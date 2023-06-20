@@ -1232,7 +1232,7 @@ function scr_ui_advisors() {
     
     
 	    var blurp2,blurp3,yyy;yyy=0;
-	    method="Blood Duel";blurp2="";blurp3="";
+	    recruit_type="Blood Duel";blurp2="";blurp3="";
     
 	    draw_set_halign(fa_center);draw_set_font(fnt_40k_30b);
 	    draw_text_transformed(xx+622,yy+491,string_hash_to_newline("Aspirant Trial"),0.6,0.6,0);

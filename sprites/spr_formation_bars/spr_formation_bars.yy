@@ -85,7 +85,7 @@
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"c6ae1886-a082-4bd0-9ff5-a4d4c496e479","path":"sprites/spr_formation_bars/spr_formation_bars.yy",},},},"Disabled":false,"id":"c710c3c4-0e5d-4e70-b1f6-77b78619af6a","IsCreationKey":false,"Key":14.0,"Length":1.0,"Stretch":false,},
           ],},"modifiers":[],"spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
-    "visibleRange": {"x":0.0,"y":0.0,},
+    "visibleRange": null,
     "volume": 1.0,
     "xorigin": 0,
     "yorigin": 0,
