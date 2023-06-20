@@ -1,0 +1,11 @@
+
+All images are .png
+Note that MS Paint can save .png files but for some reason these cannot be read by the game.  You will have to use a different program.
+
+=====
+loading1.png	(1600 x 900 px, 1 subimage)
+loading2.png
+loading3.png
+loading4.png
+loading5.png
+=====

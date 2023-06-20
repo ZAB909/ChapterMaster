@@ -1,0 +1,33 @@
+
+All images are .png
+Note that MS Paint can save .png files but for some reason these cannot be read by the game.  You will have to use a different program.
+
+=====
+creation_icons.png	(3243 x 141 px, 23 subimages)
+
+main1.png	(374 x 713 px, 1 subimage)
+main2.png
+main3.png
+main4.png
+main5.png
+main6.png
+main7.png
+main8.png
+main9.png
+
+existing1.png	(374 x 713 px, 1 subimage)
+existing2.png
+existing3.png
+existing4.png
+existing5.png
+existing7.png
+
+other1.png	(374 x 713 px, 1 subimage)
+other3.png
+other5.png
+other6.png
+other7.png
+
+slate1.png (850 x 860 px, 1 subimage)
+slate2.png
+=====

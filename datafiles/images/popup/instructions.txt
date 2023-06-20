@@ -1,0 +1,18 @@
+
+All images are .png
+Note that MS Paint can save .png files but for some reason these cannot be read by the game.  You will have to use a different program.
+
+=====
+popup1.png	(138 x 149 px, 1 subimage)
+popup2.png
+popup3.png
+popup4.png
+popup5.png
+popup6.png
+popup7.png
+...
+popup61.png
+popup62.png
+popup63.png
+popup64.png
+=====

@@ -1,0 +1,87 @@
+
+All images are .png
+Note that MS Paint can save .png files but for some reason these cannot be read by the game.  You will have to use a different program.
+
+=====
+attacked1.png	(257 x 174 px, 1 subimage)
+attacked2.png
+
+commander1.png	(162 x 208 px, 1 subimage)
+commander2.png
+commander3.png
+
+defeat1.png	(938 x 554 px, 1 subimage)
+defeat2.png
+defeat3.png
+defeat4.png
+
+force1.png	(64 x 64 px, 1 subimage)
+force2.png
+force3.png
+force4.png
+force5.png
+force6.png
+force7.png
+force8.png
+force9.png
+force10.png
+force12.png
+force13.png
+force14.png
+force15.png
+force16.png
+force17.png
+force31.png
+
+formation1.png	(239 x 297 px, 1 subimage)
+formation2.png
+formation3.png
+formation4.png
+formation5.png
+formation6.png
+formation7.png
+formation8.png
+formation9.png
+formation10.png
+formation11.png
+formation12.png
+formation13.png
+formation14.png
+formation15.png
+
+ingame_menu.png	(1124 x 631 px, 2 subimages)
+
+planet1.png	(128 x 128 px, 1 subimage)
+planet2.png
+planet3.png
+planet4.png
+planet5.png
+planet6.png
+planet7.png
+planet8.png
+planet9.png
+planet10.png
+planet12.png
+planet13.png
+planet14.png
+planet15.png
+planet16.png
+planet17.png
+
+postbattle1.png	(409 x 247 px, 1 subimage)
+postbattle2.png
+postbattle3.png
+
+postspace1.png	(409 x 247 px, 1 subimage)
+postspace2.png
+postspace3.png
+
+purge1.png	(351 x 63 px, 1 subimage)
+purge2.png
+purge3.png
+purge4.png
+purge5.png
+purge6.png
+purge7.png
+purge8.png
+=====

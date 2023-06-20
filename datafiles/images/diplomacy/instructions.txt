@@ -1,0 +1,42 @@
+
+All images are .png
+Note that MS Paint can save .png files but for some reason these cannot be read by the game.  You will have to use a different program.
+
+=====
+diplomacy_icons.png	(4284 x 135 px, 28 subimages)
+
+advisor1.png	(310 x 828 px, 1 subimage)
+advisor2.png
+advisor3.png
+advisor4.png
+advisor5.png
+advisor6.png
+advisor7.png
+advisor11.png
+advisor12.png
+
+diplomacy2.png	(310 x 828 px, 1 subimage)
+diplomacy3.png
+diplomacy4.png
+diplomacy5.png
+diplomacy6.png
+diplomacy7.png
+diplomacy8.png
+diplomacy10.png
+diplomacy11.png
+diplomacy12.png
+
+daemon1.png	(310 x 828 px, 1 subimage)
+daemon2.png
+daemon3.png
+daemon4.png
+daemon5.png
+daemon6.png
+daemon7.png
+daemon8.png
+daemon9.png
+
+symbol1.png (217 x 107 px, 1 sumbimage)
+symbol2.png
+symbol3.png
+=====
