@@ -128,8 +128,8 @@ function scr_load(argument0, argument1) {
 	        if (recent_type[i]!=""){
 	            obj_controller.recent_type[i]=ini_write_string("Controller","rect"+string(i),"");
 	            obj_controller.recent_keyword[i]=ini_write_string("Controller","reck"+string(i),"");
-	            obj_controller.recent_turn[i]=ini_write_real("Controller","recu"+string(i),0);
-	            obj_controller.recent_number[i]=ini_write_real("Controller","recn"+string(i),0);
+	  //          obj_controller.recent_turn[i]=ini_write_real("Controller","recu"+string(i),0);
+	       //     obj_controller.recent_number[i]=ini_write_real("Controller","recn"+string(i),0);
 	        }
 	    }
     
