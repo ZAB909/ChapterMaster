@@ -57,7 +57,7 @@
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"be2b8b48-0ab2-4b69-b879-4af5e4ede8a4","path":"sprites/spr_ship_glad/spr_ship_glad.yy",},},},"Disabled":false,"id":"dc542ebd-2f6e-43f1-b053-8b4014539608","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
           ],},"modifiers":[],"spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
-    "visibleRange": {"x":0.0,"y":0.0,},
+    "visibleRange": null,
     "volume": 1.0,
     "xorigin": 39,
     "yorigin": 15,
