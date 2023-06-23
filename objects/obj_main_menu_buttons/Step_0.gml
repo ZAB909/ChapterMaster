@@ -15,8 +15,8 @@ if (room_get_name(room)="Creation"){
     if (fade=60) then room_goto(Main_Menu);
     exit;
 }
-
-if (!instance_exists(obj_popup)) and (!instance_exists(obj_credits)) and (!instance_exists(obj_saveload)) and (fading=0){
+// this places the button's step on the menu (new,load,about and exit). The image and step can be in different locations. Draw has the image locations
+if (!instance_exists(obj_popup)) and (!instance_exists(obj_credits)) and (!instance_exists(obj_saveload)) and (fading=0){ 
     xx=126;if (mouse_x>=xx) and (mouse_y>yy) and (mouse_x<xx+265) and (mouse_y<yy+48) then hover[1]=1;
     xx=550;if (mouse_x>=xx) and (mouse_y>yy) and (mouse_x<xx+265) and (mouse_y<yy+48) then hover[2]=1;
     xx=968;if (mouse_x>=xx) and (mouse_y>yy) and (mouse_x<xx+265) and (mouse_y<yy+48) then hover[3]=1;

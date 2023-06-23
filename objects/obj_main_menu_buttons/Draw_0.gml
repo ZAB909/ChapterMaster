@@ -66,16 +66,16 @@ if (instance_exists(obj_main_menu)) and (!instance_exists(obj_saveload)) and (!i
                 if (i=1) then draw_sprite(spr_mm_glow,0,126,yy);
                 if (i=2) then draw_sprite(spr_mm_glow,1,550,yy);
                 if (i=3) then draw_sprite(spr_mm_glow,2,968,yy);
-                if (i=4) then draw_sprite(spr_mm_glow,3,1280,yy);
+                if (i=4) then draw_sprite(spr_mm_glow,3,1280,700);
             }
             if (hover[i]=0) and (glow[i]>0) then glow[i]-=4;
         }
     
         draw_set_alpha(obj_main_menu.tim4/50);
-        draw_sprite(spr_mm_butts,0,126,yy);
-        draw_sprite(spr_mm_butts,1,550,yy);
-        draw_sprite(spr_mm_butts,2,968,yy);
-        draw_sprite(spr_mm_butts,3,1280,yy);
+        draw_sprite(spr_mm_butts,0,1073,453);
+        draw_sprite(spr_mm_butts,1,1073,564);
+        draw_sprite(spr_mm_butts,2,1072,685);
+        draw_sprite(spr_mm_butts,3,1073,792);
         draw_set_alpha(1);
     }
     

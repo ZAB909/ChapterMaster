@@ -2,9 +2,9 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "spr_mm_butts",
-  "bbox_bottom": 43,
+  "bbox_bottom": 100,
   "bbox_left": 0,
-  "bbox_right": 240,
+  "bbox_right": 525,
   "bbox_top": 0,
   "bboxMode": 0,
   "collisionKind": 1,
@@ -21,7 +21,7 @@
   ],
   "gridX": 0,
   "gridY": 0,
-  "height": 44,
+  "height": 101,
   "HTile": false,
   "layers": [
     {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"4c75b947-deee-44bc-aeeb-ca652b9f50f8","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
@@ -78,5 +78,5 @@
   },
   "type": 0,
   "VTile": false,
-  "width": 241,
+  "width": 526,
 }
