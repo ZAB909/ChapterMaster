@@ -65,7 +65,6 @@
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"help.ini","CopyToMask":9223372036854775807,"filePath":"datafiles",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"custom_icons_help.txt","CopyToMask":153157610357391598,"filePath":"datafiles/icons",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"title_splash.png","CopyToMask":-1,"filePath":"datafiles/images",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"creation_icons.png","CopyToMask":-1,"filePath":"datafiles/images/creation",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"existing1.png","CopyToMask":-1,"filePath":"datafiles/images/creation",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"existing2.png","CopyToMask":-1,"filePath":"datafiles/images/creation",},
@@ -197,6 +196,7 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"popup8.png","CopyToMask":-1,"filePath":"datafiles/images/popup",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"popup9.png","CopyToMask":-1,"filePath":"datafiles/images/popup",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"title_splash_old.png","CopyToMask":-1,"filePath":"datafiles/images",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"title_splash.png","CopyToMask":-1,"filePath":"datafiles/images",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"attacked1.png","CopyToMask":-1,"filePath":"datafiles/images/ui",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"attacked2.png","CopyToMask":-1,"filePath":"datafiles/images/ui",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"commander1.png","CopyToMask":-1,"filePath":"datafiles/images/ui",},
