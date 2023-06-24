@@ -58,14 +58,14 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	                atta=60;arp=0;rang=12;ranged_hands+=2;amm=15;spli=1;
 	                if (obj_controller.menu=1) and ((string_count("Terminator",marine_armor[0])>0) or (marine_armor[0]="Tartaros")) then ranged_hands-=1;
 	            }
-	            if (string_count("Plasma Pistol",thawep)>0){atta=105;arp=1;rang=3.1;melee_hands+=1;}
-	            if (string_count("Plasma Gun",thawep)>0){atta=210;arp=1;rang=10;ranged_hands+=2;spli=1;}
+	            if (string_count("Plasma Pistol",thawep)>0){atta=115;arp=1;rang=3.1;melee_hands+=1;}
+	            if (string_count("Plasma Gun",thawep)>0){atta=250;arp=1;rang=10;ranged_hands+=2;spli=1;}
 	            if (string_count("Power Sword",thawep)>0){atta=180;arp=0;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";}
-	            if (string_count("Power Spear",thawep)>0){atta=200;arp=0;rang=1;melee_hands+=2;spli=1;}
-	            if (string_count("Power Axe",thawep)>0){atta=195;arp=0;rang=1;melee_hands+=1;spli=1;}
+	            if (string_count("Power Spear",thawep)>0){atta=200;arp=0;rang=1.5;melee_hands+=2;spli=1;}
+	            if (string_count("Power Axe",thawep)>0){atta=190;arp=0;rang=1.2;melee_hands+=1;spli=1;}
 	            if (string_count("Power Fist",thawep)>0){atta=450;arp=0;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;}
-	            if (string_count("Lightning Claw",thawep)>0){atta=345;arp=1;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;}
-	            if (string_count("Relic Blade",thawep)>0){atta=700;arp=0;rang=1;melee_hands+=2;spli=1;}
+	            if (string_count("Lightning Claw",thawep)>0){atta=350;arp=1;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;}
+	            if (string_count("Relic Blade",thawep)>0){atta=700;arp=0;rang=1;melee_hands+=1;spli=1;}
             
 	            if (string_count("Relic Blade",thawep)=0) and (atta>0){atta=atta*1.5;}
             
@@ -136,7 +136,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	            descr="A weapon of the Emperor, and His divine judgement, this weapon can be placed upon a planet to obliterate it entirely.";}
 	        if (argument0="Bike"){spe_descr="+25% HP, Bike";
 	            descr="A robust bike that can propel a marine at very high speeds.  Boasts highly responsive controls and Twin Linked Bolters.";}
-	        if (thawep="Company Standard"){spe_descr="Boosts morale";atta=20;arp=0;rang=1;melee_hands+=0;ranged_hands+=1;spli=1;
+	        if (thawep="Company Standard"){spe_descr="Boosts morale";atta=45;arp=0;rang=1.5;melee_hands+=0;ranged_hands+=1;spli=1;
 	            descr="A banner that represents the honour of a particular company and will bolster the morale abilities of nearby Space Marines.";}
 	        if (argument0="Servo Arms"){spe_descr="Integrated flamer, repairs";
 	            descr="A pair of powerful, mechanical arms.  They include several tools that allow trained marines to repair vehicles rapidly.";}
@@ -212,9 +212,9 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        // if (obj_controller.menu=1) and ((string_count("Terminator",marine_armor[0])>0) or (marine_armor[0]="Tartaros")) then melee_hands-=1;
 	    }
     
-	    if (thawep="Thunder Hammer"){atta=300;arp=1;rang=1;melee_hands+=1;spli=1;
+	    if (thawep="Thunder Hammer"){atta=300;arp=1;rang=1.5;melee_hands+=1;spli=1;
 	        descr="This weapon unleashes a massive, disruptive field on impact.  Only experienced marines can use Thunder Hammers.";}
-	    if (thawep="Master Crafted Thunder Hammer"){atta=360;arp=0;rang=1;melee_hands+=1;spli=1;
+	    if (thawep="Master Crafted Thunder Hammer"){atta=360;arp=0;rang=1.5;melee_hands+=1;spli=1;
 	        descr="";}
     
 	    if (thawep="Bolt Pistol"){atta=35;arp=0;rang=3.1;melee_hands+=1;amm=18;
