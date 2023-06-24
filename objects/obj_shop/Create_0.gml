@@ -59,7 +59,7 @@ if (shop="equipment"){i=0;
     i+=1;x_mod[i]=9;item[i]="Lascutter";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=15;
     i+=1;x_mod[i]=9;item[i]="Boarding Shield";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=5;
     i+=1;x_mod[i]=9;item[i]="Storm Shield";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=20;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
-    i+=1;x_mod[i]=9;item[i]="Company Standard";item_stocked[i]=scr_item_count(item[i]);nobuy[i]=1;
+    i+=1;x_mod[i]=9;item[i]="Company Standard";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=600;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     
     i+=1;item[i]="Bolt Pistol";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=2;
     i+=1;item[i]="Bolter";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=5;
