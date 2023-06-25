@@ -55,19 +55,19 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        // Artifact weapons
 	        if (arti_armor=false){
 	            if (string_count("Bolter",thawep)>0){
-	                atta=60;arp=0;rang=12;ranged_hands+=2;amm=15;spli=1;
+	                atta=65;arp=0;rang=12;ranged_hands+=2;amm=15;spli=1;
 	                if (obj_controller.menu=1) and ((string_count("Terminator",marine_armor[0])>0) or (marine_armor[0]="Tartaros")) then ranged_hands-=1;
 	            }
 	            if (string_count("Plasma Pistol",thawep)>0){atta=115;arp=1;rang=3.1;melee_hands+=1;}
 	            if (string_count("Plasma Gun",thawep)>0){atta=250;arp=1;rang=10;ranged_hands+=2;spli=1;}
 	            if (string_count("Power Sword",thawep)>0){atta=180;arp=0;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";}
-	            if (string_count("Power Spear",thawep)>0){atta=200;arp=0;rang=1.5;melee_hands+=2;spli=1;}
+	            if (string_count("Power Spear",thawep)>0){atta=200;arp=0;rang=1;melee_hands+=2;spli=1;}
 	            if (string_count("Power Axe",thawep)>0){atta=190;arp=0;rang=1.2;melee_hands+=1;spli=1;}
 	            if (string_count("Power Fist",thawep)>0){atta=450;arp=0;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;}
-	            if (string_count("Lightning Claw",thawep)>0){atta=350;arp=1;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;}
+	            if (string_count("Lightning Claw",thawep)>0){atta=400;arp=1;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;}
 	            if (string_count("Relic Blade",thawep)>0){atta=700;arp=0;rang=1;melee_hands+=1;spli=1;}
             
-	            if (string_count("Relic Blade",thawep)=0) and (atta>0){atta=atta*1.5;}
+	            if (string_count("Relic Blade",thawep)=0) and (atta>0){atta=atta*1;}
             
 	            if (string_count("Tome",thawep)>0){atta=0;arp=0;rang=1;melee_hands+=1;ranged_hands+=1;}
             
@@ -136,7 +136,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	            descr="A weapon of the Emperor, and His divine judgement, this weapon can be placed upon a planet to obliterate it entirely.";}
 	        if (argument0="Bike"){spe_descr="+25% HP, Bike";
 	            descr="A robust bike that can propel a marine at very high speeds.  Boasts highly responsive controls and Twin Linked Bolters.";}
-	        if (thawep="Company Standard"){spe_descr="Boosts morale";atta=45;arp=0;rang=1.5;melee_hands+=0;ranged_hands+=1;spli=1;
+	        if (thawep="Company Standard"){spe_descr="Boosts morale";atta=45;arp=0;rang=1;melee_hands+=1;ranged_hands+=0;spli=1;
 	            descr="A banner that represents the honour of a particular company and will bolster the morale abilities of nearby Space Marines.";}
 	        if (argument0="Servo Arms"){spe_descr="Integrated flamer, repairs";
 	            descr="A pair of powerful, mechanical arms.  They include several tools that allow trained marines to repair vehicles rapidly.";}
@@ -169,25 +169,25 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        descr="More of a sword than knife proper, this tough and thick blade becomes a deadly weapon in the hand of an Astartes.";}
 	    if (thawep="Sarissa"){atta=40;arp=0;rang=1;spli=1;
 	        descr="A vicious combat attachment that is attached to Bolters, in order to allow them to be used in melee combat.";}
-	    if (thawep="Chainsword"){atta=60;arp=0;rang=1;melee_hands+=1;spli=1;
+	    if (thawep="Chainsword"){atta=65;arp=0;rang=1;melee_hands+=1;spli=1;
 	        descr="A standard Chainsword.  It is popular among Assault Marines due to the raw power and anti-armor capabilities.";}
 	    if (thawep="Chainaxe"){atta=80;arp=0;rang=1;melee_hands+=1;spli=1;
 	        descr="A weapon most frequently seen in the hands of Chaos, this Chainaxe uses motorized chainsaw teeth to maim and tear.";}
 	    if (thawep="Eviscerator"){atta=160;arp=0;rang=1;melee_hands+=2;spli=1;
 	        descr="An obscenely large Chainsword, this two-handed weapon can carve through flesh and plasteel with equal ease.";}
-	    if (thawep="Power Sword"){atta=120;arp=0;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";
+	    if (thawep="Power Sword"){atta=125arp=0;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";
 	        descr="A preeminent type of Power Weapon.  When active the blade becomes sheathed in a lethal haze of disruptive energy.";}
-	    if (thawep="Master Crafted Power Sword"){atta=144;arp=0;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";
+	    if (thawep="Master Crafted Power Sword"){atta=150;arp=0;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";
 	        descr="";}
-	    if (thawep="Eldar Power Sword"){atta=150;arp=0;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";
+	    if (thawep="Eldar Power Sword"){atta=170;arp=0;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";
 	        descr="";}
-	    if (thawep="Power Weapon"){atta=120;arp=0;rang=1;melee_hands+=1;spli=1;
+	    if (thawep="Power Weapon"){atta=135;arp=0;rang=1;melee_hands+=1;spli=1;
 	        descr="";}
 	    if (thawep="Power Axe"){atta=130;arp=0;rang=1;melee_hands+=1;spli=1;
 	        descr="Similar to the Power Sword, this weapon can be activated to sheathe the axe-head in a lethal haze of disruptive energy.";}
 	    if (thawep="Power Fist"){atta=300;arp=0;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;
 	        descr="A large, metal gauntlet surrounded by an energy field.  Though large and slow it dishes out tremendous damage.";}
-	    if (thawep="Lightning Claw"){atta=230;arp=1;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;
+	    if (thawep="Lightning Claw"){atta=250;arp=1;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;
 	        descr="Created by attaching several long, energized blades to a standard power fist.  Allows better ripping and tearing.";}
 	    if (thawep="Chainfist"){atta=300;arp=1;rang=1;melee_hands+=1;ranged_hands+=1;spli=0;
 	        descr="Created by mounting a chainsword to a power fist, this weapon is easily able to carve through armored bulkheads.";}
@@ -212,9 +212,9 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        // if (obj_controller.menu=1) and ((string_count("Terminator",marine_armor[0])>0) or (marine_armor[0]="Tartaros")) then melee_hands-=1;
 	    }
     
-	    if (thawep="Thunder Hammer"){atta=300;arp=1;rang=1.5;melee_hands+=1;spli=1;
+	    if (thawep="Thunder Hammer"){atta=450;arp=1;rang=1;melee_hands+=1;spli=1;
 	        descr="This weapon unleashes a massive, disruptive field on impact.  Only experienced marines can use Thunder Hammers.";}
-	    if (thawep="Master Crafted Thunder Hammer"){atta=360;arp=0;rang=1.5;melee_hands+=1;spli=1;
+	    if (thawep="Master Crafted Thunder Hammer"){atta=360;arp=0;rang=1;melee_hands+=1;spli=1;
 	        descr="";}
     
 	    if (thawep="Bolt Pistol"){atta=35;arp=0;rang=3.1;melee_hands+=1;amm=18;
