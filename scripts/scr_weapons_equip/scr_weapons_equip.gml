@@ -41,6 +41,9 @@ function scr_weapons_equip() {
 	    }
 	    i+=1;item_name[i]="Heavy Bolter";
 	    i+=1;item_name[i]="Heavy Flamer";
+		i+=1;item_name[i]="Twin Linked Heavy Bolters";
+		i+=1;item_name[i]="Twin Linked Heavy Lascannon";
+		i+=1;item_name[i]="Twin Linked Bolters";
 	    if (dude!=6){
 	        i+=1;item_name[i]="Hellrifle";
 	        i+=1;item_name[i]="Incinerator";
@@ -50,6 +53,10 @@ function scr_weapons_equip() {
 	    i+=1;item_name[i]="Meltagun";
 	    i+=1;item_name[i]="Missile Launcher";
 	    i+=1;item_name[i]="Multi-Melta";
+		i+=1;item_name[i]="Inferno Cannon";
+		i+=1;item_name[i]="Autocannon";
+		i+=1;item_name[i]="Flamestorm Cannon";
+		i+=1;item_name[i]="Twin-Linked Assault Cannon";
 	    if (dude!=6){
 	        i+=1;item_name[i]="Plasma Gun";
 	        i+=1;item_name[i]="Plasma Pistol";
@@ -139,6 +146,8 @@ function scr_weapons_equip() {
 	        i+=1;item_name[i]="Lascutter";
 	        i+=1;item_name[i]="Integrated Bolters";
 	        i+=1;item_name[i]="Archeotech Laspistol";
+			i += 1;item_name[i] = "Twin Linked Heavy Bolter"; // Added option for Twin Linked Heavy Bolter
+            i += 1;item_name[i] = "Twin Linked Lascannon"; // Added option for Twin Linked Lascannon
 	    }
 	}*/
 

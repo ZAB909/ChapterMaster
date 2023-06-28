@@ -57,7 +57,7 @@ function scr_add_vehicle(argument0, argument1, argument2, argument3, argument4, 
 	    if (argument5!="standard") then obj_ini.veh_upgrade[argument1,good]=argument5;
     
 	    if (argument2="standard") and (argument3="standard") and (argument4="standard"){
-	        if (argument0="Rhino"){obj_ini.veh_wep1[argument1,good]="Storm Bolter";obj_ini.veh_wep2[argument1,good]="Storm Bolter";obj_ini.veh_upgrade[argument1,good]="Dozer Blades";}
+	        if (argument0="Rhino"){obj_ini.veh_wep1[argument1,good]="Heavy Bolters";obj_ini.veh_wep2[argument1,good]="Storm Bolter";obj_ini.veh_upgrade[argument1,good]="Dozer Blades";}
 	        if (argument0="Whirlwind"){obj_ini.veh_wep1[argument1,good]="Whirlwind Missiles";obj_ini.veh_wep2[argument1,good]="Storm Bolter";obj_ini.veh_upgrade[argument1,good]="";}
 	        if (argument0="Predator"){
 	            var randumb;randumb=choose(1,2,2)obj_ini.veh_upgrade[argument1,good]="Dozer Blades";
