@@ -46,16 +46,16 @@ if (obj_controller.faction_status[2]="War"){rene=1;
 
 if (shop="equipment"){i=0;
     i+=1;item[i]="Combat Knife";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=1;
-    i+=1;item[i]="Chainsword";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=3;
+    i+=1;item[i]="Chainsword";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=4;
         i+=1;x_mod[i]=9;item[i]="Eviscerator";item_stocked[i]=scr_item_count(item[i]);nobuy[i]=1;
-    i+=1;item[i]="Chainaxe";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=4;
-        i+=1;item[i]="Power Axe";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=10;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+    i+=1;item[i]="Chainaxe";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=8;
+        i+=1;item[i]="Power Axe";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=15;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
         i+=1;item[i]="Power Sword";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=12;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
         i+=1;item[i]="Power Fist";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=30;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
-        i+=1;item[i]="Lightning Claw";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=35;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
-        i+=1;item[i]="Chainfist";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=35;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+        i+=1;item[i]="Lightning Claw";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=50;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+        i+=1;item[i]="Chainfist";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=45;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
         i+=1;item[i]="Force Weapon";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=65;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
-        i+=1;item[i]="Thunder Hammer";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=50;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+        i+=1;item[i]="Thunder Hammer";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=75;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i+=1;x_mod[i]=9;item[i]="Lascutter";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=15;
     i+=1;x_mod[i]=9;item[i]="Boarding Shield";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=5;
     i+=1;x_mod[i]=9;item[i]="Storm Shield";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=20;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
