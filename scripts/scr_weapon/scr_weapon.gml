@@ -100,7 +100,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	            descr="An ancient set of Armorum Ferrum.  Has thicker armor plating but the added weight slows down the wearer.";}
 	        if (argument0="MK4 Maximus"){statt=20;spe_descr="+5% Melee, +5% Ranged";emor=1;
 	            descr="Armor dating to the end of the Great Crusade.  Often considered the ultimate Space Marine armor.  The components are no longer reproducable.";}
-	        if (argument0="MK6 Corvus"){statt=15;spe_descr="+10% Ranged";emor=1;
+	        if (argument0="MK6 Corvus"){statt=16;spe_descr="+10% Ranged";emor=1;
 	            descr="Relatively old beakie armor, sleek as can be.  Boosted olfactory and auditory sensors increase the ranged accuracy of the wearer.";}
 	        if (argument0="MK7 Aquila"){statt=17;spe_descr="";emor=1;
 	            descr="Developed during the Horus Heresy, this Mark of armor is the most commonly used amongst all the Adeptus Astartes.";}
