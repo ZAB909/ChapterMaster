@@ -76,7 +76,7 @@ function scr_en_weapon(argument0, argument1, argument2, argument3, argument4) {
 	    if (argument0="Eldar Missile Launcher"){atta=200;arp=1;rang=20;amm=4;spli=1;}
 	    if (argument0="Laser Lance"){atta=80;arp=0;rang=2;spli=1;}
 	    if (argument0="Fusion Pistol"){atta=100;arp=1;rang=1.1;amm=4;}
-	    if (argument0="Plasma Pistol"){atta=70;arp=0;rang=3.1;}
+	    if (argument0="Plasma Pistol"){atta=60;arp=1;rang=3.1;}
 	    if (argument0="Harlequin's Kiss"){atta=350;arp=0;rang=1;amm=1;}
 	    if (argument0="Wraithcannon"){atta=80;arp=1;rang=2.1;}
 	    if (argument0="Pulse Laser"){atta=80;arp=1;rang=15;}
@@ -86,7 +86,7 @@ function scr_en_weapon(argument0, argument1, argument2, argument3, argument4) {
 	    if (argument0="Twin Linked Doomweaver"){atta=100;arp=0;rang=2;}// Also create difficult terrain?
 	    if (argument0="Starcannon"){atta=140;arp=1;rang=3;spli=1;}
 	    if (argument0="Two Power Fists"){atta=300;arp=1;rang=1;}
-	    if (argument0="Flamer"){atta=80;arp=0;rang=2;amm=4;spli=1;}
+	    if (argument0="Flamer"){atta=100;arp=0;rang=2;amm=4;spli=1;}
 	    if (argument0="Titan Starcannon"){atta=220;arp=1;rang=4;spli=1;}
 	    if (argument0="Phantom Pulsar"){atta=500;arp=1;rang=20;spli=1;}
 	}
@@ -162,19 +162,19 @@ function scr_en_weapon(argument0, argument1, argument2, argument3, argument4) {
 	    if (argument0="Flamer"){atta=160;arp=0;rang=2.1;amm=4;spli=1;}
 	    if (argument0="Heavy Flamer"){atta=250;arp=0;rang=2.1;amm=6;spli=1;}
 	    if (argument0="Combi-Flamer"){atta=160;arp=0;rang=2.1;amm=1;spli=1;}
-	    if (argument0="Bolter"){atta=40;arp=0;rang=12;amm=15;if (obj_ncombat.enemy=5) then atta=35;}// Bursts
-	    if (argument0="Power Fist"){atta=300;arp=1;rang=1;}
+	    if (argument0="Bolter"){atta=45;arp=0;rang=12;amm=15;if (obj_ncombat.enemy=5) then atta=35;}// Bursts
+	    if (argument0="Power Fist"){atta=425;arp=1;rang=1;}
 	    if (argument0="Possessed Claws"){atta=250;arp=1;rang=1;spli=1;}
 	    if (argument0="Missile Launcher"){atta=200;arp=1;rang=20;amm=4;spli=1;}
-	    if (argument0="Chainsword"){atta=60;arp=0;rang=1;}
+	    if (argument0="Chainsword"){atta=45;arp=0;rang=1;}
 	    if (argument0="Bolt Pistol"){atta=35;arp=0;rang=3.1;amm=18;}
-	    if (argument0="Chainaxe"){atta=90;arp=0;rang=1;}
+	    if (argument0="Chainaxe"){atta=55;arp=0;rang=1;}
 	    if (argument0="Poisoned Chainsword"){atta=90;arp=0;rang=1;if (obj_ini.preomnor=1){atta=130;}}
 	    if (argument0="Sonic Blaster"){atta=120;arp=0;rang=3;spli=1;}
 	    if (argument0="Rubric Bolter"){atta=80;arp=0;rang=12;amm=15;}// Bursts
 	    if (argument0="Witchfire"){atta=200;arp=1;rang=5.1;}
 	    if (argument0="Autogun"){atta=20;arp=0;rang=6;amm=12;}
-	    if (argument0="Storm Bolter"){atta=60;arp=0;rang=8;amm=10;spli=1;}
+	    if (argument0="Storm Bolter"){atta=65;arp=0;rang=8;amm=10;spli=1;}
 	    if (argument0="Lascannon"){atta=200;arp=1;rang=20;amm=8;}
 	    if (argument0="Twin Linked Heavy Bolters"){atta=240;arp=0;rang=16;spli=1;}
 	    if (argument0="Twin-Linked Heavy Bolters"){atta=240;arp=0;rang=16;spli=1;}
