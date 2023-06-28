@@ -414,7 +414,7 @@ function scr_initialize_custom() {
 	if (global.chapter_name="Dark Angels"){veteran=0;terminator+=80;}
 	if (global.chapter_name="Lamenters"){
 	    tenth=0;ninth=0;eighth=0;seventh=0;sixth=0;fifth=0;
-	    techs=10;epistolary=2;apothecary=3;codiciery=3;lexicanum=5;terminator=0;veteran+=10;
+	    techs=8;epistolary=6;apothecary=5;codiciery=3;lexicanum=5;terminator=5;veteran+=10;
 	}
 	if (global.chapter_name="Space Wolves"){
 	    veteran+=40;second+=40;third+=40;fourth+=40;fifth+=40;sixth+=40;seventh+=40;eighth+=40;ninth+=40;tenth+=60;
@@ -1199,7 +1199,7 @@ function scr_initialize_custom() {
 	    penitent_end=obj_creation.strength*5;
     
 	    if (obj_creation.chapter="Lamenters"){
-	        penitent_max=1200;penitent_end=1200;
+	        penitent_max=850;penitent_end=850;
 	        // obj_controller.loyalty=50;obj_controller.loyalty_hidden=50;
 	    }
 	}
