@@ -208,8 +208,8 @@ function scr_initialize_custom() {
 	    }
 	    if (obj_creation.fleet_type=3){
 	        if (global.chapter_name="Lamenters"){
-	            strike_cruisers=1;
-	            gladius=3;
+	            strike_cruisers=2;
+	            gladius=2;
 	            hunters=1;
 	        }
 	        if (global.chapter_name="Blood Ravens"){
@@ -276,7 +276,7 @@ function scr_initialize_custom() {
 	    ship_conditions[v]="";ship_speed[v]=30;ship_turning[v]=90;
 	    ship_front_armor[v]=5;ship_other_armor[v]=5;ship_weapons[v]=1;ship_shields[v]=1;
 	    ship_wep[v,1]="Weapons Battery";ship_wep_facing[v,1]="most";ship_wep_condition[v,1]="";
-	    ship_capacity[v]=30;ship_carrying[v]=0;ship_contents[v]="";ship_turrets[v]=1;
+	    ship_capacity[v]=100;ship_carrying[v]=0;ship_contents[v]="";ship_turrets[v]=1;
 	    repeat(5){if (string_count(ship[v],ship_names)!=0) then ship[v]=scr_ship_name("imperial");}
 	    ship_names+=string(ship[v])+"|";
 	}
@@ -289,7 +289,7 @@ function scr_initialize_custom() {
 	    ship_front_armor[v]=5;ship_other_armor[v]=5;ship_weapons[v]=2;ship_shields[v]=1;
 	    ship_wep[v,1]="Torpedoes";ship_wep_facing[v,1]="front";ship_wep_condition[v,1]="";
 	    ship_wep[v,2]="Weapons Battery";ship_wep_facing[v,2]="most";ship_wep_condition[v,2]="";
-	    ship_capacity[v]=25;ship_carrying[v]=0;ship_contents[v]="";ship_turrets[v]=1;
+	    ship_capacity[v]=50;ship_carrying[v]=0;ship_contents[v]="";ship_turrets[v]=1;
 	    repeat(5){if (string_count(ship[v],ship_names)!=0) then ship[v]=scr_ship_name("imperial");}
 	    ship_names+=string(ship[v])+"|";
 	}
