@@ -208,8 +208,8 @@ function scr_initialize_custom() {
 	    }
 	    if (obj_creation.fleet_type=3){
 	        if (global.chapter_name="Lamenters"){
-	            strike_cruisers=1;
-	            gladius=3;
+	            strike_cruisers=2;
+	            gladius=2;
 	            hunters=1;
 	        }
 	        if (global.chapter_name="Blood Ravens"){
@@ -276,7 +276,7 @@ function scr_initialize_custom() {
 	    ship_conditions[v]="";ship_speed[v]=30;ship_turning[v]=90;
 	    ship_front_armor[v]=5;ship_other_armor[v]=5;ship_weapons[v]=1;ship_shields[v]=1;
 	    ship_wep[v,1]="Weapons Battery";ship_wep_facing[v,1]="most";ship_wep_condition[v,1]="";
-	    ship_capacity[v]=30;ship_carrying[v]=0;ship_contents[v]="";ship_turrets[v]=1;
+	    ship_capacity[v]=100;ship_carrying[v]=0;ship_contents[v]="";ship_turrets[v]=1;
 	    repeat(5){if (string_count(ship[v],ship_names)!=0) then ship[v]=scr_ship_name("imperial");}
 	    ship_names+=string(ship[v])+"|";
 	}
@@ -289,7 +289,7 @@ function scr_initialize_custom() {
 	    ship_front_armor[v]=5;ship_other_armor[v]=5;ship_weapons[v]=2;ship_shields[v]=1;
 	    ship_wep[v,1]="Torpedoes";ship_wep_facing[v,1]="front";ship_wep_condition[v,1]="";
 	    ship_wep[v,2]="Weapons Battery";ship_wep_facing[v,2]="most";ship_wep_condition[v,2]="";
-	    ship_capacity[v]=25;ship_carrying[v]=0;ship_contents[v]="";ship_turrets[v]=1;
+	    ship_capacity[v]=50;ship_carrying[v]=0;ship_contents[v]="";ship_turrets[v]=1;
 	    repeat(5){if (string_count(ship[v],ship_names)!=0) then ship[v]=scr_ship_name("imperial");}
 	    ship_names+=string(ship[v])+"|";
 	}
@@ -414,7 +414,7 @@ function scr_initialize_custom() {
 	if (global.chapter_name="Dark Angels"){veteran=0;terminator+=80;}
 	if (global.chapter_name="Lamenters"){
 	    tenth=0;ninth=0;eighth=0;seventh=0;sixth=0;fifth=0;
-	    techs=10;epistolary=2;apothecary=3;codiciery=3;lexicanum=5;terminator=0;veteran+=10;
+	    techs=8;epistolary=6;apothecary=5;codiciery=3;lexicanum=5;terminator=5;veteran+=10;
 	}
 	if (global.chapter_name="Space Wolves"){
 	    veteran+=40;second+=40;third+=40;fourth+=40;fifth+=40;sixth+=40;seventh+=40;eighth+=40;ninth+=40;tenth+=60;
@@ -1199,7 +1199,7 @@ function scr_initialize_custom() {
 	    penitent_end=obj_creation.strength*5;
     
 	    if (obj_creation.chapter="Lamenters"){
-	        penitent_max=1200;penitent_end=1200;
+	        penitent_max=850;penitent_end=850;
 	        // obj_controller.loyalty=50;obj_controller.loyalty_hidden=50;
 	    }
 	}

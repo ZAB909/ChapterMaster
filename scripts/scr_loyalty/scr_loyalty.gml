@@ -60,8 +60,8 @@ function scr_loyalty(argument0, argument1) {
 	            }
             
 	            if (argument0="Lost Standard"){
-	                obj_controller.loyalty-=5;
-	                obj_controller.loyalty_hidden-=5;
+	                obj_controller.loyalty-=2;
+	                obj_controller.loyalty_hidden-=2;
 	                obj_controller.loyal_num[i]+=5;
 	                obj_controller.loyal_time[i]=9999;
 	                amount=0;noplus=1;exit;
@@ -264,7 +264,7 @@ function scr_loyalty(argument0, argument1) {
                 
 	                if (obj_controller.loyal[i]="Inquisitor Killer"){obj_controller.loyal_num[i]=100;obj_controller.loyal_time[i]=9999;}
 	                // if (obj_controller.loyal[i]="Avoiding Inspections"){obj_controller.loyal_num[i]=20;obj_controller.loyal_time[i]=120;}
-	                // if (obj_controller.loyal[i]="Lost Standard"){obj_controller.loyal_num[i]=20;obj_controller.loyal_time[i]=9999;}
+	                // if (obj_controller.loyal[i]="Lost Standard"){obj_controller.loyal_num[i]=10;obj_controller.loyal_time[i]=9999;}
                 
 	                obj_controller.loyalty_hidden-=obj_controller.loyal_num[i];
 	            }
@@ -332,14 +332,14 @@ function scr_loyalty(argument0, argument1) {
             
 	            if (argument0="Lost Standard"){
 	                obj_controller.loyal_num[i]=floor(obj_controller.loyal_num[i]+8);
-	                obj_controller.loyalty_hidden-=5;
+	                obj_controller.loyalty_hidden-=2;
 	                obj_controller.loyal_time[i]=9999;
 	            }
             
 	            obj_controller.loyal_num[i]+=amount;
             
 	        }
-	    }
+	    }	
 	}
 
 	if (argument1="inspect_world") or (argument1="inspect_fleet"){
@@ -378,7 +378,7 @@ function scr_loyalty(argument0, argument1) {
                 
 	                if (obj_controller.loyal[i]="Inquisitor Killer"){obj_controller.loyal_num[i]=100;obj_controller.loyal_time[i]=9999;}
 	                if (obj_controller.loyal[i]="Avoiding Inspections"){obj_controller.loyal_num[i]=20;obj_controller.loyal_time[i]=120;}
-	                if (obj_controller.loyal[i]="Lost Standard"){obj_controller.loyal_num[i]=20;obj_controller.loyal_time[i]=9999;}
+	                if (obj_controller.loyal[i]="Lost Standard"){obj_controller.loyal_num[i]=10;obj_controller.loyal_time[i]=9999;}
                 
 	                obj_controller.loyalty_hidden-=obj_controller.loyal_num[i];
 	            }
