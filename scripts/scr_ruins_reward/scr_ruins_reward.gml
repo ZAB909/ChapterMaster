@@ -74,8 +74,8 @@ function scr_ruins_reward(argument0, argument1, argument2) {
 	        wep3=choose("Missile Launcher","Heavy Bolter","Lascannon","Plasma Pistol");wen3=choose(1,2,3);
 	    }if (argument2=3){
 			wep1=choose("Terminator Armor");wen1=choose(1,2);
-	        wep2=choose("Narthecium","Bionics");wen2=choose(1,2,3);
-	        wep3=choose("Psychic Hood","Rosarius");wen3=choose(1,2);
+	        wep2=choose("Bionics");wen2=choose(5,6,7);
+	        wep3=choose("Narthecium","Psychic Hood","Rosarius");wen3=choose(1);
 	    }
 		if (argument2=4){
 			wep1=choose("MK4 Maximus");wen1=choose(2,3);
@@ -88,8 +88,8 @@ function scr_ruins_reward(argument0, argument1, argument2) {
 	        wep3=choose("Heavy Flamer","Heavy Bolter","Plasma Pistol");wen3=choose(1,2,3);
 	    }
 	    if (argument2=6){
-	        wep1=choose("Eldar Power Sword","Power Spear");wen1=choose(2,3);
-	        wep2=choose("Storm Shield","Twin Linked Bolters");wen2=choose(3,4,5);
+	        wep1=choose("Eldar Power Sword","Power Spear");wen1=choose(1,2);
+	        wep2=choose("Storm Shield","Twin Linked Bolters");wen2=choose(1,2);
 	        wep3=choose("Archeotech Laspistol","Plasma Pistol");wen3=choose(1,2);
 	    }
 		if (argument2=7){
