@@ -104,7 +104,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	            descr="Relatively old beakie armor, sleek as can be.  Boosted olfactory and auditory sensors increase the ranged accuracy of the wearer.";}
 	        if (argument0="MK7 Aquila"){statt=17;spe_descr="";emor=1;
 	            descr="Developed during the Horus Heresy, this Mark of armor is the most commonly used amongst all the Adeptus Astartes.";}
-	        if (argument0="MK8 Errant"){statt=19;spe_descr="";emor=1;
+	        if (argument0="MK8 Errant"){statt=22;spe_descr="";emor=1;
 	            descr="Highly modified MK7, this armor has additional protection along the neck and cables.  It is oft worn as a symbol of high rank.";}
 	        if (argument0="Power Armor"){statt=19;spe_descr="";emor=1;
 	            descr="A suit of Adeptus Astartes power armor.  The Mark can no longer be determined- it appears to be a combination of several types.";}
