@@ -173,11 +173,11 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        descr="A standard Chainsword.  It is popular among Assault Marines due to the raw power and anti-armor capabilities.";}
 	    if (thawep="Chainaxe"){atta=55;arp=1;rang=1;melee_hands+=1;spli=1;
 	        descr="A weapon most frequently seen in the hands of Chaos, this Chainaxe uses motorized chainsaw teeth to maim and tear.";}
-	    if (thawep="Eviscerator"){atta=160;arp=1;rang=1;melee_hands+=2;spli=1;
+	    if (thawep="Eviscerator"){atta=140;arp=1;rang=1;melee_hands+=2;spli=1;
 	        descr="An obscenely large Chainsword, this two-handed weapon can carve through flesh and plasteel with equal ease.";}
 	    if (thawep="Power Sword"){atta=125;arp=1;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";
 	        descr="A preeminent type of Power Weapon.  When active the blade becomes sheathed in a lethal haze of disruptive energy.";}
-	    if (thawep="Master Crafted Power Sword"){atta=1850;arp=1;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";
+	    if (thawep="Master Crafted Power Sword"){atta=185;arp=1;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";
 	        descr="A master-crafted weapon is usually incredibly ornate and highly decorated compared to standard weapons of the same pattern, while also possessing augmented functionality. Any standard Imperial weapon can be master-crafted. Due to the improved design of a master-crafted weapon, it is more likely that a target will be hit by attacks from this weapon.";}
 	    if (thawep="Eldar Power Sword"){atta=170;arp=1;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";
 	        descr="Power weapons, infused with arcane energy, are used by Howling Banshees and Dire Avenger Exarchs. Swords such as these are as much artistic statement as weapon, and effective against even heavily armoured troops.";}
@@ -185,9 +185,9 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        descr="Often the signature weapons of elite warriors, power swords are perhaps the most dangerous of melee weapons in the galaxy.";}
 	    if (thawep="Power Axe"){atta=130;arp=1;rang=1;melee_hands+=1;spli=1;
 	        descr="Similar to the Power Sword, this weapon can be activated to sheathe the axe-head in a lethal haze of disruptive energy.";}
-	    if (thawep="Power Fist"){atta=300;arp=1;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;
+	    if (thawep="Power Fist"){atta=275;arp=1;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;
 	        descr="A large, metal gauntlet surrounded by an energy field.  Though large and slow it dishes out tremendous damage.";}
-	    if (thawep="Lightning Claw"){atta=250;arp=1;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;
+	    if (thawep="Lightning Claw"){atta=290;arp=1;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;
 	        descr="Created by attaching several long, energized blades to a standard power fist.  Allows better ripping and tearing.";}
 	    if (thawep="Chainfist"){atta=300;arp=1;rang=1;melee_hands+=1;ranged_hands+=1;spli=0;
 	        descr="Created by mounting a chainsword to a power fist, this weapon is easily able to carve through armored bulkheads.";}
@@ -217,13 +217,13 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	    if (thawep="Master Crafted Thunder Hammer"){atta=560;arp=1;rang=1;melee_hands+=1;spli=1;
 	        descr="The Master Crafted Thunder Hammer incorporates superior craftsmanship, advanced technology, and special modifications, making it more potent and effective in combat. It possesses all the qualities of a standard Thunder Hammer but with enhanced performance and additional features.";}
     
-	    if (thawep="Bolt Pistol"){atta=35;arp=0;rang=3.1;melee_hands+=1;amm=18;
+	    if (thawep="Bolt Pistol"){atta=25;arp=0;rang=3.1;melee_hands+=1;amm=18;
 	        descr="A smaller, more compact version of the venerable Boltgun.  Standard Godwyn pattern.";}
-	    if (thawep="Webber"){atta=40;arp=0;rang=4.1;ranged_hands+=2;amm=5;spli=0;
+	    if (thawep="Webber"){atta=35;arp=0;rang=4.1;ranged_hands+=2;amm=5;spli=0;
 	        descr="The Webber is a close-range weapon that fires strands of sticky web-like substance. It is designed to ensnare and immobilize enemies, restricting their movement and rendering them vulnerable to further attacks. ";}
 	    if (thawep="Underslung Bolter"){atta=60;arp=0;rang=10;amm=8;spli=1;}// Bursts
     
-	    if (thawep="Bolter"){atta=45;arp=0;rang=12;ranged_hands+=2;amm=15;spli=1;
+	    if (thawep="Bolter"){atta=40;arp=0;rang=12;ranged_hands+=2;amm=15;spli=1;
 	        if (argument6!="description") and (argument6!="description_long"){
 	        if (string_count("Terminator",marine_armor[argument3])>0) then melee_hands-=1;
 	        if (marine_armor[argument3]="Tartaros") then melee_hands-=1;}
@@ -240,7 +240,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        descr="An enormous Boltgun.This weapon can fire a hail of powerful, armor-piercing bolts at the enemy.";}
 	    if (thawep="Master Crafted Heavy Bolter"){atta=220;arp=1;rang=16;ranged_hands+=2;amm=25;spli=1;
 	        descr="A Master Crafted Heavy Bolter incorporates superior craftsmanship, advanced modifications, and enhancements compared to its standard counterpart";}
-	    if (thawep="Storm Bolter"){atta=85;arp=0;rang=10;ranged_hands+=2;amm=10;spli=1;
+	    if (thawep="Storm Bolter"){atta=65;arp=0;rang=10;ranged_hands+=2;amm=10;spli=1;
 	        if (argument6!="description") and (argument6!="description_long"){
 	        if (string_count("Terminator",marine_armor[argument3])>0) then melee_hands-=1;
 	        if (marine_armor[argument3]="Tartaros") then melee_hands-=1;}
@@ -297,7 +297,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	    if (thawep="Master Crafted Plasma Gun"){atta=175;arp=1;rang=14;ranged_hands+=2;spli=1;
 	        descr="A Master Crafted Plasma Gun incorporates superior craftsmanship, advanced modifications, and enhancements compared to its standard counterpart.";}
     
-	    if (thawep="Sniper Rifle"){atta=80;arp=0;rang=25;ranged_hands+=2;amm=20;
+	    if (thawep="Sniper Rifle"){atta=50;arp=1;rang=25;ranged_hands+=2;amm=20;
 	        descr="Fires a solid shell and boasts powerful telescopic sights, allowing the user to target enemy weak points and distant foes.";}
 	    if (thawep="Assault Cannon"){atta=150;arp=0;rang=18;ranged_hands+=2;amm=10;spli=1;
 	        descr="A heavy, rotary auto-cannon frequently used by Dreadnoughts and Terminators.  Has an incredible rate of fire.";
@@ -307,7 +307,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        descr="A rapid-firing weapon able to use a wide variety of ammunition, from mass-reactive explosive to solid shells.";
 	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armor[0])>0) or (marine_armor[0]="Tartaros")) then ranged_hands-=1;
 	    }
-	    if (thawep="Missile Launcher"){atta=250;arp=1;rang=20;ranged_hands+=1;amm=2;spli=1;
+	    if (thawep="Missile Launcher"){atta=195;arp=1;rang=20;ranged_hands+=1;amm=2;spli=1;
 	        descr="This heavy weapon is capable of firing either armor-piercing or fragmentation rockets.  Has low ammunition count.";}
 	    if (thawep="Lascannon"){atta=200;arp=1;rang=20;ranged_hands+=2;amm=5;
 	        descr="A formidable laser weapon, this lascannon can pierce most vehicle or power armor from a tremendous range.";}
