@@ -484,10 +484,10 @@ if (menu=20) and ((diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6))) and (coo
             }
             if (diplomacy=3){cooldown=8;// Mechanicus trade goods
                 trade_theirs[1]="Terminator Armor";trade_theirs[2]="Land Raider";trade_theirs[3]="Minor Artifact";
-                // trade_theirs[4]="Skitarii";
-                trade_theirs[4]="Techpriest";
+                trade_theirs[4]="Skitarii";
+                trade_theirs[5]="Techpriest";
                 trade_disp[1]=30;trade_disp[2]=20;trade_disp[3]=40;// trade_disp[4]=20;
-                trade_disp[4]=50;
+                trade_disp[4]=30;trade_disp[5]=60;
             }
             if (diplomacy=4){cooldown=8;// Inquisition trade goods
                 trade_theirs[1]="Condemnor Boltgun";trade_theirs[2]="Hellrifle";trade_theirs[3]="Incinerator";trade_theirs[4]="Crusader";trade_theirs[5]="Exterminatus";trade_theirs[6]="Cyclonic Torpedo";
