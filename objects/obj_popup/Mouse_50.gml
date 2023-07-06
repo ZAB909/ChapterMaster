@@ -400,7 +400,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
         mahreens=0;w=0;god=0;vehi=0;god2=0;
 
         repeat(300){w+=1; // Gets the number of marines in the target company
-			if (god=0) and (obj_ini.name[target_comp,w]=""){god=1;mahreens=w;}
+			if (god=0) and (obj_ini.name[target_comp,w]=""){god=1;mahreens=w - 1;}
 		}
         w=0;
         repeat(100){w+=1; // Gets the number of vehicles in the target company
