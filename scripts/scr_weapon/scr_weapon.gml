@@ -93,6 +93,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
     
 	    if (i=1){
 	        if (argument0="Ork Armor"){statt=15;spe_descr="";emor=1;}
+                if (argument0="Skitarii Armor"){statt=5;spe_descr="";emor=1;}
     
 	        if (argument0="Scout Armor"){statt=8;spe_descr="";emor=1;
 	            descr="A non-powered suit made up of carapace armor and ballistic nylon.  Includes biohazard shielding, nutrient feed, and camoflauge.";}
