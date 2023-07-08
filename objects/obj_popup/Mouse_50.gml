@@ -460,6 +460,8 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
             }
             if (obj_controller.man[w]="vehicle") and (obj_controller.man_sel[w]=1){// This seems to execute the correct number of times
                 var check;check=0;
+				// Check if the target company is within the allowed range
+                if (target_comp >= 1) and (target_comp <= 10) {
 
                 obj_ini.veh_race[target_comp,vehi]=obj_ini.veh_race[company,obj_controller.ide[w]];
                 obj_ini.veh_loc[target_comp,vehi]=obj_ini.veh_loc[company,obj_controller.ide[w]];
@@ -484,6 +486,8 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
             }
 
         }
+		
+}
 
         // Check this
 
