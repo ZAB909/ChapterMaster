@@ -131,7 +131,7 @@ function scr_dialogue(argument0) {
 	    var tix;tix=string(obj_ini.master_name)+" kills the "+string(global.chapter_name)+" Master of Sanctity for "+string(obj_controller.faction_leader[10])+".";
 	    scr_event_log("purple",tix);// scr_alert("purple","lol",string(tix),0,0);
     
-	    diplo_text="[Missing dialogue- well done]";
+	    diplo_text="As the echoes fade, it becomes clear that the Master of Sanctity of "+string(global.chapter_name)+" has fallen.";
 	    diplo_option[1]="[Continue]";diplo_goto[1]="cs_meeting135";
 	}
 
@@ -168,9 +168,9 @@ function scr_dialogue(argument0) {
 	}
 
 	if (argument0="cs_meeting_m5"){diplomacy=-5.2;instance_activate_all();
-	    diplo_text="[Missing text- Master of Sanctity is turning you in to the Inquisition]";
+	    diplo_text="By the sacred oath I have sworn, I bear witness to your darkest secrets. Know this: I am compelled to report your heresy to the Inquisition. Redemption or retribution, their verdict shall decide. May the Emperor's mercy guide your path.";
     
-	    diplo_option[1]="Very well.  I did what must be done, and now accept the price.  [Game Over]";
+	    diplo_option[1]="Very well.  I did what must be done for my brothers, and now accept the price.  [Game Over]";
 	    diplo_option[2]="Never!  [Battle Loyalist "+string(global.chapter_name)+"]";
 	    diplo_goto[1]="cs_meeting_m6";diplo_goto[2]="cs_meeting_battle7";
 	}
@@ -405,10 +405,10 @@ function scr_dialogue(argument0) {
 
 	if (diplomacy=10){// Chaos
 	    if (argument0="civilwar_begin"){
-	        diplo_text="[Missing dialogue]";force_goodbye=1;
+	        diplo_text="The Imperium, blinded by its own hypocrisy, drowns in corruption and stagnation.If it is civil war they desire, then civil war they shall have.";force_goodbye=1;
 	    }
 	    if (argument0="civilwar_soon"){
-	        diplo_text="[Missing dialogue]";force_goodbye=1;
+	        diplo_text="The winds of change whisper a familiar tune. Soon, the veil of deceit shall be lifted, and the true face of the Imperium shall be revealed to all.";force_goodbye=1;
 	    }
 
     
@@ -1361,7 +1361,7 @@ function scr_dialogue(argument0) {
 	        diplo_option[3]="Threaten my Chapter at your own peril.";diplo_goto[3]="die_heretic";
 	    }
 	    if (argument0="loyalty_penitence"){
-	        diplo_text="[Missing text]";
+	        diplo_text="Brothers, hear my words! It is time to embark on a sacred journey of redemption, a penitence crusade to cleanse our souls. Our past wrongdoings have led us astray form the Emperor, but through unwavering determination and righteous deeds, we shall forge a path to absolution. With every battle fought, every sacrifice made, we shall restore honor to our name and rekindle the flame of righteousness within. ";
         
 	        var tx;tx="The "+string(global.chapter_name)+" become Penitent.";
 	        scr_alert("green","halp",string(tx),0,0);scr_event_log("",string(tx));
@@ -1545,7 +1545,7 @@ function scr_dialogue(argument0) {
 	        diplo_text="How dare you strike at us, the truest and most devoted servants of the Emperor!? That artifact was on our territory! You had no right and you shall pay in blood for your actions!";
 	    }
 	    if (argument0="stc_thanks"){
-	        diplo_text="[Missing Dialogue: stc_thanks]";
+	        diplo_text="On behalf of Imperium, I extend our deepest gratitude to "+string(global.chapter_name)+" for the invaluable gift given to us.";
 	    }
 	    if (argument0="trading_demand"){
 	        if (rela="friendly") then diplo_text=string(obj_ini.master_name)+"?";
@@ -1723,7 +1723,7 @@ function scr_dialogue(argument0) {
 	    }
 	    if (argument0="open_trade") then diplo_text="Speak.";
 	    if (argument0="artifact"){
-	        diplo_text="[Missing Dialogue]";
+	        diplo_text="Representatives of the Imperium, as the Chapter Master of "+string(global.chapter_name)+",  I inform you of a potential artifact within our possession, one that we are willing to trade.";
 	    }
 	    if (argument0="artifact_thanks"){
 	        diplo_text="We... thank you, for the gift of this imperial curio. I am sure it will prove useful for something. What, I am not sure.";
@@ -2345,7 +2345,7 @@ function scr_dialogue(argument0) {
 	    }
 	    if (argument0="artifact_thanks") then diplo_text="Your generosity will not be forgotten, friend of the Tau.  What you have done shall advance The Greater Good.";
 	    if (argument0="stc_thanks"){
-	        diplo_text="[Missing Dialogue: stc_thanks]";
+	        diplo_text="We extend our sincere gratitude to you, noble ally of the Tau, for your generosity. The STC fragment you have bestowed upon us shall not only serve our cause but also contribute significantly to The Greater Good. ";
 	    }
     
 	    if (argument0="bombard_angry"){
