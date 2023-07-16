@@ -103,13 +103,13 @@ repeat(3){i+=1;
     obj_controller.r_role[i,8]="Tactical Marine";obj_controller.r_wep1[i,8]="Bolter";obj_controller.r_wep2[i,8]="Chainsword";
     obj_controller.r_armor[i,8]="Power Armor";obj_controller.r_mobi[i,8]="";obj_controller.r_gear[i,8]="";
     
-    obj_controller.r_role[i,9]="Devastator";obj_controller.r_wep1[i,9]="Heavy Ranged";obj_controller.r_wep2[i,9]="Bolt Pistol";
+    obj_controller.r_role[i,9]="Devastator";obj_controller.r_wep1[i,9]="Heavy Ranged";obj_controller.r_wep2[i,9]="Combat Knife";
     obj_controller.r_armor[i,9]="Power Armor";obj_controller.r_mobi[i,9]="";obj_controller.r_gear[i,9]="";
     
     obj_controller.r_role[i,10]="Assault Marine";obj_controller.r_wep1[i,10]="Chainsword";obj_controller.r_wep2[i,10]="Bolt Pistol";
     obj_controller.r_armor[i,10]="Power Armor";obj_controller.r_mobi[i,10]="Jump Pack";obj_controller.r_gear[i,10]="";
     
-    obj_controller.r_role[i,12]="Scout";obj_controller.r_wep1[i,12]="Sniper Rifle";obj_controller.r_wep2[i,12]="Chainsword";
+    obj_controller.r_role[i,12]="Scout";obj_controller.r_wep1[i,12]="Sniper Rifle";obj_controller.r_wep2[i,12]="Combat Knife";
     obj_controller.r_armor[i,12]="Scout Armor";obj_controller.r_mobi[i,12]="";obj_controller.r_gear[i,12]="";
     
     obj_controller.r_role[i,14]="Chaplain";obj_controller.r_wep1[i,14]="Power Sword";obj_controller.r_wep2[i,14]="Storm Bolter";

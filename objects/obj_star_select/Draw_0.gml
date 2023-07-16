@@ -138,9 +138,11 @@ if (obj_controller.selecting_planet!=0){
     if (target.p_type[pp]="Temperate") then temp1=8;
     if (target.p_type[pp]="Feudal") then temp1=7;
     if (target.p_type[pp]="Agri") then temp1=6;
-    if (target.p_type[pp]="Death") then temp1=5;if (target.p_type[pp]="Ice") then temp1=9;
+    if (target.p_type[pp]="Death") then temp1=5;
+	if (target.p_type[pp]="Ice") then temp1=9;
     if (target.p_type[pp]="Forge") then temp1=3;  
-    if (target.p_type[pp]="Daemon") then temp1=11;if (target.p_type[pp]="Craftworld") then temp1=12;
+    if (target.p_type[pp]="Daemon") then temp1=11;
+	if (target.p_type[pp]="Craftworld") then temp1=12;
     if (target.p_type[pp]="Space Hulk") then temp1=14;
     if (target.p_type[pp]="Shrine") then temp1=16;
     
