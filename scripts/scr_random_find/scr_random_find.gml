@@ -1,68 +1,57 @@
-function scr_random_find(argument0, argument1, argument2, argument3) {
+function scr_random_find(owner, is_planet, ship_action, feature) {
 
-	// argument0: owner
-	// argument1: planet?
-	// argument2: ship_action (if ship)
-	// argument3: feature type?
-
-	// This creates obj_temp5 near an object or fleet based on the criteria
-
-	var plane;
-	plane=0;
-
-	if (argument1=true) then plane=1;
-	if (plane=1){
-	    with(obj_star){
-	        if ((p_owner[1]=argument0) or (p_owner[2]=argument0) or (p_owner[3]=argument0) or (p_owner[4]=argument0)) and (argument0!=0) and (storm=0){
-	            var chi;chi[0]=0;
-	            chi[1]=p_owner[1];
-	            chi[2]=p_owner[2];
-	            chi[3]=p_owner[3];
-	            chi[4]=p_owner[4];
-            
-	            var good;good=0;
-	            repeat(100){
-	                if (good=0){
-	                    var randd;randd=choose(1,2,3,4);
-	                    if ((chi[randd]=argument0) and (randd<=planets)) and ((argument3="") or (p_feature[randd]=argument3)){
-	                        good=1;instance_create(x,y,obj_temp5);
-	                        obj_temp5.planet=randd;
-	                    }
-	                }
-	            }
-            
+	// This returns a star or fleet instanceID
+	
+	if (is_planet && instance_exists(obj_star)){
+		var stars = [];
+		with(obj_star){
+			var no_owner = owner == 0;
+	        var has_correct_owner = no_owner || owner == p_owner[1] || owner == p_owner[2] || owner == p_owner[3] || owner == p_owner[4];// && storm==0; this is from the duke code, it checks for no warp storms
+			var no_feature = feature == "";
+			var has_correct_feature = no_feature || feature == p_feature[1] || feature == p_feature[2] || feature == p_feature[3] || feature == p_feature[4];
+			if (has_correct_owner && has_correct_feature){
+				array_push(stars,id);
 	        }
 	    }
+		if(array_length(stars) != 0)
+		{
+			var star_index = irandom(array_length(stars)-1);
+			var star = stars[star_index];
+			return star; // use that to get the obj
+		}
+		else 
+		{
+			return undefined;
+		}
+		
 	}
-
-	if (plane=0) and (instance_exists(obj_all_fleet)){
-	    with(obj_all_fleet){
-	        if (owner=argument0) or (argument0=0){
-	            if (action=argument2) or (argument2=""){
-	                instance_create(x,y,obj_temp5);
-	                obj_temp5.planet=0;
-	            }
-	        }
-	    }
-	}
-
-
-
-	var n,i,target;target=0;
-	n = instance_number(obj_temp5);
-	do
+	else if(!is_planet && instance_exists(obj_all_fleet))
 	{
-	i = floor(random(n));
-	target = instance_find(obj_temp5, i);
-	}until(instance_exists(target) || n = 0)
-
-
-
-	if (instance_exists(target)){
-	    instance_deactivate_object(target);
-	    with(obj_temp5){instance_destroy();}
-	    instance_activate_object(target);
+		var ships = [];
+	    with(obj_all_fleet){
+	        var no_owner = owner == 0;
+			var has_correct_owner = no_owner || this.owner == owner;
+			var no_action = ship_action == "";
+			var has_correct_action = no_action || this.action == ship_action;
+			if (has_correct_owner && has_correct_action){
+	            array_push(ships, id);
+	        }
+	    }
+		if(array_length(ships) != 0)
+		{
+			var ship_index = irandom(array_length(ships)-1);
+			var ship = ships[ship_index];
+			return ship;
+		}
+		else 
+		{
+			return undefined;
+		}
 	}
-
-
+	else
+	{
+		return undefined; //?? I think it would return that regardless 
+	}
 }
+
+

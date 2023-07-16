@@ -1171,27 +1171,31 @@ repeat(99){i+=1;
             
             if (event[i]="imperium_daemon"){scr_alert("red","lol","Sector Commander "+string(faction_leader[2])+" has gone insane.",0,0);faction_defeated[2]=1;scr_event_log("red","Sector Commander "+string(faction_leader[2])+" has gone insane.");}
             
-            if (event[i]="chaos_invasion"){
-                // check if homeworld type fleet here
-                // if (
-                    var xx,yy,flee,dirr;xx=0;yy=0;flee=0;dirr=0;
-                    scr_random_find(1,true,"","");
-                    
-                    if (instance_exists(obj_temp5)){
-                        var tee;tee=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
-                        scr_event_log("purple","Chaos Fleets exit the warp near the "+string(tee.name)+" system.");
+            if (event[i]="chaos_invasion"){ 
+				var xx,yy,flee,dirr;xx=0;yy=0;flee=0;dirr=0;
+                    var star_id = scr_random_find(1,true,"","");
+
+					if(star_id != undefined){
+                        scr_event_log("purple","Chaos Fleets exit the warp near the "+string(star_id.name)+" system.");
                         repeat(4){
-                            dirr+=floor(random_range(50,100))+1;
-                            xx=obj_temp5.x+lengthdir_x(72,dirr);yy=obj_temp5.y+lengthdir_y(72,dirr);
-                            flee=instance_create(xx,yy,obj_en_fleet);flee.owner=10;
-                            flee.sprite_index=spr_fleet_chaos;flee.image_index=4;
-                            flee.capital_number=choose(0,1);flee.frigate_number=choose(2,3);flee.escort_number=choose(4,5,6);
-                            flee.trade_goods="csm";obj_controller.chaos_fleets+=1;
-                            flee.action_x=obj_temp5.x;flee.action_y=obj_temp5.y;flee.alarm[4]=1;
+                            dirr+=irandom_range(50,100);
+                            xx=star_id.x+lengthdir_x(72,dirr);
+							yy=star_id.y+lengthdir_y(72,dirr);
+                            flee=instance_create(xx,yy,obj_en_fleet);
+							flee.owner=10;
+                            flee.sprite_index=spr_fleet_chaos;
+							flee.image_index=4;
+                            flee.capital_number=choose(0,1);
+							flee.frigate_number=choose(2,3);
+							flee.escort_number=choose(4,5,6);
+                            flee.trade_goods="csm";
+							obj_controller.chaos_fleets+=1;
+                            flee.action_x=star_id.x;
+							flee.action_y=star_id.y;
+							flee.alarm[4]=1;
                         }
-                    }
-                    with(obj_temp5){instance_destroy();}
-                // }
+						
+					}
             }
             
             if (string_count("new_",event[i])>0){var fucking;fucking=event[i];
