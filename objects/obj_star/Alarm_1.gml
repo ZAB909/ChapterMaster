@@ -10,7 +10,7 @@ repeat(4){
     
     if (p_type[i]="Lava"){
         p_population[i]=floor(random(100))+400;p_station[i]=2;
-        p_max_population[i]=500;
+        p_max_population[i]=150000;
     }
     if (p_type[i]="Desert"){
         p_population[i]=floor(random(300000000))+50000000;p_fortified[i]=choose(2,3,4);p_station[i]=3;

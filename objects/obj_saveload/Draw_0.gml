@@ -36,7 +36,7 @@ if (save_part+load_part>0){
     
     // 
     // draw_sprite(spr_load_splash,splash,xx+0,yy+0);
-    scr_image("loading",splash,xx+0,yy+0,1600,900);
+    scr_image("loading0",splash,xx+0,yy+0,1600,900);
     // 
     
     draw_sprite(spr_loadbar_empty,0,xx+1047,yy+875);

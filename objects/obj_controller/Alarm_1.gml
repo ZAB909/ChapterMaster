@@ -10,11 +10,13 @@ instance_activate_all();
 // Some damn orks and a few genestealer cults
 
 var field;
-field=choose("orks","tyranids","both");
-if (global.chapter_name="Lamenters") then field="both";
-if (test_map=true) then field="orks";
+field="tyranids"
+/*
+field=choose("orks","tyranids","both"); 
+if (global.chapter_name="Lamenters") then field="both"; 
+if (test_map=true) then field="orks"; 
 
-
+*/
 
 
 
@@ -233,7 +235,7 @@ repeat(10){
     
 }// end repeat
 
-    if (p_type[1]!="Forge") and (p_type[1]!="Ice"){p_owner[1]=2;p_first[1]=2;}
+    if (p_type[1]!="Forge") and (p_type[1]!="Ice"){p_owner[1]=2;p_first[1]=2;}  // important later on for having other chapters homeworlds or civil war imperiums
     if (p_type[2]!="Forge") and (p_type[2]!="Ice"){p_owner[2]=2;p_first[2]=2;}
     if (p_type[3]!="Forge") and (p_type[3]!="Ice"){p_owner[3]=2;p_first[3]=2;}
     if (p_type[4]!="Forge") and (p_type[4]!="Ice"){p_owner[4]=2;p_first[4]=2;}
@@ -274,31 +276,45 @@ repeat(10){
         ed.planet[1]=1;ed.p_owner[1]=8;ed.p_type[1]="Desert";xx=ed.x;yy=ed.y;ed.tau[1]=choose(3,4);ed.p_influence[1]=70;
         instance_deactivate_object(ed);
         
-        rando=choose(0,1,1);
+        rando=1
         if (rando=1){
             ed=instance_nearest(xx,yy,obj_star);
-            if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner=2){ed.p_owner[1]=8;ed.owner=8;ed.tau[1]=choose(2,3,4);ed.p_influence[1]=70;}
+            if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner=2){ed.p_owner[1]=8;ed.owner=8;ed.p_influence[1]=70;}
             instance_deactivate_object(ed);
         }
         
-        rando=choose(0,1,1);
+        rando=1;
         if (rando=1){
             ed=instance_nearest(xx,yy,obj_star);
-            if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner=2){ed.p_owner[1]=8;ed.owner=8;ed.tau[1]=choose(2,3,4);ed.p_influence[1]=70;}
+            if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner=2){ed.p_owner[1]=8;ed.owner=8;ed.p_influence[1]=70;}
             instance_deactivate_object(ed);
         }
         
-        rando=choose(0,1,1);
+        rando=1
         if (rando=1){
             ed=instance_nearest(xx,yy,obj_star);
-            if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner=2){ed.p_owner[1]=8;ed.owner=8;ed.tau[1]=choose(2,3,4);ed.p_influence[1]=70;}
+            if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner=2){ed.p_owner[1]=8;ed.owner=8;ed.p_influence[1]=70;}
             instance_deactivate_object(ed);
         }
         
-        rando=choose(0,1);
+        rando=1;
         if (rando=1){
             ed=instance_nearest(xx,yy,obj_star);
-            if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner=2){ed.p_owner[1]=8;ed.owner=8;ed.tau[1]=choose(2,3,4);ed.p_influence[1]=70;}
+            if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner=2){ed.p_owner[1]=8;ed.owner=8ed.p_influence[1]=70;}
+            instance_deactivate_object(ed);
+        }
+        
+        rando=1;
+        if (rando=1){
+            ed=instance_nearest(xx,yy,obj_star);
+            if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner=2){ed.p_owner[1]=8;ed.owner=8ed.p_influence[1]=70;}
+            instance_deactivate_object(ed);
+        }
+		        
+        rando=1;
+        if (rando=1){
+            ed=instance_nearest(xx,yy,obj_star);
+            if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner=2){ed.p_owner[1]=8;ed.owner=8ed.p_influence[1]=70;}
             instance_deactivate_object(ed);
         }
         
@@ -307,22 +323,44 @@ repeat(10){
     
     
     // Chaos
-    /*
+    
     xx=floor(random(1152))+64;yy=floor(random(748))+64;
     ed=instance_nearest(xx,yy,obj_star);if (ed.planets>0) and (ed.owner=2){ed.planet[1]=1;ed.p_owner[1]=10;ed.owner=10;instance_deactivate_object(ed);}
+	
     xx=floor(random(1152))+64;yy=floor(random(748))+64;
+    ed=instance_nearest(xx,yy,obj_star);if (ed.planets>0) and (ed.owner=2){ed.planet[1]=1;ed.p_owner[1]=10;ed.owner=10;instance_deactivate_object(ed);}
+	
+    xx=floor(random(1152))+64;yy=floor(random(748))+64;
+    ed=instance_nearest(xx,yy,obj_star);if (ed.planets>0) and (ed.owner=2){ed.planet[1]=1;ed.p_owner[1]=10;ed.owner=10;instance_deactivate_object(ed);}
+	
+	xx=floor(random(1152))+64;yy=floor(random(748))+64;
     ed=instance_nearest(xx,yy,obj_star);if (ed.planets>0) and (ed.owner=2){ed.planet[1]=1;ed.p_owner[1]=10;ed.owner=10;instance_deactivate_object(ed);}
     // More sneaky this way; you have to be noted of rising heresy or something, or have a ship in the system
-    */
+    
     with(obj_star){
-        if (name="Kim Jong") and (owner=2){
-            rando=choose(0,0,1,1);
+        if (name="Badab") or (name="Hellsiris") or (name="Vraks") or (name="Isstvan") or (name="Stygies") or (name="Stygia") or (name="Jhanna") or (name="Nostromo") or (name="Gangrenous Rot"){
+            rando=choose(1,1); // make 1's 0's if you want less chaos
             if (rando=1){
                 p_owner[1]=10;p_owner[2]=10;p_owner[3]=10;p_owner[4]=10;owner=10;
                 p_heresy[1]=floor(random_range(80,100));p_heresy[2]=floor(random_range(80,100));
                 p_heresy[3]=floor(random_range(80,100));p_heresy[4]=floor(random_range(80,100));
-                if (p_type[1]!="Dead") then p_traitors[1]=6;if (p_type[2]!="Dead") then p_traitors[2]=6;
-                if (p_type[3]!="Dead") then p_traitors[3]=6;if (p_type[4]!="Dead") then p_traitors[4]=6;
+				// turns dead planets into less dead ones. Only if they're specially named systems though
+				if (p_type[1]="Dead") then p_type[1]="Hive";if (p_type[2]="Dead") then p_type[2]="Temperate";
+                if (p_type[3]="Dead") then p_type[3]="Desert";if (p_type[4]="Dead") then p_type[4]="Ice" or p_type[4]="Dead";
+				// make them chaos flavoured if planet is not dead
+                if (p_type[1]!="Dead") then p_traitors[1]=6;
+				if (p_type[2]!="Dead") then p_traitors[2]=6;
+                if (p_type[3]!="Dead") then p_traitors[3]=6;
+				if (p_type[4]!="Dead") then p_traitors[4]=6;
+				// give them big defences
+				if (p_type[1]!="Dead") then p_fortified[1]=5;
+				if (p_type[2]!="Dead") then p_fortified[2]=5;
+                if (p_type[3]!="Dead") then p_fortified[3]=5;
+				if (p_type[4]!="Dead") then p_fortified[4]=5;
+				
+		
+				
+
             }
         }
     }
@@ -335,10 +373,10 @@ repeat(10){
     }
     
     var orkz,ed2,n,i;
-    orkz=choose(4,5,6)+3;
-    if (field="orks") then orkz+=4;
-    if (field="both") then orkz+=2;
-    if (obj_ini.fleet_type=3) then orkz+=3;
+    orkz=choose(4,5,6)+5;
+    if (field="orks") then orkz+=20;
+    if (field="both") then orkz+=3;
+    if (obj_ini.fleet_type=3) then orkz+=2;
     if (test_map=true) then orkz=4;
     
     repeat(orkz){
@@ -359,7 +397,7 @@ repeat(10){
         }
     }
     if (field="tyranids"){
-        orkz=floor(choose(3,4,5,6)*2)+1;
+        orkz=(choose(3,4,6)+7);
         if (obj_ini.fleet_type=3) then orkz+=2;
         
         repeat(orkz){
@@ -367,7 +405,8 @@ repeat(10){
             i=floor(random(n));
             ed=instance_find(obj_temp3, i);
             ed2=instance_nearest(ed.x,ed.y,obj_star);
-            
+			
+            ed2.planet[1]=1;ed2.p_owner[1]=7;ed2.owner=7;
             ed2.planet[1]=1;ed2.p_owner[1]=9;ed2.owner=9;
             with(ed){instance_destroy();}
         }
@@ -396,8 +435,7 @@ repeat(10){
     with(obj_temp3){instance_destroy();}
     
     
-    
-    
+ 
     
     
     
@@ -407,7 +445,15 @@ repeat(10){
     
     xx=floor(random(1152+640))+64;yy=floor(random(748+480))+64;
     ed=instance_nearest(xx,yy,obj_star);if (ed.planets>0) and (ed.owner=2){ed.planet[1]=1;ed.p_type[1]="Forge";ed.p_owner[1]=3;ed.p_first[1]=3;ed.owner=3;instance_deactivate_object(ed);}
-    
+
+    xx=floor(random(1152+640))+64;yy=floor(random(748+480))+64;
+    ed=instance_nearest(xx,yy,obj_star);if (ed.planets>0) and (ed.owner=2){ed.planet[1]=1;ed.p_type[1]="Forge";ed.p_owner[1]=3;ed.p_first[1]=3;ed.owner=3;instance_deactivate_object(ed);}
+
+    xx=floor(random(1152+640))+64;yy=floor(random(748+480))+64;
+    ed=instance_nearest(xx,yy,obj_star);if (ed.planets>0) and (ed.owner=2){ed.planet[1]=1;ed.p_type[1]="Forge";ed.p_owner[1]=3;ed.p_first[1]=3;ed.owner=3;instance_deactivate_object(ed);}
+ 
+    xx=floor(random(1152+640))+64;yy=floor(random(748+480))+64;
+    ed=instance_nearest(xx,yy,obj_star);if (ed.planets>0) and (ed.owner=2){ed.planet[1]=1;ed.p_type[1]="Forge";ed.p_owner[1]=3;ed.p_first[1]=3;ed.owner=3;instance_deactivate_object(ed);}
 
 }
 
