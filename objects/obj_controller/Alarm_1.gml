@@ -338,19 +338,27 @@ repeat(10){
     // More sneaky this way; you have to be noted of rising heresy or something, or have a ship in the system
     
     with(obj_star){
-        if (name="Badab") or (name="Hellsiris") or (name="Vraks") or (name="Isstvan") or (name="Jhanna") or (name="Nostromo") or (name="Gangrenous Rot"){
+        if (name="Badab") or (name="Hellsiris") or (name="Vraks") or (name="Isstvan") or (name="Stygies") or (name="Stygia") or (name="Jhanna") or (name="Nostromo") or (name="Gangrenous Rot"){
             rando=choose(1,1); // make 1's 0's if you want less chaos
             if (rando=1){
                 p_owner[1]=10;p_owner[2]=10;p_owner[3]=10;p_owner[4]=10;owner=10;
                 p_heresy[1]=floor(random_range(80,100));p_heresy[2]=floor(random_range(80,100));
                 p_heresy[3]=floor(random_range(80,100));p_heresy[4]=floor(random_range(80,100));
-				// turns dead planets into 
+				// turns dead planets into less dead ones. Only if they're specially named systems though
 				if (p_type[1]="Dead") then p_type[1]="Hive";if (p_type[2]="Dead") then p_type[2]="Temperate";
                 if (p_type[3]="Dead") then p_type[3]="Desert";if (p_type[4]="Dead") then p_type[4]="Ice" or p_type[4]="Dead";
+				// make them chaos flavoured if planet is not dead
+                if (p_type[1]!="Dead") then p_traitors[1]=6;
+				if (p_type[2]!="Dead") then p_traitors[2]=6;
+                if (p_type[3]!="Dead") then p_traitors[3]=6;
+				if (p_type[4]!="Dead") then p_traitors[4]=6;
+				// give them big defences
+				if (p_type[1]!="Dead") then p_fortified[1]=5;
+				if (p_type[2]!="Dead") then p_fortified[2]=5;
+                if (p_type[3]!="Dead") then p_fortified[3]=5;
+				if (p_type[4]!="Dead") then p_fortified[4]=5;
 				
-                if (p_type[1]!="Dead") then p_traitors[1]=6;if (p_type[2]!="Dead") then p_traitors[2]=6;
-                if (p_type[3]!="Dead") then p_traitors[3]=6;if (p_type[4]!="Dead") then p_traitors[4]=6;
-				
+		
 				
 
             }
