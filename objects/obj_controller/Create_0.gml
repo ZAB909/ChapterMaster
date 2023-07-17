@@ -992,18 +992,18 @@ guard_disposition=0;
 other1_disposition=0;other1="";
 */
 
-tau=0;
+tau=1; 
 tyranids=0;
 ork=1;
-eldar=0;
-
-if (global.custom=1){
+eldar=1;
+// if tau = 1 then tau spawn. also does eldar 
+/*
+if (global.custom=1){ 
     tau=choose(0,0,1);
     eldar=choose(0,1);
 }
 
-
-
+*/
 
 
 
