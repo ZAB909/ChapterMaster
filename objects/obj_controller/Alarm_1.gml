@@ -330,8 +330,15 @@ repeat(10){
                 p_owner[1]=10;p_owner[2]=10;p_owner[3]=10;p_owner[4]=10;owner=10;
                 p_heresy[1]=floor(random_range(80,100));p_heresy[2]=floor(random_range(80,100));
                 p_heresy[3]=floor(random_range(80,100));p_heresy[4]=floor(random_range(80,100));
+				// turns dead planets into 
+				if (p_type[1]="Dead") then p_type[1]="Hive";if (p_type[2]="Dead") then p_type[2]="Temperate";
+                if (p_type[3]="Dead") then p_type[3]="Desert";if (p_type[4]="Dead") then p_type[4]="Ice" or p_type[4]="Dead";
+				
                 if (p_type[1]!="Dead") then p_traitors[1]=6;if (p_type[2]!="Dead") then p_traitors[2]=6;
                 if (p_type[3]!="Dead") then p_traitors[3]=6;if (p_type[4]!="Dead") then p_traitors[4]=6;
+				
+				
+
             }
         }
     }

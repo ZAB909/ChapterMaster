@@ -280,7 +280,7 @@ function scr_image(argument0, argument1, argument2, argument3, argument4, argume
 	                }
 	                if (w>0) then diplomacy_daemon_good=true;
 	            }
-            
+						// loading screen error arg
 	            if (argument0="loading"){
 	                if (file_exists(working_directory + "\\images\\loading\\loading"+string(i)+".png")){
 	                    loading[i-1]=sprite_add(working_directory + "\\images\\loading\\loading"+string(i)+".png",1,false,false,0,0);loading_exists[i-1]=1;w+=1;

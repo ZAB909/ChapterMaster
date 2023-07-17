@@ -182,7 +182,7 @@ function scr_en_weapon(argument0, argument1, argument2, argument3, argument4) {
 	    if (argument0="Twin-Linked Lascannon"){atta=300;arp=1;rang=20;}
 	    if (argument0="Battle Cannon"){atta=300;arp=1;rang=12;}
 	    if (argument0="Demolisher Cannon"){atta=500;arp=1;rang=2;if (instance_exists(obj_nfort)) then rang=5;}
-	    if (argument0="Earthshaker Cannon"){atta=300;arp=1;rang=12;spli=1;}
+	    if (argument0="Earthshaker Cannon"){atta=300;arp=0;rang=12;spli=1;}
 	    if (argument0="Havoc Launcher"){atta=100;arp=0;rang=12;}
 	    if (argument0="Baleflame"){atta=120;arp=0;rang=2;}
 	    if (argument0="Defiler Claws"){atta=350;arp=1;rang=1;spli=1;}
