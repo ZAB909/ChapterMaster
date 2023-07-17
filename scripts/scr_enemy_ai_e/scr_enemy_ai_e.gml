@@ -527,17 +527,17 @@ function scr_enemy_ai_e() {
                 
 	                // 135; recruiting
 					// corr isn't really relevant as corruption in marines doesn't matter
-	                if (p_type[run]="Agri") and (recr<=10){aspirant=1;corr=choose(1,2);train=76;}
-	                if (p_type[run]="Death") and (recr<=23){aspirant=1;corr=choose(1,2);train=66;}
-	                if (p_type[run]="Desert") and (recr<=15){aspirant=1;corr=choose(1,2);train=72;}
-	                if (p_type[run]="Feral") and (recr<=23){aspirant=1;corr=choose(1,2);train=66;}
-	                if (p_type[run]="Feudal") and (recr<=10){aspirant=1;corr=choose(1,2);train=70;}
-	                if (p_type[run]="Shrine") and (recr<=10){aspirant=1;corr=choose(1,2);train=70;}
-	                if (p_type[run]="Forge") and (recr<=10){aspirant=1;corr=floor(random(10))+floor(random(10))+2;train=72;}
-	                if (p_type[run]="Hive") and (recr<=5){aspirant=1;corr=floor(random(10))+floor(random(10))+2;train=60;}
-	                if (p_type[run]="Ice") and (recr<=5){aspirant=1;corr=choose(1,2);train=72;}
-	                if (p_type[run]="Lava") and (recr<=2){aspirant=1;corr=floor(random_range(3,18))+1;train=72;}
-	                if (p_type[run]="Temperate") and (recr<=10){aspirant=1;corr=choose(1,2);train=72;}
+	                if (p_type[run]="Agri") and (recr<=10){aspirant=1;corr=choose(1,2);}
+	                if (p_type[run]="Death") and (recr<=23){aspirant=1;corr=choose(1,2);}
+	                if (p_type[run]="Desert") and (recr<=15){aspirant=1;corr=choose(1,2);}
+	                if (p_type[run]="Feral") and (recr<=23){aspirant=1;corr=choose(1,2);}
+	                if (p_type[run]="Feudal") and (recr<=10){aspirant=1;corr=choose(1,2);}
+	                if (p_type[run]="Shrine") and (recr<=10){aspirant=1;corr=choose(1,2);}
+	                if (p_type[run]="Forge") and (recr<=10){aspirant=1;corr=floor(random(10))+floor(random(10))+2;}
+	                if (p_type[run]="Hive") and (recr<=5){aspirant=1;corr=floor(random(10))+floor(random(10))+2;}
+	                if (p_type[run]="Ice") and (recr<=5){aspirant=1;corr=choose(1,2);}
+	                if (p_type[run]="Lava") and (recr<=2){aspirant=1;corr=floor(random_range(3,18))+1;}
+	                if (p_type[run]="Temperate") and (recr<=10){aspirant=1;corr=choose(1,2);}
                 
 	                // train-=58;
 	                // train-=55;
