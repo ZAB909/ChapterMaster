@@ -235,7 +235,7 @@ repeat(10){
     
 }// end repeat
 
-    if (p_type[1]!="Forge") and (p_type[1]!="Ice"){p_owner[1]=2;p_first[1]=2;} // makes it so mech boys only own their forge world in a system
+    if (p_type[1]!="Forge") and (p_type[1]!="Ice"){p_owner[1]=2;p_first[1]=2;}  // important later on for having other chapters homeworlds or civil war imperiums
     if (p_type[2]!="Forge") and (p_type[2]!="Ice"){p_owner[2]=2;p_first[2]=2;}
     if (p_type[3]!="Forge") and (p_type[3]!="Ice"){p_owner[3]=2;p_first[3]=2;}
     if (p_type[4]!="Forge") and (p_type[4]!="Ice"){p_owner[4]=2;p_first[4]=2;}
@@ -304,6 +304,20 @@ repeat(10){
             instance_deactivate_object(ed);
         }
         
+        rando=1;
+        if (rando=1){
+            ed=instance_nearest(xx,yy,obj_star);
+            if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner=2){ed.p_owner[1]=8;ed.owner=8ed.p_influence[1]=70;}
+            instance_deactivate_object(ed);
+        }
+		        
+        rando=1;
+        if (rando=1){
+            ed=instance_nearest(xx,yy,obj_star);
+            if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner=2){ed.p_owner[1]=8;ed.owner=8ed.p_influence[1]=70;}
+            instance_deactivate_object(ed);
+        }
+        
         instance_activate_object(obj_star);
     }
     
@@ -324,8 +338,8 @@ repeat(10){
     // More sneaky this way; you have to be noted of rising heresy or something, or have a ship in the system
     
     with(obj_star){
-        if (name="Badab") or (name="Hellsiris") or (name="Vraks") or (name="Isstvan") or (name="Jhanna") or (name="Nostromo") or (name="Gangrenous Rot") and (owner=2){
-            rando=choose(1,1,1,1); // make 1's 0's if you want less chaos
+        if (name="Badab") or (name="Hellsiris") or (name="Vraks") or (name="Isstvan") or (name="Jhanna") or (name="Nostromo") or (name="Gangrenous Rot"){
+            rando=choose(1,1); // make 1's 0's if you want less chaos
             if (rando=1){
                 p_owner[1]=10;p_owner[2]=10;p_owner[3]=10;p_owner[4]=10;owner=10;
                 p_heresy[1]=floor(random_range(80,100));p_heresy[2]=floor(random_range(80,100));
@@ -375,7 +389,7 @@ repeat(10){
         }
     }
     if (field="tyranids"){
-        orkz=(choose(3,4,6)+5);
+        orkz=(choose(3,4,6)+7);
         if (obj_ini.fleet_type=3) then orkz+=2;
         
         repeat(orkz){
@@ -432,10 +446,6 @@ repeat(10){
  
     xx=floor(random(1152+640))+64;yy=floor(random(748+480))+64;
     ed=instance_nearest(xx,yy,obj_star);if (ed.planets>0) and (ed.owner=2){ed.planet[1]=1;ed.p_type[1]="Forge";ed.p_owner[1]=3;ed.p_first[1]=3;ed.owner=3;instance_deactivate_object(ed);}
-
-    xx=floor(random(1152+640))+64;yy=floor(random(748+480))+64;
-    ed=instance_nearest(xx,yy,obj_star);if (ed.planets>0) and (ed.owner=2){ed.planet[1]=1;ed.p_type[1]="Forge";ed.p_owner[1]=3;ed.p_first[1]=3;ed.owner=3;instance_deactivate_object(ed);}
- 
 
 }
 
