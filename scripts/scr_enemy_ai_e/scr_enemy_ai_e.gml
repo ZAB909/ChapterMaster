@@ -515,11 +515,11 @@ function scr_enemy_ai_e() {
 	                var recr, aspirant, corr, train, dista, onceh; 
 	                recr=999;aspirant=0;corr=10;train=72;dista=0;onceh=0;
                 
-	                if (obj_controller.recruiting=1) then recr=floor(random(300))+1; // fast, frentic, slow, ect
+	                if (obj_controller.recruiting=1) then recr=floor(random(250))+1; // fast, frantic, slow, ect
 	                if (obj_controller.recruiting=2) then recr=floor(random(200))+1;
-	                if (obj_controller.recruiting=3) then recr=floor(random(100))+1;
-	                if (obj_controller.recruiting=4) then recr=floor(random(80))+1;
-	                if (obj_controller.recruiting=5) then recr=floor(random(60))+1;
+	                if (obj_controller.recruiting=3) then recr=floor(random(150))+1;
+	                if (obj_controller.recruiting=4) then recr=floor(random(125))+1;
+	                if (obj_controller.recruiting=5) then recr=floor(random(100))+1;
                 
 	                if (obj_controller.recruit_trial="Exposure") then recr=floor(recr*1.3);
 	                if (obj_controller.recruit_trial="Challenge") then recr=floor(recr*1.3);
@@ -527,17 +527,17 @@ function scr_enemy_ai_e() {
                 
 	                // 135; recruiting
 					// corr isn't really relevant as corruption in marines doesn't matter
-	                if (p_type[run]="Agri") and (recr<=10){aspirant=1;corr=choose(1,2);}
-	                if (p_type[run]="Death") and (recr<=23){aspirant=1;corr=choose(1,2);}
-	                if (p_type[run]="Desert") and (recr<=15){aspirant=1;corr=choose(1,2);}
-	                if (p_type[run]="Feral") and (recr<=23){aspirant=1;corr=choose(1,2);}
-	                if (p_type[run]="Feudal") and (recr<=10){aspirant=1;corr=choose(1,2);}
-	                if (p_type[run]="Shrine") and (recr<=10){aspirant=1;corr=choose(1,2);}
-	                if (p_type[run]="Forge") and (recr<=10){aspirant=1;corr=floor(random(10))+floor(random(10))+2;}
-	                if (p_type[run]="Hive") and (recr<=5){aspirant=1;corr=floor(random(10))+floor(random(10))+2;}
-	                if (p_type[run]="Ice") and (recr<=5){aspirant=1;corr=choose(1,2);}
-	                if (p_type[run]="Lava") and (recr<=2){aspirant=1;corr=floor(random_range(3,18))+1;}
-	                if (p_type[run]="Temperate") and (recr<=10){aspirant=1;corr=choose(1,2);}
+	                if (p_type[run]="Agri") and (recr<=10){aspirant=1;corr+=choose(1,2);}
+	                if (p_type[run]="Death") and (recr<=23){aspirant=1;corr+=choose(1,2);}
+	                if (p_type[run]="Desert") and (recr<=15){aspirant=1;corr+=choose(1,2);}
+	                if (p_type[run]="Feral") and (recr<=23){aspirant=1;corr+=choose(1,2);}
+	                if (p_type[run]="Feudal") and (recr<=10){aspirant=1;corr+=choose(1,2);}
+	                if (p_type[run]="Shrine") and (recr<=10){aspirant=1;corr+=choose(1,2);}
+	                if (p_type[run]="Forge") and (recr<=10){aspirant=1;corr+=floor(random(10))+floor(random(10))+2;}
+	                if (p_type[run]="Hive") and (recr<=5){aspirant=1;corr+=floor(random(10))+floor(random(10))+2;}
+	                if (p_type[run]="Ice") and (recr<=5){aspirant=1;corr+=choose(1,2);}
+	                if (p_type[run]="Lava") and (recr<=2){aspirant=1;corr+=floor(random_range(3,18))+1;}
+	                if (p_type[run]="Temperate") and (recr<=10){aspirant=1;corr+=choose(1,2);}
                 
 	                // train-=58;
 	                // train-=55;
