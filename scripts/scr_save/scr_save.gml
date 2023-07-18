@@ -168,9 +168,9 @@ function scr_save(argument0, argument1) {
 	    }
     
     
-	    ini_write_string("Controller","random_event_next",obj_controller.random_event_next);
 	    ini_write_string("Controller","useful_info",obj_controller.useful_info);
-	    ini_write_real("Controller","gene_sold",obj_controller.gene_sold);
+		ini_write_real("Controller","random_event_next",obj_controller.random_event_next);
+		ini_write_real("Controller","gene_sold",obj_controller.gene_sold);		
 	    ini_write_real("Controller","gene_xeno",obj_controller.gene_xeno);
 	    ini_write_real("Controller","gene_tithe",obj_controller.gene_tithe);
 	    ini_write_real("Controller","gene_iou",obj_controller.gene_iou);
