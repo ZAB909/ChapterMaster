@@ -589,7 +589,7 @@ function scr_enemy_ai_e() {
 	                    onceh=0;
                     
                     
-	                    obj_controller.recruit_corruption[thiss]=corr;
+	                    obj_controller.recruit_corruption[t]=corr;
 	                    obj_controller.recruit_distance[thiss]=0;
 	                    obj_controller.recruit_training[thiss]=train;
 	                    obj_controller.gene_seed-=1;
