@@ -36,7 +36,7 @@ if (target.craftworld=0) and (target.space_hulk=0){
 
 if (target.craftworld=0) and (target.space_hulk=0){
     if (target.owner=1) or (target.owner=5) then draw_set_color(c_white);if (target.owner=2) then draw_set_color(c_gray);
-    if (target.owner=3) then draw_set_color(16512);if (target.owner=7) then draw_set_color(38144);
+    if (target.owner=3) then draw_set_color(c_red);if (target.owner=7) then draw_set_color(38144);
     if (target.owner=8) then draw_set_color(117758);if (target.owner=9) then draw_set_color(7492269);
     if (target.owner=10) then draw_set_color(c_purple);if (target.owner=13) then draw_set_color(65408);
     draw_text_transformed(xx+184,yy+180,string_hash_to_newline(string(target.name)+" System"),1,1,0);
@@ -138,9 +138,11 @@ if (obj_controller.selecting_planet!=0){
     if (target.p_type[pp]="Temperate") then temp1=8;
     if (target.p_type[pp]="Feudal") then temp1=7;
     if (target.p_type[pp]="Agri") then temp1=6;
-    if (target.p_type[pp]="Death") then temp1=5;if (target.p_type[pp]="Ice") then temp1=9;
+    if (target.p_type[pp]="Death") then temp1=5;
+	if (target.p_type[pp]="Ice") then temp1=9;
     if (target.p_type[pp]="Forge") then temp1=3;  
-    if (target.p_type[pp]="Daemon") then temp1=11;if (target.p_type[pp]="Craftworld") then temp1=12;
+    if (target.p_type[pp]="Daemon") then temp1=11;
+	if (target.p_type[pp]="Craftworld") then temp1=12;
     if (target.p_type[pp]="Space Hulk") then temp1=14;
     if (target.p_type[pp]="Shrine") then temp1=16;
     

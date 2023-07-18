@@ -490,9 +490,9 @@ function scr_initialize_custom() {
 	    role[i,6]="Dreadnought";wep1[i,6]="Close Combat Weapon";wep2[i,6]="Lascannon";armor[i,6]="Dreadnought";mobi[i,6]="";gear[i,6]="";
 	    role[i,7]="Company Champion";wep1[i,7]="Power Sword";wep2[i,7]="Storm Shield";armor[i,7]="Power Armor";mobi[i,7]="";gear[i,7]="";
 	    role[i,8]="Tactical Marine";wep1[i,8]="Bolter";wep2[i,8]="Chainsword";armor[i,8]="Power Armor";mobi[i,8]="";gear[i,8]="";
-	    role[i,9]="Devastator";wep1[i,9]="Heavy Ranged";wep2[i,9]="Bolt Pistol";armor[i,9]="Power Armor";mobi[i,9]="";gear[i,9]="";
+	    role[i,9]="Devastator";wep1[i,9]="Heavy Ranged";wep2[i,9]="Combat Knife";armor[i,9]="Power Armor";mobi[i,9]="";gear[i,9]="";
 	    role[i,10]="Assault Marine";wep1[i,10]="Chainsword";wep2[i,10]="Bolt Pistol";armor[i,10]="Power Armor";mobi[i,10]="Jump Pack";gear[i,10]="";
-	    role[i,12]="Scout";wep1[i,12]="Sniper Rifle";wep2[i,12]="Chainsword";armor[i,12]="Scout Armor";mobi[i,12]="";gear[i,12]="";
+	    role[i,12]="Scout";wep1[i,12]="Sniper Rifle";wep2[i,12]="Combat Knife";armor[i,12]="Scout Armor";mobi[i,12]="";gear[i,12]="";
 	    role[i,14]="Chaplain";wep1[i,14]="Power Sword";wep2[i,14]="Storm Bolter";armor[i,14]="Power Armor";gear[i,14]="Rosarius";mobi[i,14]="";
 	    role[i,15]="Apothecary";wep1[i,15]="Power Sword";wep2[i,15]="Storm Bolter";armor[i,15]="Power Armor";gear[i,15]="Narthecium";mobi[i,15]="";
 	    role[i,16]="Techmarine";wep1[i,16]="Power Axe";wep2[i,16]="Storm Bolter";armor[i,16]="Power Armor";gear[i,16]="Servo Arms";mobi[i,16]="";
