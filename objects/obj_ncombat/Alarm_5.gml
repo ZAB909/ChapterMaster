@@ -591,12 +591,14 @@ if (exterminatus>0) and (dropping!=0){
 
 instance_activate_object(obj_star);
 instance_activate_object(obj_turn_end);
-if (defeat=1) and (dropping=0) and (string_count("Monastery|",battle_object.p_feature[obj_ncombat.battle_id])>0){
-    with(obj_star){
-        if (string_count("Monastery|",p_feature[obj_ncombat.battle_id])>0){
-            p_feature[obj_ncombat.battle_id]=string_replace(p_feature[obj_ncombat.battle_id],"Monastery|","");
-        }
-    }
+var monastary_list = search_planet_features(battle_object.p_feature[obj_ncombat.battle_id], P_features.Monastery);
+var mon_count = array_length(monastary_list);
+if (defeat=1) and (dropping=0) and (mon_count>0){
+	for (var mon = 0;mon < mon_count;mon++){
+		battle_object.p_feature[obj_ncombat.battle_id][monastary_list[mon_count]].status="destroyed";
+	}
+  
+
     
     if (obj_controller.und_gene_vaults=0) then newline="Your Fortress Monastery has been raided.  "+string(obj_controller.gene_seed)+" Gene-Seed has been destroyed or stolen.";
     if (obj_controller.und_gene_vaults>0) then newline="Your Fortress Monastery has been raided.  "+string(floor(obj_controller.gene_seed/10))+" Gene-Seed has been destroyed or stolen.";

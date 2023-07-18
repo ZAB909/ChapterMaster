@@ -822,7 +822,7 @@ if (turn=5) and (faction_gender[10]=1){// show_message("Turn 100");
         if (planeh.p_type[1]="Dead") then testi=2;
         if (planeh.p_type[1]!="Dead") then testi=1;
         
-        planeh.p_feature[testi]+="WL10|";
+        planeh.warlord[testi]=1;
         if (planeh.p_type[testi]="Hive") then planeh.p_heresy[testi]+=25;
         if (planeh.p_type[testi]!="Hive") then planeh.p_heresy[testi]+=10;
         if (planeh.p_heresy[testi]<50) then planeh.p_heresy_secret[testi]=10;

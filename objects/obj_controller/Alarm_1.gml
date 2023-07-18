@@ -67,8 +67,8 @@ if (did=1){// Player star has been set
         if (obj_ini.recruiting_type!=obj_ini.home_type) and (obj_ini.home_name!=obj_ini.recruiting_name){
             ed.p_type[1]=obj_ini.recruiting_type;if (obj_ini.recruiting_name!="random") then ed.name=obj_ini.recruiting_name;
             ed.p_type[2]=obj_ini.home_type;ed.planet[2]=1;if (obj_ini.home_name!="random") then ed.name=obj_ini.home_name;
-            ed.p_feature[1]="Recruiting World|";
-            ed.p_feature[2]="Monastery|";ed.p_owner[2]=1;ed.p_first[2]=1;
+            array_push(ed.p_feature[1], new new_planet_feature(P_features.Recruiting_World));//recruiting world
+            array_push(ed.p_feature[2], new new_planet_feature(P_features.Monastery));ed.p_owner[2]=1;ed.p_first[2]=1; //monestary
             if (homeworld_rule!=1) then ed.dispo[2]=-5000;
             
             if (obj_ini.home_type="Shrine") then known[5]=1;
@@ -87,7 +87,10 @@ if (did=1){// Player star has been set
         if (obj_ini.recruiting_type=obj_ini.home_type) or (obj_ini.home_name=obj_ini.recruiting_name){
             ed.p_type[1]="Dead";
             ed.p_type[2]=obj_ini.home_type;ed.planet[2]=1;if (obj_ini.home_name!="random") then ed.name=obj_ini.home_name;
-            ed.p_feature[2]="Recruiting World|Monastery|";ed.p_owner[2]=1;ed.p_first[2]=1;
+            ed.p_feature[2]="Recruiting World|Monastery|";
+			array_push(ed.p_feature[2],new new_planet_feature(P_features.Recruiting_World))
+			array_push(ed.p_feature[2],new new_planet_feature(P_features.Monastery))
+			ed.p_owner[2]=1;ed.p_first[2]=1;
             if (homeworld_rule!=1) then ed.dispo[2]=-5000;
             
             if (obj_ini.home_type="Shrine") then known[5]=1;
@@ -131,10 +134,10 @@ if (did=1){// Player star has been set
     with(ed){
         var f;f=0;
         repeat(4){f+=1;
-            if (string_count("Recruiting",p_feature[f])>0) and (string_count("Monastery",p_feature[f])=0){
+			if (array_length( search_planet_features(p_feature[f], P_features.Monastery)) >0)and (array_length( search_planet_features(p_feature[f], P_features.Recruiting_World)) >0){
                 if (p_owner[f]=1) then p_owner[f]=2;
             }
-            if (string_count("Monastery",p_feature[f])>0){
+			if (array_length( search_planet_features(p_feature[f], P_features.Monastery)) >0){
                 if (p_owner[f]!=1) then p_owner[f]=1;
                 owner=1;
             }

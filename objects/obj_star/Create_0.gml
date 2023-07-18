@@ -14,13 +14,16 @@ image_alpha=0;
 x2=0;y2=0;buddy=0;
 if (global.load=0) then alarm[0]=1;
 storm=0;storm_image=0;trader=0;
+//has star ever been visited
+visited=0;
+
 //
 run=0;
 repeat(8){run+=1;
     planet[run]=0;
     dispo[run]=-50;
     p_type[run]="";
-    p_feature[run]=0;
+    p_feature[run]=[];
     p_owner[run]=0;
     p_first[run]=0;
     p_population[run]=0;
@@ -31,6 +34,7 @@ repeat(8){run+=1;
     p_pdf[run]=0;
     p_fortified[run]=0;
     p_station[run]=0;
+	warlord=0;
     // Whether or not player forces are on the planet
     p_player[run]=0;
     p_lasers[run]=0;

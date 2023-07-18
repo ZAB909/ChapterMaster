@@ -129,7 +129,7 @@ if (name="Muric"){
     p_type[4]="Agri";planet[4]=1;
 }
 if (name="Morrowynd"){planets=3;
-    p_type[1]="Feudal";planet[1]=1;p_feature[1]="????|";
+    p_type[1]="Feudal";planet[1]=1;array_push(p_feature[1], new new_planet_feature(P_features.Necron_Tomb);
     p_type[2]="Dead";planet[2]=1;
     p_type[3]="Dead";planet[3]=1;
 }

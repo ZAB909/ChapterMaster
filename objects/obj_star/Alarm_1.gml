@@ -324,43 +324,57 @@ if (i=1) and (planets>0){
     if (instance_exists(obj_p_fleet)){if (point_distance(x,y,aa.x,aa.y)>50) then nostart=true;}
     if (!instance_exists(obj_p_fleet)) then nostart=true;
     
-    if (p_feature[i]=0) and (p_owner[i]!=1) and (nostart=true){
+    if (array_length(p_feature[i])=0) and (p_owner[i]!=1) and (nostart=true){
 		var ranb;ranb=0;
 		// if (ranb=1) and (p_owner[i]!=1) and (p_owner[i]!=2) and (p_owner[i]!=3) then ranb=floor(random(4))+2;
 		//
-
 		var goo;goo=0;
 		repeat(10){if (goo=0){ranb=floor(random(6))+1;
 
-		if (name="Vulvis Major") then ranb=1;
-		if (name="Necron Assrape") then ranb=2;
-		if (name="Morrowynd") then ranb=5;
+			if (name="Vulvis Major") then ranb=1;
+			if (name="Necron Assrape") then ranb=2;
+			if (name="Morrowynd") then ranb=5;
+			
+		if (goo==0){
+			switch (ranb){
+				case 1:
 
-		if (ranb=1) and (goo=0){
-		    p_feature[i]=ranb
-		    if (p_heresy[i]>10) then p_heresy[i]-=10;
-		    p_sisters[i]=choose(2,2,3);goo=1;
-		}
-		if (ranb=2) and (p_type[i]!="Hive") and (p_type[i]!="Lava") and (goo=0){
-		    p_feature[i]=ranb
-		}
-		if (ranb=3) and (goo=0){
-		    p_feature[i]=ranb
-		}
-		if (ranb=4) and (goo=0){
-		    p_feature[i]=ranb
-		}
-		if (ranb=5) and (p_type[i]!="Ice") and (p_type[i]!="Dead") and (p_type[i]!="Feudal") and (goo=0){goo=1;
-		    p_feature[i]=ranb
-		}
-		if (ranb=5) and ((p_type[i]="Ice") or (p_type[i]="Dead")) and (goo=0){
-		    p_feature[i]=ranb
-		}
-		if (ranb=6) and ((p_type[i]="Dead") or (p_type[i]="Desert")) and (goo=0){
-		    var randum;randum=floor(random(100))+1;
-		    if (randum<=25){
-		        p_feature[i]=ranb
-		    }
+					 array_push(p_feature[i], new new_planet_feature(P_features.Sororitas_Cathedral))
+					 if (p_heresy[i]>10) then p_heresy[i]-=10;
+					 p_sisters[i]=choose(2,2,3);goo=1;
+					break;
+		case 2:
+			if (p_type[i]!="Hive") and (p_type[i]!="Lava") and (goo=0){
+			    array_push(p_feature[i], new new_planet_feature(P_features.Necron_Tomb))
+			}
+			break;
+			case 3:
+			    array_push(p_feature[i], new new_planet_feature( P_features.Artifact))
+				break;
+			case 4:
+			    array_push(p_feature[i], new new_planet_feature( P_features.STC_Fragment))
+			break;
+			case 5:
+			if (p_type[i]!="Ice") and (p_type[i]!="Dead") and (p_type[i]!="Feudal"){goo=1;
+			    array_push(p_feature[i], new new_planet_feature( P_features.Ancient_Ruins))
+			}
+			break;
+			//alternative spawn for necron tomb probably needs merging with other method
+			case 6:
+			if ((p_type[i]="Ice") or (p_type[i]="Dead")){
+			    array_push(p_feature[i], new new_planet_feature( P_features.Necron_Tomb))
+
+			}
+			break;
+			case 7:
+			if (ranb=7) and ((p_type[i]="Dead") or (p_type[i]="Desert")){
+			    var randum;randum=floor(random(100))+1;
+			    if (randum<=25){
+			        array_push(p_feature[i], new new_planet_feature( P_features.Cave_Network))
+			    }
+			}
+			break;
+			}
 		}
 
 

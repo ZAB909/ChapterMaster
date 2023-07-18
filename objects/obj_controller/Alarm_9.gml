@@ -4,10 +4,12 @@ with(obj_p_fleet){
     repeat(4){b+=1;
         if (steh.p_first[b]<=5) and (steh.dispo[b]>-30) and (steh.dispo[b]<0) then steh.dispo[b]=min(obj_ini.imperium_disposition,obj_controller.disposition[2])+choose(-1,-2,-3,-4,0,1,2,3,4);
     }
-    if (string_count("????|",steh.p_feature[1])>0)with(steh){{scr_planetary_feature(1);}}
-    if (string_count("????|",steh.p_feature[2])>0)with(steh){{scr_planetary_feature(2);}}
-    if (string_count("????|",steh.p_feature[3])>0)with(steh){{scr_planetary_feature(3);}}
-    if (string_count("????|",steh.p_feature[4])>0)with(steh){{scr_planetary_feature(4);}}
+	if (steh.visited==0){
+		for(var planet_num =1;planet_num<5;planet_num++){
+		    if (array_length(steh.p_feature[planet_num])!=0) with(steh){{scr_planetary_feature(planet_num);}}
+		}
+		steh.visited = 1
+	}
 }
 
 
