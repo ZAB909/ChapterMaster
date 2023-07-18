@@ -521,9 +521,7 @@ function scr_enemy_ai_e() {
 	                if (obj_controller.recruiting=4) then recr=floor(random(125))+1;
 	                if (obj_controller.recruiting=5) then recr=floor(random(100))+1;
                 
-	                if (obj_controller.recruit_trial="Exposure") then recr=floor(recr*1.3);
-	                if (obj_controller.recruit_trial="Challenge") then recr=floor(recr*1.3);
-	                if (obj_controller.recruit_trial="Knowledge of Self") then recr=floor(recr*2);
+
                 
 	                // 135; recruiting
 					// corr isn't really relevant as corruption in marines doesn't matter
@@ -541,15 +539,35 @@ function scr_enemy_ai_e() {
                 
 	                // train-=58;
 	                // train-=55;
-                
+                /* // old blood duel
 	                if (obj_controller.recruit_trial="Blood Duel"){
-	                    corr+=choose(100,200,300);train-=choose(1,2,3);
+	                    corr+=choose(1,2,3);train-=choose(1,2,3);
 	                    var rand5;rand5=floor(random(100))+1;
 	                    if (rand5<=2) then corr+=15;
-	                }
-	                if (obj_controller.recruit_trial="Survival of the Fittest"){corr+=choose(1,2,3);train-=choose(1,2,3);}
-	                if (obj_controller.recruit_trial="Exposure"){train-=choose(1,2,3,4);}
-	                if (obj_controller.recruit_trial="Knowledge of Self"){train-=choose(7,9,11,13);}
+						}
+			    */
+	                
+	                if (obj_controller.recruit_trial="Survival of the Fittest")
+						{corr+=choose(1,2,3);train-=choose(1,2,3);}
+	                if (obj_controller.recruit_trial="Exposure")
+						{train-=choose(1,2,3,4);}
+	                if (obj_controller.recruit_trial="Knowledge of Self")
+						{train-=choose(7,9,11,13);}
+					if (obj_controller.recruit_trial="Exposure")
+						then recr=floor(recr*1.3);
+	                if (obj_controller.recruit_trial="Challenge")
+						then recr=floor(recr*1.3);
+	                if (obj_controller.recruit_trial="Knowledge of Self")
+						then recr=floor(recr*2);
+					if (obj_controller.recruit_trial="Apprenticeship") then train+=36{ 
+	                    obj_controller.recruit_exp[thiss]=choose(8,9,9);
+	                    }
+						
+						
+						
+						
+						
+						
                 
 	                if (aspirant!=0){
 	                    var i,thiss;
@@ -581,11 +599,9 @@ function scr_enemy_ai_e() {
 	                            scr_alert("green","recruitment","Recruit "+string(obj_controller.recruit_name[thiss])+" defeats the Astartes and is destined for greatness.",0,0);
 	                        }
 	                    }
-	                    if (obj_controller.recruit_trial="Apprenticeship") then train+=36{ 
-	                        obj_controller.recruit_exp[thiss]=choose(8,9,9);
-	                    }
-                    
-                    
+
+                   
+                   
 	                    onceh=0;
                     
                     
