@@ -181,7 +181,7 @@ function scr_random_event(execute_now) {
 									break;
 								}
 							}
-							if(!has_mooving_fleet){
+							if(!has_moving_fleet){
 								events_share[i] -= 1;
 								events_total -= 1;
 							}
@@ -304,7 +304,8 @@ function scr_random_event(execute_now) {
 		
 		var role=obj_ini.role[company,marine];
 		var text = string(role)+" "+string(obj_ini.name[company,marine]);
-		var company_text = scr_company_string(company);
+		var company_text = scr_convert_company_to_string(company);
+		//var company_text = scr_company_string(company);
 		if(company_text != ""){
 			company_text = "("+company_text+")";
 		}
