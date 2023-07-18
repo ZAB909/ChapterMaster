@@ -977,7 +977,7 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
             if (obj_ini.fleet_type=1){
                 image="fortress";
                 if (obj_ini.home_type="Hive") then image="fortress_hive";
-                if (obj_ini.home_type="Feral") then image="fortress_feral";
+                if (obj_ini.home_type="Death") then image="fortress_death";
                 if (obj_ini.home_type="Ice") then image="fortress_ice";
                 if (obj_ini.home_type="Lava") then image="fortress_lava";
                 if (obj_ini.icon_name="dorf1") then image="fortress_dorf";
