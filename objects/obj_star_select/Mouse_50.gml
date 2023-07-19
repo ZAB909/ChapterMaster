@@ -141,10 +141,11 @@ if (obj_controller.selecting_planet>0) and (obj_controller.cooldown<=0){
     }
     if (butt="+Recruiting"){
     if (obj_controller.recruiting_worlds_bought>0) and (target.p_owner[obj_controller.selecting_planet]<=5) and (obj_controller.faction_status[target.p_owner[obj_controller.selecting_planet]]!="War"){
-        if (string_count("Recr",target.p_feature[obj_controller.selecting_planet])=0){
+        if (planet_feature_bool(target.p_feature[obj_controller.selecting_planet],P_features.Recruiting_World)==0){
             obj_controller.cooldown=8000;
             obj_controller.recruiting_worlds_bought-=1;
             target.p_feature[obj_controller.selecting_planet]+="Recruiting World|";
+			array_push(target.p_feature[obj_controller.selecting_planet] ,new new_planet_feature(P_features.Recruiting_World))
             
             if (obj_controller.selecting_planet=1) then obj_controller.recruiting_worlds+=string(target.name)+" I|";
             if (obj_controller.selecting_planet=2) then obj_controller.recruiting_worlds+=string(target.name)+" II|";
@@ -287,7 +288,8 @@ if (obj_controller.cooldown<=0) and (loading=1){
         }
         
         // Artifact Grab
-        if (string_count("Artifact",target.p_feature[obj_controller.selecting_planet])>0) and (recon=0){
+        if (planet_feature_bool(target.p_feature[obj_controller.selecting_planet], P_features.Artifact) == 1) and (recon=0){
+	
             var arti;arti=instance_create(target.x,target.y,obj_temp4);// Unloading / artifact crap
             arti.num=obj_controller.selecting_planet;arti.alarm[0]=1;
             arti.loc=obj_controller.selecting_location;
@@ -306,7 +308,7 @@ if (obj_controller.cooldown<=0) and (loading=1){
         }
         
         // STC Grab
-        if (string_count("STC",target.p_feature[obj_controller.selecting_planet])>0) and (recon=0){
+        if (planet_feature_bool(target.p_feature[obj_controller.selecting_planet], P_features.STC) == 1) and (recon=0){
             var i,tch,mch;i=0;tch=0;mch=0;
             repeat(300){i+=1;
                 if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1){
@@ -339,7 +341,7 @@ if (obj_controller.cooldown<=0) and (loading=1){
         }
         
         // Ancient Ruins
-        if (string_count("Ancient Ruins",target.p_feature[obj_controller.selecting_planet])>0){
+        if (planet_feature_bool(target.p_feature[obj_controller.selecting_planet], P_features.Ancient_Ruins) == 1){
             var pip,arti;pip=instance_create(0,0,obj_popup);pip.title="Ancient Ruins";
             
             var nu;nu=string(target.name);
@@ -633,10 +635,10 @@ if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_
         
         
         stahr=target;
-        if (string_count("Monastery",stahr.p_feature[1])>0) then obj_fleet.player_lasers=stahr.p_lasers[1];
-        if (string_count("Monastery",stahr.p_feature[2])>0) then obj_fleet.player_lasers=stahr.p_lasers[2];
-        if (string_count("Monastery",stahr.p_feature[3])>0) then obj_fleet.player_lasers=stahr.p_lasers[3];
-        if (string_count("Monastery",stahr.p_feature[4])>0) then obj_fleet.player_lasers=stahr.p_lasers[4];
+        if (planet_feature_bool(target.p_feature[obj_controller.selecting_planet], P_features.Monastery) == 1) then obj_fleet.player_lasers=stahr.p_lasers[1];
+        if (planet_feature_bool(target.p_feature[obj_controller.selecting_planet], P_features.Monastery) == 1) then obj_fleet.player_lasers=stahr.p_lasers[2];
+        if (planet_feature_bool(target.p_feature[obj_controller.selecting_planet], P_features.Monastery) == 1) then obj_fleet.player_lasers=stahr.p_lasers[3];
+        if (planet_feature_bool(target.p_feature[obj_controller.selecting_planet], P_features.Monastery) == 1) then obj_fleet.player_lasers=stahr.p_lasers[4];
         instance_deactivate_object(obj_star);
         
         

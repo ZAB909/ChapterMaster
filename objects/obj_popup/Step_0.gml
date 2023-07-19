@@ -419,7 +419,18 @@ if (image="mechanicus") and (title="Mechanicus Mission") or (title="Mechanicus M
             with(obj_star){if (name=obj_popup.loc) then instance_create(x,y,obj_temp5);}
             if (instance_exists(obj_temp5)){
                 var tempy,eh,eh2,that,that2;tempy=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);eh=0;that=0;eh2=0;that2=0;
-                repeat(4){eh+=1;if (tempy.p_owner[eh]<=5) and (string_count("Necron Tomb",tempy.p_feature[eh])>0) and (string_count("Awake",tempy.p_feature[eh])=0) then that=eh;}
+                repeat(4){
+						eh+=1;
+						var tomb_list =  search_planet_features(tempy.p_feature[eh], P_features.Necron_Tomb);
+						if (tempy.p_owner[eh]<=5) and (array_length(tomb_list)>0){
+							for (var tomb = 0;tomb<array_length(tomb_list);tomb++){
+								if (tempy.p_feature[eh][tomb].awake == 0){
+									that = eh
+								}
+							if (that !=0){break;}
+						}
+					}
+				}
                 
                 with(obj_temp5){instance_destroy();}
                 if (eh>0){
@@ -844,10 +855,16 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
                 instance_activate_object(obj_star);
                 
                 var ppp;ppp=0;
-                if (you.p_problem[self.planet,1]="bomb"){ppp=1;you.p_feature[self.planet]=string_replace(you.p_feature[self.planet],"Necron Tomb|","");you.p_problem[self.planet,1]="";you.p_timer[self.planet,1]=0;}
-                if (you.p_problem[self.planet,2]="bomb"){ppp=2;you.p_feature[self.planet]=string_replace(you.p_feature[self.planet],"Necron Tomb|","");you.p_problem[self.planet,2]="";you.p_timer[self.planet,2]=0;}
-                if (you.p_problem[self.planet,3]="bomb"){ppp=3;you.p_feature[self.planet]=string_replace(you.p_feature[self.planet],"Necron Tomb|","");you.p_problem[self.planet,3]="";you.p_timer[self.planet,3]=0;}
-                if (you.p_problem[self.planet,4]="bomb"){ppp=4;you.p_feature[self.planet]=string_replace(you.p_feature[self.planet],"Necron Tomb|","");you.p_problem[self.planet,4]="";you.p_timer[self.planet,4]=0;}
+                if (you.p_problem[self.planet,1]="bomb"){ppp=1;
+					you.p_feature[self.planet][search_planet_features(you.p_feature[self.planet], P_features.Necron_Tomb)[0]].sealed = 1;
+					you.p_problem[self.planet,1]="";you.p_timer[self.planet,1]=0;
+				}
+                if (you.p_problem[self.planet,2]="bomb"){ppp=2;
+					you.p_feature[self.planet][search_planet_features(you.p_feature[self.planet], P_features.Necron_Tomb)[0]].sealed = 1;you.p_problem[self.planet,2]="";you.p_timer[self.planet,2]=0;}
+                if (you.p_problem[self.planet,3]="bomb"){ppp=3;
+					you.p_feature[self.planet][search_planet_features(you.p_feature[self.planet], P_features.Necron_Tomb)[0]].sealed = 1;you.p_problem[self.planet,3]="";you.p_timer[self.planet,3]=0;}
+                if (you.p_problem[self.planet,4]="bomb"){ppp=4;
+					you.p_feature[self.planet][search_planet_features(you.p_feature[self.planet], P_features.Necron_Tomb)[0]].sealed = 1;you.p_problem[self.planet,4]="";you.p_timer[self.planet,4]=0;}
                 with(obj_temp5){instance_destroy();}with(obj_temp8){instance_destroy();}
                 instance_activate_object(obj_star);
                 
@@ -1285,7 +1302,10 @@ if (press=3) and (option3!=""){
         if (target_comp!=3) and (target_comp!=4){
             // Here, have this gift
             var plan;plan=instance_nearest(obj_temp4.x,obj_temp4.y,obj_star);
-            plan.p_feature[obj_temp4.num]=string_replace(plan.p_feature[obj_temp4.num],"Artifact|","");
+			var planet_arti = search_planet_features(plan.p_feature[obj_temp4.num], P_features.Artifact)
+			if (array_length(planet_arti) >0){
+				array_delete(plan.p_feature[obj_temp4.num], planet_arti[0], planet_arti[0]+1)
+			}
             
             scr_return_ship(obj_temp4.loc,obj_temp4,obj_temp4.num);
             var man_size,ship_id,comp,plan,i;

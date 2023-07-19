@@ -6,12 +6,22 @@ enum P_features {
 			Ancient_Ruins,
 			Cave_Network,
 			Recruiting_World, 
-			Monastery
+			Monastery,
+			Warlord6,
+			Warlord7,
+			Warlord10,
+			Special_Force,
+			World_Eaters,
+			Webway
 	};
 	
 function new_planet_feature(feature_type) constructor
 {
 	f_type = feature_type;
+	if(f_type == P_features.Necron_Tomb){
+		awake = 0;
+		sealed = 0;
+	}
 }
 
 // returns an array of all the positions that a certain planet feature occurs on a planet
@@ -25,6 +35,19 @@ function search_planet_features(planet, search_feature){
 		}
 	}}
 	return feature_positions;
+}
+
+function planet_feature_bool(planet, search_feature){
+	var feature_count = array_length(planet);
+	var feature_exists = 0;
+	if (feature_count > 0){
+	for (var fc = 0; fc < feature_count; fc++;){
+		if (planet[fc].f_type == search_feature){
+			feature_exists = 1;
+		}
+		if (feature_exists == 1){break;}
+	}}
+	return feature_exists;	
 }
 
 

@@ -61,15 +61,15 @@ if (owner=1) and (instance_nearest(x,y,obj_p_fleet).action=""){
         web1=0;web2=0;web=0;
         
         if (sys_dist<32){
-            if (string_count("Webway",mine.p_feature[1])>0) then web1=1;
-            if (string_count("Webway",mine.p_feature[2])>0) then web1=1;
-            if (string_count("Webway",mine.p_feature[3])>0) then web1=1;
-            if (string_count("Webway",mine.p_feature[4])>0) then web1=1;
+            if (planet_feature_bool(mine.p_feature[1], P_features.Webway)==1) then web1=1;
+            if (planet_feature_bool(mine.p_feature[2], P_features.Webway)==1) then web1=1;
+            if (planet_feature_bool(mine.p_feature[3], P_features.Webway)==1) then web1=1;
+            if (planet_feature_bool(mine.p_feature[4], P_features.Webway)==1) then web1=1;
             
-            if (string_count("Webway",sys.p_feature[1])>0) then web2=1;
-            if (string_count("Webway",sys.p_feature[2])>0) then web2=1;
-            if (string_count("Webway",sys.p_feature[3])>0) then web2=1;
-            if (string_count("Webway",sys.p_feature[4])>0) then web2=1;
+           if (planet_feature_bool(sys.p_feature[1], P_features.Webway)==1) then web2=1;
+            if (planet_feature_bool(sys.p_feature[2], P_features.Webway)==1) then web2=1;
+            if (planet_feature_bool(sys.p_feature[3], P_features.Webway)==1) then web2=1;
+           if (planet_feature_bool(sys.p_feature[4], P_features.Webway)==1) then web2=1;
             
             if (web1=1) and (web2=1) then web=1;
             if (mine.id=sys.id) then web=0;
