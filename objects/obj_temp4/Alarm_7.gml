@@ -55,7 +55,7 @@ if (defeat=1){
     if (ruins_battle=6) then pop.text+="Now that they have been discovered, the Eldar seem to have vanished without a trace.  Scans reveal nothing.";
 }
 
-obj.p_feature[num]=string_replace(obj.p_feature[num],"Ancient Ruins|","");
+ delete_features(obj.p_feature[num], P_features.Ancient_Ruins);
 
 
 if (defeat=0) then scr_ruins_reward(obj,num,ruins_race);

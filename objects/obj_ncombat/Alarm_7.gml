@@ -198,7 +198,7 @@ if (battle_special="study2a") or (battle_special="study2b"){
             }
             if (battle_special="study2b"){
                 battle_object.p_necrons[battle_id]=5;
-                battle_object.p_feature[battle_id]=string_replace(battle_object.p_feature[battle_id],"Necron Tomb","Awakened Necron Tomb");
+				 awaken_tomb_world( battle_object.p_feature[battle_id])
                 obj_controller.disposition[3]-=15;obj_controller.disposition[4]-=5;
                 scr_popup("Mechanicus Mission Failed","All of your Astartes and the Mechanicus Research party have been killed down to the last man.  The research is a bust.  To make matters worse the Necron Tomb has fully awakened- countless numbers of the souless machines are now pouring out of the tomb.  The Adeptus Mechanicus are furious with your chapter.","necron_army","");
                 scr_alert("","inqi","The Inquisition is displeased with your Chapter for tampering with and awakening a Necron Tomb",0,0);
@@ -327,7 +327,7 @@ if (string_count("_attack",battle_special)>0) and (string_count("mech",battle_sp
             if (p_problem[obj_ncombat.battle_id,2]="bomb"){p_problem[obj_ncombat.battle_id,2]="";p_timer[obj_ncombat.battle_id,2]=0;p_necrons[obj_ncombat.battle_id]=4;}
             if (p_problem[obj_ncombat.battle_id,3]="bomb"){p_problem[obj_ncombat.battle_id,3]="";p_timer[obj_ncombat.battle_id,3]=0;p_necrons[obj_ncombat.battle_id]=4;}
             if (p_problem[obj_ncombat.battle_id,4]="bomb"){p_problem[obj_ncombat.battle_id,4]="";p_timer[obj_ncombat.battle_id,4]=0;p_necrons[obj_ncombat.battle_id]=4;}
-            if (string_count("Awakened",p_feature[obj_ncombat.battle_id])=0) then p_feature[obj_ncombat.battle_id]=string_replace(p_feature[obj_ncombat.battle_id],"Necron Tomb|","Awakened Necron Tomb|");
+            if (awake_tomb_world(p_feature[obj_ncombat.battle_id])==0) then awaken_tomb_world(p_feature[obj_ncombat.battle_id])
         }
         with(obj_temp7){instance_destroy();}
         instance_activate_object(obj_star);
@@ -386,10 +386,10 @@ if (string_count("_attack",battle_special)>0) and (string_count("mech",battle_sp
                     // show_message("TEMP5: "+string(instance_number(obj_temp5))+"#Star: "+string(you));
                     
                     var ppp;ppp=0;
-                    if (you.p_problem[obj_temp8.wid,1]="bomb"){ppp=1;you.p_feature[obj_temp8.wid]=string_replace(you.p_feature[obj_temp8.wid],"Necron Tomb|","");you.p_problem[obj_temp8.wid,1]="";you.p_timer[obj_temp8.wid,1]=0;}
-                    if (you.p_problem[obj_temp8.wid,2]="bomb"){ppp=2;you.p_feature[obj_temp8.wid]=string_replace(you.p_feature[obj_temp8.wid],"Necron Tomb|","");you.p_problem[obj_temp8.wid,2]="";you.p_timer[obj_temp8.wid,2]=0;}
-                    if (you.p_problem[obj_temp8.wid,3]="bomb"){ppp=3;you.p_feature[obj_temp8.wid]=string_replace(you.p_feature[obj_temp8.wid],"Necron Tomb|","");you.p_problem[obj_temp8.wid,3]="";you.p_timer[obj_temp8.wid,3]=0;}
-                    if (you.p_problem[obj_temp8.wid,4]="bomb"){ppp=4;you.p_feature[obj_temp8.wid]=string_replace(you.p_feature[obj_temp8.wid],"Necron Tomb|","");you.p_problem[obj_temp8.wid,4]="";you.p_timer[obj_temp8.wid,4]=0;}
+                    if (you.p_problem[obj_temp8.wid,1]="bomb"){ppp=1;seal_tomb_world(you.p_feature[obj_temp8.wid]);you.p_problem[obj_temp8.wid,1]="";you.p_timer[obj_temp8.wid,1]=0;}
+                    if (you.p_problem[obj_temp8.wid,2]="bomb"){ppp=2;seal_tomb_world(you.p_feature[obj_temp8.wid]);you.p_problem[obj_temp8.wid,2]="";you.p_timer[obj_temp8.wid,2]=0;}
+                    if (you.p_problem[obj_temp8.wid,3]="bomb"){ppp=3;seal_tomb_world(you.p_feature[obj_temp8.wid]);you.p_problem[obj_temp8.wid,3]="";you.p_timer[obj_temp8.wid,3]=0;}
+                    if (you.p_problem[obj_temp8.wid,4]="bomb"){ppp=4;seal_tomb_world(you.p_feature[obj_temp8.wid]);you.p_problem[obj_temp8.wid,4]="";you.p_timer[obj_temp8.wid,4]=0;}
                     
                     pip.option1="";pip.option2="";pip.option3="";
                     scr_event_log("","Inquisition Mission Completed: Your Astartes have sealed the Necron Tomb on "+string(you.name)+" "+string(scr_roman(ppp))+".");

@@ -679,7 +679,7 @@ function scr_random_event(execute_now) {
 			
 			
 			var star = stars[irandom(valid_stars-1)];
-			var planet = scr_get_planet_with_feature(star, "Necron Tomb");
+			var planet = scr_get_planet_with_feature(star, P_features.Necron_Tomb);
 			var eta = scr_mission_eta(star.x, star.y,1)
 			
 			var text="The Inquisition is trusting you with a special mission.  They have reason to suspect the Necron Tomb on planet " + string(star.name) + " " +scr_roman(planet);
@@ -777,8 +777,8 @@ function scr_random_event(execute_now) {
 		
 			
 		with(obj_star){
-			if(scr_star_has_planet_with_feature(id,"Necron Tomb") && !scr_star_has_planet_with_feature(id, "Awake")){
-				var planet = scr_get_planet_with_feature(id, "Necron Tomb");
+			if(scr_star_has_planet_with_feature(id,P_features.Necron_Tomb)) and (awake_necron_Star(id)!= 0){
+				var planet = scr_get_planet_with_feature(id, P_features.Necron_Tomb);
 				if(p_owner[planet] <= 5){
 					array_push(mechanicus_missions, mechanicus_mission.necron_study);
 					break;
@@ -803,7 +803,7 @@ function scr_random_event(execute_now) {
 			stars = scr_get_stars();
 			var valid_stars = array_filter_ext(stars,
 				function(star, index){
-					var planet = scr_get_planet_with_feature(star, "Forge");
+					var planet = scr_get_planet_with_feature(star, P_features.Mechanicus_Forge);
 					if(planet != -1){
 						return star.p_owner[planet] == 3;
 					}
@@ -841,7 +841,7 @@ function scr_random_event(execute_now) {
 			stars = scr_get_stars();
 			var valid_stars = array_filter_ext(stars, 
 			function(star,index) {
-				if(scr_star_has_planet_with_feature(star,"Necron Tomb") && !scr_star_has_planet_with_feature(star, "Awake")){
+				if(scr_star_has_planet_with_feature(star,P_features.Necron_Tomb)) and (awake_necron_Star(star)!= 0){
 					var planet = scr_get_planet_with_feature(star, "Necron Tomb");
 					if(star.p_owner[planet] <= 5){
 						return true;
@@ -882,7 +882,7 @@ function scr_random_event(execute_now) {
 		}
 	    	
 		var star = stars[irandom(valid_stars-1)];
-		var planet = scr_get_planet_with_feature(star, "????");
+		var planet = scr_get_planet_with_feature(star, P_features.Ancient_Ruins);
 		if (planet == -1){
 			debugl("RE: Investigate Planet, couldn't pick a planet");
 			exit;
@@ -1059,7 +1059,7 @@ function scr_random_event(execute_now) {
 			}
 		}
 		
-	    star.p_feature[planet] += "War of Succession|";
+		array_push(star.p_feature[planet], new new_planet_feature(P_features.Succession_War))
 	    for(var i = 1; i <= 4; i++){
 			if(star.p_problem[planet,i] == "" ) {
 				star.p_problem[planet,i] = "succession";
@@ -1529,8 +1529,8 @@ function scr_random_event(execute_now) {
 		var stars = scr_get_stars();
 		var valid_stars = array_filter_ext(stars, 
 			function(star, index){
-				var tomb_world = scr_get_planet_with_feature(star,"Necron Tomb");
-				return string_count("Awakened Necron Tomb",star.p_feature[tomb_world]) == 0;
+				var tomb_world = scr_get_planet_with_feature(star,P_features.Necron_Tomb);
+				return awake_tomb_world(star.p_feature[tomb_world]) == 0;
 		});
 	
 	
@@ -1543,7 +1543,7 @@ function scr_random_event(execute_now) {
 		var star = stars[star_index];
 		var planet = -1;
 		for(var i = 1; i <= star.planets; i++) {
-			if(string_count("Necron Tomb",star.p_feature[i]) > 0 && string_count("Awakened Necron Tomb",star.p_feature[i]) == 0) {
+			if (awake_tomb_world(star.p_feature[i])!=1){
 				planet = i;
 				break;
 			}
@@ -1554,7 +1554,6 @@ function scr_random_event(execute_now) {
 			exit;
 		}
 		
-        star.p_feature[planet] = string_replace(star.p_feature[planet],"Necron Tomb","Awakened Necron Tomb"); 
         var text=string(star.name) + string(scr_roman(planet));
         scr_event_log("red","The Necron Tomb on "+string(text)+" has surged into activity.");
         scr_popup("Necron Awakening","The Necron Tomb on "+string(text)+" has surged into activity.  Rank upon rank of the abominations are pouring out from their tunnels.","necron_tomb","");

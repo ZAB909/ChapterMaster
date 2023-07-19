@@ -90,7 +90,7 @@ repeat(600){i+=1;
     
     if (ally[i]=false){
         if (marine_dead[i]=0) and (obj_ini.gear[marine_co[i],marine_id[i]]="Plasma Bomb") and (obj_ncombat.defeat=0) and (string_count("mech",obj_ncombat.battle_special)=0){
-            if (obj_ncombat.plasma_bomb=0) and (obj_ncombat.enemy=13) and (obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id]="Awakened Necron Tomb|"){
+            if (obj_ncombat.plasma_bomb=0) and (obj_ncombat.enemy=13) and (awake_tomb_world(obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id])==1){
                 if (((obj_ncombat.battle_object.p_necrons[obj_ncombat.battle_id]-2)<3) and (obj_ncombat.dropping!=0)) or ((obj_ncombat.battle_object.p_necrons[obj_ncombat.battle_id]-1)<3){
                     obj_ncombat.plasma_bomb+=1;obj_ini.gear[marine_co[i],marine_id[i]]="";
                 }

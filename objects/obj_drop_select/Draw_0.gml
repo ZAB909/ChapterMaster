@@ -400,7 +400,7 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
         if (ship_all[500]=1) then obj_ncombat.local_forces=1;
         
         if (obj_ncombat.battle_object.space_hulk=1) then obj_ncombat.battle_special="space_hulk";
-        if (array_length(search_planet_feature(obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id],P_features.Warlord6))>0) and (obj_ncombat.enemy=6) and (obj_controller.faction_defeated[6]=0) then obj_ncombat.leader=1;
+        if (planet_feature_bool(obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id],P_features.Warlord6) == 1) and (obj_ncombat.enemy=6) and (obj_controller.faction_defeated[6]=0) then obj_ncombat.leader=1;
         if (obj_ncombat.enemy=7) and (obj_controller.faction_defeated[7]<=0){
             /*with(obj_temp1){instance_destroy();}
             with(obj_star){
@@ -425,7 +425,7 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
         }
         
         if (obj_ncombat.enemy=11){
-            if ( planet_feature_bool(obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id],P_features.World_Eaters)=1){
+            if ( planet_feature_bool(obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id],P_features.World_Eaters)==1){
                 obj_ncombat.battle_special="world_eaters";obj_ncombat.leader=1;
             }
         }

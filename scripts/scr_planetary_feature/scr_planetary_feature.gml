@@ -13,7 +13,13 @@ enum P_features {
 			Special_Force,
 			World_Eaters,
 			Webway,
-			Secret_Base
+			Secret_Base,
+			Starship,
+			Succession_War,
+			Mechanicus_Forge,
+			Reclamation_pools,
+			Capillary_Towers,
+			Daemonic_Incursion
 	};
 	
 enum base_type{
@@ -24,13 +30,18 @@ enum base_type{
 	
 function new_planet_feature(feature_type) constructor
 {
-	f_type = feature_type;
+	f_type = feature_type
 	if(f_type == P_features.Necron_Tomb){
 		awake = 0;
 		sealed = 0;
 	} else  if(f_type == P_features.Secret_Base){
 		base_type = 0;
 		inquis_hidden =1;
+	} else if(f_type == P_features.Ancient_Ruins){
+		find_starship = function(){
+			f_type = P_features.Ancient_Ruins;
+			completion_level = 0;
+		}
 	}
 }
 
@@ -77,6 +88,61 @@ function delete_features(planet, del_feature){
 			array_delete(planet, delete_Array[d],delete_Array[d]+1)
 		}
 	}
+}
+
+function awake_necron_Star(star){
+		for(var i = 1; i <= star.planets; i++){
+		if(awake_tomb_world(star.p_feature[i]) == 1)
+			{
+				return i;
+			}
+		}
+		return 0
+}
+
+function awake_tomb_world(planet){
+	var awake_tomb = 0;
+	 var tombs = search_planet_features(planet, P_features.Necron_Tomb);
+	 if (array_length(tombs)>0){
+		 for (var tomb =0;tomb<array_length(tombs);tomb++;){
+			 if (planet[tombs[tomb]].awake = 1){
+				awake_tomb = 1;
+			 }
+			 if (awake_tomb = 1){break;}
+		 }
+		 return awake_tomb;
+	 }
+	 return 2;
+}
+
+function seal_tomb_world(planet){
+	var awake_tomb = 0;
+	 var tombs = search_planet_features(planet, search_feature);
+	 if (array_length(tombs)>0){
+		 for (var tomb =0;tomb<array_length(tombs);tomb++;){
+			 if (planet[tombs[tomb]].awake == 1){
+				awake_tomb = 1;
+				planet[tombs[tomb]].awake = 0;
+				planet[tombs[tomb]].sealed = 1;
+			 }
+			 if (awake_tomb = 1){break;}
+		 }
+	 }
+}
+
+function awaken_tomb_world(planet){
+	var awake_tomb = 0;
+	 var tombs = search_planet_features(planet, search_feature);
+	 if (array_length(tombs)>0){
+		 for (var tomb =0;tomb<array_length(tombs);tomb++;){
+			 if (planet[tombs[tomb]].awake == 0){
+				awake_tomb = 1;
+				planet[tombs[tomb]].awake = 1;
+			 }
+			 if (awake_tomb = 1){break;}
+		 }
+		 
+	 }
 }
 
 

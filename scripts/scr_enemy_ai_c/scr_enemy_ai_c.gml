@@ -161,7 +161,7 @@ function scr_enemy_ai_c() {
 	                    if (orbiting.name=obj_controller.temp[1049]) then instance_create(x,y,obj_temp2);
 	                }
 	            }
-	            if (instance_exists(obj_temp2)){p_feature[i]+="WL7|";p_orks[i]=6;}
+	            if (instance_exists(obj_temp2)){array_push(feature[i], new new_planet_feature(P_features.Warlord7));p_orks[i]=6;}
 	            with(obj_temp2){instance_destroy();}
             
 	            if (p_orks[i]>6) then p_orks[i]=6;
@@ -499,15 +499,15 @@ function scr_enemy_ai_c() {
 	repeat(4){i+=1;
 	    if (p_tyranids[i]>=5) and (planets>=i) and (p_player[i]+p_orks[i]+p_guardsmen[i]+p_pdf[i]+p_chaos[i]=0){
 	        var ship;ship=instance_nearest(x,y+32,obj_en_fleet);
-	        if (point_distance(x,y+32,ship.x,ship.y)<5) and (ship.owner=9) and (ship.capital_number>0) and (p_type[i]!="Dead") and (p_feature[i]!=""){
-	            if (string_count("Reclamation Pools|",p_feature[i])=1){
+	        if (point_distance(x,y+32,ship.x,ship.y)<5) and (ship.owner=9) and (ship.capital_number>0) and (p_type[i]!="Dead") and (array_length(p_feature[i])!=0){
+	            if (planet_feature_bool(p_feature[i], P_features.Reclamation_pools) ==1){
 	                p_tyranids[i]=0;
 	                if (p_type[i]="Feral") or (p_type[i]="Hive") then ship.capital_number+=choose(0,1,1);
 	                ship.capital_number+=1;
 	                ship.escort_number+=3;
 	                ship.image_index=floor((ship.capital_number)+(ship.frigate_number/2)+(ship.escort_number/4));
 	                p_type[i]="Dead";
-	                p_feature[i]=string_replace(p_feature[i],"Reclamation Pools|","");// show_message("D");
+					delete_features(p_feature[i], P_features.Reclamation_pools);// show_message("D");
 	                if (planets=1) and (p_type[1]="Dead") then image_alpha=0.33;
 	                if (planets=2) and (p_type[1]="Dead") and (p_type[2]="Dead") then image_alpha=0.33;
 	                if (planets=3) and (p_type[1]="Dead") and (p_type[2]="Dead") and (p_type[3]="Dead") then image_alpha=0.33;
@@ -517,12 +517,14 @@ function scr_enemy_ai_c() {
 	                // if image_alpha = 0.33 then send the ship somewhere new
                 
 	            }
-	            if (string_count("Capillary Towers|",p_feature[i])=1) and (p_type[i]!="Dead"){p_population[i]=floor(p_population[i]*0.3);}
-	            if (string_count("Capillary Towers|",p_feature[i])>0) and (p_type[i]!="Dead"){
-	                p_feature[i]=string_replace_all(p_feature[i],"Capillary Towers|","Reclamation Pools|");
+	            if (planet_feature_bool(p_feature[i], P_features.Capillary_Towers)==1) and (p_type[i]!="Dead"){p_population[i]=floor(p_population[i]*0.3);}
+	            if (planet_feature_bool(p_feature[i], P_features.Capillary_Towers)==1) and (p_type[i]!="Dead"){
+	                p_feature[i]=[];
+					array_push(p_feature[i], new new_planet_feature(P_features.Capillary_Towers), new new_planet_feature(P_features.Reclamation_pools));
 	                p_population[i]=0;// show_message("C");
 	            }
-	            if (string_count("Capillary Towers|",p_feature[i])=0) and (string_count("Reclamation",p_feature[i])=0) and (p_type[i]!="Dead"){p_feature[i]+="Capillary Towers|";// show_message("B");
+	            if (planet_feature_bool(p_feature[i], P_features.Capillary_Towers)==0) and (planet_feature_bool(p_feature[i], P_features.Reclamation_pools)==0) and (p_type[i]!="Dead"){
+					array_push(p_feature[i], new new_planet_feature(P_features.Capillary_Towers));// show_message("B");
 	            }
 	        }
 	    }

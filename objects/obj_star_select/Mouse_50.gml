@@ -144,7 +144,6 @@ if (obj_controller.selecting_planet>0) and (obj_controller.cooldown<=0){
         if (planet_feature_bool(target.p_feature[obj_controller.selecting_planet],P_features.Recruiting_World)==0){
             obj_controller.cooldown=8000;
             obj_controller.recruiting_worlds_bought-=1;
-            target.p_feature[obj_controller.selecting_planet]+="Recruiting World|";
 			array_push(target.p_feature[obj_controller.selecting_planet] ,new new_planet_feature(P_features.Recruiting_World))
             
             if (obj_controller.selecting_planet=1) then obj_controller.recruiting_worlds+=string(target.name)+" I|";

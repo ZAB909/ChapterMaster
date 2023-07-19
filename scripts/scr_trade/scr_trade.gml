@@ -281,7 +281,7 @@ function scr_trade(argument0) {
 	        if (diplomacy=5){
 	            with(obj_star){var ahuh,q;ahuh=0;q=0;
 	                repeat(4){q+=1;if (p_owner[q]=5) then ahuh=1;
-	                    if (p_owner[q]<6) and (string_count("Sororitas Cathedral",p_feature[q])>0) then ahuh=1;
+	                    if (p_owner[q]<6) and (planet_feature_bool(p_feature[q],P_features.Sororitas_Cathedral )==1) then ahuh=1;
 	                }
 	                if (ahuh=1) then instance_create(x,y,obj_temp3);
 	            }

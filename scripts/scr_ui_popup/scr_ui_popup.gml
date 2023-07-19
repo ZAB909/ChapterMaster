@@ -61,12 +61,12 @@ function scr_ui_popup() {
     
     
 	    if (ups=0) then title="Build ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
-	    if (ups!=0) and (string_count("Secret",obj_temp_build.target.p_feature[obj_controller.selecting_planet])>0){
+	    if (ups!=0) and (planet_feature_bool(obj_temp_build.target.p_feature[obj_controller.selecting_planet],P_features.Secret_Base)==1){
 	        if (obj_temp_build.lair!=0) then title="Secret Lair ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
 	        if (obj_temp_build.arsenal!=0) then title="Secret Arsenal ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
 	        if (obj_temp_build.gene_vault!=0) then title="Secret Gene-Vault ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
 	    }
-	    if (ups!=0) and (string_count("Secret",obj_temp_build.target.p_feature[obj_controller.selecting_planet])=0){
+	    if (ups!=0) and (planet_feature_bool(obj_temp_build.target.p_feature[obj_controller.selecting_planet], P_features.Secret_Base)==0){
 	        if (obj_temp_build.lair!=0) then title="Lair ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
 	        if (obj_temp_build.arsenal!=0) then title="Arsenal ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
 	        if (obj_temp_build.gene_vault!=0) then title="Gene-Vault ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
@@ -80,7 +80,7 @@ function scr_ui_popup() {
     
 	    if (ups>0) and (obj_temp_build.lair>0){
 	        var woob;woob="";secret=true;
-	        if (string_count("Secret",obj_temp_build.target.p_feature[obj_controller.selecting_planet])=0) then secret=false;
+	        if (planet_feature_bool(obj_temp_build.target.p_feature[obj_controller.selecting_planet], P_features.Secret_Base)==0) then secret=false;
         
 	        var r,butt,alp,cost,fuck,tooltip,tooltip2,tooltip3,tooltip4,tcost;r=0;tcost=0;butt="";alp=1;cost=0;fuck=obj_temp_build;tooltip="";tooltip2="";tooltip3="";tooltip4="";
 	        repeat(12){r+=1;alp=1;cost=0;
@@ -219,7 +219,7 @@ function scr_ui_popup() {
     
 	    if (ups>0) and (obj_temp_build.lair=0){
 	        var woob,secret;woob="";secret=true;
-	        if (string_count("Secret",obj_temp_build.target.p_feature[obj_controller.selecting_planet])=0) then secret=false;
+	        if (planet_feature_bool(obj_temp_build.target.p_feature[obj_controller.selecting_planet], P_features.Secret_Base)==0) then secret=false;
         
 	        draw_set_font(fnt_40k_14b);
         
@@ -254,7 +254,7 @@ function scr_ui_popup() {
 	            draw_set_alpha(0.2);draw_rectangle(xx+300,yy+45,xx+400,yy+65,0);draw_set_alpha(1);
             
 	            if (obj_controller.cooldown<=0) and (obj_controller.mouse_left=1) and (obj_controller.requisition>=1000){
-	                obj_temp_build.target.p_feature[obj_controller.selecting_planet]+="Secret Lair|";
+	                array_push(obj_temp_build.target.p_feature[obj_controller.selecting_planet], new new_planet_feature(P_features.Secret_Base));
 	                obj_temp_build.target.p_upgrades[obj_controller.selecting_planet]="Lair.2|";
 	                obj_temp_build.lair=-2;obj_temp_build.isnew=1;
 	                obj_controller.cooldown=8000;obj_controller.requisition-=1000;

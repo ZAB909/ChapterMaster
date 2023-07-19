@@ -284,7 +284,7 @@ if (defeat=0) and (npowers=true){
     if (enemy=13){en_power=battle_object.p_necrons[battle_id];part10="Necrons";}
     
     if (instance_exists(battle_object)) and (en_power>2){
-        if (string_count("Awakened",battle_object.p_feature[battle_id])=0){
+        if (awake_tomb_world(battle_object.p_feature[battle_id])!=0){
             scr_gov_disp(battle_object.name,battle_id,floor(en_power/2));
         }
     }
@@ -358,7 +358,7 @@ if (defeat=0) and (npowers=true){
         newline="Tau Ethereal Captured";newline_color="yellow";scr_newtext();
     }
     
-    if (enemy=13) and (battle_object.p_necrons[battle_id]<3) and (string_count("Awakened Necron Tomb|",battle_object.p_feature[battle_id])>0){
+    if (enemy=13) and (battle_object.p_necrons[battle_id]<3) and (awake_tomb_world(battle_object.p_feature[battle_id])== 1){
     
         // var bombs;bombs=scr_check_equip("Plasma Bomb",battle_loc,battle_id,0);
         // var bombs;bombs=scr_check_equip("Plasma Bomb","","",0);
@@ -369,8 +369,7 @@ if (defeat=0) and (npowers=true){
             // scr_check_equip("Plasma Bomb",battle_loc,battle_id,1);
             // scr_check_equip("Plasma Bomb","","",1);
             newline="Plasma Bomb used to seal the Necron Tomb.";newline_color="yellow";scr_newtext();
-            battle_object.p_feature[battle_id]=string_replace(battle_object.p_feature[battle_id],"Awakened Necron Tomb|","Necron Tomb|");
-            // if (battle_object.p_feature[battle_id]="Awakened Necron Tomb") then battle_object.p_feature[battle_id]="Necron Tomb";
+			seal_tomb_world(battle_object.p_feature[battle_id])
         }
         
         if (plasma_bomb<=0){

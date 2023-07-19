@@ -502,13 +502,13 @@ function scr_enemy_ai_e() {
     
 	    // Other planetary stuff
     
-	    if (p_feature[run]!=""){
-	        if (string_count("Recruiting World|",p_feature[run])>0) and (obj_controller.gene_seed=0) and (obj_controller.recruiting>0){
+	    if (array_length(p_feature[run]!=0)){
+	        if (planet_feature_bool(p_feature[run], P_features.Recruiting_World)==1) and (obj_controller.gene_seed=0) and (obj_controller.recruiting>0){
 	            obj_controller.recruiting=0;obj_controller.income_recruiting=0;
 	            scr_alert("red","recruiting","The Chapter has run out of gene-seed!",0,0);
 	        }
         
-	        if (string_count("Recruiting World|",p_feature[run])>0) and (obj_controller.gene_seed>0) and (p_owner[run]<=5) and (obj_controller.faction_status[p_owner[run]]!="War"){
+	        if (planet_feature_bool(p_feature[run], P_features.Recruiting_World)==1) and (obj_controller.gene_seed>0) and (p_owner[run]<=5) and (obj_controller.faction_status[p_owner[run]]!="War"){
 	            if (p_population[run]>=50){
 	                if (p_large[run]=0) then p_population[run]-=1;
                 
@@ -634,7 +634,7 @@ function scr_enemy_ai_e() {
     
 	    // Work on fortifications
 	    if (p_owner[run]=1){
-	        if (string_count("Monastery",p_feature[run])>0){
+	        if (planet_feature_bool(p_feature[run], P_features.Monastery)==1){
 	            var md,ms,ml,build_rate,build_rate2;
 	            md=225;ms=300;ml=32;build_rate=4;build_rate2=6;
             

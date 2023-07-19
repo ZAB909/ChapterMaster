@@ -768,13 +768,14 @@ function scr_dialogue(argument0) {
 	        with(obj_star){var p;p=0;
 	            repeat(4){p+=1;
 	                if (planets>=p){
-	                    if (p_owner[p]<=2) and (dispo[p]<100) and (string_count("Recru",p_feature[p])>0){
+	                    if (p_owner[p]<=2) and (dispo[p]<100) and (planet_feature_bool(p_feature[p], P_features.Recruiting_World)==1){
+							delete_features(p_feature[p], P_features.Recruiting_World)
 	                        p_feature[p]=string_replace(p_feature[p],"Recruiting World|","");
 	                        scr_alert("red","blarg","Recruiting rights on "+string(name)+" "+scr_roman(p)+" revoked!",x,y);
 	                        scr_event_log("red","Recruiting rights on "+string(name)+" "+scr_roman(p)+" revoked!");
 	                        obj_controller.recruiting_worlds=string_replace(obj_controller.recruiting_worlds,string(name)+" "+scr_roman(p)+"|","");
 	                    }
-	                    if (p_owner[p]=1) and (dispo[p]<100) and (string_count("Monast",p_feature[p])=0){
+	                    if (p_owner[p]=1) and (dispo[p]<100) and (planet_feature_bool(p_feature[p], P_features.Monastery)=0){
 	                        if (p_first[p]!=1) then p_owner[p]=p_first[p];
 	                        else p_owner[p]=2;
 	                        scr_alert("red","blarg","Control of "+string(name)+" "+scr_roman(p)+" lost!",x,y);
@@ -1880,12 +1881,12 @@ function scr_dialogue(argument0) {
 	            if (obj_controller.faction_gender[10]=1){
 	                repeat(5){if (found=0){instance_activate_object(obj_star);
 	                    with(obj_temp5){instance_destroy();}
-	                    with(obj_star){var i;i=0;repeat(4){i+=1;if (string_count("WL10",p_feature[i])>0) then instance_create(x,y,obj_temp5);}}
+	                    with(obj_star){var i;i=0;repeat(4){i+=1;if (planet_feature_bool(p_feature[1], P_features.Warlord10)=1) then instance_create(x,y,obj_temp5);}}
 	                    if (instance_exists(obj_temp5)){
 	                        var you,nuum,plan;
 	                        you=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
 	                        nuum=you.name;plan=0;
-	                        var i;i=0;repeat(4){i+=1;if (string_count("WL10",you.p_feature[i])>0) then plan=i;}found=1;
+	                        var i;i=0;repeat(4){i+=1;if (planet_feature_bool(you.p_feature[1], P_features.Warlord10)==1) then plan=i;}found=1;
 	                        diplo_text="The fallen warlord of your kind is located somewhere within the "+string(nuum)+" system.  More I cannot say.  It would be prudent to deal with this soon- that abomination may not remain there long.";
 	                    }
 	                }}
@@ -1901,12 +1902,12 @@ function scr_dialogue(argument0) {
             
 	            repeat(5){if (found=0){instance_activate_object(obj_star);
 	                with(obj_temp5){instance_destroy();}
-	                with(obj_star){var i;i=0;repeat(4){i+=1;if (string_count("WL7|",p_feature[i])>0) then instance_create(x,y,obj_temp5);}}
+	                with(obj_star){var i;i=0;repeat(4){i+=1;if (planet_feature_bool(p_feature[1], P_features.Warlord7)==1) then instance_create(x,y,obj_temp5);}}
 	                if (instance_exists(obj_temp5)){
 	                    var you,nuum,plan;
 	                    you=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
 	                    nuum=you.name;plan=0;
-	                    var i;i=0;repeat(4){i+=1;if (string_count("WL7|",you.p_feature[i])>0) then plan=i;}
+	                    var i;i=0;repeat(4){i+=1;if (planet_feature_bool(you.p_feature[1], P_features.Warlord7)==1) then plan=i;}
 	                    if (you.p_orks[plan]<6) then you.p_orks[plan]=6;
 	                    diplo_text="The greenskin horde is led by a massive Ork, one who calls himself "+string(faction_leader[7])+".  If this warboss were to perish the rest might be dealt with in a more languorous fashion.  He is located on "+string(nuum);
 	                    if (plan=1) then diplo_text+=" I.";if (plan=2) then diplo_text+=" II.";
@@ -1941,9 +1942,9 @@ function scr_dialogue(argument0) {
 	                    repeat(5){
 	                        if (good=0) then with(that){
 	                            var i,onceh;i=0;onceh=0;
-	                            repeat(10){i=floor(random(planets))+1;if (p_feature[i]="") and (onceh=0) then onceh=i;}
+	                            repeat(10){i=floor(random(planets))+1;if (array_length(p_feature[i])==0) and (onceh=0) then onceh=i;}
 	                            if (onceh!=0){
-	                                p_feature[onceh]+="Webway Gate|";obj_controller.temp[90]=name;good=1;
+	                                array_push(p_feature[onceh], new new_planet_feature(P_features.Webway));obj_controller.temp[90]=name;good=1;
 	                                if (onceh=1) then obj_controller.temp[90]+=" I";if (onceh=2) then obj_controller.temp[90]+=" II";
 	                                if (onceh=3) then obj_controller.temp[90]+=" III";if (onceh=4) then obj_controller.temp[90]+=" IV";
 	                            }
@@ -1971,9 +1972,9 @@ function scr_dialogue(argument0) {
 	                    repeat(5){
 	                        if (good=0) then with(that){
 	                            var i,onceh;i=0;onceh=0;
-	                            repeat(10){i=floor(random(planets))+1;if (p_feature[i]="") and (onceh=0) then onceh=i;}
+	                            repeat(10){i=floor(random(planets))+1;if (array_length(p_feature[i])==0) and (onceh=0) then onceh=i;}
 	                            if (onceh!=0){
-	                                p_feature[onceh]+="Webway Gate|";obj_controller.temp[90]=name;good=1;
+	                                array_push(p_feature[onceh], new new_planet_feature(P_features.Webway));obj_controller.temp[90]=name;good=1;
 	                                if (onceh=1) then obj_controller.temp[90]+=" I";if (onceh=2) then obj_controller.temp[90]+=" II";
 	                                if (onceh=3) then obj_controller.temp[90]+=" III";if (onceh=4) then obj_controller.temp[90]+=" IV";
 	                            }
