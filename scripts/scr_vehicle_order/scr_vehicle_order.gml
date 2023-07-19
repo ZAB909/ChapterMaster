@@ -21,7 +21,9 @@ function scr_vehicle_order(argument0) {
 	    temp_wid[co,i]=0;
 	    temp_wep1[co,i]="";
 	    temp_wep2[co,i]="";
+	    temp_wep3[co,i]="";
 	    temp_upgrade[co,i]="";
+	    temp_acc[co,i]="";
 	    temp_hp[co,i]=100;
 	    temp_chaos[co,i]=0;
 	    temp_uid[co,i]=0;
@@ -38,40 +40,40 @@ function scr_vehicle_order(argument0) {
 	i=0;repeat(150){i+=1;
 	    if (veh_role[co,i]="Rhino"){v+=1;
 	        temp_race[co,v]=veh_race[co,i];temp_loc[co,v]=veh_loc[co,i];temp_name[co,v]=veh_name[co,i];temp_role[co,v]=veh_role[co,i];temp_lid[co,v]=veh_lid[co,i];
-	        temp_wid[co,v]=veh_wid[co,i];temp_wep1[co,v]=veh_wep1[co,i];temp_wep2[co,v]=veh_wep2[co,i];temp_upgrade[co,v]=veh_upgrade[co,i];temp_hp[co,v]=veh_hp[co,i];
+	        temp_wid[co,v]=veh_wid[co,i];temp_wep1[co,v]=veh_wep1[co,i];temp_wep2[co,v]=veh_wep2[co,i];temp_wep3[co,v]=veh_wep3[co,i];temp_upgrade[co,v]=veh_upgrade[co,i];temp_acc[co,v]=veh_acc[co,i];temp_hp[co,v]=veh_hp[co,i];
 	        temp_chaos[co,v]=veh_chaos[co,i];temp_uid[co,v]=veh_uid[co,i];
 	    }
 	}
 
 	i=0;repeat(150){i+=1;
 	    if (veh_role[co,i]="Predator"){v+=1;
-	        temp_race[co,v]=veh_race[co,i];temp_loc[co,v]=veh_loc[co,i];temp_name[co,v]=veh_name[co,i];temp_role[co,v]=veh_role[co,i];temp_lid[co,v]=veh_lid[co,i];
-	        temp_wid[co,v]=veh_wid[co,i];temp_wep1[co,v]=veh_wep1[co,i];temp_wep2[co,v]=veh_wep2[co,i];temp_upgrade[co,v]=veh_upgrade[co,i];temp_hp[co,v]=veh_hp[co,i];
-	        temp_chaos[co,v]=veh_chaos[co,i];temp_uid[co,v]=veh_uid[co,i];
+					temp_race[co,v]=veh_race[co,i];temp_loc[co,v]=veh_loc[co,i];temp_name[co,v]=veh_name[co,i];temp_role[co,v]=veh_role[co,i];temp_lid[co,v]=veh_lid[co,i];
+					temp_wid[co,v]=veh_wid[co,i];temp_wep1[co,v]=veh_wep1[co,i];temp_wep2[co,v]=veh_wep2[co,i];temp_wep3[co,v]=veh_wep3[co,i];temp_upgrade[co,v]=veh_upgrade[co,i];temp_acc[co,v]=veh_acc[co,i];temp_hp[co,v]=veh_hp[co,i];
+					temp_chaos[co,v]=veh_chaos[co,i];temp_uid[co,v]=veh_uid[co,i];
 	    }
 	}
 
 	i=0;repeat(150){i+=1;
 	    if (veh_role[co,i]="Whirlwind"){v+=1;
-	        temp_race[co,v]=veh_race[co,i];temp_loc[co,v]=veh_loc[co,i];temp_name[co,v]=veh_name[co,i];temp_role[co,v]=veh_role[co,i];temp_lid[co,v]=veh_lid[co,i];
-	        temp_wid[co,v]=veh_wid[co,i];temp_wep1[co,v]=veh_wep1[co,i];temp_wep2[co,v]=veh_wep2[co,i];temp_upgrade[co,v]=veh_upgrade[co,i];temp_hp[co,v]=veh_hp[co,i];
-	        temp_chaos[co,v]=veh_chaos[co,i];temp_uid[co,v]=veh_uid[co,i];
+					temp_race[co,v]=veh_race[co,i];temp_loc[co,v]=veh_loc[co,i];temp_name[co,v]=veh_name[co,i];temp_role[co,v]=veh_role[co,i];temp_lid[co,v]=veh_lid[co,i];
+					temp_wid[co,v]=veh_wid[co,i];temp_wep1[co,v]=veh_wep1[co,i];temp_wep2[co,v]=veh_wep2[co,i];temp_wep3[co,v]=veh_wep3[co,i];temp_upgrade[co,v]=veh_upgrade[co,i];temp_acc[co,v]=veh_acc[co,i];temp_hp[co,v]=veh_hp[co,i];
+					temp_chaos[co,v]=veh_chaos[co,i];temp_uid[co,v]=veh_uid[co,i];
 	    }
 	}
 
 	i=0;repeat(150){i+=1;
 	    if (veh_role[co,i]="Land Speeder"){v+=1;
-	        temp_race[co,v]=veh_race[co,i];temp_loc[co,v]=veh_loc[co,i];temp_name[co,v]=veh_name[co,i];temp_role[co,v]=veh_role[co,i];temp_lid[co,v]=veh_lid[co,i];
-	        temp_wid[co,v]=veh_wid[co,i];temp_wep1[co,v]=veh_wep1[co,i];temp_wep2[co,v]=veh_wep2[co,i];temp_upgrade[co,v]=veh_upgrade[co,i];temp_hp[co,v]=veh_hp[co,i];
-	        temp_chaos[co,v]=veh_chaos[co,i];temp_uid[co,v]=veh_uid[co,i];
+					temp_race[co,v]=veh_race[co,i];temp_loc[co,v]=veh_loc[co,i];temp_name[co,v]=veh_name[co,i];temp_role[co,v]=veh_role[co,i];temp_lid[co,v]=veh_lid[co,i];
+					temp_wid[co,v]=veh_wid[co,i];temp_wep1[co,v]=veh_wep1[co,i];temp_wep2[co,v]=veh_wep2[co,i];temp_wep3[co,v]=veh_wep3[co,i];temp_upgrade[co,v]=veh_upgrade[co,i];temp_acc[co,v]=veh_acc[co,i];temp_hp[co,v]=veh_hp[co,i];
+					temp_chaos[co,v]=veh_chaos[co,i];temp_uid[co,v]=veh_uid[co,i];
 	    }
 	}
 
 	i=0;repeat(150){i+=1;
 	    if (veh_role[co,i]="Land Raider"){v+=1;
-	        temp_race[co,v]=veh_race[co,i];temp_loc[co,v]=veh_loc[co,i];temp_name[co,v]=veh_name[co,i];temp_role[co,v]=veh_role[co,i];temp_lid[co,v]=veh_lid[co,i];
-	        temp_wid[co,v]=veh_wid[co,i];temp_wep1[co,v]=veh_wep1[co,i];temp_wep2[co,v]=veh_wep2[co,i];temp_upgrade[co,v]=veh_upgrade[co,i];temp_hp[co,v]=veh_hp[co,i];
-	        temp_chaos[co,v]=veh_chaos[co,i];temp_uid[co,v]=veh_uid[co,i];
+					temp_race[co,v]=veh_race[co,i];temp_loc[co,v]=veh_loc[co,i];temp_name[co,v]=veh_name[co,i];temp_role[co,v]=veh_role[co,i];temp_lid[co,v]=veh_lid[co,i];
+					temp_wid[co,v]=veh_wid[co,i];temp_wep1[co,v]=veh_wep1[co,i];temp_wep2[co,v]=veh_wep2[co,i];temp_wep3[co,v]=veh_wep3[co,i];temp_upgrade[co,v]=veh_upgrade[co,i];temp_acc[co,v]=veh_acc[co,i];temp_hp[co,v]=veh_hp[co,i];
+					temp_chaos[co,v]=veh_chaos[co,i];temp_uid[co,v]=veh_uid[co,i];
 	    }
 	}
 
@@ -91,9 +93,11 @@ function scr_vehicle_order(argument0) {
 	        veh_wid[co,i]=temp_wid[co,i];
 	        veh_wep1[co,i]=temp_wep1[co,i];
 	        veh_wep2[co,i]=temp_wep2[co,i];
+	        veh_wep3[co,i]=temp_wep3[co,i];
 	        veh_upgrade[co,i]=temp_upgrade[co,i];
+	        veh_acc[co,i]=temp_acc[co,i];
 	        veh_hp[co,i]=temp_hp[co,i];
-	        veh_chaos[co,i]=temp_chaos[co,i];    
+	        veh_chaos[co,i]=temp_chaos[co,i];
 	        veh_uid[co,i]=temp_uid[co,i];
 	    }
 	    if (i>v){
@@ -105,7 +109,9 @@ function scr_vehicle_order(argument0) {
 	        veh_wid[co,i]=0;
 	        veh_wep1[co,i]="";
 	        veh_wep2[co,i]="";
+	        veh_wep3[co,i]="";
 	        veh_upgrade[co,i]="";
+	        veh_acc[co,i]="";
 	        veh_hp[co,i]=0;
 	        veh_chaos[co,i]=0;
 	        veh_uid[co,i]=0;
