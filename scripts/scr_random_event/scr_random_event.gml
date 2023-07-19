@@ -34,7 +34,7 @@ function scr_random_event(execute_now) {
 	}
 
 	var chosen_event;
-	if (force_inquisition_mission && random_event_next == "") {
+	if (force_inquisition_mission && random_event_next == event_enum.none) {
 		chosen_event = event_enum.inquisition_mission;
 	}
 	else {
@@ -46,9 +46,8 @@ function scr_random_event(execute_now) {
 			if ((turn-15)<last_event) then exit;// Minimum interval between
 		}
 		
-		if(random_event_next != "") {
-			//chosen_event;
-			// make a switch case that forces the chosen_event to be whatever the random_event_next says
+		if(random_event_next != event_enum.none) {
+			chosen_event = random_event_next;
 		}
 		else {
 			var player_luck;
@@ -208,8 +207,7 @@ function scr_random_event(execute_now) {
 	}
 	
 	if (!execute_now){
-		random_event_next=chosen_event; // Fix this!!
-		// make a switch case that sets the random event next
+		random_event_next = chosen_event;
 		exit;
 	}
 	
@@ -1624,8 +1622,8 @@ function scr_random_event(execute_now) {
 		}
 		else {
 			last_event=turn;
-			if (random_event_next!=""){
-				random_event_next="";
+			if (random_event_next != event_enum.none){
+				random_event_next = event_enum.none;
 			}
 		}
 	}
