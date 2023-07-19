@@ -16,7 +16,7 @@ plani=floor(random(stahr.planets))+1;
 if (faction_gender[10]=1) and (faction_defeated[10]=0) and (turn>=chaos_turn) then repeat(times){
     if (stahr.p_type[plani]!="Dead") and (stahr.planets>0) and (turn>=20){
         var cathedral;cathedral=0;
-        if (string_count("Cathedral",stahr.p_feature[plani])>0) then cathedral=choose(0,1,1);
+        if (planet_feature_bool(stahr.p_feature[plani], P_features.Sororitas_Cathedral)==1) then cathedral=choose(0,1,1);
     
         if (cathedral=0){
             if (stahr.p_heresy[plani]>=0) and (stahr.p_heresy[plani]<10){
@@ -921,12 +921,11 @@ if ((turn>=10) or (obj_ini.fleet_type=3)) and (faction_defeated[7]=0){
                 repeat(10){
                     if (!instance_exists(obj_temp2)){
                         rund=round(random(you.planets));
-                        if (rund=1) and (you.p_owner[1]=7) and (you.p_pdf[1]+you.p_guardsmen[1]=0) and (you.p_orks[1]>=2) then you.p_feature[rund]+="WL7|";
-                        if (rund=2) and (you.p_owner[2]=7) and (you.p_pdf[2]+you.p_guardsmen[2]=0) and (you.p_orks[2]>=2) then you.p_feature[rund]+="WL7|";
-                        if (rund=3) and (you.p_owner[3]=7) and (you.p_pdf[3]+you.p_guardsmen[3]=0) and (you.p_orks[3]>=2) then you.p_feature[rund]+="WL7|";
-                        if (rund=4) and (you.p_owner[4]=7) and (you.p_pdf[4]+you.p_guardsmen[4]=0) and (you.p_orks[4]>=2) then you.p_feature[rund]+="WL7|";
+						if (rund>0) and(rund<5){
+							if	(you.p_owner[rund]=7) and (you.p_pdf[rund]+you.p_guardsmen[rund]=0) and (you.p_orks[rund]>=2) then array_push( you.p_feature[rund], new new_planet_feature(P_features.Warlord7));
+						}
                         if (you.p_orks[rund]<4) then you.p_orks[rund]=4;
-                        if (string_count("WL7",you.p_feature[rund])>0) then instance_create(x,y,obj_temp2);
+                        if (planet_feature_bool(you.p_feature[rund], P_features.Warlord7)==1) then instance_create(x,y,obj_temp2);
                     }
                 }
             }

@@ -308,7 +308,7 @@ if (obj_controller.cooldown<=0) and (loading=1){
         }
         
         // STC Grab
-        if (planet_feature_bool(target.p_feature[obj_controller.selecting_planet], P_features.STC) == 1) and (recon=0){
+        if (planet_feature_bool(target.p_feature[obj_controller.selecting_planet], P_features.STC_Fragment) == 1) and (recon=0){
             var i,tch,mch;i=0;tch=0;mch=0;
             repeat(300){i+=1;
                 if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1){

@@ -12,8 +12,15 @@ enum P_features {
 			Warlord10,
 			Special_Force,
 			World_Eaters,
-			Webway
+			Webway,
+			Secret_Base
 	};
+	
+enum base_type{
+	Lair,
+	Arsenal,
+	Gene_Vault
+}
 	
 function new_planet_feature(feature_type) constructor
 {
@@ -21,6 +28,9 @@ function new_planet_feature(feature_type) constructor
 	if(f_type == P_features.Necron_Tomb){
 		awake = 0;
 		sealed = 0;
+	} else  if(f_type == P_features.Secret_Base){
+		base_type = 0;
+		inquis_hidden =1;
 	}
 }
 
@@ -37,6 +47,16 @@ function search_planet_features(planet, search_feature){
 	return feature_positions;
 }
 
+function system_feature_bool(system, search_feature){
+	var sys_bool = 0;
+	for (var sys =1; sys<5; sys++;){
+		sys_bool = planet_feature_bool(system[sys], search_feature)
+		if (sys_bool==1){
+		break;}
+	}
+	return sys_bool;
+}
+
 function planet_feature_bool(planet, search_feature){
 	var feature_count = array_length(planet);
 	var feature_exists = 0;
@@ -48,6 +68,15 @@ function planet_feature_bool(planet, search_feature){
 		if (feature_exists == 1){break;}
 	}}
 	return feature_exists;	
+}
+
+function delete_features(planet, del_feature){
+	var delete_Array = search_planet_features(planet, del_feature)
+	if (array_length(delete_Array) >0){
+		for (var d=0;d<array_length(delete_Array);d++){
+			array_delete(planet, delete_Array[d],delete_Array[d]+1)
+		}
+	}
 }
 
 
