@@ -536,12 +536,12 @@ function scr_enemy_ai_e() {
 	                if (p_type[run]="Temperate") and (recr<=25){aspirant=1;}
 	                if (p_type[run]="Feudal") and (recr<=25){aspirant=1;}
 	                if (p_type[run]="Shrine") and (recr<=20){aspirant=1;}
-	                if (p_type[run]="Forge") and (recr<=15){aspirant=1;}
+	                if (p_type[run]="Forge") and (recr<=20){aspirant=1;}
 	                if (p_type[run]="Desert") and (recr<=15){aspirant=1;}
 	                if (p_type[run]="Ice") and (recr<=15){aspirant=1;}
 	                if (p_type[run]="Agri") and (recr<=15){aspirant=1;}
 	                if (p_type[run]="Death") and (recr<=10){aspirant=1;}
-	                if (p_type[run]="Lava") and (recr<=5){aspirant=1;}
+	                if (p_type[run]="Lava") and (recr<=7){aspirant=1;}
 
 
 	                // train-=58;
