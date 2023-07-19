@@ -1,8 +1,8 @@
 function scr_ui_settings() {
 
 	var xx,yy;
-	xx=view_xview[0]+0;
-	yy=view_yview[0]+0;
+	xx=__view_get( e__VW.XView, 0 )+0;
+	yy=__view_get( e__VW.YView, 0 )+0;
 
 
 
