@@ -181,7 +181,7 @@ function scr_random_event(execute_now) {
 									break;
 								}
 							}
-							if(!has_mooving_fleet){
+							if(!has_moving_fleet){
 								events_share[i] -= 1;
 								events_total -= 1;
 							}
@@ -304,7 +304,7 @@ function scr_random_event(execute_now) {
 		
 		var role=obj_ini.role[company,marine];
 		var text = string(role)+" "+string(obj_ini.name[company,marine]);
-		var company_text = scr_company_string(company);
+		var company_text = scr_convert_company_to_string(company);
 		if(company_text != ""){
 			company_text = "("+company_text+")";
 		}
@@ -515,7 +515,7 @@ function scr_random_event(execute_now) {
     
 	    if (chosen_mission == inquisition_mission.purge){
 			debugl("RE: Purge");
-	        var mission_flavour = choose(1,1,1,2,2,3);
+	        var mission_flavour = choose(1,1,1,2,2,/*3*/); // think 3 makes errors
 			
 			var stars = scr_get_stars();
 			var valid_stars = array_filter_ext(stars,
@@ -658,7 +658,7 @@ function scr_random_event(execute_now) {
 	    else if (chosen_mission == inquisition_mission.artifact) {
 			var text;
 			debugl("RE: Artifact Hold");
-	        tixt="The Inquisition is trusting you with a special mission.  A local Inquisitor has a powerful artifact.  You are to keep it safe, and NOT use it, until the artifact may be safely retrieved.  Can your chapter handle this mission?";
+	        text="The Inquisition is trusting you with a special mission.  A local Inquisitor has a powerful artifact.  You are to keep it safe, and NOT use it, until the artifact may be safely retrieved.  Can your chapter handle this mission?";
 	        scr_popup("Inquisition Mission",text,"inquisition","artifact|bop|0|"+string(irandom_range(6,26))+"|");
 			evented = true;
 	    }

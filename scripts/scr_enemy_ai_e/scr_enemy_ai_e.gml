@@ -501,7 +501,10 @@ function scr_enemy_ai_e() {
     
     
 	    // Other planetary stuff
-    
+		var thirdpop;
+		var halfpop;
+		thirdpop = p_max_population[run]/3;
+		halfpop = p_max_population[run]/2;
 	    if (p_feature[run]!=""){
 	        if (string_count("Recruiting World|",p_feature[run])>0) and (obj_controller.gene_seed=0) and (obj_controller.recruiting>0){
 	            obj_controller.recruiting=0;obj_controller.income_recruiting=0;
@@ -509,7 +512,8 @@ function scr_enemy_ai_e() {
 	        }
         
 	        if (string_count("Recruiting World|",p_feature[run])>0) and (obj_controller.gene_seed>0) and (p_owner[run]<=5) and (obj_controller.faction_status[p_owner[run]]!="War"){
-	            if (p_population[run]>=50){
+	            if (p_population[run])>=50{
+					scr_alert("green","owner", "Recruitment is slowed due to lack of population on our recruitment worlds",0,0);
 	                if (p_large[run]=0) then p_population[run]-=1;
                 
 	                var recr, aspirant, corr, train, dista, onceh; 
@@ -527,10 +531,10 @@ function scr_enemy_ai_e() {
 					// corr isn't really relevant as corruption in marines doesn't matter
 					// by default it takes 72 turns (6 years) to train
 					
+					
 					if (p_type[run]="Hive") and (recr<=40){aspirant=1;}
 	                if (p_type[run]="Temperate") and (recr<=25){aspirant=1;}
-
-	                if (p_type[run]="Feudal") and (recr<=20){aspirant=1;}
+	                if (p_type[run]="Feudal") and (recr<=25){aspirant=1;}
 	                if (p_type[run]="Shrine") and (recr<=20){aspirant=1;}
 	                if (p_type[run]="Forge") and (recr<=15){aspirant=1;}
 	                if (p_type[run]="Desert") and (recr<=15){aspirant=1;}
@@ -540,7 +544,6 @@ function scr_enemy_ai_e() {
 	                if (p_type[run]="Lava") and (recr<=5){aspirant=1;}
 
 
-                
 	                // train-=58;
 	                // train-=55;
                 /* // old blood duel
@@ -585,11 +588,11 @@ function scr_enemy_ai_e() {
 						then recr=floor(recr*2);
 
 						
-						
+						/*
 						// give xp if they deserve it
 					obj_controller.recruit_exp[thiss]=choose(8,9,9);	
 						
-						
+						*/
                 
 	                if (aspirant!=0){
 	                    var i,thiss;

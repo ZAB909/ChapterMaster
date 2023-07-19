@@ -170,7 +170,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        descr="More of a sword than knife proper, this tough and thick blade becomes a deadly weapon in the hand of an Astartes.";}
 	    if (thawep="Sarissa"){atta=40;arp=0;rang=1;spli=1;
 	        descr="A vicious combat attachment that is attached to Bolters, in order to allow them to be used in melee combat.";}
-	    if (thawep="Chainsword"){atta=45;arp=1;rang=1;melee_hands+=1;spli=1;
+	    if (thawep="Chainsword"){atta=45;arp=0;rang=1;melee_hands+=1;spli=1;
 	        descr="A standard Chainsword.  It is popular among Assault Marines due to the raw power and anti-armor capabilities.";}
 	    if (thawep="Chainaxe"){atta=55;arp=1;rang=1;melee_hands+=1;spli=1;
 	        descr="A weapon most frequently seen in the hands of Chaos, this Chainaxe uses motorized chainsaw teeth to maim and tear.";}
