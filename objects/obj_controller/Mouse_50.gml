@@ -484,10 +484,10 @@ if (menu=20) and ((diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6))) and (coo
             }
             if (diplomacy=3){cooldown=8;// Mechanicus trade goods
                 trade_theirs[1]="Terminator Armor";trade_theirs[2]="Land Raider";trade_theirs[3]="Minor Artifact";
-                // trade_theirs[4]="Skitarii";
-                trade_theirs[4]="Techpriest";
+                trade_theirs[4]="Skitarii";
+                trade_theirs[5]="Techpriest";
                 trade_disp[1]=30;trade_disp[2]=20;trade_disp[3]=40;// trade_disp[4]=20;
-                trade_disp[4]=50;
+                trade_disp[4]=30;trade_disp[5]=60;
             }
             if (diplomacy=4){cooldown=8;// Inquisition trade goods
                 trade_theirs[1]="Condemnor Boltgun";trade_theirs[2]="Hellrifle";trade_theirs[3]="Incinerator";trade_theirs[4]="Crusader";trade_theirs[5]="Exterminatus";trade_theirs[6]="Cyclonic Torpedo";
@@ -501,7 +501,7 @@ if (menu=20) and ((diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6))) and (coo
             if (diplomacy=6){cooldown=8;// Elfdar trade goods
                 trade_theirs[1]="Master Crafted Power Sword";trade_theirs[2]="Archeotech Laspistol";trade_theirs[3]="Ranger";trade_theirs[4]="Useful Information";
                 trade_disp[1]=-10;trade_disp[2]=-10;trade_disp[3]=10;trade_disp[4]=-15;
-                if (random_event_next!="") and ((string_count("WL10|",useful_info)>0) or (turn<chaos_turn)) and ((string_count("WL7|",useful_info)>0) or (known[7]<1)) and  (string_count("WG|",useful_info)>1) and (string_count("CM|",useful_info)>0) then trade_disp[4]=1000;
+                if (random_event_next != event_enum.none) and ((string_count("WL10|",useful_info)>0) or (turn<chaos_turn)) and ((string_count("WL7|",useful_info)>0) or (known[7]<1)) and  (string_count("WG|",useful_info)>1) and (string_count("CM|",useful_info)>0) then trade_disp[4]=1000;
             }
             if (diplomacy=7){cooldown=8;// Ork trade goods
                 trade_theirs[1]="Power Klaw";trade_theirs[2]="Ork Sniper";trade_theirs[3]="Flash Git";

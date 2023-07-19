@@ -50,7 +50,7 @@ function scr_planetary_feature(argument0) {
 	    var lop;lop="STC Fragment located on "+string(name)+" "+scr_roman(argument0)+"."debugl(lop);
 	    scr_alert("green","feature",lop,x,y);scr_event_log("",lop);
 	}
-	if (ranb=5) and (p_type[argument0]!="Ice") and (p_type[argument0]!="Dead") and (goo=0){goo=1;
+	if (ranb=5) and (p_type[argument0]!="Ice") and (p_type[argument0]!="Dead") and (p_type[argument0]!="Feudal") and (goo=0){goo=1;
 	    p_feature[argument0]=string_replace(p_feature[argument0],"????|","Ancient Ruins|");
 	    var lop;lop="Ancient Ruins discovered on "+string(name)+" "+scr_roman(argument0)+"."debugl(lop);
 	    scr_alert("green","feature",lop,x,y);scr_event_log("",lop);

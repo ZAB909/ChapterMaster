@@ -55,14 +55,14 @@ draw_set_font(fnt_menu);
 draw_set_color(38144);
 if (owner=1) then draw_set_color(c_white);
 if (owner=2) then draw_set_color(c_gray);
-if (owner=3) then draw_set_color(16512);
+if (owner=3) then draw_set_color(c_red); // toaster fuckers 
 if (owner=5) then draw_set_color(c_white);
 if (owner=6) then draw_set_color(33023);
-if (owner=7) then draw_set_color(38144);
-if (owner=8) then draw_set_color(117758);
-if (owner=9) then draw_set_color(7492269);
-if (owner=10) then draw_set_color(c_purple);
-if (owner=13) then draw_set_color(65408);
+if (owner=7) then draw_set_color(38144); // waagh
+if (owner=8) then draw_set_color(117758); // the greater good
+if (owner=9) then draw_set_color(7492269); //bug boys
+if (owner=10) then draw_set_color(c_purple); // chaos
+if (owner=13) then draw_set_color(65408); //Sleepy robots
 if (space_hulk=1) then draw_set_color(255);
 // if (explored=0){draw_set_color(38144);show="????";}
 

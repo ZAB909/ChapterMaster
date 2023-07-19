@@ -23,9 +23,9 @@ function scr_chapter_new(argument0) {
 	    role[i,5]="Captain";wep1[i,5]="Power Fist";wep2[i,5]="Bolt Pistol";armor[i,5]="Power Armor";
 	    role[i,6]="Dreadnought";wep1[i,6]="Close Combat Weapon";wep2[i,6]="Lascannon";armor[i,6]="Dreadnought";
 	    role[i,8]="Tactical Marine";wep1[i,8]="Bolter";wep2[i,8]="Chainsword";armor[i,8]="Power Armor";
-	    role[i,9]="Devastator";wep1[i,9]="Heavy Ranged";wep2[i,9]="Bolt Pistol";armor[i,9]="Power Armor";
+	    role[i,9]="Devastator";wep1[i,9]="Heavy Ranged";wep2[i,9]="Combat Knife";armor[i,9]="Power Armor";
 	    role[i,10]="Assault Marine";wep1[i,10]="Chainsword";wep2[i,10]="Bolt Pistol";armor[i,10]="Power Armor";mobi[i,10]="Jump Pack";
-	    role[i,12]="Scout";wep1[i,12]="Sniper Rifle";wep2[i,12]="Chainsword";armor[i,12]="Scout Armor";
+	    role[i,12]="Scout";wep1[i,12]="Sniper Rifle";wep2[i,12]="Combat Knife";armor[i,12]="Scout Armor";
 	    role[i,14]="Chaplain";wep1[i,14]="Power Sword";wep2[i,14]="Storm Bolter";armor[i,14]="Power Armor";gear[i,14]="Rosarius";
 	    role[i,15]="Apothecary";wep1[i,15]="Power Sword";wep2[i,15]="Storm Bolter";armor[i,15]="Power Armor";gear[i,15]="Narthecium";
 	    role[i,16]="Techmarine";wep1[i,16]="Power Axe";wep2[i,16]="Storm Bolter";armor[i,16]="Power Armor";gear[i,16]="Servo Arms";

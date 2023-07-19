@@ -16,7 +16,7 @@ if (obj_controller.zoomed=1){if (maxhp!=0) then draw_text_transformed(x,y-sprite
 }
 
 if (shields>0){
-draw_set_color(c_blue);
+draw_set_color(c_white);
 if (obj_controller.zoomed=0){if (maxhp!=0) then draw_text(x,y-(sprite_height/2),string_hash_to_newline(string(floor((shields/maxshields)*100))+"%"));}
 if (obj_controller.zoomed=1){if (maxhp!=0) then draw_text_transformed(x,y-sprite_height,string_hash_to_newline(string(floor((shields/maxshields)*100))+"%"),2,2,0);}
 }
