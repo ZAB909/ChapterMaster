@@ -131,7 +131,7 @@ function scr_dialogue(argument0) {
 	    var tix;tix=string(obj_ini.master_name)+" kills the "+string(global.chapter_name)+" Master of Sanctity for "+string(obj_controller.faction_leader[10])+".";
 	    scr_event_log("purple",tix);// scr_alert("purple","lol",string(tix),0,0);
     
-	    diplo_text="[Missing dialogue- well done]";
+	    diplo_text="As the echoes fade, it becomes clear that the Master of Sanctity of "+string(global.chapter_name)+" has fallen.";
 	    diplo_option[1]="[Continue]";diplo_goto[1]="cs_meeting135";
 	}
 
@@ -168,9 +168,9 @@ function scr_dialogue(argument0) {
 	}
 
 	if (argument0="cs_meeting_m5"){diplomacy=-5.2;instance_activate_all();
-	    diplo_text="[Missing text- Master of Sanctity is turning you in to the Inquisition]";
+	    diplo_text="By the sacred oath I have sworn, I bear witness to your darkest secrets. Know this: I am compelled to report your heresy to the Inquisition. Redemption or retribution, their verdict shall decide. May the Emperor's mercy guide your path.";
     
-	    diplo_option[1]="Very well.  I did what must be done, and now accept the price.  [Game Over]";
+	    diplo_option[1]="Very well.  I did what must be done for my brothers, and now accept the price.  [Game Over]";
 	    diplo_option[2]="Never!  [Battle Loyalist "+string(global.chapter_name)+"]";
 	    diplo_goto[1]="cs_meeting_m6";diplo_goto[2]="cs_meeting_battle7";
 	}
@@ -405,10 +405,10 @@ function scr_dialogue(argument0) {
 
 	if (diplomacy=10){// Chaos
 	    if (argument0="civilwar_begin"){
-	        diplo_text="[Missing dialogue]";force_goodbye=1;
+	        diplo_text="The Imperium, blinded by its own hypocrisy, drowns in corruption and stagnation.If it is civil war they desire, then civil war they shall have.";force_goodbye=1;
 	    }
 	    if (argument0="civilwar_soon"){
-	        diplo_text="[Missing dialogue]";force_goodbye=1;
+	        diplo_text="The winds of change whisper a familiar tune. Soon, the veil of deceit shall be lifted, and the true face of the Imperium shall be revealed to all.";force_goodbye=1;
 	    }
 
     
@@ -1361,7 +1361,7 @@ function scr_dialogue(argument0) {
 	        diplo_option[3]="Threaten my Chapter at your own peril.";diplo_goto[3]="die_heretic";
 	    }
 	    if (argument0="loyalty_penitence"){
-	        diplo_text="[Missing text]";
+	        diplo_text="Brothers, hear my words! It is time to embark on a sacred journey of redemption, a penitence crusade to cleanse our souls. Our past wrongdoings have led us astray form the Emperor, but through unwavering determination and righteous deeds, we shall forge a path to absolution. With every battle fought, every sacrifice made, we shall restore honor to our name and rekindle the flame of righteousness within. ";
         
 	        var tx;tx="The "+string(global.chapter_name)+" become Penitent.";
 	        scr_alert("green","halp",string(tx),0,0);scr_event_log("",string(tx));
@@ -1545,7 +1545,7 @@ function scr_dialogue(argument0) {
 	        diplo_text="How dare you strike at us, the truest and most devoted servants of the Emperor!? That artifact was on our territory! You had no right and you shall pay in blood for your actions!";
 	    }
 	    if (argument0="stc_thanks"){
-	        diplo_text="[Missing Dialogue: stc_thanks]";
+	        diplo_text="On behalf of Imperium, I extend our deepest gratitude to "+string(global.chapter_name)+" for the invaluable gift given to us.";
 	    }
 	    if (argument0="trading_demand"){
 	        if (rela="friendly") then diplo_text=string(obj_ini.master_name)+"?";
@@ -1723,7 +1723,7 @@ function scr_dialogue(argument0) {
 	    }
 	    if (argument0="open_trade") then diplo_text="Speak.";
 	    if (argument0="artifact"){
-	        diplo_text="[Missing Dialogue]";
+	        diplo_text="Representatives of the Imperium, as the Chapter Master of "+string(global.chapter_name)+",  I inform you of a potential artifact within our possession, one that we are willing to trade.";
 	    }
 	    if (argument0="artifact_thanks"){
 	        diplo_text="We... thank you, for the gift of this imperial curio. I am sure it will prove useful for something. What, I am not sure.";
@@ -1813,7 +1813,7 @@ function scr_dialogue(argument0) {
         
 	        repeat(30){
 	            if (o3=5) and (string_count("CM|",obj_controller.useful_info)>0) then o3-=1;
-	            if (o3=4) and (random_event_next!="") then o3-=1;
+	            if (o3=4) and (random_event_next != event_enum.none) then o3-=1;
 	            if (o3=3) and ((turn<chaos_turn) or (known[10]>3)) then o3-=1;
 	            if (o3=2) and ((known[7]<0) or (known[7]>=3) or (string_count("WL7|",obj_controller.useful_info)=1)) then o3-=1;
 	            if (o3=1) and (string_count("WG|",obj_controller.useful_info)>1) then o3=5;         
@@ -1847,28 +1847,30 @@ function scr_dialogue(argument0) {
 	        // Next random event
 	        if (o1=4){
 	            scr_random_event(false);
-	            if (random_event_next="strange_behavior") and (obj_controller.disposition[6]<15) then diplo_text="One of your Mon'keigh soldiers will no longer act as you expect him to. Be wary, when one Mon'keigh is influenced the rest of the herd will be.";
-	            if (random_event_next="strange_behavior") and (obj_controller.disposition[6]>=15) then diplo_text="One of your soldiers will no longer act as you expect him to. Be wary, when one is influenced the rest of the herd will be.";
-	            if (random_event_next="space_hulk") then diplo_text="It comes from the warp, a relic from the past. It is steeped in the energies of the ethereal tides. Beware.";
-	            if (random_event_next="promotion") then diplo_text="One of your soldiers will cover himself in glory. As his “Chapter Master”, a title I find inherently foolish, you may wish to reward him.";
-	            if (random_event_next="strange_building") then diplo_text="The Red robed ones, their “Machine God”, calls to them. Soon, one shall lose their tenuos grip on the here and now and follow the pictures in his head.";
-	            if (random_event_next="sororitas") then diplo_text="Your priestesses of war, who worship He Who Fell, will gather their forces soon, to stay.";
-	            if (random_event_next="inquisition_mission") then diplo_text="They will come very soon, the bearers of hellfire and hate. They will scour the sector for so-called ''Heresy''.";
-	            if (random_event_next="inquisition_planet") then diplo_text="Your questions askers seek to learn more of a planet.  Warp meddlers and free thinkers would be well-served with caution. Beware, Chapter Master.";
-	            if (random_event_next="rogue_trader") then diplo_text="Free thinkers, traders in the vast expanse. They are coming, perhaps you aught to set out your wares?";
-	            if (random_event_next="fleet_delay") then diplo_text="Mon'keigh, your fleets may be delayed by my kin. Eldar Pirates, your kind would call them.";
-	            if (random_event_next="harlequins") then diplo_text="Rillietann. They have come. They are on some world, hidden, or soon will be.";
-	            if (random_event_next="succession_war") then diplo_text="Your underlings fight for power, Mon'keigh.  Someone will die who believes he is important. His children and ''friends'' will vie for the rite to call himself or herself governor. Or king. Or whatever self aggrandising title your people name yourselves.";
-	            if (random_event_next="random_fun") then diplo_text="Something will happen soon. The runes do not show me exactly what will happen, only that it concerns you. Watch the horizon, Mon'keigh.";
-	            if (random_event_next="warp_storms") then diplo_text="The tides of the Immaterium are unsettled. Of course, it's hard to calculate where the Immaterium will affect the Materium, but I predict it will come soon.";
-	            if (random_event_next="enemy_forces") then diplo_text="From beyond your circle of firelight, they are coming. Rest not Mon'keigh, for they will come soon and are bent on destruction."; 
-	            if (random_event_next="crusade") then diplo_text="Soon, your masters will call you to heel like a dog to attack the foes of man. One of your ''Crusades'' of hate, ignorance and bigotry will be called."; 
-	            if (random_event_next="enemy") then diplo_text="You will make an enemy among your fellow man. Soon they shall whisper into their lord's ear, telling that you are a threat, a beetle to be crushed beneath their boot.  You would do well to speak carefully, for some time.";
-	            if (random_event_next="mutation") then diplo_text="Your 'battle brothers' are twisting like snakes beneath your feet. Watch yourself, Chapter Master.";
-	            if (random_event_next="ship_lost") then diplo_text="The Immaterium will swallow one of your ships.  Do not look for it to return.";
-	            if (random_event_next="chaos_invasion") then diplo_text="Your twisted brethren, who fell to the lure of the Immaterium, will soon arrive with their wrath and demons. Beware.";
-	            if (random_event_next="necron_awaken") then diplo_text="Our old enemies, the men of metal, are close. You call them “Necrons”, and you will need to fight them soon. Or flee, it matters not to me.";            
-	            if (string_length(diplo_text)<5) then diplo_text="[Missing Dialogue: "+string(random_event_next)+" forcast.]";
+	            if (random_event_next == event_enum.strange_behavior) and (obj_controller.disposition[6]<15) then diplo_text="One of your Mon'keigh soldiers will no longer act as you expect him to. Be wary, when one Mon'keigh is influenced the rest of the herd will be.";
+	            else if (random_event_next == event_enum.strange_behavior) and (obj_controller.disposition[6]>=15) then diplo_text="One of your soldiers will no longer act as you expect him to. Be wary, when one is influenced the rest of the herd will be.";
+	            else if (random_event_next == event_enum.space_hulk) then diplo_text="It comes from the warp, a relic from the past. It is steeped in the energies of the ethereal tides. Beware.";
+	            else if (random_event_next == event_enum.promotion) then diplo_text="One of your soldiers will cover himself in glory. As his “Chapter Master”, a title I find inherently foolish, you may wish to reward him.";
+	            else if (random_event_next == event_enum.strange_building) then diplo_text="The Red robed ones, their “Machine God”, calls to them. Soon, one shall lose their tenuos grip on the here and now and follow the pictures in his head.";
+	            else if (random_event_next == event_enum.sororitas) then diplo_text="Your priestesses of war, who worship He Who Fell, will gather their forces soon, to stay.";
+	            else if (random_event_next == event_enum.inquisition_mission) then diplo_text="They will come very soon, the bearers of hellfire and hate. They will scour the sector for so-called ''Heresy''.";
+	            else if (random_event_next == event_enum.inquisition_planet) then diplo_text="Your questions askers seek to learn more of a planet.  Warp meddlers and free thinkers would be well-served with caution. Beware, Chapter Master.";
+	            else if (random_event_next == event_enum.rogue_trader) then diplo_text="Free thinkers, traders in the vast expanse. They are coming, perhaps you aught to set out your wares?";
+	            else if (random_event_next == event_enum.fleet_delay) then diplo_text="Mon'keigh, your fleets may be delayed by my kin. Eldar Pirates, your kind would call them.";
+	            else if (random_event_next == event_enum.harlequins) then diplo_text="Rillietann. They have come. They are on some world, hidden, or soon will be.";
+	            else if (random_event_next == event_enum.succession_war) then diplo_text="Your underlings fight for power, Mon'keigh.  Someone will die who believes he is important. His children and ''friends'' will vie for the rite to call himself or herself governor. Or king. Or whatever self aggrandising title your people name yourselves.";
+	            else if (random_event_next == event_enum.random_fun) then diplo_text="Something will happen soon. The runes do not show me exactly what will happen, only that it concerns you. Watch the horizon, Mon'keigh.";
+	            else if (random_event_next == event_enum.warp_storms) then diplo_text="The tides of the Immaterium are unsettled. Of course, it's hard to calculate where the Immaterium will affect the Materium, but I predict it will come soon.";
+	            else if (random_event_next == event_enum.enemy_forces) then diplo_text="From beyond your circle of firelight, they are coming. Rest not Mon'keigh, for they will come soon and are bent on destruction."; 
+	            else if (random_event_next == event_enum.crusade) then diplo_text="Soon, your masters will call you to heel like a dog to attack the foes of man. One of your ''Crusades'' of hate, ignorance and bigotry will be called."; 
+	            else if (random_event_next == event_enum.enemy) then diplo_text="You will make an enemy among your fellow man. Soon they shall whisper into their lord's ear, telling that you are a threat, a beetle to be crushed beneath their boot.  You would do well to speak carefully, for some time.";
+	            else if (random_event_next == event_enum.mutation) then diplo_text="Your 'battle brothers' are twisting like snakes beneath your feet. Watch yourself, Chapter Master.";
+	            else if (random_event_next == event_enum.ship_lost) then diplo_text="The Immaterium will swallow one of your ships.  Do not look for it to return.";
+	            else if (random_event_next == event_enum.chaos_invasion) then diplo_text="Your twisted brethren, who fell to the lure of the Immaterium, will soon arrive with their wrath and demons. Beware.";
+	            else if (random_event_next == event_enum.necron_awaken) then diplo_text="Our old enemies, the men of metal, are close. You call them “Necrons”, and you will need to fight them soon. Or flee, it matters not to me.";            
+	            else {
+					diplo_text="[Missing Dialogue: "+string(random_event_next)+" forcast.]"; // this will print a number rather that a string which is less than ideal, but we can just add new flavour text whem we get the bug reports
+				}
 	        }
         
         
@@ -2345,7 +2347,7 @@ function scr_dialogue(argument0) {
 	    }
 	    if (argument0="artifact_thanks") then diplo_text="Your generosity will not be forgotten, friend of the Tau.  What you have done shall advance The Greater Good.";
 	    if (argument0="stc_thanks"){
-	        diplo_text="[Missing Dialogue: stc_thanks]";
+	        diplo_text="We extend our sincere gratitude to you, noble ally of the Tau, for your generosity. The STC fragment you have bestowed upon us shall not only serve our cause but also contribute significantly to The Greater Good. ";
 	    }
     
 	    if (argument0="bombard_angry"){

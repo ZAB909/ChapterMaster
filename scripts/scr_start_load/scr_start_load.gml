@@ -131,7 +131,14 @@ function scr_start_load(argument0, argument1, argument2) {
 
                 repeat (500) {
                     ey += 1;
-
+  // Check if com and ey are within valid range
+    if (com >= 0 && com <= 100 && ey >= 0 && ey <= 500) {
+        if (obj_ini.role[com, ey] != "") {
+            obj_ini.lid[com, ey] = shiyp;
+            obj_ini.wid[com, ey] = 0;
+            obj_ini.loc[com, ey] = obj_ini.ship_location[shiyp];
+            company_size += 1;
+			
                     if (obj_ini.role[com, ey] != "") {
                         obj_ini.lid[com, ey] = shiyp;
                         obj_ini.wid[com, ey] = 0;
@@ -536,4 +543,6 @@ function scr_start_load(argument0, argument1, argument2) {
         }
         shiyp += 1;
     }
+   }
+  }
 }

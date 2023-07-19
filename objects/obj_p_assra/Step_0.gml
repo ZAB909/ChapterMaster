@@ -4,11 +4,11 @@ if (cooldown>0) then cooldown-=1;
 
 var dist;
 if (instance_exists(target)){
-    if (target.owner=9) or (target.owner=13){damage=true;plasma_bomb=true;steal=false;}
+    if (target.owner=9) or (target.owner=13){damage=true;plasma_bomb=true;steal=false;} 
     if (target.owner!=9) and (target.owner!=13){
         if (obj_controller.command_set[20]=1) then damage=true;
         if (obj_controller.command_set[21]=1) then plasma_bomb=true;
-        if (obj_controller.command_set[22]=1) then steal=true;
+        if (obj_controller.command_set[22]=1) then steal=true; // important for boarding and commandeering ships later down the line?
     }
     
     dist=point_distance(x,y,target.x,target.y);
@@ -43,8 +43,8 @@ if (action="return") and (point_distance(x,y,origin.x,origin.y)<=16){
 if (action="goto") and (!instance_exists(target)){boarding=false;
     with(obj_en_ship){if (size=1) then y-=6000;}
     target=instance_nearest(x,y,obj_en_ship);action="goto";
-    if (target.size=1) then action="return";
-    with(obj_en_ship){if (size=1) then y+=6000;}
+  /*if (target.size=1) then action="return";
+    with(obj_en_ship){if (size=1) then y+=6000;} */
 }
 if (boarding=true) and (!instance_exists(target)){boarding=false;
     if (steal=true){action="sdagdsgdasg";x=-500;y=-500;}
