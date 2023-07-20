@@ -60,6 +60,7 @@ if (shop="equipment"){i=0;
     i+=1;x_mod[i]=9;item[i]="Boarding Shield";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=5;
     i+=1;x_mod[i]=9;item[i]="Storm Shield";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=50;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i+=1;x_mod[i]=9;item[i]="Company Standard";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=150;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+<<<<<<<
     
     i+=1;item[i]="Bolt Pistol";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=5;
     i+=1;item[i]="Bolter";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=10;
@@ -68,6 +69,17 @@ if (shop="equipment"){i=0;
     i+=1;item[i]="Storm Bolter";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=15;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i+=1;item[i]="Flamer";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=15;
     i+=1;item[i]="Heavy Flamer";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=40;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+=======
+
+    i+=1;item[i]="Bolt Pistol";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=2;
+    i+=1;item[i]="Bolter";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=5;
+	i+=1;item[i]="Twin Linked Bolters";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=8;
+    i+=1;x_mod[i]=9;item[i]="Combiflamer";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=8;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+    i+=1;item[i]="Heavy Bolter";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=15;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+    i+=1;item[i]="Storm Bolter";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=8;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+    i+=1;item[i]="Flamer";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=5;
+    i+=1;item[i]="Heavy Flamer";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=50;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+>>>>>>>
     i+=1;item[i]="Incinerator";item_stocked[i]=scr_item_count(item[i]);nobuy[i]=1;
     i+=1;item[i]="Integrated Bolters";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=50;
     i+=1;item[i]="Meltagun";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=20;
@@ -77,9 +89,16 @@ if (shop="equipment"){i=0;
         i+=1;x_mod[i]=9;item[i]="Archeotech Laspistol";item_stocked[i]=scr_item_count(item[i]);nobuy[i]=1;
         i+=1;x_mod[i]=9;item[i]="Hellrifle";item_stocked[i]=scr_item_count(item[i]);nobuy[i]=1;
     i+=1;item[i]="Sniper Rifle";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=5;
+<<<<<<<
     i+=1;item[i]="Missile Launcher";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=30;
     i+=1;item[i]="Lascannon";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=60;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     
+=======
+    i+=1;item[i]="Assault Cannon";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=30;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+    i+=1;item[i]="Missile Launcher";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=20;
+    i+=1;item[i]="Lascannon";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=25;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+
+>>>>>>>
     i=0;repeat(39){i+=1;if (item[i]!="") then mc_stocked[i]=scr_item_count("Master Crafted "+string(item[i]));}
 }
 if (shop="equipment2"){i=0;
@@ -93,8 +112,13 @@ if (shop="equipment2"){i=0;
     i+=1;item[i]="Terminator Armor";item_stocked[i]=scr_item_count("Terminator Armor");nobuy[i]=1;
     if (obj_controller.stc_wargear>=6){nobuy[i]=0;item_cost[i]=350;}// if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i+=1;item[i]="Tartaros";item_stocked[i]=scr_item_count("Tartaros");nobuy[i]=1;
+<<<<<<<
     
     i+=1;x_mod[i]=9;item[i]="Jump Pack";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=5;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+=======
+
+    i+=1;x_mod[i]=9;item[i]="Jump Pack";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=8;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+>>>>>>>
     i+=1;x_mod[i]=9;item[i]="Servo Arms";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=30;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i+=1;x_mod[i]=9;item[i]="Bionics";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=5;
     i+=1;x_mod[i]=9;item[i]="Narthecium";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=10;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
@@ -108,10 +132,21 @@ if (shop="equipment2"){i=0;
 
 if (shop="vehicles"){i=0;
     i+=1;item[i]="Rhino";item_stocked[i]=scr_vehicle_count(item[i],"");item_cost[i]=75;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
-    i+=1;item[i]="Predator";item_stocked[i]=scr_vehicle_count(item[i],"");item_cost[i]=125;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+    i+=1;item[i]="Predator";item_stocked[i]=scr_vehicle_count(item[i],"");item_cost[i]=90;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+      i+=1;x_mod[i]=9;item[i]="Autocannon Turret";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=30;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+      i+=1;x_mod[i]=9;item[i]="Twin Linked Lascannon Turret";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=60;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+      i+=1;x_mod[i]=9;item[i]="Heavy Bolter Sponsons";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=38;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+      i+=1;x_mod[i]=9;item[i]="Heavy Flamer Sponsons";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=50;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+      i+=1;x_mod[i]=9;item[i]="Lascannon Sponsons";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=60;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i+=1;item[i]="Land Raider";item_stocked[i]=scr_vehicle_count(item[i],"");nobuy[i]=1;
-    if (obj_controller.stc_vehicles>=6){nobuy[i]=0;item_cost[i]=650;}// if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+    if (obj_controller.stc_vehicles>=6){nobuy[i]=0;item_cost[i]=500;}// if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+      i+=1;x_mod[i]=9;item[i]="Twin Linked Heavy Bolter Mount";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=28;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+      i+=1;x_mod[i]=9;item[i]="Twin Linked Assault Cannon Mount";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=60;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+      i+=1;x_mod[i]=9;item[i]="Flamestorm Cannon Sponsons";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=100;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+      i+=1;x_mod[i]=9;item[i]="Hurricane Bolter Sponsons";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=70;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+      i+=1;x_mod[i]=9;item[i]="Twin Linked Lascannon Sponsons";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=120;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i+=1;item[i]="Whirlwind";item_stocked[i]=scr_vehicle_count(item[i],"");item_cost[i]=100;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+    i+=1;x_mod[i]=9;item[i]="HK Missile";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=10;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i+=1;item[i]="Land Speeder";item_stocked[i]=scr_vehicle_count(item[i],"");nobuy[i]=1;
 	   i+=1;x_mod[i]=9;item[i]="Twin Linked Bolters";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=8;
     if (obj_controller.stc_vehicles>=6){nobuy[i]=0;item_cost[i]=200;}// if (rene=1){nobuy[i]=1;item_cost[i]=0;}
