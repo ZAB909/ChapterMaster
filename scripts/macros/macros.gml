@@ -52,7 +52,9 @@ function macros() {
 		ship_lost,
 		chaos_invasion,
 		necron_awaken,
-		fallen
+		fallen,
 
+
+		none
 	}
 }

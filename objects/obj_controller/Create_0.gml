@@ -572,8 +572,7 @@ diplo_char=0;
 var q;q=-1;repeat(6){q+=1;diplo_option[q]="";diplo_goto[q]="";}
 diplo_alpha=0;
 combat=0;
-random_event_next="";
-// random_event_next="space_hulk";
+random_event_next = event_enum.none;
 useful_info="";
 
 // 
@@ -1317,12 +1316,6 @@ remov=string_length(string(temp[65])+string(temp[66])+string(temp[67])+string(te
 
 
 
-
-// random_event_next="chaos_invasion";
-/*var ii;ii=0;
-repeat(50){ii+=1;
-    obj_ini.gear[0,ii]="Exterminatus";
-}*/
 
 
 /* */

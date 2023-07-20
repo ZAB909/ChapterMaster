@@ -42,15 +42,15 @@ alarm[8]=999999;
             if (i<120){
                 if (obj_ini.veh_role[cmp,i]!="") and (obj_ini.veh_lid[cmp,i]=battle_id) and (obj_ini.veh_loc[cmp,i]=battle_loc) and (obj_ini.veh_lid[cmp,i]=0){
                     vehicle_deaths+=1;clean[cmp]=1;
-                    obj_ini.veh_race[cmp,i]=0;obj_ini.veh_loc[cmp,i]="";obj_ini.veh_name[cmp,i]="";obj_ini.veh_role[cmp,i]="";obj_ini.veh_wep1[cmp,i]="";obj_ini.veh_wep2[cmp,i]="";
-                    obj_ini.veh_upgrade[cmp,i]="";obj_ini.veh_hp[cmp,i]=100;obj_ini.veh_chaos[cmp,i]=0;obj_ini.veh_pilots[cmp,i]=0;obj_ini.veh_lid[cmp,i]=0;
+                    obj_ini.veh_race[cmp,i]=0;obj_ini.veh_loc[cmp,i]="";obj_ini.veh_name[cmp,i]="";obj_ini.veh_role[cmp,i]="";obj_ini.veh_wep1[cmp,i]="";obj_ini.veh_wep2[cmp,i]="";obj_ini.veh_wep3[cmp,i]="";
+                    obj_ini.veh_upgrade[cmp,i]="";obj_ini.veh_acc[cmp,i]="";obj_ini.veh_hp[cmp,i]=100;obj_ini.veh_chaos[cmp,i]=0;obj_ini.veh_pilots[cmp,i]=0;obj_ini.veh_lid[cmp,i]=0;
                 }
             }
         }
-        
+
     }
-    
-    
+
+
     i=-1;
     repeat(31){
         i+=1;
@@ -222,19 +222,19 @@ if (fortified>0) and (!instance_exists(obj_nfort)) and (lowf=true){
 if (defeat=0) and (battle_special="space_hulk"){
     var en_power,loot,dicey,ex;
     en_power=0;loot=0;dicey=floor(random(100))+1;ex=0;
-    
+
     if (enemy=7){en_power=battle_object.p_orks[battle_id];battle_object.p_orks[battle_id]-=1;}
     if (enemy=9){en_power=battle_object.p_tyranids[battle_id];battle_object.p_tyranids[battle_id]-=1;}
     if (enemy=10){en_power=battle_object.p_traitors[battle_id];battle_object.p_traitors[battle_id]-=1;}
-    
+
     part10="Space Hulk Exploration at ";
     ex=min(100,100-((en_power-1)*20));
     part10+=string(ex)+"%";
     newline=part10;if (ex=100) then newline_color="red";scr_newtext();
-    
+
     if (string_count("Shitty",obj_ini.strin2)>0) then dicey=dicey*1.5;
     // show_message("Roll Under: "+string(en_power*10)+", Roll: "+string(dicey));
-    
+
     if (dicey<=(en_power*10)){
         loot=choose(1,2,3,4);
         if (enemy!=10) then loot=choose(1,1,2,3);
@@ -267,13 +267,13 @@ if (battle_special="study2b") then npowers=false;
 if (defeat=0) and (npowers=true){
     var en_power,new_power;
     en_power=0;new_power=0;
-    
+
     if (enemy=2){
         en_power=battle_object.p_guardsmen[battle_id];
         battle_object.p_guardsmen[battle_id]-=threat;
         // if (threat=1) or (threat=2) then battle_object.p_guardsmen[battle_id]=0;
     }
-    
+
     if (enemy=5){en_power=battle_object.p_sisters[battle_id];part10="Ecclesiarchy";}
     if (enemy=6){en_power=battle_object.p_eldar[battle_id];part10="Eldar";}
     if (enemy=7){en_power=battle_object.p_orks[battle_id];part10="Ork";}
@@ -282,24 +282,24 @@ if (defeat=0) and (npowers=true){
     if (enemy=10){en_power=battle_object.p_traitors[battle_id];part10="Heretic";if (threat=7) then part10="Daemon";}
     if (enemy=11){en_power=battle_object.p_chaos[battle_id];part10="Chaos Space Marine";}
     if (enemy=13){en_power=battle_object.p_necrons[battle_id];part10="Necrons";}
-    
+
     if (instance_exists(battle_object)) and (en_power>2){
         if (awake_tomb_world(battle_object.p_feature[battle_id])!=0){
             scr_gov_disp(battle_object.name,battle_id,floor(en_power/2));
         }
     }
-    
+
     if (enemy!=2){
         if (attacker=0) then new_power=en_power-1;
         if ((attacker=1) or (dropping=1)) then new_power=en_power-2;
-        
+
         new_power=max(new_power,0);
         if (part10="Daemon") then new_power=7;
         if (enemy=9) and (new_power=0) then scr_event_log("","Tyranids cleansed from "+string(battle_object.name)+" "+scr_roman(battle_id));
         if (enemy=11) and (en_power!=floor(en_power)) then en_power=floor(en_power);
     }
-    
-    
+
+
     if (obj_controller.blood_debt=1) and (defeat=0){
         if (enemy=6) or (enemy=9) or (enemy=11) or (enemy=13){
             if (en_power=1){obj_controller.penitent_current+=25;obj_controller.penitent_turn=0;obj_controller.penitent_turnly=0;}
@@ -319,7 +319,7 @@ if (defeat=0) and (npowers=true){
             if (en_power=7){obj_controller.penitent_current+=1500;obj_controller.penitent_turn=0;obj_controller.penitent_turnly=0;}
         }
     }
-    
+
     if (enemy=5){battle_object.p_sisters[battle_id]=new_power;}
     if (enemy=6){battle_object.p_eldar[battle_id]=new_power;}
     if (enemy=7){battle_object.p_orks[battle_id]=new_power;}
@@ -328,7 +328,7 @@ if (defeat=0) and (npowers=true){
     if (enemy=10){battle_object.p_traitors[battle_id]=new_power;}
     if (enemy=11){battle_object.p_chaos[battle_id]=new_power;}
     if (enemy=13){battle_object.p_necrons[battle_id]=new_power;}
-    
+
     if (enemy!=2) and (string_count("cs_meeting_battle",battle_special)=0){
         part10+=" Forces on "+string(battle_loc);
         if (battle_id=1) then part10+=" I";
@@ -338,7 +338,7 @@ if (defeat=0) and (npowers=true){
         if (battle_id=5) then part10+=" V";
         part10+=" have decreased to "+string(new_power)+" ("+string(en_power)+"-"+string(en_power-new_power)+")";
         newline=part10;scr_newtext();
-        
+
         if (new_power<=0) and (en_power>0) then battle_object.p_raided[battle_id]=1;
     }
     if (enemy=2){
@@ -351,9 +351,9 @@ if (defeat=0) and (npowers=true){
         part10+=" have decreased to "+string(battle_object.p_guardsmen[battle_id])+" ("+string(en_power)+"-"+string(threat)+")";
         newline=part10;scr_newtext();
     }
-    
-    
-    
+
+
+
     if (enemy=8) and (ethereal>0) and (defeat=0){
         newline="Tau Ethereal Captured";newline_color="yellow";scr_newtext();
     }
@@ -362,45 +362,45 @@ if (defeat=0) and (npowers=true){
     
         // var bombs;bombs=scr_check_equip("Plasma Bomb",battle_loc,battle_id,0);
         // var bombs;bombs=scr_check_equip("Plasma Bomb","","",0);
-        
+
         // show_message(string(bombs));
-        
+
         if (plasma_bomb>0){
             // scr_check_equip("Plasma Bomb",battle_loc,battle_id,1);
             // scr_check_equip("Plasma Bomb","","",1);
             newline="Plasma Bomb used to seal the Necron Tomb.";newline_color="yellow";scr_newtext();
 			seal_tomb_world(battle_object.p_feature[battle_id])
         }
-        
+
         if (plasma_bomb<=0){
             battle_object.p_necrons[battle_id]=3;// newline_color="yellow";
             if (dropping!=0) then newline="Deep Strike Ineffective; Plasma Bomb required";
             if (dropping=0) then newline="Attack Ineffective; Plasma Bomb required";
             scr_newtext();
         }
-        
+
         // popup here
         /*
         var pip;
         pip=instance_create(0,0,obj_popup);
         pip.title="Necron Tombs";
         pip.text="The Necrons have been defeated on the surface, but remain able to replenish their numbers and recuperate.  Do you wish to advance your army into the tunnels?";
-        pip.image="necron_tunnels_1";    
+        pip.image="necron_tunnels_1";
         pip.cooldown=15;
         cooldown=15;
-        
+
         pip.option1="Advance!";
         pip.option2="Cancel the attack";*/
-        
-        
-        
-        
+
+
+
+
     }
-    
-    
-    
-    
-    
+
+
+
+
+
     /*if (enemy=13) and (new_power<=0) and (dropping=0){
         var bombs;bombs=scr_check_equip("Plasma Bomb",battle_loc,battle_id,0);
         if (bombs>0){
@@ -415,13 +415,13 @@ if (defeat=0) and (enemy=9) and (battle_special="tyranid_org"){
     if (captured_gaunt=1) then newline=string(captured_gaunt)+" Gaunt organism have been captured.";
     if (captured_gaunt>1) or (captured_gaunt=0) then newline=string(captured_gaunt)+" Gaunt organisms have been captured.";
     scr_newtext();
-    
+
     if (captured_gaunt>0){
         var why,thatta;why=0;thatta=0;
         instance_activate_object(obj_star);
         // with(obj_star){if (name!=obj_ncombat.battle_loc) then instance_deactivate_object(id);}
         // thatta=obj_star;
-        
+
         with(obj_star){
             var u;u=0;
             repeat(4){u+=1;
@@ -431,7 +431,7 @@ if (defeat=0) and (enemy=9) and (battle_special="tyranid_org"){
                 if (p_problem[u,4]="tyranid_org"){p_problem[u,4]="";p_timer[u,4]=0;}
             }
         }
-        
+
         /*var u;u=0;
         repeat(4){u+=1;
             if (thatta.p_problem[u,1]="tyranid_org"){thatta.p_problem[u,1]="";thatta.p_timer[u,1]=0;}
@@ -440,9 +440,9 @@ if (defeat=0) and (enemy=9) and (battle_special="tyranid_org"){
             if (thatta.p_problem[u,4]="tyranid_org"){thatta.p_problem[u,4]="";thatta.p_timer[u,4]=0;}
         }*/
     }
-    
+
     scr_event_log("","Inquisition Mission Completed: A Gaunt organism has been captured for the Inquisition.");
-    
+
     if (captured_gaunt>1){
         if (instance_exists(obj_turn_end)) then scr_popup("Inquisition Mission Completed","You have captured several Gaunt organisms.  The Inquisitor is pleased with your work, though she notes that only one is needed- the rest are to be purged.  It will be stored until it may be retrieved.  The mission is a success.","inquisition","");
     }
@@ -477,14 +477,14 @@ if (obj_ini.omophagea=1){
     var eatme;eatme=floor(random(100))+1;
     if (enemy=13) or (enemy=9) or (battle_special="ship_demon") then eatme+=100;
     if (enemy=10) and (battle_object.p_traitors[battle_id]=7) then eatme+=200;
-    
+
     if (red_thirst=3) then thirsty=1;if (red_thirst>3) then thirsty=red_thirst-2;
     if (thirsty>0) then eatme-=(thirsty*6);if (really_thirsty>0) then eatme-=(really_thirsty*15);
     if (string_count("Shitty",obj_ini.strin2)=1) then eatme-=10;
-    
+
     if (allies>0){obj_controller.disposition[2]-=choose(1,0,0);obj_controller.disposition[4]-=choose(0,0,1);obj_controller.disposition[5]-=choose(0,0,1);}
     if (present_inquisitor>0) then obj_controller.disposition[4]-=2;
-    
+
     if (eatme<=25){endline=0;
         if (thirsty=0) and (really_thirsty=0){
             var ran;ran=choose(1,2);
@@ -501,11 +501,11 @@ if (obj_ini.omophagea=1){
         if (really_thirsty>0){
             newline="One of your Death Company "+string(obj_ini.role[100,6])+" blitzes to the fallen enemy lines.  Massive mechanical hands begin to rend and smash at the fallen corpses, trying to squeeze their flesh and blood through the sarcophogi opening.";
         }
-        
+
         newline+="  Almost at once most of the present "+string(global.chapter_name)+" follow suite, joining in and starting a massive feeding frenzy.  The sight is gruesome to behold.";
         scr_newtext();
-        
-        
+
+
         // check for pdf/guardsmen
         eatme=floor(random(100))+1;if (string_count("Shitty",obj_ini.strin2)=1) then eatme-=10;
         if (eatme<=10) and (allies>0){
@@ -513,21 +513,21 @@ if (obj_ini.omophagea=1){
             if (allies=1){newline="Local PDF have been eaten!";newline_color="red";scr_newtext();}
             if (allies=2){newline="Local Guardsmen have been eaten!";newline_color="red";scr_newtext();}
         }
-        
+
         // check for inquisitor
         eatme=floor(random(100))+1;if (string_count("Shitty",obj_ini.strin2)=1) then eatme-=5;
         if (eatme<=40) and (present_inquisitor=1){
             var thatta,thatta2,remove,i;thatta=0;remove=0;i=0;
             obj_controller.disposition[4]-=10;inq_eated=true;
             instance_activate_object(obj_en_fleet);
-            
+
             if (instance_exists(inquisitor_ship)){
                 repeat(2){scr_loyalty("Inquisitor Killer","+");}
                 if (obj_controller.loyalty>=85) then obj_controller.last_world_inspection-=44;
                 if (obj_controller.loyalty>=70) and (obj_controller.loyalty<85) then obj_controller.last_world_inspection-=32;
                 if (obj_controller.loyalty>=50) and (obj_controller.loyalty<70) then obj_controller.last_world_inspection-=20;
                 if (obj_controller.loyalty<50) then scr_loyalty("Inquisitor Killer","+");
-                
+
                 var msg,msg2,i,remove;msg="";msg2="";i=0;remove=0;
                 // if (string_count("Inqis",inquisitor_ship.trade_goods)>0) then show_message("B");
                 if (string_count("Inqis1",inquisitor_ship.trade_goods)=1){newline="Inquisitor "+string(obj_controller.inquisitor[1])+" has been eaten!";msg="Inquisitor "+string(obj_controller.inquisitor[1]);remove=1;scr_event_log("red","Your Astartes consume "+string(msg)+".");}
@@ -537,7 +537,7 @@ if (obj_ini.omophagea=1){
                 if (string_count("Inqis5",inquisitor_ship.trade_goods)=1){newline="Inquisitor "+string(obj_controller.inquisitor[5])+" has been eaten!";msg="Inquisitor "+string(obj_controller.inquisitor[5]);remove=5;scr_event_log("red","Your Astartes consume "+string(msg)+".");}
                 newline_color="red";scr_newtext();
                 if (obj_controller.inquisitor_type[remove]="Ordo Hereticus") then scr_loyalty("Inquisitor Killer","+");
-                
+
                 i=remove;
                 repeat(10-remove){
                     if (i<10){
@@ -552,7 +552,7 @@ if (obj_ini.omophagea=1){
                     }
                     i+=1;
                 }
-                
+
                 instance_activate_object(obj_turn_end);
                 if (obj_controller.known[4]<3) and (!instance_exists(obj_turn_end)){
                     var pip;pip=instance_create(0,0,obj_popup);
@@ -568,7 +568,7 @@ if (obj_ini.omophagea=1){
                     obj_controller.alarm[8]=1;scr_event_log("red","EXCOMMUNICATUS TRAITORUS");
                 }
                 instance_deactivate_object(obj_turn_end);
-                
+
                 with(inquisitor_ship){instance_destroy();}
                 with(obj_temp3){instance_destroy();}
                 with(obj_temp4){instance_destroy();}
@@ -598,25 +598,25 @@ if (defeat=1) and (dropping=0) and (mon_count>0){
 	}
   
 
-    
+   
     if (obj_controller.und_gene_vaults=0) then newline="Your Fortress Monastery has been raided.  "+string(obj_controller.gene_seed)+" Gene-Seed has been destroyed or stolen.";
     if (obj_controller.und_gene_vaults>0) then newline="Your Fortress Monastery has been raided.  "+string(floor(obj_controller.gene_seed/10))+" Gene-Seed has been destroyed or stolen.";
-    
+
     scr_event_log("red",string(newline));
     instance_activate_object(obj_event_log);
     newline_color="red";scr_newtext();
-    
+
     var lasers_lost,defenses_lost,silos_lost;
     lasers_lost=0;defenses_lost=0;silos_lost=0;
-    
+
     if (player_defenses>0){defenses_lost=round(player_defenses*0.75);}
     if (battle_object.p_silo[obj_ncombat.battle_id]>0){silos_lost=round(battle_object.p_silo[obj_ncombat.battle_id]*0.75);}
     if (battle_object.p_lasers[obj_ncombat.battle_id]>0){lasers_lost=round(battle_object.p_lasers[obj_ncombat.battle_id]*0.75);}
-    
+
     if (player_defenses<30) then defenses_lost=player_defenses;
     if (battle_object.p_silo[obj_ncombat.battle_id]<30){silos_lost=battle_object.p_silo[obj_ncombat.battle_id];}
     if (battle_object.p_lasers[obj_ncombat.battle_id]<8){lasers_lost=battle_object.p_lasers[obj_ncombat.battle_id];}
-    
+
     var percent;percent=0;newline="";
     if (defenses_lost>0){
         percent=round((defenses_lost/player_defenses)*100);
@@ -632,19 +632,19 @@ if (defeat=1) and (dropping=0) and (mon_count>0){
         if (silos_lost>0) or (defenses_lost>0) then newline+="  ";
         newline+=string(lasers_lost)+" Defense Lasers have been lost ("+string(percent)+"%).";
     }
-    
+
     battle_object.p_defenses[obj_ncombat.battle_id]-=defenses_lost;
     battle_object.p_silo[obj_ncombat.battle_id]-=silos_lost;
     battle_object.p_lasers[obj_ncombat.battle_id]-=lasers_lost;
     if (defenses_lost+silos_lost+lasers_lost>0){newline_color="red";scr_newtext();}
-    
+
     endline=0;
-    
+
     if (obj_controller.und_gene_vaults=0){
         obj_controller.gene_seed=0;var w;w=0;repeat(120){w+=1;if (obj_ini.slave_batch_num[w]>0){obj_ini.slave_batch_num[w]=0;obj_ini.slave_batch_eta[w]=0;}}
     }
     if (obj_controller.und_gene_vaults>0) then obj_controller.gene_seed-=floor(obj_controller.gene_seed/10);
-    
+
 }
 instance_deactivate_object(obj_star);
 instance_deactivate_object(obj_turn_end);

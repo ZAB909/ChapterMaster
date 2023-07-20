@@ -501,55 +501,103 @@ function scr_enemy_ai_e() {
     
     
 	    // Other planetary stuff
-    
-	    if (array_length(p_feature[run]!=0)){
+
+		var thirdpop;
+		var halfpop;
+		thirdpop = p_max_population[run]/3;
+		halfpop = p_max_population[run]/2;
+f (array_length(p_feature[run]!=0)){
 	        if (planet_feature_bool(p_feature[run], P_features.Recruiting_World)==1) and (obj_controller.gene_seed=0) and (obj_controller.recruiting>0){
 	            obj_controller.recruiting=0;obj_controller.income_recruiting=0;
 	            scr_alert("red","recruiting","The Chapter has run out of gene-seed!",0,0);
 	        }
         
-	        if (planet_feature_bool(p_feature[run], P_features.Recruiting_World)==1) and (obj_controller.gene_seed>0) and (p_owner[run]<=5) and (obj_controller.faction_status[p_owner[run]]!="War"){
+
+	         if (planet_feature_bool(p_feature[run], P_features.Recruiting_World)==1) and (obj_controller.gene_seed>0) and (p_owner[run]<=5) and (obj_controller.faction_status[p_owner[run]]!="War"){
 	            if (p_population[run]>=50){
+					scr_alert("green","owner", "Recruitment is slowed due to lack of population on our recruitment worlds",0,0);
 	                if (p_large[run]=0) then p_population[run]-=1;
                 
 	                var recr, aspirant, corr, train, dista, onceh; 
 	                recr=999;aspirant=0;corr=10;train=72;dista=0;onceh=0;
                 
-	                if (obj_controller.recruiting=1) then recr=floor(random(300))+1; // fast, frentic, slow, ect
+	                if (obj_controller.recruiting=1) then recr=floor(random(250))+1; // fast, frantic, slow, ect
 	                if (obj_controller.recruiting=2) then recr=floor(random(200))+1;
-	                if (obj_controller.recruiting=3) then recr=floor(random(100))+1;
-	                if (obj_controller.recruiting=4) then recr=floor(random(80))+1;
-	                if (obj_controller.recruiting=5) then recr=floor(random(60))+1;
+	                if (obj_controller.recruiting=3) then recr=floor(random(150))+1;
+	                if (obj_controller.recruiting=4) then recr=floor(random(125))+1;
+	                if (obj_controller.recruiting=5) then recr=floor(random(100))+1;
                 
-	                if (obj_controller.recruit_trial="Exposure") then recr=floor(recr*1.3);
-	                if (obj_controller.recruit_trial="Challenge") then recr=floor(recr*1.3);
-	                if (obj_controller.recruit_trial="Knowledge of Self") then recr=floor(recr*2);
+
                 
 	                // 135; recruiting
 					// corr isn't really relevant as corruption in marines doesn't matter
-	                if (p_type[run]="Agri") and (recr<=10){aspirant=1;corr=choose(1,2);train=76;}
-	                if (p_type[run]="Death") and (recr<=23){aspirant=1;corr=choose(1,2);train=66;}
-	                if (p_type[run]="Desert") and (recr<=15){aspirant=1;corr=choose(1,2);train=72;}
-	                if (p_type[run]="Feral") and (recr<=23){aspirant=1;corr=choose(1,2);train=66;}
-	                if (p_type[run]="Feudal") and (recr<=10){aspirant=1;corr=choose(1,2);train=70;}
-	                if (p_type[run]="Shrine") and (recr<=10){aspirant=1;corr=choose(1,2);train=70;}
-	                if (p_type[run]="Forge") and (recr<=10){aspirant=1;corr=floor(random(10))+floor(random(10))+2;train=72;}
-	                if (p_type[run]="Hive") and (recr<=5){aspirant=1;corr=floor(random(10))+floor(random(10))+2;train=60;}
-	                if (p_type[run]="Ice") and (recr<=5){aspirant=1;corr=choose(1,2);train=72;}
-	                if (p_type[run]="Lava") and (recr<=2){aspirant=1;corr=floor(random_range(3,18))+1;train=72;}
-	                if (p_type[run]="Temperate") and (recr<=10){aspirant=1;corr=choose(1,2);train=72;}
-                
+					// by default it takes 72 turns (6 years) to train
+					
+					
+					if (p_type[run]="Hive") and (recr<=40){aspirant=1;}
+	                if (p_type[run]="Temperate") and (recr<=25){aspirant=1;}
+	                if (p_type[run]="Feudal") and (recr<=25){aspirant=1;}
+	                if (p_type[run]="Shrine") and (recr<=20){aspirant=1;}
+	                if (p_type[run]="Forge") and (recr<=20){aspirant=1;}
+	                if (p_type[run]="Desert") and (recr<=15){aspirant=1;}
+	                if (p_type[run]="Ice") and (recr<=15){aspirant=1;}
+	                if (p_type[run]="Agri") and (recr<=15){aspirant=1;}
+	                if (p_type[run]="Death") and (recr<=10){aspirant=1;}
+	                if (p_type[run]="Lava") and (recr<=7){aspirant=1;}
+
+
 	                // train-=58;
 	                // train-=55;
-                
+                /* // old blood duel
 	                if (obj_controller.recruit_trial="Blood Duel"){
-	                    corr+=choose(100,200,300);train-=choose(1,2,3);
+	                    corr+=choose(1,2,3);train-=choose(1,2,3);
 	                    var rand5;rand5=floor(random(100))+1;
 	                    if (rand5<=2) then corr+=15;
-	                }
-	                if (obj_controller.recruit_trial="Survival of the Fittest"){corr+=choose(1,2,3);train-=choose(1,2,3);}
-	                if (obj_controller.recruit_trial="Exposure"){train-=choose(1,2,3,4);}
-	                if (obj_controller.recruit_trial="Knowledge of Self"){train-=choose(7,9,11,13);}
+						}
+			    */
+					// This is the area that dictates training and corruption per trial type
+					
+
+	                
+					if (obj_controller.recruit_trial="Blood Duel"){
+						corr+=choose(5,10,15);
+						train+=12;
+						}
+					
+	                if (obj_controller.recruit_trial="Survival of the Fittest"){
+						train-=choose(1,2,3);
+						corr+=choose(3,6,9);
+						}
+	                if (obj_controller.recruit_trial="Exposure"){
+						train-=choose(1,2,3,4);
+						corr+=choose(1,2,3);
+						}
+	                if (obj_controller.recruit_trial="Knowledge of Self"){
+						train-=choose(7,9,11,13);
+						corr-=choose(2,4,6) 
+						}
+					if (obj_controller.recruit_trial="Apprenticeship") { 
+						train+=36;
+	                    }
+						
+						
+					// these reduce the amount of recruits by the * 
+					if (obj_controller.recruit_trial="Exposure")
+						then recr=floor(recr*1.3);
+	                if (obj_controller.recruit_trial="Challenge")
+						then recr=floor(recr*1.3);
+	                if (obj_controller.recruit_trial="Knowledge of Self")
+						then recr=floor(recr*2);
+
+					if (p_type[run]="Death") and (obj_controller.recruit_trial="Challenge"){
+						obj_controller.recruit_exp+=69;train-=10;
+						
+					}
+						/*
+						// give xp if they deserve it
+					obj_controller.recruit_exp[thiss]=choose(8,9,9);	
+						
+						*/
                 
 	                if (aspirant!=0){
 	                    var i,thiss;
@@ -581,11 +629,9 @@ function scr_enemy_ai_e() {
 	                            scr_alert("green","recruitment","Recruit "+string(obj_controller.recruit_name[thiss])+" defeats the Astartes and is destined for greatness.",0,0);
 	                        }
 	                    }
-	                    if (obj_controller.recruit_trial="Apprenticeship") then train+=36{ 
-	                        obj_controller.recruit_exp[thiss]=choose(8,9,9);
-	                    }
-                    
-                    
+
+                   
+                   
 	                    onceh=0;
                     
                     

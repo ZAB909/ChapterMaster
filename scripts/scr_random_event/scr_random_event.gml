@@ -34,7 +34,7 @@ function scr_random_event(execute_now) {
 	}
 
 	var chosen_event;
-	if (force_inquisition_mission && random_event_next == "") {
+	if (force_inquisition_mission && random_event_next == event_enum.none) {
 		chosen_event = event_enum.inquisition_mission;
 	}
 	else {
@@ -46,9 +46,8 @@ function scr_random_event(execute_now) {
 			if ((turn-15)<last_event) then exit;// Minimum interval between
 		}
 		
-		if(random_event_next != "") {
-			//chosen_event;
-			// make a switch case that forces the chosen_event to be whatever the random_event_next says
+		if(random_event_next != event_enum.none) {
+			chosen_event = random_event_next;
 		}
 		else {
 			var player_luck;
@@ -208,8 +207,7 @@ function scr_random_event(execute_now) {
 	}
 	
 	if (!execute_now){
-		random_event_next=chosen_event; // Fix this!!
-		// make a switch case that sets the random event next
+		random_event_next = chosen_event;
 		exit;
 	}
 	
@@ -516,7 +514,7 @@ function scr_random_event(execute_now) {
     
 	    if (chosen_mission == inquisition_mission.purge){
 			debugl("RE: Purge");
-	        var mission_flavour = choose(1,1,1,2,2,3);
+	        var mission_flavour = choose(1,1,1,2,2,/*3*/); // think 3 makes errors
 			
 			var stars = scr_get_stars();
 			var valid_stars = array_filter_ext(stars,
@@ -659,7 +657,7 @@ function scr_random_event(execute_now) {
 	    else if (chosen_mission == inquisition_mission.artifact) {
 			var text;
 			debugl("RE: Artifact Hold");
-	        tixt="The Inquisition is trusting you with a special mission.  A local Inquisitor has a powerful artifact.  You are to keep it safe, and NOT use it, until the artifact may be safely retrieved.  Can your chapter handle this mission?";
+	        text="The Inquisition is trusting you with a special mission.  A local Inquisitor has a powerful artifact.  You are to keep it safe, and NOT use it, until the artifact may be safely retrieved.  Can your chapter handle this mission?";
 	        scr_popup("Inquisition Mission",text,"inquisition","artifact|bop|0|"+string(irandom_range(6,26))+"|");
 			evented = true;
 	    }
@@ -1623,8 +1621,8 @@ function scr_random_event(execute_now) {
 		}
 		else {
 			last_event=turn;
-			if (random_event_next!=""){
-				random_event_next="";
+			if (random_event_next != event_enum.none){
+				random_event_next = event_enum.none;
 			}
 		}
 	}
