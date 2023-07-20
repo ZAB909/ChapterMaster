@@ -514,45 +514,51 @@ function scr_random_event(execute_now) {
     
 	    if (chosen_mission == inquisition_mission.purge){
 			debugl("RE: Purge");
-	        var mission_flavour = choose(1,1,1,2,2,/*3*/); // think 3 makes errors
+	        var mission_flavour = choose(1,1,1,2,2,3);
 			
 			var stars = scr_get_stars();
-			var valid_stars = array_filter_ext(stars,
-				function(star,index){	
-					if(mission_flavour == 3){
+			var valid_stars = 0;
+			
+			if(mission_flavour == 3) {
+				valid_stars = array_filter_ext(stars,
+					function(star,index){	
 						return scr_star_has_planet_with_type(star, "Hive") && star.p_owner[scr_get_planet_with_type(star,"Hive")] <= 5;
-					}
-					else{
+				});
+			}
+			else {
+				valid_stars = array_filter_ext(stars,
+					function(star,index){	
 						var has_hive = (scr_star_has_planet_with_type(star, "Hive") && star.p_owner[scr_get_planet_with_type(star,"Hive")] <= 5);
 						var has_desert = (scr_star_has_planet_with_type(star, "Desert") && star.p_owner[scr_get_planet_with_type(star,"Desert")] <= 5);
 						var has_temparate = (scr_star_has_planet_with_type(star, "Temparate") && star.p_owner[scr_get_planet_with_type(star,"Temparate")] <= 5);
 						return has_hive || has_desert || has_temparate;
-					}
-			});
+				});
+			}
+
 			if(valid_stars == 0){
 				debugl("RE: Purge, couldn't find star");
 				exit;
 			}
 			
-			var star = stars[irandom(valid_stars)-1];
+			var star = stars[irandom(valid_stars - 1)];
 			
 			var planet = -1;
-			if(mission_flavour == 3){
+			if(mission_flavour == 3) {
 				planet = scr_get_planet_with_type(star, "Hive");
 			}
-			else{
+			else {
 				var hive_planet = scr_get_planet_with_type(star,"Hive");
 				var desert_planet = scr_get_planet_with_type(star,"Desert");
 				var temperate_planet = scr_get_planet_with_type(star,"Temperate");
-				if(star.p_owner[hive_planet] <= 5)
+				if(hive_planet != -1 && star.p_owner[hive_planet] <= 5)
 				{
 					planet = hive_planet;
 				}
-				else if(star.p_owner[temperate_planet] <= 5)
+				else if(temperate_planet != -1 && star.p_owner[temperate_planet] <= 5)
 				{
 					planet = temperate_planet;
 				}
-				else if(star.p_owner[desert_planet] <= 5)
+				else if(desert_planet != -1 && star.p_owner[desert_planet] <= 5)
 				{
 					planet = desert_planet;
 				}
