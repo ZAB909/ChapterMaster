@@ -41,7 +41,7 @@ repeat(1500){i+=1;
     marine_casting[i]=0;
     marine_local[i]=0;
     ally[i]=false;
-    // 
+    //
     // this would be set to the turns remaining
     // so long as >0 would apply an effect
     marine_mshield[i]=0;
@@ -53,7 +53,7 @@ repeat(1500){i+=1;
     marine_dome[i]=0;
     marine_spatial[i]=0;
     marine_dementia[i]=0;
-    // 
+    //
     veh_co[i]=0;
     veh_id[i]=0;
     veh_type[i]="";
@@ -61,6 +61,9 @@ repeat(1500){i+=1;
     veh_ac[i]=0;
     veh_wep1[i]="";
     veh_wep2[i]="";
+    veh_wep3[i]="";
+    veh_upgrade[i]="";
+    veh_acc[i]="";
     veh_dead[i]=0;
     veh_hp_multiplier[i]=1;
     veh_local[i]=0;
@@ -81,7 +84,7 @@ repeat(71){i+=1;
     wep_owner[i]="";
     wep_solo[i]="";
     wep_title[i]="";
-    
+
     dudes[i]="";
     dudes_num[i]=0;
     dudes_vehicle[i]=0;

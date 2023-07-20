@@ -20,9 +20,9 @@ function scr_company_view(argument0) {
 
 	repeat(499){// This sets up the mans, but not the vehicles
 	    v+=1;bad=0;
-    
-    
-    
+
+
+
 	    if (argument0>=0) and (argument0<=10){company=argument0;
 	        if (obj_ini.name[company,v]!=""){
 	            // if (obj_ini.god[company,v]>=10) then bad=1;
@@ -31,7 +31,7 @@ function scr_company_view(argument0) {
 	                if (obj_ini.ship_location[ham]="Lost") then bad=1;
 	            }
 	            if (bad=1) then man[v]="hide";
-            
+
 	            if (bad=0){
 	                mans+=1;man[v]="man";ide[v]=v;
 	                ma_race[v]=obj_ini.race[company,v];ma_loc[v]=obj_ini.loc[company,v];ma_name[v]=obj_ini.name[company,v];
@@ -43,11 +43,11 @@ function scr_company_view(argument0) {
 	                    ma_loc[v]=obj_ini.ship[ma_lid[v]];
 	                    if (obj_ini.ship_location[ma_lid[v]]="Lost") then ma_loc[v]="Lost";
 	                }
-                
-                
+
+
 	                // Select All Setup
 	                var i,go,op;go=0;op=0;i=-1;
-	                if (man[v]="man") and (ma_role[v]!=obj_ini.role[100,14]) and (ma_role[v]!=obj_ini.role[100,15]) 
+	                if (man[v]="man") and (ma_role[v]!=obj_ini.role[100,14]) and (ma_role[v]!=obj_ini.role[100,15])
 	                and (ma_role[v]!=obj_ini.role[100,16]) and (ma_role[v]!=obj_ini.role[100,17])
 	                 and (ma_role[v]!=obj_ini.role[100,5]) and (ma_role[v]!="Standard Bearer")
 	                 and (ma_role[v]!="Company Champion")
@@ -66,10 +66,10 @@ function scr_company_view(argument0) {
 	                    }
 	                    if (go=0) then sel_veh[op]=ma_role[v];
 	                }
-                
-                
-                
-                
+
+
+
+
 	                /*
 	                if (global.chapter_name!="Iron Hands"){
 	                if (sel_uni[1]=obj_ini.role[100,5]) and (sel_uni[2]=obj_ini.role[100,14]) and (sel_uni[3]=obj_ini.role[100,15]) and (sel_uni[4]="Standard Bearer"){
@@ -92,8 +92,8 @@ function scr_company_view(argument0) {
 	                    }
 	                }}
 	                */
-                
-                
+
+
 	                /*
 	                repeat(3){
 	                    i=20;sel_uni[1]="Command";
@@ -103,15 +103,15 @@ function scr_company_view(argument0) {
 	                        }
 	                    }
 	                }*/
-                
-                
-                
-                
-                
+
+
+
+
+
 	                // Squad setup
-	                // 137 ; 
-                
-                
+	                // 137 ;
+
+
 	                // Should have this be only ran for MAN, somehow run it a second time for VEHICLE
 	                if (squads>0){var n;n=1;
 	                    if (squad_typ=obj_ini.role[100,5]) then n=0;
@@ -124,7 +124,7 @@ function scr_company_view(argument0) {
 	                    if (squad_typ="Codiciery") then n=0;
 	                    if (squad_typ="Lexicanum") then n=0;
 	                    // if (squad_typ=obj_ini.role[100,6]) then n=0;
-                    
+
 	                    if (squad_typ="Master of Sanctity") then n=1;
 	                    if (squad_typ="Chief "+string(obj_ini.role[100,17])) then n+=1;
 	                    if (squad_typ="Forge Master") then n+=1;
@@ -134,15 +134,15 @@ function scr_company_view(argument0) {
 	                    if (squad_typ=obj_ini.role[100,6]) and (ma_role[v]=obj_ini.role[100,6]) then n=0;
 	                    if (squad_typ=obj_ini.role[100,6]) and (ma_role[v]="Venerable "+string(obj_ini.role[100,6])) then n=0;
 	                    if (squad_typ="Venerable "+string(obj_ini.role[100,6])) and (ma_role[v]=obj_ini.role[100,6]) then n=0;
-                    
+
 	                    if (squad_typ=ma_role[v]) then n=0;
 	                    if (squad_members+1>10) then n=1;
 	                    if ((ma_wid[v]+(ma_lid[v]/100))!=squad_loc) then n=1;
-                    
-                    
+
+
 	                    // if (squad_typ="Venerable "+string(ma_role[v])) then n=0;
 	                    // if (squad_typ="Venerable "+string(obj_ini.role[100,6])) then n=2;
-                    
+
 	                    if (n=0){squad_members+=1;squad_typ=ma_role[v];squad[v]=squads;}
 	                    if (n=1){squads+=1;squad_members=1;squad_typ=ma_role[v];squad[v]=squads;squad_loc=ma_wid[v]+(ma_lid[v]/100);}
 	                    if (n=2){squad[v]=0;}
@@ -150,23 +150,24 @@ function scr_company_view(argument0) {
 	                if (squads=0){
 	                    squads+=1;squad_members=1;squad_typ=ma_role[v];squad[v]=squads;squad_loc=ma_wid[v]+(ma_lid[v]/100);
 	                }
-                
-                
-                
+
+
+
 	                // Right here is where the promotion check will go
 	                // If EXP is enough for that company then ma_promote[i]=1
-                
+
 	                if (ma_role[v]=obj_ini.role[100,3]) or (ma_role[v]=obj_ini.role[100,4]){
 	                    if (company=1) and (ma_exp[v]>=300) then ma_promote[v]=1;
 	                    if (ma_health[v]<=10) then ma_promote[v]=10;
 	                }
-                
+
 	                if (ma_role[v]=obj_ini.role[100,6]) and (ma_exp[v]>=400) then ma_promote[v]=1;
-                
+
 	                if (ma_role[v]=obj_ini.role[100,15]) or (ma_role[v]=obj_ini.role[100,14]) then ma_promote[v]=1;
 	                if (ma_role[v]=obj_ini.role[100,16]) then ma_promote[v]=1;
-                
+
 	                if (ma_role[v]=obj_ini.role[100,8]) or (ma_role[v]=obj_ini.role[100,12]) or (ma_role[v]=obj_ini.role[100,10]) or (ma_role[v]=obj_ini.role[100,9]){
+
 	                    if (company=10) and (ma_exp[v]>=40) then ma_promote[v]=1;
 	                    if (company=9) and (ma_exp[v]>=60) then ma_promote[v]=1;
 	                    if (company=8) and (ma_exp[v]>=80) then ma_promote[v]=1;
@@ -177,9 +178,11 @@ function scr_company_view(argument0) {
 	                    if (company=3) and (ma_exp[v]>=180) then ma_promote[v]=1;
 	                    if (company=2) and (ma_exp[v]>=200) then ma_promote[v]=1;
                     
+
+
 	                    if (ma_health[v]<=10) then ma_promote[v]=10;
 	                }
-                
+
 	                // Need something to verify there is no standard bearer in the previous company
 	                /*if (ma_role[v]="Standard Bearer"){
 	                    if (company=10) and (ma_exp[v]>=25) then ma_promote[v]=1;
@@ -191,7 +194,7 @@ function scr_company_view(argument0) {
 	                    if (company=4) and (ma_exp[v]>=65) then ma_promote[v]=1;
 	                    if (company=3) and (ma_exp[v]>=75) then ma_promote[v]=1;
 	                }*/
-                
+
 	                if (ma_role[v]=obj_ini.role[100,5]){
 	                    if (company=10) and (ma_exp[v]>=40) then ma_promote[v]=1;
 	                    if (company=9) and (ma_exp[v]>=60) then ma_promote[v]=1;
@@ -202,19 +205,20 @@ function scr_company_view(argument0) {
 	                    if (company=4) and (ma_exp[v]>=160) then ma_promote[v]=1;
 	                    if (company=3) and (ma_exp[v]>=180) then ma_promote[v]=1;
 	                    if (company=2) and (ma_exp[v]>=200) then ma_promote[v]=1;
+
 	                }
-                
+
 	                if (obj_controller.command_set[2]=1) and (ma_promote[v]=0) then ma_promote[v]=1;
 	            }
-            
-            
-            
+
+
+
 	        }
-        
-	        if (obj_ini.name[company,v+1]="") and 
-	        (obj_ini.name[company,v]!="") and 
-	        (last_man=0) and 
-	        (obj_ini.ship_location[obj_ini.lid[company,v]]!="Lost") 
+
+	        if (obj_ini.name[company,v+1]="") and
+	        (obj_ini.name[company,v]!="") and
+	        (last_man=0) and
+	        (obj_ini.ship_location[obj_ini.lid[company,v]]!="Lost")
 	        then last_man=v;
 	    }
 	}
@@ -226,29 +230,28 @@ function scr_company_view(argument0) {
 	repeat(100){
 	// if (!instance_exists(obj_popup)) then repeat(100){// 100
 	    i+=1;bad=0;
-    
+
 	    // if (obj_ini.veh_race[company,i]=argument0) and (obj_ini.veh_role[company,i]!=""){
 	    if (obj_ini.veh_race[company,i]!=0){
 	        if (obj_ini.veh_lid[company,i]>0){
 	            if (obj_ini.ship_location[obj_ini.veh_lid[company,i]]="Lost") then bad=1;
 	        }
-        
+
 	        if (bad=0){v+=1;
-        
+
 	            var step;step=false;
 	            if (i>1){if (ide[v-1]=i){step=true;v-=1;}}
-        
+
 	            if (step=false){
-                
+
 	                man[v]="vehicle";ide[v]=i;last_vehicle+=1;
 	                ma_loc[v]=obj_ini.veh_loc[company,i];ma_role[v]=obj_ini.veh_role[company,i];ma_wep1[v]=obj_ini.veh_wep1[company,i];
-	                ma_wep2[v]=obj_ini.veh_wep2[company,i];ma_gear[v]=obj_ini.veh_upgrade[company,i];ma_health[v]=obj_ini.veh_hp[company,i];
+	                ma_wep2[v]=obj_ini.veh_wep2[company,i];ma_armor[v]=obj_ini.veh_wep3[company,i];ma_gear[v]=obj_ini.veh_upgrade[company,i];ma_mobi[v]=obj_ini.veh_acc[company,i];ma_health[v]=obj_ini.veh_hp[company,i];
 	                ma_lid[v]=obj_ini.veh_lid[company,i];ma_wid[v]=obj_ini.veh_wid[company,i];
 	                if (ma_lid[v]>0){
 	                    ma_loc[v]=obj_ini.ship[ma_lid[v]];
 	                    if (obj_ini.ship_location[ma_lid[v]]="Lost") then ma_loc[v]="Lost";
 	                }
-                
 	                // Select All Setup
 	                var p,go,op;go=0;op=0;p=-1;
 	                if (man[v]="vehicle"){
@@ -258,13 +261,13 @@ function scr_company_view(argument0) {
 	                    }
 	                    if (go=0) then sel_veh[op]=ma_role[v];
 	                }
-                
+
 	            }
-                
-                
+
+
 	        }
-        
-        
+
+
 	    }
 	}
 
