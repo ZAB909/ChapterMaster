@@ -502,7 +502,7 @@ function scr_enemy_ai_c() {
 	        if (point_distance(x,y+32,ship.x,ship.y)<5) and (ship.owner=9) and (ship.capital_number>0) and (p_type[i]!="Dead") and (array_length(p_feature[i])!=0){
 	            if (planet_feature_bool(p_feature[i], P_features.Reclamation_pools) ==1){
 	                p_tyranids[i]=0;
-	                if (p_type[i]="Feral") or (p_type[i]="Hive") then ship.capital_number+=choose(0,1,1);
+	                if (p_type[i]="Death") or (p_type[i]="Hive") then ship.capital_number+=choose(0,1,1);
 	                ship.capital_number+=1;
 	                ship.escort_number+=3;
 	                ship.image_index=floor((ship.capital_number)+(ship.frigate_number/2)+(ship.escort_number/4));

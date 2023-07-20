@@ -167,7 +167,7 @@ if ((zm=0) and (type<=4)) or (type=98){
     if (image="spyrer") then img=23;
     if (image="fortress") then img=24;
     if (image="fortress_hive") then img=25;
-    if (image="fortress_feral") then img=26;
+    if (image="fortress_death") then img=26;
     if (image="fortress_ice") then img=27;
     if (image="fortress_lava") then img=28;
     if (image="fortress_dorf") then img=29;

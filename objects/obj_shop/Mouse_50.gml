@@ -31,7 +31,7 @@ draw_rectangle(xx+957,yy+76,xx+1062,yy+104,0);
     draw_rectangle(xx+1068,yy+76,xx+1136,yy+104,0);
     draw_rectangle(xx+1167,yy+76,xx+1255,yy+104,0);
     draw_rectangle(xx+1487,yy+76,xx+1545,yy+104,0);
-    
+
     draw_set_color(c_black);
     draw_text_transformed(xx+960,yy+76,string_hash_to_newline("Equipment"),0.6,0.6,0);
     draw_text_transformed(xx+1070,yy+76,string_hash_to_newline("Armor"),0.6,0.6,0);
@@ -67,30 +67,30 @@ if (obj_controller.cooldown<=0){
                     if (!keyboard_check(vk_shift)){scr_add_item(item[i],1);item_stocked[i]+=1;click2=1;}
                 }
                 if (item[i]="Rhino") or (item[i]="Predator") or (item[i]="Land Raider") or (item[i]="Whirlwind") or (item[i]="Land Speeder"){
-                    if (keyboard_check(vk_shift)){repeat(5){scr_add_vehicle(item[i],target_comp,"standard","standard","standard","standard");}item_stocked[i]+=5;click2=1;}
-                    if (!keyboard_check(vk_shift)){scr_add_vehicle(item[i],target_comp,"standard","standard","standard","standard");item_stocked[i]+=1;click2=1;}
+                    if (keyboard_check(vk_shift)){repeat(5){scr_add_vehicle(item[i],target_comp,"standard","standard","standard","standard","standard");}item_stocked[i]+=5;click2=1;}
+                    if (!keyboard_check(vk_shift)){scr_add_vehicle(item[i],target_comp,"standard","standard","standard","standard","standard");item_stocked[i]+=1;click2=1;}
                 }
                 with(obj_ini){scr_vehicle_order(obj_shop.target_comp);}
                 obj_controller.requisition-=cost;
             }
-            
+
             if (obj_controller.requisition>=cost) and (shop="warships"){
                 var v,ev,;v=0;ev=0;
                 repeat(99){v+=1;if (ev=0) and (obj_controller.event[v]="") then ev=v;}
                 obj_controller.event[ev]="new_"+string(item[i]);
-                
+
                 if (item[i]="Battle Barge") then obj_controller.event_duration[ev]=12;
                 if (item[i]="Strike Cruiser") then obj_controller.event_duration[ev]=4;
                 if (item[i]="Gladius") then obj_controller.event_duration[ev]=1;
                 if (item[i]="Hunter") then obj_controller.event_duration[ev]=1;
                 obj_controller.event_duration[ev]+=choose(0,0,1);
                 eta=obj_controller.event_duration[ev];
-                
+
                 construction_started=120;obj_controller.requisition-=cost;
             }
-            
+
             obj_controller.cooldown=8000;
-        }  
+        }
     }
 }
 
