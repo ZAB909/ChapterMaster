@@ -9,11 +9,11 @@ function scr_load(argument0, argument1) {
 	    file_copy("save"+string(argument1)+".ini","tsave.ini");
 	    file_decrypt("tsave.ini","p");
 	    ini_open("tsave.ini");
-    
+
 	    // Global variables
 	    global.chapter_name=ini_read_string("Save","chapter_name","Error");
 	    obj_ini.sector_name=ini_read_string("Save","sector_name","Error");
-    
+
 	    global.version=ini_read_real("Save","version",0);
 	    if (global.version<0.64) then room_goto(Main_Menu);
 	    if (global.restart>0) and (global.version<0.635){
@@ -22,9 +22,9 @@ function scr_load(argument0, argument1) {
 	    }
 	    global.game_seed=ini_read_real("Save","game_seed",0);
 	    obj_ini.use_custom_icon=ini_read_real("Save","use_custom_icon",0);
-    
+
 	    obj_controller.play_time=ini_read_real("Save","play_time",0);
-    
+
 	    obj_ini.progenitor=ini_read_real("Save","founding",0);
 	    // global.founding_secret=ini_read_string("Save","founding_secret","Error");
 	    global.custom=ini_read_real("Save","custom",1);
@@ -35,14 +35,14 @@ function scr_load(argument0, argument1) {
 	    random_set_seed(g);g=0;
 	    var corrupt;corrupt=1;
 	    corrupt=ini_read_real("Save","corrupt",1);
-    
+
 	    if (corrupt=1){
 	        game_restart();
 	    }
-    
+
 	    // obj_controller variables here
 	    obj_controller.load_game=argument1;
-    
+
 	    obj_controller.cheatyface=ini_read_real("Controller","cheatyface",0);
 	    obj_controller.x=ini_read_real("Controller","x",obj_controller.x);
 	    obj_controller.y=ini_read_real("Controller","y",obj_controller.y);
@@ -52,10 +52,10 @@ function scr_load(argument0, argument1) {
 	    obj_controller.fleet_type=ini_read_string("Controller","fleet_type","");
 	    obj_ini.fleet_type=round(ini_read_real("Controller","ifleet_type",0));
 	    obj_controller.homeworld_rule=ini_read_real("Controller","home_rule",1);
-    
+
 	    obj_controller.star_names=ini_read_string("Controller","star_names","Error");
 	    obj_controller.craftworld=ini_read_real("Controller","craftworld",0);
-    
+
 	    obj_controller.turn=ini_read_real("Controller","turn",0);
 	    obj_controller.last_event=ini_read_real("Controller","last_event",0);
 	    obj_controller.last_mission=ini_read_real("Controller","last_mission",0);
@@ -83,7 +83,7 @@ function scr_load(argument0, argument1) {
 	    obj_controller.select_wounded=ini_read_real("Controller","wndsel",1);
 	    obj_ini.imperium_disposition=ini_read_real("Controller","imdis",40);
 	    obj_controller.terra_direction=ini_read_real("Controller","terra_dir",floor(random(360))+1);
-    
+
 	        obj_controller.stc_wargear=ini_read_real("Controller","stc_wargear",0);
 	        obj_controller.stc_vehicles=ini_read_real("Controller","stc_vehicles",0);
 	        obj_controller.stc_ships=ini_read_real("Controller","stc_ships",0);
@@ -93,12 +93,12 @@ function scr_load(argument0, argument1) {
 	        obj_controller.stc_ships_un=ini_read_real("Controller","stc_ships_un",0);
 	    var j;j=0;repeat(6){j+=1;obj_controller.stc_bonus[j]=ini_read_real("Controller","stc_bonus_"+string(j),0);}
 	    j=-1;repeat(5){j+=1;obj_ini.adv[j]=ini_read_string("Controller","adv"+string(j),"");obj_ini.dis[j]=ini_read_string("Controller","dis"+string(j),"");}
-    
-    
-    
+
+
+
 	    // Player scheduled event
 	    obj_controller.fest_type=ini_read_string("Controller","f_t","");
-    
+
 	    if (obj_controller.fest_type!=""){
 	        obj_controller.fest_sid=ini_read_real("Controller","f_si",0);
 	        obj_controller.fest_wid=ini_read_real("Controller","f_wi",0);
@@ -132,9 +132,9 @@ function scr_load(argument0, argument1) {
 	       //     obj_controller.recent_number[i]=ini_write_real("Controller","recn"+string(i),0);
 	        }
 	    }
-    
-    
-    
+
+
+
 	    obj_controller.last_attack_form=ini_read_real("Formation","last_attack",1);if (obj_controller.last_attack_form=0) then obj_controller.last_attack_form=1;
 	    obj_controller.last_raid_form=ini_read_real("Formation","last_raid",3);if (obj_controller.last_raid_form=0) then obj_controller.last_raid_form=3;
 	    j=0;repeat(16){j+=1;
@@ -163,18 +163,23 @@ function scr_load(argument0, argument1) {
 	            obj_controller.bat_scou_for[j]=ini_read_real("Formation","scou"+string(j),1);
 	        }
 	    }
+<<<<<<<
     
+=======
+
+	    obj_controller.random_event_next=ini_read_string("Controller","random_event_next","");
+>>>>>>>
 	    obj_controller.useful_info=ini_read_string("Controller","useful_info","");
 	    obj_controller.random_event_next=ini_read_real("Controller","random_event_next","");
 	    obj_controller.gene_sold=ini_read_real("Controller","gene_sold",0);
 	    obj_controller.gene_xeno=ini_read_real("Controller","gene_xeno",0);
 	    obj_controller.gene_tithe=ini_read_real("Controller","gene_tithe",24);
 	    obj_controller.gene_iou=ini_read_real("Controller","gene_iou",0);
-    
+
 	    obj_controller.und_armories=ini_read_real("Controller","und_armories",0);
 	    obj_controller.und_gene_vaults=ini_read_real("Controller","und_gene_vaults",0);
 	    obj_controller.und_lairs=ini_read_real("Controller","und_lairs",0);
-    
+
 	    obj_controller.penitent=ini_read_real("Controller","penitent",0);
 	    obj_controller.penitent_current=ini_read_real("Controller","penitent_current",0);
 	    obj_controller.penitent_max=ini_read_real("Controller","penitent_max",0);
@@ -182,7 +187,7 @@ function scr_load(argument0, argument1) {
 	    obj_controller.penitent_turn=ini_read_real("Controller","penitent_turn",0);
 	    obj_controller.penitent_end=ini_read_real("Controller","penitent_end",0);
 	    obj_controller.blood_debt=ini_read_real("Controller","penitent_blood",0);
-    
+
 	    obj_controller.training_apothecary=ini_read_real("Controller","training_apothecary",0);
 	    obj_controller.apothecary_points=ini_read_real("Controller","apothecary_points",0);
 	    obj_controller.apothecary_aspirant=ini_read_real("Controller","apothecary_aspirant",0);
@@ -195,22 +200,22 @@ function scr_load(argument0, argument1) {
 	    obj_controller.training_techmarine=ini_read_real("Controller","training_techmarine",0);
 	    obj_controller.tech_points=ini_read_real("Controller","tech_points",0);
 	    obj_controller.tech_aspirant=ini_read_real("Controller","tech_aspirant",0);
-    
+
 	    obj_controller.penitorium=ini_read_real("Controller","penitorium",0);
-    
+
 	    obj_controller.recruiting_worlds=ini_read_string("Controller","recruiting_worlds","");
 	    obj_controller.recruiting=ini_read_real("Controller","recruiting",0);
 	    obj_controller.recruit_trial=ini_read_string("Controller","trial","Blood Duel");
 	    obj_controller.recruits=ini_read_real("Controller","recruits",0);
 	    obj_controller.recruit_last=ini_read_real("Controller","recruit_last",0);
-    
+
 	    var g;g=-1;repeat(30){g+=1;
 	        obj_controller.command_set[g]=ini_read_real("Controller","command"+string(g),0);
 	    }
 	    if (obj_controller.command_set[20]=0) and (obj_controller.command_set[21]=0) and (obj_controller.command_set[22]=0) then obj_controller.command_set[20]=1;
 	    if (obj_controller.command_set[23]=0) and (obj_controller.command_set[24]=0) then obj_controller.command_set[24]=1;
-    
-    
+
+
 	    ini_read_real("Controller","blandify",0);
 	    var g;g=-1;repeat(obj_controller.recruits){g+=1;
 	        obj_controller.recruit_name[g]=ini_read_string("Recruit","rcr"+string(g),"Error");
@@ -230,26 +235,26 @@ function scr_load(argument0, argument1) {
 	        obj_controller.inquisitor_gender[g]=ini_read_real("Controller","inq_ge"+string(g),1);
 	        obj_controller.inquisitor_type[g]=ini_read_string("Controller","inq_ty"+string(g),"Error");
 	    }
-    
+
 	    var g;g=-1;repeat(14){g+=1;
 	        obj_controller.faction[g]=ini_read_string("Factions","fac"+string(g),"Error");
 	        obj_controller.disposition[g]=ini_read_real("Factions","dis"+string(g),0);
 	        obj_controller.disposition_max[g]=ini_read_real("Factions","dis_max"+string(g),0);
-        
+
 	        obj_controller.faction_leader[g]=ini_read_string("Factions","lead"+string(g),"Error");
 	        obj_controller.faction_gender[g]=ini_read_real("Factions","gen"+string(g),1);
 	        obj_controller.faction_title[g]=ini_read_string("Factions","title"+string(g),"Error");
 	        obj_controller.faction_status[g]=ini_read_string("Factions","status"+string(g),"Error");
 	        obj_controller.faction_defeated[g]=ini_read_real("Factions","defeated"+string(g),0);
 	        obj_controller.known[g]=ini_read_real("Factions","known"+string(g),0);
-        
+
 	        obj_controller.annoyed[g]=ini_read_real("Factions","annoyed"+string(g),0);
 	        obj_controller.ignore[g]=ini_read_real("Factions","ignore"+string(g),0);
 	        obj_controller.turns_ignored[g]=ini_read_real("Factions","turns_ignored"+string(g),0);
 	        obj_controller.audien[g]=ini_read_real("Factions","audience"+string(g),0);
 	        obj_controller.audien_topic[g]=ini_read_string("Factions","audience_topic"+string(g),"");
 	    }
-	    // 
+	    //
 	    var g;g=0;
 	    repeat(50){g+=1;
 	        obj_controller.quest[g]=ini_read_string("Ongoing","quest"+string(g),"");
@@ -261,15 +266,15 @@ function scr_load(argument0, argument1) {
 	        obj_controller.event[g]=ini_read_string("Ongoing","event"+string(g),"");
 	        obj_controller.event_duration[g]=ini_read_real("Ongoing","event_duration"+string(g),0);
 	    }
-	    // 
+	    //
 	    obj_controller.justmet=0;
 	    obj_controller.check_number=ini_read_real("Controller","check_number",0);
 	    obj_controller.year_fraction=ini_read_real("Controller","year_fraction",0);
 	    obj_controller.year=ini_read_real("Controller","year",0);
 	    obj_controller.millenium=ini_read_real("Controller","millenium",0);
-	    // 
+	    //
 	    obj_controller.requisition=ini_read_real("Controller","req",0);
-	    // 
+	    //
 	    obj_controller.income=ini_read_real("Controller","income",0);
 	    obj_controller.income_last=ini_read_real("Controller","income_last",0);
 	    obj_controller.income_base=ini_read_real("Controller","income_base",0);
@@ -291,7 +296,7 @@ function scr_load(argument0, argument1) {
 	    obj_controller.inspection_passes=ini_read_real("Controller","inspection_passes",0);
 	    obj_controller.recruiting_worlds_bought=ini_read_real("Controller","recruiting_worlds_bought",0);
 	    obj_controller.last_weapons_tab=ini_read_real("Controller","lwt",1);
-	    // 
+	    //
 	    obj_ini.battle_cry=ini_read_string("Ini","battle_cry","Error");
 	    // obj_ini.fortress_name=ini_read_string("Ini","fortress_name","Error");
 	    obj_ini.flagship_name=ini_read_string("Ini","flagship_name","Error");
@@ -299,43 +304,43 @@ function scr_load(argument0, argument1) {
 	    obj_ini.home_type=ini_read_string("Ini","home_type","Error");
 	    obj_ini.recruiting_name=ini_read_string("Ini","recruiting_name","Error");
 	    obj_ini.recruiting_type=ini_read_string("Ini","recruiting_type","Error");
-    
-    
+
+
 	    var tempa,tempa2,q,good;q=0;good=0;tempa="";tempa2=0;
 	    scr_colors_initialize();
-    
+
 	    tempa=ini_read_string("Controller","main_color","Error");tempa2=0;
 	    q=0;good=0;repeat(30){q+=1;if (tempa=col[q]) and (good=0){good=q;tempa2=q;}}
 	    obj_controller.main_color=tempa2;obj_ini.main_color=tempa2;
-    
+
 	    tempa=ini_read_string("Controller","secondary_color","Error");tempa2=0;
 	    q=0;good=0;repeat(30){q+=1;if (tempa=col[q]) and (good=0){good=q;tempa2=q;}}
 	    obj_controller.secondary_color=tempa2;obj_ini.secondary_color=tempa2;
-    
+
 	    tempa=ini_read_string("Controller","trim_color","Error");tempa2=0;
 	    q=0;good=0;repeat(30){q+=1;if (tempa=col[q]) and (good=0){good=q;tempa2=q;}}
 	    obj_controller.trim_color=tempa2;obj_ini.trim_color=tempa2;
-    
+
 	    tempa=ini_read_string("Controller","pauldron2_color","Error");tempa2=0;
 	    q=0;good=0;repeat(30){q+=1;if (tempa=col[q]) and (good=0){good=q;tempa2=q;}}
 	    obj_controller.pauldron2_color=tempa2;obj_ini.pauldron2_color=tempa2;
-    
+
 	    tempa=ini_read_string("Controller","pauldron_color","Error");tempa2=0;
 	    q=0;good=0;repeat(30){q+=1;if (tempa=col[q]) and (good=0){good=q;tempa2=q;}}
 	    obj_controller.pauldron_color=tempa2;obj_ini.pauldron_color=tempa2;
-    
+
 	    tempa=ini_read_string("Controller","lens_color","Error");tempa2=0;
 	    q=0;good=0;repeat(30){q+=1;if (tempa=col[q]) and (good=0){good=q;tempa2=q;}}
 	    obj_controller.lens_color=tempa2;obj_ini.lens_color=tempa2;
-    
+
 	    tempa=ini_read_string("Controller","weapon_color","Error");tempa2=0;
 	    q=0;good=0;repeat(30){q+=1;if (tempa=col[q]) and (good=0){good=q;tempa2=q;}}
 	    obj_controller.weapon_color=tempa2;obj_ini.weapon_color=tempa2;
-    
+
 	    obj_controller.col_special=ini_read_real("Controller","col_special",0);obj_ini.col_special=obj_controller.col_special;
 	    obj_controller.trim=ini_read_real("Controller","trimmed",0);obj_ini.trim=obj_controller.trim;
 	    obj_ini.skin_color=ini_read_real("Controller","skin_color",0);obj_controller.skin_color=obj_ini.skin_color;
-    
+
 	    obj_ini.adept_name=ini_read_string("Controller","adept_name","Error");
 	    obj_ini.recruiter_name=ini_read_string("Controller","recruiter_name","Error");
 	    // obj_ini.progenitor=ini_read_string("Controller","progenitor","Error");
@@ -344,7 +349,7 @@ function scr_load(argument0, argument1) {
 	    obj_ini.progenitor_disposition=ini_read_real("Controller","progenitor_disposition",0);
 	    obj_ini.imperium_disposition=ini_read_real("Controller","imperium_disposition",0);
 	    obj_controller.astartes_disposition=ini_read_real("Controller","astartes_disposition",0);
-    
+
 	    obj_controller.bat_devastator_column=ini_read_real("Controller","bat_devastator_column",1);
 	    obj_controller.bat_assault_column=ini_read_real("Controller","bat_assault_column",4);
 	    obj_controller.bat_tactical_column=ini_read_real("Controller","bat_tactical_column",2);
@@ -360,21 +365,21 @@ function scr_load(argument0, argument1) {
 	    obj_controller.bat_predator_column=ini_read_real("Controller","bat_preadtor_column",7);
 	    obj_controller.bat_landraiders_column=ini_read_real("Controller","bat_landraiders_column",7);
 	    obj_controller.bat_scout_column=ini_read_real("Controller","bat_scout_column",1);
-    
+
 	    ini_close();
 	}
 
 
 	if (argument0=2) or (argument0=0){debugl("Loading slot "+string(argument1)+" part 2");
 	    ini_open("tsave.ini");
-    
+
 	    stars=ini_read_real("Save","stars",0);
-    
+
 	    // Stars
 	    var i;i=-1;
 	    repeat(stars){i+=1;
 	        var new_star;new_star=instance_create(0,0,obj_star);
-        
+
 	        new_star.name=ini_read_string("Star","sr"+string(i)+"name","");
 	        new_star.star=ini_read_string("Star","sr"+string(i)+"star","");
 	        new_star.planets=ini_read_real("Star","sr"+string(i)+"planets",0);
@@ -385,14 +390,14 @@ function scr_load(argument0, argument1) {
 	        new_star.y2=ini_read_real("Star","sr"+string(i)+"y2",0);
 	        new_star.old_x=ini_read_real("Star","sr"+string(i)+"ox",0);
 	        new_star.old_y=ini_read_real("Star","sr"+string(i)+"oy",0);
-        
+
 	        new_star.vision=ini_read_real("Star","sr"+string(i)+"vision",1);
 	        new_star.storm=ini_read_real("Star","sr"+string(i)+"storm",0);
 	        new_star.trader=ini_read_real("Star","sr"+string(i)+"trader",0);
 	        new_star.craftworld=ini_read_real("Star","sr"+string(i)+"craftworld",0);
 	        new_star.space_hulk=ini_read_real("Star","sr"+string(i)+"spacehulk",0);
 	        if (new_star.space_hulk=1) then new_star.sprite_index=spr_star_hulk;
-        
+
 	        var g;g=0;
 	        repeat(4){g+=1;
 	            if (new_star.planets>=g){
@@ -410,13 +415,13 @@ function scr_load(argument0, argument1) {
 	                new_star.p_pdf[g]=ini_read_real("Star","sr"+string(i)+"pdf"+string(g),0);
 	                new_star.p_fortified[g]=ini_read_real("Star","sr"+string(i)+"forti"+string(g),0);
 	                new_star.p_station[g]=ini_read_real("Star","sr"+string(i)+"stat"+string(g),0);
-                
+
 	                new_star.p_player[g]=ini_read_real("Star","sr"+string(i)+"play"+string(g),0);
 	                new_star.p_lasers[g]=ini_read_real("Star","sr"+string(i)+"p_lasers"+string(g),0);
 	                new_star.p_silo[g]=ini_read_real("Star","sr"+string(i)+"p_silo"+string(g),0);
 	                new_star.p_defenses[g]=ini_read_real("Star","sr"+string(i)+"p_defenses"+string(g),0);
 	                new_star.p_upgrades[g]=ini_read_string("Star","sr"+string(i)+"upg"+string(g),"");
-                
+
 	                new_star.p_orks[g]=ini_read_real("Star","sr"+string(i)+"or"+string(g),0);
 	                new_star.p_tau[g]=ini_read_real("Star","sr"+string(i)+"ta"+string(g),0);
 	                new_star.p_eldar[g]=ini_read_real("Star","sr"+string(i)+"el"+string(g),0);
@@ -427,32 +432,32 @@ function scr_load(argument0, argument1) {
 	                new_star.p_necrons[g]=ini_read_real("Star","sr"+string(i)+"ne"+string(g),0);
 	                new_star.p_tyranids[g]=ini_read_real("Star","sr"+string(i)+"tyr"+string(g),0);
 	                    new_star.p_halp[g]=ini_read_real("Star","sr"+string(i)+"halp"+string(g),0);
-                
+
 	                new_star.p_heresy[g]=ini_read_real("Star","sr"+string(i)+"heresy"+string(g),0);
 	                new_star.p_hurssy[g]=ini_read_real("Star","sr"+string(i)+"hurssy"+string(g),0);
 	                new_star.p_hurssy_time[g]=ini_read_real("Star","sr"+string(i)+"hurssy_time"+string(g),0);
 	                new_star.p_heresy_secret[g]=ini_read_real("Star","sr"+string(i)+"heresy_secret"+string(g),0);
 	                new_star.p_influence[g]=ini_read_real("Star","sr"+string(i)+"influence"+string(g),0);
 	                new_star.p_raided[g]=ini_read_real("Star","sr"+string(i)+"raided"+string(g),0);
-                
-                
-                
+
+
+
 	                /*
 	                ini_write_string("Star","sr"+string(i)+"prob"+string(g)+".1",instance_array[i].p_problem[g,1]);
 	                ini_write_real("Star","sr"+string(i)+"time"+string(g)+".1",instance_array[i].p_timer[g,1]);
-                
+
 	                ini_write_string("Star","sr"+string(i)+"prob"+string(g)+"2",instance_array[i].p_problem[g,2]);
 	                ini_write_real("Star","sr"+string(i)+"time"+string(g)+".2",instance_array[i].p_timer[g,2]);
-                
+
 	                ini_write_string("Star","sr"+string(i)+"prob"+string(g)+".3",instance_array[i].p_problem[g,3]);
 	                ini_write_real("Star","sr"+string(i)+"time"+string(g)+".3",instance_array[i].p_timer[g,3]);
-                
+
 	                ini_write_string("Star","sr"+string(i)+"prob"+string(g)+".4",instance_array[i].p_problem[g,4]);
 	                ini_write_real("Star","sr"+string(i)+"time"+string(g)+".4",instance_array[i].p_timer[g,4]);
 	                */
-                
-                
-                
+
+
+
 	                new_star.p_problem[g,1]=ini_read_string("Star","sr"+string(i)+"prob"+string(g)+".1","");
 	                new_star.p_timer[g,1]=ini_read_real("Star","sr"+string(i)+"time"+string(g)+".1",0);
 	                new_star.p_problem[g,2]=ini_read_string("Star","sr"+string(i)+"prob"+string(g)+".2","");
@@ -464,7 +469,7 @@ function scr_load(argument0, argument1) {
 	            }
 	        }
 	    }
-    
+
 	    // obj_ini
 	    obj_ini.home_name=ini_read_string("Ini","home_name","Error");
 	    obj_ini.home_type=ini_read_string("Ini","home_type","Error");
@@ -480,13 +485,13 @@ function scr_load(argument0, argument1) {
 	    obj_ini.strin=ini_read_string("Ini","strin1","");
 	    obj_ini.strin2=ini_read_string("Ini","strin2","");
 	    obj_ini.psy_powers=ini_read_string("Ini","psy_powers","default");
-    
+
 	    obj_ini.companies=ini_read_real("Ini","companies",10);
 	    var i;i=-1;repeat(21){i+=1;obj_ini.company_title[i]=ini_read_string("Ini","comp_title"+string(i),"");}
 	    var i;i=-1;repeat(121){i+=1;obj_ini.slave_batch_num[i]=ini_read_real("Ini","slave_num_"+string(i),0);obj_ini.slave_batch_eta[i]=ini_read_real("Ini","slave_eta_"+string(i),0);}
-    
-    
-    
+
+
+
 	    obj_ini.master_autarch=ini_read_real("Ini","master_autarch",0);
 	    obj_ini.master_avatar=ini_read_real("Ini","master_avatar",0);
 	    obj_ini.master_farseer=ini_read_real("Ini","master_farseer",0);
@@ -519,7 +524,7 @@ function scr_load(argument0, argument1) {
 	    obj_ini.master_necron_vehicles=ini_read_real("Ini","master_necron_vehicles",0);
 	    obj_ini.master_monolith=ini_read_real("Ini","master_monolith",0);
 	    obj_ini.master_special_killed=ini_read_string("Ini","master_special","");
-	    // 
+	    //
 	    obj_ini.preomnor=ini_read_real("Ini","preomnor",0);
 	    obj_ini.voice=ini_read_real("Ini","voice",0);
 	    obj_ini.doomed=ini_read_real("Ini","doomed",0);
@@ -533,14 +538,14 @@ function scr_load(argument0, argument1) {
 	    obj_ini.secretions=ini_read_real("Ini","secretions",0);
 	    obj_ini.occulobe=ini_read_real("Ini","occulobe",0);
 	    obj_ini.mucranoid=ini_read_real("Ini","mucranoid",0);
-	    // 
+	    //
 	    obj_ini.master_name=ini_read_string("Ini","master_name","Error");
 	    obj_ini.chief_librarian_name=ini_read_string("Ini","chief_name","Error");
 	    obj_ini.high_chaplain_name=ini_read_string("Ini","high_name","Error");
 	    obj_ini.high_apothecary_name=ini_read_string("Ini","high2_name","Error");
 	    obj_ini.forge_master_name=ini_read_string("Ini","forgey_name","Error");
 	    obj_ini.lord_admiral_name=ini_read_string("Ini","lord_name","Error");
-	    // 
+	    //
 	    obj_ini.chaplain_ranged=ini_read_string("Ini","chaplain_ranged","Error");
 	    obj_ini.chaplain_melee=ini_read_string("Ini","chaplain_melee","Error");
 	    obj_ini.apothecary_ranged=ini_read_string("Ini","apothecary_ranged","Error");
@@ -555,14 +560,14 @@ function scr_load(argument0, argument1) {
 	    obj_ini.forbidden_unit1=ini_read_string("Ini","forbidden_unit1","Error");
 	    obj_ini.forbidden_unit2=ini_read_string("Ini","forbidden_unit2","Error");
 	    obj_ini.forbidden_unit3=ini_read_string("Ini","forbidden_unit3","Error");
-	    // 
+	    //
 	    var g;g=-1;
 	    repeat(150){g+=1;
 	        obj_ini.equipment[g]=ini_read_string("Ini","equipment"+string(g),"");
 	        obj_ini.equipment_type[g]=ini_read_string("Ini","equipment_type"+string(g),"");
 	        obj_ini.equipment_number[g]=ini_read_real("Ini","equipment_number"+string(g),0);
 	        obj_ini.equipment_condition[g]=ini_read_real("Ini","equipment_condition"+string(g),0);
-        
+
 	        if (g<=20){
 	            obj_ini.artifact[g]=ini_read_string("Ini","artifact"+string(g),"");
 	            obj_ini.artifact_tags[g]=ini_read_string("Ini","artifact_tags"+string(g),"");
@@ -572,26 +577,26 @@ function scr_load(argument0, argument1) {
 	            obj_ini.artifact_sid[g]=ini_read_real("Ini","artifact_sid"+string(g),0);
 	        }
 	    }
-	    // 
+	    //
 	    obj_ini.ship_location[0]="";
-    
-    
+
+
 	    if (global.restart=0){
 	        var g;g=-1;repeat(200){g+=1;
 	            obj_ini.ship[g]=ini_read_string("Ships","shi"+string(g),"");
 	            obj_ini.ship_uid[g]=ini_read_real("Ships","shi_uid"+string(g),0);
 	            obj_ini.ship_class[g]=ini_read_string("Ships","shi_class"+string(g),"");
-	            // 
+	            //
 	            obj_ini.ship_size[g]=ini_read_real("Ships","shi_size"+string(g),0);
 	            obj_ini.ship_leadership[g]=ini_read_real("Ships","shi_leadership"+string(g),0);
 	            obj_ini.ship_hp[g]=ini_read_real("Ships","shi_hp"+string(g),0);
 	            obj_ini.ship_maxhp[g]=ini_read_real("Ships","shi_maxhp"+string(g),0);
-            
+
 	            if (obj_ini.ship_maxhp[g]<200) and (obj_ini.ship_maxhp[g]!=0){
 	                obj_ini.ship_hp[g]=obj_ini.ship_hp[g]*2;
 	                obj_ini.ship_maxhp[g]=obj_ini.ship_maxhp[g]*2;
 	            }
-            
+
 	            obj_ini.ship_location[g]=ini_read_string("Ships","shi_location"+string(g),"");
 	            obj_ini.ship_shields[g]=ini_read_real("Ships","shi_shields"+string(g),0);
 	            obj_ini.ship_conditions[g]=ini_read_string("Ships","shi_conditions"+string(g),"");
@@ -600,7 +605,7 @@ function scr_load(argument0, argument1) {
 	            obj_ini.ship_front_armor[g]=ini_read_real("Ships","shi_front_ac"+string(g),0);
 	            obj_ini.ship_other_armor[g]=ini_read_real("Ships","shi_other_ac"+string(g),0);
 	            obj_ini.ship_weapons[g]=ini_read_real("Ships","shi_weapons"+string(g),0);
-	            // 
+	            //
 	            obj_ini.ship_wep[g,1]=ini_read_string("Ships","shi"+string(g)+"wep1","");
 	            obj_ini.ship_facing[g,1]=ini_read_string("Ships","shi"+string(g)+"facing1","");
 	            obj_ini.ship_condition[g,1]=ini_read_string("Ships","shi"+string(g)+"condition1","");
@@ -616,7 +621,7 @@ function scr_load(argument0, argument1) {
 	            obj_ini.ship_wep[g,5]=ini_read_string("Ships","shi"+string(g)+"wep5","");
 	            obj_ini.ship_facing[g,5]=ini_read_string("Ships","shi"+string(g)+"facing5","");
 	            obj_ini.ship_condition[g,5]=ini_read_string("Ships","shi"+string(g)+"condition5","");
-	            // 
+	            //
 	            obj_ini.ship_capacity[g]=ini_read_real("Ships","shi_capacity"+string(g),0);
 	            obj_ini.ship_carrying[g]=ini_read_real("Ships","shi_carrying"+string(g),0);
 	            obj_ini.ship_contents[g]=ini_read_string("Ships","shi_contents"+string(g),"");
@@ -632,10 +637,10 @@ function scr_load(argument0, argument1) {
 
 	if (argument0=3) or (argument0=0){debugl("Loading slot "+string(argument1)+" part 3");
 	    ini_open("tsave.ini");
-    
+
 	    var coh,mah,good;
 	    good=0;coh=100;mah=-1;
-    
+
 	    if (global.restart=0){
 	        var coh,mah,good;
 	        good=0;coh=10;mah=205;
@@ -643,10 +648,10 @@ function scr_load(argument0, argument1) {
 	            if (good=0){
 	                mah-=1;
 	                if (mah=0){mah=205;coh-=1;}
-                
+
 	                // var temp_name;temp_name="";
 	                // temp_name=ini_read_string("Veh","rol"+string(coh)+"."+string(mah),"");
-                
+
 	                // if (temp_name!=""){
 	                    obj_ini.veh_race[coh,mah]=ini_read_real("Veh","co"+string(coh)+"."+string(mah),0);
 	                    obj_ini.veh_loc[coh,mah]=ini_read_string("Veh","lo"+string(coh)+"."+string(mah),"");
@@ -654,11 +659,13 @@ function scr_load(argument0, argument1) {
 	                    obj_ini.veh_lid[coh,mah]=ini_read_real("Veh","lid"+string(coh)+"."+string(mah),0);
 	                    obj_ini.veh_uid[coh,mah]=ini_read_real("Veh","uid"+string(coh)+"."+string(mah),0);
 	                    obj_ini.veh_wid[coh,mah]=ini_read_real("Veh","wid"+string(coh)+"."+string(mah),0);
-                    
+
 	                    obj_ini.veh_wep1[coh,mah]=ini_read_string("Veh","w1"+string(coh)+"."+string(mah),"");
 	                    obj_ini.veh_wep2[coh,mah]=ini_read_string("Veh","w2"+string(coh)+"."+string(mah),"");
+	                    obj_ini.veh_wep3[coh,mah]=ini_read_string("Veh","w3"+string(coh)+"."+string(mah),"");
 	                    obj_ini.veh_upgrade[coh,mah]=ini_read_string("Veh","up"+string(coh)+"."+string(mah),"");
-                    
+	                    obj_ini.veh_acc[coh,mah]=ini_read_string("Veh","ac"+string(coh)+"."+string(mah),"");
+
 	                    obj_ini.veh_hp[coh,mah]=ini_read_real("Veh","hp"+string(coh)+"."+string(mah),0);
 	                    obj_ini.veh_chaos[coh,mah]=ini_read_real("Veh","cha"+string(coh)+"."+string(mah),0);
 	                    // ini_write_real("Veh","pil"+string(coh)+"."+string(mah),obj_ini.veh_pilots[coh,mah]);
@@ -666,7 +673,7 @@ function scr_load(argument0, argument1) {
 	                if (coh=1) and (mah=1) then good=1;
 	            }
 	        }
-        
+
 	        var coh,mah,good;
 	        good=0;coh=100;mah=-1;
 	        repeat(31){mah+=1;
@@ -686,10 +693,10 @@ function scr_load(argument0, argument1) {
 	                if (mah=0){mah=600;coh-=1;}
 	                if (coh=0) and (mah=0) then good=1;
 	                if (coh<0) then good=1;
-                
+
 	                // var temp_name;temp_name="";
 	                // temp_name=ini_read_string("Mar","rol"+string(coh)+"."+string(mah),"Error");
-                
+
 	                if (good=0){
 	                    obj_ini.race[coh,mah]=ini_read_real("Mar","co"+string(coh)+"."+string(mah),0);
 	                    obj_ini.loc[coh,mah]=ini_read_string("Mar","lo"+string(coh)+"."+string(mah),"");
@@ -698,7 +705,7 @@ function scr_load(argument0, argument1) {
 	                    obj_ini.lid[coh,mah]=ini_read_real("Mar","li"+string(coh)+"."+string(mah),0);
 	                    obj_ini.bio[coh,mah]=ini_read_real("Mar","bio"+string(coh)+"."+string(mah),0);
 	                    obj_ini.wid[coh,mah]=ini_read_real("Mar","wi"+string(coh)+"."+string(mah),0);
-                    
+
 	                    if (coh=0){
 	                        if (obj_ini.role[coh,mah]="Chapter Master") then obj_ini.race[coh,mah]=1;
 	                        if (obj_ini.role[coh,mah]="Master of Sanctity") then obj_ini.race[coh,mah]=1;
@@ -706,13 +713,13 @@ function scr_load(argument0, argument1) {
 	                        if (obj_ini.role[coh,mah]="Forge Master") then obj_ini.race[coh,mah]=1;
 	                        if (string_count("Chief",obj_ini.role[coh,mah])>0) then obj_ini.race[coh,mah]=1;
 	                    }
-                    
+
 	                    obj_ini.wep1[coh,mah]=ini_read_string("Mar","w1"+string(coh)+"."+string(mah),"");
 	                    obj_ini.wep2[coh,mah]=ini_read_string("Mar","w2"+string(coh)+"."+string(mah),"");
 	                    obj_ini.armor[coh,mah]=ini_read_string("Mar","ar"+string(coh)+"."+string(mah),"");
 	                    obj_ini.gear[coh,mah]=ini_read_string("Mar","ge"+string(coh)+"."+string(mah),"");
 	                    obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");
-                    
+
 	                    var arc,teh,teh2;arc=0;teh="";teh2="";// Give daemon weapons their dialogue lines
 	                    repeat(5){arc+=1;teh2=choose("Daemonic1a|","Daemonic2a|","Daemonic3a|","Daemonic4a|");
 	                        if (arc=1) then teh=obj_ini.wep1[coh,mah];
@@ -729,29 +736,29 @@ function scr_load(argument0, argument1) {
 	                            if (arc=5) then obj_ini.mobi[coh,mah]=teh;
 	                        }
 	                    }
-                    
+
 	                    obj_ini.hp[coh,mah]=ini_read_real("Mar","hp"+string(coh)+"."+string(mah),0);
 	                    obj_ini.chaos[coh,mah]=ini_read_real("Mar","cha"+string(coh)+"."+string(mah),0);
 	                    obj_ini.experience[coh,mah]=ini_read_real("Mar","exp"+string(coh)+"."+string(mah),0);
 	                    obj_ini.age[coh,mah]=ini_read_real("Mar","ag"+string(coh)+"."+string(mah),0);
 	                    obj_ini.spe[coh,mah]=ini_read_string("Mar","spe"+string(coh)+"."+string(mah),"");
 	                    obj_ini.god[coh,mah]=ini_read_real("Mar","god"+string(coh)+"."+string(mah),0);
-                    
+
 	                    if (obj_ini.spe[coh,mah]="") and (global.version<0.625){// 135;
 	                        if (obj_ini.role[coh,mah]=obj_ini.role[100,17]) or (obj_ini.role[coh,mah]="Codiciery") or (obj_ini.role[coh,mah]="Lexicanum") or (obj_ini.role[coh,mah]="Chief "+string(obj_ini.role[100,17])){
 	                            scr_powers_new(coh,mah);
 	                        }
 	                    }
-                    
-                    
+
+
 	                }
-                
+
 	            }
 	        }
-    
-    
+
+
 	        if (string_count(obj_ini.spe[0,1],"$")>0) then obj_controller.born_leader=1;
-        
+
 	        coh=100;mah=-1;
 	        repeat(21){mah+=1;
 	            obj_ini.race[coh,mah]=ini_read_real("Mar","co"+string(coh)+"."+string(mah),0);
@@ -772,10 +779,10 @@ function scr_load(argument0, argument1) {
 	            obj_ini.gear[coh,mah]=ini_read_string("Mar","ge"+string(coh)+"."+string(mah),"");
 	            obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");
 	        }
-        
+
 	    }
-    
-    
+
+
 	    ini_close();
 	}
 
@@ -783,7 +790,7 @@ function scr_load(argument0, argument1) {
 
 	if (argument0=4) or (argument0=0){debugl("Loading slot "+string(argument1)+" part 4");// PLAYER FLEET OBJECTS
 	    ini_open("tsave.ini");
-    
+
 	    var num,i,fla;
 	    // Temporary artifact objects
 	    num=ini_read_real("Controller","temp_arti",0);
@@ -793,10 +800,10 @@ function scr_load(argument0, argument1) {
 	        fla.x=ini_read_real("Star","ar"+string(i)+"x",0);
 	        fla.y=ini_read_real("Star","ar"+string(i)+"y",0);
 	    }
-    
+
 	    num=ini_read_real("Save","p_fleets",0);
 	    i=-1;fla=0;
-    
+
 	    repeat(num){i+=1;fla=instance_create(0,0,obj_p_fleet);
 	        fla.image_index=ini_read_real("Fleet","pf"+string(i)+"image",0);
 	        fla.x=ini_read_real("Fleet","pf"+string(i)+"x",0);
@@ -818,7 +825,7 @@ function scr_load(argument0, argument1) {
 	        fla.hurssy=ini_read_real("Fleet","pf"+string(i)+"hurssy",0);
 	        fla.hurssy_time=ini_read_real("Fleet","pf"+string(i)+"hurssy_time",0);
 	        fla.orbiting=ini_read_real("Fleet","pf"+string(i)+"orb",0);
-        
+
 	        var g;g=-1;repeat(10){g+=1;
 	            fla.capital[g]=ini_read_string("Fleet","pf"+string(i)+"capital"+string(g),"");
 	            fla.capital_num[g]=ini_read_real("Fleet","pf"+string(i)+"capital_num"+string(g),0);
@@ -838,11 +845,11 @@ function scr_load(argument0, argument1) {
 	            fla.escort_uid[g]=ini_read_real("Fleet","pf"+string(i)+"escort_uid"+string(g),0);
 	        }
 	    }
-    
+
 	    // ENEMY FLEET OBJECTS
 	    num=ini_read_real("Save","en_fleets",0);
 	    i=-1;fla=0;
-    
+
 	    repeat(num){i+=1;fla=instance_create(0,0,obj_en_fleet);
 	        fla.owner=ini_read_real("Fleet","ef"+string(i)+"owner",0);
 	        fla.x=ini_read_real("Fleet","ef"+string(i)+"x",0);
@@ -871,7 +878,7 @@ function scr_load(argument0, argument1) {
 	        fla.orbiting=ini_read_real("Fleet","ef"+string(i)+"orb",0);
 	        fla.navy=ini_read_real("Fleet","ef"+string(i)+"navy",0);
 	        fla.guardsmen_unloaded=ini_read_real("Fleet","ef"+string(i)+"unl",0);
-        
+
 	        if (fla.navy=1){var e;e=-1;
 	            repeat(20){e+=1;
 	                fla.capital_imp[e]=ini_read_real("Fleet","ef"+string(i)+"navy_cap."+string(e),0);
@@ -885,7 +892,7 @@ function scr_load(argument0, argument1) {
 	                fla.escort_max_imp[e]=ini_read_real("Fleet","ef"+string(i)+"navy_esc_max."+string(e),0);
 	            }
 	        }
-        
+
 	    }
 	    with(obj_en_fleet){if (owner=0) then instance_destroy();}
 	    ini_close();
@@ -894,7 +901,7 @@ function scr_load(argument0, argument1) {
 	if (argument0=5) or (argument0=0){
 	    ini_open("tsave.ini");
 	    // file_delete("tsave.ini");
-    
+
 	    var i;i=0;
 	    obj_controller.restart_name=ini_read_string("Res","nm","");
 	    obj_controller.restart_founding=ini_read_real("Res","found",0);
@@ -916,45 +923,45 @@ function scr_load(argument0, argument1) {
 	    obj_controller.restart_homeworld_exists=ini_read_real("Res","home_e",0);
 	    obj_controller.restart_homeworld_rule=ini_read_real("Res","home_r",0);
 	    obj_controller.restart_battle_cry=ini_read_string("Res","cry","");
-    
-    
+
+
 	    with(obj_controller){
 	        scr_colors_initialize();
 	        scr_shader_initialize();
 	    }
-    
+
 	    var tempa,tempa2,q,good;tempa="";tempa2=0;q=0;good=0;
-    
+
 	    tempa=ini_read_string("Res","maincol","");
 	    tempa2=0;q=0;good=0;repeat(30){q+=1;if (tempa=obj_controller.col[q]) and (good=0){good=q;tempa2=q;}}
 	    obj_controller.restart_main_color=tempa2;
-    
+
 	    tempa=ini_read_string("Res","seccol","");
 	    tempa2=0;q=0;good=0;repeat(30){q+=1;if (tempa=obj_controller.col[q]) and (good=0){good=q;tempa2=q;}}
 	    obj_controller.restart_secondary_color=tempa2;
-    
+
 	    tempa=ini_read_string("Res","tricol","");
 	    tempa2=0;q=0;good=0;repeat(30){q+=1;if (tempa=obj_controller.col[q]) and (good=0){good=q;tempa2=q;}}
 	    obj_controller.restart_trim_color=tempa2;
-    
+
 	    tempa=ini_read_string("Res","paul2col","");
 	    tempa2=0;q=0;good=0;repeat(30){q+=1;if (tempa=obj_controller.col[q]) and (good=0){good=q;tempa2=q;}}
 	    obj_controller.restart_pauldron2_color=tempa2;
-    
+
 	    tempa=ini_read_string("Res","paul1col","");
 	    tempa2=0;q=0;good=0;repeat(30){q+=1;if (tempa=obj_controller.col[q]) and (good=0){good=q;tempa2=q;}}
 	    obj_controller.restart_pauldron_color=tempa2;
-    
+
 	    tempa=ini_read_string("Res","lenscol","");
 	    tempa2=0;q=0;good=0;repeat(30){q+=1;if (tempa=obj_controller.col[q]) and (good=0){good=q;tempa2=q;}}
 	    obj_controller.restart_lens_color=tempa2;
-    
+
 	    tempa=ini_read_string("Res","wepcol","");
 	    tempa2=0;q=0;good=0;repeat(30){q+=1;if (tempa=obj_controller.col[q]) and (good=0){good=q;tempa2=q;}}
 	    obj_controller.restart_weapon_color=tempa2;
-    
-	    // 
-    
+
+	    //
+
 	    obj_controller.restart_col_special=ini_read_real("Res","speccol",0);
 	    obj_controller.restart_trim=ini_read_real("Res","trim",0);
 	    obj_controller.restart_skin_color=ini_read_real("Res","skin",0);
@@ -967,7 +974,7 @@ function scr_load(argument0, argument1) {
 	    obj_controller.restart_equal_specialists=ini_read_real("Res","eqspec",0);
 	    obj_controller.restart_load_to_ships=ini_read_real("Res","load2",0);
 	    obj_controller.restart_successors=ini_read_real("Res","successors",0);
-    
+
 	    obj_controller.restart_mutations=ini_read_real("Res","muta",0);
 	    obj_controller.restart_preomnor=ini_read_real("Res","preo",0);
 	    obj_controller.restart_voice=ini_read_real("Res","voic",0);
@@ -997,7 +1004,7 @@ function scr_load(argument0, argument1) {
 	         repeat(14){o+=1;
 	            if (o=11) then o=12;
 	            if (o=13) then o=14;
-            
+
 	            obj_controller.r_race[i,o]=ini_read_real("Res","r_race"+string(i)+"."+string(o),0);
 	            obj_controller.r_role[i,o]=ini_read_string("Res","r_role"+string(i)+"."+string(o),"");
 	            obj_controller.r_wep1[i,o]=ini_read_string("Res","r_wep1"+string(i)+"."+string(o),"");
@@ -1007,14 +1014,14 @@ function scr_load(argument0, argument1) {
 	            obj_controller.r_gear[i,o]=ini_read_string("Res","r_gear"+string(i)+"."+string(o),"");
 	         }
 	    }// 100 is defaults, 101 is the allowable starting equipment
-    
+
 	    ini_close();
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
 	    with(obj_en_fleet){
 	        if (owner=2) and (string_count("colon",trade_goods)=0) then sprite_index=spr_fleet_imperial;
 	        if (owner=2) and (string_count("colon",trade_goods)>0) then sprite_index=spr_fleet_civilian;
@@ -1030,13 +1037,13 @@ function scr_load(argument0, argument1) {
 	        if (owner=10) then sprite_index=spr_fleet_chaos;
 	        image_speed=0;
 	    }
-    
-    
-    
+
+
+
 	    if (file_exists("save"+string(argument1)+"log.ini")){
 	        // ini_open("save"+string(argument1)+"log.ini");
 	        ini_open("tsave.ini");
-        
+
 	        var g,bobby,bobby2,stars;bobby="";bobby2="";g=0;
 	        stars=ini_read_real("Save","stars",0);
 	        bobby+=string(stars)+"|";
@@ -1046,27 +1053,27 @@ function scr_load(argument0, argument1) {
 	        g=ini_read_real("Save","sod",0);
 	        ini_close();file_delete("tsave.ini");
 	        bobby+=string(g)+"|";
-        
+
 	        ini_open("save"+string(argument1)+"log.ini");
 	        bobby2=string(ini_read_real("Main","data1",random(500)))+"|";
 	        bobby2+=ini_read_string("Main","data2","error")+"|";
 	        bobby2+=ini_read_string("Main","data3","error")+"|";
 	        bobby2+=string(ini_read_real("Main","data4",random(500)))+"|";
 	        bobby2+=string(ini_read_real("Main","data5",random(500)))+"|";
-        
+
 	        // show_message(string(bobby)+" - "+string(bobby2));
 	        // window_set_fullscreen(true);
-        
+
 	        if (bobby=bobby2) then obj_controller.good_log=1;
 	        instance_create(-100,-100,obj_event_log);
-        
+
 	        with(obj_all_fleet){
 	            alarm[11]=10;
 	        }
-        
+
 	        ini_close();
 	    }
-    
+
 	    obj_saveload.alarm[1]=30;
 	    obj_controller.invis=false;
 	    global.load=0;

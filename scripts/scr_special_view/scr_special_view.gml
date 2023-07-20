@@ -16,7 +16,7 @@ function scr_special_view(argument0) {
 	    ma_wep2[i]="";ma_armor[i]="";ma_gear[i]="";ma_health[i]=100;ma_chaos[i]=0;ma_exp[i]=0;ma_god[i]=0;
 	    sh_ide[i]=0;sh_uid[i]=0;sh_name[i]="";sh_class[i]="";sh_loc[i]="";sh_hp[i]="";sh_cargo[i]=0;sh_cargo_max[i]="";
 	    squad[i]=0;
-    
+
 	    if (i<=50){penit_co[i]=0;penit_id[i]=0;}
 	    // if (i<=100){event[i]="";event_duration[i]=0;}
 	}
@@ -41,7 +41,7 @@ function scr_special_view(argument0) {
 	        var ham;ham=obj_ini.lid[0,v];
 	        if (obj_ini.ship_location[ham]="Lost") then bad=1;
 	    }
-    
+
 	    if ((obj_ini.role[0,v]="Chapter Master") or (obj_ini.role[0,v]=obj_ini.role[100,2])) and (bad=0){
 	        b+=1;
 	        mans+=1;man[b]="man";ide[b]=v;
@@ -52,7 +52,7 @@ function scr_special_view(argument0) {
 	        if (ma_lid[b]>0) then ma_loc[b]=obj_ini.ship[ma_lid[b]];ma_mobi[b]=obj_ini.mobi[0,v];
 	        last_man=b;ma_promote[b]=0;ma_god[b]=obj_ini.god[0,v];ma_bio[b]=obj_ini.bio[0,v];
 	    }
-    
+
 	    if (bad=0){
 	        var yep;yep=0;
 	        if (obj_ini.role[0,v]="Skitarii") then yep=1;
@@ -182,10 +182,10 @@ function scr_special_view(argument0) {
 	    if (obj_ini.veh_race[company,i]!=0){b+=1;
 	        man[b]="vehicle";ide[b]=i;last_vehicle+=1;
 	        ma_loc[v]=obj_ini.veh_loc[company,i];ma_role[v]=obj_ini.veh_role[company,i];ma_wep1[v]=obj_ini.veh_wep1[company,i];
-	        ma_wep2[v]=obj_ini.veh_wep2[company,i];ma_gear[v]=obj_ini.veh_upgrade[company,i];ma_health[v]=obj_ini.veh_hp[company,i];
+	        ma_wep2[v]=obj_ini.veh_wep2[company,i];ma_armor[v]=obj_ini.veh_wep3[company,i];ma_gear[v]=obj_ini.veh_upgrade[company,i];ma_mobi[v]=obj_ini.veh_acc[company,i];ma_health[v]=obj_ini.veh_hp[company,i];
 	        ma_lid[v]=obj_ini.veh_lid[company,i];ma_wid[v]=obj_ini.veh_wid[company,i];
 	        if (ma_lid[v]>0) then ma_loc[v]=obj_ini.ship[ma_lid[v]];
-        
+
 	    }
 	}
 
@@ -196,7 +196,7 @@ function scr_special_view(argument0) {
 	    var ahuh;ahuh=0;
 	    if (man[i]="man"){if (ma_role[i]!="") then ahuh=1;}
 	    if (man[i]="vehicle"){if (ma_role[i]!="") then ahuh=1;}
-    
+
 	    if (ahuh=1){
 	        // Select All
 	        var w,go,op;go=0;op=0;w=-1;
@@ -215,8 +215,8 @@ function scr_special_view(argument0) {
 	            }
 	            if (go=0) then sel_veh[op]=ma_role[i];
 	        }
-        
-        
+
+
 	        // Squads
 	        if (squads>0){var n;n=1;
 	            if (squad_typ=obj_ini.role[100,15]) then n=0;
@@ -228,24 +228,24 @@ function scr_special_view(argument0) {
 	            if (squad_typ=ma_role[i]) then n=0;
 	            if (squad_typ=obj_ini.role[100,17]) and (ma_role[i]="Codiciery") then n=1;
 	            if (squad_typ="Codiciery") and (ma_role[i]="Lexicanum") then n=1;
-            
+
 	            if (squad_typ="Master of Sanctity") then n=1;
 	            if (squad_typ="Chief "+string(obj_ini.role[100,17])) then n=1;
 	            if (squad_typ="Forge Master") then n=1;
 	            if (squad_typ="Chapter Master") then n=1;
 	            if (squad_typ="Master of the Apothecarion") then n=1;
-            
+
 	            if (squad_members+1>10) then n=1;
 	            if ((ma_wid[i]+(ma_lid[i]/100))!=squad_loc) then n=1;
 	            if (squad_typ=obj_ini.role[100,6]) then n=2;
-            
+
 	            if (n=0){squad_members+=1;squad_typ=ma_role[i];squad[i]=squads;}
 	            if (n=1){squads+=1;squad_members=1;squad_typ=ma_role[i];squad[i]=squads;squad_loc=ma_wid[i]+(ma_lid[i]/100);}
 	            if (n=2){squad[i]=0;}
 	        }
 	        if (squads=0){squads+=1;squad_members=1;squad_typ=ma_role[i];squad[i]=squads;squad_loc=ma_wid[i]+(ma_lid[i]/100);}
 	    }
-    
+
 	}
 
 	man_current=1;man_max=last_man+last_vehicle;man_see=38-4;
