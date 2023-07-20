@@ -587,7 +587,10 @@ function scr_enemy_ai_e() {
 	                if (obj_controller.recruit_trial="Knowledge of Self")
 						then recr=floor(recr*2);
 
+					if (p_type[run]="Death") and (obj_controller.recruit_trial="Challenge"){
+						obj_controller.recruit_exp+=69;train-=10;
 						
+					}
 						/*
 						// give xp if they deserve it
 					obj_controller.recruit_exp[thiss]=choose(8,9,9);	

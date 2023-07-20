@@ -17,7 +17,7 @@ function scr_start_load(argument0, argument1, argument2) {
 
 	var splinter,com,ey,remove_size,company_size,shiyp,shiyp_size,companies_loaded;
 	splinter=0;com=-1;ey=0;remove_size=0;company_size=0;shiyp=1;shiyp_size=obj_ini.ship_size[shiyp];companies_loaded=1;
-	if (string_count("Splinter",obj_ini.strin2)>0) then splinter=1;
+if (string_count("Splinter",obj_ini.strin2)>0) then splinter=1;
 
 
 
@@ -125,9 +125,9 @@ function scr_start_load(argument0, argument1, argument2) {
 
 
 
-<<<<<<<
-                repeat (500) {
-                    ey += 1;
+
+repeat (500){
+    ey += 1;
   // Check if com and ey are within valid range
     if (com >= 0 && com <= 100 && ey >= 0 && ey <= 500) {
         if (obj_ini.role[com, ey] != "") {
@@ -135,15 +135,14 @@ function scr_start_load(argument0, argument1, argument2) {
             obj_ini.wid[com, ey] = 0;
             obj_ini.loc[com, ey] = obj_ini.ship_location[shiyp];
             company_size += 1;
+		}
 			
                     if (obj_ini.role[com, ey] != "") {
                         obj_ini.lid[com, ey] = shiyp;
                         obj_ini.wid[com, ey] = 0;
                         obj_ini.loc[com, ey] = obj_ini.ship_location[shiyp];
                         company_size += 1;
-=======
-
->>>>>>>
+					}
 
 	/*
 
@@ -343,7 +342,6 @@ function scr_start_load(argument0, argument1, argument2) {
 	}
 
 
-<<<<<<<
     if (num_of_cruisers == 3) then last_company = 4;
 
     if (num_of_cruisers == 4) then last_company = 5;
@@ -658,14 +656,13 @@ function scr_start_load(argument0, argument1, argument2) {
 
     // Final check to ensure no companies are left unsupported
     repeat (10) {
-        if (obj_ini.man_size > 0 && obj_ini.ship_carrying[shiyp] == 0) {
+        if (obj_ini.man_size > 0 && obj_ini.ship_carrying[shiyp] == 0){
             obj_ini.man_size = 0;
         }
         shiyp += 1;
     }
    }
   }
-=======
-
->>>>>>>
 }
+
+

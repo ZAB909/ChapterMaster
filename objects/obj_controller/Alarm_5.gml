@@ -1170,27 +1170,13 @@ repeat(99){i+=1;
             if (event[i]="enemy_ecclesiarchy"){scr_alert("green","enemy","You have made amends with your enemy in the Ecclesiarchy.",0,0);disposition[5]+=20;scr_event_log("","Amends made with Ecclesiarchy enemy.");}
 
             if (event[i]="imperium_daemon"){scr_alert("red","lol","Sector Commander "+string(faction_leader[2])+" has gone insane.",0,0);faction_defeated[2]=1;scr_event_log("red","Sector Commander "+string(faction_leader[2])+" has gone insane.");}
-<<<<<<<
-            
-            if (event[i]="chaos_invasion"){ 
+         
+		 if (event[i]="chaos_invasion"){ 
 				var xx,yy,flee,dirr;xx=0;yy=0;flee=0;dirr=0;
                     var star_id = scr_random_find(1,true,"","");
 
 					if(star_id != undefined){
-                        scr_event_log("purple","Chaos Fleets exit the warp near the "+string(star_id.name)+" system.");
-=======
-
-            if (event[i]="chaos_invasion"){
-                // check if homeworld type fleet here
-                // if (
-                    var xx,yy,flee,dirr;xx=0;yy=0;flee=0;dirr=0;
-                    scr_random_find(1,true,"","");
-
-                    if (instance_exists(obj_temp5)){
-                        var tee;tee=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
-                        scr_event_log("purple","Chaos Fleets exit the warp near the "+string(tee.name)+" system.");
->>>>>>>
-                        repeat(4){
+                        scr_event_log("purple","Chaos Fleets exit the warp near the "+string(star_id.name)+" system.");      repeat(4){
                             dirr+=irandom_range(50,100);
                             xx=star_id.x+lengthdir_x(72,dirr);
 							yy=star_id.y+lengthdir_y(72,dirr);
@@ -1504,13 +1490,10 @@ if (income_controlled_planets>0){
 
     if (income_controlled_planets=1) then obj_turn_end.alert_text[1]="-"+string(income_tribute)+" Requisition granted by tithes from 1 planet.";
     if (income_controlled_planets>1) then obj_turn_end.alert_text[1]="-"+string(income_tribute)+" Requisition granted by tithes from "+string(income_controlled_planets)+" planets.";
-}
+
 
 instance_activate_object(obj_p_fleet);
 
 with(obj_star){if (x<-10000){x+=20000;y+=20000;}};
 
-
-
-/* */
-/*  */
+	}

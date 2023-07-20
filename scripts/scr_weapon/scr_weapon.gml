@@ -93,12 +93,12 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 	    if (i=1){
 	        if (argument0="Ork Armor"){statt=15;spe_descr="";emor=1;}
-<<<<<<<
+//<<<<<<<
                 if (argument0="Skitarii Armor"){statt=5;spe_descr="";emor=1;}
     
-=======
+//=======
 
->>>>>>>
+//>>>>>>>
 	        if (argument0="Scout Armor"){statt=8;spe_descr="";emor=1;
 	            descr="A non-powered suit made up of carapace armor and ballistic nylon.  Includes biohazard shielding, nutrient feed, and camoflauge.";}
 	        if (argument0="MK3 Iron Armor"){statt=21;spe_descr="-10% Ranged";emor=1;
@@ -221,24 +221,20 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        descr="This weapon unleashes a massive, disruptive field on impact.  Only experienced marines can use Thunder Hammers.";}
 	    if (thawep="Master Crafted Thunder Hammer"){atta=560;arp=1;rang=1;melee_hands+=1;spli=1;
 	        descr="The Master Crafted Thunder Hammer incorporates superior craftsmanship, advanced technology, and special modifications, making it more potent and effective in combat. It possesses all the qualities of a standard Thunder Hammer but with enhanced performance and additional features.";}
-<<<<<<<
     
 	    if (thawep="Bolt Pistol"){atta=25;arp=0;rang=3.1;melee_hands+=1;amm=18;
-=======
+
 
 	    if (thawep="Bolt Pistol"){atta=35;arp=0;rang=3.1;melee_hands+=1;amm=18;
->>>>>>>
+
 	        descr="A smaller, more compact version of the venerable Boltgun.  Standard Godwyn pattern.";}
 	    if (thawep="Webber"){atta=35;arp=0;rang=4.1;ranged_hands+=2;amm=5;spli=0;
 	        descr="The Webber is a close-range weapon that fires strands of sticky web-like substance. It is designed to ensnare and immobilize enemies, restricting their movement and rendering them vulnerable to further attacks. ";}
 	    if (thawep="Underslung Bolter"){atta=60;arp=0;rang=10;amm=8;spli=1;}// Bursts
-<<<<<<<
-    
-	    if (thawep="Bolter"){atta=40;arp=0;rang=12;ranged_hands+=2;amm=15;spli=1;
-=======
+
 
 	    if (thawep="Bolter"){atta=45;arp=0;rang=12;ranged_hands+=2;amm=15;spli=1;
->>>>>>>
+
 	        if (argument6!="description") and (argument6!="description_long"){
 	        if (string_count("Terminator",marine_armor[argument3])>0) then melee_hands-=1;
 	        if (marine_armor[argument3]="Tartaros") then melee_hands-=1;}
@@ -311,13 +307,9 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        descr="A 2-handed firearm that launches bolts of plasma.  They are considered both sacred and dangerous, occasionally overheating.";}
 	    if (thawep="Master Crafted Plasma Gun"){atta=175;arp=1;rang=14;ranged_hands+=2;spli=1;
 	        descr="A Master Crafted Plasma Gun incorporates superior craftsmanship, advanced modifications, and enhancements compared to its standard counterpart.";}
-<<<<<<<
-    
-	    if (thawep="Sniper Rifle"){atta=50;arp=1;rang=25;ranged_hands+=2;amm=20;
-=======
 
 	    if (thawep="Sniper Rifle"){atta=80;arp=0;rang=25;ranged_hands+=2;amm=20;
->>>>>>>
+
 	        descr="Fires a solid shell and boasts powerful telescopic sights, allowing the user to target enemy weak points and distant foes.";}
 	    if (thawep="Assault Cannon"){atta=240;arp=0;rang=12;ranged_hands+=2;amm=5;spli=1;
 	        descr="A heavy, rotary auto-cannon frequently used by Dreadnoughts and Terminators.  Has an incredible rate of fire.";
@@ -763,4 +755,5 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	}
 
 
+}
 }
