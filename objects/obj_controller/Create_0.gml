@@ -572,7 +572,7 @@ diplo_char=0;
 var q;q=-1;repeat(6){q+=1;diplo_option[q]="";diplo_goto[q]="";}
 diplo_alpha=0;
 combat=0;
-random_event_next = event_enum.none;
+random_event_next = EVENT.none;
 useful_info="";
 
 // 
