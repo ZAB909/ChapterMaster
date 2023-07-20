@@ -47,6 +47,7 @@ function new_planet_feature(feature_type) constructor{
 		base_type = 0;
 		inquis_hidden =1;
 		planet_display = "Hidden Secret Base";
+		player_hidden = 0
 		break;
 	case P_features.Ancient_Ruins:
 		find_starship = function(){
@@ -55,6 +56,7 @@ function new_planet_feature(feature_type) constructor{
 			player_hidden = 0;
 			planet_display = "Unexplored Ancient Ruins";
 		}
+		player_hidden = 1
 		break;
 	case P_features.STC_Fragment:
 		player_hidden = 1;
@@ -80,9 +82,11 @@ function new_planet_feature(feature_type) constructor{
 		break;
 	case P_features.Monastery:
 		planet_display="Fortress Monastary";
+		player_hidden = 0
 		break;
 	case P_features.Recruiting_World:
 		planet_display="Recruitment";
+		player_hidden = 0
 		break;
 	default:
 		player_hidden = 1;
@@ -207,11 +211,10 @@ function awaken_tomb_world(planet){
 
 // creates alerts for discovering features on a planet
 function scr_planetary_feature(planet_num) {
-	var plan_feat_count = array_length(p_feature[planet_num])
+	var plan_feat_count = array_length(p_feature[planet_num]);
 	//need to iterate over features instead of just looking at first
-	if ( plan_feat_count>0){
 	for (var f= 0; f < plan_feat_count;f++;){
-		feat = p_feature[planet_num][f];
+		var feat = p_feature[planet_num][f];
 		if (feat.player_hidden ==1){
 			feat.player_hidden =0;
 			switch (feat.f_type){
@@ -250,7 +253,7 @@ function scr_planetary_feature(planet_num) {
 			
 			}
 		}
-	}}
+	}
 }
 		
 
