@@ -40,6 +40,7 @@
     {"name":"spr_tartaros2_colors","order":43,"path":"sprites/spr_tartaros2_colors/spr_tartaros2_colors.yy",},
     {"name":"spr_tartaros_wep_fix","order":45,"path":"sprites/spr_tartaros_wep_fix/spr_tartaros_wep_fix.yy",},
     {"name":"spr_terminator_colors","order":47,"path":"sprites/spr_terminator_colors/spr_terminator_colors.yy",},
+    {"name":"scr_ships","order":65,"path":"scripts/scr_ships/scr_ships.yy",},
     {"name":"spr_terminator2_colors","order":49,"path":"sprites/spr_terminator2_colors/spr_terminator2_colors.yy",},
     {"name":"spr_termi_wep_fix","order":51,"path":"sprites/spr_termi_wep_fix/spr_termi_wep_fix.yy",},
     {"name":"spr_honor_helm","order":1,"path":"sprites/spr_honor_helm/spr_honor_helm.yy",},

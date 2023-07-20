@@ -49,12 +49,38 @@ if (instance_exists(obj_controller)){
         i=0;repeat(4){i+=1;if (obj_ini.adv[i]="Kings of Space") then rdice-=10;}
         if (rdice<=80) and (p_strength<=2) then rdice=-5;
         
-        if (rdice!=-5){
+        if (rdice!=-5) {
             repeat(50){
                 diceh=floor(random(100))+1;
-                if (diceh<=ratio){ratio-=100;
-                    var onceh;onceh=0;
+                if (diceh<=ratio){
+					ratio-=100;
                     
+					if (count_ecsorts(mfleet) != 0) {
+                        esc_lost += 1;
+						var escorts = get_escorts(mfleet);
+						var escort = escorts[irandom(array_length(escorts) - 1)];
+						escort.hp = 0;
+						array_delete(mfleet, array_get_index(mfleet, escort), 1);
+					}
+					else if(count_frigates(mfleet) != 0) {
+                        frig_lost += 1;
+						var frigates = get_frigates(mfleet);
+						var frigate = frigates[irandom(array_length(frigates) - 1)];
+						frigate.hp = 0;
+						array_delete(mfleet, array_get_index(mfleet, frigate), 1);
+
+					}
+					else if (count_capitals(mfleet) != 0) {
+						cap_lost += 1;
+						var capitals = get_escorts(mfleet);
+						var capital = capitals[irandom(array_length(capitals) - 1)];
+						capital.hp = 0;
+						array_delete(mfleet, array_get_index(mfleet, capital), 1);
+					}
+					
+					
+					
+					
                     if (mfleet.escort_number>0) and (onceh=0){
                         esc_lost+=1;
                         which=floor(random(mfleet.escort_number))+1;
@@ -76,8 +102,10 @@ if (instance_exists(obj_controller)){
                         which=floor(random(mfleet.capital_number))+1;
                         sayd=mfleet.capital_num[which];
                         
-                        obj_ini.ship_hp[sayd]=0;ship_lost[sayd]=1;
-                        onceh=1;mfleet.capital_number-=1;
+                        obj_ini.ship_hp[sayd]=0;
+						ship_lost[sayd]=1;
+                        onceh=1;
+						mfleet.capital_number-=1;
                     }
                     
                     // show_message("Ship lost");

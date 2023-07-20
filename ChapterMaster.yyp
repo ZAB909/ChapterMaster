@@ -321,6 +321,7 @@
     {"id":{"name":"spr_tartaros2_colors","path":"sprites/spr_tartaros2_colors/spr_tartaros2_colors.yy",},},
     {"id":{"name":"spr_tartaros_wep_fix","path":"sprites/spr_tartaros_wep_fix/spr_tartaros_wep_fix.yy",},},
     {"id":{"name":"spr_terminator_colors","path":"sprites/spr_terminator_colors/spr_terminator_colors.yy",},},
+    {"id":{"name":"scr_ships","path":"scripts/scr_ships/scr_ships.yy",},},
     {"id":{"name":"spr_terminator2_colors","path":"sprites/spr_terminator2_colors/spr_terminator2_colors.yy",},},
     {"id":{"name":"spr_termi_wep_fix","path":"sprites/spr_termi_wep_fix/spr_termi_wep_fix.yy",},},
     {"id":{"name":"spr_honor_helm","path":"sprites/spr_honor_helm/spr_honor_helm.yy",},},
