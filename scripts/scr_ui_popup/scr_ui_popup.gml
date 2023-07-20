@@ -80,7 +80,12 @@ function scr_ui_popup() {
     
 	    if (ups>0) and (obj_temp_build.lair>0){
 	        var woob;woob="";secret=true;
-	        if (planet_feature_bool(obj_temp_build.target.p_feature[obj_controller.selecting_planet], P_features.Secret_Base)==0) then secret=false;
+			var planet_features = obj_temp_build.target.p_feature[obj_controller.selecting_planet]
+	        if (planet_feature_bool(planet_features, P_features.Secret_Base)==0){
+				secret=false;}else{
+					var s_base = search_planet_features(planet_features, P_features.Secret_Base)[0]
+					if (s_base.inquis_hidden != 1){secret = false;}
+				}
         
 	        var r,butt,alp,cost,fuck,tooltip,tooltip2,tooltip3,tooltip4,tcost;r=0;tcost=0;butt="";alp=1;cost=0;fuck=obj_temp_build;tooltip="";tooltip2="";tooltip3="";tooltip4="";
 	        repeat(12){r+=1;alp=1;cost=0;
