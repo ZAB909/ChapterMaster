@@ -32,7 +32,7 @@ function scr_chapter(argument0) {
 	    veteran_name="Veteran";devastator_name="Devastator";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
 	    tech_name="Techmarine";chaplain_name="Chaplain";role[100,2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=3;master_ranged=999;forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";
-	    home_type="Dead";recruiting_type="Feral";recruiting_name="Kimmeria";home_name="The Rock";lord_admiral_name=scr_marine_name();
+	    home_type="Dead";recruiting_type="Death";recruiting_name="Kimmeria";home_name="The Rock";lord_admiral_name=scr_marine_name();
 	    chief_librarian_name="Ezekial";high_chaplain_name="Sapphon";high_apothecary_name=scr_marine_name();forge_master_name="";
 	    chaplain_melee=1;chaplain_ranged=1;apothecary_melee=1;apothecary_ranged=1;sergeant_melee=1;
 	    sergeant_ranged=1;scout_melee=2;scout_ranged=1;honor_melee=3;honor_mobi=1;honor_ranged=1;
@@ -52,7 +52,7 @@ function scr_chapter(argument0) {
 	    veteran_name="Veteran";devastator_name="Devastator";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
 	    tech_name="Techmarine";chaplain_name="Chaplain";role[100,2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=3;master_ranged=999;forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";
-	    home_type="Dead";recruiting_type="Feral";recruiting_name="Kimmeria";home_name="The Rock";lord_admiral_name=scr_marine_name();
+	    home_type="Dead";recruiting_type="Death";recruiting_name="Kimmeria";home_name="The Rock";lord_admiral_name=scr_marine_name();
 	    chief_librarian_name="Ezekial";high_chaplain_name="Sapphon";high_apothecary_name=scr_marine_name();forge_master_name="";
 	    chaplain_melee=1;chaplain_ranged=1;apothecary_melee=1;apothecary_ranged=1;sergeant_melee=1;
 	    sergeant_ranged=1;scout_melee=2;scout_ranged=1;honor_melee=3;honor_mobi=1;honor_ranged=1;
@@ -226,7 +226,7 @@ function scr_chapter(argument0) {
 	    veteran_name="Veteran";devastator_name="Devastator";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
 	    tech_name="Techmarine";chaplain_name="Chaplain";role[100,2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=1;master_ranged=1;forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";
-	    home_type="Temperate";recruiting_type="Feral";recruiting_name="Parmenio";home_name="Macragge";lord_admiral_name="Lazlo Tiberius";
+	    home_type="Temperate";recruiting_type="Death";recruiting_name="Parmenio";home_name="Macragge";lord_admiral_name="Lazlo Tiberius";
 	    chief_librarian_name="Varro Tigurius";high_chaplain_name="Ortan Cassius";high_apothecary_name="Corpus Helix";forge_master_name="Fennias Maxim";
 	    chaplain_melee=1;chaplain_ranged=1;apothecary_melee=1;apothecary_ranged=1;sergeant_melee=1;
 	    sergeant_ranged=1;scout_melee=2;scout_ranged=1;honor_melee=1;honor_mobi=1;honor_ranged=1;

@@ -77,8 +77,8 @@ if (did=1){// Player star has been set
             ed.p_lasers[2]=8;ed.p_silo[2]=100;ed.p_defenses[2]=75;
             if (obj_ini.custom=0){ed.p_lasers[2]=32;ed.p_silo[2]=300;ed.p_defenses[2]=225;}
             
-            if (ed.p_type[1]="random") then ed.p_type[1]=choose("Feral","Temperate","Desert","Ice");
-            if (ed.p_type[2]="random") then ed.p_type[2]=choose("Feral","Temperate","Desert","Ice");
+            if (ed.p_type[1]="random") then ed.p_type[1]=choose("Death","Temperate","Desert","Ice");
+            if (ed.p_type[2]="random") then ed.p_type[2]=choose("Death","Temperate","Desert","Ice");
             // if (ed.name="random") then with(ed){scr_star_name();}
             if (global.chapter_name!="Lamenters") then obj_controller.recruiting_worlds+=string(ed.name)+" I|";
             
@@ -97,8 +97,8 @@ if (did=1){// Player star has been set
             ed.p_lasers[2]=8;ed.p_silo[2]=100;ed.p_defenses[2]=75;
             if (obj_ini.custom=0){ed.p_lasers[2]=32;ed.p_silo[2]=300;ed.p_defenses[2]=225;}
             
-            if (ed.p_type[1]="random") then ed.p_type[1]=choose("Feral","Temperate","Desert","Ice");
-            if (ed.p_type[2]="random") then ed.p_type[2]=choose("Feral","Temperate","Desert","Ice");
+            if (ed.p_type[1]="random") then ed.p_type[1]=choose("Death","Temperate","Desert","Ice");
+            if (ed.p_type[2]="random") then ed.p_type[2]=choose("Death","Temperate","Desert","Ice");
             // if (ed.name="random") then with(ed){scr_star_name();}
             if (global.chapter_name!="Lamenters") then obj_controller.recruiting_worlds+=string(ed.name)+" II|";
             
@@ -198,19 +198,19 @@ repeat(10){
 
     e=p_type[1];
     if (e="Lava") then a=1;if (e="Desert") then a=2;if (e="Hive") then a=3;
-    if (e="Feral") then a=4;if (e="Agri") then a=5;if (e="Temperate") then a=6;
+    if (e="Death") then a=4;if (e="Agri") then a=5;if (e="Temperate") then a=6;
     if (e="Ice") then a=7;if (e="Dead") then a=1;if (e="Forge") then a=1.5;
     e=p_type[2];
     if (e="Lava") then b=1;if (e="Desert") then b=2;if (e="Hive") then b=3;
-    if (e="Feral") then b=4;if (e="Agri") then b=5;if (e="Temperate") then b=6;
+    if (e="Death") then b=4;if (e="Agri") then b=5;if (e="Temperate") then b=6;
     if (e="Ice") then b=7;if (e="Dead") then b=2.5;if (e="Forge") then b=1.5;
     e=p_type[3];
     if (e="Lava") then c=1;if (e="Desert") then c=2;if (e="Hive") then c=3;
-    if (e="Feral") then c=4;if (e="Agri") then c=5;if (e="Temperate") then c=6;
+    if (e="Death") then c=4;if (e="Agri") then c=5;if (e="Temperate") then c=6;
     if (e="Ice") then c=7;if (e="Dead") then c=3.5;if (e="Forge") then c=1.5;
     e=p_type[4];
     if (e="Lava") then d=1;if (e="Desert") then d=2;if (e="Hive") then d=3;
-    if (e="Feral") then d=4;if (e="Agri") then d=5;if (e="Temperate") then d=6;
+    if (e="Death") then d=4;if (e="Agri") then d=5;if (e="Temperate") then d=6;
     if (e="Ice") then d=7;if (e="Dead") then d=4.5;if (e="Forge") then d=1.5;
 
     if (d<c){
