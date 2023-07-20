@@ -224,9 +224,6 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
     
 	    if (thawep="Bolt Pistol"){atta=25;arp=0;rang=3.1;melee_hands+=1;amm=18;
 
-
-	    if (thawep="Bolt Pistol"){atta=35;arp=0;rang=3.1;melee_hands+=1;amm=18;
-
 	        descr="A smaller, more compact version of the venerable Boltgun.  Standard Godwyn pattern.";}
 	    if (thawep="Webber"){atta=35;arp=0;rang=4.1;ranged_hands+=2;amm=5;spli=0;
 	        descr="The Webber is a close-range weapon that fires strands of sticky web-like substance. It is designed to ensnare and immobilize enemies, restricting their movement and rendering them vulnerable to further attacks. ";}
@@ -649,7 +646,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 
 	    obj_controller.temp[9000]+=string(thawep)+": "+string(melee_hands)+","+string(ranged_hands)+"|";
-	}
+	
 
 
 

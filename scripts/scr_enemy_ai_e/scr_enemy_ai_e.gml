@@ -540,7 +540,7 @@ function scr_enemy_ai_e() {
 	                if (p_type[run]="Desert") and (recr<=15){aspirant=1;}
 	                if (p_type[run]="Ice") and (recr<=15){aspirant=1;}
 	                if (p_type[run]="Agri") and (recr<=15){aspirant=1;}
-	                if (p_type[run]="Death") and (recr<=10){aspirant=1;}
+	                if (p_type[run]="Death") and (recr<=100){aspirant=1;}
 	                if (p_type[run]="Lava") and (recr<=7){aspirant=1;}
 
 
@@ -582,12 +582,12 @@ function scr_enemy_ai_e() {
 					// these reduce the amount of recruits by the * 
 					if (obj_controller.recruit_trial="Exposure")
 						then recr=floor(recr*1.3);
-	                if (obj_controller.recruit_trial="Challenge")
-						then recr=floor(recr*1.3);
+	            //    if (obj_controller.recruit_trial="Challenge")
+					//	then recr=floor(recr*1.3);
 	                if (obj_controller.recruit_trial="Knowledge of Self")
 						then recr=floor(recr*2);
 
-					if (p_type[run]="Death") and (obj_controller.recruit_trial="Challenge"){
+					if (p_type="Death") and (obj_controller.recruit_trial="Challenge"){
 						obj_controller.recruit_exp+=69;train-=10;
 						
 					}
@@ -612,18 +612,22 @@ function scr_enemy_ai_e() {
 	                    obj_controller.recruit_exp[thiss]=0;
                     
 	                    if (obj_controller.recruit_trial="Hunting the Hunter"){
-	                        obj_controller.recruit_exp[thiss]=choose(1,2);
+	                        obj_controller.recruit_exp[thiss]+=choose(1,2);
 	                        var rand5;rand5=floor(random(100))+1;
 	                        if (rand5<=1){
-	                            obj_controller.recruit_exp[thiss]=choose(10,11,12);train-=5;
+	                            obj_controller.recruit_exp[thiss]+=choose(10,11,12);train-=5;
 	                            scr_alert("green","recruitment","Recruit "+string(obj_controller.recruit_name[thiss])+" hunts a larger, more impressive beast by mistake.",0,0);
 	                        }
 	                    }
 	                    if (obj_controller.recruit_trial="Challenge"){
-	                        obj_controller.recruit_exp[thiss]=choose(2,3,4);
+							if(p_type[run]="Death"){
+								obj_controller.recruit_exp[thiss]+=30;
+							}
+							else
+	                        obj_controller.recruit_exp[thiss]+=choose(2,3,4);
 	                        var rand5;rand5=floor(random(100))+1;
 	                        if (rand5<=1){
-	                            obj_controller.recruit_exp[thiss]=choose(20,25,30);train-=5;
+	                            obj_controller.recruit_exp[thiss]+=choose(20,25,30);train-=5;
 	                            scr_alert("green","recruitment","Recruit "+string(obj_controller.recruit_name[thiss])+" defeats the Astartes and is destined for greatness.",0,0);
 	                        }
 	                    }
