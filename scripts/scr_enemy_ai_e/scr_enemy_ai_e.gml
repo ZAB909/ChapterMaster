@@ -63,7 +63,7 @@ function scr_enemy_ai_e() {
 	if (battle2>0) and (battle=0){// AI only battle
 	    var i,f,shiyp;i=0;f=1;shiyp=0;
     
-	    repeat(10){f+=1;if (f=11) then f=13;
+	    repeat(10){f+=1;if (f==11) then f=13;
 	        if (present_fleet[f]>0){
 	            obj_controller.temp[1049]=self.id;
 	            obj_controller.temp[1050]=f;
@@ -506,7 +506,7 @@ function scr_enemy_ai_e() {
 		var halfpop;
 		thirdpop = p_max_population[run]/3;
 		halfpop = p_max_population[run]/2;
-f (array_length(p_feature[run]!=0)){
+		(array_length(p_feature[run]!=0)){
 	        if (planet_feature_bool(p_feature[run], P_features.Recruiting_World)==1) and (obj_controller.gene_seed=0) and (obj_controller.recruiting>0){
 	            obj_controller.recruiting=0;obj_controller.income_recruiting=0;
 	            scr_alert("red","recruiting","The Chapter has run out of gene-seed!",0,0);

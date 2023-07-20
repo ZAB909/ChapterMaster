@@ -824,7 +824,7 @@ if (turn=5) and (faction_gender[10]=1){// show_message("Turn 100");
         
         planeh.warlord[testi]=1;
 
-        planeh.p_feature[testi]+="WL10|";
+        array_push(planeh.p_feature[testi], new new_planet_feature(P_features.Warlord10));
 
         if (planeh.p_type[testi]="Hive") then planeh.p_heresy[testi]+=25;
         if (planeh.p_type[testi]!="Hive") then planeh.p_heresy[testi]+=10;
