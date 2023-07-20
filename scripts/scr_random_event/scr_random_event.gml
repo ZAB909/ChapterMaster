@@ -1439,7 +1439,7 @@ function scr_random_event(execute_now) {
 		switch(ship_type) {
 			case "capital":
 			    lost_ship_fleet.capital_number=1;
-				lost_ship_fleet.capital[1] = chosen_ship;
+				lost_ship_fleet.capital[1] = ship_name;
 				lost_ship_fleet.capital_num[1] = chosen_ship;
 				array_delete(fleet.capital,ship_index,1);
 				array_delete(fleet.capital_num,ship_index,1);
@@ -1447,7 +1447,7 @@ function scr_random_event(execute_now) {
 				break;
 			case "frigate": 
 			    lost_ship_fleet.frigate_number=1;
-				lost_ship_fleet.frigate[1]=chosen_ship;
+				lost_ship_fleet.frigate[1]=ship_name;
 				lost_ship_fleet.frigate_num[1]=chosen_ship;
 				array_delete(fleet.frigate,ship_index,1);
 			    array_delete(fleet.frigate_num,ship_index,1);
