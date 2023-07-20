@@ -681,51 +681,51 @@ if (instance_exists(obj_temp8)){
 
 if (gene_tithe=0) and (faction_status[2]!="War"){// Time for another tithe
     gene_tithe=24;
-    
+
     var expected,onceh,txt,mech_mad;onceh=0;txt="";mech_mad=false;
     expected=max(1,round(obj_controller.gene_seed/20));
     if (obj_controller.faction_status[3]="War") then mech_mad=true;
-    
+
     if (obj_controller.gene_seed<=0) or (mech_mad=true){onceh=2;gene_iou+=1;loyalty-=2;loyalty_hidden-=2;
         txt="No Gene-Seed for Adeptus Mechanicus tithe.  High Lords of Terra IOU increased to "+string(gene_iou)+".";
     }
-    
+
     if (mech_mad=false){
         if (obj_controller.gene_seed>0) and (und_gene_vaults=0) and (onceh=0){
             obj_controller.gene_seed-=expected;onceh=1;
-            
+
             if (obj_controller.gene_seed>=gene_iou) and (gene_iou>0){
                 expected+=gene_iou;obj_controller.gene_seed-=gene_iou;gene_iou=0;
                 onceh=3;
             }
-            
+
             repeat(50){
                 if (obj_controller.gene_seed<gene_iou) and (obj_controller.gene_seed>0) and (gene_iou>0){
                     expected+=1;obj_controller.gene_seed-=1;gene_iou-=1;if (gene_iou=0) then onceh=3;
                 }
             }
-            
+
             if (gene_iou<0) then gene_iou=0;
-            
+
             txt=string(expected)+" Gene-Seed sent to Adeptus Mechanicus for tithe.";
             if (gene_iou>0) then txt+="  IOU remains at "+string(gene_iou)+".";
             if (onceh=3) then txt+="  IOU has been payed off.";
         }
-        
+
         if (obj_controller.gene_seed>0) and (und_gene_vaults>0) and (onceh=0){
             expected=1;obj_controller.gene_seed-=expected;onceh=1;
-            
+
             if (obj_controller.gene_seed<gene_iou) and (obj_controller.gene_seed>0) and (gene_iou>0){
                 expected+=1;obj_controller.gene_seed-=1;gene_iou-=1;if (gene_iou=0) then onceh=3;
             }
-            
+
             if (gene_iou<0) then gene_iou=0;
-            
+
             txt=string(expected)+" Gene-Seed sent to Adeptus Mechanicus for tithe.";
             if (gene_iou>0) then txt+="  IOU remains at "+string(gene_iou)+".";
             if (onceh=3) then txt+="  IOU has been payed off.";
         }
-        
+
         if (onceh!=2){scr_alert("green","tithes",txt,0,0);scr_event_log("",txt);}
         if (onceh=2){scr_alert("red","tithes",txt,0,0);scr_event_log("red",txt);}
     }
@@ -734,11 +734,11 @@ if (gene_sold>0){
     var disc,droll;disc=0;droll=0;
     gene_sold=floor(gene_sold*75)/100;
 
-    if (gene_sold<1) then gene_sold=0;    
+    if (gene_sold<1) then gene_sold=0;
     if (gene_sold>=50){
         disc=round(gene_sold/7);
         droll=floor(random(100))+1;
-        
+
         if (droll<=disc) and (obj_controller.known[4]!=0){// Inquisition takes notice
             var disp_change;disp_change=-3;
             if (gene_sold>=100) then disp_change=-5;
@@ -752,11 +752,11 @@ if (gene_xeno>0){
     var disc,droll;disc=0;droll=0;
     gene_xeno=floor(gene_xeno*90)/100;
 
-    if (gene_xeno<1) then gene_xeno=0;    
+    if (gene_xeno<1) then gene_xeno=0;
     if (gene_xeno>=5){
         disc=round(gene_xeno/5);
         droll=floor(random(100))+1;
-        
+
         if (droll<=disc) and (obj_controller.known[4]!=0){// Inquisition takes notice
             gene_xeno=99999;alarm[8]=1;
         }
@@ -803,14 +803,14 @@ if (obj_controller.stc_ships>=6){var v;v=0;
 if (turn=5) and (faction_gender[10]=1){// show_message("Turn 100");
     var xx4,yy4,plant,planeh,fleeta,testi;
     xx4=0;yy4=0;plant=0;planeh=0;testi=0;fleeta=0;
-    
+
     with(obj_en_fleet){if (owner!=2) then y-=20000;}
-    
+
     repeat(50){
         if (planeh=0){xx4=floor(random(room_width))+1;yy4=floor(random(room_height))+1;plant=instance_nearest(xx4,yy4,obj_star);}
         if (planeh=0) and (plant.owner=2) and (plant.planets>1){
             planeh=instance_nearest(xx4,yy4,obj_star);
-            
+
             if (planeh.present_fleet[2]>0){
                 fleeta=instance_nearest(planeh.x,planeh.y,obj_en_fleet);
                 if (point_distance(fleeta.x,fleeta.y,planeh.x,planeh.y)>40) then planeh=0;
@@ -821,16 +821,16 @@ if (turn=5) and (faction_gender[10]=1){// show_message("Turn 100");
     if (planeh!=0){
         if (planeh.p_type[1]="Dead") then testi=2;
         if (planeh.p_type[1]!="Dead") then testi=1;
-        
+
         planeh.p_feature[testi]+="WL10|";
         if (planeh.p_type[testi]="Hive") then planeh.p_heresy[testi]+=25;
         if (planeh.p_type[testi]!="Hive") then planeh.p_heresy[testi]+=10;
         if (planeh.p_heresy[testi]<50) then planeh.p_heresy_secret[testi]=10;
-        
+
         // show_message("Placed the chaos warlord on "+string(planeh.name)+" "+scr_roman(testi));// 139
         // obj_controller.x=planeh.x;obj_controller.y=planeh.y;
     }
-    
+
     with(obj_en_fleet){if (owner!=2) then y+=20000;}
 }
 
@@ -842,10 +842,10 @@ if (blood_debt=1) and (penitent=1){
     penitent_turnly=((penitent_turn*penitent_turn)-512)*-1;
     if (penitent_turnly>0) then penitent_turnly=0;
     penitent_current+=penitent_turnly;
-    
+
     if (penitent_current<=0){penitent=0;alarm[8]=1;}
     if (penitent_end<30000) then penitent_end+=41000;
-    
+
     if (penitent_current>=penitent_max) or (((obj_controller.millenium*1000)+obj_controller.year)>=penitent_end){
         penitent=0;
         if (known[4]=2) or (known[4]>=4) then scr_audience(4,"penitent_end",0,"",0,0);
@@ -858,7 +858,7 @@ if (blood_debt=1) and (penitent=1){
 
 if (penitent=1) and (blood_debt=0){
     penitent_turn+=1;penitent_current+=1;penitent_turnly=0;
-    
+
     if (penitent_current<=0){penitent=0;alarm[8]=1;}
     if (penitent_current>=penitent_max){penitent=0;
         if (known[4]=2) or (known[4]>=4) then scr_audience(4,"penitent_end",0,"",0,0);
@@ -893,7 +893,7 @@ if ((turn>=10) or (obj_ini.fleet_type=3)) and (faction_defeated[7]=0){
         with(obj_star){
             if (owner=7) then alarm[4]=1;
         }
-        
+
         if (!instance_exists(obj_turn_end)) then scr_popup("WAAAAGH!","The greenskins have swelled in activity, their numbers increasing seemingly without relent.  A massive Warboss has risen to take control, leading most of the sector's Orks on a massive WAAAGH!","waaagh","");
         if (instance_exists(obj_turn_end)){
             obj_turn_end.popups+=1;
@@ -902,7 +902,7 @@ if ((turn>=10) or (obj_ini.fleet_type=3)) and (faction_defeated[7]=0){
             obj_turn_end.popup_text[obj_turn_end.popups]="The greenskins have swelled in activity, their numbers increasing seemingly without relent.  A massive Warboss has risen to take control, leading most of the sector's Orks on a massive WAAAGH!";
             obj_turn_end.popup_image[obj_turn_end.popups]="waaagh";
             scr_event_log("red","Ork WAAAAGH! begins.");
-            
+
             with(obj_star){
                 if (owner=7){
                     var rund;rund=floor(random(planets))+1;
@@ -916,7 +916,7 @@ if ((turn>=10) or (obj_ini.fleet_type=3)) and (faction_defeated[7]=0){
                 var you2,you,rund;
                 you2=instance_nearest(random(room_width),random(room_height),obj_temp6);
                 you=instance_nearest(you2.x,you2.y,obj_star);
-                
+
                 with(obj_temp2){instance_destroy();}
                 repeat(10){
                     if (!instance_exists(obj_temp2)){
@@ -1009,22 +1009,22 @@ with(obj_fleet){if (owner=4) then instance_create(x,y,obj_temp6);}
 if (inspec=1) and (faction_status[4]!="War") and (obj_ini.fleet_type=1) and (instance_number(obj_temp6)=0){// Find planet near homeworld to have an inquisitor ship pop from
     // If player does not own their homeworld than do a fleet inspection instead
     with(obj_star){if (owner=1) then instance_create(x,y,obj_temp3);}
-    
+
     if (instance_number(obj_temp3)=1){
         var xy,yx,tar,flit;
         xy=obj_temp3.x;yx=obj_temp3.y;
-        
-        
+
+
         repeat(choose(2,3)){
             tar=instance_nearest(obj_temp3.x,obj_temp3.y,obj_star);
             instance_deactivate_object(tar);
         }
-        
+
         repeat(5){
             tar=instance_nearest(obj_temp3.x,obj_temp3.y,obj_star);
             if (tar.owner=6) then instance_deactivate_object(tar);
         }
-        
+
         tar=instance_nearest(obj_temp3.x,obj_temp3.y,obj_star);
         flit=instance_create(tar.x,tar.y-24,obj_en_fleet);
         flit.owner=4;
@@ -1033,18 +1033,18 @@ if (inspec=1) and (faction_status[4]!="War") and (obj_ini.fleet_type=1) and (ins
         flit.action_y=yx;
         flit.sprite_index=spr_fleet_inquisition;
         flit.image_index=0;
-        
+
         var roll;
         roll=floor(random(100))+1;
-        
+
         if (roll<=60) then flit.trade_goods="Inqis1";
         if (roll<=70) and (roll>60) then flit.trade_goods="Inqis2";
         if (roll<=80) and (roll>70) then flit.trade_goods="Inqis3";
         if (roll<=90) and (roll>80) then flit.trade_goods="Inqis4";
         if (roll<=100) and (roll>90) then flit.trade_goods="Inqis5";
-        
+
         flit.alarm[4]=1;
-        
+
         instance_activate_object(obj_star);
         with(obj_temp3){instance_destroy();}
         last_world_inspection=turn;
@@ -1054,10 +1054,10 @@ if (inspec=1) and (faction_status[4]!="War") and (obj_ini.fleet_type=1) and (ins
 
 if (inspec=1) and (faction_status[4]!="War") and (obj_ini.fleet_type!=1) and (instance_number(obj_temp6)=0){// Find planet near homeworld to have an inquisitor ship pop from
     // If player does not own their homeworld than do a fleet inspection instead
-    
+
     with(obj_temp4){instance_destroy();}
     with(obj_temp5){instance_destroy();}
-    
+
     if (instance_exists(obj_p_fleet)){
         with(obj_p_fleet){
             if (capital_number>0) and (action=""){instance_create(x,y,obj_temp5);}
@@ -1065,66 +1065,66 @@ if (inspec=1) and (faction_status[4]!="War") and (obj_ini.fleet_type!=1) and (in
             if (frigate_number>0) and (action="") then instance_create(x,y,obj_temp4);
             if (frigate_number>0) and (action!="") then instance_create(action_x,action_y,obj_temp4);
         }
-    
+
         var obj,x4,y4,from,target,flit;
         if (instance_exists(obj_p_ship)) then obj=instance_nearest(random(room_width),random(room_height),obj_p_ship);
         if (instance_exists(obj_temp4)) then obj=instance_nearest(random(room_width),random(room_height),obj_temp4);
         if (instance_exists(obj_temp5)) then obj=instance_nearest(random(room_width),random(room_height),obj_temp5);
-        
-        
+
+
         x4=obj.x;y4=obj.y;
-        
+
         with(obj_star){if (owner=6) then instance_deactivate_object(id);}
-        
-        
+
+
         repeat(choose(2,3)){
             from=instance_nearest(x4,y4,obj_star);with(from){instance_deactivate_object(id);};
         }
         from=instance_nearest(x4,y4,obj_star);
         instance_activate_object(obj_star);
-        
-        
-        
+
+
+
         flit=instance_create(from.x,from.y-24,obj_en_fleet);
         flit.owner=4;
         flit.frigate_number=1;
-        
+
         flit.target=instance_nearest(x4,y4,obj_p_fleet);
         flit.action_x=instance_nearest(x4,y4,obj_star).x;
         flit.action_y=instance_nearest(x4,y4,obj_star).y;
         if (flit.target.action!="") then flit.action_eta=flit.target.action_eta;
         // show_message(string(flit.action_eta));
-        
+
         flit.sprite_index=spr_fleet_inquisition;
         flit.image_index=0;
-        
+
         var roll, messi;
         mess="Inquisitor ";
         roll=floor(random(100))+1;
-        
+
         if (roll<=60){flit.trade_goods="Inqis1";mess+=string(obj_controller.inquisitor[1]);}
         if (roll<=70) and (roll>60){flit.trade_goods="Inqis2";mess+=string(obj_controller.inquisitor[2]);}
         if (roll<=80) and (roll>70){flit.trade_goods="Inqis3";mess+=string(obj_controller.inquisitor[3]);}
         if (roll<=90) and (roll>80){flit.trade_goods="Inqis4";mess+=string(obj_controller.inquisitor[4]);}
         if (roll<=100) and (roll>90){flit.trade_goods="Inqis5";mess+=string(obj_controller.inquisitor[5]);}
         flit.trade_goods+="_fleet";
-        
+
         obj=instance_nearest(x4,y4,obj_star);
-        
+
         mess+=" wishes to inspect your fleet at "+string(obj.name);
         scr_alert("green","inspect",mess,obj.x,obj.y);
         if (instance_exists(obj_turn_end)) then obj_turn_end.alerts+=1;
-        
-        
+
+
         flit.alarm[4]=1;
-        
+
         with(obj_temp4){instance_destroy();}
         with(obj_temp5){instance_destroy();}
         last_fleet_inspection=turn;
-        
-        
+
+
         // if (roll<=60)
-        
+
     }
 }
 
@@ -1145,9 +1145,9 @@ repeat(99){i+=1;
     if (event[i]!="") and (event_duration[i]>0){
         event_duration[i]-=1;
         if (event_duration[i]=0){
-        
+
             if (event[i]="game_over_man") then obj_controller.alarm[8]=1;
-            
+
             if (string_count("remove_serf",event[i])>0){
                 var ta,tb,tc,pp;
                 explode_script(event[i],"|");
@@ -1163,37 +1163,40 @@ repeat(99){i+=1;
                 }
                 with(obj_temp5){instance_destroy();}
             }
-            
+
             if (event[i]="enemy_imperium"){scr_alert("green","enemy","You have made amends with your enemy in the Imperium.",0,0);disposition[2]+=20;scr_event_log("","Amends made with Imperium.");}
             if (event[i]="enemy_mechanicus"){scr_alert("green","enemy","You have made amends with your Mechanicus enemy.",0,0);disposition[3]+=20;scr_event_log("","Amends made with Mechanicus enemy.");}
             if (event[i]="enemy_inquisition"){scr_alert("green","enemy","You have made amends with your enemy in the Inquisition.",0,0);disposition[4]+=20;scr_event_log("","Amends made with Inquisition enemy.");}
             if (event[i]="enemy_ecclesiarchy"){scr_alert("green","enemy","You have made amends with your enemy in the Ecclesiarchy.",0,0);disposition[5]+=20;scr_event_log("","Amends made with Ecclesiarchy enemy.");}
-            
+
             if (event[i]="imperium_daemon"){scr_alert("red","lol","Sector Commander "+string(faction_leader[2])+" has gone insane.",0,0);faction_defeated[2]=1;scr_event_log("red","Sector Commander "+string(faction_leader[2])+" has gone insane.");}
-            
-            if (event[i]="chaos_invasion"){
-                // check if homeworld type fleet here
-                // if (
-                    var xx,yy,flee,dirr;xx=0;yy=0;flee=0;dirr=0;
-                    scr_random_find(1,true,"","");
-                    
-                    if (instance_exists(obj_temp5)){
-                        var tee;tee=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
-                        scr_event_log("purple","Chaos Fleets exit the warp near the "+string(tee.name)+" system.");
-                        repeat(4){
-                            dirr+=floor(random_range(50,100))+1;
-                            xx=obj_temp5.x+lengthdir_x(72,dirr);yy=obj_temp5.y+lengthdir_y(72,dirr);
-                            flee=instance_create(xx,yy,obj_en_fleet);flee.owner=10;
-                            flee.sprite_index=spr_fleet_chaos;flee.image_index=4;
-                            flee.capital_number=choose(0,1);flee.frigate_number=choose(2,3);flee.escort_number=choose(4,5,6);
-                            flee.trade_goods="csm";obj_controller.chaos_fleets+=1;
-                            flee.action_x=obj_temp5.x;flee.action_y=obj_temp5.y;flee.alarm[4]=1;
+         
+		 if (event[i]="chaos_invasion"){ 
+				var xx,yy,flee,dirr;xx=0;yy=0;flee=0;dirr=0;
+                    var star_id = scr_random_find(1,true,"","");
+
+					if(star_id != undefined){
+                        scr_event_log("purple","Chaos Fleets exit the warp near the "+string(star_id.name)+" system.");      repeat(4){
+                            dirr+=irandom_range(50,100);
+                            xx=star_id.x+lengthdir_x(72,dirr);
+							yy=star_id.y+lengthdir_y(72,dirr);
+                            flee=instance_create(xx,yy,obj_en_fleet);
+							flee.owner=10;
+                            flee.sprite_index=spr_fleet_chaos;
+							flee.image_index=4;
+                            flee.capital_number=choose(0,1);
+							flee.frigate_number=choose(2,3);
+							flee.escort_number=choose(4,5,6);
+                            flee.trade_goods="csm";
+							obj_controller.chaos_fleets+=1;
+                            flee.action_x=star_id.x;
+							flee.action_y=star_id.y;
+							flee.alarm[4]=1;
                         }
-                    }
-                    with(obj_temp5){instance_destroy();}
-                // }
+						
+					}
             }
-            
+
             if (string_count("new_",event[i])>0){var fucking;fucking=event[i];
                 // show_message(fucking);
                 with(obj_temp5){instance_destroy();}
@@ -1209,33 +1212,33 @@ repeat(99){i+=1;
                     var that,that2,flit;
                     that=instance_nearest(random(room_width),random(room_height),obj_temp5);
                     that2=instance_nearest(that.x,that.y,obj_star);
-                    
+
                     flit=instance_create(that2.x+24,that2.y-24,obj_p_fleet);
-                    
+
                     var new_name,ship_names,i,last_ship;
-                    
+
                     i=0;ship_names="";new_name="";last_ship=0;
                     repeat(40){
                         i+=1;if (obj_ini.ship[i]!="") then ship_names+=string(obj_ini.ship[i]);
                         if (last_ship=0) and (obj_ini.ship[i]="") then last_ship=i;
                     }
-                    
+
                     i=0;repeat(50){
                         if (new_name=""){
                             new_name=scr_ship_name("imperial");
                             if (string_count(new_name,ship_names)>0) then new_name="";
                         }
                     }
-                    
+
                     obj_ini.ship[last_ship]=new_name;
                     obj_ini.ship_uid[last_ship]=floor(random(99999999))+1;
                     obj_ini.ship_owner[last_ship]=1;
                     obj_ini.ship_size[last_ship]=1;
                     obj_ini.ship_location[last_ship]=that2.name;
                     obj_ini.ship_leadership[last_ship]=100;
-                    
+
                     // show_message(string(fucking));
-                    
+
                     if (string_count("Battle Barge",fucking)>0){
                         obj_ini.ship_class[last_ship]="Battle Barge";
                         obj_ini.ship_size[last_ship]=3;
@@ -1290,27 +1293,27 @@ repeat(99){i+=1;
                         obj_ini.ship_turrets[last_ship]=1;// obj_ini.ship_names+=string(obj_ini.ship[last_ship])+"|";
                         flit.escort[1]=obj_ini.ship[last_ship];flit.escort_number=1;flit.escort_num[1]=last_ship;flit.escort_uid[1]=obj_ini.ship_uid[last_ship];
                     }
-                    
+
                     // show_message(string(obj_ini.ship_class[last_ship])+":"+string(obj_ini.ship[last_ship]));
-                
-                
+
+
                     if (instance_exists(that2)){
                         if (obj_ini.ship_size[last_ship]!=1) then scr_popup("Ship Constructed","Your new "+string(obj_ini.ship_class[last_ship])+" '"+string(obj_ini.ship[last_ship])+"' has finished being constructed.  It is orbiting "+string(that2.name)+" and awaits its maiden voyage.","shipyard","");
                         if (obj_ini.ship_size[last_ship]=1) then scr_popup("Ship Constructed","Your new "+string(obj_ini.ship_class[last_ship])+" Escort '"+string(obj_ini.ship[last_ship])+"' has finished being constructed.  It is orbiting "+string(that2.name)+" and awaits its maiden voyage.","shipyard","");
-                        var bob;bob=instance_create(that2.x+16,that2.y-24,obj_star_event);bob.image_alpha=1;bob.image_speed=1; 
+                        var bob;bob=instance_create(that2.x+16,that2.y-24,obj_star_event);bob.image_alpha=1;bob.image_speed=1;
                     }
                 }
                 if (instance_number(obj_temp5)=0) then event_duration[i]=2;
                 with(obj_temp5){instance_destroy();}
                 event[i]="";event_duration[i]-=1;
             }
-            
-            
+
+
             if (string_count("inquisitor_spared",event[i])>0){
                 var diceh;diceh=floor(random(100))+1;
-                
+
                 if (string_count("Shit",obj_ini.strin2)>0) then diceh-=25;
-                
+
                 if (diceh<=25){alarm[8]=1;scr_loyalty("Crossing the Inquisition","+");}
                 if (diceh>25) and (diceh<=50){scr_loyalty("Crossing the Inquisition","+");}
                 if (diceh>50) and (diceh<=85){}
@@ -1318,10 +1321,10 @@ repeat(99){i+=1;
                     scr_popup("Anonymous Message","You recieve an anonymous letter of thanks.  It mentions that motions are underway to destroy any local forces of Chaos.","","");
                     with(obj_star){var o;o=0;repeat(4){o+=1;p_heresy[o]=max(0,p_heresy[o]-10);}}
                 }
-            
+
             }
-            
-            
+
+
             if (string_count("strange_building",event[i])>0){
                 var aa,bb,cc,dd,ee;
                 aa="";bb="";cc=0;dd=0;ee="";
@@ -1331,15 +1334,15 @@ repeat(99){i+=1;
                 cc=real(explode[2]);// company
                 dd=real(explode[3]);// marine
                 ee=string(explode[4]);// item
-                
+
                 var killy,tixt;killy=0;tixt=string(obj_ini.role[100,16])+" "+string(bb)+" has finished his work- ";
-                
+
                 if (ee="Icon"){tixt+="it is a "+string(global.chapter_name)+" Icon wrought in metal, finely decorated.  Pride for his chapter seems to have overtaken him.  There are no corrections to be made and the item is placed where many may view it.";}
-                if (ee="Statue"){tixt+="it is a small, finely crafted statue wrought in metal.  The "+string(obj_ini.role[100,16])+" is scolded for the waste of material, but none daresay the quality of the piece.";}                
+                if (ee="Statue"){tixt+="it is a small, finely crafted statue wrought in metal.  The "+string(obj_ini.role[100,16])+" is scolded for the waste of material, but none daresay the quality of the piece.";}
                 if (ee="Bike"){scr_add_item("Bike",1);
                     tixt+="it is a finely crafted Bike, conforming mostly to STC standards.  The other "+string(obj_ini.role[100,16])+" are surprised at the rapid pace of his work.";
                 }
-                if (ee="Rhino"){scr_add_vehicle("Rhino",0,"Storm Bolter","Storm Bolter","","Dozer Blades");
+                if (ee="Rhino"){scr_add_vehicle("Rhino",0,"Storm Bolter","Storm Bolter","","Artificer Hull","Dozer Blades");
                     tixt+="it is a finely crafted Rhino, conforming to STC standards.  The other "+string(obj_ini.role[100,16])+" are surprised at the rapid pace of his work.";
                 }
                 if (ee="Artifact"){
@@ -1365,18 +1368,18 @@ repeat(99){i+=1;
                 if (ee="fusion"){
                     // obj_ini.chaos[cc,dd]+=choose(70);
                     tixt+="some kind of ill-mannered ascension.  One of your battle-brothers enters the armamentarium to find "+string(bb)+" fused to a vehicle, his flesh twisted and submerged into the frame.  Mechendrites and weapons fire upon the marine without warning, a windy scream eminating from the abomination.  It takes several battle-brothers to take out what was once a "+string(obj_ini.role[100,16])+".";
-                    
+
                     // This is causing the problem
-                    
+
                     obj_ini.race[cc,dd]=0;obj_ini.loc[cc,dd]="";obj_ini.name[cc,dd]="";obj_ini.role[cc,dd]="";obj_ini.wep1[cc,dd]="";obj_ini.lid[cc,dd]=0;
                     obj_ini.wep2[cc,dd]="";obj_ini.armor[cc,dd]="";obj_ini.gear[cc,dd]="";obj_ini.hp[cc,dd]=100;obj_ini.chaos[cc,dd]=0;obj_ini.experience[cc,dd]=0;
                     obj_ini.mobi[cc,dd]="";obj_ini.age[cc,dd]=0;
                     with(obj_ini){scr_company_order(0);}
                 }
-                
+
                 scr_popup("He Built It",tixt,"tech_build","target_marine|"+string(bb)+"|"+string(cc)+"|"+string(dd)+"|");
             }
-            
+
             if (event_duration[i]<=0) then event[i]="";
         }
     }
@@ -1434,13 +1437,13 @@ if (turn=2){
 if (fest_scheduled>0) and (fest_repeats>0){
     var cm_present,lock;cm_present=false;
     fest_repeats-=1;lock="";lock=scr_master_loc();
-    
+
     if (fest_sid>0) and (obj_ini.ship[fest_sid]=lock) then cm_present=true;
     if (fest_wid>0) and (string(fest_star)+"."+string(fest_wid)=lock) then cm_present=true;
-    
+
     if (cm_present=true){
         var imag;imag="";
-        
+
         if (fest_type="Great Feast") then imag="event_feast";
         if (fest_type="Tournament") then imag="event_tournament";
         if (fest_type="Deathmatch") then imag="event_deathmatch";
@@ -1448,11 +1451,11 @@ if (fest_scheduled>0) and (fest_repeats>0){
         if (fest_type="Cult Sermon") then imag="event_ccult";
         if (fest_type="Chapter Relic") then imag="event_ccrelic";
         if (fest_type="Triumphal March") then imag="event_march";
-        
+
         if (fest_wid>0) then scr_popup("Scheduled Event","Your "+string(fest_type)+" takes place on "+string(fest_star)+" "+scr_roman(fest_wid)+".  Would you like to spectate the event?",imag,"");
         if (fest_sid>0) then scr_popup("Scheduled Event","Your "+string(fest_type)+" takes place on the ship '"+string(obj_ini.ship[fest_sid])+".  Would you like to spectate the event?",imag,"");
     }
-    
+
     // if (fest_repeats=0) then fest_scheduled=0;
 }
 
@@ -1484,16 +1487,13 @@ if (income_controlled_planets>0){
     obj_turn_end.alert_txt[1]="";
     obj_turn_end.alert_color[1]="yellow";
     obj_turn_end.alerts+=1;
-        
+
     if (income_controlled_planets=1) then obj_turn_end.alert_text[1]="-"+string(income_tribute)+" Requisition granted by tithes from 1 planet.";
     if (income_controlled_planets>1) then obj_turn_end.alert_text[1]="-"+string(income_tribute)+" Requisition granted by tithes from "+string(income_controlled_planets)+" planets.";
-}
+
 
 instance_activate_object(obj_p_fleet);
 
 with(obj_star){if (x<-10000){x+=20000;y+=20000;}};
 
-
-
-/* */
-/*  */
+	}

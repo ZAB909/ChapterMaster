@@ -1165,6 +1165,7 @@ function scr_ui_advisors() {
 	    if (recruiting>0) and (string_count("|",obj_controller.recruiting_worlds)=1) then blurp+="Our Chapter is recruiting from one world- "+string(obj_ini.recruiting_name)+".  Perhaps we should speak with a planetary governor to acquire another.";
 	    if (recruiting>0) and (string_count("|",obj_controller.recruiting_worlds)=2) then blurp+="Our Chapter is recruiting from two worlds.  Finding recruits is vastly accelerated but incuring more expenses.";
 	    if (recruiting>0) and (string_count("|",obj_controller.recruiting_worlds)>2) then blurp+="Our Chapter is recruiting from several worlds.";
+
     
     
 	    if (menu_adept=1){

@@ -7,10 +7,7 @@ function scr_trade_add(argument0) {
 	if (trade_take[4]="") then thinz=4;if (trade_take[3]="") then thinz=3;if (trade_take[2]="") then thinz=2;if (trade_take[1]="") then thinz=1;
 
 
-	/*if (thinz!=0) and (trade_take[thinz]="Useful Information"){
-	    if (random_event_next!="") and (string_count("WL10|",useful_info)>0) and (string_count("WL7|",useful_info)>0) and  (string_count("WG|",useful_info)>1) and (string_count("CM|",useful_info)>0) then exit;
-	}*/
-
+	
 
 	if (thinz!=0){
 	    trade_take[thinz]=argument0;

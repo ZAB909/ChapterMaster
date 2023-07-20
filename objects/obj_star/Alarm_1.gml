@@ -5,19 +5,20 @@ i=1;
 // p_population[run]=0;p_guardsmen[run]=0;p_pdf[run]=0;
 
 
+
 repeat(4){
     p_population[i]=0;// 10B        
     
     if (p_type[i]="Lava"){
-        p_population[i]=floor(random(100))+400;p_station[i]=2;
-        p_max_population[i]=500;
+        p_population[i]=floor(random(1000))+500;p_station[i]=2;
+        p_max_population[i]=1500;
     }
     if (p_type[i]="Desert"){
-        p_population[i]=floor(random(300000000))+50000000;p_fortified[i]=choose(2,3,4);p_station[i]=3;
-        p_max_population[i]=350000000;
+        p_population[i]=floor(random(200000000))+50000000;p_fortified[i]=choose(2,3,4);p_station[i]=3;
+        p_max_population[i]=250000000;
     }
     if (p_type[i]="Hive"){
-        p_population[i]=random(50)+50;p_large[i]=1;p_fortified[i]=4;p_station[i]=choose(4,5);
+        p_population[i]=random(110)+40;p_large[i]=1;p_fortified[i]=4;p_station[i]=choose(4,5);
         p_max_population[i]=150;
     }
     if (p_type[i]="Agri"){
@@ -37,16 +38,16 @@ repeat(4){
         p_max_population[i]=2000000;
     }
     if (p_type[i]="Feudal"){
-        p_population[i]=floor(random(100000000))+50000000;p_fortified[i]=choose(2,3);p_station[i]=choose(2,3,4);
-        p_max_population[i]=150000000;
+        p_population[i]=floor(random(500000000))+200000000;p_fortified[i]=choose(2,3);p_station[i]=choose(2,3,4);
+        p_max_population[i]=1000000000;
     }
     if (p_type[i]="Forge"){
         p_population[i]=random(2)+4;p_large[i]=1;p_fortified[i]=5;p_station[i]=5;
         p_max_population[i]=6;
     }
     if (p_type[i]="Death"){
-        p_population[i]=floor(random(4900000))+100000;p_station[i]=choose(2,3);
-        p_max_population[i]=5000000;
+        p_population[i]=floor(random(300000))+200000;p_station[i]=choose(2,3);
+        p_max_population[i]=500000;
     }
     if (p_type[i]="Craftworld"){
         p_population[i]=floor(random_range(150000,300000));p_station=6;

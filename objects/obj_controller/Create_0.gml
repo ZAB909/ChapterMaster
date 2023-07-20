@@ -103,13 +103,13 @@ repeat(3){i+=1;
     obj_controller.r_role[i,8]="Tactical Marine";obj_controller.r_wep1[i,8]="Bolter";obj_controller.r_wep2[i,8]="Chainsword";
     obj_controller.r_armor[i,8]="Power Armor";obj_controller.r_mobi[i,8]="";obj_controller.r_gear[i,8]="";
     
-    obj_controller.r_role[i,9]="Devastator";obj_controller.r_wep1[i,9]="Heavy Ranged";obj_controller.r_wep2[i,9]="Bolt Pistol";
+    obj_controller.r_role[i,9]="Devastator";obj_controller.r_wep1[i,9]="Heavy Ranged";obj_controller.r_wep2[i,9]="Combat Knife";
     obj_controller.r_armor[i,9]="Power Armor";obj_controller.r_mobi[i,9]="";obj_controller.r_gear[i,9]="";
     
     obj_controller.r_role[i,10]="Assault Marine";obj_controller.r_wep1[i,10]="Chainsword";obj_controller.r_wep2[i,10]="Bolt Pistol";
     obj_controller.r_armor[i,10]="Power Armor";obj_controller.r_mobi[i,10]="Jump Pack";obj_controller.r_gear[i,10]="";
     
-    obj_controller.r_role[i,12]="Scout";obj_controller.r_wep1[i,12]="Sniper Rifle";obj_controller.r_wep2[i,12]="Chainsword";
+    obj_controller.r_role[i,12]="Scout";obj_controller.r_wep1[i,12]="Sniper Rifle";obj_controller.r_wep2[i,12]="Combat Knife";
     obj_controller.r_armor[i,12]="Scout Armor";obj_controller.r_mobi[i,12]="";obj_controller.r_gear[i,12]="";
     
     obj_controller.r_role[i,14]="Chaplain";obj_controller.r_wep1[i,14]="Power Sword";obj_controller.r_wep2[i,14]="Storm Bolter";
@@ -572,8 +572,7 @@ diplo_char=0;
 var q;q=-1;repeat(6){q+=1;diplo_option[q]="";diplo_goto[q]="";}
 diplo_alpha=0;
 combat=0;
-random_event_next="";
-// random_event_next="space_hulk";
+random_event_next = event_enum.none;
 useful_info="";
 
 // 
@@ -992,18 +991,18 @@ guard_disposition=0;
 other1_disposition=0;other1="";
 */
 
-tau=0;
+tau=1; 
 tyranids=0;
 ork=1;
-eldar=0;
-
-if (global.custom=1){
+eldar=1;
+// if tau = 1 then tau spawn. also does eldar 
+/*
+if (global.custom=1){ 
     tau=choose(0,0,1);
     eldar=choose(0,1);
 }
 
-
-
+*/
 
 
 
@@ -1317,12 +1316,6 @@ remov=string_length(string(temp[65])+string(temp[66])+string(temp[67])+string(te
 
 
 
-
-// random_event_next="chaos_invasion";
-/*var ii;ii=0;
-repeat(50){ii+=1;
-    obj_ini.gear[0,ii]="Exterminatus";
-}*/
 
 
 /* */

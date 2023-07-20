@@ -13,7 +13,7 @@ function scr_save(argument0, argument1) {
 
 	if (argument0=1) or (argument0=0){debugl("Saving to slot "+string(argument1));
 	    ini_open("save"+string(argument1)+".ini");
-    
+
 	    // Global variables
 	    ini_write_string("Save","chapter_name",global.chapter_name);
 	    ini_write_string("Save","sector_name",obj_ini.sector_name);
@@ -21,7 +21,7 @@ function scr_save(argument0, argument1) {
 	    ini_write_real("Save","play_time",play_time);
 	    ini_write_real("Save","game_seed",global.game_seed);
 	    ini_write_real("Save","use_custom_icon",obj_ini.use_custom_icon);
-    
+
 	    var t,month,day,year,hour,minute,pm;
 	    t=date_current_datetime();
 	    month=date_get_month(t);
@@ -34,12 +34,12 @@ function scr_save(argument0, argument1) {
 	    if (hour>12) and (hour<24){pm="PM";hour-=12;}
 	    if (hour=24){pm="AM";hour-=12;}
 	    if (hour=0) then hour=12;
-    
+
 	    var mahg;mahg=minute;
 	    if (mahg<10) then minute="0"+string(mahg);
-    
+
 	    // if (minute<10) then minute="0"+string(minute);
-    
+
 	    ini_write_string("Save","date",string(month)+"/"+string(day)+"/"+string(year)+" ("+string(hour)+":"+string(minute)+" "+string(pm)+")");
 	    ini_write_real("Save","founding",obj_ini.progenitor);
 	    // ini_write_string("Save","founding_secret",global.founding_secret);
@@ -49,7 +49,7 @@ function scr_save(argument0, argument1) {
 	    ini_write_real("Save","en_fleets",instance_number(obj_en_fleet));
 	    ini_write_real("Save","sod",random_get_seed());
 	    ini_write_real("Save","corrupt",1);
-    
+
 	    // obj_controller variables here
 	    ini_write_real("Controller","cheatyface",obj_controller.cheatyface);
 	    ini_write_real("Controller","x",obj_controller.x);
@@ -97,14 +97,14 @@ function scr_save(argument0, argument1) {
 	        ini_write_real("Controller","stc_vehicles_un",obj_controller.stc_vehicles_un);
 	        ini_write_real("Controller","stc_ships_un",obj_controller.stc_ships_un);
 	    var j;j=0;repeat(6){j+=1;ini_write_real("Controller","stc_bonus_"+string(j),obj_controller.stc_bonus[j]);}
-    
+
 	    j=0;repeat(4){j+=1;
 	        ini_write_string("Controller","adv"+string(j),obj_ini.adv[j]);
 	        ini_write_string("Controller","dis"+string(j),obj_ini.dis[j]);
 	    }
-    
-    
-    
+
+
+
 	    // Player scheduled event
 	    if (obj_controller.fest_type!=""){
 	        ini_write_real("Controller","f_si",obj_controller.fest_sid);
@@ -140,9 +140,9 @@ function scr_save(argument0, argument1) {
 	            ini_write_real("Controller","recn"+string(i),obj_controller.recent_number[i]);
 	        }
 	    }
-    
-    
-    
+
+
+
 	    ini_write_real("Formation","last_attack",obj_controller.last_attack_form);
 	    ini_write_real("Formation","last_raid",obj_controller.last_raid_form);
 	    j=0;repeat(14){j+=1;
@@ -166,20 +166,26 @@ function scr_save(argument0, argument1) {
 	            ini_write_real("Formation","scou"+string(j),obj_controller.bat_scou_for[j]);
 	        }
 	    }
+//<<<<<<<
     
     
+//=======
+
+
 	    ini_write_string("Controller","random_event_next",obj_controller.random_event_next);
+//>>>>>>>
 	    ini_write_string("Controller","useful_info",obj_controller.useful_info);
-	    ini_write_real("Controller","gene_sold",obj_controller.gene_sold);
+		ini_write_real("Controller","random_event_next",obj_controller.random_event_next);
+		ini_write_real("Controller","gene_sold",obj_controller.gene_sold);		
 	    ini_write_real("Controller","gene_xeno",obj_controller.gene_xeno);
 	    ini_write_real("Controller","gene_tithe",obj_controller.gene_tithe);
 	    ini_write_real("Controller","gene_iou",obj_controller.gene_iou);
-    
+
 	    ini_write_real("Controller","und_armories",obj_controller.und_armories);
 	    ini_write_real("Controller","und_gene_vaults",obj_controller.und_gene_vaults);
 	    ini_write_real("Controller","und_lairs",obj_controller.und_lairs);
-    
-	    // 
+
+	    //
 	    ini_write_real("Controller","penitent",obj_controller.penitent);
 	    ini_write_real("Controller","penitent_current",obj_controller.penitent_current);
 	    ini_write_real("Controller","penitent_max",obj_controller.penitent_max);
@@ -187,7 +193,7 @@ function scr_save(argument0, argument1) {
 	    ini_write_real("Controller","penitent_turn",obj_controller.penitent_turn);
 	    ini_write_real("Controller","penitent_end",obj_controller.penitent_end);
 	    ini_write_real("Controller","penitent_blood",obj_controller.blood_debt);
-	    // 
+	    //
 	    ini_write_real("Controller","training_apothecary",obj_controller.training_apothecary);
 	    ini_write_real("Controller","apothecary_points",obj_controller.apothecary_points);
 	    ini_write_real("Controller","apothecary_aspirant",obj_controller.apothecary_aspirant);
@@ -200,15 +206,15 @@ function scr_save(argument0, argument1) {
 	    ini_write_real("Controller","training_techmarine",obj_controller.training_techmarine);
 	    ini_write_real("Controller","tech_points",obj_controller.tech_points);
 	    ini_write_real("Controller","tech_aspirant",obj_controller.tech_aspirant);
-    
+
 	    ini_write_real("Controller","penitorium",obj_controller.penitorium);
-    
+
 	    ini_write_string("Controller","recruiting_worlds",obj_controller.recruiting_worlds);
 	    ini_write_real("Controller","recruiting",obj_controller.recruiting);
 	    ini_write_string("Controller","trial",obj_controller.recruit_trial);
 	    ini_write_real("Controller","recruits",obj_controller.recruits);
 	    ini_write_real("Controller","recruit_last",obj_controller.recruit_last);
-	    // 
+	    //
 	    var g;g=-1;repeat(30){g+=1;
 	        ini_write_real("Controller","command"+string(g),obj_controller.command_set[g]);
 	    }
@@ -230,27 +236,27 @@ function scr_save(argument0, argument1) {
 	        ini_write_real("Controller","inq_ge"+string(g),obj_controller.inquisitor_gender[g]);
 	        ini_write_string("Controller","inq_ty"+string(g),obj_controller.inquisitor_type[g]);
 	    }
-	    // 
+	    //
 	    var g;g=-1;repeat(14){g+=1;
 	        ini_write_string("Factions","fac"+string(g),obj_controller.faction[g]);
 	        ini_write_real("Factions","dis"+string(g),obj_controller.disposition[g]);
 	        ini_write_real("Factions","dis_max"+string(g),obj_controller.disposition_max[g]);
-        
+
 	        ini_write_string("Factions","lead"+string(g),obj_controller.faction_leader[g]);
 	        ini_write_real("Factions","gen"+string(g),obj_controller.faction_gender[g]);
 	        ini_write_string("Factions","title"+string(g),obj_controller.faction_title[g]);
 	        ini_write_string("Factions","status"+string(g),obj_controller.faction_status[g]);
 	        ini_write_real("Factions","defeated"+string(g),obj_controller.faction_defeated[g]);
 	        ini_write_real("Factions","known"+string(g),known[g]);
-        
+
 	        ini_write_real("Factions","annoyed"+string(g),obj_controller.annoyed[g]);
 	        ini_write_real("Factions","ignore"+string(g),obj_controller.ignore[g]);
 	        ini_write_real("Factions","turns_ignored"+string(g),obj_controller.turns_ignored[g]);
-        
+
 	        ini_write_real("Factions","audience"+string(g),obj_controller.audien[g]);
 	        ini_write_string("Factions","audience_topic"+string(g),obj_controller.audien_topic[g]);
 	    }
-	    // 
+	    //
 	    var g;g=0;
 	    repeat(50){g+=1;
 	        ini_write_string("Ongoing","quest"+string(g),obj_controller.quest[g]);
@@ -262,15 +268,15 @@ function scr_save(argument0, argument1) {
 	        ini_write_string("Ongoing","event"+string(g),obj_controller.event[g]);
 	        ini_write_real("Ongoing","event_duration"+string(g),obj_controller.event_duration[g]);
 	    }
-	    // 
+	    //
 	    ini_write_real("Controller","justmet",obj_controller.faction_justmet);
 	    ini_write_real("Controller","check_number",obj_controller.check_number);
 	    ini_write_real("Controller","year_fraction",obj_controller.year_fraction);
 	    ini_write_real("Controller","year",obj_controller.year);
 	    ini_write_real("Controller","millenium",obj_controller.millenium);
-	    // 
+	    //
 	    ini_write_real("Controller","req",obj_controller.requisition);
-	    // 
+	    //
 	    ini_write_real("Controller","income",obj_controller.income);
 	    ini_write_real("Controller","income_last",obj_controller.income_last);
 	    ini_write_real("Controller","income_base",obj_controller.income_base);
@@ -285,8 +291,8 @@ function scr_save(argument0, argument1) {
 	    ini_write_real("Controller","loyalty_hidden",obj_controller.loyalty_hidden);
 	        ini_write_real("Controller","flag_lair",obj_controller.inqis_flag_lair);
 	        ini_write_real("Controller","flag_gene",obj_controller.inqis_flag_gene);
-    
-    
+
+
 	    ini_write_real("Controller","gene_seed",obj_controller.gene_seed);
 	    ini_write_real("Controller","marines",obj_controller.marines);
 	    ini_write_real("Controller","command",obj_controller.command);
@@ -294,7 +300,7 @@ function scr_save(argument0, argument1) {
 	    ini_write_real("Controller","inspection_passes",obj_controller.inspection_passes);
 	    ini_write_real("Controller","recruiting_worlds_bought",obj_controller.recruiting_worlds_bought);
 	    ini_write_real("Controller","lwt",obj_controller.last_weapons_tab);
-    
+
 	    ini_write_real("Controller","bat_devastator_column",obj_controller.bat_devastator_column);
 	    ini_write_real("Controller","bat_assault_column",obj_controller.bat_assault_column);
 	    ini_write_real("Controller","bat_tactical_column",obj_controller.bat_tactical_column);
@@ -310,16 +316,16 @@ function scr_save(argument0, argument1) {
 	    ini_write_real("Controller","bat_predator_column",obj_controller.bat_predator_column);
 	    ini_write_real("Controller","bat_landraider_column",obj_controller.bat_landraider_column);
 	    ini_write_real("Controller","bat_scout_column",obj_controller.bat_scout_column);
-    
+
 	    ini_close();
 	}
- 
+
 
 
 	if (argument0=2) or (argument0=0){debugl("Saving to slot "+string(argument1)+" part 2");
 	    ini_open("save"+string(argument1)+".ini");
 	    // Stars
-    
+
 	    var num;num=instance_number(obj_star);instance_array=0;
 	    for (i=0; i<num; i+=1){
 	        instance_array[i] = instance_find(obj_star,i);
@@ -328,20 +334,20 @@ function scr_save(argument0, argument1) {
 	        ini_write_string("Star","sr"+string(i)+"star",instance_array[i].star);
 	        ini_write_real("Star","sr"+string(i)+"planets",instance_array[i].planets);
 	        ini_write_real("Star","sr"+string(i)+"owner",instance_array[i].owner);
-        
+
 	        ini_write_real("Star","sr"+string(i)+"x",instance_array[i].x);
 	        ini_write_real("Star","sr"+string(i)+"y",instance_array[i].y);
 	        ini_write_real("Star","sr"+string(i)+"x2",instance_array[i].x2);
 	        ini_write_real("Star","sr"+string(i)+"y2",instance_array[i].y2);
 	        ini_write_real("Star","sr"+string(i)+"ox",instance_array[i].old_x);
 	        ini_write_real("Star","sr"+string(i)+"oy",instance_array[i].old_y);
-        
+
 	        ini_write_real("Star","sr"+string(i)+"vision",instance_array[i].vision);
 	        ini_write_real("Star","sr"+string(i)+"storm",instance_array[i].storm);
 	        ini_write_real("Star","sr"+string(i)+"trader",instance_array[i].trader);
 	        ini_write_real("Star","sr"+string(i)+"craftworld",instance_array[i].craftworld);
 	        ini_write_real("Star","sr"+string(i)+"spacehulk",instance_array[i].space_hulk);
-        
+
 	        var g;g=0;
 	        repeat(4){g+=1;
 	            if (instance_array[i].planets>=g){
@@ -359,7 +365,7 @@ function scr_save(argument0, argument1) {
 	                ini_write_real("Star","sr"+string(i)+"pdf"+string(g),instance_array[i].p_pdf[g]);
 	                ini_write_real("Star","sr"+string(i)+"forti"+string(g),instance_array[i].p_fortified[g]);
 	                ini_write_real("Star","sr"+string(i)+"stat"+string(g),instance_array[i].p_station[g]);
-                
+
 	                ini_write_real("Star","sr"+string(i)+"play"+string(g),instance_array[i].p_player[g]);
 	                if (instance_array[i].p_first[g]=1) or (instance_array[i].p_owner[g]=1){
 	                    ini_write_real("Star","sr"+string(i)+"p_lasers"+string(g),instance_array[i].p_lasers[g]);
@@ -367,7 +373,7 @@ function scr_save(argument0, argument1) {
 	                    ini_write_real("Star","sr"+string(i)+"p_defenses"+string(g),instance_array[i].p_defenses[g]);
 	                }
 	                ini_write_string("Star","sr"+string(i)+"upg"+string(g),instance_array[i].p_upgrades[g]);
-                
+
 	                ini_write_real("Star","sr"+string(i)+"or"+string(g),instance_array[i].p_orks[g]);
 	                ini_write_real("Star","sr"+string(i)+"ta"+string(g),instance_array[i].p_tau[g]);
 	                ini_write_real("Star","sr"+string(i)+"el"+string(g),instance_array[i].p_eldar[g]);
@@ -378,7 +384,7 @@ function scr_save(argument0, argument1) {
 	                ini_write_real("Star","sr"+string(i)+"ne"+string(g),instance_array[i].p_necrons[g]);
 	                ini_write_real("Star","sr"+string(i)+"tyr"+string(g),instance_array[i].p_tyranids[g]);
 	                    ini_write_real("Star","sr"+string(i)+"halp"+string(g),instance_array[i].p_halp[g]);
-                
+
 	                ini_write_real("Star","sr"+string(i)+"hurssy"+string(g),instance_array[i].p_hurssy[g]);
 	                ini_write_real("Star","sr"+string(i)+"hurssy_time"+string(g),instance_array[i].p_hurssy_time[g]);
 	                ini_write_real("Star","sr"+string(i)+"heresy"+string(g),instance_array[i].p_heresy[g]);
@@ -388,20 +394,20 @@ function scr_save(argument0, argument1) {
 
 	                ini_write_string("Star","sr"+string(i)+"prob"+string(g)+".1",instance_array[i].p_problem[g,1]);
 	                ini_write_real("Star","sr"+string(i)+"time"+string(g)+".1",instance_array[i].p_timer[g,1]);
-                
+
 	                ini_write_string("Star","sr"+string(i)+"prob"+string(g)+".2",instance_array[i].p_problem[g,2]);
 	                ini_write_real("Star","sr"+string(i)+"time"+string(g)+".2",instance_array[i].p_timer[g,2]);
-                
+
 	                ini_write_string("Star","sr"+string(i)+"prob"+string(g)+".3",instance_array[i].p_problem[g,3]);
 	                ini_write_real("Star","sr"+string(i)+"time"+string(g)+".3",instance_array[i].p_timer[g,3]);
-                
+
 	                ini_write_string("Star","sr"+string(i)+"prob"+string(g)+".4",instance_array[i].p_problem[g,4]);
 	                ini_write_real("Star","sr"+string(i)+"time"+string(g)+".4",instance_array[i].p_timer[g,4]);
 	            }
 	        }
 	    }
-    
-    
+
+
 	    // Temporary artifact objects
 	    ini_write_real("Controller","temp_arti",instance_number(obj_temp_arti));
 	    num=instance_number(obj_temp_arti);instance_array=0;
@@ -410,14 +416,14 @@ function scr_save(argument0, argument1) {
 	        ini_write_real("Star","ar"+string(i)+"x",instance_array[i].x);
 	        ini_write_real("Star","ar"+string(i)+"y",instance_array[i].y);
 	    }
-    
+
 	    // PLAYER FLEET OBJECTS
 	    num=0;tot=0;num=instance_number(obj_p_fleet);
 	    instance_array[tot]=0;
-    
+
 	    for (i=0; i<num; i+=1){
 	        instance_array[i] = instance_find(obj_p_fleet,i);
-        
+
 	        ini_write_real("Fleet","pf"+string(i)+"image",instance_array[i].image_index);
 	        ini_write_real("Fleet","pf"+string(i)+"x",instance_array[i].x);
 	        ini_write_real("Fleet","pf"+string(i)+"y",instance_array[i].y);
@@ -457,11 +463,11 @@ function scr_save(argument0, argument1) {
 	            ini_write_real("Fleet","pf"+string(i)+"escort_uid"+string(g),instance_array[i].escort_uid[g]);
 	        }
 	    }
-    
+
 	    // ENEMY FLEET OBJECTS
 	    num=0;tot=0;num=instance_number(obj_en_fleet);
 	    instance_array[tot]=0;
-    
+
 	    for (i=0; i<num; i+=1){
 	        instance_array[i] = instance_find(obj_en_fleet,i);
 	        ini_write_real("Fleet","ef"+string(i)+"owner",instance_array[i].owner);
@@ -479,11 +485,11 @@ function scr_save(argument0, argument1) {
 	        ini_write_real("Fleet","ef"+string(i)+"action_y",instance_array[i].action_y);
 	        ini_write_real("Fleet","ef"+string(i)+"home_x",instance_array[i].home_x);
 	        ini_write_real("Fleet","ef"+string(i)+"home_y",instance_array[i].home_y);
-        
+
 	        ini_write_real("Fleet","ef"+string(i)+"target",instance_array[i].target);
 	        ini_write_real("Fleet","ef"+string(i)+"target_x",instance_array[i].target_x);
 	        ini_write_real("Fleet","ef"+string(i)+"target_y",instance_array[i].target_y);
-        
+
 	        ini_write_real("Fleet","ef"+string(i)+"action_spd",instance_array[i].action_spd);
 	        ini_write_real("Fleet","ef"+string(i)+"action_eta",instance_array[i].action_eta);
 	        ini_write_real("Fleet","ef"+string(i)+"connected",instance_array[i].connected);
@@ -493,7 +499,7 @@ function scr_save(argument0, argument1) {
 	        ini_write_real("Fleet","ef"+string(i)+"orb",instance_array[i].orbiting);
 	        ini_write_real("Fleet","ef"+string(i)+"navy",instance_array[i].navy);
 	        ini_write_real("Fleet","ef"+string(i)+"unl",instance_array[i].guardsmen_unloaded);
-        
+
 	        if (instance_array[i].navy=1){var e;e=-1;
 	            repeat(20){e+=1;
 	                ini_write_real("Fleet","ef"+string(i)+"navy_cap."+string(e),instance_array[i].capital_imp[e]);
@@ -523,13 +529,13 @@ function scr_save(argument0, argument1) {
 	    ini_write_string("Ini","strin1",obj_ini.strin);
 	    ini_write_string("Ini","strin2",obj_ini.strin2);
 	    ini_write_string("Ini","psy_powers",obj_ini.psy_powers);
-    
+
 	    ini_write_real("Ini","companies",obj_ini.companies);
 	    var i;i=-1;repeat(21){i+=1;ini_write_string("Ini","comp_title"+string(i),obj_ini.company_title[i]);}
 	    var i;i=-1;repeat(121){i+=1;ini_write_real("Ini","slave_num_"+string(i),obj_ini.slave_batch_num[i]);ini_write_real("Ini","slave_eta_"+string(i),obj_ini.slave_batch_eta[i]);}
-    
+
 	    ini_write_string("Ini","battle_cry",obj_ini.battle_cry);
-    
+
 	    ini_write_string("Controller","main_color",obj_controller.col[obj_controller.main_color]);
 	    ini_write_string("Controller","secondary_color",obj_controller.col[obj_controller.secondary_color]);
 	    ini_write_string("Controller","trim_color",obj_controller.col[obj_controller.trim_color]);
@@ -540,7 +546,7 @@ function scr_save(argument0, argument1) {
 	    ini_write_real("Controller","col_special",obj_controller.col_special);
 	    ini_write_real("Controller","trimmed",obj_controller.trim);
 	    ini_write_real("Controller","skin_color",obj_ini.skin_color);
-    
+
 	    ini_write_string("Ini","adept_name",obj_controller.adept_name);
 	    ini_write_string("Ini","recruiter_name",obj_controller.recruiter_name);
 	    // ini_write_string("Ini","progenitor",obj_controller.progenitor);
@@ -549,7 +555,7 @@ function scr_save(argument0, argument1) {
 	    ini_write_real("Ini","progenitor_disposition",obj_controller.progenitor_disposition);
 	    ini_write_real("Ini","imperium_disposition",obj_controller.imperium_disposition);
 	    ini_write_real("Ini","astartes_disposition",obj_controller.astartes_disposition);
-    
+
 	    ini_write_real("Ini","master_autarch",obj_ini.master_autarch);
 	    ini_write_real("Ini","master_avatar",obj_ini.master_avatar);
 	    ini_write_real("Ini","master_farseer",obj_ini.master_farseer);
@@ -582,9 +588,9 @@ function scr_save(argument0, argument1) {
 	    ini_write_real("Ini","master_necron_vehicles",obj_ini.master_necron_vehicles);
 	    ini_write_real("Ini","master_monolith",obj_ini.master_monolith);
 	    ini_write_string("Ini","master_special",obj_ini.master_special_killed);
-    
-    
-	    // 
+
+
+	    //
 	    ini_write_real("Ini","preomnor",obj_ini.preomnor);
 	    ini_write_real("Ini","voice",obj_ini.voice);
 	    ini_write_real("Ini","doomed",obj_ini.doomed);
@@ -598,14 +604,14 @@ function scr_save(argument0, argument1) {
 	    ini_write_real("Ini","secretions",obj_ini.secretions);
 	    ini_write_real("Ini","occulobe",obj_ini.occulobe);
 	    ini_write_real("Ini","mucranoid",obj_ini.mucranoid);
-	    // 
+	    //
 	    ini_write_string("Ini","master_name",obj_ini.master_name);
 	    ini_write_string("Ini","chief_name",obj_ini.chief_librarian_name);
 	    ini_write_string("Ini","high_name",obj_ini.high_chaplain_name);
 	    ini_write_string("Ini","high2_name",obj_ini.high_apothecary_name);
 	    ini_write_string("Ini","forgey_name",obj_ini.forge_master_name);
 	    ini_write_string("Ini","lord_name",obj_ini.lord_admiral_name);
-	    // 
+	    //
 	    var g;g=0;
 	    repeat(150){g+=1;
 	        if (obj_ini.equipment[g]!=""){
@@ -623,12 +629,12 @@ function scr_save(argument0, argument1) {
 	            ini_write_real("Ini","artifact_sid"+string(g),obj_ini.artifact_sid[g]);
 	        }
 	    }
-	    // 
+	    //
 	    var g;g=0;repeat(200){g+=1;
 	        ini_write_string("Ships","shi"+string(g),obj_ini.ship[g]);
 	        ini_write_real("Ships","shi_uid"+string(g),obj_ini.ship_uid[g]);
 	        ini_write_string("Ships","shi_class"+string(g),obj_ini.ship_class[g]);
-        
+
 	        ini_write_real("Ships","shi_size"+string(g),obj_ini.ship_size[g]);
 	        ini_write_real("Ships","shi_leadership"+string(g),obj_ini.ship_leadership[g]);
 	        ini_write_real("Ships","shi_hp"+string(g),obj_ini.ship_hp[g]);
@@ -641,27 +647,27 @@ function scr_save(argument0, argument1) {
 	        ini_write_real("Ships","shi_front_ac"+string(g),obj_ini.ship_front_armor[g]);
 	        ini_write_real("Ships","shi_other_ac"+string(g),obj_ini.ship_other_armor[g]);
 	        ini_write_real("Ships","shi_weapons"+string(g),obj_ini.ship_weapons[g]);
-	        // 
+	        //
 	        ini_write_string("Ships","shi"+string(g)+"wep1",obj_ini.ship_wep[g,1]);
 	        ini_write_string("Ships","shi"+string(g)+"facing1",obj_ini.ship_wep_facing[g,1]);
 	        ini_write_string("Ships","shi"+string(g)+"condition1",obj_ini.ship_wep_condition[g,1]);
-	        // 
+	        //
 	        ini_write_string("Ships","shi"+string(g)+"wep2",obj_ini.ship_wep[g,2]);
 	        ini_write_string("Ships","shi"+string(g)+"facing2",obj_ini.ship_wep_facing[g,2]);
 	        ini_write_string("Ships","shi"+string(g)+"condition2",obj_ini.ship_wep_condition[g,2]);
-	        // 
+	        //
 	        ini_write_string("Ships","shi"+string(g)+"wep3",obj_ini.ship_wep[g,3]);
 	        ini_write_string("Ships","shi"+string(g)+"facing3",obj_ini.ship_wep_facing[g,3]);
 	        ini_write_string("Ships","shi"+string(g)+"condition3",obj_ini.ship_wep_condition[g,3]);
-	        // 
+	        //
 	        ini_write_string("Ships","shi"+string(g)+"wep4",obj_ini.ship_wep[g,4]);
 	        ini_write_string("Ships","shi"+string(g)+"facing4",obj_ini.ship_wep_facing[g,4]);
 	        ini_write_string("Ships","shi"+string(g)+"condition4",obj_ini.ship_wep_condition[g,4]);
-	        // 
+	        //
 	        ini_write_string("Ships","shi"+string(g)+"wep5",obj_ini.ship_wep[g,5]);
 	        ini_write_string("Ships","shi"+string(g)+"facing5",obj_ini.ship_wep_facing[g,5]);
 	        ini_write_string("Ships","shi"+string(g)+"condition5",obj_ini.ship_wep_condition[g,5]);
-	        // 
+	        //
 	        ini_write_real("Ships","shi_capacity"+string(g),obj_ini.ship_capacity[g]);
 	        ini_write_real("Ships","shi_carrying"+string(g),obj_ini.ship_carrying[g]);
 	        ini_write_string("Ships","shi_contents"+string(g),obj_ini.ship_contents[g]);
@@ -688,11 +694,13 @@ function scr_save(argument0, argument1) {
 	                ini_write_real("Veh","lid"+string(coh)+"."+string(mah),obj_ini.veh_lid[coh,mah]);
 	                ini_write_real("Veh","uid"+string(coh)+"."+string(mah),obj_ini.veh_uid[coh,mah]);
 	                ini_write_real("Veh","wid"+string(coh)+"."+string(mah),obj_ini.veh_wid[coh,mah]);
-                
+
 	                ini_write_string("Veh","w1"+string(coh)+"."+string(mah),obj_ini.veh_wep1[coh,mah]);
 	                ini_write_string("Veh","w2"+string(coh)+"."+string(mah),obj_ini.veh_wep2[coh,mah]);
+	                ini_write_string("Veh","w3"+string(coh)+"."+string(mah),obj_ini.veh_wep3[coh,mah]);
 	                ini_write_string("Veh","up"+string(coh)+"."+string(mah),obj_ini.veh_upgrade[coh,mah]);
-                
+	                ini_write_string("Veh","ac"+string(coh)+"."+string(mah),obj_ini.veh_acc[coh,mah]);
+
 	                ini_write_real("Veh","hp"+string(coh)+"."+string(mah),obj_ini.veh_hp[coh,mah]);
 	                ini_write_real("Veh","cha"+string(coh)+"."+string(mah),obj_ini.veh_chaos[coh,mah]);
 	                // ini_write_real("Veh","pil"+string(coh)+"."+string(mah),obj_ini.veh_pilots[coh,mah]);
@@ -700,10 +708,10 @@ function scr_save(argument0, argument1) {
 	            if (coh=1) and (mah=1) then good=1;
 	        }
 	    }
-    
-    
-    
-    
+
+
+
+
 	    var i;i=0;
 	    ini_write_string("Res","nm",obj_controller.restart_name);
 	    ini_write_real("Res","found",obj_controller.restart_founding);
@@ -719,7 +727,7 @@ function scr_save(argument0, argument1) {
 	    ini_write_string("Res","rcrnam",obj_controller.restart_recruiting_name);
 	    ini_write_string("Res","homtyp",obj_controller.restart_home_type);
 	    ini_write_string("Res","homnam",obj_controller.restart_home_name);
-    
+
 	    ini_write_real("Res","flit",obj_controller.restart_fleet_type);
 	    ini_write_real("Res","recr_e",obj_controller.restart_recruiting_exists);
 	    ini_write_real("Res","home_e",obj_controller.restart_homeworld_exists);
@@ -767,7 +775,7 @@ function scr_save(argument0, argument1) {
 	    ini_write_real("Res","cooperation",obj_controller.restart_cooperation);
 	    ini_write_real("Res","purity",obj_controller.restart_purity);
 	    ini_write_real("Res","stability",obj_controller.restart_stability);
-    
+
 	    i=99;
 	    repeat(3){i+=1;
 	         var o;o=1;
@@ -783,8 +791,8 @@ function scr_save(argument0, argument1) {
 	            ini_write_string("Res","r_gear"+string(i)+"."+string(o),obj_controller.r_gear[i,o]);
 	         }
 	    }// 100 is defaults, 101 is the allowable starting equipment
-    
-    
+
+
 	    ini_close();
 	}
 
@@ -819,13 +827,13 @@ function scr_save(argument0, argument1) {
 	                ini_write_real("Mar","li"+string(coh)+"."+string(mah),obj_ini.lid[coh,mah]);
 	                ini_write_real("Mar","bio"+string(coh)+"."+string(mah),obj_ini.bio[coh,mah]);
 	                ini_write_real("Mar","wi"+string(coh)+"."+string(mah),obj_ini.wid[coh,mah]);
-                
+
 	                ini_write_string("Mar","w1"+string(coh)+"."+string(mah),obj_ini.wep1[coh,mah]);
 	                ini_write_string("Mar","w2"+string(coh)+"."+string(mah),obj_ini.wep2[coh,mah]);
 	                ini_write_string("Mar","ar"+string(coh)+"."+string(mah),obj_ini.armor[coh,mah]);
 	                ini_write_string("Mar","ge"+string(coh)+"."+string(mah),obj_ini.gear[coh,mah]);
 	                ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);
-                
+
 	                ini_write_real("Mar","hp"+string(coh)+"."+string(mah),obj_ini.hp[coh,mah]);
 	                ini_write_real("Mar","cha"+string(coh)+"."+string(mah),obj_ini.chaos[coh,mah]);
 	                ini_write_real("Mar","exp"+string(coh)+"."+string(mah),obj_ini.experience[coh,mah]);
@@ -864,11 +872,11 @@ function scr_save(argument0, argument1) {
 
 	if (argument0=5) or (argument0=0){
 	    ini_open("save"+string(argument1)+".ini");
-    
+
 	    obj_saveload.hide=1;
 	    obj_controller.invis=true;
 	    obj_saveload.alarm[2]=2;
-    
+
 	    var svt,svc,svm,smr,svd;
 	    svt=0;svc="";svm="";smr=0;svd="";
 	    svt=ini_read_real("Controller","turn",0);
@@ -878,7 +886,7 @@ function scr_save(argument0, argument1) {
 	    svd=ini_read_string("Save","date","Error");
 	    ini_write_real("Save","corrupt",0);
 	    ini_close();
-    
+
 	    ini_open("saves.ini");
 	    ini_write_real(string(argument1),"turn",svt);
 	    ini_write_string(string(argument1),"chapter_name",svc);
@@ -890,7 +898,7 @@ function scr_save(argument0, argument1) {
 	    ini_close();
 
 	    file_encrypt("save"+string(argument1)+".ini","p");
-    
+
 	    // This saves the log in an unencrypted file
 	    instance_activate_object(obj_event_log);
 	    file_delete("save"+string(argument1)+"log.ini");
@@ -901,7 +909,7 @@ function scr_save(argument0, argument1) {
 	    ini_write_string("Main","data3",obj_ini.sector_name);
 	    ini_write_real("Main","data4",obj_controller.turn);
 	    ini_write_real("Main","data5",random_get_seed());
-    
+
 	    repeat(600){t+=1;
 	        if (obj_event_log.event_text[t]!=""){
 	            ini_write_string("Log","a."+string(t),obj_event_log.event_text[t]);
@@ -911,9 +919,9 @@ function scr_save(argument0, argument1) {
 	        }
 	    }
 	    ini_close();
-    
+
 	    obj_saveload.save[argument1]=1;
-    
+
 	    debugl("Saving to slot "+string(argument1)+" complete");
 	}
 
@@ -951,7 +959,7 @@ function scr_save(argument0, argument1) {
 	     myID = ini_read_real( "Save", "object" + string(i), 0); //loads id from file
 	     myX = ini_read_real( "Save", "object" + string(i) + "x", 0); //loads x from file
 	     myY = ini_read_real( "Save", "object" + string(i) + "y", 0); //loads y from file
-          
+
 	     instance_create( myX, myY, myID);
 	}
 	ini_close();
@@ -963,7 +971,7 @@ function scr_save(argument0, argument1) {
 
 	2. Check if 'Save1' exists, 'Save2', etc, and display them accordingly by reading their names from the file
 
-	3. When clicked, load the file by its FILENAME. When the user deletes a file, remove it and rename all the files with names AFTER it (for example, if Save3 was deleted, rename Save4 to Save3, and Save5 to Save4). This way, the structure stays tidy. 
+	3. When clicked, load the file by its FILENAME. When the user deletes a file, remove it and rename all the files with names AFTER it (for example, if Save3 was deleted, rename Save4 to Save3, and Save5 to Save4). This way, the structure stays tidy.
 
 
 	file_exists(fname) Returns whether the file with the given name exists (true) or not (false).
@@ -973,7 +981,7 @@ function scr_save(argument0, argument1) {
 
 	Use Splash Webpage(from d&d) ! (hehe) Usually you want to open in browser not in game (splash_show_web(url,delay) shows only in game )
 
-	Note: You can use working_directory to point the folder where the game is 
+	Note: You can use working_directory to point the folder where the game is
 
 
 
