@@ -14,17 +14,9 @@ action_eta=eta;
 // if (action="crusade2") then action="crusade3";
 // if (action="crusade1") then action="crusade2";
 
-
-var w, tempp;
-w=0;repeat(capital_number){
-    w+=1;if (capital[w]!="") and (capital_sel[w]=0){tempp=capital_num[w];obj_ini.ship_location[tempp]="Warp";}
+var ship_count = array_length(ships);
+for (var i = 0; i < ship_count; i++){
+	if (!ships[i].selected) {
+		ships[i].location = "Warp";
+	}
 }
-w=0;repeat(frigate_number){
-    w+=1;if (frigate[w]!="") and (frigate_sel[w]=0){tempp=frigate_num[w];obj_ini.ship_location[tempp]="Warp";}
-}
-w=0;repeat(escort_number){
-    w+=1;if (escort[w]!="") and (escort_sel[w]=0){tempp=escort_num[w];obj_ini.ship_location[tempp]="Warp";}
-}
-
-
-

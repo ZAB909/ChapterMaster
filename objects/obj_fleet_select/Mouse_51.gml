@@ -131,12 +131,13 @@ if (owner=1) and (instance_nearest(x,y,obj_p_fleet).action=""){
 			var ship = fleet.ships[i];
 			if (ship.selected) {
 				array_delete(fleet.ships,i,1);
-				--ships_count
 				array_push(new_fleet.ships, ship);
 				ship.location = "Warp";
 				if(ship.size == SHIP_SIZE.capital) then ++cap;
 				else if(ship.size == SHIP_SIZE.frigate) then ++fri;
 				else if(ship.size == SHIP_SIZE.escort) then ++esc;
+				--ships_count;
+				--i;
 			}
 		}
 		

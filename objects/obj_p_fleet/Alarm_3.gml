@@ -25,20 +25,14 @@ obj_fleet_select.frigate=frigate_number;
 obj_fleet_select.capital=capital_number;
 
 
-
-var i;i=-1;
-repeat(91){i+=1;
-    if (i<=20) then capital_sel[i]=1;
-    frigate_sel[i]=1;
-    escort_sel[i]=1;
-    
-    if (obj_controller.fest_scheduled>0) and (obj_controller.fest_sid>0){
-        if (i<=20){if (capital_num[i]=obj_controller.fest_sid) and (capital_sel[w]=1) then capital_sel[w]=0;}
-        if (frigate_num[i]=obj_controller.fest_sid) and (frigate_sel[i]=1) then frigate_sel[i]=0;
-        if (escort_num[i]=obj_controller.fest_sid) and (escort_sel[i]=1) then escort_sel[i]=0;
-    }
+var ship_count = array_length(ships);
+for (var i = 0; i < ship_count; i++) {
+	ships[i].selected = true;
+	
+	if (obj_controller.fest_scheduled > 0 && obj_controller.fest_sid == ships[i]){
+		ships[i].selected = false;
+	}
 }
-
 
 /*var ii;ii=0;ii+=capital_number;ii+=round((frigate_number/2));ii+=round((escort_number/4));
 if (ii<=1) then ii=1;image_index=ii;*/
