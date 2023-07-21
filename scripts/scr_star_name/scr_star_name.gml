@@ -1,9 +1,9 @@
 function scr_star_name() {
 
-
+	// TODO refactor this to just a list of star names
 	var stib, rand, rand2, ok, num;
 	stib=100;ok=0;num="";
-	rand=floor(random(551))+1;
+	rand=floor(random(566))+1;
 	rand2=floor(random(100))+1;
 
 	repeat(100){
@@ -55,15 +55,13 @@ function scr_star_name() {
 	        if (rand=44) then num="Amon";
 	        if (rand=45) then num="Asherah";
 	        if (rand=46) then num="Xu Xiu";
-	        if (rand=47) then num="Kim Jong";
 	        if (rand=47) then num="Gonj Mik";
 	        if (rand=48) then num="Zentra";
 	        if (rand=49) then num="Azeroth";
 	        if (rand=50) then num="Morphua";
-	        if (rand=11) then num="Muric";
+	        if (rand=51) then num="Muric";
 	        if (rand=52) then num="Sextanis";
 	        if (rand=53) then num="Betelgeuse";
-	        if (rand=53) then num="Betechton";
 	        if (rand=54) then num="Soachton";
 	        if (rand=55) then num="Ao-Chin";
 	        if (rand=56) then num="Hordi";
@@ -71,10 +69,8 @@ function scr_star_name() {
 	        if (rand=58) then num="Lustania";
 	        if (rand=59) then num="Albion";
 	        if (rand=60) then num="Bongistan";
-	        if (rand=60) then num="Natsigan";
 	        if (rand=61) then num="Orwell";
 	        if (rand=62) then num="Dagobah";
-	        if (rand=62) then num="Haboga";
 	        if (rand=63) then num="Outer Heaven";
 	        if (rand=64) then num="Sodden Hollow";
 	        if (rand=65) then num="Protasia";
@@ -133,7 +129,6 @@ function scr_star_name() {
 	        if (rand=118) then num="Seadelant";
 	        if (rand=119) then num="Ostrola";
 	        if (rand=120) then num="Ilbira";
-	        if (rand=120) then num="Mard";
 	        if (rand=121) then num="Carshim";
 	        if (rand=122) then num="Addolorata";
 	        if (rand=123) then num="Dolsene";
@@ -534,16 +529,6 @@ function scr_star_name() {
 	        if (rand=518) then num="Quarth"; 
 	        if (rand=519) then num="Dornus Noangulus"; 
 	        if (rand=520) then num="Dornari"; 
-	        if (rand=521) then num="Vandiria"; 
-	        if (rand=522) then num="Pearia"; 
-	        if (rand=523) then num="Sheol"; 
-	        if (rand=524) then num="Libertania"; 
-	        if (rand=525) then num="Woden"; 
-	        if (rand=526) then num="Guderian"; 
-	        if (rand=527) then num="Edelweiss"; //und sie heisst Erika
-	        if (rand=528) then num="Gotenland"; 
-	        if (rand=529) then num="Theodorichshaven"; 
-	        if (rand=530) then num="Batoria"; 
 	        if (rand=521) then num="Husania"; 
 	        if (rand=522) then num="Urslavik"; 
 	        if (rand=523) then num="Creedia"; 
@@ -575,7 +560,22 @@ function scr_star_name() {
 	        if (rand=549) then num="Whitefall"; 
 	        if (rand=550) then num="Zalia"; 
 	        if (rand=551) then num="Regina";
-        
+			if (rand=552) then num="Kim Jong";
+			if (rand=553) then num="Vandiria"; 
+	        if (rand=554) then num="Pearia"; 
+	        if (rand=555) then num="Sheol"; 
+	        if (rand=556) then num="Libertania"; 
+	        if (rand=557) then num="Woden"; 
+	        if (rand=558) then num="Guderian"; 
+	        if (rand=559) then num="Edelweiss"; //und sie heisst Erika
+	        if (rand=560) then num="Gotenland"; 
+	        if (rand=561) then num="Theodorichshaven"; 
+	        if (rand=562) then num="Batoria"; 
+			if (rand=563) then num="Betechton";
+        	if (rand=564) then num="Natsigan";
+			if (rand=565) then num="Haboga";
+	        if (rand=566) then num="Mard";
+
 	        if (instance_exists(obj_controller)){if (obj_controller.diplomacy=6){return(num);exit;}}
         
 	        if (instance_exists(obj_controller)){if (string_count(num,obj_controller.star_names)=0){obj_controller.star_names+=num;name=num;ok=1;}}
