@@ -560,8 +560,8 @@ function scr_star_name() {
 	        if (rand=549) then num="Whitefall"; 
 	        if (rand=550) then num="Zalia"; 
 	        if (rand=551) then num="Regina";
-			if (rand=552) then num="Kim Jong";
-			if (rand=553) then num="Vandiria"; 
+	        if (rand=552) then num="Kim Jong";
+	        if (rand=553) then num="Vandiria"; 
 	        if (rand=554) then num="Pearia"; 
 	        if (rand=555) then num="Sheol"; 
 	        if (rand=556) then num="Libertania"; 
@@ -571,9 +571,9 @@ function scr_star_name() {
 	        if (rand=560) then num="Gotenland"; 
 	        if (rand=561) then num="Theodorichshaven"; 
 	        if (rand=562) then num="Batoria"; 
-			if (rand=563) then num="Betechton";
-        	if (rand=564) then num="Natsigan";
-			if (rand=565) then num="Haboga";
+	        if (rand=563) then num="Betechton";
+	        if (rand=564) then num="Natsigan";
+	        if (rand=565) then num="Haboga";
 	        if (rand=566) then num="Mard";
 
 	        if (instance_exists(obj_controller)){if (obj_controller.diplomacy=6){return(num);exit;}}
