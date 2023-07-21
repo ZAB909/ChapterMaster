@@ -3,10 +3,11 @@ var spid, dir;spid=0;dir=0;
 
 acted=0;
 
-if (action="lost"){var i;
-    i=0;repeat(capital_number){i+=1;obj_ini.ship_location[capital_num[i]]="Lost";}
-    i=0;repeat(frigate_number){i+=1;obj_ini.ship_location[frigate_num[i]]="Lost";}
-    i=0;repeat(escort_number){i+=1;obj_ini.ship_location[escort_num[i]]="Lost";}
+if (action="lost"){
+	var ships_count = array_length(ships);
+	for (var i = 0; i < ships_count; i++){
+		ships[i].location = "Lost";	
+	}
     exit;
 }
 
@@ -29,11 +30,10 @@ if (action=""){
 
 if (action="move") or (action="crusade1") or (action="crusade2") or (action="crusade3"){
     
-    var i;
-    i=0;repeat(capital_number){i+=1;obj_ini.ship_location[capital_num[i]]="Warp";}
-    i=0;repeat(frigate_number){i+=1;obj_ini.ship_location[frigate_num[i]]="Warp";}
-    i=0;repeat(escort_number){i+=1;obj_ini.ship_location[escort_num[i]]="Warp";}
-
+	var ships_count = array_length(ships);
+	for (var i = 0; i < ships_count; i++){
+		ships[i].location = "Warp";	
+	}
 
     if (instance_nearest(action_x,action_y,obj_star).storm>0) then exit;
 
@@ -94,19 +94,13 @@ if (action="move") or (action="crusade1") or (action="crusade2") or (action="cru
         action_x=0;
         action_y=0;
         
-        
-        var i;
-        i=0;if (capital_number>0) then repeat(capital_number){
-            i+=1;obj_ini.ship_location[capital_num[i]]=steh.name;
-        }
-        i=0;if (frigate_number>0) then repeat(frigate_number){
-            i+=1;obj_ini.ship_location[frigate_num[i]]=steh.name;
-        }
-        i=0;if (escort_number>0) then repeat(escort_number){
-            i+=1;obj_ini.ship_location[escort_num[i]]=steh.name;
-        }
-        
-        
+		
+		
+		var ships_count = array_length(ships);
+		for (var i = 0; i < ships_count; i++){
+			ships[i].location = steh.name;	
+		}
+
         if (steh.p_feature[1]="????|") then with(steh){scr_planetary_feature(1);}
         if (steh.p_feature[2]="????|") then with(steh){scr_planetary_feature(2);}
         if (steh.p_feature[3]="????|") then with(steh){scr_planetary_feature(3);}

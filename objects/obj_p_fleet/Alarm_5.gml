@@ -1,34 +1,36 @@
-
-var i, minhp, maxhp;
-
-
-
-if (capital_number>0){
-    i=0;minhp=0;maxhp=0;
-    repeat(8){i+=1;
-        if (capital[i]!="") and (capital_num[i]>0){minhp+=obj_ini.ship_hp[i];maxhp+=obj_ini.ship_maxhp[i];}
-    }
-    if (maxhp>0) then capital_health=round((minhp/maxhp)*100);
-    else capital_health=0;
+var min_hp = 0;
+var max_hp = 0;
+var capitals = get_capitals(ships);
+for (var i = 0; i < capital_number; i++) {
+	min_hp += capitals[i].hp;
+	max_hp += capitals[i].max_hp;
+}
+if(max_hp > 0) {
+	capital_health = round((min_hp/max_hp)*100);
 }
 
-if (frigate_number>0){
-    i=0;minhp=0;maxhp=0;
-    repeat(30){i+=1;
-        if (frigate[i]!="") and (frigate_num[i]>0){minhp+=obj_ini.ship_hp[i];maxhp+=obj_ini.ship_maxhp[i];}
-    }
-    if (maxhp>0) then frigate_health=round((minhp/maxhp)*100);
-    else frigate_health=0;
+
+min_hp = 0;
+max_hp = 0;
+var frigates = get_frigates(ships);
+for (var i = 0; i < frigate_number; i++) {
+	min_hp += frigates[i].hp;
+	max_hp += frigates[i].max_hp;
+}
+if(max_hp > 0) {
+	frigate_health = round((min_hp/max_hp)*100);
 }
 
-if (escort_number>0){
-    i=0;minhp=0;maxhp=0;
-    repeat(30){i+=1;
-        if (escort[i]!="") and (escort_num[i]>0){minhp+=obj_ini.ship_hp[i];maxhp+=obj_ini.ship_maxhp[i];}
-    }
-    if (maxhp>0) then escort_health=round((minhp/maxhp)*100);
-    else escort_health=0;
-}
 
+min_hp = 0;
+max_hp = 0;
+var escorts = get_escorts(ships);
+for (var i = 0; i < escort_number; i++) {
+	min_hp += escorts[i].hp;
+	max_hp += escorts[i].max_hp;
+}
+if(max_hp > 0) {
+	escort_health = round((min_hp/max_hp)*100);
+}
 
 

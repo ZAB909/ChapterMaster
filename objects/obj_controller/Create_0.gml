@@ -1187,16 +1187,33 @@ bb=0;sk=0;glad=0;hunt=0;ships=0;
 bb_names="";sk_names="";glad_names="";hunt_names="";
 
 mm=0;codex[0]="";codex_discovered[0]=0;
-repeat(30){mm+=1;
-    if (obj_ini.ship[mm]!=""){
-        ships+=1;
-        if (obj_ini.ship_class[mm]="Battle Barge"){bb+=1;bb_names+=", "+string(obj_ini.ship[mm]);}
-        if (obj_ini.ship_class[mm]="Strike Cruiser"){sk+=1;sk_names+=", "+string(obj_ini.ship[mm]);}
-        if (obj_ini.ship_class[mm]="Gladius"){glad+=1;glad_names+=", "+string(obj_ini.ship[mm]);}
-        if (obj_ini.ship_class[mm]="Hunter"){hunt+=1;hunt_names+=", "+string(obj_ini.ship[mm]);}
-    }
-    codex[mm]="";codex_discovered[mm]=0;
+repeat(30) {
+	mm+=1;
+    codex[mm]="";
+	codex_discovered[mm]=0;
 }
+
+var ship_count = array_length(obj_ini.ship);
+for (var i = 0; i < ship_count; i++) {
+	ships += 1;
+	if (obj_ini.ship[i].class == SHIP_CLASS.battle_barge) {
+		bb += 1;
+		bb_names += ", " + string(obj_ini.ship[i].name);
+	}
+	else if (obj_ini.ship[i].class == SHIP_CLASS.strike_cruiser) {
+		sk += 1;
+		sk_names += ", " + string(obj_ini.ship[i].name);
+	}
+	else if (obj_ini.ship[i].class == SHIP_CLASS.gladius) {
+		glad += 1;
+		glad_names += ", " + string(obj_ini.ship[i].name);
+	}
+	else if (obj_ini.ship[i].class == SHIP_CLASS.hunter) { 
+		hunt += 1;
+		hunt_names += ", " + string(obj_ini.ship[i].name);
+	}
+}
+
 temp[62]+=string(ships)+" warships.#";
 
 vih=string_pos(",",bb_names);bb_names=string_delete(bb_names,vih,1);

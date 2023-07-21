@@ -157,19 +157,21 @@ if (did=1){// Player star has been set
     fleet.alarm[5]=5;
     
     f=0;
-    repeat(40){f+=1;
-        if (obj_ini.ship_size[f]=1){fleet.escort_number+=1;fleet.escort[fleet.escort_number]=obj_ini.ship[f];fleet.escort_num[fleet.escort_number]=f;fleet.escort_uid[fleet.escort_number]=obj_ini.ship_uid[fleet.escort_num[fleet.escort_number]];}
-        if (obj_ini.ship_size[f]=2){fleet.frigate_number+=1;fleet.frigate[fleet.frigate_number]=obj_ini.ship[f];fleet.frigate_num[fleet.frigate_number]=f;fleet.frigate_uid[fleet.frigate_number]=obj_ini.ship_uid[fleet.frigate_num[fleet.frigate_number]];}
-        if (obj_ini.ship_size[f]=3){
-            fleet.capital_number+=1;
-            fleet.capital[fleet.capital_number]=obj_ini.ship[f];
-            fleet.capital_num[fleet.capital_number]=f;
-            fleet.capital_uid[fleet.capital_number]=obj_ini.ship_uid[fleet.capital_num[fleet.capital_number]];
-        }
-    }
+	
+	var ship_count = array_length(obj_ini.ship);
+	for (var i = 0; i < ship_count; i++) {
+		array_push(fleet.ships, obj_ini.ship[i]);
+		if(obj_ini.ship[i].size = SHIP_SIZE.capital) then fleet.capital_number++;
+		else if(obj_ini.ship[i].size = SHIP_SIZE.frigate) then fleet.frigate_number++;
+		else if(obj_ini.ship[i].size = SHIP_SIZE.escort) then fleet.escort_number++;
+	}
     
-    var ii;ii=0;ii+=fleet.capital_number;ii+=round((fleet.frigate_number/2));ii+=round((fleet.escort_number/4));
-    if (ii<=1) then ii=1;fleet.image_index=ii;
+    var ii = 0;
+	ii += fleet.capital_number;
+	ii += round((fleet.frigate_number/2));
+	ii += round((fleet.escort_number/4));
+    if (ii<=1) then ii=1;
+	fleet.image_index=ii;
     
     if (obj_ini.load_to_ships>0){
         scr_start_load(fleet,ed,obj_ini.load_to_ships);

@@ -4,7 +4,7 @@ function scr_ui_popup() {
   
 	// 48,48      over like 256, down to 480-128
 
-	if (obj_controller.menu=60){var xx,yy;
+ 	if (obj_controller.menu=60){var xx,yy;
 	    xx=__view_get( e__VW.XView, 0 )+25;yy=__view_get( e__VW.YView, 0 )+165;
     
 	    draw_sprite(spr_popup_large,1,xx,yy);
@@ -342,96 +342,154 @@ function scr_ui_popup() {
     
 	    var type,lines,posi,colu,x3,y3,es,fr,ca,ty,shit,robj,nem,sal,sib,scale,void_h,shew,helth;
 	    type="capital";lines=0;posi=0;colu=1;x3=48;y3=142-20;ty=0;shit=0;robj=0;nem="";sal=0;scale=1;void_h=122;helth=0;
-	    es=obj_fleet_select.escort;
-	    fr=obj_fleet_select.frigate;
-	    ca=obj_fleet_select.capital;
+	    //es=obj_fleet_select.escort;
+	    //fr=obj_fleet_select.frigate;
+	    //ca=obj_fleet_select.capital;
     
 	    robj=instance_nearest(obj_fleet_select.x,obj_fleet_select.y,obj_p_fleet);
     
-	    if (es>0) then ty+=1;
-	    if (fr>0) then ty+=1;
-	    if (ca>0) then ty+=1;
+	    //if (es>0) then ty+=1;
+	    //if (fr>0) then ty+=1;
+	    //if (ca>0) then ty+=1;
     
-	    repeat(es+fr+ca+ty){
-	        y3+=20;lines+=1;posi+=1;scale=1;shew=1;helth=100;
-	        if (colu=1) then void_h=min(void_h+20,560);
+	
+	
+		var name = "";
+		for (var s = 0; s < 3; s++) {
+			if(s == 0) then var ships = get_capitals(robj.ships);
+			if(s == 1) then var ships = get_frigates(robj.ships);
+			if(s == 2) then var ships = get_escorts(robj.ships);
+			var ship_count = array_length(ships);
+			for(var i = 0; i < ship_count; i++) {
+				y3+=20;lines+=1;posi+=1;scale=1;shew=1;helth=100;
+				if (i == 0 && mnz == 0) {
+					if (s == 0) then draw_text(__view_get( e__VW.XView, 0 ) + x3, __view_get( e__VW.YView, 0 ) + y3, string_hash_to_newline("=Capital Ships="));
+					if (s == 1) then draw_text(__view_get( e__VW.XView, 0 ) + x3, __view_get( e__VW.YView, 0 ) + y3, string_hash_to_newline("=Frigates="));
+					if (s == 2) then draw_text(__view_get( e__VW.XView, 0 ) + x3, __view_get( e__VW.YView, 0 ) + y3, string_hash_to_newline("=Escorts="));
+					y3 += 20;
+				}
+				void_h=min(void_h+20,560);
+			
+				name = ships[i].name;
+				if (string_width(string_hash_to_newline(name))*scale>179) {
+					repeat(9) { 
+						if (string_width(string_hash_to_newline(name))*scale>179) then scale-=0.05;
+					}
+				}
+				if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+209) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
+					if (string_width(string_hash_to_newline(name))*scale>135) then repeat(9){if (string_width(string_hash_to_newline(name))*scale>135) then scale-=0.05;}shew=2;
+				}
+				if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+					if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+25) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
+						var onceh;onceh=0;cooldown=8000;
+		                    if (obj_controller.fest_scheduled>0) and (obj_controller.fest_sid==ships[i]) then onceh=1; //fix that later, fest_sid isn't a ship
+		                    if (onceh=0) {
+								ships[i].selected = !ships[i].selected;
+								onceh=1;
+							}
+					}
+				}
+				if (ships[i].max_hp>0) then helth=round((ships[i].hp/ships[i].max_hp)*100);
+				sal=ships[i].selected;
+				if (sal) { 
+					sib="[x]";
+				}
+				else {
+					sib="[ ] ";
+				}
+				if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+x3+2,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(sib));
+		            if (mnz=0) and (shew=2) then draw_text(__view_get( e__VW.XView, 0 )+x3+160,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(" "+string(helth)+"%"));
+		            if (helth<=60) and (helth>40) then draw_set_color(c_yellow);
+		            if (helth<=40) and (helth>20) then draw_set_color(c_orange);
+		            if (helth<=20) then draw_set_color(c_red);
+		            if (mnz=0) then draw_text_transformed(__view_get( e__VW.XView, 0 )+x3+30,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(string(name)),scale,1,0);
+		            draw_set_color(c_gray);
+			}		
+		}
+		
+	    //repeat(es+fr+ca+ty){
+		//	y3+=20;lines+=1;posi+=1;scale=1;shew=1;helth=100;
+	    //    if (colu=1) then void_h=min(void_h+20,560);
         
-	        if (posi=1){if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+x3,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline("=Capital Ships="));y3+=20;}
-	        if (posi=ca+1) and (fr>0){y3+=20;if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+x3,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline("=Frigates="));y3+=20;}
-	        if (posi=ca+fr+1) and (es>0){y3+=20;if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+x3,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline("=Escorts="));y3+=20;}
+	    //    if (posi=1){if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+x3,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline("=Capital Ships="));y3+=20;}
+	    //    if (posi=ca+1) and (fr>0){y3+=20;if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+x3,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline("=Frigates="));y3+=20;}
+	    //    if (posi=ca+fr+1) and (es>0){y3+=20;if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+x3,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline("=Escorts="));y3+=20;}
         
-	        if (y3>670) and (posi<=es+fr+ca){lines=1;y3=142;x3+=223;posi+=1;colu+=1;}
+	    //    if (y3>670) and (posi<=es+fr+ca){lines=1;y3=142;x3+=223;posi+=1;colu+=1;}
         
-	        if (posi<=ca){
-	            shit=posi;nem=robj.capital[shit];
-	            if (string_width(string_hash_to_newline(nem))*scale>179) then repeat(9){if (string_width(string_hash_to_newline(nem))*scale>179) then scale-=0.05;}
-	            if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+209) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
-	                if (string_width(string_hash_to_newline(nem))*scale>135) then repeat(9){if (string_width(string_hash_to_newline(nem))*scale>135) then scale-=0.05;}shew=2;
-	            }
-	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	                if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+25) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
-	                    var onceh;onceh=0;cooldown=8000;
-	                    if (obj_controller.fest_scheduled>0) and (obj_controller.fest_sid=robj.capital_num[shit]) then onceh=1;
-	                    if (robj.capital_sel[shit]=1) and (onceh=0){robj.capital_sel[shit]=0;onceh=1;}
-	                    if (robj.capital_sel[shit]=0) and (onceh=0){robj.capital_sel[shit]=1;onceh=1;}
-	                }
-	            }
-	            if (obj_ini.ship_maxhp[shit]>0) then helth=round((obj_ini.ship_hp[shit]/obj_ini.ship_maxhp[shit])*100);
-	            sal=robj.capital_sel[shit];if (sal=0) then sib="[ ]";if (sal=1) then sib="[x] ";if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+x3+2,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(sib));
-	            if (mnz=0) and (shew=2) then draw_text(__view_get( e__VW.XView, 0 )+x3+160,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(" "+string(helth)+"%"));
-	            if (helth<=60) and (helth>40) then draw_set_color(c_yellow);
-	            if (helth<=40) and (helth>20) then draw_set_color(c_orange);
-	            if (helth<=20) then draw_set_color(c_red);
-	            if (mnz=0) then draw_text_transformed(__view_get( e__VW.XView, 0 )+x3+30,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(string(nem)),scale,1,0);
-	            draw_set_color(c_gray);
-	        }
-	        if (posi>ca) and (posi<=ca+fr){
-	            shit=posi-ca;nem=robj.frigate[shit];
-	            if (string_width(string_hash_to_newline(nem))*scale>179) then repeat(9){if (string_width(string_hash_to_newline(nem))*scale>179) then scale-=0.05;}
-	            if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+209) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
-	                if (string_width(string_hash_to_newline(nem))*scale>135) then repeat(9){if (string_width(string_hash_to_newline(nem))*scale>135) then scale-=0.05;}shew=2;
-	            }
-	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	                if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+25) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
-	                    var onceh;onceh=0;cooldown=8000;
-	                    if (obj_controller.fest_scheduled>0) and (obj_controller.fest_sid=robj.frigate_num[shit]) then onceh=1;
-	                    if (robj.frigate_sel[shit]=1) and (onceh=0){robj.frigate_sel[shit]=0;onceh=1;}
-	                    if (robj.frigate_sel[shit]=0) and (onceh=0){robj.frigate_sel[shit]=1;onceh=1;}
-	                }
-	            }
-	            if (obj_ini.ship_maxhp[shit]>0) then helth=round((obj_ini.ship_hp[shit]/obj_ini.ship_maxhp[shit])*100);
-	            sal=robj.frigate_sel[shit];if (sal=0) then sib="[ ]";if (sal=1) then sib="[x] ";if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+x3+2,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(sib));
-	            if (mnz=0) and (shew=2) then draw_text(__view_get( e__VW.XView, 0 )+x3+160,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(" "+string(helth)+"%"));
-	            if (helth<=60) and (helth>40) then draw_set_color(c_yellow);
-	            if (helth<=40) and (helth>20) then draw_set_color(c_orange);
-	            if (helth<=20) then draw_set_color(c_red);
-	            if (mnz=0) then draw_text_transformed(__view_get( e__VW.XView, 0 )+x3+30,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(string(nem)),scale,1,0);
-	            draw_set_color(c_gray);
-	        }
-	        if (posi>ca+fr) and (posi<=ca+fr+es){
-	            shit=posi-(ca+fr);nem=robj.escort[shit];
-	            if (string_width(string_hash_to_newline(nem))*scale>179) then repeat(9){if (string_width(string_hash_to_newline(nem))*scale>179) then scale-=0.05;}
-	            if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+209) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
-	                if (string_width(string_hash_to_newline(nem))*scale>135) then repeat(9){if (string_width(string_hash_to_newline(nem))*scale>135) then scale-=0.05;}shew=2;
-	            }
-	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	                if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+25) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
-	                    var onceh;onceh=0;cooldown=8000;
-	                    if (obj_controller.fest_scheduled>0) and (obj_controller.fest_sid=robj.escort_num[shit]) then onceh=1;
-	                    if (robj.escort_sel[shit]=1) and (onceh=0){robj.escort_sel[shit]=0;onceh=1;}
-	                    if (robj.escort_sel[shit]=0) and (onceh=0){robj.escort_sel[shit]=1;onceh=1;}
-	                }
-	            }
-	            if (obj_ini.ship_maxhp[shit]>0) then helth=round((obj_ini.ship_hp[shit]/obj_ini.ship_maxhp[shit])*100);
-	            sal=robj.escort_sel[shit];if (sal=0) then sib="[ ]";if (sal=1) then sib="[x] ";if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+x3+2,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(sib));
-	            if (mnz=0) and (shew=2) then draw_text(__view_get( e__VW.XView, 0 )+x3+160,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(" "+string(helth)+"%"));
-	            if (helth<=60) and (helth>40) then draw_set_color(c_yellow);
-	            if (helth<=40) and (helth>20) then draw_set_color(c_orange);
-	            if (helth<=20) then draw_set_color(c_red);
-	            if (mnz=0) then draw_text_transformed(__view_get( e__VW.XView, 0 )+x3+30,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(string(nem)),scale,1,0);
-	            draw_set_color(c_gray);
-	        }
-	    }
+		//	var capitals = get_capitals(robj.ships);
+		//	var frigates = get_frigates(robj.ships);
+		//	var escorts = get_escorts(robj.ships);
+	    //    if (posi<=ca){
+	    //        shit=posi;nem=capitals[shit].name;
+	    //        if (string_width(string_hash_to_newline(nem))*scale>179) then repeat(9){if (string_width(string_hash_to_newline(nem))*scale>179) then scale-=0.05;}
+	    //        if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+209) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
+	    //            if (string_width(string_hash_to_newline(nem))*scale>135) then repeat(9){if (string_width(string_hash_to_newline(nem))*scale>135) then scale-=0.05;}shew=2;
+	    //        }
+	    //        if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+	    //            if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+25) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
+	    //                var onceh;onceh=0;cooldown=8000;
+	    //                //if (obj_controller.fest_scheduled>0) and (obj_controller.fest_sid=robj.capital_num[shit]) then onceh=1; fix that later?
+	    //                if (capitals[shit].selected) and (onceh=0){capitals[shit].selected=false;onceh=1;}
+	    //                if (!capitals[shit].selected) and (onceh=0){capitals[shit].selected=true;onceh=1;}
+	    //            }
+	    //        }
+	    //        if (obj_ini.ship[shit].max_hp>0) then helth=round((obj_ini.ship[shit].hp/obj_ini.ship[shit].max_hp)*100);
+	    //        sal=robj.capital_sel[shit];if (sal=0) then sib="[ ]";if (sal=1) then sib="[x] ";if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+x3+2,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(sib));
+	    //        if (mnz=0) and (shew=2) then draw_text(__view_get( e__VW.XView, 0 )+x3+160,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(" "+string(helth)+"%"));
+	    //        if (helth<=60) and (helth>40) then draw_set_color(c_yellow);
+	    //        if (helth<=40) and (helth>20) then draw_set_color(c_orange);
+	    //        if (helth<=20) then draw_set_color(c_red);
+	    //        if (mnz=0) then draw_text_transformed(__view_get( e__VW.XView, 0 )+x3+30,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(string(nem)),scale,1,0);
+	    //        draw_set_color(c_gray);
+	    //    }
+	    //    if (posi>ca) and (posi<=ca+fr){
+	    //        shit=posi-ca;nem=robj.frigate[shit];
+	    //        if (string_width(string_hash_to_newline(nem))*scale>179) then repeat(9){if (string_width(string_hash_to_newline(nem))*scale>179) then scale-=0.05;}
+	    //        if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+209) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
+	    //            if (string_width(string_hash_to_newline(nem))*scale>135) then repeat(9){if (string_width(string_hash_to_newline(nem))*scale>135) then scale-=0.05;}shew=2;
+	    //        }
+	    //        if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+	    //            if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+25) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
+	    //                var onceh;onceh=0;cooldown=8000;
+	    //                if (obj_controller.fest_scheduled>0) and (obj_controller.fest_sid=robj.frigate_num[shit]) then onceh=1;
+	    //                if (robj.frigate_sel[shit]=1) and (onceh=0){robj.frigate_sel[shit]=0;onceh=1;}
+	    //                if (robj.frigate_sel[shit]=0) and (onceh=0){robj.frigate_sel[shit]=1;onceh=1;}
+	    //            }
+	    //        }
+	    //        if (obj_ini.ship_maxhp[shit]>0) then helth=round((obj_ini.ship_hp[shit]/obj_ini.ship_maxhp[shit])*100);
+	    //        sal=robj.frigate_sel[shit];if (sal=0) then sib="[ ]";if (sal=1) then sib="[x] ";if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+x3+2,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(sib));
+	    //        if (mnz=0) and (shew=2) then draw_text(__view_get( e__VW.XView, 0 )+x3+160,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(" "+string(helth)+"%"));
+	    //        if (helth<=60) and (helth>40) then draw_set_color(c_yellow);
+	    //        if (helth<=40) and (helth>20) then draw_set_color(c_orange);
+	    //        if (helth<=20) then draw_set_color(c_red);
+	    //        if (mnz=0) then draw_text_transformed(__view_get( e__VW.XView, 0 )+x3+30,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(string(nem)),scale,1,0);
+	    //        draw_set_color(c_gray);
+	    //    }
+	    //    if (posi>ca+fr) and (posi<=ca+fr+es){
+	    //        shit=posi-(ca+fr);nem=robj.escort[shit];
+	    //        if (string_width(string_hash_to_newline(nem))*scale>179) then repeat(9){if (string_width(string_hash_to_newline(nem))*scale>179) then scale-=0.05;}
+	    //        if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+209) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
+	    //            if (string_width(string_hash_to_newline(nem))*scale>135) then repeat(9){if (string_width(string_hash_to_newline(nem))*scale>135) then scale-=0.05;}shew=2;
+	    //        }
+	    //        if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+	    //            if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+25) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
+	    //                var onceh;onceh=0;cooldown=8000;
+	    //                if (obj_controller.fest_scheduled>0) and (obj_controller.fest_sid=robj.escort_num[shit]) then onceh=1;
+	    //                if (robj.escort_sel[shit]=1) and (onceh=0){robj.escort_sel[shit]=0;onceh=1;}
+	    //                if (robj.escort_sel[shit]=0) and (onceh=0){robj.escort_sel[shit]=1;onceh=1;}
+	    //            }
+	    //        }
+	    //        if (obj_ini.ship_maxhp[shit]>0) then helth=round((obj_ini.ship_hp[shit]/obj_ini.ship_maxhp[shit])*100);
+	    //        sal=robj.escort_sel[shit];if (sal=0) then sib="[ ]";if (sal=1) then sib="[x] ";if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+x3+2,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(sib));
+	    //        if (mnz=0) and (shew=2) then draw_text(__view_get( e__VW.XView, 0 )+x3+160,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(" "+string(helth)+"%"));
+	    //        if (helth<=60) and (helth>40) then draw_set_color(c_yellow);
+	    //        if (helth<=40) and (helth>20) then draw_set_color(c_orange);
+	    //        if (helth<=20) then draw_set_color(c_red);
+	    //        if (mnz=0) then draw_text_transformed(__view_get( e__VW.XView, 0 )+x3+30,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline(string(nem)),scale,1,0);
+	    //        draw_set_color(c_gray);
+	    //    }
+	    //}
     
 	    obj_fleet_select.void_x=44;
 	    obj_fleet_select.void_y=110;
@@ -462,22 +520,12 @@ function scr_ui_popup() {
 	        if (mouse_x>=__view_get( e__VW.XView, 0 )+50) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+70) and (mouse_y>=__view_get( e__VW.YView, 0 )+117) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+137){
 	            if (cooldown<=0) and (fleet_all=0){cooldown=8000;fleet_all=1;}
 	            if (cooldown<=0) and (fleet_all=1){cooldown=8000;fleet_all=0;}
-	            if (fleet_all=1) then with(selected){
-	                var i;i=-1;
-	                repeat(91){i+=1;
-	                    if (i<=20) then capital_sel[i]=1;
-	                    frigate_sel[i]=1;
-	                    escort_sel[i]=1;
-	                }
-	            }
-	            if (fleet_all=0) then with(selected){
-	                var i;i=-1;
-	                repeat(91){i+=1;
-	                    if (i<=20) then capital_sel[i]=0;
-	                    frigate_sel[i]=0;
-	                    escort_sel[i]=0;
-	                }
-	            }
+				var ship_count = array_length(robj.ships);
+				var selected_value = false
+				if (fleet_all=1) then selected_value = true;	
+				for (var i = 0; i < ship_count; i++) {
+					robj.ships[i].selected = selected_value;	
+				}
 	        }
 	    }
     

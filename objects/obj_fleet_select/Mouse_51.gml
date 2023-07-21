@@ -32,7 +32,7 @@ if (owner=1) and (instance_nearest(x,y,obj_p_fleet).action=""){
     
     sys=instance_nearest(mouse_x,mouse_y,obj_star);
     sys_dist=point_distance(mouse_x,mouse_y,sys.x,sys.y);
-    act_dist=point_distance(x,y,sys.x,sys.y);
+    var act_dist=point_distance(x,y,sys.x,sys.y);
     mine=instance_nearest(x,y,obj_star);
     
     if (mine.buddy=sys) then connected=1;
@@ -63,22 +63,15 @@ if (owner=1) and (instance_nearest(x,y,obj_p_fleet).action=""){
     if (cont=1){
         
         var w,stot;stot=0;
-        w=0;repeat(fleet.capital_number){
-            w+=1;
-            if (fleet.capital[w]!="") and (fleet.capital_sel[w]=0){cont=50;}
-            if (fleet.capital[w]!="") and (fleet.capital_sel[w]=1) then stot+=1;
-        }
-        w=0;repeat(fleet.frigate_number){
-            w+=1;
-            if (fleet.frigate[w]!="") and (fleet.frigate_sel[w]=0){cont=50;}
-            if (fleet.frigate[w]!="") and (fleet.frigate_sel[w]=1) then stot+=1;
-        }
-        w=0;repeat(fleet.escort_number){
-            w+=1;
-            if (fleet.escort[w]!="") and (fleet.escort_sel[w]=0){cont=50;}
-            if (fleet.escort[w]!="") and (fleet.escort_sel[w]=1) then stot+=1;
-        }
-        
+		var ships_count = array_length(fleet.ships);
+		for (var i = 0; i < ships_count; i++) {
+			if (fleet.ships[i].selected) {
+				++stot;
+			}
+			else {
+				cont = 50;
+			}
+		}
         
         if (cont!=50) then cont=20;
         if (stot>0) and (stot<fleet.capital_number+fleet.frigate_number+fleet.escort_number) then cont=50;
@@ -100,24 +93,15 @@ if (owner=1) and (instance_nearest(x,y,obj_p_fleet).action=""){
         fleet.action_x=sys.x;
         fleet.action_y=sys.y;
         fleet.action="move";
-        orbiting=0;
+        fleet.orbiting=0;
         
         // mine.present_fleet[1]-=1;
         
-        
-        
-        var w, tempp;
-        w=0;repeat(fleet.capital_number+1){
-            w+=1;if (fleet.capital[w]!="") and (fleet.capital_sel[w]=1){tempp=fleet.capital_num[w];obj_ini.ship_location[tempp]="Warp";}
-        }
-        w=0;repeat(fleet.frigate_number+1){
-            w+=1;if (fleet.frigate[w]!="") and (fleet.frigate_sel[w]=1){tempp=fleet.frigate_num[w];obj_ini.ship_location[tempp]="Warp";}
-        }
-        w=0;repeat(fleet.escort_number+1){
-            w+=1;if (fleet.escort[w]!="") and (fleet.escort_sel[w]=1){tempp=fleet.escort_num[w];obj_ini.ship_location[tempp]="Warp";}
-        }
+		var ships_count = array_length(fleet.ships);
+		for (var i = 0; i < ships_count; i++) {
+			fleet.ships[i].location = "Warp";
+		}	
     }
-    
     
     if (cont=50){// The fleet is splitting up
     
@@ -141,65 +125,25 @@ if (owner=1) and (instance_nearest(x,y,obj_p_fleet).action=""){
         
         cap=0;fri=0;esc=0;
         
+		
+		var ships_count = array_length(fleet.ships);
+		for (var i = 0; i < ships_count; i++) {
+			var ship = fleet.ships[i];
+			if (ship.selected) {
+				array_delete(fleet.ships,i,1);
+				--ships_count
+				array_push(new_fleet.ships, ship);
+				ship.location = "Warp";
+				if(ship.size == SHIP_SIZE.capital) then ++cap;
+				else if(ship.size == SHIP_SIZE.frigate) then ++fri;
+				else if(ship.size == SHIP_SIZE.escort) then ++esc;
+			}
+		}
+		
         // Pass over ships to the new fleet, if they are selected
-        w=0;repeat(fleet.capital_number){w+=1;
-            if (fleet.capital[w]!="") and (fleet.capital_sel[w]=1){
-                cap+=1;tempp=fleet.capital_num[w];// obj_ini.ship_location[tempp]="Warp";
-                new_fleet.capital[cap]=fleet.capital[w];new_fleet.capital_num[cap]=fleet.capital_num[w];new_fleet.capital_uid[cap]=fleet.capital_uid[w];
-                fleet.capital[w]="";fleet.capital_num[w]=0;fleet.capital_uid[w]=0;
-            }
-        }
-        w=0;repeat(fleet.frigate_number){w+=1;
-            if (fleet.frigate[w]!="") and (fleet.frigate_sel[w]=1){
-                fri+=1;tempp=fleet.frigate_num[w];// obj_ini.ship_location[tempp]="Warp";
-                new_fleet.frigate[fri]=fleet.frigate[w];new_fleet.frigate_num[fri]=fleet.frigate_num[w];new_fleet.frigate_uid[fri]=fleet.frigate_uid[w];
-                fleet.frigate[w]="";fleet.frigate_num[w]=0;fleet.frigate_uid[w]=0;
-            }
-        }
-        w=0;repeat(fleet.escort_number){w+=1;
-            if (fleet.escort[w]!="") and (fleet.escort_sel[w]=1){
-                esc+=1;tempp=fleet.escort_num[w];// obj_ini.ship_location[tempp]="Warp";
-                new_fleet.escort[esc]=fleet.escort[w];new_fleet.escort_num[esc]=fleet.escort_num[w];new_fleet.escort_uid[esc]=fleet.escort_uid[w];
-                fleet.escort[w]="";fleet.escort_num[w]=0;fleet.escort_uid[w]=0;
-            }
-        }
-        
         fleet.capital_number-=cap;
         fleet.frigate_number-=fri;
         fleet.escort_number-=esc;
-    
-        
-        
-        repeat(20){
-        w=0;repeat(8){
-            w+=1;if (fleet.capital[w]="") and (fleet.capital[w+1]!=""){
-                fleet.capital[w]=fleet.capital[w+1];fleet.capital_num[w]=fleet.capital_num[w+1];fleet.capital_uid[w]=fleet.capital_uid[w+1];
-                fleet.capital[w+1]="";fleet.capital_num[w+1]=0;fleet.capital_uid[w+1]=0;}}
-        w=0;repeat(30){
-            w+=1;if (fleet.frigate[w]="") and (fleet.frigate[w+1]!=""){
-                fleet.frigate[w]=fleet.frigate[w+1];fleet.frigate_num[w]=fleet.frigate_num[w+1];fleet.frigate_uid[w]=fleet.frigate_uid[w+1];
-                fleet.frigate[w+1]="";fleet.frigate_num[w+1]=0;fleet.frigate_uid[w+1]=0;}}
-        w=0;repeat(30){
-            w+=1;if (fleet.escort[w]="") and (fleet.escort[w+1]!=""){
-                fleet.escort[w]=fleet.escort[w+1];fleet.escort_num[w]=fleet.escort_num[w+1];fleet.escort_uid[w]=fleet.escort_uid[w+1];
-                fleet.escort[w+1]="";fleet.escort_num[w+1]=0;fleet.escort_uid[w+1]=0;}}
-        }
-        // 
-        repeat(20){
-        w=0;repeat(8){
-            w+=1;if (new_fleet.capital[w]="") and (new_fleet.capital[w+1]!=""){
-                new_fleet.capital[w]=new_fleet.capital[w+1];new_fleet.capital_num[w]=new_fleet.capital_num[w+1];new_fleet.capital_uid[w]=new_fleet.capital_uid[w+1];
-                new_fleet.capital[w+1]="";new_fleet.capital_num[w+1]=0;new_fleet.capital_uid[w+1]=0;}}
-        w=0;repeat(30){
-            w+=1;if (new_fleet.frigate[w]="") and (new_fleet.frigate[w+1]!=""){
-                new_fleet.frigate[w]=new_fleet.frigate[w+1];new_fleet.frigate_num[w]=new_fleet.frigate_num[w+1];new_fleet.frigate_uid[w]=new_fleet.frigate_uid[w+1];
-                new_fleet.frigate[w+1]="";new_fleet.frigate_num[w+1]=0;new_fleet.frigate_uid[w+1]=0;}}
-        w=0;repeat(30){
-            w+=1;if (new_fleet.escort[w]="") and (new_fleet.escort[w+1]!=""){
-                new_fleet.escort[w]=new_fleet.escort[w+1];new_fleet.escort_num[w]=new_fleet.escort_num[w+1];new_fleet.escort_uid[w]=new_fleet.escort_uid[w+1];
-                new_fleet.escort[w+1]="";new_fleet.escort_num[w+1]=0;new_fleet.escort_uid[w+1]=0;}}
-        }
-        
         new_fleet.capital_number=cap;
         new_fleet.frigate_number=fri;
         new_fleet.escort_number=esc;
@@ -207,36 +151,26 @@ if (owner=1) and (instance_nearest(x,y,obj_p_fleet).action=""){
         fleet.selected=0;
         obj_controller.selected=new_fleet;
         obj_controller.fleet_all=1;
-        with(new_fleet){
-            capital_sel[0]=1;capital_sel[1]=1;
-            capital_sel[2]=1;capital_sel[3]=1;
-            capital_sel[4]=1;capital_sel[5]=1;
-            capital_sel[6]=1;capital_sel[7]=1;
-            capital_sel[8]=1;
-            var i;i=-1;
-            repeat(31){i+=1;
-                frigate_sel[i]=1;
-                escort_sel[i]=1;
-            }
-        }
+
+		
         with(obj_fleet_select){instance_destroy();}
         new_fleet.alarm[3]=1;
         
         var ii;ii=0;ii+=fleet.capital_number;ii+=round((fleet.frigate_number/2));ii+=round((fleet.escort_number/4));
         if (ii<=1) then ii=1;fleet.image_index=ii;
         
-        // Temporary fixing thing
-        with(new_fleet){var w, tempp;
-            w=0;repeat(capital_number+1){
-                w+=1;if (capital[w]!=""){tempp=capital_num[w];obj_ini.ship_location[tempp]="Warp";}
-            }
-            w=0;repeat(frigate_number+1){
-                w+=1;if (frigate[w]!=""){tempp=frigate_num[w];obj_ini.ship_location[tempp]="Warp";}
-            }
-            w=0;repeat(escort_number+1){
-                w+=1;if (escort[w]!=""){tempp=escort_num[w];obj_ini.ship_location[tempp]="Warp";}
-            }
-        }
+        //// Temporary fixing thing
+        //with(new_fleet){var w, tempp;
+        //    w=0;repeat(capital_number+1){
+        //        w+=1;if (capital[w]!=""){tempp=capital_num[w];obj_ini.ship_location[tempp]="Warp";}
+        //    }
+        //    w=0;repeat(frigate_number+1){
+        //        w+=1;if (frigate[w]!=""){tempp=frigate_num[w];obj_ini.ship_location[tempp]="Warp";}
+        //    }
+        //    w=0;repeat(escort_number+1){
+        //        w+=1;if (escort[w]!=""){tempp=escort_num[w];obj_ini.ship_location[tempp]="Warp";}
+        //    }
+        //}
         
     }
     

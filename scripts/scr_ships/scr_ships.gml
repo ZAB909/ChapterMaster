@@ -57,10 +57,11 @@ enum SHIP_SIZE {
 function new_ship(ship_class, ship_name = "") constructor {
 	class = ship_class;
 	name = ship_name;
+	selected = true;
 
 	if(ship_class == SHIP_CLASS.battle_barge) {
 		if (name == ""){
-			name = scr_ship_name("imperium");
+			name = scr_ship_name("imperial");
 		}
 		owner = 1;
 		location = "home";
@@ -88,7 +89,7 @@ function new_ship(ship_class, ship_name = "") constructor {
 	}
 	else if(ship_class == SHIP_CLASS.strike_cruiser) {
 		if (name == ""){
-			name = scr_ship_name("imperium");
+			name = scr_ship_name("imperial");
 		}
 		owner = 1;
 		location = "home";
@@ -115,7 +116,7 @@ function new_ship(ship_class, ship_name = "") constructor {
 	}
 	else if(ship_class == SHIP_CLASS.gladius) {
 		if (name == ""){
-			name = scr_ship_name("imperium");
+			name = scr_ship_name("imperial");
 		}
 		owner = 1;
 		location = "home";

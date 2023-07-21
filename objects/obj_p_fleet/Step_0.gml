@@ -17,10 +17,12 @@ if (ii_check=0){ii_check=10;
 if (global.load>0) and (sprite_index!=spr_fleet_tiny) then sprite_index=spr_fleet_tiny;
 
 if (fix>-1) then fix-=1;
-if (fix=0) and (action=""){var p;
-    p=0;repeat(capital_number){p+=1;obj_ini.ship_location[capital_num[p]]=instance_nearest(x,y,obj_star).name;}
-    p=0;repeat(frigate_number){p+=1;obj_ini.ship_location[frigate_num[p]]=instance_nearest(x,y,obj_star).name;}
-    p=0;repeat(escort_number){p+=1;obj_ini.ship_location[escort_num[p]]=instance_nearest(x,y,obj_star).name;}
+if (fix=0) and (action="") {
+	var ships_count = array_length(ships);
+	var name_of_star = instance_nearest(x,y,obj_star).name;
+	for(var p = 0; p < ships_count; p++) {
+		ships[p].location = name_of_star;	
+	}
 }
 
 

@@ -16,7 +16,7 @@ function scr_start_load(argument0, argument1, argument2) {
 
 
 	var splinter,com,ey,remove_size,company_size,shiyp,shiyp_size,companies_loaded;
-	splinter=0;com=-1;ey=0;remove_size=0;company_size=0;shiyp=1;shiyp_size=obj_ini.ship_size[shiyp];companies_loaded=1;
+	splinter=0;com=-1;ey=0;remove_size=0;company_size=0;shiyp=1;shiyp_size=obj_ini.ship[shiyp].size;companies_loaded=1;
 if (string_count("Splinter",obj_ini.strin2)>0) then splinter=1;
 
 
@@ -24,24 +24,25 @@ if (string_count("Splinter",obj_ini.strin2)>0) then splinter=1;
 	repeat(2){com+=1;ey=0;
 	    repeat(500){ey+=1;
 	        if (obj_ini.role[com,ey]!=""){
-	            if (obj_ini.ship_size[shiyp]<3){
+	            if (obj_ini.ship[shiyp].size != SHIP_SIZE.capital){
 	                var n_size;n_size=1;
 	                if (obj_ini.armor[com,ey]="Terminator Armor") then n_size+=1;
 	                if (obj_ini.armor[com,ey]="Tartaros") then n_size+=1;
 	                if (obj_ini.armor[com,ey]="Dreadnought") then n_size+=7;
 	                if (obj_ini.role[com,ey]="Chapter Master") then n_size+=1;
             
-	                if (obj_ini.ship_carrying[shiyp]+n_size>obj_ini.ship_capacity[shiyp]){
+	                if (obj_ini.ship[shiyp].carrying+n_size>obj_ini.ship[shiyp].carrying){
 	                    remove_size+=company_size;
-	                    obj_ini.ship_carrying[shiyp]+=company_size;
+	                    obj_ini.ship[shiyp].carrying+=company_size;
 	                    obj_ini.man_size-=company_size;
 	                    company_size=0;shiyp+=1;companies_loaded=1;
 	                }
 	            }
         
-	            obj_ini.lid[com,ey]=shiyp;
+	            obj_ini.lid[com,ey]=obj_ini.ship[shiyp];
 	            // obj_ini.uid[com,ey]=obj_ini.ship_uid[shiyp];
-	            obj_ini.wid[com,ey]=0;obj_ini.loc[com,ey]=obj_ini.ship_location[shiyp];
+	            obj_ini.wid[com,ey]=0;
+				obj_ini.loc[com,ey]=obj_ini.ship[shiyp].location;
 	            company_size+=1;
 	            if (obj_ini.armor[com,ey]="Terminator Armor") then company_size+=1;
 	            if (obj_ini.armor[com,ey]="Tartaros") then company_size+=1;
@@ -51,7 +52,7 @@ if (string_count("Splinter",obj_ini.strin2)>0) then splinter=1;
 	        }
 	    }
 	    remove_size+=company_size;
-	    obj_ini.ship_carrying[shiyp]+=company_size;
+	    obj_ini.ship[shiyp].carrying+=company_size;
 	    obj_ini.man_size-=company_size;
 	    company_size=0;
 	}
@@ -68,12 +69,12 @@ if (string_count("Splinter",obj_ini.strin2)>0) then splinter=1;
 	    if (next_company<=9){
         
 	        if (next_company=2){
-	            if (obj_ini.ship_size[1]=3){
+	            if (obj_ini.ship[1].size == SHIP_SIZE.capital){
 	                shiyp=1;squeeze=1;
 	            }
 	        }
 	        if (next_company>2){
-	            squeeze=0;if (companies_loaded=1) and (obj_ini.ship_size[shiyp]>2) then squeeze=1;
+	            squeeze=0;if (companies_loaded=1) and (obj_ini.ship[shiyp].size == SHIP_SIZE.capital) then squeeze=1;
 	        }
         
         
@@ -81,9 +82,9 @@ if (string_count("Splinter",obj_ini.strin2)>0) then splinter=1;
 	            shiyp+=1;com+=1;ey=0;company_size=0;companies_loaded=1;
 	            repeat(500){ey+=1;
 	                if (obj_ini.role[com,ey]!=""){
-	                    obj_ini.lid[com,ey]=shiyp;
+	                    obj_ini.lid[com,ey]=obj_ini.ship[shiyp];
 	                    // obj_ini.uid[com,ey]=obj_ini.ship_uid[shiyp];
-	                    obj_ini.wid[com,ey]=0;obj_ini.loc[com,ey]=obj_ini.ship_location[shiyp];
+	                    obj_ini.wid[com,ey]=0;obj_ini.loc[com,ey]=obj_ini.ship[shiyp].location;
 	                    company_size+=1;
 	                    if (obj_ini.armor[com,ey]="Terminator Armor") then company_size+=1;
 	                    if (obj_ini.armor[com,ey]="Tartaros") then company_size+=1;
@@ -92,7 +93,7 @@ if (string_count("Splinter",obj_ini.strin2)>0) then splinter=1;
 	                }
 	            }
 	            remove_size+=company_size;
-	            obj_ini.ship_carrying[shiyp]=company_size;
+	            obj_ini.ship[shiyp].carrying=company_size;
 	            obj_ini.man_size-=company_size;
 	            company_size=0;
 	        }
@@ -100,9 +101,10 @@ if (string_count("Splinter",obj_ini.strin2)>0) then splinter=1;
 	            com+=1;ey=0;company_size=0;companies_loaded=2;
 	            repeat(500){ey+=1;
 	                if (obj_ini.role[com,ey]!=""){
-	                    obj_ini.lid[com,ey]=shiyp;
+	                    obj_ini.lid[com,ey]=obj_ini.ship[shiyp];
 	                    // obj_ini.uid[com,ey]=obj_ini.ship_uid[shiyp];
-	                    obj_ini.wid[com,ey]=0;obj_ini.loc[com,ey]=obj_ini.ship_location[shiyp];
+	                    obj_ini.wid[com,ey]=0;
+						obj_ini.loc[com,ey]=obj_ini.ship[shiyp].location;
 	                    company_size+=1;
 	                    if (obj_ini.armor[com,ey]="Terminator Armor") then company_size+=1;
 	                    if (obj_ini.armor[com,ey]="Tartaros") then company_size+=1;
@@ -111,7 +113,7 @@ if (string_count("Splinter",obj_ini.strin2)>0) then splinter=1;
 	                }
 	            }
 	            remove_size+=company_size;
-	            obj_ini.ship_carrying[shiyp]+=company_size;
+	            obj_ini.ship[shiyp].carrying+=company_size;
 	            obj_ini.man_size-=company_size;
 	            company_size=0;
 	        }
@@ -131,16 +133,16 @@ repeat (500){
   // Check if com and ey are within valid range
     if (com >= 0 && com <= 100 && ey >= 0 && ey <= 500) {
         if (obj_ini.role[com, ey] != "") {
-            obj_ini.lid[com, ey] = shiyp;
+            obj_ini.lid[com, ey] = obj_ini.ship[shiyp];
             obj_ini.wid[com, ey] = 0;
-            obj_ini.loc[com, ey] = obj_ini.ship_location[shiyp];
+            obj_ini.loc[com, ey] = obj_ini.ship[shiyp].location;
             company_size += 1;
 		}
 			
                     if (obj_ini.role[com, ey] != "") {
-                        obj_ini.lid[com, ey] = shiyp;
+                        obj_ini.lid[com, ey] = obj_ini.ship[shiyp];
                         obj_ini.wid[com, ey] = 0;
-                        obj_ini.loc[com, ey] = obj_ini.ship_location[shiyp];
+                        obj_ini.loc[com, ey] = obj_ini.ship[shiyp].location;
                         company_size += 1;
 					}
 
@@ -175,16 +177,16 @@ repeat (500){
 
 	if (argument2=2){
 	    repeat(20){ss+=1;
-	        if (ns=0) and (obj_ini.ship_size[ss]>=2) and (obj_ini.ship_carrying[ss]=0) then ns=ss;
+	        if (ns=0) and (obj_ini.ship[ss].size == SHIP_SIZE.frigate || obj_ini.ship[ss].size == SHIP_SIZE.capital) and (obj_ini.ship[ss].carrying=0) then ns=ss;
 	    }
 	}
 	if (argument2!=2){
 	    repeat(20){ss+=1;
-	        if (ns=0) and (obj_ini.ship_size[ss]=1) and (obj_ini.ship_carrying[ss]=0) then ns=ss;
+	        if (ns=0) and (obj_ini.ship[ss].size == SHIP_SIZE.escort) and (obj_ini.ship[ss].carrying=0) then ns=ss;
 	    }
 	    if (ns=0){ss=0;
 	        repeat(20){ss+=1;
-	            if (ns=0) and (obj_ini.ship_size[ss]>=2) and (obj_ini.ship_carrying[ss]=0) then ns=ss;
+	            if (ns=0) and (obj_ini.ship[ss].size == SHIP_SIZE.frigate || obj_ini.ship[ss].size == SHIP_SIZE.capital) and (obj_ini.ship[ss].carrying=0) then ns=ss;
 	        }
 	    }
 	}
@@ -214,12 +216,13 @@ repeat (500){
 	        if (obj_ini.armor[com,ey]="Dreadnought"){company_size+=7;mah_size+=7;}
 	        // if (obj_ini.mobi[com,ey]="Jump Pack"){company_size+=1;mah_size+=1;}
         
-	        if ((obj_ini.ship_carrying[shiyp]+mah_size)>obj_ini.ship_capacity[shiyp]) then shiyp+=1;
-	        if ((obj_ini.ship_carrying[shiyp]+mah_size)<=obj_ini.ship_capacity[shiyp]){
-	            obj_ini.lid[com,ey]=shiyp;
+	        if ((obj_ini.ship[shiyp].carrying+mah_size)>obj_ini.ship[shiyp].carrying) then shiyp+=1;
+	        if ((obj_ini.ship[shiyp].carrying+mah_size)<=obj_ini.ship[shiyp].carrying){
+	            obj_ini.lid[com,ey]=obj_ini.ship[shiyp];
 	            // obj_ini.uid[com,ey]=obj_ini.ship_uid[shiyp];
-	            obj_ini.wid[com,ey]=0;obj_ini.loc[com,ey]=obj_ini.ship_location[shiyp];
-	            obj_ini.ship_carrying[shiyp]+=mah_size;
+	            obj_ini.wid[com,ey]=0;
+				obj_ini.loc[com,ey]=obj_ini.ship[shiyp].location;
+	            obj_ini.ship[shiyp].carrying+=mah_size;
 	        }
 	    }
 	}
@@ -243,16 +246,6 @@ repeat (500){
 	    with(obj_p_fleet){
 	        frigate_number=0;
 	        escort_number=0;
-        
-	        var i;i=-1;
-	        repeat(35){i+=1;
-	            frigate[i]="";frigate_num[i]=0;frigate_sel[i]=1;
-	        }
-        
-	        var i;i=-1;
-	        repeat(35){i+=1;
-	            escort[i]="";escort_num[i]=0;escort_sel[i]=1;
-	        }
 	    }
     
 	    repeat(50){
@@ -366,7 +359,7 @@ repeat (500){
         frigate += 1;
         barge += 1;
 
-        if (obj_ini.ship_size[frigate] == 3) then max_fr += 1;
+        if (obj_ini.ship[frigate].size == SHIP_SIZE.capital) then max_fr += 1;
 
         if (obj_ini.ship_size[frigate] == 4) then max_bl += 1;
 
