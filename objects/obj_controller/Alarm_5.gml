@@ -1171,7 +1171,7 @@ repeat(99){i+=1;
 
             if (event[i]="imperium_daemon"){scr_alert("red","lol","Sector Commander "+string(faction_leader[2])+" has gone insane.",0,0);faction_defeated[2]=1;scr_event_log("red","Sector Commander "+string(faction_leader[2])+" has gone insane.");}
          
-		 if (event[i]="chaos_invasion"){ 
+		    if (event[i]="chaos_invasion"){ 
 				var xx,yy,flee,dirr;xx=0;yy=0;flee=0;dirr=0;
                     var star_id = scr_random_find(1,true,"","");
 
