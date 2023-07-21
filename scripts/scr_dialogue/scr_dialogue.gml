@@ -559,7 +559,7 @@ function scr_dialogue(argument0) {
 	        }
 	    }
     
-	    if (argument0="accept_peace"){scr_chaos_alliance_test();}
+	    if (argument0="accept_peace"){scr_chaos_diplomacy_accept_peace();}
     
 	    if (argument0="ignored"){
 	        // 
@@ -655,7 +655,7 @@ function scr_dialogue(argument0) {
 	            if (rando=1) then diplo_text="I await your arrival on "+string(there.name)+" "+scr_roman(instance_number(obj_temp5))+", in case it has slipped your mind.";
 	            if (rando=2) then diplo_text="We agreed to meet upon "+string(there.name)+" "+scr_roman(instance_number(obj_temp5))+".  Do not squander this opportunity.";
 	        }
-	        if (!instance_exists(obj_temp5)) then scr_chaos_alliance_test();
+	        if (!instance_exists(obj_temp5)) then scr_chaos_diplomacy_accept_peace();
 	        with(obj_temp5){instance_destroy();}
 	    }
 	}

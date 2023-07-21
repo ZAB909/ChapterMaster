@@ -1,6 +1,5 @@
-function scr_chaos_alliance_test() {
-
-
+function scr_chaos_diplomacy_accept_peace() {
+	
 	var accept_chance,o,result,jroll,shittah;
 	accept_chance=0;o=0;result="";jroll=floor(random(100))+1;shittah=false;
 

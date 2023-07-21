@@ -445,7 +445,7 @@
     {"name":"scr_trade_dep","order":9,"path":"scripts/scr_trade_dep/scr_trade_dep.yy",},
     {"name":"scr_demand","order":11,"path":"scripts/scr_demand/scr_demand.yy",},
     {"name":"scr_dialogue","order":13,"path":"scripts/scr_dialogue/scr_dialogue.yy",},
-    {"name":"scr_chaos_alliance_test","order":15,"path":"scripts/scr_chaos_alliance_test/scr_chaos_alliance_test.yy",},
+    {"name":"scr_chaos_diplomacy_accept_peace","order":15,"path":"scripts/scr_chaos_diplomacy_accept_peace/scr_chaos_diplomacy_accept_peace.yy",},
     {"name":"scr_quest","order":17,"path":"scripts/scr_quest/scr_quest.yy",},
     {"name":"scr_audience","order":19,"path":"scripts/scr_audience/scr_audience.yy",},
     {"name":"scr_sector_name","order":21,"path":"scripts/scr_sector_name/scr_sector_name.yy",},

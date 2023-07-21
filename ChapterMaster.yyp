@@ -279,7 +279,7 @@
   "isEcma": false,
   "LibraryEmitters": [],
   "MetaData": {
-    "IDEVersion": "2023.6.0.89",
+    "IDEVersion": "2023.6.0.92",
   },
   "resources": [
     {"id":{"name":"spr_credits_bg","path":"sprites/spr_credits_bg/spr_credits_bg.yy",},},
@@ -727,7 +727,7 @@
     {"id":{"name":"scr_trade_dep","path":"scripts/scr_trade_dep/scr_trade_dep.yy",},},
     {"id":{"name":"scr_demand","path":"scripts/scr_demand/scr_demand.yy",},},
     {"id":{"name":"scr_dialogue","path":"scripts/scr_dialogue/scr_dialogue.yy",},},
-    {"id":{"name":"scr_chaos_alliance_test","path":"scripts/scr_chaos_alliance_test/scr_chaos_alliance_test.yy",},},
+    {"id":{"name":"scr_chaos_diplomacy_accept_peace","path":"scripts/scr_chaos_diplomacy_accept_peace/scr_chaos_diplomacy_accept_peace.yy",},},
     {"id":{"name":"scr_quest","path":"scripts/scr_quest/scr_quest.yy",},},
     {"id":{"name":"scr_audience","path":"scripts/scr_audience/scr_audience.yy",},},
     {"id":{"name":"scr_sector_name","path":"scripts/scr_sector_name/scr_sector_name.yy",},},
