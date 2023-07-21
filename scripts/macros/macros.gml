@@ -8,7 +8,7 @@ function macros() {
 		neutral = 0,
 		good = 1
 	}
-	enum inquisition_mission {
+	enum INQUISITION_MISSION {
 		purge,
 		inquisitor,
 		spyrer,
@@ -18,13 +18,13 @@ function macros() {
 		ethereal
 
 	}
-	enum mechanicus_mission {
+	enum MECHANICUS_MISSION {
 		bionics,
 		land_raider,
 		mars_voyage,
 		necron_study
 	}
-	enum event_enum 
+	enum EVENT 
 	{
 		//good
 		space_hulk,
