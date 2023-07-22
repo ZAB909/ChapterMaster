@@ -540,12 +540,9 @@ function scr_enemy_ai_e() {
 	                if (p_type[run]="Desert") and (recr<=15){aspirant=1;}
 	                if (p_type[run]="Ice") and (recr<=15){aspirant=1;}
 	                if (p_type[run]="Agri") and (recr<=10){aspirant=1;} // there's no reason to use agri's
-	                if (p_type[run]="Death") and (recr<=100){aspirant=1;}
+	                if (p_type[run]="Death") and (recr<=10){aspirant=1;}
 	                if (p_type[run]="Lava") and (recr<=7){aspirant=1;}
 
-
-	                // train-=58;
-	                // train-=55;
                 /* // old blood duel
 	                if (obj_controller.recruit_trial="Blood Duel"){
 	                    corr+=choose(1,2,3);train-=choose(1,2,3);
@@ -557,10 +554,23 @@ function scr_enemy_ai_e() {
 					
 
 	                
-					if (obj_controller.recruit_trial="Blood Duel"){
-						corr+=choose(15,20,25);
-						train+=12;
+					if (obj_controller.recruit_trial="Blood Duel"){ // blood duel is most numerous, but not great with gene seed
+						train-=choose(6,12,12,24);
+						corr+=choose(5,10,15,20);
+						
+						var failedneo;
+						failedneo=choose(0,0,0,0,0,0,0,0,0,1);
+						if(obj_controller.recruiting)>=1{
+						(obj_controller.gene_seed)-=failedneo;
+								if(failedneo=1){
+								scr_alert("red","owner","Blood Duels are efficient in time, but costly in risk with gene material. A gene-seed has been lost.",0,0);
+							    }
 						}
+					}	
+						
+						
+						
+						
 					
 	                if (obj_controller.recruit_trial="Survival of the Fittest"){
 						train-=choose(1,2,3);
