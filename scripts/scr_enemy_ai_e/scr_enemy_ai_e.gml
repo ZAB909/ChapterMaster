@@ -539,7 +539,7 @@ function scr_enemy_ai_e() {
 	                if (p_type[run]="Forge") and (recr<=20){aspirant=1;}
 	                if (p_type[run]="Desert") and (recr<=15){aspirant=1;}
 	                if (p_type[run]="Ice") and (recr<=15){aspirant=1;}
-	                if (p_type[run]="Agri") and (recr<=15){aspirant=1;}
+	                if (p_type[run]="Agri") and (recr<=10){aspirant=1;} // there's no reason to use agri's
 	                if (p_type[run]="Death") and (recr<=100){aspirant=1;}
 	                if (p_type[run]="Lava") and (recr<=7){aspirant=1;}
 
@@ -558,7 +558,7 @@ function scr_enemy_ai_e() {
 
 	                
 					if (obj_controller.recruit_trial="Blood Duel"){
-						corr+=choose(5,10,15);
+						corr+=choose(15,20,25);
 						train+=12;
 						}
 					
@@ -582,8 +582,7 @@ function scr_enemy_ai_e() {
 					// these reduce the amount of recruits by the * 
 					if (obj_controller.recruit_trial="Exposure")
 						then recr=floor(recr*1.3);
-	            //    if (obj_controller.recruit_trial="Challenge")
-					//	then recr=floor(recr*1.3);
+	        
 	                if (obj_controller.recruit_trial="Knowledge of Self")
 						then recr=floor(recr*2);
 
