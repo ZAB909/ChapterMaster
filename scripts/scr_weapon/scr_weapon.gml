@@ -93,12 +93,9 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 	    if (i=1){
 	        if (argument0="Ork Armor"){statt=15;spe_descr="";emor=1;}
-//<<<<<<<
-                if (argument0="Skitarii Armor"){statt=5;spe_descr="";emor=1;}
-    
-//=======
+            
+			if (argument0="Skitarii Armor"){statt=5;spe_descr="";emor=1;}
 
-//>>>>>>>
 	        if (argument0="Scout Armor"){statt=8;spe_descr="";emor=1;
 	            descr="A non-powered suit made up of carapace armor and ballistic nylon.  Includes biohazard shielding, nutrient feed, and camoflauge.";}
 	        if (argument0="MK3 Iron Armor"){statt=21;spe_descr="-10% Ranged";emor=1;
@@ -123,7 +120,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	            descr="A massive war-machine that can be piloted by a honored Space Marine, who otherwise would have fallen in combat.";}
 	        if (argument0="Jump Pack"){spe_descr="+10% Damage Resistance, Jump Pack";
 	            descr="A back mounted device containing turbines or jets powerful enough to lift even a user in Power Armour.";}
-	                if (argument0="hammer_of_wrath"){atta=120;arp=0;rang=1;spli=0;amm=1;}
+	        if (argument0="hammer_of_wrath"){atta=120;arp=0;rang=1;spli=0;amm=1;}
 	        if (argument0="Bionics"){
 	            spe_descr="Restores 30HP";if (global.chapter_name="Iron Hands") then spe_descr="Restores 50 HP";
 	            descr="Bionics may be given to wounded marines to quickly get them back into combat-ready status, replacing damaged flesh.";}
@@ -222,7 +219,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	    if (thawep="Master Crafted Thunder Hammer"){atta=560;arp=1;rang=1;melee_hands+=1;spli=1;
 	        descr="The Master Crafted Thunder Hammer incorporates superior craftsmanship, advanced technology, and special modifications, making it more potent and effective in combat. It possesses all the qualities of a standard Thunder Hammer but with enhanced performance and additional features.";}
     
-	    if (thawep="Bolt Pistol"){atta=25;arp=0;rang=3.1;melee_hands+=1;amm=18;
+	    if (thawep="Bolt Pistol"){atta=35;arp=0;rang=3.1;melee_hands+=1;amm=18;
 
 	        descr="A smaller, more compact version of the venerable Boltgun.  Standard Godwyn pattern.";}
 	    if (thawep="Webber"){atta=35;arp=0;rang=4.1;ranged_hands+=2;amm=5;spli=0;
@@ -646,7 +643,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 
 	    obj_controller.temp[9000]+=string(thawep)+": "+string(melee_hands)+","+string(ranged_hands)+"|";
-	
+	}
 
 
 
@@ -752,5 +749,4 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	}
 
 
-}
 }
