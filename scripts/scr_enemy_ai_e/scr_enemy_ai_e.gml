@@ -533,10 +533,10 @@ function scr_enemy_ai_e() {
 					
 					
 					if (p_type[run]="Hive") and (recruit_chance<=40){aspirant=1;}
-	                if (p_type[run]="Temperate") and (recruit_chance<=25){aspirant=1;}
-	                if (p_type[run]="Feudal") and (recruit_chance<=25){aspirant=1;}
-	                if (p_type[run]="Shrine") and (recruit_chance<=20){aspirant=1;}
-	                if (p_type[run]="Forge") and (recruit_chance<=20){aspirant=1;}
+	                if (p_type[run]="Temperate") and (recruit_chance<=20){aspirant=1;}
+	                if (p_type[run]="Feudal") and (recruit_chance<=20){aspirant=1;}
+	                if (p_type[run]="Forge") and (recruit_chance<=15){aspirant=1;} 
+	                if (p_type[run]="Shrine") and (recruit_chance<=15){aspirant=1;}
 	                if (p_type[run]="Desert") and (recruit_chance<=15){aspirant=1;}
 	                if (p_type[run]="Ice") and (recruit_chance<=15){aspirant=1;}
 	                if (p_type[run]="Agri") and (recruit_chance<=10){aspirant=1;} // there's no reason to use agri's
@@ -577,13 +577,19 @@ function scr_enemy_ai_e() {
 						}	
 					}	
 						
+						
+					if (obj_controller.recruit_trial="Challenge"){
+						
+					}
+					
 	                if (obj_controller.recruit_trial="Knowledge of Self"){ // less time heavy than apprenticeship. Good on temperates (ppl are educated there idk)
-						months_to_neo+=choose(12,12,24,24);
+						months_to_neo+=choose(18,24,36);
 						corr-=choose(4,6,8) 
 						}
 					if (obj_controller.recruit_trial="Apprenticeship") {  // the "I don't need any more astartes but have money to spend" one
-						months_to_neo+=48;
+						months_to_neo+=choose(48,60);
 						corr-=10;
+						
 	                    }
                 
 				// xp gain for the recruit is here
@@ -602,19 +608,24 @@ function scr_enemy_ai_e() {
 	                    obj_controller.recruit_name[thiss]=scr_marine_name();
 	                    obj_controller.recruit_exp[thiss]=0;
 						
+						
                 
 	                    if (obj_controller.recruit_trial="Hunting the Hunter"){
-							if(p_type[run]="Desert" or "Death" or "Ice")
-								obj_controller.recruit_exp[thiss]+=15;
+							if(p_type[run]="Desert") or (p_type[run]="Ice") or (p_type[run]="Death")
+								obj_controller.recruit_exp[thiss]+=irandom(7)+7; 
 								
 	                    }
 						
 						if (obj_controller.recruit_trial="Exposure"){
-						
+							
 						}
 
 						if (obj_controller.recruit_trial="Survival of the Fittest"){
+							
+						}
 						
+						if (obj_controller.recruit_trial="Apprenticeship"){
+							obj_controller.recruit_exp[thiss]+=40						
 						}
 
 	                    if (obj_controller.recruit_trial="Challenge"){
