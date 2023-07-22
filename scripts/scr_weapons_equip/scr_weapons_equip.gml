@@ -35,7 +35,7 @@ function scr_weapons_equip() {
 // dude=53 for Land Speeder
 // dude=54 for Whirlwind
 
-	if (tc<3) and (tb=1) and (dude=1){var i;i=0; // Infantry Ranged
+	if (tc=3) and (tb=1) and (dude=1){var i;i=0; // Infantry Ranged
 	    i+=1;item_name[i]="(None)";
 	    i+=1;item_name[i]="Archeotech Laspistol";
       i+=1;item_name[i]="Assault Cannon";
@@ -61,7 +61,7 @@ function scr_weapons_equip() {
 			i+=1;item_name[i]="Webber";
 	}
 
-	if (tc<3) and (tb=2) and (dude=1){var i;i=0; // Infantry Melee
+	if (tc=3) and (tb=2) and (dude=1){var i;i=0; // Infantry Melee
 	    if (!instance_exists(obj_creation)) and (!instance_exists(obj_controller)){i+=1;item_name[i]="(None)";}
 			i+=1;item_name[i]="Combat Knife";
 			i+=1;item_name[i]="Chainsword";
