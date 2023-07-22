@@ -14,7 +14,7 @@ function scr_dialogue(argument0) {
 
 	diplo_txt="";
 	diplo_text="";
-
+	
 
 	// show_message(string(argument0));
 
@@ -396,6 +396,25 @@ function scr_dialogue(argument0) {
 	    instance_activate_object(obj_enunit);
     
 	    exit;
+	}
+	
+	diplo_option[1]="";diplo_option[2]="";diplo_option[4]="";diplo_option[3]="";
+if (diplomacy = 10.1){
+	switch (argument0){
+		case "intro":
+		diplo_text = "[[The Emmissary to Chaos is writhing snake like creature, a vile creature even by the standards of it's foul bretheren it has no specific master instead preffering to work undividely. It's savage toungue flicks from between it's teeth with glazed aged ayes staring into your soul]]";
+			diplo_text += "###";
+			diplo_text = "Greetings Chapter Master, The gods have been watching you oh so very closely, they see you struggles, they here your pain. The warp is the key too all things all you need do is ask and they will provide......For a cost of course even in the warp nothing comes withou cost";
+			diplo_option[1] = "I seek a favour from the Gods"; diplo_option[2]="Begone Filth i serve the true god FOR THE EMPROR; diplo_option"; diplo_option[3]="The gods may have respect when they earn it i'll be back cretin";
+			break;
+		
+		case "favour":
+			diplo_text ="Of course Chapter master (giggle) and what may they do for you"
+			diplo_option[1] = "I need strength and power to crush my enemies";diplo_option[2]="I seek to protect thoes under my command from this hellish existance";diplo_option[3]="I seek wisdom and knowlage to better guide me";diplo_option[4]="I seek wealth and a better life for my men";
+			break;
+		case "khorne_path":
+		break;
+		}
 	}
 
 

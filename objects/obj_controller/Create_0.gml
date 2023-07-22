@@ -19,6 +19,25 @@ chaos_rating=0;
 obj_cuicons.alarm[1]=1;// Clean up custom icons
 
 
+// function set to build chaos gods
+chaos_gods = {};
+function build_chaos_gods(){
+	var _god_names = ["Khorne", "Slaanesh", "Nurlgle", "tzeentch"]
+	for (var _i = 0; _i < 4; _i++;){
+		chaos_gods[$ _god_names[_i]] = {};
+		chaos_gods[$ _god_names[_i]].favour = 0;
+		chaos_gods[$ _god_names[_i]].name = _god_names[_i];
+		chaos_gods[$ _god_names[_i]].emmissary = "";
+		chaos_gods[$ _god_names[_i]].power = 0;
+		chaos_gods[$ _god_names[_i]].interfaced = 0;
+	}
+	
+}
+
+build_chaos_gods()
+
+
+
 obj_controller.restart_name="";
 obj_controller.restart_founding="";
 obj_controller.restart_secret="";
