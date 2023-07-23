@@ -7,43 +7,45 @@ i=1;
 
 
 repeat(4){
-    p_population[i]=0;// 10B        
-    
+    p_population[i]=0;// 10B        // the min population of a planet is usually 1/3 of the max. so lava has 1500 max. min is 500. min + random should = max
+									// its important to know the population of a planet due to recruitment changing depending on population max
+									// If getting to max pop is very rare, it will be awful to recruit from
+									// some planets may be better or worse than others depending on their max pop.
     if (p_type[i]="Lava"){
-        p_population[i]=floor(random(1000))+500;p_station[i]=2;
-        p_max_population[i]=1500;
+        p_population[i]=floor(random(1500))+500;p_station[i]=2;
+        p_max_population[i]=2000;
     }
     if (p_type[i]="Desert"){
-        p_population[i]=floor(random(200000000))+50000000;p_fortified[i]=choose(2,3,4);p_station[i]=3;
+        p_population[i]=floor(random(150000000))+100000000;p_fortified[i]=choose(2,3,4);p_station[i]=3;
         p_max_population[i]=250000000;
     }
     if (p_type[i]="Hive"){
-        p_population[i]=random(110)+40;p_large[i]=1;p_fortified[i]=4;p_station[i]=choose(4,5);
+        p_population[i]=random(100)+50;p_large[i]=1;p_fortified[i]=4;p_station[i]=choose(4,5);
         p_max_population[i]=150;
     }
     if (p_type[i]="Agri"){
-        p_population[i]=floor(random(10000000))+5000000;p_fortified[i]=choose(0,1);p_station[i]=choose(0,1);
-        p_max_population[i]=15000000;
+        p_population[i]=floor(random(1000000))+500000;p_fortified[i]=choose(0,1);p_station[i]=choose(0,1);
+        p_max_population[i]=1500000;
     }
     if (p_type[i]="Temperate"){
-        p_population[i]=random(2)+5;p_large[i]=1;p_fortified[i]=choose(3,4);p_station[i]=choose(3,4);
-        p_max_population[i]=7;
+        p_population[i]=random(4)+2;p_large[i]=1;p_fortified[i]=choose(3,4);p_station[i]=choose(3,4);
+        p_max_population[i]=6;
     }
     if (p_type[i]="Shrine"){
-        p_population[i]=random(2)+4;p_large[i]=1;p_fortified[i]=choose(4,5);p_station[i]=choose(4,5);
-        p_max_population[i]=7;
+        p_population[i]=random(5)+3;p_large[i]=1;p_fortified[i]=choose(4,5);p_station[i]=choose(4,5);
+        p_max_population[i]=8;
     }
     if (p_type[i]="Ice"){
-        p_population[i]=floor(random(1500000))+500000;p_fortified[i]=choose(1,2,3);p_station[i]=choose(1,2,3);
-        p_max_population[i]=2000000;
+        p_population[i]=floor(random(13500000))+6500000;p_fortified[i]=choose(1,2,3);p_station[i]=choose(1,2,3);
+        p_max_population[i]=20000000;
     }
     if (p_type[i]="Feudal"){
-        p_population[i]=floor(random(500000000))+200000000;p_fortified[i]=choose(2,3);p_station[i]=choose(2,3,4);
-        p_max_population[i]=1000000000;
+        p_population[i]=floor(random(400000000))+200000000;p_fortified[i]=choose(2,3);p_station[i]=choose(2,3,4);
+        p_max_population[i]=600000000;
     }
     if (p_type[i]="Forge"){
-        p_population[i]=random(2)+4;p_large[i]=1;p_fortified[i]=5;p_station[i]=5;
-        p_max_population[i]=6;
+        p_population[i]=random(26)+4;p_large[i]=1;p_fortified[i]=5;p_station[i]=5;
+        p_max_population[i]=30;
     }
     if (p_type[i]="Death"){
         p_population[i]=floor(random(300000))+200000;p_station[i]=choose(2,3);
@@ -53,7 +55,6 @@ repeat(4){
         p_population[i]=floor(random_range(150000,300000));p_station=6;
         p_max_population[i]=p_population;
     }
-    
     
     
     if (p_population[i]>=10000000){
