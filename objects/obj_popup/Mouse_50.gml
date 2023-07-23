@@ -155,10 +155,10 @@ if (type=5) and (cooldown<=0){
             role_name[1]=obj_ini.role[100,17];role_exp[1]=125;spec=1;
         }
 
-
+        // this area does the required exp for roles per company
         if ((target_comp=0) or (target_comp>10)) and (spec=0){
             i=0;cap=0;bear=0;champ=0;
-            i+=1;role_name[i]=obj_ini.role[100,2];role_exp[i]=90;// 136;
+            i+=1;role_name[i]=obj_ini.role[100,2];role_exp[i]=160;// 136;
         }
 
         if (target_comp=1) and (spec=0){
@@ -168,8 +168,8 @@ if (type=5) and (cooldown<=0){
             if (units=1){champ=scr_role_count(obj_ini.role[100,7],"1");if (champ=0){i+=1;role_name[i]=obj_ini.role[100,7];role_exp[i]=180;}}
             // i+=1;role_name[i]=obj_ini.role[100,2];role_exp[i]=90;// 136;
             i+=1;role_name[i]="Terminator";role_exp[i]=180;
-            i+=1;role_name[i]=obj_ini.role[100,3];role_exp[i]=80;
-            if (units=1){i+=1;role_name[i]=obj_ini.role[100,6];role_exp[i]=80;}
+            i+=1;role_name[i]=obj_ini.role[100,3];role_exp[i]=150;
+            if (units=1){i+=1;role_name[i]=obj_ini.role[100,6];role_exp[i]=150;}
         }
 
         if (target_comp=2) and (spec=0){
@@ -177,10 +177,10 @@ if (type=5) and (cooldown<=0){
             if (units=1){cap=scr_role_count(obj_ini.role[100,5],"2");if (cap=0){i+=1;role_name[i]=obj_ini.role[100,5];role_exp[i]=200;}}
             if (units=1){bear=scr_role_count("Standard Bearer","2");if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=75;}}
             if (units=1){champ=scr_role_count(obj_ini.role[100,7],"2");if (champ=0){i+=1;role_name[i]=obj_ini.role[100,7];role_exp[i]=170;}}
-            i+=1;role_name[i]=obj_ini.role[100,8];role_exp[i]=70;
-            i+=1;role_name[i]=obj_ini.role[100,10];role_exp[i]=70;
-            i+=1;role_name[i]=obj_ini.role[100,9];role_exp[i]=70;
-            if (units=1){i+=1;role_name[i]=obj_ini.role[100,6];role_exp[i]=75;}
+            i+=1;role_name[i]=obj_ini.role[100,8];role_exp[i]=120;
+            i+=1;role_name[i]=obj_ini.role[100,10];role_exp[i]=120;
+            i+=1;role_name[i]=obj_ini.role[100,9];role_exp[i]=120;
+            if (units=1){i+=1;role_name[i]=obj_ini.role[100,6];role_exp[i]=120;}
         }
 
         if (target_comp=3) and (spec=0){
@@ -188,20 +188,20 @@ if (type=5) and (cooldown<=0){
             if (units=1){cap=scr_role_count(obj_ini.role[100,5],"3");if (cap=0){i+=1;role_name[i]=obj_ini.role[100,5];role_exp[i]=190;}}
             if (units=1){bear=scr_role_count("Standard Bearer","3");if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=65;}}
             if (units=1){champ=scr_role_count(obj_ini.role[100,7],"3");if (champ=0){i+=1;role_name[i]=obj_ini.role[100,7];role_exp[i]=160;}}
-            i+=1;role_name[i]=obj_ini.role[100,8];role_exp[i]=60;
-            i+=1;role_name[i]=obj_ini.role[100,10];role_exp[i]=60;
-            i+=1;role_name[i]=obj_ini.role[100,9];role_exp[i]=60;
-            if (units=1){i+=1;role_name[i]=obj_ini.role[100,6];role_exp[i]=60;}
+            i+=1;role_name[i]=obj_ini.role[100,8];role_exp[i]=110;
+            i+=1;role_name[i]=obj_ini.role[100,10];role_exp[i]=110;
+            i+=1;role_name[i]=obj_ini.role[100,9];role_exp[i]=110;
+            if (units=1){i+=1;role_name[i]=obj_ini.role[100,6];role_exp[i]=110;}
         }
-
+      
         if (target_comp=4) and (spec=0){
             i=0;cap=0;bear=0;champ=0;
             if (units=1){cap=scr_role_count(obj_ini.role[100,5],"4");if (cap=0){i+=1;role_name[i]=obj_ini.role[100,5];role_exp[i]=170;}}
             if (units=1){bear=scr_role_count("Standard Bearer","4");if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=55;}}
             if (units=1){champ=scr_role_count(obj_ini.role[100,7],"4");if (champ=0){i+=1;role_name[i]=obj_ini.role[100,7];role_exp[i]=140;}}
-            i+=1;role_name[i]=obj_ini.role[100,8];role_exp[i]=50;
-            i+=1;role_name[i]=obj_ini.role[100,10];role_exp[i]=50;
-            i+=1;role_name[i]=obj_ini.role[100,9];role_exp[i]=50;
+            i+=1;role_name[i]=obj_ini.role[100,8];role_exp[i]=100;
+            i+=1;role_name[i]=obj_ini.role[100,10];role_exp[i]=100;
+            i+=1;role_name[i]=obj_ini.role[100,9];role_exp[i]=100;
             if (units=1){i+=1;role_name[i]=obj_ini.role[100,6];role_exp[i]=50;}
         }
 
@@ -210,10 +210,10 @@ if (type=5) and (cooldown<=0){
             if (units=1){cap=scr_role_count(obj_ini.role[100,5],"5");if (cap=0){i+=1;role_name[i]=obj_ini.role[100,5];role_exp[i]=160;}}
             if (units=1){bear=scr_role_count("Standard Bearer","5");if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=45;}
             if (units=1){champ=scr_role_count(obj_ini.role[100,7],"5");if (champ=0){i+=1;role_name[i]=obj_ini.role[100,7];role_exp[i]=130;}}}
-            i+=1;role_name[i]=obj_ini.role[100,8];role_exp[i]=40;
-            i+=1;role_name[i]=obj_ini.role[100,10];role_exp[i]=40;
-            i+=1;role_name[i]=obj_ini.role[100,9];role_exp[i]=40;
-            if (units=1){i+=1;role_name[i]=obj_ini.role[100,6];role_exp[i]=40;}
+            i+=1;role_name[i]=obj_ini.role[100,8];role_exp[i]=80;
+            i+=1;role_name[i]=obj_ini.role[100,10];role_exp[i]=80;
+            i+=1;role_name[i]=obj_ini.role[100,9];role_exp[i]=80;
+            if (units=1){i+=1;role_name[i]=obj_ini.role[100,6];role_exp[i]=80;}
         }
 
         if (target_comp=6) and (spec=0){
@@ -221,8 +221,8 @@ if (type=5) and (cooldown<=0){
             if (units=1){cap=scr_role_count(obj_ini.role[100,5],"6");if (cap=0){i+=1;role_name[i]=obj_ini.role[100,5];role_exp[i]=120;}}
             if (units=1){bear=scr_role_count("Standard Bearer","6");if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=40;}}
             if (units=1){champ=scr_role_count(obj_ini.role[100,7],"6");if (champ=0){i+=1;role_name[i]=obj_ini.role[100,7];role_exp[i]=100;}}
-            i+=1;role_name[i]=obj_ini.role[100,8];role_exp[i]=35;
-            if (units=1){i+=1;role_name[i]=obj_ini.role[100,6];role_exp[i]=35;}
+            i+=1;role_name[i]=obj_ini.role[100,8];role_exp[i]=70;
+            if (units=1){i+=1;role_name[i]=obj_ini.role[100,6];role_exp[i]=70;}
         }
 
         if (target_comp=7) and (spec=0){
@@ -230,8 +230,8 @@ if (type=5) and (cooldown<=0){
             if (units=1){cap=scr_role_count(obj_ini.role[100,5],"7");if (cap=0){i+=1;role_name[i]=obj_ini.role[100,5];role_exp[i]=120;}}
             if (units=1){bear=scr_role_count("Standard Bearer","7");if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=35;}}
             if (units=1){champ=scr_role_count(obj_ini.role[100,7],"7");if (champ=0){i+=1;role_name[i]=obj_ini.role[100,7];role_exp[i]=100;}}
-            i+=1;role_name[i]=obj_ini.role[100,8];role_exp[i]=30;
-            if (units=1){i+=1;role_name[i]=obj_ini.role[100,6];role_exp[i]=30;}
+            i+=1;role_name[i]=obj_ini.role[100,8];role_exp[i]=60;
+            if (units=1){i+=1;role_name[i]=obj_ini.role[100,6];role_exp[i]=60;}
         }
 
         if (target_comp=8) and (spec=0){
@@ -239,8 +239,8 @@ if (type=5) and (cooldown<=0){
             if (units=1){cap=scr_role_count(obj_ini.role[100,5],"8");if (cap=0){i+=1;role_name[i]=obj_ini.role[100,5];role_exp[i]=120;}}
             if (units=1){bear=scr_role_count("Standard Bearer","8");if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=30;}}
             if (units=1){champ=scr_role_count(obj_ini.role[100,7],"8");if (champ=0){i+=1;role_name[i]=obj_ini.role[100,7];role_exp[i]=100;}}
-            i+=1;role_name[i]=obj_ini.role[100,10];role_exp[i]=25;
-            if (units=1){i+=1;role_name[i]=obj_ini.role[100,6];role_exp[i]=25;}
+            i+=1;role_name[i]=obj_ini.role[100,10];role_exp[i]=50;
+            if (units=1){i+=1;role_name[i]=obj_ini.role[100,6];role_exp[i]=50;}
         }
 
         if (target_comp=9) and (spec=0){
@@ -248,8 +248,8 @@ if (type=5) and (cooldown<=0){
             if (units=1){cap=scr_role_count(obj_ini.role[100,5],"9");if (cap=0){i+=1;role_name[i]=obj_ini.role[100,5];role_exp[i]=120;}}
             if (units=1){bear=scr_role_count("Standard Bearer","9");if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=25;}
             if (units=1){champ=scr_role_count(obj_ini.role[100,7],"9");if (champ=0){i+=1;role_name[i]=obj_ini.role[100,7];role_exp[i]=100;}}}
-            i+=1;role_name[i]=obj_ini.role[100,9];role_exp[i]=20;
-            if (units=1){i+=1;role_name[i]=obj_ini.role[100,6];role_exp[i]=20;}
+            i+=1;role_name[i]=obj_ini.role[100,9];role_exp[i]=40;
+            if (units=1){i+=1;role_name[i]=obj_ini.role[100,6];role_exp[i]=40;}
         }
 
         if (target_comp=10) and (spec=0){
