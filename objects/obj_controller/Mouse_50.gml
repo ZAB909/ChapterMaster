@@ -412,16 +412,63 @@ if (menu==20) and (diplomacy==10.1){
 				cooldown=8000;
 				diplomacy_pathway = "sacrifice_lib";
 				scr_dialogue(diplomacy_pathway);
+				force_goodbye = 1;
 			}
 					if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
 				cooldown=8000;
-				diplomacy_pathway = "kurgle_path"
+				diplomacy_pathway = "sacrifice_champ"
 				scr_dialogue(diplomacy_pathway);
+				force_goodbye = 1;
 			}
 					if point_in_rectangle(mouse_x, mouse_y, option_selections[2].lh, option_selections[2].top, option_selections[2].rh, option_selections[2].base){
 				cooldown=8000;
-				diplomacy_pathway = "Khorne_path"
+				diplomacy_pathway = "sacrifice_squad"
 				scr_dialogue(diplomacy_pathway);
+				force_goodbye = 1;
+			}
+			if point_in_rectangle(mouse_x, mouse_y, option_selections[2].lh, option_selections[2].top, option_selections[2].rh, option_selections[2].base){
+				cooldown=8000;diplomacy_pathway = "daemon_scorn";scr_dialogue(diplomacy_pathway);force_goodbye = 1;
+
+			}			
+		}
+	if (diplomacy_pathway = "Slaanesh_path")  and (cooldown  <= 0){
+			if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
+				cooldown=8000;diplomacy_pathway = "Slaanesh_arti";scr_dialogue(diplomacy_pathway);force_goodbye = 1;
+
+			}
+			if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
+				cooldown=8000;diplomacy_pathway = "daemon_scorn";scr_dialogue(diplomacy_pathway);force_goodbye = 1;
+
+			}
+		}
+	if (diplomacy_pathway = "Nurgle_path")  and (cooldown  <= 0){
+			if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
+				cooldown=8000;
+				diplomacy_pathway = "nurgle_gift";
+				scr_dialogue(diplomacy_pathway);
+				force_goodbye = 1;
+			}
+			if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
+				cooldown=8000;diplomacy_pathway = "daemon_scorn";scr_dialogue(diplomacy_pathway);force_goodbye = 1;
+
+			}
+		}
+	if (diplomacy_pathway = "Nurgle_path")  and (cooldown  <= 0){
+			if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
+				cooldown=8000;diplomacy_pathway = "nurgle_gift";scr_dialogue(diplomacy_pathway);force_goodbye = 1;
+
+			}
+					if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
+				cooldown=8000;diplomacy_pathway = "daemon_scorn";scr_dialogue(diplomacy_pathway);force_goodbye = 1;
+			}
+		}	
+	if (diplomacy_pathway = "Tzeentch_path")  and (cooldown  <= 0){
+			if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
+				cooldown=8000;diplomacy_pathway = "Tzeentch_plan";scr_dialogue(diplomacy_pathway);force_goodbye = 1;
+
+			}
+					if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
+				cooldown=8000;diplomacy_pathway = "daemon_scorn";scr_dialogue(diplomacy_pathway);force_goodbye = 1;
 			}
 		}
 }

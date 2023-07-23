@@ -417,8 +417,27 @@ if (diplomacy == 10.1){
 		break;	
 		case "Tzeentch_path":
 			diplo_text ="Yes I supose for a creature of your occupation your fate must be a pressing concern. it's dreary really wandering which rancid little backwater you'll die on fighting a pointless cause for a corpse on a throne, or maybe you only ask because you harbour greater ambitions? The changer of ways knows all things if you'll play a part in his games for him. ohh he does love his games yes he does."
-			diplo_option[1] ="What little game?"; diplo_option[2] = "A game? not only heretics but fools then begone Daemon"; diplo_option[3] = ""; diplo_option[4] = ""
-		break;			
+			diplo_option[1] ="What little game?"; diplo_option[2] = "A game? not only heretics but fools then begone Daemon"; diplo_option[3] = ""; diplo_option[4] = "";
+		break;	
+		case "sacrifice_lib":
+			diplo_text="one less spell caster how pleasing for the lord. Enjoy your gift.";
+		break;	
+		case "sacrifice_champ":
+			diplo_text="How much of a champion can a dead man really be>Enjoy your gift.";
+		break;	
+		case "sacrifice_squad":
+			diplo_text="Sooo many good souls how sweet on my tounge. Enjoy your gift";
+		break;
+		case "Slaanesh_arti":
+			diplo_text="Fetch this for her and you dahll have her favour";
+		break;
+		case "Nurgle_gift":
+			diplo_text="The father is a loving figure. Farewell may your men rot gently.";
+		break;
+		case "Tzeentch_plan":
+			diplo_text="All these schemes i can hardly be bothered to keep track. Do this and you shall have fates favour.";
+		break;
+
 		}
 			if (diplo_keyphrase == "gift"){
 			diplo_text ="Of course Chapter master (giggle) and what may they do for you";
