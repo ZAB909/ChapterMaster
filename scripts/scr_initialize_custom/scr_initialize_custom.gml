@@ -759,19 +759,20 @@ function scr_initialize_custom() {
 	}
 
 	// go 5 under the required xp amount 
-	var terminator_random_xp = irandom(20)+=175;
-	var veteran_random_xp = irandom(20)+=145;
-
-	if (terminator-1>0) then repeat(terminator-1){k+=1;man_size+=2;
+	
+	var terminator_random_xp;
+	var veteran_random_xp;
+	
+	if (terminator-1>0) then repeat(terminator-1){k+=1;man_size+=2; terminator_random_xp = irandom(20)+175;
 	// repeat(max(terminator-4,0)){k+=1;man_size+=2;
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,4];wep1[company,k]=wep1[101,4];name[company,k]=scr_marine_name();
-	    wep2[company,k]=wep2[101,4];armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=var terminator_random_xp;
+	    wep2[company,k]=wep2[101,4];armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=terminator_random_xp;
 	    if (string_count("Crafter",strin)>0) and (k<=20) then armor[company,k]="Tartaros";
 	}
-	repeat(veteran){k+=1;man_size+=1;
+	repeat(veteran){k+=1;man_size+=1;  veteran_random_xp = irandom(20)+145;
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,3];wep1[company,k]=wep1[101,3];name[company,k]=scr_marine_name();
 	    wep2[company,k]=wep2[101,3];armor[company,k]="MK6 Corvus";hp[company,k]=100;chaos[company,k]=0;
-	    experience[company,k]=80;mobi[company,k]=mobi[101,3];
+	    experience[company,k]=veteran_random_xp;mobi[company,k]=mobi[101,3];
 	}
 
 	k+=1;commands+=1;
@@ -847,27 +848,31 @@ function scr_initialize_custom() {
 	    }
 
 		// random xp for each marine company
-	var company2_random_exp = irandom(15)+=115;
-	var company3_random_exp = irandom(15)+=105;
-	var company4_random_exp = irandom(15)+=95;
-	var company5_random_exp = irandom(15)+=85;
-	var company6_random_exp = irandom(10)+=65;
-	var company7_random_exp = irandom(10)+=55;
-	var company8_random_exp = irandom(10)+=45;
-	var company9_random_exp = irandom(10)+=35;
-	var company10_random_exp = irandom(15)+=5;
+		// this gives the entire company the same xp
+		// figure it out later how to give individual ones different ones
+		// repeat didn't work
+	var company2_random_exp = irandom(15)+110; 
+	var company3_random_exp = irandom(15)+105;
+	var company4_random_exp = irandom(15)+95;
+	var company5_random_exp = irandom(15)+85;
+	var company6_random_exp = irandom(10)+65;
+	var company7_random_exp = irandom(10)+55;
+	var company8_random_exp = irandom(10)+45;
+	var company9_random_exp = irandom(10)+35;
+	var company10_random_exp = irandom(15)+3;
 
 
 
-	    if (obj_creation.equal_specialists=0){
-	        if (company=2){
+	    if (obj_creation.equal_specialists=0)  { 
+			 if (company=2){ 
 	            temp1=(second-(assault+devastator));company_experience=company2_random_exp;company_unit2="assault";company_unit3="devastator";
 	            temp1-=2;
 
 	            dready=1;if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=1;
 	            rhinoy=8;whirly=whirlwind;speedy=2;
 	            if (second=0) then stahp=1;
-	        }
+			
+	      }
 	        if (company=3){
 	            temp1=(third-(assault+devastator));company_experience=company3_random_exp;company_unit2="assault";company_unit3="devastator";
 	            temp1-=2;
