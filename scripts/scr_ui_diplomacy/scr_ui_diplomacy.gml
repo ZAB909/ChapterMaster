@@ -2,7 +2,7 @@ function scr_ui_diplomacy() {
 	var xx,yy,show_stuff;
 	xx=__view_get( e__VW.XView, 0 )+0;
 	yy=__view_get( e__VW.YView, 0 )+0;
-	show_stuff=false;
+	var show_stuff=false;var warning=0;
 
 	// This script draws all of the diplomacy stuff, up to and including trading.
 
@@ -202,14 +202,12 @@ function scr_ui_diplomacy() {
     
 	    draw_set_halign(fa_left);
 	    draw_set_color(38144);
-    	_diplomacy_pathway = "";
 		
 	    draw_set_color(38144);draw_rectangle(xx+688,yy+240,xx+1028,yy+281,0);
 	    draw_set_color(c_black);draw_text_transformed(xx+688,yy+241,string_hash_to_newline(" Meet Chaos Emmissary"),0.7,0.7,0);
-	    if (point_in_rectangle(mouse_x, mouse_y, xx+688,yy+181,xx+1028,yy+281)){
-	        draw_set_alpha(0.2);draw_rectangle(xx+688,yy+181,xx+1028,yy+281,0);draw_set_alpha(1);
-			if (mouse_check_button_released(mb_left)){diplomacy=10.1;_diplomacy_pathway="intro";}
-		}
+	    if (point_in_rectangle(mouse_x, mouse_y, xx+688,yy+240,xx+1028,yy+281)){
+	        draw_set_alpha(0.2);draw_rectangle(xx+688,yy+240,xx+1028,yy+281,0);draw_set_alpha(1);
+		};
 	    var x6,y6,x7,y7;
 	    x6=0;y6=0;x7=0;y7=0;
 	    xx-=55;yy+=20;
@@ -429,54 +427,7 @@ function scr_ui_diplomacy() {
 
 
 	xx=__view_get( e__VW.XView, 0 );yy=__view_get( e__VW.YView, 0 );
-	function basic_diplomacy_screen(){
-		var xx=__view_get( e__VW.XView, 0 );var yy=__view_get( e__VW.YView, 0 );
-	draw_set_font(fnt_40k_14);draw_set_alpha(1);
-	    draw_set_color(38144);draw_set_halign(fa_left);
-	    draw_text_ext(xx+336+16,yy+209,string_hash_to_newline(string(diplo_txt)),-1,536);
-	    xx=__view_get( e__VW.XView, 0 );yy=__view_get( e__VW.YView, 0 );draw_set_halign(fa_center);
-	    draw_line(xx+429,yy+710,xx+800,yy+710);
-		 if (trading=0) and ((diplo_option[1]!="") or (diplo_option[2]!="") or (diplo_option[3]!="") or (diplo_option[4]!="")){
-	        if (force_goodbye=0){
-	            draw_set_halign(fa_center);
-            
-	            var opts,slot,dp;opts=0;slot=0;dp=0;
-	            repeat(4){dp+=1;if (diplo_option[dp]!="") then opts+=1;}
-	            if (opts=4) then yy-=30;
-	            if (opts=2) then yy+=30;
-	            if (opts=1) then yy+=60;
-            
-	            repeat(4){slot+=1;
-	                if (diplo_option[slot]!=""){
-	                    draw_set_color(38144);draw_rectangle(xx+354,yy+694,xx+887,yy+717,0);
-	                    draw_set_color(0);
-                    
-	                    var sw;sw=1;
-	                    repeat(4){if (string_width(string_hash_to_newline(diplo_option[slot]))*sw>530) then sw-=0.05;}
-	                    if (string_width(string_hash_to_newline(diplo_option[slot]))*sw<=530) and (sw=1) then draw_text_transformed(xx+620,yy+696,string_hash_to_newline(string(diplo_option[slot])),sw,sw,0);
-	                    if (string_width(string_hash_to_newline(diplo_option[slot]))*sw<=530) and (sw<1) then draw_text_transformed(xx+620,yy+696+2,string_hash_to_newline(string(diplo_option[slot])),sw,sw,0);
-	                    if (string_width(string_hash_to_newline(diplo_option[slot]))*sw>530){
-	                        draw_text_ext_transformed(xx+620,yy+696-4,string_hash_to_newline(string(diplo_option[slot])),16,530/sw,sw,sw,0);
-	                    }
-                    
-	                    if (mouse_x>=xx+354) and (mouse_y>=yy+694) and (mouse_x<xx+887) and (mouse_y<yy+717){
-	                        draw_set_alpha(0.2);draw_rectangle(xx+354,yy+694,xx+887,yy+717,0);draw_set_alpha(1);
-	                    }
-	                }
-	                yy+=30;
-	            }
-            
-	            yy=__view_get( e__VW.YView, 0 );
-	        }
-        
-	        if (force_goodbye=1){
-	            draw_rectangle(xx+818,yy+796,xx+897,yy+815,0);
-	            draw_set_color(0);draw_text(xx+857.5,yy+797,string_hash_to_newline("Exit"));draw_set_alpha(0.2);
-	            if (mouse_x>=xx+818) and (mouse_y>=yy+796) and (mouse_x<=xx+897) and (mouse_y<=yy+815) then draw_rectangle(xx+818,yy+796,xx+897,yy+815,0);
-	            draw_set_alpha(1);
-	        }
-        
-	    }}
+
 
 	if (menu=20) and (diplomacy<-5) and (diplomacy>-6){
 	    draw_sprite(spr_rock_bg,0,xx,yy);
@@ -522,6 +473,11 @@ function scr_ui_diplomacy() {
 	    // draw_sprite(spr_diplo_splash,diplomacy,xx+916,yy+33);
 	    draw_set_alpha(0.75);draw_set_color(0);draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+820,0);
 	    draw_set_alpha(1);draw_set_color(38144);draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+820,1);
+		if (diplomacy==10.1){
+	        // if (diplomacy=10.1) then draw_sprite(spr_diplomacy_dae,0,xx+16,yy+43);
+	        daemon=true;scr_image("diplomacy_daemon",0,xx+16,yy+43,310,828);show_stuff=false;
+			 if (mouse_x>=xx+360) and (mouse_y>=yy+143) and (mouse_x<=xx+884) and (mouse_y<=yy+180) then warning=1;
+			 }
     
 	    if (daemon=false){
 	        if (diplomacy!=6) then scr_image("diplomacy_splash",diplomacy,xx+16,yy+43,310,828);
@@ -532,10 +488,6 @@ function scr_ui_diplomacy() {
 	        if (diplomacy!=6) or ((diplomacy=6) and (faction_gender[6]=1)) then draw_sprite(spr_diplomacy,diplomacy,xx+16,yy+16);
 	        if (diplomacy=6) and (faction_gender[6]=2) then draw_sprite(spr_diplomacy,11,xx+16,yy+16);
 	        if (diplomacy=10) and (faction_gender[10]=2) then draw_sprite(spr_diplomacy,12,xx+16,yy+16);*/
-	    }
-	    if (diplomacy==10.1){
-	        // if (diplomacy=10.1) then draw_sprite(spr_diplomacy_dae,0,xx+16,yy+43);
-	        daemon=true;scr_image("diplomacy_daemon",0,xx+16,yy+43,310,828);show_stuff=false;
 	    }
     
 	    draw_set_halign(fa_center);
@@ -558,7 +510,7 @@ function scr_ui_diplomacy() {
     
 	    draw_text_transformed(xx+622,yy+66,string_hash_to_newline(string(fac)),1,1,0);
     
-	    if (daemon=true) then draw_text_transformed(xx+622,yy+104,string_hash_to_newline("The Emmmisary"),0.6,0.6,0);
+	    if (daemon=true){ draw_text_transformed(xx+622,yy+104,string_hash_to_newline("The Emmmisary"),0.6,0.6,0);show_stuff=true;};
 	    if (daemon=false) then draw_text_transformed(xx+622,yy+104,string_hash_to_newline(string(faction_title[diplomacy])+" "+string(faction_leader[diplomacy])+string(fac2)),0.6,0.6,0);
     
 	    draw_set_font(fnt_40k_14);
@@ -582,16 +534,17 @@ function scr_ui_diplomacy() {
     
 	    show_stuff=true;
 	}
-	
-			if (diplomacy==10.1){
-			if (_diplomacy_pathway == "intro"){
-				scr_dialogue(_diplomacy_pathway);
-				basic_diplomacy_screen();
-			}
-		}
 		
-    
-    
+		if (warning=1) and (diplomacy>=6){
+	            var warn;
+	            if (diplomacy<10) and (warning=1) then warn="Consorting with xenos will cause your disposition with the Imperium to lower.";
+	            if (diplomacy>=10) and (warning=1) then warn="Consorting with heretics will cause your disposition with the Imperium to plummet.";
+        
+	            draw_rectangle(mouse_x-2,mouse_y+20,mouse_x+2+string_width_ext(string_hash_to_newline(string(warn)),-1,600),mouse_y+24+string_height_ext(string_hash_to_newline(string(warn)),-1,600),0);
+	            draw_set_color(38144);
+	            draw_rectangle(mouse_x-2,mouse_y+20,mouse_x+2+string_width_ext(string_hash_to_newline(string(warn)),-1,600),mouse_y+24+string_height_ext(string_hash_to_newline(string(warn)),-1,600),1);
+	            draw_text_ext(mouse_x,mouse_y+22,string_hash_to_newline(string(warn)),-1,600);
+	        }
     
 	if (show_stuff=true){
 	    draw_set_font(fnt_40k_14);draw_set_alpha(1);
@@ -630,8 +583,7 @@ function scr_ui_diplomacy() {
 	        draw_set_alpha(0.2);
 	        if ((audience=0) and (force_goodbye=0)) or (faction_justmet=1){
 	            var show;show=false;if (faction_justmet=1) then show=true;
-            
-	            if (mouse_x>=xx+360) and (mouse_y>=yy+143) and (mouse_x<=xx+884) and (mouse_y<=yy+180) then warning=1;
+         
         
 	            if (mouse_y>=yy+719) and (mouse_y<yy+738) and (audience=0) and (force_goodbye=0){
 	                if (mouse_x>=xx+442) and (mouse_x<xx+547){draw_rectangle(xx+442,yy+719,xx+547,yy+738,0);warning=1;}
@@ -657,16 +609,7 @@ function scr_ui_diplomacy() {
 	        draw_set_halign(fa_left);
 	        draw_set_color(0);
         
-	        if (warning=1) and (diplomacy>=6){
-	            var warn;
-	            if (diplomacy<10) and (warning=1) then warn="Consorting with xenos will cause your disposition with the Imperium to lower.";
-	            if (diplomacy>=10) and (warning=1) then warn="Consorting with heretics will cause your disposition with the Imperium to plummet.";
-        
-	            draw_rectangle(mouse_x-2,mouse_y+20,mouse_x+2+string_width_ext(string_hash_to_newline(string(warn)),-1,600),mouse_y+24+string_height_ext(string_hash_to_newline(string(warn)),-1,600),0);
-	            draw_set_color(38144);
-	            draw_rectangle(mouse_x-2,mouse_y+20,mouse_x+2+string_width_ext(string_hash_to_newline(string(warn)),-1,600),mouse_y+24+string_height_ext(string_hash_to_newline(string(warn)),-1,600),1);
-	            draw_text_ext(mouse_x,mouse_y+22,string_hash_to_newline(string(warn)),-1,600);
-	        }
+
         
 	        // draw_line(xx+220,yy+317,xx+592,yy+317);
 	    }
@@ -843,6 +786,62 @@ function scr_ui_diplomacy() {
     
     
 	}
+	if (diplomacy==10.1){
+		//scr_dialogue(diplomacy_pathway);
+		basic_diplomacy_screen();
+	}
 
+}
 
+function basic_diplomacy_screen(){
+		var  yy=__view_get( e__VW.YView, 0 );
+		var  xx=__view_get( e__VW.XView, 0 );
+		 if (trading=0) and ((diplo_option[1]!="") or (diplo_option[2]!="") or (diplo_option[3]!="") or (diplo_option[4]!="")){
+	        if (force_goodbye=0){
+	            draw_set_halign(fa_center);
+            
+	            var opts,slot,dp, opt_cord;opts=0;slot=0;dp=0;opt_cord=0;
+	            repeat(4){dp+=1;if (diplo_option[dp]!="") then opts+=1;}
+	            if (opts=4) then yy-=30;
+	            if (opts=2) then yy+=30;
+	            if (opts=1) then yy+=60;
+            
+	            repeat(4){slot+=1;
+	                if (diplo_option[slot]!=""){
+						var left = xx+354;
+						var top = yy+694;
+						var right = xx+887;
+						var base = yy+717;
+						var opt;
+	                    draw_set_color(38144);draw_rectangle(left,top,right,base,0);
+	                    draw_set_color(0);
+                    
+	                    var sw;sw=1;
+	                    repeat(4){if (string_width(string_hash_to_newline(diplo_option[slot]))*sw>530) then sw-=0.05;}
+	                    if (string_width(string_hash_to_newline(diplo_option[slot]))*sw<=530) and (sw=1) then draw_text_transformed(xx+620,yy+696,string_hash_to_newline(string(diplo_option[slot])),sw,sw,0);
+	                    if (string_width(string_hash_to_newline(diplo_option[slot]))*sw<=530) and (sw<1) then draw_text_transformed(xx+620,yy+696+2,string_hash_to_newline(string(diplo_option[slot])),sw,sw,0);
+	                    if (string_width(string_hash_to_newline(diplo_option[slot]))*sw>530){
+	                        draw_text_ext_transformed(xx+620,yy+696-4,string_hash_to_newline(string(diplo_option[slot])),16,530/sw,sw,sw,0);
+	                    }
+						if point_in_rectangle(mouse_x, mouse_y,left,top,right,base){
+	                        draw_set_alpha(0.2);draw_rectangle(left,top,right,base,0);draw_set_alpha(1);
+	                    }
+	                }
+					opt = {lh:left, top, rh:right, base}
+					option_selections[opt_cord]= opt
+					opt_cord+=1;
+	                yy+=30;
+	            }
+            
+	            yy=__view_get( e__VW.YView, 0 );
+	        }
+        
+	        if (force_goodbye=1){
+	            draw_rectangle(xx+818,yy+796,xx+897,yy+815,0);
+	            draw_set_color(0);draw_text(xx+857.5,yy+797,string_hash_to_newline("Exit"));draw_set_alpha(0.2);
+	            if (mouse_x>=xx+818) and (mouse_y>=yy+796) and (mouse_x<=xx+897) and (mouse_y<=yy+815) then draw_rectangle(xx+818,yy+796,xx+897,yy+815,0);
+	            draw_set_alpha(1);
+	        }
+        
+	    }
 }
