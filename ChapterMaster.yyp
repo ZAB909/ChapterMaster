@@ -435,6 +435,7 @@
     {"id":{"name":"spr_planets","path":"sprites/spr_planets/spr_planets.yy",},},
     {"id":{"name":"sprite134","path":"sprites/sprite134/sprite134.yy",},},
     {"id":{"name":"spr_star_screen","path":"sprites/spr_star_screen/spr_star_screen.yy",},},
+    {"id":{"name":"scr_ship_enums","path":"scripts/scr_ship_enums/scr_ship_enums.yy",},},
     {"id":{"name":"spr_planet_screen","path":"sprites/spr_planet_screen/spr_planet_screen.yy",},},
     {"id":{"name":"spr_red_button","path":"sprites/spr_red_button/spr_red_button.yy",},},
     {"id":{"name":"spr_popup","path":"sprites/spr_popup/spr_popup.yy",},},
