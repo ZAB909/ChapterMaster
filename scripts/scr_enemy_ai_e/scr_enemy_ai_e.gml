@@ -546,7 +546,7 @@ function scr_enemy_ai_e() {
 					// if a planet type has less than half it's max pop, you get 20% less spacey marines
 					if (p_population[run] <= halfpop){
 						recruit_chance+=1.2;
-						scr_alert("red","owner","The populations you attain aspirants from are less populant than required, chances of recruiting quality aspirants is 20% lower",0,0);
+						scr_alert("red","owner","The populations you attain aspirants from are less populant than required, chances of recruiting aspirants is 20% lower",0,0);
 					} 
 					
                 /* // old blood duel
@@ -561,7 +561,7 @@ function scr_enemy_ai_e() {
 					// This is the area has trial types that don't care about planet type 
 					// xp is given in a latter if loop
 	                
-					if (obj_controller.recruit_trial="Blood Duel"){ // blood duel is most numerous, but not great with gene seed
+					if (obj_controller.recruit_trial=="Blood Duel"){ // blood duel is most numerous, but not great with gene seed
 						months_to_neo-=choose(24,24,36,36,36,48);
 						corr+=choose(10,15,20);
 						recruit_chance-=choose(0.7,0.7,0.8,0.8,0,8,0.9);
@@ -612,16 +612,22 @@ function scr_enemy_ai_e() {
 	                    obj_controller.recruit_name[thiss]=scr_marine_name();
 	                    obj_controller.recruit_exp[thiss]+=irandom(5);
 						
+						// gives planet buffs
+						
+						if (p_type[run]="Death"){ obj_controller.recruit_exp[thiss]+=6;}
+						if (p_type[run]="Ice"){obj_controller.recruit_exp[thiss]+=3;}
+						if (p_type[run]="Desert"){obj_controller.recruit_exp[thiss]+=3;}
+						if (p_type[run]="Lava"){obj_controller.recruit_exp[thiss]+=9;}
 						
                 
 	                    if (obj_controller.recruit_trial="Hunting the Hunter"){
-							if(p_type[run]="Desert") or (p_type[run]="Ice") or (p_type[run]="Death"){
+							if(p_type[run]="Desert") or (p_type[run]="Ice") or (p_type[run]=="Death"){
 								obj_controller.recruit_exp[thiss]+=irandom(13)+7; 
 							}
 	                    }
 						
 						if (obj_controller.recruit_trial="Exposure"){
-							if(p_type[run]="Desert") or (p_type[run]="Ice") or (p_type[run]="Death") or (p_type[run]="Lava") or (p_type[run]="Forge"){
+							if(p_type[run]=="Desert") or (p_type[run]=="Ice") or (p_type[run]=="Death") or (p_type[run]=="Lava") or (p_type[run]=="Forge"){
 								months_to_neo-=choose(12,12,12,24,24,36);
 							}
 						}
