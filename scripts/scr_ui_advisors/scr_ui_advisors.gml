@@ -63,39 +63,44 @@ function scr_ui_advisors() {
 	    var i,cn;i=ship_current;cn=obj_controller;
     
 	    if (instance_exists(cn)){
-	        // var i,cn;i=0;cn=obj_controller;
-	        repeat(34){i+=1;
+			var ship_count = array_length(obj_ini.ship);
+			for (var i = 0; i < ship_count; i++) {
 	            if (obj_ini.ship[i]!=""){
 	                draw_rectangle(xx+950,yy+80+(i*20),xx+1546,yy+100+(i*20),1);
 	                draw_sprite(spr_view_small,0,xx+953,yy+84+(i*20));
-	                draw_text(xx+970,yy+80+(i*20),string_hash_to_newline(string(obj_ini.ship[i])+" ("+string(obj_ini.ship_class[i])+")"));
-	                draw_text(xx+1222,yy+80+(i*20),string_hash_to_newline(string(obj_ini.ship_location[i])));
-	                draw_text(xx+1372,yy+80+(i*20),string_hash_to_newline(string(round((obj_ini.ship_hp[i]/obj_ini.ship_maxhp[i])*100))+"% HP"));
-	                draw_text(xx+1450,yy+80+(i*20),string_hash_to_newline(string(obj_ini.ship_carrying[i])+"/"+string(obj_ini.ship_capacity[i])+" Space"));
+	                draw_text(xx+970,yy+80+(i*20),string_hash_to_newline(string(obj_ini.ship[i].name)+" ("+string(print_class(obj_ini.ship[i].class))+")"));
+	                draw_text(xx+1222,yy+80+(i*20),string_hash_to_newline(string(obj_ini.ship[i].location)));
+	                draw_text(xx+1372,yy+80+(i*20),string_hash_to_newline(string(round((obj_ini.ship[i].hp/obj_ini.ship[i].max_hp)*100))+"% HP"));
+	                draw_text(xx+1450,yy+80+(i*20),string_hash_to_newline(string(obj_ini.ship[i].carrying)+"/"+string(obj_ini.ship[i].capacity)+" Space"));
                 
 	                if (mouse_x>=xx+950) and (mouse_y>=yy+80+(i*20)) and (mouse_x<xx+1546) and (mouse_y<yy+100+(i*20)){
-	                    if (cn.temp[101]!=obj_ini.ship[i]){
-	                        cn.temp[101]=obj_ini.ship[i];
-	                        cn.temp[102]=obj_ini.ship_class[i];
+	                    if (cn.temp[101]!=obj_ini.ship[i].name){
+	                        cn.temp[101]=obj_ini.ship[i].name;
+	                        cn.temp[102]=print_class(obj_ini.ship[i].class);
                         
-	                        cn.temp[103]=string(obj_ini.ship_hp[i]);
-	                        cn.temp[104]=string(obj_ini.ship_maxhp[i]);
-	                        cn.temp[105]=string(obj_ini.ship_shields[i]*100);
+	                        cn.temp[103]=string(obj_ini.ship[i].hp);
+	                        cn.temp[104]=string(obj_ini.ship[i].max_hp);
+	                        cn.temp[105]=string(obj_ini.ship[i].shields*100);
                         
-	                        cn.temp[106]=string(obj_ini.ship_speed[i]);
+	                        cn.temp[106]=string(obj_ini.ship[i].movespeed);
                         
-	                        cn.temp[107]=string(obj_ini.ship_front_armor[i]);
-	                        cn.temp[108]=string(obj_ini.ship_other_armor[i]);
+	                        cn.temp[107]=string(obj_ini.ship[i].front_armor);
+	                        cn.temp[108]=string(obj_ini.ship[i].other_armor);
                         
-	                        cn.temp[109]=string(obj_ini.ship_turrets[i]);
+	                        cn.temp[109]=string(obj_ini.ship[i].turrets);
                         
-	                        cn.temp[110]=obj_ini.ship_wep[i,1];cn.temp[111]=obj_ini.ship_wep_facing[i,1];
-	                        cn.temp[112]=obj_ini.ship_wep[i,2];cn.temp[113]=obj_ini.ship_wep_facing[i,2];
-	                        cn.temp[114]=obj_ini.ship_wep[i,3];cn.temp[115]=obj_ini.ship_wep_facing[i,3];
-	                        cn.temp[116]=obj_ini.ship_wep[i,4];cn.temp[117]=obj_ini.ship_wep_facing[i,4];
-                        
-	                        cn.temp[118]=string(obj_ini.ship_carrying[i])+"/"+string(obj_ini.ship_capacity[i]);
-	                        cn.temp[119]="";if (obj_ini.ship_carrying[i]>0) then cn.temp[119]=scr_ship_occupants(i);
+							
+							for (var j = 0; j < 4; j++) {
+								cn.temp[110 + j*2] = "";
+								cn.temp[111 + j*2] = "";
+							}
+							for (var j = 0; j < obj_ini.ship[i].max_weapons && j < 4; j++) {
+								cn.temp[110 + j*2] = print_weapon(obj_ini.ship[i].weapons[j].weapon);
+								cn.temp[111 + j*2] = print_facing(obj_ini.ship[i].weapons[j].facing);
+							}
+	                        cn.temp[118]=string(obj_ini.ship[i].carrying)+"/"+string(obj_ini.ship[i].capacity);
+	                        cn.temp[119]="";
+							if (obj_ini.ship[i].carrying>0) then cn.temp[119]=scr_ship_occupants(obj_ini.ship[i]);
 	                    }
 	                }
                 

@@ -340,26 +340,26 @@ if (menu=15) and (cooldown<=0){
 
 
 if (menu=16) and (cooldown<=0){
-    var i;i=ship_current;
-    repeat(34){i+=1;
-        if (obj_ini.ship[i]!="") and (mouse_x>=xx+953) and (mouse_x>=yy+84+(i*20)) and (mouse_x<xx+969) and (mouse_y<yy+100+(i*20)){
-            temp[40]=obj_ini.ship[i];
-            with(obj_p_fleet){var i;i=0;
-                repeat(40){i+=1;
-                    if (capital[i]=obj_controller.temp[40]) then instance_create(x,y,obj_temp7);
-                    if (frigate[i]=obj_controller.temp[40]) then instance_create(x,y,obj_temp7);
-                    if (escort[i]=obj_controller.temp[40]) then instance_create(x,y,obj_temp7);
-                }
-            }
-            if (instance_exists(obj_temp7)){
-                x=obj_temp7.x;y=obj_temp7.y;cooldown=8000;
-                menu=0;with(obj_fleet_show){instance_destroy();}
-                instance_create(obj_temp7.x,obj_temp7.y,obj_fleet_show);
-                with(obj_temp7){instance_destroy();}
-            }
-        }
-    }
+	var done = false;
+	var ship_count = array_length(obj_ini.ship);
+    for (var i = ship_current, j = 0; j < 34; j++) { // i can't put two statements in the increment???
+		if (i < ship_count) and (mouse_x>=xx+953) and (mouse_y>=yy+84+(j*20)) and (mouse_x<xx+969) and (mouse_y<yy+100+(j*20)){
+            temp[40] = obj_ini.ship[i];
+            with(obj_p_fleet) {
+				if (array_contains(ships,obj_ini.ship[i])) {
+					other.menu = 0; 
+					other.cooldown=8000;
+					instance_create(x,y,obj_fleet_show);
+					done = true;
+					break;
+				}
+			}
+		}
+		i++;
+		if (done) then break;
+	}
 }
+
 
 
 
@@ -1084,6 +1084,8 @@ if (zoomed=0) and (cooldown<=0) and (diplomacy=0){
         managing=0;
     }
 
+
+	// I do not know why the code saves string in this obj_controller.temp array, for now i won't be changing it
     if (mouse_x>=xx+939) and (mouse_y>=yy+838) and (mouse_x<xx+1052) and (mouse_y<yy+879){// Master of the Fleet
         menu_adept=0;hide_banner=1;
         var geh,good;good=0;geh=0;
@@ -1099,18 +1101,33 @@ if (zoomed=0) and (cooldown<=0) and (diplomacy=0){
             temp[116]="";temp[118]="";temp[119]="";
 
             var i,g,u,m,d;i=0;g=0;u=0;m=0;d=0;
-            i=0;g=0;repeat(60){i+=1;if (obj_ini.ship[i]!="") and (obj_ini.ship_size[i]=3) then g+=1;}temp[37]=string(g);
-            i=0;g=0;repeat(60){i+=1;if (obj_ini.ship[i]!="") and (obj_ini.ship_size[i]=2) then g+=1;}temp[38]=string(g);
-            i=0;g=0;repeat(60){i+=1;if (obj_ini.ship[i]!="") and (obj_ini.ship_size[i]=1) then g+=1;}temp[39]=string(g);
+			temp[37] = string(count_capitals(obj_ini.ship));
+			temp[38] = string(count_frigates(obj_ini.ship));
+			temp[39] = string(count_escorts(obj_ini.ship));
+            //i=0;g=0;repeat(60){i+=1;if (obj_ini.ship[i]!="") and (obj_ini.ship_size[i]=3) then g+=1;}temp[37]=string(g);
+            //i=0;g=0;repeat(60){i+=1;if (obj_ini.ship[i]!="") and (obj_ini.ship_size[i]=2) then g+=1;}temp[38]=string(g);
+            //i=0;g=0;repeat(60){i+=1;if (obj_ini.ship[i]!="") and (obj_ini.ship_size[i]=1) then g+=1;}temp[39]=string(g);
             i=0;g=0;u=0;
-            repeat(60){i+=1;
-                if (g!=0) and (obj_ini.ship[i]!=""){if ((obj_ini.ship_hp[i]/obj_ini.ship_maxhp[i])<u){g=i;u=obj_ini.ship_hp[i]/obj_ini.ship_maxhp[i];}}
-                if (g=0) and (obj_ini.ship[i]!=""){g=i;u=obj_ini.ship_hp[i]/obj_ini.ship_maxhp[i];}
-                if (obj_ini.ship[i]!="") then m=i;
-                if (obj_ini.ship[i]!="") and ((obj_ini.ship_hp[i]/obj_ini.ship_maxhp[i])<0.25) then d+=1;
-            }
-            if (g!=0){temp[40]=string(obj_ini.ship_class[g])+" '"+string(obj_ini.ship[g])+"'";temp[41]=string(u);temp[42]=string(d);}
-            man_max=m;
+			var ship_count = array_length(obj_ini.ship);
+			var most_damaged_ship = undefined;
+			var least_hp = infinity;
+			var badly_wounded_ships = 0;
+			for (var i = 0; i < ship_count; i++) {
+				var ship_hp = obj_ini.ship[i].hp/obj_ini.ship[i].max_hp;
+				if ship_hp < 0.25 {
+					++badly_wounded_ships;
+				}
+				if(ship_hp < least_hp) {
+					most_damaged_ship = obj_ini.ship[i];
+					least_hp = ship_hp;
+				}
+			}
+            if (ship_count != 0) {
+				temp[40] = string(obj_ini.ship[g].class) + " '" + string(obj_ini.ship[g].name) + "'";
+				temp[41] = string(least_hp);
+				temp[42] = string(badly_wounded_ships);
+			}
+            man_max=ship_count;
             man_current=1;
         }
         if (menu=16) and (onceh=0){menu=0;onceh=1;cooldown=8000;click=1;}
