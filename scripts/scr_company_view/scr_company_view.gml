@@ -169,14 +169,14 @@ function scr_company_view(argument0) {
 	                if (ma_role[v]=obj_ini.role[100,8]) or (ma_role[v]=obj_ini.role[100,12]) or (ma_role[v]=obj_ini.role[100,10]) or (ma_role[v]=obj_ini.role[100,9]){
 
 	                    if (company=10) and (ma_exp[v]>=40) then ma_promote[v]=1;
-	                    if (company=9) and (ma_exp[v]>=60) then ma_promote[v]=1;
-	                    if (company=8) and (ma_exp[v]>=80) then ma_promote[v]=1;
-	                    if (company=7) and (ma_exp[v]>=100) then ma_promote[v]=1;
-	                    if (company=6) and (ma_exp[v]>=120) then ma_promote[v]=1;
-	                    if (company=5) and (ma_exp[v]>=140) then ma_promote[v]=1;
-	                    if (company=4) and (ma_exp[v]>=160) then ma_promote[v]=1;
-	                    if (company=3) and (ma_exp[v]>=180) then ma_promote[v]=1;
-	                    if (company=2) and (ma_exp[v]>=200) then ma_promote[v]=1;
+	                    if (company=9) and (ma_exp[v]>=50) then ma_promote[v]=1;
+	                    if (company=8) and (ma_exp[v]>=60) then ma_promote[v]=1;
+	                    if (company=7) and (ma_exp[v]>=70) then ma_promote[v]=1;
+	                    if (company=6) and (ma_exp[v]>=80) then ma_promote[v]=1;
+	                    if (company=5) and (ma_exp[v]>=100) then ma_promote[v]=1;
+	                    if (company=4) and (ma_exp[v]>=110) then ma_promote[v]=1;
+	                    if (company=3) and (ma_exp[v]>=120) then ma_promote[v]=1;
+	                    if (company=2) and (ma_exp[v]>=150) then ma_promote[v]=1;
                     
 
 
@@ -197,14 +197,14 @@ function scr_company_view(argument0) {
 
 	                if (ma_role[v]=obj_ini.role[100,5]){
 	                    if (company=10) and (ma_exp[v]>=40) then ma_promote[v]=1;
-	                    if (company=9) and (ma_exp[v]>=60) then ma_promote[v]=1;
-	                    if (company=8) and (ma_exp[v]>=80) then ma_promote[v]=1;
-	                    if (company=7) and (ma_exp[v]>=100) then ma_promote[v]=1;
-	                    if (company=6) and (ma_exp[v]>=120) then ma_promote[v]=1;
-	                    if (company=5) and (ma_exp[v]>=140) then ma_promote[v]=1;
-	                    if (company=4) and (ma_exp[v]>=160) then ma_promote[v]=1;
-	                    if (company=3) and (ma_exp[v]>=180) then ma_promote[v]=1;
-	                    if (company=2) and (ma_exp[v]>=200) then ma_promote[v]=1;
+	                    if (company=9) and (ma_exp[v]>=50) then ma_promote[v]=1;
+	                    if (company=8) and (ma_exp[v]>=60) then ma_promote[v]=1;
+	                    if (company=7) and (ma_exp[v]>=70) then ma_promote[v]=1;
+	                    if (company=6) and (ma_exp[v]>=80) then ma_promote[v]=1;
+	                    if (company=5) and (ma_exp[v]>=100) then ma_promote[v]=1;
+	                    if (company=4) and (ma_exp[v]>=110) then ma_promote[v]=1;
+	                    if (company=3) and (ma_exp[v]>=120) then ma_promote[v]=1;
+	                    if (company=2) and (ma_exp[v]>=150) then ma_promote[v]=1;
 
 	                }
 
