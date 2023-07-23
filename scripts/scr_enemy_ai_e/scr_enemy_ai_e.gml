@@ -562,9 +562,9 @@ function scr_enemy_ai_e() {
 					// xp is given in a latter if loop
 	                
 					if (obj_controller.recruit_trial="Blood Duel"){ // blood duel is most numerous, but not great with gene seed
-						months_to_neo-=choose(24,24,36,36,48);
+						months_to_neo-=choose(24,24,36,36,36,48);
 						corr+=choose(10,15,20);
-						recruit_chance-=choose(0.7,0.8,0,8,0.9);
+						recruit_chance-=choose(0.7,0.7,0.8,0.8,0,8,0.9);
 						
 						var failedneo;
 						failedneo=choose(0,0,0,0,0,0,0,0,1);
@@ -579,17 +579,21 @@ function scr_enemy_ai_e() {
 						
 						
 					if (obj_controller.recruit_trial="Challenge"){
-						
+						corr+=choose(1,2,3)
+						months_to_neo-=choose(-6,0,6);
+					}
+					
+					if (obj_controller.recruit_trial="Exposure"){
+						corr+=choose(1,2,3)
 					}
 					
 	                if (obj_controller.recruit_trial="Knowledge of Self"){ // less time heavy than apprenticeship. Good on temperates (ppl are educated there idk)
-						months_to_neo+=choose(18,24,36);
+						months_to_neo+=choose(18,24,24,24,36,36);
 						corr-=choose(4,6,8) 
 						}
 					if (obj_controller.recruit_trial="Apprenticeship") {  // the "I don't need any more astartes but have money to spend" one
 						months_to_neo+=choose(48,60);
 						corr-=10;
-						
 	                    }
                 
 				// xp gain for the recruit is here
@@ -611,35 +615,40 @@ function scr_enemy_ai_e() {
 						
                 
 	                    if (obj_controller.recruit_trial="Hunting the Hunter"){
-							if(p_type[run]="Desert") or (p_type[run]="Ice") or (p_type[run]="Death")
-								obj_controller.recruit_exp[thiss]+=irandom(7)+7; 
-								
+							if(p_type[run]="Desert") or (p_type[run]="Ice") or (p_type[run]="Death"){
+								obj_controller.recruit_exp[thiss]+=irandom(13)+7; 
+							}
+							obj_controller.recruit_exp[thiss]+=5;
 	                    }
 						
 						if (obj_controller.recruit_trial="Exposure"){
-							
+							if(p_type[run]="Desert") or (p_type[run]="Ice") or (p_type[run]="Death") or (p_type[run]="Lava") or (p_type[run]="Forge"){
+								months_to_neo-=choose(12,12,12,24,24,36);
+							}
 						}
 
 						if (obj_controller.recruit_trial="Survival of the Fittest"){
-							
+							if(p_type[run]="Desert") or (p_type[run]="Ice") or (p_type[run]="Death") or (p_type[run]="Lava"){
+								recruit_chance-=choose(0.7,0.8,0.8,0.8,0.9);
+							}
+							if(p_type[run]="Feudal"){recruit_chance-=choose(0.5,0.6,0.6,0.7,0.7,0.8)}
 						}
+	                    if (obj_controller.recruit_trial="Challenge"){
+							obj_controller.recruit_exp[thiss]+=choose(0,0,0,0,0,0,0,0,10,20);
+							scr_alert("green","owner","A worthy aspirant has risen to the rank of Neophyte, doing quite well against the challenger Astartes.",0,0);
+	                    }
+
 						
 						if (obj_controller.recruit_trial="Apprenticeship"){
-							obj_controller.recruit_exp[thiss]+=40						
+							if (p_type[run]="Lava"){recruit_chance-=choose(0.5,0.6,0.6,0.7,0.7);} // nocturne gaming
+							obj_controller.recruit_exp[thiss]+=irandom(5)+33;					
+						}
+						
+						if (obj_controller.recruit_trial="Knowledge of Self"){
+							if(p_type[run]="Temperate") then obj_controller.recruit_exp[thiss]+=irandom(5)+5; // this is the only one that gives bonus for temperates
+							obj_controller.recruit_exp[thiss]+=irandom(15)+15; 
 						}
 
-	                    if (obj_controller.recruit_trial="Challenge"){
-							if(p_type[run]="Death"){
-								obj_controller.recruit_exp[thiss]+=30;
-							}
-							else
-	                        obj_controller.recruit_exp[thiss]+=irandom(5)+5;
-	                        var rand5;rand5=floor(random(100))+1;
-	                        if (rand5<=1){
-	                            obj_controller.recruit_exp[thiss]+=choose(20,25,30);months_to_neo-=5;
-	                            scr_alert("green","recruitment","Recruit "+string(obj_controller.recruit_name[thiss])+" defeats the Astartes and is destined for greatness.",0,0);
-	                        }
-	                    }
 
                    
                    
