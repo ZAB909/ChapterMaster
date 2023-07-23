@@ -3,6 +3,7 @@ function scr_initialize_custom() {
 	// These are the new variables that are being read, for the new creation
 	// They will also have to be loaded and saved
 	// Worry about that later
+    // this has starting XP for marines !
 
 	/*
 	chapter="Unnamed";
@@ -668,7 +669,7 @@ function scr_initialize_custom() {
 	if (hong>0) then repeat(10){k+=1;commands+=1;man_size+=1;
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,2];wep1[company,k]=wep1[101,2];name[company,k]=scr_marine_name();
 	    wep2[company,k]=wep2[101,2];armor[company,k]="MK7 Aquila";gear[company,k]=gear[100,2];mobi[company,k]=mobi[100,2];hp[company,k]=100;
-	    chaos[company,k]=0;experience[company,k]=100;
+	    chaos[company,k]=0;experience[company,k]=220;
 	}
 
 
@@ -690,7 +691,7 @@ function scr_initialize_custom() {
 	if (veteran+terminator>0){
 	    k+=1;commands+=1;// Captain
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,5];wep1[company,k]=wep1[101,5];name[company,k]=scr_marine_name();
-	    wep2[company,k]=wep2[101,5];armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=100;gear[company,k]=gear[101,5];
+	    wep2[company,k]=wep2[101,5];armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=220;gear[company,k]=gear[101,5];
 	    if (string_count("Crafter",strin)>0) then armor[company,k]="Tartaros";
 	    if (terminator<=0) then armor[company,k]="MK6 Corvus";
 	    if (global.chapter_name="Iron Hands") then armor[company,k]="Terminator Armor";
@@ -751,7 +752,7 @@ function scr_initialize_custom() {
 
 	    k+=1;man_size+=1;// Company Champion
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,7];wep1[company,k]=wep1[100,7];name[company,k]=scr_marine_name();
-	    wep2[company,k]=wep2[100,7];armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=120;
+	    wep2[company,k]=wep2[100,7];armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=200;
 	    if (string_count("Crafter",strin)>0) then armor[company,k]="Tartaros";
 	    if (terminator<=0) then armor[company,k]="MK6 Corvus";
 	    if (armor[company,k]="Terminator") or (armor[company,k]="Tartaros") then man_size+=1;
