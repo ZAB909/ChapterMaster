@@ -12,6 +12,7 @@ function macros() {
 	enum GOD_MISSION{
 		artifact
 	}
+
 	enum INQUISITION_MISSION {
 		purge,
 		inquisitor,
