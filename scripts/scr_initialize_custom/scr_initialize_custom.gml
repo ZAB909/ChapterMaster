@@ -669,7 +669,7 @@ function scr_initialize_custom() {
 	if (hong>0) then repeat(10){k+=1;commands+=1;man_size+=1;
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,2];wep1[company,k]=wep1[101,2];name[company,k]=scr_marine_name();
 	    wep2[company,k]=wep2[101,2];armor[company,k]="MK7 Aquila";gear[company,k]=gear[100,2];mobi[company,k]=mobi[100,2];hp[company,k]=100;
-	    chaos[company,k]=0;experience[company,k]=220;
+	    chaos[company,k]=0;experience[company,k]=180;
 	}
 
 
@@ -758,12 +758,14 @@ function scr_initialize_custom() {
 	    if (armor[company,k]="Terminator") or (armor[company,k]="Tartaros") then man_size+=1;
 	}
 
-
+	// go 5 under the required xp amount 
+	var terminator_random_xp = irandom(20)+=175;
+	var veteran_random_xp = irandom(20)+=145;
 
 	if (terminator-1>0) then repeat(terminator-1){k+=1;man_size+=2;
 	// repeat(max(terminator-4,0)){k+=1;man_size+=2;
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,4];wep1[company,k]=wep1[101,4];name[company,k]=scr_marine_name();
-	    wep2[company,k]=wep2[101,4];armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=180;
+	    wep2[company,k]=wep2[101,4];armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=var terminator_random_xp;
 	    if (string_count("Crafter",strin)>0) and (k<=20) then armor[company,k]="Tartaros";
 	}
 	repeat(veteran){k+=1;man_size+=1;
@@ -844,10 +846,22 @@ function scr_initialize_custom() {
 	        rhinoy=8;whirly=whirlwind;speedy=2;
 	    }
 
+		// random xp for each marine company
+	var company2_random_exp = irandom(15)+=115;
+	var company3_random_exp = irandom(15)+=105;
+	var company4_random_exp = irandom(15)+=95;
+	var company5_random_exp = irandom(15)+=85;
+	var company6_random_exp = irandom(10)+=65;
+	var company7_random_exp = irandom(10)+=55;
+	var company8_random_exp = irandom(10)+=45;
+	var company9_random_exp = irandom(10)+=35;
+	var company10_random_exp = irandom(15)+=5;
+
+
 
 	    if (obj_creation.equal_specialists=0){
 	        if (company=2){
-	            temp1=(second-(assault+devastator));company_experience=70;company_unit2="assault";company_unit3="devastator";
+	            temp1=(second-(assault+devastator));company_experience=company2_random_exp;company_unit2="assault";company_unit3="devastator";
 	            temp1-=2;
 
 	            dready=1;if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=1;
@@ -855,7 +869,7 @@ function scr_initialize_custom() {
 	            if (second=0) then stahp=1;
 	        }
 	        if (company=3){
-	            temp1=(third-(assault+devastator));company_experience=60;company_unit2="assault";company_unit3="devastator";
+	            temp1=(third-(assault+devastator));company_experience=company3_random_exp;company_unit2="assault";company_unit3="devastator";
 	            temp1-=2;
 	            // dready=2;
 	            if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=2;
@@ -863,7 +877,7 @@ function scr_initialize_custom() {
 	            if (third=0) then stahp=1;
 	        }
 	        if (company=4){
-	            temp1=(fourth-(assault+devastator));company_experience=50;company_unit2="assault";company_unit3="devastator";
+	            temp1=(fourth-(assault+devastator));company_experience=company4_random_exp;company_unit2="assault";company_unit3="devastator";
 	            temp1-=2;
 	            // dready=2;
 	            if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=2;
@@ -871,7 +885,7 @@ function scr_initialize_custom() {
 	            if (fourth=0) then stahp=1;
 	        }
 	        if (company=5){
-	            temp1=(fifth-(assault+devastator));company_experience=40;company_unit2="assault";company_unit3="devastator";
+	            temp1=(fifth-(assault+devastator));company_experience=company5_random_exp;company_unit2="assault";company_unit3="devastator";
 	            temp1-=2;
 	            // dready=2;
 	            if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=2;
@@ -879,7 +893,7 @@ function scr_initialize_custom() {
 	            if (fifth=0) then stahp=1;
 	        }
 	        if (company=6){
-	            temp1=sixth;company_experience=35;company_unit2="";company_unit3="";
+	            temp1=sixth;company_experience=company6_random_exp;company_unit2="";company_unit3="";
 	            temp1-=2;
 	            // dready=2;
 	            if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=2;
@@ -887,28 +901,28 @@ function scr_initialize_custom() {
 	            if (sixth=0) then stahp=1;
 	        }
 	        if (company=7){
-	            temp1=seventh;company_experience=30;company_unit2="";company_unit3="";
+	            temp1=seventh;company_experience=company7_random_exp;company_unit2="";company_unit3="";
 	            temp1-=2;
 	            if (obj_creation.custom=0) then dready=2;
 	            rhinoy=8;whirly=0;speedy=8;
 	            if (seventh=0) then stahp=1;
 	        }
 	        if (company=8){
-	            temp1=eighth;company_experience=25;company_unit2="";company_unit3="";
+	            temp1=eighth;company_experience=company8_random_exp;company_unit2="";company_unit3="";
 	            temp1-=2;
 	            if (obj_creation.custom=0) then dready=2;
 	            rhinoy=2;whirly=0;speedy=2;
 	            if (eighth=0) then stahp=1;
 	        }
 	        if (company=9){
-	            temp1=ninth;company_experience=20;company_unit2="";company_unit3="";
+	            temp1=ninth;company_experience=company9_random_exp;company_unit2="";company_unit3="";
 	            temp1-=2;
 	            if (obj_creation.custom=0) then dready=2;
 	            rhinoy=2;whirly=0;speedy=0;
 	            if (ninth=0) then stahp=1;
 	        }
 	        if (company=10){
-	            temp1=tenth;company_experience=5;company_unit2="";company_unit3="";
+	            temp1=tenth;company_experience=company10_random_exp;company_unit2="";company_unit3="";
 	            temp1-=2;
 	            dready=0;rhinoy=8;whirly=0;speedy=0;
 
