@@ -709,7 +709,7 @@ function scr_initialize_custom() {
 	        repeat(skl){
 	            k+=1;commands+=1;// Chaplain
 	            race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,14];wep1[company,k]=wep1[101,14];name[company,k]=scr_marine_name();
-	            wep2[company,k]=wep2[101,14];armor[company,k]="Terminator Armor";gear[company,k]=gear[101,14];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=110;
+	            wep2[company,k]=wep2[101,14];armor[company,k]="Terminator Armor";gear[company,k]=gear[101,14];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=150;
 	            if (string_count("Crafter",strin)>0) then armor[company,k]="Tartaros";
 	            if (terminator<=0) then armor[company,k]="MK6 Corvus";
 	            if (mobi[101,14]!="") then mobi[company,k]=mobi[101,14];
@@ -719,7 +719,7 @@ function scr_initialize_custom() {
 
 	    k+=1;commands+=1;// Apothecary
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,15];wep1[company,k]=wep1[101,15];name[company,k]=scr_marine_name();
-	    wep2[company,k]=wep2[101,15];armor[company,k]="Terminator Armor";gear[company,k]=gear[101,15];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=110;
+	    wep2[company,k]=wep2[101,15];armor[company,k]="Terminator Armor";gear[company,k]=gear[101,15];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=130;
 	    if (string_count("Crafter",strin)>0) then armor[company,k]="Tartaros";
 	    if (terminator<=0) then armor[company,k]="MK6 Corvus";
 	    if (mobi[101,15]!="") then mobi[company,k]=mobi[101,15];
@@ -745,7 +745,7 @@ function scr_initialize_custom() {
 
 	    k+=1;// Standard bearer
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]="Standard Bearer";wep1[company,k]="Company Standard";name[company,k]=scr_marine_name();
-	    wep2[company,k]="Power Fist";armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=95;
+	    wep2[company,k]="Power Fist";armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=90;
 	    if (string_count("Crafter",strin)>0) then armor[company,k]="Tartaros";
 	    if (terminator<=0) then armor[company,k]="MK6 Corvus";
 	    if (armor[company,k]="Terminator") or (armor[company,k]="Tartaros") then man_size+=1;
@@ -763,7 +763,7 @@ function scr_initialize_custom() {
 	if (terminator-1>0) then repeat(terminator-1){k+=1;man_size+=2;
 	// repeat(max(terminator-4,0)){k+=1;man_size+=2;
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,4];wep1[company,k]=wep1[101,4];name[company,k]=scr_marine_name();
-	    wep2[company,k]=wep2[101,4];armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=90;
+	    wep2[company,k]=wep2[101,4];armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=180;
 	    if (string_count("Crafter",strin)>0) and (k<=20) then armor[company,k]="Tartaros";
 	}
 	repeat(veteran){k+=1;man_size+=1;
