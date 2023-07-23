@@ -1001,8 +1001,8 @@ if (slide=3){
     draw_text_transformed(830,512,string_hash_to_newline(string(aspirant_trial)),0.5,0.5,0);
     
     var asp_info;asp_info="";
-    if (aspirant_trial="Blood Duel") then asp_info="-Faster Neophyte Training#-Small Chance of Corruption";
-    if (aspirant_trial="Hunting the Hunter") then asp_info="-Minor Bonus Neophyte Experience";
+    if (aspirant_trial="Blood Duel") then asp_info="-10-30% more recruits#-30-60% faster training time#-10% chance to burn a gene-seed";
+    if (aspirant_trial="Hunting the Hunter") then asp_info="-Planets: Desert, Ice, Death#-Up to 25 XP on Neophytes";
     if (aspirant_trial="Survival of the Fittest") then asp_info="-Faster Neophyte Training#-Small Chance of Corruption";
     if (aspirant_trial="Exposure") then asp_info="-Faster Neophyte Training#-Less Chance of Recruit Success";
     if (aspirant_trial="Knowledge of Self") then asp_info="-Greatly Faster Neophyte Training#-Much Less Chance of Recruit Success";

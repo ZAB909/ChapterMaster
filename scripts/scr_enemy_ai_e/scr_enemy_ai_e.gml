@@ -610,7 +610,7 @@ function scr_enemy_ai_e() {
 	                    }
                     
 	                    obj_controller.recruit_name[thiss]=scr_marine_name();
-	                    obj_controller.recruit_exp[thiss]=0;
+	                    obj_controller.recruit_exp[thiss]+=irandom(5);
 						
 						
                 
@@ -618,7 +618,6 @@ function scr_enemy_ai_e() {
 							if(p_type[run]="Desert") or (p_type[run]="Ice") or (p_type[run]="Death"){
 								obj_controller.recruit_exp[thiss]+=irandom(13)+7; 
 							}
-							obj_controller.recruit_exp[thiss]+=5;
 	                    }
 						
 						if (obj_controller.recruit_trial="Exposure"){
@@ -641,12 +640,12 @@ function scr_enemy_ai_e() {
 						
 						if (obj_controller.recruit_trial="Apprenticeship"){
 							if (p_type[run]="Lava"){recruit_chance-=choose(0.5,0.6,0.6,0.7,0.7);} // nocturne gaming
-							obj_controller.recruit_exp[thiss]+=irandom(5)+33;					
+							obj_controller.recruit_exp[thiss]+=irandom(5)+34;					
 						}
 						
 						if (obj_controller.recruit_trial="Knowledge of Self"){
 							if(p_type[run]="Temperate") then obj_controller.recruit_exp[thiss]+=irandom(5)+5; // this is the only one that gives bonus for temperates
-							obj_controller.recruit_exp[thiss]+=irandom(15)+15; 
+							obj_controller.recruit_exp[thiss]+=irandom(10)+15; 
 						}
 
 
@@ -659,7 +658,7 @@ function scr_enemy_ai_e() {
 	                    obj_controller.recruit_distance[thiss]=0;
 	                    obj_controller.recruit_training[thiss]=months_to_neo;
 	                    obj_controller.gene_seed-=1;
-                    
+						if(obj_controller.recruit_exp[thiss]>=40) then obj_controller.recruit_exp[thiss]=38; // we don't want immediate battle bros
                     
                     
                     
