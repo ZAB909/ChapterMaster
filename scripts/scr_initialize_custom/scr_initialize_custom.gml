@@ -198,6 +198,9 @@ function scr_initialize_custom() {
 	        strike_cruisers=6;
 	        gladius=7;
 	        hunters=3;
+			
+			if (global.chapter_name="Soul Drinkers") then gladius-=4; strike_cruisers-=3; battle_barges+=1; 
+			
 	    }
 	    if (obj_creation.fleet_type=1){
 	        strike_cruisers=8;
@@ -205,6 +208,7 @@ function scr_initialize_custom() {
 	        hunters=3;
 
 	        if (global.chapter_name="Dark Angels") then battle_barges+=1;
+
 	    }
 	    if (obj_creation.fleet_type=3){
 	        if (global.chapter_name="Lamenters"){
@@ -416,12 +420,17 @@ function scr_initialize_custom() {
 	    tenth=0;ninth=0;eighth=0;seventh=0;sixth=0;fifth=0;
 	    techs=8;epistolary=6;apothecary=5;codiciery=3;lexicanum=5;terminator=5;veteran+=10;
 	}
+	if (global.chapter_name="Soul Drinkers"){
+		tenth-=38;seventh=0;sixth=40; assault-=10;
+		fifth-=20;fourth-=20;third-=20;second-=20;terminator-=5;veteran-=20;
+	}
 	if (global.chapter_name="Space Wolves"){
 	    veteran+=40;second+=40;third+=40;fourth+=40;fifth+=40;sixth+=40;seventh+=40;eighth+=40;ninth+=40;tenth+=60;
 	}
 	if (global.chapter_name="Iron Hands"){
 	    terminator=0;veteran+=10;
 	}
+	
 	if (obj_creation.custom=0) and (global.chapter_name!="Iron Hands") and (global.chapter_name!="Doom Benefactors"){
 	    if (veteran>=20) and (global.founding=0){veteran-=20;terminator+=20;}
 	    if (veteran>=10) and (global.founding!=0) and (global.chapter_name!="Lamenters"){veteran-=10;terminator+=10;}
@@ -1006,7 +1015,7 @@ function scr_initialize_custom() {
 	                }
 	            }
 	            if (company=10){
-	                repeat(temp1){k+=1;man_size+=1;
+	                repeat(temp1){k+=1;man_size+=1; // commands+=1; // i don't think this does anything
 	                    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,12];
 	                    wep1[company,k]=wep1[101,12];name[company,k]=scr_marine_name();
 	                    wep2[company,k]=wep2[101,12];armor[company,k]="Scout Armor";
@@ -1212,7 +1221,7 @@ function scr_initialize_custom() {
 	    penitent_end=obj_creation.strength*5;
 
 	    if (obj_creation.chapter="Lamenters"){
-	        penitent_max=850;penitent_end=850;
+	        penitent_max=720;penitent_end=720;
 	        // obj_controller.loyalty=50;obj_controller.loyalty_hidden=50;
 	    }
 	}

@@ -76,6 +76,7 @@ if (menu=12) and (cooldown<=0) and (penitorium>0){
                 if (obj_ini.role[c,e]="Master of the Apothecarion") then tek="c";
                 if (obj_ini.role[c,e]="Forge Master") then tek="c";
                 if (obj_ini.role[c,e]="Chapter Master"){tek="c";obj_controller.alarm[7]=5;global.defeat=3;}
+                if (obj_ini.role[c,e]="Scout") then tek="c"; // this should make the scouts command idk
 
                 // Needs to be based on role
                 if (tek="m") then obj_controller.marines-=1;

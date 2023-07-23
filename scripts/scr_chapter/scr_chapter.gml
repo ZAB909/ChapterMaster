@@ -1,7 +1,7 @@
 function scr_chapter(argument0) {
 
 	// argument0 = chapter
-
+	// i don't think fleet based ones go here
 	// Assigns premade Chapter settings
 
 	if (cooldown<=0){click=1;
@@ -148,9 +148,6 @@ function scr_chapter(argument0) {
 	    other2="Mechanicus";mutations=2;mutations_selected=2;mutation="Betcher's Gland|Sus-an Membrane|";
 	    betchers=1;membrane=1;
 	}
-
-
-
 
 	if (argument0="Blood Angels"){founding="N/A";
 	    selected_chapter=5;chapter_name="Blood Angels";icon=5;icon_name="ba";fleet_type=2;maximum_size=10;purity=10;stability=9;cooperation=7;

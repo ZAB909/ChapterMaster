@@ -160,7 +160,7 @@ if (type=5) and (cooldown<=0){
             i=0;cap=0;bear=0;champ=0;
             i+=1;role_name[i]=obj_ini.role[100,2];role_exp[i]=90;// 136;
         }
-
+        // does command roles per company, and how much xp they start out with
         if (target_comp=1) and (spec=0){
             i=0;cap=0;bear=0;champ=0;
             if (units=1){cap=scr_role_count(obj_ini.role[100,5],"1");if (cap=0){i+=1;role_name[i]=obj_ini.role[100,5];role_exp[i]=100;}}
