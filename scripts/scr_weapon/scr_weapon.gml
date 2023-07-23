@@ -154,10 +154,10 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 
 
-	    if (thawep="Storm Shield"){melee_hands+=1;atta=0;arp=0;rang=0;spli=0;
+	    if (thawep="Storm Shield"){melee_hands+=0.9;atta=0;arp=0;rang=0;spli=0;
 	        descr="Protects twice as well when boarding. A powered shield that must be held with a hand.  While powered by the marines armor it shimmers with blue energy.";
 	        spe_descr="+30% HP, +8 Armor";}
-	    if (thawep="Boarding Shield"){melee_hands+=1;atta=0;arp=0;rang=0;spli=0;
+	    if (thawep="Boarding Shield"){melee_hands+=0.9;atta=0;arp=0;rang=0;spli=0;
 	        descr="Protects twice as well when boarding. Used in siege or boarding operations, this shield offers additional protection.  It may be used with a 2-handed ranged weapon.";
 	        spe_descr="+15% HP, +4 Armor";}
 	    if (thawep="Hellgun"){atta=30;arp=0;rang=6.1;ranged_hands+=2;amm=10;
