@@ -418,6 +418,11 @@ function scr_initialize_custom() {
 	    tenth=0;ninth=0;eighth=0;seventh=0;sixth=0;fifth=0;
 	    techs=8;epistolary=6;apothecary=5;codiciery=3;lexicanum=5;terminator=5;veteran+=10;
 	}
+	if (global.chapter_name="Soul Drinkers"){
+		tenth-=38;seventh=0;sixth=40; assault-=10;
+		fifth-=20;fourth-=20;third-=20;second-=20;terminator-=5;veteran-=20;
+	}
+
 	if (global.chapter_name="Space Wolves"){
 	    veteran+=40;second+=40;third+=40;fourth+=40;fifth+=40;sixth+=40;seventh+=40;eighth+=40;ninth+=40;tenth+=60;
 	}
