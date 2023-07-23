@@ -33,7 +33,7 @@ if (engage=true){
                     if (req_armor="Terminator Armor"){
                         if (obj_ini.armor[co,i]="Terminator Armor") then yes=true;
                         if (obj_ini.armor[co,i]="Tartaros") then yes=true;
-                        if (obj_ini.armor[co,i]!="Terminator Armor") and (obj_ini.armor[co,i]!="Tartaros") and (obj_ini.experience[co,i]<90) then yes=true;
+                        if (obj_ini.armor[co,i]!="Terminator Armor") and (obj_ini.armor[co,i]!="Tartaros") and (obj_ini.experience[co,i]<179) then yes=true;
                     }
                     if (req_armor="Scout Armor") and (obj_ini.armor[co,i]="Scout Armor") then yes=true;
                     if (string_count("&",obj_ini.armor[co,i])>0) then yes=true;
