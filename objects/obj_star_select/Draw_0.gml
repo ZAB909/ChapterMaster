@@ -272,7 +272,9 @@ if (obj_controller.selecting_planet!=0){
 	if ( feat_count > 0){
 	for (var i =0; i <  feat_count ;i++;){
 		if (target.p_feature[pp][i].planet_display != 0){
-			planet_displays += target.p_feature[pp][i].planet_display + "|";
+			if (target.p_feature[pp][i].player_hidden == 1){planet_displays += "????"}else{
+				planet_displays += target.p_feature[pp][i].planet_display + "|";
+			}
 		}
 	}}
     t=0;to_show=string_count("|",planet_displays);

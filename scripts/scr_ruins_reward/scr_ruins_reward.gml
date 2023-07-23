@@ -1,8 +1,8 @@
-function scr_ruins_reward(argument0, argument1, argument2) {
+function scr_ruins_reward(star_system, planet, ruins_type) {
 
-	// argument0: world object
-	// argument1: planet
-	// argument2: argument2
+	// star_system: world object
+	// planet: planet
+	// ruins_type: ruins_type
 
 	var dice,loot,flea,sihd;
 	dice=floor(random(100))+1;loot="";
@@ -17,20 +17,20 @@ function scr_ruins_reward(argument0, argument1, argument2) {
 	if (dice>97) and (dice<=100) then loot="fortress";// 
 	if (dice>100) and (dice<=150) then loot="starship";// 
 
-	if (argument2=1) and (loot="wild_card") then loot="gene_seed";// 
-	if (argument2=2) and (loot="wild_card") then loot="req";// 
-	if (argument2=6) and (loot="wild_card") then loot="gear";// 
-	if (argument2>=10) and (loot="wild_card") then loot="req";// 
+	if (ruins_type=1) and (loot="wild_card") then loot="gene_seed";// 
+	if (ruins_type=2) and (loot="wild_card") then loot="req";// 
+	if (ruins_type=6) and (loot="wild_card") then loot="gear";// 
+	if (ruins_type>=10) and (loot="wild_card") then loot="req";// 
 
 	var yar;yar=0;sihd=0;
 	with(obj_p_fleet){if (action!="") then instance_deactivate_object(id);}
-	flea=instance_nearest(argument0.x,argument0.y,obj_p_fleet);
+	flea=instance_nearest(star_system.x,star_system.y,obj_p_fleet);
 	if (yar=0) and (flea.capital_num[1]!=0){yar=1;sihd=flea.capital_num[1];}
 	if (yar=0) and (flea.frigate_num[1]!=0){yar=1;sihd=flea.frigate_num[1];}
 	if (yar=0) and (flea.escort_num[1]!=0){yar=1;sihd=flea.escort_num[1];}
 	instance_activate_object(obj_p_fleet);
 
-	scr_event_log("","The Ancient Ruins on "+string(argument0.name)+" "+scr_roman(argument1)+" has been explored.");
+	scr_event_log("","The Ancient Ruins on "+string(star_system.name)+" "+scr_roman(planet)+" has been explored.");
 
 	// loot="artifact";
 
@@ -68,35 +68,35 @@ function scr_ruins_reward(argument0, argument1, argument2) {
 	    var wep1,wen1,wep2,wen2,wep3,wen3;
 	    wep1="";wen1=0;wep2="";wen2=0;wep3="";wen3=0;
 
-	    if (argument2<=2) or (argument2>=10){
+	    if (ruins_type<=2) or (ruins_type>=10){
 	        wep1=choose("Power Fist","Chainfist","Power Axe","Power Sword");wen1=choose(2,3,4,5);
 	        wep2=choose("Flamer","Meltagun","Combiflamer","Sniper Rifle");wen2=choose(3,4,5,6,7,8);
 	        wep3=choose("Missile Launcher","Heavy Bolter","Lascannon","Plasma Pistol");wen3=choose(1,2,3);
-	    }if (argument2=3){
+	    }if (ruins_type=3){
 			wep1=choose("Terminator Armor");wen1=choose(1,2);
 	        wep2=choose("Bionics");wen2=choose(5,6,7);
 	        wep3=choose("Narthecium","Psychic Hood","Rosarius");wen3=choose(1);
 	    }
-		if (argument2=4){
+		if (ruins_type=4){
 			wep1=choose("MK4 Maximus");wen1=choose(2,3);
 	        wep2=choose("MK6 Corvus","Scout Armor");wen2=choose(4,5,6);
 	        wep3=choose("MK8 Errant");wen3=choose(1,2);
 	    }
-	    if (argument2=5){
+	    if (ruins_type=5){
 	        wep1=choose("Eviscerator","Underslung Flamer");wen1=choose(2,3,4,5);
 	        wep2=choose("Flamer","Meltagun","Combiflamer");wen2=choose(3,4,5,6,7,8);
 	        wep3=choose("Heavy Flamer","Heavy Bolter","Plasma Pistol");wen3=choose(1,2,3);
 	    }
-	    if (argument2=6){
+	    if (ruins_type=6){
 	        wep1=choose("Eldar Power Sword","Power Spear");wen1=choose(1,2);
 	        wep2=choose("Storm Shield","Twin Linked Bolters");wen2=choose(1,2);
 	        wep3=choose("Archeotech Laspistol","Plasma Pistol");wen3=choose(1,2);
 	    }
-		if (argument2=7){
+		if (ruins_type=7){
 			wep1=choose("Autocannon");wen1=choose(1,2);
 	        wep2=choose("Heavy Bolters","Twin Linked Heavy Bolter");wen2=choose(1,2,3);
 	        wep3=choose("Twin Linked Lascannon","Lascannon");wen3=choose(1,2);
-	    }if (argument2=8){
+	    }if (ruins_type=8){
 			wep1=choose("Iron Halo");wen1=choose(1,2);
 	        wep2=choose("Company Standard");wen2=choose(1);
 	        wep3=choose("Master Servo Arms");wen3=choose(1);
@@ -122,10 +122,10 @@ function scr_ruins_reward(argument0, argument1, argument2) {
 	    var gene,pop;gene=floor(random_range(20,40))+1;pop=instance_create(0,0,obj_popup);
 	    pop.image="ruins_bunker";pop.title="Ancient Ruins: Bunker Network";
 	    pop.text="Your battle brothers have found several entrances into an ancient bunker network.  Its location has been handed over to the PDF.  The planet's defense rating has increased to ";
-	    pop.text+=string(min(argument0.p_fortified[argument1]+1,5))+".  ";
-	    if (argument0.p_fortified[argument1]<5) then pop.text+="("+string(argument0.p_fortified[argument1])+"+1)";
-	    if (argument0.p_fortified[argument1]>=5) then pop.text+="("+string(argument0.p_fortified[argument1])+"+0)";
-	    argument0.p_fortified[argument1]=min(argument0.p_fortified[argument1]+1,5);
+	    pop.text+=string(min(star_system.p_fortified[planet]+1,5))+".  ";
+	    if (star_system.p_fortified[planet]<5) then pop.text+="("+string(star_system.p_fortified[planet])+"+1)";
+	    if (star_system.p_fortified[planet]>=5) then pop.text+="("+string(star_system.p_fortified[planet])+"+0)";
+	    star_system.p_fortified[planet]=min(star_system.p_fortified[planet]+1,5);
 	}
 	if (loot="fortress"){// Fortress
 	    var gene,pop;gene=floor(random_range(20,40))+1;pop=instance_create(0,0,obj_popup);
@@ -138,13 +138,13 @@ function scr_ruins_reward(argument0, argument1, argument2) {
 	    var pop;pop=instance_create(0,0,obj_popup);
 	    pop.image="ruins_ship";pop.title="Ancient Ruins: Starship";
 	    pop.text="The ground beneath one of your battle brothers crumbles, and he falls a great height.  The other marines go down in pursuit- within a great chamber they find the remains of an ancient starship.  Though derelict, it is possible to land "+string(obj_ini.role[100,16])+"s onto the planet to repair the ship.  10,000 Requisition will be needed to make it operational.";
-		argument0.p_feature[argument1][search_planet_features(argument0.p_feature[argument1],P_features.Ancient_Ruins)[0]].find_starship();
-	    scr_event_log("","Ancient Starship discovered on "+string(argument0.name)+" "+scr_roman(argument1)+".");
+		star_system.p_feature[planet][search_planet_features(star_system.p_feature[planet],P_features.Ancient_Ruins)[0]].find_starship();
+	    scr_event_log("","Ancient Starship discovered on "+string(star_system.name)+" "+scr_roman(planet)+".");
 	}
 
 
-	 delete_features(argument0.p_feature[argument1], P_features.Ancient_Ruins)
-	// argument0.p_feature[argument1]="Ancient Ruins|";
+	 delete_features(star_system.p_feature[planet], P_features.Ancient_Ruins)
+	// star_system.p_feature[planet]="Ancient Ruins|";
 
 
 }
