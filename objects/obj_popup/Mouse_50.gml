@@ -642,9 +642,9 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
         if (n_wep1="Thunder Hammer"){
             var g,exp_check;g=0;exp_check=0;
             repeat(obj_controller.man_max){
-                g+=1;if (obj_controller.man_sel[g]=1) and (obj_controller.ma_exp[g]<70) then exp_check=1;
+                g+=1;if (obj_controller.man_sel[g]=1) and (obj_controller.ma_exp[g]<140) then exp_check=1;
             }
-            if (exp_check=1){n_good1=0;warning="A unit must have 70+ EXP to use a Thunder Hammer.";}
+            if (exp_check=1){n_good1=0;warning="A unit must have 140+ EXP to use a Thunder Hammer.";}
         }
         if (string_count("Terminator",n_armor)=0) and (string_count("Dreadnought",n_armor)=0) and (string_count("Tartaros",n_armor)=0) and (n_wep1="Assault Cannon"){n_good1=0;warning="Cannot use Assault Cannons without Terminator/Dreadnought Armor.";}
         if (string_count("Dreadnought",n_armor)=0) and (n_wep1="Close Combat Weapon"){n_good1=0;warning="Only "+string(obj_ini.role[100,6])+" can use Close Combat Weapons.";}
@@ -664,9 +664,9 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
         if (n_wep2="Thunder Hammer"){
             var g,exp_check;g=0;exp_check=0;
             repeat(obj_controller.man_max){
-                g+=1;if (obj_controller.man_sel[g]=1) and (obj_controller.ma_exp[g]<70) then exp_check=1;
+                g+=1;if (obj_controller.man_sel[g]=1) and (obj_controller.ma_exp[g]<140) then exp_check=1;
             }
-            if (exp_check=1){n_good2=0;warning="A unit must have 70+ EXP to use a Thunder Hammer.";}
+            if (exp_check=1){n_good2=0;warning="A unit must have 140+ EXP to use a Thunder Hammer.";}
         }
         if (string_count("Terminator",n_armor)=0) and (string_count("Dreadnought",n_armor)=0) and (string_count("Tartaros",n_armor)=0) and (n_wep2="Assault Cannon"){n_good2=0;warning="Cannot use Assault Cannons without Terminator/Dreadnought Armor.";}
         if (string_count("Dreadnought",n_armor)=0) and (n_wep2="Close Combat Weapon"){n_good2=0;warning="Only "+string(obj_ini.role[100,6])+" can use Close Combat Weapons.";}
