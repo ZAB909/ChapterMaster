@@ -313,7 +313,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        descr="A rapid-firing weapon able to use a wide variety of ammunition, from mass-reactive explosive to solid shells.";
 	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armor[0])>0) or (marine_armor[0]="Tartaros")) then ranged_hands-=1;
 	    }
-	    if (thawep="Missile Launcher"){atta=250;arp=0;rang=24;ranged_hands+=2;melee_hands+=1;amm=6;spli=0;
+	    if (thawep="Missile Launcher"){atta=250;arp=0;rang=24;ranged_hands+=2;melee_hands+=1;amm=6;spli=1;
 	        descr="This heavy weapon is capable of firing either armor-piercing or fragmentation rockets.  Has low ammunition count.";}
 	    if (thawep="Lascannon"){atta=200;arp=1;rang=24;ranged_hands+=2;melee_hands+=1;amm=8;spli=0;
 	        descr="A formidable laser weapon, this lascannon can pierce most vehicle or power armor from a tremendous range.";}
