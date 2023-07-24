@@ -65,6 +65,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	            if (string_count("Power Axe",thawep)>0){atta=190;arp=1;rang=1.2;melee_hands+=1;spli=1;}
 	            if (string_count("Power Fist",thawep)>0){atta=450;arp=1;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;}
 	            if (string_count("Lightning Claw",thawep)>0){atta=400;arp=1;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;}
+                    if (string_count("Thunder Hammer",thawep)>0){atta=650;arp=1;rang=1;melee_hands+=2;spli=1;}
 	            if (string_count("Relic Blade",thawep)>0){atta=700;arp=1;rang=1;melee_hands+=1;spli=1;}
 
 	            if (string_count("Relic Blade",thawep)=0) and (atta>0){atta=atta*1;}
