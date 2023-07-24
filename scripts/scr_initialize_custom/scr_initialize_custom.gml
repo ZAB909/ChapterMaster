@@ -214,6 +214,7 @@ function scr_initialize_custom() {
 	            strike_cruisers=2;
 	            gladius=2;
 	            hunters=1;
+				battle_barges=0;
 	        }
 	        if (global.chapter_name="Blood Ravens"){
 	            battle_barges=1;
@@ -1239,7 +1240,7 @@ function scr_initialize_custom() {
 	    penitent_end=obj_creation.strength*5;
 
 	    if (obj_creation.chapter="Lamenters"){
-	        penitent_max=850;penitent_end=850;
+	        penitent_max=600;penitent_end=600;
 	        // obj_controller.loyalty=50;obj_controller.loyalty_hidden=50;
 	    }
 	}
