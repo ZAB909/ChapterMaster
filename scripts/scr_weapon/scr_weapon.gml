@@ -227,7 +227,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	    if (thawep="Underslung Bolter"){atta=60;arp=0;rang=10;amm=8;spli=1;}// Bursts
 
 
-	    if (thawep="Bolter"){atta=40;arp=0;rang=12;ranged_hands+=2;amm=16;spli=1;
+	    if (thawep="Bolter"){atta=50;arp=0;rang=12;ranged_hands+=2;amm=16;spli=1;
 
 	        if (argument6!="description") and (argument6!="description_long"){
 	        if (string_count("Terminator",marine_armor[argument3])>0) then melee_hands-=1;
