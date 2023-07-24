@@ -163,12 +163,7 @@ function scr_load(argument0, argument1) {
 	            obj_controller.bat_scou_for[j]=ini_read_real("Formation","scou"+string(j),1);
 	        }
 	    }
-//<<<<<<<
-    
-//=======
 
-	    obj_controller.random_event_next=ini_read_string("Controller","random_event_next","");
-//>>>>>>>
 	    obj_controller.useful_info=ini_read_string("Controller","useful_info","");
 	    obj_controller.random_event_next=ini_read_real("Controller","random_event_next","");
 	    obj_controller.gene_sold=ini_read_real("Controller","gene_sold",0);
