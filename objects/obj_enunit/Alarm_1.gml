@@ -497,26 +497,26 @@ repeat(20){j+=1;
         scr_en_weapon("Power Klaw",true,dudes_num[j],dudes[j],j);
         scr_en_weapon("Rokkit Launcha",true,dudes_num[j],dudes[j],j);
         scr_en_weapon("Big Shoota",true,dudes_num[j],dudes[j],j);
-        dudes_ac[j]=37;
+        dudes_ac[j]=60;
         if (obj_ncombat.started=0) or (dudes_num[j]>1){dudes_hp[j]=600;}
         veh+=dudes_num[j];dudes_dr[j]=0.5;
     }
     
-    if (dudes[j]="Minor Warboss"){scr_en_weapon("Choppa",true,dudes_num[j],dudes[j],j);scr_en_weapon("Big Shoota",true,dudes_num[j],dudes[j],j);dudes_ac[j]=25;if (obj_ncombat.started=0) or (dudes_num[j]>1){dudes_hp[j]=150;}men+=dudes_num[j];}
-    if (dudes[j]="Warboss"){scr_en_weapon("Power Klaw",true,dudes_num[j],dudes[j],j);scr_en_weapon("Rokkit Launcha",true,dudes_num[j],dudes[j],j);dudes_ac[j]=30;if (obj_ncombat.started=0) or (dudes_num[j]>1){dudes_hp[j]=200;}men+=dudes_num[j];}
-    if (dudes[j]="Big Warboss"){scr_en_weapon("Power Klaw",true,dudes_num[j],dudes[j],j);scr_en_weapon("Rokkit Launcha",true,dudes_num[j],dudes[j],j);dudes_ac[j]=37;if (obj_ncombat.started=0) or (dudes_num[j]>1){dudes_hp[j]=300;}veh+=dudes_num[j];}
+    if (dudes[j]="Minor Warboss"){scr_en_weapon("Choppa",true,dudes_num[j],dudes[j],j);scr_en_weapon("Big Shoota",true,dudes_num[j],dudes[j],j);dudes_ac[j]=40;if (obj_ncombat.started=0) or (dudes_num[j]>1){dudes_hp[j]=150;}men+=dudes_num[j];}
+    if (dudes[j]="Warboss"){scr_en_weapon("Power Klaw",true,dudes_num[j],dudes[j],j);scr_en_weapon("Rokkit Launcha",true,dudes_num[j],dudes[j],j);dudes_ac[j]=50;if (obj_ncombat.started=0) or (dudes_num[j]>1){dudes_hp[j]=200;}men+=dudes_num[j];}
+    if (dudes[j]="Big Warboss"){scr_en_weapon("Power Klaw",true,dudes_num[j],dudes[j],j);scr_en_weapon("Rokkit Launcha",true,dudes_num[j],dudes[j],j);dudes_ac[j]=60;if (obj_ncombat.started=0) or (dudes_num[j]>1){dudes_hp[j]=300;}veh+=dudes_num[j];}
     
     if (dudes[j]="Gretchin"){scr_en_weapon("Grot Blasta",true,dudes_num[j],dudes[j],j);dudes_ac[j]=0;dudes_hp[j]=15;men+=dudes_num[j];}
-    if (dudes[j]="Slugga Boy"){scr_en_weapon("Choppa",true,dudes_num[j],dudes[j],j);scr_en_weapon("Slugga",true,dudes_num[j],dudes[j],j);dudes_ac[j]=10;dudes_hp[j]=35;men+=dudes_num[j];}
-    if (dudes[j]="Shoota Boy"){scr_en_weapon("Shoota",true,dudes_num[j],dudes[j],j);scr_en_weapon("Choppa",true,dudes_num[j],dudes[j],j);dudes_ac[j]=10;dudes_hp[j]=35;men+=dudes_num[j];}
+    if (dudes[j]="Slugga Boy"){scr_en_weapon("Choppa",true,dudes_num[j],dudes[j],j);scr_en_weapon("Slugga",true,dudes_num[j],dudes[j],j);dudes_ac[j]=10;dudes_hp[j]=50;men+=dudes_num[j];}
+    if (dudes[j]="Shoota Boy"){scr_en_weapon("Shoota",true,dudes_num[j],dudes[j],j);scr_en_weapon("Choppa",true,dudes_num[j],dudes[j],j);dudes_ac[j]=10;dudes_hp[j]=50;men+=dudes_num[j];}
     
-    if (dudes[j]="Mekboy"){scr_en_weapon("Power Klaw",true,dudes_num[j],dudes[j],j);scr_en_weapon("Big Shoota",true,dudes_num[j],dudes[j],j);dudes_ac[j]=30;dudes_hp[j]=50;men+=dudes_num[j];}
-    if (dudes[j]="Meganob"){scr_en_weapon("Power Klaw",true,dudes_num[j],dudes[j],j);scr_en_weapon("Big Shoota",true,dudes_num[j],dudes[j],j);dudes_ac[j]=35;dudes_hp[j]=50;men+=dudes_num[j];}
+    if (dudes[j]="Mekboy"){scr_en_weapon("Power Klaw",true,dudes_num[j],dudes[j],j);scr_en_weapon("Big Shoota",true,dudes_num[j],dudes[j],j);dudes_ac[j]=30;dudes_hp[j]=60;men+=dudes_num[j];}
+    if (dudes[j]="Meganob"){scr_en_weapon("Power Klaw",true,dudes_num[j],dudes[j],j);scr_en_weapon("Big Shoota",true,dudes_num[j],dudes[j],j);dudes_ac[j]=40;dudes_hp[j]=120;men+=dudes_num[j];}
     if (dudes[j]="Flash Git"){scr_en_weapon("Snazzgun",true,dudes_num[j],dudes[j],j);scr_en_weapon("Choppa",true,dudes_num[j],dudes[j],j);dudes_ac[j]=15;dudes_hp[j]=65;men+=dudes_num[j];}
     if (dudes[j]="Cybork"){scr_en_weapon("Power Klaw",true,dudes_num[j],dudes[j],j);scr_en_weapon("Big Shoota",true,dudes_num[j],dudes[j],j);dudes_ac[j]=30;dudes_hp[j]=80;men+=dudes_num[j];}
     
-    if (dudes[j]="Ard Boy"){scr_en_weapon("Choppa",true,dudes_num[j],dudes[j],j);scr_en_weapon("Slugga",true,dudes_num[j],dudes[j],j);dudes_ac[j]=20;dudes_hp[j]=45;men+=dudes_num[j];}
-    if (dudes[j]="Kommando"){scr_en_weapon("Choppa",true,dudes_num[j],dudes[j],j);scr_en_weapon("Rokkit Launcha",true,dudes_num[j],dudes[j],j);dudes_ac[j]=10;dudes_hp[j]=35;men+=dudes_num[j];}
+    if (dudes[j]="Ard Boy"){scr_en_weapon("Choppa",true,dudes_num[j],dudes[j],j);scr_en_weapon("Slugga",true,dudes_num[j],dudes[j],j);dudes_ac[j]=20;dudes_hp[j]=70;men+=dudes_num[j];}
+    if (dudes[j]="Kommando"){scr_en_weapon("Choppa",true,dudes_num[j],dudes[j],j);scr_en_weapon("Rokkit Launcha",true,dudes_num[j],dudes[j],j);dudes_ac[j]=10;dudes_hp[j]=80;men+=dudes_num[j];}
     if (dudes[j]="Burna Boy"){scr_en_weapon("Choppa",true,dudes_num[j],dudes[j],j);scr_en_weapon("Burna",true,dudes_num[j],dudes[j],j);dudes_ac[j]=10;dudes_hp[j]=35;men+=dudes_num[j];}
     if (dudes[j]="Tank Busta"){
         scr_en_weapon("Rokkit Launcha",true,dudes_num[j],dudes[j],j);
@@ -524,7 +524,7 @@ repeat(20){j+=1;
         scr_en_weapon("Melee1",true,dudes_num[j],dudes[j],j);
         dudes_ac[j]=10;dudes_hp[j]=50;men+=dudes_num[j];
     }
-    if (dudes[j]="Stormboy"){scr_en_weapon("Choppa",true,dudes_num[j],dudes[j],j);scr_en_weapon("Slugga",true,dudes_num[j],dudes[j],j);dudes_ac[j]=10;dudes_hp[j]=35;dudes_special[j]="Jetpack";men+=dudes_num[j];}
+    if (dudes[j]="Stormboy"){scr_en_weapon("Choppa",true,dudes_num[j],dudes[j],j);scr_en_weapon("Slugga",true,dudes_num[j],dudes[j],j);dudes_ac[j]=10;dudes_hp[j]=50;dudes_special[j]="Jetpack";men+=dudes_num[j];}
     
     if (dudes[j]="Battle Wagon"){
         scr_en_weapon("Kannon",false,dudes_num[j],dudes[j],j);
@@ -608,9 +608,9 @@ repeat(20){j+=1;
     if (dudes[j]="Hormagaunt"){scr_en_weapon("Scything Talons",true,dudes_num[j],dudes[j],j);dudes_ac[j]=0;dudes_hp[j]=20;men+=dudes_num[j];}
     
     if (dudes[j]="Cultist"){scr_en_weapon("Autogun",true,dudes_num[j],dudes[j],j);scr_en_weapon("melee0.5",true,dudes_num[j],dudes[j],j);dudes_ac[j]=0;dudes_hp[j]=20;men+=dudes_num[j];}
-    if (dudes[j]="Genestealer"){scr_en_weapon("Genestealer Claws",true,dudes_num[j],dudes[j],j);dudes_ac[j]=10;dudes_hp[j]=30;men+=dudes_num[j];}
+    if (dudes[j]="Genestealer"){scr_en_weapon("Genestealer Claws",true,dudes_num[j],dudes[j],j);dudes_ac[j]=10;dudes_hp[j]=50;men+=dudes_num[j];}
     if (dudes[j]="Genestealer Patriarch"){scr_en_weapon("Genestealer Claws",true,dudes_num[j],dudes[j],j);scr_en_weapon("Witchfire",true,dudes_num[j],dudes[j],j);dudes_ac[j]=20;dudes_hp[j]=150;dudes_dr[j]=0.75;men+=dudes_num[j];}
-    if (dudes[j]="Armored Limousine"){scr_en_weapon("Autogun",false,dudes_num[j]*4,dudes[j],j);dudes_ac[j]=10;dudes_hp[j]=100;veh+=dudes_num[j];dudes_vehicle[j]=1;}
+    if (dudes[j]="Armored Limousine"){scr_en_weapon("Autogun",false,dudes_num[j]*4,dudes[j],j);dudes_ac[j]=10;dudes_hp[j]=150;veh+=dudes_num[j];dudes_vehicle[j]=1;}
     if (dudes[j]="Lictor"){scr_en_weapon("Lictor Claws",true,dudes_num[j],dudes[j],j);scr_en_weapon("Flesh Hooks",true,dudes_num[j],dudes[j],j);dudes_ac[j]=20;dudes_hp[j]=150;men+=dudes_num[j];}
     
     dudes_dr[j]+=0.25;
@@ -685,7 +685,7 @@ repeat(20){j+=1;
     if (dudes[j]="Rubric Marine"){scr_en_weapon("Rubric Bolter",true,dudes_num[j],dudes[j],j);scr_en_weapon("Melee1",true,dudes_num[j],dudes[j],j);dudes_ac[j]=30;dudes_hp[j]=125;men+=dudes_num[j];}
     if (dudes[j]="Rubric Sorcerer"){scr_en_weapon("Witchfire",true,dudes_num[j],dudes[j],j);scr_en_weapon("Force Weapon",true,dudes_num[j],dudes[j],j);dudes_ac[j]=30;dudes_hp[j]=150;men+=dudes_num[j];}
       
-    if (dudes[j]="Cultist"){scr_en_weapon("Autogun",true,dudes_num[j],dudes[j],j);scr_en_weapon("melee0.5",true,dudes_num[j],dudes[j],j);dudes_ac[j]=0;dudes_hp[j]=20;men+=dudes_num[j];}
+    if (dudes[j]="Cultist"){scr_en_weapon("Autogun",true,dudes_num[j],dudes[j],j);scr_en_weapon("melee0.5",true,dudes_num[j],dudes[j],j);dudes_ac[j]=0;dudes_hp[j]=30;men+=dudes_num[j];}
     
     if (dudes[j]="Hellbrute"){
         scr_en_weapon("Power Fist",false,dudes_num[j],dudes[j],j);scr_en_weapon("Meltagun",false,dudes_num[j],dudes[j],j);
@@ -718,10 +718,10 @@ repeat(20){j+=1;
     
     
     if (dudes[j]="Arch Heretic"){scr_en_weapon("Power Weapon",true,dudes_num[j],dudes[j],j);scr_en_weapon("Plasma Pistol",true,dudes_num[j],dudes[j],j);dudes_ac[j]=20;dudes_hp[j]=30;dudes_dr[j]=0.7;men+=dudes_num[j];}
-    if (dudes[j]="Cultist Elite"){scr_en_weapon("Lasgun",true,dudes_num[j],dudes[j],j);scr_en_weapon("melee1",true,dudes_num[j],dudes[j],j);dudes_ac[j]=10;dudes_hp[j]=20;men+=dudes_num[j];}
-    if (dudes[j]="Mutant"){scr_en_weapon("melee1",true,dudes_num[j],dudes[j],j);dudes_ac[j]=0;dudes_hp[j]=30;men+=dudes_num[j];}
+    if (dudes[j]="Cultist Elite"){scr_en_weapon("Lasgun",true,dudes_num[j],dudes[j],j);scr_en_weapon("Chainaxe",true,dudes_num[j],dudes[j],j);dudes_ac[j]=10;dudes_hp[j]=20;men+=dudes_num[j];}
+    if (dudes[j]="Mutant"){scr_en_weapon("Flesh Hooks",true,dudes_num[j],dudes[j],j);dudes_ac[j]=0;dudes_hp[j]=30;men+=dudes_num[j];}
     if (dudes[j]="Daemonhost"){scr_en_weapon("Daemonhost Claws",true,dudes_num[j],dudes[j],j);scr_en_weapon("Daemonhost_Powers",true,dudes_num[j],dudes[j],j);dudes_ac[j]=30;dudes_hp[j]=300;dudes_dr[j]=0.5;medi+=dudes_num[j];}
-    
+    if (dudes[j]="Possessed"){scr_en_weapon("Possessed Claws",true,dudes_num[j],dudes[j],j);dudes_ac[j]=17;dudes_hp[j]=100;men+=dudes_num[j];}
     
     
     

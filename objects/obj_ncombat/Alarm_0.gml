@@ -1219,6 +1219,8 @@ if (enemy=10) and (battle_special!="ship_demon") and (battle_special!="fallen1")
         u=instance_nearest(xxx,240,obj_enunit);
         u.dudes[1]="Mutant";u.dudes_num[1]=8000;
         u.dudes[2]="Cultist Elite";u.dudes_num[2]=4000;
+        u.dudes[3]="Havoc";u.dudes_num[3]=50;
+        u.dudes[4]="Chaos Space Marine";u.dudes_num[4]=50;
         instance_deactivate_object(u);
     }
     if (threat=7){
