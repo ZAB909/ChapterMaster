@@ -11,8 +11,8 @@ function scr_load(argument0, argument1) {
 	    ini_open("tsave.ini");
 
 	    // Global variables
-	    global.chapter_name=ini_read_string("Save","chapter_name","Error");
-	    obj_ini.sector_name=ini_read_string("Save","sector_name","Error");
+	    global.chapter_name=ini_read_string("Save","chapter_name","Error"); //
+	    obj_ini.sector_name=ini_read_string("Save","sector_name","Error"); //
 
 	    global.version=ini_read_real("Save","version",0);
 	    if (global.version<0.64) then room_goto(Main_Menu);
@@ -49,11 +49,11 @@ function scr_load(argument0, argument1) {
 	    obj_controller.was_zoomed=ini_read_real("Controller","was_zoomed",0);
 	    obj_controller.zoomed=ini_read_real("Controller","zoomed",0);
 	    obj_controller.chaos_rating=ini_read_real("Controller","chaos_rating",0);
-	    obj_controller.fleet_type=ini_read_string("Controller","fleet_type","");
+	    obj_controller.fleet_type=ini_read_string("Controller","fleet_type",""); //
 	    obj_ini.fleet_type=round(ini_read_real("Controller","ifleet_type",0));
 	    obj_controller.homeworld_rule=ini_read_real("Controller","home_rule",1);
 
-	    obj_controller.star_names=ini_read_string("Controller","star_names","Error");
+	    obj_controller.star_names=ini_read_string("Controller","star_names","Error"); //
 	    obj_controller.craftworld=ini_read_real("Controller","craftworld",0);
 
 	    obj_controller.turn=ini_read_real("Controller","turn",0);
@@ -92,18 +92,18 @@ function scr_load(argument0, argument1) {
 	        obj_controller.stc_vehicles_un=ini_read_real("Controller","stc_vehicles_un",0);
 	        obj_controller.stc_ships_un=ini_read_real("Controller","stc_ships_un",0);
 	    var j;j=0;repeat(6){j+=1;obj_controller.stc_bonus[j]=ini_read_real("Controller","stc_bonus_"+string(j),0);}
-	    j=-1;repeat(5){j+=1;obj_ini.adv[j]=ini_read_string("Controller","adv"+string(j),"");obj_ini.dis[j]=ini_read_string("Controller","dis"+string(j),"");}
+	    j=-1;repeat(5){j+=1;obj_ini.adv[j]=ini_read_string("Controller","adv"+string(j),"");obj_ini.dis[j]=ini_read_string("Controller","dis"+string(j),"");} //
 
 
 
 	    // Player scheduled event
-	    obj_controller.fest_type=ini_read_string("Controller","f_t","");
+	    obj_controller.fest_type=ini_read_string("Controller","f_t",""); //
 
 	    if (obj_controller.fest_type!=""){
 	        obj_controller.fest_sid=ini_read_real("Controller","f_si",0);
 	        obj_controller.fest_wid=ini_read_real("Controller","f_wi",0);
 	        obj_controller.fest_planet=ini_read_real("Controller","f_pl",0);
-	        obj_controller.fest_star=ini_read_string("Controller","f_st","");
+	        obj_controller.fest_star=ini_read_string("Controller","f_st",""); //
 	        obj_controller.fest_cost=ini_read_real("Controller","f_co",0);
 	        obj_controller.fest_warp=ini_read_real("Controller","f_wa",0);
 	        obj_controller.fest_scheduled=ini_read_real("Controller","f_sch",0);
@@ -113,7 +113,7 @@ function scr_load(argument0, argument1) {
 	        obj_controller.fest_feature2=ini_read_real("Controller","f_f2",0);
 	        obj_controller.fest_feature3=ini_read_real("Controller","f_f3",0);
 	        obj_controller.fest_display=ini_read_real("Controller","f_di",0);
-	        obj_controller.fest_display_tags=ini_read_string("Controller","f_dit","");
+	        obj_controller.fest_display_tags=ini_read_string("Controller","f_dit",""); //
 	        obj_controller.fest_repeats=ini_read_real("Controller","f_re",0);
 	        obj_controller.fest_honor_co=ini_read_real("Controller","f_hc",0);
 	        obj_controller.fest_honor_id=ini_read_real("Controller","f_hi",0);
@@ -138,7 +138,7 @@ function scr_load(argument0, argument1) {
 	    obj_controller.last_attack_form=ini_read_real("Formation","last_attack",1);if (obj_controller.last_attack_form=0) then obj_controller.last_attack_form=1;
 	    obj_controller.last_raid_form=ini_read_real("Formation","last_raid",3);if (obj_controller.last_raid_form=0) then obj_controller.last_raid_form=3;
 	    j=0;repeat(16){j+=1;
-	        obj_controller.bat_formation[j]=ini_read_string("Formation","form"+string(j),"");
+	        obj_controller.bat_formation[j]=ini_read_string("Formation","form"+string(j),""); //
 	        if (obj_controller.bat_formation[j]!="") or (j<=3){
 	            obj_controller.bat_formation_type[j]=ini_read_real("Formation","form_type"+string(j),0);
 	            if (bat_formation[j]="")and (obj_controller.bat_formation_type[j]=0){
@@ -164,8 +164,8 @@ function scr_load(argument0, argument1) {
 	        }
 	    }
 
-	    obj_controller.useful_info=ini_read_string("Controller","useful_info","");
-	    obj_controller.random_event_next=ini_read_real("Controller","random_event_next","");
+	    obj_controller.useful_info=ini_read_string("Controller","useful_info",""); 
+	    obj_controller.random_event_next=ini_read_real("Controller","random_event_next","0"); 
 	    obj_controller.gene_sold=ini_read_real("Controller","gene_sold",0);
 	    obj_controller.gene_xeno=ini_read_real("Controller","gene_xeno",0);
 	    obj_controller.gene_tithe=ini_read_real("Controller","gene_tithe",24);
