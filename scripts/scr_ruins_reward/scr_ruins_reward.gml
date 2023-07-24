@@ -1,4 +1,10 @@
-function scr_ruins_reward(star_system, planet, ruins_type) {
+function scr_ruins_reward(star_system, planet, _ruins) {
+	
+	var ruins_type = _ruins.ruins_race;
+	
+	if (_ruins.unrecovered_items != false){
+		_ruins.recover_from_dead()
+	} else{
 
 	// star_system: world object
 	// planet: planet
@@ -143,8 +149,8 @@ function scr_ruins_reward(star_system, planet, ruins_type) {
 	}
 
 
-	 delete_features(star_system.p_feature[planet], P_features.Ancient_Ruins)
+	_ruins.ruins_explored()
 	// star_system.p_feature[planet]="Ancient Ruins|";
 
-
+	}
 }

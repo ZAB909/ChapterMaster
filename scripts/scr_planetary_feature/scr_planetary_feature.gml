@@ -50,13 +50,50 @@ function new_planet_feature(feature_type) constructor{
 		player_hidden = 0
 		break;
 	case P_features.Ancient_Ruins:
+		recoverables=[];
+		failed_exploration = 0;
+		unrecovered_items = false;
+		f_type =  P_features.Ancient_Ruins;
+		exploration_complete= false;
+		planet_display = "Unexplored Ancient Ruins";
+		completion_level = 0;
+		player_hidden = 1;	
 		find_starship = function(){
-			f_type = P_features.Ancient_Ruins;
+			f_type = P_features.Starship;
+			planet_display = "Ancient Starship";
 			completion_level = 0;
 			player_hidden = 0;
-			planet_display = "Unexplored Ancient Ruins";
 		}
-		player_hidden = 1
+		forces_defeated = function(){
+			planet_display = "Failed Ruins Expidition"
+			completion_level = 1;
+			failed_exploration = 1;
+			player_hidden = 0;
+			exploration_complete= false;
+		}
+		recover_from_dead = function(){
+			if (array_length(recoverables)>0){
+					for (var item =0;item<array_length(recoverables);item++){
+						var i_set = recoverables[item]
+						scr_add_item(i_set[0],i_set[1])
+					}
+			}
+			unrecovered_items=false;
+			var _recoverables =[]
+			recoverables =_recoverables 
+		}
+		determine_race = function(){
+		        var dice=floor(random(100))+1;
+		        if (dice<=9) then ruins_race=1;
+		        if (dice>9) and (dice<=74) then ruins_race=2;
+		        if (dice>74) and (dice<=83) then ruins_race=5;
+		        if (dice>83) and (dice<=91) then ruins_race=6;
+		        if (dice>91) then ruins_race=10;
+		}
+		ruins_explored = function(){
+			planet_display = "Unexplored Ancient Ruins";
+			exploration_complete= true;
+		}
 		break;
 	case P_features.STC_Fragment:
 		player_hidden = 1;

@@ -518,9 +518,11 @@ if (image="ancient_ruins") and (woopwoopwoop=2){
     instance_activate_object(obj_controller);
     instance_activate_object(obj_ini);
     instance_activate_object(obj_temp4);
+	var _star = obj_controller.current_planet_feature.star
+	var _planet = obj_controller.current_planet_feature.planet
     
     instance_create(0,0,obj_ncombat);
-    scr_battle_roster(obj_temp4.battle_loc,obj_temp4.num,true);
+    scr_battle_roster(_star.name ,_planet,true);
     
     instance_activate_object(obj_star);
     with(obj_star){if (name!=obj_temp4.loc) then instance_deactivate_object(id);}
@@ -529,9 +531,9 @@ if (image="ancient_ruins") and (woopwoopwoop=2){
     instance_activate_object(obj_star);
     
     obj_controller.cooldown=10;
-    obj_ncombat.battle_object=that_one;instance_deactivate_object(obj_star);
-    obj_ncombat.battle_loc=obj_temp4.battle_loc;
-    obj_ncombat.battle_id=obj_temp4.num;
+    obj_ncombat.battle_object=_star;instance_deactivate_object(obj_star);
+    obj_ncombat.battle_loc=_star;
+    obj_ncombat.battle_id=_planet;
     obj_ncombat.battle_special="ruins";if (obj_temp4.ruins_race=6) then obj_ncombat.battle_special="ruins_eldar";
     obj_ncombat.dropping=0;obj_ncombat.attacking=0;
     obj_ncombat.enemy=obj_temp4.ruins_battle;
@@ -543,15 +545,11 @@ if (image="ancient_ruins") and (woopwoopwoop=2){
 
 if (image="ancient_ruins") and (option1!=""){
     if (press=1){// Begin
-        var ruins_race,ruins_battle,ruins_fact,ruins_disp,ruins_reward,dice,battle_threat;
-        ruins_race=0;ruins_battle=0;ruins_fact=0;ruins_disp=0;ruins_reward=0;battle_threat=0;
+		var _ruins = obj_controller.current_planet_feature;
+        var ruins_battle,ruins_fact,ruins_disp,ruins_reward,dice,battle_threat;
+        ruins_battle=0;ruins_fact=0;ruins_disp=0;ruins_reward=0;battle_threat=0;
         
-        dice=floor(random(100))+1;
-        if (dice<=9) then ruins_race=1;
-        if (dice>9) and (dice<=74) then ruins_race=2;
-        if (dice>74) and (dice<=83) then ruins_race=5;
-        if (dice>83) and (dice<=91) then ruins_race=6;
-        if (dice>91) then ruins_race=10;
+        _ruins.determine_race()
         
         dice=floor(random(100))+1;
         if (string_count("Shitty",obj_ini.strin2)=0) and (dice<=50) then ruins_battle=1;
@@ -568,21 +566,24 @@ if (image="ancient_ruins") and (option1!=""){
             if (dice>60) and (dice<=90) then battle_threat=2;
             if (dice>90) and (dice<=99) then battle_threat=3;
             
-            if (ruins_race=1) or (ruins_race=2) or (ruins_race=10) then ruins_battle=choose(10,10,10,10,11,11,12);
-            if (ruins_race=5) then ruins_battle=10;
-            if (ruins_race=6) then ruins_battle=choose(6,6,10,10,10,12);
+            if (_ruins.ruins_race=1) or (_ruins.ruins_race=2) or (_ruins.ruins_race=10) then ruins_battle=choose(10,10,10,10,11,11,12);
+            if (_ruins.ruins_race=5) then ruins_battle=10;
+            if (_ruins.ruins_race=6) then ruins_battle=choose(6,6,10,10,10,12);
             
-            obj_temp4.ruins_race=ruins_race;
+            obj_temp4.ruins_race=_ruins.ruins_race;
             obj_temp4.ruins_battle=ruins_battle;
             obj_temp4.battle_threat=battle_threat;
             
             option1="";option2="";option3="";
             text="Your marines descended into the ancient ruins, mapping them out as they go.  They quickly determine the ruins were once ";
-            if (ruins_race=1) then text+="a Space Marine fortification from earlier times.";
-            if (ruins_race=2) then text+="golden-age Imperial ruins, lost to time.";
-            if (ruins_race=5) then text+="a magnificent temple of the Imperial Cult.";
-            if (ruins_race=6) then text+="Eldar colonization structures from an unknown time.";
-            if (ruins_race=10) then text+="golden-age Imperial ruins, since decorated with spikes and bones.";            
+            if (_ruins.ruins_race=1) then text+="a Space Marine fortification from earlier times.";
+            if (_ruins.ruins_race=2) then text+="golden-age Imperial ruins, lost to time.";
+            if (_ruins.ruins_race=5) then text+="a magnificent temple of the Imperial Cult.";
+            if (_ruins.ruins_race=6) then text+="Eldar colonization structures from an unknown time.";
+            if (_ruins.ruins_race=10) then text+="golden-age Imperial ruins, since decorated with spikes and bones."; 
+			if (_ruins.failed_exploration == 1){
+				text+= "You see the scarring in the walls and rouns impacts where your brothers died to clense this place of it's foul inhabitants"
+			}			
             text+="  Unfortunantly, it's too late before your Battle Brothers discern the ruins are still inhabited.  Shapes begin to descend upon them from all directions, masked in the shadows.";
             
             cooldown=15;woopwoopwoop=1;exit;
@@ -590,7 +591,7 @@ if (image="ancient_ruins") and (option1!=""){
         if (ruins_battle=0){
             var obj;obj=obj_temp4.obj;
             instance_activate_object(obj_star);
-            scr_ruins_reward(obj,obj_temp4.num,ruins_race);
+            scr_ruins_reward(obj,obj_temp4.num,obj_controller.current_planet_feature);
             instance_destroy();exit;
         }
     }

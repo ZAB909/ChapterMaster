@@ -2,10 +2,13 @@
 // show_message("so far so good, defeat:"+string(defeat));
 
 
-var obj;obj=0;
+var obj, _ruins;obj=0;_ruins=obj_controller.current_planet_feature
+ruins_race = _ruins.ruins_race;
+ruins_battle = choose(6,7,8,9,10,11);
+loc=obj_controller.current_planet_feature.star.name
 with(obj_star){if (name!=obj_temp4.battle_loc) then instance_deactivate_object(id);}
 obj=instance_nearest(room_width/2,room_height/2,obj_star);
-instance_activate_object(obj_star);
+instance_activate_object(obj_star)
 
 
 if (defeat=0){
@@ -48,17 +51,30 @@ if (defeat=1){
     if (ruins_battle=12){obj.p_demons[num]=battle_threat+1;obj.p_heresy[num]+=40;}
     
     pop.title="Ancient Ruins";
-    pop.text="Your forces within the ancient ruins have been surrounded and destroyed, down to the last man.  ";
+    pop.text="Your forces within the ancient ruins have been surrounded and destroyed, down to the last man. An immediate expedition must be launched to recover and honour them as well as sucure any geneseed or equipment not destroyed";
     if (ruins_battle=10) then pop.text+="Now that they have been discovered, scans indicate the heretics and mutants are leaving the structures en masse.  ";
     if (ruins_battle=11) then pop.text+="Now that they have been discovered, scans indicate the chaos space marines are leaving the structures, intent on doing damage.  ";
     if (ruins_battle=12) then pop.text+="Scans indicate the foul daemons are leaving the structures en masse, intent on doing damage.  "
     if (ruins_battle=6) then pop.text+="Now that they have been discovered, the Eldar seem to have vanished without a trace.  Scans reveal nothing.";
+	_ruins.forces_defeated()
+	if (post_equipment_lost[1]!=""){
+    
+	    var i;i=0;
+	    repeat(50){i+=1;
+	        if (post_equipment_lost[i]!="") and (post_equipments_lost[i]>0){
+				var _new_equip = floor(post_equipments_lost[i]/4)
+				if (_new_equip == 0) then _new_equip++
+				array_push(_ruins.recoverables, [post_equipment_lost[i],_new_equip])
+	        }
+	    }
+		if (array_length(_ruins.recoverables)>0){
+			_ruins.unrecovered_items=true;
+		}
+	}
 }
 
- delete_features(obj.p_feature[num], P_features.Ancient_Ruins);
 
-
-if (defeat=0) then scr_ruins_reward(obj,num,ruins_race);
+if (defeat=0) then scr_ruins_reward(obj,num,obj_controller.current_planet_feature);
 
 // argument0: world object
 // argument1: planet

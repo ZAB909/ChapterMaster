@@ -340,13 +340,28 @@ if (obj_controller.cooldown<=0) and (loading=1){
         }
         
         // Ancient Ruins
-        if (planet_feature_bool(target.p_feature[obj_controller.selecting_planet], P_features.Ancient_Ruins) == 1){
+		var _planet = target.p_feature[obj_controller.selecting_planet]
+		var _ruins_list =  search_planet_features( _planet, P_features.Ancient_Ruins)
+		var _explore_ruins;
+        if (array_length(_ruins_list) > 0){
+			for (var _ruin= 0; _ruin < array_length(_ruins_list); _ruin++;){
+				if ( _planet[_ruins_list[_ruin]].exploration_complete == false){
+					 _explore_ruins = _planet[_ruins_list[_ruin]];
+					break;
+				}else{ _explore_ruins=0;}
+			}
+			if ( _explore_ruins!= 0){
+				obj_controller.current_planet_feature =_explore_ruins;
+				obj_controller.current_planet_feature.star = target;
+				obj_controller.current_planet_feature.planet = obj_controller.selecting_planet;
             var pip,arti;pip=instance_create(0,0,obj_popup);pip.title="Ancient Ruins";
             
             var nu;nu=string(target.name);
             if (obj_controller.selecting_planet=1) then nu+=" I";if (obj_controller.selecting_planet=2) then nu+=" II";
             if (obj_controller.selecting_planet=3) then nu+=" III";if (obj_controller.selecting_planet=4) then nu+=" IV";
+			 if(_explore_ruins.failed_exploration ==1){ pip.text="The accursed ruins on "+string(nu)+"where your brothers fell still holds many secrets including the remains of your brothers honour demands you avenge them."}else{
             pip.text="Located upon "+string(nu)+" is a sprawling expanse of ancient ruins, dating back to times long since forgotten.  Locals are superstitious about the place- as a result the ruins are hardly explored.  What they might contain, and any potential threats, are unknown.  What is thy will?";
+			}
             pip.option1="Explore the ruins.";pip.option2="Do nothing.";pip.option3="Return your marines to the ship.";pip.image="ancient_ruins";
             
             arti=instance_create(target.x,target.y,obj_temp4);
@@ -365,6 +380,7 @@ if (obj_controller.cooldown<=0) and (loading=1){
                 }
             }
             arti.ship_id=obj_controller.ma_lid[1];
+			}
         }
         
         
