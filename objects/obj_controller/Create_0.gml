@@ -25,7 +25,7 @@ diplomacy_pathway = "";
 option_selections=[];
 ready=false;
 function build_chaos_gods(){
-	var _god_names = ["Khorne", "Slaanesh", "Nurlgle", "tzeentch"]
+	var _god_names = ["Khorne", "Slaanesh", "Nurgle", "Tzeentch"]
 	for (var _i = 0; _i < 4; _i++;){
 		chaos_gods[$ _god_names[_i]] = {};
 		chaos_gods[$ _god_names[_i]].favour = 0;
