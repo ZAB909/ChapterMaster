@@ -11,83 +11,83 @@ function scr_start_load(argument0, argument1, argument2) {
     hunters
     */
 
-    var splinter, com, eqp, remove_size, company_size, shyp, shyp_size, companies_loaded;
+    var splinter, _companies, _equip, remove_size, company_size, ship, ship_size, companies_loaded;
     splinter = 0;
-    com = -1; // all companies for this script
-    eqp = 0; //vehicle or armor(equip)
+    _companies = -1; // all companies for this script
+    _equip = 0; //vehicle or armor(equip)
     remove_size = 0;
     company_size = 0;
-    shyp = 1;
-    shyp_size = obj_ini.ship_size[shyp];
+    ship = 1;
+    ship_size = obj_ini.ship_size[ship];
     companies_loaded = 1;
 
     if (string_count("Splinter", obj_ini.strin2) > 0) then splinter = 1;
 
     repeat (10) {
-        com += 1;
-        eqp = 0;
+        _companies += 1;
+        _equip = 0;
 
         repeat (500) {
-            eqp += 1;
+            _equip += 1;
 
-            if (obj_ini.role[com, eqp] != "") {
+            if (obj_ini.role[_companies, _equip] != "") {
                 var n_size;
                 n_size = 1;
 
-                if (obj_ini.armor[com, eqp] == "Terminator Armor") then n_size += 1;
-                if (obj_ini.armor[com, eqp] == "Tartaros") then n_size += 1;
-                if (obj_ini.armor[com, eqp] == "Dreadnought") then n_size += 5;
-                if (obj_ini.role[com, eqp] == "Chapter Master") then n_size += 1;
+                if (obj_ini.armor[_companies, _equip] == "Terminator Armor") then n_size += 1;
+                if (obj_ini.armor[_companies, _equip] == "Tartaros") then n_size += 1;
+                if (obj_ini.armor[_companies, _equip] == "Dreadnought") then n_size += 5;
+                if (obj_ini.role[_companies, _equip] == "Chapter Master") then n_size += 1;
 
-                if (obj_ini.ship_carrying[shyp] + n_size > obj_ini.ship_capacity[shyp]) {
+                if (obj_ini.ship_carrying[ship] + n_size > obj_ini.ship_capacity[ship]) {
                     remove_size += company_size;
-                    obj_ini.ship_carrying[shyp] += company_size;
+                    obj_ini.ship_carrying[ship] += company_size;
                     obj_ini.man_size -= company_size;
                     company_size = 0;
-                    shyp += 1;
+                    ship += 1;
                     companies_loaded = 1;
                 }
 
-                obj_ini.lid[com, eqp] = shyp;
-                obj_ini.wid[com, eqp] = 0;
-                obj_ini.loc[com, eqp] = obj_ini.ship_location[shyp];
+                obj_ini.lid[_companies, _equip] = ship;
+                obj_ini.wid[_companies, _equip] = 0;
+                obj_ini.loc[_companies, _equip] = obj_ini.ship_location[ship];
                 company_size += 1;
 
-                if (obj_ini.armor[com, eqp] == "Terminator Armor") then company_size += 1;
-                if (obj_ini.armor[com, eqp] == "Tartaros") then company_size += 1;
-                if (obj_ini.armor[com, eqp] == "Dreadnought") then company_size += 5;
+                if (obj_ini.armor[_companies, _equip] == "Terminator Armor") then company_size += 1;
+                if (obj_ini.armor[_companies, _equip] == "Tartaros") then company_size += 1;
+                if (obj_ini.armor[_companies, _equip] == "Dreadnought") then company_size += 5;
 
                 // Load vehicles onto the ship
                 var v;
                 for (v = 1; v <= 5; v++) {
-                    if (obj_ini.veh_role[com, eqp] == "Rhino") {
-                        obj_ini.veh_lid[com, eqp] = shyp;
-                        obj_ini.veh_wid[com, eqp] = 0;
-                        obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[shyp];
+                    if (obj_ini.veh_role[_companies, _equip] == "Rhino") {
+                        obj_ini.veh_lid[_companies, _equip] = ship;
+                        obj_ini.veh_wid[_companies, _equip] = 0;
+                        obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[ship];
                         break;
                     }
-                    if (obj_ini.veh_role[com, eqp] == "Predator") {
-                        obj_ini.veh_lid[com, eqp] = shyp;
-                        obj_ini.veh_wid[com, eqp] = 1;
-                        obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[shyp];
+                    if (obj_ini.veh_role[_companies, _equip] == "Predator") {
+                        obj_ini.veh_lid[_companies, _equip] = ship;
+                        obj_ini.veh_wid[_companies, _equip] = 1;
+                        obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[ship];
                         break;
                     }
-                    if (obj_ini.veh_role[com, eqp] == "Land Raider") {
-                        obj_ini.veh_lid[com, eqp] = shyp;
-                        obj_ini.veh_wid[com, eqp] = 2;
-                        obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[shyp];
+                    if (obj_ini.veh_role[_companies, _equip] == "Land Raider") {
+                        obj_ini.veh_lid[_companies, _equip] = ship;
+                        obj_ini.veh_wid[_companies, _equip] = 2;
+                        obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[ship];
                         break;
                     }
-                    if (obj_ini.veh_role[com, eqp] == "Land Speeder") {
-                        obj_ini.veh_lid[com, eqp] = shyp;
-                        obj_ini.veh_wid[com, eqp] = 3;
-                        obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[shyp];
+                    if (obj_ini.veh_role[_companies, _equip] == "Land Speeder") {
+                        obj_ini.veh_lid[_companies, _equip] = ship;
+                        obj_ini.veh_wid[_companies, _equip] = 3;
+                        obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[ship];
                         break;
                     }
-                    if (obj_ini.veh_role[com, eqp] == "Whirlwind") {
-                        obj_ini.veh_lid[com, eqp] = shyp;
-                        obj_ini.veh_wid[com, eqp] = 4;
-                        obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[shyp];
+                    if (obj_ini.veh_role[_companies, _equip] == "Whirlwind") {
+                        obj_ini.veh_lid[_companies, _equip] = ship;
+                        obj_ini.veh_wid[_companies, _equip] = 4;
+                        obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[ship];
                         break;
                     }
                 }
@@ -95,7 +95,7 @@ function scr_start_load(argument0, argument1, argument2) {
         }
 
         remove_size += company_size;
-        obj_ini.ship_carrying[shyp] += company_size;
+        obj_ini.ship_carrying[ship] += company_size;
         obj_ini.man_size -= company_size;
         company_size = 0;
     }
@@ -103,7 +103,7 @@ function scr_start_load(argument0, argument1, argument2) {
     var first_frigate, next_company, squeeze;
     next_company = 1;
     squeeze = 0;
-    first_frigate = shyp + 1;
+    first_frigate = ship + 1;
 
     repeat (20) {
         next_company += 1;
@@ -112,73 +112,73 @@ function scr_start_load(argument0, argument1, argument2) {
         if (next_company <= 9) {
             if (next_company == 2) {
                 if (obj_ini.ship_size[1] == 3) {
-                    shyp = 1;
+                    ship = 1;
                     squeeze = 1;
                 }
             }
 
             if (next_company > 2) {
-                if (companies_loaded == 1 && obj_ini.ship_size[shyp] > 2) then squeeze = 1;
+                if (companies_loaded == 1 && obj_ini.ship_size[ship] > 2) then squeeze = 1;
             }
 
             if (squeeze == 0) {
-                shyp += 1;
-                com += 1;
-                eqp = 0;
+                ship += 1;
+                _companies += 1;
+                _equip = 0;
                 company_size = 0;
                 companies_loaded = 1;
 
                 repeat (500) {
-                    eqp += 1;
-  // Check if com and eqp are within valid range
-    if (com >= 0 && com <= 100 && eqp >= 0 && eqp <= 500) {
-        if (obj_ini.role[com, eqp] != "") {
-            obj_ini.lid[com, eqp] = shyp;
-            obj_ini.wid[com, eqp] = 0;
-            obj_ini.loc[com, eqp] = obj_ini.ship_location[shyp];
+                    _equip += 1;
+  // Check if _companies and _equip are within valid range
+    if (_companies >= 0 && _companies <= 100 && _equip >= 0 && _equip <= 500) {
+        if (obj_ini.role[_companies, _equip] != "") {
+            obj_ini.lid[_companies, _equip] = ship;
+            obj_ini.wid[_companies, _equip] = 0;
+            obj_ini.loc[_companies, _equip] = obj_ini.ship_location[ship];
             company_size += 1;
 			
-                    if (obj_ini.role[com, eqp] != "") {
-                        obj_ini.lid[com, eqp] = shyp;
-                        obj_ini.wid[com, eqp] = 0;
-                        obj_ini.loc[com, eqp] = obj_ini.ship_location[shyp];
+                    if (obj_ini.role[_companies, _equip] != "") {
+                        obj_ini.lid[_companies, _equip] = ship;
+                        obj_ini.wid[_companies, _equip] = 0;
+                        obj_ini.loc[_companies, _equip] = obj_ini.ship_location[ship];
                         company_size += 1;
 
-                        if (obj_ini.armor[com, eqp] == "Terminator Armor") then company_size += 1;
-                        if (obj_ini.armor[com, eqp] == "Tartaros") then company_size += 1;
-                        if (obj_ini.armor[com, eqp] == "Dreadnought") then company_size += 5;
+                        if (obj_ini.armor[_companies, _equip] == "Terminator Armor") then company_size += 1;
+                        if (obj_ini.armor[_companies, _equip] == "Tartaros") then company_size += 1;
+                        if (obj_ini.armor[_companies, _equip] == "Dreadnought") then company_size += 5;
 
                         // Load vehicles onto the ship
                         var v;
                         for (v = 1; v <= 5; v++) {
-                            if (obj_ini.veh_role[com, eqp] == "Rhino") {
-                                obj_ini.veh_lid[com, eqp] = shyp;
-                                obj_ini.veh_wid[com, eqp] = 0;
-                                obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[shyp];
+                            if (obj_ini.veh_role[_companies, _equip] == "Rhino") {
+                                obj_ini.veh_lid[_companies, _equip] = ship;
+                                obj_ini.veh_wid[_companies, _equip] = 0;
+                                obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[ship];
                                 break;
                             }
-                            if (obj_ini.veh_role[com, eqp] == "Predator") {
-                                obj_ini.veh_lid[com, eqp] = shyp;
-                                obj_ini.veh_wid[com, eqp] = 1;
-                                obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[shyp];
+                            if (obj_ini.veh_role[_companies, _equip] == "Predator") {
+                                obj_ini.veh_lid[_companies, _equip] = ship;
+                                obj_ini.veh_wid[_companies, _equip] = 1;
+                                obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[ship];
                                 break;
                             }
-                            if (obj_ini.veh_role[com, eqp] == "Land Raider") {
-                                obj_ini.veh_lid[com, eqp] = shyp;
-                                obj_ini.veh_wid[com, eqp] = 2;
-                                obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[shyp];
+                            if (obj_ini.veh_role[_companies, _equip] == "Land Raider") {
+                                obj_ini.veh_lid[_companies, _equip] = ship;
+                                obj_ini.veh_wid[_companies, _equip] = 2;
+                                obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[ship];
                                 break;
                             }
-                            if (obj_ini.veh_role[com, eqp] == "Land Speeder") {
-                                obj_ini.veh_lid[com, eqp] = shyp;
-                                obj_ini.veh_wid[com, eqp] = 3;
-                                obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[shyp];
+                            if (obj_ini.veh_role[_companies, _equip] == "Land Speeder") {
+                                obj_ini.veh_lid[_companies, _equip] = ship;
+                                obj_ini.veh_wid[_companies, _equip] = 3;
+                                obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[ship];
                                 break;
                             }
-                            if (obj_ini.veh_role[com, eqp] == "Whirlwind") {
-                                obj_ini.veh_lid[com, eqp] = shyp;
-                                obj_ini.veh_wid[com, eqp] = 4;
-                                obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[shyp];
+                            if (obj_ini.veh_role[_companies, _equip] == "Whirlwind") {
+                                obj_ini.veh_lid[_companies, _equip] = ship;
+                                obj_ini.veh_wid[_companies, _equip] = 4;
+                                obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[ship];
                                 break;
                             }
                         }
@@ -186,7 +186,7 @@ function scr_start_load(argument0, argument1, argument2) {
                 }
 
                 remove_size += company_size;
-                obj_ini.ship_carrying[shyp] += company_size;
+                obj_ini.ship_carrying[ship] += company_size;
                 obj_ini.man_size -= company_size;
                 company_size = 0;
             }
@@ -252,59 +252,59 @@ function scr_start_load(argument0, argument1, argument2) {
         if (obj_ini.ship_size[frigate] == 4) then max_bl += 1;
 
         if (obj_ini.ship_size[frigate] == 4 && barge == 1 && last_company == 1) {
-            shyp += 1;
+            ship += 1;
             remove_size += company_size;
-            obj_ini.ship_carrying[shyp] += company_size;
+            obj_ini.ship_carrying[ship] += company_size;
             obj_ini.man_size -= company_size;
             company_size = 0;
-            com += 1;
-            eqp = 0;
+            _companies += 1;
+            _equip = 0;
             companies_loaded += 1;
 
             repeat (500) {
-                eqp += 1;
+                _equip += 1;
 
-                if (obj_ini.role[com, eqp] != "") {
-                    obj_ini.lid[com, eqp] = shyp;
-                    obj_ini.wid[com, eqp] = 0;
-                    obj_ini.loc[com, eqp] = obj_ini.ship_location[shyp];
+                if (obj_ini.role[_companies, _equip] != "") {
+                    obj_ini.lid[_companies, _equip] = ship;
+                    obj_ini.wid[_companies, _equip] = 0;
+                    obj_ini.loc[_companies, _equip] = obj_ini.ship_location[ship];
                     company_size += 1;
 
-                    if (obj_ini.armor[com, eqp] == "Terminator Armor") then company_size += 1;
-                    if (obj_ini.armor[com, eqp] == "Tartaros") then company_size += 1;
-                    if (obj_ini.armor[com, eqp] == "Dreadnought") then company_size += 5;
+                    if (obj_ini.armor[_companies, _equip] == "Terminator Armor") then company_size += 1;
+                    if (obj_ini.armor[_companies, _equip] == "Tartaros") then company_size += 1;
+                    if (obj_ini.armor[_companies, _equip] == "Dreadnought") then company_size += 5;
 
                     // Load vehicles onto the ship
                     var v;
                     for (v = 1; v <= 5; v++) {
-                        if (obj_ini.veh_role[com, eqp] == "Rhino") {
-                            obj_ini.veh_lid[com, eqp] = shyp;
-                            obj_ini.veh_wid[com, eqp] = 0;
-                            obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[shyp];
+                        if (obj_ini.veh_role[_companies, _equip] == "Rhino") {
+                            obj_ini.veh_lid[_companies, _equip] = ship;
+                            obj_ini.veh_wid[_companies, _equip] = 0;
+                            obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[ship];
                             break;
                         }
-                        if (obj_ini.veh_role[com, eqp] == "Predator") {
-                            obj_ini.veh_lid[com, eqp] = shyp;
-                            obj_ini.veh_wid[com, eqp] = 1;
-                            obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[shyp];
+                        if (obj_ini.veh_role[_companies, _equip] == "Predator") {
+                            obj_ini.veh_lid[_companies, _equip] = ship;
+                            obj_ini.veh_wid[_companies, _equip] = 1;
+                            obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[ship];
                             break;
                         }
-                        if (obj_ini.veh_role[com, eqp] == "Land Raider") {
-                            obj_ini.veh_lid[com, eqp] = shyp;
-                            obj_ini.veh_wid[com, eqp] = 2;
-                            obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[shyp];
+                        if (obj_ini.veh_role[_companies, _equip] == "Land Raider") {
+                            obj_ini.veh_lid[_companies, _equip] = ship;
+                            obj_ini.veh_wid[_companies, _equip] = 2;
+                            obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[ship];
                             break;
                         }
-                        if (obj_ini.veh_role[com, eqp] == "Land Speeder") {
-                            obj_ini.veh_lid[com, eqp] = shyp;
-                            obj_ini.veh_wid[com, eqp] = 3;
-                            obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[shyp];
+                        if (obj_ini.veh_role[_companies, _equip] == "Land Speeder") {
+                            obj_ini.veh_lid[_companies, _equip] = ship;
+                            obj_ini.veh_wid[_companies, _equip] = 3;
+                            obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[ship];
                             break;
                         }
-                        if (obj_ini.veh_role[com, eqp] == "Whirlwind") {
-                            obj_ini.veh_lid[com, eqp] = shyp;
-                            obj_ini.veh_wid[com, eqp] = 4;
-                            obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[shyp];
+                        if (obj_ini.veh_role[_companies, _equip] == "Whirlwind") {
+                            obj_ini.veh_lid[_companies, _equip] = ship;
+                            obj_ini.veh_wid[_companies, _equip] = 4;
+                            obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[ship];
                             break;
                         }
                     }
@@ -312,60 +312,60 @@ function scr_start_load(argument0, argument1, argument2) {
             }
 
             remove_size += company_size;
-            obj_ini.ship_carrying[shyp] += company_size;
+            obj_ini.ship_carrying[ship] += company_size;
             obj_ini.man_size -= company_size;
             company_size = 0;
         }
 
         if (obj_ini.ship_size[frigate] == 4) {
-            com += 1;
-            eqp = 0;
+            _companies += 1;
+            _equip = 0;
             companies_loaded += 1;
 
             repeat (500) {
-                eqp += 1;
+                _equip += 1;
 
-                if (obj_ini.role[com, eqp] != "") {
-                    obj_ini.lid[com, eqp] = frigate;
-                    obj_ini.wid[com, eqp] = 0;
-                    obj_ini.loc[com, eqp] = obj_ini.ship_location[frigate];
+                if (obj_ini.role[_companies, _equip] != "") {
+                    obj_ini.lid[_companies, _equip] = frigate;
+                    obj_ini.wid[_companies, _equip] = 0;
+                    obj_ini.loc[_companies, _equip] = obj_ini.ship_location[frigate];
                     company_size += 1;
 
-                    if (obj_ini.armor[com, eqp] == "Terminator Armor") then company_size += 1;
-                    if (obj_ini.armor[com, eqp] == "Tartaros") then company_size += 1;
-                    if (obj_ini.armor[com, eqp] == "Dreadnought") then company_size += 5;
+                    if (obj_ini.armor[_companies, _equip] == "Terminator Armor") then company_size += 1;
+                    if (obj_ini.armor[_companies, _equip] == "Tartaros") then company_size += 1;
+                    if (obj_ini.armor[_companies, _equip] == "Dreadnought") then company_size += 5;
 
                     // Load vehicles onto the ship
                     var v;
                     for (v = 1; v <= 5; v++) {
-                        if (obj_ini.veh_role[com, eqp] == "Rhino") {
-                            obj_ini.veh_lid[com, eqp] = frigate;
-                            obj_ini.veh_wid[com, eqp] = 0;
-                            obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[frigate];
+                        if (obj_ini.veh_role[_companies, _equip] == "Rhino") {
+                            obj_ini.veh_lid[_companies, _equip] = frigate;
+                            obj_ini.veh_wid[_companies, _equip] = 0;
+                            obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[frigate];
                             break;
                         }
-                        if (obj_ini.veh_role[com, eqp] == "Predator") {
-                            obj_ini.veh_lid[com, eqp] = frigate;
-                            obj_ini.veh_wid[com, eqp] = 1;
-                            obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[frigate];
+                        if (obj_ini.veh_role[_companies, _equip] == "Predator") {
+                            obj_ini.veh_lid[_companies, _equip] = frigate;
+                            obj_ini.veh_wid[_companies, _equip] = 1;
+                            obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[frigate];
                             break;
                         }
-                        if (obj_ini.veh_role[com, eqp] == "Land Raider") {
-                            obj_ini.veh_lid[com, eqp] = frigate;
-                            obj_ini.veh_wid[com, eqp] = 2;
-                            obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[frigate];
+                        if (obj_ini.veh_role[_companies, _equip] == "Land Raider") {
+                            obj_ini.veh_lid[_companies, _equip] = frigate;
+                            obj_ini.veh_wid[_companies, _equip] = 2;
+                            obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[frigate];
                             break;
                         }
-                        if (obj_ini.veh_role[com, eqp] == "Land Speeder") {
-                            obj_ini.veh_lid[com, eqp] = frigate;
-                            obj_ini.veh_wid[com, eqp] = 3;
-                            obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[frigate];
+                        if (obj_ini.veh_role[_companies, _equip] == "Land Speeder") {
+                            obj_ini.veh_lid[_companies, _equip] = frigate;
+                            obj_ini.veh_wid[_companies, _equip] = 3;
+                            obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[frigate];
                             break;
                         }
-                        if (obj_ini.veh_role[com, eqp] == "Whirlwind") {
-                            obj_ini.veh_lid[com, eqp] = frigate;
-                            obj_ini.veh_wid[com, eqp] = 4;
-                            obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[frigate];
+                        if (obj_ini.veh_role[_companies, _equip] == "Whirlwind") {
+                            obj_ini.veh_lid[_companies, _equip] = frigate;
+                            obj_ini.veh_wid[_companies, _equip] = 4;
+                            obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[frigate];
                             break;
                         }
                     }
@@ -381,59 +381,59 @@ function scr_start_load(argument0, argument1, argument2) {
         if (frigate == first_frigate + max_fr) then exit;
 
         if (obj_ini.ship_size[frigate] == 4 && barge == 2 && last_company == 2) {
-            shyp += 1;
+            ship += 1;
             remove_size += company_size;
-            obj_ini.ship_carrying[shyp] += company_size;
+            obj_ini.ship_carrying[ship] += company_size;
             obj_ini.man_size -= company_size;
             company_size = 0;
-            com += 1;
-            eqp = 0;
+            _companies += 1;
+            _equip = 0;
             companies_loaded += 1;
 
             repeat (500) {
-                eqp += 1;
+                _equip += 1;
 
-                if (obj_ini.role[com, eqp] != "") {
-                    obj_ini.lid[com, eqp] = shyp;
-                    obj_ini.wid[com, eqp] = 0;
-                    obj_ini.loc[com, eqp] = obj_ini.ship_location[shyp];
+                if (obj_ini.role[_companies, _equip] != "") {
+                    obj_ini.lid[_companies, _equip] = ship;
+                    obj_ini.wid[_companies, _equip] = 0;
+                    obj_ini.loc[_companies, _equip] = obj_ini.ship_location[ship];
                     company_size += 1;
 
-                    if (obj_ini.armor[com, eqp] == "Terminator Armor") then company_size += 1;
-                    if (obj_ini.armor[com, eqp] == "Tartaros") then company_size += 1;
-                    if (obj_ini.armor[com, eqp] == "Dreadnought") then company_size += 5;
+                    if (obj_ini.armor[_companies, _equip] == "Terminator Armor") then company_size += 1;
+                    if (obj_ini.armor[_companies, _equip] == "Tartaros") then company_size += 1;
+                    if (obj_ini.armor[_companies, _equip] == "Dreadnought") then company_size += 5;
 
                     // Load vehicles onto the ship
                     var v;
                     for (v = 1; v <= 5; v++) {
-                        if (obj_ini.veh_role[com, eqp] == "Rhino") {
-                            obj_ini.veh_lid[com, eqp] = shyp;
-                            obj_ini.veh_wid[com, eqp] = 0;
-                            obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[shyp];
+                        if (obj_ini.veh_role[_companies, _equip] == "Rhino") {
+                            obj_ini.veh_lid[_companies, _equip] = ship;
+                            obj_ini.veh_wid[_companies, _equip] = 0;
+                            obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[ship];
                             break;
                         }
-                        if (obj_ini.veh_role[com, eqp] == "Predator") {
-                            obj_ini.veh_lid[com, eqp] = shyp;
-                            obj_ini.veh_wid[com, eqp] = 1;
-                            obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[shyp];
+                        if (obj_ini.veh_role[_companies, _equip] == "Predator") {
+                            obj_ini.veh_lid[_companies, _equip] = ship;
+                            obj_ini.veh_wid[_companies, _equip] = 1;
+                            obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[ship];
                             break;
                         }
-                        if (obj_ini.veh_role[com, eqp] == "Land Raider") {
-                            obj_ini.veh_lid[com, eqp] = shyp;
-                            obj_ini.veh_wid[com, eqp] = 2;
-                            obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[shyp];
+                        if (obj_ini.veh_role[_companies, _equip] == "Land Raider") {
+                            obj_ini.veh_lid[_companies, _equip] = ship;
+                            obj_ini.veh_wid[_companies, _equip] = 2;
+                            obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[ship];
                             break;
                         }
-                        if (obj_ini.veh_role[com, eqp] == "Land Speeder") {
-                            obj_ini.veh_lid[com, eqp] = shyp;
-                            obj_ini.veh_wid[com, eqp] = 3;
-                            obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[shyp];
+                        if (obj_ini.veh_role[_companies, _equip] == "Land Speeder") {
+                            obj_ini.veh_lid[_companies, _equip] = ship;
+                            obj_ini.veh_wid[_companies, _equip] = 3;
+                            obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[ship];
                             break;
                         }
-                        if (obj_ini.veh_role[com, eqp] == "Whirlwind") {
-                            obj_ini.veh_lid[com, eqp] = shyp;
-                            obj_ini.veh_wid[com, eqp] = 4;
-                            obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[shyp];
+                        if (obj_ini.veh_role[_companies, _equip] == "Whirlwind") {
+                            obj_ini.veh_lid[_companies, _equip] = ship;
+                            obj_ini.veh_wid[_companies, _equip] = 4;
+                            obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[ship];
                             break;
                         }
                     }
@@ -441,60 +441,60 @@ function scr_start_load(argument0, argument1, argument2) {
             }
 
             remove_size += company_size;
-            obj_ini.ship_carrying[shyp] += company_size;
+            obj_ini.ship_carrying[ship] += company_size;
             obj_ini.man_size -= company_size;
             company_size = 0;
         }
 
         if (obj_ini.ship_size[frigate] == 4 && barge == 2) {
-            com += 1;
-            eqp = 0;
+            _companies += 1;
+            _equip = 0;
             companies_loaded += 1;
 
             repeat (500) {
-                eqp += 1;
+                _equip += 1;
 
-                if (obj_ini.role[com, eqp] != "") {
-                    obj_ini.lid[com, eqp] = frigate;
-                    obj_ini.wid[com, eqp] = 0;
-                    obj_ini.loc[com, eqp] = obj_ini.ship_location[frigate];
+                if (obj_ini.role[_companies, _equip] != "") {
+                    obj_ini.lid[_companies, _equip] = frigate;
+                    obj_ini.wid[_companies, _equip] = 0;
+                    obj_ini.loc[_companies, _equip] = obj_ini.ship_location[frigate];
                     company_size += 1;
 
-                    if (obj_ini.armor[com, eqp] == "Terminator Armor") then company_size += 1;
-                    if (obj_ini.armor[com, eqp] == "Tartaros") then company_size += 1;
-                    if (obj_ini.armor[com, eqp] == "Dreadnought") then company_size += 5;
+                    if (obj_ini.armor[_companies, _equip] == "Terminator Armor") then company_size += 1;
+                    if (obj_ini.armor[_companies, _equip] == "Tartaros") then company_size += 1;
+                    if (obj_ini.armor[_companies, _equip] == "Dreadnought") then company_size += 5;
 
                     // Load vehicles onto the ship
                     var v;
                     for (v = 1; v <= 5; v++) {
-                        if (obj_ini.veh_role[com, eqp] == "Rhino") {
-                            obj_ini.veh_lid[com, eqp] = frigate;
-                            obj_ini.veh_wid[com, eqp] = 0;
-                            obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[frigate];
+                        if (obj_ini.veh_role[_companies, _equip] == "Rhino") {
+                            obj_ini.veh_lid[_companies, _equip] = frigate;
+                            obj_ini.veh_wid[_companies, _equip] = 0;
+                            obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[frigate];
                             break;
                         }
-                        if (obj_ini.veh_role[com, eqp] == "Predator") {
-                            obj_ini.veh_lid[com, eqp] = frigate;
-                            obj_ini.veh_wid[com, eqp] = 1;
-                            obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[frigate];
+                        if (obj_ini.veh_role[_companies, _equip] == "Predator") {
+                            obj_ini.veh_lid[_companies, _equip] = frigate;
+                            obj_ini.veh_wid[_companies, _equip] = 1;
+                            obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[frigate];
                             break;
                         }
-                        if (obj_ini.veh_role[com, eqp] == "Land Raider") {
-                            obj_ini.veh_lid[com, eqp] = frigate;
-                            obj_ini.veh_wid[com, eqp] = 2;
-                            obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[frigate];
+                        if (obj_ini.veh_role[_companies, _equip] == "Land Raider") {
+                            obj_ini.veh_lid[_companies, _equip] = frigate;
+                            obj_ini.veh_wid[_companies, _equip] = 2;
+                            obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[frigate];
                             break;
                         }
-                        if (obj_ini.veh_role[com, eqp] == "Land Speeder") {
-                            obj_ini.veh_lid[com, eqp] = frigate;
-                            obj_ini.veh_wid[com, eqp] = 3;
-                            obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[frigate];
+                        if (obj_ini.veh_role[_companies, _equip] == "Land Speeder") {
+                            obj_ini.veh_lid[_companies, _equip] = frigate;
+                            obj_ini.veh_wid[_companies, _equip] = 3;
+                            obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[frigate];
                             break;
                         }
-                        if (obj_ini.veh_role[com, eqp] == "Whirlwind") {
-                            obj_ini.veh_lid[com, eqp] = frigate;
-                            obj_ini.veh_wid[com, eqp] = 4;
-                            obj_ini.veh_loc[com, eqp] = obj_ini.ship_location[frigate];
+                        if (obj_ini.veh_role[_companies, _equip] == "Whirlwind") {
+                            obj_ini.veh_lid[_companies, _equip] = frigate;
+                            obj_ini.veh_wid[_companies, _equip] = 4;
+                            obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[frigate];
                             break;
                         }
                     }
@@ -513,11 +513,11 @@ function scr_start_load(argument0, argument1, argument2) {
     // Drop unsupported companies
     if (remove_size > 0) {
         if (remove_size == obj_ini.man_size) {
-            shyp = first_frigate;
+            ship = first_frigate;
 
             repeat (10) {
-                obj_ini.ship_carrying[shyp] = 0;
-                shyp += 1;
+                obj_ini.ship_carrying[ship] = 0;
+                ship += 1;
             }
 
             obj_ini.man_size = 0;
@@ -537,10 +537,10 @@ function scr_start_load(argument0, argument1, argument2) {
 
     // Final check to ensure no companies are left unsupported
     repeat (10) {
-        if (obj_ini.man_size > 0 && obj_ini.ship_carrying[shyp] == 0) {
+        if (obj_ini.man_size > 0 && obj_ini.ship_carrying[ship] == 0) {
             obj_ini.man_size = 0;
         }
-        shyp += 1;
+        ship += 1;
     }
   }
  }
