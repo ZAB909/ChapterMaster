@@ -66,41 +66,22 @@ repeat(31){
 
 max_ships=sh_target.capital_number+sh_target.frigate_number+sh_target.escort_number;
 
-var tump;tump=0;
-
-var i, q, b;i=0;q=0;b=0;
-repeat(sh_target.capital_number){
-    b+=1;
-    if (sh_target.capital[b]!=""){
-        i+=1;
-        ship[i]=sh_target.capital[i];
-        
-        ship_use[i]=0;
-        tump=sh_target.capital_num[i];
-        ship_max[i]=obj_ini.ship_carrying[tump];
-        ship_ide[i]=tump;
-        
-        bomb_a+=3;
-        bomb_b+=ship_max[i];bomb_c+=ship_max[i];
-    }
+var fleet = sh_target;
+for (var i = 0; i < max_ships; i++) {
+	ship[i] = fleet.ships[i].name;
+	ship_use[i] = 0;
+	ship_max[i] = fleet.ships[i].carrying;
+	ship_ide[i] = array_get_index(obj_ini.ship, fleet.ships[i]);
+	bomb_b += ship_max[i];
+	bomb_c += ship_max[i];
+	
+	if (fleet.ships[i].size = SHIP_SIZE.capital) {
+		bomb_a += 3;	
+	}
+	else if (fleet.ships[i].size = SHIP_SIZE.frigate) {
+		bomb_a += 1;
+	}
 }
-q=0;
-repeat(sh_target.frigate_number){
-    q+=1;
-    if (sh_target.frigate[q]!=""){
-        i+=1;
-        ship[i]=sh_target.frigate[q];
-        
-        ship_use[i]=0;
-        tump=sh_target.frigate_num[q];
-        ship_max[i]=obj_ini.ship_carrying[tump];
-        ship_ide[i]=tump;
-        
-        bomb_a+=1;
-        bomb_b+=ship_max[i];bomb_c+=ship_max[i];
-    }
-}
-
 
 eldar=p_target.p_eldar[obj_controller.selecting_planet];
 ork=p_target.p_orks[obj_controller.selecting_planet];

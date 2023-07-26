@@ -51,7 +51,7 @@ if (fork=3) then tt2="Moderate";
 if (fork=4) then tt2="High";
 if (fork=5) then tt2="Very High";
 if (fork>=6) then tt2="Overwhelming";
-tt1+=string(tt2)+")";
+if(tt1 != "") then tt1 += string(tt2) + ")";
 draw_text(xx+550,yy+245,string_hash_to_newline(string(tt1)));
 
 
@@ -103,10 +103,14 @@ e=1;
 
 repeat(50){                                 // Ship Forces here
     if (ship[e]!="") and (ship_max[e]>0){
-        draw_set_alpha(1);if (ship_all[e]=0) then draw_set_alpha(0.35);
-        draw_set_color(c_gray);draw_rectangle(x8,y8,x8+160,y8+16,0);// 160
-        draw_set_color(c_black);draw_text_transformed(x8+2,y8,string_hash_to_newline(string(ship[e])+" ("+string(ship_use[e])+"/"+string(ship_max[e])+")"),0.8,0.8,0);
-        if (obj_controller.cooldown<=0) and (mouse_left>=1) and (scr_hit(x8,y8,x8+160,y8+16)=true){var onceh;onceh=0;
+        draw_set_alpha(1);
+		if (ship_all[e]=0) then draw_set_alpha(0.35);
+        draw_set_color(c_gray);
+		draw_rectangle(x8,y8,x8+160,y8+16,0);// 160
+        draw_set_color(c_black);
+		draw_text_transformed(x8+2,y8,string_hash_to_newline(string(ship[e])+" ("+string(ship_use[e])+"/"+string(ship_max[e])+")"),0.8,0.8,0);
+        if (obj_controller.cooldown<=0) and (mouse_left>=1) and (scr_hit(x8,y8,x8+160,y8+16)=true) {
+			var onceh=0;
             if (onceh=0) and (ship_all[e]=0){onceh=1;obj_controller.cooldown=8000;scr_drop_fiddle(ship_ide[e],true,e,attack);}
             if (onceh=0) and (ship_all[e]=1){onceh=1;obj_controller.cooldown=8000;scr_drop_fiddle(ship_ide[e],false,e,attack);}
             if (onceh=1) then refresh_raid=1;
@@ -880,9 +884,9 @@ if (menu=0) and (purge>=2){
             if (purge=2){var i;i=0;
                 repeat(50){i+=1;
                     if (ship[i]!="") and (ship_all[i]>0){
-                        if (obj_ini.ship_class[ship_ide[i]]="Slaughtersong") then purge_score+=3;
-                        if (obj_ini.ship_class[ship_ide[i]]="Battle Barge") then purge_score+=3;
-                        if (obj_ini.ship_class[ship_ide[i]]="Strike Cruiser") then purge_score+=1;
+                        if (obj_ini.ship[ship_ide[i]].class="Slaughtersong") then purge_score+=3;
+                        if (obj_ini.ship[ship_ide[i]].class="Battle Barge") then purge_score+=3;
+                        if (obj_ini.ship[ship_ide[i]].class="Strike Cruiser") then purge_score+=1;
                     }
                 }
             }

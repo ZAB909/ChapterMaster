@@ -12,18 +12,23 @@ if (refresh_raid!=0){
             i+=1;if (i>300){i=1;comp+=1;}
             if (comp>10) then good=0;
         }
-        
-        if (good=1){if (obj_ini.lid[comp,i]>0) and (via[obj_ini.lid[comp,i]]<=0) then chick=0;}
-        
+		
+        var ship_index = -1;
+		if (good == 1 && obj_ini.lid[comp,i] != 0) {
+			ship_index = array_get_index(obj_ini.ship, obj_ini.lid[comp,i]);
+		}
+        if (ship_index != -1 && ship_all[ship_index] == 0){
+			chick=0;
+		}
         remove=0;
         
         // just added the ship part
-        if (good=1) and ((obj_ini.lid[comp,i]>0) or ((attack=1) and (obj_ini.wid[comp,i]=obj_controller.selecting_planet) and (obj_ini.loc[comp,i]=p_target.name) and (remove_local!=0))){
+        if (good=1) and (obj_ini.lid[comp,i] != 0 or ((attack=1) and (obj_ini.wid[comp,i]=obj_controller.selecting_planet) and (obj_ini.loc[comp,i]=p_target.name) and (remove_local!=0))){
             
             if (attack=1) and (obj_ini.wid[comp,i]=obj_controller.selecting_planet) and (remove_local=1) then remove=1;
         
             // Fight wounded
-            if (obj_ini.hp[comp,i]<=10) and (fighting[comp,i]=0) and (raid_wounded=1) and (via[obj_ini.lid[comp,i]]>0){
+            if (obj_ini.hp[comp,i]<=10) and (fighting[comp,i]=0) and (raid_wounded=1) and (ship_all[ship_index] == 1){
                 if (string_count("Bike",obj_ini.mobi[comp,i])=0) or (attack=1) then fighting[comp,i]=1;
                 
                 if (obj_ini.role[comp,i]="Standard Bearer"){

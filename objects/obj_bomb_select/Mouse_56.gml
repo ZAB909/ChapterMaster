@@ -115,8 +115,8 @@ var i;i=0;bomb_score=0;
 repeat(25){
     i+=1;
     if (ship_all[i]=1){
-        if (obj_ini.ship_class[ship_ide[i]]="Battle Barge") then bomb_score+=3;
-        if (obj_ini.ship_class[ship_ide[i]]="Strike Cruiser") then bomb_score+=1;
+        if (obj_ini.ship[ship_ide[i]].class = SHIP_CLASS.battle_barge) then bomb_score+=3;
+        if (obj_ini.ship[ship_ide[i]].class = SHIP_CLASS.strike_cruiser) then bomb_score+=1;
     }
 }
 

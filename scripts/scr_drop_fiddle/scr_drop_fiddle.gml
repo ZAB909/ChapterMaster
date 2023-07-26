@@ -1,10 +1,11 @@
-function scr_drop_fiddle(argument0, argument1, argument2, argument3) {
+function scr_drop_fiddle(global_ship_id, loading, ship_id, vehicles) {
 
-	// argument0: ship IDE     argument1: loading?      argument2: ship array number        argument3: vehicles?
+	// global_ship_id: ship IDE     loading: loading?      ship_id: ship array number        vehicles: vehicles?
 	// This script is executed to determine who is eligable to DEEP STRAHK or purge
-
+	
+	var ship = obj_ini.ship[global_ship_id];
 	var i, comp, idy, good, vgood, assassinate, vehy, para;
-	i=0;comp=0;idy=0;good=1;vgood=1;assassinate=false;vehy=argument3;para=true;
+	i=0;comp=0;idy=0;good=1;vgood=1;assassinate=false;vehy=vehicles;para=true;
 
 	if (instance_exists(obj_drop_select)){
 	    if (obj_drop_select.purge=5) then assassinate=true;
@@ -13,15 +14,15 @@ function scr_drop_fiddle(argument0, argument1, argument2, argument3) {
 
 	if (attacking=0) then vgood=0;
 
-	if (argument0>0) and (argument1=true){// Adding marines to the drop roster
-	    ship_all[argument2]=1;
+	if (global_ship_id>0) and (loading=true){// Adding marines to the drop roster
+	    ship_all[ship_id]=1;
     
 	    repeat(3500){
 	        if (good=1){para=true;
 	            i+=1;if (i>300){i=1;comp+=1;}
 	            if (comp>10) then good=0;
 	        }
-	        if (good=1) and (vgood=1) and (i<=100) and (vehy=1) and (obj_ini.veh_lid[comp,i]=argument0){
+	        if (good=1) and (vgood=1) and (i<=100) and (vehy=1) and (obj_ini.veh_lid[comp,i]=ship){
 	            veh_fighting[comp,i]=1;
 	            if (obj_ini.veh_role[comp,i]="Land Speeder") then speeders+=1;
 	            if (obj_ini.veh_role[comp,i]="Rhino") then rhinos+=1;
@@ -30,10 +31,10 @@ function scr_drop_fiddle(argument0, argument1, argument2, argument3) {
 	            if (obj_ini.veh_role[comp,i]="Land Raider") then raiders+=1;
 	        }
 	        if (good=1){
-	            if (obj_ini.race[comp,i]!=0) and (obj_ini.lid[comp,i]=argument0) /*and (string_count("Aspirant",obj_ini.role[comp,i])=0)*/ and (obj_ini.god[comp,i]<10) and ((string_count("Bike",obj_ini.mobi[comp,i])=0) or (vehy=1)) and (para=true){// Man
-	                ship_use[argument2]+=1;fighting[comp,i]=1;
+	            if (obj_ini.race[comp,i]!=0) and (obj_ini.lid[comp,i]=ship) /*and (string_count("Aspirant",obj_ini.role[comp,i])=0)*/ and (obj_ini.god[comp,i]<10) and ((string_count("Bike",obj_ini.mobi[comp,i])=0) or (vehy=1)) and (para=true){// Man
+	                ship_use[ship_id]+=1;fighting[comp,i]=1;
                 
-	                if (obj_ini.role[comp,i]="Chapter Master"){master=1;ship_use[argument2]+=1;}
+	                if (obj_ini.role[comp,i]="Chapter Master"){master=1;ship_use[ship_id]+=1;}
 	                if (obj_ini.role[comp,i]=obj_ini.role[100,2]) then honor+=1;
 	                if (obj_ini.role[comp,i]="Company Champion") then champions+=1;
                 
@@ -74,15 +75,15 @@ function scr_drop_fiddle(argument0, argument1, argument2, argument3) {
 	    }
 	}
 
-	if (argument0>0) and (argument1=false){// Removing marines from the drop roster
-	    ship_all[argument2]=0;
+	if (global_ship_id>0) and (loading=false){// Removing marines from the drop roster
+	    ship_all[ship_id]=0;
 
 	    repeat(3500){
 	        if (good=1){
 	            i+=1;if (i>300){i=1;comp+=1;}
 	            if (comp>10) then good=0;
 	        }
-	        if (good=1) and (i<=100) and (vehy=1) and (obj_ini.veh_lid[comp,i]=argument0){
+	        if (good=1) and (i<=100) and (vehy=1) and (obj_ini.veh_lid[comp,i]=ship){
 	            veh_fighting[comp,i]=0;
 	            if (obj_ini.veh_role[comp,i]="Land Speeder") then speeders-=1;
 	            if (obj_ini.veh_role[comp,i]="Rhino") then rhinos-=1;
@@ -91,10 +92,10 @@ function scr_drop_fiddle(argument0, argument1, argument2, argument3) {
 	            if (obj_ini.veh_role[comp,i]="Land Raider") then raiders-=1;
 	        }
 	        if (good=1){
-	            if (obj_ini.race[comp,i]!=0) and (obj_ini.lid[comp,i]=argument0) and (string_count("Aspirant",obj_ini.role[comp,i])=0) and (obj_ini.god[comp,i]<10) and ((string_count("Bike",obj_ini.mobi[comp,i])=0) or (vehy=1)){// Man
-	                ship_use[argument2]-=1;fighting[comp,i]=0;
+	            if (obj_ini.race[comp,i]!=0) and (obj_ini.lid[comp,i]=ship) and (string_count("Aspirant",obj_ini.role[comp,i])=0) and (obj_ini.god[comp,i]<10) and ((string_count("Bike",obj_ini.mobi[comp,i])=0) or (vehy=1)){// Man
+	                ship_use[ship_id]-=1;fighting[comp,i]=0;
                             
-	                if (obj_ini.role[comp,i]="Chapter Master"){master=0;ship_use[argument2]-=1;}
+	                if (obj_ini.role[comp,i]="Chapter Master"){master=0;ship_use[ship_id]-=1;}
 	                if (obj_ini.role[comp,i]=obj_ini.role[100,2]) then honor-=1;
 	                if (obj_ini.role[comp,i]="Company Champion") then champions-=1;
                 
@@ -136,16 +137,16 @@ function scr_drop_fiddle(argument0, argument1, argument2, argument3) {
 	}
 
 
-	// var p;p=0;repeat(50){p+=1;if (ship_all[p]=1) then via[ship_ide[p]]=1;if (ship_all[p]=0) then via[ship_ide[p]]=0;}
-	// var p;p=0;repeat(50){p+=1;if (ship_all[p]=1) then via[ship_ide[p]]=1;if (ship_all[p]=0) then via[ship_ide[p]]=0;}
+	// var p;p=0;repeat(50){p+=1;if (ship_all[p]=1) then via[global_ship_ide[p]]=1;if (ship_all[p]=0) then via[global_ship_ide[p]]=0;}
+	// var p;p=0;repeat(50){p+=1;if (ship_all[p]=1) then via[global_ship_ide[p]]=1;if (ship_all[p]=0) then via[global_ship_ide[p]]=0;}
 	// var p,p2;
 	// p=0;p2=0;
 
-	/*repeat(50){if (p2=0){p+=1;if (ship_ide[p]=argument0) then p2=p;}}
+	/*repeat(50){if (p2=0){p+=1;if (global_ship_ide[p]=global_ship_id) then p2=p;}}
 	if (p2>0){if (ship_all[p2]=1) then via[p2]=1;if (ship_all[p2]=0) then via[p2]=0;}*/
 
-	if (ship_all[argument2]=0) then via[argument0]=0;
-	if (ship_all[argument2]=1) then via[argument0]=1;
+	if (ship_all[ship_id]=0) then via[global_ship_id]=0;
+	if (ship_all[ship_id]=1) then via[global_ship_id]=1;
 
 
 }
