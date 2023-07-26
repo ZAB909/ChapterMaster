@@ -12,8 +12,8 @@ if (instance_exists(obj_temp1)){
         var i;i=0;    
         repeat(4){
             i+=1;
-            if (p_type[i]="Forge") and (p_owner[i]=3) then obj_controller.income_forge+=4;
-            if (p_type[i]="Agri") and (p_owner[i]=2) then obj_controller.income_agri+=2;
+            if (p_type[i]="Forge") and (p_owner[i]=3) then obj_controller.income_forge+=6;
+            if (p_type[i]="Agri") and (p_owner[i]=2) then obj_controller.income_agri+=3;
         }
         // if (tempy_d<5) then instance_deactivate_object(self);
     }
@@ -23,8 +23,8 @@ if (instance_exists(obj_temp1)){
         var i;i=0;
         repeat(4){
             i+=1;
-            if (p_type[i]="Forge") and (p_owner[i]=3) then obj_controller.income_forge+=4;
-            if (p_type[i]="Agri") and (p_owner[i]=2) then obj_controller.income_agri+=2;
+            if (p_type[i]="Forge") and (p_owner[i]=3) then obj_controller.income_forge+=6;
+            if (p_type[i]="Agri") and (p_owner[i]=2) then obj_controller.income_agri+=3;
         }
     }
     

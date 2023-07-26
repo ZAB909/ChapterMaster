@@ -175,16 +175,16 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                     
                     ac=0;
                     if (obj_ini.armor[co,i]="Scout Armor") then ac=8;
-                    if (obj_ini.armor[co,i]="MK3 Iron Armor") then ac=24;
+                    if (obj_ini.armor[co,i]="MK3 Iron Armor") then ac=26;
                     if (obj_ini.armor[co,i]="MK4 Maximus") then ac=19;
-                    if (obj_ini.armor[co,i]="MK6 Corvus") then ac=18;
+                    if (obj_ini.armor[co,i]="MK6 Corvus") then ac=16;
                     if (obj_ini.armor[co,i]="MK7 Aquila") then ac=18;
-                    if (obj_ini.armor[co,i]="MK8 Errant") then ac=19;
+                    if (obj_ini.armor[co,i]="MK8 Errant") then ac=22;
                     if (obj_ini.armor[co,i]="Power Armor") then ac=19;
-                    if (obj_ini.armor[co,i]="Artificer Armor") then ac=35;
-                    if (obj_ini.armor[co,i]="Terminator Armor") then ac=40;
+                    if (obj_ini.armor[co,i]="Artificer Armor") then ac=37;
+                    if (obj_ini.armor[co,i]="Terminator Armor") then ac=42;
                     if (obj_ini.armor[co,i]="Tartaros") then ac=44;
-                    if (obj_ini.armor[co,i]="Dreadnought") then ac=40;
+                    if (obj_ini.armor[co,i]="Dreadnought") then ac=50;
                     if (obj_ini.armor[co,i]="Ork Armor") then ac=15;
                     if (string_count("&",obj_ini.armor[co,i])>0){
                         // Artifact armor
@@ -197,10 +197,10 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                         if (obj_controller.stc_bonus[1]=5){if (ac>=40) then ac+=2;if (ac<40) then ac+=1;}
                         if (obj_controller.stc_bonus[2]=3){if (ac>=40) then ac+=2;if (ac<40) then ac+=1;}
                     }
-                    if (obj_ini.wep1[co,i]="Boarding Shield") then ac+=4;
-                    if (obj_ini.wep2[co,i]="Boarding Shield") then ac+=4;
-                    if (obj_ini.wep1[co,i]="Storm Shield") then ac+=8;
-                    if (obj_ini.wep2[co,i]="Storm Shield") then ac+=8;
+                    if (obj_ini.wep1[co,i]="Boarding Shield") then ac+=8;
+                    if (obj_ini.wep2[co,i]="Boarding Shield") then ac+=8;
+                    if (obj_ini.wep1[co,i]="Storm Shield") then ac+=16;
+                    if (obj_ini.wep2[co,i]="Storm Shield") then ac+=16;
                     
                     roll2=floor(random(100))+1;
                     

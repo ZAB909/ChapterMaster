@@ -546,7 +546,7 @@ function scr_enemy_ai_e() {
 					// if a planet type has less than half it's max pop, you get 20% less spacey marines
 					if (p_population[run] <= halfpop){
 						recruit_chance+=1.2;
-						scr_alert("red","owner","The populations you attain aspirants from are less populant than required, chances of recruiting quality aspirants is 20% lower",0,0);
+						scr_alert("red","owner","The populations you attain aspirants from are less populant than required, chances of recruiting aspirants is 20% lower",0,0);
 					} 
 					
                 /* // old blood duel
@@ -562,9 +562,9 @@ function scr_enemy_ai_e() {
 					// xp is given in a latter if loop
 	                
 					if (obj_controller.recruit_trial="Blood Duel"){ // blood duel is most numerous, but not great with gene seed
-						months_to_neo-=choose(24,24,36,36,48);
+						months_to_neo-=choose(24,24,36,36,36,48);
 						corr+=choose(10,15,20);
-						recruit_chance-=choose(0.7,0.8,0,8,0.9);
+						recruit_chance-=choose(0.7,0.7,0.8,0.8,0,8,0.9);
 						
 						var failedneo;
 						failedneo=choose(0,0,0,0,0,0,0,0,1);
@@ -579,17 +579,21 @@ function scr_enemy_ai_e() {
 						
 						
 					if (obj_controller.recruit_trial="Challenge"){
-						
+						corr+=choose(1,2,3)
+						months_to_neo-=choose(-6,0,6);
+					}
+					
+					if (obj_controller.recruit_trial="Exposure"){
+						corr+=choose(1,2,3)
 					}
 					
 	                if (obj_controller.recruit_trial="Knowledge of Self"){ // less time heavy than apprenticeship. Good on temperates (ppl are educated there idk)
-						months_to_neo+=choose(18,24,36);
+						months_to_neo+=choose(18,24,24,24,36,36);
 						corr-=choose(4,6,8) 
 						}
 					if (obj_controller.recruit_trial="Apprenticeship") {  // the "I don't need any more astartes but have money to spend" one
 						months_to_neo+=choose(48,60);
 						corr-=10;
-						
 	                    }
                 
 				// xp gain for the recruit is here
@@ -606,40 +610,50 @@ function scr_enemy_ai_e() {
 	                    }
                     
 	                    obj_controller.recruit_name[thiss]=scr_marine_name();
-	                    obj_controller.recruit_exp[thiss]=0;
+	                    obj_controller.recruit_exp[thiss]+=irandom(5);
 						
+						// gives planet buffs
+						
+						if (p_type[run]="Death"){ obj_controller.recruit_exp[thiss]+=6;}
+						if (p_type[run]="Ice"){obj_controller.recruit_exp[thiss]+=3;}
+						if (p_type[run]="Desert"){obj_controller.recruit_exp[thiss]+=3;}
+						if (p_type[run]="Lava"){obj_controller.recruit_exp[thiss]+=9;}
 						
                 
 	                    if (obj_controller.recruit_trial="Hunting the Hunter"){
-							if(p_type[run]="Desert") or (p_type[run]="Ice") or (p_type[run]="Death")
-								obj_controller.recruit_exp[thiss]+=irandom(7)+7; 
-								
+							if(p_type[run]="Desert") or (p_type[run]="Ice") or (p_type[run]=="Death"){
+								obj_controller.recruit_exp[thiss]+=irandom(13)+7; 
+							}
 	                    }
 						
 						if (obj_controller.recruit_trial="Exposure"){
-							
+							if(p_type[run]=="Desert") or (p_type[run]=="Ice") or (p_type[run]=="Death") or (p_type[run]=="Lava") or (p_type[run]=="Forge"){
+								months_to_neo-=choose(12,12,12,24,24,36);
+							}
 						}
 
 						if (obj_controller.recruit_trial="Survival of the Fittest"){
-							
+							if(p_type[run]="Desert") or (p_type[run]="Ice") or (p_type[run]="Death") or (p_type[run]="Lava"){
+								recruit_chance-=choose(0.7,0.8,0.8,0.8,0.9);
+							}
+							if(p_type[run]="Feudal"){recruit_chance-=choose(0.5,0.6,0.6,0.7,0.7,0.8)}
 						}
+	                    if (obj_controller.recruit_trial="Challenge"){
+							obj_controller.recruit_exp[thiss]+=choose(0,0,0,0,0,0,0,0,10,20);
+							scr_alert("green","owner","A worthy aspirant has risen to the rank of Neophyte, doing quite well against the challenger Astartes.",0,0);
+	                    }
+
 						
 						if (obj_controller.recruit_trial="Apprenticeship"){
-							obj_controller.recruit_exp[thiss]+=40						
+							if (p_type[run]="Lava"){recruit_chance-=choose(0.5,0.6,0.6,0.7,0.7);} // nocturne gaming
+							obj_controller.recruit_exp[thiss]+=irandom(5)+34;					
+						}
+						
+						if (obj_controller.recruit_trial="Knowledge of Self"){
+							if(p_type[run]="Temperate") then obj_controller.recruit_exp[thiss]+=irandom(5)+5; // this is the only one that gives bonus for temperates
+							obj_controller.recruit_exp[thiss]+=irandom(10)+15; 
 						}
 
-	                    if (obj_controller.recruit_trial="Challenge"){
-							if(p_type[run]="Death"){
-								obj_controller.recruit_exp[thiss]+=30;
-							}
-							else
-	                        obj_controller.recruit_exp[thiss]+=irandom(5)+5;
-	                        var rand5;rand5=floor(random(100))+1;
-	                        if (rand5<=1){
-	                            obj_controller.recruit_exp[thiss]+=choose(20,25,30);months_to_neo-=5;
-	                            scr_alert("green","recruitment","Recruit "+string(obj_controller.recruit_name[thiss])+" defeats the Astartes and is destined for greatness.",0,0);
-	                        }
-	                    }
 
                    
                    
@@ -650,7 +664,7 @@ function scr_enemy_ai_e() {
 	                    obj_controller.recruit_distance[thiss]=0;
 	                    obj_controller.recruit_training[thiss]=months_to_neo;
 	                    obj_controller.gene_seed-=1;
-                    
+						if(obj_controller.recruit_exp[thiss]>=40) then obj_controller.recruit_exp[thiss]=38; // we don't want immediate battle bros
                     
                     
                     

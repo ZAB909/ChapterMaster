@@ -57,7 +57,6 @@ repeat(4){
     }
     
     
-    
     if (p_population[i]>=10000000){
         var military;military=p_population[i]/470;
         p_guardsmen[i]=floor(military*0.25);

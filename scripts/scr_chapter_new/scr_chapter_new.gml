@@ -258,6 +258,31 @@ function scr_chapter_new(argument0) {
 	    chapter_master_ranged=3;chapter_master_specialty=1;
 	}
 
+	
+	if (argument0="Soul Drinkers"){founding="N/A";points=200;
+	    selected_chapter=16;chapter=argument0;icon=14;icon_name="lam";founding=5;
+	    fleet_type=2;strength=2;purity=10;stability=2;cooperation=2;
+	    adv[1]="Melee Enthusiasts";adv[2]="Kings of Space";adv[3]="Boarders";adv[4]="Daemon Binders";dis[1]="Suspicious";
+	    homeworld="Dead";homeworld_name="Entymion";
+	    homeworld_exists=0;recruiting_exists=1;
+	    recruiting_world="Death";recruiting_name=scr_star_name();
+	    homeworld_rule=0;aspirant_trial="Challenge";
+	    // Pauldron2: Left, Pauldron: Right
+	    color_to_main="Purple";color_to_secondary="Purple";color_to_trim="Gold";
+	    color_to_pauldron2="Purple";color_to_pauldron="Purple";color_to_lens="Red";
+	    color_to_weapon="Purple";col_special=0;trim=1;
+	    battle_cry="Cold and Hard, Soul Drinkers";
+	    equal_specialists=0;load_to_ships=2;successors=0;
+	    mutations=1;mutations_selected=1;
+	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=1;ossmodula=0;membrane=0;
+	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
+	    disposition[1]=60;// Prog
+	    disposition[2]=15;disposition[3]=20;disposition[4]=10;disposition[5]=25;
+	    disposition[6]=50;// Astartes
+	    disposition[7]=0;// Reserved
+	    chapter_master_name="Sarpedon";chapter_master_melee=7;
+	    chapter_master_ranged=3;chapter_master_specialty=3;
+	}
 
 
 

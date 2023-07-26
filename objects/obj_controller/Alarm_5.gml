@@ -605,11 +605,11 @@ i=0;repeat(120){i+=1;
 
 /* */
 
-
+/*
 if (turn=240) and (global.chapter_name="Lamenters"){obj_ini.strin2+="Black Rage";
     scr_popup("Geneseed Mutation","Your Chapter has begun to have visions and nightmares of Sanguinius' fall.  The less mentally disciplined of your battle-brothers no longer are able to sleep soundly, waking from sleep in a screaming, frothing rage.  It appears the Black Rage has returned.","black_rage","");    
 }
-
+*/
 if (obj_ini.adv[1]="Scavengers") or (obj_ini.adv[1]="Scavengers") or (obj_ini.adv[1]="Scavengers") or (obj_ini.adv[1]="Scavengers"){
     var lroll1,lroll2,loot;
     lroll1=floor(random(100))+1;
