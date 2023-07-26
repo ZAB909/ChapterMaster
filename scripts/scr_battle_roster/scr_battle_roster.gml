@@ -1,4 +1,4 @@
-function scr_battle_roster(argument0, argument1, argument2) {
+function scr_battle_roster(_name, _id, _on_planet) {
 
 	// argument 0 : planet or ship name
 	// argument 1 : world number (wid)
@@ -8,12 +8,16 @@ function scr_battle_roster(argument0, argument1, argument2) {
 
 
 
-	// show_message("Container:"+string(argument0)+", number:"+string(argument1)+", planet?:"+string(argument2));
+	// show_message("Container:"+string(_name)+", number:"+string(_id)+", planet?:"+string(_on_planet));
 
 
 	var fiy, secc, stop,okay,sofar;
-	fiy=argument0;
-	secc=argument1;
+	fiy=_name;
+	secc=_id;
+	var ship = undefined;
+	if(!_on_planet) {
+		ship = obj_ini.ship[_id];
+	}
 	stop=0;okay=0;sofar=0;
 
 
@@ -41,7 +45,7 @@ function scr_battle_roster(argument0, argument1, argument2) {
 
 
 
-	// if (argument2=true){
+	// if (_on_planet=true){
 	    var co, v, meat;
 	    co=-1;v=0;meat=false;
 
@@ -53,13 +57,13 @@ function scr_battle_roster(argument0, argument1, argument2) {
 
 	            if (stop=0){
 	                if (!instance_exists(obj_drop_select)){// Only when attacked
-	                    if (argument2=true) and (obj_ini.loc[co,v]=fiy) and (obj_ini.wid[co,v]=secc) and (obj_ini.hp[co,v]>0) and (obj_ini.god[co,v]<10) then okay=1;
-	                    if (argument2=false) and (obj_ini.lid[co,v]=argument1) and (argument1=argument1) and (obj_ini.hp[co,v]>0) and (obj_ini.god[co,v]<10) then okay=1;
+	                    if (_on_planet=true) and (obj_ini.loc[co,v]=fiy) and (obj_ini.wid[co,v]=secc) and (obj_ini.hp[co,v]>0) and (obj_ini.god[co,v]<10) then okay=1;
+	                    if (_on_planet=false) and (obj_ini.lid[co,v]=ship) and (obj_ini.hp[co,v]>0) and (obj_ini.god[co,v]<10) then okay=1;
 	                }
 	                if (instance_exists(obj_drop_select)){
 	                    if (obj_drop_select.attack=1){
-	                        if (argument2=true) and (obj_ini.loc[co,v]=fiy) and (obj_ini.wid[co,v]=secc) and (obj_ini.hp[co,v]>0) and (obj_ini.god[co,v]<10) then okay=1;
-	                        if (argument2=false) and (obj_ini.lid[co,v]=argument1) and (argument1=argument1) and (obj_ini.hp[co,v]>0) and (obj_ini.god[co,v]<10) then okay=1;
+	                        if (_on_planet=true) and (obj_ini.loc[co,v]=fiy) and (obj_ini.wid[co,v]=secc) and (obj_ini.hp[co,v]>0) and (obj_ini.god[co,v]<10) then okay=1;
+	                        if (_on_planet=false) and (obj_ini.lid[co,v]=ship)  and (obj_ini.hp[co,v]>0) and (obj_ini.god[co,v]<10) then okay=1;
 	                    }
 	                }
 
@@ -71,7 +75,7 @@ function scr_battle_roster(argument0, argument1, argument2) {
 	                }
 
 	                /*if (!instance_exists(obj_drop_select)){// Only when attacked
-	                    if (argument2=true) and (obj_ncombat.local_forces=1){
+	                    if (_on_planet=true) and (obj_ncombat.local_forces=1){
 	                        var world_name,p_num;world_name="";p_num=obj_controller.selecting_planet;
 	                        if (instance_exists(obj_drop_select)){world_name=obj_drop_select.p_target.name;}
 
@@ -83,7 +87,7 @@ function scr_battle_roster(argument0, argument1, argument2) {
 
 
 	                if (instance_exists(obj_drop_select)){
-	                    if (obj_drop_select.fighting[co,v]=1) and (obj_ini.lid[co,v]=argument1) and (okay!=-1) then okay=1;
+	                    if (obj_drop_select.fighting[co,v]=1) and (obj_ini.lid[co,v]=ship) and (okay!=-1) then okay=1;
 	                    if (obj_drop_select.fighting[co,v]=0) then okay=0;
 	                }
 	                if (!instance_exists(obj_drop_select)) and (instance_exists(obj_temp_meeting)){meat=true;
@@ -259,12 +263,12 @@ function scr_battle_roster(argument0, argument1, argument2) {
 
 	                    if (obj_ini.veh_race[co,v]!=0) and (obj_ini.veh_loc[co,v]=fiy) and (obj_ini.veh_wid[co,v]=secc) then vokay=1;
 
-	                    if (argument2=true) and (obj_ncombat.local_forces=1){
+	                    if (_on_planet=true) and (obj_ncombat.local_forces=1){
 	                        var world_name,p_num;world_name="";p_num=obj_controller.selecting_planet;
 	                        if (instance_exists(obj_drop_select)){world_name=obj_drop_select.p_target.name;}
 	                        if (obj_ini.veh_race[co,v]!=0) and (obj_ini.veh_loc[co,v]=world_name) and (obj_ini.wid[co,v]=p_num) then vokay=2;
 	                    }
-	                    if (argument2=false) and (obj_ini.veh_lid[co,v]=argument1) and (argument1=argument1) and (obj_ini.veh_hp[co,v]>0) then vokay=1;
+	                    if (_on_planet=false) and (obj_ini.veh_lid[co,v]=ship) and (obj_ini.veh_hp[co,v]>0) then vokay=1;
 
 	                    if (instance_exists(obj_drop_select)){
 	                        if (obj_drop_select.attack=0) then vokay=0;
