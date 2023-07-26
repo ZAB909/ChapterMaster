@@ -592,12 +592,16 @@ if (trade_goods="building_ships"){
         }
         
         if (capital_number=1) and (frigate_number>=5) and (escort_number>=12){
-            var i;i=0;repeat(capital_number){i+=1;
-                capital_max_imp[i]=(((floor(random(15))+1)*1000000)+15000000)*2;
-            }
-            i=0;repeat(frigate_number){i+=1;
-                frigate_max_imp[i]=(500000+(floor(random(50))+1)*10000)*2;
-            }
+			var capitals = get_capitals(ships);
+			for(var i = 0; i < capital_number; i++){
+				capitals[i].max_imp = (((floor(random(15))+1)*1000000)+15000000)*2;
+				capitals[i].imp = capitals[i].max_imp;
+			}
+			var frigates = get_frigates(ships);
+			for(var i = 0; i < capital_number; i++){
+				frigates[i].max_imp = (500000+(floor(random(50))+1)*10000)*2;
+				frigates[i].imp = frigates[i].max_imp;
+			}
             trade_goods="";
         }
     }
@@ -605,29 +609,16 @@ if (trade_goods="building_ships"){
     if (trade_goods="building_ships") or (cont!=1) then exit;
 }
 
+var troop_count = array_reduce(ships, function(sum, ship, index){
+	return sum + ship.imp;
+},0);
 
-
-var maxi,curr,i,o;
-maxi=0;curr=0;i=0;o=0;
-
-i=0;repeat(20){i+=1;
-    if (capital_max_imp[i]>0) and (capital_number>i){capital_max_imp[i]=0;}
-    if (capital_imp[i]>0) and (capital_number<=i) and (guardsmen_unloaded=0) then curr+=capital_imp[i];
-    if (capital_max_imp[i]>0) and (capital_number<=i) then maxi+=capital_max_imp[i];
-}
-i=0;repeat(30){i+=1;
-    if (frigate_max_imp[i]>0) and (frigate_number>i){frigate_max_imp[i]=0;}
-    if (frigate_imp[i]>0) and (frigate_number<=i) and (guardsmen_unloaded=0) then curr+=frigate_imp[i];
-    if (frigate_max_imp[i]>0) and (frigate_number<=i) then maxi+=frigate_max_imp[i];
-}
-i=0;repeat(30){i+=1;
-    if (escort_max_imp[i]>0) and (escort_number>i){escort_imp[i]=0;escort_max_imp[i]=0;}
-    if (escort_imp[i]>0) and (escort_number<=i) and (guardsmen_unloaded=0) then curr+=escort_imp[i];
-    if (escort_max_imp[i]>0) and (escort_number<=i) then maxi+=escort_max_imp[i];
-}
+var troop_max = array_reduce(ships, function(sum, ship, index){
+	return sum + ship.max_imp;
+},0);
 
 guardsmen_ratio=1;
-if (guardsmen_unloaded=0) then guardsmen_ratio=curr/maxi;
+if (guardsmen_unloaded=0) then guardsmen_ratio=troop_count/troop_max;
 with(obj_temp_inq){instance_destroy();}
 
 
@@ -645,8 +636,9 @@ if (action="") and (instance_exists(orbiting)) and (guardsmen_unloaded=1){// Mov
     
     
     // Move on, man
-    if (orbiting.p_orks[cr]+orbiting.p_chaos[cr]+orbiting.p_tyranids[cr]+orbiting.p_necrons[cr]+orbiting.p_tau[cr]+orbiting.p_traitors[cr]=0){
-        var hol;hol=false;if ((orbiting.p_player[cr]>0) and (obj_controller.faction_status[2]="War")) then hol=true;
+    if (orbiting.p_orks[cr]+orbiting.p_chaos[cr]+orbiting.p_tyranids[cr]+orbiting.p_necrons[cr]+orbiting.p_tau[cr]+orbiting.p_traitors[cr]==0){
+        var hol=false;
+		if ((orbiting.p_player[cr]>0) and (obj_controller.faction_status[2]="War")) then hol=true;
         
         if (cr>0) and (that>0) and (hol=false){// Jump to next planet
             orbiting.p_guardsmen[that]=orbiting.p_guardsmen[cr];orbiting.p_guardsmen[that]=0;
@@ -654,19 +646,25 @@ if (action="") and (instance_exists(orbiting)) and (guardsmen_unloaded=1){// Mov
         }
         
         if (cr>0) and (that=0) and (hol=false){// Get back onboard
-            var new_capacity;
-            new_capacity=orbiting.p_guardsmen[1]+orbiting.p_guardsmen[2]+orbiting.p_guardsmen[3]+orbiting.p_guardsmen[4]/maxi;
+            var new_troops;
+            new_troops=(orbiting.p_guardsmen[1]+orbiting.p_guardsmen[2]+orbiting.p_guardsmen[3]+orbiting.p_guardsmen[4]);
             
-            i=0;repeat(20){i+=1;if (capital_number>=i) then capital_imp[i]=floor(capital_max_imp[i]*new_capacity);}
-            i=0;repeat(30){i+=1;if (frigate_number>=i) then frigate_imp[i]=floor(frigate_max_imp[i]*new_capacity);}
-            i=0;repeat(30){i+=1;if (escort_number>=i) then escort_imp[i]=floor(escort_max_imp[i]*new_capacity);}
+			var ship_count = array_length(ships);
+			for (var i = 0; i < ship_count && new_troops >= 0; i++) {
+				ships[i].imp = ships[i].max_imp;
+				new_troops = max((new_troops - ships[i].imp),0);
+			}
             
-            orbiting.p_guardsmen[1]=0;orbiting.p_guardsmen[2]=0;orbiting.p_guardsmen[3]=0;orbiting.p_guardsmen[4]=0;
-            trade_goods="";guardsmen_unloaded=0;exit;
+			
+            orbiting.p_guardsmen[1]=max(0,new_troops);
+			orbiting.p_guardsmen[2]=0;
+			orbiting.p_guardsmen[3]=0;
+			orbiting.p_guardsmen[4]=0;
+            trade_goods="";
+			guardsmen_unloaded=0;
+			exit;
         }
     }
-    
-    
 }
 
 
@@ -688,8 +686,8 @@ if (((capital_number*8)+(frigate_number*2)+escort_number)<=14) and (guardsmen_un
             var cont,p;cont=0;p=0;
             repeat(4){p+=1;
                 if (p_type[p]="Forge"){
-                    if (p_orks[o]+p_chaos[o]+p_tyranids[o]+p_necrons[o]+p_tau[o]+p_traitors[o]=0){
-                        if (present_fleet[7]+present_fleet[8]+present_fleet[9]+present_fleet[10]+present_fleet[13]=0){
+                    if (p_orks[p]+p_chaos[p]+p_tyranids[p]+p_necrons[p]+p_tau[p]+p_traitors[p]==0){
+                        if (present_fleet[7]+present_fleet[8]+present_fleet[9]+present_fleet[10]+present_fleet[13]==0){
                             cont=1;
                         }
                     }
@@ -798,7 +796,7 @@ if (guardsmen_unloaded=1) and (instance_exists(orbiting)){
 
 // Go to recruiting grounds
 if ((guardsmen_unloaded=0) and (guardsmen_ratio<0.5) and ((trade_goods=""))) or (trade_goods="recr"){// determine what sort of planet is needed
-    var guard_wanted,planet_needed;guard_wanted=0;planet_needed=0;guard_wanted=maxi-curr;
+    var guard_wanted,planet_needed;guard_wanted=0;planet_needed=0;guard_wanted=troop_max-troop_count;
     if (guard_wanted<=50000) then planet_needed=1;// Pretty much any
     if (guard_wanted>50000) then planet_needed=2;// Feudal and up
     if (guard_wanted>200000) then planet_needed=3;// Temperate and up
@@ -871,21 +869,24 @@ if (action="") and (trade_goods="goto_recruiting"){
             }
         }
         
-        var guard_wanted;guard_wanted=0;guard_wanted=maxi-curr;
+        var guard_wanted;guard_wanted=0;guard_wanted=troop_count-troop_count;
         
         // if (orbiting.p_population[that]<guard_wanted) and (orbiting.p_large[that]=0) then trade_goods="";
-        if (orbiting.p_population[that]>guard_wanted) or (orbiting.p_large[that]=1){
-            if (orbiting.p_large[that]=0){orbiting.p_population[that]-=guard_wanted;
-                i=0;repeat(20){i+=1;capital_imp[i]=capital_max_imp[i];}
-                i=0;repeat(30){i+=1;frigate_imp[i]=frigate_max_imp[i];}
-                i=0;repeat(30){i+=1;escort_imp[i]=escort_max_imp[i];}
+        if (orbiting.p_population[that]>guard_wanted) or (orbiting.p_large[that]==1){
+            if (orbiting.p_large[that]==0)
+			{
+				orbiting.p_population[that]-=guard_wanted;
+				array_foreach(ships, function(ship, index){
+					ship.imp = ship.max_imp;
+				});
             }
-            if (orbiting.p_large[that]=1){guard_wanted=guard_wanted/1000000000;
+            if (orbiting.p_large[that]==1){
+				guard_wanted=guard_wanted/1000000000;
                 orbiting.p_population[that]-=guard_wanted;
-                i=0;repeat(20){i+=1;capital_imp[i]=capital_max_imp[i];}
-                i=0;repeat(30){i+=1;frigate_imp[i]=frigate_max_imp[i];}
-                i=0;repeat(30){i+=1;escort_imp[i]=escort_max_imp[i];}
-            }
+				array_foreach(ships, function(ship, index){
+					ship.imp = ship.max_imp;
+				});
+			}
             trade_goods="recruited";
         }
     }
@@ -927,9 +928,12 @@ if (action="") and (instance_exists(orbiting)) and (guardsmen_unloaded=0){// Unl
     
     if (that>0) and (highest>0) and (orbiting.p_guardsmen[1]+orbiting.p_guardsmen[2]+orbiting.p_guardsmen[3]+orbiting.p_guardsmen[4]=0){
         if (highest>2) or (orbiting.p_pdf[that]=0){guardsmen_unloaded=1;
-            i=0;repeat(20){i+=1;if (capital_imp[i]>0) then orbiting.p_guardsmen[that]+=capital_imp[i];capital_imp[i]=0;}
-            i=0;repeat(30){i+=1;if (frigate_imp[i]>0) then orbiting.p_guardsmen[that]+=frigate_imp[i];frigate_imp[i]=0;}
-            i=0;repeat(30){i+=1;if (escort_imp[i]>0) then orbiting.p_guardsmen[that]+=escort_imp[i];escort_imp[i]=0;}
+			var troop_count = array_reduce(ships, function(sum, ship, index){
+				sum += ship.imp;
+				ship.imp = 0;
+				return sum
+			},0);
+			orbiting.p_guardsmen[that] += troop_count;
         }
     }
     

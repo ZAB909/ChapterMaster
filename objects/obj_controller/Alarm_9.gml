@@ -50,7 +50,20 @@ with(obj_temp_inq){
     
     nav.capital_number=choose(1,2,3);
     nav.frigate_number=(nav.capital_number*2)+3;
-    nav.escort_number=12;
+	nav.escort_number=12;
+	repeat(nav.capital_number) {
+		array_push(nav.ships, new new_ship(get_random_capital(2)));
+	}
+	repeat(nav.frigate_number) {
+		array_push(nav.ships, new new_ship(get_random_frigate(2)));
+	}
+	repeat(nav.escort_number) {
+		array_push(nav.ships, new new_ship(get_random_escort(2)));
+	}
+	array_foreach(nav.ships, function(ship, index){
+		ship.imp = 0;
+		ship.max_imp = 0;
+	});
     nav.home_x=x;nav.home_y=y;
     nav.orbiting=instance_nearest(x,y,obj_star);
     nav.orbiting.present_fleet[2]+=1;
@@ -63,16 +76,20 @@ with(obj_temp_inq){
 }
 
 with(obj_en_fleet){
-    if (owner=2) and (navy=1){var i;
-        i=0;repeat(capital_number){i+=1;
-            capital_max_imp[i]=(((floor(random(15))+1)*1000000)+15000000)*2;
-            capital_imp[i]=capital_max_imp[i];
-        }
-        i=0;repeat(frigate_number){i+=1;
-            frigate_max_imp[i]=(500000+(floor(random(50))+1)*10000)*2;
-            frigate_imp[i]=frigate_max_imp[i];
-        }
-    }
+	if (owner==2) {
+		array_foreach(ships, function(ship, index){
+			if (ship.size == SHIP_SIZE.capital) {
+				ship.max_imp = (((floor(random(15))+1)*1000000)+15000000)*2;
+			}
+			else if (ship.size == SHIP_SIZE.frigate) {
+				ship.max_imp = (500000+(floor(random(50))+1)*10000)*2;
+			}
+			else if (ship.size == SHIP_SIZE.escort) {
+				ship.max_imp = 0;
+			}
+			ship.imp = ship.max_imp;
+		});
+	}
 }
 
 

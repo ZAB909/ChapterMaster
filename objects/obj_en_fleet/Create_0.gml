@@ -20,20 +20,7 @@ etah=0;safe=0;
 
 image_xscale=1.25;image_yscale=1.25;
 
-var i;i=-1;
-repeat(21){i+=1;
-    capital[i]="";capital_num[i]=0;capital_sel[i]=1;capital_imp[i]=0;capital_max_imp[i]=0;
-}
-
-var i;i=-1;
-repeat(31){i+=1;
-    frigate[i]="";frigate_num[i]=0;frigate_sel[i]=1;frigate_imp[i]=0;frigate_max_imp[i]=0;
-}
-
-var i;i=-1;
-repeat(31){i+=1;
-    escort[i]="";escort_num[i]=0;escort_sel[i]=1;escort_imp[i]=0;escort_max_imp[i]=0;
-}
+ships = [];
 
 image_speed=0;
 
