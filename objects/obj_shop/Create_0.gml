@@ -152,10 +152,10 @@ if (shop="vehicles"){i=0;
 }
 
 if (shop="warships"){i=0;
-    i+=1;item[i]="Battle Barge";item_stocked[i]=scr_ship_count(item[i]);item_cost[i]=20000;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
-    i+=1;item[i]="Strike Cruiser";item_stocked[i]=scr_ship_count(item[i]);item_cost[i]=8000;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
-    i+=1;item[i]="Gladius";item_stocked[i]=scr_ship_count(item[i]);item_cost[i]=3500;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
-    i+=1;item[i]="Hunter";item_stocked[i]=scr_ship_count(item[i]);item_cost[i]=3000;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+    i+=1;item[i]="Battle Barge";item_stocked[i]=scr_ship_count(SHIP_CLASS.battle_barge);item_cost[i]=20000;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+    i+=1;item[i]="Strike Cruiser";item_stocked[i]=scr_ship_count(SHIP_CLASS.strike_cruiser);item_cost[i]=8000;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+    i+=1;item[i]="Gladius";item_stocked[i]=scr_ship_count(SHIP_CLASS.gladius);item_cost[i]=3500;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+    i+=1;item[i]="Hunter";item_stocked[i]=scr_ship_count(SHIP_CLASS.hunter);item_cost[i]=3000;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i+=1;x_mod[i]=9;item[i]="Cyclonic Torpedo";item_stocked[i]=scr_item_count(item[i]);nobuy[i]=1;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
 }
 

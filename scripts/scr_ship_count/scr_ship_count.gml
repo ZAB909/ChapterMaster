@@ -1,22 +1,13 @@
-function scr_ship_count(argument0) {
-
-	// argument0 : role
-
-	// Mi color favorito es bicicleta.
-
-	var i, count;
-	count=0;i=0;
-
-	repeat(30){i+=1;if (obj_ini.ship_class[i]=argument0) then count+=1;}
-
-	return(count);
-
-
-
-
-	// temp[36]=scr_role_count("Chaplain","field");
-	// temp[37]=scr_role_count("Chaplain","home");
-	// temp[37]=scr_role_count("Chaplain","");
-
-
+function scr_ship_count(_class) {
+	var _ship_count = array_length(obj_ini.ship);
+	var _result = 0;
+	
+	for(var i = 0; i < _ship_count; i++) {
+		if(obj_ini.ship[i].class == _class) {
+			++_result;
+		}
+	}
+	return _result;
 }
+
+// Move that function with the other ship functions
