@@ -349,6 +349,7 @@ if (menu=16) and (cooldown<=0){
 				if (array_contains(ships,obj_ini.ship[i])) {
 					other.menu = 0; 
 					other.cooldown=8000;
+					instance_destroy(obj_fleet_show);
 					instance_create(x,y,obj_fleet_show);
 					done = true;
 					break;
