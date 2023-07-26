@@ -718,39 +718,47 @@ function scr_ui_manage() {
 	            }
 	            temp3=string(round(ma_health[sel]))+"% HP";temp4="";
 	            // Need abbreviations here
-            
-            
-            
+
+
+
 	            ma_ar="";ma_we1="";ma_we2="";ma_ge="";ma_mb="";ttt=0;
 	            ar_ar=0;ar_we1=0;ar_we2=0;ar_ge=0;ar_mb=0;
-            
+
+							if (ma_armor[sel]!=""){ma_ar=scr_wep_abbreviate(ma_armor[sel]);
+	                // if (string_count("*",ma_ar)>0){ar_ar=2;ma_ar=string_replace(ma_ar,"*","");}
+	                if (string_count("^",ma_armor[sel])>0){ar_ar=1;ma_ar=string_replace(ma_ar,"^","");}
+	                if (string_count("&",ma_armor[sel])>0){ar_ar=2;ma_ar="Artifact";}
+	            }
 	            if (ma_gear[sel]!=""){ma_ge=scr_wep_abbreviate(ma_gear[sel]);
 	                // if (string_count("*",ma_ge)>0){ar_ge=2;ma_ge=string_replace(ma_ge,"*","");}
-	                if (string_count("^",ma_ge)>0){ar_ge=1;ma_ge=string_replace(ma_ge,"^","");}
-	                if (string_count("&",ma_ge)>0){ar_ge=2;ma_ge="Artifact";}
-                
+	                if (string_count("^",ma_gear[sel])>0){ar_ge=1;ma_ge=string_replace(ma_ge,"^","");}
+	                if (string_count("&",ma_gear[sel])>0){ar_ge=2;ma_ge="Artifact";}
+	            }
+	            if (ma_mobi[sel]!=""){ma_mb=scr_wep_abbreviate(ma_mobi[sel]);
+	                // if (string_count("*",ma_mb)>0){ar_mb=2;ma_mb=string_replace(ma_mb,"*","");}
+	                if (string_count("^",ma_mobi[sel])>0){ar_mb=1;ma_mb=string_replace(ma_mb,"^","");}
+	                if (string_count("&",ma_mobi[sel])>0){ar_mb=2;ma_mb="Artifact";}
 	            }
 	            if (ma_wep1[sel]!=""){ma_we1=scr_wep_abbreviate(ma_wep1[sel]);
 	                // if (string_count("*",ma_we1)>0){ar_we1=2;ma_we1=string_replace(ma_we1,"*","");}
 	                if (string_count("^",ma_wep1[sel])>0){ar_we1=1;ma_we1=string_replace(ma_we1,"^","");}
 	                if (string_count("&",ma_wep1[sel])>0){ar_we1=2;ma_we1="Artifact";}
-                
 	            }
 	            if (ma_wep2[sel]!=""){ma_we2=scr_wep_abbreviate(ma_wep2[sel]);
 	                // if (string_count("*",ma_we2)>0){ar_we2=2;ma_we2=string_replace(ma_we2,"*","");}
 	                if (string_count("^",ma_wep2[sel])>0){ar_we2=1;ma_we2=string_replace(ma_we2,"^","");}
 	                if (string_count("&",ma_wep2[sel])>0){ar_we2=2;ma_we2="Artifact";}
 	            }
-            
+
 	            // temp5=string(ma_wep1[sel])+", "+string(ma_wep2[sel])+" + "+string(ma_gear[sel]);
 	        }
-        
-        
+
+
 	        if (man_sel[sel]=0) then draw_set_color(c_black);
 	        if (man_sel[sel]!=0) then draw_set_color(6052956);// was gray
 	        draw_rectangle(xx+25,yy+64,xx+974,yy+85,0);
 	        draw_set_color(c_gray);draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);
-        
+
 	        // Squads
 	        var sqi;sqi="";
 	        draw_set_color(c_black);
@@ -849,130 +857,142 @@ function scr_ui_manage() {
 	                if (ma_lid[sel]>0) and (ma_wid[sel]=0) then draw_sprite(spr_loc_icon,1,xx+427+8,yy+66);
 	            }
 	        }
-        
-        
+
+
 	        /*if (man[sel]="man"){
 	            if (ma_lid[sel]=0) then draw_text_transformed(xx+430,yy+66,string(temp2),1,1,0);
 	        }
 	        if (man[sel]="vehicle"){
 	            if (ma_lid[sel]=0) then draw_text_transformed(xx+430,yy+66,string(temp2),1,1,0);
 	        }*/
-        
+
 	        /*draw_set_color(38144);// Equipment
 	        if (string_count("Artifact",temp5)>0) then draw_set_color(881503);
 	        draw_text_transformed(xx+573,yy+66,string(temp5),1,1,0);draw_set_color(38144);*/
-        
+
 	        if (man[sel]="man"){var x5;x5=0;
 	            draw_set_color(c_gray);
 	            if (ar_ar=1) then draw_set_color(c_gray);
 	            if (ar_ar=2) then draw_set_color(881503);
 	            draw_text(xx+573,yy+66,string_hash_to_newline(string(ma_ar)));
-            
+
 	            x5+=string_width(string_hash_to_newline(ma_ar))+15;
 	            draw_set_color(c_gray);
 	            if (ar_mb=1) then draw_set_color(c_gray);
 	            if (ar_mb=2) then draw_set_color(881503);
 	            draw_text(xx+573+x5,yy+66,string_hash_to_newline(string(ma_mb)));
-            
+
 	            x5+=string_width(string_hash_to_newline(ma_mb))+15;
 	            draw_set_color(c_gray);
 	            if (ar_ge=1) then draw_set_color(c_gray);
 	            if (ar_ge=2) then draw_set_color(881503);
 	            draw_text(xx+573+x5,yy+66,string_hash_to_newline(string(ma_ge)));
-            
+
 	            x5+=string_width(string_hash_to_newline(ma_ge))+15;
 	            draw_set_color(c_gray);
 	            if (ar_we1=1) then draw_set_color(c_gray);
 	            if (ar_we1=2) then draw_set_color(881503);
 	            draw_text(xx+573+x5,yy+66,string_hash_to_newline(string(ma_we1)));
-            
+
 	            x5+=string_width(string_hash_to_newline(ma_we1))+15;
 	            draw_set_color(c_gray);
 	            if (ar_we2=1) then draw_set_color(c_gray);
 	            if (ar_we2=2) then draw_set_color(881503);
 	            draw_text(xx+573+x5,yy+66,string_hash_to_newline(string(ma_we2)));
 	        }
-        
+
 	        if (man[sel]!="man"){var x5;x5=0;
-        
-	            draw_set_color(c_gray);
-	            if (ar_ar=1) then draw_set_color(c_gray);
-	            if (ar_ar=2) then draw_set_color(881503);
-	            draw_text(xx+573,yy+66,string_hash_to_newline(string(ma_ar)));
-            
-	            x5+=string_width(string_hash_to_newline(ma_ar));
-	            draw_set_color(c_gray);
-	            if (ar_we1=1) then draw_set_color(c_gray);
-	            if (ar_we1=2) then draw_set_color(881503);
-	            draw_text(xx+573+x5,yy+66,string_hash_to_newline(string(ma_we1)));
-            
-	            x5+=string_width(string_hash_to_newline(ma_we1))+15;
-	            draw_set_color(c_gray);
-	            if (ar_we2=1) then draw_set_color(c_gray);
-	            if (ar_we2=2) then draw_set_color(881503);
-	            draw_text(xx+573+x5,yy+66,string_hash_to_newline(string(ma_we2)));
+
+						draw_set_color(c_gray);
+						if (ar_ge=1) then draw_set_color(c_gray);
+						if (ar_ge=2) then draw_set_color(881503);
+						draw_text(xx+573,yy+66,string_hash_to_newline(string(ma_ge)));
+
+						x5+=string_width(string_hash_to_newline(ma_ge))+15;
+						draw_set_color(c_gray);
+						if (ar_mb=1) then draw_set_color(c_gray);
+						if (ar_mb=2) then draw_set_color(881503);
+						draw_text(xx+573+x5,yy+66,string_hash_to_newline(string(ma_mb)));
+
+						x5+=string_width(string_hash_to_newline(ma_mb))+15;
+						draw_set_color(c_gray);
+						if (ar_we1=1) then draw_set_color(c_gray);
+						if (ar_we1=2) then draw_set_color(881503);
+						draw_text(xx+573+x5,yy+66,string_hash_to_newline(string(ma_we1)));
+
+						x5+=string_width(string_hash_to_newline(ma_we1))+15;
+						draw_set_color(c_gray);
+						if (ar_we2=1) then draw_set_color(c_gray);
+						if (ar_we2=2) then draw_set_color(881503);
+						draw_text(xx+573+x5,yy+66,string_hash_to_newline(string(ma_we2)));
+
+						x5+=string_width(string_hash_to_newline(ma_we2))+15;
+						draw_set_color(c_gray);
+						if (ar_ar=1) then draw_set_color(c_gray);
+						if (ar_ar=2) then draw_set_color(881503);
+						draw_text(xx+573+x5,yy+66,string_hash_to_newline(string(ma_ar)));
 	        }
-        
-        
-        
-        
-        
+
+
+
+
+
 	        yy+=20;
 	        sel+=1;
-        
+
 	    }
-    
+
 	    draw_set_color(c_black);
 	    xx=__view_get( e__VW.XView, 0 )+0;yy=__view_get( e__VW.YView, 0 )+0;
 	    draw_rectangle(xx+974,yy+165,xx+1005,yy+822,0);
 	    draw_set_color(c_gray);
 	    draw_rectangle(xx+974,yy+165,xx+1005,yy+822,1);
-    
+
 	    draw_rectangle(xx+25,yy+142,xx+14+8,yy+822,1);// Squad outline
-    
-    
-    
+
+
+
 	    // draw_rectangle(xx+577,yy+64,xx+600,yy+85,1);
 	    // draw_rectangle(xx+577,yy+379,xx+600,yy+400,1);
-    
+
 	    draw_set_color(0);
 	    draw_rectangle(xx+974,yy+141,xx+1005,yy+172,0);
 	    draw_rectangle(xx+974,yy+790,xx+1005,yy+822,0);
 	    draw_set_color(c_gray);
 	    draw_rectangle(xx+974,yy+141,xx+1005,yy+172,1);
 	    draw_rectangle(xx+974,yy+790,xx+1005,yy+822,1);
-    
-    
+
+
 	    draw_sprite_stretched(spr_arrow,2,xx+974,yy+141,31,30);
 	    draw_sprite_stretched(spr_arrow,3,xx+974,yy+791,31,30);
-    
+
 	    /*
 	    draw_set_color(c_black);draw_rectangle(xx+25,yy+400,xx+600,yy+417,0);
 	    draw_set_color(38144);draw_rectangle(xx+25,yy+400,xx+600,yy+417,1);
 	    draw_line(xx+160,yy+400,xx+160,yy+417);
 	    draw_line(xx+304,yy+400,xx+304,yy+417);
 	    draw_line(xx+448,yy+400,xx+448,yy+417);
-    
+
 	    draw_set_font(fnt_menu);
 	    draw_set_halign(fa_center);
 	    */
-    
+
 	    draw_set_color(c_gray);
 	    draw_set_font(fnt_40k_14b);draw_text_transformed(xx+1010,yy+528,string_hash_to_newline("Selection: "+string(man_size)+" space"),1.5,1.5,0);
 	    draw_set_font(fnt_40k_14);draw_text_ext(xx+1010,yy+552,string_hash_to_newline(selecting_dudes),-1,560);
-    
+
 	    draw_set_font(fnt_40k_14b);draw_text_transformed(xx+1010,yy+610,string_hash_to_newline("Options:"),1.5,1.5,0);
 	    draw_set_font(fnt_40k_14);
-    
+
 	    yy+=8;
-    
+
 	    if (sel_uni[1]!=""){
 	        draw_text(xx+1010,yy+636,string_hash_to_newline("All Infantry"));
 	        draw_rectangle(xx+1010,yy+634,xx+1010+string_width(string_hash_to_newline("All Infantry")),yy+634+string_height(string_hash_to_newline("All Infantry")),1);
 	        if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
 	            if (mouse_x>=xx+1010) and (mouse_y>=yy+634) and (mouse_x<xx+1010+string_width(string_hash_to_newline("All Infantry"))) and (mouse_y<yy+634+string_height(string_hash_to_newline("All Infantry"))){cooldown=8;sel_all="man";}
 	        }
-        
+
 	        if (sel_uni[1]!=""){
 	            draw_text(xx+1016,yy+662,string_hash_to_newline(sel_uni[1]));draw_rectangle(xx+1015,yy+661,xx+1016+string_width(string_hash_to_newline(sel_uni[1])),yy+661+string_height(string_hash_to_newline(sel_uni[1])),1);
 	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){

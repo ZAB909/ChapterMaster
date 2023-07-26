@@ -337,7 +337,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        descr="Lascannons are powerful anti-armor weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armor. ";}
 	    if (thawep="Heavy Bolters"){atta=320;arp=1;rang=16;amm=10;spli=1;
 	        descr="The Heavy Bolter is a heavy weapon that fires larger and more powerful bolt shells compared to the standard Bolter.";}
-	    if (thawep="Whirlwind Missiles"){atta=400;arp=1;rang=20;amm=1;spli=1;
+	    if (thawep="Whirlwind Missiles"){atta=400;arp=1;rang=20;amm=6;spli=1;
 	        descr="The Whirlwind Missile Launcher is a vehicle-mounted artillery weapon that launches a barrage of powerful missiles at the enemy.";}
 
 					// Vehicle Upgrades
@@ -552,7 +552,6 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 
 	    if (argument6!="description") and (argument6!="description_long"){
-	        if (argument2=false) then amm=-1;
 	        if (argument2!=false){if (string_count("Dreadnought",marine_armor[argument3])>0) and (marine_mobi[argument3]="") then amm=-1;}
 	        if (thawep="Whirlwind Missiles") then amm=6;
 
