@@ -216,7 +216,7 @@ function scr_special_view(argument0) {
 	            if (go=0) then sel_veh[op]=ma_role[i];
 	        }
 
-
+			var _ship_index = array_get_index(obj_ini.ship, ma_lid[v]);
 	        // Squads
 	        if (squads>0){var n;n=1;
 	            if (squad_typ=obj_ini.role[100,15]) then n=0;
@@ -236,14 +236,14 @@ function scr_special_view(argument0) {
 	            if (squad_typ="Master of the Apothecarion") then n=1;
 
 	            if (squad_members+1>10) then n=1;
-	            if ((ma_wid[i]+(ma_lid[i]/100))!=squad_loc) then n=1;
+	            if ((ma_wid[i]+(_ship_index/100))!=squad_loc) then n=1;
 	            if (squad_typ=obj_ini.role[100,6]) then n=2;
 
 	            if (n=0){squad_members+=1;squad_typ=ma_role[i];squad[i]=squads;}
-	            if (n=1){squads+=1;squad_members=1;squad_typ=ma_role[i];squad[i]=squads;squad_loc=ma_wid[i]+(ma_lid[i]/100);}
+	            if (n=1){squads+=1;squad_members=1;squad_typ=ma_role[i];squad[i]=squads;squad_loc=ma_wid[i]+(_ship_index/100);}
 	            if (n=2){squad[i]=0;}
 	        }
-	        if (squads=0){squads+=1;squad_members=1;squad_typ=ma_role[i];squad[i]=squads;squad_loc=ma_wid[i]+(ma_lid[i]/100);}
+	        if (squads=0){squads+=1;squad_members=1;squad_typ=ma_role[i];squad[i]=squads;squad_loc=ma_wid[i]+(_ship_index/100);}
 	    }
 
 	}

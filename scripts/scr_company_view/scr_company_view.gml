@@ -22,13 +22,10 @@ function scr_company_view(argument0) {
 	    v+=1;bad=0;
 
 
-
 	    if (argument0>=0) and (argument0<=10){company=argument0;
 	        if (obj_ini.name[company,v]!=""){
-	            // if (obj_ini.god[company,v]>=10) then bad=1;
-	            if (obj_ini.lid[company,v]>0){
-	                var ham;ham=obj_ini.lid[company,v];
-	                if (obj_ini.ship_location[ham]="Lost") then bad=1;
+				if (obj_ini.lid[company,v] != 0){
+	                if (obj_ini.lid[company,v].location="Lost") then bad=1;
 	            }
 	            if (bad=1) then man[v]="hide";
 
@@ -39,9 +36,10 @@ function scr_company_view(argument0) {
 	                ma_armor[v]=obj_ini.armor[company,v];ma_gear[v]=obj_ini.gear[company,v];ma_health[v]=obj_ini.hp[company,v];
 	                ma_exp[v]=obj_ini.experience[company,v];ma_lid[v]=obj_ini.lid[company,v];ma_wid[v]=obj_ini.wid[company,v];
 	                ma_god[v]=obj_ini.god[company,v];ma_bio[v]=obj_ini.bio[company,v];ma_mobi[v]=obj_ini.mobi[company,v];
-	                if (ma_lid[v]>0){
-	                    ma_loc[v]=obj_ini.ship[ma_lid[v]];
-	                    if (obj_ini.ship_location[ma_lid[v]]="Lost") then ma_loc[v]="Lost";
+					var _ship_id = array_get_index(obj_ini.ship, obj_ini.lid[company,v])
+	                if (ma_lid[v] != 0){
+	                    ma_loc[v] = ma_lid[v].location;
+	                    //if (obj_ini.ma_lid[v].location="Lost") then ma_loc[v]="Lost";
 	                }
 
 
@@ -137,18 +135,18 @@ function scr_company_view(argument0) {
 
 	                    if (squad_typ=ma_role[v]) then n=0;
 	                    if (squad_members+1>10) then n=1;
-	                    if ((ma_wid[v]+(ma_lid[v]/100))!=squad_loc) then n=1;
+	                    if ((ma_wid[v]+(_ship_id/100))!=squad_loc) then n=1;
 
 
 	                    // if (squad_typ="Venerable "+string(ma_role[v])) then n=0;
 	                    // if (squad_typ="Venerable "+string(obj_ini.role[100,6])) then n=2;
 
 	                    if (n=0){squad_members+=1;squad_typ=ma_role[v];squad[v]=squads;}
-	                    if (n=1){squads+=1;squad_members=1;squad_typ=ma_role[v];squad[v]=squads;squad_loc=ma_wid[v]+(ma_lid[v]/100);}
+	                    if (n=1){squads+=1;squad_members=1;squad_typ=ma_role[v];squad[v]=squads;squad_loc=ma_wid[v]+(_ship_id/100);}
 	                    if (n=2){squad[v]=0;}
 	                }
 	                if (squads=0){
-	                    squads+=1;squad_members=1;squad_typ=ma_role[v];squad[v]=squads;squad_loc=ma_wid[v]+(ma_lid[v]/100);
+	                    squads+=1;squad_members=1;squad_typ=ma_role[v];squad[v]=squads;squad_loc=ma_wid[v]+(_ship_id/100);
 	                }
 
 
@@ -215,11 +213,7 @@ function scr_company_view(argument0) {
 
 	        }
 
-	        if (obj_ini.name[company,v+1]="") and
-	        (obj_ini.name[company,v]!="") and
-	        (last_man=0) and
-	        (obj_ini.ship_location[obj_ini.lid[company,v]]!="Lost")
-	        then last_man=v;
+	        if (obj_ini.name[company,v+1]="") and (obj_ini.name[company,v]!="") and (last_man=0) and (obj_ini.lid[company,v] != 0) and (obj_ini.lid[company,v].location != "Lost") then last_man=v;
 	    }
 	}
 
@@ -248,9 +242,9 @@ function scr_company_view(argument0) {
 	                ma_loc[v]=obj_ini.veh_loc[company,i];ma_role[v]=obj_ini.veh_role[company,i];ma_wep1[v]=obj_ini.veh_wep1[company,i];
 	                ma_wep2[v]=obj_ini.veh_wep2[company,i];ma_armor[v]=obj_ini.veh_wep3[company,i];ma_gear[v]=obj_ini.veh_upgrade[company,i];ma_mobi[v]=obj_ini.veh_acc[company,i];ma_health[v]=obj_ini.veh_hp[company,i];
 	                ma_lid[v]=obj_ini.veh_lid[company,i];ma_wid[v]=obj_ini.veh_wid[company,i];
-	                if (ma_lid[v]>0){
-	                    ma_loc[v]=obj_ini.ship[ma_lid[v]];
-	                    if (obj_ini.ship_location[ma_lid[v]]="Lost") then ma_loc[v]="Lost";
+	                if (ma_lid[v] != 0){
+	                    ma_loc[v]=ma_lid[v].location;
+	                    //if (obj_ini.ship_location[ma_lid[v]]="Lost") then ma_loc[v]="Lost";
 	                }
 	                // Select All Setup
 	                var p,go,op;go=0;op=0;p=-1;

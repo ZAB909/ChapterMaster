@@ -1795,7 +1795,6 @@ if (menu=30) and (managing>0){// Selecting the ship
     top=ship_current;var stop;stop=0;sel=top;
 
     var wombat;wombat=0;
-    sel_uid=sh_uid[sel];
 
     yy=yy+77;
 
@@ -1812,18 +1811,19 @@ if (menu=30) and (managing>0){// Selecting the ship
                         wombat=sel;
 
                         ma_loc[q]=sh_name[sel];
-                        ma_lid[q]=sh_ide[sel];
+                        ma_lid[q]=obj_ini[sh_ide[sel]];
                         ma_wid[q]=0;
-                        ma_uid[q]=sh_uid[sel];
 
 
                         if (managing<=10){
-                            loc[managing,q]=sh_name[sel];obj_ini.lid[managing,ide[q]]=sh_ide[sel];obj_ini.wid[managing,ide[q]]=0;
-                            obj_ini.uid[managing,ide[q]]=sel_uid;
+                            loc[managing,q]=sh_name[sel];
+							obj_ini.lid[managing,ide[q]]=obj_ini.ship[sh_ide[sel]];
+							obj_ini.wid[managing,ide[q]]=0;
                         }
                         if (managing>10){
-                            loc[0,q]=sh_name[sel];obj_ini.lid[0,ide[q]]=sh_ide[sel];obj_ini.wid[0,ide[q]]=0;
-                            obj_ini.uid[0,ide[q]]=sel_uid;
+                            loc[0,q]=sh_name[sel];
+							obj_ini.lid[0,ide[q]]=obj_ini.ship[sh_ide[sel]];
+							obj_ini.wid[0,ide[q]]=0;
                         }
 
 
@@ -1835,9 +1835,8 @@ if (menu=30) and (managing>0){// Selecting the ship
                         wombat=sel;
 
                         ma_loc[q]=sh_name[sel];
-                        ma_lid[q]=sh_ide[sel];
+                        ma_lid[q]=obj_ini.ship[sh_ide[sel]];
                         ma_wid[q]=0;
-                        ma_uid[q]=sh_uid[sel];
                         veh_loc[managing,q]=sh_name[sel];
 
 
@@ -1845,12 +1844,10 @@ if (menu=30) and (managing>0){// Selecting the ship
                         // if (managing>10){obj_ini.veh_lid[0,ide[q]]=sel;obj_ini.veh_wid[0,ide[q]]=0;}
 
                         if (managing<=10){
-                            obj_ini.veh_lid[managing,ide[q]]=sh_ide[sel];obj_ini.veh_wid[managing,ide[q]]=0;
-                            obj_ini.veh_uid[managing,ide[q]]=sel_uid;
+                            obj_ini.veh_lid[managing,ide[q]]=obj_ini.ship[sh_ide[sel]];obj_ini.veh_wid[managing,ide[q]]=0;
                         }
                         if (managing>10){
-                            obj_ini.veh_lid[0,ide[q]]=sh_ide[sel];obj_ini.veh_wid[0,ide[q]]=0;
-                            obj_ini.veh_uid[0,ide[q]]=sel_uid;
+                            obj_ini.veh_lid[0,ide[q]]=obj_ini.ship[sh_ide[sel]];obj_ini.veh_wid[0,ide[q]]=0;
                         }
 
                     }
