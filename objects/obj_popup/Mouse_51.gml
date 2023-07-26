@@ -55,7 +55,7 @@ if (instance_exists(obj_controller)){
                 if (diceh<=ratio){
 					ratio-=100;
                     
-					if (count_ecsorts(mfleet) != 0) {
+					if (count_escorts(mfleet) != 0) {
                         esc_lost += 1;
 						var escorts = get_escorts(mfleet);
 						var escort = escorts[irandom(array_length(escorts) - 1)];
