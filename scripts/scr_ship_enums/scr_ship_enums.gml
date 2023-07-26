@@ -129,79 +129,79 @@ function get_ship_sprite(ship) {
 	
 	switch (class) {
 		case SHIP_CLASS.battle_barge:
-			return "Battle Barge";
+			return spr_ship_bb;
 		case SHIP_CLASS.strike_cruiser:
-			return "Strike Cruiser";
+			return spr_ship_stri;
 		case SHIP_CLASS.gladius:
-			return "Gladius";
+			return spr_ship_glad;
 		case SHIP_CLASS.hunter:
-			return "Hunter";
+			return spr_ship_hunt;
 		case SHIP_CLASS.apocalypse_class_battleship:
-			return "Apocalypse Class Battleship";
+			return spr_ship_apoc;
 		case SHIP_CLASS.nemesis_class_fleet_carrier:
-			return "Nemesis Class Fleet Carrier";
+			return spr_ship_nem;
 		case SHIP_CLASS.avenger_class_grand_cruiser:
-			return "Avenger Class Grand Cruiser";
+			return spr_ship_aven;
 		case SHIP_CLASS.sword_class_frigate:
-			return "Sword Class Frigate";
+			return spr_ship_sword;
 		case SHIP_CLASS.void_stalker:
-			return "Void Stalker";
+			return spr_ship_void;
 		case SHIP_CLASS.shadow_class:
-			return "Shadow Class";
+			return spr_ship_shadow;
 		case SHIP_CLASS.hellebore:
-			return "Hellebore";
+			return spr_ship_hellebore;
 		case SHIP_CLASS.aconite:
-			return "Aconite";
+			return spr_ship_aconite;
 		case SHIP_CLASS.dethdeala:
-			return "Dethdeala";
+			return spr_ship_deth;
 		case SHIP_CLASS.gorbags_revenge:
-			return "Gorbag's Revenge";
+			return spr_ship_gorbag;
 		case SHIP_CLASS.kroolboy:
-			return "Kroolboy";
+			return spr_ship_krool;
 		case SHIP_CLASS.slamblasta:
-			return "Slamblasta";
+			return spr_ship_slam;
 		case SHIP_CLASS.battlekroozer:
-			return "Battlekroozer";
+			return spr_ship_kroozer;
 		case SHIP_CLASS.custodian:
-			return "Custodian";
+			return spr_ship_custodian;
 		case SHIP_CLASS.protector:
-			return "Protector";
+			return spr_ship_protector;
 		case SHIP_CLASS.emissary:
-			return "Emissary";
+			return spr_ship_emissary;
 		case SHIP_CLASS.warden:
-			return "Warden";
+			return spr_ship_warden;
 		case SHIP_CLASS.castellan:
-			return "Castellan";
+			return spr_ship_castellan;
 		case SHIP_CLASS.desecrator:
-			return "Desecrator";
+			return spr_ship_dese;
 		case SHIP_CLASS.avenger:
-			return "Avenger";
+			return spr_ship_veng;
 		case SHIP_CLASS.carnage:
-			return "Carnage";
+			return spr_ship_carnage;
 		case SHIP_CLASS.daemon:
-			return "Daemon";
+			return spr_ship_daemon;
 		case SHIP_CLASS.iconoclast:
-			return "Iconoclast";
+			return spr_ship_icono;
 		case SHIP_CLASS.leviathan:
-			return "Leviathan";
+			return spr_ship_leviathan;
 		case SHIP_CLASS.razorfiend:
-			return "Razorfiend";
+			return spr_ship_razorfiend;
 		case SHIP_CLASS.stalker:
-			return "Stalker";
+			return spr_ship_stalker;
 		case SHIP_CLASS.prowler:
-			return "Prowler";
+			return spr_ship_prowler;
 		case SHIP_CLASS.cairn:
-			return "Cairn";
+			return spr_ship_cairn;
 		case SHIP_CLASS.reaper:
-			return "Reaper";
+			return spr_ship_reaper;
 		case SHIP_CLASS.shroud:
-			return "Shroud";
+			return spr_ship_shroud;
 		case SHIP_CLASS.jackal:
-			return "Jackal";
+			return spr_ship_jackal;
 		case SHIP_CLASS.dirge:
-			return "Dirge";
+			return spr_ship_dirge;
 		default:
-			return "";
+			return undefined;
 	}
 };
 
@@ -321,4 +321,37 @@ enum SHIP_SIZE {
 	capital,
 	frigate,
 	escort
+}
+
+function get_random_capital(faction) {
+	switch (faction) {
+		case 1:
+			return SHIP_CLASS.battle_barge;	
+		break;
+		case 2:
+			return choose(SHIP_CLASS.apocalypse_class_battleship, SHIP_CLASS.nemesis_class_fleet_carrier)
+		break;
+	}
+}
+
+function get_random_frigate(faction) {
+	switch (faction) {
+		case 1:
+			return SHIP_CLASS.sword_class_frigate;	
+		break;
+		case 2:
+			return SHIP_CLASS.avenger_class_grand_cruiser
+		break;
+	}
+}
+
+function get_random_escort(faction) {
+	switch (faction) {
+		case 1:
+			return SHIP_CLASS.hunter;	
+		break;
+		case 2:
+			return SHIP_CLASS.sword_class_frigate
+		break;
+	}
 }
