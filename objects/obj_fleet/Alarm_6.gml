@@ -1,72 +1,51 @@
-
-/*
-enemy[2]=6;enemy_status[2]=1;
-en_capital[2]=2;en_frigate[2]=3;en_escort[2]=5;
-en_capital_max[2]=2;en_frigate_max[2]=3;en_escort_max[2]=5;
-en_ships_max[2]=10;
-
-enemy[3]=2;enemy_status[3]=1;
-en_capital[3]=1;en_frigate[3]=2;en_escort[3]=3;
-en_capital_max[3]=1;en_frigate_max[3]=2;en_escort_max[3]=3;
-en_ships_max[3]=6;
-*/
-
-var total_enemies, total_allies, t, tt, y1, y2, fug, spawner;
-total_enemies=0;
-total_allies=1;
+var total_enemies = array_length(enemy_fleets);
+var total_allies = array_length(ally_fleets);
+var t, tt, y1, y2, fug, spawner;
 spawner=0;
 t=0;y1=0;y2=0;tt=0;fug=0;
 
-repeat(6){t+=1;
-    if (enemy[t]!=0){
-        if (enemy_status[t]<0) then total_enemies+=1;
-        if (enemy_status[t]>0) then total_allies+=1;
-        
-        // show_message("Computer "+string(t)+":"+string(enemy[t])+", status:"+string(enemy_status[t]));
-    }
+
+
+for(var i = 0; i < total_enemies; i++) {
+	t=1;
+	y2=room_height/total_enemies/2;
+	tt=0;
+	tt+=1;y1=(t*y2);
+	spawner=instance_create(200,y1,obj_fleet_spawner);
+	spawner.owner=enemy_fleets[i].owner;
+	spawner.height=(y2);
+	spawner.is_enemy = true;
+	spawner.ships = enemy_fleets[i].ships;
+	t+=2;
 }
 
+t=0;
+y1=0;
+y2=0;
+tt=0;
+fug=0;
+t=1;
+y2=room_height/total_allies/2;tt=0;
+tt+=1;
+y1=(t*y2);
+spawner=instance_create(200,y1,obj_fleet_spawner);
+spawner.owner=1;
+spawner.height=(y2);
+spawner.is_enemy = false;
+spawner.ships = ships;
 
-
-if (total_enemies>0){
-    t=1;y2=room_height/total_enemies/2;tt=0;
-    repeat(5){fug+=1;
-        if (enemy_status[fug]<0){
-            tt+=1;y1=(t*y2);
-            
-            spawner=instance_create(room_width+200,y1,obj_fleet_spawner);
-            spawner.owner=enemy[fug];
-            spawner.height=(y2);
-            spawner.number=fug;
-            
-            t+=2;
-        }
-    }
+t+=2;
+for(var i = 0; i < total_allies; i++) {
+	fug += 1;
+	tt += 1;
+	y1 = (t*y2);
+	spawner = instance_create(room_width+200,y1,obj_fleet_spawner);
+	spawner.owner = ally_fleets[i].owner;
+	spawner.height = (y2);
+	spawner.is_enemy = false;
+	spawner.ships = ally_fleets[i].ships;
+	t += 2;
 }
-
-if (total_allies>0){
-    t=0;y1=0;y2=0;tt=0;fug=0;
-    t=1;y2=room_height/total_allies/2;tt=0;
-    repeat(5){fug+=1;
-        if (enemy_status[fug]>0){
-            tt+=1;y1=(t*y2);
-            
-            spawner=instance_create(200,y1,obj_fleet_spawner);
-            
-            if (fug=1) then spawner.owner=1;
-            if (fug>1) then spawner.owner=enemy[fug];// Get the ENEMY after the actual enemies
-            
-            spawner.height=(y2);
-            spawner.number=fug;
-            
-            t+=2;
-        }
-    }
-}
-
-
-// show_message("Total Enemies: "+string(total_enemies));
-// show_message("Total Allies: "+string(total_allies));
 
 
 // Buffs here
@@ -130,40 +109,15 @@ var i, k, onceh, company;i=0;k=0;onceh=0;
 
 // instance_activate_object(obj_combat_info);
 
-repeat(100){i+=1;
-    if (fighting[i]=1) and (obj_ini.ship_class[i]!="") then ships_max+=1;
-}
 
+ships_max = array_length(ships)
+capital_max=count_capitals(ships);
+frigate_max=count_frigates(ships);
+escort_max=count_escorts(ships);
+capital=capital_max;
+frigate=frigate_max
+escort=escort_max;
 
-
-i=0;
-repeat(100){i+=1;
-    if (fighting[i]=1) and (obj_ini.ship[i]!="") and (obj_ini.ship_hp[i]>0){onceh=0;
-        if (obj_ini.ship_size[i]=3) then capital+=1;
-        if (obj_ini.ship_size[i]=2) then frigate+=1;
-        if (obj_ini.ship_size[i]=1) then escort+=1;
-        
-        ship_class[i]=obj_ini.ship_class[i];
-        ship[i]=obj_ini.ship[i];ship_id[i]=i;ship_size[i]=obj_ini.ship_size[i];
-        ship_leadership[i]=100;ship_hp[i]=obj_ini.ship_hp[i];ship_maxhp[i]=obj_ini.ship_maxhp[i];
-        ship_conditions[i]=obj_ini.ship_conditions[i];ship_speed[i]=obj_ini.ship_speed[i];ship_turning[i]=obj_ini.ship_turning[i];
-        ship_front_armor[i]=obj_ini.ship_front_armor[i];ship_other_armor[i]=obj_ini.ship_other_armor[i];ship_weapons[i]=obj_ini.ship_weapons[i];
-        
-        var t;t=0;
-        t+=1;ship_wep[i,t]=obj_ini.ship_wep[i,t];ship_wep_facing[i,t]=obj_ini.ship_wep_facing[i,t];ship_wep_condition[i,t]=obj_ini.ship_wep_condition[i,t];
-        t+=1;ship_wep[i,t]=obj_ini.ship_wep[i,t];ship_wep_facing[i,t]=obj_ini.ship_wep_facing[i,t];ship_wep_condition[i,t]=obj_ini.ship_wep_condition[i,t];
-        t+=1;ship_wep[i,t]=obj_ini.ship_wep[i,t];ship_wep_facing[i,t]=obj_ini.ship_wep_facing[i,t];ship_wep_condition[i,t]=obj_ini.ship_wep_condition[i,t];
-        t+=1;ship_wep[i,t]=obj_ini.ship_wep[i,t];ship_wep_facing[i,t]=obj_ini.ship_wep_facing[i,t];ship_wep_condition[i,t]=obj_ini.ship_wep_condition[i,t];
-        t+=1;ship_wep[i,t]=obj_ini.ship_wep[i,t];ship_wep_facing[i,t]=obj_ini.ship_wep_facing[i,t];ship_wep_condition[i,t]=obj_ini.ship_wep_condition[i,t];
-        
-        ship_capacity[i]=obj_ini.ship_capacity[i];ship_carrying[i]=obj_ini.ship_carrying[i];
-        ship_contents[i]=obj_ini.ship_contents[i];ship_turrets[i]=obj_ini.ship_turrets[i];
-    }
-}
-
-capital_max=capital;
-frigate_max=frigate;
-escort_max=escort;
 
 obj_fleet_spawner.alarm[0]=1;
 

@@ -31,34 +31,12 @@ if (start=5){
         player_lasers_cd=max(player_lasers_cd-1,0);
         if (player_lasers_cd<=0){
             player_lasers_cd=round(360/(player_lasers));
-            repeat(min(2,player_lasers)){var las;
-                las=instance_create(x-150,random(room_height/2)+(room_height/4),obj_p_round);
+            repeat(min(2,player_lasers)){
+				var las=instance_create(x-150,random(room_height/2)+(room_height/4),obj_p_round);
                 las.direction=point_direction(las.x,las.y,player_lasers_target.x,player_lasers_target.y)+round(random_range(-4,4));
                 las.image_xscale=1.5;las.image_yscale=1.5;las.speed=30;las.dam=30;
                 las.sprite_index=spr_ground_las;las.image_index=0;las.image_speed=0;
             }
-            
         }
     }
 }
-
-
-/*
-if (instance_number(obj_en_ship)=0) and (start<6){
-    stage=6;
-    alarm[0]=10;
-}
-
-if (instance_number(obj_p_ship)=0) and (start<6){
-    capital=0;
-    frigate=0;
-    escort=0;
-    
-    stage=6;
-    alarm[0]=10;
-}
-*/
-
-
-/* */
-/*  */

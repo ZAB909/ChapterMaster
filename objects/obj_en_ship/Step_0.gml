@@ -1,17 +1,18 @@
 var __b__;
-__b__ = action_if_variable(owner, 6, 0);
-if !__b__
+__b__ = action_if_variable(owner, 6, 0); 
+if !__b__ // fo this if not eldar
 {
 image_angle=direction;
 
 if (obj_fleet.start!=5) then exit;
 
-if (class="Daemon") and (image_alpha<1) then image_alpha+=0.006;
+if (ship.class==SHIP_CLASS.daemon) and (image_alpha<1) then image_alpha+=0.006;
 
 var o_dist, dist, ch_rang, ex, spid;spid=0;
 
-if (shields>0) and (shields<maxshields) then shields+=0.02;
-
+if (ship.shield > 0 && ship.shield < ship.max_shield) {
+	shield+=0.02;
+}
 
 // Need to every couple of seconds check this
 // with obj_en_ship if not big then disable, check nearest, and activate once more
@@ -20,16 +21,27 @@ if (shields>0) and (shields<maxshields) then shields+=0.02;
 if (instance_exists(obj_p_ship)) and (!instance_exists(obj_al_ship)) then target=instance_nearest(x,y,obj_p_ship);
 if (!instance_exists(obj_p_ship)) and (instance_exists(obj_al_ship)) then target=instance_nearest(x,y,obj_al_ship);
 if (instance_exists(obj_p_ship)) and (instance_exists(obj_al_ship)){
-    var tp1,tp2;
-    tp1=instance_nearest(x,y,obj_p_ship);tp2=instance_nearest(x,y,obj_al_ship);
-    if (point_distance(x,y,tp1.x,tp1.y)<=point_distance(x,y,tp2.x,tp2.y)) then target=tp1;
-    if (point_distance(x,y,tp1.x,tp1.y)>point_distance(x,y,tp2.x,tp2.y)) then target=tp2;
+    var target_player, target_ally;
+    target_player = instance_nearest(x,y,obj_p_ship);
+	target_ally = instance_nearest(x,y,obj_al_ship);
+    if (point_distance(x,y,target_player.x,target_player.y) <= point_distance(x,y,target_ally.x,target_ally.y)) {
+		target=target_player;
+	}
+	else {
+		target=target_ally;		
+	}
 }
 if (!instance_exists(target)) then exit;
 
-if (hp<=0){
-    var wh,gud;wh=0;gud=0;
-    repeat(5){wh+=1;if (obj_fleet.enemy[wh]=owner) then gud=wh;}
+if (ship.hp <= 0) {
+    var wh = 0;
+	var gud = 0;
+    repeat(5) { 
+		wh+=1;
+		if (obj_fleet.enemy[wh]=owner) {
+			gud=wh;
+		}
+	}
     
     if (size=3) then obj_fleet.en_capital_lost[gud]+=1;
     if (size=2) then obj_fleet.en_frigate_lost[gud]+=1;
@@ -39,23 +51,25 @@ if (hp<=0){
     
     
     if (owner!=9){
-        // ex=instance_create(x,y,obj_explosion);
-        // ex.image_xscale=2;ex.image_yscale=2;ex.image_speed=0.75;
-        var husk;husk=instance_create(x,y,obj_en_husk);
-        husk.sprite_index=sprite_index;husk.direction=direction;
-        husk.image_angle=image_angle;husk.depth=depth;husk.image_speed=0;
+        var husk;
+		husk=instance_create(x,y,obj_en_husk);
+        husk.sprite_index=sprite_index;
+		husk.direction=direction;
+        husk.image_angle=image_angle;
+		husk.depth=depth;husk.image_speed=0;
         repeat(choose(4,5,6)){
-            var explo;explo=instance_create(x,y,obj_explosion);
-            explo.image_xscale=0.5;explo.image_yscale=0.5;
-            explo.x+=random_range(sprite_width*0.25,sprite_width*-0.25);
-            explo.y+=random_range(sprite_width*0.25,sprite_width*-0.25);
+            var explosion = instance_create(x,y,obj_explosion);
+            explosion.image_xscale=0.5;
+			explosion.image_yscale=0.5;
+            explosion.x += random_range(sprite_width*0.25,sprite_width*-0.25);
+            explosion.y += random_range(sprite_width*0.25,sprite_width*-0.25);
         }
     }
     if (owner=9) then effect_create_above(ef_firework,x,y,1,c_purple);
     instance_destroy();
 }
 
-if (hp>0) and (instance_exists(obj_p_ship)){
+if (ship.hp > 0) {
 
     if (class="Apocalypse Class Battleship"){o_dist=500;action="attack";spid=20;}
     if (class="Nemesis Class Fleet Carrier"){o_dist=1000;action="attack";spid=20;}

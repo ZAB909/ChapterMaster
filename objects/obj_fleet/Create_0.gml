@@ -7,7 +7,8 @@ obj_controller.cooldown=20;
 sel_x1=0;sel_y1=0;control=0;
 ships_selected=0;
 battle_special="";
-csm_exp=0;star_name="";
+csm_exp=0; // this seems to be used for determening diffuculty when boarding (chaos presumably) ships
+star_name="";
 
 // woohoo=0;
 left_down=0;
@@ -22,8 +23,8 @@ start=0;combat_end=170;
 
 if (obj_controller.zoomed=0) then with(obj_controller){scr_zoom();}
 
-enemy=0;
-enemy_status="attacking";
+enemy = [];
+enemy_status = [];
 
 tempor1=0;
 tempor2=0;
@@ -50,31 +51,12 @@ column[4]="";column_width[4]=0;
 column[5]="";column_width[5]=0;// Furthest right
 
 
-threat=4;
-var k,j;
-k=-1;
-j=-1;
+threat=4; // seems useless
 
-
-repeat(6){k+=1;j=-1;
-    repeat(11){j+=1;
-        enemy[j]=0;
-        enemy_status[j]=0;
-        
-        /*en_column[j,k]="";
-        en_width[j,k]=0;en_height[j,k]=0;
-        en_num[j,k]=0;en_size[j,k]=0;*/
-        
-        en_capital[j]=0;en_capital_max[j]=0;en_capital_lost[j]=0;
-        en_frigate[j]=0;en_frigate_max[j]=0;en_frigate_lost[j]=0;
-        en_escort[j]=0;en_escort_max[j]=0;en_escort_lost[j]=0;
-        en_ships_max[j]=0;
-    }
-}
-// Should be 0-5 for each of the factions
-
-
-
+player_fleet = undefined;
+enemy_fleets = [];
+ally_fleets = [];
+ships = [];
 
 
 capital=0;capital_max=0;capital_lost=0;
@@ -135,35 +117,6 @@ time=0;
 
 
 
-
-
-
-
-
-
-
-var i;i=-1;
-repeat(110){i+=1;
-    fighting[i]=0;
-    
-    ship[i]="";ship_id[i]=0;ship_class[i]=obj_ini.ship_class[i];ship_size[i]=0;
-    ship_leadership[i]=100;ship_hp[i]=9999;ship_maxhp[i]=9999;
-    ship_conditions[i]="";ship_speed[i]=20;ship_turning[i]=0;
-    ship_front_armor[i]=0;ship_other_armor[i]=0;ship_weapons[i]=0;ship_shields=0;
-    
-    ship_wep[i,1]="";ship_wep_facing[i,1]="";ship_wep_condition[i,1]="";
-    ship_wep[i,2]="";ship_wep_facing[i,2]="";ship_wep_condition[i,2]="";
-    ship_wep[i,3]="";ship_wep_facing[i,3]="";ship_wep_condition[i,3]="";
-    ship_wep[i,4]="";ship_wep_facing[i,4]="";ship_wep_condition[i,4]="";
-    ship_wep[i,5]="";ship_wep_facing[i,5]="";ship_wep_condition[i,5]="";
-    
-    
-    ship_capacity[i]=0;ship_carrying[i]=0;ship_contents[i]="";ship_turrets[i]=0;
-    
-    if (i<=80) then ship_lost[i]=0;
-}
-
-
 // screwing around below here
 alarm[6]=2;
 // 
@@ -178,7 +131,7 @@ column[4]="Strike Cruiser";column_width[4]=140;column_num[4]=0;
 column[5]="Escort";column_width[5]=76;column_num[5]=0;// Furthest right
 
 
-color_index=0;
+color_index=0; // this was used to color the player ships depending on faction??
 
 /* */
 /*  */

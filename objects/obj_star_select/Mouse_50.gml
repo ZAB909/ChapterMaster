@@ -515,7 +515,9 @@ if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_
         ii=target;
         
         with(obj_temp3){instance_destroy();}
-        
+        var enemy_fleets = [];
+		var ally_fleets = [];
+		var csm_xp = undefined;
         if (good=1){// trying to find the star
             instance_activate_object(obj_star);
             obj_controller.x=ii.x;obj_controller.y=ii.y;// show=current_battle;
@@ -529,7 +531,27 @@ if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_
             strin[6]=string(pfleet.escort_health);
             
             // pull enemy ships here
-            
+
+			for(var faction = 2; faction <= 14; faction++) {
+				if(target.present_fleet[faction] > 0 && obj_controller.faction_status[faction]!="War" && faction!=combating) {
+					with(obj_en_fleet) {
+						if(orbiting == target && owner == faction) {
+							array_push(enemy_fleets, id);
+							if (string_count("BLOOD",trade_goods)>0) then csm_xp = 2;
+							if (string_lower(trade_goods)="csm") then csm_xp = 1;
+							break;
+						}
+					}
+				}
+				else if (target.present_fleet[faction] > 0 && (obj_controller.faction_status[faction]=="War" || faction=combating)) {
+					with(obj_en_fleet) {
+						if(orbiting == target && owner == faction) {
+							array_push(ally_fleets, id);
+							break;
+						}
+					}
+				}
+			}
             var e;e=1;
             repeat(9){e+=1;
                 if (target.present_fleet[e]>0){
@@ -539,6 +561,7 @@ if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_
                     obj_controller.temp[1073]=0;
                     obj_controller.temp[1074]=0;
                     
+					
                     with(obj_temp2){instance_destroy();}
                     with(obj_temp3){instance_destroy();}
                     with(obj_en_fleet){
@@ -546,21 +569,26 @@ if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_
                             obj_controller.temp[1072]+=capital_number;
                             obj_controller.temp[1073]+=frigate_number;
                             obj_controller.temp[1074]+=escort_number;
-                            if (string_count("BLOOD",trade_goods)>0) then instance_create(x,y,obj_temp2);
-                            if (string_lower(trade_goods)="csm") then instance_create(x,y,obj_temp3);
+                          
                         }
                     }
                     
                     var l1,l2;l1=0;l2=0;
                     if (obj_controller.faction_status[e]!="War") and (e!=combating){
-                        repeat(10){l1+=1;if (allied_fleet[l1]=0) and (l2=0) then l2=l1;}
+                        repeat(10) {
+							l1+=1;
+							if (allied_fleet[l1]=0) and (l2=0) then l2=l1;
+						}
                         allied_fleet[l2]=e;
                         acap[l2]=obj_controller.temp[1072];
                         afri[l2]=obj_controller.temp[1073];
                         aesc[l2]=obj_controller.temp[1074];
                     }
                     if (obj_controller.faction_status[e]="War") or (e=9) or (e=combating){
-                        repeat(10){l1+=1;if (enemy_fleet[l1]=0) and (l2=0) then l2=l1;}
+                        repeat(10) {
+							l1+=1;
+							if (enemy_fleet[l1]=0) and (l2=0) then l2=l1;
+						}
                         enemy_fleet[l2]=e;
                         ecap[l2]=obj_controller.temp[1072];
                         efri[l2]=obj_controller.temp[1073];
@@ -569,32 +597,6 @@ if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_
                 }
             }
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         obj_controller.cooldown=8000;
         
@@ -609,57 +611,47 @@ if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_
         instance_activate_object(pfleet);
         instance_activate_object(obj_star);
         
-        instance_create(0,0,obj_fleet);
-        obj_fleet.star_name=target.name;
-        // 
-        obj_fleet.enemy[1]=enemy_fleet[1];
-        obj_fleet.enemy_status[1]=-1;
+        var battle = instance_create(0,0,obj_fleet);
+		
+        battle.star_name=target.name;
+        //battle.enemy[1]=enemy_fleet[1]; Do we need this?
+        //battle.enemy_status[1]=-1;
         
-        obj_fleet.en_capital[1]=ecap[1];
-        obj_fleet.en_frigate[1]=efri[1];
-        obj_fleet.en_escort[1]=eesc[1];
+		battle.ships = pfleet.ships;
+		battle.enemy_fleets = enemy_fleets;
+		battle.ally_fleets= ally_fleets;
+		battle.csm_exp = csm_xp;
+		
+        //obj_fleet.en_capital[1]=count_capitals(enemy_ships);
+        //obj_fleet.en_frigate[1]=count_frigates(enemy_ships);
+        //obj_fleet.en_escort[1]=eesc[1];
         
         // Plug in all of the enemies first
         // And then plug in the allies after then with their status set to positive
         
-        if (instance_exists(obj_temp3)){
-            obj_fleet.csm_exp=1;
-            with(obj_temp3){instance_destroy();}
-        }
-        if (instance_exists(obj_temp2)){
-            obj_fleet.csm_exp=2;
-            with(obj_temp2){instance_destroy();}
-        }
-        
-        
-        stahr=target;
-        if (string_count("Monastery",stahr.p_feature[1])>0) then obj_fleet.player_lasers=stahr.p_lasers[1];
-        if (string_count("Monastery",stahr.p_feature[2])>0) then obj_fleet.player_lasers=stahr.p_lasers[2];
-        if (string_count("Monastery",stahr.p_feature[3])>0) then obj_fleet.player_lasers=stahr.p_lasers[3];
-        if (string_count("Monastery",stahr.p_feature[4])>0) then obj_fleet.player_lasers=stahr.p_lasers[4];
+        var star = target;
+        if (string_count("Monastery",star.p_feature[1])>0) then battle.player_lasers=star.p_lasers[1];
+        if (string_count("Monastery",star.p_feature[2])>0) then battle.player_lasers=star.p_lasers[2];
+        if (string_count("Monastery",star.p_feature[3])>0) then battle.player_lasers=star.p_lasers[3];
+        if (string_count("Monastery",star.p_feature[4])>0) then battle.player_lasers=star.p_lasers[4];
         instance_deactivate_object(obj_star);
-        
-        
-        
-        
-        
         // 
         
         
-        var i;i=0;
-        repeat(8){
-            i+=1;if (pfleet.capital[i]!="") then obj_fleet.fighting[pfleet.capital_num[i]]=1;
-        }
+        //var i;i=0;
+        //repeat(8){
+        //    i+=1;if (pfleet.capital[i]!="") then obj_fleet.fighting[pfleet.capital_num[i]]=1;
+        //}
         
-        i=0;
-        repeat(30){
-            i+=1;if (pfleet.frigate[i]!="") then obj_fleet.fighting[pfleet.frigate_num[i]]=1;
-        }
+        //i=0;
+        //repeat(30){
+        //    i+=1;if (pfleet.frigate[i]!="") then obj_fleet.fighting[pfleet.frigate_num[i]]=1;
+        //}
         
-        i=0;
-        repeat(30){
-            i+=1;if (pfleet.escort[i]!="") then obj_fleet.fighting[pfleet.escort_num[i]]=1;
-        }
+        //i=0;
+        //repeat(30){
+        //    i+=1;if (pfleet.escort[i]!="") then obj_fleet.fighting[pfleet.escort_num[i]]=1;
+        //}
         
         // instance_deactivate_object(battle_object[current_battle]);
         instance_deactivate_object(pfleet);
@@ -667,12 +659,9 @@ if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_
         
         
         obj_controller.combat=1;
-        obj_fleet.player_started=1;
-        obj_fleet.pla_fleet=pfleet;
-        obj_fleet.ene_fleet=target;
-        
-        
-        
+        battle.player_started=1;
+        battle.player_fleet=pfleet;
+        battle.enemy_fleet=target;
         
     }
 }

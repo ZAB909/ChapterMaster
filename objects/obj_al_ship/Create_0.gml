@@ -23,6 +23,8 @@ turret_cool=0;
 shield_size=0;
 
 
+ship = undefined;
+
 name="";
 class="";
 hp=0;
