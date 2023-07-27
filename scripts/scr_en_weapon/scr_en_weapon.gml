@@ -193,7 +193,7 @@ function scr_en_weapon(argument0, argument1, argument2, argument3, argument4) {
 	    if (argument0="Blessed Weapon"){atta=150;arp=1;rang=1;}
 	    if (argument0="Electro-Flail"){atta=125;arp=1;rang=1;spli=1;}
 	    if (argument0="Neural Whip"){atta=85;arp=0;rang=1;spli=1}
-  	    if (argument0="Sarissa"){atta=65;arp=1;rang=2;}
+  	    if (argument0="Sarissa"){atta=65;arp=0;rang=2;}
 	    if (argument0="Seraphim Pistols"){atta=200;arp=1;rang=4;}
 	    if (argument0="Laser Mace"){atta=200;arp=1;rang=5.1;amm=3;}
 	    if (argument0="Heavy Bolter"){atta=120;arp=0;rang=16;spli=0;
