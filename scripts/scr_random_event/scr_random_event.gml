@@ -1374,6 +1374,23 @@ function scr_random_event(execute_now) {
 		var eligible_fleets = [];
 		with(obj_p_fleet) {
 			if (action="move") {
+				/*K-INI (27/07/23 - 1.1)
+				Broken, throws exception as eligible_ships does not exist as a var.
+				Created and initialized eligible_ships in obj_p_fleet
+				___________________________________________
+				############################################################################################
+				ERROR in
+				action number 1
+				of Alarm Event for alarm 5
+				for object obj_controller:
+
+				Variable obj_p_fleet.eligible_ships(102112, -2147483648) not set before reading it.
+				 at gml_Script_scr_random_event (line 1377) -                             array_push(eligible_ships, id);
+				############################################################################################
+				gml_Script_scr_random_event (line 1377)
+				gml_Object_obj_controller_Alarm_5 (line 1410) - scr_random_event(true);
+				*/
+				//K-FIN (27/07/23 - 1.1)
 				array_push(eligible_ships, id);
 			}
 		}
@@ -1531,9 +1548,29 @@ function scr_random_event(execute_now) {
 	else if (chosen_event == EVENT.necron_awaken){
 		debugl("RE: Necron Tomb Awakens");
 		var stars = scr_get_stars();
+
+		//var star = stars;
 		var valid_stars = array_filter_ext(stars, 
 			function(star, index){
+		
+		
 				var tomb_world = scr_get_planet_with_feature(star,"Necron Tomb");
+				/*
+				___________________________________________
+				############################################################################################
+				ERROR in
+				action number 1
+				of Alarm Event for alarm 5
+				for object obj_controller:
+
+				Push :: Execution Error - Variable Index [-1] out of range [9] - -9.p_feature(100500,-1)
+				 at gml_Script_anon_scr_random_event_gml_GlobalScript_scr_random_event_52005_scr_random_event_gml_GlobalScript_scr_random_event (line 1552) -                             return string_count("Awakened Necron Tomb",star.p_feature[tomb_world]) == 0;
+				############################################################################################
+				gml_Script_anon_scr_random_event_gml_GlobalScript_scr_random_event_52005_scr_random_event_gml_GlobalScript_scr_random_event (line 1552)
+				gml_Script_scr_random_event (line 1549)
+				gml_Object_obj_controller_Alarm_5 (line 1410) - scr_random_event(true);
+				*/
+				
 				return string_count("Awakened Necron Tomb",star.p_feature[tomb_world]) == 0;
 		});
 	

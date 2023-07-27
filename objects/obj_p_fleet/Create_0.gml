@@ -51,3 +51,9 @@ acted=0;
 hurssy=0;
 hurssy_time=0;
 
+/*K-INI (27/07/23 - 1.2)
+Related to scr_random_event TODO bug.
+Hotfixing, creating the var & praying
+*/
+eligible_ships=[];
+//K-FIN (27/07/23 - 1.2)
