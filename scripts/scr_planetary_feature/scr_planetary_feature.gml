@@ -50,13 +50,14 @@ function new_planet_feature(feature_type) constructor{
 		player_hidden = 0
 		break;
 	case P_features.Ancient_Ruins:
+		ruins_size = choose("tiny", "small", "medium", "large", "sprawling")
 		recoverable_gene_seed = 0;
 		recoverables=[];
 		failed_exploration = 0;
 		unrecovered_items = false;
 		f_type =  P_features.Ancient_Ruins;
 		exploration_complete= false;
-		planet_display = "Unexplored Ancient Ruins";
+		planet_display = $"{ruins_size} Unexplored Ancient Ruins";
 		completion_level = 0;
 		player_hidden = 1;	
 		find_starship = function(){
@@ -73,32 +74,57 @@ function new_planet_feature(feature_type) constructor{
 			failed_exploration = 1;
 			player_hidden = 0;
 			exploration_complete= false;
+			failiure_turn = obj_controller.turn;
 		}
 		
 		//revcover equipment of fallen marines from ruins
 		recover_from_dead = function(){
-			var weapon_text = ""
-			if (array_length(recoverables)>0){
-					var pop;pop=instance_create(0,0,obj_popup);
-					for (var item =0;item<array_length(recoverables);item++){
-						var i_set = recoverables[item]
-						scr_add_item(i_set[0],i_set[1])
-						 weapon_text += $", {i_set[0]} x {i_set[1]}"
+			var pop=instance_create(0,0,obj_popup);var route = random(5);
+			pop.image="ancient_ruins";pop.title="Ancient Ruins: Recovery";
+			if (route < 4){
+				var weapon_text = ""
+			
+				//calculate equipment degredation
+				var equipment_deg = floor((obj_controller.turn - failiure_turn)/7)
+				var some_recoverable = false;
+				if (array_length(recoverables)>0){
+						for (var item =0;item<array_length(recoverables);item++){
+							var i_set = recoverables[item]
+							i_set[1] -= equipment_deg;
+							if (i_set[1]> 0){
+								some_recoverable = true;
+								scr_add_item(i_set[0],i_set[1])
+								weapon_text += $", {i_set[0]} x {i_set[1]}"
+							}
+						}
+					if (some_recoverable == true){
+						pop.text=$"Your strike team locates the site where the previous expedition made their last stand. They airlift whatever equipment and vehicles remain, disposing of anything beyond saving;.{ weapon_text}is repaired and restored to the armamentarium";
+					}else{
+						pop.text=$"our strike team locates the site where the previous expedition made their last stand. They cannot find any intact equipment, and are forced to burn the derelicts to prevent capture; no equipment is added to the armamentarium"
 					}
-				pop.image="ancient_ruins";pop.title="Ancient Ruins: Recovery";
-				pop.text=$"You come too the site where your brothers made their last stand. You recover what you can and bring aboard the bodies of the fallen.{ weapon_text} were recovered and added to the armentarium";
-			}
-			if (recoverable_gene_seed>0){
-				pop.text += $" {recoverable_gene_seed} revered gene seed were also recovered so the warriors legacies may continue."
-				obj_controller.gene_seed+=recoverable_gene_seed;
+				}
+			
+				//calculate geneseed degredation
+				if (obj_controller.turn - failiure_turn > 2){
+					recoverable_gene_seed -= obj_controller.turn - failiure_turn
+				}
+				if (recoverable_gene_seed>0){
+					pop.text += $" The strike team returns with remains, apothecaries report the gene-seed was able to be saved;{recoverable_gene_seed} gene-seed is harvested from the chapter’s fallen. At least their genetic legacy will continue, we will recover from this."
+					obj_controller.gene_seed+=recoverable_gene_seed;
+				} else{
+					pop.text += $"The strike team returns with remains, but apothecaries report the gene-seed is too contaminated to use; no gene-seed is harvested from the chapter’s fallen. Their legacy lives on through their armaments, we will hold onto their memory."
+				}
+			}else{
+				pop.text = "Your strike team locates the site where the previous expedition made their last stand. They find nothing. Your equipment is gone and bodies nowhere to be found, the entire expedition appears to have vanished without a trace; they return empty handed. Something insidious happened. You must find whoever defiled your brothers, and eliminate them, forever.”"
 			}
 			unrecovered_items=false;
+			recoverable_gene_seed = 0;
 			var _recoverables =[]
 			recoverables =_recoverables
 			planet_display = "Unexplored Ancient Ruins";
 		}
 		
-		//determine what race the ruins once belonged to effect enemies that cna be found
+		//determine what race the ruins once belonged to effect enemies that can be found
 		determine_race = function(){
 		        var dice=floor(random(100))+1;
 		        if (dice<=9) then ruins_race=1;
@@ -294,7 +320,7 @@ function scr_planetary_feature(planet_num) {
 					 scr_alert("green","feature",lop,x,y);scr_event_log("",lop);
 					 break;
 				case P_features.Ancient_Ruins:
-					var lop="Ancient Ruins discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
+					var lop=$"A {feat.ruins_size} Ancient Ruins discovered on {string(name)} {scr_roman(planet_num)}."debugl(lop);
 					scr_alert("green","feature",lop,x,y);scr_event_log("",lop);
 					break;
 				case P_features.Cave_Network:

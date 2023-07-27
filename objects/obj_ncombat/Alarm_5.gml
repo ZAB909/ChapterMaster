@@ -104,9 +104,6 @@ if (apoth>0) and (final_deaths+final_command_deaths>0) and (string_count("Doom",
 }
 if (apoth=0) and (string_count("Doom",obj_ini.strin2)=0){
     part3="No able-bodied "+string(obj_ini.role[100,15])+".  "+string(seed_max)+" Gene-Seed lost.";
-	if (instance_exists(obj_temp4)){
-		obj_temp4.recoverable_gene_seed = seed_max;
-	}
     newline=part3;scr_newtext();
     newline=" ";scr_newtext();
 }
@@ -665,7 +662,13 @@ if (endline=0){
 }
 
 
-if (defeat=1){player_forces=0;}
+if (defeat=1){
+	player_forces=0;
+		if (instance_exists(obj_temp4)){
+		obj_temp4.recoverable_gene_seed = seed_max;
+	}
+	
+}
 
 instance_deactivate_object(obj_star);
 

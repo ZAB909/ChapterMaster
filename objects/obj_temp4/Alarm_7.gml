@@ -62,13 +62,13 @@ if (defeat=1){
 	    var i;i=0;
 	    repeat(50){i+=1;
 	        if (post_equipment_lost[i]!="") and (post_equipments_lost[i]>0){
-				var _new_equip = floor(post_equipments_lost[i]/4)
+				var _new_equip = floor(post_equipments_lost[i]/2)
 				if (_new_equip == 0) then _new_equip++
 				array_push(_ruins.recoverables, [post_equipment_lost[i],_new_equip])
 	        }
 	    }
 		if (recoverable_gene_seed > 0){
-			recoverable_gene_seed = floor(post_equipments_lost[i]/4)
+			recoverable_gene_seed = floor(recoverable_gene_seed/2)
 			if (recoverable_gene_seed == 0) then recoverable_gene_seed++;
 			_ruins.recoverable_gene_seed = recoverable_gene_seed;
 		}

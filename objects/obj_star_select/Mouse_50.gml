@@ -358,12 +358,26 @@ if (obj_controller.cooldown<=0) and (loading=1){
 				obj_controller.current_planet_feature.star = target;
 				obj_controller.current_planet_feature.planet = obj_controller.selecting_planet;
             var pip,arti;pip=instance_create(0,0,obj_popup);pip.title="Ancient Ruins";
+			var ruins_size =obj_controller.current_planet_feature.ruins_size
             
             var nu;nu=string(target.name);
             if (obj_controller.selecting_planet=1) then nu+=" I";if (obj_controller.selecting_planet=2) then nu+=" II";
             if (obj_controller.selecting_planet=3) then nu+=" III";if (obj_controller.selecting_planet=4) then nu+=" IV";
 			 if(_explore_ruins.failed_exploration ==1){ pip.text="The accursed ruins on "+string(nu)+"where your brothers fell still holds many secrets including the remains of your brothers honour demands you avenge them."}else{
-            pip.text="Located upon "+string(nu)+" is a sprawling expanse of ancient ruins, dating back to times long since forgotten.  Locals are superstitious about the place- as a result the ruins are hardly explored.  What they might contain, and any potential threats, are unknown.  What is thy will?";
+				 pip.text="Located upon "+string(nu)+$" is a {ruins_size} expanse of ancient ruins, dating back to times long since forgotten.  Locals are superstitious about the place- as a result the ruins are hardly explored.  What they might contain, and any potential threats, are unknown.";
+				switch (ruins_size){
+					case "tiny":pip.text += "It's tiny nature means no more than five marines can operate in cohesion without being seperated";
+					break;
+					case "small":pip.text += "As a result of it's narrow corridors and tight spaces a squad of any more than 15 would struggle to operate effectivly";
+					break;
+					case "medium":pip.text += "Half a standard company (55) could easily operate effectivly in the many wide spaces and caverns";
+					break;
+					case "large":pip.text += "A whole company (110) would not be confined in the huge spaces that such a ruin contain";
+					break;
+					case "sprawling":pip.text += "The ruins is of an unprecidented size whole legions of old would not feel uncomfortable in such a space"
+					break;
+				}
+				pip.text += ". What is thy will?"
 			}
             pip.option1="Explore the ruins.";pip.option2="Do nothing.";pip.option3="Return your marines to the ship.";pip.image="ancient_ruins";
             
