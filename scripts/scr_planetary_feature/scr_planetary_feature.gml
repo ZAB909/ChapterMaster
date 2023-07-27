@@ -50,6 +50,7 @@ function new_planet_feature(feature_type) constructor{
 		player_hidden = 0
 		break;
 	case P_features.Ancient_Ruins:
+		recoverable_gene_seed = 0;
 		recoverables=[];
 		failed_exploration = 0;
 		unrecovered_items = false;
@@ -64,6 +65,8 @@ function new_planet_feature(feature_type) constructor{
 			completion_level = 0;
 			player_hidden = 0;
 		}
+		
+		//allows ruins to be entered to retrive fallen marine gear
 		forces_defeated = function(){
 			planet_display = "Failed Ruins Expidition"
 			completion_level = 1;
@@ -71,17 +74,31 @@ function new_planet_feature(feature_type) constructor{
 			player_hidden = 0;
 			exploration_complete= false;
 		}
+		
+		//revcover equipment of fallen marines from ruins
 		recover_from_dead = function(){
+			var weapon_text = ""
 			if (array_length(recoverables)>0){
+					var pop;pop=instance_create(0,0,obj_popup);
 					for (var item =0;item<array_length(recoverables);item++){
 						var i_set = recoverables[item]
 						scr_add_item(i_set[0],i_set[1])
+						 weapon_text += $", {i_set[0]} x {i_set[1]}"
 					}
+				pop.image="ancient_ruins";pop.title="Ancient Ruins: Recovery";
+				pop.text=$"You come too the site where your brothers made their last stand. You recover what you can and bring aboard the bodies of the fallen.{ weapon_text} were recovered and added to the armentarium";
+			}
+			if (recoverable_gene_seed>0){
+				pop.text += $" {recoverable_gene_seed} revered gene seed were also recovered so the warriors legacies may continue."
+				obj_controller.gene_seed+=recoverable_gene_seed;
 			}
 			unrecovered_items=false;
 			var _recoverables =[]
-			recoverables =_recoverables 
+			recoverables =_recoverables
+			planet_display = "Unexplored Ancient Ruins";
 		}
+		
+		//determine what race the ruins once belonged to effect enemies that cna be found
 		determine_race = function(){
 		        var dice=floor(random(100))+1;
 		        if (dice<=9) then ruins_race=1;
@@ -90,8 +107,10 @@ function new_planet_feature(feature_type) constructor{
 		        if (dice>83) and (dice<=91) then ruins_race=6;
 		        if (dice>91) then ruins_race=10;
 		}
+		
+		//mark ruins as fully explored
 		ruins_explored = function(){
-			planet_display = "Unexplored Ancient Ruins";
+			planet_display = "Ancient Ruins";
 			exploration_complete= true;
 		}
 		break;

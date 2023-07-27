@@ -6,7 +6,7 @@ with(obj_p_fleet){
     }
 	if (steh.visited==0){
 		for(var planet_num =1;planet_num<5;planet_num++){
-		    if (array_length(steh.p_feature[planet_num])!=0) with(steh){{scr_planetary_feature(planet_num);}}
+		    if (array_length(steh.p_feature[planet_num])!=0) with(steh){scr_planetary_feature(planet_num);}
 		}
 		steh.visited = 1
 	}

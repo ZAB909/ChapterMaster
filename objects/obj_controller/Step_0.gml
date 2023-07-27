@@ -786,6 +786,7 @@ if (unload>0){
             ma_loc[q]=obj_ini.ship_location[b];
             ma_lid[q]=0;
             ma_wid[q]=unload;
+			show_debug_message("{0},{1},{2}", manaj,ide[q],obj_ini.loc[manaj,ide[q]])
         }
         if (man[q]="vehicle") and (ma_loc[q]=selecting_location) and (man_sel[q]!=0){
             if (b=0) then b=ma_lid[q];

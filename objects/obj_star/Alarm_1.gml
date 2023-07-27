@@ -331,7 +331,11 @@ if (i=1) and (planets>0){
 		// if (ranb=1) and (p_owner[i]!=1) and (p_owner[i]!=2) and (p_owner[i]!=3) then ranb=floor(random(4))+2;
 		//
 		var goo;goo=0;
-		repeat(10){if (goo=0)and (irandom(9)<2){ranb=floor(random(6))+1;
+		if (goo==0){
+					goo=1;
+			    array_push(p_feature[i], new new_planet_feature( P_features.Ancient_Ruins))
+			}
+		/*repeat(10){if (goo=0)and (irandom(9)<2){ranb=floor(random(6))+1;
 
 			if (name="Vulvis Major") then ranb=1;
 			if (name="Necron Assrape") then ranb=2;
@@ -385,7 +389,8 @@ if (i=1) and (planets>0){
 		}
 
 
-		}}
+		}
+		}*/
 	}
 
 }

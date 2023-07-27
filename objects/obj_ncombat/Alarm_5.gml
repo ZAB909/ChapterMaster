@@ -84,8 +84,11 @@ if (final_deaths+final_command_deaths>0){
     newline=" ";scr_newtext();
 }
 
-
-
+if (instance_exists(obj_temp4)){
+	if (apoth < 0){
+		obj_temp4.apothecary_present = apoth;
+	}
+};
 
 seed_saved=(min(seed_max,apoth*40))-gene_penalty;
 if (string_count("Doom",obj_ini.strin2)>0) then seed_saved=0;
@@ -101,6 +104,9 @@ if (apoth>0) and (final_deaths+final_command_deaths>0) and (string_count("Doom",
 }
 if (apoth=0) and (string_count("Doom",obj_ini.strin2)=0){
     part3="No able-bodied "+string(obj_ini.role[100,15])+".  "+string(seed_max)+" Gene-Seed lost.";
+	if (instance_exists(obj_temp4)){
+		obj_temp4.recoverable_gene_seed = seed_max;
+	}
     newline=part3;scr_newtext();
     newline=" ";scr_newtext();
 }
@@ -151,10 +157,14 @@ if (post_equipment_lost[1]!=""){
         }
     }
     part7=string_delete(part7,string_length(part7)-1,2);part7+=".";i=0;
-    
+	if (instance_exists(obj_temp4)){part7 += "Some may be recoverable"}
     newline=part6;scr_newtext();
     newline=part7;scr_newtext();
     newline=" ";scr_newtext();
+}
+if (instance_exists(obj_temp4)){
+	obj_temp4.post_equipment_lost = post_equipment_lost
+	obj_temp4.post_equipments_lost = post_equipments_lost
 }
 if (slime>0){
     var compan_slime;

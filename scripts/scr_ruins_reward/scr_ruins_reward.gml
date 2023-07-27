@@ -2,6 +2,7 @@ function scr_ruins_reward(star_system, planet, _ruins) {
 	
 	var ruins_type = _ruins.ruins_race;
 	
+	//if there is gear from previoulsy killed marines retrieve instead of a standard reward
 	if (_ruins.unrecovered_items != false){
 		_ruins.recover_from_dead()
 	} else{

@@ -259,6 +259,9 @@ if (obj_controller.cooldown<=0) and (loading=1){
         obj_controller.unload=obj_controller.selecting_planet;
         obj_controller.return_object=target;
         obj_controller.return_size=obj_controller.man_size;
+       with(obj_controller.return_object){// This marks that there are forces upon this planet
+            p_player[obj_controller.unload]+=obj_controller.man_size;
+        }
         
         // 135 ; SPECIAL PLANET CRAP HERE
         
@@ -380,6 +383,7 @@ if (obj_controller.cooldown<=0) and (loading=1){
                 }
             }
             arti.ship_id=obj_controller.ma_lid[1];
+			obj_controller.current_planet_feature.battle = arti;
 			}
         }
         
@@ -387,10 +391,7 @@ if (obj_controller.cooldown<=0) and (loading=1){
         
         
         
-        
-        with(obj_controller.return_object){// This marks that there are forces upon this planet
-            p_player[obj_controller.unload]+=obj_controller.man_size;
-        }
+ 
         
         
         

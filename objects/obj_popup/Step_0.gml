@@ -517,22 +517,22 @@ if (image="ancient_ruins") and (woopwoopwoop=2){
     instance_deactivate_all(true);
     instance_activate_object(obj_controller);
     instance_activate_object(obj_ini);
-    instance_activate_object(obj_temp4);
-	var _star = obj_controller.current_planet_feature.star
-	var _planet = obj_controller.current_planet_feature.planet
+    instance_activate_object(obj_controller.current_planet_feature.battle);
+	var _star = obj_controller.current_planet_feature.star;
+	var _planet = obj_controller.current_planet_feature.planet;
     
     instance_create(0,0,obj_ncombat);
+    
+    instance_activate_object(_star);
+	obj_ncombat.man_size_limit = 15;
+   // with(obj_star){if (name!=obj_temp4.loc) then instance_deactivate_object(id);}
+    
+    //that_one=instance_nearest(0,0,obj_star);
+   // instance_activate_object(obj_star);
     scr_battle_roster(_star.name ,_planet,true);
-    
-    instance_activate_object(obj_star);
-    with(obj_star){if (name!=obj_temp4.loc) then instance_deactivate_object(id);}
-    
-    that_one=instance_nearest(0,0,obj_star);
-    instance_activate_object(obj_star);
-    
     obj_controller.cooldown=10;
     obj_ncombat.battle_object=_star;instance_deactivate_object(obj_star);
-    obj_ncombat.battle_loc=_star;
+    obj_ncombat.battle_loc=_star.name;
     obj_ncombat.battle_id=_planet;
     obj_ncombat.battle_special="ruins";if (obj_temp4.ruins_race=6) then obj_ncombat.battle_special="ruins_eldar";
     obj_ncombat.dropping=0;obj_ncombat.attacking=0;
