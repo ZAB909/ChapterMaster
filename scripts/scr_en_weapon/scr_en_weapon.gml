@@ -21,8 +21,6 @@ function scr_en_weapon(argument0, argument1, argument2, argument3, argument4) {
 	    atta=10;arp=0;rang=1;spli=1;
 	}
 
-	if (obj_ncombat.enemy=5) then faith_bonus=faith[argument3];
-
 	if (argument0="Venom Claws"){atta=200;arp=0;rang=1;spli=0;if (obj_ini.preomnor=1){atta=240;}}
 	if (argument0="Web Spinner"){atta=40;arp=0;rang=2.1;spli=1;amm=1;}
 	if (argument0="Warpsword"){atta=300;arp=1;rang=1;spli=1;}
