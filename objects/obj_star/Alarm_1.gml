@@ -391,6 +391,7 @@ if (i=1) and (planets>0){
 	}
 
 }
+}
 
 
 
