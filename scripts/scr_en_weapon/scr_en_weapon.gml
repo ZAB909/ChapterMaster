@@ -16,7 +16,7 @@ function scr_en_weapon(argument0, argument1, argument2, argument3, argument4) {
 	i=0;rang=0;atta=0;spli=0;
 	arp=0;acr=0;amm=-1;faith_bonus=0;
 
-	if (string_count("elee",argument0)>0){
+	if (string_count("melee",argument0)>0){
 	    var to;to=string_delete(argument0,0,5);
 	    atta=10;arp=0;rang=1;spli=1;
 	}
@@ -84,7 +84,7 @@ function scr_en_weapon(argument0, argument1, argument2, argument3, argument4) {
 	    if (argument0="Twin Linked Doomweaver"){atta=100;arp=0;rang=2;}// Also create difficult terrain?
 	    if (argument0="Starcannon"){atta=140;arp=1;rang=3;spli=1;}
 	    if (argument0="Two Power Fists"){atta=300;arp=1;rang=1;}
-	    if (argument0="Flamer"){atta=250;arp=0;rang=2;amm=4;spli=1;}
+	    if (argument0="Flamer"){atta=100;arp=0;rang=2;amm=4;spli=1;}
 	    if (argument0="Titan Starcannon"){atta=220;arp=1;rang=4;spli=1;}
 	    if (argument0="Phantom Pulsar"){atta=500;arp=1;rang=20;spli=1;}
 	}
@@ -94,18 +94,18 @@ function scr_en_weapon(argument0, argument1, argument2, argument3, argument4) {
 	if (obj_ncombat.enemy=7){
 	    if (argument0="Choppa"){atta=28;arp=0;rang=1;spli=1;}
 	    if (argument0="Power Klaw"){atta=150;arp=1;rang=1;spli=1;}
-	    if (argument0="Slugga"){atta=30;arp=0;rang=4;amm=4;spli=1;}
-	    if (argument0="Tankbusta Bomb"){atta=260;arp=1;rang=1;amm=2;spli=0;}
-	    if (argument0="Big Shoota"){atta=80;arp=0;rang=18;amm=30;spli=0;}
-	    if (argument0="Dakkagun"){atta=90;arp=1;rang=10;amm=20;spli=0;}
-	    if (argument0="Deffgun"){atta=90;arp=1;rang=6;amm=6;spli=0;}
-	    if (argument0="Snazzgun"){atta=80;arp=0;rang=10;spli=1;}
+	    if (argument0="Slugga"){atta=27;arp=0;rang=3.1;amm=4;spli=1;}
+	    if (argument0="Tankbusta Bomb"){atta=264;arp=1;rang=1;amm=2;spli=1;}
+	    if (argument0="Big Shoota"){atta=100;arp=0;rang=12;amm=30;spli=0;}
+	    if (argument0="Dakkagun"){atta=150;arp=0;rang=10;amm=20;spli=0;}
+	    if (argument0="Deffgun"){atta=120;arp=0;rang=8;amm=20;spli=0;}
+	    if (argument0="Snazzgun"){atta=80;arp=0;rang=10;spli=0;}
 	    if (argument0="Grot Blasta"){atta=12;arp=0;rang=2;amm=6;}
-	    if (argument0="Kannon"){atta=200;arp=1;rang=12.1;amm=5;spli=1;}
-	    if (argument0="Shoota"){atta=30;arp=0;rang=8;}
-	    if (argument0="Burna"){atta=200;arp=1;rang=2;amm=4;spli=1;}
+	    if (argument0="Kannon"){atta=200;arp=1;rang=10.1;amm=5;spli=1;}
+	    if (argument0="Shoota"){atta=30;arp=0;rang=6;}
+	    if (argument0="Burna"){atta=140;arp=1;rang=2;amm=4;spli=1;}
 	    if (argument0="Skorcha"){atta=160;arp=1;rang=2;amm=6;spli=1;}
-	    if (argument0="Rokkit Launcha"){atta=130;arp=1;rang=15;spli=0;}
+	    if (argument0="Rokkit Launcha"){atta=150;arp=1;rang=15;spli=1;}
 	    if (argument0="Krooz Missile"){atta=250;arp=1;rang=15;spli=1;}
 	}
 
@@ -144,7 +144,7 @@ function scr_en_weapon(argument0, argument1, argument2, argument3, argument4) {
 	    if (argument0="Scything Talons"){atta=30;arp=0;rang=1;}
 	    if (argument0="Genestealer Claws"){atta=choose(105,105,130);arp=1;rang=1;}
 	    if (argument0="Witchfire"){atta=100;arp=1;rang=2;}
-	    if (argument0="Autogun"){atta=20;arp=0;rang=10;amm=12;spli=1;}
+	    if (argument0="Autogun"){atta=20;arp=0;rang=6;amm=12;spli=1;}
 	    if (argument0="Lictor Claws"){atta=300;arp=0;rang=1;}
 	    if (argument0="Flesh Hooks"){atta=50;arp=0;rang=2;amm=1;}
 	}
@@ -156,24 +156,24 @@ function scr_en_weapon(argument0, argument1, argument2, argument3, argument4) {
 	    if (argument0="Power Sword"){atta=120;arp=0;rang=1;}
 	    if (argument0="Force Weapon"){atta=400;arp=1;rang=1;}
 	    if (argument0="Chainfist"){atta=300;arp=1;rang=1;spli=1;}
-	    if (argument0="Meltagun"){atta=300;arp=1;rang=2;amm=4;}
-	    if (argument0="Flamer"){atta=250;arp=0;rang=2.1;amm=4;spli=1;}
-	    if (argument0="Heavy Flamer"){atta=500;arp=0;rang=2.1;amm=6;spli=1;}
-	    if (argument0="Combi-Flamer"){atta=120;arp=0;rang=2.1;amm=1;spli=1;}
-	    if (argument0="Bolter"){atta=45;arp=0;rang=18;amm=16;if (obj_ncombat.enemy=5) then atta=35;}// Bursts
+	    if (argument0="Meltagun"){atta=200;arp=1;rang=2;amm=4;}
+	    if (argument0="Flamer"){atta=160;arp=0;rang=2.1;amm=4;spli=1;}
+	    if (argument0="Heavy Flamer"){atta=250;arp=0;rang=2.1;amm=6;spli=1;}
+	    if (argument0="Combi-Flamer"){atta=160;arp=0;rang=2.1;amm=1;spli=1;}
+	    if (argument0="Bolter"){atta=45;arp=0;rang=12;amm=15;if (obj_ncombat.enemy=5) then atta=35;}// Bursts
 	    if (argument0="Power Fist"){atta=425;arp=1;rang=1;}
-	    if (argument0="Possessed Claws"){atta=550;arp=1;rang=1;spli=1;}
-	    if (argument0="Missile Launcher"){atta=200;arp=0;rang=20;amm=4;spli=1;}
-	    if (argument0="Chainsword"){atta=60;arp=1;rang=1;}
+	    if (argument0="Possessed Claws"){atta=250;arp=1;rang=1;spli=1;}
+	    if (argument0="Missile Launcher"){atta=200;arp=1;rang=20;amm=4;spli=1;}
+	    if (argument0="Chainsword"){atta=45;arp=0;rang=1;}
 	    if (argument0="Bolt Pistol"){atta=35;arp=0;rang=3.1;amm=18;}
-	    if (argument0="Chainaxe"){atta=100;arp=0;rang=1;}
+	    if (argument0="Chainaxe"){atta=55;arp=0;rang=1;}
 	    if (argument0="Poisoned Chainsword"){atta=90;arp=0;rang=1;if (obj_ini.preomnor=1){atta=130;}}
 	    if (argument0="Sonic Blaster"){atta=120;arp=0;rang=3;spli=1;}
 	    if (argument0="Rubric Bolter"){atta=80;arp=0;rang=12;amm=15;}// Bursts
 	    if (argument0="Witchfire"){atta=200;arp=1;rang=5.1;}
-	    if (argument0="Autogun"){atta=20;arp=0;rang=12;amm=12;}
-	    if (argument0="Storm Bolter"){atta=90;arp=0;rang=8;amm=10;spli=1;}
-	    if (argument0="Lascannon"){atta=200;arp=1;rang=26;amm=8;}
+	    if (argument0="Autogun"){atta=20;arp=0;rang=6;amm=12;}
+	    if (argument0="Storm Bolter"){atta=65;arp=0;rang=8;amm=10;spli=1;}
+	    if (argument0="Lascannon"){atta=200;arp=1;rang=20;amm=8;}
 	    if (argument0="Twin Linked Heavy Bolters"){atta=240;arp=0;rang=16;spli=1;}
 	    if (argument0="Twin-Linked Heavy Bolters"){atta=240;arp=0;rang=16;spli=1;}
 	    if (argument0="Twin Linked Lascannon"){atta=300;arp=1;rang=20;}
@@ -181,7 +181,7 @@ function scr_en_weapon(argument0, argument1, argument2, argument3, argument4) {
 	    if (argument0="Battle Cannon"){atta=300;arp=1;rang=12;}
 	    if (argument0="Demolisher Cannon"){atta=500;arp=1;rang=2;if (instance_exists(obj_nfort)) then rang=5;}
 	    if (argument0="Earthshaker Cannon"){atta=300;arp=0;rang=12;spli=1;}
-	    if (argument0="Havoc Launcher"){atta=300;arp=1;rang=12;}
+	    if (argument0="Havoc Launcher"){atta=100;arp=0;rang=12;}
 	    if (argument0="Baleflame"){atta=120;arp=0;rang=2;}
 	    if (argument0="Defiler Claws"){atta=350;arp=1;rang=1;spli=1;}
 	    if (argument0="Reaper Autocannon"){atta=320;arp=0;rang=18;amm=10;spli=1;}
@@ -191,8 +191,12 @@ function scr_en_weapon(argument0, argument1, argument2, argument3, argument4) {
 	    if (argument0="Multi-Laser"){atta=choose(60,75,90,105);arp=0;rang=10;}
     
 	    if (argument0="Blessed Weapon"){atta=150;arp=1;rang=1;}
+	    if (argument0="Electro-Flail"){atta=125;arp=1;rang=1;spli=1;}
+	    if (argument0="Neural Whip"){atta=85;arp=0;rang=1;spli=1}
+  	    if (argument0="Sarissa"){atta=65;arp=1;rang=2;}
+	    if (argument0="Seraphim Pistols"){atta=200;arp=1;rang=4;}
 	    if (argument0="Laser Mace"){atta=200;arp=1;rang=5.1;amm=3;}
-	    if (argument0="Heavy Bolter"){atta=120;arp=0;rang=16;spli=0;if (faith_bonus>0){atta=50;arp=1;}}
+	    if (argument0="Heavy Bolter"){atta=120;arp=0;rang=16;spli=0;
     
 	    if (argument0="Lasgun"){atta=20;arp=0;rang=6;amm=30;}
 	    if (argument0="Daemonhost Claws"){atta=350;arp=1;rang=1;spli=1;}
@@ -268,4 +272,5 @@ function scr_en_weapon(argument0, argument1, argument2, argument3, argument4) {
 	*/
 
 
-}
+    }
+  }
