@@ -50,7 +50,9 @@ function new_planet_feature(feature_type) constructor{
 		player_hidden = 0
 		break;
 	case P_features.Ancient_Ruins:
-		ruins_size = choose("tiny", "small", "medium", "large", "sprawling")
+		var ruin_data = choose(["tiny", 5], ["small", 15], ["medium", 55], ["large",110], ["sprawling", 0])
+		ruins_size =  ruin_data[0]
+		man_size_limit = ruin_data[1]
 		recoverable_gene_seed = 0;
 		recoverables=[];
 		failed_exploration = 0;

@@ -524,7 +524,7 @@ if (image="ancient_ruins") and (woopwoopwoop=2){
     instance_create(0,0,obj_ncombat);
     
     instance_activate_object(_star);
-	obj_ncombat.man_size_limit = 15;
+	obj_ncombat.man_size_limit = obj_controller.current_planet_feature.man_size_limit;
    // with(obj_star){if (name!=obj_temp4.loc) then instance_deactivate_object(id);}
     
     //that_one=instance_nearest(0,0,obj_star);
