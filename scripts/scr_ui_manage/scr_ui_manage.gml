@@ -870,67 +870,67 @@ function scr_ui_manage() {
 	        if (string_count("Artifact",temp5)>0) then draw_set_color(881503);
 	        draw_text_transformed(xx+573,yy+66,string(temp5),1,1,0);draw_set_color(38144);*/
 
-	        if (man[sel]="man"){var x5;x5=0;
+	        if (man[sel]="man"){var xoffset;xoffset=0;
 	            draw_set_color(c_gray);
 	            if (ar_ar=1) then draw_set_color(c_gray);
 	            if (ar_ar=2) then draw_set_color(881503);
 	            draw_text(xx+573,yy+66,string_hash_to_newline(string(ma_ar)));
 
-	            x5+=string_width(string_hash_to_newline(ma_ar))+15;
+	            xoffset+=string_width(string_hash_to_newline(ma_ar))+15;
 	            draw_set_color(c_gray);
 	            if (ar_mb=1) then draw_set_color(c_gray);
 	            if (ar_mb=2) then draw_set_color(881503);
-	            draw_text(xx+573+x5,yy+66,string_hash_to_newline(string(ma_mb)));
+	            draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_mb)));
 
-	            x5+=string_width(string_hash_to_newline(ma_mb))+15;
+	            xoffset+=string_width(string_hash_to_newline(ma_mb))+15;
 	            draw_set_color(c_gray);
 	            if (ar_ge=1) then draw_set_color(c_gray);
 	            if (ar_ge=2) then draw_set_color(881503);
-	            draw_text(xx+573+x5,yy+66,string_hash_to_newline(string(ma_ge)));
+	            draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_ge)));
 
-	            x5+=string_width(string_hash_to_newline(ma_ge))+15;
+	            xoffset+=string_width(string_hash_to_newline(ma_ge))+15;
 	            draw_set_color(c_gray);
 	            if (ar_we1=1) then draw_set_color(c_gray);
 	            if (ar_we1=2) then draw_set_color(881503);
-	            draw_text(xx+573+x5,yy+66,string_hash_to_newline(string(ma_we1)));
+	            draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_we1)));
 
-	            x5+=string_width(string_hash_to_newline(ma_we1))+15;
+	            xoffset+=string_width(string_hash_to_newline(ma_we1))+15;
 	            draw_set_color(c_gray);
 	            if (ar_we2=1) then draw_set_color(c_gray);
 	            if (ar_we2=2) then draw_set_color(881503);
-	            draw_text(xx+573+x5,yy+66,string_hash_to_newline(string(ma_we2)));
+	            draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_we2)));
 	        }
 
-	        if (man[sel]!="man"){var x5;x5=0;
+	        if (man[sel]!="man"){var xoffset;xoffset=0;
 
 						draw_set_color(c_gray);
 						if (ar_ge=1) then draw_set_color(c_gray);
 						if (ar_ge=2) then draw_set_color(881503);
 						draw_text(xx+573,yy+66,string_hash_to_newline(string(ma_ge)));
 
-						x5+=string_width(string_hash_to_newline(ma_ge))+15;
+						xoffset+=string_width(string_hash_to_newline(ma_ge))+15;
 						draw_set_color(c_gray);
 						if (ar_mb=1) then draw_set_color(c_gray);
 						if (ar_mb=2) then draw_set_color(881503);
-						draw_text(xx+573+x5,yy+66,string_hash_to_newline(string(ma_mb)));
+						draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_mb)));
 
-						x5+=string_width(string_hash_to_newline(ma_mb))+15;
+						xoffset+=string_width(string_hash_to_newline(ma_mb))+15;
 						draw_set_color(c_gray);
 						if (ar_we1=1) then draw_set_color(c_gray);
 						if (ar_we1=2) then draw_set_color(881503);
-						draw_text(xx+573+x5,yy+66,string_hash_to_newline(string(ma_we1)));
+						draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_we1)));
 
-						x5+=string_width(string_hash_to_newline(ma_we1))+15;
+						xoffset+=string_width(string_hash_to_newline(ma_we1))+15;
 						draw_set_color(c_gray);
 						if (ar_we2=1) then draw_set_color(c_gray);
 						if (ar_we2=2) then draw_set_color(881503);
-						draw_text(xx+573+x5,yy+66,string_hash_to_newline(string(ma_we2)));
+						draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_we2)));
 
-						x5+=string_width(string_hash_to_newline(ma_we2))+15;
+						xoffset+=string_width(string_hash_to_newline(ma_we2))+15;
 						draw_set_color(c_gray);
 						if (ar_ar=1) then draw_set_color(c_gray);
 						if (ar_ar=2) then draw_set_color(881503);
-						draw_text(xx+573+x5,yy+66,string_hash_to_newline(string(ma_ar)));
+						draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_ar)));
 	        }
 
 
