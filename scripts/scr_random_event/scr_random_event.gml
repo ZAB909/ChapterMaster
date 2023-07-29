@@ -214,7 +214,7 @@ function scr_random_event(execute_now) {
 				//DEBUG-INI (EVENTS DEBUG CODE - 2)
 				//Comment/delete this when not debugging events
 				//If event on the switch above, (EVENTS DEBUG CODE - 1) array should be set to event too.
-				//chosen_event =  EVENT.ship_lost
+				chosen_event =  EVENT.ship_lost
 				//DEBUG-FIN (EVENTS DEBUG CODE - 2)
 		}
 	}
@@ -1388,24 +1388,10 @@ function scr_random_event(execute_now) {
 		var eligible_fleets = [];
 		with(obj_p_fleet) {
 			if (action="move") {
-				/*K-INI (27/07/23 - 1.1)
-				Broken, throws exception as eligible_ships does not exist as a var.
-				Created and initialized eligible_ships in obj_p_fleet
-				___________________________________________
-				############################################################################################
-				ERROR in
-				action number 1
-				of Alarm Event for alarm 5
-				for object obj_controller:
-
-				Variable obj_p_fleet.eligible_ships(102112, -2147483648) not set before reading it.
-				 at gml_Script_scr_random_event (line 1377) -                             array_push(eligible_ships, id);
-				############################################################################################
-				gml_Script_scr_random_event (line 1377)
-				gml_Object_obj_controller_Alarm_5 (line 1410) - scr_random_event(true);
-				*/
+				//K-INI (27/07/23 - 1.1)
+				//array_push(eligible_ships, id);
+				array_push(eligible_fleets, id);
 				//K-FIN (27/07/23 - 1.1)
-				array_push(eligible_ships, id);
 			}
 		}
 		
@@ -1413,8 +1399,10 @@ function scr_random_event(execute_now) {
 			debugl("RE: Ship Lost, couldn't find a player fleet");   
 			exit;
 		}
-		
-		var fleet = eligible_ships[irandom(array_length(eligible_fleets) - 1)];		
+		//K-INI (29/07/23 - 1.2)
+		//var fleet = eligible_ships[irandom(array_length(eligible_fleets) - 1)];
+		var fleet = eligible_fleets[irandom(array_length(eligible_fleets) - 1)];		
+		//K-FIN (29/07/23 - 1.2)
 		var ship_index = -1;
 		var ship_type="";
 	    var ship_count = fleet.capital_number + fleet.frigate_number + fleet.escort_number;
@@ -1442,7 +1430,7 @@ function scr_random_event(execute_now) {
 				text += "Battle Barge '" + string(ship_name) + "'";
 				chosen_ship = fleet.capital_num[ship_index];
 				break;
-				case "frigate":
+			case "frigate":
 				ship_name = fleet.frigate[ship_index];
 				text += "Strike Cruiser '" + string(ship_name) + "'";
 				chosen_ship = fleet.frigate_num[ship_index];
