@@ -64,7 +64,7 @@ if (owner=9) then draw_set_color(7492269); //bug boys
 if (owner=10) then draw_set_color(c_purple); // chaos
 if (owner=13) then draw_set_color(65408); //Sleepy robots
 if (space_hulk=1) then draw_set_color(255);
-// if (explored=0){draw_set_color(38144);show="????";}
+// if (explored=0){draw_set_color(38144);show="???";}
 
 
 if (owner!=1){

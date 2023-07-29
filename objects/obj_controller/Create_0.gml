@@ -272,6 +272,7 @@ l_fleet=0;
 l_diplomacy=0;
 l_log=0;
 l_turn=0;
+current_planet_feature=0;
 // Highlight
 h_options=0;
 h_menu=0;

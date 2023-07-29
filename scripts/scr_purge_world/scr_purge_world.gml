@@ -11,14 +11,14 @@ function scr_purge_world(argument0, argument1, argument2, argument3) {
 
 
 	if ((argument2=2) or (argument2=3)) and (argument0.p_traitors[argument1]=0) and (argument0.p_chaos[argument1]=0) and (obj_controller.turn>=obj_controller.chaos_turn){
-	    if (string_count("WL10",argument0.p_feature[argument1])>0) and (obj_controller.known[10]=0) and (obj_controller.faction_gender[10]=1) then with(obj_drop_select){
+	    if (planet_feature_bool(argument0.p_feature[argument1],P_features.Warlord10) == 1) and (obj_controller.known[10]=0) and (obj_controller.faction_gender[10]=1) then with(obj_drop_select){
 	        var pop;pop=instance_create(0,0,obj_popup);
 	        pop.image="chaos_symbol";
 	        pop.title="Concealed Heresy";
 	        pop.text="Your astartes set out and begin to cleanse "+string(argument0.name)+" "+scr_roman(argument1)+" of possible heresy.  The general populace appears to be devout in their faith, but a disturbing trend appears- the odd citizen cursing your forces, frothing at the mouth, and screaming out heresy most foul.  One week into the cleansing a large hostile force is detected approaching and encircling your forces.";        
 	        exit;exit;    
 	    }
-	    if (string_count("WL10",argument0.p_feature[argument1])>0) and (obj_controller.known[10]>=2) and (obj_controller.faction_gender[10]=1) then with(obj_drop_select){
+	    if (planet_feature_bool(argument0.p_feature[argument1],P_features.Warlord10) == 1) and (obj_controller.known[10]>=2) and (obj_controller.faction_gender[10]=1) then with(obj_drop_select){
 	        alarm[6]=1; 
 	    }
 	}

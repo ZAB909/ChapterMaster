@@ -81,7 +81,7 @@ function scr_enemy_ai_d() {
 	            if (result="imperial"){tixt+=".";
 	                scr_alert("green","succession",string(tixt),x,y);
 	            }
-	            p_problem[i,wob]="";p_feature[i]=string_replace(p_feature[i],"War of Succession|","");
+	            p_problem[i,wob]="";delete_features(p_feature[i], P_features.Succession_War);
 	            if (result="chaos") then scr_event_log("purple",tixt);
 	            if (result="tau") then scr_event_log("red",tixt);
 	            if (result="imperial") then scr_event_log("",tixt);
@@ -142,7 +142,7 @@ function scr_enemy_ai_d() {
 	                                if (battli=2) then obj_turn_end.battle_special[obj_turn_end.battles]="study2b";
                                 
 	                                if (obj_turn_end.battle_opponent[obj_turn_end.battles]=11){
-	                                    if (string_count("World Eaters",p_feature[i])>0){
+	                                    if (planet_feature_bool(p_feature[i],P_features.World_Eaters)==1){
 	                                        obj_turn_end.battle_special[obj_turn_end.battles]="world_eaters";
 	                                    }
 	                                }
@@ -288,7 +288,7 @@ function scr_enemy_ai_d() {
 	            if (i=4) then scr_event_log("red","Inquisition Mission Failed: Bombing run failed; the Necron Tomb on "+string(name)+" IV has become active.");
             
 	            p_problem[i,wob]="";p_timer[i,wob]=0;p_necrons[i]=4;
-	            if (string_count("Awakened",p_feature[i])=0) then p_feature[i]=string_replace(p_feature[i],"Necron Tomb|","Awakened Necron Tomb|");
+	            if (awake_tomb_world(p_feature[i])==0) then awaken_tomb_world(p_feature[i]);
             
 	            // scr_alert("red","mission_failed",string(tixt),0,0);
 	            obj_controller.disposition[4]-=8;p_problem[i,wob]="";

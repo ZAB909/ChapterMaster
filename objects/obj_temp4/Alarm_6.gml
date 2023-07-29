@@ -1,7 +1,7 @@
 
 var comp,plan,i;i=0;comp=0;plan=0;
 plan=instance_nearest(x,y,obj_star);
-plan.p_feature[num]=string_replace(plan.p_feature[num],"STC Fragment|","");
+ delete_features(plan.p_feature[num], P_features.Artifact);
 
 scr_return_ship(loc,self,num);
 

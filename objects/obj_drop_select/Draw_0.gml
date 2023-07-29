@@ -400,8 +400,7 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
         if (ship_all[500]=1) then obj_ncombat.local_forces=1;
         
         if (obj_ncombat.battle_object.space_hulk=1) then obj_ncombat.battle_special="space_hulk";
-        if (string_count("WL6|",obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id])>0) and (obj_ncombat.enemy=6) and (obj_controller.faction_defeated[6]=0) then obj_ncombat.leader=1;
-        
+        if (planet_feature_bool(obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id],P_features.Warlord6) == 1) and (obj_ncombat.enemy=6) and (obj_controller.faction_defeated[6]=0) then obj_ncombat.leader=1;
         if (obj_ncombat.enemy=7) and (obj_controller.faction_defeated[7]<=0){
             /*with(obj_temp1){instance_destroy();}
             with(obj_star){
@@ -411,7 +410,7 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
                 if (p_owner[4]=7) then instance_create(x,y,obj_temp1);
             }*/
             // if (instance_number(obj_temp1)=1) or (string_count("WL7|",obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id])>0) then obj_ncombat.leader=1;
-            if (string_count("WL7|",obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id])>0) then obj_ncombat.leader=1;
+            if ( planet_feature_bool(obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id],P_features.Warlord7)==1) then obj_ncombat.leader=1;
             // with(obj_temp1){instance_destroy();}
         }
         // if (string_count("WL10|",obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id])>0) and (obj_ncombat.enemy=10) and (obj_controller.faction_defeated[10]=0){
@@ -426,7 +425,7 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
         }
         
         if (obj_ncombat.enemy=11){
-            if (string_count("World Eaters",obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id])>0){
+            if ( planet_feature_bool(obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id],P_features.World_Eaters)==1){
                 obj_ncombat.battle_special="world_eaters";obj_ncombat.leader=1;
             }
         }
@@ -460,7 +459,7 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
         
         
         if ((attacking=0) or (attacking=10) or (attacking=11)) and (obj_ncombat.battle_object.p_traitors[obj_ncombat.battle_id]=0) and (obj_ncombat.battle_object.p_chaos[obj_ncombat.battle_id]=0){
-            if (string_count("WL10",obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id])>0) and (obj_controller.known[10]=0) and (obj_controller.faction_gender[10]=1) and (obj_controller.turn>=obj_controller.chaos_turn){
+            if ( planet_feature_bool(obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id],P_features.Warlord10)==1) and (obj_controller.known[10]=0) and (obj_controller.faction_gender[10]=1) and (obj_controller.turn>=obj_controller.chaos_turn){
                 var pop;pop=instance_create(0,0,obj_popup);
                 pop.image="chaos_symbol";
                 pop.title="Concealed Heresy";
@@ -472,7 +471,7 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
                 obj_controller.cooldown=8;combating=0;
                 instance_activate_all();exit;exit;
             }
-            if (string_count("WL10",obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id])>0) and (obj_controller.known[10]>=2) and (obj_controller.faction_gender[10]=1) and (obj_controller.turn>=obj_controller.chaos_turn) then with(obj_drop_select){
+            if ( planet_feature_bool(obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id],P_features.Warlord10)==1) and (obj_controller.known[10]>=2) and (obj_controller.faction_gender[10]=1) and (obj_controller.turn>=obj_controller.chaos_turn) then with(obj_drop_select){
                 obj_ncombat.enemy=11;obj_ncombat.threat=0;alarm[6]=1;
                 with(obj_pnunit){instance_destroy();}
                 with(obj_enunit){instance_destroy();}
@@ -507,14 +506,12 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
             }
         }
         
+        // Iterates through all selected "ships" (max 30), including the planet (Local on the drop menu), 
+        // and fills the battle roster with any marines found.
         var i;i=-1;ships_selected=0;
         repeat(31){
             i+=1;if (ship_all[i]!=0) then scr_battle_roster(ship[i],ship_ide[i],false);
         }
-        if (ship_all[500]=1) and (attack=1) then scr_battle_roster(p_target.name,obj_controller.selecting_planet,true);
-        
-        
-        // if (attacking=1) then scr_battle_roster(p_target.name,obj_controller.selecting_planet,true);
     }
 }
 

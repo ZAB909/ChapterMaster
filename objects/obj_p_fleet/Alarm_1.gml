@@ -18,11 +18,11 @@ if (action=""){
     if (spid.vision=0) then spid.vision=1;
     orbiting=spid;
     
-    if (orbiting!=0) and (instance_exists(orbiting)){
-        if (orbiting.p_feature[1]="????|") then with(orbiting){scr_planetary_feature(1);}
-        if (orbiting.p_feature[2]="????|") then with(orbiting){scr_planetary_feature(2);}
-        if (orbiting.p_feature[3]="????|") then with(orbiting){scr_planetary_feature(3);}
-        if (orbiting.p_feature[4]="????|") then with(orbiting){scr_planetary_feature(4);}
+    if (orbiting!=0) and (instance_exists(orbiting) and (orbiting.visited == 0)){
+		for (var planet_num = 1; planet_num < 5; planet_num += 1){
+			if (array_length(orbiting.p_feature[planet_num])!=0) then with(orbiting){scr_planetary_feature(planet_num);}
+		}
+		orbiting.visited = 1;
     }
 }
 
@@ -105,12 +105,12 @@ if (action="move") or (action="crusade1") or (action="crusade2") or (action="cru
         i=0;if (escort_number>0) then repeat(escort_number){
             i+=1;obj_ini.ship_location[escort_num[i]]=steh.name;
         }
-        
-        
-        if (steh.p_feature[1]="????|") then with(steh){scr_planetary_feature(1);}
-        if (steh.p_feature[2]="????|") then with(steh){scr_planetary_feature(2);}
-        if (steh.p_feature[3]="????|") then with(steh){scr_planetary_feature(3);}
-        if (steh.p_feature[4]="????|") then with(steh){scr_planetary_feature(4);}
+        if (steh.visited == 0){
+			for (var plan_num =1; plan_num < 5; plan_num++){
+		        if (array_length(steh.p_feature[plan_num])!=0)then with(steh){scr_planetary_feature(plan_num);}
+			}
+			steh.visited = 1
+		}
     }
     
 }

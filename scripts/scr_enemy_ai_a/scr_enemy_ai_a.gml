@@ -18,9 +18,9 @@ function scr_enemy_ai_a() {
 
 	if (obj_controller.faction_defeated[10]>0) and (obj_controller.faction_gender[10]=2){
 	    var o;o=0;repeat(4){o+=1;
-	        if (p_feature[o]!=""){
-	            if (string_count("World Eaters",p_feature[o])>0) and (p_chaos[o]<=0){
-	                p_feature[o]=string_replace(p_feature[o],"World Eaters|","");
+	        if (array_length(p_feature[o])!=0){
+	            if (planet_feature_bool(p_feature[o], P_features.World_Eaters)==1) and (p_chaos[o]<=0){
+	                delete_features(p_feature[o],P_features.World_Eaters);
 	            }
 	        }
 	    }
@@ -45,7 +45,7 @@ function scr_enemy_ai_a() {
 	    repeat(4){o+=1;
 	        if (p_first[o]=1) and (p_owner[o]=2) then p_owner[o]=1;
 	        if (p_type[o]="Dead") and (p_upgrades[o]!=""){
-	            if (string_count("Secret",p_feature[o])!=0) and (string_count(".0|",p_upgrades[o])>0){
+	            if (planet_feature_bool(p_feature[o], P_features.Secret_Base)==0) and (string_count(".0|",p_upgrades[o])>0){
 	                if (chanceh<=2) then yep=o;
 	            }
 	        }
@@ -441,7 +441,7 @@ function scr_enemy_ai_a() {
 	                if (guard_score>=1) and (p_pdf[run]<200) then p_pdf[run]=0;
 	            }
 	            if (p_pdf[run]=0) and (p_owner[run]=1) and (obj_controller.faction_status[2]="War"){
-	                if (string_count("Monast",p_feature[run])=0) and (p_player[run]<=0){p_owner[run]=2;dispo[run]=-50;}
+	                if (planet_feature_bool(p_feature[run],P_features.Monastery)==0) and (p_player[run]<=0){p_owner[run]=2;dispo[run]=-50;}
 	            }
 	        }
 	        if (guard_attack!="pdf") and (rand1>tempor){
@@ -945,7 +945,7 @@ function scr_enemy_ai_a() {
 	        if (dispo[run]=101) then p_owner[run]=1;
 	    }
 	    if (p_owner[run]=13) and (p_player[run]+p_raided[run]>0) and (p_orks[run]=0) and (p_tyranids[run]<4) and (p_chaos[run]=0) and (p_traitors[run]=0) and (p_necrons[run]=0) and (p_tau[run]=0){
-	        if (string_count("Awakened|",p_feature[run])=0){
+	        if (awake_tomb_world(p_feature[run])!=1){
 	            scr_event_log("","Necrons cleansed from "+string(name)+" "+scr_roman(run));
 	            if (p_first[run]=1){p_owner[run]=1;scr_alert("green","owner","Necrons cleansed from "+string(name)+" "+scr_roman(run)+".",x,y);}
 	            if (p_first[run]=2){p_owner[run]=2;scr_alert("green","owner","Necrons cleansed from "+string(name)+" "+scr_roman(run)+".  Control returned to the governor.",x,y);}

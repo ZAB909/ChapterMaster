@@ -38,8 +38,8 @@ function scr_chaos_alliance_test() {
 	    with(obj_star){
 	        var yeah,ii;yeah=0;ii=0;
 	        repeat(4){ii+=1;
-	            if (p_feature[ii]!=""){
-	                if (string_count("WL10",p_feature[ii])>0) then yeah=ii;
+	            if (array_length(p_feature[ii])>0){
+	                if (planet_feature_bool(p_feature[ii],P_features.Warlord10)>0) then yeah=ii;
 	            }
 	        }
 	        if (yeah>0) then repeat(yeah){instance_create(x,y,obj_temp8);}

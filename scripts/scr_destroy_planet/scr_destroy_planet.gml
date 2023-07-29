@@ -118,7 +118,7 @@ function scr_destroy_planet(argument0) {
 	    if (obj_controller.known[4]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=4;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
 	    if (obj_controller.known[5]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=5;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
 
-	    if (string_count("Cathedral|",you.p_feature[baid])>0){
+	    if (planet_feature_bool(you.p_feature[baid], P_features.Sororitas_Cathedral)==1){
 	        obj_controller.disposition[5]-=30;
 	        if (obj_controller.known[3]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=3;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
 	    }
@@ -140,7 +140,7 @@ function scr_destroy_planet(argument0) {
 
 
 	if (you.p_tyranids[baid]<5){
-	    if (you.p_first[baid]=2) and (you.p_type[baid]="Hive") and (string_count("Daemon",you.p_feature[baid])=0) and (obj_controller.faction_status[2]!="War"){
+	    if (you.p_first[baid]=2) and (you.p_type[baid]="Hive") and (planet_feature_bool(you.p_feature[baid], P_features.Daemonic_Incursion)==0) and (obj_controller.faction_status[2]!="War"){
 	        obj_controller.loyalty-=50;obj_controller.loyalty_hidden-=50;
 	        obj_controller.disposition[2]-=60;obj_controller.disposition[3]-=30;
 	        obj_controller.disposition[4]-=40;obj_controller.disposition[5]-=40;
@@ -153,9 +153,9 @@ function scr_destroy_planet(argument0) {
 	        if (obj_controller.known[5]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=5;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
 	        if (obj_controller.known[3]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=3;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
     
-	        if (string_count("Cathedral|",you.p_feature[baid])>0) then obj_controller.disposition[5]-=30;
+	        if (planet_feature_bool(you.p_feature[baid], P_features.Sororitas_Cathedral)==1) then obj_controller.disposition[5]-=30;
 	    }
-	    if (you.p_owner[baid]=2) and ((you.p_type[baid]="Temperate") or (you.p_type[baid]="Temperate")) and (string_count("Daemon",you.p_feature[baid])=0){
+	    if (you.p_owner[baid]=2) and ((you.p_type[baid]="Temperate") or (you.p_type[baid]="Temperate")) and (planet_feature_bool(you.p_feature[baid], P_features.Daemonic_Incursion)==0){
 	        obj_controller.loyalty-=30;obj_controller.loyalty_hidden-=30;
 	        obj_controller.disposition[2]-=30;obj_controller.disposition[3]-=15;
 	        obj_controller.disposition[4]-=30;obj_controller.disposition[5]-=30;
@@ -164,7 +164,7 @@ function scr_destroy_planet(argument0) {
 
 	// Planet changes here
 	with(you){
-	    p_type[baid]="Dead";p_feature[baid]="";p_owner[baid]=0;
+	    p_type[baid]="Dead";p_feature[baid]=[];p_owner[baid]=0;
 	    p_first[baid]=0;p_population[baid]=0;p_max_population[baid]=0;
 	    p_large[baid]=0;p_pop[baid]="";p_guardsmen[baid]=0;
 	    p_pdf[baid]=0;p_fortified[baid]=0;p_station[baid]=0;

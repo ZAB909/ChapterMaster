@@ -6,37 +6,37 @@ var times;times=max(1,round(turn/150));
 if (known[10]=2) and (faction_defeated[10]=0) then times+=1;
 
 
-var xx3, yy3, plani, stahr;stahr=0;
+var xx3, yy3, plani, _star;_star=0;
 xx3=floor(random(room_width))+1;
 yy3=floor(random(room_height))+1;
-stahr=instance_nearest(xx3,yy3,obj_star);
-plani=floor(random(stahr.planets))+1;
+_star=instance_nearest(xx3,yy3,obj_star);
+plani=floor(random(_star.planets))+1;
 
 
 if (faction_gender[10]=1) and (faction_defeated[10]=0) and (turn>=chaos_turn) then repeat(times){
-    if (stahr.p_type[plani]!="Dead") and (stahr.planets>0) and (turn>=20){
+    if (_star.p_type[plani]!="Dead") and (_star.planets>0) and (turn>=20){
         var cathedral;cathedral=0;
-        if (string_count("Cathedral",stahr.p_feature[plani])>0) then cathedral=choose(0,1,1);
+        if (planet_feature_bool(_star.p_feature[plani], P_features.Sororitas_Cathedral)==1) then cathedral=choose(0,1,1);
     
         if (cathedral=0){
-            if (stahr.p_heresy[plani]>=0) and (stahr.p_heresy[plani]<10){
-                stahr.p_heresy[plani]+=choose(0,0,0,0,0,0,0,0,5);
+            if (_star.p_heresy[plani]>=0) and (_star.p_heresy[plani]<10){
+                _star.p_heresy[plani]+=choose(0,0,0,0,0,0,0,0,5);
             }
-            if (stahr.p_heresy[plani]>=10) and (stahr.p_heresy[plani]<20){
-                stahr.p_heresy[plani]+=choose(-2,-2,-2,5,10,15);
+            if (_star.p_heresy[plani]>=10) and (_star.p_heresy[plani]<20){
+                _star.p_heresy[plani]+=choose(-2,-2,-2,5,10,15);
             }
-            if (stahr.p_heresy[plani]>=20) and (stahr.p_heresy[plani]<40){
-                stahr.p_heresy[plani]+=choose(-2,-1,0,0,0,0,0,0,5,10);
+            if (_star.p_heresy[plani]>=20) and (_star.p_heresy[plani]<40){
+                _star.p_heresy[plani]+=choose(-2,-1,0,0,0,0,0,0,5,10);
             }
-            if (stahr.p_heresy[plani]>=40) and (stahr.p_heresy[plani]<60){
-                stahr.p_heresy[plani]+=choose(-2,-1,0,0,0,0,0,0,5,10,15);
+            if (_star.p_heresy[plani]>=40) and (_star.p_heresy[plani]<60){
+                _star.p_heresy[plani]+=choose(-2,-1,0,0,0,0,0,0,5,10,15);
             }
-            if (stahr.p_heresy[plani]>=60) and (stahr.p_heresy[plani]<100){
-                stahr.p_heresy[plani]+=choose(-1,0,0,0,0,5,10,15);
+            if (_star.p_heresy[plani]>=60) and (_star.p_heresy[plani]<100){
+                _star.p_heresy[plani]+=choose(-1,0,0,0,0,5,10,15);
             }
         }
         
-        if (stahr.p_heresy[plani]<0) then stahr.p_heresy[plani]=0;
+        if (_star.p_heresy[plani]<0) then _star.p_heresy[plani]=0;
     }
 }
 
@@ -801,34 +801,37 @@ if (obj_controller.stc_ships>=6){var v;v=0;
 
 // if (turn=chaos_turn) and (faction_gender[10]=1){// show_message("Turn 100");
 if (turn=5) and (faction_gender[10]=1){// show_message("Turn 100");
-    var xx4,yy4,plant,planeh,fleeta,testi;
-    xx4=0;yy4=0;plant=0;planeh=0;testi=0;fleeta=0;
+    var xx4,yy4,plant,planet,fleeta,testi;
+    xx4=0;yy4=0;plant=0;planet=0;testi=0;fleeta=0;
 
     with(obj_en_fleet){if (owner!=2) then y-=20000;}
 
     repeat(50){
-        if (planeh=0){xx4=floor(random(room_width))+1;yy4=floor(random(room_height))+1;plant=instance_nearest(xx4,yy4,obj_star);}
-        if (planeh=0) and (plant.owner=2) and (plant.planets>1){
-            planeh=instance_nearest(xx4,yy4,obj_star);
+        if (planet=0){xx4=floor(random(room_width))+1;yy4=floor(random(room_height))+1;plant=instance_nearest(xx4,yy4,obj_star);}
+        if (planet=0) and (plant.owner=2) and (plant.planets>1){
+            planet=instance_nearest(xx4,yy4,obj_star);
 
-            if (planeh.present_fleet[2]>0){
-                fleeta=instance_nearest(planeh.x,planeh.y,obj_en_fleet);
-                if (point_distance(fleeta.x,fleeta.y,planeh.x,planeh.y)>40) then planeh=0;
+            if (planet.present_fleet[2]>0){
+                fleeta=instance_nearest(planet.x,planet.y,obj_en_fleet);
+                if (point_distance(fleeta.x,fleeta.y,planet.x,planet.y)>40) then planet=0;
             }
-            if (planeh.present_fleet[2]=0) then planeh=0;
+            if (planet.present_fleet[2]=0) then planet=0;
         }
     }
-    if (planeh!=0){
-        if (planeh.p_type[1]="Dead") then testi=2;
-        if (planeh.p_type[1]!="Dead") then testi=1;
+    if (planet!=0){
+        if (planet.p_type[1]="Dead") then testi=2;
+        if (planet.p_type[1]!="Dead") then testi=1;
+        
+        planet.warlord[testi]=1;
 
-        planeh.p_feature[testi]+="WL10|";
-        if (planeh.p_type[testi]="Hive") then planeh.p_heresy[testi]+=25;
-        if (planeh.p_type[testi]!="Hive") then planeh.p_heresy[testi]+=10;
-        if (planeh.p_heresy[testi]<50) then planeh.p_heresy_secret[testi]=10;
+        array_push(planet.p_feature[testi], new new_planet_feature(P_features.Warlord10));
 
-        // show_message("Placed the chaos warlord on "+string(planeh.name)+" "+scr_roman(testi));// 139
-        // obj_controller.x=planeh.x;obj_controller.y=planeh.y;
+        if (planet.p_type[testi]="Hive") then planet.p_heresy[testi]+=25;
+        if (planet.p_type[testi]!="Hive") then planet.p_heresy[testi]+=10;
+        if (planet.p_heresy[testi]<50) then planet.p_heresy_secret[testi]=10;
+
+        // show_message("Placed the chaos warlord on "+string(planet.name)+" "+scr_roman(testi));// 139
+        // obj_controller.x=planet.x;obj_controller.y=planet.y;
     }
 
     with(obj_en_fleet){if (owner!=2) then y+=20000;}
@@ -921,12 +924,11 @@ if ((turn>=10) or (obj_ini.fleet_type=3)) and (faction_defeated[7]=0){
                 repeat(10){
                     if (!instance_exists(obj_temp2)){
                         rund=round(random(you.planets));
-                        if (rund=1) and (you.p_owner[1]=7) and (you.p_pdf[1]+you.p_guardsmen[1]=0) and (you.p_orks[1]>=2) then you.p_feature[rund]+="WL7|";
-                        if (rund=2) and (you.p_owner[2]=7) and (you.p_pdf[2]+you.p_guardsmen[2]=0) and (you.p_orks[2]>=2) then you.p_feature[rund]+="WL7|";
-                        if (rund=3) and (you.p_owner[3]=7) and (you.p_pdf[3]+you.p_guardsmen[3]=0) and (you.p_orks[3]>=2) then you.p_feature[rund]+="WL7|";
-                        if (rund=4) and (you.p_owner[4]=7) and (you.p_pdf[4]+you.p_guardsmen[4]=0) and (you.p_orks[4]>=2) then you.p_feature[rund]+="WL7|";
+						if (rund>0) and(rund<5){
+							if	(you.p_owner[rund]=7) and (you.p_pdf[rund]+you.p_guardsmen[rund]=0) and (you.p_orks[rund]>=2) then array_push( you.p_feature[rund], new new_planet_feature(P_features.Warlord7));
+						}
                         if (you.p_orks[rund]<4) then you.p_orks[rund]=4;
-                        if (string_count("WL7",you.p_feature[rund])>0) then instance_create(x,y,obj_temp2);
+                        if (planet_feature_bool(you.p_feature[rund], P_features.Warlord7)==1) then instance_create(x,y,obj_temp2);
                     }
                 }
             }
