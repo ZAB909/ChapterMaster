@@ -513,17 +513,6 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
         repeat(31){
             i+=1;if (ship_all[i]!=0) then scr_battle_roster(ship[i],ship_ide[i],false);
         }
-        
-        // K-INI
-        // Trying to solve marines duplicating when selecting "All ships" (ship_all[500]=1) on the drop menu.
-        // This scr_battle_roster call should be redundant and causing the duplicated marines bug, as the previous call already 
-        // fills the roster with the marines from all the selected ships/planet
-        /*
-        if (ship_all[500]=1) and (attack=1) then scr_battle_roster(p_target.name,obj_controller.selecting_planet,true);
-        */
-        // K-FIN
-		
-        // if (attacking=1) then scr_battle_roster(p_target.name,obj_controller.selecting_planet,true);
     }
 }
 
