@@ -683,22 +683,18 @@ function scr_ui_manage() {
 	                if (string_count("&",ma_armor[sel])>0){ar_ar=2;ma_ar="Artifact";}
 	            }
 	            if (ma_gear[sel]!=""){ma_ge=scr_wep_abbreviate(ma_gear[sel]);
-	                // if (string_count("*",ma_ge)>0){ar_ge=2;ma_ge=string_replace(ma_ge,"*","");}
 	                if (string_count("^",ma_gear[sel])>0){ar_ge=1;ma_ge=string_replace(ma_ge,"^","");}
 	                if (string_count("&",ma_gear[sel])>0){ar_ge=2;ma_ge="Artifact";}
 	            }
 	            if (ma_mobi[sel]!=""){ma_mb=scr_wep_abbreviate(ma_mobi[sel]);
-	                // if (string_count("*",ma_mb)>0){ar_mb=2;ma_mb=string_replace(ma_mb,"*","");}
 	                if (string_count("^",ma_mobi[sel])>0){ar_mb=1;ma_mb=string_replace(ma_mb,"^","");}
 	                if (string_count("&",ma_mobi[sel])>0){ar_mb=2;ma_mb="Artifact";}
 	            }
 	            if (ma_wep1[sel]!=""){ma_we1=scr_wep_abbreviate(ma_wep1[sel]);
-	                // if (string_count("*",ma_we1)>0){ar_we1=2;ma_we1=string_replace(ma_we1,"*","");}
 	                if (string_count("^",ma_wep1[sel])>0){ar_we1=1;ma_we1=string_replace(ma_we1,"^","");}
 	                if (string_count("&",ma_wep1[sel])>0){ar_we1=2;ma_we1="Artifact";}
 	            }
 	            if (ma_wep2[sel]!=""){ma_we2=scr_wep_abbreviate(ma_wep2[sel]);
-	                // if (string_count("*",ma_we2)>0){ar_we2=2;ma_we2=string_replace(ma_we2,"*","");}
 	                if (string_count("^",ma_wep2[sel])>0){ar_we2=1;ma_we2=string_replace(ma_we2,"^","");}
 	                if (string_count("&",ma_wep2[sel])>0){ar_we2=2;ma_we2="Artifact";}
 	            }
@@ -724,28 +720,23 @@ function scr_ui_manage() {
 	            ma_ar="";ma_we1="";ma_we2="";ma_ge="";ma_mb="";ttt=0;
 	            ar_ar=0;ar_we1=0;ar_we2=0;ar_ge=0;ar_mb=0;
 
-							if (ma_armor[sel]!=""){ma_ar=scr_wep_abbreviate(ma_armor[sel]);
-	                // if (string_count("*",ma_ar)>0){ar_ar=2;ma_ar=string_replace(ma_ar,"*","");}
+			if (ma_armor[sel]!=""){ma_ar=scr_wep_abbreviate(ma_armor[sel]);// vehicle weapon 3
 	                if (string_count("^",ma_armor[sel])>0){ar_ar=1;ma_ar=string_replace(ma_ar,"^","");}
 	                if (string_count("&",ma_armor[sel])>0){ar_ar=2;ma_ar="Artifact";}
 	            }
-	            if (ma_gear[sel]!=""){ma_ge=scr_wep_abbreviate(ma_gear[sel]);
-	                // if (string_count("*",ma_ge)>0){ar_ge=2;ma_ge=string_replace(ma_ge,"*","");}
+	            if (ma_gear[sel]!=""){ma_ge=scr_wep_abbreviate(ma_gear[sel]);// vehicle upgrade
 	                if (string_count("^",ma_gear[sel])>0){ar_ge=1;ma_ge=string_replace(ma_ge,"^","");}
 	                if (string_count("&",ma_gear[sel])>0){ar_ge=2;ma_ge="Artifact";}
 	            }
-	            if (ma_mobi[sel]!=""){ma_mb=scr_wep_abbreviate(ma_mobi[sel]);
-	                // if (string_count("*",ma_mb)>0){ar_mb=2;ma_mb=string_replace(ma_mb,"*","");}
+	            if (ma_mobi[sel]!=""){ma_mb=scr_wep_abbreviate(ma_mobi[sel]);// vehicle accessory
 	                if (string_count("^",ma_mobi[sel])>0){ar_mb=1;ma_mb=string_replace(ma_mb,"^","");}
 	                if (string_count("&",ma_mobi[sel])>0){ar_mb=2;ma_mb="Artifact";}
 	            }
-	            if (ma_wep1[sel]!=""){ma_we1=scr_wep_abbreviate(ma_wep1[sel]);
-	                // if (string_count("*",ma_we1)>0){ar_we1=2;ma_we1=string_replace(ma_we1,"*","");}
+	            if (ma_wep1[sel]!=""){ma_we1=scr_wep_abbreviate(ma_wep1[sel]);//vehicle weapon 1
 	                if (string_count("^",ma_wep1[sel])>0){ar_we1=1;ma_we1=string_replace(ma_we1,"^","");}
 	                if (string_count("&",ma_wep1[sel])>0){ar_we1=2;ma_we1="Artifact";}
 	            }
-	            if (ma_wep2[sel]!=""){ma_we2=scr_wep_abbreviate(ma_wep2[sel]);
-	                // if (string_count("*",ma_we2)>0){ar_we2=2;ma_we2=string_replace(ma_we2,"*","");}
+	            if (ma_wep2[sel]!=""){ma_we2=scr_wep_abbreviate(ma_wep2[sel]);//vehicle weapon 2
 	                if (string_count("^",ma_wep2[sel])>0){ar_we2=1;ma_we2=string_replace(ma_we2,"^","");}
 	                if (string_count("&",ma_wep2[sel])>0){ar_we2=2;ma_we2="Artifact";}
 	            }
@@ -902,35 +893,35 @@ function scr_ui_manage() {
 	        }
 
 	        if (man[sel]!="man"){var xoffset;xoffset=0;
-
-						draw_set_color(c_gray);
-						if (ar_ge=1) then draw_set_color(c_gray);
-						if (ar_ge=2) then draw_set_color(881503);
-						draw_text(xx+573,yy+66,string_hash_to_newline(string(ma_ge)));
-
-						xoffset+=string_width(string_hash_to_newline(ma_ge))+15;
-						draw_set_color(c_gray);
-						if (ar_mb=1) then draw_set_color(c_gray);
-						if (ar_mb=2) then draw_set_color(881503);
-						draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_mb)));
-
-						xoffset+=string_width(string_hash_to_newline(ma_mb))+15;
-						draw_set_color(c_gray);
-						if (ar_we1=1) then draw_set_color(c_gray);
-						if (ar_we1=2) then draw_set_color(881503);
-						draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_we1)));
-
-						xoffset+=string_width(string_hash_to_newline(ma_we1))+15;
-						draw_set_color(c_gray);
-						if (ar_we2=1) then draw_set_color(c_gray);
-						if (ar_we2=2) then draw_set_color(881503);
-						draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_we2)));
-
-						xoffset+=string_width(string_hash_to_newline(ma_we2))+15;
-						draw_set_color(c_gray);
-						if (ar_ar=1) then draw_set_color(c_gray);
-						if (ar_ar=2) then draw_set_color(881503);
-						draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_ar)));
+			//Vehicle Upgrade
+			draw_set_color(c_gray);
+			if (ar_ge=1) then draw_set_color(c_gray);
+			if (ar_ge=2) then draw_set_color(881503);
+			draw_text(xx+573,yy+66,string_hash_to_newline(string(ma_ge)));
+			//Vehicle accessory
+			xoffset+=string_width(string_hash_to_newline(ma_ge))+15;
+			draw_set_color(c_gray);
+			if (ar_mb=1) then draw_set_color(c_gray);
+			if (ar_mb=2) then draw_set_color(881503);
+			draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_mb)));
+			//Vehicle wep 1
+			xoffset+=string_width(string_hash_to_newline(ma_mb))+15;
+			draw_set_color(c_gray);
+			if (ar_we1=1) then draw_set_color(c_gray);
+			if (ar_we1=2) then draw_set_color(881503);
+			draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_we1)));
+			//Vehicle wep 2
+			xoffset+=string_width(string_hash_to_newline(ma_we1))+15;
+			draw_set_color(c_gray);
+			if (ar_we2=1) then draw_set_color(c_gray);
+			if (ar_we2=2) then draw_set_color(881503);
+			draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_we2)));
+			//Vehicle wep 3
+			xoffset+=string_width(string_hash_to_newline(ma_we2))+15;
+			draw_set_color(c_gray);
+			if (ar_ar=1) then draw_set_color(c_gray);
+			if (ar_ar=2) then draw_set_color(881503);
+			draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_ar)));
 	        }
 
 
