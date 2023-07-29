@@ -489,8 +489,8 @@ if (menu=1) and (managing>0){
                     j=0;jj=0;repeat(4){j+=1;if (obj_ini.adv[j]="Melee Enthusiasts") then jj=1;}if (jj=1){ma+=0.15;}
                 }
                 
-                if (ui_melee_penalty>0) then ma=ma*0.6;
-                if (ui_ranged_penalty>0) then ra=ra*0.6;
+                if (ui_melee_penalty>0){ma=ma*0.5; ra=ra*0.75;}
+                if (ui_ranged_penalty>0){ra=ra*0.5; ma=ma*0.75;}
                 
                 ui_specialist=0;ui_coloring="";
                 if (ma_role[sel]="Chapter Master") then ui_specialist=111;
@@ -786,6 +786,7 @@ if (unload>0){
             ma_loc[q]=obj_ini.ship_location[b];
             ma_lid[q]=0;
             ma_wid[q]=unload;
+			show_debug_message("{0},{1},{2}", manaj,ide[q],obj_ini.loc[manaj,ide[q]])
         }
         if (man[q]="vehicle") and (ma_loc[q]=selecting_location) and (man_sel[q]!=0){
             if (b=0) then b=ma_lid[q];

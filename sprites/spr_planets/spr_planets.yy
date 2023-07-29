@@ -87,7 +87,7 @@
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"fb8ebd46-efd0-493e-bd15-4d22c3f8fab5","path":"sprites/spr_planets/spr_planets.yy",},},},"Disabled":false,"id":"e7f41fba-0333-4687-b256-a1d38f6896d4","IsCreationKey":false,"Key":15.0,"Length":1.0,"Stretch":false,},
           ],},"modifiers":[],"spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
-    "visibleRange": {"x":0.0,"y":0.0,},
+    "visibleRange": null,
     "volume": 1.0,
     "xorigin": 16,
     "yorigin": 16,

@@ -63,7 +63,7 @@ function scr_enemy_ai_e() {
 	if (battle2>0) and (battle=0){// AI only battle
 	    var i,f,shiyp;i=0;f=1;shiyp=0;
     
-	    repeat(10){f+=1;if (f=11) then f=13;
+	    repeat(10){f+=1;if (f==11) then f=13;
 	        if (present_fleet[f]>0){
 	            obj_controller.temp[1049]=self.id;
 	            obj_controller.temp[1050]=f;
@@ -501,102 +501,105 @@ function scr_enemy_ai_e() {
     
     
 	    // Other planetary stuff
+
 		var thirdpop;
 		var halfpop;
 		thirdpop = p_max_population[run]/3;
 		halfpop = p_max_population[run]/2;
-	    if (p_feature[run]!=""){
-	        if (string_count("Recruiting World|",p_feature[run])>0) and (obj_controller.gene_seed=0) and (obj_controller.recruiting>0){
+		(array_length(p_feature[run]!=0)){
+	        if (planet_feature_bool(p_feature[run], P_features.Recruiting_World)==1) and (obj_controller.gene_seed=0) and (obj_controller.recruiting>0){
 	            obj_controller.recruiting=0;obj_controller.income_recruiting=0;
 	            scr_alert("red","recruiting","The Chapter has run out of gene-seed!",0,0);
 	        }
         
-	        if (string_count("Recruiting World|",p_feature[run])>0) and (obj_controller.gene_seed>0) and (p_owner[run]<=5) and (obj_controller.faction_status[p_owner[run]]!="War"){
-	            if (p_population[run])>=50{
+
+	         if (planet_feature_bool(p_feature[run], P_features.Recruiting_World)==1) and (obj_controller.gene_seed>0) and (p_owner[run]<=5) and (obj_controller.faction_status[p_owner[run]]!="War"){
+	            if (p_population[run]>=50){
 					scr_alert("green","owner", "Recruitment is slowed due to lack of population on our recruitment worlds",0,0);
 	                if (p_large[run]=0) then p_population[run]-=1;
                 
-	                var recr, aspirant, corr, train, dista, onceh; 
-	                recr=999;aspirant=0;corr=10;train=72;dista=0;onceh=0;
+	                var recruit_chance, aspirant, corr, months_to_neo, dista, onceh; 
+	                recruit_chance=999;aspirant=0;corr=10;months_to_neo=72;dista=0;onceh=0;
                 
-	                if (obj_controller.recruiting=1) then recr=floor(random(250))+1; // fast, frantic, slow, ect
-	                if (obj_controller.recruiting=2) then recr=floor(random(200))+1;
-	                if (obj_controller.recruiting=3) then recr=floor(random(150))+1;
-	                if (obj_controller.recruiting=4) then recr=floor(random(125))+1;
-	                if (obj_controller.recruiting=5) then recr=floor(random(100))+1;
+	                if (obj_controller.recruiting=1) then recruit_chance=floor(random(250))+1; // fast, frantic, slow, ect
+	                if (obj_controller.recruiting=2) then recruit_chance=floor(random(200))+1; // the lower recruit_chance is, the more baby astartes
+	                if (obj_controller.recruiting=3) then recruit_chance=floor(random(150))+1;
+	                if (obj_controller.recruiting=4) then recruit_chance=floor(random(125))+1;
+	                if (obj_controller.recruiting=5) then recruit_chance=floor(random(100))+1;
                 
-
+					
                 
 	                // 135; recruiting
 					// corr isn't really relevant as corruption in marines doesn't matter
 					// by default it takes 72 turns (6 years) to train
 					
 					
-					if (p_type[run]="Hive") and (recr<=40){aspirant=1;}
-	                if (p_type[run]="Temperate") and (recr<=25){aspirant=1;}
-	                if (p_type[run]="Feudal") and (recr<=25){aspirant=1;}
-	                if (p_type[run]="Shrine") and (recr<=20){aspirant=1;}
-	                if (p_type[run]="Forge") and (recr<=20){aspirant=1;}
-	                if (p_type[run]="Desert") and (recr<=15){aspirant=1;}
-	                if (p_type[run]="Ice") and (recr<=15){aspirant=1;}
-	                if (p_type[run]="Agri") and (recr<=15){aspirant=1;}
-	                if (p_type[run]="Death") and (recr<=100){aspirant=1;}
-	                if (p_type[run]="Lava") and (recr<=7){aspirant=1;}
+					if (p_type[run]="Hive") and (recruit_chance<=40){aspirant=1;}
+	                if (p_type[run]="Temperate") and (recruit_chance<=20){aspirant=1;}
+	                if (p_type[run]="Feudal") and (recruit_chance<=20){aspirant=1;}
+	                if (p_type[run]="Forge") and (recruit_chance<=15){aspirant=1;} 
+	                if (p_type[run]="Shrine") and (recruit_chance<=15){aspirant=1;}
+	                if (p_type[run]="Desert") and (recruit_chance<=15){aspirant=1;}
+	                if (p_type[run]="Ice") and (recruit_chance<=15){aspirant=1;}
+	                if (p_type[run]="Agri") and (recruit_chance<=10){aspirant=1;} // there's no reason to use agri's
+	                if (p_type[run]="Death") and (recruit_chance<=10){aspirant=1;}
+	                if (p_type[run]="Lava") and (recruit_chance<=7){aspirant=1;}
 
-
-	                // train-=58;
-	                // train-=55;
+					// if a planet type has less than half it's max pop, you get 20% less spacey marines
+					if (p_population[run] <= halfpop){
+						recruit_chance+=1.2;
+						scr_alert("red","owner","The populations you attain aspirants from are less populant than required, chances of recruiting aspirants is 20% lower",0,0);
+					} 
+					
                 /* // old blood duel
 	                if (obj_controller.recruit_trial="Blood Duel"){
-	                    corr+=choose(1,2,3);train-=choose(1,2,3);
+	                    corr+=choose(1,2,3);months_to_neo-=choose(1,2,3);
 	                    var rand5;rand5=floor(random(100))+1;
 	                    if (rand5<=2) then corr+=15;
 						}
 			    */
-					// This is the area that dictates training and corruption per trial type
-					
-
+				
+				
+					// This is the area has trial types that don't care about planet type 
+					// xp is given in a latter if loop
 	                
-					if (obj_controller.recruit_trial="Blood Duel"){
-						corr+=choose(5,10,15);
-						train+=12;
-						}
-					
-	                if (obj_controller.recruit_trial="Survival of the Fittest"){
-						train-=choose(1,2,3);
-						corr+=choose(3,6,9);
-						}
-	                if (obj_controller.recruit_trial="Exposure"){
-						train-=choose(1,2,3,4);
-						corr+=choose(1,2,3);
-						}
-	                if (obj_controller.recruit_trial="Knowledge of Self"){
-						train-=choose(7,9,11,13);
-						corr-=choose(2,4,6) 
-						}
-					if (obj_controller.recruit_trial="Apprenticeship") { 
-						train+=36;
-	                    }
+					if (obj_controller.recruit_trial="Blood Duel"){ // blood duel is most numerous, but not great with gene seed
+						months_to_neo-=choose(24,24,36,36,36,48);
+						corr+=choose(10,15,20);
+						recruit_chance-=choose(0.7,0.7,0.8,0.8,0,8,0.9);
+						
+						var failedneo;
+						failedneo=choose(0,0,0,0,0,0,0,0,1);
+						if(failedneo=1){
+							failedneo+=(obj_controller.recruiting);
+								(obj_controller.gene_seed)-=failedneo;
+									if(failedneo>=1){
+									scr_alert("red","owner","Blood Duels are efficient in time, but costly in risk with gene material. Gene-seed has been lost.",0,0);
+							        }
+						}	
+					}	
 						
 						
-					// these reduce the amount of recruits by the * 
-					if (obj_controller.recruit_trial="Exposure")
-						then recr=floor(recr*1.3);
-	            //    if (obj_controller.recruit_trial="Challenge")
-					//	then recr=floor(recr*1.3);
-	                if (obj_controller.recruit_trial="Knowledge of Self")
-						then recr=floor(recr*2);
-
-					if (p_type="Death") and (obj_controller.recruit_trial="Challenge"){
-						obj_controller.recruit_exp+=69;train-=10;
-						
+					if (obj_controller.recruit_trial="Challenge"){
+						corr+=choose(1,2,3)
+						months_to_neo-=choose(-6,0,6);
 					}
-						/*
-						// give xp if they deserve it
-					obj_controller.recruit_exp[thiss]=choose(8,9,9);	
-						
-						*/
+					
+					if (obj_controller.recruit_trial="Exposure"){
+						corr+=choose(1,2,3)
+					}
+					
+	                if (obj_controller.recruit_trial="Knowledge of Self"){ // less time heavy than apprenticeship. Good on temperates (ppl are educated there idk)
+						months_to_neo+=choose(18,24,24,24,36,36);
+						corr-=choose(4,6,8) 
+						}
+					if (obj_controller.recruit_trial="Apprenticeship") {  // the "I don't need any more astartes but have money to spend" one
+						months_to_neo+=choose(48,60);
+						corr-=10;
+	                    }
                 
+				// xp gain for the recruit is here
+				// as well as planet type buffs or nerfs
 	                if (aspirant!=0){
 	                    var i,thiss;
 	                    i=0;thiss=0;
@@ -609,39 +612,61 @@ function scr_enemy_ai_e() {
 	                    }
                     
 	                    obj_controller.recruit_name[thiss]=scr_marine_name();
-	                    obj_controller.recruit_exp[thiss]=0;
-                    
+	                    obj_controller.recruit_exp[thiss]+=irandom(5);
+						
+						// gives planet buffs
+						
+						if (p_type[run]="Death"){ obj_controller.recruit_exp[thiss]+=6;}
+						if (p_type[run]="Ice"){obj_controller.recruit_exp[thiss]+=3;}
+						if (p_type[run]="Desert"){obj_controller.recruit_exp[thiss]+=3;}
+						if (p_type[run]="Lava"){obj_controller.recruit_exp[thiss]+=9;}
+						
+                
 	                    if (obj_controller.recruit_trial="Hunting the Hunter"){
-	                        obj_controller.recruit_exp[thiss]+=choose(1,2);
-	                        var rand5;rand5=floor(random(100))+1;
-	                        if (rand5<=1){
-	                            obj_controller.recruit_exp[thiss]+=choose(10,11,12);train-=5;
-	                            scr_alert("green","recruitment","Recruit "+string(obj_controller.recruit_name[thiss])+" hunts a larger, more impressive beast by mistake.",0,0);
-	                        }
-	                    }
-	                    if (obj_controller.recruit_trial="Challenge"){
-							if(p_type[run]="Death"){
-								obj_controller.recruit_exp[thiss]+=30;
+							if(p_type[run]="Desert") or (p_type[run]="Ice") or (p_type[run]=="Death"){
+								obj_controller.recruit_exp[thiss]+=irandom(13)+7; 
 							}
-							else
-	                        obj_controller.recruit_exp[thiss]+=choose(2,3,4);
-	                        var rand5;rand5=floor(random(100))+1;
-	                        if (rand5<=1){
-	                            obj_controller.recruit_exp[thiss]+=choose(20,25,30);train-=5;
-	                            scr_alert("green","recruitment","Recruit "+string(obj_controller.recruit_name[thiss])+" defeats the Astartes and is destined for greatness.",0,0);
-	                        }
 	                    }
+						
+						if (obj_controller.recruit_trial="Exposure"){
+							if(p_type[run]=="Desert") or (p_type[run]=="Ice") or (p_type[run]=="Death") or (p_type[run]=="Lava") or (p_type[run]=="Forge"){
+								months_to_neo-=choose(12,12,12,24,24,36);
+							}
+						}
+
+						if (obj_controller.recruit_trial="Survival of the Fittest"){
+							if(p_type[run]="Desert") or (p_type[run]="Ice") or (p_type[run]="Death") or (p_type[run]="Lava"){
+								recruit_chance-=choose(0.7,0.8,0.8,0.8,0.9);
+							}
+							if(p_type[run]="Feudal"){recruit_chance-=choose(0.5,0.6,0.6,0.7,0.7,0.8)}
+						}
+	                    if (obj_controller.recruit_trial="Challenge"){
+							obj_controller.recruit_exp[thiss]+=choose(0,0,0,0,0,0,0,0,10,20);
+							scr_alert("green","owner","A worthy aspirant has risen to the rank of Neophyte, doing quite well against the challenger Astartes.",0,0);
+	                    }
+
+						
+						if (obj_controller.recruit_trial="Apprenticeship"){
+							if (p_type[run]="Lava"){recruit_chance-=choose(0.5,0.6,0.6,0.7,0.7);} // nocturne gaming
+							obj_controller.recruit_exp[thiss]+=irandom(5)+34;					
+						}
+						
+						if (obj_controller.recruit_trial="Knowledge of Self"){
+							if(p_type[run]="Temperate") then obj_controller.recruit_exp[thiss]+=irandom(5)+5; // this is the only one that gives bonus for temperates
+							obj_controller.recruit_exp[thiss]+=irandom(10)+15; 
+						}
+
 
                    
                    
 	                    onceh=0;
                     
                     
-	                    obj_controller.recruit_corruption[thiss]=corr;
+	                    obj_controller.recruit_corruption[t]=corr;
 	                    obj_controller.recruit_distance[thiss]=0;
-	                    obj_controller.recruit_training[thiss]=train;
+	                    obj_controller.recruit_training[thiss]=months_to_neo;
 	                    obj_controller.gene_seed-=1;
-                    
+						if(obj_controller.recruit_exp[thiss]>=40) then obj_controller.recruit_exp[thiss]=38; // we don't want immediate battle bros
                     
                     
                     
@@ -682,7 +707,7 @@ function scr_enemy_ai_e() {
     
 	    // Work on fortifications
 	    if (p_owner[run]=1){
-	        if (string_count("Monastery",p_feature[run])>0){
+	        if (planet_feature_bool(p_feature[run], P_features.Monastery)==1){
 	            var md,ms,ml,build_rate,build_rate2;
 	            md=225;ms=300;ml=32;build_rate=4;build_rate2=6;
             

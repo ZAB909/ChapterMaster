@@ -61,8 +61,8 @@ function scr_income() {
 
 	if (obj_ini.fleet_type=1){
 	    with(obj_star){
-	        if (string_count("Monastery",p_feature[1])=1){obj_controller.income+=10;instance_create(x,y,obj_temp1);}
-	        if (string_count("Monastery",p_feature[2])=1){obj_controller.income+=10;instance_create(x,y,obj_temp1);}
+	        if (planet_feature_bool(p_feature[1], P_features.Monastery)==1){obj_controller.income+=10;instance_create(x,y,obj_temp1);}
+	        if (planet_feature_bool(p_feature[2], P_features.Monastery)==1){obj_controller.income+=10;instance_create(x,y,obj_temp1);}
 	        if (owner=8) then obj_controller.tau_stars+=1;
 	        alarm[2]=1;
 	    }
@@ -89,7 +89,7 @@ function scr_income() {
 	    var o;o=0;
 	    repeat(4){o+=1;
 	        if (dispo[o]>=100){
-	            if (string_count("Monastery",p_feature[1])=0){
+	            if (planet_feature_bool(p_feature[1], P_features.Monastery)==0){
 	                obj_controller.income_controlled_planets+=1;obj_controller.income_tribute+=1;
 	                if (p_type[o]="Feudal") then obj_controller.income_tribute+=1;
 	                if (p_type[o]="Desert") or (p_type[o]="Temperate") then obj_controller.income_tribute+=2;

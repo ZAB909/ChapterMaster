@@ -1,0 +1,344 @@
+
+Version 0.6702
+
+Hotfixes a critical error regarding not being able to save the game lol oops
+
+Version 0.6701
+
+changelog:
+
+Hot fixed lamenters, they no longer get black rage, they have 2 strike cruisers, as well as 30 gene seed
+
+buffed bolter just a little so it's actually better than a pistol
+
+if your chapter master dies, game over!
+
+
+Version 0.67000
+
+Hello I'm Zab1019. Head dev ( i guess) of the restoration and renewed development of Chapter Master
+
+There's about 8 active contributors total. A few being artists, but mostly coders.
+
+Our github is open source, and linked on our discord in our dev channels
+
+Chapter Master Discord has made an open source project of this. Now titled "Chapter Master Adeptus Dominus"
+
+We hope you enjoy the ride along this awesome project with us!
+
+Discord:
+https://discord.gg/zAGpqHzsXQ
+
+
+Changelog:
+
+++++
+Added the Soul Drinkers:
+They are daemon binder using, and soon shall turn renegade. Their numbers aren't great, but start with 60 gene seed, and 4 (FOUR!) battle barges!
+++++
+
+++++
+Completely reworked the recruitment system for neophytes from the ground up.
+Recruitment trials are mostly planet based, and none of them are strictly the best. They all have their own different scenarios where they are good.
+If a planet has under 50% of it's max possible population, you recruit 20% less neophytes from there.
+Currently there's no way to increase pop on a planet you have, but will be added soon.
+++++
+
+----
+Hives by far have the most recruits, but very little exp
+Lava,death, ice, and desert have the least, but have more exp
+everything else is in the middle
+----
+
+----
+xp and promotion amounts have been reworked, reminder you can simply disable requirements in chapter settings. But you cannot for terminators or thunder hammers
+
+terminators = 180
+thunder hammers = 140
+
+1st: 150
+2nd: 120
+3rd: 110
+4th: 100
+5th: 80
+6th: 70
+7th: 60
+8th: 50
+9th: 40
+----
+
+
+A decent amount of enemies have been rebalanced. Expect ground combat to be harsher. A more thorough rework is still due for ground combat
+
+++++
+The marine's equipment has been entirely redone. Now mostly more expensive, but more worth it.
+Duel wielding has been reduced massively. No longer will you be able to have a heavy bolter and a chain sword. 
+Some exceptions exist. Such as axe's purpose now is to be duel wielded, or be used with heavier things.
+++++
+
+Chaos marines equipment has been matched to be the same or slightly better than the player's 
+
+++++
+Rhinos,predators,whirlwhinds,dreadnoughts and land raiders can now have sponsons, turrets, mounts and launchers. 
+Customised with different weapons (plasma sponsons, heavy bolter sponsons, lascannon sponsons, ect.)
+++++
+
+----
+Made tau a confirmed spawn 100% of the time. Also increased numbers massively. They can have 3-7 planets at start
+
+Increased mechanicus planet spawn rate. 2-6 planets tops. Rarely get's 6 though
+----
+
+
+++++There are now three different types of chaos cults:++++
+
+Stronghold worlds are somewhat rare, but incredibly powerful. They are named systems (Isstvan, Badab, ect.) and start spawning fleets straight away. Their corruption and traitor presence is rampant. Deal with them quickly!
+
+Rebellion cults are worlds that haven't won over the planet's government yet, but shall within a few dozen turns. They have their name already changed to that colour at game start, so you can tell easily.
+
+Underground cults are the old version of them. You'll only know they exist on a planet via PDF being killed. Rarer than the other forms but still present.
+
+
+----
+Many things in the code have been improved upon, and bugs fixed. Which makes our lives easy as coders. Also did I mention we are open source? Just join and help us in the discord link above!
+
+++++Chapter Master Adeptus Dominus++++
+
+Version 0.6602
+Notes
+-Sorry for the delay.
+-I was unable to replicate the Eldar crash but I re-wrote it anyways. 
+
+Fixed
+	-Bombardment menu now has a close button (Conversion Error)
+	-Scouts being created but have no location. (Source Error)
+	-Promotions to tacticals (My Error.)
+	-Some events causing crashes (These are tricky as I suspect some are conversion errors)
+	
+Changes
+-Increased the range required to find the eldar by 25% (300 to 400), increased the chance of finding them by 5% (now 10%).
+
+New Cheats
+recruit# = Created # of recruits with 20xp, that will be ready in one turn (No extra equipment)
+eventg8 = "meet_eldar"
+
+
+Version 0.6601 GMS2 Hotfix
+Fixed
+-Artifacts can now be equipped (Conversion Error)
+-Ships that are purchased should now function correctly, included a fix on load in case one is bugged. (Source Error?)
+-Choosing random will now give you advantages and disadvantages (Source Error, incomplete content)
+
+
+Version 0.6600 GMS2
+Notes
+-With the conversion to GMS2, I cannot guarantee stability.  I am only 90% confident nothing of note is broken.
+
+Fixed
+-Crash caused by getting the STC bonus to vehicle accuracy ad then sending vehicles into combat.
+-Crash caused by a typo in obj_turn_end_Alarm_0 when Orks invaded.
+-Transfer showing empty boxes for unit roles company screen.
+-Ship/world names overlapping with armour in company screen.
+-Lost ships now return after a random amount of time (10-100 turns).
+-Splintered ships on creation to now work as intended (I think it's being weird).
+-Changed the range of boarding to the max range on the parent ship.
+-Daemon binders no longer resaults in instant failure, instead it will take several encounters with the inquisition before they freak out.
+
+Changes
+-Made it, so you always get loot after you clear a space hulk and added a small chance to get Tartaros armour. 
+-Added the option to decrypt saves in the options menu, BACK UP YOUR SAVES; if you break them, you are on your own.
+-Changed the fleet selection menu, selecting a category (de)selects all within, selecting names (de)selects as well.
+	--Selecting the background no longer selects all.
+-Changed how company screen logic works D
+	--DOUBLE CLICK has been disabled.
+	--Right-click selected all of the selected unit types.
+	--All multi-select options no longer inverse selection, but instead select all targeted, and if all are selected, deselects them.
+	--If none are selected, the group with the most units at a location will be selected.
+-Made planets random features (????) generate on creation, but also made more of on gen. (Will be adding more options at a later date.)
+-Added symbols on the planets when they have features of interest or require help. (! Coloured threats)
+-Activated "Cave Network" planetary feature, however temporarily make it equal to Ancient Ruins.
+-Assault a Necron tomb without a mission, land troops, end turn. (requires plasma bomb, still decent chance of failure)
+-Removed the need to have the chapter master present to control the fleet. (It's too buggy without control.)
+-Increased the chances of the tau spawning on gen from 33% to 66%.
+
+Code Changes
+-Refactored unit selection and unit selection buttons on the company screen. 
+-Converted project from GMS 1.4 to GMS 2. 
+-Added proper documentation (Jsdoc) to some of the existing code.
+-Started converting dedicated object scripts into object functions.
+
+New Cheats (Many of these events will proc but will not create a popup)
+eventg0="space_hulk";
+eventg1="promotion";
+eventg2="strange_building";
+eventg3="sororitas";
+eventg4="rogue_trader";
+eventg5="inquisition_mission";
+eventg6="inquisition_planet";
+eventg7="mechanicus_mission";
+
+eventn0="strange_behavior";
+eventn1="fleet_delay";
+eventn2="harlequins";
+eventn3="succession_war";
+eventn4="random_fun";
+
+eventb0="warp_storms";
+eventb1="enemy_forces";
+eventb2="crusade";
+eventb3="enemy";
+eventb4="mutation";
+eventb5="ship_lost";
+eventb6="chaos_invasion";
+eventb7="necron_awaken";
+
+
+Version 0.6571
+Notes
+-Just a quick fix, feeling ill from my second covid vaccination, taking it easy for now.
+
+Fixed
+-A few bugs in promotions.
+-Clicking out from the promotions/transfer/rearm menu now exits the menu, in addition to clicking cancel.
+-Bottom part of companies now enters into selected company.
+
+Changes
+-
+
+Code Changes
+-
+
+Version 0.6570
+https://ufile.io/xyy05hi3
+https://anonfiles.com/jd84ff4fua/Chapter_Master_0.6570_rar
+-Saves should be forward compatible but ARE NOT BACKWARDS COMPATIBLE.
+-There are several options of things I can look at next as everything needs work.
+	-Finish the role/weapon/armour overhaul to bring in more equipment and chapter options.
+	-Overhaul space combat to be more strategic by creating basic ai and better controls for the player.
+	-Overhaul ground combat to be more engaging and include controls for the player.
+	-Make going renegade/chaos viable.
+	-Finish the diplomatic options with different races.
+	-Find out what is causing the infinite guard bug.
+	
+Fixed
+-Marines being overloaded into escorts on generation.
+-Ships not despawning after being defeated in battle.
+-Transfers to allow all units to be in all companies.
+-You can now promote units to HQ positions if they are empty.
+-Board Next Nearest now works with no limit on the number of marines.
+	-Note you can now take on fairly large fleets with minimal losses, 
+	-Enemy escorts are still an issue that I am looking into.
+-Fixed a bug where strike cruisers would not get close enough to shoot. (I think?)
+
+Changes
+-Game no longer ends when your chapter master dies, the most experienced marine is automatically promoted.
+-Changed ship loading to one company per frigate, including vehicles and 2 companies for battle barges.
+-Overhauled promoting to be more in line with the lore, 1st = veterans, 2nd-5th = battle, 6-9th = support.
+	--You can only promote in order scout->support->battle->1st-> honour; exceptions are made for command positions.
+-Increased the max number of promotion options that "can" be shown from 6 to 9.
+-Randomized starting experince of all units.
+-Change promotion experience to a single rational number "40", to which most ranks require a multiple of.
+	-Companies 6th-9th= 20
+	-Companies 2nd-5th= 40
+	-Company 1st= 80, Terminators= 100
+	-HQ Honor guard=120.
+	-HQ command positions= 200
+	----Command positions, 1st company adds +40
+	Captian=120, Champion= 100, Standard Bearer= 80 
+	-Dreadnought= 100, Venerable Dreadnought= 400
+	-Specialists exp requires increase 40 per rank, eg: X asprant/Lexicanum= 40, techmarine/Codiciery= 80, Epistolary= 120
+	
+Code Changes
+-Created refactored role name system (Role_Enums) to allow the changing/adding of roles, which needs to be implemented across all code structures.
+-Rewrote the entire chapter management screen and company management view using Enums as a testbed.
+-Created a ton of helper tools.
+
+----------------------------------------------------------------------------------------------------
+Version 0.6560
+Changes
+-More elaborate cheats with the option to turn off debug mode (see cheats)
+
+Fixes
+-Fixed vehicles disappearing when tranfered to HQ
+-Fixed a boarding bug, unsure which one.
+-Tons of small things.
+-*Forgot about this, fixed crash when replacing governer with serf.
+
+-------Cheats--------
+-Cheats have been updated to allow semi logical strings.
+-Several cheats can be toggled on and off, just repeat the same cheat.
+-Several cheats use numbers eg: to use "req#" you could type "req10000"
+-To start once on the sector/map screen press "p", then enter text that is before the = sign.
+
+infreq = Toggle infinate requisition
+infseed = Toggle, gain 9999 geneseed.
+debug = Toggle debugmode, use at your own peril.
+		(Right click on sector map to create/destroy fleets/invasions)
+		(On planet view, increase or decrease forces)
+		(On Armanentarium screen add STC research for free)
+test = Test dialogue, dont use.
+req# = Set requisition to # amount
+seed# = Set geneseed to # amount
+recruit# = Created # of recruits with 20xp, that will be ready in one turn (No extra equipment)
+
+*Note all deposition cheats can be negative and are capped between -100 and 100.
+*Deposition has the format of "depXYZ#" where XYZ is the first 3 letters of a factions name.
+*EG: "depimp100" sets deposition with the imperium to 100; whereas, depimp-100 sets it to -100.
+depall# = Set deposition of all factions to an amount.
+depimp# = Imperium
+depmec# = Mechanicus
+depinq# = Inquisition
+depecc# = Ecclesiarchy
+depeld# = Eldar
+depork# = Ork
+deptau# = Tau
+deptyr# = Tyranids, this probably wont do anything.
+depcha# = Chaos
+
+(Many of these events will proc but will not create a popup)
+eventg0="space_hulk";
+eventg1="promotion";
+eventg2="strange_building";
+eventg3="sororitas";
+eventg4="rogue_trader";
+eventg5="inquisition_mission";
+eventg6="inquisition_planet";
+eventg7="mechanicus_mission";
+eventg8 = "meet_eldar"
+
+eventn0="strange_behavior";
+eventn1="fleet_delay";
+eventn2="harlequins";
+eventn3="succession_war";
+eventn4="random_fun";
+
+eventb0="warp_storms";
+eventb1="enemy_forces";
+eventb2="crusade";
+eventb3="enemy";
+eventb4="mutation";
+eventb5="ship_lost";
+eventb6="chaos_invasion";
+eventb7="necron_awaken";
+
+http://www.bay12forums.com/smf/index.php?topic=142620.4035
+https://1d4chan.org/wiki/Chapter_Master_(game)
+
+---------------------
+Version 0.XXXX
+Notes
+-
+
+Fixed
+-
+
+Changes
+-
+
+Code Changes
+-
+
+
+
+scr_weapon -sets description and damage for the player
+scr_en_weapon -sets the damage for npc's.

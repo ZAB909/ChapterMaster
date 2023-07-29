@@ -294,6 +294,7 @@ l_fleet=0;
 l_diplomacy=0;
 l_log=0;
 l_turn=0;
+current_planet_feature=0;
 // Highlight
 h_options=0;
 h_menu=0;
@@ -1033,7 +1034,8 @@ loyalty_hidden=100;// Updated when inquisitors do an inspection
 
 gene_seed=20;
 if (string_count("Sieged",obj_ini.strin2)>0) then gene_seed=floor(random_range(300,500));
-if (global.chapter_name="Lamenters") then gene_seed=10;
+if (global.chapter_name="Lamenters") then gene_seed=30;
+if (global.chapter_name="Soul Drinkers") then gene_seed=60;
 // gene_seed=2000;
 
 marines=0;

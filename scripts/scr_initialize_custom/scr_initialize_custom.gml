@@ -3,6 +3,7 @@ function scr_initialize_custom() {
 	// These are the new variables that are being read, for the new creation
 	// They will also have to be loaded and saved
 	// Worry about that later
+    // this has starting XP for marines !
 
 	/*
 	chapter="Unnamed";
@@ -198,12 +199,14 @@ function scr_initialize_custom() {
 	        strike_cruisers=6;
 	        gladius=7;
 	        hunters=3;
+			
+			if (global.chapter_name="Soul Drinkers") then gladius-=4; strike_cruisers-=3; battle_barges+=1; 
 	    }
 	    if (obj_creation.fleet_type=1){
 	        strike_cruisers=8;
 	        gladius=7;
 	        hunters=3;
-
+		
 	        if (global.chapter_name="Dark Angels") then battle_barges+=1;
 	    }
 	    if (obj_creation.fleet_type=3){
@@ -211,6 +214,7 @@ function scr_initialize_custom() {
 	            strike_cruisers=2;
 	            gladius=2;
 	            hunters=1;
+				battle_barges=0;
 	        }
 	        if (global.chapter_name="Blood Ravens"){
 	            battle_barges=1;
@@ -416,6 +420,11 @@ function scr_initialize_custom() {
 	    tenth=0;ninth=0;eighth=0;seventh=0;sixth=0;fifth=0;
 	    techs=8;epistolary=6;apothecary=5;codiciery=3;lexicanum=5;terminator=5;veteran+=10;
 	}
+	if (global.chapter_name="Soul Drinkers"){
+		tenth-=38;seventh=0;sixth=40; assault-=10;
+		fifth-=20;fourth-=20;third-=20;second-=20;terminator-=5;veteran-=20;
+	}
+
 	if (global.chapter_name="Space Wolves"){
 	    veteran+=40;second+=40;third+=40;fourth+=40;fifth+=40;sixth+=40;seventh+=40;eighth+=40;ninth+=40;tenth+=60;
 	}
@@ -661,7 +670,7 @@ function scr_initialize_custom() {
 	if (hong>0) then repeat(10){k+=1;commands+=1;man_size+=1;
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,2];wep1[company,k]=wep1[101,2];name[company,k]=scr_marine_name();
 	    wep2[company,k]=wep2[101,2];armor[company,k]="MK7 Aquila";gear[company,k]=gear[100,2];mobi[company,k]=mobi[100,2];hp[company,k]=100;
-	    chaos[company,k]=0;experience[company,k]=100;
+	    chaos[company,k]=0;experience[company,k]=180;
 	}
 
 
@@ -683,7 +692,7 @@ function scr_initialize_custom() {
 	if (veteran+terminator>0){
 	    k+=1;commands+=1;// Captain
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,5];wep1[company,k]=wep1[101,5];name[company,k]=scr_marine_name();
-	    wep2[company,k]=wep2[101,5];armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=100;gear[company,k]=gear[101,5];
+	    wep2[company,k]=wep2[101,5];armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=220;gear[company,k]=gear[101,5];
 	    if (string_count("Crafter",strin)>0) then armor[company,k]="Tartaros";
 	    if (terminator<=0) then armor[company,k]="MK6 Corvus";
 	    if (global.chapter_name="Iron Hands") then armor[company,k]="Terminator Armor";
@@ -701,7 +710,7 @@ function scr_initialize_custom() {
 	        repeat(skl){
 	            k+=1;commands+=1;// Chaplain
 	            race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,14];wep1[company,k]=wep1[101,14];name[company,k]=scr_marine_name();
-	            wep2[company,k]=wep2[101,14];armor[company,k]="Terminator Armor";gear[company,k]=gear[101,14];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=110;
+	            wep2[company,k]=wep2[101,14];armor[company,k]="Terminator Armor";gear[company,k]=gear[101,14];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=150;
 	            if (string_count("Crafter",strin)>0) then armor[company,k]="Tartaros";
 	            if (terminator<=0) then armor[company,k]="MK6 Corvus";
 	            if (mobi[101,14]!="") then mobi[company,k]=mobi[101,14];
@@ -711,7 +720,7 @@ function scr_initialize_custom() {
 
 	    k+=1;commands+=1;// Apothecary
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,15];wep1[company,k]=wep1[101,15];name[company,k]=scr_marine_name();
-	    wep2[company,k]=wep2[101,15];armor[company,k]="Terminator Armor";gear[company,k]=gear[101,15];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=110;
+	    wep2[company,k]=wep2[101,15];armor[company,k]="Terminator Armor";gear[company,k]=gear[101,15];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=130;
 	    if (string_count("Crafter",strin)>0) then armor[company,k]="Tartaros";
 	    if (terminator<=0) then armor[company,k]="MK6 Corvus";
 	    if (mobi[101,15]!="") then mobi[company,k]=mobi[101,15];
@@ -737,31 +746,34 @@ function scr_initialize_custom() {
 
 	    k+=1;// Standard bearer
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]="Standard Bearer";wep1[company,k]="Company Standard";name[company,k]=scr_marine_name();
-	    wep2[company,k]="Power Fist";armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=95;
+	    wep2[company,k]="Power Fist";armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=90;
 	    if (string_count("Crafter",strin)>0) then armor[company,k]="Tartaros";
 	    if (terminator<=0) then armor[company,k]="MK6 Corvus";
 	    if (armor[company,k]="Terminator") or (armor[company,k]="Tartaros") then man_size+=1;
 
 	    k+=1;man_size+=1;// Company Champion
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,7];wep1[company,k]=wep1[100,7];name[company,k]=scr_marine_name();
-	    wep2[company,k]=wep2[100,7];armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=120;
+	    wep2[company,k]=wep2[100,7];armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=200;
 	    if (string_count("Crafter",strin)>0) then armor[company,k]="Tartaros";
 	    if (terminator<=0) then armor[company,k]="MK6 Corvus";
 	    if (armor[company,k]="Terminator") or (armor[company,k]="Tartaros") then man_size+=1;
 	}
 
-
-
-	if (terminator-1>0) then repeat(terminator-1){k+=1;man_size+=2;
+	// go 5 under the required xp amount 
+	
+	var terminator_random_xp;
+	var veteran_random_xp;
+	
+	if (terminator-1>0) then repeat(terminator-1){k+=1;man_size+=2; terminator_random_xp = irandom(20)+175;
 	// repeat(max(terminator-4,0)){k+=1;man_size+=2;
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,4];wep1[company,k]=wep1[101,4];name[company,k]=scr_marine_name();
-	    wep2[company,k]=wep2[101,4];armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=90;
+	    wep2[company,k]=wep2[101,4];armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=terminator_random_xp;
 	    if (string_count("Crafter",strin)>0) and (k<=20) then armor[company,k]="Tartaros";
 	}
-	repeat(veteran){k+=1;man_size+=1;
+	repeat(veteran){k+=1;man_size+=1;  veteran_random_xp = irandom(20)+145;
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,3];wep1[company,k]=wep1[101,3];name[company,k]=scr_marine_name();
 	    wep2[company,k]=wep2[101,3];armor[company,k]="MK6 Corvus";hp[company,k]=100;chaos[company,k]=0;
-	    experience[company,k]=80;mobi[company,k]=mobi[101,3];
+	    experience[company,k]=veteran_random_xp;mobi[company,k]=mobi[101,3];
 	}
 
 	k+=1;commands+=1;
@@ -836,18 +848,34 @@ function scr_initialize_custom() {
 	        rhinoy=8;whirly=whirlwind;speedy=2;
 	    }
 
+		// random xp for each marine company
+		// this gives the entire company the same xp
+		// figure it out later how to give individual ones different ones
+		// repeat didn't work
+	var company2_random_exp = irandom(15)+110; 
+	var company3_random_exp = irandom(15)+105;
+	var company4_random_exp = irandom(15)+95;
+	var company5_random_exp = irandom(15)+85;
+	var company6_random_exp = irandom(10)+65;
+	var company7_random_exp = irandom(10)+55;
+	var company8_random_exp = irandom(10)+45;
+	var company9_random_exp = irandom(10)+35;
+	var company10_random_exp = irandom(15)+3;
 
-	    if (obj_creation.equal_specialists=0){
-	        if (company=2){
-	            temp1=(second-(assault+devastator));company_experience=70;company_unit2="assault";company_unit3="devastator";
+
+
+	    if (obj_creation.equal_specialists=0)  { 
+			 if (company=2){ 
+	            temp1=(second-(assault+devastator));company_experience=company2_random_exp;company_unit2="assault";company_unit3="devastator";
 	            temp1-=2;
 
 	            dready=1;if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=1;
 	            rhinoy=8;whirly=whirlwind;speedy=2;
 	            if (second=0) then stahp=1;
-	        }
+			
+	      }
 	        if (company=3){
-	            temp1=(third-(assault+devastator));company_experience=60;company_unit2="assault";company_unit3="devastator";
+	            temp1=(third-(assault+devastator));company_experience=company3_random_exp;company_unit2="assault";company_unit3="devastator";
 	            temp1-=2;
 	            // dready=2;
 	            if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=2;
@@ -855,7 +883,7 @@ function scr_initialize_custom() {
 	            if (third=0) then stahp=1;
 	        }
 	        if (company=4){
-	            temp1=(fourth-(assault+devastator));company_experience=50;company_unit2="assault";company_unit3="devastator";
+	            temp1=(fourth-(assault+devastator));company_experience=company4_random_exp;company_unit2="assault";company_unit3="devastator";
 	            temp1-=2;
 	            // dready=2;
 	            if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=2;
@@ -863,7 +891,7 @@ function scr_initialize_custom() {
 	            if (fourth=0) then stahp=1;
 	        }
 	        if (company=5){
-	            temp1=(fifth-(assault+devastator));company_experience=40;company_unit2="assault";company_unit3="devastator";
+	            temp1=(fifth-(assault+devastator));company_experience=company5_random_exp;company_unit2="assault";company_unit3="devastator";
 	            temp1-=2;
 	            // dready=2;
 	            if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=2;
@@ -871,7 +899,7 @@ function scr_initialize_custom() {
 	            if (fifth=0) then stahp=1;
 	        }
 	        if (company=6){
-	            temp1=sixth;company_experience=35;company_unit2="";company_unit3="";
+	            temp1=sixth;company_experience=company6_random_exp;company_unit2="";company_unit3="";
 	            temp1-=2;
 	            // dready=2;
 	            if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=2;
@@ -879,28 +907,28 @@ function scr_initialize_custom() {
 	            if (sixth=0) then stahp=1;
 	        }
 	        if (company=7){
-	            temp1=seventh;company_experience=30;company_unit2="";company_unit3="";
+	            temp1=seventh;company_experience=company7_random_exp;company_unit2="";company_unit3="";
 	            temp1-=2;
 	            if (obj_creation.custom=0) then dready=2;
 	            rhinoy=8;whirly=0;speedy=8;
 	            if (seventh=0) then stahp=1;
 	        }
 	        if (company=8){
-	            temp1=eighth;company_experience=25;company_unit2="";company_unit3="";
+	            temp1=eighth;company_experience=company8_random_exp;company_unit2="";company_unit3="";
 	            temp1-=2;
 	            if (obj_creation.custom=0) then dready=2;
 	            rhinoy=2;whirly=0;speedy=2;
 	            if (eighth=0) then stahp=1;
 	        }
 	        if (company=9){
-	            temp1=ninth;company_experience=20;company_unit2="";company_unit3="";
+	            temp1=ninth;company_experience=company9_random_exp;company_unit2="";company_unit3="";
 	            temp1-=2;
 	            if (obj_creation.custom=0) then dready=2;
 	            rhinoy=2;whirly=0;speedy=0;
 	            if (ninth=0) then stahp=1;
 	        }
 	        if (company=10){
-	            temp1=tenth;company_experience=5;company_unit2="";company_unit3="";
+	            temp1=tenth;company_experience=company10_random_exp;company_unit2="";company_unit3="";
 	            temp1-=2;
 	            dready=0;rhinoy=8;whirly=0;speedy=0;
 
@@ -1212,7 +1240,7 @@ function scr_initialize_custom() {
 	    penitent_end=obj_creation.strength*5;
 
 	    if (obj_creation.chapter="Lamenters"){
-	        penitent_max=850;penitent_end=850;
+	        penitent_max=600;penitent_end=600;
 	        // obj_controller.loyalty=50;obj_controller.loyalty_hidden=50;
 	    }
 	}
