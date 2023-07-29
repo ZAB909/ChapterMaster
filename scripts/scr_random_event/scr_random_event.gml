@@ -114,7 +114,7 @@ function scr_random_event(execute_now) {
 					//DEBUG-INI (EVENTS DEBUG CODE - 1)
 					//Comment/delete this when not debugging events
 					//List of possible events above
-					curr_event =  EVENT.necron_awaken
+					curr_event =  EVENT.ship_lost
 					events_count = 1
 					//DEBUG-FIN (EVENTS DEBUG CODE - 1)
 					
@@ -214,7 +214,7 @@ function scr_random_event(execute_now) {
 				//DEBUG-INI (EVENTS DEBUG CODE - 2)
 				//Comment/delete this when not debugging events
 				//If event on the switch above, (EVENTS DEBUG CODE - 1) array should be set to event too.
-				chosen_event =  EVENT.necron_awaken
+				chosen_event =  EVENT.ship_lost
 				//DEBUG-FIN (EVENTS DEBUG CODE - 2)
 		}
 	}
@@ -1556,36 +1556,6 @@ function scr_random_event(execute_now) {
 			function(star, index){
 					return scr_star_has_planet_with_feature(star, "Necron Tomb") && !scr_star_has_planet_with_feature(star, "Awakaned");
 			});
-				/*K-INI (29/07/23 - 3)
-				//var tomb_world = scr_get_planet_with_feature(star,"Necron Tomb");
-				
-				//Statement below crashes due to -1 return of the statement above. It shouldn't crash.
-				___________________________________________
-				############################################################################################
-				ERROR in
-				action number 1
-				of Alarm Event for alarm 5
-				for object obj_controller:
-
-				Push :: Execution Error - Variable Index [-1] out of range [9] - -9.p_feature(100500,-1)
-				 at gml_Script_anon_scr_random_event_gml_GlobalScript_scr_random_event_52005_scr_random_event_gml_GlobalScript_scr_random_event (line 1552) -                             return string_count("Awakened Necron Tomb",star.p_feature[tomb_world]) == 0;
-				############################################################################################
-				gml_Script_anon_scr_random_event_gml_GlobalScript_scr_random_event_52005_scr_random_event_gml_GlobalScript_scr_random_event (line 1552)
-				gml_Script_scr_random_event (line 1549)
-				gml_Object_obj_controller_Alarm_5 (line 1410) - scr_random_event(true);
-				
-				if (tomb_world == -1){
-					debugl("RE: Necron Tomb Awakens event could not find a suitable Necron Tomb world");
-					exit;
-				} else {
-					return string_count("Awakened Necron Tomb",star.p_feature[tomb_world]) == 0;
-				}
-				
-				//return string_count("Awakened Necron Tomb",star.p_feature[tomb_world]) == 0;
-				
-		});*/
-		//K-FIN (29/07/23 - 3)
-	
 	
 		if(valid_stars == 0){
 			debugl("RE: Necron Tomb Awakens, couldn't find a sleeping necron tomb");
