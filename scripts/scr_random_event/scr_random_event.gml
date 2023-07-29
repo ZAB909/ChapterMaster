@@ -109,7 +109,15 @@ function scr_random_event(execute_now) {
 				var events_share = array_create(events_count, 1);
 	
 				for(var i = 0; i < events_count; i++){
-					var curr_event = events[i];
+					var curr_event = events[i];			
+					
+					//DEBUG-INI (EVENTS DEBUG CODE - 1)
+					//Comment/delete this when not debugging events
+					//List of possible events above
+					curr_event =  EVENT.ship_lost
+					events_count = 1
+					//DEBUG-FIN (EVENTS DEBUG CODE - 1)
+					
 					switch (curr_event){
 						case EVENT.inquisition_planet:
 							if (known[4]==0 || obj_controller.faction_status[4]=="War") {
@@ -203,6 +211,11 @@ function scr_random_event(execute_now) {
 						break;
 					}
 				}
+				//DEBUG-INI (EVENTS DEBUG CODE - 2)
+				//Comment/delete this when not debugging events
+				//If event on the switch above, (EVENTS DEBUG CODE - 1) array should be set to event too.
+				//chosen_event =  EVENT.ship_lost
+				//DEBUG-FIN (EVENTS DEBUG CODE - 2)
 		}
 	}
 	
@@ -1083,11 +1096,12 @@ function scr_random_event(execute_now) {
 		evented = true;
 	}
     
+	// Flavor text/events
 	else if (chosen_event == EVENT.random_fun){
 		debugl("RE: Random");
 	    var text;
 	    var situation = irandom(4);
-	    var place = floor(random(12))+1;
+		var place = irandom(9);
 		
 		switch(situation) {
 			case 0:
@@ -1549,13 +1563,13 @@ function scr_random_event(execute_now) {
 		debugl("RE: Necron Tomb Awakens");
 		var stars = scr_get_stars();
 
-		//var star = stars;
 		var valid_stars = array_filter_ext(stars, 
 			function(star, index){
 		
 		
 				var tomb_world = scr_get_planet_with_feature(star,"Necron Tomb");
-				/*
+				/*K-INI (29/07/23 - 3)
+				//Statement below crashes. It shouldn't crash.
 				___________________________________________
 				############################################################################################
 				ERROR in
@@ -1570,6 +1584,7 @@ function scr_random_event(execute_now) {
 				gml_Script_scr_random_event (line 1549)
 				gml_Object_obj_controller_Alarm_5 (line 1410) - scr_random_event(true);
 				*/
+				//K-FIN (29/07/23 - 3)
 				
 				return string_count("Awakened Necron Tomb",star.p_feature[tomb_world]) == 0;
 		});
