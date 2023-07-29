@@ -507,26 +507,7 @@ if (obj_controller.faction_status[2]="War") and (action="") and (trade_goods="")
                 pnear=instance_nearest(fnear.x,fnear.y,obj_star);
                 
                 if (instance_exists(pnear)) and (instance_exists(orbiting)){
-					//K-INI (27/07/23 - 2)
-					/*TODO: Broken IF, pnear in pnear.orbiting does not exist (¿?) and throws error.
-					  Both pnear and orbiting are instances of obj_star, so pnear.orbiting does not exist.
-					  pnear should be checked against orbiting, and not the var orbiting dependant of pnear.
-					  ___________________________________________
-					  ############################################################################################
-					  ERROR in
-					  action number 1
-					  of Alarm Event for alarm 1
-					  for object obj_en_fleet:
-
-					  Variable <unknown_object>.orbiting(100548, -2147483648) not set before reading it.
-					  at gml_Object_obj_en_fleet_Alarm_1 (line 510) -                     if (fdis<=500) and (pnear.orbiting!=orbiting){// Case 1; really close, wait for them to make the move
-					  ############################################################################################
-					  gml_Object_obj_en_fleet_Alarm_1 (line 510)
-					
-                    if (fdis<=500) and (pnear.orbiting!=orbiting){// Case 1; really close, wait for them to make the move
-					*/
 					if (fdis<=500) and (pnear!=orbiting){// Case 1; really close, wait for them to make the move
-					//K-FIN (27/07/23 - 2)
                         with(obj_temp7){instance_destroy();}
                         with(obj_temp8){instance_destroy();}
                         exit;

@@ -114,8 +114,8 @@ function scr_random_event(execute_now) {
 					//DEBUG-INI (EVENTS DEBUG CODE - 1)
 					//Comment/delete this when not debugging events
 					//List of possible events above
-					curr_event =  EVENT.ship_lost
-					events_count = 1
+					/*curr_event =  EVENT.ship_lost
+					events_count = 1*/
 					//DEBUG-FIN (EVENTS DEBUG CODE - 1)
 					
 					switch (curr_event){
@@ -213,8 +213,8 @@ function scr_random_event(execute_now) {
 				}
 				//DEBUG-INI (EVENTS DEBUG CODE - 2)
 				//Comment/delete this when not debugging events
-				//If event on the switch above, (EVENTS DEBUG CODE - 1) array should be set to event too.
-				chosen_event =  EVENT.ship_lost
+				//If event on the switch above, (EVENTS DEBUG CODE - 1) var should be set to event too.
+				/*chosen_event =  EVENT.ship_lost*/
 				//DEBUG-FIN (EVENTS DEBUG CODE - 2)
 		}
 	}
@@ -1388,10 +1388,7 @@ function scr_random_event(execute_now) {
 		var eligible_fleets = [];
 		with(obj_p_fleet) {
 			if (action="move") {
-				//K-INI (27/07/23 - 1.1)
-				//array_push(eligible_ships, id);
 				array_push(eligible_fleets, id);
-				//K-FIN (27/07/23 - 1.1)
 			}
 		}
 		
@@ -1399,10 +1396,8 @@ function scr_random_event(execute_now) {
 			debugl("RE: Ship Lost, couldn't find a player fleet");   
 			exit;
 		}
-		//K-INI (29/07/23 - 1.2)
-		//var fleet = eligible_ships[irandom(array_length(eligible_fleets) - 1)];
+		
 		var fleet = eligible_fleets[irandom(array_length(eligible_fleets) - 1)];		
-		//K-FIN (29/07/23 - 1.2)
 		var ship_index = -1;
 		var ship_type="";
 	    var ship_count = fleet.capital_number + fleet.frigate_number + fleet.escort_number;
