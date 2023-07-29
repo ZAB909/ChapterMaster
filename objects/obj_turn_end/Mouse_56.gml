@@ -87,11 +87,10 @@ if (cooldown<=0) and (battle_world[current_battle]=-50) and (combating=0){
         instance_activate_all();
         var stahr;stahr=instance_nearest(battle_pobject[current_battle].x,battle_pobject[current_battle].y,obj_star);
         obj_fleet.star_name=stahr.name;
-        
-        if (string_count("Monastery",stahr.p_feature[1])>0) then obj_fleet.player_lasers=stahr.p_lasers[1];
-        if (string_count("Monastery",stahr.p_feature[2])>0) then obj_fleet.player_lasers=stahr.p_lasers[2];
-        if (string_count("Monastery",stahr.p_feature[3])>0) then obj_fleet.player_lasers=stahr.p_lasers[3];
-        if (string_count("Monastery",stahr.p_feature[4])>0) then obj_fleet.player_lasers=stahr.p_lasers[4];
+		
+		for (p_num =1; p_num<5;p_num++;){
+			//if(planet_feature_bool(stahr.p_feature[p_num], P_features.Monastery)==1)thenobj_fleet.player_lasers=stahr.p_lasers[p_num]; 
+		}
         
         var i;i=0;
         repeat(40){
@@ -171,12 +170,12 @@ if (cooldown<=0) and (battle_world[current_battle]>0) and (combating=0){
         obj_ncombat.battle_climate=battle_object[current_battle].p_type[battle_world[current_battle]];
         
         // show_message(string(battle_object[current_battle].p_feature[battle_world[current_battle]]));
-        if (string_count("Monastery",battle_object[current_battle].p_feature[battle_world[current_battle]])>0){
+        /*if (scr_planetary_feature.plant_feature_bool(battle_object[current_battle].p_feature[battle_world[current_battle]], P_features.Monastery)==1){
             // show_message(string(battle_object[current_battle].p_defenses[battle_world[current_battle]]));
             // show_message(string(battle_object[current_battle].p_silo[battle_world[current_battle]]));
             obj_ncombat.player_defenses+=battle_object[current_battle].p_defenses[battle_world[current_battle]];
             obj_ncombat.player_silos+=battle_object[current_battle].p_silo[battle_world[current_battle]];
-        }
+        }*/
         
         if (obj_ncombat.enemy=2){obj_ncombat.threat=min(1000000,battle_object[current_battle].p_guardsmen[battle_world[current_battle]]);}
         if (obj_ncombat.enemy=6) then obj_ncombat.threat=battle_object[current_battle].p_eldar[battle_world[current_battle]];

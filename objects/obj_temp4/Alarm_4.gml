@@ -87,7 +87,7 @@ if (obj_ini.adv[1]="Scavengers") or (obj_ini.adv[2]="Scavengers") or (obj_ini.ad
 
 with(obj_star_select){instance_destroy();}
 with(obj_fleet_select){instance_destroy();}
-plan.p_feature[num]=string_replace(plan.p_feature[num],"Artifact|","");
+ delete_features(plan.p_feature[num], P_features.Artifact);
 
 i=0;
 if (string_count("Daemonic",obj_ini.artifact_tags[last_artifact-1])=1) then repeat(140){

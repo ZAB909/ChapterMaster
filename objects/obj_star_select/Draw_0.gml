@@ -266,9 +266,20 @@ if (obj_controller.selecting_planet!=0){
     
     var fit,to_show,temp9;t=-1;to_show=0;temp9="";
     repeat(11){t+=1;fit[t]="";}
-    t=0;to_show=string_count("|",target.p_feature[pp]);
+	var planet_displays = "";
+	var feat_count;
+	var feat_count = array_length(target.p_feature[pp]);
+	if ( feat_count > 0){
+	for (var i =0; i <  feat_count ;i++;){
+		if (target.p_feature[pp][i].planet_display != 0){
+			if (target.p_feature[pp][i].player_hidden == 1){planet_displays += "???? |"}else{
+				planet_displays += target.p_feature[pp][i].planet_display + "|";
+			}
+		}
+	}}
+    t=0;to_show=string_count("|",planet_displays);
     if (to_show>0){
-        explode_script(target.p_feature[pp],"|");
+        explode_script(planet_displays,"|");
         t+=1;if (to_show>=t) then fit[t]=string_replace(string(explode[0]),"|","");if (string_count("WL",fit[t])>0) and (string_count(fit[t],obj_controller.useful_info)=0) then fit[t]="";
         t+=1;if (to_show>=t) then fit[t]=string_replace(string(explode[1]),"|","");if (string_count("WL",fit[t])>0) and (string_count(fit[t],obj_controller.useful_info)=0) then fit[t]="";
         t+=1;if (to_show>=t) then fit[t]=string_replace(string(explode[2]),"|","");if (string_count("WL",fit[t])>0) and (string_count(fit[t],obj_controller.useful_info)=0) then fit[t]="";

@@ -17,7 +17,8 @@ var nope;nope=0;if (obj_controller.master_volume=0) or (obj_controller.music_vol
 if (nope!=1){audio_sound_gain(snd_battle,0.25*obj_controller.master_volume*obj_controller.music_volume,2000);}
 
 
-
+//limit on the size of the players forces allowed
+man_size_limit = 0;
 fack=0;
 cd=0;
 owner=1;

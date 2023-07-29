@@ -15,8 +15,8 @@ function scr_enemy_ai_b() {
 	        if (p_large[i]=1) then p_population[i]+=choose(0,0.01);
 	    }
     
-	    if (p_feature[i]!=""){var nfleet,nforce;nforce=0;nfleet=0;
-	        if (string_count("Awakened Necron Tomb|",p_feature[i])>0) then nforce=1;
+	    if (array_length(p_feature[i])!=0){var nfleet,nforce;nforce=0;nfleet=0;
+	        if (awake_tomb_world(p_feature[i])==1) then nforce=1;
 	        if (nforce=1) and (p_necrons[i]<6) then p_necrons[i]+=1;
 	        if (nforce=1) and (p_necrons[i]<3) then p_necrons[i]+=1;
         
@@ -178,7 +178,7 @@ function scr_enemy_ai_b() {
 	                scr_event_log("purple","Massive heretic uprising on "+string(name)+" "+scr_roman(i)+".");
 	            }// Huge uprising
 	            if (rando>=100) and (p_traitors[i]<5){
-	                p_traitors[i]=6;p_owner[i]=10;p_feature[i]+="Daemonic Incursion|";
+	                p_traitors[i]=6;p_owner[i]=10;array_push(p_feature[i], new new_planet_feature(P_features.Daemonic_Incursion));
 	                if (p_heresy[i]>=80) then p_heresy[i]=95;
 	                if (p_heresy[i]<80) then p_heresy[i]=80;
 	                tixt="Daemonic incursion on "+string(name)+" "+string(i)+"!";

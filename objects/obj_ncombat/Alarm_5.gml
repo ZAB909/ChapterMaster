@@ -84,8 +84,11 @@ if (final_deaths+final_command_deaths>0){
     newline=" ";scr_newtext();
 }
 
-
-
+if (instance_exists(obj_temp4)){
+	if (apoth < 0){
+		obj_temp4.apothecary_present = apoth;
+	}
+};
 
 seed_saved=(min(seed_max,apoth*40))-gene_penalty;
 if (string_count("Doom",obj_ini.strin2)>0) then seed_saved=0;
@@ -151,10 +154,14 @@ if (post_equipment_lost[1]!=""){
         }
     }
     part7=string_delete(part7,string_length(part7)-1,2);part7+=".";i=0;
-    
+	if (instance_exists(obj_temp4)){part7 += "Some may be recoverable"}
     newline=part6;scr_newtext();
     newline=part7;scr_newtext();
     newline=" ";scr_newtext();
+}
+if (instance_exists(obj_temp4)){
+	obj_temp4.post_equipment_lost = post_equipment_lost
+	obj_temp4.post_equipments_lost = post_equipments_lost
 }
 if (slime>0){
     var compan_slime;
@@ -284,7 +291,7 @@ if (defeat=0) and (npowers=true){
     if (enemy=13){en_power=battle_object.p_necrons[battle_id];part10="Necrons";}
 
     if (instance_exists(battle_object)) and (en_power>2){
-        if (string_count("Awakened",battle_object.p_feature[battle_id])=0){
+        if (awake_tomb_world(battle_object.p_feature[battle_id])!=0){
             scr_gov_disp(battle_object.name,battle_id,floor(en_power/2));
         }
     }
@@ -357,9 +364,9 @@ if (defeat=0) and (npowers=true){
     if (enemy=8) and (ethereal>0) and (defeat=0){
         newline="Tau Ethereal Captured";newline_color="yellow";scr_newtext();
     }
-
-    if (enemy=13) and (battle_object.p_necrons[battle_id]<3) and (string_count("Awakened Necron Tomb|",battle_object.p_feature[battle_id])>0){
-
+    
+    if (enemy=13) and (battle_object.p_necrons[battle_id]<3) and (awake_tomb_world(battle_object.p_feature[battle_id])== 1){
+    
         // var bombs;bombs=scr_check_equip("Plasma Bomb",battle_loc,battle_id,0);
         // var bombs;bombs=scr_check_equip("Plasma Bomb","","",0);
 
@@ -369,8 +376,7 @@ if (defeat=0) and (npowers=true){
             // scr_check_equip("Plasma Bomb",battle_loc,battle_id,1);
             // scr_check_equip("Plasma Bomb","","",1);
             newline="Plasma Bomb used to seal the Necron Tomb.";newline_color="yellow";scr_newtext();
-            battle_object.p_feature[battle_id]=string_replace(battle_object.p_feature[battle_id],"Awakened Necron Tomb|","Necron Tomb|");
-            // if (battle_object.p_feature[battle_id]="Awakened Necron Tomb") then battle_object.p_feature[battle_id]="Necron Tomb";
+			seal_tomb_world(battle_object.p_feature[battle_id])
         }
 
         if (plasma_bomb<=0){
@@ -591,13 +597,15 @@ if (exterminatus>0) and (dropping!=0){
 
 instance_activate_object(obj_star);
 instance_activate_object(obj_turn_end);
-if (defeat=1) and (dropping=0) and (string_count("Monastery|",battle_object.p_feature[obj_ncombat.battle_id])>0){
-    with(obj_star){
-        if (string_count("Monastery|",p_feature[obj_ncombat.battle_id])>0){
-            p_feature[obj_ncombat.battle_id]=string_replace(p_feature[obj_ncombat.battle_id],"Monastery|","");
-        }
-    }
+var monastary_list = search_planet_features(battle_object.p_feature[obj_ncombat.battle_id], P_features.Monastery);
+var mon_count = array_length(monastary_list);
+if (defeat=1) and (dropping=0) and (mon_count>0){
+	for (var mon = 0;mon < mon_count;mon++){
+		battle_object.p_feature[obj_ncombat.battle_id][monastary_list[mon_count]].status="destroyed";
+	}
+  
 
+   
     if (obj_controller.und_gene_vaults=0) then newline="Your Fortress Monastery has been raided.  "+string(obj_controller.gene_seed)+" Gene-Seed has been destroyed or stolen.";
     if (obj_controller.und_gene_vaults>0) then newline="Your Fortress Monastery has been raided.  "+string(floor(obj_controller.gene_seed/10))+" Gene-Seed has been destroyed or stolen.";
 
@@ -654,7 +662,13 @@ if (endline=0){
 }
 
 
-if (defeat=1){player_forces=0;}
+if (defeat=1){
+	player_forces=0;
+		if (instance_exists(obj_temp4)){
+		obj_temp4.recoverable_gene_seed = seed_max;
+	}
+	
+}
 
 instance_deactivate_object(obj_star);
 

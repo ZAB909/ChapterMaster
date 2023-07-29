@@ -49,7 +49,7 @@ if (instance_exists(target)){
             button1="Attack";button2="Purge";
         }*/
         if ((target.p_type[obj_controller.selecting_planet]="Dead") and ((target.present_fleet[1]>0) or (target.p_player[obj_controller.selecting_planet]>0))) or (target.p_upgrades[obj_controller.selecting_planet]!=""){
-            if (target.p_feature[obj_controller.selecting_planet]="") or (target.p_upgrades[obj_controller.selecting_planet]!=""){var chock;chock=1;
+            if (array_length(target.p_feature[obj_controller.selecting_planet])==0) or (target.p_upgrades[obj_controller.selecting_planet]!=""){var chock;chock=1;
                 if (target.p_orks[obj_controller.selecting_planet]>0) then chock=0;
                 if (target.p_chaos[obj_controller.selecting_planet]>0) then chock=0;
                 if (target.p_tyranids[obj_controller.selecting_planet]>0) then chock=0;
@@ -72,7 +72,7 @@ if (instance_exists(target)){
         */
         
         if (obj_controller.recruiting_worlds_bought>0) and (target.p_owner[obj_controller.selecting_planet]<=5) and (obj_controller.faction_status[target.p_owner[obj_controller.selecting_planet]]!="War"){
-            if (string_count("Recr",target.p_feature[obj_controller.selecting_planet])=0) and (target.p_type[obj_controller.selecting_planet]!="Dead") and (target.space_hulk=0){
+            if (planet_feature_bool(target.p_feature[obj_controller.selecting_planet], P_features.Recruiting_World)==0) and (target.p_type[obj_controller.selecting_planet]!="Dead") and (target.space_hulk=0){
                 button4="+Recruiting";
             }
         }

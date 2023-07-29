@@ -67,8 +67,8 @@ if (did=1){// Player star has been set
         if (obj_ini.recruiting_type!=obj_ini.home_type) and (obj_ini.home_name!=obj_ini.recruiting_name){
             ed.p_type[1]=obj_ini.recruiting_type;if (obj_ini.recruiting_name!="random") then ed.name=obj_ini.recruiting_name;
             ed.p_type[2]=obj_ini.home_type;ed.planet[2]=1;if (obj_ini.home_name!="random") then ed.name=obj_ini.home_name;
-            ed.p_feature[1]="Recruiting World|";
-            ed.p_feature[2]="Monastery|";ed.p_owner[2]=1;ed.p_first[2]=1;
+            array_push(ed.p_feature[1], new new_planet_feature(P_features.Recruiting_World));//recruiting world
+            array_push(ed.p_feature[2], new new_planet_feature(P_features.Monastery));ed.p_owner[2]=1;ed.p_first[2]=1; //monestary
             if (homeworld_rule!=1) then ed.dispo[2]=-5000;
             
             if (obj_ini.home_type="Shrine") then known[5]=1;
@@ -87,7 +87,8 @@ if (did=1){// Player star has been set
         if (obj_ini.recruiting_type=obj_ini.home_type) or (obj_ini.home_name=obj_ini.recruiting_name){
             ed.p_type[1]="Dead";
             ed.p_type[2]=obj_ini.home_type;ed.planet[2]=1;if (obj_ini.home_name!="random") then ed.name=obj_ini.home_name;
-            ed.p_feature[2]="Recruiting World|Monastery|";ed.p_owner[2]=1;ed.p_first[2]=1;
+            array_push(ed.p_feature[2], new new_planet_feature(P_features.Monastery), new new_planet_feature(P_features.Recruiting_World))
+			ed.p_owner[2]=1;ed.p_first[2]=1;
             if (homeworld_rule!=1) then ed.dispo[2]=-5000;
             
             if (obj_ini.home_type="Shrine") then known[5]=1;
@@ -108,7 +109,7 @@ if (did=1){// Player star has been set
         if (obj_ini.recruiting_type!=obj_ini.home_type) and (obj_ini.home_name!=obj_ini.recruiting_name){
             ed.p_type[1]=obj_ini.recruiting_type;if (obj_ini.recruiting_name!="random") then ed.name=obj_ini.recruiting_name;
             ed.p_type[2]=obj_ini.home_type;ed.planet[2]=1;if (obj_ini.home_name!="random") then ed.name=obj_ini.home_name;
-            ed.p_feature[1]="Recruiting World|";
+            array_push(ed.p_feature[1],new new_planet_feature(P_features.Recruiting_World))
             if (ed.p_type[1]="random") then ed.p_type[1]=choose("Feral","Temperate","Desert","Ice");
             if (ed.p_type[2]="random") then ed.p_type[2]=choose("Feral","Temperate","Desert","Ice");
             // if (ed.name="random") then with(ed){scr_star_name();}
@@ -119,7 +120,7 @@ if (did=1){// Player star has been set
         if (obj_ini.recruiting_type=obj_ini.home_type) or (obj_ini.home_name=obj_ini.recruiting_name){
             ed.p_type[1]="Dead";
             ed.p_type[2]=obj_ini.home_type;ed.planet[2]=1;if (obj_ini.home_name!="random") then ed.name=obj_ini.home_name;
-            ed.p_feature[2]="Recruiting";
+            array_push(ed.p_feature[2],new new_planet_feature(P_features.Recruiting_World))
             if (ed.p_type[1]="random") then ed.p_type[1]=choose("Feral","Temperate","Desert","Ice");
             if (ed.p_type[2]="random") then ed.p_type[2]=choose("Feral","Temperate","Desert","Ice");
             // if (ed.name="random") then with(ed){scr_star_name();}
@@ -131,10 +132,10 @@ if (did=1){// Player star has been set
     with(ed){
         var f;f=0;
         repeat(4){f+=1;
-            if (string_count("Recruiting",p_feature[f])>0) and (string_count("Monastery",p_feature[f])=0){
+			if (array_length( search_planet_features(p_feature[f], P_features.Monastery)) >0)and (array_length( search_planet_features(p_feature[f], P_features.Recruiting_World)) >0){
                 if (p_owner[f]=1) then p_owner[f]=2;
             }
-            if (string_count("Monastery",p_feature[f])>0){
+			if (array_length( search_planet_features(p_feature[f], P_features.Monastery)) >0){
                 if (p_owner[f]!=1) then p_owner[f]=1;
                 owner=1;
             }
@@ -495,7 +496,7 @@ repeat(100){
         var craft;
         craft=instance_create(xx,yy,obj_star);
         craft.craftworld=1;go=999;
-        craft.p_feature[1]="WL6|";
+		array_push(craft.p_feature[1],new new_planet_feature(P_features.Warlord6));
         
         var elforce;
         elforce=instance_create(xx-24,yy-24,obj_en_fleet);
@@ -545,7 +546,7 @@ if (!instance_exists(obj_saveload)) and (instance_exists(obj_creation)) and (glo
                 repeat(4){run+=1;
                     if (him2.p_type[run]=obj_creation.world_type[i]){
                         him2.name=obj_creation.world[i];
-                        if (obj_creation.world_feature[i]!="") then him2.p_feature[run]=obj_creation.world_feature[i];
+                        if (obj_creation.world_feature[i]!="") then him2.p_feature[run]=[];
                         obj_creation.world[i]="";obj_creation.world_type[i]="";obj_creation.world_feature[i]="";
                     }
                     

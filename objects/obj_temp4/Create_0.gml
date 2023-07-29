@@ -8,6 +8,9 @@ battle_threat=0;
 battle_loc="";
 ship_id=0;
 obj=0;
+post_equipments_lost = 0;
+post_equipment_lost =0;
+recoverable_gene_seed = 0;
 
 action_eta = 0;
 siz = 0;
