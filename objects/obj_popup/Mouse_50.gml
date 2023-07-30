@@ -468,7 +468,9 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
                 obj_ini.veh_role[target_comp,vehi]=obj_ini.veh_role[company,obj_controller.ide[w]];
                 obj_ini.veh_wep1[target_comp,vehi]=obj_ini.veh_wep1[company,obj_controller.ide[w]];
                 obj_ini.veh_wep2[target_comp,vehi]=obj_ini.veh_wep2[company,obj_controller.ide[w]];
+                obj_ini.veh_wep3[target_comp,vehi]=obj_ini.veh_wep3[company,obj_controller.ide[w]];
                 obj_ini.veh_upgrade[target_comp,vehi]=obj_ini.veh_upgrade[company,obj_controller.ide[w]];
+                obj_ini.veh_acc[target_comp,vehi]=obj_ini.veh_acc[company,obj_controller.ide[w]];
                 obj_ini.veh_hp[target_comp,vehi]=obj_ini.veh_hp[company,obj_controller.ide[w]];
                 obj_ini.veh_chaos[target_comp,vehi]=obj_ini.veh_chaos[company,obj_controller.ide[w]];
                 obj_ini.veh_pilots[target_comp,vehi]=0;
@@ -476,8 +478,8 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
                 obj_ini.veh_wid[target_comp,vehi]=obj_ini.veh_wid[company,obj_controller.ide[w]];
 
                 obj_ini.veh_race[company,obj_controller.ide[w]]=0;obj_ini.veh_loc[company,obj_controller.ide[w]]="";
-                obj_ini.veh_role[company,obj_controller.ide[w]]="";obj_ini.veh_wep1[company,obj_controller.ide[w]]="";
-                obj_ini.veh_wep2[company,obj_controller.ide[w]]="";obj_ini.veh_upgrade[company,obj_controller.ide[w]]="";
+                obj_ini.veh_role[company,obj_controller.ide[w]]="";obj_ini.veh_wep1[company,obj_controller.ide[w]]="";obj_ini.veh_wep2[company,obj_controller.ide[w]]="";
+                obj_ini.veh_wep3[company,obj_controller.ide[w]]="";obj_ini.veh_upgrade[company,obj_controller.ide[w]]="";obj_ini.veh_acc[company,obj_controller.ide[w]]="";
                 obj_ini.veh_hp[company,obj_controller.ide[w]]=0;obj_ini.veh_chaos[company,obj_controller.ide[w]]=0;
                 obj_ini.veh_pilots[company,obj_controller.ide[w]]=0;obj_ini.veh_lid[company,obj_controller.ide[w]]=0;
                 obj_ini.veh_wid[company,obj_controller.ide[w]]=0;
