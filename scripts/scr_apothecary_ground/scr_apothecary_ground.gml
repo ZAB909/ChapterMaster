@@ -27,10 +27,10 @@ function scr_apothecary_ground() {
 	            com=0;
 	        }
         
-	        if (p_feature[run]!=""){
-	            if (string_count("Starship",p_feature[run])>0){
+	        if (array_length(p_feature[run])!=0){
+				if(planet_feature_bool(p_feature[run],P_features.Starship)==1){
 	                var feetn,feet,tempo,c;
-	                feetn=string_count("|",p_feature[run]);
+	                feetn=array_length(p_feature[run]);
 	                feet=0;tempo[0]="";c=0;
                 
 	                explode_script(p_feature[run],"|");

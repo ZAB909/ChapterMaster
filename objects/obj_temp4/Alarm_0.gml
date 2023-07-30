@@ -5,7 +5,7 @@ if (num>0){// Hmmmmmmm
     obj_controller.menu=0;
 
     
-    if (string_count("STC",stah.p_feature[num])>0){// STC is present
+    if (planet_feature_bool(stah.p_feature[num], P_features.STC_Fragment)==1){// STC is present
         if (tch>0) and (mch=0){
             var pop,own;
             pop=instance_create(0,0,obj_popup);
@@ -79,7 +79,7 @@ if (num>0){// Hmmmmmmm
     
     
     
-    if (string_count("Artifact",stah.p_feature[num])>0){// Artifact is present
+    if (planet_feature_bool(stah.p_feature[num], P_features.Artifact)==1){// Artifact is present
         if (stah.p_type[num]="Dead") or (stah.p_owner[num]=1){alarm[4]=1;exit;}
     
         var pop,own;

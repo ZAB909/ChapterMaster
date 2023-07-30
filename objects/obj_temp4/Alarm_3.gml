@@ -18,7 +18,7 @@ pop.title="Artifact Recovered!";
 pop.text="The Planetary Governor hands over the Artifact without asking for compensation.##It has been safely stowed away upon "+string(loc)+".  It appears to be a "+string(obj_ini.artifact[last_artifact])+" but should be brought home and identified posthaste.";
 with(obj_star_select){instance_destroy();}
 with(obj_fleet_select){instance_destroy();}
-plan.p_feature[num]=string_replace(plan.p_feature[num],"Artifact|","");
+ delete_features(plan.p_feature[num], P_features.Artifact);
 scr_event_log("","Planetary Governor hands over Artifact.");
 
 i=0;
