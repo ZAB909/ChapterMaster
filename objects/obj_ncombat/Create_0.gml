@@ -31,7 +31,7 @@ alpha_strike=0;
 
 view_x=obj_controller.x;view_y=obj_controller.y;
 obj_controller.x=0;obj_controller.y=0;
-if (obj_controller.zoomed=1){with(obj_controller){scr_zoom();}}
+if (obj_controller.zoomed==1){with(obj_controller){scr_zoom();}}
 xxx=200;
 instance_activate_object(obj_cursor);
 instance_activate_object(obj_ini);
