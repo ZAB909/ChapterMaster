@@ -46,7 +46,7 @@ function scr_add_artifact(argument0, argument1, argument2, argument3, argument4)
 	    if (rand2<=50) and (good=0){t2="Plasma Gun";good=1;}
 	    if (rand2<=70) and (good=0){t2=choose("Power Sword","Power Axe","Power Spear","Lightning Claw");good=1;}
 	    if (rand2<=90) and (good=0){t2=choose("Power Fist","Power Fist","Lightning Claw");good=1;}
-	    if (rand2<=100) and (good=0){t2="Relic Blade";good=1;}
+	    if (rand2<=100) and (good=0){t2=choose("Relic Blade","Thunder Hammer");good=1;}
 	}
 
 	if (t1="Armor") and (t2=""){good=0;
@@ -58,7 +58,6 @@ function scr_add_artifact(argument0, argument1, argument2, argument3, argument4)
 
 	if (t1="Gear") and (t2=""){good=0;
 	    if (rand2<=20) and (good=0){t2="Rosarius";good=1;}
-	    // if (rand2<=40) and (good=0){t2="Bionics";good=1;}
 	    if (rand2<=45) and (good=0){t2="Psychic Hood";good=1;}
 	    if (rand2<=80) and (good=0){t2="Jump Pack";good=1;}
 	    if (rand2<=100) and (good=0){t2="Servo Arms";good=1;}
@@ -95,6 +94,7 @@ function scr_add_artifact(argument0, argument1, argument2, argument3, argument4)
 	    t4=choose("RUN","SCO","ADA","VOI");
 	    if ((t2="Power Sword") or (t2="Power Axe") or (t2="Power Spear")) and (t4="SCO") then t4="CHB";// chainblade
 	    if ((t2="Power Fist") or (t2="Power Claw")) and (t4="SCO") then t4="DUB";// doubled up
+		if (t2="Thunder Hammer") and (t4="RUN") then t4="GLO";//glowing runed
 	    if (t2="Relic Blade") and (t4="SCO") then t4="UFL";// underslung flamer
 	}
 	if (t1="Armor"){
