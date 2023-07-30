@@ -83,6 +83,44 @@ function scr_wep_abbreviate(argument0) {
 	if (we="Lascannons") then we2="2 LasCan";
 	if (we="Heavy Bolters") then we2="2 HvyBolt";
 	if (we="Whirlwind Missiles") then we2="Whirl";
+	if (we="HK Missile") then we2="HK Miss";
+
+	if (we="Armoured Ceramite") then we2="Cera";
+	if (we="Artificer Hull") then we2="Art Hull";
+	if (we="Heavy Armour") then we2="Hvy Arm";
+	if (we="Lucifer Pattern Engine") then we2="Luc Eng";
+
+	if (we="Dozer Blades") then we2="Doz Blad";
+	if (we="Searchlight") then we2="Light";
+	if (we="Smoke Launchers") then we2="Smoke";
+
+	if (we="Twin Linked Heavy Bolter Mount") then we2="TL Hvy Bolt";
+	if (we="Twin Linked Lascannon Mount") then we2="TL Lascan";
+	if (we="Twin Linked Assault Cannon Mount") then we2="TL AssaCan";
+	if (we="Reaper Autocannon Mount") then we2="Reap AC";
+
+	if (we="Quad Linked Heavy Bolter Sponsons") then we2="QL Hvy Bolts";
+	if (we="Twin Linked Lascannon Sponsons") then we2="TL Lascans";
+	if (we="Hurricane Bolter Sponsons") then we2="Hurc Bolts";
+	if (we="Flamestorm Cannon Sponsons") then we2="FStorm Cans";
+	if (we="Twin Linked Heavy Flamer Sponsons") then we2="TL Hvy Flams";
+	if (we="Twin Linked Multi-Melta Sponsons") then we2="TL M Meltas";
+	if (we="Twin Linked Volkite Culverin Sponsons") then we2="TL VolCuls";
+
+	if (we="Twin Linked Lascannon Turret") then we2="TL Lascan";
+	if (we="Autocannon Turret") then we2="AutoCan";
+	if (we="Twin Linked Assault Cannon Turret") then we2="TL AssaCan";
+	if (we="Flamestorm Cannon Turret") then we2="FStorm Can";
+	if (we="Magna-Melta Turret") then we2="Mag-Melta";
+	if (we="Plasma Destroyer Turret") then we2="Plas Dest";
+	if (we="Heavy Conversion Beamer Turret") then we2="Hvy CBeam";
+	if (we="Neutron Blaster Turret") then we2="NBlaster";
+	if (we="Volkite Saker Turret") then we2="Vol Saker";
+
+	if (we="Lascannon Sponsons") then we2="Lascans";
+	if (we="Heavy Bolter Sponsons") then we2="Hvy Bolts";
+	if (we="Heavy Flamer Sponsons") then we2="Hvy Flams";
+	if (we="Volkite Culverin Sponsons") then we2="VolCuls";
 
 	return(we2);
 

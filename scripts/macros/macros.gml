@@ -8,6 +8,11 @@ function macros() {
 		neutral = 0,
 		good = 1
 	}
+	
+	enum GOD_MISSION{
+		artifact
+	}
+
 	enum INQUISITION_MISSION {
 		purge,
 		inquisitor,
