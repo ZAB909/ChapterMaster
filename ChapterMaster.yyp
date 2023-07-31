@@ -279,7 +279,7 @@
   "isEcma": false,
   "LibraryEmitters": [],
   "MetaData": {
-    "IDEVersion": "2023.6.0.92",
+    "IDEVersion": "2023.6.0.89",
   },
   "resources": [
     {"id":{"name":"spr_credits_bg","path":"sprites/spr_credits_bg/spr_credits_bg.yy",},},
@@ -911,7 +911,6 @@
     {"roomId":{"name":"combat_testing","path":"rooms/combat_testing/combat_testing.yy",},},
     {"roomId":{"name":"testing_half","path":"rooms/testing_half/testing_half.yy",},},
     {"roomId":{"name":"Testing_newnew","path":"rooms/Testing_newnew/Testing_newnew.yy",},},
-
     {"roomId":{"name":"Main_Menu","path":"rooms/Main_Menu/Main_Menu.yy",},},
     {"roomId":{"name":"Defeat","path":"rooms/Defeat/Defeat.yy",},},
     {"roomId":{"name":"combat_testing","path":"rooms/combat_testing/combat_testing.yy",},},
@@ -960,7 +959,6 @@
     {"roomId":{"name":"testing_half","path":"rooms/testing_half/testing_half.yy",},},
     {"roomId":{"name":"Tutorial","path":"rooms/Tutorial/Tutorial.yy",},},
     {"roomId":{"name":"Main_Menu","path":"rooms/Main_Menu/Main_Menu.yy",},},
-
   ],
   "TextureGroups": [
     {"resourceType":"GMTextureGroup","resourceVersion":"1.3","name":"Default","autocrop":true,"border":2,"compressFormat":"bz2","directory":"","groupParent":null,"isScaled":false,"loadType":"default","mipsToGenerate":0,"targets":-1,},
