@@ -31,7 +31,7 @@ enum base_type{
 	// function creates a new struct planet feature of a  specified type
 function new_planet_feature(feature_type) constructor{
 	f_type = feature_type;
-	reveal_to_player = function(){
+	static reveal_to_player = function(){
 		if (player_hidden == 1){
 			player_hidden = 0;
 		}
@@ -62,7 +62,7 @@ function new_planet_feature(feature_type) constructor{
 		planet_display = $"{ruins_size} Unexplored Ancient Ruins";
 		completion_level = 0;
 		player_hidden = 1;	
-		find_starship = function(){
+		static find_starship = function(){
 			f_type = P_features.Starship;
 			planet_display = "Ancient Starship";
 			completion_level = 0;
@@ -70,7 +70,7 @@ function new_planet_feature(feature_type) constructor{
 		}
 		
 		//allows ruins to be entered to retrive fallen marine gear
-		forces_defeated = function(){
+		static forces_defeated = function(){
 			planet_display = "Failed Ruins Expidition"
 			completion_level = 1;
 			failed_exploration = 1;
@@ -80,7 +80,7 @@ function new_planet_feature(feature_type) constructor{
 		}
 		
 		//revcover equipment of fallen marines from ruins
-		recover_from_dead = function(){
+		static recover_from_dead = function(){
 			var pop=instance_create(0,0,obj_popup);var route = random(5);
 			pop.image="ancient_ruins";pop.title="Ancient Ruins: Recovery";
 			if (route < 4){
@@ -127,7 +127,7 @@ function new_planet_feature(feature_type) constructor{
 		}
 		
 		//determine what race the ruins once belonged to effect enemies that can be found
-		determine_race = function(){
+		static determine_race = function(){
 		        var dice=floor(random(100))+1;
 		        if (dice<=9) then ruins_race=1;
 		        if (dice>9) and (dice<=74) then ruins_race=2;
@@ -137,7 +137,7 @@ function new_planet_feature(feature_type) constructor{
 		}
 		
 		//mark ruins as fully explored
-		ruins_explored = function(){
+		static ruins_explored = function(){
 			planet_display = "Ancient Ruins";
 			exploration_complete= true;
 		}
@@ -175,6 +175,12 @@ function new_planet_feature(feature_type) constructor{
 	default:
 		player_hidden = 1;
 		planet_display = 0
+	}
+	static load_json_data = function(data){
+		 var names = variable_struct_get_names(data);
+		 for (var i = 0; i < array_length(names); i++) {
+            variable_struct_set(self, names[i], variable_struct_get(data, names[i]))
+        }
 	}
 }
 
