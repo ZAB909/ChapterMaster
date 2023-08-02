@@ -50,4 +50,3 @@ connected=0;
 acted=0;
 hurssy=0;
 hurssy_time=0;
-

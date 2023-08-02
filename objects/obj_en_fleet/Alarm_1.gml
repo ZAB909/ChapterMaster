@@ -149,29 +149,29 @@ if ((trade_goods="BLOODBLOODBLOOD") or (trade_goods="BLOODBLOODBLOODBLOOD")) and
                             
                             
                             if (action="") and (yarr=false){debugl("BLOOD: F");
-                                var hdis,hnear,fnear,fdis,pnear;
-                                hdis=9999;fdis=9999;fnear=0;hnear=0;pnear=0;
+                                var homeworld_distance,homeworld_nearby,fleet_nearby,fleet_distance,planet_nearby;
+                                homeworld_distance=9999;fleet_distance=9999;fleet_nearby=0;homeworld_nearby=0;planet_nearby=0;
                                 
                                 with(obj_p_fleet){if (action="") then instance_create(x,y,obj_temp7);}
                                 with(obj_star){if (p_owner[1]=1) or (p_owner[2]=1) or (p_owner[3]=1) or (p_owner[4]=1) then instance_create(x,y,obj_temp8);}
                                 
-                                if (instance_exists(obj_temp7)){fnear=instance_nearest(x,y,obj_temp7);fdis=point_distance(x,y,fnear.x,fnear.y);}
-                                if (instance_exists(obj_temp8)){hnear=instance_nearest(x,y,obj_temp8);hdis=point_distance(x,y,hnear.x,hnear.y)-30;}
+                                if (instance_exists(obj_temp7)){fleet_nearby=instance_nearest(x,y,obj_temp7);fleet_distance=point_distance(x,y,fleet_nearby.x,fleet_nearby.y);}
+                                if (instance_exists(obj_temp8)){homeworld_nearby=instance_nearest(x,y,obj_temp8);homeworld_distance=point_distance(x,y,homeworld_nearby.x,homeworld_nearby.y)-30;}
                                 
-                                if (hdis<fdis) and (hdis<5000) and (hdis>40) and (instance_exists(hnear)){// Go towards planet
-                                    next_star=hnear;yarr=true;
+                                if (homeworld_distance<fleet_distance) and (homeworld_distance<5000) and (homeworld_distance>40) and (instance_exists(homeworld_nearby)){// Go towards planet
+                                    next_star=homeworld_nearby;yarr=true;
                                 }
-                                if (hdis<fdis) and (hdis<5000) and (hdis>40){
+                                if (homeworld_distance<fleet_distance) and (homeworld_distance<5000) and (homeworld_distance>40){
                                     with(obj_temp7){instance_destroy();}
                                     with(obj_temp8){instance_destroy();}
                                 }
                                 
                                 
-                                if (fdis<hdis) and (fdis<7000) and (fdis>40) and (instance_exists(obj_temp7)){// Go towards that fleet
-                                    pnear=instance_nearest(fnear.x,fnear.y,obj_star);
+                                if (fleet_distance<homeworld_distance) and (fleet_distance<7000) and (fleet_distance>40) and (instance_exists(obj_temp7)){// Go towards that fleet
+                                    planet_nearby=instance_nearest(fleet_nearby.x,fleet_nearby.y,obj_star);
                                     
-                                    if (instance_exists(pnear)) and (instance_exists(orbiting)){debugl("BLOOD: G");
-                                        if (fdis<=500) and (orbiting!=pnear){// Case 1; really close, wait for them to make the move
+                                    if (instance_exists(planet_nearby)) and (instance_exists(orbiting)){debugl("BLOOD: G");
+                                        if (fleet_distance<=500) and (orbiting!=planet_nearby){// Case 1; really close, wait for them to make the move
                                             with(obj_temp7){instance_destroy();}
                                             with(obj_temp8){instance_destroy();}
                                             
@@ -181,9 +181,9 @@ if ((trade_goods="BLOODBLOODBLOOD") or (trade_goods="BLOODBLOODBLOODBLOOD")) and
                                             
                                             yarr=true;exit;
                                         }
-                                        if (fdis>500){// Case 2; kind of far away, move closer
-                                            var dirr,diss,goto;diss=fdis/2;goto=0;
-                                            dirr=point_direction(x,y,fnear.x,fnear.y);debugl("BLOOD: H");
+                                        if (fleet_distance>500){// Case 2; kind of far away, move closer
+                                            var dirr,diss,goto;diss=fleet_distance/2;goto=0;
+                                            dirr=point_direction(x,y,fleet_nearby.x,fleet_nearby.y);debugl("BLOOD: H");
                                             
                                             with(orbiting){y-=20000;}
                                             goto=instance_nearest(x+lengthdir_x(diss,dirr),y+lengthdir_x(diss,dirr),obj_star);
@@ -486,17 +486,17 @@ if (obj_controller.faction_status[2]="War") and (action="") and (trade_goods="")
         
         
         if (trade_goods="") and (action=""){
-            var hdis,hnear,fnear,fdis,pnear;
-            hdis=9999;fdis=9999;fnear=0;hnear=0;pnear=0;
+            var homeworld_distance,homeworld_nearby,fleet_nearby,fleet_distance,planet_nearby;
+            homeworld_distance=9999;fleet_distance=9999;fleet_nearby=0;homeworld_nearby=0;planet_nearby=0;
             
             with(obj_p_fleet){if (action="") then instance_create(x,y,obj_temp7);}
             with(obj_star){if (p_owner[1]=1) or (p_owner[2]=1) or (p_owner[3]=1) or (p_owner[4]=1) then instance_create(x,y,obj_temp8);}
             
-            if (instance_exists(obj_temp7)){fnear=instance_nearest(x,y,obj_temp7);fdis=point_distance(x,y,fnear.x,fnear.y);}
-            if (instance_exists(obj_temp8)){hnear=instance_nearest(x,y,obj_temp8);hdis=point_distance(x,y,hnear.x,hnear.y)-30;}
+            if (instance_exists(obj_temp7)){fleet_nearby=instance_nearest(x,y,obj_temp7);fleet_distance=point_distance(x,y,fleet_nearby.x,fleet_nearby.y);}
+            if (instance_exists(obj_temp8)){homeworld_nearby=instance_nearest(x,y,obj_temp8);homeworld_distance=point_distance(x,y,homeworld_nearby.x,homeworld_nearby.y)-30;}
             
-            if (hdis<fdis) and (hdis<5000) and (hdis>40){// Go towards planet
-                action_x=hnear.x;action_y=hnear.y;alarm[4]=1;// show_message("B");
+            if (homeworld_distance<fleet_distance) and (homeworld_distance<5000) and (homeworld_distance>40){// Go towards planet
+                action_x=homeworld_nearby.x;action_y=homeworld_nearby.y;alarm[4]=1;// show_message("B");
                 with(obj_temp7){instance_destroy();}
                 with(obj_temp8){instance_destroy();}
                 exit;
@@ -504,18 +504,18 @@ if (obj_controller.faction_status[2]="War") and (action="") and (trade_goods="")
             
             
             
-            if (fdis<hdis) and (fdis<7000) and (fdis>40) and (instance_exists(obj_temp7)){// Go towards that fleet
-                pnear=instance_nearest(fnear.x,fnear.y,obj_star);
+            if (fleet_distance<homeworld_distance) and (fleet_distance<7000) and (fleet_distance>40) and (instance_exists(obj_temp7)){// Go towards that fleet
+                planet_nearby=instance_nearest(fleet_nearby.x,fleet_nearby.y,obj_star);
                 
-                if (instance_exists(pnear)) and (instance_exists(orbiting)){
-                    if (fdis<=500) and (pnear.orbiting!=orbiting){// Case 1; really close, wait for them to make the move
+                if (instance_exists(planet_nearby)) and (instance_exists(orbiting)){
+					if (fleet_distance<=500) and (planet_nearby!=orbiting){// Case 1; really close, wait for them to make the move
                         with(obj_temp7){instance_destroy();}
                         with(obj_temp8){instance_destroy();}
                         exit;
                     }
-                    if (fdis>500){// Case 2; kind of far away, move closer
-                        var dirr,diss,goto;diss=fdis/2;goto=0;
-                        dirr=point_direction(x,y,fnear.x,fnear.y);
+                    if (fleet_distance>500){// Case 2; kind of far away, move closer
+                        var dirr,diss,goto;diss=fleet_distance/2;goto=0;
+                        dirr=point_direction(x,y,fleet_nearby.x,fleet_nearby.y);
                         
                         with(orbiting){y-=20000;}
                         goto=instance_nearest(x+lengthdir_x(diss,dirr),y+lengthdir_x(diss,dirr),obj_star);
@@ -543,17 +543,17 @@ if (obj_controller.faction_status[2]="War") and (action="") and (trade_goods="")
         
         
         
-        /*var hdis,hnear,fnear,fdis;
-        hdis=9999;fdis=9999;fnear=0;hnear=0;
+        /*var homeworld_distance,homeworld_nearby,fleet_nearby,fleet_distance;
+        homeworld_distance=9999;fleet_distance=9999;fleet_nearby=0;homeworld_nearby=0;
         
         with(obj_p_fleet){if (action!="") then y-=20000;}// Disable non-stationary player fleets
-        if (instance_exists(obj_p_fleet)){fnear=instance_nearest(x,y,obj_p_fleet);fdis=point_distance(x,y,fnear.x,fnear.y);}// Get closest player fleet
+        if (instance_exists(obj_p_fleet)){fleet_nearby=instance_nearest(x,y,obj_p_fleet);fleet_distance=point_distance(x,y,fleet_nearby.x,fleet_nearby.y);}// Get closest player fleet
         with(obj_star){if (owner=1) then instance_create(x,y,obj_temp7);}// Create temp7 at player stars
-        if (instance_exists(obj_temp7)){hnear=instance_nearest(x,y,obj_temp7);hdis=point_distance(x,y,hnear.x,hnear.y);}// Get closest star
+        if (instance_exists(obj_temp7)){homeworld_nearby=instance_nearest(x,y,obj_temp7);homeworld_distance=point_distance(x,y,homeworld_nearby.x,homeworld_nearby.y);}// Get closest star
         with(obj_p_fleet){if (y<-10000) then y+=20000;}// Enable non-stationary player fleets
         
-        if (hdis<=fdis) and (hdis<7000) and (instance_exists(hnear)){// Go towards planet
-            action_x=hnear.x;action_y=hnear.y;alarm[4]=1;exit;
+        if (homeworld_distance<=fleet_distance) and (homeworld_distance<7000) and (instance_exists(homeworld_nearby)){// Go towards planet
+            action_x=homeworld_nearby.x;action_y=homeworld_nearby.y;alarm[4]=1;exit;
         }
         
         
