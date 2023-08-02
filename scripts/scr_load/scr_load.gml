@@ -399,7 +399,16 @@ function scr_load(argument0, argument1) {
 	                new_star.planet[g]=ini_read_real("Star","sr"+string(i)+"plan"+string(g),0);
 	                new_star.dispo[g]=ini_read_real("Star","sr"+string(i)+"dispo"+string(g),-10);
 	                new_star.p_type[g]=ini_read_string("Star","sr"+string(i)+"type"+string(g),"");
-	                new_star.p_feature[g]=ini_read_string("Star","sr"+string(i)+"feat"+string(g),"");
+					new_star.p_feature[g] = [];
+					var  p_features = ini_read_string("Star","sr"+string(i)+"feat"+string(g),"");
+					if (p_features != ""){
+						var p_features = json_parse(base64_decode(p_features));
+						for (var feat = 0;feat < array_length(p_features);feat++){
+							var new_feat = new new_planet_feature(p_features[feat].f_type);
+							new_feat.load_json_data(p_features[feat]);
+							array_push(new_star.p_feature[g], new_feat);
+						}
+					}
 	                new_star.p_owner[g]=ini_read_real("Star","sr"+string(i)+"own"+string(g),0);
 	                new_star.p_first[g]=ini_read_real("Star","sr"+string(i)+"fir"+string(g),0);
 	                new_star.p_population[g]=ini_read_real("Star","sr"+string(i)+"popul"+string(g),0);

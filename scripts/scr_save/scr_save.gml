@@ -354,7 +354,22 @@ function scr_save(argument0, argument1) {
 	                ini_write_real("Star","sr"+string(i)+"plan"+string(g),instance_array[i].planet[g]);
 	                ini_write_real("Star","sr"+string(i)+"dispo"+string(g),instance_array[i].dispo[g]);
 	                ini_write_string("Star","sr"+string(i)+"type"+string(g),instance_array[i].p_type[g]);
-	                ini_write_string("Star","sr"+string(i)+"feat"+string(g),instance_array[i].p_feature[g]);
+					var save_features = [];
+					if (array_length(instance_array[i].p_feature[g])> 0){
+					for (var f = 0;f < array_length(instance_array[i].p_feature[g]);f++;){
+						save_features[f]=0;
+						var copy_feature = instance_array[i].p_feature[g][f];
+						var new_feature = {};
+						var names = variable_struct_get_names(copy_feature);
+						for (var name = 0; name < array_length(names); name++) {
+						  if (!is_method(copy_feature[$ names[name]])){
+							  variable_struct_set(new_feature, names[name],copy_feature[$ names[name]])
+						  }
+						}
+						save_features[f] = new_feature;
+					}
+					}
+	                ini_write_string("Star","sr"+string(i)+"feat"+string(g),base64_encode(json_stringify(save_features)));
 	                ini_write_real("Star","sr"+string(i)+"own"+string(g),instance_array[i].p_owner[g]);
 	                ini_write_real("Star","sr"+string(i)+"fir"+string(g),instance_array[i].p_first[g]);
 	                ini_write_real("Star","sr"+string(i)+"popul"+string(g),instance_array[i].p_population[g]);
