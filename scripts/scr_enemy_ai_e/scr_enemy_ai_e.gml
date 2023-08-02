@@ -601,30 +601,31 @@ function scr_enemy_ai_e() {
 				// xp gain for the recruit is here
 				// as well as planet type buffs or nerfs
 	                if (aspirant!=0){
-	                    var i,thiss;
-	                    i=0;thiss=0;
+	                    var i,new_recruit;
+	                    i=0;new_recruit=0;
                     
+						// gets the next empty recruit space on the array
 	                    repeat(300){
 	                        i+=1;
-	                        if (thiss=0){
-	                            if (obj_controller.recruit_name[i]=""){thiss=i;}
+	                        if (new_recruit=0){
+	                            if (obj_controller.recruit_name[i]=""){new_recruit=i;}
 	                        }    
 	                    }
                     
-	                    obj_controller.recruit_name[thiss]=scr_marine_name();
-	                    obj_controller.recruit_exp[thiss]+=irandom(5);
+	                    obj_controller.recruit_name[new_recruit]=scr_marine_name();
+	                    obj_controller.recruit_exp[new_recruit]+=irandom(5);
 						
 						// gives planet buffs
 						
-						if (p_type[run]="Death"){ obj_controller.recruit_exp[thiss]+=6;}
-						if (p_type[run]="Ice"){obj_controller.recruit_exp[thiss]+=3;}
-						if (p_type[run]="Desert"){obj_controller.recruit_exp[thiss]+=3;}
-						if (p_type[run]="Lava"){obj_controller.recruit_exp[thiss]+=9;}
+						if (p_type[run]="Death"){ obj_controller.recruit_exp[new_recruit]+=6;}
+						if (p_type[run]="Ice"){obj_controller.recruit_exp[new_recruit]+=3;}
+						if (p_type[run]="Desert"){obj_controller.recruit_exp[new_recruit]+=3;}
+						if (p_type[run]="Lava"){obj_controller.recruit_exp[new_recruit]+=9;}
 						
                 
 	                    if (obj_controller.recruit_trial="Hunting the Hunter"){
 							if(p_type[run]="Desert") or (p_type[run]="Ice") or (p_type[run]=="Death"){
-								obj_controller.recruit_exp[thiss]+=irandom(13)+7; 
+								obj_controller.recruit_exp[new_recruit]+=irandom(13)+7; 
 							}
 	                    }
 						
@@ -641,19 +642,19 @@ function scr_enemy_ai_e() {
 							if(p_type[run]="Feudal"){recruit_chance-=choose(0.5,0.6,0.6,0.7,0.7,0.8)}
 						}
 	                    if (obj_controller.recruit_trial="Challenge"){
-							obj_controller.recruit_exp[thiss]+=choose(0,0,0,0,0,0,0,0,10,20);
+							obj_controller.recruit_exp[new_recruit]+=choose(0,0,0,0,0,0,0,0,10,20);
 							scr_alert("green","owner","A worthy aspirant has risen to the rank of Neophyte, doing quite well against the challenger Astartes.",0,0);
 	                    }
 
 						
 						if (obj_controller.recruit_trial="Apprenticeship"){
 							if (p_type[run]="Lava"){recruit_chance-=choose(0.5,0.6,0.6,0.7,0.7);} // nocturne gaming
-							obj_controller.recruit_exp[thiss]+=irandom(5)+34;					
+							obj_controller.recruit_exp[new_recruit]+=irandom(5)+34;					
 						}
 						
 						if (obj_controller.recruit_trial="Knowledge of Self"){
-							if(p_type[run]="Temperate") then obj_controller.recruit_exp[thiss]+=irandom(5)+5; // this is the only one that gives bonus for temperates
-							obj_controller.recruit_exp[thiss]+=irandom(10)+15; 
+							if(p_type[run]="Temperate") then obj_controller.recruit_exp[new_recruit]+=irandom(5)+5; // this is the only one that gives bonus for temperates
+							obj_controller.recruit_exp[new_recruit]+=irandom(10)+15; 
 						}
 
 
@@ -662,11 +663,11 @@ function scr_enemy_ai_e() {
 	                    onceh=0;
                     
                     
-	                    obj_controller.recruit_corruption[thiss]=corr;
-	                    obj_controller.recruit_distance[thiss]=0;
-	                    obj_controller.recruit_training[thiss]=months_to_neo;
+	                    obj_controller.recruit_corruption[new_recruit]=corr;
+	                    obj_controller.recruit_distance[new_recruit]=0;
+	                    obj_controller.recruit_training[new_recruit]=months_to_neo;
 	                    obj_controller.gene_seed-=1;
-						if(obj_controller.recruit_exp[thiss]>=40) then obj_controller.recruit_exp[thiss]=38; // we don't want immediate battle bros
+						if(obj_controller.recruit_exp[new_recruit]>=40) then obj_controller.recruit_exp[new_recruit]=38; // we don't want immediate battle bros
                     
                     
                     
