@@ -5,7 +5,7 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
                 
 	//scr_infantry_weapon
 	// name: name
-	// is_man: man?
+	// is_man: man?  //Probably used to differenciate internaly between trooper and vehicle weapons
 	// man_number: number
 	// man_type: owner
 	// group: current dudes block
@@ -206,7 +206,7 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
   	  if (argument0="Sarissa"){atta=65;arp=0;rang=2;}
 	    if (argument0="Seraphim Pistols"){atta=200;arp=1;rang=4;}
 	    if (argument0="Laser Mace"){atta=200;arp=1;rang=5.1;amm=3;}
-	    if (argument0="Heavy Bolter"){atta=120;arp=0;rang=16;spli=0;
+	    if (argument0="Heavy Bolter"){atta=120;arp=0;rang=16;spli=0;}
     
 	    if (name="Lasgun"){atta=20;arp=0;rang=6;amm=30;}
 	    if (name="Daemonhost Claws"){atta=350;arp=1;rang=1;spli=1;}
@@ -280,7 +280,4 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
 	att[i]=0;
 	apa[i]=0;
 	*/
-
-
-    }
-  }
+}

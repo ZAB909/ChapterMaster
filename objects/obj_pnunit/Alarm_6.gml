@@ -1,3 +1,7 @@
+//
+// Handles marines dying on battle
+//
+
 // Remove from ships
 // Remove from the controller
 // Remove from any planetary bodies
