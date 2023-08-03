@@ -139,17 +139,15 @@ if (shop="vehicles"){i=0;
       i+=1;x_mod[i]=9;item[i]="Twin Linked Lascannon";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=110;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
       i+=1;x_mod[i]=9;item[i]="Autocannon";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=80;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
 	  i+=1;x_mod[i]=9;item[i]="Inferno Cannon";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=115;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
-    if (obj_controller.stc_bonus[3]=3){
-		i+=1;x_mod[i]=0;item[i]="Assault Cannon";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=75;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
-        i+=1;x_mod[i]=0;item[i]="Flamestorm Cannon";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=135;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
-        i+=1;x_mod[i]=0;item[i]="Twin-Linked Assault Cannon";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=150;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
-        i+=1;x_mod[i]=0;item[i]="Whirlwind Missile Launcher";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=90;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+	  i+=1;x_mod[i]=9;item[i]="Assault Cannon";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=75;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+      i+=1;x_mod[i]=9;item[i]="Flamestorm Cannon";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=135;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+      i+=1;x_mod[i]=9;item[i]="Twin-Linked Assault Cannon";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=150;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+      i+=1;x_mod[i]=9;item[i]="Whirlwind Missile Launcher";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=90;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     }
-    if (obj_controller.stc_bonus[4]=3){
-        i+=1;x_mod[i]=0;item[i]="Heavy Conversion Beam Projector";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=100;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
-        i+=1;x_mod[i]=0;item[i]="Void Shield";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=250;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
-    }
-}
+   if (obj_controller.stc_wargear>=6){nobuy[i]=0;item_cost[i]=700;}
+      i+=1;x_mod[i]=9;item[i]="Heavy Conversion Beam Projector";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=100;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+      i+=1;x_mod[i]=9;item[i]="Void Shield";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=250;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+
 
 if (shop="warships"){i=0;
     i+=1;item[i]="Battle Barge";item_stocked[i]=scr_ship_count(item[i]);item_cost[i]=20000;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
