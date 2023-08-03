@@ -398,24 +398,16 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
         obj_ncombat.formation_set=formation_possible[formation_current];
         obj_ncombat.attacker=1;
         if (ship_all[500]=1) then obj_ncombat.local_forces=1;
-        
+        var _planet = obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id]
         if (obj_ncombat.battle_object.space_hulk=1) then obj_ncombat.battle_special="space_hulk";
-        if (planet_feature_bool(obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id],P_features.Warlord6) == 1) and (obj_ncombat.enemy=6) and (obj_controller.faction_defeated[6]=0) then obj_ncombat.leader=1;
+        if (planet_feature_bool(_planet,P_features.Warlord6) == 1) and (obj_ncombat.enemy=6) and (obj_controller.faction_defeated[6]=0) then obj_ncombat.leader=1;
         if (obj_ncombat.enemy=7) and (obj_controller.faction_defeated[7]<=0){
-            /*with(obj_temp1){instance_destroy();}
-            with(obj_star){
-                if (p_owner[1]=7) then instance_create(x,y,obj_temp1);
-                if (p_owner[2]=7) then instance_create(x,y,obj_temp1);
-                if (p_owner[3]=7) then instance_create(x,y,obj_temp1);
-                if (p_owner[4]=7) then instance_create(x,y,obj_temp1);
-            }*/
-            // if (instance_number(obj_temp1)=1) or (string_count("WL7|",obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id])>0) then obj_ncombat.leader=1;
-            if ( planet_feature_bool(obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id],P_features.Warlord7)==1) then obj_ncombat.leader=1;
-            // with(obj_temp1){instance_destroy();}
-        }
-        // if (string_count("WL10|",obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id])>0) and (obj_ncombat.enemy=10) and (obj_controller.faction_defeated[10]=0){
-            // if (
-        // }
+
+            if ( planet_feature_bool(_planet,P_features.Warlord7)==1){
+				obj_ncombat.leader=1;
+				obj_ncombat.Warlord = _planet[search_planet_features(_planet,P_features.Warlord7)[0]]
+			}
+
         
         if (obj_ncombat.enemy=9) and (obj_ncombat.battle_object.space_hulk=0){
             if (p_target.p_problem[obj_controller.selecting_planet,1]="tyranid_org") then obj_ncombat.battle_special="tyranid_org";

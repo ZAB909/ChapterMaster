@@ -19,7 +19,8 @@ enum P_features {
 			Mechanicus_Forge,
 			Reclamation_pools,
 			Capillary_Towers,
-			Daemonic_Incursion
+			Daemonic_Incursion,
+			Victory_Shrine
 	};
 	
 enum base_type{
@@ -163,6 +164,12 @@ function new_planet_feature(feature_type) constructor{
 	case P_features.Warlord7:
 		player_hidden = 1;
 		planet_display= "Ork Warboss";
+		Warboss = "alive"
+		kill_warboss = function(){
+			f_type = P_features.Victory_Shrine
+			planet_display= $"{faction_leader[7]} Death Place";
+			Warboss = "dead";
+		}
 		break;
 	case P_features.Monastery:
 		planet_display="Fortress Monastary";
