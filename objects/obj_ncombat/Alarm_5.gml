@@ -296,11 +296,15 @@ if (defeat=0) and (npowers=true){
         }
     }
 
+	
     if (enemy!=2){
         if (attacker=0) then new_power=en_power-1;
         if ((attacker=1) or (dropping=1)) then new_power=en_power-2;
 
         new_power=max(new_power,0);
+		
+		//(¿?) Ramps up threat/enemy presence in case enemy Type == "Daemon" (¿?)
+		//Does the inverse check/var assignment 10 lines above
         if (part10="Daemon") then new_power=7;
         if (enemy=9) and (new_power=0) then scr_event_log("","Tyranids cleansed from "+string(battle_object.name)+" "+scr_roman(battle_id));
         if (enemy=11) and (en_power!=floor(en_power)) then en_power=floor(en_power);
