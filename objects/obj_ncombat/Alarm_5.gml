@@ -601,61 +601,62 @@ if (exterminatus>0) and (dropping!=0){
 
 instance_activate_object(obj_star);
 instance_activate_object(obj_turn_end);
-var monastary_list = search_planet_features(battle_object.p_feature[obj_ncombat.battle_id], P_features.Monastery);
-var mon_count = array_length(monastary_list);
-if (defeat=1) and (dropping=0) and (mon_count>0){
-	for (var mon = 0;mon < mon_count;mon++){
-		battle_object.p_feature[obj_ncombat.battle_id][monastary_list[mon_count]].status="destroyed";
+
+//If not fleet based and...
+if (obj_ini.fleet_type!=1) and (defeat=1) and (dropping=0){
+	var monastary_list = search_planet_features(battle_object.p_feature[obj_ncombat.battle_id], P_features.Monastery);
+	var mon_count = array_length(monastary_list);
+	if(mon_count>0){
+		for (var mon = 0;mon < mon_count;mon++){
+			battle_object.p_feature[obj_ncombat.battle_id][monastary_list[mon_count]].status="destroyed";
+		}
+
+	    if (obj_controller.und_gene_vaults=0) then newline="Your Fortress Monastery has been raided.  "+string(obj_controller.gene_seed)+" Gene-Seed has been destroyed or stolen.";
+	    if (obj_controller.und_gene_vaults>0) then newline="Your Fortress Monastery has been raided.  "+string(floor(obj_controller.gene_seed/10))+" Gene-Seed has been destroyed or stolen.";
+
+	    scr_event_log("red",string(newline));
+	    instance_activate_object(obj_event_log);
+	    newline_color="red";scr_newtext();
+
+	    var lasers_lost,defenses_lost,silos_lost;
+	    lasers_lost=0;defenses_lost=0;silos_lost=0;
+
+	    if (player_defenses>0){defenses_lost=round(player_defenses*0.75);}
+	    if (battle_object.p_silo[obj_ncombat.battle_id]>0){silos_lost=round(battle_object.p_silo[obj_ncombat.battle_id]*0.75);}
+	    if (battle_object.p_lasers[obj_ncombat.battle_id]>0){lasers_lost=round(battle_object.p_lasers[obj_ncombat.battle_id]*0.75);}
+
+	    if (player_defenses<30) then defenses_lost=player_defenses;
+	    if (battle_object.p_silo[obj_ncombat.battle_id]<30){silos_lost=battle_object.p_silo[obj_ncombat.battle_id];}
+	    if (battle_object.p_lasers[obj_ncombat.battle_id]<8){lasers_lost=battle_object.p_lasers[obj_ncombat.battle_id];}
+
+	    var percent;percent=0;newline="";
+	    if (defenses_lost>0){
+	        percent=round((defenses_lost/player_defenses)*100);
+	        newline=string(defenses_lost)+" Weapon Emplacements have been lost ("+string(percent)+"%).";
+	    }
+	    if (silos_lost>0){
+	        percent=round((silos_lost/battle_object.p_silo[obj_ncombat.battle_id])*100);
+	        if (defenses_lost>0) then newline+="  ";
+	        newline+=string(silos_lost)+" Missile Silos have been lost ("+string(percent)+"%).";
+	    }
+	    if (lasers_lost>0){
+	        percent=round((lasers_lost/battle_object.p_lasers[obj_ncombat.battle_id])*100);
+	        if (silos_lost>0) or (defenses_lost>0) then newline+="  ";
+	        newline+=string(lasers_lost)+" Defense Lasers have been lost ("+string(percent)+"%).";
+	    }
+
+	    battle_object.p_defenses[obj_ncombat.battle_id]-=defenses_lost;
+	    battle_object.p_silo[obj_ncombat.battle_id]-=silos_lost;
+	    battle_object.p_lasers[obj_ncombat.battle_id]-=lasers_lost;
+	    if (defenses_lost+silos_lost+lasers_lost>0){newline_color="red";scr_newtext();}
+
+	    endline=0;
+
+	    if (obj_controller.und_gene_vaults=0){
+	        obj_controller.gene_seed=0;var w;w=0;repeat(120){w+=1;if (obj_ini.slave_batch_num[w]>0){obj_ini.slave_batch_num[w]=0;obj_ini.slave_batch_eta[w]=0;}}
+	    }
+	    if (obj_controller.und_gene_vaults>0) then obj_controller.gene_seed-=floor(obj_controller.gene_seed/10);
 	}
-  
-
-   
-    if (obj_controller.und_gene_vaults=0) then newline="Your Fortress Monastery has been raided.  "+string(obj_controller.gene_seed)+" Gene-Seed has been destroyed or stolen.";
-    if (obj_controller.und_gene_vaults>0) then newline="Your Fortress Monastery has been raided.  "+string(floor(obj_controller.gene_seed/10))+" Gene-Seed has been destroyed or stolen.";
-
-    scr_event_log("red",string(newline));
-    instance_activate_object(obj_event_log);
-    newline_color="red";scr_newtext();
-
-    var lasers_lost,defenses_lost,silos_lost;
-    lasers_lost=0;defenses_lost=0;silos_lost=0;
-
-    if (player_defenses>0){defenses_lost=round(player_defenses*0.75);}
-    if (battle_object.p_silo[obj_ncombat.battle_id]>0){silos_lost=round(battle_object.p_silo[obj_ncombat.battle_id]*0.75);}
-    if (battle_object.p_lasers[obj_ncombat.battle_id]>0){lasers_lost=round(battle_object.p_lasers[obj_ncombat.battle_id]*0.75);}
-
-    if (player_defenses<30) then defenses_lost=player_defenses;
-    if (battle_object.p_silo[obj_ncombat.battle_id]<30){silos_lost=battle_object.p_silo[obj_ncombat.battle_id];}
-    if (battle_object.p_lasers[obj_ncombat.battle_id]<8){lasers_lost=battle_object.p_lasers[obj_ncombat.battle_id];}
-
-    var percent;percent=0;newline="";
-    if (defenses_lost>0){
-        percent=round((defenses_lost/player_defenses)*100);
-        newline=string(defenses_lost)+" Weapon Emplacements have been lost ("+string(percent)+"%).";
-    }
-    if (silos_lost>0){
-        percent=round((silos_lost/battle_object.p_silo[obj_ncombat.battle_id])*100);
-        if (defenses_lost>0) then newline+="  ";
-        newline+=string(silos_lost)+" Missile Silos have been lost ("+string(percent)+"%).";
-    }
-    if (lasers_lost>0){
-        percent=round((lasers_lost/battle_object.p_lasers[obj_ncombat.battle_id])*100);
-        if (silos_lost>0) or (defenses_lost>0) then newline+="  ";
-        newline+=string(lasers_lost)+" Defense Lasers have been lost ("+string(percent)+"%).";
-    }
-
-    battle_object.p_defenses[obj_ncombat.battle_id]-=defenses_lost;
-    battle_object.p_silo[obj_ncombat.battle_id]-=silos_lost;
-    battle_object.p_lasers[obj_ncombat.battle_id]-=lasers_lost;
-    if (defenses_lost+silos_lost+lasers_lost>0){newline_color="red";scr_newtext();}
-
-    endline=0;
-
-    if (obj_controller.und_gene_vaults=0){
-        obj_controller.gene_seed=0;var w;w=0;repeat(120){w+=1;if (obj_ini.slave_batch_num[w]>0){obj_ini.slave_batch_num[w]=0;obj_ini.slave_batch_eta[w]=0;}}
-    }
-    if (obj_controller.und_gene_vaults>0) then obj_controller.gene_seed-=floor(obj_controller.gene_seed/10);
-
 }
 instance_deactivate_object(obj_star);
 instance_deactivate_object(obj_turn_end);
