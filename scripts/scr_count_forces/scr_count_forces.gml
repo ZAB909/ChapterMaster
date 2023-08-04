@@ -30,19 +30,19 @@ function scr_count_forces(argument0, argument1, argument2) {
 			//Marines and vehicles get checked AT THE SAME TIME
 			//This is possible since array for saving vehicles and marines are separated
 			//v<300 is an arbitrary number, probably linked to a company unit limit somewhere
-			while ((checked_unit.name[company,v]!=""		|| 
-					checked_unit.veh_role[company,v]!="")		&& i<300)
+			while ((checked_unit.name[company,i]!=""		|| 
+					checked_unit.veh_role[company,i]!="")		&& i<300)
 			{
-				if (checked_unit.race[co,v]=1)					&& 
-				   (checked_unit.loc[co,v]=unit_location)		&& 
-				   (checked_unit.wid[co,v]=target_location)
+				if (checked_unit.race[company,i]=1)					&& 
+				   (checked_unit.loc[company,i]=unit_location)		&& 
+				   (checked_unit.wid[company,i]=target_location)
 				{
 					info_mahreens+=1;
 				}
 				
-				if (checked_unit.veh_race[co,v]=1)				&& 
-				   (checked_unit.veh_loc[co,v]=unit_location)	&& 
-				   (checked_unit.veh_wid[co,v]=target_location)		
+				if (checked_unit.veh_race[company,i]=1)				&& 
+				   (checked_unit.veh_loc[company,i]=unit_location)	&& 
+				   (checked_unit.veh_wid[company,i]=target_location)		
 				{
 					info_vehicles+=1;
 				}
