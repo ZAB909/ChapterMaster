@@ -52,7 +52,7 @@ function scr_battle_roster(_battle_loci, _loci_specific, _is_planet) {
 		//For each marine in that company, while unit exists (either marine name or vehicle role, vehicles have no names saved)
 		//Marines and vehicles get added AT THE SAME TIME, (index [0][1] adds marine AND vehicle at index at the same time for loop x)
 		//This is possible since array for saving vehicles and marines are separated
-		//v<300 based on previous repeat(300), so it might be nonsense
+		//v<300 is an arbitrary number, probably linked to a company unit limit somewhere
 		while ((deploying_unit.name[company,v]!=""      || 
 				deploying_unit.veh_role[company,v]!="")    && v<300){
 			if (man_limit_reached == true){break;}

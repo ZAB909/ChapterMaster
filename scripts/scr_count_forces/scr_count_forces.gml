@@ -10,7 +10,7 @@ function scr_count_forces(argument0, argument1, argument2) {
 	//--------------------------------------------------------------------------------------------------------------------
 	// Global objects used.
 	//--------------------------------------------------------------------------------------------------------------------
-	deploying_unit=obj_ini;
+	checked_unit=obj_ini;
 	//--------------------------------------------------------------------------------------------------------------------
 
 	var unit_location, target_location, is_planet;
@@ -18,23 +18,37 @@ function scr_count_forces(argument0, argument1, argument2) {
 	target_location=argument1;
 	is_planet = argument2;
 
-	if (is_planet=true){
-	    var co, v;
-	    co=0;v=0;
-    
-	    repeat(3600){
-	        if (co<11){v+=1;
-        
-	            if (v>300){co+=1;v=1;/*show_message("mahreens at the start of company "+string(co)+" is equal to "+string(info_mahreens));*/}
-        
-	            if (co>10) then exit;
-            
-	            if (deploying_unit.race[co,v]=1) and (deploying_unit.loc[co,v]=unit_location) and (deploying_unit.wid[co,v]=target_location){info_mahreens+=1;}
-        
-	            if (v<=100){
-	                if (deploying_unit.veh_race[co,v]=1) and (deploying_unit.veh_loc[co,v]=unit_location) and (deploying_unit.veh_wid[co,v]=target_location){info_vehicles+=1;}
-	            }
-	        }
-	    }
+	if (is_planet==true){
+		
+		//For each of the companies (HQ + 10)
+		for(var company=0;company<11;company++;)
+		{
+			//For now, obj_ini arrays start at array[1].
+			var i = 1;
+			
+			//For each unit in that company, while unit exists
+			//Marines and vehicles get checked AT THE SAME TIME
+			//This is possible since array for saving vehicles and marines are separated
+			//v<300 is an arbitrary number, probably linked to a company unit limit somewhere
+			while ((checked_unit.name[company,v]!=""		|| 
+					checked_unit.veh_role[company,v]!="")		&& i<300)
+			{
+				if (checked_unit.race[co,v]=1)					&& 
+				   (checked_unit.loc[co,v]=unit_location)		&& 
+				   (checked_unit.wid[co,v]=target_location)
+				{
+					info_mahreens+=1;
+				}
+				
+				if (checked_unit.veh_race[co,v]=1)				&& 
+				   (checked_unit.veh_loc[co,v]=unit_location)	&& 
+				   (checked_unit.veh_wid[co,v]=target_location)		
+				{
+					info_vehicles+=1;
+				}
+				
+				i++
+			}
+		}
 	}
 }
