@@ -604,11 +604,11 @@ instance_activate_object(obj_turn_end);
 
 //If not fleet based and...
 if (obj_ini.fleet_type!=1) and (defeat=1) and (dropping=0){
-	var monastary_list = search_planet_features(battle_object.p_feature[obj_ncombat.battle_id], P_features.Monastery);
-	var mon_count = array_length(monastary_list);
-	if(mon_count>0){
-		for (var mon = 0;mon < mon_count;mon++){
-			battle_object.p_feature[obj_ncombat.battle_id][monastary_list[mon_count]].status="destroyed";
+	var monastery_list = search_planet_features(battle_object.p_feature[obj_ncombat.battle_id], P_features.Monastery);
+	var monastery_count = array_length(monastery_list);
+	if(monastery_count>0){
+		for (var mon = 0;mon < monastery_count;mon++){
+			battle_object.p_feature[obj_ncombat.battle_id][monastery_list[mon]].status="destroyed";
 		}
 
 	    if (obj_controller.und_gene_vaults=0) then newline="Your Fortress Monastery has been raided.  "+string(obj_controller.gene_seed)+" Gene-Seed has been destroyed or stolen.";
