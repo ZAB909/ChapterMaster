@@ -407,6 +407,7 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
 				obj_ncombat.leader=1;
 				obj_ncombat.Warlord = _planet[search_planet_features(_planet,P_features.Warlord7)[0]]
 			}
+		}
 
         
         if (obj_ncombat.enemy=9) and (obj_ncombat.battle_object.space_hulk=0){
