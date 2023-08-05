@@ -155,6 +155,7 @@ function scr_civil_roster(argument0, argument1, argument2) {
 	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100,5]) or (deploying_unit.role[cooh,va]="Standard Bearer") or (deploying_unit.role[cooh,va]=deploying_unit.role[100,7]){
 	                    if (deploying_unit.role[cooh,va]=deploying_unit.role[100,5]){new_combat.en_captains+=1;if (new_combat.en_big_mofo>5) then new_combat.en_big_mofo=5;}
 	                    if (deploying_unit.role[cooh,va]="Standard Bearer") then new_combat.en_standard_bearers+=1;
+						if (deploying_unit.role[cooh,va]=deploying_unit.role[100,7]) then new_combat.champions+=1;
                     
 	                    if (co=1){
 	                        col=22-obj_controller.bat_veteran_column;
@@ -307,6 +308,7 @@ function scr_civil_roster(argument0, argument1, argument2) {
 	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100,5]) or (deploying_unit.role[cooh,va]="Standard Bearer") or (deploying_unit.role[cooh,va]=deploying_unit.role[100,7]){
 	                    if (deploying_unit.role[cooh,va]=deploying_unit.role[100,5]){new_combat.captains+=1;if (new_combat.big_mofo>5) then new_combat.big_mofo=5;}
 	                    if (deploying_unit.role[cooh,va]="Standard Bearer") then new_combat.standard_bearers+=1;
+						if (deploying_unit.role[cooh,va]=deploying_unit.role[100,7]) then new_combat.champions+=1;
                     
 	                    if (co=1){
 	                        col=obj_controller.bat_veteran_column;

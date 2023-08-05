@@ -179,6 +179,7 @@ dreadnoughts=0;
 terminators=0;
 captains=0;
 standard_bearers=0;
+champions=0;
 important_dudes=0;
 chaplains=0;
 apothecaries=0;

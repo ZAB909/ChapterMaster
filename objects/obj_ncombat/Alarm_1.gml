@@ -18,7 +18,23 @@ d1="";d2="";d3="";d4="";d5="";d6="";d7="";d8="";
 
 temp=scouts+tacticals+veterans+devastators+assaults+librarians;
 temp+=techmarines+honors+dreadnoughts+terminators+captains;
-temp+=standard_bearers+important_dudes+chaplains+apothecaries;
+temp+=standard_bearers+champions+important_dudes+chaplains+apothecaries;
+
+show_debug_message("scouts: {0}", string(scouts))
+show_debug_message("tacticals: {0}", string(tacticals))
+show_debug_message("veterans: {0}", string(veterans))
+show_debug_message("devastators: {0}", string(devastators))
+show_debug_message("assaults: {0}", string(assaults))
+show_debug_message("librarians: {0}", string(librarians))
+show_debug_message("techmarines: {0}", string(techmarines))
+show_debug_message("honors: {0}", string(honors))
+show_debug_message("dreadnoughts: {0}", string(dreadnoughts))
+show_debug_message("terminators: {0}", string(terminators))
+show_debug_message("captains: {0}", string(captains))
+show_debug_message("important_dudes: {0}", string(important_dudes))
+show_debug_message("standard_bearers: {0}", string(standard_bearers))
+show_debug_message("chaplains: {0}", string(chaplains))
+show_debug_message("apothecaries: {0}", string(apothecaries))
 
 var color_descr;
 color_descr="";
