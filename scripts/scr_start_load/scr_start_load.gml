@@ -1,7 +1,7 @@
-function scr_start_load(argument0, argument1, argument2) {
-    // argument0: the fleet object
-    // argument1: star object
-    // argument2: 1 for including escorts, 2 for no escorts
+function scr_start_load(fleet, load_from_star, escort_load) {
+    // fleet: the fleet object
+    // load_from_star: star object
+    // escort_load: 1 for including escorts, 2 for no escorts
 
     // this distributes the marines and vehicles to the correct ships if the chapter is fleet-based or a home-based chapter
     /*
@@ -10,16 +10,51 @@ function scr_start_load(argument0, argument1, argument2) {
     gladius
     hunters
     */
-
-    var splinter, _companies, _equip, remove_size, company_size, ship, ship_size, companies_loaded;
+	//loads marine on to ship and returns marine unit size
+	
+	var _vehicles = ["Rhino", "Predator", "Land Speeder", "Land Raider", "Whirlwind"]
+	function load_vehicles(_companies, _equip ,_ship, size){
+		var unit_size = 0;
+			switch(obj_ini.veh_role[_companies, _equip]){
+                    case "Rhino":                       
+                        obj_ini.veh_wid[_companies, _equip] = 0;
+                        break;
+                   case "Predator":
+                        obj_ini.veh_wid[_companies, _equip] = 1;
+                        break;
+                   case "Land Raider":
+                        obj_ini.veh_wid[_companies, _equip] = 2;
+                        break;
+                    
+                   case "Land Speeder":
+                        obj_ini.veh_wid[_companies, _equip] = 3;
+                        break;
+                    case "Whirlwind":
+                        obj_ini.veh_wid[_companies, _equip] = 4;
+                        break;
+					 
+			}
+			obj_ini.veh_lid[_companies, _equip] = _ship;
+			obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[_ship];	
+			obj_ini.ship_carrying[_ship] -= size;
+	}
+	function load_marine(_company, _unit, _ship, size){
+             obj_ini.lid[_company, _unit] = _ship;
+             obj_ini.wid[_company, _unit] = 0;
+			obj_ini.loc[_company, _unit] = obj_ini.ship_location[_ship];
+			obj_ini.ship_carrying[_ship] -= size;
+	}
+    var splinter, company_size, ship, ship_size, companies_loaded;
     splinter = 0;
     _companies = -1; // all companies for this script
     _equip = 0; //vehicle or armour(equip)
     remove_size = 0;
     company_size = 0;
     ship = 1;
-    ship_size = obj_ini.ship_size[ship];
+    //ship_size = obj_ini.ship_size[ship];
     companies_loaded = 1;
+	var ship_return = 1;
+	var ship_has_space =true;
 
     if (string_count("Splinter", obj_ini.strin2) > 0) then splinter = 1;
 
