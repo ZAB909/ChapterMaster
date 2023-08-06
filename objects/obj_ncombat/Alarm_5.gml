@@ -475,7 +475,10 @@ if (((leader=1)) or ((battle_special="world_eaters") and (obj_controller.faction
     instance_activate_object(obj_event_log);
     if (enemy=5) then scr_event_log("","Enemy Leader Assassinated: Ecclesiarchy Prioress");
     if (enemy=6) then scr_event_log("","Enemy Leader Assassinated: Eldar Farseer");
-    if (enemy=7) then scr_event_log("","Enemy Leader Assassinated: Ork Warboss");
+    if (enemy=7){
+		scr_event_log("","Enemy Leader Assassinated: Ork Warboss");
+		if (Warlord !=0){Warlord.kill_warboss()}
+		}
     if (enemy=8) then scr_event_log("","Enemy Leader Assassinated: Tau Diplomat");
     if (enemy=10) then scr_event_log("","Enemy Leader Assassinated: Chaos Lord");
 }
