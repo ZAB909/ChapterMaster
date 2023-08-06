@@ -1,4 +1,4 @@
-function scr_civil_roster(argument0, argument1, argument2) {
+function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 
 	// Determines who all will be present for the battle
 	// Only used on the Chaos Space Marines(?) meeting battle (not sure if its implemented)
@@ -14,11 +14,12 @@ function scr_civil_roster(argument0, argument1, argument2) {
 	new_combat=obj_ncombat;
 	//???=obj_drop_select;
 	//???=obj_controller
+	//???=obj_pnunit
+	//???=obj_enunit
+	//???=obj_centerline
 	//--------------------------------------------------------------------------------------------------------------------
 
-	var unit_location, target_location, stop,okay,sofar;
-	unit_location=argument0;
-	target_location=argument1;
+	var stop,okay,sofar;
 	stop=0;okay=0;sofar=0;
 
 	// Formation here
@@ -424,8 +425,7 @@ function scr_civil_roster(argument0, argument1, argument2) {
 	        }
 	    }
 	}
-
-	if (argument2=1){
+	if (_is_planet=1){
 	    // Small chance of ship going critical if loyalists are loosing
 	    // Boosted chance if shitty luck
 	}

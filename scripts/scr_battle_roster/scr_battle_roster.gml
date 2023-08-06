@@ -1,4 +1,4 @@
-function scr_battle_roster(_battle_loci, _loci_specific, _is_planet) {
+function scr_battle_roster(_unit_location, _target_location, _is_planet) {
 	
 	// Determines who all will be present for the battle
 	
@@ -17,9 +17,7 @@ function scr_battle_roster(_battle_loci, _loci_specific, _is_planet) {
 
 	// show_message("Container:"+string(_battle_loci)+", number:"+string(_loci_specific)+", planet?:"+string(_is_planet));
 	
-	var unit_location,target_location, stop,okay,sofar, man_limit_reached,man_size_count;
-	unit_location=_battle_loci;
-	target_location=_loci_specific;
+	var stop,okay,sofar, man_limit_reached,man_size_count;
 	stop=0;okay=0;sofar=0;man_limit_reached=false;man_size_count=0;
 
 
@@ -47,7 +45,7 @@ function scr_battle_roster(_battle_loci, _loci_specific, _is_planet) {
 
 	//For each company and the HQ
 	repeat(11){
-		if (man_limit_reached == true){break;}
+		if (man_limit_reached){break;}
 		company+=1;v=0;
 		//For each marine in that company, while unit exists (either marine name or vehicle role, vehicles have no names saved)
 		//Marines and vehicles get added AT THE SAME TIME, (index [0][1] adds marine AND vehicle at index at the same time for loop x)
@@ -56,7 +54,7 @@ function scr_battle_roster(_battle_loci, _loci_specific, _is_planet) {
 		while ((deploying_unit.name[company,v]!=""      || 
 				deploying_unit.veh_role[company,v]!="")    && v<300){
 			okay=0;
-			if (man_limit_reached == true){break;}
+			if (man_limit_reached){break;}
 			//array[0] set to 0, so the proper array starts at array[1], for some reason
 			v+=1;
 
@@ -65,14 +63,13 @@ function scr_battle_roster(_battle_loci, _loci_specific, _is_planet) {
 		        if (string_count("spyrer",new_combat.battle_special)>0) or (new_combat.battle_special="space_hulk") or (string_count("chaos_meeting",new_combat.battle_special)>0){
 		            if (string_count("Dread",deploying_unit.armor[company,v])>0) then okay=-1;
 		        }
-		        else if (string_count("spyrer",new_combat.battle_special)>0){
+		        if (string_count("spyrer",new_combat.battle_special)>0){
 		            if (okay=1) and (sofar>2) then okay = -1;
 		        }
 				if (okay <= -1) then new_combat.fighting[company,v]=0;
 				
-				// No idea of what this does
 				if (instance_exists(obj_temp4)){
-					if  (deploying_unit.wid[company,v]==target_location) and  (deploying_unit.loc[company,v]==_battle_loci) and (deploying_unit.hp[company,v]>0){
+					if  (deploying_unit.wid[company,v]==_target_location) and  (deploying_unit.loc[company,v]==_battle_loci) and (deploying_unit.hp[company,v]>0){
 						okay=1;
 					}else {okay=0;}
 				}
@@ -80,43 +77,29 @@ function scr_battle_roster(_battle_loci, _loci_specific, _is_planet) {
 				//Normal and other battle cases go here
 				if(okay >= 0){
 			        if (!instance_exists(obj_drop_select)){// Only when attacked
-			            if (_is_planet=true) and (deploying_unit.loc[company,v]=unit_location) and (deploying_unit.wid[company,v]=target_location) and (deploying_unit.hp[company,v]>0) and (deploying_unit.god[company,v]<10) then okay=1;
-			            else if (_is_planet=false) and (deploying_unit.lid[company,v]=target_location) and (deploying_unit.hp[company,v]>0) and (deploying_unit.god[company,v]<10) then okay=1;
+			            if (_is_planet) and (deploying_unit.loc[company,v]=_unit_location) and (deploying_unit.wid[company,v]=_target_location) and (deploying_unit.hp[company,v]>0) and (deploying_unit.god[company,v]<10) then okay=1;
+			            else if (!_is_planet) and (deploying_unit.lid[company,v]=_target_location) and (deploying_unit.hp[company,v]>0) and (deploying_unit.god[company,v]<10) then okay=1;
 						
-						// Not 100% sure of what this does
 						if (instance_exists(obj_temp_meeting)){
 							meeting=true;
-				            if (company=0) and (v<=obj_temp_meeting.dudes) and (obj_temp_meeting.present[v]=1){
-								okay=1;
-				            }
-				            else if (company>0) or (v>obj_temp_meeting.dudes) then okay=0;{
-								okay=0;
-							}
+				            if (company=0) and (v<=obj_temp_meeting.dudes) and (obj_temp_meeting.present[v]=1) then okay=1;
+				            else if (company>0) or (v>obj_temp_meeting.dudes) then okay=0;
 						}
 			        }
 			        else if (instance_exists(obj_drop_select)){// When attacking
-						//If not fighting, we skip the unit
+						//If not fighting (obj_drop_select pre-check), we skip the unit
 						if (obj_drop_select.fighting[company,v]=0) then okay=0;
 						
 			            else if (obj_drop_select.attack=1){
-			                if (_is_planet=true) and (deploying_unit.loc[company,v]=unit_location) and (deploying_unit.wid[company,v]=target_location) and (deploying_unit.hp[company,v]>0) and (deploying_unit.god[company,v]<10) then okay=1;
-			                else if (_is_planet=false) and (deploying_unit.lid[company,v]=target_location) and (deploying_unit.hp[company,v]>0) and (deploying_unit.god[company,v]<10) then okay=1;
+			                if (_is_planet=true) and (deploying_unit.loc[company,v]=_unit_location) and (deploying_unit.wid[company,v]=_target_location) and (deploying_unit.hp[company,v]>0) and (deploying_unit.god[company,v]<10) then okay=1;
+			                else if (_is_planet=false) and (deploying_unit.lid[company,v]=_target_location) and (deploying_unit.hp[company,v]>0) and (deploying_unit.god[company,v]<10) then okay=1;
 			            }
 						else if (obj_drop_select.attack!=1){
 							//Related to defensive battles (¿?). Without the above check, it duplicates marines on offensive ones.
-							if (obj_drop_select.fighting[company,v]=1) and (deploying_unit.lid[company,v]=target_location) then okay=1;
+							if (obj_drop_select.fighting[company,v]=1) and (deploying_unit.lid[company,v]=_target_location) then okay=1;
 						}
 			        }
 				}
-
-		        /*if (!instance_exists(obj_drop_select)){// Only when attacked
-		            if (_is_planet=true) and (obj_ncombat.local_forces=1){
-		                var world_name,p_num;world_name="";p_num=obj_controller.selecting_planet;
-		                if (instance_exists(obj_drop_select)){world_name=obj_drop_select.p_target.name;} 
-
-		                if (obj_ini.loc[company,v]=world_name) and (obj_ini.wid[company,v]=p_num) then okay=2;
-		            }
-		        }*/
 				
 				// Start adding unit to battle
 		        if (okay>=1){
@@ -296,14 +279,14 @@ function scr_battle_roster(_battle_loci, _loci_specific, _is_planet) {
 		        if (v<=100) and (string_count("spyrer",new_combat.battle_special)=0) and (company<=10) and (meeting=false){
 		            var vokay;vokay=0;
 
-		            if (deploying_unit.veh_race[company,v]!=0) and (deploying_unit.veh_loc[company,v]=unit_location) and (deploying_unit.veh_wid[company,v]=target_location) then vokay=1;
+		            if (deploying_unit.veh_race[company,v]!=0) and (deploying_unit.veh_loc[company,v]=_unit_location) and (deploying_unit.veh_wid[company,v]=_target_location) then vokay=1;
 
 		            if (_is_planet=true) and (new_combat.local_forces=1){
 		                var world_name,p_num;world_name="";p_num=obj_controller.selecting_planet;
 		                if (instance_exists(obj_drop_select)){world_name=obj_drop_select.p_target.name;}
 		                if (deploying_unit.veh_race[company,v]!=0) and (deploying_unit.veh_loc[company,v]=world_name) and (deploying_unit.wid[company,v]=p_num) then vokay=2;
 		            }
-		            if (_is_planet=false) and (deploying_unit.veh_lid[company,v]=target_location) and (deploying_unit.veh_hp[company,v]>0) then vokay=1;
+		            if (_is_planet=false) and (deploying_unit.veh_lid[company,v]=_target_location) and (deploying_unit.veh_hp[company,v]>0) then vokay=1;
 
 		            if (instance_exists(obj_drop_select)){
 		                if (obj_drop_select.attack=0) then vokay=0;

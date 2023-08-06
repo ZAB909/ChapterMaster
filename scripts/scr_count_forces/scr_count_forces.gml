@@ -1,4 +1,4 @@
-function scr_count_forces(argument0, argument1, argument2) {
+function scr_count_forces(_unit_location, _target_location, _is_planet) {
 
 	// Works similar to scr_battle_roster but merely counts the forces
 	// Used for the obj_turn_end display to give a sense of player forces
@@ -13,12 +13,7 @@ function scr_count_forces(argument0, argument1, argument2) {
 	checked_unit=obj_ini;
 	//--------------------------------------------------------------------------------------------------------------------
 
-	var unit_location, target_location, is_planet;
-	unit_location=argument0;
-	target_location=argument1;
-	is_planet = argument2;
-
-	if (is_planet==true){
+	if (_is_planet){
 		
 		//For each of the companies (HQ + 10)
 		for(var company=0;company<11;company++;)
@@ -34,15 +29,15 @@ function scr_count_forces(argument0, argument1, argument2) {
 					checked_unit.veh_role[company,i]!="")		&& i<300)
 			{
 				if (checked_unit.race[company,i]=1)					&& 
-				   (checked_unit.loc[company,i]=unit_location)		&& 
-				   (checked_unit.wid[company,i]=target_location)
+				   (checked_unit.loc[company,i]=_unit_location)		&& 
+				   (checked_unit.wid[company,i]=_target_location)
 				{
 					info_mahreens+=1;
 				}
 				
 				if (checked_unit.veh_race[company,i]=1)				&& 
-				   (checked_unit.veh_loc[company,i]=unit_location)	&& 
-				   (checked_unit.veh_wid[company,i]=target_location)		
+				   (checked_unit.veh_loc[company,i]=_unit_location)	&& 
+				   (checked_unit.veh_wid[company,i]=_target_location)		
 				{
 					info_vehicles+=1;
 				}
