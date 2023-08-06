@@ -14,7 +14,8 @@ function scr_count_forces(_unit_location, _target_location, _is_planet) {
 	//--------------------------------------------------------------------------------------------------------------------
 
 	if (_is_planet){
-		
+		info_mahreens=0;
+		info_vehicles=0;
 		//For each of the companies (HQ + 10)
 		for(var company=0;company<11;company++;)
 		{

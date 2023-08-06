@@ -68,15 +68,14 @@ function scr_battle_roster(_unit_location, _target_location, _is_planet) {
 		        }
 				if (okay <= -1) then new_combat.fighting[company,v]=0;
 				
-				if (instance_exists(obj_temp4)){
-					if  (deploying_unit.wid[company,v]==_target_location) and  (deploying_unit.loc[company,v]==_battle_loci) and (deploying_unit.hp[company,v]>0){
-						okay=1;
-					}else {okay=0;}
-				}
-
-				//Normal and other battle cases go here
-				if(okay >= 0){
-			        if (!instance_exists(obj_drop_select)){// Only when attacked
+				//Normal and other battle cases checks go here
+				else if(okay >= 0){
+					if (instance_exists(obj_temp4)){//Exploring ruins ambush case
+						if  (deploying_unit.loc[company,v]==_unit_location) and (deploying_unit.wid[company,v]==_target_location) and (deploying_unit.hp[company,v]>0){
+							okay=1;
+						}else {okay=0;}
+					}
+			        else if (!instance_exists(obj_drop_select)){// Only when attacked, normal battle
 			            if (_is_planet) and (deploying_unit.loc[company,v]==_unit_location) and (deploying_unit.wid[company,v]==_target_location) and (deploying_unit.hp[company,v]>0) and (deploying_unit.god[company,v]<10) then okay=1;
 			            else if (!_is_planet) and (deploying_unit.lid[company,v]==_target_location) and (deploying_unit.hp[company,v]>0) and (deploying_unit.god[company,v]<10) then okay=1;
 						
@@ -86,7 +85,7 @@ function scr_battle_roster(_unit_location, _target_location, _is_planet) {
 				            else if (company>0) or (v>obj_temp_meeting.dudes) then okay=0;
 						}
 			        }
-			        else if (instance_exists(obj_drop_select)){// When attacking
+			        else if (instance_exists(obj_drop_select)){// When attacking, normal battle
 						//If not fighting (obj_drop_select pre-check), we skip the unit
 						if (obj_drop_select.fighting[company,v]==0) then okay=0;
 						
