@@ -58,13 +58,13 @@ function scr_battle_roster(_unit_location, _target_location, _is_planet) {
 			//array[0] set to 0, so the proper array starts at array[1], for some reason
 			v+=1;
 
-		    if (stop=0){
+		    if (stop==0){
 				//Special (okay -1) battle cases go here
-		        if (string_count("spyrer",new_combat.battle_special)>0) or (new_combat.battle_special="space_hulk") or (string_count("chaos_meeting",new_combat.battle_special)>0){
+		        if (string_count("spyrer",new_combat.battle_special)>0) or (new_combat.battle_special=="space_hulk") or (string_count("chaos_meeting",new_combat.battle_special)>0){
 		            if (string_count("Dread",deploying_unit.armor[company,v])>0) then okay=-1;
 		        }
 		        if (string_count("spyrer",new_combat.battle_special)>0){
-		            if (okay=1) and (sofar>2) then okay = -1;
+		            if (okay==1) and (sofar>2) then okay = -1;
 		        }
 				if (okay <= -1) then new_combat.fighting[company,v]=0;
 				
@@ -77,26 +77,26 @@ function scr_battle_roster(_unit_location, _target_location, _is_planet) {
 				//Normal and other battle cases go here
 				if(okay >= 0){
 			        if (!instance_exists(obj_drop_select)){// Only when attacked
-			            if (_is_planet) and (deploying_unit.loc[company,v]=_unit_location) and (deploying_unit.wid[company,v]=_target_location) and (deploying_unit.hp[company,v]>0) and (deploying_unit.god[company,v]<10) then okay=1;
-			            else if (!_is_planet) and (deploying_unit.lid[company,v]=_target_location) and (deploying_unit.hp[company,v]>0) and (deploying_unit.god[company,v]<10) then okay=1;
+			            if (_is_planet) and (deploying_unit.loc[company,v]==_unit_location) and (deploying_unit.wid[company,v]==_target_location) and (deploying_unit.hp[company,v]>0) and (deploying_unit.god[company,v]<10) then okay=1;
+			            else if (!_is_planet) and (deploying_unit.lid[company,v]==_target_location) and (deploying_unit.hp[company,v]>0) and (deploying_unit.god[company,v]<10) then okay=1;
 						
 						if (instance_exists(obj_temp_meeting)){
 							meeting=true;
-				            if (company=0) and (v<=obj_temp_meeting.dudes) and (obj_temp_meeting.present[v]=1) then okay=1;
+				            if (company==0) and (v<=obj_temp_meeting.dudes) and (obj_temp_meeting.present[v]==1) then okay=1;
 				            else if (company>0) or (v>obj_temp_meeting.dudes) then okay=0;
 						}
 			        }
 			        else if (instance_exists(obj_drop_select)){// When attacking
 						//If not fighting (obj_drop_select pre-check), we skip the unit
-						if (obj_drop_select.fighting[company,v]=0) then okay=0;
+						if (obj_drop_select.fighting[company,v]==0) then okay=0;
 						
-			            else if (obj_drop_select.attack=1){
-			                if (_is_planet=true) and (deploying_unit.loc[company,v]=_unit_location) and (deploying_unit.wid[company,v]=_target_location) and (deploying_unit.hp[company,v]>0) and (deploying_unit.god[company,v]<10) then okay=1;
-			                else if (_is_planet=false) and (deploying_unit.lid[company,v]=_target_location) and (deploying_unit.hp[company,v]>0) and (deploying_unit.god[company,v]<10) then okay=1;
+			            else if (obj_drop_select.attack==1){
+			                if (_is_planet) and (deploying_unit.loc[company,v]==_unit_location) and (deploying_unit.wid[company,v]==_target_location) and (deploying_unit.hp[company,v]>0) and (deploying_unit.god[company,v]<10) then okay=1;
+			                else if (!_is_planet) and (deploying_unit.lid[company,v]==_target_location) and (deploying_unit.hp[company,v]>0) and (deploying_unit.god[company,v]<10) then okay=1;
 			            }
 						else if (obj_drop_select.attack!=1){
 							//Related to defensive battles (¿?). Without the above check, it duplicates marines on offensive ones.
-							if (obj_drop_select.fighting[company,v]=1) and (deploying_unit.lid[company,v]=_target_location) then okay=1;
+							if (obj_drop_select.fighting[company,v]==1) and (deploying_unit.lid[company,v]==_target_location) then okay=1;
 						}
 			        }
 				}
@@ -110,15 +110,15 @@ function scr_battle_roster(_unit_location, _target_location, _is_planet) {
 		            var cooh,va;
 		            cooh=0;va=0;
 
-		            if (meeting=false){cooh=company;va=v;}
-		            if (meeting=true){if (v<=obj_temp_meeting.dudes){
+		            if (meeting==false){cooh=company;va=v;}
+		            if (meeting==true){if (v<=obj_temp_meeting.dudes){
 		                cooh=obj_temp_meeting.company[v];
 		                va=obj_temp_meeting.ide[v];
 		            }}
 
 		            var col,moov,targ;col=0;targ=0;moov=0;
 
-		            if (new_combat.battle_special="space_hulk") then new_combat.player_starting_dudes+=1;
+		            if (new_combat.battle_special=="space_hulk") then new_combat.player_starting_dudes+=1;
 
 		            if (deploying_unit.role[cooh,va]=deploying_unit.role[100,12]){col=obj_controller.bat_scout_column;new_combat.scouts+=1;}
 		            if (deploying_unit.role[cooh,va]=deploying_unit.role[100,8]){col=obj_controller.bat_tactical_column;new_combat.tacticals+=1;}
@@ -281,12 +281,12 @@ function scr_battle_roster(_unit_location, _target_location, _is_planet) {
 
 		            if (deploying_unit.veh_race[company,v]!=0) and (deploying_unit.veh_loc[company,v]=_unit_location) and (deploying_unit.veh_wid[company,v]=_target_location) then vokay=1;
 
-		            if (_is_planet=true) and (new_combat.local_forces=1){
+		            if (_is_planet) and (new_combat.local_forces=1){
 		                var world_name,p_num;world_name="";p_num=obj_controller.selecting_planet;
 		                if (instance_exists(obj_drop_select)){world_name=obj_drop_select.p_target.name;}
 		                if (deploying_unit.veh_race[company,v]!=0) and (deploying_unit.veh_loc[company,v]=world_name) and (deploying_unit.wid[company,v]=p_num) then vokay=2;
 		            }
-		            if (_is_planet=false) and (deploying_unit.veh_lid[company,v]=_target_location) and (deploying_unit.veh_hp[company,v]>0) then vokay=1;
+		            if (!_is_planet) and (deploying_unit.veh_lid[company,v]=_target_location) and (deploying_unit.veh_hp[company,v]>0) then vokay=1;
 
 		            if (instance_exists(obj_drop_select)){
 		                if (obj_drop_select.attack=0) then vokay=0;

@@ -28,9 +28,9 @@ function scr_count_forces(_unit_location, _target_location, _is_planet) {
 			while ((checked_unit.name[company,i]!=""		|| 
 					checked_unit.veh_role[company,i]!="")		&& i<300)
 			{
-				if (checked_unit.race[company,i]=1)					&& 
-				   (checked_unit.loc[company,i]=_unit_location)		&& 
-				   (checked_unit.wid[company,i]=_target_location)
+				if (checked_unit.race[company,i]==1)					&& 
+				   (checked_unit.loc[company,i]==_unit_location)		&& 
+				   (checked_unit.wid[company,i]==_target_location)
 				{
 					info_mahreens+=1;
 				}
