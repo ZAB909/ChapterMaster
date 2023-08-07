@@ -41,19 +41,19 @@ if (action="return") and (point_distance(x,y,origin.x,origin.y)<=16){
 
 
 if (action="goto") and (!instance_exists(target)){boarding=false;
-    with(obj_en_ship){if (size=1) then y-=6000;}
+    //with(obj_en_ship){if (size=1) then y-=6000;}
     target=instance_nearest(x,y,obj_en_ship);action="goto";
-  /*if (target.size=1) then action="return";
-    with(obj_en_ship){if (size=1) then y+=6000;} */
+    //if (target.size=1) then action="return";
+    //with(obj_en_ship){if (size=1) then y+=6000;}
 }
 if (boarding=true) and (!instance_exists(target)){boarding=false;
     if (steal=true){action="sdagdsgdasg";x=-500;y=-500;}
     if (steal=false){
         if (obj_controller.command_set[23]=1) and (instance_exists(obj_en_ship)){
-            with(obj_en_ship){if (size=1) then y-=6000;}
+            //with(obj_en_ship){if (size=1) then y-=6000;}
             target=instance_nearest(x,y,obj_en_ship);action="goto";
-            if (target.size=1) then action="return";
-            with(obj_en_ship){if (size=1) then y+=6000;}
+            //if (target.size=1) then action="return";
+            //with(obj_en_ship){if (size=1) then y+=6000;}
         }
         if (obj_controller.command_set[24]=1) or (!instance_exists(obj_en_ship)) then action="return";
     }
