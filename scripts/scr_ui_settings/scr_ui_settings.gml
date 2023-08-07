@@ -184,7 +184,7 @@ function scr_ui_settings() {
 	            gg+=1;y5+=spacing;
 	            if (gg=1){title="Main Weapon: ";geh=obj_ini.wep1[co,ide];}
 	            if (gg=2){title="Secondary Weapon: ";geh=obj_ini.wep2[co,ide];}
-	            if (gg=3){title="Armor: ";geh=obj_ini.armor[co,ide];}
+	            if (gg=3){title="Armour: ";geh=obj_ini.armor[co,ide];}
 	            if (gg=4){title="Mobility Item: ";geh=obj_ini.mobi[co,ide];}
 	            if (gg=5){title="Special Item: ";geh=obj_ini.gear[co,ide];}
             
@@ -197,7 +197,7 @@ function scr_ui_settings() {
 	                draw_rectangle(x5,y5,x5-string_width(title),y5+string_height(title)-2,0);
                 
 	                var nep;nep=false;
-	                if ((obj_ini.armor[co,ide]="Terminator Armor") or (obj_ini.armor[co,ide]="Dreadnought")) and (gg=4) then nep=true;
+	                if ((obj_ini.armor[co,ide]="Terminator Armour") or (obj_ini.armor[co,ide]="Dreadnought")) and (gg=4) then nep=true;
 	                if (ide=6) and ((gg=3) or (gg=5)) then nep=true;
                 
 	                if (obj_controller.mouse_left=1) and (obj_controller.cooldown<=0) and (nep=false){
@@ -247,7 +247,7 @@ function scr_ui_settings() {
 	    draw_text(xx+66,yy+273,"Remove Promote EXP Requirements");
 	    var che,cx,cy;che=command_set[2];cx=xx+31;cy=yy+269;
 	    draw_sprite(spr_creation_check,che+2,cx,cy);
-	    if (scr_hit(cx+31,cy,cx+300,cy+20)=true){tool1="Remove Promote EXP Requirements";tool2="Turned off by default.  Allows you to promote Astartes without regard of their Experience.  Experience requirements for Terminator Armor and Thunder Hammers remain.";}
+	    if (scr_hit(cx+31,cy,cx+300,cy+20)=true){tool1="Remove Promote EXP Requirements";tool2="Turned off by default.  Allows you to promote Astartes without regard of their Experience.  Experience requirements for Terminator Armour and Thunder Hammers remain.";}
 	    if (scr_hit(cx,cy,cx+32,cy+32)=true) and (mouse_left=1) and (cooldown<=0){var onceh;onceh=0;cooldown=8000;
 	    if (onceh=0) and (command_set[2]=0){onceh=1;command_set[2]=1;}if (onceh=0) and (command_set[2]=1){onceh=1;command_set[2]=0;}}
     

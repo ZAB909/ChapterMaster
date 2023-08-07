@@ -237,7 +237,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	    m2="- mouth stretching unnaturally wide, before letting out a hellish shriek.  ";
 	    var rah;rah=choose(1,2);
 	    if (rah=1) then m2="The air rumbles and shifts at the sheer magnitude of the sound.  ";
-	    if (rah=2) then m2="Armor and flesh tear alike are torn apart by volume of the howl.  ";
+	    if (rah=2) then m2="Armour and flesh tear alike are torn apart by volume of the howl.  ";
 	    if (obj_ncombat.sorcery_seen<2) then obj_ncombat.sorcery_seen=1;
 	}
 

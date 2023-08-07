@@ -13,7 +13,7 @@ function scr_trade_add(argument0) {
 	    trade_take[thinz]=argument0;
     
 	    if (argument0="Requisition"){get_integer2("Requisition wanted?",100000,"t"+string(thinz),"Requisition");}
-	    if (argument0="Terminator Armor"){get_integer2("Terminator Armor wanted?",5,"t"+string(thinz),"Terminator Armor");}
+	    if (argument0="Terminator Armour"){get_integer2("Terminator Armour wanted?",5,"t"+string(thinz),"Terminator Armour");}
 	    if (argument0="Tartaros"){trade_tnum[thinz]=1;tomp1=1;}
 	    if (argument0="Land Raider"){trade_tnum[thinz]=1;tomp1=1;}
 	    if (argument0="Castellax Battle Automata"){trade_tnum[thinz]=1;tomp1=1;}

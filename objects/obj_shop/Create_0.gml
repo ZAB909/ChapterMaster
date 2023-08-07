@@ -86,14 +86,14 @@ if (shop="equipment"){i=0;
     i=0;repeat(39){i+=1;if (item[i]!="") then mc_stocked[i]=scr_item_count("Master Crafted "+string(item[i]));}
 }
 if (shop="equipment2"){i=0;
-    i+=1;item[i]="MK3 Iron Armor";item_stocked[i]=scr_item_count("MK3 Iron Armor");nobuy[i]=1;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+    i+=1;item[i]="MK3 Iron Armour";item_stocked[i]=scr_item_count("MK3 Iron Armour");nobuy[i]=1;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i+=1;item[i]="MK4 Maximus";item_stocked[i]=scr_item_count("MK4 Maximus");nobuy[i]=1;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i+=1;item[i]="MK6 Corvus";item_stocked[i]=scr_item_count("MK6 Corvus");item_cost[i]=35;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i+=1;item[i]="MK7 Aquila";item_stocked[i]=scr_item_count("MK7 Aquila");item_cost[i]=20;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i+=1;item[i]="MK8 Errant";item_stocked[i]=scr_item_count("MK8 Errant");nobuy[i]=1;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
-    i+=1;item[i]="Scout Armor";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=5;
-    i+=1;item[i]="Artificer Armor";item_stocked[i]=scr_item_count("Artificer Armor");nobuy[i]=1;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
-    i+=1;item[i]="Terminator Armor";item_stocked[i]=scr_item_count("Terminator Armor");nobuy[i]=1;
+    i+=1;item[i]="Scout Armour";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=5;
+    i+=1;item[i]="Artificer Armour";item_stocked[i]=scr_item_count("Artificer Armour");nobuy[i]=1;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+    i+=1;item[i]="Terminator Armour";item_stocked[i]=scr_item_count("Terminator Armour");nobuy[i]=1;
     if (obj_controller.stc_wargear>=6){nobuy[i]=0;item_cost[i]=350;}// if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i+=1;item[i]="Tartaros";item_stocked[i]=scr_item_count("Tartaros");nobuy[i]=1;
 

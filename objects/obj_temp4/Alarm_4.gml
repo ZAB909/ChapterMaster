@@ -66,7 +66,7 @@ if (obj_ini.adv[1]="Scavengers") or (obj_ini.adv[2]="Scavengers") or (obj_ini.ad
         ex3=choose("Power Fist","Chainsword","Bolt Pistol");ex3_num=choose(2,3,4,5);
     }
     if (stah.p_first[num]=3){
-        ex1="Plasma Pistol";ex1_num=choose(1,2);ex2="Power Armor";ex2_num=choose(2,3,4);
+        ex1="Plasma Pistol";ex1_num=choose(1,2);ex2="Power Armour";ex2_num=choose(2,3,4);
         ex3=choose("Servo Arms","Bionics");ex3_num=choose(2,3,4);
     }
     if (stah.p_first[num]=5){

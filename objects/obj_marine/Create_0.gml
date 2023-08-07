@@ -78,7 +78,7 @@ i=-1;repeat(41){i+=1;
 }
 
 i=0;repeat(10){i+=1;
-    marine_armor[i]="Power Armor";
+    marine_armor[i]="Power Armour";
     
     marine_wep1[i]="Bolter";
     marine_wep1_ammo[i]=40;

@@ -610,7 +610,7 @@ repeat(20){j+=1;
     if (dudes[j]="Cultist"){scr_en_weapon("Autogun",true,dudes_num[j],dudes[j],j);scr_en_weapon("melee0.5",true,dudes_num[j],dudes[j],j);dudes_ac[j]=0;dudes_hp[j]=20;men+=dudes_num[j];}
     if (dudes[j]="Genestealer"){scr_en_weapon("Genestealer Claws",true,dudes_num[j],dudes[j],j);dudes_ac[j]=10;dudes_hp[j]=50;men+=dudes_num[j];}
     if (dudes[j]="Genestealer Patriarch"){scr_en_weapon("Genestealer Claws",true,dudes_num[j],dudes[j],j);scr_en_weapon("Witchfire",true,dudes_num[j],dudes[j],j);dudes_ac[j]=20;dudes_hp[j]=150;dudes_dr[j]=0.75;men+=dudes_num[j];}
-    if (dudes[j]="Armored Limousine"){scr_en_weapon("Autogun",false,dudes_num[j]*4,dudes[j],j);dudes_ac[j]=10;dudes_hp[j]=150;veh+=dudes_num[j];dudes_vehicle[j]=1;}
+    if (dudes[j]="Armoured Limousine"){scr_en_weapon("Autogun",false,dudes_num[j]*4,dudes[j],j);dudes_ac[j]=10;dudes_hp[j]=150;veh+=dudes_num[j];dudes_vehicle[j]=1;}
     if (dudes[j]="Lictor"){scr_en_weapon("Lictor Claws",true,dudes_num[j],dudes[j],j);scr_en_weapon("Flesh Hooks",true,dudes_num[j],dudes[j],j);dudes_ac[j]=20;dudes_hp[j]=150;men+=dudes_num[j];}
     
     dudes_dr[j]+=0.25;

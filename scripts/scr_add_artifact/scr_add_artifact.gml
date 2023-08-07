@@ -26,13 +26,13 @@ function scr_add_artifact(argument0, argument1, argument2, argument3, argument4)
 
 	if (argument0="random") or (argument0="random_nodemon"){
 	    if (rand1<=45) and (good=0){t1="Weapon";good=1;}
-	    if (rand1<=80) and (good=0){t1="Armor";good=1;}
+	    if (rand1<=80) and (good=0){t1="Armour";good=1;}
 	    if (rand1<=90) and (good=0){t1="Gear";good=1;}
 	    if (rand1<=100) and (good=0){t1="Device";good=1;}
 	}
 
 	if (argument0="Weapon") then t1=argument0;
-	if (argument0="Armor") then t1=argument0;
+	if (argument0="Armour") then t1=argument0;
 	if (argument0="Gear") then t1=argument0;
 	if (argument0="Device") then t1=argument0;
 	    if (argument0="Robot"){t1="Device";t2="Robot";}
@@ -49,11 +49,11 @@ function scr_add_artifact(argument0, argument1, argument2, argument3, argument4)
 	    if (rand2<=100) and (good=0){t2=choose("Relic Blade","Thunder Hammer");good=1;}
 	}
 
-	if (t1="Armor") and (t2=""){good=0;
-	    if (rand2<=70) and (good=0){t2="Power Armor";good=1;}
-	    if (rand2<=80) and (good=0){t2="Terminator Armor";good=1;}
-	    if (rand2<=90) and (good=0){t2="Dreadnought Armor";good=1;}
-	    if (rand2<=100) and (good=0){t2="Artificer Armor";good=1;}
+	if (t1="Armour") and (t2=""){good=0;
+	    if (rand2<=70) and (good=0){t2="Power Armour";good=1;}
+	    if (rand2<=80) and (good=0){t2="Terminator Armour";good=1;}
+	    if (rand2<=90) and (good=0){t2="Dreadnought Armour";good=1;}
+	    if (rand2<=100) and (good=0){t2="Artificer Armour";good=1;}
 	}
 
 	if (t1="Gear") and (t2=""){good=0;
@@ -76,7 +76,7 @@ function scr_add_artifact(argument0, argument1, argument2, argument3, argument4)
 	    if (haha=1){t1="Weapon";t2="Relic Blade";}
 	    if (haha=2){t1="Weapon";t2="Plasma Gun";}
 	    if (haha=3){t1="Gear";t2="Rosarius";}
-	    if (haha=4){t1="Armor";t2="Terminator Armor";}
+	    if (haha=4){t1="Armour";t2="Terminator Armour";}
 	}
 
 
@@ -97,7 +97,7 @@ function scr_add_artifact(argument0, argument1, argument2, argument3, argument4)
 		if (t2="Thunder Hammer") and (t4="RUN") then t4="GLO";//glowing runed
 	    if (t2="Relic Blade") and (t4="SCO") then t4="UFL";// underslung flamer
 	}
-	if (t1="Armor"){
+	if (t1="Armour"){
 	    // golden filigree, glowing optics, purity seals
 	    t5=choose("GLD","GLO","PUR");
 	    // articulated plates, spikes, runes, drake scales

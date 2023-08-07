@@ -10,10 +10,10 @@ function scr_arti_descr(argument0) {
 	var temp;temp=obj_ini.artifact_tags[argument0];
 
 	typ="weapon";
-	if (obj_ini.artifact[argument0]="Power Armor") then typ="armor";
-	if (obj_ini.artifact[argument0]="Terminator Armor") then typ="armor";
+	if (obj_ini.artifact[argument0]="Power Armour") then typ="armor";
+	if (obj_ini.artifact[argument0]="Terminator Armour") then typ="armor";
 	if (obj_ini.artifact[argument0]="Dreadnought") then typ="armor";
-	if (obj_ini.artifact[argument0]="Artificer Armor") then typ="armor";
+	if (obj_ini.artifact[argument0]="Artificer Armour") then typ="armor";
 	if (obj_ini.artifact[argument0]="Rosarius") then typ="gear";
 	if (obj_ini.artifact[argument0]="Bionics") then typ="gear";
 	if (obj_ini.artifact[argument0]="Psychic Hood") then typ="gear";
@@ -25,13 +25,13 @@ function scr_arti_descr(argument0) {
 	if (obj_ini.artifact[argument0]="Tome") then typ="device";
 	if (obj_ini.artifact[argument0]="Robot") then typ="device";
 
-	if (obj_ini.artifact[argument0]!="Power Armor") and (obj_ini.artifact[argument0]!="Terminator Armor") and (obj_ini.artifact[argument0]!="Artificer Armor"){
+	if (obj_ini.artifact[argument0]!="Power Armour") and (obj_ini.artifact[argument0]!="Terminator Armour") and (obj_ini.artifact[argument0]!="Artificer Armour"){
 	    p1="This artifact is a "+string(obj_ini.artifact[argument0]);
 	    if (string_count("inq",temp)>0) then p1+=", entrusted by the Inquisition.";
 	    if (string_count("inq",temp)=0) then p1+=".";
 	}
 
-	if (obj_ini.artifact[argument0]="Power Armor") or (obj_ini.artifact[argument0]="Terminator Armor") or (obj_ini.artifact[argument0]="Artificer Armor"){
+	if (obj_ini.artifact[argument0]="Power Armour") or (obj_ini.artifact[argument0]="Terminator Armour") or (obj_ini.artifact[argument0]="Artificer Armour"){
 	    p1="This artifact is "+string(obj_ini.artifact[argument0]);
 	    if (string_count("inq",temp)>0) then p1+=", entrusted by the Inquisition.";
 	    if (string_count("inq",temp)=0) then p1+=".";

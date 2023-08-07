@@ -119,7 +119,7 @@ function scr_ui_advisors() {
             
 	            draw_text(xx+383,yy+665,string_hash_to_newline("Health: "+string(cn.temp[103])+"/"+string(cn.temp[104])));
 	            draw_text(xx+588,yy+665,string_hash_to_newline("Shields: "+string(cn.temp[105])));
-	            draw_text(xx+768,yy+665,string_hash_to_newline("Armor: "+string(cn.temp[107])+","+string(cn.temp[108])));
+	            draw_text(xx+768,yy+665,string_hash_to_newline("Armour: "+string(cn.temp[107])+","+string(cn.temp[108])));
             
 	            draw_text(xx+485,yy+683,string_hash_to_newline("Speed: "+string(cn.temp[106])));
 	            draw_text(xx+678,yy+683,string_hash_to_newline("Turrets: "+string(cn.temp[109])));
@@ -567,7 +567,7 @@ function scr_ui_advisors() {
 	        if (fest_type="Great Feast") then fet_text="Alcohol";
 	        if (fest_type="Tournament") then fet_text="Spectators";
 	        if (fest_type="Deathmatch") then fet_text="Spectators";
-	        if (fest_type="Chapter Relic") then fet_text="Create Armor";
+	        if (fest_type="Chapter Relic") then fet_text="Create Armour";
 	        if (fest_type="Imperial Mass"){fet_text="Request Ecclesiarchy";fet_scale=0.75;}
 	        if (fest_type="Chapter Sermon"){ fet_text="Blood Sacrifices";fet_scale=0.75;}
 	        if (fest_type="Triumphal March"){ fet_text="Honor to Allies";fet_scale=0.75;}
@@ -811,15 +811,15 @@ function scr_ui_advisors() {
             
             
 	            if (menu_artifact_type=1){// Weapon
-	                // tip2=string(tooltip_stat1)+" Attack, "+string(tooltip_stat2)+" Armor Penetration#";
+	                // tip2=string(tooltip_stat1)+" Attack, "+string(tooltip_stat2)+" Armour Penetration#";
 	                tip2=string(tooltip_stat1)+" Damage#";
 	                if (tooltip_stat4>0) then tip2+=string(tooltip_stat4)+" Ammunition#";
 	                // tip2+=string_replace(string(tooltip_other),",","#");
 	                tip2+=string(tooltip_other);
 	            }
-	            if (menu_artifact_type=2){// Armor
-	                if (tooltip_other="") then tip2=string(tooltip_stat1)+" Armor Class";
-	                if (tooltip_other!="") then tip2=string(tooltip_stat1)+" Armor Class#"+string(tooltip_other);
+	            if (menu_artifact_type=2){// Armour
+	                if (tooltip_other="") then tip2=string(tooltip_stat1)+" Armour Class";
+	                if (tooltip_other!="") then tip2=string(tooltip_stat1)+" Armour Class#"+string(tooltip_other);
 	            }
 	            if (menu_artifact_type=3){// Gear
 	                tip2=tooltip_other;
@@ -883,7 +883,7 @@ function scr_ui_advisors() {
     
 	    draw_set_color(c_black);
 	    draw_text_transformed(xx+960,yy+76,string_hash_to_newline("Equipment"),0.6,0.6,0);
-	    draw_text_transformed(xx+1070,yy+76,string_hash_to_newline("Armor"),0.6,0.6,0);
+	    draw_text_transformed(xx+1070,yy+76,string_hash_to_newline("Armour"),0.6,0.6,0);
 	    draw_text_transformed(xx+1170,yy+76,string_hash_to_newline("Vehicles"),0.6,0.6,0);
 	    draw_text_transformed(xx+1490,yy+76,string_hash_to_newline("Ships"),0.6,0.6,0);
     
@@ -1004,7 +1004,7 @@ function scr_ui_advisors() {
 	    if (stc_bonus[1]=2) then ta="Enhanced Chain Weapons";
 	    if (stc_bonus[1]=3) then ta="Enhanced Flame Weapons";
 	    if (stc_bonus[1]=4) then ta="Enhanced Missiles";
-	    if (stc_bonus[1]=5) then ta="Enhanced Armor";
+	    if (stc_bonus[1]=5) then ta="Enhanced Armour";
 	    draw_set_alpha(1);if (stc_wargear<2) then draw_set_alpha(0.5);
 	    draw_text(xx+372,yy+549+35,string_hash_to_newline("2) "+string(ta)));
 	    draw_set_alpha(1);if (stc_wargear<3) then draw_set_alpha(0.5);
@@ -1012,13 +1012,13 @@ function scr_ui_advisors() {
 	    ta="Random";
 	    if (stc_bonus[2]=1) then ta="Enhanced Fist Weapons";
 	    if (stc_bonus[2]=2) then ta="Enhanced Plasma";
-	    if (stc_bonus[2]=3) then ta="Enhanced Armor";
+	    if (stc_bonus[2]=3) then ta="Enhanced Armour";
 	    draw_set_alpha(1);if (stc_wargear<4) then draw_set_alpha(0.5);
 	    draw_text(xx+372,yy+549+105,string_hash_to_newline("4) "+string(ta)));
 	    draw_set_alpha(1);if (stc_wargear<5) then draw_set_alpha(0.5);
 	    draw_text(xx+372,yy+549+140,string_hash_to_newline("5) 25% discount"));
 	    draw_set_alpha(1);if (stc_wargear<6) then draw_set_alpha(0.5);
-	    draw_text_ext(xx+372,yy+549+175,string_hash_to_newline("6) Can produce Terminator Armor and Dreadnoughts."),-1,140);
+	    draw_text_ext(xx+372,yy+549+175,string_hash_to_newline("6) Can produce Terminator Armour and Dreadnoughts."),-1,140);
 	    draw_set_alpha(1);
     
 	    // 21 right of the gray bar
@@ -1030,14 +1030,14 @@ function scr_ui_advisors() {
 	    if (stc_bonus[3]=2) then ta="Enhanced Accuracy";
 	    if (stc_bonus[3]=3) then ta="New Weapons";
 	    if (stc_bonus[3]=4) then ta="Survivability";
-	    if (stc_bonus[3]=5) then ta="Enhanced Armor";
+	    if (stc_bonus[3]=5) then ta="Enhanced Armour";
 	    draw_set_alpha(1);if (stc_vehicles<2) then draw_set_alpha(0.5);
 	    draw_text(xx+552,yy+549+35,string_hash_to_newline("2) "+string(ta)));
 	    draw_set_alpha(1);if (stc_vehicles<3) then draw_set_alpha(0.5);
 	    draw_text(xx+552,yy+549+70,string_hash_to_newline("3) 16% discount"));
 	    ta="Random";
 	    if (stc_bonus[4]=1) then ta="Enhanced Hull";
-	    if (stc_bonus[4]=2) then ta="Enhanced Armor";
+	    if (stc_bonus[4]=2) then ta="Enhanced Armour";
 	    if (stc_bonus[4]=3) then ta="New Weapons";
 	    draw_set_alpha(1);if (stc_vehicles<4) then draw_set_alpha(0.5);
 	    draw_text(xx+552,yy+549+105,string_hash_to_newline("4) "+string(ta)));
@@ -1056,14 +1056,14 @@ function scr_ui_advisors() {
 	    if (stc_bonus[5]=2) then ta="Enhanced Accuracy";
 	    if (stc_bonus[5]=3) then ta="Enhanced Turning";
 	    if (stc_bonus[5]=4) then ta="Enhanced Boarding";
-	    if (stc_bonus[5]=5) then ta="Enhanced Armor";
+	    if (stc_bonus[5]=5) then ta="Enhanced Armour";
 	    draw_set_alpha(1);if (stc_ships<2) then draw_set_alpha(0.5);
 	    draw_text(xx+732,yy+549+35,string_hash_to_newline("2) "+string(ta)));
 	    draw_set_alpha(1);if (stc_ships<3) then draw_set_alpha(0.5);
 	    draw_text(xx+732,yy+549+70,string_hash_to_newline("3) 16% discount"));
 	    ta="Random";
 	    if (stc_bonus[6]=1) then ta="Enhanced Hull";
-	    if (stc_bonus[6]=2) then ta="Enhanced Armor";
+	    if (stc_bonus[6]=2) then ta="Enhanced Armour";
 	    if (stc_bonus[6]=3) then ta="Enhanced Speed";
 	    draw_set_alpha(1);if (stc_ships<4) then draw_set_alpha(0.5);
 	    draw_text(xx+732,yy+549+105,string_hash_to_newline("4) "+string(ta)));
@@ -1084,7 +1084,7 @@ function scr_ui_advisors() {
 	    draw_set_color(38144);
 	    draw_set_font(fnt_large);
 	    if (menu=55) then draw_text_transformed(xx+216,yy+40,"Armamentarium; Weapons/Held",0.75,0.75,0);
-	    if (menu=58) then draw_text_transformed(xx+216,yy+40,"Armamentarium; Armor/Other",0.75,0.75,0);
+	    if (menu=58) then draw_text_transformed(xx+216,yy+40,"Armamentarium; Armour/Other",0.75,0.75,0);
 	    if (menu=56) then draw_text_transformed(xx+216,yy+40,"Armamentarium; Vehicles",0.75,0.75,0);
 	    if (menu=57) then draw_text_transformed(xx+216,yy+40,"Armamentarium; Warships",0.75,0.75,0);
 	}*/

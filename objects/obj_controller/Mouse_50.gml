@@ -592,7 +592,7 @@ if (menu=20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (coold
                 trade_theirs[2]="Recruiting Planet";trade_theirs[3]="License: Repair";trade_theirs[4]="License: Crusade";
             }
             if (diplomacy=3){cooldown=8;// Mechanicus trade goods
-                trade_theirs[1]="Terminator Armor";trade_theirs[2]="Land Raider";trade_theirs[3]="Minor Artifact";
+                trade_theirs[1]="Terminator Armour";trade_theirs[2]="Land Raider";trade_theirs[3]="Minor Artifact";
                 trade_theirs[4]="Skitarii";
                 trade_theirs[5]="Techpriest";
                 trade_disp[1]=30;trade_disp[2]=20;trade_disp[3]=40;// trade_disp[4]=20;
@@ -1347,7 +1347,7 @@ if (zoomed=0) and (menu=1) and (managing=0) and (cooldown<=0) and (diplomacy=0){
     if (mouse_x>=xx+136) and (mouse_y>=yy+64) and (mouse_x<xx+248) and (mouse_y<yy+80+64){managing=12;cooldown=8000;}// Apoth
     if (mouse_x>=xx+392) and (mouse_y>=yy+64) and (mouse_x<xx+504) and (mouse_y<yy+80+144){managing=13;cooldown=8000;}// Librar
     if (mouse_x>=xx+136) and (mouse_y>=yy+144) and (mouse_x<xx+248) and (mouse_y<yy+160+64){managing=14;cooldown=8000;}// Reclus
-    if (mouse_x>=xx+248) and (mouse_y>=yy+144) and (mouse_x<xx+392) and (mouse_y<yy+160+64){managing=15;cooldown=8000;}// Armory
+    if (mouse_x>=xx+248) and (mouse_y>=yy+144) and (mouse_x<xx+392) and (mouse_y<yy+160+64){managing=15;cooldown=8000;}// Armoury
     xx+=16;
     if (mouse_x>=xx+24) and (mouse_y>=yy+224) and (mouse_x<xx+136) and (mouse_y<yy+256+64){managing=1;cooldown=8000;}
     if (mouse_x>=xx+136) and (mouse_y>=yy+224) and (mouse_x<xx+248) and (mouse_y<yy+256+64){managing=2;cooldown=8000;}

@@ -492,20 +492,20 @@ function scr_initialize_custom() {
 	    role[102,i]="";wep1[102,i]="";wep2[102,i]="";armor[102,i]="";gear[102,i]="";mobi[102,i]="";
 	}
 	i=99;repeat(3){i+=1;
-	    role[i,2]="Honor Guard";wep1[i,2]="Power Sword";wep2[i,2]="Bolter";armor[i,2]="Power Armor";mobi[i,2]="";gear[i,2]="";
-	    role[i,3]="Veteran";wep1[i,3]="Chainsword";wep2[i,3]="Bolter";armor[i,3]="Power Armor";mobi[i,3]="";gear[i,3]="";
-	    role[i,4]="Terminator";wep1[i,4]="Power Fist";wep2[i,4]="Storm Bolter";armor[i,4]="Terminator Armor";mobi[i,4]="";gear[i,4]="";
-	    role[i,5]="Captain";wep1[i,5]="Power Fist";wep2[i,5]="Bolt Pistol";armor[i,5]="Power Armor";mobi[i,5]="";gear[i,5]="";
+	    role[i,2]="Honor Guard";wep1[i,2]="Power Sword";wep2[i,2]="Bolter";armor[i,2]="Power Armour";mobi[i,2]="";gear[i,2]="";
+	    role[i,3]="Veteran";wep1[i,3]="Chainsword";wep2[i,3]="Bolter";armor[i,3]="Power Armour";mobi[i,3]="";gear[i,3]="";
+	    role[i,4]="Terminator";wep1[i,4]="Power Fist";wep2[i,4]="Storm Bolter";armor[i,4]="Terminator Armour";mobi[i,4]="";gear[i,4]="";
+	    role[i,5]="Captain";wep1[i,5]="Power Fist";wep2[i,5]="Bolt Pistol";armor[i,5]="Power Armour";mobi[i,5]="";gear[i,5]="";
 	    role[i,6]="Dreadnought";wep1[i,6]="Close Combat Weapon";wep2[i,6]="Lascannon";armor[i,6]="Dreadnought";mobi[i,6]="";gear[i,6]="";
-	    role[i,7]="Company Champion";wep1[i,7]="Power Sword";wep2[i,7]="Storm Shield";armor[i,7]="Power Armor";mobi[i,7]="";gear[i,7]="";
-	    role[i,8]="Tactical Marine";wep1[i,8]="Bolter";wep2[i,8]="Chainsword";armor[i,8]="Power Armor";mobi[i,8]="";gear[i,8]="";
-	    role[i,9]="Devastator";wep1[i,9]="Heavy Ranged";wep2[i,9]="Combat Knife";armor[i,9]="Power Armor";mobi[i,9]="";gear[i,9]="";
-	    role[i,10]="Assault Marine";wep1[i,10]="Chainsword";wep2[i,10]="Bolt Pistol";armor[i,10]="Power Armor";mobi[i,10]="Jump Pack";gear[i,10]="";
-	    role[i,12]="Scout";wep1[i,12]="Sniper Rifle";wep2[i,12]="Combat Knife";armor[i,12]="Scout Armor";mobi[i,12]="";gear[i,12]="";
-	    role[i,14]="Chaplain";wep1[i,14]="Power Sword";wep2[i,14]="Storm Bolter";armor[i,14]="Power Armor";gear[i,14]="Rosarius";mobi[i,14]="";
-	    role[i,15]="Apothecary";wep1[i,15]="Power Sword";wep2[i,15]="Storm Bolter";armor[i,15]="Power Armor";gear[i,15]="Narthecium";mobi[i,15]="";
-	    role[i,16]="Techmarine";wep1[i,16]="Power Axe";wep2[i,16]="Storm Bolter";armor[i,16]="Power Armor";gear[i,16]="Servo Arms";mobi[i,16]="";
-	    role[i,17]="Librarian";wep1[i,17]="Force Weapon";wep2[i,17]="Storm Bolter";armor[i,17]="Power Armor";gear[i,17]="Psychic Hood";mobi[i,17]="";
+	    role[i,7]="Company Champion";wep1[i,7]="Power Sword";wep2[i,7]="Storm Shield";armor[i,7]="Power Armour";mobi[i,7]="";gear[i,7]="";
+	    role[i,8]="Tactical Marine";wep1[i,8]="Bolter";wep2[i,8]="Chainsword";armor[i,8]="Power Armour";mobi[i,8]="";gear[i,8]="";
+	    role[i,9]="Devastator";wep1[i,9]="Heavy Ranged";wep2[i,9]="Combat Knife";armor[i,9]="Power Armour";mobi[i,9]="";gear[i,9]="";
+	    role[i,10]="Assault Marine";wep1[i,10]="Chainsword";wep2[i,10]="Bolt Pistol";armor[i,10]="Power Armour";mobi[i,10]="Jump Pack";gear[i,10]="";
+	    role[i,12]="Scout";wep1[i,12]="Sniper Rifle";wep2[i,12]="Combat Knife";armor[i,12]="Scout Armour";mobi[i,12]="";gear[i,12]="";
+	    role[i,14]="Chaplain";wep1[i,14]="Power Sword";wep2[i,14]="Storm Bolter";armor[i,14]="Power Armour";gear[i,14]="Rosarius";mobi[i,14]="";
+	    role[i,15]="Apothecary";wep1[i,15]="Power Sword";wep2[i,15]="Storm Bolter";armor[i,15]="Power Armour";gear[i,15]="Narthecium";mobi[i,15]="";
+	    role[i,16]="Techmarine";wep1[i,16]="Power Axe";wep2[i,16]="Storm Bolter";armor[i,16]="Power Armour";gear[i,16]="Servo Arms";mobi[i,16]="";
+	    role[i,17]="Librarian";wep1[i,17]="Force Weapon";wep2[i,17]="Storm Bolter";armor[i,17]="Power Armour";gear[i,17]="Psychic Hood";mobi[i,17]="";
 	}// 100 is defaults, 101 is the allowable starting equipment
 
 
@@ -561,7 +561,7 @@ function scr_initialize_custom() {
 	if (global.chapter_name="Iron Hands"){wep1[0,1]="Power Axe&ADA|";wep2[0,1]="Storm Shield";bio[0,1]=10;}
 	if (global.chapter_name="Doom Benefactors") then bio[0,1]=4;
 
-	armor[company,1]="Artificer Armor";spe[company,1]="";
+	armor[company,1]="Artificer Armour";spe[company,1]="";
 	if (obj_creation.chapter_master_specialty=1){experience[company,1]=550;spe[company,1]+="$";}
 	if (obj_creation.chapter_master_specialty=2){experience[company,1]=650;spe[company,1]+="@";}
 	if (obj_creation.chapter_master_specialty=3){experience[company,1]=550;gear[company,1]="Psychic Hood";
@@ -578,19 +578,19 @@ function scr_initialize_custom() {
 
 	// Forge Master
 	race[company,2]=1;loc[company,2]=home_name;role[company,2]="Forge Master";wep1[company,2]="Conversion Beam Projector";name[company,2]=obj_creation.fmaster;
-	wep2[company,2]="Power Weapon";armor[company,2]="Artificer Armor";gear[company,2]="Master Servo Arms";hp[company,2]=100;chaos[company,2]=0;experience[company,2]=475;
+	wep2[company,2]="Power Weapon";armor[company,2]="Artificer Armour";gear[company,2]="Master Servo Arms";hp[company,2]=100;chaos[company,2]=0;experience[company,2]=475;
 	if (global.chapter_name="Lamenters") then armor[company,2]="MK6 Corvus";bio[company,2]=8;if (global.chapter_name="Iron Hands") then bio[company,k]=10;
 	// Master of Sanctity (Chaplain)
 	race[company,3]=1;loc[company,3]=home_name;role[company,3]="Master of Sanctity";wep1[company,3]=wep1[101,14];name[company,3]=obj_creation.hchaplain;
-	wep2[company,3]=wep2[101,14];armor[company,3]="Artificer Armor";gear[company,3]=gear[101,14];hp[3]=100;chaos[company,3]=-100;experience[company,3]=525;
+	wep2[company,3]=wep2[101,14];armor[company,3]="Artificer Armour";gear[company,3]=gear[101,14];hp[3]=100;chaos[company,3]=-100;experience[company,3]=525;
 	if (global.chapter_name="Lamenters") then armor[company,3]="MK6 Corvus";
 	// Maser of the Apothecarion (Apothecary)
 	race[company,4]=1;loc[company,4]=home_name;role[company,4]="Master of the Apothecarion";wep1[company,4]=wep1[101,15];name[company,4]=obj_creation.hapothecary;
-	wep2[company,4]=wep2[100,15];armor[company,4]="Artificer Armor";gear[company,4]=gear[101,15];hp[4]=100;chaos[company,4]=0;experience[company,4]=500;
+	wep2[company,4]=wep2[100,15];armor[company,4]="Artificer Armour";gear[company,4]=gear[101,15];hp[4]=100;chaos[company,4]=0;experience[company,4]=500;
 	if (global.chapter_name="Lamenters") then armor[company,4]="MK6 Corvus";
 	// Chief Librarian
 	race[company,5]=1;loc[company,5]=home_name;role[company,5]="Chief "+string(role[100,17]);wep1[company,5]=wep1[101,17];name[company,5]=obj_creation.clibrarian;
-	wep2[company,5]=wep2[101,17];armor[company,5]="Artificer Armor";gear[company,5]=gear[101,17];hp[5]=100;chaos[company,5]=0;experience[company,5]=550;
+	wep2[company,5]=wep2[101,17];armor[company,5]="Artificer Armour";gear[company,5]=gear[101,17];hp[5]=100;chaos[company,5]=0;experience[company,5]=550;
 	if (global.chapter_name="Lamenters") then armor[company,5]="MK6 Corvus";
 	if (obj_creation.discipline="default"){let="D";letmax=7;}
 	if (obj_creation.discipline="biomancy"){let="B";letmax=5;}
@@ -610,7 +610,7 @@ function scr_initialize_custom() {
 	// Tech Marines
 	repeat(techs){k+=1;commands+=1;man_size+=1;
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,16];wep1[company,k]=wep1[101,16];name[company,k]=scr_marine_name();
-	    wep2[company,k]=wep2[101,16];armor[company,k]="Power Armor";gear[company,k]=gear[101,16];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=100;
+	    wep2[company,k]=wep2[101,16];armor[company,k]="Power Armour";gear[company,k]=gear[101,16];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=100;
 	    bio[company,k]=4+choose(0,1,2);if (global.chapter_name="Iron Hands") then bio[company,k]=choose(7,8);
 	}
 	// Librarians
@@ -692,12 +692,12 @@ function scr_initialize_custom() {
 	if (veteran+terminator>0){
 	    k+=1;commands+=1;// Captain
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,5];wep1[company,k]=wep1[101,5];name[company,k]=scr_marine_name();
-	    wep2[company,k]=wep2[101,5];armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=220;gear[company,k]=gear[101,5];
+	    wep2[company,k]=wep2[101,5];armor[company,k]="Terminator Armour";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=220;gear[company,k]=gear[101,5];
 	    if (string_count("Crafter",strin)>0) then armor[company,k]="Tartaros";
 	    if (terminator<=0) then armor[company,k]="MK6 Corvus";
-	    if (global.chapter_name="Iron Hands") then armor[company,k]="Terminator Armor";
+	    if (global.chapter_name="Iron Hands") then armor[company,k]="Terminator Armour";
 	    if (mobi[101,5]!="") then mobi[company,k]=mobi[101,5];
-	    if (armor[company,k]="Terminator Armor") or (armor[company,k]="Tartaros"){
+	    if (armor[company,k]="Terminator Armour") or (armor[company,k]="Tartaros"){
 	        man_size+=1;
 	        if (wep1[company,k]="Bolt Pistol") then wep1[company,k]="Storm Bolter";
 	        if (wep1[company,k]="Bolter") then wep1[company,k]="Storm Bolter";
@@ -710,7 +710,7 @@ function scr_initialize_custom() {
 	        repeat(skl){
 	            k+=1;commands+=1;// Chaplain
 	            race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,14];wep1[company,k]=wep1[101,14];name[company,k]=scr_marine_name();
-	            wep2[company,k]=wep2[101,14];armor[company,k]="Terminator Armor";gear[company,k]=gear[101,14];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=150;
+	            wep2[company,k]=wep2[101,14];armor[company,k]="Terminator Armour";gear[company,k]=gear[101,14];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=150;
 	            if (string_count("Crafter",strin)>0) then armor[company,k]="Tartaros";
 	            if (terminator<=0) then armor[company,k]="MK6 Corvus";
 	            if (mobi[101,14]!="") then mobi[company,k]=mobi[101,14];
@@ -720,7 +720,7 @@ function scr_initialize_custom() {
 
 	    k+=1;commands+=1;// Apothecary
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,15];wep1[company,k]=wep1[101,15];name[company,k]=scr_marine_name();
-	    wep2[company,k]=wep2[101,15];armor[company,k]="Terminator Armor";gear[company,k]=gear[101,15];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=130;
+	    wep2[company,k]=wep2[101,15];armor[company,k]="Terminator Armour";gear[company,k]=gear[101,15];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=130;
 	    if (string_count("Crafter",strin)>0) then armor[company,k]="Tartaros";
 	    if (terminator<=0) then armor[company,k]="MK6 Corvus";
 	    if (mobi[101,15]!="") then mobi[company,k]=mobi[101,15];
@@ -729,7 +729,7 @@ function scr_initialize_custom() {
 	    if (global.chapter_name="Space Wolves"){
 	        k+=1;commands+=1;// Apothecary
 	        race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,15];wep1[company,k]=wep1[101,15];name[company,k]=scr_marine_name();
-	        wep2[company,k]=wep2[101,15];armor[company,k]="Terminator Armor";gear[company,k]=gear[101,15];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=110;
+	        wep2[company,k]=wep2[101,15];armor[company,k]="Terminator Armour";gear[company,k]=gear[101,15];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=110;
 	        if (string_count("Crafter",strin)>0) then armor[company,k]="Tartaros";
 	        if (terminator<=0) then armor[company,k]="MK6 Corvus";
 	        if (mobi[101,15]!="") then mobi[company,k]=mobi[101,15];
@@ -738,7 +738,7 @@ function scr_initialize_custom() {
 	    if (global.chapter_name="Iron Hands"){
 	        k+=1;commands+=1;
 	        race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,16];wep1[company,k]=wep1[101,16];name[company,k]=scr_marine_name();
-	        wep2[company,k]=wep2[101,16];armor[company,k]="Power Armor";gear[company,k]=gear[101,16];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=100;
+	        wep2[company,k]=wep2[101,16];armor[company,k]="Power Armour";gear[company,k]=gear[101,16];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=100;
 	        bio[company,k]=4+choose(0,1,2);if (global.chapter_name="Iron Hands") then bio[company,k]=choose(7,8);
 	        if (mobi[101,16]!="") then mobi[company,k]=mobi[101,16];
 	        if (armor[company,k]="Terminator") or (armor[company,k]="Tartaros") then man_size+=1;
@@ -746,14 +746,14 @@ function scr_initialize_custom() {
 
 	    k+=1;// Standard bearer
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]="Standard Bearer";wep1[company,k]="Company Standard";name[company,k]=scr_marine_name();
-	    wep2[company,k]="Power Fist";armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=90;
+	    wep2[company,k]="Power Fist";armor[company,k]="Terminator Armour";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=90;
 	    if (string_count("Crafter",strin)>0) then armor[company,k]="Tartaros";
 	    if (terminator<=0) then armor[company,k]="MK6 Corvus";
 	    if (armor[company,k]="Terminator") or (armor[company,k]="Tartaros") then man_size+=1;
 
 	    k+=1;man_size+=1;// Company Champion
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,7];wep1[company,k]=wep1[100,7];name[company,k]=scr_marine_name();
-	    wep2[company,k]=wep2[100,7];armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=200;
+	    wep2[company,k]=wep2[100,7];armor[company,k]="Terminator Armour";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=200;
 	    if (string_count("Crafter",strin)>0) then armor[company,k]="Tartaros";
 	    if (terminator<=0) then armor[company,k]="MK6 Corvus";
 	    if (armor[company,k]="Terminator") or (armor[company,k]="Tartaros") then man_size+=1;
@@ -767,7 +767,7 @@ function scr_initialize_custom() {
 	if (terminator-1>0) then repeat(terminator-1){k+=1;man_size+=2; terminator_random_xp = irandom(20)+175;
 	// repeat(max(terminator-4,0)){k+=1;man_size+=2;
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,4];wep1[company,k]=wep1[101,4];name[company,k]=scr_marine_name();
-	    wep2[company,k]=wep2[101,4];armor[company,k]="Terminator Armor";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=terminator_random_xp;
+	    wep2[company,k]=wep2[101,4];armor[company,k]="Terminator Armour";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=terminator_random_xp;
 	    if (string_count("Crafter",strin)>0) and (k<=20) then armor[company,k]="Tartaros";
 	}
 	repeat(veteran){k+=1;man_size+=1;  veteran_random_xp = irandom(20)+145;
@@ -956,7 +956,7 @@ function scr_initialize_custom() {
 	        if (mobi[101,5]!="") then mobi[company,k]=mobi[101,5];
 	        gear[company,k]=gear[101,5];
 
-	        if (global.chapter_name="Iron Hands") then armor[company,k]="Terminator Armor";
+	        if (global.chapter_name="Iron Hands") then armor[company,k]="Terminator Armour";
 
 	        if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands"){
 	            var skl;skl=1;if (chaap>0){skl=2;chaap-=1;}
@@ -991,7 +991,7 @@ function scr_initialize_custom() {
 	        if (global.chapter_name="Iron Hands"){
 	            k+=1;commands+=1;
 	            race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,16];wep1[company,k]=wep1[101,16];name[company,k]=scr_marine_name();
-	            wep2[company,k]=wep2[101,16];armor[company,k]="Power Armor";gear[company,k]=gear[101,16];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=100;
+	            wep2[company,k]=wep2[101,16];armor[company,k]="Power Armour";gear[company,k]=gear[101,16];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=100;
 	            bio[company,k]=4+choose(0,1,2);if (global.chapter_name="Iron Hands") then bio[company,k]=choose(7,8);
 	            if (mobi[101,16]!="") then mobi[company,k]=mobi[101,16];
 	        }
@@ -1037,7 +1037,7 @@ function scr_initialize_custom() {
 	                repeat(temp1){k+=1;man_size+=1;
 	                    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,12];
 	                    wep1[company,k]=wep1[101,12];name[company,k]=scr_marine_name();
-	                    wep2[company,k]=wep2[101,12];armor[company,k]="Scout Armor";
+	                    wep2[company,k]=wep2[101,12];armor[company,k]="Scout Armour";
 	                    hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
 	                }
 	            }
@@ -1071,7 +1071,7 @@ function scr_initialize_custom() {
 	            }
 	            if (company=10) then repeat(temp1){k+=1;man_size+=1;
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,12];wep1[company,k]=wep1[101,12];name[company,k]=scr_marine_name();
-	                wep2[company,k]=wep2[101,12];armor[company,k]="Scout Armor";
+	                wep2[company,k]=wep2[101,12];armor[company,k]="Scout Armour";
 	                hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
 	            }
 	            if (company_unit2="assault") then repeat(assault){k+=1;man_size+=1;
@@ -1173,7 +1173,7 @@ function scr_initialize_custom() {
 	var eqi;eqi=0;
 	eqi+=1;equipment[eqi]="MK7 Aquila";equipment_number[eqi]=10;equipment_type[eqi]="armor";
 	eqi+=1;equipment[eqi]="MK8 Errant";equipment_number[eqi]=1;equipment_type[eqi]="armor";
-	eqi+=1;equipment[eqi]="Scout Armor";equipment_number[eqi]=20;equipment_type[eqi]="armor";
+	eqi+=1;equipment[eqi]="Scout Armour";equipment_number[eqi]=20;equipment_type[eqi]="armor";
 	eqi+=1;equipment[eqi]="Bolter";equipment_number[eqi]=20;equipment_type[eqi]="weapon";
 	eqi+=1;equipment[eqi]="Chainsword";equipment_number[eqi]=20;equipment_type[eqi]="weapon";
 	eqi+=1;equipment[eqi]="Lascannon";equipment_number[eqi]=5;equipment_type[eqi]="weapon";
@@ -1196,7 +1196,7 @@ function scr_initialize_custom() {
 
 	    o=0;yep=0;repeat(4){o+=1;if (obj_creation.adv[o]="Crafters") then yep=1;}
 	    if (yep=1) then scr_add_item("Tartaros",10);
-	    else{scr_add_item("Terminator Armor",10);}
+	    else{scr_add_item("Terminator Armour",10);}
 
 	    scr_add_item("MK7 Aquila",200);
 	    scr_add_item("Bolter",200);
@@ -1215,7 +1215,7 @@ function scr_initialize_custom() {
 	// if (string_count("Crafter",strin)>0) and (string_count("Enthusi",strin)>0) then equipment_number[1]=20;
 	// if (string_count("Crafter",strin)>0) and (string_count("Enthusi",strin)=0) then equipment_number[2]=20;
 
-	if (string_count("Crafter",strin)>0) and (string_count("Enthusi",strin)>0){eqi+=1;equipment[eqi]="MK3 Iron Armor";equipment_number[eqi]=round(random_range(2,12));equipment_type[eqi]="armor";}
+	if (string_count("Crafter",strin)>0) and (string_count("Enthusi",strin)>0){eqi+=1;equipment[eqi]="MK3 Iron Armour";equipment_number[eqi]=round(random_range(2,12));equipment_type[eqi]="armor";}
 	if (string_count("Crafter",strin)>0) and (string_count("Enthusi",strin)=0){eqi+=1;equipment[eqi]="MK4 Maximus";equipment_number[eqi]=round(random_range(3,18));equipment_type[eqi]="armor";}
 
 

@@ -12,15 +12,15 @@ function scr_wep_abbreviate(argument0) {
 	    // var ttt;ttt=0;we=argument0;ttt=string_pos("Master Crafted ",we);we="^"+string(string_delete(we,0,string_length("Master Crafted ")));
 	}
 
-	if (we="Scout Armor") then we2="Scout";
-	if (we="MK3 Iron Armor") then we2="MK3";
+	if (we="Scout Armour") then we2="Scout";
+	if (we="MK3 Iron Armour") then we2="MK3";
 	if (we="MK4 Maximus") then we2="MK4";
 	if (we="MK6 Corvus") then we2="MK6";
 	if (we="MK7 Aquila") then we2="MK7";
 	if (we="MK8 Errant") then we2="MK8";
-	if (we="Power Armor") then we2="PA";
-	if (we="Artificer Armor") then we2="Arti";
-	if (we="Terminator Armor") then we2="Termi";
+	if (we="Power Armour") then we2="PA";
+	if (we="Artificer Armour") then we2="Arti";
+	if (we="Terminator Armour") then we2="Termi";
 	if (we="Tartaros") then we2="Tarta";
 	if (we="Dreadnought") then we2="Dread";
 	if (we="Jump Pack") then we2="Jump";

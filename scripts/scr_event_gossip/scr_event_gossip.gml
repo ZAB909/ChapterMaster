@@ -83,8 +83,8 @@ function scr_event_gossip(argument0) {
 	    words+=choose("recounts","retells","tells","speaks of")+" past glorious battles that the Chapter partook of, in glory of "+choose("our honor","The Emperor","The Imperium","Primarch")+".";
 	}
 	if (that_type="artifact_armor"){rando=choose(1,2);
-	    if (rando=1) then words+="speaks fondly of his Artifact Armor.  Several adjacent Astartes recall the mighty item with envy.";
-	    if (rando=2) then words+="speaks of his Artifact Armor in a reverent tone.  May it protect him in many more battles to come.";
+	    if (rando=1) then words+="speaks fondly of his Artifact Armour.  Several adjacent Astartes recall the mighty item with envy.";
+	    if (rando=2) then words+="speaks of his Artifact Armour in a reverent tone.  May it protect him in many more battles to come.";
 	}
 	if (that_type="artifact_wep"){rando=choose(1,2);
 	    if (rando=1) then words+="speaks fondly of his Artifact weapon.  Several adjacent Astartes recall the mighty item with envy.";

@@ -96,7 +96,7 @@ if (type>0){
         
         /*if (target_gear=1) then draw_text_transformed(594,575,"Primary Weapon",0.5,0.5,0);
         if (target_gear=2) then draw_text_transformed(594,575,"Secondary Weapon",0.5,0.5,0);
-        if (target_gear=3) then draw_text_transformed(594,575,"Armor",0.5,0.5,0);
+        if (target_gear=3) then draw_text_transformed(594,575,"Armour",0.5,0.5,0);
         if (target_gear=4) then draw_text_transformed(594,575,"Mobility Item",0.5,0.5,0);
         if (target_gear=5) then draw_text_transformed(594,575,"Special Gear",0.5,0.5,0);*/
         
@@ -109,7 +109,7 @@ if (type>0){
             gg+=1;y5+=spacing;
             if (gg=1){title="Main Weapon: ";geh=obj_creation.wep1[co,ide];}
             if (gg=2){title="Secondary Weapon: ";geh=obj_creation.wep2[co,ide];}
-            if (gg=3){title="Armor: ";geh=obj_creation.armor[co,ide];}
+            if (gg=3){title="Armour: ";geh=obj_creation.armor[co,ide];}
             if (gg=4){title="Mobility Item: ";geh=obj_creation.mobi[co,ide];}
             if (gg=5){title="Special Item: ";geh=obj_creation.gear[co,ide];}
             
@@ -175,7 +175,7 @@ if (target_gear>0){
     draw_set_font(fnt_40k_30b);
     if (target_gear=1) then draw_text_transformed(862,215,string_hash_to_newline("Select First Weapon"),0.6,0.6,0);
     if (target_gear=2) then draw_text_transformed(862,215,string_hash_to_newline("Select Second Weapon"),0.6,0.6,0);
-    if (target_gear=3) then draw_text_transformed(862,215,string_hash_to_newline("Select Armor"),0.6,0.6,0);
+    if (target_gear=3) then draw_text_transformed(862,215,string_hash_to_newline("Select Armour"),0.6,0.6,0);
     if (target_gear=4) then draw_text_transformed(862,215,string_hash_to_newline("Select Mobility Item"),0.6,0.6,0);
     if (target_gear=5) then draw_text_transformed(862,215,string_hash_to_newline("Select Special Item"),0.6,0.6,0);
     draw_set_font(fnt_40k_14b);

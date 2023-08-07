@@ -466,7 +466,7 @@ if (menu=1) and (managing>0){
                 }
                 
                 
-                if (ma_armor[sel]="MK3 Iron Armor") then ra-=0.1;
+                if (ma_armor[sel]="MK3 Iron Armour") then ra-=0.1;
                 if (ma_armor[sel]="MK4 Maximus"){ra+=0.05;ma+=0.05;}
                 if (ma_armor[sel]="MK6 Corvus"){ra+=0.1;}
                 if (string_count("Artificer",ma_armor[sel])>0){ma+=0.1;}

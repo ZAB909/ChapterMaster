@@ -141,7 +141,7 @@ function scr_management(argument0) {
 	    }
 	    instance_activate_object(obj_managment_panel);
     
-	    // Armory
+	    // Armoury
 	    company=0;obj_controller.temp[71]=15;var q;q=0;
 	    i=-1;repeat(50){i+=1;num[i]=0;nam[i]="";}
 	    nam[2]=obj_ini.role[100,16];nam[3]=string(obj_ini.role[100,16])+" Aspirant";nam[4]="Techpriest";

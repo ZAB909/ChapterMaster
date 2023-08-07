@@ -8,18 +8,18 @@ if (engage=true){
         if (role_number[co]>0){
             repeat(300){i+=1;
                 if (obj_ini.role[co,i]=obj_ini.role[100,role]){
-                    // Armor First because complex
+                    // Armour First because complex
                     var yes,done;yes=false;done="";
-                    if (req_armor="Power Armor"){
-                        if (obj_ini.armor[co,i]="Power Armor") then yes=true;
-                        if (obj_ini.armor[co,i]="MK3 Iron Armor") then yes=true;
+                    if (req_armor="Power Armour"){
+                        if (obj_ini.armor[co,i]="Power Armour") then yes=true;
+                        if (obj_ini.armor[co,i]="MK3 Iron Armour") then yes=true;
                         if (obj_ini.armor[co,i]="MK4 Maximus") then yes=true;
                         if (obj_ini.armor[co,i]="MK6 Corvus") then yes=true;
                         if (obj_ini.armor[co,i]="MK7 Aquila") then yes=true;
                         if (obj_ini.armor[co,i]="MK8 Errant") then yes=true;
-                        if (obj_ini.armor[co,i]="Artificer Armor") then yes=true;
+                        if (obj_ini.armor[co,i]="Artificer Armour") then yes=true;
                         
-                        if (co=1) and ((obj_ini.armor[co,i]="Terminator Armor") or (obj_ini.armor[co,i]="Tartaros")){
+                        if (co=1) and ((obj_ini.armor[co,i]="Terminator Armour") or (obj_ini.armor[co,i]="Tartaros")){
                             if (obj_ini.role[co,i]=obj_ini.role[100,3]) then yes=true;
                             if (obj_ini.role[co,i]=obj_ini.role[100,5]) then yes=true;
                             if (obj_ini.role[co,i]=obj_ini.role[100,14]) then yes=true;
@@ -30,30 +30,30 @@ if (engage=true){
                             if (obj_ini.role[co,i]="Codiciery") then yes=true;
                         }
                     }
-                    if (req_armor="Terminator Armor"){
-                        if (obj_ini.armor[co,i]="Terminator Armor") then yes=true;
+                    if (req_armor="Terminator Armour"){
+                        if (obj_ini.armor[co,i]="Terminator Armour") then yes=true;
                         if (obj_ini.armor[co,i]="Tartaros") then yes=true;
-                        if (obj_ini.armor[co,i]!="Terminator Armor") and (obj_ini.armor[co,i]!="Tartaros") and (obj_ini.experience[co,i]<179) then yes=true;
+                        if (obj_ini.armor[co,i]!="Terminator Armour") and (obj_ini.armor[co,i]!="Tartaros") and (obj_ini.experience[co,i]<179) then yes=true;
                     }
-                    if (req_armor="Scout Armor") and (obj_ini.armor[co,i]="Scout Armor") then yes=true;
+                    if (req_armor="Scout Armour") and (obj_ini.armor[co,i]="Scout Armour") then yes=true;
                     if (string_count("&",obj_ini.armor[co,i])>0) then yes=true;
                     if (yes=false){
                         if (obj_ini.armor[co,i]!=""){scr_add_item(obj_ini.armor[co,i],1);obj_ini.armor[co,i]="";}
-                        if (obj_ini.armor[co,i]="") and (req_armor="Power Armor"){
+                        if (obj_ini.armor[co,i]="") and (req_armor="Power Armour"){
                             if (done="") and (scr_item_count("MK7 Aquila")>0) then done="MK7 Aquila";
                             if (done="") and (scr_item_count("MK6 Corvus")>0) then done="MK6 Corvus";
-                            if (done="") and (scr_item_count("Power Armor")>0) then done="Power Armor";
+                            if (done="") and (scr_item_count("Power Armour")>0) then done="Power Armour";
                             if (done="") and (scr_item_count("MK4 Maximus")>0) then done="MK4 Maximus";
                             if (done="") and (scr_item_count("MK3 Iron")>0) then done="MK3 Iron";
                             if (done!=""){scr_add_item(done,-1);obj_ini.armor[co,i]=done;}
                         }
-                        if (obj_ini.armor[co,i]="") and (req_armor="Terminator Armor"){
-                            if (done="") and (scr_item_count("Terminator Armor")>0) then done="Terminator Armor";
+                        if (obj_ini.armor[co,i]="") and (req_armor="Terminator Armour"){
+                            if (done="") and (scr_item_count("Terminator Armour")>0) then done="Terminator Armour";
                             if (done="") and (scr_item_count("Tartaros")>0) then done="Tartaros";
                             if (done!=""){scr_add_item(done,-1);obj_ini.armor[co,i]=done;}
                         }
-                        if (obj_ini.armor[co,i]="") and (req_armor="Scout Armor"){
-                            if (done="") and (scr_item_count("Scout Armor")>0) then done="Scout Armor";
+                        if (obj_ini.armor[co,i]="") and (req_armor="Scout Armour"){
+                            if (done="") and (scr_item_count("Scout Armour")>0) then done="Scout Armour";
                             if (done!=""){scr_add_item(done,-1);obj_ini.armor[co,i]=done;}
                         }
                     }
@@ -65,8 +65,8 @@ if (engage=true){
                         
                         if (string_count("&",obj_ini.wep1[co,i])>0) then stop_one=true;
                         if (string_count("&",obj_ini.wep2[co,i])>0) then stop_two=true;
-                        if (req_wep1="Assault Cannon") and (obj_ini.armor[co,i]!="Terminator Armor") and (obj_ini.armor[co,i]!="Tartaros") and (obj_ini.armor[co,i]!="Dreadnought") then stop_one=true;
-                        if (req_wep2="Assault Cannon") and (obj_ini.armor[co,i]!="Terminator Armor") and (obj_ini.armor[co,i]!="Tartaros") and (obj_ini.armor[co,i]!="Dreadnought") then stop_two=true;
+                        if (req_wep1="Assault Cannon") and (obj_ini.armor[co,i]!="Terminator Armour") and (obj_ini.armor[co,i]!="Tartaros") and (obj_ini.armor[co,i]!="Dreadnought") then stop_one=true;
+                        if (req_wep2="Assault Cannon") and (obj_ini.armor[co,i]!="Terminator Armour") and (obj_ini.armor[co,i]!="Tartaros") and (obj_ini.armor[co,i]!="Dreadnought") then stop_two=true;
                         if (req_wep1="Thunder Hammer") and (obj_ini.experience[co,i]<70) then stop_one=true;
                         if (req_wep2="Thunder Hammer") and (obj_ini.experience[co,i]<70) then stop_two=true;
                         
@@ -86,7 +86,7 @@ if (engage=true){
                     if (obj_ini.mobi[co,i]!=req_mobi) and (string_count("&",obj_ini.mobi[co,i])=0){
                         var stop_mobi;stop_mobi=false;
                     
-                        if (obj_ini.armor[co,i]="Terminator Armor") or (obj_ini.armor[co,i]="Tartaros") or (obj_ini.armor[co,i]="Dreadnought") then stop_mobi=true;
+                        if (obj_ini.armor[co,i]="Terminator Armour") or (obj_ini.armor[co,i]="Tartaros") or (obj_ini.armor[co,i]="Dreadnought") then stop_mobi=true;
                         if (string_pos("&",obj_ini.armor[co,i])>0){
                             if (string_count("Termi",obj_ini.armor[co,i])>0) then stop_mobi=true;
                             if (string_count("Dreadnou",obj_ini.armor[co,i])>0) then stop_mobi=true;
@@ -145,20 +145,20 @@ if (refresh=true) and (obj_controller.settings>0){// Refreshing
                 
                 if (req_armor!=""){
                     var yes;yes=false;
-                    if (req_armor="Power Armor"){
-                        if (obj_ini.armor[co,i]="Power Armor") then yes=true;
-                        if (obj_ini.armor[co,i]="MK3 Iron Armor") then yes=true;
+                    if (req_armor="Power Armour"){
+                        if (obj_ini.armor[co,i]="Power Armour") then yes=true;
+                        if (obj_ini.armor[co,i]="MK3 Iron Armour") then yes=true;
                         if (obj_ini.armor[co,i]="MK4 Maximus") then yes=true;
                         if (obj_ini.armor[co,i]="MK6 Corvus") then yes=true;
                         if (obj_ini.armor[co,i]="MK7 Aquila") then yes=true;
                         if (obj_ini.armor[co,i]="MK8 Errant") then yes=true;
-                        if (obj_ini.armor[co,i]="Artificer Armor") then yes=true;
+                        if (obj_ini.armor[co,i]="Artificer Armour") then yes=true;
                     }
-                    if (req_armor="Terminator Armor"){
-                        if (obj_ini.armor[co,i]="Terminator Armor") then yes=true;
+                    if (req_armor="Terminator Armour"){
+                        if (obj_ini.armor[co,i]="Terminator Armour") then yes=true;
                         if (obj_ini.armor[co,i]="Tartaros") then yes=true;
                     }
-                    if (req_armor="Scout Armor") and (obj_ini.armor[co,i]="Scout Armor") then yes=true;
+                    if (req_armor="Scout Armour") and (obj_ini.armor[co,i]="Scout Armour") then yes=true;
                     if (string_count("&",obj_ini.armor[co,i])>0) then yes=true;
                     if (yes=true) then have_armor_num+=1;
                 }
@@ -208,18 +208,18 @@ if (refresh=true) and (obj_controller.settings>0){// Refreshing
     have_wep1_num+=scr_item_count(req_wep1);
     have_wep2_num+=scr_item_count(req_wep2);
     
-    if (req_armor="Power Armor"){
+    if (req_armor="Power Armour"){
         have_armor_num+=scr_item_count("MK7 Aquila");
         have_armor_num+=scr_item_count("MK6 Corvus");
-        have_armor_num+=scr_item_count("Power Armor");
+        have_armor_num+=scr_item_count("Power Armour");
         have_armor_num+=scr_item_count("MK4 Maximus");
         have_armor_num+=scr_item_count("MK3 Iron");
     }
-    if (req_armor="Terminator Armor"){
-        have_armor_num+=scr_item_count("Terminator Armor");
+    if (req_armor="Terminator Armour"){
+        have_armor_num+=scr_item_count("Terminator Armour");
         have_armor_num+=scr_item_count("Tartaros");
     }
-    if (req_armor="Scout Armor") then have_armor_num+=scr_item_count("Scout Armor");
+    if (req_armor="Scout Armour") then have_armor_num+=scr_item_count("Scout Armour");
     
     have_gear_num+=scr_item_count(req_gear);
     have_mobi_num+=scr_item_count(req_mobi);

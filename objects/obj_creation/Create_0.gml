@@ -263,20 +263,20 @@ ye=103;i=-1;repeat(51){i+=1;
 
 i=99;
 repeat(3){i+=1;// First is for the correct slot, second is for default
-    race[i,2]=1;role[i,2]="Honor Guard";wep1[i,2]="Power Sword";wep2[i,2]="Bolter";armor[i,2]="Power Armor";
-    race[i,3]=1;role[i,3]="Veteran";wep1[i,3]="Chainsword";wep2[i,3]="Bolter";armor[i,3]="Power Armor";
-    race[i,4]=1;role[i,4]="Terminator";wep1[i,4]="Power Fist";wep2[i,4]="Storm Bolter";armor[i,4]="Terminator Armor";
-    race[i,5]=1;role[i,5]="Captain";wep1[i,5]="Power Fist";wep2[i,5]="Bolt Pistol";armor[i,5]="Power Armor";gear[i,5]="";
+    race[i,2]=1;role[i,2]="Honor Guard";wep1[i,2]="Power Sword";wep2[i,2]="Bolter";armor[i,2]="Power Armour";
+    race[i,3]=1;role[i,3]="Veteran";wep1[i,3]="Chainsword";wep2[i,3]="Bolter";armor[i,3]="Power Armour";
+    race[i,4]=1;role[i,4]="Terminator";wep1[i,4]="Power Fist";wep2[i,4]="Storm Bolter";armor[i,4]="Terminator Armour";
+    race[i,5]=1;role[i,5]="Captain";wep1[i,5]="Power Fist";wep2[i,5]="Bolt Pistol";armor[i,5]="Power Armour";gear[i,5]="";
     race[i,6]=1;role[i,6]="Dreadnought";wep1[i,6]="Close Combat Weapon";wep2[i,6]="Lascannon";armor[i,6]="Dreadnought";
-    race[i,7]=1;role[i,7]="Company Champion";wep1[i,7]="Power Sword";wep2[i,7]="Storm Shield";armor[i,7]="Power Armor";
-    race[i,8]=1;role[i,8]="Tactical Marine";wep1[i,8]="Bolter";wep2[i,8]="Chainsword";armor[i,8]="Power Armor";
-    race[i,9]=1;role[i,9]="Devastator";wep1[i,9]="Heavy Ranged";wep2[i,9]="Combat Knife";armor[i,9]="Power Armor";
-    race[i,10]=1;role[i,10]="Assault Marine";wep1[i,10]="Chainsword";wep2[i,10]="Bolt Pistol";armor[i,10]="Power Armor";mobi[i,10]="Jump Pack";
-    race[i,12]=1;role[i,12]="Scout";wep1[i,12]="Sniper Rifle";wep2[i,12]="Combat Knife";armor[i,12]="Scout Armor";
-    race[i,14]=1;role[i,14]="Chaplain";wep1[i,14]="Power Sword";wep2[i,14]="Storm Bolter";armor[i,14]="Power Armor";gear[i,14]="Rosarius";
-    race[i,15]=1;role[i,15]="Apothecary";wep1[i,15]="Power Sword";wep2[i,15]="Storm Bolter";armor[i,15]="Power Armor";gear[i,15]="Narthecium";
-    race[i,16]=1;role[i,16]="Techmarine";wep1[i,16]="Power Axe";wep2[i,16]="Storm Bolter";armor[i,16]="Power Armor";gear[i,16]="Servo Arms";
-    race[i,17]=1;role[i,17]="Librarian";wep1[i,17]="Force Weapon";wep2[i,17]="Storm Bolter";armor[i,17]="Power Armor";gear[i,17]="Psychic Hood";
+    race[i,7]=1;role[i,7]="Company Champion";wep1[i,7]="Power Sword";wep2[i,7]="Storm Shield";armor[i,7]="Power Armour";
+    race[i,8]=1;role[i,8]="Tactical Marine";wep1[i,8]="Bolter";wep2[i,8]="Chainsword";armor[i,8]="Power Armour";
+    race[i,9]=1;role[i,9]="Devastator";wep1[i,9]="Heavy Ranged";wep2[i,9]="Combat Knife";armor[i,9]="Power Armour";
+    race[i,10]=1;role[i,10]="Assault Marine";wep1[i,10]="Chainsword";wep2[i,10]="Bolt Pistol";armor[i,10]="Power Armour";mobi[i,10]="Jump Pack";
+    race[i,12]=1;role[i,12]="Scout";wep1[i,12]="Sniper Rifle";wep2[i,12]="Combat Knife";armor[i,12]="Scout Armour";
+    race[i,14]=1;role[i,14]="Chaplain";wep1[i,14]="Power Sword";wep2[i,14]="Storm Bolter";armor[i,14]="Power Armour";gear[i,14]="Rosarius";
+    race[i,15]=1;role[i,15]="Apothecary";wep1[i,15]="Power Sword";wep2[i,15]="Storm Bolter";armor[i,15]="Power Armour";gear[i,15]="Narthecium";
+    race[i,16]=1;role[i,16]="Techmarine";wep1[i,16]="Power Axe";wep2[i,16]="Storm Bolter";armor[i,16]="Power Armour";gear[i,16]="Servo Arms";
+    race[i,17]=1;role[i,17]="Librarian";wep1[i,17]="Force Weapon";wep2[i,17]="Storm Bolter";armor[i,17]="Power Armour";gear[i,17]="Psychic Hood";
 }
 
 

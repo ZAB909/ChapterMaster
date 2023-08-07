@@ -25,7 +25,7 @@ function scr_load_all(argument0) {
 	    repeat(300){i+=1;
 	        man_sel[i]=0;
 	            /*if (man[i]="man") then man_size-=1;
-	            if (man[i]="man") and (ma_armor[i]="Terminator Armor") then man_size-=1;
+	            if (man[i]="man") and (ma_armor[i]="Terminator Armour") then man_size-=1;
 	            if (man[i]="man") and (ma_armor[i]="Tartaros") then man_size-=1;
 	            if (man[i]="man") and (ma_armor[i]="Dreadnought") then man_size-=7;
 	            // if (man[i]="man") and (ma_mobi[i]="Jump Pack") then man_size-=1;

@@ -44,10 +44,10 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	    }
 
 	    if (string_count("&",thawep)>0) or (string_count("|",thawep)>0){
-	        // Artifact Armor
+	        // Artifact Armour
 	        var arti_armor;
 	        arti_armor=false;
-	        if (string_count("Power Armor",thawep)>0){statt=30;emor=1;arti_armor=true;}
+	        if (string_count("Power Armour",thawep)>0){statt=30;emor=1;arti_armor=true;}
 	        if (string_count("Artificer",thawep)>0){statt=35;emor=1;arti_armor=true;spe_descr="+10% Melee";}
 	        if (string_count("Terminator",thawep)>0){statt=45;emor=1;arti_armor=true;spe_descr="+20% Melee, -10% Ranged, Strength";}
 	        if (string_count("Dreadnought",thawep)>0){statt=50;emor=1;arti_armor=true;}
@@ -93,30 +93,30 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 
 	    if (i=1){
-	        if (argument0="Ork Armor"){statt=15;spe_descr="";emor=1;}
+	        if (argument0="Ork Armour"){statt=15;spe_descr="";emor=1;}
             
-			if (argument0="Skitarii Armor"){statt=5;spe_descr="";emor=1;}
+			if (argument0="Skitarii Armour"){statt=5;spe_descr="";emor=1;}
 
-	        if (argument0="Scout Armor"){statt=8;spe_descr="";emor=1;
+	        if (argument0="Scout Armour"){statt=8;spe_descr="";emor=1;
 	            descr="A non-powered suit made up of carapace armor and ballistic nylon.  Includes biohazard shielding, nutrient feed, and camoflauge.";}
-	        if (argument0="MK3 Iron Armor"){statt=26;spe_descr="-10% Ranged";emor=1;
-	            descr="An ancient set of Armorum Ferrum.  Has thicker armor plating but the added weight slows down the wearer.";}
+	        if (argument0="MK3 Iron Armour"){statt=26;spe_descr="-10% Ranged";emor=1;
+	            descr="An ancient set of Armourum Ferrum.  Has thicker armor plating but the added weight slows down the wearer.";}
 	        if (argument0="MK4 Maximus"){statt=22;spe_descr="+5% Melee, +5% Ranged";emor=1;
-	            descr="Armor dating to the end of the Great Crusade.  Often considered the ultimate Space Marine armor.  The components are no longer reproducable.";}
+	            descr="Armour dating to the end of the Great Crusade.  Often considered the ultimate Space Marine armor.  The components are no longer reproducable.";}
 	        if (argument0="MK6 Corvus"){statt=16;spe_descr="+10% Ranged";emor=1;
 	            descr="Relatively old beakie armor, sleek as can be.  Boosted olfactory and auditory sensors increase the ranged accuracy of the wearer.";}
 	        if (argument0="MK7 Aquila"){statt=17;spe_descr="";emor=1;
 	            descr="Developed during the Horus Heresy, this Mark of armor is the most commonly used amongst all the Adeptus Astartes.";}
 	        if (argument0="MK8 Errant"){statt=22;spe_descr="";emor=1;
 	            descr="Highly modified MK7, this armor has additional protection along the neck and cables.  It is oft worn as a symbol of high rank.";}
-	        if (argument0="Power Armor"){statt=19;spe_descr="";emor=1;
+	        if (argument0="Power Armour"){statt=19;spe_descr="";emor=1;
 	            descr="A suit of Adeptus Astartes power armor.  The Mark can no longer be determined- it appears to be a combination of several types.";}
-	        if (argument0="Artificer Armor"){statt=37;spe_descr="+10% Melee";emor=1;
-	            descr="Heavily modified by the chapter artificers, and decorated without compare, this ancient Power Armor is beyond priceless.";}
-	        if (argument0="Terminator Armor"){statt=42;spe_descr="+20% Melee, -10% Ranged, Strength";emor=1;
+	        if (argument0="Artificer Armour"){statt=37;spe_descr="+10% Melee";emor=1;
+	            descr="Heavily modified by the chapter artificers, and decorated without compare, this ancient Power Armour is beyond priceless.";}
+	        if (argument0="Terminator Armour"){statt=42;spe_descr="+20% Melee, -10% Ranged, Strength";emor=1;
 	            descr="The toughest and most powerful armor designed by humanity.  Only the most veteran of Astartes are allowed to wear these.";}
 	        if (argument0="Tartaros"){statt=45;spe_descr="+20% Melee, -5% Ranged, Strength";emor=1;
-	            descr="Even more advanced than the Indomitus Terminator Armor, this upgraded armor offer greater mobility at no cost to protection.";}
+	            descr="Even more advanced than the Indomitus Terminator Armour, this upgraded armor offer greater mobility at no cost to protection.";}
 	        if (argument0="Dreadnought"){statt=50;spe_descr="";emor=1;
 	            descr="A massive war-machine that can be piloted by a honored Space Marine, who otherwise would have fallen in combat.";}
 	        if (argument0="Jump Pack"){spe_descr="+10% Damage Resistance, Jump Pack";
@@ -130,7 +130,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        if (argument0="Psychic Hood"){spe_descr="-50% chance of perils*";
 	            descr="An arcane hood that protects "+string(obj_ini.role[100,17])+"s from enemy psychic powers and enhances their control.";}
 	        if (argument0="Rosarius"){spe_descr="+33% Damage Resistance";
-	            descr="Also called the 'Soul's Armor', this amulet has a built-in, powerful shield generator.  They are an icon of the Imperial Creed.";}
+	            descr="Also called the 'Soul's Armour', this amulet has a built-in, powerful shield generator.  They are an icon of the Imperial Creed.";}
 	        if (argument0="Iron Halo"){spe_descr="+33% Damage Resistance, +20 HP";
 	            descr="An ancient artifact, these powerful conversion field generators are granted to high ranking battle brothers or heroes.  Bearers are oft looked to for guidance.";}
 	        if (argument0="Plasma Bomb"){spe_descr="Destroys destructibles";
@@ -157,10 +157,10 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 	    if (thawep="Storm Shield"){melee_hands+=0.9;atta=0;arp=0;rang=0;spli=0;
 	        descr="Protects twice as well when boarding. A powered shield that must be held with a hand.  While powered by the marines armor it shimmers with blue energy.";
-	        spe_descr="+30% HP, +8 Armor";}
+	        spe_descr="+30% HP, +8 Armour";}
 	    if (thawep="Boarding Shield"){melee_hands+=0.9;atta=0;arp=0;rang=0;spli=0;
 	        descr="Protects twice as well when boarding. Used in siege or boarding operations, this shield offers additional protection.  It may be used with a 2-handed ranged weapon.";
-	        spe_descr="+15% HP, +4 Armor";}
+	        spe_descr="+15% HP, +4 Armour";}
 	    if (thawep="Hellgun"){atta=30;arp=0;rang=6.1;ranged_hands+=2;amm=10;
 	        descr="";}
 	    if (thawep="Hellrifle"){atta=150;arp=90;rang=8;ranged_hands+=2;
@@ -494,14 +494,14 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	                }
 
 	                if (arp=-1) then obj_shop.tooltip_other+=", Low Penetration";
-	                if (arp=1) then obj_shop.tooltip_other+=", Armor Piercing";
+	                if (arp=1) then obj_shop.tooltip_other+=", Armour Piercing";
 
 	            }
 	            if (atta=0) and (statt=0){// Held something
 	                obj_shop.tooltip_weapon=2;
 	                obj_shop.tooltip_other=spe_descr;
 	            }
-	            if (atta=0) and (melee_hands+ranged_hands=0) and (statt>0){// Armor
+	            if (atta=0) and (melee_hands+ranged_hands=0) and (statt>0){// Armour
 	                obj_shop.tooltip_weapon=3;
 	                obj_shop.tooltip_stat1=statt;
 	                obj_shop.tooltip_other=spe_descr;
@@ -528,7 +528,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	                }
 
 	                if (arp=-1) then obj_controller.tooltip_other+=", Low Penetration";
-	                if (arp=1) then obj_controller.tooltip_other+=", Armor Piercing";
+	                if (arp=1) then obj_controller.tooltip_other+=", Armour Piercing";
 	            }
 	            if (atta=0) and (statt=0){// Held something
 	                obj_controller.tooltip_other=spe_descr;
@@ -538,7 +538,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	                obj_controller.tooltip_stat3=max(ranged_hands,melee_hands);
 	                obj_controller.tooltip_stat4=0;
 	            }
-	            if (atta=0) and (statt>0){// Armor
+	            if (atta=0) and (statt>0){// Armour
 	                obj_controller.tooltip_stat1=statt;
 	                obj_controller.tooltip_other=spe_descr;
 	                menu_artifact_type=2;

@@ -61,7 +61,7 @@ function scr_crusade() {
                     
 	                    /*
                     
-	                    // if (obj_ini.armor[co,i]="Terminator Armor") then man_size+=1;
+	                    // if (obj_ini.armor[co,i]="Terminator Armour") then man_size+=1;
 	                    if (obj_ini.armor[co,i]="Tartaros") then man_size+=1;
 	                    if (string_count("Terminator",obj_ini.armor[co,i])>0) then man_size+=1;
 	                    if (string_count("Dread",obj_ini.armor[co,i])>0) then man_size+=7;

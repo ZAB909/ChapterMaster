@@ -39,7 +39,7 @@ if (ally>0) and (ally_forces>0){
                         thata.marine_type[ii]="Skitarii";thata.marine_hp[ii]=40;
                         thata.marine_ac[ii]=10;thata.marine_exp[ii]=10;
                         thata.marine_wep1[ii]="Hellgun";thata.marine_wep2[ii]="";
-                        thata.marine_armor[ii]="Skitarii Armor";thata.marine_gear[ii]="";
+                        thata.marine_armor[ii]="Skitarii Armour";thata.marine_gear[ii]="";
                         thata.ally[ii]=true;thata.marine_dead[ii]=0;ii+=1;thata.men+=1;
                     }
                 }

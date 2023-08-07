@@ -61,8 +61,8 @@ function scr_ship_battle(argument0, argument1) {
 	                        if (obj_ini.role[co,v]=obj_ini.role[100,14]){obj_ncombat.chaplains+=1;if (obj_ncombat.big_mofo>5) then obj_ncombat.big_mofo=5;}
                         
 	                        col=obj_controller.bat_tactical_column;
-	                        if (obj_ini.armor[co,v]="Terminator Armor") then col=obj_controller.bat_terminator_column;
-	                        if (obj_ini.armor[co,v]="Tartaros Armor") then col=obj_controller.bat_terminator_column;
+	                        if (obj_ini.armor[co,v]="Terminator Armour") then col=obj_controller.bat_terminator_column;
+	                        if (obj_ini.armor[co,v]="Tartaros Armour") then col=obj_controller.bat_terminator_column;
 	                        if (co=10) then col=obj_controller.bat_scout_column;
 	                    }
                     
@@ -72,8 +72,8 @@ function scr_ship_battle(argument0, argument1) {
                         
 	                        if (co=1){
 	                            col=obj_controller.bat_veteran_column;
-	                            if (obj_ini.armor[co,v]="Terminator Armor") then col=obj_controller.bat_terminator_column;
-	                            if (obj_ini.armor[co,v]="Tartaros Armor") then col=obj_controller.bat_terminator_column;
+	                            if (obj_ini.armor[co,v]="Terminator Armour") then col=obj_controller.bat_terminator_column;
+	                            if (obj_ini.armor[co,v]="Tartaros Armour") then col=obj_controller.bat_terminator_column;
 	                        }
 	                        if (co>=2) then col=obj_controller.bat_tactical_column;
 	                        if (co=10) then col=obj_controller.bat_scout_column;
@@ -105,13 +105,13 @@ function scr_ship_battle(argument0, argument1) {
 	                    targ.marine_hp[targ.men]=obj_ini.hp[co,v];
 	                    targ.marine_exp[targ.men]=obj_ini.experience[co,v];
                     
-	                    if (targ.marine_armor[targ.men]="Scout Armor") then targ.marine_ac[targ.men]=8;
-	                    if (targ.marine_armor[targ.men]="MK3 Iron Armor") or (targ.marine_armor[targ.men]="MK8 Errant") then targ.marine_ac[targ.men]=21;
-	                    if (targ.marine_armor[targ.men]="Power Armor") or (targ.marine_armor[targ.men]="MK4 Maximus") then targ.marine_ac[targ.men]=19;
+	                    if (targ.marine_armor[targ.men]="Scout Armour") then targ.marine_ac[targ.men]=8;
+	                    if (targ.marine_armor[targ.men]="MK3 Iron Armour") or (targ.marine_armor[targ.men]="MK8 Errant") then targ.marine_ac[targ.men]=21;
+	                    if (targ.marine_armor[targ.men]="Power Armour") or (targ.marine_armor[targ.men]="MK4 Maximus") then targ.marine_ac[targ.men]=19;
 	                    if (targ.marine_armor[targ.men]="MK6 Corvus") or (targ.marine_armor[targ.men]="MK7 Aquila") then targ.marine_ac[targ.men]=18;
-	                    if (targ.marine_armor[targ.men]="Terminator Armor") or (targ.marine_armor[targ.men]="Dreadnought") then targ.marine_ac[targ.men]=40;
+	                    if (targ.marine_armor[targ.men]="Terminator Armour") or (targ.marine_armor[targ.men]="Dreadnought") then targ.marine_ac[targ.men]=40;
 	                    if (targ.marine_armor[targ.men]="Tartaros") then targ.marine_ac[targ.men]=44;
-	                    if (targ.marine_armor[targ.men]="Artificer Armor") then targ.marine_ac[targ.men]=35;
+	                    if (targ.marine_armor[targ.men]="Artificer Armour") then targ.marine_ac[targ.men]=35;
                     
                     
 	                    if (targ.marine_wep1[targ.men]="Boarding Shield") then targ.marine_ac[targ.men]+=4;

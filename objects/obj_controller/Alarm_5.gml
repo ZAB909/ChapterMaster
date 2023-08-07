@@ -562,7 +562,7 @@ repeat(300){i+=1;
 i=0;
 repeat(300){i+=1;
     if (recruit_name[i]!="") and (recruit_training[i]<=0){
-        scr_add_man(obj_ini.role[100,12],10,"Scout Armor",obj_ini.role[100,12],"",recruit_exp[i],recruit_name[i],recruit_corruption[i],false,"default","");
+        scr_add_man(obj_ini.role[100,12],10,"Scout Armour",obj_ini.role[100,12],"",recruit_exp[i],recruit_name[i],recruit_corruption[i],false,"default","");
         if (recruit_first="") then recruit_first=recruit_name[i];
         recruits_finished+=1;recruit_name[i]="";recruit_training[i]=-50;
     }
@@ -620,8 +620,8 @@ if (obj_ini.adv[1]="Scavengers") or (obj_ini.adv[1]="Scavengers") or (obj_ini.ad
         loot=choose("Chainsword","Bolt Pistol","Combat Knife","Narthecium");
         if (lroll2<=80) then loot=choose("Power Sword","Storm Bolter");
         if (lroll2<=60) then loot=choose("Plasma Pistol","Chainfist","Lascannon","Heavy Bolter","Assault Cannon","Bike");
-        if (lroll2<=30) then loot=choose("Artificer Armor","Plasma Gun","Chainfist","Rosarius","Psychic Hood");
-        if (lroll2<=10) then loot=choose("Terminator Armor","Artificer Armor","Dreadnought","Plasma Gun","Power Fist","Thunder Hammer","Iron Halo");
+        if (lroll2<=30) then loot=choose("Artificer Armour","Plasma Gun","Chainfist","Rosarius","Psychic Hood");
+        if (lroll2<=10) then loot=choose("Terminator Armour","Artificer Armour","Dreadnought","Plasma Gun","Power Fist","Thunder Hammer","Iron Halo");
         var tix;tix="A "+string(loot)+" has been gifted to the Chapter.";
         tix=string_replace(tix,"A A","An A");tix=string_replace(tix,"A E","An E");
         tix=string_replace(tix,"A I","An I");tix=string_replace(tix,"A O","An O");
