@@ -4,36 +4,10 @@ function scr_start_load(fleet, load_from_star, escort_load) {
     // escort_load: 1 for including escorts, 2 for no escorts
 
     // this distributes the marines and vehicles to the correct ships if the chapter is fleet-based or a home-based chapter
-    /*
-    battle_barges
-    strike_cruisers
-    gladius
-    hunters
-    */
-	//loads marine on to ship and returns marine unit size
 	
 	var _vehicles = ["Rhino", "Predator", "Land Speeder", "Land Raider", "Whirlwind"]
 	function load_vehicles(_companies, _equip ,_ship, size){
-		var unit_size = 0;
-			switch(obj_ini.veh_role[_companies, _equip]){
-                    case "Rhino":                       
-                        obj_ini.veh_wid[_companies, _equip] = 0;
-                        break;
-                   case "Predator":
-                        obj_ini.veh_wid[_companies, _equip] = 1;
-                        break;
-                   case "Land Raider":
-                        obj_ini.veh_wid[_companies, _equip] = 2;
-                        break;
-                    
-                   case "Land Speeder":
-                        obj_ini.veh_wid[_companies, _equip] = 3;
-                        break;
-                    case "Whirlwind":
-                        obj_ini.veh_wid[_companies, _equip] = 4;
-                        break;
-					 
-			}
+			obj_ini.veh_wid[_companies, _equip] = 0;
 			obj_ini.veh_lid[_companies, _equip] = _ship;
 			obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[_ship];	
 			obj_ini.ship_carrying[_ship] -= size;
