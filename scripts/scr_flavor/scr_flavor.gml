@@ -136,8 +136,8 @@ function scr_flavor(argument0, argument1, argument2, argument3, argument4) {
 	    if (argument1.dudes_num[targeh]>1) then p1=string(argument3)+" "+string(wepp)+" fire on the "+string(duhs)+" ranks.";
 	}
 	if (wepp="Stalker Pattern Bolter") and (solod=false){flavored=1;
-	    if (argument1.dudes_num[targeh]=1) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+".";
-	    if (argument1.dudes_num[targeh]>1) then p1=string(argument3)+" "+string(wepp)+" fire on the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]=1) then p1=$"{string(argument3)} {string(wepp)} fire upon the {string(duhs)}.";
+	    if (argument1.dudes_num[targeh]=1) then p1=$"{string(argument3)} {string(wepp)} fire on the {string(duhs)}.";
 	}
 	if ((wepp="Lascannon") or (wepp="Twin Linked Lascannon") or (wepp="Lascannons")) and (solod=false){flavored=1;
 	    if (wepp="Lascannons"){wepp="Lascannon";argument3=argument3*2;}
