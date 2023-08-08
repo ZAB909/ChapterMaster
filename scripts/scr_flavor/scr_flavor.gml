@@ -135,6 +135,10 @@ function scr_flavor(argument0, argument1, argument2, argument3, argument4) {
 	    if (argument1.dudes_num[targeh]=1) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+".";
 	    if (argument1.dudes_num[targeh]>1) then p1=string(argument3)+" "+string(wepp)+" fire on the "+string(duhs)+" ranks.";
 	}
+	if (wepp="Stalker Pattern Bolter") and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+".";
+	    if (argument1.dudes_num[targeh]>1) then p1=string(argument3)+" "+string(wepp)+" fire on the "+string(duhs)+" ranks.";
+	}
 	if ((wepp="Lascannon") or (wepp="Twin Linked Lascannon") or (wepp="Lascannons")) and (solod=false){flavored=1;
 	    if (wepp="Lascannons"){wepp="Lascannon";argument3=argument3*2;}
 	    if (argument3=1) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+".";
@@ -356,6 +360,12 @@ function scr_flavor(argument0, argument1, argument2, argument3, argument4) {
 	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" Whirlwinds fire upon the "+string(duhs)+" ranks and blow "+string(argument4)+" to pieces.";
 	}
 	if (wepp="Sniper Rifle") and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" and fail to do damage.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" and destroy it.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire on the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" ranks and kill "+string(argument4)+".";
+	}
+	if (wepp="Stalker Pattern Bolter") and (solod=false){flavored=1;
 	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" and fail to do damage.";
 	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" and destroy it.";
 	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire on the "+string(duhs)+" ranks.";
@@ -743,6 +753,12 @@ function scr_flavor(argument0, argument1, argument2, argument3, argument4) {
 	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" Whirlwinds fire upon the "+string(duhs)+" ranks and blow "+string(argument4)+" to pieces.";
 	}
 	if (wepp="Sniper Rifle") and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" and fail to do damage.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" and destroy it.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire on the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" ranks and kill "+string(argument4)+".";
+	}
+	if (wepp="Stalker Pattern Bolter") and (solod=false){flavored=1;
 	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" and fail to do damage.";
 	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" and destroy it.";
 	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire on the "+string(duhs)+" ranks.";
