@@ -504,18 +504,27 @@ function scr_enemy_ai_e() {
 
 		var thirdpop;
 		var halfpop;
+		
 		thirdpop = p_max_population[run]/3;
 		halfpop = p_max_population[run]/2;
-		(array_length(p_feature[run]!=0)){
+		
+		if (array_length(p_feature[run])!=0){
 	        if (planet_feature_bool(p_feature[run], P_features.Recruiting_World)==1) and (obj_controller.gene_seed=0) and (obj_controller.recruiting>0){
 	            obj_controller.recruiting=0;obj_controller.income_recruiting=0;
 	            scr_alert("red","recruiting","The Chapter has run out of gene-seed!",0,0);
 	        }
         
+			// Transforming billions pop number to a real number so the code can handle it
+			// Otherwise, 3 and a half billions get translated as 3,50 instead of 3500000000
+			var _planet_population = p_population[run];
+			if (p_large[run]==1){
+				_planet_population = _planet_population * 1000000000;
+			}
 
-	         if (planet_feature_bool(p_feature[run], P_features.Recruiting_World)==1) and (obj_controller.gene_seed>0) and (p_owner[run]<=5) and (obj_controller.faction_status[p_owner[run]]!="War"){
-	            if (p_population[run]>=50){
-					scr_alert("green","owner", "Recruitment is slowed due to lack of population on our recruitment worlds",0,0);
+	        if (planet_feature_bool(p_feature[run], P_features.Recruiting_World)==1) and (obj_controller.gene_seed>0) and (p_owner[run]<=5) and (obj_controller.faction_status[p_owner[run]]!="War"){
+	            if (_planet_population>=50){
+					// Commenting this for now, looks like debug code
+					//scr_alert("green","owner", "Recruitment is slowed due to lack of population on our recruitment worlds",0,0);
 	                if (p_large[run]=0) then p_population[run]-=1;
                 
 	                var recruit_chance, aspirant, corr, months_to_neo, dista, onceh; 
@@ -546,7 +555,7 @@ function scr_enemy_ai_e() {
 	                if (p_type[run]="Lava") and (recruit_chance<=7){aspirant=1;}
 
 					// if a planet type has less than half it's max pop, you get 20% less spacey marines
-					if (p_population[run] <= halfpop){
+					if (_planet_population <= halfpop){
 						recruit_chance+=1.2;
 						scr_alert("red","owner","The populations you attain aspirants from are less populant than required, chances of recruiting aspirants is 20% lower",0,0);
 					} 
