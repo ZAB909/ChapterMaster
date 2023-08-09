@@ -64,6 +64,7 @@ if (shop="equipment"){i=0;
     
     i+=1;item[i]="Bolt Pistol";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=5;
     i+=1;item[i]="Bolter";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=10;
+    i+=1;item[i]="Stalker Pattern Bolter";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=80;
     i+=1;x_mod[i]=9;item[i]="Combiflamer";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=35;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i+=1;item[i]="Heavy Bolter";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=50;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i+=1;item[i]="Storm Bolter";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=50;if (rene=1){nobuy[i]=1;item_cost[i]=0;}

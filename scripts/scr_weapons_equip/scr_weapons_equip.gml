@@ -41,6 +41,7 @@ function scr_weapons_equip() {
       i+=1;item_name[i]="Assault Cannon";
 	   	i+=1;item_name[i]="Bolt Pistol";
 	    i+=1;item_name[i]="Bolter";
+		i+=1;item_name[i]="Stalker Pattern Bolter";
 	  	i+=1;item_name[i]="Combiflamer";
 	    i+=1;item_name[i]="Flamer";
 			i+=1;item_name[i]="Heavy Bolter";

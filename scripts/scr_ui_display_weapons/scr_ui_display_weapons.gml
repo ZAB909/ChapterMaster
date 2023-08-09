@@ -58,6 +58,9 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	if (string_count("Sniper Rifle",wee)>0){ui_weapon[rl]=spr_weapon_sniper;
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;display_type="melee_onehand";
 	}
+	if (string_count("Stalker Pattern Bolter",wee)>0){ui_weapon[rl]=spr_weapon_stalker;
+	   ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;display_type="normal_ranged";
+	}
 
 	if (string_count("Company Standard",wee)>0){ui_weapon[rl]=spr_weapon_standard;
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;display_type="melee_onehand";
@@ -211,6 +214,10 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	if (string_count("Sniper Rifle",wee)>0){ui_weapon[rl]=spr_weapon_sniper;
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;
 	    if (argument1=1){ui_xmod[rl]=-3+11-13;ui_ymod[rl]=5-12+10;}if (argument1=2){ui_xmod[rl]=-12;ui_ymod[rl]=0;}
+	}
+	if (string_count("Stalker Pattern Bolter",wee)>0){ui_weapon[rl]=spr_weapon_stalker;
+	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;
+	    if (argument1=1) then ui_xmod[rl]=-10;if (argument1=2) then ui_xmod[rl]=-16;
 	}
 
 
