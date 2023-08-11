@@ -248,6 +248,7 @@ function scr_weapons_equip() {
 	        i+=1;item_name[i]="Power Armor";
 	        i+=1;item_name[i]="MK3 Iron Armor";
 	        i+=1;item_name[i]="MK4 Maximus";
+	        i+=1;item_name[i]="MK5 Heresy";
 	        i+=1;item_name[i]="MK6 Corvus";
 	        i+=1;item_name[i]="MK7 Aquila";
 	        i+=1;item_name[i]="MK8 Errant";
