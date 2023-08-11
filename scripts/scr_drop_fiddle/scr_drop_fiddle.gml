@@ -52,9 +52,9 @@ function scr_drop_fiddle(argument0, argument1, argument2, argument3) {
 	                if (obj_ini.role[comp,i]="Forge Master") then techmarines+=1;
 	                if (obj_ini.role[comp,i]=obj_ini.role[100,16]) then techmarines+=1;
                 
-	                if (obj_ini.role[comp,i]="Death Company") and (string_count("Dreadnought",obj_ini.armor[comp,i])=0) then mahreens+=1;
+	                if (obj_ini.role[comp,i]="Death Company") and (string_count("Dreadnought",obj_ini.armour[comp,i])=0) then mahreens+=1;
 	                if (obj_ini.role[comp,i]=obj_ini.role[100,4]) then terminators+=1;
-	                if ((obj_ini.role[comp,i]=obj_ini.role[100,6]) or (obj_ini.role[comp,i]="Venerable "+string(obj_ini.role[100,6])) or (string_count("Dreadnought",obj_ini.armor[comp,i])=1)) and (assassinate=false) then dreads+=1;
+	                if ((obj_ini.role[comp,i]=obj_ini.role[100,6]) or (obj_ini.role[comp,i]="Venerable "+string(obj_ini.role[100,6])) or (string_count("Dreadnought",obj_ini.armour[comp,i])=1)) and (assassinate=false) then dreads+=1;
                 
 	                if (string_count("Bike",obj_ini.mobi[comp,i])=0){
 	                    if (obj_ini.role[comp,i]="Standard Bearer") then mahreens+=1;
@@ -113,9 +113,9 @@ function scr_drop_fiddle(argument0, argument1, argument2, argument3) {
 	                if (obj_ini.role[comp,i]="Forge Master") then techmarines-=1;
 	                if (obj_ini.role[comp,i]=obj_ini.role[100,16]) then techmarines-=1;
                 
-	                if (obj_ini.role[comp,i]="Death Company") and (string_count("Dreadnought",obj_ini.armor[comp,i])=0) then mahreens-=1;
+	                if (obj_ini.role[comp,i]="Death Company") and (string_count("Dreadnought",obj_ini.armour[comp,i])=0) then mahreens-=1;
 	                if (obj_ini.role[comp,i]=obj_ini.role[100,4]) then terminators-=1;
-	                if ((obj_ini.role[comp,i]=obj_ini.role[100,6]) or (obj_ini.role[comp,i]="Venerable "+string(obj_ini.role[100,6])) or (string_count("Dreadnought",obj_ini.armor[comp,i])=1)) and (assassinate=false) then dreads-=1;
+	                if ((obj_ini.role[comp,i]=obj_ini.role[100,6]) or (obj_ini.role[comp,i]="Venerable "+string(obj_ini.role[100,6])) or (string_count("Dreadnought",obj_ini.armour[comp,i])=1)) and (assassinate=false) then dreads-=1;
                 
 	                if (string_count("Bike",obj_ini.mobi[comp,i])=0){
 	                    if (obj_ini.role[comp,i]="Standard Bearer") then mahreens-=1;

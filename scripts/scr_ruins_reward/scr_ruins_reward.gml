@@ -114,7 +114,7 @@ function scr_ruins_reward(star_system, planet, _ruins) {
     
 	    var pop;pop=instance_create(0,0,obj_popup);
 	    pop.image="ancient_ruins";pop.title="Ancient Ruins: Gear";
-	    pop.text="These ruins were once an armory. We found some weapons and pieces of wargear.  "+string(wen1)+"x "+string(wep1)+", "+string(wen2)+"x "+string(wep2)+", and "+string(wen3)+"x "+string(wep3)+" have been added to the Armamentarium.";
+	    pop.text="These ruins were once an armoury. We found some weapons and pieces of wargear.  "+string(wen1)+"x "+string(wep1)+", "+string(wen2)+"x "+string(wep2)+", and "+string(wen3)+"x "+string(wep3)+" have been added to the Armamentarium.";
 	}
 	if (loot="gene_seed"){// Requisition
 	    var gene,pop;gene=floor(random_range(20,40))+1;pop=instance_create(0,0,obj_popup);

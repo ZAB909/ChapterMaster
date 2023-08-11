@@ -103,7 +103,7 @@ if (tooltip_show!=0){
         if (string_length(tooltip_other)>0) then tlp+="#  "+string(tooltip_other)
     }
     if (tooltip_weapon=3){
-        tlp=string(tooltip)+"#  Armor:"+string(tooltip_stat1);
+        tlp=string(tooltip)+"#  Armour:"+string(tooltip_stat1);
         tlp+="  "+string(tooltip_other);
     }
     

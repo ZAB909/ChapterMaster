@@ -171,7 +171,7 @@ function scr_load(argument0, argument1) {
 	    obj_controller.gene_tithe=ini_read_real("Controller","gene_tithe",24);
 	    obj_controller.gene_iou=ini_read_real("Controller","gene_iou",0);
 
-	    obj_controller.und_armories=ini_read_real("Controller","und_armories",0);
+	    obj_controller.und_armouries=ini_read_real("Controller","und_armouries",0);
 	    obj_controller.und_gene_vaults=ini_read_real("Controller","und_gene_vaults",0);
 	    obj_controller.und_lairs=ini_read_real("Controller","und_lairs",0);
 
@@ -606,8 +606,8 @@ function scr_load(argument0, argument1) {
 	            obj_ini.ship_conditions[g]=ini_read_string("Ships","shi_conditions"+string(g),"");
 	            obj_ini.ship_speed[g]=ini_read_real("Ships","shi_speed"+string(g),0);
 	            obj_ini.ship_turning[g]=ini_read_real("Ships","shi_turning"+string(g),0);
-	            obj_ini.ship_front_armor[g]=ini_read_real("Ships","shi_front_ac"+string(g),0);
-	            obj_ini.ship_other_armor[g]=ini_read_real("Ships","shi_other_ac"+string(g),0);
+	            obj_ini.ship_front_armour[g]=ini_read_real("Ships","shi_front_ac"+string(g),0);
+	            obj_ini.ship_other_armour[g]=ini_read_real("Ships","shi_other_ac"+string(g),0);
 	            obj_ini.ship_weapons[g]=ini_read_real("Ships","shi_weapons"+string(g),0);
 	            //
 	            obj_ini.ship_wep[g,1]=ini_read_string("Ships","shi"+string(g)+"wep1","");
@@ -686,7 +686,7 @@ function scr_load(argument0, argument1) {
 	            obj_ini.role[coh,mah]=ini_read_string("Mar","rol"+string(coh)+"."+string(mah),"");
 	            obj_ini.wep1[coh,mah]=ini_read_string("Mar","w1"+string(coh)+"."+string(mah),"");
 	            obj_ini.wep2[coh,mah]=ini_read_string("Mar","w2"+string(coh)+"."+string(mah),"");
-	            obj_ini.armor[coh,mah]=ini_read_string("Mar","ar"+string(coh)+"."+string(mah),"");
+	            obj_ini.armour[coh,mah]=ini_read_string("Mar","ar"+string(coh)+"."+string(mah),"");
 	            obj_ini.gear[coh,mah]=ini_read_string("Mar","ge"+string(coh)+"."+string(mah),"");
 	            obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");
 	        }
@@ -720,7 +720,7 @@ function scr_load(argument0, argument1) {
 
 	                    obj_ini.wep1[coh,mah]=ini_read_string("Mar","w1"+string(coh)+"."+string(mah),"");
 	                    obj_ini.wep2[coh,mah]=ini_read_string("Mar","w2"+string(coh)+"."+string(mah),"");
-	                    obj_ini.armor[coh,mah]=ini_read_string("Mar","ar"+string(coh)+"."+string(mah),"");
+	                    obj_ini.armour[coh,mah]=ini_read_string("Mar","ar"+string(coh)+"."+string(mah),"");
 	                    obj_ini.gear[coh,mah]=ini_read_string("Mar","ge"+string(coh)+"."+string(mah),"");
 	                    obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");
 
@@ -728,14 +728,14 @@ function scr_load(argument0, argument1) {
 	                    repeat(5){arc+=1;teh2=choose("Daemonic1a|","Daemonic2a|","Daemonic3a|","Daemonic4a|");
 	                        if (arc=1) then teh=obj_ini.wep1[coh,mah];
 	                        if (arc=2) then teh=obj_ini.wep2[coh,mah];
-	                        if (arc=3) then teh=obj_ini.armor[coh,mah];
+	                        if (arc=3) then teh=obj_ini.armour[coh,mah];
 	                        if (arc=4) then teh=obj_ini.gear[coh,mah];
 	                        if (arc=5) then teh=obj_ini.mobi[coh,mah];
 	                        if (string_pos("&",teh)>0){
 	                            if (string_count("Daemonic|",teh)>0) then teh=string_replace(teh,"Daemonic|",teh2);
 	                            if (arc=1) then obj_ini.wep1[coh,mah]=teh;
 	                            if (arc=2) then obj_ini.wep2[coh,mah]=teh;
-	                            if (arc=3) then obj_ini.armor[coh,mah]=teh;
+	                            if (arc=3) then obj_ini.armour[coh,mah]=teh;
 	                            if (arc=4) then obj_ini.gear[coh,mah]=teh;
 	                            if (arc=5) then obj_ini.mobi[coh,mah]=teh;
 	                        }
@@ -769,7 +769,7 @@ function scr_load(argument0, argument1) {
 	            obj_ini.role[coh,mah]=ini_read_string("Mar","rol"+string(coh)+"."+string(mah),"");
 	            obj_ini.wep1[coh,mah]=ini_read_string("Mar","w1"+string(coh)+"."+string(mah),"");
 	            obj_ini.wep2[coh,mah]=ini_read_string("Mar","w2"+string(coh)+"."+string(mah),"");
-	            obj_ini.armor[coh,mah]=ini_read_string("Mar","ar"+string(coh)+"."+string(mah),"");
+	            obj_ini.armour[coh,mah]=ini_read_string("Mar","ar"+string(coh)+"."+string(mah),"");
 	            obj_ini.gear[coh,mah]=ini_read_string("Mar","ge"+string(coh)+"."+string(mah),"");
 	            obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");
 	        }
@@ -779,7 +779,7 @@ function scr_load(argument0, argument1) {
 	            obj_ini.role[coh,mah]=ini_read_string("Mar","rol"+string(coh)+"."+string(mah),"");
 	            obj_ini.wep1[coh,mah]=ini_read_string("Mar","w1"+string(coh)+"."+string(mah),"");
 	            obj_ini.wep2[coh,mah]=ini_read_string("Mar","w2"+string(coh)+"."+string(mah),"");
-	            obj_ini.armor[coh,mah]=ini_read_string("Mar","ar"+string(coh)+"."+string(mah),"");
+	            obj_ini.armour[coh,mah]=ini_read_string("Mar","ar"+string(coh)+"."+string(mah),"");
 	            obj_ini.gear[coh,mah]=ini_read_string("Mar","ge"+string(coh)+"."+string(mah),"");
 	            obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");
 	        }
@@ -1013,7 +1013,7 @@ function scr_load(argument0, argument1) {
 	            obj_controller.r_role[i,o]=ini_read_string("Res","r_role"+string(i)+"."+string(o),"");
 	            obj_controller.r_wep1[i,o]=ini_read_string("Res","r_wep1"+string(i)+"."+string(o),"");
 	            obj_controller.r_wep2[i,o]=ini_read_string("Res","r_wep2"+string(i)+"."+string(o),"");
-	            obj_controller.r_armor[i,o]=ini_read_string("Res","r_armor"+string(i)+"."+string(o),"");
+	            obj_controller.r_armour[i,o]=ini_read_string("Res","r_armour"+string(i)+"."+string(o),"");
 	            obj_controller.r_mobi[i,o]=ini_read_string("Res","r_mobi"+string(i)+"."+string(o),"");
 	            obj_controller.r_gear[i,o]=ini_read_string("Res","r_gear"+string(i)+"."+string(o),"");
 	         }

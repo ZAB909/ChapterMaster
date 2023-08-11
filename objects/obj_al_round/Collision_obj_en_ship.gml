@@ -2,7 +2,7 @@
 
 
 var arm;
-arm=other.armor_front;
+arm=other.armour_front;
 
 var t1;t1=0;
 dam=dam;

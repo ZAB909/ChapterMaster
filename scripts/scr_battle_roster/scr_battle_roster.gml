@@ -67,7 +67,7 @@ function scr_battle_roster(_battle_loci, _loci_specific, _is_planet) {
 	                }
 
 	                if (string_count("spyrer",obj_ncombat.battle_special)>0) or (obj_ncombat.battle_special="space_hulk") or (string_count("chaos_meeting",obj_ncombat.battle_special)>0){
-	                    if (string_count("Dread",obj_ini.armor[company,v])>0) then okay=-1;
+	                    if (string_count("Dread",obj_ini.armour[company,v])>0) then okay=-1;
 	                }
 	                if (string_count("spyrer",obj_ncombat.battle_special)>0){
 	                    if (okay=1) and (sofar>2) then okay = -1;
@@ -155,7 +155,7 @@ function scr_battle_roster(_battle_loci, _loci_specific, _is_planet) {
 	                        if (obj_ini.role[cooh,va]=obj_ini.role[100,14]){obj_ncombat.chaplains+=1;if (obj_ncombat.big_mofo>5) then obj_ncombat.big_mofo=5;}
 
 	                        col=obj_controller.bat_tactical_column;
-	                        if (obj_ini.armor[cooh,va]="Terminator Armor")or (obj_ini.armor[cooh,va]="Tartaros Armor"){col=obj_controller.bat_terminator_column;}
+	                        if (obj_ini.armour[cooh,va]="Terminator Armor")or (obj_ini.armour[cooh,va]="Tartaros Armor"){col=obj_controller.bat_terminator_column;}
 	                        if (company=10) then col=obj_controller.bat_scout_column;
 	                    }
 
@@ -165,8 +165,8 @@ function scr_battle_roster(_battle_loci, _loci_specific, _is_planet) {
 
 	                        if (company=1){
 	                            col=obj_controller.bat_veteran_column;
-	                            if (obj_ini.armor[cooh,va]="Terminator Armor") then col=obj_controller.bat_terminator_column;
-	                            if (obj_ini.armor[cooh,va]="Tartaros Armor") then col=obj_controller.bat_terminator_column;
+	                            if (obj_ini.armour[cooh,va]="Terminator Armor") then col=obj_controller.bat_terminator_column;
+	                            if (obj_ini.armour[cooh,va]="Tartaros Armor") then col=obj_controller.bat_terminator_column;
 	                        }
 	                        if (company>=2) then col=obj_controller.bat_tactical_column;
 	                        if (company=10) then col=obj_controller.bat_scout_column;
@@ -192,7 +192,7 @@ function scr_battle_roster(_battle_loci, _loci_specific, _is_planet) {
 	                    targ.marine_type[targ.men]=obj_ini.role[cooh,va];
 	                    targ.marine_wep1[targ.men]=obj_ini.wep1[cooh,va];
 	                    targ.marine_wep2[targ.men]=obj_ini.wep2[cooh,va];
-	                    targ.marine_armor[targ.men]=obj_ini.armor[cooh,va];
+	                    targ.marine_armour[targ.men]=obj_ini.armour[cooh,va];
 	                    targ.marine_gear[targ.men]=obj_ini.gear[cooh,va];
 	                    targ.marine_mobi[targ.men]=obj_ini.mobi[cooh,va];
 	                    targ.marine_hp[targ.men]=obj_ini.hp[cooh,va];
@@ -203,23 +203,23 @@ function scr_battle_roster(_battle_loci, _loci_specific, _is_planet) {
 
 	                    if (obj_ini.role[cooh,va]="Death Company"){// Ahahahahah
 	                        var really;really=false;
-	                        if (string_count("Dreadnought",targ.marine_armor[targ.men])>0) then really=true;
+	                        if (string_count("Dreadnought",targ.marine_armour[targ.men])>0) then really=true;
 	                        if (really=false) then obj_ncombat.thirsty+=1;if (really=true) then obj_ncombat.really_thirsty+=1;
 	                        col=max(obj_controller.bat_assault_column,obj_controller.bat_command_column,obj_controller.bat_honor_column,obj_controller.bat_dreadnought_column,obj_controller.bat_veteran_column);
 	                    }
 
-	                    if (targ.marine_armor[targ.men]="Scout Armor") then targ.marine_ac[targ.men]=8;
-	                    if (targ.marine_armor[targ.men]="MK3 Iron Armor"){targ.marine_ac[targ.men]=20;targ.marine_ranged[targ.men]-=0.1;}
-	                    if (targ.marine_armor[targ.men]="MK4 Maximus"){targ.marine_ac[targ.men]=19;targ.marine_ranged[targ.men]+=0.05;targ.marine_attack[targ.men]+=0.05;}
-	                    if (targ.marine_armor[targ.men]="MK6 Corvus"){targ.marine_ac[targ.men]=18;targ.marine_ranged[targ.men]+=0.1;}
-	                    if (targ.marine_armor[targ.men]="MK7 Aquila") then targ.marine_ac[targ.men]=18;
-	                    if (targ.marine_armor[targ.men]="MK8 Errant") then targ.marine_ac[targ.men]=19;
-	                    if (targ.marine_armor[targ.men]="Power Armor") then targ.marine_ac[targ.men]=19;
-	                    if (targ.marine_armor[targ.men]="Artificer Armor"){targ.marine_ac[targ.men]=35;targ.marine_attack[targ.men]+=0.1;}
-	                    if (targ.marine_armor[targ.men]="Terminator Armor"){targ.marine_ac[targ.men]=40;targ.marine_ranged[targ.men]-=0.1;targ.marine_attack[targ.men]+=0.2;man_size = 2;}
-	                    if (targ.marine_armor[targ.men]="Tartaros"){targ.marine_ac[targ.men]=44;targ.marine_ranged[targ.men]-=0.05;targ.marine_attack[targ.men]+=0.2;man_size = 2;}
-	                    if (targ.marine_armor[targ.men]="Dreadnought") then targ.marine_ac[targ.men]=40;man_size = 10;
-	                    if (targ.marine_armor[targ.men]="Ork Armor") then targ.marine_ac[targ.men]=15;
+	                    if (targ.marine_armour[targ.men]="Scout Armor") then targ.marine_ac[targ.men]=8;
+	                    if (targ.marine_armour[targ.men]="MK3 Iron Armor"){targ.marine_ac[targ.men]=20;targ.marine_ranged[targ.men]-=0.1;}
+	                    if (targ.marine_armour[targ.men]="MK4 Maximus"){targ.marine_ac[targ.men]=19;targ.marine_ranged[targ.men]+=0.05;targ.marine_attack[targ.men]+=0.05;}
+	                    if (targ.marine_armour[targ.men]="MK6 Corvus"){targ.marine_ac[targ.men]=18;targ.marine_ranged[targ.men]+=0.1;}
+	                    if (targ.marine_armour[targ.men]="MK7 Aquila") then targ.marine_ac[targ.men]=18;
+	                    if (targ.marine_armour[targ.men]="MK8 Errant") then targ.marine_ac[targ.men]=19;
+	                    if (targ.marine_armour[targ.men]="Power Armor") then targ.marine_ac[targ.men]=19;
+	                    if (targ.marine_armour[targ.men]="Artificer Armor"){targ.marine_ac[targ.men]=35;targ.marine_attack[targ.men]+=0.1;}
+	                    if (targ.marine_armour[targ.men]="Terminator Armor"){targ.marine_ac[targ.men]=40;targ.marine_ranged[targ.men]-=0.1;targ.marine_attack[targ.men]+=0.2;man_size = 2;}
+	                    if (targ.marine_armour[targ.men]="Tartaros"){targ.marine_ac[targ.men]=44;targ.marine_ranged[targ.men]-=0.05;targ.marine_attack[targ.men]+=0.2;man_size = 2;}
+	                    if (targ.marine_armour[targ.men]="Dreadnought") then targ.marine_ac[targ.men]=40;man_size = 10;
+	                    if (targ.marine_armour[targ.men]="Ork Armor") then targ.marine_ac[targ.men]=15;
 
 	                    if (obj_ini.role[cooh,va]="Chapter Master"){
 	                        if (obj_ini.adv[1]="Paragon") or (obj_ini.adv[2]="Paragon") or (obj_ini.adv[3]="Paragon") or (obj_ini.adv[4]="Paragon"){
@@ -238,14 +238,14 @@ function scr_battle_roster(_battle_loci, _loci_specific, _is_planet) {
 	                    if (targ.marine_wep2[targ.men]="Storm Shield") then targ.marine_ac[targ.men]+=8;
 
 
-	                    if (string_count("&",targ.marine_armor[targ.men])>0){
-	                        // Artifact armor
-	                        if (string_count("Power",targ.marine_armor[targ.men])>0) then targ.marine_ac[targ.men]=30;
-	                        if (string_count("Artificer",targ.marine_armor[targ.men])>0){targ.marine_ac[targ.men]=37;targ.marine_attack[targ.men]+=0.1;}
-	                        if (string_count("Terminator",targ.marine_armor[targ.men])>0){targ.marine_ac[targ.men]=46;targ.marine_ranged[targ.men]-=0.1;targ.marine_attack[targ.men]+=0.2;}
-	                        if (string_count("Dreadnought",targ.marine_armor[targ.men])>0) then targ.marine_ac[targ.men]=44;
+	                    if (string_count("&",targ.marine_armour[targ.men])>0){
+	                        // Artifact armour
+	                        if (string_count("Power",targ.marine_armour[targ.men])>0) then targ.marine_ac[targ.men]=30;
+	                        if (string_count("Artificer",targ.marine_armour[targ.men])>0){targ.marine_ac[targ.men]=37;targ.marine_attack[targ.men]+=0.1;}
+	                        if (string_count("Terminator",targ.marine_armour[targ.men])>0){targ.marine_ac[targ.men]=46;targ.marine_ranged[targ.men]-=0.1;targ.marine_attack[targ.men]+=0.2;}
+	                        if (string_count("Dreadnought",targ.marine_armour[targ.men])>0) then targ.marine_ac[targ.men]=44;
 	                    }
-	                    if (targ.marine_armor[targ.men]!=""){// STC Bonuses
+	                    if (targ.marine_armour[targ.men]!=""){// STC Bonuses
 	                        if (obj_controller.stc_bonus[1]=5){if (targ.marine_ac[targ.men]>=40) then targ.marine_ac[targ.men]+=2;if (targ.marine_ac[targ.men]<40) then targ.marine_ac[targ.men]+=1;}
 	                        if (obj_controller.stc_bonus[2]=3){if (targ.marine_ac[targ.men]>=40) then targ.marine_ac[targ.men]+=2;if (targ.marine_ac[targ.men]<40) then targ.marine_ac[targ.men]+=1;}
 	                    }

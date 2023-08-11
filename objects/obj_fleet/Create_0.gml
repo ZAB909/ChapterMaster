@@ -149,7 +149,7 @@ repeat(110){i+=1;
     ship[i]="";ship_id[i]=0;ship_class[i]=obj_ini.ship_class[i];ship_size[i]=0;
     ship_leadership[i]=100;ship_hp[i]=9999;ship_maxhp[i]=9999;
     ship_conditions[i]="";ship_speed[i]=20;ship_turning[i]=0;
-    ship_front_armor[i]=0;ship_other_armor[i]=0;ship_weapons[i]=0;ship_shields=0;
+    ship_front_armour[i]=0;ship_other_armour[i]=0;ship_weapons[i]=0;ship_shields=0;
     
     ship_wep[i,1]="";ship_wep_facing[i,1]="";ship_wep_condition[i,1]="";
     ship_wep[i,2]="";ship_wep_facing[i,2]="";ship_wep_condition[i,2]="";

@@ -391,8 +391,8 @@ if (type=8) and (instance_exists(obj_controller)){// Equip Artifact
                 if (string_count("&",obj_controller.ma_gear[sel])>0) then ma_ge=clean_tags(obj_controller.ma_gear[sel]);
                 if (string_count("&",obj_controller.ma_mobi[sel])=0) then ma_mb=obj_controller.ma_mobi[sel];
                 if (string_count("&",obj_controller.ma_mobi[sel])>0) then ma_mb=clean_tags(obj_controller.ma_mobi[sel]);
-                if (string_count("&",obj_controller.ma_armor[sel])=0) then ma_ar=obj_controller.ma_armor[sel];
-                if (string_count("&",obj_controller.ma_armor[sel])>0) then ma_ar=clean_tags(obj_controller.ma_armor[sel]);
+                if (string_count("&",obj_controller.ma_armour[sel])=0) then ma_ar=obj_controller.ma_armour[sel];
+                if (string_count("&",obj_controller.ma_armour[sel])>0) then ma_ar=clean_tags(obj_controller.ma_armour[sel]);
                 if (string_count("&",obj_controller.ma_wep1[sel])=0) then ma_we1=obj_controller.ma_wep1[sel];
                 if (string_count("&",obj_controller.ma_wep1[sel])>0) then ma_we1=clean_tags(obj_controller.ma_wep1[sel]);
                 if (string_count("&",obj_controller.ma_wep2[sel])=0) then ma_we2=obj_controller.ma_wep2[sel];
@@ -549,8 +549,8 @@ if (zm=0) and (type=6) and (instance_exists(obj_controller)){// Changing Equipme
     if (o_wep2!="") then draw_text(xx+1014,yy+235,string_hash_to_newline(string(show_name)));
     else draw_text(xx+1014,yy+235,string_hash_to_newline("(None)"));
     
-    show_name=o_armor;if (a_armor!="") then show_name=a_armor;
-    if (o_armor!="") then draw_text(xx+1014,yy+255,string_hash_to_newline(string(show_name)));
+    show_name=o_armour;if (a_armour!="") then show_name=a_armour;
+    if (o_armour!="") then draw_text(xx+1014,yy+255,string_hash_to_newline(string(show_name)));
     else draw_text(xx+1014,yy+255,string_hash_to_newline("(None)"));
     
     show_name=o_gear;if (a_gear!="") then show_name=a_gear;
@@ -575,8 +575,8 @@ if (zm=0) and (type=6) and (instance_exists(obj_controller)){// Changing Equipme
     else draw_text(xx+1300,yy+235,string_hash_to_newline("(None)"));
     
     draw_set_color(c_gray);if (n_good3=0) then draw_set_color(255);
-    show_name=n_armor;if (a_armor!="") and (n_armor=o_armor) then show_name=a_armor;
-    if (n_armor!="") then draw_text(xx+1300,yy+255,string_hash_to_newline(string(show_name)));
+    show_name=n_armour;if (a_armour!="") and (n_armour=o_armour) then show_name=a_armour;
+    if (n_armour!="") then draw_text(xx+1300,yy+255,string_hash_to_newline(string(show_name)));
     else draw_text(xx+1300,yy+255,string_hash_to_newline("(None)"));
     
     draw_set_color(c_gray);if (n_good4=0) then draw_set_color(255);
@@ -771,10 +771,10 @@ if (zm=0) and (type=5) and (instance_exists(obj_controller)){// Promoting
     var gr,tox;gr=0;tox="";
     
     if (target_role>0){
-        if (req_armor!=""){
-            gr=req_armor_num-have_armor_num;tox="";
-            if (gr>0){draw_set_color(255);draw_text(xx+1030,yy+390,string_hash_to_newline(string(req_armor)+" (-"+string(gr)+")"));}
-            if (gr<=0) and (req_armor!=""){draw_set_color(c_gray);draw_text(xx+1030,yy+390,string_hash_to_newline(string(req_armor)+" ("+string(have_armor_num)+"-"+string(req_armor_num)+")"));}
+        if (req_armour!=""){
+            gr=req_armour_num-have_armour_num;tox="";
+            if (gr>0){draw_set_color(255);draw_text(xx+1030,yy+390,string_hash_to_newline(string(req_armour)+" (-"+string(gr)+")"));}
+            if (gr<=0) and (req_armour!=""){draw_set_color(c_gray);draw_text(xx+1030,yy+390,string_hash_to_newline(string(req_armour)+" ("+string(have_armour_num)+"-"+string(req_armour_num)+")"));}
         }
         
         if (req_gear!=""){

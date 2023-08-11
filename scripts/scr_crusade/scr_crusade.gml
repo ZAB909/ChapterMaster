@@ -57,14 +57,14 @@ function scr_crusade() {
                 
 	                if (dead=true){
 	                    var man_size;man_size=0;
-	                    man_size=scr_unit_size(obj_ini.armor[co,i],obj_ini.role[co,i],true);
+	                    man_size=scr_unit_size(obj_ini.armour[co,i],obj_ini.role[co,i],true);
                     
 	                    /*
                     
-	                    // if (obj_ini.armor[co,i]="Terminator Armor") then man_size+=1;
-	                    if (obj_ini.armor[co,i]="Tartaros") then man_size+=1;
-	                    if (string_count("Terminator",obj_ini.armor[co,i])>0) then man_size+=1;
-	                    if (string_count("Dread",obj_ini.armor[co,i])>0) then man_size+=7;
+	                    // if (obj_ini.armour[co,i]="Terminator Armour") then man_size+=1;
+	                    if (obj_ini.armour[co,i]="Tartaros") then man_size+=1;
+	                    if (string_count("Terminator",obj_ini.armour[co,i])>0) then man_size+=1;
+	                    if (string_count("Dread",obj_ini.armour[co,i])>0) then man_size+=7;
 	                    // if (obj_ini.mobi[co,i]="Jump Pack") then man_size+=1;
 	                    if (obj_ini.role[co,i]="Chapter Master") then man_size+=1;*/
 	                    obj_ini.ship_carrying[obj_ini.lid[co,i]]-=man_size;
@@ -91,7 +91,7 @@ function scr_crusade() {
 	                    clean[co]=1;obj_controller.marines-=1;marines_lost+=1;
 	                    obj_ini.race[co,i]=1;obj_ini.loc[co,i]="";obj_ini.name[co,i]="";obj_ini.role[co,i]="";
 	                    obj_ini.wep1[co,i]="";obj_ini.lid[co,i]=0;obj_ini.wid[co,i]=0;obj_ini.wep2[co,i]="";
-	                    obj_ini.armor[co,i]="";obj_ini.gear[co,i]="";obj_ini.mobi[co,i]="";obj_ini.hp[co,i]=0;
+	                    obj_ini.armour[co,i]="";obj_ini.gear[co,i]="";obj_ini.mobi[co,i]="";obj_ini.hp[co,i]=0;
 	                    obj_ini.chaos[co,i]=0;obj_ini.experience[co,i]=0;obj_ini.age[co,i]=0;
 	                    seed+=2;
 	                }

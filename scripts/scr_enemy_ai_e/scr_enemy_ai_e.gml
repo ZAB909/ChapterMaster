@@ -732,7 +732,7 @@ function scr_enemy_ai_e() {
 	        if (string_count(".3|",p_upgrades[run])>0) then p_upgrades[run]=string_replace(p_upgrades[run],".3|",".2|");
 	        if (finished=true){
 	            if (string_count("Lair",p_upgrades[run])>0){type="Lair";obj_controller.und_lairs+=1;}
-	            if (string_count("Arsenal",p_upgrades[run])>0){type="Arsenal";obj_controller.und_armories+=1;}
+	            if (string_count("Arsenal",p_upgrades[run])>0){type="Arsenal";obj_controller.und_armouries+=1;}
 	            if (string_count("Gene",p_upgrades[run])>0){type="Gene-Vault";obj_controller.und_gene_vaults+=1;}
 	            var tx;tx="Hidden "+string(type)+" on "+string(name)+" "+scr_roman(run)+" has been completed.";
 	            scr_alert("green","owner",string(tx),x,y);scr_event_log("",string(tx));
@@ -758,7 +758,7 @@ function scr_enemy_ai_e() {
 	        repeat(200){i+=1;good=0;
 	            if (obj_ini.role[co,i]!="") and (obj_ini.loc[co,i]=name) and (obj_ini.wid[co,i]==floor(chaos_meeting)) then good+=1;
 	            if (obj_ini.role[co,i]!=obj_ini.role[100,6]) and (obj_ini.role[co,i]!="Venerable "+string(obj_ini.role[100,6])) then good+=1;
-	            if (string_count("Dread",obj_ini.armor[co,i])=0) or (obj_ini.role[co,i]="Chapter Master") then good+=1;
+	            if (string_count("Dread",obj_ini.armour[co,i])=0) or (obj_ini.role[co,i]="Chapter Master") then good+=1;
             
 	            if (good=3){
 	                obj_temp_meeting.dudes+=1;otm=obj_temp_meeting.dudes;

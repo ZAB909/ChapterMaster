@@ -84,8 +84,8 @@ function scr_ui_advisors() {
                         
 	                        cn.temp[106]=string(obj_ini.ship_speed[i]);
                         
-	                        cn.temp[107]=string(obj_ini.ship_front_armor[i]);
-	                        cn.temp[108]=string(obj_ini.ship_other_armor[i]);
+	                        cn.temp[107]=string(obj_ini.ship_front_armour[i]);
+	                        cn.temp[108]=string(obj_ini.ship_other_armour[i]);
                         
 	                        cn.temp[109]=string(obj_ini.ship_turrets[i]);
                         
@@ -419,7 +419,7 @@ function scr_ui_advisors() {
 	            }
 	            if (fest_type="Chapter Relic"){
 	                if (fest_feature1=1) then blurp2+="  Our "+string(obj_ini.role[100,16])+"s aim to create a weapon.";
-	                if (fest_feature2=1) then blurp2+="  Our "+string(obj_ini.role[100,16])+"s aim to create a suit of armor.";
+	                if (fest_feature2=1) then blurp2+="  Our "+string(obj_ini.role[100,16])+"s aim to create a suit of armour.";
 	                if (fest_feature3=1) then blurp2+="  Our "+string(obj_ini.role[100,16])+"s aim to hone and strengthen an already existing relic.";
 	            }
 	            if (fest_type="Imperial Mass"){
@@ -1258,7 +1258,7 @@ function scr_ui_advisors() {
 	        blurp2="An Aspirant’s spiritual and mental capability is every bit as important as his physical characteristics.  It is wise to impose Trials not upon their body, but on the mind.  Either through psychic powers, chemical agents, or endurance trials, the Aspirant’s willpower is tested.  Those unworthy do not survive the stress and trauma placed upon their hearts- only those whose minds are proven to be unbreakable are welcomed into our ranks.";
 	    }
 	    if (recruit_trial="Challenge"){blurp3="-Standard generic choice #-Heroic Neophytes gain bonus 10-20 XP";
-	        blurp2="What better gauge of an Aspirant than in a duel with our astartes?  Our brother, unarmed and unarmored, will face against the armed challenger until one cannot continue.  It is impossible for the Aspirant to actually succeed these trials, but demonstrates how far they can possibly go, and allow us to judge him accordingly.  As with most trials the Aspirant’s life is in their own hands.  He who has failed the duel- yet proven himself worthy- is rescued from the jaws of death by "+string(obj_ini.role[100,15])+" and allowed to progress to the rank of Neophyte.";
+	        blurp2="What better gauge of an Aspirant than in a duel with our astartes?  Our brother, unarmed and unarmoured, will face against the armed challenger until one cannot continue.  It is impossible for the Aspirant to actually succeed these trials, but demonstrates how far they can possibly go, and allow us to judge him accordingly.  As with most trials the Aspirant’s life is in their own hands.  He who has failed the duel- yet proven himself worthy- is rescued from the jaws of death by "+string(obj_ini.role[100,15])+" and allowed to progress to the rank of Neophyte.";
 	    }
 	    if (recruit_trial="Apprenticeship"){blurp3="-Planet Bonus: Lava (+10-50% recruits)#-4-5 Years longer training time#-Almost able for immediate promotion";
 	        blurp2="What better way to cultivate astartes than to raise them from youth?  The capable children of "+string(obj_ini.recruiting_name)+" are apprenticed to our battle brothers.  Beneath their steady guidance the Aspirants spend several years learning the art of the smith.  The most able are judged by our Chapter’s "+string(obj_ini.role[100,15])+"s and "+string(obj_ini.role[100,14])+" to deem if they are compatible with gene-seed implantation.  If so, the Aspirant’s trial culminates in hunting and slaying a massive beast.  Only the brightest and bravest are added to our ranks.";
@@ -1356,8 +1356,8 @@ function scr_ui_advisors() {
 	        eqp+=string(tempe)+"#";
 	    }
     
-	    if (obj_ini.armor[0,1]!=""){
-	        tempe=string(obj_ini.armor[0,1])+": "+string(scr_item_descr(string(obj_ini.armor[0,1])));
+	    if (obj_ini.armour[0,1]!=""){
+	        tempe=string(obj_ini.armour[0,1])+": "+string(scr_item_descr(string(obj_ini.armour[0,1])));
 	        eqp+=string(tempe)+"#";
 	    }
 	    if (obj_ini.gear[0,1]!=""){

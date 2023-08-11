@@ -96,9 +96,9 @@ if (owner=8) and (action="") and (obj_controller.tau_messenger>=30) and (frigate
 
 
 if (owner=9) and (trade_goods=""){
-    trade_goods=choose("Spore Clouds","Health","Armor","Speed","Turn","Turret");
+    trade_goods=choose("Spore Clouds","Health","Armour","Speed","Turn","Turret");
     trade_goods+="|";
-    trade_goods+=choose("Spore Clouds","Health","Armor","Speed","Turn","Turret");
+    trade_goods+=choose("Spore Clouds","Health","Armour","Speed","Turn","Turret");
     trade_goods+="|";
 }
 

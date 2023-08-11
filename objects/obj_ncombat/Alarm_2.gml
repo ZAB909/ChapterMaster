@@ -32,14 +32,14 @@ if (ally>0) and (ally_forces>0){
                         thata.marine_type[ii]="Techpriest";thata.marine_hp[ii]=50;
                         thata.marine_ac[ii]=20;thata.marine_exp[ii]=100;
                         thata.marine_wep1[ii]="Power Weapon";thata.marine_wep2[ii]="Conversion Beam Projector";
-                        thata.marine_armor[ii]="Dragon Scales";thata.marine_gear[ii]="Servo Arms";
+                        thata.marine_armour[ii]="Dragon Scales";thata.marine_gear[ii]="Servo Arms";
                         thata.ally[ii]=true;thata.marine_dead[ii]=0;ii+=1;thata.men+=1;
                     }
                     repeat(20){
                         thata.marine_type[ii]="Skitarii";thata.marine_hp[ii]=40;
                         thata.marine_ac[ii]=10;thata.marine_exp[ii]=10;
                         thata.marine_wep1[ii]="Hellgun";thata.marine_wep2[ii]="";
-                        thata.marine_armor[ii]="Skitarii Armor";thata.marine_gear[ii]="";
+                        thata.marine_armour[ii]="Skitarii Armor";thata.marine_gear[ii]="";
                         thata.ally[ii]=true;thata.marine_dead[ii]=0;ii+=1;thata.men+=1;
                     }
                 }

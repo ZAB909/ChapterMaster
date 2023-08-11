@@ -41,7 +41,7 @@ function scr_add_item(argument0, argument1) {
 	        obj_ini.equipment[last_open]=argument0;
 	        obj_ini.equipment_number[last_open]=argument1;
 	        obj_ini.equipment_condition[last_open]=100
-	        if (string_count("MK",argument0)>0) or (string_count("Armor",argument0)>0) or (argument0="Tartaros") then obj_ini.equipment_type[last_open]="armor";
+	        if (string_count("MK",argument0)>0) or (string_count("Armour",argument0)>0) or (argument0="Tartaros") then obj_ini.equipment_type[last_open]="armour";
 	        if (string_count("Bolts",argument0)>0) then obj_ini.equipment_type[last_open]="gear";
 	    }    
 	}
@@ -57,7 +57,7 @@ function scr_add_item(argument0, argument1) {
 	    obj_ini.equipment[last_open]=argument0;
 	    obj_ini.equipment_number[last_open]=argument1;
 	    obj_ini.equipment_condition[last_open]=100
-	    if (string_count("MK",argument0)>0) or (string_count("Armor",argument0)>0) or (argument0="Tartaros") then obj_ini.equipment_type[last_open]="armor";
+	    if (string_count("MK",argument0)>0) or (string_count("Armour",argument0)>0) or (argument0="Tartaros") then obj_ini.equipment_type[last_open]="armour";
 	}
 
 	*/
@@ -100,7 +100,7 @@ function scr_add_item(argument0, argument1) {
 	        obj_ini.equipment[last_open]=argument0;
 	        obj_ini.equipment_number[last_open]=argument1;
 	        obj_ini.equipment_condition[last_open]=100
-	        if (string_count("MK",argument0)>0) or (string_count("Armor",argument0)>0) or (argument0="Tartaros") then obj_ini.equipment_type[last_open]="armor";
+	        if (string_count("MK",argument0)>0) or (string_count("Armour",argument0)>0) or (argument0="Tartaros") then obj_ini.equipment_type[last_open]="armour";
 	    }
 
 	}*/

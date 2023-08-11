@@ -31,7 +31,7 @@ show_message(techmarines+honors+dreadnoughts+terminators+captains);
 show_message(standard_bearers+important_dudes+chaplains+apothecaries);
 show_message(temp);*/
 
-// Random variations; dark out, rain pooling down, dawn shining off of the armor, etc.
+// Random variations; dark out, rain pooling down, dawn shining off of the armour, etc.
 var variation;variation="";
 variation=choose("","dawn","rain");
 
@@ -212,7 +212,7 @@ if (standard_bearers>1) and (dropping=0) then p5="  The Battle Standard Bearers 
 
 
 if (dreadnoughts+predators+land_raiders>3){
-    p6="  Forming up the armored division is ";
+    p6="  Forming up the armoured division is ";
     if (dreadnoughts=1) then p6+=string(dreadnoughts)+" "+string(obj_ini.role[100,6])+", ";
     if (dreadnoughts>1) then p6+=string(dreadnoughts)+" "+string(obj_ini.role[100,6])+"s, ";
     

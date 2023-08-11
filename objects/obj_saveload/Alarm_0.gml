@@ -38,7 +38,7 @@ if (load_part=5){txt="Sacred Anointing of Oil";if (global.restart>0) then txt="S
 
 if (load_part=4){
     with(obj_star){if (x2>5) and (y2>5) then buddy=instance_nearest(x2,y2,obj_star);}
-    txt="Astartes Registry";if (global.restart>0) then txt="Donning Power Armor";with(obj_controller){scr_load(3,global.load);}trickle=40;load_part=5;
+    txt="Astartes Registry";if (global.restart>0) then txt="Donning Power Armour";with(obj_controller){scr_load(3,global.load);}trickle=40;load_part=5;
 }
 
 if (load_part=3){txt="Charting Sector";if (global.restart>0) then txt="Rousing the Machine Spirit";with(obj_controller){scr_load(2,global.load);}trickle=10;load_part=4;}

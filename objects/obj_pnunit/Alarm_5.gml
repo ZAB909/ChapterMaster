@@ -81,10 +81,10 @@ repeat(600){i+=1;
     if (marine_dead[i]=0) and (obj_ncombat.mucranoid=1) and (ally[i]=false){
         var muck;muck=floor(random(200))+1;
         if (muck=50){
-            if (marine_armor[i]="MK6 Corvus"){obj_ini.armor[marine_co[i],marine_id[i]]="";obj_ncombat.mucra[marine_co[i]]=1;obj_ncombat.slime+=1;}
-            if (marine_armor[i]="MK7 Aquila"){obj_ini.armor[marine_co[i],marine_id[i]]="";obj_ncombat.mucra[marine_co[i]]=1;obj_ncombat.slime+=1;}
-            if (marine_armor[i]="MK8 Errant"){obj_ini.armor[marine_co[i],marine_id[i]]="";obj_ncombat.mucra[marine_co[i]]=1;obj_ncombat.slime+=1;}
-            if (marine_armor[i]="Power Armor"){obj_ini.armor[marine_co[i],marine_id[i]]="";obj_ncombat.mucra[marine_co[i]]=1;obj_ncombat.slime+=1;}
+            if (marine_armour[i]="MK6 Corvus"){obj_ini.armour[marine_co[i],marine_id[i]]="";obj_ncombat.mucra[marine_co[i]]=1;obj_ncombat.slime+=1;}
+            if (marine_armour[i]="MK7 Aquila"){obj_ini.armour[marine_co[i],marine_id[i]]="";obj_ncombat.mucra[marine_co[i]]=1;obj_ncombat.slime+=1;}
+            if (marine_armour[i]="MK8 Errant"){obj_ini.armour[marine_co[i],marine_id[i]]="";obj_ncombat.mucra[marine_co[i]]=1;obj_ncombat.slime+=1;}
+            if (marine_armour[i]="Power Armor"){obj_ini.armour[marine_co[i],marine_id[i]]="";obj_ncombat.mucra[marine_co[i]]=1;obj_ncombat.slime+=1;}
         }
     }
     
@@ -180,7 +180,7 @@ repeat(600){i+=1;
         destroy=1;
     }
         
-    if (marine_armor[i]="") and (marine_wep1[i]="") and (marine_wep2[i]="") and (marine_gear[i]="") and (marine_mobi[i]="") and (marine_type[i]!="") then destroy=2;
+    if (marine_armour[i]="") and (marine_wep1[i]="") and (marine_wep2[i]="") and (marine_gear[i]="") and (marine_mobi[i]="") and (marine_type[i]!="") then destroy=2;
     
     if (destroy>0) and (marine_type[i]!="") and (ally[i]=false){// 135
         var wah,artif;wah=0;artif=false;
@@ -193,26 +193,26 @@ repeat(600){i+=1;
             if (marine_dead[i]=2) or (destroy=2) then dece=9999;
             if (obj_ini.race[marine_co[i],marine_id[i]]!=1) then dece=9999;
             
-            // if (wah=1){show_message(obj_ini.armor[marine_co[i],marine_id[i]]);}
+            // if (wah=1){show_message(obj_ini.armour[marine_co[i],marine_id[i]]);}
             
-            if (wah=1) and (obj_ini.armor[marine_co[i],marine_id[i]]!=""){
-                if (marine_armor[i]="Terminator Armor") or (marine_armor[i]="Tartaros") then eqp_chance+=30;
-                if (string_count("&",marine_armor[i])>0){eqp_chance=90;artif=true;}
+            if (wah=1) and (obj_ini.armour[marine_co[i],marine_id[i]]!=""){
+                if (marine_armour[i]="Terminator Armor") or (marine_armour[i]="Tartaros") then eqp_chance+=30;
+                if (string_count("&",marine_armour[i])>0){eqp_chance=90;artif=true;}
                 if (dece>eqp_chance){
                     var last,o;last=0;o=0;
                     repeat(50){
                         if (last=0){
                             o+=1;artif=false;
-                            if (obj_ncombat.post_equipment_lost[o]=marine_armor[i]){last=1;obj_ncombat.post_equipments_lost[o]+=1;artif=true;}
-                            if (obj_ncombat.post_equipment_lost[o]="") and (last=0){last=o;obj_ncombat.post_equipment_lost[o]=marine_armor[i];obj_ncombat.post_equipments_lost[o]=1;artif=true;}
+                            if (obj_ncombat.post_equipment_lost[o]=marine_armour[i]){last=1;obj_ncombat.post_equipments_lost[o]+=1;artif=true;}
+                            if (obj_ncombat.post_equipment_lost[o]="") and (last=0){last=o;obj_ncombat.post_equipment_lost[o]=marine_armour[i];obj_ncombat.post_equipments_lost[o]=1;artif=true;}
                             if (artif=true) then obj_ncombat.post_equipment_lost[o]=clean_tags(obj_ncombat.post_equipment_lost[o]);
                             
-                            obj_ini.armor[marine_co[i],marine_id[i]]="";
-                            // wep2[0,i]="";armor[0,i]="";gear[0,i]="";mobi[0,i]="";
+                            obj_ini.armour[marine_co[i],marine_id[i]]="";
+                            // wep2[0,i]="";armour[0,i]="";gear[0,i]="";mobi[0,i]="";
                         }
                     }
                 }
-                if (dece<=eqp_chance) then scr_add_item(marine_armor[i],1);
+                if (dece<=eqp_chance) then scr_add_item(marine_armour[i],1);
             }
             if (wah=2) and (obj_ini.wep1[marine_co[i],marine_id[i]]!=""){
                 if (string_count("&",marine_wep1[i])>0){eqp_chance=90;artif=true;}
@@ -232,7 +232,7 @@ repeat(600){i+=1;
                             if (string(obj_ncombat.post_equipment_lost[o])="") and (last=0){last=o;obj_ncombat.post_equipment_lost[o]=marine_wep1[i];obj_ncombat.post_equipments_lost[o]=1;artif=true;}
                             if (artif=true) then obj_ncombat.post_equipment_lost[o]=clean_tags(obj_ncombat.post_equipment_lost[o]);
                             obj_ini.wep1[marine_co[i],marine_id[i]]="";
-                            // wep2[0,i]="";armor[0,i]="";gear[0,i]="";mobi[0,i]="";
+                            // wep2[0,i]="";armour[0,i]="";gear[0,i]="";mobi[0,i]="";
                         }
                     }
                 }
@@ -253,7 +253,7 @@ repeat(600){i+=1;
                             if (string(obj_ncombat.post_equipment_lost[o])="") and (last=0){last=o;obj_ncombat.post_equipment_lost[o]=marine_wep2[i];obj_ncombat.post_equipments_lost[o]=1;artif=true;}
                             if (artif=true) then obj_ncombat.post_equipment_lost[o]=clean_tags(obj_ncombat.post_equipment_lost[o]);
                             obj_ini.wep2[marine_co[i],marine_id[i]]="";
-                            // wep2[0,i]="";armor[0,i]="";gear[0,i]="";mobi[0,i]="";
+                            // wep2[0,i]="";armour[0,i]="";gear[0,i]="";mobi[0,i]="";
                         }
                     }
                 }
@@ -281,7 +281,7 @@ repeat(600){i+=1;
                             if (obj_ncombat.post_equipment_lost[o]="") and (last=0){last=o;obj_ncombat.post_equipment_lost[o]=marine_gear[i];obj_ncombat.post_equipments_lost[o]=1;artif=true;}
                             if (artif=true) then obj_ncombat.post_equipment_lost[o]=clean_tags(obj_ncombat.post_equipment_lost[o]);
                             obj_ini.gear[marine_co[i],marine_id[i]]="";
-                            // wep2[0,i]="";armor[0,i]="";gear[0,i]="";mobi[0,i]="";
+                            // wep2[0,i]="";armour[0,i]="";gear[0,i]="";mobi[0,i]="";
                         }
                     }
                 }
@@ -301,7 +301,7 @@ repeat(600){i+=1;
                             if (obj_ncombat.post_equipment_lost[o]="") and (last=0){last=o;obj_ncombat.post_equipment_lost[o]=marine_mobi[i];obj_ncombat.post_equipments_lost[o]=1;artif=true;}
                             if (artif=true) then obj_ncombat.post_equipment_lost[o]=clean_tags(obj_ncombat.post_equipment_lost[o]);
                             obj_ini.mobi[marine_co[i],marine_id[i]]="";
-                            // wep2[0,i]="";armor[0,i]="";gear[0,i]="";mobi[0,i]="";
+                            // wep2[0,i]="";armour[0,i]="";gear[0,i]="";mobi[0,i]="";
                         }
                     }
                 }

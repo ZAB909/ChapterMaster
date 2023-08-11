@@ -287,7 +287,7 @@ function scr_flavor(argument0, argument1, argument2, argument3, argument4) {
 	        if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" rip through the "+string(duhs)+" and purge "+string(argument4)+".";
 	    }
 	    if (argument3>=200){
-	        if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s fire.  Explosions clap across the armor of the "+string(duhs)+".";
+	        if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s fire.  Explosions clap across the armour of the "+string(duhs)+".";
 	        if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+"s fire.  Explosions clap around the "+string(duhs)+" and kill it instantly.";
 	        if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s rip through the ranks of "+string(duhs)+", seemingly doing no damage.";
 	        if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+"s rip through the ranks of "+string(duhs)+", "+string(argument4)+" dying immediately.";
@@ -332,14 +332,14 @@ function scr_flavor(argument0, argument1, argument2, argument3, argument4) {
 	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" shoot bolts of energy into the "+string(duhs)+", cleansing "+string(argument4)+".";
 	}
 	if (wepp="Assault Cannon") and (solod=false){flavored=1;
-	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s hum and rotate, belching out bullets and flame alike.  Explosions clap across the armor of the "+string(duhs)+".";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s hum and rotate, belching out bullets and flame alike.  Explosions clap across the armour of the "+string(duhs)+".";
 	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+"s hum and rotate, belching out bullets and flame alike. A "+string(duhs)+" is ripped apart by the rounds.";
 	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s hum and rotate, belching out bullets and flame alike .  The "+string(duhs)+"s are rocked but unharmed.";
 	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+"s hum and rotate, belching out bullets and flame alike.  "+string(argument4)+" "+string(duhs)+" are purged.";
 	}
 	if (string_count("Flamer",wepp)>0) and (solod=false){flavored=1;
 	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" bathe the "+string(duhs)+" in holy promethium.";
-	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" flash-fry the "+string(duhs)+" inside its armor.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" flash-fry the "+string(duhs)+" inside its armour.";
 	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" wash over the "+string(duhs)+" ranks.";
 	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" bathe the "+string(duhs)+" ranks in holy promethium, cleansing "+string(argument4)+".";
 	}
@@ -674,7 +674,7 @@ function scr_flavor(argument0, argument1, argument2, argument3, argument4) {
 	        if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" rip through the "+string(duhs)+" and purge "+string(argument4)+".";
 	    }
 	    if (argument3>=200){
-	        if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s fire.  Explosions clap across the armor of the "+string(duhs)+".";
+	        if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s fire.  Explosions clap across the armour of the "+string(duhs)+".";
 	        if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+"s fire.  Explosions clap around the "+string(duhs)+" and kill it instantly.";
 	        if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s rip through the ranks of "+string(duhs)+", seemingly doing no damage.";
 	        if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+"s rip through the ranks of "+string(duhs)+", "+string(argument4)+" dying immediately.";
@@ -719,14 +719,14 @@ function scr_flavor(argument0, argument1, argument2, argument3, argument4) {
 	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" shoot bolts of energy into the "+string(duhs)+", cleansing "+string(argument4)+".";
 	}
 	if (wepp="Assault Cannon") and (solod=false){flavored=1;
-	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s hum and rotate, belching out bullets and flame alike.  Explosions clap across the armor of the "+string(duhs)+".";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s hum and rotate, belching out bullets and flame alike.  Explosions clap across the armour of the "+string(duhs)+".";
 	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+"s hum and rotate, belching out bullets and flame alike. A "+string(duhs)+" is ripped apart by the rounds.";
 	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s hum and rotate, belching out bullets and flame alike .  The "+string(duhs)+"s are rocked but unharmed.";
 	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+"s hum and rotate, belching out bullets and flame alike.  "+string(argument4)+" "+string(duhs)+" are purged.";
 	}
 	if (string_count("Flamer",wepp)>0) and (solod=false){flavored=1;
 	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" bathe the "+string(duhs)+" in holy promethium.";
-	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" flash-fry the "+string(duhs)+" inside its armor.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" flash-fry the "+string(duhs)+" inside its armour.";
 	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" wash over the "+string(duhs)+" ranks.";
 	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" bathe the "+string(duhs)+" ranks in holy promethium, cleansing "+string(argument4)+".";
 	}

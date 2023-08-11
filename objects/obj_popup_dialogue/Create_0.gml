@@ -14,7 +14,7 @@ target2="";
 
 // 
 
-// question="How many Terminator Armors?  Max: 5";
+// question="How many Terminator Armours?  Max: 5";
 // maximum=5;
 // value_is_string=false;
 

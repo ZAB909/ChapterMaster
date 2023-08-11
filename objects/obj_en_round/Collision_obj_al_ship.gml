@@ -2,7 +2,7 @@
 
 
 var arm;
-arm=other.armor_front;
+arm=other.armour_front;
 
 if (arm<dam){
     dam-=arm;

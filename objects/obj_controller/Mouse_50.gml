@@ -55,7 +55,7 @@ if (menu=12) and (cooldown<=0) and (penitorium>0){
                 if (obj_ini.race[c,e]=1){
                     tek=obj_ini.wep1[c,e];if (tek!="") then scr_add_item(tek,1);
                     tek=obj_ini.wep2[c,e];if (tek!="") then scr_add_item(tek,1);
-                    tek=obj_ini.armor[c,e];if (tek!="") then scr_add_item(tek,1);
+                    tek=obj_ini.armour[c,e];if (tek!="") then scr_add_item(tek,1);
                     tek=obj_ini.mobi[c,e];if (tek!="") then scr_add_item(tek,1);
                     tek=obj_ini.gear[c,e];if (tek!="") then scr_add_item(tek,1);
                 }
@@ -82,7 +82,7 @@ if (menu=12) and (cooldown<=0) and (penitorium>0){
                 if (tek="c") then obj_controller.command-=1;
 
                 obj_ini.race[c,e]=0;obj_ini.loc[c,e]="";obj_ini.name[c,e]="";obj_ini.role[c,e]="";obj_ini.wep1[c,e]="";obj_ini.lid[c,e]=0;
-                obj_ini.wep2[c,e]="";obj_ini.armor[c,e]="";obj_ini.gear[c,e]="";obj_ini.hp[c,e]=100;obj_ini.chaos[c,e]=0;obj_ini.experience[c,e]=0;
+                obj_ini.wep2[c,e]="";obj_ini.armour[c,e]="";obj_ini.gear[c,e]="";obj_ini.hp[c,e]=100;obj_ini.chaos[c,e]=0;obj_ini.experience[c,e]=0;
                 obj_ini.mobi[c,e]="";obj_ini.age[c,e]=0;obj_ini.spe[c,e]="";obj_ini.god[c,e]=0;
                 diplo_char=c;with(obj_ini){scr_company_order(obj_controller.diplo_char);}re=1;diplo_char=0;
             }
@@ -1378,7 +1378,7 @@ if (zoomed=0) and (menu=1) and (managing=0) and (cooldown<=0) and (diplomacy=0){
         repeat(501){i+=1;
             man[i]="";ide[i]=0;man_sel[i]=0;ma_lid[i]=0;ma_wid[i]=0;ma_uid[i]=0;
             ma_race[i]=0;ma_loc[i]="";ma_name[i]="";ma_role[i]="";ma_wep1[i]="";
-            ma_wep2[i]="";ma_armor[i]="";ma_health[i]=100;ma_chaos[i]=0;ma_exp[i]=0;ma_promote[i]=0;
+            ma_wep2[i]="";ma_armour[i]="";ma_health[i]=100;ma_chaos[i]=0;ma_exp[i]=0;ma_promote[i]=0;
             sh_ide[i]=0;sh_uid[i]=0;sh_name[i]="";sh_class[i]="";sh_loc[i]="";sh_hp[i]="";sh_cargo[i]=0;sh_cargo_max[i]="";
             squad[i]=0;
         }
@@ -1466,8 +1466,8 @@ if (menu=1) and (managing>0){                       // Selecting individual mari
 
             if (sel_all!="Command") and (sel_all!="man") and (sel_all!="vehicle"){// Selects all men of type
                 if (man[sel]="man") and (ma_role[sel]=sel_all) and (ma_loc[sel]!="Terra") and (ma_loc[sel]!="Mechanicus Vessel") and (ma_loc[sel]!="Lost") and (ma_god[sel]<10) and ((ma_loc[sel]=selecting_location) or (selecting_location="")) and ((ma_wid[sel]=selecting_planet) or (selecting_planet=0)) and ((ma_lid[sel]=selecting_ship) or (selecting_ship=0)) and (eventing=false){var onceh;onceh=0;
-                    if (man_sel[sel]=0) and (onceh=0){man_sel[sel]=1;man_size+=scr_unit_size(ma_armor[sel],ma_role[sel],true);onceh=1;if (selecting_location="") and (ma_lid[sel]>0){selecting_location=obj_ini.ship_location[ma_lid[sel]];selecting_ship=ma_lid[sel];sel_loading=1;}}
-                    if (man_sel[sel]=1) and (onceh=0){man_sel[sel]=0;man_size-=scr_unit_size(ma_armor[sel],ma_role[sel],true);onceh=1;}
+                    if (man_sel[sel]=0) and (onceh=0){man_sel[sel]=1;man_size+=scr_unit_size(ma_armour[sel],ma_role[sel],true);onceh=1;if (selecting_location="") and (ma_lid[sel]>0){selecting_location=obj_ini.ship_location[ma_lid[sel]];selecting_ship=ma_lid[sel];sel_loading=1;}}
+                    if (man_sel[sel]=1) and (onceh=0){man_sel[sel]=0;man_size-=scr_unit_size(ma_armour[sel],ma_role[sel],true);onceh=1;}
                 }
             }
             if (sel_all!="Command") and (sel_all!="man") and (sel_all!="vehicle"){// Selects all vehicles of type
@@ -1478,8 +1478,8 @@ if (menu=1) and (managing>0){                       // Selecting individual mari
             }
             if (sel_all="man"){// Selects all men
                 if (man[sel]="man") and (ma_loc[sel]!="Terra") and (ma_loc[sel]!="Lost") and (ma_loc[sel]!="Mechanicus Vessel") and (ma_god[sel]<10) and ((ma_loc[sel]=selecting_location) or (selecting_location="")) and ((ma_wid[sel]=selecting_planet) or (selecting_planet=0)) and ((ma_lid[sel]=selecting_ship) or (selecting_ship=0)) and (eventing=false){var onceh;onceh=0;
-                    if (man_sel[sel]=0) and (onceh=0){man_sel[sel]=1;man_size+=scr_unit_size(ma_armor[sel],ma_role[sel],true);onceh=1;if (selecting_location="") and (ma_lid[sel]>0){selecting_location=obj_ini.ship_location[ma_lid[sel]];selecting_ship=ma_lid[sel];sel_loading=1;}}
-                    if (man_sel[sel]=1) and (onceh=0){man_sel[sel]=0;man_size-=scr_unit_size(ma_armor[sel],ma_role[sel],true);onceh=1;}
+                    if (man_sel[sel]=0) and (onceh=0){man_sel[sel]=1;man_size+=scr_unit_size(ma_armour[sel],ma_role[sel],true);onceh=1;if (selecting_location="") and (ma_lid[sel]>0){selecting_location=obj_ini.ship_location[ma_lid[sel]];selecting_ship=ma_lid[sel];sel_loading=1;}}
+                    if (man_sel[sel]=1) and (onceh=0){man_sel[sel]=0;man_size-=scr_unit_size(ma_armour[sel],ma_role[sel],true);onceh=1;}
                 }
             }
             if (sel_all="vehicle"){// Selects all vehicles
@@ -1500,8 +1500,8 @@ if (menu=1) and (managing>0){                       // Selecting individual mari
                     if (ma_role[sel]="Champion") then yep=1;
                 }
                 if (yep=1){var onceh;onceh=0;
-                    if (man_sel[sel]=0) and (onceh=0){man_sel[sel]=1;man_size+=scr_unit_size(ma_armor[sel],ma_role[sel],true);onceh=1;if (selecting_location="") and (ma_lid[sel]>0){selecting_location=obj_ini.ship_location[ma_lid[sel]];selecting_ship=ma_lid[sel];sel_loading=1;}}
-                    if (man_sel[sel]=1) and (onceh=0){man_sel[sel]=0;man_size-=scr_unit_size(ma_armor[sel],ma_role[sel],true);onceh=1;}
+                    if (man_sel[sel]=0) and (onceh=0){man_sel[sel]=1;man_size+=scr_unit_size(ma_armour[sel],ma_role[sel],true);onceh=1;if (selecting_location="") and (ma_lid[sel]>0){selecting_location=obj_ini.ship_location[ma_lid[sel]];selecting_ship=ma_lid[sel];sel_loading=1;}}
+                    if (man_sel[sel]=1) and (onceh=0){man_sel[sel]=0;man_size-=scr_unit_size(ma_armour[sel],ma_role[sel],true);onceh=1;}
 
 
 
@@ -1512,8 +1512,8 @@ if (menu=1) and (managing>0){                       // Selecting individual mari
                 if (ma_role[sel]="Codiciery") or (ma_role[sel]="Lexicanum") then yep=1;
                 if (ma_role[sel]="Standard Bearer") then yep=1;
                 if (yep=1){var onceh;onceh=0;
-                    if (man_sel[sel]=0) and (onceh=0){man_sel[sel]=1;man_size+=scr_unit_size(ma_armor[sel],ma_role[sel],true);onceh=1;}
-                    if (man_sel[sel]=1) and (onceh=0){man_sel[sel]=0;man_size-=scr_unit_size(ma_armor[sel],ma_role[sel],true);onceh=1;}*/
+                    if (man_sel[sel]=0) and (onceh=0){man_sel[sel]=1;man_size+=scr_unit_size(ma_armour[sel],ma_role[sel],true);onceh=1;}
+                    if (man_sel[sel]=1) and (onceh=0){man_sel[sel]=0;man_size-=scr_unit_size(ma_armour[sel],ma_role[sel],true);onceh=1;}*/
                 }
             }
             yy+=20;sel+=1;
@@ -1575,7 +1575,7 @@ if (menu=1) and (managing>0){                       // Selecting individual mari
                             if (ma_loc[bi]=selecting_location) and (ma_role[bi]=ma_role[double_was]) and (bi!=double_was){
                                 man_sel[bi]=1;
 
-                                if (man[bi]="man") then man_size+=scr_unit_size(ma_armor[bi],ma_role[bi],true);
+                                if (man[bi]="man") then man_size+=scr_unit_size(ma_armour[bi],ma_role[bi],true);
                                 if (man[bi]="vehicle") then man_size+=scr_unit_size("",ma_role[bi],true);
                             }
                         }
@@ -1602,7 +1602,7 @@ if (menu=1) and (managing>0){                       // Selecting individual mari
                     if (man[sel]="man") and (ma_lid[sel]>0) then sel_loading=ma_lid[sel];
                     if (man[sel]="vehicle") and (ma_lid[sel]>0) then sel_loading=ma_lid[sel];
 
-                    if (man[sel]="man") then man_size+=scr_unit_size(ma_armor[sel],ma_role[sel],true);
+                    if (man[sel]="man") then man_size+=scr_unit_size(ma_armour[sel],ma_role[sel],true);
                     if (man[sel]="vehicle") then man_size+=scr_unit_size("",ma_role[sel],true);
                 }
 
@@ -1614,7 +1614,7 @@ if (menu=1) and (managing>0){                       // Selecting individual mari
                     if (man[sel]="vehicle") and (string_count(ma_role[sel],selecting_types)>0) then selecting_types=string_replace(selecting_types,ma_role[sel],"");
                 }
 
-                if (man[sel]="man") then man_size-=scr_unit_size(ma_armor[sel],ma_role[sel],true);
+                if (man[sel]="man") then man_size-=scr_unit_size(ma_armour[sel],ma_role[sel],true);
                 if (man[sel]="vehicle") then man_size-=scr_unit_size("",ma_role[sel],true);
 
                 if (man_size=0) then sel_loading=0;
@@ -1663,11 +1663,11 @@ if (menu=1) and (managing>0){                       // Selecting individual mari
     if (mouse_x>=xx+1018+141) and (mouse_y>yy+805) and (mouse_x<xx+1297) and (mouse_y<yy+831) and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel") and (otha=0){// Change Equipment
         if (man_size>0) and (instance_number(obj_popup)=0){
             var f,god,nuuum;f=0;god=0;nuuum=0;
-            var o_wep1,o_wep2,o_armor,o_gear,o_mobi;
-            var b_wep1,b_wep2,b_armor,b_gear,b_mobi;
+            var o_wep1,o_wep2,o_armour,o_gear,o_mobi;
+            var b_wep1,b_wep2,b_armour,b_gear,b_mobi;
             var vih;vih=0;
-            o_wep1="";o_wep2="";o_armor="";o_gear="";o_mobi="";
-            b_wep1=0;b_wep2=0;b_armor=0;b_gear=0;b_mobi=0;
+            o_wep1="";o_wep2="";o_armour="";o_gear="";o_mobi="";
+            b_wep1=0;b_wep2=0;b_armour=0;b_gear=0;b_mobi=0;
 
             repeat(man_max){// Need to make sure that group selected is all the same type
                 f+=1;
@@ -1695,17 +1695,17 @@ if (menu=1) and (managing>0){                       // Selecting individual mari
                 if (man_sel[f]=1) and (vih!=-1){nuuum+=1;
                     if (o_wep1="") and (ma_wep1[f]!="") then o_wep1=ma_wep1[f];
                     if (o_wep2="") and (ma_wep2[f]!="") then o_wep2=ma_wep2[f];
-                    if (o_armor="") and (ma_armor[f]!="") then o_armor=ma_armor[f];
+                    if (o_armour="") and (ma_armour[f]!="") then o_armour=ma_armour[f];
                     if (o_gear="") and (ma_gear[f]!="") then o_gear=ma_gear[f];
                     if (o_mobi="") and (ma_mobi[f]!="") then o_mobi=ma_mobi[f];
 
                     if (ma_wep1[f]="") then b_wep1+=1;if (ma_wep2[f]="") then b_wep2+=1;
-                    if (ma_armor[f]="") then b_armor+=1;if (ma_gear[f]="") then b_gear+=1;
+                    if (ma_armour[f]="") then b_armour+=1;if (ma_gear[f]="") then b_gear+=1;
                     if (ma_mobi[f]="") then b_mobi+=1;
 
                     if ((o_wep1!="") and (ma_wep1[f]!=o_wep1)) or (b_wep1=1) then o_wep1="Assortment";
                     if ((o_wep2!="") and (ma_wep2[f]!=o_wep2)) or (b_wep2=1) then o_wep2="Assortment";
-                    if ((o_armor!="") and (ma_armor[f]!=o_armor)) or (b_armor=1) then o_armor="Assortment";
+                    if ((o_armour!="") and (ma_armour[f]!=o_armour)) or (b_armour=1) then o_armour="Assortment";
                     if ((o_gear!="") and (ma_gear[f]!=o_gear)) or (b_gear=1) then o_gear="Assortment";
                     if ((o_mobi!="") and (ma_mobi[f]!=o_mobi)) or (b_mobi=1) then o_mobi="Assortment";
                 }
@@ -1713,13 +1713,13 @@ if (menu=1) and (managing>0){                       // Selecting individual mari
 
             /*if (o_wep1!="") and (string_count("&",o_wep1)>0) then o_wep1=clean_tags(o_wep1);
             if (o_wep2!="") and (string_count("&",o_wep2)>0) then o_wep2=clean_tags(o_wep2);
-            if (o_armor!="") and (string_count("&",o_armor)>0) then o_armor=clean_tags(o_armor);
+            if (o_armour!="") and (string_count("&",o_armour)>0) then o_armour=clean_tags(o_armour);
             if (o_gear!="") and (string_count("&",o_gear)>0) then o_gear=clean_tags(o_gear);
             if (o_mobi!="") and (string_count("&",o_mobi)>0) then o_mobi=clean_tags(o_mobi);*/
 
             if (b_wep1=nuuum) then o_wep1="";
             if (b_wep2=nuuum) then o_wep2="";
-            if (b_armor=nuuum) then o_armor="";
+            if (b_armour=nuuum) then o_armour="";
             if (b_gear=nuuum) then o_gear="";
             if (b_mobi=nuuum) then o_mobi="";
 
@@ -1727,8 +1727,8 @@ if (menu=1) and (managing>0){                       // Selecting individual mari
 
             if (vih>0) and (man_size>0){
                 var pip;pip=instance_create(0,0,obj_popup);pip.type=6;
-                pip.o_wep1=o_wep1;pip.o_wep2=o_wep2;pip.o_armor=o_armor;pip.o_gear=o_gear;
-                pip.n_wep1=o_wep1;pip.n_wep2=o_wep2;pip.n_armor=o_armor;pip.n_gear=o_gear;
+                pip.o_wep1=o_wep1;pip.o_wep2=o_wep2;pip.o_armour=o_armour;pip.o_gear=o_gear;
+                pip.n_wep1=o_wep1;pip.n_wep2=o_wep2;pip.n_armour=o_armour;pip.n_gear=o_gear;
                 pip.o_mobi=o_mobi;pip.n_mobi=o_mobi;
                 pip.company=managing;pip.units=nuuum;
 
@@ -1736,7 +1736,7 @@ if (menu=1) and (managing>0){                       // Selecting individual mari
 
                 if (o_wep1!="") and (string_count("&",o_wep1)>0) then pip.a_wep1=clean_tags(o_wep1);
                 if (o_wep2!="") and (string_count("&",o_wep2)>0) then pip.a_wep2=clean_tags(o_wep2);
-                if (o_armor!="") and (string_count("&",o_armor)>0) then pip.a_armor=clean_tags(o_armor);
+                if (o_armour!="") and (string_count("&",o_armour)>0) then pip.a_armour=clean_tags(o_armour);
                 if (o_gear!="") and (string_count("&",o_gear)>0) then pip.a_gear=clean_tags(o_gear);
                 if (o_mobi!="") and (string_count("&",o_mobi)>0) then pip.a_mobi=clean_tags(o_mobi);
             }
@@ -1746,16 +1746,16 @@ if (menu=1) and (managing>0){                       // Selecting individual mari
     // Reset equipment
     if (mouse_x>=xx+1018+141) and (mouse_y>yy+805-26) and (mouse_x<xx+1297) and (mouse_y<yy+831-26) and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel") and (man_size>0){// Reset Equipment
         var f,god,nuuum;f=0;god=0;nuuum=0;
-        o_wep1="";o_wep2="";o_armor="";o_gear="";o_mobi="";
-        b_wep1=0;b_wep2=0;b_armor=0;b_gear=0;b_mobi=0;
+        o_wep1="";o_wep2="";o_armour="";o_gear="";o_mobi="";
+        b_wep1=0;b_wep2=0;b_armour=0;b_gear=0;b_mobi=0;
 
         repeat(man_max){f+=1;
             if (man[f]="man") and (man_sel[f]=1) then nuuum+=1;// If come across a man, set vih to 1
         }
 
         var pip;pip=instance_create(0,0,obj_popup);pip.type=6;
-        pip.o_wep1="Assortment";pip.o_wep2="Assortment";pip.o_armor="Assortment";pip.o_gear="Assortment";pip.o_mobi="Assortment";
-        pip.n_wep1="Assortment";pip.n_wep2="Assortment";pip.n_armor="Assortment";pip.n_gear="Assortment";pip.n_mobi="Assortment";
+        pip.o_wep1="Assortment";pip.o_wep2="Assortment";pip.o_armour="Assortment";pip.o_gear="Assortment";pip.o_mobi="Assortment";
+        pip.n_wep1="Assortment";pip.n_wep2="Assortment";pip.n_armour="Assortment";pip.n_gear="Assortment";pip.n_mobi="Assortment";
         pip.company=managing;pip.units=nuuum;pip.alarm[1]=1;
     }
 
@@ -1792,7 +1792,7 @@ if (menu=1) and (managing>0){                       // Selecting individual mari
             repeat(501){i+=1;
                 man[i]="";ide[i]=0;man_sel[i]=0;ma_lid[i]=0;ma_wid[i]=0;ma_uid[i]=0;
                 ma_race[i]=0;ma_loc[i]="";ma_name[i]="";ma_role[i]="";ma_wep1[i]="";
-                ma_wep2[i]="";ma_armor[i]="";ma_health[i]=100;ma_chaos[i]=0;ma_exp[i]=0;ma_promote[i]=0;
+                ma_wep2[i]="";ma_armour[i]="";ma_health[i]=100;ma_chaos[i]=0;ma_exp[i]=0;ma_promote[i]=0;
                 sh_ide[i]=0;sh_uid[i]=0;sh_name[i]="";sh_class[i]="";sh_loc[i]="";sh_hp[i]="";sh_cargo[i]=0;sh_cargo_max[i]="";
             }
             alll=0;
@@ -1811,7 +1811,7 @@ if (menu=1) and (managing>0){                       // Selecting individual mari
         bionics_before=scr_item_count("Bionics");bionics_after=bionics_before;temp[114]="refresh";
         if (bionics_before>0) then repeat(500){p+=1;
             if (man_sel[p]=1) and (man[p]="man") and (bionics_after>0) and (obj_ini.bio[cah,ide[p]]<10) and (obj_ini.loc[cah,ide[p]]!="Terra") and (obj_ini.loc[cah,ide[p]]!="Mechanicus Vessel"){
-                if (string_count("Dread",ma_armor[p])=0){
+                if (string_count("Dread",ma_armour[p])=0){
                     obj_ini.bio[cah,ide[p]]+=1;bionics_after-=1;
                     obj_ini.hp[cah,ide[p]]=min(obj_ini.hp[cah,ide[p]]+30,100);
                     if (global.chapter_name="Iron Hands") then obj_ini.hp[cah,ide[p]]=min(obj_ini.hp[cah,ide[p]]+20,100);
@@ -1831,7 +1831,7 @@ if (menu=1) and (managing>0){                       // Selecting individual mari
         repeat(500){p+=1;
             if (man_sel[p]=1) and (man[p]="man") and (obj_ini.lid[cah,ide[p]]>0) and (obj_ini.loc[cah,ide[p]]!="Mechanicus Vessel"){var onk;onk=0;
                 if (obj_ini.age[cah,ide[p]]==floor(obj_ini.age[cah,ide[p]])) and (onk=0){
-                    if (ma_role[p]!=obj_ini.role[100,6]) and (ma_role[p]!="Venerable "+string(obj_ini.role[100,6])) and (string_count("Dread",ma_armor[p])=0){
+                    if (ma_role[p]!=obj_ini.role[100,6]) and (ma_role[p]!="Venerable "+string(obj_ini.role[100,6])) and (string_count("Dread",ma_armour[p])=0){
                         obj_ini.age[cah,ide[p]]+=0.01;onk=1;
                     }
                 }
