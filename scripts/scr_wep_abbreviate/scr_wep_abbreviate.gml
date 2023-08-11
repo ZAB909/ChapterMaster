@@ -15,6 +15,7 @@ function scr_wep_abbreviate(argument0) {
 	if (we="Scout Armor") then we2="Scout";
 	if (we="MK3 Iron Armor") then we2="MK3";
 	if (we="MK4 Maximus") then we2="MK4";
+        if (we="MK5 Heresy") then we2="MK5";
 	if (we="MK6 Corvus") then we2="MK6";
 	if (we="MK7 Aquila") then we2="MK7";
 	if (we="MK8 Errant") then we2="MK8";
