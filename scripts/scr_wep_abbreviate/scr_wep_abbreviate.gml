@@ -70,6 +70,7 @@ function scr_wep_abbreviate(argument0) {
 	if (we="Infernus Pistol") then we2="InfPist";
 	if (we="Plasma Gun") then we2="PlaGun";
 	if (we="Sniper Rifle") then we2="Snipe";
+        if (we="Stalker Pattern Bolter") then we2="Stalker";
 	if (we="Assault Cannon") then we2="Assa";
 	if (we="Autocannon") then we2="AutoC";
 	if (we="Missile Launcher") then we2="Missi";

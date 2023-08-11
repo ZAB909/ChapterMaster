@@ -293,7 +293,7 @@ function scr_ui_popup() {
 	            draw_set_alpha(0.2);draw_rectangle(xx+300,yy+175,xx+400,yy+195,0);draw_set_alpha(1);
             
 	            if (obj_controller.cooldown<=0) and (obj_controller.mouse_left=1) and (obj_controller.requisition>=4000){
-	                obj_temp_build.target.p_feature[obj_controller.selecting_planet]+="Secret Gene-Vault|";
+	                obj_temp_build.target.p_feature[obj_controller.selecting_planet]="Secret Gene-Vault|";
 	                obj_temp_build.target.p_upgrades[obj_controller.selecting_planet]="Gene-Vault.3|";
 	                obj_temp_build.gene_vault=-3;
 	                obj_controller.cooldown=8000;obj_controller.requisition-=4000;

@@ -114,8 +114,10 @@ function scr_random_event(execute_now) {
 					//DEBUG-INI (EVENTS DEBUG CODE - 1)
 					//Comment/delete this when not debugging events
 					//List of possible events above
-					/*curr_event =  EVENT.ship_lost
-					events_count = 1*/
+					/*curr_event =  EVENT.necron_awaken
+					events_count = 1
+					events_total = events_count;
+					events_share = array_create(events_count, 1);*/
 					//DEBUG-FIN (EVENTS DEBUG CODE - 1)
 					
 					switch (curr_event){
@@ -214,7 +216,7 @@ function scr_random_event(execute_now) {
 				//DEBUG-INI (EVENTS DEBUG CODE - 2)
 				//Comment/delete this when not debugging events
 				//If event on the switch above, (EVENTS DEBUG CODE - 1) var should be set to event too.
-				/*chosen_event =  EVENT.ship_lost*/
+				/*chosen_event =  EVENT.necron_awaken*/
 				//DEBUG-FIN (EVENTS DEBUG CODE - 2)
 		}
 	}
@@ -1549,7 +1551,11 @@ function scr_random_event(execute_now) {
 		var valid_stars = array_filter_ext(stars, 
 			function(star, index){
 				var tomb_world = scr_get_planet_with_feature(star,P_features.Necron_Tomb);
-				return awake_tomb_world(star.p_feature[tomb_world]) == 0;
+				
+				if (tomb_world == -1) then return false;
+				else {
+					return awake_tomb_world(star.p_feature[tomb_world]) == 0;
+				}
 		});
 	
 		if(valid_stars == 0){

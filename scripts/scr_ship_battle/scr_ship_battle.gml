@@ -66,9 +66,10 @@ function scr_ship_battle(argument0, argument1) {
 	                        if (co=10) then col=obj_controller.bat_scout_column;
 	                    }
                     
-	                    if (obj_ini.role[co,v]=obj_ini.role[100,5]) or (obj_ini.role[co,v]="Standard Bearer"){
+	                    if (obj_ini.role[co,v]=obj_ini.role[100,5]) or (obj_ini.role[co,v]="Standard Bearer") or (obj_ncombat.role[cooh,va]=obj_ini.role[100,7]){
 	                        if (obj_ini.role[co,v]=obj_ini.role[100,5]){obj_ncombat.captains+=1;if (obj_ncombat.big_mofo>5) then obj_ncombat.big_mofo=5;}
 	                        if (obj_ini.role[co,v]="Standard Bearer") then obj_ncombat.standard_bearers+=1;
+							if (obj_ini.role[co,v]==obj_ini.role[100,7]) then obj_ncombat.champions+=1;
                         
 	                        if (co=1){
 	                            col=obj_controller.bat_veteran_column;

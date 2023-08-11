@@ -226,6 +226,8 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	    if (thawep="Webber"){atta=35;arp=0;rang=4.1;ranged_hands+=2;amm=5;spli=0;
 	        descr="The Webber is a close-range weapon that fires strands of sticky web-like substance. It is designed to ensnare and immobilize enemies, restricting their movement and rendering them vulnerable to further attacks. ";}
 	    if (thawep="Underslung Bolter"){atta=60;arp=0;rang=10;amm=8;spli=1;}// Bursts
+            if (thawep="Stalker Pattern Bolter"){atta=100;arp=1;rang=15;ranged_hands+=2;amm=20;spli=0;
+	        descr="The Stalker Bolter is a scoped long-range variant of the standard Bolter. Depending on the specific modifications made by the wielder, the Stalker Bolter can serve as a precision battle rifle or a high-powered sniper weapon.";}
 
 
 	    if (thawep="Bolter"){atta=50;arp=0;rang=12;ranged_hands+=2;amm=16;spli=1;
