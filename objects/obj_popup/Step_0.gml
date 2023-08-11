@@ -716,11 +716,11 @@ if (type=6){// Equipment
 }
 
 if (type=8){
-    if (obj_ini.artifact[obj_controller.menu_artifact]="Power Armor") then target_role=5;
-    if (obj_ini.artifact[obj_controller.menu_artifact]="Terminator Armor") then target_role=5;
-    if (obj_ini.artifact[obj_controller.menu_artifact]="Artificer Armor") then target_role=5;
+    if (obj_ini.artifact[obj_controller.menu_artifact]="Power Armour") then target_role=5;
+    if (obj_ini.artifact[obj_controller.menu_artifact]="Terminator Armour") then target_role=5;
+    if (obj_ini.artifact[obj_controller.menu_artifact]="Artificer Armour") then target_role=5;
     if (obj_ini.artifact[obj_controller.menu_artifact]="Dreadnought") then target_role=5;
-    if (obj_ini.artifact[obj_controller.menu_artifact]="Dreadnought Armor") then target_role=5;
+    if (obj_ini.artifact[obj_controller.menu_artifact]="Dreadnought Armour") then target_role=5;
     if (obj_ini.artifact[obj_controller.menu_artifact]="Rosarius") then target_role=5;
     if (obj_ini.artifact[obj_controller.menu_artifact]="Bionics") then target_role=5;
     if (obj_ini.artifact[obj_controller.menu_artifact]="Psychic Hood") then target_role=5;
