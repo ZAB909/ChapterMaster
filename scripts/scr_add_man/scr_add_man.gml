@@ -1,47 +1,47 @@
-function scr_add_man(argument0, argument1, argument2, argument3, argument4, argument5, argument6, argument7, argument8, argument9, argument10) {
+function scr_add_man(man_role, target_company, choice_armour, choice_weapons, choice_gear, spawn_exp, spawn_name, corruption, other_gear, home_spot, mobility_items) {
 
-	// argument0 = role
-	// argument1 = company
-	// argument2 = armourset
-	// argument3 = weaponset
-	// argument4 = gear
-	// argument5 = exp
-	// argument6 = name
-	// argument7 = chaos
-	// argument8 = gear provided?
-	// argument9 = home, shipXY, or default
-	// argument10 = mobility
+	// man_role = role
+	// target_company = company
+	// choice_armour = armorset
+	// choice_weapons = weaponset
+	// choice_gear = gear
+	// spawn_exp = exp
+	// spawn_name = name
+	// corruption = chaos
+	// other_gear = gear provided?
+	// home_spot = home, shipXY, or default
+	// mobility_items = mobility
 
 	// That should be sufficient to add stuff in a highly modifiable fashion
 
-
+	var non_marine_roles = ["Skitarii","Techpriest","Ranger","Crusader","Sister of Battle","Sister Hospitaler", "Ork Sniper", "Flash Git"]
 	var i,good, wep1, wep2, gear, mobi, arm, e, missing;
 	i=0;e=0;good=0;wep1="";wep2="";gear="";mobi="";arm="";missing=0;
 
 	repeat(300){
 	    i+=1;
 	    if (good=0){
-	        if (obj_ini.name[argument1,i]="") or (obj_ini.role[argument1,i]="") then good=i;
+	        if (obj_ini.name[target_company,i]="") or (obj_ini.role[target_company,i]="") then good=i;
 	    }
 	}
 
 
 	if (good!=0){
-	    obj_ini.race[argument1,good]=1;
-	    obj_ini.lid[argument1,good]=0;
+	    obj_ini.race[target_company,good]=1;
+	    obj_ini.lid[target_company,good]=0;
     
-	    if ((argument9="home") or (argument9="default")) and (obj_ini.fleet_type=1){
+	    if ((home_spot="home") or (home_spot="default")) and (obj_ini.fleet_type=1){
 	        var bst;bst=0;
 	        bst=instance_nearest(x,y,obj_star);
         
-	        obj_ini.loc[argument1,good]=obj_ini.home_name;
-	        if (bst.p_owner[4]=1) and (bst.planets>=4) then obj_ini.wid[argument1,good]=4;
-	        if (bst.p_owner[3]=1) and (bst.planets>=3) then obj_ini.wid[argument1,good]=3;
-	        if (bst.p_owner[2]=1) and (bst.planets>=2) then obj_ini.wid[argument1,good]=2;
-	        if (bst.p_owner[1]=1) and (bst.planets>=1) then obj_ini.wid[argument1,good]=1;
+	        obj_ini.loc[target_company,good]=obj_ini.home_name;
+	        if (bst.p_owner[4]=1) and (bst.planets>=4) then obj_ini.wid[target_company,good]=4;
+	        if (bst.p_owner[3]=1) and (bst.planets>=3) then obj_ini.wid[target_company,good]=3;
+	        if (bst.p_owner[2]=1) and (bst.planets>=2) then obj_ini.wid[target_company,good]=2;
+	        if (bst.p_owner[1]=1) and (bst.planets>=1) then obj_ini.wid[target_company,good]=1;
 	    }
     
-	    if (string_count("ship",argument9)>0) or ((obj_ini.fleet_type!=1) and (argument9="default")){
+	    if (string_count("ship",home_spot)>0) or ((obj_ini.fleet_type!=1) and (home_spot="default")){
 	        var wop,loaded;loaded=0;
 	        // with(obj_p_fleet){if (action!="") then instance_deactivate_object(id);}
         
@@ -53,8 +53,8 @@ function scr_add_man(argument0, argument1, argument2, argument3, argument4, argu
 	            repeat(20){i+=1;
 	                if (good=0){
 	                    if (obj_ini.ship[i]!="") and (obj_ini.ship_carrying[i]<obj_ini.ship_capacity[i]){good=1;
-	                        obj_ini.ship_carrying[i]+=1;obj_ini.lid[argument1,good]=shiyp;loaded=1;
-	                        obj_ini.wid[argument1,good]=0;obj_ini.loc[argument1,good]=obj_ini.ship_location[i];
+	                        obj_ini.ship_carrying[i]+=1;obj_ini.lid[target_company,good]=shiyp;loaded=1;
+	                        obj_ini.wid[target_company,good]=0;obj_ini.loc[target_company,good]=obj_ini.ship_location[i];
                         
 	                    }
 	                }
@@ -74,8 +74,8 @@ function scr_add_man(argument0, argument1, argument2, argument3, argument4, argu
 	                if (loaded=0){
 	                    f=wop.capital_num[i];
 	                    if (obj_ini.ship_capacity[f]>obj_ini.ship_carrying[f]){
-	                        obj_ini.ship_carrying[f]+=1;obj_ini.lid[argument1,good]=f;loaded=1;
-	                        obj_ini.wid[argument1,good]=0;obj_ini.loc[argument1,good]=obj_ini.ship_location[f];
+	                        obj_ini.ship_carrying[f]+=1;obj_ini.lid[target_company,good]=f;loaded=1;
+	                        obj_ini.wid[target_company,good]=0;obj_ini.loc[target_company,good]=obj_ini.ship_location[f];
 	                    }
 	                }
 	            }
@@ -87,8 +87,8 @@ function scr_add_man(argument0, argument1, argument2, argument3, argument4, argu
 	                if (loaded=0){
 	                    f=wop.frigate_num[i];
 	                    if (obj_ini.ship_capacity[f]>obj_ini.ship_carrying[f]){
-	                        obj_ini.ship_carrying[f]+=1;obj_ini.lid[argument1,good]=f;loaded=1;
-	                        obj_ini.wid[argument1,good]=0;obj_ini.loc[argument1,good]=obj_ini.ship_location[f];
+	                        obj_ini.ship_carrying[f]+=1;obj_ini.lid[target_company,good]=f;loaded=1;
+	                        obj_ini.wid[target_company,good]=0;obj_ini.loc[target_company,good]=obj_ini.ship_location[f];
 	                    }
 	                }
 	            }
@@ -100,8 +100,8 @@ function scr_add_man(argument0, argument1, argument2, argument3, argument4, argu
 	                if (loaded=0){
 	                    f=wop.escort_num[i];
 	                    if (obj_ini.ship_capacity[f]>obj_ini.ship_carrying[f]){
-	                        obj_ini.ship_carrying[f]+=1;obj_ini.lid[argument1,good]=f;loaded=1;
-	                        obj_ini.wid[argument1,good]=0;obj_ini.loc[argument1,good]=obj_ini.ship_location[f];
+	                        obj_ini.ship_carrying[f]+=1;obj_ini.lid[target_company,good]=f;loaded=1;
+	                        obj_ini.wid[target_company,good]=0;obj_ini.loc[target_company,good]=obj_ini.ship_location[f];
 	                    }
 	                }
 	            }
@@ -109,122 +109,91 @@ function scr_add_man(argument0, argument1, argument2, argument3, argument4, argu
         
         
         
-	        // wop=string_delete(argument9,0,4);
+	        // wop=string_delete(home_spot,0,4);
 	        // wop2=real(wop);
-	        /*obj_ini.lid[argument1,good]=wop2;
+	        /*obj_ini.lid[target_company,good]=wop2;
 	        obj_ini.loc=obj_ini.ship_location[wop2];
-	        obj_ini.wid[argument1,good]=0;*/
+	        obj_ini.wid[target_company,good]=0;*/
 	    }
-	    /*if (argument9="default") and (obj_ini.fleet_type!=1){// Need a more elaborate ship_carrying += here for the different types of units
-	        var first,backup;first=0;backup=0;i=0;
-	        repeat(30){i+=1;
-	            if (obj_ini.ship_class[i]="Battle Barge") and (first=0) and (obj_ini.ship_capacity[i]>obj_ini.ship_carrying[i]) then first=i;
-	            if (obj_ini.ship_class[i]="Strike Cruiser") and (backup=0) and (obj_ini.ship_capacity[i]>obj_ini.ship_carrying[i]) then backup=i;
-	        }
-	        if (first!=0){
-	            obj_ini.lid[argument1,good]=first;obj_ini.loc[argument1,good]=obj_ini.ship_location[first];
-	            obj_ini.wid[argument1,good]=0;obj_ini.ship_carrying[first]+=1;
-	        }
-	        if (first=0) and (backup!=0){
-	            obj_ini.lid[argument1,good]=backup;obj_ini.loc[argument1,good]=obj_ini.ship_location[backup];
-	            obj_ini.wid[argument1,good]=0;obj_ini.ship_carrying[backup]+=1;
-	        }
-	        if (first=0) and (backup=0){
-	            obj_ini.lid[argument1,good]=0;obj_ini.loc[argument1,good]="";obj_ini.wid[argument1,good]=0;exit;
-	        }
+	    obj_ini.role[target_company,good]=man_role;
+	    obj_ini.wep1[target_company,good]="";
+	    obj_ini.wep2[target_company,good]="";
+	    obj_ini.armor[target_company,good]="";
+	    obj_ini.hp[target_company,good]=100;
+	    obj_ini.chaos[target_company,good]=corruption;
+	    obj_ini.experience[target_company,good]=spawn_exp;
+	    obj_ini.spe[target_company,good]="";
+	    obj_ini.god[target_company,good]=0;
+		obj_ini.TTRPG[target_company, good] = {};
     
-	    }*/
-	    obj_ini.role[argument1,good]=argument0;
-	    obj_ini.wep1[argument1,good]="";
-	    obj_ini.wep2[argument1,good]="";
-	    obj_ini.armour[argument1,good]="";
-	    obj_ini.hp[argument1,good]=100;
-	    obj_ini.chaos[argument1,good]=argument7;
-	    obj_ini.experience[argument1,good]=argument5;
-	    obj_ini.spe[argument1,good]="";
-	    obj_ini.god[argument1,good]=0;
-    
-	    if (argument8=true){
-	        if (argument0="Skitarii"){
-	            obj_ini.wep1[argument1,good]="Hellgun";obj_ini.wep2[argument1,good]="";
-	            obj_ini.armour[argument1,good]="Skitarii Armour";obj_ini.experience[argument1,good]=10;
-	            obj_ini.hp[argument1,good]=40;
-	            obj_ini.race[argument1,good]=3;
-	        }
-	        if (argument0="Techpriest"){
-	            obj_ini.wep1[argument1,good]="Power Weapon";obj_ini.wep2[argument1,good]="Conversion Beam Projector";
-	            obj_ini.armour[argument1,good]="Dragon Scales";obj_ini.gear[argument1,good]="Servo Arms";obj_ini.experience[argument1,good]=100;
-	            obj_ini.hp[argument1,good]=50;
-	            obj_ini.race[argument1,good]=3;
-	        }
-	        if (argument0="Ranger"){
-	            obj_ini.wep1[argument1,good]="Ranger Long Rifle";obj_ini.wep2[argument1,good]="Shuriken Pistol";
-	            obj_ini.armour[argument1,good]="";obj_ini.experience[argument1,good]=80;
-	            obj_ini.hp[argument1,good]=30;
-	            obj_ini.race[argument1,good]=6;
-	        }
-	        if (argument0="Crusader"){
-	            obj_ini.wep1[argument1,good]="Power Sword";obj_ini.armour[argument1,good]="Power Armour";
-	            obj_ini.gear[argument1,good]="Storm Shield";obj_ini.experience[argument1,good]=10;
-	            obj_ini.hp[argument1,good]=30;
-	            obj_ini.race[argument1,good]=4;
-	        }
-	        if (argument0="Sister of Battle"){
-	            obj_ini.wep1[argument1,good]="Bolter";obj_ini.wep2[argument1,good]="Sarissa";
-	            obj_ini.armour[argument1,good]="Power Armour";obj_ini.experience[argument1,good]=60;
-	            obj_ini.hp[argument1,good]=40;obj_ini.race[argument1,good]=5;
-	        }
-	        if (argument0="Sister Hospitaler"){
-	            obj_ini.wep1[argument1,good]="Bolter";obj_ini.wep2[argument1,good]="Sarissa";
-	            obj_ini.armour[argument1,good]="Power Armour";obj_ini.experience[argument1,good]=100;
-	            obj_ini.gear[argument1,good]="Sororitas Medkit";
-	            obj_ini.hp[argument1,good]=40;obj_ini.race[argument1,good]=5;
-	        }
-	        if (argument0="Ork Sniper"){
-	            obj_ini.wep1[argument1,good]="Sniper Rifle";obj_ini.wep2[argument1,good]="Choppa";
-	            obj_ini.armour[argument1,good]="";obj_ini.experience[argument1,good]=20;
-	            obj_ini.hp[argument1,good]=45;
-	            obj_ini.race[argument1,good]=7;
-	        }
-	        if (argument0="Flash Git"){
-	            obj_ini.wep1[argument1,good]="Snazzgun";obj_ini.wep2[argument1,good]="Choppa";
-	            obj_ini.armour[argument1,good]="Ork Armour";obj_ini.experience[argument1,good]=40;
-	            obj_ini.hp[argument1,good]=65;
-	            obj_ini.race[argument1,good]=7;
-	        }
+	    if (other_gear=true){
+			switch(man_role){
+	        case "Skitarii":
+	            obj_ini.wep1[target_company,good]="Hellgun";obj_ini.wep2[target_company,good]="";
+	            obj_ini.armor[target_company,good]="Skitarii Armour";obj_ini.experience[target_company,good]=10;
+	            obj_ini.hp[target_company,good]=40;
+	            obj_ini.race[target_company,good]=3;break;
+	        case "Techpriest":
+	            obj_ini.wep1[target_company,good]="Power Weapon";obj_ini.wep2[target_company,good]="Conversion Beam Projector";
+	            obj_ini.armor[target_company,good]="Dragon Scales";obj_ini.gear[target_company,good]="Servo Arms";obj_ini.experience[target_company,good]=100;
+	            obj_ini.hp[target_company,good]=50;
+	            obj_ini.race[target_company,good]=3;break;
+	        case "Ranger":
+	            obj_ini.wep1[target_company,good]="Ranger Long Rifle";obj_ini.wep2[target_company,good]="Shuriken Pistol";
+	            obj_ini.armor[target_company,good]="";obj_ini.experience[target_company,good]=80;
+	            obj_ini.hp[target_company,good]=30;
+	            obj_ini.race[target_company,good]=6;break;
+	         case "Crusader":
+	            obj_ini.wep1[target_company,good]="Power Sword";obj_ini.armor[target_company,good]="Power Armour";
+	            obj_ini.gear[target_company,good]="Storm Shield";obj_ini.experience[target_company,good]=10;
+	            obj_ini.hp[target_company,good]=30;
+	            obj_ini.race[target_company,good]=4;break;
+	        case "Sister of Battle":
+	            obj_ini.wep1[target_company,good]="Bolter";obj_ini.wep2[target_company,good]="Sarissa";
+	            obj_ini.armor[target_company,good]="Power Armour";obj_ini.experience[target_company,good]=60;
+	            obj_ini.hp[target_company,good]=40;obj_ini.race[target_company,good]=5;break;
+	        case "Sister Hospitaler":
+	            obj_ini.wep1[target_company,good]="Bolter";obj_ini.wep2[target_company,good]="Sarissa";
+	            obj_ini.armor[target_company,good]="Power Armour";obj_ini.experience[target_company,good]=100;
+	            obj_ini.gear[target_company,good]="Sororitas Medkit";
+	            obj_ini.hp[target_company,good]=40;obj_ini.race[target_company,good]=5; break;
+	        case "Ork Sniper":
+	            obj_ini.wep1[target_company,good]="Sniper Rifle";obj_ini.wep2[target_company,good]="Choppa";
+	            obj_ini.armor[target_company,good]="";obj_ini.experience[target_company,good]=20;
+	            obj_ini.hp[target_company,good]=45;
+	            obj_ini.race[target_company,good]=7;break;
+	        
+	        case "Flash Git":
+	            obj_ini.wep1[target_company,good]="Snazzgun";obj_ini.wep2[target_company,good]="Choppa";
+	            obj_ini.armor[target_company,good]="Ork Armour";obj_ini.experience[target_company,good]=40;
+	            obj_ini.hp[target_company,good]=65;
+	            obj_ini.race[target_company,good]=7;break;
+			}
 	    }
     
+
+	    obj_ini.age[target_company,good]=((obj_controller.millenium*1000)+obj_controller.year);// Age here
     
-    
-    
-    
-	    // show_message(string(argument0)+" was added to "+string(argument1)+"."+string(good));
-    
-    
-    
-    
-	    obj_ini.age[argument1,good]=((obj_controller.millenium*1000)+obj_controller.year);// Age here
-    
-	    if (argument6="") or (argument6="imperial") then obj_ini.name[argument1,good]=scr_marine_name();
-	    if (argument6!="") and (argument6!="imperial") then obj_ini.name[argument1,good]=argument6;
-	    if (argument0="Ranger") then obj_ini.name[argument1,good]=scr_eldar_name(2);
-	    if (argument0="Ork Sniper") or (argument0="Flash Git") then obj_ini.name[argument1,good]=scr_ork_name();
-	    if (argument0="Sister of Battle") or (argument0="Sister Hospitaler") then obj_ini.name[argument1,good]=scr_imperial_name(2);
+	    if (spawn_name="") or (spawn_name="imperial") then obj_ini.name[target_company,good]=scr_marine_name();
+	    if (spawn_name!="") and (spawn_name!="imperial") then obj_ini.name[target_company,good]=spawn_name;
+	    if (man_role="Ranger") then obj_ini.name[target_company,good]=scr_eldar_name(2);
+	    if (man_role="Ork Sniper") or (man_role="Flash Git") then obj_ini.name[target_company,good]=scr_ork_name();
+	    if (man_role="Sister of Battle") or (man_role="Sister Hospitaler") then obj_ini.name[target_company,good]=scr_imperial_name(2);
     
     
 	    // Weapons
-	    if (argument3=obj_ini.role[100,12]){wep2=obj_ini.wep2[100,12];wep1=obj_ini.wep1[100,12];arm=obj_ini.armour[100,12];}
+	    if (choice_weapons=obj_ini.role[100,12]){wep2=obj_ini.wep2[100,12];wep1=obj_ini.wep1[100,12];arm=obj_ini.armor[100,12];}
     
 	    var good1,good2,good3,good4;
 	    good1=0;good2=0;good3=0;good4=0;
     
-	    if (argument8=false){
+	    if (other_gear=false){
 	        e=0;
 	        if (wep1!="") then repeat(100){// First Weapon
 	            e+=1;
 	            if (e<=100){
 	                if (obj_ini.equipment[e]=wep1){
-	                    obj_ini.equipment_number[e]-=1;obj_ini.wep1[argument1,good]=obj_ini.equipment[e];
+	                    obj_ini.equipment_number[e]-=1;obj_ini.wep1[target_company,good]=obj_ini.equipment[e];
 	                    if (obj_ini.equipment_number[e]=0){obj_ini.equipment[e]="";obj_ini.equipment_type[e]="";}
 	                    e=1000;
 	                }
@@ -235,7 +204,7 @@ function scr_add_man(argument0, argument1, argument2, argument3, argument4, argu
 	            e+=1;
 	            if (e<=100){
 	                if (obj_ini.equipment[e]=wep2){
-	                    obj_ini.equipment_number[e]-=1;obj_ini.wep2[argument1,good]=obj_ini.equipment[e];
+	                    obj_ini.equipment_number[e]-=1;obj_ini.wep2[target_company,good]=obj_ini.equipment[e];
 	                    if (obj_ini.equipment_number[e]=0){obj_ini.equipment[e]="";obj_ini.equipment_type[e]="";}
 	                    e=1000;
 	                }
@@ -249,61 +218,125 @@ function scr_add_man(argument0, argument1, argument2, argument3, argument4, argu
 	            e+=1;
 	            if (e<=100){
 	                if (obj_ini.equipment[e]=arm){
-	                    obj_ini.equipment_number[e]-=1;obj_ini.armour[argument1,good]=arm;
+	                    obj_ini.equipment_number[e]-=1;obj_ini.armor[target_company,good]=arm;
 	                    if (obj_ini.equipment_number[e]=0){obj_ini.equipment[e]="";obj_ini.equipment_type[e]="";}
 	                    e=1000;
 	                }
 	            }
 	        }
         
-	        // show_message(obj_ini.armour[argument1,good]);
+	        // show_message(obj_ini.armor[target_company,good]);
         
 	        e=0;
-	        if (argument4!="") then repeat(100){// Gear
+	        if (choice_gear!="") then repeat(100){// Gear
 	            e+=1;
 	            if (e<=100){
-	                if (obj_ini.equipment[e]=argument4){
-	                    obj_ini.equipment_number[e]-=1;obj_ini.gear[argument1,good]=argument4;
+	                if (obj_ini.equipment[e]=choice_gear){
+	                    obj_ini.equipment_number[e]-=1;obj_ini.gear[target_company,good]=choice_gear;
 	                    if (obj_ini.equipment_number[e]=0){obj_ini.equipment[e]="";obj_ini.equipment_type[e]="";}
 	                    e=1000;
 	                }
 	            }
 	        }
 	        e=0;
-	        if (argument10!="") then repeat(100){// Mobility
+	        if (mobility_items!="") then repeat(100){// Mobility
 	            e+=1;
 	            if (e<=100){
-	                if (obj_ini.equipment[e]=argument10){
-	                    obj_ini.equipment_number[e]-=1;obj_ini.mobi[argument1,good]=argument10;
+	                if (obj_ini.equipment[e]=mobility_items){
+	                    obj_ini.equipment_number[e]-=1;obj_ini.mobi[target_company,good]=mobility_items;
 	                    if (obj_ini.equipment_number[e]=0){obj_ini.equipment[e]="";obj_ini.equipment_type[e]="";}
 	                    e=1000;
 	                }
 	            }
 	        }
         
-	        if (obj_ini.wep1[argument1,good]!=wep1) and (wep1!="") then missing=1;
-	        if (obj_ini.wep2[argument1,good]!=wep2) and (wep2!="") then missing=1;
-	        if (obj_ini.armour[argument1,good]!=arm) and (arm!="") then missing=1;
-	        if (obj_ini.gear[argument1,good]!=argument4) and (argument4!="") then missing=1;
-	        if (obj_ini.mobi[argument1,good]!=argument10) and (argument10!="") then missing=1;
+	        if (obj_ini.wep1[target_company,good]!=wep1) and (wep1!="") then missing=1;
+	        if (obj_ini.wep2[target_company,good]!=wep2) and (wep2!="") then missing=1;
+	        if (obj_ini.armor[target_company,good]!=arm) and (arm!="") then missing=1;
+	        if (obj_ini.gear[target_company,good]!=choice_gear) and (choice_gear!="") then missing=1;
+	        if (obj_ini.mobi[target_company,good]!=mobility_items) and (mobility_items!="") then missing=1;
         
-	        if (argument3=obj_ini.role[100,12]) and (argument7>=13) then obj_ini.god[argument1,good]=2;// Khorne!!!1 XDDDDDDD
+	        if (choice_weapons=obj_ini.role[100,12]) and (corruption>=13) then obj_ini.god[target_company,good]=2;// Khorne!!!1 XDDDDDDD
         
-	        if (missing=1) and (argument0="Scout"){
+	        if (missing=1) and (man_role="Scout"){
 	            if (string_count("has joined the 10th Company",obj_turn_end.alert_text[obj_turn_end.alerts])=1){
 	               scr_alert("red","recruiting","Not enough "+string(obj_ini.role[100,12])+" equipment in the armoury!",0,0);
 	            }
 	        }
 	    }
     
-    
-	    if (argument0!="Skitarii") and (argument0!="Techpriest") and (argument0!="Ranger") and (argument0!="Crusader") and (argument0!="Sister of Battle"){
-	        if (argument0!="Sister Hospitaler") and (argument0!="Ork Sniper") and (argument0!="Flash Git") then marines+=1;
-	    }
-    
-    
-	    with(obj_ini){scr_company_order(argument1);}
+    if (!array_contains(non_marine_roles,man_role)){
+		marines+=1;
+		}    
+	    with(obj_ini){scr_company_order(target_company);}
 	}
 
 
+}
+function TTRPG_stats(faction, comp, mar) constructor{
+	if (faction == "player_marine"){
+		strength = 5;
+		constitution = 5;
+		dexterity = 5;
+		intelligence = 5;
+		wisdom = 5;
+		charisma = 5;
+		religion = "Imperial Cult";
+		piety = 5;
+		marine_ascension = obj_controller.turn;
+		company = comp;
+		marine_number = mar;
+		static hp = function(){ 
+			return obj_ini.hp[company,marine_number]
+		};
+       static update_health = function(new_health){
+            obj_ini.hp[company,marine_number] = new_health;
+	   };
+		static weapon_one = function(){ 
+			return obj_ini.wep1[company,marine_number];
+		};
+       static update_weapon_one = function(new_weapon){
+            obj_ini.wep1[company,marine_number] = new_weapon;
+	   };
+		static weapon_two = function(){ 
+			return obj_ini.wep1[company,marine_number];
+		};
+       static update_weapon_two = function(new_weapon){
+            obj_ini.w[company,marine_number] = new_weapon;
+	   };
+		static armour = function(){ 
+			return obj_ini.armour[company,marine_number];
+		};	   
+       static update_armour = function(new_armour){
+            obj_ini.armour[company,marine_number] = new_armour;
+	   };	
+		static corruption = function(){ 
+			return obj_ini.chaos[company,marine_number];
+		};	   
+       static update_corruption = function(new_corruption){
+            obj_ini.chaos[company,marine_number] = new_corruption;
+	   };	
+		static specials = function(){ 
+			return obj_ini.spe[company,marine_number];
+		};	   
+       static update_specials = function(new_specials){
+            obj_ini.spe[company,marine_number] = new_specials;
+	   };
+	   	static mobility_item = function(){ 
+			return obj_ini.armour[company,marine_number];
+		};	   
+       static update_mobility_item = function(new_mobility_item){
+            obj_ini.spe[company,marine_number] = new_mobility_item;
+	   };
+	   	static mobility_item = function(){ 
+			return obj_ini.spe[company,marine_number];
+		};	   
+       static update_mobility_item = function(new_mobility_item){
+            obj_ini.spe[company,marine_number] = new_mobility_item;
+	   };	
+	   	static race = function(){ 
+			return obj_ini.race[company,marine_number];
+		};	   
+	   
+	}
 }
