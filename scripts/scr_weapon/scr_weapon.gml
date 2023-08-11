@@ -100,7 +100,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        if (argument0="Scout Armour"){statt=8;spe_descr="";emor=1;
 	            descr="A non-powered suit made up of carapace armour and ballistic nylon.  Includes biohazard shielding, nutrient feed, and camoflauge.";}
 	        if (argument0="MK3 Iron Armour"){statt=26;spe_descr="-10% Ranged";emor=1;
-	            descr="An ancient set of Armourum Ferrum.  Has thicker armour plating but the added weight slows down the wearer.";}
+	            descr="An ancient set of Armorum Ferrum.  Has thicker armour plating but the added weight slows down the wearer.";}
 	        if (argument0="MK4 Maximus"){statt=22;spe_descr="+5% Melee, +5% Ranged";emor=1;
 	            descr="Armour dating to the end of the Great Crusade.  Often considered the ultimate Space Marine armour.  The components are no longer reproducable.";}
 	        if (argument0="MK6 Corvus"){statt=16;spe_descr="+10% Ranged";emor=1;
