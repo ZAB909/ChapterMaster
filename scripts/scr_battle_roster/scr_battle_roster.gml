@@ -210,6 +210,7 @@ function scr_battle_roster(_unit_location, _target_location, _is_planet) {
 		            if (targ.marine_armor[targ.men]="Scout Armor") then targ.marine_ac[targ.men]=8;
 		            if (targ.marine_armor[targ.men]="MK3 Iron Armor"){targ.marine_ac[targ.men]=20;targ.marine_ranged[targ.men]-=0.1;}
 		            if (targ.marine_armor[targ.men]="MK4 Maximus"){targ.marine_ac[targ.men]=19;targ.marine_ranged[targ.men]+=0.05;targ.marine_attack[targ.men]+=0.05;}
+		            if (targ.marine_armor[targ.men]="MK5 Heresy"){targ.marine_ac[targ.men]=17;targ.marine_attack[targ.men]+=0.1;}
 		            if (targ.marine_armor[targ.men]="MK6 Corvus"){targ.marine_ac[targ.men]=18;targ.marine_ranged[targ.men]+=0.1;}
 		            if (targ.marine_armor[targ.men]="MK7 Aquila") then targ.marine_ac[targ.men]=18;
 		            if (targ.marine_armor[targ.men]="MK8 Errant") then targ.marine_ac[targ.men]=19;
