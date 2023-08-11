@@ -14,6 +14,7 @@ if (engage=true){
                         if (obj_ini.armor[co,i]="Power Armor") then yes=true;
                         if (obj_ini.armor[co,i]="MK3 Iron Armor") then yes=true;
                         if (obj_ini.armor[co,i]="MK4 Maximus") then yes=true;
+                        if (obj_ini.armor[co,i]="MK5 Heresy") then yes=true;
                         if (obj_ini.armor[co,i]="MK6 Corvus") then yes=true;
                         if (obj_ini.armor[co,i]="MK7 Aquila") then yes=true;
                         if (obj_ini.armor[co,i]="MK8 Errant") then yes=true;
