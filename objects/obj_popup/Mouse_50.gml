@@ -321,7 +321,7 @@ if (type=5) and (cooldown<=0){
 
             if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1) and (obj_controller.ma_promote[i]=1) and (obj_controller.ma_exp[i]>=min_exp){
                 if (req_armor="Power Armor"){
-                    if (obj_controller.ma_armor[i]="MK3 Iron Armor") or (obj_controller.ma_armor[i]="MK4 Maximus") or (obj_controller.ma_armor[i]="MK6 Corvus") then have_armor_num+=1;
+                    if (obj_controller.ma_armor[i]="MK3 Iron Armor") or (obj_controller.ma_armor[i]="MK4 Maximus") or (obj_controller.ma_armor[i]="MK5 Heresy") or (obj_controller.ma_armor[i]="MK6 Corvus") then have_armor_num+=1;
                     if (obj_controller.ma_armor[i]="MK7 Aquila") or (obj_controller.ma_armor[i]="Power Armor") then have_armor_num+=1;
                 }
                 if (req_armor="Terminator Armor"){if (obj_controller.ma_armor[i]="Terminator Armor") or (obj_controller.ma_armor[i]="Tartaros") then have_armor_num+=1;}
@@ -346,6 +346,7 @@ if (type=5) and (cooldown<=0){
         if (req_armor="Power Armor"){
             have_armor_num+=scr_item_count("MK3 Iron Armor");
             have_armor_num+=scr_item_count("MK4 Maximus");
+			have_armor_num+=scr_item_count("MK5 Heresy");
             have_armor_num+=scr_item_count("MK6 Corvus");
             have_armor_num+=scr_item_count("MK7 Aquila");
             have_armor_num+=scr_item_count("Power Armor");
@@ -762,7 +763,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
 
                 if (req_armor="") or (dnc=true) then check=1;
                 if (req_armor="Power Armor"){
-                    if (obj_controller.ma_armor[i]="MK3 Iron Armor") or (obj_controller.ma_armor[i]="MK4 Maximus") or (obj_controller.ma_armor[i]="MK6 Corvus") then check=1;
+                    if (obj_controller.ma_armor[i]="MK3 Iron Armor") or (obj_controller.ma_armor[i]="MK4 Maximus") or (obj_controller.ma_armor[i]="MK5 Heresy") or (obj_controller.ma_armor[i]="MK6 Corvus") then check=1;
                     if (obj_controller.ma_armor[i]="MK7 Aquila") or (obj_controller.ma_armor[i]="Power Armor") then check=1;
                 }
                 if (req_armor="Terminator Armor"){if (obj_controller.ma_armor[i]="Terminator Armor") or (obj_controller.ma_armor[i]="Tartaros") then check=1;}
@@ -790,6 +791,10 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
                     if (obj_controller.ma_armor[i]=""){// Check for Maximus
                         var satisfied;satisfied=scr_item_count("MK4 Maximus");
                         if (satisfied>0){scr_add_item("MK4 Maximus",-1);obj_controller.ma_armor[i]="MK4 Maximus";obj_ini.armor[company,obj_controller.ide[i]]="MK4 Maximus";}
+                    }
+					if (obj_controller.ma_armor[i]=""){// Check for Heresy
+                        var satisfied;satisfied=scr_item_count("MK5 Heresy");
+                        if (satisfied>0){scr_add_item("MK5 Heresy",-1);obj_controller.ma_armor[i]="MK5 Heresy";obj_ini.armor[company,obj_controller.ide[i]]="MK5 Heresy";}
                     }
                     if (obj_controller.ma_armor[i]=""){// Check for Iron
                         var satisfied;satisfied=scr_item_count("MK3 Iron Armor");

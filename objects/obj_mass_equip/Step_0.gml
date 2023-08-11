@@ -14,6 +14,7 @@ if (engage=true){
                         if (obj_ini.armor[co,i]="Power Armor") then yes=true;
                         if (obj_ini.armor[co,i]="MK3 Iron Armor") then yes=true;
                         if (obj_ini.armor[co,i]="MK4 Maximus") then yes=true;
+                        if (obj_ini.armor[co,i]="MK5 Heresy") then yes=true;
                         if (obj_ini.armor[co,i]="MK6 Corvus") then yes=true;
                         if (obj_ini.armor[co,i]="MK7 Aquila") then yes=true;
                         if (obj_ini.armor[co,i]="MK8 Errant") then yes=true;
@@ -44,6 +45,7 @@ if (engage=true){
                             if (done="") and (scr_item_count("MK6 Corvus")>0) then done="MK6 Corvus";
                             if (done="") and (scr_item_count("Power Armor")>0) then done="Power Armor";
                             if (done="") and (scr_item_count("MK4 Maximus")>0) then done="MK4 Maximus";
+                            if (done="") and (scr_item_count("MK5 Heresy")>0) then done="MK5 Heresy";
                             if (done="") and (scr_item_count("MK3 Iron")>0) then done="MK3 Iron";
                             if (done!=""){scr_add_item(done,-1);obj_ini.armor[co,i]=done;}
                         }
@@ -213,6 +215,7 @@ if (refresh=true) and (obj_controller.settings>0){// Refreshing
         have_armor_num+=scr_item_count("MK6 Corvus");
         have_armor_num+=scr_item_count("Power Armor");
         have_armor_num+=scr_item_count("MK4 Maximus");
+        have_armor_num+=scr_item_count("MK5 Heresy");
         have_armor_num+=scr_item_count("MK3 Iron");
     }
     if (req_armor="Terminator Armor"){
