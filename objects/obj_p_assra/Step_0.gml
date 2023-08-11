@@ -175,6 +175,7 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                     if (obj_ini.armour[co,i]="Scout Armour") then ac=8;
                     if (obj_ini.armour[co,i]="MK3 Iron Armour") then ac=26;
                     if (obj_ini.armour[co,i]="MK4 Maximus") then ac=19;
+                    if (obj_ini.armour[co,i]="MK5 Heresy") then ac=17;
                     if (obj_ini.armour[co,i]="MK6 Corvus") then ac=16;
                     if (obj_ini.armour[co,i]="MK7 Aquila") then ac=18;
                     if (obj_ini.armour[co,i]="MK8 Errant") then ac=22;

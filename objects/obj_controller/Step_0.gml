@@ -468,6 +468,7 @@ if (menu=1) and (managing>0){
                 
                 if (ma_armour[sel]="MK3 Iron Armour") then ra-=0.1;
                 if (ma_armour[sel]="MK4 Maximus"){ra+=0.05;ma+=0.05;}
+                if (ma_armour[sel]="MK5 Heresy"){ma+=0.1;}
                 if (ma_armour[sel]="MK6 Corvus"){ra+=0.1;}
                 if (string_count("Artificer",ma_armour[sel])>0){ma+=0.1;}
                 if (string_count("Terminator",ma_armour[sel])>0){ra-=0.1;ma+=0.2;}

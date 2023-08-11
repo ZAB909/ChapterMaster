@@ -270,6 +270,7 @@ function scr_ui_manage() {
 	                if (temp[102]="Scout Armor"){if (slow>0) then slow=10;armour_sprite=spr_scout_colors;if (hood=-50) then hood=0;}
 	                if (temp[102]="MK3 Iron Armor"){if (slow>0) then slow=13;if (brothers>-5) then brothers=3;armour_sprite=spr_iron2_colors;if (hood=-50) then hood=5;}
 	                if (temp[102]="MK4 Maximus"){if (slow>0) then slow=13;if (brothers>-5) then brothers=3;armour_sprite=spr_maximus_colors;if (hood=-50) then hood=6;}
+					if (temp[102]="MK5 Heresy"){if (slow>0) then slow=13;if (brothers>-5) then brothers=3;armour_sprite=spr_heresy_colors;if (hood=-50) then hood=6;}
 	                if (temp[102]="MK6 Corvus"){if (slow>0) then slow=13;if (brothers>-5) then brothers=2;armour_sprite=spr_beakie_colors;if (hood=-50) then hood=3;}
 	                if (temp[102]="MK7 Aquila") or (temp[102]="Power Armor"){if (brothers>-5) then brothers=0;if (slow>0) then slow=13;armour_sprite=spr_aquila_colors;if (hood=-50) then hood=1;}
 	                if (temp[102]="MK8 Errant"){if (slow>0) then slow=13;if (brothers>-5) then brothers=0;armour_sprite=spr_errant_colors;if (hood=-50) then hood=4;}
@@ -390,6 +391,11 @@ function scr_ui_manage() {
 	                    draw_sprite(armour_sprite,cspec,xx+1208,yy+178);
 	                    if (ttrim=0) and (cspec<=1) then draw_sprite(spr_maximus_colors,4,xx+1208,yy+178);
 	                    if (ttrim=0) and (cspec>=2) then draw_sprite(spr_maximus_colors,5,xx+1208,yy+178);
+	                }
+	                if (temp[102]="MK5 Heresy"){
+	                    draw_sprite(armor_sprite,cspec,xx+1208,yy+178);
+	                    if (ttrim=0) and (cspec<=1) then draw_sprite(spr_heresy_colors,4,xx+1208,yy+178);
+	                    if (ttrim=0) and (cspec>=2) then draw_sprite(spr_heresy_colors,5,xx+1208,yy+178);
 	                }
 	                if (temp[102]="MK6 Corvus"){
 	                    draw_sprite(armour_sprite,cspec,xx+1208,yy+178);
