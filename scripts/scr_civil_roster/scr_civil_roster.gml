@@ -221,7 +221,7 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	                if (deploying_unit.armor[co,v]="Scout Armor") then targ.dudes_ac[targ.men]=8;
 	                if (deploying_unit.armor[co,v]="MK3 Iron Armor"){targ.dudes_ac[targ.men]=20;targ.dudes_ranged[targ.men]-=0.1;}
 	                if (deploying_unit.armor[co,v]="MK4 Maximus"){targ.dudes_ac[targ.men]=19;targ.dudes_ranged[targ.men]+=0.05;targ.dudes_attack[targ.men]+=0.05;}
-                        if (obj_ini.armor[co,v]="MK5 Heresy"){targ.dudes_ac[targ.men]=17;targ.dudes_attack[targ.men]+=0.1;}
+                        if (deploying_unit.armor[co,v]="MK5 Heresy"){targ.dudes_ac[targ.men]=17;targ.dudes_attack[targ.men]+=0.1;}
 	                if (deploying_unit.armor[co,v]="MK6 Corvus"){targ.dudes_ac[targ.men]=18;targ.dudes_ranged[targ.men]+=0.1;}
 	                if (deploying_unit.armor[co,v]="MK7 Aquila") then targ.dudes_ac[targ.men]=18;
 	                if (deploying_unit.armor[co,v]="MK8 Errant") then targ.dudes_ac[targ.men]=19;
