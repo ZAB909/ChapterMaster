@@ -89,6 +89,7 @@ if (shop="equipment"){i=0;
 if (shop="equipment2"){i=0;
     i+=1;item[i]="MK3 Iron Armor";item_stocked[i]=scr_item_count("MK3 Iron Armor");nobuy[i]=1;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i+=1;item[i]="MK4 Maximus";item_stocked[i]=scr_item_count("MK4 Maximus");nobuy[i]=1;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+    i+=1;item[i]="MK5 Heresy";item_stocked[i]=scr_item_count("MK5 Heresy");item_cost[i]=45;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i+=1;item[i]="MK6 Corvus";item_stocked[i]=scr_item_count("MK6 Corvus");item_cost[i]=35;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i+=1;item[i]="MK7 Aquila";item_stocked[i]=scr_item_count("MK7 Aquila");item_cost[i]=20;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i+=1;item[i]="MK8 Errant";item_stocked[i]=scr_item_count("MK8 Errant");nobuy[i]=1;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
