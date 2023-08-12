@@ -107,6 +107,7 @@ function scr_ship_battle(argument0, argument1) {
 	                    targ.marine_exp[targ.men]=obj_ini.experience[co,v];
                     
 	                    if (targ.marine_armour[targ.men]="Scout Armour") then targ.marine_ac[targ.men]=8;
+						if (targ.marine_armour[targ.men]="MK5 Heresy") then targ.marine_ac[targ.men]=17;
 	                    if (targ.marine_armour[targ.men]="MK3 Iron Armour") or (targ.marine_armour[targ.men]="MK8 Errant") then targ.marine_ac[targ.men]=21;
 	                    if (targ.marine_armour[targ.men]="Power Armour") or (targ.marine_armour[targ.men]="MK4 Maximus") then targ.marine_ac[targ.men]=19;
 	                    if (targ.marine_armour[targ.men]="MK6 Corvus") or (targ.marine_armour[targ.men]="MK7 Aquila") then targ.marine_ac[targ.men]=18;

@@ -226,6 +226,7 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	                if (obj_ini.armour[co,v]="Scout Armour") then targ.dudes_ac[targ.men]=8;
 	                if (obj_ini.armour[co,v]="MK3 Iron Armour"){targ.dudes_ac[targ.men]=20;targ.dudes_ranged[targ.men]-=0.1;}
 	                if (obj_ini.armour[co,v]="MK4 Maximus"){targ.dudes_ac[targ.men]=19;targ.dudes_ranged[targ.men]+=0.05;targ.dudes_attack[targ.men]+=0.05;}
+					if (obj_ini.armour[co,v]="MK5 Heresy"){targ.dudes_ac[targ.men]=17;targ.dudes_attack[targ.men]+=0.1;}
 	                if (obj_ini.armour[co,v]="MK6 Corvus"){targ.dudes_ac[targ.men]=18;targ.dudes_ranged[targ.men]+=0.1;}
 	                if (obj_ini.armour[co,v]="MK7 Aquila") then targ.dudes_ac[targ.men]=18;
 	                if (obj_ini.armour[co,v]="MK8 Errant") then targ.dudes_ac[targ.men]=19;
@@ -373,6 +374,7 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	                if (targ.marine_armour[targ.men]="Scout Armour") then targ.marine_ac[targ.men]=8;
 	                if (targ.marine_armour[targ.men]="MK3 Iron Armour"){targ.marine_ac[targ.men]=20;targ.marine_ranged[targ.men]-=0.1;}
 	                if (targ.marine_armour[targ.men]="MK4 Maximus"){targ.marine_ac[targ.men]=19;targ.marine_ranged[targ.men]+=0.05;targ.marine_attack[targ.men]+=0.05;}
+					if (targ.marine_armour[targ.men]="MK5 Heresy"){targ.marine_ac[targ.men]=17;targ.marine_attack[targ.men]+=0.1;}
 	                if (targ.marine_armour[targ.men]="MK6 Corvus"){targ.marine_ac[targ.men]=18;targ.marine_ranged[targ.men]+=0.1;}
 	                if (targ.marine_armour[targ.men]="MK7 Aquila") then targ.marine_ac[targ.men]=18;
 	                if (targ.marine_armour[targ.men]="MK8 Errant") then targ.marine_ac[targ.men]=19;
