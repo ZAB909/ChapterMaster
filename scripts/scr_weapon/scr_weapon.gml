@@ -103,7 +103,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	            descr="An ancient set of Armorum Ferrum.  Has thicker armor plating but the added weight slows down the wearer.";}
 	        if (argument0="MK4 Maximus"){statt=22;spe_descr="+5% Melee, +5% Ranged";emor=1;
 	            descr="Armor dating to the end of the Great Crusade.  Often considered the ultimate Space Marine armor.  The components are no longer reproducable.";}
-                if (argument0="MK5 Heresy"){statt=19;spe_descr="+10% Melee";emor=1;
+                if (argument0="MK5 Heresy"){statt=19;spe_descr="+10% Melee, -5% Ranged, -15% Damaged Resistance";emor=1;
 	            descr="Mark V Power Armour, also known as Heresy Pattern Armour, was a hastily assembled variant of power armour that emerged during the Horus Heresy.";}
 	        if (argument0="MK6 Corvus"){statt=16;spe_descr="+10% Ranged";emor=1;
 	            descr="Relatively old beakie armor, sleek as can be.  Boosted olfactory and auditory sensors increase the ranged accuracy of the wearer.";}
