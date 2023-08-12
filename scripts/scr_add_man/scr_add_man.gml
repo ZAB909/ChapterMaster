@@ -283,12 +283,14 @@ function TTRPG_stats(faction, comp, mar) constructor{
 		charisma = 5;
 		religion = "Imperial Cult";
 		piety = 5;
-		marine_ascension = obj_controller.turn;
+		marine_ascension = obj_controller.turn; // on what day did turn did this marine begin to exist
 		company = comp;
 		marine_number = mar;
+		// get marine health
 		static hp = function(){ 
 			return obj_ini.hp[company,marine_number]
 		};
+		//update_marine health
        static update_health = function(new_health){
             obj_ini.hp[company,marine_number] = new_health;
 	   };
@@ -309,6 +311,7 @@ function TTRPG_stats(faction, comp, mar) constructor{
 		};	   
        static update_armour = function(new_armour){
             obj_ini.armour[company,marine_number] = new_armour;
+			get_unit_size(); //every time armour is changed see if the marines size has changed
 	   };	
 		static corruption = function(){ 
 			return obj_ini.chaos[company,marine_number];
@@ -327,6 +330,7 @@ function TTRPG_stats(faction, comp, mar) constructor{
 		};	   
        static update_mobility_item = function(new_mobility_item){
             obj_ini.spe[company,marine_number] = new_mobility_item;
+			get_unit_size(); //every time mobility_item is changed see if the marines size has changed
 	   };
 	   	static mobility_item = function(){ 
 			return obj_ini.spe[company,marine_number];
@@ -336,7 +340,38 @@ function TTRPG_stats(faction, comp, mar) constructor{
 	   };	
 	   	static race = function(){ 
 			return obj_ini.race[company,marine_number];
-		};	   
+		};	
+		static role = function(){
+			return obj_ini.role[company,marine_number];
+		};
+		static update_role = function(new_role){
+			obj_ini.role[company,marine_number]= new_role;
+		}		
+		
+		static get_unit_size = function(){
+			var r = role();
+			var arm = armour();
+		    var sz = 1;
+		    if (r!=""){
+				var bulky_armour = ["Terminator Armour", "Tartaros"]
+		        if (string_count("Dread",arm)>0) {sz+=5;}else if (array_contains(bulky_armour,arm)){sz +=1};
+		        if (r="Rhino") {sz=10;}
+		        else if (r="Predator") {sz=10;}
+		        else if (r="Land Raider") {sz=20;} 
+		        else if (r="Land Speeder") {sz=5;}
+		        else if (r="Whirlwind") {sz=10;}
+		        else if (r="Harlequin Troupe") {sz=5;}
+				else if (r="Chapter Master"){sz+=1;}
+				
+				var mobi =  mobility_item();
+				if (mobi == "Jump Pack"){
+					sz += 1;
+				}
+		        size =sz;
+		    }
+	
+			size = 0;			
+		}
 	   
 	}
 }
