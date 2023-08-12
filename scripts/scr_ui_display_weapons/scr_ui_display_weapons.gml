@@ -26,6 +26,9 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	if (string_count("Bolt Pistol",wee)>0){ui_weapon[rl]=spr_weapon_boltpis;
 	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;display_type="normal_ranged";
 	}
+	if (string_count("Infernus Pistol",wee)>0){ui_weapon[rl]=spr_weapon_inferno;
+	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;display_type="normal_ranged";
+	}
 	if (string_count("Bolter",wee)>0) and (string_count("Heavy",wee)=0) and (string_count("Integrated",wee)=0){ui_weapon[rl]=spr_weapon_bolter;
 	    if (string_count("Storm",wee)>0) then ui_weapon[rl]=spr_weapon_sbolter;
 	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;display_type="normal_ranged";
@@ -175,6 +178,10 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 
 
 	if (string_count("Bolt Pistol",wee)>0){ui_weapon[rl]=spr_weapon_boltpis;
+	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;
+	    if (argument1=1) then ui_xmod[rl]=-10;if (argument1=2) then ui_xmod[rl]=-16;
+	}
+	if (string_count("Infernus Pistol",wee)>0){ui_weapon[rl]=spr_weapon_inferno;
 	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;
 	    if (argument1=1) then ui_xmod[rl]=-10;if (argument1=2) then ui_xmod[rl]=-16;
 	}
