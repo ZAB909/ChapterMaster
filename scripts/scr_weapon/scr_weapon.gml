@@ -44,19 +44,19 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	    }
 
 	    if (string_count("&",thawep)>0) or (string_count("|",thawep)>0){
-	        // Artifact Armor
-	        var arti_armor;
-	        arti_armor=false;
-	        if (string_count("Power Armor",thawep)>0){statt=30;emor=1;arti_armor=true;}
-	        if (string_count("Artificer",thawep)>0){statt=35;emor=1;arti_armor=true;spe_descr="+10% Melee";}
-	        if (string_count("Terminator",thawep)>0){statt=45;emor=1;arti_armor=true;spe_descr="+20% Melee, -10% Ranged, Strength";}
-	        if (string_count("Dreadnought",thawep)>0){statt=50;emor=1;arti_armor=true;}
+	        // Artifact Armour
+	        var arti_armour;
+	        arti_armour=false;
+	        if (string_count("Power Armour",thawep)>0){statt=30;emor=1;arti_armour=true;}
+	        if (string_count("Artificer",thawep)>0){statt=35;emor=1;arti_armour=true;spe_descr="+10% Melee";}
+	        if (string_count("Terminator",thawep)>0){statt=45;emor=1;arti_armour=true;spe_descr="+20% Melee, -10% Ranged, Strength";}
+	        if (string_count("Dreadnought",thawep)>0){statt=50;emor=1;arti_armour=true;}
 
 	        // Artifact weapons
-	        if (arti_armor=false){
+	        if (arti_armour=false){
 	            if (string_count("Bolter",thawep)>0){
 	                atta=65;arp=0;rang=12;ranged_hands+=2;amm=15;spli=1;
-	                if (obj_controller.menu=1) and ((string_count("Terminator",marine_armor[0])>0) or (marine_armor[0]="Tartaros")) then ranged_hands-=1;
+	                if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
 	            }
 	            if (string_count("Plasma Pistol",thawep)>0){atta=115;arp=1;rang=3.1;melee_hands+=1;}
 	            if (string_count("Plasma Gun",thawep)>0){atta=250;arp=1;rang=10;ranged_hands+=2;spli=1;}
@@ -83,42 +83,42 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 
 	        /*
-	        if (string_count("Power",targ.marine_armor[targ.men])>0) then targ.marine_ac[targ.men]=30;
-	        if (string_count("Artificer",targ.marine_armor[targ.men])>0){targ.marine_ac[targ.men]=37;targ.marine_attack[targ.men]+=0.1;}
-	        if (string_count("Terminator",targ.marine_armor[targ.men])>0){targ.marine_ac[targ.men]=42;targ.marine_ranged[targ.men]-=0.1;targ.marine_attack[targ.men]+=0.2;}
-	        if (string_count("Dreadnought",targ.marine_armor[targ.men])>0) then targ.marine_ac[targ.men]=44;
+	        if (string_count("Power",targ.marine_armour[targ.men])>0) then targ.marine_ac[targ.men]=30;
+	        if (string_count("Artificer",targ.marine_armour[targ.men])>0){targ.marine_ac[targ.men]=37;targ.marine_attack[targ.men]+=0.1;}
+	        if (string_count("Terminator",targ.marine_armour[targ.men])>0){targ.marine_ac[targ.men]=42;targ.marine_ranged[targ.men]-=0.1;targ.marine_attack[targ.men]+=0.2;}
+	        if (string_count("Dreadnought",targ.marine_armour[targ.men])>0) then targ.marine_ac[targ.men]=44;
 	        */
 
 	    }
 
 
 	    if (i=1){
-	        if (argument0="Ork Armor"){statt=15;spe_descr="";emor=1;}
+	        if (argument0="Ork Armour"){statt=15;spe_descr="";emor=1;}
             
-			if (argument0="Skitarii Armor"){statt=5;spe_descr="";emor=1;}
+			if (argument0="Skitarii Armour"){statt=5;spe_descr="";emor=1;}
 
-	        if (argument0="Scout Armor"){statt=8;spe_descr="";emor=1;
-	            descr="A non-powered suit made up of carapace armor and ballistic nylon.  Includes biohazard shielding, nutrient feed, and camoflauge.";}
-	        if (argument0="MK3 Iron Armor"){statt=26;spe_descr="-10% Ranged";emor=1;
-	            descr="An ancient set of Armorum Ferrum.  Has thicker armor plating but the added weight slows down the wearer.";}
+	        if (argument0="Scout Armour"){statt=8;spe_descr="";emor=1;
+	            descr="A non-powered suit made up of carapace armour and ballistic nylon.  Includes biohazard shielding, nutrient feed, and camoflauge.";}
+	        if (argument0="MK3 Iron Armour"){statt=26;spe_descr="-10% Ranged";emor=1;
+	            descr="An ancient set of Armorum Ferrum.  Has thicker armour plating but the added weight slows down the wearer.";}
 	        if (argument0="MK4 Maximus"){statt=22;spe_descr="+5% Melee, +5% Ranged";emor=1;
-	            descr="Armor dating to the end of the Great Crusade.  Often considered the ultimate Space Marine armor.  The components are no longer reproducable.";}
-                if (argument0="MK5 Heresy"){statt=19;spe_descr="+10% Melee, -5% Ranged, -15% Damaged Resistance";emor=1;
+	            descr="Armour dating to the end of the Great Crusade.  Often considered the ultimate Space Marine armour.  The components are no longer reproducable.";}
+          if (argument0="MK5 Heresy"){statt=19;spe_descr="+10% Melee";emor=1;
 	            descr="Mark V Power Armour, also known as Heresy Pattern Armour, was a hastily assembled variant of power armour that emerged during the Horus Heresy.";}
 	        if (argument0="MK6 Corvus"){statt=16;spe_descr="+10% Ranged";emor=1;
-	            descr="Relatively old beakie armor, sleek as can be.  Boosted olfactory and auditory sensors increase the ranged accuracy of the wearer.";}
+	            descr="Relatively old beakie armour, sleek as can be.  Boosted olfactory and auditory sensors increase the ranged accuracy of the wearer.";}
 	        if (argument0="MK7 Aquila"){statt=17;spe_descr="";emor=1;
-	            descr="Developed during the Horus Heresy, this Mark of armor is the most commonly used amongst all the Adeptus Astartes.";}
+	            descr="Developed during the Horus Heresy, this Mark of armour is the most commonly used amongst all the Adeptus Astartes.";}
 	        if (argument0="MK8 Errant"){statt=22;spe_descr="";emor=1;
-	            descr="Highly modified MK7, this armor has additional protection along the neck and cables.  It is oft worn as a symbol of high rank.";}
-	        if (argument0="Power Armor"){statt=19;spe_descr="";emor=1;
-	            descr="A suit of Adeptus Astartes power armor.  The Mark can no longer be determined- it appears to be a combination of several types.";}
-	        if (argument0="Artificer Armor"){statt=37;spe_descr="+10% Melee";emor=1;
-	            descr="Heavily modified by the chapter artificers, and decorated without compare, this ancient Power Armor is beyond priceless.";}
-	        if (argument0="Terminator Armor"){statt=42;spe_descr="+20% Melee, -10% Ranged, Strength";emor=1;
-	            descr="The toughest and most powerful armor designed by humanity.  Only the most veteran of Astartes are allowed to wear these.";}
+	            descr="Highly modified MK7, this armour has additional protection along the neck and cables.  It is oft worn as a symbol of high rank.";}
+	        if (argument0="Power Armour"){statt=19;spe_descr="";emor=1;
+	            descr="A suit of Adeptus Astartes power armour.  The Mark can no longer be determined- it appears to be a combination of several types.";}
+	        if (argument0="Artificer Armour"){statt=37;spe_descr="+10% Melee";emor=1;
+	            descr="Heavily modified by the chapter artificers, and decorated without compare, this ancient Power Armour is beyond priceless.";}
+	        if (argument0="Terminator Armour"){statt=42;spe_descr="+20% Melee, -10% Ranged, Strength";emor=1;
+	            descr="The toughest and most powerful armour designed by humanity.  Only the most veteran of Astartes are allowed to wear these.";}
 	        if (argument0="Tartaros"){statt=45;spe_descr="+20% Melee, -5% Ranged, Strength";emor=1;
-	            descr="Even more advanced than the Indomitus Terminator Armor, this upgraded armor offer greater mobility at no cost to protection.";}
+	            descr="Even more advanced than the Indomitus Terminator Armour, this upgraded armour offer greater mobility at no cost to protection.";}
 	        if (argument0="Dreadnought"){statt=50;spe_descr="";emor=1;
 	            descr="A massive war-machine that can be piloted by a honored Space Marine, who otherwise would have fallen in combat.";}
 	        if (argument0="Jump Pack"){spe_descr="+10% Damage Resistance, Jump Pack";
@@ -132,7 +132,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        if (argument0="Psychic Hood"){spe_descr="-50% chance of perils*";
 	            descr="An arcane hood that protects "+string(obj_ini.role[100,17])+"s from enemy psychic powers and enhances their control.";}
 	        if (argument0="Rosarius"){spe_descr="+33% Damage Resistance";
-	            descr="Also called the 'Soul's Armor', this amulet has a built-in, powerful shield generator.  They are an icon of the Imperial Creed.";}
+	            descr="Also called the 'Soul's Armour', this amulet has a built-in, powerful shield generator.  They are an icon of the Imperial Creed.";}
 	        if (argument0="Iron Halo"){spe_descr="+33% Damage Resistance, +20 HP";
 	            descr="An ancient artifact, these powerful conversion field generators are granted to high ranking battle brothers or heroes.  Bearers are oft looked to for guidance.";}
 	        if (argument0="Plasma Bomb"){spe_descr="Destroys destructibles";
@@ -158,11 +158,11 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 
 	    if (thawep="Storm Shield"){melee_hands+=0.9;atta=0;arp=0;rang=0;spli=0;
-	        descr="Protects twice as well when boarding. A powered shield that must be held with a hand.  While powered by the marines armor it shimmers with blue energy.";
-	        spe_descr="+30% HP, +8 Armor";}
+	        descr="Protects twice as well when boarding. A powered shield that must be held with a hand.  While powered by the marines armour it shimmers with blue energy.";
+	        spe_descr="+30% HP, +8 Armour";}
 	    if (thawep="Boarding Shield"){melee_hands+=0.9;atta=0;arp=0;rang=0;spli=0;
 	        descr="Protects twice as well when boarding. Used in siege or boarding operations, this shield offers additional protection.  It may be used with a 2-handed ranged weapon.";
-	        spe_descr="+15% HP, +4 Armor";}
+	        spe_descr="+15% HP, +4 Armour";}
 	    if (thawep="Hellgun"){atta=30;arp=0;rang=6.1;ranged_hands+=2;amm=10;
 	        descr="";}
 	    if (thawep="Hellrifle"){atta=150;arp=90;rang=8;ranged_hands+=2;
@@ -195,7 +195,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	    if (thawep="Lightning Claw"){atta=450;arp=0;rang=1;melee_hands+=2;ranged_hands+=2;spli=1;
 	        descr="Created by attaching several long, energized blades to a standard power fist.  Allows better ripping and tearing.";}
 	    if (thawep="Chainfist"){atta=300;arp=1;rang=1;melee_hands+=1;ranged_hands+=1;spli=0;
-	        descr="Created by mounting a chainsword to a power fist, this weapon is easily able to carve through armored bulkheads.";}
+	        descr="Created by mounting a chainsword to a power fist, this weapon is easily able to carve through armoured bulkheads.";}
 	    if (thawep="Lascutter"){atta=100;arp=1;rang=1;melee_hands+=1;spli=0;
 	        descr="Origonally industrial tools used for breaking through bulkheads, this laser weapon is devastating in close combat.";}
 
@@ -206,7 +206,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        if (argument6!="description") and (argument6!="description_long"){
 	        if (string_count("0",marine_powers[argument3])>0){atta=400;arp=0;rang=1;melee_hands+=1;spli=1;}
 	        if (string_count("0",marine_powers[argument3])=0){thawep="Inactive Force Weapon";atta=30;arp=0;rang=1;melee_hands+=1;}}
-	        // if (obj_controller.menu=1) and ((string_count("Terminator",marine_armor[0])>0) or (marine_armor[0]="Tartaros")) then melee_hands-=1;
+	        // if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then melee_hands-=1;
 	    }
 	    if (thawep="Master Crafted Force Weapon"){
 	        atta=500;arp=1;rang=1;melee_hands+=1;spli=1;
@@ -214,7 +214,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        if (argument6!="description") and (argument6!="description_long"){
 	        if (string_count("0",marine_powers[argument3])>0){atta=480;arp=0;rang=1;melee_hands+=1;spli=1;}
 	        if (string_count("0",marine_powers[argument3])=0){thawep="Inactive Master Crafted Force Weapon";atta=30;arp=0;rang=1;melee_hands+=1;}}
-	        // if (obj_controller.menu=1) and ((string_count("Terminator",marine_armor[0])>0) or (marine_armor[0]="Tartaros")) then melee_hands-=1;
+	        // if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then melee_hands-=1;
 	    }
 
 	    if (thawep="Thunder Hammer"){atta=450;arp=1;rang=1;melee_hands+=1;spli=1;
@@ -235,9 +235,9 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	    if (thawep="Bolter"){atta=50;arp=0;rang=12;ranged_hands+=2;amm=16;spli=1;
 
 	        if (argument6!="description") and (argument6!="description_long"){
-	        if (string_count("Terminator",marine_armor[argument3])>0) then melee_hands-=1;
-	        if (marine_armor[argument3]="Tartaros") then melee_hands-=1;}
-	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armor[0])>0) or (marine_armor[0]="Tartaros")) then ranged_hands-=1;
+	        if (string_count("Terminator",marine_armour[argument3])>0) then melee_hands-=1;
+	        if (marine_armour[argument3]="Tartaros") then melee_hands-=1;}
+	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
 	        descr="A standard Godwyn Pattern Bolter.  This blessed weapon is used by most Adeptus Astartes.";}// Bursts
 	    if (thawep="Master Crafted Combiflamer"){atta=200;arp=1;rang=12;ranged_hands+=2;amm=15;spli=1;
 	        descr="The Master Crafted Combiflamer incorporates superior craftsmanship, advanced modifications, and enhancements compared to its standard counterpart. ";}// Bursts
@@ -252,28 +252,28 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        descr="A Master Crafted Heavy Bolter incorporates superior craftsmanship, advanced modifications, and enhancements compared to its standard counterpart";}
 	    if (thawep="Storm Bolter"){atta=80;arp=0;rang=10;ranged_hands+=2;amm=10;spli=1;
 	        if (argument6!="description") and (argument6!="description_long"){
-	        if (string_count("Terminator",marine_armor[argument3])>0) then melee_hands-=1;
-	        if (marine_armor[argument3]="Tartaros") then melee_hands-=1;}
-	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armor[0])>0) or (marine_armor[0]="Tartaros")) then ranged_hands-=1;
+	        if (string_count("Terminator",marine_armour[argument3])>0) then melee_hands-=1;
+	        if (marine_armour[argument3]="Tartaros") then melee_hands-=1;}
+	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
 	        descr="Compact, and double barreled, this bolt weapon is inaccurate but grants an enormous amount of firepower.";}
 	    if (thawep="Flamer"){atta=350;arp=-1;rang=2.1;ranged_hands+=2;amm=4;spli=1;
 	        if (argument6!="description") and (argument6!="description_long"){
-	        if (string_count("Terminator",marine_armor[argument3])>0) then melee_hands-=1;
-	        if (marine_armor[argument3]="Tartaros") then melee_hands-=1;
+	        if (string_count("Terminator",marine_armour[argument3])>0) then melee_hands-=1;
+	        if (marine_armour[argument3]="Tartaros") then melee_hands-=1;
 	        // if (obj_ncombat.enemy=3) or (obj_ncombat.enemy=13) then atta=40;
 	        }
-	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armor[0])>0) or (marine_armor[0]="Tartaros")) then ranged_hands-=1;
+	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
 	        descr="Blackened at the tip, this weapon unleashes a torrent of burning promethium- all the better to cleanse sin and impurity with.";}
 	    if (thawep="Underslung Flamer"){atta=200;arp=-1;rang=2.1;amm=4;spli=1;
 	        // if (obj_ncombat.enemy=3) or (obj_ncombat.enemy=13) then atta=35;
 	    }
 	    if (thawep="Incinerator"){atta=200;arp=-1;rang=2.1;ranged_hands+=2;amm=4;spli=1;
 	        if (argument6!="description") and (argument6!="description_long"){
-	        if (string_count("Terminator",marine_armor[argument3])>0) then melee_hands-=1;
-	        if (marine_armor[argument3]="Tartaros") then melee_hands-=1;
+	        if (string_count("Terminator",marine_armour[argument3])>0) then melee_hands-=1;
+	        if (marine_armour[argument3]="Tartaros") then melee_hands-=1;
 	        if (obj_ncombat.enemy=10) and (obj_ncombat.threat=7) then atta=300;
 	        }
-	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armor[0])>0) or (marine_armor[0]="Tartaros")) then ranged_hands-=1;
+	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
 	        descr="This flamer weapon includes special promethium and sacred oils.  It is particularly effective against Daemons and their ilk.";}
 	    if (thawep="Heavy Flamer"){atta=500;arp=-1;rang=2;ranged_hands+=2;melee_hands+=1;amm=8;spli=1;
 	        if (argument6!="description") and (argument6!="description_long"){
@@ -291,13 +291,13 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 
 	    if (thawep="Meltagun"){atta=250;arp=1;rang=2.1;ranged_hands+=2;amm=4;
-	        descr="A relatively quiet weapon, this gun vaporizes flesh and armor alike.  Due to heat dissipation it has only a short range.";}
+	        descr="A relatively quiet weapon, this gun vaporizes flesh and armour alike.  Due to heat dissipation it has only a short range.";}
 	        if (thawep="Master Crafted Meltagun"){atta=250;arp=1;rang=2.1;ranged_hands+=2;amm=4;
 	        descr="A Master Crafted Meltagun incorporates superior craftsmanship, advanced modifications, and enhancements compared to its standard counterpart.";}
 	    if (thawep="Multi-Melta"){atta=500;arp=1;rang=4.1;ranged_hands+=2;melee_hands+=1;amm=8;spli=1;
 	        descr="Though bearing longer range than the Meltagun, this weapon's great size usually restricts it to vehicles.";}
 	    if (thawep="Plasma Pistol"){atta=90;arp=1;rang=3.1;melee_hands+=1;
-	        descr="A smaller version of the plasma gun, this dangerous-to-use weapon has exceptional armor-piercing capabilities.";}
+	        descr="A smaller version of the plasma gun, this dangerous-to-use weapon has exceptional armour-piercing capabilities.";}
 	    if (thawep="Master Crafted Plasma Pistol"){atta=120;arp=0;rang=3.1;melee_hands+=1;
 	        descr="A Master Crafted Plasma Pistol incorporates superior craftsmanship, advanced modifications, and enhancements compared to its standard counterpart.";}
 	    if (thawep="Infernus Pistol"){atta=100;arp=1;rang=2.1;melee_hands+=1;amm=4;
@@ -312,21 +312,21 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        descr="Fires a solid shell and boasts powerful telescopic sights, allowing the user to target enemy weak points and distant foes.";}
 	    if (thawep="Assault Cannon"){atta=240;arp=0;rang=12;ranged_hands+=2;amm=5;spli=1;
 	        descr="A heavy, rotary auto-cannon frequently used by Dreadnoughts and Terminators.  Has an incredible rate of fire.";
-	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armor[0])>0) or (marine_armor[0]="Tartaros")) then ranged_hands-=1;
+	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
 	    }
 	    if (thawep="Autocannon"){atta=180;arp=0;rang=18;ranged_hands+=2;amm=25;spli=1;
 	        descr="A rapid-firing weapon able to use a wide variety of ammunition, from mass-reactive explosive to solid shells.";
-	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armor[0])>0) or (marine_armor[0]="Tartaros")) then ranged_hands-=1;
+	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
 	    }
 	    if (thawep="Missile Launcher"){atta=250;arp=0;rang=24;ranged_hands+=2;melee_hands+=1;amm=6;spli=1;
-	        descr="This heavy weapon is capable of firing either armor-piercing or fragmentation rockets.  Has low ammunition count.";}
+	        descr="This heavy weapon is capable of firing either armour-piercing or fragmentation rockets.  Has low ammunition count.";}
 	    if (thawep="Lascannon"){atta=200;arp=1;rang=24;ranged_hands+=2;melee_hands+=1;amm=8;spli=0;
-	        descr="A formidable laser weapon, this lascannon can pierce most vehicle or power armor from a tremendous range.";}
+	        descr="A formidable laser weapon, this lascannon can pierce most vehicle or power armour from a tremendous range.";}
 
 	    if (thawep="Conversion Beam Projector"){atta=500;arp=1;rang=20;ranged_hands+=1;amm=1;spli=1;
-	        descr="The Conversion Beam Projector is a heavy energy weapon that harnesses advanced technology to project a concentrated beam of destructive energy. It is capable of cutting through armor, vehicles, and even heavily fortified structures.";}
+	        descr="The Conversion Beam Projector is a heavy energy weapon that harnesses advanced technology to project a concentrated beam of destructive energy. It is capable of cutting through armour, vehicles, and even heavily fortified structures.";}
 	    if (thawep="Integrated Bolters"){atta=75;arp=1;rang=8.1;amm=20;spli=1;
-	        descr="Integrated Bolters are a set of Bolter weapons that are integrated or built directly into the structure of the vehicle,armor or Dreadnought.";}
+	        descr="Integrated Bolters are a set of Bolter weapons that are integrated or built directly into the structure of the vehicle,armour or Dreadnought.";}
 	    if (thawep="Power Fists"){atta=425;arp=0;rang=1;melee_hands+=2;spli=1;
 	        descr="While not quite as strong as two Power Fist, these artifacts allow the use of an additional, third weapon.";}
 
@@ -337,9 +337,9 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	    if (thawep="Twin Linked Heavy Bolter"){atta=240;arp=1;rang=16;amm=20;spli=1;
 	        descr="Twin-linked Heavy Bolters are an upgraded version of the standard Heavy Bolter weapon, which is known for its high rate of fire and effectiveness against infantry and light vehicles. ";}
 	    if (thawep="Twin Linked Lascannon"){atta=250;arp=0;rang=20;amm=10;
-	        descr="Lascannons are powerful anti-armor weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armor. ";}
+	        descr="Lascannons are powerful anti-armour weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armour. ";}
 	    if (thawep="Lascannons"){atta=300;arp=0;rang=20;amm=5;
-	        descr="Lascannons are powerful anti-armor weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armor. ";}
+	        descr="Lascannons are powerful anti-armour weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armour. ";}
 	    if (thawep="Heavy Bolters"){atta=320;arp=1;rang=16;amm=10;spli=1;
 	        descr="The Heavy Bolter is a heavy weapon that fires larger and more powerful bolt shells compared to the standard Bolter.";}
 	    if (thawep="Whirlwind Missiles"){atta=400;arp=1;rang=20;amm=6;spli=1;
@@ -371,7 +371,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 			if (thawep="Twin Linked Heavy Bolter Mount"){atta=240;arp=0;rang=16;amm=20;spli=1;
 			    descr="Twin-linked Heavy Bolters are an upgraded version of the standard Heavy Bolter weapon, which is known for its high rate of fire and effectiveness against infantry and light vehicles. ";}
 			if (thawep="Twin Linked Lascannon Mount"){atta=250;arp=1;rang=20;amm=10;
-			    descr="Lascannons are powerful anti-armor weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armor. ";}
+			    descr="Lascannons are powerful anti-armour weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armour. ";}
 			if (thawep="Twin Linked Assault Cannon Mount"){atta=360;arp=0;rang=12;amm=5;spli=1;
 			    descr="A twin mount of rotary autocannons, boasting an incredible rate of fire.";}
 			if (thawep="Reaper Autocannon Mount"){atta=250;arp=0;rang=15;amm=25;spli=1;
@@ -381,7 +381,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 			if (thawep="Quad Linked Heavy Bolter Sponsons"){atta=480;arp=1;rang=16;amm=10;spli=1;
 					descr="Quad-linked Heavy Bolters are a significantly upgraded version of the standard Heavy Bolter mount; already punishing in a single mount, this quad mount is devastating against a variety of targets. ";}
 			if (thawep="Twin Linked Lascannon Sponsons"){atta=375;arp=1;rang=20;amm=5;
-			    descr="Lascannons are powerful anti-armor weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armor. ";}
+			    descr="Lascannons are powerful anti-armour weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armour. ";}
 			if (thawep="Hurricane Bolter Sponsons"){atta=405;arp=0;rang=12;amm=20;spli=1;
 			    descr="Hurricane Bolters are large hex-mount bolter arrays that are able to deliver a withering hail of anti-infantry fire at short ranges. ";}
 			if (thawep="Flamestorm Cannon Sponsons"){atta=600;arp=1;rang=3;amm=6;spli=1;
@@ -416,7 +416,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 				// Predator Sponsons
 				if (thawep="Lascannon Sponsons"){atta=250;arp=1;rang=20;amm=5;
-		        descr="Lascannons are powerful anti-armor weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armor. ";}
+		        descr="Lascannons are powerful anti-armour weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armour. ";}
 				if (thawep="Heavy Bolter Sponsons"){atta=240;arp=0;rang=16;amm=20;spli=1;
 				    descr="The Heavy Bolter is a heavy weapon that fires larger and more powerful bolt shells compared to the standard Bolter.";}
 				if (thawep="Heavy Flamer Sponsons"){atta=375;arp=-1;rang=2.1;amm=6;spli=1;
@@ -498,14 +498,14 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	                }
 
 	                if (arp=-1) then obj_shop.tooltip_other+=", Low Penetration";
-	                if (arp=1) then obj_shop.tooltip_other+=", Armor Piercing";
+	                if (arp=1) then obj_shop.tooltip_other+=", Armour Piercing";
 
 	            }
 	            if (atta=0) and (statt=0){// Held something
 	                obj_shop.tooltip_weapon=2;
 	                obj_shop.tooltip_other=spe_descr;
 	            }
-	            if (atta=0) and (melee_hands+ranged_hands=0) and (statt>0){// Armor
+	            if (atta=0) and (melee_hands+ranged_hands=0) and (statt>0){// Armour
 	                obj_shop.tooltip_weapon=3;
 	                obj_shop.tooltip_stat1=statt;
 	                obj_shop.tooltip_other=spe_descr;
@@ -532,7 +532,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	                }
 
 	                if (arp=-1) then obj_controller.tooltip_other+=", Low Penetration";
-	                if (arp=1) then obj_controller.tooltip_other+=", Armor Piercing";
+	                if (arp=1) then obj_controller.tooltip_other+=", Armour Piercing";
 	            }
 	            if (atta=0) and (statt=0){// Held something
 	                obj_controller.tooltip_other=spe_descr;
@@ -542,7 +542,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	                obj_controller.tooltip_stat3=max(ranged_hands,melee_hands);
 	                obj_controller.tooltip_stat4=0;
 	            }
-	            if (atta=0) and (statt>0){// Armor
+	            if (atta=0) and (statt>0){// Armour
 	                obj_controller.tooltip_stat1=statt;
 	                obj_controller.tooltip_other=spe_descr;
 	                menu_artifact_type=2;
@@ -557,7 +557,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 
 	    if (argument6!="description") and (argument6!="description_long"){
-	        if (argument2!=false){if (string_count("Dreadnought",marine_armor[argument3])>0) and (marine_mobi[argument3]="") then amm=-1;}
+	        if (argument2!=false){if (string_count("Dreadnought",marine_armour[argument3])>0) and (marine_mobi[argument3]="") then amm=-1;}
 	        if (thawep="Whirlwind Missiles") then amm=6;
 
 	        if (rending1=1){

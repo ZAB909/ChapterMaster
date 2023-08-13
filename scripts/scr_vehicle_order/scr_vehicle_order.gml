@@ -9,7 +9,7 @@ function scr_vehicle_order(argument0) {
 	var co;co=argument0;
 
 	var i, v;i=-1;v=0;
-	var temp_race, temp_loc, temp_name, temp_role, temp_wep1, temp_lid, temp_wid, temp_wep1, temp_wep2, temp_armor, temp_gear, temp_hp, temp_chaos, temp_experience, temp_age, temp_uid;
+	var temp_race, temp_loc, temp_name, temp_role, temp_wep1, temp_lid, temp_wid, temp_wep1, temp_wep2, temp_armour, temp_gear, temp_hp, temp_chaos, temp_experience, temp_age, temp_uid;
 
 	repeat(301){
 	    i+=1;

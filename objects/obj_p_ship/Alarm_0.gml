@@ -17,8 +17,8 @@ maxhp=obj_ini.ship_hp[ship_id]*1;
 conditions=obj_ini.ship_conditions[ship_id];
 shields=obj_ini.ship_shields[ship_id]*100;
 maxshields=shields;
-armor_front=obj_ini.ship_front_armor[ship_id];
-armor_other=obj_ini.ship_other_armor[ship_id];
+armour_front=obj_ini.ship_front_armour[ship_id];
+armour_other=obj_ini.ship_other_armour[ship_id];
 weapons=obj_ini.ship_weapons[ship_id];turrets=0;
 
 weapon[1]=obj_ini.ship_wep[ship_id,1];weapon_facing[1]="";weapon_cooldown[1]=0;
@@ -74,8 +74,8 @@ if (class="Gladius"){turrets=1;weapons=2;shield_size=1;sprite_index=spr_ship_gla
 
 
 // STC Bonuses
-if (obj_controller.stc_bonus[5]=5){armor_front=round(armor_front*1.1);armor_other=round(armor_other*1.1);}
-if (obj_controller.stc_bonus[6]=2){armor_front=round(armor_front*1.1);armor_other=round(armor_other*1.1);}
+if (obj_controller.stc_bonus[5]=5){armour_front=round(armour_front*1.1);armour_other=round(armour_other*1.1);}
+if (obj_controller.stc_bonus[6]=2){armour_front=round(armour_front*1.1);armour_other=round(armour_other*1.1);}
 
 
 var i;i=0;

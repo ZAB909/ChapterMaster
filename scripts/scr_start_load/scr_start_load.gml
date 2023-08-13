@@ -14,7 +14,7 @@ function scr_start_load(argument0, argument1, argument2) {
     var splinter, _companies, _equip, remove_size, company_size, ship, ship_size, companies_loaded;
     splinter = 0;
     _companies = -1; // all companies for this script
-    _equip = 0; //vehicle or armor(equip)
+    _equip = 0; //vehicle or armour(equip)
     remove_size = 0;
     company_size = 0;
     ship = 1;
@@ -34,9 +34,9 @@ function scr_start_load(argument0, argument1, argument2) {
                 var n_size;
                 n_size = 1;
 
-                if (obj_ini.armor[_companies, _equip] == "Terminator Armor") then n_size += 1;
-                if (obj_ini.armor[_companies, _equip] == "Tartaros") then n_size += 1;
-                if (obj_ini.armor[_companies, _equip] == "Dreadnought") then n_size += 5;
+                if (obj_ini.armour[_companies, _equip] == "Terminator Armour") then n_size += 1;
+                if (obj_ini.armour[_companies, _equip] == "Tartaros") then n_size += 1;
+                if (obj_ini.armour[_companies, _equip] == "Dreadnought") then n_size += 5;
                 if (obj_ini.role[_companies, _equip] == "Chapter Master") then n_size += 1;
 
                 if (obj_ini.ship_carrying[ship] + n_size > obj_ini.ship_capacity[ship]) {
@@ -53,9 +53,9 @@ function scr_start_load(argument0, argument1, argument2) {
                 obj_ini.loc[_companies, _equip] = obj_ini.ship_location[ship];
                 company_size += 1;
 
-                if (obj_ini.armor[_companies, _equip] == "Terminator Armor") then company_size += 1;
-                if (obj_ini.armor[_companies, _equip] == "Tartaros") then company_size += 1;
-                if (obj_ini.armor[_companies, _equip] == "Dreadnought") then company_size += 5;
+                if (obj_ini.armour[_companies, _equip] == "Terminator Armour") then company_size += 1;
+                if (obj_ini.armour[_companies, _equip] == "Tartaros") then company_size += 1;
+                if (obj_ini.armour[_companies, _equip] == "Dreadnought") then company_size += 5;
 
                 // Load vehicles onto the ship
                 var v;
@@ -144,9 +144,9 @@ function scr_start_load(argument0, argument1, argument2) {
                         obj_ini.loc[_companies, _equip] = obj_ini.ship_location[ship];
                         company_size += 1;
 
-                        if (obj_ini.armor[_companies, _equip] == "Terminator Armor") then company_size += 1;
-                        if (obj_ini.armor[_companies, _equip] == "Tartaros") then company_size += 1;
-                        if (obj_ini.armor[_companies, _equip] == "Dreadnought") then company_size += 5;
+                        if (obj_ini.armour[_companies, _equip] == "Terminator Armour") then company_size += 1;
+                        if (obj_ini.armour[_companies, _equip] == "Tartaros") then company_size += 1;
+                        if (obj_ini.armour[_companies, _equip] == "Dreadnought") then company_size += 5;
 
                         // Load vehicles onto the ship
                         var v;
@@ -270,9 +270,9 @@ function scr_start_load(argument0, argument1, argument2) {
                     obj_ini.loc[_companies, _equip] = obj_ini.ship_location[ship];
                     company_size += 1;
 
-                    if (obj_ini.armor[_companies, _equip] == "Terminator Armor") then company_size += 1;
-                    if (obj_ini.armor[_companies, _equip] == "Tartaros") then company_size += 1;
-                    if (obj_ini.armor[_companies, _equip] == "Dreadnought") then company_size += 5;
+                    if (obj_ini.armour[_companies, _equip] == "Terminator Armour") then company_size += 1;
+                    if (obj_ini.armour[_companies, _equip] == "Tartaros") then company_size += 1;
+                    if (obj_ini.armour[_companies, _equip] == "Dreadnought") then company_size += 5;
 
                     // Load vehicles onto the ship
                     var v;
@@ -331,9 +331,9 @@ function scr_start_load(argument0, argument1, argument2) {
                     obj_ini.loc[_companies, _equip] = obj_ini.ship_location[frigate];
                     company_size += 1;
 
-                    if (obj_ini.armor[_companies, _equip] == "Terminator Armor") then company_size += 1;
-                    if (obj_ini.armor[_companies, _equip] == "Tartaros") then company_size += 1;
-                    if (obj_ini.armor[_companies, _equip] == "Dreadnought") then company_size += 5;
+                    if (obj_ini.armour[_companies, _equip] == "Terminator Armour") then company_size += 1;
+                    if (obj_ini.armour[_companies, _equip] == "Tartaros") then company_size += 1;
+                    if (obj_ini.armour[_companies, _equip] == "Dreadnought") then company_size += 5;
 
                     // Load vehicles onto the ship
                     var v;
@@ -399,9 +399,9 @@ function scr_start_load(argument0, argument1, argument2) {
                     obj_ini.loc[_companies, _equip] = obj_ini.ship_location[ship];
                     company_size += 1;
 
-                    if (obj_ini.armor[_companies, _equip] == "Terminator Armor") then company_size += 1;
-                    if (obj_ini.armor[_companies, _equip] == "Tartaros") then company_size += 1;
-                    if (obj_ini.armor[_companies, _equip] == "Dreadnought") then company_size += 5;
+                    if (obj_ini.armour[_companies, _equip] == "Terminator Armour") then company_size += 1;
+                    if (obj_ini.armour[_companies, _equip] == "Tartaros") then company_size += 1;
+                    if (obj_ini.armour[_companies, _equip] == "Dreadnought") then company_size += 5;
 
                     // Load vehicles onto the ship
                     var v;
@@ -460,9 +460,9 @@ function scr_start_load(argument0, argument1, argument2) {
                     obj_ini.loc[_companies, _equip] = obj_ini.ship_location[frigate];
                     company_size += 1;
 
-                    if (obj_ini.armor[_companies, _equip] == "Terminator Armor") then company_size += 1;
-                    if (obj_ini.armor[_companies, _equip] == "Tartaros") then company_size += 1;
-                    if (obj_ini.armor[_companies, _equip] == "Dreadnought") then company_size += 5;
+                    if (obj_ini.armour[_companies, _equip] == "Terminator Armour") then company_size += 1;
+                    if (obj_ini.armour[_companies, _equip] == "Tartaros") then company_size += 1;
+                    if (obj_ini.armour[_companies, _equip] == "Dreadnought") then company_size += 5;
 
                     // Load vehicles onto the ship
                     var v;

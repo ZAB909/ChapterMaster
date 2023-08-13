@@ -197,7 +197,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	if (power_name="Insect Swarm"){p_type="attack";p_rang=3;p_tar=3;p_spli=1;p_att=500;p_arp=1;p_duration=0;
 	    var rah;rah=choose(1,2);
 	    if (rah=1) then m2="- a massive, black cloud of insects spew from his body.  At once they begin burrowing into your foes.  ";
-	    if (rah=2) then m2="- rank, ichory insects spew forth from his body at your foes.  They begin burrowing through flesh and armor alike.  ";
+	    if (rah=2) then m2="- rank, ichory insects spew forth from his body at your foes.  They begin burrowing through flesh and armour alike.  ";
 	    if (obj_ncombat.sorcery_seen<2) then obj_ncombat.sorcery_seen=1;
 	}
 	if (power_name="Blood Dementia"){
@@ -237,7 +237,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	    m2="- mouth stretching unnaturally wide, before letting out a hellish shriek.  ";
 	    var rah;rah=choose(1,2);
 	    if (rah=1) then m2="The air rumbles and shifts at the sheer magnitude of the sound.  ";
-	    if (rah=2) then m2="Armor and flesh tear alike are torn apart by volume of the howl.  ";
+	    if (rah=2) then m2="Armour and flesh tear alike are torn apart by volume of the howl.  ";
 	    if (obj_ncombat.sorcery_seen<2) then obj_ncombat.sorcery_seen=1;
 	}
 
@@ -526,7 +526,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	    if (peril3>71) and (peril3<=79){obj_ncombat.global_perils+=25;m2="Wind shrieks and blood pours from the sky!  The warp feels unstable.";}
 	    if (peril3>79) and (peril3<=87){
 	        marine_casting[argument3]=-999;marine_hp[argument3]-=70;m2="A massive shockwave eminates from the marine, who is knocked out cold!  All of his equipment is destroyed!";
-	        marine_wep1[argument3]="";marine_wep2[argument3]="";marine_armor[argument3]="";marine_gear[argument3]="";marine_mobi[argument3]="";
+	        marine_wep1[argument3]="";marine_wep2[argument3]="";marine_armour[argument3]="";marine_gear[argument3]="";marine_mobi[argument3]="";
 	    }
 	    if (peril3>87) and (peril3<=95){marine_hp[argument3]=-150;marine_dead[argument3]=2;
 	        var woah;woah=choose(1,2);
@@ -742,7 +742,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	                var a,b,c,eac;eac=enemy5.dudes_ac[good2];
 	                a=p_att;// Average damage
                 
-	                // b=a-enemy5.dudes_ac[good2];// Average after armor
+	                // b=a-enemy5.dudes_ac[good2];// Average after armour
                 
 	                if (enemy5.dudes_vehicle[good2]=0){
 	                    if (p_arp=1) then eac=0;
@@ -818,7 +818,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	            if (damage_type="arp") and (stap=0) and (instance_exists(enemy5)) and (enemy5.dudes_num[good2]>0){
 	                var a,b,c,eac;eac=enemy5.dudes_ac[good2];
 	                a=p_att;// Average damage
-	                // b=a-enemy5.dudes_ac[good2];// Average after armor
+	                // b=a-enemy5.dudes_ac[good2];// Average after armour
                 
 	                if (enemy5.dudes_vehicle[good2]=0){
 	                    if (p_arp=1) then eac=0;

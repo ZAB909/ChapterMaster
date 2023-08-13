@@ -162,7 +162,7 @@ function scr_trade_dep() {
 	    if (temp1=0) and (g[i]="Requisition") then obj_controller.requisition+=n[i];
 	    if (temp1=0) and (g[i]="Minor Artifact"){
 	        /*var rar;rar=floor(random(10))+1;
-	        if (rar=1) then scr_add_item("Terminator Armor",1);
+	        if (rar=1) then scr_add_item("Terminator Armour",1);
 	        if (rar=2) then scr_add_item("Dreadnought",1);
 	        if (rar=3) then scr_add_item(choose("Master Crafted Heavy Bolter","Master Crafted Plasma Pistol"),1);
 	        if (rar=4) then scr_add_item("Iron Halo",1);

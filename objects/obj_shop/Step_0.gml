@@ -21,7 +21,7 @@ repeat(39){
     
     if (item[i]!="") and (mouse_x>=xx+962) and (mouse_y>=yy+y2) and (mouse_x<xx+1100) and (mouse_y<yy+y2+19) and (shop!="warships"){
         tooltip_stat1=0;tooltip_stat2=0;tooltip_stat3=0;tooltip_stat4=0;tooltip_other="";
-        marine_armor[0]="";
+        marine_armour[0]="";
         tooltip=scr_weapon(item[i],"",true,0,false,"","description");
         tooltip_x=mouse_x;tooltip_y=mouse_y+12;
         tooltip_show=1;

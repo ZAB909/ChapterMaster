@@ -72,7 +72,7 @@ function scr_vehicle_weapon(argument0, argument1) {
 
 
 	// Melee
-	var dym;dym=wep_dam[argument1];dym-=target[argument1].armor;
+	var dym;dym=wep_dam[argument1];dym-=target[argument1].armour;
 	if (weep="Chainsword"){with(bull){instance_destroy();}target[argument1].hp-=dym;}
 	if (weep="Chainaxe"){with(bull){instance_destroy();}target[argument1].hp-=dym;}
 	if (weep="Combat Knife"){with(bull){instance_destroy();}target[argument1].hp-=dym;}

@@ -186,7 +186,7 @@ if (l_settings>0) then l_settings+=1;if (l_settings>141) then l_settings=0;if (l
 if (l_apothecarium>0) then l_apothecarium+=1;if (l_apothecarium>113) then l_apothecarium=0;if (l_apothecarium=0) and (floor(random(freq))=3) then l_apothecarium=1;
 if (l_reclusium>0) then l_reclusium+=1;if (l_reclusium>113) then l_reclusium=0;if (l_reclusium=0) and (floor(random(freq))=3) then l_reclusium=1;
 if (l_librarium>0) then l_librarium+=1;if (l_librarium>113) then l_librarium=0;if (l_librarium=0) and (floor(random(freq))=3) then l_librarium=1;
-if (l_armory>0) then l_armory+=1;if (l_armory>113) then l_armory=0;if (l_armory=0) and (floor(random(freq))=3) then l_armory=1;
+if (l_armoury>0) then l_armoury+=1;if (l_armoury>113) then l_armoury=0;if (l_armoury=0) and (floor(random(freq))=3) then l_armoury=1;
 if (l_recruitment>0) then l_recruitment+=1;if (l_recruitment>113) then l_recruitment=0;if (l_recruitment=0) and (floor(random(freq))=3) then l_recruitment=1;
 if (l_fleet>0) then l_fleet+=1;if (l_fleet>113) then l_fleet=0;if (l_fleet=0) and (floor(random(freq))=3) then l_fleet=1;
 
@@ -323,7 +323,7 @@ if (new_buttons_hide=0) and (y_slide<=0) and (!instance_exists(obj_ingame_menu))
                 var dif1,dif2;dif1=mouse_x-(__view_get( e__VW.XView, 0 )+bx+108);dif2=dif1*2;
                 if (mouse_y<__view_get( e__VW.YView, 0 )+by+dif2) then stop=1;
             }
-            if (stop=0) then high="armory";
+            if (stop=0) then high="armoury";
         }
     }
     but=3;bx=822;by=838;wid=115;hei=43;
@@ -385,8 +385,8 @@ if ((high!="reclusium") or (new_buttons_hide=1)) and (h_reclusium>0) then h_recl
 if (high="librarium") and (h_librarium<0.5) and (new_buttons_hide=0) and (y_slide<=0) then h_librarium+=0.02;
 if ((high!="librarium") or (new_buttons_hide=1)) and (h_librarium>0) then h_librarium-=0.04;
 
-if (high="armory") and (h_armory<0.5) and (new_buttons_hide=0) and (y_slide<=0) then h_armory+=0.02;
-if ((high!="armory") or (new_buttons_hide=1)) and (h_armory>0) then h_armory-=0.04;
+if (high="armoury") and (h_armoury<0.5) and (new_buttons_hide=0) and (y_slide<=0) then h_armoury+=0.02;
+if ((high!="armoury") or (new_buttons_hide=1)) and (h_armoury>0) then h_armoury-=0.04;
 
 if (high="recruitment") and (h_recruitment<0.5) and (new_buttons_hide=0) and (y_slide<=0) then h_recruitment+=0.02;
 if ((high!="recruitment") or (new_buttons_hide=1)) and (h_recruitment>0) then h_recruitment-=0.04;
@@ -430,7 +430,7 @@ if (menu=1) and (managing>0){
         force_tool=0;
         
         if (temp[101]=string(ma_role[sel])+" "+string(ma_name[sel])) 
-        and ((temp[102]!=ma_armor[sel]) or (temp[104]!=ma_gear[sel]) or (temp[106]=ma_mobi[sel]) or (temp[108]!=ma_wep1[sel]) or (temp[110]!=ma_wep1[sel])
+        and ((temp[102]!=ma_armour[sel]) or (temp[104]!=ma_gear[sel]) or (temp[106]=ma_mobi[sel]) or (temp[108]!=ma_wep1[sel]) or (temp[110]!=ma_wep1[sel])
         or (temp[114]="refresh")) then force_tool=1;
         
         
@@ -442,7 +442,7 @@ if (menu=1) and (managing>0){
             
             
             if (man[sel]="man"){
-                marine_armor[0]=ma_armor[sel];fix_left=0;fix_right=0;
+                marine_armour[0]=ma_armour[sel];fix_left=0;fix_right=0;
                 
                 var cah;cah=managing;if (cah>10) then cah=0;
                 temp[100]="1";if (obj_ini.race[cah,ide[sel]]!=1) then temp[100]=string(obj_ini.race[cah,ide[sel]]);
@@ -466,6 +466,7 @@ if (menu=1) and (managing>0){
                 }
                 
                 
+
                 if (ma_armor[sel]="MK3 Iron Armor") then ra-=0.1;
                 if (ma_armor[sel]="MK4 Maximus"){ra+=0.05;ma+=0.05;}
                 if (ma_armor[sel]="MK5 Heresy"){ma+=0.1;ra-=0.05;dr+=0.15;}
@@ -473,6 +474,7 @@ if (menu=1) and (managing>0){
                 if (string_count("Artificer",ma_armor[sel])>0){ma+=0.1;}
                 if (string_count("Terminator",ma_armor[sel])>0){ra-=0.1;ma+=0.2;}
                 if (ma_armor[sel]="Tartaros"){ra-=0.05;ma+=0.2;}
+
                 
                 var j,jj;j=0;jj=0;
                 if (ma_race[sel]=1){
@@ -505,7 +507,7 @@ if (menu=1) and (managing>0){
                 if (global.chapter_name="Dark Angels"){
                     if (ma_role[sel]=obj_ini.role[100,4]) then ui_coloring="bone";
                     if (managing=1){
-                        if ((string_count("Terminator",ma_armor[sel])>0) or (ma_armor[sel]="Tartaros")){
+                        if ((string_count("Terminator",ma_armour[sel])>0) or (ma_armour[sel]="Tartaros")){
                             if (ma_role[sel]=obj_ini.role[100,5]) then ui_coloring="bone";
                             if (ma_role[sel]=obj_ini.role[100,7]) then ui_coloring="bone";
                             if (ma_role[sel]="Standard Bearer") then ui_coloring="bone";
@@ -517,10 +519,10 @@ if (menu=1) and (managing>0){
                 
                 temp[101]=string(ma_role[sel])+" "+string(ma_name[sel]);
                 
-                temp[102]=ma_armor[sel];temp[103]="";
+                temp[102]=ma_armour[sel];temp[103]="";
                 if (string_count("&",temp[102])>0) then temp[102]=clean_tags(temp[102]);
                 tooltip="";tooltip_weapon=0;tooltip_stat1=0;tooltip_stat2=0;tooltip_stat3=0;tooltip_stat4=0;tooltip_other="";
-                tooltip=scr_weapon(ma_armor[sel],"",true,0,false,"","description");
+                tooltip=scr_weapon(ma_armour[sel],"",true,0,false,"","description");
                 
                 if (acy=0){
                     if (tooltip_other="") then temp[103]="("+string(tooltip_stat1)+"AC)";

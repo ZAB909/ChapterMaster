@@ -15,7 +15,7 @@ function scr_event_gossip(argument0) {
 
 	if (obj_controller.turn<36){p+=1;gossip[p]="future_battles";}
 	if (obj_controller.turn>=36){p+=1;gossip[p]="past_battles";}
-	if (string_count("&",obj_ini.armor[attend_co[argument0],attend_id[argument0]])>0){p+=1;gossip[p]="artifact_armor";}
+	if (string_count("&",obj_ini.armour[attend_co[argument0],attend_id[argument0]])>0){p+=1;gossip[p]="artifact_armour";}
 	if (string_count("&",obj_ini.wep1[attend_co[argument0],attend_id[argument0]])>0){p+=1;gossip[p]="artifact_wep";}
 	if (string_count("&",obj_ini.wep2[attend_co[argument0],attend_id[argument0]])>0){p+=1;gossip[p]="artifact_wep";}
 	// if (string_count("&",obj_ini.gear[attend_co[argument0],attend_id[argument0]])>0){p+=1;gossip[p]="artifact_gear";}
@@ -82,9 +82,9 @@ function scr_event_gossip(argument0) {
 	if (that_type="past_battles"){
 	    words+=choose("recounts","retells","tells","speaks of")+" past glorious battles that the Chapter partook of, in glory of "+choose("our honor","The Emperor","The Imperium","Primarch")+".";
 	}
-	if (that_type="artifact_armor"){rando=choose(1,2);
-	    if (rando=1) then words+="speaks fondly of his Artifact Armor.  Several adjacent Astartes recall the mighty item with envy.";
-	    if (rando=2) then words+="speaks of his Artifact Armor in a reverent tone.  May it protect him in many more battles to come.";
+	if (that_type="artifact_armour"){rando=choose(1,2);
+	    if (rando=1) then words+="speaks fondly of his Artifact Armour.  Several adjacent Astartes recall the mighty item with envy.";
+	    if (rando=2) then words+="speaks of his Artifact Armour in a reverent tone.  May it protect him in many more battles to come.";
 	}
 	if (that_type="artifact_wep"){rando=choose(1,2);
 	    if (rando=1) then words+="speaks fondly of his Artifact weapon.  Several adjacent Astartes recall the mighty item with envy.";
@@ -145,7 +145,7 @@ function scr_event_gossip(argument0) {
 	}
 	if (that_type="smack_talk_tau"){rando=choose(1,2,3);
 	    if (rando=1) then words+="curses the Tau for their subversive methods and mockery of technology.  Purging some Tau would be cathartic.";
-	    if (rando=2) then words+="wishes to purge some Tau, sooner than later.  Watching their armor and vehicles explode in blue flames is enjoyable.";
+	    if (rando=2) then words+="wishes to purge some Tau, sooner than later.  Watching their armour and vehicles explode in blue flames is enjoyable.";
 	    if (rando=3) then words+="boasts he will kill a Tau Ethereal one day.";
 	}
 	if (that_type="smack_talk_tyranids"){rando=choose(1,2,3);

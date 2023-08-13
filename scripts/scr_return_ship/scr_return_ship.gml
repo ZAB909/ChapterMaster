@@ -30,7 +30,7 @@ function scr_return_ship(ship_name, object, planet_number) {
 	repeat(140){
 	    i+=1;man_size=0;
     
-	    // if (i<100) then show_message("Man "+string(i)+" selected?: "+string(object.man_sel[i])+"#"+string(obj_ini.role[comp,object.ide[i]])+", "+string(obj_ini.armor[comp,object.ide[i]]));
+	    // if (i<100) then show_message("Man "+string(i)+" selected?: "+string(object.man_sel[i])+"#"+string(obj_ini.role[comp,object.ide[i]])+", "+string(obj_ini.armour[comp,object.ide[i]]));
 	    // if (i<100) then show_message("Man "+string(i)+" selected?: "+string(object.man_sel[i])+"#"+string(object.ide[i]));
     
     
@@ -45,16 +45,16 @@ function scr_return_ship(ship_name, object, planet_number) {
 	        }
        
         
-	        // show_message(string(obj_ini.role[comp,object.ide[i]])+", "+string(obj_ini.armor[comp,object.ide[i]]));
+	        // show_message(string(obj_ini.role[comp,object.ide[i]])+", "+string(obj_ini.armour[comp,object.ide[i]]));
         
-	        if (object.man[i]!="vehicle") then man_size+=scr_unit_size(obj_ini.armor[comp,object.ide[i]],obj_ini.role[comp,object.ide[i]],true);
+	        if (object.man[i]!="vehicle") then man_size+=scr_unit_size(obj_ini.armour[comp,object.ide[i]],obj_ini.role[comp,object.ide[i]],true);
         
 	        /*
 	       if (object.man[i]="man") then man_size+=1;
        
-	       if (object.man[i]="man") and (string_count("Terminator",obj_ini.armor[comp,object.ide[i]])>0) then man_size+=1;
-	       if (object.man[i]="man") and (obj_ini.armor[comp,object.ide[i]]="Tartaros Armor") then man_size+=1;
-	       if (object.man[i]="man") and (string_count("Dreadnought",obj_ini.armor[comp,object.ide[i]])>0) then man_size+=7;
+	       if (object.man[i]="man") and (string_count("Terminator",obj_ini.armour[comp,object.ide[i]])>0) then man_size+=1;
+	       if (object.man[i]="man") and (obj_ini.armour[comp,object.ide[i]]="Tartaros Armour") then man_size+=1;
+	       if (object.man[i]="man") and (string_count("Dreadnought",obj_ini.armour[comp,object.ide[i]])>0) then man_size+=7;
        
 	       // if (object.man[i]="man") and (obj_ini.mobi[comp,object.ide[i]]="Jump Pack") then man_size+=1;
 	       if (object.man[i]="man") and (obj_ini.role[comp,object.ide[i]]="Chapter Master") then man_size+=1;
@@ -94,9 +94,9 @@ function scr_return_ship(ship_name, object, planet_number) {
 	        if (obj_controller.man[i]="vehicle"){obj_ini.veh_lid[comp,i]=ship_id;obj_ini.veh_wid[comp,i]=0;}
        
 	       if (obj_controller.man[i]="man") then man_size+=1;
-	       if (obj_controller.man[i]="man") and (obj_ini.armor[comp,i]="Terminator Armor") then man_size+=1;
-	       if (obj_controller.man[i]="man") and (obj_ini.armor[comp,i]="Tartaros Armor") then man_size+=1;
-	       if (obj_controller.man[i]="man") and (obj_ini.armor[comp,i]="Dreadnought") then man_size+=7;
+	       if (obj_controller.man[i]="man") and (obj_ini.armour[comp,i]="Terminator Armour") then man_size+=1;
+	       if (obj_controller.man[i]="man") and (obj_ini.armour[comp,i]="Tartaros Armour") then man_size+=1;
+	       if (obj_controller.man[i]="man") and (obj_ini.armour[comp,i]="Dreadnought") then man_size+=7;
 	       if (obj_controller.man[i]="man") and (obj_ini.mobi[comp,i]="Jump Pack") then man_size+=1;
 	       if (obj_controller.man[i]="man") and (obj_ini.role[comp,i]="Chapter Master") then man_size+=1;
 	       if (obj_controller.man[i]="man") and (obj_ini.role[comp,i]="Harlequin Troupe") then man_size+=4;

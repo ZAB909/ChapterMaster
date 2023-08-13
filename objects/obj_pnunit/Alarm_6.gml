@@ -11,11 +11,11 @@
 var i;i=0;
 repeat(600){i+=1;
     if (marine_dead[i]>0) and (marine_type[i]!="") and (ally[i]=false){
-        var man_size;man_size=scr_unit_size(marine_armor[i],marine_type[i],true);
+        var man_size;man_size=scr_unit_size(marine_armour[i],marine_type[i],true);
 
-        /*if (string_count("Terminator",marine_armor[i])>0) then man_size+=1;
-        if (marine_armor[i]="Tartaros") then man_size+=1;
-        if (string_count("Dreadnought",marine_armor[i])>0) then man_size+=7;
+        /*if (string_count("Terminator",marine_armour[i])>0) then man_size+=1;
+        if (marine_armour[i]="Tartaros") then man_size+=1;
+        if (string_count("Dreadnought",marine_armour[i])>0) then man_size+=7;
         // if (marine_mobi[i]="Jump Pack") then man_size+=1;
         if (marine_type[i]="Chapter Master") then man_size+=1;*/
 
@@ -25,7 +25,7 @@ repeat(600){i+=1;
         //
         obj_ini.race[marine_co[i],marine_id[i]]=0;obj_ini.loc[marine_co[i],marine_id[i]]="";obj_ini.name[marine_co[i],marine_id[i]]="";
         obj_ini.role[marine_co[i],marine_id[i]]="";obj_ini.wep1[marine_co[i],marine_id[i]]="";obj_ini.lid[marine_co[i],marine_id[i]]=0;
-        obj_ini.wid[marine_co[i],marine_id[i]]=2;obj_ini.wep2[marine_co[i],marine_id[i]]="";obj_ini.armor[marine_co[i],marine_id[i]]="";
+        obj_ini.wid[marine_co[i],marine_id[i]]=2;obj_ini.wep2[marine_co[i],marine_id[i]]="";obj_ini.armour[marine_co[i],marine_id[i]]="";
         obj_ini.gear[marine_co[i],marine_id[i]]="";obj_ini.hp[marine_co[i],marine_id[i]]=100;obj_ini.chaos[marine_co[i],marine_id[i]]=0;
         obj_ini.experience[marine_co[i],marine_id[i]]=0;obj_ini.age[marine_co[i],marine_id[i]]=0;obj_ini.mobi[marine_co[i],marine_id[i]]="";
         obj_ini.mobi[marine_co[i],marine_id[i]]="";obj_ini.spe[marine_co[i],marine_id[i]]="";

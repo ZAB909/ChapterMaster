@@ -139,7 +139,7 @@ function scr_loyalty(argument0, argument1) {
 	                i+=1;
 	                if (i<=30){
 	                    if (obj_ini.artifact[i]!="") and (obj_ini.artifact_loc[i]=that.name) and (string_count("Daemon",obj_ini.artifact_tags[i])>0){
-	                        if (obj_controller.und_armories=0){hurr+=8;demonic+=1;}
+	                        if (obj_controller.und_armouries=0){hurr+=8;demonic+=1;}
 	                    }
 	                }
 	                if (ca<=10) and (ca>=0){
@@ -151,7 +151,7 @@ function scr_loyalty(argument0, argument1) {
 	                            if (obj_ini.role[ca,ia]="Ranger") and (obj_ini.race[ca,ia]!=1){hurr+=1;finder+=1;}
 	                            if (string_count("Daemon",obj_ini.wep1[ca,ia])>0){hurr+=8;demonic+=1;}
 	                            if (string_count("Daemon",obj_ini.wep2[ca,ia])>0){hurr+=8;demonic+=1;}
-	                            if (string_count("Daemon",obj_ini.armor[ca,ia])>0){hurr+=8;demonic+=1;}
+	                            if (string_count("Daemon",obj_ini.armour[ca,ia])>0){hurr+=8;demonic+=1;}
 	                            if (string_count("Daemon",obj_ini.mobi[ca,ia])>0){hurr+=8;demonic+=1;}
 	                            if (string_count("Daemon",obj_ini.gear[ca,ia])>0){hurr+=8;demonic+=1;}
 	                        }
@@ -178,7 +178,7 @@ function scr_loyalty(argument0, argument1) {
 	            repeat(30){g+=1;good=0;geh=0;
 	                i=0;repeat(40){i+=1;if ((obj_ini.artifact_sid[g]-500)=valid[i]) and (valid[i]>0) then geh=1;}
 	                if (obj_ini.artifact[g]!="") and (geh=1) and (string_count("Daemon",obj_ini.artifact_tags[g])>0){
-	                    if (obj_controller.und_armories=0){hurr+=8;demonic+=1;}
+	                    if (obj_controller.und_armouries=0){hurr+=8;demonic+=1;}
 	                }
 	            }
 	            i=0;geh=0;good=0;
@@ -196,7 +196,7 @@ function scr_loyalty(argument0, argument1) {
 	                            if (obj_ini.role[ca,ia]="Ranger") and (obj_ini.race[ca,ia]!=1){hurr+=1;finder+=1;}
 	                            if (string_count("Daemon",obj_ini.wep1[ca,ia])>0){hurr+=8;demonic+=1;}
 	                            if (string_count("Daemon",obj_ini.wep2[ca,ia])>0){hurr+=8;demonic+=1;}
-	                            if (string_count("Daemon",obj_ini.armor[ca,ia])>0){hurr+=8;demonic+=1;}
+	                            if (string_count("Daemon",obj_ini.armour[ca,ia])>0){hurr+=8;demonic+=1;}
 	                            if (string_count("Daemon",obj_ini.mobi[ca,ia])>0){hurr+=8;demonic+=1;}
 	                            if (string_count("Daemon",obj_ini.gear[ca,ia])>0){hurr+=8;demonic+=1;}
 	                        }

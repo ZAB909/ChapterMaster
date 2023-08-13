@@ -10,10 +10,10 @@ function scr_arti_descr(argument0) {
 	var temp;temp=obj_ini.artifact_tags[argument0];
 
 	typ="weapon";
-	if (obj_ini.artifact[argument0]="Power Armor") then typ="armor";
-	if (obj_ini.artifact[argument0]="Terminator Armor") then typ="armor";
-	if (obj_ini.artifact[argument0]="Dreadnought") then typ="armor";
-	if (obj_ini.artifact[argument0]="Artificer Armor") then typ="armor";
+	if (obj_ini.artifact[argument0]="Power Armour") then typ="armour";
+	if (obj_ini.artifact[argument0]="Terminator Armour") then typ="armour";
+	if (obj_ini.artifact[argument0]="Dreadnought") then typ="armour";
+	if (obj_ini.artifact[argument0]="Artificer Armour") then typ="armour";
 	if (obj_ini.artifact[argument0]="Rosarius") then typ="gear";
 	if (obj_ini.artifact[argument0]="Bionics") then typ="gear";
 	if (obj_ini.artifact[argument0]="Psychic Hood") then typ="gear";
@@ -25,13 +25,13 @@ function scr_arti_descr(argument0) {
 	if (obj_ini.artifact[argument0]="Tome") then typ="device";
 	if (obj_ini.artifact[argument0]="Robot") then typ="device";
 
-	if (obj_ini.artifact[argument0]!="Power Armor") and (obj_ini.artifact[argument0]!="Terminator Armor") and (obj_ini.artifact[argument0]!="Artificer Armor"){
+	if (obj_ini.artifact[argument0]!="Power Armour") and (obj_ini.artifact[argument0]!="Terminator Armour") and (obj_ini.artifact[argument0]!="Artificer Armour"){
 	    p1="This artifact is a "+string(obj_ini.artifact[argument0]);
 	    if (string_count("inq",temp)>0) then p1+=", entrusted by the Inquisition.";
 	    if (string_count("inq",temp)=0) then p1+=".";
 	}
 
-	if (obj_ini.artifact[argument0]="Power Armor") or (obj_ini.artifact[argument0]="Terminator Armor") or (obj_ini.artifact[argument0]="Artificer Armor"){
+	if (obj_ini.artifact[argument0]="Power Armour") or (obj_ini.artifact[argument0]="Terminator Armour") or (obj_ini.artifact[argument0]="Artificer Armour"){
 	    p1="This artifact is "+string(obj_ini.artifact[argument0]);
 	    if (string_count("inq",temp)>0) then p1+=", entrusted by the Inquisition.";
 	    if (string_count("inq",temp)=0) then p1+=".";
@@ -58,12 +58,12 @@ function scr_arti_descr(argument0) {
 	    if (good=0) and (string_count("UFL",temp)>0){good=1;p3="A flamethrower has been integrated.";string_replace(temp,"GOLD","");}
 	}
 
-	if (typ="armor"){
+	if (typ="armour"){
 	    good=0;
-	    if (good=0) and (string_count("ART",temp)>0){good=1;p2="Much of the armor is made up of finely articulated plates, neatly interlocking.";string_replace(temp,"ART","");}
-	    if (good=0) and (string_count("SPI",temp)>0){good=1;p2="A multitude of spikes, of varying sizes, adorn the armor.";string_replace(temp,"SPI","");}
+	    if (good=0) and (string_count("ART",temp)>0){good=1;p2="Much of the armour is made up of finely articulated plates, neatly interlocking.";string_replace(temp,"ART","");}
+	    if (good=0) and (string_count("SPI",temp)>0){good=1;p2="A multitude of spikes, of varying sizes, adorn the armour.";string_replace(temp,"SPI","");}
 	    if (good=0) and (string_count("RUN",temp)>0){good=1;p2="Several glowing runes have been carved along its surfaces.";string_replace(temp,"RUN","");}
-	    if (good=0) and (string_count("DRA",temp)>0){good=1;p2="Several areas of the armor have been patched over with Drake scales.";string_replace(temp,"DRA","");}
+	    if (good=0) and (string_count("DRA",temp)>0){good=1;p2="Several areas of the armour have been patched over with Drake scales.";string_replace(temp,"DRA","");}
 	    good=0;
 	    if (good=0) and (string_count("GLD",temp)>0){good=1;p3="It is decorated with gold filigree.";string_replace(temp,"GLD","");}
 	    if (good=0) and (string_count("GLO",temp)>0){good=1;p3="The optics glow dark red.";string_replace(temp,"GLO","");}
@@ -85,7 +85,7 @@ function scr_arti_descr(argument0) {
 	    if (good=0) and (string_count("SOO",temp)>0){good=1;p3="It has a soothing appearance.";string_replace(temp,"SOO","");}
 	    if (good=0) and (string_count("FIN",temp)>0){good=1;p3="Rather than normal tubes, or plates, it is made up of very fine cloth that is unshearable.";string_replace(temp,"FIN","");}
 	    if (good=0) and (string_count("MASK",temp)>0){good=1;p3="It is shaped and contorted into a Fearsome Mask.";string_replace(temp,"MASK","");}
-	    if (good=0) and (string_count("SPI",temp)>0){good=1;p3="A multitude of spikes, of varying sizes, adorn the armor.";string_replace(temp,"SPI","");}
+	    if (good=0) and (string_count("SPI",temp)>0){good=1;p3="A multitude of spikes, of varying sizes, adorn the armour.";string_replace(temp,"SPI","");}
 	    if (good=0) and (string_count("SKRE",temp)>0){good=1;p3="While on it lets out a tormented scream.";string_replace(temp,"SKRE","");}
 	    if (good=0) and (string_count("WHI",temp)>0){good=1;p3="The jet flames are an unatural, clean white.";string_replace(temp,"WHI","");}
 	    if (good=0) and (string_count("SIL",temp)>0){good=1;p3="Somehow it is completely silent in operation.";string_replace(temp,"SIL","");}

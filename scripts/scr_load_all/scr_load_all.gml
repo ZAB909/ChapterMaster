@@ -9,7 +9,7 @@ function scr_load_all(argument0) {
 	    alll=1;man_size=0;
 	    repeat(300){i+=1;
 	        if (man[i]="man") and (ma_loc[i]=selecting_location) and (ma_god[i]<10){man_sel[i]=1;
-	            man_size+=scr_unit_size(ma_armor[i],ma_role[i],true);
+	            man_size+=scr_unit_size(ma_armour[i],ma_role[i],true);
             
 	        }
 	        if (i<=200){
@@ -25,9 +25,9 @@ function scr_load_all(argument0) {
 	    repeat(300){i+=1;
 	        man_sel[i]=0;
 	            /*if (man[i]="man") then man_size-=1;
-	            if (man[i]="man") and (ma_armor[i]="Terminator Armor") then man_size-=1;
-	            if (man[i]="man") and (ma_armor[i]="Tartaros") then man_size-=1;
-	            if (man[i]="man") and (ma_armor[i]="Dreadnought") then man_size-=7;
+	            if (man[i]="man") and (ma_armour[i]="Terminator Armour") then man_size-=1;
+	            if (man[i]="man") and (ma_armour[i]="Tartaros") then man_size-=1;
+	            if (man[i]="man") and (ma_armour[i]="Dreadnought") then man_size-=7;
 	            // if (man[i]="man") and (ma_mobi[i]="Jump Pack") then man_size-=1;
 	            if (man[i]="man") and (ma_role[i]="Chapter Master") then man_size-=1;
 	            if (man[i]="man") and (ma_role[i]="Harlequin Troupe") then man_size-=4;*/

@@ -42,7 +42,7 @@ o=0;repeat(20){o+=1;
             if (obj_ini.wep2[co,i]="Company Standard") then scr_loyalty("Lost Standard","+");
             
             obj_ini.race[co,i]=0;obj_ini.loc[co,i]="";obj_ini.name[co,i]="";obj_ini.role[co,i]="";obj_ini.wep1[co,i]="";obj_ini.lid[co,i]=0;
-            obj_ini.wep2[co,i]="";obj_ini.armor[co,i]="";obj_ini.gear[co,i]="";obj_ini.hp[co,i]=100;obj_ini.chaos[co,i]=0;obj_ini.experience[co,i]=0;
+            obj_ini.wep2[co,i]="";obj_ini.armour[co,i]="";obj_ini.gear[co,i]="";obj_ini.hp[co,i]=100;obj_ini.chaos[co,i]=0;obj_ini.experience[co,i]=0;
             obj_ini.mobi[co,i]="";obj_ini.age[co,i]=0;obj_ini.spe[co,i]="";obj_ini.god[co,i]=0;obj_ini.bio[co,i]=0;
             
             if (obj_fleet.capital+obj_fleet.frigate+obj_fleet.escort>0) then obj_controller.gene_seed+=seed_max;

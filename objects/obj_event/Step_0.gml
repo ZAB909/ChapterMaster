@@ -330,7 +330,7 @@ if (ticked=1){// Select a random marine and have them perform an action
             if ((t2="Power Fist") or (t2="Power Claw")) and (t4="SCO") then t4="DUB";// doubled up
             if (t2="Relic Blade") and (t4="SCO") then t4="UFL";// underslung flamer
         }
-        if (t1="Armor"){
+        if (t1="Armour"){
             // golden filigree, glowing optics, purity seals
             t5=choose("GLD","GLO","PUR");
             // articulated plates, spikes, runes, drake scales

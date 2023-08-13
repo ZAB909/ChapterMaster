@@ -49,7 +49,7 @@ function scr_trade(argument0) {
 	    if (trade_take[i]="License: Repair") then their_worth+=trade_tnum[i]*750;
 	    if (trade_take[i]="License: Crusade") then their_worth+=trade_tnum[i]*1500;
     
-	    if (trade_take[i]="Terminator Armor") then their_worth+=trade_tnum[i]*400;
+	    if (trade_take[i]="Terminator Armour") then their_worth+=trade_tnum[i]*400;
 	    if (trade_take[i]="Tartaros") then their_worth+=trade_tnum[i]*900;
 	    if (trade_take[i]="Land Raider") then their_worth+=trade_tnum[i]*600;
 	    if (trade_take[i]="Castellax Battle Automata") then their_worth+=trade_tnum[i]*1200;
