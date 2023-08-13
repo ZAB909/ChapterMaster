@@ -80,13 +80,13 @@ function scr_ruins_reward(star_system, planet, _ruins) {
 	        wep2=choose("Flamer","Meltagun","Combiflamer","Sniper Rifle");wen2=choose(3,4,5,6,7,8);
 	        wep3=choose("Missile Launcher","Heavy Bolter","Lascannon","Plasma Pistol");wen3=choose(1,2,3);
 	    }if (ruins_type=3){
-			wep1=choose("Terminator Armor");wen1=choose(1,2);
+			wep1=choose("Terminator Armour");wen1=choose(1,2);
 	        wep2=choose("Bionics");wen2=choose(5,6,7);
 	        wep3=choose("Narthecium","Psychic Hood","Rosarius");wen3=choose(1);
 	    }
 		if (ruins_type=4){
 			wep1=choose("MK4 Maximus");wen1=choose(2,3);
-	        wep2=choose("MK6 Corvus","Scout Armor");wen2=choose(4,5,6);
+	        wep2=choose("MK6 Corvus","Scout Armour");wen2=choose(4,5,6);
 	        wep3=choose("MK8 Errant");wen3=choose(1,2);
 	    }
 	    if (ruins_type=5){

@@ -1,7 +1,7 @@
 {
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
-  "name": "spr_noarmor_colors",
+  "name": "spr_noarmour_colors",
   "bbox_bottom": 223,
   "bbox_left": 21,
   "bbox_right": 148,
@@ -33,7 +33,7 @@
   "sequence": {
     "resourceType": "GMSequence",
     "resourceVersion": "1.4",
-    "name": "",
+    "name": "spr_noarmour_colors",
     "autoRecord": true,
     "backdropHeight": 1080,
     "backdropImageOpacity": 0.5,
@@ -55,8 +55,8 @@
     "timeUnits": 1,
     "tracks": [
       {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"1.0","Keyframes":[
-            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"7fda383a-1b96-43ab-9b00-348ba94f24e3","path":"sprites/spr_noarmor_colors/spr_noarmor_colors.yy",},},},"Disabled":false,"id":"ee2b0a1a-4b5e-48a3-8ce7-58a199d69840","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
-            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"dfcef27b-ef94-422d-b312-1aeaffa3836e","path":"sprites/spr_noarmor_colors/spr_noarmor_colors.yy",},},},"Disabled":false,"id":"38cc4662-e007-4c05-a7a0-3f86779d9c91","IsCreationKey":false,"Key":1.0,"Length":1.0,"Stretch":false,},
+            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"7fda383a-1b96-43ab-9b00-348ba94f24e3","path":"sprites/spr_noarmour_colors/spr_noarmour_colors.yy",},},},"Disabled":false,"id":"ee2b0a1a-4b5e-48a3-8ce7-58a199d69840","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
+            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"dfcef27b-ef94-422d-b312-1aeaffa3836e","path":"sprites/spr_noarmour_colors/spr_noarmour_colors.yy",},},},"Disabled":false,"id":"38cc4662-e007-4c05-a7a0-3f86779d9c91","IsCreationKey":false,"Key":1.0,"Length":1.0,"Stretch":false,},
           ],},"modifiers":[],"spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange": {"x":0.0,"y":0.0,},

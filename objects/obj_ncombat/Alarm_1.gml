@@ -313,7 +313,7 @@ temp2=0;temp3=0;temp4=0;temp5=0;
 
 
 if (enemy=2){
-    p1="Opposing your forces are a total of "+scr_display_number(floor(guard_effective))+" Guardsmen, including Heavy Weapons and Armor.";
+    p1="Opposing your forces are a total of "+scr_display_number(floor(guard_effective))+" Guardsmen, including Heavy Weapons and Armour.";
     p2="";p3="";
 }
 

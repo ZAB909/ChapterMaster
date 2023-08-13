@@ -302,7 +302,7 @@ if (type=5) and (cooldown<=0){
         if (rall="Lexicanum"){req_armour="";req_armour_num=0;req_wep1="";req_wep1_num=0;req_wep2="";req_wep2_num=0;req_mobi="";req_mobi_num=0;}
 
         if (rall=obj_ini.role[100,5]){req_armour=obj_ini.armour[100,5];req_armour_num=units;req_wep1="Chainsword";req_wep1_num=units;req_wep2="Bolt Pistol";req_wep2_num=units;}
-        if (rall="Standard Bearer"){req_armour="Power Armor";req_armour_num=units;req_wep2="Company Standard";req_wep2_num=units;}
+        if (rall="Standard Bearer"){req_armour="Power Armour";req_armour_num=units;req_wep2="Company Standard";req_wep2_num=units;}
         if (rall=obj_ini.role[100,3]){req_armour=obj_ini.armour[100,3];req_armour_num=units;req_wep1=obj_ini.wep1[100,3];req_wep1_num=units;req_wep2=obj_ini.wep2[100,3];req_wep2_num=units;}
         if (rall=obj_ini.role[100,4]){req_armour=obj_ini.armour[100,4];req_armour_num=units;req_wep1=obj_ini.wep1[100,4];req_wep1_num=units;req_wep2=obj_ini.wep2[100,4];req_wep2_num=units;}
         if (rall=obj_ini.role[100,8]){req_armour=obj_ini.armour[100,8];req_armour_num=units;req_wep1=obj_ini.wep1[100,8];req_wep1_num=units;req_wep2=obj_ini.wep2[100,8];req_wep2_num=units;}
@@ -320,11 +320,11 @@ if (type=5) and (cooldown<=0){
             i+=1;
 
             if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1) and (obj_controller.ma_promote[i]=1) and (obj_controller.ma_exp[i]>=min_exp){
-                if (req_armour="Power Armor"){
-                    if (obj_controller.ma_armour[i]="MK3 Iron Armor") or (obj_controller.ma_armour[i]="MK4 Maximus") or (obj_controller.ma_armour[i]="MK5 Heresy") or (obj_controller.ma_armour[i]="MK6 Corvus") then have_armour_num+=1;
-                    if (obj_controller.ma_armour[i]="MK7 Aquila") or (obj_controller.ma_armour[i]="Power Armor") then have_armour_num+=1;
+                if (req_armour="Power Armour"){
+                    if (obj_controller.ma_armour[i]="MK3 Iron Armour") or (obj_controller.ma_armour[i]="MK4 Maximus") or (obj_controller.ma_armour[i]="MK5 Heresy") or (obj_controller.ma_armour[i]="MK6 Corvus") then have_armour_num+=1;
+                    if (obj_controller.ma_armour[i]="MK7 Aquila") or (obj_controller.ma_armour[i]="Power Armour") then have_armour_num+=1;
                 }
-                if (req_armour="Terminator Armor"){if (obj_controller.ma_armour[i]="Terminator Armor") or (obj_controller.ma_armour[i]="Tartaros") then have_armour_num+=1;}
+                if (req_armour="Terminator Armour"){if (obj_controller.ma_armour[i]="Terminator Armour") or (obj_controller.ma_armour[i]="Tartaros") then have_armour_num+=1;}
 
                 if (obj_controller.ma_wep1[i]=req_wep1) or (obj_controller.ma_wep2[i]=req_wep1) then have_wep1_num+=1;
                 if (obj_controller.ma_wep2[i]=req_wep2) or (obj_controller.ma_wep1[i]=req_wep2) then have_wep2_num+=1;
@@ -343,16 +343,16 @@ if (type=5) and (cooldown<=0){
         }// End Repeat
 
         // This checks to see if there is any more in the armoury
-        if (req_armour="Power Armor"){
-            have_armour_num+=scr_item_count("MK3 Iron Armor");
+        if (req_armour="Power Armour"){
+            have_armour_num+=scr_item_count("MK3 Iron Armour");
             have_armour_num+=scr_item_count("MK4 Maximus");
             have_armour_num+=scr_item_count("MK5 Heresy");
             have_armour_num+=scr_item_count("MK6 Corvus");
             have_armour_num+=scr_item_count("MK7 Aquila");
-            have_armour_num+=scr_item_count("Power Armor");
+            have_armour_num+=scr_item_count("Power Armour");
         }
-        if (req_armour="Terminator Armor"){
-            have_armour_num+=scr_item_count("Terminator Armor");
+        if (req_armour="Terminator Armour"){
+            have_armour_num+=scr_item_count("Terminator Armour");
             have_armour_num+=scr_item_count("Tartaros");
         }
         if (req_armour="Dreadnought") then have_armour_num+=scr_item_count("Dreadnought");
@@ -649,7 +649,7 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
             }
             if (exp_check=1){n_good1=0;warning="A unit must have 140+ EXP to use a Thunder Hammer.";}
         }
-        if (string_count("Terminator",n_armour)=0) and (string_count("Dreadnought",n_armour)=0) and (string_count("Tartaros",n_armour)=0) and (n_wep1="Assault Cannon"){n_good1=0;warning="Cannot use Assault Cannons without Terminator/Dreadnought Armor.";}
+        if (string_count("Terminator",n_armour)=0) and (string_count("Dreadnought",n_armour)=0) and (string_count("Tartaros",n_armour)=0) and (n_wep1="Assault Cannon"){n_good1=0;warning="Cannot use Assault Cannons without Terminator/Dreadnought Armour.";}
         if (string_count("Dreadnought",n_armour)=0) and (n_wep1="Close Combat Weapon"){n_good1=0;warning="Only "+string(obj_ini.role[100,6])+" can use Close Combat Weapons.";}
     }
     if (target_comp=2) and (n_wep2!="Assortment") and (n_wep2!="(None)"){// Check numbers
@@ -671,7 +671,7 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
             }
             if (exp_check=1){n_good2=0;warning="A unit must have 140+ EXP to use a Thunder Hammer.";}
         }
-        if (string_count("Terminator",n_armour)=0) and (string_count("Dreadnought",n_armour)=0) and (string_count("Tartaros",n_armour)=0) and (n_wep2="Assault Cannon"){n_good2=0;warning="Cannot use Assault Cannons without Terminator/Dreadnought Armor.";}
+        if (string_count("Terminator",n_armour)=0) and (string_count("Dreadnought",n_armour)=0) and (string_count("Tartaros",n_armour)=0) and (n_wep2="Assault Cannon"){n_good2=0;warning="Cannot use Assault Cannons without Terminator/Dreadnought Armour.";}
         if (string_count("Dreadnought",n_armour)=0) and (n_wep2="Close Combat Weapon"){n_good2=0;warning="Only "+string(obj_ini.role[100,6])+" can use Close Combat Weapons.";}
         if ((string_count("Terminator",n_armour)>0) or (string_count("Tartaros",n_armour)>0) or (string_count("Dreadnought",n_armour)>0)) and (n_mobi!="") then n_good2=0;
         if ((string_count("Terminator",o_armour)>0) or (string_count("Tartaros",o_armour)>0) or (string_count("Dreadnought",o_armour)>0)) and (n_mobi!="") then n_good2=0;
@@ -688,7 +688,7 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
         if (have_armour_num<req_armour_num){n_good3=0;warning="Not enough "+string(n_armour)+"; "+string(units-req_armour_num)+" more are required.";}
 
         var g,exp_check;g=0;exp_check=0;
-        if (n_armour="Terminator Armor") or (n_armour="Tartaros") then repeat(obj_controller.man_max){
+        if (n_armour="Terminator Armour") or (n_armour="Tartaros") then repeat(obj_controller.man_max){
             g+=1;
             if (obj_controller.man_sel[g]=1) and (obj_controller.ma_exp[g]<90) then exp_check=1;
         }
@@ -724,7 +724,7 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
         if (have_mobi_num>=req_mobi_num) or (n_mobi="(None")  then n_good5=1;
         if (have_mobi_num<req_mobi_num){n_good5=0;warning="Not enough "+string(n_mobi)+"; "+string(units-req_mobi_num)+" more are required.";}
 
-        if (n_mobi!="") and ((n_armour="Terminator Armor") or (n_armour="Tartaros")){
+        if (n_mobi!="") and ((n_armour="Terminator Armour") or (n_armour="Tartaros")){
             n_good5=0;warning="Terminators cannot use Mobility gear.";
         }
         if (n_mobi!="(None)") and (n_mobi!="") and (n_armour="Dreadnought"){
@@ -762,15 +762,15 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
                 var check;check=0;
 
                 if (req_armour="") or (dnc=true) then check=1;
-                if (req_armour="Power Armor"){
-                    if (obj_controller.ma_armour[i]="MK3 Iron Armor") or (obj_controller.ma_armour[i]="MK4 Maximus") or (obj_controller.ma_armour[i]="MK5 Heresy") or (obj_controller.ma_armour[i]="MK6 Corvus") then check=1;
-                    if (obj_controller.ma_armour[i]="MK7 Aquila") or (obj_controller.ma_armour[i]="Power Armor") then check=1;
+                if (req_armour="Power Armour"){
+                    if (obj_controller.ma_armour[i]="MK3 Iron Armour") or (obj_controller.ma_armour[i]="MK4 Maximus") or (obj_controller.ma_armour[i]="MK5 Heresy") or (obj_controller.ma_armour[i]="MK6 Corvus") then check=1;
+                    if (obj_controller.ma_armour[i]="MK7 Aquila") or (obj_controller.ma_armour[i]="Power Armour") then check=1;
                 }
-                if (req_armour="Terminator Armor"){if (obj_controller.ma_armour[i]="Terminator Armor") or (obj_controller.ma_armour[i]="Tartaros") then check=1;}
-                if (req_armour="Scout Armor"){if (obj_controller.ma_armour[i]="Scout Armor") then check=1;}
+                if (req_armour="Terminator Armour"){if (obj_controller.ma_armour[i]="Terminator Armour") or (obj_controller.ma_armour[i]="Tartaros") then check=1;}
+                if (req_armour="Scout Armour"){if (obj_controller.ma_armour[i]="Scout Armour") then check=1;}
                 if (req_armour="Dreadnought"){if (obj_controller.ma_armour[i]="Dreadnought") then check=1;}
 
-                if (check=0) and (req_armour="Power Armor"){
+                if (check=0) and (req_armour="Power Armour"){
                     if (obj_controller.ma_armour[i]!=""){// Move current armour to armoury
                         scr_add_item(obj_ini.armour[company,obj_controller.ide[i]],1);
                         obj_controller.ma_armour[i]="";obj_ini.armour[company,obj_controller.ide[i]]="";
@@ -785,8 +785,8 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
                         if (satisfied>0){scr_add_item("MK6 Corvus",-1);obj_controller.ma_armour[i]="MK6 Corvus";obj_ini.armour[company,obj_controller.ide[i]]="MK6 Corvus";}
                     }
                     if (obj_controller.ma_armour[i]=""){// Check for generic
-                        var satisfied;satisfied=scr_item_count("Power Armor");
-                        if (satisfied>0){scr_add_item("Power Armor",-1);obj_controller.ma_armour[i]="Power Armor";obj_ini.armour[company,obj_controller.ide[i]]="Power Armor";}
+                        var satisfied;satisfied=scr_item_count("Power Armour");
+                        if (satisfied>0){scr_add_item("Power Armour",-1);obj_controller.ma_armour[i]="Power Armour";obj_ini.armour[company,obj_controller.ide[i]]="Power Armour";}
                     }
                     if (obj_controller.ma_armour[i]=""){// Check for Maximus
                         var satisfied;satisfied=scr_item_count("MK4 Maximus");
@@ -797,34 +797,34 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
                         if (satisfied>0){scr_add_item("MK5 Heresy",-1);obj_controller.ma_armour[i]="MK5 Heresy";obj_ini.armour[company,obj_controller.ide[i]]="MK5 Heresy";}
                     }
                     if (obj_controller.ma_armour[i]=""){// Check for Iron
-                        var satisfied;satisfied=scr_item_count("MK3 Iron Armor");
-                        if (satisfied>0){scr_add_item("MK3 Iron Armor",-1);obj_controller.ma_armour[i]="MK3 Iron Armor";obj_ini.armour[company,obj_controller.ide[i]]="MK3 Iron Armor";}
+                        var satisfied;satisfied=scr_item_count("MK3 Iron Armour");
+                        if (satisfied>0){scr_add_item("MK3 Iron Armour",-1);obj_controller.ma_armour[i]="MK3 Iron Armour";obj_ini.armour[company,obj_controller.ide[i]]="MK3 Iron Armour";}
                     }
                 }
-                if (check=0) and (req_armour="Terminator Armor"){
+                if (check=0) and (req_armour="Terminator Armour"){
                     if (obj_controller.ma_armour[i]!=""){// Move current armour to armoury
                         scr_add_item(obj_ini.armour[company,obj_controller.ide[i]],1);
                         obj_controller.ma_armour[i]="";obj_ini.armour[company,obj_controller.ide[i]]="";
                     }
 
                     if (obj_controller.ma_armour[i]=""){
-                        var satisfied;satisfied=scr_item_count("Terminator Armor");
-                        if (satisfied>0){scr_add_item("Terminator Armor",-1);obj_controller.ma_armour[i]="Terminator Armor";obj_ini.armour[company,obj_controller.ide[i]]="Terminator Armor";}
+                        var satisfied;satisfied=scr_item_count("Terminator Armour");
+                        if (satisfied>0){scr_add_item("Terminator Armour",-1);obj_controller.ma_armour[i]="Terminator Armour";obj_ini.armour[company,obj_controller.ide[i]]="Terminator Armour";}
                     }
                     if (obj_controller.ma_armour[i]=""){
                         var satisfied;satisfied=scr_item_count("Tartarus");
                         if (satisfied>0){scr_add_item("Tartarus",-1);obj_controller.ma_armour[i]="Tartarus";obj_ini.armour[company,obj_controller.ide[i]]="Tartarus";}
                     }
                 }
-                if (check=0) and (req_armour="Scout Armor"){
+                if (check=0) and (req_armour="Scout Armour"){
                     if (obj_controller.ma_armour[i]!=""){// Move current armour to armoury
                         scr_add_item(obj_ini.armour[company,obj_controller.ide[i]],1);
                         obj_controller.ma_armour[i]="";obj_ini.armour[company,obj_controller.ide[i]]="";
                     }
 
                     if (obj_controller.ma_armour[i]=""){
-                        var satisfied;satisfied=scr_item_count("Scout Armor");
-                        if (satisfied>0){scr_add_item("Scout Armor",-1);obj_controller.ma_armour[i]="Scout Armor";obj_ini.armour[company,obj_controller.ide[i]]="Scout Armor";}
+                        var satisfied;satisfied=scr_item_count("Scout Armour");
+                        if (satisfied>0){scr_add_item("Scout Armour",-1);obj_controller.ma_armour[i]="Scout Armour";obj_ini.armour[company,obj_controller.ide[i]]="Scout Armour";}
                     }
                 }
                 if (check=0) and (req_armour="Dreadnought"){
@@ -1109,7 +1109,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                 if (check=0) and (n_armour!=obj_controller.ma_armour[i]) and (n_armour!="Assortment")and ((vehicle_equipment=1) or (vehicle_equipment=6)){ //normal infantry or dread armour
                     if (string_count("Dread",obj_ini.armour[company,obj_controller.ide[i]])=0){
                         /* if (obj_controller.ma_role[i]=obj_ini.role[100,12]){
-                            if (n_armour!="") and (n_armour!="Power Armor") and (n_armour!="Scout Armor") then scout_check=1;
+                            if (n_armour!="") and (n_armour!="Power Armour") and (n_armour!="Scout Armour") then scout_check=1;
                         }*/
                         if (scout_check=0){
                             if (obj_ini.armour[company,obj_controller.ide[i]]!="") then scr_add_item(obj_ini.armour[company,obj_controller.ide[i]],1);
@@ -1121,13 +1121,13 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                     }
 
                     // NOPE
-                    if ((n_armour="Terminator Armor") or (n_armour="Tartaros")) and (obj_ini.mobi[company,obj_controller.ide[i]]!=""){
+                    if ((n_armour="Terminator Armour") or (n_armour="Tartaros")) and (obj_ini.mobi[company,obj_controller.ide[i]]!=""){
                         scr_add_item(obj_ini.mobi[company,obj_controller.ide[i]],1);
                         obj_ini.mobi[company,obj_controller.ide[i]]="";obj_controller.ma_mobi[i]="";
                     }
                     if (obj_ini.wep1[company,obj_controller.ide[i]]="Assault Cannon") or (obj_ini.wep2[company,obj_controller.ide[i]]="Assault Cannon"){
                         var bgn,bed;bed=0;bgn=obj_ini.armour[company,obj_controller.ide[i]];
-                        if (bgn!="Terminator Armor") and (bgn!="Tartaros") then bed+=1;
+                        if (bgn!="Terminator Armour") and (bgn!="Tartaros") then bed+=1;
                         if (string_count("Termi",bgn)=0) then bed+=1;
                         if (bed=2){
                             if (obj_ini.wep1[company,obj_controller.ide[i]]="Assault Cannon"){
@@ -1514,10 +1514,10 @@ if (mouse_x>=xx+408) and (mouse_y>=yy+393) and (mouse_x<xx+518) and (mouse_y<yy+
             if (target_role=1) then replace="weapon1";
             if (target_role=2) then replace="weapon2";
             if (target_role>3){
-                if (obj_ini.artifact[obj_controller.menu_artifact]="Power Armor") then replace="armour";
-                if (obj_ini.artifact[obj_controller.menu_artifact]="Terminator Armor") then replace="armour";
-                if (obj_ini.artifact[obj_controller.menu_artifact]="Artificer Armor") then replace="armour";
-                if (obj_ini.artifact[obj_controller.menu_artifact]="Dreadnought Armor") or (obj_ini.artifact[obj_controller.menu_artifact]="Dreadnought") then replace="armour";
+                if (obj_ini.artifact[obj_controller.menu_artifact]="Power Armour") then replace="armour";
+                if (obj_ini.artifact[obj_controller.menu_artifact]="Terminator Armour") then replace="armour";
+                if (obj_ini.artifact[obj_controller.menu_artifact]="Artificer Armour") then replace="armour";
+                if (obj_ini.artifact[obj_controller.menu_artifact]="Dreadnought Armour") or (obj_ini.artifact[obj_controller.menu_artifact]="Dreadnought") then replace="armour";
 
                 if (obj_ini.artifact[obj_controller.menu_artifact]="Rosarius") then replace="gear";
                 if (obj_ini.artifact[obj_controller.menu_artifact]="Bionics") then replace="gear";
@@ -1543,11 +1543,11 @@ if (mouse_x>=xx+408) and (mouse_y>=yy+393) and (mouse_x<xx+518) and (mouse_y<yy+
 
                 if (obj_controller.menu_artifact=obj_controller.fest_display) then obj_controller.fest_display=0;
 
-                if (obj_ini.artifact[obj_controller.menu_artifact]="Terminator Armor") or (obj_ini.artifact[obj_controller.menu_artifact]="Dreadnought Armor"){
+                if (obj_ini.artifact[obj_controller.menu_artifact]="Terminator Armour") or (obj_ini.artifact[obj_controller.menu_artifact]="Dreadnought Armour"){
                     if (obj_ini.mobi[target_comp,obj_controller.ide[i]]!=""){// NOPE
                         scr_add_item(obj_ini.mobi[target_comp,obj_controller.ide[i]],1);
                         obj_ini.mobi[target_comp,obj_controller.ide[i]]="";obj_controller.ma_mobi[i]="";
-                        if (obj_ini.artifact[obj_controller.menu_artifact]="Dreadnought Armor"){
+                        if (obj_ini.artifact[obj_controller.menu_artifact]="Dreadnought Armour"){
                             if (obj_ini.age[target_comp,obj_controller.ide[i]]!=floor(obj_ini.age[target_comp,obj_controller.ide[i]])) then obj_ini.age[target_comp,obj_controller.ide[i]]=floor(obj_ini.age[target_comp,obj_controller.ide[i]]);
                         }
 
