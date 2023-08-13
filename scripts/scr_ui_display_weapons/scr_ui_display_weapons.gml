@@ -80,6 +80,9 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	if (string_count("Chainsword",wee)>0){ui_weapon[rl]=spr_weapon_chsword;
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;display_type="melee_onehand";
 	}
+	if (string_count("Combat Knife",wee)>0){ui_weapon[rl]=spr_weapon_knife;
+	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=true;display_type="melee_onehand";
+	}
 	if (string_count("Power Sword",wee)>0){ui_weapon[rl]=spr_weapon_powswo;
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;display_type="melee_onehand";
 	}
@@ -255,6 +258,10 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	}
 	if (string_count("Chainsword",wee)>0){ui_weapon[rl]=spr_weapon_chsword;
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;
+	    if (argument1=1){ui_xmod[rl]=-3+11-13;ui_ymod[rl]=5-12+10;}if (argument1=2){ui_xmod[rl]=-12;ui_ymod[rl]=0;}
+	}
+	if (string_count("Combat Knife",wee)>0){ui_weapon[rl]=spr_weapon_knife;
+	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=true;
 	    if (argument1=1){ui_xmod[rl]=-3+11-13;ui_ymod[rl]=5-12+10;}if (argument1=2){ui_xmod[rl]=-12;ui_ymod[rl]=0;}
 	}
 	if (string_count("Power Sword",wee)>0){ui_weapon[rl]=spr_weapon_powswo;
