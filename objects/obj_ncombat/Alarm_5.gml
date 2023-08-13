@@ -178,8 +178,8 @@ if (slime>0){
         if (mucra[i]=1){compan_slime+=1;s3+=string(i)+", ";}
     }
     
-    if (compan_slime<=1){s2=" suits of Power Armor.  Company ";s4=" has been effected.";}
-    if (compan_slime>1){s2=" suits of Power Armor.  Companies ";s4=" have been effected.";}
+    if (compan_slime<=1){s2=" suits of Power Armour.  Company ";s4=" has been effected.";}
+    if (compan_slime>1){s2=" suits of Power Armour.  Companies ";s4=" have been effected.";}
     if (slime=1) then s2=string_replace(s2,"suits ","suit ");
     
     s3=string_delete(s3,string_length(s3)-1,2);

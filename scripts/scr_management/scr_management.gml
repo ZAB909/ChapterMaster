@@ -18,7 +18,7 @@ function scr_management(argument0) {
 	    pane.company=0;pane.manage=12;pane.header=2;pane.title="APOTHECARIUM";
     
 	    pane=instance_create(925,180-48,obj_managment_panel);
-	    pane.company=0;pane.manage=15;pane.header=2;pane.title="ARMORY";
+	    pane.company=0;pane.manage=15;pane.header=2;pane.title="ARMOURY";
     
 	    pane=instance_create(1125,180-48,obj_managment_panel);
 	    pane.company=0;pane.manage=13;pane.header=2;pane.title="LIBRARIUM";

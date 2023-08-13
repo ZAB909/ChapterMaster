@@ -649,13 +649,13 @@ if (battle_special="space_hulk") and (defeat=0) and (hulk_treasure>0){
         pop.text="An STC Fragment has been retrieved from the Space Hulk and safely stowed away.  It is ready to be decrypted or gifted at your convenience.";
         scr_event_log("","STC Fragment recovered from the Space Hulk.");
     }
-    if (hulk_treasure=4){// Termie Armor
+    if (hulk_treasure=4){// Termie Armour
         var termi;termi=choose(2,2,2,3);
-        scr_add_item("Terminator Armor",termi);
+        scr_add_item("Terminator Armour",termi);
         var pop;pop=instance_create(0,0,obj_popup);
         pop.image="space_hulk_done";
-        pop.title="Space Hulk: Terminator Armor";
-        pop.text="The fallen heretics wore several suits of Terminator Armor- a handful of them were found to be cleansible and worthy of use.  "+string(termi)+" Terminator Armor has been added to the Armamentarium.";
+        pop.title="Space Hulk: Terminator Armour";
+        pop.text="The fallen heretics wore several suits of Terminator Armour- a handful of them were found to be cleansible and worthy of use.  "+string(termi)+" Terminator Armour has been added to the Armamentarium.";
     }
 }
 

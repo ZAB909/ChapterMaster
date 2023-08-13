@@ -84,7 +84,7 @@ repeat(600){i+=1;
             if (marine_armour[i]="MK6 Corvus"){obj_ini.armour[marine_co[i],marine_id[i]]="";obj_ncombat.mucra[marine_co[i]]=1;obj_ncombat.slime+=1;}
             if (marine_armour[i]="MK7 Aquila"){obj_ini.armour[marine_co[i],marine_id[i]]="";obj_ncombat.mucra[marine_co[i]]=1;obj_ncombat.slime+=1;}
             if (marine_armour[i]="MK8 Errant"){obj_ini.armour[marine_co[i],marine_id[i]]="";obj_ncombat.mucra[marine_co[i]]=1;obj_ncombat.slime+=1;}
-            if (marine_armour[i]="Power Armor"){obj_ini.armour[marine_co[i],marine_id[i]]="";obj_ncombat.mucra[marine_co[i]]=1;obj_ncombat.slime+=1;}
+            if (marine_armour[i]="Power Armour"){obj_ini.armour[marine_co[i],marine_id[i]]="";obj_ncombat.mucra[marine_co[i]]=1;obj_ncombat.slime+=1;}
         }
     }
     
@@ -196,7 +196,7 @@ repeat(600){i+=1;
             // if (wah=1){show_message(obj_ini.armour[marine_co[i],marine_id[i]]);}
             
             if (wah=1) and (obj_ini.armour[marine_co[i],marine_id[i]]!=""){
-                if (marine_armour[i]="Terminator Armor") or (marine_armour[i]="Tartaros") then eqp_chance+=30;
+                if (marine_armour[i]="Terminator Armour") or (marine_armour[i]="Tartaros") then eqp_chance+=30;
                 if (string_count("&",marine_armour[i])>0){eqp_chance=90;artif=true;}
                 if (dece>eqp_chance){
                     var last,o;last=0;o=0;
