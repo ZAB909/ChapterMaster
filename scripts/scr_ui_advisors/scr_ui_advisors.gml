@@ -877,7 +877,7 @@ function scr_ui_advisors() {
 	    draw_set_color(c_gray);
     
 	    draw_rectangle(xx+957,yy+76,xx+1062,yy+104,0);
-	    draw_rectangle(xx+1068,yy+76,xx+1136,yy+104,0);
+	    draw_rectangle(xx+1068,yy+76,xx+1150,yy+104,0);
 	    draw_rectangle(xx+1167,yy+76,xx+1255,yy+104,0);
 	    draw_rectangle(xx+1487,yy+76,xx+1545,yy+104,0);
     
