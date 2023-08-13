@@ -90,7 +90,7 @@ function scr_dialogue(diplo_keyphrase) {
     
 	    // Meeting20
 	    if (diplo_keyphrase="cs_meeting20"){
-	        diplo_text="[[A low rumbling growl issues from "+string(obj_controller.faction_leader[10])+"’s power armor before he speaks.]]##I ask you for the last time Astartes. Why did you seek me out?";
+	        diplo_text="[[A low rumbling growl issues from "+string(obj_controller.faction_leader[10])+"’s power armour before he speaks.]]##I ask you for the last time Astartes. Why did you seek me out?";
 	    }
     
 	    if (mos=true) and (diplo_keyphrase!="cs_meeting20"){
@@ -232,7 +232,7 @@ function scr_dialogue(diplo_keyphrase) {
 
 	// Actually here to kill you
 	if (diplo_keyphrase="cs_meeting60"){disposition[10]+=10;
-	    diplo_text="[["+string(obj_controller.faction_leader[10])+" is silent for a moment, then a slow chuckle rises from deep within his ancient power armor. The chuckle erupts into hideous laughter that chills your blood with its otherworldly tenor.]]##I thank you, I have not truly laughed in three hundred years. I shall take your skull as a memento of this day and your fine jest. But before I do, indulge my curiosity. Let us say you did kill me, /then/ what would you do? Claim the price on my head? Go crawling back on your belly to your Imperial masters like a whipped cur, dragging your kill behind you? Become master of this sector yourself now that you’ve bested your greatest foe? Or perhaps you’d offer up my soul to the Dark Gods, ignorantly fumbling about in the darkness for their favor? Tell me.";
+	    diplo_text="[["+string(obj_controller.faction_leader[10])+" is silent for a moment, then a slow chuckle rises from deep within his ancient power armour. The chuckle erupts into hideous laughter that chills your blood with its otherworldly tenor.]]##I thank you, I have not truly laughed in three hundred years. I shall take your skull as a memento of this day and your fine jest. But before I do, indulge my curiosity. Let us say you did kill me, /then/ what would you do? Claim the price on my head? Go crawling back on your belly to your Imperial masters like a whipped cur, dragging your kill behind you? Become master of this sector yourself now that you’ve bested your greatest foe? Or perhaps you’d offer up my soul to the Dark Gods, ignorantly fumbling about in the darkness for their favor? Tell me.";
     
 	    diplo_option[1]="The reward for one such as you will be great, and I /will/ claim it.";diplo_goto[1]="cs_meeting61";
 	    diplo_option[2]="The atrocities you’ve visited on this sector are reason enough.";diplo_goto[2]="cs_meeting63";
@@ -269,7 +269,7 @@ function scr_dialogue(diplo_keyphrase) {
 	// 137
 
 	if (diplo_keyphrase="cs_meeting135"){disposition[10]=max(disposition[10]+10,10);
-	    diplo_text="[["+string(obj_controller.faction_leader[10])+"’s power armor grinds as he leans forward, his posture predatory.]]##Then we have an accord. We will assist you as you take your first steps on the path toward Chaos. And my payment for all this?##[[He chuckles.]]##Enlisting an entire chapter in the service of the Dark Gods is all the reward I require.";
+	    diplo_text="[["+string(obj_controller.faction_leader[10])+"’s power armour grinds as he leans forward, his posture predatory.]]##Then we have an accord. We will assist you as you take your first steps on the path toward Chaos. And my payment for all this?##[[He chuckles.]]##Enlisting an entire chapter in the service of the Dark Gods is all the reward I require.";
 	    diplo_text+="##But you cannot simply paint the eight-pointed star on your wargear and begin slaughtering in the name of the Dark Gods. No, some within your chapter will resist the choice you’ve made, either out of loyalty to the Corpse Emperor or out of fear of Chaos. Just think, it will be like your own little heresy. The ''"+string(obj_ini.master_name)+" Heresy!''";    
 	    diplo_option[1]="[Continue]";diplo_goto[1]="cs_meeting136";
 	}
@@ -1028,7 +1028,7 @@ if (diplomacy == 10.1){
 	    if (diplo_keyphrase="denounced"){if (faction_justmet=1){disposition[diplomacy]-=5;faction_justmet=0;}
 	        if (rela="friendly"){
 	            rando=choose(1,2,3);
-	            if (rando=1) then diplo_text="Look to your weapons, your armor, and your ships, Chapter Master, and reconsider the logic of your statement.";
+	            if (rando=1) then diplo_text="Look to your weapons, your armour, and your ships, Chapter Master, and reconsider the logic of your statement.";
 	            if (rando=2) then diplo_text="It is illogical and unwise to turn aside the Adeptus Mechanicus' auspices.";
 	            if (rando=3) then diplo_text="To speak against us is to speak against the Machine God.";
 	        }
@@ -1429,8 +1429,8 @@ if (diplomacy == 10.1){
 	if (diplomacy=5){// Ecclesiarchy
 	    if (diplo_keyphrase="intro"){
 	        rando=choose(1,2);
-	        if (rando=1) then tempd="[[Old and experienced, this Prioress of the Sisters of Battle is not a woman to be trifled with.  Clad in an elaborate set of full power armor and with her face sporting several scars, "+string(faction_leader[5])+" exudes battlefield experience.]]";
-	        if (rando=2) then tempd="[[The Ecclesiarchy have assigned one of their militant arm to their dealings with you- Prioress "+string(faction_leader[5])+".  The woman wears a set of well-used powered armor that has seen many battles, if its charred exterior is to be believed.  Incense burners hang from chains on her belt and waft smoke around her body.]]";
+	        if (rando=1) then tempd="[[Old and experienced, this Prioress of the Sisters of Battle is not a woman to be trifled with.  Clad in an elaborate set of full power armour and with her face sporting several scars, "+string(faction_leader[5])+" exudes battlefield experience.]]";
+	        if (rando=2) then tempd="[[The Ecclesiarchy have assigned one of their militant arm to their dealings with you- Prioress "+string(faction_leader[5])+".  The woman wears a set of well-used powered armour that has seen many battles, if its charred exterior is to be believed.  Incense burners hang from chains on her belt and waft smoke around her body.]]";
 	        tempd+="###";
 	        rando=choose(1,1,2,2,2);
 	        if (rando=1) then tempd+="Hail, Chapter Master!  As a son of the Emperor, you will no doubt take great joy in bringing his light to this benighted sector.  I look forward to watching heretics fall before your armies."; 
@@ -1611,7 +1611,7 @@ if (diplomacy == 10.1){
 	// 
 	if (diplomacy=6){// Elfdar
 	    if (string_count("intro",diplo_keyphrase)>0){
-	        if (faction_gender[6]=1) then diplo_text="[["+string(faction_leader[diplomacy])+" is a farseer, or witch, of the eldar.  He is dressed in a typical fashion of his position, clad in flowing black cloth and bone-like armor.  Almost seeming to relish in conflict, this xeno is known in local records for "+choose("sudden raid on trade vessels","assassinating a pair of planetary govererners")+".  It is unlikely "+string(faction_leader[diplomacy])+" will be receptive to diplomacy- further audiences are ill-advised.]]";
+	        if (faction_gender[6]=1) then diplo_text="[["+string(faction_leader[diplomacy])+" is a farseer, or witch, of the eldar.  He is dressed in a typical fashion of his position, clad in flowing black cloth and bone-like armour.  Almost seeming to relish in conflict, this xeno is known in local records for "+choose("sudden raid on trade vessels","assassinating a pair of planetary govererners")+".  It is unlikely "+string(faction_leader[diplomacy])+" will be receptive to diplomacy- further audiences are ill-advised.]]";
 	        if (faction_gender[6]=2){
 	            var rando;rando=choose(1,2,3);
 	            diplo_text="[["+string(faction_leader[diplomacy])+" is a witch; an old farseer of eldar kind.  While obviously a female, the grating voice and inhuman proportions are an unholy mockery of the human form.  She seems to avoid contact with the Imperium, as is befitting a xeno.  Little is known about "+string(faction_leader[diplomacy])+", other than ";

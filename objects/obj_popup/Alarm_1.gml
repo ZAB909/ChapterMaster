@@ -8,7 +8,7 @@ i=0;
 repeat(obj_controller.man_max){
     i+=1;
     
-    n_wep1="Assortment";n_wep2="Assortment";n_armor="Assortment";n_gear="Assortment";n_mobi="Assortment";
+    n_wep1="Assortment";n_wep2="Assortment";n_armour="Assortment";n_gear="Assortment";n_mobi="Assortment";
     
     if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1) and (vehicle_equipment=0) and (obj_controller.man[i]="man"){
         var check,ih,gi;check=0;ih=0;gi="";
@@ -35,21 +35,21 @@ repeat(obj_controller.man_max){
                 if (onceh=0) then n_wep1="";
             }
             gi=obj_ini.wep2[100,ih];if (gi!="") then n_wep2=gi;
-            gi=obj_ini.armor[100,ih];if (gi!="") then n_armor=gi;gi=obj_ini.gear[100,ih];if (gi!="") then n_gear=gi;
+            gi=obj_ini.armour[100,ih];if (gi!="") then n_armour=gi;gi=obj_ini.gear[100,ih];if (gi!="") then n_gear=gi;
             gi=obj_ini.mobi[100,ih];if (gi!="") then n_mobi=gi;
         }
         
         
-        if (n_armor=obj_controller.ma_armor[i]) then check=1;
-        if (check=0) and (n_armor!=obj_controller.ma_armor[i]) and (n_armor!="Assortment"){
-            if (string_count("Dread",obj_ini.armor[company,obj_controller.ide[i]])=0){
-                if (obj_ini.armor[company,obj_controller.ide[i]]!="") then scr_add_item(obj_ini.armor[company,obj_controller.ide[i]],1);
-                obj_controller.ma_armor[i]="";obj_ini.armor[company,obj_controller.ide[i]]="";
-                scr_add_item(n_armor,-1);
-                obj_controller.ma_armor[i]=n_armor;obj_ini.armor[company,obj_controller.ide[i]]=n_armor;
+        if (n_armour=obj_controller.ma_armour[i]) then check=1;
+        if (check=0) and (n_armour!=obj_controller.ma_armour[i]) and (n_armour!="Assortment"){
+            if (string_count("Dread",obj_ini.armour[company,obj_controller.ide[i]])=0){
+                if (obj_ini.armour[company,obj_controller.ide[i]]!="") then scr_add_item(obj_ini.armour[company,obj_controller.ide[i]],1);
+                obj_controller.ma_armour[i]="";obj_ini.armour[company,obj_controller.ide[i]]="";
+                scr_add_item(n_armour,-1);
+                obj_controller.ma_armour[i]=n_armour;obj_ini.armour[company,obj_controller.ide[i]]=n_armour;
             }
         }
-        // End swap armor
+        // End swap armour
         
         
         // if (n_wep1=n_wep2) and (
@@ -139,7 +139,7 @@ repeat(obj_controller.man_max){
         check=0;
         if (n_mobi=obj_controller.ma_mobi[i]) then check=1;
         if (check=0) and (n_mobi!=obj_controller.ma_mobi[i]) and (n_mobi!="Assortment"){
-            if (string_count("Terminator",obj_ini.armor[company,obj_controller.ide[i]])=0) and (obj_ini.armor[company,obj_controller.ide[i]]!="Tartaros"){
+            if (string_count("Terminator",obj_ini.armour[company,obj_controller.ide[i]])=0) and (obj_ini.armour[company,obj_controller.ide[i]]!="Tartaros"){
                 if (obj_ini.mobi[company,obj_controller.ide[i]]!="") then scr_add_item(obj_ini.mobi[company,obj_controller.ide[i]],1);
                 obj_controller.ma_mobi[i]="";obj_ini.mobi[company,obj_controller.ide[i]]="";
                 obj_controller.ma_mobi[i]=n_mobi;obj_ini.mobi[company,obj_controller.ide[i]]=n_mobi;
@@ -151,12 +151,12 @@ repeat(obj_controller.man_max){
         /*
         if (obj_controller.ma_wep1[i]="(None)") then obj_controller.ma_wep1[i]="";
         if (obj_controller.ma_wep2[i]="(None)") then obj_controller.ma_wep2[i]="";
-        if (obj_controller.ma_armor[i]="(None)") then obj_controller.ma_armor[i]="";
+        if (obj_controller.ma_armour[i]="(None)") then obj_controller.ma_armour[i]="";
         if (obj_controller.ma_gear[i]="(None)") then obj_controller.ma_gear[i]="";
         if (obj_controller.ma_mobi[i]="(None)") then obj_controller.ma_mobi[i]="";
         if (obj_ini.wep1[company,obj_controller.ide[i]]="(None)") then obj_ini.wep1[company,obj_controller.ide[i]]="";
         if (obj_ini.wep2[company,obj_controller.ide[i]]="(None)") then obj_ini.wep2[company,obj_controller.ide[i]]="";
-        if (obj_ini.armor[company,obj_controller.ide[i]]="(None)") then obj_ini.armor[company,obj_controller.ide[i]]="";
+        if (obj_ini.armour[company,obj_controller.ide[i]]="(None)") then obj_ini.armour[company,obj_controller.ide[i]]="";
         if (obj_ini.gear[company,obj_controller.ide[i]]="(None)") then obj_ini.gear[company,obj_controller.ide[i]]="";
         if (obj_ini.mobi[company,obj_controller.ide[i]]="(None)") then obj_ini.mobi[company,obj_controller.ide[i]]="";
         */

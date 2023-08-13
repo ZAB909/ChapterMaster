@@ -2,7 +2,7 @@
 if (other.class!="Daemon") or (other.image_alpha>=1){
 
     var arm;
-    arm=other.armor_front;
+    arm=other.armour_front;
     
     dam=dam*obj_fleet.global_attack;
     

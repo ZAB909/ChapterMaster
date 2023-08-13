@@ -42,15 +42,15 @@ if (obj_ncombat.enemy=1){
                 if (obj_ncombat.defeat=0){// Marine was killed, recover equipment
                     if (obj_ini.wep1[nco,nid]!="") then scr_add_item(obj_ini.wep1[nco,nid],1);
                     if (obj_ini.wep2[nco,nid]!="") then scr_add_item(obj_ini.wep2[nco,nid],1);
-                    if (obj_ini.armor[nco,nid]!="") then scr_add_item(obj_ini.armor[nco,nid],1);
+                    if (obj_ini.armour[nco,nid]!="") then scr_add_item(obj_ini.armour[nco,nid],1);
                     if (obj_ini.gear[nco,nid]!="") then scr_add_item(obj_ini.gear[nco,nid],1);
                     if (obj_ini.mobi[nco,nid]!="") then scr_add_item(obj_ini.mobi[nco,nid],1);
                 }
                 
-                obj_ncombat.world_size+=scr_unit_size(obj_ini.armor[nco,nid],obj_ini.role[nco,nid],true);
+                obj_ncombat.world_size+=scr_unit_size(obj_ini.armour[nco,nid],obj_ini.role[nco,nid],true);
                 
                 obj_ini.race[nco,nid]=0;obj_ini.loc[nco,nid]="";obj_ini.name[nco,nid]="";obj_ini.role[nco,nid]="";obj_ini.wep1[nco,nid]="";
-                obj_ini.lid[nco,nid]=0;obj_ini.wep2[nco,nid]="";obj_ini.armor[nco,nid]="";obj_ini.gear[nco,nid]="";obj_ini.hp[nco,nid]=100;
+                obj_ini.lid[nco,nid]=0;obj_ini.wep2[nco,nid]="";obj_ini.armour[nco,nid]="";obj_ini.gear[nco,nid]="";obj_ini.hp[nco,nid]=100;
                 obj_ini.chaos[nco,nid]=0;obj_ini.experience[nco,nid]=0;obj_ini.mobi[nco,nid]="";obj_ini.age[nco,nid]=0;
                 obj_ini.spe[nco,nid]="";obj_ini.god[nco,nid]=0;obj_ini.bio[nco,nid]=0;
             }
@@ -75,7 +75,7 @@ if (string_count("cs_meeting",battle_special)>0){
                 repeat(200){i+=1;good=0;
                     if (obj_ini.role[co,i]!="") and (obj_ini.loc[co,i]=name) and (obj_ini.wid[co,i]==floor(chaos_meeting)) then good+=1;
                     if (obj_ini.role[co,i]!=obj_ini.role[100,6]) and (obj_ini.role[co,i]!="Venerable "+string(obj_ini.role[100,6])) then good+=1;
-                    if (string_count("Dread",obj_ini.armor[co,i])=0) or (obj_ini.role[co,i]="Chapter Master") then good+=1;
+                    if (string_count("Dread",obj_ini.armour[co,i])=0) or (obj_ini.role[co,i]="Chapter Master") then good+=1;
                     
                     // if (good>=3) then show_message(string(obj_ini.role[co,i])+": "+string(co)+"."+string(i));
                     
@@ -649,13 +649,13 @@ if (battle_special="space_hulk") and (defeat=0) and (hulk_treasure>0){
         pop.text="An STC Fragment has been retrieved from the Space Hulk and safely stowed away.  It is ready to be decrypted or gifted at your convenience.";
         scr_event_log("","STC Fragment recovered from the Space Hulk.");
     }
-    if (hulk_treasure=4){// Termie Armor
+    if (hulk_treasure=4){// Termie Armour
         var termi;termi=choose(2,2,2,3);
-        scr_add_item("Terminator Armor",termi);
+        scr_add_item("Terminator Armour",termi);
         var pop;pop=instance_create(0,0,obj_popup);
         pop.image="space_hulk_done";
-        pop.title="Space Hulk: Terminator Armor";
-        pop.text="The fallen heretics wore several suits of Terminator Armor- a handful of them were found to be cleansible and worthy of use.  "+string(termi)+" Terminator Armor has been added to the Armamentarium.";
+        pop.title="Space Hulk: Terminator Armour";
+        pop.text="The fallen heretics wore several suits of Terminator Armour- a handful of them were found to be cleansible and worthy of use.  "+string(termi)+" Terminator Armour has been added to the Armamentarium.";
     }
 }
 

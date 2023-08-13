@@ -84,8 +84,8 @@ function scr_ui_advisors() {
                         
 	                        cn.temp[106]=string(obj_ini.ship_speed[i]);
                         
-	                        cn.temp[107]=string(obj_ini.ship_front_armor[i]);
-	                        cn.temp[108]=string(obj_ini.ship_other_armor[i]);
+	                        cn.temp[107]=string(obj_ini.ship_front_armour[i]);
+	                        cn.temp[108]=string(obj_ini.ship_other_armour[i]);
                         
 	                        cn.temp[109]=string(obj_ini.ship_turrets[i]);
                         
@@ -119,7 +119,7 @@ function scr_ui_advisors() {
             
 	            draw_text(xx+383,yy+665,string_hash_to_newline("Health: "+string(cn.temp[103])+"/"+string(cn.temp[104])));
 	            draw_text(xx+588,yy+665,string_hash_to_newline("Shields: "+string(cn.temp[105])));
-	            draw_text(xx+768,yy+665,string_hash_to_newline("Armor: "+string(cn.temp[107])+","+string(cn.temp[108])));
+	            draw_text(xx+768,yy+665,string_hash_to_newline("Armour: "+string(cn.temp[107])+","+string(cn.temp[108])));
             
 	            draw_text(xx+485,yy+683,string_hash_to_newline("Speed: "+string(cn.temp[106])));
 	            draw_text(xx+678,yy+683,string_hash_to_newline("Turrets: "+string(cn.temp[109])));
@@ -419,7 +419,7 @@ function scr_ui_advisors() {
 	            }
 	            if (fest_type="Chapter Relic"){
 	                if (fest_feature1=1) then blurp2+="  Our "+string(obj_ini.role[100,16])+"s aim to create a weapon.";
-	                if (fest_feature2=1) then blurp2+="  Our "+string(obj_ini.role[100,16])+"s aim to create a suit of armor.";
+	                if (fest_feature2=1) then blurp2+="  Our "+string(obj_ini.role[100,16])+"s aim to create a suit of armour.";
 	                if (fest_feature3=1) then blurp2+="  Our "+string(obj_ini.role[100,16])+"s aim to hone and strengthen an already existing relic.";
 	            }
 	            if (fest_type="Imperial Mass"){
@@ -567,7 +567,7 @@ function scr_ui_advisors() {
 	        if (fest_type="Great Feast") then fet_text="Alcohol";
 	        if (fest_type="Tournament") then fet_text="Spectators";
 	        if (fest_type="Deathmatch") then fet_text="Spectators";
-	        if (fest_type="Chapter Relic") then fet_text="Create Armor";
+	        if (fest_type="Chapter Relic") then fet_text="Create Armour";
 	        if (fest_type="Imperial Mass"){fet_text="Request Ecclesiarchy";fet_scale=0.75;}
 	        if (fest_type="Chapter Sermon"){ fet_text="Blood Sacrifices";fet_scale=0.75;}
 	        if (fest_type="Triumphal March"){ fet_text="Honor to Allies";fet_scale=0.75;}
@@ -811,15 +811,15 @@ function scr_ui_advisors() {
             
             
 	            if (menu_artifact_type=1){// Weapon
-	                // tip2=string(tooltip_stat1)+" Attack, "+string(tooltip_stat2)+" Armor Penetration#";
+	                // tip2=string(tooltip_stat1)+" Attack, "+string(tooltip_stat2)+" Armour Penetration#";
 	                tip2=string(tooltip_stat1)+" Damage#";
 	                if (tooltip_stat4>0) then tip2+=string(tooltip_stat4)+" Ammunition#";
 	                // tip2+=string_replace(string(tooltip_other),",","#");
 	                tip2+=string(tooltip_other);
 	            }
-	            if (menu_artifact_type=2){// Armor
-	                if (tooltip_other="") then tip2=string(tooltip_stat1)+" Armor Class";
-	                if (tooltip_other!="") then tip2=string(tooltip_stat1)+" Armor Class#"+string(tooltip_other);
+	            if (menu_artifact_type=2){// Armour
+	                if (tooltip_other="") then tip2=string(tooltip_stat1)+" Armour Class";
+	                if (tooltip_other!="") then tip2=string(tooltip_stat1)+" Armour Class#"+string(tooltip_other);
 	            }
 	            if (menu_artifact_type=3){// Gear
 	                tip2=tooltip_other;
@@ -877,13 +877,13 @@ function scr_ui_advisors() {
 	    draw_set_color(c_gray);
     
 	    draw_rectangle(xx+957,yy+76,xx+1062,yy+104,0);
-	    draw_rectangle(xx+1068,yy+76,xx+1136,yy+104,0);
+	    draw_rectangle(xx+1068,yy+76,xx+1150,yy+104,0);
 	    draw_rectangle(xx+1167,yy+76,xx+1255,yy+104,0);
 	    draw_rectangle(xx+1487,yy+76,xx+1545,yy+104,0);
     
 	    draw_set_color(c_black);
 	    draw_text_transformed(xx+960,yy+76,string_hash_to_newline("Equipment"),0.6,0.6,0);
-	    draw_text_transformed(xx+1070,yy+76,string_hash_to_newline("Armor"),0.6,0.6,0);
+	    draw_text_transformed(xx+1070,yy+76,string_hash_to_newline("Armour"),0.6,0.6,0);
 	    draw_text_transformed(xx+1170,yy+76,string_hash_to_newline("Vehicles"),0.6,0.6,0);
 	    draw_text_transformed(xx+1490,yy+76,string_hash_to_newline("Ships"),0.6,0.6,0);
     
@@ -1004,7 +1004,7 @@ function scr_ui_advisors() {
 	    if (stc_bonus[1]=2) then ta="Enhanced Chain Weapons";
 	    if (stc_bonus[1]=3) then ta="Enhanced Flame Weapons";
 	    if (stc_bonus[1]=4) then ta="Enhanced Missiles";
-	    if (stc_bonus[1]=5) then ta="Enhanced Armor";
+	    if (stc_bonus[1]=5) then ta="Enhanced Armour";
 	    draw_set_alpha(1);if (stc_wargear<2) then draw_set_alpha(0.5);
 	    draw_text(xx+372,yy+549+35,string_hash_to_newline("2) "+string(ta)));
 	    draw_set_alpha(1);if (stc_wargear<3) then draw_set_alpha(0.5);
@@ -1012,13 +1012,13 @@ function scr_ui_advisors() {
 	    ta="Random";
 	    if (stc_bonus[2]=1) then ta="Enhanced Fist Weapons";
 	    if (stc_bonus[2]=2) then ta="Enhanced Plasma";
-	    if (stc_bonus[2]=3) then ta="Enhanced Armor";
+	    if (stc_bonus[2]=3) then ta="Enhanced Armour";
 	    draw_set_alpha(1);if (stc_wargear<4) then draw_set_alpha(0.5);
 	    draw_text(xx+372,yy+549+105,string_hash_to_newline("4) "+string(ta)));
 	    draw_set_alpha(1);if (stc_wargear<5) then draw_set_alpha(0.5);
 	    draw_text(xx+372,yy+549+140,string_hash_to_newline("5) 25% discount"));
 	    draw_set_alpha(1);if (stc_wargear<6) then draw_set_alpha(0.5);
-	    draw_text_ext(xx+372,yy+549+175,string_hash_to_newline("6) Can produce Terminator Armor and Dreadnoughts."),-1,140);
+	    draw_text_ext(xx+372,yy+549+175,string_hash_to_newline("6) Can produce Terminator Armour and Dreadnoughts."),-1,140);
 	    draw_set_alpha(1);
     
 	    // 21 right of the gray bar
@@ -1030,14 +1030,14 @@ function scr_ui_advisors() {
 	    if (stc_bonus[3]=2) then ta="Enhanced Accuracy";
 	    if (stc_bonus[3]=3) then ta="New Weapons";
 	    if (stc_bonus[3]=4) then ta="Survivability";
-	    if (stc_bonus[3]=5) then ta="Enhanced Armor";
+	    if (stc_bonus[3]=5) then ta="Enhanced Armour";
 	    draw_set_alpha(1);if (stc_vehicles<2) then draw_set_alpha(0.5);
 	    draw_text(xx+552,yy+549+35,string_hash_to_newline("2) "+string(ta)));
 	    draw_set_alpha(1);if (stc_vehicles<3) then draw_set_alpha(0.5);
 	    draw_text(xx+552,yy+549+70,string_hash_to_newline("3) 16% discount"));
 	    ta="Random";
 	    if (stc_bonus[4]=1) then ta="Enhanced Hull";
-	    if (stc_bonus[4]=2) then ta="Enhanced Armor";
+	    if (stc_bonus[4]=2) then ta="Enhanced Armour";
 	    if (stc_bonus[4]=3) then ta="New Weapons";
 	    draw_set_alpha(1);if (stc_vehicles<4) then draw_set_alpha(0.5);
 	    draw_text(xx+552,yy+549+105,string_hash_to_newline("4) "+string(ta)));
@@ -1056,14 +1056,14 @@ function scr_ui_advisors() {
 	    if (stc_bonus[5]=2) then ta="Enhanced Accuracy";
 	    if (stc_bonus[5]=3) then ta="Enhanced Turning";
 	    if (stc_bonus[5]=4) then ta="Enhanced Boarding";
-	    if (stc_bonus[5]=5) then ta="Enhanced Armor";
+	    if (stc_bonus[5]=5) then ta="Enhanced Armour";
 	    draw_set_alpha(1);if (stc_ships<2) then draw_set_alpha(0.5);
 	    draw_text(xx+732,yy+549+35,string_hash_to_newline("2) "+string(ta)));
 	    draw_set_alpha(1);if (stc_ships<3) then draw_set_alpha(0.5);
 	    draw_text(xx+732,yy+549+70,string_hash_to_newline("3) 16% discount"));
 	    ta="Random";
 	    if (stc_bonus[6]=1) then ta="Enhanced Hull";
-	    if (stc_bonus[6]=2) then ta="Enhanced Armor";
+	    if (stc_bonus[6]=2) then ta="Enhanced Armour";
 	    if (stc_bonus[6]=3) then ta="Enhanced Speed";
 	    draw_set_alpha(1);if (stc_ships<4) then draw_set_alpha(0.5);
 	    draw_text(xx+732,yy+549+105,string_hash_to_newline("4) "+string(ta)));
@@ -1084,7 +1084,7 @@ function scr_ui_advisors() {
 	    draw_set_color(38144);
 	    draw_set_font(fnt_large);
 	    if (menu=55) then draw_text_transformed(xx+216,yy+40,"Armamentarium; Weapons/Held",0.75,0.75,0);
-	    if (menu=58) then draw_text_transformed(xx+216,yy+40,"Armamentarium; Armor/Other",0.75,0.75,0);
+	    if (menu=58) then draw_text_transformed(xx+216,yy+40,"Armamentarium; Armour/Other",0.75,0.75,0);
 	    if (menu=56) then draw_text_transformed(xx+216,yy+40,"Armamentarium; Vehicles",0.75,0.75,0);
 	    if (menu=57) then draw_text_transformed(xx+216,yy+40,"Armamentarium; Warships",0.75,0.75,0);
 	}*/
@@ -1258,7 +1258,7 @@ function scr_ui_advisors() {
 	        blurp2="An Aspirant’s spiritual and mental capability is every bit as important as his physical characteristics.  It is wise to impose Trials not upon their body, but on the mind.  Either through psychic powers, chemical agents, or endurance trials, the Aspirant’s willpower is tested.  Those unworthy do not survive the stress and trauma placed upon their hearts- only those whose minds are proven to be unbreakable are welcomed into our ranks.";
 	    }
 	    if (recruit_trial="Challenge"){blurp3="-Standard generic choice #-Heroic Neophytes gain bonus 10-20 XP";
-	        blurp2="What better gauge of an Aspirant than in a duel with our astartes?  Our brother, unarmed and unarmored, will face against the armed challenger until one cannot continue.  It is impossible for the Aspirant to actually succeed these trials, but demonstrates how far they can possibly go, and allow us to judge him accordingly.  As with most trials the Aspirant’s life is in their own hands.  He who has failed the duel- yet proven himself worthy- is rescued from the jaws of death by "+string(obj_ini.role[100,15])+" and allowed to progress to the rank of Neophyte.";
+	        blurp2="What better gauge of an Aspirant than in a duel with our astartes?  Our brother, unarmed and unarmoured, will face against the armed challenger until one cannot continue.  It is impossible for the Aspirant to actually succeed these trials, but demonstrates how far they can possibly go, and allow us to judge him accordingly.  As with most trials the Aspirant’s life is in their own hands.  He who has failed the duel- yet proven himself worthy- is rescued from the jaws of death by "+string(obj_ini.role[100,15])+" and allowed to progress to the rank of Neophyte.";
 	    }
 	    if (recruit_trial="Apprenticeship"){blurp3="-Planet Bonus: Lava (+10-50% recruits)#-4-5 Years longer training time#-Almost able for immediate promotion";
 	        blurp2="What better way to cultivate astartes than to raise them from youth?  The capable children of "+string(obj_ini.recruiting_name)+" are apprenticed to our battle brothers.  Beneath their steady guidance the Aspirants spend several years learning the art of the smith.  The most able are judged by our Chapter’s "+string(obj_ini.role[100,15])+"s and "+string(obj_ini.role[100,14])+" to deem if they are compatible with gene-seed implantation.  If so, the Aspirant’s trial culminates in hunting and slaying a massive beast.  Only the brightest and bravest are added to our ranks.";
@@ -1356,8 +1356,8 @@ function scr_ui_advisors() {
 	        eqp+=string(tempe)+"#";
 	    }
     
-	    if (obj_ini.armor[0,1]!=""){
-	        tempe=string(obj_ini.armor[0,1])+": "+string(scr_item_descr(string(obj_ini.armor[0,1])));
+	    if (obj_ini.armour[0,1]!=""){
+	        tempe=string(obj_ini.armour[0,1])+": "+string(scr_item_descr(string(obj_ini.armour[0,1])));
 	        eqp+=string(tempe)+"#";
 	    }
 	    if (obj_ini.gear[0,1]!=""){

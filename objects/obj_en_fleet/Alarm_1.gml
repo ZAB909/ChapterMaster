@@ -1151,7 +1151,7 @@ if (action=""){
                                 if (obj_ini.role[ca,ia]="Ranger") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}
                                 if (string_count("Daemon",obj_ini.wep1[ca,ia])>0){tem1_base+=3;dem+=1;}
                                 if (string_count("Daemon",obj_ini.wep2[ca,ia])>0){tem1_base+=3;dem+=1;}
-                                if (string_count("Daemon",obj_ini.armor[ca,ia])>0){tem1_base+=3;dem+=1;}
+                                if (string_count("Daemon",obj_ini.armour[ca,ia])>0){tem1_base+=3;dem+=1;}
                                 if (string_count("Daemon",obj_ini.mobi[ca,ia])>0){tem1_base+=3;dem+=1;}
                                 if (string_count("Daemon",obj_ini.gear[ca,ia])>0){tem1_base+=3;dem+=1;}
                             }
@@ -1184,7 +1184,7 @@ if (action=""){
                         }
                         if (type=2){e=0;
                             repeat(50){e+=1;
-                                if (obj_ini.artifact[e]!="") and (obj_ini.artifact_loc[e]=thata.name) and (obj_controller.und_armories<=1){
+                                if (obj_ini.artifact[e]!="") and (obj_ini.artifact_loc[e]=thata.name) and (obj_controller.und_armouries<=1){
                                     if (string_count("Daemon",obj_ini.artifact_tags[e])>0) then dem+=1;
                                     if (string_count("Chaos",obj_ini.artifact_tags[e])>0) then cha+=1;
                                 }

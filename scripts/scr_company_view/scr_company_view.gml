@@ -12,7 +12,7 @@ function scr_company_view(argument0) {
 	repeat(499){i+=1;
 	    man[i]="";ide[i]=0;man_sel[i]=0;ma_lid[i]=0;ma_wid[i]=0;ma_bio[i]=0;
 	    ma_race[i]=0;ma_loc[i]="";ma_name[i]="";ma_role[i]="";ma_gear[i]="";ma_mobi[i]="";ma_wep1[i]="";
-	    ma_wep2[i]="";ma_armor[i]="";ma_health[i]=100;ma_chaos[i]=0;ma_exp[i]=0;ma_promote[i]=0;ma_god[i]=0;
+	    ma_wep2[i]="";ma_armour[i]="";ma_health[i]=100;ma_chaos[i]=0;ma_exp[i]=0;ma_promote[i]=0;ma_god[i]=0;
 	}i=0;
 
 	var i;i=-1;repeat(20){i+=1;sel_uni[i]="";sel_veh[i]="";}
@@ -36,7 +36,7 @@ function scr_company_view(argument0) {
 	                mans+=1;man[v]="man";ide[v]=v;
 	                ma_race[v]=obj_ini.race[company,v];ma_loc[v]=obj_ini.loc[company,v];ma_name[v]=obj_ini.name[company,v];
 	                ma_role[v]=obj_ini.role[company,v];ma_wep1[v]=obj_ini.wep1[company,v];ma_wep2[v]=obj_ini.wep2[company,v];
-	                ma_armor[v]=obj_ini.armor[company,v];ma_gear[v]=obj_ini.gear[company,v];ma_health[v]=obj_ini.hp[company,v];
+	                ma_armour[v]=obj_ini.armour[company,v];ma_gear[v]=obj_ini.gear[company,v];ma_health[v]=obj_ini.hp[company,v];
 	                ma_exp[v]=obj_ini.experience[company,v];ma_lid[v]=obj_ini.lid[company,v];ma_wid[v]=obj_ini.wid[company,v];
 	                ma_god[v]=obj_ini.god[company,v];ma_bio[v]=obj_ini.bio[company,v];ma_mobi[v]=obj_ini.mobi[company,v];
 	                if (ma_lid[v]>0){
@@ -246,7 +246,7 @@ function scr_company_view(argument0) {
 
 	                man[v]="vehicle";ide[v]=i;last_vehicle+=1;
 	                ma_loc[v]=obj_ini.veh_loc[company,i];ma_role[v]=obj_ini.veh_role[company,i];ma_wep1[v]=obj_ini.veh_wep1[company,i];
-	                ma_wep2[v]=obj_ini.veh_wep2[company,i];ma_armor[v]=obj_ini.veh_wep3[company,i];ma_gear[v]=obj_ini.veh_upgrade[company,i];ma_mobi[v]=obj_ini.veh_acc[company,i];ma_health[v]=obj_ini.veh_hp[company,i];
+	                ma_wep2[v]=obj_ini.veh_wep2[company,i];ma_armour[v]=obj_ini.veh_wep3[company,i];ma_gear[v]=obj_ini.veh_upgrade[company,i];ma_mobi[v]=obj_ini.veh_acc[company,i];ma_health[v]=obj_ini.veh_hp[company,i];
 	                ma_lid[v]=obj_ini.veh_lid[company,i];ma_wid[v]=obj_ini.veh_wid[company,i];
 	                if (ma_lid[v]>0){
 	                    ma_loc[v]=obj_ini.ship[ma_lid[v]];

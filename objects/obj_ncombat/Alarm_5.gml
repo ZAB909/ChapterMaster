@@ -34,7 +34,7 @@ alarm[8]=999999;
                 if (obj_ini.wep2[cmp,i]="Company Standard") then scr_loyalty("Lost Standard","+");
                 
                 obj_ini.race[cmp,i]=0;obj_ini.loc[cmp,i]="";obj_ini.name[cmp,i]="";obj_ini.role[cmp,i]="";obj_ini.wep1[cmp,i]="";obj_ini.lid[cmp,i]=0;
-                obj_ini.wep2[cmp,i]="";obj_ini.armor[cmp,i]="";obj_ini.gear[cmp,i]="";obj_ini.hp[cmp,i]=100;obj_ini.chaos[cmp,i]=0;obj_ini.experience[cmp,i]=0;
+                obj_ini.wep2[cmp,i]="";obj_ini.armour[cmp,i]="";obj_ini.gear[cmp,i]="";obj_ini.hp[cmp,i]=100;obj_ini.chaos[cmp,i]=0;obj_ini.experience[cmp,i]=0;
                 obj_ini.mobi[cmp,i]="";obj_ini.age[cmp,i]=0;obj_ini.spe[cmp,i]="";obj_ini.god[cmp,i]=0;obj_ini.uid[cmp,i]=0;
                 // obj_controller.marines-=1;
                 final_deaths+=1;
@@ -178,8 +178,8 @@ if (slime>0){
         if (mucra[i]=1){compan_slime+=1;s3+=string(i)+", ";}
     }
     
-    if (compan_slime<=1){s2=" suits of Power Armor.  Company ";s4=" has been effected.";}
-    if (compan_slime>1){s2=" suits of Power Armor.  Companies ";s4=" have been effected.";}
+    if (compan_slime<=1){s2=" suits of Power Armour.  Company ";s4=" has been effected.";}
+    if (compan_slime>1){s2=" suits of Power Armour.  Companies ";s4=" have been effected.";}
     if (slime=1) then s2=string_replace(s2,"suits ","suit ");
     
     s3=string_delete(s3,string_length(s3)-1,2);

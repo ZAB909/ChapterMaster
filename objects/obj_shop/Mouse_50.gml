@@ -25,18 +25,17 @@ if (mouse_y>=yy+76) and (mouse_y<yy+104) and (obj_controller.cooldown<=0){
     instance_create(50,50,obj_shop);
 }
 
-
-
 draw_rectangle(xx+957,yy+76,xx+1062,yy+104,0);
-    draw_rectangle(xx+1068,yy+76,xx+1136,yy+104,0);
-    draw_rectangle(xx+1167,yy+76,xx+1255,yy+104,0);
-    draw_rectangle(xx+1487,yy+76,xx+1545,yy+104,0);
+draw_rectangle(xx+1068,yy+76,xx+1150,yy+104,0);
+draw_rectangle(xx+1167,yy+76,xx+1255,yy+104,0);
+draw_rectangle(xx+1487,yy+76,xx+1545,yy+104,0);
 
-    draw_set_color(c_black);
-    draw_text_transformed(xx+960,yy+76,string_hash_to_newline("Equipment"),0.6,0.6,0);
-    draw_text_transformed(xx+1070,yy+76,string_hash_to_newline("Armor"),0.6,0.6,0);
-    draw_text_transformed(xx+1170,yy+76,string_hash_to_newline("Vehicles"),0.6,0.6,0);
-    draw_text_transformed(xx+1490,yy+76,string_hash_to_newline("Ships"),0.6,0.6,0);
+draw_set_color(c_black);
+
+draw_text_transformed(xx+960,yy+76,string_hash_to_newline("Equipment"),0.6,0.6,0);
+draw_text_transformed(xx+1070,yy+76,string_hash_to_newline("Armour"),0.6,0.6,0);
+draw_text_transformed(xx+1170,yy+76,string_hash_to_newline("Vehicles"),0.6,0.6,0);
+draw_text_transformed(xx+1490,yy+76,string_hash_to_newline("Ships"),0.6,0.6,0);
 
 /*if (shop="vehicles") and (obj_controller.cooldown<=0){
     if (mouse_y>=yy+377) and (mouse_y<yy+389){

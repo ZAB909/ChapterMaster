@@ -15,16 +15,16 @@ var i;i=-1;repeat(61){i+=1;
     we2[i]="";we2_n[i]=0;
 }
 
-armor_equip="";
+armour_equip="";
 wep1_equip="";
 wep2_equip="";
 mobi_equip="";
 gear_equip="";
 all_equip="";
 
-req_armor="";
-req_armor_num=0;
-have_armor_num=0;
+req_armour="";
+req_armour_num=0;
+have_armour_num=0;
 
 req_wep1="";
 req_wep1_num=0;

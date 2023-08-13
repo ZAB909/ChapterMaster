@@ -1218,7 +1218,7 @@ if (slide=4){
     draw_rectangle(x8,y8,x8+wid,y8+hei,0);draw_set_color(0);
     draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
     if (scr_hit(x8,y8,x8+wid,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
-        tooltip="Trim";tooltip2="The trim color that appears on the Pauldrons, armor plating, and any decorations.";
+        tooltip="Trim";tooltip2="The trim color that appears on the Pauldrons, armour plating, and any decorations.";
         draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+wid,y8+hei,0);draw_set_alpha(1);
         if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=5;}
     }
@@ -1605,7 +1605,7 @@ if (slide=5){
         if (mucranoid=1) and (onceh=0){mucranoid=0;mutations_selected-=1;onceh=1;disposition[1]+=4;disposition[2]+=4;disposition[3]+=4;disposition[5]+=4;disposition[6]+=4;}
         if (mucranoid!=1) and (onceh=0) and (mutations>mutations_selected){mucranoid=1;mutations_selected+=1;onceh=1;disposition[1]-=4;disposition[2]-=4;disposition[3]-=4;disposition[5]-=4;disposition[6]-=4;}
     }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Rampant Mucranoid"),0.4,0.4,0);
-    if (scr_hit(x1,y1,1020,y1+20)=true){tooltip="Rampant Mucranoid";tooltip2="Your Astartes' Mucranoid cannot be turned off; the slime lowers most dispositions and occasionally damages their armor.";}
+    if (scr_hit(x1,y1,1020,y1+20)=true){tooltip="Rampant Mucranoid";tooltip2="Your Astartes' Mucranoid cannot be turned off; the slime lowers most dispositions and occasionally damages their armour.";}
     
     draw_set_alpha(1);
     

@@ -91,7 +91,7 @@ function scr_apothecary_ship() {
 	            if (obj_ini.race[co,d]>1){maybe=2;normal_hp=false;}
             
 	            if (maybe=2){
-	                if (obj_ini.armor[co,d]!="Dreadnought") and (ship_apoth>0) and (obj_ini.hp[co,d]<=10) and (normal_hp=true){
+	                if (obj_ini.armour[co,d]!="Dreadnought") and (ship_apoth>0) and (obj_ini.hp[co,d]<=10) and (normal_hp=true){
 	                    obj_ini.hp[co,d]+=heal;ship_apoth-=1;
 	                }
 	            }
@@ -101,7 +101,7 @@ function scr_apothecary_ship() {
 	    d=0;
 	    if (ship_tech>0) then repeat(300){// Initial techmarines repair shit
 	        d+=1;normal_hp=true;maybe=0;
-	        if (string_count("Dread",obj_ini.armor[co,d])>0) and (obj_ini.hp[co,d]>0) and (obj_ini.hp[co,d]<50) and (obj_ini.lid[co,d]>0) then maybe=1;
+	        if (string_count("Dread",obj_ini.armour[co,d])>0) and (obj_ini.hp[co,d]>0) and (obj_ini.hp[co,d]<50) and (obj_ini.lid[co,d]>0) then maybe=1;
         
 	        // show_message("maybe=1");
         
@@ -136,7 +136,7 @@ function scr_apothecary_ship() {
 	            if (obj_ini.race[co,d]>1){maybe=2;normal_hp=false;}
             
 	            if (maybe=2){
-	                if (obj_ini.armor[co,d]!="Dreadnought") and (ship_apoth>0) and (obj_ini.hp[co,d]<=30) and (normal_hp=true){
+	                if (obj_ini.armour[co,d]!="Dreadnought") and (ship_apoth>0) and (obj_ini.hp[co,d]<=30) and (normal_hp=true){
 	                    obj_ini.hp[co,d]+=heal;ship_apoth-=1;
 	                }
 	            }
@@ -163,14 +163,14 @@ function scr_apothecary_ship() {
             
 	                if (obj_ini.role[co,d]="Chapter Master"){
 	                    if (string_count("Paragon",string(obj_ini.adv[1])+string(obj_ini.adv[2])+string(obj_ini.adv[3])+string(obj_ini.adv[4]))>0){
-	                        if (obj_ini.armor[co,d]!="Dreadnought") and (ship_apoth>0) and (obj_ini.hp[co,d]<130) and (normal_hp=true){
+	                        if (obj_ini.armour[co,d]!="Dreadnought") and (ship_apoth>0) and (obj_ini.hp[co,d]<130) and (normal_hp=true){
 	                            obj_ini.hp[co,d]+=heal;ship_apoth-=1;
                             
 	                            if (obj_ini.hp[co,d]>130) then obj_ini.hp[co,d]=130;
 	                        }
 	                    }
 	                    if (string_count("Paragon",string(obj_ini.adv[1])+string(obj_ini.adv[2])+string(obj_ini.adv[3])+string(obj_ini.adv[4]))=0){
-	                        if (obj_ini.armor[co,d]!="Dreadnought") and (ship_apoth>0) and (obj_ini.hp[co,d]<100) and (normal_hp=true){
+	                        if (obj_ini.armour[co,d]!="Dreadnought") and (ship_apoth>0) and (obj_ini.hp[co,d]<100) and (normal_hp=true){
 	                            obj_ini.hp[co,d]+=heal;ship_apoth-=1;
                             
 	                            if (obj_ini.hp[co,d]>100) then obj_ini.hp[co,d]=100;
@@ -180,7 +180,7 @@ function scr_apothecary_ship() {
 	                }
                 
 	                if (obj_ini.role[co,d]!="Chapter Master"){
-	                    if (obj_ini.armor[co,d]!="Dreadnought") and (ship_apoth>0) and (obj_ini.hp[co,d]<100) and (normal_hp=true){
+	                    if (obj_ini.armour[co,d]!="Dreadnought") and (ship_apoth>0) and (obj_ini.hp[co,d]<100) and (normal_hp=true){
 	                        obj_ini.hp[co,d]+=heal;ship_apoth-=1;
                         
 	                        if (obj_ini.hp[co,d]>100) then obj_ini.hp[co,d]=100;
@@ -227,7 +227,7 @@ function scr_apothecary_ship() {
 	    d=0;
 	    if (ship_tech>0) then repeat(300){// Last techmarines repair shit
 	        d+=1;normal_hp=true;maybe=0;
-	        if (string_count("Dread",obj_ini.armor[co,d])>0) and (obj_ini.hp[co,d]>0) and (obj_ini.hp[co,d]<100) and (obj_ini.lid[co,d]>0) then maybe=1;
+	        if (string_count("Dread",obj_ini.armour[co,d])>0) and (obj_ini.hp[co,d]>0) and (obj_ini.hp[co,d]<100) and (obj_ini.lid[co,d]>0) then maybe=1;
 	        if (maybe=1){var c;
 	            c=0;repeat(capital_number){c+=1;if (obj_ini.lid[co,d]=capital_num[c]) then maybe=2;}
 	            c=0;repeat(frigate_number){c+=1;if (obj_ini.lid[co,d]=frigate_num[c]) then maybe=2;}

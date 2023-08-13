@@ -311,7 +311,7 @@ function scr_shoot(argument0, argument1, argument2, argument3, argument4) {
 	                if (ap=0) then eac=eac*6;
 	                if (ap=-1) then eac=a;
 	            }
-	            b=a-eac;if (b<=0) then b=0;// Average after armor
+	            b=a-eac;if (b<=0) then b=0;// Average after armour
             
 	            c=b*shots_fired;// New damage
             
@@ -406,7 +406,7 @@ function scr_shoot(argument0, argument1, argument2, argument3, argument4) {
 	                            if (ap2=0) then eac2=eac2*6;
 	                            if (ap2=-1) then eac2=a;
 	                        }
-	                        b2=a2-eac2;if (b2<=0) then b2=0;// Average after armor
+	                        b2=a2-eac2;if (b2<=0) then b2=0;// Average after armour
                         
 	                        c2=b2*shots_remaining;// New damage
                         
@@ -702,7 +702,7 @@ function scr_shoot(argument0, argument1, argument2, argument3, argument4) {
 	                if (ap=0) then eac=eac*6;
 	                if (ap=-1) then eac=a;
 	            }
-	            b=a-eac;if (b<=0) then b=0;// Average after armor
+	            b=a-eac;if (b<=0) then b=0;// Average after armour
             
 	            c=b*shots_fired;// New damage
             
@@ -773,7 +773,7 @@ function scr_shoot(argument0, argument1, argument2, argument3, argument4) {
 	            if (att[argument0]<=80) and (apa[argument0]=0) then apa[argument0]=att[argument0];
             
 	            a=(apa[argument0]/wep_num[argument0])*argument1.dudes_dr[targeh];// Average damage
-	            b=a-argument1.dudes_ac[targeh];// Average after armor
+	            b=a-argument1.dudes_ac[targeh];// Average after armour
 	            c=b*shots_fired;// New damage
             
 	            if (c>0) and (b>0){// Find number of casualties

@@ -59,15 +59,15 @@ number=0;
 var i;i=-1;
 repeat(11){i+=1;role_name[i]="";role_exp[i]=0;}
 
-req_armor="";req_armor_num=0;have_armor_num=0;
+req_armour="";req_armour_num=0;have_armour_num=0;
 req_gear="";req_gear_num=0;have_gear_num=0;
 req_wep1="";req_wep1_num=0;have_wep1_num=0;
 req_wep2="";req_wep2_num=0;have_wep2_num=0;
 req_mobi="";req_mobi_num=0;have_mobi_num=0;
 
-o_wep1="";o_wep2="";o_armor="";o_gear="";o_mobi="";
-n_wep1="";n_wep2="";n_armor="";n_gear="";n_mobi="";
-a_wep1="";a_wep2="";a_armor="";a_gear="";a_mobi="";
+o_wep1="";o_wep2="";o_armour="";o_gear="";o_mobi="";
+n_wep1="";n_wep2="";n_armour="";n_gear="";n_mobi="";
+a_wep1="";a_wep2="";a_armour="";a_gear="";a_mobi="";
 n_good1=1;n_good2=1;n_good3=1;n_good4=1;n_good5=1;
 sel1=0;sel2=0;sel3=0;sel4=0;sel5=0;
 vehicle_equipment=0;warning="";

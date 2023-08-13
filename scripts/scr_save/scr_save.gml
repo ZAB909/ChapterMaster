@@ -181,7 +181,7 @@ function scr_save(argument0, argument1) {
 	    ini_write_real("Controller","gene_tithe",obj_controller.gene_tithe);
 	    ini_write_real("Controller","gene_iou",obj_controller.gene_iou);
 
-	    ini_write_real("Controller","und_armories",obj_controller.und_armories);
+	    ini_write_real("Controller","und_armouries",obj_controller.und_armouries);
 	    ini_write_real("Controller","und_gene_vaults",obj_controller.und_gene_vaults);
 	    ini_write_real("Controller","und_lairs",obj_controller.und_lairs);
 
@@ -659,8 +659,8 @@ function scr_save(argument0, argument1) {
 	        ini_write_string("Ships","shi_conditions"+string(g),obj_ini.ship_conditions[g]);
 	        ini_write_real("Ships","shi_speed"+string(g),obj_ini.ship_speed[g]);
 	        ini_write_real("Ships","shi_turning"+string(g),obj_ini.ship_turning[g]);
-	        ini_write_real("Ships","shi_front_ac"+string(g),obj_ini.ship_front_armor[g]);
-	        ini_write_real("Ships","shi_other_ac"+string(g),obj_ini.ship_other_armor[g]);
+	        ini_write_real("Ships","shi_front_ac"+string(g),obj_ini.ship_front_armour[g]);
+	        ini_write_real("Ships","shi_other_ac"+string(g),obj_ini.ship_other_armour[g]);
 	        ini_write_real("Ships","shi_weapons"+string(g),obj_ini.ship_weapons[g]);
 	        //
 	        ini_write_string("Ships","shi"+string(g)+"wep1",obj_ini.ship_wep[g,1]);
@@ -801,7 +801,7 @@ function scr_save(argument0, argument1) {
 	            ini_write_string("Res","r_role"+string(i)+"."+string(o),obj_controller.r_role[i,o]);
 	            ini_write_string("Res","r_wep1"+string(i)+"."+string(o),obj_controller.r_wep1[i,o]);
 	            ini_write_string("Res","r_wep2"+string(i)+"."+string(o),obj_controller.r_wep2[i,o]);
-	            ini_write_string("Res","r_armor"+string(i)+"."+string(o),obj_controller.r_armor[i,o]);
+	            ini_write_string("Res","r_armour"+string(i)+"."+string(o),obj_controller.r_armour[i,o]);
 	            ini_write_string("Res","r_mobi"+string(i)+"."+string(o),obj_controller.r_mobi[i,o]);
 	            ini_write_string("Res","r_gear"+string(i)+"."+string(o),obj_controller.r_gear[i,o]);
 	         }
@@ -824,7 +824,7 @@ function scr_save(argument0, argument1) {
 	            ini_write_string("Mar","rol"+string(coh)+"."+string(mah),obj_ini.role[coh,mah]);
 	            ini_write_string("Mar","w1"+string(coh)+"."+string(mah),obj_ini.wep1[coh,mah]);
 	            ini_write_string("Mar","w2"+string(coh)+"."+string(mah),obj_ini.wep2[coh,mah]);
-	            ini_write_string("Mar","ar"+string(coh)+"."+string(mah),obj_ini.armor[coh,mah]);
+	            ini_write_string("Mar","ar"+string(coh)+"."+string(mah),obj_ini.armour[coh,mah]);
 	            ini_write_string("Mar","ge"+string(coh)+"."+string(mah),obj_ini.gear[coh,mah]);
 	            ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);
 	        }
@@ -845,7 +845,7 @@ function scr_save(argument0, argument1) {
 
 	                ini_write_string("Mar","w1"+string(coh)+"."+string(mah),obj_ini.wep1[coh,mah]);
 	                ini_write_string("Mar","w2"+string(coh)+"."+string(mah),obj_ini.wep2[coh,mah]);
-	                ini_write_string("Mar","ar"+string(coh)+"."+string(mah),obj_ini.armor[coh,mah]);
+	                ini_write_string("Mar","ar"+string(coh)+"."+string(mah),obj_ini.armour[coh,mah]);
 	                ini_write_string("Mar","ge"+string(coh)+"."+string(mah),obj_ini.gear[coh,mah]);
 	                ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);
 
@@ -865,7 +865,7 @@ function scr_save(argument0, argument1) {
 	            ini_write_string("Mar","rol"+string(coh)+"."+string(mah),obj_ini.role[coh,mah]);
 	            ini_write_string("Mar","w1"+string(coh)+"."+string(mah),obj_ini.wep1[coh,mah]);
 	            ini_write_string("Mar","w2"+string(coh)+"."+string(mah),obj_ini.wep2[coh,mah]);
-	            ini_write_string("Mar","ar"+string(coh)+"."+string(mah),obj_ini.armor[coh,mah]);
+	            ini_write_string("Mar","ar"+string(coh)+"."+string(mah),obj_ini.armour[coh,mah]);
 	            ini_write_string("Mar","ge"+string(coh)+"."+string(mah),obj_ini.gear[coh,mah]);
 	            ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);
 	        }
@@ -876,7 +876,7 @@ function scr_save(argument0, argument1) {
 	            ini_write_string("Mar","rol"+string(coh)+"."+string(mah),obj_ini.role[coh,mah]);
 	            ini_write_string("Mar","w1"+string(coh)+"."+string(mah),obj_ini.wep1[coh,mah]);
 	            ini_write_string("Mar","w2"+string(coh)+"."+string(mah),obj_ini.wep2[coh,mah]);
-	            ini_write_string("Mar","ar"+string(coh)+"."+string(mah),obj_ini.armor[coh,mah]);
+	            ini_write_string("Mar","ar"+string(coh)+"."+string(mah),obj_ini.armour[coh,mah]);
 	            ini_write_string("Mar","ge"+string(coh)+"."+string(mah),obj_ini.gear[coh,mah]);
 	            ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);
 	        }
