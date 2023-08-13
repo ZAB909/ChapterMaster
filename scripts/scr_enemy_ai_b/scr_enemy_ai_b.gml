@@ -149,8 +149,17 @@ function scr_enemy_ai_b() {
 	        if (p_heresy[i]+p_heresy_secret[i]>=90) and (rando<=40) and (p_owner[i]!=7) then contin=1;
         
 	        if (contin>0) and (p_pdf[i]=0) and (p_guardsmen[i]=0) and (p_tau[i]=0) and (p_orks[i]=0){p_owner[i]=10;
-	            scr_alert("red","owner",string(name)+" "+string(i)+" has fallen to heretics!",x,y);
-	        }
+	        scr_alert("red","owner",string(name)+" "+string(i)+" has fallen to heretics!",x,y);
+		if (visited==1) { if(p_type[i]=="Forge") { //visited variable check whether the star has been visited or not 1 for true 0 for false
+				  dispo[i]-=10; // 10 disposition decreases for the respective planet
+				  obj_controller.disposition[3]-=10;} // 10 disposition decrease for the toaster Fetishest since they aren't that numerous
+				  else if(planet_feature_bool(p_feature[i], P_features.Sororitas_Cathedral) or (p_type[i]=="Shrine")) 
+                                { dispo[i]-=10; // similarly 10 disposition decrease, note those nurses are a bit pissy and
+                                  // and you can't easily gain their favor because you cannot ask them to "step down" from office.
+			          obj_controller.disposition[2]-=5;} // the missus diplomacy 0 is when they cringe when you enter the office and cannot ask them for a date.
+				  else dispo[i]-=10; }  // This condition apply when imperium is on control, Because they control so many worlds, you aren't going to gain favor by removing the needle. Also that's your job Astrate take your complaints to your father.
+                            }
+        
         
 	        if (contin>0) and (p_type[i]!="Space Hulk"){
 	            rando=floor(random(100))+1;
@@ -267,11 +276,15 @@ function scr_enemy_ai_b() {
                 
 	                if (have=targ) then badd=2;
                 
-	                if (badd=1) then scr_alert("red","owner","Planet "+string(name)+" "+string(i)+" has succeeded to the Tau Empire!",x,y);
-	                if (badd=2){
-	                    scr_popup("System Lost","The "+string(name)+" system has been taken by the Tau Empire!","tau","");owner=8;
-	                    scr_event_log("red","System "+string(name)+" has been taken by the Tau Empire.");
-	                }
+	                if (badd=1){ scr_alert("red","owner","Planet "+string(name)+" "+string(i)+" has succeeded to the Tau Empire!",x,y);
+				if (visited==1) { if(p_type[i]=="Forge") {  //visited variable checks whether the star has been visited by the chapter or not 1 for true 0 for false
+				dispo[i]-=10; // 10 disposition decreases for the respective planet
+				obj_controller.disposition[3]-=10; }  // 10 disposition decrease for the toaster Fetishest since they aren't that many toasters in 41 millennia
+				else if(planet_feature_bool(p_feature[i], P_features.Sororitas_Cathedral) or (p_type[i]=="Shrine")) { 
+				dispo[i]-=10; // 10 disposition decreases for the respective planet
+				obj_controller.disposition[2]-=5;} // you cannot ask a dead waifu for a date, with the tau against you that's 2 lost already, idk why they are referred to as kawaii btw that's not me.
+				else dispo[i]-=10; } // you had only 1 job.
+				}
                 
 	                if (p_pdf[i]!=0) then p_pdf[i]=round(p_pdf[i]*0.75);
 	                if (p_guardsmen[i]!=0) then p_guardsmen[i]=round(p_guardsmen[i]*0.75);
