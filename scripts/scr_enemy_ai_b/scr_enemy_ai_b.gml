@@ -282,7 +282,7 @@ function scr_enemy_ai_b() {
 				obj_controller.disposition[3]-=10; }  // 10 disposition decrease for the toaster Fetishest since they aren't that many toasters in 41 millennia
 				else if(planet_feature_bool(p_feature[i], P_features.Sororitas_Cathedral) or (p_type[i]=="Shrine")) { 
 				dispo[i]-=10; // 10 disposition decreases for the respective planet
-				obj_controller.disposition[2]-=5;} // you cannot ask a dead waifu for a date, with the tau against you that's 2 lost already, idk why they are referred to as kawaii btw that's not me.
+				obj_controller.disposition[2]-=5;} 
 				else dispo[i]-=10; } // you had only 1 job.
 				}
                 
