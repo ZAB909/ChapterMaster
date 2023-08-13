@@ -39,7 +39,9 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	if (string_count("Missile Launcher",wee)>0) and (string_count("Whirl",wee)=0){ui_weapon[rl]=spr_weapon_missile;
 	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;display_type="normal_ranged";
 	}
-
+	if (string_count("Flamer",wee)>0) {ui_weapon[rl]=spr_weapon_flamer;
+	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;display_type="normal_ranged";
+	}
 
 
 
@@ -64,6 +66,10 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	if (string_count("Stalker Pattern Bolter",wee)>0){ui_weapon[rl]=spr_weapon_stalker;
 	   ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;display_type="normal_ranged";
 	}
+	if (string_count("Combiflamer",wee)>0){ui_weapon[rl]=spr_weapon_comflamer;
+	   ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;display_type="normal_ranged";
+	}
+
 
 	if (string_count("Company Standard",wee)>0){ui_weapon[rl]=spr_weapon_standard;
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;display_type="melee_onehand";
@@ -198,6 +204,10 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;
 	    if (argument1=1) then ui_xmod[rl]=-10;if (argument1=2) then ui_xmod[rl]=-16;
 	}
+	if (string_count("Flamer",wee)>0){ui_weapon[rl]=spr_weapon_flamer;
+	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;
+	    if (argument1=1) then ui_xmod[rl]=-10;if (argument1=2) then ui_xmod[rl]=-16;
+	}
 
 
 	// All of the modifiers for terminator weapons (namely melee) need to be fixed
@@ -223,6 +233,10 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	    if (argument1=1){ui_xmod[rl]=-3+11-13;ui_ymod[rl]=5-12+10;}if (argument1=2){ui_xmod[rl]=-12;ui_ymod[rl]=0;}
 	}
 	if (string_count("Stalker Pattern Bolter",wee)>0){ui_weapon[rl]=spr_weapon_stalker;
+	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;
+	    if (argument1=1) then ui_xmod[rl]=-10;if (argument1=2) then ui_xmod[rl]=-16;
+	}
+	if (string_count("Combiflamer",wee)>0){ui_weapon[rl]=spr_weapon_comflamer;
 	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;
 	    if (argument1=1) then ui_xmod[rl]=-10;if (argument1=2) then ui_xmod[rl]=-16;
 	}
