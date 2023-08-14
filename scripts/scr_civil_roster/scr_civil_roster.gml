@@ -224,31 +224,31 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	                }
                 
 
-	                if (deploying_unit.armor[co,v]="Scout Armor") then targ.dudes_ac[targ.men]=8;
-	                if (deploying_unit.armor[co,v]="MK3 Iron Armor"){targ.dudes_ac[targ.men]=20;targ.dudes_ranged[targ.men]-=0.1;}
-	                if (deploying_unit.armor[co,v]="MK4 Maximus"){targ.dudes_ac[targ.men]=19;targ.dudes_ranged[targ.men]+=0.05;targ.dudes_attack[targ.men]+=0.05;}
-                  if (deploying_unit.armor[co,v]="MK5 Heresy"){targ.dudes_ac[targ.men]=17;targ.dudes_attack[targ.men]+=0.1;targ.marine_ranged[targ.men]-=0.05;}
-	                if (deploying_unit.armor[co,v]="MK6 Corvus"){targ.dudes_ac[targ.men]=18;targ.dudes_ranged[targ.men]+=0.1;}
-	                if (deploying_unit.armor[co,v]="MK7 Aquila") then targ.dudes_ac[targ.men]=18;
-	                if (deploying_unit.armor[co,v]="MK8 Errant") then targ.dudes_ac[targ.men]=19;
-	                if (deploying_unit.armor[co,v]="Power Armor") then targ.dudes_ac[targ.men]=19;
-	                if (deploying_unit.armor[co,v]="Artificer Armor"){targ.dudes_ac[targ.men]=35;targ.dudes_attack[targ.men]+=0.1;}
-	                if (deploying_unit.armor[co,v]="Terminator Armor"){targ.dudes_ac[targ.men]=40;targ.dudes_ranged[targ.men]-=0.1;targ.dudes_attack[targ.men]+=0.2;}
-	                if (deploying_unit.armor[co,v]="Tartaros"){targ.dudes_ac[targ.men]=44;targ.dudes_ranged[targ.men]-=0.05;targ.dudes_attack[targ.men]+=0.2;}
-	                if (deploying_unit.armor[co,v]="Dreadnought") then targ.dudes_ac[targ.men]=40;
-	                if (deploying_unit.armor[co,v]="Ork Armor") then targ.dudes_ac[targ.men]=15;
+	                if (deploying_unit.armour[co,v]="Scout Armour") then targ.dudes_ac[targ.men]=8;
+	                if (deploying_unit.armour[co,v]="MK3 Iron Armour"){targ.dudes_ac[targ.men]=20;targ.dudes_ranged[targ.men]-=0.1;}
+	                if (deploying_unit.armour[co,v]="MK4 Maximus"){targ.dudes_ac[targ.men]=19;targ.dudes_ranged[targ.men]+=0.05;targ.dudes_attack[targ.men]+=0.05;}
+                  if (deploying_unit.armour[co,v]="MK5 Heresy"){targ.dudes_ac[targ.men]=17;targ.dudes_attack[targ.men]+=0.1;targ.marine_ranged[targ.men]-=0.05;}
+	                if (deploying_unit.armour[co,v]="MK6 Corvus"){targ.dudes_ac[targ.men]=18;targ.dudes_ranged[targ.men]+=0.1;}
+	                if (deploying_unit.armour[co,v]="MK7 Aquila") then targ.dudes_ac[targ.men]=18;
+	                if (deploying_unit.armour[co,v]="MK8 Errant") then targ.dudes_ac[targ.men]=19;
+	                if (deploying_unit.armour[co,v]="Power Armour") then targ.dudes_ac[targ.men]=19;
+	                if (deploying_unit.armour[co,v]="Artificer Armour"){targ.dudes_ac[targ.men]=35;targ.dudes_attack[targ.men]+=0.1;}
+	                if (deploying_unit.armour[co,v]="Terminator Armour"){targ.dudes_ac[targ.men]=40;targ.dudes_ranged[targ.men]-=0.1;targ.dudes_attack[targ.men]+=0.2;}
+	                if (deploying_unit.armour[co,v]="Tartaros"){targ.dudes_ac[targ.men]=44;targ.dudes_ranged[targ.men]-=0.05;targ.dudes_attack[targ.men]+=0.2;}
+	                if (deploying_unit.armour[co,v]="Dreadnought") then targ.dudes_ac[targ.men]=40;
+	                if (deploying_unit.armour[co,v]="Ork Armour") then targ.dudes_ac[targ.men]=15;
                 
 	                if (deploying_unit.wep1[co,v]="Boarding Shield") then targ.dudes_ac[targ.men]+=4;
 	                if (deploying_unit.wep2[co,v]="Boarding Shield") then targ.dudes_ac[targ.men]+=4;
 	                if (deploying_unit.wep1[co,v]="Storm Shield") then targ.dudes_ac[targ.men]+=8;
 	                if (deploying_unit.wep2[co,v]="Storm Shield") then targ.dudes_ac[targ.men]+=8;
                 
-	                if (string_count("&",deploying_unit.armor[co,v])>0){
-	                    // Artifact armor
-	                    if (string_count("Power",deploying_unit.armor[co,v])>0) then targ.dudes_ac[targ.men]=30;
-	                    if (string_count("Artificer",deploying_unit.armor[co,v])>0){targ.dudes_ac[targ.men]=37;targ.dudes_attack[targ.men]+=0.1;}
-	                    if (string_count("Terminator",deploying_unit.armor[co,v])>0){targ.dudes_ac[targ.men]=46;targ.dudes_ranged[targ.men]-=0.1;targ.dudes_attack[targ.men]+=0.2;}
-	                    if (string_count("Dreadnought",deploying_unit.armor[co,v])>0) then targ.dudes_ac[targ.men]=44;
+	                if (string_count("&",deploying_unit.armour[co,v])>0){
+	                    // Artifact armour
+	                    if (string_count("Power",deploying_unit.armour[co,v])>0) then targ.dudes_ac[targ.men]=30;
+	                    if (string_count("Artificer",deploying_unit.armour[co,v])>0){targ.dudes_ac[targ.men]=37;targ.dudes_attack[targ.men]+=0.1;}
+	                    if (string_count("Terminator",deploying_unit.armour[co,v])>0){targ.dudes_ac[targ.men]=46;targ.dudes_ranged[targ.men]-=0.1;targ.dudes_attack[targ.men]+=0.2;}
+	                    if (string_count("Dreadnought",deploying_unit.armour[co,v])>0) then targ.dudes_ac[targ.men]=44;
 	                }
 	                if (obj_ini.armour[co,v]!=""){// STC Bonuses
 
@@ -373,19 +373,19 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	                }
                 
 
-	                if (targ.marine_armor[targ.men]="Scout Armor") then targ.marine_ac[targ.men]=8;
-	                if (targ.marine_armor[targ.men]="MK3 Iron Armor"){targ.marine_ac[targ.men]=20;targ.marine_ranged[targ.men]-=0.1;}
-	                if (targ.marine_armor[targ.men]="MK4 Maximus"){targ.marine_ac[targ.men]=19;targ.marine_ranged[targ.men]+=0.05;targ.marine_attack[targ.men]+=0.05;}
-                  if (targ.marine_armor[targ.men]="MK5 Heresy"){targ.marine_ac[targ.men]=17;targ.marine_attack[targ.men]+=0.1;targ.marine_ranged[targ.men]-=0.05;}
-	                if (targ.marine_armor[targ.men]="MK6 Corvus"){targ.marine_ac[targ.men]=18;targ.marine_ranged[targ.men]+=0.1;}
-	                if (targ.marine_armor[targ.men]="MK7 Aquila") then targ.marine_ac[targ.men]=18;
-	                if (targ.marine_armor[targ.men]="MK8 Errant") then targ.marine_ac[targ.men]=19;
-	                if (targ.marine_armor[targ.men]="Power Armor") then targ.marine_ac[targ.men]=19;
-	                if (targ.marine_armor[targ.men]="Artificer Armor"){targ.marine_ac[targ.men]=35;targ.marine_attack[targ.men]+=0.1;}
-	                if (targ.marine_armor[targ.men]="Terminator Armor"){targ.marine_ac[targ.men]=40;targ.marine_ranged[targ.men]-=0.1;targ.marine_attack[targ.men]+=0.2;}
-	                if (targ.marine_armor[targ.men]="Tartaros"){targ.marine_ac[targ.men]=44;targ.marine_ranged[targ.men]-=0.05;targ.marine_attack[targ.men]+=0.2;}
-	                if (targ.marine_armor[targ.men]="Dreadnought") then targ.marine_ac[targ.men]=40;
-	                if (targ.marine_armor[targ.men]="Ork Armor") then targ.marine_ac[targ.men]=15;
+	                if (targ.marine_armour[targ.men]="Scout Armour") then targ.marine_ac[targ.men]=8;
+	                if (targ.marine_armour[targ.men]="MK3 Iron Armour"){targ.marine_ac[targ.men]=20;targ.marine_ranged[targ.men]-=0.1;}
+	                if (targ.marine_armour[targ.men]="MK4 Maximus"){targ.marine_ac[targ.men]=19;targ.marine_ranged[targ.men]+=0.05;targ.marine_attack[targ.men]+=0.05;}
+                        if (targ.marine_armour[targ.men]="MK5 Heresy"){targ.marine_ac[targ.men]=17;targ.marine_attack[targ.men]+=0.1;targ.marine_ranged[targ.men]-=0.05;}
+	                if (targ.marine_armour[targ.men]="MK6 Corvus"){targ.marine_ac[targ.men]=18;targ.marine_ranged[targ.men]+=0.1;}
+	                if (targ.marine_armour[targ.men]="MK7 Aquila") then targ.marine_ac[targ.men]=18;
+	                if (targ.marine_armour[targ.men]="MK8 Errant") then targ.marine_ac[targ.men]=19;
+	                if (targ.marine_armour[targ.men]="Power Armour") then targ.marine_ac[targ.men]=19;
+	                if (targ.marine_armour[targ.men]="Artificer Armour"){targ.marine_ac[targ.men]=35;targ.marine_attack[targ.men]+=0.1;}
+	                if (targ.marine_armour[targ.men]="Terminator Armour"){targ.marine_ac[targ.men]=40;targ.marine_ranged[targ.men]-=0.1;targ.marine_attack[targ.men]+=0.2;}
+	                if (targ.marine_armour[targ.men]="Tartaros"){targ.marine_ac[targ.men]=44;targ.marine_ranged[targ.men]-=0.05;targ.marine_attack[targ.men]+=0.2;}
+	                if (targ.marine_armour[targ.men]="Dreadnought") then targ.marine_ac[targ.men]=40;
+	                if (targ.marine_armour[targ.men]="Ork Armour") then targ.marine_ac[targ.men]=15;
                 
 	                if (deploying_unit.role[cooh,va]="Chapter Master"){
 	                    if (deploying_unit.adv[1]="Paragon") or (deploying_unit.adv[2]="Paragon") or (deploying_unit.adv[3]="Paragon") or (deploying_unit.adv[4]="Paragon"){
