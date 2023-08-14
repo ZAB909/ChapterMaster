@@ -5,8 +5,9 @@ function scr_cheatcode(argument0) //gml_Script_scr_cheatcode
     var cheatcode_digits = ""
     cheatcode_m_digits = ""
     var neg = 0
-    if (argument0 != "")
-    {
+    if (argument0 == "") {
+        return;
+    }
         cheatcode = argument0
         _cheatcode = cheatcode
         cheatcode_string = string_letters(cheatcode)
