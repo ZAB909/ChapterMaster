@@ -51,52 +51,95 @@ if (sound_in=0) and (sound_to!=""){audio_stop_all();
 if (y<450) then y=450;
 if (x>(room_width-800)) then x=room_width-800;
 if (y>(room_height-450)) then y=room_height-450;*/
-if (cheatcode != "") {
-    if (real(cheatcode)=87612){global.cheat_req=true;cheatyface=1;obj_controller.requisition=51234;}
-    if (real(cheatcode)=78512){global.cheat_gene=true;cheatyface=1;obj_controller.gene_seed=9999;}
-    if (real(cheatcode)=12348){global.cheat_disp=true;cheatyface=1;
-        obj_controller.disposition[2]=100;
-        obj_controller.disposition[3]=100;
-        obj_controller.disposition[4]=100;
-        obj_controller.disposition[5]=100;
-        obj_controller.disposition[6]=100;
-        obj_controller.disposition[7]=100;
-        obj_controller.disposition[8]=100;
-        obj_controller.disposition[9]=100;
-        obj_controller.disposition[10]=100;
-    }
-    if (real(cheatcode)=56741){global.cheat_debug=true;cheatyface=1;}
-    if (real(cheatcode)=99991){cheatyface=1;diplomacy=10.5;scr_dialogue("test");}
-    if (global.cheat_req=true) and (obj_controller.requisition!=51234) then obj_controller.requisition=51234;
-    cheatcode="";
+if (cheatcode != "")
+{
 }
-
-if (menu!=17.5) and (instance_exists(obj_event_log)){
-    obj_event_log.help=0;
+if (cheatcode == "req" && global.cheat_req == 0)
+{
+    global.cheat_req = 1
+    cheatyface = 1
+    obj_controller.tempRequisition = obj_controller.requisition
+    obj_controller.requisition = 51234
 }
-
-
-
-if (!instance_exists(obj_event_log)) and (instance_exists(obj_controller)){
-    instance_activate_object(obj_event_log);
+else if (cheatcode == "req" && global.cheat_req == 1)
+{
+    global.cheat_req = 0
+    cheatyface = 1
+    obj_controller.requisition = obj_controller.tempRequisition
 }
-
-if (!instance_exists(obj_ingame_menu)){
-    play_second+=1;if (play_second>=30){
-        play_second=0;play_time+=1;
-        
-        window_old=window_data;
-        window_data=string(window_get_x())+"|"+string(window_get_y())+"|"+string(window_get_width())+"|"+string(window_get_height())+"|";
-        if (window_get_fullscreen()=1){window_old="fullscreen";window_data="fullscreen";}
-        
-        if (window_data!="fullscreen") and (window_get_fullscreen()=0){
-            if (window_data!=window_old){
-                ini_open("saves.ini");
-                ini_write_string("Settings","window_data",string(window_get_x())+"|"+string(window_get_y())+"|"+string(window_get_width())+"|"+string(window_get_height())+"|");
-                ini_close();
+if (cheatcode == "seed" && global.cheat_gene == 0)
+{
+    global.cheat_gene = 1
+    cheatyface = 1
+    obj_controller.tempGene_seed = obj_controller.gene_seed
+    obj_controller.gene_seed = 9999
+}
+else if (cheatcode == "seed" && global.cheat_gene == 1)
+{
+    global.cheat_gene = 0
+    cheatyface = 1
+    obj_controller.gene_seed = obj_controller.tempGene_seed
+}
+if (cheatcode == "dep")
+{
+    global.cheat_disp = 1
+    cheatyface = 1
+    obj_controller.disposition[2] = 100
+    obj_controller.disposition[3] = 100
+    obj_controller.disposition[4] = 100
+    obj_controller.disposition[5] = 100
+    obj_controller.disposition[6] = 100
+    obj_controller.disposition[7] = 100
+    obj_controller.disposition[8] = 100
+    obj_controller.disposition[9] = 100
+    obj_controller.disposition[10] = 100
+}
+if (cheatcode == "debug" && global.cheat_debug == 0)
+{
+    global.cheat_debug = 1
+    cheatyface = 1
+}
+else if (cheatcode == "debug" && global.cheat_debug == 1)
+{
+    global.cheat_debug = 0
+    cheatyface = 1
+}
+if (cheatcode == "test")
+{
+    cheatyface = 1
+    diplomacy = 10.5
+    scr_dialogue("test")
+}
+if (global.cheat_req == 1 && obj_controller.requisition != 51234)
+    obj_controller.requisition = 51234
+cheatcode = ""
+if (menu != 17.5 && instance_exists(obj_event_log))
+    obj_event_log.help = 0
+if ((!instance_exists(obj_event_log)) && instance_exists(obj_controller))
+    instance_activate_object(obj_event_log)
+if (!instance_exists(obj_ingame_menu))
+{
+    play_second += 1
+    if (play_second >= 30)
+    {
+        play_second = 0
+        play_time += 1
+        window_old = window_data
+        window_data = (((((((string(window_get_x()) + "|") + string(window_get_y())) + "|") + string(window_get_width())) + "|") + string(window_get_height())) + "|")
+        if (window_get_fullscreen() == 1)
+        {
+            window_old = "fullscreen"
+            window_data = "fullscreen"
+        }
+        if (window_data != "fullscreen" && window_get_fullscreen() == 0)
+        {
+            if (window_data != window_old)
+            {
+                ini_open("saves.ini")
+                ini_write_string("Settings", "window_data", (((((((string(window_get_x()) + "|") + string(window_get_y())) + "|") + string(window_get_width())) + "|") + string(window_get_height())) + "|"))
+                ini_close()
             }
         }
-        
     }
 }
 
