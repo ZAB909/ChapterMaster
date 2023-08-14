@@ -26,6 +26,9 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	if (string_count("Bolt Pistol",wee)>0){ui_weapon[rl]=spr_weapon_boltpis;
 	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;display_type="normal_ranged";
 	}
+	if (string_count("Infernus Pistol",wee)>0){ui_weapon[rl]=spr_weapon_inferno;
+	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;display_type="normal_ranged";
+	}
 	if (string_count("Bolter",wee)>0) and (string_count("Heavy",wee)=0) and (string_count("Integrated",wee)=0){ui_weapon[rl]=spr_weapon_bolter;
 	    if (string_count("Storm",wee)>0) then ui_weapon[rl]=spr_weapon_sbolter;
 	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;display_type="normal_ranged";
@@ -36,7 +39,12 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	if (string_count("Missile Launcher",wee)>0) and (string_count("Whirl",wee)=0){ui_weapon[rl]=spr_weapon_missile;
 	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;display_type="normal_ranged";
 	}
-
+	if (string_count("Flamer",wee)>0) {ui_weapon[rl]=spr_weapon_flamer;
+	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;display_type="normal_ranged";
+	}
+	if (string_count("Meltagun",wee)>0) {ui_weapon[rl]=spr_weapon_melta;
+	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;display_type="normal_ranged";
+	}
 
 
 
@@ -61,12 +69,19 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	if (string_count("Stalker Pattern Bolter",wee)>0){ui_weapon[rl]=spr_weapon_stalker;
 	   ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;display_type="normal_ranged";
 	}
+	if (string_count("Combiflamer",wee)>0){ui_weapon[rl]=spr_weapon_comflamer;
+	   ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;display_type="normal_ranged";
+	}
+
 
 	if (string_count("Company Standard",wee)>0){ui_weapon[rl]=spr_weapon_standard;
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;display_type="melee_onehand";
 	}
 	if (string_count("Chainsword",wee)>0){ui_weapon[rl]=spr_weapon_chsword;
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;display_type="melee_onehand";
+	}
+	if (string_count("Combat Knife",wee)>0){ui_weapon[rl]=spr_weapon_knife;
+	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=true;display_type="melee_onehand";
 	}
 	if (string_count("Power Sword",wee)>0){ui_weapon[rl]=spr_weapon_powswo;
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;display_type="melee_onehand";
@@ -178,6 +193,10 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;
 	    if (argument1=1) then ui_xmod[rl]=-10;if (argument1=2) then ui_xmod[rl]=-16;
 	}
+	if (string_count("Infernus Pistol",wee)>0){ui_weapon[rl]=spr_weapon_inferno;
+	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;
+	    if (argument1=1) then ui_xmod[rl]=-10;if (argument1=2) then ui_xmod[rl]=-16;
+	}
 	if (string_count("Bolter",wee)>0) and (string_count("Heavy",wee)=0) and (string_count("Integrated",wee)=0){ui_weapon[rl]=spr_weapon_bolter;
 	    if (string_count("Storm",wee)>0) then ui_weapon[rl]=spr_weapon_sbolter;
 	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;
@@ -188,6 +207,14 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	    if (argument1=1) then ui_xmod[rl]=-10;if (argument1=2){ui_xmod[rl]=-16;ui_ymod[rl]=17;}
 	}
 	if (string_count("Missile Launcher",wee)>0) and (string_count("Whirl",wee)=0){ui_weapon[rl]=spr_weapon_missile;
+	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;
+	    if (argument1=1) then ui_xmod[rl]=-10;if (argument1=2) then ui_xmod[rl]=-16;
+	}
+	if (string_count("Flamer",wee)>0){ui_weapon[rl]=spr_weapon_flamer;
+	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;
+	    if (argument1=1) then ui_xmod[rl]=-10;if (argument1=2) then ui_xmod[rl]=-16;
+	}
+	if (string_count("Meltagun",wee)>0){ui_weapon[rl]=spr_weapon_melta;
 	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;
 	    if (argument1=1) then ui_xmod[rl]=-10;if (argument1=2) then ui_xmod[rl]=-16;
 	}
@@ -219,6 +246,10 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;
 	    if (argument1=1) then ui_xmod[rl]=-10;if (argument1=2) then ui_xmod[rl]=-16;
 	}
+	if (string_count("Combiflamer",wee)>0){ui_weapon[rl]=spr_weapon_comflamer;
+	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;
+	    if (argument1=1) then ui_xmod[rl]=-10;if (argument1=2) then ui_xmod[rl]=-16;
+	}
 
 
 	if (string_count("Company Standard",wee)>0){ui_weapon[rl]=spr_weapon_standard;
@@ -227,6 +258,10 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	}
 	if (string_count("Chainsword",wee)>0){ui_weapon[rl]=spr_weapon_chsword;
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;
+	    if (argument1=1){ui_xmod[rl]=-3+11-13;ui_ymod[rl]=5-12+10;}if (argument1=2){ui_xmod[rl]=-12;ui_ymod[rl]=0;}
+	}
+	if (string_count("Combat Knife",wee)>0){ui_weapon[rl]=spr_weapon_knife;
+	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=true;
 	    if (argument1=1){ui_xmod[rl]=-3+11-13;ui_ymod[rl]=5-12+10;}if (argument1=2){ui_xmod[rl]=-12;ui_ymod[rl]=0;}
 	}
 	if (string_count("Power Sword",wee)>0){ui_weapon[rl]=spr_weapon_powswo;
