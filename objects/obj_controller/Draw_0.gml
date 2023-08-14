@@ -244,8 +244,8 @@ draw_set_color(c_red);
 draw_set_halign(fa_left);
 draw_set_alpha(1);
 
-if (global.cheat_debug=true){
-    draw_text(__view_get( e__VW.XView, 0 )+1124,__view_get( e__VW.YView, 0 )+7,string_hash_to_newline("DEBUG MODE"));
+if (global.cheat_debug == 1){
+    draw_text((__view_get((0 << 0), 0) + 1124), (__view_get((1 << 0), 0) + 7), string_hash_to_newline("DEBUG MODE"));
 }
 
 
