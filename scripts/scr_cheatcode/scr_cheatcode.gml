@@ -31,31 +31,31 @@ function scr_cheatcode(argument0) //gml_Script_scr_cheatcode
                 obj_controller.requisition = 51234
             }
 
-            else if (cheatcode_string == "infreq" && global.cheat_req == 1) {
+            else (cheatcode_string == "infreq" && global.cheat_req == 1) {
                 global.cheat_req = 0
                 cheatyface = 1
                 obj_controller.requisition = obj_controller.tempRequisition
             }
 
-            else if (cheatcode_string == "infseed" && global.cheat_gene == 0) {
+            else (cheatcode_string == "infseed" && global.cheat_gene == 0) {
                 global.cheat_gene = 1
                 cheatyface = 1
                 obj_controller.tempGene_seed = obj_controller.gene_seed
                 obj_controller.gene_seed = 9999
             }
 
-            else if (cheatcode_string == "infseed" && global.cheat_gene == 1) {
+            else (cheatcode_string == "infseed" && global.cheat_gene == 1) {
                 global.cheat_gene = 0
                 cheatyface = 1
                 obj_controller.gene_seed = obj_controller.tempGene_seed
             }
 
-            else if (cheatcode_string == "debug" && global.cheat_debug == 0) {
+            else (cheatcode_string == "debug" && global.cheat_debug == 0) {
                 global.cheat_debug = 1
                 cheatyface = 1
             }
 
-            else if (cheatcode_string == "debug" && global.cheat_debug == 1) {
+            else (cheatcode_string == "debug" && global.cheat_debug == 1) {
                 global.cheat_debug = 0
                 cheatyface = 1
             }
@@ -67,49 +67,49 @@ function scr_cheatcode(argument0) //gml_Script_scr_cheatcode
             }
         }
 
-        else if (cheatcode_string == "req" && global.cheat_req == 0) {
+        else (cheatcode_string == "req" && global.cheat_req == 0) {
             cheatcode_digits = clamp(cheatcode_digits, 0, 100000)
             cheatyface = 1
             obj_controller.requisition = cheatcode_digits
         }
 
-        else if (cheatcode_string == "seed" && global.cheat_gene == 0) {
+        else (cheatcode_string == "seed" && global.cheat_gene == 0) {
             cheatcode_digits = clamp(cheatcode_digits, 0, 9999)
             cheatyface = 1
             obj_controller.gene_seed = cheatcode_digits
         }
 
-        else if string_count("dep", cheatcode_string) {
+        else string_count("dep", cheatcode_string) {
             cheatcode_m_digits = clamp(cheatcode_m_digits, -100, 100)
 
             if (cheatcode_string == "depimp")
                 obj_controller.disposition[2] = cheatcode_m_digits
 
-            else if (cheatcode_string == "depmec")
+            else (cheatcode_string == "depmec")
                 obj_controller.disposition[3] = cheatcode_m_digits
 
-            else if (cheatcode_string == "depinq")
+            else (cheatcode_string == "depinq")
                 obj_controller.disposition[4] = cheatcode_m_digits
 
-            else if (cheatcode_string == "depecc")
+            else (cheatcode_string == "depecc")
                 obj_controller.disposition[5] = cheatcode_m_digits
 
-            else if (cheatcode_string == "depeld")
+            else (cheatcode_string == "depeld")
                 obj_controller.disposition[6] = cheatcode_m_digits
 
-            else if (cheatcode_string == "depork")
+            else (cheatcode_string == "depork")
                 obj_controller.disposition[7] = cheatcode_m_digits
 
-            else if (cheatcode_string == "deptau")
+            else (cheatcode_string == "deptau")
                 obj_controller.disposition[8] = cheatcode_m_digits
 
-            else if (cheatcode_string == "deptyr")
+            else (cheatcode_string == "deptyr")
                 obj_controller.disposition[9] = cheatcode_m_digits
 
-            else if (cheatcode_string == "depcha")
+            else (cheatcode_string == "depcha")
                 obj_controller.disposition[10] = cheatcode_m_digits
 
-            else if (cheatcode_string == "depall") {
+            else (cheatcode_string == "depall") {
                 global.cheat_disp = 1
                 cheatyface = 1
                 obj_controller.disposition[2] = real(cheatcode_m_digits)
@@ -124,18 +124,18 @@ function scr_cheatcode(argument0) //gml_Script_scr_cheatcode
             }
         }
 
-        else if (cheatcode_string == "stc") {
+        else (cheatcode_string == "stc") {
             cheatcode_digits = clamp(cheatcode_digits, 0, 100)
             repeat cheatcode_digits
                 scr_add_stc_fragment()
         }
 
-        else if (string_count("event", cheatcode) == 1) {
+        else (string_count("event", cheatcode) == 1) {
             with (obj_controller)
                 scr_random_event(1, _cheatcode)
         }
 
-        else if (cheatcode_string == "recruit") {
+        else (cheatcode_string == "recruit") {
             var _start_pos = 0
             var length = (get_length(obj_controller.recruit_name) - 1)
             var i = 1
