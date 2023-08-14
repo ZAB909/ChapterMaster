@@ -51,6 +51,10 @@ function scr_save(argument0, argument1) {
 	    ini_write_real("Save","corrupt",1);
 
 	    // obj_controller variables here
+	    ini_write_real("boolean", "cheat_req", global.cheat_req);
+            ini_write_real("boolean", "cheat_gene", global.cheat_gene);
+            ini_write_real("boolean", "cheat_debug", global.cheat_debug);
+            ini_write_real("boolean", "cheat_disp", global.cheat_disp);
 	    ini_write_real("Controller","cheatyface",obj_controller.cheatyface);
 	    ini_write_real("Controller","x",obj_controller.x);
 	    ini_write_real("Controller","y",obj_controller.y);
