@@ -49,17 +49,15 @@ if (sound_in=0) and (sound_to!=""){audio_stop_all();
 
 if (cheatcode != "")
 {
-    cheatyface = 1
+	cheatyface = 1
 }
-
 if (cheatcode == "req" && global.cheat_req == 0)
 {
     global.cheat_req = 1
     obj_controller.tempRequisition = obj_controller.requisition
     obj_controller.requisition = 51234
 }
-
-else (cheatcode == "req" && global.cheat_req == 1)
+else if (cheatcode == "req" && global.cheat_req == 1)
 {
     global.cheat_req = 0
     obj_controller.requisition = obj_controller.tempRequisition
@@ -72,7 +70,7 @@ if (cheatcode == "seed" && global.cheat_gene == 0)
     obj_controller.gene_seed = 9999
 }
 
-else (cheatcode == "seed" && global.cheat_gene == 1)
+else if (cheatcode == "seed" && global.cheat_gene == 1)
 {
     global.cheat_gene = 0
     obj_controller.gene_seed = obj_controller.tempGene_seed
@@ -81,7 +79,6 @@ else (cheatcode == "seed" && global.cheat_gene == 1)
 if (cheatcode == "dep")
 {
     global.cheat_disp = 1
-
     obj_controller.disposition[2] = 100
     obj_controller.disposition[3] = 100
     obj_controller.disposition[4] = 100
@@ -95,10 +92,10 @@ if (cheatcode == "dep")
 
 if (cheatcode == "debug" && global.cheat_debug == 0)
 {
-    global.cheat_debug = 1
+    global.cheat_debug = 1 
 }
 
-else (cheatcode == "debug" && global.cheat_debug == 1)
+else if (cheatcode == "debug" && global.cheat_debug == 1)
 {
     global.cheat_debug = 0
 }
@@ -110,17 +107,16 @@ if (cheatcode == "test")
 }
 
 if (global.cheat_req == 1 && obj_controller.requisition != 51234)
-
     obj_controller.requisition = 51234
-    cheatcode = ""
+cheatcode = ""
 
 if (menu != 17.5 && instance_exists(obj_event_log))
     obj_event_log.help = 0
-
 if ((!instance_exists(obj_event_log)) && instance_exists(obj_controller))
     instance_activate_object(obj_event_log)
-
-if (!instance_exists(obj_ingame_menu)){
+	
+if (!instance_exists(obj_ingame_menu))
+{
     play_second += 1
     if (play_second >= 30)
     {
@@ -133,7 +129,6 @@ if (!instance_exists(obj_ingame_menu)){
             window_old = "fullscreen"
             window_data = "fullscreen"
         }
-
         if (window_data != "fullscreen" && window_get_fullscreen() == 0)
         {
             if (window_data != window_old)
