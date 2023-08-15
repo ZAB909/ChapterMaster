@@ -499,7 +499,7 @@ if (obj_controller.is_test_map=true){
     p_orks[1]=0;p_orks[2]=0;p_orks[3]=0;*/
 }
 
-// if (obj_controller.test_map=true) and (p_owner[2]=1){
+// if (obj_controller.is_test_map=true) and (p_owner[2]=1){
 
 if (p_owner[2]=1){
     
@@ -536,7 +536,7 @@ if (p_owner[2]=1){
 }
 
 obj_controller.alarm[9]=2;
-if (obj_controller.test_map!=true) and (p_owner[2]!=1){i=0;repeat(4){i+=1;p_guardsmen[i]=0;}}
+if (obj_controller.is_test_map!=true) and (p_owner[2]!=1){i=0;repeat(4){i+=1;p_guardsmen[i]=0;}}
 
 // var ii;ii=0;repeat(4){ii+=1;p_feature[ii]="STC Fragment|";}
 
