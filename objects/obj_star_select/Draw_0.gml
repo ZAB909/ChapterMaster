@@ -43,7 +43,7 @@ if (target.craftworld=0) and (target.space_hulk=0){
 }
 
 
-if (global.cheat_debug == 1 && obj_controller.selecting_planet > 0 && loading == 0)
+if (global.cheat_debug == true && obj_controller.selecting_planet > 0 && loading == false)
     {
         draw_set_color(c_gray)
         draw_rectangle(((xx + 184) - 123), (yy + 200), ((xx + 184) + 123), (yy + 226), false)
@@ -51,12 +51,12 @@ if (global.cheat_debug == 1 && obj_controller.selecting_planet > 0 && loading ==
         draw_text((xx + 184), (yy + 204), string_hash_to_newline("Debug"))
         draw_set_color(c_white)
         draw_set_alpha(0.2)
-        if (scr_hit(((xx + 184) - 123), ((xx + 184) + 123), (yy + 200), (yy + 226)) == 1)
+        if (scr_hit(((xx + 184) - 123), ((xx + 184) + 123), (yy + 200), (yy + 226)) == true)
         {
             draw_rectangle(((xx + 184) - 123), (yy + 200), ((xx + 184) + 123), (yy + 226), false)
             if (obj_controller.cooldown <= 0 && obj_controller.mouse_left == 1)
             {
-                debug = 1
+                debug = true
                 obj_controller.cooldown = 8000
             }
         }
