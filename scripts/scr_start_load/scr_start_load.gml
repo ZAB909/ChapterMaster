@@ -41,7 +41,7 @@ function scr_start_load(fleet, load_from_star, escort_load) {
 				// check if marine exists
 				 if (obj_ini.role[_comp, _marine] != "") {
 					 //calculate marine space
-					var marine_size =  scr_unit_size(obj_ini.armor[_comp, _marine], obj_ini.role[_comp, _marine], false, false);
+					var marine_size =  scr_unit_size(obj_ini.armour[_comp, _marine], obj_ini.role[_comp, _marine], false, false);
 					_company_size += marine_size;
 				 array_push(company_loader, [_comp, _marine, marine_size ])
 			 }
