@@ -181,7 +181,7 @@ large_text=ini_read_real("Settings","large_text",0);
 settings_heresy=ini_read_real("Settings","settings_heresy",0);
 settings_fullscreen=ini_read_real("Settings","fullscreen",1);
 settings_window_data=ini_read_string("Settings","window_data","fullscreen");
-if (is_test_map=true) then global.cheat_debug=true;
+if (is_test_map) then global.cheat_debug=true;
 ini_close();
 
 
