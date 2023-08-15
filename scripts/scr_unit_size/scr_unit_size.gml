@@ -1,9 +1,11 @@
 
+// lets face it this should all be solved in a method in the marines struct....
 function scr_unit_size(armour, role, other_factors, mobility) {
 
     // armour: armour
     // role: role
     // other_factors: +?
+	//mobility item
     var sz = 1;
     if (role!=""){
 		var bulky_armour = ["Terminator Armour", "Tartaros"]

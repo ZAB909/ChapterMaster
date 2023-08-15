@@ -5,6 +5,8 @@ function scr_start_load(fleet, load_from_star, escort_load) {
 
     // this distributes the marines and vehicles to the correct ships if the chapter is fleet-based or a home-based chapter
 	
+	
+	// i feel like there definatly is or should be a generic function for this????
 	var _vehicles = ["Rhino", "Predator", "Land Speeder", "Land Raider", "Whirlwind"]
 	function load_vehicles(_companies, _equip ,_ship, size){
 			obj_ini.veh_wid[_companies, _equip] = 0;
@@ -12,6 +14,7 @@ function scr_start_load(fleet, load_from_star, escort_load) {
 			obj_ini.veh_loc[_companies, _equip] = obj_ini.ship_location[_ship];	
 			obj_ini.ship_carrying[_ship] -= size;
 	}
+	// i feel like there definatly is or should be a generic function for this????	
 	function load_marine(_company, _unit, _ship, size){
              obj_ini.lid[_company, _unit] = _ship;
              obj_ini.wid[_company, _unit] = 0;
@@ -20,9 +23,6 @@ function scr_start_load(fleet, load_from_star, escort_load) {
 	}
     var splinter, company_size, ship, ship_size, companies_loaded;
     splinter = 0;
-    _companies = -1; // all companies for this script
-    _equip = 0; //vehicle or armour(equip)
-    remove_size = 0;
     company_size = 0;
     ship = 1;
     //ship_size = obj_ini.ship_size[ship];
@@ -30,8 +30,10 @@ function scr_start_load(fleet, load_from_star, escort_load) {
 	var ship_return = 1;
 	var ship_has_space =true;
 
+	//thread for now defunct splinter fleets new algorithm just sorts marines into ships and ship location determines splinter status
     if (string_count("Splinter", obj_ini.strin2) > 0) then splinter = 1;
 	
+		//loop through companies. try and load whole company onto single ship else spread company across largest ships with remaining space
 	for (var _comp =0; _comp<10;_comp++;){
 		var _company_size = 0;
 		var company_loader =[];//array of companies marines
