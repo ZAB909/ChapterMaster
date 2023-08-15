@@ -50,7 +50,7 @@ if (fin=true) and (too_high<=0){fin=false;
             instance_destroy()
         }
     }
-    else (value_is_string == 1 && ischeatcode == 1) {
+    else {
         if (target == "controller")
             scr_cheatcode(inputing)
 
