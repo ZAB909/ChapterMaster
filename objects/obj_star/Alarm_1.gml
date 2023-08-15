@@ -480,7 +480,7 @@ p_tyranids[2]=3;*/
 
 
 
-if (obj_controller.test_map=true){
+if (obj_controller.is_test_map=true){
     /*if (p_owner[1]=3) then p_feature[1]="STC Fragment|";
     if (p_owner[2]=3) then p_feature[2]="STC Fragment|";
     if (p_owner[3]=3) then p_feature[3]="STC Fragment|";
