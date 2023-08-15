@@ -891,7 +891,7 @@ if ((turn>=10) or (obj_ini.fleet_type=3)) and (faction_defeated[7]=0){
     with(obj_star){
         if (owner=7) then instance_create(x,y,obj_temp2);
     }
-    if ((instance_number(obj_temp2)>=5) and (waaagh<=instance_number(obj_temp2)) and (obj_controller.known[7]=0))/* or (obj_controller.test_map=true)*/{
+    if ((instance_number(obj_temp2)>=5) and (waaagh<=instance_number(obj_temp2)) and (obj_controller.known[7]=0))/* or (obj_controller.is_test_map=true)*/{
         obj_controller.known[7]=0.5;
         with(obj_star){
             if (owner=7) then alarm[4]=1;
