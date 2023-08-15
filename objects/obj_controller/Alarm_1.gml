@@ -14,7 +14,7 @@ field="tyranids"
 /*
 field=choose("orks","tyranids","both"); 
 if (global.chapter_name="Lamenters") then field="both"; 
-if (test_map=true) then field="orks"; 
+if (is_test_map=true) then field="orks"; 
 
 */
 
@@ -378,7 +378,7 @@ repeat(10){
     if (field="orks") then orkz+=20;
     if (field="both") then orkz+=3;
     if (obj_ini.fleet_type=3) then orkz+=2;
-    if (test_map=true) then orkz=4;
+    if (is_test_map=true) then orkz=4;
     
     repeat(orkz){
         n=instance_number(obj_temp3);
@@ -601,7 +601,7 @@ scr_add_artifact("good","daemonic",0,obj_ini.ship[1],501);*/
 // scr_add_item("Cyclonic Torpedo",5);
 // scr_add_item("Exterminatus",5);
     
-if (test_map=true){
+if (is_test_map=true){
     // scr_add_item("Exterminatus",5);
     /*scr_add_artifact("good","",0,obj_ini.ship[1],501);
     scr_add_artifact("good","",0,obj_ini.ship[1],501);
