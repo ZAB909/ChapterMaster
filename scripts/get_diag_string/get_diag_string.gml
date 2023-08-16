@@ -12,4 +12,3 @@ function get_diag_string(question, maximum, target1, target2, value, cheat)
     newpopdialogue.value_is_string = value
     newpopdialogue.ischeatcode = cheat
 }
-
