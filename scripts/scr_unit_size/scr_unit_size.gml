@@ -9,7 +9,9 @@ function scr_unit_size(armour, role, other_factors, mobility) {
     var sz = 1;
     if (role!=""){
 		var bulky_armour = ["Terminator Armour", "Tartaros"]
-        if (string_count("Dread",armour)>0) {sz+=5;}else if (array_contains(bulky_armour,armour)){sz +=1};
+        if (string_count("Dread",armour)>0) {
+		sz+=5;
+	}else if (array_contains(bulky_armour,armour)){sz +=1};
         if (role="Rhino") {sz=10;}
         else if (role="Predator") {sz=10;}
         else if (role="Land Raider") {sz=20;} 
