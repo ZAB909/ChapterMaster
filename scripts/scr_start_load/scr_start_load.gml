@@ -90,6 +90,7 @@ function scr_start_load(fleet, load_from_star, escort_load) {
 						  if ((obj_ini.ship_carrying[ship_loop] - company_loader[m][2]) <= obj_ini.ship_capacity[ship_loop]){
 							load_marine(company_loader[m][0], company_loader[m][1], ship_loop, company_loader[m][2]);
 						  } else {array_push(comp_edit, company_loader[m])}
+
 						  if (obj_ini.ship_carrying[ship_loop] = obj_ini.ship_capacity[ship_loop]){
 							   ship_has_space = false;
 							   break;
