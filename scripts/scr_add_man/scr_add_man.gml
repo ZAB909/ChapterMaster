@@ -1,3 +1,102 @@
+function TTRPG_stats(faction, comp, mar) constructor{
+	if (faction == "player_marine"){
+		role_history = [[obj_ini.wep1[company,marine_number], obj_controller.turn]];
+		strength = 5;
+		constitution = 5;
+		dexterity = 5;
+		intelligence = 5;
+		wisdom = 5;
+		charisma = 5;
+		religion = "Imperial Cult";
+		piety = 5;
+		marine_ascension = obj_controller.turn; // on what day did turn did this marine begin to exist
+		company = comp;
+		marine_number = mar;
+		// get marine health
+		static hp = function(){ 
+			return obj_ini.hp[company,marine_number]
+		};
+		//update_marine health
+       static update_health = function(new_health){
+            obj_ini.hp[company,marine_number] = new_health;
+	   };
+		static weapon_one = function(){ 
+			return obj_ini.wep1[company,marine_number];
+		};
+       static update_weapon_one = function(new_weapon){
+            obj_ini.wep1[company,marine_number] = new_weapon;
+	   };
+		static weapon_two = function(){ 
+			return obj_ini.wep1[company,marine_number];
+		};
+       static update_weapon_two = function(new_weapon){
+            obj_ini.w[company,marine_number] = new_weapon;
+	   };
+		static armour = function(){ 
+			return obj_ini.armour[company,marine_number];
+		};	   
+       static update_armour = function(new_armour){
+            obj_ini.armour[company,marine_number] = new_armour;
+			get_unit_size(); //every time armour is changed see if the marines size has changed
+	   };	
+		static corruption = function(){ 
+			return obj_ini.chaos[company,marine_number];
+		};	   
+       static update_corruption = function(new_corruption){
+            obj_ini.chaos[company,marine_number] = new_corruption;
+	   };	
+		static specials = function(){ 
+			return obj_ini.spe[company,marine_number];
+		};	   
+       static update_specials = function(new_specials){
+            obj_ini.spe[company,marine_number] = new_specials;
+	   };
+	   	static mobility_item = function(){ 
+			return obj_ini.mobi[company,marine_number];
+		};	   
+       static update_mobility_item = function(new_mobility_item){
+            obj_ini.mobi[company,marine_number] = new_mobility_item;
+			get_unit_size(); //every time mobility_item is changed see if the marines size has changed
+	   };	
+	   	static race = function(){ 
+			return obj_ini.race[company,marine_number];
+		};	
+		static role = function(){
+			return obj_ini.role[company,marine_number];
+		};
+		static update_role = function(new_role){
+			obj_ini.role[company,marine_number]= new_role;
+			array_append(role_history ,[obj_ini.wep1[company,marine_number], obj_controller.turn])
+		}		
+		
+		static get_unit_size = function(){
+			var r = role();
+			var arm = armour();
+		    var sz = 1;
+		    if (r!=""){
+				var bulky_armour = ["Terminator Armour", "Tartaros"]
+		        if (string_count("Dread",arm)>0) {sz+=5;}else if (array_contains(bulky_armour,arm)){sz +=1};
+		        if (r="Rhino") {sz=10;}
+		        else if (r="Predator") {sz=10;}
+		        else if (r="Land Raider") {sz=20;} 
+		        else if (r="Land Speeder") {sz=5;}
+		        else if (r="Whirlwind") {sz=10;}
+		        else if (r="Harlequin Troupe") {sz=5;}
+				else if (r="Chapter Master"){sz+=1;}
+				
+				var mobi =  mobility_item();
+				if (mobi == "Jump Pack"){
+					sz += 1;
+				}
+		        size =sz;
+		    }
+	
+			size = 0;			
+		}
+	   
+	}
+}
+
 function scr_add_man(man_role, target_company, choice_armour, choice_weapons, choice_gear, spawn_exp, spawn_name, corruption, other_gear, home_spot, mobility_items) {
 
 	// man_role = role
@@ -266,112 +365,10 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 	    }
     
     if (!array_contains(non_marine_roles,man_role)){
+		obj_ini.TTRPG[target_company, good] = TTRPG("player_marine", target_company, good);
 		marines+=1;
 		}    
 	    with(obj_ini){scr_company_order(target_company);}
 	}
 
-
-}
-function TTRPG_stats(faction, comp, mar) constructor{
-	if (faction == "player_marine"){
-		strength = 5;
-		constitution = 5;
-		dexterity = 5;
-		intelligence = 5;
-		wisdom = 5;
-		charisma = 5;
-		religion = "Imperial Cult";
-		piety = 5;
-		marine_ascension = obj_controller.turn; // on what day did turn did this marine begin to exist
-		company = comp;
-		marine_number = mar;
-		// get marine health
-		static hp = function(){ 
-			return obj_ini.hp[company,marine_number]
-		};
-		//update_marine health
-       static update_health = function(new_health){
-            obj_ini.hp[company,marine_number] = new_health;
-	   };
-		static weapon_one = function(){ 
-			return obj_ini.wep1[company,marine_number];
-		};
-       static update_weapon_one = function(new_weapon){
-            obj_ini.wep1[company,marine_number] = new_weapon;
-	   };
-		static weapon_two = function(){ 
-			return obj_ini.wep1[company,marine_number];
-		};
-       static update_weapon_two = function(new_weapon){
-            obj_ini.w[company,marine_number] = new_weapon;
-	   };
-		static armour = function(){ 
-			return obj_ini.armour[company,marine_number];
-		};	   
-       static update_armour = function(new_armour){
-            obj_ini.armour[company,marine_number] = new_armour;
-			get_unit_size(); //every time armour is changed see if the marines size has changed
-	   };	
-		static corruption = function(){ 
-			return obj_ini.chaos[company,marine_number];
-		};	   
-       static update_corruption = function(new_corruption){
-            obj_ini.chaos[company,marine_number] = new_corruption;
-	   };	
-		static specials = function(){ 
-			return obj_ini.spe[company,marine_number];
-		};	   
-       static update_specials = function(new_specials){
-            obj_ini.spe[company,marine_number] = new_specials;
-	   };
-	   	static mobility_item = function(){ 
-			return obj_ini.armour[company,marine_number];
-		};	   
-       static update_mobility_item = function(new_mobility_item){
-            obj_ini.spe[company,marine_number] = new_mobility_item;
-			get_unit_size(); //every time mobility_item is changed see if the marines size has changed
-	   };
-	   	static mobility_item = function(){ 
-			return obj_ini.spe[company,marine_number];
-		};	   
-       static update_mobility_item = function(new_mobility_item){
-            obj_ini.spe[company,marine_number] = new_mobility_item;
-	   };	
-	   	static race = function(){ 
-			return obj_ini.race[company,marine_number];
-		};	
-		static role = function(){
-			return obj_ini.role[company,marine_number];
-		};
-		static update_role = function(new_role){
-			obj_ini.role[company,marine_number]= new_role;
-		}		
-		
-		static get_unit_size = function(){
-			var r = role();
-			var arm = armour();
-		    var sz = 1;
-		    if (r!=""){
-				var bulky_armour = ["Terminator Armour", "Tartaros"]
-		        if (string_count("Dread",arm)>0) {sz+=5;}else if (array_contains(bulky_armour,arm)){sz +=1};
-		        if (r="Rhino") {sz=10;}
-		        else if (r="Predator") {sz=10;}
-		        else if (r="Land Raider") {sz=20;} 
-		        else if (r="Land Speeder") {sz=5;}
-		        else if (r="Whirlwind") {sz=10;}
-		        else if (r="Harlequin Troupe") {sz=5;}
-				else if (r="Chapter Master"){sz+=1;}
-				
-				var mobi =  mobility_item();
-				if (mobi == "Jump Pack"){
-					sz += 1;
-				}
-		        size =sz;
-		    }
-	
-			size = 0;			
-		}
-	   
-	}
 }
