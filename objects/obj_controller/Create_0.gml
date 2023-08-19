@@ -1,7 +1,7 @@
 
 
 
-test_map=false;
+is_test_map=false;
 target_navy_number=5;
 global.sound_playing=0;
 global.defeat=0;tutorial=0;
@@ -181,7 +181,7 @@ large_text=ini_read_real("Settings","large_text",0);
 settings_heresy=ini_read_real("Settings","settings_heresy",0);
 settings_fullscreen=ini_read_real("Settings","fullscreen",1);
 settings_window_data=ini_read_string("Settings","window_data","fullscreen");
-    if (test_map=true) then global.cheat_debug=true;
+if (is_test_map) then global.cheat_debug=true;
 ini_close();
 
 
@@ -644,7 +644,7 @@ requisition=500;
 if (instance_exists(obj_ini)){
     if (obj_ini.progenitor=0) /*and (obj_creation.custom=0)*/ and (global.chapter_name!="Doom Benefactors") then requisition=2000;
 }
-if (test_map=true) then requisition=50000;
+if (is_test_map=true) then requisition=50000;
 
 
 
@@ -974,7 +974,7 @@ instance_create(floor(random(room_width-128))+64,floor(random(room_height-256))+
 plan=floor(random(5))+19;
 plan=30*1.5;
 plan=70;
-if (test_map=true) then plan=20;
+if (is_test_map=true) then plan=20;
 
 repeat(120){
     go=0;

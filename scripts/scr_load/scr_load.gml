@@ -42,7 +42,10 @@ function scr_load(argument0, argument1) {
 
 	    // obj_controller variables here
 	    obj_controller.load_game=argument1;
-
+	    global.cheat_req = ini_read_real("boolean", "cheat_req", 0);
+	    global.cheat_gene = ini_read_real("boolean", "cheat_gene", 0);
+	    global.cheat_debug = ini_read_real("boolean", "cheat_debug", 0);
+	    global.cheat_disp = ini_read_real("boolean", "cheat_disp", 0);
 	    obj_controller.cheatyface=ini_read_real("Controller","cheatyface",0);
 	    obj_controller.x=ini_read_real("Controller","x",obj_controller.x);
 	    obj_controller.y=ini_read_real("Controller","y",obj_controller.y);

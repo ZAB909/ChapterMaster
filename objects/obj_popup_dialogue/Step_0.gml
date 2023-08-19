@@ -45,15 +45,19 @@ if (fin=true) and (too_high<=0){fin=false;
                 if (target2="Info Chip") then obj_controller.trade_info-=real(inputing);
             }
             
-            if (target="controller") then obj_controller.cheatcode=real(inputing);
-            
-            if (instance_exists(obj_controller)){obj_controller.cooldown=8;}
-            instance_destroy();
+            if instance_exists(obj_controller)
+                obj_controller.cooldown = 8
+            instance_destroy()
         }
-        
-        
     }
-    
+    else {
+        if (target == "controller")
+            scr_cheatcode(inputing)
+
+        if instance_exists(obj_controller)
+            obj_controller.cooldown = 8
+        instance_destroy()
+    }
 }
 
 
