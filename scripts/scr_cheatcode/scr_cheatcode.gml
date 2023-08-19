@@ -131,8 +131,8 @@ function scr_cheatcode(argument0)
         }
 
         else if (string_count("event", cheatcode) == 1) {
-            with (obj_controller)
-                scr_random_event(1, _cheatcode)
+          with (obj_controller)
+          scr_random_event(1)
         }
 
         else if (cheatcode_string == "recruit") {
