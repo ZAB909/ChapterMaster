@@ -22,7 +22,8 @@ if (enemy=1){instance_activate_object(obj_enunit);exit;}
 
 if (battle_special="study2a") or (battle_special="study2b"){ally=3;ally_forces=1;}
 
-xxx=instance_nearest(1000,240,obj_pnunit).x+80;
+xxx=instance_nearest(1000,240,obj_pnunit);
+xxx=xxx.x+80;
 
 if (string_count("spyrer",battle_special)>0) or (string_count("fallen",battle_special)>0) or (string_count("mech",battle_special)>0) or (battle_special="space_hulk") or (battle_special="study2a") or (battle_special="study2b") then fortified=0;
 
