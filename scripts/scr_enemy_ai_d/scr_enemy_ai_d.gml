@@ -204,14 +204,14 @@ function scr_enemy_ai_d() {
 	                                if (obj_ini.role[com,ide]=obj_ini.role[100,16]){
 	                                    // Case 1: on planet
 	                                    if (obj_ini.loc[com,ide]=name) and (obj_ini.wid[com,ide]=i){
-	                                        p_player[i]-=scr_unit_size(obj_ini.armor[com,ide],obj_ini.role[com,ide],true);
+	                                        p_player[i]-=scr_unit_size(obj_ini.armour[com,ide],obj_ini.role[com,ide],true);
 	                                        obj_ini.loc[com,ide]="Mechanicus Vessel";obj_ini.wid[com,ide]=0;obj_ini.lid[com,ide]=0;
 	                                        techs_taken+=1;
 	                                    }
 	                                    if (obj_ini.lid[com,ide]>0){
 	                                        ship_planet=obj_ini.ship_location[obj_ini.lid[com,ide]];
 	                                        if (ship_planet=name){
-	                                            obj_ini.ship_carrying[obj_ini.lid[com,ide]]-=scr_unit_size(obj_ini.armor[com,ide],obj_ini.role[com,ide],true);
+	                                            obj_ini.ship_carrying[obj_ini.lid[com,ide]]-=scr_unit_size(obj_ini.armour[com,ide],obj_ini.role[com,ide],true);
 	                                            obj_ini.loc[com,ide]="Mechanicus Vessel";obj_ini.wid[com,ide]=0;obj_ini.lid[com,ide]=0;
 	                                            techs_taken+=1;
 	                                        }

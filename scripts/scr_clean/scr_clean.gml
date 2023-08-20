@@ -106,7 +106,7 @@ function scr_clean(argument0) {
 	    repeat(hostile_shots){
 	        if (men>0) then you=floor(random(men))+1;// Need a max_men / max_veh    for the amount of them initialized
 	        repeat(700){// This gets a different mahreen if it is not valid
-	            // if (marine_armor[you]="Dreadnought") or (marine_hp[you]<0){
+	            // if (marine_armour[you]="Dreadnought") or (marine_hp[you]<0){
 	            if (marine_hp[you]<0){
 	                if (you=1) then going_up=1;
 	                if (going_up=0) and (you>0) you-=1;
@@ -114,7 +114,7 @@ function scr_clean(argument0) {
 	                if (going_up=1) and (you=950) then going_up=0;
 	            }
 	        }
-	        // if (marine_armor[you]="Dreadnought") or (marine_hp[you]<0) then stahp=1;
+	        // if (marine_armour[you]="Dreadnought") or (marine_hp[you]<0) then stahp=1;
         
 	        if (stahp=0){
 	            var dr,minus;

@@ -195,12 +195,12 @@ if (apothecary_points>=4) and (apothecary_aspirant=0){
         if (g1!=0){command+=1;marines-=1;
             obj_ini.race[0,g1]=obj_ini.race[tco,tid];obj_ini.loc[0,g1]=obj_ini.loc[tco,tid];obj_ini.name[0,g1]=obj_ini.name[tco,tid];
             obj_ini.role[0,g1]=obj_ini.role[100,15]+" Aspirant";obj_ini.wep1[0,g1]=obj_ini.wep1[tco,tid];obj_ini.lid[0,g1]=obj_ini.lid[tco,tid];
-            obj_ini.wid[0,g1]=obj_ini.wid[tco,tid];obj_ini.wep2[0,g1]=obj_ini.wep2[tco,tid];obj_ini.armor[0,g1]=obj_ini.armor[tco,tid];
+            obj_ini.wid[0,g1]=obj_ini.wid[tco,tid];obj_ini.wep2[0,g1]=obj_ini.wep2[tco,tid];obj_ini.armour[0,g1]=obj_ini.armour[tco,tid];
             obj_ini.gear[0,g1]=obj_ini.gear[tco,tid];obj_ini.hp[0,g1]=obj_ini.hp[tco,tid];obj_ini.chaos[0,g1]=obj_ini.chaos[tco,tid];
             obj_ini.mobi[0,g1]=obj_ini.mobi[tco,tid];
             obj_ini.experience[0,g1]=obj_ini.experience[tco,tid];obj_ini.age[0,g1]=obj_ini.age[tco,tid];
             obj_ini.loc[tco,tid]="";obj_ini.name[tco,tid]="";obj_ini.wep1[tco,tid]="";obj_ini.lid[tco,tid]=0;obj_ini.role[tco,tid]="";
-            obj_ini.wid[tco,tid]=0;obj_ini.wep2[tco,tid]="";obj_ini.armor[tco,tid]="";obj_ini.gear[tco,tid]="";obj_ini.hp[tco,tid]=0;
+            obj_ini.wid[tco,tid]=0;obj_ini.wep2[tco,tid]="";obj_ini.armour[tco,tid]="";obj_ini.gear[tco,tid]="";obj_ini.hp[tco,tid]=0;
             obj_ini.chaos[tco,tid]=0;obj_ini.experience[tco,tid]=0;obj_ini.age[tco,tid]=0;obj_ini.mobi[tco,tid]="";
             if (obj_ini.gear[0,g1]!=""){scr_add_item(obj_ini.gear[0,g1],1);obj_ini.gear[0,g1]="";}
             if (obj_ini.mobi[0,g1]!=""){scr_add_item(obj_ini.mobi[0,g1],1);obj_ini.mobi[0,g1]="";}
@@ -292,12 +292,12 @@ if (chaplain_points>=4) and (chaplain_aspirant=0){
         if (g1!=0){command+=1;marines-=1;
             obj_ini.race[0,g1]=obj_ini.race[tco,tid];obj_ini.loc[0,g1]=obj_ini.loc[tco,tid];obj_ini.name[0,g1]=obj_ini.name[tco,tid];
             obj_ini.role[0,g1]=obj_ini.role[100,14]+" Aspirant";obj_ini.wep1[0,g1]=obj_ini.wep1[tco,tid];obj_ini.lid[0,g1]=obj_ini.lid[tco,tid];
-            obj_ini.wid[0,g1]=obj_ini.wid[tco,tid];obj_ini.wep2[0,g1]=obj_ini.wep2[tco,tid];obj_ini.armor[0,g1]=obj_ini.armor[tco,tid];
+            obj_ini.wid[0,g1]=obj_ini.wid[tco,tid];obj_ini.wep2[0,g1]=obj_ini.wep2[tco,tid];obj_ini.armour[0,g1]=obj_ini.armour[tco,tid];
             obj_ini.gear[0,g1]=obj_ini.gear[tco,tid];obj_ini.hp[0,g1]=obj_ini.hp[tco,tid];obj_ini.chaos[0,g1]=obj_ini.chaos[tco,tid];
             obj_ini.experience[0,g1]=obj_ini.experience[tco,tid];obj_ini.age[0,g1]=obj_ini.age[tco,tid];
             obj_ini.mobi[0,g1]=obj_ini.mobi[tco,tid];
             obj_ini.loc[tco,tid]="";obj_ini.name[tco,tid]="";obj_ini.wep1[tco,tid]="";obj_ini.lid[tco,tid]=0;obj_ini.role[tco,tid]="";
-            obj_ini.wid[tco,tid]=0;obj_ini.wep2[tco,tid]="";obj_ini.armor[tco,tid]="";obj_ini.gear[tco,tid]="";obj_ini.hp[tco,tid]=0;
+            obj_ini.wid[tco,tid]=0;obj_ini.wep2[tco,tid]="";obj_ini.armour[tco,tid]="";obj_ini.gear[tco,tid]="";obj_ini.hp[tco,tid]=0;
             obj_ini.chaos[tco,tid]=0;obj_ini.experience[tco,tid]=0;obj_ini.age[tco,tid]=0;obj_ini.mobi[tco,tid]="";
             if (obj_ini.gear[0,g1]!=""){scr_add_item(obj_ini.gear[0,g1],1);obj_ini.gear[0,g1]="";}
             if (obj_ini.mobi[0,g1]!=""){scr_add_item(obj_ini.mobi[0,g1],1);obj_ini.mobi[0,g1]="";}
@@ -360,7 +360,7 @@ if (psyker_points>=round(goal/2)) and (psyker_aspirant=0){
         if (g1!=0){command+=1;marines-=1;
             obj_ini.race[0,g1]=obj_ini.race[tco,tid];obj_ini.loc[0,g1]=obj_ini.loc[tco,tid];obj_ini.name[0,g1]=obj_ini.name[tco,tid];
             obj_ini.role[0,g1]=string(obj_ini.role[100,17])+" Aspirant";obj_ini.wep1[0,g1]=obj_ini.wep1[tco,tid];obj_ini.lid[0,g1]=obj_ini.lid[tco,tid];
-            obj_ini.wid[0,g1]=obj_ini.wid[tco,tid];obj_ini.wep2[0,g1]=obj_ini.wep2[tco,tid];obj_ini.armor[0,g1]=obj_ini.armor[tco,tid];
+            obj_ini.wid[0,g1]=obj_ini.wid[tco,tid];obj_ini.wep2[0,g1]=obj_ini.wep2[tco,tid];obj_ini.armour[0,g1]=obj_ini.armour[tco,tid];
             obj_ini.gear[0,g1]=obj_ini.gear[tco,tid];obj_ini.hp[0,g1]=obj_ini.hp[tco,tid];obj_ini.chaos[0,g1]=obj_ini.chaos[tco,tid];
             obj_ini.experience[0,g1]=obj_ini.experience[tco,tid];obj_ini.age[0,g1]=obj_ini.age[tco,tid];
             scr_powers_new(0,g1);
@@ -369,7 +369,7 @@ if (psyker_points>=round(goal/2)) and (psyker_aspirant=0){
             
             obj_ini.mobi[0,g1]=obj_ini.mobi[tco,tid];
             obj_ini.loc[tco,tid]="";obj_ini.name[tco,tid]="";obj_ini.wep1[tco,tid]="";obj_ini.lid[tco,tid]=0;obj_ini.role[tco,tid]="";
-            obj_ini.wid[tco,tid]=0;obj_ini.wep2[tco,tid]="";obj_ini.armor[tco,tid]="";obj_ini.gear[tco,tid]="";obj_ini.hp[tco,tid]=0;
+            obj_ini.wid[tco,tid]=0;obj_ini.wep2[tco,tid]="";obj_ini.armour[tco,tid]="";obj_ini.gear[tco,tid]="";obj_ini.hp[tco,tid]=0;
             obj_ini.chaos[tco,tid]=0;obj_ini.experience[tco,tid]=0;obj_ini.age[tco,tid]=0;obj_ini.mobi[tco,tid]="";
             if (obj_ini.gear[0,g1]!=""){scr_add_item(obj_ini.gear[0,g1],1);obj_ini.gear[0,g1]="";}
             if (obj_ini.mobi[0,g1]!=""){scr_add_item(obj_ini.mobi[0,g1],1);obj_ini.mobi[0,g1]="";}
@@ -463,7 +463,7 @@ if (tech_points>=4) and (tech_aspirant=0){
             yoo=scr_random_marine(choose(obj_ini.role[100,8],obj_ini.role[100,8],obj_ini.role[100,10],obj_ini.role[100,9]),30);
             tid=floor(yoo);
             tco=(yoo-tid)*100;
-            if (obj_ini.role[tco,tid]="") or (string_count("Dread",obj_ini.armor[tco,tid])>0){yoo=0;tid=0;tco=0;}
+            if (obj_ini.role[tco,tid]="") or (string_count("Dread",obj_ini.armour[tco,tid])>0){yoo=0;tid=0;tco=0;}
         }
     }
     if (tco<=10) and (obj_ini.role[tco,tid]!=""){
@@ -473,15 +473,15 @@ if (tech_points>=4) and (tech_aspirant=0){
         if (g1!=0){command+=1;marines-=1;
             obj_ini.race[0,g1]=obj_ini.race[tco,tid];obj_ini.loc[0,g1]=obj_ini.loc[tco,tid];obj_ini.name[0,g1]=obj_ini.name[tco,tid];
             obj_ini.role[0,g1]=obj_ini.role[100,16]+" Aspirant";obj_ini.wep1[0,g1]=obj_ini.wep1[tco,tid];obj_ini.lid[0,g1]=obj_ini.lid[tco,tid];
-            obj_ini.wid[0,g1]=obj_ini.wid[tco,tid];obj_ini.wep2[0,g1]=obj_ini.wep2[tco,tid];obj_ini.armor[0,g1]=obj_ini.armor[tco,tid];
+            obj_ini.wid[0,g1]=obj_ini.wid[tco,tid];obj_ini.wep2[0,g1]=obj_ini.wep2[tco,tid];obj_ini.armour[0,g1]=obj_ini.armour[tco,tid];
             obj_ini.gear[0,g1]=obj_ini.gear[tco,tid];obj_ini.hp[0,g1]=obj_ini.hp[tco,tid];obj_ini.chaos[0,g1]=obj_ini.chaos[tco,tid];
             obj_ini.mobi[0,g1]=obj_ini.mobi[tco,tid];
             obj_ini.experience[0,g1]=obj_ini.experience[tco,tid];obj_ini.age[0,g1]=obj_ini.age[tco,tid];
             obj_ini.loc[tco,tid]="";obj_ini.name[tco,tid]="";obj_ini.wep1[tco,tid]="";obj_ini.lid[tco,tid]=0;obj_ini.role[tco,tid]="";
-            obj_ini.wid[tco,tid]=0;obj_ini.wep2[tco,tid]="";obj_ini.armor[tco,tid]="";obj_ini.gear[tco,tid]="";obj_ini.hp[tco,tid]=0;
+            obj_ini.wid[tco,tid]=0;obj_ini.wep2[tco,tid]="";obj_ini.armour[tco,tid]="";obj_ini.gear[tco,tid]="";obj_ini.hp[tco,tid]=0;
             obj_ini.chaos[tco,tid]=0;obj_ini.experience[tco,tid]=0;obj_ini.age[tco,tid]=0;obj_ini.mobi[tco,tid]="";
             if (obj_ini.lid[0,g1]>0){// Remove from ship
-                var man_size;man_size=scr_unit_size(obj_ini.armor[0,g1],obj_ini.role[0,g1],true);
+                var man_size;man_size=scr_unit_size(obj_ini.armour[0,g1],obj_ini.role[0,g1],true);
                 obj_ini.ship_carrying[obj_ini.lid[0,g1]]-=man_size;
             }
             obj_ini.loc[0,g1]="Terra";obj_ini.wid[0,g1]=4;obj_ini.lid[0,g1]=0;
@@ -562,7 +562,7 @@ repeat(300){i+=1;
 i=0;
 repeat(300){i+=1;
     if (recruit_name[i]!="") and (recruit_training[i]<=0){
-        scr_add_man(obj_ini.role[100,12],10,"Scout Armor",obj_ini.role[100,12],"",recruit_exp[i],recruit_name[i],recruit_corruption[i],false,"default","");
+        scr_add_man(obj_ini.role[100,12],10,"Scout Armour",obj_ini.role[100,12],"",recruit_exp[i],recruit_name[i],recruit_corruption[i],false,"default","");
         if (recruit_first="") then recruit_first=recruit_name[i];
         recruits_finished+=1;recruit_name[i]="";recruit_training[i]=-50;
     }
@@ -620,8 +620,8 @@ if (obj_ini.adv[1]="Scavengers") or (obj_ini.adv[1]="Scavengers") or (obj_ini.ad
         loot=choose("Chainsword","Bolt Pistol","Combat Knife","Narthecium");
         if (lroll2<=80) then loot=choose("Power Sword","Storm Bolter");
         if (lroll2<=60) then loot=choose("Plasma Pistol","Chainfist","Lascannon","Heavy Bolter","Assault Cannon","Bike");
-        if (lroll2<=30) then loot=choose("Artificer Armor","Plasma Gun","Chainfist","Rosarius","Psychic Hood");
-        if (lroll2<=10) then loot=choose("Terminator Armor","Artificer Armor","Dreadnought","Plasma Gun","Power Fist","Thunder Hammer","Iron Halo");
+        if (lroll2<=30) then loot=choose("Artificer Armour","Plasma Gun","Chainfist","Rosarius","Psychic Hood");
+        if (lroll2<=10) then loot=choose("Terminator Armour","Artificer Armour","Dreadnought","Plasma Gun","Power Fist","Thunder Hammer","Iron Halo");
         var tix;tix="A "+string(loot)+" has been gifted to the Chapter.";
         tix=string_replace(tix,"A A","An A");tix=string_replace(tix,"A E","An E");
         tix=string_replace(tix,"A I","An I");tix=string_replace(tix,"A O","An O");
@@ -891,7 +891,7 @@ if ((turn>=10) or (obj_ini.fleet_type=3)) and (faction_defeated[7]=0){
     with(obj_star){
         if (owner=7) then instance_create(x,y,obj_temp2);
     }
-    if ((instance_number(obj_temp2)>=5) and (waaagh<=instance_number(obj_temp2)) and (obj_controller.known[7]=0))/* or (obj_controller.test_map=true)*/{
+    if ((instance_number(obj_temp2)>=5) and (waaagh<=instance_number(obj_temp2)) and (obj_controller.known[7]=0))/* or (obj_controller.is_test_map=true)*/{
         obj_controller.known[7]=0.5;
         with(obj_star){
             if (owner=7) then alarm[4]=1;
@@ -1247,7 +1247,7 @@ repeat(99){i+=1;
                         // show_message("A");
                         obj_ini.ship_hp[last_ship]=1200;obj_ini.ship_maxhp[last_ship]=1200;
                         obj_ini.ship_conditions[last_ship]="";obj_ini.ship_speed[last_ship]=20;obj_ini.ship_turning[last_ship]=45;
-                        obj_ini.ship_front_armor[last_ship]=6;obj_ini.ship_other_armor[last_ship]=6;obj_ini.ship_weapons[last_ship]=5;obj_ini.ship_shields[last_ship]=12;
+                        obj_ini.ship_front_armour[last_ship]=6;obj_ini.ship_other_armour[last_ship]=6;obj_ini.ship_weapons[last_ship]=5;obj_ini.ship_shields[last_ship]=12;
                         obj_ini.ship_wep[last_ship,1]="Weapons Battery";ship_wep_facing[last_ship,1]="left";obj_ini.ship_wep_condition[last_ship,1]="";
                         obj_ini.ship_wep[last_ship,2]="Weapons Battery";ship_wep_facing[last_ship,2]="right";obj_ini.ship_wep_condition[last_ship,2]="";
                         obj_ini.ship_wep[last_ship,3]="Thunderhawk Launch Bays";obj_ini.ship_wep_facing[last_ship,3]="special";obj_ini.ship_wep_condition[last_ship,3]="";
@@ -1263,7 +1263,7 @@ repeat(99){i+=1;
                         // show_message("B");
                         obj_ini.ship_hp[last_ship]=600;obj_ini.ship_maxhp[last_ship]=600;
                         obj_ini.ship_conditions[last_ship]="";obj_ini.ship_speed[last_ship]=25;obj_ini.ship_turning[last_ship]=90;
-                        obj_ini.ship_front_armor[last_ship]=6;obj_ini.ship_other_armor[last_ship]=6;obj_ini.ship_weapons[last_ship]=4;obj_ini.ship_shields[last_ship]=6;
+                        obj_ini.ship_front_armour[last_ship]=6;obj_ini.ship_other_armour[last_ship]=6;obj_ini.ship_weapons[last_ship]=4;obj_ini.ship_shields[last_ship]=6;
                         obj_ini.ship_wep[last_ship,1]="Weapons Battery";ship_wep_facing[last_ship,1]="left";obj_ini.ship_wep_condition[last_ship,1]="";
                         obj_ini.ship_wep[last_ship,2]="Weapons Battery";ship_wep_facing[last_ship,2]="right";obj_ini.ship_wep_condition[last_ship,2]="";
                         obj_ini.ship_wep[last_ship,3]="Thunderhawk Launch Bays";obj_ini.ship_wep_facing[last_ship,3]="special";obj_ini.ship_wep_condition[last_ship,3]="";
@@ -1277,7 +1277,7 @@ repeat(99){i+=1;
                         // show_message("C");
                         obj_ini.ship_hp[last_ship]=200;obj_ini.ship_maxhp[last_ship]=200;
                         obj_ini.ship_conditions[last_ship]="";obj_ini.ship_speed[last_ship]=30;obj_ini.ship_turning[last_ship]=90;
-                        obj_ini.ship_front_armor[last_ship]=5;obj_ini.ship_other_armor[last_ship]=5;obj_ini.ship_weapons[last_ship]=1;obj_ini.ship_shields[last_ship]=1;
+                        obj_ini.ship_front_armour[last_ship]=5;obj_ini.ship_other_armour[last_ship]=5;obj_ini.ship_weapons[last_ship]=1;obj_ini.ship_shields[last_ship]=1;
                         obj_ini.ship_wep[last_ship,1]="Weapons Battery";ship_wep_facing[last_ship,1]="most";obj_ini.ship_wep_condition[last_ship,1]="";
                         obj_ini.ship_capacity[last_ship]=30;obj_ini.ship_carrying[last_ship]=0;obj_ini.ship_contents[last_ship]="";
                         obj_ini.ship_turrets[last_ship]=1;// obj_ini.ship_names+=string(obj_ini.ship[last_ship])+"|";
@@ -1288,7 +1288,7 @@ repeat(99){i+=1;
                         // show_message("D");
                         obj_ini.ship_hp[last_ship]=200;obj_ini.ship_maxhp[last_ship]=200;
                         obj_ini.ship_conditions[last_ship]="";obj_ini.ship_speed[last_ship]=30;obj_ini.ship_turning[last_ship]=90;
-                        obj_ini.ship_front_armor[last_ship]=5;obj_ini.ship_other_armor[last_ship]=5;obj_ini.ship_weapons[last_ship]=2;obj_ini.ship_shields[last_ship]=1;
+                        obj_ini.ship_front_armour[last_ship]=5;obj_ini.ship_other_armour[last_ship]=5;obj_ini.ship_weapons[last_ship]=2;obj_ini.ship_shields[last_ship]=1;
                         obj_ini.ship_wep[last_ship,1]="Torpedoes";ship_wep_facing[last_ship,1]="front";obj_ini.ship_wep_condition[last_ship,1]="";
                         obj_ini.ship_wep[last_ship,2]="Weapons Battery";ship_wep_facing[last_ship,2]="most";obj_ini.ship_wep_condition[last_ship,2]="";
                         obj_ini.ship_capacity[last_ship]=25;obj_ini.ship_carrying[last_ship]=0;obj_ini.ship_contents[last_ship]="";
@@ -1374,7 +1374,7 @@ repeat(99){i+=1;
                     // This is causing the problem
 
                     obj_ini.race[cc,dd]=0;obj_ini.loc[cc,dd]="";obj_ini.name[cc,dd]="";obj_ini.role[cc,dd]="";obj_ini.wep1[cc,dd]="";obj_ini.lid[cc,dd]=0;
-                    obj_ini.wep2[cc,dd]="";obj_ini.armor[cc,dd]="";obj_ini.gear[cc,dd]="";obj_ini.hp[cc,dd]=100;obj_ini.chaos[cc,dd]=0;obj_ini.experience[cc,dd]=0;
+                    obj_ini.wep2[cc,dd]="";obj_ini.armour[cc,dd]="";obj_ini.gear[cc,dd]="";obj_ini.hp[cc,dd]=100;obj_ini.chaos[cc,dd]=0;obj_ini.experience[cc,dd]=0;
                     obj_ini.mobi[cc,dd]="";obj_ini.age[cc,dd]=0;
                     with(obj_ini){scr_company_order(0);}
                 }

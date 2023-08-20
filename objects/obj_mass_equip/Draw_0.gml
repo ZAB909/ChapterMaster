@@ -40,10 +40,10 @@ if (total_role_number>0){
         if (req_wep2_num>have_wep2_num) then draw_text_transformed(xx+154,yy+698,string_hash_to_newline("-Not enough "+string(req_wep2)+" (Have "+string(have_wep2_num)+", Need "+string(req_wep2_num)+")"),0.6,0.6,0);
         if (req_wep2_num<=have_wep2_num) then draw_text_transformed(xx+154,yy+698,string_hash_to_newline("-"+string(req_wep2)+" (Have "+string(have_wep2_num)+", Need "+string(req_wep2_num)+")"),0.6,0.6,0);
     }
-    if (req_armor!=""){
-        draw_set_color(c_gray);if (req_armor_num>have_armor_num) then draw_set_color(c_red);
-        if (req_armor_num>have_armor_num) then draw_text_transformed(xx+154,yy+726,string_hash_to_newline("-Not enough "+string(req_armor)+" (Have "+string(have_armor_num)+", Need "+string(req_armor_num)+")"),0.6,0.6,0);
-        if (req_armor_num<=have_armor_num) then draw_text_transformed(xx+154,yy+726,string_hash_to_newline("-"+string(req_armor)+" (Have "+string(have_armor_num)+", Need "+string(req_armor_num)+")"),0.6,0.6,0);
+    if (req_armour!=""){
+        draw_set_color(c_gray);if (req_armour_num>have_armour_num) then draw_set_color(c_red);
+        if (req_armour_num>have_armour_num) then draw_text_transformed(xx+154,yy+726,string_hash_to_newline("-Not enough "+string(req_armour)+" (Have "+string(have_armour_num)+", Need "+string(req_armour_num)+")"),0.6,0.6,0);
+        if (req_armour_num<=have_armour_num) then draw_text_transformed(xx+154,yy+726,string_hash_to_newline("-"+string(req_armour)+" (Have "+string(have_armour_num)+", Need "+string(req_armour_num)+")"),0.6,0.6,0);
     }
     if (req_gear!=""){
         draw_set_color(c_gray);if (req_gear_num>have_gear_num) then draw_set_color(c_red);
@@ -77,7 +77,7 @@ if (total_role_number>0) and (tab>0){
     draw_set_font(fnt_40k_30b);
     if (tab=1) then draw_text_transformed(xx+1203,yy+174,string_hash_to_newline("Select First Weapon"),0.6,0.6,0);
     if (tab=2) then draw_text_transformed(xx+1203,yy+174,string_hash_to_newline("Select Second Weapon"),0.6,0.6,0);
-    if (tab=3) then draw_text_transformed(xx+1203,yy+174,string_hash_to_newline("Select Armor"),0.6,0.6,0);
+    if (tab=3) then draw_text_transformed(xx+1203,yy+174,string_hash_to_newline("Select Armour"),0.6,0.6,0);
     if (tab=4) then draw_text_transformed(xx+1203,yy+174,string_hash_to_newline("Select Special Item"),0.6,0.6,0);
     if (tab=5) then draw_text_transformed(xx+1203,yy+174,string_hash_to_newline("Select Mobility Item"),0.6,0.6,0);
     draw_set_font(fnt_40k_14b);
@@ -96,8 +96,8 @@ if (total_role_number>0) and (tab>0){
                     if (tab=1) then obj_ini.wep1[100,role]=buh;
                     if (tab=2) then obj_ini.wep2[100,role]=buh;
                     if (tab=3){
-                        obj_ini.armor[100,role]=buh;
-                        if (buh="Terminator Armor") then obj_ini.mobi[100,role]="";
+                        obj_ini.armour[100,role]=buh;
+                        if (buh="Terminator Armour") then obj_ini.mobi[100,role]="";
                     }
                     if (tab=4) then obj_ini.gear[100,role]=buh;
                     if (tab=5) then obj_ini.mobi[100,role]=buh;
@@ -140,8 +140,8 @@ if (total_role_number>0) and (tab>0){
                     if (tab=1) then obj_ini.wep1[100,role]=buh;
                     if (tab=2) then obj_ini.wep2[100,role]=buh;
                     if (tab=3){
-                        obj_ini.armor[100,role]=buh;
-                        if (buh="Terminator Armor") then obj_ini.mobi[100,role]="";
+                        obj_ini.armour[100,role]=buh;
+                        if (buh="Terminator Armour") then obj_ini.mobi[100,role]="";
                     }
                     if (tab=4) then obj_ini.gear[100,role]=buh;
                     if (tab=5) then obj_ini.mobi[100,role]=buh;
@@ -180,8 +180,8 @@ if (total_role_number>0) and (tab>0){
                         if (tab=1) then obj_ini.wep1[100,role]=buh;
                         if (tab=2) then obj_ini.wep2[100,role]=buh;
                         if (tab=3){
-                            obj_ini.armor[100,role]=buh;
-                            if (buh="Terminator Armor") then obj_ini.mobi[100,role]="";
+                            obj_ini.armour[100,role]=buh;
+                            if (buh="Terminator Armour") then obj_ini.mobi[100,role]="";
                         }
                         if (tab=4) then obj_ini.gear[100,role]=buh;
                         if (tab=5) then obj_ini.mobi[100,role]=buh;

@@ -1001,7 +1001,7 @@ if (enemy=9) and (battle_special!="tyranid_org"){
         u=instance_nearest(xxx,240,obj_enunit);enemy_dudes="100";
         u.dudes[1]="Genestealer Patriarch";u.dudes_num[1]=1;
         u.dudes[2]="Genestealer";u.dudes_num[2]=120;
-        u.dudes[3]="Armored Limousine";u.dudes_num[3]=20;
+        u.dudes[3]="Armoured Limousine";u.dudes_num[3]=20;
         
         instance_deactivate_object(u);
         u=instance_nearest(xxx+10,240,obj_enunit);

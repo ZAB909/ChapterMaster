@@ -165,11 +165,11 @@ function scr_ui_popup() {
 	        if (string_count("$",upp)=2) then woob+="  One of the chambers holds war trophies from recent conquests.  ";
 	        if (string_count("$",upp)=3) then woob+="  War trophies taken from several Xeno races are displayed in the Relic Room.  ";
 	        if (string_count("$",upp)=4) then woob+="  Your Relic Room contains trophies and skulls, taken from every Xeno race.  ";
-	        if (string_count("$",upp)=5) then woob+="  Your Relic Room contains trophies, skulls, and suits of armor taken from Xenos races.  ";
-	        if (string_count("$",upp)=6) then woob+="  Your Relic Room contains wargear and suits of armor from all races, several Adeptus Astartes suits included.  ";
-	        if (string_count("$",upp)=7) then woob+="  One of the chambers holds wargear and suits of armor from all races.  A suit of Terminator armor is included, half of the armor taken off to reveal the inner workings.";
-	        if (string_count("$",upp)=8) then woob+="  Your Relic Room's trophies, skulls, and armors now spill out into the hallways, such is their number.  ";
-	        if (string_count("$",upp)=9) then woob+="  Many of the xenos war trophies and suits of armor are placed around the Lair, filling out spare surfaces.  ";
+	        if (string_count("$",upp)=5) then woob+="  Your Relic Room contains trophies, skulls, and suits of armour taken from Xenos races.  ";
+	        if (string_count("$",upp)=6) then woob+="  Your Relic Room contains wargear and suits of armour from all races, several Adeptus Astartes suits included.  ";
+	        if (string_count("$",upp)=7) then woob+="  One of the chambers holds wargear and suits of armour from all races.  A suit of Terminator armour is included, half of the armour taken off to reveal the inner workings.";
+	        if (string_count("$",upp)=8) then woob+="  Your Relic Room's trophies, skulls, and armours now spill out into the hallways, such is their number.  ";
+	        if (string_count("$",upp)=9) then woob+="  Many of the xenos war trophies and suits of armour are placed around the Lair, filling out spare surfaces.  ";
 	        if (string_count("$",upp)=10) then woob+="  In addition to the many war trophies your Relic Room also has small amounts of gold coins.  ";
 	        if (string_count("$",upp)=11) then woob+="  In addition to the many war trophies your Relic Room also has small piles of gold coins and clutter.  ";
 	        if (string_count("$",upp)=12) then woob+="  In addition to the many war trophies your Relic Room also has sizeable piles of gold.  ";
@@ -268,7 +268,7 @@ function scr_ui_popup() {
         
 	        draw_sprite(spr_requisition,0,xx+160,yy+112);
 	        draw_set_color(16291875);if (obj_controller.requisition<1500) then draw_set_color(c_red);draw_text(xx+180,yy+112,string_hash_to_newline("1500"));draw_set_color(c_gray);
-	        draw_text_ext(xx+21,yy+130,string_hash_to_newline("Hidden armory that stores unused Chaos and Daemonic artifacts, preventing them from discovery."),-1,600);
+	        draw_text_ext(xx+21,yy+130,string_hash_to_newline("Hidden armoury that stores unused Chaos and Daemonic artifacts, preventing them from discovery."),-1,600);
 	        draw_rectangle(xx+300,yy+110,xx+400,yy+130,0);
 	        draw_set_halign(fa_center);draw_set_color(0);
 	        draw_text(xx+350,yy+112,string_hash_to_newline("Build"));draw_text(xx+351,yy+113,string_hash_to_newline("Build"));

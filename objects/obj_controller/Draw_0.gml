@@ -4,7 +4,7 @@ if (instance_exists(obj_fleet)) then exit;
 if (global.load>0) then exit;
 if (invis=true) then exit;
 
-if (test_map=true){
+if (is_test_map=true){
     draw_set_color(c_yellow);draw_set_alpha(0.5);
     draw_line_width(room_width/2,room_height/2,(room_width/2)+lengthdir_x(3000,terra_direction),(room_height/2)+lengthdir_y(3000,terra_direction),4);
     draw_set_alpha(1);
@@ -58,7 +58,7 @@ if (zoomed=0) and (zui=0){
     draw_set_alpha(h_apothecarium*2);if (h_apothecarium>0) then draw_sprite(spr_ui_hov_3,0,__view_get( e__VW.XView, 0 )+357,__view_get( e__VW.YView, 0 )+838+y_slide);
     draw_set_alpha(h_reclusium*2);if (h_reclusium>0) then draw_sprite(spr_ui_hov_3,0,__view_get( e__VW.XView, 0 )+473,__view_get( e__VW.YView, 0 )+838+y_slide);
     draw_set_alpha(h_librarium*2);if (h_librarium>0) then draw_sprite(spr_ui_hov_3,0,__view_get( e__VW.XView, 0 )+590,__view_get( e__VW.YView, 0 )+838+y_slide);
-    draw_set_alpha(h_armory*2);if (h_armory>0) then draw_sprite(spr_ui_hov_3,0,__view_get( e__VW.XView, 0 )+706,__view_get( e__VW.YView, 0 )+838+y_slide);
+    draw_set_alpha(h_armoury*2);if (h_armoury>0) then draw_sprite(spr_ui_hov_3,0,__view_get( e__VW.XView, 0 )+706,__view_get( e__VW.YView, 0 )+838+y_slide);
     draw_set_alpha(h_recruitment*2);if (h_recruitment>0) then draw_sprite(spr_ui_hov_3,0,__view_get( e__VW.XView, 0 )+822,__view_get( e__VW.YView, 0 )+838+y_slide);
     draw_set_alpha(h_fleet*2);if (h_fleet>0) then draw_sprite(spr_ui_hov_3,0,__view_get( e__VW.XView, 0 )+938,__view_get( e__VW.YView, 0 )+838+y_slide);
     
@@ -119,8 +119,8 @@ if (zoomed=0) and (zui=0){
     if (l_librarium>0){var l_hei,l_why;l_hei=37;l_why=0;if (l_librarium>101){l_hei=141-l_librarium;l_why=min(l_librarium-103,11);}
        draw_line(__view_get( e__VW.XView, 0 )+l_librarium+590,__view_get( e__VW.YView, 0 )+840+y_slide+1+l_why,__view_get( e__VW.XView, 0 )+l_librarium+590,__view_get( e__VW.YView, 0 )+840+y_slide+37);
     }
-    if (l_armory>0){var l_hei,l_why;l_hei=37;l_why=0;if (l_armory>101){l_hei=141-l_armory;l_why=min(l_armory-103,11);}
-       draw_line(__view_get( e__VW.XView, 0 )+l_armory+706,__view_get( e__VW.YView, 0 )+840+y_slide+1+l_why,__view_get( e__VW.XView, 0 )+l_armory+706,__view_get( e__VW.YView, 0 )+840+y_slide+37);
+    if (l_armoury>0){var l_hei,l_why;l_hei=37;l_why=0;if (l_armoury>101){l_hei=141-l_armoury;l_why=min(l_armoury-103,11);}
+       draw_line(__view_get( e__VW.XView, 0 )+l_armoury+706,__view_get( e__VW.YView, 0 )+840+y_slide+1+l_why,__view_get( e__VW.XView, 0 )+l_armoury+706,__view_get( e__VW.YView, 0 )+840+y_slide+37);
     }
     if (l_recruitment>0){var l_hei,l_why;l_hei=37;l_why=0;if (l_recruitment>101){l_hei=141-l_recruitment;l_why=min(l_recruitment-103,11);}
        draw_line(__view_get( e__VW.XView, 0 )+l_recruitment+822,__view_get( e__VW.YView, 0 )+840+y_slide+1+l_why,__view_get( e__VW.XView, 0 )+l_recruitment+822,__view_get( e__VW.YView, 0 )+840+y_slide+37);
@@ -244,8 +244,8 @@ draw_set_color(c_red);
 draw_set_halign(fa_left);
 draw_set_alpha(1);
 
-if (global.cheat_debug=true){
-    draw_text(__view_get( e__VW.XView, 0 )+1124,__view_get( e__VW.YView, 0 )+7,string_hash_to_newline("DEBUG MODE"));
+if (global.cheat_debug == true){
+    draw_text((__view_get((0 << 0), 0) + 1124), (__view_get((1 << 0), 0) + 7), string_hash_to_newline("DEBUG MODE"));
 }
 
 

@@ -25,7 +25,7 @@ function scr_check_equip(argument0, argument1, argument2, argument3) {
 	            if (obj_ini.name[c,i]!="") and (obj_ini.loc[c,i]=argument1) and (obj_ini.wid[c,i]=argument2){
 	                if (obj_ini.wep1[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.wep1[c,i]="";}}
 	                if (obj_ini.wep2[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.wep2[c,i]="";}}
-	                if (obj_ini.armor[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.armor[c,i]="";}}
+	                if (obj_ini.armour[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.armour[c,i]="";}}
 	                if (obj_ini.mobi[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.mobi[c,i]="";}}
 	                if (obj_ini.gear[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.gear[c,i]="";}}
 	            }
@@ -34,7 +34,7 @@ function scr_check_equip(argument0, argument1, argument2, argument3) {
 	            if (obj_ini.name[c,i]!="") and (obj_ini.lid[c,i]=argument1) and (obj_ini.wid[c,i]=0){
 	                if (obj_ini.wep1[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.wep1[c,i]="";}}
 	                if (obj_ini.wep2[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.wep2[c,i]="";}}
-	                if (obj_ini.armor[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.armor[c,i]="";}}
+	                if (obj_ini.armour[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.armour[c,i]="";}}
 	                if (obj_ini.mobi[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.mobi[c,i]="";}}
 	                if (obj_ini.gear[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.gear[c,i]="";}}
 	            }
@@ -55,7 +55,7 @@ function scr_check_equip(argument0, argument1, argument2, argument3) {
         
 	            if (obj_ini.wep1[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.wep1[c,i]="";}}
 	            if (obj_ini.wep2[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.wep2[c,i]="";}}
-	            if (obj_ini.armor[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.armor[c,i]="";}}
+	            if (obj_ini.armour[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.armour[c,i]="";}}
 	            if (obj_ini.mobi[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.mobi[c,i]="";}}
 	            if (obj_ini.gear[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.gear[c,i]="";}}
 	        }

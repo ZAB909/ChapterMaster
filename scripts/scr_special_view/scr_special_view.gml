@@ -13,7 +13,7 @@ function scr_special_view(argument0) {
 	repeat(501){i+=1;
 	    man[i]="";ide[i]=0;man_sel[i]=0;ma_lid[i]=0;ma_wid[i]=0;ma_promote[i]=0;ma_bio[i]=0;
 	    ma_race[i]=0;ma_loc[i]="";ma_name[i]="";ma_role[i]="";ma_wep1[i]="";ma_mobi[i]="";
-	    ma_wep2[i]="";ma_armor[i]="";ma_gear[i]="";ma_health[i]=100;ma_chaos[i]=0;ma_exp[i]=0;ma_god[i]=0;
+	    ma_wep2[i]="";ma_armour[i]="";ma_gear[i]="";ma_health[i]=100;ma_chaos[i]=0;ma_exp[i]=0;ma_god[i]=0;
 	    sh_ide[i]=0;sh_uid[i]=0;sh_name[i]="";sh_class[i]="";sh_loc[i]="";sh_hp[i]="";sh_cargo[i]=0;sh_cargo_max[i]="";
 	    squad[i]=0;
 
@@ -47,7 +47,7 @@ function scr_special_view(argument0) {
 	        mans+=1;man[b]="man";ide[b]=v;
 	        ma_race[b]=obj_ini.race[0,v];ma_loc[b]=obj_ini.loc[0,v];ma_name[b]=obj_ini.name[0,v];
 	        ma_role[b]=obj_ini.role[0,v];ma_wep1[b]=obj_ini.wep1[0,v];ma_wep2[b]=obj_ini.wep2[0,v];
-	        ma_armor[b]=obj_ini.armor[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
+	        ma_armour[b]=obj_ini.armour[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
 	        ma_exp[b]=obj_ini.experience[0,v];ma_lid[b]=obj_ini.lid[0,v];ma_wid[b]=obj_ini.wid[0,v];
 	        if (ma_lid[b]>0) then ma_loc[b]=obj_ini.ship[ma_lid[b]];ma_mobi[b]=obj_ini.mobi[0,v];
 	        last_man=b;ma_promote[b]=0;ma_god[b]=obj_ini.god[0,v];ma_bio[b]=obj_ini.bio[0,v];
@@ -67,7 +67,7 @@ function scr_special_view(argument0) {
 	            mans+=1;man[b]="man";ide[b]=v;ma_bio[b]=obj_ini.bio[0,v];
 	            ma_race[b]=obj_ini.race[0,v];ma_loc[b]=obj_ini.loc[0,v];ma_name[b]=obj_ini.name[0,v];
 	            ma_role[b]=obj_ini.role[0,v];ma_wep1[b]=obj_ini.wep1[0,v];ma_wep2[b]=obj_ini.wep2[0,v];
-	            ma_armor[b]=obj_ini.armor[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
+	            ma_armour[b]=obj_ini.armour[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
 	            ma_exp[b]=obj_ini.experience[0,v];ma_lid[b]=obj_ini.lid[0,v];ma_wid[b]=obj_ini.wid[0,v];
 	            if (ma_lid[b]>0) then ma_loc[b]=obj_ini.ship[ma_lid[b]];ma_mobi[b]=obj_ini.mobi[0,v];
 	            last_man=b;ma_promote[b]=0;ma_god[b]=obj_ini.god[0,v];ma_god[b]=obj_ini.god[0,v];
@@ -87,7 +87,7 @@ function scr_special_view(argument0) {
 	        mans+=1;man[b]="man";ide[b]=v;
 	        ma_race[b]=obj_ini.race[0,v];ma_loc[b]=obj_ini.loc[0,v];ma_name[b]=obj_ini.name[0,v];
 	        ma_role[b]=obj_ini.role[0,v];ma_wep1[b]=obj_ini.wep1[0,v];ma_wep2[b]=obj_ini.wep2[0,v];
-	        ma_armor[b]=obj_ini.armor[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
+	        ma_armour[b]=obj_ini.armour[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
 	        ma_exp[b]=obj_ini.experience[0,v];ma_lid[b]=obj_ini.lid[0,v];ma_wid[b]=obj_ini.wid[0,v];
 	        if (ma_lid[b]>0) then ma_loc[b]=obj_ini.ship[ma_lid[b]];ma_mobi[b]=obj_ini.mobi[0,v];
 	        last_man=b;ma_promote[b]=0;ma_god[b]=obj_ini.god[0,v];ma_bio[b]=obj_ini.bio[0,v];
@@ -107,7 +107,7 @@ function scr_special_view(argument0) {
 	        mans+=1;man[b]="man";ide[b]=v;
 	        ma_race[b]=obj_ini.race[0,v];ma_loc[b]=obj_ini.loc[0,v];ma_name[b]=obj_ini.name[0,v];
 	        ma_role[b]=obj_ini.role[0,v];ma_wep1[b]=obj_ini.wep1[0,v];ma_wep2[b]=obj_ini.wep2[0,v];
-	        ma_armor[b]=obj_ini.armor[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
+	        ma_armour[b]=obj_ini.armour[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
 	        ma_exp[b]=obj_ini.experience[0,v];ma_lid[b]=obj_ini.lid[0,v];ma_wid[b]=obj_ini.wid[0,v];
 	        if (ma_lid[b]>0) then ma_loc[b]=obj_ini.ship[ma_lid[b]];ma_mobi[b]=obj_ini.mobi[0,v];
 	        last_man=b;ma_promote[b]=0;ma_god[b]=obj_ini.god[0,v];ma_bio[b]=obj_ini.bio[0,v];
@@ -130,7 +130,7 @@ function scr_special_view(argument0) {
 	        mans+=1;man[b]="man";ide[b]=v;ma_god[b]=obj_ini.god[0,v];
 	        ma_race[b]=obj_ini.race[0,v];ma_loc[b]=obj_ini.loc[0,v];ma_name[b]=obj_ini.name[0,v];
 	        ma_role[b]=obj_ini.role[0,v];ma_wep1[b]=obj_ini.wep1[0,v];ma_wep2[b]=obj_ini.wep2[0,v];
-	        ma_armor[b]=obj_ini.armor[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
+	        ma_armour[b]=obj_ini.armour[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
 	        ma_exp[b]=obj_ini.experience[0,v];ma_lid[b]=obj_ini.lid[0,v];ma_wid[b]=obj_ini.wid[0,v];
 	        if (ma_lid[b]>0) then ma_loc[b]=obj_ini.ship[ma_lid[b]];ma_mobi[b]=obj_ini.mobi[0,v];
 	        last_man=b;ma_promote[b]=0;ma_bio[b]=obj_ini.bio[0,v];
@@ -140,7 +140,7 @@ function scr_special_view(argument0) {
 	        mans+=1;man[b]="man";ide[b]=v;ma_god[b]=obj_ini.god[0,v];
 	        ma_race[b]=obj_ini.race[0,v];ma_loc[b]=obj_ini.loc[0,v];ma_name[b]=obj_ini.name[0,v];
 	        ma_role[b]=obj_ini.role[0,v];ma_wep1[b]=obj_ini.wep1[0,v];ma_wep2[b]=obj_ini.wep2[0,v];
-	        ma_armor[b]=obj_ini.armor[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
+	        ma_armour[b]=obj_ini.armour[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
 	        ma_exp[b]=obj_ini.experience[0,v];ma_lid[b]=obj_ini.lid[0,v];ma_wid[b]=obj_ini.wid[0,v];
 	        if (ma_lid[b]>0) then ma_loc[b]=obj_ini.ship[ma_lid[b]];ma_mobi[b]=obj_ini.mobi[0,v];
 	        last_man=b;ma_promote[b]=0;ma_bio[b]=obj_ini.bio[0,v];
@@ -160,7 +160,7 @@ function scr_special_view(argument0) {
 	        mans+=1;man[b]="man";ide[b]=v;ma_god[b]=obj_ini.god[0,v];
 	        ma_race[b]=obj_ini.race[0,v];ma_loc[b]=obj_ini.loc[0,v];ma_name[b]=obj_ini.name[0,v];
 	        ma_role[b]=obj_ini.role[0,v];ma_wep1[b]=obj_ini.wep1[0,v];ma_wep2[b]=obj_ini.wep2[0,v];
-	        ma_armor[b]=obj_ini.armor[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
+	        ma_armour[b]=obj_ini.armour[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
 	        ma_exp[b]=obj_ini.experience[0,v];ma_lid[b]=obj_ini.lid[0,v];ma_wid[b]=obj_ini.wid[0,v];
 	        if (ma_lid[b]>0) then ma_loc[b]=obj_ini.ship[ma_lid[b]];ma_mobi[b]=obj_ini.mobi[0,v];
 	        last_man=b;ma_promote[b]=0;ma_bio[b]=obj_ini.bio[0,v];
@@ -182,7 +182,7 @@ function scr_special_view(argument0) {
 	    if (obj_ini.veh_race[company,i]!=0){b+=1;
 	        man[b]="vehicle";ide[b]=i;last_vehicle+=1;
 	        ma_loc[v]=obj_ini.veh_loc[company,i];ma_role[v]=obj_ini.veh_role[company,i];ma_wep1[v]=obj_ini.veh_wep1[company,i];
-	        ma_wep2[v]=obj_ini.veh_wep2[company,i];ma_armor[v]=obj_ini.veh_wep3[company,i];ma_gear[v]=obj_ini.veh_upgrade[company,i];ma_mobi[v]=obj_ini.veh_acc[company,i];ma_health[v]=obj_ini.veh_hp[company,i];
+	        ma_wep2[v]=obj_ini.veh_wep2[company,i];ma_armour[v]=obj_ini.veh_wep3[company,i];ma_gear[v]=obj_ini.veh_upgrade[company,i];ma_mobi[v]=obj_ini.veh_acc[company,i];ma_health[v]=obj_ini.veh_hp[company,i];
 	        ma_lid[v]=obj_ini.veh_lid[company,i];ma_wid[v]=obj_ini.veh_wid[company,i];
 	        if (ma_lid[v]>0) then ma_loc[v]=obj_ini.ship[ma_lid[v]];
 

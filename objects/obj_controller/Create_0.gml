@@ -1,7 +1,7 @@
 
 
 
-test_map=false;
+is_test_map=false;
 target_navy_number=5;
 global.sound_playing=0;
 global.defeat=0;tutorial=0;
@@ -105,46 +105,46 @@ obj_controller.restart_stability=0;
 i=99;
 repeat(3){i+=1;
     obj_controller.r_role[i,2]="Honor Guard";obj_controller.r_wep1[i,2]="Power Sword";obj_controller.r_wep2[i,2]="Bolter";
-    obj_controller.r_armor[i,2]="Power Armor";obj_controller.r_mobi[i,2]="";obj_controller.r_gear[i,2]="";
+    obj_controller.r_armour[i,2]="Power Armour";obj_controller.r_mobi[i,2]="";obj_controller.r_gear[i,2]="";
     
     obj_controller.r_role[i,3]="Veteran";obj_controller.r_wep1[i,3]="Chainsword";obj_controller.r_wep2[i,3]="Bolter";
-    obj_controller.r_armor[i,3]="Power Armor";obj_controller.r_mobi[i,3]="";obj_controller.r_gear[i,3]="";
+    obj_controller.r_armour[i,3]="Power Armour";obj_controller.r_mobi[i,3]="";obj_controller.r_gear[i,3]="";
     
     obj_controller.r_role[i,4]="Terminator";obj_controller.r_wep1[i,4]="Power Fist";obj_controller.r_wep2[i,4]="Storm Bolter";
-    obj_controller.r_armor[i,4]="Terminator Armor";obj_controller.r_mobi[i,4]="";obj_controller.r_gear[i,4]="";
+    obj_controller.r_armour[i,4]="Terminator Armour";obj_controller.r_mobi[i,4]="";obj_controller.r_gear[i,4]="";
     
     obj_controller.r_role[i,5]="Captain";obj_controller.r_wep1[i,5]="Power Fist";obj_controller.r_wep2[i,5]="Bolt Pistol";
-    obj_controller.r_armor[i,5]="Power Armor";obj_controller.r_mobi[i,5]="";obj_controller.r_gear[i,5]="";
+    obj_controller.r_armour[i,5]="Power Armour";obj_controller.r_mobi[i,5]="";obj_controller.r_gear[i,5]="";
     
     obj_controller.r_role[i,6]="Dreadnought";obj_controller.r_wep1[i,6]="Close Combat Weapon";obj_controller.r_wep2[i,6]="Lascannon";
-    obj_controller.r_armor[i,6]="Dreadnought";obj_controller.r_mobi[i,6]="";obj_controller.r_gear[i,6]="";
+    obj_controller.r_armour[i,6]="Dreadnought";obj_controller.r_mobi[i,6]="";obj_controller.r_gear[i,6]="";
     
     obj_controller.r_role[i,7]="Company Champion";obj_controller.r_wep1[i,7]="Power Sword";obj_controller.r_wep2[i,7]="Storm Shield";
-    obj_controller.r_armor[i,7]="Power Armor";obj_controller.r_mobi[i,7]="";obj_controller.r_gear[i,7]="";
+    obj_controller.r_armour[i,7]="Power Armour";obj_controller.r_mobi[i,7]="";obj_controller.r_gear[i,7]="";
     
     obj_controller.r_role[i,8]="Tactical Marine";obj_controller.r_wep1[i,8]="Bolter";obj_controller.r_wep2[i,8]="Chainsword";
-    obj_controller.r_armor[i,8]="Power Armor";obj_controller.r_mobi[i,8]="";obj_controller.r_gear[i,8]="";
+    obj_controller.r_armour[i,8]="Power Armour";obj_controller.r_mobi[i,8]="";obj_controller.r_gear[i,8]="";
     
     obj_controller.r_role[i,9]="Devastator";obj_controller.r_wep1[i,9]="Heavy Ranged";obj_controller.r_wep2[i,9]="Combat Knife";
-    obj_controller.r_armor[i,9]="Power Armor";obj_controller.r_mobi[i,9]="";obj_controller.r_gear[i,9]="";
+    obj_controller.r_armour[i,9]="Power Armour";obj_controller.r_mobi[i,9]="";obj_controller.r_gear[i,9]="";
     
     obj_controller.r_role[i,10]="Assault Marine";obj_controller.r_wep1[i,10]="Chainsword";obj_controller.r_wep2[i,10]="Bolt Pistol";
-    obj_controller.r_armor[i,10]="Power Armor";obj_controller.r_mobi[i,10]="Jump Pack";obj_controller.r_gear[i,10]="";
+    obj_controller.r_armour[i,10]="Power Armour";obj_controller.r_mobi[i,10]="Jump Pack";obj_controller.r_gear[i,10]="";
     
     obj_controller.r_role[i,12]="Scout";obj_controller.r_wep1[i,12]="Sniper Rifle";obj_controller.r_wep2[i,12]="Combat Knife";
-    obj_controller.r_armor[i,12]="Scout Armor";obj_controller.r_mobi[i,12]="";obj_controller.r_gear[i,12]="";
+    obj_controller.r_armour[i,12]="Scout Armour";obj_controller.r_mobi[i,12]="";obj_controller.r_gear[i,12]="";
     
     obj_controller.r_role[i,14]="Chaplain";obj_controller.r_wep1[i,14]="Power Sword";obj_controller.r_wep2[i,14]="Storm Bolter";
-    obj_controller.r_armor[i,14]="Power Armor";obj_controller.r_gear[i,14]="Rosarius";obj_controller.r_mobi[i,14]="";
+    obj_controller.r_armour[i,14]="Power Armour";obj_controller.r_gear[i,14]="Rosarius";obj_controller.r_mobi[i,14]="";
     
     obj_controller.r_role[i,15]="Apothecary";obj_controller.r_wep1[i,15]="Power Sword";obj_controller.r_wep2[i,15]="Storm Bolter";
-    obj_controller.r_armor[i,15]="Power Armor";obj_controller.r_gear[i,15]="Narthecium";obj_controller.r_mobi[i,15]="";
+    obj_controller.r_armour[i,15]="Power Armour";obj_controller.r_gear[i,15]="Narthecium";obj_controller.r_mobi[i,15]="";
     
     obj_controller.r_role[i,16]="Techmarine";obj_controller.r_wep1[i,16]="Power Axe";obj_controller.r_wep2[i,16]="Storm Bolter";
-    obj_controller.r_armor[i,16]="Power Armor";obj_controller.r_gear[i,16]="Servo Arms";obj_controller.r_mobi[i,16]="";
+    obj_controller.r_armour[i,16]="Power Armour";obj_controller.r_gear[i,16]="Servo Arms";obj_controller.r_mobi[i,16]="";
     
     obj_controller.r_role[i,17]="Librarian";obj_controller.r_wep1[i,17]="Force Weapon";obj_controller.r_wep2[i,17]="Storm Bolter";
-    obj_controller.r_armor[i,17]="Power Armor";obj_controller.r_gear[i,17]="Psychic Hood";obj_controller.r_mobi[i,17]="";
+    obj_controller.r_armour[i,17]="Power Armour";obj_controller.r_gear[i,17]="Psychic Hood";obj_controller.r_mobi[i,17]="";
 
 }// 100 is defaults, 101 is the allowable starting equipment
 
@@ -153,7 +153,7 @@ i=-1;repeat(21){i+=1;
     obj_controller.r_role[100,i]="";
     obj_controller.r_wep1[100,i]="";
     obj_controller.r_wep2[100,i]="";
-    obj_controller.r_armor[100,i]="";
+    obj_controller.r_armour[100,i]="";
     obj_controller.r_gear[100,i]="";
     obj_controller.r_mobi[100,i]="";
 }
@@ -181,7 +181,7 @@ large_text=ini_read_real("Settings","large_text",0);
 settings_heresy=ini_read_real("Settings","settings_heresy",0);
 settings_fullscreen=ini_read_real("Settings","fullscreen",1);
 settings_window_data=ini_read_string("Settings","window_data","fullscreen");
-    if (test_map=true) then global.cheat_debug=true;
+if (is_test_map) then global.cheat_debug=true;
 ini_close();
 
 
@@ -288,7 +288,7 @@ l_settings=0;
 l_apothecarium=0;
 l_reclusium=0;
 l_librarium=0;
-l_armory=0;
+l_armoury=0;
 l_recruitment=0;
 l_fleet=0;
 l_diplomacy=0;
@@ -303,7 +303,7 @@ h_settings=0;
 h_apothecarium=0;
 h_reclusium=0;
 h_librarium=0;
-h_armory=0;
+h_armoury=0;
 h_recruitment=0;
 h_fleet=0;
 h_diplomacy=0;
@@ -359,7 +359,7 @@ hurssy=0;
 hurssy_time=0;
 qsfx=0;
 
-und_armories=0;
+und_armouries=0;
 und_gene_vaults=0;
 und_lairs=0;
 
@@ -491,7 +491,7 @@ var i;i=-1;
 repeat(501){i+=1;
     man[i]="";ide[i]=0;man_sel[i]=0;ma_lid[i]=0;ma_wid[i]=0;ma_promote[i]=0;
     ma_race[i]=0;ma_loc[i]="";ma_name[i]="";ma_role[i]="";ma_wep1[i]="";ma_mobi[i]="";
-    ma_wep2[i]="";ma_armor[i]="";ma_gear[i]="";ma_health[i]=100;ma_chaos[i]=0;ma_exp[i]=0;ma_god[i]=0;
+    ma_wep2[i]="";ma_armour[i]="";ma_gear[i]="";ma_health[i]=100;ma_chaos[i]=0;ma_exp[i]=0;ma_god[i]=0;
     sh_ide[i]=0;sh_uid[i]=0;sh_name[i]="";sh_class[i]="";sh_loc[i]="";sh_hp[i]="";sh_cargo[i]=0;sh_cargo_max[i]="";
     squad[i]=0;
     
@@ -644,7 +644,7 @@ requisition=500;
 if (instance_exists(obj_ini)){
     if (obj_ini.progenitor=0) /*and (obj_creation.custom=0)*/ and (global.chapter_name!="Doom Benefactors") then requisition=2000;
 }
-if (test_map=true) then requisition=50000;
+if (is_test_map=true) then requisition=50000;
 
 
 
@@ -974,7 +974,7 @@ instance_create(floor(random(room_width-128))+64,floor(random(room_height-256))+
 plan=floor(random(5))+19;
 plan=30*1.5;
 plan=70;
-if (test_map=true) then plan=20;
+if (is_test_map=true) then plan=20;
 
 repeat(120){
     go=0;
@@ -1105,7 +1105,7 @@ temp[njm]=string_delete(temp[njm],vih,1);
 if (honoh>0) then temp[njm]+="  You have an Honor Guard which contains "+string(honoh)+" souls.";
         
 // show_message(string(temp[njm-1])+string(temp[njm]));
-/*scr_add_item("Terminator Armor",10);
+/*scr_add_item("Terminator Armour",10);
 scr_add_item("Tartaros",10);
 scr_add_item("Power Fist",10);*/
 // repeat(5){scr_add_man("Sister Hospitaler",0,"","","","","",0,true,"default","");}

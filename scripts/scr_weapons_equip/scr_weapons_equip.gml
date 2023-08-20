@@ -244,25 +244,26 @@ function scr_weapons_equip() {
 
 	    if (!instance_exists(obj_creation)) and (!instance_exists(obj_mass_equip)){
 	        i+=1;item_name[i]="(None)";
-	        i+=1;item_name[i]="Scout Armor";
-	        i+=1;item_name[i]="Power Armor";
-	        i+=1;item_name[i]="MK3 Iron Armor";
+	        i+=1;item_name[i]="Scout Armour";
+	        i+=1;item_name[i]="Power Armour";
+	        i+=1;item_name[i]="MK3 Iron Armour";
 	        i+=1;item_name[i]="MK4 Maximus";
+	        i+=1;item_name[i]="MK5 Heresy";
 	        i+=1;item_name[i]="MK6 Corvus";
 	        i+=1;item_name[i]="MK7 Aquila";
 	        i+=1;item_name[i]="MK8 Errant";
-	        i+=1;item_name[i]="Artificer Armor";
-	        i+=1;item_name[i]="Terminator Armor";
+	        i+=1;item_name[i]="Artificer Armour";
+	        i+=1;item_name[i]="Terminator Armour";
 	        i+=1;item_name[i]="Tartaros";
 	    }
 
 	    if (instance_exists(obj_creation)) or (instance_exists(obj_mass_equip)){
 	        var bub;bub=0;
-	        i+=1;item_name[i]="Scout Armor";
+	        i+=1;item_name[i]="Scout Armour";
 	        if (instance_exists(obj_creation)){if (type=112) then bub=1;}
 	        if (instance_exists(obj_mass_equip)){if (obj_controller.settings=12) then bub=1;}
-	        i+=1;item_name[i]="Power Armor";
-	        i+=1;item_name[i]="Terminator Armor";
+	        i+=1;item_name[i]="Power Armour";
+	        i+=1;item_name[i]="Terminator Armour";
 	    }
 
 	    else i+=1;

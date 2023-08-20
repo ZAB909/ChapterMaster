@@ -1,7 +1,7 @@
 
 function scr_unit_size(armour, role, other_factors) {
 
-    // armour: armor
+    // armour: armour
     // role: role
     // other_factors: +?
     var sz = 1;

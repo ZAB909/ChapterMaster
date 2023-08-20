@@ -34,7 +34,7 @@ function scr_ini_ship_cleanup() {
 	        ship[i]="";ship_owner[i]=0;ship_class[i]="";ship_size[i]=0;
 	        ship_leadership[i]=0;ship_hp[i]=0;ship_maxhp[i]=0;ship_location[i]="";ship_shields[i]=0;
 	        ship_conditions[i]="";ship_speed[i]=0;ship_turning[i]=0;
-	        ship_front_armor[i]=0;ship_other_armor[i]=0;ship_weapons[i]=0;ship_shields[i]=0;
+	        ship_front_armour[i]=0;ship_other_armour[i]=0;ship_weapons[i]=0;ship_shields[i]=0;
 	        ship_wep[i,0]="";ship_wep_facing[i,0]="";ship_wep_condition[i,0]="";
 	        ship_wep[i,1]="";ship_wep_facing[i,1]="";ship_wep_condition[i,1]="";
 	        ship_wep[i,2]="";ship_wep_facing[i,2]="";ship_wep_condition[i,2]="";
@@ -63,8 +63,8 @@ function scr_ini_ship_cleanup() {
 	            ship_conditions[i]=ship_conditions[i+1];
 	            ship_speed[i]=ship_speed[i+1];
 	            ship_turning[i]=ship_turning[i+1];
-	            ship_front_armor[i]=ship_front_armor[i+1];
-	            ship_other_armor[i]=ship_other_armor[i+1];
+	            ship_front_armour[i]=ship_front_armour[i+1];
+	            ship_other_armour[i]=ship_other_armour[i+1];
 	            ship_weapons[i]=ship_weapons[i+1];
 	            ship_shields[i]=ship_shields[i+1];
 	            ship_wep[i,0]=ship_wep[i+1,0];
@@ -103,8 +103,8 @@ function scr_ini_ship_cleanup() {
 	            ship_conditions[i+1]="";
 	            ship_speed[i+1]=0;
 	            ship_turning[i+1]=0;
-	            ship_front_armor[i+1]=0;
-	            ship_other_armor[i+1]=0;
+	            ship_front_armour[i+1]=0;
+	            ship_other_armour[i+1]=0;
 	            ship_weapons[i+1]=0;
 	            ship_shields[i+1]=0;
 	            ship_wep[i+1,0]="";
@@ -246,7 +246,7 @@ function scr_ini_ship_cleanup() {
 	        ship[i]="";ship_owner[i]=0;ship_class[i]="";ship_size[i]=0;
 	        ship_leadership[i]=0;ship_hp[i]=0;ship_maxhp[i]=0;ship_location[i]="";ship_shields[i]=0;
 	        ship_conditions[i]="";ship_speed[i]=0;ship_turning[i]=0;
-	        ship_front_armor[i]=0;ship_other_armor[i]=0;ship_weapons[i]=0;ship_shields[i]=0;
+	        ship_front_armour[i]=0;ship_other_armour[i]=0;ship_weapons[i]=0;ship_shields[i]=0;
 	        ship_wep[i,0]="";ship_wep_facing[i,0]="";ship_wep_condition[i,0]="";
 	        ship_wep[i,1]="";ship_wep_facing[i,1]="";ship_wep_condition[i,1]="";
 	        ship_wep[i,2]="";ship_wep_facing[i,2]="";ship_wep_condition[i,2]="";
@@ -274,8 +274,8 @@ function scr_ini_ship_cleanup() {
 	            ship_conditions[i]=ship_conditions[i+1];
 	            ship_speed[i]=ship_speed[i+1];
 	            ship_turning[i]=ship_turning[i+1];
-	            ship_front_armor[i]=ship_front_armor[i+1];
-	            ship_other_armor[i]=ship_other_armor[i+1];
+	            ship_front_armour[i]=ship_front_armour[i+1];
+	            ship_other_armour[i]=ship_other_armour[i+1];
 	            ship_weapons[i]=ship_weapons[i+1];
 	            ship_shields[i]=ship_shields[i+1];
 	            ship_wep[i,0]=ship_wep[i+1,0];
@@ -313,8 +313,8 @@ function scr_ini_ship_cleanup() {
 	            ship_conditions[i+1]="";
 	            ship_speed[i+1]=0;
 	            ship_turning[i+1]=0;
-	            ship_front_armor[i+1]=0;
-	            ship_other_armor[i+1]=0;
+	            ship_front_armour[i+1]=0;
+	            ship_other_armour[i+1]=0;
 	            ship_weapons[i+1]=0;
 	            ship_shields[i+1]=0;
 	            ship_wep[i+1,0]="";

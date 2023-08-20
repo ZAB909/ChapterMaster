@@ -28,8 +28,8 @@ function scr_unit_stats() {
 	    ini_write_real("Land Raider","Accuracy",80);
 	    ini_write_real("Land Raider","Speed",8);
 	    ini_write_string("Land Raider","Movement","Tracks");
-	    ini_write_real("Land Raider","Secondary Armor",14);
-	    ini_write_real("Land Raider","Main Armor",14);
+	    ini_write_real("Land Raider","Secondary Armour",14);
+	    ini_write_real("Land Raider","Main Armour",14);
 	    ini_write_real("Land Raider","Health",600);
 	    ini_write_string("Land Raider","Name","Land Raider");
     

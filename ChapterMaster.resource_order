@@ -34,7 +34,7 @@
     {"name":"spr_iron_colors","order":31,"path":"sprites/spr_iron_colors/spr_iron_colors.yy",},
     {"name":"spr_iron2_colors","order":33,"path":"sprites/spr_iron2_colors/spr_iron2_colors.yy",},
     {"name":"spr_maximus_colors","order":35,"path":"sprites/spr_maximus_colors/spr_maximus_colors.yy",},
-    {"name":"spr_noarmor_colors","order":37,"path":"sprites/spr_noarmor_colors/spr_noarmor_colors.yy",},
+    {"name":"spr_noarmour_colors","order":37,"path":"sprites/spr_noarmour_colors/spr_noarmour_colors.yy",},
     {"name":"spr_scout_colors","order":39,"path":"sprites/spr_scout_colors/spr_scout_colors.yy",},
     {"name":"spr_tartaros_colors","order":41,"path":"sprites/spr_tartaros_colors/spr_tartaros_colors.yy",},
     {"name":"spr_tartaros2_colors","order":43,"path":"sprites/spr_tartaros2_colors/spr_tartaros2_colors.yy",},

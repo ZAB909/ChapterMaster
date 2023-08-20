@@ -2,7 +2,7 @@ function scr_add_man(argument0, argument1, argument2, argument3, argument4, argu
 
 	// argument0 = role
 	// argument1 = company
-	// argument2 = armorset
+	// argument2 = armourset
 	// argument3 = weaponset
 	// argument4 = gear
 	// argument5 = exp
@@ -137,7 +137,7 @@ function scr_add_man(argument0, argument1, argument2, argument3, argument4, argu
 	    obj_ini.role[argument1,good]=argument0;
 	    obj_ini.wep1[argument1,good]="";
 	    obj_ini.wep2[argument1,good]="";
-	    obj_ini.armor[argument1,good]="";
+	    obj_ini.armour[argument1,good]="";
 	    obj_ini.hp[argument1,good]=100;
 	    obj_ini.chaos[argument1,good]=argument7;
 	    obj_ini.experience[argument1,good]=argument5;
@@ -147,48 +147,48 @@ function scr_add_man(argument0, argument1, argument2, argument3, argument4, argu
 	    if (argument8=true){
 	        if (argument0="Skitarii"){
 	            obj_ini.wep1[argument1,good]="Hellgun";obj_ini.wep2[argument1,good]="";
-	            obj_ini.armor[argument1,good]="Skitarii Armor";obj_ini.experience[argument1,good]=10;
+	            obj_ini.armour[argument1,good]="Skitarii Armour";obj_ini.experience[argument1,good]=10;
 	            obj_ini.hp[argument1,good]=40;
 	            obj_ini.race[argument1,good]=3;
 	        }
 	        if (argument0="Techpriest"){
 	            obj_ini.wep1[argument1,good]="Power Weapon";obj_ini.wep2[argument1,good]="Conversion Beam Projector";
-	            obj_ini.armor[argument1,good]="Dragon Scales";obj_ini.gear[argument1,good]="Servo Arms";obj_ini.experience[argument1,good]=100;
+	            obj_ini.armour[argument1,good]="Dragon Scales";obj_ini.gear[argument1,good]="Servo Arms";obj_ini.experience[argument1,good]=100;
 	            obj_ini.hp[argument1,good]=50;
 	            obj_ini.race[argument1,good]=3;
 	        }
 	        if (argument0="Ranger"){
 	            obj_ini.wep1[argument1,good]="Ranger Long Rifle";obj_ini.wep2[argument1,good]="Shuriken Pistol";
-	            obj_ini.armor[argument1,good]="";obj_ini.experience[argument1,good]=80;
+	            obj_ini.armour[argument1,good]="";obj_ini.experience[argument1,good]=80;
 	            obj_ini.hp[argument1,good]=30;
 	            obj_ini.race[argument1,good]=6;
 	        }
 	        if (argument0="Crusader"){
-	            obj_ini.wep1[argument1,good]="Power Sword";obj_ini.armor[argument1,good]="Power Armor";
+	            obj_ini.wep1[argument1,good]="Power Sword";obj_ini.armour[argument1,good]="Power Armour";
 	            obj_ini.gear[argument1,good]="Storm Shield";obj_ini.experience[argument1,good]=10;
 	            obj_ini.hp[argument1,good]=30;
 	            obj_ini.race[argument1,good]=4;
 	        }
 	        if (argument0="Sister of Battle"){
 	            obj_ini.wep1[argument1,good]="Bolter";obj_ini.wep2[argument1,good]="Sarissa";
-	            obj_ini.armor[argument1,good]="Power Armor";obj_ini.experience[argument1,good]=60;
+	            obj_ini.armour[argument1,good]="Power Armour";obj_ini.experience[argument1,good]=60;
 	            obj_ini.hp[argument1,good]=40;obj_ini.race[argument1,good]=5;
 	        }
 	        if (argument0="Sister Hospitaler"){
 	            obj_ini.wep1[argument1,good]="Bolter";obj_ini.wep2[argument1,good]="Sarissa";
-	            obj_ini.armor[argument1,good]="Power Armor";obj_ini.experience[argument1,good]=100;
+	            obj_ini.armour[argument1,good]="Power Armour";obj_ini.experience[argument1,good]=100;
 	            obj_ini.gear[argument1,good]="Sororitas Medkit";
 	            obj_ini.hp[argument1,good]=40;obj_ini.race[argument1,good]=5;
 	        }
 	        if (argument0="Ork Sniper"){
 	            obj_ini.wep1[argument1,good]="Sniper Rifle";obj_ini.wep2[argument1,good]="Choppa";
-	            obj_ini.armor[argument1,good]="";obj_ini.experience[argument1,good]=20;
+	            obj_ini.armour[argument1,good]="";obj_ini.experience[argument1,good]=20;
 	            obj_ini.hp[argument1,good]=45;
 	            obj_ini.race[argument1,good]=7;
 	        }
 	        if (argument0="Flash Git"){
 	            obj_ini.wep1[argument1,good]="Snazzgun";obj_ini.wep2[argument1,good]="Choppa";
-	            obj_ini.armor[argument1,good]="Ork Armor";obj_ini.experience[argument1,good]=40;
+	            obj_ini.armour[argument1,good]="Ork Armour";obj_ini.experience[argument1,good]=40;
 	            obj_ini.hp[argument1,good]=65;
 	            obj_ini.race[argument1,good]=7;
 	        }
@@ -213,7 +213,7 @@ function scr_add_man(argument0, argument1, argument2, argument3, argument4, argu
     
     
 	    // Weapons
-	    if (argument3=obj_ini.role[100,12]){wep2=obj_ini.wep2[100,12];wep1=obj_ini.wep1[100,12];arm=obj_ini.armor[100,12];}
+	    if (argument3=obj_ini.role[100,12]){wep2=obj_ini.wep2[100,12];wep1=obj_ini.wep1[100,12];arm=obj_ini.armour[100,12];}
     
 	    var good1,good2,good3,good4;
 	    good1=0;good2=0;good3=0;good4=0;
@@ -245,18 +245,18 @@ function scr_add_man(argument0, argument1, argument2, argument3, argument4, argu
         
 	        // show_message(arm);
         
-	        if (arm!="") then repeat(100){// Armor
+	        if (arm!="") then repeat(100){// Armour
 	            e+=1;
 	            if (e<=100){
 	                if (obj_ini.equipment[e]=arm){
-	                    obj_ini.equipment_number[e]-=1;obj_ini.armor[argument1,good]=arm;
+	                    obj_ini.equipment_number[e]-=1;obj_ini.armour[argument1,good]=arm;
 	                    if (obj_ini.equipment_number[e]=0){obj_ini.equipment[e]="";obj_ini.equipment_type[e]="";}
 	                    e=1000;
 	                }
 	            }
 	        }
         
-	        // show_message(obj_ini.armor[argument1,good]);
+	        // show_message(obj_ini.armour[argument1,good]);
         
 	        e=0;
 	        if (argument4!="") then repeat(100){// Gear
@@ -283,7 +283,7 @@ function scr_add_man(argument0, argument1, argument2, argument3, argument4, argu
         
 	        if (obj_ini.wep1[argument1,good]!=wep1) and (wep1!="") then missing=1;
 	        if (obj_ini.wep2[argument1,good]!=wep2) and (wep2!="") then missing=1;
-	        if (obj_ini.armor[argument1,good]!=arm) and (arm!="") then missing=1;
+	        if (obj_ini.armour[argument1,good]!=arm) and (arm!="") then missing=1;
 	        if (obj_ini.gear[argument1,good]!=argument4) and (argument4!="") then missing=1;
 	        if (obj_ini.mobi[argument1,good]!=argument10) and (argument10!="") then missing=1;
         
@@ -291,7 +291,7 @@ function scr_add_man(argument0, argument1, argument2, argument3, argument4, argu
         
 	        if (missing=1) and (argument0="Scout"){
 	            if (string_count("has joined the 10th Company",obj_turn_end.alert_text[obj_turn_end.alerts])=1){
-	               scr_alert("red","recruiting","Not enough "+string(obj_ini.role[100,12])+" equipment in the armory!",0,0);
+	               scr_alert("red","recruiting","Not enough "+string(obj_ini.role[100,12])+" equipment in the armoury!",0,0);
 	            }
 	        }
 	    }
