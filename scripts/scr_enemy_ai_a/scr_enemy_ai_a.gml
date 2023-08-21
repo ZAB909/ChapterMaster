@@ -1,5 +1,5 @@
 function scr_enemy_ai_a() {
-
+//test
 	// guardsmen hop from planet to planet
 	if (p_guardsmen[1]+p_guardsmen[2]+p_guardsmen[3]+p_guardsmen[4]>0) and (present_fleet[2]>0){
 	    var o,mx,cr,tr;o=0;mx=0;cr=0;tr=0;
