@@ -1,6 +1,7 @@
 function TTRPG_stats(faction, comp, mar) constructor{
 	if (faction == "player_marine"){
 		role_history = [[obj_ini.wep1[company,marine_number], obj_controller.turn]];
+		weapon_skills = {"bolter":3, "chainsword":3};
 		strength = 5;
 		constitution = 5;
 		dexterity = 5;
@@ -12,6 +13,7 @@ function TTRPG_stats(faction, comp, mar) constructor{
 		marine_ascension = obj_controller.turn; // on what day did turn did this marine begin to exist
 		company = comp;
 		marine_number = mar;
+		static name = function(){return obj_ini.name[target_company,good];}
 		// get marine health
 		static hp = function(){ 
 			return obj_ini.hp[company,marine_number]
@@ -92,6 +94,42 @@ function TTRPG_stats(faction, comp, mar) constructor{
 		    }
 	
 			size = 0;			
+		}
+		
+		static marine_location = function(){
+			var location_id,location_name;
+			var location_type = obj_ini.wid[company,marine_number];
+			if ( location_type > 0){ //if marine is on planet
+				location_id = location_type; //planet_number marine is on
+				location_type = "planet"; //state marine is on planet
+				location_name = obj_ini.loc[company,marine_number]; //system marine is in
+			} else {
+				location_type = "ship"; //marine is on ship
+				location_id = obj_ini.lid[_company, _unit]; //ship array location
+				location_name = obj_ini.ship_location[location_id]; //location of ship
+			}
+			return [location_type,location_id ,location_name];
+		};
+		
+		static load_marine =function(ship){
+			 get_unit_size(); // make sure marines size given it's current equipment is correct
+			 var current_location = marine_location();
+			 if (current_location[0] == "planet"){//if marine is on a planet
+				 
+				 //check if ship is in the same location as marine and has enough space;
+				 if ( obj_ini.ship_location[ship] == (current_location[2])) and ((obj_ini.ship_carrying[ship] + size) <= obj_ini.ship_capacity[ship]){
+					 obj_ini.wid[_company, _unit] = 0; //mark marine as no longer on planet
+					 obj_ini.lid[_company, _unit] = ship; //id of ship marine is now loaded on
+					 obj_ini.ship_carrying[ship] += size; //update ship capacity
+				 }
+			 } else if (current_location[0] == "ship"){ //with this addition marines can now be moved between ships freely as long as they are in the same system
+				 var off_loading_ship = current_location[2];
+				 if ( (obj_ini.ship_location[ship] == obj_ini.ship_location[off_loading_ship]) and ((obj_ini.ship_carrying[ship] + size) <= obj_ini.ship_capacity[ship])){
+					 obj_ini.ship_carrying[off_loading_ship] -= size; // remove from previous ship capacity
+					 obj_ini.lid[_company, _unit] = ship;             // change marine location to new ship
+					  obj_ini.ship_carrying[ship] += size;            //add marine capacity to new ship
+				 }
+			 }
 		}
 	   
 	}

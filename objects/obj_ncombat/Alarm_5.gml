@@ -604,12 +604,6 @@ if (exterminatus>0) and (dropping!=0){
 
 instance_activate_object(obj_star);
 instance_activate_object(obj_turn_end);
-var monastary_list = search_planet_features(battle_object.p_feature[obj_ncombat.battle_id], P_features.Monastery);
-var mon_count = array_length(monastary_list);
-if (defeat=1) and (dropping=0) and (mon_count>0){
-	for (var mon = 0;mon < mon_count;mon++){
-		battle_object.p_feature[obj_ncombat.battle_id][monastary_list[mon]].status="destroyed";
-	}
   
 
 //If not fleet based and...
