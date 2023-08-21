@@ -775,6 +775,17 @@ function scr_load(argument0, argument1) {
 	            obj_ini.armour[coh,mah]=ini_read_string("Mar","ar"+string(coh)+"."+string(mah),"");
 	            obj_ini.gear[coh,mah]=ini_read_string("Mar","ge"+string(coh)+"."+string(mah),"");
 	            obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");
+				obj_ini.TTRPG[coh,mah];
+					new_star.p_feature[g] = [];
+					var  p_features = ini_read_string("Star","sr"+string(i)+"feat"+string(g),"");
+					if (p_features != ""){
+						var p_features = json_parse(base64_decode(p_features));
+						for (var feat = 0;feat < array_length(p_features);feat++){
+							var new_feat = new new_planet_feature(p_features[feat].f_type);
+							new_feat.load_json_data(p_features[feat]);
+							array_push(new_star.p_feature[g], new_feat);
+						}
+					}				
 	        }
 	        coh=102;mah=-1;
 	        repeat(21){mah+=1;

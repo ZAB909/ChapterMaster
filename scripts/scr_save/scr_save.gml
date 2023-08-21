@@ -1,4 +1,15 @@
-function scr_save(argument0, argument1) {
+			function jsonify_marine_struct(company, marine){
+				var copy_marine_struct = obj_ini.TTRPG[company, marine]; //grab marine structure
+				var new_marine = {};
+				var names = variable_struct_get_names(copy_marine_struct); // get all keys within structure
+					for (var name = 0; name < array_length(names); name++) { //loop through keys to find which ones are methods as they can't be saved as a json string
+					  if (!is_method(copy_marine_struct[$ names[name]])){
+						  variable_struct_set(new_marine, names[name],copy_feature[$ names[name]]) //if key value is not a method add to copy structure
+					  }
+					}
+					return json_stringify(new_marine);
+				}
+function scr_save(save_slot,save_id) {
 
 	var num, tot;
 	num=0;tot=0;
@@ -9,9 +20,9 @@ function scr_save(argument0, argument1) {
 
 	// if (file_exists("save1.ini")) then file_delete("save1.ini");
 	// argument 0 = the part of the save to do
-	// argument1 = the save ID
+	//save_id = the save ID
 
-	if (argument0=1) or (argument0=0){debugl("Saving to slot "+string(argument1));
+	if (save_slot=1) or (save_slot=0){debugl("Saving to slot "+string(argument1));
 	    ini_open("save"+string(argument1)+".ini");
 
 	    // Global variables
@@ -326,7 +337,7 @@ function scr_save(argument0, argument1) {
 
 
 
-	if (argument0=2) or (argument0=0){debugl("Saving to slot "+string(argument1)+" part 2");
+	if (save_slot=2) or (save_slot=0){debugl("Saving to slot "+string(argument1)+" part 2");
 	    ini_open("save"+string(argument1)+".ini");
 	    // Stars
 
@@ -698,7 +709,7 @@ function scr_save(argument0, argument1) {
 
 
 
-	if (argument0=3) or (argument0=0){debugl("Saving to slot "+string(argument1)+" part 3");
+	if (save_slot=3) or (save_slot=0){debugl("Saving to slot "+string(argument1)+" part 3");
 	    ini_open("save"+string(argument1)+".ini");
 	    var coh,mah,good;
 	    good=0;coh=10;mah=100;
@@ -817,7 +828,7 @@ function scr_save(argument0, argument1) {
 
 
 
-	if (argument0=4) or (argument0=0){debugl("Saving to slot "+string(argument1)+" part 4");
+	if (save_slot=4) or (save_slot=0){debugl("Saving to slot "+string(argument1)+" part 4");
 	    ini_open("save"+string(argument1)+".ini");
 	    var coh,mah,good;
 	    good=0;coh=100;mah=0;
@@ -831,6 +842,7 @@ function scr_save(argument0, argument1) {
 	            ini_write_string("Mar","ar"+string(coh)+"."+string(mah),obj_ini.armour[coh,mah]);
 	            ini_write_string("Mar","ge"+string(coh)+"."+string(mah),obj_ini.gear[coh,mah]);
 	            ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);
+	            ini_write_string("Mar","Struct"+string(coh)+"."+string(mah),base64_encode(jsonify_marine_struct(coh,mah)));	//encode stripped out marine struct			
 	        }
 	    }
 	    good=0;coh=10;mah=400;
@@ -859,6 +871,7 @@ function scr_save(argument0, argument1) {
 	                ini_write_real("Mar","ag"+string(coh)+"."+string(mah),obj_ini.age[coh,mah]);
 	                ini_write_string("Mar","spe"+string(coh)+"."+string(mah),obj_ini.spe[coh,mah]);
 	                ini_write_real("Mar","god"+string(coh)+"."+string(mah),obj_ini.god[coh,mah]);
+					ini_write_string("Mar","Struct"+string(coh)+"."+string(mah),base64_encode(jsonify_marine_struct(coh,mah)));					
 	            }
 	            if (coh=0) and (mah=1) then good=1;
 	        }
@@ -872,6 +885,7 @@ function scr_save(argument0, argument1) {
 	            ini_write_string("Mar","ar"+string(coh)+"."+string(mah),obj_ini.armour[coh,mah]);
 	            ini_write_string("Mar","ge"+string(coh)+"."+string(mah),obj_ini.gear[coh,mah]);
 	            ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);
+				ini_write_string("Mar","Struct"+string(coh)+"."+string(mah),base64_encode(jsonify_marine_struct(coh,mah)));
 	        }
 	    }
 	    coh=102;mah=-1;
@@ -883,13 +897,14 @@ function scr_save(argument0, argument1) {
 	            ini_write_string("Mar","ar"+string(coh)+"."+string(mah),obj_ini.armour[coh,mah]);
 	            ini_write_string("Mar","ge"+string(coh)+"."+string(mah),obj_ini.gear[coh,mah]);
 	            ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);
+				ini_write_string("Mar","Struct"+string(coh)+"."+string(mah),base64_encode(jsonify_marine_struct(coh,mah)));
 	        }
 	    }
 	    ini_close();
 	}
 
 
-	if (argument0=5) or (argument0=0){
+	if (save_slot=5) or (save_slot=0){
 	    ini_open("save"+string(argument1)+".ini");
 
 	    obj_saveload.hide=1;
