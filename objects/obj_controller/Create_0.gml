@@ -529,7 +529,7 @@ exit_all=0;
 // 
 diplomacy=0;
 trading=0;
-trading_artifat=0;
+trading_artifact=0;
 trading_enemy_demand=0;
 trading_demand=0;
 trade_likely="";

@@ -480,16 +480,19 @@ function scr_initialize_custom() {
 	    race[100,i]=1;loc[100,i]="";name[100,i]="";role[100,i]="";wep1[100,i]="";bio[100,i]=0;lid[100,i]=0;wid[100,i]=2;spe[100,i]="";
 	    wep2[100,i]="";armour[100,i]="";gear[100,i]="";mobi[100,i]="";hp[100,i]=100;chaos[100,i]=0;experience[100,i]=0;
 	    age[100,i]=((millenium*1000)+year)-10;god[100,i]=0;if (global.chapter_name="Iron Hands") then bio[100,i]=choose(3,4,5);
+		TTRPG[100,i]=new TTRPG_stats("chapter", 100,i);
 	}initialized=500;
 	// Initialize special marines
 	i=-1;repeat(501){i+=1;
 	    race[0,i]=1;loc[0,i]="";name[0,i]="";role[0,i]="";wep1[0,i]="";bio[0,i]=0;lid[0,i]=0;wid[0,i]=2;spe[0,i]="";
 	    wep2[0,i]="";armour[0,i]="";gear[0,i]="";mobi[0,i]="";hp[0,i]=100;chaos[0,i]=0;experience[0,i]=0;
 	    age[0,i]=((millenium*1000)+year)-10;god[0,i]=0;if (global.chapter_name="Iron Hands") then bio[0,i]=choose(3,4,5);
+		TTRPG[0,i]= new TTRPG_stats("chapter", 0,i);
 	}
 	i=-1;repeat(101){i+=1;
-	    role[100,i]="";wep1[100,i]="";wep2[100,i]="";armour[100,i]="";gear[100,i]="";mobi[100,i]="";
-	    role[102,i]="";wep1[102,i]="";wep2[102,i]="";armour[102,i]="";gear[102,i]="";mobi[102,i]="";
+	    role[100,i]="";wep1[100,i]="";wep2[100,i]="";armour[100,i]="";gear[100,i]="";mobi[100,i]="";//hirelings??
+	    role[102,i]="";wep1[102,i]="";wep2[102,i]="";armour[102,i]="";gear[102,i]="";mobi[102,i]="";//hirelings??
+		TTRPG[102,i]=new TTRPG_stats("chapter", 102,i);
 	}
 	i=99;repeat(3){i+=1;
 	    role[i,2]="Honor Guard";wep1[i,2]="Power Sword";wep2[i,2]="Bolter";armour[i,2]="Power Armour";mobi[i,2]="";gear[i,2]="";
@@ -685,6 +688,7 @@ function scr_initialize_custom() {
 	    race[company,i]=1;loc[company,i]="";name[company,i]="";role[company,i]="";wep1[company,i]="";lid[company,i]=0;wid[company,i]=2;spe[company,i]="";
 	    wep2[company,i]="";armour[company,i]="";hp[company,i]=100;chaos[company,i]=0;experience[company,i]=0;gear[company,i]="";mobi[company,i]="";
 	    age[company,i]=((millenium*1000)+year)-10;god[company,i]=0;bio[company,i]=0;if (global.chapter_name="Iron Hands") then bio[company,i]=choose(3,4,5);
+		TTRPG[company,i]= new TTRPG_stats("chapter", 0,i);
 	}initialized=200;// How many array variables have been prepared
 
 	k=0;
@@ -820,6 +824,7 @@ function scr_initialize_custom() {
 	        race[company,i]=1;loc[company,i]="";name[company,i]="";role[company,i]="";wep1[company,i]="";lid[company,i]=0;wid[company,i]=2;spe[company,i]="";
 	        wep2[company,i]="";armour[company,i]="";gear[company,i]="";mobi[company,i]="";hp[company,i]=100;chaos[company,i]=0;experience[company,i]=0;
 	        age[company,i]=((millenium*1000)+year)-10;god[company,i]=0;bio[company,i]=0;if (global.chapter_name="Iron Hands") then bio[company,i]=choose(3,4,5);
+			TTRPG[company,i]= new TTRPG_stats("chapter", 0,i);
 	    }
 
 	    var company_experience, company_unit2, company_unit3, dready, rhinoy, whirly, speedy,stahp;

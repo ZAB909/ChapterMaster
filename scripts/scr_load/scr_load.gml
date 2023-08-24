@@ -1,5 +1,13 @@
 function scr_load(argument0, argument1) {
-
+	
+	function load_marine_struct(company, marine){
+			var marStruct = ini_read_string("Mar","Struct"+string(company)+"."+string(marine),"");
+			if (marStruct != ""){
+				marStruct = json_parse(base64_decode(marStruct));
+			} else {marStruct = {};}
+			obj_ini.TTRPG[company, marine] = new TTRPG_stats("chapter", company, marine);
+			obj_ini.TTRPG[company, marine].load_json_data(marStruct);		
+	};
 	var rang,i,g,stars,pfleets,efleets;
 	rang=0;i=0;g=0;stars=0;pfleets=0;efleets=0;
 
@@ -692,6 +700,7 @@ function scr_load(argument0, argument1) {
 	            obj_ini.armour[coh,mah]=ini_read_string("Mar","ar"+string(coh)+"."+string(mah),"");
 	            obj_ini.gear[coh,mah]=ini_read_string("Mar","ge"+string(coh)+"."+string(mah),"");
 	            obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");
+				load_marine_struct(coh,mah)			
 	        }
 	        good=0;coh=10;mah=600;
 	        repeat(6600){
@@ -712,6 +721,7 @@ function scr_load(argument0, argument1) {
 	                    obj_ini.lid[coh,mah]=ini_read_real("Mar","li"+string(coh)+"."+string(mah),0);
 	                    obj_ini.bio[coh,mah]=ini_read_real("Mar","bio"+string(coh)+"."+string(mah),0);
 	                    obj_ini.wid[coh,mah]=ini_read_real("Mar","wi"+string(coh)+"."+string(mah),0);
+						load_marine_struct(coh,mah);								
 
 	                    if (coh=0){
 	                        if (obj_ini.role[coh,mah]="Chapter Master") then obj_ini.race[coh,mah]=1;
@@ -775,17 +785,7 @@ function scr_load(argument0, argument1) {
 	            obj_ini.armour[coh,mah]=ini_read_string("Mar","ar"+string(coh)+"."+string(mah),"");
 	            obj_ini.gear[coh,mah]=ini_read_string("Mar","ge"+string(coh)+"."+string(mah),"");
 	            obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");
-				obj_ini.TTRPG[coh,mah];
-					new_star.p_feature[g] = [];
-					var  p_features = ini_read_string("Star","sr"+string(i)+"feat"+string(g),"");
-					if (p_features != ""){
-						var p_features = json_parse(base64_decode(p_features));
-						for (var feat = 0;feat < array_length(p_features);feat++){
-							var new_feat = new new_planet_feature(p_features[feat].f_type);
-							new_feat.load_json_data(p_features[feat]);
-							array_push(new_star.p_feature[g], new_feat);
-						}
-					}				
+				load_marine_struct(coh,mah);
 	        }
 	        coh=102;mah=-1;
 	        repeat(21){mah+=1;
@@ -796,6 +796,7 @@ function scr_load(argument0, argument1) {
 	            obj_ini.armour[coh,mah]=ini_read_string("Mar","ar"+string(coh)+"."+string(mah),"");
 	            obj_ini.gear[coh,mah]=ini_read_string("Mar","ge"+string(coh)+"."+string(mah),"");
 	            obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");
+				load_marine_struct(coh,mah);				
 	        }
 
 	    }
