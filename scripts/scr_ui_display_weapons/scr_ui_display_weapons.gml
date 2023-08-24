@@ -178,6 +178,9 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	if (string_count("Storm Shield",wee)>0){ui_weapon[rl]=spr_weapon_storm;
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=false;
 	}
+		if (string_count("Boarding Shield",wee)>0){ui_weapon[rl]=spr_weapon_boarding;
+	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=false;
+	}
 
 	// Flip for offhand
 	if (argument0=2) /*and (argument1=0)*/ and (ui_xmod[rl]<0) and (display_type!="power_fist") and (display_type!="lightning_claw") then ui_xmod[rl]=ui_xmod[rl]*-1;
@@ -334,6 +337,9 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 
 
 	if (string_count("Storm Shield",wee)>0){ui_weapon[rl]=spr_weapon_storm;
+	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=false;
+	}
+		if (string_count("Boarding Shield",wee)>0){ui_weapon[rl]=spr_weapon_boarding;
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=false;
 	}
 
