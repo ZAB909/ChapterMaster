@@ -636,6 +636,7 @@
     {"id":{"name":"scr_colors_initialize","path":"scripts/scr_colors_initialize/scr_colors_initialize.yy",},},
     {"id":{"name":"scr_shader_initialize","path":"scripts/scr_shader_initialize/scr_shader_initialize.yy",},},
     {"id":{"name":"string_to_integer","path":"scripts/string_to_integer/string_to_integer.yy",},},
+    {"id":{"name":"spr_weapon_boarding","path":"sprites/spr_weapon_boarding/spr_weapon_boarding.yy",},},
     {"id":{"name":"string_rpos","path":"scripts/string_rpos/string_rpos.yy",},},
     {"id":{"name":"explode_script","path":"scripts/explode_script/explode_script.yy",},},
     {"id":{"name":"relative_direction","path":"scripts/relative_direction/relative_direction.yy",},},
