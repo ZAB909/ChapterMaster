@@ -616,14 +616,25 @@ function scr_enemy_ai_a() {
 	                    badd=2;
 	                }
                 
-	                if (owner<=5){
-	                    if (badd=1) and (p_tyranids[run]=0) and (p_necrons[run]=0) and (p_sisters[run]=0) then scr_alert("red","owner",string(name)+" "+string(run)+" has been overwhelmed by Orks!",x,y);
-	                    if (badd=2) and (p_tyranids[run]=0) and (p_necrons[run]=0) and (p_sisters[run]=0){
-	                        scr_popup("System Lost","The "+string(name)+" system has been ovewhelmed by Orks!","orks","");
-	                        scr_event_log("red","System "+string(name)+" has been overwhelmed by Orkz.");
-	                        // owner=7;p_owner[1]=7;p_owner[2]=7;p_owner[3]=7;p_owner[4]=7;
-	                    }
-	                }
+					if (owner <= 5) {
+    					if (badd = 1) and(p_tyranids[run] = 0) and(p_necrons[run] = 0) and(p_sisters[run] = 0) {
+        					scr_alert("red", "owner", string(name) + " " + string(run) + " has been overwhelmed by Orks!", x, y);
+        					if (visited == 1) { //visited variable check whether the star has been visisted or not 1 for true 0 for false
+            					if (p_type[run] == "Forge") {
+					                dispo[run] -= 10; // 10 Disposition decrease for the planet govrnor if it's overrun by orks
+					                obj_controller.disposition[3] -= 10; // obj_controller.disposition[3] refer to the disposition of the toaster jocks.
+					            } else if (planet_feature_bool(p_feature[run], P_features.Sororitas_Cathedral) or(p_type[run] == "Shrine")) {
+					                dispo[run] -= 10; // diso[run] is the disposition of the planet. where run refer to the planet that is currently running the code.
+					                obj_controller.disposition[5] -= 5; // obj_controller.disposition[2] refer to the disposition of the sororitas while 3 refer to mechanicus
+					            } else dispo[run] -= 10;
+					        }
+					    } // diso[run] is the disposition of the planet. where run refer to the planet that is currently running the code.
+					    if (badd = 2) and(p_tyranids[run] = 0) and(p_necrons[run] = 0) and(p_sisters[run] = 0) {
+					        scr_popup("System Lost", "The " + string(name) + " system has been ovewhelmed by Orks!", "orks", "");
+					        scr_event_log("red", "System " + string(name) + " has been overwhelmed by Orkz.");
+					        // owner=7;p_owner[1]=7;p_owner[2]=7;p_owner[3]=7;p_owner[4]=7;
+					    }
+					}
 	            }
 	        }
 	        if (ork_attack="sisters"){
@@ -725,58 +736,6 @@ function scr_enemy_ai_a() {
 	            if (rand1>rand2) then temp11-=1;
 	        }
 	    }
-    
-    
-    
-    
-    
-    
-    
-	    // eldar attack
-	    /*if (eldar_score>0) and (eldar_attack!="") and (eldar_attack!="player"){
-	        rand1=choose(1,2,3,4,5,6,7)*eldar_score;
-	        if (eldar_score=6) then rand1=choose(30,36);
-        
-	        if (eldar_attack="tau"){
-	            rand2=(choose(1,2,3,4,5)*tau_score)*choose(1,1.25);
-	            if (rand1>rand2) then temp4-=1;
-	        }
-	        if (eldar_attack="ork"){
-	            rand2=(choose(1,2,3,4,5)*ork_score)*choose(1,1.25);
-	            if (rand1>rand2) then temp3-=1;
-	        }
-	        if (eldar_attack="traitors"){
-	            rand2=(choose(1,2,3,4,5)*traitors_score)*choose(1,1.25);
-	            if (rand1>rand2) then temp10=1;
-	        }
-        
-	        if (eldar_attack="guard"){
-	            rand2=(choose(1,2,3,4,5)*guard_score)*choose(1,1.25);
-	            if (rand1>rand2){
-	                if (eldar_score<=3) then p_guardsmen[run]=floor(p_guardsmen[run]*0.7);
-	                if (eldar_score>=4) then p_guardsmen[run]=floor(p_guardsmen[run]*0.6);
-	                if (eldar_score>=6) then p_guardsmen[run]=floor(p_guardsmen[run]*0.3);
-	                if (eldar_score>=4) and (p_guardsmen[run]<15000) then p_guardsmen[run]=0;
-	                if (eldar_score>=3) and (p_guardsmen[run]<5000) then p_guardsmen[run]=0;
-	                if (eldar_score>=2) and (p_guardsmen[run]<1000) then p_guardsmen[run]=0;
-	                if (eldar_score>=1) and (p_guardsmen[run]<500) then p_guardsmen[run]=0;
-	            }
-	        }
-	        if (eldar_attack="pdf"){
-	            rand2=(choose(1,2,3,4,5)*pdf_score)*choose(1,1.25);
-	            if (rand1>rand2){
-	                if (eldar_score>=6) then p_pdf[run]=0;
-	                if (eldar_score<=3) then p_pdf[run]=floor(p_pdf[run]*0.7);
-	                if (eldar_score>=4) then p_pdf[run]=floor(p_pdf[run]*0.6);
-	                if (eldar_score>=4) and (p_pdf[run]<60000) then p_pdf[run]=0;
-	                if (eldar_score>=3) and (p_pdf[run]<20000) then p_pdf[run]=0;
-	                if (eldar_score>=2) and (p_pdf[run]<3000) then p_pdf[run]=0;
-	                if (eldar_score>=1) and (p_pdf[run]<1000) then p_pdf[run]=0;
-	            }
-	        }
-	    }*/
-    
-    
     
     
 	    // Tyranids attack
@@ -891,7 +850,19 @@ function scr_enemy_ai_a() {
 	                    badd=2;
 	                }
                 
-	                if (badd=1) and (p_tyranids[run]<5) and (p_orks[run]=0) and (p_traitors[run]=0) then scr_alert("red","owner",string(name)+" "+string(run)+" has been overwhelmed by Necrons!",x,y);
+					if (badd = 1) and(p_tyranids[run] < 5) and(p_orks[run] = 0) and(p_traitors[run] = 0) {
+					    scr_alert("red", "owner", string(name) + " " + string(run) + " has been overwhelmed by Necrons!", x, y);
+					    if (visited == 1) {
+					        if (p_type[run] == "Forge") { //visited variable check whether the star has been visisted or not 1 for true 0 for false
+					            dispo[run] -= 10; // 10 Disposition decrease for the planet govrnor if it's overrun by necrons
+					            obj_controller.disposition[3] -= 10; // 10 dis decrease for the faction mechanicus
+					        } else if (planet_feature_bool(p_feature[run], P_features.Sororitas_Cathedral) or(p_type[run] == "Shrine")) {
+					            dispo[run] -= 10; // 10 Disposition decrease for the planet govrnor if it's overrun by necrons
+					            obj_controller.disposition[5] -= 5; // 5 dis decrease for the Nurses
+					        } else dispo[run] -= 10;
+					    }
+					}
+					
 	                if (badd=2) and (p_tyranids[run]<5) and (p_orks[run]=0) and (p_traitors[run]=0){
 	                    scr_popup("System Lost","The "+string(name)+" system has been ovewhelmed by Necrons!","necron_army","");
 	                    scr_event_log("red","System "+string(name)+" has been overwhelmed by Necrons.");
@@ -922,93 +893,216 @@ function scr_enemy_ai_a() {
     
     
 	    // 135;
-    
-	    if (p_owner[run]=7) and (p_player[run]+p_raided[run]>0) and (p_orks[run]=0) and (p_tyranids[run]<4) and (p_chaos[run]=0) and (p_traitors[run]=0) and (p_necrons[run]=0) and (p_tau[run]=0){
-	        scr_event_log("","Orks cleansed from "+string(name)+" "+scr_roman(run));
-	        if (p_first[run]=1){p_owner[run]=1;scr_alert("green","owner","Orks cleansed from "+string(name)+" "+scr_roman(run)+".",x,y);}
-	        if (p_first[run]=2){p_owner[run]=2;scr_alert("green","owner","Orks cleansed from "+string(name)+" "+scr_roman(run)+".  Control returned to the governor.",x,y);}
-	        if (p_first[run]=3){p_owner[run]=3;scr_alert("green","owner","Orks cleansed from "+string(name)+" "+scr_roman(run)+".  Control returned to Mechanicus.",x,y);}
-	        if (dispo[run]=101) then p_owner[run]=1;
+	    p_time_since_saved[run] = 0;
+	    if (p_owner[run] = 7) and(p_player[run] + p_raided[run] > 0) and(p_orks[run] = 0) and(p_tyranids[run] < 4) and(p_chaos[run] = 0) and(p_traitors[run] = 0) and(p_necrons[run] = 0) and(p_tau[run] = 0) {
+	        scr_event_log("", "Orks cleansed from " + string(name) + " " + scr_roman(run));
+	        if (p_first[run] = 1) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
+	            p_owner[run] = 1;
+	            scr_alert("green", "owner", "Orks cleansed from " + string(name) + " " + scr_roman(run) + ".", x, y);
+	            dispo[run] += 10;
+	            p_time_since_saved[run] = obj_controller.turn;
+	            obj_controller.disposition[5] += 5;
+	        } // 10 Disposition increase for returning control to the governor Planet disposition
+	        if (p_first[run] = 2) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
+	            p_owner[run] = 2;
+	            scr_alert("green", "owner", "Orks cleansed from " + string(name) + " " + scr_roman(run) + ".  Control returned to the governor.", x, y);
+	            dispo[run] += 10;
+	            p_time_since_saved[run] = obj_controller.turn;
+	        } // 10 Disposition increase for returning control to the governor Planet disposition
+	        if (p_first[run] = 3) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
+	            p_owner[run] = 3;
+	            scr_alert("green", "owner", "Orks cleansed from " + string(name) + " " + scr_roman(run) + ".  Control returned to Mechanicus.", x, y);
+	            obj_controller.disposition[3] += 10;
+	            dispo[run] += 10;
+	            p_time_since_saved[run] = obj_controller.turn;
+	        } // 10 Disposition increase for returning control to the governor Planet disposition
+	        if (dispo[run] = 101) then p_owner[run] = 1;
 	    }
-	    if (p_owner[run]=8) and (p_player[run]+p_raided[run]>0) and (p_orks[run]=0) and (p_tyranids[run]<4) and (p_chaos[run]=0) and (p_traitors[run]=0) and (p_necrons[run]=0) and (p_tau[run]=0) and (p_pdf[run]=0){
-	        scr_event_log("","Tau cleansed from "+string(name)+" "+scr_roman(run));
-	        if (p_first[run]=1){p_owner[run]=1;scr_alert("green","owner","Tau cleansed from "+string(name)+" "+scr_roman(run)+".",x,y);}
-	        if (p_first[run]=2){p_owner[run]=2;scr_alert("green","owner","Tau cleansed from "+string(name)+" "+scr_roman(run)+".  Control given to new governor.",x,y);}
-	        if (p_first[run]=3){p_owner[run]=3;scr_alert("green","owner","Tau cleansed from "+string(name)+" "+scr_roman(run)+".  Control returned to Mechanicus.",x,y);}
-	        if (dispo[run]=101) then p_owner[run]=1;
+	    if (p_owner[run] = 8) and(p_player[run] + p_raided[run] > 0) and(p_orks[run] = 0) and(p_tyranids[run] < 4) and(p_chaos[run] = 0) and(p_traitors[run] = 0) and(p_necrons[run] = 0) and(p_tau[run] = 0) and(p_pdf[run] = 0) {
+	        scr_event_log("", "Tau cleansed from " + string(name) + " " + scr_roman(run));
+	        if (p_first[run] = 1) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
+	            p_owner[run] = 1;
+	            scr_alert("green", "owner", "Tau cleansed from " + string(name) + " " + scr_roman(run) + ".", x, y);
+	            dispo[run] += 10;
+	            p_time_since_saved[run] = obj_controller.turn;
+	            obj_controller.disposition[5] += 5;
+	        } // 10 Disposition increase for returning control to the governor Planet disposition
+	        if (p_first[run] = 2) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
+	            p_owner[run] = 2;
+	            scr_alert("green", "owner", "Tau cleansed from " + string(name) + " " + scr_roman(run) + ".  Control given to new governor.", x, y);
+	            dispo[run] += 10;
+	            p_time_since_saved[run] = obj_controller.turn
+	        } // 10 Disposition increase for returning control to the governor Planet disposition
+	        if (p_first[run] = 3) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
+	            p_owner[run] = 3;
+	            scr_alert("green", "owner", "Tau cleansed from " + string(name) + " " + scr_roman(run) + ".  Control returned to Mechanicus.", x, y);
+	            obj_controller.disposition[3] += 10;
+	            dispo[run] += 10;
+	            p_time_since_saved[run] = obj_controller.turn
+	        } // 10 Disposition increase for returning control to the governor Planet disposition
+	        if (dispo[run] = 101) then p_owner[run] = 1;
 	    }
-	    if (p_owner[run]=10) and (p_player[run]+p_raided[run]>0) and (p_orks[run]=0) and (p_tyranids[run]<4) and (p_chaos[run]=0) and (p_traitors[run]=0) and (p_necrons[run]=0) and (p_tau[run]=0){
-	        scr_event_log("","Chaos cleansed from "+string(name)+" "+scr_roman(run));
-	        if (p_first[run]=1){p_owner[run]=1;scr_alert("green","owner","Chaos cleansed from "+string(name)+" "+scr_roman(run)+".",x,y);}
-	        if (p_first[run]=2){p_owner[run]=2;scr_alert("green","owner","Chaos cleansed from "+string(name)+" "+scr_roman(run)+".  Control returned to the governor.",x,y);}
-	        if (p_first[run]=3){p_owner[run]=3;scr_alert("green","owner","Chaos cleansed from "+string(name)+" "+scr_roman(run)+".  Control returned to Mechanicus.",x,y);}
-	        if (dispo[run]=101) then p_owner[run]=1;
+	    if (p_owner[run] = 10) and(p_player[run] + p_raided[run] > 0) and(p_orks[run] = 0) and(p_tyranids[run] < 4) and(p_chaos[run] = 0) and(p_traitors[run] = 0) and(p_necrons[run] = 0) and(p_tau[run] = 0) {
+	        scr_event_log("", "Chaos cleansed from " + string(name) + " " + scr_roman(run));
+	        if (p_first[run] = 1) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
+	            p_owner[run] = 1;
+	            scr_alert("green", "owner", "Chaos cleansed from " + string(name) + " " + scr_roman(run) + ".", x, y);
+	            dispo[run] += 10;
+	            p_time_since_saved[run] = obj_controller.turn;
+	            obj_controller.disposition[5] += 5;
+	        } // 10 Disposition increase for returning control to the governor Planet disposition
+	        if (p_first[run] = 2) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
+	            p_owner[run] = 2;
+	            scr_alert("green", "owner", "Chaos cleansed from " + string(name) + " " + scr_roman(run) + ".  Control returned to the governor.", x, y);
+	            dispo[run] += 10;
+	            p_time_since_saved[run] = obj_controller.turn
+	        } // 10 Disposition increase for returning control to the governor Planet disposition
+	        if (p_first[run] = 3) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
+	            p_owner[run] = 3;
+	            scr_alert("green", "owner", "Chaos cleansed from " + string(name) + " " + scr_roman(run) + ".  Control returned to Mechanicus.", x, y);
+	            obj_controller.disposition[3] += 10;
+	            dispo[run] += 10;
+	            p_time_since_saved[run] = obj_controller.turn
+	        } // 10 Disposition increase for returning control to the governor Planet disposition
+	        if (dispo[run] = 101) then p_owner[run] = 1;
 	    }
-	    if (p_owner[run]=13) and (p_player[run]+p_raided[run]>0) and (p_orks[run]=0) and (p_tyranids[run]<4) and (p_chaos[run]=0) and (p_traitors[run]=0) and (p_necrons[run]=0) and (p_tau[run]=0){
-	        if (awake_tomb_world(p_feature[run])!=1){
-	            scr_event_log("","Necrons cleansed from "+string(name)+" "+scr_roman(run));
-	            if (p_first[run]=1){p_owner[run]=1;scr_alert("green","owner","Necrons cleansed from "+string(name)+" "+scr_roman(run)+".",x,y);}
-	            if (p_first[run]=2){p_owner[run]=2;scr_alert("green","owner","Necrons cleansed from "+string(name)+" "+scr_roman(run)+".  Control returned to the governor.",x,y);}
-	            if (p_first[run]=3){p_owner[run]=3;scr_alert("green","owner","Necrons cleansed from "+string(name)+" "+scr_roman(run)+".  Control returned to Mechanicus.",x,y);}
-	            if (dispo[run]=101) then p_owner[run]=1;
+	    if (p_owner[run] = 13) and(p_player[run] + p_raided[run] > 0) and(p_orks[run] = 0) and(p_tyranids[run] < 4) and(p_chaos[run] = 0) and(p_traitors[run] = 0) and(p_necrons[run] = 0) and(p_tau[run] = 0) {
+	        if (awake_tomb_world(p_feature[run]) != 1) {
+	            scr_event_log("", "Necrons cleansed from " + string(name) + " " + scr_roman(run));
+	            if (p_first[run] = 1) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
+	                p_owner[run] = 1;
+	                scr_alert("green", "owner", "Necrons cleansed from " + string(name) + " " + scr_roman(run) + ".", x, y);
+	                dispo[run] += 10;
+	                p_time_since_save[run] = obj_controller.turn;
+	                obj_controller.disposition[5] += 5;
+	            } // 10 Disposition increase for returning control to the governor Planet disposition
+	            if (p_first[run] = 2) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
+	                p_owner[run] = 2;
+	                scr_alert("green", "owner", "Necrons cleansed from " + string(name) + " " + scr_roman(run) + ".  Control returned to the governor.", x, y);
+	                dispo[run] += 10;
+	                p_time_since_saved[run] = obj_controller.turn
+	            } // 10 Disposition increase for returning control to the governor Planet disposition
+	            if (p_first[run] = 3) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
+	                p_owner[run] = 3;
+	                scr_alert("green", "owner", "Necrons cleansed from " + string(name) + " " + scr_roman(run) + ".  Control returned to Mechanicus.", x, y);
+	                obj_controller.disposition[3] += 10;
+	                dispo[run] += 10;
+	                p_time_since_saved[run] = obj_controller.turn
+	            } // 10 Disposition increase for returning control to the governor Planet disposition
+	            if (dispo[run] = 101) then p_owner[run] = 1;
 	        }
 	    }
-	    if (p_raided[run]>0) then p_raided[run]=0;
-	}// end repeat here
+	    if (p_raided[run] > 0) then p_raided[run] = 0;
+	    } // end repeat here
 
 
-	// quene player battles here
+	    // quene player battles here
 
 
-	// End quene player battles
-
-
-
-	scr_star_ownership(true);
+	    // End quene player battles
 
 
 
+	    scr_star_ownership(true);
 
-	// Restock PDF and military
-	var i;i=0;repeat(4){i+=1;
-	    if (p_type[i]="Daemon"){p_heresy[i]=200;p_owner[i]=10;}
-    
-	    if (p_population[i]<=0) and (p_large[i]=0) and (p_chaos[i]=0) and (p_traitors[i]=0) and (p_tau[i]=0) and (p_type[i]!="Daemon") then p_heresy[i]=0;
-	    if (p_population[i]<1) and (p_large[i]=1){p_population[i]=p_population[i]*100000000;p_large[i]=0;}
-    
-	    if (p_owner[i]=2) and (p_type[i]!="Dead") and (planets>=i) and (p_tyranids[i]=0) and (p_chaos[i]=0) and (p_traitors[i]=0) and (p_eldar[i]=0) and (p_tau[i]=0){
-	        var military, pdf,rando,contin;
-	        military=0;pdf=0;contin=0;
-	        rando=floor(random(100))+1;
-        
-	        if (p_population[i]>=10000000){military=(p_population[i]/470);pdf=floor(military*0.75);military=floor(military*0.25);}
-	        if (p_population[i]>=5000000) and (p_population[i]<10000000){military=p_population[i]/200;pdf=floor(military*0.75);military=floor(military*0.25);}
-	        if (p_population[i]>=100000) and (p_population[i]<5000000){military=p_population[i]/50;pdf=floor(military*0.75);military=floor(military*0.25);}
-	        if (p_large[i]=1){military=military*1000000000;pdf=pdf*1000000000;}
-        
-	        if (p_large[i]=0) and (rando<50) and (military!=0) and (pdf!=0){
-	            // if (p_guardsmen[i]<military) and (rando<50){rando=10;contin=max(floor(p_guardsmen[i]*1.05),500);p_population[i]-=contin;p_guardsmen[i]+=contin;}/
-	            if (p_pdf[i]<pdf) and (rando<50){rando=1;rando=10;contin=max(floor(p_pdf[i]*1.02),1000);p_population[i]-=contin;p_pdf[i]+=contin;}
+
+
+
+	    // Restock PDF and military
+	    var i;
+	    i = 0;
+	    repeat(4) {
+	        i += 1;
+	        if (p_type[i] = "Daemon") {
+	            p_heresy[i] = 200;
+	            p_owner[i] = 10;
 	        }
-	        if (p_large[i]=1) and (rando<50) and (military!=0) and (pdf!=0){
-	            // if (p_guardsmen[i]<military) and (rando<50){rando=10;contin=0.01*p_population[i];p_guardsmen[i]+=contin*1250000;}
-	            if (p_pdf[i]<pdf) and (rando<50){rando=1;rando=10;contin=0.01*p_population[i];p_pdf[i]+=contin*1250000;}
+
+	        if (p_population[i] <= 0) and(p_large[i] = 0) and(p_chaos[i] = 0) and(p_traitors[i] = 0) and(p_tau[i] = 0) and(p_type[i] != "Daemon") then p_heresy[i] = 0;
+	        if (p_population[i] < 1) and(p_large[i] = 1) {
+	            p_population[i] = p_population[i] * 100000000;
+	            p_large[i] = 0;
 	        }
-        
-	        if (p_large[i]=1){military=floor(p_population[i]*1250000);pdf=military*3;}
-	        if (p_population[i]<100000) and (p_population[i]>5) and (p_large[i]=0){pdf=floor(p_population[i]/25);military=0;}
-	        if (p_population[i]<2000) and (p_population[i]>5) and (p_large[i]=0){pdf=floor(p_population[i]/10);military=0;}
-        
-	        if (p_large[i]=0) and (rando<3){
-	            // if (p_guardsmen[i]<military) and (rando<3){rando=1;contin=max(floor(p_guardsmen[i]*1.05),500);p_population[i]-=contin;p_guardsmen[i]+=contin;}
-	            if (p_pdf[i]<pdf) and (rando<3){rando=1;rando=1;contin=max(floor(p_pdf[i]*1.02),1000);p_population[i]-=contin;p_pdf[i]+=contin;}
-	        }
-	        if (p_large[i]=1) and (rando<3){
-	            // if (p_guardsmen[i]<military) and (rando<3){rando=1;contin=0.01*p_population[i];p_guardsmen[i]+=floor(contin*1250000);}
-	            if (p_pdf[i]<pdf) and (rando<3){rando=1;rando=1;contin=0.01*p_population[i];p_pdf[i]+=floor(contin*1250000);}
+
+	        if (p_owner[i] = 2) and(p_type[i] != "Dead") and(planets >= i) and(p_tyranids[i] = 0) and(p_chaos[i] = 0) and(p_traitors[i] = 0) and(p_eldar[i] = 0) and(p_tau[i] = 0) {
+	            var military, pdf, rando, contin;
+	            military = 0;
+	            pdf = 0;
+	            contin = 0;
+	            rando = floor(random(100)) + 1;
+
+	            if (p_population[i] >= 10000000) {
+	                military = (p_population[i] / 470);
+	                pdf = floor(military * 0.75);
+	                military = floor(military * 0.25);
+	            }
+	            if (p_population[i] >= 5000000) and(p_population[i] < 10000000) {
+	                military = p_population[i] / 200;
+	                pdf = floor(military * 0.75);
+	                military = floor(military * 0.25);
+	            }
+	            if (p_population[i] >= 100000) and(p_population[i] < 5000000) {
+	                military = p_population[i] / 50;
+	                pdf = floor(military * 0.75);
+	                military = floor(military * 0.25);
+	            }
+	            if (p_large[i] = 1) {
+	                military = military * 1000000000;
+	                pdf = pdf * 1000000000;
+	            }
+
+	            if (p_large[i] = 0) and(rando < 50) and(military != 0) and(pdf != 0) {
+	                // if (p_guardsmen[i]<military) and (rando<50){rando=10;contin=max(floor(p_guardsmen[i]*1.05),500);p_population[i]-=contin;p_guardsmen[i]+=contin;}/
+	                if (p_pdf[i] < pdf) and(rando < 50) {
+	                    rando = 1;
+	                    rando = 10;
+	                    contin = max(floor(p_pdf[i] * 1.02), 1000);
+	                    p_population[i] -= contin;
+	                    p_pdf[i] += contin;
+	                }
+	            }
+	            if (p_large[i] = 1) and(rando < 50) and(military != 0) and(pdf != 0) {
+	                // if (p_guardsmen[i]<military) and (rando<50){rando=10;contin=0.01*p_population[i];p_guardsmen[i]+=contin*1250000;}
+	                if (p_pdf[i] < pdf) and(rando < 50) {
+	                    rando = 1;
+	                    rando = 10;
+	                    contin = 0.01 * p_population[i];
+	                    p_pdf[i] += contin * 1250000;
+	                }
+	            }
+
+	            if (p_large[i] = 1) {
+	                military = floor(p_population[i] * 1250000);
+	                pdf = military * 3;
+	            }
+	            if (p_population[i] < 100000) and(p_population[i] > 5) and(p_large[i] = 0) {
+	                pdf = floor(p_population[i] / 25);
+	                military = 0;
+	            }
+	            if (p_population[i] < 2000) and(p_population[i] > 5) and(p_large[i] = 0) {
+	                pdf = floor(p_population[i] / 10);
+	                military = 0;
+	            }
+
+	            if (p_large[i] = 0) and(rando < 3) {
+	                // if (p_guardsmen[i]<military) and (rando<3){rando=1;contin=max(floor(p_guardsmen[i]*1.05),500);p_population[i]-=contin;p_guardsmen[i]+=contin;}
+	                if (p_pdf[i] < pdf) and(rando < 3) {
+	                    rando = 1;
+	                    rando = 1;
+	                    contin = max(floor(p_pdf[i] * 1.02), 1000);
+	                    p_population[i] -= contin;
+	                    p_pdf[i] += contin;
+	                }
+	            }
+	            if (p_large[i] = 1) and(rando < 3) {
+	                // if (p_guardsmen[i]<military) and (rando<3){rando=1;contin=0.01*p_population[i];p_guardsmen[i]+=floor(contin*1250000);}
+	                if (p_pdf[i] < pdf) and(rando < 3) {
+	                    rando = 1;
+	                    rando = 1;
+	                    contin = 0.01 * p_population[i];
+	                    p_pdf[i] += floor(contin * 1250000);
+	                }
+	            }
 	        }
 	    }
-	}
-
-
 }
