@@ -814,7 +814,6 @@
     {"id":{"name":"fnt_legal","path":"fonts/fnt_legal/fnt_legal.yy",},},
     {"id":{"name":"obj_fleet","path":"objects/obj_fleet/obj_fleet.yy",},},
     {"id":{"name":"obj_circular","path":"objects/obj_circular/obj_circular.yy",},},
-    {"id":{"name":"spr_crusade_colors","path":"sprites/spr_crusade_colors/spr_crusade_colors.yy",},},
     {"id":{"name":"obj_fleet_spawner","path":"objects/obj_fleet_spawner/obj_fleet_spawner.yy",},},
     {"id":{"name":"obj_fleet_controller","path":"objects/obj_fleet_controller/obj_fleet_controller.yy",},},
     {"id":{"name":"obj_p_ship","path":"objects/obj_p_ship/obj_p_ship.yy",},},
