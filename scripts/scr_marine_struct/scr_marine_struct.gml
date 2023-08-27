@@ -31,7 +31,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		static update_bionics = function(new_val){obj_ini.bio[company,marine_number] = new_val;}
 		static age = function(){return obj_ini.age[company,marine_number];}// age
 		static update_age = function(new_val){obj_ini.age[company,marine_number] = new_val;}		
-		static name = function(){return obj_ini.name[company,marine_number];}// get marine health
+		static name = function(){return obj_ini.name[company,marine_number];}// get marine name
 
 		static hp = function(){ 
 			return obj_ini.hp[company,marine_number]
@@ -92,26 +92,17 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		static get_unit_size = function(){
 			var r = role();
 			var arm = armour();
-		    var sz = 1;
-		    if (r!=""){
-				var bulky_armour = ["Terminator Armour", "Tartaros"]
-		        if (string_count("Dread",arm)>0) {sz+=5;}else if (array_contains(bulky_armour,arm)){sz +=1};
-		        if (r="Rhino") {sz=10;}
-		        else if (r="Predator") {sz=10;}
-		        else if (r="Land Raider") {sz=20;} 
-		        else if (r="Land Speeder") {sz=5;}
-		        else if (r="Whirlwind") {sz=10;}
-		        else if (r="Harlequin Troupe") {sz=5;}
-				else if (r="Chapter Master"){sz+=1;}
-				
-				var mobi =  mobility_item();
-				if (mobi == "Jump Pack"){
-					sz += 1;
-				}
-		        size =sz;
-		    }
-	
-			size = 0;			
+			var sz = 0;
+			sz = 1;
+			var bulky_armour = ["Terminator Armour", "Tartaros"]
+		    if (string_count("Dread",arm)>0) {sz+=5;} else if (array_contains(bulky_armour,arm)){sz +=1};
+			var mobi =  mobility_item();
+			if (mobi == "Jump Pack"){
+				sz++;
+			}
+			if (r == "Chapter Master"){sz++}
+			size =sz;
+			return size
 		};
 		
 		static marine_location = function(){
@@ -123,7 +114,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				location_name = obj_ini.loc[company,marine_number]; //system marine is in
 			} else {
 				location_type = "ship"; //marine is on ship
-				location_id = obj_ini.lid[_company, _unit]; //ship array location
+				location_id = obj_ini.lid[company,marine_number]; //ship array position
 				location_name = obj_ini.ship_location[location_id]; //location of ship
 			}
 			return [location_type,location_id ,location_name];
@@ -132,19 +123,22 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		static load_marine =function(ship){
 			 get_unit_size(); // make sure marines size given it's current equipment is correct
 			 var current_location = marine_location();
+			 show_debug_message("{0},{1}", current_location,  obj_ini.ship_location[ship]);
+			 var system = current_location[2];
+			
 			 if (current_location[0] == "planet"){//if marine is on a planet
-				 
+				  if (current_location[2] == obj_ini.home_name){system = "home"}
 				 //check if ship is in the same location as marine and has enough space;
-				 if ( obj_ini.ship_location[ship] == (current_location[2])) and ((obj_ini.ship_carrying[ship] + size) <= obj_ini.ship_capacity[ship]){
-					 obj_ini.wid[_company, _unit] = 0; //mark marine as no longer on planet
-					 obj_ini.lid[_company, _unit] = ship; //id of ship marine is now loaded on
+				 if ( obj_ini.ship_location[ship] == system) and ((obj_ini.ship_carrying[ship] + size) <= obj_ini.ship_capacity[ship]){
+					 obj_ini.wid[company,marine_number] = 0; //mark marine as no longer on planet
+					 obj_ini.lid[company,marine_number] = ship; //id of ship marine is now loaded on
 					 obj_ini.ship_carrying[ship] += size; //update ship capacity
 				 }
 			 } else if (current_location[0] == "ship"){ //with this addition marines can now be moved between ships freely as long as they are in the same system
-				 var off_loading_ship = current_location[2];
+				 var off_loading_ship = current_location[1];
 				 if ( (obj_ini.ship_location[ship] == obj_ini.ship_location[off_loading_ship]) and ((obj_ini.ship_carrying[ship] + size) <= obj_ini.ship_capacity[ship])){
 					 obj_ini.ship_carrying[off_loading_ship] -= size; // remove from previous ship capacity
-					 obj_ini.lid[_company, _unit] = ship;             // change marine location to new ship
+					 obj_ini.lid[company,marine_number] = ship;             // change marine location to new ship
 					  obj_ini.ship_carrying[ship] += size;            //add marine capacity to new ship
 				 }
 			 }
