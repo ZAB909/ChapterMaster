@@ -143,6 +143,7 @@ if (shop="vehicles"){i=0;
 	  i+=1;x_mod[i]=9;item[i]="Inferno Cannon";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=115;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
 	  i+=1;x_mod[i]=9;item[i]="Assault Cannon";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=75;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
       i+=1;x_mod[i]=9;item[i]="Flamestorm Cannon";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=135;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
+      i+=1;x_mod[i]=9;item[i]="Assault Cannon";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=110;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
       i+=1;x_mod[i]=9;item[i]="Twin-Linked Assault Cannon";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=150;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
       i+=1;x_mod[i]=9;item[i]="Whirlwind Missile Launcher";item_stocked[i]=scr_item_count(item[i]);item_cost[i]=90;if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     }
