@@ -5,42 +5,49 @@ function scr_ui_manage() {
 	// This is the draw script for showing the main management screen or individual company screens
 
 	if (menu=1) and (managing>0){
-	    var xx, yy, bb, img;
-	    bb="";img=0;
-	    xx=__view_get( e__VW.XView, 0 )+0;
-	    yy=__view_get( e__VW.YView, 0 )+0;
+	    var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0, bb="", img=0;
 
-	    // BG
-    
+	    // Draw BG
 	    draw_set_alpha(1);
 	    draw_sprite(spr_rock_bg,0,xx,yy);
 	    draw_set_font(fnt_40k_30b);
 	    draw_set_halign(fa_center);
 	    draw_set_color(c_gray);// 38144
     
-	    var c,fx,skin;c=0;fx="";skin=obj_ini.skin_color;
+		// Var declarations
+	    var c=0,fx="",skin=obj_ini.skin_color;
+		var romanNumerals=[
+			"I",
+			"II",
+			"III", 
+			"IV", 
+			"V", 
+			"VI", 
+			"VII", 
+			"VIII", 
+			"IX", 
+			"X",
+		];
+		
 	    if (managing<=10) then c=managing;
 	    if (managing>20) then c=managing-10;
-    
-	    if (managing=1) then fx="1st Company";
-	    if (managing=2) then fx="2nd Company";
-	    if (managing=3) then fx="3rd Company";
-	    if ((managing>=4) and (managing<11)) or (managing>20) then fx=string(c)+"th Company";
-    
+		
+		if (managing >= 1) and (managing <=10) {
+			fx= romanNumerals[managing - 1] + " Company";
+		}
+
 	    if (managing=11) then fx="Headquarters";
 	    if (managing=12) then fx="Apothecarion";
 	    if (managing=13) then fx="Librarium";
 	    if (managing=14) then fx="Reclusium";
 	    if (managing=15) then fx="Armamentarium";
-    
-    
-    
-    
-    
-	    draw_text(xx+800,yy+74,string_hash_to_newline(string(global.chapter_name)+" "+string(fx)));
-    
+
+		// Draw the company followed by chapters name
+	    draw_text(xx+800,yy+74,string_hash_to_newline(string(fx)+", "+string(global.chapter_name)));
+
+		
 	    if (managing<=10){
-	        var bar_wid;bar_wid=0;
+	        var bar_wid=0;
 	        draw_set_alpha(0.25);
 	        if (obj_ini.company_title[managing]!="") then bar_wid=max(400,string_width(string_hash_to_newline(obj_ini.company_title[managing])));
 	        if (obj_ini.company_title[managing]="") then bar_wid=400;
@@ -65,9 +72,9 @@ function scr_ui_manage() {
 	        }
 	    }
     
-    
 	    // var we;we=string_width(string(global.chapter_name)+" "+string(fx))/2;
     
+		// Draw arrows
 	    draw_sprite_ext(spr_arrow,0,xx+25,yy+70,2,2,0,c_white,1);// Back
 	    draw_sprite_ext(spr_arrow,0,xx+429,yy+70,2,2,0,c_white,1);// Left
 	    draw_sprite_ext(spr_arrow,1,xx+1110,yy+70,2,2,0,c_white,1);// Right
@@ -80,18 +87,30 @@ function scr_ui_manage() {
     
 	    draw_set_font(fnt_40k_14b);
     
-	    var cn;cn=obj_controller;
+	    var cn=obj_controller;
+		
 	    if (instance_exists(cn)){
 	        if (cn.temp[101]!="") and (cn.temp[100]="1"){
-	            ui_arm[1]=true;ui_arm[2]=true;
-	            ui_xmod[1]=0;ui_xmod[2]=0;
-	            ui_ymod[1]=0;ui_ymod[2]=0;
-	            ui_weapon[1]=spr_weapon_blank;ui_weapon[2]=spr_weapon_blank;
-	            ui_back=true;ui_force_both=false;
-	            var cpec;cspec=obj_ini.col_special;
+	            ui_arm[1]=true;
+				ui_arm[2]=true;
+				
+	            ui_xmod[1]=0;
+				ui_xmod[2]=0;
+				
+	            ui_ymod[1]=0;
+				ui_ymod[2]=0;
+				
+	            ui_weapon[1]=spr_weapon_blank;
+				ui_weapon[2]=spr_weapon_blank;
+				
+	            ui_back=true;
+				ui_force_both=false;
+				
+	            var cpec;
+				cspec=obj_ini.col_special;
             
-	            var terg,armour_sprite,show1,show2;terg=0;armour_sprite=spr_weapon_blank;
-	            var jump,dev,hood,skull,arm,halo,braz,slow,brothers;jump=0;dev=0;hood=0;skull=0;arm=0;halo=0;braz=0;slow=0;brothers=-5;
+	            var terg=0,armour_sprite=spr_weapon_blank,show1,show2;
+	            var jump=0,dev=0,hood=0,skull=0,arm=0,halo=0,braz=0,slow=0,brothers=-5;
             
 	            var show_wep1,show_wep2,show_arm,show_gear,show_mobi;
 	            /*show_wep1=string_pos("&",cn.temp[108]);
@@ -99,6 +118,7 @@ function scr_ui_manage() {
 	            show_arm=string_pos("&",cn.temp[102]);
 	            show_gear=string_pos("&",cn.temp[104]);
 	            show_mobi=string_pos("&",cn.temp[106]);*/
+				
 	            show_wep1=string_replace(cn.temp[108],"Arti. ","");
 	            show_wep2=string_replace(cn.temp[110],"Arti. ","");
 	            show_arm=string_replace(cn.temp[102],"Arti. ","");
@@ -127,25 +147,39 @@ function scr_ui_manage() {
 	                }
 	            }
             
-            
-            
 	            // if (terg>0) then ui_back=false;
             
-	            if (show_mobi="Jump Pack"){ui_back=false;jump=1;}
-	            if (string_count(obj_ini.role[100,9],cn.temp[101])>0){ui_back=false;dev=1;}
-	            if (show_arm="Terminator Armour"){ui_back=false;terg=1;}
-	            if (show_arm="Tartaros"){ui_back=false;terg=2;}
-	            if (show_arm="Dreadnought"){ui_back=false;terg=5;}
+	            if (show_mobi="Jump Pack"){
+					ui_back=false;
+					jump=1;
+				}
+				
+	            if (string_count(obj_ini.role[100,9],cn.temp[101])>0){
+					ui_back=false;
+					dev=1;
+				}
+				
+	            if (show_arm="Terminator Armour"){
+					ui_back=false;
+					terg=1;
+				}
+				
+	            if (show_arm="Tartaros"){
+					ui_back=false;
+					terg=2;
+				}
+				
+	            if (show_arm="Dreadnought"){
+					ui_back=false;
+					terg=5;
+				}
+				
 	            if (terg>0) then ui_back=false;
-            
-            
-            
-            
-            
             
 	            if (cn.temp[108]!="") and (terg<5){
 	                scr_ui_display_weapons(1,terg,cn.temp[108]);
 	            }
+				
 	            if (cn.temp[110]!="") and (terg<5) and (ui_force_both=false){
 	                scr_ui_display_weapons(2,terg,cn.temp[110]);
 	            }
@@ -184,18 +218,24 @@ function scr_ui_manage() {
 	                */
                 
 	                ttrim=trim;var cpec;cspec=obj_ini.col_special;
-	                if (ui_specialist=1) or ((ui_specialist=3) and (global.chapter_name="Space Wolves")){// Chaplain
+					
+					// Chaplain
+	                if (ui_specialist=1) or ((ui_specialist=3) and (global.chapter_name="Space Wolves")){
 	                    shader_set_uniform_f(colour_to_set1, 30/255,30/255,30/255);
 	                    shader_set_uniform_f(colour_to_set2, 30/255,30/255,30/255);
 	                    // ttrim=0;
 	                    cspec=0;
 	                }
-	                if (ui_specialist=3) and (global.chapter_name!="Space Wolves"){// Apothecary
+					
+					// Apothecary
+	                if (ui_specialist=3) and (global.chapter_name!="Space Wolves"){
 	                    shader_set_uniform_f(colour_to_set1, 255/255,255/255,255/255);
 	                    shader_set_uniform_f(colour_to_set2, 255/255,255/255,255/255);
 	                    ttrim=0;cspec=0;
 	                }
-	                if (ui_specialist=5){// Techmarine
+					
+					// Techmarine
+	                if (ui_specialist=5){
 	                    shader_set_uniform_f(colour_to_set1, 150/255,0/255,0/255);
 	                    shader_set_uniform_f(colour_to_set2, 150/255,0/255,0/255);
 	                    // pauldron
@@ -203,7 +243,9 @@ function scr_ui_manage() {
 	                    shader_set_uniform_f(colour_to_set5, 200/255,200/255,200/255);
 	                    ttrim=1;cspec=0;
 	                }
-	                if (ui_specialist=15){// Death Company
+					
+					// Death Company
+	                if (ui_specialist=15){
 	                    shader_set_uniform_f(colour_to_set1, 30/255,30/255,30/255);
 	                    shader_set_uniform_f(colour_to_set2, 30/255,30/255,30/255);
 	                    shader_set_uniform_f(colour_to_set3, 30/255,30/255,30/255);
@@ -213,8 +255,9 @@ function scr_ui_manage() {
 	                    shader_set_uniform_f(colour_to_set7, 124/255,0/255,0/255);// Weapon
 	                    ttrim=0;cspec=0;
 	                }
-                
-	                if (ui_coloring="bone"){// Deathwing
+					
+					// Deathwing
+	                if (ui_coloring="bone"){
 	                    shader_set_uniform_f(colour_to_set1, 255/255,217/255,193/255);
 	                    shader_set_uniform_f(colour_to_set2, 255/255,217/255,193/255);
 	                    shader_set_uniform_f(colour_to_set3, 255/255,217/255,193/255);
@@ -222,7 +265,9 @@ function scr_ui_manage() {
 	                    shader_set_uniform_f(colour_to_set6, 255/255,217/255,193/255);
 	                    ttrim=0;cspec=0;
 	                }
-	                if (ui_coloring="gold"){// Blood Angels
+					
+					// Blood Angels
+	                if (ui_coloring="gold"){
 	                    shader_set_uniform_f(colour_to_set1, 166/255,129/255,0/255);
 	                    shader_set_uniform_f(colour_to_set2, 166/255,129/255,0/255);
 	                    shader_set_uniform_f(colour_to_set3, 166/255,129/255,0/255);
@@ -231,7 +276,7 @@ function scr_ui_manage() {
 	                    ttrim=0;cspec=0;
 	                }
                 
-                
+					// Marine draw sequence
 	                /*
 	                main
 	                secondary
@@ -242,13 +287,10 @@ function scr_ui_manage() {
 	                weapon
 	                */
                 
-                
-                
 	                //Rejoice!
 	                // draw_sprite(spr_marine_base,img,xx+1208,yy+178);
                 
-                
-	                var clothing_style;clothing_style=3;                    
+	                var clothing_style;clothing_style=3;
 	                if (global.chapter_name="Dark Angels") or (obj_ini.progenitor=1) then clothing_style=0;
 	                if (global.chapter_name="White Scars") or (obj_ini.progenitor=2) then clothing_style=1; 
 	                if (global.chapter_name="Space Wolves") or (obj_ini.progenitor=3) then clothing_style=2;
@@ -266,23 +308,89 @@ function scr_ui_manage() {
 	                    if (ui_specialist=5){var o,yep;o=0;yep=0;repeat(4){o+=1;if (obj_ini.adv[o]="Tech-Brothers") then brothers=0;}}
 	                }
                 
+					// Define armor
 	                if (temp[102]="") then armour_sprite=spr_weapon_blank;
-	                if (temp[102]="Scout Armour"){if (slow>0) then slow=10;armour_sprite=spr_scout_colors;if (hood=-50) then hood=0;}
-	                if (temp[102]="MK3 Iron Armour"){if (slow>0) then slow=13;if (brothers>-5) then brothers=3;armour_sprite=spr_iron2_colors;if (hood=-50) then hood=5;}
-	                if (temp[102]="MK4 Maximus"){if (slow>0) then slow=13;if (brothers>-5) then brothers=3;armour_sprite=spr_maximus_colors;if (hood=-50) then hood=6;}
-					if (temp[102]="MK5 Heresy"){if (slow>0) then slow=13;if (brothers>-5) then brothers=3;armour_sprite=spr_heresy_colors;if (hood=-50) then hood=6;}
-	                if (temp[102]="MK6 Corvus"){if (slow>0) then slow=13;if (brothers>-5) then brothers=2;armour_sprite=spr_beakie_colors;if (hood=-50) then hood=3;}
-	                if (temp[102]="MK7 Aquila") or (temp[102]="Power Armour"){if (brothers>-5) then brothers=0;if (slow>0) then slow=13;armour_sprite=spr_aquila_colors;if (hood=-50) then hood=1;}
-	                if (temp[102]="MK8 Errant"){if (slow>0) then slow=13;if (brothers>-5) then brothers=0;armour_sprite=spr_errant_colors;if (hood=-50) then hood=4;}
-	                if (show_arm="Artificer Armour"){if (slow>0) then slow=13;if (brothers>-5) then brothers=1;armour_sprite=spr_artificer_colors;if (hood=-50) then hood=2;}
-	                if (temp[102]="Tartaros"){armour_sprite=spr_tartaros2_colors;if (brothers>-5) then brothers=4;if (hood=-50) then hood=8;if (skull=1) then skull=3;}
-	                if (show_arm="Terminator Armour"){armour_sprite=spr_terminator2_colors;if (brothers>-5) then brothers=5;if (hood=-50) then hood=9;if (skull=1) then skull=2;}
+					
+	                if (temp[102]="Scout Armour"){
+						if (slow>0) then slow=10;
+						armour_sprite=spr_scout_colors;
+						if (hood=-50) then hood=0;
+					}
+	                if (temp[102]="MK3 Iron Armour"){
+						if (slow>0) then slow=13;
+						if (brothers>-5) then brothers=3;
+						armour_sprite=spr_iron2_colors;
+						if (hood=-50) then hood=5;
+					}
+	                if (temp[102]="MK4 Maximus"){
+						if (slow>0) then slow=13;
+						if (brothers>-5) then brothers=3;
+						armour_sprite=spr_maximus_colors;
+						if (hood=-50) then hood=6;
+					}
+					if (temp[102]="MK5 Heresy"){
+						if (slow>0) then slow=13;
+						if (brothers>-5) then brothers=3;
+						armour_sprite=spr_heresy_colors;
+						if (hood=-50) then hood=6;
+					}
+	                if (temp[102]="MK6 Corvus"){
+						if (slow>0) then slow=13;
+						if (brothers>-5) then brothers=2;
+						armour_sprite=spr_beakie_colors;
+						if (hood=-50) then hood=3;
+					}
+	                if (temp[102]="MK7 Aquila") or (temp[102]="Power Armour"){
+						if (brothers>-5) then brothers=0;
+						if (slow>0) then slow=13;
+						armour_sprite=spr_aquila_colors;
+						if (hood=-50) then hood=1;
+					}
+	                if (temp[102]="MK8 Errant"){
+						if (slow>0) then slow=13;
+						if (brothers>-5) then brothers=0;
+						armour_sprite=spr_errant_colors;
+						if (hood=-50) then hood=4;
+					}
+	                if (show_arm="Artificer Armour"){
+						if (slow>0) then slow=13;
+						if (brothers>-5) then brothers=1;
+						armour_sprite=spr_artificer_colors;
+						if (hood=-50) then hood=2;
+					}
+	                if (temp[102]="Tartaros"){
+						armour_sprite=spr_tartaros2_colors;
+						if (brothers>-5) then brothers=4;
+						if (hood=-50) then hood=8;
+						if (skull=1) then skull=3;
+					}
+	                if (show_arm="Terminator Armour"){
+						armour_sprite=spr_terminator2_colors;
+						if (brothers>-5) then brothers=5;
+						if (hood=-50) then hood=9;
+						if (skull=1) then skull=2;
+					}
 	                if (show_arm="Dreadnought") then armour_sprite=spr_dread_colors;
                 
 	                if (armour_sprite=spr_weapon_blank) and (temp[102]!=""){
-	                    if (string_count("Power Armour",temp[102])>0){if (slow>0) then slow=13;if (brothers>-5) then brothers=0;armour_sprite=spr_aquila_colors;if (hood=-50) then hood=1;}
-	                    if (string_count("Artifi",temp[102])>0){if (slow>0) then slow=13;if (brothers>-5) then brothers=1;armour_sprite=spr_artificer_colors;if (hood=-50) then hood=2;}
-	                    if (string_count("Termi",temp[102])>0){if (brothers>-5) then brothers=5;armour_sprite=spr_terminator2_colors;if (hood=-50) then hood=9;if (skull=1) then skull=2;}
+	                    if (string_count("Power Armour",temp[102])>0){
+							if (slow>0) then slow=13;
+							if (brothers>-5) then brothers=0;
+							armour_sprite=spr_aquila_colors;
+							if (hood=-50) then hood=1;
+						}
+	                    if (string_count("Artifi",temp[102])>0){
+							if (slow>0) then slow=13;
+							if (brothers>-5) then brothers=1;
+							armour_sprite=spr_artificer_colors;
+							if (hood=-50) then hood=2;
+						}
+	                    if (string_count("Termi",temp[102])>0){
+							if (brothers>-5) then brothers=5;
+							armour_sprite=spr_terminator2_colors;
+							if (hood=-50) then hood=9;
+							if (skull=1) then skull=2;
+						}
 	                    if (string_count("Dread",temp[102])>0) then armour_sprite=spr_dread_colors;
 	                }
 	                /*if (show_arm!=0){
@@ -462,6 +570,7 @@ function scr_ui_manage() {
 	                        if (ttrim=0) then draw_sprite(spr_gear_hood2,1,xx+1208,yy+178);
 	                    }
 	                }
+					// Skull helmet
 	                if (skull>0) and (temp[102]!=""){
 	                    if (terg!=2) and (terg!=1) then draw_sprite(spr_gear_chap,skull,xx+1208,yy+178);
 	                    if (terg=2) then draw_sprite(spr_gear_chap,skull,xx+1210,yy+178);
@@ -521,13 +630,9 @@ function scr_ui_manage() {
 	                    }
 	                }
                 
-                
 	                // if (braz=1) then draw_sprite(spr_pack_brazier,1,xx+1208,yy+178);
-                
-                
-                
+					
 	                shader_reset();
-                
 	            }else{
 	                draw_set_color(c_gray);
 	                draw_text(xx+1208,yy+178,string_hash_to_newline("Color swap shader#did not compile"));
@@ -554,8 +659,6 @@ function scr_ui_manage() {
 	                if (string_count("Howling Banshee",cn.temp[101])>0) then draw_sprite(spr_eldar_hire,1,xx+1208,yy+178);
 	            }
 	        }
-        
-        
         
 	        // Crop anything sticking out of the display
 	        draw_set_color(0);
@@ -585,6 +688,7 @@ function scr_ui_manage() {
 	        if (cn.temp[110]!="") then draw_text_ext(xx+1387,yy+345,string_hash_to_newline(string(cn.temp[110])+"#"+string(cn.temp[111])),-1,187);
 	        if (cn.temp[110]!="") then draw_text_ext(xx+1388,yy+346,string_hash_to_newline(string(cn.temp[110])),-1,187);
         
+			// Display information on the marine
 	        if (cn.temp[112]!="") then draw_text(xx+1015,yy+420,string_hash_to_newline("Health: "+string(cn.temp[112])));
 	        if (cn.temp[113]!="") then draw_text(xx+1190,yy+420,string_hash_to_newline("Experience: "+string(cn.temp[113])));
 	        if (cn.temp[114]!="") then draw_text(xx+1365,yy+420,string_hash_to_newline("Bionics: "+string(cn.temp[114])));
@@ -600,22 +704,14 @@ function scr_ui_manage() {
         
 	        draw_set_font(fnt_40k_14i);
 	        if (cn.temp[119]!="") then draw_text(xx+1020,yy+468,string_hash_to_newline(string(cn.temp[119])));
-        
-        
-        
 	    }
     
-    
-    
 	    draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
+		
+		// TODO continue code revamp
+		
 	    // Back
-    
-    
-	    var top,sel,temp1,temp2,temp3,temp4,temp5;
-	    temp1="";temp2="";temp3="";temp4="";temp5="";
-    
-	    top=man_current;
-	    sel=top;
+	    var top=man_current,sel=top,temp1="",temp2="",temp3="",temp4="",temp5="";
     
 	    var ma_ar,ma_we1,ma_we2,ma_ge,ma_mb,ttt;
 	    var ar_ar,ar_we1,ar_we2,ar_ge,ar_mb,eventing;
