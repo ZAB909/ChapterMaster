@@ -1,4 +1,31 @@
 function scr_ui_manage() {
+	
+	var romanNumerals=[
+			"I",
+			"II",
+			"III", 
+			"IV", 
+			"V", 
+			"VI", 
+			"VII", 
+			"VIII", 
+			"IX", 
+			"X",
+		];
+		
+	var normal_hp=true;
+	
+	// Declare non marine roles here
+	var non_marine_roles=[
+		"Skitarii", 
+		"Techpriest",
+		"Crusader", 
+		"Ranger", 
+		"Sister of Battle", 
+		"Sister Hospitaler", 
+		"Ork Sniper", 
+		"Flash Git",
+	];
 
 	if (combat!=0) then exit;
 
@@ -16,18 +43,7 @@ function scr_ui_manage() {
     
 		// Var declarations
 	    var c=0,fx="",skin=obj_ini.skin_color;
-		var romanNumerals=[
-			"I",
-			"II",
-			"III", 
-			"IV", 
-			"V", 
-			"VI", 
-			"VII", 
-			"VIII", 
-			"IX", 
-			"X",
-		];
+		
 		
 	    if (managing<=10) then c=managing;
 	    if (managing>20) then c=managing-10;
@@ -125,7 +141,8 @@ function scr_ui_manage() {
 	            show_gear=string_replace(cn.temp[104],"Arti. ","");
 	            show_mobi=string_replace(cn.temp[106],"Arti. ","");
             
-	            if (ui_specialist=7) or (ui_specialist=1) or (ui_specialist=111){var o;o=0;repeat(4){o+=1;if (obj_ini.adv[o]="Reverent Guardians") then braz=1;}}
+	            if (ui_specialist=7) or (ui_specialist=1) or (ui_specialist=111){
+					for(var o=0; o<4; o++){if (obj_ini.adv[o]="Reverent Guardians") then braz=1;}}
 	            if (show_gear="Psychic Hood") then hood=-50;
             
 	            if (show_gear="Iron Halo") then halo=1;
@@ -217,7 +234,8 @@ function scr_ui_manage() {
 	                if (ma_role[sel]=obj_ini.role[100,17]) then ui_specialist=7;// Librarian
 	                */
                 
-	                ttrim=trim;var cpec;cspec=obj_ini.col_special;
+	                ttrim=trim;
+					cspec=obj_ini.col_special;
 					
 					// Chaplain
 	                if (ui_specialist=1) or ((ui_specialist=3) and (global.chapter_name="Space Wolves")){
@@ -304,8 +322,12 @@ function scr_ui_manage() {
 	                if (skull=-50) then skull=1;
                 
 	                if (temp[102]!=""){
-	                    var o,yep;o=0;yep=0;repeat(4){o+=1;if (obj_ini.adv[o]="Slow and Purposeful") then slow=1;}
-	                    if (ui_specialist=5){var o,yep;o=0;yep=0;repeat(4){o+=1;if (obj_ini.adv[o]="Tech-Brothers") then brothers=0;}}
+	                    var yep=0;
+						for(var o=0;o<4;o++){if (obj_ini.adv[o]="Slow and Purposeful") then slow=1;}
+	                    if (ui_specialist=5){
+							yep=0;
+							for(var o=0;o<4;o++){if (obj_ini.adv[o]="Tech-Brothers") then brothers=0;}
+						}
 	                }
                 
 					// Define armor
@@ -560,7 +582,9 @@ function scr_ui_manage() {
                 
 	                // Hood
 	                if (hood>0) and (temp[102]!=""){
-	                    var o,yep;o=0;yep=0;repeat(4){o+=1;if (obj_ini.adv[o]="Daemon Binders") and (blandify=0) then yep=1;}
+	                    var yep=0;
+						
+						for(var o=0;o<4;o++){if (obj_ini.adv[o]="Daemon Binders") and (blandify=0) then yep=1;}
 	                    if (yep=0) or (hood>=7){
 	                        if (obj_ini.main_color=obj_ini.secondary_color) then draw_sprite(spr_gear_hood1,hood,xx+1208,yy+178);
 	                        if (obj_ini.main_color!=obj_ini.secondary_color) then draw_sprite(spr_gear_hood3,hood,xx+1208,yy+178);
@@ -582,9 +606,22 @@ function scr_ui_manage() {
 	                    var helm_ii,o,yep;helm_ii=0;
 	                    if (obj_ini.progenitor=7) or (global.chapter_name="Ultramarines") then helm_ii=1;
 	                    if (obj_ini.progenitor=5) or (global.chapter_name="Blood Angels") then helm_ii=5;
-	                    o=0;yep=0;repeat(4){o+=1;if (obj_ini.adv[o]="Tech-Brothers") then yep=1;}if (yep=1) then helm_ii=2;
-	                    o=0;yep=0;repeat(4){o+=1;if (obj_ini.dis[o]="Never Forgive") then yep=1;}if (yep=1) or (obj_ini.progenitor=1) then helm_ii=3;
-	                    o=0;yep=0;repeat(4){o+=1;if (obj_ini.adv[o]="Reverent Guardians") then yep=1;}if (yep=1) then helm_ii=4;
+	                    
+						yep=0;
+						for(var p=0; p<4;p++){
+							if (obj_ini.adv[p]="Tech-Brothers") then yep=1;
+						}
+						if (yep=1) then helm_ii=2;
+	                    yep=0;
+						for(var q=0; q<4;q++){
+							if (obj_ini.dis[q]="Never Forgive") then yep=1;
+						}
+						if (yep=1) or (obj_ini.progenitor=1) then helm_ii=3;
+	                    yep=0;
+						for(var r=0; r<4;r++){
+							if (obj_ini.adv[r]="Reverent Guardians") then yep=1;
+						}
+						if (yep=1) then helm_ii=4;
 	                    draw_sprite(spr_honor_helm,helm_ii,xx+1210,yy+178);
 	                }
                 
@@ -708,20 +745,35 @@ function scr_ui_manage() {
     
 	    draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
 		
-		// TODO continue code revamp
-		
 	    // Back
 	    var top=man_current,sel=top,temp1="",temp2="",temp3="",temp4="",temp5="";
     
+		// Var creation
 	    var ma_ar,ma_we1,ma_we2,ma_ge,ma_mb,ttt;
 	    var ar_ar,ar_we1,ar_we2,ar_ge,ar_mb,eventing;
-	    ma_ar="";ma_we1="";ma_we2="";ma_ge="";ma_mb="";ttt=0;
-	    ar_ar=0;ar_we1=0;ar_we2=0;ar_ge=0;ar_mb=0;eventing=false;
+	    ma_ar="";
+		ma_we1="";
+		ma_we2="";
+		ma_ge="";
+		ma_mb="";
+		ttt=0;
+	    ar_ar=0;
+		ar_we1=0;
+		ar_we2=0;
+		ar_ge=0;
+		ar_mb=0;
+		eventing=false;
     
 	    yy+=77;
-    
-	    repeat(min(man_max,man_see)){
-	        repeat(500){if (man[sel]="hide") then sel+=1;}eventing=false;
+		
+		var repetitions=min(man_max,man_see)
+	    for(var i=0; i<repetitions;i++){
+			
+			for(var j=0; j<500; j++){
+				if (man[sel]="hide") then sel+=1;
+			}
+			
+			eventing=false;
         
 	        if (man[sel]="man"){
 	            temp1=string(ma_role[sel])+" "+string(ma_name[sel]);
@@ -734,36 +786,42 @@ function scr_ui_manage() {
 	                if (ma_wid[sel]=3) then temp2+=" III";
 	                if (ma_wid[sel]=4) then temp2+=" IV";
 	            }
-	            if (fest_planet=0) and (fest_sid>0) and (fest_repeats>0) and (ma_lid[sel]=fest_sid){temp2="=Event=";eventing=true;}
-	            if (fest_planet=1) and (fest_wid>0) and (fest_repeats>0) and (ma_wid[sel]=fest_wid) and (ma_loc[sel]=fest_star){temp2="=Event=";eventing=true;}
+	            if (fest_planet=0) and (fest_sid>0) and (fest_repeats>0) and (ma_lid[sel]=fest_sid){
+					temp2="=Event=";
+					eventing=true;
+				}
+	            if (fest_planet=1) and (fest_wid>0) and (fest_repeats>0) and (ma_wid[sel]=fest_wid) and (ma_loc[sel]=fest_star){
+					temp2="=Event=";
+					eventing=true;
+				}
 	            if (ma_god[sel]>=10) then temp2="=Penitorium=";
             
-	            var normal_hp;normal_hp="yes";
-	            if (ma_role[sel]="Skitarii") then normal_hp="no";
-	            if (ma_role[sel]="Techpriest") then normal_hp="no";
-	            if (ma_role[sel]="Crusader") then normal_hp="no";
-	            if (ma_role[sel]="Ranger") then normal_hp="no";
-	            if (ma_role[sel]="Sister of Battle") then normal_hp="no";
-	            if (ma_role[sel]="Sister Hospitaler") then normal_hp="no";
-	            if (ma_role[sel]="Ork Sniper") then normal_hp="no";
-	            if (ma_role[sel]="Flash Git") then normal_hp="no";
-            
-            
-            
-            
-            
-            
-	            if (normal_hp="yes") then temp3=string(ma_health[sel])+"% HP";
-            
-            
-	            if (normal_hp="no"){
-	                var mixhp, ratio;mixhp=0;ratio=0;
-	                if (ma_role[sel]="Skitarii") or (ma_role[sel]="Sister of Battle") or (ma_role[sel]="Sister Hospitaler") then mixhp=40;
-	                if (ma_role[sel]="Techpriest") then mixhp=50;
-	                if (ma_role[sel]="Ranger") then mixhp=40;
-	                if (ma_role[sel]="Crusader") then mixhp=30;
-	                if (ma_role[sel]="Ork Sniper") then mixhp=45;
-	                if (ma_role[sel]="Flash Git") then mixhp=65;
+	            
+				
+				// Define non marine HP
+				for (var k=0; k< array_length(non_marine_roles);k++){
+					if (ma_role[sel] == non_marine_roles[k]) then normal_hp=false;
+					break;
+				}
+				// Marine hp
+	            if (normal_hp) { 
+					temp3=string(ma_health[sel])+"% HP";
+				} else{
+	                var mixhp=0,ratio=0;
+					
+	                var roleToMixhp = ds_map_create();
+
+					roleToMixhp[? "Skitarii"] = 40;
+					roleToMixhp[? "Techpriest"] = 50;
+					roleToMixhp[? "Ranger"] = 40;
+					roleToMixhp[? "Crusader"] = 30;
+					roleToMixhp[? "Ork Sniper"] = 45;
+					roleToMixhp[? "Flash Git"] = 65;
+					roleToMixhp[? "Sister of Battle"] = 40;
+					roleToMixhp[? "Sister Hospitaler"] = 40;
+					
+					mixhp = roleToMixhp[ma_role[sel]];
+					
 	                if (mixhp>0) then ratio=(ma_health[sel]/mixhp)*100;
 	                // if (mixhp=0) then ratio=100;
 	                /*if (ratio>=100) then temp3="Unwounded";
@@ -775,38 +833,71 @@ function scr_ui_manage() {
             
 	            temp4=string(ma_exp[sel])+" exp";
             
-            
 	            ma_ar="";ma_we1="";ma_we2="";ma_ge="";ma_mb="";ttt=0;
 	            ar_ar=0;ar_we1=0;ar_we2=0;ar_ge=0;ar_mb=0;
             
-	            if (ma_armour[sel]!=""){ma_ar=scr_wep_abbreviate(ma_armour[sel]);
+	            if (ma_armour[sel]!=""){
+					ma_ar=scr_wep_abbreviate(ma_armour[sel]);
 	                // if (string_count("*",ma_ar)>0){ar_ar=2;ma_ar=string_replace(ma_ar,"*","");}
-	                if (string_count("^",ma_armour[sel])>0){ar_ar=1;ma_ar=string_replace(ma_ar,"^","");}
-	                if (string_count("&",ma_armour[sel])>0){ar_ar=2;ma_ar="Artifact";}
+	                if (string_count("^",ma_armour[sel])>0){
+						ar_ar=1;
+						ma_ar=string_replace(ma_ar,"^","");
+					}
+	                if (string_count("&",ma_armour[sel])>0){
+						ar_ar=2;
+						ma_ar="Artifact";
+					}
 	            }
-	            if (ma_gear[sel]!=""){ma_ge=scr_wep_abbreviate(ma_gear[sel]);
-	                if (string_count("^",ma_gear[sel])>0){ar_ge=1;ma_ge=string_replace(ma_ge,"^","");}
-	                if (string_count("&",ma_gear[sel])>0){ar_ge=2;ma_ge="Artifact";}
+	            if (ma_gear[sel]!=""){
+					ma_ge=scr_wep_abbreviate(ma_gear[sel]);
+	                if (string_count("^",ma_gear[sel])>0){
+						ar_ge=1;
+						ma_ge=string_replace(ma_ge,"^","");
+					}
+	                if (string_count("&",ma_gear[sel])>0){
+						ar_ge=2;
+						ma_ge="Artifact";
+					}
 	            }
-	            if (ma_mobi[sel]!=""){ma_mb=scr_wep_abbreviate(ma_mobi[sel]);
-	                if (string_count("^",ma_mobi[sel])>0){ar_mb=1;ma_mb=string_replace(ma_mb,"^","");}
-	                if (string_count("&",ma_mobi[sel])>0){ar_mb=2;ma_mb="Artifact";}
+	            if (ma_mobi[sel]!=""){
+					ma_mb=scr_wep_abbreviate(ma_mobi[sel]);
+	                if (string_count("^",ma_mobi[sel])>0){
+						ar_mb=1;
+						ma_mb=string_replace(ma_mb,"^","");
+					}
+	                if (string_count("&",ma_mobi[sel])>0){
+						ar_mb=2;
+						ma_mb="Artifact";
+					}
 	            }
-	            if (ma_wep1[sel]!=""){ma_we1=scr_wep_abbreviate(ma_wep1[sel]);
-	                if (string_count("^",ma_wep1[sel])>0){ar_we1=1;ma_we1=string_replace(ma_we1,"^","");}
-	                if (string_count("&",ma_wep1[sel])>0){ar_we1=2;ma_we1="Artifact";}
+	            if (ma_wep1[sel]!=""){
+					ma_we1=scr_wep_abbreviate(ma_wep1[sel]);
+	                if (string_count("^",ma_wep1[sel])>0){
+						ar_we1=1;
+						ma_we1=string_replace(ma_we1,"^","");
+					}
+	                if (string_count("&",ma_wep1[sel])>0){
+						ar_we1=2;
+						ma_we1="Artifact";
+					}
 	            }
-	            if (ma_wep2[sel]!=""){ma_we2=scr_wep_abbreviate(ma_wep2[sel]);
-	                if (string_count("^",ma_wep2[sel])>0){ar_we2=1;ma_we2=string_replace(ma_we2,"^","");}
-	                if (string_count("&",ma_wep2[sel])>0){ar_we2=2;ma_we2="Artifact";}
+	            if (ma_wep2[sel]!=""){
+					ma_we2=scr_wep_abbreviate(ma_wep2[sel]);
+	                if (string_count("^",ma_wep2[sel])>0){
+						ar_we2=1;
+						ma_we2=string_replace(ma_we2,"^","");
+					}
+	                if (string_count("&",ma_wep2[sel])>0){
+						ar_we2=2;
+						ma_we2="Artifact";
+					}
 	            }
-            
 	        }
+			// Vehicle setup
 	        if (man[sel]="vehicle"){
 	            // temp1="v "+string(managing)+"."+string(ide[sel]);
 	            temp1=string(ma_role[sel]);
 	            temp2=string(ma_loc[sel]);
-            
             
 	            if (ma_wid[sel]!=0){
 	                if (ma_wid[sel]=1) then temp2+=" I";
@@ -817,35 +908,65 @@ function scr_ui_manage() {
 	            temp3=string(round(ma_health[sel]))+"% HP";temp4="";
 	            // Need abbreviations here
 
-
-
 	            ma_ar="";ma_we1="";ma_we2="";ma_ge="";ma_mb="";ttt=0;
 	            ar_ar=0;ar_we1=0;ar_we2=0;ar_ge=0;ar_mb=0;
 
-			if (ma_armour[sel]!=""){ma_ar=scr_wep_abbreviate(ma_armour[sel]);// vehicle weapon 3
-	                if (string_count("^",ma_armour[sel])>0){ar_ar=1;ma_ar=string_replace(ma_ar,"^","");}
-	                if (string_count("&",ma_armour[sel])>0){ar_ar=2;ma_ar="Artifact";}
-	            }
-	            if (ma_gear[sel]!=""){ma_ge=scr_wep_abbreviate(ma_gear[sel]);// vehicle upgrade
-	                if (string_count("^",ma_gear[sel])>0){ar_ge=1;ma_ge=string_replace(ma_ge,"^","");}
-	                if (string_count("&",ma_gear[sel])>0){ar_ge=2;ma_ge="Artifact";}
-	            }
-	            if (ma_mobi[sel]!=""){ma_mb=scr_wep_abbreviate(ma_mobi[sel]);// vehicle accessory
-	                if (string_count("^",ma_mobi[sel])>0){ar_mb=1;ma_mb=string_replace(ma_mb,"^","");}
-	                if (string_count("&",ma_mobi[sel])>0){ar_mb=2;ma_mb="Artifact";}
-	            }
-	            if (ma_wep1[sel]!=""){ma_we1=scr_wep_abbreviate(ma_wep1[sel]);//vehicle weapon 1
-	                if (string_count("^",ma_wep1[sel])>0){ar_we1=1;ma_we1=string_replace(ma_we1,"^","");}
-	                if (string_count("&",ma_wep1[sel])>0){ar_we1=2;ma_we1="Artifact";}
-	            }
-	            if (ma_wep2[sel]!=""){ma_we2=scr_wep_abbreviate(ma_wep2[sel]);//vehicle weapon 2
-	                if (string_count("^",ma_wep2[sel])>0){ar_we2=1;ma_we2=string_replace(ma_we2,"^","");}
-	                if (string_count("&",ma_wep2[sel])>0){ar_we2=2;ma_we2="Artifact";}
-	            }
-
+				if (ma_armour[sel]!=""){
+					ma_ar=scr_wep_abbreviate(ma_armour[sel]);// vehicle weapon 3
+					if (string_count("^",ma_armour[sel])>0){
+						ar_ar=1;
+						ma_ar=string_replace(ma_ar,"^","");
+					}
+					if (string_count("&",ma_armour[sel])>0){
+						ar_ar=2;
+						ma_ar="Artifact";
+					}
+				}
+				if (ma_gear[sel]!=""){
+					ma_ge=scr_wep_abbreviate(ma_gear[sel]);// vehicle upgrade
+					if (string_count("^",ma_gear[sel])>0){
+						ar_ge=1;
+						ma_ge=string_replace(ma_ge,"^","");
+					}
+					if (string_count("&",ma_gear[sel])>0){
+						ar_ge=2;
+						ma_ge="Artifact";
+					}
+				}
+				if (ma_mobi[sel]!=""){
+					ma_mb=scr_wep_abbreviate(ma_mobi[sel]);// vehicle accessory
+					if (string_count("^",ma_mobi[sel])>0){
+						ar_mb=1;
+						ma_mb=string_replace(ma_mb,"^","");
+					}
+					if (string_count("&",ma_mobi[sel])>0){
+						ar_mb=2;
+						ma_mb="Artifact";
+					}
+				}
+				if (ma_wep1[sel]!=""){ma_we1=scr_wep_abbreviate(ma_wep1[sel]);//vehicle weapon 1
+					if (string_count("^",ma_wep1[sel])>0){
+						ar_we1=1;
+						ma_we1=string_replace(ma_we1,"^","");
+					}
+					if (string_count("&",ma_wep1[sel])>0){
+						ar_we1=2;
+						ma_we1="Artifact";
+					}
+				}
+				if (ma_wep2[sel]!=""){
+					ma_we2=scr_wep_abbreviate(ma_wep2[sel]);//vehicle weapon 2
+					if (string_count("^",ma_wep2[sel])>0){
+						ar_we2=1;
+						ma_we2=string_replace(ma_we2,"^","");
+					}
+					if (string_count("&",ma_wep2[sel])>0){
+						ar_we2=2;
+						ma_we2="Artifact";
+					}
+				}
 	            // temp5=string(ma_wep1[sel])+", "+string(ma_wep2[sel])+" + "+string(ma_gear[sel]);
 	        }
-
 
 	        if (man_sel[sel]=0) then draw_set_color(c_black);
 	        if (man_sel[sel]!=0) then draw_set_color(6052956);// was gray
@@ -853,7 +974,7 @@ function scr_ui_manage() {
 	        draw_set_color(c_gray);draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);
 
 	        // Squads
-	        var sqi;sqi="";
+	        var sqi="";
 	        draw_set_color(c_black);
 	        if (squad[sel]=1) or (squad[sel]=11) or (squad[sel]=21) then draw_set_color(c_red);
 	        if (squad[sel]=2) or (squad[sel]=12) or (squad[sel]=22) then draw_set_color(c_green);
@@ -899,15 +1020,15 @@ function scr_ui_manage() {
 	            draw_line(xx+25+8,yy+64,xx+25+8,yy+85);
 	        }
         
-        
 	        // was 885
 	        // 974
-        
-        
-        
-        
+			
 	        if (man[sel]="man") and (ma_ar="") then draw_set_alpha(0.5);
-	        var name_xr;name_xr=1;repeat(10){if ((string_width(string_hash_to_newline(temp1))*name_xr)>184-8) then name_xr-=0.05;}
+	        var name_xr=1;
+			
+			for (var k = 0; k<10; k++){
+				if ((string_width(string_hash_to_newline(temp1))*name_xr)>184-8) then name_xr-=0.05;
+			}
         
 	        if (temp1!="Chapter Master "+string(obj_ini.master_name)){
 	            if (man[sel]="man") and (ma_promote[sel]>0) then draw_set_color(c_yellow);
@@ -930,14 +1051,14 @@ function scr_ui_manage() {
 	        draw_text_transformed(xx+430+8,yy+66,string_hash_to_newline(string(temp2)),1,1,0);// LOC
 	        draw_set_alpha(1);
         
-        
 	        // ma_lid[i]=0;ma_wid[i]=0;
         
 	        if (ma_loc[sel]="Mechanicus Vessel") then draw_sprite(spr_loc_icon,2,xx+427+8,yy+66);
 	        if (man[sel]="man"){
-	            if (ma_loc[sel]!="Mechanicus Vessel"){var berd;berd=false;
-	                if (managing<11){if (obj_ini.age[managing,ide[sel]]!=floor(obj_ini.age[managing,ide[sel]])) then berd=true;}
-	                if (managing>=11){if (obj_ini.age[0,ide[sel]]!=floor(obj_ini.age[0,ide[sel]])) then berd=true;}
+	            if (ma_loc[sel]!="Mechanicus Vessel"){
+					var berd=false;
+	                if (managing<11) and (obj_ini.age[managing,ide[sel]]!=floor(obj_ini.age[managing,ide[sel]])) then berd=true;
+	                if (managing>=11)and (obj_ini.age[0,ide[sel]]!=floor(obj_ini.age[0,ide[sel]])) then berd=true;
                 
 	                if (ma_lid[sel]=0) and (ma_wid[sel]>0) then draw_sprite(spr_loc_icon,0,xx+427+8,yy+66);
 	                if (ma_lid[sel]>0) and (ma_wid[sel]=0) and (berd=false) then draw_sprite(spr_loc_icon,1,xx+427+8,yy+66);
@@ -963,7 +1084,8 @@ function scr_ui_manage() {
 	        if (string_count("Artifact",temp5)>0) then draw_set_color(881503);
 	        draw_text_transformed(xx+573,yy+66,string(temp5),1,1,0);draw_set_color(38144);*/
 
-	        if (man[sel]="man"){var xoffset;xoffset=0;
+	        if (man[sel]="man"){
+				var xoffset=0;
 	            draw_set_color(c_gray);
 	            if (ar_ar=1) then draw_set_color(c_gray);
 	            if (ar_ar=2) then draw_set_color(881503);
@@ -994,45 +1116,44 @@ function scr_ui_manage() {
 	            draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_we2)));
 	        }
 
-	        if (man[sel]!="man"){var xoffset;xoffset=0;
-			//Vehicle Upgrade
-			draw_set_color(c_gray);
-			if (ar_ge=1) then draw_set_color(c_gray);
-			if (ar_ge=2) then draw_set_color(881503);
-			draw_text(xx+573,yy+66,string_hash_to_newline(string(ma_ge)));
-			//Vehicle accessory
-			xoffset+=string_width(string_hash_to_newline(ma_ge))+15;
-			draw_set_color(c_gray);
-			if (ar_mb=1) then draw_set_color(c_gray);
-			if (ar_mb=2) then draw_set_color(881503);
-			draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_mb)));
-			//Vehicle wep 1
-			xoffset+=string_width(string_hash_to_newline(ma_mb))+15;
-			draw_set_color(c_gray);
-			if (ar_we1=1) then draw_set_color(c_gray);
-			if (ar_we1=2) then draw_set_color(881503);
-			draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_we1)));
-			//Vehicle wep 2
-			xoffset+=string_width(string_hash_to_newline(ma_we1))+15;
-			draw_set_color(c_gray);
-			if (ar_we2=1) then draw_set_color(c_gray);
-			if (ar_we2=2) then draw_set_color(881503);
-			draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_we2)));
-			//Vehicle wep 3
-			xoffset+=string_width(string_hash_to_newline(ma_we2))+15;
-			draw_set_color(c_gray);
-			if (ar_ar=1) then draw_set_color(c_gray);
-			if (ar_ar=2) then draw_set_color(881503);
-			draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_ar)));
+	        if (man[sel]!="man"){
+				var xoffset=0;
+				//Vehicle Upgrade
+				draw_set_color(c_gray);
+				if (ar_ge=1) then draw_set_color(c_gray);
+				if (ar_ge=2) then draw_set_color(881503);
+				draw_text(xx+573,yy+66,string_hash_to_newline(string(ma_ge)));
+			
+				//Vehicle accessory
+				xoffset+=string_width(string_hash_to_newline(ma_ge))+15;
+				draw_set_color(c_gray);
+				if (ar_mb=1) then draw_set_color(c_gray);
+				if (ar_mb=2) then draw_set_color(881503);
+				draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_mb)));
+			
+				//Vehicle wep 1
+				xoffset+=string_width(string_hash_to_newline(ma_mb))+15;
+				draw_set_color(c_gray);
+				if (ar_we1=1) then draw_set_color(c_gray);
+				if (ar_we1=2) then draw_set_color(881503);
+				draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_we1)));
+			
+				//Vehicle wep 2
+				xoffset+=string_width(string_hash_to_newline(ma_we1))+15;
+				draw_set_color(c_gray);
+				if (ar_we2=1) then draw_set_color(c_gray);
+				if (ar_we2=2) then draw_set_color(881503);
+				draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_we2)));
+			
+				//Vehicle wep 3
+				xoffset+=string_width(string_hash_to_newline(ma_we2))+15;
+				draw_set_color(c_gray);
+				if (ar_ar=1) then draw_set_color(c_gray);
+				if (ar_ar=2) then draw_set_color(881503);
+				draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_ar)));
 	        }
-
-
-
-
-
 	        yy+=20;
 	        sel+=1;
-
 	    }
 
 	    draw_set_color(c_black);
@@ -1041,10 +1162,8 @@ function scr_ui_manage() {
 	    draw_set_color(c_gray);
 	    draw_rectangle(xx+974,yy+165,xx+1005,yy+822,1);
 
-	    draw_rectangle(xx+25,yy+142,xx+14+8,yy+822,1);// Squad outline
-
-
-
+		// Squad outline
+	    draw_rectangle(xx+25,yy+142,xx+14+8,yy+822,1);
 	    // draw_rectangle(xx+577,yy+64,xx+600,yy+85,1);
 	    // draw_rectangle(xx+577,yy+379,xx+600,yy+400,1);
 
@@ -1054,7 +1173,6 @@ function scr_ui_manage() {
 	    draw_set_color(c_gray);
 	    draw_rectangle(xx+974,yy+141,xx+1005,yy+172,1);
 	    draw_rectangle(xx+974,yy+790,xx+1005,yy+822,1);
-
 
 	    draw_sprite_stretched(spr_arrow,2,xx+974,yy+141,31,30);
 	    draw_sprite_stretched(spr_arrow,3,xx+974,yy+791,31,30);
@@ -1069,12 +1187,17 @@ function scr_ui_manage() {
 	    draw_set_font(fnt_menu);
 	    draw_set_halign(fa_center);
 	    */
-
+		
+		// How much space the selected unit takes
 	    draw_set_color(c_gray);
-	    draw_set_font(fnt_40k_14b);draw_text_transformed(xx+1010,yy+528,string_hash_to_newline("Selection: "+string(man_size)+" space"),1.5,1.5,0);
-	    draw_set_font(fnt_40k_14);draw_text_ext(xx+1010,yy+552,string_hash_to_newline(selecting_dudes),-1,560);
+	    draw_set_font(fnt_40k_14b);
+		draw_text_transformed(xx+1010,yy+528,string_hash_to_newline("Selection: "+string(man_size)+" space"),1.5,1.5,0);
+	    draw_set_font(fnt_40k_14);
+		draw_text_ext(xx+1010,yy+552,string_hash_to_newline(selecting_dudes),-1,560);
 
-	    draw_set_font(fnt_40k_14b);draw_text_transformed(xx+1010,yy+610,string_hash_to_newline("Options:"),1.5,1.5,0);
+		// Options for the selected unit
+	    draw_set_font(fnt_40k_14b);
+		draw_text_transformed(xx+1010,yy+610,string_hash_to_newline("Options:"),1.5,1.5,0);
 	    draw_set_font(fnt_40k_14);
 
 	    yy+=8;
@@ -1083,56 +1206,91 @@ function scr_ui_manage() {
 	        draw_text(xx+1010,yy+636,string_hash_to_newline("All Infantry"));
 	        draw_rectangle(xx+1010,yy+634,xx+1010+string_width(string_hash_to_newline("All Infantry")),yy+634+string_height(string_hash_to_newline("All Infantry")),1);
 	        if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	            if (mouse_x>=xx+1010) and (mouse_y>=yy+634) and (mouse_x<xx+1010+string_width(string_hash_to_newline("All Infantry"))) and (mouse_y<yy+634+string_height(string_hash_to_newline("All Infantry"))){cooldown=8;sel_all="man";}
+	            if (mouse_x>=xx+1010) and (mouse_y>=yy+634) and (mouse_x<xx+1010+string_width(string_hash_to_newline("All Infantry"))) and (mouse_y<yy+634+string_height(string_hash_to_newline("All Infantry"))){
+					cooldown=8;
+					sel_all="man";
+				}
 	        }
 
 	        if (sel_uni[1]!=""){
-	            draw_text(xx+1016,yy+662,string_hash_to_newline(sel_uni[1]));draw_rectangle(xx+1015,yy+661,xx+1016+string_width(string_hash_to_newline(sel_uni[1])),yy+661+string_height(string_hash_to_newline(sel_uni[1])),1);
+	            draw_text(xx+1016,yy+662,string_hash_to_newline(sel_uni[1]));
+				draw_rectangle(xx+1015,yy+661,xx+1016+string_width(string_hash_to_newline(sel_uni[1])),yy+661+string_height(string_hash_to_newline(sel_uni[1])),1);
 	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	                if (mouse_x>=xx+1015) and (mouse_y>=yy+661) and (mouse_x<xx+1016+string_width(string_hash_to_newline(sel_uni[1]))) and (mouse_y<yy+661+string_height(string_hash_to_newline(sel_uni[1]))){cooldown=8;sel_all=sel_uni[1];}
+	                if (mouse_x>=xx+1015) and (mouse_y>=yy+661) and (mouse_x<xx+1016+string_width(string_hash_to_newline(sel_uni[1]))) and (mouse_y<yy+661+string_height(string_hash_to_newline(sel_uni[1]))){
+						cooldown=8;
+						sel_all=sel_uni[1];
+					}
 	            }
 	        }
 	        if (sel_uni[2]!=""){
-	            draw_text(xx+1016,yy+684,string_hash_to_newline(sel_uni[2]));draw_rectangle(xx+1015,yy+683,xx+1016+string_width(string_hash_to_newline(sel_uni[2])),yy+683+string_height(string_hash_to_newline(sel_uni[2])),1);
+	            draw_text(xx+1016,yy+684,string_hash_to_newline(sel_uni[2]));
+				draw_rectangle(xx+1015,yy+683,xx+1016+string_width(string_hash_to_newline(sel_uni[2])),yy+683+string_height(string_hash_to_newline(sel_uni[2])),1);
 	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	                if (mouse_x>=xx+1016) and (mouse_y>=yy+684) and (mouse_x<xx+1016+string_width(string_hash_to_newline(sel_uni[2]))) and (mouse_y<yy+683+string_height(string_hash_to_newline(sel_uni[2]))){cooldown=8;sel_all=sel_uni[2];}
+	                if (mouse_x>=xx+1016) and (mouse_y>=yy+684) and (mouse_x<xx+1016+string_width(string_hash_to_newline(sel_uni[2]))) and (mouse_y<yy+683+string_height(string_hash_to_newline(sel_uni[2]))){
+						cooldown=8;
+						sel_all=sel_uni[2];
+					}
 	            }
 	        }
 	        if (sel_uni[3]!=""){
-	            draw_text(xx+1016,yy+706,string_hash_to_newline(sel_uni[3]));draw_rectangle(xx+1015,yy+705,xx+1016+string_width(string_hash_to_newline(sel_uni[3])),yy+705+string_height(string_hash_to_newline(sel_uni[3])),1);
+	            draw_text(xx+1016,yy+706,string_hash_to_newline(sel_uni[3]));
+				draw_rectangle(xx+1015,yy+705,xx+1016+string_width(string_hash_to_newline(sel_uni[3])),yy+705+string_height(string_hash_to_newline(sel_uni[3])),1);
 	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	                if (mouse_x>=xx+1016) and (mouse_y>=yy+706) and (mouse_x<xx+1016+string_width(string_hash_to_newline(sel_uni[3]))) and (mouse_y<yy+705+string_height(string_hash_to_newline(sel_uni[3]))){cooldown=8;sel_all=sel_uni[3];}
+	                if (mouse_x>=xx+1016) and (mouse_y>=yy+706) and (mouse_x<xx+1016+string_width(string_hash_to_newline(sel_uni[3]))) and (mouse_y<yy+705+string_height(string_hash_to_newline(sel_uni[3]))){
+						cooldown=8;
+						sel_all=sel_uni[3];
+					}
 	            }
 	        }
 	        if (sel_uni[4]!=""){
-	            draw_text(xx+1016,yy+728,string_hash_to_newline(sel_uni[4]));draw_rectangle(xx+1015,yy+727,xx+1016+string_width(string_hash_to_newline(sel_uni[4])),yy+727+string_height(string_hash_to_newline(sel_uni[4])),1);
+	            draw_text(xx+1016,yy+728,string_hash_to_newline(sel_uni[4]));
+				draw_rectangle(xx+1015,yy+727,xx+1016+string_width(string_hash_to_newline(sel_uni[4])),yy+727+string_height(string_hash_to_newline(sel_uni[4])),1);
 	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	                if (mouse_x>=xx+1016) and (mouse_y>=yy+727) and (mouse_x<xx+1016+string_width(string_hash_to_newline(sel_uni[4]))) and (mouse_y<yy+727+string_height(string_hash_to_newline(sel_uni[4]))){cooldown=8;sel_all=sel_uni[4];}
+	                if (mouse_x>=xx+1016) and (mouse_y>=yy+727) and (mouse_x<xx+1016+string_width(string_hash_to_newline(sel_uni[4]))) and (mouse_y<yy+727+string_height(string_hash_to_newline(sel_uni[4]))){
+						cooldown=8;
+						sel_all=sel_uni[4];
+					}
 	            }
 	        }
         
 	        if (sel_uni[5]!=""){
-	            draw_text(xx+1160,yy+662,string_hash_to_newline(sel_uni[5]));draw_rectangle(xx+1015+144,yy+661,xx+1160+string_width(string_hash_to_newline(sel_uni[5])),yy+661+string_height(string_hash_to_newline(sel_uni[5])),1);
+	            draw_text(xx+1160,yy+662,string_hash_to_newline(sel_uni[5]));
+				draw_rectangle(xx+1015+144,yy+661,xx+1160+string_width(string_hash_to_newline(sel_uni[5])),yy+661+string_height(string_hash_to_newline(sel_uni[5])),1);
 	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	                if (mouse_x>=xx+1160) and (mouse_y>=yy+661) and (mouse_x<xx+1160+string_width(string_hash_to_newline(sel_uni[5]))) and (mouse_y<yy+661+string_height(string_hash_to_newline(sel_uni[5]))){cooldown=8;sel_all=sel_uni[5];}
+	                if (mouse_x>=xx+1160) and (mouse_y>=yy+661) and (mouse_x<xx+1160+string_width(string_hash_to_newline(sel_uni[5]))) and (mouse_y<yy+661+string_height(string_hash_to_newline(sel_uni[5]))){
+						cooldown=8;
+						sel_all=sel_uni[5];
+					}
 	            }
 	        }
 	        if (sel_uni[6]!=""){
-	            draw_text(xx+1160,yy+684,string_hash_to_newline(sel_uni[6]));draw_rectangle(xx+1015+144,yy+683,xx+1160+string_width(string_hash_to_newline(sel_uni[6])),yy+683+string_height(string_hash_to_newline(sel_uni[6])),1);
+	            draw_text(xx+1160,yy+684,string_hash_to_newline(sel_uni[6]));
+				draw_rectangle(xx+1015+144,yy+683,xx+1160+string_width(string_hash_to_newline(sel_uni[6])),yy+683+string_height(string_hash_to_newline(sel_uni[6])),1);
 	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	                if (mouse_x>=xx+1160) and (mouse_y>=yy+684) and (mouse_x<xx+1160+string_width(string_hash_to_newline(sel_uni[6]))) and (mouse_y<yy+684+string_height(string_hash_to_newline(sel_uni[6]))){cooldown=8;sel_all=sel_uni[6];}
+	                if (mouse_x>=xx+1160) and (mouse_y>=yy+684) and (mouse_x<xx+1160+string_width(string_hash_to_newline(sel_uni[6]))) and (mouse_y<yy+684+string_height(string_hash_to_newline(sel_uni[6]))){
+						cooldown=8;
+						sel_all=sel_uni[6];
+					}
 	            }
 	        }
 	        if (sel_uni[7]!=""){
-	            draw_text(xx+1160,yy+706,string_hash_to_newline(sel_uni[7]));draw_rectangle(xx+1015+144,yy+705,xx+1160+string_width(string_hash_to_newline(sel_uni[7])),yy+705+string_height(string_hash_to_newline(sel_uni[7])),1);
+	            draw_text(xx+1160,yy+706,string_hash_to_newline(sel_uni[7]));
+				draw_rectangle(xx+1015+144,yy+705,xx+1160+string_width(string_hash_to_newline(sel_uni[7])),yy+705+string_height(string_hash_to_newline(sel_uni[7])),1);
 	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	                if (mouse_x>=xx+1160) and (mouse_y>=yy+706) and (mouse_x<xx+1160+string_width(string_hash_to_newline(sel_uni[7]))) and (mouse_y<yy+706+string_height(string_hash_to_newline(sel_uni[7]))){cooldown=8;sel_all=sel_uni[7];}
+	                if (mouse_x>=xx+1160) and (mouse_y>=yy+706) and (mouse_x<xx+1160+string_width(string_hash_to_newline(sel_uni[7]))) and (mouse_y<yy+706+string_height(string_hash_to_newline(sel_uni[7]))){
+						cooldown=8;
+						sel_all=sel_uni[7];
+					}
 	            }
 	        }
 	        if (sel_uni[8]!=""){
-	            draw_text(xx+1160,yy+728,string_hash_to_newline(sel_uni[8]));draw_rectangle(xx+1015+144,yy+727,xx+1160+string_width(string_hash_to_newline(sel_uni[8])),yy+727+string_height(string_hash_to_newline(sel_uni[8])),1);
+	            draw_text(xx+1160,yy+728,string_hash_to_newline(sel_uni[8]));
+				draw_rectangle(xx+1015+144,yy+727,xx+1160+string_width(string_hash_to_newline(sel_uni[8])),yy+727+string_height(string_hash_to_newline(sel_uni[8])),1);
 	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	                if (mouse_x>=xx+1160) and (mouse_y>=yy+728) and (mouse_x<xx+1160+string_width(string_hash_to_newline(sel_uni[8]))) and (mouse_y<yy+727+string_height(string_hash_to_newline(sel_uni[8]))){cooldown=8;sel_all=sel_uni[8];}
+	                if (mouse_x>=xx+1160) and (mouse_y>=yy+728) and (mouse_x<xx+1160+string_width(string_hash_to_newline(sel_uni[8]))) and (mouse_y<yy+727+string_height(string_hash_to_newline(sel_uni[8]))){
+						cooldown=8;
+						sel_all=sel_uni[8];
+					}
 	            }
 	        }
 	    }
@@ -1141,63 +1299,96 @@ function scr_ui_manage() {
 	        draw_text(xx+1010+288,yy+636,string_hash_to_newline("All Vehicles"));
 	        draw_rectangle(xx+1010+288,yy+634,xx+1010+288+string_width(string_hash_to_newline("All Vehicles")),yy+634+string_height(string_hash_to_newline("All Vehicles")),1);
 	        if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	            if (mouse_x>=xx+1010+288) and (mouse_y>=yy+634) and (mouse_x<xx+1010+288+string_width(string_hash_to_newline("All Vehicles"))) and (mouse_y<yy+634+string_height(string_hash_to_newline("All Vehicles"))){cooldown=8;sel_all="vehicle";}
+	            if (mouse_x>=xx+1010+288) and (mouse_y>=yy+634) and (mouse_x<xx+1010+288+string_width(string_hash_to_newline("All Vehicles"))) and (mouse_y<yy+634+string_height(string_hash_to_newline("All Vehicles"))){
+					cooldown=8;
+					sel_all="vehicle";
+				}
 	        }
         
 	        if (sel_veh[1]!=""){
-	            draw_text(xx+1016+288,yy+662,string_hash_to_newline(sel_veh[1]));draw_rectangle(xx+1015+288,yy+661,xx+1016+288+string_width(string_hash_to_newline(sel_veh[1])),yy+661+string_height(string_hash_to_newline(sel_veh[1])),1);
+	            draw_text(xx+1016+288,yy+662,string_hash_to_newline(sel_veh[1]));
+				draw_rectangle(xx+1015+288,yy+661,xx+1016+288+string_width(string_hash_to_newline(sel_veh[1])),yy+661+string_height(string_hash_to_newline(sel_veh[1])),1);
 	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	                if (mouse_x>=xx+1015+288) and (mouse_y>=yy+661) and (mouse_x<xx+1016+288+string_width(string_hash_to_newline(sel_veh[1]))) and (mouse_y<yy+661+string_height(string_hash_to_newline(sel_veh[1]))){cooldown=8;sel_all=sel_veh[1];}
+	                if (mouse_x>=xx+1015+288) and (mouse_y>=yy+661) and (mouse_x<xx+1016+288+string_width(string_hash_to_newline(sel_veh[1]))) and (mouse_y<yy+661+string_height(string_hash_to_newline(sel_veh[1]))){
+						cooldown=8;
+						sel_all=sel_veh[1];
+					}
 	            }
 	        }
 	        if (sel_veh[2]!=""){
-	            draw_text(xx+1016+288,yy+684,string_hash_to_newline(sel_veh[2]));draw_rectangle(xx+1015+288,yy+683,xx+1016+288+string_width(string_hash_to_newline(sel_veh[2])),yy+683+string_height(string_hash_to_newline(sel_veh[2])),1);
+	            draw_text(xx+1016+288,yy+684,string_hash_to_newline(sel_veh[2]));
+				draw_rectangle(xx+1015+288,yy+683,xx+1016+288+string_width(string_hash_to_newline(sel_veh[2])),yy+683+string_height(string_hash_to_newline(sel_veh[2])),1);
 	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	                if (mouse_x>=xx+1015+288) and (mouse_y>=yy+683) and (mouse_x<xx+1016+288+string_width(string_hash_to_newline(sel_veh[2]))) and (mouse_y<yy+683+string_height(string_hash_to_newline(sel_veh[2]))){cooldown=8;sel_all=sel_veh[2];}
+	                if (mouse_x>=xx+1015+288) and (mouse_y>=yy+683) and (mouse_x<xx+1016+288+string_width(string_hash_to_newline(sel_veh[2]))) and (mouse_y<yy+683+string_height(string_hash_to_newline(sel_veh[2]))){
+						cooldown=8;
+						sel_all=sel_veh[2];
+					}
 	            }
 	        }
 	        if (sel_veh[3]!=""){
-	            draw_text(xx+1016+288,yy+706,string_hash_to_newline(sel_veh[3]));draw_rectangle(xx+1015+288,yy+705,xx+1016+288+string_width(string_hash_to_newline(sel_veh[3])),yy+705+string_height(string_hash_to_newline(sel_veh[3])),1);
+	            draw_text(xx+1016+288,yy+706,string_hash_to_newline(sel_veh[3]));
+				draw_rectangle(xx+1015+288,yy+705,xx+1016+288+string_width(string_hash_to_newline(sel_veh[3])),yy+705+string_height(string_hash_to_newline(sel_veh[3])),1);
 	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	                if (mouse_x>=xx+1015+288) and (mouse_y>=yy+705) and (mouse_x<xx+1016+288+string_width(string_hash_to_newline(sel_veh[3]))) and (mouse_y<yy+705+string_height(string_hash_to_newline(sel_veh[3]))){cooldown=8;sel_all=sel_veh[3];}
+	                if (mouse_x>=xx+1015+288) and (mouse_y>=yy+705) and (mouse_x<xx+1016+288+string_width(string_hash_to_newline(sel_veh[3]))) and (mouse_y<yy+705+string_height(string_hash_to_newline(sel_veh[3]))){
+						cooldown=8;
+						sel_all=sel_veh[3];
+					}
 	            }
 	        }
 	        if (sel_veh[4]!=""){
-	            draw_text(xx+1016+288,yy+728,string_hash_to_newline(sel_veh[4]));draw_rectangle(xx+1015+288,yy+727,xx+1016+288+string_width(string_hash_to_newline(sel_veh[4])),yy+727+string_height(string_hash_to_newline(sel_veh[4])),1);
+	            draw_text(xx+1016+288,yy+728,string_hash_to_newline(sel_veh[4]));
+				draw_rectangle(xx+1015+288,yy+727,xx+1016+288+string_width(string_hash_to_newline(sel_veh[4])),yy+727+string_height(string_hash_to_newline(sel_veh[4])),1);
 	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	                if (mouse_x>=xx+1015+288) and (mouse_y>=yy+728) and (mouse_x<xx+1016+288+string_width(string_hash_to_newline(sel_veh[4]))) and (mouse_y<yy+727+string_height(string_hash_to_newline(sel_veh[4]))){cooldown=8;sel_all=sel_veh[4];}
+	                if (mouse_x>=xx+1015+288) and (mouse_y>=yy+728) and (mouse_x<xx+1016+288+string_width(string_hash_to_newline(sel_veh[4]))) and (mouse_y<yy+727+string_height(string_hash_to_newline(sel_veh[4]))){
+						cooldown=8;
+						sel_all=sel_veh[4];
+					}
 	            }
 	        }
         
 	        if (sel_veh[5]!=""){
-	            draw_text(xx+1160+432,yy+662,string_hash_to_newline(sel_veh[5]));draw_rectangle(xx+1015+432,yy+661,xx+1160+432+string_width(string_hash_to_newline(sel_veh[5])),yy+661+string_height(string_hash_to_newline(sel_veh[5])),1);
+	            draw_text(xx+1160+432,yy+662,string_hash_to_newline(sel_veh[5]));
+				draw_rectangle(xx+1015+432,yy+661,xx+1160+432+string_width(string_hash_to_newline(sel_veh[5])),yy+661+string_height(string_hash_to_newline(sel_veh[5])),1);
 	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	                if (mouse_x>=xx+1160+432) and (mouse_y>=yy+661) and (mouse_x<xx+1160+432+string_width(string_hash_to_newline(sel_veh[5]))) and (mouse_y<yy+661+string_height(string_hash_to_newline(sel_veh[5]))){cooldown=8;sel_all=sel_veh[5];}
+	                if (mouse_x>=xx+1160+432) and (mouse_y>=yy+661) and (mouse_x<xx+1160+432+string_width(string_hash_to_newline(sel_veh[5]))) and (mouse_y<yy+661+string_height(string_hash_to_newline(sel_veh[5]))){
+						cooldown=8;
+						sel_all=sel_veh[5];
+					}
 	            }
 	        }
 	        if (sel_veh[6]!=""){
-	            draw_text(xx+1160+432,yy+684,string_hash_to_newline(sel_veh[6]));draw_rectangle(xx+1015+432,yy+683,xx+1160+432+string_width(string_hash_to_newline(sel_veh[6])),yy+683+string_height(string_hash_to_newline(sel_veh[6])),1);
+	            draw_text(xx+1160+432,yy+684,string_hash_to_newline(sel_veh[6]));
+				draw_rectangle(xx+1015+432,yy+683,xx+1160+432+string_width(string_hash_to_newline(sel_veh[6])),yy+683+string_height(string_hash_to_newline(sel_veh[6])),1);
 	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	                if (mouse_x>=xx+1160+432) and (mouse_y>=yy+683) and (mouse_x<xx+1160+432+string_width(string_hash_to_newline(sel_veh[6]))) and (mouse_y<yy+683+string_height(string_hash_to_newline(sel_veh[6]))){cooldown=8;sel_all=sel_veh[6];}
+	                if (mouse_x>=xx+1160+432) and (mouse_y>=yy+683) and (mouse_x<xx+1160+432+string_width(string_hash_to_newline(sel_veh[6]))) and (mouse_y<yy+683+string_height(string_hash_to_newline(sel_veh[6]))){
+						cooldown=8;
+						sel_all=sel_veh[6];
+					}
 	            }
 	        }
 	        if (sel_veh[7]!=""){
-	            draw_text(xx+1160+432,yy+706,string_hash_to_newline(sel_veh[7]));draw_rectangle(xx+1015+432,yy+705,xx+1160+432+string_width(string_hash_to_newline(sel_veh[7])),yy+705+string_height(string_hash_to_newline(sel_veh[7])),1);
+	            draw_text(xx+1160+432,yy+706,string_hash_to_newline(sel_veh[7]));
+				draw_rectangle(xx+1015+432,yy+705,xx+1160+432+string_width(string_hash_to_newline(sel_veh[7])),yy+705+string_height(string_hash_to_newline(sel_veh[7])),1);
 	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	                if (mouse_x>=xx+1160+432) and (mouse_y>=yy+706) and (mouse_x<xx+1160+432+string_width(string_hash_to_newline(sel_veh[7]))) and (mouse_y<yy+705+string_height(string_hash_to_newline(sel_veh[7]))){cooldown=8;sel_all=sel_veh[7];}
+	                if (mouse_x>=xx+1160+432) and (mouse_y>=yy+706) and (mouse_x<xx+1160+432+string_width(string_hash_to_newline(sel_veh[7]))) and (mouse_y<yy+705+string_height(string_hash_to_newline(sel_veh[7]))){
+						cooldown=8;
+						sel_all=sel_veh[7];
+					}
 	            }
 	        }
 	        if (sel_veh[8]!=""){
-	            draw_text(xx+1160+432,yy+728,string_hash_to_newline(sel_veh[8]));draw_rectangle(xx+1015+432,yy+727,xx+1160+432+string_width(string_hash_to_newline(sel_veh[8])),yy+727+string_height(string_hash_to_newline(sel_veh[8])),1);
+	            draw_text(xx+1160+432,yy+728,string_hash_to_newline(sel_veh[8]));
+				draw_rectangle(xx+1015+432,yy+727,xx+1160+432+string_width(string_hash_to_newline(sel_veh[8])),yy+727+string_height(string_hash_to_newline(sel_veh[8])),1);
 	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-	                if (mouse_x>=xx+1160+432) and (mouse_y>=yy+728) and (mouse_x<xx+1160+432+string_width(string_hash_to_newline(sel_veh[8]))) and (mouse_y<yy+727+string_height(string_hash_to_newline(sel_veh[8]))){cooldown=8;sel_all=sel_veh[8];}
+	                if (mouse_x>=xx+1160+432) and (mouse_y>=yy+728) and (mouse_x<xx+1160+432+string_width(string_hash_to_newline(sel_veh[8]))) and (mouse_y<yy+727+string_height(string_hash_to_newline(sel_veh[8]))){
+						cooldown=8;
+						sel_all=sel_veh[8];
+					}
 	            }
 	        }
 	    }
     
 	    yy-=8;
-    
-    
     
 	    draw_set_font(fnt_40k_14b);
 	    draw_set_halign(fa_left);
@@ -1211,9 +1402,11 @@ function scr_ui_manage() {
 	    draw_set_alpha(1);
 	    draw_set_font(fnt_40k_14);
 	    draw_set_halign(fa_center);
-    
-	    var x5,y5,x6,y6;
-	    x5=xx+1018;y5=yy+831;x6=xx+1018+141;y6=yy+805;
+		
+		// Update screen coordinates
+	    var x5=xx+1018, y5=yy+831, x6=xx+1018+141, y6=yy+805;
+		
+		// Load/Unload to ship button
 	    draw_set_alpha(1);draw_rectangle(x5,y5,x6,y6,1);
 	    draw_set_alpha(0.5);draw_rectangle(x5+1,y5+1,x6-1,y6-1,1);
 	    draw_set_alpha(0.25);if (mouse_x>=x5) and (mouse_y>=y6) and (mouse_x<x6) and (mouse_y<y5) then draw_rectangle(x5,y5,x6,y6,0);
@@ -1221,6 +1414,7 @@ function scr_ui_manage() {
 	    if (sel_loading=0) then draw_text_transformed(xx+1089,yy+805,string_hash_to_newline("Load"),1.5,1.5,0);
 	    if (sel_loading!=0) then draw_text_transformed(xx+1089,yy+805,string_hash_to_newline("Unload"),1.5,1.5,0);
     
+		// Re equip button
 	    x5=xx+1018+141;y5=yy+831;x6=xx+1297;y6=yy+805;
 	    draw_set_alpha(1);draw_rectangle(x5,y5,x6,y6,1);
 	    draw_set_alpha(0.5);draw_rectangle(x5+1,y5+1,x6-1,y6-1,1);
@@ -1229,6 +1423,7 @@ function scr_ui_manage() {
 	    if (otha>0) then draw_set_alpha(0.5);
 	    draw_text_transformed(xx+1089+141,yy+805,string_hash_to_newline("Re-equip"),1.5,1.5,0);
     
+		// Promote button
 	    x5=xx+1297;y5=yy+831;x6=xx+1436;y6=yy+805;
 	    draw_set_alpha(1);draw_rectangle(x5,y5,x6,y6,1);
 	    draw_set_alpha(0.5);draw_rectangle(x5+1,y5+1,x6-1,y6-1,1);
@@ -1236,13 +1431,15 @@ function scr_ui_manage() {
 	    draw_set_alpha(1);
 	    draw_set_alpha(min(sel_promoting+0.5,1));
 	    draw_text_transformed(xx+1089+282,yy+805,string_hash_to_newline("Promote"),1.5,1.5,0);
-    
+		
+		// Put in jail button
 	    x5=xx+1297+141;y5=yy+831;x6=xx+1436+141;y6=yy+805;
 	    draw_set_alpha(1);draw_rectangle(x5,y5,x6,y6,1);
 	    draw_set_alpha(0.5);draw_rectangle(x5+1,y5+1,x6-1,y6-1,1);
 	    draw_set_alpha(0.25);if (mouse_x>=x5) and (mouse_y>=y6) and (mouse_x<x6) and (mouse_y<y5) then draw_rectangle(x5,y5,x6,y6,0);
 	    draw_set_alpha(1);draw_text_transformed(xx+1089+423,yy+805,string_hash_to_newline("Jail"),1.5,1.5,0);
-    
+		
+		// Reset changes button
 	    x5=xx+1018+141;y5=yy+831-26;x6=xx+1297;y6=yy+805-26;
 	    draw_set_alpha(1);draw_rectangle(x5,y5,x6,y6,1);
 	    draw_set_alpha(0.5);draw_rectangle(x5+1,y5+1,x6-1,y6-1,1);
@@ -1251,13 +1448,14 @@ function scr_ui_manage() {
 	    if (otha>0) then draw_set_alpha(0.5);
 	    draw_text_transformed(xx+1089+141,yy+805-26,string_hash_to_newline("Reset"),1.5,1.5,0);
     
+		// Transfer to another company button
 	    x5=xx+1297;y5=yy+831-26;x6=xx+1436;y6=yy+805-26;
 	    draw_set_alpha(1);draw_rectangle(x5,y5,x6,y6,1);
 	    draw_set_alpha(0.5);draw_rectangle(x5+1,y5+1,x6-1,y6-1,1);
 	    draw_set_alpha(0.25);if (mouse_x>=x5) and (mouse_y>=y6) and (mouse_x<x6) and (mouse_y<y5) then draw_rectangle(x5,y5,x6,y6,0);
 	    draw_set_alpha(1);draw_text_transformed(xx+1089+282,yy+805-26,string_hash_to_newline("Transfer"),1.5,1.5,0);
     
-    
+		// Add bionics button
 	    draw_set_color(38144);
 	    x5=xx+1300+141;y5=yy+827-26;x6=xx+1436+141;y6=yy+805-26;
 	    draw_set_alpha(1);draw_rectangle(x5,y5,x6,y6,1);
@@ -1265,7 +1463,8 @@ function scr_ui_manage() {
 	    draw_set_alpha(0.25);if (mouse_x>=x5) and (mouse_y>=y6) and (mouse_x<x6) and (mouse_y<y5) then draw_rectangle(x5,y5,x6,y6,0);
 	    draw_set_alpha(1);draw_text_transformed(xx+1089+423,yy+807-26,string_hash_to_newline("Add Bionics"),1,1,0);
 	    draw_set_color(c_gray);
-    
+		
+		// Designate as boarder unit
 	    draw_set_color(c_red);
 	    x5=xx+1018;y5=yy+827-26;x6=xx+1018+141;y6=yy+805-26;
 	    draw_set_alpha(1);draw_rectangle(x5,y5,x6,y6,1);
@@ -1274,10 +1473,6 @@ function scr_ui_manage() {
 	    draw_set_halign(fa_center);draw_set_alpha(1);
 	    draw_text_transformed(xx+1084,yy+807-26,string_hash_to_newline("Set Boarder"),1,1,0);
 	    draw_set_halign(fa_left);draw_set_color(c_gray);
-    
-    
-    
-    
     
 	    /*if (scr_hit(x5,y5,x6,y6)=true) and (mouse_left>=1) and (cooldown<=0){
 	        var bionics_before,bionics_after,p,cah;
@@ -1297,43 +1492,32 @@ function scr_ui_manage() {
 	        }
         
 	    }*/
-    
-    
 	    scr_scrollbar(974,172,1005,790,34,man_max,man_current);
 	}
+	
+	// Load to ships
+	if (menu=30) and (managing>0){
 
+	    var bb="", img=0;
+	    var xx=__view_get( e__VW.XView, 0 )+0;
+	    var yy=__view_get( e__VW.YView, 0 )+0;
 
-	// 
-
-
-
-
-
-
-
-
-
-	if (menu=30) and (managing>0){// Load to ships
-	    var xx, yy, bb, img;
-	    bb="";img=0;
-	    xx=__view_get( e__VW.XView, 0 )+0;
-	    yy=__view_get( e__VW.YView, 0 )+0;
-
-	    // BG
+	    // Draw BG
 	    draw_set_alpha(1);
 	    draw_sprite(spr_rock_bg,0,xx,yy);
 	    draw_set_font(fnt_40k_30b);
 	    draw_set_halign(fa_center);
 	    draw_set_color(c_gray);// 38144
-	    // Title
+		
+	    // Draw Title
 	    var c,fx;c=0;fx="";
 	    if (managing<=10) then c=managing;
 	    if (managing>20) then c=managing-10;
     
-	    if (managing=1) then fx="1st Company";
-	    if (managing=2) then fx="2nd Company";
-	    if (managing=3) then fx="3rd Company";
-	    if ((managing>=4) and (managing<11)) or (managing>20) then fx=string(c)+"th Company";
+		// Draw companies
+	    if (managing >= 1) and (managing <=10) {
+			fx= romanNumerals[managing - 1] + " Company";
+		}
     
 	    if (managing=11) then fx="Headquarters";
 	    if (managing=12) then fx="Apothecarion";
@@ -1350,7 +1534,7 @@ function scr_ui_manage() {
 	    draw_sprite_ext(spr_arrow,0,xx+25,yy+70,2,2,0,c_white,1);// Back
     
     
-	    var top,sel,temp1,temp2,temp3,temp4,temp5;temp1="";temp2="";temp3="";temp4="";temp5="";
+	    var top, sel, temp1="", temp2="", temp3="", temp4="", temp5="";
 	    top=ship_current;
 	    sel=top;
     
@@ -1358,7 +1542,8 @@ function scr_ui_manage() {
 	    draw_set_halign(fa_left);
 	    yy+=77;
     
-	    repeat(min(ship_max,ship_see)){
+		var repetitions=min(ship_max,ship_see)
+	    for(var i=0; i<repetitions; i++){
 	        if (sh_name[sel]!=""){
 	            temp1=string(sh_name[sel])+" ("+string(sh_class[sel])+")";
 	            temp2=string(sh_loc[sel]);
@@ -1368,7 +1553,8 @@ function scr_ui_manage() {
         
 	        draw_set_color(c_black);draw_rectangle(xx+25,yy+64,xx+974,yy+85,0);
 	        draw_set_color(c_gray);draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);
-	        draw_text_transformed(xx+27,yy+66,string_hash_to_newline(string(temp1)),1,1,0);draw_text_transformed(xx+27.5,yy+66.5,string_hash_to_newline(string(temp1)),1,1,0);
+	        draw_text_transformed(xx+27,yy+66,string_hash_to_newline(string(temp1)),1,1,0);
+			draw_text_transformed(xx+27.5,yy+66.5,string_hash_to_newline(string(temp1)),1,1,0);
 	        draw_text_transformed(xx+364,yy+66,string_hash_to_newline(string(temp2)),1,1,0);
 	        draw_text_transformed(xx+580,yy+66,string_hash_to_newline(string(temp3)),1,1,0);
 	        draw_text_transformed(xx+730,yy+66,string_hash_to_newline(string(temp4)),1,1,0);
@@ -1393,6 +1579,7 @@ function scr_ui_manage() {
 	    draw_set_font(fnt_menu);
 	    draw_set_halign(fa_center);*/
     
+		// Load to selected
 	    draw_set_font(fnt_40k_14b);
 	    draw_text_transformed(xx+320,yy+402,string_hash_to_newline("Click a Ship to Load Selection (Req. "+string(man_size)+" Space)"),1,1,0);
     
