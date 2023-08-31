@@ -133,7 +133,9 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 	            obj_ini.wep1[target_company,good]="Hellgun";obj_ini.wep2[target_company,good]="";
 	            obj_ini.armor[target_company,good]="Skitarii Armour";obj_ini.experience[target_company,good]=10;
 	            obj_ini.hp[target_company,good]=40;
-	            obj_ini.race[target_company,good]=3;break;
+	            obj_ini.race[target_company,good]=3;
+				obj_ini.TTRPG[target_company, good] = new TTRPG_stats("mechanicus", target_company, good, "skitarii");
+				break;
 	        case "Techpriest":
 	            obj_ini.wep1[target_company,good]="Power Weapon";obj_ini.wep2[target_company,good]="Conversion Beam Projector";
 	            obj_ini.armor[target_company,good]="Dragon Scales";obj_ini.gear[target_company,good]="Servo Arms";obj_ini.experience[target_company,good]=100;

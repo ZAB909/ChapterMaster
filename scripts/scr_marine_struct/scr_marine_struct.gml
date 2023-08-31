@@ -1,30 +1,62 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
-	if (class == "marine"){
-		company = comp;
-		marine_number = mar;
-		alligence =faction;
-		if (faction ="chapter"){
-			alligence = global.chapter_name;
-		}
-		if (instance_exists(obj_controller)){
-			role_history = [[obj_ini.role[company,marine_number], obj_controller.turn]]; //marines_promotion and demotion history
-			marine_ascension = obj_controller.turn; // on what day did turn did this marine begin to exist
-		} else {
-			role_history = [[obj_ini.role[company,marine_number], "pre_game"]];
-			marine_ascension = "pre_game"; // on what day did turn did this marine begin to exist
 
+
+trait_list = {
+	"very_hard_to_kill":{
+		constitution:10,
+		luck:2,
+	},
+	"paragon":{
+		constitution:6,
+		luck:2,
+		strength:2,
+		dexterity:2,
+		intelligence:2,
+	}
+}
+function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
+	traits = [];
+	company = comp;
+	marine_number = mar;
+	alligence =faction;
+	static add_trait = function(trait){
+			var selec_trait = trait_list[trait];
+			constitution += selec_trait.constitution;
+			luck += selec_trait.luck;
+			array_push(traits, "very_hard_to_kill");
+		}	
+	switch class{
+		case "marine":
+			if (faction ="chapter"){
+				alligence = global.chapter_name;
+			}
+			if (instance_exists(obj_controller)){
+				role_history = [[obj_ini.role[company,marine_number], obj_controller.turn]]; //marines_promotion and demotion history
+				marine_ascension = obj_controller.turn; // on what day did turn did this marine begin to exist
+			} else {
+				role_history = [[obj_ini.role[company,marine_number], "pre_game"]];
+				marine_ascension = "pre_game"; // on what day did turn did this marine begin to exist
+
+			}
+			strength = 5;
+			constitution = 10;
+			dexterity = 5;
+			intelligence = 5;
+			wisdom = 5;
+			charisma = 5;
+			religion = "Imperial Cult";
+			piety = 5;
+			luck = 5;
+			skills= {weapons:{"bolter":3, "chainsword":3}};
+			if (irandom(100)>99){
+				 add_trait("very_hard_to_kill");	
+			};
+			if (irandom(1000)>999){
+				 add_trait("paragon");	
+			};			
+		
 		}
-		weapon_skills = {"bolter":3, "chainsword":3};
-		strength = 5;
-		constitution = 5;
-		dexterity = 5;
-		intelligence = 5;
-		wisdom = 5;
-		charisma = 5;
-		religion = "Imperial Cult";
-		piety = 5;
 		static experience =  function(){return obj_ini.experience[company,marine_number];}//get exp
 		static update_exp = function(new_val){obj_ini.experience[company,marine_number] =new_val}//change exp
 		static bionics = function(){return obj_ini.bio[company,marine_number];}// get marine bionics count
@@ -32,7 +64,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		static age = function(){return obj_ini.age[company,marine_number];}// age
 		static update_age = function(new_val){obj_ini.age[company,marine_number] = new_val;}		
 		static name = function(){return obj_ini.name[company,marine_number];}// get marine name
-
+				
+		max_health = 100 * (1+((constitution - 10)*0.05));
+		static increase_max_health(increase){
+			max_health += (increase*(1+((constitution - 10)*0.05)));
+		}
 		static hp = function(){ 
 			return obj_ini.hp[company,marine_number]
 		};
@@ -40,6 +76,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
        static update_health = function(new_health){
             obj_ini.hp[company,marine_number] = new_health;
 	   };
+	   update_health(max_health);
 		static weapon_one = function(){ 
 			return obj_ini.wep1[company,marine_number];
 		};
@@ -144,7 +181,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			 }
 		}
 	   
-	}
 	static load_json_data = function(data){
 		 var names = variable_struct_get_names(data);
 		 for (var i = 0; i < array_length(names); i++) {
