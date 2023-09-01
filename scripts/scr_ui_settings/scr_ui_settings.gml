@@ -262,7 +262,8 @@ function scr_ui_settings() {
 
 	if (menu=23){
 	    if (settings>0){
-	        var co=100,ide=settings;
+	        var co=100;
+			var ide=settings;
         
 	        draw_sprite_ext(spr_arrow,0,xx+25,yy+70,2,2,0,c_white,1);// Back
 	        if (scr_hit(xx+25,yy+70,xx+25+64,yy+70+64)=true) and (mouse_left=1) and (cooldown<=0){
@@ -813,15 +814,15 @@ function scr_ui_settings() {
 		xxx=xx+936;
 		yyy=yy+250-31;
 		
-	    for (ide=0; ide < 11; ide++){
+	    for (var ides=0; ides < 11; ides++){
 	        draw_set_alpha(1);
 	        // if (custom<2) then draw_set_alpha(0.5);
 	        yyy+=31;draw_set_color(c_gray);draw_rectangle(xxx,yyy,xxx+289,yyy+20,0);
 	        draw_set_color(0);
         
 	        var shw="";
-	        if (ide=0) then shw="Headquarters";
-	        if (ide>0) then shw=romanNumerals[ide - 1] + " Company";
+	        if (ides=0) then shw="Headquarters";
+	        if (ides>0) then shw=romanNumerals[ides - 1] + " Company";
 	        draw_text(xxx,yyy,string(shw));
         
 	        if (scr_hit(xxx,yyy,xxx+289,yyy+20)=true){/*if (custom=2) then draw_set_alpha(0.2);if (custom<2) then */
@@ -831,7 +832,7 @@ function scr_ui_settings() {
 	            draw_set_alpha(1);
 	            tool1=string(shw)+" Settings";
 				tool2="Click to open the settings for this company.";
-	            // if (mouse_left>=1) and (cooldown<=0){settings=ide;menu=22;cooldown=8000;}
+	            // if (mouse_left>=1) and (cooldown<=0){settings=ides;menu=22;cooldown=8000;}
 	        }
 	    }
     
