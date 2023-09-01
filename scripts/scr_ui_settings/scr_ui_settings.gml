@@ -264,7 +264,8 @@ function scr_ui_settings() {
 	if (menu=23){
 	    if (settings>0){
 	        var co=100;
-			var ide=settings;
+			var ide;
+			ide=settings;
         
 	        draw_sprite_ext(spr_arrow,0,xx+25,yy+70,2,2,0,c_white,1);// Back
 	        if (scr_hit(xx+25,yy+70,xx+25+64,yy+70+64)=true) and (mouse_left=1) and (cooldown<=0){
@@ -768,6 +769,7 @@ function scr_ui_settings() {
     
 	    // Role Settings
 	    var ide,xxx,yyy;
+		ide=0;
 		xxx=xx+1277;yyy=yy+250-31;
     
 	    for (var derpaderp = 0; derpaderp < 14; derpaderp++){

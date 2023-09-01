@@ -938,14 +938,14 @@ function scr_ui_advisors() {
 		artif_descr="";
 		tp=0;
 		
+		if (artifacts=0) then artif="no unused artifacts.";
+	    if (artifacts=1) then artif="one unused artifact.";
+	    if (artifacts>1) then artif=string(artifacts)+" unused artifacts.";
+		
 		// Greetings message
 		if (menu_adept=0) then draw_text_ext(xx+336+16,yy+130,string_hash_to_newline("Chapter Master "+string(obj_ini.name[0,1])+", greetings.#I assume you've come for the report?  The Chapter currently possesses "+string(temp[36])+" Epistolaries, "+string(temp[37])+" Codiceries, and "+string(temp[38])+" Lexicanum.  We are working to identify additional warp-sensitive brothers before they cause harm, and the training is "+string(blurp)+".##We could likely speed up the identification and application of appropriate training, but we would need more resources...I don't suppose we can spare some?##Our Chapter has "+string(artif)),-1,536);
 	    if (menu_adept=1) then draw_text_ext(xx+336+16,yy+130,string_hash_to_newline("Your Chapter contains "+string(temp[36])+" "+string(obj_ini.role[100,17])+"s, "+string(temp[37])+" Codiceries, and "+string(temp[38])+" Lexicanum.##Training of more "+string(obj_ini.role[100,17])+"s is "+string(blurp)+".##Your chapter has "+string(artif)),-1,536);
-    
-	    if (artifacts=0) then artif="no unused artifacts.";
-	    if (artifacts=1) then artif="one unused artifact.";
-	    if (artifacts>1) then artif=string(artifacts)+" unused artifacts.";
-    
+
 	    draw_set_color(881503);
 	    draw_set_halign(fa_center);
     
@@ -1447,15 +1447,15 @@ function scr_ui_advisors() {
 	        if (recruits=1) then blurp+="Our Chapter currently has one recruit being trained.  The Neophyte's name is "+string(recruit_name[1])+" and they are scheduled to become a battle brother in "+string(recruit_training[1]+recruit_distance[1])+" months' time.  ";
 	        if (recruits>1) then blurp+="Our Chapter currently has "+string(recruits)+" recruits being trained.  "+string(recruit_name[1])+" is the next scheduled Neophyte to become a battle brother in "+string(recruit_training[1]+recruit_distance[1])+" months' time.  ";
 	        if (gene_seed>0){
-	            if (recruiting=0) and (marines>=1000) then blurp+="##Recruitment"+recruitment_rates[recuiting]+".  You must only give me the word and I can begin further increasing our numbers... though this would violate the Codex Astartes.  ";
-	            if (recruiting=0) and (marines<1000) then blurp+="##Recruitment "+recruitment_rates[recuiting]+".  You must only give me the word and I can begin further increasing our numbers.  ";
+	            if (recruiting=0) and (marines>=1000) then blurp+="##Recruitment"+recruitment_rates[recruiting]+".  You must only give me the word and I can begin further increasing our numbers... though this would violate the Codex Astartes.  ";
+	            if (recruiting=0) and (marines<1000) then blurp+="##Recruitment "+recruitment_rates[recruiting]+".  You must only give me the word and I can begin further increasing our numbers.  ";
                 
-	            if (recruiting=1) then blurp+="##Recruitment "+recruitment_rates[recuiting]+".  With an increase of funding I could vastly increase the rate.  ";
-	            if (recruiting=2) then blurp+="##Recruitment "+recruitment_rates[recuiting]+".  With an increase of funding I could vastly increase the rate.  ";
-	            if (recruiting=3) then blurp+="##Recruitment "+recruitment_rates[recuiting]+"  ";
-	            if (recruiting=4) then blurp+="##Recruitment "+recruitment_rates[recuiting]+"- give me the word when we have enough Neophytes being trained.  ";
-	            if (recruiting=5) then blurp+="##Recruitment "+recruitment_rates[recuiting]+"- give me the word when we have enough Neophytes being trained.  ";
-				if (recruiting=6) then blurp+="##Recruitment "+recruitment_rates[recuiting]+"- give me the word when we have enough Neophytes being trained.  ";
+	            if (recruiting=1) then blurp+="##Recruitment "+recruitment_rates[recruiting]+".  With an increase of funding I could vastly increase the rate.  ";
+	            if (recruiting=2) then blurp+="##Recruitment "+recruitment_rates[recruiting]+".  With an increase of funding I could vastly increase the rate.  ";
+	            if (recruiting=3) then blurp+="##Recruitment "+recruitment_rates[recruiting]+"  ";
+	            if (recruiting=4) then blurp+="##Recruitment "+recruitment_rates[recruiting]+"- give me the word when we have enough Neophytes being trained.  ";
+	            if (recruiting=5) then blurp+="##Recruitment "+recruitment_rates[recruiting]+"- give me the word when we have enough Neophytes being trained.  ";
+				if (recruiting=6) then blurp+="##Recruitment "+recruitment_rates[recruiting]+"- give me the word when we have enough Neophytes being trained.  ";
 	        }
 	    }
     
