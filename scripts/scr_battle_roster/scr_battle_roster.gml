@@ -103,7 +103,6 @@ function scr_battle_roster(_unit_location, _target_location, _is_planet) {
 				// Start adding unit to battle
 		        if (okay>=1){
 					var man_size = 1;
-					show_debug_message("marine {0},{1}, {2},{3}", company, v, deploying_unit.name[company, v],deploying_unit.loc[company, v])
 						
 					//Same as co/company and v, but with extra comprovations in case of a meeting (meeting?) 
 		            var cooh,va;

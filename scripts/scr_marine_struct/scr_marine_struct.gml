@@ -362,13 +362,14 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		static load_marine =function(ship){
 			 get_unit_size(); // make sure marines size given it's current equipment is correct
 			 var current_location = marine_location();
-			 show_debug_message("{0},{1}", current_location,  obj_ini.ship_location[ship]);
 			 var system = current_location[2];
+			 var ship_location= obj_ini.ship_location[ship]
+			 if (ship_location == "home" ){ship_location = obj_ini.home_name}
 			
 			 if (current_location[0] == "planet"){//if marine is on a planet
-				  if (current_location[2] == obj_ini.home_name){system = "home"}
+				  if (current_location[2] == "home" ){system = obj_ini.home_name}
 				 //check if ship is in the same location as marine and has enough space;
-				 if ( obj_ini.ship_location[ship] == system) and ((obj_ini.ship_carrying[ship] + size) <= obj_ini.ship_capacity[ship]){
+				 if (ship_location == system) and ((obj_ini.ship_carrying[ship] + size) <= obj_ini.ship_capacity[ship]){
 					 obj_ini.wid[company,marine_number] = 0; //mark marine as no longer on planet
 					 obj_ini.lid[company,marine_number] = ship; //id of ship marine is now loaded on
 					 obj_ini.ship_carrying[ship] += size; //update ship capacity
