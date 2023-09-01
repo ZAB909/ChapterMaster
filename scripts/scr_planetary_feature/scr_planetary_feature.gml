@@ -167,7 +167,7 @@ function new_planet_feature(feature_type) constructor{
 		Warboss = "alive"
 		kill_warboss = function(){
 			f_type = P_features.Victory_Shrine
-			planet_display= $"{faction_leader[7]} Death Place";
+			planet_display= $"{obj_controller.faction_leader[7]} Death Place";
 			Warboss = "dead";
 		}
 		break;

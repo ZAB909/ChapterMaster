@@ -144,7 +144,7 @@ function scr_apothecary_ship() {
 						 if (unit.hp()>unit.max_health) then unit.update_health(unit.max_health);
 	            }
 	            }
-	        }
+	      
 	    }
     
     
