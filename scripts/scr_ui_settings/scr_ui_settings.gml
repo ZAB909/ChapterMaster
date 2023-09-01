@@ -292,7 +292,7 @@ function scr_ui_settings() {
 			draw_set_font(fnt_40k_14b);
 			draw_set_halign(fa_right);
         
-	        var x5,y5,title,geh,tab;
+	        var title,geh,tab;
 			title="";
 			geh="";
 			spacing=22;
