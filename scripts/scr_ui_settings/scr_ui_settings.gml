@@ -817,7 +817,7 @@ function scr_ui_settings() {
 		xxx=xx+936;
 		yyy=yy+250-31;
 		
-	    for (var ides=1; ides<=11; ides++){
+	    for (var ides=0; ides<=10; ides++){
 	        draw_set_alpha(1);
 	        // if (custom<2) then draw_set_alpha(0.5);
 	        yyy+=31;draw_set_color(c_gray);draw_rectangle(xxx,yyy,xxx+289,yyy+20,0);
