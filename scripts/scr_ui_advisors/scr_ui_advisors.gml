@@ -95,11 +95,10 @@ function scr_ui_advisors() {
     
 	    draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
     
-	    var cn;
-		cn=obj_controller;
+	    var cn=obj_controller;
     
 	    if (instance_exists(cn)){
-	        for (var i = ship_current; i < ship_current + 34; i++) {
+	        for (var i=ship_current;i<ship_current+34;i++) {
 	            if (obj_ini.ship[i]!=""){
 	                draw_rectangle(xx+950,yy+80+(i*20),xx+1546,yy+100+(i*20),1);
 	                draw_sprite(spr_view_small,0,xx+953,yy+84+(i*20));
@@ -266,7 +265,7 @@ function scr_ui_advisors() {
 	    draw_text_ext(xx+336+16,yy+477,string_hash_to_newline(string(blurp2)),-1,536);
 
 		var g = 0;
-	    for (var i = 0; i < 120 && g < 10; i++) {
+	    for (var i=1;i<=120 && g<10;i++) {
     		if (obj_ini.slave_batch_num[g] > 0) {
 				g++;
 	            draw_text(xx+336+16,yy+513+(g*20),string_hash_to_newline("Batch "+string(g)));
@@ -389,7 +388,7 @@ function scr_ui_advisors() {
 				behav=0;
 				r_eta=0;
 
-	            for(var qp= 0; qp < min(36,penitorium); qp++){
+	            for(var qp= 1; qp <= min(36,penitorium); qp++){
 	                if (obj_ini.chaos[penit_co[qp],penit_id[qp]]>0) then r_eta=round((obj_ini.chaos[penit_co[qp],penit_id[qp]]*obj_ini.chaos[penit_co[qp],penit_id[qp]])/50);
 	                if (obj_ini.chaos[penit_co[qp],penit_id[qp]]>=90) then r_eta="Never";
 	                if (obj_ini.chaos[penit_co[qp],penit_id[qp]]<=0) then r_eta="0";
@@ -970,7 +969,7 @@ function scr_ui_advisors() {
 	    if (instance_exists(obj_p_fleet)){
 	        with(obj_p_fleet){
 	            var good=0;
-	            for (var i=0; i<20; i++){
+	            for (var i=1; i<=20; i++){
 	                if (i<=9){if (capital_num[i]=obj_ini.artifact_sid[other.menu_artifact]-500) then good=1;}
 	                if (frigate_num[i]=obj_ini.artifact_sid[other.menu_artifact]-500) then good=1;
 	                if (escort_num[i]=obj_ini.artifact_sid[other.menu_artifact]-500) then good=1;
@@ -981,7 +980,7 @@ function scr_ui_advisors() {
 	    }
 	    if (obj_ini.artifact[menu_artifact]!=""){
 	        if (obj_ini.artifact_sid[menu_artifact]>=500){
-				for(var i=0; i<30; i++)
+				for(var i=1; i=<30; i++)
 				if (obj_ini.ship[i]=obj_ini.artifact_loc[menu_artifact]) then tp=i;
 			}
 		}
@@ -1665,7 +1664,7 @@ function scr_ui_advisors() {
         
 	        var t_eta;
 			t_eta=0;
-	        for (var qp=0, n=0; qp<300 && n<36; qp++) {
+	        for (var qp=1, n=0; qp<=300 && n<36; qp++) {
     			if (recruit_name[qp] != "") {
         			n++;
 	                draw_rectangle(xx+947,yy+100+((n-1)*20),xx+1577,yy+100+(n*20),1);

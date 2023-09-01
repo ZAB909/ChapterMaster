@@ -81,12 +81,10 @@ function scr_management(argument0) {
 			}
 	    }
 
-		for(var i = 0; i < 50; i++) {
+		for(var i=1;i=<50;i++) {
 			num[i] = 0;
 			nam[i] = "";
 		}
-		
-		
 		
 	    // ****** MAIN PANEL ******
 	    company=0;
@@ -160,8 +158,6 @@ function scr_management(argument0) {
 		}
 	    // if (num[4]>0){q+=1;obj_managment_panel.line[q]=string(num[4])+"x "+string(nam[4]);}
 	    instance_activate_object(obj_managment_panel);
-    
-	
 	
 	    // ** Reclusium **
 		q=0;
@@ -268,14 +264,12 @@ function scr_management(argument0) {
 		}
 		
 	    instance_activate_object(obj_managment_panel);
-    
-	
 	
 	    // ** Librarium **
 		q=0;
 	    company=0;
 		obj_controller.temp[71]=13;
-	    for (var i = 0; i < 50; i++) {
+	    for (var i=0;i<50;i++) {
 			num[i] = 0;
 			nam[i] = "";
 		}
@@ -330,15 +324,14 @@ function scr_management(argument0) {
 		}
 		
 	    instance_activate_object(obj_managment_panel);
-    
 	    
 		// ** Marines and vehicles per company and HQ by ranks **
 		
-	    for (company = 1; company <= obj_ini.companies; company++){
+	    for (company=1;company<=obj_ini.companies;company++){
 	        q=0;
 			obj_controller.temp[71]=company;
 			
-	        for (var i = 0; i < 50; i++) {
+	        for (var i=0;i<50;i++) {
 				num[i] = 0;
 				nam[i] = "";
 			}
@@ -366,7 +359,7 @@ function scr_management(argument0) {
 	        nam[20]="Land Speeder";
 	        nam[21]="Whirlwind";
         
-	        for (var i = 1; i <= 300; i++) {
+	        for (var i=1;i<=300;i++) {
 	            if (obj_ini.role[company,i]=obj_ini.role[100,5]) then num[1]+=1;
 	            if (obj_ini.role[company,i]=obj_ini.role[100,14]) then num[2]+=1;
 				// Space Wolves exception
@@ -399,7 +392,7 @@ function scr_management(argument0) {
 	        with(obj_managment_panel){if (manage!=obj_controller.temp[71]) then instance_deactivate_object(id);}
 			
 	        q=0;
-			for (var d = 1; d <= 21; d++) {
+			for (var d=1;d<=21;d++) {
 				if (num[d] > 0) {
 					q += 1;
 					obj_managment_panel.line[q] = string(num[d]) + "x " + string(nam[d]);

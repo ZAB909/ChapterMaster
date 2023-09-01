@@ -14,6 +14,7 @@ function scr_add_man(argument0, argument1, argument2, argument3, argument4, argu
 
 	// That should be sufficient to add stuff in a highly modifiable fashion
 
+	// TODO refactor repeats
 
 	var i,good, wep1, wep2, gear, mobi, arm, e, missing;
 	i=0;e=0;good=0;wep1="";wep2="";gear="";mobi="";arm="";missing=0;
@@ -290,7 +291,7 @@ function scr_add_man(argument0, argument1, argument2, argument3, argument4, argu
 	        if (argument3=obj_ini.role[100,12]) and (argument7>=13) then obj_ini.god[argument1,good]=2;// Khorne!!!1 XDDDDDDD
         
 	        if (missing=1) and (argument0="Scout"){
-	            if (string_count("has joined the 10th Company",obj_turn_end.alert_text[obj_turn_end.alerts])=1){
+	            if (string_count("has joined the X Company",obj_turn_end.alert_text[obj_turn_end.alerts])=1){
 	               scr_alert("red","recruiting","Not enough "+string(obj_ini.role[100,12])+" equipment in the armoury!",0,0);
 	            }
 	        }

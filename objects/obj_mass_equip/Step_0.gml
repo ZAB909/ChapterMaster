@@ -1,14 +1,16 @@
 
 if (obj_controller.settings=0) or (obj_controller.menu!=23) then instance_destroy();
 
-var romanNumerals= scr_roman_numerals();
+var romanNumerals;
+romanNumerals= scr_roman_numerals();
 
 if (engage=true){
-    for(var co=0; co<11; co++){
+    for(var co=1; co<=11; co++){
+        var i=0;
         if (role_number[co]>0){
-			for(i=0; i<300; i++){
+			for(i=1; i<=300; i++){
                 if (obj_ini.role[co,i]=obj_ini.role[100,role]){
-                    // ** Start Armor **
+                    // ** Start Armour **
                     var yes=false,done="";
 					
                     if (req_armour="Power Armour"){
@@ -155,8 +157,8 @@ if (engage=true){
 if (refresh=true) and (obj_controller.settings>0){
     total_role_number=0;
 	total_roles="";
-	for(var i=0; i<11; i++){role_number[i]=0;}
-	for(var i=0; i<61; i++){
+	for(var i=1; i<=11; i++){role_number[i]=0;}
+	for(var i=1; i<=61; i++){
 		arm[i]="";
 		arm_n[i]=0;
 		mob[i]="";
@@ -201,8 +203,8 @@ if (refresh=true) and (obj_controller.settings>0){
     req_gear=obj_ini.gear[100,role];
     req_mobi=obj_ini.mobi[100,role];
 	
-	for(var co=0; co<11; co++){
-		for(var i=0; i<300; i++){
+	for(var co=1; co<11; co++){
+		for(var i=1; i<=300; i++){
             if (obj_ini.role[co,i]=obj_ini.role[100,role]){
                 role_number[co]+=1;
                 
@@ -270,21 +272,23 @@ if (refresh=true) and (obj_controller.settings>0){
                 var hue=0,hue2=0;
                 
                 if (obj_ini.wep1[co,i]!=""){
-					hue=0;hue2=0;
-					for(hue=0;hue<60;hue++){
+					hue=0;
+                    hue2=0;
+					for(hue=1;hue<=60;hue++){
 						if (hue2=0){
 							if (we1[hue]=obj_ini.wep1[co,i]){
-								hue2=-5;we1_n[hue]+=1;
+								hue2=-5;
+                                we1_n[hue]+=1;
 							}
 						}
 					}
                     if (hue2=0){
-						for(hue=0; hue<30;hue++){
+						for(hue=0; hue<30; hue++){
 							if (hue2=0){
-								if (we1[hue]=""){
+								if (we1[hue+1]=""){
 									hue2=-5;
-									we1[hue]=obj_ini.wep1[co,i];
-									we1_n[hue]=1;
+									we1[hue+1]=obj_ini.wep1[co,i];
+									we1_n[hue+1]=1;
 								}
 							}
 						}
@@ -293,7 +297,7 @@ if (refresh=true) and (obj_controller.settings>0){
                 hue2=0;
                 if (obj_ini.wep2[co,i]!=""){
 					hue2=0;
-					for(hue=0;hue<60;hue++){
+					for(hue=1;hue<=60;hue++){
 						if (hue2=0){
 							if (we2[hue]=obj_ini.wep2[co,i]){
 								hue2=-5;
@@ -304,9 +308,9 @@ if (refresh=true) and (obj_controller.settings>0){
                     if (hue2=0){
 						for(hue=0;hue<30;hue++){
 							if (hue2=0){
-								if (we2[hue]=""){
-									hue2=-5;we2[hue]=obj_ini.wep2[co,i];
-									we2_n[hue]=1;
+								if (we2[hue+1]=""){
+									hue2=-5;we2[hue+1]=obj_ini.wep2[co,i];
+									we2_n[hue+1]=1;
 								}
 							}
 						}
@@ -315,7 +319,7 @@ if (refresh=true) and (obj_controller.settings>0){
                 hue2=0;
                 if (obj_ini.armour[co,i]!=""){
 					hue2=0;
-					for(hue=0; hue<60; hue++){
+					for(hue=1; hue<=60; hue++){
 						if (hue2=0){
 							if (arm[hue]=obj_ini.armour[co,i]){
 								hue2=-5;
@@ -326,10 +330,10 @@ if (refresh=true) and (obj_controller.settings>0){
                     if (hue2=0){
 						for(hue=0;hue<30;hue++){
 							if (hue2=0){
-								if (arm[hue]=""){
+								if (arm[hue+1]=""){
 									hue2=-5;
-									arm[hue]=obj_ini.armour[co,i];
-									arm_n[hue]=1;
+									arm[hue+1]=obj_ini.armour[co,i];
+									arm_n[hue+1]=1;
 								}
 							}
 						}
@@ -338,7 +342,7 @@ if (refresh=true) and (obj_controller.settings>0){
                 hue2=0;
                 if (obj_ini.gear[co,i]!=""){
 					hue2=0;
-					for(hue=0;hue<60;hue++){
+					for(hue=1; hue<=60; hue++){
 						if (hue2=0){
 							if (gea[hue]=obj_ini.gear[co,i]){
 								hue2=-5;
@@ -348,12 +352,12 @@ if (refresh=true) and (obj_controller.settings>0){
 					}
                     if (hue2=0){
 						hue=0;
-						for(hue=0;hue<30;hue++){
+						for(hue=0; hue<30; hue++){
 							if (hue2=0){
-								if (gea[hue]=""){
+								if (gea[hue+1]=""){
 									hue2=-5;
-									gea[hue]=obj_ini.gear[co,i];
-									gea_n[hue]=1;
+									gea[hue+1]=obj_ini.gear[co,i];
+									gea_n[hue+1]=1;
 								}
 							}
 						}
@@ -363,7 +367,7 @@ if (refresh=true) and (obj_controller.settings>0){
                 if (obj_ini.mobi[co,i]!=""){
 					hue=0;
 					hue2=0;
-					for(hue=0;hue<60;hue++){
+					for(hue=1;hue<=60;hue++){
 						if (hue2=0){
 							if (mob[hue]=obj_ini.mobi[co,i]){
 								hue2=-5;
@@ -374,10 +378,10 @@ if (refresh=true) and (obj_controller.settings>0){
                     if (hue2=0){
 						for(hue=0; hue<30;hue++){
 							if (hue2=0){
-								if (mob[hue]=""){
+								if (mob[hue+1]=""){
 									hue2=-5;
-									mob[hue]=obj_ini.mobi[co,i];
-									mob_n[hue]=1;
+									mob[hue+1]=obj_ini.mobi[co,i];
+									mob_n[hue+1]=1;
 								}
 							}
 						}
@@ -410,7 +414,7 @@ if (refresh=true) and (obj_controller.settings>0){
     
     total_role_number=0;
 	
-	for(var i=0; i<11; i++){
+	for(var i=1; i<=11; i++){
         if (role_number[i]>0){
             req_wep1_num+=role_number[i];
             req_wep2_num+=role_number[i];
@@ -432,11 +436,11 @@ if (refresh=true) and (obj_controller.settings>0){
     
     // Add up messages
     
-	for(var i=0; i<60;i++){if (we1[i]!="") then wep1_equip+=string(we1_n[i])+"x "+string(we1[i])+", ";}
-    for(var i=0; i<60;i++){if (we2[i]!="") then wep2_equip+=string(we2_n[i])+"x "+string(we2[i])+", ";}
-    for(var i=0; i<60;i++){if (arm[i]!="") then armour_equip+=string(arm_n[i])+"x "+string(arm[i])+", ";}
-    for(var i=0; i<60;i++){if (gea[i]!="") then gear_equip+=string(gea_n[i])+"x "+string(gea[i])+", ";}
-    for(var i=0; i<60;i++){if (mob[i]!="") then mobi_equip+=string(mob_n[i])+"x "+string(mob[i])+", ";}
+	for(var i=1; i<=60;i++){if (we1[i]!="") then wep1_equip+=string(we1_n[i])+"x "+string(we1[i])+", ";}
+    for(var i=1; i<=60;i++){if (we2[i]!="") then wep2_equip+=string(we2_n[i])+"x "+string(we2[i])+", ";}
+    for(var i=1; i<=60;i++){if (arm[i]!="") then armour_equip+=string(arm_n[i])+"x "+string(arm[i])+", ";}
+    for(var i=1; i<=60;i++){if (gea[i]!="") then gear_equip+=string(gea_n[i])+"x "+string(gea[i])+", ";}
+    for(var i=1; i<=60;i++){if (mob[i]!="") then mobi_equip+=string(mob_n[i])+"x "+string(mob[i])+", ";}
     
     all_equip="In total they have equipped "+string(wep1_equip)+string(wep2_equip)+string(armour_equip)+string(gear_equip)+string(mobi_equip);
     all_equip=string_delete(all_equip,string_length(all_equip)+1,3);

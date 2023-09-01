@@ -130,7 +130,7 @@ function scr_ui_manage() {
 	            show_mobi=string_replace(cn.temp[106],"Arti. ","");
             
 	            if (ui_specialist=7) or (ui_specialist=1) or (ui_specialist=111){
-					for(var o=0; o<4; o++){if (obj_ini.adv[o]="Reverent Guardians") then braz=1;}}
+					for(var o=1; o<=4; o++){if (obj_ini.adv[o]="Reverent Guardians") then braz=1;}}
 	            if (show_gear="Psychic Hood") then hood=-50;
             
 	            if (show_gear="Iron Halo") then halo=1;
@@ -311,10 +311,10 @@ function scr_ui_manage() {
                 
 	                if (temp[102]!=""){
 	                    var yep=0;
-						for(var o=0;o<4;o++){if (obj_ini.adv[o]="Slow and Purposeful") then slow=1;}
+						for(var o=1;o<=4;o++){if (obj_ini.adv[o]="Slow and Purposeful") then slow=1;}
 	                    if (ui_specialist=5){
 							yep=0;
-							for(var o=0;o<4;o++){if (obj_ini.adv[o]="Tech-Brothers") then brothers=0;}
+							for(var o=1;o<=4;o++){if (obj_ini.adv[o]="Tech-Brothers") then brothers=0;}
 						}
 	                }
                 
@@ -572,7 +572,7 @@ function scr_ui_manage() {
 	                if (hood>0) and (temp[102]!=""){
 	                    var yep=0;
 						
-						for(var o=0;o<4;o++){if (obj_ini.adv[o]="Daemon Binders") and (blandify=0) then yep=1;}
+						for(var o=1;o<=4;o++){if (obj_ini.adv[o]="Daemon Binders") and (blandify=0) then yep=1;}
 	                    if (yep=0) or (hood>=7){
 	                        if (obj_ini.main_color=obj_ini.secondary_color) then draw_sprite(spr_gear_hood1,hood,xx+1208,yy+178);
 	                        if (obj_ini.main_color!=obj_ini.secondary_color) then draw_sprite(spr_gear_hood3,hood,xx+1208,yy+178);
@@ -596,17 +596,17 @@ function scr_ui_manage() {
 	                    if (obj_ini.progenitor=5) or (global.chapter_name="Blood Angels") then helm_ii=5;
 	                    
 						yep=0;
-						for(var p=0; p<4;p++){
+						for(var p=1; p<=4;p++){
 							if (obj_ini.adv[p]="Tech-Brothers") then yep=1;
 						}
 						if (yep=1) then helm_ii=2;
 	                    yep=0;
-						for(var q=0; q<4;q++){
+						for(var q=1; q<=4;q++){
 							if (obj_ini.dis[q]="Never Forgive") then yep=1;
 						}
 						if (yep=1) or (obj_ini.progenitor=1) then helm_ii=3;
 	                    yep=0;
-						for(var r=0; r<4;r++){
+						for(var r=1; r<=4;r++){
 							if (obj_ini.adv[r]="Reverent Guardians") then yep=1;
 						}
 						if (yep=1) then helm_ii=4;

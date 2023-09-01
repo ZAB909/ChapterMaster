@@ -16,7 +16,7 @@ function scr_company_view(argument0) {
 	// mans: number of mans that a hit has gotten
 	// Calculates the temporary variables to be displayed as marines in the individual company screens
 
-	for (var i = 0; i < 499; i++){
+	for (var i = 1; i <= 499; i++){
 	    man[i]="";
 		ide[i]=0;
 		man_sel[i]=0;
@@ -47,7 +47,7 @@ function scr_company_view(argument0) {
 	sel_uni[1]="Command";
 
 	// This sets up the mans, but not the vehicles
-	for (var v = 0; v < 499; v++){
+	for (var v = 1; v <= 499; v++){
 		bad=0;
 
 	    if (argument0>=0) and (argument0<=10){company=argument0;
@@ -80,7 +80,7 @@ function scr_company_view(argument0) {
 	                 and (ma_role[v]!=obj_ini.role[100,5]) and (ma_role[v]!="Standard Bearer")
 	                 and (ma_role[v]!="Company Champion")
 	                {
-	                    for (var j=-1; j<=20;j++) {
+	                    for (var j=0; j<=20;j++) {
 							if (sel_uni[j] == "" && op == 0) then op = j;
 							if (sel_uni[j] == ma_role[v]) then go = 1;
 						}
@@ -91,7 +91,7 @@ function scr_company_view(argument0) {
 					op=0;
 					
 	                if (man[v]="vehicle"){
-	                    for (var j=-1; j<=20;j++) {
+	                    for (var j=0; j<=20;j++) {
 	                        if (sel_veh[j]="") and (op=0) then op=j;
 	                        if (sel_veh[j]=ma_role[v]) then go=1;
 	                    }
@@ -258,7 +258,7 @@ function scr_company_view(argument0) {
 	var v=last_man;
 	last_vehicle=0;
 
-	for (var i = 0; i < 100; i++){
+	for (var i=1;i<=100;i++){
 	// if (!instance_exists(obj_popup)) then repeat(100){// 100
 		bad=0;
 
@@ -295,7 +295,7 @@ function scr_company_view(argument0) {
 	                // Select All Setup
 	                var go=0,op=0;
 	                if (man[v]="vehicle"){
-	                    for (var p = 0; p < 20; p++){
+	                    for (var p=1;p<=20;p++){
 	                        if (sel_veh[p]="") and (op=0) then op=p;
 	                        if (sel_veh[p]=ma_role[v]) then go=1;
 	                    }

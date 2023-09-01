@@ -303,7 +303,7 @@ function scr_ui_settings() {
 	        x5=xx+830;
 			y5=yy+207-spacing;
         
-	        for (var gg = 0; gg < 5; gg++){
+	        for (var gg=1; gg<=5; gg++){
 	            y5+=spacing;
 	            if (gg=1){
 					title="Main Weapon: ";
@@ -772,7 +772,7 @@ function scr_ui_settings() {
 		ide=0;
 		xxx=xx+1277;yyy=yy+250-31;
     
-	    for (var derpaderp = 0; derpaderp < 14; derpaderp++){
+	    for (var derpaderp=1; derpaderp<=14; derpaderp++){
 	        if (derpaderp=1) then ide=15;
 	        if (derpaderp=2) then ide=14;
 	        if (derpaderp=3) then ide=17;
@@ -817,7 +817,7 @@ function scr_ui_settings() {
 		xxx=xx+936;
 		yyy=yy+250-31;
 		
-	    for (var ides=0; ides < 11; ides++){
+	    for (var ides=1; ides<=11; ides++){
 	        draw_set_alpha(1);
 	        // if (custom<2) then draw_set_alpha(0.5);
 	        yyy+=31;draw_set_color(c_gray);draw_rectangle(xxx,yyy,xxx+289,yyy+20,0);
@@ -842,7 +842,7 @@ function scr_ui_settings() {
 	    xxx=xx+936-341;
 		yyy=yy+250-31;
 
-	    for(var i=0; i<11;i++){
+	    for(var i=1; i<=11;i++){
 	        draw_set_alpha(1);
 	        // if (custom<2) then draw_set_alpha(0.5);
 	        yyy+=31;draw_set_color(c_gray);
