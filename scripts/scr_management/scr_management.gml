@@ -333,11 +333,9 @@ function scr_management(argument0) {
     
 	    
 		// ** Marines and vehicles per company and HQ by ranks **
-		company=0;
 		
-	    repeat(obj_ini.companies){
+	    for (company = 1; company <= obj_ini.companies; company++){
 	        q=0;
-			company+=1;
 			obj_controller.temp[71]=company;
 			
 	        for (var i = 0; i < 50; i++) {
