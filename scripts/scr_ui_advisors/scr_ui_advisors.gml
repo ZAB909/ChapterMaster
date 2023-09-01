@@ -980,10 +980,10 @@ function scr_ui_advisors() {
 	    }
 	    if (obj_ini.artifact[menu_artifact]!=""){
 	        if (obj_ini.artifact_sid[menu_artifact]>=500){
-				for(var i=1; i=<30; i++)
-				if (obj_ini.ship[i]=obj_ini.artifact_loc[menu_artifact]) then tp=i;
+				for(var i=1; i<=30; i++){
+					if (obj_ini.ship[i]=obj_ini.artifact_loc[menu_artifact]) then tp=i;
+				}
 			}
-		}
 	        if (obj_ini.artifact_identified[menu_artifact]>0) and (identifiable=0){
 				draw_set_color(881503);
 	            if (obj_ini.artifact_sid[menu_artifact]>=500) then artif_descr="This artifact is an unidentified "+string(obj_ini.artifact[menu_artifact])+".#It is stored on the ship ‘"+string(obj_ini.ship[tp])+"’.#To be identified it must be brought to a fleet with a Battle Barge or your Homeworld.";
@@ -1081,8 +1081,9 @@ function scr_ui_advisors() {
 			draw_text_ext(xx+622,yy+648+spack,string_hash_to_newline(string(tip2)),-1,430);        
 	    
 	    // identifiable=0;
+		}
 	}
-
+	
 	// ** Armamentarium **
 	if (menu=14){                               
 	    draw_sprite(spr_rock_bg,0,xx,yy);

@@ -81,7 +81,7 @@ function scr_management(argument0) {
 			}
 	    }
 
-		for(var i=1;i=<50;i++) {
+		for(var i=1;i<=50;i++) {
 			num[i] = 0;
 			nam[i] = "";
 		}
