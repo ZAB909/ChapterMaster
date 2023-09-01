@@ -1,17 +1,6 @@
 function scr_ui_manage() {
 	
-	var romanNumerals=[
-			"I",
-			"II",
-			"III", 
-			"IV", 
-			"V", 
-			"VI", 
-			"VII", 
-			"VIII", 
-			"IX", 
-			"X",
-		];
+	var romanNumerals= src_roman_numerals();
 		
 	var normal_hp=true;
 	

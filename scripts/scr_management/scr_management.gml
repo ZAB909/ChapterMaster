@@ -6,18 +6,7 @@ function scr_management(argument0) {
 
 	// Variable creation
 	var num=0, nam="", company=50, trainee=0, q=0;	
-	var romanNumerals=[
-			"I",
-			"II",
-			"III", 
-			"IV", 
-			"V", 
-			"VI", 
-			"VII", 
-			"VIII", 
-			"IX", 
-			"X",
-		];
+	var romanNumerals= src_roman_numerals();
 
 	if (argument0=1){
 	    with(obj_managment_panel){instance_destroy();}
