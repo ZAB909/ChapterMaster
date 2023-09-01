@@ -1,11 +1,10 @@
 
 if (obj_controller.settings=0) or (obj_controller.menu!=23) then instance_destroy();
 
-var romanNumerals;
-romanNumerals= scr_roman_numerals();
+var romanNumerals= scr_roman_numerals();
 
 if (engage=true){
-    for(var co=0, i=0; co<11; co++){
+    for(var co=0; co<11; co++){
         if (role_number[co]>0){
 			for(i=0; i<300; i++){
                 if (obj_ini.role[co,i]=obj_ini.role[100,role]){
