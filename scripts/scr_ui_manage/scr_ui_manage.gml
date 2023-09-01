@@ -1,6 +1,8 @@
 function scr_ui_manage() {
 	
-	var romanNumerals= src_roman_numerals();
+	var romanNumerals;
+	romanNumerals= scr_roman_numerals();
+
 		
 	var normal_hp=true;
 	

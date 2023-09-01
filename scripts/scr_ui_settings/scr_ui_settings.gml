@@ -1,6 +1,7 @@
 function scr_ui_settings() {
 
-	var romanNumerals= src_roman_numerals();
+	var romanNumerals;
+	romanNumerals= scr_roman_numerals();
 	// Var declaration
 	var xx,yy;
 	var tool1="",tool2="";

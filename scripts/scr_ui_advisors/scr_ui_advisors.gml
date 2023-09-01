@@ -1,7 +1,8 @@
 function scr_ui_advisors() {
 
 	var xx,yy, blurp, eta, va;
-	var romanNumerals= src_roman_numerals();
+	var romanNumerals;
+	romanNumerals= scr_roman_numerals();
 	var recruitment_rates = [
     	"sluggish",
     	"slow",

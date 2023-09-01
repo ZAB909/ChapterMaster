@@ -583,8 +583,8 @@ repeat(299){i+=1;
     }
 }
 
-if (recruits_finished=1) then scr_alert("green","recruitment",string(obj_ini.role[100,12])+" "+string(recruit_first)+" has joined the 10th Company.",0,0);
-if (recruits_finished>1) then scr_alert("green","recruitment",string(recruits_finished)+"x "+string(obj_ini.role[100,12])+" have joined the 10th Company.",0,0);
+if (recruits_finished=1) then scr_alert("green","recruitment",string(obj_ini.role[100,12])+" "+string(recruit_first)+" has joined the X Company.",0,0);
+if (recruits_finished>1) then scr_alert("green","recruitment",string(recruits_finished)+"x "+string(obj_ini.role[100,12])+" have joined the X Company.",0,0);
 
 recruits=tot;
 
