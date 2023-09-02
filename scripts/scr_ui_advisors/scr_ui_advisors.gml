@@ -22,6 +22,16 @@ function scr_ui_advisors() {
     	" is advancing as fast as possible."
 	];
 
+	var recruitement_rate = [
+		"HALTED",
+		"SLUGGISH",
+		"SLOW",
+		"MODERATE",
+		"FAST",
+		"FRENETIC",
+		"MAXIMUM",
+	];
+
 
 	xx=__view_get( e__VW.XView, 0 )+0;
 	yy=__view_get( e__VW.YView, 0 )+0;
@@ -384,9 +394,7 @@ function scr_ui_advisors() {
 	            draw_set_font(fnt_40k_14);
 				draw_set_halign(fa_left);
             
-	            var behav,r_eta;
-				behav=0;
-				r_eta=0;
+	            var behav=0,r_eta=0;
 
 	            for(var qp= 1; qp <= min(36,penitorium); qp++){
 	                if (obj_ini.chaos[penit_co[qp],penit_id[qp]]>0) then r_eta=round((obj_ini.chaos[penit_co[qp],penit_id[qp]]*obj_ini.chaos[penit_co[qp],penit_id[qp]])/50);
@@ -596,7 +604,6 @@ function scr_ui_advisors() {
         
 	        // Attendees
 	        if (fest_attend!="") then draw_text_ext(xx+962,yy+550,string_hash_to_newline(string(fest_attend)),-1,612);
-        
         
 	        // Location type
 	        if (fest_planet!=1) then che=1;
@@ -927,15 +934,12 @@ function scr_ui_advisors() {
 	        draw_set_font(fnt_40k_14);
 	    }
     
-	    var tip2;
-		tip2="";
+	    var tip2="";
 	    
 		// Set pace of recruitment based on training psyker value
 		if (training_psyker >= 0 && training_psyker <= 6) then blurp += recruitment_pace[training_psyker];
 
-		var artif,artif_descr,tp;
-		artif_descr="";
-		tp=0;
+		var artif="",artif_descr="",tp=0;
 		
 		if (artifacts=0) then artif="no unused artifacts.";
 	    if (artifacts=1) then artif="one unused artifact.";
@@ -1481,14 +1485,9 @@ function scr_ui_advisors() {
     
 	    draw_text_ext(xx+336+16,yy+130,string_hash_to_newline(string(blurp)),-1,536);
     
-    
 	    // draw_line(xx+216,yy+252,xx+597,yy+252);draw_line(xx+216,yy+292,xx+597,yy+292);
     
-    
-	    var amo,blur;
-		blur="";
-    
-	    amo=0;
+	    var blur="", amo=0;
 		// ** Normal recruiting **
 		draw_set_color(16291875);
 	    if (recruiting=1) then amo=-2;
@@ -1501,13 +1500,7 @@ function scr_ui_advisors() {
 	    if (amo!=0) then draw_sprite(spr_requisition,0,xx+336+16,yy+356);
 		if (recruiting!=0) then draw_text(xx+351+16,yy+354,string_hash_to_newline(string(amo)));
 		draw_set_color(c_gray);
-	    if (recruiting=0) then blur="HALTED";
-		if (recruiting=1) then blur="SLUGGISH";
-		if (recruiting=2) then blur="SLOW";
-	    if (recruiting=3) then blur="MODERATE";
-		if (recruiting=4) then blur="FAST";
-		if (recruiting=5) then blur="FRENETIC";
-	    if (recruiting=6) then blur="MAXIMUM";
+		if (recruiting >= 0) and (recruiting <= 6) then blur=recruitement_rate[recruiting];
 	    draw_text(xx+407,yy+354,string_hash_to_newline("Space Marine Recruiting: "+string(blur)));
 		draw_text(xx+728,yy+354,string_hash_to_newline("[-] [+]"));
     
@@ -1523,13 +1516,7 @@ function scr_ui_advisors() {
 	    if (amo!=0) then draw_sprite(spr_requisition,0,xx+336+16,yy+396);
 		if (training_apothecary!=0) then draw_text(xx+351+16,yy+394,string_hash_to_newline(string(amo)));
 		draw_set_color(c_gray);
-	    if (training_apothecary=0) then blur="HALTED";
-		if (training_apothecary=1) then blur="SLUGGISH";
-		if (training_apothecary=2) then blur="SLOW";
-	    if (training_apothecary=3) then blur="MODERATE";
-		if (training_apothecary=4) then blur="FAST";
-		if (training_apothecary=5) then blur="FRENETIC";
-	    if (training_apothecary=6) then blur="MAXIMUM";
+		if (training_apothecary >= 0) and (training_apothecary <= 6) then blur=recruitement_rate[training_apothecary];
 	    draw_text(xx+407,yy+394,string_hash_to_newline("Apothecary Training: "+string(blur)));
 		draw_text(xx+728,yy+394,string_hash_to_newline("[-] [+]"));
 
@@ -1546,13 +1533,7 @@ function scr_ui_advisors() {
 	        if (amo!=0) then draw_sprite(spr_requisition,0,xx+336+16,yy+416);
 			if (training_chaplain!=0) then draw_text(xx+351+16,yy+414,string_hash_to_newline(string(amo)));
 			draw_set_color(c_gray);
-	        if (training_chaplain=0) then blur="HALTED";
-			if (training_chaplain=1) then blur="SLUGGISH";
-			if (training_chaplain=2) then blur="SLOW";
-	        if (training_chaplain=3) then blur="MODERATE";
-			if (training_chaplain=4) then blur="FAST";
-			if (training_chaplain=5) then blur="FRENETIC";
-	        if (training_chaplain=6) then blur="MAXIMUM";
+			if (training_chaplain >= 0) and (training_chaplain <= 6) then blur=recruitement_rate[training_chaplain];
 	        draw_text(xx+407,yy+414,string_hash_to_newline("Chaplain Training: "+string(blur)));
 			draw_text(xx+728,yy+414,string_hash_to_newline("[-] [+]"));
 	    }
@@ -1568,13 +1549,7 @@ function scr_ui_advisors() {
 	    if (amo!=0) then draw_sprite(spr_requisition,0,xx+336+16,yy+436);
 		if (training_psyker!=0) then draw_text(xx+351+16,yy+434,string_hash_to_newline(string(amo)));
 		draw_set_color(c_gray);
-	    if (training_psyker=0) then blur="HALTED";
-		if (training_psyker=1) then blur="SLUGGISH";
-		if (training_psyker=2) then blur="SLOW";
-	    if (training_psyker=3) then blur="MODERATE";
-		if (training_psyker=4) then blur="FAST";
-		if (training_psyker=5) then blur="FRENETIC";
-	    if (training_psyker=6) then blur="MAXIMUM";
+		if (training_psyker >= 0) and (training_psyker <= 6) then blur=recruitement_rate[training_psyker];
 	    draw_text(xx+407,yy+434,string_hash_to_newline("Psyker Training: "+string(blur)));
 		draw_text(xx+728,yy+434,string_hash_to_newline("[-] [+]"));
     
@@ -1589,23 +1564,12 @@ function scr_ui_advisors() {
 	    if (amo!=0) then draw_sprite(spr_requisition,0,xx+336+16,yy+456);
 		if (training_techmarine!=0) then draw_text(xx+351+16,yy+456,string_hash_to_newline(string(amo)));
 		draw_set_color(c_gray);
-	    if (training_techmarine=0) then blur="HALTED";
-		if (training_techmarine=1) then blur="SLUGGISH";
-		if (training_techmarine=2) then blur="SLOW";
-	    if (training_techmarine=3) then blur="MODERATE";
-		if (training_techmarine=4) then blur="FAST";
-		if (training_techmarine=5) then blur="FRENETIC";
-	    if (training_techmarine=6) then blur="MAXIMUM";
+		if (training_techmarine >= 0) and (training_techmarine <= 6) then blur=recruitement_rate[training_techmarine];
 	    draw_text(xx+407,yy+454,string_hash_to_newline("Techmarine Training: "+string(blur)));
 		draw_text(xx+728,yy+454,string_hash_to_newline("[-] [+]"));
     
-    
-    
-	    var blurp2,blurp3,yyy;
-		yyy=0;
-		blurp2="";
-		blurp3="";
-	    recruit_type="Blood Duel";
+		// ** Neophyte Training types **
+	    var yyy=0,blurp2="",blurp3="";
     
 	    draw_set_halign(fa_center);
 		draw_set_font(fnt_40k_30b);
@@ -1663,8 +1627,7 @@ function scr_ui_advisors() {
 	        draw_set_font(fnt_40k_14);
 			draw_set_halign(fa_left);
         
-	        var t_eta;
-			t_eta=0;
+	        var t_eta=0;
 	        for (var qp=1, n=0; qp<=300 && n<36; qp++) {
     			if (recruit_name[qp] != "") {
         			n++;
@@ -1713,9 +1676,7 @@ function scr_ui_advisors() {
 	    draw_set_font(fnt_small);
 	    draw_set_halign(fa_left);
     
-	    var eqp, tempe;
-	    eqp="";
-		tempe="";
+	    var eqp="",tempe="";
 	    /*
 	    if (obj_ini.wep1[0,1]!=""){
 	        tempe=string(obj_ini.wep1[0,1])+": "+string(scr_item_descr(string(obj_ini.wep1[0,1])));
