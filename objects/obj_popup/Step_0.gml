@@ -329,7 +329,7 @@ if (title="Planetary Governor Assassinated") and (option1!="") and (cooldown<=0)
         new_target.dispo[planet]=70+floor(random_range(5,15))+1;
         scr_event_log("","Planetary Governor of "+string(new_target.name)+" "+scr_roman(planet)+" assassinated.  A more suitable Governor is installed.");
         if (randa2<=(10*estimate)){
-            var v,ev,;v=0;ev=0;
+            var v=0,ev=0;
             repeat(99){v+=1;if (ev=0) and (obj_controller.event[v]="") then ev=v;}
             obj_controller.event[ev]="governor_assassination_1|"+string(new_target.name)+"|"+string(planet)+"|";
             obj_controller.event_duration[ev]=((choose(1,2,3,4,5,6)+choose(1,2,3,4,5,6))*6)+choose(-3,-2,-1,0,1,2,3);
@@ -343,7 +343,7 @@ if (title="Planetary Governor Assassinated") and (option1!="") and (cooldown<=0)
         new_target.dispo[planet]=101;
         scr_event_log("","Planetary Governor of "+string(new_target.name)+" "+scr_roman(planet)+" assassinated.  One of your Chapter Serfs take their position.");
         if (randa2<=(25*estimate)){
-            var v,ev,;v=0;ev=0;
+            var v=0,ev=0;
             repeat(99){v+=1;if (ev=0) and (obj_controller.event[v]="") then ev=v;}
             obj_controller.event[ev]="governor_assassination_2|"+string(new_target.name)+"|"+string(planet)+"|";
             obj_controller.event_duration[ev]=(choose(1,2)*6)+choose(-3,-2,-1,0,1,2,3);
@@ -1264,7 +1264,7 @@ if (press=3) and (option3!=""){
         scr_event_log("","Artifact Recovered from radical Inquisitor.");
         scr_event_log("","Inquisition Mission Completed: The radical Inquisitor has been purged.");
         
-        var v,ev,;v=0;ev=0;
+        var v=0,ev=0;
         repeat(99){v+=1;if (ev=0) and (obj_controller.event[v]="") then ev=v;}
         obj_controller.event[ev]="inquisitor_spared1";obj_controller.event_duration[ev]=floor(random_range(6,18))+1;
         
@@ -1284,7 +1284,7 @@ if (press=3) and (option3!=""){
         
         scr_event_log("","Inquisition Mission Completed?: The radical Inquisitor has been allowed to flee in order to weaken the forces of Chaos, as they promised.");
         
-        var v,ev,;v=0;ev=0;
+        var v=0,ev=0;
         repeat(99){v+=1;if (ev=0) and (obj_controller.event[v]="") then ev=v;}
         obj_controller.event[ev]="inquisitor_spared2";obj_controller.event_duration[ev]=floor(random_range(6,18))+1;
         

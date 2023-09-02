@@ -788,7 +788,7 @@ if (menu=20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (coold
 
 
 
-        var minz,;minz=0;
+        var minz=0;
         if (trade_give[4]="") then minz=4;if (trade_give[3]="") then minz=3;if (trade_give[2]="") then minz=2;if (trade_give[1]="") then minz=1;
 
         // Opponent things to offer
