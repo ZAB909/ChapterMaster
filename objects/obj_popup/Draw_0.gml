@@ -1,6 +1,7 @@
 
 if (hide=true) then exit;
 
+var romanNumerals=scr_roman_numerals();
 var xx,yy;
 xx=__view_get( e__VW.XView, 0 );
 yy=__view_get( e__VW.YView, 0 );
@@ -18,7 +19,6 @@ if (type=99){
     
     draw_set_halign(fa_left);
 }
-
 
 if (type=10){
     target_comp+=1;
@@ -48,15 +48,25 @@ if ((type=9) or (type=9.1)) and (instance_exists(obj_controller)){
     
     if (obj_controller.disposition[2]>0) then ch="+";
     if (obj_controller.known[2]>1) then draw_text(xx+740,yy+120,string_hash_to_newline("Imperium ("+string(ch)+string(obj_controller.disposition[2])+")#"+string(obj_controller.faction_title[2])));
-    draw_line(xx+239+420,yy+150,xx+398+420,yy+150);ch="";if (obj_controller.disposition[3]>0) then ch="+";
+    draw_line(xx+239+420,yy+150,xx+398+420,yy+150);
+    ch="";
+    if (obj_controller.disposition[3]>0) then ch="+";
     if (obj_controller.known[3]>1) then draw_text(xx+740,yy+150,string_hash_to_newline("Mechanicus ("+string(ch)+string(obj_controller.disposition[3])+")#"+string(obj_controller.faction_title[3])));
-    draw_line(xx+239+420,yy+180,xx+398+420,yy+180);ch="";if (obj_controller.disposition[4]>0) then ch="+";
+    draw_line(xx+239+420,yy+180,xx+398+420,yy+180);
+    ch="";
+    if (obj_controller.disposition[4]>0) then ch="+";
     if ((obj_controller.known[4]>1) or (inq_hide=2)) and (inq_hide!=1) then draw_text(xx+740,yy+180,string_hash_to_newline("Inquisition ("+string(ch)+string(obj_controller.disposition[4])+")#"+string(obj_controller.faction_title[4])));
-    draw_line(xx+239+420,yy+210,xx+398+420,yy+210);ch="";if (obj_controller.disposition[5]>0) then ch="+";
+    draw_line(xx+239+420,yy+210,xx+398+420,yy+210);
+    ch="";
+    if (obj_controller.disposition[5]>0) then ch="+";
     if (obj_controller.known[5]>1) then draw_text(xx+740,yy+210,string_hash_to_newline("Ecclesiarchy ("+string(ch)+string(obj_controller.disposition[5])+")#"+string(obj_controller.faction_title[5])));
-    draw_line(xx+239+420,yy+240,xx+398+420,yy+240);ch="";if (obj_controller.disposition[6]>0) then ch="+";
+    draw_line(xx+239+420,yy+240,xx+398+420,yy+240);
+    ch="";
+    if (obj_controller.disposition[6]>0) then ch="+";
     if (obj_controller.known[6]>1) then draw_text(xx+740,yy+240,string_hash_to_newline("Eldar ("+string(ch)+string(obj_controller.disposition[6])+")#"+string(obj_controller.faction_title[6])));
-    draw_line(xx+239+420,yy+270,xx+398+420,yy+270);ch="";if (obj_controller.disposition[8]>0) then ch="+";
+    draw_line(xx+239+420,yy+270,xx+398+420,yy+270);
+    ch="";
+    if (obj_controller.disposition[8]>0) then ch="+";
     if (obj_controller.known[8]>1) then draw_text(xx+740,yy+270,string_hash_to_newline("Tau ("+string(ch)+string(obj_controller.disposition[8])+")#"+string(obj_controller.faction_title[8])));
     draw_line(xx+239+420,yy+300,xx+398+420,yy+300);
     
@@ -75,11 +85,9 @@ if ((type=9) or (type=9.1)) and (instance_exists(obj_controller)){
     draw_text(xx+740,yy+326,string_hash_to_newline("[Cancel]"));
 }
 
-
 var zm;zm=0;
 if (instance_exists(obj_controller)) then zm=obj_controller.zoomed;
 if ((zm=0) and (type<=4)) or (type=98){
-
     
     var widd,image_bot;
     image_bot=0;
@@ -138,8 +146,8 @@ if ((zm=0) and (type<=4)) or (type=98){
     
     // if (image!="") then draw_text_ext(x1+126+150,y1+152,string(text),-1,384-150);
     // if (text2!="") then draw_text_ext(x1+126,y1+309,string(text2),-1,384);
-    
-    var img;img=-1;
+    // TODO change this into an array in a function (like romanNumerals does in here)
+    var img=-1;
     if (image="") then img=-1;
     if (image="orks") then img=0;
     if (image="tau") then img=1;
@@ -208,47 +216,38 @@ if ((zm=0) and (type<=4)) or (type=98){
     if (img!=-1) and (image!="") and (image_wid>0){
         // if (size=1) then draw_sprite_stretched(spr_popup_pic,img,x1+5,y1+(sprite_height*0.07)+24,image_wid,image_hei);
         // if (size>=2) then draw_sprite_stretched(spr_popup_pic,img,x1+25,y1+(sprite_height*0.07)+24,image_wid,image_hei);
-        
-        var sh;sh=999;
+        var sh=999;
         if (size=1){sh=24;scr_image("popup",img,x1+5,y1+sh+24,image_wid,image_hei);}
         if (size>=2){sh=24;scr_image("popup",img,x1+25,y1+sh+24,image_wid,image_hei);}
         
         image_bot=(sprite_height*0.07)+image_hei+5;
     }
     
-    
-    
     // if (img!=-1) then draw_sprite(spr_popup_pic,img,xx+130,yy+149);
-    
     // if (instance_exists(obj_turn_end)){if (obj_turn_end.popups>1) draw_text(xx+126,yy+123,string(obj_turn_end.current_popup)+"/"+string(obj_turn_end.popups));}
-    
-    
-    
     // if (option1!="") and ((string_count("Servitors and Skitarii",option1)=0) or (img!=14)){
+
     if (option1!="") and (string_count("Servitors and Skitarii",option1)=0){
         
-        var tox;tox="";
+        var tox="";
         tox+="1. "+string(option1);
         if (option2!="") then tox+="#2. "+string(option2);
         if (option3!="") then tox+="#3. "+string(option3);
         // if (option4!="") then tox+="#4. "+string(option4);
         
         // if (size<2){
-            var top;top=y1+0.5+(sprite_height*0.6);
+            var top=y1+0.5+(sprite_height*0.6);
             if (str_h!=0) then top=y1+str_h+20;
             if (image!="") then top=max(top,y1+image_bot);
             
             draw_text_ext(x1+25.5,top,string_hash_to_newline("  Choices:"),-1,widd);
             draw_text_ext(x1+25,top+0.5,string_hash_to_newline("  Choices:"),-1,widd);
             
-            var sz,sz2,oy,t8;sz=0;sz2=0;oy=y1;t8=0;
+            var sz=0,sz2=0,oy=y1,t8=0;
             if (str_h!=0){y1+=str_h+20;y1-=(sprite_height*0.6);}
             
-            // XDDDD
             y1=top;
             // if (size=2) and (image!="") then y1+=15;
-            
-            
             
             if (option1!="") then draw_text_ext(x1+25.5,y1+20,string_hash_to_newline("1. "+string(option1)),-1,widd);
             
@@ -277,18 +276,12 @@ if ((zm=0) and (type<=4)) or (type=98){
                 if (mouse_check_button(mb_left)) then press=3;
             }
             
-            
-            
-            
-            
             if (t8<(oy+sprite_height)){
                 y_scale=(t8/(oy+sprite_height));
             }
             if (t8>(oy+sprite_height)){
                 y_scale=(t8/(oy+sprite_height));
             }
-        
-        
     }
     /*
     
@@ -307,14 +300,10 @@ if ((zm=0) and (type<=4)) or (type=98){
         if (option3!="") then draw_text_ext(xx+130,yy+304,"1. "+string(option1)+"#2. "+string(option2)+"#3. "+string(option3),-1,384);
     }
     */
-    
-    
 }
 
-
-
-
-if (type=8) and (instance_exists(obj_controller)){// Equip Artifact
+// ** Equip Artifact **
+if (type=8) and (instance_exists(obj_controller)){
     var x2,y2;x2=__view_get( e__VW.XView, 0 )+951;y2=__view_get( e__VW.YView, 0 )+48;
     
     // draw_sprite(spr_popup_large,0,x2,y2);
@@ -329,24 +318,62 @@ if (type=8) and (instance_exists(obj_controller)){// Equip Artifact
     draw_set_font(fnt_40k_12);draw_set_halign(fa_left);
     draw_text(x2+31,y2+55,string_hash_to_newline("View Company:"));
     var check;check=" ";
+    // HQ Company
+    if (target_comp=0) then check="x";
+    draw_text(x2+73,y2+71,string_hash_to_newline(" HQ ["+string(check)+"]"));
+    check=" ";
+    // I Company
+    if (target_comp=1) then check="x";
+    draw_text(x2+77,y2+87,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+    check=" ";
+    // II Company
+    if (target_comp=2) then check="x";
+    draw_text(x2+158,y2+87,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+    check=" ";
+    // III Company
+    if (target_comp=3) then check="x";
+    draw_text(x2+275,y2+87,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+    check=" ";
+    // IV Company
+    if (target_comp=4) then check="x";
+    draw_text(x2+386,y2+87,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+    check=" ";
+    // V Company
+    if (target_comp=5) then check="x";
+    draw_text(x2+497,y2+87,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+    check=" ";
+    // VI Company
+    if (target_comp=6) then check="x";
+    draw_text(x2+73,y2+103,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+    check=" ";
+    // VII Company
+    if (target_comp=7) then check="x";
+    draw_text(x2+160,y2+103,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+    check=" ";
+    // VIII Company
+    if (target_comp=8) then check="x";
+    draw_text(x2+275,y2+103,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+    check=" ";
+    // IX Company
+    if (target_comp=9) then check="x";
+    draw_text(x2+386,y2+103,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+    check=" ";
+    // X Company
+    if (target_comp=10) then check="x";
+    draw_text(x2+497,y2+103,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+    check=" ";
     
-    if (target_comp=0) then check="x";draw_text(x2+73,y2+71,string_hash_to_newline(" HQ ["+string(check)+"]"));check=" ";
+    if (target_role>2) then draw_set_alpha(0.25);
+    check=" ";
+    draw_text(x2+30,y2+128,string_hash_to_newline("Replace:"));
     
-    if (target_comp=1) then check="x";draw_text(x2+77,y2+87,string_hash_to_newline("1st ["+string(check)+"]"));check=" ";
-    if (target_comp=2) then check="x";draw_text(x2+158,y2+87,string_hash_to_newline("2nd ["+string(check)+"]"));check=" ";
-    if (target_comp=3) then check="x";draw_text(x2+275,y2+87,string_hash_to_newline("3rd ["+string(check)+"]"));check=" ";
-    if (target_comp=4) then check="x";draw_text(x2+386,y2+87,string_hash_to_newline("4th ["+string(check)+"]"));check=" ";
-    if (target_comp=5) then check="x";draw_text(x2+497,y2+87,string_hash_to_newline("5th ["+string(check)+"]"));check=" ";
+    if (target_role=1) then check="x";
+    draw_text(x2+200,y2+128,string_hash_to_newline("1st Weapon ["+string(check)+"]"));
+    check=" ";
     
-    if (target_comp=6) then check="x";draw_text(x2+73,y2+103,string_hash_to_newline("6th ["+string(check)+"]"));check=" ";
-    if (target_comp=7) then check="x";draw_text(x2+160,y2+103,string_hash_to_newline("7th ["+string(check)+"]"));check=" ";
-    if (target_comp=8) then check="x";draw_text(x2+275,y2+103,string_hash_to_newline("8th ["+string(check)+"]"));check=" ";
-    if (target_comp=9) then check="x";draw_text(x2+386,y2+103,string_hash_to_newline("9th ["+string(check)+"]"));check=" ";
-    if (target_comp=10) then check="x";draw_text(x2+497,y2+103,string_hash_to_newline("10th ["+string(check)+"]"));check=" ";
-    
-    if (target_role>2) then draw_set_alpha(0.25);check=" ";draw_text(x2+30,y2+128,string_hash_to_newline("Replace:"));
-    if (target_role=1) then check="x";draw_text(x2+200,y2+128,string_hash_to_newline("1st Weapon ["+string(check)+"]"));check=" ";
-    if (target_role=2) then check="x";draw_text(x2+426,y2+128,string_hash_to_newline("2nd Weapon ["+string(check)+"]"));check=" ";
+    if (target_role=2) then check="x";
+    draw_text(x2+426,y2+128,string_hash_to_newline("2nd Weapon ["+string(check)+"]"));
+    check=" ";
     draw_set_alpha(1);
     
     
@@ -494,12 +521,6 @@ if (type=8) and (instance_exists(obj_controller)){// Equip Artifact
     
 }
 
-
-
-
-
-
-
 /* */
 var xx,yy;
 xx=__view_get( e__VW.XView, 0 );
@@ -516,10 +537,8 @@ if (zm=0) and (type=6) and (instance_exists(obj_controller)){// Changing Equipme
     draw_text(xx+1292,yy+145,string_hash_to_newline("Change Equipment"));
     
     draw_set_font(fnt_40k_12);
-    
-    var comp;comp="";
-    if (company=1) then comp="1st";if (company=2) then comp="2nd";
-    if (company=3) then comp="3rd";if (company>=4) then comp=string(company)+"th";
+    var comp="";
+    if (company<10) then comp=romanNumerals[company-1];
     if (company>10) then comp="HQ";
     if (vehicle_equipment=0) then draw_text(xx+1292,yy+170,string_hash_to_newline(string(comp)+" Company, "+string(units)+" Marines"));
     if (vehicle_equipment=1) then draw_text(xx+1292,yy+170,string_hash_to_newline(string(comp)+" Company, "+string(units)+" Vehicles"));
@@ -536,56 +555,72 @@ if (zm=0) and (type=6) and (instance_exists(obj_controller)){// Changing Equipme
     draw_rectangle(xx+1574,yy+215,xx+1296,yy+315,1);
     
     
-    var show_name;show_name="";
+    var show_name="";
     // Need to not show the artifact tags here somehow
     
-    draw_text(xx+1010,yy+195,string_hash_to_newline("Before"));draw_text(xx+1010.5,yy+195.5,string_hash_to_newline("Before"));
+    draw_text(xx+1010,yy+195,string_hash_to_newline("Before"));
+    draw_text(xx+1010.5,yy+195.5,string_hash_to_newline("Before"));
     
-    show_name=o_wep1;if (a_wep1!="") then show_name=a_wep1;
+    show_name=o_wep1;
+    if (a_wep1!="") then show_name=a_wep1;
     if (o_wep1!="") then draw_text(xx+1014,yy+215,string_hash_to_newline(show_name));
     else draw_text(xx+1014,yy+215,string_hash_to_newline("(None)"));
     
-    show_name=o_wep2;if (a_wep2!="") then show_name=a_wep2;
+    show_name=o_wep2;
+    if (a_wep2!="") then show_name=a_wep2;
     if (o_wep2!="") then draw_text(xx+1014,yy+235,string_hash_to_newline(string(show_name)));
     else draw_text(xx+1014,yy+235,string_hash_to_newline("(None)"));
     
-    show_name=o_armour;if (a_armour!="") then show_name=a_armour;
+    show_name=o_armour;
+    if (a_armour!="") then show_name=a_armour;
     if (o_armour!="") then draw_text(xx+1014,yy+255,string_hash_to_newline(string(show_name)));
     else draw_text(xx+1014,yy+255,string_hash_to_newline("(None)"));
     
-    show_name=o_gear;if (a_gear!="") then show_name=a_gear;
+    show_name=o_gear;
+    if (a_gear!="") then show_name=a_gear;
     if (o_gear!="") then draw_text(xx+1014,yy+275,string_hash_to_newline(string(show_name)));
     else draw_text(xx+1014,yy+275,string_hash_to_newline("(None)"));
     
-    show_name=o_mobi;if (a_mobi!="") then show_name=a_mobi;
+    show_name=o_mobi;
+    if (a_mobi!="") then show_name=a_mobi;
     if (o_mobi!="") then draw_text(xx+1014,yy+295,string_hash_to_newline(string(show_name)));
     else draw_text(xx+1014,yy+295,string_hash_to_newline("(None)"));
     
+    draw_text(xx+1296,yy+195,string_hash_to_newline("After"));
+    draw_text(xx+1296.5,yy+195.5,string_hash_to_newline("After"));
     
-    draw_text(xx+1296,yy+195,string_hash_to_newline("After"));draw_text(xx+1296.5,yy+195.5,string_hash_to_newline("After"));
-    
-    draw_set_color(c_gray);if (n_good1=0) then draw_set_color(255);
-    show_name=n_wep1;if (a_wep1!="") and (n_wep1=o_wep1) then show_name=a_wep1;
+    draw_set_color(c_gray);
+    if (n_good1=0) then draw_set_color(255);
+    show_name=n_wep1;
+    if (a_wep1!="") and (n_wep1=o_wep1) then show_name=a_wep1;
     if (n_wep1!="") then draw_text(xx+1300,yy+215,string_hash_to_newline(string(show_name)));
     else draw_text(xx+1300,yy+215,string_hash_to_newline("(None)"));
     
-    draw_set_color(c_gray);if (n_good2=0) then draw_set_color(255);
-    show_name=n_wep2;if (a_wep2!="") and (n_wep2=o_wep2) then show_name=a_wep2;
+    draw_set_color(c_gray);
+    if (n_good2=0) then draw_set_color(255);
+    show_name=n_wep2;
+    if (a_wep2!="") and (n_wep2=o_wep2) then show_name=a_wep2;
     if (n_wep2!="") then draw_text(xx+1300,yy+235,string_hash_to_newline(string(show_name)));
     else draw_text(xx+1300,yy+235,string_hash_to_newline("(None)"));
     
-    draw_set_color(c_gray);if (n_good3=0) then draw_set_color(255);
-    show_name=n_armour;if (a_armour!="") and (n_armour=o_armour) then show_name=a_armour;
+    draw_set_color(c_gray);
+    if (n_good3=0) then draw_set_color(255);
+    show_name=n_armour;
+    if (a_armour!="") and (n_armour=o_armour) then show_name=a_armour;
     if (n_armour!="") then draw_text(xx+1300,yy+255,string_hash_to_newline(string(show_name)));
     else draw_text(xx+1300,yy+255,string_hash_to_newline("(None)"));
     
-    draw_set_color(c_gray);if (n_good4=0) then draw_set_color(255);
-    show_name=n_gear;if (a_gear!="") and (n_gear=o_gear) then show_name=a_gear;
+    draw_set_color(c_gray);
+    if (n_good4=0) then draw_set_color(255);
+    show_name=n_gear;
+    if (a_gear!="") and (n_gear=o_gear) then show_name=a_gear;
     if (n_gear!="") then draw_text(xx+1300,yy+275,string_hash_to_newline(string(show_name)));
     else draw_text(xx+1300,yy+275,string_hash_to_newline("(None)"));
     
-    draw_set_color(c_gray);if (n_good5=0) then draw_set_color(255);
-    show_name=n_mobi;if (a_mobi!="") and (n_mobi=o_mobi) then show_name=a_mobi;
+    draw_set_color(c_gray);
+    if (n_good5=0) then draw_set_color(255);
+    show_name=n_mobi;
+    if (a_mobi!="") and (n_mobi=o_mobi) then show_name=a_mobi;
     if (n_mobi!="") then draw_text(xx+1300,yy+295,string_hash_to_newline(string(show_name)));
     else draw_text(xx+1300,yy+295,string_hash_to_newline("(None)"));
     
@@ -599,17 +634,33 @@ if (zm=0) and (type=6) and (instance_exists(obj_controller)){// Changing Equipme
     
     
     if (mouse_x>=xx+1296) and (mouse_x<xx+1574){
-        if (mouse_y>=yy+215) and (mouse_y<yy+235){draw_set_alpha(0.5);draw_line(xx+1296,yy+225,xx+1574,yy+225);}
-        if (mouse_y>=yy+235) and (mouse_y<yy+255){draw_set_alpha(0.5);draw_line(xx+1296,yy+245,xx+1574,yy+245);}
-        if (mouse_y>=yy+255) and (mouse_y<yy+275){draw_set_alpha(0.5);draw_line(xx+1296,yy+265,xx+1574,yy+265);}
-        if (mouse_y>=yy+275) and (mouse_y<yy+295){draw_set_alpha(0.5);draw_line(xx+1296,yy+285,xx+1574,yy+285);}
-        if (mouse_y>=yy+295) and (mouse_y<yy+315){draw_set_alpha(0.5);draw_line(xx+1296,yy+305,xx+1574,yy+305);}
+        if (mouse_y>=yy+215) and (mouse_y<yy+235){
+            draw_set_alpha(0.5);
+            draw_line(xx+1296,yy+225,xx+1574,yy+225);
+        }
+        if (mouse_y>=yy+235) and (mouse_y<yy+255){
+            draw_set_alpha(0.5);
+            draw_line(xx+1296,yy+245,xx+1574,yy+245);
+        }
+        if (mouse_y>=yy+255) and (mouse_y<yy+275){
+            draw_set_alpha(0.5);
+            draw_line(xx+1296,yy+265,xx+1574,yy+265);
+        }
+        if (mouse_y>=yy+275) and (mouse_y<yy+295){
+            draw_set_alpha(0.5);
+            draw_line(xx+1296,yy+285,xx+1574,yy+285);
+        }
+        if (mouse_y>=yy+295) and (mouse_y<yy+315){
+            draw_set_alpha(0.5);
+            draw_line(xx+1296,yy+305,xx+1574,yy+305);
+        }
     }
     draw_set_alpha(1);
      
      
      if (target_comp!=-1){
-         var check,mct,o;check=" ";o=1;mct=1;if (master_crafted=1) then mct=0.7;
+         var check=" ",o=1,mct=1;
+         if (master_crafted=1) then mct=0.7;
          
          if (item_name[o]!=""){if (target_role=o) then check="x";draw_text_transformed(xx+1016,yy+335,string_hash_to_newline("["+string(check)+"] "+string(item_name[o])),mct,1,0);check=" ";}o+=1;
          if (item_name[o]!=""){if (target_role=o) then check="x";draw_text_transformed(xx+1016,yy+355,string_hash_to_newline("["+string(check)+"] "+string(item_name[o])),mct,1,0);check=" ";}o+=1;
@@ -646,15 +697,18 @@ if (zm=0) and (type=6) and (instance_exists(obj_controller)){// Changing Equipme
     
     draw_set_halign(fa_center);
     if (target_comp=1) or (target_comp=2){
-        var msc;msc=" ";if (master_crafted=1) then msc="x";
-         if (tab=1) then draw_text(xx+1292,yy+318,string_hash_to_newline("Tab 1 [x]    Tab 2 [ ]        Master-Crafted ["+string(msc)+"]"));
-         if (tab=2) then draw_text(xx+1292,yy+318,string_hash_to_newline("Tab 1 [ ]    Tab 2 [x]        Master-Crafted ["+string(msc)+"]"));
+        var msc=" ";
+        if (master_crafted=1) then msc="x";
+        if (tab=1) then draw_text(xx+1292,yy+318,string_hash_to_newline("Tab 1 [x]    Tab 2 [ ]        Master-Crafted ["+string(msc)+"]"));
+        if (tab=2) then draw_text(xx+1292,yy+318,string_hash_to_newline("Tab 1 [ ]    Tab 2 [x]        Master-Crafted ["+string(msc)+"]"));
     }
     
-    draw_set_color(255);draw_set_halign(fa_center);
+    draw_set_color(255);
+    draw_set_halign(fa_center);
     draw_text(xx+1292,yy+476,string_hash_to_newline(warning));
     
-    draw_set_color(c_gray);draw_set_halign(fa_left);
+    draw_set_color(c_gray);
+    draw_set_halign(fa_left);
     draw_rectangle(xx+1006,yy+499,xx+1115,yy+518,1);
     draw_set_alpha(0.5);
     draw_rectangle(xx+1007,yy+500,xx+1114,yy+517,1);
@@ -672,8 +726,10 @@ if (zm=0) and (type=6) and (instance_exists(obj_controller)){// Changing Equipme
         draw_rectangle(xx+1466,yy+500,xx+1575,yy+517,1);
     }
     
-    draw_set_alpha(1);draw_set_halign(fa_center);
-    draw_text(xx+1061,yy+501,string_hash_to_newline("Cancel"));draw_text(xx+1061.5,yy+501.5,string_hash_to_newline("Cancel"));
+    draw_set_alpha(1);
+    draw_set_halign(fa_center);
+    draw_text(xx+1061,yy+501,string_hash_to_newline("Cancel"));
+    draw_text(xx+1061.5,yy+501.5,string_hash_to_newline("Cancel"));
     
     if (n_good1+n_good2+n_good3+n_good4=4){
         draw_text(xx+1521,yy+501,string_hash_to_newline("Equip!"));
@@ -685,15 +741,13 @@ if (zm=0) and (type=6) and (instance_exists(obj_controller)){// Changing Equipme
         draw_text(xx+1521.5,yy+501.5,string_hash_to_newline("Equip!"));
     }
     draw_set_alpha(1);
-    
-    
-    
 }
 
-
-if (zm=0) and (type=5) and (instance_exists(obj_controller)){// Promoting
+// ** Promoting **
+if (zm=0) and (type=5) and (instance_exists(obj_controller)){
     // draw_sprite(spr_popup,0,xx+112,yy+112);
-    draw_set_color(0);draw_rectangle(xx+1006,yy+143,xx+1577,yy+518,0);
+    draw_set_color(0);
+    draw_rectangle(xx+1006,yy+143,xx+1577,yy+518,0);
     
     draw_set_font(fnt_40k_14b);
     draw_set_halign(fa_center);
@@ -701,11 +755,8 @@ if (zm=0) and (type=5) and (instance_exists(obj_controller)){// Promoting
     draw_text(xx+1292,yy+145,string_hash_to_newline("Promoting"));
     
     draw_set_font(fnt_40k_12);
-    var comp;comp="";
-    if (company=1) then comp="1st";
-    if (company=2) then comp="2nd";
-    if (company=3) then comp="3rd";
-    if (company>=4) then comp=string(company)+"th";
+    var comp="";
+    if (company<10) then comp=romanNumerals[company-1];
     if (company>10) then comp="HQ";
     draw_text(xx+1292,yy+170,string_hash_to_newline(string(comp)+" Company "+string(unit_role)));
     
@@ -713,27 +764,75 @@ if (zm=0) and (type=5) and (instance_exists(obj_controller)){// Promoting
     draw_set_color(c_gray);
     draw_text(xx+1014,yy+210,string_hash_to_newline("Target Company:"));
     
-    var check;check=" ";
+    var check=" ";
     draw_set_alpha(1);
     // if (company=0) or (company>10) or (company=1) or (unit_role=obj_ini.role[100,15]) or (unit_role=obj_ini.role[100,14]){
         // draw_set_alpha(0.25);
+    // HQ Company
     if (target_comp=0) or (target_comp>10) then check="x";
     draw_text(xx+1470,yy+210,string_hash_to_newline("HQ ["+string(check)+"]"));
     check=" ";
     // }
     
     if ((unit_role!=obj_ini.role[100,17]) or (obj_controller.command_set[1]!=0)) and (unit_role!="Lexicanum") and (unit_role!="Codiciery"){
-    if (min_exp<80) then draw_set_alpha(0.25);if (target_comp=1) then check="x";draw_text(xx+1030,yy+230,string_hash_to_newline("1st ["+string(check)+"]"));check=" ";draw_set_alpha(1);
-    if (min_exp<70) then draw_set_alpha(0.25);if (target_comp=2) then check="x";draw_text(xx+1140,yy+230,string_hash_to_newline("2nd ["+string(check)+"]"));check=" ";draw_set_alpha(1);
-    if (min_exp<60) then draw_set_alpha(0.25);if (target_comp=3) then check="x";draw_text(xx+1250,yy+230,string_hash_to_newline("3rd ["+string(check)+"]"));check=" ";draw_set_alpha(1);
-    if (min_exp<50) then draw_set_alpha(0.25);if (target_comp=4) then check="x";draw_text(xx+1360,yy+230,string_hash_to_newline("4th ["+string(check)+"]"));check=" ";draw_set_alpha(1);
-    if (min_exp<40) then draw_set_alpha(0.25);if (target_comp=5) then check="x";draw_text(xx+1470,yy+230,string_hash_to_newline("5th ["+string(check)+"]"));check=" ";draw_set_alpha(1);
-    
-    if (min_exp<35) then draw_set_alpha(0.25);if (target_comp=6) then check="x";draw_text(xx+1030,yy+250,string_hash_to_newline("6th ["+string(check)+"]"));check=" ";draw_set_alpha(1);
-    if (min_exp<30) then draw_set_alpha(0.25);if (target_comp=7) then check="x";draw_text(xx+1140,yy+250,string_hash_to_newline("7th ["+string(check)+"]"));check=" ";draw_set_alpha(1);
-    if (min_exp<25) then draw_set_alpha(0.25);if (target_comp=8) then check="x";draw_text(xx+1250,yy+250,string_hash_to_newline("8th ["+string(check)+"]"));check=" ";draw_set_alpha(1);
-    if (min_exp<20) then draw_set_alpha(0.25);if (target_comp=9) then check="x";draw_text(xx+1360,yy+250,string_hash_to_newline("9th ["+string(check)+"]"));check=" ";draw_set_alpha(1);
-    if (target_comp=10) then check="x";draw_text(xx+1470,yy+250,string_hash_to_newline("10th ["+string(check)+"]"));check=" ";}
+        if (min_exp<80) then draw_set_alpha(0.25);
+        // I Company
+        if (target_comp=1) then check="x";
+        draw_text(xx+1030,yy+230,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+        check=" ";
+        draw_set_alpha(1);
+        if (min_exp<70) then draw_set_alpha(0.25);
+        // II Company
+        if (target_comp=2) then check="x";
+        draw_text(xx+1140,yy+230,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+        check=" ";
+        draw_set_alpha(1);
+        if (min_exp<60) then draw_set_alpha(0.25);
+        // III Company
+        if (target_comp=3) then check="x";
+        draw_text(xx+1250,yy+230,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+        check=" ";
+        draw_set_alpha(1);
+        if (min_exp<50) then draw_set_alpha(0.25);
+        // IV Company
+        if (target_comp=4) then check="x";
+        draw_text(xx+1360,yy+230,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+        check=" ";
+        draw_set_alpha(1);
+        if (min_exp<40) then draw_set_alpha(0.25);
+        // V Company
+        if (target_comp=5) then check="x";
+        draw_text(xx+1470,yy+230,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+        check=" ";
+        draw_set_alpha(1);
+        if (min_exp<35) then draw_set_alpha(0.25);
+        // VI Company
+        if (target_comp=6) then check="x";
+        draw_text(xx+1030,yy+250,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+        check=" ";
+        draw_set_alpha(1);
+        if (min_exp<30) then draw_set_alpha(0.25);
+        // VII Company
+        if (target_comp=7) then check="x";
+        draw_text(xx+1140,yy+250,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+        check=" ";draw_set_alpha(1);
+        if (min_exp<25) then draw_set_alpha(0.25);
+        // VIII Company
+        if (target_comp=8) then check="x";
+        draw_text(xx+1250,yy+250,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+        check=" ";
+        draw_set_alpha(1);
+        if (min_exp<20) then draw_set_alpha(0.25);
+        // IX Company
+        if (target_comp=9) then check="x";
+        draw_text(xx+1360,yy+250,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+        check=" ";
+        draw_set_alpha(1);
+        // X Company
+        if (target_comp=10) then check="x";
+        draw_text(xx+1470,yy+250,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+        check=" ";
+    }
     
     draw_text(xx+1014,yy+290,string_hash_to_newline("Target Role:"));
     
@@ -768,43 +867,66 @@ if (zm=0) and (type=5) and (instance_exists(obj_controller)){// Promoting
     draw_set_alpha(1);
     
     draw_text(xx+1014,yy+370,string_hash_to_newline("Required Gear:"));
-    var gr,tox;gr=0;tox="";
+    var gr=0,tox="";
     
     if (target_role>0){
         if (req_armour!=""){
-            gr=req_armour_num-have_armour_num;tox="";
-            if (gr>0){draw_set_color(255);draw_text(xx+1030,yy+390,string_hash_to_newline(string(req_armour)+" (-"+string(gr)+")"));}
-            if (gr<=0) and (req_armour!=""){draw_set_color(c_gray);draw_text(xx+1030,yy+390,string_hash_to_newline(string(req_armour)+" ("+string(have_armour_num)+"-"+string(req_armour_num)+")"));}
+            gr=req_armour_num-have_armour_num;
+            tox="";
+            if (gr>0){draw_set_color(255);
+            draw_text(xx+1030,yy+390,string_hash_to_newline(string(req_armour)+" (-"+string(gr)+")"));}
+            if (gr<=0) and (req_armour!=""){
+                draw_set_color(c_gray);
+                draw_text(xx+1030,yy+390,string_hash_to_newline(string(req_armour)+" ("+string(have_armour_num)+"-"+string(req_armour_num)+")"));
+            }
         }
-        
         if (req_gear!=""){
-            gr=req_gear_num-have_gear_num;tox="";
-            if (gr>0){draw_set_color(255);draw_text(xx+1030,yy+410,string_hash_to_newline(string(req_gear)+" (-"+string(gr)+")"));}
-            if (gr<=0) and (req_gear!=""){draw_set_color(c_gray);draw_text(xx+1030,yy+390,string_hash_to_newline(string(req_gear)+" ("+string(have_gear_num)+"-"+string(req_gear_num)+")"));}
+            gr=req_gear_num-have_gear_num;
+            tox="";
+            if (gr>0){draw_set_color(255);
+            draw_text(xx+1030,yy+410,string_hash_to_newline(string(req_gear)+" (-"+string(gr)+")"));}
+            if (gr<=0) and (req_gear!=""){
+                draw_set_color(c_gray);
+                draw_text(xx+1030,yy+390,string_hash_to_newline(string(req_gear)+" ("+string(have_gear_num)+"-"+string(req_gear_num)+")"));
+            }
         }
         if (req_mobi!=""){
-            gr=req_mobi_num-have_mobi_num;tox="";
-            if (gr>0){draw_set_color(255);draw_text(xx+1030,yy+410,string_hash_to_newline(string(req_mobi)+" (-"+string(gr)+")"));}
-            if (gr<=0) and (req_mobi!=""){draw_set_color(c_gray);draw_text(xx+1030,yy+410,string_hash_to_newline(string(req_mobi)+" ("+string(have_mobi_num)+"-"+string(req_mobi_num)+")"));}
+            gr=req_mobi_num-have_mobi_num;
+            tox="";
+            if (gr>0){draw_set_color(255);
+            draw_text(xx+1030,yy+410,string_hash_to_newline(string(req_mobi)+" (-"+string(gr)+")"));}
+            if (gr<=0) and (req_mobi!=""){
+                draw_set_color(c_gray);
+                draw_text(xx+1030,yy+410,string_hash_to_newline(string(req_mobi)+" ("+string(have_mobi_num)+"-"+string(req_mobi_num)+")"));
+            }
         }
-        
-        
         if (req_wep1!=""){
-            gr=req_wep1_num-have_wep1_num;tox="";
-            if (gr>0){draw_set_color(255);draw_text(xx+1200,yy+390,string_hash_to_newline(string(req_wep1)+" (-"+string(gr)+")"));}
-            if (gr<=0) and (req_wep1!=""){draw_set_color(c_gray);draw_text(xx+1140,yy+390,string_hash_to_newline(string(req_wep1)+" ("+string(have_wep1_num)+"-"+string(req_wep1_num)+")"));}
+            gr=req_wep1_num-have_wep1_num;
+            tox="";
+            if (gr>0){draw_set_color(255);
+            draw_text(xx+1200,yy+390,string_hash_to_newline(string(req_wep1)+" (-"+string(gr)+")"));}
+            if (gr<=0) and (req_wep1!=""){
+                draw_set_color(c_gray);
+                draw_text(xx+1140,yy+390,string_hash_to_newline(string(req_wep1)+" ("+string(have_wep1_num)+"-"+string(req_wep1_num)+")"));
+            }
         }
         if (req_wep2!=""){
-            gr=req_wep2_num-have_wep2_num;tox="";
-            if (gr>0){draw_set_color(255);draw_text(xx+1200,yy+410,string_hash_to_newline(string(req_wep2)+" (-"+string(gr)+")"));}
-            if (gr<=0) and (req_wep2!=""){draw_set_color(c_gray);draw_text(xx+1140,yy+410,string_hash_to_newline(string(req_wep2)+" ("+string(have_wep2_num)+"-"+string(req_wep2_num)+")"));}
+            gr=req_wep2_num-have_wep2_num;
+            tox="";
+            if (gr>0){draw_set_color(255);
+            draw_text(xx+1200,yy+410,string_hash_to_newline(string(req_wep2)+" (-"+string(gr)+")"));}
+            if (gr<=0) and (req_wep2!=""){
+                draw_set_color(c_gray);
+                draw_text(xx+1140,yy+410,string_hash_to_newline(string(req_wep2)+" ("+string(have_wep2_num)+"-"+string(req_wep2_num)+")"));
+            }
         }
         
     }
     
     draw_set_alpha(1);
     
-    draw_set_color(c_gray);draw_set_halign(fa_left);
+    draw_set_color(c_gray);
+    draw_set_halign(fa_left);
     draw_rectangle(xx+1006,yy+499,xx+1115,yy+518,1);
     draw_set_alpha(0.5);
     draw_rectangle(xx+1007,yy+500,xx+1114,yy+517,1);
@@ -821,8 +943,10 @@ if (zm=0) and (type=5) and (instance_exists(obj_controller)){// Promoting
         draw_rectangle(xx+1466,yy+500,xx+1575,yy+517,1);
     }
     
-    draw_set_alpha(1);draw_set_halign(fa_center);
-    draw_text(xx+1061,yy+501,string_hash_to_newline("Cancel"));draw_text(xx+1061.5,yy+501.5,string_hash_to_newline("Cancel"));
+    draw_set_alpha(1);
+    draw_set_halign(fa_center);
+    draw_text(xx+1061,yy+501,string_hash_to_newline("Cancel"));
+    draw_text(xx+1061.5,yy+501.5,string_hash_to_newline("Cancel"));
     
     if (all_good=1){
         draw_text(xx+1521,yy+501,string_hash_to_newline("Promote!"));
@@ -834,14 +958,13 @@ if (zm=0) and (type=5) and (instance_exists(obj_controller)){// Promoting
         draw_text(xx+1521.5,yy+501.5,string_hash_to_newline("Promote!"));
     }
     draw_set_alpha(1);
-    
 }
 
-
-
-if (zm=0) and (type=5.1) and (instance_exists(obj_controller)){// Transfering
+// ** Transfering **
+if (zm=0) and (type=5.1) and (instance_exists(obj_controller)){
     // draw_sprite(spr_popup,0,xx+112,yy+112);
-    draw_set_color(0);draw_rectangle(xx+1006,yy+143,xx+1577,yy+518,0);
+    draw_set_color(0);
+    draw_rectangle(xx+1006,yy+143,xx+1577,yy+518,0);
     
     draw_set_font(fnt_40k_14b);
     draw_set_halign(fa_center);
@@ -849,11 +972,8 @@ if (zm=0) and (type=5.1) and (instance_exists(obj_controller)){// Transfering
     draw_text(xx+1292,yy+145,string_hash_to_newline("Transfering"));
     
     draw_set_font(fnt_40k_12);
-    var comp;comp="";
-    if (company=1) then comp="1st";
-    if (company=2) then comp="2nd";
-    if (company=3) then comp="3rd";
-    if (company>=4) then comp=string(company)+"th";
+    var comp="";
+    if (company<10) then comp=romanNumerals[company-1];
     if (company>10) then comp="HQ";
     draw_text(xx+1292,yy+170,string_hash_to_newline(string(comp)+" Company "+string(unit_role)));
     
@@ -861,28 +981,60 @@ if (zm=0) and (type=5.1) and (instance_exists(obj_controller)){// Transfering
     draw_set_color(c_gray);
     draw_text(xx+1014,yy+210,string_hash_to_newline("Target Company:"));
     
-    var check;check=" ";
+    var check=" ";
+    // HQ Company
     if (target_comp=0) or (target_comp>10) then check="x";
     draw_text(xx+1470,yy+210,string_hash_to_newline("HQ ["+string(check)+"]"));
     check=" ";
     // }
     
     if ((unit_role!=obj_ini.role[100,17]) or (obj_controller.command_set[1]!=0)) and (unit_role!="Lexicanum") and (unit_role!="Codiciery"){
-    if (target_comp=1) then check="x";draw_text(xx+1030,yy+230,string_hash_to_newline("1st ["+string(check)+"]"));check=" ";
-    if (target_comp=2) then check="x";draw_text(xx+1140,yy+230,string_hash_to_newline("2nd ["+string(check)+"]"));check=" ";
-    if (target_comp=3) then check="x";draw_text(xx+1250,yy+230,string_hash_to_newline("3rd ["+string(check)+"]"));check=" ";
-    if (target_comp=4) then check="x";draw_text(xx+1360,yy+230,string_hash_to_newline("4th ["+string(check)+"]"));check=" ";
-    if (target_comp=5) then check="x";draw_text(xx+1470,yy+230,string_hash_to_newline("5th ["+string(check)+"]"));check=" ";
-    
-    if (target_comp=6) then check="x";draw_text(xx+1030,yy+250,string_hash_to_newline("6th ["+string(check)+"]"));check=" ";
-    if (target_comp=7) then check="x";draw_text(xx+1140,yy+250,string_hash_to_newline("7th ["+string(check)+"]"));check=" ";
-    if (target_comp=8) then check="x";draw_text(xx+1250,yy+250,string_hash_to_newline("8th ["+string(check)+"]"));check=" ";
-    if (target_comp=9) then check="x";draw_text(xx+1360,yy+250,string_hash_to_newline("9th ["+string(check)+"]"));check=" ";
-    if (target_comp=10) then check="x";draw_text(xx+1470,yy+250,string_hash_to_newline("10th ["+string(check)+"]"));check=" ";}
+        // I Company
+        if (target_comp=1) then check="x";
+        draw_text(xx+1030,yy+230,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+        check=" ";
+        // II Company
+        if (target_comp=2) then check="x";
+        draw_text(xx+1140,yy+230,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+        check=" ";
+        // III Company
+        if (target_comp=3) then check="x";
+        draw_text(xx+1250,yy+230,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+        check=" ";
+        // IV Company
+        if (target_comp=4) then check="x";
+        draw_text(xx+1360,yy+230,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+        check=" ";
+        // V Company
+        if (target_comp=5) then check="x";
+        draw_text(xx+1470,yy+230,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+        check=" ";
+        // VI Company
+        if (target_comp=6) then check="x";
+        draw_text(xx+1030,yy+250,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+        check=" ";
+        // VII Company
+        if (target_comp=7) then check="x";
+        draw_text(xx+1140,yy+250,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+        check=" ";
+        // VIII Company
+        if (target_comp=8) then check="x";
+        draw_text(xx+1250,yy+250,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+        check=" ";
+        // IX Company
+        if (target_comp=9) then check="x";
+        draw_text(xx+1360,yy+250,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+        check=" ";
+        // X Company
+        if (target_comp=10) then check="x";
+        draw_text(xx+1470,yy+250,string_hash_to_newline(romanNumerals[target_comp-1]+" ["+string(check)+"]"));
+        check=" ";
+    }
     
     draw_set_alpha(1);
     
-    draw_set_color(c_gray);draw_set_halign(fa_left);
+    draw_set_color(c_gray);
+    draw_set_halign(fa_left);
     draw_rectangle(xx+1006,yy+499,xx+1115,yy+518,1);
     draw_set_alpha(0.5);
     draw_rectangle(xx+1007,yy+500,xx+1114,yy+517,1);
@@ -899,8 +1051,10 @@ if (zm=0) and (type=5.1) and (instance_exists(obj_controller)){// Transfering
         draw_rectangle(xx+1466,yy+500,xx+1575,yy+517,1);
     }
     
-    draw_set_alpha(1);draw_set_halign(fa_center);
-    draw_text(xx+1061,yy+501,string_hash_to_newline("Cancel"));draw_text(xx+1061.5,yy+501.5,string_hash_to_newline("Cancel"));
+    draw_set_alpha(1);
+    draw_set_halign(fa_center);
+    draw_text(xx+1061,yy+501,string_hash_to_newline("Cancel"));
+    draw_text(xx+1061.5,yy+501.5,string_hash_to_newline("Cancel"));
     
     if (company!=target_comp) and (target_comp>=0){
         draw_text(xx+1521,yy+501,string_hash_to_newline("Transfer!"));
@@ -913,8 +1067,3 @@ if (zm=0) and (type=5.1) and (instance_exists(obj_controller)){// Transfering
     }
     draw_set_alpha(1);
 }
-
-
-
-/* */
-/*  */
