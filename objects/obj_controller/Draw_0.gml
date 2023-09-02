@@ -163,7 +163,7 @@ if (zoomed=0) and (zui=0){
         
         if (icc<=20) then scr_image("creation",icc,__view_get( e__VW.XView, 0 )+1451+new_banner_x,__view_get( e__VW.YView, 0 )+73,141,141);
         
-        if (icc>20){icon_sprite=spr_icon_other;icc-=19;
+        if (icc>20){icon_sprite=spr_icon_chapters;icc-=19;
         draw_sprite(icon_sprite,icc,__view_get( e__VW.XView, 0 )+1451+new_banner_x,__view_get( e__VW.YView, 0 )+73);}
     }
     
