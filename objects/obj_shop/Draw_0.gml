@@ -12,7 +12,7 @@ draw_set_halign(fa_left);
 
 
 var te="";
-if (target_comp=1) then te=romanNumerals[target_comp-1];
+if (target_comp<=10) then te=romanNumerals[target_comp-1];
 if (mouse_x>=xx+1262) and (mouse_y>=yy+82) and (mouse_x<=xx+1417) and (mouse_y<yy+103) then draw_set_alpha(0.8);
 draw_text(xx+1262,yy+82,string_hash_to_newline("Target: "+string(te)+" Company"));
 
