@@ -6,7 +6,7 @@ var add_ground=0;
 var w=-1,smin=0,smax=0;
 
 // Sets up the ground forces
-if (add_ground=1){
+if (add_ground==1){
     ships_selected+=1;
     remove_local=-1;
     bikes+=l_bikes;
@@ -20,7 +20,7 @@ if (add_ground=1){
     ship_all[500]=1;
     ship_use[500]=ship_max[500];
 }
-if (add_ground=-1){
+if (add_ground==-1){
     ships_selected-=1;
     remove_local=1;
     bikes-=l_bikes;
@@ -38,7 +38,7 @@ add_ground=0;
 
 obj_controller.cooldown=30;
 // ** Starts the battle **
-combating=1;
+is_in_combat=true;
 
 instance_deactivate_all(true);
 instance_activate_object(obj_controller);
@@ -77,24 +77,24 @@ argument0.p_chaos[argument1]=4;
 argument0.p_owner[argument1]=10;
 */
 
-var co=0,v=0,stop=0;
+var company=0,v=0,stop=false;
 for (var i=0; i<3600; i++) {
-    if (co<11){
+    if (company<11){
         v+=1;
         if (v>300){
-            co+=1;
+            company+=1;
             v=1;
         }
-        if (co>10) then stop=1;
-        if (stop=0){
-            if (fighting[co,v]!=0) then obj_ncombat.fighting[co,v]=1;// show_message(string(co)+":"+string(v)+" is fighting");
+        if (company>10) then stop=true;
+        if (stop=false){
+            if (fighting[company,v]!=0) then obj_ncombat.fighting[company,v]=1;// show_message(string(company)+":"+string(v)+" is fighting");
             if (attack=1) and (v<=100){
-                if (veh_fighting[co,v]!=0) then obj_ncombat.veh_fighting[co,v]=1;
+                if (veh_fighting[company,v]!=0) then obj_ncombat.veh_fighting[company,v]=1;
             }
             if (attack=1) and (ship_all[500]=1){
-                if (obj_ini.loc[co,v]=p_target.name) and (obj_ini.wid[co,v]=obj_controller.selecting_planet) and (fighting[co,v]=1) then obj_ncombat.fighting[co,v]=1;
+                if (obj_ini.loc[company,v]=p_target.name) and (obj_ini.wid[company,v]=obj_controller.selecting_planet) and (fighting[company,v]=1) then obj_ncombat.fighting[company,v]=1;
                 if (v<=100){
-                    if (obj_ini.veh_loc[co,v]=p_target.name) and (obj_ini.veh_wid[co,v]=obj_controller.selecting_planet) then obj_ncombat.veh_fighting[co,v]=1;
+                    if (obj_ini.veh_loc[company,v]=p_target.name) and (obj_ini.veh_wid[company,v]=obj_controller.selecting_planet) then obj_ncombat.veh_fighting[company,v]=1;
                 }
             }
         }

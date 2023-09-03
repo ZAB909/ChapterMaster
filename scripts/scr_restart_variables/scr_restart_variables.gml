@@ -1,6 +1,6 @@
-// Restarts variables
-function scr_restart_variables(argument0) {
-	if (argument0=1) then with(obj_ini){
+// Restarts variables, ensuring loaded saves are properly initialized
+function scr_restart_variables(saved_game) {
+	if (saved_game=1) then with(obj_ini){
     
 	    // show_message(instance_number(obj_restart_vars));
     
@@ -90,7 +90,7 @@ function scr_restart_variables(argument0) {
 	    obj_restart_vars.restart_stability=obj_creation.stability;
 
 		// 100 is defaults, 101 is the allowable starting equipment
-		for(var i=100; i<104; i++){
+		for(var i=100; i<103; i++){
 	        obj_restart_vars.r_race[i,2]=1;
 	        obj_restart_vars.r_role[i,2]="Honor Guard";
 			obj_restart_vars.r_wep1[i,2]="Power Sword";
@@ -216,7 +216,7 @@ function scr_restart_variables(argument0) {
     
 	}
 
-	if (argument0=2){
+	if (saved_game=2){
 
 	    obj_controller.restart_name=obj_restart_vars.restart_name;
 	    obj_controller.restart_founding=obj_restart_vars.restart_founding;
@@ -304,7 +304,7 @@ function scr_restart_variables(argument0) {
 	    obj_controller.restart_stability=obj_restart_vars.restart_stability;
 
 		// 100 is defaults, 101 is the allowable starting equipment
-		for(var i=100; i<104; i++){
+		for(var i=100; i<103; i++){
 	        obj_controller.r_race[i,2]=1;
 	        obj_controller.r_role[i,2]="Honor Guard";
 			obj_controller.r_wep1[i,2]="Power Sword";
@@ -429,14 +429,14 @@ function scr_restart_variables(argument0) {
 	}
 
 	// Controller to restart vars
-	if (argument0=3){
+	if (saved_game=3){
 	    obj_restart_vars.restart_name=obj_controller.restart_name;
 	    obj_restart_vars.restart_founding=obj_controller.restart_founding;
     
 	    obj_restart_vars.restart_secret=obj_controller.restart_secret;
 	    obj_restart_vars.restart_title[0]=obj_controller.restart_title[0];
 
-		for(var i=1; i<=0; i++){obj_restart_vars.restart_title[i]=obj_controller.restart_title[i];}
+		for(var i=1; i<=11; i++){obj_restart_vars.restart_title[i]=obj_controller.restart_title[i];}
     
 	    obj_restart_vars.restart_icon=obj_controller.restart_icon;
 	    obj_restart_vars.restart_icon_name=obj_controller.restart_icon_name;
@@ -530,7 +530,7 @@ function scr_restart_variables(argument0) {
 	    }
 	}
 
-	if (argument0=4){
+	if (saved_game=4){
 		for(var i=0; i<21; i++){world[i]="";world_type[i]="";world_feature[i]="";}
 
 		for(var i=0; i<6; i++){adv[i]="";adv_num[i]=0;dis[i]="";dis_num[i]=0;}
@@ -547,7 +547,7 @@ function scr_restart_variables(argument0) {
 	    admiral=scr_marine_name();
 
 		// First is for the correct slot, second is for default
-		for(var i=100; i<104; i++){
+		for(var i=100; i<103; i++){
 	        
 			race[i,2]=1;
 			role[i,2]="Honor Guard";
@@ -737,7 +737,7 @@ function scr_restart_variables(argument0) {
 		restarted=1;
 	    mutations_selected=mutations;
 		
-		for(var i=1; i<=4; i++){
+		for(var i=1; i<=40; i++){
 	        if (adv[i]!="") and (adv_num[i]=0){
 				for(var n=1; n<=41; n++){
 	                if (advantage[n]=adv[i]) then adv_num[i]=n;
@@ -745,7 +745,7 @@ function scr_restart_variables(argument0) {
 	        }
 	    }
 
-		for(var i=1; i<=4; i++){
+		for(var i=1; i<=40; i++){
 	        if (dis[i]!="") and (dis_num[i]=0){
 	            for(var n=1; n<=41; n++){
 	                if (disadvantage[n]=dis[i]) then dis_num[i]=n;
