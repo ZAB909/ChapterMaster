@@ -493,7 +493,7 @@ function scr_initialize_custom() {
 	}
 	i=99;repeat(3){i+=1;
 	    role[i,2]="Honor Guard";wep1[i,2]="Power Sword";wep2[i,2]="Bolter";armour[i,2]="Power Armour";mobi[i,2]="";gear[i,2]="";
-	    role[i,3]="Veteran";wep1[i,3]="Chainsword";wep2[i,3]="Bolter";armour[i,3]="Power Armour";mobi[i,3]="";gear[i,3]="";
+	    role[i,3]="Veteran";wep1[i,3]="Chainsword";wep2[i,3]="Combi-Flamer";armour[i,3]="Power Armour";mobi[i,3]="";gear[i,3]="";
 	    role[i,4]="Terminator";wep1[i,4]="Power Fist";wep2[i,4]="Storm Bolter";armour[i,4]="Terminator Armour";mobi[i,4]="";gear[i,4]="";
 	    role[i,5]="Captain";wep1[i,5]="Power Fist";wep2[i,5]="Bolt Pistol";armour[i,5]="Power Armour";mobi[i,5]="";gear[i,5]="";
 	    role[i,6]="Dreadnought";wep1[i,6]="Close Combat Weapon";wep2[i,6]="Lascannon";armour[i,6]="Dreadnought";mobi[i,6]="";gear[i,6]="";
@@ -948,9 +948,15 @@ function scr_initialize_custom() {
 	        if (company=4) then name[company,k]=lord_admiral_name;
 	        if (company=10) then name[company,k]=recruiter_name;
 
+			var oldguard; oldguard=0;
+			// used to randomly make a marine an old guard of their company, giving a bit more xp and fancier armor they've hanged onto all these years
+
+
 	        wep2[company,k]=wep2[101,5];
-	        armour[company,k]="MK7 Aquila";if (company<=2) then armour[company,k]=choose("MK8 Errant","MK6 Corvus");
-	        hp[company,k]=100;chaos[company,k]=0;experience[company,k]=max(40,company_experience+10);
+			// dictates which type of armor non 1st company get. Commented out to just gave everyone mk8
+	      //armour[company,k]="MK7 Aquila";if (company<=2) then armour[company,k]=choose("MK8 Errant","MK6 Corvus");
+		  	armour[company,k]="MK8 Errant";
+	        hp[company,k]=100;chaos[company,k]=0;experience[company,k]=max(40,company_experience+50+irandom(40));
 
 	        if (company=8) then mobi[company,k]="Jump Pack";
 	        if (mobi[101,5]!="") then mobi[company,k]=mobi[101,5];
@@ -999,13 +1005,13 @@ function scr_initialize_custom() {
 	        k+=1;// Standard Bearer
 	        race[company,k]=1;loc[company,k]=home_name;role[company,k]="Standard Bearer";wep1[company,k]="Chainsword";name[company,k]=scr_marine_name();
 	        wep2[company,k]="Company Standard";
-	        armour[company,k]="MK7 Aquila";if (company<=2) then armour[company,k]="MK6 Corvus";
-	        hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience+5;if (company=8) then mobi[company,k]="Jump Pack";
+	        armour[company,k]="MK5 Heresy";
+	        hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience+20;if (company=8) then mobi[company,k]="Jump Pack";
 
 	        k+=1;man_size+=1;// Company Champion
 	        race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,7];wep1[company,k]=wep1[100,7];name[company,k]=scr_marine_name();
-	        wep2[company,k]=wep2[100,7];armour[company,k]="MK7 Aquila";if (company<=2) then armour[company,k]="MK6 Corvus";
-	        hp[company,k]=100;chaos[company,k]=0;experience[company,k]=120;
+	        wep2[company,k]=wep2[100,7];armour[company,k]="MK4 Maximus";
+	        hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience+40+irandom(40);
 
 	        if (obj_creation.equal_specialists=1){
 	            company_experience=(16-company)*5;
@@ -1105,11 +1111,11 @@ function scr_initialize_custom() {
 
 
 	        if (rhinoy>0) then repeat(rhinoy){v+=1;man_size+=10;
-	            veh_race[company,v]=1;veh_loc[company,v]=home_name;veh_role[company,v]="Rhino";veh_wep1[company,v]="Storm Bolter";veh_wep2[company,v]="HK Missile";veh_wep3[company,v]="";
+	            veh_race[company,v]=1;veh_loc[company,v]=home_name;veh_role[company,v]="Rhino";veh_wep1[company,v]="Storm Bolter";veh_wep2[company,v]="";veh_wep3[company,v]="";
 	            veh_upgrade[company,v]="";veh_acc[company,v]="Dozer Blades";veh_hp[company,v]=100;veh_chaos[company,v]=0;veh_pilots[company,v]=0;veh_lid[company,v]=0;veh_wid[company,v]=2;
 	        }
 	        if (whirly>0) then repeat(whirly){v+=1;man_size+=10;
-	            veh_race[company,v]=1;veh_loc[company,v]=home_name;veh_role[company,v]="Whirlwind";veh_wep1[company,v]="Whirlwind Missiles";veh_wep2[company,v]="HK Missile";veh_wep3[company,v]="";
+	            veh_race[company,v]=1;veh_loc[company,v]=home_name;veh_role[company,v]="Whirlwind";veh_wep1[company,v]="Whirlwind Missiles";veh_wep2[company,v]="";veh_wep3[company,v]="";
 	            veh_upgrade[company,v]="";veh_acc[company,v]="";veh_hp[company,v]=100;veh_chaos[company,v]=0;veh_pilots[company,v]=0;veh_lid[company,v]=0;veh_wid[company,v]=2;
 	        }
 	        if (speedy>0) then repeat(speedy){v+=1;man_size+=6;
@@ -1122,7 +1128,7 @@ function scr_initialize_custom() {
 
 	            repeat(predy){v+=1;man_size+=10;
 	                veh_race[company,v]=1;veh_loc[company,v]=home_name;veh_role[company,v]="Predator";
-	                if (!floor(v mod 2) == 1){veh_wep1[company,v]="Twin Linked Lascannon Turret";veh_wep2[company,v]="Lascannon Sponsons";veh_wep3[company,v]="HK Missile";veh_upgrade[company,v]="";veh_acc[company,v]="Searchlight";}
+	                if (!floor(v mod 2) == 1){veh_wep1[company,v]="Twin Linked Lascannon Turret";veh_wep2[company,v]="Lascannon Sponsons";veh_wep3[company,v]="";veh_upgrade[company,v]="";veh_acc[company,v]="Searchlight";}
 	                if (floor(v mod 2) == 1){veh_wep1[company,v]="Autocannon Turret";veh_wep2[company,v]="Heavy Bolter Sponsons";veh_wep3[company,v]="Storm Bolter";veh_upgrade[company,v]="";veh_acc[company,v]="Dozer Blades";}veh_wid[company,v]=2;
 	                veh_hp[company,v]=100;veh_chaos[company,v]=0;veh_pilots[company,v]=0;veh_lid[company,v]=0;
 	            }
