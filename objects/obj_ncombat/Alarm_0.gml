@@ -3,10 +3,11 @@ if (battle_special="cs_meeting_battle5") then alpha_strike=1;
 
 instance_activate_object(obj_enunit);
 
+// Checks if Chapter master is a psyker
 if (chapter_master_psyker=true) and (obj_ini.psy_powers="default"){
-    var yeo=0;
-	for(var i=1; i<=4; i++){if (obj_ini.adv[i]="Paragon") then yeo=1;}
-    if (yeo=1) then kamehameha=true;
+    var yeo=false;
+	for(var i=1; i<=4; i++){if (obj_ini.adv[i]="Paragon") then yeo=true;}
+    if (yeo=true) then kamehameha=true;
 }
 
 // show_message("Leader?: "+string(leader));
@@ -74,7 +75,7 @@ if (string_count("spyrer",battle_special)>0){
 	enemies[1]=1;
 	u.flank=1;
 }
-// * Small Fallen force *
+// * Small Fallen Group *
 if (battle_special="fallen1"){
     fortified=0;
 	with(obj_enunit){instance_destroy();}
@@ -84,7 +85,7 @@ if (battle_special="fallen1"){
 	u.dudes_num[1]=1;
 	enemies[1]=1;
 }
-// * Big Fallen Force *
+// * Large Fallen Group *
 if (battle_special="fallen2"){
     fortified=0;
 	with(obj_enunit){instance_destroy();}
@@ -94,7 +95,7 @@ if (battle_special="fallen2"){
     u.dudes_num[1]=choose(1,1,2,2,3);
     enemies[1]=u.dudes_num[1];
 }
-// * Praetorian Servitor force *
+// * Praetorian Servitor Group *
 if (string_count("mech",battle_special)>0){
     fortified=0;
 	with(obj_enunit){instance_destroy();}
@@ -121,8 +122,7 @@ if (battle_special="ship_demon"){
 	u.engaged=1;
     with(instance_nearest(x+1000,240,obj_pnunit)){engaged=1;}
 }
-// ** Necron Forces **
-// * Necron Wraith Force *
+// * Necron Wraith Group *
 if (battle_special="wraith_attack"){
     fortified=0;
 	with(obj_enunit){instance_destroy();}
@@ -137,7 +137,7 @@ if (battle_special="wraith_attack"){
     u.engaged=1;// u.flank=1;
     with(instance_nearest(x+1000,240,obj_pnunit)){engaged=1;}
 }
-// * Canoptek Spyder Force * 
+// * Canoptek Spyder Group * 
 if (battle_special="spyder_attack"){
     fortified=0;
 	with(obj_enunit){instance_destroy();}
@@ -151,7 +151,7 @@ if (battle_special="spyder_attack"){
     u.engaged=1;// u.flank=1;
     with(instance_nearest(x+1000,240,obj_pnunit)){engaged=1;}
 }
-// * Tomb Stalker Force *
+// * Tomb Stalker Group *
 if (battle_special="stalker_attack"){
     fortified=0;
 	with(obj_enunit){instance_destroy();}
@@ -163,7 +163,7 @@ if (battle_special="stalker_attack"){
     u.engaged=1;// u.flank=1;
     with(instance_nearest(x+1000,240,obj_pnunit)){engaged=1;}
 }
-// * Chaos Space Marine Elite Force *
+// * Chaos Space Marine Elite Group *
 if (battle_special="cs_meeting_battle5") or (battle_special="cs_meeting_battle6"){
     fortified=0;with(obj_enunit){instance_destroy();}
     u=instance_create(xxx+20,240,obj_enunit);
@@ -183,7 +183,7 @@ if (battle_special="cs_meeting_battle5") or (battle_special="cs_meeting_battle6"
 	u.dudes_num[1]=20;
     enemies[1]=20;
 }
-// * Chaos Space Marine Company Force *
+// * Chaos Space Marine Elite Company *
 if (battle_special="cs_meeting_battle10"){
     fortified=0;with(obj_enunit){instance_destroy();}
     u=instance_create(xxx+20,240,obj_enunit);
@@ -516,7 +516,7 @@ if (enemy=2){
     if (threat>1){u.dudes[3]="Leman Russ Battle Tank";u.dudes_num[3]=min(1000,floor(guard_effective*0.1));enemies[3]=u.dudes[3];}*/
 }
 
-// * Aeldar Force *
+// ** Aeldar Force **
 if (enemy=6){
     // Ranger Group
     if (threat=1){
@@ -1128,7 +1128,7 @@ if (enemy=5){
         u.dudes[5]="Mistress";
         u.dudes_num[5]=30;
     }
-    // Big Sister Army
+    // Large Sister Army
     if (threat=6){
         u=instance_nearest(xxx+50,240,obj_enunit);
         enemy_dudes="12000";
@@ -1199,6 +1199,7 @@ if (enemy=5){
 if (enemy=7){
     // u=instance_create(-10,240,obj_enunit);
     // u.dudes[1]="Stormboy";u.dudes_num[1]=2500;u.flank=1;// enemies[1]=u.dudes[1];
+    
     // Small Ork Group
     if (threat=1){
         u=instance_nearest(xxx,240,obj_enunit);
