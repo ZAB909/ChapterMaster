@@ -22,7 +22,7 @@ if (header=3){
     }
     
     var icon_sprite,icc;icon_sprite=spr_icon;icc=obj_ini.icon;
-    if (icc>20){icon_sprite=spr_icon_other;icc-=19;}
+    if (icc>20){icon_sprite=spr_icon_chapters;icc-=19;}
     
     if (string_pos("custom",obj_ini.icon_name)>0) then cus=true;
     if (cus=false) and (icc<=20) then scr_image("creation",icc,x2+(wid/2)-50,y2-10,141*0.7,141*0.7);
@@ -50,7 +50,7 @@ if (header=2){
     }
     
     var icon_sprite,icc;icon_sprite=spr_icon;icc=obj_ini.icon;
-    if (icc>20){icon_sprite=spr_icon_other;icc-=19;}
+    if (icc>20){icon_sprite=spr_icon_chapters;icc-=19;}
     
     if (string_pos("custom",obj_ini.icon_name)>0) then cus=true;
     if (cus=false) and (icc<=20) then scr_image("creation",icc,x2+(wid/2)-16,y2-16,141*0.23,141*0.23);

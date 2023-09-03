@@ -1,3 +1,4 @@
+
 {
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
@@ -17,7 +18,7 @@
     {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"9a0be619-cf47-40ad-85fb-80e9a47f33d2",},
     {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"220e7f94-beeb-42d1-a773-382c6244c0ba",},
     {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"6364e9e1-4f23-4786-9752-32d47a8908f0",},
-    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"e66f031b-878c-4987-a88d-51f855dd5fef",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"1a9393a1-441d-45c5-a749-b3cba91ef231",},
     {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"d1050907-e731-4640-b035-7463ff93ba84",},
     {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"7516952b-d12c-45e5-a064-08239121bd51",},
     {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"d699ddac-33db-4a1e-b748-61660b027c75",},
@@ -70,7 +71,7 @@
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"9a0be619-cf47-40ad-85fb-80e9a47f33d2","path":"sprites/spr_beakie_colors/spr_beakie_colors.yy",},},},"Disabled":false,"id":"280151a6-78a4-4eda-9c3e-0fa5adbae20c","IsCreationKey":false,"Key":1.0,"Length":1.0,"Stretch":false,},
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"220e7f94-beeb-42d1-a773-382c6244c0ba","path":"sprites/spr_beakie_colors/spr_beakie_colors.yy",},},},"Disabled":false,"id":"9331c140-97ce-4e0a-9af1-5462d14ecdd1","IsCreationKey":false,"Key":2.0,"Length":1.0,"Stretch":false,},
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"6364e9e1-4f23-4786-9752-32d47a8908f0","path":"sprites/spr_beakie_colors/spr_beakie_colors.yy",},},},"Disabled":false,"id":"96758a3d-33e6-4764-9606-3683be225e57","IsCreationKey":false,"Key":3.0,"Length":1.0,"Stretch":false,},
-            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"e66f031b-878c-4987-a88d-51f855dd5fef","path":"sprites/spr_beakie_colors/spr_beakie_colors.yy",},},},"Disabled":false,"id":"829ef1b0-d834-4536-9492-a06387208e3d","IsCreationKey":false,"Key":4.0,"Length":1.0,"Stretch":false,},
+            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"1a9393a1-441d-45c5-a749-b3cba91ef231","path":"sprites/spr_beakie_colors/spr_beakie_colors.yy",},},},"Disabled":false,"id":"b083c1fd-6be2-4779-b6cb-07557d146327","IsCreationKey":false,"Key":4.0,"Length":1.0,"Stretch":false,},
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"d1050907-e731-4640-b035-7463ff93ba84","path":"sprites/spr_beakie_colors/spr_beakie_colors.yy",},},},"Disabled":false,"id":"8f1a06e0-1b78-45a1-8b13-ac8c5813ac3f","IsCreationKey":false,"Key":5.0,"Length":1.0,"Stretch":false,},
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"7516952b-d12c-45e5-a064-08239121bd51","path":"sprites/spr_beakie_colors/spr_beakie_colors.yy",},},},"Disabled":false,"id":"46288b4a-6dac-4bda-88c4-41cd823fbae3","IsCreationKey":false,"Key":6.0,"Length":1.0,"Stretch":false,},
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"d699ddac-33db-4a1e-b748-61660b027c75","path":"sprites/spr_beakie_colors/spr_beakie_colors.yy",},},},"Disabled":false,"id":"cead7b66-440e-4873-b879-2060887b5293","IsCreationKey":false,"Key":7.0,"Length":1.0,"Stretch":false,},
@@ -95,4 +96,5 @@
   "type": 0,
   "VTile": false,
   "width": 167,
+
 }
