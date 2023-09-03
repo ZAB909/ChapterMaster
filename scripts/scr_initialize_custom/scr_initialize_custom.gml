@@ -1013,24 +1013,30 @@ function scr_initialize_custom() {
 	        wep2[company,k]=wep2[100,7];armour[company,k]="MK4 Maximus";
 	        hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience+40+irandom(40);
 
-			var old_guard; old_guard=0;
+
 			// used to randomly make a marine an old guard of their company, giving a bit more xp and fancier gear they've hanged onto all these years
+
 
 			// non command marines
 	        if (obj_creation.equal_specialists=1){
 	            company_experience=(16-company)*5;
 	            if (company<10){ // taccies
 	                repeat(temp1){k+=1;man_size+=1;
-	                    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,8];wep1[company,k]=wep1[101,8];name[company,k]=scr_marine_name();
+					var old_guard=irandom(100); // 100% for diff armor
+					var rare_weapon=irandom(20); // power sword
+					var squad_weapon=irandom(10); // plasma, melta, combi, chainaxe
+					var special_weapon=irandom(5); // flamer (assault marines), 
+	                    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,8];name[company,k]=scr_marine_name();
+						
+						wep1[company,k]=wep1[101,8];
 	                    wep2[company,k]=wep2[101,8];
 
-						//armor assign and old guard assignment
-
 						if (company<=2) then armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies
-						old_guard = irandom(100)
-						if (oldguard=100){armour[company,k]="MK3 Iron Armour"}; // 1%
-						if (oldguard>=97 and oldguard<=99){armour[company,k]="MK4 Maximus"}; //3%
-	                    armour[company,k]="MK3 Iron Armour"; // default armor for all taccies
+
+	
+						if (old_guard=100){armour[company,k]="MK3 Iron Armour"}; // 1%
+						if (old_guard>=97 and old_guard<=99){armour[company,k]="MK4 Maximus"}; //3%
+						else{armour[company,k]="MK7 Aquila"};
 	                    hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
 	                } // assault boys
 	                repeat(assault){k+=1;man_size+=1;
@@ -1060,13 +1066,18 @@ function scr_initialize_custom() {
 	            }
 	        }
 
-
+				// I think this is the one next to the load transport option, overrides the other gear option so it sucks
 	        if (obj_creation.equal_specialists=0){ // taccies
 	            if (company<8) then repeat(temp1){k+=1;man_size+=1;
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,8];wep1[company,k]=wep1[101,8];name[company,k]=scr_marine_name();
 	                wep2[company,k]=wep2[101,8];
-	             //   armour[company,k]="MK7 Aquila";if (company<=2) then armour[company,k]="MK6 Corvus";
-	                hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
+
+						if (company<=2) then armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies
+						
+						if (old_guard=100){armour[company,k]="MK3 Iron Armour"}; // 1%
+						if (old_guard>=30 and old_guard<=99){armour[company,k]="MK4 Maximus"}; //3%
+						else{armour[company,k]="MK7 Aquila"};
+	                    hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
 	            }
 	            if (company=8) then repeat(temp1){k+=1;man_size+=1; // assaulties
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,10];wep1[company,k]=wep1[101,10];name[company,k]=scr_marine_name();
@@ -1074,7 +1085,7 @@ function scr_initialize_custom() {
 	                armour[company,k]="MK7 Aquila";if (company<=2) then armour[company,k]="MK6 Corvus";
 	                hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;mobi[company,k]="Jump Pack";
 	            }
-	            if (company=9) then repeat(temp1){k+=1;man_size+=1; // devos
+	            if (company=9) then repeat(temp1){k+=1;man_size+=1; // demos
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,9];
 
 	                if (wep1[101,9]="Heavy Ranged") then wep1[company,k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
@@ -1083,7 +1094,7 @@ function scr_initialize_custom() {
 	                name[company,k]=scr_marine_name();
 
 	                wep2[company,k]=wep2[101,9];
-	             //   armour[company,k]="MK7 Aquila";if (company<=2) then armour[company,k]="MK6 Corvus";
+	                armour[company,k]="MK7 Aquila";if (company<=2) then armour[company,k]="MK6 Corvus";
 	                hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
 	            }
 	            if (company=10) then repeat(temp1){k+=1;man_size+=1;

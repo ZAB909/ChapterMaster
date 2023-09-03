@@ -107,7 +107,7 @@ repeat(3){i+=1;
     obj_controller.r_role[i,2]="Honor Guard";obj_controller.r_wep1[i,2]="Power Sword";obj_controller.r_wep2[i,2]="Bolter";
     obj_controller.r_armour[i,2]="Power Armour";obj_controller.r_mobi[i,2]="";obj_controller.r_gear[i,2]="";
     
-    obj_controller.r_role[i,3]="Veteran";obj_controller.r_wep1[i,3]="Chainsword";obj_controller.r_wep2[i,3]="Bolter";
+    obj_controller.r_role[i,3]="Veteran";obj_controller.r_wep1[i,3]="Chainsword";obj_controller.r_wep2[i,3]="Combi-Flamer";
     obj_controller.r_armour[i,3]="Power Armour";obj_controller.r_mobi[i,3]="";obj_controller.r_gear[i,3]="";
     
     obj_controller.r_role[i,4]="Terminator";obj_controller.r_wep1[i,4]="Power Fist";obj_controller.r_wep2[i,4]="Storm Bolter";
