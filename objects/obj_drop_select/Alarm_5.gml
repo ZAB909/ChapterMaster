@@ -1,26 +1,44 @@
-
+// This script sets up the selected forces to drop into a planet and initiates combat
 attacking=10;
 
-var add_ground;add_ground=0;        // Local Forces here
-var smin,smax,w;w=-1;smin=0;smax=0;
+// Local Forces here
+var add_ground=0;        
+var w=-1,smin=0,smax=0;
 
-if (add_ground=1){ships_selected+=1;remove_local=-1;
-    bikes+=l_bikes;rhinos+=l_rhinos;
-    whirls+=l_whirls;predators+=l_predators;
-    raiders+=l_raiders;speeders+=l_speeders;
+// Sets up the ground forces
+if (add_ground=1){
+    ships_selected+=1;
+    remove_local=-1;
+    bikes+=l_bikes;
+    rhinos+=l_rhinos;
+    whirls+=l_whirls;
+    predators+=l_predators;
+    raiders+=l_raiders;
+    speeders+=l_speeders;
     
-    refresh_raid=1;ship_all[500]=1;ship_use[500]=ship_max[500];
+    refresh_raid=1;
+    ship_all[500]=1;
+    ship_use[500]=ship_max[500];
 }
-if (add_ground=-1){ships_selected-=1;remove_local=1;
-    bikes-=l_bikes;rhinos-=l_rhinos;
-    whirls-=l_whirls;predators-=l_predators;
-    raiders-=l_raiders;speeders-=l_speeders;
+if (add_ground=-1){
+    ships_selected-=1;
+    remove_local=1;
+    bikes-=l_bikes;
+    rhinos-=l_rhinos;
+    whirls-=l_whirls;
+    predators-=l_predators;
+    raiders-=l_raiders;
+    speeders-=l_speeders;
     
-    refresh_raid=1;ship_all[500]=0;ship_use[500]=0;
-}add_ground=0;
+    refresh_raid=1;
+    ship_all[500]=0;
+    ship_use[500]=0;
+}
+add_ground=0;
 
-
-obj_controller.cooldown=30;combating=1;// Start battle here
+obj_controller.cooldown=30;
+// ** Starts the battle **
+combating=1;
 
 instance_deactivate_all(true);
 instance_activate_object(obj_controller);
@@ -31,9 +49,10 @@ instance_create(0,0,obj_ncombat);
 obj_ncombat.battle_object=p_target;
 obj_ncombat.battle_loc=p_target.name;
 obj_ncombat.battle_id=obj_controller.selecting_planet;
-obj_ncombat.dropping=0;obj_ncombat.attacking=10;
-obj_ncombat.enemy=10;obj_ncombat.formation_set=2;
-
+obj_ncombat.dropping=0;
+obj_ncombat.attacking=10;
+obj_ncombat.enemy=10;
+obj_ncombat.formation_set=2;
 
 /*
 obj_ncombat.battle_object=p_target;
@@ -47,7 +66,8 @@ obj_ncombat.formation_set=formation_possible[formation_current];
 
 if (ship_all[500]=1) then obj_ncombat.local_forces=1;
 
-obj_ncombat.leader=1;obj_ncombat.threat=5;
+obj_ncombat.leader=1;
+obj_ncombat.threat=5;
 obj_ncombat.battle_special="WL10_reveal";
 
 /*
@@ -57,35 +77,34 @@ argument0.p_chaos[argument1]=4;
 argument0.p_owner[argument1]=10;
 */
 
-var co, v, stop;
-co=0;v=0;stop=0;  
-repeat(3600){
-    if (co<11){v+=1;
-        if (v>300){co+=1;v=1;}
+var co=0,v=0,stop=0;
+for (var i=0; i<3600; i++) {
+    if (co<11){
+        v+=1;
+        if (v>300){
+            co+=1;
+            v=1;
+        }
         if (co>10) then stop=1;
         if (stop=0){
-            if (fighting[co,v]!=0){obj_ncombat.fighting[co,v]=1;}// show_message(string(co)+":"+string(v)+" is fighting");
+            if (fighting[co,v]!=0) then obj_ncombat.fighting[co,v]=1;// show_message(string(co)+":"+string(v)+" is fighting");
             if (attack=1) and (v<=100){
                 if (veh_fighting[co,v]!=0) then obj_ncombat.veh_fighting[co,v]=1;
             }
             if (attack=1) and (ship_all[500]=1){
-            if (obj_ini.loc[co,v]=p_target.name) and (obj_ini.wid[co,v]=obj_controller.selecting_planet) and (fighting[co,v]=1) then obj_ncombat.fighting[co,v]=1;
-                if (v<=100){if (obj_ini.veh_loc[co,v]=p_target.name) and (obj_ini.veh_wid[co,v]=obj_controller.selecting_planet) then obj_ncombat.veh_fighting[co,v]=1;}
+                if (obj_ini.loc[co,v]=p_target.name) and (obj_ini.wid[co,v]=obj_controller.selecting_planet) and (fighting[co,v]=1) then obj_ncombat.fighting[co,v]=1;
+                if (v<=100){
+                    if (obj_ini.veh_loc[co,v]=p_target.name) and (obj_ini.veh_wid[co,v]=obj_controller.selecting_planet) then obj_ncombat.veh_fighting[co,v]=1;
+                }
             }
         }
     }
 }
 
-var i;i=-1;ships_selected=0;
-repeat(31){
-    i+=1;if (ship_all[i]!=0) then scr_battle_roster(ship[i],ship_ide[i],false);
+var ships_selected=0;
+for (var i=0; i<31; i++) {
+    if (ship_all[i]!=0) then scr_battle_roster(ship[i],ship_ide[i],false);
 }
 if (ship_all[500]=1) and (attack=1) then scr_battle_roster(p_target.name,obj_controller.selecting_planet,true);
 
-
 instance_destroy();
-        
-
-
-/* */
-/*  */
