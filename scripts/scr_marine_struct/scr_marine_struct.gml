@@ -126,21 +126,6 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			skills: {},	
 			gear:{"armour":"Power Armour", "wep1":"Power Sword", "wep2":"Storm Shield"}
 	},
-	"sister_of_battle":{
-			title : "Sister of Battle",
-			strength:5,
-			constitution:8,
-			dexterity:6,
-			intelligence:5,
-			wisdom:5,
-			charisma :5,
-			religion : "imperial_cult",
-			piety : 20,
-			technology :3,
-			luck :6,
-			skills: {},	
-			gear:{"armour":"Power Armour", "wep1":"Power Sword", "wep2":"Storm Shield"}
-	},
 	"sister_hospitaler":{
 			title : "Sister of Battle",
 			strength:5,
@@ -237,17 +222,17 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				marine_ascension = "pre_game"; // on what day did turn did this marine begin to exist
 
 			}
-			if (irandom(100)>99){
+			if (irandom(99)>98){
 				 add_trait("very_hard_to_kill");	 //chance for marine to be exceedingly tough
 			};
-			if (irandom(1000)>999){
+			if (irandom(999)>998){
 				 add_trait("paragon");				//paragon chance just like cm
 			};
-			if (irandom(50)>49){
+			if (irandom(49)>48){
 				 add_trait("warp_touched");			//has phychic potential
 			};		
 			if (allegiance == "Lamentors"){		//lamentors are unlucky
-				if (irandom(4)>3){
+				if (irandom(3)>2){
 					add_trait("shitty_luck");
 				}
 			}

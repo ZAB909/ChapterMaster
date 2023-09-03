@@ -5,7 +5,7 @@ icon=0;icon_name="";
 specials=0;firsts=0;seconds=0;thirds=0;fourths=0;fifths=0;
 sixths=0;sevenths=0;eighths=0;ninths=0;tenths=0;commands=0;
 
-hh1=0;heh2=0;
+heh1=0;heh2=0;
 
 strin="";
 strin2="";

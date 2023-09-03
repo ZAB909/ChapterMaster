@@ -1,17 +1,10 @@
 
 function scr_add_man(man_role, target_company, choice_armour, choice_weapons, choice_gear, spawn_exp, spawn_name, corruption, other_gear, home_spot, mobility_items) {
 
-	// man_role = role
-	// target_company = company
-	// choice_armour = armorset
-	// choice_weapons = weaponset
-	// choice_gear = gear
-	// spawn_exp = exp
-	// spawn_name = name
-	// corruption = chaos
+	//all of this will in time be irrelevant as calling new TTRPG_stats() and then calling the correct methods within the new itme will replace this but for
+	//now its easy enough to use this as the structs continue to be built.
 	// other_gear = gear provided?
 	// home_spot = home, shipXY, or default
-	// mobility_items = mobility
 
 	// That should be sufficient to add stuff in a highly modifiable fashion
 
@@ -107,14 +100,6 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 	                }
 	            }
 	        }
-        
-        
-        
-	        // wop=string_delete(home_spot,0,4);
-	        // wop2=real(wop);
-	        /*obj_ini.lid[target_company,good]=wop2;
-	        obj_ini.loc=obj_ini.ship_location[wop2];
-	        obj_ini.wid[target_company,good]=0;*/
 	    }
 	    obj_ini.role[target_company,good]=man_role;
 	    obj_ini.wep1[target_company,good]="";
