@@ -938,9 +938,9 @@ function scr_initialize_custom() {
 	        }
 	    }
 
-
+	
 	    if (stahp=0){
-
+			
 	        k+=1;commands+=1;// Captain
 	        race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,5];wep1[company,k]=wep1[101,5];
 	        name[company,k]=scr_marine_name();
@@ -948,13 +948,13 @@ function scr_initialize_custom() {
 	        if (company=4) then name[company,k]=lord_admiral_name;
 	        if (company=10) then name[company,k]=recruiter_name;
 
-			var oldguard; oldguard=0;
-			// used to randomly make a marine an old guard of their company, giving a bit more xp and fancier armor they've hanged onto all these years
 
 
 	        wep2[company,k]=wep2[101,5];
-			// dictates which type of armor non 1st company get. Commented out to just gave everyone mk8
+
+		 // dictates which type of armor non 1st company get. Commented out to just give all captains mk8
 	      //armour[company,k]="MK7 Aquila";if (company<=2) then armour[company,k]=choose("MK8 Errant","MK6 Corvus");
+
 		  	armour[company,k]="MK8 Errant";
 	        hp[company,k]=100;chaos[company,k]=0;experience[company,k]=max(40,company_experience+50+irandom(40));
 
@@ -1013,21 +1013,32 @@ function scr_initialize_custom() {
 	        wep2[company,k]=wep2[100,7];armour[company,k]="MK4 Maximus";
 	        hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience+40+irandom(40);
 
+			var old_guard; old_guard=0;
+			// used to randomly make a marine an old guard of their company, giving a bit more xp and fancier gear they've hanged onto all these years
+
+			// non command marines
 	        if (obj_creation.equal_specialists=1){
 	            company_experience=(16-company)*5;
-	            if (company<10){
+	            if (company<10){ // taccies
 	                repeat(temp1){k+=1;man_size+=1;
 	                    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,8];wep1[company,k]=wep1[101,8];name[company,k]=scr_marine_name();
 	                    wep2[company,k]=wep2[101,8];
-	                    armour[company,k]="MK7 Aquila";if (company<=2) then armour[company,k]="MK6 Corvus";
+
+						//armor assign and old guard assignment
+
+						if (company<=2) then armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies
+						old_guard = irandom(100)
+						if (oldguard=100){armour[company,k]="MK3 Iron Armour"}; // 1%
+						if (oldguard>=97 and oldguard<=99){armour[company,k]="MK4 Maximus"}; //3%
+	                    armour[company,k]="MK3 Iron Armour"; // default armor for all taccies
 	                    hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
-	                }
+	                } // assault boys
 	                repeat(assault){k+=1;man_size+=1;
 	                    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,10];wep1[company,k]=wep1[101,10];name[company,k]=scr_marine_name();
 	                    wep2[company,k]=wep2[101,10];
 	                    armour[company,k]="MK7 Aquila";if (company<=2) then armour[company,k]="MK6 Corvus";
 	                    mobi[company,k]="Jump Pack";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
-	                }
+	                } // devo lads
 	                repeat(devastator){k+=1;man_size+=1;
 	                    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,9];
 
@@ -1038,7 +1049,7 @@ function scr_initialize_custom() {
 	                    armour[company,k]="MK7 Aquila";if (company<=2) then armour[company,k]="MK6 Corvus";
 	                    hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
 	                }
-	            }
+	            } // apprentices
 	            if (company=10){
 	                repeat(temp1){k+=1;man_size+=1;
 	                    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,12];
@@ -1050,20 +1061,20 @@ function scr_initialize_custom() {
 	        }
 
 
-	        if (obj_creation.equal_specialists=0){
+	        if (obj_creation.equal_specialists=0){ // taccies
 	            if (company<8) then repeat(temp1){k+=1;man_size+=1;
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,8];wep1[company,k]=wep1[101,8];name[company,k]=scr_marine_name();
 	                wep2[company,k]=wep2[101,8];
-	                armour[company,k]="MK7 Aquila";if (company<=2) then armour[company,k]="MK6 Corvus";
+	             //   armour[company,k]="MK7 Aquila";if (company<=2) then armour[company,k]="MK6 Corvus";
 	                hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
 	            }
-	            if (company=8) then repeat(temp1){k+=1;man_size+=1;
+	            if (company=8) then repeat(temp1){k+=1;man_size+=1; // assaulties
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,10];wep1[company,k]=wep1[101,10];name[company,k]=scr_marine_name();
 	                wep2[company,k]=wep2[101,10];
 	                armour[company,k]="MK7 Aquila";if (company<=2) then armour[company,k]="MK6 Corvus";
 	                hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;mobi[company,k]="Jump Pack";
 	            }
-	            if (company=9) then repeat(temp1){k+=1;man_size+=1;
+	            if (company=9) then repeat(temp1){k+=1;man_size+=1; // devos
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,9];
 
 	                if (wep1[101,9]="Heavy Ranged") then wep1[company,k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
@@ -1072,7 +1083,7 @@ function scr_initialize_custom() {
 	                name[company,k]=scr_marine_name();
 
 	                wep2[company,k]=wep2[101,9];
-	                armour[company,k]="MK7 Aquila";if (company<=2) then armour[company,k]="MK6 Corvus";
+	             //   armour[company,k]="MK7 Aquila";if (company<=2) then armour[company,k]="MK6 Corvus";
 	                hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
 	            }
 	            if (company=10) then repeat(temp1){k+=1;man_size+=1;
