@@ -378,6 +378,7 @@
     {"id":{"name":"spr_weapon_assca","path":"sprites/spr_weapon_assca/spr_weapon_assca.yy",},},
     {"id":{"name":"spr_weapon_lasca","path":"sprites/spr_weapon_lasca/spr_weapon_lasca.yy",},},
     {"id":{"name":"spr_weapon_plasg","path":"sprites/spr_weapon_plasg/spr_weapon_plasg.yy",},},
+    {"id":{"name":"spr_weapon_plasp","path":"sprites/spr_weapon_plasp/spr_weapon_plasp.yy",},},
     {"id":{"name":"spr_weapon_knife","path":"sprites/spr_weapon_knife/spr_weapon_knife.yy",},},
     {"id":{"name":"spr_weapon_chsword","path":"sprites/spr_weapon_chsword/spr_weapon_chsword.yy",},},
     {"id":{"name":"spr_weapon_sniper","path":"sprites/spr_weapon_sniper/spr_weapon_sniper.yy",},},
