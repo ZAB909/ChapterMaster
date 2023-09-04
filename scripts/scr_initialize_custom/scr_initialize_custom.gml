@@ -1024,12 +1024,20 @@ function scr_initialize_custom() {
 	                repeat(temp1){k+=1;man_size+=1;
 					var old_guard=irandom(100); // 100% for diff armor
 					var rare_weapon=irandom(20); // power sword
-					var squad_weapon=irandom(10); // plasma, melta, combi, chainaxe
-					var special_weapon=irandom(5); // flamer (assault marines), 
+					var squad_weapon=irandom(10); // plasma, melta, flamer, combi?, chainaxe (assault)
+					var special_weapon=irandom(5); // hand flamer (assault), 
+					var coinflip = irandom(2);
 	                    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,8];name[company,k]=scr_marine_name();
+						// make a repeat for squad_weapon to do this
+						if(squad_weapon=10){wep1[company,k]="Flamer"};
+						squad_weapon=irandom(10); if(squad_weapon=10){squad_weapon=0};
+						if(squad_weapon=9 && coinflip=2){wep1[company,k]="Meltagun"};
+						squad_weapon=irandom(10);if(squad_weapon=9){squad_weapon=0};
+						if(squad_weapon=8){wep1[company,k]="Plasma Gun"};
+							else{wep1[company,k]=wep1[101,8]};
 						
-						wep1[company,k]=wep1[101,8];
-	                    wep2[company,k]=wep2[101,8];
+						if(rare_weapon=20){wep2[company,k]="Power Sword"};
+							else{wep2[company,k]=wep2[101,8]};
 
 						if (company<=2) then armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies
 
