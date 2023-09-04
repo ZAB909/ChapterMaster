@@ -1,7 +1,13 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 
-
+enum location_types {
+	planet,
+	ship,
+	space_hulk,
+	ancient_ruins,
+	warp
+}
 global.trait_list = {
 	"shitty_luck":{
 		luck:-4
@@ -208,7 +214,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		load_json_data(global.base_stats[$ class]);
 	}
 	
-
 	switch class{
 		case "marine":				//basic marine class //adds specific mechanics not releveant to most units
 			if (faction ="chapter"){
@@ -231,16 +236,14 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			if (irandom(49)>48){
 				 add_trait("warp_touched");			//has phychic potential
 			};		
-			if (allegiance == "Lamentors"){		//lamentors are unlucky
+			if (array_contains(obj_ini.dis,"Shitty Luck")){		//lamentors are unlucky
 				if (irandom(3)>2){
 					add_trait("shitty_luck");
 				}
 			}
 			break;
-		case "skitarii":
-			break;
-			
-		
+		/*case "skitarii":
+			break;*/	
 	}
 		static race = function(){return obj_ini.race[company,marine_number];}		//get race
 		static experience =  function(){return obj_ini.experience[company,marine_number];}//get exp
@@ -258,7 +261,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		static hp = function(){ 
 			return obj_ini.hp[company,marine_number] //return current health
 		};
-		//update_marine health
        static update_health = function(new_health){
             obj_ini.hp[company,marine_number] = new_health;
 	   };
@@ -334,10 +336,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			var location_type = obj_ini.wid[company,marine_number];
 			if ( location_type > 0){ //if marine is on planet
 				location_id = location_type; //planet_number marine is on
-				location_type = "planet"; //state marine is on planet
+				location_type = location_types.planet; //state marine is on planet
 				location_name = obj_ini.loc[company,marine_number]; //system marine is in
 			} else {
-				location_type = "ship"; //marine is on ship
+				location_type =  location_types.ship; //marine is on ship
 				location_id = obj_ini.lid[company,marine_number]; //ship array position
 				location_name = obj_ini.ship_location[location_id]; //location of ship
 			}
@@ -351,7 +353,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			 var ship_location= obj_ini.ship_location[ship]
 			 if (ship_location == "home" ){ship_location = obj_ini.home_name}
 			
-			 if (current_location[0] == "planet"){//if marine is on a planet
+			 if (current_location[0] == location_types.planet){//if marine is on a planet
 				  if (current_location[2] == "home" ){system = obj_ini.home_name}
 				 //check if ship is in the same location as marine and has enough space;
 				 if (ship_location == system) and ((obj_ini.ship_carrying[ship] + size) <= obj_ini.ship_capacity[ship]){
@@ -359,7 +361,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					 obj_ini.lid[company,marine_number] = ship; //id of ship marine is now loaded on
 					 obj_ini.ship_carrying[ship] += size; //update ship capacity
 				 }
-			 } else if (current_location[0] == "ship"){ //with this addition marines can now be moved between ships freely as long as they are in the same system
+			 } else if (current_location[0] == location_types.ship){ //with this addition marines can now be moved between ships freely as long as they are in the same system
 				 var off_loading_ship = current_location[1];
 				 if ( (obj_ini.ship_location[ship] == obj_ini.ship_location[off_loading_ship]) and ((obj_ini.ship_carrying[ship] + size) <= obj_ini.ship_capacity[ship])){
 					 obj_ini.ship_carrying[off_loading_ship] -= size; // remove from previous ship capacity

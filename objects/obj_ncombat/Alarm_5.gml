@@ -604,7 +604,6 @@ if (exterminatus>0) and (dropping!=0){
 
 instance_activate_object(obj_star);
 instance_activate_object(obj_turn_end);
-  
 
 //If not fleet based and...
 if (obj_ini.fleet_type!=1) and (defeat==1) and (dropping==0){

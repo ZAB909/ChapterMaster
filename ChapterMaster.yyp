@@ -1,4 +1,3 @@
-
 {
   "resourceType": "GMProject",
   "resourceVersion": "1.7",
@@ -314,7 +313,7 @@
   "isEcma": false,
   "LibraryEmitters": [],
   "MetaData": {
-    "IDEVersion": "2023.6.0.92",
+    "IDEVersion": "2023.6.0.89",
   },
   "resources": [
     {"id":{"name":"spr_credits_bg","path":"sprites/spr_credits_bg/spr_credits_bg.yy",},},

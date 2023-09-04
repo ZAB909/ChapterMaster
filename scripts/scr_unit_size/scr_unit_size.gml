@@ -1,9 +1,5 @@
 
 function scr_unit_size(armour, role, other_factors, mobility) {
-
-    // armour: armour
-    // role: role
-    // other_factors: +?
     var sz = 1;
     if (role!=""){
 		var bulky_armour = ["Terminator Armour", "Tartaros"]
@@ -18,7 +14,6 @@ function scr_unit_size(armour, role, other_factors, mobility) {
         else if (role="Harlequin Troupe") {sz=5;}
 		else if (role="Chapter Master"){sz+=1;}
     
-        //if (other_factors=false) then sz=sz*-1;
         return(sz);
     }
 	

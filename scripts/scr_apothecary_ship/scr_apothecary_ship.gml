@@ -126,7 +126,7 @@ function scr_apothecary_ship() {
 	        maybe=0;
 			var unit = obj_ini.TTRPG[co,d]
 			var location =  unit.marine_location()
-	        if (unit.role()!="") and (unit.hp()>0) and (location[0]=="ship") then maybe=1;
+	        if (unit.role()!="") and (unit.hp()>0) and (location[0]==location_types.ship) then maybe=1;
         
 	        if (maybe=1){
 	            var c;
