@@ -385,6 +385,7 @@
     {"id":{"name":"spr_weapon_thhammer","path":"sprites/spr_weapon_thhammer/spr_weapon_thhammer.yy",},},
     {"id":{"name":"spr_weapon_evisc","path":"sprites/spr_weapon_evisc/spr_weapon_evisc.yy",},},
     {"id":{"name":"spr_weapon_powaxe","path":"sprites/spr_weapon_powaxe/spr_weapon_powaxe.yy",},},
+    {"id":{"name":"spr_weapon_chaxe","path":"sprites/spr_weapon_chaxe/spr_weapon_chaxe.yy",},},
     {"id":{"name":"spr_weapon_powswo","path":"sprites/spr_weapon_powswo/spr_weapon_powswo.yy",},},
     {"id":{"name":"spr_weapon_powspear","path":"sprites/spr_weapon_powspear/spr_weapon_powspear.yy",},},
     {"id":{"name":"spr_weapon_eldsword","path":"sprites/spr_weapon_eldsword/spr_weapon_eldsword.yy",},},
