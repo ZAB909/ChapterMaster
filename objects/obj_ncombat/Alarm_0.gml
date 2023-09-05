@@ -3,7 +3,7 @@ if (battle_special="cs_meeting_battle5") then alpha_strike=1;
 
 instance_activate_object(obj_enunit);
 
-// Checks if Chapter master is a psyker
+// Checks if Chapter master is a psyker and then casts a pskychic power (kamehameha)
 if (chapter_master_psyker=true) and (obj_ini.psy_powers="default"){
     var yeo=false;
 	for(var i=1; i<=4; i++){if (obj_ini.adv[i]="Paragon") then yeo=true;}
@@ -25,7 +25,7 @@ xxx=xxx.x+80;
 
 if (string_count("spyrer",battle_special)>0) or (string_count("fallen",battle_special)>0) or (string_count("mech",battle_special)>0) or (battle_special="space_hulk") or (battle_special="study2a") or (battle_special="study2b") then fortified=0;
 
-var i=11, u;
+var i=0, u;
 i=xxx/10;
 
 if (fortified>1) and (enemy+threat!=17){
