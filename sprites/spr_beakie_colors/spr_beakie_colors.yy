@@ -1,11 +1,10 @@
-
 {
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "spr_beakie_colors",
-  "bbox_bottom": 221,
+  "bbox_bottom": 222,
   "bbox_left": 0,
-  "bbox_right": 153,
+  "bbox_right": 159,
   "bbox_top": 0,
   "bboxMode": 0,
   "collisionKind": 1,
@@ -96,5 +95,4 @@
   "type": 0,
   "VTile": false,
   "width": 167,
-
 }
