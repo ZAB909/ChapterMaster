@@ -212,7 +212,7 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;
 	    if (argument1=1) then ui_xmod[rl]=-10;if (argument1=2) then ui_xmod[rl]=-16;
 	}
-	if (string_count("Plasma Pistol",wee)>0){ui_weapon[rl]=spr_weapon_plasg;
+	if (string_count("Plasma Pistol",wee)>0){ui_weapon[rl]=spr_weapon_plasp;
 	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;
 	    if (argument1=1) then ui_xmod[rl]=-10;if (argument1=2){ui_xmod[rl]=-16;ui_ymod[rl]=17;}
 	}
