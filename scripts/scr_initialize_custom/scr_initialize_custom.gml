@@ -1030,8 +1030,8 @@ function scr_initialize_custom() {
 						if (old_guard>=97 and old_guard<=99){armour[company,k]="MK4 Maximus"}; //3%
 						if (old_guard>=91 and old_guard<=96){armour[company,k]="MK5 Heresy"}; // 6%
 						if (old_guard>=80 and old_guard<=90){armour[company,k]="MK6 Corvus"}; // 10%
-							elseif (company<=2) then armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies 
-							else{armour[company,k]="MK7 Aquila"};
+							else if (company<=2){armour[company,k]="MK6 Corvus"}; // company 1 and 2 taccies get beakies 
+								else armour[company,k]="MK7 Aquila";
 	                    hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
 	                }
 	                repeat(assault){k+=1;man_size+=1;
@@ -1040,8 +1040,8 @@ function scr_initialize_custom() {
 						if (old_guard>=98){armour[company,k]="MK3 Iron Armour"}; // 3%
 						if (old_guard>=92 and old_guard<=97){armour[company,k]="MK4 Maximus"}; // 6%
 						if (old_guard>=78 and old_guard<=91){armour[company,k]="MK5 Heresy"}; // 12%
-							elseif (company<=2) then armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies 
-							else{armour[company,k]="MK7 Aquila"};
+							else if (company<=2) armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies 
+								else armour[company,k]="MK7 Aquila";
 	                    mobi[company,k]="Jump Pack";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
 	                }
 	                repeat(devastator){k+=1;man_size+=1;
@@ -1077,8 +1077,8 @@ function scr_initialize_custom() {
 						if (old_guard>=97 and old_guard<=99){armour[company,k]="MK4 Maximus"}; //3%
 						if (old_guard>=91 and old_guard<=96){armour[company,k]="MK5 Heresy"}; // 6%
 						if (old_guard>=80 and old_guard<=90){armour[company,k]="MK6 Corvus"}; // 10%
-							elseif (company<=2) then armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies 
-							else{armour[company,k]="MK7 Aquila"};
+							else if (company<=2) then armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies 
+								else{armour[company,k]="MK7 Aquila"};
 	                    hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
 	            } // reserve company only of assault
 	            if (company=8) then repeat(temp1){k+=1;man_size+=1; // assault company
@@ -1117,8 +1117,8 @@ function scr_initialize_custom() {
 					if (old_guard>=98){armour[company,k]="MK3 Iron Armour"}; // 3%
 					if (old_guard>=92 and old_guard<=97){armour[company,k]="MK4 Maximus"}; // 6%
 					if (old_guard>=78 and old_guard<=91){armour[company,k]="MK5 Heresy"}; // 12%
-						elseif (company<=2) then armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies 
-						else{armour[company,k]="MK7 Aquila"};
+						else if (company<=2) then armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies 
+							else{armour[company,k]="MK7 Aquila"};
 	                mobi[company,k]=mobi[101,10];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
 	            }
 	            if (company_unit3="devastator") then repeat(devastator){k+=1;man_size+=1;
@@ -1129,8 +1129,8 @@ function scr_initialize_custom() {
 
 					if (company<=2) then armour[company,k]="MK6 Corvus"; 
 					if (old_guard>=91){armour[company,k]="MK6 Corvus"}; // 10% chance
-						elseif (company<=2) then armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies 
-						else{armour[company,k]="MK7 Aquila"};
+						else if (company<=2) then armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies 
+							else{armour[company,k]="MK7 Aquila"};
 	                hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
 	            }
 	        }
