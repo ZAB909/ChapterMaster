@@ -18,7 +18,7 @@ function scr_chapter_new(argument0) {
 	i=99;
 	repeat(3){i+=1;// First is for the correct slot, second is for default
 	    role[i,2]="Honor Guard";wep1[i,2]="Power Sword";wep2[i,2]="Bolter";armour[i,2]="Power Armour";
-	    role[i,3]="Veteran";wep1[i,3]="Chainsword";wep2[i,3]="Bolter";armour[i,3]="Power Armour";
+	    role[i,3]="Veteran";wep1[i,3]="Chainsword";wep2[i,3]="Combi-Flamer";armour[i,3]="Power Armour";
 	    role[i,4]="Terminator";wep1[i,4]="Power Fist";wep2[i,4]="Storm Bolter";armour[i,4]="Terminator Armour";
 	    role[i,5]="Captain";wep1[i,5]="Power Fist";wep2[i,5]="Bolt Pistol";armour[i,5]="Power Armour";
 	    role[i,6]="Dreadnought";wep1[i,6]="Close Combat Weapon";wep2[i,6]="Lascannon";armour[i,6]="Dreadnought";
