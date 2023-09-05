@@ -2,7 +2,7 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "spr_artificer_colors",
-  "bbox_bottom": 220,
+  "bbox_bottom": 221,
   "bbox_left": 0,
   "bbox_right": 154,
   "bbox_top": 0,
