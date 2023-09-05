@@ -737,17 +737,17 @@ function scr_restart_variables(saved_game) {
 		restarted=1;
 	    mutations_selected=mutations;
 		
-		for(var i=1; i<=40; i++){
+		for(var i=1; i<=4; i++){
 	        if (adv[i]!="") and (adv_num[i]=0){
-				for(var n=1; n<=41; n++){
+				for(var n=1; n<=40; n++){
 	                if (advantage[n]=adv[i]) then adv_num[i]=n;
 	            }
 	        }
 	    }
 
-		for(var i=1; i<=40; i++){
+		for(var i=1; i<=4; i++){
 	        if (dis[i]!="") and (dis_num[i]=0){
-	            for(var n=1; n<=41; n++){
+	            for(var n=1; n<=40; n++){
 	                if (disadvantage[n]=dis[i]) then dis_num[i]=n;
 	            }
 	        }
