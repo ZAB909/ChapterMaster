@@ -47,7 +47,7 @@ if (obj_ncombat.enemy=1){
                     if (obj_ini.mobi[nco,nid]!="") then scr_add_item(obj_ini.mobi[nco,nid],1);
                 }
                 
-                obj_ncombat.world_size+=scr_unit_size(obj_ini.armour[nco,nid],obj_ini.role[nco,nid],true);
+                obj_ncombat.world_size+=scr_unit_size(obj_ini.armour[nco,nid],obj_ini.role[nco,nid],true, obj_ini.mobi[nco,nid]);
                 
                 obj_ini.race[nco,nid]=0;obj_ini.loc[nco,nid]="";obj_ini.name[nco,nid]="";obj_ini.role[nco,nid]="";obj_ini.wep1[nco,nid]="";
                 obj_ini.lid[nco,nid]=0;obj_ini.wep2[nco,nid]="";obj_ini.armour[nco,nid]="";obj_ini.gear[nco,nid]="";obj_ini.hp[nco,nid]=100;

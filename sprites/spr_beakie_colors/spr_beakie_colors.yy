@@ -1,3 +1,4 @@
+
 {
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
@@ -95,4 +96,5 @@
   "type": 0,
   "VTile": false,
   "width": 167,
+
 }

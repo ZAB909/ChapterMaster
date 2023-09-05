@@ -313,7 +313,7 @@
   "isEcma": false,
   "LibraryEmitters": [],
   "MetaData": {
-    "IDEVersion": "2023.6.0.92",
+    "IDEVersion": "2023.6.0.89",
   },
   "resources": [
     {"id":{"name":"spr_credits_bg","path":"sprites/spr_credits_bg/spr_credits_bg.yy",},},
@@ -479,6 +479,7 @@
     {"id":{"name":"spr_red_button","path":"sprites/spr_red_button/spr_red_button.yy",},},
     {"id":{"name":"spr_popup","path":"sprites/spr_popup/spr_popup.yy",},},
     {"id":{"name":"spr_attacked","path":"sprites/spr_attacked/spr_attacked.yy",},},
+    {"id":{"name":"scr_marine_struct","path":"scripts/scr_marine_struct/scr_marine_struct.yy",},},
     {"id":{"name":"spr_raid","path":"sprites/spr_raid/spr_raid.yy",},},
     {"id":{"name":"spr_purge_1","path":"sprites/spr_purge_1/spr_purge_1.yy",},},
     {"id":{"name":"spr_purge_2","path":"sprites/spr_purge_2/spr_purge_2.yy",},},

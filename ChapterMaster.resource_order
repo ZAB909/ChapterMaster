@@ -155,6 +155,7 @@
     {"name":"spr_red_button","order":49,"path":"sprites/spr_red_button/spr_red_button.yy",},
     {"name":"spr_popup","order":51,"path":"sprites/spr_popup/spr_popup.yy",},
     {"name":"spr_attacked","order":53,"path":"sprites/spr_attacked/spr_attacked.yy",},
+    {"name":"scr_marine_struct","order":65,"path":"scripts/scr_marine_struct/scr_marine_struct.yy",},
     {"name":"spr_raid","order":55,"path":"sprites/spr_raid/spr_raid.yy",},
     {"name":"spr_purge_1","order":57,"path":"sprites/spr_purge_1/spr_purge_1.yy",},
     {"name":"spr_purge_2","order":59,"path":"sprites/spr_purge_2/spr_purge_2.yy",},

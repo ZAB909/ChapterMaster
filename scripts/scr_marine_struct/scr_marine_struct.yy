@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "scr_cheatcode",
+  "name": "scr_marine_struct",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
