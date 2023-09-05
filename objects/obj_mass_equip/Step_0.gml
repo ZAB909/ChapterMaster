@@ -203,7 +203,7 @@ if (refresh=true) and (obj_controller.settings>0){
     req_gear=obj_ini.gear[100,role];
     req_mobi=obj_ini.mobi[100,role];
 	
-	for(var co=1; co<11; co++){
+	for(var co=0; co<11; co++){
 		for(var i=1; i<=300; i++){
             if (obj_ini.role[co,i]=obj_ini.role[100,role]){
                 role_number[co]+=1;
@@ -414,7 +414,7 @@ if (refresh=true) and (obj_controller.settings>0){
     
     total_role_number=0;
 	
-	for(var i=1; i<=11; i++){
+	for(var i=0; i<11; i++){
         if (role_number[i]>0){
             req_wep1_num+=role_number[i];
             req_wep2_num+=role_number[i];

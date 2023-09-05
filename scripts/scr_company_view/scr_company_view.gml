@@ -80,7 +80,7 @@ function scr_company_view(argument0) {
 	                 and (ma_role[v]!=obj_ini.role[100,5]) and (ma_role[v]!="Standard Bearer")
 	                 and (ma_role[v]!="Company Champion")
 	                {
-	                    for (var j=0; j<=20;j++) {
+	                    for (var j=0; j<20;j++) {
 							if (sel_uni[j] == "" && op == 0) then op = j;
 							if (sel_uni[j] == ma_role[v]) then go = 1;
 						}
@@ -91,7 +91,7 @@ function scr_company_view(argument0) {
 					op=0;
 					
 	                if (man[v]="vehicle"){
-	                    for (var j=0; j<=20;j++) {
+	                    for (var j=0; j<20;j++) {
 	                        if (sel_veh[j]="") and (op=0) then op=j;
 	                        if (sel_veh[j]=ma_role[v]) then go=1;
 	                    }

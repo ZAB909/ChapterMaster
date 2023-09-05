@@ -434,7 +434,7 @@ function scr_ui_advisors() {
 		draw_set_font(fnt_40k_14);
     
 	    var blurp2="";
-
+		// TODO rename fest_type and fest_scheduled into feast_type and feast_schedule and refactor scripts
 	    if (menu_adept=0){
 	        if (fest_scheduled=0){
 	            if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands") then blurp2="As our bolters are charged with death for the Emperor's enemies, our thoughts are charged with his wisdom.  As our bodies are armoured with Adamantium, our souls are protected with our loyalty- loyalty to Him, and loyalty to our brothers.  The bonds of this brotherhood are worth revering, even if a lull in duty invites doubt and heresy.  Should you wish to schedule a rousing event, or challenge, I will make it so.  Under the careful watch of our "+string(obj_ini.role[100,14])+"s, our brothers' spirits may be lifted.";
