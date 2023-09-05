@@ -1023,6 +1023,7 @@ function scr_initialize_custom() {
 	        if (obj_creation.equal_specialists=1){
 	            company_experience=(16-company)*5;
 	            if (company<10){
+					old_guard = irandom(99);
 	                repeat(temp1){k+=1;man_size+=1;
 	                    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,8];wep1[company,k]=wep1[101,8];name[company,k]=scr_marine_name();
 	                    wep2[company,k]=wep2[101,8];
@@ -1070,6 +1071,7 @@ function scr_initialize_custom() {
 
 	        if (obj_creation.equal_specialists=0){
 	             if (company<8) then repeat(temp1){k+=1;man_size+=1;
+				 old_guard = irandom(99);
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,8];wep1[company,k]=wep1[101,8];name[company,k]=scr_marine_name();
 	                wep2[company,k]=wep2[101,8];
 
