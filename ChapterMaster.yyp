@@ -375,6 +375,7 @@
     {"id":{"name":"spr_weapon_missile","path":"sprites/spr_weapon_missile/spr_weapon_missile.yy",},},
     {"id":{"name":"spr_weapon_melta","path":"sprites/spr_weapon_melta/spr_weapon_melta.yy",},},
     {"id":{"name":"spr_weapon_hbolt","path":"sprites/spr_weapon_hbolt/spr_weapon_hbolt.yy",},},
+    {"id":{"name":"spr_weapon_mmelta","path":"sprites/spr_weapon_mmelta/spr_weapon_mmelta.yy",},},
     {"id":{"name":"spr_weapon_assca","path":"sprites/spr_weapon_assca/spr_weapon_assca.yy",},},
     {"id":{"name":"spr_weapon_lasca","path":"sprites/spr_weapon_lasca/spr_weapon_lasca.yy",},},
     {"id":{"name":"spr_weapon_plasg","path":"sprites/spr_weapon_plasg/spr_weapon_plasg.yy",},},
