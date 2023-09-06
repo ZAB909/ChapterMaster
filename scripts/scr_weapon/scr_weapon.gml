@@ -336,9 +336,9 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 	    if (thawep="Twin Linked Heavy Bolter"){atta=240;arp=1;rang=16;amm=20;spli=1;
 	        descr="Twin-linked Heavy Bolters are an upgraded version of the standard Heavy Bolter weapon, which is known for its high rate of fire and effectiveness against infantry and light vehicles. ";}
-	    if (thawep="Twin Linked Lascannon"){atta=250;arp=0;rang=20;amm=10;
+	    if (thawep="Twin Linked Lascannon"){atta=250;arp=1;rang=20;amm=10;
 	        descr="Lascannons are powerful anti-armour weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armour. ";}
-	    if (thawep="Lascannons"){atta=300;arp=0;rang=20;amm=5;
+	    if (thawep="Lascannons"){atta=300;arp=1;rang=20;amm=5;
 	        descr="Lascannons are powerful anti-armour weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armour. ";}
 	    if (thawep="Heavy Bolters"){atta=320;arp=1;rang=16;amm=10;spli=1;
 	        descr="The Heavy Bolter is a heavy weapon that fires larger and more powerful bolt shells compared to the standard Bolter.";}
