@@ -13,9 +13,29 @@ function scr_load(argument0, argument1) {
 
 
 
-	if (argument0=1) or (argument0=0){debugl("Loading slot "+string(argument1));
-	    file_copy("save"+string(argument1)+".ini","tsave.ini");
-	    file_decrypt("tsave.ini","p");
+	if (argument0=1) or (argument0=0){
+		
+		debugl("Loading slot "+string(argument1));
+		var save_file_name = "save"+string(argument1)+".ini";
+
+		if(file_exists("tsave.ini"))
+		{
+			// file_copy() will fail if destination file already exists
+			file_delete("tsave.ini");
+		}
+
+		if(file_exists(save_file_name))
+		{
+	    	file_copy(save_file_name,"tsave.ini");
+		}
+		else
+		{
+			debugl("Could not load save game " + save_file_name + ", file does not exist.");
+			game_restart();
+		}
+	    
+		// TODO temporary disabled. Will be reenabled during ironman/autosave feature task
+		//file_decrypt("tsave.ini","p");
 	    ini_open("tsave.ini");
 
 	    // Global variables
