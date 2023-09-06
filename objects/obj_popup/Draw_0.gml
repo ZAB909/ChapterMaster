@@ -770,7 +770,7 @@ if (zm=0) and (type=5) and (instance_exists(obj_controller)){
     
     draw_set_font(fnt_40k_12);
     var comp="";
-    if (company<10) {
+    if (company<10) and (company>0) {
         current_company=company-1;
         comp=romanNumerals[current_company];
     }
@@ -792,71 +792,71 @@ if (zm=0) and (type=5) and (instance_exists(obj_controller)){
     // }
     // TODO refactor Promoting and Transfer to use a function or a for loop
     if ((unit_role!=obj_ini.role[100,17]) or (obj_controller.command_set[1]!=0)) and (unit_role!="Lexicanum") and (unit_role!="Codiciery"){
-        if (min_exp<80) then draw_set_alpha(0.25);
         // I Company
-        if (target_comp=1) then check="x";
+        if (min_exp<80) then draw_set_alpha(0.25);
+        if (target_comp==1) then check="x";
         current_company=0;
         draw_text(xx+1030,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
-        if (min_exp<70) then draw_set_alpha(0.25);
         // II Company
+        if (min_exp<70) then draw_set_alpha(0.25);
         if (target_comp=2) then check="x";
-        current_company=1;
+        current_company==1;
         draw_text(xx+1140,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
-        if (min_exp<60) then draw_set_alpha(0.25);
         // III Company
+        if (min_exp<60) then draw_set_alpha(0.25);
         if (target_comp=3) then check="x";
-        current_company=2;
+        current_company==2;
         draw_text(xx+1250,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
-        if (min_exp<50) then draw_set_alpha(0.25);
         // IV Company
+        if (min_exp<50) then draw_set_alpha(0.25);
         if (target_comp=4) then check="x";
-        current_company=3;
+        current_company==3;
         draw_text(xx+1360,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
-        if (min_exp<40) then draw_set_alpha(0.25);
         // V Company
+        if (min_exp<40) then draw_set_alpha(0.25);
         if (target_comp=5) then check="x";
-        current_company=4;
+        current_company==4;
         draw_text(xx+1470,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
-        if (min_exp<35) then draw_set_alpha(0.25);
         // VI Company
+        if (min_exp<35) then draw_set_alpha(0.25);
         if (target_comp=6) then check="x";
-        current_company=5;
+        current_company==5;
         draw_text(xx+1030,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
-        if (min_exp<30) then draw_set_alpha(0.25);
         // VII Company
+        if (min_exp<30) then draw_set_alpha(0.25);
         if (target_comp=7) then check="x";
-        current_company=6;
+        current_company==6;
         draw_text(xx+1140,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";draw_set_alpha(1);
-        if (min_exp<25) then draw_set_alpha(0.25);
         // VIII Company
+        if (min_exp<25) then draw_set_alpha(0.25);
         if (target_comp=8) then check="x";
-        current_company=7;
+        current_company==7;
         draw_text(xx+1250,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
-        if (min_exp<20) then draw_set_alpha(0.25);
         // IX Company
+        if (min_exp<20) then draw_set_alpha(0.25);
         if (target_comp=9) then check="x";
-        current_company=8;
+        current_company==8;
         draw_text(xx+1360,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
         // X Company
         if (target_comp=10) then check="x";
-        current_company=9;
+        current_company==9;
         draw_text(xx+1470,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
     }
@@ -1020,52 +1020,52 @@ if (zm=0) and (type=5.1) and (instance_exists(obj_controller)){
     
     if ((unit_role!=obj_ini.role[100,17]) or (obj_controller.command_set[1]!=0)) and (unit_role!="Lexicanum") and (unit_role!="Codiciery"){
         // I Company
-        if (target_comp=1) then check="x";
+        if (target_comp==1) then check="x";
         current_company=0;
         draw_text(xx+1030,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         // II Company
-        if (target_comp=2) then check="x";
+        if (target_comp==2) then check="x";
         current_company=1;
         draw_text(xx+1140,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         // III Company
-        if (target_comp=3) then check="x";
+        if (target_comp==3) then check="x";
         current_company=2;
         draw_text(xx+1250,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         // IV Company
-        if (target_comp=4) then check="x";
+        if (target_comp==4) then check="x";
         current_company=3;
         draw_text(xx+1360,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         // V Company
-        if (target_comp=5) then check="x";
+        if (target_comp==5) then check="x";
         current_company=4;
         draw_text(xx+1470,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         // VI Company
-        if (target_comp=6) then check="x";
+        if (target_comp==6) then check="x";
         current_company=5;
         draw_text(xx+1030,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         // VII Company
-        if (target_comp=7) then check="x";
+        if (target_comp==7) then check="x";
         current_company=6;
         draw_text(xx+1140,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         // VIII Company
-        if (target_comp=8) then check="x";
+        if (target_comp==8) then check="x";
         current_company=7;
         draw_text(xx+1250,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         // IX Company
-        if (target_comp=9) then check="x";
+        if (target_comp==9) then check="x";
         current_company=8;
         draw_text(xx+1360,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         // X Company
-        if (target_comp=10) then check="x";
+        if (target_comp==10) then check="x";
         current_company=9;
         draw_text(xx+1470,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
