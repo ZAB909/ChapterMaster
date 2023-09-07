@@ -111,7 +111,7 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	if (string_count("Power Axe",wee)>0){ui_weapon[rl]=spr_weapon_powaxe;
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;display_type="melee_onehand";
 	}
-	}
+	
 		if (string_count("Chainaxe",wee)>0){ui_weapon[rl]=spr_weapon_chaxe;
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;display_type="melee_onehand";
 	}
