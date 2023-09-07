@@ -1,4 +1,5 @@
 
+// Modifies the size for each unit depending on their Type
 function scr_unit_size(armour, role, other_factors, mobility) {
     var sz = 1;
     if (role!=""){
@@ -16,8 +17,5 @@ function scr_unit_size(armour, role, other_factors, mobility) {
     
         return(sz);
     }
-	
 	return 0;
-
-
 }
