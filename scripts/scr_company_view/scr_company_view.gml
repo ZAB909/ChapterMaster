@@ -295,7 +295,7 @@ function scr_company_view(argument0) {
 	                // Select All Setup
 	                var go=0,op=0;
 	                if (man[v]="vehicle"){
-	                    for (var p=1;p<=20;p++){
+	                    for (var p=0;p<20;p++){
 	                        if (sel_veh[p]="") and (op=0) then op=p;
 	                        if (sel_veh[p]=ma_role[v]) then go=1;
 	                    }
