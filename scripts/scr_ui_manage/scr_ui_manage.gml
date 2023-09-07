@@ -742,26 +742,22 @@ function scr_ui_manage() {
 	    var ar_ar=0,ar_we1=0,ar_we2=0,ar_ge=0,ar_mb=0,eventing=false;
 	        
 	    yy+=77;
-		
-		var repetitions=min(man_max,man_see)
-	    for(var i=0; i<repetitions;i++){
-			
-			for(var j=0; j<500; j++){
-				if (man[sel]="hide") then sel+=1;
-			}
-			
-			eventing=false;
+    
+	    repeat(min(man_max,man_see)){
+	        repeat(500){if (man[sel]="hide") then sel+=1;}eventing=false;
+			var unit = display_unit[sel];
+			var unit_location = unit.marine_location();
         
-	        if (man[sel]=="man"){
-	            temp1=string(ma_role[sel])+" "+string(ma_name[sel]);
+	        if (man[sel]="man"){
+	            temp1=$"{unit.role()} {unit.name()}";
 	            // temp1=string(managing)+"."+string(ide[sel]);
             
 	            temp2=string(ma_loc[sel]);
-	            if (ma_wid[sel]!=0){
-	                if (ma_wid[sel]==1) then temp2+=" I";
-	                if (ma_wid[sel]==2) then temp2+=" II";
-	                if (ma_wid[sel]==3) then temp2+=" III";
-	                if (ma_wid[sel]==4) then temp2+=" IV";
+	            if (unit_location==location_types.planet){
+	                if (unit_location[1]=1) then temp2+=" I";
+	                if (unit_location[1]=2) then temp2+=" II";
+	                if (unit_location[1]=3) then temp2+=" III";
+	                if (unit_location[1]=4) then temp2+=" IV";
 	            }
 	            if (fest_planet==0) and (fest_sid>0) and (fest_repeats>0) and (ma_lid[sel]==fest_sid){
 					temp2="=Event=";
@@ -772,39 +768,8 @@ function scr_ui_manage() {
 					eventing=true;
 				}
 	            if (ma_god[sel]>=10) then temp2="=Penitorium=";
-				
-				// Define non marine HP
-				for (var k=0; k< array_length(non_marine_roles);k++){
-					if (ma_role[sel] == non_marine_roles[k]) then normal_hp=false;
-					break;
-				}
-				// Marine hp
-	            if (normal_hp) { 
-					temp3=string(ma_health[sel])+"% HP";
-				} else{
-	                var mixhp=0,ratio=0;
-					
-	                var roleToMixhp = ds_map_create();
-
-					roleToMixhp[? "Skitarii"] = 40;
-					roleToMixhp[? "Techpriest"] = 50;
-					roleToMixhp[? "Ranger"] = 40;
-					roleToMixhp[? "Crusader"] = 30;
-					roleToMixhp[? "Ork Sniper"] = 45;
-					roleToMixhp[? "Flash Git"] = 65;
-					roleToMixhp[? "Sister of Battle"] = 40;
-					roleToMixhp[? "Sister Hospitaler"] = 40;
-					
-					mixhp = roleToMixhp[ma_role[sel]];
-					
-	                if (mixhp>0) then ratio=(ma_health[sel]/mixhp)*100;
-	                // if (mixhp=0) then ratio=100;
-	                /*if (ratio>=100) then temp3="Unwounded";
-	                if (ratio>=70) and (ratio<100) then temp3="Lightly Wounded";
-	                if (ratio>=40) and (ratio<70) then temp3="Wounded";if (ratio>=8) and (ratio<40) then temp3="Badly Wounded";*/
-	                // if (ratio<8) then temp3="CRITICAL";
-	                temp3=string(ratio)+"% HP";
-	            }
+                   
+	            temp3=string((unit.hp()/unit.max_health())*100)+"% HP";
             
 	            temp4=string(ma_exp[sel])+" exp";
             
@@ -1480,6 +1445,7 @@ function scr_ui_manage() {
 	    draw_set_halign(fa_left);
 		draw_set_color(c_gray);
     
+    
 	    scr_scrollbar(974,172,1005,790,34,man_max,man_current);
 	}
 	
@@ -1490,7 +1456,15 @@ function scr_ui_manage() {
 	    var xx=__view_get( e__VW.XView, 0 )+0;
 	    var yy=__view_get( e__VW.YView, 0 )+0;
 
-	    // Draw BG
+
+
+	if (menu=30) and (managing>0){// Load to ships
+	    var xx, yy, bb, img;
+	    bb="";img=0;
+	    xx=__view_get( e__VW.XView, 0 )+0;
+	    yy=__view_get( e__VW.YView, 0 )+0;
+
+	    // BG
 	    draw_set_alpha(1);
 	    draw_sprite(spr_rock_bg,0,xx,yy);
 	    draw_set_font(fnt_40k_30b);

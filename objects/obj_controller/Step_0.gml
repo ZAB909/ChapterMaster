@@ -458,7 +458,7 @@ if (menu=1) and (managing>0){
     if (managing>20) then c=managing-10;
     
 
-    var top,sel,temp1,temp2,temp3,temp4,temp5,force_tool;
+    var top,sel,temp1,temp2,temp3,temp4,temp5,force_tool,unit;
     temp1="";temp2="";temp3="";temp4="";temp5="";force_tool=0;
     
     top=man_current;
@@ -469,9 +469,10 @@ if (menu=1) and (managing>0){
     
     repeat(min(man_max,man_see)){
         force_tool=0;
+		unit = display_unit[sel]
         
-        if (temp[101]=string(ma_role[sel])+" "+string(ma_name[sel])) 
-        and ((temp[102]!=ma_armour[sel]) or (temp[104]!=ma_gear[sel]) or (temp[106]=ma_mobi[sel]) or (temp[108]!=ma_wep1[sel]) or (temp[110]!=ma_wep1[sel])
+		if (temp[101] == $"{unit.role()} {unit.name}")
+        and ((temp[102]!=unit.armour()) or (temp[104]!=unit.gear()) or (temp[106]=unit.mobility_item()) or (temp[108]!=unit.weapon_one()) or (temp[110]!=unit.weapon_one())
         or (temp[114]="refresh")) then force_tool=1;
         
         
@@ -481,9 +482,9 @@ if (menu=1) and (managing>0){
             var ach,dr,ma,ra,acy;dr=1;ma=1;ra=1;ach=0;acy=0;
             
             
-            
+            //if marine not hidden
             if (man[sel]="man"){
-                marine_armour[0]=ma_armour[sel];fix_left=0;fix_right=0;
+                marine_armour[0]=unit.armour();fix_left=0;fix_right=0;
                 
                 var cah;cah=managing;if (cah>10) then cah=0;
                 temp[100]="1";if (obj_ini.race[cah,ide[sel]]!=1) then temp[100]=string(obj_ini.race[cah,ide[sel]]);
@@ -614,22 +615,7 @@ if (menu=1) and (managing>0){
                 if (tooltip_stat4>0) then temp[111]="("+string(tooltip_stat1)+"DAM, "+string(tooltip_stat4)+" ammo, "+string(tooltip_other)+")";
                 
                 
-                if (ma_role[sel]="Chapter Master"){
-                    if (obj_ini.adv[1]="Paragon") or (obj_ini.adv[2]="Paragon") or (obj_ini.adv[3]="Paragon") or (obj_ini.adv[4]="Paragon"){
-                        temp[112]=string(real(ma_health[sel]+ach))+"/"+string(real(130+ach));
-                    }
-                }
-                if (ma_role[sel]!="Chapter Master") or ((obj_ini.adv[1]!="Paragon") and (obj_ini.adv[2]!="Paragon") and (obj_ini.adv[3]!="Paragon") and (obj_ini.adv[4]!="Paragon")){
-                    temp[112]=string(real(ma_health[sel]+ach))+"/"+string(real(100+ach));
-                }
-                if (ma_race[sel]=3) then temp[112]=string(real(ma_health[sel]+ach))+"/"+string(real(50+ach));
-                if (ma_race[sel]=4) then temp[112]=string(real(ma_health[sel]+ach))+"/"+string(real(30+ach));
-                if (ma_race[sel]=5) then temp[112]=string(real(ma_health[sel]+ach))+"/"+string(real(40+ach));
-                if (ma_race[sel]=6) then temp[112]=string(real(ma_health[sel]+ach))+"/"+string(real(30+ach));
-                if (ma_race[sel]=7){
-                    if (ma_role[sel]="Ork Sniper") then temp[112]=string(real(ma_health[sel]+ach))+"/"+string(real(45+ach));
-                    if (ma_role[sel]="Flash Git") then temp[112]=string(real(ma_health[sel]+ach))+"/"+string(real(65+ach));
-                }
+                temp[112]=$"{display_unit[sel].hp()}/{display_unit[sel].max_health()}"
                 
                 temp[113]=string(ma_exp[sel]);
                 
@@ -766,40 +752,6 @@ if (menu=0) and (repair_ships>0) and (instance_number(obj_turn_end)=0) and (inst
     
     // 135 ; need something here to veryify that the ships are within a friendly star system
 }
-
-
-/*if ((zoomed=0) and ((menu=0) or (instance_exists(obj_fleet) or instance_exists(obj_ncombat))) and (!instance_exists(obj_ncombat))) or (force_scroll=1){
-
-if (x<320) then x=320;
-if (y<240) then y=240;
-if (x>(room_width-320)) then x=room_width-320;
-if (y>(room_height-240)) then y=room_height-240;
-
-
-var spd, keyb;spd=6;keyb="";
-
-
-/*if ((keyboard_check(vk_left)) or (keyboard_check(ord("A")))) and (x>320) then x-=spd;
-if ((keyboard_check(vk_right)) or (keyboard_check(ord("D")))) and (x<(room_width-320)) then x+=spd;
-if ((keyboard_check(vk_up)) or (keyboard_check(ord("W")))) and (y>240) then y-=spd;
-if ((keyboard_check(vk_down)) or (keyboard_check(ord("S")))) and (y<(room_height-240)) then y+=spd;*/
-
-
-/*if (x<320) then x=320;
-if (y<240) then y=240;
-if (x>(room_width-320)) then x=(room_width-320);
-if (y>(room_height-240)) then y=(room_height-240);
-
-}
-
-
-if (menu=1) and (managing>0) and (selecting_location!="") and (man_size=0){
-    selecting_location="";sel_loading=0;selecting_planet=0;selecting_ship=0;
-}
-
-/*if (popup=0) and (selected=0) and (instance_exists(obj_fleet_controller)){
-    with(obj_fleet_controller){instance_destroy();}
-}*/
 
 
 

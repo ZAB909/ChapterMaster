@@ -589,7 +589,7 @@ function scr_initialize_custom() {
 	}
 	mobi[company,1]=mobi[100,2];
 	if (string_count("Paragon",strin)>0) then chapter_master.add_trait("paragon")
-	chapter_master.update_health(chapter_master.max_health)
+	chapter_master.update_health(chapter_master.max_health())
 
 	// Forge Master
 	race[company,2]=1;loc[company,2]=home_name;role[company,2]="Forge Master";wep1[company,2]="Conversion Beam Projector";name[company,2]=obj_creation.fmaster;

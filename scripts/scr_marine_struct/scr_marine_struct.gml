@@ -13,16 +13,16 @@ global.trait_list = {
 		luck:-4
 	},
 	"very_hard_to_kill":{
-		constitution:10,
+		constitution:15,
 		luck:2,
 	},
 	"paragon":{
-		constitution:6,
+		constitution:12,
 		luck:2,
-		strength:2,
-		dexterity:2,
-		intelligence:2,
-		charisma:2
+		strength:6,
+		dexterity:6,
+		intelligence:6,
+		charisma:6
 	},
 	"warp_touched":{
 		intelligence:4
@@ -30,37 +30,39 @@ global.trait_list = {
 }
 global.base_stats = { //tempory stats subject to change by anyone that wishes to try their luck
 	"chapter_master":{
-			title : "Chapter Master",
-			strength:12,
-			constitution:22,
-			dexterity:12,
-			intelligence:12,
-			wisdom:12,
-			charisma :12,
+			title : "Adeptus Astartes",
+			strength:[42,3],
+			constitution:[44,3],
+			dexterity:[44,3],
+			intelligence:[44,3],
+			wisdom:[44,3],
+			charisma :[35,3],
 			religion : "imperial_cult",
-			piety : 5,
-			technology :10,
-			luck :12,		
+			piety : [30,3],
+			luck :10,
+			technology :[30,3],	
+			base_group : "astartes",
 	},
 	"marine":{
 			title : "Adeptus Astartes",
-			strength:10,
-			constitution:20,
-			dexterity:10,
-			intelligence:10,
-			wisdom:10,
-			charisma :10,
+			strength:[40,3],
+			constitution:[40,3],
+			dexterity:[40,3],
+			intelligence:[40,3],
+			wisdom:[40,3],
+			charisma :[30,3],
 			religion : "imperial_cult",
-			piety : 5,
+			piety : [30,3],
 			luck :10,
-			technology :10,
+			technology :[30,3],
 			skills: {weapons:{"bolter":3, "chainsword":3, "ccw":3, "bolt_pistol":3}},
-			gear:{"armour":"power_armour", "wep1":"bolter", "wep2":"chainsword"}
+			gear:{"armour":"power_armour", "wep1":"bolter", "wep2":"chainsword"},
+			base_group : "astartes",
 	},
 	"skitarii":{
 			title : "Skitarii",
 			strength:6,
-			constitution:8,
+			constitution:28,
 			dexterity:6,
 			intelligence:7,
 			wisdom:2,
@@ -70,11 +72,12 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			technology :8,
 			luck :5,
 			skills: {weapons:{"hellgun":1,}},	
-			gear:{"armour":"skitarii_armour", "wep1":"hellgun"}
+			gear:{"armour":"skitarii_armour", "wep1":"hellgun"},
+			base_group : "skitarri",
 	},
 	"tech_priest":{
 			strength:4,
-			constitution:10,
+			constitution:30,
 			dexterity:7,
 			intelligence:14,
 			wisdom:13,
@@ -85,12 +88,13 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			luck :6,
 			technology :15,
 			skills: {weapons:{"power_weapon":2,}},	
-			gear:{"armour":"dragon_scales", "wep1":"power_weapon"}
+			gear:{"armour":"dragon_scales", "wep1":"power_weapon"},
+			base_group : "tech_priest",
 	},
 	"skitarii_ranger":{
 			title : "Skitarii Ranger",
 			strength:5,
-			constitution:6,
+			constitution:26,
 			dexterity:7,
 			intelligence:7,
 			wisdom:2,
@@ -100,12 +104,13 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			technology :8,
 			luck :5,
 			skills: {weapons:{"ranger_long_rifle":1,}},	
-			gear:{"armour":"skitarii_armour", "wep1":"hellgun", "wep2":"shuriken_pistol"}
+			gear:{"armour":"skitarii_armour", "wep1":"hellgun", "wep2":"shuriken_pistol"},
+			base_group : "skitarii",
 	},
 	"inquisition_crusader":{
 			title : "Inquisiton Crusador",
 			strength:4,
-			constitution:6,
+			constitution:26,
 			dexterity:4,
 			intelligence:3,
 			wisdom:2,
@@ -115,12 +120,13 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			technology :3,
 			luck :4,
 			skills: {},	
-			gear:{"armour":"Power Armour", "wep1":"Power Sword", "wep2":"Storm Shield"}
+			gear:{"armour":"Power Armour", "wep1":"Power Sword", "wep2":"Storm Shield"},
+			base_group : "human",
 	},
 	"sister_of_battle":{
 			title : "Sister of Battle",
 			strength:5,
-			constitution:8,
+			constitution:28,
 			dexterity:6,
 			intelligence:5,
 			wisdom:5,
@@ -130,12 +136,13 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			technology :3,
 			luck :4,
 			skills: {},	
-			gear:{"armour":"Power Armour", "wep1":"Power Sword", "wep2":"Storm Shield"}
+			gear:{"armour":"Power Armour", "wep1":"Power Sword", "wep2":"Storm Shield"},
+			base_group : "human",
 	},
 	"sister_hospitaler":{
 			title : "Sister of Battle",
 			strength:5,
-			constitution:8,
+			constitution:28,
 			dexterity:6,
 			intelligence:5,
 			wisdom:5,
@@ -145,12 +152,13 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			technology :3,
 			luck :4,
 			skills: {},	
-			gear:{"armour":"Power Armour", "wep1":"Power Sword", "wep2":"Storm Shield"}
+			gear:{"armour":"Power Armour", "wep1":"Power Sword", "wep2":"Storm Shield"},
+			base_group : "human",
 	},
 	"ork_sniper":{
 			title : "Ork Sniper",
 			strength:5,
-			constitution:9,
+			constitution:29,
 			dexterity:8,
 			intelligence:2,
 			wisdom:3,
@@ -160,12 +168,13 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			technology :2,
 			luck :4,
 			skills: {},	
-			gear:{"armour":"Power Armour", "wep1":"Power Sword", "wep2":"Storm Shield"}
+			gear:{"armour":"Power Armour", "wep1":"Power Sword", "wep2":"Storm Shield"},
+			base_group : "ork",
 	},
 	"flash_git":{
 			title : "Flash Git",
 			strength:8,
-			constitution:13,
+			constitution:23,
 			dexterity:6,
 			intelligence:2,
 			wisdom:3,
@@ -175,7 +184,8 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			technology :2,
 			luck :4,
 			skills: {},	
-			gear:{"armour":"Power Armour", "wep1":"Power Sword", "wep2":"Storm Shield"}
+			gear:{"armour":"Power Armour", "wep1":"Power Sword", "wep2":"Storm Shield"},
+			base_group : "ork",
 	}
 }
 function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
@@ -197,21 +207,52 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	static add_trait = function(trait){
 			var selec_trait = global.trait_list[$ trait];
 			var edits = variable_struct_get_names(selec_trait);
+			var edit_stat,random_stat,stat_mod;
 			
 			//loop over stats and add stats where needed
-			var stats = ["constitution", "strength", "luck", "dexterity", "wisdom", "piety", "charisma", "technology"]
+			var stats = ["constitution", "strength", "luck", "dexterity", "wisdom", "piety", "charisma", "technology","intelligence"]
 			for (var stat_iter =0; stat_iter <array_length(stats);stat_iter++;){
 				if (array_contains(edits ,stats[stat_iter])){
-					 variable_struct_set(self,stats[stat_iter],  (variable_struct_get(self, stats[stat_iter])+  variable_struct_get(selec_trait, stats[stat_iter])));
+					edit_stat = variable_struct_get(selec_trait, stats[stat_iter]);
+					if (is_array(edit_stat)){
+						random_stat = irandom(edit_stat[1]);
+						if (choose("plus","minus") == "plus"){
+							stat_mod= edit_stat[0]+random_stat;
+						} else{
+							stat_mod = edit_stat[0]-random_stat;
+						}
+					} else{stat_mod = edit_stat}
+					variable_struct_set(self,stats[stat_iter],  (variable_struct_get(self, stats[stat_iter])+  stat_mod));
 				}
 			}
-			//max_health = 100 * (1+((constitution - 20)*0.05));
+			//max_health() = 100 * (1+((constitution - 20)*0.05));
 			array_push(traits, trait);
 	}
 	
 	//takes dict and plumbs dict values into unit struct
 	if (array_contains(variable_struct_get_names(global.base_stats), class)){
 		load_json_data(global.base_stats[$ class]);
+	}
+	show_debug_message("data_loaded")
+	var random_stat,edit_stat, stat_mod;
+	var stats = ["constitution", "strength", "luck", "dexterity", "wisdom", "piety", "charisma", "technology","intelligence"];
+	for (var stat_iter =0; stat_iter <array_length(stats);stat_iter++;){
+		if struct_exists(self, stats[stat_iter]){
+			//show_debug_message("{0},{1}", variable_struct_get(self, stats[stat_iter]),stats[stat_iter])
+			if (is_array(variable_struct_get(self, stats[stat_iter]))){
+				//show_debug_message("is array");
+				edit_stat = variable_struct_get(self, stats[stat_iter]);
+				random_stat = irandom(edit_stat[1]);
+				//show_debug_message("{0}",random_stat);
+				if (choose("plus","minus") == "plus"){
+					stat_mod = edit_stat[0]+random_stat;
+				} else{
+					stat_mod = edit_stat[0]-random_stat;
+				}
+				//show_debug_message("{0}",stat_mod);
+				variable_struct_set(self, stats[stat_iter],  stat_mod);			
+			}
+		}
 	}
 	
 	switch class{
@@ -253,18 +294,21 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		static age = function(){return obj_ini.age[company,marine_number];}// age
 		static update_age = function(new_val){obj_ini.age[company,marine_number] = new_val;}		
 		static name = function(){return obj_ini.name[company,marine_number];}// get marine name
-				
-		max_health = 100 * (1+((constitution - 20)*0.05));
+		static max_health =function(){
+			return 100 * (1+((constitution - 40)*0.025));
+		}
+		static gear = function(){return obj_ini.gear[company,marine_number]}
+		static update_gear = function(new_val){obj_ini.gear[company,marine_number]= new_val;}
 		static increase_max_health = function(increase){
-			max_health += (increase*(1+((constitution - 20)*0.05))); //calculate the effect of health buffs
+			return max_health() + (increase*(1+((constitution - 40)*0.025))); //calculate the effect of health buffs
 		}
 		static hp = function(){ 
-			return obj_ini.hp[company,marine_number] //return current health
+			return obj_ini.hp[company,marine_number]; //return current health
 		};
        static update_health = function(new_health){
             obj_ini.hp[company,marine_number] = new_health;
 	   };
-	   update_health(max_health); //set marine health to max
+	   update_health(max_health()); //set marine health to max
 	   
 		static weapon_one = function(){ 
 			return obj_ini.wep1[company,marine_number];
