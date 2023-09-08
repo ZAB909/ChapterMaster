@@ -58,13 +58,12 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	if (string_count("Lascannon",wee)>0){ui_weapon[rl]=spr_weapon_lasca;display_type="ranged_twohand";
 	    ui_arm[1]=false;ui_arm[2]=false;ui_above[rl]=true;ui_spec[rl]=true;ui_twoh[rl]=true;
 	}
+	if (string_count("Multi-Melta",wee)>0){ui_weapon[rl]=spr_weapon_mmelta;display_type="ranged_twohand";
+	    ui_arm[1]=false;ui_arm[2]=false;ui_above[rl]=true;ui_spec[rl]=true;ui_twoh[rl]=true;
+	}
 	if (wee="Assault Cannon"){ui_weapon[rl]=spr_weapon_assca;display_type="ranged_assault";
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;
 	}
-
-
-
-
 
 	if (string_count("Sniper Rifle",wee)>0){ui_weapon[rl]=spr_weapon_sniper;
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;display_type="melee_onehand";
@@ -108,6 +107,9 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	if (string_count("Power Axe",wee)>0){ui_weapon[rl]=spr_weapon_powaxe;
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;display_type="melee_onehand";
 	}
+	if (string_count("Chainaxe",wee)>0){ui_weapon[rl]=spr_weapon_chaxe;
+	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;display_type="melee_onehand";
+	}
 	if (string_count("Force Weapon",wee)>0){ui_weapon[rl]=spr_weapon_force;
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;display_type="melee_onehand";
 	}
@@ -122,18 +124,6 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	    ui_weapon[rl]=spr_weapon_lightning1;display_type="lightning_claw";
 	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=true;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	if (argument1>=1){// Fix the hands for termi/tartar
@@ -188,10 +178,6 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	// Flip for offhand
 	if (argument0=2) /*and (argument1=0)*/ and (ui_xmod[rl]<0) and (display_type!="power_fist") and (display_type!="lightning_claw") then ui_xmod[rl]=ui_xmod[rl]*-1;
 
-
-
-
-
 	exit;
 
 
@@ -212,7 +198,7 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;
 	    if (argument1=1) then ui_xmod[rl]=-10;if (argument1=2) then ui_xmod[rl]=-16;
 	}
-	if (string_count("Plasma Pistol",wee)>0){ui_weapon[rl]=spr_weapon_plasg;
+	if (string_count("Plasma Pistol",wee)>0){ui_weapon[rl]=spr_weapon_plasp;
 	    ui_arm[rl]=true;ui_above[rl]=true;ui_spec[rl]=false;
 	    if (argument1=1) then ui_xmod[rl]=-10;if (argument1=2){ui_xmod[rl]=-16;ui_ymod[rl]=17;}
 	}
@@ -239,6 +225,11 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	    if (argument1=1){ui_xmod[rl]=-3;ui_ymod[rl]=12;}if (argument1=2){ui_xmod[rl]=-13;ui_ymod[rl]=14;}
 	}
 	if (string_count("Lascannon",wee)>0){ui_weapon[rl]=spr_weapon_lasca;
+	    ui_arm[1]=false;ui_arm[2]=false;
+	    ui_above[rl]=true;ui_spec[rl]=true;ui_twoh[rl]=true;
+	    if (argument1=1){ui_xmod[rl]=-3;ui_ymod[rl]=12;}if (argument1=2){ui_xmod[rl]=-13;ui_ymod[rl]=14;}
+	}
+	if (string_count("Multi-Melta",wee)>0){ui_weapon[rl]=spr_weapon_mmelta;
 	    ui_arm[1]=false;ui_arm[2]=false;
 	    ui_above[rl]=true;ui_spec[rl]=true;ui_twoh[rl]=true;
 	    if (argument1=1){ui_xmod[rl]=-3;ui_ymod[rl]=12;}if (argument1=2){ui_xmod[rl]=-13;ui_ymod[rl]=14;}
@@ -295,7 +286,10 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;
 	    if (argument1=1){ui_xmod[rl]=-3+11-13;ui_ymod[rl]=5-12+10;}if (argument1=2){ui_xmod[rl]=-12;ui_ymod[rl]=0;}
 	}
-
+	if (string_count("Chainaxe",wee)>0){ui_weapon[rl]=spr_weapon_chaxe;
+	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;
+	    if (argument1=1){ui_xmod[rl]=-3+11-13;ui_ymod[rl]=5-12+10;}if (argument1=2){ui_xmod[rl]=-12;ui_ymod[rl]=0;}
+	}
 
 	if (string_count("Force Weapon",wee)>0){ui_weapon[rl]=spr_weapon_force;
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=true;
@@ -317,31 +311,10 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	}
 
 
-
-
 	if (argument1=1){
 	    if (argument0=1) and (ui_arm[1]=false) and (fix_left=0) then fix_left=1;
 	    if (argument0=2) and (ui_arm[2]=false) and (fix_right=0) then fix_right=1;
 	}
-
-
-	/*if (string_count("Power Fist",wee)>0) and (string_count("DUB",wee)>0){
-	    ui_weapon[1]=spr_weapon_powfist;ui_weapon[2]=spr_weapon_powfist;
-	    ui_arm[1]=true;ui_arm[2]=true;
-	    ui_above[1]=true;ui_above[2]=true;
-	    ui_spec[1]=true;ui_spec[2]=true;
-	    ui_twoh[1]=true;ui_force_both=true;
-	    ui_xmod[1]=0;ui_ymod[1]=0;
-	    ui_xmod[2]=0;ui_ymod[2]=0;
-	    if (argument1=1){ui_xmod[1]=-4;ui_ymod[1]=0;ui_xmod[2]=0;ui_ymod[2]=0;}
-	    if (argument1=2){ui_weapon[1]=spr_weapon_powfist2;ui_weapon[2]=spr_weapon_powfist2;}
-	    // if (argument1=2){ui_xmod[1]=-31;ui_ymod[1]=0;ui_xmod[2]=26;ui_ymod[2]=0;}
-	    exit;
-	}*/
-
-
-
-
 
 	if (string_count("Storm Shield",wee)>0){ui_weapon[rl]=spr_weapon_storm;
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=false;
@@ -350,15 +323,8 @@ function scr_ui_display_weapons(argument0, argument1, argument2) {
 	    ui_arm[rl]=false;ui_above[rl]=true;ui_spec[rl]=false;
 	}
 
-
-
 	if (argument1=1) and (((argument0=1) and (fix_left=0)) or ((argument0=2) and (fix_right=0))) and (clear=false){ui_xmod[1]-=15;ui_ymod[1]+=10;}
-	// if (argument1=1) and (((argument0=1) and (fix_left=0)) or ((argument0=2) and (fix_right=0))) and (clear=false){ui_xmod[1]-=30;ui_ymod[1]+=20;}
-
-
 
 	if (argument0=2) and (argument1=0) and (ui_xmod[rl]<0) then ui_xmod[rl]=ui_xmod[rl]*-1;
-	// if (rl=2) and (ui_xmod[rl]!=0) then ui_xmod[rl]=ui_xmod[rl]*-1;
-
 
 }
