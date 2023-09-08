@@ -1086,7 +1086,7 @@ function scr_initialize_custom() {
 	            if (company=8) then repeat(temp1){k+=1;man_size+=1; // assault company
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,10];wep1[company,k]=wep1[101,10];name[company,k]=scr_marine_name();
 	                wep2[company,k]=wep2[101,10];
-
+					// TODO MAKE 100 INTO 99 
 					if (old_guard>=100){armour[company,k]="MK3 Iron Armour"}; // 1%
 					if (old_guard>=97 and old_guard<=99){armour[company,k]="MK4 Maximus"}; // 3%
 					if (old_guard>=91 and old_guard<=96){armour[company,k]="MK5 Heresy"}; //  6%
