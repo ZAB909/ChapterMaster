@@ -494,9 +494,9 @@ function scr_initialize_custom() {
 	    role[102,i]="";wep1[102,i]="";wep2[102,i]="";armour[102,i]="";gear[102,i]="";mobi[102,i]="";//hirelings??
 		TTRPG[102,i]=new TTRPG_stats("chapter", 102,i);
 	}
-	i=99;repeat(3){i+=1;
-	    role[i,2]="Honor Guard";wep1[i,2]="Power Sword";wep2[i,2]="Bolter";armour[i,2]="Power Armour";mobi[i,2]="";gear[i,2]="";
-	    role[i,3]="Veteran";wep1[i,3]="Chainsword";wep2[i,3]="Bolter";armour[i,3]="Power Armour";mobi[i,3]="";gear[i,3]="";
+	i=99;repeat(3){i+=1; // gear 
+	    role[i,2]="Honor Guard";wep1[i,2]="Power Sword";wep2[i,2]="Storm Bolter";armour[i,2]="Power Armour";mobi[i,2]="";gear[i,2]="";
+	    role[i,3]="Veteran";wep1[i,3]="Chainsword";wep2[i,3]="Combi-Flamer";armour[i,3]="Power Armour";mobi[i,3]="";gear[i,3]="";
 	    role[i,4]="Terminator";wep1[i,4]="Power Fist";wep2[i,4]="Storm Bolter";armour[i,4]="Terminator Armour";mobi[i,4]="";gear[i,4]="";
 	    role[i,5]="Captain";wep1[i,5]="Power Fist";wep2[i,5]="Bolt Pistol";armour[i,5]="Power Armour";mobi[i,5]="";gear[i,5]="";
 	    role[i,6]="Dreadnought";wep1[i,6]="Close Combat Weapon";wep2[i,6]="Lascannon";armour[i,6]="Dreadnought";mobi[i,6]="";gear[i,6]="";
@@ -509,7 +509,7 @@ function scr_initialize_custom() {
 	    role[i,15]="Apothecary";wep1[i,15]="Power Sword";wep2[i,15]="Storm Bolter";armour[i,15]="Power Armour";gear[i,15]="Narthecium";mobi[i,15]="";
 	    role[i,16]="Techmarine";wep1[i,16]="Power Axe";wep2[i,16]="Storm Bolter";armour[i,16]="Power Armour";gear[i,16]="Servo Arms";mobi[i,16]="";
 	    role[i,17]="Librarian";wep1[i,17]="Force Weapon";wep2[i,17]="Storm Bolter";armour[i,17]="Power Armour";gear[i,17]="Psychic Hood";mobi[i,17]="";
-	}// 100 is defaults, 101 is the allowable starting equipment
+	}// 100 is defaults, 101 is the allowable starting equipment // info
 
 
 	i=-1;repeat(21){i+=1;
@@ -674,9 +674,15 @@ function scr_initialize_custom() {
 	o=0;yep=0;repeat(4){o+=1;if (obj_creation.adv[o]="Brothers, All") then yep=1;}if (yep=1) then hong+=20;
 	if (progenitor=0) and (obj_creation.custom=0) then hong+=10;
 	if (hong>0) then repeat(10){k+=1;commands+=1;man_size+=1;
-	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,2];wep1[company,k]=wep1[101,2];name[company,k]=scr_marine_name();
-	    wep2[company,k]=wep2[101,2];armour[company,k]="MK7 Aquila";gear[company,k]=gear[100,2];mobi[company,k]=mobi[100,2];
-	    chaos[company,k]=0;experience[company,k]=180;
+	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,2];name[company,k]=scr_marine_name();gear[company,k]=gear[100,2];mobi[company,k]=mobi[100,2];
+// wep1 power sword // wep2 storm bolter default
+
+		
+		wep1[company,k]=wep1[101,2];
+
+	    wep2[company,k]=wep2[101,2];armour[company,k]="MK4 Maximus";
+
+	    chaos[company,k]=0;experience[company,k]=210+irandom(30);
 	}
 
 
@@ -957,7 +963,7 @@ function scr_initialize_custom() {
 	        if (company=10) then name[company,k]=recruiter_name;
 
 			var oldguard; oldguard=0;
-			// used to randomly make a marine an old guard of their company, giving a bit more xp and fancier armor they've hanged onto all these years
+			// used to randomly make a marine an old guard of their company, giving a bit more xp (TODO) and fancier armor they've hanged onto all these years
 
 	        wep2[company,k]=wep2[101,5];
 		  	if(old_guard>=76){armour[company,k]="MK3 Iron Armour"}; // 25% of iron within
@@ -1013,7 +1019,7 @@ function scr_initialize_custom() {
 	        race[company,k]=1;loc[company,k]=home_name;role[company,k]="Standard Bearer";wep1[company,k]="Chainsword";name[company,k]=scr_marine_name();
 	        wep2[company,k]="Company Standard";
 	        armour[company,k]="MK5 Heresy";
-	        hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience+20;if (company=8) then mobi[company,k]="Jump Pack";
+	        hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience+30+irandom(30);if (company=8) then mobi[company,k]="Jump Pack";
 
 	        k+=1;man_size+=1;// Company Champion
 	        race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,7];wep1[company,k]=wep1[100,7];name[company,k]=scr_marine_name();
