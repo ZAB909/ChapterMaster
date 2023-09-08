@@ -941,7 +941,8 @@ function scr_save(save_slot,save_id) {
 	    ini_write_real(string(save_id),"seed",global.game_seed);
 	    ini_close();
 
-	    file_encrypt("save"+string(save_id)+".ini","p");
+		// TODO temporary disabled. Will be reenabled during ironman/autosave feature task
+	    //file_encrypt("save"+string(save_id)+".ini","p");
 
 	    // This saves the log in an unencrypted file
 	    instance_activate_object(obj_event_log);
