@@ -496,7 +496,7 @@ function scr_initialize_custom() {
 	}
 	i=99;repeat(3){i+=1; // gear 
 	    role[i,2]="Honor Guard";wep1[i,2]="Power Sword";wep2[i,2]="Storm Bolter";armour[i,2]="Power Armour";mobi[i,2]="";gear[i,2]="";
-	    role[i,3]="Veteran";wep1[i,3]="Chainsword";wep2[i,3]="Combi-Flamer";armour[i,3]="Power Armour";mobi[i,3]="";gear[i,3]="";
+	    role[i,3]="Veteran";wep1[i,3]="Chainsword";wep2[i,3]="Combiflamer";armour[i,3]="Power Armour";mobi[i,3]="";gear[i,3]="";
 	    role[i,4]="Terminator";wep1[i,4]="Power Fist";wep2[i,4]="Storm Bolter";armour[i,4]="Terminator Armour";mobi[i,4]="";gear[i,4]="";
 	    role[i,5]="Captain";wep1[i,5]="Power Fist";wep2[i,5]="Bolt Pistol";armour[i,5]="Power Armour";mobi[i,5]="";gear[i,5]="";
 	    role[i,6]="Dreadnought";wep1[i,6]="Close Combat Weapon";wep2[i,6]="Lascannon";armour[i,6]="Dreadnought";mobi[i,6]="";gear[i,6]="";
@@ -966,7 +966,7 @@ function scr_initialize_custom() {
 			// used to randomly make a marine an old guard of their company, giving a bit more xp (TODO) and fancier armor they've hanged onto all these years
 
 	        wep2[company,k]=wep2[101,5];
-		  	if(old_guard>=76){armour[company,k]="MK3 Iron Armour"}; // 25% of iron within
+		  	if(old_guard>=75){armour[company,k]="MK3 Iron Armour"}; // 25% of iron within
 				else{armour[company,k]="MK8 Errant"};
 
 	        hp[company,k]=100;chaos[company,k]=0;experience[company,k]=max(40,company_experience+70+irandom(40));

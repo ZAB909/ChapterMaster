@@ -166,7 +166,6 @@ if (type=5) and (cooldown<=0){
             if (units=1){cap=scr_role_count(obj_ini.role[100,5],"1");if (cap=0){i+=1;role_name[i]=obj_ini.role[100,5];role_exp[i]=210;}}
             if (units=1){bear=scr_role_count("Standard Bearer","1");if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=95;}}
             if (units=1){champ=scr_role_count(obj_ini.role[100,7],"1");if (champ=0){i+=1;role_name[i]=obj_ini.role[100,7];role_exp[i]=180;}}
-            // i+=1;role_name[i]=obj_ini.role[100,2];role_exp[i]=90;// 136;
             i+=1;role_name[i]="Terminator";role_exp[i]=180;
             i+=1;role_name[i]=obj_ini.role[100,3];role_exp[i]=150;
             if (units=1){i+=1;role_name[i]=obj_ini.role[100,6];role_exp[i]=150;}
