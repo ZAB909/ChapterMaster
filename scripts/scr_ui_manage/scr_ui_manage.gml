@@ -579,28 +579,33 @@ function scr_ui_manage() {
 	                    }
 	                    if (yep=1) and (hood<7){
 	                        if (ttrim=1) then draw_sprite(spr_gear_hood2,0,xx+1208,yy+178);
-	                        if (ttrim=0) then draw_sprite(spr_gear_hood2,1,xx+1208,yy+178);
+	                        if (ttrim=0) then draw_sprite(spr_gear_hood2,1,xx+1206,yy+167);
 	                    }
 	                }
-					// Skull helmet
-	                if (skull>0) and (temp[102]!=""){
+//Chaplain head and Terminator version
+	                if (skull>0) and (ui_specialist=1) and (temp[102]!=""){
 	                    if (terg!=2) and (terg!=1) then draw_sprite(spr_gear_chap,skull,xx+1206,yy+167);
 	                    if (terg=2) then draw_sprite(spr_gear_chap,skull,xx+1206,yy+167);
 	                    if (terg=1) then draw_sprite(spr_gear_chap,skull,xx+1206,yy+167);
-	                }
+	                    if (temp[102]!="Terminator"){
+	                      if (terg=2) or (terg=1) then draw_sprite(spr_terminator_chap,1,xx+1206,yy+167);
+	                 }
+					}
+                
                 
 	                // Honor Guard Helm
 	                if (hood=0) and (terg<1) and (temp[102]!="") and (ui_specialist=14){
-	                    var helm_ii,o,yep;helm_ii=0;
+	                    var helm_ii,o,yep;
+                      helm_ii=0;
 	                    if (obj_ini.progenitor=7) or (global.chapter_name="Ultramarines") then helm_ii=1;
 	                    if (obj_ini.progenitor=5) or (global.chapter_name="Blood Angels") then helm_ii=5;
-	                    
+      
 						yep=0;
 						for(var p=1; p<=4;p++){
 							if (obj_ini.adv[p]="Tech-Brothers") then yep=1;
 						}
 						if (yep=1) then helm_ii=2;
-	                    yep=0;
+	          yep=0;
 						for(var q=1; q<=4;q++){
 							if (obj_ini.dis[q]="Never Forgive") then yep=1;
 						}
@@ -611,8 +616,7 @@ function scr_ui_manage() {
 						}
 						if (yep=1) then helm_ii=4;
 	                    draw_sprite(spr_honor_helm,helm_ii,xx+1210,yy+178);
-	                }
-                
+
 	                // Weapons for above arms
 	                if (ui_weapon[1]!=0) and (sprite_exists(ui_weapon[1])) and (ui_above[1]=true) and (fix_left<8){
 	                    if (ui_twoh[1]=false) and (ui_twoh[2]=false) then draw_sprite(ui_weapon[1],0,xx+1208+ui_xmod[1],yy+178+ui_ymod[1]);
