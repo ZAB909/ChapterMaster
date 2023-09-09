@@ -7,6 +7,7 @@ var eq1=1,eq2=1,eq3=1,t=0,r=0;
 var tco=0;
 var warn="",w5=0;
 var g1=0,g2=0;
+var onceh=0,up=0,tot=0,stahp=0;
 
 if (known[10]==2) and (faction_defeated[10]==0) then times+=1;
 
@@ -733,9 +734,6 @@ if (tech_points>=4) and (tech_aspirant==0){
     }
 }
 tra=0;
-// TODO continue refactor
-var i, onceh, up, tot,stahp;
-i=0;onceh=0;up=0;tot=0;stahp=0;
 
 if (obj_ini.fleet_type!=1){
     with(obj_temp5){instance_destroy();}
@@ -747,51 +745,49 @@ if (obj_ini.fleet_type!=1){
     with(obj_temp5){instance_destroy();}
 }
 
-// probably rewrite all of this
-
-var recruits_finished,tot,recruit_first;
-recruits_finished=0;tot=0;recruit_first="";
-
-i=0;
-repeat(300){i+=1;
+var recruits_finished=0,tot=0,recruit_first="";
+// ** Assign recruits to X Company **
+for(var i=1; i<=300; i++){
     if (recruit_name[i]!="") then tot+=1;
     if (recruit_name[i]!="") and (recruit_distance[i]<=0) then recruit_training[i]-=1;
 }
-
-i=0;
-repeat(300){i+=1;
+for(var i=1; i<=300; i++){
     if (recruit_name[i]!="") and (recruit_training[i]<=0){
         scr_add_man(obj_ini.role[100,12],10,"Scout Armour",obj_ini.role[100,12],"",recruit_exp[i],recruit_name[i],recruit_corruption[i],false,"default","");
-        if (recruit_first="") then recruit_first=recruit_name[i];
-        recruits_finished+=1;recruit_name[i]="";recruit_training[i]=-50;
+        if (recruit_first=="") then recruit_first=recruit_name[i];
+        recruits_finished+=1;
+        recruit_name[i]="";
+        recruit_training[i]=-50;
     }
 }
-
-i=0;
-repeat(299){i+=1;
-    if (recruit_name[i]="") and (recruit_name[i+1]!=""){
+// Correct recruits name and empties the array
+// TODO could be implemented better
+for(var i=1; i<=299; i++){
+    if (recruit_name[i]=="") and (recruit_name[i+1]!=""){
         recruit_name[i]=recruit_name[i+1];
         recruit_corruption[i]=recruit_corruption[i+1];
         recruit_distance[i]=recruit_distance[i+1];
         recruit_training[i]=recruit_training[i+1];
         recruit_exp[i]=recruit_exp[i+1];
         
-        recruit_name[i+1]="";recruit_corruption[i+1]=0;
-        recruit_distance[i+1]=0;recruit_training[i+1]=0;
+        recruit_name[i+1]="";
+        recruit_corruption[i+1]=0;
+        recruit_distance[i+1]=0;
+        recruit_training[i+1]=0;
         recruit_exp[i+1]=0;
     }
 }
 
-if (recruits_finished=1) then scr_alert("green","recruitment",string(obj_ini.role[100,12])+" "+string(recruit_first)+" has joined the 10th Company.",0,0);
-if (recruits_finished>1) then scr_alert("green","recruitment",string(recruits_finished)+"x "+string(obj_ini.role[100,12])+" have joined the 10th Company.",0,0);
+if (recruits_finished==1) then scr_alert("green","recruitment",string(obj_ini.role[100,12])+" "+string(recruit_first)+" has joined X Company.",0,0);
+if (recruits_finished>1) then scr_alert("green","recruitment",string(recruits_finished)+"x "+string(obj_ini.role[100,12])+" have joined X Company.",0,0);
 
 recruits=tot;
 
-// Gene-seed Test-Slaves
-i=0;repeat(120){i+=1;
+// ** Gene-seed Test-Slaves **
+for(var i=1; i<=120; i++){
     if (obj_ini.slave_batch_num[i]>0){
         obj_ini.slave_batch_eta[i]-=1;
-        if (obj_ini.slave_batch_eta[i]=0){
+        if (obj_ini.slave_batch_eta[i]==0){
             obj_ini.slave_batch_eta[i]=60;
             obj_controller.gene_seed+=obj_ini.slave_batch_num[i];
             // color / type / text /x/y
@@ -799,77 +795,89 @@ i=0;repeat(120){i+=1;
         }
     }
 }
-
-/*
-if (turn=240) and (global.chapter_name="Lamenters"){obj_ini.strin2+="Black Rage";
+/* TODO implement Lamenters get Black Rage and story
+if (turn=240) and (global.chapter_name="Lamenters"){
+    obj_ini.strin2+="Black Rage";
     scr_popup("Geneseed Mutation","Your Chapter has begun to have visions and nightmares of Sanguinius' fall.  The less mentally disciplined of your battle-brothers no longer are able to sleep soundly, waking from sleep in a screaming, frothing rage.  It appears the Black Rage has returned.","black_rage","");    
 }
 */
-if (obj_ini.adv[1]="Scavengers") or (obj_ini.adv[1]="Scavengers") or (obj_ini.adv[1]="Scavengers") or (obj_ini.adv[1]="Scavengers"){
-    var lroll1,lroll2,loot;
+// ** Battlefield Loot **
+if (obj_ini.adv[1]="Scavengers") or (obj_ini.adv[2]="Scavengers") or (obj_ini.adv[3]="Scavengers") or (obj_ini.adv[4]="Scavengers"){
+    var lroll1,lroll2,loot="";
     lroll1=floor(random(100))+1;
     lroll2=floor(random(100))+1;
-    loot="";
-    if (obj_ini.dis[1]="Shitty Luck") or (obj_ini.dis[2]="Shitty Luck") or (obj_ini.dis[3]="Shitty Luck") or (obj_ini.dis[4]="Shitty Luck"){lroll1+=2;lroll2+=25;}
+    if (obj_ini.dis[1]="Shitty Luck") or (obj_ini.dis[2]="Shitty Luck") or (obj_ini.dis[3]="Shitty Luck") or (obj_ini.dis[4]="Shitty Luck"){
+        lroll1+=2;
+        lroll2+=25;
+    }
     if (lroll1<=5){
         loot=choose("Chainsword","Bolt Pistol","Combat Knife","Narthecium");
         if (lroll2<=80) then loot=choose("Power Sword","Storm Bolter");
         if (lroll2<=60) then loot=choose("Plasma Pistol","Chainfist","Lascannon","Heavy Bolter","Assault Cannon","Bike");
         if (lroll2<=30) then loot=choose("Artificer Armour","Plasma Gun","Chainfist","Rosarius","Psychic Hood");
         if (lroll2<=10) then loot=choose("Terminator Armour","Artificer Armour","Dreadnought","Plasma Gun","Power Fist","Thunder Hammer","Iron Halo");
-        var tix;tix="A "+string(loot)+" has been gifted to the Chapter.";
-        tix=string_replace(tix,"A A","An A");tix=string_replace(tix,"A E","An E");
-        tix=string_replace(tix,"A I","An I");tix=string_replace(tix,"A O","An O");
-        scr_add_item(string(loot),1);scr_alert("","loot",tix,0,0);
+        var tix="A "+string(loot)+" has been gifted to the Chapter.";
+        tix=string_replace(tix,"A A","An A");
+        tix=string_replace(tix,"A E","An E");
+        tix=string_replace(tix,"A I","An I");
+        tix=string_replace(tix,"A O","An O");
+        scr_add_item(string(loot),1);
+        scr_alert("","loot",tix,0,0);
     }
 }
-
-// Check number of navy fleets
+// ** Check number of navy fleets **
 with(obj_temp_inq){instance_destroy();}
 with(obj_temp8){instance_destroy();}
 with(obj_en_fleet){
-    if (owner=2) and (navy=1) then instance_create(x,y,obj_temp_inq);
+    if (owner==2) and (navy==1) then instance_create(x,y,obj_temp_inq);
 }
 if (instance_number(obj_temp_inq)>target_navy_number){
-    with(obj_en_fleet){if (navy=0) or (guardsmen_unloaded=1) then y-=20000;}
-    var him;him=instance_nearest(random(room_width),random(room_height),obj_en_fleet);
-    if (him.guardsmen_unloaded=0) and (him.navy=1) then with(him){instance_destroy();}
+    with(obj_en_fleet){if (navy==0) or (guardsmen_unloaded==1) then y-=20000;}
+    var him=instance_nearest(random(room_width),random(room_height),obj_en_fleet);
+    if (him.guardsmen_unloaded==0) and (him.navy==1) then with(him){instance_destroy();}
     with(obj_en_fleet){if (y<-10000) then y+=20000;}
 }
 if (instance_number(obj_temp_inq)<target_navy_number){
     with(obj_star){
-        var o,good;o=0;good=0;
-        repeat(4){o+=1;
-            if (p_type[o]="Forge") and (p_owner[o]=3) and (p_orks[o]+p_tau[o]+p_tyranids[o]+p_chaos[o]+p_traitors[o]+p_necrons[o]=0){
-                if (present_fleet[7]+present_fleet[8]+present_fleet[9]+present_fleet[10]+present_fleet[13]=0){
-                    good=1;if (instance_nearest(x+24,y-24,obj_en_fleet).navy=1) then good=0;
+        var good=false;
+        for(var o=1; o<=4; o++){
+            if (p_type[o]=="Forge") and (p_owner[o]==3) and (p_orks[o]+p_tau[o]+p_tyranids[o]+p_chaos[o]+p_traitors[o]+p_necrons[o]==0){
+                if (present_fleet[7]+present_fleet[8]+present_fleet[9]+present_fleet[10]+present_fleet[13]==0){
+                    good=true;
+                    if (instance_nearest(x+24,y-24,obj_en_fleet).navy==1) then good=false;
                 }
             }
         }
-        if (good=1) then instance_create(x,y,obj_temp8);
+        if (good=true) then instance_create(x,y,obj_temp8);
     }
 }
 if (instance_exists(obj_temp8)){
-    var newy,nav,ii;newy=instance_nearest(random(room_width),random(room_height),obj_temp8);
+    var newy,nav;
+    newy=instance_nearest(random(room_width),random(room_height),obj_temp8);
     nav=instance_create(newy.x+24,newy.y-24,obj_en_fleet);
-    nav.owner=2;ii=0;
+    nav.owner=2;
     
     nav.capital_number=0;
     nav.frigate_number=0;
     nav.escort_number=1;
-    nav.home_x=x;nav.home_y=y;
+    nav.home_x=x;
+    nav.home_y=y;
     with(instance_nearest(newy.x,newy.y,obj_star)){present_fleet[2]+=1;}
     nav.orbiting=instance_nearest(newy.x,newy.y,obj_star);
     nav.navy=1;
     
-    var ii;ii=0;ii+=nav.capital_number-1;ii+=round((nav.frigate_number/2));ii+=round((nav.escort_number/4));
-    if (ii<=1) and (nav.capital_number+nav.frigate_number+nav.escort_number>0) then ii=1;
-    nav.image_index=ii;nav.image_speed=0;
+    var total_ships=0;
+    total_ships+=nav.capital_number-1;
+    total_ships+=round((nav.frigate_number/2));
+    total_ships+=round((nav.escort_number/4));
+    if (total_ships<=1) and (nav.capital_number+nav.frigate_number+nav.escort_number>0) then total_ships=1;
+    nav.image_index=total_ships;
+    nav.image_speed=0;
     
     nav.trade_goods="building_ships";
     with(obj_temp8){instance_destroy();}
 }
-
+// TODO continue refactor
 if (gene_tithe=0) and (faction_status[2]!="War"){// Time for another tithe
     gene_tithe=24;
 
