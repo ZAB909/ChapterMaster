@@ -17,7 +17,7 @@ if (cus=true){
 if (cus=false){
     // if (global.icon<=20) then draw_sprite_stretched(spr_icon,global.icon,728,83,135,135);
     if (global.icon<=20) then scr_image("creation",global.icon,728,83,135,135);
-    if (global.icon>20) then draw_sprite_stretched(spr_icon_other,global.icon-19,728,83,135,135);
+    if (global.icon>20) then draw_sprite_stretched(spr_icon_chapters,global.icon-19,728,83,135,135);
 }
 // 728,103
 

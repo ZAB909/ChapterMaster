@@ -495,12 +495,12 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
         // Check this
 
         with(obj_controller){scr_management(1);}
-        obj_ini.heh1=company;obj_ini.heh2=target_comp;
+        obj_ini.selected_company=company;obj_ini.temp_target_company=target_comp;
         with(obj_ini){
-            scr_company_order(heh1);
-            scr_company_order(heh2);
-            scr_vehicle_order(heh1);
-            scr_vehicle_order(heh2);
+            scr_company_order(selected_company);
+            scr_company_order(temp_target_company);
+            scr_vehicle_order(selected_company);
+            scr_vehicle_order(temp_target_company);
         }
 
         with(obj_controller){

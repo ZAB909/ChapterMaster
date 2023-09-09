@@ -110,7 +110,7 @@ if (slate4>0){
         repeat(2){
         
             draw_sprite(spr_creation_icon,0,x2,y2);
-            draw_sprite_stretched(spr_icon_other,i-1001,x2,y2,48,48);
+            draw_sprite_stretched(spr_icon_chapters,i-1001,x2,y2,48,48);
             
             if (mouse_x>=x2) and (mouse_y>=y2) and (mouse_x<x2+48) and (mouse_y<y2+48) and (slate4>=30){
                 if (old_highlight!=highlight) and (highlight!=i) and (goto_slide!=2){old_highlight=highlight;highlighting=1;}
@@ -219,7 +219,7 @@ if (slide>=2){
     draw_rectangle(436,74,436+128,74+128,0);
     // if (icon<=20) then draw_sprite_stretched(spr_icon,icon,436,74,128,128);
     if (icon<=20) then scr_image("creation",icon,436,74,128,128);
-    if (icon>20) then draw_sprite_stretched(spr_icon_other,icon-19,436,74,128,128);
+    if (icon>20) then draw_sprite_stretched(spr_icon_chapters,icon-19,436,74,128,128);
     
     obj_cursor.image_index=0;
     if (scr_hit(436,74,436+128,74+128)=true) and (popup=""){obj_cursor.image_index=1;
@@ -262,7 +262,7 @@ if (slide>=2){
             draw_set_alpha(0.33);
             // if (founding<10) then draw_sprite_stretched(spr_icon,founding,1164-128,74,128,128);
             if (founding<10) then scr_image("creation",founding,1164-128,74,128,128);
-            if (founding=10) then draw_sprite_stretched(spr_icon_other,0,1164-128,74,128,128);
+            if (founding=10) then draw_sprite_stretched(spr_icon_chapters,0,1164-128,74,128,128);
             draw_set_alpha(1);
             
             if (scr_hit(1164-128,74,1164,74+128)=true){tooltip="Founding Chapter";tooltip2="The parent Chapter whos Gene-Seed your own originates from.";}
@@ -533,7 +533,7 @@ if (slide=2){
                 // draw_rectangle(x3,y3,x3+96,y3+96,0);
                 // if (ic<=20) then draw_sprite_stretched(spr_icon,ic,x3,y3,96,96);
                 if (ic<=20) then scr_image("creation",ic,x3,y3,96,96);
-                if (ic>20) and (ic<=76) then draw_sprite_stretched(spr_icon_other,ic-19,x3,y3,96,96);
+                if (ic>20) and (ic<=76) then draw_sprite_stretched(spr_icon_chapters,ic-19,x3,y3,96,96);
                 if (ic>76) and (obj_cuicons.spr_custom[ic-76]>0) and (obj_cuicons.spr_custom_icon[ic-76]!=-1){
                     draw_sprite_stretched(obj_cuicons.spr_custom_icon[ic-76],0,x3,y3,96,96);
                 }
@@ -542,7 +542,7 @@ if (slide=2){
                     draw_set_blend_mode(bm_add);draw_set_alpha(0.25);draw_set_color(16119285);
                     // if (ic<=20) then draw_sprite_stretched(spr_icon,ic,x3,y3,96,96);
                     if (ic<=20) then scr_image("creation",ic,x3,y3,96,96);
-                    if (ic>20) and (ic<=76) then draw_sprite_stretched(spr_icon_other,ic-19,x3,y3,96,96);
+                    if (ic>20) and (ic<=76) then draw_sprite_stretched(spr_icon_chapters,ic-19,x3,y3,96,96);
                     if (ic>76) and (obj_cuicons.spr_custom[ic-76]>0) and (obj_cuicons.spr_custom_icon[ic-76]!=-1){
                         draw_sprite_stretched(obj_cuicons.spr_custom_icon[ic-76],0,x3,y3,96,96);
                     }

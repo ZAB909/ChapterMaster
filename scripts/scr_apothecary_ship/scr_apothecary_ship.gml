@@ -124,70 +124,27 @@ function scr_apothecary_ship() {
 	    if (ship_apoth>0) then repeat(300){
 	        d+=1;normal_hp=true;
 	        maybe=0;
-	        if (obj_ini.role[co,d]!="") and (obj_ini.hp[co,d]>0) and (obj_ini.lid[co,d]>0) then maybe=1;
+			var unit = obj_ini.TTRPG[co,d]
+			var location =  unit.marine_location()
+	        if (unit.role()!="") and (unit.hp()>0) and (location[0]==location_types.ship) then maybe=1;
         
 	        if (maybe=1){
 	            var c;
-	            c=0;repeat(capital_number){c+=1;if (obj_ini.lid[co,d]=capital_num[c]) then maybe=2;}
-	            c=0;repeat(frigate_number){c+=1;if (obj_ini.lid[co,d]=frigate_num[c]) then maybe=2;}
-	            c=0;repeat(escort_number){c+=1;if (obj_ini.lid[co,d]=escort_num[c]) then maybe=2;}
+	            c=0;repeat(capital_number){c+=1;if (location[1]=capital_num[c]) then maybe=2;}
+	            c=0;repeat(frigate_number){c+=1;if (location[1]=frigate_num[c]) then maybe=2;}
+	            c=0;repeat(escort_number){c+=1;if (location[1]=escort_num[c]) then maybe=2;}
             
 	            if (obj_ini.race[co,d]=1){maybe=2;normal_hp=true;}
 	            if (obj_ini.race[co,d]>1){maybe=2;normal_hp=false;}
             
 	            if (maybe=2){
-	                if (obj_ini.armour[co,d]!="Dreadnought") and (ship_apoth>0) and (obj_ini.hp[co,d]<=30) and (normal_hp=true){
-	                    obj_ini.hp[co,d]+=heal;ship_apoth-=1;
-	                }
-	            }
-	        }
-	    }
-    
-    
-	    d=0;
-	    if (ship_apoth>0) then repeat(300){
-	        d+=1;normal_hp=true;
-	        maybe=0;
-	        if (obj_ini.role[co,d]!="") and (obj_ini.hp[co,d]>0) and (obj_ini.lid[co,d]>0) then maybe=1;
-        
-	        if (maybe=1){
-	            var c;
-	            c=0;repeat(capital_number){c+=1;if (obj_ini.lid[co,d]=capital_num[c]) then maybe=2;}
-	            c=0;repeat(frigate_number){c+=1;if (obj_ini.lid[co,d]=frigate_num[c]) then maybe=2;}
-	            c=0;repeat(escort_number){c+=1;if (obj_ini.lid[co,d]=escort_num[c]) then maybe=2;}
-            
-	            if (obj_ini.race[co,d]=1){maybe=2;normal_hp=true;}
-	            if (obj_ini.race[co,d]>1){maybe=2;normal_hp=false;}
-            
-	            if (maybe=2){
-            
-	                if (obj_ini.role[co,d]="Chapter Master"){
-	                    if (string_count("Paragon",string(obj_ini.adv[1])+string(obj_ini.adv[2])+string(obj_ini.adv[3])+string(obj_ini.adv[4]))>0){
-	                        if (obj_ini.armour[co,d]!="Dreadnought") and (ship_apoth>0) and (obj_ini.hp[co,d]<130) and (normal_hp=true){
-	                            obj_ini.hp[co,d]+=heal;ship_apoth-=1;
-                            
-	                            if (obj_ini.hp[co,d]>130) then obj_ini.hp[co,d]=130;
+	                        if (unit.armour()!="Dreadnought") and (ship_apoth>0) and (unit.hp()<unit.max_health) and (normal_hp=true){
+	                            unit.update_health(unit.hp()+heal);ship_apoth-=1;                           
 	                        }
-	                    }
-	                    if (string_count("Paragon",string(obj_ini.adv[1])+string(obj_ini.adv[2])+string(obj_ini.adv[3])+string(obj_ini.adv[4]))=0){
-	                        if (obj_ini.armour[co,d]!="Dreadnought") and (ship_apoth>0) and (obj_ini.hp[co,d]<100) and (normal_hp=true){
-	                            obj_ini.hp[co,d]+=heal;ship_apoth-=1;
-                            
-	                            if (obj_ini.hp[co,d]>100) then obj_ini.hp[co,d]=100;
-	                        }
-	                    }
-                    
-	                }
-                
-	                if (obj_ini.role[co,d]!="Chapter Master"){
-	                    if (obj_ini.armour[co,d]!="Dreadnought") and (ship_apoth>0) and (obj_ini.hp[co,d]<100) and (normal_hp=true){
-	                        obj_ini.hp[co,d]+=heal;ship_apoth-=1;
-                        
-	                        if (obj_ini.hp[co,d]>100) then obj_ini.hp[co,d]=100;
-	                    }
-	                }
+						 if (unit.hp()>unit.max_health) then unit.update_health(unit.max_health);
 	            }
-	        }
+	            }
+	      
 	    }
     
     

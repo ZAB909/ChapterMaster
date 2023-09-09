@@ -1,105 +1,12 @@
-function scr_company_order(argument0) {
+function scr_company_order(company) {
 
-	// argument0 : company number
+	// company : company number
 	// This sorts and crunches the marine variables for the company
-	var co;co=argument0;
+	var co;co=company;
 
 	var i, v;i=-1;v=0;
 	var temp_race, temp_loc, temp_name, temp_role, temp_wep1, temp_lid, temp_wid, temp_wep1, temp_wep2, temp_armour, temp_gear, temp_mobi, temp_hp, temp_chaos, temp_experience, temp_age, temp_spe, temp_god, temp_uid;
 	var temp_vrace, temp_vloc, temp_vrole, temp_vwep1, temp_vwep2, temp_vup, temp_vhp, temp_vchaos, temp_vpilots, temp_vlid, temp_vwid;
-
-	/*
-	veh_race[company,v]=1;veh_loc[company,v]=home_name;veh_role[company,v]="Rhino";veh_wep1[company,v]="Storm Bolter";veh_wep2[company,v]="Storm Bolter";
-	veh_upgrade[company,v]="Dozer Blades";veh_hp[company,v]=100;veh_chaos[company,v]=0;veh_pilots[company,v]=0;veh_lid[company,v]=0;veh_wid[company,v]=2;
-	*/
-
-
-	/*repeat(201){i+=1;
-	    temp_vrace[co,i]=0;
-	    temp_vloc[co,i]="";
-	    temp_vrole[co,i]="";
-	    temp_vwep1[co,i]="";
-	    temp_vwep2[co,i]="";
-	    temp_vup[co,i]="";
-	    temp_vhp[co,i]=0;
-	    temp_vchaos[co,i]=0;
-	    temp_vpilots[co,i]=0;
-	    temp_vlid[co,i]=0;
-	    temp_vwid[co,i]=0;
-	}
-
-	i=0;repeat(200){i+=1;
-	    if (veh_role[co,i]="Land Raider"){v+=1;
-	        temp_vrace[co,v]=veh_race[co,i];temp_vloc[co,v]=veh_loc[co,i];temp_vrole[co,v]=veh_role[co,i];temp_vlid[co,v]=veh_lid[co,i];
-	        temp_vwid[co,v]=veh_wid[co,i];temp_vwep1[co,v]=veh_wep1[co,i];temp_vwep2[co,v]=veh_wep2[co,i];temp_vwep3[co,v]=veh_wep3[co,i];temp_vup[co,v]=veh_upgrade[co,i];temp_vacc[co,v]=veh_acc[co,i];
-	        temp_vhp[co,v]=veh_hp[co,i];temp_vchaos[co,v]=veh_chaos[co,i];temp_bio[co,v]=bio[co,i];
-	    }
-	}
-	i=0;repeat(200){i+=1;
-	    if (veh_role[co,i]="Predator"){v+=1;
-					temp_vrace[co,v]=veh_race[co,i];temp_vloc[co,v]=veh_loc[co,i];temp_vrole[co,v]=veh_role[co,i];temp_vlid[co,v]=veh_lid[co,i];
-					temp_vwid[co,v]=veh_wid[co,i];temp_vwep1[co,v]=veh_wep1[co,i];temp_vwep2[co,v]=veh_wep2[co,i];temp_vwep3[co,v]=veh_wep3[co,i];temp_vup[co,v]=veh_upgrade[co,i];temp_vacc[co,v]=veh_acc[co,i];
-					temp_vhp[co,v]=veh_hp[co,i];temp_vchaos[co,v]=veh_chaos[co,i];temp_bio[co,v]=bio[co,i];
-	    }
-	}
-	i=0;repeat(200){i+=1;
-	    if (veh_role[co,i]="Rhino"){v+=1;
-					temp_vrace[co,v]=veh_race[co,i];temp_vloc[co,v]=veh_loc[co,i];temp_vrole[co,v]=veh_role[co,i];temp_vlid[co,v]=veh_lid[co,i];
-					temp_vwid[co,v]=veh_wid[co,i];temp_vwep1[co,v]=veh_wep1[co,i];temp_vwep2[co,v]=veh_wep2[co,i];temp_vwep3[co,v]=veh_wep3[co,i];temp_vup[co,v]=veh_upgrade[co,i];temp_vacc[co,v]=veh_acc[co,i];
-					temp_vhp[co,v]=veh_hp[co,i];temp_vchaos[co,v]=veh_chaos[co,i];temp_bio[co,v]=bio[co,i];
-	    }
-	}
-	i=0;repeat(200){i+=1;
-	    if (veh_role[co,i]="Land Speeder"){v+=1;
-					temp_vrace[co,v]=veh_race[co,i];temp_vloc[co,v]=veh_loc[co,i];temp_vrole[co,v]=veh_role[co,i];temp_vlid[co,v]=veh_lid[co,i];
-					temp_vwid[co,v]=veh_wid[co,i];temp_vwep1[co,v]=veh_wep1[co,i];temp_vwep2[co,v]=veh_wep2[co,i];temp_vwep3[co,v]=veh_wep3[co,i];temp_vup[co,v]=veh_upgrade[co,i];temp_vacc[co,v]=veh_acc[co,i];
-					temp_vhp[co,v]=veh_hp[co,i];temp_vchaos[co,v]=veh_chaos[co,i];temp_bio[co,v]=bio[co,i];
-	    }
-	}
-	i=0;repeat(200){i+=1;
-	    if (veh_role[co,i]="Whirlwind"){v+=1;
-					temp_vrace[co,v]=veh_race[co,i];temp_vloc[co,v]=veh_loc[co,i];temp_vrole[co,v]=veh_role[co,i];temp_vlid[co,v]=veh_lid[co,i];
-						temp_vwid[co,v]=veh_wid[co,i];temp_vwep1[co,v]=veh_wep1[co,i];temp_vwep2[co,v]=veh_wep2[co,i];temp_vwep3[co,v]=veh_wep3[co,i];temp_vup[co,v]=veh_upgrade[co,i];temp_vacc[co,v]=veh_acc[co,i];
-							temp_vhp[co,v]=veh_hp[co,i];temp_vchaos[co,v]=veh_chaos[co,i];temp_bio[co,v]=bio[co,i];
-	    }
-	}
-
-	i=0;
-	repeat(200){i+=1;
-	    if (i<=v){
-	        veh_race[co,i]=temp_vrace[co,i];
-	        veh_loc[co,i]=temp_vloc[co,i];
-	        veh_role[co,i]=temp_vrole[co,i];
-	        veh_lid[co,i]=temp_vlid[co,i];
-	        veh_wid[co,i]=temp_vwid[co,i];
-	        veh_wep1[co,i]=temp_vwep1[co,i];
-	        veh_wep2[co,i]=temp_vwep2[co,i];
-	        veh_wep3[co,i]=temp_vwep3[co,i];
-	        veh_upgrade[co,i]=temp_vup[co,i];
-	        veh_acc[co,i]=temp_vacc[co,i];
-	        veh_hp[co,i]=temp_vhp[co,i];
-	        veh_chaos[co,i]=temp_vchaos[co,i];
-	    }
-	    if (i>v){
-	        veh_race[co,i]=0;
-	        veh_loc[co,i]="";
-	        veh_role[co,i]="";
-	        veh_lid[co,i]=0;
-	        veh_wid[co,i]=0;
-	        veh_wep1[co,i]="";
-	        veh_wep2[co,i]="";
-	        veh_wep3[co,i]="";
-	        veh_upgrade[co,i]="";
-	        veh_acc[co,i]="";
-	        veh_hp[co,i]=0;
-	        veh_chaos[co,i]=0;
-	    }
-	}
-	i=-1;v=0;
-	*/
-
-
-
 
 	repeat(401){i+=1;
 	    temp_race[co,i]=0;

@@ -584,9 +584,9 @@ function scr_ui_manage() {
 	                }
 					// Skull helmet
 	                if (skull>0) and (temp[102]!=""){
-	                    if (terg!=2) and (terg!=1) then draw_sprite(spr_gear_chap,skull,xx+1208,yy+178);
-	                    if (terg=2) then draw_sprite(spr_gear_chap,skull,xx+1210,yy+178);
-	                    if (terg=1) then draw_sprite(spr_gear_chap,skull,xx+1208,yy+184);
+	                    if (terg!=2) and (terg!=1) then draw_sprite(spr_gear_chap,skull,xx+1206,yy+167);
+	                    if (terg=2) then draw_sprite(spr_gear_chap,skull,xx+1206,yy+167);
+	                    if (terg=1) then draw_sprite(spr_gear_chap,skull,xx+1206,yy+167);
 	                }
                 
 	                // Honor Guard Helm

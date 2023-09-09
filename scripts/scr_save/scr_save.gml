@@ -1,18 +1,31 @@
-function scr_save(argument0, argument1) {
+
+function scr_save(save_slot,save_id) {
 
 	var num, tot;
 	num=0;tot=0;
 
 	num=instance_number(obj_star);
 	instance_array[tot]=0;
+	
+	function jsonify_marine_struct(company, marine){
+		var copy_marine_struct = obj_ini.TTRPG[company, marine]; //grab marine structure
+		var new_marine = {};
+		var names = variable_struct_get_names(copy_marine_struct); // get all keys within structure
+		for (var name = 0; name < array_length(names); name++) { //loop through keys to find which ones are methods as they can't be saved as a json string
+			if (!is_method(copy_marine_struct[$ names[name]])){
+				variable_struct_set(new_marine, names[name],copy_marine_struct[$ names[name]]); //if key value is not a method add to copy structure
+			}
+		}
+		return json_stringify(new_marine);
+	}	
 
 
 	// if (file_exists("save1.ini")) then file_delete("save1.ini");
 	// argument 0 = the part of the save to do
-	// argument1 = the save ID
+	//save_id = the save ID
 
-	if (argument0=1) or (argument0=0){debugl("Saving to slot "+string(argument1));
-	    ini_open("save"+string(argument1)+".ini");
+	if (save_slot=1) or (save_slot=0){debugl("Saving to slot "+string(save_id));
+	    ini_open("save"+string(save_id)+".ini");
 
 	    // Global variables
 	    ini_write_string("Save","chapter_name",global.chapter_name);
@@ -326,8 +339,8 @@ function scr_save(argument0, argument1) {
 
 
 
-	if (argument0=2) or (argument0=0){debugl("Saving to slot "+string(argument1)+" part 2");
-	    ini_open("save"+string(argument1)+".ini");
+	if (save_slot=2) or (save_slot=0){debugl("Saving to slot "+string(save_id)+" part 2");
+	    ini_open("save"+string(save_id)+".ini");
 	    // Stars
 
 	    var num;num=instance_number(obj_star);instance_array=0;
@@ -698,8 +711,8 @@ function scr_save(argument0, argument1) {
 
 
 
-	if (argument0=3) or (argument0=0){debugl("Saving to slot "+string(argument1)+" part 3");
-	    ini_open("save"+string(argument1)+".ini");
+	if (save_slot=3) or (save_slot=0){debugl("Saving to slot "+string(save_id)+" part 3");
+	    ini_open("save"+string(save_id)+".ini");
 	    var coh,mah,good;
 	    good=0;coh=10;mah=100;
 	    repeat(1000){
@@ -817,8 +830,8 @@ function scr_save(argument0, argument1) {
 
 
 
-	if (argument0=4) or (argument0=0){debugl("Saving to slot "+string(argument1)+" part 4");
-	    ini_open("save"+string(argument1)+".ini");
+	if (save_slot=4) or (save_slot=0){debugl("Saving to slot "+string(save_id)+" part 4");
+	    ini_open("save"+string(save_id)+".ini");
 	    var coh,mah,good;
 	    good=0;coh=100;mah=0;
 	    repeat(30){mah+=1;
@@ -830,7 +843,7 @@ function scr_save(argument0, argument1) {
 	            ini_write_string("Mar","w2"+string(coh)+"."+string(mah),obj_ini.wep2[coh,mah]);
 	            ini_write_string("Mar","ar"+string(coh)+"."+string(mah),obj_ini.armour[coh,mah]);
 	            ini_write_string("Mar","ge"+string(coh)+"."+string(mah),obj_ini.gear[coh,mah]);
-	            ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);
+	            ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);	
 	        }
 	    }
 	    good=0;coh=10;mah=400;
@@ -859,6 +872,10 @@ function scr_save(argument0, argument1) {
 	                ini_write_real("Mar","ag"+string(coh)+"."+string(mah),obj_ini.age[coh,mah]);
 	                ini_write_string("Mar","spe"+string(coh)+"."+string(mah),obj_ini.spe[coh,mah]);
 	                ini_write_real("Mar","god"+string(coh)+"."+string(mah),obj_ini.god[coh,mah]);
+					if (!is_struct(obj_ini.TTRPG[coh,mah])){
+						TTRPG[coh,mah]= new TTRPG_stats("chapter", coh,mah);
+					}
+					ini_write_string("Mar","Struct"+string(coh)+"."+string(mah),base64_encode(jsonify_marine_struct(coh,mah)));					
 	            }
 	            if (coh=0) and (mah=1) then good=1;
 	        }
@@ -872,6 +889,10 @@ function scr_save(argument0, argument1) {
 	            ini_write_string("Mar","ar"+string(coh)+"."+string(mah),obj_ini.armour[coh,mah]);
 	            ini_write_string("Mar","ge"+string(coh)+"."+string(mah),obj_ini.gear[coh,mah]);
 	            ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);
+					if (!is_struct(obj_ini.TTRPG[coh,mah])){
+						TTRPG[coh,mah]= new TTRPG_stats("chapter", coh,mah);
+					}
+					ini_write_string("Mar","Struct"+string(coh)+"."+string(mah),base64_encode(jsonify_marine_struct(coh,mah)));					
 	        }
 	    }
 	    coh=102;mah=-1;
@@ -883,14 +904,18 @@ function scr_save(argument0, argument1) {
 	            ini_write_string("Mar","ar"+string(coh)+"."+string(mah),obj_ini.armour[coh,mah]);
 	            ini_write_string("Mar","ge"+string(coh)+"."+string(mah),obj_ini.gear[coh,mah]);
 	            ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);
+					if (!is_struct(obj_ini.TTRPG[coh,mah])){
+						TTRPG[coh,mah]= new TTRPG_stats("chapter", coh,mah);
+					}
+					ini_write_string("Mar","Struct"+string(coh)+"."+string(mah),base64_encode(jsonify_marine_struct(coh,mah)));					
 	        }
 	    }
 	    ini_close();
 	}
 
 
-	if (argument0=5) or (argument0=0){
-	    ini_open("save"+string(argument1)+".ini");
+	if (save_slot=5) or (save_slot=0){
+	    ini_open("save"+string(save_id)+".ini");
 
 	    obj_saveload.hide=1;
 	    obj_controller.invis=true;
@@ -907,21 +932,22 @@ function scr_save(argument0, argument1) {
 	    ini_close();
 
 	    ini_open("saves.ini");
-	    ini_write_real(string(argument1),"turn",svt);
-	    ini_write_string(string(argument1),"chapter_name",svc);
-	    ini_write_string(string(argument1),"master_name",svm);
-	    ini_write_real(string(argument1),"marines",smr);
-	    ini_write_string(string(argument1),"date",svd);
-	    ini_write_real(string(argument1),"time",obj_controller.play_time);
-	    ini_write_real(string(argument1),"seed",global.game_seed);
+	    ini_write_real(string(save_id),"turn",svt);
+	    ini_write_string(string(save_id),"chapter_name",svc);
+	    ini_write_string(string(save_id),"master_name",svm);
+	    ini_write_real(string(save_id),"marines",smr);
+	    ini_write_string(string(save_id),"date",svd);
+	    ini_write_real(string(save_id),"time",obj_controller.play_time);
+	    ini_write_real(string(save_id),"seed",global.game_seed);
 	    ini_close();
 
-	    file_encrypt("save"+string(argument1)+".ini","p");
+		// TODO temporary disabled. Will be reenabled during ironman/autosave feature task
+	    //file_encrypt("save"+string(save_id)+".ini","p");
 
 	    // This saves the log in an unencrypted file
 	    instance_activate_object(obj_event_log);
-	    file_delete("save"+string(argument1)+"log.ini");
-	    ini_open("save"+string(argument1)+"log.ini");
+	    file_delete("save"+string(save_id)+"log.ini");
+	    ini_open("save"+string(save_id)+"log.ini");
 	    var t;t=0;
 	    ini_write_real("Main","data1",instance_number(obj_star));
 	    ini_write_string("Main","data2",global.chapter_name);
@@ -939,9 +965,9 @@ function scr_save(argument0, argument1) {
 	    }
 	    ini_close();
 
-	    obj_saveload.save[argument1]=1;
+	    obj_saveload.save[save_id]=1;
 
-	    debugl("Saving to slot "+string(argument1)+" complete");
+	    debugl("Saving to slot "+string(save_id)+" complete");
 	}
 
 	// Finish here
