@@ -1,21 +1,19 @@
+// TODO script description: This is the turn management in general 
+// TODO refactor
+var times=max(1,round(turn/150));
 
-
-
-// Chaos influence / corruption
-var times;times=max(1,round(turn/150));
 if (known[10]=2) and (faction_defeated[10]=0) then times+=1;
 
-
-var xx3, yy3, plani, _star;_star=0;
+var xx3, yy3, plani, _star;
 xx3=floor(random(room_width))+1;
 yy3=floor(random(room_height))+1;
 _star=instance_nearest(xx3,yy3,obj_star);
 plani=floor(random(_star.planets))+1;
 
-
+// ** Chaos influence / corruption **
 if (faction_gender[10]=1) and (faction_defeated[10]=0) and (turn>=chaos_turn) then repeat(times){
     if (_star.p_type[plani]!="Dead") and (_star.planets>0) and (turn>=20){
-        var cathedral;cathedral=0;
+        var cathedral=0;
         if (planet_feature_bool(_star.p_feature[plani], P_features.Sororitas_Cathedral)==1) then cathedral=choose(0,1,1);
     
         if (cathedral=0){
@@ -35,16 +33,13 @@ if (faction_gender[10]=1) and (faction_defeated[10]=0) and (turn>=chaos_turn) th
                 _star.p_heresy[plani]+=choose(-1,0,0,0,0,5,10,15);
             }
         }
-        
         if (_star.p_heresy[plani]<0) then _star.p_heresy[plani]=0;
     }
 }
 
 instance_activate_object(obj_star);
 
-
-
-// Build new Imperial Ships
+// ** Build new Imperial Ships **
 with(obj_temp6){instance_destroy();}with(obj_temp5){instance_destroy();}with(obj_temp4){instance_destroy();}
 imp_ships=0;
 with(obj_en_fleet){
@@ -59,17 +54,17 @@ with(obj_star){
     if (owner=3) then instance_create(x,y,obj_temp5);
     if (space_hulk=1) or (craftworld=1){x-=20000;y-=20000;}
 }
-var sha;sha=instance_number(obj_temp6)*1.3;// former
-sha=instance_number(obj_temp6)*0.65;// new
+// Former: var sha;sha=instance_number(obj_temp6)*1.3;
+var sha=instance_number(obj_temp6)*0.65;// new
 
 with(obj_temp6){instance_destroy();}
 
 if (instance_number(obj_temp5)>0) and (imp_ships<sha){
-    var rando,rando2;rando=floor(random(100))+1;rando2=choose(1,2,2,3,3,3);
-    var forge;forge=instance_nearest(random(room_width),random(room_height),obj_temp5);
+    var rando=floor(random(100))+1, rando2=choose(1,2,2,3,3,3);
+    var forge=instance_nearest(random(room_width),random(room_height),obj_temp5);
     
     if (rando<=(12)*instance_number(obj_temp5)){
-        var flit;flit=instance_create(forge.x,forge.y,obj_en_fleet);
+        var flit=instance_create(forge.x,forge.y,obj_en_fleet);
         flit.owner=2;flit.sprite_index=spr_fleet_imperial;
         if (rando2=1) then flit.capital_number=1;
         if (rando2=2) then flit.frigate_number=1;
@@ -78,7 +73,7 @@ if (instance_number(obj_temp5)>0) and (imp_ships<sha){
     with(obj_temp5){instance_destroy();}
     with(obj_star){
         if (x>10) and (y>10) and ((owner=2) or (owner=3)){
-            var mapre;mapre=0;
+            var mapre=0;
             mapre+=present_fleet[1];
             mapre+=present_fleet[2];
             mapre+=present_fleet[3];
@@ -96,7 +91,7 @@ if (instance_number(obj_temp5)>0) and (imp_ships<sha){
             if ((planets=1) or (planets=2)) and (mapre=0) and (p_type[1]!="Dead") then instance_create(x,y,obj_temp4);
         }
     }
-    var targeted;targeted=0;
+    var targeted=0;
     
     if (instance_number(obj_temp6)>0) and (targeted=0) then targeted=instance_nearest(random(room_width),random(room_height),obj_temp6);
     if (instance_number(obj_temp5)>0) and (targeted=0) then targeted=instance_nearest(random(room_width),random(room_height),obj_temp5);
@@ -109,17 +104,13 @@ if (instance_number(obj_temp5)>0) and (imp_ships<sha){
     }
 }
 
-
-
 instance_activate_object(obj_star);
 with(obj_star){
     if (x<-10000){x+=20000;y+=20000;}
     if (x<-10000){x+=20000;y+=20000;}
 }
 
-
-
-var tra;tra=0;
+var tra=0;
 
 // Training here
 if (training_apothecary=1) then apothecary_points+=0.8;
@@ -129,26 +120,33 @@ if (training_apothecary=4) then apothecary_points+=1.5;
 if (training_apothecary=5) then apothecary_points+=2;
 if (training_apothecary=6) then apothecary_points+=4;
 
-
 if (training_apothecary>0) then tra=scr_role_count(string(obj_ini.role[100,15])+" Aspirant","");
 if (apothecary_points>=4) and (apothecary_aspirant!=0) and (tra=0){apothecary_points=0;apothecary_aspirant=0;}
 if (apothecary_points>=48){
     if (tra>0){
-        var yoo, tid;tid=0;
-        yoo=scr_random_marine(string(obj_ini.role[100,15])+" Aspirant",0);tid=yoo;
+        var yoo, tid=0;
+        yoo=scr_random_marine(string(obj_ini.role[100,15])+" Aspirant",0);
+        tid=yoo;
         // show_message(tid);
         // show_message(obj_ini.role[0,tid]);
         repeat(10){
             if (obj_ini.role[0,tid]!=(string(obj_ini.role[100,15])+" Aspirant")){
                 yoo=scr_random_marine((obj_ini.role[100,15]+" Aspirant"),0);
-                tid=yoo;// tco=(yoo-tid)*100;
+                tid=yoo;
+                // tco=(yoo-tid)*100;
             }
         }
         if (obj_ini.role[0,tid]=(obj_ini.role[100,15]+" Aspirant")){
-            apothecary_points-=48;apothecary_aspirant=0;
-            obj_ini.role[0,tid]=obj_ini.role[100,15];obj_ini.experience[0,tid]+=10;
-            var eq1,eq2,eq3,t,r;eq1=1;eq2=1;eq3=1;t=0;r=0;
+            apothecary_points-=48;
+            apothecary_aspirant=0;
+            obj_ini.role[0,tid]=obj_ini.role[100,15];
+            obj_ini.experience[0,tid]+=10;
+
+            var eq1=1,eq2=1,eq3=1,t=0,r=0;
+
+            // TODO continue refactor
             if (obj_ini.wep1[0,tid]!=obj_ini.wep1[100,15]){
+
                 repeat(50){t+=1;if (obj_ini.equipment[t]=obj_ini.wep1[100,15]) and (obj_ini.equipment_number[t]>=1) and (r=0) then r=t;}
                 if (r!=0){if (obj_ini.wep1[0,tid]!="") then scr_add_item(obj_ini.wep1[0,tid],1);scr_add_item(obj_ini.wep1[100,15],-1);obj_ini.wep1[0,tid]=obj_ini.wep1[100,15];}
                 if (r=0) then eq1=0;
