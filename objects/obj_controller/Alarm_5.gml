@@ -987,14 +987,16 @@ if (gene_xeno>0){
         }
     }
 }
-// TODO continue refactor
-var c,e,p;c=-1;e=0;p=0;penitorium=0;
-repeat(11){c+=1;e=0;
-    repeat(250){e+=1;
+var p=0,penitorium=0;
+for(var c=0; c<11; c++){
+    for(var e=1; e<=250; e++){
         if (obj_ini.god[c,e]>=10){
-            p+=1;penit_co[p]=c;penit_id[p]=e;penitorium+=1;
+            p+=1;
+            penit_co[p]=c;
+            penit_id[p]=e;
+            penitorium+=1;
             if (obj_ini.chaos[c,e]<90) and (obj_ini.chaos[c,e]>0){
-                var heresy_old,heresy_new;heresy_old=0;heresy_new=0;
+                var heresy_old=0,heresy_new=0;
                 heresy_old=round((obj_ini.chaos[c,e]*obj_ini.chaos[c,e])/50)-0.5;
                 heresy_new=(heresy_old*50)/obj_ini.chaos[c,e];
                 obj_ini.chaos[c,e]=max(0,heresy_new);
@@ -1002,15 +1004,14 @@ repeat(11){c+=1;e=0;
         }
     }
 }
-
 // STC Bonuses
-if (obj_controller.stc_ships>=6){var v;v=0;
-    repeat(40){v+=1;
+if (obj_controller.stc_ships>=6){
+    for(var v=1; v<=40; v++){
         if (obj_ini.ship_hp[v]<obj_ini.ship_maxhp[v]) then obj_ini.ship_hp[v]+=round(obj_ini.ship_maxhp[v]*0.06);
         if (obj_ini.ship_hp[v]>obj_ini.ship_maxhp[v]) then obj_ini.ship_hp[v]=obj_ini.ship_maxhp[v];
     }
 }
-
+// TODO continue refactor
 // if (turn=chaos_turn) and (faction_gender[10]=1){// show_message("Turn 100");
 if (turn=5) and (faction_gender[10]=1){// show_message("Turn 100");
     var xx4,yy4,plant,planet,fleeta,testi;
