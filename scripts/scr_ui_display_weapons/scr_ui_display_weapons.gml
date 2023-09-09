@@ -235,6 +235,7 @@ function scr_ui_display_weapons(argument0, termi_tartaros, equiped_weapon) {
 	}
 	// Fix sprite for termi/tartar
 	if (termi_tartaros>=1){
+
 	    if (argument0=1) and (ui_arm[1]=false) and (fix_left=0) then fix_left=1;
 	    if (argument0=2) and (ui_arm[2]=false) and (fix_right=0) then fix_right=1;
 	}
@@ -345,6 +346,7 @@ function scr_ui_display_weapons(argument0, termi_tartaros, equiped_weapon) {
 	if (argument0=2) /*and (termi_tartaros=0)*/ and (ui_xmod[rl]<0) and (display_type!="power_fist") and (display_type!="lightning_claw") then ui_xmod[rl]=ui_xmod[rl]*-1;
 
 	// TODO Why is there an exit here? Do you know why? Is the code bellow a WIP? is the exit supposed to be inside something else?
+
 	exit;
 
 	// ** Ranged Weapon fixes **
