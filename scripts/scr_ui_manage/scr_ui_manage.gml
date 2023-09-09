@@ -463,10 +463,13 @@ function scr_ui_manage() {
 	                    }
 	                }
 	                if (skull>0) and (temp[102]!=""){
-	                    if (terg!=2) and (terg!=1) then draw_sprite(spr_gear_chap,skull,xx+1206,yy+167);
-	                    if (terg=2) then draw_sprite(spr_gear_chap,skull,xx+1206,yy+167);
-	                    if (terg=1) then draw_sprite(spr_gear_chap,skull,xx+1206,yy+167);
-	                }
+   	                 if (terg!=2) and (terg!=1) then draw_sprite(spr_gear_chap,skull,xx+1206,yy+167);
+    	             if (terg=2) then draw_sprite(spr_gear_chap,skull,xx+1206,yy+167);
+   	                 if (terg=1) {
+      	                  if (terg!=2) and (terg!=1) and (ttrim=0) and (cspec<=1) then draw_sprite(spr_gear_chap,skull,xx+1208,yy+178);
+       	                  if (terg!=2) and (terg!=1) and (ttrim=0) and (cspec<=1) then draw_sprite(spr_gear_chap,skull,xx+1208,yy+178);
+    }
+}
                 
 	                // Honor Guard Helm
 	                if (hood=0) and (terg<1) and (temp[102]!="") and (ui_specialist=14){
