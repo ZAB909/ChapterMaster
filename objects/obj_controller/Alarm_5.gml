@@ -1011,78 +1011,98 @@ if (obj_controller.stc_ships>=6){
         if (obj_ini.ship_hp[v]>obj_ini.ship_maxhp[v]) then obj_ini.ship_hp[v]=obj_ini.ship_maxhp[v];
     }
 }
-// TODO continue refactor
-// if (turn=chaos_turn) and (faction_gender[10]=1){// show_message("Turn 100");
-if (turn=5) and (faction_gender[10]=1){// show_message("Turn 100");
-    var xx4,yy4,plant,planet,fleeta,testi;
-    xx4=0;yy4=0;plant=0;planet=0;testi=0;fleeta=0;
+if (turn==5) and (faction_gender[10]==1){// show_message("Turn 100");
+    var xx4=0,yy4=0,plant=0,planet=0,testi=0,fleeta=0;
 
     with(obj_en_fleet){if (owner!=2) then y-=20000;}
-
-    repeat(50){
-        if (planet=0){xx4=floor(random(room_width))+1;yy4=floor(random(room_height))+1;plant=instance_nearest(xx4,yy4,obj_star);}
-        if (planet=0) and (plant.owner=2) and (plant.planets>1){
+    for(var i=0; i<50; i++){
+        if (planet==0){
+            xx4=floor(random(room_width))+1;
+            yy4=floor(random(room_height))+1;
+            plant=instance_nearest(xx4,yy4,obj_star);
+        }
+        if (planet==0) and (plant.owner==2) and (plant.planets>1){
             planet=instance_nearest(xx4,yy4,obj_star);
 
             if (planet.present_fleet[2]>0){
                 fleeta=instance_nearest(planet.x,planet.y,obj_en_fleet);
                 if (point_distance(fleeta.x,fleeta.y,planet.x,planet.y)>40) then planet=0;
             }
-            if (planet.present_fleet[2]=0) then planet=0;
+            if (planet.present_fleet[2]==0) then planet=0;
         }
     }
     if (planet!=0){
-        if (planet.p_type[1]="Dead") then testi=2;
+        if (planet.p_type[1]=="Dead") then testi=2;
         if (planet.p_type[1]!="Dead") then testi=1;
         
         planet.warlord[testi]=1;
 
         array_push(planet.p_feature[testi], new new_planet_feature(P_features.Warlord10));
 
-        if (planet.p_type[testi]="Hive") then planet.p_heresy[testi]+=25;
+        if (planet.p_type[testi]=="Hive") then planet.p_heresy[testi]+=25;
         if (planet.p_type[testi]!="Hive") then planet.p_heresy[testi]+=10;
         if (planet.p_heresy[testi]<50) then planet.p_heresy_secret[testi]=10;
 
         // show_message("Placed the chaos warlord on "+string(planet.name)+" "+scr_roman(testi));// 139
         // obj_controller.x=planet.x;obj_controller.y=planet.y;
     }
-
     with(obj_en_fleet){if (owner!=2) then y+=20000;}
 }
-
-if (blood_debt=1) and (penitent=1){
+// * Blood debt end *
+if (blood_debt==1) and (penitent==1){
     penitent_turn+=1;
     // was -60
     penitent_turnly=((penitent_turn*penitent_turn)-512)*-1;
     if (penitent_turnly>0) then penitent_turnly=0;
     penitent_current+=penitent_turnly;
-
-    if (penitent_current<=0){penitent=0;alarm[8]=1;}
+    if (penitent_current<=0){
+        penitent=0;
+        alarm[8]=1;
+    }
     if (penitent_end<30000) then penitent_end+=41000;
-
     if (penitent_current>=penitent_max) or (((obj_controller.millenium*1000)+obj_controller.year)>=penitent_end){
         penitent=0;
-        if (known[4]=2) or (known[4]>=4) then scr_audience(4,"penitent_end",0,"",0,0);
+        if (known[4]==2) or (known[4]>=4) then scr_audience(4,"penitent_end",0,"",0,0);
         if (known[5]>=2) then scr_audience(5,"penitent_end",0,"",0,0);
-        disposition[2]+=20;disposition[3]+=15;disposition[4]+=20;disposition[5]+=20;
-        var o;o=0;repeat(4){if (o<=4){o+=1;if (obj_ini.adv[o]="Reverent Guardians") then o=500;}}if (o>100) then obj_controller.disposition[5]+=10;
+        disposition[2]+=20;
+        disposition[3]+=15;
+        disposition[4]+=20;
+        disposition[5]+=20;
+        var o=0;
+        for(o=1; o<=4; o++){
+            if (obj_ini.adv[o]=="Reverent Guardians") then o=500;
+        }
+        if (o>100) then obj_controller.disposition[5]+=10;
         scr_event_log("","Blood Debt payed off.  You may once more recruit Astartes.");
     }
 }
+// * Penitent Crusade end *
+if (penitent==1) and (blood_debt==0){
+    penitent_turn+=1;
+    penitent_current+=1;
+    penitent_turnly=0;
 
-if (penitent=1) and (blood_debt=0){
-    penitent_turn+=1;penitent_current+=1;penitent_turnly=0;
-
-    if (penitent_current<=0){penitent=0;alarm[8]=1;}
-    if (penitent_current>=penitent_max){penitent=0;
-        if (known[4]=2) or (known[4]>=4) then scr_audience(4,"penitent_end",0,"",0,0);
+    if (penitent_current<=0){
+        penitent=0;
+        alarm[8]=1;
+    }
+    if (penitent_current>=penitent_max){
+        penitent=0;
+        if (known[4]==2) or (known[4]>=4) then scr_audience(4,"penitent_end",0,"",0,0);
         if (known[5]>=2) then scr_audience(5,"penitent_end",0,"",0,0);
-        disposition[2]+=20;disposition[3]+=15;disposition[4]+=20;disposition[5]+=20;
-        var o;o=0;repeat(4){if (o<=4){o+=1;if (obj_ini.adv[o]="Reverent Guardians") then o=500;}}if (o>100) then obj_controller.disposition[5]+=10;
+        disposition[2]+=20;
+        disposition[3]+=15;
+        disposition[4]+=20;
+        disposition[5]+=20;
+        var o=0;
+        for(o=1; o<=4; o++){
+            if (obj_ini.adv[o]=="Reverent Guardians") then o=500;
+        }
+        if (o>100) then obj_controller.disposition[5]+=10;
         scr_event_log("","Penitent Crusade ends.  You may once more recruit Astartes.");
     }
 }
-
+// TODO continue refactor
 // if (obj_controller.known[7]=0){
 if ((turn>=10) or (obj_ini.fleet_type=3)) and (faction_defeated[7]=0){
     var waaagh;waaagh=floor(random(100))+1;
