@@ -8,6 +8,7 @@ var tco=0;
 var warn="",w5=0;
 var g1=0,g2=0;
 var onceh=0,up=0,tot=0,stahp=0;
+var disc=0,droll=0;
 
 if (known[10]==2) and (faction_defeated[10]==0) then times+=1;
 
@@ -848,7 +849,7 @@ if (instance_number(obj_temp_inq)<target_navy_number){
                 }
             }
         }
-        if (good=true) then instance_create(x,y,obj_temp8);
+        if (good==true) then instance_create(x,y,obj_temp8);
     }
 }
 if (instance_exists(obj_temp8)){
@@ -877,30 +878,38 @@ if (instance_exists(obj_temp8)){
     nav.trade_goods="building_ships";
     with(obj_temp8){instance_destroy();}
 }
-// TODO continue refactor
-if (gene_tithe=0) and (faction_status[2]!="War"){// Time for another tithe
+// ** Adeptus Mechanicus Geneseed Tithe **
+if (gene_tithe==0) and (faction_status[2]!="War"){
     gene_tithe=24;
 
-    var expected,onceh,txt,mech_mad;onceh=0;txt="";mech_mad=false;
+    var expected,txt="",mech_mad=false;
+    onceh=0;
     expected=max(1,round(obj_controller.gene_seed/20));
-    if (obj_controller.faction_status[3]="War") then mech_mad=true;
+    if (obj_controller.faction_status[3]=="War") then mech_mad=true;
 
-    if (obj_controller.gene_seed<=0) or (mech_mad=true){onceh=2;gene_iou+=1;loyalty-=2;loyalty_hidden-=2;
+    if (obj_controller.gene_seed<=0) or (mech_mad==true){
+        onceh=2;
+        gene_iou+=1;
+        loyalty-=2;
+        loyalty_hidden-=2;
         txt="No Gene-Seed for Adeptus Mechanicus tithe.  High Lords of Terra IOU increased to "+string(gene_iou)+".";
     }
-
-    if (mech_mad=false){
-        if (obj_controller.gene_seed>0) and (und_gene_vaults=0) and (onceh=0){
-            obj_controller.gene_seed-=expected;onceh=1;
-
+    if (mech_mad==false){
+        if (obj_controller.gene_seed>0) and (und_gene_vaults==0) and (onceh==0){
+            obj_controller.gene_seed-=expected;
+            onceh=1;
             if (obj_controller.gene_seed>=gene_iou) and (gene_iou>0){
-                expected+=gene_iou;obj_controller.gene_seed-=gene_iou;gene_iou=0;
+                expected+=gene_iou;
+                obj_controller.gene_seed-=gene_iou;
+                gene_iou=0;
                 onceh=3;
             }
-
-            repeat(50){
+            for(var i=0; i<50; i++){
                 if (obj_controller.gene_seed<gene_iou) and (obj_controller.gene_seed>0) and (gene_iou>0){
-                    expected+=1;obj_controller.gene_seed-=1;gene_iou-=1;if (gene_iou=0) then onceh=3;
+                    expected+=1;
+                    obj_controller.gene_seed-=1;
+                    gene_iou-=1;
+                    if (gene_iou==0) then onceh=3;
                 }
             }
 
@@ -908,29 +917,41 @@ if (gene_tithe=0) and (faction_status[2]!="War"){// Time for another tithe
 
             txt=string(expected)+" Gene-Seed sent to Adeptus Mechanicus for tithe.";
             if (gene_iou>0) then txt+="  IOU remains at "+string(gene_iou)+".";
-            if (onceh=3) then txt+="  IOU has been payed off.";
+            if (onceh==3) then txt+="  IOU has been payed off.";
         }
 
-        if (obj_controller.gene_seed>0) and (und_gene_vaults>0) and (onceh=0){
-            expected=1;obj_controller.gene_seed-=expected;onceh=1;
+        if (obj_controller.gene_seed>0) and (und_gene_vaults>0) and (onceh==0){
+            expected=1;
+            obj_controller.gene_seed-=expected;
+            onceh=1;
 
             if (obj_controller.gene_seed<gene_iou) and (obj_controller.gene_seed>0) and (gene_iou>0){
-                expected+=1;obj_controller.gene_seed-=1;gene_iou-=1;if (gene_iou=0) then onceh=3;
+                expected+=1;
+                obj_controller.gene_seed-=1;
+                gene_iou-=1;
+                if (gene_iou==0) then onceh=3;
             }
 
             if (gene_iou<0) then gene_iou=0;
 
             txt=string(expected)+" Gene-Seed sent to Adeptus Mechanicus for tithe.";
             if (gene_iou>0) then txt+="  IOU remains at "+string(gene_iou)+".";
-            if (onceh=3) then txt+="  IOU has been payed off.";
+            if (onceh==3) then txt+="  IOU has been payed off.";
         }
 
-        if (onceh!=2){scr_alert("green","tithes",txt,0,0);scr_event_log("",txt);}
-        if (onceh=2){scr_alert("red","tithes",txt,0,0);scr_event_log("red",txt);}
+        if (onceh!=2){
+            scr_alert("green","tithes",txt,0,0);
+            scr_event_log("",txt);
+        }
+        if (onceh==2){
+            scr_alert("red","tithes",txt,0,0);
+            scr_event_log("red",txt);
+        }
     }
 }
 if (gene_sold>0){
-    var disc,droll;disc=0;droll=0;
+    disc=0;
+    droll=0;
     gene_sold=floor(gene_sold*75)/100;
 
     if (gene_sold<1) then gene_sold=0;
@@ -938,17 +959,20 @@ if (gene_sold>0){
         disc=round(gene_sold/7);
         droll=floor(random(100))+1;
 
-        if (droll<=disc) and (obj_controller.known[4]!=0){// Inquisition takes notice
-            var disp_change;disp_change=-3;
+        // Inquisition takes notice
+        if (droll<=disc) and (obj_controller.known[4]!=0){
+            var disp_change=-3;
             if (gene_sold>=100) then disp_change=-5;
             if (gene_sold>=200) then disp_change=-7;
             if (gene_sold>=400) then disp_change=-10;
-            gene_sold=0;scr_audience(4,"gene_trade",disp_change,"",2,0);
+            gene_sold=0;
+            scr_audience(4,"gene_trade",disp_change,"",2,0);
         }
     }
 }
 if (gene_xeno>0){
-    var disc,droll;disc=0;droll=0;
+    disc=0;
+    droll=0;
     gene_xeno=floor(gene_xeno*90)/100;
 
     if (gene_xeno<1) then gene_xeno=0;
@@ -956,12 +980,14 @@ if (gene_xeno>0){
         disc=round(gene_xeno/5);
         droll=floor(random(100))+1;
 
-        if (droll<=disc) and (obj_controller.known[4]!=0){// Inquisition takes notice
-            gene_xeno=99999;alarm[8]=1;
+        // Inquisition takes notice
+        if (droll<=disc) and (obj_controller.known[4]!=0){
+            gene_xeno=99999;
+            alarm[8]=1;
         }
     }
 }
-
+// TODO continue refactor
 var c,e,p;c=-1;e=0;p=0;penitorium=0;
 repeat(11){c+=1;e=0;
     repeat(250){e+=1;
