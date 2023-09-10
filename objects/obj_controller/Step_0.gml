@@ -460,7 +460,6 @@ if (menu=1) and (managing>0){
 
     var top,sel,temp1,temp2,temp3,temp4,temp5,force_tool,unit;
     temp1="";temp2="";temp3="";temp4="";temp5="";force_tool=0;
-    
     top=man_current;
     sel=top;
     
@@ -469,8 +468,8 @@ if (menu=1) and (managing>0){
     
     repeat(min(man_max,man_see)){
         force_tool=0;
-		unit = display_unit[sel]
-        
+		unit = display_unit[sel];
+        temp[120] = unit;
 		if (temp[101] == $"{unit.role()} {unit.name}")
         and ((temp[102]!=unit.armour()) or (temp[104]!=unit.gear()) or (temp[106]=unit.mobility_item()) or (temp[108]!=unit.weapon_one()) or (temp[110]!=unit.weapon_one())
         or (temp[114]="refresh")) then force_tool=1;
@@ -479,7 +478,9 @@ if (menu=1) and (managing>0){
         if (mouse_x>=xx+25) and (mouse_y>=yy+64) and (mouse_x<xx+974) and (mouse_y<yy+85)
         or (force_tool=1)
         /*and ((temp[101]!=string(ma_role[sel])+" "+string(ma_name[sel])) or (temp[104]!=ma_gear[sel]) or (temp[106]!=ma_mobi[sel]))*/{
-            var ach,dr,ma,ra,acy;dr=1;ma=1;ra=1;ach=0;acy=0;
+            var ach,damage_res,melee_attack,ranged_attack,acy;damage_res=1;ach=0;acy=0;
+			melee_attack=unit.melee_attack();
+			ranged_attack = unit.ranged_attack();
             
             
             //if marine not hidden
@@ -490,24 +491,25 @@ if (menu=1) and (managing>0){
                 temp[100]="1";if (obj_ini.race[cah,ide[sel]]!=1) then temp[100]=string(obj_ini.race[cah,ide[sel]]);
                 
                 
-                dr=0.7-((ma_exp[sel]*ma_exp[sel])/40000);
+                damage_res= unit.damage_resistance();
                 
-                if (ma_gear[sel]="Rosarius") then dr-=0.33;
-                if (ma_gear[sel]="Iron Halo"){dr-=0.33;ach+=20;}
-                if (ma_mobi[sel]="Jump Pack"){dr-=0.1;}
+                if (ma_gear[sel]="Rosarius") then damage_res+=0.33;
+                if (ma_gear[sel]="Iron Halo"){damage_res+=0.33;ach+=20;}
+                if (ma_mobi[sel]="Jump Pack"){damage_res+=0.1;}
                 if (ma_mobi[sel]="Bike") then ach+=25;
                 if (ma_wep1[sel]="Boarding Shield"){ach+=20;acy+=4;}
                 if (ma_wep2[sel]="Boarding Shield"){ach+=20;acy+=4;}
                 if (ma_wep1[sel]="Storm Shield"){ach+=30;acy+=8;}
                 if (ma_wep2[sel]="Storm Shield"){ach+=30;acy+=8;}
-                
-                if (obj_ini.role[cah,ide[sel]]="Chapter Master"){
-                    if (obj_ini.adv[1]="Paragon") or (obj_ini.adv[2]="Paragon") or (obj_ini.adv[3]="Paragon") or (obj_ini.adv[4]="Paragon"){
-                        ra+=0.2;ma+=0.2;
-                    }
-                }
-                
-                
+                if (ma_armour[sel]="MK3 Iron Armour") then ranged_attack-=0.1;
+                if (ma_armour[sel]="MK4 Maximus"){ranged_attack+=0.05;melee_attack+=0.05;}
+                if (ma_armour[sel]="MK5 Heresy"){melee_attack+=0.1;ranged_attack-=0.05;damage_res+=0.15;}
+                if (ma_armour[sel]="MK6 Corvus"){ranged_attack+=0.1;}
+                if (string_count("Artificer",ma_armour[sel])>0){melee_attack+=0.1;}
+                if (string_count("Terminator",ma_armour[sel])>0){ranged_attack-=0.1;melee_attack+=0.2;}
+                if (ma_armour[sel]="Tartaros"){ranged_attack-=0.05;melee_attack+=0.2;}
+				
+                var j,jj;j=0;jj=0;
 
                 if (ma_armour[sel]="MK3 Iron Armour") then ra-=0.1;
                 if (ma_armour[sel]="MK4 Maximus"){ra+=0.05;ma+=0.05;}
@@ -518,24 +520,8 @@ if (menu=1) and (managing>0){
                 if (ma_armour[sel]="Tartaros"){ra-=0.05;ma+=0.2;}
 
                 
-                var j,jj;j=0;jj=0;
-                if (ma_race[sel]=1){
-                    j=0;jj=0;repeat(4){j+=1;if (obj_ini.adv[j]="Slow and Purposeful") then jj=1;}if (jj=1) then dr-=0.2;
-                    j=0;jj=0;repeat(4){j+=1;if (obj_ini.adv[j]="Lightning Warriors") then jj=1;}if (jj=1) then dr-=0.2;
-                }
-                
-                if (dr<0.25) then dr=0.25;
-                
-                var ttt;ttt=ma_exp[sel]-30;ttt=(ttt*0.0014)+1;ttt=max(1,(min(ttt,1.5)));ma=ma*ttt;ra=ra*ttt;
-                
-                if (ma_race[sel]=1){
-                    j=0;jj=0;repeat(4){j+=1;if (obj_ini.adv[j]="Slow and Purposeful") then jj=1;}if (jj=1){ma-=0.1;ra-=0.1;}
-                    j=0;jj=0;repeat(4){j+=1;if (obj_ini.adv[j]="Lightning Warriors") then jj=1;}if (jj=1){ma+=0.2;ra+=0.2;}
-                    j=0;jj=0;repeat(4){j+=1;if (obj_ini.adv[j]="Melee Enthusiasts") then jj=1;}if (jj=1){ma+=0.15;}
-                }
-                
-                if (ui_melee_penalty>0){ma=ma*0.5; ra=ra*0.75;}
-                if (ui_ranged_penalty>0){ra=ra*0.5; ma=ma*0.75;}
+                //if (ui_melee_penalty>0){melee_attack=melee_attack*0.5; ranged_attack=ranged_attack*0.75;}
+               // if (ui_ranged_penalty>0){ranged_attack=ranged_attack*0.5; melee_attack=melee_attack*0.75;}
                 
                 ui_specialist=0;ui_coloring="";
                 if (ma_role[sel]="Chapter Master") then ui_specialist=111;
@@ -626,7 +612,7 @@ if (menu=1) and (managing>0){
                     if (floor(b1/2)=(b1/2)) then b2=(10.43*ma_bio[sel]);
                 }
                 if (ma_bio[sel]>3) then b2=(10.43*ma_bio[sel])-5;
-                temp[114]=string(ma_bio[sel])+" ("+string(round(max(0,b2)))+"%)";// Bionics
+                temp[114]=string(unit.bionics())+" ("+string(round(max(0,b2)))+"%)";// Bionics
                 
                 var cah;cah=managing;if (cah>10) then cah=0;
                 temp[119]="";// Notes
@@ -634,7 +620,7 @@ if (menu=1) and (managing>0){
                     if (string_count("$",obj_ini.spe[cah,ide[sel]])>0) then temp[119]="Born Leader Bonus";
                     if (string_count("@",obj_ini.spe[cah,ide[sel]])>0){
                         temp[119]="Champion Bonus";
-                        ma=ma*1.15;ra=ra*1.15;
+                        melee_attack=melee_attack*1.15;ranged_attack=ranged_attack*1.15;
                     }
                     if (string_count("0",obj_ini.spe[cah,ide[sel]])>0){
                         temp[119]="PSYKER ("+string_upper(string(obj_ini.psy_powers))+"): ";
@@ -646,15 +632,15 @@ if (menu=1) and (managing>0){
                 if (obj_controller.chaos_rating>0) and (temp[119]!="") then temp[119]+="#"+string(max(0,obj_ini.chaos[cah,ide[sel]]))+"% Corruption.";
                 if (obj_controller.chaos_rating>0) and (temp[119]="") then temp[119]=string(max(0,obj_ini.chaos[cah,ide[sel]]))+"% Corruption.";
                 
-                temp[116]=string(round(ma*100))+"%";// Melee Attack
-                temp[117]=string(round(ra*100))+"%";// Ranged Attack
+                temp[116]=$"{melee_attack*100}%";// Melee Attack
+                temp[117]=$"{ranged_attack*100}%";// Ranged Attack
                 
                 
-                // mitigation=1-(((1-dr)*0.8)+0.1);
+                // mitigation=1-(((1-damage_res)*0.8)+0.1);
                 // mitigation=round(mitigation*100);
                 
-                // temp[118]=string(max(113,round(100-(dr*100))))+"%#dm: "+string(min(95,mitigation))+"%";// Damage Resistance
-                temp[118]=string(min(75,round(100-(dr*100))))+"%";// Damage Resistance
+                // temp[118]=string(max(113,round(100-(damage_res*100))))+"%#dm: "+string(min(95,mitigation))+"%";// Damage Resistance
+                temp[118]=string(min(75,round(damage_res*100)))+"%";// Damage Resistance
                 
             }
             if (man[sel]="vehicle"){

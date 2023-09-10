@@ -113,8 +113,9 @@ function scr_ui_manage() {
 	            var cpec;
 				cspec=obj_ini.col_special;
             
-	            var terg=0,armour_sprite=spr_weapon_blank,show1,show2;
-	            var jump=0,dev=0,hood=0,skull=0,arm=0,halo=0,braz=0,slow=0,brothers=-5;
+	            var terg,armour_sprite,show1,show2;terg=0;armour_sprite=spr_weapon_blank;
+	            var jump,dev,hood,skull,arm,halo,braz,slow,brothers,body_part;jump=0;dev=0;hood=0;skull=0;arm=0;halo=0;braz=0;slow=0;brothers=-5;
+				var selected_unit =  temp[120];				//unit struct
             
 	            var show_wep1,show_wep2,show_arm,show_gear,show_mobi;
 	            /*show_wep1=string_pos("&",cn.temp[108]);
@@ -591,6 +592,15 @@ function scr_ui_manage() {
 	                    	if (terg=2) or (terg=1) then draw_sprite(spr_terminator_chap,1,xx+1206,yy+167);
 	                	}
 					}
+	                }
+					
+					// bionics
+					
+					/*for (body_part = 0; body_part<global.body_parts;body_part++){
+						if (struct_exists(selected_unit.body[$ global.body_parts[body_part]], "bionic")){
+							continue;
+						}
+					}*/
                 
 	                // Honor Guard Helm
 	                if (hood=0) and (terg<1) and (temp[102]!="") and (ui_specialist=14){
@@ -1016,6 +1026,7 @@ function scr_ui_manage() {
 	            if (ar_ar==1) then draw_set_color(c_gray);
 	            if (ar_ar==2) then draw_set_color(881503);
 	            draw_text(xx+573,yy+66,string_hash_to_newline(string(ma_ar)));
+				
 
 	            xoffset+=string_width(string_hash_to_newline(ma_ar))+15;
 	            draw_set_color(c_gray);

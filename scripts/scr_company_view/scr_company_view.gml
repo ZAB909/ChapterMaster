@@ -2,7 +2,7 @@ function scr_company_view(company) {
 
 	var v, i, mans, onceh,bad, squads, squad_type, squad_loc, squad_members, unit, unit_loc;
 	gogogo=0;mans=0;vehicles=0;last_man=0;last_vehicle=0;
-	mans=0;vehicles=0;v=0;i=0;bad=0;
+	mans=0;vehicles=0;v=0;i=-1;bad=0;
 	squads=0;squad_type="";squad_loc=0;squad_members=0;
 	var command_roles= [obj_ini.role[100,5],obj_ini.role[100,14],obj_ini.role[100,15],obj_ini.role[100,16],ma_role[v]!=obj_ini.role[100,17],"Standard Bearer","Company Champion","Codiciery","Lexicanum"];
 
@@ -14,7 +14,7 @@ function scr_company_view(company) {
 		display_unit[i]=0;
 	    man[i]="";ide[i]=0;man_sel[i]=0;ma_lid[i]=0;ma_wid[i]=0;ma_bio[i]=0;
 	    ma_race[i]=0;ma_loc[i]="";ma_name[i]="";ma_role[i]="";ma_gear[i]="";ma_mobi[i]="";ma_wep1[i]="";
-	    ma_wep2[i]="";ma_armour[i]="";ma_health[i]=100;ma_chaos[i]=0;ma_exp[i]=0;ma_promote[i]=0;ma_god[i]=0;
+	    ma_wep2[i]="";ma_armour[i]="";ma_health[i]=0;ma_chaos[i]=0;ma_exp[i]=0;ma_promote[i]=0;ma_god[i]=0;
 	}i=0;
 
 	for (var i = 0; i < 20; i++){
