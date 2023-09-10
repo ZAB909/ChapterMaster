@@ -10,7 +10,7 @@ if (arm < dam) {
 
 if (arm > dam) {
     if (other.shields > 0) other.shields -= 0.5;
-    else other.hp -= 0.5;
+    if (other.shields <= 0) other.hp -= 0.5;
 }
 
 if (sprite_index == spr_torpedo) {
