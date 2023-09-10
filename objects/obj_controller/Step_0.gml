@@ -468,27 +468,29 @@ if (menu=1) and (managing>0){
     
     repeat(min(man_max,man_see)){
         force_tool=0;
-		unit = display_unit[sel];
-        temp[120] = unit;
-		if (temp[101] == $"{unit.role()} {unit.name}")
-        and ((temp[102]!=unit.armour()) or (temp[104]!=unit.gear()) or (temp[106]=unit.mobility_item()) or (temp[108]!=unit.weapon_one()) or (temp[110]!=unit.weapon_one())
-        or (temp[114]="refresh")) then force_tool=1;
+		if (man[sel]="man"){
+			unit = display_unit[sel];
+			if (temp[101] == $"{unit.role()} {unit.name}")
+	        and ((temp[102]!=unit.armour()) or (temp[104]!=unit.gear()) or (temp[106]=unit.mobility_item()) or (temp[108]!=unit.weapon_one()) or (temp[110]!=unit.weapon_one())
+	        or (temp[114]="refresh")) then force_tool=1;
+		}
         
         
         if (mouse_x>=xx+25) and (mouse_y>=yy+64) and (mouse_x<xx+974) and (mouse_y<yy+85)
         or (force_tool=1)
         /*and ((temp[101]!=string(ma_role[sel])+" "+string(ma_name[sel])) or (temp[104]!=ma_gear[sel]) or (temp[106]!=ma_mobi[sel]))*/{
             var ach,damage_res,melee_attack,ranged_attack,acy;damage_res=1;ach=0;acy=0;
-			melee_attack=unit.melee_attack();
-			ranged_attack = unit.ranged_attack();
             
             
             //if marine not hidden
             if (man[sel]="man"){
+				melee_attack=unit.melee_attack();
+				ranged_attack = unit.ranged_attack();
                 marine_armour[0]=unit.armour();fix_left=0;fix_right=0;
                 
                 var cah;cah=managing;if (cah>10) then cah=0;
                 temp[100]="1";if (obj_ini.race[cah,ide[sel]]!=1) then temp[100]=string(obj_ini.race[cah,ide[sel]]);
+				 temp[120] = unit; // unit_struct
                 
                 
                 damage_res= unit.damage_resistance();

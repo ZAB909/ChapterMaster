@@ -589,18 +589,23 @@ function scr_ui_manage() {
 	                    if (terg=2) then draw_sprite(spr_gear_chap,skull,xx+1206,yy+167);
 	                    if (terg=1) then draw_sprite(spr_gear_chap,skull,xx+1206,yy+167);
 	                    if (temp[102]!="Terminator"){
-	                    	if (terg=2) or (terg=1) then draw_sprite(spr_terminator_chap,1,xx+1206,yy+167);
-	                	}
-					}
+	                      if (terg=2) or (terg=1) then draw_sprite(spr_terminator_chap,1,xx+1206,yy+167);
+	                 }
 	                }
 					
 					// bionics
 					
-					/*for (body_part = 0; body_part<global.body_parts;body_part++){
+					for (body_part = 0; body_part<array_length(global.body_parts);body_part++){
 						if (struct_exists(selected_unit.body[$ global.body_parts[body_part]], "bionic")){
-							continue;
+
+							if (global.body_parts[body_part] == "left_eye") {draw_sprite(spr_bionics_eye,0,xx+1272,yy+193)};
+							if (global.body_parts[body_part] == "right_eye") {draw_sprite(spr_bionics_eye,1,xx+1277,yy+193)};
+							if (global.body_parts[body_part] == "left_leg") {draw_sprite(spr_bionics_leg,1,xx+1208,yy+178)};
+							if (global.body_parts[body_part] == "right_leg") {draw_sprite(spr_bionics_leg,0,xx+1208,yy+178)};
+							if (global.body_parts[body_part] == "left_arm") {draw_sprite(spr_bionics_arm,0,xx+1208,yy+178)};
+							if (global.body_parts[body_part] == "right_arm") {draw_sprite(spr_bionics_arm,1,xx+1208,yy+178)};
 						}
-					}*/
+					}
                 
 	                // Honor Guard Helm
 	                if (hood=0) and (terg<1) and (temp[102]!="") and (ui_specialist=14){
@@ -755,10 +760,10 @@ function scr_ui_manage() {
     
 	    repeat(min(man_max,man_see)){
 	        repeat(500){if (man[sel]="hide") then sel+=1;}eventing=false;
-			var unit = display_unit[sel];
-			var unit_location = unit.marine_location();
         
 	        if (man[sel]="man"){
+				var unit = display_unit[sel];
+				var unit_location = unit.marine_location();
 	            temp1=$"{unit.role()} {unit.name()}";
 	            // temp1=string(managing)+"."+string(ide[sel]);
             
