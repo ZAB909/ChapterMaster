@@ -386,7 +386,7 @@
     {"name":"scr_wep_abbreviate","order":1,"path":"scripts/scr_wep_abbreviate/scr_wep_abbreviate.yy",},
     {"name":"scr_scrollbar","order":3,"path":"scripts/scr_scrollbar/scr_scrollbar.yy",},
     {"name":"scr_thought","order":5,"path":"scripts/scr_thought/scr_thought.yy",},
-    {"name":"scr_ui_refres","order":7,"path":"scripts/scr_ui_refres/scr_ui_refres.yy",},
+    {"name":"scr_ui_refresh","order":7,"path":"scripts/scr_ui_refresh/scr_ui_refresh.yy",},
     {"name":"scr_management","order":9,"path":"scripts/scr_management/scr_management.yy",},
     {"name":"scr_ui_manage","order":11,"path":"scripts/scr_ui_manage/scr_ui_manage.yy",},
     {"name":"scr_ui_display_weapons","order":13,"path":"scripts/scr_ui_display_weapons/scr_ui_display_weapons.yy",},

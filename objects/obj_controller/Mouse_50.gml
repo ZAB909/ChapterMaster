@@ -1394,19 +1394,19 @@ if (zoomed=0) and (menu=1) and (managing>0) and (cooldown<=0){
     var xx,yy;xx=xx+0;yy=yy+0;
 
     if (mouse_x>=xx+23) and (mouse_y>=yy+80) and (mouse_x<xx+95) and (mouse_y<yy+128){// Back out from company
-        managing=0;cooldown=8000;scr_ui_refres();scr_management(1);cooldown=8000;click=1;popup=0;selected=0;hide_banner=1;
+        managing=0;cooldown=8000;scr_ui_refresh();scr_management(1);cooldown=8000;click=1;popup=0;selected=0;hide_banner=1;
     }
     if (mouse_x>=xx+424) and (mouse_y>=yy+80) and (mouse_x<xx+496) and (mouse_y<yy+128) and (cooldown<=0){// Previous company
         var onceh;onceh=0;text_bar=0;
-        if (managing>1) and (managing<=10) and (onceh=0){scr_ui_refres();managing-=1;cooldown=8000;onceh=1;scr_company_view(managing);}
-        if (managing>11) and (onceh=0){scr_ui_refres();managing-=1;cooldown=8000;onceh=1;scr_special_view(managing);}
-        if (managing=1) and (onceh=0){scr_ui_refres();managing=15;cooldown=8000;onceh=1;scr_special_view(managing);}
+        if (managing>1) and (managing<=10) and (onceh=0){scr_ui_refresh();managing-=1;cooldown=8000;onceh=1;scr_company_view(managing);}
+        if (managing>11) and (onceh=0){scr_ui_refresh();managing-=1;cooldown=8000;onceh=1;scr_special_view(managing);}
+        if (managing=1) and (onceh=0){scr_ui_refresh();managing=15;cooldown=8000;onceh=1;scr_special_view(managing);}
     }
     if (mouse_x>=xx+1105) and (mouse_y>=yy+80) and (mouse_x<xx+1178) and (mouse_y<yy+128) and (cooldown<=0){// Next company
         var onceh;onceh=0;text_bar=0;
-        if (managing<10) and (onceh=0){scr_ui_refres();managing+=1;cooldown=8000;onceh=1;scr_company_view(managing);}
-        if (managing>10) and (managing<15) and (onceh=0){scr_ui_refres();managing+=1;cooldown=8000;onceh=1;scr_special_view(managing);}
-        if (managing=15) and (onceh=0){scr_ui_refres();managing=1;cooldown=8000;onceh=1;scr_company_view(managing);}
+        if (managing<10) and (onceh=0){scr_ui_refresh();managing+=1;cooldown=8000;onceh=1;scr_company_view(managing);}
+        if (managing>10) and (managing<15) and (onceh=0){scr_ui_refresh();managing+=1;cooldown=8000;onceh=1;scr_special_view(managing);}
+        if (managing=15) and (onceh=0){scr_ui_refresh();managing=1;cooldown=8000;onceh=1;scr_company_view(managing);}
     }
 }
 
