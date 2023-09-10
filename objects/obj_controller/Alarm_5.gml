@@ -1590,182 +1590,227 @@ for(var i=1; i<=99; i++){
                         flit.escort_num[1]=last_ship;
                         flit.escort_uid[1]=obj_ini.ship_uid[last_ship];
                     }
-                    // TODO continue refactor
                     if (string_count("Hunter",fucking)>0){
                         obj_ini.ship_class[last_ship]="Hunter";
-                        // show_message("D");
-                        obj_ini.ship_hp[last_ship]=200;obj_ini.ship_maxhp[last_ship]=200;
-                        obj_ini.ship_conditions[last_ship]="";obj_ini.ship_speed[last_ship]=30;obj_ini.ship_turning[last_ship]=90;
-                        obj_ini.ship_front_armour[last_ship]=5;obj_ini.ship_other_armour[last_ship]=5;obj_ini.ship_weapons[last_ship]=2;obj_ini.ship_shields[last_ship]=1;
-                        obj_ini.ship_wep[last_ship,1]="Torpedoes";ship_wep_facing[last_ship,1]="front";obj_ini.ship_wep_condition[last_ship,1]="";
-                        obj_ini.ship_wep[last_ship,2]="Weapons Battery";ship_wep_facing[last_ship,2]="most";obj_ini.ship_wep_condition[last_ship,2]="";
-                        obj_ini.ship_capacity[last_ship]=25;obj_ini.ship_carrying[last_ship]=0;obj_ini.ship_contents[last_ship]="";
-                        obj_ini.ship_turrets[last_ship]=1;// obj_ini.ship_names+=string(obj_ini.ship[last_ship])+"|";
-                        flit.escort[1]=obj_ini.ship[last_ship];flit.escort_number=1;flit.escort_num[1]=last_ship;flit.escort_uid[1]=obj_ini.ship_uid[last_ship];
+                        obj_ini.ship_hp[last_ship]=200;
+                        obj_ini.ship_maxhp[last_ship]=200;
+                        obj_ini.ship_conditions[last_ship]="";
+                        obj_ini.ship_speed[last_ship]=30;
+                        obj_ini.ship_turning[last_ship]=90;
+                        obj_ini.ship_front_armour[last_ship]=5;
+                        obj_ini.ship_other_armour[last_ship]=5;
+                        obj_ini.ship_weapons[last_ship]=2;
+                        obj_ini.ship_shields[last_ship]=1;
+                        obj_ini.ship_wep[last_ship,1]="Torpedoes";
+                        ship_wep_facing[last_ship,1]="front";
+                        obj_ini.ship_wep_condition[last_ship,1]="";
+                        obj_ini.ship_wep[last_ship,2]="Weapons Battery";
+                        ship_wep_facing[last_ship,2]="most";
+                        obj_ini.ship_wep_condition[last_ship,2]="";
+                        obj_ini.ship_capacity[last_ship]=25;
+                        obj_ini.ship_carrying[last_ship]=0;
+                        obj_ini.ship_contents[last_ship]="";
+                        obj_ini.ship_turrets[last_ship]=1;
+                        flit.escort[1]=obj_ini.ship[last_ship];
+                        flit.escort_number=1;
+                        flit.escort_num[1]=last_ship;
+                        flit.escort_uid[1]=obj_ini.ship_uid[last_ship];
                     }
 
                     // show_message(string(obj_ini.ship_class[last_ship])+":"+string(obj_ini.ship[last_ship]));
 
-
                     if (instance_exists(that2)){
                         if (obj_ini.ship_size[last_ship]!=1) then scr_popup("Ship Constructed","Your new "+string(obj_ini.ship_class[last_ship])+" '"+string(obj_ini.ship[last_ship])+"' has finished being constructed.  It is orbiting "+string(that2.name)+" and awaits its maiden voyage.","shipyard","");
-                        if (obj_ini.ship_size[last_ship]=1) then scr_popup("Ship Constructed","Your new "+string(obj_ini.ship_class[last_ship])+" Escort '"+string(obj_ini.ship[last_ship])+"' has finished being constructed.  It is orbiting "+string(that2.name)+" and awaits its maiden voyage.","shipyard","");
-                        var bob;bob=instance_create(that2.x+16,that2.y-24,obj_star_event);bob.image_alpha=1;bob.image_speed=1;
+                        if (obj_ini.ship_size[last_ship]==1) then scr_popup("Ship Constructed","Your new "+string(obj_ini.ship_class[last_ship])+" Escort '"+string(obj_ini.ship[last_ship])+"' has finished being constructed.  It is orbiting "+string(that2.name)+" and awaits its maiden voyage.","shipyard","");
+                        var bob=instance_create(that2.x+16,that2.y-24,obj_star_event);
+                        bob.image_alpha=1;
+                        bob.image_speed=1;
                     }
                 }
-                if (instance_number(obj_temp5)=0) then event_duration[i]=2;
+                if (instance_number(obj_temp5)==0) then event_duration[i]=2;
                 with(obj_temp5){instance_destroy();}
                 event[i]="";event_duration[i]-=1;
             }
-
-
+            // Spare the inquisitor
             if (string_count("inquisitor_spared",event[i])>0){
-                var diceh;diceh=floor(random(100))+1;
+                var diceh=floor(random(100))+1;
 
                 if (string_count("Shit",obj_ini.strin2)>0) then diceh-=25;
 
-                if (diceh<=25){alarm[8]=1;scr_loyalty("Crossing the Inquisition","+");}
+                if (diceh<=25){
+                    alarm[8]=1;
+                    scr_loyalty("Crossing the Inquisition","+");
+                }
                 if (diceh>25) and (diceh<=50){scr_loyalty("Crossing the Inquisition","+");}
                 if (diceh>50) and (diceh<=85){}
                 if (diceh>85) and (event[i]="inquisitor_spared2"){
                     scr_popup("Anonymous Message","You recieve an anonymous letter of thanks.  It mentions that motions are underway to destroy any local forces of Chaos.","","");
-                    with(obj_star){var o;o=0;repeat(4){o+=1;p_heresy[o]=max(0,p_heresy[o]-10);}}
+                    with(obj_star){
+                        for(var o=1; o<=4; o++){p_heresy[o]=max(0,p_heresy[o]-10);}
+                    }
                 }
-
             }
 
-
             if (string_count("strange_building",event[i])>0){
-                var aa,bb,cc,dd,ee;
-                aa="";bb="";cc=0;dd=0;ee="";
+                var b_event="",marine_name="",comp=0,marine_num=0,item="";
                 explode_script(event[i],"|");
-                aa=string(explode[0]);// event
-                bb=string(explode[1]);// marine name
-                cc=real(explode[2]);// company
-                dd=real(explode[3]);// marine
-                ee=string(explode[4]);// item
+                b_event=string(explode[0]);
+                marine_name=string(explode[1]);
+                comp=real(explode[2]);
+                marine_num=real(explode[3]);
+                item=string(explode[4]);
 
-                var killy,tixt;killy=0;tixt=string(obj_ini.role[100,16])+" "+string(bb)+" has finished his work- ";
+                var killy=0,tixt=string(obj_ini.role[100,16])+" "+string(marine_name)+" has finished his work- ";
 
-                if (ee="Icon"){tixt+="it is a "+string(global.chapter_name)+" Icon wrought in metal, finely decorated.  Pride for his chapter seems to have overtaken him.  There are no corrections to be made and the item is placed where many may view it.";}
-                if (ee="Statue"){tixt+="it is a small, finely crafted statue wrought in metal.  The "+string(obj_ini.role[100,16])+" is scolded for the waste of material, but none daresay the quality of the piece.";}
-                if (ee="Bike"){scr_add_item("Bike",1);
+                if (item=="Icon"){
+                    tixt+="it is a "+string(global.chapter_name)+" Icon wrought in metal, finely decorated.  Pride for his chapter seems to have overtaken him.  There are no corrections to be made and the item is placed where many may view it.";
+                }
+                if (item=="Statue"){
+                    tixt+="it is a small, finely crafted statue wrought in metal.  The "+string(obj_ini.role[100,16])+" is scolded for the waste of material, but none daresay the quality of the piece.";
+                }
+                if (item=="Bike"){
+                    scr_add_item("Bike",1);
                     tixt+="it is a finely crafted Bike, conforming mostly to STC standards.  The other "+string(obj_ini.role[100,16])+" are surprised at the rapid pace of his work.";
                 }
-                if (ee="Rhino"){scr_add_vehicle("Rhino",0,"Storm Bolter","Storm Bolter","","Artificer Hull","Dozer Blades");
+                if (item=="Rhino"){
+                    scr_add_vehicle("Rhino",0,"Storm Bolter","Storm Bolter","","Artificer Hull","Dozer Blades");
                     tixt+="it is a finely crafted Rhino, conforming to STC standards.  The other "+string(obj_ini.role[100,16])+" are surprised at the rapid pace of his work.";
                 }
-                if (ee="Artifact"){
-                    scr_event_log("",string(obj_ini.role[100,16])+" "+string(bb)+" constructs an Artifact.");
-                    if (obj_ini.fleet_type=1) then scr_add_artifact("random_nodemon","",0,obj_ini.home_name,2);
+                if (item=="Artifact"){
+                    scr_event_log("",string(obj_ini.role[100,16])+" "+string(marine_name)+" constructs an Artifact.");
+                    if (obj_ini.fleet_type==1) then scr_add_artifact("random_nodemon","",0,obj_ini.home_name,2);
                     if (obj_ini.fleet_type!=1) then scr_add_artifact("random_nodemon","",0,obj_ini.ship_location[1],501);
-                    var k,last_artifact;k=0;last_artifact=0;
-                    repeat(100){if (last_artifact=0){k+=1;if (obj_ini.artifact[k]="") then last_artifact=k-1;}}
+                    var last_artifact=0;
+                    for(var k=1; k<=100; k++){
+                        if (last_artifact==0){
+                            if (obj_ini.artifact[k]=="") then last_artifact=k-1;
+                        }
+                    }
                     tixt+="some form of divine inspiration has seemed to have taken hold of him.  An artifact "+string(obj_ini.artifact[k])+" has been crafted.";
                 }
-                if (ee="baby"){
-                    obj_ini.chaos[cc,dd]+=choose(8,12,16,20);
+                if (item=="baby"){
+                    obj_ini.chaos[comp,marine_num]+=choose(8,12,16,20);
                     tixt+="some form of horrendous statue.  A weird amalgram of limbs and tentacles, the sheer atrocity of it is made worse by the tiny, baby-like form, the once natural shape of a human child twisted nearly beyond recognition.";
                 }
-                if (ee="robot"){
-                    obj_ini.chaos[cc,dd]+=choose(2,4,6,8,10);
-                    tixt+="some form of small, box-like robot.  It seems to teeter around haphazardly, nearly falling over with each step.  "+string(bb)+" maintains that it has no AI, though the other "+string(obj_ini.role[100,16])+" express skepticism.";
+                if (item=="robot"){
+                    obj_ini.chaos[comp,marine_num]+=choose(2,4,6,8,10);
+                    tixt+="some form of small, box-like robot.  It seems to teeter around haphazardly, nearly falling over with each step.  "+string(marine_name)+" maintains that it has no AI, though the other "+string(obj_ini.role[100,16])+" express skepticism.";
                 }
-                if (ee="demon"){
-                    obj_ini.chaos[cc,dd]+=choose(8,12,16,20);
+                if (item=="demon"){
+                    obj_ini.chaos[comp,marine_num]+=choose(8,12,16,20);
                     tixt+="some form of horrendous statue.  What was meant to be some sort of angel, or primarch, instead has a mishappen face that is hardly human in nature.  Between the fetid, ragged feathers and empty sockets it is truly blasphemous.";
                 }
-                if (ee="fusion"){
-                    // obj_ini.chaos[cc,dd]+=choose(70);
-                    tixt+="some kind of ill-mannered ascension.  One of your battle-brothers enters the armamentarium to find "+string(bb)+" fused to a vehicle, his flesh twisted and submerged into the frame.  Mechendrites and weapons fire upon the marine without warning, a windy scream eminating from the abomination.  It takes several battle-brothers to take out what was once a "+string(obj_ini.role[100,16])+".";
+                if (item=="fusion"){
+                    // obj_ini.chaos[comp,marine_num]+=choose(70);
+                    tixt+="some kind of ill-mannered ascension.  One of your battle-brothers enters the armamentarium to find "+string(marine_name)+" fused to a vehicle, his flesh twisted and submerged into the frame.  Mechendrites and weapons fire upon the marine without warning, a windy scream eminating from the abomination.  It takes several battle-brothers to take out what was once a "+string(obj_ini.role[100,16])+".";
 
                     // This is causing the problem
 
-                    obj_ini.race[cc,dd]=0;obj_ini.loc[cc,dd]="";obj_ini.name[cc,dd]="";obj_ini.role[cc,dd]="";obj_ini.wep1[cc,dd]="";obj_ini.lid[cc,dd]=0;
-                    obj_ini.wep2[cc,dd]="";obj_ini.armour[cc,dd]="";obj_ini.gear[cc,dd]="";obj_ini.hp[cc,dd]=100;obj_ini.chaos[cc,dd]=0;obj_ini.experience[cc,dd]=0;
-                    obj_ini.mobi[cc,dd]="";obj_ini.age[cc,dd]=0;
+                    obj_ini.race[comp,marine_num]=0;
+                    obj_ini.loc[comp,marine_num]="";
+                    obj_ini.name[comp,marine_num]="";
+                    obj_ini.role[comp,marine_num]="";
+                    obj_ini.wep1[comp,marine_num]="";
+                    obj_ini.lid[comp,marine_num]=0;
+                    obj_ini.wep2[comp,marine_num]="";
+                    obj_ini.armour[comp,marine_num]="";
+                    obj_ini.gear[comp,marine_num]="";
+                    obj_ini.hp[comp,marine_num]=100;
+                    obj_ini.chaos[comp,marine_num]=0;
+                    obj_ini.experience[comp,marine_num]=0;
+                    obj_ini.mobi[comp,marine_num]="";
+                    obj_ini.age[comp,marine_num]=0;
                     with(obj_ini){scr_company_order(0);}
                 }
-
-                scr_popup("He Built It",tixt,"tech_build","target_marine|"+string(bb)+"|"+string(cc)+"|"+string(dd)+"|");
+                scr_popup("He Built It",tixt,"tech_build","target_marine|"+string(marine_name)+"|"+string(comp)+"|"+string(marine_num)+"|");
             }
-
             if (event_duration[i]<=0) then event[i]="";
         }
     }
 }
-i=0;
-repeat(99){i+=1;
+for(var i=1; i<=99; i++){
     if (event[i]!="") and (event_duration[i]<=0) then event[i]="";
-    if (event[i]="") and (event_duration[i]=0) and (event[i+1]!=""){
+    if (event[i]=="") and (event_duration[i]==0) and (event[i+1]!=""){
         event[i]=event[i+1];
         event_duration[i]=event_duration[i+1];
-        event[i+1]="";event_duration[i+1]=0;
+        event[i+1]="";
+        event_duration[i+1]=0;
     }
 }
 // Right here need to sort the battles within the obj_turn_end
 with(obj_turn_end){scr_battle_sort();}
 
-var i;i=0;
-repeat(10){
-    i+=1;
+for(var i=1; i<=10; i++){
     if (turns_ignored[i]>0) and (turns_ignored[i]<500) then turns_ignored[i]-=1;
 }
-if (known[6]>=2) and (faction_gender[6]=2) and (floor(turn/10)=(turn/10)) then turns_ignored[6]+=floor(random_range(0,6));
+if (known[6]>=2) and (faction_gender[6]==2) and (floor(turn/10)==(turn/10)) then turns_ignored[6]+=floor(random_range(0,6));
 
 with(obj_temp4){instance_destroy();}
-if (instance_exists(obj_p_fleet)) then with(obj_p_fleet){scr_apothecary_ship();}// asgsdgasdgasdgdsag
+if (instance_exists(obj_p_fleet)) then with(obj_p_fleet){scr_apothecary_ship();}
 scr_random_event(true);
 
-// Random events here
-
+// ** Random events here **
 if (hurssy_time>0) and (hurssy>0) then hurssy_time-=1;
-if (hurssy_time=0) and (hurssy>0){hurssy_time=-1;hurssy=0;}
+if (hurssy_time==0) and (hurssy>0){hurssy_time=-1;hurssy=0;}
 with(obj_p_fleet){
     if (hurssy_time>0) and (hurssy>0) then hurssy_time-=1;
-    if (hurssy_time=0) and (hurssy>0){hurssy_time=-1;hurssy=0;}
+    if (hurssy_time==0) and (hurssy>0){hurssy_time=-1;hurssy=0;}
 }
 with(obj_star){
-    if (p_hurssy_time[1]>0) and (p_hurssy[1]>0) then p_hurssy_time[1]-=1;if (p_hurssy_time[1]=0) and (p_hurssy[1]>0){p_hurssy_time[1]=-1;p_hurssy[1]=0;}
-    if (p_hurssy_time[2]>0) and (p_hurssy[2]>0) then p_hurssy_time[2]-=1;if (p_hurssy_time[2]=0) and (p_hurssy[2]>0){p_hurssy_time[2]=-1;p_hurssy[2]=0;}
-    if (p_hurssy_time[3]>0) and (p_hurssy[3]>0) then p_hurssy_time[3]-=1;if (p_hurssy_time[3]=0) and (p_hurssy[3]>0){p_hurssy_time[3]=-1;p_hurssy[3]=0;}
-    if (p_hurssy_time[4]>0) and (p_hurssy[4]>0) then p_hurssy_time[4]-=1;if (p_hurssy_time[4]=0) and (p_hurssy[4]>0){p_hurssy_time[4]=-1;p_hurssy[4]=0;}
+    if (p_hurssy_time[1]>0) and (p_hurssy[1]>0) then p_hurssy_time[1]-=1;
+    if (p_hurssy_time[1]==0) and (p_hurssy[1]>0){
+        p_hurssy_time[1]=-1;
+        p_hurssy[1]=0;
+    }
+    if (p_hurssy_time[2]>0) and (p_hurssy[2]>0) then p_hurssy_time[2]-=1;
+    if (p_hurssy_time[2]==0) and (p_hurssy[2]>0){
+        p_hurssy_time[2]=-1;
+        p_hurssy[2]=0;
+    }
+    if (p_hurssy_time[3]>0) and (p_hurssy[3]>0) then p_hurssy_time[3]-=1;
+    if (p_hurssy_time[3]=0) and (p_hurssy[3]>0){
+        p_hurssy_time[3]=-1;
+        p_hurssy[3]=0;
+    }
+    if (p_hurssy_time[4]>0) and (p_hurssy[4]>0) then p_hurssy_time[4]-=1;
+    if (p_hurssy_time[4]==0) and (p_hurssy[4]>0){
+        p_hurssy_time[4]=-1;
+        p_hurssy[4]=0;
+    }
 }
 
-if (turn=2){
-    if (obj_ini.master_name="Zakis Randi") or (global.chapter_name="Knights Inductor") and (obj_controller.faction_status[2]!="War") then alarm[8]=1;
+if (turn==2){
+    if (obj_ini.master_name=="Zakis Randi") or (global.chapter_name=="Knights Inductor") and (obj_controller.faction_status[2]!="War") then alarm[8]=1;
 }
-
-// Player-set events
+// ** Player-set events **
 if (fest_scheduled>0) and (fest_repeats>0){
-    var cm_present,lock;cm_present=false;
-    fest_repeats-=1;lock="";lock=scr_master_loc();
+    var lock="",cm_present=false;
+    fest_repeats-=1;
+    lock=scr_master_loc();
 
     if (fest_sid>0) and (obj_ini.ship[fest_sid]=lock) then cm_present=true;
     if (fest_wid>0) and (string(fest_star)+"."+string(fest_wid)=lock) then cm_present=true;
 
-    if (cm_present=true){
-        var imag;imag="";
+    if (cm_present==true){
+        var imag="";
 
-        if (fest_type="Great Feast") then imag="event_feast";
-        if (fest_type="Tournament") then imag="event_tournament";
-        if (fest_type="Deathmatch") then imag="event_deathmatch";
-        if (fest_type="Imperial Mass") then imag="event_mass";
-        if (fest_type="Cult Sermon") then imag="event_ccult";
-        if (fest_type="Chapter Relic") then imag="event_ccrelic";
-        if (fest_type="Triumphal March") then imag="event_march";
+        if (fest_type=="Great Feast") then imag="event_feast";
+        if (fest_type=="Tournament") then imag="event_tournament";
+        if (fest_type=="Deathmatch") then imag="event_deathmatch";
+        if (fest_type=="Imperial Mass") then imag="event_mass";
+        if (fest_type=="Cult Sermon") then imag="event_ccult";
+        if (fest_type=="Chapter Relic") then imag="event_ccrelic";
+        if (fest_type=="Triumphal March") then imag="event_march";
 
         if (fest_wid>0) then scr_popup("Scheduled Event","Your "+string(fest_type)+" takes place on "+string(fest_star)+" "+scr_roman(fest_wid)+".  Would you like to spectate the event?",imag,"");
         if (fest_sid>0) then scr_popup("Scheduled Event","Your "+string(fest_type)+" takes place on the ship '"+string(obj_ini.ship[fest_sid])+".  Would you like to spectate the event?",imag,"");
     }
-    // if (fest_repeats=0) then fest_scheduled=0;
 }
 
-// Income
+// ** Income **
 if (income_controlled_planets>0){
     with(obj_turn_end){
-        var a;a=90;
-        repeat(90){a-=1;
+        for(var a=89; a>=0; a--){
             if (alert[a]!=0){
                 alert[a+1]=alert[a];
                 alert_type[a+1]=alert_type[a];
@@ -1782,10 +1827,15 @@ if (income_controlled_planets>0){
     obj_turn_end.alert_color[1]="yellow";
     obj_turn_end.alerts+=1;
 
-    if (income_controlled_planets=1) then obj_turn_end.alert_text[1]="-"+string(income_tribute)+" Requisition granted by tithes from 1 planet.";
+    if (income_controlled_planets==1) then obj_turn_end.alert_text[1]="-"+string(income_tribute)+" Requisition granted by tithes from 1 planet.";
     if (income_controlled_planets>1) then obj_turn_end.alert_text[1]="-"+string(income_tribute)+" Requisition granted by tithes from "+string(income_controlled_planets)+" planets.";
 
     instance_activate_object(obj_p_fleet);
 
-    with(obj_star){if (x<-10000){x+=20000;y+=20000;}};
+    with(obj_star){
+        if (x<-10000){
+            x+=20000;
+            y+=20000;
+        }
+    }
 }
