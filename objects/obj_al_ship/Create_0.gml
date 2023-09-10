@@ -1,4 +1,4 @@
-
+// TODO refactor
 ship_id=0;
 // if (x<0) then ship_id=2;
 
