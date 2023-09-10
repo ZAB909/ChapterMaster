@@ -1025,7 +1025,10 @@ function scr_initialize_custom() {
 	        race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,7];wep1[company,k]=wep1[100,7];name[company,k]=scr_marine_name();
 	        wep2[company,k]=wep2[100,7];armour[company,k]="MK4 Maximus";
 	        hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience+40+irandom(40);
-
+			// have equal spec true or false have same old_guard chance
+			// it doesn't fully make sense why new marines in reserve companies would have the same chance
+			// but otherwise you'd always pick true so you'd have more shit
+			// just making em the same to reduce meta/power gaming
 	        if (obj_creation.equal_specialists=1){
 	            company_experience=(16-company)*5;
 	            if (company<10){
@@ -1033,18 +1036,18 @@ function scr_initialize_custom() {
 	                repeat(temp1){k+=1;man_size+=1;
 	                    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,8];wep1[company,k]=wep1[101,8];name[company,k]=scr_marine_name();
 	                    wep2[company,k]=wep2[101,8];
-						if (old_guard=100){armour[company,k]="MK3 Iron Armour"}; // 1%
-						if (old_guard>=97 and old_guard<=99){armour[company,k]="MK4 Maximus"}; //3%
-						if (old_guard>=91 and old_guard<=96){armour[company,k]="MK5 Heresy"}; // 6%
-						if (old_guard>=80 and old_guard<=90){armour[company,k]="MK6 Corvus"}; // 10%
+						if (old_guard=99){armour[company,k]="MK3 Iron Armour"}; // 1%
+						if (old_guard>=96 and old_guard<=98){armour[company,k]="MK4 Maximus"}; //3%
+						if (old_guard>=90 and old_guard<=95){armour[company,k]="MK5 Heresy"}; // 6%
+						if (old_guard>=79 and old_guard<=89){armour[company,k]="MK6 Corvus"}; // 10%
 							else if (company<=2){armour[company,k]="MK6 Corvus"}; // company 1 and 2 taccies get beakies 
 								else armour[company,k]="MK7 Aquila";
 	                    hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
 	                }
 	                repeat(assault){k+=1;man_size+=1;
 	                    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,10];wep1[company,k]=wep1[101,10];name[company,k]=scr_marine_name();
-	                    wep2[company,k]=wep2[101,10];
-						if (old_guard>=98){armour[company,k]="MK3 Iron Armour"}; // 3%
+	                    wep2[company,k]=wep2[101,10];         // melee oriented armours and higher chance for assaulties
+						if (old_guard>=98){armour[company,k]="MK3 Iron Armour"}; // 3% 
 						if (old_guard>=92 and old_guard<=97){armour[company,k]="MK4 Maximus"}; // 6%
 						if (old_guard>=78 and old_guard<=91){armour[company,k]="MK5 Heresy"}; // 12%
 							else if (company<=2) armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies 
@@ -1059,7 +1062,8 @@ function scr_initialize_custom() {
 	                    name[company,k]=scr_marine_name();
 	                    wep2[company,k]=wep2[101,9];
 						if (company<=2) then armour[company,k]="MK6 Corvus"; 
-						if (old_guard>=91){armour[company,k]="MK6 Corvus"}; // 10% chance for devos to have ranged. I'd give em others but you'd only want em to have ranged aye
+						if (old_guard>=99 and old_guard<=97){armour[company,k]="MK4 Maximus"}; // 3% for maximus
+						if (old_guard>= and old_guard<=96){armour[company,k]="MK6 Corvus"}; // 15% chance for devos to have ranged armor, wouldn't want much else
 							else{armour[company,k]="MK7 Aquila"};
 	                    hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
 	                }
@@ -1092,8 +1096,8 @@ function scr_initialize_custom() {
 	            if (company=8) then repeat(temp1){k+=1;man_size+=1; // assault company
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,10];wep1[company,k]=wep1[101,10];name[company,k]=scr_marine_name();
 	                wep2[company,k]=wep2[101,10];
-					// TODO MAKE 100 INTO 99 
-					if (old_guard>=100){armour[company,k]="MK3 Iron Armour"}; // 1%
+					
+					if (old_guard>=99){armour[company,k]="MK3 Iron Armour"}; // 1%
 					if (old_guard>=97 and old_guard<=99){armour[company,k]="MK4 Maximus"}; // 3%
 					if (old_guard>=91 and old_guard<=96){armour[company,k]="MK5 Heresy"}; //  6%
 						else{armour[company,k]="MK7 Aquila"};
