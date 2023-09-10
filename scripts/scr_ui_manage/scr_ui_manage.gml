@@ -459,14 +459,19 @@ function scr_ui_manage() {
 	                    }
 	                    if (yep=1) and (hood<7){
 	                        if (ttrim=1) then draw_sprite(spr_gear_hood2,0,xx+1208,yy+178);
-	                        if (ttrim=0) then draw_sprite(spr_gear_hood2,1,xx+1208,yy+178);
+	                        if (ttrim=0) then draw_sprite(spr_gear_hood2,1,xx+1206,yy+167);
 	                    }
 	                }
-	                if (skull>0) and (temp[102]!=""){
+//Chaplain head and Terminator version
+	                if (skull>0) and (ui_specialist=1) and (temp[102]!=""){
 	                    if (terg!=2) and (terg!=1) then draw_sprite(spr_gear_chap,skull,xx+1206,yy+167);
 	                    if (terg=2) then draw_sprite(spr_gear_chap,skull,xx+1206,yy+167);
 	                    if (terg=1) then draw_sprite(spr_gear_chap,skull,xx+1206,yy+167);
-	                }
+	                    if (temp[102]!="Terminator"){
+	                      if (terg=2) or (terg=1) then draw_sprite(spr_terminator_chap,1,xx+1206,yy+167);
+	                 }
+					}
+                
                 
 	                // Honor Guard Helm
 	                if (hood=0) and (terg<1) and (temp[102]!="") and (ui_specialist=14){
@@ -476,7 +481,7 @@ function scr_ui_manage() {
 	                    o=0;yep=0;repeat(4){o+=1;if (obj_ini.adv[o]="Tech-Brothers") then yep=1;}if (yep=1) then helm_ii=2;
 	                    o=0;yep=0;repeat(4){o+=1;if (obj_ini.dis[o]="Never Forgive") then yep=1;}if (yep=1) or (obj_ini.progenitor=1) then helm_ii=3;
 	                    o=0;yep=0;repeat(4){o+=1;if (obj_ini.adv[o]="Reverent Guardians") then yep=1;}if (yep=1) then helm_ii=4;
-	                    draw_sprite(spr_honor_helm,helm_ii,xx+1210,yy+178);
+	                    draw_sprite(spr_honor_helm,helm_ii,xx+1206,yy+167);
 	                }
                 
 	                // Weapons for above arms

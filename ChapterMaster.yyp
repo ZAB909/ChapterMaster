@@ -697,6 +697,7 @@
     {"id":{"name":"scr_ui_formation_bars","path":"scripts/scr_ui_formation_bars/scr_ui_formation_bars.yy",},},
     {"id":{"name":"scr_ui_settings","path":"scripts/scr_ui_settings/scr_ui_settings.yy",},},
     {"id":{"name":"scr_arti_descr","path":"scripts/scr_arti_descr/scr_arti_descr.yy",},},
+    {"id":{"name":"spr_terminator_chap","path":"sprites/spr_terminator_chap/spr_terminator_chap.yy",},},
     {"id":{"name":"scr_draw_rainbow","path":"scripts/scr_draw_rainbow/scr_draw_rainbow.yy",},},
     {"id":{"name":"scr_weapons_equip","path":"scripts/scr_weapons_equip/scr_weapons_equip.yy",},},
     {"id":{"name":"scr_master_loc","path":"scripts/scr_master_loc/scr_master_loc.yy",},},
