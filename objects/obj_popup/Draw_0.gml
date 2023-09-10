@@ -802,61 +802,61 @@ if (zm=0) and (type=5) and (instance_exists(obj_controller)){
         // II Company
         if (min_exp<70) then draw_set_alpha(0.25);
         if (target_comp=2) then check="x";
-        current_company==1;
+        current_company=1;
         draw_text(xx+1140,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
         // III Company
         if (min_exp<60) then draw_set_alpha(0.25);
         if (target_comp=3) then check="x";
-        current_company==2;
+        current_company=2;
         draw_text(xx+1250,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
         // IV Company
         if (min_exp<50) then draw_set_alpha(0.25);
         if (target_comp=4) then check="x";
-        current_company==3;
+        current_company=3;
         draw_text(xx+1360,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
         // V Company
         if (min_exp<40) then draw_set_alpha(0.25);
         if (target_comp=5) then check="x";
-        current_company==4;
+        current_company=4;
         draw_text(xx+1470,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
         // VI Company
         if (min_exp<35) then draw_set_alpha(0.25);
         if (target_comp=6) then check="x";
-        current_company==5;
+        current_company=5;
         draw_text(xx+1030,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
         // VII Company
         if (min_exp<30) then draw_set_alpha(0.25);
         if (target_comp=7) then check="x";
-        current_company==6;
+        current_company=6;
         draw_text(xx+1140,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";draw_set_alpha(1);
         // VIII Company
         if (min_exp<25) then draw_set_alpha(0.25);
         if (target_comp=8) then check="x";
-        current_company==7;
+        current_company=7;
         draw_text(xx+1250,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
         // IX Company
         if (min_exp<20) then draw_set_alpha(0.25);
         if (target_comp=9) then check="x";
-        current_company==8;
+        current_company=8;
         draw_text(xx+1360,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
         // X Company
         if (target_comp=10) then check="x";
-        current_company==9;
+        current_company=9;
         draw_text(xx+1470,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
         check=" ";
     }
