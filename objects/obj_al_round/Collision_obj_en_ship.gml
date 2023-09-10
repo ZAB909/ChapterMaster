@@ -1,10 +1,7 @@
+// Handles damage allocation on space combat against ships based on shields and hp
+var arm=other.armour_front;
+var t1=0;
 
-
-
-var arm;
-arm=other.armour_front;
-
-var t1;t1=0;
 dam=dam;
 
 if (arm<dam){
@@ -21,4 +18,3 @@ if (sprite_index=spr_torpedo){
 }
 
 instance_destroy();
-
