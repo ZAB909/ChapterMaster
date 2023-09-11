@@ -201,6 +201,15 @@ function scr_initialize_custom() {
 	        hunters=3;
 			
 			if (global.chapter_name="Soul Drinkers") then gladius-=4; strike_cruisers-=3; battle_barges+=1; 
+			
+			}
+	    if (obj_creation.fleet_type=1){
+	        flagship_name="Spear Of Vengeance";
+			strike_cruisers=8;
+	        gladius=7;
+	        hunters=3;
+		
+	        if (global.chapter_name="Imperial Fists") then battle_barges+=1;
 	    }
 	    if (obj_creation.fleet_type=1){
 	        strike_cruisers=8;
