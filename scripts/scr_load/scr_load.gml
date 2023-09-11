@@ -42,12 +42,8 @@ function scr_load(argument0, argument1) {
 	    global.chapter_name=ini_read_string("Save","chapter_name","Error"); //
 	    obj_ini.sector_name=ini_read_string("Save","sector_name","Error"); //
 
-	    global.version=ini_read_real("Save","version",0);
-	    if (global.version<0.64) then room_goto(Main_Menu);
-	    if (global.restart>0) and (global.version<0.635){
-	        with(obj_restart_vars){instance_destroy();}
-	        global.restart=0;room_goto(Main_Menu);
-	    }
+		// TODO make it either throw error (if version is wrong) or try to upgrade the saved game data and version
+	    global.version=ini_read_string("Save","version",0);
 	    global.game_seed=ini_read_real("Save","game_seed",0);
 	    obj_ini.use_custom_icon=ini_read_real("Save","use_custom_icon",0);
 
@@ -780,14 +776,6 @@ function scr_load(argument0, argument1) {
 	                    obj_ini.age[coh,mah]=ini_read_real("Mar","ag"+string(coh)+"."+string(mah),0);
 	                    obj_ini.spe[coh,mah]=ini_read_string("Mar","spe"+string(coh)+"."+string(mah),"");
 	                    obj_ini.god[coh,mah]=ini_read_real("Mar","god"+string(coh)+"."+string(mah),0);
-
-	                    if (obj_ini.spe[coh,mah]="") and (global.version<0.625){// 135;
-	                        if (obj_ini.role[coh,mah]=obj_ini.role[100,17]) or (obj_ini.role[coh,mah]="Codiciery") or (obj_ini.role[coh,mah]="Lexicanum") or (obj_ini.role[coh,mah]="Chief "+string(obj_ini.role[100,17])){
-	                            scr_powers_new(coh,mah);
-	                        }
-	                    }
-
-
 	                }
 
 	            }

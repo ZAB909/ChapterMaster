@@ -33,18 +33,11 @@ if (stage=2) and (tim1<=0){tim2-=1;
     }
 }
 
-
-// Some kind of integrity test through version? global.version set in Create
-if (global.version<version){
-    if (audio_is_playing(snd_prologue)){audio_stop_all();
-        global.sound=audio_play_sound(snd_redownload,0,1);
-        audio_sound_gain(global.sound,0,0);
-        audio_sound_gain(global.sound,1,1500);
-    }
+if (audio_is_playing(snd_prologue)){audio_stop_all();
+    global.sound=audio_play_sound(snd_redownload,0,1);
+    audio_sound_gain(global.sound,0,0);
+    audio_sound_gain(global.sound,1,1500);
 }
-
-
-
 
 if (stage=3){
     if (tim3>-15) then tim3-=1;
@@ -67,7 +60,6 @@ if (away>=1) then away+=1;
 if (out_of_date>0) then out_of_date-=1;
 
 mess_alpha+=1;
-if (global.version<version) then mess_alpha+=1;
 if (mess_alpha>120) then mess_alpha=0;
 
 
