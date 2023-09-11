@@ -349,23 +349,23 @@ function scr_initialize_custom() {
 	second=9;third=9;fourth=9;fifth=9;sixth=9;seventh=9;eighth=9;ninth=9;tenth=10;
 	assault=2;siege=0;devastator=2;*/
 
-	var yep,o,psyky;psyky=0;
+	var chapter_option,o,psyky;psyky=0;
 
-	o=0;yep=0;repeat(4){o+=1;if (obj_creation.adv[o]="Tech-Brothers") then yep=1;}if (yep=1){techs+=10;tenth-=10;}
-	o=0;yep=0;repeat(4){o+=1;if (obj_creation.adv[o]="Melee Enthusiasts") then yep=1;}if (yep=1){assault=30;}
-	o=0;yep=0;repeat(4){o+=1;if (obj_creation.adv[o]="Siege Masters") then yep=1;}if (yep=1) then siege=1;
-	o=0;yep=0;repeat(4){o+=1;if (obj_creation.adv[o]="Crafters") then yep=1;}if (yep=1){techs+=5;terminator+=5;tenth-=10;}
-	o=0;yep=0;repeat(4){o+=1;if (obj_creation.adv[o]="Psyker Abundance") then yep=1;}if (yep=1){tenth-=10;epistolary+=2;codiciery+=3;lexicanum+=5;psyky=1;}
+	o=0;chapter_option=0;repeat(4){o+=1;if (obj_creation.adv[o]="Tech-Brothers") then chapter_option=1;}if (chapter_option=1){techs+=10;tenth-=10;}
+	o=0;chapter_option=0;repeat(4){o+=1;if (obj_creation.adv[o]="Melee Enthusiasts") then chapter_option=1;}if (chapter_option=1){assault=30;}
+	o=0;chapter_option=0;repeat(4){o+=1;if (obj_creation.adv[o]="Siege Masters") then chapter_option=1;}if (chapter_option=1) then siege=1;
+	o=0;chapter_option=0;repeat(4){o+=1;if (obj_creation.adv[o]="Crafters") then chapter_option=1;}if (chapter_option=1){techs+=5;terminator+=5;tenth-=10;}
+	o=0;chapter_option=0;repeat(4){o+=1;if (obj_creation.adv[o]="Psyker Abundance") then chapter_option=1;}if (chapter_option=1){tenth-=10;epistolary+=2;codiciery+=3;lexicanum+=5;psyky=1;}
 	var intolerant;intolerant=0;
-	o=0;yep=0;repeat(4){o+=1;if (obj_creation.dis[o]="Psyker Intolerant") then yep=1;}if (yep=1){epistolary=0;codiciery=0;lexicanum=0;veteran+=10;tenth+=10;intolerant=1;}
-	o=0;yep=0;repeat(4){o+=1;if (obj_creation.dis[o]="Sieged") then yep=1;}
-	if (yep=1){
+	o=0;chapter_option=0;repeat(4){o+=1;if (obj_creation.dis[o]="Psyker Intolerant") then chapter_option=1;}if (chapter_option=1){epistolary=0;codiciery=0;lexicanum=0;veteran+=10;tenth+=10;intolerant=1;}
+	o=0;chapter_option=0;repeat(4){o+=1;if (obj_creation.dis[o]="Sieged") then chapter_option=1;}
+	if (chapter_option=1){
 	    techs-=10;epistolary-=3;apothecary-=4;codiciery-=3;lexicanum-=5;terminator-=10;veteran-=50;
 	    second-=30;third-=30;fourth-=30;fifth-=60;sixth-=60;seventh-=60;eighth-=70;ninth-=70;tenth-=70;// 370
 	    assault=10;siege=0;devastator=10;
 	}
-	o=0;yep=0;repeat(4){o+=1;if (obj_creation.dis[o]="Tech-Heresy") then yep=1;}if (yep=1){techs-=10;tenth+=1;}
-	o=0;yep=0;repeat(4){o+=1;if (obj_creation.adv[o]="Reverent Guardians") then yep=1;}if (yep=1){chaap+=10;tenth-=10;}
+	o=0;chapter_option=0;repeat(4){o+=1;if (obj_creation.dis[o]="Tech-Heresy") then chapter_option=1;}if (chapter_option=1){techs-=10;tenth+=1;}
+	o=0;chapter_option=0;repeat(4){o+=1;if (obj_creation.adv[o]="Reverent Guardians") then chapter_option=1;}if (chapter_option=1){chaap+=10;tenth-=10;}
 
 	// if (obj_creation.custom>0) or ((global.chapter_name="Doom Benefactors") and (obj_creation.custom=0)){
 	if ((progenitor>=1) and (progenitor<=10)) or ((global.chapter_name="Doom Benefactors") and (obj_creation.custom=0)){
@@ -670,8 +670,8 @@ function scr_initialize_custom() {
 
 	// Honor Guard
 
-	var hong,yep,o;hong=0;
-	o=0;yep=0;repeat(4){o+=1;if (obj_creation.adv[o]="Brothers, All") then yep=1;}if (yep=1) then hong+=20;
+	var hong,chapter_option,o;hong=0;
+	o=0;chapter_option=0;repeat(4){o+=1;if (obj_creation.adv[o]="Brothers, All") then chapter_option=1;}if (chapter_option=1) then hong+=20;
 	if (progenitor=0) and (obj_creation.custom=0) then hong+=10;
 	if (hong>0) then repeat(10){k+=1;commands+=1;man_size+=1;
 	    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,2];name[company,k]=scr_marine_name();gear[company,k]=gear[100,2];mobi[company,k]=mobi[100,2];
@@ -1033,11 +1033,12 @@ function scr_initialize_custom() {
 	        if (obj_creation.equal_specialists=1){
 	            company_experience=(16-company)*5;
 	            if (company<10){
-					old_guard = irandom(99);
+					
 	                repeat(temp1){k+=1;man_size+=1;
 	                    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,8];wep1[company,k]=wep1[101,8];wep2[company,k]=wep2[101,8];name[company,k]=scr_marine_name();
 	                    hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience+irandom(5);
-	                  
+
+	                old_guard = irandom(99);
 						if (old_guard=99){armour[company,k]="MK3 Iron Armour"}; // 1%
 							else if (old_guard>=97 and old_guard<=99){armour[company,k]="MK4 Maximus"}; //3%
 								else if (old_guard>=91 and old_guard<=96){armour[company,k]="MK5 Heresy"}; // 6%
@@ -1050,6 +1051,8 @@ function scr_initialize_custom() {
 	                    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,10];wep1[company,k]=wep1[101,10];name[company,k]=scr_marine_name();
 						mobi[company,k]="Jump Pack";hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
 						wep2[company,k]=wep2[101,10]; 
+						{armour[company,k]="MK7 Aquila"};
+					/*
 					// due to assault marines not wanting corvus due to worse ac, given them better chances with melee oriented armours. 
 					// melee is risky af anyway so let's reward players who go assault marine heavy at game start
 					if (old_guard>=99 and old_guard<=97){armour[company,k]="MK8 Errant"}; // 3% 
@@ -1057,7 +1060,7 @@ function scr_initialize_custom() {
 							else if (old_guard>=80 and old_guard<=90){armour[company,k]="MK4 Maximus"}; // 12%
 								else if (old_guard>=57 and old_guard<=79){armour[company,k]="MK5 Heresy"}; // 24%
 									else{armour[company,k]="MK7 Aquila"};
-
+					/*
 	                }
 	                repeat(devastator){k+=1;man_size+=1;
 	                    race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,9];wep2[company,k]=wep2[101,9];name[company,k]=scr_marine_name();
@@ -1065,12 +1068,13 @@ function scr_initialize_custom() {
 
 	                    if (wep1[101,9]="Heavy Ranged") then wep1[company,k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
 	                    if (wep1[101,9]!="Heavy Ranged") then wep1[company,k]=wep1[101,9];
-
+						{armour[company,k]="MK7 Aquila"};
+							/*
 							if (old_guard>=99 and old_guard<=97){armour[company,k]="MK4 Maximus"}; // 3% for maximus
 								else if (old_guard>=78 and old_guard<=96){armour[company,k]="MK6 Corvus"}; // 20% chance for devos to have ranged armor, wouldn't want much else
 									else if (company<=2) then armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies by default
 										else{armour[company,k]="MK7 Aquila"};
-
+							*/
 	                }
 	            }
 	            if (company=10){
@@ -1085,40 +1089,45 @@ function scr_initialize_custom() {
 
 	        if (obj_creation.equal_specialists=0){
 	             if (company<8) then repeat(temp1){k+=1;man_size+=1;
-				 old_guard = irandom(99);
+				 	old_guard = irandom(99);
+					
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,8];wep1[company,k]=wep1[101,8];wep2[company,k]=wep2[101,8];name[company,k]=scr_marine_name();
 	                hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
-	    
+
+					
 						if (old_guard=99){armour[company,k]="MK3 Iron Armour"}; // 1%
 							else if (old_guard>=97 and old_guard<=99){armour[company,k]="MK4 Maximus"}; //3%
 								else if (old_guard>=91 and old_guard<=96){armour[company,k]="MK5 Heresy"}; // 6%
 									else if (old_guard>=79 and old_guard<=90){armour[company,k]="MK6 Corvus"}; // 12%
 										else if (company<=2) then armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies by default
 											else{armour[company,k]="MK7 Aquila"};
-
+					
 	            } // reserve company only of assault
 	            if (company=8) then repeat(temp1){k+=1;man_size+=1; // assault reserve company
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,10];wep1[company,k]=wep1[101,10];wep2[company,k]=wep2[101,10];name[company,k]=scr_marine_name();
 	                hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;mobi[company,k]="Jump Pack";
+					{armour[company,k]="MK7 Aquila"};
 					// due to assault marines not wanting corvus due to worse ac, given them better chances with melee oriented armours. 
 					// melee is risky af anyway so let's reward players who go assault marine heavy at game start
+					/*
 					if (old_guard>=99 and old_guard<=97){armour[company,k]="MK8 Errant"}; // 3% 
 						else if (old_guard>=91 and old_guard<=96){armour[company,k]="MK3 Iron Armour"}; // 6% 
 							else if (old_guard>=80 and old_guard<=90){armour[company,k]="MK4 Maximus"}; // 12%
 								else if (old_guard>=57 and old_guard<=79){armour[company,k]="MK5 Heresy"}; // 24%
 									else{armour[company,k]="MK7 Aquila"};
-
+				*/  
 	            } // reserve company only devo
 	            if (company=9) then repeat(temp1){k+=1;man_size+=1; 
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,9];name[company,k]=scr_marine_name();wep2[company,k]=wep2[101,9];
 	                hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
 	                if (wep1[101,9]="Heavy Ranged") then wep1[company,k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
 	                if (wep1[101,9]!="Heavy Ranged") then wep1[company,k]=wep1[101,9];
-
+					{armour[company,k]="MK7 Aquila"};
+					/*
 						if (old_guard>=99 and old_guard<=97){armour[company,k]="MK4 Maximus"}; // 3% for maximus
 							else if (old_guard>=78 and old_guard<=96){armour[company,k]="MK6 Corvus"}; // 20% chance for devos to have ranged armor, wouldn't want much else
 								else{armour[company,k]="MK7 Aquila"};
-
+					*/
 	            }
 	            if (company=10) then repeat(temp1){k+=1;man_size+=1;
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,12];wep1[company,k]=wep1[101,12];name[company,k]=scr_marine_name();
@@ -1128,24 +1137,27 @@ function scr_initialize_custom() {
 	            if (company_unit2="assault") then repeat(assault){k+=1;man_size+=1;
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,10];wep1[company,k]=wep1[101,10];wep2[company,k]=wep2[101,10];name[company,k]=scr_marine_name();
 	                mobi[company,k]=mobi[101,10];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
+					{armour[company,k]="MK7 Aquila"};
+					/*
 					if (old_guard>=99 and old_guard<=97){armour[company,k]="MK8 Errant"}; // 3% 
 						else if (old_guard>=91 and old_guard<=96){armour[company,k]="MK3 Iron Armour"}; // 6% 
 							else if (old_guard>=80 and old_guard<=90){armour[company,k]="MK4 Maximus"}; // 12%
 								else if (old_guard>=57 and old_guard<=79){armour[company,k]="MK5 Heresy"}; // 24%
 									else{armour[company,k]="MK7 Aquila"};
-
+					*/
 	            }
 	            if (company_unit3="devastator") then repeat(devastator){k+=1;man_size+=1;
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,9];name[company,k]=scr_marine_name();wep2[company,k]=wep2[101,9];
 					hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
+					{armour[company,k]="MK7 Aquila"};
 
 	                if (wep1[101,9]="Heavy Ranged") then wep1[company,k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
 	                if (wep1[101,9]!="Heavy Ranged") then wep1[company,k]=wep1[101,9];
-
+					/*
 					if (old_guard>=91){armour[company,k]="MK6 Corvus"}; // 10% chance
 						else if (company<=2) then armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies 
 							else{armour[company,k]="MK7 Aquila"};
-	                
+	                */
 	            }
 	        }
 
@@ -1249,8 +1261,8 @@ function scr_initialize_custom() {
 	    scr_add_item("Force Weapon",4);
 	    scr_add_item("Plasma Pistol",4);
 
-	    o=0;yep=0;repeat(4){o+=1;if (obj_creation.adv[o]="Crafters") then yep=1;}
-	    if (yep=1) then scr_add_item("Tartaros",10);
+	    o=0;chapter_option=0;repeat(4){o+=1;if (obj_creation.adv[o]="Crafters") then chapter_option=1;}
+	    if (chapter_option=1) then scr_add_item("Tartaros",10);
 	    else{scr_add_item("Terminator Armour",10);}
 
 	    scr_add_item("MK7 Aquila",200);
