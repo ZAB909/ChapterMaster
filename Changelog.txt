@@ -1,5 +1,49 @@
 Version: 0.8.0.0.0
 
+We have skipped a few versions to ensure clarity with other projects
+
+++++
+Added
+++++
+
+All Marines can now be old guards. Spawning them with different armour than what they are meant to. Expect Assault marines to have the best melee!
+Starting armours for command marines have been changed. For example all company champions are MK4.
+Veterans given combi-flamers by default
+new sprites for weapons and armour
+many new weapons and gear
+including Electro-flail, Sarissa, Seraphim Pistols, Stalker Pattern Bolter and many others
+MK5 Armor
+new artifact: Thunder Hammer (replaced Relic Blade)
+killing a warboss should now create a victory shrine on the planet
+changelog for the repo
+cheatcodes
+
+++++
+Changed
+++++
+
+many weapon and gear stat tweaks
+numerous under-the-hood refactors and changes (they won't have an effect on gameplay, but they make development easier)
+changed all instances of 'Armor' to 'Armour'
+moved some chapter icons into the custom icons folder, allowing players to toggle their visibility in-game
+
+++++
+Fixed
+++++
+
+vehicles should load on ships now at the start of the game
+vehicles should no longer have unlimited ammo
+marines should no longer duplicate during battles
+some stuff not appearing in Armamentarium (including Void Shield Heavy, Assault Cannon and some other things)
+the UI should now show proper amount of marines after a defensive battle
+it should now be possible to recruit from planets containing billions of pops (previous it had to be either below 1 billion or above 50 billions)
+enemy escorts should not teleport around after another enemy ship gets boarded. Also escorts should be fully boardable now
+text typos
+numerous CTDs
+Removed:
+faith (temporily, it was causing crashes when attacking Sisters of Battle, will be readded in the future)
+
+---------------------------
 
 Version 0.6702
 
