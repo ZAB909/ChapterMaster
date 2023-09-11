@@ -6,7 +6,10 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 	// other_gear = gear provided?
 	// home_spot = home, shipXY, or default
 
+	// TODO refactor repeats
+
 	// That should be sufficient to add stuff in a highly modifiable fashion
+
 
 	var non_marine_roles = ["Skitarii","Techpriest","Ranger","Crusader","Sister of Battle","Sister Hospitaler", "Ork Sniper", "Flash Git"]
 	var i,good, wep1, wep2, gear, mobi, arm, e, missing;
@@ -260,8 +263,9 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
         
 	        if (choice_weapons=obj_ini.role[100,12]) and (corruption>=13) then obj_ini.god[target_company,good]=2;// Khorne!!!1 XDDDDDDD
         
-	        if (missing=1) and (man_role="Scout"){
-	            if (string_count("has joined the 10th Company",obj_turn_end.alert_text[obj_turn_end.alerts])=1){
+	        if (missing=1) and (argument0="Scout"){
+	            if (string_count("has joined the X Company",obj_turn_end.alert_text[obj_turn_end.alerts])=1){
+
 	               scr_alert("red","recruiting","Not enough "+string(obj_ini.role[100,12])+" equipment in the armoury!",0,0);
 	            }
 	        }

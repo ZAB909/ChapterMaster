@@ -481,7 +481,7 @@ if (tech_points>=4) and (tech_aspirant=0){
             obj_ini.wid[tco,tid]=0;obj_ini.wep2[tco,tid]="";obj_ini.armour[tco,tid]="";obj_ini.gear[tco,tid]="";obj_ini.hp[tco,tid]=0;
             obj_ini.chaos[tco,tid]=0;obj_ini.experience[tco,tid]=0;obj_ini.age[tco,tid]=0;obj_ini.mobi[tco,tid]="";
             if (obj_ini.lid[0,g1]>0){// Remove from ship
-                var man_size;man_size=scr_unit_size(obj_ini.armour[0,g1],obj_ini.role[0,g1],true);
+                var man_size=scr_unit_size(obj_ini.armour[0,g1],obj_ini.role[0,g1],true, false);
                 obj_ini.ship_carrying[obj_ini.lid[0,g1]]-=man_size;
             }
             obj_ini.loc[0,g1]="Terra";obj_ini.wid[0,g1]=4;obj_ini.lid[0,g1]=0;
@@ -583,8 +583,8 @@ repeat(299){i+=1;
     }
 }
 
-if (recruits_finished=1) then scr_alert("green","recruitment",string(obj_ini.role[100,12])+" "+string(recruit_first)+" has joined the 10th Company.",0,0);
-if (recruits_finished>1) then scr_alert("green","recruitment",string(recruits_finished)+"x "+string(obj_ini.role[100,12])+" have joined the 10th Company.",0,0);
+if (recruits_finished=1) then scr_alert("green","recruitment",string(obj_ini.role[100,12])+" "+string(recruit_first)+" has joined the X Company.",0,0);
+if (recruits_finished>1) then scr_alert("green","recruitment",string(recruits_finished)+"x "+string(obj_ini.role[100,12])+" have joined the X Company.",0,0);
 
 recruits=tot;
 

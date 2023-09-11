@@ -465,6 +465,7 @@
     {"name":"scr_vehicle_order","order":25,"path":"scripts/scr_vehicle_order/scr_vehicle_order.yy",},
     {"name":"scr_icon","order":27,"path":"scripts/scr_icon/scr_icon.yy",},
     {"name":"scr_initialize_custom","order":29,"path":"scripts/scr_initialize_custom/scr_initialize_custom.yy",},
+    {"name":"scr_roman_numerals","order":65,"path":"scripts/scr_roman_numerals/scr_roman_numerals.yy",},
     {"name":"scr_restart_variables","order":31,"path":"scripts/scr_restart_variables/scr_restart_variables.yy",},
     {"name":"scr_start_allow","order":33,"path":"scripts/scr_start_allow/scr_start_allow.yy",},
     {"name":"scr_start_load","order":35,"path":"scripts/scr_start_load/scr_start_load.yy",},
