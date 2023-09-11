@@ -651,7 +651,7 @@ if (menu=1) and (managing>0){
                         ma=ma*1.15;ra=ra*1.15;
                     }
                     if (string_count("0",obj_ini.spe[cah,ide[sel]])>0){
-                        temp[119]="PSYKER ("+string_upper(obj_ini.psy_powers)+"): ";
+                        temp[119]="PSYKER ("+string_upper(string(obj_ini.psy_powers))+"): ";
                         temp[119]+=string(string_count("|",obj_ini.spe[cah,ide[sel]]));
                         temp[119]+=" Powers known.";
                     }

@@ -1670,7 +1670,7 @@ if (slide=6){
     if (text_selected!="cm") or (custom=0) then draw_text_ext(580,144,string_hash_to_newline(string(chapter_master_name)),-1,580);
     if (custom>0) and (restarted=0){
         if (text_selected="cm") and (text_bar>30) then draw_text(580,144,string_hash_to_newline(string(chapter_master_name)));
-        if (text_selected="cm") and (text_bar<=30) then draw_text(580,144,string_hash_to_newline(string(chapter_master_name)+"|"),);
+        if (text_selected="cm") and (text_bar<=30) then draw_text(580,144,string_hash_to_newline(string(chapter_master_name)+"|"));
         var wid,hei;wid=max(400,string_width(string_hash_to_newline(chapter_master_name)));hei=string_height(string_hash_to_newline(chapter_master_name));
         if (scr_hit(580-2,144-2,582+wid,146+hei)){obj_cursor.image_index=2;
             if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="cm";cooldown=8000;keyboard_string=chapter_master_name;}

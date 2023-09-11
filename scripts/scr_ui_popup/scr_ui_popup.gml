@@ -460,7 +460,7 @@ function scr_ui_popup() {
 	    draw_set_color(c_gray);
 	    draw_line(__view_get( e__VW.XView, 0 )+44,__view_get( e__VW.YView, 0 )+137,__view_get( e__VW.XView, 0 )+44+obj_fleet_select.void_wid,__view_get( e__VW.YView, 0 )+137);
     
-	    if (fleet_all=0) then draw_text(__view_get( e__VW.XView, 0 )+50,__view_get( e__VW.YView, 0 )+117,string_hash_to_newline("[ ]"),);
+	    if (fleet_all=0) then draw_text(__view_get( e__VW.XView, 0 )+50,__view_get( e__VW.YView, 0 )+117,string_hash_to_newline("[ ]"));
 	    if (fleet_all=1) then draw_text(__view_get( e__VW.XView, 0 )+50,__view_get( e__VW.YView, 0 )+116,string_hash_to_newline("[x]"));
     
 	    if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){

@@ -11,7 +11,7 @@ function get_vehicle_size_map() {
 }
 
 // Modifies the size for each unit depending on their Type
-function scr_unit_size(armour, role, other_factors, mobility) {
+function scr_unit_size(armour, role, other_factors, mobility=false) {
     var _size = 1;
     if (role == "") {
         return 0;

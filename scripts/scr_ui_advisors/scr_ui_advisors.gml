@@ -1,19 +1,61 @@
 function scr_ui_advisors() {
 
-	var xx,yy, blurp, eta;
+	var xx,yy, blurp, eta, va;
+	var romanNumerals;
+	romanNumerals=scr_roman_numerals();
+	var recruitment_rates = [
+    	"sluggish",
+    	"slow",
+    	"moderate",
+    	"fast",
+    	"frenetic",
+    	"hereticly fast"
+	];
+
+	var recruitment_pace = [
+    	" is currently halted.",
+    	" is advancing sluggishly.",
+    	" is advancing slowly.",
+    	" is advancing moderately fast.",
+    	" is advancing fast.",
+    	" is advancing frenetically.",
+    	" is advancing as fast as possible."
+	];
+
+	var recruitement_rate = [
+		"HALTED",
+		"SLUGGISH",
+		"SLOW",
+		"MODERATE",
+		"FAST",
+		"FRENETIC",
+		"MAXIMUM",
+	];
+
+
 	xx=__view_get( e__VW.XView, 0 )+0;
 	yy=__view_get( e__VW.YView, 0 )+0;
-	blurp="";eta=0;
+	blurp="";
+	eta=0;
 
 	// This script draws all of the ADVISOR screens
 
-	if (menu=16){// Fleet
+	// ** Fleet **
+	if (menu=16){
 	    draw_sprite(spr_rock_bg,0,xx,yy);
-	    draw_set_alpha(0.75);draw_set_color(0);draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,0);
-	    draw_set_alpha(1);draw_set_color(c_gray);draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,1);
+	    draw_set_alpha(0.75);
+		draw_set_color(0);
+		draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,0);
+	    draw_set_alpha(1);
+		draw_set_color(c_gray);
+		draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,1);
 	    draw_line(xx+326+16,yy+426,xx+887+16,yy+426);
-	    draw_set_alpha(0.75);draw_set_color(0);draw_rectangle(xx+945,yy+66,xx+1580,yy+818,0);
-	    draw_set_alpha(1);draw_set_color(c_gray);draw_rectangle(xx+945,yy+66,xx+1580,yy+818,1);
+	    draw_set_alpha(0.75);
+		draw_set_color(0);
+		draw_rectangle(xx+945,yy+66,xx+1580,yy+818,0);
+	    draw_set_alpha(1);
+		draw_set_color(c_gray);
+		draw_rectangle(xx+945,yy+66,xx+1580,yy+818,1);
     
 	    if (menu_adept=0){
 	        scr_image("advisor",6,xx+16,yy+43,310,828);
@@ -33,15 +75,18 @@ function scr_ui_advisors() {
 	        draw_text_transformed(xx+336+16,yy+40,string_hash_to_newline("Flagship Bridge"),1,1,0);
 	        draw_text_transformed(xx+336+16,yy+100,string_hash_to_newline("Adept "+string(obj_controller.adept_name)),0.6,0.6,0);
 	        draw_set_font(fnt_40k_14);
-	        blurp="Yur fleet contains ";
+	        blurp="Your fleet contains ";
 	    }
-    
+
 	    blurp+=string(temp[37])+" Capital Ships, ";
 	    blurp+=string(temp[38])+" Frigates, and ";
 	    blurp+=string(temp[39])+" Escorts";
-	    var va;va=real(temp[41]);
+
+		va=real(temp[41]);
+
 	    if (va>=1) then blurp+=", none of which are damaged.";
 	    if (va<1) then blurp+=".  Our most damaged vessel is the "+string(temp[40])+"- it has "+string(min(99,round(va*100)))+"% Hull Integrity.";
+
 	    va=real(temp[42]);
 	    if (va=2) then blurp+="  Two of our ships are highly damaged.  You may wish to purchase a Repair License from the Sector Governerner.";
 	    if (va>2) then blurp+="  Several of our ships are highly damaged.  It is advisable that you purchase a Repair License from the Sector Governer.";
@@ -60,11 +105,10 @@ function scr_ui_advisors() {
     
 	    draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
     
-	    var i,cn;i=ship_current;cn=obj_controller;
+	    var cn=obj_controller;
     
 	    if (instance_exists(cn)){
-	        // var i,cn;i=0;cn=obj_controller;
-	        repeat(34){i+=1;
+	        for (var i=ship_current;i<ship_current+34;i++) {
 	            if (obj_ini.ship[i]!=""){
 	                draw_rectangle(xx+950,yy+80+(i*20),xx+1546,yy+100+(i*20),1);
 	                draw_sprite(spr_view_small,0,xx+953,yy+84+(i*20));
@@ -98,7 +142,6 @@ function scr_ui_advisors() {
 	                        cn.temp[119]="";if (obj_ini.ship_carrying[i]>0) then cn.temp[119]=scr_ship_occupants(i);
 	                    }
 	                }
-                
 	            }
 	        }
         
@@ -136,13 +179,13 @@ function scr_ui_advisors() {
 	            yy+=34;
 	        }
 	    }
-    
 	    // 31 wide
 	    scr_scrollbar(1547,100,1577,780,34,ship_max,ship_current);
 	}
 
 
-	if (menu=11){// Apothecarium
+	// ** Apothecarium **
+	if (menu=11){
 	    draw_sprite(spr_rock_bg,0,xx,yy);
     
 	    draw_set_alpha(0.75);draw_set_color(0);draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,0);
@@ -157,7 +200,9 @@ function scr_ui_advisors() {
 	        // draw_sprite(spr_advisors,1,xx+16,yy+43);
 	        if (global.chapter_name="Space Wolves") then scr_image("advisor",11,xx+16,yy+43,310,828);
 	        // draw_sprite(spr_advisors,11,xx+16,yy+43);
-	        draw_set_halign(fa_left);draw_set_color(c_gray);draw_set_font(fnt_40k_30b);
+	        draw_set_halign(fa_left);
+			draw_set_color(c_gray);
+			draw_set_font(fnt_40k_30b);
 	        draw_text_transformed(xx+336+16,yy+66,string_hash_to_newline("Apothecarium"),1,1,0);
 	        draw_text_transformed(xx+336+16,yy+100,string_hash_to_newline("Master of the Apothecarion "+string(obj_ini.name[0,4])),0.6,0.6,0);
 	        draw_set_font(fnt_40k_14);
@@ -165,7 +210,9 @@ function scr_ui_advisors() {
 	    if (menu_adept=1){
 	        // draw_sprite(spr_advisors,0,xx+16,yy+43);
 	        scr_image("advisor",0,xx+16,yy+43,310,828);
-	        draw_set_halign(fa_left);draw_set_color(c_gray);draw_set_font(fnt_40k_30b);
+	        draw_set_halign(fa_left);
+			draw_set_color(c_gray);
+			draw_set_font(fnt_40k_30b);
 	        draw_text_transformed(xx+336+16,yy+40,string_hash_to_newline("Apothecarium"),1,1,0);
 	        draw_text_transformed(xx+336+16,yy+100,string_hash_to_newline("Adept "+string(obj_controller.adept_name)),0.6,0.6,0);
 	        draw_set_font(fnt_40k_14);
@@ -174,14 +221,9 @@ function scr_ui_advisors() {
 	    blurp="Milord, I come with a report.  Our Chapter currently boasts "+string(temp[36])+" "+string(obj_ini.role[100,15])+" working on a variety of things, from field-duty to research to administrative duties.  ";
     
 	    if (training_apothecary=0) then blurp+="Our Brothers are currently not assigned to train further "+string(obj_ini.role[100,15])+"; no more can be trained until Apothcarium funds are increased.";
-	    // 
+	    //
 	    if (training_apothecary>0) then blurp+="Our Brothers assigned to the training of future "+string(obj_ini.role[100,15])+"s have taken up a ";
-	        if (training_apothecary=1) then blurp+="sluggish";
-	        if (training_apothecary=2) then blurp+="slow";
-	        if (training_apothecary=3) then blurp+="moderate";
-	        if (training_apothecary=4) then blurp+="fast";
-	        if (training_apothecary=5) then blurp+="frenetic";
-	        if (training_apothecary=6) then blurp+="hereticly fast";
+	        if (training_apothecary >= 1 && training_apothecary <= 6) then blurp += recruitment_rates[training_apothecary - 1];
 	    if (training_apothecary>0) then blurp+=" pace and expect to graduate an additional "+string(obj_ini.role[100,15])+" in ";
 	    // 
 	    if (training_apothecary=1) then eta=floor((47-apothecary_points)/0.8)+1;
@@ -201,20 +243,14 @@ function scr_ui_advisors() {
 	    if (menu_adept=1){
 	        blurp="Your Chapter contains "+string(temp[36])+" "+string(obj_ini.role[100,15])+".##";
 	        blurp+="Training of further "+string(obj_ini.role[100,15])+"s";
-	        if (training_apothecary=0) then blurp+=" is currently halted.";
-	        if (training_apothecary=1) then blurp+=" is advancing sluggishly.";
-	        if (training_apothecary=2) then blurp+=" is advancing slowly.";
-	        if (training_apothecary=3) then blurp+=" is advancing moderately fast.";
-	        if (training_apothecary=4) then blurp+=" is advancing fast.";
-	        if (training_apothecary=5) then blurp+=" is advancing freneticly.";
-	        if (training_apothecary=6) then blurp+=" is advancing as fast as possible.";
+	        if (training_apothecary >= 0 && training_apothecary <= 6) then blurp += recruitment_pace[training_apothecary];
 	        if (training_apothecary>0) then blurp+="  The next "+string(obj_ini.role[100,15])+" is expected in "+string(eta)+" months.";
 	        blurp+="##You have "+string(gene_seed)+" gene-seed stocked.";
 	    }
     
 	    draw_text_ext(xx+336+16,yy+130,string_hash_to_newline(string(blurp)),-1,536);
     
-	    var blurp2;blurp2="";
+	    var blurp2="";
 
 	    if (obj_ini.zygote=0){
 	        if (obj_controller.marines+obj_controller.gene_seed<=300) and (obj_ini.slave_batch_num[1]=0){
@@ -229,47 +265,68 @@ function scr_ui_advisors() {
 	    }
 	    if (obj_ini.zygote=1) then blurp2="Unfortunantly we cannot make use of Test-Slave Incubators.  Due to our missing Zygote any use of gestation pods is ultimately useless- no new gene-seed may be grown, no matter how long we wait.";
     
-	    draw_set_halign(fa_center);draw_set_color(c_gray);draw_set_font(fnt_40k_30b);
+	    draw_set_halign(fa_center);
+		draw_set_color(c_gray);
+		draw_set_font(fnt_40k_30b);
 	    draw_text_transformed(xx+622,yy+440,string_hash_to_newline("Test-Slave Incubators"),0.6,0.6,0);
-	    draw_set_halign(fa_left);draw_set_color(c_gray);draw_set_font(fnt_40k_14);
+	    draw_set_halign(fa_left);
+		draw_set_color(c_gray);
+		draw_set_font(fnt_40k_14);
 	    draw_text_ext(xx+336+16,yy+477,string_hash_to_newline(string(blurp2)),-1,536);
-    
-	    var i,g;i=0;g=0;
-	    repeat(120){i+=1;
-	        if (obj_ini.slave_batch_num[i]>0) and (g<10){g+=1;
+
+		var g = 0;
+	    for (var i=1;i<=120 && g<10;i++) {
+    		if (obj_ini.slave_batch_num[g] > 0) {
+				g++;
 	            draw_text(xx+336+16,yy+513+(g*20),string_hash_to_newline("Batch "+string(g)));
 	            draw_text(xx+336+16.5,yy+513.5+(g*20),string_hash_to_newline("Batch "+string(g)));
 	            draw_text(xx+536,yy+513+(g*20),string_hash_to_newline("Eta: "+string(obj_ini.slave_batch_eta[g])+" months"));
 	            draw_text(xx+756,yy+513+(g*20),string_hash_to_newline(string(obj_ini.slave_batch_num[g])+" pods"));
 	        }
 	    }
-	    draw_set_alpha(1);if (obj_controller.gene_seed<=0) or (obj_ini.zygote=1) then draw_set_alpha(0.5);
-	    draw_set_color(c_gray);draw_rectangle(xx+407,yy+788,xx+529,yy+811,0);
-	    draw_set_color(c_black);draw_text(xx+411,yy+793,string_hash_to_newline("Add Test-Slave"));
+	    draw_set_alpha(1);
+		if (obj_controller.gene_seed<=0) or (obj_ini.zygote=1) then draw_set_alpha(0.5);
+	    draw_set_color(c_gray);
+		draw_rectangle(xx+407,yy+788,xx+529,yy+811,0);
+	    draw_set_color(c_black);
+		draw_text(xx+411,yy+793,string_hash_to_newline("Add Test-Slave"));
 	    if (obj_controller.gene_seed>0) and (mouse_x>=xx+407) and (mouse_y>=yy+788) and (mouse_x<xx+529) and (mouse_y<yy+811){
-	        draw_set_alpha(0.2);draw_set_color(c_gray);draw_rectangle(xx+407,yy+788,xx+529,yy+811,0);
+	        draw_set_alpha(0.2);
+			draw_set_color(c_gray);
+			draw_rectangle(xx+407,yy+788,xx+529,yy+811,0);
 	    }
-	    draw_set_alpha(1);if (obj_ini.slave_batch_num[1]<=0) then draw_set_alpha(0.5);
-	    draw_set_color(c_gray);draw_rectangle(xx+659,yy+788,xx+838,yy+811,0);
-	    draw_set_color(c_black);draw_text(xx+664,yy+793,string_hash_to_newline("Destroy All Incubators"));
+	    draw_set_alpha(1);
+		if (obj_ini.slave_batch_num[1]<=0) then draw_set_alpha(0.5);
+	    draw_set_color(c_gray);
+		draw_rectangle(xx+659,yy+788,xx+838,yy+811,0);
+	    draw_set_color(c_black);
+		draw_text(xx+664,yy+793,string_hash_to_newline("Destroy All Incubators"));
 	    if (obj_ini.slave_batch_num[1]>0) and (mouse_x>=xx+659) and (mouse_y>=yy+788) and (mouse_x<xx+838) and (mouse_y<yy+811){
-	        draw_set_alpha(0.2);draw_set_color(c_gray);draw_rectangle(xx+659,yy+788,xx+838,yy+811,0);
+	        draw_set_alpha(0.2);
+			draw_set_color(c_gray);
+			draw_rectangle(xx+659,yy+788,xx+838,yy+811,0);
 	    }
 	    draw_set_alpha(1);
 	}
 
-
-
-
-	if ((menu=12) or (menu=12.1)){// Reclusium
+	// ** Reclusium **
+	if ((menu=12) or (menu=12.1)){
 	    draw_sprite(spr_rock_bg,0,xx,yy);
     
-	    draw_set_alpha(0.75);draw_set_color(0);draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,0);
-	    draw_set_alpha(1);draw_set_color(c_gray);draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,1);
+	    draw_set_alpha(0.75);
+		draw_set_color(0);
+		draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,0);
+	    draw_set_alpha(1);
+		draw_set_color(c_gray);
+		draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,1);
 	    draw_line(xx+326+16,yy+426,xx+887+16,yy+426);
     
-	    draw_set_alpha(0.75);draw_set_color(0);draw_rectangle(xx+945,yy+66,xx+1580,yy+818,0);
-	    draw_set_alpha(1);draw_set_color(c_gray);draw_rectangle(xx+945,yy+66,xx+1580,yy+818,1);
+	    draw_set_alpha(0.75);
+		draw_set_color(0);
+		draw_rectangle(xx+945,yy+66,xx+1580,yy+818,0);
+	    draw_set_alpha(1);
+		draw_set_color(c_gray);
+		draw_rectangle(xx+945,yy+66,xx+1580,yy+818,1);
     
 	    if (menu_adept=0){
 	        // draw_sprite(spr_advisors,2,xx+16,yy+43);
@@ -298,27 +355,48 @@ function scr_ui_advisors() {
 	    // 
 	    if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands"){
 	    blurp+="##Currently, we are training additional "+string(obj_ini.role[100,14])+" at a ";
-	        if (training_chaplain=1){blurp+="sluggish";eta=floor((47-chaplain_points)/0.8)+1;}
-	        if (training_chaplain=2){blurp+="slow";eta=floor((47-chaplain_points)/0.9)+1;}
-	        if (training_chaplain=3){blurp+="moderate";eta=floor((47-chaplain_points)/1)+1;}
-	        if (training_chaplain=4){blurp+="fast";eta=floor((47-chaplain_points)/1.5)+1;}
-	        if (training_chaplain=5){blurp+="frenetic";eta=floor((47-chaplain_points)/2)+1;}
-	        if (training_chaplain=6){blurp+="hereticly fast";eta=floor((47-chaplain_points)/4)+1;}
+	        if (training_chaplain=1){
+				blurp+=recruitment_rates[training_chaplain -1];
+				eta=floor((47-chaplain_points)/0.8)+1;
+			}
+	        if (training_chaplain=2){
+				blurp+=recruitment_rates[training_chaplain -1];
+				eta=floor((47-chaplain_points)/0.9)+1;
+			}
+	        if (training_chaplain=3){
+				blurp+=recruitment_rates[training_chaplain -1];
+				eta=floor((47-chaplain_points)/1)+1;
+			}
+	        if (training_chaplain=4){
+				blurp+=recruitment_rates[training_chaplain -1];
+				eta=floor((47-chaplain_points)/1.5)+1;
+			}
+	        if (training_chaplain=5){
+				blurp+=recruitment_rates[training_chaplain -1];
+				eta=floor((47-chaplain_points)/2)+1;
+			}
+	        if (training_chaplain=6){
+				blurp+=recruitment_rates[training_chaplain -1];
+				eta=floor((47-chaplain_points)/4)+1;
+			}
 	    // 
 	    blurp+=" rate";
 	    if (training_chaplain>0) then blurp+=" and expect to see a new one in "+string(eta)+" month's time.";
 	    if (training_chaplain<5) then blurp+="We can increase this rate, but it will require us to requisition additional facilities, as well as upkeep, Sir.";
 	    if (penitorium=0) then blurp+="##Our men have been behaving as they should.  Not a single one is scheduled for corrective action of any type.";
     
-	    draw_set_font(fnt_40k_30b);draw_set_halign(fa_center);
+	    draw_set_font(fnt_40k_30b);
+		draw_set_halign(fa_center);
 	    if (menu=12) then draw_text_transformed(xx+1262,yy+70,string_hash_to_newline("Penitorium"),0.6,0.6,0);
 	    if (menu=12.1) then draw_text_transformed(xx+1262,yy+70,string_hash_to_newline("Scheduling Event"),0.6,0.6,0);
     
 	        if (penitorium>0) and (menu!=12.1){
-	            draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
+	            draw_set_font(fnt_40k_14);
+				draw_set_halign(fa_left);
             
-	            var qp,behav,r_eta;qp=0;behav=0;r_eta=0;
-	            repeat(min(36,penitorium)){qp+=1;
+	            var behav=0,r_eta=0;
+
+	            for(var qp= 1; qp <= min(36,penitorium); qp++){
 	                if (obj_ini.chaos[penit_co[qp],penit_id[qp]]>0) then r_eta=round((obj_ini.chaos[penit_co[qp],penit_id[qp]]*obj_ini.chaos[penit_co[qp],penit_id[qp]])/50);
 	                if (obj_ini.chaos[penit_co[qp],penit_id[qp]]>=90) then r_eta="Never";
 	                if (obj_ini.chaos[penit_co[qp],penit_id[qp]]<=0) then r_eta="0";
@@ -329,34 +407,34 @@ function scr_ui_advisors() {
 	            }
 	        }
 	        draw_set_font(fnt_40k_14);
-        
-        
 	    }
     
-	    draw_set_font(fnt_40k_14);draw_set_alpha(1);draw_set_color(c_gray);
+	    draw_set_font(fnt_40k_14);
+		draw_set_alpha(1);
+		draw_set_color(c_gray);
+
 	    if (menu_adept=1){
 	        blurp="Your Chapter contains "+string(temp[36])+" "+string(obj_ini.role[100,14])+"s.##";
 	        if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands"){
-	        blurp+="Training of further "+string(obj_ini.role[100,14])+"s";
-	        if (training_chaplain=0) then blurp+=" is currently halted.";
-	        if (training_chaplain=1) then blurp+=" is advancing sluggishly.";
-	        if (training_chaplain=2) then blurp+=" is advancing slowly.";
-	        if (training_chaplain=3) then blurp+=" is advancing moderately fast.";
-	        if (training_chaplain=4) then blurp+=" is advancing fast.";
-	        if (training_chaplain=5) then blurp+=" is advancing freneticly.";
-	        if (training_chaplain=6) then blurp+=" is advancing as fast as possible.";
-	        if (training_chaplain>0) then blurp+="  The next "+string(obj_ini.role[100,14])+" is expected in "+string(eta)+" months.";
+	        	blurp+="Training of further "+string(obj_ini.role[100,14])+"s";
+	        	if (training_chaplain >= 0 && training_chaplain <= 6) then blurp += recruitment_pace[training_chaplain];
+	        	if (training_chaplain>0) then blurp+="  The next "+string(obj_ini.role[100,14])+" is expected in "+string(eta)+" months.";
 	        }
 	    }
-	    draw_set_halign(fa_left);draw_text_ext(xx+336+16,yy+130,string_hash_to_newline(string(blurp)),-1,536);
+
+	    draw_set_halign(fa_left);
+		draw_text_ext(xx+336+16,yy+130,string_hash_to_newline(string(blurp)),-1,536);
     
-    
-    
-	    draw_set_halign(fa_center);draw_set_color(c_gray);draw_set_font(fnt_40k_30b);
+	    draw_set_halign(fa_center);
+		draw_set_color(c_gray);
+		draw_set_font(fnt_40k_30b);
 	    draw_text_transformed(xx+622,yy+440,string_hash_to_newline("Chapter Revelry"),0.6,0.6,0);
-	    draw_set_halign(fa_left);draw_set_color(c_gray);draw_set_font(fnt_40k_14);
+	    draw_set_halign(fa_left);
+		draw_set_color(c_gray);
+		draw_set_font(fnt_40k_14);
     
-	    var blurp2;blurp2="";
+	    var blurp2="";
+		// TODO rename fest_type and fest_scheduled into feast_type and feast_schedule and refactor scripts
 	    if (menu_adept=0){
 	        if (fest_scheduled=0){
 	            if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands") then blurp2="As our bolters are charged with death for the Emperor's enemies, our thoughts are charged with his wisdom.  As our bodies are armoured with Adamantium, our souls are protected with our loyalty- loyalty to Him, and loyalty to our brothers.  The bonds of this brotherhood are worth revering, even if a lull in duty invites doubt and heresy.  Should you wish to schedule a rousing event, or challenge, I will make it so.  Under the careful watch of our "+string(obj_ini.role[100,14])+"s, our brothers' spirits may be lifted.";
@@ -372,13 +450,14 @@ function scr_ui_advisors() {
             
 	            if (fest_honoring=0) then blurp2+=".  ";
 	            if (fest_honoring=1) then blurp2+=" in your name.  ";
-	            if (fest_honoring=2){// Specific company
+				// Specific company
+	            if (fest_honoring=2){
 	                blurp2+=" in honor of the ";
 	            }
 	            if (fest_honoring=3){
 	                blurp2+=" in honor of ";
 	                blurp2+=string(obj_ini.role[fest_honor_co,fest_honor_id])+" ";
-	                blurp2+=string(obj_ini.name[fest_honor_co,fest_honor_id])+" ("+string(fest_honor_co)+"th Company).  ";
+	                blurp2+=string(obj_ini.name[fest_honor_co,fest_honor_id])+" ("+romanNumerals[fest_honor_co]+" Company).  ";
 	            }
 	            if (fest_honoring=4){// faction
 	                blurp2+=", honoring ";
@@ -399,7 +478,6 @@ function scr_ui_advisors() {
 	                if (fest_feature1=1) and (fest_feature2+fest_feature3=0) then blurp2+="  The feast will be made up entirely of a banquet.";
 	                if (fest_feature1=1) and (fest_feature2+fest_feature3>0){
 	                    blurp2+="  The feast will primarily be made up of a banquet, although ";
-                    
 	                    if (fest_feature2+fest_feature3=2) then blurp2+="drugs and alcohol will be present for those who wish to partake.";
 	                    if (fest_feature2=1) and (fest_feature3=0) then blurp2+="alcohol will also be present.";
 	                    if (fest_feature2=0) and (fest_feature3=1) then blurp2+="drugs will also be present.";
@@ -446,14 +524,20 @@ function scr_ui_advisors() {
 	    // draw_set_alpha(1);if (obj_controller.gene_seed<=0) or (obj_ini.zygote=1) then draw_set_alpha(0.5);
     
 	    if (menu=12.1) or (fest_sid+fest_wid>0) then draw_set_alpha(0.25);
-	    draw_set_color(c_gray);draw_rectangle(xx+560,yy+780,xx+682,yy+805,0);
-	    draw_set_alpha(1);draw_set_color(c_black);draw_text(xx+567,yy+783,string_hash_to_newline("Schedule Event"));
+	    draw_set_color(c_gray);
+		draw_rectangle(xx+560,yy+780,xx+682,yy+805,0);
+	    draw_set_alpha(1);
+		draw_set_color(c_black);
+		draw_text(xx+567,yy+783,string_hash_to_newline("Schedule Event"));
     
 	    if (menu!=12.1) and (fest_sid+fest_wid=0) and (mouse_x>=xx+560) and (mouse_y>=yy+780) and (mouse_x<xx+682) and (mouse_y<yy+805){
-	        draw_set_alpha(0.2);draw_set_color(c_gray);draw_rectangle(xx+560,yy+780,xx+682,yy+805,0);
+	        draw_set_alpha(0.2);
+			draw_set_color(c_gray);
+			draw_rectangle(xx+560,yy+780,xx+682,yy+805,0);
         
 	        if (mouse_left=1) and (cooldown<=0){
-	            menu=12.1;var dro;dro=0;
+	            menu=12.1;
+				var dro=0;
 	            dro=instance_create(xx+1064,yy+124,obj_dropdown_sel);dro.target="event_type";
 	            dro=instance_create(xx+1100,yy+183,obj_dropdown_sel);dro.target="event_loc";dro.width=186;
 	            dro=instance_create(xx+1088,yy+264,obj_dropdown_sel);dro.target="event_lavish";
@@ -463,15 +547,22 @@ function scr_ui_advisors() {
             
 	            dro=instance_create(xx+1325,yy+525,obj_dropdown_sel);dro.target="event_public";
             
-	            fest_type="Great Feast";fest_star="";
-	            fest_sid=0;fest_wid=0;fest_planet=0;
+	            fest_type="Great Feast";
+				fest_star="";
+	            fest_sid=0;
+				fest_wid=0;
+				fest_planet=0;
             
 	            if (obj_ini.fleet_type!=1) then fest_planet=-1;
 	            if (obj_ini.fleet_type=1) then fest_planet=1;
             
-	            fest_lav=0;fest_locals=0;
-	            fest_feature1=1;fest_feature2=0;fest_feature3=0;
-	            fest_display=0;fest_repeats=1;
+	            fest_lav=0;
+				fest_locals=0;
+	            fest_feature1=1;
+				fest_feature2=0;
+				fest_feature3=0;
+	            fest_display=0;
+				fest_repeats=1;
             
 	        }
 	    }
@@ -480,7 +571,8 @@ function scr_ui_advisors() {
     
 	    if (menu=12.1){
 	        var che,cx,cy;
-	        draw_set_font(fnt_40k_14b);draw_set_color(c_gray);
+	        draw_set_font(fnt_40k_14b);
+			draw_set_color(c_gray);
 	        draw_text_transformed(xx+962,yy+126,string_hash_to_newline("Event Type: "),1,1,0);
 	        draw_text_transformed(xx+962,yy+185,string_hash_to_newline("Event Location: "),1,1,0);
 	        draw_text_transformed(xx+962,yy+266,string_hash_to_newline("Grandoise: "),1,1,0);
@@ -513,96 +605,206 @@ function scr_ui_advisors() {
 	        // Attendees
 	        if (fest_attend!="") then draw_text_ext(xx+962,yy+550,string_hash_to_newline(string(fest_attend)),-1,612);
         
-        
 	        // Location type
-	        if (fest_planet!=1) then che=1;if (fest_planet=1) then che=2;
-	        cx=xx+990;cy=yy+212;draw_text(cx,cy,string_hash_to_newline("Planet"));cx-=35;cy-=4;
-	        draw_sprite(spr_creation_check,che+1,cx,cy);draw_set_alpha(1);
+	        if (fest_planet!=1) then che=1;
+			if (fest_planet=1) then che=2;
+	        
+			cx=xx+990;
+			cy=yy+212;
+			
+			draw_text(cx,cy,string_hash_to_newline("Planet"));
+			
+			cx-=35;
+			cy-=4;
+	        
+			draw_sprite(spr_creation_check,che+1,cx,cy);
+			draw_set_alpha(1);
 	        // if (scr_hit(cx+31,cy,cx+260,cy+20)=true){tool1="Planet";tool2="Allows the use of vehicles, and bikes, but prevents this formation from being used during Raids.";}
-	        if (scr_hit(cx,cy,cx+32,cy+32)=true) and (mouse_left=1) and (cooldown<=0) and (dropdown_open=0){var onceh;onceh=0;cooldown=8000;
+	        if (scr_hit(cx,cy,cx+32,cy+32)=true) and (mouse_left=1) and (cooldown<=0) and (dropdown_open=0){
+				var onceh=0;
+				cooldown=8000;
 	            if (onceh=0) and ((fest_planet=0)){
-	                onceh=1;fest_planet=1;fest_sid=0;fest_wid=0;fest_star="";
+	                onceh=1;
+					fest_planet=1;
+					fest_sid=0;
+					fest_wid=0;
+					fest_star="";
 	                with(obj_dropdown_sel){if (target="event_loc") then option[1]="";}
 	            }
 	        }
-	        if (fest_planet=1) then che=1;if (fest_planet=0) then che=2;
+	        if (fest_planet=1) then che=1;
+			if (fest_planet=0) then che=2;
 	        if (fest_type="Triumphal March") then draw_set_alpha(0.5);
-	        cx=xx+1100;cy=yy+212;draw_text(cx,cy,string_hash_to_newline("Ship"));cx-=35;cy-=4;
-	        draw_sprite(spr_creation_check,che+1,cx,cy);draw_set_alpha(1);
+	        
+			cx=xx+1100;
+			cy=yy+212;
+			
+			draw_text(cx,cy,string_hash_to_newline("Ship"));
+			
+			cx-=35;
+			cy-=4;
+
+	        draw_sprite(spr_creation_check,che+1,cx,cy);
+			draw_set_alpha(1);
+
 	        // if (scr_hit(cx+31,cy,cx+260,cy+20)=true){tool1="Planet";tool2="Allows the use of vehicles, and bikes, but prevents this formation from being used during Raids.";}
-	        if (scr_hit(cx,cy,cx+32,cy+32)=true) and (mouse_left=1) and (cooldown<=0) and (dropdown_open=0){var onceh;onceh=0;cooldown=8000;
+	        if (scr_hit(cx,cy,cx+32,cy+32)=true) and (mouse_left=1) and (cooldown<=0) and (dropdown_open=0){
+				var onceh=0;
+				cooldown=8000;
 	            if (onceh=0) and (fest_planet=1) and (fest_type!="Triumphal March"){
-	                onceh=1;fest_planet=0;fest_sid=0;fest_wid=0;fest_star="";
-	                with(obj_dropdown_sel){
-	                    if (target="event_loc") then option[1]="";
-	                }
+	                onceh=1;
+					fest_planet=0;
+					fest_sid=0;
+					fest_wid=0;
+					fest_star="";
+	                with(obj_dropdown_sel){if (target="event_loc") then option[1]="";}
 	            }
 	        }
 	        draw_set_alpha(1);
         
 	        // Features
-	        var fet_text,fet_scale;fet_text="";fet_scale=1;
+	        var fet_text="",fet_scale=1;
         
 	        if (fest_type="Great Feast") then fet_text="Banquet";
 	        if (fest_type="Tournament") then fet_text="Internal";
 	        if (fest_type="Deathmatch") then fet_text="Chapter Only";
 	        if (fest_type="Chapter Relic") then fet_text="Create Wargear";
-	        if (fest_type="Imperial Mass"){fet_text="Local";fet_scale=1;}
 	        if (fest_type="Chapter Sermon") then fet_text="Sanctioned";
-	        if (fest_type="Triumphal March"){fet_text="Mandatory Attendance";fet_scale=0.7;}
+	        if (fest_type="Imperial Mass"){
+				fet_text="Local";
+				fet_scale=1;
+			}
+	        if (fest_type="Triumphal March"){
+				fet_text="Mandatory Attendance";
+				fet_scale=0.7;
+			}
         
-	        if (fest_feature1=0) then che=1;if (fest_feature1=1) then che=2;
-	        cx=xx+1068+22;cy=yy+326;draw_text_transformed(cx,cy,string_hash_to_newline(string(fet_text)),fet_scale,1,0);cx-=35;cy-=4;
-	        draw_sprite(spr_creation_check,che+1,cx,cy);draw_set_alpha(1);
+	        if (fest_feature1=0) then che=1;
+			if (fest_feature1=1) then che=2;
+	        
+			cx=xx+1068+22;
+			cy=yy+326;
+			
+			draw_text_transformed(cx,cy,string_hash_to_newline(string(fet_text)),fet_scale,1,0);
+			
+			cx-=35;
+			cy-=4;
+
+	        draw_sprite(spr_creation_check,che+1,cx,cy);
+			draw_set_alpha(1);
 	        // if (scr_hit(cx+31,cy,cx+260,cy+20)=true){tool1="Planet";tool2="Allows the use of vehicles, and bikes, but prevents this formation from being used during Raids.";}
-	        if (scr_hit(cx,cy,cx+32,cy+32)=true) and (mouse_left=1) and (cooldown<=0) and (dropdown_open=0){var onceh;onceh=0;cooldown=8000;
+	        if (scr_hit(cx,cy,cx+32,cy+32)=true) and (mouse_left=1) and (cooldown<=0) and (dropdown_open=0){
+				var onceh=0;
+				cooldown=8000;
 	            if (fest_type="Tournament") or (fest_type="Deathmatch") then onceh=1;
-	            if (onceh=0) and (fest_feature1=0){onceh=1;fest_feature1=1;}
-	            if (onceh=0) and (fest_feature1=1) and (fest_type!="Chapter Relic"){onceh=1;fest_feature1=0;}
-	            if (fest_type="Chapter Relic") and (fest_feature1=1){fest_feature3=0;fest_feature2=0;}
+	            if (onceh=0) and (fest_feature1=0){
+					onceh=1;
+					fest_feature1=1;
+				}
+	            if (onceh=0) and (fest_feature1=1) and (fest_type!="Chapter Relic"){
+					onceh=1;
+					fest_feature1=0;
+				}
+	            if (fest_type="Chapter Relic") and (fest_feature1=1){
+					fest_feature3=0;
+					fest_feature2=0;
+				}
 	        }
 	        if (fest_type="Tournament") or (fest_type="Deathmatch") and (fest_feature1=0) then fest_feature1=1;
-        
         
 	        if (fest_type="Great Feast") then fet_text="Alcohol";
 	        if (fest_type="Tournament") then fet_text="Spectators";
 	        if (fest_type="Deathmatch") then fet_text="Spectators";
 	        if (fest_type="Chapter Relic") then fet_text="Create Armour";
-	        if (fest_type="Imperial Mass"){fet_text="Request Ecclesiarchy";fet_scale=0.75;}
-	        if (fest_type="Chapter Sermon"){ fet_text="Blood Sacrifices";fet_scale=0.75;}
-	        if (fest_type="Triumphal March"){ fet_text="Honor to Allies";fet_scale=0.75;}
+	        if (fest_type="Imperial Mass"){
+				fet_text="Request Ecclesiarchy";
+				fet_scale=0.75;
+			}
+	        if (fest_type="Chapter Sermon"){ 
+				fet_text="Blood Sacrifices";
+				fet_scale=0.75;
+			}
+	        if (fest_type="Triumphal March"){ 
+				fet_text="Honor to Allies";
+				fet_scale=0.75;
+			}
         
-	        if (fest_feature2=0) then che=1;if (fest_feature2=1) then che=2;
+	        if (fest_feature2=0) then che=1;
+			if (fest_feature2=1) then che=2;
 	        if (fest_type="Imperial Mass") and (known[5]=0) then draw_set_alpha(0.5);
-	        cx=xx+1228+22;cy=yy+326;draw_text_transformed(cx,cy,string_hash_to_newline(string(fet_text)),fet_scale,1,0);cx-=35;cy-=4;
-	        draw_sprite(spr_creation_check,che+1,cx,cy);draw_set_alpha(1);
+	        
+			cx=xx+1228+22;
+			cy=yy+326;
+			
+			draw_text_transformed(cx,cy,string_hash_to_newline(string(fet_text)),fet_scale,1,0);cx-=35;cy-=4;
+	        draw_sprite(spr_creation_check,che+1,cx,cy);
+			draw_set_alpha(1);
 	        // if (scr_hit(cx+31,cy,cx+260,cy+20)=true){tool1="Planet";tool2="Allows the use of vehicles, and bikes, but prevents this formation from being used during Raids.";}
-	        if (scr_hit(cx,cy,cx+32,cy+32)=true) and (mouse_left=1) and (cooldown<=0) and (dropdown_open=0){var onceh;onceh=0;cooldown=8000;
+	        if (scr_hit(cx,cy,cx+32,cy+32)=true) and (mouse_left=1) and (cooldown<=0) and (dropdown_open=0){
+				var onceh=0;
+				cooldown=8000;
 	            if (fest_type="Imperial Mass") and (known[5]=0) then onceh=1;
-	            if (onceh=0) and (fest_feature2=0){onceh=1;fest_feature2=1;}
-	            if (onceh=0) and (fest_feature2=1) and (fest_type!="Chapter Relic"){onceh=1;fest_feature2=0;}
-	            if (fest_type="Chapter Relic") and (fest_feature2=1){fest_feature1=0;fest_feature3=0;}
-	        }
-        
+	            if (onceh=0) and (fest_feature2=0){
+					onceh=1;
+					fest_feature2=1;
+				}
+	            if (onceh=0) and (fest_feature2=1) and (fest_type!="Chapter Relic"){
+					onceh=1;
+					fest_feature2=0;
+				}
+	            if (fest_type="Chapter Relic") and (fest_feature2=1){
+					fest_feature1=0;
+					fest_feature3=0;
+				}
+	        }        
         
 	        if (fest_type="Great Feast") then fet_text="Drugs";
-	        if (fest_type="Tournament"){fet_text="Invite Other Chapters";fet_scale=0.75;}
-	        if (fest_type="Deathmatch"){fet_text="Allow Other Competitors";fet_scale=0.7;}
 	        if (fest_type="Chapter Relic") then fet_text="Upgrade Existing";
-	        if (fest_type="Imperial Mass"){fet_text="Request Sororitas";fet_scale=0.75;}
 	        if (fest_type="Chapter Sermon") then fet_text="Drugs";
-	        if (fest_type="Triumphal March"){ fet_text="Brandish Bloody Trophies";fet_scale=0.6;}
+	        if (fest_type="Tournament"){
+				fet_text="Invite Other Chapters";
+				fet_scale=0.75;
+			}
+	        if (fest_type="Deathmatch"){
+				fet_text="Allow Other Competitors";
+				fet_scale=0.7;
+			}
+	        if (fest_type="Imperial Mass"){
+				fet_text="Request Sororitas";
+				fet_scale=0.75;
+			}
+	        if (fest_type="Triumphal March"){ 
+				fet_text="Brandish Bloody Trophies";
+				fet_scale=0.6;
+			}
         
-	        if (fest_feature3=0) then che=1;if (fest_feature3=1) then che=2;
+	        if (fest_feature3=0) then che=1;
+			if (fest_feature3=1) then che=2;
 	        if (fest_type="Imperial Mass") and (known[5]=0) then draw_set_alpha(0.5);
-	        cx=xx+1388+22;cy=yy+326;draw_text_transformed(cx,cy,string_hash_to_newline(string(fet_text)),fet_scale,1,0);cx-=35;cy-=4;
-	        draw_sprite(spr_creation_check,che+1,cx,cy);draw_set_alpha(1);
+
+	        cx=xx+1388+22;
+			cy=yy+326;
+			
+			draw_text_transformed(cx,cy,string_hash_to_newline(string(fet_text)),fet_scale,1,0);cx-=35;cy-=4;
+	        draw_sprite(spr_creation_check,che+1,cx,cy);
+			draw_set_alpha(1);
 	        // if (scr_hit(cx+31,cy,cx+260,cy+20)=true){tool1="Planet";tool2="Allows the use of vehicles, and bikes, but prevents this formation from being used during Raids.";}
-	        if (scr_hit(cx,cy,cx+32,cy+32)=true) and (mouse_left=1) and (cooldown<=0) and (dropdown_open=0){var onceh;onceh=0;cooldown=8000;
+	        if (scr_hit(cx,cy,cx+32,cy+32)=true) and (mouse_left=1) and (cooldown<=0) and (dropdown_open=0){
+				var onceh=0;
+				cooldown=8000;
 	            if (fest_type="Imperial Mass") and (known[5]=0) then onceh=1;
-	            if (onceh=0) and (fest_feature3=0){onceh=1;fest_feature3=1;}
-	            if (onceh=0) and (fest_feature3=1) and (fest_type!="Chapter Relic"){onceh=1;fest_feature3=0;}
-	            if (fest_type="Chapter Relic") and (fest_feature3=1){fest_feature1=0;fest_feature2=0;}
+	            if (onceh=0) and (fest_feature3=0){
+					onceh=1;
+					fest_feature3=1;
+				}
+	            if (onceh=0) and (fest_feature3=1) and (fest_type!="Chapter Relic"){
+					onceh=1;
+					fest_feature3=0;
+				}
+	            if (fest_type="Chapter Relic") and (fest_feature3=1){
+					fest_feature1=0;
+					fest_feature2=0;
+				}
 	        }
         
 	        // Always at least one feature
@@ -610,13 +812,11 @@ function scr_ui_advisors() {
 	            if (fest_feature1=0) and (fest_feature2=0) and (fest_feature3=0) then fest_feature1=1;
 	        }
         
-	        // Attendants
+	        // TODO Attendants 
 	        if (fest_attend="") and ((fest_wid>0) or (fest_sid>0)){
 	            // determine attendants
 	        }
-        
-        
-        
+    
 	        draw_set_font(fnt_40k_14);
         
 	        var doable;doable=true;
@@ -625,22 +825,32 @@ function scr_ui_advisors() {
         
 	        // Accept
 	        draw_set_halign(fa_left);
-	        draw_set_alpha(1);draw_set_color(c_gray);
+	        draw_set_alpha(1);
+			draw_set_color(c_gray);
+
 	        if (doable=false) then draw_set_alpha(0.5);
+
 	        draw_rectangle(xx+1302,yy+780,xx+1433,yy+805,0);
 	        draw_set_alpha(1);
-	        draw_set_color(c_black);draw_text(xx+1305,yy+784,string_hash_to_newline("Schedule"));
+	        draw_set_color(c_black);
+			draw_text(xx+1305,yy+784,string_hash_to_newline("Schedule"));
+
 	        draw_sprite_ext(spr_requisition,0,xx+1374,yy+787,1,1,0,c_white,1);
-	        draw_set_color(c_blue);// draw_set_color(16291875);
+	        draw_set_color(c_blue);
+			// draw_set_color(16291875);
+
 	        if (requisition<fest_cost) then draw_set_color(c_red);
 	        draw_text(xx+1388,yy+784,string_hash_to_newline(string(fest_cost)));
 	        if (scr_hit(xx+1302,yy+780,xx+1423,yy+805)=true) and (doable=true){
-	            draw_set_color(c_white);draw_set_alpha(0.2);
+	            draw_set_color(c_white);
+				draw_set_alpha(0.2);
 	            draw_rectangle(xx+1302,yy+780,xx+1433,yy+805,0);
             
 	            if (mouse_left=1) and (cooldown<=0){
-	                requisition-=fest_cost;fest_scheduled=1;cooldown=6000;
-	                menu=12;with(obj_dropdown_sel){instance_destroy();}
+	                requisition-=fest_cost;
+					fest_scheduled=1;cooldown=6000;
+	                menu=12;
+					with(obj_dropdown_sel){instance_destroy();}
 	                if (fest_repeats=0) then fest_repeats=1;
 	                if (fest_display>0) then fest_display_tags=obj_ini.artifact_tags[fest_display];
                 
@@ -652,36 +862,54 @@ function scr_ui_advisors() {
         
 	        // Cancel
 	        draw_set_halign(fa_center);
-	        draw_set_alpha(1);draw_set_color(c_gray);draw_rectangle(xx+1132,yy+780,xx+1253,yy+805,0);
-	        draw_set_color(c_black);draw_text(xx+1192,yy+783,string_hash_to_newline("Cancel"));
+	        draw_set_alpha(1);
+			draw_set_color(c_gray);
+			draw_rectangle(xx+1132,yy+780,xx+1253,yy+805,0);
+	        draw_set_color(c_black);
+			draw_text(xx+1192,yy+783,string_hash_to_newline("Cancel"));
 	        if (scr_hit(xx+1132,yy+780,xx+1253,yy+805)=true){
-	            draw_set_color(c_white);draw_set_alpha(0.2);draw_rectangle(xx+1132,yy+780,xx+1253,yy+805,0);
+	            draw_set_color(c_white);
+				draw_set_alpha(0.2);
+				draw_rectangle(xx+1132,yy+780,xx+1253,yy+805,0);
 	            if (mouse_left=1) and (cooldown<=0){cooldown=20;
-	                fest_type="";fest_sid=0;fest_wid=0;fest_planet=0;fest_star="";
-	                fest_lav=0;fest_locals=0;fest_feature1=0;fest_feature2=0;fest_attend="";
-	                fest_feature3=0;fest_display=0;fest_repeats=0;fest_warp=0;
-	                menu=12;with(obj_dropdown_sel){instance_destroy();}
+	                fest_type="";fest_sid=0;
+					fest_wid=0;
+					fest_planet=0;
+					fest_star="";
+	                fest_lav=0;fest_locals=0;
+					fest_feature1=0;
+					fest_feature2=0;
+					fest_attend="";
+	                fest_feature3=0;
+					fest_display=0;
+					fest_repeats=0;
+					fest_warp=0;
+	                menu=12;
+					with(obj_dropdown_sel){instance_destroy();}
 	            }
 	        }
 	        draw_set_halign(fa_left);
-	        draw_set_alpha(1);
-        
+	        draw_set_alpha(1);        
 	    }
-    
-    
-    
 	}
 
-
-
-	if (menu=13){// Librarium
+	// ** Librarium **
+	if (menu=13){
 	    draw_sprite(spr_rock_bg,0,xx,yy);
 
-	    draw_set_alpha(0.75);draw_set_color(0);draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,0);
-	    draw_set_alpha(1);draw_set_color(c_gray);draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,1);
+	    draw_set_alpha(0.75);
+		draw_set_color(0);
+		draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,0);
+	    draw_set_alpha(1);
+		draw_set_color(c_gray);
+		draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,1);
 	    draw_line(xx+326+16,yy+426,xx+887+16,yy+426);
-	    draw_set_alpha(0.75);draw_set_color(0);draw_rectangle(xx+945,yy+66,xx+1580,yy+818,0);
-	    draw_set_alpha(1);draw_set_color(c_gray);draw_rectangle(xx+945,yy+66,xx+1580,yy+818,1);
+	    draw_set_alpha(0.75);
+		draw_set_color(0);
+		draw_rectangle(xx+945,yy+66,xx+1580,yy+818,0);
+	    draw_set_alpha(1);
+		draw_set_color(c_gray);
+		draw_rectangle(xx+945,yy+66,xx+1580,yy+818,1);
 
 	    if (menu_adept=0){
 	        // draw_sprite(spr_advisors,3,xx+16,yy+43);
@@ -706,36 +934,33 @@ function scr_ui_advisors() {
 	        draw_set_font(fnt_40k_14);
 	    }
     
-	    var blurp,tip2;tip2="";
-	    if (training_psyker=0) then blurp="currently halted";
-	    if (training_psyker=1) then blurp="moving along at a nonexistant pace";
-	    if (training_psyker=2) then blurp="moving along at a slow pace";
-	    if (training_psyker=3) then blurp="moving along at an average pace";
-	    if (training_psyker=4) then blurp="moving along at a fast pace";
-	    if (training_psyker=5) then blurp="moving along at an accelerated pace";
-	    if (training_psyker=6) then blurp="moving along as fast as possible";
-    
-	    var artif,artif_descr,tp;artif_descr="";tp=0;
-	    if (artifacts=0) then artif="no unused artifacts.";
+	    var tip2="";
+	    
+		// Set pace of recruitment based on training psyker value
+		if (training_psyker >= 0 && training_psyker <= 6) then blurp += recruitment_pace[training_psyker];
+
+		var artif="",artif_descr="",tp=0;
+		
+		if (artifacts=0) then artif="no unused artifacts.";
 	    if (artifacts=1) then artif="one unused artifact.";
-	    if (artifacts=2) then artif="two unused artifacts.";
-	    if (artifacts=3) then artif="three unused artifacts.";
-	    if (artifacts=4) then artif="four unused artifacts.";
-	    if (artifacts=5) then artif="five unused artifacts.";
-	    if (artifacts>5) then artif=string(artifacts)+" unused artifacts.";
-    
-	    if (menu_adept=0) then draw_text_ext(xx+336+16,yy+130,string_hash_to_newline("Chapter Master "+string(obj_ini.name[0,1])+", greetings.#I assume you've come for the report?  The Chapter currently possesses "+string(temp[36])+" Epistolaries, "+string(temp[37])+" Codiceries, and "+string(temp[38])+" Lexicanum.  We are working to identify additional warp-sensitive brothers before they cause harm, and the training is "+string(blurp)+".##We could likely speed up the identification and application of appropriate training, but we would need more resources...I don't suppose we can spare some?##Our Chapter has "+string(artif)),-1,536);
+	    if (artifacts>1) then artif=string(artifacts)+" unused artifacts.";
+		
+		// Greetings message
+		if (menu_adept=0) then draw_text_ext(xx+336+16,yy+130,string_hash_to_newline("Chapter Master "+string(obj_ini.name[0,1])+", greetings.#I assume you've come for the report?  The Chapter currently possesses "+string(temp[36])+" Epistolaries, "+string(temp[37])+" Codiceries, and "+string(temp[38])+" Lexicanum.  We are working to identify additional warp-sensitive brothers before they cause harm, and the training is "+string(blurp)+".##We could likely speed up the identification and application of appropriate training, but we would need more resources...I don't suppose we can spare some?##Our Chapter has "+string(artif)),-1,536);
 	    if (menu_adept=1) then draw_text_ext(xx+336+16,yy+130,string_hash_to_newline("Your Chapter contains "+string(temp[36])+" "+string(obj_ini.role[100,17])+"s, "+string(temp[37])+" Codiceries, and "+string(temp[38])+" Lexicanum.##Training of more "+string(obj_ini.role[100,17])+"s is "+string(blurp)+".##Your chapter has "+string(artif)),-1,536);
-    
+
 	    draw_set_color(881503);
 	    draw_set_halign(fa_center);
     
 	    if (artifacts>0){
 	        draw_text(xx+622,yy+440,string_hash_to_newline("[Artifact "+string(menu_artifact)+" of "+string(artifacts)+"]"));
-	        draw_sprite(spr_arrow,0,xx+515,yy+433);draw_sprite(spr_arrow,1,xx+695,yy+433);
+	        draw_sprite(spr_arrow,0,xx+515,yy+433);
+			draw_sprite(spr_arrow,1,xx+695,yy+433);
         
-	        draw_set_color(c_black);draw_rectangle(xx+482,yy+466,xx+762,yy+620,0);
-	        draw_set_color(c_gray);draw_rectangle(xx+482,yy+466,xx+762,yy+620,1);
+	        draw_set_color(c_black);
+			draw_rectangle(xx+482,yy+466,xx+762,yy+620,0);
+	        draw_set_color(c_gray);
+			draw_rectangle(xx+482,yy+466,xx+762,yy+620,1);
 	    }
 	    if (artifacts=0) then draw_text(xx+622,yy+440,string_hash_to_newline("[No Artifacts]"));
     
@@ -747,8 +972,8 @@ function scr_ui_advisors() {
     
 	    if (instance_exists(obj_p_fleet)){
 	        with(obj_p_fleet){
-	            var i,good;i=0;good=0;
-	            repeat(20){i+=1;
+	            var good=0;
+	            for (var i=1; i<=20; i++){
 	                if (i<=9){if (capital_num[i]=obj_ini.artifact_sid[other.menu_artifact]-500) then good=1;}
 	                if (frigate_num[i]=obj_ini.artifact_sid[other.menu_artifact]-500) then good=1;
 	                if (escort_num[i]=obj_ini.artifact_sid[other.menu_artifact]-500) then good=1;
@@ -758,57 +983,81 @@ function scr_ui_advisors() {
 	        }
 	    }
 	    if (obj_ini.artifact[menu_artifact]!=""){
-	        if (obj_ini.artifact_sid[menu_artifact]>=500){var i;i=0;
-	            repeat(30){i+=1;if (obj_ini.ship[i]=obj_ini.artifact_loc[menu_artifact]) then tp=i;}
-	        }
-	        if (obj_ini.artifact_identified[menu_artifact]>0) and (identifiable=0){draw_set_color(881503);
+	        if (obj_ini.artifact_sid[menu_artifact]>=500){
+				for(var i=1; i<=30; i++){
+					if (obj_ini.ship[i]=obj_ini.artifact_loc[menu_artifact]) then tp=i;
+				}
+			}
+	        if (obj_ini.artifact_identified[menu_artifact]>0) and (identifiable=0){
+				draw_set_color(881503);
 	            if (obj_ini.artifact_sid[menu_artifact]>=500) then artif_descr="This artifact is an unidentified "+string(obj_ini.artifact[menu_artifact])+".#It is stored on the ship ‘"+string(obj_ini.ship[tp])+"’.#To be identified it must be brought to a fleet with a Battle Barge or your Homeworld.";
 	            if (obj_ini.artifact_sid[menu_artifact]<500) then artif_descr="This artifact is an unidentified "+string(obj_ini.artifact[menu_artifact])+".#It is stored on "+string(obj_ini.artifact_loc[menu_artifact])+" "+string(obj_ini.artifact_sid[menu_artifact])+".#To be identified it must be brought to a fleet with a Battle Barge or your Homeworld.";
 	        }
-	        if (obj_ini.artifact_identified[menu_artifact]>0) and (identifiable=1){draw_set_color(881503);
+	        if (obj_ini.artifact_identified[menu_artifact]>0) and (identifiable=1){
+				draw_set_color(881503);
 	            if (obj_ini.artifact_sid[menu_artifact]>=500) then artif_descr="This artifact is an unidentified "+string(obj_ini.artifact[menu_artifact])+".#It is stored on the ship ‘"+string(obj_ini.ship[tp])+"’.#It will be identified in "+string(obj_ini.artifact_identified[menu_artifact])+" turns.  You may alternatively spend 150 Requisition to";
 	            if (obj_ini.artifact_sid[menu_artifact]<500) then artif_descr="This artifact is an unidentified "+string(obj_ini.artifact[menu_artifact])+".#It is stored on "+string(obj_ini.artifact_loc[menu_artifact])+" "+string(obj_ini.artifact_sid[menu_artifact])+".#It will be identified in "+string(obj_ini.artifact_identified[menu_artifact])+" turns.  You may alternatively spend 150 Requisition to";
             
-	            draw_set_color(c_gray);draw_rectangle(xx+532,yy+715,xx+709,yy+733,0);
-	            draw_set_color(c_black);draw_text(xx+622,yy+715,string_hash_to_newline("IDENTIFY NOW"));
+	            draw_set_color(c_gray);
+				draw_rectangle(xx+532,yy+715,xx+709,yy+733,0);
+	            draw_set_color(c_black);
+				draw_text(xx+622,yy+715,string_hash_to_newline("IDENTIFY NOW"));
 	            if (mouse_x>=xx+532) and (mouse_y>=yy+715) and (mouse_x<xx+709) and (mouse_y<yy+733){
-	                draw_set_alpha(0.2);draw_rectangle(xx+532,yy+715,xx+709,yy+733,0);draw_set_alpha(1);
+	                draw_set_alpha(0.2);
+					draw_rectangle(xx+532,yy+715,xx+709,yy+733,0);
+					draw_set_alpha(1);
 	            }
             
 	        }
-	        if (obj_ini.artifact_identified[menu_artifact]=0){draw_set_color(881503);
+	        if (obj_ini.artifact_identified[menu_artifact]=0){
+				draw_set_color(881503);
 	            artif_descr=scr_arti_descr(menu_artifact);
-	            tooltip="";tooltip_weapon=0;tooltip_stat1=0;tooltip_stat2=0;tooltip_stat3=0;tooltip_stat4=0;tooltip_other="";
+	            tooltip="";
+				tooltip_weapon=0;
+				tooltip_stat1=0;
+				tooltip_stat2=0;
+				tooltip_stat3=0;
+				tooltip_stat4=0;
+				tooltip_other="";
 	            scr_weapon(string(obj_ini.artifact[menu_artifact])+"&"+string(obj_ini.artifact_tags[menu_artifact]),"",true,0,false,"","description");
             
-	            var hue;hue=1;
+	            var hue=1;
 	            if (obj_ini.artifact[menu_artifact]="Statue") then hue=0;
 	            if (obj_ini.artifact[menu_artifact]="Casket") then hue=0;
 	            if (obj_ini.artifact[menu_artifact]="Chalice") then hue=0;
 	            if (obj_ini.artifact[menu_artifact]="Robot") then hue=0;
             
 	            if (hue=1){
-	                draw_set_color(c_gray);draw_rectangle(xx+354,yy+789,xx+448,yy+804,0);
-	                draw_set_color(c_black);draw_text(xx+401,yy+789,string_hash_to_newline("EQUIP"));
+	                draw_set_color(c_gray);
+					draw_rectangle(xx+354,yy+789,xx+448,yy+804,0);
+	                draw_set_color(c_black);
+					draw_text(xx+401,yy+789,string_hash_to_newline("EQUIP"));
 	                if (mouse_x>=xx+354) and (mouse_y>=yy+789) and (mouse_x<xx+448) and (mouse_y<yy+804){
-	                    draw_set_alpha(0.2);draw_rectangle(xx+354,yy+789,xx+448,yy+804,0);draw_set_alpha(1);
+	                    draw_set_alpha(0.2);
+						draw_rectangle(xx+354,yy+789,xx+448,yy+804,0);
+						draw_set_alpha(1);
 	                }
 	            }
             
-	            draw_set_color(c_gray);draw_rectangle(xx+512,yy+789,xx+740,yy+804,0);
-	            draw_set_color(c_black);draw_text(xx+626,yy+789,string_hash_to_newline("GIFT TO FACTION"));
+	            draw_set_color(c_gray);
+				draw_rectangle(xx+512,yy+789,xx+740,yy+804,0);
+	            draw_set_color(c_black);
+				draw_text(xx+626,yy+789,string_hash_to_newline("GIFT TO FACTION"));
 	            if (mouse_x>=xx+512) and (mouse_y>=yy+789) and (mouse_x<xx+740) and (mouse_y<yy+804){
-	                draw_set_alpha(0.2);draw_rectangle(xx+512,yy+789,xx+740,yy+804,0);draw_set_alpha(1);
+	                draw_set_alpha(0.2);
+					draw_rectangle(xx+512,yy+789,xx+740,yy+804,0);
+					draw_set_alpha(1);
 	            }
             
-	            draw_set_color(c_gray);draw_rectangle(xx+780,yy+789,xx+894,yy+804,0);
-	            draw_set_color(c_black);draw_text(xx+837,yy+789,string_hash_to_newline("DESTROY"));
+	            draw_set_color(c_gray);
+				draw_rectangle(xx+780,yy+789,xx+894,yy+804,0);
+	            draw_set_color(c_black);
+				draw_text(xx+837,yy+789,string_hash_to_newline("DESTROY"));
 	            if (mouse_x>=xx+780) and (mouse_y>=yy+789) and (mouse_x<xx+894) and (mouse_y<yy+804){
-	                draw_set_alpha(0.2);draw_rectangle(xx+780,yy+789,xx+894,yy+804,0);draw_set_alpha(1);
+	                draw_set_alpha(0.2);
+					draw_rectangle(xx+780,yy+789,xx+894,yy+804,0);
+					draw_set_alpha(1);
 	            }
-            
-            
-            
             
 	            if (menu_artifact_type=1){// Weapon
 	                // tip2=string(tooltip_stat1)+" Attack, "+string(tooltip_stat2)+" Armour Penetration#";
@@ -824,32 +1073,39 @@ function scr_ui_advisors() {
 	            if (menu_artifact_type=3){// Gear
 	                tip2=tooltip_other;
 	            }
-            
-            
-            
 	        }
         
 	        draw_set_font(fnt_40k_14);
-	        draw_set_color(c_gray);draw_text_ext(xx+622,yy+628,string_hash_to_newline(string(artif_descr)),-1,430);
-	        var spack;spack=string_height_ext(string_hash_to_newline(string(artif_descr)),-1,430);
+	        draw_set_color(c_gray);
+			draw_text_ext(xx+622,yy+628,string_hash_to_newline(string(artif_descr)),-1,430);
+	        var spack;
+			spack=string_height_ext(string_hash_to_newline(string(artif_descr)),-1,430);
 	        draw_set_font(fnt_40k_14b);
-	        draw_set_color(c_gray);draw_text_ext(xx+622,yy+648+spack,string_hash_to_newline(string(tip2)),-1,430);
-        
-        
-        
-	    }
+	        draw_set_color(c_gray);
+			draw_text_ext(xx+622,yy+648+spack,string_hash_to_newline(string(tip2)),-1,430);        
+	    
 	    // identifiable=0;
+		}
 	}
-
-	if (menu=14){                               // Armamentarium
+	
+	// ** Armamentarium **
+	if (menu=14){                               
 	    draw_sprite(spr_rock_bg,0,xx,yy);
     
-	    draw_set_alpha(0.75);draw_set_color(0);draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,0);
-	    draw_set_alpha(1);draw_set_color(c_gray);draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,1);
+	    draw_set_alpha(0.75);
+		draw_set_color(0);
+		draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,0);
+	    draw_set_alpha(1);
+		draw_set_color(c_gray);
+		draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,1);
 	    draw_line(xx+326+16,yy+426,xx+887+16,yy+426);
     
-	    draw_set_alpha(0.75);draw_set_color(0);draw_rectangle(xx+945,yy+66,xx+1580,yy+818,0);
-	    draw_set_alpha(1);draw_set_color(c_gray);draw_rectangle(xx+945,yy+66,xx+1580,yy+818,1);
+	    draw_set_alpha(0.75);
+		draw_set_color(0);
+		draw_rectangle(xx+945,yy+66,xx+1580,yy+818,0);
+	    draw_set_alpha(1);
+		draw_set_color(c_gray);
+		draw_rectangle(xx+945,yy+66,xx+1580,yy+818,1);
     
 	    if (menu_adept=0){
 	        // draw_sprite(spr_advisors,4,xx+16,yy+43);
@@ -871,7 +1127,6 @@ function scr_ui_advisors() {
 	        draw_set_font(fnt_40k_30b);
 	        draw_text_transformed(xx+336+16,yy+100,string_hash_to_newline("Adept "+string(obj_controller.adept_name)),0.6,0.6,0);
 	    }
-    
     
 	    draw_set_font(fnt_40k_30b);
 	    draw_set_color(c_gray);
@@ -897,7 +1152,6 @@ function scr_ui_advisors() {
 	    draw_set_alpha(1);
 	    draw_set_color(c_gray);
     
-    
 	    draw_set_font(fnt_40k_30b);
 	    draw_set_halign(fa_center);
 	    draw_text_transformed(xx+605,yy+432,string_hash_to_newline("STC Fragments"),0.75,0.75,0);
@@ -908,33 +1162,36 @@ function scr_ui_advisors() {
 	    draw_set_halign(fa_center);
     
 	    if (stc_wargear_un+stc_vehicles_un+stc_ships_un=0) then draw_set_alpha(0.5);
-	    draw_set_color(c_gray);draw_rectangle(xx+621,yy+466,xx+720,yy+486,0);
+	    draw_set_color(c_gray);
+		draw_rectangle(xx+621,yy+466,xx+720,yy+486,0);
 	    draw_set_color(0);
 	    draw_text(xx+670,yy+467,string_hash_to_newline("Identify"));
 	    if (mouse_x>xx+621) and (mouse_y>yy+466) and (mouse_x<xx+720) and (mouse_y<yy+486){
-	        draw_set_color(0);draw_set_alpha(0.2);draw_rectangle(xx+621,yy+466,xx+720,yy+486,0);
-	    }draw_set_alpha(1);
+	        draw_set_color(0);
+			draw_set_alpha(0.2);
+			draw_rectangle(xx+621,yy+466,xx+720,yy+486,0);
+	    }
+		draw_set_alpha(1);
     
 	    if (stc_wargear_un+stc_vehicles_un+stc_ships_un=0) then draw_set_alpha(0.5);
-	    draw_set_color(c_gray);draw_rectangle(xx+733,yy+466,xx+790,yy+486,0);
+	    draw_set_color(c_gray);
+		draw_rectangle(xx+733,yy+466,xx+790,yy+486,0);
 	    draw_set_color(0);
 	    draw_text(xx+761,yy+467,string_hash_to_newline("Gift"));
 	    if (mouse_x>xx+733) and (mouse_y>yy+466) and (mouse_x<xx+790) and (mouse_y<yy+486){
-	        draw_set_color(0);draw_set_alpha(0.2);draw_rectangle(xx+733,yy+466,xx+790,yy+486,0);
-	    }draw_set_alpha(1);
+	        draw_set_color(0);draw_set_alpha(0.2);
+			draw_rectangle(xx+733,yy+466,xx+790,yy+486,0);
+	    }
+		draw_set_alpha(1);
     
 	    draw_set_font(fnt_40k_12);
 	    draw_set_halign(fa_left);
 	    draw_set_color(c_gray);
     
-	    var max_techs,blurp;blurp="";
+	    var max_techs;
+		blurp="";
 	    max_techs=round((disposition[3]/2))+5;
-    
-	    // show_message("Max Techmarines: "+string(max_techs)+"   Have: "+string(temp[37]));
-	    // game_end();
-    
-	    // blurp="Subject ID confirmed.  Rank Identified: Chapter Master.  Salutations Chapter Master.  We have assembled the following Data: #"+string(obj_ini.role[100,16])+"s: "+string(temp[36])+"##Estimated Mechanicus Influence necessary to train and supply additional Techmarines: Y##Analysis completed.  Summation:  ";
-    
+        
 	    var yyy1,yyy;
 	    yyy1=max_techs-temp[37];
 	    if (yyy1<0) then yyy1=yyy1*-1;
@@ -952,13 +1209,33 @@ function scr_ui_advisors() {
 	        blurp+="The training of a new "+string(obj_ini.role[100,16]);
 	    }
     
-	    if (training_techmarine=0){blurp+=" is currently halted.";}
-	    if (training_techmarine=1){blurp+=" is advancing sluggishly.";eta=floor((359-tech_points)/1)+1;}
-	    if (training_techmarine=2){blurp+=" is advancing slowly.";eta=floor((359-tech_points)/2)+1;}
-	    if (training_techmarine=3){blurp+=" is advancing moderately fast.";eta=floor((359-tech_points)/4)+1;}
-	    if (training_techmarine=4){blurp+=" is advancing fast.";eta=floor((359-tech_points)/6)+1;}
-	    if (training_techmarine=5){blurp+=" is advancing freneticly.";eta=floor((359-tech_points)/8)+1;}
-	    if (training_techmarine=6){blurp+=" is advancing as fast as possible.";eta=floor((359-tech_points)/16)+1;}
+	    if (training_techmarine=0){
+			blurp+=recruitment_pace[training_techmarine];
+		}
+	    if (training_techmarine=1){
+			blurp+=recruitment_pace[training_techmarine];
+			eta=floor((359-tech_points)/1)+1;
+		}
+	    if (training_techmarine=2){
+			blurp+=recruitment_pace[training_techmarine];
+			eta=floor((359-tech_points)/2)+1;
+		}
+	    if (training_techmarine=3){
+			blurp+=recruitment_pace[training_techmarine];
+			eta=floor((359-tech_points)/4)+1;
+		}
+	    if (training_techmarine=4){
+			blurp+=recruitment_pace[training_techmarine];
+			eta=floor((359-tech_points)/6)+1;
+		}
+	    if (training_techmarine=5){
+			blurp+=recruitment_pace[training_techmarine];
+			eta=floor((359-tech_points)/8)+1;
+		}
+	    if (training_techmarine=6){
+			blurp+=recruitment_pace[training_techmarine];
+			eta=floor((359-tech_points)/16)+1;
+		}
     
 	    if (tech_aspirant>0) and (training_techmarine>0) and (menu_adept=1){
 	        if (eta=1) then blurp+="  Your current "+string(obj_ini.role[100,16])+" Aspirant will finish training in "+string(eta)+" month.";
@@ -975,16 +1252,18 @@ function scr_ui_advisors() {
 	        if (max_techs<=temp[37]) then blurp+="You require "+string(yyy)+" additional Mechanicus Disposition to train one additional "+string(obj_ini.role[100,16])+".";
         
 	        blurp+="##Data compilation complete.  You currently possess the technology to produce the following:";
-	        // blurp+="##You may produce some of the following:";
 	    }
     
 	    draw_text_ext(xx+336+16,yy+130,string_hash_to_newline(string(blurp)),-1,536);
     
-    
-	    var hi;draw_set_color(38144);
-	    hi=0;if (stc_wargear>0) then hi=(stc_wargear/6)*210;draw_rectangle(xx+351,yy+539,xx+368,yy+539+hi,0);
-	    hi=0;if (stc_vehicles>0) then hi=(stc_vehicles/6)*210;draw_rectangle(xx+531,yy+539,xx+548,yy+539+hi,0);
-	    hi=0;if (stc_ships>0) then hi=(stc_ships/6)*210;draw_rectangle(xx+711,yy+539,xx+728,yy+539+hi,0);
+	    var hi;
+		draw_set_color(38144);
+	    hi=0;if (stc_wargear>0) then hi=(stc_wargear/6)*210;
+		draw_rectangle(xx+351,yy+539,xx+368,yy+539+hi,0);
+	    hi=0;if (stc_vehicles>0) then hi=(stc_vehicles/6)*210;
+		draw_rectangle(xx+531,yy+539,xx+548,yy+539+hi,0);
+	    hi=0;if (stc_ships>0) then hi=(stc_ships/6)*210;
+		draw_rectangle(xx+711,yy+539,xx+728,yy+539+hi,0);
     
 	    draw_set_color(c_gray);
 	    draw_rectangle(xx+351,yy+539,xx+368,yy+749,1);
@@ -999,81 +1278,116 @@ function scr_ui_advisors() {
 	    draw_set_font(fnt_40k_12);
 	    draw_set_alpha(1);if (stc_wargear<1) then draw_set_alpha(0.5);
 	    draw_text(xx+372,yy+549,string_hash_to_newline("1) 8% discount"));
-	    var ta;ta="Random";
-	    if (stc_bonus[1]=1) then ta="Enhanced Bolts";
+	    var ta="Random";
+		if (stc_bonus[1]=1) then ta="Enhanced Bolts";
 	    if (stc_bonus[1]=2) then ta="Enhanced Chain Weapons";
 	    if (stc_bonus[1]=3) then ta="Enhanced Flame Weapons";
 	    if (stc_bonus[1]=4) then ta="Enhanced Missiles";
 	    if (stc_bonus[1]=5) then ta="Enhanced Armour";
-	    draw_set_alpha(1);if (stc_wargear<2) then draw_set_alpha(0.5);
+	    draw_set_alpha(1);
+		
+		if (stc_wargear<2) then draw_set_alpha(0.5);
 	    draw_text(xx+372,yy+549+35,string_hash_to_newline("2) "+string(ta)));
-	    draw_set_alpha(1);if (stc_wargear<3) then draw_set_alpha(0.5);
+	    draw_set_alpha(1);
+		
+		if (stc_wargear<3) then draw_set_alpha(0.5);
 	    draw_text(xx+372,yy+549+70,string_hash_to_newline("3) 16% discount"));
-	    ta="Random";
+	    
+		ta="Random";
 	    if (stc_bonus[2]=1) then ta="Enhanced Fist Weapons";
 	    if (stc_bonus[2]=2) then ta="Enhanced Plasma";
 	    if (stc_bonus[2]=3) then ta="Enhanced Armour";
-	    draw_set_alpha(1);if (stc_wargear<4) then draw_set_alpha(0.5);
+	    draw_set_alpha(1);
+		
+		if (stc_wargear<4) then draw_set_alpha(0.5);
 	    draw_text(xx+372,yy+549+105,string_hash_to_newline("4) "+string(ta)));
-	    draw_set_alpha(1);if (stc_wargear<5) then draw_set_alpha(0.5);
+	    draw_set_alpha(1);
+
+		if (stc_wargear<5) then draw_set_alpha(0.5);
 	    draw_text(xx+372,yy+549+140,string_hash_to_newline("5) 25% discount"));
-	    draw_set_alpha(1);if (stc_wargear<6) then draw_set_alpha(0.5);
+	    draw_set_alpha(1);
+		
+		if (stc_wargear<6) then draw_set_alpha(0.5);
 	    draw_text_ext(xx+372,yy+549+175,string_hash_to_newline("6) Can produce Terminator Armour and Dreadnoughts."),-1,140);
 	    draw_set_alpha(1);
     
 	    // 21 right of the gray bar
 	    draw_set_font(fnt_40k_12);
-	    draw_set_alpha(1);if (stc_vehicles<1) then draw_set_alpha(0.5);
+	    draw_set_alpha(1);
+		if (stc_vehicles<1) then draw_set_alpha(0.5);
 	    draw_text(xx+552,yy+549,string_hash_to_newline("1) 8% discount"));
-	    var ta;ta="Random";
+	    
+		ta="Random";
 	    if (stc_bonus[3]=1) then ta="Enhanced Hull";
 	    if (stc_bonus[3]=2) then ta="Enhanced Accuracy";
 	    if (stc_bonus[3]=3) then ta="New Weapons";
 	    if (stc_bonus[3]=4) then ta="Survivability";
 	    if (stc_bonus[3]=5) then ta="Enhanced Armour";
-	    draw_set_alpha(1);if (stc_vehicles<2) then draw_set_alpha(0.5);
+	    draw_set_alpha(1);
+		
+		if (stc_vehicles<2) then draw_set_alpha(0.5);
 	    draw_text(xx+552,yy+549+35,string_hash_to_newline("2) "+string(ta)));
-	    draw_set_alpha(1);if (stc_vehicles<3) then draw_set_alpha(0.5);
+	    draw_set_alpha(1);
+		
+		if (stc_vehicles<3) then draw_set_alpha(0.5);
 	    draw_text(xx+552,yy+549+70,string_hash_to_newline("3) 16% discount"));
+
 	    ta="Random";
 	    if (stc_bonus[4]=1) then ta="Enhanced Hull";
 	    if (stc_bonus[4]=2) then ta="Enhanced Armour";
 	    if (stc_bonus[4]=3) then ta="New Weapons";
-	    draw_set_alpha(1);if (stc_vehicles<4) then draw_set_alpha(0.5);
+	    draw_set_alpha(1);
+		
+		if (stc_vehicles<4) then draw_set_alpha(0.5);
 	    draw_text(xx+552,yy+549+105,string_hash_to_newline("4) "+string(ta)));
-	    draw_set_alpha(1);if (stc_vehicles<5) then draw_set_alpha(0.5);
+	    draw_set_alpha(1);
+		
+		if (stc_vehicles<5) then draw_set_alpha(0.5);
 	    draw_text(xx+552,yy+549+140,string_hash_to_newline("5) 25% discount"));
-	    draw_set_alpha(1);if (stc_vehicles<6) then draw_set_alpha(0.5);
+	    draw_set_alpha(1);
+		
+		if (stc_vehicles<6) then draw_set_alpha(0.5);
 	    draw_text_ext(xx+552,yy+549+175,string_hash_to_newline("6) Can produce Land Speeders and Land Raiders."),-1,140);
 	    draw_set_alpha(1);
     
 	    // 21 right of the gray bar
 	    draw_set_font(fnt_40k_12);
-	    draw_set_alpha(1);if (stc_ships<1) then draw_set_alpha(0.5);
+	    draw_set_alpha(1);
+		if (stc_ships<1) then draw_set_alpha(0.5);
 	    draw_text(xx+732,yy+549,string_hash_to_newline("1) 8% discount"));
-	    var ta;ta="Random";
+	    ta="Random";
 	    if (stc_bonus[5]=1) then ta="Enhanced Hull";
 	    if (stc_bonus[5]=2) then ta="Enhanced Accuracy";
 	    if (stc_bonus[5]=3) then ta="Enhanced Turning";
 	    if (stc_bonus[5]=4) then ta="Enhanced Boarding";
 	    if (stc_bonus[5]=5) then ta="Enhanced Armour";
-	    draw_set_alpha(1);if (stc_ships<2) then draw_set_alpha(0.5);
+	    draw_set_alpha(1);
+		
+		if (stc_ships<2) then draw_set_alpha(0.5);
 	    draw_text(xx+732,yy+549+35,string_hash_to_newline("2) "+string(ta)));
-	    draw_set_alpha(1);if (stc_ships<3) then draw_set_alpha(0.5);
+	    draw_set_alpha(1);
+		
+		if (stc_ships<3) then draw_set_alpha(0.5);
 	    draw_text(xx+732,yy+549+70,string_hash_to_newline("3) 16% discount"));
-	    ta="Random";
+	    
+		ta="Random";
 	    if (stc_bonus[6]=1) then ta="Enhanced Hull";
 	    if (stc_bonus[6]=2) then ta="Enhanced Armour";
 	    if (stc_bonus[6]=3) then ta="Enhanced Speed";
-	    draw_set_alpha(1);if (stc_ships<4) then draw_set_alpha(0.5);
+	    draw_set_alpha(1);
+		
+		if (stc_ships<4) then draw_set_alpha(0.5);
 	    draw_text(xx+732,yy+549+105,string_hash_to_newline("4) "+string(ta)));
-	    draw_set_alpha(1);if (stc_ships<5) then draw_set_alpha(0.5);
+	    draw_set_alpha(1);
+		
+		if (stc_ships<5) then draw_set_alpha(0.5);
 	    draw_text(xx+732,yy+549+140,string_hash_to_newline("5) 25% discount"));
-	    draw_set_alpha(1);if (stc_ships<6) then draw_set_alpha(0.5);
+	    draw_set_alpha(1);
+		
+		if (stc_ships<6) then draw_set_alpha(0.5);
 	    draw_text_ext(xx+732,yy+549+175,string_hash_to_newline("6) Warp Speed is increased and ships self-repair."),-1,140);
 	    draw_set_alpha(1);
 	}
-
 
 	/*if (menu>=55) and (menu<=58){
 	    draw_sprite(spr_info_bg,0,xx,yy);
@@ -1089,31 +1403,23 @@ function scr_ui_advisors() {
 	    if (menu=57) then draw_text_transformed(xx+216,yy+40,"Armamentarium; Warships",0.75,0.75,0);
 	}*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	if (menu=15){// Recruiting
+	// ** Recruiting **
+	if (menu=15){
 
 	    draw_sprite(spr_rock_bg,0,xx,yy);
-	    draw_set_alpha(0.75);draw_set_color(0);draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,0);
-	    draw_set_alpha(1);draw_set_color(c_gray);draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,1);
+	    draw_set_alpha(0.75);
+		draw_set_color(0);
+		draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,0);
+	    draw_set_alpha(1);
+		draw_set_color(c_gray);
+		draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+818,1);
 	    draw_line(xx+326+16,yy+480,xx+887+16,yy+480);
-	    draw_set_alpha(0.75);draw_set_color(0);draw_rectangle(xx+945,yy+66,xx+1580,yy+818,0);
-	    draw_set_alpha(1);draw_set_color(c_gray);draw_rectangle(xx+945,yy+66,xx+1580,yy+818,1);
+	    draw_set_alpha(0.75);
+		draw_set_color(0);
+		draw_rectangle(xx+945,yy+66,xx+1580,yy+818,0);
+	    draw_set_alpha(1);
+		draw_set_color(c_gray);
+		draw_rectangle(xx+945,yy+66,xx+1580,yy+818,1);
     
 	    if (menu_adept=0){
 	        // draw_sprite(spr_advisors,5,xx+16,yy+43);
@@ -1128,7 +1434,9 @@ function scr_ui_advisors() {
 	    if (menu_adept=1){
 	        // draw_sprite(spr_advisors,0,xx+16,yy+43);
 	        scr_image("advisor",0,xx+16,yy+43,310,828);
-	        draw_set_halign(fa_left);draw_set_color(c_gray);draw_set_font(fnt_40k_30b);
+	        draw_set_halign(fa_left);
+			draw_set_color(c_gray);
+			draw_set_font(fnt_40k_30b);
 	        draw_text_transformed(xx+336+16,yy+40,string_hash_to_newline("World "+string(obj_ini.recruiting_name)),1,1,0);
 	        draw_text_transformed(xx+336+16,yy+100,string_hash_to_newline("Adept "+string(obj_controller.adept_name)),0.6,0.6,0);
 	        draw_set_font(fnt_40k_14);
@@ -1143,14 +1451,15 @@ function scr_ui_advisors() {
 	        if (recruits=1) then blurp+="Our Chapter currently has one recruit being trained.  The Neophyte's name is "+string(recruit_name[1])+" and they are scheduled to become a battle brother in "+string(recruit_training[1]+recruit_distance[1])+" months' time.  ";
 	        if (recruits>1) then blurp+="Our Chapter currently has "+string(recruits)+" recruits being trained.  "+string(recruit_name[1])+" is the next scheduled Neophyte to become a battle brother in "+string(recruit_training[1]+recruit_distance[1])+" months' time.  ";
 	        if (gene_seed>0){
-	            if (recruiting=0) and (marines>=1000) then blurp+="##Recruitment is currently halted.  You must only give me the word and I can begin further increasing our numbers... though this would violate the Codex Astartes.  ";
-	            if (recruiting=0) and (marines<1000) then blurp+="##Recruitment is currently halted.  You must only give me the word and I can begin further increasing our numbers.  ";
+	            if (recruiting=0) and (marines>=1000) then blurp+="##Recruitment"+recruitment_rates[recruiting]+".  You must only give me the word and I can begin further increasing our numbers... though this would violate the Codex Astartes.  ";
+	            if (recruiting=0) and (marines<1000) then blurp+="##Recruitment "+recruitment_rates[recruiting]+".  You must only give me the word and I can begin further increasing our numbers.  ";
                 
-	            if (recruiting=1) then blurp+="##Recruitment is underway at a very slow pace.  With an increase of funding I could vastly increase the rate.  ";
-	            if (recruiting=2) then blurp+="##Recruitment is underway at a slow pace.  With an increase of funding I could vastly increase the rate.  ";
-	            if (recruiting=3) then blurp+="##Recruitment is underway at a moderate pace.  ";
-	            if (recruiting=4) then blurp+="##Recruitment is underway at a fast pace- give me the word when we have enough Neophytes being trained.  ";
-	            if (recruiting=5) then blurp+="##Recruitment is underway at a rapid pace- give me the word when we have enough Neophytes being trained.  ";
+	            if (recruiting=1) then blurp+="##Recruitment "+recruitment_rates[recruiting]+".  With an increase of funding I could vastly increase the rate.  ";
+	            if (recruiting=2) then blurp+="##Recruitment "+recruitment_rates[recruiting]+".  With an increase of funding I could vastly increase the rate.  ";
+	            if (recruiting=3) then blurp+="##Recruitment "+recruitment_rates[recruiting]+"  ";
+	            if (recruiting=4) then blurp+="##Recruitment "+recruitment_rates[recruiting]+"- give me the word when we have enough Neophytes being trained.  ";
+	            if (recruiting=5) then blurp+="##Recruitment "+recruitment_rates[recruiting]+"- give me the word when we have enough Neophytes being trained.  ";
+				if (recruiting=6) then blurp+="##Recruitment "+recruitment_rates[recruiting]+"- give me the word when we have enough Neophytes being trained.  ";
 	        }
 	    }
     
@@ -1176,91 +1485,126 @@ function scr_ui_advisors() {
     
 	    draw_text_ext(xx+336+16,yy+130,string_hash_to_newline(string(blurp)),-1,536);
     
-    
 	    // draw_line(xx+216,yy+252,xx+597,yy+252);draw_line(xx+216,yy+292,xx+597,yy+292);
     
-    
-	    var amo,blur;blur="";
-    
-	    amo=0;draw_set_color(16291875);// Normal recruiting
-	    if (recruiting=1) then amo=-2;if (recruiting=2) then amo=-4;if (recruiting=3) then amo=-6;
-	    if (recruiting=4) then amo=-8;if (recruiting=5) then amo=-10;if (recruiting=6) then amo=-20;
+	    var blur="", amo=0;
+		// ** Normal recruiting **
+		draw_set_color(16291875);
+	    if (recruiting=1) then amo=-2;
+		if (recruiting=2) then amo=-4;
+		if (recruiting=3) then amo=-6;
+	    if (recruiting=4) then amo=-8;
+		if (recruiting=5) then amo=-10;
+		if (recruiting=6) then amo=-20;
 	    amo=amo*(string_count("|",obj_controller.recruiting_worlds));
-	    if (amo!=0) then draw_sprite(spr_requisition,0,xx+336+16,yy+356);if (recruiting!=0) then draw_text(xx+351+16,yy+354,string_hash_to_newline(string(amo)));draw_set_color(c_gray);
-	    if (recruiting=0) then blur="HALTED";if (recruiting=1) then blur="SLUGGISH";if (recruiting=2) then blur="SLOW";
-	    if (recruiting=3) then blur="MODERATE";if (recruiting=4) then blur="FAST";if (recruiting=5) then blur="FRENETIC";
-	    if (recruiting=6) then blur="MAXIMUM";
-	    draw_text(xx+407,yy+354,string_hash_to_newline("Space Marine Recruiting: "+string(blur)));draw_text(xx+728,yy+354,string_hash_to_newline("[-] [+]"));
+	    if (amo!=0) then draw_sprite(spr_requisition,0,xx+336+16,yy+356);
+		if (recruiting!=0) then draw_text(xx+351+16,yy+354,string_hash_to_newline(string(amo)));
+		draw_set_color(c_gray);
+		if (recruiting >= 0) and (recruiting <= 6) then blur=recruitement_rate[recruiting];
+	    draw_text(xx+407,yy+354,string_hash_to_newline("Space Marine Recruiting: "+string(blur)));
+		draw_text(xx+728,yy+354,string_hash_to_newline("[-] [+]"));
     
-	    amo=0;draw_set_color(16291875);// Apothecary
-	    if (training_apothecary=1) then amo=-1;if (training_apothecary=2) then amo=-2;if (training_apothecary=3) then amo=-3;
-	    if (training_apothecary=4) then amo=-4;if (training_apothecary=5) then amo=-6;if (training_apothecary=6) then amo=-12;
-	    if (amo!=0) then draw_sprite(spr_requisition,0,xx+336+16,yy+396);if (training_apothecary!=0) then draw_text(xx+351+16,yy+394,string_hash_to_newline(string(amo)));draw_set_color(c_gray);
-	    if (training_apothecary=0) then blur="HALTED";if (training_apothecary=1) then blur="SLUGGISH";if (training_apothecary=2) then blur="SLOW";
-	    if (training_apothecary=3) then blur="MODERATE";if (training_apothecary=4) then blur="FAST";if (training_apothecary=5) then blur="FRENETIC";
-	    if (training_apothecary=6) then blur="MAXIMUM";
-	    draw_text(xx+407,yy+394,string_hash_to_newline("Apothecary Training: "+string(blur)));draw_text(xx+728,yy+394,string_hash_to_newline("[-] [+]"));
-    
+	    amo=0;
+		// ** Apothecary recruitment **
+		draw_set_color(16291875);
+	    if (training_apothecary=1) then amo=-1;
+		if (training_apothecary=2) then amo=-2;
+		if (training_apothecary=3) then amo=-3;
+	    if (training_apothecary=4) then amo=-4;
+		if (training_apothecary=5) then amo=-6;
+		if (training_apothecary=6) then amo=-12;
+	    if (amo!=0) then draw_sprite(spr_requisition,0,xx+336+16,yy+396);
+		if (training_apothecary!=0) then draw_text(xx+351+16,yy+394,string_hash_to_newline(string(amo)));
+		draw_set_color(c_gray);
+		if (training_apothecary >= 0) and (training_apothecary <= 6) then blur=recruitement_rate[training_apothecary];
+	    draw_text(xx+407,yy+394,string_hash_to_newline("Apothecary Training: "+string(blur)));
+		draw_text(xx+728,yy+394,string_hash_to_newline("[-] [+]"));
+
+		// TODO implement Spave Wolves and Iron Hands cases
 	    if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands"){
-	        amo=0;draw_set_color(16291875);// Chaplain        28
-	        if (training_chaplain=1) then amo=-1;if (training_chaplain=2) then amo=-2;if (training_chaplain=3) then amo=-3;
-	        if (training_chaplain=4) then amo=-4;if (training_chaplain=5) then amo=-6;if (training_chaplain=6) then amo=-12;
-	        if (amo!=0) then draw_sprite(spr_requisition,0,xx+336+16,yy+416);if (training_chaplain!=0) then draw_text(xx+351+16,yy+414,string_hash_to_newline(string(amo)));draw_set_color(c_gray);
-	        if (training_chaplain=0) then blur="HALTED";if (training_chaplain=1) then blur="SLUGGISH";if (training_chaplain=2) then blur="SLOW";
-	        if (training_chaplain=3) then blur="MODERATE";if (training_chaplain=4) then blur="FAST";if (training_chaplain=5) then blur="FRENETIC";
-	        if (training_chaplain=6) then blur="MAXIMUM";
-	        draw_text(xx+407,yy+414,string_hash_to_newline("Chaplain Training: "+string(blur)));draw_text(xx+728,yy+414,string_hash_to_newline("[-] [+]"));
+			// ** Chaplain recruitment **
+	        amo=0;draw_set_color(16291875);
+	        if (training_chaplain=1) then amo=-1;
+			if (training_chaplain=2) then amo=-2;
+			if (training_chaplain=3) then amo=-3;
+	        if (training_chaplain=4) then amo=-4;
+			if (training_chaplain=5) then amo=-6;
+			if (training_chaplain=6) then amo=-12;
+	        if (amo!=0) then draw_sprite(spr_requisition,0,xx+336+16,yy+416);
+			if (training_chaplain!=0) then draw_text(xx+351+16,yy+414,string_hash_to_newline(string(amo)));
+			draw_set_color(c_gray);
+			if (training_chaplain >= 0) and (training_chaplain <= 6) then blur=recruitement_rate[training_chaplain];
+	        draw_text(xx+407,yy+414,string_hash_to_newline("Chaplain Training: "+string(blur)));
+			draw_text(xx+728,yy+414,string_hash_to_newline("[-] [+]"));
 	    }
     
-	    amo=0;draw_set_color(16291875);// Psyker        28
-	    if (training_psyker=1) then amo=-1;if (training_psyker=2) then amo=-2;if (training_psyker=3) then amo=-3;
-	    if (training_psyker=4) then amo=-4;if (training_psyker=5) then amo=-6;if (training_psyker=6) then amo=-12;
-	    if (amo!=0) then draw_sprite(spr_requisition,0,xx+336+16,yy+436);if (training_psyker!=0) then draw_text(xx+351+16,yy+434,string_hash_to_newline(string(amo)));draw_set_color(c_gray);
-	    if (training_psyker=0) then blur="HALTED";if (training_psyker=1) then blur="SLUGGISH";if (training_psyker=2) then blur="SLOW";
-	    if (training_psyker=3) then blur="MODERATE";if (training_psyker=4) then blur="FAST";if (training_psyker=5) then blur="FRENETIC";
-	    if (training_psyker=6) then blur="MAXIMUM";
-	    draw_text(xx+407,yy+434,string_hash_to_newline("Psyker Training: "+string(blur)));draw_text(xx+728,yy+434,string_hash_to_newline("[-] [+]"));
+		// ** Psyker recruitment **
+	    amo=0;draw_set_color(16291875);
+	    if (training_psyker=1) then amo=-1;
+		if (training_psyker=2) then amo=-2;
+		if (training_psyker=3) then amo=-3;
+	    if (training_psyker=4) then amo=-4;
+		if (training_psyker=5) then amo=-6;
+		if (training_psyker=6) then amo=-12;
+	    if (amo!=0) then draw_sprite(spr_requisition,0,xx+336+16,yy+436);
+		if (training_psyker!=0) then draw_text(xx+351+16,yy+434,string_hash_to_newline(string(amo)));
+		draw_set_color(c_gray);
+		if (training_psyker >= 0) and (training_psyker <= 6) then blur=recruitement_rate[training_psyker];
+	    draw_text(xx+407,yy+434,string_hash_to_newline("Psyker Training: "+string(blur)));
+		draw_text(xx+728,yy+434,string_hash_to_newline("[-] [+]"));
     
-	    amo=0;draw_set_color(16291875);// Techmarine        28
-	    if (training_techmarine=1) then amo=-1;if (training_techmarine=2) then amo=-2;if (training_techmarine=3) then amo=-3;
-	    if (training_techmarine=4) then amo=-4;if (training_techmarine=5) then amo=-6;if (training_techmarine=6) then amo=-12;
-	    if (amo!=0) then draw_sprite(spr_requisition,0,xx+336+16,yy+456);if (training_techmarine!=0) then draw_text(xx+351+16,yy+456,string_hash_to_newline(string(amo)));draw_set_color(c_gray);
-	    if (training_techmarine=0) then blur="HALTED";if (training_techmarine=1) then blur="SLUGGISH";if (training_techmarine=2) then blur="SLOW";
-	    if (training_techmarine=3) then blur="MODERATE";if (training_techmarine=4) then blur="FAST";if (training_techmarine=5) then blur="FRENETIC";
-	    if (training_techmarine=6) then blur="MAXIMUM";
-	    draw_text(xx+407,yy+454,string_hash_to_newline("Techmarine Training: "+string(blur)));draw_text(xx+728,yy+454,string_hash_to_newline("[-] [+]"));
+		// ** Techmarine recruitment **
+	    amo=0;draw_set_color(16291875);
+	    if (training_techmarine=1) then amo=-1;
+		if (training_techmarine=2) then amo=-2;
+		if (training_techmarine=3) then amo=-3;
+	    if (training_techmarine=4) then amo=-4;
+		if (training_techmarine=5) then amo=-6;
+		if (training_techmarine=6) then amo=-12;
+	    if (amo!=0) then draw_sprite(spr_requisition,0,xx+336+16,yy+456);
+		if (training_techmarine!=0) then draw_text(xx+351+16,yy+456,string_hash_to_newline(string(amo)));
+		draw_set_color(c_gray);
+		if (training_techmarine >= 0) and (training_techmarine <= 6) then blur=recruitement_rate[training_techmarine];
+	    draw_text(xx+407,yy+454,string_hash_to_newline("Techmarine Training: "+string(blur)));
+		draw_text(xx+728,yy+454,string_hash_to_newline("[-] [+]"));
     
+		// ** Neophyte Training types **
+	    var yyy=0,blurp2="",blurp3="";
     
-    
-	    var blurp2,blurp3,yyy;yyy=0;
-	    recruit_type="Blood Duel";blurp2="";blurp3="";
-    
-	    draw_set_halign(fa_center);draw_set_font(fnt_40k_30b);
+	    draw_set_halign(fa_center);
+		draw_set_font(fnt_40k_30b);
 	    draw_text_transformed(xx+622,yy+491,string_hash_to_newline("Aspirant Trial"),0.6,0.6,0);
 	    draw_set_font(fnt_40k_14b);
     
 	    draw_text_ext(xx+622,yy+522,string_hash_to_newline(string(recruit_trial)),-1,536);
 	    draw_set_halign(fa_left);draw_set_font(fnt_40k_14);
 		
-	    if (recruit_trial="Blood Duel"){blurp3="-10-30% More recruits#-2-4 Years shorter training time#-10% Chance to burn gene-seed per speed";
+	    if (recruit_trial="Blood Duel"){
+			blurp3="-10-30% More recruits#-2-4 Years shorter training time#-10% Chance to burn gene-seed per speed";
 	        blurp2="THE BLOOD DUEL?  HAT DO I EVEN NEED TO EXPLAIN, CHAPTER MASTER?  ASPIRANTS ENTER.  NEOPHYTES LEAVE.  Those worthy of serving the Emperor are rewarded justly and those merely pretending at glory are lost in the BLOOD AND THUNDER of the dome.  Do not be alarmed at the carnage.  The Apothecarium has become quite adept at rebuilding those fit to serve.  The others are given to the "+string(obj_ini.role[100,16])+"s.  The mind is a terrible thing to waste and the Emperor does hate waste.  Not every man is useful as an Astartes but every man is useful.";
 	    }
-	    if (recruit_trial="Hunting the Hunter"){blurp3="-Planet Bonus': Desert, Ice, Death#-Up to 15 bonus XP on Neophytes";
+	    if (recruit_trial="Hunting the Hunter"){
+			blurp3="-Planet Bonus': Desert, Ice, Death#-Up to 15 bonus XP on Neophytes";
 	        blurp2="To be an Astartes is to be a hunter of xenos, of traitors, of heretics, and of all those that dare defy the Emperor.  What better way to test the worthiness of Aspirants than to have to them hunt the most dangerous predator to be found on their planet?  Such a task requires a combination of wits and cunning, in addition to raw martial skill.  When they have received the blessed geneseed and become full battle brothers, they will hunt across the stars with bolter and chainsword. For now, let them hunt with nothing more than a spear and their wits.";
 	    }
-	    if (recruit_trial="Survival of the Fittest"){blurp3="-Planet Bonus': Desert, Ice, Death, Lava#-(+10-30% recruits)#-Planet Bonus: Feudal (+20-50% recruits)";
+	    if (recruit_trial="Survival of the Fittest"){
+			blurp3="-Planet Bonus': Desert, Ice, Death, Lava#-(+10-30% recruits)#-Planet Bonus: Feudal (+20-50% recruits)";
 	        blurp2="To become one of the Imperium’s finest warriors, the Space Marines, is the greatest glory that any human can aspire to. And is glory not worth fighting, bleeding or even dying for? It must be, for whole worlds of ice, ash and sand have buried generations of sons in pursuit of this glory and never once called the price too dear.  To ensure the necessary bloodshed, lies, paranoia and psychosis-inducing drugs have been introduced to "+string(obj_ini.recruiting_name)+".  This trial will seperate the weak from the strong and the chaff from the wheat.";
 	    }
-	    if (recruit_trial="Exposure"){blurp3="-Planet Bonus':3- Desert, Ice, Forge, Lava, Death#-1-3 Years shorter training time";
+	    if (recruit_trial="Exposure"){
+			blurp3="-Planet Bonus':3- Desert, Ice, Forge, Lava, Death#-1-3 Years shorter training time";
 	        blurp2="Few worlds of the Imperium are free from the adversity of pollution or toxic waste.  Still others are bequeathed with flows of lava and choking atmosphere.  The glory of rising to astartes is only granted to those that can tackle and overcome these dangerous environments.  Aspirants are placed upon the most hellish of planet in the sector, and then expected to traverse the continent with only himself to rely upon.  Those who face the impossible without faltering and survive past the point they should have perished are recovered by "+string(obj_ini.role[100,15])+"s, judged worthy of becoming a Neophyte.";
 	    }
-	    if (recruit_trial="Knowledge of Self"){blurp3="-Planet Bonus: Temperate (up to 10 bonus xp)#-1.5-3 Years longer training#-Up to bonus 25 XP on Neophytes.";
+	    if (recruit_trial="Knowledge of Self"){
+			blurp3="-Planet Bonus: Temperate (up to 10 bonus xp)#-1.5-3 Years longer training#-Up to bonus 25 XP on Neophytes.";
 	        blurp2="An Aspirant’s spiritual and mental capability is every bit as important as his physical characteristics.  It is wise to impose Trials not upon their body, but on the mind.  Either through psychic powers, chemical agents, or endurance trials, the Aspirant’s willpower is tested.  Those unworthy do not survive the stress and trauma placed upon their hearts- only those whose minds are proven to be unbreakable are welcomed into our ranks.";
 	    }
-	    if (recruit_trial="Challenge"){blurp3="-Standard generic choice #-Heroic Neophytes gain bonus 10-20 XP";
+	    if (recruit_trial="Challenge"){
+			blurp3="-Standard generic choice #-Heroic Neophytes gain bonus 10-20 XP";
 	        blurp2="What better gauge of an Aspirant than in a duel with our astartes?  Our brother, unarmed and unarmoured, will face against the armed challenger until one cannot continue.  It is impossible for the Aspirant to actually succeed these trials, but demonstrates how far they can possibly go, and allow us to judge him accordingly.  As with most trials the Aspirant’s life is in their own hands.  He who has failed the duel- yet proven himself worthy- is rescued from the jaws of death by "+string(obj_ini.role[100,15])+" and allowed to progress to the rank of Neophyte.";
 	    }
-	    if (recruit_trial="Apprenticeship"){blurp3="-Planet Bonus: Lava (+10-50% recruits)#-4-5 Years longer training time#-Almost able for immediate promotion";
+	    if (recruit_trial="Apprenticeship"){
+			blurp3="-Planet Bonus: Lava (+10-50% recruits)#-4-5 Years longer training time#-Almost able for immediate promotion";
 	        blurp2="What better way to cultivate astartes than to raise them from youth?  The capable children of "+string(obj_ini.recruiting_name)+" are apprenticed to our battle brothers.  Beneath their steady guidance the Aspirants spend several years learning the art of the smith.  The most able are judged by our Chapter’s "+string(obj_ini.role[100,15])+"s and "+string(obj_ini.role[100,14])+" to deem if they are compatible with gene-seed implantation.  If so, the Aspirant’s trial culminates in hunting and slaying a massive beast.  Only the brightest and bravest are added to our ranks.";
 	    }
     
@@ -1269,24 +1613,24 @@ function scr_ui_advisors() {
 	    /*draw_text_ext(xx+336+16,yy+545,string(blurp2),-1,536);
 	    draw_text_ext(xx+366+16,yyy,string(blurp3),-1,506);*/
     
-    
 	    draw_text_ext(xx+336+16,yy+545,string_hash_to_newline(string(blurp2)),-1,536);
 	    draw_text_ext(xx+336+16,yy+565+string_height_ext(string_hash_to_newline(blurp2),-1,536),string_hash_to_newline(string(blurp3)),-1,536);
     
-	    draw_sprite(spr_arrow,0,xx+494,yy+515);draw_sprite(spr_arrow,1,xx+717,yy+515);
-    
-    
-    
+	    draw_sprite(spr_arrow,0,xx+494,yy+515);
+		draw_sprite(spr_arrow,1,xx+717,yy+515);
 
-	    draw_set_font(fnt_40k_30b);draw_set_halign(fa_center);
+	    draw_set_font(fnt_40k_30b);
+		draw_set_halign(fa_center);
 	    draw_text_transformed(xx+1262,yy+70,string_hash_to_newline("Neophytes"),0.6,0.6,0);
     
 	    if (recruit_name[1]!=""){
-	        draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
+	        draw_set_font(fnt_40k_14);
+			draw_set_halign(fa_left);
         
-	        var qp,t_eta,n;qp=0;t_eta=0;n=0;
-	        repeat(300){qp+=1;
-	            if (recruit_name[qp]!="") and (n<36){n+=1;
+	        var t_eta=0;
+	        for (var qp=1, n=0; qp<=300 && n<36; qp++) {
+    			if (recruit_name[qp] != "") {
+        			n++;
 	                draw_rectangle(xx+947,yy+100+((n-1)*20),xx+1577,yy+100+(n*20),1);
 	                draw_text(xx+950,yy+100+((qp-1)*20),string_hash_to_newline("Neophyte "+string(recruit_name[qp])));
 	                draw_text(xx+1200,yy+100+((qp-1)*20),string_hash_to_newline("Starting EXP: "+string(recruit_exp[qp])));
@@ -1297,17 +1641,12 @@ function scr_ui_advisors() {
 	            }
 	        }
 	    }
-          
-    
-    
-    
-    
 	}
-	// fleet advisor was here
+	
+	// *** Fleet advisor was here ***
 
-
-
-	if (menu=50){// Chapter Master
+	// ** Chapter Master **
+	if (menu=50){
 	    draw_set_color(0);
 	    draw_sprite(spr_solid_bg,0,xx,yy);
 	    draw_sprite(spr_master_splash,0,xx,yy);
@@ -1329,10 +1668,6 @@ function scr_ui_advisors() {
 	    draw_rectangle(xx+217,yy+199,xx+617,yy+367,1);
 	    draw_rectangle(xx+217,yy+380,xx+617,yy+411,1);
     
-    
-    
-    
-    
 	    draw_set_font(fnt_large);
 	    draw_text_transformed(xx+410,yy+29,string_hash_to_newline("Chapter Master"),0.5,0.5,0);
     
@@ -1341,10 +1676,7 @@ function scr_ui_advisors() {
 	    draw_set_font(fnt_small);
 	    draw_set_halign(fa_left);
     
-    
-    
-	    var eqp, tempe;
-	    eqp="";tempe="";
+	    var eqp="",tempe="";
 	    /*
 	    if (obj_ini.wep1[0,1]!=""){
 	        tempe=string(obj_ini.wep1[0,1])+": "+string(scr_item_descr(string(obj_ini.wep1[0,1])));
@@ -1369,18 +1701,25 @@ function scr_ui_advisors() {
 	        eqp+=string(tempe)+"#";
 	    }
 	    */
-	    draw_text(xx+222,yy+83,string_hash_to_newline("Equipment:"));draw_text(xx+222.5,yy+83.5,string_hash_to_newline("Equipment:"));
+	    draw_text(xx+222,yy+83,string_hash_to_newline("Equipment:"));
+		draw_text(xx+222.5,yy+83.5,string_hash_to_newline("Equipment:"));
     
 	    draw_set_font(fnt_tiny);
 	    draw_text_ext(xx+222,yy+99,string_hash_to_newline(string(eqp)),-1,396);
-    
     
 	    draw_set_font(fnt_small);
 	    draw_text(xx+222,yy+200,string_hash_to_newline("Kills:"));
 	    draw_text(xx+222.5,yy+200.5,string_hash_to_newline("Kills:"));
     
 	    var her_ki, ork_ki, tau_ki, tyr_ki, eld_ki, tot_ki, nec_ki, comma;
-	    her_ki="";ork_ki="";tau_ki="";tyr_ki="";eld_ki="";tot_ki="";nec_ki="";comma=0;
+	    her_ki="";
+		ork_ki="";
+		tau_ki="";
+		tyr_ki="";
+		eld_ki="";
+		nec_ki="";
+		tot_ki="";
+		comma=0;
     
 	    if (obj_ini.master_heretics=1) then her_ki+=string(obj_ini.master_heretics)+" Heretic, ";
 	    if (obj_ini.master_heretics>1) then her_ki+=string(obj_ini.master_heretics)+" Heretics, ";
@@ -1392,7 +1731,10 @@ function scr_ui_advisors() {
 	    if (obj_ini.master_lesser_demons>1) then her_ki+=string(obj_ini.master_lesser_demons)+" Lesser Daemons, ";
 	    if (obj_ini.master_greater_demons=1) then her_ki+=string(obj_ini.master_greater_demons)+" Greater Daemon, ";
 	    if (obj_ini.master_greater_demons>1) then her_ki+=string(obj_ini.master_greater_demons)+" Greater Daemons, ";
-	    if (her_ki!=""){comma=string_length(her_ki);her_ki=string_delete(her_ki,comma-1,2);}
+	    if (her_ki!=""){
+			comma=string_length(her_ki);
+			her_ki=string_delete(her_ki,comma-1,2);
+		}
 	    if (her_ki!="") then tot_ki+=string(her_ki)+"#";
     
 	    if (obj_ini.master_necron_overlord=1) then nec_ki+=string(obj_ini.master_necron_overlord)+" Necron Overlord, ";
@@ -1405,7 +1747,10 @@ function scr_ui_advisors() {
 	    if (obj_ini.master_necron_vehicles>1) then nec_ki+=string(obj_ini.master_necron_vehicles)+" Necron Vehicles, ";
 	    if (obj_ini.master_monolith=1) then nec_ki+=string(obj_ini.master_monolith)+" Monolith, ";
 	    if (obj_ini.master_monolith>1) then nec_ki+=string(obj_ini.master_monolith)+" Monoliths, ";
-	    if (nec_ki!=""){comma=string_length(nec_ki);nec_ki=string_delete(nec_ki,comma-1,2);}
+	    if (nec_ki!=""){
+			comma=string_length(nec_ki);
+			nec_ki=string_delete(nec_ki,comma-1,2);
+		}
 	    if (nec_ki!="") then tot_ki+=string(nec_ki)+"#";
     
 	    if (obj_ini.master_ork_boyz=1) then ork_ki+=string(obj_ini.master_ork_boyz)+" Ork Boy, ";
@@ -1416,7 +1761,10 @@ function scr_ui_advisors() {
 	    if (obj_ini.master_ork_warboss>1) then ork_ki+=string(obj_ini.master_ork_warboss)+" Ork Warbosses, ";
 	    if (obj_ini.master_ork_vehicles=1) then ork_ki+=string(obj_ini.master_ork_vehicles)+" Ork Vehicle, ";
 	    if (obj_ini.master_ork_vehicles>1) then ork_ki+=string(obj_ini.master_ork_vehicles)+" Ork Vehicles, ";
-	    if (ork_ki!=""){comma=string_length(ork_ki);ork_ki=string_delete(ork_ki,comma-1,2);}
+	    if (ork_ki!=""){
+			comma=string_length(ork_ki);
+			ork_ki=string_delete(ork_ki,comma-1,2);
+		}
 	    if (ork_ki!="") then tot_ki+=string(ork_ki)+"#";
     
 	    if (obj_ini.master_tyrant=1) then tyr_ki+=string(obj_ini.master_tyrant)+" Hive Tyrant, ";
@@ -1429,7 +1777,10 @@ function scr_ui_advisors() {
 	    if (obj_ini.master_gene>1) then tyr_ki+=string(obj_ini.master_gene)+" Genestealers, ";
 	    if (obj_ini.master_gaunts=1) then tyr_ki+=string(obj_ini.master_gaunts)+" Gaunt, ";
 	    if (obj_ini.master_gaunts>1) then tyr_ki+=string(obj_ini.master_gaunts)+" Gaunts, ";
-	    if (tyr_ki!=""){comma=string_length(tyr_ki);tyr_ki=string_delete(tyr_ki,comma-1,2);}
+	    if (tyr_ki!=""){
+			comma=string_length(tyr_ki);
+			tyr_ki=string_delete(tyr_ki,comma-1,2);
+		}
 	    if (tyr_ki!="") then tot_ki+=string(tyr_ki)+"#";
     
 	    if (obj_ini.master_avatar=1) then eld_ki+=string(obj_ini.master_avatar)+" Avatar, ";
@@ -1442,7 +1793,10 @@ function scr_ui_advisors() {
 	    if (obj_ini.master_eldar>0) then eld_ki+=string(obj_ini.master_eldar)+" Eldar, ";
 	    if (obj_ini.master_eldar_vehicles=1) then eld_ki+=string(obj_ini.master_eldar_vehicles)+" Eldar Vehicle, ";
 	    if (obj_ini.master_eldar_vehicles>1) then eld_ki+=string(obj_ini.master_eldar_vehicles)+" Eldar Vehicles, ";
-	    if (eld_ki!=""){comma=string_length(eld_ki);eld_ki=string_delete(eld_ki,comma-1,2);}
+	    if (eld_ki!=""){
+			comma=string_length(eld_ki);
+			eld_ki=string_delete(eld_ki,comma-1,2);
+		}
 	    if (eld_ki!="") then tot_ki+=string(eld_ki)+"#";
     
 	    if (obj_ini.master_tau=1) then tau_ki+=string(obj_ini.master_tau)+" Fire Warrior, ";
@@ -1452,7 +1806,10 @@ function scr_ui_advisors() {
 	    if (obj_ini.master_tau_vehicles=1) then tau_ki+=string(obj_ini.master_tau_vehicles)+" Tau Vehicle, ";
 	    if (obj_ini.master_tau_vehicles>1) then tau_ki+=string(obj_ini.master_tau_vehicles)+" Tau Vehicles, ";
 	    if (obj_ini.master_kroot>0) then tau_ki+=string(obj_ini.master_kroot)+" Kroot, ";
-	    if (tau_ki!=""){comma=string_length(tau_ki);tau_ki=string_delete(tau_ki,comma-1,2);}
+	    if (tau_ki!=""){
+			comma=string_length(tau_ki);
+			tau_ki=string_delete(tau_ki,comma-1,2);
+		}
 	    if (tau_ki!="") then tot_ki+=string(tau_ki)+"#";
     
     
@@ -1465,11 +1822,8 @@ function scr_ui_advisors() {
 	    draw_sprite(spr_arrow,0,xx+217,yy+32);
 	}
 
-
-
-
-
-	if (menu>=500) and (menu<=510){// Welcome
+	// ** Welcome menu **
+	if (menu>=500) and (menu<=510){
 	    draw_sprite(spr_welcome_bg,0,xx,yy);
 	    // draw_sprite(spr_advisors,0,xx+16,yy+16);
 	    scr_image("advisor",0,xx+16,yy+16,310,828);
@@ -1488,14 +1842,6 @@ function scr_ui_advisors() {
 
 	}
 
-
-
-
-
-
-
-
-
 	if (menu=1) and (managing=0){
 	    draw_set_alpha(1);
 	    draw_sprite(spr_rock_bg,0,xx,yy);
@@ -1504,6 +1850,4 @@ function scr_ui_advisors() {
 	    draw_set_color(c_gray);
 	    draw_text(xx+800,yy+74,string_hash_to_newline(string(global.chapter_name)+" Chapter Organization"));
 	}
-
-
 }
