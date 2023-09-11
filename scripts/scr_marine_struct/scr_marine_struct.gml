@@ -23,7 +23,7 @@ global.trait_list = {
 		weapon_skill : 20,
 		ballistic_skill:20,
 		display_name : "Champion",
-		flavour_text : "Through either natural talent, or obsessive training {0} is a master or arms"
+		flavour_text : "Through either natural talent, or obsessive training {0} is a master of arms"
 	},
 	"lightning_warriors":{
 		constitution: -6,
