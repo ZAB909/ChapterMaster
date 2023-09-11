@@ -223,7 +223,7 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	                    col=min(22-obj_controller.bat_assault_column,22-obj_controller.bat_command_column,22-obj_controller.bat_honor_column,22-obj_controller.bat_dreadnought_column,22-obj_controller.bat_veteran_column);
 	                }
                 
-
+					// todo find out what more targ.dudes does, relevant to targ.men?
 	                if (deploying_unit.armour[co,v]="Scout Armour") then targ.dudes_ac[targ.men]=8;
 	                if (deploying_unit.armour[co,v]="MK3 Iron Armour"){targ.dudes_ac[targ.men]=20;targ.dudes_ranged[targ.men]-=0.1;}
 	                if (deploying_unit.armour[co,v]="MK4 Maximus"){targ.dudes_ac[targ.men]=19;targ.dudes_ranged[targ.men]+=0.05;targ.dudes_attack[targ.men]+=0.05;}

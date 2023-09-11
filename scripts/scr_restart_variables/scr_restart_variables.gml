@@ -546,7 +546,7 @@ function scr_restart_variables(saved_game) {
 	    recruiter=scr_marine_name();
 	    admiral=scr_marine_name();
 
-		// First is for the correct slot, second is for default
+		// First is for the correct slot, second is for default info
 		for(var i=100; i<103; i++){
 	        
 			race[i,2]=1;

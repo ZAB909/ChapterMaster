@@ -103,10 +103,10 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	            descr="An ancient set of Armorum Ferrum.  Has thicker armour plating but the added weight slows down the wearer.";}
 	        if (argument0="MK4 Maximus"){statt=22;spe_descr="+5% Melee, +5% Ranged";emor=1;
 	            descr="Armour dating to the end of the Great Crusade.  Often considered the ultimate Space Marine armour.  The components are no longer reproducable.";}
-          if (argument0="MK5 Heresy"){statt=19;spe_descr="+10% Melee";emor=1;
-	            descr="Mark V Power Armour, also known as Heresy Pattern Armour, was a hastily assembled variant of power armour that emerged during the Horus Heresy.";}
-	        if (argument0="MK6 Corvus"){statt=16;spe_descr="+10% Ranged";emor=1;
-	            descr="Relatively old beakie armour, sleek as can be.  Boosted olfactory and auditory sensors increase the ranged accuracy of the wearer.";}
+          if (argument0="MK5 Heresy"){statt=15;spe_descr="+20% Melee, -5% Ranged";emor=1;
+	            descr="A Hastily assembled Power armour during the Horus Heresy to act as a stop gap. Excels at melee, alongside some downsides.";}
+	        if (argument0="MK6 Corvus"){statt=15;spe_descr="+15% Ranged";emor=1;
+	            descr="Relatively old beakie armour, sleek as can be.  Boosted olfactory and auditory sensors increase the ranged accuracy of the wearer. Making it more fragile";}
 	        if (argument0="MK7 Aquila"){statt=17;spe_descr="";emor=1;
 	            descr="Developed during the Horus Heresy, this Mark of armour is the most commonly used amongst all the Adeptus Astartes.";}
 	        if (argument0="MK8 Errant"){statt=22;spe_descr="";emor=1;

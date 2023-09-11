@@ -218,7 +218,7 @@ advantage[i]="Tech-Brothers";advantage_tooltip[i]="Your chapter has better ties 
 advantage[i]="Scavengers";advantage_tooltip[i]="Your Astartes have a knack for finding what has been lost.  Items and wargear are periodically found and added to the Armamentarium.";i+=1;
 advantage[i]="Siege Masters";advantage_tooltip[i]="Your chapter is familiar with the ins-and-outs of fortresses.  They are better at defending and attacking fortifications.";i+=1;
 advantage[i]="Slow and Purposeful";advantage_tooltip[i]="Careful and steady is your chapters doctrine; all infantry have slightly less attack but boosted defenses.";i+=1;
-advantage[i]="Melee Enthusiasts";advantage_tooltip[i]="Rip and tear!  Your marines and dreadnoughts have boosted attack with melee weapons.";i+=1;
+advantage[i]="Melee Enthusiasts";advantage_tooltip[i]="Rip and tear! Each Company has an additional Assault Squad.  Your marines and dreadnoughts also have boosted attack with melee weapons.";i+=1;
 i+=1;
 advantage[i]="Cancel";advantage_tooltip[i]="";
 
