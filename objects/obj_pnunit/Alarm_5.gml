@@ -80,7 +80,7 @@ repeat(600){i+=1;
     }
     if (marine_dead[i]=0) and (obj_ncombat.mucranoid=1) and (ally[i]=false){
         var muck;muck=floor(random(200))+1;
-        if (muck=50){
+        if (muck=50){                                                                                                                    // todo find out what slime is? organ maybe
             if (marine_armour[i]="MK6 Corvus"){obj_ini.armour[marine_co[i],marine_id[i]]="";obj_ncombat.mucra[marine_co[i]]=1;obj_ncombat.slime+=1;}
             if (marine_armour[i]="MK7 Aquila"){obj_ini.armour[marine_co[i],marine_id[i]]="";obj_ncombat.mucra[marine_co[i]]=1;obj_ncombat.slime+=1;}
             if (marine_armour[i]="MK8 Errant"){obj_ini.armour[marine_co[i],marine_id[i]]="";obj_ncombat.mucra[marine_co[i]]=1;obj_ncombat.slime+=1;}

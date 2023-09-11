@@ -74,7 +74,7 @@ if (obj_controller.cooldown<=0){
             }
 
             if (obj_controller.requisition>=cost) and (shop="warships"){
-                var v,ev,;v=0;ev=0;
+                var v=0,ev=0;
                 repeat(99){v+=1;if (ev=0) and (obj_controller.event[v]="") then ev=v;}
                 obj_controller.event[ev]="new_"+string(item[i]);
 

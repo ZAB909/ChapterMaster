@@ -785,6 +785,7 @@ for(var i=1; i<=299; i++){
 if (recruits_finished==1) then scr_alert("green","recruitment",string(obj_ini.role[100,12])+" "+string(recruit_first)+" has joined X Company.",0,0);
 if (recruits_finished>1) then scr_alert("green","recruitment",string(recruits_finished)+"x "+string(obj_ini.role[100,12])+" have joined X Company.",0,0);
 
+
 recruits=tot;
 
 // ** Gene-seed Test-Slaves **
