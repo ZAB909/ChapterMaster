@@ -34,18 +34,14 @@ function scr_start_load(fleet, load_from_star, escort_load) {
 		var company_vehicle = [];//array of companies vehicles
 		var  ship_fit = true;
 		for (var _unit =1; _unit<(array_length(obj_ini.role[_comp])-1); _unit++){
-			show_debug_message("two")
 				var _marine = obj_ini.TTRPG[_comp, _unit];
 				// check if marine exists
-				show_debug_message("two.one")
 				if (_marine.name() != "") {
 					//calculate marine space
-					show_debug_message("two.two")
 					var marine_size = _marine.get_unit_size();
 					_company_size += marine_size;
 					array_push(company_loader, _marine);
 				}
-				show_debug_message("three")
 			 //fetch company vehicles
 			 if (_unit <array_length(obj_ini.veh_role[_comp])){
 				 if array_contains(_vehicles,obj_ini.veh_role[_comp, _unit]){
@@ -90,7 +86,6 @@ function scr_start_load(fleet, load_from_star, escort_load) {
 					 
 					 for (var m = 0; m <array_length(company_loader);m++;){
 						 if ((obj_ini.ship_carrying[ship_loop] + company_loader[m].size) <= obj_ini.ship_capacity[ship_loop]){
-							 show_debug_message("four");
 							company_loader[m].load_marine(ship_loop);
 						 } else {array_push(comp_edit, company_loader[m])}
 						 if (obj_ini.ship_carrying[ship_loop] = obj_ini.ship_capacity[ship_loop]){
@@ -112,7 +107,6 @@ function scr_start_load(fleet, load_from_star, escort_load) {
 			 }
 		 } else{
 			 for (var m = 0; m <array_length(company_loader);m++;){
-				 show_debug_message("five");
 				company_loader[m].load_marine(ship);
 			}
 			for (var m = 0; m <array_length(company_vehicle);m++;){

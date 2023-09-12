@@ -596,7 +596,7 @@ if (menu=1) and (managing>0){
                 
                 temp[112]=$"{display_unit[sel].hp()}/{display_unit[sel].max_health()}"
                 
-                temp[113]=string(ma_exp[sel]);
+                temp[113]=string(floor(ma_exp[sel]));
                 
                 var b1,b2;b1=0;b2=0;
                 if (ma_bio[sel]<=3){
@@ -625,8 +625,8 @@ if (menu=1) and (managing>0){
                 if (obj_controller.chaos_rating>0) and (temp[119]!="") then temp[119]+="#"+string(max(0,obj_ini.chaos[cah,ide[sel]]))+"% Corruption.";
                 if (obj_controller.chaos_rating>0) and (temp[119]="") then temp[119]=string(max(0,obj_ini.chaos[cah,ide[sel]]))+"% Corruption.";
                 
-                temp[116]=$"{melee_attack*100}%";// Melee Attack
-                temp[117]=$"{ranged_attack*100}%";// Ranged Attack
+                temp[116]=$"{floor(melee_attack*100)}%";// Melee Attack
+                temp[117]=$"{floor(ranged_attack*100)}%";// Ranged Attack
                 
                 
                 // mitigation=1-(((1-damage_res)*0.8)+0.1);

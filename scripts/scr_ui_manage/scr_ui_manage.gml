@@ -595,15 +595,29 @@ function scr_ui_manage() {
 					
 					// bionics
 					
-					for (body_part = 0; body_part<array_length(global.body_parts);body_part++){
-						if (struct_exists(selected_unit.body[$ global.body_parts[body_part]], "bionic")){
+					if (!array_contains(["Dreadnought", "Terminator Armour", "Tartaros"], selected_unit.armour())){
+						for (body_part = 0; body_part<array_length(global.body_parts);body_part++){
+							if (struct_exists(selected_unit.body[$ global.body_parts[body_part]], "bionic")){
 
-							if (global.body_parts[body_part] == "left_eye") {draw_sprite(spr_bionics_eye,0,xx+1208,yy+178)};
-							if (global.body_parts[body_part] == "right_eye") {draw_sprite(spr_bionics_eye,1,xx+1208,yy+178)};
-							if (global.body_parts[body_part] == "left_leg") {draw_sprite(spr_bionics_leg,1,xx+1208,yy+178)};
-							if (global.body_parts[body_part] == "right_leg") {draw_sprite(spr_bionics_leg,0,xx+1208,yy+178)};
-							if (global.body_parts[body_part] == "left_arm") {draw_sprite(spr_bionics_arm,0,xx+1208,yy+178)};
-							if (global.body_parts[body_part] == "right_arm") {draw_sprite(spr_bionics_arm,1,xx+1208,yy+178)};
+								if (global.body_parts[body_part] == "left_eye") {
+									if (selected_unit.armour() == "MK3 Iron Armour"){
+										draw_sprite(spr_bionics_eye,0,xx+1203,yy+178)
+									} else{
+										draw_sprite(spr_bionics_eye,0,xx+1203,yy+174)
+									}
+								};
+								if (global.body_parts[body_part] == "right_eye") {
+									if (selected_unit.armour() == "MK3 Iron Armour"){
+										draw_sprite(spr_bionics_eye,1,xx+1204,yy+178);
+									} else{
+										draw_sprite(spr_bionics_eye,1,xx+1204,yy+174);
+									}
+								};
+								if (global.body_parts[body_part] == "left_leg") {draw_sprite(spr_bionics_leg,1,xx+1208,yy+178)};
+								if (global.body_parts[body_part] == "right_leg") {draw_sprite(spr_bionics_leg,0,xx+1208,yy+178)};
+								if (global.body_parts[body_part] == "left_arm") {draw_sprite(spr_bionics_arm,0,xx+1208,yy+178)};
+								if (global.body_parts[body_part] == "right_arm") {draw_sprite(spr_bionics_arm,1,xx+1208,yy+178)};
+							}
 						}
 					}
                 

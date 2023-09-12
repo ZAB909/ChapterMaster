@@ -489,21 +489,20 @@ function scr_initialize_custom() {
 	// Initialize default marines for loadouts
 	i=-1;repeat(101){i+=1;
 	    race[100,i]=1;loc[100,i]="";name[100,i]="";role[100,i]="";wep1[100,i]="";bio[100,i]=0;lid[100,i]=0;wid[100,i]=2;spe[100,i]="";
-	    wep2[100,i]="";armour[100,i]="";gear[100,i]="";mobi[100,i]="";chaos[100,i]=0;experience[100,i]=0;
+	    wep2[100,i]="";armour[100,i]="";gear[100,i]="";mobi[100,i]="";chaos[100,i]=0;experience[100,i]=0;hp[100,i]=0;
 	    age[100,i]=((millenium*1000)+year)-10;god[100,i]=0;if (global.chapter_name="Iron Hands") then bio[100,i]=choose(3,4,5);
 		TTRPG[100,i]=new TTRPG_stats("chapter", 100,i);
 	}initialized=500;
 	// Initialize special marines
 	i=-1;repeat(501){i+=1;
 	    race[0,i]=1;loc[0,i]="";name[0,i]="";role[0,i]="";wep1[0,i]="";bio[0,i]=0;lid[0,i]=0;wid[0,i]=2;spe[0,i]="";
-	    wep2[0,i]="";armour[0,i]="";gear[0,i]="";mobi[0,i]="";chaos[0,i]=0;experience[0,i]=0;
+	    wep2[0,i]="";armour[0,i]="";gear[0,i]="";mobi[0,i]="";chaos[0,i]=0;experience[0,i]=0;hp[0,i]=0;
 	    age[0,i]=((millenium*1000)+year)-10;god[0,i]=0;if (global.chapter_name="Iron Hands") then bio[0,i]=choose(3,4,5);
 		TTRPG[0,i]= new TTRPG_stats("chapter", 0,i);
 	}
 	i=-1;repeat(101){i+=1;
 	    role[100,i]="";wep1[100,i]="";wep2[100,i]="";armour[100,i]="";gear[100,i]="";mobi[100,i]="";//hirelings??
 	    role[102,i]="";wep1[102,i]="";wep2[102,i]="";armour[102,i]="";gear[102,i]="";mobi[102,i]="";//hirelings??
-		TTRPG[102,i]=new TTRPG_stats("chapter", 102,i);
 	}
 	i=99;repeat(3){i+=1; // gear 
 	    role[i,2]="Honor Guard";wep1[i,2]="Power Sword";wep2[i,2]="Storm Bolter";armour[i,2]="Power Armour";mobi[i,2]="";gear[i,2]="";
@@ -521,7 +520,19 @@ function scr_initialize_custom() {
 	    role[i,16]="Techmarine";wep1[i,16]="Power Axe";wep2[i,16]="Storm Bolter";armour[i,16]="Power Armour";gear[i,16]="Servo Arms";mobi[i,16]="";
 	    role[i,17]="Librarian";wep1[i,17]="Force Weapon";wep2[i,17]="Storm Bolter";armour[i,17]="Power Armour";gear[i,17]="Psychic Hood";mobi[i,17]="";
 	}// 100 is defaults, 101 is the allowable starting equipment // info
-
+		//made all the exp buffs sort into neat little structs so theyre easier to dev and player modify
+	company_spawn_buffs = [0,0,[110,15],[105,15],[95,15],[80,10],[65,10],[55,10],[45,10],[35,10],[3,10]]
+	role_spawn_buffs = {}
+	variable_struct_set(role_spawn_buffs,role[100,5],[70,40]);
+	variable_struct_set(role_spawn_buffs,role[100,14],[120,30]);
+	variable_struct_set(role_spawn_buffs,role[100,15],[95,20]);
+	variable_struct_set(role_spawn_buffs,role[100,16],[95,20]);
+	variable_struct_set(role_spawn_buffs,"Standard Bearer",[30,30]);
+	variable_struct_set(role_spawn_buffs,role[100,7],[40,5]);
+	variable_struct_set(role_spawn_buffs,role[100,8],[3,5]);
+	variable_struct_set(role_spawn_buffs,role[100,10],0);
+	variable_struct_set(role_spawn_buffs,role[100,9],0);
+	variable_struct_set(role_spawn_buffs,role[100,12],0);
 
 	i=-1;repeat(21){i+=1;
 	    race[100,i]=obj_creation.race[100,i];
@@ -617,7 +628,7 @@ function scr_initialize_custom() {
 
 	if (intolerant=1){
 	    race[company,5]=0;loc[company,5]="";role[company,5]="";wep1[company,5]="";name[company,5]="";
-	    wep2[company,5]="";armour[company,5]="";gear[company,5]="";hp[5]=0;chaos[company,5]=0;experience[company,5]=0;
+	    wep2[company,5]="";armour[company,5]="";gear[company,5]="";hp[company,5]=0;chaos[company,5]=0;experience[company,5]=0;
 	    man_size-=1;commands-=1;
 	}
 	man_size+=6;
@@ -704,7 +715,7 @@ function scr_initialize_custom() {
 	i=-1;company=1;
 	repeat(501){i+=1;
 	    race[company,i]=1;loc[company,i]="";name[company,i]="";role[company,i]="";wep1[company,i]="";lid[company,i]=0;wid[company,i]=2;spe[company,i]="";
-	    wep2[company,i]="";armour[company,i]="";chaos[company,i]=0;experience[company,i]=0;gear[company,i]="";mobi[company,i]="";
+	    wep2[company,i]="";armour[company,i]="";chaos[company,i]=0;experience[company,i]=0;gear[company,i]="";mobi[company,i]="";hp[company,i]=100;
 	    age[company,i]=((millenium*1000)+year)-10;god[company,i]=0;bio[company,i]=0;if (global.chapter_name="Iron Hands") then bio[company,i]=choose(3,4,5);
 		TTRPG[company,i]= new TTRPG_stats("chapter", company,i);
 	}initialized=200;// How many array variables have been prepared
@@ -959,16 +970,13 @@ function scr_initialize_custom() {
 	        if (company=4) then name[company,k]=lord_admiral_name;
 	        if (company=10) then name[company,k]=recruiter_name;
 
-			var oldguard; oldguard=0;
-			// used to randomly make a marine an old guard of their company, giving a bit more xp (TODO) and fancier armor they've hanged onto all these years
 
 	        wep2[company,k]=wep2[101,5];
-	        spawn_unit = TTRPG[company,k]
+	        spawn_unit = TTRPG[company,k];
+			// used to randomly make a marine an old guard of their company, giving a bit more xp (TODO) and fancier armor they've hanged onto all these years			
 	        spawn_unit.spawn_old_guard();
-	        spawn_unit.spawn_exp()
+	        spawn_unit.spawn_exp();
 	        chaos[company,k]=0;
-
-	        hp[company,k]=100;chaos[company,k]=0;experience[company,k]=max(40,company_experience+70+irandom(40));
 
 	        if (company=8) then mobi[company,k]="Jump Pack";
 	        if (mobi[101,5]!="") then mobi[company,k]=mobi[101,5];
@@ -986,6 +994,9 @@ function scr_initialize_custom() {
 	                gear[company,k]=gear[101,14];chaos[company,k]=0;
 	                if (company=8) then mobi[company,k]="Jump Pack";
 	                if (mobi[101,14]!="") then mobi[company,k]=mobi[101,14];
+					spawn_unit = TTRPG[company,k]
+					spawn_unit.spawn_old_guard();
+					spawn_unit.spawn_exp();
 	            }
 	        }
 
@@ -1007,6 +1018,9 @@ function scr_initialize_custom() {
 	            gear[company,k]=gear[101,15];chaos[company,k]=0;
 	            if (company=8) then mobi[company,k]="Jump Pack";
 	            if (mobi[101,15]!="") then mobi[company,k]=mobi[101,15];
+					        spawn_unit = TTRPG[company,k]
+	        spawn_unit.spawn_old_guard();
+	        spawn_unit.spawn_exp()
 	        }
 	        if (global.chapter_name="Iron Hands"){
 	            k+=1;commands+=1;
@@ -1014,6 +1028,9 @@ function scr_initialize_custom() {
 	            wep2[company,k]=wep2[101,16];armour[company,k]="Power Armour";gear[company,k]=gear[101,16];chaos[company,k]=0;
 	            bio[company,k]=4+choose(0,1,2);if (global.chapter_name="Iron Hands") then bio[company,k]=choose(7,8);
 	            if (mobi[101,16]!="") then mobi[company,k]=mobi[101,16];
+				spawn_unit = TTRPG[company,k]
+				spawn_unit.spawn_old_guard();
+				spawn_unit.spawn_exp();
 	        }
 
 	        k+=1;// Standard Bearer
@@ -1021,9 +1038,9 @@ function scr_initialize_custom() {
 	        wep2[company,k]="Company Standard";
 	        armour[company,k]="MK5 Heresy";
 	        chaos[company,k]=0;if (company=8) then mobi[company,k]="Jump Pack";
-	        spawn_unit = TTRPG[company,k]
+	        spawn_unit = TTRPG[company,k];
 	        spawn_unit.spawn_old_guard();
-	        spawn_unit.spawn_exp()	        
+	        spawn_unit.spawn_exp();       
 
 
 	        k+=1;man_size+=1;// Company Champion
@@ -1032,6 +1049,8 @@ function scr_initialize_custom() {
 	        chaos[company,k]=0;
 			spawn_unit = TTRPG[company,k];
 			spawn_unit.add_trait("champion");
+			spawn_unit.spawn_old_guard();
+	        spawn_unit.spawn_exp();
 			// have equal spec true or false have same old_guard chance
 			// it doesn't fully make sense why new marines in reserve companies would have the same chance
 			// but otherwise you'd always pick true so you'd have more shit

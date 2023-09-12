@@ -10,22 +10,6 @@ function gauss(base, sd){
     w = sqrt(-2 * ln(w) / w);
     return base + sd * x1 * w;
 }
-with (obj_ini){
-		//made all the exp buffs sort into neat little structs so theyre easier to dev and player modify
-	company_spawn_buffs = [0,0,[110,15],[105,15],[95,15],[80,10],[65,10],[55,10],[45,10],[35,10],[3,10]]
-	role_spawn_buffs = {}
-	variable_struct_set(role_spawn_buffs,role[100,5],[70,40]);
-	variable_struct_set(role_spawn_buffs,role[100,14],[120,30]);
-	variable_struct_set(role_spawn_buffs,role[100,15],[95,20]);
-	variable_struct_set(role_spawn_buffs,role[100,16],[95,20]);
-	variable_struct_set(role_spawn_buffs,"Standard Bearer",[30,30]); //company champion
-	variable_struct_set(role_spawn_buffs,role[100,7],[40,40]);
-	variable_struct_set(role_spawn_buffs,role[100,8],[3,5]);
-	variable_struct_set(role_spawn_buffs,role[100,10],0);
-	variable_struct_set(role_spawn_buffs,role[100,9],0);
-	variable_struct_set(role_spawn_buffs,role[100,12],0);
-};
-
 
 /*old_guard_equipment :{
 	role[100,5]:{"armour":[["MK3 Iron Armour",25]]},
@@ -119,7 +103,35 @@ global.trait_list = {
 		ballistic_skill :2,
 		flavour_text : "{0} has seen many a young warrior rise and die before him but he remains",
 		display_name : "Old Guard"
-	}
+	},
+	"seasoned":{
+		luck : 1,
+		constitution : 1,
+		strength :1,
+		weapon_skill : 1,
+		ballistic_skill :1,
+		flavour_text : "{0} has seen many a young warrior rise and die before him but he remains",
+		display_name : "Old Guard",		
+	},
+	"seasoned":{
+		luck : 1,
+		constitution : 1,
+		strength :1,
+		weapon_skill : 1,
+		ballistic_skill :1,
+		flavour_text : "{0} is a seasoned warrior having fought for many years",
+		display_name : "Seasoned",		
+	},
+	"ancient":{
+		luck : 1,
+		constitution : -1,
+		strength :-1,
+		weapon_skill : 3,
+		ballistic_skill :4,
+		wisdom : 5,
+		flavour_text : "{0} is truly Ancient while his body may ache his skills and wisdom are to be respected",
+		display_name : "Ancient",		
+	}	
 }
 global.base_stats = { //tempory stats subject to change by anyone that wishes to try their luck
 	"chapter_master":{
@@ -292,13 +304,14 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 	}
 }
 function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
+	constitution=0; strength=0;luck=0;dexterity=0;wisdom=0;piety=0;charisma=0;technology=0;intelligence=0;weapon_skill=0;ballistic_skill=0;size = 0;
 	company = comp;			//marine company
 	marine_number = mar;			//marine number in company
-	size = 0;
 	obj_ini.bio[company,marine_number] = 0;   //need to rework init of 2d arrays( and eventually remove)
 	static bionics = function(){return obj_ini.bio[company,marine_number];}// get marine bionics count	
 	static experience =  function(){return obj_ini.experience[company,marine_number];}//get exp
 	static update_exp = function(new_val){obj_ini.experience[company,marine_number] =new_val}//change exp
+	static add_exp = function(add_val){obj_ini.experience[company,marine_number] +=add_val}
 	static armour = function(){ 
 		return obj_ini.armour[company,marine_number];
 	};
@@ -311,17 +324,20 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	};	
 	static mobility_item = function(){ 
 		return obj_ini.mobi[company,marine_number];
-	};	   	
+	};	
+	static hp = function(){ 
+		return obj_ini.hp[company,marine_number]; //return current health
+	};
+    static update_health = function(new_health){
+      obj_ini.hp[company,marine_number] = new_health;
+   };	
 	static get_unit_size = function(){
-		show_debug_message("two.one.one")
 		var r = role();
-		show_debug_message("two.one.two.{0}",armour())
 		var arm = armour();
 		var sz = 0;
 		sz = 1;
 		var bulky_armour = ["Terminator Armour", "Tartaros"]
 	    if (string_count("Dread",arm)>0) {sz+=5;} else if (array_contains(bulky_armour,arm)){sz +=1};
-		show_debug_message("two.one.three")
 		var mobi =  mobility_item();
 		if (mobi == "Jump Pack"){
 			sz++;
@@ -337,6 +353,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
      static update_armour = function(new_armour){
           obj_ini.armour[company,marine_number] = new_armour;
 		get_unit_size(); //every time armour is changed see if the marines size has changed
+	};	
+	static max_health =function(){
+		return 100 * (1+((constitution - 40)*0.025));
+	};	
+	static increase_max_health = function(increase){
+		return max_health() + (increase*(1+((constitution - 40)*0.025))); //calculate the effect of health buffs
 	};		
 	// used both to load unit data from save and to add preset base_stats
 	static load_json_data = function(data){							//this also allows us to create a pre set of anysort for a marine
@@ -351,6 +373,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	
 	//adds a trait to a marines trait list
 	static add_trait = function(trait){
+			var balance_value;
 			if struct_exists(global.trait_list, trait){
 				var selec_trait = global.trait_list[$ trait];
 				var edits = variable_struct_get_names(selec_trait);
@@ -364,7 +387,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 						if (is_array(edit_stat)){
 							stat_mod = gauss(edit_stat[0], edit_stat[1]);
 						} else{stat_mod = edit_stat}
+						if (stats[stat_iter] == "constitution"){
+							balance_value = (hp()/max_health());
+						}
 						variable_struct_set(self,stats[stat_iter],  (variable_struct_get(self, stats[stat_iter])+  stat_mod));
+						if (stats[stat_iter] == "constitution"){
+							update_health(max_health()*balance_value)
+						}
 					}
 				}
 				//max_health() = 100 * (1+((constitution - 20)*0.05));
@@ -375,7 +404,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	//takes dict and plumbs dict values into unit struct
 	if (array_contains(variable_struct_get_names(global.base_stats), class)){
 		load_json_data(global.base_stats[$ class]);
-	}
+	};
 	var random_stat,edit_stat, stat_mod;
 	var stats = ["constitution", "strength", "luck", "dexterity", "wisdom", "piety", "charisma", "technology","intelligence", "weapon_skill", "ballistic_skill"];
 	for (var stat_iter =0; stat_iter <array_length(stats);stat_iter++;){
@@ -389,7 +418,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				variable_struct_set(self, stats[stat_iter],  stat_mod);			
 			}
 		}
-	}
+	};
 	
 	switch base_group{
 		case "astartes":				//basic marine class //adds specific mechanics not releveant to most units
@@ -511,20 +540,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		static age = function(){return obj_ini.age[company,marine_number];}// age
 		static update_age = function(new_val){obj_ini.age[company,marine_number] = new_val;}		
 		static name = function(){return obj_ini.name[company,marine_number];}// get marine name
-		static max_health =function(){
-			return 100 * (1+((constitution - 40)*0.025));
-		}
+
 		static gear = function(){return obj_ini.gear[company,marine_number]}
 		static update_gear = function(new_val){obj_ini.gear[company,marine_number]= new_val;}
-		static increase_max_health = function(increase){
-			return max_health() + (increase*(1+((constitution - 40)*0.025))); //calculate the effect of health buffs
-		}
-		static hp = function(){ 
-			return obj_ini.hp[company,marine_number]; //return current health
-		};
-       static update_health = function(new_health){
-            obj_ini.hp[company,marine_number] = new_health;
-	   };
 	   update_health(max_health()); //set marine health to max
 	   
 		static weapon_one = function(){ 
@@ -626,11 +644,15 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			case obj_ini.role[100,5]:  //captain
 				if(old_guard>=75){
 					update_armour("MK3 Iron Armour");
-					update_age(age - gauss(600, 100))
+					update_age(age - gauss(400, 200))
+					add_trait("old_guard");
+					add_exp(50);
 				} // 25% of iron within
 				else{
 					update_armour("MK8 Errant");
 					update_age(age - gauss(400, 25));
+					add_trait("seasoned");
+					add_exp(25);
 				};
 				break;
 			case  obj_ini.role[100,15]:  //apothecary
@@ -643,14 +665,24 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				 update_age(age - gauss(400, 250));
 				break;
 			case  obj_ini.role[100,8]:		//tacticals
-				if (old_guard=99){update_armour("MK3 Iron Armour")} // 1%
+				if (old_guard=99){
+						update_armour("MK3 Iron Armour")
+						update_age(age - gauss(600, 150));
+						add_trait("ancient");
+						add_exp(75);
+						
+					} // 1%
 					else if (old_guard>=97 and old_guard<=99){
 						update_armour("MK4 Maximus")
 						update_age(age - gauss(500, 100));
+						add_trait("old_guard");	
+						add_exp(50);
 					} //3%
 					else if (old_guard>=91 and old_guard<=96){
 						update_armour("MK5 Heresy");
 						update_age(age - gauss(300, 100));
+						add_trait("seasoned");
+						add_exp(25);
 					} // 6%
 					else if (old_guard>=79 and old_guard<=90){
 						update_armour("MK6 Corvus");
@@ -667,18 +699,25 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				if (old_guard>=99 and old_guard<=97){
 					update_armour("MK8 Errant");
 					update_age(age - gauss(150, 30));
+					add_exp(25);
 				} // 3% 
 				else if (old_guard>=91 and old_guard<=96){
 					update_armour("MK3 Iron Armour");
-					update_age(age - gauss(500, 100));
+					update_age(age - gauss(600, 100));
+					add_trait(choose("ancient","old_guard"));
+					add_exp(choose(50,25, 75));
 				} // 6% 
 				else if (old_guard>=80 and old_guard<=90){
 					update_armour("MK4 Maximus");
 					update_age(age - gauss(300, 100));
+					add_trait("old_guard")
+					add_exp(50);
 				} // 12%
 				else if (old_guard>=57 and old_guard<=79){
 					update_armour("MK5 Heresy");
 					update_age(age - gauss(240, 40));
+					add_trait("seasoned")
+					add_exp(25);
 				} // 24%
 				else{
 					update_armour("MK7 Aquila");
@@ -689,10 +728,14 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				if (old_guard>=99 and old_guard<=97){
 					update_armour("MK4 Maximus");
 					update_age(age - gauss(300, 100));
+					add_trait(choose("ancient","old_guard"));
+					add_exp(choose(50,25, 75));
 				} // 3% for maximus
 				else if (old_guard>=78 and old_guard<=96){
 					update_armour("MK6 Corvus");
 					update_age(age - gauss(200, 50));
+					add_trait("seasoned")
+					add_exp(25);
 				} // 20% chance for devos to have ranged armor, wouldn't want much else
 				else if (company<=2) {
 					update_armour("MK6 Corvus");
