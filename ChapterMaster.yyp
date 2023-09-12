@@ -279,7 +279,7 @@
   "isEcma": false,
   "LibraryEmitters": [],
   "MetaData": {
-    "IDEVersion": "2023.6.0.89",
+    "IDEVersion": "2023.6.0.92",
   },
   "resources": [
     {"id":{"name":"spr_credits_bg","path":"sprites/spr_credits_bg/spr_credits_bg.yy",},},
@@ -756,7 +756,6 @@
     {"id":{"name":"scr_star_name","path":"scripts/scr_star_name/scr_star_name.yy",},},
     {"id":{"name":"scr_ship_name","path":"scripts/scr_ship_name/scr_ship_name.yy",},},
     {"id":{"name":"scr_hulk_name","path":"scripts/scr_hulk_name/scr_hulk_name.yy",},},
-    {"id":{"name":"scr_unit_stats","path":"scripts/scr_unit_stats/scr_unit_stats.yy",},},
     {"id":{"name":"scr_zoom","path":"scripts/scr_zoom/scr_zoom.yy",},},
     {"id":{"name":"scr_chapter","path":"scripts/scr_chapter/scr_chapter.yy",},},
     {"id":{"name":"scr_chapter_new","path":"scripts/scr_chapter_new/scr_chapter_new.yy",},},
