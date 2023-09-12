@@ -33,12 +33,6 @@ if (stage=2) and (tim1<=0){tim2-=1;
     }
 }
 
-if (audio_is_playing(snd_prologue)){audio_stop_all();
-    global.sound=audio_play_sound(snd_redownload,0,1);
-    audio_sound_gain(global.sound,0,0);
-    audio_sound_gain(global.sound,1,1500);
-}
-
 if (stage=3){
     if (tim3>-15) then tim3-=1;
     
@@ -50,10 +44,6 @@ if (stage=3){
     if (tim3<=-15) then tim4+=0.75;
     if (tim4>=37.5) and (instance_exists(obj_cursor)){obj_cursor.image_alpha=1;}
 }
-
-
-
-
 
 if (fade>0) then fade-=0.5;
 if (away>=1) then away+=1;
