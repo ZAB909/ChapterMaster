@@ -1,14 +1,14 @@
 // Creates the formation bars and draws them according to their designated type (infantry and vehicles)
 function scr_ui_formation_bars() {
-    var x9, y9, bar = 0,
+    var bar = 0,
         ii = 0,
         nbar = 0,
         abar = 0,
         fo = formating,
         te = 4700;
 
-    x9 = __view_get(e__VW.XView, 0) + 49;
-    y9 = __view_get(e__VW.YView, 0) + 224;
+    var x9 = __view_get(e__VW.XView, 0) + 49;
+    var y9 = __view_get(e__VW.YView, 0) + 224;
 
     with(obj_formation_bar) {
         instance_destroy();
@@ -29,38 +29,38 @@ function scr_ui_formation_bars() {
 
         // Set up the infantry
         if (bat_comm_for[fo] == bar) {
-            init_combat_bars(2, 0, "HQ");
+            init_combat_bars(2, 0, x9, y9, temp, te, "HQ");
         } else if (bat_hono_for[fo] == bar) {
-            init_combat_bars(1, 1, "Hono");
+            init_combat_bars(1, 1, x9, y9, temp, te, "Hono");
         } else if (bat_libr_for[fo] == bar) {
-            init_combat_bars(1, 8, "Lib");
+            init_combat_bars(1, 8, x9, y9, temp, te, "Lib");
         } else if (bat_tech_for[fo] == bar) {
-            init_combat_bars(1, 9, "Tech");
+            init_combat_bars(1, 9, x9, y9, temp, te, "Tech");
         } else if (bat_term_for[fo] == bar) {
-            init_combat_bars(1, 10, "Term");
+            init_combat_bars(1, 10, x9, y9, temp, te, "Term");
         } else if (bat_vete_for[fo] == bar) {
-            init_combat_bars(2, 6, "Veteran");
+            init_combat_bars(2, 6, x9, y9, temp, te, "Veteran");
         } else if (bat_tact_for[fo] == bar) {
-            init_combat_bars(6, 3, "Tactical");
+            init_combat_bars(6, 3, x9, y9, temp, te, "Tactical");
         } else if (bat_deva_for[fo] == bar) {
-            init_combat_bars(3, 2, "Devastator");
+            init_combat_bars(3, 2, x9, y9, temp, te, "Devastator");
         } else if (bat_assa_for[fo] == bar) {
-            init_combat_bars(3, 5, "Assault");
+            init_combat_bars(3, 5, x9, y9, temp, te, "Assault");
         } else if (bat_scou_for[fo] == bar) {
-            init_combat_bars(1, 4, "Sco");
+            init_combat_bars(1, 4, x9, y9, temp, te, "Sco");
         } else if (bat_drea_for[fo] == bar) {
-            init_combat_bars(2, 11, "Dread");
+            init_combat_bars(2, 11, x9, y9, temp, te, "Dread");
         } else if (bat_hire_for[fo] == bar) {
-            init_combat_bars(1, 7, "???");
+            init_combat_bars(1, 7, x9, y9, temp, te, "???");
         }
         // Set up the vehicles
         if (bat_formation_type[fo] != 2) {
             if (bat_rhin_for[fo] == bar) {
-                init_combat_bars(4, 12, "Rhino");
+                init_combat_bars(4, 12, x9, y9, temp, te, "Rhino");
             } else if (bat_pred_for[fo] == bar) {
-                init_combat_bars(2, 13, "Predator");
+                init_combat_bars(2, 13, x9, y9, temp, te, "Predator");
             } else if (bat_land_for[fo] == bar) {
-                init_combat_bars(2, 14, "Land Raider");
+                init_combat_bars(2, 14, x9, y9, temp, te, "Land Raider");
             }
         }
 
@@ -92,7 +92,7 @@ function scr_ui_formation_bars() {
     }
 }
 
-function init_combat_bars(size, image_index, unit_type) {
+function init_combat_bars(size, image_index, x9, y9, temp, te, unit_type) {
     nbar = instance_create(x9, y9 + temp[te], obj_formation_bar);
     nbar.size = size;
     nbar.height = nbar.size * 47;

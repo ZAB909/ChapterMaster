@@ -140,7 +140,7 @@ chapter_id[3]="Space Wolves";
 chapter_tooltip[3]="Brave sky warriors hailing from the icy deathworld of Fenris, the Space Wolves are a non-Codex compliant chapter, and deadly in close combat.  They fight on their own terms and damn any who wish otherwise.";
 
 chapter_id[4]="Imperial Fists";
-//chapter_tooltip[4]="Siege-masters of utmost excellence, the Imperial Fists stoicism has lead them to great victories and horrifying defeats. To them, the idea of a tactical retreat is utterly unconsiderable. They hold ground on Terra vigilantly, refusing to back down from any fight.";
+chapter_tooltip[4]="Siege-masters of utmost excellence, the Imperial Fists stoicism has lead them to great victories and horrifying defeats. To them, the idea of a tactical retreat is utterly unconsiderable. They hold ground on Inwit vigilantly, refusing to back down from any fight.";
 
 chapter_id[5]="Blood Angels";
 chapter_tooltip[5]="One of the most noble and renowned chapters, their combat record belies a dark flaw in their gene-seed caused by the death of their primarch. Their primarch had wings and a propensity for close combat, and this shows in their extensive use of jump packs and close quarters weapons.";
@@ -304,7 +304,7 @@ if (skip=true){
     slate=21;
     slate3=21;
     slate4=50;
-    global.version=500;
+    global.version="500";
     
     change_slide=0;
     slide=6;

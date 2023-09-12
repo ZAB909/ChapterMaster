@@ -91,7 +91,37 @@ function scr_chapter_new(argument0) {
 	    company_title[4]="Defenders of Ultramar";
 	    company_title[5]="Wardens of the Eastern Fringe";
 	}
+	//Waiting on new disadv to give anymore adv.
+  if (argument0="Imperial Fists"){founding="N/A";points=150;
+		selected_chapter=4;chapter=argument0;icon=4;icon_name="if";founding=0;fleet_type=1;strength=10;purity=7;stability=10;cooperation=8;
+		adv[1]="Bolter Drilling";adv[2]="Siege Masters";
+		homeworld="Ice";homeworld_name="Inwit";recruiting_world="Hive";recruiting_name="Necromunda";
+		homeworld_exists=1;recruiting_exists=1;homeworld_rule=2;aspirant_trial="Survival of the Fittest";
+		color_to_main="Gold";color_to_secondary="Gold";color_to_trim="Red";color_to_pauldron="Gold"
+		color_to_pauldron2="Gold";color_to_lens="Red";color_to_weapon="Black"
+		hapothecary="Dyserna";hchaplain="Guaron";clibrarian="Vidos Harn";fmaster="Atornus Geis";admiral="Kyne Phasn"
+                recruiter="Taelos"
+		battle_cry="Primarch-Progenitor, to your glory and the glory of him on earth!";
+	        equal_specialists=0;load_to_ships=2;successors=21;
+	        mutations=2;mutations_selected=2;
+	        preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=1;
+	        zygote=0;betchers=1;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
+	        // disposition[1]=0;// Prog
+	        disposition[2]=75;disposition[3]=60;disposition[4]=50;disposition[5]=60;
+	        disposition[6]=60;// Astartes
+	        disposition[7]=0;// Reserved
+	        chapter_master_name="Vorn Hagen";chapter_master_melee=3;
+	        chapter_master_ranged=7;chapter_master_specialty=1;
 
+	        company_title[1]="The Fists of Dorn";company_title[2]="The Scions of Redemption";company_title[3]="The Sentinels of Terra";
+	        company_title[4]="The Reductors";company_title[5]="The Heralds of Truth";company_title[6]="The Siege Hammers";
+	        company_title[7]="Guardians of Phalanx";company_title[8]="Dorn's Huscarls";company_title[9]="The Wardens";
+	        company_title[10]="The Eyes of Dorn";
+
+	    i=99;repeat(3){i+=1;
+	        role[i,2]="Huscarl";wep1[i,2]="Power Sword";wep2[i,2]="Storm Shield";armour[i,2]="Power Armour";
+		}
+	}
 
 
 	if (argument0="Space Wolves"){founding="N/A";points=150;

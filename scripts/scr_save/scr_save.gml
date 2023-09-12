@@ -30,7 +30,7 @@ function scr_save(save_slot,save_id) {
 	    // Global variables
 	    ini_write_string("Save","chapter_name",global.chapter_name);
 	    ini_write_string("Save","sector_name",obj_ini.sector_name);
-	    ini_write_real("Save","version",global.version);
+	    ini_write_string("Save","version",global.version);
 	    ini_write_real("Save","play_time",play_time);
 	    ini_write_real("Save","game_seed",global.game_seed);
 	    ini_write_real("Save","use_custom_icon",obj_ini.use_custom_icon);
