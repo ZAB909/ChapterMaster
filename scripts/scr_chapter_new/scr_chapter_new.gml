@@ -91,12 +91,12 @@ function scr_chapter_new(argument0) {
 	    company_title[4]="Defenders of Ultramar";
 	    company_title[5]="Wardens of the Eastern Fringe";
 	}
-
+	//Waiting on new disadv to give anymore adv.
   if (argument0="Imperial Fists"){founding="N/A";points=150;
 		selected_chapter=4;chapter=argument0;icon=4;icon_name="if";founding=0;fleet_type=1;strength=10;purity=7;stability=10;cooperation=8;
-		adv[1]="Bolter Drilling";adv[2]="Siege Masters"
-		homeworld="Ice";homeworld_name="Inwit";//recruiting_world="Hive";recruiting_name="Necromunda";
-		homeworld_exists=1;recruiting_exists=0;homeworld_rule=2;aspirant_trial="Survival of the Fittest";
+		adv[1]="Bolter Drilling";adv[2]="Siege Masters";//adv[3]="Boarders"
+		homeworld="Ice";homeworld_name="Inwit";recruiting_world="Hive";recruiting_name="Necromunda";
+		homeworld_exists=1;recruiting_exists=1;homeworld_rule=2;aspirant_trial="Survival of the Fittest";
 		color_to_main="Gold";color_to_secondary="Gold";color_to_trim="Red";color_to_pauldron="Gold"
 		color_to_pauldron2="Gold";color_to_lens="Red";color_to_weapon="Black"
 		hapothecary="Dyserna";hchaplain="Guaron";clibrarian="Vidos Harn";fmaster="Atornus Geis";admiral="Kyne Phasn"
