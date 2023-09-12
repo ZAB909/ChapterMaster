@@ -304,7 +304,7 @@ if (skip=true){
     slate=21;
     slate3=21;
     slate4=50;
-    global.version=500;
+    global.version="500";
     
     change_slide=0;
     slide=6;

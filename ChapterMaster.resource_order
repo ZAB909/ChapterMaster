@@ -457,7 +457,6 @@
     {"name":"scr_star_name","order":33,"path":"scripts/scr_star_name/scr_star_name.yy",},
     {"name":"scr_ship_name","order":35,"path":"scripts/scr_ship_name/scr_ship_name.yy",},
     {"name":"scr_hulk_name","order":37,"path":"scripts/scr_hulk_name/scr_hulk_name.yy",},
-    {"name":"scr_unit_stats","order":15,"path":"scripts/scr_unit_stats/scr_unit_stats.yy",},
     {"name":"scr_zoom","order":17,"path":"scripts/scr_zoom/scr_zoom.yy",},
     {"name":"scr_chapter","order":19,"path":"scripts/scr_chapter/scr_chapter.yy",},
     {"name":"scr_chapter_new","order":21,"path":"scripts/scr_chapter_new/scr_chapter_new.yy",},
