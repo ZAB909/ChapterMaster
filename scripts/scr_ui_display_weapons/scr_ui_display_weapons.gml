@@ -1,4 +1,4 @@
-// Displays weapon based on the armor type to change the art to match the armor type
+// Displays weapon based on the armour type to change the art to match the armour type
 function scr_ui_display_weapons(argument0, termi_tartaros, equiped_weapon) {
 
     // argument0: left?
