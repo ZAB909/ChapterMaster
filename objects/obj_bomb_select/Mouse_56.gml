@@ -1,3 +1,4 @@
+// TODO refactor
 var __b__;
 __b__ = action_if_number(obj_saveload, 0, 0);
 if __b__

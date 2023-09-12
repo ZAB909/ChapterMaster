@@ -53,7 +53,7 @@ repeat(sh_target.escort_number){
         purge_b+=ship_max[i];purge_c+=ship_max[i];
     }
 }*/
-
+// TODO refactor
 var i;i=-1;
 repeat(31){
     i+=1;

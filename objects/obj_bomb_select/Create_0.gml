@@ -1,4 +1,4 @@
-
+// TODO refactor
 ship_names="";
 sh_target=0;
 p_target=0;
