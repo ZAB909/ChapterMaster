@@ -505,22 +505,13 @@ if (menu=1) and (managing>0){
                 if (ma_wep2[sel]="Storm Shield"){ach+=30;acy+=8;}
                 if (ma_armour[sel]="MK3 Iron Armour") then ranged_attack-=0.1;
                 if (ma_armour[sel]="MK4 Maximus"){ranged_attack+=0.05;melee_attack+=0.05;}
-                if (ma_armour[sel]="MK5 Heresy"){melee_attack+=0.1;ranged_attack-=0.05;damage_res+=0.15;}
+                if (ma_armour[sel]="MK5 Heresy"){melee_attack+=0.2;ranged_attack-=0.05;}  // heresy should be lower damage resistance, lowered ap for now so it's easier for players to digest
                 if (ma_armour[sel]="MK6 Corvus"){ranged_attack+=0.1;}
                 if (string_count("Artificer",ma_armour[sel])>0){melee_attack+=0.1;}
                 if (string_count("Terminator",ma_armour[sel])>0){ranged_attack-=0.1;melee_attack+=0.2;}
                 if (ma_armour[sel]="Tartaros"){ranged_attack-=0.05;melee_attack+=0.2;}
 				
                 var j,jj;j=0;jj=0;
-
-                if (ma_armour[sel]="MK3 Iron Armour") then ra-=0.1;
-                if (ma_armour[sel]="MK4 Maximus"){ra+=0.05;ma+=0.05;}
-                if (ma_armour[sel]="MK5 Heresy"){ma+=0.2;ra-=0.05;} // heresy should be lower damage resistance, lowered ap for now so it's easier for players to digest
-                if (ma_armour[sel]="MK6 Corvus"){ra+=0.15;} 
-                if (string_count("Artificer",ma_armour[sel])>0){ma+=0.1;}
-                if (string_count("Terminator",ma_armour[sel])>0){ra-=0.1;ma+=0.2;}
-                if (ma_armour[sel]="Tartaros"){ra-=0.05;ma+=0.2;}
-
                 
                 //if (ui_melee_penalty>0){melee_attack=melee_attack*0.5; ranged_attack=ranged_attack*0.75;}
                // if (ui_ranged_penalty>0){ranged_attack=ranged_attack*0.5; melee_attack=melee_attack*0.75;}

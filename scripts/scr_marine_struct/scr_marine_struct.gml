@@ -294,6 +294,7 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	company = comp;			//marine company
 	marine_number = mar;			//marine number in company
+	size = 0;
 	obj_ini.bio[company,marine_number] = 0;   //need to rework init of 2d arrays( and eventually remove)
 	static bionics = function(){return obj_ini.bio[company,marine_number];}// get marine bionics count	
 	static experience =  function(){return obj_ini.experience[company,marine_number];}//get exp
@@ -301,13 +302,26 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	static armour = function(){ 
 		return obj_ini.armour[company,marine_number];
 	};
+	static role = function(){
+		return obj_ini.role[company,marine_number];
+	};
+	static update_role = function(new_role){
+		obj_ini.role[company,marine_number]= new_role;
+		array_append(role_history ,[obj_ini.wep1[company,marine_number], obj_controller.turn])
+	};	
+	static mobility_item = function(){ 
+		return obj_ini.mobi[company,marine_number];
+	};	   	
 	static get_unit_size = function(){
+		show_debug_message("two.one.one")
 		var r = role();
+		show_debug_message("two.one.two.{0}",armour())
 		var arm = armour();
 		var sz = 0;
 		sz = 1;
 		var bulky_armour = ["Terminator Armour", "Tartaros"]
 	    if (string_count("Dread",arm)>0) {sz+=5;} else if (array_contains(bulky_armour,arm)){sz +=1};
+		show_debug_message("two.one.three")
 		var mobi =  mobility_item();
 		if (mobi == "Jump Pack"){
 			sz++;
@@ -315,7 +329,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if (r == "Chapter Master"){sz++}
 		size =sz;
 		return size
-	};	   
+	};
+    static update_mobility_item = function(new_mobility_item){
+        obj_ini.mobi[company,marine_number] = new_mobility_item;
+		get_unit_size(); //every time mobility_item is changed see if the marines size has changed
+	 };		
      static update_armour = function(new_armour){
           obj_ini.armour[company,marine_number] = new_armour;
 		get_unit_size(); //every time armour is changed see if the marines size has changed
@@ -533,23 +551,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
        static update_specials = function(new_specials){
             obj_ini.spe[company,marine_number] = new_specials;
 	   };
-	   	static mobility_item = function(){ 
-			return obj_ini.mobi[company,marine_number];
-		};	   
-       static update_mobility_item = function(new_mobility_item){
-            obj_ini.mobi[company,marine_number] = new_mobility_item;
-			get_unit_size(); //every time mobility_item is changed see if the marines size has changed
-	   };	
 	   	static race = function(){ 
 			return obj_ini.race[company,marine_number];
 		};	
-		static role = function(){
-			return obj_ini.role[company,marine_number];
-		};
-		static update_role = function(new_role){
-			obj_ini.role[company,marine_number]= new_role;
-			array_append(role_history ,[obj_ini.wep1[company,marine_number], obj_controller.turn])
-		};
 		static damage_resistance = function(){
 			 damage_res = (constitution*0.005) + (experience()/1000);
 			 return damage_res
@@ -582,11 +586,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			 get_unit_size(); // make sure marines size given it's current equipment is correct
 			 var current_location = marine_location();
 			 var system = current_location[2];
-			 var ship_location= obj_ini.ship_location[ship]
-			 if (ship_location == "home" ){ship_location = obj_ini.home_name}
+			 var ship_location= obj_ini.ship_location[ship];
+			 if (ship_location == "home" ){ship_location = obj_ini.home_name;}
 			
 			 if (current_location[0] == location_types.planet){//if marine is on a planet
-				  if (current_location[2] == "home" ){system = obj_ini.home_name}
+				  if (current_location[2] == "home" ){system = obj_ini.home_name;}
 				 //check if ship is in the same location as marine and has enough space;
 				 if (ship_location == system) and ((obj_ini.ship_carrying[ship] + size) <= obj_ini.ship_capacity[ship]){
 					 obj_ini.wid[company,marine_number] = 0; //mark marine as no longer on planet
@@ -601,7 +605,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					  obj_ini.ship_carrying[ship] += size;            //add marine capacity to new ship
 				 }
 			 }
-		}
+		};
 	static spawn_exp =function(){
 		var spawn_ex = 0;
 		if (obj_ini.company_spawn_buffs[company] != 0){
@@ -614,85 +618,86 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 		if (spawn_ex != 0){update_exp(spawn_ex)}  //update the marines exp with updated guass value
 
-	}
+	};
 	static spawn_old_guard =function(){
 		var old_guard=irandom(100);
 		var age = (obj_ini.millenium*1000)+obj_ini.year;
 		switch(role()){
 			case obj_ini.role[100,5]:  //captain
 				if(old_guard>=75){
-					armour[company,marine_number]="MK3 Iron Armour"
+					update_armour("MK3 Iron Armour");
 					update_age(age - gauss(600, 100))
 				} // 25% of iron within
 				else{
-					armour[company,marine_number]="MK8 Errant"
-					update_age(age - gauss(400, 250))
+					update_armour("MK8 Errant");
+					update_age(age - gauss(400, 25));
 				};
 				break;
 			case  obj_ini.role[100,15]:  //apothecary
-				armour[company,marine_number]="MK7 Aquila";if (company<=2) then armour[company,marine_number]=choose("MK8 Errant","MK6 Corvus");
-				update_age(age - gauss(400, 250))
+				update_armour("MK7 Aquila");
+				if (company<=2) then update_armour(choose("MK8 Errant","MK6 Corvus"));
+				update_age(age - gauss(400, 250));
 				break;
 			case "Standard Bearer":
-				 armour[company,marine_number]="MK5 Heresy";
-				 update_age(age - gauss(400, 250))
+				 update_armour("MK5 Heresy");
+				 update_age(age - gauss(400, 250));
 				break;
 			case  obj_ini.role[100,8]:		//tacticals
-				if (old_guard=99){armour[company,marine_number]="MK3 Iron Armour"} // 1%
+				if (old_guard=99){update_armour("MK3 Iron Armour")} // 1%
 					else if (old_guard>=97 and old_guard<=99){
-						armour[company,marine_number]="MK4 Maximus"
-						update_age(age - gauss(500, 100))
+						update_armour("MK4 Maximus")
+						update_age(age - gauss(500, 100));
 					} //3%
 					else if (old_guard>=91 and old_guard<=96){
-						armour[company,marine_number]="MK5 Heresy";
+						update_armour("MK5 Heresy");
 						update_age(age - gauss(300, 100));
 					} // 6%
 					else if (old_guard>=79 and old_guard<=90){
-						armour[company,marine_number]="MK6 Corvus";
-						update_age(age - gauss(250, 25))
+						update_armour("MK6 Corvus");
+						update_age(age - gauss(250, 25));
 					} // 12%
 					else if (company<=2){
-						armour[company,marine_number]="MK6 Corvus"
+						update_armour("MK6 Corvus")
 						} // company 1 and 2 taccies get beakies by default
-					else{armour[company,marine_number]="MK7 Aquila"};
+					else{update_armour("MK7 Aquila")};
 				break;
 			case  obj_ini.role[100,10]:		//assualts
 				// due to assault marines not wanting corvus due to worse ac, given them better chances with melee oriented armours. 
 				// melee is risky af anyway so let's reward players who go assault marine heavy at game start
 				if (old_guard>=99 and old_guard<=97){
-					armour[company,marine_number]="MK8 Errant";
+					update_armour("MK8 Errant");
 					update_age(age - gauss(150, 30));
 				} // 3% 
 				else if (old_guard>=91 and old_guard<=96){
-					armour[company,marine_number]="MK3 Iron Armour";
+					update_armour("MK3 Iron Armour");
 					update_age(age - gauss(500, 100));
 				} // 6% 
 				else if (old_guard>=80 and old_guard<=90){
-					armour[company,marine_number]="MK4 Maximus";
+					update_armour("MK4 Maximus");
 					update_age(age - gauss(300, 100));
 				} // 12%
 				else if (old_guard>=57 and old_guard<=79){
-					armour[company,marine_number]="MK5 Heresy";
+					update_armour("MK5 Heresy");
 					update_age(age - gauss(240, 40));
 				} // 24%
 				else{
-					armour[company,marine_number]="MK7 Aquila";
-					update_age(age - gauss(150, 75))
+					update_armour("MK7 Aquila");
+					update_age(age - gauss(150, 75));
 				};
 				break;	
 			case  obj_ini.role[100,9]: 		//devastators	
 				if (old_guard>=99 and old_guard<=97){
-					armour[company,marine_number]="MK4 Maximus";
+					update_armour("MK4 Maximus");
 					update_age(age - gauss(300, 100));
 				} // 3% for maximus
 				else if (old_guard>=78 and old_guard<=96){
-					armour[company,marine_number]="MK6 Corvus";
-					update_age(age - gauss(200, 50))
+					update_armour("MK6 Corvus");
+					update_age(age - gauss(200, 50));
 				} // 20% chance for devos to have ranged armor, wouldn't want much else
 				else if (company<=2) {
-					armour[company,marine_number]="MK6 Corvus";
+					update_armour("MK6 Corvus");
 				} // company 1 and 2 taccies get beakies by default
-				else{armour[company,marine_number]="MK7 Aquila"};
+				else{update_armour("MK7 Aquila")};
 				break;
 		}
 	}

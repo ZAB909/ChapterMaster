@@ -598,8 +598,8 @@ function scr_ui_manage() {
 					for (body_part = 0; body_part<array_length(global.body_parts);body_part++){
 						if (struct_exists(selected_unit.body[$ global.body_parts[body_part]], "bionic")){
 
-							if (global.body_parts[body_part] == "left_eye") {draw_sprite(spr_bionics_eye,0,xx+1272,yy+193)};
-							if (global.body_parts[body_part] == "right_eye") {draw_sprite(spr_bionics_eye,1,xx+1277,yy+193)};
+							if (global.body_parts[body_part] == "left_eye") {draw_sprite(spr_bionics_eye,0,xx+1208,yy+178)};
+							if (global.body_parts[body_part] == "right_eye") {draw_sprite(spr_bionics_eye,1,xx+1208,yy+178)};
 							if (global.body_parts[body_part] == "left_leg") {draw_sprite(spr_bionics_leg,1,xx+1208,yy+178)};
 							if (global.body_parts[body_part] == "right_leg") {draw_sprite(spr_bionics_leg,0,xx+1208,yy+178)};
 							if (global.body_parts[body_part] == "left_arm") {draw_sprite(spr_bionics_arm,0,xx+1208,yy+178)};
@@ -1465,14 +1465,6 @@ function scr_ui_manage() {
 	    scr_scrollbar(974,172,1005,790,34,man_max,man_current);
 	}
 	
-	// Load to ships
-	if (menu==30) and (managing>0){
-
-	    var bb="", img=0;
-	    var xx=__view_get( e__VW.XView, 0 )+0;
-	    var yy=__view_get( e__VW.YView, 0 )+0;
-
-
 
 	if (menu=30) and (managing>0){// Load to ships
 	    var xx, yy, bb, img;
