@@ -90,38 +90,21 @@ if (instance_exists(obj_main_menu)) and (!instance_exists(obj_saveload)) and (!i
         if (word_from_duke2!="blank") and (word_from_duke2!="") then wfd=word_from_duke2;
         
         if (wfd!="blank") and (wfd!="") and (obj_main_menu.tim4<400){
-            if (global.version>=version){
-                draw_set_alpha((tim4-20)/50);
-                draw_set_color(c_yellow);
-                draw_text_ext_transformed(xx,yy,string_hash_to_newline("Server: "+string(wfd)),-1,wad,1,1,0);
-                draw_text_ext_transformed(xx+0.5,yy+0.5,string_hash_to_newline("Server: "+string(wfd)),-1,wad,1,1,0);
-                
-                var da;da=0;
-                if (mess_alpha<=60) then da=mess_alpha/60;
-                if (mess_alpha>60) then da=1+(((mess_alpha-60)*-1)/60);
-                draw_set_alpha(min(da,((obj_main_menu.tim4-20)/50)));
-                
-                draw_set_color(c_red);
-                draw_text_ext_transformed(xx,yy,string_hash_to_newline("Server: "+string(wfd)),-1,wad,1,1,0);
-                draw_text_ext_transformed(xx+0.5,yy+0.5,string_hash_to_newline("Server: "+string(wfd)),-1,wad,1,1,0);
-                draw_set_alpha(1);
-            }
-            if (global.version<version){
-                draw_set_alpha(min(((tim4-20)/50),(obj_main_menu.tim4/50)));
-                /*draw_set_color(c_white);
-                draw_text_ext_transformed(room_width/2,724,"Server: Chapter Master is out of date.  Visit 1d4chan for the newest client.",-1,279,1,1,0);
-                draw_text_ext_transformed((room_width/2)+0.5,724+0.5,"Server: Chapter Master is out of date.  Visit 1d4chan for the newest client.",-1,279,1,1,0);
-                
-                var da;da=0;
-                if (mess_alpha<=60) then da=mess_alpha/60;
-                if (mess_alpha>60) then da=1+(((mess_alpha-60)*-1)/60);
-                draw_set_alpha(da);*/
-                
-                draw_set_color(c_red);
-                draw_text_ext_transformed(xx,yy,string_hash_to_newline("Server: Chapter Master is out of date.  Visit 1d4chan for v0."+string(obj_main_menu.version*1000)),-1,wad,1,1,0);
-                draw_text_ext_transformed(xx+0.5,yy+0.5,string_hash_to_newline("Server: Chapter Master is out of date.  Visit 1d4chan for v0."+string(obj_main_menu.version*1000)),-1,wad,1,1,0);
-                draw_set_alpha(1);
-            }
+            draw_set_alpha((tim4-20)/50);
+            draw_set_color(c_yellow);
+            draw_text_ext_transformed(xx,yy,string_hash_to_newline("Server: "+string(wfd)),-1,wad,1,1,0);
+            draw_text_ext_transformed(xx+0.5,yy+0.5,string_hash_to_newline("Server: "+string(wfd)),-1,wad,1,1,0);
+            
+            var da;da=0;
+            if (mess_alpha<=60) then da=mess_alpha/60;
+            if (mess_alpha>60) then da=1+(((mess_alpha-60)*-1)/60);
+            draw_set_alpha(min(da,((obj_main_menu.tim4-20)/50)));
+            
+            draw_set_color(c_red);
+            draw_text_ext_transformed(xx,yy,string_hash_to_newline("Server: "+string(wfd)),-1,wad,1,1,0);
+            draw_text_ext_transformed(xx+0.5,yy+0.5,string_hash_to_newline("Server: "+string(wfd)),-1,wad,1,1,0);
+            draw_set_alpha(1);
+            
         }
     }
 

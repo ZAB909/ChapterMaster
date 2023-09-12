@@ -313,7 +313,7 @@ function scr_battle_roster(_unit_location, _target_location, _is_planet) {
                         if (really = true) then new_combat.really_thirsty += 1;
                         col = max(obj_controller.bat_assault_column, obj_controller.bat_command_column, obj_controller.bat_honor_column, obj_controller.bat_dreadnought_column, obj_controller.bat_veteran_column);
                     }
-
+                    // info for ai targetting armor and what they think is best. TODO find out what marine_ranged and attack does
                     if (targ.marine_armour[targ.men] = "Scout Armour") then targ.marine_ac[targ.men] = 8;
                     if (targ.marine_armour[targ.men] = "MK3 Iron Armour") {
                         targ.marine_ac[targ.men] = 20;

@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "scr_unit_stats",
+  "name": "scr_roman_numerals",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
