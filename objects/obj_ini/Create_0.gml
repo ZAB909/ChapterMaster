@@ -69,6 +69,8 @@ check_number=0;
 year_fraction=0;
 year=0;
 millenium=0;
+company_spawn_buffs = [0,0,[110,15],[105,15],[95,15],[80,10],[65,10],[55,10],[45,10],[35,10],[3,10]];
+role_spawn_buffs ={};
 
 /* if (global.load=0){
     if (obj_creation.custom>0) then scr_initialize_custom();
@@ -77,7 +79,9 @@ millenium=0;
 
 if (instance_exists(obj_creation)) then custom=obj_creation.custom;
 
+global.unit_init = true;
 if (global.load=0) then scr_initialize_custom();
+global.unit_init = false;
 
 
 

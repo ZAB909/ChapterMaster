@@ -10,6 +10,35 @@ function gauss(base, sd){
     w = sqrt(-2 * ln(w) / w);
     return base + sd * x1 * w;
 }
+with (obj_ini){
+		//made all the exp buffs sort into neat little structs so theyre easier to dev and player modify
+	company_spawn_buffs = [0,0,[110,15],[105,15],[95,15],[80,10],[65,10],[55,10],[45,10],[35,10],[3,10]]
+	role_spawn_buffs = {}
+	variable_struct_set(role_spawn_buffs,role[100,5],[70,40]);
+	variable_struct_set(role_spawn_buffs,role[100,14],[120,30]);
+	variable_struct_set(role_spawn_buffs,role[100,15],[95,20]);
+	variable_struct_set(role_spawn_buffs,role[100,16],[95,20]);
+	variable_struct_set(role_spawn_buffs,"Standard Bearer",[30,30]); //company champion
+	variable_struct_set(role_spawn_buffs,role[100,7],[40,40]);
+	variable_struct_set(role_spawn_buffs,role[100,8],[3,5]);
+	variable_struct_set(role_spawn_buffs,role[100,10],0);
+	variable_struct_set(role_spawn_buffs,role[100,9],0);
+	variable_struct_set(role_spawn_buffs,role[100,12],0);
+};
+
+
+/*old_guard_equipment :{
+	role[100,5]:{"armour":[["MK3 Iron Armour",25]]},
+	role[100,14]:{"armour":[["MK3 Iron Armour",25]],
+	role[100,15]:{"armour":[["MK3 Iron Armour", 10]]}, //apothecary
+	role[100,16]:{"armour":},
+	"Standard Bearer":{"armour":[["MK3 Iron Armour", 3]]},
+	role[100,7]:{"armour":[]},  //company champion
+	role[100,8]:{"armour":[["MK8 Errant", 3],["MK3 Iron Armour", 3],["MK4 Maximus", 3],["MK5 Heresy", 3]]},     //tacticals
+	role[100,10]:{"armour":},		
+	role[100,9]:{"armour":},
+	role[100,12]:{"armour":},
+}*/
 global.body_parts = ["left_leg", "right_leg", "torso", "right_arm", "left_arm", "left_eye", "right_eye"];
 enum location_types {
 	planet,
@@ -81,6 +110,15 @@ global.trait_list = {
 		luck : 4,
 		flavour_text : "Is inexplicably lucky",
 		display_name : "Lucky"
+	},
+	"old_guard":{
+		luck : 1,
+		constitution : 1,
+		strength :1,
+		weapon_skill : 2,
+		ballistic_skill :2,
+		flavour_text : "{0} has seen many a young warrior rise and die before him but he remains",
+		display_name : "Old Guard"
 	}
 }
 global.base_stats = { //tempory stats subject to change by anyone that wishes to try their luck
@@ -258,6 +296,30 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	marine_number = mar;			//marine number in company
 	obj_ini.bio[company,marine_number] = 0;   //need to rework init of 2d arrays( and eventually remove)
 	static bionics = function(){return obj_ini.bio[company,marine_number];}// get marine bionics count	
+	static experience =  function(){return obj_ini.experience[company,marine_number];}//get exp
+	static update_exp = function(new_val){obj_ini.experience[company,marine_number] =new_val}//change exp
+	static armour = function(){ 
+		return obj_ini.armour[company,marine_number];
+	};
+	static get_unit_size = function(){
+		var r = role();
+		var arm = armour();
+		var sz = 0;
+		sz = 1;
+		var bulky_armour = ["Terminator Armour", "Tartaros"]
+	    if (string_count("Dread",arm)>0) {sz+=5;} else if (array_contains(bulky_armour,arm)){sz +=1};
+		var mobi =  mobility_item();
+		if (mobi == "Jump Pack"){
+			sz++;
+		}
+		if (r == "Chapter Master"){sz++}
+		size =sz;
+		return size
+	};	   
+     static update_armour = function(new_armour){
+          obj_ini.armour[company,marine_number] = new_armour;
+		get_unit_size(); //every time armour is changed see if the marines size has changed
+	};		
 	// used both to load unit data from save and to add preset base_stats
 	static load_json_data = function(data){							//this also allows us to create a pre set of anysort for a marine
 		 var names = variable_struct_get_names(data);
@@ -379,15 +441,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				if (irandom(99)>98){
 					add_trait("lightning_warriors");
 				};
-			};			
+			};
 			break;
 		/*case "skitarii":
 			break;*/	
 	}
 		body = {"left_leg":{}, "right_leg":{}, "torso":{}, "left_arm":{}, "right_arm":{}, "left_eye":{}, "right_eye":{}}; //body parts list can be extended as much as people want
 		static race = function(){return obj_ini.race[company,marine_number];}		//get race
-		static experience =  function(){return obj_ini.experience[company,marine_number];}//get exp
-		static update_exp = function(new_val){obj_ini.experience[company,marine_number] =new_val}//change exp
 		static add_bionics = function(){
 			var new_bionic_pos, part, new_bionic = {quality :"standard"};
 			if (obj_ini.bio[company,marine_number] < 10){
@@ -461,13 +521,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
        static update_weapon_two = function(new_weapon){
             obj_ini.w[company,marine_number] = new_weapon;
 	   };
-		static armour = function(){ 
-			return obj_ini.armour[company,marine_number];
-		};	   
-       static update_armour = function(new_armour){
-            obj_ini.armour[company,marine_number] = new_armour;
-			get_unit_size(); //every time armour is changed see if the marines size has changed
-	   };	
 		static corruption = function(){ 
 			return obj_ini.chaos[company,marine_number];
 		};	   
@@ -510,23 +563,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			melee_att = (((weapon_skill/100) * (strength/20)) + (experience()/1000)+0.1);
 			return melee_att;
 		};
-		
-		static get_unit_size = function(){
-			var r = role();
-			var arm = armour();
-			var sz = 0;
-			sz = 1;
-			var bulky_armour = ["Terminator Armour", "Tartaros"]
-		    if (string_count("Dread",arm)>0) {sz+=5;} else if (array_contains(bulky_armour,arm)){sz +=1};
-			var mobi =  mobility_item();
-			if (mobi == "Jump Pack"){
-				sz++;
-			}
-			if (r == "Chapter Master"){sz++}
-			size =sz;
-			return size
-		};
-		
 		static marine_location = function(){
 			var location_id,location_name;
 			var location_type = obj_ini.wid[company,marine_number];
@@ -565,5 +601,99 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					  obj_ini.ship_carrying[ship] += size;            //add marine capacity to new ship
 				 }
 			 }
-		}	
+		}
+	static spawn_exp =function(){
+		var spawn_ex = 0;
+		if (obj_ini.company_spawn_buffs[company] != 0){
+			spawn_ex += gauss(obj_ini.company_spawn_buffs[company][0], obj_ini.company_spawn_buffs[company][1]);	//finds the on game spwan buff a marine should get from being spawned at game start
+		}
+		if (struct_exists(obj_ini.role_spawn_buffs, role())){ //adds exp buffs based on marine's role
+			if (obj_ini.role_spawn_buffs[$ role()] != 0){
+				spawn_ex += gauss(obj_ini.role_spawn_buffs[$ role()][0], obj_ini.role_spawn_buffs[$ role()][1]);
+			}
+		}
+		if (spawn_ex != 0){update_exp(spawn_ex)}  //update the marines exp with updated guass value
+
+	}
+	static spawn_old_guard =function(){
+		var old_guard=irandom(100);
+		var age = (obj_ini.millenium*1000)+obj_ini.year;
+		switch(role()){
+			case obj_ini.role[100,5]:  //captain
+				if(old_guard>=75){
+					armour[company,marine_number]="MK3 Iron Armour"
+					update_age(age - gauss(600, 100))
+				} // 25% of iron within
+				else{
+					armour[company,marine_number]="MK8 Errant"
+					update_age(age - gauss(400, 250))
+				};
+				break;
+			case  obj_ini.role[100,15]:  //apothecary
+				armour[company,marine_number]="MK7 Aquila";if (company<=2) then armour[company,marine_number]=choose("MK8 Errant","MK6 Corvus");
+				update_age(age - gauss(400, 250))
+				break;
+			case "Standard Bearer":
+				 armour[company,marine_number]="MK5 Heresy";
+				 update_age(age - gauss(400, 250))
+				break;
+			case  obj_ini.role[100,8]:		//tacticals
+				if (old_guard=99){armour[company,marine_number]="MK3 Iron Armour"} // 1%
+					else if (old_guard>=97 and old_guard<=99){
+						armour[company,marine_number]="MK4 Maximus"
+						update_age(age - gauss(500, 100))
+					} //3%
+					else if (old_guard>=91 and old_guard<=96){
+						armour[company,marine_number]="MK5 Heresy";
+						update_age(age - gauss(300, 100));
+					} // 6%
+					else if (old_guard>=79 and old_guard<=90){
+						armour[company,marine_number]="MK6 Corvus";
+						update_age(age - gauss(250, 25))
+					} // 12%
+					else if (company<=2){
+						armour[company,marine_number]="MK6 Corvus"
+						} // company 1 and 2 taccies get beakies by default
+					else{armour[company,marine_number]="MK7 Aquila"};
+				break;
+			case  obj_ini.role[100,10]:		//assualts
+				// due to assault marines not wanting corvus due to worse ac, given them better chances with melee oriented armours. 
+				// melee is risky af anyway so let's reward players who go assault marine heavy at game start
+				if (old_guard>=99 and old_guard<=97){
+					armour[company,marine_number]="MK8 Errant";
+					update_age(age - gauss(150, 30));
+				} // 3% 
+				else if (old_guard>=91 and old_guard<=96){
+					armour[company,marine_number]="MK3 Iron Armour";
+					update_age(age - gauss(500, 100));
+				} // 6% 
+				else if (old_guard>=80 and old_guard<=90){
+					armour[company,marine_number]="MK4 Maximus";
+					update_age(age - gauss(300, 100));
+				} // 12%
+				else if (old_guard>=57 and old_guard<=79){
+					armour[company,marine_number]="MK5 Heresy";
+					update_age(age - gauss(240, 40));
+				} // 24%
+				else{
+					armour[company,marine_number]="MK7 Aquila";
+					update_age(age - gauss(150, 75))
+				};
+				break;	
+			case  obj_ini.role[100,9]: 		//devastators	
+				if (old_guard>=99 and old_guard<=97){
+					armour[company,marine_number]="MK4 Maximus";
+					update_age(age - gauss(300, 100));
+				} // 3% for maximus
+				else if (old_guard>=78 and old_guard<=96){
+					armour[company,marine_number]="MK6 Corvus";
+					update_age(age - gauss(200, 50))
+				} // 20% chance for devos to have ranged armor, wouldn't want much else
+				else if (company<=2) {
+					armour[company,marine_number]="MK6 Corvus";
+				} // company 1 and 2 taccies get beakies by default
+				else{armour[company,marine_number]="MK7 Aquila"};
+				break;
+		}
+	}
 }
