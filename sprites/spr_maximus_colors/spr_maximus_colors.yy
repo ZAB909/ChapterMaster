@@ -3,7 +3,7 @@
   "resourceVersion": "1.0",
   "name": "spr_maximus_colors",
   "bbox_bottom": 220,
-  "bbox_left": 11,
+  "bbox_left": 10,
   "bbox_right": 154,
   "bbox_top": 11,
   "bboxMode": 0,
