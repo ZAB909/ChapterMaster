@@ -275,7 +275,7 @@ function scr_ui_advisors() {
 	    draw_text_ext(xx+336+16,yy+477,string_hash_to_newline(string(blurp2)),-1,536);
 
 		var currently_rendered_slave_index = 0;
-	    for (var i=1;i<=120;i++) {
+	    for (var i=1;i<=120;i++) { // TODO why go through all batches if we can only display 10?
     		if (obj_ini.slave_batch_num[i] > 0 && currently_rendered_slave_index < 10) {
 				currently_rendered_slave_index++;
 	            draw_text(xx+336+16,yy+513+(currently_rendered_slave_index*20),string_hash_to_newline("Batch "+string(currently_rendered_slave_index)));
