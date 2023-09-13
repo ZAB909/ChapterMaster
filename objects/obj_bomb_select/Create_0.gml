@@ -1,4 +1,4 @@
-// TODO refactor
+// Resets vars and also checks if target can be bombarded
 ship_names="";
 sh_target=0;
 p_target=0;
@@ -15,17 +15,13 @@ bomb_a=0;
 bomb_b=0;
 bomb_c=0;
 
-
-var i;i=-1;
-repeat(31){
-    i+=1;
+for(var i=0; i<31; i++){
     ship[i]="";
     ship_all[i]=0;
     ship_use[i]=0;
     ship_max[i]=0;
     ship_ide[i]=0;
 }
-
 
 menu=0;
 
@@ -43,15 +39,17 @@ mechanicus=0;
 necrons=0;
 
 
-with(obj_en_fleet){if (owner=2) or (owner=3) or (owner=4) or (action!="") then instance_deactivate_object(id);}
+with(obj_en_fleet){
+    if (owner==2) or (owner==3) or (owner==4) or (action!="") then instance_deactivate_object(id);
+}
 instance_create(obj_star_select.target.x,obj_star_select.target.y,obj_temp3);
-with(obj_fleet){if (point_distance(x,y,obj_temp3.x,obj_temp3.y)>35) then instance_deactivate_object(id);}
+with(obj_fleet){
+    if (point_distance(x,y,obj_temp3.x,obj_temp3.y)>35) then instance_deactivate_object(id);
+}
 
-
-var bib;bib=instance_nearest(obj_temp3.x,obj_temp3.y,obj_en_fleet);
+var bib=instance_nearest(obj_temp3.x,obj_temp3.y,obj_en_fleet);
 if (instance_exists(bib)){
     if (point_distance(obj_temp3.x,obj_temp3.y,bib.x,bib.y)<=35){
-        // show_message("Enemy fleets are preventing bombardment!");
         
         scr_popup("Cannot Bombard","Enemy fleets are preventing bombardment!","","");
         
@@ -64,7 +62,4 @@ if (instance_exists(bib)){
 }
 instance_activate_object(obj_en_fleet);
 
-
-
 alarm[1]=1;
-

@@ -1,7 +1,5 @@
-// TODO refactor
-var i;i=-1;
-repeat(31){
-    i+=1;
+// Sets the targets for the ships, handles bombardment
+for(var i=0; i<31; i++){
     ship[i]="";
     ship_all[i]=0;
     ship_use[i]=0;
@@ -11,12 +9,10 @@ repeat(31){
 
 max_ships=sh_target.capital_number+sh_target.frigate_number+sh_target.escort_number;
 
+var tump=0;
 
-var tump;tump=0;
-
-var i, q, b;i=0;q=0;b=0;
-repeat(sh_target.capital_number){
-    b+=1;
+var i=0;
+for(var b=1; b<=sh_target.capital_number; b++){
     if (sh_target.capital[b]!=""){
         i+=1;
         ship[i]=sh_target.capital[i];
@@ -30,9 +26,7 @@ repeat(sh_target.capital_number){
         bomb_b+=ship_max[i];bomb_c+=ship_max[i];
     }
 }
-q=0;
-repeat(sh_target.frigate_number){
-    q+=1;
+for(var q=1; q<=sh_target.frigate_number; q++){
     if (sh_target.frigate[q]!=""){
         i+=1;
         ship[i]=sh_target.frigate[q];
@@ -46,4 +40,3 @@ repeat(sh_target.frigate_number){
         bomb_b+=ship_max[i];bomb_c+=ship_max[i];
     }
 }
-
