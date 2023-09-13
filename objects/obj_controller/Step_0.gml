@@ -1,4 +1,4 @@
-
+// TODO refactor
 if (double_click>=0) then double_click-=1;
 if (text_bar>0){text_bar+=1;
     if (menu=1) and (managing>0) then obj_ini.company_title[managing]=keyboard_string;

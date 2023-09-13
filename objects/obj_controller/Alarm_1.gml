@@ -1,4 +1,4 @@
-
+// TODO refactor
 instance_activate_object(obj_star);
 instance_activate_object(obj_restart_vars);
 instance_activate_all();
