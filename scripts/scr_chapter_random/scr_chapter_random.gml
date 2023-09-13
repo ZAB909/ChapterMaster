@@ -45,7 +45,7 @@ function scr_chapter_random(argument0) {
 	hapothecary=scr_marine_name();hchaplain=scr_marine_name();clibrarian=scr_marine_name();
 	fmaster=scr_marine_name();recruiter=scr_marine_name();admiral=scr_marine_name();
 
-	equal_specialists=0;load_to_ships=2;successors=0;
+	equal_specialists=0;load_to_ships=[2,0,0];successors=0;
 
 	mutations=0;mutations_selected=0;
 	preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
