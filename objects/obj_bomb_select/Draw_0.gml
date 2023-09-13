@@ -180,35 +180,20 @@ if (max_ships>0)and (instance_exists(obj_star_select)){
 draw_set_font(fnt_tiny);
 draw_set_halign(fa_left);
 
-var i=-3,why=0,num="";
-repeat(6){i+=4;
-    if (ship[i]!=""){
-        if (ship_all[i]==0) then draw_set_alpha(0.35);
-        draw_rectangle(xx+47,yy+107+why,xx+161,yy+122+why,1);
-        num=string_delete(ship[i],20,999);
-        draw_text(xx+49,yy+109+why,string_hash_to_newline(string(num)));
-        draw_set_alpha(1);
+var ship_index=0,why=0,num="";
+
+for (var j = 0; j < 6; j++) {
+    for (var k = 0; k < 4; k++) {
+        if (ship[ship_index] != "") {
+            if (ship_all[ship_index] == 0) {
+                draw_set_alpha(0.35);
+            }
+            draw_rectangle(xx + 47 + k * 113, yy + 107 + why, xx + 161 + k * 113, yy + 122 + why, 1);
+            num = string_delete(ship[ship_index], 20, 999);
+            draw_text(xx + 49 + k * 113, yy + 109 + why, string_hash_to_newline(string(num)));
+            draw_set_alpha(1);
+        }
+        ship_index++;
     }
-    if (ship[i+1]!=""){
-        if (ship_all[i+1]==0) then draw_set_alpha(0.35);
-        draw_rectangle(xx+164,yy+107+why,xx+278,yy+122+why,1);
-        num=string_delete(ship[i+1],20,999);
-        draw_text(xx+166,yy+109+why,string_hash_to_newline(string(num)));
-        draw_set_alpha(1);
-    }
-    if (ship[i+2]!=""){
-        if (ship_all[i+2]==0) then draw_set_alpha(0.35);
-        draw_rectangle(xx+281,yy+107+why,xx+395,yy+122+why,1);
-        num=string_delete(ship[i+2],20,999);
-        draw_text(xx+283,yy+109+why,string_hash_to_newline(string(num)));
-        draw_set_alpha(1);
-    }
-    if (ship[i+3]!=""){
-        if (ship_all[i+3]==0) then draw_set_alpha(0.35);
-        draw_rectangle(xx+398,yy+107+why,xx+512,yy+122+why,1);
-        num=string_delete(ship[i+3],20,999);
-        draw_text(xx+400,yy+109+why,string_hash_to_newline(string(num)));
-        draw_set_alpha(1);
-    }
-    why+=18;
+    why += 18;
 }
