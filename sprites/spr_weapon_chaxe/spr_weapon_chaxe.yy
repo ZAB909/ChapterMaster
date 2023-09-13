@@ -2,7 +2,7 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "spr_weapon_chaxe",
-  "bbox_bottom": 217,
+  "bbox_bottom": 220,
   "bbox_left": 0,
   "bbox_right": 147,
   "bbox_top": 0,

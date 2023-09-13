@@ -2,7 +2,7 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "spr_weapon_chsword",
-  "bbox_bottom": 225,
+  "bbox_bottom": 228,
   "bbox_left": 0,
   "bbox_right": 143,
   "bbox_top": 0,
