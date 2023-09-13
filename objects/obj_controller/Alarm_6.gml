@@ -1,7 +1,7 @@
+// TODO refactor
 
-
-if (menu=1) and (managing>0){
-    var f;f=0;
+if (menu==1) and (managing>0){
+    var f=0;
     
     var cap,apo,chap,bear,tct,assa,dev,sco,hon,ve,ter,oth,drea,vdrea,codi,lexi,lib,tech;
     cap=0;apo=0;chap=0;bear=0;tct=0;assa=0;dev=0;sco=0;hon=0;ve=0;ter=0;oth=0;drea=0;vdrea=0;codi=0;lexi=0;lib=0;tech=0;
@@ -14,8 +14,8 @@ if (menu=1) and (managing>0){
     var manz,vanz,stahp;
     manz=0;vanz=0;stahp=0;
     
-    repeat(man_max){
-        f+=1;// cooldown=8;
+    for(var f=1; f<=man_max; f++){
+        // cooldown=8;
         
         if (man_sel[f]=1){
             
