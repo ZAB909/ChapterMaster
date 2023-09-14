@@ -214,7 +214,13 @@ function scr_initialize_custom() {
 				   battle_barges+=1;
 			   }
 	    
-		
+		if (global.chapter_name="Crimson Fists")   
+	           {
+				   flagship_name="Throne's Fury";
+				   battle_barges-=1;
+				   gladius-=3;
+				   strike_cruisers-=4
+			   }
 		
 	        if (global.chapter_name="Dark Angels") then battle_barges+=1;
 	    }
@@ -433,7 +439,9 @@ function scr_initialize_custom() {
 		tenth-=38;seventh=0;sixth=40; assault-=10;
 		fifth-=20;fourth-=20;third-=20;second-=20;terminator-=5;veteran-=20;
 	}
-
+if (global.chapter_name="Crimson Fists"){
+	    veteran+=30;
+	}
 	if (global.chapter_name="Space Wolves"){
 	    veteran+=40;second+=40;third+=40;fourth+=40;fifth+=40;sixth+=40;seventh+=40;eighth+=40;ninth+=40;tenth+=60;
 	}
