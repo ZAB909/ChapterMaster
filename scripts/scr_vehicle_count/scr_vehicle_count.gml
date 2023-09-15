@@ -27,7 +27,7 @@ function scr_vehicle_count(role, star_system_num) {
 
                 if (star_system_num != "home") and(star_system_num != "field") {
                     if (obj_ini.veh_role[company_number, i] == role) {
-                        var t1 = string(obj_ini.veh_loc[company_number, i]) + "|" + string(obj_ini.veh_wid[com, i]) + "|";
+                        var t1 = string(obj_ini.veh_loc[company_number, i]) + "|" + string(obj_ini.veh_wid[company_number, i]) + "|";
                         if (star_system_num == t1) then vehicle_count++;
                     }
                 }
