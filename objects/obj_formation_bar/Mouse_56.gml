@@ -43,52 +43,52 @@ if (dragging==true) and (instance_exists(mah_target)){
             obj_controller.click=1;
             obj_controller.cooldown=20;
             show_debug_message(string(obj_controller.click) + "Selected UNIT ID OR selected UNIT TYPE");
-            switch (unit_id) {
-				case 1:
+            switch (unit_type) {
+				case "HQ":
                     obj_controller.bat_comm_for[obj_controller.formating] = mah_target.col_parent;
                     show_debug_message(string(mah_target.col_parent) +"Col parent, unit_id: " + string(unit_id));
                     show_debug_message(string(obj_controller.bat_comm_for[obj_controller.formating]) + " Formation position (1-10 max");
                     break;
-                case 2:
+                case "Hono":
                     obj_controller.bat_hono_for[obj_controller.formating] = mah_target.col_parent;
                     break;
-                case 3:
+                case "Lib":
                     obj_controller.bat_libr_for[obj_controller.formating] = mah_target.col_parent;
                     break;
-                case 4:
+                case "Tech":
                     obj_controller.bat_tech_for[obj_controller.formating] = mah_target.col_parent;
                     break;
-                case 5:
+                case "Term":
                     obj_controller.bat_term_for[obj_controller.formating] = mah_target.col_parent;
                     break;
-                case 6:
+                case "Veteran":
                     obj_controller.bat_vete_for[obj_controller.formating] = mah_target.col_parent;
                     break;
-                case 7:
+                case "Tactical":
                     obj_controller.bat_tact_for[obj_controller.formating] = mah_target.col_parent;
                     break;
-                case 8:
+                case "Devastator":
                     obj_controller.bat_deva_for[obj_controller.formating] = mah_target.col_parent;
                     break;
-                case 9:
+                case "Assault":
                     obj_controller.bat_assa_for[obj_controller.formating] = mah_target.col_parent;
                     break;
-                case 10:
+                case "Sco":
                     obj_controller.bat_scou_for[obj_controller.formating] = mah_target.col_parent;
                     break;
-                case 11:
+                case "Dread":
                     obj_controller.bat_drea_for[obj_controller.formating] = mah_target.col_parent;
                     break;
-                case 12:
+                case "???":
                     obj_controller.bat_hire_for[obj_controller.formating] = mah_target.col_parent;
                     break;
-                case 13:
+                case "Rhino":
                     obj_controller.bat_rhin_for[obj_controller.formating] = mah_target.col_parent;
                     break;
-                case 14:
+                case "Predator":
                     obj_controller.bat_pred_for[obj_controller.formating] = mah_target.col_parent;
                     break;
-                case 15:
+                case "Land Raider":
                     obj_controller.bat_land_for[obj_controller.formating] = mah_target.col_parent;
                     break;
             }
