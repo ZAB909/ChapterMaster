@@ -668,8 +668,8 @@ if ((leader=1) or (battle_special="world_eaters")) and (obj_controller.faction_d
     if (obj_controller.known[enemy]=0) then obj_controller.known[enemy]=1;
     
     if (battle_special!="world_eaters") then with(obj_star){
-        if (string_count("WL"+string(obj_ncombat.enemy),p_feature[obj_ncombat.battle_id])>0){
-            p_feature[obj_ncombat.battle_id]=string_replace(p_feature[obj_ncombat.battle_id],"WL"+string(obj_ncombat.enemy)+"|","");
+        if (string_count("WL"+string(obj_ncombat.enemy),string(p_feature[obj_ncombat.battle_id]))>0){
+            p_feature[obj_ncombat.battle_id]=string_replace(string(p_feature[obj_ncombat.battle_id]),"WL"+string(obj_ncombat.enemy)+"|","");
         }
     }
     if (battle_special="world_eaters"){

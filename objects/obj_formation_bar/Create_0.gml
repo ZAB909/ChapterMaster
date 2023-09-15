@@ -20,5 +20,5 @@ width=0;
 text_xscale=1.25;
 image_speed=0;
 
-
-
+initial_drag_x = 0;
+initial_drag_y = 0;
