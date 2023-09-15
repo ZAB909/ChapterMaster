@@ -3,7 +3,7 @@
   "resourceVersion": "1.0",
   "name": "spr_heresy_colors",
   "bbox_bottom": 221,
-  "bbox_left": 11,
+  "bbox_left": 10,
   "bbox_right": 156,
   "bbox_top": 11,
   "bboxMode": 0,

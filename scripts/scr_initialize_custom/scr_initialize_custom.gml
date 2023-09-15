@@ -972,7 +972,7 @@ function scr_initialize_custom() {
 	        if (company=10) then name[company,k]=recruiter_name;
 
 			var oldguard; oldguard=0;
-			// used to randomly make a marine an old guard of their company, giving a bit more xp (TODO) and fancier armor they've hanged onto all these years
+			// used to randomly make a marine an old guard of their company, giving a bit more xp (TODO) and fancier armour they've hanged onto all these years
 
 	        wep2[company,k]=wep2[101,5];
 		  	if(old_guard>=75){armour[company,k]="MK3 Iron Armour"}; // 25% of iron within
@@ -1084,7 +1084,7 @@ function scr_initialize_custom() {
 	                    if (wep1[101,9]!="Heavy Ranged") then wep1[company,k]=wep1[101,9];
 
 							if (old_guard>=99 and old_guard<=97){armour[company,k]="MK4 Maximus"}; // 3% for maximus
-								else if (old_guard>=78 and old_guard<=96){armour[company,k]="MK6 Corvus"}; // 20% chance for devos to have ranged armor, wouldn't want much else
+								else if (old_guard>=78 and old_guard<=96){armour[company,k]="MK6 Corvus"}; // 20% chance for devos to have ranged armour, wouldn't want much else
 									else if (company<=2) then armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies by default
 										else{armour[company,k]="MK7 Aquila"};
 							
@@ -1143,7 +1143,7 @@ function scr_initialize_custom() {
 					{armour[company,k]="MK7 Aquila"};
 					
 						if (old_guard>=99 and old_guard<=97){armour[company,k]="MK4 Maximus"}; // 3% for maximus
-							else if (old_guard>=78 and old_guard<=96){armour[company,k]="MK6 Corvus"}; // 20% chance for devos to have ranged armor, wouldn't want much else
+							else if (old_guard>=78 and old_guard<=96){armour[company,k]="MK6 Corvus"}; // 20% chance for devos to have ranged armour, wouldn't want much else
 								else{armour[company,k]="MK7 Aquila"};
 					
 	            }
