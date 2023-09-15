@@ -26,67 +26,67 @@ function scr_ui_formation_bars() {
 
         temp[te] = 0;
         temp[te + 100] = 0;
+        for (ii = 1; ii <= 15; ii++) {
+            // Set up the infantry
+            if (bat_comm_for[fo] == bar) {
+                init_combat_bars(bar, ii, nbar, abar,2, 0, x9, y9, temp, te, "HQ");
+            } else if (bat_hono_for[fo] == bar) {
+                init_combat_bars(bar, ii, nbar, abar,1, 1, x9, y9, temp, te, "Hono");
+            } else if (bat_libr_for[fo] == bar) {
+                init_combat_bars(bar, ii, nbar, abar,1, 8, x9, y9, temp, te, "Lib");
+            } else if (bat_tech_for[fo] == bar) {
+                init_combat_bars(bar, ii, nbar, abar,1, 9, x9, y9, temp, te, "Tech");
+            } else if (bat_term_for[fo] == bar) {
+                init_combat_bars(bar, ii, nbar, abar,1, 10, x9, y9, temp, te, "Term");
+            } else if (bat_vete_for[fo] == bar) {
+                init_combat_bars(bar, ii, nbar, abar,2, 6, x9, y9, temp, te, "Veteran");
+            } else if (bat_tact_for[fo] == bar) {
+                init_combat_bars(bar, ii, nbar, abar,6, 3, x9, y9, temp, te, "Tactical");
+            } else if (bat_deva_for[fo] == bar) {
+                init_combat_bars(bar, ii, nbar, abar,3, 2, x9, y9, temp, te, "Devastator");
+            } else if (bat_assa_for[fo] == bar) {
+                init_combat_bars(bar, ii, nbar, abar,3, 5, x9, y9, temp, te, "Assault");
+            } else if (bat_scou_for[fo] == bar) {
+                init_combat_bars(bar, ii, nbar, abar,1, 4, x9, y9, temp, te, "Sco");
+            } else if (bat_drea_for[fo] == bar) {
+                init_combat_bars(bar, ii, nbar, abar,2, 11, x9, y9, temp, te, "Dread");
+            } else if (bat_hire_for[fo] == bar) {
+                init_combat_bars(bar, ii, nbar, abar,1, 7, x9, y9, temp, te, "???");
+            }
+            // Set up the vehicles
+            if (bat_formation_type[fo] != 2) {
+                if (bat_rhin_for[fo] == bar) {
+                    init_combat_bars(bar, ii, nbar, abar,4, 12, x9, y9, temp, te, "Rhino");
+                } else if (bat_pred_for[fo] == bar) {
+                    init_combat_bars(bar, ii, nbar, abar,2, 13, x9, y9, temp, te, "Predator");
+                } else if (bat_land_for[fo] == bar) {
+                    init_combat_bars(bar, ii, nbar, abar,2, 14, x9, y9, temp, te, "Land Raider");
+                }
+            }
 
-        // Set up the infantry
-        if (bat_comm_for[fo] == bar) {
-            init_combat_bars(bar, ii, nbar, abar,2, 0, x9, y9, temp, te, "HQ");
-        } else if (bat_hono_for[fo] == bar) {
-            init_combat_bars(bar, ii, nbar, abar,1, 1, x9, y9, temp, te, "Hono");
-        } else if (bat_libr_for[fo] == bar) {
-            init_combat_bars(bar, ii, nbar, abar,1, 8, x9, y9, temp, te, "Lib");
-        } else if (bat_tech_for[fo] == bar) {
-            init_combat_bars(bar, ii, nbar, abar,1, 9, x9, y9, temp, te, "Tech");
-        } else if (bat_term_for[fo] == bar) {
-            init_combat_bars(bar, ii, nbar, abar,1, 10, x9, y9, temp, te, "Term");
-        } else if (bat_vete_for[fo] == bar) {
-            init_combat_bars(bar, ii, nbar, abar,2, 6, x9, y9, temp, te, "Veteran");
-        } else if (bat_tact_for[fo] == bar) {
-            init_combat_bars(bar, ii, nbar, abar,6, 3, x9, y9, temp, te, "Tactical");
-        } else if (bat_deva_for[fo] == bar) {
-            init_combat_bars(bar, ii, nbar, abar,3, 2, x9, y9, temp, te, "Devastator");
-        } else if (bat_assa_for[fo] == bar) {
-            init_combat_bars(bar, ii, nbar, abar,3, 5, x9, y9, temp, te, "Assault");
-        } else if (bat_scou_for[fo] == bar) {
-            init_combat_bars(bar, ii, nbar, abar,1, 4, x9, y9, temp, te, "Sco");
-        } else if (bat_drea_for[fo] == bar) {
-            init_combat_bars(bar, ii, nbar, abar,2, 11, x9, y9, temp, te, "Dread");
-        } else if (bat_hire_for[fo] == bar) {
-            init_combat_bars(bar, ii, nbar, abar,1, 7, x9, y9, temp, te, "???");
-        }
-        // Set up the vehicles
-        if (bat_formation_type[fo] != 2) {
-            if (bat_rhin_for[fo] == bar) {
-                init_combat_bars(bar, ii, nbar, abar,4, 12, x9, y9, temp, te, "Rhino");
-            } else if (bat_pred_for[fo] == bar) {
-                init_combat_bars(bar, ii, nbar, abar,2, 13, x9, y9, temp, te, "Predator");
-            } else if (bat_land_for[fo] == bar) {
-                init_combat_bars(bar, ii, nbar, abar,2, 14, x9, y9, temp, te, "Land Raider");
+            if (instance_exists(nbar)) {
+                nbar.width = 39;
+            }
+
+            if (temp[4800 + bar] > 10) {
+                bat_deva_for[bar] = 1;
+                bat_assa_for[bar] = 4;
+                bat_tact_for[bar] = 2;
+                bat_vete_for[bar] = 2;
+                bat_hire_for[bar] = 3;
+                bat_libr_for[bar] = 3;
+                bat_comm_for[bar] = 3;
+                bat_tech_for[bar] = 3;
+                bat_term_for[bar] = 3;
+                bat_hono_for[bar] = 3;
+                bat_drea_for[bar] = 5;
+                bat_rhin_for[bar] = 6;
+                bat_pred_for[bar] = 7;
+                bat_land_for[bar] = 7;
+                bat_scou_for[bar] = 1;
+                bar_fix = 1;
             }
         }
-
-        if (instance_exists(nbar)) {
-            nbar.width = 39;
-        }
-
-        if (temp[4800 + bar] > 10) {
-            bat_deva_for[bar] = 1;
-            bat_assa_for[bar] = 4;
-            bat_tact_for[bar] = 2;
-            bat_vete_for[bar] = 2;
-            bat_hire_for[bar] = 3;
-            bat_libr_for[bar] = 3;
-            bat_comm_for[bar] = 3;
-            bat_tech_for[bar] = 3;
-            bat_term_for[bar] = 3;
-            bat_hono_for[bar] = 3;
-            bat_drea_for[bar] = 5;
-            bat_rhin_for[bar] = 6;
-            bat_pred_for[bar] = 7;
-            bat_land_for[bar] = 7;
-            bat_scou_for[bar] = 1;
-            bar_fix = 1;
-        }
-
         y9 = __view_get(e__VW.YView, 0) + 224;
         x9 += 50;
     }

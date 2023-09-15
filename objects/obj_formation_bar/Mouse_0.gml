@@ -1,5 +1,5 @@
 
-if (obj_cursor.dragging==0) and (obj_controller.cooldown<=0){
+if (obj_cursor.dragging==0) and (obj_controller.cooldown<=0) and (mouse_check_button_pressed(mb_left)){
     obj_cursor.dragging=1;
     dragging=true;
     obj_controller.cooldown=9999;
