@@ -1,11 +1,10 @@
 
 if (obj_controller.settings=0) or (obj_controller.menu!=23) then instance_destroy();
 
-var romanNumerals;
-romanNumerals= scr_roman_numerals();
+var romanNumerals= scr_roman_numerals();
 
 if (engage=true){
-    for(var co=1; co<=11; co++){
+    for(var co=0; co<11; co++){
         var i=0;
         if (role_number[co]>0){
 			for(i=1; i<=300; i++){
@@ -157,7 +156,9 @@ if (engage=true){
 if (refresh=true) and (obj_controller.settings>0){
     total_role_number=0;
 	total_roles="";
-	for(var i=0; i<11; i++){role_number[i]=0;}
+	for(var i=0; i<11; i++){
+        role_number[i]=0;
+        }
 	for(var i=0; i<61; i++){
 		arm[i]="";
 		arm_n[i]=0;

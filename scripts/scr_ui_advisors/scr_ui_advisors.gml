@@ -274,14 +274,14 @@ function scr_ui_advisors() {
 		draw_set_font(fnt_40k_14);
 	    draw_text_ext(xx+336+16,yy+477,string_hash_to_newline(string(blurp2)),-1,536);
 
-		var g = 0;
-	    for (var i=1;i<=120 && g<10;i++) {
-    		if (obj_ini.slave_batch_num[g] > 0) {
-				g++;
-	            draw_text(xx+336+16,yy+513+(g*20),string_hash_to_newline("Batch "+string(g)));
-	            draw_text(xx+336+16.5,yy+513.5+(g*20),string_hash_to_newline("Batch "+string(g)));
-	            draw_text(xx+536,yy+513+(g*20),string_hash_to_newline("Eta: "+string(obj_ini.slave_batch_eta[g])+" months"));
-	            draw_text(xx+756,yy+513+(g*20),string_hash_to_newline(string(obj_ini.slave_batch_num[g])+" pods"));
+		var currently_rendered_slave_index = 0;
+	    for (var i=1;i<=120;i++) { // TODO why go through all batches if we can only display 10?
+    		if (obj_ini.slave_batch_num[i] > 0 && currently_rendered_slave_index < 10) {
+				currently_rendered_slave_index++;
+	            draw_text(xx+336+16,yy+513+(currently_rendered_slave_index*20),string_hash_to_newline("Batch "+string(currently_rendered_slave_index)));
+	            draw_text(xx+336+16.5,yy+513.5+(currently_rendered_slave_index*20),string_hash_to_newline("Batch "+string(currently_rendered_slave_index)));
+	            draw_text(xx+536,yy+513+(currently_rendered_slave_index*20),string_hash_to_newline("Eta: "+string(obj_ini.slave_batch_eta[currently_rendered_slave_index])+" months"));
+	            draw_text(xx+756,yy+513+(currently_rendered_slave_index*20),string_hash_to_newline(string(obj_ini.slave_batch_num[currently_rendered_slave_index])+" pods"));
 	        }
 	    }
 	    draw_set_alpha(1);

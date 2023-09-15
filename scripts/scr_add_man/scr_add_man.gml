@@ -107,7 +107,7 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 	    obj_ini.role[target_company,good]=man_role;
 	    obj_ini.wep1[target_company,good]="";
 	    obj_ini.wep2[target_company,good]="";
-	    obj_ini.armor[target_company,good]="";
+	    obj_ini.armour[target_company,good]="";
 	    obj_ini.chaos[target_company,good]=corruption;
 	    obj_ini.experience[target_company,good]=spawn_exp;
 	    obj_ini.spe[target_company,good]="";
@@ -118,27 +118,27 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 			switch(man_role){
 	        case "Skitarii":
 	            obj_ini.wep1[target_company,good]="Hellgun";obj_ini.wep2[target_company,good]="";
-	            obj_ini.armor[target_company,good]="Skitarii Armour";obj_ini.experience[target_company,good]=10;
+	            obj_ini.armour[target_company,good]="Skitarii Armour";obj_ini.experience[target_company,good]=10;
 	            obj_ini.hp[target_company,good]=40;
 	            obj_ini.race[target_company,good]=3;
 				obj_ini.TTRPG[target_company, good] = new TTRPG_stats("mechanicus", target_company, good, "skitarii");
 				break;
 	        case "Techpriest":
 	            obj_ini.wep1[target_company,good]="Power Weapon";obj_ini.wep2[target_company,good]="Conversion Beam Projector";
-	            obj_ini.armor[target_company,good]="Dragon Scales";obj_ini.gear[target_company,good]="Servo Arms";obj_ini.experience[target_company,good]=100;
+	            obj_ini.armour[target_company,good]="Dragon Scales";obj_ini.gear[target_company,good]="Servo Arms";obj_ini.experience[target_company,good]=100;
 	            obj_ini.hp[target_company,good]=50;
 	            obj_ini.race[target_company,good]=3;
 				obj_ini.TTRPG[target_company, good] = new TTRPG_stats("mechanicus", target_company, good, "tech_priest");
 				break
 	        case "Ranger":
 	            obj_ini.wep1[target_company,good]="Ranger Long Rifle";obj_ini.wep2[target_company,good]="Shuriken Pistol";
-	            obj_ini.armor[target_company,good]="";obj_ini.experience[target_company,good]=80;
+	            obj_ini.armour[target_company,good]="";obj_ini.experience[target_company,good]=80;
 	            obj_ini.hp[target_company,good]=30;
 	            obj_ini.race[target_company,good]=6
 				obj_ini.TTRPG[target_company, good] = new TTRPG_stats("mechanicus", target_company, good, "skitarii_ranger");
 				break;
 	         case "Crusader":
-	            obj_ini.wep1[target_company,good]="Power Sword";obj_ini.armor[target_company,good]="Power Armour";
+	            obj_ini.wep1[target_company,good]="Power Sword";obj_ini.armuor[target_company,good]="Power Armour";
 	            obj_ini.gear[target_company,good]="Storm Shield";obj_ini.experience[target_company,good]=10;
 	            obj_ini.hp[target_company,good]=30;
 	            obj_ini.race[target_company,good]=4;
@@ -146,20 +146,20 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 				break;
 	        case "Sister of Battle":
 	            obj_ini.wep1[target_company,good]="Bolter";obj_ini.wep2[target_company,good]="Sarissa";
-	            obj_ini.armor[target_company,good]="Power Armour";obj_ini.experience[target_company,good]=60;
+	            obj_ini.armour[target_company,good]="Power Armour";obj_ini.experience[target_company,good]=60;
 	            obj_ini.hp[target_company,good]=40;obj_ini.race[target_company,good]=5;
 				obj_ini.TTRPG[target_company, good] = new TTRPG_stats("adeptus_sororitas", target_company, good, "sister_of_battle");
 				break;
 	        case "Sister Hospitaler":
 	            obj_ini.wep1[target_company,good]="Bolter";obj_ini.wep2[target_company,good]="Sarissa";
-	            obj_ini.armor[target_company,good]="Power Armour";obj_ini.experience[target_company,good]=100;
+	            obj_ini.armour[target_company,good]="Power Armour";obj_ini.experience[target_company,good]=100;
 	            obj_ini.gear[target_company,good]="Sororitas Medkit";
 	            obj_ini.hp[target_company,good]=40;obj_ini.race[target_company,good]=5;
 				obj_ini.TTRPG[target_company, good] = new TTRPG_stats("adeptus_sororitas", target_company, good, "sister_hospitaler");
 				break;
 	        case "Ork Sniper":
 	            obj_ini.wep1[target_company,good]="Sniper Rifle";obj_ini.wep2[target_company,good]="Choppa";
-	            obj_ini.armor[target_company,good]="";obj_ini.experience[target_company,good]=20;
+	            obj_ini.armour[target_company,good]="";obj_ini.experience[target_company,good]=20;
 	            obj_ini.hp[target_company,good]=45;
 	            obj_ini.race[target_company,good]=7;
 				obj_ini.TTRPG[target_company, good] = new TTRPG_stats("ork", target_company, good, "ork_Sniper");
@@ -168,7 +168,7 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 	        
 	        case "Flash Git":
 	            obj_ini.wep1[target_company,good]="Snazzgun";obj_ini.wep2[target_company,good]="Choppa";
-	            obj_ini.armor[target_company,good]="Ork Armour";obj_ini.experience[target_company,good]=40;
+	            obj_ini.armour[target_company,good]="Ork Armour";obj_ini.experience[target_company,good]=40;
 	            obj_ini.hp[target_company,good]=65;
 	            obj_ini.race[target_company,good]=7;
 				obj_ini.TTRPG[target_company, good] = new TTRPG_stats("ork", target_company, good, "flash_git");
@@ -187,7 +187,7 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
     
     
 	    // Weapons
-	    if (choice_weapons=obj_ini.role[100,12]){wep2=obj_ini.wep2[100,12];wep1=obj_ini.wep1[100,12];arm=obj_ini.armor[100,12];}
+	    if (choice_weapons=obj_ini.role[100,12]){wep2=obj_ini.wep2[100,12];wep1=obj_ini.wep1[100,12];arm=obj_ini.armour[100,12];}
     
 	    var good1,good2,good3,good4;
 	    good1=0;good2=0;good3=0;good4=0;
@@ -223,14 +223,14 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 	            e+=1;
 	            if (e<=100){
 	                if (obj_ini.equipment[e]=arm){
-	                    obj_ini.equipment_number[e]-=1;obj_ini.armor[target_company,good]=arm;
+	                    obj_ini.equipment_number[e]-=1;obj_ini.armour[target_company,good]=arm;
 	                    if (obj_ini.equipment_number[e]=0){obj_ini.equipment[e]="";obj_ini.equipment_type[e]="";}
 	                    e=1000;
 	                }
 	            }
 	        }
         
-	        // show_message(obj_ini.armor[target_company,good]);
+	        // show_message(obj_ini.armour[target_company,good]);
         
 	        e=0;
 	        if (choice_gear!="") then repeat(100){// Gear
@@ -257,7 +257,7 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
         
 	        if (obj_ini.wep1[target_company,good]!=wep1) and (wep1!="") then missing=1;
 	        if (obj_ini.wep2[target_company,good]!=wep2) and (wep2!="") then missing=1;
-	        if (obj_ini.armor[target_company,good]!=arm) and (arm!="") then missing=1;
+	        if (obj_ini.armour[target_company,good]!=arm) and (arm!="") then missing=1;
 	        if (obj_ini.gear[target_company,good]!=choice_gear) and (choice_gear!="") then missing=1;
 	        if (obj_ini.mobi[target_company,good]!=mobility_items) and (mobility_items!="") then missing=1;
         
