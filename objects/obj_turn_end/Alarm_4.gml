@@ -48,8 +48,8 @@ if (battles>0) and (current_battle<=battles){
             strin[2]=info_vehicles;
             
             if (info_mahreens+info_vehicles=0){
-                if (battles>current_battles) then alarm[4]=1;
-                if (battles=current_battles) then alarm[1]=1;
+                if (battles>current_battle) then alarm[4]=1;
+                if (battles=current_battle) then alarm[1]=1;
             }
             
             strin[3]="";

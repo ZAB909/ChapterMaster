@@ -4,7 +4,7 @@
   "name": "spr_errant_colors",
   "bbox_bottom": 220,
   "bbox_left": 1,
-  "bbox_right": 155,
+  "bbox_right": 156,
   "bbox_top": 1,
   "bboxMode": 0,
   "collisionKind": 1,
