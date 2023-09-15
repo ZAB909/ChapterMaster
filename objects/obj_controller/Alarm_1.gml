@@ -1,4 +1,4 @@
-// TODO refactor
+// Sets up the sector spawn and assigns spawned enemies to the sector
 instance_activate_object(obj_star);
 instance_activate_object(obj_restart_vars);
 instance_activate_all();
