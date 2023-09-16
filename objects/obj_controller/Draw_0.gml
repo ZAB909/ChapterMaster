@@ -1,5 +1,4 @@
-// TODO refactor
-
+// Draws the main UI menu. The function is used to highlight if you selected something in the menu
 var l_hei=37,l_why=0;
 
 if (instance_exists(obj_ncombat)) then exit;
@@ -96,126 +95,22 @@ if (zoomed==0) and (zui==0){
     draw_text_ext(__view_get( e__VW.XView, 0 )+102,__view_get( e__VW.YView, 0 )+838+y_slide,string_hash_to_newline("Chapter#Management"),18,999);
     draw_text_ext(__view_get( e__VW.XView, 0 )+250,__view_get( e__VW.YView, 0 )+838+y_slide,string_hash_to_newline("Chapter#Settings"),18,999);
     
-    // Low alpha line here?
+    // Draws the non selected menu less visible?
     draw_set_alpha(0.15);
     
-    if (l_options>0){
-        l_hei=37;
-        l_why=0;
-        if (l_options>94){
-            l_hei=134-l_options;
-            l_why=min(l_options-96,11);
-        }
-       draw_line(__view_get( e__VW.XView, 0 )+l_options+1374,__view_get( e__VW.YView, 0 )+10+1,__view_get( e__VW.XView, 0 )+l_options+1374,__view_get( e__VW.YView, 0 )+10+37-l_why);
-    }
-    if (l_menu>0){
-        l_hei=37;
-        l_why=0;
-        if (l_menu>94){
-            l_hei=134-l_menu;
-            l_why=min(l_menu-96,11);
-        }
-       draw_line(__view_get( e__VW.XView, 0 )+l_menu+1484,__view_get( e__VW.YView, 0 )+10+1,__view_get( e__VW.XView, 0 )+l_menu+1484,__view_get( e__VW.YView, 0 )+10+37-l_why);
-    }
-    if (l_manage>0){
-        l_hei=37;
-        l_why=0;
-        if (l_manage>131){
-            l_hei=171-l_manage;
-            l_why=min(l_manage-133,11);
-        }
-        draw_line(__view_get( e__VW.XView, 0 )+l_manage+34,__view_get( e__VW.YView, 0 )+840+y_slide+1+l_why,__view_get( e__VW.XView, 0 )+l_manage+34,__view_get( e__VW.YView, 0 )+840+y_slide+37);
-    }
-    if (l_settings>0){
-        l_hei=37;
-        l_why=0;
-        if (l_settings>131){
-            l_hei=171-l_settings;
-            l_why=min(l_settings-133,11);
-        }
-        draw_line(__view_get( e__VW.XView, 0 )+l_settings+179,__view_get( e__VW.YView, 0 )+840+y_slide+1+l_why,__view_get( e__VW.XView, 0 )+l_settings+179,__view_get( e__VW.YView, 0 )+840+y_slide+37);
-    }
-    if (l_apothecarium>0){
-        l_hei=37;
-        l_why=0;
-        if (l_apothecarium>101){
-            l_hei=141-l_apothecarium;
-            l_why=min(l_apothecarium-103,11);
-        }
-       draw_line(__view_get( e__VW.XView, 0 )+l_apothecarium+357,__view_get( e__VW.YView, 0 )+840+y_slide+1+l_why,__view_get( e__VW.XView, 0 )+l_apothecarium+357,__view_get( e__VW.YView, 0 )+840+y_slide+37);
-    }
-    if (l_reclusium>0){
-        l_hei=37;
-        l_why=0;
-        if (l_reclusium>101){
-            l_hei=141-l_reclusium;
-            l_why=min(l_reclusium-103,11);
-        }
-       draw_line(__view_get( e__VW.XView, 0 )+l_reclusium+473,__view_get( e__VW.YView, 0 )+840+y_slide+1+l_why,__view_get( e__VW.XView, 0 )+l_reclusium+473,__view_get( e__VW.YView, 0 )+840+y_slide+37);
-    }
-    if (l_librarium>0){
-        l_hei=37;
-        l_why=0;
-        if (l_librarium>101){
-            l_hei=141-l_librarium;
-            l_why=min(l_librarium-103,11);
-        }
-       draw_line(__view_get( e__VW.XView, 0 )+l_librarium+590,__view_get( e__VW.YView, 0 )+840+y_slide+1+l_why,__view_get( e__VW.XView, 0 )+l_librarium+590,__view_get( e__VW.YView, 0 )+840+y_slide+37);
-    }
-    if (l_armoury>0){
-        l_hei=37;
-        l_why=0;
-        if (l_armoury>101){
-            l_hei=141-l_armoury;
-            l_why=min(l_armoury-103,11);
-        }
-       draw_line(__view_get( e__VW.XView, 0 )+l_armoury+706,__view_get( e__VW.YView, 0 )+840+y_slide+1+l_why,__view_get( e__VW.XView, 0 )+l_armoury+706,__view_get( e__VW.YView, 0 )+840+y_slide+37);
-    }
-    if (l_recruitment>0){
-        l_hei=37;
-        l_why=0;
-        if (l_recruitment>101){
-            l_hei=141-l_recruitment;
-            l_why=min(l_recruitment-103,11);
-        }
-       draw_line(__view_get( e__VW.XView, 0 )+l_recruitment+822,__view_get( e__VW.YView, 0 )+840+y_slide+1+l_why,__view_get( e__VW.XView, 0 )+l_recruitment+822,__view_get( e__VW.YView, 0 )+840+y_slide+37);
-    }
-    if (l_fleet>0){
-        l_hei=37;
-        l_why=0;
-        if (l_fleet>101){
-            l_hei=141-l_fleet;
-            l_why=min(l_fleet-103,11);
-        }
-       draw_line(__view_get( e__VW.XView, 0 )+l_fleet+938,__view_get( e__VW.YView, 0 )+840+y_slide+1+l_why,__view_get( e__VW.XView, 0 )+l_fleet+938,__view_get( e__VW.YView, 0 )+840+y_slide+37);
-    }
-    if (l_diplomacy>0){
-        l_hei=37;
-        l_why=0;
-        if (l_diplomacy>131){
-            l_hei=171-l_diplomacy;
-            l_why=min(l_diplomacy-133,11);
-        }
-        draw_line(__view_get( e__VW.XView, 0 )+l_diplomacy+1130,__view_get( e__VW.YView, 0 )+840+y_slide+1+l_why,__view_get( e__VW.XView, 0 )+l_diplomacy+1130,__view_get( e__VW.YView, 0 )+840+y_slide+37);
-    }
-    if (l_log>0){
-        l_hei=37;
-        l_why=0;
-        if (l_log>131){
-            l_hei=171-l_log;
-            l_why=min(l_log-133,11);
-        }
-        draw_line(__view_get( e__VW.XView, 0 )+l_log+1275,__view_get( e__VW.YView, 0 )+840+y_slide+1+l_why,__view_get( e__VW.XView, 0 )+l_log+1275,__view_get( e__VW.YView, 0 )+840+y_slide+37);
-    }
-    if (l_turn>0){
-        l_hei=37;
-        l_why=0;
-        if (l_turn>131){
-            l_hei=171-l_turn;
-            l_why=min(l_turn-133,11);
-        }
-        draw_line(__view_get( e__VW.XView, 0 )+l_turn+1420,__view_get( e__VW.YView, 0 )+840+y_slide+1+l_why,__view_get( e__VW.XView, 0 )+l_turn+1420,__view_get( e__VW.YView, 0 )+840+y_slide+37);
-    }
+    draw_line(1374, 1, 0, l_options);
+    draw_line(1484, 1, 0, l_menu);
+    draw_line(34, 840, y_slide, l_manage);
+    draw_line(179, 840, y_slide, l_settings);
+    draw_line(357, 840, y_slide, l_apothecarium);
+    draw_line(473, 840, y_slide, l_reclusium);
+    draw_line(590, 840, y_slide, l_librarium);
+    draw_line(706, 840, y_slide, l_armoury);
+    draw_line(822, 840, y_slide, l_recruitment);
+    draw_line(938, 840, y_slide, l_fleet);
+    draw_line(1130, 1, 0, l_diplomacy);
+    draw_line(1275, 1, 0, l_log);
+    draw_line(1420, 1, 0, l_turn);
     
     draw_set_alpha(1);
     draw_sprite(spr_new_banner,0,__view_get( e__VW.XView, 0 )+1439+new_banner_x,__view_get( e__VW.YView, 0 )+62);
@@ -322,3 +217,18 @@ if (global.cheat_debug == true){
 }
 
 script_execute(scr_ui_popup,0,0,0,0,0);
+
+
+function draw_line(x1, y1, y_slide, variable) {
+    l_hei = 37;
+    l_why = 0;
+
+    if (variable > 0) {
+        if (variable > 94) {
+            l_hei = 134 - variable;
+            l_why = min(variable - 96, 11);
+        }
+
+        draw_line(view_xview[0] + variable + x1, view_yview[0] + 10 + 1 + l_why, view_xview[0] + variable + x1, view_yview[0] + 10 + 37 - l_why);
+    }
+}
