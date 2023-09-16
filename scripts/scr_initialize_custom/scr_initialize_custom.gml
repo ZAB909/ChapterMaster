@@ -536,10 +536,18 @@ function scr_initialize_custom() {
 	    role[i,16]="Techmarine";wep1[i,16]="Power Axe";wep2[i,16]="Storm Bolter";armour[i,16]="Power Armour";gear[i,16]="Servo Arms";mobi[i,16]="";
 	    role[i,17]="Librarian";wep1[i,17]="Force Weapon";wep2[i,17]="Storm Bolter";armour[i,17]="Power Armour";gear[i,17]="Psychic Hood";mobi[i,17]="";
 	}// 100 is defaults, 101 is the allowable starting equipment // info
+	i=-1;repeat(21){i+=1;
+	    race[100,i]=obj_creation.race[100,i];
+	    role[100,i]=obj_creation.role[100,i];
+	    wep1[100,i]=obj_creation.wep1[100,i];
+	    wep2[100,i]=obj_creation.wep2[100,i];
+	    armour[100,i]=obj_creation.armour[100,i];
+	    gear[100,i]=obj_creation.gear[100,i];
+	    mobi[100,i]=obj_creation.mobi[100,i];
+	}
+	role[100,18]="Sergeant";wep1[100,18]="Chainsword";wep2[100,18]="Combiflamer";armour[100,18]="Power Armour";mobi[100,18]="";gear[100,18]="";	
 		//made all the exp buffs sort into neat little structs so theyre easier to dev and player modify
-		/*each position in array the represents a company (with position 0 representing specials), and the first position in each second dimension
-			is the experience bonus each marine will get in that company modified with the gauss function where the second position is one standard deviation*/
-	company_spawn_buffs = [0,0,[110,15],[105,15],[95,15],[80,10],[65,10],[55,10],[45,10],[35,10],[3,10]]
+	company_spawn_buffs = [0,0,[110,10],[105,10],[95,10],[80,15],[65,5],[55,5],[45,5],[35,5],[3,4]]
 	role_spawn_buffs = {}
 	variable_struct_set(role_spawn_buffs,role[100,5],[70,40]);
 	variable_struct_set(role_spawn_buffs,role[100,14],[120,30]);
@@ -551,15 +559,67 @@ function scr_initialize_custom() {
 	variable_struct_set(role_spawn_buffs,role[100,10],0);
 	variable_struct_set(role_spawn_buffs,role[100,9],0);
 	variable_struct_set(role_spawn_buffs,role[100,12],0);
+	
+	squad_types = {};
+	var st = { 
+		"command_squad" :[
+				[role[100,5], {"max":1,"min":1}],		//captain
+				[role[100,7], {"max":1,"min":1}],		//company_champion
+				[role[100,15], {"max":1,"min":1}],		//Apothecary
+				["Standard Bearer" , {"max":1,"min":1}],//standard bearer
+				[role[100,3] , {"max":5,"min":0}],		//veterans
+			],
+			"terminator_squad": [
+				[role[100,8], {"max":9,"min":3}],
+			],
+			"tactical_squad":[
+				[role[100,8], {"max":9,"min":4, "loadout":{
+					"required":{
+						"wep1":["Bolter",4], 
+						"wep2":["Combat Knife",4]
+					},
+					"option" :{
+						"wep1":[
+							[["Flamer", "Meltagun"],1],
+							[["Plasma Gun","Storm Bolter"], 1],
+							[["Multi-Melta", "Heavy Flamer", "Bolter"], 1],
+							[["Missile Launcher", "Lascannon", "Bolter"], 1]],
+						"wep2":[
+							["Chainsword",2],
+							[["Power Sword", "Power Axe", "Lightning Claw"],1],
+							[["Chainfist", "Power Fist"],1]
+						]
+					} 
+				}}],		//tactical marine
+				[role[100,18], {"max":1,"min":1}],		// sergeant
+			],
+			"assualt_squad" : [
+				[role[100,10] , {"max":10, "min":4, "loadout":{
+					"required" : {
+						"wep1" : ["Chainsword", 4],
+						"wep2":["Bolt Pistol",4]
+					},
+					"option" : {
+						"wep1":[
+							[["Flamer"], 1], [["Eviscerator"],2],
+						],
+						"wep2":[
+							[["Plasma Pistol"], 1]
+						]
+					}
+				}}
+				],
+				[role[100,18], {"max":1,"min":1}],		// sergeant
+			]		
+		};
 
-	i=-1;repeat(21){i+=1;
-	    race[100,i]=obj_creation.race[100,i];
-	    role[100,i]=obj_creation.role[100,i];
-	    wep1[100,i]=obj_creation.wep1[100,i];
-	    wep2[100,i]=obj_creation.wep2[100,i];
-	    armour[100,i]=obj_creation.armour[100,i];
-	    gear[100,i]=obj_creation.gear[100,i];
-	    mobi[100,i]=obj_creation.mobi[100,i];
+	var st_names = struct_get_names(st);
+	for (var st_iter = 0; st_iter < array_length(st_names);st_iter++;){
+		var s_group = st[$ st_names[st_iter]];
+		squad_types[$ st_names[st_iter]] = {};
+		for (var iter_2 = 0; iter_2 < array_length(s_group);iter_2++){
+			squad_types[$ st_names[st_iter]][$ s_group[iter_2][0]] = s_group[iter_2][1];
+		}
 	}
 
 
@@ -991,9 +1051,9 @@ function scr_initialize_custom() {
 
 	        wep2[company,k]=wep2[101,5];
 	        spawn_unit = TTRPG[company,k];
-			// used to randomly make a marine an old guard of their company, giving a bit more xp (TODO) and fancier armor they've hanged onto all these years			
-	        spawn_unit.spawn_exp();
-        spawn_unit.spawn_old_guard();
+			// used to randomly make a marine an old guard of their company, giving a bit more xp (TODO) and fancier armor they've hanged onto all these years	
+			spawn_unit.spawn_exp();
+	        spawn_unit.spawn_old_guard();
 	        chaos[company,k]=0;
 
 	        if (company=8) then mobi[company,k]="Jump Pack";
@@ -1021,9 +1081,9 @@ function scr_initialize_custom() {
 	        k+=1;commands+=1;// Apothecary
 	        race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,15];wep1[company,k]=wep1[101,15];name[company,k]=scr_marine_name();
 	        wep2[company,k]=wep2[101,15];
-	        spawn_unit = TTRPG[company,k]; 
-	        spawn_unit.spawn_exp();
-          spawn_unit.spawn_old_guard();
+	        spawn_unit = TTRPG[company,k]
+			spawn_unit.spawn_exp();
+	        spawn_unit.spawn_old_guard();
 	        gear[company,k]=gear[101,15];chaos[company,k]=0;
 	        if (company=8) then mobi[company,k]="Jump Pack";
 	        if (mobi[101,15]!="") then mobi[company,k]=mobi[101,15];
@@ -1036,9 +1096,9 @@ function scr_initialize_custom() {
 	            gear[company,k]=gear[101,15];chaos[company,k]=0;
 	            if (company=8) then mobi[company,k]="Jump Pack";
 	            if (mobi[101,15]!="") then mobi[company,k]=mobi[101,15];
-					        spawn_unit = TTRPG[company,k];
-	                 spawn_unit.spawn_exp();
-                     spawn_unit.spawn_old_guard();
+					        spawn_unit = TTRPG[company,k]
+			spawn_unit.spawn_exp();
+	        spawn_unit.spawn_old_guard();
 	        }
 	        if (global.chapter_name="Iron Hands"){
 	            k+=1;commands+=1;
@@ -1046,9 +1106,9 @@ function scr_initialize_custom() {
 	            wep2[company,k]=wep2[101,16];armour[company,k]="Power Armour";gear[company,k]=gear[101,16];chaos[company,k]=0;
 	            bio[company,k]=4+choose(0,1,2);if (global.chapter_name="Iron Hands") then bio[company,k]=choose(7,8);
 	            if (mobi[101,16]!="") then mobi[company,k]=mobi[101,16];
-				spawn_unit = TTRPG[company,k];
+				spawn_unit = TTRPG[company,k]
 				spawn_unit.spawn_exp();
-        spawn_unit.spawn_old_guard();
+			 spawn_unit.spawn_old_guard();
 	        }
 
 	        k+=1;// Standard Bearer
@@ -1057,9 +1117,8 @@ function scr_initialize_custom() {
 	        armour[company,k]="MK5 Heresy";
 	        chaos[company,k]=0;if (company=8) then mobi[company,k]="Jump Pack";
 	        spawn_unit = TTRPG[company,k];
-	       
-	        spawn_unit.spawn_exp();       
-           spawn_unit.spawn_old_guard();
+			spawn_unit.spawn_exp();
+	        spawn_unit.spawn_old_guard();      
 
 	        k+=1;man_size+=1;// Company Champion
 	        race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,7];wep1[company,k]=wep1[100,7];name[company,k]=scr_marine_name();
@@ -1067,8 +1126,8 @@ function scr_initialize_custom() {
 	        chaos[company,k]=0;
 			spawn_unit = TTRPG[company,k];
 			spawn_unit.add_trait("champion");
-	    spawn_unit.spawn_exp();
-      spawn_unit.spawn_old_guard();
+			spawn_unit.spawn_exp();
+	        spawn_unit.spawn_old_guard();
 			// have equal spec true or false have same old_guard chance
 			// it doesn't fully make sense why new marines in reserve companies would have the same chance
 			// but otherwise you'd always pick true so you'd have more shit
@@ -1081,9 +1140,9 @@ function scr_initialize_custom() {
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,8];wep1[company,k]=wep1[101,8];wep2[company,k]=wep2[101,8];name[company,k]=scr_marine_name();
 	                chaos[company,k]=0;
 
-			        spawn_unit = TTRPG[company,k];
-			        spawn_unit.spawn_exp();
-               spawn_unit.spawn_old_guard();                  
+			        spawn_unit = TTRPG[company,k]
+					spawn_unit.spawn_exp();
+					spawn_unit.spawn_old_guard();
 
 	                }
 	                repeat(assault){k+=1;man_size+=1;
@@ -1092,9 +1151,9 @@ function scr_initialize_custom() {
 					mobi[company,k]="Jump Pack";chaos[company,k]=0;
 					wep2[company,k]=wep2[101,10]; 
 						
-			        spawn_unit = TTRPG[company,k];
-			        spawn_unit.spawn_exp();
-             spawn_unit.spawn_old_guard();                     
+			        spawn_unit = TTRPG[company,k]
+					spawn_unit.spawn_exp();
+					spawn_unit.spawn_old_guard();
 					
 	                }
 	                repeat(devastator){k+=1;man_size+=1;
@@ -1105,10 +1164,9 @@ function scr_initialize_custom() {
 	                    if (wep1[101,9]="Heavy Ranged") then wep1[company,k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
 	                    if (wep1[101,9]!="Heavy Ranged") then wep1[company,k]=wep1[101,9];
 
-			        spawn_unit = TTRPG[company,k];
-			        spawn_unit.spawn_exp();
-              spawn_unit.spawn_old_guard();                       
-
+			        spawn_unit = TTRPG[company,k]
+					spawn_unit.spawn_exp();
+					spawn_unit.spawn_old_guard();
 							
 	                }
 	            }
@@ -1132,9 +1190,9 @@ function scr_initialize_custom() {
 	                chaos[company,k]=0;
 
 					
-			        spawn_unit = TTRPG[company,k];
-			        spawn_unit.spawn_exp();
-              spawn_unit.spawn_old_guard();
+			        spawn_unit = TTRPG[company,k]
+					spawn_unit.spawn_exp();
+					spawn_unit.spawn_old_guard();
 					
 	            } // reserve company only of assault
 	            if (company=8) then repeat(temp1){k+=1;man_size+=1; // assault reserve company
@@ -1142,12 +1200,9 @@ function scr_initialize_custom() {
 	            	race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,10];wep1[company,k]=wep1[101,10];wep2[company,k]=wep2[101,10];name[company,k]=scr_marine_name();
 	            	chaos[company,k]=0;mobi[company,k]="Jump Pack";
 					
-					// due to assault marines not wanting corvus due to worse ac, given them better chances with melee oriented armours. 
-					// melee is risky af anyway so let's reward players who go assault marine heavy at game start
-					
-			        spawn_unit = TTRPG[company,k];
-			        spawn_unit.spawn_exp();
-               spawn_unit.spawn_old_guard();                                 
+			        spawn_unit = TTRPG[company,k]
+					spawn_unit.spawn_exp();
+					spawn_unit.spawn_old_guard();
 				
 	            } // reserve company only devo
 	            if (company=9) then repeat(temp1){k+=1;man_size+=1; 
@@ -1156,9 +1211,10 @@ function scr_initialize_custom() {
 	                chaos[company,k]=0;
 	                if (wep1[101,9]="Heavy Ranged") then wep1[company,k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
 	                if (wep1[101,9]!="Heavy Ranged") then wep1[company,k]=wep1[101,9];
-			        spawn_unit = TTRPG[company,k];
-			        spawn_unit.spawn_exp();
-              spawn_unit.spawn_old_guard();                                 	
+			        spawn_unit = TTRPG[company,k]
+					spawn_unit.spawn_exp();
+					spawn_unit.spawn_old_guard();
+								
 	            }
 	            if (company=10) then repeat(temp1){k+=1;man_size+=1;
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,12];wep1[company,k]=wep1[101,12];name[company,k]=scr_marine_name();
@@ -1169,9 +1225,9 @@ function scr_initialize_custom() {
 
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,10];wep1[company,k]=wep1[101,10];wep2[company,k]=wep2[101,10];name[company,k]=scr_marine_name();
 	                mobi[company,k]=mobi[101,10];chaos[company,k]=0;
-			        spawn_unit = TTRPG[company,k];
-			        spawn_unit.spawn_exp()
-              spawn_unit.spawn_old_guard();
+			        spawn_unit = TTRPG[company,k]
+					spawn_unit.spawn_exp();
+					spawn_unit.spawn_old_guard();
 				
 					
 	            }
@@ -1184,9 +1240,9 @@ function scr_initialize_custom() {
 	                if (wep1[101,9]="Heavy Ranged") then wep1[company,k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
 	                if (wep1[101,9]!="Heavy Ranged") then wep1[company,k]=wep1[101,9];
 					
-			        spawn_unit = TTRPG[company,k];
-			        spawn_unit.spawn_exp();
-              spawn_unit.spawn_old_guard();
+			        spawn_unit = TTRPG[company,k]
+			        spawn_unit.spawn_old_guard();
+			        spawn_unit.spawn_exp()
 				
 	                
 	            }
@@ -1348,6 +1404,203 @@ function scr_initialize_custom() {
 	    // penitent_max=100300;penitent_end=1200;
 	    // obj_controller.loyalty=50;obj_controller.loyalty_hidden=50;
 	// }
+	obj_ini.squads = [];
+	var last_squad_count
+	for (company=1;company < 10;company++){
+		create_squad("command_squad", company);
+		last_squad_count = array_length(obj_ini.squads);
+		while (last_squad_count == array_length(obj_ini.squads)){
+			last_squad_count = (array_length(obj_ini.squads) + 1);
+			create_squad("tactical_squad", company);
+		}
+		last_squad_count = array_length(obj_ini.squads);
+		while (last_squad_count == array_length(obj_ini.squads)){
+			last_squad_count = (array_length(obj_ini.squads) + 1);
+			create_squad("assault_squad", company);
+		}		
+	}
+}
+function create_squad(squad_type, company, squad_loadout = true){
+		var fill_squad, squad_fulfilment, i, squad_unit_types, fulfilled,unit, 
+		squad, sergeant_found, highest_exp, exp_unit, squad_unit,
+		 required_load, unit_type, load_out_name, load_out_areas, load_out_slot,load_item,
+		 optional_load, item_to_add;
+		var squad_count = array_length(obj_ini.squads);
+		fill_squad =  obj_ini.squad_types[$ squad_type];			//generate company command squad
+		squad_fulfilment = {};		
+		squad_unit_types = struct_get_names(fill_squad);		//find out what type of units squad consists of
+		for (i = 0;i < array_length(squad_unit_types);i++){
+			squad_fulfilment[$ squad_unit_types[i]] =0;	//create a fulfilment structure to log members of squad
+		}
+		squad = {type : squad_type, members:[]};
+		sergeant_found = false;
+		if (array_contains(["tactical_squad", "assault_squad"], squad_type)){
+			sergeant_found = false;
+			for (i = 0; i < array_length(obj_ini.TTRPG[company]);i++;){	
+				unit = obj_ini.TTRPG[company,i];
+				if (unit.squad== "none"){
+					if (unit.role() == obj_ini.role[100,18]){
+						unit.squad = squad_count;
+						squad_fulfilment[$ obj_ini.role[100,18]] += 1;
+						array_push(squad.members, unit);
+						sergeant_found = true;
+						break;
+					}
+				}
+			}
+		}
+		for (i = 0; i < array_length( obj_ini.TTRPG[company]);i++;){								//fill squad roles
+			unit = obj_ini.TTRPG[company,i];
+			if (unit.squad== "none") and (array_contains(squad_unit_types, unit.role())){
+				if (array_contains(["tactical_squad", "assault_squad"], squad_type))and (sergeant_found == false){
+					show_debug_message("be here");
+					if (squad_fulfilment[$ unit.role()]< (fill_squad[$ unit.role()][$ "max"] + 1)){
+						unit.squad = squad_count;
+						squad_fulfilment[$ unit.role()]++;
+						array_push(squad.members, unit);	
+					}
+				}
+				else if (squad_fulfilment[$ unit.role()]< fill_squad[$ unit.role()][$ "max"]){
+					unit.squad = squad_count;
+					squad_fulfilment[$ unit.role()]++;
+					array_push(squad.members, unit);
+				}
+			}
+		}
+		if (array_contains(["tactical_squad", "assault_squad"], squad_type)) and (sergeant_found == false) and (squad_fulfilment[$ obj_ini.role[100,8]] > 4){
+			highest_exp = 0;
+			for (i = 0; i < array_length(squad.members);i++;){
+				unit = squad.members[i];
+				if (unit.experience() > highest_exp){
+					highest_exp = unit.experience();
+					exp_unit = unit;
+				};
+			}
+			exp_unit.update_role(obj_ini.role[100,18]);
+			squad_fulfilment[$ obj_ini.role[100,18]]++;
+		}
+		fulfilled = true;
+		for (i = 0;i < array_length(squad_unit_types);i++){
+			if (squad_fulfilment[$ squad_unit_types[i]] < fill_squad[$ squad_unit_types[i]][$ "min"]){
+				fulfilled = false;
+			}
+			if (fulfilled == false){
+				break
+			}
+		}
+		if (fulfilled == true){
+			array_push(obj_ini.squads, squad);
+			if (squad_loadout == true ){
+				for (i = 0;i < array_length(squad_unit_types);i++;){
+					unit_type = squad_unit_types[i];
+					required_load = "none";
+					optional_load = "none";
+					 if (struct_exists(fill_squad[$ unit_type],"loadout")){
+						if (struct_exists(fill_squad[$ unit_type][$ "loadout"],"option")){
+							if (optional_load == "none"){
+							  	optional_load = DeepCloneStruct(fill_squad[$ unit_type][$ "loadout"][$ "option"]);
+							  	load_out_areas = struct_get_names(fill_squad[$ unit_type][$ "loadout"][$ "option"]);
+							  	for (load_out_name = 0; load_out_name < array_length(load_out_areas);load_out_name++;){
+									load_out_slot = load_out_areas[load_out_name];
+									for (load_item = 0; load_item < array_length(optional_load[$ load_out_slot]);load_item++;){									
+							  			array_push(optional_load[$ load_out_slot][load_item],0);
+							  		}
+							  	}
+							}
+						}					 	
+						 
+						if (struct_exists(fill_squad[$ unit_type][$ "loadout"],"required")){
+							if (required_load == "none"){
+							  	required_load = DeepCloneStruct(fill_squad[$ unit_type][$ "loadout"][$ "required"]);
+							  	load_out_areas = struct_get_names(fill_squad[$ unit_type][$ "loadout"][$ "required"]);
+								for (load_out_name = 0; load_out_name < array_length(load_out_areas);load_out_name++;){
+									load_out_slot = load_out_areas[load_out_name];
+									array_push(required_load[$ load_out_slot],0);
+								}
+							}
+						}											
+						var copy_squad;
+						var new_copy_unit;
+						for (load_out_name = 0; load_out_name < array_length(load_out_areas);load_out_name++;){
+							copy_squad = [];
+							load_out_slot = load_out_areas[load_out_name];
+							array_copy(copy_squad,0,squad.members,0, array_length(squad.members))
+							while (array_length(copy_squad) > 0){
+								new_copy_unit = irandom(array_length(copy_squad)-1);
+								unit = copy_squad[new_copy_unit];
+								if (unit.role() == unit_type){
+									if (struct_exists(fill_squad[$ unit_type],"loadout")){
+										if (required_load != "none"){
+											if (required_load[$ load_out_slot][2] <required_load[$ load_out_slot][1]){
+										  		switch(load_out_slot){
+										  			case "wep1":
+										  				unit.update_weapon_one(required_load[$ load_out_slot][0]);
+										  				break;
+										  			case "wep2":
+										  				unit.update_weapon_two(required_load[$ load_out_slot][0]);
+										  				break;
+										  		}
+												required_load[$ load_out_slot][2]++;
+										  	} else{	
+												if (struct_exists(fill_squad[$ unit_type][$ "loadout"],"option")){
+													if (optional_load != "none"){
+										  				if (struct_exists(optional_load, load_out_slot)){
+										  					for (load_item = 0; load_item < array_length(optional_load[$ load_out_slot]);load_item++;){
+											  					if (optional_load[$ load_out_slot][load_item][2] <optional_load[$ load_out_slot][load_item][1]){
+											  						
+											  						if (is_array(optional_load[$ load_out_slot][load_item][0])){
+											  							item_to_add = optional_load[$ load_out_slot][load_item][0][irandom(array_length(optional_load[$ load_out_slot][load_item][0])-1)]
+											  						} else {
+											  							item_to_add = optional_load[$ load_out_slot][load_item][0];
+											  						}
 
+															  		switch(load_out_slot){
+															  			case "wep1":
+															  				unit.update_weapon_one(item_to_add);
+															  				break;
+															  			case "wep2":
+															  				unit.update_weapon_two(item_to_add);
+															  				break;															  				
+																				  		}
+															  		optional_load[$ load_out_slot][load_item][2]++;
+															  		break;
+														  		}
+													  		}
+										  				}
+													}
+												}			  		
+										  	}				
 
+										}	
+									}
+								}
+								array_delete(copy_squad, new_copy_unit,1);
+							}
+						}
+						 
+					}
+				}
+			}
+		}
+	}	
+
+function DeepCloneStruct(s){
+    if( is_array(s) ){
+        var len = array_length(s);
+        var arr = array_create(len);
+        for( var i=0; i<len; ++i ){
+            arr[i] = DeepCloneStruct(s[i]);
+        }
+        return arr;
+    }else if( is_struct(s) ){
+        var stc = {};
+        var nms = variable_struct_get_names(s);
+        var len = array_length(nms);
+        for( var i=0; i<len; ++i ){
+            var nm = nms[i];
+            stc[$nm] = DeepCloneStruct(s[$nm]);
+        }
+        return stc;
+    }
+    return s;
 }
