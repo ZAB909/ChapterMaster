@@ -1,10 +1,97 @@
+Version 0.8.1.1
+
+This version is purely fixing bugs, especially ones that crashed to desktop
+
+Changing battle formations and gene slaves are now correctly working as well.
+
+A rework of how squads function and some UI is planned for an upcoming update :)
+
+Here is our discord with 500 people, and about a dozen devs where we constantly work on the game, feel free to join the dev process!
+
+https://discord.gg/zAGpqHzsXQ
+
+-----------------------
+
+Version 0.8.1.0.0
+
+This version is to mainly ensure stability and add
+content that wasn't quite ready for 0.8
+
+++++
+Added
+++++
+
+The Sons of Dorn, The Imperial Fists!
+
+In a future update, Imperial Fists' Huscarls will start with storm shields :)
+
+++++
+Changed
+++++
+
+Companies are now numbered using roman numerals. Like Terra intended
+
+++++
+Fixed
+++++
+Some various Crash to desktop bug fixes
+
+----------------
+
 Version: 0.8.0.0.0
 
+We have skipped a few versions to ensure clarity with other projects
+
+
+++++
+Added
+++++
+
+All Marines can now be old guards. Spawning them with different armour than what they are meant to. Expect Assault marines to have the best melee!
+Starting armours for command marines have been changed. For example all company champions are MK4.
+Veterans given combi-flamers by default
+new sprites for weapons and armour
+many new weapons and gear
+including Electro-flail, Sarissa, Seraphim Pistols, Stalker Pattern Bolter and many others
+MK5 Armor
+new artifact: Thunder Hammer (replaced Relic Blade)
+killing a warboss should now create a victory shrine on the planet
+changelog for the repo
+cheatcodes
+
+++++
+Changed
+++++
+
+many weapon and gear stat tweaks
+numerous under-the-hood refactors and changes (they won't have an effect on gameplay, but they make development easier)
+changed all instances of 'Armor' to 'Armour'
+moved some chapter icons into the custom icons folder, allowing players to toggle their visibility in-game
+
+++++
+Fixed
+++++
+
+vehicles should load on ships now at the start of the game
+vehicles should no longer have unlimited ammo
+marines should no longer duplicate during battles
+some stuff not appearing in Armamentarium (including Void Shield Heavy, Assault Cannon and some other things)
+the UI should now show proper amount of marines after a defensive battle
+it should now be possible to recruit from planets containing billions of pops (previous it had to be either below 1 billion or above 50 billions)
+enemy escorts should not teleport around after another enemy ship gets boarded. Also escorts should be fully boardable now
+text typos
+numerous CTDs
+Removed:
+faith (temporily, it was causing crashes when attacking Sisters of Battle, will be readded in the future)
+
+---------------------------
 
 Version 0.6702
 
 Hotfixes a critical error regarding not being able to save the game lol oops
 
+
+----------------
 Version 0.6701
 
 changelog:
@@ -15,7 +102,7 @@ buffed bolter just a little so it's actually better than a pistol
 
 if your chapter master dies, game over!
 
-
+-----------------
 Version 0.67000
 
 Hello I'm Zab1019. Head dev ( i guess) of the restoration and renewed development of Chapter Master
