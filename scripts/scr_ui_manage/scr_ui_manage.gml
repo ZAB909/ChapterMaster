@@ -578,7 +578,7 @@ function scr_ui_manage() {
 	                        if (obj_ini.main_color!=obj_ini.secondary_color) then draw_sprite(spr_gear_hood3,hood,xx+1208,yy+178);
 	                    }
 	                    if (yep=1) and (hood<7){
-	                        if (ttrim=1) then draw_sprite(spr_gear_hood2,0,xx+1208,yy+178);
+	                        if (ttrim=1) then draw_sprite(spr_gear_hood2,0,xx+1206,yy+167);
 	                        if (ttrim=0) then draw_sprite(spr_gear_hood2,1,xx+1206,yy+167);
 	                    }
 	                }
@@ -614,7 +614,7 @@ function scr_ui_manage() {
 							if (obj_ini.adv[r]="Reverent Guardians") then yep=1;
 						}
 						if (yep==1) then helm_ii=4;
-	                    draw_sprite(spr_honor_helm,helm_ii,xx+1210,yy+178);
+	                    draw_sprite(spr_honor_helm,helm_ii,xx+1206,yy+167);
 					}
 	                // Weapons for above arms
 	                if (ui_weapon[1]!=0) and (sprite_exists(ui_weapon[1])) and (ui_above[1]==true) and (fix_left<8){

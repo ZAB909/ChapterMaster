@@ -172,7 +172,7 @@ if (did=1){// Player star has been set
     var ii;ii=0;ii+=fleet.capital_number;ii+=round((fleet.frigate_number/2));ii+=round((fleet.escort_number/4));
     if (ii<=1) then ii=1;fleet.image_index=ii;
     
-    if (obj_ini.load_to_ships>0){
+    if (obj_ini.load_to_ships[0]>0){
         scr_start_load(fleet,ed,obj_ini.load_to_ships);
         with(obj_p_fleet){instance_create(x,y,obj_fleet_show);}
     }
