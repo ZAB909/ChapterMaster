@@ -12,7 +12,7 @@ strin2="";
 tolerant=0;
 companies=10;
 progenitor=0;
-
+squads = [];
 load_to_ships=2;
 if (instance_exists(obj_creation)){load_to_ships=obj_creation.load_to_ships;}
 
