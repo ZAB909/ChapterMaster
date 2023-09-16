@@ -975,8 +975,8 @@ function scr_initialize_custom() {
 			// used to randomly make a marine an old guard of their company, giving a bit more xp (TODO) and fancier armour they've hanged onto all these years
 
 	        wep2[company,k]=wep2[101,5];
-		  	if(old_guard>=75){armour[company,k]="MK3 Iron Armour"}; // 25% of iron within
-				else{armour[company,k]="MK8 Errant"};
+		  	if(old_guard>=75){armour[company,k]="MK3 Iron Armour"} // 25% of iron within
+				else{armour[company,k]="MK8 Errant"}
 
 	        hp[company,k]=100;chaos[company,k]=0;experience[company,k]=max(40,company_experience+70+irandom(40));
 
@@ -1049,12 +1049,12 @@ function scr_initialize_custom() {
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,8];wep1[company,k]=wep1[101,8];wep2[company,k]=wep2[101,8];name[company,k]=scr_marine_name();
 	                hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience+irandom(5);
 
-						if (old_guard=99){armour[company,k]="MK3 Iron Armour"}; // 1%
-							else if (old_guard>=97 and old_guard<=99){armour[company,k]="MK4 Maximus"}; //3%
-								else if (old_guard>=91 and old_guard<=96){armour[company,k]="MK5 Heresy"}; // 6%
-									else if (old_guard>=79 and old_guard<=90){armour[company,k]="MK6 Corvus"}; // 12%
+						if (old_guard=99){armour[company,k]="MK3 Iron Armour"} // 1%
+							else if (old_guard>=97 and old_guard<=99){armour[company,k]="MK4 Maximus"} //3%
+								else if (old_guard>=91 and old_guard<=96){armour[company,k]="MK5 Heresy"} // 6%
+									else if (old_guard>=79 and old_guard<=90){armour[company,k]="MK6 Corvus"} // 12%
 										else if (company<=2) then armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies by default
-											else{armour[company,k]="MK7 Aquila"};
+											else{armour[company,k]="MK7 Aquila"}
 
 	                }
 	                repeat(assault){k+=1;man_size+=1;
@@ -1067,11 +1067,11 @@ function scr_initialize_custom() {
 					
 					// due to assault marines not wanting corvus due to worse ac, given them better chances with melee oriented armours. 
 					// melee is risky af anyway so let's reward players who go assault marine heavy at game start
-					if (old_guard>=99 and old_guard<=97){armour[company,k]="MK8 Errant"}; // 3% 
-						else if (old_guard>=91 and old_guard<=96){armour[company,k]="MK3 Iron Armour"}; // 6% 
-							else if (old_guard>=80 and old_guard<=90){armour[company,k]="MK4 Maximus"}; // 12%
-								else if (old_guard>=57 and old_guard<=79){armour[company,k]="MK5 Heresy"}; // 24%
-									else{armour[company,k]="MK7 Aquila"};
+					if (old_guard>=99 and old_guard<=97){armour[company,k]="MK8 Errant"} // 3% 
+						else if (old_guard>=91 and old_guard<=96){armour[company,k]="MK3 Iron Armour"} // 6% 
+							else if (old_guard>=80 and old_guard<=90){armour[company,k]="MK4 Maximus"} // 12%
+								else if (old_guard>=57 and old_guard<=79){armour[company,k]="MK5 Heresy"} // 24%
+									else{armour[company,k]="MK7 Aquila"}
 					
 	                }
 	                repeat(devastator){k+=1;man_size+=1;
@@ -1083,10 +1083,10 @@ function scr_initialize_custom() {
 	                    if (wep1[101,9]="Heavy Ranged") then wep1[company,k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
 	                    if (wep1[101,9]!="Heavy Ranged") then wep1[company,k]=wep1[101,9];
 
-							if (old_guard>=99 and old_guard<=97){armour[company,k]="MK4 Maximus"}; // 3% for maximus
-								else if (old_guard>=78 and old_guard<=96){armour[company,k]="MK6 Corvus"}; // 20% chance for devos to have ranged armour, wouldn't want much else
+							if (old_guard>=99 and old_guard<=97){armour[company,k]="MK4 Maximus"} // 3% for maximus
+								else if (old_guard>=78 and old_guard<=96){armour[company,k]="MK6 Corvus"} // 20% chance for devos to have ranged armour, wouldn't want much else
 									else if (company<=2) then armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies by default
-										else{armour[company,k]="MK7 Aquila"};
+										else{armour[company,k]="MK7 Aquila"}
 							
 	                }
 	            }
@@ -1109,12 +1109,12 @@ function scr_initialize_custom() {
 	                hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
 
 					
-						if (old_guard=99){armour[company,k]="MK3 Iron Armour"}; // 1%
-							else if (old_guard>=97 and old_guard<=99){armour[company,k]="MK4 Maximus"}; //3%
-								else if (old_guard>=91 and old_guard<=96){armour[company,k]="MK5 Heresy"}; // 6%
-									else if (old_guard>=79 and old_guard<=90){armour[company,k]="MK6 Corvus"}; // 12%
+						if (old_guard=99){armour[company,k]="MK3 Iron Armour"} // 1%
+							else if (old_guard>=97 and old_guard<=99){armour[company,k]="MK4 Maximus"} //3%
+								else if (old_guard>=91 and old_guard<=96){armour[company,k]="MK5 Heresy"} // 6%
+									else if (old_guard>=79 and old_guard<=90){armour[company,k]="MK6 Corvus"} // 12%
 										else if (company<=2) then armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies by default
-											else{armour[company,k]="MK7 Aquila"};
+											else{armour[company,k]="MK7 Aquila"}
 					
 	            } // reserve company only of assault
 	            if (company=8) then repeat(temp1){k+=1;man_size+=1; // assault reserve company
@@ -1126,11 +1126,11 @@ function scr_initialize_custom() {
 					// due to assault marines not wanting corvus due to worse ac, given them better chances with melee oriented armours. 
 					// melee is risky af anyway so let's reward players who go assault marine heavy at game start
 					
-					if (old_guard>=99 and old_guard<=97){armour[company,k]="MK8 Errant"}; // 3% 
-						else if (old_guard>=91 and old_guard<=96){armour[company,k]="MK3 Iron Armour"}; // 6% 
-							else if (old_guard>=80 and old_guard<=90){armour[company,k]="MK4 Maximus"}; // 12%
-								else if (old_guard>=57 and old_guard<=79){armour[company,k]="MK5 Heresy"}; // 24%
-									else{armour[company,k]="MK7 Aquila"};
+					if (old_guard>=99 and old_guard<=97){armour[company,k]="MK8 Errant"} // 3% 
+						else if (old_guard>=91 and old_guard<=96){armour[company,k]="MK3 Iron Armour"} // 6% 
+							else if (old_guard>=80 and old_guard<=90){armour[company,k]="MK4 Maximus"} // 12%
+								else if (old_guard>=57 and old_guard<=79){armour[company,k]="MK5 Heresy"} // 24%
+									else{armour[company,k]="MK7 Aquila"}
 				
 	            } // reserve company only devo
 	            if (company=9) then repeat(temp1){k+=1;man_size+=1; 
@@ -1142,9 +1142,9 @@ function scr_initialize_custom() {
 	                if (wep1[101,9]!="Heavy Ranged") then wep1[company,k]=wep1[101,9];
 					{armour[company,k]="MK7 Aquila"};
 					
-						if (old_guard>=99 and old_guard<=97){armour[company,k]="MK4 Maximus"}; // 3% for maximus
-							else if (old_guard>=78 and old_guard<=96){armour[company,k]="MK6 Corvus"}; // 20% chance for devos to have ranged armour, wouldn't want much else
-								else{armour[company,k]="MK7 Aquila"};
+						if (old_guard>=99 and old_guard<=97){armour[company,k]="MK4 Maximus"} // 3% for maximus
+							else if (old_guard>=78 and old_guard<=96){armour[company,k]="MK6 Corvus"} // 20% chance for devos to have ranged armour, wouldn't want much else
+								else{armour[company,k]="MK7 Aquila"}
 					
 	            }
 	            if (company=10) then repeat(temp1){k+=1;man_size+=1;
@@ -1159,11 +1159,11 @@ function scr_initialize_custom() {
 	                mobi[company,k]=mobi[101,10];hp[company,k]=100;chaos[company,k]=0;experience[company,k]=company_experience;
 					{armour[company,k]="MK7 Aquila"};
 					
-					if (old_guard>=99 and old_guard<=97){armour[company,k]="MK8 Errant"}; // 3% 
-						else if (old_guard>=91 and old_guard<=96){armour[company,k]="MK3 Iron Armour"}; // 6% 
-							else if (old_guard>=80 and old_guard<=90){armour[company,k]="MK4 Maximus"}; // 12%
-								else if (old_guard>=57 and old_guard<=79){armour[company,k]="MK5 Heresy"}; // 24%
-									else{armour[company,k]="MK7 Aquila"};
+					if (old_guard>=99 and old_guard<=97){armour[company,k]="MK8 Errant"} // 3% 
+						else if (old_guard>=91 and old_guard<=96){armour[company,k]="MK3 Iron Armour"} // 6% 
+							else if (old_guard>=80 and old_guard<=90){armour[company,k]="MK4 Maximus"} // 12%
+								else if (old_guard>=57 and old_guard<=79){armour[company,k]="MK5 Heresy"} // 24%
+									else{armour[company,k]="MK7 Aquila"}
 					
 	            }
 	            if (company_unit3="devastator") then repeat(devastator){k+=1;man_size+=1;
@@ -1176,9 +1176,9 @@ function scr_initialize_custom() {
 	                if (wep1[101,9]="Heavy Ranged") then wep1[company,k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
 	                if (wep1[101,9]!="Heavy Ranged") then wep1[company,k]=wep1[101,9];
 					
-					if (old_guard>=91){armour[company,k]="MK6 Corvus"}; // 10% chance
+					if (old_guard>=91){armour[company,k]="MK6 Corvus"} // 10% chance
 						else if (company<=2) then armour[company,k]="MK6 Corvus"; // company 1 and 2 taccies get beakies 
-							else{armour[company,k]="MK7 Aquila"};
+							else{armour[company,k]="MK7 Aquila"}
 	                
 	            }
 	        }
