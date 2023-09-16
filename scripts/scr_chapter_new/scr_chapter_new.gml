@@ -50,7 +50,7 @@ function scr_chapter_new(argument0) {
 	    color_to_weapon="Black";col_special=0;trim=0;
 	    hchaplain="Sapphon";clibrarian="Ezekial";
 	    battle_cry="Repent!  For tomorow you may die";
-	    equal_specialists=0;load_to_ships=2;successors=9;
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=9;
 	    mutations=0;mutations_selected=0;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
 	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -75,7 +75,7 @@ function scr_chapter_new(argument0) {
 	    color_to_weapon="Red";col_special=0;
 	    hapothecary="Corpus Helix";hchaplain="Ortan Cassius";clibrarian="Varro Tigurius";fmaster="Fennias Maxim";admiral="Lazlo Tiberius";
 	    battle_cry="Courage and honor";// monastery_name="Fortress of Hera";master_name=
-	    equal_specialists=0;load_to_ships=2;successors=27;
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=27;
 	    mutations=0;mutations_selected=0;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
 	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -102,7 +102,7 @@ function scr_chapter_new(argument0) {
 		hapothecary="Dyserna";hchaplain="Guaron";clibrarian="Vidos Harn";fmaster="Atornus Geis";admiral="Kyne Phasn"
                 recruiter="Taelos"
 		battle_cry="Primarch-Progenitor, to your glory and the glory of him on earth!";
-	        equal_specialists=0;load_to_ships=2;successors=21;
+	        equal_specialists=0;load_to_ships=[2,0,0];successors=21;
 	        mutations=2;mutations_selected=2;
 	        preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=1;
 	        zygote=0;betchers=1;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -135,7 +135,7 @@ function scr_chapter_new(argument0) {
 	    color_to_weapon="Blue";col_special=0;trim=0;
 	    hapothecary="Ranek Icewalker";hchaplain="Ulrik the Slayer";clibrarian="Njal Stormcaller";fmaster="Krom Dragongaz";admiral="Engir Krakendoom";
 	    battle_cry="For Russ and the Allfather";// monastery_name="Fortress of Hera";master_name=
-	    equal_specialists=0;load_to_ships=2;successors=1;
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=1;
 	    mutations=0;mutations_selected=0;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
 	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -179,7 +179,7 @@ function scr_chapter_new(argument0) {
 	    color_to_weapon="Black";col_special=0;trim=0;
 	    hchaplain="Astorash the Grim";clibrarian="Mephiston";fmaster="Incarael";
 	    battle_cry="For the Emperor and Sanguinius! Death! DEATH";// monastery_name="Fortress of Hera";master_name=
-	    equal_specialists=0;load_to_ships=2;successors=3;
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=3;
 	    mutations=0;mutations_selected=0;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
 	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -212,7 +212,7 @@ function scr_chapter_new(argument0) {
 	    color_to_weapon="Silver";col_special=0;trim=0;
 	    hchaplain="Shulgaar";clibrarian="Lydriik";fmaster="Feirros";hapothecary="Grolvoch";
 	    battle_cry="The flesh is weak";// monastery_name="Fortress of Hera";master_name=
-	    equal_specialists=1;load_to_ships=2;successors=6;
+	    equal_specialists=1;load_to_ships=[2,0,0];successors=6;
 	    mutations=0;mutations_selected=0;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
 	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -246,7 +246,7 @@ function scr_chapter_new(argument0) {
 	    color_to_weapon="Black";col_special=0;trim=0;
 	    fmaster="Vulkan He'stan";
 	    battle_cry="Into the fires of battle!  Unto the anvil of war";// monastery_name="Fortress of Hera";master_name=
-	    equal_specialists=0;load_to_ships=2;successors=2;
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=2;
 	    mutations=1;mutations_selected=1;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
 	    zygote=0;betchers=0;catalepsean=0;secretions=1;occulobe=0;mucranoid=0;
@@ -276,7 +276,7 @@ function scr_chapter_new(argument0) {
 	    color_to_pauldron2="Bone";color_to_pauldron="Bone";color_to_lens="Green";
 	    color_to_weapon="Black";col_special=0;trim=1;
 	    battle_cry="Knowledge is power, guard it well";
-	    equal_specialists=0;load_to_ships=2;successors=0;
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
 	    mutations=0;mutations_selected=0;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
 	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -329,7 +329,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    color_to_pauldron2="Purple";color_to_pauldron="Purple";color_to_lens="Red";
 	    color_to_weapon="Purple";col_special=0;trim=1;
 	    battle_cry="Cold and Hard, Soul Drinkers";
-	    equal_specialists=0;load_to_ships=2;successors=0;
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
 	    mutations=1;mutations_selected=1;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=1;ossmodula=0;membrane=0;
 	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -358,7 +358,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    color_to_pauldron2="White";color_to_pauldron="Gold";color_to_lens="Dark Red";
 	    color_to_weapon="Black";col_special=0;trim=1;
 	    battle_cry="For those we cherish, we die in Glory";
-	    equal_specialists=0;load_to_ships=2;successors=0;
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
 	    mutations=0;mutations_selected=0;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
 	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -389,7 +389,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    battle_cry="Death to the enemy!  DEATH";// monastery_name="Fortress of Hera";master_name=
 	    equal_specialists=0;
     
-	    load_to_ships=2;
+	    load_to_ships=[2,0,0];
 	    // load_to_ships=0;
     
 	    successors=0;

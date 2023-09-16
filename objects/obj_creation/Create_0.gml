@@ -105,7 +105,7 @@ recruiter=scr_marine_name();
 admiral=scr_marine_name();
 
 equal_specialists=0;
-load_to_ships=2;
+load_to_ships=[2,0,0];
 
 successors=0;
 
