@@ -974,8 +974,8 @@ function scr_initialize_custom() {
 	        wep2[company,k]=wep2[101,5];
 	        spawn_unit = TTRPG[company,k];
 			// used to randomly make a marine an old guard of their company, giving a bit more xp (TODO) and fancier armor they've hanged onto all these years			
-	        spawn_unit.spawn_old_guard();
 	        spawn_unit.spawn_exp();
+        spawn_unit.spawn_old_guard();
 	        chaos[company,k]=0;
 
 	        if (company=8) then mobi[company,k]="Jump Pack";
@@ -995,17 +995,17 @@ function scr_initialize_custom() {
 	                if (company=8) then mobi[company,k]="Jump Pack";
 	                if (mobi[101,14]!="") then mobi[company,k]=mobi[101,14];
 					spawn_unit = TTRPG[company,k]
-					spawn_unit.spawn_old_guard();
 					spawn_unit.spawn_exp();
+          spawn_unit.spawn_old_guard();
 	            }
 	        }
 
 	        k+=1;commands+=1;// Apothecary
 	        race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,15];wep1[company,k]=wep1[101,15];name[company,k]=scr_marine_name();
 	        wep2[company,k]=wep2[101,15];
-	        spawn_unit = TTRPG[company,k]
-	        spawn_unit.spawn_old_guard();
-	        spawn_unit.spawn_exp()
+	        spawn_unit = TTRPG[company,k]; 
+	        spawn_unit.spawn_exp();
+          spawn_unit.spawn_old_guard();
 	        gear[company,k]=gear[101,15];chaos[company,k]=0;
 	        if (company=8) then mobi[company,k]="Jump Pack";
 	        if (mobi[101,15]!="") then mobi[company,k]=mobi[101,15];
@@ -1018,9 +1018,9 @@ function scr_initialize_custom() {
 	            gear[company,k]=gear[101,15];chaos[company,k]=0;
 	            if (company=8) then mobi[company,k]="Jump Pack";
 	            if (mobi[101,15]!="") then mobi[company,k]=mobi[101,15];
-					        spawn_unit = TTRPG[company,k]
-	        spawn_unit.spawn_old_guard();
-	        spawn_unit.spawn_exp()
+					        spawn_unit = TTRPG[company,k];
+	                 spawn_unit.spawn_exp();
+                     spawn_unit.spawn_old_guard();
 	        }
 	        if (global.chapter_name="Iron Hands"){
 	            k+=1;commands+=1;
@@ -1028,9 +1028,9 @@ function scr_initialize_custom() {
 	            wep2[company,k]=wep2[101,16];armour[company,k]="Power Armour";gear[company,k]=gear[101,16];chaos[company,k]=0;
 	            bio[company,k]=4+choose(0,1,2);if (global.chapter_name="Iron Hands") then bio[company,k]=choose(7,8);
 	            if (mobi[101,16]!="") then mobi[company,k]=mobi[101,16];
-				spawn_unit = TTRPG[company,k]
-				spawn_unit.spawn_old_guard();
+				spawn_unit = TTRPG[company,k];
 				spawn_unit.spawn_exp();
+        spawn_unit.spawn_old_guard();
 	        }
 
 	        k+=1;// Standard Bearer
@@ -1039,9 +1039,9 @@ function scr_initialize_custom() {
 	        armour[company,k]="MK5 Heresy";
 	        chaos[company,k]=0;if (company=8) then mobi[company,k]="Jump Pack";
 	        spawn_unit = TTRPG[company,k];
-	        spawn_unit.spawn_old_guard();
+	       
 	        spawn_unit.spawn_exp();       
-
+           spawn_unit.spawn_old_guard();
 
 	        k+=1;man_size+=1;// Company Champion
 	        race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,7];wep1[company,k]=wep1[100,7];name[company,k]=scr_marine_name();
@@ -1049,8 +1049,8 @@ function scr_initialize_custom() {
 	        chaos[company,k]=0;
 			spawn_unit = TTRPG[company,k];
 			spawn_unit.add_trait("champion");
-			spawn_unit.spawn_old_guard();
-	        spawn_unit.spawn_exp();
+	    spawn_unit.spawn_exp();
+      spawn_unit.spawn_old_guard();
 			// have equal spec true or false have same old_guard chance
 			// it doesn't fully make sense why new marines in reserve companies would have the same chance
 			// but otherwise you'd always pick true so you'd have more shit
@@ -1063,9 +1063,9 @@ function scr_initialize_custom() {
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,8];wep1[company,k]=wep1[101,8];wep2[company,k]=wep2[101,8];name[company,k]=scr_marine_name();
 	                chaos[company,k]=0;
 
-			        spawn_unit = TTRPG[company,k]
-			        spawn_unit.spawn_old_guard();
-			        spawn_unit.spawn_exp()
+			        spawn_unit = TTRPG[company,k];
+			        spawn_unit.spawn_exp();
+               spawn_unit.spawn_old_guard();                  
 
 	                }
 	                repeat(assault){k+=1;man_size+=1;
@@ -1074,9 +1074,9 @@ function scr_initialize_custom() {
 					mobi[company,k]="Jump Pack";chaos[company,k]=0;
 					wep2[company,k]=wep2[101,10]; 
 						
-			        spawn_unit = TTRPG[company,k]
-			        spawn_unit.spawn_old_guard();
-			        spawn_unit.spawn_exp()
+			        spawn_unit = TTRPG[company,k];
+			        spawn_unit.spawn_exp();
+             spawn_unit.spawn_old_guard();                     
 					
 	                }
 	                repeat(devastator){k+=1;man_size+=1;
@@ -1087,9 +1087,10 @@ function scr_initialize_custom() {
 	                    if (wep1[101,9]="Heavy Ranged") then wep1[company,k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
 	                    if (wep1[101,9]!="Heavy Ranged") then wep1[company,k]=wep1[101,9];
 
-			        spawn_unit = TTRPG[company,k]
-			        spawn_unit.spawn_old_guard();
-			        spawn_unit.spawn_exp()
+			        spawn_unit = TTRPG[company,k];
+			        spawn_unit.spawn_exp();
+              spawn_unit.spawn_old_guard();                       
+
 							
 	                }
 	            }
@@ -1113,9 +1114,9 @@ function scr_initialize_custom() {
 	                chaos[company,k]=0;
 
 					
-			        spawn_unit = TTRPG[company,k]
-			        spawn_unit.spawn_old_guard();
-			        spawn_unit.spawn_exp()
+			        spawn_unit = TTRPG[company,k];
+			        spawn_unit.spawn_exp();
+              spawn_unit.spawn_old_guard();
 					
 	            } // reserve company only of assault
 	            if (company=8) then repeat(temp1){k+=1;man_size+=1; // assault reserve company
@@ -1126,9 +1127,9 @@ function scr_initialize_custom() {
 					// due to assault marines not wanting corvus due to worse ac, given them better chances with melee oriented armours. 
 					// melee is risky af anyway so let's reward players who go assault marine heavy at game start
 					
-			        spawn_unit = TTRPG[company,k]
-			        spawn_unit.spawn_old_guard();
-			        spawn_unit.spawn_exp()
+			        spawn_unit = TTRPG[company,k];
+			        spawn_unit.spawn_exp();
+               spawn_unit.spawn_old_guard();                                 
 				
 	            } // reserve company only devo
 	            if (company=9) then repeat(temp1){k+=1;man_size+=1; 
@@ -1137,10 +1138,9 @@ function scr_initialize_custom() {
 	                chaos[company,k]=0;
 	                if (wep1[101,9]="Heavy Ranged") then wep1[company,k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
 	                if (wep1[101,9]!="Heavy Ranged") then wep1[company,k]=wep1[101,9];
-			        spawn_unit = TTRPG[company,k]
-			        spawn_unit.spawn_old_guard();
-			        spawn_unit.spawn_exp()
-								
+			        spawn_unit = TTRPG[company,k];
+			        spawn_unit.spawn_exp();
+              spawn_unit.spawn_old_guard();                                 	
 	            }
 	            if (company=10) then repeat(temp1){k+=1;man_size+=1;
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,12];wep1[company,k]=wep1[101,12];name[company,k]=scr_marine_name();
@@ -1151,9 +1151,9 @@ function scr_initialize_custom() {
 
 	                race[company,k]=1;loc[company,k]=home_name;role[company,k]=role[100,10];wep1[company,k]=wep1[101,10];wep2[company,k]=wep2[101,10];name[company,k]=scr_marine_name();
 	                mobi[company,k]=mobi[101,10];chaos[company,k]=0;
-			        spawn_unit = TTRPG[company,k]
-			        spawn_unit.spawn_old_guard();
+			        spawn_unit = TTRPG[company,k];
 			        spawn_unit.spawn_exp()
+              spawn_unit.spawn_old_guard();
 				
 					
 	            }
@@ -1166,9 +1166,9 @@ function scr_initialize_custom() {
 	                if (wep1[101,9]="Heavy Ranged") then wep1[company,k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
 	                if (wep1[101,9]!="Heavy Ranged") then wep1[company,k]=wep1[101,9];
 					
-			        spawn_unit = TTRPG[company,k]
-			        spawn_unit.spawn_old_guard();
-			        spawn_unit.spawn_exp()
+			        spawn_unit = TTRPG[company,k];
+			        spawn_unit.spawn_exp();
+              spawn_unit.spawn_old_guard();
 				
 	                
 	            }

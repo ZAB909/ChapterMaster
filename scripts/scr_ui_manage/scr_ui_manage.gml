@@ -319,7 +319,7 @@ function scr_ui_manage() {
 						}
 	                }
                 
-					// Define armor
+					// Define armour
 	                if (temp[102]="") then armour_sprite=spr_weapon_blank;
 					
 	                if (temp[102]="Scout Armour"){

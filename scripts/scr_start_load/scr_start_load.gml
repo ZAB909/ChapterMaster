@@ -59,7 +59,7 @@ function scr_start_load(fleet, load_from_star, escort_load) {
 		//if entire company won't fit on ship test to see if there is any ship in the fleet the company will fit on;
 		 if (ship_fit == false){
 			 for (ship_loop =  1; ship_loop< array_length(obj_ini.ship_carrying);ship_loop++;){
-				 if (escort_load ==0) and (obj_ini.ship_capacity[ship] < 250){continue}
+				 if (escort_load == 2) and (obj_ini.ship_capacity[ship_loop] < 250){continue}
 				  if ((obj_ini.ship_carrying[ship_loop] + _company_size) <= obj_ini.ship_capacity[ship_loop]){
 					  //load marines
 					  for (var m = 0; m <array_length(company_loader);m++;){
@@ -77,7 +77,7 @@ function scr_start_load(fleet, load_from_star, escort_load) {
 			 // if there are no ships that will hold the entire company loop all ships and jam pac the fuckers in in
 			 if (ship_fit == false){
 				 for (var ship_loop = 1; ship_loop<array_length(obj_ini.ship_carrying); ship_loop++;){
-				 if (escort_load ==0) and (obj_ini.ship_capacity[ship] < 250){continue}				 
+				 if (escort_load ==2) and (obj_ini.ship_capacity[ship_loop] < 250){continue}				 
 				 if (obj_ini.ship_carrying[ship_loop] < obj_ini.ship_capacity[ship_loop]){
 					 ship_has_space = true;	
 					 // new arrays that will contain troops that didn't get loaded
