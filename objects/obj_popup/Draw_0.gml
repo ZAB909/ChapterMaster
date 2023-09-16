@@ -2,12 +2,10 @@
 if (hide=true) then exit;
 
 var romanNumerals=scr_roman_numerals();
-var current_company;
 var xx,yy;
 xx=__view_get( e__VW.XView, 0 );
 yy=__view_get( e__VW.YView, 0 );
 
-// if (!instance_exists(obj_controller)) then exit;
 if (instance_exists(obj_fleet)) then exit;
 
 if (type=99){
@@ -212,11 +210,7 @@ if ((zm=0) and (type<=4)) or (type=98){
     if (image="event_crelic") then img=62;
     if (image="event_march") then img=63;
     
-    
-    // if (img!=-1) then draw_sprite_stretched(spr_popup_pic,img,x1+(sprite_width/2),y1+(sprite_height*0.07),image_wid,image_hei);
     if (img!=-1) and (image!="") and (image_wid>0){
-        // if (size=1) then draw_sprite_stretched(spr_popup_pic,img,x1+5,y1+(sprite_height*0.07)+24,image_wid,image_hei);
-        // if (size>=2) then draw_sprite_stretched(spr_popup_pic,img,x1+25,y1+(sprite_height*0.07)+24,image_wid,image_hei);
         var sh=999;
         if (size=1){sh=24;scr_image("popup",img,x1+5,y1+sh+24,image_wid,image_hei);}
         if (size>=2){sh=24;scr_image("popup",img,x1+25,y1+sh+24,image_wid,image_hei);}
@@ -224,83 +218,63 @@ if ((zm=0) and (type<=4)) or (type=98){
         image_bot=(sprite_height*0.07)+image_hei+5;
     }
     
-    // if (img!=-1) then draw_sprite(spr_popup_pic,img,xx+130,yy+149);
-    // if (instance_exists(obj_turn_end)){if (obj_turn_end.popups>1) draw_text(xx+126,yy+123,string(obj_turn_end.current_popup)+"/"+string(obj_turn_end.popups));}
-    // if (option1!="") and ((string_count("Servitors and Skitarii",option1)=0) or (img!=14)){
+    if (option1 != "") and(string_count("Servitors and Skitarii", option1) = 0) {
+        var tox = "1. " + string(option1);
+        if (option2 != "") then tox += "#2. " + string(option2);
+        if (option3 != "") then tox += "#3. " + string(option3);
 
-    if (option1!="") and (string_count("Servitors and Skitarii",option1)=0){
-        
-        var tox="";
-        tox+="1. "+string(option1);
-        if (option2!="") then tox+="#2. "+string(option2);
-        if (option3!="") then tox+="#3. "+string(option3);
-        // if (option4!="") then tox+="#4. "+string(option4);
-        
-        // if (size<2){
-            var top=y1+0.5+(sprite_height*0.6);
-            if (str_h!=0) then top=y1+str_h+20;
-            if (image!="") then top=max(top,y1+image_bot);
-            
-            draw_text_ext(x1+25.5,top,string_hash_to_newline("  Choices:"),-1,widd);
-            draw_text_ext(x1+25,top+0.5,string_hash_to_newline("  Choices:"),-1,widd);
-            
-            var sz=0,sz2=0,oy=y1,t8=0;
-            if (str_h!=0){y1+=str_h+20;y1-=(sprite_height*0.6);}
-            
-            y1=top;
-            // if (size=2) and (image!="") then y1+=15;
-            
-            if (option1!="") then draw_text_ext(x1+25.5,y1+20,string_hash_to_newline("1. "+string(option1)),-1,widd);
-            
-            sz=string_height_ext(string_hash_to_newline("1. "+string(option1)),-1,widd);
-            if (option2!="") then draw_text_ext(x1+25.5,y1+20+sz,string_hash_to_newline("2. "+string(option2)),-1,widd);
-            
-            sz2=string_height_ext(string_hash_to_newline("1. "+string(option1)),-1,widd);
-            sz2+=string_height_ext(string_hash_to_newline("2. "+string(option2)),-1,widd);
-            if (option3!="") then draw_text_ext(x1+25.5,y1+20+sz2,string_hash_to_newline("3. "+string(option3)),-1,widd);
-            
-            if (option1!="") then t8=(y1+20)+5;
-            if (option2!="") then t8=(y1+20+sz)+5;
-            if (option3="") then t8=(y1+20+sz2+string_height_ext(string_hash_to_newline("3. "+string(option3)),-1,widd))+5;
-            
-            
-            if (option1!="") and (mouse_x>=x1) and (mouse_y>=y1+21) and (mouse_x<=x1+30+string_width_ext(string_hash_to_newline("1. "+string(option1)),-1,widd)) and (mouse_y<y1+39){
-                draw_sprite(spr_popup_select,0,x1+8.5,y1+21);
-                if (mouse_check_button(mb_left)) then press=1;
-            }
-            if (option2!="") and (mouse_x>=x1) and (mouse_y>=y1+21+sz) and (mouse_x<=x1+30+string_width_ext(string_hash_to_newline("2. "+string(option2)),-1,widd)) and (mouse_y<y1+39+sz){
-                draw_sprite(spr_popup_select,0,x1+8.5,y1+21+sz);
-                if (mouse_check_button(mb_left)) then press=2;
-            }
-            if (option3!="") and (mouse_x>=x1) and (mouse_y>=y1+21+sz2) and (mouse_x<=x1+30+string_width_ext(string_hash_to_newline("3. "+string(option3)),-1,widd)) and (mouse_y<y1+39+sz2){
-                draw_sprite(spr_popup_select,0,x1+8.5,y1+21+sz2);
-                if (mouse_check_button(mb_left)) then press=3;
-            }
-            
-            if (t8<(oy+sprite_height)){
-                y_scale=(t8/(oy+sprite_height));
-            }
-            if (t8>(oy+sprite_height)){
-                y_scale=(t8/(oy+sprite_height));
-            }
+        var top = y1 + 0.5 + (sprite_height * 0.6);
+        if (str_h != 0) then top = y1 + str_h + 20;
+        if (image != "") then top = max(top, y1 + image_bot);
+
+        draw_text_ext(x1 + 25.5, top, string_hash_to_newline("  Choices:"), -1, widd);
+        draw_text_ext(x1 + 25, top + 0.5, string_hash_to_newline("  Choices:"), -1, widd);
+
+        var sz = 0,
+            sz2 = 0,
+            oy = y1,
+            t8 = 0;
+        if (str_h != 0) {
+            y1 += str_h + 20;
+            y1 -= (sprite_height * 0.6);
+        }
+
+        y1 = top;
+
+        if (option1 != "") then draw_text_ext(x1 + 25.5, y1 + 20, string_hash_to_newline("1. " + string(option1)), -1, widd);
+
+        sz = string_height_ext(string_hash_to_newline("1. " + string(option1)), -1, widd);
+        if (option2 != "") then draw_text_ext(x1 + 25.5, y1 + 20 + sz, string_hash_to_newline("2. " + string(option2)), -1, widd);
+
+        sz2 = string_height_ext(string_hash_to_newline("1. " + string(option1)), -1, widd);
+        sz2 += string_height_ext(string_hash_to_newline("2. " + string(option2)), -1, widd);
+        if (option3 != "") then draw_text_ext(x1 + 25.5, y1 + 20 + sz2, string_hash_to_newline("3. " + string(option3)), -1, widd);
+
+        if (option1 != "") then t8 = (y1 + 20) + 5;
+        if (option2 != "") then t8 = (y1 + 20 + sz) + 5;
+        if (option3 = "") then t8 = (y1 + 20 + sz2 + string_height_ext(string_hash_to_newline("3. " + string(option3)), -1, widd)) + 5;
+
+
+        if (option1 != "") and(mouse_x >= x1) and(mouse_y >= y1 + 21) and(mouse_x <= x1 + 30 + string_width_ext(string_hash_to_newline("1. " + string(option1)), -1, widd)) and(mouse_y < y1 + 39) {
+            draw_sprite(spr_popup_select, 0, x1 + 8.5, y1 + 21);
+            if (mouse_check_button(mb_left)) then press = 1;
+        }
+        if (option2 != "") and(mouse_x >= x1) and(mouse_y >= y1 + 21 + sz) and(mouse_x <= x1 + 30 + string_width_ext(string_hash_to_newline("2. " + string(option2)), -1, widd)) and(mouse_y < y1 + 39 + sz) {
+            draw_sprite(spr_popup_select, 0, x1 + 8.5, y1 + 21 + sz);
+            if (mouse_check_button(mb_left)) then press = 2;
+        }
+        if (option3 != "") and(mouse_x >= x1) and(mouse_y >= y1 + 21 + sz2) and(mouse_x <= x1 + 30 + string_width_ext(string_hash_to_newline("3. " + string(option3)), -1, widd)) and(mouse_y < y1 + 39 + sz2) {
+            draw_sprite(spr_popup_select, 0, x1 + 8.5, y1 + 21 + sz2);
+            if (mouse_check_button(mb_left)) then press = 3;
+        }
+
+        if (t8 < (oy + sprite_height)) {
+            y_scale = (t8 / (oy + sprite_height));
+        }
+        if (t8 > (oy + sprite_height)) {
+            y_scale = (t8 / (oy + sprite_height));
+        }
     }
-    /*
-    
-    if (option1=""){
-        draw_set_halign(fa_center);
-        draw_text(xx+320,yy+372,"(Press Any Key)");
-    }
-    if (option1!="") and ((string_count("Mechanicus",option1)=0) or (img!=14)){
-        draw_text(xx+130,yy+304,"Choices:");
-        if (option3="") then draw_text_ext(xx+130,yy+320,"1. "+string(option1)+"#2. "+string(option2),-1,384);
-        if (option3!="") then draw_text_ext(xx+130,yy+320,"1. "+string(option1)+"#2. "+string(option2)+"#3. "+string(option3),-1,384);
-    }
-    if (option1!="") and (string_count("Mechanicus",option1)>0) and (img=14){
-        // draw_text(xx+130,yy+304,"Choices:");
-        if (option3="") then draw_text_ext(xx+130,yy+304,"1. "+string(option1)+"#2. "+string(option2),-1,384);
-        if (option3!="") then draw_text_ext(xx+130,yy+304,"1. "+string(option1)+"#2. "+string(option2)+"#3. "+string(option3),-1,384);
-    }
-    */
 }
 
 // ** Equip Artifact **
@@ -325,53 +299,43 @@ if (type=8) and (instance_exists(obj_controller)){
     check=" ";
     // I Company
     if (target_comp=1) then check="x";
-    current_company=0;
-    draw_text(x2+77,y2+87,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+    draw_text(x2+77,y2+87,string_hash_to_newline(romanNumerals[0]+" ["+string(check)+"]"));
     check=" ";
     // II Company
     if (target_comp=2) then check="x";
-    current_company=1;
-    draw_text(x2+158,y2+87,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+    draw_text(x2+158,y2+87,string_hash_to_newline(romanNumerals[1]+" ["+string(check)+"]"));
     check=" ";
     // III Company
     if (target_comp=3) then check="x";
-    current_company=2;
-    draw_text(x2+275,y2+87,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+    draw_text(x2+275,y2+87,string_hash_to_newline(romanNumerals[2]+" ["+string(check)+"]"));
     check=" ";
     // IV Company
     if (target_comp=4) then check="x";
-    current_company=3;
-    draw_text(x2+386,y2+87,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+    draw_text(x2+386,y2+87,string_hash_to_newline(romanNumerals[3]+" ["+string(check)+"]"));
     check=" ";
     // V Company
     if (target_comp=5) then check="x";
-    current_company=4;
-    draw_text(x2+497,y2+87,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+    draw_text(x2+497,y2+87,string_hash_to_newline(romanNumerals[4]+" ["+string(check)+"]"));
     check=" ";
     // VI Company
     if (target_comp=6) then check="x";
-    current_company=5;
-    draw_text(x2+73,y2+103,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+    draw_text(x2+73,y2+103,string_hash_to_newline(romanNumerals[5]+" ["+string(check)+"]"));
     check=" ";
     // VII Company
     if (target_comp=7) then check="x";
-    current_company=6;
-    draw_text(x2+160,y2+103,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+    draw_text(x2+160,y2+103,string_hash_to_newline(romanNumerals[6]+" ["+string(check)+"]"));
     check=" ";
     // VIII Company
     if (target_comp=8) then check="x";
-    current_company=7;
-    draw_text(x2+275,y2+103,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+    draw_text(x2+275,y2+103,string_hash_to_newline(romanNumerals[7]+" ["+string(check)+"]"));
     check=" ";
     // IX Company
     if (target_comp=9) then check="x";
-    current_company=8;
-    draw_text(x2+386,y2+103,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+    draw_text(x2+386,y2+103,string_hash_to_newline(romanNumerals[8]+" ["+string(check)+"]"));
     check=" ";
     // X Company
     if (target_comp=10) then check="x";
-    current_company=9;
-    draw_text(x2+497,y2+103,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+    draw_text(x2+497,y2+103,string_hash_to_newline(romanNumerals[9]+" ["+string(check)+"]"));
     check=" ";
     
     if (target_role>2) then draw_set_alpha(0.25);
@@ -532,13 +496,12 @@ if (type=8) and (instance_exists(obj_controller)){
     
 }
 
-/* */
 var xx,yy;
 xx=__view_get( e__VW.XView, 0 );
 yy=__view_get( e__VW.YView, 0 );
 
-if (zm=0) and (type=6) and (instance_exists(obj_controller)){// Changing Equipment
-    // draw_sprite(spr_popup,0,xx+112,yy+112);
+// Changing Equipment
+if (zm=0) and (type=6) and (instance_exists(obj_controller)){
     draw_set_color(0);draw_rectangle(xx+1006,yy+143,xx+1577,yy+518,0);
     
     draw_set_font(fnt_40k_14b);
@@ -549,18 +512,13 @@ if (zm=0) and (type=6) and (instance_exists(obj_controller)){// Changing Equipme
     
     draw_set_font(fnt_40k_12);
     var comp="";
-    if (company<10) {
-        current_company=company-1;
-        comp=romanNumerals[current_company];
+    if (company <= 10 and company > 0) {
+        comp=romanNumerals[company-1];
     }
-    if (company>10) then comp="HQ";
+    else if (company>10) then comp="HQ";
+
     if (vehicle_equipment=0) then draw_text(xx+1292,yy+170,string_hash_to_newline(string(comp)+" Company, "+string(units)+" Marines"));
     if (vehicle_equipment=1) then draw_text(xx+1292,yy+170,string_hash_to_newline(string(comp)+" Company, "+string(units)+" Vehicles"));
-    
-    /*if (target_comp=1) or (target_comp=2){var si;
-        si=83;if (tab!=1) then si=40;draw_sprite_stretched(spr_red_button,3,xx+528,yy+238,si,15);
-        si=83;if (tab!=2) then si=40;draw_sprite_stretched(spr_red_button,3,xx+528,yy+238+17,si,15);
-    }*/
     
     draw_set_halign(fa_left);
     draw_set_color(c_gray);
@@ -759,7 +717,7 @@ if (zm=0) and (type=6) and (instance_exists(obj_controller)){// Changing Equipme
 
 // ** Promoting **
 if (zm=0) and (type=5) and (instance_exists(obj_controller)){
-    // draw_sprite(spr_popup,0,xx+112,yy+112);
+
     draw_set_color(0);
     draw_rectangle(xx+1006,yy+143,xx+1577,yy+518,0);
     
@@ -770,11 +728,10 @@ if (zm=0) and (type=5) and (instance_exists(obj_controller)){
     
     draw_set_font(fnt_40k_12);
     var comp="";
-    if (company<10) and (company>0) {
-        current_company=company-1;
-        comp=romanNumerals[current_company];
+    if (company <= 10 and company > 0) {
+        comp=romanNumerals[company-1];
     }
-    if (company>10) then comp="HQ";
+    else if (company>10) then comp="HQ";
     draw_text(xx+1292,yy+170,string_hash_to_newline(string(comp)+" Company "+string(unit_role)));
     
     draw_set_halign(fa_left);
@@ -783,81 +740,70 @@ if (zm=0) and (type=5) and (instance_exists(obj_controller)){
     
     var check=" ";
     draw_set_alpha(1);
-    // if (company=0) or (company>10) or (company=1) or (unit_role=obj_ini.role[100,15]) or (unit_role=obj_ini.role[100,14]){
-        // draw_set_alpha(0.25);
+
     // HQ Company
     if (target_comp=0) or (target_comp>10) then check="x";
     draw_text(xx+1470,yy+210,string_hash_to_newline("HQ ["+string(check)+"]"));
     check=" ";
-    // }
+
     // TODO refactor Promoting and Transfer to use a function or a for loop
     if ((unit_role!=obj_ini.role[100,17]) or (obj_controller.command_set[1]!=0)) and (unit_role!="Lexicanum") and (unit_role!="Codiciery"){
         // I Company
         if (min_exp<80) then draw_set_alpha(0.25);
         if (target_comp==1) then check="x";
-        current_company=0;
-        draw_text(xx+1030,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+        draw_text(xx+1030,yy+230,string_hash_to_newline(romanNumerals[0]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
         // II Company
         if (min_exp<70) then draw_set_alpha(0.25);
-        if (target_comp=2) then check="x";
-        current_company=1;
-        draw_text(xx+1140,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+        if (target_comp==2) then check="x";
+        draw_text(xx+1140,yy+230,string_hash_to_newline(romanNumerals[1]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
         // III Company
         if (min_exp<60) then draw_set_alpha(0.25);
-        if (target_comp=3) then check="x";
-        current_company=2;
-        draw_text(xx+1250,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+        if (target_comp==3) then check="x";
+        draw_text(xx+1250,yy+230,string_hash_to_newline(romanNumerals[2]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
         // IV Company
         if (min_exp<50) then draw_set_alpha(0.25);
-        if (target_comp=4) then check="x";
-        current_company=3;
-        draw_text(xx+1360,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+        if (target_comp==4) then check="x";
+        draw_text(xx+1360,yy+230,string_hash_to_newline(romanNumerals[3]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
         // V Company
         if (min_exp<40) then draw_set_alpha(0.25);
         if (target_comp=5) then check="x";
-        current_company=4;
-        draw_text(xx+1470,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+        draw_text(xx+1470,yy+230,string_hash_to_newline(romanNumerals[4]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
         // VI Company
         if (min_exp<35) then draw_set_alpha(0.25);
         if (target_comp=6) then check="x";
-        current_company=5;
-        draw_text(xx+1030,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+        draw_text(xx+1030,yy+250,string_hash_to_newline(romanNumerals[5]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
         // VII Company
         if (min_exp<30) then draw_set_alpha(0.25);
         if (target_comp=7) then check="x";
-        current_company=6;
-        draw_text(xx+1140,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+        draw_text(xx+1140,yy+250,string_hash_to_newline(romanNumerals[6]+" ["+string(check)+"]"));
         check=" ";draw_set_alpha(1);
         // VIII Company
         if (min_exp<25) then draw_set_alpha(0.25);
         if (target_comp=8) then check="x";
-        current_company=7;
-        draw_text(xx+1250,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+        draw_text(xx+1250,yy+250,string_hash_to_newline(romanNumerals[7]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
         // IX Company
         if (min_exp<20) then draw_set_alpha(0.25);
         if (target_comp=9) then check="x";
-        current_company=8;
-        draw_text(xx+1360,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+        draw_text(xx+1360,yy+250,string_hash_to_newline(romanNumerals[8]+" ["+string(check)+"]"));
         check=" ";
         draw_set_alpha(1);
         // X Company
         if (target_comp=10) then check="x";
-        current_company=9;
-        draw_text(xx+1470,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+        draw_text(xx+1470,yy+250,string_hash_to_newline(romanNumerals[9]+" ["+string(check)+"]"));
         check=" ";
     }
     
@@ -989,7 +935,6 @@ if (zm=0) and (type=5) and (instance_exists(obj_controller)){
 
 // ** Transfering **
 if (zm=0) and (type=5.1) and (instance_exists(obj_controller)){
-    // draw_sprite(spr_popup,0,xx+112,yy+112);
     draw_set_color(0);
     draw_rectangle(xx+1006,yy+143,xx+1577,yy+518,0);
     
@@ -1000,11 +945,10 @@ if (zm=0) and (type=5.1) and (instance_exists(obj_controller)){
     
     draw_set_font(fnt_40k_12);
     var comp="";
-    if (company<10) {
-        current_company=company-1;
-        comp=romanNumerals[current_company];
+    if (company <=10 and company > 0) {
+        comp=romanNumerals[company-1];
     }
-    if (company>10) then comp="HQ";
+    else if (company>10) then comp="HQ";
     draw_text(xx+1292,yy+170,string_hash_to_newline(string(comp)+" Company "+string(unit_role)));
     
     draw_set_halign(fa_left);
@@ -1016,58 +960,47 @@ if (zm=0) and (type=5.1) and (instance_exists(obj_controller)){
     if (target_comp=0) or (target_comp>10) then check="x";
     draw_text(xx+1470,yy+210,string_hash_to_newline("HQ ["+string(check)+"]"));
     check=" ";
-    // }
     
     if ((unit_role!=obj_ini.role[100,17]) or (obj_controller.command_set[1]!=0)) and (unit_role!="Lexicanum") and (unit_role!="Codiciery"){
         // I Company
         if (target_comp==1) then check="x";
-        current_company=0;
-        draw_text(xx+1030,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+        draw_text(xx+1030,yy+230,string_hash_to_newline(romanNumerals[0]+" ["+string(check)+"]"));
         check=" ";
         // II Company
         if (target_comp==2) then check="x";
-        current_company=1;
-        draw_text(xx+1140,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+        draw_text(xx+1140,yy+230,string_hash_to_newline(romanNumerals[1]+" ["+string(check)+"]"));
         check=" ";
         // III Company
         if (target_comp==3) then check="x";
-        current_company=2;
-        draw_text(xx+1250,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+        draw_text(xx+1250,yy+230,string_hash_to_newline(romanNumerals[2]+" ["+string(check)+"]"));
         check=" ";
         // IV Company
         if (target_comp==4) then check="x";
-        current_company=3;
-        draw_text(xx+1360,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+        draw_text(xx+1360,yy+230,string_hash_to_newline(romanNumerals[3]+" ["+string(check)+"]"));
         check=" ";
         // V Company
         if (target_comp==5) then check="x";
-        current_company=4;
-        draw_text(xx+1470,yy+230,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+        draw_text(xx+1470,yy+230,string_hash_to_newline(romanNumerals[4]+" ["+string(check)+"]"));
         check=" ";
         // VI Company
         if (target_comp==6) then check="x";
-        current_company=5;
-        draw_text(xx+1030,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+        draw_text(xx+1030,yy+250,string_hash_to_newline(romanNumerals[5]+" ["+string(check)+"]"));
         check=" ";
         // VII Company
         if (target_comp==7) then check="x";
-        current_company=6;
-        draw_text(xx+1140,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+        draw_text(xx+1140,yy+250,string_hash_to_newline(romanNumerals[6]+" ["+string(check)+"]"));
         check=" ";
         // VIII Company
         if (target_comp==8) then check="x";
-        current_company=7;
-        draw_text(xx+1250,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+        draw_text(xx+1250,yy+250,string_hash_to_newline(romanNumerals[7]+" ["+string(check)+"]"));
         check=" ";
         // IX Company
         if (target_comp==9) then check="x";
-        current_company=8;
-        draw_text(xx+1360,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+        draw_text(xx+1360,yy+250,string_hash_to_newline(romanNumerals[8]+" ["+string(check)+"]"));
         check=" ";
         // X Company
         if (target_comp==10) then check="x";
-        current_company=9;
-        draw_text(xx+1470,yy+250,string_hash_to_newline(romanNumerals[current_company]+" ["+string(check)+"]"));
+        draw_text(xx+1470,yy+250,string_hash_to_newline(romanNumerals[9]+" ["+string(check)+"]"));
         check=" ";
     }
     
@@ -1085,7 +1018,7 @@ if (zm=0) and (type=5.1) and (instance_exists(obj_controller)){
         draw_set_alpha(0.5);
         draw_rectangle(xx+1466,yy+500,xx+1575,yy+517,1);
     }
-    if (company=target_comp) or (target_comp<0){
+    if (company==target_comp) or (target_comp<0){
         draw_set_alpha(0.25);
         draw_rectangle(xx+1465,yy+499,xx+1576,yy+518,1);
         draw_rectangle(xx+1466,yy+500,xx+1575,yy+517,1);
@@ -1100,7 +1033,7 @@ if (zm=0) and (type=5.1) and (instance_exists(obj_controller)){
         draw_text(xx+1521,yy+501,string_hash_to_newline("Transfer!"));
         draw_text(xx+1521.5,yy+501.5,string_hash_to_newline("Transfer!"));
     }
-    if (company=target_comp) or (target_comp<0){
+    if (company==target_comp) or (target_comp<0){
         draw_set_alpha(0.25);
         draw_text(xx+1521,yy+501,string_hash_to_newline("Transfer!"));
         draw_text(xx+1521.5,yy+501.5,string_hash_to_newline("Transfer!"));
