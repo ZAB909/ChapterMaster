@@ -216,7 +216,7 @@ if (did==1){
                 fleet.capital_uid[fleet.capital_number]=obj_ini.ship_uid[fleet.capital_num[fleet.capital_number]];
                 break;
             default:
-                console.log("🚀 ~ file: Obj_controller Alarm_1.gml:201 ~ obj_ini.ship_size[f]:", obj_ini.ship_size[f])
+                show_debug_message("🚀 ~ file: Obj_controller Alarm_1.gml:201 ~ obj_ini.ship_size[f]:", obj_ini.ship_size[f])
                 break;
         }
     }
