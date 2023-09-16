@@ -333,6 +333,7 @@
     {"id":{"name":"spr_weapon_colors","path":"sprites/spr_weapon_colors/spr_weapon_colors.yy",},},
     {"id":{"name":"spr_weapon_standard","path":"sprites/spr_weapon_standard/spr_weapon_standard.yy",},},
     {"id":{"name":"spr_weapon_blank","path":"sprites/spr_weapon_blank/spr_weapon_blank.yy",},},
+    {"id":{"name":"spr_purity_s","path":"sprites/spr_purity_s/spr_purity_s.yy",},},
     {"id":{"name":"spr_weapon_boltpis","path":"sprites/spr_weapon_boltpis/spr_weapon_boltpis.yy",},},
     {"id":{"name":"spr_weapon_bolter","path":"sprites/spr_weapon_bolter/spr_weapon_bolter.yy",},},
     {"id":{"name":"spr_weapon_sbolter","path":"sprites/spr_weapon_sbolter/spr_weapon_sbolter.yy",},},
