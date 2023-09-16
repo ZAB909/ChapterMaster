@@ -122,7 +122,7 @@ function new_planet_feature(feature_type) constructor{
 			}
 			unrecovered_items=false;
 			recoverable_gene_seed = 0;
-			var _recoverables =[]
+			var _recoverables =[];
 			recoverables =_recoverables
 			planet_display = "Unexplored Ancient Ruins";
 		}
