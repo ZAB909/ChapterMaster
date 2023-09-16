@@ -1,192 +1,8 @@
-
-
-
-is_test_map=false;
-target_navy_number=5;
-global.sound_playing=0;
-global.defeat=0;tutorial=0;
-sound_in=0;sound_to="";
-fix_left=0;fix_right=0;
-text_bar=0;bar_fix=0;
-last_attack_form=1;
-last_raid_form=3;
-double_click=0;
-double_was=0;
-last_weapons_tab=1;
-complex_event=false;
-current_eventing="";
-chaos_rating=0;
-obj_cuicons.alarm[1]=1;// Clean up custom icons
-
-
-// function set to build chaos gods
-chaos_gods = {};
-diplomacy_pathway = "";
-option_selections=[];
-ready=false;
-function build_chaos_gods(){
-	var _god_names = ["Khorne", "Slaanesh", "Nurgle", "Tzeentch"]
-	for (var _i = 0; _i < 4; _i++;){
-		chaos_gods[$ _god_names[_i]] = {};
-		chaos_gods[$ _god_names[_i]].favour = 0;
-		chaos_gods[$ _god_names[_i]].god_name = _god_names[_i];
-		chaos_gods[$ _god_names[_i]].emmissary = "";
-		chaos_gods[$ _god_names[_i]].power = 0;
-		chaos_gods[$ _god_names[_i]].interfaced = 0;
-	}
-	
-}
-
-build_chaos_gods()
-
-
-
-obj_controller.restart_name="";
-obj_controller.restart_founding="";
-obj_controller.restart_secret="";
-obj_controller.restart_title[0]="";
-var i;i=0;repeat(11){i+=1;obj_controller.restart_title[i]="";}
-obj_controller.restart_icon=0;
-obj_controller.restart_icon_name="";
-obj_controller.restart_powers="";
-var ad;ad=-1;repeat(5){ad+=1;obj_controller.restart_adv[ad]="";obj_controller.restart_dis[ad]="";}
-obj_controller.restart_recruiting_type="";
-obj_controller.restart_trial="";
-obj_controller.restart_recruiting_name="";
-obj_controller.restart_home_type="";
-obj_controller.restart_home_name="";
-obj_controller.restart_fleet_type=0;
-obj_controller.restart_recruiting_exists=0;
-obj_controller.restart_homeworld_exists=0;
-obj_controller.restart_homeworld_rule=0;
-obj_controller.restart_battle_cry="";
-obj_controller.restart_main_color="";
-obj_controller.restart_secondary_color="";
-obj_controller.restart_trim_color="";
-obj_controller.restart_pauldron2_color="";
-obj_controller.restart_pauldron_color="";
-obj_controller.restart_lens_color="";
-obj_controller.restart_weapon_color="";
-obj_controller.restart_col_special=0;
-obj_controller.restart_trim=0;
-obj_controller.restart_skin_color=0;
-obj_controller.restart_hapothecary="";
-obj_controller.restart_hchaplain="";
-obj_controller.restart_clibrarian="";
-obj_controller.restart_fmaster="";
-obj_controller.restart_recruiter="";
-obj_controller.restart_admiral="";
-obj_controller.restart_equal_specialists=0;
-obj_controller.restart_load_to_ships=0;
-obj_controller.restart_successors=0;
-obj_controller.restart_mutations=0;
-obj_controller.restart_preomnor=0;
-obj_controller.restart_voice=0;
-obj_controller.restart_doomed=0;
-obj_controller.restart_lyman=0;
-obj_controller.restart_omophagea=0;
-obj_controller.restart_ossmodula=0;
-obj_controller.restart_membrane=0;
-obj_controller.restart_zygote=0;
-obj_controller.restart_betchers=0;
-obj_controller.restart_catalepsean=0;
-obj_controller.restart_secretions=0;
-obj_controller.restart_occulobe=0;
-obj_controller.restart_mucranoid=0;
-obj_controller.restart_master_name="";
-obj_controller.restart_master_melee=0;
-obj_controller.restart_master_ranged=0;
-obj_controller.restart_master_specialty=0;
-obj_controller.restart_strength=0;
-obj_controller.restart_cooperation=0;
-obj_controller.restart_purity=0;
-obj_controller.restart_stability=0;
-
-i=99;
-repeat(3){i+=1;
-    obj_controller.r_role[i,2]="Honor Guard";obj_controller.r_wep1[i,2]="Power Sword";obj_controller.r_wep2[i,2]="Bolter";
-    obj_controller.r_armour[i,2]="Power Armour";obj_controller.r_mobi[i,2]="";obj_controller.r_gear[i,2]="";
-    
-    obj_controller.r_role[i,3]="Veteran";obj_controller.r_wep1[i,3]="Chainsword";obj_controller.r_wep2[i,3]="Bolter";
-    obj_controller.r_armour[i,3]="Power Armour";obj_controller.r_mobi[i,3]="";obj_controller.r_gear[i,3]="";
-    
-    obj_controller.r_role[i,4]="Terminator";obj_controller.r_wep1[i,4]="Power Fist";obj_controller.r_wep2[i,4]="Storm Bolter";
-    obj_controller.r_armour[i,4]="Terminator Armour";obj_controller.r_mobi[i,4]="";obj_controller.r_gear[i,4]="";
-    
-    obj_controller.r_role[i,5]="Captain";obj_controller.r_wep1[i,5]="Power Fist";obj_controller.r_wep2[i,5]="Bolt Pistol";
-    obj_controller.r_armour[i,5]="Power Armour";obj_controller.r_mobi[i,5]="";obj_controller.r_gear[i,5]="";
-    
-    obj_controller.r_role[i,6]="Dreadnought";obj_controller.r_wep1[i,6]="Close Combat Weapon";obj_controller.r_wep2[i,6]="Lascannon";
-    obj_controller.r_armour[i,6]="Dreadnought";obj_controller.r_mobi[i,6]="";obj_controller.r_gear[i,6]="";
-    
-    obj_controller.r_role[i,7]="Company Champion";obj_controller.r_wep1[i,7]="Power Sword";obj_controller.r_wep2[i,7]="Storm Shield";
-    obj_controller.r_armour[i,7]="Power Armour";obj_controller.r_mobi[i,7]="";obj_controller.r_gear[i,7]="";
-    
-    obj_controller.r_role[i,8]="Tactical Marine";obj_controller.r_wep1[i,8]="Bolter";obj_controller.r_wep2[i,8]="Chainsword";
-    obj_controller.r_armour[i,8]="Power Armour";obj_controller.r_mobi[i,8]="";obj_controller.r_gear[i,8]="";
-    
-    obj_controller.r_role[i,9]="Devastator";obj_controller.r_wep1[i,9]="Heavy Ranged";obj_controller.r_wep2[i,9]="Combat Knife";
-    obj_controller.r_armour[i,9]="Power Armour";obj_controller.r_mobi[i,9]="";obj_controller.r_gear[i,9]="";
-    
-    obj_controller.r_role[i,10]="Assault Marine";obj_controller.r_wep1[i,10]="Chainsword";obj_controller.r_wep2[i,10]="Bolt Pistol";
-    obj_controller.r_armour[i,10]="Power Armour";obj_controller.r_mobi[i,10]="Jump Pack";obj_controller.r_gear[i,10]="";
-    
-    obj_controller.r_role[i,12]="Scout";obj_controller.r_wep1[i,12]="Sniper Rifle";obj_controller.r_wep2[i,12]="Combat Knife";
-    obj_controller.r_armour[i,12]="Scout Armour";obj_controller.r_mobi[i,12]="";obj_controller.r_gear[i,12]="";
-    
-    obj_controller.r_role[i,14]="Chaplain";obj_controller.r_wep1[i,14]="Power Sword";obj_controller.r_wep2[i,14]="Storm Bolter";
-    obj_controller.r_armour[i,14]="Power Armour";obj_controller.r_gear[i,14]="Rosarius";obj_controller.r_mobi[i,14]="";
-    
-    obj_controller.r_role[i,15]="Apothecary";obj_controller.r_wep1[i,15]="Power Sword";obj_controller.r_wep2[i,15]="Storm Bolter";
-    obj_controller.r_armour[i,15]="Power Armour";obj_controller.r_gear[i,15]="Narthecium";obj_controller.r_mobi[i,15]="";
-    
-    obj_controller.r_role[i,16]="Techmarine";obj_controller.r_wep1[i,16]="Power Axe";obj_controller.r_wep2[i,16]="Storm Bolter";
-    obj_controller.r_armour[i,16]="Power Armour";obj_controller.r_gear[i,16]="Servo Arms";obj_controller.r_mobi[i,16]="";
-    
-    obj_controller.r_role[i,17]="Librarian";obj_controller.r_wep1[i,17]="Force Weapon";obj_controller.r_wep2[i,17]="Storm Bolter";
-    obj_controller.r_armour[i,17]="Power Armour";obj_controller.r_gear[i,17]="Psychic Hood";obj_controller.r_mobi[i,17]="";
-
-}// 100 is defaults, 101 is the allowable starting equipment
-
-i=-1;repeat(21){i+=1;
-    obj_controller.r_race[100,i]=0;
-    obj_controller.r_role[100,i]="";
-    obj_controller.r_wep1[100,i]="";
-    obj_controller.r_wep2[100,i]="";
-    obj_controller.r_armour[100,i]="";
-    obj_controller.r_gear[100,i]="";
-    obj_controller.r_mobi[100,i]="";
-}
-// 
-// 
-// 
-
-
-window_data=string(window_get_x())+"|"+string(window_get_y())+"|"+string(window_get_width())+"|"+string(window_get_height())+"|";
-window_old=window_data;if (window_get_fullscreen()=1){window_old="fullscreen";window_data="fullscreen";}
-cheatcode=0;cheatyface=0;
-
-debug_lines=0;
-ini_open("debug_log.ini");
-debug_lines=ini_read_real("Main","lines",0);
-ini_close();
-
-debugl("=========Controller Created");
-
-ini_open("saves.ini");
-master_volume=ini_read_real("Settings","master_volume",1);
-effect_volume=ini_read_real("Settings","effect_volume",1);
-music_volume=ini_read_real("Settings","music_volume",1);
-large_text=ini_read_real("Settings","large_text",0);
-settings_heresy=ini_read_real("Settings","settings_heresy",0);
-settings_fullscreen=ini_read_real("Settings","fullscreen",1);
-settings_window_data=ini_read_string("Settings","window_data","fullscreen");
-if (is_test_map) then global.cheat_debug=true;
-ini_close();
-
-
-
 /*
+    Creates all instances and logic for the game, 
+    This is the MAIN script to load in the actual game UI and where most if not all MISC Stuff from the game is:
+    NOTE from old Duke:
+
     Welcome to the project file for Chapter Master.  As of December
     2014 I will be attempting to add documentation across this file
     in order to facilitate the transfer of development.  This comment
@@ -256,10 +72,253 @@ ini_close();
     The Machine God watches over you.
 */
 
+is_test_map=false;
+target_navy_number=5;
+global.sound_playing=0;
+global.defeat=0;
+tutorial=0;
+sound_in=0;
+sound_to="";
+fix_left=0;
+fix_right=0;
+text_bar=0;
+bar_fix=0;
+last_attack_form=1;
+last_raid_form=3;
+double_click=0;
+double_was=0;
+last_weapons_tab=1;
+complex_event=false;
+current_eventing="";
+chaos_rating=0;
+obj_cuicons.alarm[1]=1; // Clean up custom icons
 
 
+diplomacy_pathway = "";
+option_selections=[];
+ready=false;
 
+// ** Create Chaos Gods **
+chaos_gods = {};
+function build_chaos_gods(){
+	var _god_names = ["Khorne", "Slaanesh", "Nurgle", "Tzeentch"]
+	for (var _i = 0; _i < 4; _i++;){
+		chaos_gods[$ _god_names[_i]] = {};
+		chaos_gods[$ _god_names[_i]].favour = 0;
+		chaos_gods[$ _god_names[_i]].god_name = _god_names[_i];
+		chaos_gods[$ _god_names[_i]].emmissary = "";
+		chaos_gods[$ _god_names[_i]].power = 0;
+		chaos_gods[$ _god_names[_i]].interfaced = 0;
+	}
+	
+}
+build_chaos_gods()
 
+// ** Resets global vars **
+obj_controller.restart_name="";
+obj_controller.restart_founding="";
+obj_controller.restart_secret="";
+for(var i=0; i<=10; i++){obj_controller.restart_title[i]="";}
+obj_controller.restart_icon=0;
+obj_controller.restart_icon_name="";
+obj_controller.restart_powers="";
+for(var ad=0; ad<5; ad ++){
+    obj_controller.restart_adv[ad]="";
+    obj_controller.restart_dis[ad]="";
+}
+obj_controller.restart_recruiting_type="";
+obj_controller.restart_trial="";
+obj_controller.restart_recruiting_name="";
+obj_controller.restart_home_type="";
+obj_controller.restart_home_name="";
+obj_controller.restart_fleet_type=0;
+obj_controller.restart_recruiting_exists=0;
+obj_controller.restart_homeworld_exists=0;
+obj_controller.restart_homeworld_rule=0;
+obj_controller.restart_battle_cry="";
+obj_controller.restart_main_color="";
+obj_controller.restart_secondary_color="";
+obj_controller.restart_trim_color="";
+obj_controller.restart_pauldron2_color="";
+obj_controller.restart_pauldron_color="";
+obj_controller.restart_lens_color="";
+obj_controller.restart_weapon_color="";
+obj_controller.restart_col_special=0;
+obj_controller.restart_trim=0;
+obj_controller.restart_skin_color=0;
+obj_controller.restart_hapothecary="";
+obj_controller.restart_hchaplain="";
+obj_controller.restart_clibrarian="";
+obj_controller.restart_fmaster="";
+obj_controller.restart_recruiter="";
+obj_controller.restart_admiral="";
+obj_controller.restart_equal_specialists=0;
+obj_controller.restart_load_to_ships=0;
+obj_controller.restart_successors=0;
+obj_controller.restart_mutations=0;
+obj_controller.restart_preomnor=0;
+obj_controller.restart_voice=0;
+obj_controller.restart_doomed=0;
+obj_controller.restart_lyman=0;
+obj_controller.restart_omophagea=0;
+obj_controller.restart_ossmodula=0;
+obj_controller.restart_membrane=0;
+obj_controller.restart_zygote=0;
+obj_controller.restart_betchers=0;
+obj_controller.restart_catalepsean=0;
+obj_controller.restart_secretions=0;
+obj_controller.restart_occulobe=0;
+obj_controller.restart_mucranoid=0;
+obj_controller.restart_master_name="";
+obj_controller.restart_master_melee=0;
+obj_controller.restart_master_ranged=0;
+obj_controller.restart_master_specialty=0;
+obj_controller.restart_strength=0;
+obj_controller.restart_cooperation=0;
+obj_controller.restart_purity=0;
+obj_controller.restart_stability=0;
+
+// ** Sets default equipement for roles **
+// 100 is defaults, 101 is the allowable starting equipment
+for(var i=100; i<103; i++){
+    obj_controller.r_role[i,2]="Honor Guard";
+    obj_controller.r_wep1[i,2]="Power Sword";
+    obj_controller.r_wep2[i,2]="Bolter";
+    obj_controller.r_armour[i,2]="Power Armour";
+    obj_controller.r_mobi[i,2]="";
+    obj_controller.r_gear[i,2]="";
+    
+    obj_controller.r_role[i,3]="Veteran";
+    obj_controller.r_wep1[i,3]="Chainsword";
+    obj_controller.r_wep2[i,3]="Bolter";
+    obj_controller.r_armour[i,3]="Power Armour";
+    obj_controller.r_mobi[i,3]="";
+    obj_controller.r_gear[i,3]="";
+    
+    obj_controller.r_role[i,4]="Terminator";
+    obj_controller.r_wep1[i,4]="Power Fist";
+    obj_controller.r_wep2[i,4]="Storm Bolter";
+    obj_controller.r_armour[i,4]="Terminator Armour";
+    obj_controller.r_mobi[i,4]="";
+    obj_controller.r_gear[i,4]="";
+    
+    obj_controller.r_role[i,5]="Captain";
+    obj_controller.r_wep1[i,5]="Power Fist";
+    obj_controller.r_wep2[i,5]="Bolt Pistol";
+    obj_controller.r_armour[i,5]="Power Armour";
+    obj_controller.r_mobi[i,5]="";
+    obj_controller.r_gear[i,5]="";
+    
+    obj_controller.r_role[i,6]="Dreadnought";
+    obj_controller.r_wep1[i,6]="Close Combat Weapon";
+    obj_controller.r_wep2[i,6]="Lascannon";
+    obj_controller.r_armour[i,6]="Dreadnought";
+    obj_controller.r_mobi[i,6]="";
+    obj_controller.r_gear[i,6]="";
+    
+    obj_controller.r_role[i,7]="Company Champion";
+    obj_controller.r_wep1[i,7]="Power Sword";
+    obj_controller.r_wep2[i,7]="Storm Shield";
+    obj_controller.r_armour[i,7]="Power Armour";
+    obj_controller.r_mobi[i,7]="";
+    obj_controller.r_gear[i,7]="";
+    
+    obj_controller.r_role[i,8]="Tactical Marine";
+    obj_controller.r_wep1[i,8]="Bolter";
+    obj_controller.r_wep2[i,8]="Chainsword";
+    obj_controller.r_armour[i,8]="Power Armour";
+    obj_controller.r_mobi[i,8]="";
+    obj_controller.r_gear[i,8]="";
+    
+    obj_controller.r_role[i,9]="Devastator";
+    obj_controller.r_wep1[i,9]="Heavy Ranged";
+    obj_controller.r_wep2[i,9]="Combat Knife";
+    obj_controller.r_armour[i,9]="Power Armour";
+    obj_controller.r_mobi[i,9]="";
+    obj_controller.r_gear[i,9]="";
+    
+    obj_controller.r_role[i,10]="Assault Marine";
+    obj_controller.r_wep1[i,10]="Chainsword";
+    obj_controller.r_wep2[i,10]="Bolt Pistol";
+    obj_controller.r_armour[i,10]="Power Armour";
+    obj_controller.r_mobi[i,10]="Jump Pack";
+    obj_controller.r_gear[i,10]="";
+    
+    obj_controller.r_role[i,12]="Scout";
+    obj_controller.r_wep1[i,12]="Sniper Rifle";
+    obj_controller.r_wep2[i,12]="Combat Knife";
+    obj_controller.r_armour[i,12]="Scout Armour";
+    obj_controller.r_mobi[i,12]="";
+    obj_controller.r_gear[i,12]="";
+    
+    obj_controller.r_role[i,14]="Chaplain";
+    obj_controller.r_wep1[i,14]="Power Sword";
+    obj_controller.r_wep2[i,14]="Storm Bolter";
+    obj_controller.r_armour[i,14]="Power Armour";
+    obj_controller.r_gear[i,14]="Rosarius";
+    obj_controller.r_mobi[i,14]="";
+    
+    obj_controller.r_role[i,15]="Apothecary";
+    obj_controller.r_wep1[i,15]="Power Sword";
+    obj_controller.r_wep2[i,15]="Storm Bolter";
+    obj_controller.r_armour[i,15]="Power Armour";
+    obj_controller.r_gear[i,15]="Narthecium";
+    obj_controller.r_mobi[i,15]="";
+    
+    obj_controller.r_role[i,16]="Techmarine";
+    obj_controller.r_wep1[i,16]="Power Axe";
+    obj_controller.r_wep2[i,16]="Storm Bolter";
+    obj_controller.r_armour[i,16]="Power Armour";
+    obj_controller.r_gear[i,16]="Servo Arms";
+    obj_controller.r_mobi[i,16]="";
+    
+    obj_controller.r_role[i,17]="Librarian";
+    obj_controller.r_wep1[i,17]="Force Weapon";
+    obj_controller.r_wep2[i,17]="Storm Bolter";
+    obj_controller.r_armour[i,17]="Power Armour";
+    obj_controller.r_gear[i,17]="Psychic Hood";
+    obj_controller.r_mobi[i,17]="";
+}
+// ** Resets all races and equipement for 100 **
+for(var i=0; i<21; i++){
+    obj_controller.r_race[100,i]=0;
+    obj_controller.r_role[100,i]="";
+    obj_controller.r_wep1[100,i]="";
+    obj_controller.r_wep2[100,i]="";
+    obj_controller.r_armour[100,i]="";
+    obj_controller.r_gear[100,i]="";
+    obj_controller.r_mobi[100,i]="";
+}
+// ** Sets to full screen/ checks for resolution **
+window_data=string(window_get_x())+"|"+string(window_get_y())+"|"+string(window_get_width())+"|"+string(window_get_height())+"|";
+window_old=window_data;
+if (window_get_fullscreen()=1){
+    window_old="fullscreen";
+    window_data="fullscreen";
+}
+// ** Sets cheatcode values **
+cheatcode=0;
+cheatyface=0;
+// ** Debugging file created **
+debug_lines=0;
+ini_open("debug_log.ini");
+debug_lines=ini_read_real("Main","lines",0);
+ini_close();
+
+debugl("=========Controller Created");
+// ** Creates saves.ini with default settings **
+ini_open("saves.ini");
+master_volume=ini_read_real("Settings","master_volume",1);
+effect_volume=ini_read_real("Settings","effect_volume",1);
+music_volume=ini_read_real("Settings","music_volume",1);
+large_text=ini_read_real("Settings","large_text",0);
+settings_heresy=ini_read_real("Settings","settings_heresy",0);
+settings_fullscreen=ini_read_real("Settings","fullscreen",1);
+settings_window_data=ini_read_string("Settings","window_data","fullscreen");
+if (is_test_map) then global.cheat_debug=true;
+ini_close();
+
+// ** Sets play variables **
 info_fragments=0;
 play_time=0;
 play_second=0;
@@ -319,6 +378,7 @@ new_button_highlight="";
 new_buttons_hide=0;
 new_buttons_frame=0;
 
+// ** Sets tooltips **
 tooltip="";
 tooltip_weapon=0;
 tooltip_stat1=0;
@@ -331,22 +391,30 @@ tooltip_y=0;
 tooltip_width=0;
 tooltip_height=0;
 
-// for weapon display in management
-ui_weapon[1]=0;ui_weapon[2]=0;
-ui_arm[1]=true;ui_arm[2]=true;
-ui_above[1]=true;ui_above[2]=true;
-ui_spec[1]=false;ui_spec[2]=false;
-ui_twoh[1]=false;ui_twoh[2]=false;
-ui_xmod[1]=0;ui_xmod[2]=0;
-ui_ymod[1]=0;ui_ymod[2]=0;
-ui_back=true;ui_force_both=false;
-ui_specialist=0;ttrim=0;ui_coloring="";
-// 
+// ** For weapon display in management **
+ui_weapon[1]=0;
+ui_weapon[2]=0;
+ui_arm[1]=true;
+ui_arm[2]=true;
+ui_above[1]=true;
+ui_above[2]=true;
+ui_spec[1]=false;
+ui_spec[2]=false;
+ui_twoh[1]=false;
+ui_twoh[2]=false;
+ui_xmod[1]=0;
+ui_xmod[2]=0;
+ui_ymod[1]=0;
+ui_ymod[2]=0;
+ui_back=true;
+ui_force_both=false;
+ui_specialist=0;
+ttrim=0;
+ui_coloring=""; 
 ui_melee_penalty=0;
 ui_ranged_penalty=0;
-// End
 
-
+// ** Sets default mouse vars **
 click=0;
 click2=0;
 mouse_left=0;
@@ -354,25 +422,31 @@ dropdown_open=0;
 scrollbar_engaged=0;
 born_leader=0;
 
+// ** Sets the secrets/events of the world **
 craftworld=0;
 hurssy=0;
 hurssy_time=0;
 qsfx=0;
-
 und_armouries=0;
 und_gene_vaults=0;
 und_lairs=0;
-
+// ** Sets default gene seed values **
 gene_sold=0;
 gene_xeno=0;
 gene_tithe=24;
 gene_iou=0;
 
-// 
-managing=0;formating=0;
-man_current=0;man_max=0;man_see=0;
-ship_current=0;ship_max=0;ship_see=0;
-man_sel[0]=0;man_size=0;
+// ** Sets default views and in game values on creation **
+managing=0;
+formating=0;
+man_current=0;
+man_max=0;
+man_see=0;
+ship_current=0;
+ship_max=0;
+ship_see=0;
+man_sel[0]=0;
+man_size=0;
 selecting_location="";
 selecting_types="";
 selecting_dudes="";
@@ -381,29 +455,57 @@ sel_promoting=0;
 sel_loading=0;
 sel_uid=0;
 
-// for chapter events and celebrations
-fest_sid=0;fest_wid=0;fest_planet=0;fest_star="";
-fest_type="";fest_cost=0;fest_warp=0;fest_scheduled=0;
-fest_lav=0;fest_locals=0;
-fest_feature1=0;fest_feature2=0;fest_feature3=0;
-fest_display=0;fest_display_tags="";fest_repeats=0;
-fest_honor_co=0;fest_honor_id=0;fest_honoring=0;
+// ** Sets Chapter events and celebrations **
+fest_sid=0;
+fest_wid=0;
+fest_planet=0;
+fest_star="";
+fest_type="";
+fest_cost=0;
+fest_warp=0;
+fest_scheduled=0;
+fest_lav=0;
+fest_locals=0;
+fest_feature1=0;
+fest_feature2=0;
+fest_feature3=0;
+fest_display=0;
+fest_display_tags="";
+fest_repeats=0;
+fest_honor_co=0;
+fest_honor_id=0;
+fest_honoring=0;
 fest_attend="";
+// Sets the festivities and allowances
+fest_feasts=0;
+fest_boozes=0;
+fest_drugses=0;
 
-fest_feasts=0;fest_boozes=0;fest_drugses=0;
-
-var i;i=-1;repeat(601){i+=1;
+for(var i=0; i<601; i++){
     recent_type[i]="";recent_keyword[i]="";recent_turn[i]=0;recent_number[i]=0;
 }recent_happenings=0;
-// end chapter events and celebrations
 
-
-var i;i=-1;repeat(40){i+=1;sel_uni[i]="";sel_veh[i]="";command_set[i]=0;}
-command_set[1]=0;command_set[2]=0;
-command_set[3]=1;command_set[4]=1;command_set[5]=1;command_set[6]=1;command_set[7]=1;
-command_set[8]=0;command_set[9]=0;command_set[20]=1;command_set[24]=1;
+// Sets up items to be default
+for(var i=0; i<40; i++){
+    sel_uni[i]="";
+    sel_veh[i]="";
+    command_set[i]=0;
+}
+// TODO command_set is used for equipement. We should re do this and have an array for all available equipement
+command_set[1]=0;
+command_set[2]=0;
+command_set[3]=1;
+command_set[4]=1;
+command_set[5]=1;
+command_set[6]=1;
+command_set[7]=1;
+command_set[8]=0;
+command_set[9]=0;
+command_set[20]=1;
+command_set[24]=1;
 blandify=0;
 
+// ** Default menu items **
 selecting_planet=0;
 selecting_ship=0;
 fleet_minimized=0;
@@ -424,14 +526,21 @@ menu_adept=0;
 artifacts=0;
 identifiable=0;
 repair_ships=0;
-// 
-stc_wargear=0;stc_vehicles=0;stc_ships=0;stc_un_total=0;
-stc_wargear_un=0;stc_vehicles_un=0;stc_ships_un=0;
-stc_bonus[0]=0;stc_bonus[1]=0;stc_bonus[2]=0;stc_bonus[3]=0;
-stc_bonus[4]=0;stc_bonus[5]=0;stc_bonus[6]=0;
-
-// 
-
+// ** STC values **
+stc_wargear=0;
+stc_vehicles=0;
+stc_ships=0;
+stc_un_total=0;
+stc_wargear_un=0;
+stc_vehicles_un=0;
+stc_ships_un=0;
+stc_bonus[0]=0;
+stc_bonus[1]=0;
+stc_bonus[2]=0;
+stc_bonus[3]=0;
+stc_bonus[4]=0;
+stc_bonus[5]=0;stc_bonus[6]=0;
+// ** Resets the years **
 check_number=0;
 year_fraction=0;
 year=0;
@@ -445,7 +554,7 @@ if (instance_exists(obj_ini)){
         millenium=obj_ini.millenium;
     }
 }
-
+// ** Penitent and blood debt reset **
 penitent=0;
 penitent_current=0;
 penitent_max=0;
@@ -454,20 +563,7 @@ penitent_turn=0;
 penitent_end=0;
 blood_debt=0;
 
-
-/*
-if (bloo=1) and (instance_exists(obj_controller)){obj_controller.blood_debt=1;}
-if (bloo=1){
-    penitent=1;penitent_max=(obj_creation.strength*1000)+300;
-    penitent_current=300;penitent_end=obj_creation.strength*48;
-}
-if (bloo=0){
-    penitent=1;penitent_max=(obj_creation.strength*60);
-    penitent_current=1;
-    penitent_end=obj_creation.strength*5;
-}*/
-
-
+// TODO continue refactor
 if (instance_exists(obj_ini)){
     var o,bloo;bloo=0;o=0;repeat(4){o+=1;if (obj_ini.dis[o]="Blood Debt") then bloo=1;}
 
@@ -493,7 +589,7 @@ repeat(501){i+=1;
     ma_race[i]=0;ma_loc[i]="";ma_name[i]="";ma_role[i]="";ma_wep1[i]="";ma_mobi[i]="";
     ma_wep2[i]="";ma_armour[i]="";ma_gear[i]="";ma_health[i]=100;ma_chaos[i]=0;ma_exp[i]=0;ma_god[i]=0;
     sh_ide[i]=0;sh_uid[i]=0;sh_name[i]="";sh_class[i]="";sh_loc[i]="";sh_hp[i]="";sh_cargo[i]=0;sh_cargo_max[i]="";
-    squad[i]=0;
+    squad[i]=0;display_unit[i]=0;
     
     if (i<=50){penit_co[i]=0;penit_id[i]=0;}
     if (i<=100){event[i]="";event_duration[i]=0;}
