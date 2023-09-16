@@ -588,25 +588,29 @@ function scr_initialize_custom() {
 				}}],		//tactical marine
 				[role[100,18], {"max":1,"min":1}],		// sergeant
 			],
-			"assualt_squad" : [
-				[role[100,10] , {"max":10, "min":4, "loadout":{
-					"required" : {
-						"wep1" : ["Chainsword", 4],
-						"wep2":["Bolt Pistol",4]
-					},
-					"option" : {
-						"wep1":[
-							[["Flamer"], 1], [["Eviscerator"],2],
-						],
-						"wep2":[
-							[["Plasma Pistol"], 1]
-						]
+			"assault_squad" : [
+				[role[100,10] , {
+					"max":9, 
+					"min":4, 
+					"loadout":{
+						"required" : {
+							"wep1" : ["Chainsword", 4],
+							"wep2":["Bolt Pistol",4]
+						},
+						"option" : {
+							"wep1":[
+								[["Flamer"], 1], [["Eviscerator"],2],
+							],
+							"wep2":[
+								[["Plasma Pistol"], 1]
+							]
+						}
 					}
-				}}
-				],
-				[role[100,18], {"max":1,"min":1}],		// sergeant
-			]		
-		};
+				}
+			],
+			[role[100,18], {"max":1,"min":1}],		// sergeant
+		]		
+	};
 
 	var st_names = struct_get_names(st);
 	for (var st_iter = 0; st_iter < array_length(st_names);st_iter++;){
@@ -1102,7 +1106,7 @@ function scr_initialize_custom() {
 	            if (mobi[101,16]!="") then mobi[company,k]=mobi[101,16];
 				spawn_unit = TTRPG[company,k]
 				spawn_unit.spawn_exp();
-			 spawn_unit.spawn_old_guard();
+				spawn_unit.spawn_old_guard();
 	        }
 
 	        k+=1;// Standard Bearer
@@ -1400,7 +1404,7 @@ function scr_initialize_custom() {
 	// }
 	obj_ini.squads = [];
 	var last_squad_count
-	for (company=1;company < 10;company++){
+	for (company=1;company < 10;company++;){
 		create_squad("command_squad", company);
 		last_squad_count = array_length(obj_ini.squads);
 		while (last_squad_count == array_length(obj_ini.squads)){
