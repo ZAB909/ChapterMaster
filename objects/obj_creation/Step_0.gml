@@ -95,7 +95,7 @@ if (change_slide=35) or (change_slide=36) or (chapter="Doom Benefactors") or (ch
         color_to_weapon="";trim=1;
         hapothecary=scr_marine_name();hchaplain=scr_marine_name();clibrarian=scr_marine_name();
         fmaster=scr_marine_name();recruiter=scr_marine_name();admiral=scr_marine_name();
-        equal_specialists=0;load_to_ships=2;successors=0;
+        equal_specialists=0;load_to_ships=[2,0,0];successors=0;
         mutations=0;mutations_selected=0;
         preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
         zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;

@@ -105,7 +105,7 @@ recruiter=scr_marine_name();
 admiral=scr_marine_name();
 
 equal_specialists=0;
-load_to_ships=2;
+load_to_ships=[2,0,0];
 
 successors=0;
 
@@ -167,7 +167,7 @@ chapter_id[12]="Blood Ravens";
 chapter_tooltip[12]="Of unknown origins and Founding, the origins of the Blood Ravens are shrouded in mystery and are believed to be tied to a dark truth. This elusive Chapter is drawn to the pursuit of knowledge and ancient lore and produces an unusually high number of Librarians.";
 
 chapter_id[13]="Crimson Fists";
-//chapter_tooltip[13]="An Imperial Fists descendant, the Crimson Fists are more level-minded than their Progenitor and brother chapters.  They suffer the same lacking zygotes as their ancestors, and more resemble the Ultramarines in their balanced approach to combat.";
+chapter_tooltip[13]="An Imperial Fists descendant, the Crimson Fists are more level-minded than their Progenitor and brother chapters.  They suffer the same lacking zygotes as their ancestors, and more resemble the Ultramarines in their balanced approach to combat. After surviving a devastating Ork WAAAGH! the chapter clings dearly to its future."
 
 chapter_id[14]="Lamenters";
 chapter_tooltip[14]="The Lamenter's accursed and haunted legacy seems to taint much of what they have achieved; their victories often become bitter ashes in their hands.  Nearly extinct, they fight their last days on behalf of the common folk in a crusade of endless penitence.";
