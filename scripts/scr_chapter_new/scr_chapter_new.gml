@@ -50,7 +50,7 @@ function scr_chapter_new(argument0) {
 	    color_to_weapon="Black";col_special=0;trim=0;
 	    hchaplain="Sapphon";clibrarian="Ezekial";
 	    battle_cry="Repent!  For tomorow you may die";
-	    equal_specialists=0;load_to_ships=2;successors=9;
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=9;
 	    mutations=0;mutations_selected=0;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
 	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -75,7 +75,7 @@ function scr_chapter_new(argument0) {
 	    color_to_weapon="Red";col_special=0;
 	    hapothecary="Corpus Helix";hchaplain="Ortan Cassius";clibrarian="Varro Tigurius";fmaster="Fennias Maxim";admiral="Lazlo Tiberius";
 	    battle_cry="Courage and honor";// monastery_name="Fortress of Hera";master_name=
-	    equal_specialists=0;load_to_ships=2;successors=27;
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=27;
 	    mutations=0;mutations_selected=0;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
 	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -93,7 +93,7 @@ function scr_chapter_new(argument0) {
 	}
 	//Waiting on new disadv to give anymore adv.
   if (argument0="Imperial Fists"){founding="N/A";points=150;
-		selected_chapter=4;chapter=argument0;icon=4;icon_name="if";founding=0;fleet_type=1;strength=10;purity=7;stability=10;cooperation=8;
+		selected_chapter=4;chapter=argument0;icon=4;icon_name="if";founding=0;fleet_type=1;strength=6;purity=7;stability=10;cooperation=8;
 		adv[1]="Bolter Drilling";adv[2]="Siege Masters";
 		homeworld="Ice";homeworld_name="Inwit";recruiting_world="Hive";recruiting_name="Necromunda";
 		homeworld_exists=1;recruiting_exists=1;homeworld_rule=2;aspirant_trial="Survival of the Fittest";
@@ -102,7 +102,7 @@ function scr_chapter_new(argument0) {
 		hapothecary="Dyserna";hchaplain="Guaron";clibrarian="Vidos Harn";fmaster="Atornus Geis";admiral="Kyne Phasn"
                 recruiter="Taelos"
 		battle_cry="Primarch-Progenitor, to your glory and the glory of him on earth!";
-	        equal_specialists=0;load_to_ships=2;successors=21;
+	        equal_specialists=0;load_to_ships=[2,0,0];successors=21;
 	        mutations=2;mutations_selected=2;
 	        preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=1;
 	        zygote=0;betchers=1;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -135,7 +135,7 @@ function scr_chapter_new(argument0) {
 	    color_to_weapon="Blue";col_special=0;trim=0;
 	    hapothecary="Ranek Icewalker";hchaplain="Ulrik the Slayer";clibrarian="Njal Stormcaller";fmaster="Krom Dragongaz";admiral="Engir Krakendoom";
 	    battle_cry="For Russ and the Allfather";// monastery_name="Fortress of Hera";master_name=
-	    equal_specialists=0;load_to_ships=2;successors=1;
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=1;
 	    mutations=0;mutations_selected=0;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
 	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -179,7 +179,7 @@ function scr_chapter_new(argument0) {
 	    color_to_weapon="Black";col_special=0;trim=0;
 	    hchaplain="Astorash the Grim";clibrarian="Mephiston";fmaster="Incarael";
 	    battle_cry="For the Emperor and Sanguinius! Death! DEATH";// monastery_name="Fortress of Hera";master_name=
-	    equal_specialists=0;load_to_ships=2;successors=3;
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=3;
 	    mutations=0;mutations_selected=0;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
 	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -212,7 +212,7 @@ function scr_chapter_new(argument0) {
 	    color_to_weapon="Silver";col_special=0;trim=0;
 	    hchaplain="Shulgaar";clibrarian="Lydriik";fmaster="Feirros";hapothecary="Grolvoch";
 	    battle_cry="The flesh is weak";// monastery_name="Fortress of Hera";master_name=
-	    equal_specialists=1;load_to_ships=2;successors=6;
+	    equal_specialists=1;load_to_ships=[2,0,0];successors=6;
 	    mutations=0;mutations_selected=0;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
 	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -246,7 +246,7 @@ function scr_chapter_new(argument0) {
 	    color_to_weapon="Black";col_special=0;trim=0;
 	    fmaster="Vulkan He'stan";
 	    battle_cry="Into the fires of battle!  Unto the anvil of war";// monastery_name="Fortress of Hera";master_name=
-	    equal_specialists=0;load_to_ships=2;successors=2;
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=2;
 	    mutations=1;mutations_selected=1;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
 	    zygote=0;betchers=0;catalepsean=0;secretions=1;occulobe=0;mucranoid=0;
@@ -276,7 +276,7 @@ function scr_chapter_new(argument0) {
 	    color_to_pauldron2="Bone";color_to_pauldron="Bone";color_to_lens="Green";
 	    color_to_weapon="Black";col_special=0;trim=1;
 	    battle_cry="Knowledge is power, guard it well";
-	    equal_specialists=0;load_to_ships=2;successors=0;
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
 	    mutations=0;mutations_selected=0;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
 	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -288,6 +288,33 @@ function scr_chapter_new(argument0) {
 	    chapter_master_ranged=3;chapter_master_specialty=1;
 	}
 
+if (argument0="Crimson Fists"){founding="N/A";points=150;
+		selected_chapter=13;chapter=argument0;icon=4;icon_name="cf";founding=4;fleet_type=1;strength=5;purity=7;stability=10;cooperation=8;
+		adv[1]="Bolter Drilling";adv[2]="Enemy: Orks";dis[1]="Sieged";
+		homeworld="Agri";homeworld_name="Rynn's World";
+		homeworld_exists=1;recruiting_exists=0;homeworld_rule=1;aspirant_trial="Challenge"
+		color_to_main="Blue";color_to_secondary="Blue";color_to_trim="White";color_to_pauldron="Blue"
+		color_to_pauldron2="Blue";color_to_lens="Red";color_to_weapon="Black"
+		hapothecary="Curien Droga";hchaplain="Marqol Tomasi";clibrarian="Eustace Mendoza";fmaster="Javier Adon";admiral="Alessio Cortez"
+                recruiter="Ishmael Icario"
+		battle_cry="There is only the Emperor!  He is our shield and our protector!";
+	        equal_specialists=0;load_to_ships=2;successors=0;
+	        mutations=2;mutations_selected=2;
+	        preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=1;
+	        zygote=0;betchers=1;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
+	        // disposition[1]=0;// Prog
+	        disposition[2]=80;disposition[3]=50;disposition[4]=50;disposition[5]=50;
+	        disposition[6]=60;// Astartes
+	        disposition[7]=0;// Reserved
+	        chapter_master_name="Pedro Kantor";chapter_master_melee=1;
+	        chapter_master_ranged=1;chapter_master_specialty=1;
+
+	        company_title[1]="The Righteous Crusaders";company_title[2]="The Shieldwall";company_title[3]="The Red Lightning";
+	        company_title[4]="The Crimson Lancers";company_title[5]="The War Riders";company_title[6]="Iron Guardians";
+	        company_title[7]="The Wardens of Rynn";company_title[8]="The Red Path";company_title[9]="The Fists of Rynn";
+	        company_title[10]="The Wayfinders";
+
+}
 	
 	if (argument0="Soul Drinkers"){founding="N/A";points=200;
 	    selected_chapter=16;chapter=argument0;icon=14;icon_name="lam";founding=5;
@@ -302,7 +329,7 @@ function scr_chapter_new(argument0) {
 	    color_to_pauldron2="Purple";color_to_pauldron="Purple";color_to_lens="Red";
 	    color_to_weapon="Purple";col_special=0;trim=1;
 	    battle_cry="Cold and Hard, Soul Drinkers";
-	    equal_specialists=0;load_to_ships=2;successors=0;
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
 	    mutations=1;mutations_selected=1;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=1;ossmodula=0;membrane=0;
 	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -331,7 +358,7 @@ function scr_chapter_new(argument0) {
 	    color_to_pauldron2="White";color_to_pauldron="Gold";color_to_lens="Dark Red";
 	    color_to_weapon="Black";col_special=0;trim=1;
 	    battle_cry="For those we cherish, we die in Glory";
-	    equal_specialists=0;load_to_ships=2;successors=0;
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
 	    mutations=0;mutations_selected=0;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
 	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -362,7 +389,7 @@ function scr_chapter_new(argument0) {
 	    battle_cry="Death to the enemy!  DEATH";// monastery_name="Fortress of Hera";master_name=
 	    equal_specialists=0;
     
-	    load_to_ships=2;
+	    load_to_ships=[2,0,0];
 	    // load_to_ships=0;
     
 	    successors=0;

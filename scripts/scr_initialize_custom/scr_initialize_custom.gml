@@ -1,3 +1,4 @@
+
 function scr_initialize_custom() {
 
 	// These are the new variables that are being read, for the new creation

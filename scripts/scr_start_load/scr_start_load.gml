@@ -1,11 +1,34 @@
-function scr_start_load(fleet, load_from_star, escort_load) {
+function scr_start_load(fleet, load_from_star, load_options) {
     // fleet: the fleet object
     // load_from_star: star object
-    // escort_load: 1 for including escorts, 2 for no escorts
 
     // this distributes the marines and vehicles to the correct ships if the chapter is fleet-based or a home-based chapter
-	
-	
+	var vet_count, scout_count, _unit, _comp, vet_list, vet_check,scout_list, scout_check, _marine;
+	var vet_role = obj_ini.role[100,3];
+	var scout_role = obj_ini.role[100,12];
+	var escort_load = load_options[0];
+	var split_scouts = load_options[1];
+	var split_vets = load_options[2];
+	if (split_vets == 1){
+		vet_list = [];
+		_comp = 1;
+		for (_unit =1; _unit<(array_length(obj_ini.role[_comp])-1); _unit++){
+			if (obj_ini.role[_comp,_unit] == vet_role){
+				array_push(vet_list, obj_ini.TTRPG[_comp,_unit]);
+			}
+		}
+		vet_count = array_length(vet_list);
+	}
+	if (split_scouts == 1){
+		scout_list = [];
+		_comp = 10;
+		for (_unit =1; _unit<(array_length(obj_ini.role[_comp])-1); _unit++){
+			if (obj_ini.role[_comp,_unit] == scout_role){
+				array_push(scout_list, obj_ini.TTRPG[_comp,_unit]);
+			}
+		}
+		scout_count = array_length(scout_list);
+	}	
 	// i feel like there definatly is or should be a generic function for this????
 	var _vehicles = ["Rhino", "Predator", "Land Speeder", "Land Raider", "Whirlwind"]
 	function load_vehicles(_companies, _equip ,_ship, size){
@@ -27,30 +50,55 @@ function scr_start_load(fleet, load_from_star, escort_load) {
     if (string_count("Splinter", obj_ini.strin2) > 0) then splinter = 1;
 	
 		//loop through companies. try and load whole company onto single ship else spread company across largest ships with remaining space
-	for (var _comp =0; _comp<10;_comp++;){
-		show_debug_message("one")
+	for (_comp = 0; _comp<10;_comp++;){
+		vet_check = 0;
+
 		var _company_size = 0;
 		var company_loader =[];//array of companies marines
 		var company_vehicle = [];//array of companies vehicles
 		var  ship_fit = true;
-		for (var _unit =1; _unit<(array_length(obj_ini.role[_comp])-1); _unit++){
-				var _marine = obj_ini.TTRPG[_comp, _unit];
-				// check if marine exists
-				if (_marine.name() != "") {
-					//calculate marine space
-					var marine_size = _marine.get_unit_size();
-					_company_size += marine_size;
-					array_push(company_loader, _marine);
-				}
-			 //fetch company vehicles
-			 if (_unit <array_length(obj_ini.veh_role[_comp])){
-				 if array_contains(_vehicles,obj_ini.veh_role[_comp, _unit]){
-						 var _vehic_size = scr_unit_size(false, obj_ini.veh_role[_comp, _unit], false, false);
-						 _company_size += _vehic_size;
-					 array_push(company_vehicle,  [_comp, _unit, _vehic_size]);
-				 }
-			 }
+
+		for (_unit =1; _unit<(array_length(obj_ini.role[_comp])-1); _unit++;){
+			_marine = obj_ini.TTRPG[_comp, _unit];
+					// check if marine exists
+			if (_marine.name() != "") {
+				if (split_vets == 1) and (_comp == 1){
+					if (_marine.role() == vet_role){
+						if(vet_check < floor(vet_count/9)){
+							vet_check++;
+						} else {continue;}
+					}
+				}						
+				//calculate marine space
+				var marine_size =  _marine.get_unit_size();
+				_company_size += marine_size;
+				array_push(company_loader, _marine);
+			}
+		}
+		if (split_vets == 1) and (_comp > 1) and (_comp < 10){
+			for (_unit = (floor(vet_count/9)*(_comp-1));_unit < (floor(vet_count/9)*(_comp));_unit++){
+				_marine =  vet_list[_unit];
+				var marine_size =  _marine.get_unit_size();
+				_company_size += marine_size;
+				array_push(company_loader, _marine);			
+			}
+		}
+		if (split_scouts == 1) and (_comp > 0) and (_comp < 10){
+			for (_unit = (floor(scout_count/9)*(_comp-1));_unit < (floor(scout_count/9)*(_comp));_unit++){
+				_marine =  scout_list[_unit];
+				var marine_size =  _marine.get_unit_size();
+				_company_size += marine_size;
+				array_push(company_loader, _marine);			
+			}
+		}		
 			
+			 //fetch company vehicles
+		for (_unit =1;_unit <array_length(obj_ini.veh_role[_comp]);_unit++;){
+			 if array_contains(_vehicles,obj_ini.veh_role[_comp, _unit]){
+					 var _vehic_size = scr_unit_size(false, obj_ini.veh_role[_comp, _unit], false, false);
+					 _company_size += _vehic_size;
+				 array_push(company_vehicle,  [_comp, _unit, _vehic_size])
+			 }
 		}
 					//if company won't fit onto ship
 		if ((obj_ini.ship_carrying[ship] + _company_size) > obj_ini.ship_capacity[ship]){
@@ -114,4 +162,4 @@ function scr_start_load(fleet, load_from_star, escort_load) {
 			}		 
 		 }
 	}
-	}
+}

@@ -1327,32 +1327,59 @@ if (slide=4){
     
     draw_set_color(38144);draw_set_alpha(1);draw_set_font(fnt_40k_30b);
     
-    
     if (custom<2) then draw_set_alpha(0.5);
-    yar=0;if (equal_specialists=1) then yar=1;draw_sprite(spr_creation_check,yar,860,680);yar=0;
-    if (scr_hit(860,680,1150,700)=true) and (!instance_exists(obj_creation_popup)){tooltip="Specialist Distribution";tooltip2="Check if you wish for your Companies to be uniform and each contain "+string(role[100,10])+"s and "+string(role[100,9])+"s.";}
-    if (scr_hit(860,680,860+32,680+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
+    yar=0;if (equal_specialists=1) then yar=1;draw_sprite(spr_creation_check,yar,860,645);yar=0;
+    if (scr_hit(860,645,1150,765)=true) and (!instance_exists(obj_creation_popup)){tooltip="Specialist Distribution";tooltip2="Check if you wish for your Companies to be uniform and each contain "+string(role[100,10])+"s and "+string(role[100,9])+"s.";}
+    if (scr_hit(860,650,860+32,650+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
         cooldown=8000;var onceh;onceh=0;
         if (equal_specialists=1) and (onceh=0){equal_specialists=0;onceh=1;}
         if (equal_specialists!=1) and (onceh=0){equal_specialists=1;onceh=1;}
-    }draw_text_transformed(860+30,680+4,string_hash_to_newline("Equal Specialist Distribution"),0.4,0.4,0);
+    }draw_text_transformed(860+30,650+4,string_hash_to_newline("Equal Specialist Distribution"),0.4,0.4,0);
     draw_set_alpha(1);
     
-    yar=0;if (load_to_ships=1) then yar=1;draw_sprite(spr_creation_check,yar,860,680+40);yar=0;
-    if (scr_hit(860,680+40,1005,700+40)=true) and (!instance_exists(obj_creation_popup)){tooltip="Load to Ships";tooltip2="Check to have your Astartes automatically loaded into ships when the game starts.";}
-    if (scr_hit(860,680+40,860+32,680+32+40)=true) and (cooldown<=0) and (mouse_left>=1) and (!instance_exists(obj_creation_popup)){
+    yar=0;if (load_to_ships[0]=1) then yar=1;draw_sprite(spr_creation_check,yar,860,645+40);yar=0;
+    if (scr_hit(860,645+40,1005,765+40)=true) and (!instance_exists(obj_creation_popup)){tooltip="Load to Ships";tooltip2="Check to have your Astartes automatically loaded into ships when the game starts.";}
+    if (scr_hit(860,645+40,860+32,645+32+40)=true) and (cooldown<=0) and (mouse_left>=1) and (!instance_exists(obj_creation_popup)){
         cooldown=8000;var onceh;onceh=0;
-        if (load_to_ships=1) and (onceh=0){load_to_ships=0;onceh=1;}
-        if (load_to_ships!=1) and (onceh=0){load_to_ships=1;onceh=1;}
-    }draw_text_transformed(860+30,680+4+40,string_hash_to_newline("Load to Ships"),0.4,0.4,0);
+        if (load_to_ships[0]=1) and (onceh=0){load_to_ships[0]=0;onceh=1;}
+        if (load_to_ships[0]!=1) and (onceh=0){load_to_ships[0]=1;onceh=1;}
+    }draw_text_transformed(860+30,645+4+40,string_hash_to_newline("Load to Ships"),0.4,0.4,0);
     
-    yar=0;if (load_to_ships=2) then yar=1;draw_sprite(spr_creation_check,yar,1010,680+40);yar=0;
-    if (scr_hit(1010,680+40,1150,700+40)=true) and (!instance_exists(obj_creation_popup)){tooltip="Load (Sans Escorts)";tooltip2="Check to have your Astartes automatically loaded into ships, except for Escorts, when the game starts.";}
-    if (scr_hit(1010,680+40,1020+32,680+32+40)=true) and (cooldown<=0) and (mouse_left>=1) and (!instance_exists(obj_creation_popup)){
+    yar=0;if (load_to_ships[0]=2) then yar=1;draw_sprite(spr_creation_check,yar,1010,645+40);yar=0;
+    if (scr_hit(1010,645+40,1150,665+40)=true) and (!instance_exists(obj_creation_popup)){tooltip="Load (Sans Escorts)";tooltip2="Check to have your Astartes automatically loaded into ships, except for Escorts, when the game starts.";}
+    if (scr_hit(1010,645+40,1020+32,645+32+40)=true) and (cooldown<=0) and (mouse_left>=1) and (!instance_exists(obj_creation_popup)){
         cooldown=8000;var onceh;onceh=0;
-        if (load_to_ships=2) and (onceh=0){load_to_ships=0;onceh=1;}
-        if (load_to_ships!=2) and (onceh=0){load_to_ships=2;onceh=1;}
-    }draw_text_transformed(1010+30,680+4+40,string_hash_to_newline("Load (Sans Escorts)"),0.4,0.4,0);
+        if (load_to_ships[0]=2) and (onceh=0){load_to_ships[0]=0;onceh=1;}
+        if (load_to_ships[0]!=2) and (onceh=0){load_to_ships[0]=2;onceh=1;}
+    }draw_text_transformed(1010+30,645+4+40,string_hash_to_newline("Load (Sans Escorts)"),0.4,0.4,0);
+	
+	yar=0;
+	if (load_to_ships[0] > 0){
+		if (load_to_ships[1] == 1){
+			yar=1;
+		}
+		draw_sprite(spr_creation_check,yar,860,645+80);yar=0;
+    	if (scr_hit(860,645+80,1005,765+80)=true) and (!instance_exists(obj_creation_popup)){tooltip="Distribute Scouts";tooltip2="Check to have your Scouts split across ships in the fleet.";}
+    	if (scr_hit(860,645+80,860+32,645+32+80)=true) and (cooldown<=0) and (mouse_left>=1) and (!instance_exists(obj_creation_popup)){
+    		 cooldown=8000;var onceh;onceh=0;
+    		 if (load_to_ships[1]=0) and (onceh=0){load_to_ships[1]=1;onceh=1;}
+     		 if (load_to_ships[1]=1) and (onceh=0){load_to_ships[1]=0;onceh=1;}   		 
+    	}
+    	draw_text_transformed(860+30,645+4+80,string_hash_to_newline("Distribute Scouts"),0.4,0.4,0);	
+	
+		yar=0;
+		if (load_to_ships[2] == 1){
+			yar=1;
+		}
+		draw_sprite(spr_creation_check,yar,1010,645+80);yar=0;
+    	if (scr_hit(1010,645+80,1150,765+80)=true) and (!instance_exists(obj_creation_popup)){tooltip="Distribute Veterans";tooltip2="Check to have your Veterans split across the fleet.";}
+    	if (scr_hit(1010,645+80,1020+32,645+32+80)=true) and (cooldown<=0) and (mouse_left>=1) and (!instance_exists(obj_creation_popup)){
+    		 cooldown=8000;var onceh;onceh=0;
+    		 if (load_to_ships[2]=0) and (onceh=0){load_to_ships[2]=1;onceh=1;}
+     		 if (load_to_ships[2]=1) and (onceh=0){load_to_ships[2]=0;onceh=1;}   		 
+    	}
+    	draw_text_transformed(1010+30,645+4+80,string_hash_to_newline("Distribute Veterans"),0.4,0.4,0);	
+	}	
     
     
     
