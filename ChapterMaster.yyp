@@ -279,8 +279,7 @@
   "isEcma": false,
   "LibraryEmitters": [],
   "MetaData": {
-
-    "IDEVersion": "2023.6.0.92",
+    "IDEVersion": "2023.6.0.89",
   },
   "resources": [
     {"id":{"name":"spr_credits_bg","path":"sprites/spr_credits_bg/spr_credits_bg.yy",},},
@@ -359,6 +358,7 @@
     {"id":{"name":"spr_weapon_eldsword","path":"sprites/spr_weapon_eldsword/spr_weapon_eldsword.yy",},},
     {"id":{"name":"spr_weapon_powfist","path":"sprites/spr_weapon_powfist/spr_weapon_powfist.yy",},},
     {"id":{"name":"spr_weapon_powfist2","path":"sprites/spr_weapon_powfist2/spr_weapon_powfist2.yy",},},
+    {"id":{"name":"gauss","path":"scripts/gauss/gauss.yy",},},
     {"id":{"name":"spr_weapon_powfist3","path":"sprites/spr_weapon_powfist3/spr_weapon_powfist3.yy",},},
     {"id":{"name":"spr_weapon_powfist_old","path":"sprites/spr_weapon_powfist_old/spr_weapon_powfist_old.yy",},},
     {"id":{"name":"spr_weapon_powmaul","path":"sprites/spr_weapon_powmaul/spr_weapon_powmaul.yy",},},

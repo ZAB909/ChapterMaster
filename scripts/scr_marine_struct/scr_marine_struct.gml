@@ -1,16 +1,4 @@
-
-function gauss(base, sd){
-    var x1, x2, w;
-    do {
-        x1 = random(2) - 1;
-        x2 = random(2) - 1;
-        w = (x1 * x1) + (x2 * x2);
-    } until (0 < w and w < 1);
- 
-    w = sqrt(-2 * ln(w) / w);
-    return base + sd * x1 * w;
-}
-
+//in future would be better to store old guard data in a struct like this but for now while working out kinks have left hardcoded
 /*old_guard_equipment :{
 	role[100,5]:{"armour":[["MK3 Iron Armour",25]]},
 	role[100,14]:{"armour":[["MK3 Iron Armour",25]],
@@ -49,7 +37,7 @@ global.trait_list = {
 		constitution:6,
 		dexterity : -6,
 		strength : 2,
-		flavour_text : "{0} is implacable advancing in combat with methodical reason",
+		flavour_text : "{0} is implacable, advancing in combat with methodical reason",
 		display_name : "Slow and Purposeful",
 
 	},
@@ -110,15 +98,6 @@ global.trait_list = {
 		strength :1,
 		weapon_skill : 1,
 		ballistic_skill :1,
-		flavour_text : "{0} has seen many a young warrior rise and die before him but he remains",
-		display_name : "Old Guard",		
-	},
-	"seasoned":{
-		luck : 1,
-		constitution : 1,
-		strength :1,
-		weapon_skill : 1,
-		ballistic_skill :1,
 		flavour_text : "{0} is a seasoned warrior having fought for many years",
 		display_name : "Seasoned",		
 	},
@@ -129,7 +108,7 @@ global.trait_list = {
 		weapon_skill : 3,
 		ballistic_skill :4,
 		wisdom : 5,
-		flavour_text : "{0} is truly Ancient while his body may ache his skills and wisdom are to be respected",
+		flavour_text : "{0} is truly Ancient. While his body may ache his, skills and wisdom are to be respected",
 		display_name : "Ancient",		
 	}	
 }
@@ -223,7 +202,7 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			base_group : "skitarii",
 	},
 	"inquisition_crusader":{
-			title : "Inquisiton Crusador",
+			title : "Inquisition Crusador",
 			strength:4,
 			constitution:26,
 			dexterity:4,
@@ -332,7 +311,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
       obj_ini.hp[company,marine_number] = new_health;
    };	
 	static get_unit_size = function(){
-		var r = role();
+		var unit_role = role();
 		var arm = armour();
 		var sz = 0;
 		sz = 1;
@@ -342,7 +321,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if (mobi == "Jump Pack"){
 			sz++;
 		}
-		if (r == "Chapter Master"){sz++}
+		if (unit_role == "Chapter Master"){sz++}
 		size =sz;
 		return size
 	};

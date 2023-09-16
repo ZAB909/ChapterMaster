@@ -522,6 +522,8 @@ function scr_initialize_custom() {
 	    role[i,17]="Librarian";wep1[i,17]="Force Weapon";wep2[i,17]="Storm Bolter";armour[i,17]="Power Armour";gear[i,17]="Psychic Hood";mobi[i,17]="";
 	}// 100 is defaults, 101 is the allowable starting equipment // info
 		//made all the exp buffs sort into neat little structs so theyre easier to dev and player modify
+		/*each position in array the represents a company (with position 0 representing specials), and the first position in each second dimension
+			is the experience bonus each marine will get in that company modified with the gauss function where the second position is one standard deviation*/
 	company_spawn_buffs = [0,0,[110,15],[105,15],[95,15],[80,10],[65,10],[55,10],[45,10],[35,10],[3,10]]
 	role_spawn_buffs = {}
 	variable_struct_set(role_spawn_buffs,role[100,5],[70,40]);

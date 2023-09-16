@@ -1,5 +1,5 @@
 function scr_ui_manage() {
-	
+	var unit,i;
 	var romanNumerals=scr_roman_numerals();	
 	var normal_hp=true;
 	
@@ -771,12 +771,19 @@ function scr_ui_manage() {
 	    var ar_ar=0,ar_we1=0,ar_we2=0,ar_ge=0,ar_mb=0,eventing=false;
 	        
 	    yy+=77;
-    
-	    repeat(min(man_max,man_see)){
-	        repeat(500){if (man[sel]="hide") then sel+=1;}eventing=false;
+		
+
+		var repetitions=min(man_max,man_see)
+	    for(var i=0; i<repetitions;i++){
+
+			for(var j=0; j<500; j++){
+				if (man[sel]="hide") then sel+=1;
+			}
+
+			eventing=false;
         
 	        if (man[sel]="man"){
-				var unit = display_unit[sel];
+				unit = display_unit[sel];
 				var unit_location = unit.marine_location();
 	            temp1=$"{unit.role()} {unit.name()}";
 	            // temp1=string(managing)+"."+string(ide[sel]);
