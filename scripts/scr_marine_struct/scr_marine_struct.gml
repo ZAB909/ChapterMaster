@@ -164,7 +164,7 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			luck :5,
 			skills: {weapons:{"hellgun":1,}},	
 			gear:{"armour":"skitarii_armour", "wep1":"hellgun"},
-			base_group : "skitarri",
+			base_group : "skitarii",
 	},
 	"tech_priest":{
 			strength:16,
@@ -729,6 +729,20 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				} // company 1 and 2 taccies get beakies by default
 				else{update_armour("MK7 Aquila")};
 				break;
+		}
+	}
+	static alter_equipment = function(update_equipment){
+		var i;
+		var equip_areas = struct_get_names(update_equipment);
+		for (i=0;i<array_length(equip_areas);i++;){
+			switch(equip_areas[i]){
+				case "wep1":
+					update_weapon_one(update_equipment[$ equip_areas[i]]);
+					break;
+				case "wep2":
+					update_weapon_two(update_equipment[$ equip_areas[i]]);
+					break;					
+			}
 		}
 	}
 }
