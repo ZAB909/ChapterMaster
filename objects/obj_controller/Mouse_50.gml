@@ -39,26 +39,31 @@ if (menu==11) and (cooldown<=0){
         cooldown=8000;
     }
 }
-// TODO continue refactor
-// ** 
-if (menu=12) and (cooldown<=0) and (penitorium>0){
-    var qp,behav,r_eta,re;qp=0;behav=0;r_eta=0;re=0;
-    repeat(min(36,penitorium)){qp+=1;
+// ** Reclusium Jail Marines**
+if (menu==12) and (cooldown<=0) and (penitorium>0){
+    var behav=0,r_eta=0,re=0;
+    for(var qp=1; qp<=min(36,penitorium); qp++){
         if (qp<=penitorium) and (mouse_y>=yy+100+((qp-1)*20)) and (mouse_y<yy+100+(qp*20)){
             if (mouse_x>=xx+1433) and (mouse_x<xx+1497){
-                cooldown=20;var c,e;c=penit_co[qp];e=penit_id[qp];
+                cooldown=20;
+                var c=penit_co[qp],e=penit_id[qp];
                 if (obj_ini.race[c,e]=1){
-                    if (obj_ini.age[c,e]<=((obj_controller.millenium*1000)+obj_controller.year)-10) and (obj_ini.zygote=0) and (string_count("Doom",obj_ini.strin2)=0) then obj_controller.gene_seed+=1;
-                    if (obj_ini.age[c,e]<=((obj_controller.millenium*1000)+obj_controller.year)-5) and (string_count("Doom",obj_ini.strin2)=0) then obj_controller.gene_seed+=1;
+                    if (obj_ini.age[c,e]<=((obj_controller.millenium*1000)+obj_controller.year)-10) and (obj_ini.zygote==0) and (string_count("Doom",obj_ini.strin2)==0) then obj_controller.gene_seed+=1;
+                    if (obj_ini.age[c,e]<=((obj_controller.millenium*1000)+obj_controller.year)-5) and (string_count("Doom",obj_ini.strin2)==0) then obj_controller.gene_seed+=1;
                 }
 
-                var tek;tek="";
-                if (obj_ini.race[c,e]=1){
-                    tek=obj_ini.wep1[c,e];if (tek!="") then scr_add_item(tek,1);
-                    tek=obj_ini.wep2[c,e];if (tek!="") then scr_add_item(tek,1);
-                    tek=obj_ini.armour[c,e];if (tek!="") then scr_add_item(tek,1);
-                    tek=obj_ini.mobi[c,e];if (tek!="") then scr_add_item(tek,1);
-                    tek=obj_ini.gear[c,e];if (tek!="") then scr_add_item(tek,1);
+                var tek="";
+                if (obj_ini.race[c,e]==1){
+                    tek=obj_ini.wep1[c,e];
+                    if (tek!="") then scr_add_item(tek,1);
+                    tek=obj_ini.wep2[c,e];
+                    if (tek!="") then scr_add_item(tek,1);
+                    tek=obj_ini.armour[c,e];
+                    if (tek!="") then scr_add_item(tek,1);
+                    tek=obj_ini.mobi[c,e];
+                    if (tek!="") then scr_add_item(tek,1);
+                    tek=obj_ini.gear[c,e];
+                    if (tek!="") then scr_add_item(tek,1);
                 }
 
                 tek="";
@@ -76,35 +81,55 @@ if (menu=12) and (cooldown<=0) and (penitorium>0){
                 if (obj_ini.role[c,e]="Master of Sanctity") then tek="c";
                 if (obj_ini.role[c,e]="Master of the Apothecarion") then tek="c";
                 if (obj_ini.role[c,e]="Forge Master") then tek="c";
-                if (obj_ini.role[c,e]="Chapter Master"){tek="c";obj_controller.alarm[7]=5;global.defeat=3;}
-
-                // Needs to be based on role
+                if (obj_ini.role[c,e]="Chapter Master"){
+                    tek="c";
+                    obj_controller.alarm[7]=5;
+                    global.defeat=3;
+                }
+                // TODO Needs to be based on role
                 if (tek="m") then obj_controller.marines-=1;
                 if (tek="c") then obj_controller.command-=1;
 
-                obj_ini.race[c,e]=0;obj_ini.loc[c,e]="";obj_ini.name[c,e]="";obj_ini.role[c,e]="";obj_ini.wep1[c,e]="";obj_ini.lid[c,e]=0;
-                obj_ini.wep2[c,e]="";obj_ini.armour[c,e]="";obj_ini.gear[c,e]="";obj_ini.hp[c,e]=100;obj_ini.chaos[c,e]=0;obj_ini.experience[c,e]=0;
-                obj_ini.mobi[c,e]="";obj_ini.age[c,e]=0;obj_ini.spe[c,e]="";obj_ini.god[c,e]=0;
-                diplo_char=c;with(obj_ini){scr_company_order(obj_controller.diplo_char);}re=1;diplo_char=0;
+                obj_ini.race[c,e]=0;
+                obj_ini.loc[c,e]="";
+                obj_ini.name[c,e]="";
+                obj_ini.role[c,e]="";
+                obj_ini.wep1[c,e]="";
+                obj_ini.lid[c,e]=0;
+                obj_ini.wep2[c,e]="";
+                obj_ini.armour[c,e]="";
+                obj_ini.gear[c,e]="";
+                obj_ini.hp[c,e]=100;
+                obj_ini.chaos[c,e]=0;
+                obj_ini.experience[c,e]=0;
+                obj_ini.mobi[c,e]="";
+                obj_ini.age[c,e]=0;
+                obj_ini.spe[c,e]="";
+                obj_ini.god[c,e]=0;
+                diplo_char=c;
+                with(obj_ini){scr_company_order(obj_controller.diplo_char);}
+                re=1;
+                diplo_char=0;
             }
             if (mouse_x>=xx+1508) and (mouse_x<xx+1567){
-                cooldown=20;var c,e;c=penit_co[qp];e=penit_id[qp];
-                obj_ini.god[c,e]-=10;re=1;
+                cooldown=20;
+                var c=penit_co[qp],e=penit_id[qp];
+                obj_ini.god[c,e]-=10;
+                re=1;
             }
         }
     }
-    if (re=1){
-        var g;g=0;
-        repeat(100){g+=1;
-            penit_co[g]=0;penit_id[g]=0;
+    if (re==1){
+        for(var g=1; g<=100; g++){
+            penit_co[g]=0;
+            penit_id[g]=0;
         }
-
         penitorium=0;
-        var c,e,p;c=-1;e=0;p=0;
-        repeat(11){
-            c+=1;e=0;
-            repeat(250){e+=1;
-                if (obj_ini.god[c,e]>=10){p+=1;
+        var p=0;
+        for(var c=0; c<11; c++){
+            for(var e=1; e<=250; e++){
+                if (obj_ini.god[c,e]>=10){
+                    p+=1;
                     penit_co[p]=c;
                     penit_id[p]=e;
                     penitorium+=1;
@@ -113,96 +138,119 @@ if (menu=12) and (cooldown<=0) and (penitorium>0){
         }
     }
 }
-
-
-
-
-
-
-
-
-if (menu=13) and (cooldown<=0) and (artifacts>0){
+// ** Lirarium Artifcts identify **
+if (menu==13) and (cooldown<=0) and (artifacts>0){
     if (mouse_y>=yy+437) and (mouse_y<=yy+461){
-        if (mouse_x>=xx+512) and (mouse_x<xx+550){// Previous
-            if (menu_artifact>1) and (cooldown<=0){menu_artifact-=1;cooldown=8000;identifiable=0;}
-            if (menu_artifact=1) and (cooldown<=0){menu_artifact=artifacts;cooldown=8000;identifiable=0;}
+        // Previous
+        if (mouse_x>=xx+512) and (mouse_x<xx+550){
+            if (menu_artifact>1) and (cooldown<=0){
+                menu_artifact-=1;
+                cooldown=8000;
+                identifiable=0;
+            }
+            if (menu_artifact==1) and (cooldown<=0){
+                menu_artifact=artifacts;
+                cooldown=8000;
+                identifiable=0;
+            }
         }
-        if (mouse_x>=xx+690) and (mouse_x<xx+732){// Next
-            if (menu_artifact<artifacts) and (cooldown<=0){menu_artifact+=1;cooldown=8000;identifiable=0;}
-            if (menu_artifact=artifacts) and (cooldown<=0){menu_artifact=1;cooldown=8000;identifiable=0;}
+        // Next
+        if (mouse_x>=xx+690) and (mouse_x<xx+732){
+            if (menu_artifact<artifacts) and (cooldown<=0){
+                menu_artifact+=1;
+                cooldown=8000;
+                identifiable=0;
+            }
+            if (menu_artifact==artifacts) and (cooldown<=0){
+                menu_artifact=1;
+                cooldown=8000;
+                identifiable=0;
+            }
         }
     }
-    if (mouse_x>=xx+531) and (mouse_y>=yy+715) and (mouse_x<xx+709) and (mouse_y<yy+733){// Identify now
-        if (identifiable=1) and (obj_ini.artifact_identified[menu_artifact]>0) and (requisition>=150){
+    // Identify now
+    if (mouse_x>=xx+531) and (mouse_y>=yy+715) and (mouse_x<xx+709) and (mouse_y<yy+733){
+        if (identifiable==1) and (obj_ini.artifact_identified[menu_artifact]>0) and (requisition>=150){
             obj_ini.artifact_identified[menu_artifact]=0;
-            requisition-=150;cooldown=8000;identifiable=0;
+            requisition-=150;
+            cooldown=8000;
+            identifiable=0;
             audio_play_sound(snd_identify,-500,0);
             audio_sound_gain(snd_identify,master_volume*effect_volume,0);
         }
     }
-
-
-    if (obj_ini.artifact_identified[menu_artifact]=0){
-        if (mouse_x>=xx+354) and (mouse_y>=yy+789) and (mouse_x<xx+448) and (mouse_y<yy+804) and (cooldown<=0){// Equip
-            var hue;hue=1;
-            if (obj_ini.artifact[menu_artifact]="Statue") then hue=0;
-            if (obj_ini.artifact[menu_artifact]="Casket") then hue=0;
-            if (obj_ini.artifact[menu_artifact]="Chalice") then hue=0;
-            if (obj_ini.artifact[menu_artifact]="Robot") then hue=0;
-            if (hue=1){
-                var pop;
-                pop=instance_create(0,0,obj_popup);
-                pop.type=8;cooldown=8;
+    if (obj_ini.artifact_identified[menu_artifact]==0){
+        // Equip
+        if (mouse_x>=xx+354) and (mouse_y>=yy+789) and (mouse_x<xx+448) and (mouse_y<yy+804) and (cooldown<=0){
+            var hue=1;
+            if (obj_ini.artifact[menu_artifact]=="Statue") then hue=0;
+            if (obj_ini.artifact[menu_artifact]=="Casket") then hue=0;
+            if (obj_ini.artifact[menu_artifact]=="Chalice") then hue=0;
+            if (obj_ini.artifact[menu_artifact]=="Robot") then hue=0;
+            if (hue==1){
+                var pop=instance_create(0,0,obj_popup);
+                pop.type=8;
+                cooldown=8;
             }
         }
-        if (mouse_x>=xx+512) and (mouse_y>=yy+789) and (mouse_x<xx+740) and (mouse_y<yy+804) and (cooldown<=0){// Gift
-            var pop,chick;chick=0;
-            if (known[2]>1) and (faction_defeated[2]=0) then chick=1;if (known[3]>1) and (faction_defeated[3]=0) then chick=1;
-            if (known[4]>1) and (faction_defeated[4]=0) then chick=1;if (known[5]>1) and (faction_defeated[5]=0) then chick=1;
-            if (known[6]>1) and (faction_defeated[6]=0) then chick=1;if (known[8]>1) and (faction_defeated[8]=0) then chick=1;
+        // Gift
+        if (mouse_x>=xx+512) and (mouse_y>=yy+789) and (mouse_x<xx+740) and (mouse_y<yy+804) and (cooldown<=0){
+            var chick=0;
+            if (known[2]>1) and (faction_defeated[2]==0) then chick=1;
+            if (known[3]>1) and (faction_defeated[3]==0) then chick=1;
+            if (known[4]>1) and (faction_defeated[4]==0) then chick=1;
+            if (known[5]>1) and (faction_defeated[5]==0) then chick=1;
+            if (known[6]>1) and (faction_defeated[6]==0) then chick=1;
+            if (known[8]>1) and (faction_defeated[8]==0) then chick=1;
             if (chick!=0){
-                pop=instance_create(0,0,obj_popup);
-                pop.type=9;cooldown=8;
+                var pop=instance_create(0,0,obj_popup);
+                pop.type=9;
+                cooldown=8;
             }
         }
-        if (mouse_x>=xx+780) and (mouse_y>=yy+789) and (mouse_x<xx+894) and (mouse_y<yy+804) and (cooldown<=0){// Destroy
-            var fun;fun=floor(random(100))+1;
+        // Destroy
+        if (mouse_x>=xx+780) and (mouse_y>=yy+789) and (mouse_x<xx+894) and (mouse_y<yy+804) and (cooldown<=0){
+            var fun=floor(random(100))+1;
             // Below here cleans up the artifacts
-            var i;i=menu_artifact;
+            var i=menu_artifact;
 
-            if (menu_artifact=fest_display) then fest_display=0;
+            if (menu_artifact==fest_display) then fest_display=0;
 
             if (string_count("Daemon",obj_ini.artifact_tags[i])>0){
                 if (obj_ini.artifact_sid[i]>=500){
-                    var oops;oops=floor(random(100))+1;
+                    var oops=floor(random(100))+1;
 
                     if (oops<=60) and (obj_ini.ship_carrying[obj_ini.artifact_sid[i]-500]>0){
                         instance_create(0,0,obj_ncombat);
-                        obj_ncombat.battle_special="ship_demon";obj_ncombat.formation_set=1;
-                        obj_ncombat.enemy=10;obj_ncombat.battle_id=obj_ini.artifact_sid[i]-500;
+                        obj_ncombat.battle_special="ship_demon";
+                        obj_ncombat.formation_set=1;
+                        obj_ncombat.enemy=10;
+                        obj_ncombat.battle_id=obj_ini.artifact_sid[i]-500;
                         scr_ship_battle(obj_ini.artifact_sid[i]-500,999);
                     }
                 }
             }
-
-
-            var e;e=0;
-            repeat(500){e+=1;
-                if (obj_ini.artifact_tags[i]=obj_controller.recent_keyword[e]){
-                    obj_controller.recent_keyword[e]="";obj_controller.recent_type[e]="";
-                    obj_controller.recent_turn[e]=0;obj_controller.recent_number[e]=0;
+            for(var e=1; e<=500; e++){
+                if (obj_ini.artifact_tags[i]==obj_controller.recent_keyword[e]){
+                    obj_controller.recent_keyword[e]="";
+                    obj_controller.recent_type[e]="";
+                    obj_controller.recent_turn[e]=0;
+                    obj_controller.recent_number[e]=0;
                     scr_recent("artifact_destroyed",obj_controller.recent_keyword,2);
                     scr_recent("","",0);
                 }
             }
 
-            obj_ini.artifact[i]="";obj_ini.artifact_tags[i]="";
-            obj_ini.artifact_identified[i]=0;obj_ini.artifact_condition[i]=100;
-            obj_ini.artifact_loc[i]="";obj_ini.artifact_sid[i]=0;
-            artifacts-=1;cooldown=12;
+            obj_ini.artifact[i]="";
+            obj_ini.artifact_tags[i]="";
+            obj_ini.artifact_identified[i]=0;
+            obj_ini.artifact_condition[i]=100;
+            obj_ini.artifact_loc[i]="";
+            obj_ini.artifact_sid[i]=0;
+            artifacts-=1;
+            cooldown=12;
             if (menu_artifact>artifacts) then menu_artifact=artifacts;
-
-            repeat(20){
+            for(var j=0; j<20; j++){
                 obj_ini.artifact[i]=obj_ini.artifact[i+1];obj_ini.artifact_tags[i]=obj_ini.artifact_tags[i+1];
                 obj_ini.artifact_identified[i]=obj_ini.artifact_identified[i+1];
                 obj_ini.artifact_condition[i]=obj_ini.artifact_condition[i+1];
@@ -211,47 +259,31 @@ if (menu=13) and (cooldown<=0) and (artifacts>0){
             }
         }
     }
-
-
 }
-
-if (menu=14) and (cooldown<=0){
-    /*
-    draw_set_alpha(1);draw_rectangle(xx+621,yy+466,xx+720,yy+486,1);
-    draw_set_alpha(0.5);draw_rectangle(xx+622,yy+467,xx+719,yy+485,1);
-    if (mouse_x>xx+621) and (mouse_y>yy+466) and (mouse_x<xx+720) and (mouse_y<yy+486){
-        draw_set_alpha(0.2);draw_rectangle(xx+621,yy+466,xx+720,yy+486,0);
-    }draw_set_alpha(1);
-    if (stc_wargear_un+stc_vehicles_un+stc_ships_un=0) then draw_set_alpha(0.5);
-    draw_text(xx+670,yy+467,"Identify");draw_set_alpha(1);
-
-    draw_set_alpha(1);draw_rectangle(xx+733,yy+466,xx+790,yy+486,1);
-    draw_set_alpha(0.5);draw_rectangle(xx+734,yy+467,xx+789,yy+485,1);
-    if (mouse_x>xx+733) and (mouse_y>yy+466) and (mouse_x<xx+790) and (mouse_y<yy+486){
-        draw_set_alpha(0.2);draw_rectangle(xx+733,yy+466,xx+790,yy+486,0);
-    }draw_set_alpha(1);
-    if (stc_wargear_un+stc_vehicles_un+stc_ships_un=0) then draw_set_alpha(0.5);
-    draw_text(xx+761,yy+467,"Gift");draw_set_alpha(1);
-    */
-
-
-    if (mouse_x>=xx+733) and (mouse_y>=yy+466) and (mouse_x<xx+790) and (mouse_y<yy+486) and (cooldown<=0){// Gift STC Fragment
+// ** Armamentorium STC fragments **
+if (menu==14) and (cooldown<=0){
+    // Gift STC Fragment
+    if (mouse_x>=xx+733) and (mouse_y>=yy+466) and (mouse_x<xx+790) and (mouse_y<yy+486) and (cooldown<=0){
         if (stc_wargear_un+stc_vehicles_un+stc_ships_un>0){
-            var pop,chick;chick=0;
-            if (known[2]>1) and (faction_defeated[2]=0) then chick=1;if (known[3]>1) and (faction_defeated[3]=0) then chick=1;
-            if (known[4]>1) and (faction_defeated[4]=0) then chick=1;if (known[5]>1) and (faction_defeated[5]=0) then chick=1;
-            if (known[6]>1) and (faction_defeated[6]=0) then chick=1;if (known[8]>1) and (faction_defeated[8]=0) then chick=1;
+            var chick=0;
+            if (known[2]>1) and (faction_defeated[2]==0) then chick=1;
+            if (known[3]>1) and (faction_defeated[3]==0) then chick=1;
+            if (known[4]>1) and (faction_defeated[4]==0) then chick=1;
+            if (known[5]>1) and (faction_defeated[5]==0) then chick=1;
+            if (known[6]>1) and (faction_defeated[6]==0) then chick=1;
+            if (known[8]>1) and (faction_defeated[8]==0) then chick=1;
             if (chick!=0){
-                pop=instance_create(0,0,obj_popup);
-                pop.type=9.1;cooldown=8000;
+                var pop=instance_create(0,0,obj_popup);
+                pop.type=9.1;
+                cooldown=8000;
             }
         }
     }
-
-
-    if (mouse_x>xx+621) and (mouse_y>yy+466) and (mouse_x<xx+720) and (mouse_y<yy+486){// Identify STC
+    // Identify STC
+    if (mouse_x>xx+621) and (mouse_y>yy+466) and (mouse_x<xx+720) and (mouse_y<yy+486){
         if (stc_wargear_un+stc_vehicles_un+stc_ships_un>0){
-            var r1,r2;r2=0;cooldown=8000;
+            var r1,r2=0;
+            cooldown=8000;
             audio_play_sound(snd_stc,-500,0)
             audio_sound_gain(snd_stc,master_volume*effect_volume,0);
             r1=floor(random(stc_wargear_un+stc_vehicles_un+stc_ships_un))+1;
@@ -260,251 +292,370 @@ if (menu=14) and (cooldown<=0){
             if (r1>stc_wargear_un) and (r1<=stc_wargear_un+stc_vehicles_un) and (stc_vehicles_un>0) then r2=2;
             if (r1>stc_wargear_un+stc_vehicles_un) and (r2<=stc_wargear_un+stc_vehicles_un+stc_ships_un) and (stc_ships_un>0) then r2=3;
 
-            if (stc_wargear_un>0) and (stc_vehicles_un+stc_ships_un=0) then r2=1;
-            if (stc_vehicles_un>0) and (stc_wargear_un+stc_ships_un=0) then r2=2;
-            if (stc_ships_un>0) and (stc_vehicles_un+stc_wargear_un=0) then r2=3;
+            if (stc_wargear_un>0) and (stc_vehicles_un+stc_ships_un==0) then r2=1;
+            if (stc_vehicles_un>0) and (stc_wargear_un+stc_ships_un==0) then r2=2;
+            if (stc_ships_un>0) and (stc_vehicles_un+stc_wargear_un==0) then r2=3;
 
-            if (r2=1){
-                stc_wargear_un-=1;stc_wargear+=1;
-                if (stc_wargear=2) then stc_bonus[1]=choose(1,2,3,4,5);
-                if (stc_wargear=4) then stc_bonus[2]=choose(1,2,3);
+            if (r2==1){
+                stc_wargear_un-=1;
+                stc_wargear+=1;
+                if (stc_wargear==2) then stc_bonus[1]=choose(1,2,3,4,5);
+                if (stc_wargear==4) then stc_bonus[2]=choose(1,2,3);
             }
-            if (r2=2){
-                stc_vehicles_un-=1;stc_vehicles+=1;
-                if (stc_vehicles=2) then stc_bonus[3]=choose(1,2,3,4,5);
-                if (stc_vehicles=4) then stc_bonus[4]=choose(1,2,3);
+            if (r2==2){
+                stc_vehicles_un-=1;
+                stc_vehicles+=1;
+                if (stc_vehicles==2) then stc_bonus[3]=choose(1,2,3,4,5);
+                if (stc_vehicles==4) then stc_bonus[4]=choose(1,2,3);
             }
-            if (r2=3){
-                stc_ships_un-=1;stc_ships+=1;
-                if (stc_ships=2) then stc_bonus[5]=choose(1,2,3,4,5);
-                if (stc_ships=4) then stc_bonus[6]=choose(1,2,3);
+            if (r2==3){
+                stc_ships_un-=1;
+                stc_ships+=1;
+                if (stc_ships==2) then stc_bonus[5]=choose(1,2,3,4,5);
+                if (stc_ships==4) then stc_bonus[6]=choose(1,2,3);
             }
-            instance_create(1000,1000,obj_shop);// Refresh the shop
+            // Refresh the shop
+            instance_create(1000,1000,obj_shop);
         }
         exit;
     }
-
-
-
-    /*
-    if (mouse_x>=xx+223) and (mouse_y>=yy+301) and (mouse_x<xx+333) and (mouse_y<yy+347){menu=55;cooldown=8;with(obj_shop){instance_destroy();}instance_create(0,0,obj_shop);}
-    if (mouse_x>=xx+223) and (mouse_y>=yy+347) and (mouse_x<xx+333) and (mouse_y<yy+393){menu=58;cooldown=8;with(obj_shop){instance_destroy();}instance_create(0,0,obj_shop);}
-    if (mouse_x>=xx+353) and (mouse_y>=yy+301) and (mouse_x<xx+463) and (mouse_y<yy+393){menu=56;cooldown=8;with(obj_shop){instance_destroy();}instance_create(0,0,obj_shop);}
-    if (mouse_x>=xx+483) and (mouse_y>=yy+301) and (mouse_x<xx+593) and (mouse_y<yy+393){menu=57;cooldown=8;with(obj_shop){instance_destroy();}instance_create(0,0,obj_shop);}
-    */
 }
-
-
-if (menu=15) and (cooldown<=0){
+// ** Recruitement **
+if (menu==15) and (cooldown<=0){
     if (mouse_x>=xx+748) and (mouse_x<xx+772){
-        if (mouse_y>=yy+355) and (mouse_y<yy+373) and (recruiting<5) and (obj_controller.gene_seed>0) and (obj_ini.doomed=0) and (string_count("|",obj_controller.recruiting_worlds)>0) and (obj_controller.penitent=0){cooldown=8000;recruiting+=1;income_recruiting-=2*(string_count("|",obj_controller.recruiting_worlds));scr_income();}
-
-        if (mouse_y>=yy+395) and (mouse_y<yy+413) and (training_apothecary<6){cooldown=8000;training_apothecary+=1;scr_income();}
-        if (mouse_y>=yy+415) and (mouse_y<yy+433) and (training_chaplain<6) and (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands"){cooldown=8000;training_chaplain+=1;scr_income();}
-        if (mouse_y>=yy+435) and (mouse_y<yy+452) and (training_psyker<6) and (string_count("Intolerant",obj_ini.strin2)=0){cooldown=8000;training_psyker+=1;scr_income();}
+        if (mouse_y>=yy+355) and (mouse_y<yy+373) and (recruiting<5) and (obj_controller.gene_seed>0) and (obj_ini.doomed==0) and (string_count("|",obj_controller.recruiting_worlds)>0) and (obj_controller.penitent==0){
+            cooldown=8000;
+            recruiting+=1;
+            income_recruiting-=2*(string_count("|",obj_controller.recruiting_worlds));
+            scr_income();
+        }
+        if (mouse_y>=yy+395) and (mouse_y<yy+413) and (training_apothecary<6){
+            cooldown=8000;
+            training_apothecary+=1;
+            scr_income();
+        }
+        if (mouse_y>=yy+415) and (mouse_y<yy+433) and (training_chaplain<6) and (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands"){
+            cooldown=8000;
+            training_chaplain+=1;
+            scr_income();
+        }
+        if (mouse_y>=yy+435) and (mouse_y<yy+452) and (training_psyker<6) and (string_count("Intolerant",obj_ini.strin2)==0){
+            cooldown=8000;
+            training_psyker+=1;
+            scr_income();
+        }
         if (mouse_y>=yy+455) and (mouse_y<yy+473) and (training_techmarine<6){
             cooldown=8000;
-            var pid;pid=0;pid=scr_role_count("Techmarine","");
+            var pid=scr_role_count("Techmarine","");
             if (pid>=((disposition[3]/2)+5)) then training_techmarine=0;
-            if (pid<((disposition[3]/2)+5)){training_techmarine+=1;scr_income();}
+            if (pid<((disposition[3]/2)+5)){
+                training_techmarine+=1;
+                scr_income();
+            }
         }
     }
     if (mouse_x>=xx+726) and (mouse_x<xx+745){
-        if (mouse_y>=yy+355) and (mouse_y<yy+373) and (recruiting>0){cooldown=8000;recruiting-=1;income_recruiting+=2*(string_count("|",obj_controller.recruiting_worlds));scr_income();}
-        if (mouse_y>=yy+395) and (mouse_y<yy+413) and (training_apothecary>0){cooldown=8000;training_apothecary-=1;scr_income();}
-        if (mouse_y>=yy+415) and (mouse_y<yy+433) and (training_chaplain>0){cooldown=8000;training_chaplain-=1;scr_income();}
-        if (mouse_y>=yy+435) and (mouse_y<yy+452) and (training_psyker>0){cooldown=8000;training_psyker-=1;scr_income();}
-        if (mouse_y>=yy+455) and (mouse_y<yy+473) and (training_techmarine>0){cooldown=8000;training_techmarine-=1;scr_income();}
-    }
-    if (mouse_y>=yy+518) and (mouse_y<=yy+542){
-        var onceh;onceh=0;
-        if (mouse_x>=xx+713) and (mouse_x<=xx+752){cooldown=8000;
-            if (recruit_trial="Blood Duel") and (onceh=0){onceh=1;recruit_trial="Hunting the Hunter";}
-            if (recruit_trial="Hunting the Hunter") and (onceh=0){onceh=1;recruit_trial="Survival of the Fittest";}
-            if (recruit_trial="Survival of the Fittest") and (onceh=0){onceh=1;recruit_trial="Exposure";}
-            if (recruit_trial="Exposure") and (onceh=0){onceh=1;recruit_trial="Knowledge of Self";}
-            if (recruit_trial="Knowledge of Self") and (onceh=0){onceh=1;recruit_trial="Challenge";}
-            if (recruit_trial="Challenge") and (onceh=0){onceh=1;recruit_trial="Apprenticeship";}
-            if (recruit_trial="Apprenticeship") and (onceh=0){onceh=1;recruit_trial="Blood Duel";}
+        if (mouse_y>=yy+355) and (mouse_y<yy+373) and (recruiting>0){
+            cooldown=8000;
+            recruiting-=1;
+            income_recruiting+=2*(string_count("|",obj_controller.recruiting_worlds));
+            scr_income();
         }
-        if (mouse_x>=xx+492) and (mouse_x<=xx+528){cooldown=8000;
-            if (recruit_trial="Blood Duel") and (onceh=0){onceh=1;recruit_trial="Apprenticeship";}
-            if (recruit_trial="Apprenticeship") and (onceh=0){onceh=1;recruit_trial="Challenge";}
-            if (recruit_trial="Challenge") and (onceh=0){onceh=1;recruit_trial="Knowledge of Self";}
-            if (recruit_trial="Knowledge of Self") and (onceh=0){onceh=1;recruit_trial="Exposure";}
-            if (recruit_trial="Exposure") and (onceh=0){onceh=1;recruit_trial="Survival of the Fittest";}
-            if (recruit_trial="Survival of the Fittest") and (onceh=0){onceh=1;recruit_trial="Hunting the Hunter";}
-            if (recruit_trial="Hunting the Hunter") and (onceh=0){onceh=1;recruit_trial="Blood Duel";}
+        if (mouse_y>=yy+395) and (mouse_y<yy+413) and (training_apothecary>0){
+            cooldown=8000;
+            training_apothecary-=1;
+            scr_income();
+        }
+        if (mouse_y>=yy+415) and (mouse_y<yy+433) and (training_chaplain>0){
+            cooldown=8000;
+            training_chaplain-=1;
+            scr_income();
+        }
+        if (mouse_y>=yy+435) and (mouse_y<yy+452) and (training_psyker>0){
+            cooldown=8000;
+            training_psyker-=1;
+            scr_income();
+        }
+        if (mouse_y>=yy+455) and (mouse_y<yy+473) and (training_techmarine>0){
+            cooldown=8000;
+            training_techmarine-=1;
+            scr_income();
+        }
+    }
+    // Change trial type
+    if (mouse_y>=yy+518) and (mouse_y<=yy+542){
+        var onceh=0;
+        if (mouse_x>=xx+713) and (mouse_x<=xx+752){
+            cooldown=8000;
+            if (recruit_trial=="Blood Duel") and (onceh==0){
+                onceh=1;
+                recruit_trial="Hunting the Hunter";
+            }
+            if (recruit_trial=="Hunting the Hunter") and (onceh==0){
+                onceh=1;
+                recruit_trial="Survival of the Fittest";
+            }
+            if (recruit_trial=="Survival of the Fittest") and (onceh==0){
+                onceh=1;
+                recruit_trial="Exposure";
+            }
+            if (recruit_trial=="Exposure") and (onceh==0){
+                onceh=1;
+                recruit_trial="Knowledge of Self";
+            }
+            if (recruit_trial=="Knowledge of Self") and (onceh==0){
+                onceh=1;
+                recruit_trial="Challenge";
+            }
+            if (recruit_trial=="Challenge") and (onceh==0){
+                onceh=1;
+                recruit_trial="Apprenticeship";
+            }
+            if (recruit_trial=="Apprenticeship") and (onceh==0){
+                onceh=1;
+                recruit_trial="Blood Duel";
+            }
+        }
+        if (mouse_x>=xx+492) and (mouse_x<=xx+528){
+            cooldown=8000;
+            if (recruit_trial=="Blood Duel") and (onceh==0){
+                onceh=1;
+                recruit_trial="Apprenticeship";
+            }
+            if (recruit_trial=="Apprenticeship") and (onceh==0){
+                onceh=1;
+                recruit_trial="Challenge";
+            }
+            if (recruit_trial=="Challenge") and (onceh==0){
+                onceh=1;
+                recruit_trial="Knowledge of Self";
+            }
+            if (recruit_trial=="Knowledge of Self") and (onceh==0){
+
+                onceh=1;
+                recruit_trial="Exposure";
+            }
+            if (recruit_trial=="Exposure") and (onceh==0){
+                onceh=1;
+                recruit_trial="Survival of the Fittest";
+            }
+            if (recruit_trial=="Survival of the Fittest") and (onceh==0){
+                onceh=1;
+                recruit_trial="Hunting the Hunter";
+            }
+            if (recruit_trial=="Hunting the Hunter") and (onceh==0){
+                onceh=1;
+                recruit_trial="Blood Duel";
+            }
         }
     }
 }
-
-
-if (menu=16) and (cooldown<=0){
-    var i;i=ship_current;
-    repeat(34){i+=1;
+// ** Fleet count **
+if (menu==16) and (cooldown<=0){
+    var i=ship_current;
+    for(var j=0; j<34; j++){
+        i+=1;
         if (obj_ini.ship[i]!="") and (mouse_x>=xx+953) and (mouse_x>=yy+84+(i*20)) and (mouse_x<xx+969) and (mouse_y<yy+100+(i*20)){
             temp[40]=obj_ini.ship[i];
-            with(obj_p_fleet){var i;i=0;
-                repeat(40){i+=1;
-                    if (capital[i]=obj_controller.temp[40]) then instance_create(x,y,obj_temp7);
-                    if (frigate[i]=obj_controller.temp[40]) then instance_create(x,y,obj_temp7);
-                    if (escort[i]=obj_controller.temp[40]) then instance_create(x,y,obj_temp7);
+            with(obj_p_fleet){
+                for(var k=1; k<=40; k++){
+                    if (capital[k]==obj_controller.temp[40]) then instance_create(x,y,obj_temp7);
+                    if (frigate[k]==obj_controller.temp[40]) then instance_create(x,y,obj_temp7);
+                    if (escort[k]==obj_controller.temp[40]) then instance_create(x,y,obj_temp7);
                 }
             }
             if (instance_exists(obj_temp7)){
-                x=obj_temp7.x;y=obj_temp7.y;cooldown=8000;
-                menu=0;with(obj_fleet_show){instance_destroy();}
+                x=obj_temp7.x;
+                y=obj_temp7.y;
+                cooldown=8000;
+                menu=0;
+                with(obj_fleet_show){instance_destroy();}
                 instance_create(obj_temp7.x,obj_temp7.y,obj_fleet_show);
                 with(obj_temp7){instance_destroy();}
             }
         }
     }
 }
-
-
+// ** Diplomacy Chaos talks **
 if (menu==20) and (diplomacy==10.1){
-		show_debug_message(diplomacy_pathway, diplo_text);
-		show_debug_message( diplo_text, diplo_text);
-		show_debug_message(cooldown);
-		if (diplomacy_pathway == "intro") and (cooldown <= 0){
-			if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
-				cooldown=8000;
-			 diplomacy_pathway = "gift";
-			 scr_dialogue(diplomacy_pathway);
-			}
-			if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
-				cooldown=8000;
-				diplomacy_pathway = "daemon_scorn";
-				scr_dialogue(diplomacy_pathway);
-				force_goodbye=1;
-			}
-			if point_in_rectangle(mouse_x, mouse_y, option_selections[2].lh, option_selections[2].top, option_selections[2].rh, option_selections[2].base){
-				cooldown=8000;
-				diplomacy_pathway = "daemon_Scorn";
-				scr_dialogue(diplomacy_pathway);
-				force_goodbye=1;
-			}
+	show_debug_message(diplomacy_pathway, diplo_text);
+	show_debug_message( diplo_text, diplo_text);
+	show_debug_message(cooldown);
+	if (diplomacy_pathway == "intro") and (cooldown <= 0){
+		if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
+			cooldown=8000;
+		    diplomacy_pathway = "gift";
+		    scr_dialogue(diplomacy_pathway);
 		}
-		if (diplomacy_pathway == "gift") and (cooldown  <= 0) {
-			if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
-				cooldown=8000;
-				diplomacy_pathway = "Khorne_path";
-				scr_dialogue(diplomacy_pathway);
-			}
-			if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
-				cooldown=8000;
-				diplomacy_pathway = "Nurgle_path";
-				scr_dialogue(diplomacy_pathway);
-			}
-			if point_in_rectangle(mouse_x, mouse_y, option_selections[2].lh, option_selections[2].top, option_selections[2].rh, option_selections[2].base){
-				cooldown=8000;
-				diplomacy_pathway = "Tzeentch_path";
-				scr_dialogue(diplomacy_pathway);
-			}
-					if point_in_rectangle(mouse_x, mouse_y, option_selections[3].lh, option_selections[3].top, option_selections[3].rh, option_selections[3].base){
-				cooldown=8000;
-				diplomacy_pathway = "Slaanesh_path";
-				scr_dialogue(diplomacy_pathway);
-			}
+		if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
+			cooldown=8000;
+			diplomacy_pathway = "daemon_scorn";
+			scr_dialogue(diplomacy_pathway);
+			force_goodbye=1;
 		}
-	if (diplomacy_pathway = "Khorne_path")  and (cooldown  <= 0){
-			if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
-				cooldown=8000;
-				diplomacy_pathway = "sacrifice_lib";
-				scr_dialogue(diplomacy_pathway);
-				force_goodbye = 1;
-			}
-					if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
-				cooldown=8000;
-				diplomacy_pathway = "sacrifice_champ"
-				scr_dialogue(diplomacy_pathway);
-				force_goodbye = 1;
-			}
-					if point_in_rectangle(mouse_x, mouse_y, option_selections[2].lh, option_selections[2].top, option_selections[2].rh, option_selections[2].base){
-				cooldown=8000;
-				diplomacy_pathway = "sacrifice_squad"
-				scr_dialogue(diplomacy_pathway);
-				force_goodbye = 1;
-			}
-			if point_in_rectangle(mouse_x, mouse_y, option_selections[2].lh, option_selections[2].top, option_selections[2].rh, option_selections[2].base){
-				cooldown=8000;diplomacy_pathway = "daemon_scorn";scr_dialogue(diplomacy_pathway);force_goodbye = 1;
-
-			}			
+		if point_in_rectangle(mouse_x, mouse_y, option_selections[2].lh, option_selections[2].top, option_selections[2].rh, option_selections[2].base){
+			cooldown=8000;
+			diplomacy_pathway = "daemon_Scorn";
+			scr_dialogue(diplomacy_pathway);
+			force_goodbye=1;
 		}
-	if (diplomacy_pathway = "Slaanesh_path")  and (cooldown  <= 0){
-			if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
-				cooldown=8000;diplomacy_pathway = "Slaanesh_arti";scr_dialogue(diplomacy_pathway);force_goodbye = 1;
-
-			}
-			if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
-				cooldown=8000;diplomacy_pathway = "daemon_scorn";scr_dialogue(diplomacy_pathway);force_goodbye = 1;
-
-			}
+	}
+	if (diplomacy_pathway == "gift") and (cooldown  <= 0) {
+		if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
+			cooldown=8000;
+			diplomacy_pathway = "Khorne_path";
+			scr_dialogue(diplomacy_pathway);
 		}
-	if (diplomacy_pathway = "Nurgle_path")  and (cooldown  <= 0){
-			if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
-				cooldown=8000;
-				diplomacy_pathway = "nurgle_gift";
-				scr_dialogue(diplomacy_pathway);
-				force_goodbye = 1;
-			}
-			if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
-				cooldown=8000;diplomacy_pathway = "daemon_scorn";scr_dialogue(diplomacy_pathway);force_goodbye = 1;
-
-			}
+		if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
+			cooldown=8000;
+			diplomacy_pathway = "Nurgle_path";
+			scr_dialogue(diplomacy_pathway);
 		}
-	if (diplomacy_pathway = "Nurgle_path")  and (cooldown  <= 0){
-			if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
-				cooldown=8000;diplomacy_pathway = "nurgle_gift";scr_dialogue(diplomacy_pathway);force_goodbye = 1;
-
-			}
-					if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
-				cooldown=8000;diplomacy_pathway = "daemon_scorn";scr_dialogue(diplomacy_pathway);force_goodbye = 1;
-			}
-		}	
+		if point_in_rectangle(mouse_x, mouse_y, option_selections[2].lh, option_selections[2].top, option_selections[2].rh, option_selections[2].base){
+			cooldown=8000;
+			diplomacy_pathway = "Tzeentch_path";
+			scr_dialogue(diplomacy_pathway);
+		}
+        if point_in_rectangle(mouse_x, mouse_y, option_selections[3].lh, option_selections[3].top, option_selections[3].rh, option_selections[3].base){
+			cooldown=8000;
+			diplomacy_pathway = "Slaanesh_path";
+			scr_dialogue(diplomacy_pathway);
+		}
+	}
+	if (diplomacy_pathway == "Khorne_path")  and (cooldown  <= 0){
+		if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
+			cooldown=8000;
+			diplomacy_pathway = "sacrifice_lib";
+			scr_dialogue(diplomacy_pathway);
+			force_goodbye = 1;
+		}
+		if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
+			cooldown=8000;
+			diplomacy_pathway = "sacrifice_champ";
+			scr_dialogue(diplomacy_pathway);
+			force_goodbye = 1;
+		}
+		if point_in_rectangle(mouse_x, mouse_y, option_selections[2].lh, option_selections[2].top, option_selections[2].rh, option_selections[2].base){
+			cooldown=8000;
+			diplomacy_pathway = "sacrifice_squad";
+			scr_dialogue(diplomacy_pathway);
+			force_goodbye = 1;
+		}
+		if point_in_rectangle(mouse_x, mouse_y, option_selections[2].lh, option_selections[2].top, option_selections[2].rh, option_selections[2].base){
+			cooldown=8000;
+            diplomacy_pathway = "daemon_scorn";
+            scr_dialogue(diplomacy_pathway);
+            force_goodbye = 1;
+		}
+	}
+	if (diplomacy_pathway == "Slaanesh_path")  and (cooldown  <= 0){
+		if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
+			cooldown=8000;
+            diplomacy_pathway = "Slaanesh_arti";
+            scr_dialogue(diplomacy_pathway);
+            force_goodbye = 1;
+		}
+		if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
+			cooldown=8000;
+            diplomacy_pathway = "daemon_scorn";
+            scr_dialogue(diplomacy_pathway);
+            force_goodbye = 1;
+		}
+	}
+	if (diplomacy_pathway == "Nurgle_path")  and (cooldown  <= 0){
+		if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
+			cooldown=8000;
+			diplomacy_pathway = "nurgle_gift";
+			scr_dialogue(diplomacy_pathway);
+			force_goodbye = 1;
+		}
+		if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
+			cooldown=8000;
+            diplomacy_pathway = "daemon_scorn";
+            scr_dialogue(diplomacy_pathway);
+            force_goodbye = 1;
+		}
+	}
+	if (diplomacy_pathway == "Nurgle_path")  and (cooldown  <= 0){
+		if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
+			cooldown=8000;
+            diplomacy_pathway = "nurgle_gift";
+            scr_dialogue(diplomacy_pathway);
+            force_goodbye = 1;
+		}
+				if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
+			cooldown=8000;
+            diplomacy_pathway = "daemon_scorn";
+            scr_dialogue(diplomacy_pathway);
+            force_goodbye = 1;
+		}
+	}	
 	if (diplomacy_pathway = "Tzeentch_path")  and (cooldown  <= 0){
-			if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
-				cooldown=8000;diplomacy_pathway = "Tzeentch_plan";scr_dialogue(diplomacy_pathway);force_goodbye = 1;
-
-			}
-					if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
-				cooldown=8000;diplomacy_pathway = "daemon_scorn";scr_dialogue(diplomacy_pathway);force_goodbye = 1;
-			}
+		if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
+			cooldown=8000;
+            diplomacy_pathway = "Tzeentch_plan";
+            scr_dialogue(diplomacy_pathway);
+            force_goodbye = 1;
 		}
+		if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
+			cooldown=8000;
+            diplomacy_pathway = "daemon_scorn";
+            scr_dialogue(diplomacy_pathway);
+            force_goodbye = 1;
+		}
+	}
 }
-
-
-if (menu=20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (cooldown<=0) and (diplomacy<10){// Diplomacy
-
-    if (trading=0) and (diplo_option[1]="") and (diplo_option[2]="") and (diplo_option[3]="") and (diplo_option[4]=""){
-
-        // xx+=208;yy+=83;yy+=50;
-
+// ** Diplomacy **
+if (menu==20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (cooldown<=0) and (diplomacy<10){
+    if (trading==0) and (diplo_option[1]=="") and (diplo_option[2]=="") and (diplo_option[3]=="") and (diplo_option[4]==""){
         if (force_goodbye<=0){
-            if (audience=0){
-                if (mouse_x>=xx+442) and (mouse_y>=yy+718) and (mouse_x<xx+547) and (mouse_y<yy+737) and (audience=0) and (force_goodbye=0){// Trade
-                    trading=1;scr_dialogue("open_trade");cooldown=8;click2=1;trade_likely="";
+            if (audience==0){
+                // Trade
+                if (mouse_x>=xx+442) and (mouse_y>=yy+718) and (mouse_x<xx+547) and (mouse_y<yy+737) and (audience==0) and (force_goodbye==0){
+                    trading=1;
+                    scr_dialogue("open_trade");
+                    cooldown=8;
+                    click2=1;
+                    trade_likely="";
                 }
-                if (mouse_x>=xx+561) and (mouse_y>=yy+718) and (mouse_x<xx+667) and (mouse_y<yy+737) and (force_goodbye=0){// Demand
-                    cooldown=8;click2=1;trading_demand=diplomacy;scr_dialogue("trading_demand");
+                // Demand
+                if (mouse_x>=xx+561) and (mouse_y>=yy+718) and (mouse_x<xx+667) and (mouse_y<yy+737) and (force_goodbye==0){
+                    cooldown=8;
+                    click2=1;
+                    trading_demand=diplomacy;
+                    scr_dialogue("trading_demand");
                 }
-                if (mouse_x>=xx+682) and (mouse_y>=yy+718) and (mouse_x<xx+787) and (mouse_y<yy+737) and (force_goodbye=0){// Discuss
-                    //
+                // Discuss
+                if (mouse_x>=xx+682) and (mouse_y>=yy+718) and (mouse_x<xx+787) and (mouse_y<yy+737) and (force_goodbye==0){
+                    // TODO
                 }
             }
-            if (mouse_x>=xx+442) and (mouse_y>=yy+752) and (mouse_x<xx+547) and (mouse_y<yy+771) and (force_goodbye=0){// Denounce
-                if (diplo_last!="denounced"){scr_dialogue("denounced");cooldown=8;click2=1;}
-            }
-            if (mouse_x>=xx+561) and (mouse_y>=yy+752) and (mouse_x<xx+667) and (mouse_y<yy+771) and (force_goodbye=0){// Praise
-                if (diplo_last!="praised"){scr_dialogue("praised");cooldown=8;click2=1;}
-            }
-
-            if (audience=0){
-                if (mouse_x>=xx+682) and (mouse_y>=yy+752) and (mouse_x<xx+787) and (mouse_y<yy+771) and (force_goodbye=0){// Propose Alliance
-                    if (diplo_last!="propose_alliance"){cooldown=8;click2=1;scr_dialogue("propose_alliance");}
+            // Denounce
+            if (mouse_x>=xx+442) and (mouse_y>=yy+752) and (mouse_x<xx+547) and (mouse_y<yy+771) and (force_goodbye==0){
+                if (diplo_last!="denounced"){
+                    scr_dialogue("denounced");
+                    cooldown=8;
+                    click2=1;
                 }
-                // Declare war here
+            }
+            // Praise
+            if (mouse_x>=xx+561) and (mouse_y>=yy+752) and (mouse_x<xx+667) and (mouse_y<yy+771) and (force_goodbye==0){
+                if (diplo_last!="praised"){
+                    scr_dialogue("praised");
+                    cooldown=8;
+                    click2=1;
+                }
+            }
+            if (audience==0){
+                // Propose Alliance
+                if (mouse_x>=xx+682) and (mouse_y>=yy+752) and (mouse_x<xx+787) and (mouse_y<yy+771) and (force_goodbye==0){
+                    if (diplo_last!="propose_alliance"){
+                        cooldown=8;
+                        click2=1;
+                        scr_dialogue("propose_alliance");
+                    }
+                }
+                // TODO Declare war here
             }
         }
 
@@ -513,135 +664,217 @@ if (menu=20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (coold
         Declare War         551,784,677,803
         */
 
-        if (mouse_x>=xx+818) and (mouse_y>=yy+795) and (mouse_x<xx+897) and (mouse_y<yy+814){// Exit
+        // Exit
+        if (mouse_x>=xx+818) and (mouse_y>=yy+795) and (mouse_x<xx+897) and (mouse_y<yy+814){
             click=1;
+            if (audio_is_playing(snd_blood)==true) then scr_music("royal",2000);
 
-            if (audio_is_playing(snd_blood)=true) then scr_music("royal",2000);
-
-
-
-            if (complex_event=true) and (instance_exists(obj_temp_meeting)){
-                complex_event=false;diplomacy=0;menu=0;
-                force_goodbye=0;cooldown=80;
+            if (complex_event==true) and (instance_exists(obj_temp_meeting)){
+                complex_event=false;
+                diplomacy=0;
+                menu=0;
+                force_goodbye=0;
+                cooldown=80;
                 with(obj_temp_meeting){instance_destroy();}
-                if (instance_exists(obj_turn_end)){obj_turn_end.alarm[1]=1;exit;}
+                if (instance_exists(obj_turn_end)){
+                    obj_turn_end.alarm[1]=1;
+                    exit;
+                }
                 exit;
             }
-
-
-
             if (trading_artifact!=0){
-                var h;h=0;repeat(4){h+=1;obj_controller.diplo_option[h]="";obj_controller.diplo_goto[h]="";}
-                diplomacy=0;menu=0;force_goodbye=0;cooldown=8;
-                if (trading_artifact=2) and (instance_exists(obj_temp4)){obj_temp4.alarm[2]=1;}// 135 this might not be needed
-                trading_artifact=0;
-                with(obj_popup){obj_temp4.alarm[1]=1;instance_destroy();}exit;
-            }
-
-            if (force_goodbye=5){
-                var h;h=0;repeat(4){h+=1;obj_controller.diplo_option[h]="";obj_controller.diplo_goto[h]="";}
-                diplomacy=0;menu=0;force_goodbye=0;cooldown=8;exit;
-            }
-
-            if (liscensing=2) and (repair_ships=0){
+                for(var h=1; h<=4; h++){
+                    obj_controller.diplo_option[h]="";
+                    obj_controller.diplo_goto[h]="";
+                }
+                diplomacy=0;
+                menu=0;
+                force_goodbye=0;
                 cooldown=8;
-                var cru;
-                cru=instance_create(mouse_x,mouse_y,obj_crusade);
-                cru.owner=diplomacy;cru.placing=true;
-                diplomacy=0;force_goodbye=0;
-                menu=0;exit_all=0;liscensing=0;
-                if (zoomed=0) then scr_zoom();
+                if (trading_artifact==2) and (instance_exists(obj_temp4)){obj_temp4.alarm[2]=1;}// 135 this might not be needed
+                trading_artifact=0;
+                with(obj_popup){
+                    obj_temp4.alarm[1]=1;
+                    instance_destroy();
+                }
                 exit;
             }
-
-            if (exit_all!=0){cooldown=8;diplomacy=0;force_goodbye=0;menu=0;exit_all=0;}
-
-            if (diplo_last="artifact_thanks") and (force_goodbye!=0){
-                diplomacy=0;menu=13;force_goodbye=0;cooldown=8;exit;
+            if (force_goodbye==5){
+                for(var h=1; h<=4; h++){
+                    obj_controller.diplo_option[h]="";
+                    obj_controller.diplo_goto[h]="";
+                }
+                diplomacy=0;
+                menu=0;
+                force_goodbye=0;
+                cooldown=8;
+                exit;
             }
-
-            // Trading artifact was here
-
-            if (audience=0){cooldown=8;diplomacy=0;force_goodbye=0;}// Exits back to diplomacy thing
-
-            if (audience>0) and (!instance_exists(obj_turn_end)){cooldown=8;diplomacy=0;menu=0;audience=0;force_goodbye=0;exit;}// No need to check for next audience
+            if (liscensing==2) and (repair_ships==0){
+                cooldown=8;
+                var cru=instance_create(mouse_x,mouse_y,obj_crusade);
+                cru.owner=diplomacy;
+                cru.placing=true;
+                diplomacy=0;
+                force_goodbye=0;
+                menu=0;
+                exit_all=0;
+                liscensing=0;
+                if (zoomed==0) then scr_zoom();
+                exit;
+            }
+            if (exit_all!=0){
+                cooldown=8;
+                diplomacy=0;
+                force_goodbye=0;
+                menu=0;
+                exit_all=0;
+            }
+            if (diplo_last=="artifact_thanks") and (force_goodbye!=0){
+                diplomacy=0;
+                menu=13;
+                force_goodbye=0;
+                cooldown=8;
+                exit;
+            }
+            // Exits back to diplomacy thing
+            if (audience==0){
+                cooldown=8;
+                diplomacy=0;
+                force_goodbye=0;
+            }
+            // No need to check for next audience
+            if (audience>0) and (!instance_exists(obj_turn_end)){
+                cooldown=8;
+                diplomacy=0;
+                menu=0;
+                audience=0;
+                force_goodbye=0;
+                exit;
+            }
             if (audience>0) and (instance_exists(obj_turn_end)){
-                if (obj_controller.complex_event=false){
-                    cooldown=8;diplomacy=0;menu=0;obj_turn_end.alarm[1]=1;audience=0;force_goodbye=0;exit;
+                if (obj_controller.complex_event==false){
+                    cooldown=8;
+                    diplomacy=0;
+                    menu=0;
+                    obj_turn_end.alarm[1]=1;
+                    audience=0;
+                    force_goodbye=0;
+                    exit;
                 }
                 if (obj_controller.complex_event=true){
-
+                    // TODO
                 }
             }// Have this check for the next audience, if any
         }
+        // Trade goods go here
+        if (trading==1) or (trading==2){
+            trade_theirs[1]="";
+            trade_theirs[2]="";
+            trade_theirs[3]="";
+            trade_theirs[4]="";
+            trade_theirs[5]="";
+            trade_theirs[6]="";
+            trade_disp[0]=-100;
+            trade_disp[1]=-100;
+            trade_disp[2]=-100;
+            trade_disp[3]=-100;
+            trade_disp[4]=-100;
+            trade_disp[5]=-100;
+            trade_disp[6]=-100;
 
-        // xx=view_xview[0]+0;yy=view_yview[0]+0;
-
-
-
-        if (trading=1) or (trading=2){// Trade goods go here
-            trade_theirs[1]="";trade_theirs[2]="";trade_theirs[3]="";trade_theirs[4]="";trade_theirs[5]="";trade_theirs[6]="";
-            trade_disp[0]=-100;trade_disp[1]=-100;trade_disp[2]=-100;trade_disp[3]=-100;trade_disp[4]=-100;trade_disp[5]=-100;trade_disp[6]=-100;
-
-            trade_req=requisition;trade_gene=gene_seed;
+            trade_req=requisition;
+            trade_gene=gene_seed;
             trade_chip=stc_wargear_un+stc_vehicles_un+stc_ships_un;
             trade_info=info_chips;
 
-            if (diplomacy=2){cooldown=8;// Imperium trade goods
+            // Imperium trade goods
+            if (diplomacy==2){
+                cooldown=8;
                 trade_theirs[1]="Requisition";
-                // trade_theirs[2]="Storm Trooper";
-                trade_theirs[2]="Recruiting Planet";trade_theirs[3]="License: Repair";trade_theirs[4]="License: Crusade";
+                trade_theirs[2]="Recruiting Planet";
+                trade_theirs[3]="License: Repair";
+                trade_theirs[4]="License: Crusade";
             }
-            if (diplomacy=3){cooldown=8;// Mechanicus trade goods
-                trade_theirs[1]="Terminator Armour";trade_theirs[2]="Land Raider";trade_theirs[3]="Minor Artifact";
+            // Mechanicus trade goods
+            if (diplomacy==3){
+                cooldown=8;
+                trade_theirs[1]="Terminator Armour";
+                trade_theirs[2]="Land Raider";
+                trade_theirs[3]="Minor Artifact";
                 trade_theirs[4]="Skitarii";
                 trade_theirs[5]="Techpriest";
-                trade_disp[1]=30;trade_disp[2]=20;trade_disp[3]=40;// trade_disp[4]=20;
-                trade_disp[4]=30;trade_disp[5]=60;
+                trade_disp[1]=30;
+                trade_disp[2]=20;
+                trade_disp[3]=40;
+                trade_disp[4]=30;
+                trade_disp[5]=60;
             }
-            if (diplomacy=4){cooldown=8;// Inquisition trade goods
-                trade_theirs[1]="Condemnor Boltgun";trade_theirs[2]="Hellrifle";trade_theirs[3]="Incinerator";trade_theirs[4]="Crusader";trade_theirs[5]="Exterminatus";trade_theirs[6]="Cyclonic Torpedo";
-                trade_disp[1]=20;trade_disp[2]=30;trade_disp[3]=20;trade_disp[4]=30;trade_disp[5]=40;trade_disp[6]=60;
+            // Inquisition trade goods
+            if (diplomacy==4){
+                cooldown=8;
+                trade_theirs[1]="Condemnor Boltgun";
+                trade_theirs[2]="Hellrifle";
+                trade_theirs[3]="Incinerator";
+                trade_theirs[4]="Crusader";
+                trade_theirs[5]="Exterminatus";
+                trade_theirs[6]="Cyclonic Torpedo";
+                trade_disp[1]=20;
+                trade_disp[2]=30;
+                trade_disp[3]=20;
+                trade_disp[4]=30;
+                trade_disp[5]=40;
+                trade_disp[6]=60;
             }
-            if (diplomacy=5){cooldown=8;// Ecclesiarchy trade goods
-                trade_theirs[1]="Eviscerator";trade_theirs[2]="Heavy Flamer";trade_theirs[3]="Inferno Bolts";trade_theirs[4]="Sister of Battle";trade_theirs[5]="Sister Hospitaler";
-                trade_disp[1]=20;trade_disp[2]=30;trade_disp[3]=30;trade_disp[4]=50;trade_disp[5]=50;
+            // Ecclesiarchy trade goods
+            if (diplomacy==5){
+                cooldown=8;
+                trade_theirs[1]="Eviscerator";
+                trade_theirs[2]="Heavy Flamer";
+                trade_theirs[3]="Inferno Bolts";
+                trade_theirs[4]="Sister of Battle";
+                trade_theirs[5]="Sister Hospitaler";
+                trade_disp[1]=20;
+                trade_disp[2]=30;
+                trade_disp[3]=30;
+                trade_disp[4]=50;
+                trade_disp[5]=50;
             }
-
-            if (diplomacy=6){cooldown=8;// Elfdar trade goods
-                trade_theirs[1]="Master Crafted Power Sword";trade_theirs[2]="Archeotech Laspistol";trade_theirs[3]="Ranger";trade_theirs[4]="Useful Information";
-                trade_disp[1]=-10;trade_disp[2]=-10;trade_disp[3]=10;trade_disp[4]=-15;
+            // Eldar trade goods
+            if (diplomacy==6){
+                cooldown=8;
+                trade_theirs[1]="Master Crafted Power Sword";
+                trade_theirs[2]="Archeotech Laspistol";
+                trade_theirs[3]="Ranger";
+                trade_theirs[4]="Useful Information";
+                trade_disp[1]=-10;
+                trade_disp[2]=-10;
+                trade_disp[3]=10;
+                trade_disp[4]=-15;
                 if (random_event_next != EVENT.none) and ((string_count("WL10|",useful_info)>0) or (turn<chaos_turn)) and ((string_count("WL7|",useful_info)>0) or (known[7]<1)) and  (string_count("WG|",useful_info)>1) and (string_count("CM|",useful_info)>0) then trade_disp[4]=1000;
             }
-            if (diplomacy=7){cooldown=8;// Ork trade goods
-                trade_theirs[1]="Power Klaw";trade_theirs[2]="Ork Sniper";trade_theirs[3]="Flash Git";
+            // Ork trade goods
+            if (diplomacy==7){
+                cooldown=8;
+                trade_theirs[1]="Power Klaw";
+                trade_theirs[2]="Ork Sniper";
+                trade_theirs[3]="Flash Git";
             }
-
-            if (diplomacy=8) then trade_theirs[1]="Test";
-
+            if (diplomacy==8) then trade_theirs[1]="Test";
         }
     }
-    //
+    if (trading==0) and ((diplo_option[1]!="") or (diplo_option[2]!="") or (diplo_option[3]!="") or (diplo_option[4]!="")){
+        if (force_goodbye==0) and (cooldown<=0){
 
-
-
-
-
-
-
-    if (trading=0) and ((diplo_option[1]!="") or (diplo_option[2]!="") or (diplo_option[3]!="") or (diplo_option[4]!="")){
-        if (force_goodbye=0) and (cooldown<=0){
-
-            var diplo_pressed;diplo_pressed=0;
+            var diplo_pressed=0;
             yy=__view_get( e__VW.YView, 0 )+0;
 
-            var opts,slot,dp;opts=0;slot=0;dp=0;
-            repeat(4){dp+=1;if (diplo_option[dp]!="") then opts+=1;}
-            if (opts=4) then yy-=30;
-            if (opts=2) then yy+=30;
-            if (opts=1) then yy+=60;
-
-            repeat(4){slot+=1;
+            var opts=0;
+            for(var dp=1; dp<=4; dp++){if (diplo_option[dp]!="") then opts+=1;}
+            if (opts==4) then yy-=30;
+            if (opts==2) then yy+=30;
+            if (opts==1) then yy+=60;
+            for(var slot=1; slot<=4; slot++){
                 if (diplo_option[slot]!=""){
                     if (mouse_x>=xx+354) and (mouse_y>=yy+694) and (mouse_x<xx+887) and (mouse_y<yy+717) and (cooldown<=0){
                         diplo_pressed=slot;
@@ -651,244 +884,400 @@ if (menu=20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (coold
             }
             yy=__view_get( e__VW.YView, 0 );
 
-
             if (diplo_pressed>0) and (diplo_goto[diplo_pressed]!="") and (cooldown<=0){
-                click2=1;scr_dialogue(diplo_goto[diplo_pressed]);cooldown=4000;exit;
+                click2=1;
+                scr_dialogue(diplo_goto[diplo_pressed]);
+                cooldown=4000;
+                exit;
             }
+            if (diplo_pressed==1){
+                click2=1;
+                if (questing==0) and (trading_artifact==0) and (trading_demand==0){
+                    if (diplomacy==4) and (diplo_option[1]=="It will not happen again"){// It will not happen again mang
+                        scr_dialogue("you_better");
+                        diplo_option[1]="";
+                        diplo_option[2]="";
+                        diplo_option[3]="";
+                        force_goodbye=1;
 
-            if (diplo_pressed=1){click2=1;
-                if (questing=0) and (trading_artifact=0) and (trading_demand=0){
-                    if (diplomacy=4) and (diplo_option[1]="It will not happen again"){// It will not happen again mang
-                        scr_dialogue("you_better");diplo_option[1]="";diplo_option[2]="";diplo_option[3]="";force_goodbye=1;
-
-                        var tb,tc,pp;
+                        var tb,tc;
                         explode_script(obj_controller.temp[1008],"|");
-                        tb=string(explode[0]);tc=real(explode[1]);
-                        var who,ev,v;v=0;ev=0;repeat(99){v+=1;if (ev=0) and (event[v]="") then ev=v;}
-                        event[ev]="remove_serf|"+string(tb)+"|"+string(tc)+"|";event_duration[ev]=choose(1,2);
+                        tb=string(explode[0]);
+                        tc=real(explode[1]);
+                        var ev=0;
+                        for(var v=1; v<=99; v++){if (ev==0) and (event[v]=="") then ev=v;}
+                        event[ev]="remove_serf|"+string(tb)+"|"+string(tc)+"|";
+                        event_duration[ev]=choose(1,2);
                         exit;
                     }
                 }
-
-                if (questing!=0){cooldown=8;
-                    if (questing=1) and (diplomacy=6){
-                        if (requisition>=500){scr_loyalty("Xeno Trade","+");
-                            scr_dialogue("mission1_thanks");scr_quest(2,"300req",6,0);
-                            requisition-=500;questing=0;diplo_option[1]="";
-                            diplo_option[2]="";diplo_option[3]="";exit;
+                if (questing!=0){
+                    cooldown=8;
+                    if (questing==1) and (diplomacy==6){
+                        if (requisition>=500){
+                            scr_loyalty("Xeno Trade","+");
+                            scr_dialogue("mission1_thanks");
+                            scr_quest(2,"300req",6,0);
+                            requisition-=500;questing=0;
+                            diplo_option[1]="";
+                            diplo_option[2]="";
+                            diplo_option[3]="";
+                            exit;
                         }
                     }
                 }
-
-                if ((diplomacy=3) or (diplomacy=5)) and (trading_artifact!=0){trading=1;scr_dialogue("open_trade");trade_take[1]="Artifact";trade_tnum[1]=1;trade_req=requisition;trade_gene=gene_seed;trade_chip=info_chips;trade_info=stc_wargear_un+stc_vehicles_un+stc_ships_un;}
-
+                if ((diplomacy==3) or (diplomacy==5)) and (trading_artifact!=0){
+                    trading=1;
+                    scr_dialogue("open_trade");
+                    trade_take[1]="Artifact";
+                    trade_tnum[1]=1;
+                    trade_req=requisition;
+                    trade_gene=gene_seed;
+                    trade_chip=info_chips;
+                    trade_info=stc_wargear_un+stc_vehicles_un+stc_ships_un;
+                }
                 if (trading_demand>0) and (diplo_option[1]!="Cancel") and (diplo_option[1]!="") then scr_demand(1);
             }
-
-
-
-            if (diplo_pressed=2){
-                // show_message("special diplomacy option 2");
+            if (diplo_pressed==2){
                 click2=1;
 
-                if (questing=0) and (trading_artifact=0) and (trading_demand=0){// Don't want no trabble
-                    if (diplomacy=4) and (diplo_option[2]="Very well"){
-                        diplo_option[1]="";diplo_option[2]="";diplo_option[3]="";force_goodbye=1;
+                if (questing==0) and (trading_artifact==0) and (trading_demand==0){// Don't want no trabble
+                    if (diplomacy==4) and (diplo_option[2]=="Very well"){
+                        diplo_option[1]="";
+                        diplo_option[2]="";
+                        diplo_option[3]="";
+                        force_goodbye=1;
 
-                        var tb,tc,pp;
+                        var tb,tc;
                         explode_script(obj_controller.temp[1008],"|");
-                        tb=string(explode[0]);tc=real(explode[1]);
-                        var who,ev,v;v=0;ev=0;repeat(99){v+=1;if (ev=0) and (event[v]="") then ev=v;}
-                        event[ev]="remove_serf|"+string(tb)+"|"+string(tc)+"|";event_duration[ev]=choose(1,2);
-                        cooldown=8;diplomacy=0;menu=0;obj_turn_end.alarm[1]=1;audience=0;force_goodbye=0;
+                        tb=string(explode[0]);
+                        tc=real(explode[1]);
+                        var ev=0;
+                        for(var v=1; v<=99; v++){if (ev==0) and (event[v]=="") then ev=v;}
+                        event[ev]="remove_serf|"+string(tb)+"|"+string(tc)+"|";
+                        event_duration[ev]=choose(1,2);
+                        cooldown=8;
+                        diplomacy=0;
+                        menu=0;
+                        obj_turn_end.alarm[1]=1;
+                        audience=0;
+                        force_goodbye=0;
                         exit;
                     }
                 }
-
-
-
-                if (questing!=0){cooldown=8;
-                    if (questing=1) and (diplomacy=6){
-                        scr_dialogue("quest_maybe");questing=0;
-                        diplo_option[1]="";diplo_option[2]="";diplo_option[3]="";exit;
+                if (questing!=0){
+                    cooldown=8;
+                    if (questing==1) and (diplomacy==6){
+                        scr_dialogue("quest_maybe");
+                        questing=0;
+                        diplo_option[1]="";
+                        diplo_option[2]="";
+                        diplo_option[3]="";
+                        exit;
                     }
                 }
-
                 if (trading_demand>0) and (diplo_option[2]!="Cancel") and (diplo_option[2]!="") then scr_demand(2);
-                if (trading_demand>0) and (diplo_option[2]="Cancel"){cooldown=8000;trading_demand=0;diplo_option[1]="";diplo_option[2]="";diplo_option[3]="";diplo_text="...";diplo_txt="...";}
-
-
-                if (diplomacy>0) and (trading_artifact>0) and (menu=20){cooldown=8;
-                    obj_temp4.alarm[1]=2;trading_artifact=0;menu=0;diplomacy=0;diplo_option[1]="";diplo_option[2]="";diplo_option[3]="";
+                if (trading_demand>0) and (diplo_option[2]=="Cancel"){
+                    cooldown=8000;
+                    trading_demand=0;
+                    diplo_option[1]="";
+                    diplo_option[2]="";
+                    diplo_option[3]="";
+                    diplo_text="...";
+                    diplo_txt="...";
+                }
+                if (diplomacy>0) and (trading_artifact>0) and (menu==20){
+                    cooldown=8;
+                    obj_temp4.alarm[1]=2;
+                    trading_artifact=0;
+                    menu=0;
+                    diplomacy=0;
+                    diplo_option[1]="";
+                    diplo_option[2]="";
+                    diplo_option[3]="";
                 }
             }
-
-
-
-            if (diplo_pressed=3){
-                // show_message("special diplomacy option 3");
+            if (diplo_pressed==3){
                 click2=1;
-
-                if (questing=0) and (trading_artifact=0) and (trading_demand=0){
-                    if (diplomacy=4) and (string_count("You will not",diplo_option[3])>0){// MIIIIINE!!!1
-                        scr_dialogue("die_heretic");diplo_option[1]="";diplo_option[2]="";diplo_option[3]="";force_goodbye=1;
+                if (questing==0) and (trading_artifact==0) and (trading_demand==0){
+                    if (diplomacy==4) and (string_count("You will not",diplo_option[3])>0){// MIIIIINE!!!1
+                        scr_dialogue("die_heretic");
+                        diplo_option[1]="";
+                        diplo_option[2]="";
+                        diplo_option[3]="";
+                        force_goodbye=1;
                         exit;
                     }
                 }
-
-                if (questing!=0){cooldown=8;
-                    if (questing=1) and (diplomacy=6){// That +2 counteracts the WAITED TOO LONG penalty
+                if (questing!=0){
+                    cooldown=8;
+                    if (questing==1) and (diplomacy==6){// That +2 counteracts the WAITED TOO LONG penalty
                         scr_dialogue("mission1_refused");
-                        scr_quest(3,"300req",6,0);questing=0;
-                        diplo_option[1]="";diplo_option[2]="";diplo_option[3]="";exit;
+                        scr_quest(3,"300req",6,0);
+                        questing=0;
+                        diplo_option[1]="";
+                        diplo_option[2]="";
+                        diplo_option[3]="";
+                        exit;
                     }
                 }
-
                 if (trading_demand>0) and (diplo_option[3]!="Cancel") and (diplo_option[3]!="") then scr_demand(3);
-                if (trading_demand>0) and (diplo_option[3]="Cancel"){cooldown=8;trading_demand=0;diplo_option[1]="";diplo_option[2]="";diplo_option[3]="";diplo_text="...";diplo_txt="...";}
+                if (trading_demand>0) and (diplo_option[3]=="Cancel"){
+                    cooldown=8;
+                    trading_demand=0;
+                    diplo_option[1]="";
+                    diplo_option[2]="";
+                    diplo_option[3]="";
+                    diplo_text="...";
+                    diplo_txt="...";
+                }
             }
         }
         if (force_goodbye!=0) and (cooldown<=0){// Want to check to see if the deal went fine here
-            if (trading_artifact!=0){click2=1;
-                obj_controller.diplo_option[1]="";obj_controller.diplo_option[2]="";obj_controller.diplo_option[3]="";
-                diplomacy=0;menu=0;force_goodbye=0;
+            if (trading_artifact!=0){
+                click2=1;
+                obj_controller.diplo_option[1]="";
+                obj_controller.diplo_option[2]="";
+                obj_controller.diplo_option[3]="";
+                diplomacy=0;
+                menu=0;
+                force_goodbye=0;
                 with(obj_popup){instance_destroy();}
                 if (trading_artifact!=2) then obj_temp4.alarm[1]=1;
-                if (trading_artifact=2) then obj_temp4.alarm[2]=1;
+                if (trading_artifact==2) then obj_temp4.alarm[2]=1;
                 exit;
             }
         }
     }
-
-
-
-
-
-
-
     //
-    if (trading=1) or (trading=2){
-        if (scr_hit(xx+818,yy+796,xx+897,yy+815)=true){// Exit
-            cooldown=8;trading=0;scr_dialogue("trade_close");click2=1;
-            trade_take[0]="";trade_take[1]="";trade_take[2]="";trade_take[3]="";trade_take[4]="";trade_take[5]="";trade_tnum[0]=0;trade_tnum[1]=0;trade_tnum[2]=0;trade_tnum[3]=0;trade_tnum[4]=0;trade_tnum[5]=0;
-            trade_give[0]="";trade_give[1]="";trade_give[2]="";trade_give[3]="";trade_give[4]="";trade_give[5]="";trade_mnum[0]=0;trade_mnum[1]=0;trade_mnum[2]=0;trade_mnum[3]=0;trade_mnum[4]=0;trade_mnum[5]=0;
-            if (trading_artifact!=0){diplomacy=0;menu=0;force_goodbye=0;with(obj_popup){instance_destroy();}obj_temp4.alarm[1]=1;exit;}// Also need to disable the popup OFFER TERMS option
-        }
-        if (scr_hit(xx+510,yy+649,xx+615,yy+668)=true){// Clear Terms
-            cooldown=8;click2=1;trade_likely="";
-            trade_req=requisition;trade_gene=gene_seed;trade_chip=stc_wargear_un+stc_vehicles_un+stc_ships_un;trade_info=info_chips;
-
-            if (trading_artifact=0){
-                trade_take[0]="";trade_take[1]="";trade_take[2]="";trade_take[3]="";trade_take[4]="";trade_take[5]="";trade_tnum[0]=0;trade_tnum[1]=0;trade_tnum[2]=0;trade_tnum[3]=0;trade_tnum[4]=0;trade_tnum[5]=0;
+    if (trading==1) or (trading==2){
+        // Exit
+        if (scr_hit(xx+818,yy+796,xx+897,yy+815)==true){
+            cooldown=8;
+            trading=0;
+            scr_dialogue("trade_close");
+            click2=1;
+            trade_take[0]="";
+            trade_take[1]="";
+            trade_take[2]="";
+            trade_take[3]="";
+            trade_take[4]="";
+            trade_take[5]="";
+            trade_tnum[0]=0;
+            trade_tnum[1]=0;
+            trade_tnum[2]=0;
+            trade_tnum[3]=0;
+            trade_tnum[4]=0;
+            trade_tnum[5]=0;
+            trade_give[0]="";
+            trade_give[1]="";
+            trade_give[2]="";
+            trade_give[3]="";
+            trade_give[4]="";
+            trade_give[5]="";
+            trade_mnum[0]=0;
+            trade_mnum[1]=0;
+            trade_mnum[2]=0;
+            trade_mnum[3]=0;
+            trade_mnum[4]=0;
+            trade_mnum[5]=0;
+            if (trading_artifact!=0){
+                diplomacy=0;
+                menu=0;
+                force_goodbye=0;
+                with(obj_popup){instance_destroy();}
+                obj_temp4.alarm[1]=1;
+                exit;
             }
-            trade_give[0]="";trade_give[1]="";trade_give[2]="";trade_give[3]="";trade_give[4]="";trade_give[5]="";trade_mnum[0]=0;trade_mnum[1]=0;trade_mnum[2]=0;trade_mnum[3]=0;trade_mnum[4]=0;trade_mnum[5]=0;
+            // Also need to disable the popup OFFER TERMS option
         }
-        if (scr_hit(xx+630,yy+649,xx+735,yy+668)=true){// Trade Here?
-            cooldown=8;click2=1;if (diplo_last!="offer") then scr_trade(true);
+        // Clear Terms
+        if (scr_hit(xx+510,yy+649,xx+615,yy+668)==true){
+            cooldown=8;
+            click2=1;
+            trade_likely="";
+            trade_req=requisition;
+            trade_gene=gene_seed;
+            trade_chip=stc_wargear_un+stc_vehicles_un+stc_ships_un;
+            trade_info=info_chips;
+
+            if (trading_artifact==0){
+                trade_take[0]="";
+                trade_take[1]="";
+                trade_take[2]="";
+                trade_take[3]="";
+                trade_take[4]="";
+                trade_take[5]="";
+                trade_tnum[0]=0;
+                trade_tnum[1]=0;
+                trade_tnum[2]=0;
+                trade_tnum[3]=0;
+                trade_tnum[4]=0;
+                trade_tnum[5]=0;
+            }
+            trade_give[0]="";
+            trade_give[1]="";
+            trade_give[2]="";
+            trade_give[3]="";
+            trade_give[4]="";
+            trade_give[5]="";
+            trade_mnum[0]=0;
+            trade_mnum[1]=0;
+            trade_mnum[2]=0;
+            trade_mnum[3]=0;
+            trade_mnum[4]=0;
+            trade_mnum[5]=0;
         }
-
-
+        // Trade Here?
+        if (scr_hit(xx+630,yy+649,xx+735,yy+668)==true){
+            cooldown=8;
+            click2=1;
+            if (diplo_last!="offer") then scr_trade(true);
+        }
 
         var minz=0;
-        if (trade_give[4]="") then minz=4;if (trade_give[3]="") then minz=3;if (trade_give[2]="") then minz=2;if (trade_give[1]="") then minz=1;
+        if (trade_give[4]=="") then minz=4;
+        if (trade_give[3]=="") then minz=3;
+        if (trade_give[2]=="") then minz=2;
+        if (trade_give[1]=="") then minz=1;
 
         // Opponent things to offer
-        if (trading_artifact=0){
-            if (scr_hit(xx+342,yy+371,xx+485,yy+422)=true) and (cooldown<=0) and (disposition[diplomacy]>=trade_disp[1]){
-                cooldown=8;click2=1;scr_trade_add(string(trade_theirs[1]));
+        if (trading_artifact==0){
+            if (scr_hit(xx+342,yy+371,xx+485,yy+422)==true) and (cooldown<=0) and (disposition[diplomacy]>=trade_disp[1]){
+                cooldown=8;
+                click2=1;
+                scr_trade_add(string(trade_theirs[1]));
             }
-            if (scr_hit(xx+342,yy+422,xx+485,yy+470)=true) and (cooldown<=0) and (disposition[diplomacy]>=trade_disp[2]){
-                cooldown=8;click2=1;scr_trade_add(string(trade_theirs[2]));
+            if (scr_hit(xx+342,yy+422,xx+485,yy+470)==true) and (cooldown<=0) and (disposition[diplomacy]>=trade_disp[2]){
+                cooldown=8;
+                click2=1;
+                scr_trade_add(string(trade_theirs[2]));
             }
-            if (scr_hit(xx+342,yy+470,xx+485,yy+517)=true) and (cooldown<=0) and (disposition[diplomacy]>=trade_disp[3]){
-                cooldown=8;click2=1;scr_trade_add(string(trade_theirs[3]));
+            if (scr_hit(xx+342,yy+470,xx+485,yy+517)==true) and (cooldown<=0) and (disposition[diplomacy]>=trade_disp[3]){
+                cooldown=8;
+                click2=1;
+                scr_trade_add(string(trade_theirs[3]));
             }
-            if (scr_hit(xx+342,yy+517,xx+485,yy+564)=true) and (cooldown<=0) and (disposition[diplomacy]>=trade_disp[4]){
-                cooldown=8;click2=1;scr_trade_add(string(trade_theirs[4]));
+            if (scr_hit(xx+342,yy+517,xx+485,yy+564)==true) and (cooldown<=0) and (disposition[diplomacy]>=trade_disp[4]){
+                cooldown=8;
+                click2=1;
+                scr_trade_add(string(trade_theirs[4]));
             }
-            if (scr_hit(xx+342,yy+564,xx+485,yy+611)=true) and (cooldown<=0) and (disposition[diplomacy]>=trade_disp[5]){
-                cooldown=8;click2=1;scr_trade_add(string(trade_theirs[5]));
+            if (scr_hit(xx+342,yy+564,xx+485,yy+611)==true) and (cooldown<=0) and (disposition[diplomacy]>=trade_disp[5]){
+                cooldown=8;
+                click2=1;
+                scr_trade_add(string(trade_theirs[5]));
             }
         }
-
         xx+=419;
         // Player Things to Offer
-        if (scr_hit(xx+342,yy+371,xx+485,yy+422)=true) and (minz!=0) and (cooldown<=0) and (trade_req>0){// Requisition
-            cooldown=8000;click2=1;
+        // Requisition
+        if (scr_hit(xx+342,yy+371,xx+485,yy+422)==true) and (minz!=0) and (cooldown<=0) and (trade_req>0){
+            cooldown=8000;
+            click2=1;
             get_integer2("Requisition offered?",trade_req,"m"+string(minz),"Requisition");
             scr_trade(false);
         }
-        if (scr_hit(xx+342,yy+422,xx+485,yy+470)=true) and (minz!=0) and (cooldown<=0) and (trade_gene>0){// Gene-seed
-            cooldown=8000;click2=1;
+        // Gene-seed
+        if (scr_hit(xx+342,yy+422,xx+485,yy+470)==true) and (minz!=0) and (cooldown<=0) and (trade_gene>0){
+            cooldown=8000;
+            click2=1;
             get_integer2("Gene-Seed offered?",trade_gene,"m"+string(minz),"Gene-Seed");
             scr_trade(false);
         }
-        if (scr_hit(xx+342,yy+470,xx+485,yy+517)=true) and (minz!=0) and (cooldown<=0) and (trade_chip>0){// STC Fragment
-            cooldown=8000;click2=1;
+        // STC Fragment
+        if (scr_hit(xx+342,yy+470,xx+485,yy+517)==true) and (minz!=0) and (cooldown<=0) and (trade_chip>0){
+            cooldown=8000;
+            click2=1;
             get_integer2("STC Fragments offered?",trade_chip,"m"+string(minz),"STC Fragment");
             scr_trade(false);
         }
-        if (scr_hit(xx+342,yy+517,xx+485,yy+564)=true) and (minz!=0) and (cooldown<=0) and (trade_info>0){// Info Chips
-            cooldown=8000;click2=1;
+        // Info Chips
+        if (scr_hit(xx+342,yy+517,xx+485,yy+564)==true) and (minz!=0) and (cooldown<=0) and (trade_info>0){
+            cooldown=8000;
+            click2=1;
             get_integer2("Info Chips offered?",trade_info,"m"+string(minz),"Info Chip");
             scr_trade(false);
         }
         xx-=419;
-
-
-
-
         // Remove items buttons
-        if (trading_artifact=0){
-            if (scr_hit(xx+507,yy+399,xx+527,yy+418)=true) and (trade_tnum[2]=0) and (trade_tnum[1]!=0) and (cooldown<=0){
-                trade_tnum[1]=0;trade_take[1]="";cooldown=8000;click2=1;scr_trade(false);
+        if (trading_artifact==0){
+            if (scr_hit(xx+507,yy+399,xx+527,yy+418)==true) and (trade_tnum[2]==0) and (trade_tnum[1]!=0) and (cooldown<=0){
+                trade_tnum[1]=0;
+                trade_take[1]="";
+                cooldown=8000;
+                click2=1;
+                scr_trade(false);
             }
-            if (scr_hit(xx+507,yy+419,xx+527,yy+438)=true) and (trade_tnum[3]=0) and (trade_tnum[2]!=0) and (cooldown<=0){
-                trade_tnum[2]=0;trade_take[2]="";cooldown=8000;click2=1;scr_trade(false);
+            if (scr_hit(xx+507,yy+419,xx+527,yy+438)==true) and (trade_tnum[3]==0) and (trade_tnum[2]!=0) and (cooldown<=0){
+                trade_tnum[2]=0;
+                trade_take[2]="";
+                cooldown=8000;
+                click2=1;
+                scr_trade(false);
             }
-            if (scr_hit(xx+507,yy+439,xx+527,yy+458)=true) and (trade_tnum[4]=0) and (trade_tnum[3]!=0) and (cooldown<=0){
-                trade_tnum[3]=0;trade_take[3]="";cooldown=8000;click2=1;scr_trade(false);
+            if (scr_hit(xx+507,yy+439,xx+527,yy+458)==true) and (trade_tnum[4]==0) and (trade_tnum[3]!=0) and (cooldown<=0){
+                trade_tnum[3]=0;
+                trade_take[3]="";
+                cooldown=8000;
+                click2=1;
+                scr_trade(false);
             }
-            if (scr_hit(xx+507,yy+459,xx+527,yy+478)=true) and (trade_tnum[4]!=0) and (cooldown<=0){
-                trade_tnum[4]=0;trade_take[4]="";cooldown=8000;click2=1;scr_trade(false);
+            if (scr_hit(xx+507,yy+459,xx+527,yy+478)==true) and (trade_tnum[4]!=0) and (cooldown<=0){
+                trade_tnum[4]=0;
+                trade_take[4]="";
+                cooldown=8000;
+                click2=1;
+                scr_trade(false);
             }
         }
-
-        if (scr_hit(xx+507,yy+547,xx+527,yy+566)=true) and (trade_mnum[2]=0) and (trade_mnum[1]!=0) and (cooldown<=0){
-            if (trade_give[1]="Requisition") then trade_req+=trade_mnum[1];if (trade_give[1]="Gene-Seed") then trade_gene+=trade_mnum[1];
-            if (trade_give[1]="STC Fragment") then trade_chip+=trade_mnum[1];if (trade_give[1]="Info Chip") then trade_info+=trade_mnum[1];
-            trade_mnum[1]=0;trade_give[1]="";cooldown=8000;click2=1;scr_trade(false);
+        if (scr_hit(xx+507,yy+547,xx+527,yy+566)==true) and (trade_mnum[2]==0) and (trade_mnum[1]!=0) and (cooldown<=0){
+            if (trade_give[1]=="Requisition") then trade_req+=trade_mnum[1];
+            if (trade_give[1]=="Gene-Seed") then trade_gene+=trade_mnum[1];
+            if (trade_give[1]=="STC Fragment") then trade_chip+=trade_mnum[1];
+            if (trade_give[1]=="Info Chip") then trade_info+=trade_mnum[1];
+            trade_mnum[1]=0;
+            trade_give[1]="";
+            cooldown=8000;
+            click2=1;
+            scr_trade(false);
         }
-        if (scr_hit(xx+507,yy+567,xx+527,yy+586)=true) and (trade_mnum[3]=0) and (trade_mnum[2]!=0) and (cooldown<=0){
-            if (trade_give[2]="Requisition") then trade_req+=trade_mnum[2];if (trade_give[2]="Gene-Seed") then trade_gene+=trade_mnum[2];
-            if (trade_give[2]="STC Fragment") then trade_chip+=trade_mnum[2];if (trade_give[2]="Info Chip") then trade_info+=trade_mnum[2];
-            trade_mnum[2]=0;trade_give[2]="";cooldown=8000;click2=1;scr_trade(false);
+        if (scr_hit(xx+507,yy+567,xx+527,yy+586)==true) and (trade_mnum[3]==0) and (trade_mnum[2]!=0) and (cooldown<=0){
+            if (trade_give[2]=="Requisition") then trade_req+=trade_mnum[2];
+            if (trade_give[2]=="Gene-Seed") then trade_gene+=trade_mnum[2];
+            if (trade_give[2]=="STC Fragment") then trade_chip+=trade_mnum[2];
+            if (trade_give[2]=="Info Chip") then trade_info+=trade_mnum[2];
+            trade_mnum[2]=0;
+            trade_give[2]="";
+            cooldown=8000;
+            click2=1;
+            scr_trade(false);
         }
-        if (scr_hit(xx+507,yy+587,xx+527,yy+606)=true) and (trade_mnum[4]=0) and (trade_mnum[3]!=0) and (cooldown<=0){
-            if (trade_give[3]="Requisition") then trade_req+=trade_mnum[3];if (trade_give[3]="Gene-Seed") then trade_gene+=trade_mnum[3];
-            if (trade_give[3]="STC Fragment") then trade_chip+=trade_mnum[3];if (trade_give[3]="Info Chip") then trade_info+=trade_mnum[3];
-            trade_mnum[3]=0;trade_give[3]="";cooldown=8000;click2=1;scr_trade(false);
+        if (scr_hit(xx+507,yy+587,xx+527,yy+606)==true) and (trade_mnum[4]==0) and (trade_mnum[3]!=0) and (cooldown<=0){
+            if (trade_give[3]=="Requisition") then trade_req+=trade_mnum[3];
+            if (trade_give[3]=="Gene-Seed") then trade_gene+=trade_mnum[3];
+            if (trade_give[3]=="STC Fragment") then trade_chip+=trade_mnum[3];
+            if (trade_give[3]=="Info Chip") then trade_info+=trade_mnum[3];
+            trade_mnum[3]=0;
+            trade_give[3]="";
+            cooldown=8000;
+            click2=1;
+            scr_trade(false);
         }
-        if (scr_hit(xx+507,yy+607,xx+527,yy+626)=true) and (trade_mnum[4]!=0) and (cooldown<=0){
-            if (trade_give[4]="Requisition") then trade_req+=trade_mnum[4];if (trade_give[4]="Gene-Seed") then trade_gene+=trade_mnum[4];
-            if (trade_give[4]="STC Fragment") then trade_chip+=trade_mnum[4];if (trade_give[4]="Info Chip") then trade_info+=trade_mnum[4];
-            trade_mnum[4]=0;trade_give[4]="";cooldown=8000;click2=1;scr_trade(false);
+        if (scr_hit(xx+507,yy+607,xx+527,yy+626)==true) and (trade_mnum[4]!=0) and (cooldown<=0){
+            if (trade_give[4]=="Requisition") then trade_req+=trade_mnum[4];
+            if (trade_give[4]=="Gene-Seed") then trade_gene+=trade_mnum[4];
+            if (trade_give[4]=="STC Fragment") then trade_chip+=trade_mnum[4];
+            if (trade_give[4]=="Info Chip") then trade_info+=trade_mnum[4];
+            trade_mnum[4]=0;
+            trade_give[4]="";
+            cooldown=8000;
+            click2=1;
+            scr_trade(false);
         }
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
+// TODO continue refactor
 if (zoomed=0) and (cooldown<=0) and (menu=20) and (diplomacy=0){
     xx+=55;yy-=20;
 	
