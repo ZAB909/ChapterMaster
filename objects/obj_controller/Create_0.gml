@@ -493,7 +493,7 @@ repeat(501){i+=1;
     ma_race[i]=0;ma_loc[i]="";ma_name[i]="";ma_role[i]="";ma_wep1[i]="";ma_mobi[i]="";
     ma_wep2[i]="";ma_armour[i]="";ma_gear[i]="";ma_health[i]=100;ma_chaos[i]=0;ma_exp[i]=0;ma_god[i]=0;
     sh_ide[i]=0;sh_uid[i]=0;sh_name[i]="";sh_class[i]="";sh_loc[i]="";sh_hp[i]="";sh_cargo[i]=0;sh_cargo_max[i]="";
-    squad[i]=0;
+    squad[i]=0;display_unit[i]=0;
     
     if (i<=50){penit_co[i]=0;penit_id[i]=0;}
     if (i<=100){event[i]="";event_duration[i]=0;}
