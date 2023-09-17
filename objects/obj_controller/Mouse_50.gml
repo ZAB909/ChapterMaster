@@ -5,41 +5,42 @@ yy=__view_get( e__VW.YView, 0 );
 
 if (trading>0) and (force_goodbye!=0) then trading=0;
 
+// ** Gene seed countdown and production **
+if (menu==11) and (cooldown<=0){
+    if (gene_seed>0) and (obj_ini.zygote==0) and (mouse_x>=xx+407) and (mouse_y>=yy+788) and (mouse_x<xx+529) and (mouse_y<yy+811){
+        var i=0,g=0;
+        for(i=1; i<=120; i++){
+            if (g==0){
+                if (obj_ini.slave_batch_eta[i]==120) then g=i;
+            }
+        }
+        if (g=0){
+            for(i=1; i<=120; i++){
+                if (g=0){if (obj_ini.slave_batch_num[i]=0) then g=i;}
+            }
+        }
 
-
-
-
-if (menu=11) and (cooldown<=0){
-    if (gene_seed>0) and (obj_ini.zygote=0) and (mouse_x>=xx+407) and (mouse_y>=yy+788) and (mouse_x<xx+529) and (mouse_y<yy+811){
-        var i,g;i=0;g=0;repeat(120){i+=1;if (g=0){if (obj_ini.slave_batch_eta[i]=120) then g=i;}}
-        if (g=0){i=0;repeat(120){i+=1;if (g=0){if (obj_ini.slave_batch_num[i]=0) then g=i;}}}
-
-        var carpal;carpal=1;
+        var carpal=1;
         if (obj_ini.slave_batch_num[g]>=10) and (obj_ini.slave_batch_num[g]<50) then carpal=2;
         if (obj_ini.slave_batch_num[g]>=50) then carpal=5;if (obj_ini.slave_batch_num[g]>=150) then carpal=10;
         if (obj_controller.gene_seed<carpal) then carpal=obj_controller.gene_seed;
 
-        obj_controller.gene_seed-=carpal;obj_ini.slave_batch_num[g]+=carpal;obj_ini.slave_batch_eta[g]=120;
-
-
-        // cooldown=8000;
+        obj_controller.gene_seed-=carpal;
+        obj_ini.slave_batch_num[g]+=carpal;
+        obj_ini.slave_batch_eta[g]=120;
         cooldown=10;
     }
     if (obj_ini.slave_batch_num[1]>0) and (mouse_x>=xx+659) and (mouse_y>=yy+788) and (mouse_x<xx+838) and (mouse_y<yy+811){
-        var i;i=0;repeat(120){i+=1;gene_seed+=obj_ini.slave_batch_num[i];obj_ini.slave_batch_num[i]=0;obj_ini.slave_batch_eta[i]=0;}
+        for(var i=1; i<=120; i++){
+            gene_seed+=obj_ini.slave_batch_num[i];
+            obj_ini.slave_batch_num[i]=0;
+            obj_ini.slave_batch_eta[i]=0;
+        }
         cooldown=8000;
     }
 }
-
-
-
-
-
-
-
-
-
-
+// TODO continue refactor
+// ** 
 if (menu=12) and (cooldown<=0) and (penitorium>0){
     var qp,behav,r_eta,re;qp=0;behav=0;r_eta=0;re=0;
     repeat(min(36,penitorium)){qp+=1;
