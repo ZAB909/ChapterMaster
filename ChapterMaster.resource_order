@@ -70,6 +70,7 @@
     {"name":"spr_weapon_eldsword","order":51,"path":"sprites/spr_weapon_eldsword/spr_weapon_eldsword.yy",},
     {"name":"spr_weapon_powfist","order":53,"path":"sprites/spr_weapon_powfist/spr_weapon_powfist.yy",},
     {"name":"spr_weapon_powfist2","order":55,"path":"sprites/spr_weapon_powfist2/spr_weapon_powfist2.yy",},
+    {"name":"gauss","order":66,"path":"scripts/gauss/gauss.yy",},
     {"name":"spr_weapon_powfist3","order":57,"path":"sprites/spr_weapon_powfist3/spr_weapon_powfist3.yy",},
     {"name":"spr_weapon_powfist_old","order":59,"path":"sprites/spr_weapon_powfist_old/spr_weapon_powfist_old.yy",},
     {"name":"spr_weapon_lightning1","order":61,"path":"sprites/spr_weapon_lightning1/spr_weapon_lightning1.yy",},

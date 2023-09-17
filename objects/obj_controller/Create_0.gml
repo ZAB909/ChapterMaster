@@ -582,7 +582,6 @@ if (instance_exists(obj_ini)){
     
     if (string_count(obj_ini.spe[0,1],"$")>0) then born_leader=1;
 }
-
 // ** Resets marines and other vars **
 for(var i=0; i<501; i++){
     man[i]="";
@@ -614,6 +613,7 @@ for(var i=0; i<501; i++){
     sh_cargo_max[i]="";
     squad[i]=0;
     display_unit[i]=0;
+
     
     if (i<=50){
         penit_co[i]=0;
