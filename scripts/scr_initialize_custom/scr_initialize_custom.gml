@@ -179,6 +179,9 @@ function scr_initialize_custom() {
 	// if not custom
 
 
+		// if not custom
+
+
 	if (obj_creation.fleet_type!=1){
 	    battle_barges=1;
 	    strike_cruisers=6;
@@ -215,7 +218,13 @@ function scr_initialize_custom() {
 				   battle_barges+=1;
 			   }
 	    
-		
+		if (global.chapter_name="Crimson Fists")   
+	           {
+				   flagship_name="Throne's Fury";
+				   battle_barges-=1;
+				   gladius-=3;
+				   strike_cruisers-=4
+			   }
 		
 	        if (global.chapter_name="Dark Angels") then battle_barges+=1;
 	    }
@@ -232,7 +241,6 @@ function scr_initialize_custom() {
 	    }
 	    if (global.chapter_name!="Lamenters") and (global.chapter_name!="Doom Benefactors") and (global.chapter_name!="Blood Ravens") then battle_barges+=2;
 	}
-
 
 	var i, v;i=-1;v=0;
 	/*repeat(110){i+=1;
@@ -422,7 +430,7 @@ function scr_initialize_custom() {
 
 
 
-	if (global.chapter_name="Salamanders"){veteran+=20;second+=20;third+=20;fourth+=20;fifth+=20;sixth+=20;seventh=0;eighth=0;ninth=0;tenth-=40;}
+		if (global.chapter_name="Salamanders"){veteran+=20;second+=20;third+=20;fourth+=20;fifth+=20;sixth+=20;seventh=0;eighth=0;ninth=0;tenth-=40;}
 	// if (global.chapter_name="Salamanders"){veteran+=12;second+=2;third+=2;fourth+=2;fifth+=4;sixth+=4;seventh+=4;eighth=0;ninth=0;}
 	if (global.chapter_name="Blood Angels"){chaap=3;apothecary=10;epistolary=6;codiciery=6;lexicanum=8;}
 	if (global.chapter_name="Dark Angels"){veteran=0;terminator+=80;}
@@ -434,7 +442,9 @@ function scr_initialize_custom() {
 		tenth-=38;seventh=0;sixth=40; assault-=10;
 		fifth-=20;fourth-=20;third-=20;second-=20;terminator-=5;veteran-=20;
 	}
-
+	if (global.chapter_name="Crimson Fists"){
+	    veteran+=30;
+	}
 	if (global.chapter_name="Space Wolves"){
 	    veteran+=40;second+=40;third+=40;fourth+=40;fifth+=40;sixth+=40;seventh+=40;eighth+=40;ninth+=40;tenth+=60;
 	}

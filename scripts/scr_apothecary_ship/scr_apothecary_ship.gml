@@ -2,7 +2,7 @@ function scr_apothecary_ship() {
 
 	// Executed by each obj_p_fleet to heal or repair units on ships at the end of the turn
 
-	var ship_apoth, oldhp, newhp, heals, i, v, co, heal, ship_tech, repairs, repair, maybe2;
+	var ship_apoth, oldhp, newhp, heals, i, v, co, heal, ship_tech, repairs, repair, maybe2,unit;
 	oldhp=0;newhp=0;heals=0;i=-1;v=0;co=0;repairs=0;
 
 	heal=50;if (obj_ini.ossmodula=1) then heal=25;
@@ -68,7 +68,7 @@ function scr_apothecary_ship() {
 	// show_message("[1] "+string(obj_ini.ship[1])+": "+string(ship_apoth[1])+" apothecaries");
 
 
-	var normal_hp,mixhp,ratio,unit, unit_location;
+	var normal_hp,mixhp,ratio;
 	normal_hp=true;mixhp=0;ratio=0;
 
 	i=-1;co=-1;
@@ -102,7 +102,7 @@ function scr_apothecary_ship() {
 	    while (ship_apoth>0) and (d < 300){
 	        d+=1;normal_hp=true;
 	        maybe=0;
-			var unit = obj_ini.TTRPG[co,d]
+			unit = obj_ini.TTRPG[co,d]
 			var location =  unit.marine_location()
 	        if (unit.name()!="") and (unit.hp()>0) and (location[0]==location_types.ship) then maybe=1;
         
