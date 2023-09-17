@@ -52,10 +52,12 @@ function scr_start_load(fleet, load_from_star, load_options) {
 		//loop through companies. try and load whole company onto single ship else spread company across largest ships with remaining space
 	for (_comp = 0; _comp<10;_comp++;){
 		vet_check = 0;
+
 		var _company_size = 0;
 		var company_loader =[];//array of companies marines
 		var company_vehicle = [];//array of companies vehicles
 		var  ship_fit = true;
+
 		for (_unit =1; _unit<(array_length(obj_ini.role[_comp])-1); _unit++;){
 			_marine = obj_ini.TTRPG[_comp, _unit];
 					// check if marine exists

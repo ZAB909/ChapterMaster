@@ -1,5 +1,5 @@
 function scr_ui_manage() {
-	
+	var unit,i;
 	var romanNumerals=scr_roman_numerals();	
 	var normal_hp=true;
 	
@@ -113,8 +113,9 @@ function scr_ui_manage() {
 	            var cpec;
 				cspec=obj_ini.col_special;
             
-	            var terg=0,armour_sprite=spr_weapon_blank,show1,show2;
-	            var jump=0,dev=0,hood=0,skull=0,arm=0,halo=0,braz=0,slow=0,brothers=-5;
+	            var terg,armour_sprite,show1,show2;terg=0;armour_sprite=spr_weapon_blank;
+	            var jump,dev,hood,skull,arm,halo,braz,slow,brothers,body_part;jump=0;dev=0;hood=0;skull=0;arm=0;halo=0;braz=0;slow=0;brothers=-5;
+				var selected_unit =  temp[120];				//unit struct
             
 	            var show_wep1,show_wep2,show_arm,show_gear,show_mobi;
 	            /*show_wep1=string_pos("&",cn.temp[108]);
@@ -588,8 +589,36 @@ function scr_ui_manage() {
 	                    if (terg=2) then draw_sprite(spr_gear_chap,skull,xx+1206,yy+167);
 	                    if (terg=1) then draw_sprite(spr_gear_chap,skull,xx+1206,yy+167);
 	                    if (temp[102]!="Terminator"){
-	                    	if (terg=2) or (terg=1) then draw_sprite(spr_terminator_chap,1,xx+1206,yy+167);
-	                	}
+	                      if (terg=2) or (terg=1) then draw_sprite(spr_terminator_chap,1,xx+1206,yy+167);
+	                 }
+	                }
+					
+					// bionics
+					
+					if (!array_contains(["Dreadnought", "Terminator Armour", "Tartaros"], selected_unit.armour())){
+						for (body_part = 0; body_part<array_length(global.body_parts);body_part++){
+							if (struct_exists(selected_unit.body[$ global.body_parts[body_part]], "bionic")){
+
+								if (global.body_parts[body_part] == "left_eye") {
+									if (selected_unit.armour() == "MK3 Iron Armour"){
+										draw_sprite(spr_bionics_eye,0,xx+1203,yy+178)
+									} else{
+										draw_sprite(spr_bionics_eye,0,xx+1203,yy+174)
+									}
+								};
+								if (global.body_parts[body_part] == "right_eye") {
+									if (selected_unit.armour() == "MK3 Iron Armour"){
+										draw_sprite(spr_bionics_eye,1,xx+1204,yy+178);
+									} else{
+										draw_sprite(spr_bionics_eye,1,xx+1204,yy+174);
+									}
+								};
+								if (global.body_parts[body_part] == "left_leg") {draw_sprite(spr_bionics_leg,1,xx+1208,yy+178)};
+								if (global.body_parts[body_part] == "right_leg") {draw_sprite(spr_bionics_leg,0,xx+1208,yy+178)};
+								if (global.body_parts[body_part] == "left_arm") {draw_sprite(spr_bionics_arm,0,xx+1208,yy+178)};
+								if (global.body_parts[body_part] == "right_arm") {draw_sprite(spr_bionics_arm,1,xx+1208,yy+178)};
+							}
+						}
 					}
                 
 	                // Honor Guard Helm
@@ -743,25 +772,28 @@ function scr_ui_manage() {
 	        
 	    yy+=77;
 		
+
 		var repetitions=min(man_max,man_see)
 	    for(var i=0; i<repetitions;i++){
-			
+
 			for(var j=0; j<500; j++){
 				if (man[sel]="hide") then sel+=1;
 			}
-			
+
 			eventing=false;
         
-	        if (man[sel]=="man"){
-	            temp1=string(ma_role[sel])+" "+string(ma_name[sel]);
+	        if (man[sel]="man"){
+				unit = display_unit[sel];
+				var unit_location = unit.marine_location();
+	            temp1=$"{unit.role()} {unit.name()}";
 	            // temp1=string(managing)+"."+string(ide[sel]);
             
 	            temp2=string(ma_loc[sel]);
-	            if (ma_wid[sel]!=0){
-	                if (ma_wid[sel]==1) then temp2+=" I";
-	                if (ma_wid[sel]==2) then temp2+=" II";
-	                if (ma_wid[sel]==3) then temp2+=" III";
-	                if (ma_wid[sel]==4) then temp2+=" IV";
+	            if (unit_location==location_types.planet){
+	                if (unit_location[1]=1) then temp2+=" I";
+	                if (unit_location[1]=2) then temp2+=" II";
+	                if (unit_location[1]=3) then temp2+=" III";
+	                if (unit_location[1]=4) then temp2+=" IV";
 	            }
 	            if (fest_planet==0) and (fest_sid>0) and (fest_repeats>0) and (ma_lid[sel]==fest_sid){
 					temp2="=Event=";
@@ -772,39 +804,8 @@ function scr_ui_manage() {
 					eventing=true;
 				}
 	            if (ma_god[sel]>=10) then temp2="=Penitorium=";
-				
-				// Define non marine HP
-				for (var k=0; k< array_length(non_marine_roles);k++){
-					if (ma_role[sel] == non_marine_roles[k]) then normal_hp=false;
-					break;
-				}
-				// Marine hp
-	            if (normal_hp) { 
-					temp3=string(ma_health[sel])+"% HP";
-				} else{
-	                var mixhp=0,ratio=0;
-					
-	                var roleToMixhp = ds_map_create();
-
-					roleToMixhp[? "Skitarii"] = 40;
-					roleToMixhp[? "Techpriest"] = 50;
-					roleToMixhp[? "Ranger"] = 40;
-					roleToMixhp[? "Crusader"] = 30;
-					roleToMixhp[? "Ork Sniper"] = 45;
-					roleToMixhp[? "Flash Git"] = 65;
-					roleToMixhp[? "Sister of Battle"] = 40;
-					roleToMixhp[? "Sister Hospitaler"] = 40;
-					
-					mixhp = roleToMixhp[ma_role[sel]];
-					
-	                if (mixhp>0) then ratio=(ma_health[sel]/mixhp)*100;
-	                // if (mixhp=0) then ratio=100;
-	                /*if (ratio>=100) then temp3="Unwounded";
-	                if (ratio>=70) and (ratio<100) then temp3="Lightly Wounded";
-	                if (ratio>=40) and (ratio<70) then temp3="Wounded";if (ratio>=8) and (ratio<40) then temp3="Badly Wounded";*/
-	                // if (ratio<8) then temp3="CRITICAL";
-	                temp3=string(ratio)+"% HP";
-	            }
+                   
+	            temp3=string((unit.hp()/unit.max_health())*100)+"% HP";
             
 	            temp4=string(ma_exp[sel])+" exp";
             
@@ -1051,6 +1052,7 @@ function scr_ui_manage() {
 	            if (ar_ar==1) then draw_set_color(c_gray);
 	            if (ar_ar==2) then draw_set_color(881503);
 	            draw_text(xx+573,yy+66,string_hash_to_newline(string(ma_ar)));
+				
 
 	            xoffset+=string_width(string_hash_to_newline(ma_ar))+15;
 	            draw_set_color(c_gray);
@@ -1480,17 +1482,18 @@ function scr_ui_manage() {
 	    draw_set_halign(fa_left);
 		draw_set_color(c_gray);
     
+    
 	    scr_scrollbar(974,172,1005,790,34,man_max,man_current);
 	}
 	
-	// Load to ships
-	if (menu==30) and (managing>0){
 
-	    var bb="", img=0;
-	    var xx=__view_get( e__VW.XView, 0 )+0;
-	    var yy=__view_get( e__VW.YView, 0 )+0;
+	if (menu=30) and (managing>0){// Load to ships
+	    var xx, yy, bb, img;
+	    bb="";img=0;
+	    xx=__view_get( e__VW.XView, 0 )+0;
+	    yy=__view_get( e__VW.YView, 0 )+0;
 
-	    // Draw BG
+	    // BG
 	    draw_set_alpha(1);
 	    draw_sprite(spr_rock_bg,0,xx,yy);
 	    draw_set_font(fnt_40k_30b);
