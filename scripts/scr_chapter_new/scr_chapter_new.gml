@@ -262,7 +262,8 @@ function scr_chapter_new(argument0) {
 
 
 
-	if (argument0="Blood Ravens"){founding=10;points=100;
+	if (argument0="Blood Ravens"){
+		founding=10;points=100;
 	    selected_chapter=12;chapter=argument0;icon=12;icon_name="br";
 	    fleet_type=2;strength=5;purity=10;stability=6;cooperation=7;
 	    adv[1]="Scavengers";adv[2]="Psyker Abundance";dis[1]="Suspicious";
@@ -298,11 +299,11 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 		hapothecary="Curien Droga";hchaplain="Marqol Tomasi";clibrarian="Eustace Mendoza";fmaster="Javier Adon";admiral="Alessio Cortez"
                 recruiter="Ishmael Icario"
 		battle_cry="There is only the Emperor!  He is our shield and our protector!";
-	        equal_specialists=0;load_to_ships=2;successors=0;
+	        equal_specialists=0;load_to_ships=[2,1,1];successors=0;
 	        mutations=2;mutations_selected=2;
 	        preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=1;
 	        zygote=0;betchers=1;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
-	        // disposition[1]=0;// Prog
+	        disposition[1]=60;// Prog
 	        disposition[2]=80;disposition[3]=50;disposition[4]=50;disposition[5]=50;
 	        disposition[6]=60;// Astartes
 	        disposition[7]=0;// Reserved
