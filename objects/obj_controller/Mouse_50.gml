@@ -1814,7 +1814,7 @@ if (menu=1) and (managing>0){                       // Selecting individual mari
             if (man_sel[p]=1) and (man[p]="man") and (bionics_after>0) and (obj_ini.bio[cah,ide[p]]<10) and (obj_ini.loc[cah,ide[p]]!="Terra") and (obj_ini.loc[cah,ide[p]]!="Mechanicus Vessel"){
                 if (string_count("Dread",ma_armour[p])=0){
                     obj_ini.bio[cah,ide[p]]+=1;bionics_after-=1;
-                    obj_ini.hp[cah,ide[p]]=min(obj_ini.hp[cah,ide[p]]+30,obj_ini.TTRPG[cah, ide[p]].max_health);
+                    obj_ini.hp[cah,ide[p]]=min(obj_ini.hp[cah,ide[p]]+30,obj_ini.TTRPG[cah, ide[p]].max_health());
                     if (global.chapter_name="Iron Hands") then obj_ini.hp[cah,ide[p]]=min(obj_ini.hp[cah,ide[p]]+20,100);
                     ma_bio[p]=obj_ini.bio[cah,ide[p]];ma_health[p]=obj_ini.hp[cah,ide[p]];
                     if (ma_promote[p]=10) then ma_promote[p]=0;
