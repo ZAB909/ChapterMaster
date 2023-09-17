@@ -1,4 +1,4 @@
-var __b__, _unit;
+var __b__;
 __b__ = action_if_variable(cooldown, 0, 2);
 if !__b__
 {
