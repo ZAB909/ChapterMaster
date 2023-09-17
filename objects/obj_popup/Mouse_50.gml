@@ -1,4 +1,4 @@
-var __b__;
+var __b__, _unit;
 __b__ = action_if_variable(cooldown, 0, 2);
 if !__b__
 {
@@ -413,7 +413,11 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
         repeat(300){w+=1;
             if (obj_controller.man[w]="man") and (obj_controller.man_sel[w]=1){
                 var check;check=0;
+				var new_struct = jsonify_marine_struct(company,obj_controller.ide[w]);
                 // Pass variables here
+				obj_ini.TTRPG[target_comp,mahreens] = new TTRPG_stats("chapter",target_comp,mahreens);
+				obj_ini.TTRPG[target_comp,mahreens].load_json_data(json_parse(new_struct));
+				obj_ini.TTRPG[target_comp,mahreens]=obj_ini.race[company,obj_controller.ide[w]];
                 obj_ini.race[target_comp,mahreens]=obj_ini.race[company,obj_controller.ide[w]];
                 obj_ini.loc[target_comp,mahreens]=obj_ini.loc[company,obj_controller.ide[w]];
                 obj_ini.role[target_comp,mahreens]=obj_ini.role[company,obj_controller.ide[w]];
@@ -456,6 +460,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
                 obj_ini.lid[company,obj_controller.ide[w]]=0;
                 obj_ini.bio[company,obj_controller.ide[w]]=0;
                 obj_ini.spe[company,obj_controller.ide[w]]="";
+				obj_ini.TTRPG[company,obj_controller.ide[w]] = {};
                 mahreens+=1;
             }
             if (obj_controller.man[w]="vehicle") and (obj_controller.man_sel[w]=1){// This seems to execute the correct number of times

@@ -7,19 +7,6 @@ function scr_save(save_slot,save_id) {
 	num=instance_number(obj_star);
 	instance_array[tot]=0;
 	
-	function jsonify_marine_struct(company, marine){
-		var copy_marine_struct = obj_ini.TTRPG[company, marine]; //grab marine structure
-		var new_marine = {};
-		var names = variable_struct_get_names(copy_marine_struct); // get all keys within structure
-		for (var name = 0; name < array_length(names); name++) { //loop through keys to find which ones are methods as they can't be saved as a json string
-			if (!is_method(copy_marine_struct[$ names[name]])){
-				variable_struct_set(new_marine, names[name],copy_marine_struct[$ names[name]]); //if key value is not a method add to copy structure
-			}
-		}
-		return json_stringify(new_marine);
-	}	
-
-
 	// if (file_exists("save1.ini")) then file_delete("save1.ini");
 	// argument 0 = the part of the save to do
 	//save_id = the save ID
@@ -873,7 +860,7 @@ function scr_save(save_slot,save_id) {
 	                ini_write_string("Mar","spe"+string(coh)+"."+string(mah),obj_ini.spe[coh,mah]);
 	                ini_write_real("Mar","god"+string(coh)+"."+string(mah),obj_ini.god[coh,mah]);
 					if (!is_struct(obj_ini.TTRPG[coh,mah])){
-						TTRPG[coh,mah]= new TTRPG_stats("chapter", coh,mah);
+						TTRPG[coh,mah]= {};
 					}
 					ini_write_string("Mar","Struct"+string(coh)+"."+string(mah),base64_encode(jsonify_marine_struct(coh,mah)));					
 	            }
@@ -890,7 +877,7 @@ function scr_save(save_slot,save_id) {
 	            ini_write_string("Mar","ge"+string(coh)+"."+string(mah),obj_ini.gear[coh,mah]);
 	            ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);
 					if (!is_struct(obj_ini.TTRPG[coh,mah])){
-						TTRPG[coh,mah]= new TTRPG_stats("chapter", coh,mah);
+						TTRPG[coh,mah]= {};
 					}
 					ini_write_string("Mar","Struct"+string(coh)+"."+string(mah),base64_encode(jsonify_marine_struct(coh,mah)));					
 	        }
@@ -905,7 +892,7 @@ function scr_save(save_slot,save_id) {
 	            ini_write_string("Mar","ge"+string(coh)+"."+string(mah),obj_ini.gear[coh,mah]);
 	            ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);
 					if (!is_struct(obj_ini.TTRPG[coh,mah])){
-						TTRPG[coh,mah]= new TTRPG_stats("chapter", coh,mah);
+						TTRPG[coh,mah]= {};
 					}
 					ini_write_string("Mar","Struct"+string(coh)+"."+string(mah),base64_encode(jsonify_marine_struct(coh,mah)));					
 	        }
