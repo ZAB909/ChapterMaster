@@ -715,8 +715,7 @@ function scr_load(argument0, argument1) {
 	            obj_ini.wep2[coh,mah]=ini_read_string("Mar","w2"+string(coh)+"."+string(mah),"");
 	            obj_ini.armour[coh,mah]=ini_read_string("Mar","ar"+string(coh)+"."+string(mah),"");
 	            obj_ini.gear[coh,mah]=ini_read_string("Mar","ge"+string(coh)+"."+string(mah),"");
-	            obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");
-				load_marine_struct(coh,mah)			
+	            obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");	
 	        }
 	        good=0;coh=10;mah=600;
 	        repeat(6600){
@@ -793,7 +792,6 @@ function scr_load(argument0, argument1) {
 	            obj_ini.armour[coh,mah]=ini_read_string("Mar","ar"+string(coh)+"."+string(mah),"");
 	            obj_ini.gear[coh,mah]=ini_read_string("Mar","ge"+string(coh)+"."+string(mah),"");
 	            obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");
-				load_marine_struct(coh,mah);
 	        }
 	        coh=102;mah=-1;
 	        repeat(21){mah+=1;
@@ -803,8 +801,7 @@ function scr_load(argument0, argument1) {
 	            obj_ini.wep2[coh,mah]=ini_read_string("Mar","w2"+string(coh)+"."+string(mah),"");
 	            obj_ini.armour[coh,mah]=ini_read_string("Mar","ar"+string(coh)+"."+string(mah),"");
 	            obj_ini.gear[coh,mah]=ini_read_string("Mar","ge"+string(coh)+"."+string(mah),"");
-	            obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");
-				load_marine_struct(coh,mah);				
+	            obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");			
 	        }
 
 	    }
@@ -999,8 +996,10 @@ function scr_load(argument0, argument1) {
 	    obj_controller.restart_recruiter=ini_read_string("Res","recruiter","");
 	    obj_controller.restart_admiral=ini_read_string("Res","admir","");
 	    obj_controller.restart_equal_specialists=ini_read_real("Res","eqspec",0);
-	    obj_controller.restart_load_to_ships=ini_read_real("Res","load2",0);
-	    obj_controller.restart_successors=ini_read_real("Res","successors",0);
+		if (ini_read_string("Res","load2",0)!= 0){
+			 obj_controller.restart_load_to_ships = json_parse(base64_decode(ini_read_string("Res","load2",0)));
+		} else { obj_controller.restart_load_to_ships=[0,0,0]}
+	    obj_controller.restart_successors=ini_read_string("Res","successors",0);
 
 	    obj_controller.restart_mutations=ini_read_real("Res","muta",0);
 	    obj_controller.restart_preomnor=ini_read_real("Res","preo",0);

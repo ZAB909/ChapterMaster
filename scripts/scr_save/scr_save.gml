@@ -13,7 +13,6 @@ function scr_save(save_slot,save_id) {
 
 	if (save_slot=1) or (save_slot=0){debugl("Saving to slot "+string(save_id));
 	    ini_open("save"+string(save_id)+".ini");
-
 	    // Global variables
 	    ini_write_string("Save","chapter_name",global.chapter_name);
 	    ini_write_string("Save","sector_name",obj_ini.sector_name);
@@ -21,7 +20,6 @@ function scr_save(save_slot,save_id) {
 	    ini_write_real("Save","play_time",play_time);
 	    ini_write_real("Save","game_seed",global.game_seed);
 	    ini_write_real("Save","use_custom_icon",obj_ini.use_custom_icon);
-
 	    var t,month,day,year,hour,minute,pm;
 	    t=date_current_datetime();
 	    month=date_get_month(t);
@@ -49,7 +47,6 @@ function scr_save(save_slot,save_id) {
 	    ini_write_real("Save","en_fleets",instance_number(obj_en_fleet));
 	    ini_write_real("Save","sod",random_get_seed());
 	    ini_write_real("Save","corrupt",1);
-
 	    // obj_controller variables here
 	    ini_write_real("boolean", "cheat_req", global.cheat_req);
             ini_write_real("boolean", "cheat_gene", global.cheat_gene);
@@ -108,7 +105,6 @@ function scr_save(save_slot,save_id) {
 	    }
 
 
-
 	    // Player scheduled event
 	    if (obj_controller.fest_type!=""){
 	        ini_write_real("Controller","f_si",obj_controller.fest_sid);
@@ -146,7 +142,6 @@ function scr_save(save_slot,save_id) {
 	    }
 
 
-
 	    ini_write_real("Formation","last_attack",obj_controller.last_attack_form);
 	    ini_write_real("Formation","last_raid",obj_controller.last_raid_form);
 	    j=0;repeat(14){j+=1;
@@ -170,14 +165,13 @@ function scr_save(save_slot,save_id) {
 	            ini_write_real("Formation","scou"+string(j),obj_controller.bat_scou_for[j]);
 	        }
 	    }
-//<<<<<<<
+
     
     
-//=======
 
 
 	    ini_write_string("Controller","random_event_next",obj_controller.random_event_next);
-//>>>>>>>
+
 	    ini_write_string("Controller","useful_info",obj_controller.useful_info);
 		ini_write_real("Controller","random_event_next",obj_controller.random_event_next);
 		ini_write_real("Controller","gene_sold",obj_controller.gene_sold);		
@@ -323,7 +317,6 @@ function scr_save(save_slot,save_id) {
 
 	    ini_close();
 	}
-
 
 
 	if (save_slot=2) or (save_slot=0){debugl("Saving to slot "+string(save_id)+" part 2");
@@ -697,7 +690,6 @@ function scr_save(save_slot,save_id) {
 	}
 
 
-
 	if (save_slot=3) or (save_slot=0){debugl("Saving to slot "+string(save_id)+" part 3");
 	    ini_open("save"+string(save_id)+".ini");
 	    var coh,mah,good;
@@ -770,7 +762,7 @@ function scr_save(save_slot,save_id) {
 	    ini_write_string("Res","recruiter",obj_controller.restart_recruiter);
 	    ini_write_string("Res","admir",obj_controller.restart_admiral);
 	    ini_write_real("Res","eqspec",obj_controller.restart_equal_specialists);
-	    ini_write_real("Res","load2",obj_controller.restart_load_to_ships);
+	    ini_write_string("Res","load2",base64_encode(json_stringify(obj_controller.restart_load_to_ships)));
 	    ini_write_real("Res","successors",obj_controller.restart_successors);
 	    ini_write_real("Res","muta",obj_controller.restart_mutations);
 	    ini_write_real("Res","preo",obj_controller.restart_preomnor);
@@ -794,7 +786,6 @@ function scr_save(save_slot,save_id) {
 	    ini_write_real("Res","cooperation",obj_controller.restart_cooperation);
 	    ini_write_real("Res","purity",obj_controller.restart_purity);
 	    ini_write_real("Res","stability",obj_controller.restart_stability);
-
 	    i=99;
 	    repeat(3){i+=1;
 	         var o;o=1;
@@ -814,8 +805,6 @@ function scr_save(save_slot,save_id) {
 
 	    ini_close();
 	}
-
-
 
 	if (save_slot=4) or (save_slot=0){debugl("Saving to slot "+string(save_id)+" part 4");
 	    ini_open("save"+string(save_id)+".ini");
@@ -875,11 +864,7 @@ function scr_save(save_slot,save_id) {
 	            ini_write_string("Mar","w2"+string(coh)+"."+string(mah),obj_ini.wep2[coh,mah]);
 	            ini_write_string("Mar","ar"+string(coh)+"."+string(mah),obj_ini.armour[coh,mah]);
 	            ini_write_string("Mar","ge"+string(coh)+"."+string(mah),obj_ini.gear[coh,mah]);
-	            ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);
-					if (!is_struct(obj_ini.TTRPG[coh,mah])){
-						TTRPG[coh,mah]= {};
-					}
-					ini_write_string("Mar","Struct"+string(coh)+"."+string(mah),base64_encode(jsonify_marine_struct(coh,mah)));					
+	            ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);				
 	        }
 	    }
 	    coh=102;mah=-1;
@@ -890,16 +875,11 @@ function scr_save(save_slot,save_id) {
 	            ini_write_string("Mar","w2"+string(coh)+"."+string(mah),obj_ini.wep2[coh,mah]);
 	            ini_write_string("Mar","ar"+string(coh)+"."+string(mah),obj_ini.armour[coh,mah]);
 	            ini_write_string("Mar","ge"+string(coh)+"."+string(mah),obj_ini.gear[coh,mah]);
-	            ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);
-					if (!is_struct(obj_ini.TTRPG[coh,mah])){
-						TTRPG[coh,mah]= {};
-					}
-					ini_write_string("Mar","Struct"+string(coh)+"."+string(mah),base64_encode(jsonify_marine_struct(coh,mah)));					
+	            ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);			
 	        }
 	    }
 	    ini_close();
 	}
-
 
 	if (save_slot=5) or (save_slot=0){
 	    ini_open("save"+string(save_id)+".ini");
