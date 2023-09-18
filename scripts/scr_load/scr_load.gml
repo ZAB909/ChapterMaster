@@ -735,8 +735,7 @@ function scr_load(argument0, argument1) {
 	                    obj_ini.role[coh,mah]=ini_read_string("Mar","rol"+string(coh)+"."+string(mah),"");// temp_name;
 	                    obj_ini.lid[coh,mah]=ini_read_real("Mar","li"+string(coh)+"."+string(mah),0);
 	                    obj_ini.bio[coh,mah]=ini_read_real("Mar","bio"+string(coh)+"."+string(mah),0);
-	                    obj_ini.wid[coh,mah]=ini_read_real("Mar","wi"+string(coh)+"."+string(mah),0);
-						load_marine_struct(coh,mah);								
+	                    obj_ini.wid[coh,mah]=ini_read_real("Mar","wi"+string(coh)+"."+string(mah),0);								
 
 	                    if (coh=0){
 	                        if (obj_ini.role[coh,mah]="Chapter Master") then obj_ini.race[coh,mah]=1;
@@ -775,6 +774,7 @@ function scr_load(argument0, argument1) {
 	                    obj_ini.age[coh,mah]=ini_read_real("Mar","ag"+string(coh)+"."+string(mah),0);
 	                    obj_ini.spe[coh,mah]=ini_read_string("Mar","spe"+string(coh)+"."+string(mah),"");
 	                    obj_ini.god[coh,mah]=ini_read_real("Mar","god"+string(coh)+"."+string(mah),0);
+						load_marine_struct(coh,mah);
 	                }
 
 	            }
