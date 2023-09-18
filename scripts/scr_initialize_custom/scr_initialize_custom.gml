@@ -682,7 +682,6 @@ function scr_initialize_custom() {
 	}
 	mobi[company,1]=mobi[100,2];
 	if (string_count("Paragon",strin)>0) then chapter_master.add_trait("paragon")
-	chapter_master.update_health(chapter_master.max_health)
 
 	// Forge Master
 	race[company,2]=1;loc[company,2]=home_name;role[company,2]="Forge Master";wep1[company,2]="Conversion Beam Projector";name[company,2]=obj_creation.fmaster;
@@ -1524,7 +1523,7 @@ function create_squad(squad_type, company, squad_loadout = true){
 					 if (struct_exists(fill_squad[$ unit_type],"loadout")){						//find out if the unit type for the squad has optional equipment thresholds
 						if (struct_exists(fill_squad[$ unit_type][$ "loadout"],"option")){
 							if (optional_load == "none"){
-							  	optional_load = DeepCloneStruct(fill_squad[$ unit_type][$ "loadout"][$ "option"]);
+							  	optional_load = DeepCloneStruct(fill_squad[$ unit_type][$ "loadout"][$ "option"]);			//create a fulfillment object for optional loadouts
 							  	load_out_areas = struct_get_names(fill_squad[$ unit_type][$ "loadout"][$ "option"]);
 							  	for (load_out_name = 0; load_out_name < array_length(load_out_areas);load_out_name++;){
 									load_out_slot = load_out_areas[load_out_name];

@@ -1,8 +1,8 @@
-function scr_special_view(argument0) {
+function scr_special_view(command_group) {
 
 	// Works as COMPANY VIEW but for the subsections of HQ
 
-	var v, i, mans, onceh, company, bad, oth;
+	var v, i, mans, onceh, company, bad, oth, unit;
 	gogogo=0;mans=0;vehicles=0;last_man=0;last_vehicle=0;bad=0;company=0;oth=0;
 
 	var squads, squad_typ, squad_loc, squad_members;
@@ -15,16 +15,16 @@ function scr_special_view(argument0) {
 	    ma_race[i]=0;ma_loc[i]="";ma_name[i]="";ma_role[i]="";ma_wep1[i]="";ma_mobi[i]="";
 	    ma_wep2[i]="";ma_armour[i]="";ma_gear[i]="";ma_health[i]=100;ma_chaos[i]=0;ma_exp[i]=0;ma_god[i]=0;
 	    sh_ide[i]=0;sh_uid[i]=0;sh_name[i]="";sh_class[i]="";sh_loc[i]="";sh_hp[i]="";sh_cargo[i]=0;sh_cargo_max[i]="";
-	    squad[i]=0;
+	    squad[i]=0;display_unit[i] = {};
 
 	    if (i<=50){penit_co[i]=0;penit_id[i]=0;}
 	    // if (i<=100){event[i]="";event_duration[i]=0;}
 	}
 
-	/*if (argument0=1) then gogogo=obj_ini.firsts;if (argument0=2) then gogogo=obj_ini.seconds;if (argument0=3) then gogogo=obj_ini.thirds;
-	if (argument0=4) then gogogo=obj_ini.fourths;if (argument0=5) then gogogo=obj_ini.fifths;if (argument0=6) then gogogo=obj_ini.sixths;
-	if (argument0=7) then gogogo=obj_ini.sevenths;if (argument0=8) then gogogo=obj_ini.eighths;if (argument0=9) then gogogo=obj_ini.ninths;
-	if (argument0=10) then gogogo=obj_ini.tenths;*/
+	/*if (command_group=1) then gogogo=obj_ini.firsts;if (command_group=2) then gogogo=obj_ini.seconds;if (command_group=3) then gogogo=obj_ini.thirds;
+	if (command_group=4) then gogogo=obj_ini.fourths;if (command_group=5) then gogogo=obj_ini.fifths;if (command_group=6) then gogogo=obj_ini.sixths;
+	if (command_group=7) then gogogo=obj_ini.sevenths;if (command_group=8) then gogogo=obj_ini.eighths;if (command_group=9) then gogogo=obj_ini.ninths;
+	if (command_group=10) then gogogo=obj_ini.tenths;*/
 
 	mans=0;vehicles=0;v=0;i=0;b=0;
 
@@ -33,50 +33,37 @@ function scr_special_view(argument0) {
 
 
 
-
+	var non_marine_roles = ["Skitarii","Crusader","Sister of Battle","Sister Hospitaler","Ork Sniper","Flash Git"]
 	b=0;
-	if (argument0=11) or (argument0=0) then repeat(199){// HQ
-	    v+=1;bad=0;
-	    if (obj_ini.lid[company,v]>0){
-	        var ham;ham=obj_ini.lid[0,v];
-	        if (obj_ini.ship_location[ham]="Lost") then bad=1;
-	    }
+	if (command_group=11) or (command_group=0){				//HQ units
+		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++;){
+			bad=0;
+			if (obj_ini.name[0,v]== ""){continue;}
+			if (obj_ini.lid[company,v]>0){
+			   var ham;ham=obj_ini.lid[0,v];
+			   if (obj_ini.ship_location[ham]="Lost") then continue;
+			}
 
-	    if ((obj_ini.role[0,v]="Chapter Master") or (obj_ini.role[0,v]=obj_ini.role[100,2])) and (bad=0){
-	        b+=1;
+			unit = obj_ini.TTRPG[0,v];	    	
+			var yep;yep=0;
+			if array_contains(non_marine_roles, unit.role()){yep=1;}
+			if ((unit.role()=="Chapter Master") or (unit.role()==obj_ini.role[100,2])){yep=1;}
+			if (yep=1){
+				b+=1;
 	        mans+=1;man[b]="man";ide[b]=v;
 	        ma_race[b]=obj_ini.race[0,v];ma_loc[b]=obj_ini.loc[0,v];ma_name[b]=obj_ini.name[0,v];
 	        ma_role[b]=obj_ini.role[0,v];ma_wep1[b]=obj_ini.wep1[0,v];ma_wep2[b]=obj_ini.wep2[0,v];
 	        ma_armour[b]=obj_ini.armour[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
 	        ma_exp[b]=obj_ini.experience[0,v];ma_lid[b]=obj_ini.lid[0,v];ma_wid[b]=obj_ini.wid[0,v];
+			display_unit[b] = obj_ini.TTRPG[0,v];
 	        if (ma_lid[b]>0) then ma_loc[b]=obj_ini.ship[ma_lid[b]];ma_mobi[b]=obj_ini.mobi[0,v];
 	        last_man=b;ma_promote[b]=0;ma_god[b]=obj_ini.god[0,v];ma_bio[b]=obj_ini.bio[0,v];
-	    }
-
-	    if (bad=0){
-	        var yep;yep=0;
-	        if (obj_ini.role[0,v]="Skitarii") then yep=1;
-	        if (obj_ini.role[0,v]="Crusader") then yep=1;
-	        if (obj_ini.role[0,v]="Ranger") then yep=1;
-	        if (obj_ini.role[0,v]="Sister of Battle") then yep=1;
-	        if (obj_ini.role[0,v]="Sister Hospitaler") then yep=1;
-	        if (obj_ini.role[0,v]="Ork Sniper") then yep=1;
-	        if (obj_ini.role[0,v]="Flash Git") then yep=1;
-	        if (yep=1){
-	            b+=1;
-	            mans+=1;man[b]="man";ide[b]=v;ma_bio[b]=obj_ini.bio[0,v];
-	            ma_race[b]=obj_ini.race[0,v];ma_loc[b]=obj_ini.loc[0,v];ma_name[b]=obj_ini.name[0,v];
-	            ma_role[b]=obj_ini.role[0,v];ma_wep1[b]=obj_ini.wep1[0,v];ma_wep2[b]=obj_ini.wep2[0,v];
-	            ma_armour[b]=obj_ini.armour[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
-	            ma_exp[b]=obj_ini.experience[0,v];ma_lid[b]=obj_ini.lid[0,v];ma_wid[b]=obj_ini.wid[0,v];
-	            if (ma_lid[b]>0) then ma_loc[b]=obj_ini.ship[ma_lid[b]];ma_mobi[b]=obj_ini.mobi[0,v];
-	            last_man=b;ma_promote[b]=0;ma_god[b]=obj_ini.god[0,v];ma_god[b]=obj_ini.god[0,v];
-	        }
-	    }
+			}
+		}
 	}
 
 	v=0;
-	if (argument0=12) or (argument0=0) then repeat(199){// Apothecarion
+	if (command_group=12) or (command_group=0) then repeat(199){// Apothecarion
 	    v+=1;bad=0;
 	    if (obj_ini.lid[company,v]>0){
 	        var ham;ham=obj_ini.lid[0,v];
@@ -89,6 +76,7 @@ function scr_special_view(argument0) {
 	        ma_role[b]=obj_ini.role[0,v];ma_wep1[b]=obj_ini.wep1[0,v];ma_wep2[b]=obj_ini.wep2[0,v];
 	        ma_armour[b]=obj_ini.armour[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
 	        ma_exp[b]=obj_ini.experience[0,v];ma_lid[b]=obj_ini.lid[0,v];ma_wid[b]=obj_ini.wid[0,v];
+			display_unit[b] = obj_ini.TTRPG[0,v];
 	        if (ma_lid[b]>0) then ma_loc[b]=obj_ini.ship[ma_lid[b]];ma_mobi[b]=obj_ini.mobi[0,v];
 	        last_man=b;ma_promote[b]=0;ma_god[b]=obj_ini.god[0,v];ma_bio[b]=obj_ini.bio[0,v];
 	        if (obj_ini.role[0,v]=obj_ini.role[100,15]) then ma_promote[b]=1;
@@ -96,7 +84,7 @@ function scr_special_view(argument0) {
 	}
 
 	v=0;
-	if (argument0=13) or (argument0=0) then repeat(199){// Librarium
+	if (command_group=13) or (command_group=0) then repeat(199){// Librarium
 	    v+=1;bad=0;
 	    if (obj_ini.lid[company,v]>0){
 	        var ham;ham=obj_ini.lid[0,v];
@@ -109,6 +97,7 @@ function scr_special_view(argument0) {
 	        ma_role[b]=obj_ini.role[0,v];ma_wep1[b]=obj_ini.wep1[0,v];ma_wep2[b]=obj_ini.wep2[0,v];
 	        ma_armour[b]=obj_ini.armour[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
 	        ma_exp[b]=obj_ini.experience[0,v];ma_lid[b]=obj_ini.lid[0,v];ma_wid[b]=obj_ini.wid[0,v];
+			display_unit[b] = obj_ini.TTRPG[0,v];
 	        if (ma_lid[b]>0) then ma_loc[b]=obj_ini.ship[ma_lid[b]];ma_mobi[b]=obj_ini.mobi[0,v];
 	        last_man=b;ma_promote[b]=0;ma_god[b]=obj_ini.god[0,v];ma_bio[b]=obj_ini.bio[0,v];
 	        if (obj_ini.role[0,v]!="Chief "+string(obj_ini.role[100,17])){
@@ -120,7 +109,7 @@ function scr_special_view(argument0) {
 	}
 
 	v=0;
-	if (argument0=14) or (argument0=0) then repeat(199){// Reclusium
+	if (command_group=14) or (command_group=0) then repeat(199){// Reclusium
 	    v+=1;bad=0;
 	    if (obj_ini.lid[company,v]>0){
 	        var ham;ham=obj_ini.lid[0,v];
@@ -132,6 +121,7 @@ function scr_special_view(argument0) {
 	        ma_role[b]=obj_ini.role[0,v];ma_wep1[b]=obj_ini.wep1[0,v];ma_wep2[b]=obj_ini.wep2[0,v];
 	        ma_armour[b]=obj_ini.armour[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
 	        ma_exp[b]=obj_ini.experience[0,v];ma_lid[b]=obj_ini.lid[0,v];ma_wid[b]=obj_ini.wid[0,v];
+			display_unit[b] = obj_ini.TTRPG[0,v];
 	        if (ma_lid[b]>0) then ma_loc[b]=obj_ini.ship[ma_lid[b]];ma_mobi[b]=obj_ini.mobi[0,v];
 	        last_man=b;ma_promote[b]=0;ma_bio[b]=obj_ini.bio[0,v];
 	        if (obj_ini.role[0,v]=obj_ini.role[100,14]) then ma_promote[b]=1;
@@ -142,6 +132,7 @@ function scr_special_view(argument0) {
 	        ma_role[b]=obj_ini.role[0,v];ma_wep1[b]=obj_ini.wep1[0,v];ma_wep2[b]=obj_ini.wep2[0,v];
 	        ma_armour[b]=obj_ini.armour[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
 	        ma_exp[b]=obj_ini.experience[0,v];ma_lid[b]=obj_ini.lid[0,v];ma_wid[b]=obj_ini.wid[0,v];
+			display_unit[b] = obj_ini.TTRPG[0,v];
 	        if (ma_lid[b]>0) then ma_loc[b]=obj_ini.ship[ma_lid[b]];ma_mobi[b]=obj_ini.mobi[0,v];
 	        last_man=b;ma_promote[b]=0;ma_bio[b]=obj_ini.bio[0,v];
 	        if (obj_ini.role[0,v]=obj_ini.role[100,14]) then ma_promote[b]=1;
@@ -149,7 +140,7 @@ function scr_special_view(argument0) {
 	}
 
 	v=0;squads=0;
-	if (argument0=15) or (argument0=0) then repeat(199){// Armamentarium
+	if (command_group=15) or (command_group=0) then repeat(199){// Armamentarium
 	    v+=1;bad=0;
 	    if (obj_ini.lid[company,v]>0){
 	        var ham;ham=obj_ini.lid[0,v];
@@ -161,6 +152,7 @@ function scr_special_view(argument0) {
 	        ma_race[b]=obj_ini.race[0,v];ma_loc[b]=obj_ini.loc[0,v];ma_name[b]=obj_ini.name[0,v];
 	        ma_role[b]=obj_ini.role[0,v];ma_wep1[b]=obj_ini.wep1[0,v];ma_wep2[b]=obj_ini.wep2[0,v];
 	        ma_armour[b]=obj_ini.armour[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
+			display_unit[b] = obj_ini.TTRPG[0,v];
 	        ma_exp[b]=obj_ini.experience[0,v];ma_lid[b]=obj_ini.lid[0,v];ma_wid[b]=obj_ini.wid[0,v];
 	        if (ma_lid[b]>0) then ma_loc[b]=obj_ini.ship[ma_lid[b]];ma_mobi[b]=obj_ini.mobi[0,v];
 	        last_man=b;ma_promote[b]=0;ma_bio[b]=obj_ini.bio[0,v];
@@ -250,7 +242,7 @@ function scr_special_view(argument0) {
 
 	man_current=1;man_max=last_man+last_vehicle;man_see=38-4;
 	if (man_max>=man_see) then man_max+=2;
-	// if (argument0=13) then man_max+=2;
+	// if (command_group=13) then man_max+=2;
 
 
 	// Now have the maximum (man_last + vehicle last), the types of each of those slots, and the relevant ID
