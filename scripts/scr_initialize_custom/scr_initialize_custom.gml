@@ -1518,7 +1518,7 @@ function create_squad(squad_type, company, squad_loadout = true){
 					 if (struct_exists(fill_squad[$ unit_type],"loadout")){						//find out if the unit type for the squad has optional equipment thresholds
 						if (struct_exists(fill_squad[$ unit_type][$ "loadout"],"option")){
 							if (optional_load == "none"){
-							  	optional_load = DeepCloneStruct(fill_squad[$ unit_type][$ "loadout"][$ "option"]);
+							  	optional_load = DeepCloneStruct(fill_squad[$ unit_type][$ "loadout"][$ "option"]);			//create a fulfillment object for optional loadouts
 							  	load_out_areas = struct_get_names(fill_squad[$ unit_type][$ "loadout"][$ "option"]);
 							  	for (load_out_name = 0; load_out_name < array_length(load_out_areas);load_out_name++;){
 									load_out_slot = load_out_areas[load_out_name];
