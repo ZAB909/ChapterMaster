@@ -50,7 +50,7 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		planet_display = "Hidden Secret Base";
 		player_hidden = 0;
 		if (struct_exists(other_data, "style")){
-			style = other_data[style];
+			style = other_data[$ "style"];
 		}
 		built = obj_controller.turn +3;
 		forge = 0;hippo=0;beastarium=0;torture=0;narcotics=0;relic=0;cookery=0;
