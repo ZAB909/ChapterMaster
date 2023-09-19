@@ -134,7 +134,7 @@ chapter_id[1]="Dark Angels";
 chapter_tooltip[1]="The Dark Angels claim complete allegiance and service to the Emperor of Mankind, though their actions and secret goals seem to run counter to this- above all other things they strive to atone for an ancient crime of betrayal.";
 
 chapter_id[2]="White Scars";
-//chapter_tooltip[2]="Known and feared for their highly mobile way of war, the White Scars are the masters of lightning strikes and hit-and-run tactics.  They are particularly adept in the use of Attack Bikes and field large numbers of them.";
+chapter_tooltip[2]="Known and feared for their highly mobile way of war, the White Scars are the masters of lightning strikes and hit-and-run tactics.  They are particularly adept in the use of Attack Bikes and field large numbers of them.";
 
 chapter_id[3]="Space Wolves";
 chapter_tooltip[3]="Brave sky warriors hailing from the icy deathworld of Fenris, the Space Wolves are a non-Codex compliant chapter, and deadly in close combat.  They fight on their own terms and damn any who wish otherwise.";
