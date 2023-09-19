@@ -218,6 +218,11 @@ function scr_initialize_custom() {
 				   battle_barges+=1;
 			   }
 	    
+		 if (global.chapter_name="White Scars")
+	           {
+				   flagship_name="Constantius";
+			   }
+			   
 		if (global.chapter_name="Crimson Fists")   
 	           {
 				   flagship_name="Throne's Fury";
