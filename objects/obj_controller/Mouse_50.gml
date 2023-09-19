@@ -2233,8 +2233,8 @@ if (menu=1) and (managing>0){                       // Selecting individual mari
 
 
 
-
-    if (mouse_x>=xx+1297) and (mouse_y>yy+777) and (mouse_x<xx+1436) and (mouse_y<yy+804) and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel") and (man_size>0){// Transfer
+    // Transfer
+    if (mouse_x>=xx+1297) and (mouse_y>yy+777) and (mouse_x<xx+1436) and (mouse_y<yy+804) and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel") and (man_size>0){
         if (instance_number(obj_popup)=0){// and (managing>=0) and (managing<11){
             var pip;pip=instance_create(0,0,obj_popup);
             pip.type=5.1;pip.company=managing;
