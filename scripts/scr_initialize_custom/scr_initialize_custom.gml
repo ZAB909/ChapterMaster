@@ -218,11 +218,6 @@ function scr_initialize_custom() {
 				   battle_barges+=1;
 			   }
 	    
-		 if (global.chapter_name="White Scars")
-	           {
-				   flagship_name="Constantius";
-			   }
-			   
 		if (global.chapter_name="Crimson Fists")   
 	           {
 				   flagship_name="Throne's Fury";
@@ -570,7 +565,7 @@ function scr_initialize_custom() {
 				[role[100,3] , {"max":5,"min":0}],		//veterans
 			],
 			"terminator_squad": [
-				[role[100,8], {"max":9,"min":3}],
+				[role[100,8], {"max":9,"min":3}],		//terminator
 			],
 			"tactical_squad":[
 				[role[100,8], {"max":9,"min":4, "loadout":{
@@ -580,13 +575,13 @@ function scr_initialize_custom() {
 					},
 					"option" :{
 						"wep1":[
-							[["Flamer", "Meltagun"],1],
+							[["Flamer", "Meltagun"],1],								//squad will have one of the set
 							[["Plasma Gun","Storm Bolter"], 1],
 							[["Multi-Melta", "Heavy Flamer", "Bolter"], 1],
-							[["Missile Launcher", "Lascannon", "Bolter"], 1]],
+							[["Missile Launcher", "Lascannon", "Bolter"], 1]],		//squad will have one of the set
 						"wep2":[
 							["Chainsword",2],
-							[["Power Sword", "Power Axe", "Lightning Claw"],1],
+							[["Power Sword", "Power Axe", "Lightning Claw"],1],		
 							[["Chainfist", "Power Fist"],1]
 						]
 					} 
@@ -594,7 +589,7 @@ function scr_initialize_custom() {
 				[role[100,18], {"max":1,"min":1}],		// sergeant
 			],
 			"assault_squad" : [
-				[role[100,10] , {
+				[role[100,10] , {						//assualt marine
 					"max":9, 
 					"min":4, 
 					"loadout":{
@@ -631,7 +626,7 @@ function scr_initialize_custom() {
                          ],
                         "wep2":[
                             [["Flamer", "Meltagun","Bolt Pistol"],2],
-                            [["Plasma pistol","Bolt pistol"], 4],
+                            [["Plasma Pistol","Bolt Pistol"], 4],
                             
                         ],
                     } 
@@ -639,17 +634,14 @@ function scr_initialize_custom() {
                 [role[100,18],{"max":1,"min":1, 
 					"loadout":{
                 		 "required":{
-								"wep1":["Bolt pistol",1], 
-								"wep2":["Chainsword",1]
+							"wep1":["Bolt Pistol",0], 
+							"wep2":["Chainsword",0],
 						 },
-							"option":{
-				            "wep1":[["Power Sword","Thunder Hammer","Power Fist","Chainsword"],1],
-
-				            "wep2":[["Plasma pistol","Combiflamer","Meltagun"],1]
-			        
-			
+						"option":{
+				            "wep1":[[["Power Sword","Thunder Hammer","Power Fist","Chainsword"],1]],
+				            "wep2":[[["Plasma Pistol","Combiflamer","Meltagun"],1]]
 			            }
-			      }}])
+			      }}]])
 	}
 
 	var st_names = struct_get_names(st);
@@ -1376,7 +1368,7 @@ function scr_initialize_custom() {
 	scr_add_item(wep1[101,12],20);
 	scr_add_item(wep2[101,12],20);
 	if (global.chapter_name="Iron Hands") then scr_add_item("Bionics",200);
-	if (global.chapter_name="White Scars") then scr_add_item("Bike", 120)
+
 
 	if (string_count("Sieged",strin2)>0){
 	    scr_add_item("Narthecium",4);
@@ -1559,6 +1551,7 @@ function create_squad(squad_type, company, squad_loadout = true){
 						if (struct_exists(fill_squad[$ unit_type][$ "loadout"],"option")){
 							if (optional_load == "none"){
 							  	optional_load = DeepCloneStruct(fill_squad[$ unit_type][$ "loadout"][$ "option"]);			//create a fulfillment object for optional loadouts
+								show_debug_message("{0}",optional_load );
 							  	load_out_areas = struct_get_names(fill_squad[$ unit_type][$ "loadout"][$ "option"]);
 							  	for (load_out_name = 0; load_out_name < array_length(load_out_areas);load_out_name++;){
 									load_out_slot = load_out_areas[load_out_name];
@@ -1571,6 +1564,7 @@ function create_squad(squad_type, company, squad_loadout = true){
 						 
 						if (struct_exists(fill_squad[$ unit_type][$ "loadout"],"required")){	//find out if the unit type for the squad has required  equipment thresholds
 							if (required_load == "none"){
+								show_debug_message("{0}");
 							  	required_load = DeepCloneStruct(fill_squad[$ unit_type][$ "loadout"][$ "required"]);
 							  	load_out_areas = struct_get_names(fill_squad[$ unit_type][$ "loadout"][$ "required"]);
 								for (load_out_name = 0; load_out_name < array_length(load_out_areas);load_out_name++;){
@@ -1592,15 +1586,17 @@ function create_squad(squad_type, company, squad_loadout = true){
 									if (struct_exists(fill_squad[$ unit_type],"loadout")){		
 										if (required_load != "none"){
 											if (required_load[$ load_out_slot][2] <required_load[$ load_out_slot][1]){		//if the required amount of equipment is not in the squad already equip this marine with equipment
-												unit.alter_equipment({load_out_slot:required_load[$ load_out_slot][0]})
+												unit.alter_equipment({load_out_slot:required_load[$ load_out_slot][0]});
 												required_load[$ load_out_slot][2]++;
 										  	} else{	 //if all required equipment is included in the squad start adding optional equipment
 												if (struct_exists(fill_squad[$ unit_type][$ "loadout"],"option")){
+													show_debug_message("1");
 													if (optional_load != "none"){
 										  				if (struct_exists(optional_load, load_out_slot)){
+															
 										  					for (load_item = 0; load_item < array_length(optional_load[$ load_out_slot]);load_item++;){
 											  					if (optional_load[$ load_out_slot][load_item][2] <optional_load[$ load_out_slot][load_item][1]){
-											  						
+											  						show_debug_message("3");
 											  						if (is_array(optional_load[$ load_out_slot][load_item][0])){ //if the array items are varibale e.g a struct
 											  							item_to_add = optional_load[$ load_out_slot][load_item][0][irandom(array_length(optional_load[$ load_out_slot][load_item][0])-1)]
 											  						} else {
