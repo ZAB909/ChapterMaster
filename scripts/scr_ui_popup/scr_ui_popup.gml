@@ -16,7 +16,7 @@ function scr_ui_popup() {
 	    draw_set_halign(fa_center);
 	    var title,un_upgraded;title="";
 	    var planet_upgrades = obj_temp_build.target.p_upgrades[obj_controller.selecting_planet];
-	    un_upgraded = 1;
+	    un_upgraded = 0;
 	    var arsenal = 0; gene_vault=0;s_base=0;
 	    if (planet_feature_bool(planet_upgrades, P_features.Secret_Base)==1){s_base=1}
 	    if (planet_feature_bool(planet_upgrades, P_features.Arsenal)==1){arsenal=1}
@@ -51,46 +51,50 @@ function scr_ui_popup() {
 	                    if (r=1) then tag="BRB";if (r=2) then tag="DIS";if (r=3) then tag="FEU";
 	                    if (r=4) then tag="GTH";if (r=5) then tag="MCH";if (r=6) then tag="PRS";
 	                    if (r=7) then tag="RAV";if (r=8) then tag="STL";if (r=9) then tag="UTL";
-	                    array_push(planet_upgrades, new new_planet_feature(P_features.Secret_Base, {style:tag}))
+						var base_options = {style:tag};
 	                    obj_temp_build.isnew=0;
+						array_push(planet_upgrades, new new_planet_feature(P_features.Secret_Base, base_options));
 	                }
 	            }
 	            draw_set_color(0);
 	            draw_set_font(fnt_40k_14b);draw_text_transformed(xx+23,yy+40+(r*30),string_hash_to_newline(string(wob)),1,0.8,0);
 	            draw_set_font(fnt_40k_14);draw_text_transformed(xx+121,yy+40+(r*30),string_hash_to_newline(string(word)),1,0.8,0);
 	        }
-	        exit;
 	    }
-    
+		show_debug_message("1")
     
     
     
     
 	    if (un_upgraded=0) then title="Build ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
-	    if (un_upgraded!=0) and (planet_feature_bool(planet_upgrades,P_features.Secret_Base)==1){
+	    if (un_upgraded!=0){
 	        if (s_base!=0) then title="Secret Lair ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
 	        if (arsenal!=0) then title="Secret Arsenal ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
 	        if (gene_vault!=0) then title="Secret Gene-Vault ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
 	    }
-	    if (un_upgraded!=0) and (planet_feature_bool(planet_upgrades, P_features.Secret_Base)==0){
+	    /*if (un_upgraded!=0) and (planet_feature_bool(planet_upgrades, P_features.Secret_Base)==0){
 	        if (s_base!=0) then title="Lair ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
 	        if (arsenal!=0) then title="Arsenal ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
 	        if (gene_vault!=0) then title="Gene-Vault ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
-	    }
+	    }*/
 	    draw_text_transformed(xx+312,yy+10,string_hash_to_newline(title),0.7,0.7,0);
     
-    
+			show_debug_message("2")
 	    draw_set_halign(fa_left);
     
 	    if (s_base>0){
 		    var search_list =search_planet_features(planet_upgrades, P_features.Secret_Base);
 		    if (array_length(search_list) > 0){
+				show_debug_message("2.1.1{0}",search_list)
 			    var woob;woob="";var secret=true;
-				var s_base = search_list[0];
+				var s_base = planet_upgrades[search_list[0]];
+				show_debug_message("2.1.2")
 				if (s_base.built>obj_controller.turn){
+					show_debug_message("2.1")
 					draw_set_font(fnt_40k_14b);
 		        	draw_text(xx+21,yy+65,string_hash_to_newline($"This feature will be constructed in {s_base.built-obj_controller.turn} months."));
 		    	}else{
+					show_debug_message("2.2")
 					if (s_base.inquis_hidden != 1){secret = false;}
 		        
 			        var r,butt,alp,cost,fuck,tooltip,tooltip2,tooltip3,tooltip4,tcost;r=0;tcost=0;butt="";alp=1;cost=0;fuck=obj_temp_build;tooltip="";tooltip2="";tooltip3="";tooltip4="";
@@ -140,15 +144,15 @@ function scr_ui_popup() {
 			        if (secret=true) then woob+="secret lair.  ";if (secret=false) then woob+="previously discovered lair.  ";
 		        
 			        woob+="It is massive";
-			        if (s_base.style="BRB") then woob+=", the walls decorated with animal hides and leather.  Among the copius body-trophies and bones are torches that hiss and spit.  ";
-			        if (s_base.style="DIS")  then woob+="- the main attraction is the rainbow-colored, lit up grid flooring which quickly change color.  Far overhead are metal rafters.  ";
-			        if (s_base.style="FEU") then woob+=", the walls made up of sturdy blocks of stones.  It is heavily decorated with wooden furniture, banners, and medieval weaponry.  ";
-			        if (s_base.style="GTH") then woob+=", the walls made up of lightly-dusty stone.  Mosaics and statues are abundant throughout, giving it that comfortable gothic feel.  ";
-			        if (s_base.style="MCH") then woob+="- at a glance it appears decorated like a factory.  Those with a neural network see the lair as brightly colored and lit, full of knowledge, learning, and chapter iconography.  ";
-			        if (s_base.style="PRS") then woob+=", the walls made up of polished sandstone or marble.  All throughout are chapter iconography and ancient symbols, wrought in gold.  ";
-			        if (s_base.style="RAV") then woob+=" but nearly pitch-black inside.  The only illumination is provided by loopy neon lux-casters, and strobes, which blast out light in random, flickering patterns.  ";
-			        if (s_base.style="STL") then woob+=".  All of the surfaces are made up of highly polished stainless steel.  An occasional small water fountain or plant decorates the place.  ";
-			        if (s_base.style="UTL") then woob+=" and almost civilian looking in nature- the walls are up of simple concrete or plaster.  A thick carpet covers much of the floor.";
+			        if (s_base.style=="BRB") then woob+=", the walls decorated with animal hides and leather.  Among the copius body-trophies and bones are torches that hiss and spit.  ";
+			        if (s_base.style=="DIS")  then woob+="- the main attraction is the rainbow-colored, lit up grid flooring which quickly change color.  Far overhead are metal rafters.  ";
+			        if (s_base.style=="FEU") then woob+=", the walls made up of sturdy blocks of stones.  It is heavily decorated with wooden furniture, banners, and medieval weaponry.  ";
+			        if (s_base.style=="GTH") then woob+=", the walls made up of lightly-dusty stone.  Mosaics and statues are abundant throughout, giving it that comfortable gothic feel.  ";
+			        if (s_base.style=="MCH") then woob+="- at a glance it appears decorated like a factory.  Those with a neural network see the lair as brightly colored and lit, full of knowledge, learning, and chapter iconography.  ";
+			        if (s_base.style=="PRS") then woob+=", the walls made up of polished sandstone or marble.  All throughout are chapter iconography and ancient symbols, wrought in gold.  ";
+			        if (s_base.style=="RAV") then woob+=" but nearly pitch-black inside.  The only illumination is provided by loopy neon lux-casters, and strobes, which blast out light in random, flickering patterns.  ";
+			        if (s_base.style=="STL") then woob+=".  All of the surfaces are made up of highly polished stainless steel.  An occasional small water fountain or plant decorates the place.  ";
+			        if (s_base.style=="UTL") then woob+=" and almost civilian looking in nature- the walls are up of simple concrete or plaster.  A thick carpet covers much of the floor.";
 		        
 		        
 			        if (s_base.throne=1){
@@ -225,23 +229,24 @@ function scr_ui_popup() {
         
 	     	}
 	    }
+			show_debug_message("3")
 	     draw_set_font(fnt_40k_14b);
 	     woob=""
 	     var arsenal = 0;var gene_vault=0;
     		if (planet_feature_bool(planet_upgrades, P_features.Arsenal)==1){
-    			var arsenal = search_planet_features(planet_upgrades, P_features.Secret_Base)[0];
+    			var arsenal = planet_upgrades[search_planet_features(planet_upgrades, P_features.Arsenal)[0]];
  	          if (arsenal.inquis_hidden == 1) then woob="A moderate sized secret Arsenal, this structure has ample holding area to store any number of artifacts and wargear.  Chaos and Daemonic items will be sent here by your Master of Relics, and due to the secret nature of its existance, the Inquisition will not find them during routine inspections.";
 	          if (arsenal.inquis_hidden == 0) then woob="A moderate sized Arsenal, this structure has ample holding area to store any number of artifacts and wargear.  Since being discovered it may no longer hide Chaos and Daemonic wargear from routine Inquisition inspections.  You may wish to construct another Arsenal on a different planet.";   			
     		}
     		if (planet_feature_bool(planet_upgrades, P_features.Gene_Vault)==1){
-    			var gene_vault = search_planet_features(planet_upgrades, P_features.Gene_Vault)[0];
+    			var gene_vault = planet_upgrades[search_planet_features(planet_upgrades, P_features.Gene_Vault)[0]];
 	          if (gene_vault.inquis_hidden == 1) then woob="A large facility with Gene-Vaults and additional spare rooms, this structure safely stores the majority of your Gene-Seed and is ran by servitors.  Due to its secret nature you may amass Gene-Seed and Test-Slave Incubators without fear of Inquisition reprisal or taking offense.";
 	          if (gene_vault.inquis_hidden == 0) then woob="A large facility with Gene-Vaults and additional spare rooms, this structure safely stores the majority of your Gene-Seed and is ran by servitors.  Since being discovered all the contents are known to the Inquisition.  Your Gene-Seed remains protected but you may wish to build a new, secret one.";  
 	     }
 	     if (arsenal!=0) or (gene_vault!=0){
  			draw_text_ext(xx+21,yy+65,string_hash_to_newline(string(woob)),-1,595);
 	     }
-    
+			show_debug_message("4")
 	    if (un_upgraded==0){
 	        draw_set_font(fnt_40k_14b);
 	        if (s_base=0) then draw_text(xx+21,yy+45,string_hash_to_newline("Lair"));
@@ -296,6 +301,7 @@ function scr_ui_popup() {
 	        }draw_set_halign(fa_left);
         
 	    }
+			show_debug_message("5")
     
     
     
@@ -312,8 +318,6 @@ function scr_ui_popup() {
 
 	    }draw_set_halign(fa_left);
 	}
-
-
 
 
 
@@ -462,7 +466,7 @@ function scr_ui_popup() {
 	        if (mouse_x>=__view_get( e__VW.XView, 0 )+50) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+70) and (mouse_y>=__view_get( e__VW.YView, 0 )+117) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+137){
 	            if (cooldown<=0) and (fleet_all=0){cooldown=8000;fleet_all=1;}
 	            if (cooldown<=0) and (fleet_all=1){cooldown=8000;fleet_all=0;}
-	            if (fleet_all=1) then with(selected){
+	            if (fleet_all=1) then with(obj_fleet_select){
 	                var i;i=-1;
 	                repeat(91){i+=1;
 	                    if (i<=20) then capital_sel[i]=1;
@@ -470,7 +474,7 @@ function scr_ui_popup() {
 	                    escort_sel[i]=1;
 	                }
 	            }
-	            if (fleet_all=0) then with(selected){
+	            if (fleet_all=0) then with(obj_fleet_select){
 	                var i;i=-1;
 	                repeat(91){i+=1;
 	                    if (i<=20) then capital_sel[i]=0;

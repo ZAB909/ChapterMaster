@@ -1160,7 +1160,7 @@ if (action=""){
                 }
                 repeat(4){t+=1;tem1=tem1_base;// Repeat to check each of the planets
                     if (thata.p_type[t]="Dead") and (array_length(thata.p_upgrades[t])>0){
-						var base_search = search_planet_features(thata.p_upgrades[t], P_features.Secret_Base) 
+						var base_search = search_planet_features(thata.p_upgrades[t], P_features.Secret_Base); 
                         if (array_length(base_search) >0){
 							var player_base = thata.p_upgrades[t][base_search[0]]
                             if (player_base.vox>0) then tem1+=2;

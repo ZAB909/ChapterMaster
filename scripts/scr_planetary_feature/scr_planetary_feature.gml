@@ -49,6 +49,7 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		inquis_hidden =1;
 		planet_display = "Hidden Secret Base";
 		player_hidden = 0;
+		style = "UTL"
 		if (struct_exists(other_data, "style")){
 			style = other_data[$ "style"];
 		}
