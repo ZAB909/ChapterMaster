@@ -136,6 +136,7 @@ if (custom=2){
     if (chapter="Raven Guard") then name_bad=1;
     if (chapter="Blood Ravens") then name_bad=1;
     if (chapter="Doom Benefactors") then name_bad=1;
+	if (chapter="Crimson Fists") then name_bad=1;
 }
 
 
