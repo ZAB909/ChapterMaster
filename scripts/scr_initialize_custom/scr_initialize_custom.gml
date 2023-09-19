@@ -604,7 +604,8 @@ function scr_initialize_custom() {
 						},
 						"option" : {
 							"wep1":[
-								[["Flamer"], 1], [["Eviscerator"],2],
+								[["Flamer"], 1], 
+								[["Eviscerator"],2],
 							],
 							"wep2":[
 								[["Plasma Pistol"], 1]
@@ -616,6 +617,40 @@ function scr_initialize_custom() {
 			[role[100,18], {"max":1,"min":1}],		// sergeant
 		]		
 	};
+	if (global.chapter_name="Salamanders"){
+		variable_struct_set(st , "assault_squad",[
+                [role[100,10], {"max":9,"min":4, "loadout":{
+                    "required":{
+                        "wep1":["Bolt pistol",4], 
+                        "wep2":["Chainsword",4]
+                    },
+                    "option" :{
+                        "wep1":[
+                            [["Power Sword","Power Axe","Chainsword"],5],
+                            [["Power Fist","Lightning Claw"],1]
+                         ],
+                        "wep2":[
+                            [["Flamer", "Meltagun","Bolt Pistol"],2],
+                            [["Plasma pistol","Bolt pistol"], 4],
+                            
+                        ],
+                    } 
+                }}],        //assault marine
+                [role[100,18],{"max":1,"min":1, 
+					"loadout":{
+                		 "required":{
+								"wep1":["Bolt pistol",1], 
+								"wep2":["Chainsword",1]
+						 },
+							"option":{
+				            "wep1":[["Power Sword","Thunder Hammer","Power Fist","Chainsword"],1],
+
+				            "wep2":[["Plasma pistol","Combiflamer","Meltagun"],1]
+			        
+			
+			            }
+			      }}])
+	}
 
 	var st_names = struct_get_names(st);
 	for (var st_iter = 0; st_iter < array_length(st_names);st_iter++;){
