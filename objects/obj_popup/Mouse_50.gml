@@ -78,26 +78,6 @@ if (type=5) and (cooldown<=0){
     before=target_comp;
     before2=target_role;
 
-    /*if (unit_role=obj_ini.role[100,17]) and (obj_controller.command_set[1]!=0){
-        if (mouse_y>=yy+210) and (mouse_y<yy+230){
-            if (mouse_x>=xx+1468) and (mouse_x<=xx+1515) and (min_exp>=0){target_comp=0;cooldown=8000;}
-        }
-        if (mouse_y>=yy+230) and (mouse_y<yy+250) and (unit_role!="Lexicanum") and (unit_role!="Codiciery"){
-            if (mouse_x>=xx+1030) and (mouse_x<=xx+1120) and (min_exp>=0){target_comp=1;cooldown=8000;}
-            if (mouse_x>=xx+1140) and (mouse_x<=xx+1230) and (min_exp>=0){target_comp=2;cooldown=8000;}
-            if (mouse_x>=xx+1250) and (mouse_x<=xx+1340) and (min_exp>=0){target_comp=3;cooldown=8000;}
-            if (mouse_x>=xx+1360) and (mouse_x<=xx+1450) and (min_exp>=0){target_comp=4;cooldown=8000;}
-            if (mouse_x>=xx+1470) and (mouse_x<=xx+1560) and (min_exp>=0){target_comp=5;cooldown=8000;}
-        }
-        if (mouse_y>=yy+250) and (mouse_y<yy+270) and (unit_role!="Lexicanum") and (unit_role!="Codiciery"){
-            if (mouse_x>=xx+1030) and (mouse_x<=xx+1120) and (min_exp>=0){target_comp=6;cooldown=8000;}
-            if (mouse_x>=xx+1140) and (mouse_x<=xx+1230) and (min_exp>=0){target_comp=7;cooldown=8000;}
-            if (mouse_x>=xx+1250) and (mouse_x<=xx+1340) and (min_exp>=0){target_comp=8;cooldown=8000;}
-            if (mouse_x>=xx+1360) and (mouse_x<=xx+1450) and (min_exp>=0){target_comp=9;cooldown=8000;}
-            if (mouse_x>=xx+1470) and (mouse_x<=xx+1560) and (min_exp>=0){target_comp=10;cooldown=8000;}
-        }
-    }*/
-
     if (unit_role!=obj_ini.role[100,17]) or (obj_controller.command_set[1]!=0){
         if (mouse_y>=yy+210) and (mouse_y<yy+230){
             if (mouse_x>=xx+1468) and (mouse_x<=xx+1515) and (min_exp>=0){target_comp=0;cooldown=8000;}
@@ -400,11 +380,11 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
         mahreens=0;w=0;god=0;vehi=0;god2=0;
 
         repeat(300){w+=1; // Gets the number of marines in the target company
-			if (god=0) and (obj_ini.name[target_comp,w]=""){god=1;mahreens=w - 1;}
+			if (god=0 and obj_ini.name[target_comp,w]=""){god=1;mahreens=w;}
 		}
         w=0;
         repeat(100){w+=1; // Gets the number of vehicles in the target company
-			if (god2=0) and (obj_ini.veh_role[target_comp,w]=""){god2=1;vehi=w;}
+			if (god2=0 and obj_ini.veh_role[target_comp,w]=""){god2=1;vehi=w;}
 		}
 
         // The MAHREENS and TARGET/FROM seems to check out
@@ -463,38 +443,38 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
 				obj_ini.TTRPG[company,obj_controller.ide[w]] = {};
                 mahreens+=1;
             }
-            if (obj_controller.man[w]="vehicle") and (obj_controller.man_sel[w]=1){// This seems to execute the correct number of times
-                var check;check=0;
+            // This seems to execute the correct number of times
+            if (obj_controller.man[w]="vehicle") and (obj_controller.man_sel[w]=1){
+                var check=0;
 				// Check if the target company is within the allowed range
                 if (target_comp >= 1) and (target_comp <= 10) {
+                    obj_ini.veh_race[target_comp,vehi]=obj_ini.veh_race[company,obj_controller.ide[w]];
+                    obj_ini.veh_loc[target_comp,vehi]=obj_ini.veh_loc[company,obj_controller.ide[w]];
+                    obj_ini.veh_role[target_comp,vehi]=obj_ini.veh_role[company,obj_controller.ide[w]];
+                    obj_ini.veh_wep1[target_comp,vehi]=obj_ini.veh_wep1[company,obj_controller.ide[w]];
+                    obj_ini.veh_wep2[target_comp,vehi]=obj_ini.veh_wep2[company,obj_controller.ide[w]];
+                    obj_ini.veh_wep3[target_comp,vehi]=obj_ini.veh_wep3[company,obj_controller.ide[w]];
+                    obj_ini.veh_upgrade[target_comp,vehi]=obj_ini.veh_upgrade[company,obj_controller.ide[w]];
+                    obj_ini.veh_acc[target_comp,vehi]=obj_ini.veh_acc[company,obj_controller.ide[w]];
+                    obj_ini.veh_hp[target_comp,vehi]=obj_ini.veh_hp[company,obj_controller.ide[w]];
+                    obj_ini.veh_chaos[target_comp,vehi]=obj_ini.veh_chaos[company,obj_controller.ide[w]];
+                    obj_ini.veh_pilots[target_comp,vehi]=0;
+                    obj_ini.veh_lid[target_comp,vehi]=obj_ini.veh_lid[company,obj_controller.ide[w]];
+                    obj_ini.veh_wid[target_comp,vehi]=obj_ini.veh_wid[company,obj_controller.ide[w]];
 
-                obj_ini.veh_race[target_comp,vehi]=obj_ini.veh_race[company,obj_controller.ide[w]];
-                obj_ini.veh_loc[target_comp,vehi]=obj_ini.veh_loc[company,obj_controller.ide[w]];
-                obj_ini.veh_role[target_comp,vehi]=obj_ini.veh_role[company,obj_controller.ide[w]];
-                obj_ini.veh_wep1[target_comp,vehi]=obj_ini.veh_wep1[company,obj_controller.ide[w]];
-                obj_ini.veh_wep2[target_comp,vehi]=obj_ini.veh_wep2[company,obj_controller.ide[w]];
-                obj_ini.veh_wep3[target_comp,vehi]=obj_ini.veh_wep3[company,obj_controller.ide[w]];
-                obj_ini.veh_upgrade[target_comp,vehi]=obj_ini.veh_upgrade[company,obj_controller.ide[w]];
-                obj_ini.veh_acc[target_comp,vehi]=obj_ini.veh_acc[company,obj_controller.ide[w]];
-                obj_ini.veh_hp[target_comp,vehi]=obj_ini.veh_hp[company,obj_controller.ide[w]];
-                obj_ini.veh_chaos[target_comp,vehi]=obj_ini.veh_chaos[company,obj_controller.ide[w]];
-                obj_ini.veh_pilots[target_comp,vehi]=0;
-                obj_ini.veh_lid[target_comp,vehi]=obj_ini.veh_lid[company,obj_controller.ide[w]];
-                obj_ini.veh_wid[target_comp,vehi]=obj_ini.veh_wid[company,obj_controller.ide[w]];
+                    obj_ini.veh_race[company,obj_controller.ide[w]]=0;obj_ini.veh_loc[company,obj_controller.ide[w]]="";
+                    obj_ini.veh_role[company,obj_controller.ide[w]]="";obj_ini.veh_wep1[company,obj_controller.ide[w]]="";obj_ini.veh_wep2[company,obj_controller.ide[w]]="";
+                    obj_ini.veh_wep3[company,obj_controller.ide[w]]="";obj_ini.veh_upgrade[company,obj_controller.ide[w]]="";obj_ini.veh_acc[company,obj_controller.ide[w]]="";
+                    obj_ini.veh_hp[company,obj_controller.ide[w]]=0;obj_ini.veh_chaos[company,obj_controller.ide[w]]=0;
+                    obj_ini.veh_pilots[company,obj_controller.ide[w]]=0;obj_ini.veh_lid[company,obj_controller.ide[w]]=0;
+                    obj_ini.veh_wid[company,obj_controller.ide[w]]=0;
 
-                obj_ini.veh_race[company,obj_controller.ide[w]]=0;obj_ini.veh_loc[company,obj_controller.ide[w]]="";
-                obj_ini.veh_role[company,obj_controller.ide[w]]="";obj_ini.veh_wep1[company,obj_controller.ide[w]]="";obj_ini.veh_wep2[company,obj_controller.ide[w]]="";
-                obj_ini.veh_wep3[company,obj_controller.ide[w]]="";obj_ini.veh_upgrade[company,obj_controller.ide[w]]="";obj_ini.veh_acc[company,obj_controller.ide[w]]="";
-                obj_ini.veh_hp[company,obj_controller.ide[w]]=0;obj_ini.veh_chaos[company,obj_controller.ide[w]]=0;
-                obj_ini.veh_pilots[company,obj_controller.ide[w]]=0;obj_ini.veh_lid[company,obj_controller.ide[w]]=0;
-                obj_ini.veh_wid[company,obj_controller.ide[w]]=0;
+                    vehi+=1;
+                }
 
-                vehi+=1;
             }
-
-        }
 		
-}
+        }
 
         // Check this
 
