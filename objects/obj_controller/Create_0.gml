@@ -118,7 +118,7 @@ build_chaos_gods()
 obj_controller.restart_name="";
 obj_controller.restart_founding="";
 obj_controller.restart_secret="";
-for(var i=0; i<=10; i++){obj_controller.restart_title[i]="";}
+for(var i=0; i<=11; i++){obj_controller.restart_title[i]="";}
 obj_controller.restart_icon=0;
 obj_controller.restart_icon_name="";
 obj_controller.restart_powers="";
@@ -676,7 +676,7 @@ for(var t=0; i<200; t++){
 }
 temp[90]=0;
 temp[9000]="";
-for(var t=4699; t<=4719; t++){
+for(var t=4700; t<=4719; t++){
     temp[t]=0;temp[t+100]=0;
 }
 // ** Resets all audiences **
