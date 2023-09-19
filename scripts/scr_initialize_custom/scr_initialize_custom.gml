@@ -1282,7 +1282,7 @@ function scr_initialize_custom() {
 	scr_add_item(wep1[101,12],20);
 	scr_add_item(wep2[101,12],20);
 	if (global.chapter_name="Iron Hands") then scr_add_item("Bionics",200);
-	if (global.chapter_name="White Scars") then scr_add_item("Bike", 160)
+	if (global.chapter_name="White Scars") then scr_add_item("Bike", 120)
 
 	if (string_count("Sieged",strin2)>0){
 	    scr_add_item("Narthecium",4);
