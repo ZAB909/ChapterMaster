@@ -1,3 +1,4 @@
+// TODO refactor
 var __b__;
 __b__ = action_if_number(obj_saveload, 0, 0);
 if __b__
@@ -15,7 +16,7 @@ __b__ = action_if_variable(managing, 0, 0);
 if __b__
 {
 
-var ok;ok=0;
+var ok=0;
 
 if (cooldown<=0){
     if (!instance_exists(obj_turn_end)) then ok=1;
