@@ -20,17 +20,17 @@ enum P_features {
 			Reclamation_pools,
 			Capillary_Towers,
 			Daemonic_Incursion,
-			Victory_Shrine
+			Victory_Shrine,
+			Arsenal,
+			Gene_Vault
 	};
 	
 enum base_type{
 	Lair,
-	Arsenal,
-	Gene_Vault
 }
 	
 	// function creates a new struct planet feature of a  specified type
-function new_planet_feature(feature_type) constructor{
+function new_planet_feature(feature_type, other_data={}) constructor{
 	f_type = feature_type;
 	static reveal_to_player = function(){
 		if (player_hidden == 1){
@@ -48,8 +48,26 @@ function new_planet_feature(feature_type) constructor{
 		base_type = 0;
 		inquis_hidden =1;
 		planet_display = "Hidden Secret Base";
-		player_hidden = 0
+		player_hidden = 0;
+		if (struct_exists(other_data, "style")){
+			style = other_data[style];
+		}
+		built = obj_controller.turn +3;
+		forge = 0;hippo=0;beastarium=0;torture=0;narcotics=0;relic=0;cookery=0;
+		vox=0;librarium=0;throne=0;stasis=0;swimming=0;stock=0;
 		break;
+	case P_features.Arsenal:
+		inquis_hidden = 1;
+		planet_display = "Arsenal";
+		player_hidden = 0;
+		built = obj_controller.turn+3;
+		break;
+	case P_features.Gene_Vault:
+		inquis_hidden=1;
+		planet_display = "Arsenal";
+		player_hidden = 0;
+		built = obj_controller.turn+3;
+		break;		
 	case P_features.Ancient_Ruins:
 		var ruin_data = choose(["tiny", 5], ["small", 15], ["medium", 55], ["large",110], ["sprawling", 0])
 		ruins_size =  ruin_data[0]
@@ -192,6 +210,7 @@ function new_planet_feature(feature_type) constructor{
 }
 
 // returns an array of all the positions that a certain planet feature occurs on th p_feature array of a planet
+// this works for both planet_Features and planet upgrades
 function search_planet_features(planet, search_feature){
 	var feature_count = array_length(planet);
 	var feature_positions = [];

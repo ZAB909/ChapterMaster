@@ -353,18 +353,18 @@ function scr_save(save_slot,save_id) {
 	                ini_write_string("Star","sr"+string(i)+"type"+string(g),instance_array[i].p_type[g]);
 					var save_features = [];
 					if (array_length(instance_array[i].p_feature[g])> 0){
-					for (var f = 0;f < array_length(instance_array[i].p_feature[g]);f++;){
-						save_features[f]=0;
-						var copy_feature = instance_array[i].p_feature[g][f];
-						var new_feature = {};
-						var names = variable_struct_get_names(copy_feature);
-						for (var name = 0; name < array_length(names); name++) {
-						  if (!is_method(copy_feature[$ names[name]])){
-							  variable_struct_set(new_feature, names[name],copy_feature[$ names[name]])
-						  }
+						for (var f = 0;f < array_length(instance_array[i].p_feature[g]);f++;){
+							save_features[f]=0;
+							var copy_feature = instance_array[i].p_feature[g][f];
+							var new_feature = {};
+							var names = variable_struct_get_names(copy_feature);
+							for (var name = 0; name < array_length(names); name++) {
+							  if (!is_method(copy_feature[$ names[name]])){
+								  variable_struct_set(new_feature, names[name],copy_feature[$ names[name]])
+							  }
+							}
+							save_features[f] = new_feature;
 						}
-						save_features[f] = new_feature;
-					}
 					}
 	                ini_write_string("Star","sr"+string(i)+"feat"+string(g),base64_encode(json_stringify(save_features)));
 	                ini_write_real("Star","sr"+string(i)+"own"+string(g),instance_array[i].p_owner[g]);
@@ -384,8 +384,21 @@ function scr_save(save_slot,save_id) {
 	                    ini_write_real("Star","sr"+string(i)+"p_silo"+string(g),instance_array[i].p_silo[g]);
 	                    ini_write_real("Star","sr"+string(i)+"p_defenses"+string(g),instance_array[i].p_defenses[g]);
 	                }
-	                ini_write_string("Star","sr"+string(i)+"upg"+string(g),instance_array[i].p_upgrades[g]);
-
+					if (array_length(instance_array[i].p_upgrades[g])> 0){
+						for (var f = 0;f < array_length(instance_array[i].p_upgrades[g]);f++;){
+							save_features[f]=0;
+							var copy_feature = instance_array[i].p_upgrades[g][f];
+							var new_feature = {};
+							var names = variable_struct_get_names(copy_feature);
+							for (var name = 0; name < array_length(names); name++) {
+							  if (!is_method(copy_feature[$ names[name]])){
+								  variable_struct_set(new_feature, names[name],copy_feature[$ names[name]])
+							  }
+							}
+							save_features[f] = new_feature;
+						}
+					}
+	                ini_write_string("Star","sr"+string(i)+"upg"+string(g),base64_encode(json_stringify(save_features)));					
 	                ini_write_real("Star","sr"+string(i)+"or"+string(g),instance_array[i].p_orks[g]);
 	                ini_write_real("Star","sr"+string(i)+"ta"+string(g),instance_array[i].p_tau[g]);
 	                ini_write_real("Star","sr"+string(i)+"el"+string(g),instance_array[i].p_eldar[g]);

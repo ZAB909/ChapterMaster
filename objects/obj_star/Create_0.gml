@@ -40,7 +40,7 @@ repeat(8){run+=1;
     p_lasers[run]=0;
     p_silo[run]=0;
     p_defenses[run]=0;
-    p_upgrades[run]="";
+    p_upgrades[run]=[];
     // 
     // v how much of a problem they are from 1-5
     p_orks[run]=0;

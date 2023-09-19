@@ -86,21 +86,10 @@ if (obj_controller.selecting_planet>0) and (obj_controller.cooldown<=0){
     if (butt="Build"){
         var him;him=instance_create(x,y,obj_temp_build);
         him.target=self.target;him.planet=obj_controller.selecting_planet;
-        if (string_count("Lair",target.p_upgrades[obj_controller.selecting_planet])>0) then him.lair=1;
-        if (string_count("Arsenal",target.p_upgrades[obj_controller.selecting_planet])>0) then him.arsenal=1;
-        if (string_count("Gene",target.p_upgrades[obj_controller.selecting_planet])>0) then him.gene_vault=1;
+        if (planet_feature_bool(target.p_upgrades[obj_controller.selecting_planet], P_features.Secret_Base)) then him.lair=1;
+        if (planet_feature_bool(target.p_upgrades[obj_controller.selecting_planet], P_features.Arsenal)) then him.arsenal=1;
+        if (planet_feature_bool(target.p_upgrades[obj_controller.selecting_planet], P_features.Gene_Vault)) then him.gene_vault=1;
         
-        if (string_count(".0|",target.p_upgrades[obj_controller.selecting_planet])=0){
-            if (string_count(".3|",target.p_upgrades[obj_controller.selecting_planet])=1){
-                him.lair=him.lair*-3;him.arsenal=him.arsenal*-3;him.gene_vault=him.gene_vault*-3;
-            }
-            if (string_count(".2|",target.p_upgrades[obj_controller.selecting_planet])=1){
-                him.lair=him.lair*-2;him.arsenal=him.arsenal*-2;him.gene_vault=him.gene_vault*-2;
-            }
-            if (string_count(".1|",target.p_upgrades[obj_controller.selecting_planet])=1){
-                him.lair=him.lair*-1;him.arsenal=him.arsenal*-1;him.gene_vault=him.gene_vault*-1;
-            }
-        }
         
         obj_controller.temp[104]=string(scr_master_loc());
         obj_controller.cooldown=8000;obj_controller.menu=60;
