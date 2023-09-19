@@ -1381,7 +1381,7 @@ if (inspec==true) and (faction_status[4]!="War") and (obj_ini.fleet_type!=1) and
 
 with(obj_temp6){instance_destroy();}
 
-for(var i=1; i<=60; i++){
+for(var i=1; i<=10; i++){
     if (turns_ignored[i]==0) and (annoyed[i]>0) then annoyed[i]-=1;
 }
 // ** Various checks for imperium and faction relations **
