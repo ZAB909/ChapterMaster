@@ -64,6 +64,47 @@ function scr_chapter_new(argument0) {
 	    company_title[2]="Ravenwing";
 	}
 
+if (argument0="White Scars"){founding="N/A";points=150;
+	    selected_chapter=2;chapter=argument0;icon=2;icon_name="ws";founding=0;fleet_type=1;strength=5;purity=10;stability=8;cooperation=5;
+	    homeworld="Feudal";homeworld_name="Chogoris";
+	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=3;aspirant_trial="Survival of the Fittest";discipline="rune Magick";
+		adv[1]="Lightning Warriors";adv[2]="Brothers, All";adv[3]="Melee Enthusiasts";dis[1]="Splintered";
+	    // Pauldron2: Left, Pauldron: Right
+	    color_to_main="White";color_to_secondary="White";color_to_trim="Red";
+	    color_to_pauldron="White";color_to_pauldron2="White";color_to_lens="Red";
+	    color_to_weapon="Black";col_special=0;
+	    hapothecary="Ogholei";hchaplain="Jaghorin";clibrarian="Saghai";fmaster="Khamkar";admiral="Joghaten";recruiter="Jodagha";
+	    battle_cry="For the Emperor and the Khan!";// monastery_name="Quan Zhou";master_name=
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=12;
+	    mutations=0;mutations_selected=0;
+	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
+	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
+	    // disposition[1]=0;// Prog
+	    disposition[2]=50;disposition[3]=50;disposition[4]=50;disposition[5]=50;
+	    disposition[6]=65;// Astartes
+	    disposition[7]=0;// Reserved
+	    chapter_master_name="Jubal Khan";chapter_master_melee=4;
+	    chapter_master_ranged=3;chapter_master_specialty=1;
+	    company_title[1]="The Spearpoint Brotherhood";
+	    company_title[2]="The Firefist Brotherhood";
+	    company_title[3]="The Eagle Brotherhood";
+	    company_title[4]="The Tulwar Brotherhood";
+	    company_title[5]="The Stormwrath Brotherhood";
+		company_title[6]="The Hawkeye Brotherhood";
+		company_title[7]="The Plainstalker Brotherhood";
+		company_title[8]="The Bloodrider Brotherhood";
+		company_title[9]="The Stormbolt Brotherhood";
+		company_title[10]="The Windspeaker Brotherhood";
+		
+		i=99;repeat(3){i+=1;
+		role[i,2]="Keshig";wep1[i,2]="Power Sword";wep2[i,2]="Bolter";armour[i,2]="Terminator Armour";
+		role[i,5]="Khan";wep1[i,5]="Power Sword"
+		role[i,15]="Emchi";
+		role[i,17]="Stormseer";
+		
+		}
+}
+
 
 	if (argument0="Ultramarines"){founding="N/A";points=150;
 	    selected_chapter=7;chapter=argument0;icon=7;icon_name="um";founding=0;fleet_type=1;strength=5;purity=10;stability=10;cooperation=10;
@@ -262,7 +303,8 @@ function scr_chapter_new(argument0) {
 
 
 
-	if (argument0="Blood Ravens"){founding=10;points=100;
+	if (argument0="Blood Ravens"){
+		founding=10;points=100;
 	    selected_chapter=12;chapter=argument0;icon=12;icon_name="br";
 	    fleet_type=2;strength=5;purity=10;stability=6;cooperation=7;
 	    adv[1]="Scavengers";adv[2]="Psyker Abundance";dis[1]="Suspicious";
@@ -298,11 +340,11 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 		hapothecary="Curien Droga";hchaplain="Marqol Tomasi";clibrarian="Eustace Mendoza";fmaster="Javier Adon";admiral="Alessio Cortez"
                 recruiter="Ishmael Icario"
 		battle_cry="There is only the Emperor!  He is our shield and our protector!";
-	        equal_specialists=0;load_to_ships=2;successors=0;
+	        equal_specialists=0;load_to_ships=[2,1,1];successors=0;
 	        mutations=2;mutations_selected=2;
 	        preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=1;
 	        zygote=0;betchers=1;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
-	        // disposition[1]=0;// Prog
+	        disposition[1]=60;// Prog
 	        disposition[2]=80;disposition[3]=50;disposition[4]=50;disposition[5]=50;
 	        disposition[6]=60;// Astartes
 	        disposition[7]=0;// Reserved
