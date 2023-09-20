@@ -1,5 +1,4 @@
-
-
+// TODO refactor
 
 if (slide=2) and (scrollbar_engaged>0){
     var x1,x2,x3,x4,x5,x6,y1,y2,y3,y4,y5,y6,bs,see_size,total_max,current,top;

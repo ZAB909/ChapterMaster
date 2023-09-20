@@ -1,3 +1,4 @@
+// TODO refactor
 action_set_alarm(30, 1);
 
 window_old=window_data;
