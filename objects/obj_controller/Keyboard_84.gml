@@ -7,7 +7,7 @@ if (action_if_number(obj_saveload, 0, 0) && (action_if_number(obj_fleet, 0, 0)) 
     if (cooldown<=0){
         if (!instance_exists(obj_turn_end)) then ok=true;
         if (instance_exists(obj_turn_end)){
-            if (obj_turn_end.popups_end=1) then ok=true;
+            if (obj_turn_end.popups_end==1) then ok=true;
         }
         
         if (ok){
