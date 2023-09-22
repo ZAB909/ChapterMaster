@@ -188,57 +188,57 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	    m2="- a putrid cone of warp energy splashes outward, ";
 	    if (obj_ncombat.enemy=9) then m2+="twisting and rusting everything it touches.  ";
 	    if (obj_ncombat.enemy!=9) then m2+="boiling and putrifying flesh.  ";
-	    if (obj_ncombat.sorcery_seen<2) then obj_ncombat.sorcery_seen=1;
+	    if (obj_ncombat.sorcery_seen<2) and (obj_ncombat.present_inquisitor=1) then obj_ncombat.sorcery_seen=1;
 	}
 	if (power_name="Wave of Change"){p_type="attack";p_rang=3;p_tar=3;p_spli=1;p_att=220;p_arp=0;p_duration=0;
 	    m2="- a wispy cone of warp energy reaches outward, twisting and morphing all that it touches.  ";
-	    if (obj_ncombat.sorcery_seen<2) then obj_ncombat.sorcery_seen=1;
+	    if (obj_ncombat.sorcery_seen<2) and (obj_ncombat.present_inquisitor=1) then obj_ncombat.sorcery_seen=1;
 	}
 	if (power_name="Insect Swarm"){p_type="attack";p_rang=3;p_tar=3;p_spli=1;p_att=500;p_arp=1;p_duration=0;
 	    var rah;rah=choose(1,2);
 	    if (rah=1) then m2="- a massive, black cloud of insects spew from his body.  At once they begin burrowing into your foes.  ";
 	    if (rah=2) then m2="- rank, ichory insects spew forth from his body at your foes.  They begin burrowing through flesh and armour alike.  ";
-	    if (obj_ncombat.sorcery_seen<2) then obj_ncombat.sorcery_seen=1;
+	    if (obj_ncombat.sorcery_seen<2) and (obj_ncombat.present_inquisitor=1) then obj_ncombat.sorcery_seen=1;
 	}
 	if (power_name="Blood Dementia"){
 	    p_type="buff";p_rang=0;p_tar=0;p_spli=0;p_att=0;p_arp=0;p_duration=3;
 	    m2=".  He goes absolutely nuts, screaming and raging, his mind and body pulsing with chaotic energy.  ";
 	    // marine_dementia[argument3]=1;
 	    marine_attack[argument3]+=2;marine_ranged[argument3]=0;
-	    if (obj_ncombat.sorcery_seen<2) then obj_ncombat.sorcery_seen=1;
+	    if (obj_ncombat.sorcery_seen<2) and (obj_ncombat.present_inquisitor=1) then obj_ncombat.sorcery_seen=1;
 	}
 	if (power_name="Putrid Vomit"){p_type="attack";p_rang=2.1;p_tar=3;p_spli=1;p_att=600;p_arp=0;p_duration=0;
 	    var rah;rah=choose(1,2);
 	    m2="- from in front of their mouth a stream of rancid, acidic vomit spews forth at tremendous pressure, splashing over his foes.  ";
 	    if (obj_ncombat.enemy=9) then p_att=450;
-	    if (obj_ncombat.sorcery_seen<2) then obj_ncombat.sorcery_seen=1;
+	    if (obj_ncombat.sorcery_seen<2) and (obj_ncombat.present_inquisitor=1) then obj_ncombat.sorcery_seen=1;
 	}
 	if (power_name="Warp Bolts"){p_type="attack";p_rang=5;p_tar=3;p_spli=1;p_att=300;p_arp=0;p_duration=0;
 	    var rah;rah=choose(1,2,3);
 	    if (rah=1) then m2="- several bolts of purple warp energy appear and are flung at the enemy.  ";
 	    if (rah=2) then m2="- he launches a series of rapid warp bolts at the enemy.  ";
 	    if (rah=3) then m2="- three oozing, shifting bolts of warp energy fly outward from his palms.  ";
-	    if (obj_ncombat.sorcery_seen<2) then obj_ncombat.sorcery_seen=1;
+	    if (obj_ncombat.sorcery_seen<2) and (obj_ncombat.present_inquisitor=1) then obj_ncombat.sorcery_seen=1;
 	}
 	if (power_name="Warp Beam"){p_type="attack";p_rang=8;p_tar=4;p_spli=1;p_att=600;p_arp=1;p_duration=0;
 	    m2="- a massive beam of purple warp energy shoots forth.  All that it touches is consumed.  ";
-	    if (obj_ncombat.sorcery_seen<2) then obj_ncombat.sorcery_seen=1;
+	    if (obj_ncombat.sorcery_seen<2) and (obj_ncombat.present_inquisitor=1) then obj_ncombat.sorcery_seen=1;
 	}
 	if (power_name="Rainbow Beam"){p_type="attack";p_rang=10;p_tar=3;p_spli=1;p_att=500;p_arp=1;p_duration=0;
 	    m2="- a massive beam of warp energy hisses at the enemy, the crackling energy shifting through every color imaginable sickeningly fast.  ";
-	    if (obj_ncombat.sorcery_seen<2) then obj_ncombat.sorcery_seen=1;
+	    if (obj_ncombat.sorcery_seen<2) and (obj_ncombat.present_inquisitor=1) then obj_ncombat.sorcery_seen=1;
 	}
 	if (power_name="Hysterical Frenzy"){p_type="buff";p_rang=0;p_tar=0;p_spli=0;p_att=0;p_arp=0;p_duration=999;
 	    if (obj_ncombat.player_forces>1) then m2=".  Warp energy infuses his body, and several other marines, frenzying them into sensation-seeking destruction.  ";
 	    if (obj_ncombat.player_forces=1) then m2=".  Warp energy infuses his body, frenzying him into sensation-seeking destruction.  ";
-	    if (obj_ncombat.sorcery_seen<2) then obj_ncombat.sorcery_seen=1;
+	    if (obj_ncombat.sorcery_seen<2) and (obj_ncombat.present_inquisitor=1) then obj_ncombat.sorcery_seen=1;
 	}
 	if (power_name="Symphony of Pain"){p_type="attack";p_rang=2.1;p_tar=3;p_spli=1;p_att=750;p_arp=1;p_duration=0;
 	    m2="- mouth stretching unnaturally wide, before letting out a hellish shriek.  ";
 	    var rah;rah=choose(1,2);
 	    if (rah=1) then m2="The air rumbles and shifts at the sheer magnitude of the sound.  ";
 	    if (rah=2) then m2="Armour and flesh tear alike are torn apart by volume of the howl.  ";
-	    if (obj_ncombat.sorcery_seen<2) then obj_ncombat.sorcery_seen=1;
+	    if (obj_ncombat.sorcery_seen<2) and (obj_ncombat.present_inquisitor=1) then obj_ncombat.sorcery_seen=1;
 	}
 
 
@@ -283,7 +283,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	if (power_name="Force Dome"){p_type="buff";p_rang=1;p_tar=1;p_spli=0;p_att=0;p_arp=0;p_duration=2;
 	    m2=".  An oozing, shifting dome of pure energy appears, covering your forces.";
 	    if (binders=true) then m2=".  An oozing, shifting dome of sorcerous energy appears, covering your forces.";
-	    if (binders=true) and (obj_ncombat.sorcery_seen<2) then obj_ncombat.sorcery_seen=1;
+	    if (binders=true) and (obj_ncombat.sorcery_seen<2) and (obj_ncombat.present_inquisitor=1) then obj_ncombat.sorcery_seen=1;
 	}
 	if (power_name="Machine Curse"){p_type="attack";p_rang=5;p_tar=4;p_spli=0;p_att=300;p_arp=1;p_duration=0;
 	    m2="- the machine spirit within an enemy vehicle is roused.  ";
@@ -304,7 +304,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	if (power_name="Vortex of Doom"){p_type="attack";p_rang=5;p_tar=3;p_spli=1;p_att=800;p_arp=1;p_duration=0;
 	    m2="- a hole between real and warp space is torn open with deadly effect.  ";
 	    if (binders=true) then m2="- a hole bewteen real and worp space is torn, unleashing a myriad of sorcerous energies.  ";
-	    if (binders=true) and (obj_ncombat.sorcery_seen<2) then obj_ncombat.sorcery_seen=1;
+	    if (binders=true) and (obj_ncombat.sorcery_seen<2) and (obj_ncombat.present_inquisitor=1) then obj_ncombat.sorcery_seen=1;
 	}
 
 
@@ -330,12 +330,12 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	if (power_name="Sun Burst"){p_type="attack";p_rang=8;p_tar=4;p_spli=1;p_att=200;p_arp=1;p_duration=0;
 	    m2="- a crackling, hissing beam of purple-red flame shoots from him.  ";
 	    if (binders=true) then m2="- a crackling, hissing beam of purple warp shoots from him.  ";
-	    if (binders=true) and (obj_ncombat.sorcery_seen<2) then obj_ncombat.sorcery_seen=1;
+	    if (binders=true) and (obj_ncombat.sorcery_seen<2) and (obj_ncombat.present_inquisitor=1) then obj_ncombat.sorcery_seen=1;
 	}
 	if (power_name="Molten Beam"){p_type="attack";p_rang=8;p_tar=4;p_spli=1;p_att=600;p_arp=1;p_duration=0;
 	    m2="- a white-blue beam, blinding to behold, shoots forth.  All that it touches turns to slag.  ";
 	    if (binders=true) then m2="- a massive beam of purple warp energy shoots forth.  All that it touches is consumed.  ";
-	    if (binders=true) and (obj_ncombat.sorcery_seen<2) then obj_ncombat.sorcery_seen=1;
+	    if (binders=true) and (obj_ncombat.sorcery_seen<2) and (obj_ncombat.present_inquisitor=1) then obj_ncombat.sorcery_seen=1;
 	}
 
 	if (power_name="Blood Boil"){p_type="attack";p_rang=3;p_tar=3;p_spli=0;p_att=220;p_arp=0;p_duration=0;
