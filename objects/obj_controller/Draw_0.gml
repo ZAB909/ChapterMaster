@@ -95,23 +95,6 @@ if (zoomed==0) and (zui==0){
     draw_text_ext(__view_get( e__VW.XView, 0 )+102,__view_get( e__VW.YView, 0 )+838+y_slide,string_hash_to_newline("Chapter#Management"),18,999);
     draw_text_ext(__view_get( e__VW.XView, 0 )+250,__view_get( e__VW.YView, 0 )+838+y_slide,string_hash_to_newline("Chapter#Settings"),18,999);
     
-    // Draws the non selected menu less visible?
-    draw_set_alpha(0.15);
-    
-    draw_line(1374, 1, 0, l_options);
-    draw_line(1484, 1, 0, l_menu);
-    draw_line(34, 840, y_slide, l_manage);
-    draw_line(179, 840, y_slide, l_settings);
-    draw_line(357, 840, y_slide, l_apothecarium);
-    draw_line(473, 840, y_slide, l_reclusium);
-    draw_line(590, 840, y_slide, l_librarium);
-    draw_line(706, 840, y_slide, l_armoury);
-    draw_line(822, 840, y_slide, l_recruitment);
-    draw_line(938, 840, y_slide, l_fleet);
-    draw_line(1130, 1, 0, l_diplomacy);
-    draw_line(1275, 1, 0, l_log);
-    draw_line(1420, 1, 0, l_turn);
-    
     draw_set_alpha(1);
     draw_sprite(spr_new_banner,0,__view_get( e__VW.XView, 0 )+1439+new_banner_x,__view_get( e__VW.YView, 0 )+62);
     draw_sprite(spr_new_ui_cover,0,__view_get( e__VW.XView, 0 )+0,__view_get( e__VW.YView, 0 )+(900-17));
