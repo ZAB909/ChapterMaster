@@ -1535,7 +1535,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
     yy=__view_get( e__VW.YView, 0 );
     zoomeh=zoomed;
 
-    if (menu0==0) then hide_banner=0;// 136 ;
+    if (menu==0) then hide_banner=0;// 136 ;
 
     if (zoomed==0) and (!instance_exists(obj_ingame_menu)) and (!instance_exists(obj_popup)){
         // Main Menu
