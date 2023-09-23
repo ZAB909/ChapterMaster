@@ -145,6 +145,9 @@ repeat(3){i+=1;
     
     obj_controller.r_role[i,17]="Librarian";obj_controller.r_wep1[i,17]="Force Weapon";obj_controller.r_wep2[i,17]="Storm Bolter";
     obj_controller.r_armour[i,17]="Power Armour";obj_controller.r_gear[i,17]="Psychic Hood";obj_controller.r_mobi[i,17]="";
+	
+    obj_controller.r_role[i,18]="Sergeant";obj_controller.r_wep1[i,18]="Chainsword";obj_controller.r_wep2[i,18]="Storm Bolter";
+    obj_controller.r_armour[i,18]="Power Armour";obj_controller.r_gear[i,18]="";obj_controller.r_mobi[i,18]="";	
 
 }// 100 is defaults, 101 is the allowable starting equipment
 

@@ -33,7 +33,7 @@ function scr_company_view(company) {
 	    if (company>=0) and (company<=10){
 			unit = obj_ini.TTRPG[company,v]
 	        if (unit.name()!=""){
-				unit_loc = unit.marine_location() 
+				unit_loc = unit.marine_location() ;
 	            // if (obj_ini.god[company,v]>=10) then bad=1;
 	            if (bad=1){
 					man[v]="hide";

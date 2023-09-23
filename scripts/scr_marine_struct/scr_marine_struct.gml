@@ -119,8 +119,8 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			strength:[42,5],
 			constitution:[44,3],
 			dexterity:[44,3],
-			weapon_skill : [50,5],
-			ballistic_skill : [50,5],			
+			weapon_skill : [50,5, "max"],
+			ballistic_skill : [50,5, "max"],			
 			intelligence:[44,3],
 			wisdom:[44,3],
 			charisma :[35,3],
@@ -411,6 +411,19 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			if (faction ="chapter"){
 				allegiance = global.chapter_name;
 			}
+		   gene_Seed_mutations = {
+		   			"preomnor":obj_ini.preomnor,
+			    	"lyman":obj_ini.preomnor,
+			    	"omophagea":obj_ini.preomnor,
+			    	"ossmodula":obj_ini.preomnor,
+			    	"zygote":obj_ini.preomnor,
+			    	"betchers":obj_ini.preomnor,
+			    	"catalepsean":obj_ini.preomnor,
+			    	"occulobe":obj_ini.preomnor,
+			    	"mucranoid":obj_ini.preomnor,
+			    	"membran":obj_ini.preomnor,
+			    	"voice":obj_ini.preomnor,
+			};			
 			if (instance_exists(obj_controller)){
 				role_history = [[obj_ini.role[company,marine_number], obj_controller.turn]]; //marines_promotion and demotion history
 				marine_ascension = obj_controller.turn; // on what day did turn did this marine begin to exist
@@ -656,7 +669,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 						update_age(age - gauss(600, 150));
 						add_trait("ancient");
 						add_exp(choose(100,75,50));	
-						
 					} // 1%
 					else if (old_guard>=97 and old_guard<=99){
 						update_armour("MK4 Maximus")

@@ -277,6 +277,7 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
     race[i,15]=1;role[i,15]="Apothecary";wep1[i,15]="Power Sword";wep2[i,15]="Storm Bolter";armour[i,15]="Power Armour";gear[i,15]="Narthecium";
     race[i,16]=1;role[i,16]="Techmarine";wep1[i,16]="Power Axe";wep2[i,16]="Storm Bolter";armour[i,16]="Power Armour";gear[i,16]="Servo Arms";
     race[i,17]=1;role[i,17]="Librarian";wep1[i,17]="Force Weapon";wep2[i,17]="Storm Bolter";armour[i,17]="Power Armour";gear[i,17]="Psychic Hood";
+	race[i,18]=1;role[i,18]="Sergeant";wep1[i,18]="Chainsword";wep2[i,18]="Combiflamer";armour[i,18]="Power Armour";mobi[i,18]="";gear[i,18]="";	
 }
 
 

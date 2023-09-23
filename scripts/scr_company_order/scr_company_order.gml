@@ -5,7 +5,7 @@ function scr_company_order(company) {
 	var co;co=company;
 
 	var i, v;i=-1;v=0;
-	var temp_race, temp_loc, temp_name, temp_role, temp_wep1, temp_lid, temp_wid, temp_wep1, temp_wep2, temp_armour, temp_gear, temp_mobi, temp_hp, temp_chaos, temp_experience, temp_age, temp_spe, temp_god, temp_uid;
+	var temp_race, temp_loc, temp_name, temp_role, temp_wep1, temp_lid, temp_wid, temp_wep1, temp_wep2, temp_armour, temp_gear, temp_mobi, temp_hp, temp_chaos, temp_experience, temp_age, temp_spe, temp_god, temp_uid,temp_bio;
 	var temp_vrace, temp_vloc, temp_vrole, temp_vwep1, temp_vwep2, temp_vup, temp_vhp, temp_vchaos, temp_vpilots, temp_vlid, temp_vwid;
 
 	repeat(401){i+=1;
@@ -236,6 +236,14 @@ function scr_company_order(company) {
 
 	i=0;repeat(300){i+=1;
 	    if (role[co,i]=role[100,4]){v+=1;
+	        temp_race[co,v]=race[co,i];temp_loc[co,v]=loc[co,i];temp_name[co,v]=name[co,i];temp_role[co,v]=role[co,i];temp_lid[co,v]=lid[co,i];
+	        temp_wid[co,v]=wid[co,i];temp_wep1[co,v]=wep1[co,i];temp_wep2[co,v]=wep2[co,i];temp_armour[co,v]=armour[co,i];temp_gear[co,v]=gear[co,i];
+	        temp_hp[co,v]=hp[co,i];temp_chaos[co,v]=chaos[co,i];temp_experience[co,v]=experience[co,i];temp_age[co,v]=age[co,i];
+	        temp_mobi[co,v]=mobi[co,i];temp_spe[co,v]=spe[co,i];temp_god[co,v]=god[co,i];temp_bio[co,v]=bio[co,i];
+	    }
+	}
+	i=0;repeat(300){i+=1;
+	    if (role[co,i]=role[100,18]){v+=1;
 	        temp_race[co,v]=race[co,i];temp_loc[co,v]=loc[co,i];temp_name[co,v]=name[co,i];temp_role[co,v]=role[co,i];temp_lid[co,v]=lid[co,i];
 	        temp_wid[co,v]=wid[co,i];temp_wep1[co,v]=wep1[co,i];temp_wep2[co,v]=wep2[co,i];temp_armour[co,v]=armour[co,i];temp_gear[co,v]=gear[co,i];
 	        temp_hp[co,v]=hp[co,i];temp_chaos[co,v]=chaos[co,i];temp_experience[co,v]=experience[co,i];temp_age[co,v]=age[co,i];

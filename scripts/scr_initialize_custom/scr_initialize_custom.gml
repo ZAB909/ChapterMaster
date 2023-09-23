@@ -530,6 +530,7 @@ function scr_initialize_custom() {
 	    role[i,15]="Apothecary";wep1[i,15]="Power Sword";wep2[i,15]="Storm Bolter";armour[i,15]="Power Armour";gear[i,15]="Narthecium";mobi[i,15]="";
 	    role[i,16]="Techmarine";wep1[i,16]="Power Axe";wep2[i,16]="Storm Bolter";armour[i,16]="Power Armour";gear[i,16]="Servo Arms";mobi[i,16]="";
 	    role[i,17]="Librarian";wep1[i,17]="Force Weapon";wep2[i,17]="Storm Bolter";armour[i,17]="Power Armour";gear[i,17]="Psychic Hood";mobi[i,17]="";
+		role[i,18]="Sergeant";wep1[i,18]="Chainsword";wep2[i,18]="Combiflamer";armour[i,18]="Power Armour";mobi[i,18]="";gear[i,18]="";	
 	}// 100 is defaults, 101 is the allowable starting equipment // info
 	i=-1;repeat(21){i+=1;
 	    race[100,i]=obj_creation.race[100,i];
@@ -540,7 +541,6 @@ function scr_initialize_custom() {
 	    gear[100,i]=obj_creation.gear[100,i];
 	    mobi[100,i]=obj_creation.mobi[100,i];
 	}
-	role[100,18]="Sergeant";wep1[100,18]="Chainsword";wep2[100,18]="Combiflamer";armour[100,18]="Power Armour";mobi[100,18]="";gear[100,18]="";	
 		//made all the exp buffs sort into neat little structs so theyre easier to dev and player modify
 	company_spawn_buffs = [0,0,[110,10],[105,10],[95,10],[80,15],[65,5],[55,5],[45,5],[35,5],[3,4]]
 	role_spawn_buffs = {}
@@ -567,6 +567,18 @@ function scr_initialize_custom() {
 			"terminator_squad": [
 				[role[100,8], {"max":9,"min":3}],
 			],
+			"veteran_squad": [
+				[role[100,3], {"max":9,"min":4}],		//veterans
+				[role[100,18], {"max":1,"min":1}],
+			],
+			"devestator_squad": [
+				[role[100,9], {"max":9,"min":4,"loadout":{
+					"required":{
+						"wep1":["Bolter",4], 
+						"wep2":["Combat Knife",4]
+					}}}],		//veterans
+				[role[100,18], {"max":1,"min":1}],
+			],				
 			"tactical_squad":[
 				[role[100,8], {"max":9,"min":4, "loadout":{
 					"required":{
@@ -611,6 +623,37 @@ function scr_initialize_custom() {
 			[role[100,18], {"max":1,"min":1}],		// sergeant
 		]		
 	};
+	if (global.chapter_name="Salamanders"){ //alamanders squads
+		variable_struct_set(st , "assault_squad",[
+                [role[100,10], {"max":9,"min":4, "loadout":{
+                    "required":{
+                        "wep1":["Bolt pistol",4], 
+                        "wep2":["Chainsword",4]
+                    },
+                    "option" :{
+                        "wep1":[
+                            [["Power Sword","Power Axe","Chainsword"],5],
+                            [["Power Fist","Lightning Claw"],1]
+                         ],
+                        "wep2":[
+                            [["Flamer", "Meltagun","Bolt Pistol"],2],
+                            [["Plasma Pistol","Bolt Pistol"], 4],
+                            
+                        ],
+                    } 
+                }}],        //assault marine
+                [role[100,18],{"max":1,"min":1, 
+					"loadout":{
+                		 "required":{
+							"wep1":["Bolt Pistol",0], 
+							"wep2":["Chainsword",0],
+						 },
+						"option":{
+				            "wep1":[[["Power Sword","Thunder Hammer","Power Fist","Chainsword"],1]],
+				            "wep2":[[["Plasma Pistol","Combiflamer","Meltagun"],1]]
+			            }
+			      }}]])
+	}
 
 	var st_names = struct_get_names(st);
 	for (var st_iter = 0; st_iter < array_length(st_names);st_iter++;){
@@ -1404,7 +1447,7 @@ function scr_initialize_custom() {
 	// }
 	obj_ini.squads = [];
 	var last_squad_count
-	for (company=1;company < 10;company++;){
+	for (company=2;company < 10;company++;){
 		create_squad("command_squad", company);
 		last_squad_count = array_length(obj_ini.squads);
 		while (last_squad_count == array_length(obj_ini.squads)){ ///keep making tact squads for as long as there are enough tact marines
@@ -1412,14 +1455,25 @@ function scr_initialize_custom() {
 			create_squad("tactical_squad", company);
 		}
 		last_squad_count = array_length(obj_ini.squads);
+		while (last_squad_count == array_length(obj_ini.squads)){ ///keep making tact squads for as long as there are enough tact marines
+			last_squad_count = (array_length(obj_ini.squads) + 1);
+			create_squad("devestator_squad", company);
+		}		
+		last_squad_count = array_length(obj_ini.squads);
 		while (last_squad_count == array_length(obj_ini.squads)){
 			last_squad_count = (array_length(obj_ini.squads) + 1);
 			create_squad("assault_squad", company);
-		}		
+		}
+	}
+	company = 1;
+	last_squad_count = array_length(obj_ini.squads);
+	while (last_squad_count == array_length(obj_ini.squads)){
+		last_squad_count = (array_length(obj_ini.squads) + 1);
+		create_squad("veteran_squad", company);
 	}
 }
 
-/* okay so basically htis functions loops through a given company and attempts to sortv the units in the company not in a squad already into 
+/* okay so basically htis functions loops through a given company and attempts to sort the units in the company not in a squad already into 
 the requested squad type , if the squad is not possible it will  not be made*/
 // squad_type: the type of squad to be created as a string to access the correct key in obj_ini.squad_types
 // company : the company you wish to create the squad in (int)
@@ -1457,7 +1511,7 @@ function create_squad(squad_type, company, squad_loadout = true){
 			unit = obj_ini.TTRPG[company,i];
 			if (unit.squad== "none") and (array_contains(squad_unit_types, unit.role())){
 				//if no sergeant found add one marine to standard marine selection so that a marine can be promoted
-				if (array_contains(["tactical_squad", "assault_squad"], squad_type))and (sergeant_found == false){
+				if (array_contains(["tactical_squad", "assault_squad", "veteran_squad", "devestator_squad"], squad_type))and (sergeant_found == false){
 					if (squad_fulfilment[$ unit.role()]< (fill_squad[$ unit.role()][$ "max"] + 1)){
 						squad_fulfilment[$ unit.role()]++;
 						array_push(squad.members, unit);	
@@ -1471,7 +1525,7 @@ function create_squad(squad_type, company, squad_loadout = true){
 		}
 		//if a new sergeant is needed find the marine with the highest experience in the squad 
 		//(which if everything works right should be a marine with the old_guard, seasoned, or ancient trait)
-		if (struct_exists(squad_fulfilment ,obj_ini.role[100,18])) and (sergeant_found == false) and ((squad_fulfilment[$ obj_ini.role[100,8]] > 4)or (squad_fulfilment[$ obj_ini.role[100,10]] > 4) ){
+		if (struct_exists(squad_fulfilment ,obj_ini.role[100,18])) and (sergeant_found == false) and ((squad_fulfilment[$ obj_ini.role[100,8]] > 4)or (squad_fulfilment[$ obj_ini.role[100,10]] > 4) or (squad_fulfilment[$ obj_ini.role[100,9]] > 4)or (squad_fulfilment[$ obj_ini.role[100,3]] > 4) ){
 			highest_exp = 0;
 			for (i = 0; i < array_length(squad.members);i++;){
 				unit = squad.members[i];
