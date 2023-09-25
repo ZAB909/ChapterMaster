@@ -244,35 +244,8 @@ if (apothecary_points>=4) and (apothecary_aspirant==0){
         if (g1!=0){
             command+=1;
             marines-=1;
-            obj_ini.race[0,g1]=obj_ini.race[tco,tid];
-            obj_ini.loc[0,g1]=obj_ini.loc[tco,tid];
-            obj_ini.name[0,g1]=obj_ini.name[tco,tid];
-            obj_ini.role[0,g1]=obj_ini.role[100,15]+" Aspirant";
-            obj_ini.wep1[0,g1]=obj_ini.wep1[tco,tid];
-            obj_ini.lid[0,g1]=obj_ini.lid[tco,tid];
-            obj_ini.wid[0,g1]=obj_ini.wid[tco,tid];
-            obj_ini.wep2[0,g1]=obj_ini.wep2[tco,tid];
-            obj_ini.armour[0,g1]=obj_ini.armour[tco,tid];
-            obj_ini.gear[0,g1]=obj_ini.gear[tco,tid];
-            obj_ini.hp[0,g1]=obj_ini.hp[tco,tid];
-            obj_ini.chaos[0,g1]=obj_ini.chaos[tco,tid];
-            obj_ini.mobi[0,g1]=obj_ini.mobi[tco,tid];
-            obj_ini.experience[0,g1]=obj_ini.experience[tco,tid];
-            obj_ini.age[0,g1]=obj_ini.age[tco,tid];
-            obj_ini.loc[tco,tid]="";
-            obj_ini.name[tco,tid]="";
-            obj_ini.wep1[tco,tid]="";
-            obj_ini.lid[tco,tid]=0;
-            obj_ini.role[tco,tid]="";
-            obj_ini.wid[tco,tid]=0;
-            obj_ini.wep2[tco,tid]="";
-            obj_ini.armour[tco,tid]="";
-            obj_ini.gear[tco,tid]="";
-            obj_ini.hp[tco,tid]=0;
-            obj_ini.chaos[tco,tid]=0;
-            obj_ini.experience[tco,tid]=0;
-            obj_ini.age[tco,tid]=0;
-            obj_ini.mobi[tco,tid]="";
+			scr_move_unit_info(tco,0, tid, g1)
+			obj_ini.role[0,g1]=obj_ini.role[100,15]+" Aspirant";
             if (obj_ini.gear[0,g1]!=""){scr_add_item(obj_ini.gear[0,g1],1);obj_ini.gear[0,g1]="";}
             if (obj_ini.mobi[0,g1]!=""){scr_add_item(obj_ini.mobi[0,g1],1);obj_ini.mobi[0,g1]="";}
             scr_alert("green","recruitment",string(obj_ini.role[100,15])+" Aspirant "+string(obj_ini.name[0,g1])+" begins training.",0,0);
@@ -395,32 +368,8 @@ if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands")
             if (g1!=0){
                 command+=1;
                 marines-=1;
-                obj_ini.race[0,g1]=obj_ini.race[tco,tid];
-                obj_ini.loc[0,g1]=obj_ini.loc[tco,tid];
-                obj_ini.name[0,g1]=obj_ini.name[tco,tid];
+				scr_move_unit_info(tco,0, tid, g1);
                 obj_ini.role[0,g1]=obj_ini.role[100,14]+" Aspirant";
-                obj_ini.wep1[0,g1]=obj_ini.wep1[tco,tid];
-                obj_ini.lid[0,g1]=obj_ini.lid[tco,tid];
-                obj_ini.wid[0,g1]=obj_ini.wid[tco,tid];
-                obj_ini.wep2[0,g1]=obj_ini.wep2[tco,tid];
-                obj_ini.armour[0,g1]=obj_ini.armour[tco,tid];
-                obj_ini.gear[0,g1]=obj_ini.gear[tco,tid];
-                obj_ini.hp[0,g1]=obj_ini.hp[tco,tid];
-                obj_ini.chaos[0,g1]=obj_ini.chaos[tco,tid];
-                obj_ini.experience[0,g1]=obj_ini.experience[tco,tid];
-                obj_ini.age[0,g1]=obj_ini.age[tco,tid];
-                obj_ini.mobi[0,g1]=obj_ini.mobi[tco,tid];
-                obj_ini.loc[tco,tid]="";obj_ini.name[tco,tid]="";
-                obj_ini.wep1[tco,tid]="";
-                obj_ini.lid[tco,tid]=0;
-                obj_ini.role[tco,tid]="";
-                obj_ini.wid[tco,tid]=0;obj_ini.wep2[tco,tid]="";
-                obj_ini.armour[tco,tid]="";
-                obj_ini.gear[tco,tid]="";
-                obj_ini.hp[tco,tid]=0;
-                obj_ini.chaos[tco,tid]=0;obj_ini.experience[tco,tid]=0;
-                obj_ini.age[tco,tid]=0;
-                obj_ini.mobi[tco,tid]="";
                 if (obj_ini.gear[0,g1]!=""){
                     scr_add_item(obj_ini.gear[0,g1],1);
                     obj_ini.gear[0,g1]="";
@@ -515,39 +464,13 @@ if (psyker_points>=round(goal/2)) and (psyker_aspirant==0){
         if (g1!=0){
             command+=1;
             marines-=1;
-            obj_ini.race[0,g1]=obj_ini.race[tco,tid];
-            obj_ini.loc[0,g1]=obj_ini.loc[tco,tid];
-            obj_ini.name[0,g1]=obj_ini.name[tco,tid];
+			scr_move_unit_info(tco,0, tid, g1)
             obj_ini.role[0,g1]=string(obj_ini.role[100,17])+" Aspirant";
-            obj_ini.wep1[0,g1]=obj_ini.wep1[tco,tid];
-            obj_ini.lid[0,g1]=obj_ini.lid[tco,tid];
-            obj_ini.wid[0,g1]=obj_ini.wid[tco,tid];
-            obj_ini.wep2[0,g1]=obj_ini.wep2[tco,tid];
-            obj_ini.armour[0,g1]=obj_ini.armour[tco,tid];
-            obj_ini.gear[0,g1]=obj_ini.gear[tco,tid];
-            obj_ini.hp[0,g1]=obj_ini.hp[tco,tid];
-            obj_ini.chaos[0,g1]=obj_ini.chaos[tco,tid];
-            obj_ini.experience[0,g1]=obj_ini.experience[tco,tid];
-            obj_ini.age[0,g1]=obj_ini.age[tco,tid];
             scr_powers_new(0,g1);
             
             if (string_count("Abund",obj_ini.strin)>0) then obj_ini.experience[0,g1]+=floor(random(5))+3;
             
             obj_ini.mobi[0,g1]=obj_ini.mobi[tco,tid];
-            obj_ini.loc[tco,tid]="";
-            obj_ini.name[tco,tid]="";
-            obj_ini.wep1[tco,tid]="";
-            obj_ini.lid[tco,tid]=0;
-            obj_ini.role[tco,tid]="";
-            obj_ini.wid[tco,tid]=0;
-            obj_ini.wep2[tco,tid]="";
-            obj_ini.armour[tco,tid]="";
-            obj_ini.gear[tco,tid]="";
-            obj_ini.hp[tco,tid]=0;
-            obj_ini.chaos[tco,tid]=0;
-            obj_ini.experience[tco,tid]=0;
-            obj_ini.age[tco,tid]=0;
-            obj_ini.mobi[tco,tid]="";
             if (obj_ini.gear[0,g1]!=""){
                 scr_add_item(obj_ini.gear[0,g1],1);
                 obj_ini.gear[0,g1]="";
@@ -676,35 +599,8 @@ if (tech_points>=4) and (tech_aspirant==0){
         if (g1!=0){
             command+=1;
             marines-=1;
-            obj_ini.race[0,g1]=obj_ini.race[tco,tid];
-            obj_ini.loc[0,g1]=obj_ini.loc[tco,tid];
-            obj_ini.name[0,g1]=obj_ini.name[tco,tid];
+			scr_move_unit_info(tco,0, tid, g1);
             obj_ini.role[0,g1]=obj_ini.role[100,16]+" Aspirant";
-            obj_ini.wep1[0,g1]=obj_ini.wep1[tco,tid];
-            obj_ini.lid[0,g1]=obj_ini.lid[tco,tid];
-            obj_ini.wid[0,g1]=obj_ini.wid[tco,tid];
-            obj_ini.wep2[0,g1]=obj_ini.wep2[tco,tid];
-            obj_ini.armour[0,g1]=obj_ini.armour[tco,tid];
-            obj_ini.gear[0,g1]=obj_ini.gear[tco,tid];
-            obj_ini.hp[0,g1]=obj_ini.hp[tco,tid];
-            obj_ini.chaos[0,g1]=obj_ini.chaos[tco,tid];
-            obj_ini.mobi[0,g1]=obj_ini.mobi[tco,tid];
-            obj_ini.experience[0,g1]=obj_ini.experience[tco,tid];
-            obj_ini.age[0,g1]=obj_ini.age[tco,tid];
-            obj_ini.loc[tco,tid]="";
-            obj_ini.name[tco,tid]="";
-            obj_ini.wep1[tco,tid]="";
-            obj_ini.lid[tco,tid]=0;
-            obj_ini.role[tco,tid]="";
-            obj_ini.wid[tco,tid]=0;
-            obj_ini.wep2[tco,tid]="";
-            obj_ini.armour[tco,tid]="";
-            obj_ini.gear[tco,tid]="";
-            obj_ini.hp[tco,tid]=0;
-            obj_ini.chaos[tco,tid]=0;
-            obj_ini.experience[tco,tid]=0;
-            obj_ini.age[tco,tid]=0;
-            obj_ini.mobi[tco,tid]="";
             // Remove from ship
             if (obj_ini.lid[0,g1]>0){
                 var man_size=scr_unit_size(obj_ini.armour[0,g1],obj_ini.role[0,g1],true);
@@ -1721,6 +1617,7 @@ for(var i=1; i<=99; i++){
                     obj_ini.experience[comp,marine_num]=0;
                     obj_ini.mobi[comp,marine_num]="";
                     obj_ini.age[comp,marine_num]=0;
+					obj_ini.TTRPG[comp,marine_num]={};
                     with(obj_ini){scr_company_order(0);}
                 }
                 scr_popup("He Built It",tixt,"tech_build","target_marine|"+string(marine_name)+"|"+string(comp)+"|"+string(marine_num)+"|");

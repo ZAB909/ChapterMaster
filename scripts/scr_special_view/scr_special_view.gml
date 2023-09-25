@@ -21,19 +21,11 @@ function scr_special_view(command_group) {
 	    // if (i<=100){event[i]="";event_duration[i]=0;}
 	}
 
-	/*if (command_group=1) then gogogo=obj_ini.firsts;if (command_group=2) then gogogo=obj_ini.seconds;if (command_group=3) then gogogo=obj_ini.thirds;
-	if (command_group=4) then gogogo=obj_ini.fourths;if (command_group=5) then gogogo=obj_ini.fifths;if (command_group=6) then gogogo=obj_ini.sixths;
-	if (command_group=7) then gogogo=obj_ini.sevenths;if (command_group=8) then gogogo=obj_ini.eighths;if (command_group=9) then gogogo=obj_ini.ninths;
-	if (command_group=10) then gogogo=obj_ini.tenths;*/
-
 	mans=0;vehicles=0;v=0;i=0;b=0;
 
 	// v: check number
 	// mans: number of mans that a hit has gotten
 
-
-
-	var non_marine_roles = ["Skitarii","Crusader","Sister of Battle","Sister Hospitaler","Ork Sniper","Flash Git"]
 	b=0;
 	if (command_group=11) or (command_group=0){				//HQ units
 		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++;){
@@ -46,7 +38,7 @@ function scr_special_view(command_group) {
 
 			unit = obj_ini.TTRPG[0,v];	    	
 			var yep;yep=0;
-			if array_contains(non_marine_roles, unit.role()){yep=1;}
+			if unit.base_group!="astartes"{yep=1;}
 			if ((unit.role()=="Chapter Master") or (unit.role()==obj_ini.role[100,2])){yep=1;}
 			if (yep=1){
 				b+=1;
