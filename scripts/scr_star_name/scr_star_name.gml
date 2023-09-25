@@ -1,595 +1,164 @@
 function scr_star_name() {
+	var rand, ok=0,num="";
+	rand=floor(random(566));
+	// rand2=floor(random(100))+1;
 
-	// TODO refactor this to just a list of star names
-	var stib, rand, rand2, ok, num;
-	stib=100;ok=0;num="";
-	rand=floor(random(566))+1;
-	rand2=floor(random(100))+1;
+	var planet_names=[
+		"Terak", "Roma", "Noctae", "Piscium", "Illan",
+		"Xi-He", "Carinae", "Skuse", "Voltantis", "Vidi",
+    	"Hasta", "Dagon", "Pocki", "Resheph", "Hemera",
+    	"Iman", "Chorta", "Atlanta", "Lyncis", "Modgud",
+		"Oynyena", "Onian", "Helen", "Canum", "Qetesh",
+		"Skonii", "Lytir", "Corvi", "Yogneek", "Delphini",
+		"Freya", "Gaima", "Vespae", "Endiku", "Menthu",
+		"Elyon", "Gone", "Baxu", "Maghda", "Leporis",
+		"Tiamat", "Ceti", "Atep", "Amon", "Asherah",
+		"Xu Xiu", "Gonj Mik", "Zentra", "Azeroth", "Morphua",
+		"Muric", "Sextanis", "Betelgeuse", "Soachton", "Ao-Chin",
+		"Hordi", "Crucis", "Lustania", "Albion", "Bongistan",
+		"Orwell", "Dagobah", "Outer Heaven", "Sodden Hollow", "Protasia",
+		"Veneria", "Iocanthus", "Quaddis", "Belahaam", "Scarric",
+		"Gelmito", "Josian", "Turanshush", "Balecaster", "Belacane",
+		"Avitohol", "Brassica", "Sinophia", "Skyren", "Antioch",
+		"Balanor", "Cathox", "Mahr'douk", "Mordax", "Phall",
+		"Vilhadran", "Chaeros", "Yaymar", "Orax", "Laurentix",
+		"Belisimar", "Vigilatum", "Korolis", "Stryken", "Tephaine",
+		"Chinchare", "Galathamar", "Lordran", "Thasia", "Lycosidae",
+		"Purgatrex", "Sabbatorus", "Lysades", "Jerulas", "Ornsworld",
+		"Treconandal", "Jubal", "Mordian", "Khardeph", "Anticanis",
+		"Landersund", "Aquasulis", "Uristes", "Euphrate", "Menazoid",
+		"Jaego", "Canemara", "Seadelant", "Ostrola", "Ilbira",
+		"Carshim", "Addolorata", "Dolsene", "Bolanion", "Solveig",
+		"Frengold", "Urdesh", "Fornax", "Cociaminus", "Verghast",
+		"Ancreon", "Amedeo", "Armatura", "Nuceria", "Konor",
+		"Isstvan", "Paramar", "Bucephalon", "Ghourra", "Kerondys",
+		"Lyubov", "Parthenope", "Rosangela", "Sapiencia", "Summaminus",
+		"Taliscant", "Stalinvast", "Denova", "Tibrias", "Polonus",
+		"Petrostock", "Tunusk", "Venady", "Voltemand", "Anark Zeta",
+		"Atar-Median", "Cabulis", "Enceladus", "Sarum", "Incaldion",
+		"M'khand", "Sabatine", "Orestes", "Stygies", "Vasalius",
+		"Vordrast", "Boonhaven", "Barbarus", "Mandragoran", "Anphelion",
+		"Solstice", "Inwit", "Magdelene", "Ghorstangrad", "Kastorel",
+		"Borsis", "Volistad", "Mortant", "Ogrolla", "Tallarax",
+		"Viridios", "Somonor", "Urphir", "Loki", "Varsavus",
+		"Vagorn", "Zeist", "Sigilare", "Aeschylrai", "Accatran",
+		"Metalica", "Kolossi", "Espandor", "Voltoris", "Draconis",
+		"Luxor", "Au'taal", "Badab", "Alaric", "Yithic",
+		"Tolkhan", "Crematis", "Pixor", "Bellephon", "Boucherin",
+		"Chemos", "Corinthe", "Corrinos", "Cytheria", "Damnos",
+		"Davin", "Drisinta", "Dynathi", "Eorcshia", "Gardinaal",
+		"Fergax", "Taros", "Garevo", "Blasted Heath", "Haletho",
+		"Hammeront", "Honourum", "Nidus Diptera", "Optera", "Menopetra",
+		"Jjojos", "Kaelas", "Ichar", "Jhanna", "Incaladion",
+		"Iolac", "Krastellan", "Lunaphage", "Memlok", "Arradin",
+		"M'khan", "Miral", "Neverlight", "Moloch", "Tatarstia",
+		"Veracia", "New Veracia", "New Varsavus", "New Petrostock", "New Thasia",
+		"Lohab", "Lalam", "Lowam", "Obsidia", "Nihilas",
+		"Molech", "Olympia", "Pavonis", "Providence", "Radnar",
+		"Sotha", "Sulis", "Niflheim", "Schindelgheist", "Jotunheim",
+		"Tarturga", "Ursidhe-Ka", "Zathatethus", "Hynnes", "Ammonai",
+		"Dirge", "Nexaris", "Circe", "Kallas", "Jursa",
+		"Parmenio", "Quintarn", "Tycor", "Masali", "Mordan",
+		"Frankonia", "Maesa", "Laconia", "Nicaea", "Hellsiris",
+		"Apollonia", "Naogeddon", "Sarcosa", "Tanhaus", "Athelaq",
+		"K'phra", "Athelaq", "Tyrannis", "Solitude", "Skgorria",
+		"Atopiana", "Hataria", "Boneyard", "Hypnoth", "Hydraphur",
+		"Barvaria", "Doranno", "Drathorian", "Kraeg", "Graia",
+		"Minerva", "Gehenna", "Crematis", "Pixor", "Bellephon",
+		"Boucherin", "Chemos", "Corinthe", "Corrinos", "Cytheria",
+		"Damnos", "Davin", "Drisinta", "Dynathi", "Eorcshia",
+		"Gardinaal", "Fergax", "Taros", "Garevo", "Blasted Heath",
+		"Haletho", "Hammeront", "Honourum", "Nidus Diptera", "Optera",
+		"Menopetra", "Jjojos", "Kaelas", "Ichar", "Jhanna",
+		"Incaladion", "Iolac", "Krastellan", "Lunaphage", "Memlok",
+		"Arradin", "M'khan", "Miral", "Neverlight", "Moloch",
+		"Tatarstia", "Veracia", "New Veracia", "New Varsavus", "New Petrostock",
+		"New Thasia", "Lohab", "Lalam", "Lowam", "Obsidia",
+		"Nihilas", "Molech", "Olympia", "Pavonis", "Providence",
+		"Radnar", "Sotha", "Sulis", "Niflheim", "Schindelgheist",
+		"Jotunheim", "Tarturga", "Ursidhe-Ka", "Zathatethus", "Hynnes",
+		"Ammonai", "Dirge", "Nexaris", "Circe", "Kallas",
+		"Jursa", "Parmenio", "Quintarn", "Tycor", "Masali",
+		"Mordan", "Frankonia", "Maesa", "Laconia", "Nicaea",
+		"Hellsiris", "Apollonia", "Naogeddon", "Sarcosa", "Tanhaus",
+		"Athelaq", "K'phra", "Athelaq", "Tyrannis", "Solitude",
+		"Skgorria", "Atopiana", "Hataria", "Boneyard", "Hypnoth",
+		"Hydraphur", "Barvaria", "Doranno", "Drathorian", "Kraeg",
+		"Graia", "Mortarius", "Zindleschlitz", "Acteron", "Quintox",
+		"Dreadhaven", "Pandorax", "Pythos", "Thandros", "Ymgarl",
+		"Raeden", "Koralkal", "Zorastra", "Hagia", "Knowhere", 
+		"Mattiax", "Wardian", "Airephal", "Xagem", "Cegorachi",
+		"Jomungandr", "Nostramo", "Stygia", "Incanda", "Haeraphya",
+		"Lycaeum", "Contqual", "Gorro", "Flint", "Deus",
+		"Persya", "Heloeum", "Devilus", "Agathon", "Anvilus",
+		"Vostroya", "Groznyj Grad", "Artaxerxes", "Solania", "Barathred",
+		"Desperation", "Fargotia", "New Aiur", "New Stalinvast", "Beroghast",
+		"Heilog's Star", "Azghrax", "Coriolanthe", "Krumpville", "Dimmamak",
+		"Primordial Frost", "Mordax Prime", "Angelus", "Ephrath", "Theboze",
+		"Urmox", "Felcarn", "Mathog", "Forrax", "Ganymethia",
+		"Ghenna", "Bodt", "Haringvleet", "Hollonan", "Hexxo",
+		"Hadriath", "Ironholm", "Hamilcar", "Kartheope", "Canis Canem",
+		"Ksatella", "Magdellan", "Manticore", "Malodrax", "Castellax",
+		"Thanatar", "Vraks", "Penumbra", "Siriua", "Impetus",
+		"Bretonia", "Lesser Mantelius", "Botmur", "Signus Prime", "Quintaine",
+		"Oranos", "Hyperion", "Leto", "Pervigilium", "Vergilian",
+		"Zuerlais", "Ullanor", "Shadrac", "Sondheim", "Rostern",
+		"Protheus", "Kronos", "Tartarus", "Portenus", "Borealum",
+		"New Tanith", "Red Reach", "Bella", "Vaxhallia", "Varestus",
+		"Gangrenous Rot", "Yaogeddon", "Ygetheddon", "Yoggoth", "Jagga",
+		"Indra-sul", "Dregeddon", "Scarus", "Vieglehaven", "Callistus",
+		"Majorial", "Cerastus", "Venator", "Macharia", "Loikik",
+		"Erasmus", "Eskarne", "Dymphna", "Moritia Prime", "Borisia",
+		"Carthage", "Suphera", "Ghourra", "Califor", "Tarant",
+		"Chanicia", "Herodor", "Heskeloth", "Mehitabel", "Presarius",
+		"Obermid", "New Tarant", "Pachuco", "Voltemand", "Bojana",
+		"Gorgonia", "Pintax", "Xatill", "Nefalia", "Polmuss",
+		"New Carthage", "Forsarr", "Capilene", "Minisotira", "Deneb",
+		"Thea", "Ando", "Iapetus", "Klimt", "Astrakhan",
+		"Atlas", "Veles", "Pannonia", "Murom", "Khorinis",
+		"Endymion", "Vall Major", "Praste", "Korabaellan", "Korvaran",
+		"Muoskaerl", "Alteraan", "Veritas", "Telenor", "Selene",
+		"Climaxus", "Corkanium", "Peripheris", "Intarme", "Quintus Superior",
+		"Zaporozhye", "Pontus", "Haliphax", "Perun", "Judean",
+		"Felisian", "Nirn", "Biik", "Starrym", "Morrowynd",
+		"Tintangiel", "Kuhrwax", "Avalon", "Vyndyalii", "Zaphonia",
+		"Zinerra", "Ullatarin", "Vaelis", "Chimaera", "Arkhamis",
+		"Shadow Hearth", "Naeraea", "Pandora", "Lorvarian", "Nova Terra",
+		"Roserias", "Rybiern", "Fastoon", "Belden", "Velden",
+		"Grenada", "Raiken", "Koros", "Toledo", "Valyria",
+		"Dead Cell", "Ghis", "Canukistan", "Gyratio", "Fistiox",
+		"Adolphian", "Quarth", "Dornus Noangulus", "Dornari", "Husania",
+		"Urslavik", "Creedia", "Ulfa", "Amerigo", "Tilfis",
+		"Rovno", "Reno", "Constantinopolis", "Istanpulia", "Inuit",
+		"Grave", "Vardenfeld", "Scorched Citadel", "Hammerfront", "Huldwynia",
+		"Brabastis", "Diherim", "Yhette", "Retsam Retpahc", "Black Creek",
+		"Tungusta", "Pugio", "Yavin", "Kup Teraz", "Serenity",
+		"Kurimizon", "Tuskus", "Whitefall", "Zalia", "Regina",
+		"Kim Jong", "Vandiria", "Pearia", "Sheol", "Libertania",
+		"Woden", "Guderian", "Edelweiss", "Gotenland", "Theodorichshaven",
+		"Batoria", "Betechton", "Natsigan", "Haboga", "Mard"
+	]
 
-	repeat(100){
+	for(var i=0; i<100; i++){
+	    if (ok==0){
+			num=planet_names[rand];
 
-	    if (ok=0){
-	        if (rand=1) then num="Terak";
-	        if (rand=2) then num="Roma";
-	        if (rand=3) then num="Noctae";
-	        if (rand=4) then num="Piscium";
-	        if (rand=5) then num="Illan";
-	        if (rand=6) then num="Xi-He";
-	        if (rand=7) then num="Carinae";
-	        if (rand=8) then num="Skuse";
-	        if (rand=9) then num="Voltantis";
-	        if (rand=10) then num="Vidi";
-	        if (rand=11) then num="Hasta";
-	        if (rand=12) then num="Dagon";
-	        if (rand=13) then num="Pocki";
-	        if (rand=14) then num="Resheph";
-	        if (rand=15) then num="Hemera";
-	        if (rand=16) then num="Iman";
-	        if (rand=17) then num="Chorta";
-	        if (rand=18) then num="Atlanta";
-	        if (rand=19) then num="Lyncis";
-	        if (rand=20) then num="Modgud";
-	        if (rand=21) then num="Oynyena";
-	        if (rand=22) then num="Onian";
-	        if (rand=23) then num="Helen";
-	        if (rand=24) then num="Canum";
-	        if (rand=25) then num="Qetesh";
-	        if (rand=26) then num="Skonii";
-	        if (rand=27) then num="Lytir";
-	        if (rand=28) then num="Corvi";
-	        if (rand=29) then num="Yogneek";
-	        if (rand=30) then num="Delphini";
-	        if (rand=31) then num="Freya";
-	        if (rand=32) then num="Gaima";
-	        if (rand=33) then num="Vespae";
-	        if (rand=34) then num="Endiku";
-	        if (rand=35) then num="Menthu";
-	        if (rand=36) then num="Elyon";
-	        if (rand=37) then num="Gone";
-	        if (rand=38) then num="Baxu";
-	        if (rand=39) then num="Maghda";
-	        if (rand=40) then num="Leporis";
-	        if (rand=41) then num="Tiamat";
-	        if (rand=42) then num="Ceti";
-	        if (rand=43) then num="Atep";
-	        if (rand=44) then num="Amon";
-	        if (rand=45) then num="Asherah";
-	        if (rand=46) then num="Xu Xiu";
-	        if (rand=47) then num="Gonj Mik";
-	        if (rand=48) then num="Zentra";
-	        if (rand=49) then num="Azeroth";
-	        if (rand=50) then num="Morphua";
-	        if (rand=51) then num="Muric";
-	        if (rand=52) then num="Sextanis";
-	        if (rand=53) then num="Betelgeuse";
-	        if (rand=54) then num="Soachton";
-	        if (rand=55) then num="Ao-Chin";
-	        if (rand=56) then num="Hordi";
-	        if (rand=57) then num="Crucis";
-	        if (rand=58) then num="Lustania";
-	        if (rand=59) then num="Albion";
-	        if (rand=60) then num="Bongistan";
-	        if (rand=61) then num="Orwell";
-	        if (rand=62) then num="Dagobah";
-	        if (rand=63) then num="Outer Heaven";
-	        if (rand=64) then num="Sodden Hollow";
-	        if (rand=65) then num="Protasia";
-	        if (rand=66) then num="Veneria";
-	        if (rand=67) then num="Iocanthus";
-	        if (rand=68) then num="Quaddis";
-	        if (rand=69) then num="Belahaam";
-	        if (rand=70) then num="Scarric";
-	        if (rand=71) then num="Gelmito";
-	        if (rand=72) then num="Josian";
-	        if (rand=73) then num="Turanshush";
-	        if (rand=74) then num="Balecaster";
-	        if (rand=75) then num="Belacane";
-	        if (rand=76) then num="Avitohol";
-	        if (rand=77) then num="Brassica";
-	        if (rand=78) then num="Sinophia";
-	        if (rand=79) then num="Skyren";
-	        if (rand=80) then num="Antioch";
-	        if (rand=81) then num="Balanor";
-	        if (rand=82) then num="Cathox";
-	        if (rand=83) then num="Mahr'douk";
-	        if (rand=84) then num="Mordax";
-	        if (rand=85) then num="Phall";
-	        if (rand=86) then num="Vilhadran";
-	        if (rand=87) then num="Chaeros";
-	        if (rand=88) then num="Yaymar";
-	        if (rand=89) then num="Orax";
-	        if (rand=90) then num="Laurentix";
-	        if (rand=91) then num="Belisimar";
-	        if (rand=92) then num="Vigilatum";
-	        if (rand=93) then num="Korolis";
-	        if (rand=94) then num="Stryken";
-	        if (rand=95) then num="Tephaine";
-	        if (rand=96) then num="Chinchare";
-	        if (rand=97) then num="Galathamar";
-	        if (rand=98) then num="Lordran";
-	        if (rand=99) then num="Thasia";
-	        if (rand=100) then num="Lycosidae";
-	        if (rand=101) then num="Purgatrex";
-	        if (rand=102) then num="Sabbatorus";
-	        if (rand=103) then num="Lysades";
-	        if (rand=104) then num="Jerulas";
-	        if (rand=105) then num="Ornsworld";
-	        if (rand=106) then num="Treconandal";
-	        if (rand=107) then num="Jubal";
-	        if (rand=108) then num="Mordian";
-	        if (rand=109) then num="Khardeph";
-	        if (rand=110) then num="Anticanis";
-	        if (rand=111) then num="Landersund";
-	        if (rand=112) then num="Aquasulis";
-	        if (rand=113) then num="Uristes";
-	        if (rand=114) then num="Euphrate";
-	        if (rand=115) then num="Menazoid";
-	        if (rand=116) then num="Jaego";
-	        if (rand=117) then num="Canemara";
-	        if (rand=118) then num="Seadelant";
-	        if (rand=119) then num="Ostrola";
-	        if (rand=120) then num="Ilbira";
-	        if (rand=121) then num="Carshim";
-	        if (rand=122) then num="Addolorata";
-	        if (rand=123) then num="Dolsene";
-	        if (rand=124) then num="Bolanion";
-	        if (rand=125) then num="Solveig";
-	        if (rand=126) then num="Frengold";
-	        if (rand=127) then num="Urdesh";
-	        if (rand=128) then num="Fornax";
-	        if (rand=129) then num="Cociaminus";
-	        if (rand=130) then num="Verghast";
-	        if (rand=131) then num="Ancreon";
-	        if (rand=132) then num="Amedeo";
-	        if (rand=133) then num="Armatura";
-	        if (rand=134) then num="Nuceria";
-	        if (rand=135) then num="Konor";
-	        if (rand=136) then num="Isstvan";
-	        if (rand=137) then num="Paramar";
-	        if (rand=138) then num="Bucephalon";
-	        if (rand=139) then num="Ghourra";
-	        if (rand=140) then num="Kerondys";
-	        if (rand=141) then num="Lyubov";
-	        if (rand=142) then num="Parthenope";
-	        if (rand=143) then num="Rosangela";
-	        if (rand=144) then num="Sapiencia";
-	        if (rand=145) then num="Summaminus";
-	        if (rand=146) then num="Taliscant";
-	        if (rand=147) then num="Stalinvast"; 
-	        if (rand=148) then num="Denova";
-	        if (rand=149) then num="Tibrias";
-	        if (rand=150) then num="Polonus";
-	        if (rand=150) then num="Petrostock";
-	        if (rand=151) then num="Tunusk";
-	        if (rand=152) then num="Venady";
-	        if (rand=153) then num="Voltemand";
-	        if (rand=154) then num="Anark Zeta";
-	        if (rand=155) then num="Atar-Median";
-	        if (rand=156) then num="Cabulis";
-	        if (rand=157) then num="Enceladus";
-	        if (rand=158) then num="Sarum";
-	        if (rand=159) then num="Incaldion";
-	        if (rand=160) then num="M'khand";
-	        if (rand=161) then num="Sabatine";
-	        if (rand=162) then num="Orestes";
-	        if (rand=163) then num="Stygies";
-	        if (rand=164) then num="Vasalius";
-	        if (rand=165) then num="Vordrast";
-	        if (rand=166) then num="Boonhaven";
-	        if (rand=167) then num="Barbarus";
-	        if (rand=168) then num="Mandragoran";
-	        if (rand=169) then num="Anphelion";
-	        if (rand=170) then num="Solstice";
-	        if (rand=171) then num="Inwit";
-	        if (rand=172) then num="Magdelene";
-	        if (rand=173) then num="Ghorstangrad";
-	        if (rand=174) then num="Kastorel";
-	        if (rand=175) then num="Borsis";
-	        if (rand=176) then num="Volistad";
-	        if (rand=177) then num="Mortant";
-	        if (rand=178) then num="Ogrolla";
-	        if (rand=179) then num="Tallarax";
-	        if (rand=180) then num="Viridios";
-	        if (rand=181) then num="Somonor";
-	        if (rand=182) then num="Urphir";
-	        if (rand=183) then num="Loki";
-	        if (rand=184) then num="Varsavus";
-	        if (rand=185) then num="Vagorn";
-	        if (rand=186) then num="Zeist";
-	        if (rand=187) then num="Sigilare";
-	        if (rand=188) then num="Aeschylrai";
-	        if (rand=189) then num="Accatran";
-	        if (rand=190) then num="Metalica";
-	        if (rand=191) then num="Kolossi";
-	        if (rand=192) then num="Espandor";
-	        if (rand=193) then num="Voltoris";
-	        if (rand=194) then num="Draconis";
-	        if (rand=195) then num="Luxor";
-	        if (rand=196) then num="Au'taal";
-	        if (rand=197) then num="Badab";
-	        if (rand=198) then num="Alaric";
-	        if (rand=199) then num="Yithic";
-	        if (rand=200) then num="Tolkhan";
-	        if (rand=201) then num="Crematis";
-	        if (rand=202) then num="Pixor";
-	        if (rand=203) then num="Bellephon";
-	        if (rand=204) then num="Boucherin";
-	        if (rand=205) then num="Chemos";
-	        if (rand=206) then num="Corinthe";
-	        if (rand=207) then num="Corrinos";
-	        if (rand=208) then num="Cytheria";
-	        if (rand=209) then num="Damnos";
-	        if (rand=210) then num="Davin";
-	        if (rand=211) then num="Drisinta";
-	        if (rand=212) then num="Dynathi";
-	        if (rand=213) then num="Eorcshia";
-	        if (rand=214) then num="Gardinaal";
-	        if (rand=215) then num="Fergax";
-	        if (rand=216) then num="Taros";
-	        if (rand=217) then num="Garevo";
-	        if (rand=218) then num="Blasted Heath";
-	        if (rand=219) then num="Haletho";
-	        if (rand=220) then num="Hammeront";
-	        if (rand=221) then num="Honourum";
-	        if (rand=222) then num="Nidus Diptera";
-	        if (rand=223) then num="Optera";
-	        if (rand=224) then num="Menopetra";
-	        if (rand=225) then num="Jjojos";
-	        if (rand=226) then num="Kaelas";
-	        if (rand=227) then num="Ichar";
-	        if (rand=228) then num="Jhanna";
-	        if (rand=229) then num="Incaladion";
-	        if (rand=230) then num="Iolac";
-	        if (rand=231) then num="Krastellan";
-	        if (rand=232) then num="Lunaphage";
-	        if (rand=233) then num="Memlok";
-	        if (rand=234) then num="Arradin";
-	        if (rand=235) then num="M'khan";
-	        if (rand=236) then num="Miral";
-	        if (rand=237) then num="Neverlight";
-	        if (rand=238) then num="Moloch";
-	        if (rand=239) then num="Tatarstia";
-	        if (rand=240) then num="Veracia";
-	        if (rand=241) then num="New Veracia";
-	        if (rand=242) then num="New Varsavus";
-	        if (rand=243) then num="New Petrostock";
-	        if (rand=244) then num="New Thasia";
-	        if (rand=245) then num="Lohab";
-	        if (rand=246) then num="Lalam";
-	        if (rand=247) then num="Lowam";
-	        if (rand=248) then num="Obsidia";
-	        if (rand=249) then num="Nihilas";
-	        if (rand=250) then num="Molech";
-	        if (rand=251) then num="Olympia";
-	        if (rand=252) then num="Pavonis";
-	        if (rand=253) then num="Providence";
-	        if (rand=254) then num="Radnar";
-	        if (rand=255) then num="Sotha";
-	        if (rand=256) then num="Sulis";
-	        if (rand=257) then num="Niflheim";
-	        if (rand=258) then num="Schindelgheist";
-	        if (rand=259) then num="Jotunheim";
-	        if (rand=260) then num="Tarturga";
-	        if (rand=261) then num="Ursidhe-Ka";
-	        if (rand=262) then num="Zathatethus";
-	        if (rand=263) then num="Hynnes";
-	        if (rand=264) then num="Ammonai";
-	        if (rand=265) then num="Dirge";
-	        if (rand=266) then num="Nexaris";
-	        if (rand=267) then num="Circe";
-	        if (rand=268) then num="Kallas";
-	        if (rand=269) then num="Jursa";
-	        if (rand=270) then num="Parmenio";
-	        if (rand=271) then num="Quintarn";
-	        if (rand=272) then num="Tycor";
-	        if (rand=273) then num="Masali";
-	        if (rand=274) then num="Mordan";
-	        if (rand=275) then num="Frankonia";
-	        if (rand=276) then num="Maesa";
-	        if (rand=277) then num="Laconia";
-	        if (rand=278) then num="Nicaea";
-	        if (rand=279) then num="Hellsiris";
-	        if (rand=280) then num="Apollonia";
-	        if (rand=281) then num="Naogeddon";
-	        if (rand=282) then num="Sarcosa ";
-	        if (rand=283) then num="Tanhaus";
-	        if (rand=284) then num="Athelaq";
-	        if (rand=285) then num="K'phra";
-	        if (rand=286) then num="Athelaq";
-	        if (rand=287) then num="Tyrannis";
-	        if (rand=288) then num="Solitude";
-	        if (rand=289) then num="Skgorria";
-	        if (rand=290) then num="Atopiana";
-	        if (rand=291) then num="Hataria";
-	        if (rand=292) then num="Boneyard";
-	        if (rand=293) then num="Hypnoth";
-	        if (rand=294) then num="Hydraphur";
-	        if (rand=295) then num="Barvaria";
-	        if (rand=296) then num="Doranno";
-	        if (rand=297) then num="Drathorian";
-	        if (rand=298) then num="Kraeg";
-	        if (rand=299) then num="Graia";
-	        if (rand=300) then num="Minerva";
-	        if (rand=301) then num="Gehenna";
-	        if (rand=302) then num="Mortarius";
-	        if (rand=303) then num="Zindleschlitz";
-	        if (rand=304) then num="Acteron";
-	        if (rand=305) then num="Quintox";
-	        if (rand=306) then num="Dreadhaven";
-	        if (rand=307) then num="Pandorax";
-	        if (rand=308) then num="Pythos";
-	        if (rand=309) then num="Thandros";
-	        if (rand=310) then num="Ymgarl";
-	        if (rand=311) then num="Raeden";
-	        if (rand=312) then num="Koralkal";
-	        if (rand=313) then num="Zorastra";
-	        if (rand=314) then num="Hagia";
-	        if (rand=315) then num="Knowhere"; //someone enjoyed GotG
-	        if (rand=316) then num="Mattiax";
-	        if (rand=317) then num="Wardian";
-	        if (rand=318) then num="Airephal";
-	        if (rand=319) then num="Xagem";
-	        if (rand=320) then num="Cegorachi";
-	        if (rand=321) then num="Jomungandr";
-	        if (rand=322) then num="Nostramo";
-	        if (rand=323) then num="Stygia";
-	        if (rand=324) then num="Incanda";
-	        if (rand=325) then num="Haeraphya";
-	        if (rand=326) then num="Lycaeum";
-	        if (rand=327) then num="Contqual";
-	        if (rand=328) then num="Gorro";
-	        if (rand=329) then num="Flint";
-	        if (rand=330) then num="Deus";
-	        if (rand=331) then num="Persya";
-	        if (rand=332) then num="Heloeum";
-	        if (rand=333) then num="Devilus";
-	        if (rand=334) then num="Agathon";
-	        if (rand=335) then num="Anvilus";
-	        if (rand=336) then num="Vostroya";
-	        if (rand=337) then num="Groznyj Grad"; //GLORY TO MOTHER RUSSIA
-	        if (rand=338) then num="Artaxerxes";
-	        if (rand=339) then num="Solania";
-	        if (rand=340) then num="Barathred";
-	        if (rand=341) then num="Desperation";
-	        if (rand=342) then num="Fargotia";
-	        if (rand=343) then num="New Aiur";
-	        if (rand=344) then num="New Stalinvast";
-	        if (rand=345) then num="Beroghast";
-	        if (rand=346) then num="Heilog’s Star";
-	        if (rand=347) then num="Azghrax";
-	        if (rand=348) then num="Coriolanthe";
-	        if (rand=349) then num="Krumpville";
-	        if (rand=350) then num="Dimmamak";
-	        if (rand=351) then num="Primordial Frost";
-	        if (rand=352) then num="Mordax Prime";
-	        if (rand=353) then num="Angelus";
-	        if (rand=354) then num="Ephrath";
-	        if (rand=355) then num="Theboze";
-	        if (rand=356) then num="Urmox";
-	        if (rand=357) then num="Felcarn";
-	        if (rand=358) then num="Mathog";
-	        if (rand=359) then num="Forrax";
-	        if (rand=360) then num="Ganymethia";
-	        if (rand=361) then num="Ghenna";
-	        if (rand=362) then num="Bodt";
-	        if (rand=363) then num="Haringvleet";
-	        if (rand=364) then num="Hollonan";
-	        if (rand=365) then num="Hexxo";
-	        if (rand=366) then num="Hadriath";
-	        if (rand=367) then num="Ironholm";
-	        if (rand=368) then num="Hamilcar";
-	        if (rand=369) then num="Kartheope";
-	        if (rand=370) then num="Canis Canem";
-	        if (rand=371) then num="Ksatella";
-	        if (rand=372) then num="Magdellan";
-	        if (rand=373) then num="Manticore";
-	        if (rand=374) then num="Malodrax";
-	        if (rand=375) then num="Castellax";
-	        if (rand=376) then num="Thanatar";
-	        if (rand=377) then num="Vraks";
-	        if (rand=378) then num="Penumbra";
-	        if (rand=379) then num="Siriua";
-	        if (rand=380) then num="Impetus";
-	        if (rand=381) then num="Bretonia";
-	        if (rand=382) then num="Lesser Mantelius";
-	        if (rand=383) then num="Botmur";
-	        if (rand=384) then num="Signus Prime";
-	        if (rand=385) then num="Quintaine";
-	        if (rand=386) then num="Oranos";
-	        if (rand=387) then num="Hyperion";
-	        if (rand=388) then num="Leto";
-	        if (rand=389) then num="Pervigilium";
-	        if (rand=390) then num="Vergilian";
-	        if (rand=391) then num="Zuerlais";
-	        if (rand=392) then num="Ullanor";
-	        if (rand=393) then num="Shadrac";
-	        if (rand=394) then num="Sondheim";
-	        if (rand=395) then num="Rostern";
-	        if (rand=396) then num="Protheus";
-	        if (rand=397) then num="Kronos";
-	        if (rand=398) then num="Tartarus";
-	        if (rand=399) then num="Portenus";
-	        if (rand=400) then num="Borealum";
-	        if (rand=401) then num="New Tanith";
-	        if (rand=402) then num="Red Reach";
-	        if (rand=403) then num="Bella";
-	        if (rand=404) then num="Vaxhallia";
-	        if (rand=405) then num="Varestus";
-	        if (rand=406) then num="Gangrenous Rot";
-	        if (rand=407) then num="Yaogeddon";
-	        if (rand=408) then num="Ygetheddon";
-	        if (rand=409) then num="Yoggoth";
-	        if (rand=410) then num="Jagga";
-	        if (rand=411) then num="Indra-sul";
-	        if (rand=412) then num="Dregeddon";
-	        if (rand=413) then num="Scarus";
-	        if (rand=414) then num="Vieglehaven";
-	        if (rand=415) then num="Callistus";
-	        if (rand=416) then num="Majorial";
-	        if (rand=417) then num="Cerastus";
-	        if (rand=418) then num="Venator";
-	        if (rand=419) then num="Macharia";
-	        if (rand=420) then num="Loikik";
-	        if (rand=421) then num="Erasmus";
-	        if (rand=422) then num="Eskarne";
-	        if (rand=423) then num="Dymphna";
-	        if (rand=424) then num="Moritia Prime";
-	        if (rand=425) then num="Borisia";
-	        if (rand=426) then num="Carthage";
-	        if (rand=427) then num="Suphera";
-	        if (rand=428) then num="Ghourra";
-	        if (rand=429) then num="Califor";
-	        if (rand=430) then num="Tarant";
-	        if (rand=431) then num="Chanicia";
-	        if (rand=432) then num="Herodor";
-	        if (rand=433) then num="Heskeloth";
-	        if (rand=434) then num="Mehitabel";
-	        if (rand=435) then num="Presarius";
-	        if (rand=436) then num="Obermid";
-	        if (rand=437) then num="New Tarant";
-	        if (rand=438) then num="Pachuco";
-	        if (rand=439) then num="Voltemand";
-	        if (rand=440) then num="Bojana";
-	        if (rand=441) then num="Gorgonia";
-	        if (rand=442) then num="Pintax";
-	        if (rand=443) then num="Xatill";
-	        if (rand=444) then num="Nefalia";
-	        if (rand=445) then num="Polmuss";
-	        if (rand=446) then num="New Carthage";
-	        if (rand=447) then num="Forsarr";
-	        if (rand=448) then num="Capilene";
-	        if (rand=449) then num="Minisotira";
-	        if (rand=450) then num="Deneb";
-	        if (rand=451) then num="Thea";
-	        if (rand=452) then num="Ando";
-	        if (rand=453) then num="Iapetus";
-	        if (rand=454) then num="Klimt";
-	        if (rand=455) then num="Astrakhan";
-	        if (rand=456) then num="Atlas";
-	        if (rand=457) then num="Veles";
-	        if (rand=458) then num="Pannonia";
-	        if (rand=459) then num="Murom";
-	        if (rand=460) then num="Khorinis";
-	        if (rand=461) then num="Endymion";
-	        if (rand=462) then num="Vall Major";
-	        if (rand=463) then num="Praste";
-	        if (rand=464) then num="Korabaellan";
-	        if (rand=465) then num="Korvaran";
-	        if (rand=466) then num="Muoskaerl";
-	        if (rand=467) then num="Alteraan";
-	        if (rand=468) then num="Veritas";
-	        if (rand=469) then num="Telenor";
-	        if (rand=470) then num="Selene";
-	        if (rand=471) then num="Climaxus";
-	        if (rand=472) then num="Corkanium";
-	        if (rand=473) then num="Peripheris";
-	        if (rand=474) then num="Intarme";
-	        if (rand=475) then num="Quintus Superior";
-	        if (rand=476) then num="Zaporozhye";
-	        if (rand=477) then num="Pontus";
-	        if (rand=478) then num="Haliphax";
-	        if (rand=479) then num="Perun";
-	        if (rand=480) then num="Judean";
-	        if (rand=481) then num="Felisian";
-	        if (rand=482) then num="Nirn";
-	        if (rand=483) then num="Biik";
-	        if (rand=484) then num="Starrym";
-	        if (rand=485) then num="Morrowynd";
-	        if (rand=486) then num="Tintangiel";
-	        if (rand=487) then num="Kuhrwax";
-	        if (rand=488) then num="Avalon";
-	        if (rand=489) then num="Vyndyalii";
-	        if (rand=490) then num="Zaphonia";
-	        if (rand=491) then num="Zinerra";
-	        if (rand=492) then num="Ullatarin";
-	        if (rand=493) then num="Vaelis";
-	        if (rand=494) then num="Chimaera";
-	        if (rand=495) then num="Arkhamis";
-	        if (rand=496) then num="Shadow Hearth";
-	        if (rand=497) then num="Naeraea";
-	        if (rand=498) then num="Pandora";
-	        if (rand=499) then num="Lorvarian";
-	        if (rand=500) then num="Nova Terra";
-	        if (rand=501) then num="Roserias"; 
-	        if (rand=502) then num="Rybiern"; 
-	        if (rand=504) then num="Fastoon"; 
-	        if (rand=505) then num="Belden"; 
-	        if (rand=506) then num="Velden"; 
-	        if (rand=507) then num="Grenada"; 
-	        if (rand=508) then num="Raiken"; 
-	        if (rand=509) then num="Koros"; 
-	        if (rand=510) then num="Toledo"; 
-	        if (rand=511) then num="Valyria"; 
-	        if (rand=512) then num="Dead Cell"; 
-	        if (rand=513) then num="Ghis"; 
-	        if (rand=514) then num="Canukistan"; 
-	        if (rand=515) then num="Gyratio"; 
-	        if (rand=516) then num="Fistiox"; 
-	        if (rand=517) then num="Adolphian"; 
-	        if (rand=518) then num="Quarth"; 
-	        if (rand=519) then num="Dornus Noangulus"; 
-	        if (rand=520) then num="Dornari"; 
-	        if (rand=521) then num="Husania"; 
-	        if (rand=522) then num="Urslavik"; 
-	        if (rand=523) then num="Creedia"; 
-	        if (rand=524) then num="Ulfa"; 
-	        if (rand=525) then num="Amerigo"; 
-	        if (rand=526) then num="Tilfis"; 
-	        if (rand=527) then num="Rovno"; 
-	        if (rand=528) then num="Reno"; 
-	        if (rand=529) then num="Constantinopolis"; 
-	        if (rand=530) then num="Istanpulia"; 
-	        if (rand=531) then num="Inuit"; 
-	        if (rand=532) then num="Grave"; 
-	        if (rand=533) then num="Vardenfeld"; 
-	        if (rand=534) then num="Scorched Citadel"; 
-	        if (rand=535) then num="Hammerfront"; 
-	        if (rand=536) then num="Huldwynia"; 
-	        if (rand=537) then num="Brabastis"; 
-	        if (rand=538) then num="Diherim"; 
-	        if (rand=539) then num="Yhette"; 
-	        if (rand=540) then num="Retsam Retpahc"; 
-	        if (rand=541) then num="Black Creek"; 
-	        if (rand=542) then num="Tungusta"; 
-	        if (rand=543) then num="Pugio"; 
-	        if (rand=544) then num="Yavin"; 
-	        if (rand=545) then num="Kup Teraz"; //what the fuck, Buy Now? someone purge the Poles
-	        if (rand=546) then num="Serenity"; 
-	        if (rand=547) then num="Kurimizon"; 
-	        if (rand=548) then num="Tuskus"; 
-	        if (rand=549) then num="Whitefall"; 
-	        if (rand=550) then num="Zalia"; 
-	        if (rand=551) then num="Regina";
-	        if (rand=552) then num="Kim Jong";
-	        if (rand=553) then num="Vandiria"; 
-	        if (rand=554) then num="Pearia"; 
-	        if (rand=555) then num="Sheol"; 
-	        if (rand=556) then num="Libertania"; 
-	        if (rand=557) then num="Woden"; 
-	        if (rand=558) then num="Guderian"; 
-	        if (rand=559) then num="Edelweiss"; //und sie heisst Erika
-	        if (rand=560) then num="Gotenland"; 
-	        if (rand=561) then num="Theodorichshaven"; 
-	        if (rand=562) then num="Batoria"; 
-	        if (rand=563) then num="Betechton";
-	        if (rand=564) then num="Natsigan";
-	        if (rand=565) then num="Haboga";
-	        if (rand=566) then num="Mard";
-
-	        if (instance_exists(obj_controller)){if (obj_controller.diplomacy=6){return(num);exit;}}
+	        if (instance_exists(obj_controller)){
+				if (obj_controller.diplomacy=6){
+					return(num);
+					exit;
+				}
+			}
         
-	        if (instance_exists(obj_controller)){if (string_count(num,obj_controller.star_names)=0){obj_controller.star_names+=num;name=num;ok=1;}}
+	        if (instance_exists(obj_controller)){
+				if (string_count(num,obj_controller.star_names)==0){
+					obj_controller.star_names+=num;
+					name=num;
+					ok=1;
+				}
+			}
 	        if (!instance_exists(obj_controller)) then return(num);
-	        if (num="") then ok=0;
-
-
-
-
+	        if (num=="") then ok=0;
 	    }
-
-
-
 	}
-
-
 }
