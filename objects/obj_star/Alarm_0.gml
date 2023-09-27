@@ -64,74 +64,93 @@ if (space_hulk==1){
 }
 // Sets up the star type
 var rui=choose(0,0,0,0,1,1,2,2,3,4,5);
-if (rui==0){
-    star="orange1";
-    image_index=0;
-}
-if (rui==1){
-    star="orange2";
-    image_index=1;
-}
-if (rui==2){
-    star="red";
-    image_index=2;
-}
-if (rui==3){
-    star="white1";
-    image_index=3;
-}
-if (rui==4){
-    star="white2";
-    image_index=4;
-}
-if (rui==5){
-    star="blue";
-    image_index=5;
+switch (rui) {
+    case 0:
+        star = "orange1";
+        image_index = 0;
+        break;
+    case 1:
+        star = "orange2";
+        image_index = 1;
+        break;
+    case 2:
+        star = "red";
+        image_index = 2;
+        break;
+    case 3:
+        star = "white1";
+        image_index = 3;
+        break;
+    case 4:
+        star = "white2";
+        image_index = 4;
+        break;
+    case 5:
+        star = "blue";
+        image_index = 5;
+        break;
 }
 image_speed=0;
 image_alpha=1;
 // Sets up number of planets per star
-if (star=="orange1") or (star=="orange2") then planets=choose(1,2,3,3,4);
-if (star=="red") then planets=choose(1,2,3);
-if (star=="white1") or (star=="white2") then planets=choose(1,1,2);
-if (star=="blue") then planets=1;
+switch (star) {
+    case "orange1":
+    case "orange2":
+        planets = choose(1, 2, 3, 3, 4);
+        break;
+    case "red":
+        planets = choose(1, 2, 3);
+        break;
+    case "white1":
+    case "white2":
+        planets = choose(1, 1, 2);
+        break;
+    case "blue":
+        planets = 1;
+        break;
+}
 // Sets the planet type and owners
-if (star=="orange1") or (star=="orange2"){
-    for(rui=1; rui<=4; rui++){
-        if (planets>=rui){
-            planet[rui]=1;
-            p_type[rui]=choose("Temperate","Temperate",choose("Temperate","Shrine"),"Feudal","Agri","Death","Desert","Ice","Hive");
-            if (p_type[rui]=="Agri") or (p_type[rui]=="Hive"){
-                p_owner[rui]=2;
-                p_first[rui]=2;
+switch (star) {
+    case "orange1":
+    case "orange2":
+        for (rui = 1; rui <= 4; rui++) {
+            if (planets >= rui) {
+                planet[rui] = 1;
+                p_type[rui] = choose("Temperate", "Temperate", choose("Temperate", "Shrine"), "Feudal", "Agri", "Death", "Desert", "Ice", "Hive");
+                if (p_type[rui] == "Agri" || p_type[rui] == "Hive") {
+                    p_owner[rui] = 2;
+                    p_first[rui] = 2;
+                }
             }
         }
-    }
-}
-if (star=="red"){
-    for(rui=1; rui<=4; rui++){
-        if (planets>=rui){
-            planet[rui]=1;
-            p_type[rui]=choose(choose("Temperate","Temperate","Temperate","Feudal","Feudal","Shrine"),"Desert","Dead","Hive","Lava");
+        break;
+    case "red":
+        for (rui = 1; rui <= 4; rui++) {
+            if (planets >= rui) {
+                planet[rui] = 1;
+                p_type[rui] = choose(choose("Temperate", "Temperate", "Temperate", "Feudal", "Feudal", "Shrine"), "Desert", "Dead", "Hive", "Lava");
+            }
         }
-    }
-}
-if (star=="white1") or (star=="white2"){
-    for(rui=1; rui<=4; rui++){
-        if (planets>=rui){
-            planet[rui]=1;
-            p_type[rui]=choose(choose("Temperate","Temperate","Temperate","Feudal","Feudal","Shrine"),"Death","Ice","Hive","Dead");
+        break;
+    case "white1":
+    case "white2":
+        for (rui = 1; rui <= 4; rui++) {
+            if (planets >= rui) {
+                planet[rui] = 1;
+                p_type[rui] = choose(choose("Temperate", "Temperate", "Temperate", "Feudal", "Feudal", "Shrine"), "Death", "Ice", "Hive", "Dead");
+            }
         }
-    }
-}
-if (star=="blue"){
-    for(rui=1; rui<=4; rui++){
-        if (planets>=rui){
-            planet[rui]=1;
-            p_type[rui]=choose(choose("Temperate","Temperate","Temperate","Feudal","Feudal","Shrine"),"Ice","Ice","Dead","Dead");
+        break;
+    case "blue":
+        for (rui = 1; rui <= 4; rui++) {
+            if (planets >= rui) {
+                planet[rui] = 1;
+                p_type[rui] = choose(choose("Temperate", "Temperate", "Temperate", "Feudal", "Feudal", "Shrine"), "Ice", "Ice", "Dead", "Dead");
+            }
         }
-    }
+        break;
 }
+
 // Premade systems with planet types
 switch (name) {
     case "Kim Jong":
