@@ -73,18 +73,18 @@ if (onceh == 0) {
 onceh=0;
 pdf=p_target.p_pdf[obj_controller.selecting_planet];
 if (onceh = 0) {
-    if (imp >= 50000000) {
-        imp = 6;
-    } else if (imp >= 15000000) {
-        imp = 5;
-    } else if (imp >= 6000000) {
-        imp = 4;
-    } else if (imp >= 1000000) {
-        imp = 3;
-    } else if (imp >= 100000) {
-        imp = 2;
-    } else if (imp >= 2000) {
-        imp = 1;
+    if (pdf >= 50000000) {
+        pdf = 6;
+    } else if (pdf >= 15000000) {
+        pdf = 5;
+    } else if (pdf >= 6000000) {
+        pdf = 4;
+    } else if (pdf >= 1000000) {
+        pdf = 3;
+    } else if (pdf >= 100000) {
+        pdf = 2;
+    } else if (pdf >= 2000) {
+        pdf = 1;
     }
     onceh = 1;
 }
