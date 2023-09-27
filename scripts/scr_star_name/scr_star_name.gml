@@ -135,7 +135,7 @@ function scr_star_name() {
 		"Batoria", "Betechton", "Natsigan", "Haboga", "Mard"
 	]
 
-	var ok=0,num="",rand=floor(irandom(array_length(planet_names)-1));
+	var ok=0,num="",rand=irandom(array_length(planet_names)-1);
 
 	for(var i=0; i<100; i++){
 	    if (ok==0){
