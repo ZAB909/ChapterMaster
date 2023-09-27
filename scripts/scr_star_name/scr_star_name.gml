@@ -1,6 +1,4 @@
 function scr_star_name() {
-	var rand, ok=0,num="";
-
 	var planet_names=[
 		"Terak", "Roma", "Noctae", "Piscium", "Illan",
 		"Xi-He", "Carinae", "Skuse", "Voltantis", "Vidi",
@@ -137,7 +135,7 @@ function scr_star_name() {
 		"Batoria", "Betechton", "Natsigan", "Haboga", "Mard"
 	]
 
-	rand=floor(irandom(array_length(planet_names)-1));
+	var ok=0,num="",rand=floor(irandom(array_length(planet_names)-1));
 
 	for(var i=0; i<100; i++){
 	    if (ok==0){
