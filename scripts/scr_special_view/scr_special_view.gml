@@ -31,7 +31,7 @@ function scr_special_view(command_group) {
 		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++;){
 			bad=0;
 			if (obj_ini.name[0,v]== ""){continue;}
-			if (obj_ini.lid[company,v]>0){
+			if (obj_ini.lid[0,v]>0){
 			   var ham;ham=obj_ini.lid[0,v];
 			   if (obj_ini.ship_location[ham]="Lost") then continue;
 			}

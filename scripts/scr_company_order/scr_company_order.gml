@@ -261,6 +261,7 @@ function scr_company_order(company) {
 	        temp_wid[co,v]=wid[co,i];temp_wep1[co,v]=wep1[co,i];temp_wep2[co,v]=wep2[co,i];temp_armour[co,v]=armour[co,i];temp_gear[co,v]=gear[co,i];
 	        temp_hp[co,v]=hp[co,i];temp_chaos[co,v]=chaos[co,i];temp_experience[co,v]=experience[co,i];temp_age[co,v]=age[co,i];
 	        temp_mobi[co,v]=mobi[co,i];temp_spe[co,v]=spe[co,i];temp_god[co,v]=god[co,i];temp_bio[co,v]=bio[co,i];temp_struct[co,v]=jsonify_marine_struct(co,i);
+			show_debug_message("{0}, {1}", TTRPG[co,i].name(),name[co,i])
 	    }
 	}	
 
@@ -379,10 +380,7 @@ function scr_company_order(company) {
 
 	// Return here
 
-
-	i=0;
-	repeat(300){i+=1;
-	    // if (i<=v){
+	for (i=0;i<array_length(temp_name[co]);i++;){
 	        race[co,i]=temp_race[co,i];
 	        loc[co,i]=temp_loc[co,i];
 	        name[co,i]=temp_name[co,i];
@@ -405,7 +403,12 @@ function scr_company_order(company) {
 			if (is_string(temp_struct[co,i])){
 				TTRPG[co,i].load_json_data(json_parse(temp_struct[co,i]));
 				TTRPG[co,i].company = co;
-				TTRPG[co,i].marine = i;
+				TTRPG[co,i].marine_number = i;
+			}
+			if (temp_name[co,i]!=""){
+			show_debug_message("{0}, {1}", TTRPG[co,i].name(),name[co,i]);
+			show_debug_message("{0}, {1}", TTRPG[co,i].company,TTRPG[co,i].marine_number);
+			show_debug_message("{0}, {1}", co,i);
 			}
 
 	    /*}

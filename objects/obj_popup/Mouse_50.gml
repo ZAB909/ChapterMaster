@@ -394,7 +394,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
             if (obj_controller.man[w]="man") and (obj_controller.man_sel[w]=1){
                 var check;check=0;
 				scr_move_unit_info(company,target_comp,obj_controller.ide[w],mahreens);
-                mahreens+=1;
+                mahreens++;
             }
             // This seems to execute the correct number of times
             if (obj_controller.man[w]="vehicle") and (obj_controller.man_sel[w]=1){
