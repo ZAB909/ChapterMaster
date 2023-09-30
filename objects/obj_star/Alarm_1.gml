@@ -7,12 +7,12 @@ for(var i=1; i<=4; i++){
     p_population[i]=0;// 10B
     switch (p_type[i]) {
         case "Lava":
-            p_population[i] = floor(random(1500)) + 500;
+            p_population[i] = irandom(1500) + 500;
             p_station[i] = 2;
             p_max_population[i] = 2000;
             break;
         case "Desert":
-            p_population[i] = floor(random(150000000)) + 100000000;
+            p_population[i] = irandom(150000000) + 100000000;
             p_fortified[i] = choose(2, 3, 4);
             p_station[i] = 3;
             p_max_population[i] = 250000000;
@@ -25,33 +25,33 @@ for(var i=1; i<=4; i++){
             p_max_population[i] = 150;
             break;
         case "Agri":
-            p_population[i] = floor(random(1000000)) + 500000;
+            p_population[i] = irandom(1000000) + 500000;
             p_fortified[i] = choose(0, 1);
             p_station[i] = choose(0, 1);
             p_max_population[i] = 1500000;
             break;
         case "Temperate":
-            p_population[i] = random(4) + 2;
+            p_population[i] = irandom(4) + 2;
             p_large[i] = 1;
             p_fortified[i] = choose(3, 4);
             p_station[i] = choose(3, 4);
             p_max_population[i] = 6;
             break;
         case "Shrine":
-            p_population[i] = random(5) + 3;
+            p_population[i] = irandom(5) + 3;
             p_large[i] = 1;
             p_fortified[i] = choose(4, 5);
             p_station[i] = choose(4, 5);
             p_max_population[i] = 8;
             break;
         case "Ice":
-            p_population[i] = floor(random(13500000)) + 6500000;
+            p_population[i] = irandom(13500000) + 6500000;
             p_fortified[i] = choose(1, 2, 3);
             p_station[i] = choose(1, 2, 3);
             p_max_population[i] = 20000000;
             break;
         case "Feudal":
-            p_population[i] = floor(random(400000000)) + 200000000;
+            p_population[i] = irandom(400000000) + 200000000;
             p_fortified[i] = choose(2, 3);
             p_station[i] = choose(2, 3, 4);
             p_max_population[i] = 600000000;
@@ -64,12 +64,12 @@ for(var i=1; i<=4; i++){
             p_max_population[i] = 30;
             break;
         case "Death":
-            p_population[i] = floor(random(300000)) + 200000;
+            p_population[i] = irandom(300000) + 200000;
             p_station[i] = choose(2, 3);
             p_max_population[i] = 500000;
             break;
         case "Craftworld":
-            p_population[i] = floor(random_range(150000, 300000));
+            p_population[i] = irandom_range(150000, 300000);
             p_station = 6;
             p_max_population[i] = p_population[i];
             break;
@@ -475,4 +475,6 @@ if (p_owner[2]=1){
 }
 
 obj_controller.alarm[9]=2;
-if (obj_controller.is_test_map!=true) and (p_owner[2]!=1){i=0;repeat(4){i+=1;p_guardsmen[i]=0;}}
+if (obj_controller.is_test_map!=true) and (p_owner[2]!=1){
+    for(var i=1; i<=4; i++){p_guardsmen[i]=0;}
+}
