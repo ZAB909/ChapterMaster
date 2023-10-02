@@ -85,10 +85,10 @@ if (obj_controller.selecting_planet>0) and (obj_controller.cooldown<=0){
     // These need work?
     if (butt="Build"){
         var building=instance_create(x,y,obj_temp_build);
-        him.target=self.target;him.planet=obj_controller.selecting_planet;
-        if (planet_feature_bool(target.p_upgrades[obj_controller.selecting_planet], P_features.Secret_Base)) then him.lair=1;
-        if (planet_feature_bool(target.p_upgrades[obj_controller.selecting_planet], P_features.Arsenal)) then him.arsenal=1;
-        if (planet_feature_bool(target.p_upgrades[obj_controller.selecting_planet], P_features.Gene_Vault)) then him.gene_vault=1;
+        building.target=self.target;building.planet=obj_controller.selecting_planet;
+        if (planet_feature_bool(target.p_upgrades[obj_controller.selecting_planet], P_features.Secret_Base)) then building.lair=1;
+        if (planet_feature_bool(target.p_upgrades[obj_controller.selecting_planet], P_features.Arsenal)) then building.arsenal=1;
+        if (planet_feature_bool(target.p_upgrades[obj_controller.selecting_planet], P_features.Gene_Vault)) then building.gene_vault=1;
         
         
         obj_controller.temp[104]=string(scr_master_loc());
@@ -110,7 +110,7 @@ if (obj_controller.selecting_planet>0) and (obj_controller.cooldown<=0){
             if (instance_nearest(x+24,y-24,obj_p_fleet).acted>=2) then with(obj_drop_select){instance_destroy();}
         }
     }
-    if (butt="Purge"){
+    if (butt=="Purge"){
         instance_create(x,y,obj_drop_select);
         obj_drop_select.p_target=self.target;obj_drop_select.purge=1;
         if (target.present_fleet[1]=0) then obj_drop_select.sh_target=-50;
@@ -119,7 +119,7 @@ if (obj_controller.selecting_planet>0) and (obj_controller.cooldown<=0){
             if (instance_nearest(x+24,y-24,obj_p_fleet).acted>0) then with(obj_drop_select){instance_destroy();}
         }
     }
-    if (butt="Bombard"){
+    if (butt=="Bombard"){
         instance_create(x,y,obj_bomb_select);
         if (instance_exists(obj_bomb_select)){
             obj_bomb_select.p_target=self.target;
@@ -142,13 +142,15 @@ if (obj_controller.selecting_planet>0) and (obj_controller.cooldown<=0){
             
             obj_controller.income_recruiting=(obj_controller.recruiting*-2)*string_count("|",obj_controller.recruiting_worlds);
             if (obj_controller.recruiting_worlds_bought=0){
-                if (button1="+Recruiting") then button1="";if (button2="+Recruiting") then button2="";
-                if (button3="+Recruiting") then button3="";if (button4="+Recruiting") then button4="";
+                if (button1=="+Recruiting") then button1="";
+				if (button2=="+Recruiting") then button2="";
+                if (button3=="+Recruiting") then button3="";
+				if (button4=="+Recruiting") then button4="";
             }
             // 135 ; popup?
         }
     }}
-    if (butt="Cyclonic Torpedo"){
+    if (butt=="Cyclonic Torpedo"){
         obj_controller.cooldown=6000;
         scr_destroy_planet(2);
     }    
@@ -163,25 +165,25 @@ if (obj_controller.selecting_planet>0){// Lose focus on no button click
     if (mouse_x>=__view_get( e__VW.XView, 0 )+348) and (mouse_y>=__view_get( e__VW.YView, 0 )+461) and (mouse_x<__view_get( e__VW.XView, 0 )+348+246) and (mouse_y<__view_get( e__VW.YView, 0 )+461+26){
         if (instance_exists(obj_star_select)){
             if (obj_star_select.button1!="") then exit;
-            if (obj_star_select.button1="") then close=true;
+            if (obj_star_select.button1=="") then close=true;
         }
     }
     if (mouse_x>=__view_get( e__VW.XView, 0 )+348) and (mouse_y>=__view_get( e__VW.YView, 0 )+489) and (mouse_x<__view_get( e__VW.XView, 0 )+348+246) and (mouse_y<__view_get( e__VW.YView, 0 )+489+26){
         if (instance_exists(obj_star_select)){
             if (obj_star_select.button2!="") then exit;
-            if (obj_star_select.button2="") then close=true;
+            if (obj_star_select.button2=="") then close=true;
         }
     }
     if (mouse_x>=__view_get( e__VW.XView, 0 )+348) and (mouse_y>=__view_get( e__VW.YView, 0 )+517) and (mouse_x<__view_get( e__VW.XView, 0 )+348+246) and (mouse_y<__view_get( e__VW.YView, 0 )+517+26){
         if (instance_exists(obj_star_select)){
             if (obj_star_select.button2!="") then exit;
-            if (obj_star_select.button2="") then close=true;
+            if (obj_star_select.button2=="") then close=true;
         }
     }
     if (mouse_x>=__view_get( e__VW.XView, 0 )+348) and (mouse_y>=__view_get( e__VW.YView, 0 )+545) and (mouse_x<__view_get( e__VW.XView, 0 )+348+246) and (mouse_y<__view_get( e__VW.YView, 0 )+545+26){
         if (instance_exists(obj_star_select)){
             if (obj_star_select.button2!="") then exit;
-            if (obj_star_select.button2="") then close=true;
+            if (obj_star_select.button2=="") then close=true;
         }
     }
 }
@@ -198,9 +200,12 @@ if (obj_controller.menu=0) and (obj_controller.zoomed=0) and (!instance_exists(o
             if (scr_hit(xx+27+381,yy+165,xx+27+320+381,yy+165+294)=false) then closes+=1;
         }
         if ((closes=1) and (obj_controller.selecting_planet=0)) or (closes=2){cooldown=0;
-            obj_controller.sel_system_x=0;obj_controller.sel_system_y=0;
-            obj_controller.selecting_planet=0;obj_controller.popup=0;
-            obj_controller.cooldown=0;instance_destroy();
+            obj_controller.sel_system_x=0;
+			obj_controller.sel_system_y=0;
+            obj_controller.selecting_planet=0;
+			obj_controller.popup=0;
+            obj_controller.cooldown=0;
+			instance_destroy();
         }
     }
 }
@@ -229,15 +234,18 @@ if (loading=0){
 
     // Exit button
     if (mouse_x>=xx+274) and (mouse_y>=yy+426) and (mouse_x<xx+337) and (mouse_y<yy+451) and (obj_controller.cooldown<=0){
-        obj_controller.sel_system_x=0;obj_controller.sel_system_y=0;
-        obj_controller.popup=0;obj_controller.cooldown=8000;obj_controller.selecting_planet=0;
+        obj_controller.sel_system_x=0;
+		obj_controller.sel_system_y=0;
+        obj_controller.popup=0;
+		obj_controller.cooldown=8000;
+		obj_controller.selecting_planet=0;
         instance_destroy();
     }
 
 }
 
 if (obj_controller.cooldown<=0) and (loading=1){
-    if (mouse_x>=xx+274) and (mouse_y>=yy+426) and (mouse_x<xx+337) and (mouse_y<yy+451){
+	if (point_in_rectangle(mouse_x, mouse_y,xx+274,yy+426,xx+337,yy+451)){
         obj_controller.selecting_planet=0;
         obj_controller.cooldown=8000;
         instance_destroy();
@@ -261,7 +269,7 @@ if (obj_controller.cooldown<=0) and (loading=1){
         if (target.p_problem[obj_controller.selecting_planet,3]="recon") then recon=1;
         if (target.p_problem[obj_controller.selecting_planet,4]="recon") then recon=1;
         if (recon=1){
-            var arti;arti=instance_create(target.x,target.y,obj_temp7);// Unloading / artifact crap
+            var arti=instance_create(target.x,target.y,obj_temp7);// Unloading / artifact crap
             arti.num=obj_controller.selecting_planet;arti.alarm[0]=1;
             arti.loc=obj_controller.selecting_location;
             arti.managing=obj_controller.managing;arti.type="recon";

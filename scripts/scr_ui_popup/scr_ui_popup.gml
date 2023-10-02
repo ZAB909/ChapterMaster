@@ -14,12 +14,9 @@ function scr_ui_popup() {
     
 	    draw_set_font(fnt_40k_30b);
 	    draw_set_halign(fa_center);
-	    var ttitle="",i=0;
 	    var planet_upgrades = obj_temp_build.target.p_upgrades[obj_controller.selecting_planet];
-	    var un_upgraded = 0;
-	    var arsenal = 0,
-	    var gene_vault=0
-	    var s_base=0;
+	    var un_upgraded = 0,arsenal = 0, gene_vault=0,s_base=0,ttitle="",i=0;
+
 	    if (planet_feature_bool(planet_upgrades, P_features.Secret_Base)==1){s_base=1}
 	    if (planet_feature_bool(planet_upgrades, P_features.Arsenal)==1){arsenal=1}
 	    if (planet_feature_bool(planet_upgrades, P_features.Gene_Vault)==1){gene_vault=1}
@@ -60,15 +57,15 @@ function scr_ui_popup() {
 		        		tag="PRS";
 		        		break;
 		        	case "Rave Club":
-		        		word="Large, open area with neon or strobe lights.";}
+		        		word="Large, open area with neon or strobe lights.";
 		        		tag="RAV";
 		        		break;
 		        	case "Steel":
-		        		word="Stainless steel surfaces and water fountains.";}
+		        		word="Stainless steel surfaces and water fountains.";
 		        		tag="STL";
 		        		break;
 		        	case "Utilitarian":
-		        		word="Plaster or concrete surfaces with carpeting.";}
+		        		word="Plaster or concrete surfaces with carpeting.";
 		        		tag="UTL"
 		        		break;	        			        			        			        		       			        		       			        		
 		        }
@@ -320,10 +317,10 @@ function scr_ui_popup() {
 	        draw_rectangle(xx+300,yy+110,xx+400,yy+130,0);
 	        draw_set_halign(fa_center);draw_set_color(0);
 	        draw_text(xx+350,yy+112,string_hash_to_newline("Build"));draw_text(xx+351,yy+113,string_hash_to_newline("Build"));
-	        if (scr_hit(xx+300,yy+110,xx+400,yy+130){
+	        if (scr_hit(xx+300,yy+110,xx+400,yy+130)){
 	            draw_set_alpha(0.2);draw_rectangle(xx+300,yy+110,xx+400,yy+130,0);draw_set_alpha(1);
             
-	            if (obj_controller.cooldown<=0) and (obj_controller.mouse_left=1) and (obj_controller.requisition>=1500){
+	            if (obj_controller.cooldown<=0) and (obj_controller.mouse_left==1) and (obj_controller.requisition>=1500){
 	                array_push(planet_upgrades, new new_planet_feature(P_features.Arsenal));
 	                obj_controller.cooldown=8000;obj_controller.requisition-=1500;
 	            }
