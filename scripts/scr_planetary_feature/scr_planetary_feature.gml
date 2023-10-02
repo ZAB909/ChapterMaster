@@ -54,8 +54,18 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 			style = other_data[$ "style"];
 		}
 		built = obj_controller.turn +3;
-		forge = 0;hippo=0;beastarium=0;torture=0;narcotics=0;relic=0;cookery=0;
-		vox=0;librarium=0;throne=0;stasis=0;swimming=0;stock=0;
+		forge = 0;
+		hippo=0;beastarium=0;
+		torture=0;
+		narcotics=0;
+		relic=0;
+		cookery=0;
+		vox=0;
+		librarium=0;
+		throne=0;
+		stasis=0;
+		swimming=0;
+		stock=0;
 		break;
 	case P_features.Arsenal:
 		inquis_hidden = 1;
