@@ -84,7 +84,7 @@ if (obj_controller.selecting_planet>0) and (obj_controller.cooldown<=0){
 
     // These need work?
     if (butt="Build"){
-        var him;him=instance_create(x,y,obj_temp_build);
+        var building=instance_create(x,y,obj_temp_build);
         him.target=self.target;him.planet=obj_controller.selecting_planet;
         if (planet_feature_bool(target.p_upgrades[obj_controller.selecting_planet], P_features.Secret_Base)) then him.lair=1;
         if (planet_feature_bool(target.p_upgrades[obj_controller.selecting_planet], P_features.Arsenal)) then him.arsenal=1;
