@@ -123,7 +123,8 @@ function scr_ui_popup() {
 		        
 			        var r=0,butt="",alp=1,cost=0,fuck=obj_temp_build,tooltip="",tooltip2="",tooltip3="",tooltip4="",tcost=0;
 			        for (r=1;r<13;r++;){
-			        	alp=1;cost=0;
+			        	alp=1;
+			        	cost=0;
 			            if (r==1){if (s_base.forge>0) then alp=0.33;cost=1000;butt="Forge";tooltip2="A modest, less elaborate forge able to employ a handful of Astartes or Techpriest.";}
 			            else if (r==2){if (s_base.hippo>0) then alp=0.33;cost=1000;butt="Hippodrome";tooltip2="A moderate sized garage fit to hold, service, and display vehicles.";}
 			            else if  (r==3){if (s_base.beastarium>0) then alp=0.33;cost=1000;butt="Beastarium";tooltip2="An enclosure with simulated greenery and foilage meant to hold beasts.";}
