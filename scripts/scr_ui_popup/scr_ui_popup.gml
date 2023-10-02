@@ -92,17 +92,14 @@ function scr_ui_popup() {
 
     
 
-	    if (un_upgraded=0) then title="Build ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
-	    if (un_upgraded!=0){
+	    if (un_upgraded=0){
+	    	title="Build ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
+		}else if(un_upgraded!=0){
 	        if (s_base!=0) then title="Secret Lair ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
 	        if (arsenal!=0) then title="Secret Arsenal ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
 	        if (gene_vault!=0) then title="Secret Gene-Vault ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
 	    }
-	    /*if (un_upgraded!=0) and (planet_feature_bool(planet_upgrades, P_features.Secret_Base)==0){
-	        if (s_base!=0) then title="Lair ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
-	        if (arsenal!=0) then title="Arsenal ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
-	        if (gene_vault!=0) then title="Gene-Vault ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
-	    }*/
+
 	    draw_text_transformed(xx+312,yy+10,string_hash_to_newline(title),0.7,0.7,0);
     
 	    draw_set_halign(fa_left);
@@ -115,7 +112,7 @@ function scr_ui_popup() {
 				if (s_base.built>obj_controller.turn){
 					draw_set_font(fnt_40k_14b);
 		        	draw_text(xx+21,yy+65,string_hash_to_newline($"This feature will be constructed in {s_base.built-obj_controller.turn} months."));
-		    	}else{
+		    	}else if (s_base.built<=obj_controller.turn){
 					if (s_base.inquis_hidden != 1){secret = false;}
 		        
 			        var r=0,butt="",alp=1,cost=0,fuck=obj_temp_build,tooltip="",tooltip2="",tooltip3="",tooltip4="",tcost=0;
@@ -137,13 +134,16 @@ function scr_ui_popup() {
 			            tooltip=butt;
 		            
 			            draw_set_font(fnt_40k_14);draw_set_alpha(alp);draw_set_color(c_gray);
-			            draw_rectangle(xx+494,yy+12+((r-1)*22),xx+614,yy+32+((r-1)*22),0);draw_set_color(c_black);
+			            draw_rectangle(xx+494,yy+12+((r-1)*22),xx+614,yy+32+((r-1)*22),0);
+			            draw_set_color(c_black);
 			            draw_text_transformed(xx+496,yy+14+((r-1)*22),string_hash_to_newline(string(butt)),1,0.9,0);draw_set_alpha(1);
 		            
 			            if (scr_hit(xx+494,yy+12+((r-1)*22),xx+614,yy+32+((r-1)*22))=true){
 			                if (alp<=0.33) then draw_set_alpha(0.1);
-			                if (alp>0.33) then draw_set_alpha(0.2);draw_set_color(0);
-			                draw_rectangle(xx+494,yy+12+((r-1)*22),xx+614,yy+32+((r-1)*22),0);draw_set_alpha(1);
+			                if (alp>0.33) then draw_set_alpha(0.2);
+			                draw_set_color(0);
+			                draw_rectangle(xx+494,yy+12+((r-1)*22),xx+614,yy+32+((r-1)*22),0);
+			                draw_set_alpha(1);
 			                tooltip3=tooltip;tooltip4=tooltip2;tcost=cost;
 			                if (obj_controller.mouse_left=1) and (obj_controller.cooldown<=0) and (obj_controller.requisition>=tcost) and (alp!=0.33){
 			                    obj_controller.cooldown=8000;obj_controller.requisition-=tcost;
@@ -416,7 +416,7 @@ function scr_ui_popup() {
 	        if (colu==1) then void_h=min(void_h+20,560);
         
 	        if (posi==1){if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+x3,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline("=Capital Ships="));y3+=20;}
-	        if (posi=ca+1) and (fr>0){
+	        if (posi==ca+1) and (fr>0){
 	        	y3+=20;
 	        	if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+x3,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline("=Frigates="));y3+=20;
 	        }
@@ -636,11 +636,15 @@ function scr_ui_popup() {
 	    if (tool1="") then tool1="Loyalty";
     
 	    if (tool1!=""){
-	        draw_set_color(0);draw_rectangle(xx+150,yy+42,xx+string_width(string_hash_to_newline(tool1))+153,yy+string_height(string_hash_to_newline(tool1))+48,0);
-	        draw_set_color(c_gray);draw_rectangle(xx+150,yy+42,xx+string_width(string_hash_to_newline(tool1))+153,yy+string_height(string_hash_to_newline(tool1))+48,1);
-	        draw_set_alpha(0.5);draw_rectangle(xx+151,yy+43,xx+string_width(string_hash_to_newline(tool1))+152,yy+string_height(string_hash_to_newline(tool1))+47,1);
+	        draw_set_color(0);
+	        draw_rectangle(xx+150,yy+42,xx+string_width(string_hash_to_newline(tool1))+153,yy+string_height(string_hash_to_newline(tool1))+48,0);
+	        draw_set_color(c_gray);
+	        draw_rectangle(xx+150,yy+42,xx+string_width(string_hash_to_newline(tool1))+153,yy+string_height(string_hash_to_newline(tool1))+48,1);
+	        draw_set_alpha(0.5);
+	        draw_rectangle(xx+151,yy+43,xx+string_width(string_hash_to_newline(tool1))+152,yy+string_height(string_hash_to_newline(tool1))+47,1);
 	        draw_set_alpha(1);
-	        draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
+	        draw_set_font(fnt_40k_14);
+	        draw_set_halign(fa_left);
 	        draw_text(xx+152.5,yy+44.5,string_hash_to_newline(string(tool1)));
 	        draw_text(xx+153.5,yy+45.5,string_hash_to_newline(string(tool1)));
 	    }
@@ -652,10 +656,14 @@ function scr_ui_popup() {
 	    var tx,ty,tool1,tool2,plu;tx=0;ty=0;tool1="";tool2="";plu="";
 	    tool1="Gene-Seed";
 	    if (tool1!=""){
-	        draw_set_color(0);draw_rectangle(xx+249,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+249,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+43,0);
-	        draw_set_color(c_gray);draw_rectangle(xx+249,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+249,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+43,1);
-	        draw_set_alpha(0.5);draw_rectangle(xx+250,yy+43,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+248,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+42,1);
-	        draw_set_alpha(1);draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
+	        draw_set_color(0);
+	        draw_rectangle(xx+249,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+249,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+43,0);
+	        draw_set_color(c_gray);
+	        draw_rectangle(xx+249,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+249,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+43,1);
+	        draw_set_alpha(0.5);
+	        draw_rectangle(xx+250,yy+43,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+248,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+42,1);
+	        draw_set_alpha(1);
+	        draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
 	        draw_text_ext(xx+252,yy+44.5,string_hash_to_newline(string(tool1)),-1,400);
 	        draw_text_ext(xx+253,yy+45.5,string_hash_to_newline(string(tool1)),-1,400);
 	    }
@@ -666,10 +674,14 @@ function scr_ui_popup() {
 	    tool1="Astartes#(Normal/Command)";
 	    tool2="Astartes";
 	    if (tool1!=""){
-	        draw_set_color(0);draw_rectangle(xx+373,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+373,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+43,0);
-	        draw_set_color(c_gray);draw_rectangle(xx+373,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+373,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+43,1);
-	        draw_set_alpha(0.5);draw_rectangle(xx+374,yy+43,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+372,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+42,1);
-	        draw_set_alpha(1);draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
+	        draw_set_color(0);
+	        draw_rectangle(xx+373,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+373,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+43,0);
+	        draw_set_color(c_gray);
+	        draw_rectangle(xx+373,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+373,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+43,1);
+	        draw_set_alpha(0.5);
+	        draw_rectangle(xx+374,yy+43,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+372,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+42,1);
+	        draw_set_alpha(1);
+	        draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
 	        draw_text_ext(xx+376,yy+44.5,string_hash_to_newline(string(tool1)),-1,400);
 	        draw_text_ext(xx+377,yy+45.5,string_hash_to_newline(string(tool1)),-1,400);
 	    }
@@ -701,11 +713,14 @@ function scr_ui_popup() {
 	    }
     
 	    if (tool1!=""){
-	        draw_set_color(0);draw_rectangle(xx+813,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+819,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+23+hei_bonus,0);
+	        draw_set_color(0);
+	        draw_rectangle(xx+813,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+819,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+23+hei_bonus,0);
 	        draw_set_color(c_gray);draw_rectangle(xx+813,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+819,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+23+hei_bonus,1);
-	        draw_set_alpha(0.5);draw_rectangle(xx+814,yy+43,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+818,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+22+hei_bonus,1);
+	        draw_set_alpha(0.5);
+	        draw_rectangle(xx+814,yy+43,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+818,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+22+hei_bonus,1);
 	        draw_set_alpha(1);
-	        draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
+	        draw_set_font(fnt_40k_14);
+	        draw_set_halign(fa_left);
 	        draw_text_ext(xx+816,yy+44.5,string_hash_to_newline(string(tool1)),-1,400);
 	        draw_text_ext(xx+817,yy+45.5,string_hash_to_newline(string(tool1)),-1,400);
 	    }
