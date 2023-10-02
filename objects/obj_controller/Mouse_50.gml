@@ -209,8 +209,8 @@ if (menu==13) and (cooldown<=0) and (artifacts>0){
             }
         }
         // Destroy
-        if (mouse_x>=xx+780) and (mouse_y>=yy+789) and (mouse_x<xx+894) and (mouse_y<yy+804) and (cooldown<=0){
-            var fun=floor(random(100))+1;
+        if (point_in_rectangle(mouse_x, mouse_y, xx + 780, yy + 789, xx + 894, yy + 804) && cooldown <= 0) {
+            var fun=irandom(100)+1;
             // Below here cleans up the artifacts
             var i=menu_artifact;
 
@@ -218,9 +218,9 @@ if (menu==13) and (cooldown<=0) and (artifacts>0){
 
             if (string_count("Daemon",obj_ini.artifact_tags[i])>0){
                 if (obj_ini.artifact_sid[i]>=500){
-                    var oops=floor(random(100))+1;
+                    var demonSummonChance=irandom(100)+1;
 
-                    if (oops<=60) and (obj_ini.ship_carrying[obj_ini.artifact_sid[i]-500]>0){
+                    if (demonSummonChance<=60) and (obj_ini.ship_carrying[obj_ini.artifact_sid[i]-500]>0){
                         instance_create(0,0,obj_ncombat);
                         obj_ncombat.battle_special="ship_demon";
                         obj_ncombat.formation_set=1;
@@ -263,7 +263,7 @@ if (menu==13) and (cooldown<=0) and (artifacts>0){
 // ** Armamentorium STC fragments **
 if (menu==14) and (cooldown<=0){
     // Gift STC Fragment
-    if (mouse_x>=xx+733) and (mouse_y>=yy+466) and (mouse_x<xx+790) and (mouse_y<yy+486) and (cooldown<=0){
+    if (point_in_rectangle(mouse_x, mouse_y, xx + 733, yy + 466, xx + 790, yy + 486) && cooldown <= 0) {
         if (stc_wargear_un+stc_vehicles_un+stc_ships_un>0){
             var chick=0;
             if (known[2]>1) and (faction_defeated[2]==0) then chick=1;
@@ -286,7 +286,7 @@ if (menu==14) and (cooldown<=0){
             cooldown=8000;
             audio_play_sound(snd_stc,-500,0)
             audio_sound_gain(snd_stc,master_volume*effect_volume,0);
-            r1=floor(random(stc_wargear_un+stc_vehicles_un+stc_ships_un))+1;
+            r1=irandom(stc_wargear_un+stc_vehicles_un+stc_ships_un)+1;
 
             if (r1<stc_wargear_un) and (stc_wargear_un>0) then r2=1;
             if (r1>stc_wargear_un) and (r1<=stc_wargear_un+stc_vehicles_un) and (stc_vehicles_un>0) then r2=2;
