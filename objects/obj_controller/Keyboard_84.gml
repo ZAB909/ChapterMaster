@@ -1,7 +1,7 @@
 // Fleet movement on turn end
 if (action_if_number(obj_saveload, 0, 0) && (action_if_number(obj_fleet, 0, 0)) && (action_if_number(obj_ncombat, 0, 0)) 
 && (action_if_variable(menu, 0, 0)) && (action_if_variable(managing, 0, 0))){
-    var him;
+    var targetStar;
     var ok=false;
 
     if (cooldown<=0){
@@ -35,17 +35,17 @@ if (action_if_number(obj_saveload, 0, 0) && (action_if_number(obj_fleet, 0, 0)) 
             }
             with(obj_p_fleet){
                 if (action=="move") and (obj_controller.faction_status[2]=="War"){
-                    him=instance_nearest(action_x,action_y,obj_star);
-                    if (point_distance(action_x,action_y,him.x,him.y)<10){
-                        him.present_fleet[20]=1;
+                    targetStar=instance_nearest(action_x,action_y,obj_star);
+                    if (point_distance(action_x,action_y,targetStar.x,targetStar.y)<10){
+                        targetStar.present_fleet[20]=1;
                     }
                 }
             }
             with(obj_en_fleet){
                 if (action=="move") and (owner>5){
-                    him=instance_nearest(action_x,action_y,obj_star);
-                    if (point_distance(action_x,action_y,him.x,him.y)<10){
-                        him.present_fleet[20]=1;
+                    targetStar=instance_nearest(action_x,action_y,obj_star);
+                    if (point_distance(action_x,action_y,targetStar.x,targetStar.y)<10){
+                        targetStar.present_fleet[20]=1;
                     }
                 }
             }
