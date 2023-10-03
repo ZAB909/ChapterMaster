@@ -22,7 +22,7 @@ enum P_features {
 			Daemonic_Incursion,
 			Victory_Shrine,
 			Arsenal,
-			Gene_Vault
+			Gene_Vault,
 	};
 	
 enum base_type{
