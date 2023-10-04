@@ -4,7 +4,7 @@ function scr_restart_variables(saved_game) {
     
 	    // show_message(instance_number(obj_restart_vars));
     
-	    obj_restart_vars.restart_name=global.chapter_name;
+	    obj_restart_vars.restart_name=obj_creation.chapter;
 	    obj_restart_vars.restart_founding=global.founding;
     
 	    obj_restart_vars.restart_secret=global.founding_secret;
