@@ -1,15 +1,16 @@
-function scr_weapon(argument0, argument1, argument2, argument3, argument4, argument5, argument6) {
+function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, is_dreadnought, nuum, information_wanted) {
 
-	// argument0: name
-	// argument1: weapon2 name
-	// argument2: man?
-	// argument3: ID number
-	// argument4: dreaded
-	// argument5: nuum
-	// argument6: description?
+	// equipment_1: name of the first piece of equipment
+	// equipment_2: name of second piece of equipment if any
+	// base_group: the unit type defualts to true which means a marine (this needs work)
+	// unit_array_position: the position of the marine inside the tempory combat array
+	// is_dreadnought: is unit a dreadnought
+	// nuum: not a good god damn fucking clue
+	// information_wanted: what type of information do you want returned
 
 	// More spaghetti code.  This either calculates damage for battle blocks or generates a tooltip for the shop/management.
 	// it also gets informatino abou marine equipment for the chapter managment screens
+	// let it be known that this represents everything wrong with this code base
 
 	var i,wip,wip1,wip2,atta,arp,acr,att1,apa1,att2,apa2,acr1,acr2,melee_hands,ranged_hands,rang1,rang2,rang,ammo1,ammo2,amm,spli1,spli2,spli,rending,thawep,descr,descr2,spe_descr,statt;
 	var disk1,rending1,spe_descr1;
@@ -23,7 +24,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	ammo1=-1;ammo2=-1;amm=-1;
 
 
-	thawep=argument0;
+	thawep=equipment_1;
 
 	obj_controller.temp[9000]="";
 
@@ -31,17 +32,17 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	    i+=1;amm=-1;spli=0;
 	    var emor;emor=0;
 
-	    if (argument6="description") or (argument6="description_long"){
-	        if (i=1) then thawep=argument1;
-	        if (i=2) then thawep=argument0;
+	    if (information_wanted="description") or (information_wanted="description_long"){
+	        if (i=1) then thawep=equipment_2;
+	        if (i=2) then thawep=equipment_1;
 	        if (i=2){wip1=thawep;}
-	        if (i=1){wip2=argument1;}
+	        if (i=1){wip2=equipment_2;}
 	    }
-	    if (argument6!="description") and (argument6!="description_long"){
-	        if (i=1) then thawep=argument0;
-	        if (i=2) then thawep=argument1;
+	    if (information_wanted!="description") and (information_wanted!="description_long"){
+	        if (i=1) then thawep=equipment_1;
+	        if (i=2) then thawep=equipment_2;
 	        if (i=1){wip1=thawep;}
-	        if (i=2){wip2=argument1;}
+	        if (i=2){wip2=equipment_2;}
 	    }
 
 	    if (string_count("&",thawep)>0) or (string_count("|",thawep)>0){
@@ -94,59 +95,59 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 
 	    if (i=1){
-	        if (argument0="Ork Armour"){statt=15;spe_descr="";emor=1;}
+	        if (equipment_1="Ork Armour"){statt=15;spe_descr="";emor=1;}
             
-			if (argument0="Skitarii Armour"){statt=5;spe_descr="";emor=1;}
+			if (equipment_1="Skitarii Armour"){statt=5;spe_descr="";emor=1;}
 
-	        if (argument0="Scout Armour"){statt=8;spe_descr="";emor=1;
+	        if (equipment_1="Scout Armour"){statt=8;spe_descr="";emor=1;
 	            descr="A non-powered suit made up of carapace armour and ballistic nylon.  Includes biohazard shielding, nutrient feed, and camoflauge.";}
-	        if (argument0="MK3 Iron Armour"){statt=26;spe_descr="-10% Ranged";emor=1;
+	        if (equipment_1="MK3 Iron Armour"){statt=26;spe_descr="-10% Ranged";emor=1;
 	            descr="An ancient set of Armorum Ferrum.  Has thicker armour plating but the added weight slows down the wearer.";}
-	        if (argument0="MK4 Maximus"){statt=22;spe_descr="+5% Melee, +5% Ranged";emor=1;
+	        if (equipment_1="MK4 Maximus"){statt=22;spe_descr="+5% Melee, +5% Ranged";emor=1;
 	            descr="Armour dating to the end of the Great Crusade.  Often considered the ultimate Space Marine armour.  The components are no longer reproducable.";}
-          if (argument0="MK5 Heresy"){statt=15;spe_descr="+20% Melee, -5% Ranged";emor=1;
+          if (equipment_1="MK5 Heresy"){statt=15;spe_descr="+20% Melee, -5% Ranged";emor=1;
 	            descr="A Hastily assembled Power armour during the Horus Heresy to act as a stop gap. Excels at melee, alongside some downsides.";}
-	        if (argument0="MK6 Corvus"){statt=15;spe_descr="+15% Ranged";emor=1;
+	        if (equipment_1="MK6 Corvus"){statt=15;spe_descr="+15% Ranged";emor=1;
 	            descr="Relatively old beakie armour, sleek as can be.  Boosted olfactory and auditory sensors increase the ranged accuracy of the wearer. Making it more fragile";}
-	        if (argument0="MK7 Aquila"){statt=17;spe_descr="";emor=1;
+	        if (equipment_1="MK7 Aquila"){statt=17;spe_descr="";emor=1;
 	            descr="Developed during the Horus Heresy, this Mark of armour is the most commonly used amongst all the Adeptus Astartes.";}
-	        if (argument0="MK8 Errant"){statt=22;spe_descr="";emor=1;
+	        if (equipment_1="MK8 Errant"){statt=22;spe_descr="";emor=1;
 	            descr="Highly modified MK7, this armour has additional protection along the neck and cables.  It is oft worn as a symbol of high rank.";}
-	        if (argument0="Power Armour"){statt=19;spe_descr="";emor=1;
+	        if (equipment_1="Power Armour"){statt=19;spe_descr="";emor=1;
 	            descr="A suit of Adeptus Astartes power armour.  The Mark can no longer be determined- it appears to be a combination of several types.";}
-	        if (argument0="Artificer Armour"){statt=37;spe_descr="+10% Melee";emor=1;
+	        if (equipment_1="Artificer Armour"){statt=37;spe_descr="+10% Melee";emor=1;
 	            descr="Heavily modified by the chapter artificers, and decorated without compare, this ancient Power Armour is beyond priceless.";}
-	        if (argument0="Terminator Armour"){statt=42;spe_descr="+20% Melee, -10% Ranged, Strength";emor=1;
+	        if (equipment_1="Terminator Armour"){statt=42;spe_descr="+20% Melee, -10% Ranged, Strength";emor=1;
 	            descr="The toughest and most powerful armour designed by humanity.  Only the most veteran of Astartes are allowed to wear these.";}
-	        if (argument0="Tartaros"){statt=45;spe_descr="+20% Melee, -5% Ranged, Strength";emor=1;
+	        if (equipment_1="Tartaros"){statt=45;spe_descr="+20% Melee, -5% Ranged, Strength";emor=1;
 	            descr="Even more advanced than the Indomitus Terminator Armour, this upgraded armour offer greater mobility at no cost to protection.";}
-	        if (argument0="Dreadnought"){statt=50;spe_descr="";emor=1;
+	        if (equipment_1="Dreadnought"){statt=50;spe_descr="";emor=1;
 	            descr="A massive war-machine that can be piloted by a honored Space Marine, who otherwise would have fallen in combat.";}
-	        if (argument0="Jump Pack"){spe_descr="+10% Damage Resistance, Jump Pack";
+	        if (equipment_1="Jump Pack"){spe_descr="+10% Damage Resistance, Jump Pack";
 	            descr="A back mounted device containing turbines or jets powerful enough to lift even a user in Power Armour.";}
-	        if (argument0="hammer_of_wrath"){atta=120;arp=0;rang=1;spli=0;amm=1;}
-	        if (argument0="Bionics"){
+	        if (equipment_1="hammer_of_wrath"){atta=120;arp=0;rang=1;spli=0;amm=1;}
+	        if (equipment_1="Bionics"){
 	            spe_descr="Restores 30HP";if (global.chapter_name="Iron Hands") then spe_descr="Restores 50 HP";
 	            descr="Bionics may be given to wounded marines to quickly get them back into combat-ready status, replacing damaged flesh.";}
-	        if (argument0="Narthecium"){spe_descr="Medical field kit";
+	        if (equipment_1="Narthecium"){spe_descr="Medical field kit";
 	            descr="An advanced medical field kit, these allow "+string(obj_ini.role[100,15])+"s to heal or recover Gene-Seed from fallen marines.";}
-	        if (argument0="Psychic Hood"){spe_descr="-50% chance of perils*";
+	        if (equipment_1="Psychic Hood"){spe_descr="-50% chance of perils*";
 	            descr="An arcane hood that protects "+string(obj_ini.role[100,17])+"s from enemy psychic powers and enhances their control.";}
-	        if (argument0="Rosarius"){spe_descr="+33% Damage Resistance";
+	        if (equipment_1="Rosarius"){spe_descr="+33% Damage Resistance";
 	            descr="Also called the 'Soul's Armour', this amulet has a built-in, powerful shield generator.  They are an icon of the Imperial Creed.";}
-	        if (argument0="Iron Halo"){spe_descr="+33% Damage Resistance, +20 HP";
+	        if (equipment_1="Iron Halo"){spe_descr="+33% Damage Resistance, +20 HP";
 	            descr="An ancient artifact, these powerful conversion field generators are granted to high ranking battle brothers or heroes.  Bearers are oft looked to for guidance.";}
-	        if (argument0="Plasma Bomb"){spe_descr="Destroys destructibles";
+	        if (equipment_1="Plasma Bomb"){spe_descr="Destroys destructibles";
 	            descr="A special plasma charge, this bomb can be used to seal underground caves or destroy enemy structures.";}
-	        if (argument0="Exterminatus"){spe_descr="Destroys planets";
+	        if (equipment_1="Exterminatus"){spe_descr="Destroys planets";
 	            descr="A weapon of the Emperor, and His divine judgement, this weapon can be placed upon a planet to obliterate it entirely.";}
-	        if (argument0="Bike"){spe_descr="+25% HP, Bike";
+	        if (equipment_1="Bike"){spe_descr="+25% HP, Bike";
 	            descr="A robust bike that can propel a marine at very high speeds.  Boasts highly responsive controls and Twin Linked Bolters.";}
 	        if (thawep="Company Standard"){spe_descr="Boosts morale";atta=45;arp=0;rang=1;melee_hands+=1;ranged_hands+=0;spli=1;
 	            descr="A banner that represents the honour of a particular company and will bolster the morale abilities of nearby Space Marines.";}
-	        if (argument0="Servo Arms"){spe_descr="Integrated flamer, repairs";
+	        if (equipment_1="Servo Arms"){spe_descr="Integrated flamer, repairs";
 	            descr="A pair of powerful, mechanical arms.  They include several tools that allow trained marines to repair vehicles rapidly.";}
-	        if (argument0="Master Servo Arms"){spe_descr="Integrated flamer, repairs";
+	        if (equipment_1="Master Servo Arms"){spe_descr="Integrated flamer, repairs";
 	            descr="This master servo harness includes additional mechanical arms and tools, allowing a greater capacity and rate of repairs.";}
 	    }
 
@@ -204,17 +205,17 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	    if (thawep="Force Weapon"){
 	        atta=400;arp=1;rang=1;melee_hands+=1;spli=1;
 	        descr="An advanced, psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.";
-	        if (argument6!="description") and (argument6!="description_long"){
-	        if (string_count("0",marine_powers[argument3])>0){atta=400;arp=0;rang=1;melee_hands+=1;spli=1;}
-	        if (string_count("0",marine_powers[argument3])=0){thawep="Inactive Force Weapon";atta=30;arp=0;rang=1;melee_hands+=1;}}
+	        if (information_wanted!="description") and (information_wanted!="description_long"){
+	        if (string_count("0",marine_powers[unit_array_position])>0){atta=400;arp=0;rang=1;melee_hands+=1;spli=1;}
+	        if (string_count("0",marine_powers[unit_array_position])=0){thawep="Inactive Force Weapon";atta=30;arp=0;rang=1;melee_hands+=1;}}
 	        // if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then melee_hands-=1;
 	    }
 	    if (thawep="Master Crafted Force Weapon"){
 	        atta=500;arp=1;rang=1;melee_hands+=1;spli=1;
 	        descr="A more expertly crafted Force Weapon, the fine craftsmanship confers greater ease and control with disrupting matter.";
-	        if (argument6!="description") and (argument6!="description_long"){
-	        if (string_count("0",marine_powers[argument3])>0){atta=480;arp=0;rang=1;melee_hands+=1;spli=1;}
-	        if (string_count("0",marine_powers[argument3])=0){thawep="Inactive Master Crafted Force Weapon";atta=30;arp=0;rang=1;melee_hands+=1;}}
+	        if (information_wanted!="description") and (information_wanted!="description_long"){
+	        if (string_count("0",marine_powers[unit_array_position])>0){atta=480;arp=0;rang=1;melee_hands+=1;spli=1;}
+	        if (string_count("0",marine_powers[unit_array_position])=0){thawep="Inactive Master Crafted Force Weapon";atta=30;arp=0;rang=1;melee_hands+=1;}}
 	        // if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then melee_hands-=1;
 	    }
 
@@ -235,9 +236,9 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 	    if (thawep="Bolter"){atta=50;arp=0;rang=12;ranged_hands+=2;amm=16;spli=1;
 
-	        if (argument6!="description") and (argument6!="description_long"){
-	        if (string_count("Terminator",marine_armour[argument3])>0) then melee_hands-=1;
-	        if (marine_armour[argument3]="Tartaros") then melee_hands-=1;}
+	        if (information_wanted!="description") and (information_wanted!="description_long"){
+	        if (string_count("Terminator",marine_armour[unit_array_position])>0) then melee_hands-=1;
+	        if (marine_armour[unit_array_position]="Tartaros") then melee_hands-=1;}
 	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
 	        descr="A standard Godwyn Pattern Bolter.  This blessed weapon is used by most Adeptus Astartes.";}// Bursts
 	    if (thawep="Master Crafted Combiflamer"){atta=200;arp=1;rang=12;ranged_hands+=2;amm=15;spli=1;
@@ -252,15 +253,15 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	    if (thawep="Master Crafted Heavy Bolter"){atta=220;arp=1;rang=16;ranged_hands+=2;amm=25;spli=1;
 	        descr="A Master Crafted Heavy Bolter incorporates superior craftsmanship, advanced modifications, and enhancements compared to its standard counterpart";}
 	    if (thawep="Storm Bolter"){atta=80;arp=0;rang=10;ranged_hands+=2;amm=10;spli=1;
-	        if (argument6!="description") and (argument6!="description_long"){
-	        if (string_count("Terminator",marine_armour[argument3])>0) then melee_hands-=1;
-	        if (marine_armour[argument3]="Tartaros") then melee_hands-=1;}
+	        if (information_wanted!="description") and (information_wanted!="description_long"){
+	        if (string_count("Terminator",marine_armour[unit_array_position])>0) then melee_hands-=1;
+	        if (marine_armour[unit_array_position]="Tartaros") then melee_hands-=1;}
 	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
 	        descr="Compact, and double barreled, this bolt weapon is inaccurate but grants an enormous amount of firepower.";}
 	    if (thawep="Flamer"){atta=350;arp=-1;rang=2.1;ranged_hands+=2;amm=4;spli=1;
-	        if (argument6!="description") and (argument6!="description_long"){
-	        if (string_count("Terminator",marine_armour[argument3])>0) then melee_hands-=1;
-	        if (marine_armour[argument3]="Tartaros") then melee_hands-=1;
+	        if (information_wanted!="description") and (information_wanted!="description_long"){
+	        if (string_count("Terminator",marine_armour[unit_array_position])>0) then melee_hands-=1;
+	        if (marine_armour[unit_array_position]="Tartaros") then melee_hands-=1;
 	        // if (obj_ncombat.enemy=3) or (obj_ncombat.enemy=13) then atta=40;
 	        }
 	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
@@ -269,15 +270,15 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        // if (obj_ncombat.enemy=3) or (obj_ncombat.enemy=13) then atta=35;
 	    }
 	    if (thawep="Incinerator"){atta=200;arp=-1;rang=2.1;ranged_hands+=2;amm=4;spli=1;
-	        if (argument6!="description") and (argument6!="description_long"){
-	        if (string_count("Terminator",marine_armour[argument3])>0) then melee_hands-=1;
-	        if (marine_armour[argument3]="Tartaros") then melee_hands-=1;
+	        if (information_wanted!="description") and (information_wanted!="description_long"){
+	        if (string_count("Terminator",marine_armour[unit_array_position])>0) then melee_hands-=1;
+	        if (marine_armour[unit_array_position]="Tartaros") then melee_hands-=1;
 	        if (obj_ncombat.enemy=10) and (obj_ncombat.threat=7) then atta=300;
 	        }
 	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
 	        descr="This flamer weapon includes special promethium and sacred oils.  It is particularly effective against Daemons and their ilk.";}
 	    if (thawep="Heavy Flamer"){atta=500;arp=-1;rang=2;ranged_hands+=2;melee_hands+=1;amm=8;spli=1;
-	        if (argument6!="description") and (argument6!="description_long"){
+	        if (information_wanted!="description") and (information_wanted!="description_long"){
 	        // if (obj_ncombat.enemy=3) or (obj_ncombat.enemy=13) then atta=60;
 	        }
 	        descr="A much larger and bulkier flamer.  Few armies carry them on hand, instead choosing to mount them to vehicles.";}
@@ -285,7 +286,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        // if (obj_ncombat.enemy=3) or (obj_ncombat.enemy=13) then atta=60;
 	    }
 	    if (thawep="Inferno Cannon"){atta=400;arp=-1;rang=3.1;spli=1;
-	        if (argument6!="description") and (argument6!="description_long"){
+	        if (information_wanted!="description") and (information_wanted!="description_long"){
 	        // if (obj_ncombat.enemy=3) or (obj_ncombat.enemy=13) then atta=90;
 	        }
 	        descr="A huge, vehicle mounted flame weapon that fires with explosive force.  The resevoir is liable to explode.";}
@@ -347,13 +348,13 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        descr="The Whirlwind Missile Launcher is a vehicle-mounted artillery weapon that launches a barrage of powerful missiles at the enemy.";}
 
 					// Vehicle Upgrades
-			if (argument0="Armoured Ceramite"){statt=20;spe_descr="";emor=1;
+			if (equipment_1="Armoured Ceramite"){statt=20;spe_descr="";emor=1;
 	        descr="Supplemental ceramite armour packages provide protection far beyond stock configurations.";}
-			if (argument0="Artificer Hull"){statt=20;spe_descr="";emor=1;
+			if (equipment_1="Artificer Hull"){statt=20;spe_descr="";emor=1;
 	        descr="Replacing numerous structural members and armour plates with thrice-blessed replacements, the vehicle’s hull is upgraded to be a rare work of mechanical art.";}
-			if (argument0="Heavy Armour"){statt=10;spe_descr="";emor=1;
+			if (equipment_1="Heavy Armour"){statt=10;spe_descr="";emor=1;
 	       	descr="Simple but effective, extra armour plates can be attached to most vehicles to provide extra protection.";}
-			if (argument0="Lucifer Pattern Engine"){statt=5;spe_descr="";emor=1;
+			if (equipment_1="Lucifer Pattern Engine"){statt=5;spe_descr="";emor=1;
 		    	descr="A significant upgrade over the more common patterns of Rhino-chassis engines, these engines provide greater output.";}
 
 					// Vehicle Accessories
@@ -441,7 +442,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        if (obj_controller.stc_bonus[2]=3) and (emor>0) and (statt>0){if (statt>=40) then statt+=2;if (statt<40) then statt+=1;}
 	    }
 
-	    if (argument2=false) and (obj_controller.stc_bonus[3]=2){
+	    if (base_group=false) and (obj_controller.stc_bonus[3]=2){
 	        if (atta>0) then atta=round(atta*1.05);
 	        // if (arp>0) then arp=round(arp*1.05);
 	    }
@@ -453,7 +454,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 
 
-	    if (argument6="description") or (argument6="description_long"){// was i=2
+	    if (information_wanted="description") or (information_wanted="description_long"){// was i=2
 	        /*if (i=1){
 	            disk1=descr;
 	            atta1=atta;
@@ -557,8 +558,8 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 
 
-	    if (argument6!="description") and (argument6!="description_long"){
-	        if (argument2!=false){if (string_count("Dreadnought",marine_armour[argument3])>0) and (marine_mobi[argument3]="") then amm=-1;}
+	    if (information_wanted!="description") and (information_wanted!="description_long"){
+	        if (base_group!=false){if (string_count("Dreadnought",marine_armour[unit_array_position])>0) and (marine_mobi[unit_array_position]="") then amm=-1;}
 	        if (thawep="Whirlwind Missiles") then amm=6;
 
 	        if (rending1=1){
@@ -569,20 +570,20 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	            }
 	        }
 	        if (rang1=1){
-	            atta=atta*marine_attack[argument3];// arp=arp*marine_attack[argument3];
-	            if (marine_might[argument3]>0){
+	            atta=atta*marine_attack[unit_array_position];// arp=arp*marine_attack[unit_array_position];
+	            if (marine_might[unit_array_position]>0){
 	                atta=atta*2;// arp=arp*2;
 	            }
-	            if (marine_spatial[argument3]>0){
+	            if (marine_spatial[unit_array_position]>0){
 	                atta=atta*1.75;// arp=arp*1.75;
 	            }
-	            if (marine_fiery[argument3]>0){
+	            if (marine_fiery[unit_array_position]>0){
 	                atta=atta*1.3;// arp=arp*1.3;
 	            }
 	        }
 	        if (rang1>1){
-	            atta=atta*marine_ranged[argument3];
-	            // arp=arp*marine_ranged[argument3];
+	            atta=atta*marine_ranged[unit_array_position];
+	            // arp=arp*marine_ranged[unit_array_position];
 	        }
 
 	        if (obj_ncombat.bolter_drilling=1) and ((string_count("Bolt",thawep)>0) or (string_count("ombi",thawep)>0)){
@@ -597,9 +598,9 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        }
 
 
-	        if (argument2=true){
-	            if (marine_exp[argument3]>30){
-	                var ttt;ttt=marine_exp[argument3]-30;
+	        if (base_group=true){
+	            if (marine_exp[unit_array_position]>30){
+	                var ttt;ttt=marine_exp[unit_array_position]-30;
 	                ttt=(ttt*0.0014)+1;ttt=max(1,(min(ttt,1.5)));// was 1.25
 	                if (ttt>=1) then atta=floor(atta*ttt);
 	                // if (ttt>=1) then arp=floor(arp*ttt);
@@ -607,16 +608,16 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	                // arp=arp*obj_ncombat.global_attack;
 	            }
 	        }
-	        if (argument2=false){
+	        if (base_group=false){
 	            atta=atta*obj_ncombat.global_attack;
 	            // arp=arp*obj_ncombat.global_attack;
 	        }
 
 
-	        if (ranged_hands>2) and (rang>1) and (argument2=true) and (argument4=false){
+	        if (ranged_hands>2) and (rang>1) and (base_group=true) and (is_dreadnought=false){
 	            atta=atta*0.6;// arp=arp*0.6;
 	        }
-	        if (melee_hands>2) and (rang<=1) and (argument2=true) and (argument4=false){
+	        if (melee_hands>2) and (rang<=1) and (base_group=true) and (is_dreadnought=false){
 	            atta=atta*0.6;// arp=arp*0.6;
 	        }
 
@@ -625,7 +626,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 
 	        // This is giving problems
-	        if (melee_hands=0) and (argument2=true) and (argument4=false) and (i=2){
+	        if (melee_hands=0) and (base_group=true) and (is_dreadnought=false) and (i=2){
 	            var atta;
 	            atta=obj_ncombat.global_attack*10;
 	            var b,goody,opn;b=0;goody=0;opn=0;
@@ -676,18 +677,18 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        if (ranged_hands>ranged_limit) and (argument4=false) then obj_controller.ui_ranged_penalty=1;
 	    }
 
-	    if (argument6="description") then return(descr);
-	    if (argument6="description_long") then return(descr2);
+	    if (information_wanted="description") then return(descr);
+	    if (information_wanted="description_long") then return(descr2);
 	}
 
 
 	if (argument6!="description") and (argument6!="description_long"){
 	    var b,goody,found,stack;b=0;goody=0;found=0;stack=1;
 
-	    thawep=argument0;// 137 135 136 flip fix?
+	    thawep=equipment_1;// 137 135 136 flip fix?
 
 
-	    if (argument5!="") then stack=0;
+	    if (nuum!="") then stack=0;
 
 
 	    repeat(60){b+=1;
@@ -695,7 +696,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        // show_message(string(goody));
 
 	        var canc;canc=false;
-	        if (rang1>1) and (marine_ranged[argument3]=0){
+	        if (rang1>1) and (marine_ranged[unit_array_position]=0){
 	             canc=true;if (floor(rang1)==rang1) then canc=false
 	        }if (canc=true) then goody=1;
 
@@ -703,39 +704,39 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	            if (stack=1) and (wep[b]=thawep) and (goody=0){
 	                // if (thawep=wip1){
 	                    att[b]+=att1;apa[b]=apa1;range[b]=rang1;wep_num[b]+=1;splash[b]=spli1;wep[b]=thawep;goody=1;
-	                    // if (marine_type[argument3]="Death Company") and (range[b]=1){att[b]+=att1;wep_num[b]+=1;wep_rnum[b]+=1;}
+	                    // if (marine_type[unit_array_position]="Death Company") and (range[b]=1){att[b]+=att1;wep_num[b]+=1;wep_rnum[b]+=1;}
 	                    if (obj_ncombat.started=0) then ammo[b]=ammo1;
 	                // }
 	            }
 	            if (stack=0) and (obj_ncombat.started=0) and (wep[b]="") and (goody=0) and (wep_solo[b]=""){
 	                if (goody=0){
 	                    att[b]+=att1;apa[b]=apa1;range[b]=rang1;wep_num[b]+=1;splash[b]=spli1;wep[b]=thawep;goody=1;
-	                    // if (marine_type[argument3]="Death Company") and (range[b]=1){att[b]+=att1;wep_num[b]+=1;wep_rnum[b]+=1;}
+	                    // if (marine_type[unit_array_position]="Death Company") and (range[b]=1){att[b]+=att1;wep_num[b]+=1;wep_rnum[b]+=1;}
 	                    ammo[b]=ammo1;
 
 	                    var title;title=true;
-	                    if (marine_type[argument3]="Chapter Master") then title=false;
-	                    if (marine_type[argument3]="Master of Sanctity") then title=false;
-	                    if (marine_type[argument3]="Chief "+string(obj_ini.role[100,17])) then title=false;
-	                    if (marine_type[argument3]="Forge Master") then title=false;
-	                    if (marine_type[argument3]="Master of the Apothecarion") then title=false;
-	                    if (title=true) then wep_title[b]=string(marine_type[argument3]);
-	                    wep_solo[b]=string(obj_ini.name[marine_co[argument3],marine_id[argument3]]);
+	                    if (marine_type[unit_array_position]="Chapter Master") then title=false;
+	                    if (marine_type[unit_array_position]="Master of Sanctity") then title=false;
+	                    if (marine_type[unit_array_position]="Chief "+string(obj_ini.role[100,17])) then title=false;
+	                    if (marine_type[unit_array_position]="Forge Master") then title=false;
+	                    if (marine_type[unit_array_position]="Master of the Apothecarion") then title=false;
+	                    if (title=true) then wep_title[b]=string(marine_type[unit_array_position]);
+	                    wep_solo[b]=string(obj_ini.name[marine_co[unit_array_position],marine_id[unit_array_position]]);
 	                }
 	            }
 
-	            if (stack=0) and (obj_ncombat.started=1) and (wep[b]=thawep) and (wep_solo[b]=argument5) and (goody=0){
+	            if (stack=0) and (obj_ncombat.started=1) and (wep[b]=thawep) and (wep_solo[b]=nuum) and (goody=0){
 	                att[b]+=att1;apa[b]=apa1;range[b]=rang1;wep_num[b]+=1;splash[b]=spli1;wep[b]=thawep;goody=1;
-	                // if (marine_type[argument3]="Death Company") and (range[b]=1){att[b]+=att1;wep_num[b]+=1;wep_rnum[b]+=1;}
+	                // if (marine_type[unit_array_position]="Death Company") and (range[b]=1){att[b]+=att1;wep_num[b]+=1;wep_rnum[b]+=1;}
 
 	                var title;title=true;
-	                if (marine_type[argument3]="Chapter Master") then title=false;
-	                if (marine_type[argument3]="Master of Sanctity") then title=false;
-	                if (marine_type[argument3]="Chief "+string(obj_ini.role[100,17])) then title=false;
-	                if (marine_type[argument3]="Forge Master") then title=false;
-	                if (marine_type[argument3]="Master of the Apothecarion") then title=false;
-	                if (title=true) then wep_title[b]=string(marine_type[argument3]);
-	                wep_solo[b]=string(obj_ini.name[marine_co[argument3],marine_id[argument3]]);
+	                if (marine_type[unit_array_position]="Chapter Master") then title=false;
+	                if (marine_type[unit_array_position]="Master of Sanctity") then title=false;
+	                if (marine_type[unit_array_position]="Chief "+string(obj_ini.role[100,17])) then title=false;
+	                if (marine_type[unit_array_position]="Forge Master") then title=false;
+	                if (marine_type[unit_array_position]="Master of the Apothecarion") then title=false;
+	                if (title=true) then wep_title[b]=string(marine_type[unit_array_position]);
+	                wep_solo[b]=string(obj_ini.name[marine_co[unit_array_position],marine_id[unit_array_position]]);
 	            }
 	        }
 	    }
@@ -744,14 +745,14 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	    if (stack=1) and (goody=0){
 	        repeat(60){b+=1;
 	            var canc;canc=false;
-	            if (rang1>1) and (marine_ranged[argument3]=0){
+	            if (rang1>1) and (marine_ranged[unit_array_position]=0){
 	                 canc=true;if (floor(rang1)==rang1) then canc=false
 	            }
 
 	            if (wep[b]="") and (goody=0) and (canc=false){
 	                // if (thawep=wip1){
 	                    att[b]+=att1;apa[b]=apa1;range[b]=rang1;wep_num[b]+=1;splash[b]=spli1;wep[b]=thawep;goody=1;
-	                    // if (marine_type[argument3]="Death Company") and (range[b]=1){att[b]+=att1;wep_num[b]+=1;wep_rnum[b]+=1;}
+	                    // if (marine_type[unit_array_position]="Death Company") and (range[b]=1){att[b]+=att1;wep_num[b]+=1;wep_rnum[b]+=1;}
 	                    if (obj_ncombat.started=0) then ammo[b]=ammo1;
 	                // }
 	            }
