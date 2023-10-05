@@ -1,4 +1,4 @@
-function scr_random_marine(role, exp_req, search_params="none") {
+function scr_random_marine(role, exp_req, search_params="none"){
 
 	// role : role
 	// exp_req: exp
@@ -73,6 +73,22 @@ function scr_random_marine(role, exp_req, search_params="none") {
             				}
             			}
             			//move to next unit if unit did not have required traits
+            			if (!match) then continue;
+            		}
+            		if (struct_exists(search_params, "stat")){
+            			for (var stat = 0;stat<array_length(search_params[$ "stat"]);stat++;){
+            				if (search_params[$ "stat"][stat][2] =="more"){
+            					if (unit[$ search_params[$ "stat"][stat][0]] < search_params[$ "stat"][stat][1]){
+            						match = false;
+									break;
+            					}
+            				} else if(search_params[$ "stat"][stat][2] =="less"){
+ 								if (unit[$ search_params[$ "stat"][stat][0]] > search_params[$ "stat"][stat][1]){
+            						match = false;
+									break;
+            					}           					
+            				}
+            			}
             			if (!match) then continue;
             		}
             	}
