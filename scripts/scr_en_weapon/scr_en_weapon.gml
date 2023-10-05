@@ -12,7 +12,7 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
 
 	// Determines combined damage for enemy battle blocks for a single weapon
 
-	var atta,arp,acr,rang,amm,spli,faith_bonus;
+	var atta,arp,acr,rang,amm,spli,faith_bonus,i;
 	i=0;rang=0;atta=0;spli=0;
 	arp=0;acr=0;amm=-1;faith_bonus=0;
 

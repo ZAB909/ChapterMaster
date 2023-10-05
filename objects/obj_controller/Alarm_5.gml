@@ -1,10 +1,10 @@
 // TODO script description: This is the turn management in general 
 // TODO refactor
 var times=max(1,round(turn/150));
-var tra=0;
-var yoo, tid=0;
+var recruit_count=0;
+var random_marine, marine_position;
 var eq1=1,eq2=1,eq3=1,t=0,r=0;
-var tco=0;
+var marine_company=0;
 var warn="",w5=0;
 var g1=0,g2=0;
 var onceh=0,up=0,tot=0,stahp=0;
@@ -12,6 +12,7 @@ var disc=0,droll=0;
 var rund=0;
 var spikky=0;
 var roll=0;
+var novice_type="";
 
 if (known[10]==2) and (faction_defeated[10]==0) then times+=1;
 
@@ -63,7 +64,9 @@ with(obj_en_fleet){
     }
 }
 with(obj_star){
+    //empty object simply acts as a counter for the number of imperial systems
     if (owner==2) then instance_create(x,y,obj_temp6);
+    //unknown function of temp5 same as temp6 but for mechanicus worlds
     if (owner==3) then instance_create(x,y,obj_temp5);
     if (space_hulk==1) or (craftworld==1){x-=20000;y-=20000;}
 }
@@ -72,46 +75,45 @@ var sha=instance_number(obj_temp6)*0.65;// new
 
 with(obj_temp6){instance_destroy();}
 
+        /*in order for new ships to spawn the number of total imperial ships must be smaller than 
+         one third of the total imperial star systems*/
 if (instance_number(obj_temp5)>0) and (imp_ships<sha){
     var rando=floor(random(100))+1, rando2=choose(1,2,2,3,3,3);
     var forge=instance_nearest(random(room_width),random(room_height),obj_temp5);
     
+    //the less mechanicus forge worlds the less likely to spawn a new fleet
     if (rando<=(12)*instance_number(obj_temp5)){
-        var flit=instance_create(forge.x,forge.y,obj_en_fleet);
-        flit.owner=2;flit.sprite_index=spr_fleet_imperial;
-        if (rando2==1) then flit.capital_number=1;
-        if (rando2==2) then flit.frigate_number=1;
-        if (rando2==3) then flit.escort_number=1;
-        flit.trade_goods="merge";
+        var new_defense_fleet=instance_create(forge.x,forge.y,obj_en_fleet);
+        new_defense_fleet.owner=2;
+        new_defense_fleet.sprite_index=spr_fleet_imperial;
+        if (rando2==1) then new_defense_fleet.capital_number=1;
+        if (rando2==2) then new_defense_fleet.frigate_number=1;
+        if (rando2==3) then new_defense_fleet.escort_number=1;
+        new_defense_fleet.trade_goods="merge";
         with(obj_temp5){instance_destroy();}
         with(obj_star){
             if (x>10) and (y>10) and ((owner==2) or (owner==3)){
-                var mapre=0;
-                mapre+=present_fleet[1];
-                mapre+=present_fleet[2];
-                mapre+=present_fleet[3];
-                mapre+=present_fleet[4];
-                mapre+=present_fleet[5];
-                mapre+=present_fleet[6];
-                mapre+=present_fleet[7];
-                mapre+=present_fleet[8];
-                mapre+=present_fleet[9];
-                mapre+=present_fleet[10];
-                mapre+=present_fleet[13];
+                var system_fleet_elements=0;
+                for (var i=1;i<11;i++;){
+                    system_fleet_elements+=present_fleet[i];
+                }
+                system_fleet_elements+=present_fleet[13];
                 
-                if (planets==4) and (mapre==0) then instance_create(x,y,obj_temp6);
-                if (planets==3) and (mapre==0) then instance_create(x,y,obj_temp5);
-                if ((planets==1) or (planets==2)) and (mapre==0) and (p_type[1]!="Dead") then instance_create(x,y,obj_temp4);
+                if (planets==4) and (system_fleet_elements==0) then instance_create(x,y,obj_temp6);
+                if (planets==3) and (system_fleet_elements==0) then instance_create(x,y,obj_temp5);
+                if ((planets==1) or (planets==2)) and (system_fleet_elements==0) and (p_type[1]!="Dead") then instance_create(x,y,obj_temp4);
             }
         }
         var targeted=0;
         
-        if (instance_number(obj_temp6)>0) and (targeted==0) then targeted=instance_nearest(random(room_width),random(room_height),obj_temp6);
-        if (instance_number(obj_temp5)>0) and (targeted==0) then targeted=instance_nearest(random(room_width),random(room_height),obj_temp5);
-        if (instance_number(obj_temp4)>0) and (targeted==0) then targeted=instance_nearest(random(room_width),random(room_height),obj_temp4);
-        if (targeted!=0) and (instance_exists(targeted)){
-        
-        flit.action_x=targeted.x;flit.action_y=targeted.y;flit.alarm[4]=1;}
+        if (instance_number(obj_temp6)>0) and (targeted==0){targeted=instance_nearest(random(room_width),random(room_height),obj_temp6);}
+        else if(instance_number(obj_temp5)>0) and (targeted==0){targeted=instance_nearest(random(room_width),random(room_height),obj_temp5);}
+        else if(instance_number(obj_temp4)>0) and (targeted==0){targeted=instance_nearest(random(room_width),random(room_height),obj_temp4);}
+        if (targeted!=0) and (instance_exists(targeted)){ 
+            new_defense_fleet.action_x=targeted.x;
+            new_defense_fleet.action_y=targeted.y;
+            new_defense_fleet.alarm[4]=1;
+        }
         
         with(obj_temp6){instance_destroy();}
         with(obj_temp5){instance_destroy();}with(obj_temp4){instance_destroy();}
@@ -132,30 +134,23 @@ if (training_apothecary==3) then apothecary_points+=1;
 if (training_apothecary==4) then apothecary_points+=1.5;
 if (training_apothecary==5) then apothecary_points+=2;
 if (training_apothecary==6) then apothecary_points+=4;
-
-if (training_apothecary>0) then tra=scr_role_count(string(obj_ini.role[100,15])+" Aspirant","");
-if (apothecary_points>=4) and (apothecary_aspirant!=0) and (tra=0){
+novice_type = string("{0} Aspirant",obj_ini.role[100,15])
+if (training_apothecary>0) then recruit_count=scr_role_count(novice_type,"");
+if (apothecary_points>=4) and (apothecary_aspirant!=0) and (recruit_count=0){
     apothecary_points=0;
     apothecary_aspirant=0;
 }
 if (apothecary_points>=48){
-    if (tra>0){
-        yoo=scr_random_marine(string(obj_ini.role[100,15])+" Aspirant",0);
-        tid=yoo;
-        // show_message(tid);
-        // show_message(obj_ini.role[0,tid]);
-        repeat(10){
-            if (obj_ini.role[0,tid]!=(string(obj_ini.role[100,15])+" Aspirant")){
-                yoo=scr_random_marine((obj_ini.role[100,15]+" Aspirant"),0);
-                tid=yoo;
-                // tco=(yoo-tid)*100;
-            }
-        }
-        if (obj_ini.role[0,tid]==(obj_ini.role[100,15]+" Aspirant")){
+    if (recruit_count>0){
+        random_marine=scr_random_marine(novice_type,0);
+        // show_message(marine_position);
+        // show_message(obj_ini.role[0,marine_position]);
+        if (random_marine != "none"){
+            marine_position=random_marine[1];
             apothecary_points-=48;
-            apothecary_aspirant=0;
-            obj_ini.role[0,tid]=obj_ini.role[100,15];
-            obj_ini.experience[0,tid]+=10;
+            obj_ini.role[0,marine_position]=obj_ini.role[100,15];
+            obj_ini.experience[0,marine_position]+=10;
+            apothecary_aspirant=0;            
 
             eq1=1;
             eq2=1;
@@ -163,42 +158,42 @@ if (apothecary_points>=48){
             t=0;
             r=0;
 
-            if (obj_ini.wep1[0,tid]!=obj_ini.wep1[100,15]){
+            if (obj_ini.wep1[0,marine_position]!=obj_ini.wep1[100,15]){
                 for (t=1; t<=50; t++){
                     if (obj_ini.equipment[t]=obj_ini.wep1[100,15]) and (obj_ini.equipment_number[t]>=1) and (r=0) then r=t;
                 }
                 if (r!=0){
-                    if (obj_ini.wep1[0,tid]!="") then scr_add_item(obj_ini.wep1[0,tid],1);
+                    if (obj_ini.wep1[0,marine_position]!="") then scr_add_item(obj_ini.wep1[0,marine_position],1);
                     scr_add_item(obj_ini.wep1[100,15],-1);
-                    obj_ini.wep1[0,tid]=obj_ini.wep1[100,15];
+                    obj_ini.wep1[0,marine_position]=obj_ini.wep1[100,15];
                 }
                 if (r==0) then eq1=0;
             }
-            if (obj_ini.wep2[0,tid]!=obj_ini.wep2[100,15]){
+            if (obj_ini.wep2[0,marine_position]!=obj_ini.wep2[100,15]){
                 r=0;
                 for (t=1; t<=50; t++){
                     if (obj_ini.equipment[t]=obj_ini.wep2[100,15]) and (obj_ini.equipment_number[t]>=1) and (r=0) then r=t;
                 }
                 if (r!=0){
-                    if (obj_ini.wep2[0,tid]!="") then scr_add_item(obj_ini.wep2[0,tid],1);
+                    if (obj_ini.wep2[0,marine_position]!="") then scr_add_item(obj_ini.wep2[0,marine_position],1);
                     scr_add_item(obj_ini.wep2[100,15],-1);
-                    obj_ini.wep2[0,tid]=obj_ini.wep2[100,15];
+                    obj_ini.wep2[0,marine_position]=obj_ini.wep2[100,15];
                 }
                 if (r==0) then eq2=0;
             }
-            if (obj_ini.gear[0,tid]!=obj_ini.gear[100,15]){
+            if (obj_ini.gear[0,marine_position]!=obj_ini.gear[100,15]){
                 r=0;
                 for (t=1; t<=50; t++){
                     if (obj_ini.equipment[t]=obj_ini.gear[100,15]) and (obj_ini.equipment_number[t]>=1) and (r=0) then r=t;
                 }
                 if (r!=0){
-                    if (obj_ini.gear[0,tid]!="") then scr_add_item(obj_ini.gear[0,tid],1);
+                    if (obj_ini.gear[0,marine_position]!="") then scr_add_item(obj_ini.gear[0,marine_position],1);
                     scr_add_item(obj_ini.gear[100,15],-1);
-                    obj_ini.gear[0,tid]=obj_ini.gear[100,15];
+                    obj_ini.gear[0,marine_position]=obj_ini.gear[100,15];
                 }
                 if (r==0) then eq3=0;
             }
-            scr_alert("green","recruitment",string(obj_ini.role[100,15])+" Aspirant "+string(obj_ini.name[0,tid])+" has finished training.",0,0);
+            scr_alert("green","recruitment",novice_type+string(obj_ini.name[0,marine_position])+" has finished training.",0,0);
             if (eq1+eq2+eq3!=3){
                 warn="";
                 w5=0;
@@ -213,26 +208,16 @@ if (apothecary_points>=48){
             }
             with(obj_ini){scr_company_order(0);}
         }
+
     }
 }
-tra=0;
-if (apothecary_points>=4) and (apothecary_aspirant==0){    
-    tco=0;
-    tid=0;
-    for(var i=0; i<10; i++){
-        if (tco<2) or (tco>10){
-            yoo=scr_random_marine(choose(obj_ini.role[100,8],obj_ini.role[100,8],obj_ini.role[100,10],obj_ini.role[100,9]),60);
-            tid=floor(yoo);
-            tco=(yoo-tid)*100;
-            if (obj_ini.role[tco,tid]="") or (obj_ini.role[tco,tid]=obj_ini.role[100,6]) or (obj_ini.role[tco,tid]="Venerable "+string(obj_ini.role[100,6])){
-                yoo=0;
-                tid=0;
-                tco=0;
-            }
-        }
-    }
-    if (tco<=10) and (obj_ini.role[tco,tid]!=""){
-        apothecary_aspirant=1;
+recruit_count=0;
+if (apothecary_points>=4) and (apothecary_aspirant==0){
+
+    random_marine=scr_random_marine([obj_ini.role[100,8],obj_ini.role[100,18],obj_ini.role[100,10],obj_ini.role[100,9]],60);
+    if (random_marine != "none"){
+        marine_position=random_marine[1];
+        marine_company=random_marine[0];
         g1=0;
         g2=0;
         // This gets the last open slot for company 0
@@ -242,15 +227,20 @@ if (apothecary_points>=4) and (apothecary_aspirant==0){
             }
         }
         if (g1!=0){
+            apothecary_aspirant=1;
             command+=1;
             marines-=1;
-			scr_move_unit_info(tco,0, tid, g1)
-			obj_ini.role[0,g1]=obj_ini.role[100,15]+" Aspirant";
+            scr_move_unit_info(marine_company,0, marine_position, g1)
+            obj_ini.role[0,g1]=novice_type;
             if (obj_ini.gear[0,g1]!=""){scr_add_item(obj_ini.gear[0,g1],1);obj_ini.gear[0,g1]="";}
             if (obj_ini.mobi[0,g1]!=""){scr_add_item(obj_ini.mobi[0,g1],1);obj_ini.mobi[0,g1]="";}
-            scr_alert("green","recruitment",string(obj_ini.role[100,15])+" Aspirant "+string(obj_ini.name[0,g1])+" begins training.",0,0);
-            with(obj_ini){scr_company_order(tco);scr_company_order(0);}
-        }    
+            with(obj_ini){
+                scr_company_order(marine_company);
+                scr_company_order(0);
+            }
+        }                  
+    } else {
+        scr_alert("red","recruitment","No marines available for apothecary traning",0,0);
     }
 }
 // * Chaplain training *
@@ -262,68 +252,62 @@ if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands")
     if (training_chaplain==4) then chaplain_points+=1.5;
     if (training_chaplain==5) then chaplain_points+=2;
     if (training_chaplain==6) then chaplain_points+=4;
-    if (training_chaplain>0) then tra=scr_role_count(string(obj_ini.role[100,14])+" Aspirant","");
-    if (chaplain_points>=4) and (chaplain_aspirant!=0) and (tra==0){
+    novice_type = string("{0} Aspirant",obj_ini.role[100,14])
+    if (training_chaplain>0) then recruit_count=scr_role_count(novice_type,"");
+    if (chaplain_points>=4) and (chaplain_aspirant!=0) and (recruit_count==0){
         chaplain_points=0;
         chaplain_aspirant=0;
     }
     if (chaplain_points>=48){
-        if (tra>0){
-            tid=0;
-            yoo=scr_random_marine((obj_ini.role[100,14]+" Aspirant"),0);
-            tid=yoo;
-            for(var i=0; i<10; i++){
-                if (obj_ini.role[0,tid]!=obj_ini.role[100,14]+" Aspirant"){
-                    yoo=scr_random_marine((obj_ini.role[100,14]+" Aspirant"),0);
-                    tid=yoo;// tco=(yoo-tid)*100;
-                }
-            }
-            if (obj_ini.role[0,tid]==(obj_ini.role[100,14]+" Aspirant")){
+        if (recruit_count>0){
+            random_marine=scr_random_marine(novice_type,0);
+            if (random_marine != "none"){
+                marine_position = random_marine[1];
                 chaplain_points-=48;
+                obj_ini.role[0,marine_position]=obj_ini.role[100,14];
+                obj_ini.experience[0,marine_position]+=10;
                 chaplain_aspirant=0;
-                obj_ini.role[0,tid]=obj_ini.role[100,14];
-                obj_ini.experience[0,tid]+=10;
                 eq1=1;
                 eq2=1;
                 eq3=1;
                 t=0;
                 r=0;
-                if (obj_ini.wep1[0,tid]!=obj_ini.wep1[100,14]){
+                if (obj_ini.wep1[0,marine_position]!=obj_ini.wep1[100,14]){
                     for (t=1; t<=50; t++){
                         if (obj_ini.equipment[t]==obj_ini.wep1[100,14]) and (obj_ini.equipment_number[t]>=1) and (r==0) then r=t;
                     }
                     if (r!=0){
-                        if (obj_ini.wep1[0,tid]!="") then scr_add_item(obj_ini.wep1[0,tid],1);
+                        if (obj_ini.wep1[0,marine_position]!="") then scr_add_item(obj_ini.wep1[0,marine_position],1);
                         scr_add_item(obj_ini.wep1[100,14],-1);
-                        obj_ini.wep1[0,tid]=obj_ini.wep1[100,14];
+                        obj_ini.wep1[0,marine_position]=obj_ini.wep1[100,14];
                     }
                     if (r==0) then eq1=0;
                 }
-                if (obj_ini.wep2[0,tid]!=obj_ini.wep2[100,14]){
+                if (obj_ini.wep2[0,marine_position]!=obj_ini.wep2[100,14]){
                     r=0;
                     for (t=1; t<=50; t++){
                         if (obj_ini.equipment[t]=obj_ini.wep2[100,14]) and (obj_ini.equipment_number[t]>=1) and (r==0) then r=t;
                     }
                     if (r!=0){
-                        if (obj_ini.wep2[0,tid]!="") then scr_add_item(obj_ini.wep2[0,tid],1);
+                        if (obj_ini.wep2[0,marine_position]!="") then scr_add_item(obj_ini.wep2[0,marine_position],1);
                         scr_add_item(obj_ini.wep2[100,14],-1);
-                        obj_ini.wep2[0,tid]=obj_ini.wep2[100,14];
+                        obj_ini.wep2[0,marine_position]=obj_ini.wep2[100,14];
                     }
                     if (r==0) then eq2=0;
                 }
-                if (obj_ini.gear[0,tid]!=obj_ini.gear[100,14]){
+                if (obj_ini.gear[0,marine_position]!=obj_ini.gear[100,14]){
                     r=0;
                     for (t=1; t<=50; t++){
                         if (obj_ini.equipment[t]=obj_ini.gear[100,14]) and (obj_ini.equipment_number[t]>=1) and (r==0) then r=t;
                     }
                     if (r!=0){
-                        if (obj_ini.gear[0,tid]!="") then scr_add_item(obj_ini.gear[0,tid],1);
+                        if (obj_ini.gear[0,marine_position]!="") then scr_add_item(obj_ini.gear[0,marine_position],1);
                         scr_add_item(obj_ini.gear[100,14],-1);
-                        obj_ini.gear[0,tid]=obj_ini.gear[100,14];
+                        obj_ini.gear[0,marine_position]=obj_ini.gear[100,14];
                     }
                     if (r==0) then eq3=0;
                 }
-                scr_alert("green","recruitment",string(obj_ini.role[100,14])+" Aspirant "+string(obj_ini.name[0,tid])+" has finished training.",0,0);
+                scr_alert("green","recruitment",novice_type+string(obj_ini.name[0,marine_position])+" has finished training.",0,0);
                 if (eq1+eq2+eq3!=3){
                     warn="";
                     w5=0;
@@ -336,40 +320,29 @@ if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands")
                     warn+=".";
                     scr_alert("red","recruitment","Not enough equipment: "+string(warn),0,0);
                 }
-                with(obj_ini){scr_company_order(0);}
+                with(obj_ini){scr_company_order(0);}                
             }
         }
     }
     if (chaplain_points>=4) and (chaplain_aspirant==0){    
-        tid=0;
-        tco=0;
-        for(var i=0; i<10; i++){
-            if (tco<1) or (tco>10){
-                yoo=scr_random_marine(choose(obj_ini.role[100,8],obj_ini.role[100,8],obj_ini.role[100,10]),60);
-                tid=floor(yoo);
-                tco=(yoo-tid)*100;
-                if (obj_ini.role[tco,tid]=="") or (obj_ini.role[tco,tid]==obj_ini.role[100,6]) or (obj_ini.role[tco,tid]=="Venerable "+string(obj_ini.role[100,6])){
-                    yoo=0;
-                    tid=0;
-                    tco=0;
-                }
-            }
-        }
-        if (tco<=10) and (obj_ini.role[tco,tid]!=""){
-            chaplain_aspirant=1;
+        marine_company=0;
+        random_marine=scr_random_marine([obj_ini.role[100,8],obj_ini.role[100,18],obj_ini.role[100,10],obj_ini.role[100,9]],60);
+        if (random_marine != "none"){
+            marine_position = random_marine[1];
+            marine_company = random_marine[0];
             g1=0;
-            g2=0;
             // This gets the last open slot for company 0
             for(var h=1; h<=300; h++){
                 if (g1==0){
-                    if (obj_ini.role[0,h]="") then g1=h;
+                    if (obj_ini.role[0,h]="") and (obj_ini.name[0,h]="")then g1=h;
                 }
             }
             if (g1!=0){
+                chaplain_aspirant=1;
                 command+=1;
                 marines-=1;
-				scr_move_unit_info(tco,0, tid, g1);
-                obj_ini.role[0,g1]=obj_ini.role[100,14]+" Aspirant";
+                scr_move_unit_info(marine_company,0, marine_position, g1);
+                obj_ini.role[0,g1]=novice_type;
                 if (obj_ini.gear[0,g1]!=""){
                     scr_add_item(obj_ini.gear[0,g1],1);
                     obj_ini.gear[0,g1]="";
@@ -378,16 +351,17 @@ if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands")
                     scr_add_item(obj_ini.mobi[0,g1],1);
                     obj_ini.mobi[0,g1]="";
                 }
-                scr_alert("green","recruitment",string(obj_ini.role[100,14])+" Aspirant "+string(obj_ini.name[0,g1])+" begins training.",0,0);
+                scr_alert("green","recruitment",novice_type+string(obj_ini.name[0,g1])+" begins training.",0,0);
                 with(obj_ini){
-                    scr_company_order(tco);
+                    scr_company_order(marine_company);
                     scr_company_order(0);
                 }
-            }    
+            }                      
+
         }
     }
 }
-tra=0;
+recruit_count=0;
 // * Psycher Training *
 if (training_psyker==1) then psyker_points+=0.8;
 if (training_psyker==2) then psyker_points+=0.9;
@@ -395,7 +369,7 @@ if (training_psyker==3) then psyker_points+=1;
 if (training_psyker==4) then psyker_points+=1.5;
 if (training_psyker==5) then psyker_points+=2;
 if (training_psyker==6) then psyker_points+=4;
-
+novice_type = string("{0} Aspirant",obj_ini.role[100,17])
 var goal=48,yep=0;
 for(var o=1; o<=4; o++){
     if (obj_ini.adv[o]=="Psyker Abundance"){
@@ -404,57 +378,40 @@ for(var o=1; o<=4; o++){
     }
 }
 
-if (training_psyker>0) then tra=scr_role_count(string(obj_ini.role[100,17])+" Aspirant","");
-if (psyker_points>=round(goal/2)) and (psyker_aspirant!=0) and (tra==0){
+if (training_psyker>0) then recruit_count=scr_role_count(novice_type,"0");
+if (psyker_points>=round(goal/2)) and (psyker_aspirant!=0) and (recruit_count==0){
     psyker_points=0;
     psyker_aspirant=0;
 }
+show_debug_message("point:{0}",psyker_points);
+show_debug_message("recruit_count:{0}",recruit_count)
+show_debug_message("psyker_aspirant:{0}",psyker_points)
 if (psyker_points>=goal){
-    if (tra>0){
-        tid=0;
-        yoo=scr_random_marine((obj_ini.role[100,17]+" Aspirant"),0);
-        tid=yoo;
-        for(var i=0; i<10; i++){
-            if (obj_ini.role[0,tid]!=obj_ini.role[100,17]+" Aspirant"){
-                yoo=scr_random_marine((obj_ini.role[100,17]+" Aspirant"),0);
-                tid=yoo;// tco=(yoo-tid)*100;
-            }
-        }
-        if (obj_ini.role[0,tid]==(obj_ini.role[100,17]+" Aspirant")){
+    if (recruit_count>0){
+        marine_position=0;
+        random_marine=scr_random_marine(novice_type,0, {"trait":"warp_touched"});
+        if (random_marine != "none"){
+            marine_position = random_marine[1];
+            show_debug_message("psyker_aspirant:{0}",obj_ini.TTRPG[0,marine_position]);
             psyker_points-=48;
             psyker_aspirant=0;
-            obj_ini.role[0,tid]="Lexicanum";
-            scr_alert("green","recruitment","Librarian Aspirant "+string(obj_ini.name[0,tid])+" has finished training.",0,0);
+            obj_ini.role[0,marine_position]="Lexicanum";
+            scr_alert("green","recruitment",novice_type + " "+string(obj_ini.name[0,marine_position])+" has finished training.",0,0);
             with(obj_ini){scr_company_order(0);}
         }
     }
 }
 if (psyker_points>=round(goal/2)) and (psyker_aspirant==0){
-    tid=0;
-    tco=0;
-    for(var i=0; i<15; i++){
-        if (tco<=2) or (tco>10){
-            yoo=scr_random_marine(obj_ini.role[100,8],30);
-            tid=floor(yoo);
-            tco=(yoo-tid)*100;
-            if (obj_ini.role[tco,tid]==""){
-                yoo=0;
-                tid=0;
-                tco=0;
-            }
-            if (tid+tco!=0){
-                if (obj_ini.role[tco,tid]=="Company Champion"){
-                    yoo=0;
-                    tid=0;
-                    tco=0;
-                }
-            }
-        }
-    }
-    if (tco<=10) and (obj_ini.role[tco,tid]!=""){
-        psyker_aspirant=1;
+    marine_position=0;
+    marine_company=0;
+
+    random_marine=scr_random_marine([obj_ini.role[100,8], obj_ini.role[100,18], obj_ini.role[100,9], obj_ini.role[100,10]],30, {"trait":"warp_touched"});
+    if (random_marine == "none"){
+        scr_alert("red","recruitment","No remaining warp sensitive marines for training",0,0);
+    }else if (random_marine != "none"){
+        marine_position=random_marine[1];
+        marine_company=random_marine[0];
         g1=0;
-        g2=0;
         // This gets the last open slot for company 0
         for(var h=1; h<=300; h++){
             if (g1==0){
@@ -464,13 +421,14 @@ if (psyker_points>=round(goal/2)) and (psyker_aspirant==0){
         if (g1!=0){
             command+=1;
             marines-=1;
-			scr_move_unit_info(tco,0, tid, g1)
-            obj_ini.role[0,g1]=string(obj_ini.role[100,17])+" Aspirant";
+			scr_move_unit_info(marine_company,0, marine_position, g1)
+            obj_ini.role[0,g1]=string("{0} Aspirant",obj_ini.role[100,17])
             scr_powers_new(0,g1);
+            psyker_aspirant=1;
             
             if (string_count("Abund",obj_ini.strin)>0) then obj_ini.experience[0,g1]+=floor(random(5))+3;
             
-            obj_ini.mobi[0,g1]=obj_ini.mobi[tco,tid];
+            obj_ini.mobi[0,g1]=obj_ini.mobi[marine_company,marine_position];
             if (obj_ini.gear[0,g1]!=""){
                 scr_add_item(obj_ini.gear[0,g1],1);
                 obj_ini.gear[0,g1]="";
@@ -481,13 +439,13 @@ if (psyker_points>=round(goal/2)) and (psyker_aspirant==0){
             }
             scr_alert("green","recruitment",string(obj_ini.role[100,17])+" Aspirant "+string(obj_ini.name[0,g1])+" begins training.",0,0);
             with(obj_ini){
-                scr_company_order(tco);
+                scr_company_order(marine_company);
                 scr_company_order(0);
             }
         }    
     }
 }
-tra=0;
+recruit_count=0;
 // * Tech Marine *
 if (training_techmarine==1) then tech_points+=1;
 if (training_techmarine==2) then tech_points+=2;
@@ -496,61 +454,55 @@ if (training_techmarine==4) then tech_points+=6;
 if (training_techmarine==5) then tech_points+=8;
 if (training_techmarine==6) then tech_points+=16;
 
-if (training_techmarine>0) then tra=scr_role_count(string(obj_ini.role[100,16])+" Aspirant","");
-if (tech_points>=4) and (tech_aspirant!=0) and (tra==0){
+if (training_techmarine>0) then recruit_count=scr_role_count(string("{0} Aspirant",obj_ini.role[100,16]),"");
+if (tech_points>=4) and (tech_aspirant!=0) and (recruit_count==0){
     tech_points=0;
     tech_aspirant=0;
 }
 if (tech_points>=360){
-    if (tra>0){
-        tid=0;
-        yoo=scr_random_marine((obj_ini.role[100,16]+" Aspirant"),0);
-        tid=yoo;
-        for(var i=0; i<10; i++){
-            if (obj_ini.role[0,tid]!=obj_ini.role[100,16]+" Aspirant"){
-                yoo=scr_random_marine((obj_ini.role[100,16]+" Aspirant"),0);
-                tid=yoo;// tco=(yoo-tid)*100;
-            }
-        }
-        if (obj_ini.role[0,tid]==(obj_ini.role[100,16]+" Aspirant")){
+    if (recruit_count>0){
+        marine_position=0;
+        random_marine=scr_random_marine(string("{0} Aspirant",obj_ini.role[100,16]),0);
+        if (random_marine != "none"){
+            marine_position = random_marine[1];
             tech_points-=360;
             tech_aspirant=0;
-            obj_ini.role[0,tid]=obj_ini.role[100,16];
-            obj_ini.experience[0,tid]+=10;
+            obj_ini.role[0,marine_position]=obj_ini.role[100,16];
+            obj_ini.experience[0,marine_position]+=10;
             
             eq1=1;
             eq2=1;
             eq3=1;
             t=0;
             r=0;
-            if (obj_ini.wep1[0,tid]!=obj_ini.wep1[100,16]){
+            if (obj_ini.wep1[0,marine_position]!=obj_ini.wep1[100,16]){
                 for (t=1; t<=50; t++){
                     if (obj_ini.equipment[t]==obj_ini.wep1[100,16]) and (obj_ini.equipment_number[t]>=1) and (r==0) then r=t;
                 }
                 if (r!=0){
-                    if (obj_ini.wep1[0,tid]!="") then scr_add_item(obj_ini.wep1[0,tid],1);
+                    if (obj_ini.wep1[0,marine_position]!="") then scr_add_item(obj_ini.wep1[0,marine_position],1);
                     scr_add_item(obj_ini.wep1[100,16],-1);
-                    obj_ini.wep1[0,tid]=obj_ini.wep1[100,16];
+                    obj_ini.wep1[0,marine_position]=obj_ini.wep1[100,16];
                 }
                 if (r==0) then eq1=0;
             }
-            if (obj_ini.wep2[0,tid]!=obj_ini.wep2[100,16]){
+            if (obj_ini.wep2[0,marine_position]!=obj_ini.wep2[100,16]){
                 r=0;
                 for (t=1; t<=50; t++){
                     if (obj_ini.equipment[t]==obj_ini.wep2[100,16]) and (obj_ini.equipment_number[t]>=1) and (r==0) then r=t;
                 }
                 if (r!=0){
-                    if (obj_ini.wep2[0,tid]!="") then scr_add_item(obj_ini.wep2[0,tid],1);
+                    if (obj_ini.wep2[0,marine_position]!="") then scr_add_item(obj_ini.wep2[0,marine_position],1);
                     scr_add_item(obj_ini.wep2[100,16],-1);
-                    obj_ini.wep2[0,tid]=obj_ini.wep2[100,16];
+                    obj_ini.wep2[0,marine_position]=obj_ini.wep2[100,16];
                 }
                 if (r==0) then eq2=0;
             }
-            if (obj_ini.gear[0,tid]!=obj_ini.gear[100,16]){
-                if (obj_ini.gear[0,tid]!="") then scr_add_item(obj_ini.gear[0,tid],1);
-                obj_ini.gear[0,tid]="Servo Arms";
+            if (obj_ini.gear[0,marine_position]!=obj_ini.gear[100,16]){
+                if (obj_ini.gear[0,marine_position]!="") then scr_add_item(obj_ini.gear[0,marine_position],1);
+                obj_ini.gear[0,marine_position]="Servo Arms";
             }
-            scr_alert("green","recruitment",string(obj_ini.name[0,tid])+" returns from Mars, a "+string(obj_ini.role[100,16])+".",0,0);
+            scr_alert("green","recruitment",string(obj_ini.name[0,marine_position])+" returns from Mars, a "+string(obj_ini.role[100,16])+".",0,0);
             
             if (eq1+eq2!=2){
                 warn="";
@@ -562,34 +514,24 @@ if (tech_points>=360){
                 warn+=".";
                 scr_alert("red","recruitment","Not enough equipment: "+string(warn),0,0);
             }
-            obj_ini.loc[0,tid]=obj_ini.home_name;
-            obj_ini.wid[0,tid]=2;
-            obj_ini.lid[0,tid]=0;
+            obj_ini.loc[0,marine_position]=obj_ini.home_name;
+            obj_ini.wid[0,marine_position]=2;
+            obj_ini.lid[0,marine_position]=0;
             // Probably want to change this to take into account fleet type chapters- also increase the man_size of that area by +X
-            if (global.chapter_name!="Iron Hands") and (obj_ini.bio[0,tid]<4) then obj_ini.bio[0,tid]=choose(4,5,6);
-            if (global.chapter_name=="Iron Hands") and (obj_ini.bio[0,tid]<7) then obj_ini.bio[0,tid]=choose(7,8);
+            if (global.chapter_name!="Iron Hands") and (obj_ini.bio[0,marine_position]<4) then obj_ini.bio[0,marine_position]=choose(4,5,6);
+            if (global.chapter_name=="Iron Hands") and (obj_ini.bio[0,marine_position]<7) then obj_ini.bio[0,marine_position]=choose(7,8);
             // 135 ; probably also want to increase the p_player by 1 just because
             with(obj_ini){scr_company_order(0);}
         }
     }
 }
 if (tech_points>=4) and (tech_aspirant==0){    
-    tid=0;
-    tco=0;
-    for(var i=0; i<10; i++){
-        if (tco<2) or (tco>10){
-            yoo=scr_random_marine(choose(obj_ini.role[100,8],obj_ini.role[100,8],obj_ini.role[100,10],obj_ini.role[100,9]),30);
-            tid=floor(yoo);
-            tco=(yoo-tid)*100;
-            if (obj_ini.role[tco,tid]=="") or (string_count("Dread",obj_ini.armour[tco,tid])>0){
-                yoo=0;
-                tid=0;
-                tco=0;
-            }
-        }
-    }
-    if (tco<=10) and (obj_ini.role[tco,tid]!=""){
-        tech_aspirant=1;
+    marine_position=0;
+    marine_company=0;
+    random_marine=scr_random_marine([obj_ini.role[100,8],obj_ini.role[100,18],obj_ini.role[100,10],obj_ini.role[100,9]],30);
+    if (random_marine != "none"){
+        marine_position = random_marine[1];
+        marine_company = random_marine[0];
         g1=0;
         g2=0;
         // This gets the last open slot for company 0
@@ -597,9 +539,10 @@ if (tech_points>=4) and (tech_aspirant==0){
             if (g1==0){if (obj_ini.role[0,h]=="") then g1=h;}
         }
         if (g1!=0){
+            tech_aspirant=1;
             command+=1;
             marines-=1;
-			scr_move_unit_info(tco,0, tid, g1);
+            scr_move_unit_info(marine_company,0, marine_position, g1);
             obj_ini.role[0,g1]=obj_ini.role[100,16]+" Aspirant";
             // Remove from ship
             if (obj_ini.lid[0,g1]>0){
@@ -627,13 +570,13 @@ if (tech_points>=4) and (tech_aspirant==0){
             }
             scr_alert("green","recruitment",string(obj_ini.role[100,16])+" Aspirant "+string(obj_ini.name[0,g1])+" journeys to Mars.",0,0);
             with(obj_ini){
-                scr_company_order(tco);
+                scr_company_order(marine_company);
                 scr_company_order(0);
             }
         }    
     }
 }
-tra=0;
+recruit_count=0;
 
 if (obj_ini.fleet_type!=1){
     with(obj_temp5){instance_destroy();}
@@ -752,6 +695,8 @@ if (instance_number(obj_temp_inq)<target_navy_number){
         if (good==true) then instance_create(x,y,obj_temp8);
     }
 }
+
+//after initial navy fleet construction fleet growth is handles in obj_en_fleet.alarm_5
 if (instance_exists(obj_temp8)){
     var newy,nav;
     newy=instance_nearest(random(room_width),random(room_height),obj_temp8);
@@ -1152,7 +1097,7 @@ if (inspec==true) and (faction_status[4]!="War") and (obj_ini.fleet_type==1) and
     with(obj_star){if (owner==1) then instance_create(x,y,obj_temp3);}
 
     if (instance_number(obj_temp3)==1){
-        var xy,yx,tar,flit;
+        var xy,yx,tar,new_defense_fleet;
         xy=obj_temp3.x;
         yx=obj_temp3.y;
 
@@ -1166,23 +1111,23 @@ if (inspec==true) and (faction_status[4]!="War") and (obj_ini.fleet_type==1) and
         }
 
         tar=instance_nearest(obj_temp3.x,obj_temp3.y,obj_star);
-        flit=instance_create(tar.x,tar.y-24,obj_en_fleet);
-        flit.owner=4;
-        flit.frigate_number=1;
-        flit.action_x=xy;
-        flit.action_y=yx;
-        flit.sprite_index=spr_fleet_inquisition;
-        flit.image_index=0;
+        new_defense_fleet=instance_create(tar.x,tar.y-24,obj_en_fleet);
+        new_defense_fleet.owner=4;
+        new_defense_fleet.frigate_number=1;
+        new_defense_fleet.action_x=xy;
+        new_defense_fleet.action_y=yx;
+        new_defense_fleet.sprite_index=spr_fleet_inquisition;
+        new_defense_fleet.image_index=0;
 
         roll=floor(random(100))+1;
 
-        if (roll<=60) then flit.trade_goods="Inqis1";
-        if (roll<=70) and (roll>60) then flit.trade_goods="Inqis2";
-        if (roll<=80) and (roll>70) then flit.trade_goods="Inqis3";
-        if (roll<=90) and (roll>80) then flit.trade_goods="Inqis4";
-        if (roll<=100) and (roll>90) then flit.trade_goods="Inqis5";
+        if (roll<=60) then new_defense_fleet.trade_goods="Inqis1";
+        if (roll<=70) and (roll>60) then new_defense_fleet.trade_goods="Inqis2";
+        if (roll<=80) and (roll>70) then new_defense_fleet.trade_goods="Inqis3";
+        if (roll<=90) and (roll>80) then new_defense_fleet.trade_goods="Inqis4";
+        if (roll<=100) and (roll>90) then new_defense_fleet.trade_goods="Inqis5";
 
-        flit.alarm[4]=1;
+        new_defense_fleet.alarm[4]=1;
 
         instance_activate_object(obj_star);
         with(obj_temp3){instance_destroy();}
@@ -1205,7 +1150,7 @@ if (inspec==true) and (faction_status[4]!="War") and (obj_ini.fleet_type!=1) and
             if (frigate_number>0) and (action!="") then instance_create(action_x,action_y,obj_temp4);
         }
 
-        var obj,x4,y4,from,target,flit;
+        var obj,x4,y4,from,target,new_defense_fleet;
         if (instance_exists(obj_p_ship)) then obj=instance_nearest(random(room_width),random(room_height),obj_p_ship);
         if (instance_exists(obj_temp4)) then obj=instance_nearest(random(room_width),random(room_height),obj_temp4);
         if (instance_exists(obj_temp5)) then obj=instance_nearest(random(room_width),random(room_height),obj_temp5);
@@ -1222,43 +1167,43 @@ if (inspec==true) and (faction_status[4]!="War") and (obj_ini.fleet_type!=1) and
         from=instance_nearest(x4,y4,obj_star);
         instance_activate_object(obj_star);
 
-        flit=instance_create(from.x,from.y-24,obj_en_fleet);
-        flit.owner=4;
-        flit.frigate_number=1;
+        new_defense_fleet=instance_create(from.x,from.y-24,obj_en_fleet);
+        new_defense_fleet.owner=4;
+        new_defense_fleet.frigate_number=1;
 
-        flit.target=instance_nearest(x4,y4,obj_p_fleet);
-        flit.action_x=instance_nearest(x4,y4,obj_star).x;
-        flit.action_y=instance_nearest(x4,y4,obj_star).y;
-        if (flit.target.action!="") then flit.action_eta=flit.target.action_eta;
-        // show_message(string(flit.action_eta));
+        new_defense_fleet.target=instance_nearest(x4,y4,obj_p_fleet);
+        new_defense_fleet.action_x=instance_nearest(x4,y4,obj_star).x;
+        new_defense_fleet.action_y=instance_nearest(x4,y4,obj_star).y;
+        if (new_defense_fleet.target.action!="") then new_defense_fleet.action_eta=new_defense_fleet.target.action_eta;
+        // show_message(string(new_defense_fleet.action_eta));
 
-        flit.sprite_index=spr_fleet_inquisition;
-        flit.image_index=0;
+        new_defense_fleet.sprite_index=spr_fleet_inquisition;
+        new_defense_fleet.image_index=0;
 
         var mess="Inquisitor ";
         roll=floor(random(100))+1;
 
         if (roll<=60){
-            flit.trade_goods="Inqis1";
+            new_defense_fleet.trade_goods="Inqis1";
             mess+=string(obj_controller.inquisitor[1]);
         }
         if (roll<=70) and (roll>60){
-            flit.trade_goods="Inqis2";
+            new_defense_fleet.trade_goods="Inqis2";
             mess+=string(obj_controller.inquisitor[2]);
         }
         if (roll<=80) and (roll>70){
-            flit.trade_goods="Inqis3";
+            new_defense_fleet.trade_goods="Inqis3";
             mess+=string(obj_controller.inquisitor[3]);
         }
         if (roll<=90) and (roll>80){
-            flit.trade_goods="Inqis4";
+            new_defense_fleet.trade_goods="Inqis4";
             mess+=string(obj_controller.inquisitor[4]);
         }
         if (roll<=100) and (roll>90){
-            flit.trade_goods="Inqis5";
+            new_defense_fleet.trade_goods="Inqis5";
             mess+=string(obj_controller.inquisitor[5]);
         }
-        flit.trade_goods+="_fleet";
+        new_defense_fleet.trade_goods+="_fleet";
 
         obj=instance_nearest(x4,y4,obj_star);
 
@@ -1267,7 +1212,7 @@ if (inspec==true) and (faction_status[4]!="War") and (obj_ini.fleet_type!=1) and
         if (instance_exists(obj_turn_end)) then obj_turn_end.alerts+=1;
 
 
-        flit.alarm[4]=1;
+        new_defense_fleet.alarm[4]=1;
 
         with(obj_temp4){instance_destroy();}
         with(obj_temp5){instance_destroy();}
@@ -1371,10 +1316,10 @@ for(var i=1; i<=99; i++){
                     }
                 }
                 if (instance_number(obj_temp5)>0){
-                    var that,that2,flit;
+                    var that,that2,new_defense_fleet;
                     that=instance_nearest(random(room_width),random(room_height),obj_temp5);
                     that2=instance_nearest(that.x,that.y,obj_star);
-                    flit=instance_create(that2.x+24,that2.y-24,obj_p_fleet);
+                    new_defense_fleet=instance_create(that2.x+24,that2.y-24,obj_p_fleet);
 
                     var ship_names="",new_name="",last_ship=0;
                     for(var k=1; k<=40; k++){
@@ -1385,7 +1330,7 @@ for(var i=1; i<=99; i++){
                         if (new_name==""){
                             new_name=scr_ship_name("imperial");
                             if (string_count(new_name,ship_names)>0) then new_name="";
-                        }
+                        } else {break};
                     }
 
                     obj_ini.ship[last_ship]=new_name;
@@ -1426,10 +1371,10 @@ for(var i=1; i<=99; i++){
                         obj_ini.ship_carrying[last_ship]=0;
                         obj_ini.ship_contents[last_ship]="";
                         obj_ini.ship_turrets[last_ship]=3;
-                        flit.capital[1]=obj_ini.ship[last_ship];
-                        flit.capital_number=1;
-                        flit.capital_num[1]=last_ship;
-                        flit.capital_uid[1]=obj_ini.ship_uid[last_ship];
+                        new_defense_fleet.capital[1]=obj_ini.ship[last_ship];
+                        new_defense_fleet.capital_number=1;
+                        new_defense_fleet.capital_num[1]=last_ship;
+                        new_defense_fleet.capital_uid[1]=obj_ini.ship_uid[last_ship];
                     }
                     if (string_count("Strike Cruiser",fucking)>0){
                         obj_ini.ship_class[last_ship]="Strike Cruiser";
@@ -1459,10 +1404,10 @@ for(var i=1; i<=99; i++){
                         obj_ini.ship_carrying[last_ship]=0;
                         obj_ini.ship_contents[last_ship]="";
                         obj_ini.ship_turrets[last_ship]=1;
-                        flit.frigate[1]=obj_ini.ship[last_ship];
-                        flit.frigate_number=1;
-                        flit.frigate_num[1]=last_ship;
-                        flit.frigate_uid[1]=obj_ini.ship_uid[last_ship];
+                        new_defense_fleet.frigate[1]=obj_ini.ship[last_ship];
+                        new_defense_fleet.frigate_number=1;
+                        new_defense_fleet.frigate_num[1]=last_ship;
+                        new_defense_fleet.frigate_uid[1]=obj_ini.ship_uid[last_ship];
                     }
                     if (string_count("Gladius",fucking)>0){
                         obj_ini.ship_class[last_ship]="Gladius";
@@ -1482,10 +1427,10 @@ for(var i=1; i<=99; i++){
                         obj_ini.ship_carrying[last_ship]=0;
                         obj_ini.ship_contents[last_ship]="";
                         obj_ini.ship_turrets[last_ship]=1;
-                        flit.escort[1]=obj_ini.ship[last_ship];
-                        flit.escort_number=1;
-                        flit.escort_num[1]=last_ship;
-                        flit.escort_uid[1]=obj_ini.ship_uid[last_ship];
+                        new_defense_fleet.escort[1]=obj_ini.ship[last_ship];
+                        new_defense_fleet.escort_number=1;
+                        new_defense_fleet.escort_num[1]=last_ship;
+                        new_defense_fleet.escort_uid[1]=obj_ini.ship_uid[last_ship];
                     }
                     if (string_count("Hunter",fucking)>0){
                         obj_ini.ship_class[last_ship]="Hunter";
@@ -1508,10 +1453,10 @@ for(var i=1; i<=99; i++){
                         obj_ini.ship_carrying[last_ship]=0;
                         obj_ini.ship_contents[last_ship]="";
                         obj_ini.ship_turrets[last_ship]=1;
-                        flit.escort[1]=obj_ini.ship[last_ship];
-                        flit.escort_number=1;
-                        flit.escort_num[1]=last_ship;
-                        flit.escort_uid[1]=obj_ini.ship_uid[last_ship];
+                        new_defense_fleet.escort[1]=obj_ini.ship[last_ship];
+                        new_defense_fleet.escort_number=1;
+                        new_defense_fleet.escort_num[1]=last_ship;
+                        new_defense_fleet.escort_uid[1]=obj_ini.ship_uid[last_ship];
                     }
 
                     // show_message(string(obj_ini.ship_class[last_ship])+":"+string(obj_ini.ship[last_ship]));

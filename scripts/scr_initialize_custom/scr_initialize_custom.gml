@@ -811,7 +811,7 @@ function scr_initialize_custom() {
 	wep2[company,4]=wep2[100,15];armour[company,4]="Artificer Armour";gear[company,4]=gear[101,15];chaos[company,4]=0;experience[company,4]=500;
 	if (global.chapter_name="Lamenters") then armour[company,4]="MK6 Corvus";
 	// Chief Librarian
-	race[company,5]=1;loc[company,5]=home_name;role[company,5]="Chief "+string(role[100,17]);wep1[company,5]=wep1[101,17];name[company,5]=obj_creation.clibrarian;
+	race[company,5]=1;loc[company,5]=home_name;role[company,5]=string("Chief {0}",role[100,17]);wep1[company,5]=wep1[101,17];name[company,5]=obj_creation.clibrarian;
 	wep2[company,5]=wep2[101,17];armour[company,5]="Artificer Armour";gear[company,5]=gear[101,17];chaos[company,5]=0;experience[company,5]=550;
 	if (global.chapter_name="Lamenters") then armour[company,5]="MK6 Corvus";
 	if (obj_creation.discipline="default"){let="D";letmax=7;}
@@ -821,6 +821,7 @@ function scr_initialize_custom() {
 	if (obj_creation.discipline="rune Magick"){let="R";letmax=5;}
 	spe[company,5]=string(let)+"0|";scr_powers_new(company,5);
 	k=0;commands+=6;k+=6;
+	TTRPG[company,5].add_trait("warp_touched");
 
 	if (intolerant=1){
 	    race[company,5]=0;loc[company,5]="";role[company,5]="";wep1[company,5]="";name[company,5]="";
@@ -848,6 +849,7 @@ function scr_initialize_custom() {
 	    if (obj_creation.discipline="telekinesis"){let="T";letmax=5;}
 	    if (obj_creation.discipline="rune Magick"){let="R";letmax=5;}
 	    spe[company,k]+=string(let)+"0|";scr_powers_new(company,k);
+	    TTRPG[company,k].add_trait("warp_touched");    
 	}
 	// Codiciery
 	repeat(codiciery){k+=1;commands+=1;man_size+=1;
@@ -862,6 +864,7 @@ function scr_initialize_custom() {
 	    if (obj_creation.discipline="telekinesis"){let="T";letmax=4;}
 	    if (obj_creation.discipline="rune Magick"){let="R";letmax=5;}
 	    spe[company,k]+=string(let)+"0|";scr_powers_new(company,k);
+	    TTRPG[company,k].add_trait("warp_touched");    
 	}
 	// Lexicanum
 	repeat(lexicanum){k+=1;commands+=1;man_size+=1;
@@ -876,6 +879,7 @@ function scr_initialize_custom() {
 	    if (obj_creation.discipline="telekinesis"){let="T";letmax=4;}
 	    if (obj_creation.discipline="rune Magick"){let="R";letmax=5;}
 	    spe[company,k]+=string(let)+"0|";
+	    TTRPG[company,k].add_trait("warp_touched");
 	}
 	// Apothecary
 	repeat(apothecary){k+=1;commands+=1;man_size+=1;

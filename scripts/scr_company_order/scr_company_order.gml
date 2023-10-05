@@ -53,43 +53,39 @@ function scr_company_order(company) {
 	        temp_wid[co,v]=wid[co,i];
 	        temp_wep1[co,v]=wep1[co,i];
 	        temp_wep2[co,v]=wep2[co,i];
-	        temp_armour[co,v]=armour[co,i];temp_gear[co,v]=gear[co,i];
-	        temp_hp[co,v]=hp[co,i];temp_chaos[co,v]=chaos[co,i];
-	        temp_experience[co,v]=experience[co,i];temp_age[co,v]=age[co,i];
+	        temp_armour[co,v]=armour[co,i];
+	        temp_gear[co,v]=gear[co,i];
+	        temp_hp[co,v]=hp[co,i];
+	        temp_chaos[co,v]=chaos[co,i];
+	        temp_experience[co,v]=experience[co,i];
+	        temp_age[co,v]=age[co,i];
 	        temp_mobi[co,v]=mobi[co,i];
 	        temp_spe[co,v]=spe[co,i];
 	        temp_god[co,v]=god[co,i];
 	        temp_bio[co,v]=bio[co,i];
 	        temp_struct[co,v]=jsonify_marine_struct(co,i);
 	}
-	i=0;repeat(10){i+=1;
-	    if (role[co,i]="Chapter Master"){v++;
-	    }
-	    if (role[co,i]="Forge Master"){v+=1;
-	        temp_marine_variables(co, i ,v);
-	    }
-	    if (role[co,i]="Master of Sanctity"){v+=1;
-	        temp_marine_variables(co, i ,v);
-	    }
-	    if (role[co,i]="Chief "+string(role[100,17])){v+=1;
-	        temp_marine_variables(co, i ,v);
-	    }
-	}
 	var role_orders = [
+		"Chapter Master",
+		"Forge Master",
+		"Master of Sanctity",
+		"Master of the Apothecarion",
+		string("Chief {0}",role[100,17]),
 		role[100,2],
 		role[100,5],
-		string(role[100,14])+" Aspirant",
+		role[100,14],
+		string("{0} Aspirant",role[100,14]),
 		"Death Company",
 		role[100,16],
-		string(role[100,16])+" Aspirant",
+		string("{0} Aspirant",role[100,16]),
 		"Techpriest",
 		role[100,15],
-		string(role[100,15])+" Aspirant",
+		string("{0} Aspirant",role[100,15]),
 		"Sister Hospitaler",
 		role[100,17],
 		"Codiciery",
 		"Lexicanum",
-		string(role[100,17])+" Aspirant",
+		string("{0} Aspirant",role[100,17]),
 		"Standard Bearer",
 		obj_ini.role[100,7],
 		"Death Company",
@@ -155,7 +151,7 @@ function scr_company_order(company) {
 				TTRPG[co,i].load_json_data(json_parse(temp_struct[co,i]));
 				TTRPG[co,i].company = co;
 				TTRPG[co,i].marine_number = i;
-			}
+			} else{TTRPG[co,i] = new TTRPG_stats("chapter", co,i ,"blank");}
 	}
 /*	i=0;repeat(300){i+=1;
 	    if (role[co,i]="Death Company"){
