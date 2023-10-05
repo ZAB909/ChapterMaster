@@ -38,19 +38,25 @@ function scr_special_view(command_group) {
 
 			unit = obj_ini.TTRPG[0,v];	    	
 			var yep;yep=0;
-			if unit.base_group!="astartes"{yep=1;}
+			if (unit.base_group!="astartes"){yep=1;}
+			if (unit.base_group=="none"){yep=0;}
 			if ((unit.role()=="Chapter Master") or (unit.role()==obj_ini.role[100,2])){yep=1;}
 			if (yep=1){
 				b+=1;
-	        mans+=1;man[b]="man";ide[b]=v;
-	        ma_race[b]=obj_ini.race[0,v];ma_loc[b]=obj_ini.loc[0,v];ma_name[b]=obj_ini.name[0,v];
-	        ma_role[b]=obj_ini.role[0,v];ma_wep1[b]=obj_ini.wep1[0,v];ma_wep2[b]=obj_ini.wep2[0,v];
-	        ma_armour[b]=obj_ini.armour[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
-	        ma_exp[b]=obj_ini.experience[0,v];ma_lid[b]=obj_ini.lid[0,v];ma_wid[b]=obj_ini.wid[0,v];
-			display_unit[b] = obj_ini.TTRPG[0,v];
-	        if (ma_lid[b]>0) then ma_loc[b]=obj_ini.ship[ma_lid[b]];ma_mobi[b]=obj_ini.mobi[0,v];
-	        last_man=b;ma_promote[b]=0;ma_god[b]=obj_ini.god[0,v];ma_bio[b]=obj_ini.bio[0,v];
-			}
+		        mans+=1;
+		        man[b]="man";
+		        ide[b]=v;
+		        ma_race[b]=obj_ini.race[0,v];
+		        ma_loc[b]=obj_ini.loc[0,v];
+		        ma_name[b]=obj_ini.name[0,v];
+		        ma_role[b]=obj_ini.role[0,v];
+		        ma_wep1[b]=obj_ini.wep1[0,v];ma_wep2[b]=obj_ini.wep2[0,v];
+		        ma_armour[b]=obj_ini.armour[0,v];ma_gear[b]=obj_ini.gear[0,v];ma_health[b]=obj_ini.hp[0,v];
+		        ma_exp[b]=obj_ini.experience[0,v];ma_lid[b]=obj_ini.lid[0,v];ma_wid[b]=obj_ini.wid[0,v];
+				display_unit[b] = obj_ini.TTRPG[0,v];
+		        if (ma_lid[b]>0) then ma_loc[b]=obj_ini.ship[ma_lid[b]];ma_mobi[b]=obj_ini.mobi[0,v];
+		        last_man=b;ma_promote[b]=0;ma_god[b]=obj_ini.god[0,v];ma_bio[b]=obj_ini.bio[0,v];
+				}
 		}
 	}
 
@@ -61,7 +67,7 @@ function scr_special_view(command_group) {
 	        var ham;ham=obj_ini.lid[0,v];
 	        if (obj_ini.ship_location[ham]="Lost") then bad=1;
 	    }
-	    if ((obj_ini.role[0,v]="Master of the Apothecarion") or (obj_ini.role[0,v]=obj_ini.role[100,15]) or (obj_ini.role[0,v]=obj_ini.role[100,15]+" Aspirant")) and (bad=0){
+	    if ((obj_ini.role[0,v]="Master of the Apothecarion") or (obj_ini.role[0,v]=obj_ini.role[100,15]) or (obj_ini.role[0,v]==string("{0} Aspirant",obj_ini.role[100,15]))) and (bad=0){
 	        b+=1;
 	        mans+=1;man[b]="man";ide[b]=v;
 	        ma_race[b]=obj_ini.race[0,v];ma_loc[b]=obj_ini.loc[0,v];ma_name[b]=obj_ini.name[0,v];
@@ -82,7 +88,7 @@ function scr_special_view(command_group) {
 	        var ham;ham=obj_ini.lid[0,v];
 	        if (obj_ini.ship_location[ham]="Lost") then bad=1;
 	    }
-	    if ((obj_ini.role[0,v]="Chief "+string(obj_ini.role[100,17])) or (obj_ini.role[0,v]=obj_ini.role[100,17]) or (obj_ini.role[0,v]="Lexicanum") or (obj_ini.role[0,v]="Codiciery") or (obj_ini.role[0,v]=obj_ini.role[100,17]+" Aspirant")) and (bad=0){
+	    if ((obj_ini.role[0,v]="Chief "+string(obj_ini.role[100,17])) or (obj_ini.role[0,v]=obj_ini.role[100,17]) or (obj_ini.role[0,v]="Lexicanum") or (obj_ini.role[0,v]="Codiciery") or (obj_ini.role[0,v]=string("{0} Aspirant",obj_ini.role[100,17]))) and (bad=0){
 	        b+=1;
 	        mans+=1;man[b]="man";ide[b]=v;
 	        ma_race[b]=obj_ini.race[0,v];ma_loc[b]=obj_ini.loc[0,v];ma_name[b]=obj_ini.name[0,v];
@@ -118,7 +124,7 @@ function scr_special_view(command_group) {
 	        last_man=b;ma_promote[b]=0;ma_bio[b]=obj_ini.bio[0,v];
 	        if (obj_ini.role[0,v]=obj_ini.role[100,14]) then ma_promote[b]=1;
 	    }
-	    if ((obj_ini.role[0,v]=obj_ini.role[100,14]) or (obj_ini.role[0,v]=obj_ini.role[100,14]+" Aspirant")) and (bad=0) and (global.chapter_name!="Iron Hands"){b+=1;
+	    if ((obj_ini.role[0,v]=obj_ini.role[100,14]) or (obj_ini.role[0,v]=string("{0} Aspirant",obj_ini.role[100,14]))) and (bad=0) and (global.chapter_name!="Iron Hands"){b+=1;
 	        mans+=1;man[b]="man";ide[b]=v;ma_god[b]=obj_ini.god[0,v];
 	        ma_race[b]=obj_ini.race[0,v];ma_loc[b]=obj_ini.loc[0,v];ma_name[b]=obj_ini.name[0,v];
 	        ma_role[b]=obj_ini.role[0,v];ma_wep1[b]=obj_ini.wep1[0,v];ma_wep2[b]=obj_ini.wep2[0,v];
@@ -138,7 +144,7 @@ function scr_special_view(command_group) {
 	        var ham;ham=obj_ini.lid[0,v];
 	        if (obj_ini.ship_location[ham]="Lost") then bad=1;
 	    }
-	    if ((obj_ini.role[0,v]="Forge Master") or (obj_ini.role[0,v]=obj_ini.role[100,16]) or (obj_ini.role[0,v]=obj_ini.role[100,16]+" Aspirant") or (obj_ini.role[0,v]="Techpriest")) and (bad=0){
+	    if ((obj_ini.role[0,v]="Forge Master") or (obj_ini.role[0,v]=obj_ini.role[100,16]) or (obj_ini.role[0,v]=string("{0} Aspirant",obj_ini.role[100,16])) or (obj_ini.role[0,v]="Techpriest")) and (bad=0){
 	        b+=1;
 	        mans+=1;man[b]="man";ide[b]=v;ma_god[b]=obj_ini.god[0,v];
 	        ma_race[b]=obj_ini.race[0,v];ma_loc[b]=obj_ini.loc[0,v];ma_name[b]=obj_ini.name[0,v];
