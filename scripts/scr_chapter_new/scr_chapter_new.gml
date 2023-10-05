@@ -331,7 +331,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	}
 
 if (argument0="Crimson Fists"){founding="N/A";points=150;
-		selected_chapter=13;chapter=argument0;icon=4;icon_name="cf";founding=4;fleet_type=1;strength=5;purity=7;stability=10;cooperation=8;
+		selected_chapter=13;chapter=argument0;icon=4;icon_name="cf";founding=4;fleet_type=1;strength=2;purity=7;stability=10;cooperation=8;
 		adv[1]="Bolter Drilling";adv[2]="Enemy: Orks";dis[1]="Sieged";
 		homeworld="Agri";homeworld_name="Rynn's World";
 		homeworld_exists=1;recruiting_exists=0;homeworld_rule=1;aspirant_trial="Challenge"
