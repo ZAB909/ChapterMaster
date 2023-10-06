@@ -200,7 +200,7 @@ if (__b__){
             obj_controller.cooldown=30;
             
             var str=0;
-            
+            // TODO a centralised point to be able to fetch display names from factions identifying number
             switch (target) {
                 case 2:
                     str = imp;

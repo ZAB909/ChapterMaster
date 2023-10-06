@@ -105,6 +105,13 @@ if (sisters>0) then targets+=1;
 
 // Defines which target will appear based on the strenght of the forces there 
 // TODO in the future we could have multiple forces on a planet after we refactor into each planet using a hex grid system
+/* TODO
+    could we place all forces in a list(or dictionary) e.g [elder,chaos, traitors, ork, tau, tyranids] or
+
+        {elder:[<elder_diplo_number>, <elder_forces_size>]}
+
+    and use a sort loop to find the largest otherwise and choose target? Optional but makes more sense IMO
+*/
 target=2;
 if (eldar>chaos) and (eldar>traitors) and (eldar>ork) and (eldar>tau) and (eldar>tyranids) and (eldar>necrons) then target=6;
 if (ork>chaos) and (ork>traitors) and (ork>eldar) and (ork>tau) and (ork>tyranids) and (ork>necrons) then target=7;

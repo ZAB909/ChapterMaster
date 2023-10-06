@@ -43,7 +43,7 @@ if (max_ships>0)and (instance_exists(obj_star_select)){
         draw_text(xx+310,yy+317.5,string_hash_to_newline("Target: "));
         
         draw_set_halign(fa_center);
-        
+        // TODO a centralised point to be able to fetch display names from factions identifying number
         var t_name = "";
         switch (target) {
             case 2:
@@ -85,7 +85,7 @@ if (max_ships>0)and (instance_exists(obj_star_select)){
         draw_set_halign(fa_left);
         
         var str=0,str_string="";
-
+        // TODO a centralised point to be able to fetch display names from factions identifying number
         switch (target) {
             case 2:
                 str = imp;
