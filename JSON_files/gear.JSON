@@ -56,9 +56,9 @@
     },
     "Dreadnought": {
       "armour_value": {
-        "standard": 30,
-        "master_crafted": 34,
-        "artifact": 38
+        "standard": 50,
+        "master_crafted": 55,
+        "artifact": 60
       },
       "ranged_mod": {
         "standard": 0,
@@ -74,9 +74,9 @@
     },
     "Tartaros": {
       "armour_value": {
-        "standard": 30,
-        "master_crafted": 34,
-        "artifact": 38
+        "standard": 42,
+        "master_crafted": 46,
+        "artifact": 50
       },
       "ranged_mod": {
         "standard": 0,
@@ -89,6 +89,24 @@
         "artifact": 30
       },
       "description": "Even more advanced than the Indomitus Terminator Armour, this upgraded armour offers greater mobility at no cost to protection."
+    },
+    "Cataphractii Pattern Terminator":{
+      "armour_value": {
+        "standard": 42,
+        "master_crafted": 46,
+        "artifact": 50
+      },
+      "ranged_mod": {
+        "standard": 0,
+        "master_crafted": 5, // Augmented
+        "artifact": 10 // Augmented
+      },
+      "melee_mod": {
+        "standard": 20,
+        "master_crafted": 25,
+        "artifact": 30
+      },
+      "description": "Among the first issued to the Space Marine Legions, it is functionally distinct from other patterns, bearing additional plating and shield generators installed within the shoulder pads"
     },
      "Ork Armour": {
       "ranged_mod": {
@@ -274,9 +292,9 @@
       "special_description": "+33% Damage Resistance",
       "description": "Also called the 'Soul's Armour', this amulet has a built-in, powerful shield generator. They are an icon of the Imperial Creed.",
       "damage_resistance_mod": {
-        "standard": 33, // Adjusted
-        "master_crafted": 33, // Adjusted
-        "artifact": 33 // Adjusted
+        "standard": 10, // Adjusted
+        "master_crafted": 15, // Adjusted
+        "artifact": 20 // Adjusted
       },
       "hp_mod": {
         "standard": 0,
@@ -288,14 +306,14 @@
       "special_description": "+33% Damage Resistance, +20 HP",
       "description": "An ancient artifact, these powerful conversion field generators are granted to high ranking battle brothers or heroes. Bearers are often looked to for guidance.",
       "damage_resistance_mod": {
-        "standard": 33, // Adjusted
-        "master_crafted": 33, // Adjusted
-        "artifact": 33 // Adjusted
+        "standard": 10, // Adjusted
+        "master_crafted": 15, // Adjusted
+        "artifact": 20 // Adjusted
       },
       "hp_mod": {
         "standard": 20, // Adjusted
-        "master_crafted": 20, // Adjusted
-        "artifact": 20 // Adjusted
+        "master_crafted": 25, // Adjusted
+        "artifact": 30 // Adjusted
       }
     },
     "Plasma Bomb": {
