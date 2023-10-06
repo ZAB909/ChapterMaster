@@ -491,11 +491,22 @@ function scr_ui_popup() {
 	}
 
 
+	function tool_tip_draw(base_x, base_y, tool_tip){
+		var xx=__view_get( e__VW.XView, 0 )+0;
+		var yy=__view_get( e__VW.YView, 0 )+0;
+		draw_set_color(0);
+		draw_rectangle(base_x,base_y,string_width(string_hash_to_newline(tool_tip))+base_x+6,string_height(string_hash_to_newline(tool_tip))+base_y+6,0);
+		draw_set_color(c_gray);
+		draw_rectangle(base_x,base_y,string_width(string_hash_to_newline(tool_tip))+base_x+6,string_height(string_hash_to_newline(tool_tip))+base_y+6,1);
+		draw_set_alpha(0.5);
+		draw_rectangle(base_x+1,base_y+1,string_width(string_hash_to_newline(tool_tip))+base_x+5,string_height(string_hash_to_newline(tool_tip))+base_y+5,1);
+	    draw_set_alpha(1);
+	    draw_text(base_x+2.5,base_y+2.5,string_hash_to_newline(string(tool_tip)));
+	    draw_text(base_x+3.5,base_y+3.5,string_hash_to_newline(string(tool_tip)));	    
+	}
 
-
-	var xx,yy;
-	xx=__view_get( e__VW.XView, 0 )+0;
-	yy=__view_get( e__VW.YView, 0 )+0;
+	var xx=__view_get( e__VW.XView, 0 )+0;
+	var yy=__view_get( e__VW.YView, 0 )+0;
 
 	if (scr_hit(xx+5,yy+10,xx+137,yy+38)=true) and (zoomed=0){
 	    var tx,ty,tool1,tool2,plu;
@@ -521,13 +532,7 @@ function scr_ui_popup() {
 	    }
     
 	    if (tool1!=""){
-	        draw_set_color(0);draw_rectangle(xx+10,yy+42,xx+string_width(string_hash_to_newline(tool1))+16,yy+string_height(string_hash_to_newline(tool1))+48,0);
-	        draw_set_color(c_gray);draw_rectangle(xx+10,yy+42,xx+string_width(string_hash_to_newline(tool1))+16,yy+string_height(string_hash_to_newline(tool1))+48,1);
-	        draw_set_alpha(0.5);draw_rectangle(xx+11,yy+43,xx+string_width(string_hash_to_newline(tool1))+15,yy+string_height(string_hash_to_newline(tool1))+47,1);
-	        draw_set_alpha(1);
-	        draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
-	        draw_text(xx+12.5,yy+44.5,string_hash_to_newline(string(tool1)));
-	        draw_text(xx+13.5,yy+45.5,string_hash_to_newline(string(tool1)));
+	    	tool_tip_draw(xx+10, yy+42, tool1);
 	    }
 	}
 
@@ -554,13 +559,7 @@ function scr_ui_popup() {
 	    if (tool1="") then tool1="Loyalty";
     
 	    if (tool1!=""){
-	        draw_set_color(0);draw_rectangle(xx+150,yy+42,xx+string_width(string_hash_to_newline(tool1))+153,yy+string_height(string_hash_to_newline(tool1))+48,0);
-	        draw_set_color(c_gray);draw_rectangle(xx+150,yy+42,xx+string_width(string_hash_to_newline(tool1))+153,yy+string_height(string_hash_to_newline(tool1))+48,1);
-	        draw_set_alpha(0.5);draw_rectangle(xx+151,yy+43,xx+string_width(string_hash_to_newline(tool1))+152,yy+string_height(string_hash_to_newline(tool1))+47,1);
-	        draw_set_alpha(1);
-	        draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
-	        draw_text(xx+152.5,yy+44.5,string_hash_to_newline(string(tool1)));
-	        draw_text(xx+153.5,yy+45.5,string_hash_to_newline(string(tool1)));
+	        tool_tip_draw(xx+150, yy+42, tool1);
 	    }
 	}
 
@@ -570,12 +569,7 @@ function scr_ui_popup() {
 	    var tx,ty,tool1,tool2,plu;tx=0;ty=0;tool1="";tool2="";plu="";
 	    tool1="Gene-Seed";
 	    if (tool1!=""){
-	        draw_set_color(0);draw_rectangle(xx+249,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+249,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+43,0);
-	        draw_set_color(c_gray);draw_rectangle(xx+249,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+249,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+43,1);
-	        draw_set_alpha(0.5);draw_rectangle(xx+250,yy+43,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+248,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+42,1);
-	        draw_set_alpha(1);draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
-	        draw_text_ext(xx+252,yy+44.5,string_hash_to_newline(string(tool1)),-1,400);
-	        draw_text_ext(xx+253,yy+45.5,string_hash_to_newline(string(tool1)),-1,400);
+	        tool_tip_draw(xx+249, yy+42, tool1)
 	    }
 	}
 
@@ -584,14 +578,18 @@ function scr_ui_popup() {
 	    tool1="Astartes#(Normal/Command)";
 	    tool2="Astartes";
 	    if (tool1!=""){
-	        draw_set_color(0);draw_rectangle(xx+373,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+373,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+43,0);
-	        draw_set_color(c_gray);draw_rectangle(xx+373,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+373,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+43,1);
-	        draw_set_alpha(0.5);draw_rectangle(xx+374,yy+43,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+372,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+42,1);
-	        draw_set_alpha(1);draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
-	        draw_text_ext(xx+376,yy+44.5,string_hash_to_newline(string(tool1)),-1,400);
-	        draw_text_ext(xx+377,yy+45.5,string_hash_to_newline(string(tool1)),-1,400);
+	        tool_tip_draw(xx+373, yy+42, tool1)
 	    }
 	}
+	if (scr_hit(xx+1435,yy+40,xx+1580,yy+267)=true) and (zoomed=0){
+	    var tx,ty,tool1,tool2,plu;tx=0;ty=0;tool1="";tool2="";plu="";
+	    tool1=$"Turn :{obj_controller.turn}";
+	    tool2="Astartes";
+	    if (tool1!=""){
+	    	tool_tip_draw(xx+1480, yy+265, tool1)
+	    }
+	}
+
 
 
 	if (scr_hit(xx+813,yy+10,xx+960,yy+38)=true) and (penitent=1) and (zoomed=0){
@@ -620,13 +618,7 @@ function scr_ui_popup() {
 	    }
     
 	    if (tool1!=""){
-	        draw_set_color(0);draw_rectangle(xx+813,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+819,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+23+hei_bonus,0);
-	        draw_set_color(c_gray);draw_rectangle(xx+813,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+819,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+23+hei_bonus,1);
-	        draw_set_alpha(0.5);draw_rectangle(xx+814,yy+43,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+818,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+22+hei_bonus,1);
-	        draw_set_alpha(1);
-	        draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
-	        draw_text_ext(xx+816,yy+44.5,string_hash_to_newline(string(tool1)),-1,400);
-	        draw_text_ext(xx+817,yy+45.5,string_hash_to_newline(string(tool1)),-1,400);
+	        tool_tip_draw(xx+813, yy+42, tool1)
 	    }
 	}
 
