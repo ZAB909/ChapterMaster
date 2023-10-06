@@ -31,12 +31,11 @@ if (!__b__){
         for(var wh=1; wh<=5; wh++){if (obj_fleet.enemy[wh]==owner) then gud=wh;}
         
         if (class=="Gorbag's Revenge" or (class=="Dethdeala") or (class=="Kroolboy") or (class=="Desecrator")) or (class=="Custodian") then obj_fleet.en_capital_lost[gud]+=1;
-        if (class=="Battlekroozer") or (class=="Daemon") or (class=="Avenger Class Grand Cruiser") or (class=="Carnage") or (class=="Emissary") or (class=="Protector") then obj_fleet.en_frigate_lost[gud]+=1;
-        if (class=="Ravager") or (class=="Iconoclast") or (class=="Warden") or (class=="Castellan") then obj_fleet.en_escort_lost[gud]+=1;
-        
-        if (class=="Leviathan") then obj_fleet.en_capital_lost[gud]+=1;
-        if (class=="Razorfiend") then obj_fleet.en_frigate_lost[gud]+=1;
-        if (class=="Stalker") or (class=="Prowler") or (class=="Sword Class Frigate") then obj_fleet.en_escort_lost[gud]+=1;
+        else if (class=="Battlekroozer") or (class=="Daemon") or (class=="Avenger Class Grand Cruiser") or (class=="Carnage") or (class=="Emissary") or (class=="Protector") then obj_fleet.en_frigate_lost[gud]+=1;
+        else if (class=="Ravager") or (class=="Iconoclast") or (class=="Warden") or (class=="Castellan") then obj_fleet.en_escort_lost[gud]+=1;
+        else if (class=="Leviathan") then obj_fleet.en_capital_lost[gud]+=1;
+        else if (class=="Razorfiend") then obj_fleet.en_frigate_lost[gud]+=1;
+        else if (class=="Stalker") or (class=="Prowler") or (class=="Sword Class Frigate") then obj_fleet.en_escort_lost[gud]+=1;
         
         image_alpha=0.5;
         
@@ -459,11 +458,11 @@ if (__b__){
         
         if (y<-2000) or (y>room_height+2000) or (x<-2000) or (x>room_width+2000) then hp=-50;
         // Weapon and turret cooldown
-        if (cooldown[1]>0) then cooldown[1]-=1;
-        if (cooldown[2]>0) then cooldown[2]-=1;
-        if (cooldown[3]>0) then cooldown[3]-=1;
-        if (cooldown[4]>0) then cooldown[4]-=1;
-        if (cooldown[5]>0) then cooldown[5]-=1;
+        for (var i = 1; i <= array_length(cooldown); i++) {
+            if (cooldown[i]>0){
+                cooldown[i]--;
+            }
+        }
         if (turret_cool>0) then turret_cool-=1;
 
         targe=0;

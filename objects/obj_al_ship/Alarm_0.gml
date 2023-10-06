@@ -1,11 +1,10 @@
 // Sets up the ships for each race
-cooldown[1]=0;
-cooldown[2]=0;
-cooldown[3]=0;
-cooldown[4]=0;
-cooldown[5]=0;
+for(var i=1; i<=array_length(cooldown); i++){
+    cooldown[i]=0;
+}
 
 // ** Imperial Navy **
+// TODO hold all these variables in a dictionary/ Constructor
 if (class=="Apocalypse Class Battleship"){
     sprite_index=spr_ship_apoc;
     ship_size=3;
