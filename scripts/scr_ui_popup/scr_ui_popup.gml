@@ -490,151 +490,164 @@ function scr_ui_popup() {
 	    // draw_rectangle(view_xview[0]+obj_fleet_select.void_x,view_yview[0]+obj_fleet_select.void_y,view_xview[0]+obj_fleet_select.void_x+obj_fleet_select.void_wid,view_yview[0]+obj_fleet_select.void_y+obj_fleet_select.void_hei,1);
 	}
 
-
-
-
-	var xx,yy;
-	xx=__view_get( e__VW.XView, 0 )+0;
-	yy=__view_get( e__VW.YView, 0 )+0;
-
-	if (scr_hit(xx+5,yy+10,xx+137,yy+38)=true) and (zoomed=0){
-	    var tx,ty,tool1,tool2,plu;
-	    tx=0;ty=0;tool1="";tool2="";plu="";
-    
-	    if (obj_ini.fleet_type=1){
-	        plu="";if (income_base>0) then plu="+";tool1+="Base Income: "+string(plu)+string(income_base);tool2+="Base Income: ";
-	        plu="";if (income_home>0) then plu="+";tool1+="#Fortress Monastery Bonus: "+string(plu)+string(income_home);tool2+="#Fortress Monastery Bonus: ";
-	        plu="";if (income_forge>0) then plu="+";if (income_forge>0){tool1+="#Nearby Forge Worlds: "+string(plu)+string(income_forge);tool2+="#Nearby Forge Worlds:";}
-	        plu="";if (income_agri>0) then plu="+";if (income_forge>0){tool1+="#Nearby Agri Worlds: "+string(plu)+string(income_agri);tool2+="#Nearby Agri Worlds:";}
-	        plu="";if (income_recruiting>0) then plu="+";if (income_recruiting!=0){tool1+="#Astartes Recruitment: "+string(plu)+string(income_recruiting);tool2+="#Astartes Recruitment:";}
-	        plu="";if (income_training>0) then plu="+";if (income_training!=0){tool1+="#Specialist Training: "+string(plu)+string(income_training);tool2+="#Specialist Training:";}
-	        plu="";if (income_fleet>0) then plu="+";tool1+="#Fleet Maintenance: "+string(plu)+string(income_fleet);tool2+="#Fleet Maintenance:";
-	        plu="";if (income_tribute>0) then plu="+";if (income_tribute!=0){tool1+="#Planet Tithes: "+string(plu)+string(income_tribute);tool2+="#Planet Tithes:";}
-	    }
-	    if (obj_ini.fleet_type!=1){
-	        plu="";if (income_base>0) then plu="+";tool1+="Base Income: "+string(plu)+string(income_base);tool2+="Base Income: ";
-	        plu="";if (income_home>0) then plu="+";tool1+="#Battle Barge Trade: "+string(plu)+string(income_home);tool2+="#Battle Barge Trade: ";
-	        plu="";if (income_recruiting>0) then plu="+";if (income_recruiting!=0){tool1+="#Astartes Recruitment: "+string(plu)+string(income_recruiting);tool2+="#Astartes Recruitment:";}
-	        plu="";if (income_training>0) then plu="+";if (income_training!=0){tool1+="#Specialist Training: "+string(plu)+string(income_training);tool2+="#Specialist Training:";}
-	        plu="";if (income_fleet>0) then plu="+";tool1+="#Fleet Maintenance: "+string(plu)+string(income_fleet);tool2+="#Fleet Maintenance:";
-	        plu="";if (income_tribute>0) then plu="+";if (income_tribute!=0){tool1+="#Planet Tithes: "+string(plu)+string(income_tribute);tool2+="#Planet Tithes:";}
-	    }
-    
-	    if (tool1!=""){
-	        draw_set_color(0);draw_rectangle(xx+10,yy+42,xx+string_width(string_hash_to_newline(tool1))+16,yy+string_height(string_hash_to_newline(tool1))+48,0);
-	        draw_set_color(c_gray);draw_rectangle(xx+10,yy+42,xx+string_width(string_hash_to_newline(tool1))+16,yy+string_height(string_hash_to_newline(tool1))+48,1);
-	        draw_set_alpha(0.5);draw_rectangle(xx+11,yy+43,xx+string_width(string_hash_to_newline(tool1))+15,yy+string_height(string_hash_to_newline(tool1))+47,1);
-	        draw_set_alpha(1);
-	        draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
-	        draw_text(xx+12.5,yy+44.5,string_hash_to_newline(string(tool1)));
-	        draw_text(xx+13.5,yy+45.5,string_hash_to_newline(string(tool1)));
-	    }
+	function tool_tip_draw(base_x, base_y, tool_tip){
+		var xx=__view_get( e__VW.XView, 0 )+0;
+		var yy=__view_get( e__VW.YView, 0 )+0;
+		draw_set_color(0);
+		draw_rectangle(base_x,base_y,string_width(string_hash_to_newline(tool_tip))+base_x+6,string_height(string_hash_to_newline(tool_tip))+base_y+6,0);
+		draw_set_color(c_gray);
+		draw_rectangle(base_x,base_y,string_width(string_hash_to_newline(tool_tip))+base_x+6,string_height(string_hash_to_newline(tool_tip))+base_y+6,1);
+		draw_set_alpha(0.5);
+		draw_rectangle(base_x+1,base_y+1,string_width(string_hash_to_newline(tool_tip))+base_x+5,string_height(string_hash_to_newline(tool_tip))+base_y+5,1);
+	    draw_set_alpha(1);
+	    draw_text(base_x+2.5,base_y+2.5,string_hash_to_newline(string(tool_tip)));
+	    draw_text(base_x+3.5,base_y+3.5,string_hash_to_newline(string(tool_tip)));	    
 	}
 
+	var xx=__view_get( e__VW.XView, 0 )+0;
+	var yy=__view_get( e__VW.YView, 0 )+0;
+	if (zoomed == 0){
 
-	if (scr_hit(xx+153,yy+10,xx+221,yy+38)=true) and (zoomed=0){
-	    var tx,ty,tool1,tool2,plu;
-	    tx=0;ty=0;tool1="";tool2="";plu="";
-    
-    
-	    var d,lines;d=0;lines=0;
-	    repeat(20){d+=1;
-	        if (loyal_num[d]>1) and (lines=0){
-	            tool1+=string(loyal[d])+": -"+string(loyal_num[d])+"#";
-	            tool2+=string(loyal[d])+": #";
-	            lines+=1;
+		if (scr_hit(xx+5,yy+10,xx+137,yy+38)){
+		    var tx=0,ty=0,tool1="",tool2="",plu="";
+	   		if (income_base>0) then plu="+";
+	        tool1+=string("Base Income: {0}{1}", plu, income_base);
+	        tool2+="Base Income: ";
+		    if (obj_ini.fleet_type=1){
+		        plu="";
+
+		        if (income_home>0){
+			        tool1+=string("#Fortress Monastery Bonus: +{1}", plu,income_home);
+			        tool2+="#Fortress Monastery Bonus: ";
+			    }
+		        if (income_forge>0){
+		        	tool1+=string("#Nearby Forge Worlds: +{0}",income_forge);
+		        	tool2+="#Nearby Forge Worlds:";
+		        }
+		        if (income_agri>0){
+		        	tool1+=string("#Nearby Agri Worlds: +{0}",income_agri);
+		        	tool2+="#Nearby Agri Worlds:";
+		        }
+		    }
+		    if (obj_ini.fleet_type!=1){
+		        plu="";
+		        if (income_home>0) then plu="+";
+		        tool1+="#Battle Barge Trade: "+string(plu)+string(income_home);
+		        tool2+="#Battle Barge Trade: ";
+		    }
+	        plu="";
+	        if (income_recruiting>0) then plu="+";
+	        if (income_recruiting!=0){
+	        	tool1+=string("#Astartes Recruitment: {0}{1}",plu,income_recruiting);
+	        	tool2+="#Astartes Recruitment:";}
+	        plu="";
+	        if (income_training>0) then plu="+";
+	        if (income_training!=0){
+	        	tool1+=string("#Specialist Training: {0}{1}",plu,income_training);
+	        	tool2+="#Specialist Training:";
 	        }
-	        if (loyal_num[d]>1) and (lines>0){
-	            tool1+=string(loyal[d])+": -"+string(loyal_num[d])+"#";
-	            tool2+=string(loyal[d])+": #";
-	            lines+=1;
-	        }
-	    }
-    
-	    if (tool1="") then tool1="Loyalty";
-    
-	    if (tool1!=""){
-	        draw_set_color(0);draw_rectangle(xx+150,yy+42,xx+string_width(string_hash_to_newline(tool1))+153,yy+string_height(string_hash_to_newline(tool1))+48,0);
-	        draw_set_color(c_gray);draw_rectangle(xx+150,yy+42,xx+string_width(string_hash_to_newline(tool1))+153,yy+string_height(string_hash_to_newline(tool1))+48,1);
-	        draw_set_alpha(0.5);draw_rectangle(xx+151,yy+43,xx+string_width(string_hash_to_newline(tool1))+152,yy+string_height(string_hash_to_newline(tool1))+47,1);
-	        draw_set_alpha(1);
-	        draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
-	        draw_text(xx+152.5,yy+44.5,string_hash_to_newline(string(tool1)));
-	        draw_text(xx+153.5,yy+45.5,string_hash_to_newline(string(tool1)));
-	    }
+	        plu="";
+	        if (income_fleet>0) then plu="+";
+	        if (income_fleet!=0){
+		        tool1+=string("#Fleet Maintenance: {0}{1}",plu,income_fleet);
+		        tool2+="#Fleet Maintenance:";
+	    	}
+	        plu="";
+	        if (income_tribute>0) then plu="+";
+	        if (income_tribute!=0){
+	        	tool1+=string("#Planet Tithes: {0}{1}",plu,income_tribute);
+	        	tool2+="#Planet Tithes:";
+	        }		    
+	    
+		    if (tool1!=""){
+		    	tool_tip_draw(xx+10, yy+42, tool1);
+		    }
+		}
+
+
+		if (scr_hit(xx+153,yy+10,xx+221,yy+38)){
+		    var  tx=0,ty=0,tool1="",tool2="",plu="";
+
+		    var d,lines;d=0;lines=0;
+		    for(var d=1; d<=20; d++){
+		        if (loyal_num[d]>1) and (lines=0){
+		            tool1+=string(loyal[d])+": -"+string(loyal_num[d])+"#";
+		            tool2+=string(loyal[d])+": #";
+		            lines+=1;
+		        }
+		        if (loyal_num[d]>1) and (lines>0){
+		            tool1+=string(loyal[d])+": -"+string(loyal_num[d])+"#";
+		            tool2+=string(loyal[d])+": #";
+		            lines+=1;
+		        }
+		    }
+	    
+		    if (tool1="") then tool1="Loyalty";
+	    
+		    if (tool1!=""){
+		        tool_tip_draw(xx+150, yy+42, tool1);
+		    }
+		}
+
+
+		if (scr_hit(xx+247,yy+10,xx+338,yy+38)){
+		    var tx=0,ty=0,tool1="",tool2="",plu="";
+		    tool1="Gene-Seed";
+		    if (tool1!=""){
+		        tool_tip_draw(xx+249, yy+42, tool1);
+		    }
+		}
+
+		if (scr_hit(xx+373,yy+10,xx+463,yy+38)){
+		    var tx=0,ty=0,tool1="",tool2="",plu="";
+		    tool1="Astartes#(Normal/Command)";
+		    tool2="Astartes";
+		    if (tool1!=""){
+		        tool_tip_draw(xx+373, yy+42, tool1);
+		    }
+		}
+		if (scr_hit(xx+1435,yy+40,xx+1580,yy+267)){
+		    var tx=0,ty=0,tool1="",tool2="",plu="";
+		    tool1=$"Turn :{obj_controller.turn}";
+		    tool2="Astartes";
+		    if (tool1!=""){
+		    	tool_tip_draw(xx+1480, yy+265, tool1);
+		    }
+		}
+
+		if (scr_hit(xx+813,yy+10,xx+960,yy+38)) and (penitent==1) {
+		    var tx=0,ty=0,tool1="",tool2="",plu="",hei_bonus;
+	    
+		    var endb=0,endb2="";
+		    endb=min(0,(((penitent_turn+1)*(penitent_turn+1))-512)*-1);
+	    
+		    if (obj_controller.blood_debt==1){
+		        tool1="Blood Spilled: "+string(penitent_current);tool2="Blood Spilled: ";
+		        tool1+="#Blood Debt: "+string(penitent_max);tool2+="#Blood Debt: ";
+		        tool1+="#Decay Rate: "+string(endb);tool2+="#Decay Rate: ";
+	        
+		        tool1+="##Attacking enemies, Raiding enemies, and losing Astartes will lower your Chapter's Blood Debt.  Over #time it decays.  Bombarding enemies will prevent decay.";
+		        hei_bonus=-20;
+		    }
+		    if (obj_controller.blood_debt=0){
+		        tool1="Current Penitence: "+string(penitent_current);tool2="Current Penitence: ";
+		        tool1+="#Required Penitence: "+string(penitent_max);tool2+="#Required Penitence: ";
+		        // tool1+="#Each Turn: +1";tool2+="#Each Turn: ";
+		        // tool1+="#  ";tool2+="#  ";
+	        
+		        tool1+="##Penitence will be gained slowly over time.  After the timer runs out your Chapter will no longer be#considered Penitent.";
+		        hei_bonus=23;
+		    }
+	    
+		    if (tool1!=""){
+		        tool_tip_draw(xx+813, yy+42, tool1)
+		    }
+		}
+
 	}
-
-
-
-	if (scr_hit(xx+247,yy+10,xx+338,yy+38)=true) and (zoomed=0){
-	    var tx,ty,tool1,tool2,plu;tx=0;ty=0;tool1="";tool2="";plu="";
-	    tool1="Gene-Seed";
-	    if (tool1!=""){
-	        draw_set_color(0);draw_rectangle(xx+249,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+249,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+43,0);
-	        draw_set_color(c_gray);draw_rectangle(xx+249,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+249,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+43,1);
-	        draw_set_alpha(0.5);draw_rectangle(xx+250,yy+43,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+248,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+42,1);
-	        draw_set_alpha(1);draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
-	        draw_text_ext(xx+252,yy+44.5,string_hash_to_newline(string(tool1)),-1,400);
-	        draw_text_ext(xx+253,yy+45.5,string_hash_to_newline(string(tool1)),-1,400);
-	    }
-	}
-
-	if (scr_hit(xx+373,yy+10,xx+463,yy+38)=true) and (zoomed=0){
-	    var tx,ty,tool1,tool2,plu;tx=0;ty=0;tool1="";tool2="";plu="";
-	    tool1="Astartes#(Normal/Command)";
-	    tool2="Astartes";
-	    if (tool1!=""){
-	        draw_set_color(0);draw_rectangle(xx+373,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+373,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+43,0);
-	        draw_set_color(c_gray);draw_rectangle(xx+373,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+373,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+43,1);
-	        draw_set_alpha(0.5);draw_rectangle(xx+374,yy+43,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+372,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+42,1);
-	        draw_set_alpha(1);draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
-	        draw_text_ext(xx+376,yy+44.5,string_hash_to_newline(string(tool1)),-1,400);
-	        draw_text_ext(xx+377,yy+45.5,string_hash_to_newline(string(tool1)),-1,400);
-	    }
-	}
-
-
-	if (scr_hit(xx+813,yy+10,xx+960,yy+38)=true) and (penitent=1) and (zoomed=0){
-	    var tx,ty,tool1,tool2,plu,hei_bonus;
-	    tx=0;ty=0;tool1="";tool2="";plu="";
-    
-	    var endb,endb2;endb=0;endb2="";
-	    endb=min(0,(((penitent_turn+1)*(penitent_turn+1))-512)*-1);
-    
-	    if (obj_controller.blood_debt=1){
-	        tool1="Blood Spilled: "+string(penitent_current);tool2="Blood Spilled: ";
-	        tool1+="#Blood Debt: "+string(penitent_max);tool2+="#Blood Debt: ";
-	        tool1+="#Decay Rate: "+string(endb);tool2+="#Decay Rate: ";
-        
-	        tool1+="##Attacking enemies, Raiding enemies, and losing Astartes will lower your Chapter's Blood Debt.  Over #time it decays.  Bombarding enemies will prevent decay.";
-	        hei_bonus=-20;
-	    }
-	    if (obj_controller.blood_debt=0){
-	        tool1="Current Penitence: "+string(penitent_current);tool2="Current Penitence: ";
-	        tool1+="#Required Penitence: "+string(penitent_max);tool2+="#Required Penitence: ";
-	        // tool1+="#Each Turn: +1";tool2+="#Each Turn: ";
-	        // tool1+="#  ";tool2+="#  ";
-        
-	        tool1+="##Penitence will be gained slowly over time.  After the timer runs out your Chapter will no longer be#considered Penitent.";
-	        hei_bonus=23;
-	    }
-    
-	    if (tool1!=""){
-	        draw_set_color(0);draw_rectangle(xx+813,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+819,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+23+hei_bonus,0);
-	        draw_set_color(c_gray);draw_rectangle(xx+813,yy+42,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+819,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+23+hei_bonus,1);
-	        draw_set_alpha(0.5);draw_rectangle(xx+814,yy+43,xx+string_width_ext(string_hash_to_newline(tool1),-1,400)+818,yy+string_height_ext(string_hash_to_newline(tool1),-1,400)+22+hei_bonus,1);
-	        draw_set_alpha(1);
-	        draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
-	        draw_text_ext(xx+816,yy+44.5,string_hash_to_newline(string(tool1)),-1,400);
-	        draw_text_ext(xx+817,yy+45.5,string_hash_to_newline(string(tool1)),-1,400);
-	    }
-	}
-
-
 
 
 	exit;
-
 
 
 	if (mouse_x>=__view_get( e__VW.XView, 0 )+113) and (mouse_y>=__view_get( e__VW.YView, 0 )+4) and (mouse_x<__view_get( e__VW.XView, 0 )+185) and (mouse_y<__view_get( e__VW.YView, 0 )+19) and (zoomed=0){
