@@ -1,6 +1,6 @@
 // Restarts variables, ensuring loaded saves are properly initialized
 function scr_restart_variables(saved_game) {
-	if (saved_game=1) then with(obj_ini){
+	if (saved_game==1) then with(obj_ini){
     
 	    // show_message(instance_number(obj_restart_vars));
     
@@ -216,7 +216,7 @@ function scr_restart_variables(saved_game) {
     
 	}
 
-	if (saved_game=2){
+	if (saved_game==2){
 
 	    obj_controller.restart_name=obj_restart_vars.restart_name;
 	    obj_controller.restart_founding=obj_restart_vars.restart_founding;
@@ -429,7 +429,7 @@ function scr_restart_variables(saved_game) {
 	}
 
 	// Controller to restart vars
-	if (saved_game=3){
+	if (saved_game==3){
 	    obj_restart_vars.restart_name=obj_controller.restart_name;
 	    obj_restart_vars.restart_founding=obj_controller.restart_founding;
     
@@ -530,7 +530,7 @@ function scr_restart_variables(saved_game) {
 	    }
 	}
 
-	if (saved_game=4){
+	if (saved_game==4){
 		for(var i=0; i<21; i++){world[i]="";world_type[i]="";world_feature[i]="";}
 
 		for(var i=0; i<6; i++){adv[i]="";adv_num[i]=0;dis[i]="";dis_num[i]=0;}
