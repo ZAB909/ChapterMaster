@@ -106,6 +106,7 @@ if (menu==12) and (cooldown<=0) and (penitorium>0){
                 obj_ini.age[c,e]=0;
                 obj_ini.spe[c,e]="";
                 obj_ini.god[c,e]=0;
+                obj_ini.TTRPG[c,e]={};
                 diplo_char=c;
                 with(obj_ini){scr_company_order(obj_controller.diplo_char);}
                 re=1;
@@ -2728,72 +2729,33 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     }
                 }
             }
-            with(obj_controller){
-                man_size=0;
-                selecting_location="";
-                selecting_types="";
-                selecting_ship=0;
-                sel_uid=0;
-                for(var i=0; i<500; i++){
-                    man[i]="";
-                    ide[i]=0;
-                    man_sel[i]=0;
-                    ma_lid[i]=0;
-                    ma_wid[i]=0;
-                    ma_uid[i]=0;
-                    ma_race[i]=0;
-                    ma_loc[i]="";
-                    ma_name[i]="";
-                    ma_role[i]="";
-                    ma_wep1[i]="";
-                    ma_wep2[i]="";
-                    ma_armour[i]="";
-                    ma_health[i]=100;
-                    ma_chaos[i]=0;
-                    ma_exp[i]=0;
-                    ma_promote[i]=0;
-                    sh_ide[i]=0;
-                    sh_uid[i]=0;
-                    sh_name[i]="";
-                    sh_class[i]="";
-                    sh_loc[i]="";
-                    sh_hp[i]="";
-                    sh_cargo[i]=0;
-                    sh_cargo_max[i]="";
-                }
-                alll=0;
-                if (managing<=10) then scr_company_view(managing);
-                if (managing>20) then scr_company_view(managing);
-                if (managing>10) and (managing<=20) then scr_special_view(managing);
-                cooldown=8000;
-                sel_loading=0;
-                unload=0;
-                alarm[6]=7;
-            }
-        }
-        // Add bionics to marine(s)
-        if (scr_hit(xx+1300+141,yy+779,xx+1436+141,yy+801)==true) and (man_size>0) and (cooldown<=0){
-            var bionics_before,bionics_after,cah;
+            alll=0;
+            if (managing<=10) then scr_company_view(managing);
+            if (managing>20) then scr_company_view(managing);
+            if (managing>10) and (managing<=20) then scr_special_view(managing);
             cooldown=8000;
-            cah=managing;
-            if (cah>10) then cah=0;
-            bionics_before=scr_item_count("Bionics");
-            bionics_after=bionics_before;
-            temp[114]="refresh";
-            if (bionics_before>0) {
-                for(var p=1; p<=500; p++){
-                    if (man_sel[p]==1) and (man[p]=="man") and (bionics_after>0) and (obj_ini.bio[cah,ide[p]]<10) 
-                    and (obj_ini.loc[cah,ide[p]]!="Terra") and (obj_ini.loc[cah,ide[p]]!="Mechanicus Vessel"){
-                        if (string_count("Dread",ma_armour[p])==0){
-                            obj_ini.bio[cah,ide[p]]+=1;
-                            bionics_after-=1;
-                            obj_ini.hp[cah,ide[p]]=min(obj_ini.hp[cah,ide[p]]+30,obj_ini.TTRPG[cah, ide[p]].max_health());
-                            if (global.chapter_name=="Iron Hands") then obj_ini.hp[cah,ide[p]]=min(obj_ini.hp[cah,ide[p]]+20,100);
-                            ma_bio[p]=obj_ini.bio[cah,ide[p]];
-                            ma_health[p]=obj_ini.hp[cah,ide[p]];
-                            if (ma_promote[p]==10) then ma_promote[p]=0;
-                        }
-                    }
+            sel_loading=0;
+            unload=0;
+            alarm[6]=7;
+        }
+    }
+
+
+    // Add bionics to marine(s)
+    if (scr_hit(xx+1300+141,yy+779,xx+1436+141,yy+801)==true) and (man_size>0) and (cooldown<=0){
+        var bionics_before,bionics_after,cah;
+        cooldown=8000;
+        cah=managing;
+        if (cah>10) then cah=0;
+        bionics_before=scr_item_count("Bionics");
+        bionics_after=bionics_before;
+        temp[114]="refresh";
+        if (bionics_before>0) then for(var p=1; p<=500; p++){
+            if (man_sel[p]==1) and (man[p]=="man") and (bionics_after>0) and (obj_ini.bio[cah,ide[p]]<10) 
+            and (obj_ini.loc[cah,ide[p]]!="Terra") and (obj_ini.loc[cah,ide[p]]!="Mechanicus Vessel"){
+                if (string_count("Dread",ma_armour[p])=0){
+					          obj_ini.TTRPG[cah, ide[p]].add_bionics();
+                    if (ma_promote[p]==10) then ma_promote[p]=0;
                 }
             }
             if (bionics_before!=bionics_after){

@@ -603,7 +603,7 @@ if (image="ancient_ruins") and (option1!=""){
             var i;i=-1;man_size=0;selecting_location="";selecting_types="";selecting_ship=0;sel_uid=0;
             repeat(501){i+=1;
                 man[i]="";ide[i]=0;man_sel[i]=0;ma_lid[i]=0;ma_wid[i]=0;ma_bio[i]=0;
-                ma_race[i]=0;ma_loc[i]="";ma_name[i]="";ma_role[i]="";ma_wep1[i]="";
+                ma_race[i]=0;ma_loc[i]="";ma_name[i]="";ma_role[i]="";ma_wep1[i]="";display_unit[i]={};
                 ma_wep2[i]="";ma_armour[i]="";ma_health[i]=100;ma_chaos[i]=0;ma_exp[i]=0;ma_promote[i]=0;
                 sh_ide[i]=0;sh_uid[i]=0;sh_name[i]="";sh_class[i]="";sh_loc[i]="";sh_hp[i]="";sh_cargo[i]=0;sh_cargo_max[i]="";
             }
@@ -782,7 +782,7 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
         obj_ini.race[ma_co,ma_id]=0;obj_ini.loc[ma_co,ma_id]="";obj_ini.name[ma_co,ma_id]="";obj_ini.role[ma_co,ma_id]="";
         obj_ini.wep1[ma_co,ma_id]="";obj_ini.lid[ma_co,ma_id]=0;obj_ini.wep2[ma_co,ma_id]="";obj_ini.armour[ma_co,ma_id]="";
         obj_ini.gear[ma_co,ma_id]="";obj_ini.hp[ma_co,ma_id]=100;obj_ini.chaos[ma_co,ma_id]=0;obj_ini.experience[ma_co,ma_id]=0;
-        obj_ini.mobi[ma_co,ma_id]="";obj_ini.age[ma_co,ma_id]=0;
+        obj_ini.mobi[ma_co,ma_id]="";obj_ini.age[ma_co,ma_id]=0;obj_ini.TTRPG[ma_co,ma_id]={};
         with(obj_ini){scr_company_order(0);}
     }
     

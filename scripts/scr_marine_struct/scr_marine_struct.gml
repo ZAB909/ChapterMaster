@@ -11,6 +11,13 @@
 	role[100,9]:{"armour":},
 	role[100,12]:{"armour":},
 }*/
+
+/*
+		where the notation is[int,int, "string"] e.g [1,2,"max"]
+		the first int is a base or mean value the second int is a sd number to be passed to the gauss() function
+		the string (usually max) is guidance so in the instance of max it will pick the larger value of the mean and the gauss function return
+*/
+
 global.body_parts = ["left_leg", "right_leg", "torso", "right_arm", "left_arm", "left_eye", "right_eye"];
 enum location_types {
 	planet,
@@ -21,8 +28,8 @@ enum location_types {
 }
 global.trait_list = {
 	"champion":{
-		weapon_skill : 20,
-		ballistic_skill:20,
+		weapon_skill : [10,5,"max"],      
+		ballistic_skill:[10,5, "max"],
 		display_name : "Champion",
 		flavour_text : "Through either natural talent, or obsessive training {0} is a master of arms"
 	},
@@ -87,8 +94,8 @@ global.trait_list = {
 		luck : 1,
 		constitution : 1,
 		strength :1,
-		weapon_skill : 2,
-		ballistic_skill :2,
+		weapon_skill : [2, 2, "max"],
+		ballistic_skill :[2, 2, "max"],
 		flavour_text : "{0} has seen many a young warrior rise and die before him but he remains",
 		display_name : "Old Guard"
 	},
@@ -118,8 +125,8 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			strength:[42,5],
 			constitution:[44,3],
 			dexterity:[44,3],
-			weapon_skill : [50,5],
-			ballistic_skill : [50,5],			
+			weapon_skill : [50,5, "max"],
+			ballistic_skill : [50,5, "max"],			
 			intelligence:[44,3],
 			wisdom:[44,3],
 			charisma :[35,3],
@@ -163,7 +170,7 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			luck :5,
 			skills: {weapons:{"hellgun":1,}},	
 			gear:{"armour":"skitarii_armour", "wep1":"hellgun"},
-			base_group : "skitarri",
+			base_group : "skitarii",
 	},
 	"tech_priest":{
 			strength:16,
@@ -284,9 +291,11 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 }
 function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	constitution=0; strength=0;luck=0;dexterity=0;wisdom=0;piety=0;charisma=0;technology=0;intelligence=0;weapon_skill=0;ballistic_skill=0;size = 0;
+	base_group = "none";
 	company = comp;			//marine company
 	marine_number = mar;			//marine number in company
 	obj_ini.bio[company,marine_number] = 0;   //need to rework init of 2d arrays( and eventually remove)
+	squad = "none";
 	static bionics = function(){return obj_ini.bio[company,marine_number];}// get marine bionics count	
 	static experience =  function(){return obj_ini.experience[company,marine_number];}//get exp
 	static update_exp = function(new_val){obj_ini.experience[company,marine_number] =new_val}//change exp
@@ -299,7 +308,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	};
 	static update_role = function(new_role){
 		obj_ini.role[company,marine_number]= new_role;
-		array_append(role_history ,[obj_ini.wep1[company,marine_number], obj_controller.turn])
+		//array_push(role_history ,[obj_ini.role[company,marine_number], obj_controller.turn])
 	};	
 	static mobility_item = function(){ 
 		return obj_ini.mobi[company,marine_number];
@@ -326,7 +335,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		return size
 	};
     static update_mobility_item = function(new_mobility_item){
+		if  (mobility_item() == "Bike"){
+			update_health(hp()/1.25);
+		}
         obj_ini.mobi[company,marine_number] = new_mobility_item;
+		if (new_mobility_item == "Bike"){
+			update_health(hp()*1.25);
+		}
 		get_unit_size(); //every time mobility_item is changed see if the marines size has changed
 	 };		
      static update_armour = function(new_armour){
@@ -334,7 +349,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		get_unit_size(); //every time armour is changed see if the marines size has changed
 	};	
 	static max_health =function(){
-		return 100 * (1+((constitution - 40)*0.025));
+		var max_h = 100 * (1+((constitution - 40)*0.025));
+		if (mobility_item() == "Bike"){
+			max_h *= 1.25;
+		}
+		return max_h
 	};	
 	static increase_max_health = function(increase){
 		return max_health() + (increase*(1+((constitution - 40)*0.025))); //calculate the effect of health buffs
@@ -365,6 +384,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 						edit_stat = variable_struct_get(selec_trait, stats[stat_iter]);
 						if (is_array(edit_stat)){
 							stat_mod = gauss(edit_stat[0], edit_stat[1]);
+							if (array_length(edit_stat) > 2){
+								if (edit_stat[2] == "max"){
+									stat_mod = max(stat_mod, edit_stat[0]);
+								}
+							}
 						} else{stat_mod = edit_stat}
 						if (stats[stat_iter] == "constitution"){
 							balance_value = (hp()/max_health());
@@ -404,6 +428,19 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			if (faction ="chapter"){
 				allegiance = global.chapter_name;
 			}
+		   gene_Seed_mutations = {
+		   			"preomnor":obj_ini.preomnor,
+			    	"lyman":obj_ini.preomnor,
+			    	"omophagea":obj_ini.preomnor,
+			    	"ossmodula":obj_ini.preomnor,
+			    	"zygote":obj_ini.preomnor,
+			    	"betchers":obj_ini.preomnor,
+			    	"catalepsean":obj_ini.preomnor,
+			    	"occulobe":obj_ini.preomnor,
+			    	"mucranoid":obj_ini.preomnor,
+			    	"membran":obj_ini.preomnor,
+			    	"voice":obj_ini.preomnor,
+			};			
 			if (instance_exists(obj_controller)){
 				role_history = [[obj_ini.role[company,marine_number], obj_controller.turn]]; //marines_promotion and demotion history
 				marine_ascension = obj_controller.turn; // on what day did turn did this marine begin to exist
@@ -478,6 +515,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			var new_bionic_pos, part, new_bionic = {quality :"standard"};
 			if (obj_ini.bio[company,marine_number] < 10){
 				obj_ini.bio[company,marine_number]++;
+				update_health(hp()+30);
 				var bionic_possible = [];
 				for (var body_part = 0; body_part < array_length(global.body_parts);body_part++;){
 					part = global.body_parts[body_part];
@@ -509,6 +547,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 						dexterity--;						
 					}
 				} else{ constitution++;}
+				if (hp()>max_health()){update_health(max_health())}
 			}
 		}
 		var needed_bionics = obj_ini.bio[company,marine_number];
@@ -522,7 +561,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 		static gear = function(){return obj_ini.gear[company,marine_number]}
 		static update_gear = function(new_val){obj_ini.gear[company,marine_number]= new_val;}
-	   update_health(max_health()); //set marine health to max
+		if (base_group!="none"){
+			update_health(max_health()); //set marine health to max
+		}
 	   
 		static weapon_one = function(){ 
 			return obj_ini.wep1[company,marine_number];
@@ -531,10 +572,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
             obj_ini.wep1[company,marine_number] = new_weapon;
 	   };
 		static weapon_two = function(){ 
-			return obj_ini.wep1[company,marine_number];
+			return obj_ini.wep2[company,marine_number];
 		};
        static update_weapon_two = function(new_weapon){
-            obj_ini.w[company,marine_number] = new_weapon;
+            obj_ini.wep2[company,marine_number] = new_weapon;
 	   };
 		static corruption = function(){ 
 			return obj_ini.chaos[company,marine_number];
@@ -648,24 +689,24 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 						update_armour("MK3 Iron Armour")
 						update_age(age - gauss(600, 150));
 						add_trait("ancient");
-						add_exp(75);
-						
+						add_exp(choose(100,75,50));	
 					} // 1%
 					else if (old_guard>=97 and old_guard<=99){
 						update_armour("MK4 Maximus")
 						update_age(age - gauss(500, 100));
 						add_trait("old_guard");	
-						add_exp(50);
+						add_exp(choose(75,50));
 					} //3%
 					else if (old_guard>=91 and old_guard<=96){
 						update_armour("MK5 Heresy");
 						update_age(age - gauss(300, 100));
 						add_trait("seasoned");
-						add_exp(25);
+						add_exp(choose(25,50));
 					} // 6%
 					else if (old_guard>=79 and old_guard<=90){
 						update_armour("MK6 Corvus");
 						update_age(age - gauss(250, 25));
+						add_exp(choose(10,25));
 					} // 12%
 					else if (company<=2){
 						update_armour("MK6 Corvus")
@@ -684,23 +725,23 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					update_armour("MK3 Iron Armour");
 					update_age(age - gauss(600, 100));
 					add_trait(choose("ancient","old_guard"));
-					add_exp(choose(50,25, 75));
+					add_exp(choose(10, 30, 50));
 				} // 6% 
 				else if (old_guard>=80 and old_guard<=90){
 					update_armour("MK4 Maximus");
-					update_age(age - gauss(300, 100));
+					update_age(age - gauss(300, 75));
 					add_trait("old_guard")
-					add_exp(50);
+					add_exp(25);
 				} // 12%
 				else if (old_guard>=57 and old_guard<=79){
 					update_armour("MK5 Heresy");
 					update_age(age - gauss(240, 40));
 					add_trait("seasoned")
-					add_exp(25);
+					add_exp(choose(10,25));
 				} // 24%
 				else{
 					update_armour("MK7 Aquila");
-					update_age(age - gauss(150, 75));
+					update_age(age - gauss(150, 30));
 				};
 				break;	
 			case  obj_ini.role[100,9]: 		//devastators	
@@ -708,7 +749,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					update_armour("MK4 Maximus");
 					update_age(age - gauss(300, 100));
 					add_trait(choose("ancient","old_guard"));
-					add_exp(choose(50,25, 75));
+					add_exp(choose(25, 50));
 				} // 3% for maximus
 				else if (old_guard>=78 and old_guard<=96){
 					update_armour("MK6 Corvus");
@@ -723,15 +764,35 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				break;
 		}
 	}
+	static alter_equipment = function(update_equipment){
+		show_debug_message("{0}",update_equipment)
+		var equip_areas = struct_get_names(update_equipment);
+		for (var i=0;i<array_length(equip_areas);i++;){
+			show_debug_message("{0}",equip_areas[i])
+			switch(equip_areas[i]){
+				case "wep1":
+					update_weapon_one(update_equipment[$ equip_areas[i]]);
+					break;
+				case "wep2":
+					update_weapon_two(update_equipment[$ equip_areas[i]]);
+					break;
+				case "mobi":
+					update_mobility_item(update_equipment[$ equip_areas[i]]);
+					break;					
+			}
+		}
+	}
 }
 	function jsonify_marine_struct(company, marine){
 		var copy_marine_struct = obj_ini.TTRPG[company, marine]; //grab marine structure
 		var new_marine = {};
+		var copy_part;
 		var names = variable_struct_get_names(copy_marine_struct); // get all keys within structure
 		for (var name = 0; name < array_length(names); name++) { //loop through keys to find which ones are methods as they can't be saved as a json string
 			if (!is_method(copy_marine_struct[$ names[name]])){
-				variable_struct_set(new_marine, names[name],copy_marine_struct[$ names[name]]); //if key value is not a method add to copy structure
+				copy_part = DeepCloneStruct(copy_marine_struct[$ names[name]])
+				variable_struct_set(new_marine, names[name],copy_part); //if key value is not a method add to copy structure
 			}
 		}
 		return json_stringify(new_marine);
-	}	
+	}
