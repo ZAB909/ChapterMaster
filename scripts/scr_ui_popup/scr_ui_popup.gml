@@ -274,7 +274,7 @@ function scr_ui_popup() {
 	    }
 	     draw_set_font(fnt_40k_14b);
 	     woob=""
-	     var arsenal = 0;var gene_vault=0;
+	     var arsenal = 0,gene_vault=0;
     		if (planet_feature_bool(planet_upgrades, P_features.Arsenal)==1){
     			var arsenal = planet_upgrades[search_planet_features(planet_upgrades, P_features.Arsenal)[0]];
  	          if (arsenal.inquis_hidden == 1) then woob="A moderate sized secret Arsenal, this structure has ample holding area to store any number of artifacts and wargear.  Chaos and Daemonic items will be sent here by your Master of Relics, and due to the secret nature of its existance, the Inquisition will not find them during routine inspections.";
