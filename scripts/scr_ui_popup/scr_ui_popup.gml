@@ -588,7 +588,10 @@ function scr_ui_popup() {
 	        if (mouse_x>=__view_get( e__VW.XView, 0 )+50) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+70) 
 	        and (mouse_y>=__view_get( e__VW.YView, 0 )+117) 
 	        and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+137){
-	            if (cooldown<=0) and (fleet_all==0){cooldown=8000;fleet_all=1;}
+	            if (cooldown<=0) and (fleet_all==0){
+	                cooldown=8000;
+	                fleet_all=1;
+	            }
 	            if (cooldown<=0) and (fleet_all==1){
 	                cooldown=8000;
 	                fleet_all=0;
