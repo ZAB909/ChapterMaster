@@ -1,2 +1,5 @@
 # Visual Studio cache directory
 .vs/
+
+# Mac folder info
+**/.DS_Store
