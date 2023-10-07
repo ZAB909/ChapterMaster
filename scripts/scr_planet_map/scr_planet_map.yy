@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "ChapterMaster",
-    "path": "ChapterMaster.yyp",
+    "name": "Scripts",
+    "path": "folders/Scripts.yy",
   },
 }
