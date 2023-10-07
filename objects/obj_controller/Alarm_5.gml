@@ -79,7 +79,7 @@ with(obj_temp6){instance_destroy();}
         /*in order for new ships to spawn the number of total imperial ships must be smaller than 
          one third of the total imperial star systems*/
 if (instance_number(obj_temp5)>0) and (imp_ships<sha){
-    var rando=floor(random(100))+1, rando2=choose(1,2,2,3,3,3);
+    var rando=irandom(100)+1, rando2=choose(1,2,2,3,3,3);
     var forge=instance_nearest(random(room_width),random(room_height),obj_temp5);
     
     //the less mechanicus forge worlds the less likely to spawn a new fleet
