@@ -5,7 +5,7 @@ var rando=0,contin=0;
 for(var i=1; i<=4; i++){
     // Check for industrial facilities
     // Used to not have Ice either
-    if(!array_contains["dead", "lava", "ice"], p_type[i]){
+    if(!array_contains(["dead", "lava", "ice"], p_type[i])){
         // Have the proppa facilities and size
         if (p_orks[i]>=4){
             var fleet=0;
