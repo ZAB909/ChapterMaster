@@ -617,7 +617,7 @@ function scr_ui_popup() {
 		if (scr_hit(xx+813,yy+10,xx+960,yy+38)) and (penitent==1) {
 		    var tx=0,ty=0,tool1="",tool2="",plu="",hei_bonus;
 	    
-		    var endb,endb2;endb=0;endb2="";
+		    var endb=0,endb2="";
 		    endb=min(0,(((penitent_turn+1)*(penitent_turn+1))-512)*-1);
 	    
 		    if (obj_controller.blood_debt==1){
