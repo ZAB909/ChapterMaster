@@ -587,7 +587,7 @@ if (did==1){
     // Ork planets here
     with(obj_star){
         if (planets>0) and (owner==2) and (p_type[1]!="Dead"){
-            //this object does nothing
+            //this object simply acts as a counter of ork owned planets
             instance_create(x,y,obj_temp3);
         }
     }
