@@ -215,7 +215,7 @@ function scr_ui_popup() {
 			            if (fuck.target.p_player[obj_controller.selecting_planet]=0) then woob+="The Imperial Chefs are mostly idle, making use of the other rooms and facilities.  ";
 			        }
 		        
-			        if (s_base.stock=1)  {woob+="  One of the chambers is hollowed out to display war trophies and gear.  ";}
+			        if (s_base.stock==1)  {woob+="  One of the chambers is hollowed out to display war trophies and gear.  ";}
 			        else if (s_base.stock==2){woob+="  One of the chambers holds war trophies from recent conquests.  ";}
 			        else if (s_base.stock==3){woob+="  War trophies taken from several Xeno races are displayed in the Relic Room.  ";}
 			        else if (s_base.stock==4){woob+="  Your Relic Room contains trophies and skulls, taken from every Xeno race.  ";}
@@ -258,14 +258,18 @@ function scr_ui_popup() {
 		        
 			        if (tooltip3!=""){
 			            draw_set_alpha(1);
-			            draw_set_font(fnt_40k_14);draw_set_halign(fa_left);draw_set_color(0);
+			            draw_set_font(fnt_40k_14);
+			            draw_set_halign(fa_left);
+			            draw_set_color(0);
 			            draw_rectangle(mouse_x+18,mouse_y+20,mouse_x+string_width_ext(string_hash_to_newline(tooltip4),-1,500)+24,mouse_y+64+string_height_ext(string_hash_to_newline(tooltip4),-1,500),0);
 			            draw_set_color(c_gray);
 			            draw_rectangle(mouse_x+18,mouse_y+20,mouse_x+string_width_ext(string_hash_to_newline(tooltip4),-1,500)+24,mouse_y+64+string_height_ext(string_hash_to_newline(tooltip4),-1,500),1);
-			            draw_set_font(fnt_40k_14b);draw_text(mouse_x+22,mouse_y+22,string_hash_to_newline(string(tooltip3)));
+			            draw_set_font(fnt_40k_14b);
+			            draw_text(mouse_x+22,mouse_y+22,string_hash_to_newline(string(tooltip3)));
 			            draw_set_font(fnt_40k_14);draw_text_ext(mouse_x+22,mouse_y+42,string_hash_to_newline(string(tooltip4)),-1,500);
 		            
-			            draw_set_color(16291875);if (obj_controller.requisition<tcost) then draw_set_color(c_red);
+			            draw_set_color(16291875);
+			            if (obj_controller.requisition<tcost) then draw_set_color(c_red);
 			            draw_sprite(spr_requisition,0,mouse_x+22,mouse_y+45+string_height_ext(string_hash_to_newline(tooltip4),-1,500));
 			            draw_text(mouse_x+42,mouse_y+42+string_height_ext(string_hash_to_newline(tooltip4),-1,500),string_hash_to_newline(string(tcost)));
 			        }
@@ -309,7 +313,8 @@ function scr_ui_popup() {
 	            if (obj_controller.cooldown<=0) and (obj_controller.mouse_left=1) and (obj_controller.requisition>=1000){
 	                array_push(planet_upgrades, new new_planet_feature(P_features.Secret_Base));
 					obj_temp_build.isnew=1;
-	                obj_controller.cooldown=8000;obj_controller.requisition-=1000;
+	                obj_controller.cooldown=8000;
+	                obj_controller.requisition-=1000;
 	            }
 	        }draw_set_halign(fa_left);
         
@@ -317,10 +322,13 @@ function scr_ui_popup() {
 	        draw_set_color(16291875);if (obj_controller.requisition<1500) then draw_set_color(c_red);draw_text(xx+180,yy+112,string_hash_to_newline("1500"));draw_set_color(c_gray);
 	        draw_text_ext(xx+21,yy+130,string_hash_to_newline("Hidden armoury that stores unused Chaos and Daemonic artifacts, preventing them from discovery."),-1,600);
 	        draw_rectangle(xx+300,yy+110,xx+400,yy+130,0);
-	        draw_set_halign(fa_center);draw_set_color(0);
+	        draw_set_halign(fa_center);
+	        draw_set_color(0);
 	        draw_text(xx+350,yy+112,string_hash_to_newline("Build"));draw_text(xx+351,yy+113,string_hash_to_newline("Build"));
 	        if (scr_hit(xx+300,yy+110,xx+400,yy+130)){
-	            draw_set_alpha(0.2);draw_rectangle(xx+300,yy+110,xx+400,yy+130,0);draw_set_alpha(1);
+	            draw_set_alpha(0.2);
+	            draw_rectangle(xx+300,yy+110,xx+400,yy+130,0);
+	            draw_set_alpha(1);
             
 	            if (obj_controller.cooldown<=0) and (obj_controller.mouse_left==1) and (obj_controller.requisition>=1500){
 	                array_push(planet_upgrades, new new_planet_feature(P_features.Arsenal));
