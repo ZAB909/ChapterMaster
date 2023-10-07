@@ -530,7 +530,10 @@ function scr_ui_popup() {
 		        }
 		    }
 		    if (obj_ini.fleet_type!=1){
-		        plu="";if (income_home>0) then plu="+";tool1+="#Battle Barge Trade: "+string(plu)+string(income_home);tool2+="#Battle Barge Trade: ";
+		        plu="";
+		        if (income_home>0) then plu="+";
+		        tool1+="#Battle Barge Trade: "+string(plu)+string(income_home);
+		        tool2+="#Battle Barge Trade: ";
 		    }
 	        plu="";
 	        if (income_recruiting>0) then plu="+";
