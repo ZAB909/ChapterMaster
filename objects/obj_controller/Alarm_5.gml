@@ -32,17 +32,13 @@ if (faction_gender[10]==1) and (faction_defeated[10]==0) and (turn>=chaos_turn) 
         if (cathedral=0){
             if (_star.p_heresy[plani]>=0) and (_star.p_heresy[plani]<10){
                 _star.p_heresy[plani]+=choose(0,0,0,0,0,0,0,0,5);
-            }
-            if (_star.p_heresy[plani]>=10) and (_star.p_heresy[plani]<20){
+            }else if (_star.p_heresy[plani]>=10) and (_star.p_heresy[plani]<20){
                 _star.p_heresy[plani]+=choose(-2,-2,-2,5,10,15);
-            }
-            if (_star.p_heresy[plani]>=20) and (_star.p_heresy[plani]<40){
+            }else if(_star.p_heresy[plani]>=20) and (_star.p_heresy[plani]<40){
                 _star.p_heresy[plani]+=choose(-2,-1,0,0,0,0,0,0,5,10);
-            }
-            if (_star.p_heresy[plani]>=40) and (_star.p_heresy[plani]<60){
+            }else if(_star.p_heresy[plani]>=40) and (_star.p_heresy[plani]<60){
                 _star.p_heresy[plani]+=choose(-2,-1,0,0,0,0,0,0,5,10,15);
-            }
-            if (_star.p_heresy[plani]>=60) and (_star.p_heresy[plani]<100){
+            }else if(_star.p_heresy[plani]>=60) and (_star.p_heresy[plani]<100){
                 _star.p_heresy[plani]+=choose(-1,0,0,0,0,5,10,15);
             }
         }
@@ -66,9 +62,12 @@ with(obj_en_fleet){
 }
 with(obj_star){
     //empty object simply acts as a counter for the number of imperial systems
-    if (owner==2) then instance_create(x,y,obj_temp6);
+    if (owner==2){
+        instance_create(x,y,obj_temp6)
+    }else if (owner==3){
+        instance_create(x,y,obj_temp5)
+    }
     //unknown function of temp5 same as temp6 but for mechanicus worlds
-    if (owner==3) then instance_create(x,y,obj_temp5);
     if (space_hulk==1) or (craftworld==1){x-=20000;y-=20000;}
 }
 // Former: var sha;sha=instance_number(obj_temp6)*1.3;
@@ -129,12 +128,21 @@ with(obj_star){
 
 // ** Training **
 // * Apothecary *
-if (training_apothecary==1) then apothecary_points+=0.8;
-if (training_apothecary==2) then apothecary_points+=0.9;
-if (training_apothecary==3) then apothecary_points+=1;
-if (training_apothecary==4) then apothecary_points+=1.5;
-if (training_apothecary==5) then apothecary_points+=2;
-if (training_apothecary==6) then apothecary_points+=4;
+if (training_apothecary!=0){
+    if (training_apothecary==1){
+        apothecary_points+=0.8
+    }else if (training_apothecary==2){
+        apothecary_points+=0.9
+    } else if(training_apothecary==3){
+        apothecary_points+=1
+    }else if(training_apothecary==4){
+        apothecary_points+=1.5
+    }else if(training_apothecary==5){
+        apothecary_points+=2
+    }else if(training_apothecary==6){
+        apothecary_points+=4
+    }
+}
 novice_type = string("{0} Aspirant",obj_ini.role[100,15])
 if (training_apothecary>0) then recruit_count=scr_role_count(novice_type,"");
 if (apothecary_points>=4) and (apothecary_aspirant!=0) and (recruit_count=0){
@@ -248,12 +256,21 @@ if (apothecary_points>=4) and (apothecary_aspirant==0){
 // * Chaplain training *
 // TODO add functionality for Space Wolves and Iron Hands
 if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands"){
-    if (training_chaplain==1) then chaplain_points+=0.8;
-    if (training_chaplain==2) then chaplain_points+=0.9;
-    if (training_chaplain==3) then chaplain_points+=1;
-    if (training_chaplain==4) then chaplain_points+=1.5;
-    if (training_chaplain==5) then chaplain_points+=2;
-    if (training_chaplain==6) then chaplain_points+=4;
+    if (training_chaplain!=0){
+        if (training_chaplain==1){
+            chaplain_points+=0.8
+        }else if (training_chaplain==2){
+            chaplain_points+=0.9
+        }else if (training_chaplain==3){
+            chaplain_points+=1
+        }else if (training_chaplain==4){
+            chaplain_points+=1.5
+        }else if (training_chaplain==5){
+            chaplain_points+=2
+        }else if (training_chaplain==6){
+            chaplain_points+=4
+        }
+    }
     novice_type = string("{0} Aspirant",obj_ini.role[100,14])
     if (training_chaplain>0) then recruit_count=scr_role_count(novice_type,"");
     if (chaplain_points>=4) and (chaplain_aspirant!=0) and (recruit_count==0){
@@ -366,12 +383,21 @@ if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands")
 }
 recruit_count=0;
 // * Psycher Training *
-if (training_psyker==1) then psyker_points+=0.8;
-if (training_psyker==2) then psyker_points+=0.9;
-if (training_psyker==3) then psyker_points+=1;
-if (training_psyker==4) then psyker_points+=1.5;
-if (training_psyker==5) then psyker_points+=2;
-if (training_psyker==6) then psyker_points+=4;
+if (training_psyker!=0){
+    if (training_psyker==1){
+        psyker_points+=0.8
+    }else if (training_psyker==2){
+        psyker_points+=0.9
+    }else if (training_psyker==3){
+        psyker_points+=1
+    }else if (training_psyker==4){
+        psyker_points+=1.5
+    }else if (training_psyker==5){
+        psyker_points+=2
+    }else if (training_psyker==6){
+        psyker_points+=4
+    }
+}
 var goal=48,yep=0;
 novice_type=string("{0} Aspirant",obj_ini.role[100,17]);
 for(var o=1; o<=4; o++){
@@ -448,13 +474,21 @@ if (psyker_points>=round(goal/2)) and (psyker_aspirant==0){
 }
 recruit_count=0;
 // * Tech Marine *
-if (training_techmarine==1) then tech_points+=1;
-if (training_techmarine==2) then tech_points+=2;
-if (training_techmarine==3) then tech_points+=4;
-if (training_techmarine==4) then tech_points+=6;
-if (training_techmarine==5) then tech_points+=8;
-if (training_techmarine==6) then tech_points+=16;
-
+if (training_techmarine!=0){
+    if (training_techmarine==1){
+        tech_points+=0.8
+    }else if (training_techmarine==2){
+        tech_points+=0.9
+    }else if (training_techmarine==3){
+        tech_points+=1
+    }else if (training_techmarine==4){
+        tech_points+=1.5
+    }else if (training_techmarine==5){
+        tech_points+=2
+    }else if (training_techmarine==6){
+        tech_points+=4
+    }
+}
 if (training_techmarine>0) then recruit_count=scr_role_count(string("{0} Aspirant",obj_ini.role[100,16]),"");
 if (tech_points>=4) and (tech_aspirant!=0) and (recruit_count==0){
     tech_points=0;
