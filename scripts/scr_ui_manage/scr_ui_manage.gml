@@ -789,12 +789,15 @@ function scr_ui_manage() {
 	            // temp1=string(managing)+"."+string(ide[sel]);
             
 	            temp2=string(ma_loc[sel]);
-	            if (unit_location==location_types.planet){
+	            if (unit_location[0]==location_types.planet){
+					temp2 = unit_location[2];
 	                if (unit_location[1]=1) then temp2+=" I";
 	                if (unit_location[1]=2) then temp2+=" II";
 	                if (unit_location[1]=3) then temp2+=" III";
 	                if (unit_location[1]=4) then temp2+=" IV";
-	            }
+	            } else if(unit_location[0]==location_types.ship){
+					temp2 = obj_ini.ship[unit_location[1]]
+				}
 	            if (fest_planet==0) and (fest_sid>0) and (fest_repeats>0) and (ma_lid[sel]==fest_sid){
 					temp2="=Event=";
 					eventing=true;

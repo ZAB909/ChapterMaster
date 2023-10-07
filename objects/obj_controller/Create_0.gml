@@ -278,7 +278,14 @@ for(var i=100; i<103; i++){
     obj_controller.r_armour[i,17]="Power Armour";
     obj_controller.r_gear[i,17]="Psychic Hood";
     obj_controller.r_mobi[i,17]="";
-}
+                
+    obj_controller.r_role[i,18]="Sergeant";
+    obj_controller.r_wep1[i,18]="Chainsword";
+    obj_controller.r_wep2[i,18]="Storm Bolter";
+    obj_controller.r_armour[i,18]="Power Armour";
+    obj_controller.r_gear[i,18]="";
+    obj_controller.r_mobi[i,18]="";                
+} // 100 is defaults, 101 is the allowable starting equipment
 // ** Resets all races and equipement for 100 **
 for(var i=0; i<21; i++){
     obj_controller.r_race[100,i]=0;

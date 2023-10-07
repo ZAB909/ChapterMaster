@@ -202,6 +202,14 @@ function scr_restart_variables(saved_game) {
 	        obj_restart_vars.r_armour[i,17]="Power Armour";
 			obj_restart_vars.r_gear[i,17]="Psychic Hood";
 			obj_restart_vars.r_mobi[i,17]="";
+
+	        obj_restart_vars.r_race[i,18]=1;
+	        obj_restart_vars.r_role[i,18]="Sergeant";
+			obj_restart_vars.r_wep1[i,18]="Chainsword";
+			obj_restart_vars.r_wep2[i,18]="Storm Bolter";
+	        obj_restart_vars.r_armour[i,18]="Power Armour";
+			obj_restart_vars.r_gear[i,18]="";
+			obj_restart_vars.r_mobi[i,18]="";
 	    }
 	
 		for(var i=0; i<21; i++){
@@ -412,6 +420,14 @@ function scr_restart_variables(saved_game) {
 	        obj_controller.r_armour[i,17]="Power Armour";
 			obj_controller.r_gear[i,17]="Psychic Hood";
 			obj_controller.r_mobi[i,17]="";
+			
+	        obj_controller.r_race[i,18]=1;
+	        obj_controller.r_role[i,18]="Sergeant";
+			obj_controller.r_wep1[i,18]="Chainsword";
+			obj_controller.r_wep2[i,18]="Storm Bolter";
+	        obj_controller.r_armour[i,18]="Power Armour";
+			obj_controller.r_gear[i,18]="";
+			obj_controller.r_mobi[i,18]="";			
 	    }
     
 		for(var i=0; i<21; i++){
@@ -631,6 +647,13 @@ function scr_restart_variables(saved_game) {
 			wep2[i,17]="Storm Bolter";
 			armour[i,17]="Power Armour";
 			gear[i,17]="Psychic Hood";
+			
+			race[i,18]=1;
+			role[i,18]="Sergeant";
+			wep1[i,18]="Chainsword";
+			wep2[i,18]="Storm Bolter";
+			armour[i,18]="Power Armour";
+			gear[i,18]="";			
 	    }
 
 	    points=100;

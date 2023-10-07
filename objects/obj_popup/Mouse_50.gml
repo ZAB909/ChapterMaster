@@ -393,55 +393,8 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
         repeat(300){w+=1;
             if (obj_controller.man[w]="man") and (obj_controller.man_sel[w]=1){
                 var check;check=0;
-				var new_struct = jsonify_marine_struct(company,obj_controller.ide[w]);
-                // Pass variables here
-				obj_ini.TTRPG[target_comp,mahreens] = new TTRPG_stats("chapter",target_comp,mahreens);
-				obj_ini.TTRPG[target_comp,mahreens].load_json_data(json_parse(new_struct));
-				obj_ini.TTRPG[target_comp,mahreens]=obj_ini.race[company,obj_controller.ide[w]];
-                obj_ini.race[target_comp,mahreens]=obj_ini.race[company,obj_controller.ide[w]];
-                obj_ini.loc[target_comp,mahreens]=obj_ini.loc[company,obj_controller.ide[w]];
-                obj_ini.role[target_comp,mahreens]=obj_ini.role[company,obj_controller.ide[w]];
-                obj_ini.name[target_comp,mahreens]=obj_ini.name[company,obj_controller.ide[w]];
-                obj_ini.mobi[target_comp,mahreens]=obj_ini.mobi[company,obj_controller.ide[w]];
-                obj_ini.wep1[target_comp,mahreens]=obj_ini.wep1[company,obj_controller.ide[w]];
-                obj_ini.wep2[target_comp,mahreens]=obj_ini.wep2[company,obj_controller.ide[w]];
-                obj_ini.armour[target_comp,mahreens]=obj_ini.armour[company,obj_controller.ide[w]];
-                obj_ini.gear[target_comp,mahreens]=obj_ini.gear[company,obj_controller.ide[w]];
-                obj_ini.hp[target_comp,mahreens]=obj_ini.hp[company,obj_controller.ide[w]];
-                obj_ini.chaos[target_comp,mahreens]=obj_ini.chaos[company,obj_controller.ide[w]];
-                obj_ini.god[target_comp,mahreens]=obj_ini.god[company,obj_controller.ide[w]];
-                obj_ini.experience[target_comp,mahreens]=obj_ini.experience[company,obj_controller.ide[w]];
-                obj_ini.age[target_comp,mahreens]=obj_ini.age[company,obj_controller.ide[w]];
-                obj_ini.lid[target_comp,mahreens]=obj_ini.lid[company,obj_controller.ide[w]];
-                obj_ini.wid[target_comp,mahreens]=obj_ini.wid[company,obj_controller.ide[w]];
-                obj_ini.bio[target_comp,mahreens]=obj_ini.bio[company,obj_controller.ide[w]];
-                obj_ini.spe[target_comp,mahreens]=obj_ini.spe[company,obj_controller.ide[w]];
-
-                // This is pulling the name, correctly, and showing the right target CO/ID
-                // show_message("Marine Number "+string(obj_controller.ide[w])+", Name: "+string(obj_ini.name[company,obj_controller.ide[w]])+", being moved to "+string(target_comp)+"/"+string(mahreens));
-                // show_message("Moved to slot number: "+string(target_comp)+"/"+string(mahreens)+", that slot's Name: "+string(obj_ini.name[target_comp,mahreens]));
-
-                // Clear variables here
-                obj_ini.race[company,obj_controller.ide[w]]=0;
-                obj_ini.loc[company,obj_controller.ide[w]]="";
-                obj_ini.role[company,obj_controller.ide[w]]="";
-                obj_ini.name[company,obj_controller.ide[w]]="";
-                obj_ini.wep1[company,obj_controller.ide[w]]="";
-                obj_ini.wep2[company,obj_controller.ide[w]]="";
-                obj_ini.armour[company,obj_controller.ide[w]]="";
-                obj_ini.gear[company,obj_controller.ide[w]]="";
-                obj_ini.mobi[company,obj_controller.ide[w]]="";
-                obj_ini.god[company,obj_controller.ide[w]]="";
-                obj_ini.hp[company,obj_controller.ide[w]]=0;
-                obj_ini.chaos[company,obj_controller.ide[w]]=0;
-                obj_ini.experience[company,obj_controller.ide[w]]=0;
-                obj_ini.age[company,obj_controller.ide[w]]=0;
-                obj_ini.wid[company,obj_controller.ide[w]]=0;
-                obj_ini.lid[company,obj_controller.ide[w]]=0;
-                obj_ini.bio[company,obj_controller.ide[w]]=0;
-                obj_ini.spe[company,obj_controller.ide[w]]="";
-				obj_ini.TTRPG[company,obj_controller.ide[w]] = {};
-                mahreens+=1;
+				scr_move_unit_info(company,target_comp,obj_controller.ide[w],mahreens);
+                mahreens++;
             }
             // This seems to execute the correct number of times
             if (obj_controller.man[w]="vehicle") and (obj_controller.man_sel[w]=1){
@@ -492,7 +445,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
             var i;i=-1;man_size=0;selecting_location="";selecting_types="";selecting_ship=0;
             repeat(501){w+=1;
                 man[w]="";ide[w]=0;man_sel[w]=0;ma_lid[w]=0;ma_wid[w]=0;ma_god[w]=0;ma_bio[w]=0;
-                ma_race[w]=0;ma_loc[w]="";ma_name[w]="";ma_role[w]="";ma_wep1[w]="";
+                ma_race[w]=0;ma_loc[w]="";ma_name[w]="";ma_role[w]="";ma_wep1[w]="";display_unit[w]={};
                 ma_wep2[w]="";ma_armour[w]="";ma_health[w]=100;ma_chaos[w]=0;ma_exp[w]=0;ma_promote[w]=0;
                 sh_ide[w]=0;sh_name[w]="";sh_class[w]="";sh_loc[w]="";sh_hp[w]="";sh_cargo[w]=0;sh_cargo_max[w]="";
             }
@@ -1002,6 +955,11 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
 
                 obj_ini.experience[target_comp,mahreens]=obj_controller.ma_exp[i];obj_ini.age[target_comp,mahreens]=obj_ini.age[company,obj_controller.ide[i]];
                 obj_ini.lid[target_comp,mahreens]=obj_controller.ma_lid[i];obj_ini.wid[target_comp,mahreens]=obj_controller.ma_wid[i];
+				var new_struct = jsonify_marine_struct(company,obj_controller.ide[i]);
+				obj_ini.TTRPG[target_comp,mahreens] = new TTRPG_stats("chapter",target_comp,mahreens, "blank");
+				obj_ini.TTRPG[target_comp,mahreens].load_json_data(json_parse(new_struct));
+				obj_ini.TTRPG[target_comp,mahreens].company=target_comp;
+				obj_ini.TTRPG[target_comp,mahreens].marine=mahreens;				
 
                 mahreens+=1;
 
@@ -1021,6 +979,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
                 obj_ini.experience[company,obj_controller.ide[i]]=0;obj_ini.age[company,obj_controller.ide[i]]=0;
                 obj_ini.wid[company,obj_controller.ide[i]]=0;obj_ini.lid[company,obj_controller.ide[i]]=0;
                 obj_ini.spe[company,obj_controller.ide[i]]="";
+				obj_ini.TTRPG[company,obj_controller.ide[i]]={};
 
                 // show_message(string(company)+" - "+string(obj_ini.role[company,obj_controller.ide[i]]));
 
@@ -1042,7 +1001,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
             var i;i=-1;man_size=0;selecting_location="";selecting_types="";selecting_ship=0;
             repeat(501){i+=1;
                 man[i]="";ide[i]=0;man_sel[i]=0;ma_lid[i]=0;ma_wid[i]=0;ma_god[i]=0;
-                ma_race[i]=0;ma_loc[i]="";ma_name[i]="";ma_role[i]="";ma_wep1[i]="";
+                ma_race[i]=0;ma_loc[i]="";ma_name[i]="";ma_role[i]="";ma_wep1[i]="";display_unit[i]={};
                 ma_wep2[i]="";ma_armour[i]="";ma_health[i]=100;ma_chaos[i]=0;ma_exp[i]=0;ma_promote[i]=0;
                 sh_ide[i]=0;sh_name[i]="";sh_class[i]="";sh_loc[i]="";sh_hp[i]="";sh_cargo[i]=0;sh_cargo_max[i]="";
             }
