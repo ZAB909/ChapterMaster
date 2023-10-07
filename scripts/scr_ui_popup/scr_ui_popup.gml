@@ -425,10 +425,14 @@ function scr_ui_popup() {
 	        helth=100;
 	        if (colu==1) then void_h=min(void_h+20,560);
         
-	        if (posi==1){if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+x3,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline("=Capital Ships="));y3+=20;}
+	        if (posi==1){
+	            if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+x3,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline("=Capital Ships="));
+	            y3+=20;
+	        }
 	        if (posi==ca+1) and (fr>0){
 	        	y3+=20;
-	        	if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+x3,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline("=Frigates="));y3+=20;
+	        	if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+x3,__view_get( e__VW.YView, 0 )+y3,string_hash_to_newline("=Frigates="));
+	        	y3+=20;
 	        }
 	        if (posi==ca+fr+1) and (es>0){
 	        	y3+=20;
@@ -465,7 +469,10 @@ function scr_ui_popup() {
 	                    var onceh=0;
 	                    cooldown=8000;
 	                    if (obj_controller.fest_scheduled>0) and (obj_controller.fest_sid=robj.capital_num[shit]) then onceh=1;
-	                    if (robj.capital_sel[shit]==1) and (onceh==0){robj.capital_sel[shit]=0;onceh=1;}
+	                    if (robj.capital_sel[shit]==1) and (onceh==0){
+	                        robj.capital_sel[shit]=0;
+	                        onceh=1;
+	                    }
 	                    if (robj.capital_sel[shit]==0) and (onceh==0){
 	                        robj.capital_sel[shit]=1;
 	                        onceh=1;
@@ -502,7 +509,10 @@ function scr_ui_popup() {
 	                if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+25) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
 	                    var onceh=0,cooldown=8000;
 	                    if (obj_controller.fest_scheduled>0) and (obj_controller.fest_sid=robj.frigate_num[shit]) then onceh=1;
-	                    if (robj.frigate_sel[shit]=1) and (onceh=0){robj.frigate_sel[shit]=0;onceh=1;}
+	                    if (robj.frigate_sel[shit]==1) and (onceh==0){
+	                        robj.frigate_sel[shit]=0;
+	                        onceh=1;
+	                    }
 	                    if (robj.frigate_sel[shit]==0) and (onceh==0){
 	                        robj.frigate_sel[shit]=1;
 	                        onceh=1;
