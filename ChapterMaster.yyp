@@ -988,7 +988,6 @@
     {"roomId":{"name":"Creation","path":"rooms/Creation/Creation.yy",},},
     {"roomId":{"name":"Defeat","path":"rooms/Defeat/Defeat.yy",},},
     {"roomId":{"name":"combat_testing","path":"rooms/combat_testing/combat_testing.yy",},},
-
     {"roomId":{"name":"Creation","path":"rooms/Creation/Creation.yy",},},
     {"roomId":{"name":"Main_Menu","path":"rooms/Main_Menu/Main_Menu.yy",},},
     {"roomId":{"name":"Defeat","path":"rooms/Defeat/Defeat.yy",},},
