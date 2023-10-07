@@ -21,7 +21,7 @@ function scr_ui_popup() {
 	    if (planet_feature_bool(planet_upgrades, P_features.Arsenal)==1){arsenal=1}
 	    if (planet_feature_bool(planet_upgrades, P_features.Gene_Vault)==1){gene_vault=1}
 	    un_upgraded = gene_vault+arsenal+s_base;
-	    if (obj_temp_build.isnew=1){
+	    if (obj_temp_build.isnew==1){
 	        title="Secret Lair ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
 	        draw_text_transformed(xx+312-64,yy+10,string_hash_to_newline(title),0.7,0.7,0);
         
@@ -92,7 +92,7 @@ function scr_ui_popup() {
 
     
 
-	    if (un_upgraded=0){
+	    if (un_upgraded==0){
 	    	title="Build ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
 		}else if(un_upgraded!=0){
 	        if (s_base!=0) then title="Secret Lair ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
@@ -144,8 +144,10 @@ function scr_ui_popup() {
 			                draw_set_color(0);
 			                draw_rectangle(xx+494,yy+12+((r-1)*22),xx+614,yy+32+((r-1)*22),0);
 			                draw_set_alpha(1);
-			                tooltip3=tooltip;tooltip4=tooltip2;tcost=cost;
-			                if (obj_controller.mouse_left=1) and (obj_controller.cooldown<=0) and (obj_controller.requisition>=tcost) and (alp!=0.33){
+			                tooltip3=tooltip;
+			                tooltip4=tooltip2;
+			                tcost=cost;
+			                if (obj_controller.mouse_left==1) and (obj_controller.cooldown<=0) and (obj_controller.requisition>=tcost) and (alp!=0.33){
 			                    obj_controller.cooldown=8000;obj_controller.requisition-=tcost;
 			                    if (r=1){s_base.forge=1;}
 			                    else if (r==2){s_base.hippo=1;}
@@ -198,9 +200,9 @@ function scr_ui_popup() {
 				        	break;					        					        					        				        					        	
 			        }
 		        
-			        if (s_base.throne=1){
+			        if (s_base.throne==1){
 			            woob+="  The center chamber is dominated by ";
-			            var yep,c;yep=false;c=0;
+			            var yep=false,c=0;
 		            
 			            if (obj_controller.temp[104]=string(obj_temp_build.target.name)+"."+string(obj_controller.selecting_planet)) then yep=true;
 			            if (yep) { woob+="a massive throne, which you are currently seated upon.  ";}
