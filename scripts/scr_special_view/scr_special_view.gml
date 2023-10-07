@@ -225,7 +225,8 @@ function scr_special_view(command_group) {
 
 
 
-	i=0;squads=0;
+	i=0;
+	squads=0;
 	for (i=1;i<101;i++;){
 		onceh=0;
 	    var ahuh=0;
@@ -234,29 +235,31 @@ function scr_special_view(command_group) {
 
 	    if (ahuh=1){
 	        // Select All
-	        var go=0;op=0;w=0;
+	        var go=0,op=0,w=0;
 	        if (man[i]=="man"){
 	            for (w=0;w<20;w++;){
-	                if (sel_uni[w]=="") and (op=0) then op=w;
+	                if (sel_uni[w]=="") and (op==0) then op=w;
 	                if (sel_uni[w]==ma_role[i]) then go=1;
 	            }
-	            if (go=0) then sel_uni[op]=ma_role[i];
+	            if (go==0) then sel_uni[op]=ma_role[i];
 	        }
-	        go=0;op=0;
+	        go=0;
+	        op=0;
 	        if (man[i]=="vehicle"){
 	            for (w=0;w<20;w++;){
-	                if (sel_veh[w]=="") and (op=0) then op=w;
+	                if (sel_veh[w]=="") and (op==0) then op=w;
 	                if (sel_veh[w]==ma_role[i]) then go=1;
 	            }
-	            if (go=0) then sel_veh[op]=ma_role[i];
+	            if (go==0) then sel_veh[op]=ma_role[i];
 	        }
 
 
 	        // Squads
-	        if (squads>0){var n=1;
-	            if (squad_typ=obj_ini.role[100,15]) then n=0;
-	            if (squad_typ=obj_ini.role[100,14]) then n=0;
-	            if (squad_typ=obj_ini.role[100,17]) then n=0;
+	        if (squads>0){
+	            var n=1;
+	            if (squad_typ==obj_ini.role[100,15]) then n=0;
+	            if (squad_typ==obj_ini.role[100,14]) then n=0;
+	            if (squad_typ==obj_ini.role[100,17]) then n=0;
 	            if (squad_typ=obj_ini.role[100,16]) then n=0;
 	            if (squad_typ="Codiciery") then n=0;
 	            if (squad_typ="Lexicanum") then n=0;
@@ -272,22 +275,23 @@ function scr_special_view(command_group) {
 
 	            if (squad_members+1>10) then n=1;
 	            if ((ma_wid[i]+(ma_lid[i]/100))!=squad_loc) then n=1;
-	            if (squad_typ=obj_ini.role[100,6]) then n=2;
+	            if (squad_typ==obj_ini.role[100,6]) then n=2;
 
-	            if (n=0){
+	            if (n==0){
 	            	squad_members+=1;
 	            	squad_typ=ma_role[i];
 	            	squad[i]=squads;
-	            }else if (n=1){squads+=1;
+	            }else if (n==1){
+	                squads+=1;
 	            	squad_members=1;
 		            squad_typ=ma_role[i];
 		            squad[i]=squads;
 		            squad_loc=ma_wid[i]+(ma_lid[i]/100);
-	        	}else if (n=2){
+	        	}else if (n==2){
 	        		squad[i]=0;
 	        	}
 	        	}
-	        if (squads=0){
+	        if (squads==0){
 	        	squads+=1;
 	        	squad_members=1;
 		        squad_typ=ma_role[i];
