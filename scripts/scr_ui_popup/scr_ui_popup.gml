@@ -587,7 +587,6 @@ function scr_ui_popup() {
 		}
 
 
-
 		if (scr_hit(xx+247,yy+10,xx+338,yy+38)){
 		    var tx=0,ty=0,tool1="",tool2="",plu="";
 		    tool1="Gene-Seed";
