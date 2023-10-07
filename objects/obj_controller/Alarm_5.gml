@@ -489,6 +489,7 @@ if (training_techmarine!=0){
         tech_points+=4
     }
 }
+
 if (training_techmarine>0) then recruit_count=scr_role_count(string("{0} Aspirant",obj_ini.role[100,16]),"");
 if (tech_points>=4) and (tech_aspirant!=0) and (recruit_count==0){
     tech_points=0;
