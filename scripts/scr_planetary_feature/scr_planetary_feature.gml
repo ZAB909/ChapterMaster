@@ -28,8 +28,7 @@ enum P_features {
 enum base_type{
 	Lair,
 }
-	
-	// function creates a new struct planet feature of a  specified type
+	// Function creates a new struct planet feature of a  specified type
 function new_planet_feature(feature_type, other_data={}) constructor{
 	f_type = feature_type;
 	static reveal_to_player = function(){
