@@ -577,14 +577,13 @@ if (did==1){
 				if (p_type[2]!="Dead") then p_fortified[2]=5;
                 if (p_type[3]!="Dead") then p_fortified[3]=5;
 				if (p_type[4]!="Dead") then p_fortified[4]=5;
-
             }
         }
     }
     
     // Ork planets here
     with(obj_star){
-        if (planets>0) and (owner=2) and (p_type[1]!="Dead"){
+        if (planets>0) and (owner==2) and (p_type[1]!="Dead"){
             //this object does nothing
             instance_create(x,y,obj_temp3);
         }

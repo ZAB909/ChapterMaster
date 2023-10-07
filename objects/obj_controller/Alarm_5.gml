@@ -238,7 +238,6 @@ if (apothecary_points>=48){
 }
 recruit_count=0;
 if (apothecary_points>=4) and (apothecary_aspirant==0){
-
     random_marine=scr_random_marine([obj_ini.role[100,8],obj_ini.role[100,18],obj_ini.role[100,10],obj_ini.role[100,9]],60);
     if (random_marine != "none"){
         marine_position=random_marine[1];
@@ -257,7 +256,10 @@ if (apothecary_points>=4) and (apothecary_aspirant==0){
             marines-=1;
             scr_move_unit_info(marine_company,0, marine_position, g1)
             obj_ini.role[0,g1]=novice_type;
-            if (obj_ini.gear[0,g1]!=""){scr_add_item(obj_ini.gear[0,g1],1);obj_ini.gear[0,g1]="";}
+            if (obj_ini.gear[0,g1]!=""){
+                scr_add_item(obj_ini.gear[0,g1],1);
+                obj_ini.gear[0,g1]="";
+            }
             if (obj_ini.mobi[0,g1]!=""){scr_add_item(obj_ini.mobi[0,g1],1);obj_ini.mobi[0,g1]="";}
             with(obj_ini){
                 scr_company_order(marine_company);
@@ -392,7 +394,6 @@ if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands")
                     scr_company_order(0);
                 }
             }                      
-
         }
     }
 }
@@ -568,7 +569,7 @@ if (tech_points>=360){
             obj_ini.loc[0,marine_position]=obj_ini.home_name;
             obj_ini.wid[0,marine_position]=2;
             obj_ini.lid[0,marine_position]=0;
-            // Probably want to change this to take into account fleet type chapters- also increase the man_size of that area by +X
+            // TODO Probably want to change this to take into account fleet type chapters- also increase the man_size of that area by +X
             if (global.chapter_name!="Iron Hands") and (obj_ini.bio[0,marine_position]<4) then obj_ini.bio[0,marine_position]=choose(4,5,6);
             if (global.chapter_name=="Iron Hands") and (obj_ini.bio[0,marine_position]<7) then obj_ini.bio[0,marine_position]=choose(7,8);
             // 135 ; probably also want to increase the p_player by 1 just because
@@ -751,7 +752,7 @@ if (instance_number(obj_temp_inq)<target_navy_number){
     }
 }
 
-//after initial navy fleet construction fleet growth is handles in obj_en_fleet.alarm_5
+// After initial navy fleet construction fleet growth is handled in obj_en_fleet.alarm_5
 if (instance_exists(obj_temp8)){
     var newy,nav;
     newy=instance_nearest(random(room_width),random(room_height),obj_temp8);
@@ -1236,7 +1237,7 @@ if (inspec==true) and (faction_status[4]!="War") and (obj_ini.fleet_type!=1) and
         new_defense_fleet.image_index=0;
 
         var mess="Inquisitor ";
-        roll=floor(random(100))+1;
+        roll=irandom(100)+1;
 
         if (roll<=60){
             new_defense_fleet.trade_goods="Inqis1";
@@ -1265,7 +1266,6 @@ if (inspec==true) and (faction_status[4]!="War") and (obj_ini.fleet_type!=1) and
         mess+=" wishes to inspect your fleet at "+string(obj.name);
         scr_alert("green","inspect",mess,obj.x,obj.y);
         if (instance_exists(obj_turn_end)) then obj_turn_end.alerts+=1;
-
 
         new_defense_fleet.alarm[4]=1;
 
