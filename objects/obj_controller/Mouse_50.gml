@@ -83,7 +83,7 @@ if (menu=12) and (cooldown<=0) and (penitorium>0){
 
                 obj_ini.race[c,e]=0;obj_ini.loc[c,e]="";obj_ini.name[c,e]="";obj_ini.role[c,e]="";obj_ini.wep1[c,e]="";obj_ini.lid[c,e]=0;
                 obj_ini.wep2[c,e]="";obj_ini.armour[c,e]="";obj_ini.gear[c,e]="";obj_ini.hp[c,e]=100;obj_ini.chaos[c,e]=0;obj_ini.experience[c,e]=0;
-                obj_ini.mobi[c,e]="";obj_ini.age[c,e]=0;obj_ini.spe[c,e]="";obj_ini.god[c,e]=0;
+                obj_ini.mobi[c,e]="";obj_ini.age[c,e]=0;obj_ini.spe[c,e]="";obj_ini.god[c,e]=0; obj_ini.TTRPG[c,e]={};
                 diplo_char=c;with(obj_ini){scr_company_order(obj_controller.diplo_char);}re=1;diplo_char=0;
             }
             if (mouse_x>=xx+1508) and (mouse_x<xx+1567){
@@ -1812,10 +1812,7 @@ if (menu=1) and (managing>0){                       // Selecting individual mari
         if (bionics_before>0) then repeat(500){p+=1;
             if (man_sel[p]=1) and (man[p]="man") and (bionics_after>0) and (obj_ini.bio[cah,ide[p]]<10) and (obj_ini.loc[cah,ide[p]]!="Terra") and (obj_ini.loc[cah,ide[p]]!="Mechanicus Vessel"){
                 if (string_count("Dread",ma_armour[p])=0){
-                    obj_ini.bio[cah,ide[p]]+=1;bionics_after-=1;
-                    obj_ini.hp[cah,ide[p]]=min(obj_ini.hp[cah,ide[p]]+30,obj_ini.TTRPG[cah, ide[p]].max_health());
-                    if (global.chapter_name="Iron Hands") then obj_ini.hp[cah,ide[p]]=min(obj_ini.hp[cah,ide[p]]+20,100);
-                    ma_bio[p]=obj_ini.bio[cah,ide[p]];ma_health[p]=obj_ini.hp[cah,ide[p]];
+					obj_ini.TTRPG[cah, ide[p]].add_bionics();
                     if (ma_promote[p]=10) then ma_promote[p]=0;
                 }
             }

@@ -9,6 +9,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	// argument6: description?
 
 	// More spaghetti code.  This either calculates damage for battle blocks or generates a tooltip for the shop/management.
+	// it also gets informatino abou marine equipment for the chapter managment screens
 
 	var i,wip,wip1,wip2,atta,arp,acr,att1,apa1,att2,apa2,acr1,acr2,melee_hands,ranged_hands,rang1,rang2,rang,ammo1,ammo2,amm,spli1,spli2,spli,rending,thawep,descr,descr2,spe_descr,statt;
 	var disk1,rending1,spe_descr1;

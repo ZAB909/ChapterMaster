@@ -30,6 +30,7 @@ function scr_chapter_new(argument0) {
 	    role[i,15]="Apothecary";wep1[i,15]="Power Sword";wep2[i,15]="Storm Bolter";armour[i,15]="Power Armour";gear[i,15]="Narthecium";
 	    role[i,16]="Techmarine";wep1[i,16]="Power Axe";wep2[i,16]="Storm Bolter";armour[i,16]="Power Armour";gear[i,16]="Servo Arms";
 	    role[i,17]="Librarian";wep1[i,17]="Force Weapon";wep2[i,17]="Storm Bolter";armour[i,17]="Power Armour";gear[i,17]="Psychic Hood";
+		role[i,18]="Sergeant";wep1[i,17]="Chainsword";wep2[i,18]="Storm Bolter";armour[i,18]="Power Armour";gear[i,18]="";
 	}i=100;
 
 	chapter="nopw_nopw";
@@ -203,6 +204,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	        role[i,15]="Wolf Priest";wep1[i,15]="Power Axe";
 	        role[i,16]="Iron Priest";wep1[i,16]="Power Axe";
 	        role[i,17]="Rune Priest";wep1[i,17]="Force Weapon";
+			 role[i,18]="Pack Leader";wep1[i,18]="Chainaxe";
 	    }
 	}
 
@@ -331,7 +333,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	}
 
 if (argument0="Crimson Fists"){founding="N/A";points=150;
-		selected_chapter=13;chapter=argument0;icon=4;icon_name="cf";founding=4;fleet_type=1;strength=5;purity=7;stability=10;cooperation=8;
+		selected_chapter=13;chapter=argument0;icon=4;icon_name="cf";founding=4;fleet_type=1;strength=2;purity=7;stability=10;cooperation=8;
 		adv[1]="Bolter Drilling";adv[2]="Enemy: Orks";dis[1]="Sieged";
 		homeworld="Agri";homeworld_name="Rynn's World";
 		homeworld_exists=1;recruiting_exists=0;homeworld_rule=1;aspirant_trial="Challenge"

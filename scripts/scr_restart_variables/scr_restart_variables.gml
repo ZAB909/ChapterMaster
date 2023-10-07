@@ -1,10 +1,10 @@
 // Restarts variables, ensuring loaded saves are properly initialized
 function scr_restart_variables(saved_game) {
-	if (saved_game=1) then with(obj_ini){
+	if (saved_game==1) then with(obj_ini){
     
 	    // show_message(instance_number(obj_restart_vars));
     
-	    obj_restart_vars.restart_name=global.chapter_name;
+	    obj_restart_vars.restart_name=obj_creation.chapter;
 	    obj_restart_vars.restart_founding=global.founding;
     
 	    obj_restart_vars.restart_secret=global.founding_secret;
@@ -202,6 +202,14 @@ function scr_restart_variables(saved_game) {
 	        obj_restart_vars.r_armour[i,17]="Power Armour";
 			obj_restart_vars.r_gear[i,17]="Psychic Hood";
 			obj_restart_vars.r_mobi[i,17]="";
+
+	        obj_restart_vars.r_race[i,18]=1;
+	        obj_restart_vars.r_role[i,18]="Sergeant";
+			obj_restart_vars.r_wep1[i,18]="Chainsword";
+			obj_restart_vars.r_wep2[i,18]="Storm Bolter";
+	        obj_restart_vars.r_armour[i,18]="Power Armour";
+			obj_restart_vars.r_gear[i,18]="";
+			obj_restart_vars.r_mobi[i,18]="";
 	    }
 	
 		for(var i=0; i<21; i++){
@@ -216,7 +224,7 @@ function scr_restart_variables(saved_game) {
     
 	}
 
-	if (saved_game=2){
+	if (saved_game==2){
 
 	    obj_controller.restart_name=obj_restart_vars.restart_name;
 	    obj_controller.restart_founding=obj_restart_vars.restart_founding;
@@ -412,6 +420,14 @@ function scr_restart_variables(saved_game) {
 	        obj_controller.r_armour[i,17]="Power Armour";
 			obj_controller.r_gear[i,17]="Psychic Hood";
 			obj_controller.r_mobi[i,17]="";
+			
+	        obj_controller.r_race[i,18]=1;
+	        obj_controller.r_role[i,18]="Sergeant";
+			obj_controller.r_wep1[i,18]="Chainsword";
+			obj_controller.r_wep2[i,18]="Storm Bolter";
+	        obj_controller.r_armour[i,18]="Power Armour";
+			obj_controller.r_gear[i,18]="";
+			obj_controller.r_mobi[i,18]="";			
 	    }
     
 		for(var i=0; i<21; i++){
@@ -429,7 +445,7 @@ function scr_restart_variables(saved_game) {
 	}
 
 	// Controller to restart vars
-	if (saved_game=3){
+	if (saved_game==3){
 	    obj_restart_vars.restart_name=obj_controller.restart_name;
 	    obj_restart_vars.restart_founding=obj_controller.restart_founding;
     
@@ -530,7 +546,7 @@ function scr_restart_variables(saved_game) {
 	    }
 	}
 
-	if (saved_game=4){
+	if (saved_game==4){
 		for(var i=0; i<21; i++){world[i]="";world_type[i]="";world_feature[i]="";}
 
 		for(var i=0; i<6; i++){adv[i]="";adv_num[i]=0;dis[i]="";dis_num[i]=0;}
@@ -631,6 +647,13 @@ function scr_restart_variables(saved_game) {
 			wep2[i,17]="Storm Bolter";
 			armour[i,17]="Power Armour";
 			gear[i,17]="Psychic Hood";
+			
+			race[i,18]=1;
+			role[i,18]="Sergeant";
+			wep1[i,18]="Chainsword";
+			wep2[i,18]="Storm Bolter";
+			armour[i,18]="Power Armour";
+			gear[i,18]="";			
 	    }
 
 	    points=100;
