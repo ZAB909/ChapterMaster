@@ -86,9 +86,17 @@ if (instance_number(obj_temp5)>0) and (imp_ships<sha){
         var new_defense_fleet=instance_create(forge.x,forge.y,obj_en_fleet);
         new_defense_fleet.owner=2;
         new_defense_fleet.sprite_index=spr_fleet_imperial;
-        if (rando2==1) then new_defense_fleet.capital_number=1;
-        if (rando2==2) then new_defense_fleet.frigate_number=1;
-        if (rando2==3) then new_defense_fleet.escort_number=1;
+        switch(rando2){
+            case 1:
+                new_defense_fleet.capital_number=1;
+                break;
+            case 2:
+                new_defense_fleet.frigate_number=1;
+                break;
+            case 3:
+                new_defense_fleet.escort_number=1;
+            break;
+        }
         new_defense_fleet.trade_goods="merge";
         with(obj_temp5){instance_destroy();}
         with(obj_star){
@@ -98,10 +106,17 @@ if (instance_number(obj_temp5)>0) and (imp_ships<sha){
                     system_fleet_elements+=present_fleet[i];
                 }
                 system_fleet_elements+=present_fleet[13];
-                
-                if (planets==4) and (system_fleet_elements==0) then instance_create(x,y,obj_temp6);
-                if (planets==3) and (system_fleet_elements==0) then instance_create(x,y,obj_temp5);
-                if ((planets==1) or (planets==2)) and (system_fleet_elements==0) and (p_type[1]!="Dead") then instance_create(x,y,obj_temp4);
+                if (system_fleet_elements==0){
+                    switch(planets){
+                        case 4:
+                            instance_create(x,y,obj_temp6);
+                            break;
+                        case 3:
+                            instance_create(x,y,obj_temp5);
+                            break;
+                    }
+                    if ((planets==1) or (planets==2)) and (system_fleet_elements==0) and (p_type[1]!="Dead") then instance_create(x,y,obj_temp4);
+                }
             }
         }
         var targeted=0;
