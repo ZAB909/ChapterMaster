@@ -251,6 +251,7 @@ if (new_banner_x<0) then new_banner_x=0;
 if (y_slide>0) then new_button_highlight="";
 // Checks which menu was clicked
 var high="";
+var stop = 0;
 if (new_buttons_hide==0) and (y_slide<=0) and (!instance_exists(obj_ingame_menu)){
     var but=4,bx=1374,by=8,wid=108,hei=42;
     if (mouse_y>=__view_get( e__VW.YView, 0 )+by) and (mouse_y<=__view_get( e__VW.YView, 0 )+by+hei){
