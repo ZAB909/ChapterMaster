@@ -553,7 +553,7 @@ function scr_ui_popup() {
 	        plu="";
 	        if (income_tribute>0) then plu="+";
 	        if (income_tribute!=0){
-	        	tool1+=string("#Planet Tithes: {0}{1}",plu,income_tribute)
+	        	tool1+=string("#Planet Tithes: {0}{1}",plu,income_tribute);
 	        	;tool2+="#Planet Tithes:";
 	        }		    
 	    
