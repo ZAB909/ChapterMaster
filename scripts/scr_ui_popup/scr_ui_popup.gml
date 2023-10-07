@@ -567,7 +567,7 @@ function scr_ui_popup() {
 		    var  tx=0,ty=0,tool1="",tool2="",plu="";
 
 		    var d,lines;d=0;lines=0;
-		    repeat(20){d+=1;
+		    for(var d=1; d<=20; d++){
 		        if (loyal_num[d]>1) and (lines=0){
 		            tool1+=string(loyal[d])+": -"+string(loyal_num[d])+"#";
 		            tool2+=string(loyal[d])+": #";
