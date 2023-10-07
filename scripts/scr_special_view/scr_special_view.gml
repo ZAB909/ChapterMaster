@@ -4,7 +4,10 @@ function scr_special_view(command_group) {
 
 	var v, i, 
 	var mans=0, onceh, company=0, bad=0, oth=0, unit;
-	gogogo=0;vehicles=0;last_man=0;last_vehicle=0;
+	gogogo=0;
+	vehicles=0;
+	last_man=0;
+	last_vehicle=0;
 
 	var squads=0, squad_typ="", squad_loc=0, squad_members=0;
 
@@ -74,7 +77,11 @@ function scr_special_view(command_group) {
         ma_bio[b]=obj_ini.bio[0,unit_num];
 	}
 
-	mans=0;vehicles=0;v=0;i=0;b=0;
+	mans=0;
+	vehicles=0;
+	v=0;
+	i=0;
+	b=0;
 
 	// v: check number
 	// mans: number of mans that a hit has gotten
@@ -101,13 +108,12 @@ function scr_special_view(command_group) {
 		}
 	}
 
-	v=0;
 	if (command_group==12) or (command_group==0){// Apothecarion
 		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++;){
 			bad=0;
 		    if (obj_ini.lid[company,v]>0){
-		        var ham;ham=obj_ini.lid[0,v];
-		        if (obj_ini.ship_location[ham]="Lost") then continue
+		        var ham=obj_ini.lid[0,v];
+		        if (obj_ini.ship_location[ham]=="Lost") then continue
 		    }
 		    var apoth_roles = ["Master of the Apothecarion", obj_ini.role[100,15], string("{0} Aspirant",obj_ini.role[100,15])]
 		    if (array_contains(apoth_roles ,obj_ini.role[0,v])){
@@ -124,8 +130,8 @@ function scr_special_view(command_group) {
 		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++;){
 		    bad=0;
 		    if (obj_ini.lid[company,v]>0){
-		        var ham;ham=obj_ini.lid[0,v];
-		        if (obj_ini.ship_location[ham]="Lost") then bad=1;
+		        var ham=obj_ini.lid[0,v];
+		        if (obj_ini.ship_location[ham]=="Lost") then bad=1;
 		    }
 		    var cheif_lib = string("Chief {0}", obj_ini.role[100,17]);
 		    var lib = obj_ini.role[100,17];
@@ -137,9 +143,9 @@ function scr_special_view(command_group) {
 		        mans+=1;
 		        special_mar_data_fill(v, b);
 		        if (obj_ini.role[0,v]!="Chief "+string(obj_ini.role[100,17])){
-		            if (obj_ini.role[0,v]=obj_ini.role[100,17]) then ma_promote[b]=0;
-		            if (obj_ini.role[0,v]="Lexicanum") and (ma_exp[b]>=80) then ma_promote[b]=1;
-		            if (obj_ini.role[0,v]="Codiciery") and (ma_exp[b]>=125) then ma_promote[b]=1;
+		            if (obj_ini.role[0,v]==obj_ini.role[100,17]) then ma_promote[b]=0;
+		            if (obj_ini.role[0,v]=="Lexicanum") and (ma_exp[b]>=80) then ma_promote[b]=1;
+		            if (obj_ini.role[0,v]=="Codiciery") and (ma_exp[b]>=125) then ma_promote[b]=1;
 		        }
 		    }
 		}
@@ -150,8 +156,8 @@ function scr_special_view(command_group) {
 		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++;){
 		    bad=0;
 		    if (obj_ini.lid[company,v]>0){
-		        var ham;ham=obj_ini.lid[0,v];
-		        if (obj_ini.ship_location[ham]="Lost") then bad=1;
+		        var ham=obj_ini.lid[0,v];
+		        if (obj_ini.ship_location[ham]=="Lost") then bad=1;
 		    }
 		    if (bad==0){
 			    if (obj_ini.role[0,v]=="Master of Sanctity"){
@@ -169,15 +175,17 @@ function scr_special_view(command_group) {
 		}
 	}
 
-	v=0;squads=0;
+	v=0;
+	squads=0;
 	if (command_group==15) or (command_group==0){// Armamentarium
 		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++;){
 		    bad=0;
 		    if (obj_ini.lid[company,v]>0){
-		        var ham;ham=obj_ini.lid[0,v];
-		        if (obj_ini.ship_location[ham]="Lost") then bad=1;
+		        var ham=obj_ini.lid[0,v];
+		        if (obj_ini.ship_location[ham]=="Lost") then bad=1;
 		    }
-		    if ((obj_ini.role[0,v] == "Forge Master") or (obj_ini.role[0,v]=obj_ini.role[100,16]) or (obj_ini.role[0,v]=string("{0} Aspirant",obj_ini.role[100,16])) or (obj_ini.role[0,v]="Techpriest")) and (bad=0){
+		    if ((obj_ini.role[0,v] == "Forge Master") or (obj_ini.role[0,v]=obj_ini.role[100,16]) 
+		    or (obj_ini.role[0,v]=string("{0} Aspirant",obj_ini.role[100,16])) or (obj_ini.role[0,v]="Techpriest")) and (bad=0){
 		        b+=1;
 		        mans+=1;
 		        special_mar_data_fill(v, b);
@@ -192,11 +200,14 @@ function scr_special_view(command_group) {
 
 	// b=last_man;
 	last_man=b;
-	i=0;last_vehicle=0;
+	i=0;
+	last_vehicle=0;
 
 	for (i=1;i<101;i++;){// 100
 	    if (obj_ini.veh_race[company,i]!=0){b+=1;
-	        man[b]="vehicle";ide[b]=i;last_vehicle+=1;
+	        man[b]="vehicle";
+	        ide[b]=i;
+	        last_vehicle+=1;
 	        ma_loc[v]=obj_ini.veh_loc[company,i];
 	        ma_role[v]=obj_ini.veh_role[company,i];
 	        ma_wep1[v]=obj_ini.veh_wep1[company,i];
