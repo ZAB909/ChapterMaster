@@ -490,7 +490,6 @@ function scr_ui_popup() {
 	    // draw_rectangle(view_xview[0]+obj_fleet_select.void_x,view_yview[0]+obj_fleet_select.void_y,view_xview[0]+obj_fleet_select.void_x+obj_fleet_select.void_wid,view_yview[0]+obj_fleet_select.void_y+obj_fleet_select.void_hei,1);
 	}
 
-
 	function tool_tip_draw(base_x, base_y, tool_tip){
 		var xx=__view_get( e__VW.XView, 0 )+0;
 		var yy=__view_get( e__VW.YView, 0 )+0;
