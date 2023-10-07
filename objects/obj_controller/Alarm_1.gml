@@ -667,7 +667,7 @@ if (did==1){
     xx=floor(random(1152+640))+64;
     yy=floor(random(748+480))+64;
     ed=instance_nearest(xx,yy,obj_star);
-    if (ed.planets>0) and (ed.owner=2){
+    if (ed.planets>0) and (ed.owner==2){
         ed.planet[1]=1;
         ed.p_type[1]="Forge";
         ed.p_owner[1]=3;
