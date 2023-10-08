@@ -2232,16 +2232,12 @@ if (action_if_number(obj_saveload, 0, 0) &&
         if (man_size==0) then alll=0;
 
         // selecting all
-        if ( point_in_rectangle(mouse_x, mouse_y, xx+1281, yy+607, xx+1409, yy+636)) and (cooldown<=0)
-        // and (alll==0)
-        {
+        if ( point_in_rectangle(mouse_x, mouse_y, xx+1281, yy+607, xx+1409, yy+636)) and (cooldown<=0) and (alll==0){
             cooldown=8;
             scr_load_all(true);
             selecting_types="%!@";
         }
-        if (point_in_rectangle(mouse_x, mouse_y, xx+1281, yy+607, xx+1409, yy+636)) and (cooldown<=0) 
-        // and (alll==1)
-        {
+        if (point_in_rectangle(mouse_x, mouse_y, xx+1281, yy+607, xx+1409, yy+636)) and (cooldown<=0) and (alll==1){
             cooldown=8;
             scr_load_all(false);
             selecting_types="";
