@@ -2232,14 +2232,14 @@ if (action_if_number(obj_saveload, 0, 0) &&
         if (man_size==0) then alll=0;
 
         // selecting all
-        if (mouse_x>=xx+1281) and (mouse_y>=yy+607) and (mouse_x<xx+1409) and (mouse_y<yy+636) and (cooldown<=0) 
+        if ( point _in_rectangle(mouse_x, mouse_y, xx+1281, yy+607, xx+1409, yy+636)) and (cooldown<=0)
         // and (alll==0)
         {
             cooldown=8;
             scr_load_all(true);
             selecting_types="%!@";
         }
-        if (mouse_x>=xx+1281) and (mouse_y>=yy+607) and (mouse_x<xx+1409) and (mouse_y<yy+636) and (cooldown<=0) 
+        if (point _in_rectangle(mouse_x, mouse_y, xx+1281, yy+607, xx+1409, yy+636)) and (cooldown<=0) 
         // and (alll==1)
         {
             cooldown=8;
