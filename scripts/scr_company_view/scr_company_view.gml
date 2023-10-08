@@ -48,8 +48,9 @@ function scr_company_view(company) {
 	sel_uni[1]="Command";
 
 	// This sets up the mans, but not the vehicles
-	var company_length = array_length(obj_ini.name[company])
-	for (var v = 1; v <= company_length; v++){
+	var company_length = array_length(obj_ini.name[company]);
+	// Company_lenght is 501, so we check with 500
+	for (var v = 1; v < (company_length-1); v++){
 		bad=0;
 	    if (company>=0) and (company<=10){
 			unit = obj_ini.TTRPG[company,v]
