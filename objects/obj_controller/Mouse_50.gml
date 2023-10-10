@@ -2220,7 +2220,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
         }
     }
     // Selecting individual marines
-    if (menu=1) and (managing>0){
+    if (menu==1) and (managing>0){
         var x1, y1,eventing=false, bb="";
         xx=__view_get( e__VW.XView, 0 )+0;
         yy=__view_get( e__VW.YView, 0 )+0;
@@ -2232,12 +2232,12 @@ if (action_if_number(obj_saveload, 0, 0) &&
         if (man_size==0) then alll=0;
 
         // selecting all
-        if (mouse_x>=xx+1281) and (mouse_y>=yy+607) and (mouse_x<xx+1409) and (mouse_y<yy+636) and (cooldown<=0) and (alll==0){
+        if ( point_in_rectangle(mouse_x, mouse_y, xx+1281, yy+607, xx+1409, yy+636)) and (cooldown<=0) and (alll==0){
             cooldown=8;
             scr_load_all(true);
             selecting_types="%!@";
         }
-        if (mouse_x>=xx+1281) and (mouse_y>=yy+607) and (mouse_x<xx+1409) and (mouse_y<yy+636) and (cooldown<=0) and (alll==1){
+        if (point_in_rectangle(mouse_x, mouse_y, xx+1281, yy+607, xx+1409, yy+636)) and (cooldown<=0) and (alll==1){
             cooldown=8;
             scr_load_all(false);
             selecting_types="";
@@ -2283,7 +2283,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 }
                 // Selects all men of type
                 if (sel_all!="Command") and (sel_all!="man") and (sel_all!="vehicle"){
-                    if (man[sel]="man") and (ma_role[sel]=sel_all) and (ma_loc[sel]!="Terra") and (ma_loc[sel]!="Mechanicus Vessel") 
+                    if (man[sel]=="man") and (ma_role[sel]==sel_all) and (ma_loc[sel]!="Terra") and (ma_loc[sel]!="Mechanicus Vessel") 
                     and (ma_loc[sel]!="Lost") and (ma_god[sel]<10) 
                     and ((ma_loc[sel]==selecting_location) or (selecting_location=="")) 
                     and ((ma_wid[sel]==selecting_planet) or (selecting_planet==0)) 
@@ -2425,13 +2425,13 @@ if (action_if_number(obj_saveload, 0, 0) &&
         yy=__view_get( e__VW.YView, 0 )+77;
         for(var i=0; i<min(man_max,man_see); i++){
             for(var j=0; j<500; j++){
-                if (man[sel]="hide") then sel+=1;
+                if (man[sel]=="hide") then sel+=1;
             }
             eventing=false;
 
             // This is the actual individual click right here
             if ((mouse_x>=xx+25+8) and (mouse_y>=yy+64) and (mouse_x<xx+974) and (mouse_y<yy+85) and (cooldown<=0)) 
-            or ((squad[sel]=squad_sel) and (squad_sel!=0)){
+            or ((squad[sel]==squad_sel) and (squad_sel!=0)){
                 var onceh=0,dib=0;
                 stop=0;
 
