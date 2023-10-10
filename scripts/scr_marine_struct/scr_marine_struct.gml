@@ -17,7 +17,7 @@
 		the first int is a base or mean value the second int is a sd number to be passed to the gauss() function
 		the string (usually max) is guidance so in the instance of max it will pick the larger value of the mean and the gauss function return
 */
-
+global.stat_list = ["constitution", "strength", "luck", "dexterity", "wisdom", "piety", "charisma", "technology","intelligence", "weapon_skill", "ballistic_skill"];
 global.body_parts = ["left_leg", "right_leg", "torso", "right_arm", "left_arm", "left_eye", "right_eye"];
 enum location_types {
 	planet,
@@ -308,7 +308,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	};
 	static update_role = function(new_role){
 		obj_ini.role[company,marine_number]= new_role;
-		//array_push(role_history ,[obj_ini.role[company,marine_number], obj_controller.turn])
+		if instance_exists(obj_controller){
+			array_push(role_history ,[obj_ini.role[company,marine_number], obj_controller.turn])
+		}
 	};	
 	static mobility_item = function(){ 
 		return obj_ini.mobi[company,marine_number];
@@ -378,7 +380,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				var edit_stat,random_stat,stat_mod;
 			
 				//loop over stats and add stats where needed
-				var stats = ["constitution", "strength", "luck", "dexterity", "wisdom", "piety", "charisma", "technology","intelligence", "weapon_skill", "ballistic_skill"]
+				stats = global.stat_list;
 				for (var stat_iter =0; stat_iter <array_length(stats);stat_iter++;){
 					if (array_contains(edits ,stats[stat_iter])){
 						edit_stat = variable_struct_get(selec_trait, stats[stat_iter]);
@@ -619,8 +621,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}
 			return [location_type,location_id ,location_name];
 		};
+
+		//quick way of getting name and role combined in string
+		static name_role = function (){
+			return string("{0} {1}", role(), name())
+		}
 		
-		static load_marine =function(ship){
+		static load_marine = function(ship){
 			 get_unit_size(); // make sure marines size given it's current equipment is correct
 			 var current_location = marine_location();
 			 var system = current_location[2];

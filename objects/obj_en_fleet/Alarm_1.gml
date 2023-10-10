@@ -1159,19 +1159,13 @@ if (action=""){
                     }
                 }
                 repeat(4){t+=1;tem1=tem1_base;// Repeat to check each of the planets
-                    if (thata.p_type[t]="Dead") and (thata.p_upgrades[t]!=""){
-						var base_search = search_planet_features(thata.p_feature[t], P_features.Secret_Base) 
+                    if (thata.p_type[t]="Dead") and (array_length(thata.p_upgrades[t])>0){
+						var base_search = search_planet_features(thata.p_upgrades[t], P_features.Secret_Base); 
                         if (array_length(base_search) >0){
-							var player_base;
-							type = thata.p_feature[t][base_search[0]].base_type;
-                        }
-						if  (player_base.inquis_hidden = 1){
-							 player_base.inquis_hidden = 0;
-						}
-                        if (type=1){
-                            if (string_count("vox",thata.p_upgrades[t])>0) then tem1+=2;
-                            if (string_count("tort",thata.p_upgrades[t])>0) then tem1+=1;
-                            if (string_count("narc",thata.p_upgrades[t])>0) then tem1+=3;
+							var player_base = thata.p_upgrades[t][base_search[0]]
+                            if (player_base.vox>0) then tem1+=2;
+                            if (player_base.torture>0) then tem1+=1;
+                            if (player_base.narcotics>0) then tem1+=3;
                             // Should probably also check for xenos
                             obj_controller.disposition[2]-=tem1*2;obj_controller.disposition[4]-=tem1*3;
                             obj_controller.disposition[5]-=tem1*3;popup=1;
@@ -1180,10 +1174,18 @@ if (action=""){
                                 obj_controller.loyalty-=10;obj_controller.loyalty_hidden-=10;
                                 if ((obj_controller.inqis_flag_lair=2) or (obj_controller.disposition[4]<0) or (obj_controller.loyalty<=0)) and (obj_controller.faction_status[4]!="War"){popup=0.3;obj_controller.alarm[8]=1;}// {popup=0.2;obj_controller.alarm[8]=1;}
                             }
-               
-                        }
-                        if (type=2){e=0;
-                            repeat(50){e+=1;
+                            if  (player_base.inquis_hidden = 1){
+							 	player_base.inquis_hidden = 0;							
+                       		}
+						}
+						var arsenal_search = search_planet_features(thata.p_upgrades[t], P_features.Arsenal)
+						var arsenal;
+
+                        if (array_length(arsenal_search) > 0 ){
+                        	e=0;
+                        	arsenal = thata.p_upgrades[t][arsenal_search[0]];
+                        	arsenal.inquis_hidden = 0;
+                            for (e=0;e<array_length(obj_ini.artifact_tags[e]);e++;){
                                 if (obj_ini.artifact[e]!="") and (obj_ini.artifact_loc[e]=thata.name) and (obj_controller.und_armouries<=1){
                                     if (string_count("Daemon",obj_ini.artifact_tags[e])>0) then dem+=1;
                                     if (string_count("Chaos",obj_ini.artifact_tags[e])>0) then cha+=1;
@@ -1207,7 +1209,11 @@ if (action=""){
                                 if (obj_controller.penitent=0) and (moo=false) then scr_audience(4,"loyalty_zero",0,"",0,0);
                             }
                         }
-                        if (type=3){
+ 						var vault = search_planet_features(thata.p_upgrades[t], P_features.Arsenal)
+						var gene_vault;                       
+                        if (array_length(vault) > 0 ){
+                        	gene_vault = thata.p_upgrades[t][arsenal_search[0]];
+                        	gene_vault.inquis_hidden = 0;
                             obj_controller.inqis_flag_gene+=1;
                             obj_controller.loyalty-=10;obj_controller.loyalty_hidden-=10;
                             obj_controller.disposition[4]-=tem1*3;

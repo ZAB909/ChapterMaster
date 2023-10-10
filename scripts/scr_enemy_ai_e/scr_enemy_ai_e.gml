@@ -734,18 +734,20 @@ function scr_enemy_ai_e() {
     
     
 	    // Work on upgrades
-	    if (p_upgrades[run]!=""){
-	        var type,finished;type="";finished=false;
-	        if (string_count(".1|",p_upgrades[run])>0){p_upgrades[run]=string_replace(p_upgrades[run],".1|",".0|");finished=true;}
-	        if (string_count(".2|",p_upgrades[run])>0) then p_upgrades[run]=string_replace(p_upgrades[run],".2|",".1|");
-	        if (string_count(".3|",p_upgrades[run])>0) then p_upgrades[run]=string_replace(p_upgrades[run],".3|",".2|");
-	        if (finished=true){
-	            if (string_count("Lair",p_upgrades[run])>0){type="Lair";obj_controller.und_lairs+=1;}
-	            if (string_count("Arsenal",p_upgrades[run])>0){type="Arsenal";obj_controller.und_armouries+=1;}
-	            if (string_count("Gene",p_upgrades[run])>0){type="Gene-Vault";obj_controller.und_gene_vaults+=1;}
-	            var tx;tx="Hidden "+string(type)+" on "+string(name)+" "+scr_roman(run)+" has been completed.";
-	            scr_alert("green","owner",string(tx),x,y);scr_event_log("",string(tx));
-	        }
+	    if (array_length(p_upgrades[run])>0){
+			var upgrade_type, tx, display_type;
+			for (var upgrade =0; upgrade<array_length(p_upgrades[run]);upgrade++;){
+				if (struct_exists(p_upgrades[run][upgrade], "built")){
+					if (p_upgrades[run][upgrade].built == obj_controller.turn){
+						upgrade_type =p_upgrades[run][upgrade].f_type;
+						if (upgrade_type==P_features.Arsenal){display_type= "Arsenal";obj_controller.und_armouries++;}
+						if (upgrade_type == P_features.Secret_Base){display_type="Lair";obj_controller.und_lairs++;}
+						if (upgrade_type == P_features.Gene_Vault){display_type="Gene Vault";obj_controller.und_gene_vaults++;}
+						tx=$"Hidden {display_type} on {name} {scr_roman(run)} has been completed.";
+						scr_alert("green","owner",string(tx),x,y);scr_event_log("",string(tx));
+					}
+				}
+			}
 	    }
     
     

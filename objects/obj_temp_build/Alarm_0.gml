@@ -1,4 +1,4 @@
-
+/*
 var bob;bob=target.p_upgrades[obj_controller.selecting_planet];
 if (string_count("forge",bob)>0) then forge=1;
 if (string_count("hippo",bob)>0) then hippo=1;
@@ -14,3 +14,4 @@ if (string_count("stas",bob)>0) then stasis=1;stasis_occupants=0;
 if (string_count("swim",bob)>0) then swimming=1;
 
 
+*/
