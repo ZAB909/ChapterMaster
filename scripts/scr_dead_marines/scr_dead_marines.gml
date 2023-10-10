@@ -43,7 +43,8 @@ function scr_dead_marines(argument0) {
 
 	            obj_ini.race[cmp,i]=0;obj_ini.loc[cmp,i]="";obj_ini.name[cmp,i]="";obj_ini.role[cmp,i]="";obj_ini.wep1[cmp,i]="";obj_ini.lid[cmp,i]=0;
 	            obj_ini.wep2[cmp,i]="";obj_ini.armour[cmp,i]="";obj_ini.gear[cmp,i]="";obj_ini.hp[cmp,i]=100;obj_ini.chaos[cmp,i]=0;obj_ini.experience[cmp,i]=0;
-	            obj_ini.mobi[cmp,i]="";obj_ini.age[cmp,i]=0;obj_ini.spe[cmp,i]="";obj_ini.god[cmp,i]=0;obj_ini.bio[cmp,i]=0;obj_ini.TTRPG[cmp,i]={};// obj_controller.marines-=1;
+	            obj_ini.mobi[cmp,i]="";obj_ini.age[cmp,i]=0;obj_ini.spe[cmp,i]="";obj_ini.god[cmp,i]=0;
+	            obj_ini.bio[cmp,i]=0;obj_ini.TTRPG[cmp,i]=new TTRPG_stats("chapter",cmp,i, "blank");// obj_controller.marines-=1;
 	        }
 
 	        if (obj_ini.name[cmp,i]!="") and (obj_ini.role[cmp,i]!="") and (obj_ini.race[cmp,i]=1){

@@ -119,6 +119,7 @@
     {"name":"spr_popup_dialogue","order":45,"path":"sprites/spr_popup_dialogue/spr_popup_dialogue.yy",},
     {"name":"spr_popup_manage","order":47,"path":"sprites/spr_popup_manage/spr_popup_manage.yy",},
     {"name":"spr_popup_large","order":49,"path":"sprites/spr_popup_large/spr_popup_large.yy",},
+    {"name":"scr_squads","order":67,"path":"scripts/scr_squads/scr_squads.yy",},
     {"name":"spr_popup_medium","order":51,"path":"sprites/spr_popup_medium/spr_popup_medium.yy",},
     {"name":"spr_popup_small","order":53,"path":"sprites/spr_popup_small/spr_popup_small.yy",},
     {"name":"spr_popup_event","order":55,"path":"sprites/spr_popup_event/spr_popup_event.yy",},

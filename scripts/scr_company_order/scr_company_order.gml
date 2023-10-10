@@ -2,12 +2,12 @@ function scr_company_order(company) {
 
 	// company : company number
 	// This sorts and crunches the marine variables for the company
-	var co;co=company;
+	var co=company;
 
-	var i, v;i=-1;v=0;
-	var temp_vrace, temp_vloc, temp_vrole, temp_vwep1, temp_vwep2, temp_vup, temp_vhp, temp_vchaos, temp_vpilots, temp_vlid, temp_vwid;
+	var i=-1,v=0;
+	var temp_vrace, temp_vloc, temp_vrole, temp_vwep1, temp_vwep2, temp_vup, temp_vhp, temp_vchaos, temp_vpilots, temp_vlid, temp_vwid, unit;
 
-	for (var i=0;i<401;i++;){i+=1;
+	for (var i=0;i<401;i++;){
 	    temp_race[co,i]=0;
 	    temp_loc[co,i]="";
 	    temp_name[co,i]="";
@@ -30,8 +30,8 @@ function scr_company_order(company) {
 	}
 
 
-	function temp_marine_variables(co, i ,v){
-			var unit = TTRPG[co, i];
+	function temp_marine_variables(co, unit_num ,v){
+			/*var unit = TTRPG[co, unit_num];
 			if (unit.squad != "none"){
 				var squad_member;
 				var found = false;
@@ -44,26 +44,26 @@ function scr_company_order(company) {
 					}
 				}
 				if (!found){unit.squad = "none"}
-			}
-	        temp_race[co,v]=race[co,i];
-	        temp_loc[co,v]=loc[co,i];
-	        temp_name[co,v]=name[co,i];
-	        temp_role[co,v]=role[co,i];
-	        temp_lid[co,v]=lid[co,i];
-	        temp_wid[co,v]=wid[co,i];
-	        temp_wep1[co,v]=wep1[co,i];
-	        temp_wep2[co,v]=wep2[co,i];
-	        temp_armour[co,v]=armour[co,i];
-	        temp_gear[co,v]=gear[co,i];
-	        temp_hp[co,v]=hp[co,i];
-	        temp_chaos[co,v]=chaos[co,i];
-	        temp_experience[co,v]=experience[co,i];
-	        temp_age[co,v]=age[co,i];
-	        temp_mobi[co,v]=mobi[co,i];
-	        temp_spe[co,v]=spe[co,i];
-	        temp_god[co,v]=god[co,i];
-	        temp_bio[co,v]=bio[co,i];
-	        temp_struct[co,v]=jsonify_marine_struct(co,i);
+			}*/
+	        temp_race[co,v]=race[co,unit_num];
+	        temp_loc[co,v]=loc[co,unit_num];
+	        temp_name[co,v]=name[co,unit_num];
+	        temp_role[co,v]=role[co,unit_num];
+	        temp_lid[co,v]=lid[co,unit_num];
+	        temp_wid[co,v]=wid[co,unit_num];
+	        temp_wep1[co,v]=wep1[co,unit_num];
+	        temp_wep2[co,v]=wep2[co,unit_num];
+	        temp_armour[co,v]=armour[co,unit_num];
+	        temp_gear[co,v]=gear[co,unit_num];
+	        temp_hp[co,v]=hp[co,unit_num];
+	        temp_chaos[co,v]=chaos[co,unit_num];
+	        temp_experience[co,v]=experience[co,unit_num];
+	        temp_age[co,v]=age[co,unit_num];
+	        temp_mobi[co,v]=mobi[co,unit_num];
+	        temp_spe[co,v]=spe[co,unit_num];
+	        temp_god[co,v]=god[co,unit_num];
+	        temp_bio[co,v]=bio[co,unit_num];
+	        temp_struct[co,v]=jsonify_marine_struct(co,unit_num);
 	}
 	var role_orders = [
 		"Chapter Master",
@@ -89,9 +89,10 @@ function scr_company_order(company) {
 		"Standard Bearer",
 		obj_ini.role[100,7],
 		"Death Company",
+		role[100,19],
+		role[100,18],		
 		role[100,4],
 		role[100,3],
-		role[100,18],
 		role[100,8],
 		role[100,10],
 		role[100,9],
@@ -105,15 +106,52 @@ function scr_company_order(company) {
 		"Flash Git",
 		"Ork Sniper"
 	]
+
 	var role_shuffle_length = array_length(role_orders);
 	var company_length = array_length(name[co]);
+
+	var sorted_numbers = [];
+
+	//this stops over strenuous repeats
+	for (i=0;i<company_length;i++;){
+		sorted_numbers[i]=i;
+	}
 	for (var role_name=0;role_name<role_shuffle_length;role_name++;){
 		var wanted_role = role_orders[role_name];
-		for (i=0;i<company_length;i++;){
-			if (name[co, i] == "") then continue;
-			if (role[co,i] == wanted_role){
+		var sort_length = array_length(sorted_numbers)-1
+		i=-1;
+		while (i < sort_length){
+			i++;
+			if (role_name == 0){
+				if (name[co, sorted_numbers[i]] == ""){
+					array_delete(sorted_numbers, i ,1);
+					i--;
+					sort_length--;
+					continue;
+				};
+			}
+			unit = TTRPG[co,sorted_numbers[i]];
+			if (unit.role() == wanted_role){
 				v++;
-				temp_marine_variables(co, i ,v);
+				temp_marine_variables(co, sorted_numbers[i] ,v);
+				array_delete(sorted_numbers, i ,1);
+				i--;
+				sort_length--;				
+				if (unit.squad !="none"){
+					var cur_squad = unit.squad;
+					var r = -1;
+					while (r < sort_length){
+						r++;
+						var squad_unit = TTRPG[co,sorted_numbers[r]];
+						if (squad_unit.squad == cur_squad){
+							v++;
+							temp_marine_variables(co, sorted_numbers[r],v);
+							array_delete(sorted_numbers, r, 1);
+							r--;
+							sort_length--;
+						}
+					}
+				}
 			}
 		}
 	}
@@ -151,7 +189,7 @@ function scr_company_order(company) {
 				TTRPG[co,i].load_json_data(json_parse(temp_struct[co,i]));
 				TTRPG[co,i].company = co;
 				TTRPG[co,i].marine_number = i;
-			} else{TTRPG[co,i] = new TTRPG_stats("chapter", co,i ,"blank");}
+			}
 	}
 /*	i=0;repeat(300){i+=1;
 	    if (role[co,i]="Death Company"){

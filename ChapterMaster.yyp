@@ -412,6 +412,7 @@
     {"id":{"name":"spr_popup_dialogue","path":"sprites/spr_popup_dialogue/spr_popup_dialogue.yy",},},
     {"id":{"name":"spr_popup_manage","path":"sprites/spr_popup_manage/spr_popup_manage.yy",},},
     {"id":{"name":"spr_popup_large","path":"sprites/spr_popup_large/spr_popup_large.yy",},},
+    {"id":{"name":"scr_squads","path":"scripts/scr_squads/scr_squads.yy",},},
     {"id":{"name":"spr_popup_medium","path":"sprites/spr_popup_medium/spr_popup_medium.yy",},},
     {"id":{"name":"spr_popup_small","path":"sprites/spr_popup_small/spr_popup_small.yy",},},
     {"id":{"name":"spr_popup_event","path":"sprites/spr_popup_event/spr_popup_event.yy",},},
