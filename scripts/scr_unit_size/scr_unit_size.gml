@@ -31,7 +31,7 @@ function scr_unit_size(armour, role, other_factors, mobility=false) {
         _size++;
     } else if (ds_map_exists(vehicle_size_map, role)) {
         _size = vehicle_size_map[? role];
-    } else {
+    } else if (armour=="") {
         show_debug_message($"Could not find size for vehicle '{role}'");
     }
 
