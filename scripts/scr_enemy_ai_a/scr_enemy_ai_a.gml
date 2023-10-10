@@ -44,8 +44,8 @@ function scr_enemy_ai_a() {
 	    o=0;
 	    repeat(4){o+=1;
 	        if (p_first[o]=1) and (p_owner[o]=2) then p_owner[o]=1;
-	        if (p_type[o]="Dead") and (p_upgrades[o]!=""){
-	            if (planet_feature_bool(p_feature[o], P_features.Secret_Base)==0) and (string_count(".0|",p_upgrades[o])>0){
+	        if (p_type[o]="Dead") and (array_length(p_upgrades[o])>0){
+	            if (planet_feature_bool(p_feature[o], P_features.Secret_Base)==0) /*and (string_count(".0|",p_upgrades[o])>0)*/{
 	                if (chanceh<=2) then yep=o;
 	            }
 	        }

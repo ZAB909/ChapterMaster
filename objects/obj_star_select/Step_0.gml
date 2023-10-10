@@ -48,8 +48,9 @@ if (instance_exists(target)){
         if (target.present_fleet[1]=0) and (target.p_player[obj_controller.selecting_planet]>0){
             button1="Attack";button2="Purge";
         }*/
-        if ((target.p_type[obj_controller.selecting_planet]="Dead") and ((target.present_fleet[1]>0) or (target.p_player[obj_controller.selecting_planet]>0))) or (target.p_upgrades[obj_controller.selecting_planet]!=""){
-            if (array_length(target.p_feature[obj_controller.selecting_planet])==0) or (target.p_upgrades[obj_controller.selecting_planet]!=""){var chock;chock=1;
+        if ((target.p_type[obj_controller.selecting_planet]=="Dead") and ((target.present_fleet[1]>0) or (target.p_player[obj_controller.selecting_planet]>0))) or (array_length(target.p_upgrades[obj_controller.selecting_planet])>0){
+            if (array_length(target.p_feature[obj_controller.selecting_planet])==0) or (array_length(target.p_upgrades[obj_controller.selecting_planet])>0){
+            var chock=1;
                 if (target.p_orks[obj_controller.selecting_planet]>0) then chock=0;
                 if (target.p_chaos[obj_controller.selecting_planet]>0) then chock=0;
                 if (target.p_tyranids[obj_controller.selecting_planet]>0) then chock=0;
