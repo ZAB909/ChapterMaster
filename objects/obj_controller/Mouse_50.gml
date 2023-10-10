@@ -2275,6 +2275,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
         sel=1;
         yy=__view_get( e__VW.YView, 0 )+77;
         if (sel_all!=""){
+            // repeat(min(man_max,man_see)){
             var selection =false;
             for(var i=0; i<man_max; i++;){
                 while (man[i]=="hide"){sel++;}
@@ -2285,8 +2286,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     selection=true;
                     break;
                 }
-            }
-            // repeat(min(man_max,man_see)){
+            }                
             if (!selection){
                 if (sel_all!="Command") and (sel_all!="man") and (sel_all!="vehicle"){
                      scr_load_decide_loc("unit role",sel_all,false);

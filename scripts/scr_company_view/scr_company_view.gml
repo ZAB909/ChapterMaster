@@ -15,6 +15,7 @@ function scr_company_view(company) {
 					"Forge Master", 
 					"Chapter Master", 
 					"Master of the Apothecarion"]
+	var role_list = ds_list_create();
 	// v: check number
 	// mans: number of mans that a hit has gotten
 	// Calculates the temporary variables to be displayed as marines in the individual company screens
@@ -91,7 +92,7 @@ function scr_company_view(company) {
 	                var go=0,op=0;
 					 if (man[v]=="man") and (!array_contains(command_roles,ma_role[v])){
 	                    for (var j=0; j<20;j++) {
-							if (sel_uni[j] == "" && op == 0) then op = j;
+							if (sel_uni[j] == "") && (op == 0) then op = j;
 							if (sel_uni[j] == ma_role[v]) then go = 1;
 							ds_list_add(role_list, ma_role[v]);
 						}
@@ -284,17 +285,6 @@ function scr_company_view(company) {
 	            }
 	        }
 	    }
-	}
-	// Select All Setup
-	for (var j = 0; j < 20; j++) {
-		if (sel_uni[j] == "" && ds_list_size(role_list) > 0) {
-			// Assign roles from the role_list to sel_uni
-			for (var k = 0; k < ds_list_size(role_list); k++) {
-				sel_uni[j] = ds_list_find_value(role_list, k);
-				j++;
-			}
-			break; // Exit the loop since all available slots are filled
-		}
 	}
 	ds_list_destroy(role_list);
 
