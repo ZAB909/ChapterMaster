@@ -382,7 +382,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			
 				//loop over stats and add stats where needed
 				stats = global.stat_list;
-				for (var stat_iter =0; stat_iter <array_length(stats);stat_iter++;){
+				for (var stat_iter =0; stat_iter <array_length(stats);stat_iter++){
 					if (array_contains(edits ,stats[stat_iter])){
 						edit_stat = variable_struct_get(selec_trait, stats[stat_iter]);
 						if (is_array(edit_stat)){
@@ -413,7 +413,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	};
 	var random_stat,edit_stat, stat_mod;
 	var stats = ["constitution", "strength", "luck", "dexterity", "wisdom", "piety", "charisma", "technology","intelligence", "weapon_skill", "ballistic_skill"];
-	for (var stat_iter =0; stat_iter <array_length(stats);stat_iter++;){
+	for (var stat_iter =0; stat_iter <array_length(stats);stat_iter++){
 		if struct_exists(self, stats[stat_iter]){
 
 			if (is_array(variable_struct_get(self, stats[stat_iter]))){
@@ -520,7 +520,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				obj_ini.bio[company,marine_number]++;
 				update_health(hp()+30);
 				var bionic_possible = [];
-				for (var body_part = 0; body_part < array_length(global.body_parts);body_part++;){
+				for (var body_part = 0; body_part < array_length(global.body_parts);body_part++){
 					part = global.body_parts[body_part];
 					if (!struct_exists(body[$part], "bionic")){
 						array_push(bionic_possible, part);
@@ -555,7 +555,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 		var needed_bionics = obj_ini.bio[company,marine_number];
 		obj_ini.bio[company,marine_number] = 0;
-		for (var bionic_allocate = 0;bionic_allocate < needed_bionics;bionic_allocate++;){
+		for (var bionic_allocate = 0;bionic_allocate < needed_bionics;bionic_allocate++){
 			add_bionics();
 		}
 		static age = function(){return obj_ini.age[company,marine_number];}// age
@@ -778,7 +778,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	static alter_equipment = function(update_equipment){
 		show_debug_message("{0}",update_equipment)
 		var equip_areas = struct_get_names(update_equipment);
-		for (var i=0;i<array_length(equip_areas);i++;){
+		for (var i=0;i<array_length(equip_areas);i++){
 			show_debug_message("{0}",equip_areas[i])
 			switch(equip_areas[i]){
 				case "wep1":

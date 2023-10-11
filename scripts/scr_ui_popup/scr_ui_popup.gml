@@ -30,7 +30,7 @@ function scr_ui_popup() {
 	        draw_set_halign(fa_left);
         
 	        var r=0,wob="",word="";
-	        for (r=1;r<10;r++;){
+	        for (r=1;r<10;r++){
 		        switch(wob){
 		        	case "Barbarian":
 		        		word="Heavy on leather, hides, and trophy body parts.";
@@ -116,7 +116,7 @@ function scr_ui_popup() {
 					if (s_base.inquis_hidden != 1){secret = false;}
 		        
 			        var r=0,butt="",alp=1,cost=0,fuck=obj_temp_build,tooltip="",tooltip2="",tooltip3="",tooltip4="",tcost=0;
-			        for (r=1;r<13;r++;){
+			        for (r=1;r<13;r++){
 			        	alp=1;
 			        	cost=0;
 			            if (r==1){if (s_base.forge>0) then alp=0.33;cost=1000;butt="Forge";tooltip2="A modest, less elaborate forge able to employ a handful of Astartes or Techpriest.";}
@@ -253,7 +253,7 @@ function scr_ui_popup() {
 			        draw_rectangle(xx+12,yy+45,xx+486,yy+378,1);
 		        
 			        var hh=1;
-			        for(i=0;i<2;i++;){if (((string_height_ext(string_hash_to_newline(string(woob)),-1,470))*hh)>330) then hh-=0.1;}
+			        for(i=0;i<2;i++){if (((string_height_ext(string_hash_to_newline(string(woob)),-1,470))*hh)>330) then hh-=0.1;}
 			        draw_text_ext_transformed(xx+14,yy+47,string_hash_to_newline(string(woob)),-1,470*(2+(hh*-1)),hh,hh,0);
 		        
 			        if (tooltip3!=""){
@@ -597,14 +597,14 @@ function scr_ui_popup() {
 	                fleet_all=0;
 	            }
 	            if (fleet_all==1) then with(obj_fleet_select){
-	                for (i=0;i<91;i++;){
+	                for (i=0;i<91;i++){
 	                    if (i<=20) then capital_sel[i]=1;
 	                    frigate_sel[i]=1;
 	                    escort_sel[i]=1;
 	                }
 	            }
 	            if (fleet_all==0) then with(obj_fleet_select){
-	                for (i=0;i<91;i++;){
+	                for (i=0;i<91;i++){
 	                    if (i<=20) then capital_sel[i]=0;
 	                    frigate_sel[i]=0;
 	                    escort_sel[i]=0;

@@ -7,7 +7,7 @@ function scr_company_order(company) {
 	var i=-1,v=0;
 	var temp_vrace, temp_vloc, temp_vrole, temp_vwep1, temp_vwep2, temp_vup, temp_vhp, temp_vchaos, temp_vpilots, temp_vlid, temp_vwid, unit;
 
-	for (var i=0;i<401;i++;){
+	for (var i=0;i<401;i++){
 	    temp_race[co,i]=0;
 	    temp_loc[co,i]="";
 	    temp_name[co,i]="";
@@ -35,7 +35,7 @@ function scr_company_order(company) {
 			if (unit.squad != "none"){
 				var squad_member;
 				var found = false;
-				for (var r=0;r<array_length(squads[unit.squad].members);r++;){
+				for (var r=0;r<array_length(squads[unit.squad].members);r++){
 					squad_member = squads[unit.squad].members[r];
 					if (squad_member[0] == unit.company) and (squad_member[1] == unit.marine_number){
 						squads[unit.squad].members[r] = [co,v];
@@ -113,7 +113,7 @@ function scr_company_order(company) {
 	var company_length = array_length(name[co]);
 	var squadless={};
 	// find units not in a squad
-	for (i=0;i<company_length;i++;){
+	for (i=0;i<company_length;i++){
 		unit = TTRPG[co,i];
 		if (unit.squad=="none") and (unit.name()!=""){
 			if (!struct_exists(squadless, unit.role)){
@@ -126,7 +126,7 @@ function scr_company_order(company) {
 
 	//at this point check that all squads have the right types and numbers of units in them
 	var squad, wanted_roles;
-	for (i=0;i<array_length(squads);i++;){
+	for (i=0;i<array_length(squads);i++){
 		if (squads[i].base_company != company) then continue;
 		squad = squads[i];
 		squad.update_fulfilment();
@@ -136,7 +136,7 @@ function scr_company_order(company) {
 			/* this finds sqauds that are in need of members and checks ot see if there 
 				are any squadless units in the chapter with
 				the rigth role to fill the gap*/ 
-			for (var r = 0;r < array_length(wanted_roles);r++;){
+			for (var r = 0;r < array_length(wanted_roles);r++){
 				if (struct_exists(squadless,wanted_roles[r])){
 					while(array_length(squadless[$ wanted_roles[r]] > 0)) and (squad.required[$ wanted_roles[r]] > 0){
 						array_push(squad.members,[company,squadless[$ wanted_roles[r]][0]]);
@@ -165,10 +165,10 @@ function scr_company_order(company) {
 	var sorted_numbers = [];
 
 	//this stops over strenuous repeats should greatly speed up company reshuffle
-	for (i=0;i<company_length;i++;){
+	for (i=0;i<company_length;i++){
 		sorted_numbers[i]=i;
 	}
-	for (var role_name=0;role_name<role_shuffle_length;role_name++;){
+	for (var role_name=0;role_name<role_shuffle_length;role_name++){
 		var wanted_role = role_orders[role_name];
 		var sort_length = array_length(sorted_numbers)-1
 		i=-1;
@@ -217,7 +217,7 @@ function scr_company_order(company) {
 	}*/
 
 	// Return here
-	for (i=0;i<array_length(temp_name[co]);i++;){
+	for (i=0;i<array_length(temp_name[co]);i++){
 	        race[co,i]=temp_race[co,i];
 	        loc[co,i]=temp_loc[co,i];
 	        name[co,i]=temp_name[co,i];

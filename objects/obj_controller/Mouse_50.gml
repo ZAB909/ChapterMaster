@@ -2258,7 +2258,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             // This clicks on the squad_sel button
             yy+=77;
             sel=top;
-            for(var i=0; i<min(man_max,man_see); i++;){
+            for(var i=0; i<min(man_max,man_see); i++){
                 while (man[sel]=="hide"){sel++;}
                 if point_in_rectangle(mouse_x,mouse_y,xx+25,yy+64,xx+25+8,yy+85){
                     if (squad_sel==0) and (squad[sel]!=0){
@@ -2277,8 +2277,8 @@ if (action_if_number(obj_saveload, 0, 0) &&
         if (sel_all!=""){
             // repeat(min(man_max,man_see)){
             var selection =false;
-            for(var i=0; i<man_max; i++;){
-                while (man[i]=="hide"){sel++;}
+            for(var i=0; i<man_max; i++){
+                while (man[i]=="hide"){i++;}
                 if (man_sel[i]==1){
                     selecting_location=ma_loc[sel];
                     selecting_ship=ma_lid[sel];
@@ -2306,7 +2306,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 }
             }
             var onceh;
-            for(var i=0; i<man_max; i++;){
+            for(var i=0; i<man_max; i++){
                 while (man[sel]=="hide"){sel++;}
                 onceh=0;
                 eventing=false;
@@ -2681,7 +2681,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             b_gear=0;
             b_mobi=0;
 
-            for(var f=1; f<=man_max; f++;){
+            for(var f=1; f<=man_max; f++){
                 // If come across a man, set vih to 1
                 if (man[f]="man") and (man_sel[f]=1) then nuuum+=1;
             }
@@ -2805,7 +2805,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 pip.company=managing;
 
                 var god=0,nuuum=0,nuuum2=0,checky=0,check_number=0;
-                for(var f=1; f<=man_max; f++;){
+                for(var f=1; f<=man_max; f++){
                     if (god==1) then break;
                     if (god==0) and (man_sel[f]==1) and (man[f]=="man"){
                         god=1;
@@ -2856,7 +2856,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             yy=yy+77;
 
             if (cooldown<=0){
-                for(var i=0; i<(min(ship_max,ship_see)); i++;){
+                for(var i=0; i<(min(ship_max,ship_see)); i++){
                     if (mouse_x>=xx+25+8) and (mouse_y>=yy+64) and (mouse_x<xx+974) and (mouse_y<yy+85) and (cooldown<=0) 
                     and (((sh_cargo[sel]+man_size)<=sh_cargo_max[sel])){
                         var onceh=0;

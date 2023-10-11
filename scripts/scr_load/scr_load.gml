@@ -817,7 +817,7 @@ function scr_load(argument0, argument1) {
 	        var squad_fetch = ini_read_string("Mar","squads","");
 	        if (squad_fetch != ""){
 	        	squad_fetch = json_parse(base64_decode(squad_fetch));
-	        	for (i=0;i<array_length(squad_fetch);i++;){
+	        	for (i=0;i<array_length(squad_fetch);i++){
 	        		array_push(obj_ini.squads, new unit_squad());
 	        		obj_ini.squads[i].load_json_data(json_parse(squad_fetch[i]));
 	        	}

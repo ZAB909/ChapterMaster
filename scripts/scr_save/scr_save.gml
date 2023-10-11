@@ -353,7 +353,7 @@ function scr_save(save_slot,save_id) {
 	                ini_write_string("Star","sr"+string(i)+"type"+string(g),instance_array[i].p_type[g]);
 					var save_features = [];
 					if (array_length(instance_array[i].p_feature[g])> 0){
-						for (var f = 0;f < array_length(instance_array[i].p_feature[g]);f++;){
+						for (var f = 0;f < array_length(instance_array[i].p_feature[g]);f++){
 							save_features[f]=0;
 							var copy_feature = instance_array[i].p_feature[g][f];
 							var new_feature = {};
@@ -385,7 +385,7 @@ function scr_save(save_slot,save_id) {
 	                    ini_write_real("Star","sr"+string(i)+"p_defenses"+string(g),instance_array[i].p_defenses[g]);
 	                }
 					if (array_length(instance_array[i].p_upgrades[g])> 0){
-						for (var f = 0;f < array_length(instance_array[i].p_upgrades[g]);f++;){
+						for (var f = 0;f < array_length(instance_array[i].p_upgrades[g]);f++){
 							save_features[f]=0;
 							var copy_feature = instance_array[i].p_upgrades[g][f];
 							var new_feature = {};
@@ -871,7 +871,7 @@ function scr_save(save_slot,save_id) {
 	    }
 	    var squad_copies = [];
 		if (array_length(obj_ini.squads)> 0){
-			for (var i = 0;i < array_length(obj_ini.squads);i++;){
+			for (var i = 0;i < array_length(obj_ini.squads);i++){
 				array_push(squad_copies, obj_ini.squads[i].jsonify());
 			}
 		}

@@ -20,7 +20,7 @@ function scr_company_view(company) {
 	// mans: number of mans that a hit has gotten
 	// Calculates the temporary variables to be displayed as marines in the individual company screens
 
-	for (var i=0;i<array_length(obj_ini.TTRPG[company]);i++;){
+	for (var i=0;i<array_length(obj_ini.TTRPG[company]);i++){
 		display_unit[i]=0;
 	    man[i]="";
 		ide[i]=0;

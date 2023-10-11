@@ -102,7 +102,7 @@ if (instance_number(obj_temp5)>0) and (imp_ships<sha){
         with(obj_star){
             if (x>10) and (y>10) and ((owner==2) or (owner==3)){
                 var system_fleet_elements=0;
-                for (var i=1;i<11;i++;){
+                for (var i=1;i<11;i++){
                     system_fleet_elements+=present_fleet[i];
                 }
                 system_fleet_elements+=present_fleet[13];

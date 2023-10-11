@@ -770,7 +770,7 @@ function scr_initialize_custom() {
 	}
 
 	var squad_names = struct_get_names(st);
-	for (var st_iter = 0; st_iter < array_length( squad_names);st_iter++;){
+	for (var st_iter = 0; st_iter < array_length( squad_names);st_iter++){
 		var s_group = st[$  squad_names[st_iter]];
 		squad_types[$  squad_names[st_iter]] = {};
 		for (var iter_2 = 0; iter_2 < array_length(s_group);iter_2++){

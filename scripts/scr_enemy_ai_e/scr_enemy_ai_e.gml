@@ -736,7 +736,7 @@ function scr_enemy_ai_e() {
 	    // Work on upgrades
 	    if (array_length(p_upgrades[run])>0){
 			var upgrade_type, tx, display_type;
-			for (var upgrade =0; upgrade<array_length(p_upgrades[run]);upgrade++;){
+			for (var upgrade =0; upgrade<array_length(p_upgrades[run]);upgrade++){
 				if (struct_exists(p_upgrades[run][upgrade], "built")){
 					if (p_upgrades[run][upgrade].built == obj_controller.turn){
 						upgrade_type =p_upgrades[run][upgrade].f_type;

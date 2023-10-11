@@ -102,7 +102,7 @@ ready=false;
 chaos_gods = {};
 function build_chaos_gods(){
 	var _god_names = ["Khorne", "Slaanesh", "Nurgle", "Tzeentch"]
-	for (var _i = 0; _i < 4; _i++;){
+	for (var _i = 0; _i < 4; _i++){
 		chaos_gods[$ _god_names[_i]] = {};
 		chaos_gods[$ _god_names[_i]].favour = 0;
 		chaos_gods[$ _god_names[_i]].god_name = _god_names[_i];

@@ -88,7 +88,7 @@ if (cooldown<=0) and (battle_world[current_battle]=-50) and (combating=0){
         var stahr;stahr=instance_nearest(battle_pobject[current_battle].x,battle_pobject[current_battle].y,obj_star);
         obj_fleet.star_name=stahr.name;
 		
-		for (p_num =1; p_num<5;p_num++;){
+		for (p_num =1; p_num<5;p_num++){
 			//if(planet_feature_bool(stahr.p_feature[p_num], P_features.Monastery)==1)thenobj_fleet.player_lasers=stahr.p_lasers[p_num]; 
 		}
         
