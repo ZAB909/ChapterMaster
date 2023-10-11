@@ -92,8 +92,8 @@ function scr_special_view(command_group) {
 			bad=0;
 			if (obj_ini.name[0,v]== ""){continue;}
 			if (obj_ini.lid[0,v]>0){
-			   var ham;ham=obj_ini.lid[0,v];
-			   if (obj_ini.ship_location[ham]="Lost") then continue;
+			   	var ham=obj_ini.lid[0,v];
+			   	if (obj_ini.ship_location[ham]="Lost") then continue;
 			}
 
 			unit = obj_ini.TTRPG[0,v];	    	
