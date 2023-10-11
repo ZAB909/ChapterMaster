@@ -2841,110 +2841,110 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 }
             }
         }
+    }
         // Selecting a ship to load
-        if (menu==30) and (managing>0){
-            xx=xx+0;
-            yy=yy+0;
+    if (menu==30) and (managing>0){
+        xx=xx+0;
+        yy=yy+0;
 
-            var top,sel,temp1="",temp2="",temp3="",temp4="",temp5="",stop=0;
-            top=ship_current;
-            sel=top;
+        var top,sel,temp1="",temp2="",temp3="",temp4="",temp5="",stop=0;
+        top=ship_current;
+        sel=top;
 
-            var wombat=0;
-            sel_uid=sh_uid[sel];
+        var wombat=0;
+        sel_uid=sh_uid[sel];
 
-            yy=yy+77;
+        yy=yy+77;
 
-            if (cooldown<=0){
-                for(var i=0; i<(min(ship_max,ship_see)); i++){
-                    if (mouse_x>=xx+25+8) and (mouse_y>=yy+64) and (mouse_x<xx+974) and (mouse_y<yy+85) and (cooldown<=0) 
-                    and (((sh_cargo[sel]+man_size)<=sh_cargo_max[sel])){
-                        var onceh=0;
-                        stop=0;
-                        for(var q=1; q<=500; q++){
-                            // Load man to ship
-                            if (man[q]=="man") and (ma_loc[q]==selecting_location) and (sh_loc[sel]==selecting_location){
-                                if ((sh_cargo[sel]+man_size)<=sh_cargo_max[sel]) and (man_sel[q]!=0){
-                                    wombat=sel;
-                                    ma_loc[q]=sh_name[sel];
-                                    ma_lid[q]=sh_ide[sel];
-                                    ma_wid[q]=0;
-                                    ma_uid[q]=sh_uid[sel];
+        if (cooldown<=0){
+            for(var i=0; i<(min(ship_max,ship_see)); i++){
+                if (mouse_x>=xx+25+8) and (mouse_y>=yy+64) and (mouse_x<xx+974) and (mouse_y<yy+85) and (cooldown<=0) 
+                and (((sh_cargo[sel]+man_size)<=sh_cargo_max[sel])){
+                    var onceh=0;
+                    stop=0;
+                    for(var q=1; q<=500; q++){
+                        // Load man to ship
+                        if (man[q]=="man") and (ma_loc[q]==selecting_location) and (sh_loc[sel]==selecting_location){
+                            if ((sh_cargo[sel]+man_size)<=sh_cargo_max[sel]) and (man_sel[q]!=0){
+                                wombat=sel;
+                                ma_loc[q]=sh_name[sel];
+                                ma_lid[q]=sh_ide[sel];
+                                ma_wid[q]=0;
+                                ma_uid[q]=sh_uid[sel];
 
-                                    if (managing<=10){
-                                        loc[managing,q]=sh_name[sel];
-                                        obj_ini.lid[managing,ide[q]]=sh_ide[sel];
-                                        obj_ini.wid[managing,ide[q]]=0;
-                                        obj_ini.uid[managing,ide[q]]=sel_uid;
-                                    }
-                                    if (managing>10){
-                                        loc[0,q]=sh_name[sel];
-                                        obj_ini.lid[0,ide[q]]=sh_ide[sel];
-                                        obj_ini.wid[0,ide[q]]=0;
-                                        obj_ini.uid[0,ide[q]]=sel_uid;
-                                    }
+                                if (managing<=10){
+                                    loc[managing,q]=sh_name[sel];
+                                    obj_ini.lid[managing,ide[q]]=sh_ide[sel];
+                                    obj_ini.wid[managing,ide[q]]=0;
+                                    obj_ini.uid[managing,ide[q]]=sel_uid;
                                 }
-                            }
-                            // Load vehicle to ship
-                            if (man[q]=="vehicle") and (ma_loc[q]==selecting_location) and (sh_loc[sel]==selecting_location){
-                                if ((sh_cargo[sel]+man_size)<=sh_cargo_max[sel]) and (man_sel[q]!=0){
-                                    wombat=sel;
-                                    ma_loc[q]=sh_name[sel];
-                                    ma_lid[q]=sh_ide[sel];
-                                    ma_wid[q]=0;
-                                    ma_uid[q]=sh_uid[sel];
-                                    veh_loc[managing,q]=sh_name[sel];
-
-                                    if (managing<=10){
-                                        obj_ini.veh_lid[managing,ide[q]]=sh_ide[sel];
-                                        obj_ini.veh_wid[managing,ide[q]]=0;
-                                        obj_ini.veh_uid[managing,ide[q]]=sel_uid;
-                                    }
-                                    if (managing>10){
-                                        obj_ini.veh_lid[0,ide[q]]=sh_ide[sel];
-                                        obj_ini.veh_wid[0,ide[q]]=0;
-                                        obj_ini.veh_uid[0,ide[q]]=sel_uid;
-                                    }
+                                if (managing>10){
+                                    loc[0,q]=sh_name[sel];
+                                    obj_ini.lid[0,ide[q]]=sh_ide[sel];
+                                    obj_ini.wid[0,ide[q]]=0;
+                                    obj_ini.uid[0,ide[q]]=sel_uid;
                                 }
                             }
                         }
-                        // Right here decrease the size of stuff on that planet
-                        // Need to find the obj_star that the controller is loading from
-                        var xb=0,yb=0,god=0,tiber=0;
-                        for(var i=0; i<200; i++){
-                            if (god==0){
-                                xb=random(room_width);
-                                yb=random(room_height);
-                                tiber=instance_nearest(xb,yb,obj_star);
+                        // Load vehicle to ship
+                        if (man[q]=="vehicle") and (ma_loc[q]==selecting_location) and (sh_loc[sel]==selecting_location){
+                            if ((sh_cargo[sel]+man_size)<=sh_cargo_max[sel]) and (man_sel[q]!=0){
+                                wombat=sel;
+                                ma_loc[q]=sh_name[sel];
+                                ma_lid[q]=sh_ide[sel];
+                                ma_wid[q]=0;
+                                ma_uid[q]=sh_uid[sel];
+                                veh_loc[managing,q]=sh_name[sel];
 
-                                if (tiber.name==selecting_location) then god=1;
-                                if (tiber.name!=selecting_location) then instance_deactivate_object(tiber);
+                                if (managing<=10){
+                                    obj_ini.veh_lid[managing,ide[q]]=sh_ide[sel];
+                                    obj_ini.veh_wid[managing,ide[q]]=0;
+                                    obj_ini.veh_uid[managing,ide[q]]=sel_uid;
+                                }
+                                if (managing>10){
+                                    obj_ini.veh_lid[0,ide[q]]=sh_ide[sel];
+                                    obj_ini.veh_wid[0,ide[q]]=0;
+                                    obj_ini.veh_uid[0,ide[q]]=sel_uid;
+                                }
                             }
                         }
-                        if (god==1){
-                            tiber.p_player[selecting_planet]-=man_size;
-                            // 135;
-                            // also need the wid here
-                        }
-                        instance_activate_object(obj_star);
-
-                        obj_ini.ship_carrying[sh_ide[sel]]+=man_size;
-
-                        man_size=0;
-                        man_current=1;
-                        menu=1;
-                        cooldown=8;
-                        for(var k=1; k<=500; k++){man_sel[k]=0;}
-
                     }
-                    yy+=20;
-                    sel+=1;
+                    // Right here decrease the size of stuff on that planet
+                    // Need to find the obj_star that the controller is loading from
+                    var xb=0,yb=0,god=0,tiber=0;
+                    for(var i=0; i<200; i++){
+                        if (god==0){
+                            xb=random(room_width);
+                            yb=random(room_height);
+                            tiber=instance_nearest(xb,yb,obj_star);
+
+                            if (tiber.name==selecting_location) then god=1;
+                            if (tiber.name!=selecting_location) then instance_deactivate_object(tiber);
+                        }
+                    }
+                    if (god==1){
+                        tiber.p_player[selecting_planet]-=man_size;
+                        // 135;
+                        // also need the wid here
+                    }
+                    instance_activate_object(obj_star);
+
+                    obj_ini.ship_carrying[sh_ide[sel]]+=man_size;
+
+                    man_size=0;
+                    man_current=1;
+                    menu=1;
+                    cooldown=8;
+                    for(var k=1; k<=500; k++){man_sel[k]=0;}
+
                 }
+                yy+=20;
+                sel+=1;
             }
-            // End selecting
-            xx=xx+0;
-            yy=yy+0;
         }
+        // End selecting
+        xx=xx+0;
+        yy=yy+0;
     }
     if (menu==50) and (managing>0) and (cooldown<=0){
         if (mouse_x>=xx+217) and (mouse_y>=yy+28) and (mouse_x<xx+250) and (mouse_y<yy+59){
