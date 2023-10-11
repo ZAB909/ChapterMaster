@@ -2,7 +2,7 @@ function scr_special_view(command_group) {
 
 	// Works as COMPANY VIEW but for the subsections of HQ
 
-	var v, i, 
+	var v, i; 
 	var mans=0, onceh, company=0, bad=0, oth=0, unit;
 	gogogo=0;
 	vehicles=0;
