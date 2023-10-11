@@ -17,6 +17,7 @@ function create_squad(squad_type, company, squad_loadout = true){
 		squad_fulfilment[$ squad_unit_types[i]] =0;	//create a fulfilment structure to log members of squad
 	}
 	squad = new unit_squad(squad_type);
+	squad.base_company = company;
 	var sergeant_found = false;
 	var sgt_types = [obj_ini.role[100,18], obj_ini.role[100,19]]
 	//if squad has sergeants in find out if there are any available sergeants
@@ -216,31 +217,112 @@ function create_squad(squad_type, company, squad_loadout = true){
 }
 
 
+// constructor for new squad
 function unit_squad(squad_type) constructor{
 	type = squad_type;
 	members = [];
 	squad_fulfilment ={};
-	static new_sergeant = function(){
+	base_company = -1;
+
+	// for creating a new sergeant from existing squad members
+	static new_sergeant = function(veteran=false){
 		var unit;
 		var highest_exp = 0;
-		for (i = 0; i < array_length(members);i++;){
-			unit = obj_ini.TTRPG[squad.members[i][0], members[i][1]];
+		var member_length = array_length(members);
+		for (i = 0; i < member_length;i++;){
+			unit = obj_ini.TTRPG[members[i][0], members[i][1]];
+			if (unit.name() == ""){
+				array_delete(members, i, 1);
+				member_length--;
+				i--;
+				continue;
+			}			
 			if (unit.experience() > highest_exp){
 				highest_exp = unit.experience();
 				var exp_unit = unit;
 			};
 		}
-		exp_unit.update_role(obj_ini.role[100,18]);
-		squad_fulfilment[$ obj_ini.role[100,18]]++;		
-	}
-	static update_fulfilment = function(){
-		var unit;
-		for (var i=0;i<array_length(members);i++){
-			unit = obj_ini.TTRPG[members[i][0], members[i][1]];
+		if (unit.name() != ""){
+			var new_role;
+			if (veteran == true){
+				new_role = obj_ini.role[100,19];
+			} else{
+				new_role= obj_ini.role[100,18];
+			}
+			exp_unit.update_role(new_role);
 		}
 	}
+
+	/*checks the status of squad so it can be either restocked or 
+		deleted if there are no longer enough members ot make a squad*/
+	static update_fulfilment = function(){
+		var unit;
+		squad_fulfilment ={};
+		var fill_squad =  obj_ini.squad_types[$ type];			//grab all the squad struct info from the squad_types struct
+		var squad_fulfilment = {};		
+		squad_unit_types = struct_get_names(fill_squad);		//find out what type of units squad consists of
+		for (var i = 0;i < array_length(squad_unit_types);i++){
+			squad_fulfilment[$ squad_unit_types[i]] =0;	//create a fulfilment structure to log members of squad
+		}
+		var member_length = array_length(members);
+		for (var i=0;i<member_length;i++;){
+			//checks squad member is still valid
+			unit = obj_ini.TTRPG[members[i][0], members[i][1]];
+			if (unit.name() == ""){
+				array_delete(members, i, 1);
+				member_length--;
+				i--;
+				continue;
+			}
+			if (struct_exists(squad_fulfilment, unit.role)){
+				squad_fulfilment[$ unit.role]++;
+			} else {
+				squad_fulfilment[$ unit.role] = 1;
+			}
+		}
+		fulfilled = true;
+		space = false;
+		required = {};
+		space = {};
+		for (i = 0;i < array_length(squad_unit_types);i++){
+			if (squad_fulfilment[$ squad_unit_types[i]] < fill_squad[$ squad_unit_types[i]][$ "max"]){
+				space[$ squad_unit_types[i]] = fill_squad[$ squad_unit_types[i]][$ "max"] - squad_fulfilment[$ squad_unit_types[i]];
+				space = true;
+			}
+			if (squad_fulfilment[$ squad_unit_types[i]] < fill_squad[$ squad_unit_types[i]][$ "min"]){
+				fulfilled = false;
+				required[$ squad_unit_types[i]] = fill_squad[$ squad_unit_types[i]][$ "min"] - squad_fulfilment[$ squad_unit_types[i]];
+			}
+		}		
+	}
+
+	// for saving squads
+	static jsonify = function(){
+		var copy_struct = self; //grab marine structure
+		var new_struct = {};
+		var copy_part;
+		var names = variable_struct_get_names(copy_struct); // get all keys within structure
+		for (var name = 0; name < array_length(names); name++) { //loop through keys to find which ones are methods as they can't be saved as a json string
+			if (!is_method(copy_struct[$ names[name]])){
+				copy_part = DeepCloneStruct(copy_struct[$ names[name]])
+				variable_struct_set(new_struct, names[name],copy_part); //if key value is not a method add to copy structure
+			}
+		}
+		return json_stringify(new_struct);
+	}
+
+	//function for loading in squad save data
+	static load_json_data = function(data){	
+		 var names = variable_struct_get_names(data);
+		 for (var i = 0; i < array_length(names); i++) {
+            variable_struct_set(self, names[i], variable_struct_get(data, names[i]))
+        }
+	}		
 }
 
+
+// creates the origional distribution of squads accross the chapter
+// lots of room for customisation of different chapters here
 function game_start_squads(){
 	obj_ini.squads = [];
 	var last_squad_count
@@ -283,6 +365,7 @@ function game_start_squads(){
 		last_squad_count = (array_length(obj_ini.squads) + 1);
 		create_squad("veteran_squad", company);
 	}
+
 	with (obj_ini){
 		for (i=0;i<11;i++;){
 			scr_company_order(i)

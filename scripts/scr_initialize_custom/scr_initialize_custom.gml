@@ -683,7 +683,7 @@ function scr_initialize_custom() {
 		variable_struct_set(st , "assault_squad",[
                 [role[100,10], {"max":9,"min":4, "loadout":{//assault_marine
                     "required":{
-                        "wep1":["Bolt pistol",4], 
+                        "wep1":["Bolt Pistol",4], 
                         "wep2":["Chainsword",4]
                     },
                     "option" :{

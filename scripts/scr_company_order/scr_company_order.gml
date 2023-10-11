@@ -29,22 +29,22 @@ function scr_company_order(company) {
 		temp_struct[co,i]={};
 	}
 
-
+	//stashes varibles for marine reordering
 	function temp_marine_variables(co, unit_num ,v){
-			/*var unit = TTRPG[co, unit_num];
+			var unit = TTRPG[co, unit_num];
 			if (unit.squad != "none"){
 				var squad_member;
 				var found = false;
 				for (var r=0;r<array_length(squads[unit.squad].members);r++;){
 					squad_member = squads[unit.squad].members[r];
 					if (squad_member[0] == unit.company) and (squad_member[1] == unit.marine_number){
-						squad_member = [co,v];
+						squads[unit.squad].members[r] = [co,v];
 						found = true;
 						break;
 					}
 				}
 				if (!found){unit.squad = "none"}
-			}*/
+			}
 	        temp_race[co,v]=race[co,unit_num];
 	        temp_loc[co,v]=loc[co,unit_num];
 	        temp_name[co,v]=name[co,unit_num];
@@ -65,6 +65,8 @@ function scr_company_order(company) {
 	        temp_bio[co,v]=bio[co,unit_num];
 	        temp_struct[co,v]=jsonify_marine_struct(co,unit_num);
 	}
+
+	// the order that marines are displayed in the company view screen(this order is augmented by squads)
 	var role_orders = [
 		"Chapter Master",
 		"Forge Master",
@@ -109,10 +111,60 @@ function scr_company_order(company) {
 
 	var role_shuffle_length = array_length(role_orders);
 	var company_length = array_length(name[co]);
+	var squadless={};
+	// find units not in a squad
+	for (i=0;i<company_length;i++;){
+		unit = TTRPG[co,i];
+		if (unit.squad=="none") and (unit.name()!=""){
+			if (!struct_exists(squadless, unit.role)){
+				squadless[$ unit.role] =[i];
+			} else {
+				array_push(squadless[$ unit.role],i)
+			}
+		}
+	}
 
+	//at this point check that all squads have the right types and numbers of units in them
+	var squad, wanted_roles;
+	for (i=0;i<array_length(squads);i++;){
+		if (squads[i].base_company != company) then continue;
+		squad = squads[i];
+		squad.update_fulfilment();
+		if (squad.fulfilled == false){
+			wanted_roles=struct_get_names(squad.required);
+
+			/* this finds sqauds that are in need of members and checks ot see if there 
+				are any squadless units in the chapter with
+				the rigth role to fill the gap*/ 
+			for (var r = 0;r < array_length(wanted_roles);r++;){
+				if (struct_exists(squadless,wanted_roles[r])){
+					while(array_length(squadless[$ wanted_roles[r]] > 0)) and (squad.required[$ wanted_roles[r]] > 0){
+						array_push(squad.members,[company,squadless[$ wanted_roles[r]][0]]);
+						array_delete(squadless[$ wanted_roles[r]],0,1);
+						squad.required[$ wanted_roles[r]]--;
+					}
+				}
+			}
+			//if no new sergeants are found for squad someon gets promoted
+			//find a new_sergeant 
+			if (struct_exists(squad.required, role[100,18])){
+				if (squad.required[$ role[100,18]] > 0){
+					squad.new_sergeant();
+					squad.required[$ role[100,18]]--;
+				}
+			}
+			//find a new veteran sergeant 
+			if (struct_exists(squad.required, role[100,19])){
+				if (squad.required[$ role[100,19]] > 0){
+					squad.new_sergeant(true);
+					squad.required[$ role[100,19]]--;
+				}
+			}		
+		}
+	}
 	var sorted_numbers = [];
 
-	//this stops over strenuous repeats
+	//this stops over strenuous repeats should greatly speed up company reshuffle
 	for (i=0;i<company_length;i++;){
 		sorted_numbers[i]=i;
 	}
@@ -136,7 +188,8 @@ function scr_company_order(company) {
 				temp_marine_variables(co, sorted_numbers[i] ,v);
 				array_delete(sorted_numbers, i ,1);
 				i--;
-				sort_length--;				
+				sort_length--;
+				//if unit is part of a squad make sure rest of squad is grouped next to unit			
 				if (unit.squad !="none"){
 					var cur_squad = unit.squad;
 					var r = -1;
@@ -164,7 +217,6 @@ function scr_company_order(company) {
 	}*/
 
 	// Return here
-
 	for (i=0;i<array_length(temp_name[co]);i++;){
 	        race[co,i]=temp_race[co,i];
 	        loc[co,i]=temp_loc[co,i];
@@ -185,6 +237,7 @@ function scr_company_order(company) {
 	        god[co,i]=temp_god[co,i];
 	        bio[co,i]=temp_bio[co,i];
 			TTRPG[co,i] = new TTRPG_stats("chapter", co, i, "blank");
+			// if stashed marine struct data load it into new structure
 			if (is_string(temp_struct[co,i])){
 				TTRPG[co,i].load_json_data(json_parse(temp_struct[co,i]));
 				TTRPG[co,i].company = co;

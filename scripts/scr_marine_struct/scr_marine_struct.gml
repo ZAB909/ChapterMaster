@@ -292,6 +292,7 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	constitution=0; strength=0;luck=0;dexterity=0;wisdom=0;piety=0;charisma=0;technology=0;intelligence=0;weapon_skill=0;ballistic_skill=0;size = 0;
 	base_group = "none";
+	role_history = [];
 	company = comp;			//marine company
 	marine_number = mar;			//marine number in company
 	obj_ini.bio[company,marine_number] = 0;   //need to rework init of 2d arrays( and eventually remove)
@@ -793,7 +794,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 	}
 }
-	function jsonify_marine_struct(company, marine){
+function jsonify_marine_struct(company, marine){
 		var copy_marine_struct = obj_ini.TTRPG[company, marine]; //grab marine structure
 		var new_marine = {};
 		var copy_part;

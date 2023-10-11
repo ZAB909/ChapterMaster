@@ -813,6 +813,18 @@ function scr_load(argument0, argument1) {
 	            obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");			
 	        }
 
+	        obj_ini.squads = [];
+	        var squad_fetch = ini_read_string("Mar","squads","");
+	        if (squad_fetch != ""){
+	        	squad_fetch = json_parse(base64_decode(squad_fetch));
+	        	for (i=0;i<array_length(squad_fetch);i++;){
+	        		array_push(obj_ini.squads, new unit_squad());
+	        		obj_ini.squads[i].load_json_data(json_parse(squad_fetch[i]));
+	        	}
+	        }
+
+	        obj_ini.squad_types = json_parse(base64_decode(ini_read_string("Mar","squad_types","")));
+
 	    }
 
 
@@ -1032,6 +1044,7 @@ function scr_load(argument0, argument1) {
 	    obj_controller.restart_cooperation=ini_read_real("Res","cooperation",0);
 	    obj_controller.restart_purity=ini_read_real("Res","purity",0);
 	    obj_controller.restart_stability=ini_read_real("Res","stability",0);
+	    obj_controller.squads = false;
 
 	    i=99;
 	    repeat(3){i+=1;

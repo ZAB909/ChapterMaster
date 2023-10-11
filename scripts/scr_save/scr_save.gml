@@ -869,6 +869,15 @@ function scr_save(save_slot,save_id) {
 	            if (coh=0) and (mah=1) then good=1;
 	        }
 	    }
+	    var squad_copies = [];
+		if (array_length(obj_ini.squads)> 0){
+			for (var i = 0;i < array_length(obj_ini.squads);i++;){
+				array_push(squad_copies, obj_ini.squads[i].jsonify());
+			}
+		}
+        ini_write_string("Mar","squads",base64_encode(json_stringify(squad_copies)));
+        ini_write_string("Mar","squad_types",base64_encode(json_stringify(obj_ini.squad_types)));
+
 	    coh=100;mah=-1;
 	    repeat(21){mah+=1;
 	        if (obj_ini.role[coh,mah]!=""){

@@ -282,7 +282,7 @@ function scr_ui_popup() {
 	     woob=""
 	     var arsenal = 0,gene_vault=0;
     		if (planet_feature_bool(planet_upgrades, P_features.Arsenal)==1){
-    			var arsenal = planet_upgrades[search_planet_features(planet_upgrades, P_features.Arsenal)[0]];
+    		  var arsenal = planet_upgrades[search_planet_features(planet_upgrades, P_features.Arsenal)[0]];
  	          if (arsenal.inquis_hidden == 1) then woob="A moderate sized secret Arsenal, this structure has ample holding area to store any number of artifacts and wargear.  Chaos and Daemonic items will be sent here by your Master of Relics, and due to the secret nature of its existance, the Inquisition will not find them during routine inspections.";
 	          if (arsenal.inquis_hidden == 0) then woob="A moderate sized Arsenal, this structure has ample holding area to store any number of artifacts and wargear.  Since being discovered it may no longer hide Chaos and Daemonic wargear from routine Inquisition inspections.  You may wish to construct another Arsenal on a different planet.";   			
     		}
@@ -464,10 +464,10 @@ function scr_ui_popup() {
 	                }
 	                shew=2;
 	            }
-	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+	            if (mouse_check_button_pressed(mb_left)) and (obj_controller.cooldown<=0){
 	                if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+25) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
 	                    var onceh=0;
-	                    cooldown=8000;
+	                    obj_controller.cooldown=8000;
 	                    if (obj_controller.fest_scheduled>0) and (obj_controller.fest_sid=robj.capital_num[shit]) then onceh=1;
 	                    if (robj.capital_sel[shit]==1) and (onceh==0){
 	                        robj.capital_sel[shit]=0;
@@ -505,9 +505,9 @@ function scr_ui_popup() {
 	                }
 	                shew=2;
 	            }
-	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+	            if (mouse_check_button_pressed(mb_left)) and (obj_controller.cooldown<=0){
 	                if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+25) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
-	                    var onceh=0,cooldown=8000;
+	                    var onceh=0,obj_controller.cooldown=8000;
 	                    if (obj_controller.fest_scheduled>0) and (obj_controller.fest_sid=robj.frigate_num[shit]) then onceh=1;
 	                    if (robj.frigate_sel[shit]==1) and (onceh==0){
 	                        robj.frigate_sel[shit]=0;
@@ -537,9 +537,9 @@ function scr_ui_popup() {
 	            if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+209) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
 	                if (string_width(string_hash_to_newline(nem))*scale>135) then repeat(9){if (string_width(string_hash_to_newline(nem))*scale>135) then scale-=0.05;}shew=2;
 	            }
-	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+	            if (mouse_check_button_pressed(mb_left)) and (obj_controller.cooldown<=0){
 	                if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+25) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
-	                    var onceh;onceh=0;cooldown=8000;
+	                    var onceh;onceh=0;obj_controller.cooldown=8000;
 	                    if (obj_controller.fest_scheduled>0) and (obj_controller.fest_sid=robj.escort_num[shit]) then onceh=1;
 	                    if (robj.escort_sel[shit]=1) and (onceh=0){robj.escort_sel[shit]=0;onceh=1;}
 	                    if (robj.escort_sel[shit]=0) and (onceh=0){robj.escort_sel[shit]=1;onceh=1;}
@@ -584,16 +584,16 @@ function scr_ui_popup() {
 	    if (fleet_all=0) then draw_text(__view_get( e__VW.XView, 0 )+50,__view_get( e__VW.YView, 0 )+117,string_hash_to_newline("[ ]"));
 	    if (fleet_all=1) then draw_text(__view_get( e__VW.XView, 0 )+50,__view_get( e__VW.YView, 0 )+116,string_hash_to_newline("[x]"));
     
-	    if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+	    if (mouse_check_button_pressed(mb_left)) and (obj_controller.cooldown<=0){
 	        if (mouse_x>=__view_get( e__VW.XView, 0 )+50) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+70) 
 	        and (mouse_y>=__view_get( e__VW.YView, 0 )+117) 
 	        and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+137){
-	            if (cooldown<=0) and (fleet_all==0){
-	                cooldown=8000;
+	            if (obj_controller.cooldown<=0) and (fleet_all==0){
+	                obj_controller.cooldown=8000;
 	                fleet_all=1;
 	            }
-	            if (cooldown<=0) and (fleet_all==1){
-	                cooldown=8000;
+	            if (obj_controller.cooldown<=0) and (fleet_all==1){
+	                obj_controller.cooldown=8000;
 	                fleet_all=0;
 	            }
 	            if (fleet_all==1) then with(obj_fleet_select){
