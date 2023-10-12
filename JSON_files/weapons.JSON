@@ -1,242 +1,67 @@
 {
   "Choppa": {
+    "abbreviation": "Chop",
     "attack": {
       "standard": 28,
       "master_crafted": 32,
       "artifact": 36
     },
-    "melee_mod": {
-      "standard": 1,
-      "master_crafted": 1,
-      "artifact": 1
-    },
-    "ranged_mod": {
-      "standard": 0,
-      "master_crafted": 0,
-      "artifact": 0
-    },
-    "hp_mod": {
-      "standard": 0,
-      "master_crafted": 0,
-      "artifact": 0
-    },
-    "damage_resistance_mod": {
-      "standard": 0,
-      "master_crafted": 0,
-      "artifact": 0
-    },
-    "description": "A brutal close combat weapon used by Ork Boyz.",
-    "melee_hands": 1,
-    "ranged_hands": 0,
-    "ammo": 0,
-    "range": 1,
-    "spli": 1,
-    "arp": 0
+    // ... (other attributes)
   },
   "Snazzgun": {
+    "abbreviation": "Snazz",
     "attack": {
       "standard": 80,
       "master_crafted": 92,
       "artifact": 104
     },
-    "melee_mod": {
-      "standard": 0,
-      "master_crafted": 0,
-      "artifact": 0
-    },
-    "ranged_mod": {
-      "standard": 0,
-      "master_crafted": 0,
-      "artifact": 0
-    },
-    "hp_mod": {
-      "standard": 0,
-      "master_crafted": 0,
-      "artifact": 0
-    },
-    "damage_resistance_mod": {
-      "standard": 0,
-      "master_crafted": 0,
-      "artifact": 0
-    },
-    "description": "A high-tech Ork firearm that combines rapid fire with random and devastating effects.",
-    "melee_hands": 0,
-    "ranged_hands": 2,
-    "ammo": 0,
-    "range": 10,
-    "spli": 1,
-    "arp": 0
+    // ... (other attributes)
   },
   "Shuriken Pistol": {
+    "abbreviation": "ShurikP",
     "attack": {
       "standard": 25,
       "master_crafted": 28,
       "artifact": 31
     },
-    "melee_mod": {
-      "standard": 1,
-      "master_crafted": 1,
-      "artifact": 1
-    },
-    "ranged_mod": {
-      "standard": 0,
-      "master_crafted": 0,
-      "artifact": 0
-    },
-    "hp_mod": {
-      "standard": 0,
-      "master_crafted": 0,
-      "artifact": 0
-    },
-    "damage_resistance_mod": {
-      "standard": 0,
-      "master_crafted": 0,
-      "artifact": 0
-    },
-    "description": "A lightweight Eldar shuriken pistol that can be used in close combat.",
-    "melee_hands": 1,
-    "ranged_hands": 1,
-    "ammo": 0,
-    "range": 2.1,
-    "spli": 1,
-    "arp": 0
+    // ... (other attributes)
   },
-"Storm Shield": {
+  "Storm Shield": {
+    "abbreviation": "StShield",
     "attack": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
+      "standard": 0,
+      "master_crafted": 0,
+      "artifact": 0
     },
-    "melee_mod": {
-        "standard": 0.9,
-        "master_crafted": 0.9,
-        "artifact": 0.9
-    },
-    "ranged_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-    },
-    "hp_mod": {
-        "standard": 30,
-        "master_crafted": 30,
-        "artifact": 30
-    },
-    "damage_resistance_mod": {
-        "standard": 8,
-        "master_crafted": 8,
-        "artifact": 8
-    },
-    "description": "Protects twice as well when boarding. A powered shield that must be held with a hand. While powered by the marine's armor, it shimmers with blue energy.",
-    "melee_hands": 0.9,
-    "ranged_hands": 0,
-    "ammo": 0,
-    "range": 0,
-    "spli": 0,
-    "arp": 0
-},
-"Boarding Shield": {
+    // ... (other attributes)
+  },
+  "Boarding Shield": {
+    "abbreviation": "BoShield",
     "attack": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
+      "standard": 0,
+      "master_crafted": 0,
+      "artifact": 0
     },
-    "melee_mod": {
-        "standard": 0.9,
-        "master_crafted": 0.9,
-        "artifact": 0.9
-    },
-    "ranged_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-    },
-    "hp_mod": {
-        "standard": 15,
-        "master_crafted": 15,
-        "artifact": 15
-    },
-    "damage_resistance_mod": {
-        "standard": 4,
-        "master_crafted": 4,
-        "artifact": 4
-    },
-    "description": "Protects twice as well when boarding. Used in siege or boarding operations, this shield offers additional protection. It may be used with a 2-handed ranged weapon.",
-    "melee_hands": 0.9,
-    "ranged_hands": 0,
-    "ammo": 0,
-    "range": 0,
-    "spli": 0,
-    "arp": 0
-},
-"Hellgun": {
+    // ... (other attributes)
+  },
+  "Hellgun": {
+    "abbreviation": "HGun",
     "attack": {
-        "standard": 30,
-        "master_crafted": 34,
-        "artifact": 38
+      "standard": 30,
+      "master_crafted": 34,
+      "artifact": 38
     },
-    "melee_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-    },
-    "ranged_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-    },
-    "hp_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-    },
-    "damage_resistance_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-    },
-    "description": "",
-    "melee_hands": 0,
-    "ranged_hands": 2,
-    "ammo": 10,
-    "range": 6.1,
-    "spli": 0,
-    "arp": 0
-},
-"Hellrifle": {
+    // ... (other attributes)
+  },
+  "Hellrifle": {
+    "abbreviation": "HRifle",
     "attack": {
-        "standard": 150,
-        "master_crafted": 160,
-        "artifact": 170
+      "standard": 150,
+      "master_crafted": 160,
+      "artifact": 170
     },
-    "melee_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-    },
-    "ranged_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-    },
-    "hp_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-    },
-    "damage_resistance_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-    },
-    "description": "Normally used by Radical Inquisitors, it appears an antiquated rifle but fires razor-sharp shards of Daemonic matter.",
-    "melee_hands": 0,
-    "ranged_hands": 2,
-    "ammo": 0,
-    "range": 8,
-    "spli": 0,
-    "arp": 90
-},
+    // ... (other attributes)
+  },
 "Archeotech Laspistol": {
     "attack": {
         "standard": 120,
