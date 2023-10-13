@@ -102,7 +102,7 @@ if (instance_number(obj_temp5)>0) and (imp_ships<sha){
         with(obj_star){
             if (x>10) and (y>10) and ((owner==2) or (owner==3)){
                 var system_fleet_elements=0;
-                for (var i=1;i<11;i++;){
+                for (var i=1;i<11;i++){
                     system_fleet_elements+=present_fleet[i];
                 }
                 system_fleet_elements+=present_fleet[13];
@@ -1617,7 +1617,7 @@ for(var i=1; i<=99; i++){
                     obj_ini.experience[comp,marine_num]=0;
                     obj_ini.mobi[comp,marine_num]="";
                     obj_ini.age[comp,marine_num]=0;
-					obj_ini.TTRPG[comp,marine_num]={};
+					obj_ini.TTRPG[comp,marine_num]=new TTRPG_stats("chapter",comp,marine_num, "blank");
                     with(obj_ini){scr_company_order(0);}
                 }
                 scr_popup("He Built It",tixt,"tech_build","target_marine|"+string(marine_name)+"|"+string(comp)+"|"+string(marine_num)+"|");

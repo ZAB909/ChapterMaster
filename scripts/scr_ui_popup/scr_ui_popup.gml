@@ -30,7 +30,7 @@ function scr_ui_popup() {
 	        draw_set_halign(fa_left);
         
 	        var r=0,wob="",word="";
-	        for (r=1;r<10;r++;){
+	        for (r=1;r<10;r++){
 		        switch(wob){
 		        	case "Barbarian":
 		        		word="Heavy on leather, hides, and trophy body parts.";
@@ -116,7 +116,7 @@ function scr_ui_popup() {
 					if (s_base.inquis_hidden != 1){secret = false;}
 		        
 			        var r=0,butt="",alp=1,cost=0,fuck=obj_temp_build,tooltip="",tooltip2="",tooltip3="",tooltip4="",tcost=0;
-			        for (r=1;r<13;r++;){
+			        for (r=1;r<13;r++){
 			        	alp=1;
 			        	cost=0;
 			            if (r==1){if (s_base.forge>0) then alp=0.33;cost=1000;butt="Forge";tooltip2="A modest, less elaborate forge able to employ a handful of Astartes or Techpriest.";}
@@ -253,7 +253,7 @@ function scr_ui_popup() {
 			        draw_rectangle(xx+12,yy+45,xx+486,yy+378,1);
 		        
 			        var hh=1;
-			        for(i=0;i<2;i++;){if (((string_height_ext(string_hash_to_newline(string(woob)),-1,470))*hh)>330) then hh-=0.1;}
+			        for(i=0;i<2;i++){if (((string_height_ext(string_hash_to_newline(string(woob)),-1,470))*hh)>330) then hh-=0.1;}
 			        draw_text_ext_transformed(xx+14,yy+47,string_hash_to_newline(string(woob)),-1,470*(2+(hh*-1)),hh,hh,0);
 		        
 			        if (tooltip3!=""){
@@ -282,7 +282,7 @@ function scr_ui_popup() {
 	     woob=""
 	     var arsenal = 0,gene_vault=0;
     		if (planet_feature_bool(planet_upgrades, P_features.Arsenal)==1){
-    			var arsenal = planet_upgrades[search_planet_features(planet_upgrades, P_features.Arsenal)[0]];
+    		  var arsenal = planet_upgrades[search_planet_features(planet_upgrades, P_features.Arsenal)[0]];
  	          if (arsenal.inquis_hidden == 1) then woob="A moderate sized secret Arsenal, this structure has ample holding area to store any number of artifacts and wargear.  Chaos and Daemonic items will be sent here by your Master of Relics, and due to the secret nature of its existance, the Inquisition will not find them during routine inspections.";
 	          if (arsenal.inquis_hidden == 0) then woob="A moderate sized Arsenal, this structure has ample holding area to store any number of artifacts and wargear.  Since being discovered it may no longer hide Chaos and Daemonic wargear from routine Inquisition inspections.  You may wish to construct another Arsenal on a different planet.";   			
     		}
@@ -464,10 +464,10 @@ function scr_ui_popup() {
 	                }
 	                shew=2;
 	            }
-	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+	            if (mouse_check_button_pressed(mb_left)) and (obj_controller.cooldown<=0){
 	                if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+25) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
 	                    var onceh=0;
-	                    cooldown=8000;
+	                    obj_controller.cooldown=8000;
 	                    if (obj_controller.fest_scheduled>0) and (obj_controller.fest_sid=robj.capital_num[shit]) then onceh=1;
 	                    if (robj.capital_sel[shit]==1) and (onceh==0){
 	                        robj.capital_sel[shit]=0;
@@ -505,9 +505,9 @@ function scr_ui_popup() {
 	                }
 	                shew=2;
 	            }
-	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+	            if (mouse_check_button_pressed(mb_left)) and (obj_controller.cooldown<=0){
 	                if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+25) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
-	                    var onceh=0,cooldown=8000;
+	                    var onceh=0,obj_controller.cooldown=8000;
 	                    if (obj_controller.fest_scheduled>0) and (obj_controller.fest_sid=robj.frigate_num[shit]) then onceh=1;
 	                    if (robj.frigate_sel[shit]==1) and (onceh==0){
 	                        robj.frigate_sel[shit]=0;
@@ -537,9 +537,9 @@ function scr_ui_popup() {
 	            if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+209) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
 	                if (string_width(string_hash_to_newline(nem))*scale>135) then repeat(9){if (string_width(string_hash_to_newline(nem))*scale>135) then scale-=0.05;}shew=2;
 	            }
-	            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+	            if (mouse_check_button_pressed(mb_left)) and (obj_controller.cooldown<=0){
 	                if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+25) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
-	                    var onceh;onceh=0;cooldown=8000;
+	                    var onceh;onceh=0;obj_controller.cooldown=8000;
 	                    if (obj_controller.fest_scheduled>0) and (obj_controller.fest_sid=robj.escort_num[shit]) then onceh=1;
 	                    if (robj.escort_sel[shit]=1) and (onceh=0){robj.escort_sel[shit]=0;onceh=1;}
 	                    if (robj.escort_sel[shit]=0) and (onceh=0){robj.escort_sel[shit]=1;onceh=1;}
@@ -584,27 +584,27 @@ function scr_ui_popup() {
 	    if (fleet_all=0) then draw_text(__view_get( e__VW.XView, 0 )+50,__view_get( e__VW.YView, 0 )+117,string_hash_to_newline("[ ]"));
 	    if (fleet_all=1) then draw_text(__view_get( e__VW.XView, 0 )+50,__view_get( e__VW.YView, 0 )+116,string_hash_to_newline("[x]"));
     
-	    if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+	    if (mouse_check_button_pressed(mb_left)) and (obj_controller.cooldown<=0){
 	        if (mouse_x>=__view_get( e__VW.XView, 0 )+50) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+70) 
 	        and (mouse_y>=__view_get( e__VW.YView, 0 )+117) 
 	        and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+137){
-	            if (cooldown<=0) and (fleet_all==0){
-	                cooldown=8000;
+	            if (obj_controller.cooldown<=0) and (fleet_all==0){
+	                obj_controller.cooldown=8000;
 	                fleet_all=1;
 	            }
-	            if (cooldown<=0) and (fleet_all==1){
-	                cooldown=8000;
+	            if (obj_controller.cooldown<=0) and (fleet_all==1){
+	                obj_controller.cooldown=8000;
 	                fleet_all=0;
 	            }
 	            if (fleet_all==1) then with(obj_fleet_select){
-	                for (i=0;i<91;i++;){
+	                for (i=0;i<91;i++){
 	                    if (i<=20) then capital_sel[i]=1;
 	                    frigate_sel[i]=1;
 	                    escort_sel[i]=1;
 	                }
 	            }
 	            if (fleet_all==0) then with(obj_fleet_select){
-	                for (i=0;i<91;i++;){
+	                for (i=0;i<91;i++){
 	                    if (i<=20) then capital_sel[i]=0;
 	                    frigate_sel[i]=0;
 	                    escort_sel[i]=0;

@@ -225,7 +225,7 @@ function search_planet_features(planet, search_feature){
 	var feature_count = array_length(planet);
 	var feature_positions = [];
 	if (feature_count > 0){
-	for (var fc = 0; fc < feature_count; fc++;){
+	for (var fc = 0; fc < feature_count; fc++){
 		if (planet[fc].f_type == search_feature){
 			array_push(feature_positions, fc);
 		}
@@ -237,7 +237,7 @@ function search_planet_features(planet, search_feature){
 // returns 1 if dearch feature is on at least one planet in system returns 0 is search feature is not found in system
 function system_feature_bool(system, search_feature){
 	var sys_bool = 0;
-	for (var sys =1; sys<5; sys++;){
+	for (var sys =1; sys<5; sys++){
 		sys_bool = planet_feature_bool(system[sys], search_feature)
 		if (sys_bool==1){
 		break;}
@@ -251,7 +251,7 @@ function planet_feature_bool(planet, search_feature){
 	var feature_count = array_length(planet);
 	var feature_exists = 0;
 	if (feature_count > 0){
-	for (var fc = 0; fc < feature_count; fc++;){
+	for (var fc = 0; fc < feature_count; fc++){
 		if (planet[fc].f_type == search_feature){
 			feature_exists = 1;
 		}
@@ -289,7 +289,7 @@ function awake_tomb_world(planet){
 	var awake_tomb = 0;
 	 var tombs = search_planet_features(planet, P_features.Necron_Tomb);
 	 if (array_length(tombs)>0){
-		 for (var tomb =0;tomb<array_length(tombs);tomb++;){
+		 for (var tomb =0;tomb<array_length(tombs);tomb++){
 			 if (planet[tombs[tomb]].awake = 1){
 				awake_tomb = 1;
 			 }
@@ -306,7 +306,7 @@ function seal_tomb_world(planet){
 	var awake_tomb = 0;
 	 var tombs = search_planet_features(planet, search_feature);
 	 if (array_length(tombs)>0){
-		 for (var tomb =0;tomb<array_length(tombs);tomb++;){
+		 for (var tomb =0;tomb<array_length(tombs);tomb++){
 			 if (planet[tombs[tomb]].awake == 1){
 				awake_tomb = 1;
 				planet[tombs[tomb]].awake = 0;
@@ -323,7 +323,7 @@ function awaken_tomb_world(planet){
 	var awake_tomb = 0;
 	 var tombs = search_planet_features(planet, search_feature);
 	 if (array_length(tombs)>0){
-		 for (var tomb =0;tomb<array_length(tombs);tomb++;){
+		 for (var tomb =0;tomb<array_length(tombs);tomb++){
 			 if (planet[tombs[tomb]].awake == 0){
 				awake_tomb = 1;
 				planet[tombs[tomb]].awake = 1;
@@ -339,7 +339,7 @@ function awaken_tomb_world(planet){
 function scr_planetary_feature(planet_num) {
 	var plan_feat_count = array_length(p_feature[planet_num]);
 	//need to iterate over features instead of just looking at first
-	for (var f= 0; f < plan_feat_count;f++;){
+	for (var f= 0; f < plan_feat_count;f++){
 		var feat = p_feature[planet_num][f];
 		if (feat.player_hidden ==1){
 			feat.player_hidden =0;

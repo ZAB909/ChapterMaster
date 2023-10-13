@@ -349,7 +349,7 @@ if (obj_controller.cooldown<=0) and (loading=1){
 		var _ruins_list =  search_planet_features( _planet, P_features.Ancient_Ruins)
 		var _explore_ruins;
         if (array_length(_ruins_list) > 0){
-			for (var _ruin= 0; _ruin < array_length(_ruins_list); _ruin++;){
+			for (var _ruin= 0; _ruin < array_length(_ruins_list); _ruin++){
 				if ( _planet[_ruins_list[_ruin]].exploration_complete == false){
 					 _explore_ruins = _planet[_ruins_list[_ruin]];
 					break;

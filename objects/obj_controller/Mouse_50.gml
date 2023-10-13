@@ -106,7 +106,7 @@ if (menu==12) and (cooldown<=0) and (penitorium>0){
                 obj_ini.age[c,e]=0;
                 obj_ini.spe[c,e]="";
                 obj_ini.god[c,e]=0;
-                obj_ini.TTRPG[c,e]={};
+                obj_ini.TTRPG[c,e]=new TTRPG_stats("chapter",c,e, "blank");
                 diplo_char=c;
                 with(obj_ini){scr_company_order(obj_controller.diplo_char);}
                 re=1;
@@ -2101,6 +2101,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             selecting_location="";
             selecting_types="";
             selecting_ship=0;
+            selecting_planet=0;
             sel_uid=0;
             for(var i=0; i<501; i++){
                 man[i]="";
@@ -2220,86 +2221,117 @@ if (action_if_number(obj_saveload, 0, 0) &&
         }
     }
     // Selecting individual marines
-    if (menu==1) and (managing>0){
-        var x1, y1,eventing=false, bb="";
+    if (menu=1) and (managing>0){
+        //TODO make command roles a global variable for reuse
+        var command_roles = [
+            obj_ini.role[100,5],
+            obj_ini.role[100,14],
+            obj_ini.role[100,15],
+            obj_ini.role[100,16],
+            obj_ini.role[100,17],
+            "Codiciery",
+            "Lexicanum",
+            "Standard Bearer",
+            "Company Champion",
+            "Champion"
+        ]                        
+        var eventing=false, bb="";
         xx=__view_get( e__VW.XView, 0 )+0;
         yy=__view_get( e__VW.YView, 0 )+0;
-        var top,sel,temp1="",temp2="",temp3="",temp4="",temp5="";
-        top=man_current;
+        var top=man_current,sel,temp1="",temp2="",temp3="",temp4="",temp5="", squad_sel=0;
         var stop=0;
-        sel=top;
 
         if (man_size==0) then alll=0;
 
-        // selecting all
-        if ( point_in_rectangle(mouse_x, mouse_y, xx+1281, yy+607, xx+1409, yy+636)) and (cooldown<=0) and (alll==0){
-            cooldown=8;
-            scr_load_all(true);
-            selecting_types="%!@";
-        }
-        if (point_in_rectangle(mouse_x, mouse_y, xx+1281, yy+607, xx+1409, yy+636)) and (cooldown<=0) and (alll==1){
-            cooldown=8;
-            scr_load_all(false);
-            selecting_types="";
-        }
-        // This clicks on the squad_sel button
-        yy+=77;
-        x1=xx;
-        y1=yy;
-        var squad_sel=0;
-        if (cooldown<=0) {
-            for(var i=0; i<min(man_max,man_see); i++){
-                for(var j=0; j<500; j++){
-                    if (man[sel]=="hide") then sel+=1;
+        if (cooldown<=0){
+            // selecting all
+            if (point_in_rectangle(mouse_x,mouse_y,xx+1281,yy+607,xx+1409,yy+636)){
+                cooldown=8;
+                if (alll==0){
+                    scr_load_all(true);
+                    selecting_types="%!@";
+                } else if (alll==1){
+                    scr_load_all(false);
+                    selecting_types="";
                 }
-                if (mouse_x>=xx+25) and (mouse_y>=yy+64) and (mouse_x<xx+25+8) and (mouse_y<yy+85){
+            } 
+            // This clicks on the squad_sel button
+            yy+=77;
+            sel=top;
+            for(var i=0; i<min(man_max,man_see); i++){
+                while (man[sel]=="hide"){sel++;}
+                if point_in_rectangle(mouse_x,mouse_y,xx+25,yy+64,xx+25+8,yy+85){
                     if (squad_sel==0) and (squad[sel]!=0){
                         squad_sel=squad[sel];
                         cooldown=8;
                     }
                 }
                 yy+=21;
-                sel+=1;
+                sel++;
             }
+
         }
         // This is the 'select all of type' buttons
         sel=1;
         yy=__view_get( e__VW.YView, 0 )+77;
         if (sel_all!=""){
             // repeat(min(man_max,man_see)){
-            if (sel_all!="Command") and (sel_all!="man") and (sel_all!="vehicle") then scr_load_decide_loc("unit role",sel_all,false);
-            if (sel_all!="Command") and (sel_all!="man") and (sel_all!="vehicle") then scr_load_decide_loc("unit role",sel_all,true);
-            if (sel_all=="man") then scr_load_decide_loc("man","man",false);
-            if (sel_all=="vehicle") then scr_load_decide_loc("vehicle","vehicle",true);
-            if (sel_all=="Command") then scr_load_decide_loc("command","command",false);
-
+            var selection =false;
             for(var i=0; i<man_max; i++){
+                while (man[i]=="hide"){i++;}
+                if (man_sel[i]==1){
+                    selecting_location=ma_loc[sel];
+                    selecting_ship=ma_lid[sel];
+                    selecting_planet=ma_wid[sel];
+                    selection=true;
+                    break;
+                }
+            }                
+            if (!selection){
+                if (sel_all!="Command") and (sel_all!="man") and (sel_all!="vehicle"){
+                     scr_load_decide_loc("unit role",sel_all,false);
+                     scr_load_decide_loc("unit role",sel_all,true);
+                } else {
+                    switch(sel_all){
+                        case "man":
+                            scr_load_decide_loc("man","man",false);
+                            break;
+                        case "vehicle":
+                            scr_load_decide_loc("vehicle","man",true);
+                            break;
+                        case "Command":
+                            scr_load_decide_loc("Command","man",false);
+                            break;                                                
+                    }
+                }
+            }
+            var onceh;
+            for(var i=0; i<man_max; i++){
+                while (man[sel]=="hide"){sel++;}
+                onceh=0;
                 eventing=false;
-                var onceh=0;
+                selection=false;
                 // Prevent selecting marines that are in an event
                 if (fest_repeats>0){
                     if (fest_planet==0) and (fest_sid>0) and (ma_lid[sel]==fest_sid){eventing=true;}
                     if (fest_planet==1) and (fest_wid>0) and (ma_wid[sel]==fest_wid) and (ma_loc[sel]==fest_star){eventing=true;}
                 }
+                if (selecting_location!="")
+                and ((ma_loc[sel]!=selecting_location)
+                or (ma_wid[sel]!=selecting_planet))
+                or ((selecting_ship>0) and (ma_lid[sel]==0)){sel++;continue;}
                 // Selects all men of type
-                if (sel_all!="Command") and (sel_all!="man") and (sel_all!="vehicle"){
-                    if (man[sel]=="man") and (ma_role[sel]==sel_all) and (ma_loc[sel]!="Terra") and (ma_loc[sel]!="Mechanicus Vessel") 
-                    and (ma_loc[sel]!="Lost") and (ma_god[sel]<10) 
-                    and ((ma_loc[sel]==selecting_location) or (selecting_location=="")) 
-                    and ((ma_wid[sel]==selecting_planet) or (selecting_planet==0)) 
-                    and ((ma_lid[sel]==selecting_ship) or (selecting_ship==0)) and (eventing==false){
-                        onceh=0;
-                        if (man_sel[sel]==0) and (onceh==0){
+                if (!array_contains(["Command","man","vehicle"],sel_all)){
+                    if (man[sel]=="man") and (ma_role[sel]==sel_all)
+                    and (!array_contains(["Terra","Lost","Mechanicus Vessel"],ma_loc[sel]))
+                    and (ma_god[sel]<10)
+                    and (eventing==false){
+                        if (man_sel[sel]==0){
                             man_sel[sel]=1;
                             man_size+=scr_unit_size(ma_armour[sel],ma_role[sel],true);
                             onceh=1;
-                            if (selecting_location=="") and (ma_lid[sel]>0){
-                                selecting_location=obj_ini.ship_location[ma_lid[sel]];
-                                selecting_ship=ma_lid[sel];
-                                sel_loading=1;
-                            }
-                        }
-                        if (man_sel[sel]==1) and (onceh==0){
+                            selection=true;
+                        }else{
                             man_sel[sel]=0;
                             man_size-=scr_unit_size(ma_armour[sel],ma_role[sel],true);
                             onceh=1;
@@ -2307,22 +2339,16 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     }
                 }
                 // Selects all vehicles of type
-                if (sel_all!="Command") and (sel_all!="man") and (sel_all!="vehicle"){
+                if (sel_all!="Command") and (sel_all!="man") and (sel_all=="vehicle"){
                     if (man[sel]=="vehicle") and (ma_role[sel]==sel_all) and (ma_loc[sel]!="Terra") 
                     and (ma_loc[sel]!="Mechanicus Vessel") and (ma_loc[sel]!="Lost") and (ma_god[sel]<10) 
-                    and ((ma_loc[sel]==selecting_location) or (selecting_location=="")) 
-                    and ((ma_wid[sel]==selecting_planet) or (selecting_planet==0)) 
-                    and ((ma_lid[sel]==selecting_ship) or (selecting_ship==0)) and (eventing==false){
+                    and (eventing==false){
                         onceh=0;
                         if (man_sel[sel]==0) and (onceh==0){
                             man_sel[sel]=1;
                             man_size+=scr_unit_size("",ma_role[sel],true);
                             onceh=1;
-                            if (selecting_location=="") and (ma_lid[sel]>0){
-                                selecting_location=obj_ini.ship_location[ma_lid[sel]];
-                                selecting_ship=ma_lid[sel];
-                                sel_loading=1;
-                            }
+                            selection=true;
                         }
                         if (man_sel[sel]==1) and (onceh==0){
                             man_sel[sel]=0;
@@ -2335,19 +2361,13 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 if (sel_all=="man"){
                     if (man[sel]=="man") and (ma_loc[sel]!="Terra") and (ma_loc[sel]!="Lost") 
                     and (ma_loc[sel]!="Mechanicus Vessel") and (ma_god[sel]<10) 
-                    and ((ma_loc[sel]==selecting_location) or (selecting_location=="")) 
-                    and ((ma_wid[sel]==selecting_planet) or (selecting_planet==0)) 
-                    and ((ma_lid[sel]==selecting_ship) or (selecting_ship==0)) and (eventing==false){
+                    and (eventing==false){
                         onceh=0;
                         if (man_sel[sel]==0) and (onceh==0){
                             man_sel[sel]=1;
                             man_size+=scr_unit_size(ma_armour[sel],ma_role[sel],true);
                             onceh=1;
-                            if (selecting_location=="") and (ma_lid[sel]>0){
-                                selecting_location=obj_ini.ship_location[ma_lid[sel]];
-                                selecting_ship=ma_lid[sel];
-                                sel_loading=1;
-                            }
+                            selection=true;
                         }
                         if (man_sel[sel]==1) and (onceh==0){
                             man_sel[sel]=0;
@@ -2360,19 +2380,13 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 if (sel_all=="vehicle"){
                     if (man[sel]=="vehicle") and (ma_loc[sel]!="Terra") and (ma_loc[sel]!="Lost") 
                     and (ma_loc[sel]!="Mechanicus Vessel") and (ma_god[sel]<10) 
-                    and ((ma_loc[sel]==selecting_location) or (selecting_location=="")) 
-                    and ((ma_wid[sel]==selecting_planet) or (selecting_planet==0)) 
-                    and ((ma_lid[sel]==selecting_ship) or (selecting_ship==0)) and (eventing==false){
+                    and (eventing==false){
                         onceh=0;
                         if (man_sel[sel]==0) and (onceh==0){
+                            selection=true;
                             man_sel[sel]=1;
                             man_size+=scr_unit_size("",ma_role[sel],true);
                             onceh=1;
-                            if (selecting_location=="") and (ma_lid[sel]>0){
-                                selecting_location=obj_ini.ship_location[ma_lid[sel]];
-                                selecting_ship=ma_lid[sel];
-                                sel_loading=1;
-                            }
                         }
                         if (man_sel[sel]==1) and (onceh==0){
                             man_sel[sel]=0;
@@ -2384,18 +2398,10 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 // Selecting command
                 if (sel_all=="Command") and (man[sel]=="man") and (ma_loc[sel]!="Terra") 
                 and (ma_loc[sel]!="Mechanicus Vessel") and (ma_god[sel]<10) 
-                and ((ma_loc[sel]==selecting_location) or (selecting_location=="")) 
-                and ((ma_wid[sel]==selecting_planet) or (selecting_planet==0)) 
-                and ((ma_lid[sel]==selecting_ship) or (selecting_ship==0)) and (eventing==false){
+                and (eventing==false){
                     var is_command=0;
                     if (managing>0) and (managing<=10){
-                        if (ma_role[sel]==obj_ini.role[100,5]) or (ma_role[sel]==obj_ini.role[100,14]) then is_command=1;
-                        if (ma_role[sel]==obj_ini.role[100,15]) or (ma_role[sel]==obj_ini.role[100,16]) then is_command=1;
-                        if (ma_role[sel]==obj_ini.role[100,17]) then is_command=1;
-                        if (ma_role[sel]=="Codiciery") or (ma_role[sel]=="Lexicanum") then is_command=1;
-                        if (ma_role[sel]=="Standard Bearer") then is_command=1;
-                        if (ma_role[sel]=="Company Champion") then is_command=1;
-                        if (ma_role[sel]=="Champion") then is_command=1;
+                        if (array_contains(command_roles,ma_role[sel])) then is_command=1;
                     }
                     if (is_command==1){
                         onceh=0;
@@ -2403,11 +2409,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                             man_sel[sel]=1;
                             man_size+=scr_unit_size(ma_armour[sel],ma_role[sel],true);
                             onceh=1;
-                            if (selecting_location="") and (ma_lid[sel]>0){
-                                selecting_location=obj_ini.ship_location[ma_lid[sel]];
-                                selecting_ship=ma_lid[sel];
-                                sel_loading=1;
-                            }
+                            selection=true;
                         }
                         if (man_sel[sel]==1) and (onceh==0){
                             man_sel[sel]=0;
@@ -2416,22 +2418,31 @@ if (action_if_number(obj_saveload, 0, 0) &&
                         }
                     }
                 }
+                if (selection){
+                    if (selecting_location==""){
+                        selecting_location=ma_loc[sel];
+                        selecting_ship=ma_lid[sel];
+                        selecting_planet=ma_wid[sel];
+                        if (ma_wid[sel]==0) and (ma_lid[sel]>0){
+                            sel_loading=1;
+                            //selecting_location=obj_ini.ship_location[ma_lid[sel]];
+                        }
+                    }
+                }
                 yy+=20;
-                sel+=1;
+                sel++;
             }
             sel_all="";
         }
         sel=top;
         yy=__view_get( e__VW.YView, 0 )+77;
         for(var i=0; i<min(man_max,man_see); i++){
-            for(var j=0; j<500; j++){
-                if (man[sel]=="hide") then sel+=1;
-            }
+            while (man[sel]=="hide"){sel++;}
             eventing=false;
 
             // This is the actual individual click right here
-            if ((mouse_x>=xx+25+8) and (mouse_y>=yy+64) and (mouse_x<xx+974) and (mouse_y<yy+85) and (cooldown<=0)) 
-            or ((squad[sel]==squad_sel) and (squad_sel!=0)){
+            if (point_in_rectangle(mouse_x,mouse_y,xx+25+8,yy+64,xx+974,yy+85) and (cooldown<=0)) 
+            or ((squad[sel]=squad_sel) and (squad_sel!=0)){
                 var onceh=0,dib=0;
                 stop=0;
 
@@ -2448,29 +2459,29 @@ if (action_if_number(obj_saveload, 0, 0) &&
 
                 if ((man_sel[sel]==0) and (onceh==0) and (ma_god[sel]<10) and (ma_loc[sel]!="Terra") 
                 and (ma_loc[sel]!="Mechanicus Vessel") and (ma_loc[sel]!="Lost") and (eventing==false)) or (dib==1){
-                    if (selecting_location=="") and (man[sel]=="man"){
+                    if (selecting_location=="") and ((man[sel]=="man") or (man[sel]=="vehicle")){
                         selecting_location=ma_loc[sel];
                         selecting_ship=ma_lid[sel];
                         selecting_planet=ma_wid[sel];// sel_uid=ma_uid[sel];
-                    }
-                    if (selecting_location=="") and (man[sel]=="vehicle"){
-                        selecting_location=ma_loc[sel];
-                        selecting_ship=ma_lid[sel];
-                        selecting_planet=ma_wid[sel];// sel_uid=ma_uid[sel];
+                        if (ma_loc[sel]!=selecting_location) and (selecting_planet!=ma_wid[sel])then stop=1;
                     }
 
-                    if (selecting_location!="") and (man[sel]=="man") and (ma_loc[sel]!=selecting_location) then stop=1;
-                    if (selecting_location!="") and (man[sel]=="vehicle") and (ma_loc[sel]!=selecting_location) then stop=1;
+                    if (selecting_location!="")
+                        and (
+                            (man[sel]=="man") 
+                            or (man[sel]=="vehicle")
+                        )
+                        and (ma_loc[sel]!=selecting_location)
+                        and (selecting_planet!=ma_wid[sel])then stop=1;
 
-                    if (man[sel]=="man") and (ma_lid[sel]!=sel_loading) and (sel_loading!=0) then stop=1;
-                    if (man[sel]=="vehicle") and (ma_lid[sel]!=sel_loading) and (sel_loading!=0) then stop=1;
+                    if ((man[sel]=="man") or (man[sel]=="vehicle")) and (ma_lid[sel]!=sel_loading) and (sel_loading!=0) then stop=1;
 
                     // Continue with double click
                     if (dib==1) and (stop!=1){
                         for(var bi=1; bi<=300; bi++){
                             if (man_sel[bi]==0) and (ma_god[bi]<10) and (ma_loc[bi]!="Terra") 
                             and (ma_loc[bi]!="Mechanicus Vessel") and (ma_loc[bi]!="Lost"){
-                                if (ma_loc[bi]==selecting_location) and (ma_role[bi]==ma_role[double_was]) and (bi!=double_was){
+                                if (ma_loc[bi]==selecting_location) and (selecting_planet==ma_wid[bi]) and (ma_role[bi]==ma_role[double_was]) and (bi!=double_was){
                                     man_sel[bi]=1;
 
                                     if (man[bi]=="man") then man_size+=scr_unit_size(ma_armour[bi],ma_role[bi],true);
@@ -2519,7 +2530,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 }
             }
             yy+=20;
-            sel+=1;
+            sel++;
         }
         if (sel_all!="") then sel_all="";
         // End selecting
@@ -2564,8 +2575,8 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 with(obj_temp3){instance_destroy();}
             }
         }
-        // Other buttons go here
-        // Change equipment
+            // Other buttons go here
+            // Change equipment
         if (mouse_x>=xx+1018+141) and (mouse_y>yy+805) and (mouse_x<xx+1297) and (mouse_y<yy+831) 
         and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel") and (otha==0){
             if (man_size>0) and (instance_number(obj_popup)==0){
@@ -2655,7 +2666,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 }
             }
         }
-        // Reset equipment
+            // Reset equipment
         if (mouse_x>=xx+1018+141) and (mouse_y>yy+805-26) and (mouse_x<xx+1297) and (mouse_y<yy+831-26) 
         and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel") and (man_size>0){
             var god=0,nuuum=0;
@@ -2691,7 +2702,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             pip.units=nuuum;
             pip.alarm[1]=1;
         }
-        // Promote
+            // Promote
         if (mouse_x>=xx+1297) and (mouse_y>yy+805) and (mouse_x<xx+1436) and (mouse_y<yy+831) 
         and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel") and (man_size>0){
             if (sel_promoting==1) and (instance_number(obj_popup)==0){
@@ -2715,7 +2726,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 pip.units=nuuum;
             }
         }
-        // Jail
+            // Jail
         if (mouse_x>=xx+1438) and (mouse_y>=yy+803) and (mouse_x<xx+1578) and (mouse_y<yy+831) and (man_size>0){
             for(var f=1; f<=man_max; f++){
                 if (man[f]=="man") and (man_sel[f]==1) and (ma_loc[f]!="Terra") and (ma_loc[f]!="Mechanicus Vessel"){
@@ -2738,32 +2749,31 @@ if (action_if_number(obj_saveload, 0, 0) &&
             unload=0;
             alarm[6]=7;
         }
-    }
 
-
-    // Add bionics to marine(s)
-    if (scr_hit(xx+1300+141,yy+779,xx+1436+141,yy+801)==true) and (man_size>0) and (cooldown<=0){
-        var bionics_before,bionics_after,cah;
-        cooldown=8000;
-        cah=managing;
-        if (cah>10) then cah=0;
-        bionics_before=scr_item_count("Bionics");
-        bionics_after=bionics_before;
-        temp[114]="refresh";
-        if (bionics_before>0) then for(var p=1; p<=500; p++){
-            if (man_sel[p]==1) and (man[p]=="man") and (bionics_after>0) and (obj_ini.bio[cah,ide[p]]<10) 
-            and (obj_ini.loc[cah,ide[p]]!="Terra") and (obj_ini.loc[cah,ide[p]]!="Mechanicus Vessel"){
-                if (string_count("Dread",ma_armour[p])=0){
-					          obj_ini.TTRPG[cah, ide[p]].add_bionics();
-                    if (ma_promote[p]==10) then ma_promote[p]=0;
+        // Add bionics to marine(s)
+        if (scr_hit(xx+1300+141,yy+779,xx+1436+141,yy+801)==true) and (man_size>0) and (cooldown<=0){
+            var bionics_before,bionics_after,cah;
+            cooldown=8000;
+            cah=managing;
+            if (cah>10) then cah=0;
+            bionics_before=scr_item_count("Bionics");
+            bionics_after=bionics_before;
+            temp[114]="refresh";
+            if (bionics_before>0) then for(var p=1; p<=500; p++){
+                if (man_sel[p]==1) and (man[p]=="man") and (bionics_after>0) and (obj_ini.bio[cah,ide[p]]<10) 
+                and (obj_ini.loc[cah,ide[p]]!="Terra") and (obj_ini.loc[cah,ide[p]]!="Mechanicus Vessel"){
+                    if (string_count("Dread",ma_armour[p])=0){
+    					          obj_ini.TTRPG[cah, ide[p]].add_bionics();
+                        if (ma_promote[p]==10) then ma_promote[p]=0;
+                    }
+                }
+                if (bionics_before!=bionics_after){
+                    click=1;
+                    scr_add_item("Bionics",bionics_after-bionics_before);
                 }
             }
-            if (bionics_before!=bionics_after){
-                click=1;
-                scr_add_item("Bionics",bionics_after-bionics_before);
-            }
         }
-        // Set boarders
+            // Set boarders
         if (scr_hit(xx+1018,yy+779,xx+1018+141,yy+801)==true) and (man_size>0) and (cooldown<=0){
             var cah=managing;
             cooldown=8000;
@@ -2786,8 +2796,8 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 }
             }
         }
-        // Transfer
-        if (mouse_x>=xx+1297) and (mouse_y>yy+777) and (mouse_x<xx+1436) and (mouse_y<yy+804) and (selecting_location!="Terra") 
+            // Transfer
+        if point_in_rectangle(mouse_x,mouse_y,xx+1297, yy+777, xx+1436, yy+804) and (selecting_location!="Terra") 
         and (selecting_location!="Mechanicus Vessel") and (man_size>0){
             if (instance_number(obj_popup)==0){
                 var pip=instance_create(0,0,obj_popup);
@@ -2796,6 +2806,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
 
                 var god=0,nuuum=0,nuuum2=0,checky=0,check_number=0;
                 for(var f=1; f<=man_max; f++){
+                    if (god==1) then break;
                     if (god==0) and (man_sel[f]==1) and (man[f]=="man"){
                         god=1;
                         pip.unit_role=ma_role[f];
@@ -2831,7 +2842,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             }
         }
     }
-    // Selecting a ship to load
+        // Selecting a ship to load
     if (menu==30) and (managing>0){
         xx=xx+0;
         yy=yy+0;

@@ -979,7 +979,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
                 obj_ini.experience[company,obj_controller.ide[i]]=0;obj_ini.age[company,obj_controller.ide[i]]=0;
                 obj_ini.wid[company,obj_controller.ide[i]]=0;obj_ini.lid[company,obj_controller.ide[i]]=0;
                 obj_ini.spe[company,obj_controller.ide[i]]="";
-				obj_ini.TTRPG[company,obj_controller.ide[i]]={};
+				obj_ini.TTRPG[company,obj_controller.ide[i]]=new TTRPG_stats("chapter",company,obj_controller.ide[i], "blank");
 
                 // show_message(string(company)+" - "+string(obj_ini.role[company,obj_controller.ide[i]]));
 

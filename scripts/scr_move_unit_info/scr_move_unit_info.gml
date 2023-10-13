@@ -6,11 +6,17 @@ function scr_move_unit_info(start_company,end_company, start_slot, end_slot){
 		if (unit.squad != "none"){
 			var squad_member;
 			var found = false;
-			for (var r=0;r<array_length(obj_ini.squads[unit.squad].members);r++;){
+			for (var r=0;r<array_length(obj_ini.squads[unit.squad].members);r++){
 				squad_member = obj_ini.squads[unit.squad].members[r];
 				if (squad_member[0] == unit.company) and (squad_member[1] == unit.marine_number){
-					obj_ini.squads[unit.squad].members[r] = [end_company,end_slot];
-					found = true;
+					// if unit will no longer be same company as squad remove unit from squad
+					if (end_company == squad_member[0]){
+						obj_ini.squads[unit.squad].members[r] = [end_company,end_slot];
+						found = true;
+					} else{
+						array_delete(obj_ini.squads[unit.squad].members, r, 1);
+						found = false;
+					}
 					break;
 				}
 			}

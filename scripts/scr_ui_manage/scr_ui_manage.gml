@@ -666,10 +666,18 @@ function scr_ui_manage() {
 	                }
                 
 	                // New powerfists for termi/tartaros
-	                if (ui_weapon[1]!=0) and (fix_left==8) then draw_sprite(spr_weapon_powfist3,0,xx+1208+ui_xmod[1],yy+178+ui_ymod[1]);
-	                if (ui_weapon[2]!=0) and (fix_right==8) then draw_sprite(spr_weapon_powfist3,1,xx+1208+ui_xmod[2],yy+178+ui_ymod[2]);
-	                if (ui_weapon[1]!=0) and (fix_left==8.1) then draw_sprite(spr_weapon_lightning2,0,xx+1208+ui_xmod[1],yy+178+ui_ymod[1]);
-	                if (ui_weapon[2]!=0) and (fix_right==8.1) then draw_sprite(spr_weapon_lightning2,1,xx+1208+ui_xmod[2],yy+178+ui_ymod[2]);
+	                if (ui_weapon[1]!=0){
+		                if  (fix_left==8){
+		                	draw_sprite(spr_weapon_powfist3,0,xx+1208+ui_xmod[1],yy+178+ui_ymod[1])
+		                } else if(fix_left==8.1){
+		                	draw_sprite(spr_weapon_lightning2,0,xx+1208+ui_xmod[1],yy+178+ui_ymod[1]);
+		                }
+		                if (fix_right==8){
+		                	draw_sprite(spr_weapon_powfist3,1,xx+1208+ui_xmod[2],yy+178+ui_ymod[2]);
+		                } else if(fix_right==8.1){
+		                	draw_sprite(spr_weapon_lightning2,1,xx+1208+ui_xmod[2],yy+178+ui_ymod[2]);
+		                }
+	            	}
                 
 	                // Draw the fixed upper hands for Terminators or Tartaros
 	                if (terg==1){
@@ -879,16 +887,25 @@ function scr_ui_manage() {
 	            temp2=string(ma_loc[sel]);
             
 	            if (ma_wid[sel]!=0){
-	                if (ma_wid[sel]==1) then temp2+=" I";
-	                if (ma_wid[sel]==2) then temp2+=" II";
-	                if (ma_wid[sel]==3) then temp2+=" III";
-	                if (ma_wid[sel]==4) then temp2+=" IV";
+	                if (ma_wid[sel]==1){temp2+=" I"}
+	                else if (ma_wid[sel]==2){temp2+=" II"}
+	                else if (ma_wid[sel]==3){temp2+=" III"}
+	                else if (ma_wid[sel]==4){temp2+=" IV"}
 	            }
 	            temp3=string(round(ma_health[sel]))+"% HP";temp4="";
 	            // Need abbreviations here
 
-	            ma_ar="";ma_we1="";ma_we2="";ma_ge="";ma_mb="";ttt=0;
-	            ar_ar=0;ar_we1=0;ar_we2=0;ar_ge=0;ar_mb=0;
+	            ma_ar="";
+	            ma_we1="";
+	            ma_we2="";
+	            ma_ge="";
+	            ma_mb="";
+	            ttt=0;
+	            ar_ar=0;
+	            ar_we1=0;
+	            ar_we2=0;
+	            ar_ge=0;
+	            ar_mb=0;
 
 				if (ma_armour[sel]!=""){
 					ma_ar=scr_wep_abbreviate(ma_armour[sel]);// vehicle weapon 3
@@ -957,21 +974,44 @@ function scr_ui_manage() {
 	        // Squads
 	        var sqi="";
 	        draw_set_color(c_black);
-	        if (squad[sel]==1) or (squad[sel]==11) or (squad[sel]==21) then draw_set_color(c_red);
-	        if (squad[sel]==2) or (squad[sel]==12) or (squad[sel]==22) then draw_set_color(c_green);
-	        if (squad[sel]==3) or (squad[sel]==13) or (squad[sel]==23) then draw_set_color(c_orange);
-	        if (squad[sel]==4) or (squad[sel]==14) or (squad[sel]==24) then draw_set_color(c_aqua);
-	        if (squad[sel]==5) or (squad[sel]==15) or (squad[sel]==25) then draw_set_color(c_fuchsia);
-	        if (squad[sel]==6) or (squad[sel]==16) or (squad[sel]==26) then draw_set_color(c_green);
-	        if (squad[sel]==7) or (squad[sel]==17) or (squad[sel]==27) then draw_set_color(c_blue);
-	        if (squad[sel]==8) or (squad[sel]==18) or (squad[sel]==28) then draw_set_color(c_fuchsia);
-	        if (squad[sel]==9) or (squad[sel]==19) or (squad[sel]==29) then draw_set_color(c_maroon);
-	        if (squad[sel]==10) or (squad[sel]==20) or (squad[sel]==30) then draw_set_color(c_teal);
+	        var squad_modulo = squad[sel]%10;
+	        switch(squad_modulo){
+	        	case 1:
+	        		draw_set_color(c_red);
+	        		break;
+	        	case 2:
+	        		draw_set_color(c_green);
+	        		break;
+	        	case 3:
+	        		draw_set_color(c_orange);
+	        		break;
+	        	case 4:
+	        		draw_set_color(c_aqua);
+	        		break;
+	        	case 5:
+	        		draw_set_color(c_fuchsia);
+	        		break;
+	        	case 6:
+	        		draw_set_color(c_green);
+	        		break;
+	        	case 7:
+	        		draw_set_color(c_blue);
+	        		break;
+	        	case 8:
+	        		draw_set_color(c_fuchsia);
+	        		break;	
+	        	case 9:
+	        		draw_set_color(c_maroon);
+	        		break;
+	        	case 0:
+	        		draw_set_color(c_teal);
+	        		break;		        			        		        			        			        			        			        			        			        		
+	        }
         
 	        if (sel>0){
-	            if (squad[sel]==squad[sel+1]) and (squad[sel]!=squad[sel-1]) then sqi="top";
-	            if (squad[sel]==squad[sel+1]) and (squad[sel]==squad[sel-1]) then sqi="mid";
-	            if (squad[sel]!=squad[sel+1]) and (squad[sel]==squad[sel-1]) then sqi="bot";
+	            if (squad[sel]==squad[sel+1]) and (squad[sel]!=squad[sel-1]){sqi="top"}
+	            else if (squad[sel]==squad[sel+1]) and (squad[sel]==squad[sel-1]){sqi="mid"}
+	            else if (squad[sel]!=squad[sel+1]) and (squad[sel]==squad[sel-1]) then sqi="bot";
 	        }
 	        if (sqi==""){
 	            draw_rectangle(xx+25,yy+64,xx+25+8,yy+85,0);

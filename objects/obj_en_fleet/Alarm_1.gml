@@ -1185,7 +1185,7 @@ if (action=""){
                         	e=0;
                         	arsenal = thata.p_upgrades[t][arsenal_search[0]];
                         	arsenal.inquis_hidden = 0;
-                            for (e=0;e<array_length(obj_ini.artifact_tags[e]);e++;){
+                            for (e=0;e<array_length(obj_ini.artifact_tags[e]);e++){
                                 if (obj_ini.artifact[e]!="") and (obj_ini.artifact_loc[e]=thata.name) and (obj_controller.und_armouries<=1){
                                     if (string_count("Daemon",obj_ini.artifact_tags[e])>0) then dem+=1;
                                     if (string_count("Chaos",obj_ini.artifact_tags[e])>0) then cha+=1;
