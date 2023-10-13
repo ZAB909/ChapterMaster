@@ -451,7 +451,16 @@ function scr_load(argument0, argument1) {
 	                new_star.p_lasers[g]=ini_read_real("Star","sr"+string(i)+"p_lasers"+string(g),0);
 	                new_star.p_silo[g]=ini_read_real("Star","sr"+string(i)+"p_silo"+string(g),0);
 	                new_star.p_defenses[g]=ini_read_real("Star","sr"+string(i)+"p_defenses"+string(g),0);
-	                new_star.p_upgrades[g]=ini_read_string("Star","sr"+string(i)+"upg"+string(g),"");
+					new_star.p_upgrades[g] = [];
+					var  p_upgrades = ini_read_string("Star","sr"+string(i)+"feat"+string(g),"");
+					if (p_upgrades != ""){
+						var p_upgrades = json_parse(base64_decode(p_upgrades));
+						for (var feat = 0;feat < array_length(p_upgrades);feat++){
+							var new_feat = new new_planet_feature(p_upgrades[feat].f_type);
+							new_feat.load_json_data(p_upgrades[feat]);
+							array_push(new_star.p_upgrades[g], new_feat);
+						}
+					}					
 
 	                new_star.p_orks[g]=ini_read_real("Star","sr"+string(i)+"or"+string(g),0);
 	                new_star.p_tau[g]=ini_read_real("Star","sr"+string(i)+"ta"+string(g),0);
@@ -804,6 +813,18 @@ function scr_load(argument0, argument1) {
 	            obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");			
 	        }
 
+	        obj_ini.squads = [];
+	        var squad_fetch = ini_read_string("Mar","squads","");
+	        if (squad_fetch != ""){
+	        	squad_fetch = json_parse(base64_decode(squad_fetch));
+	        	for (i=0;i<array_length(squad_fetch);i++){
+	        		array_push(obj_ini.squads, new unit_squad());
+	        		obj_ini.squads[i].load_json_data(json_parse(squad_fetch[i]));
+	        	}
+	        }
+
+	        obj_ini.squad_types = json_parse(base64_decode(ini_read_string("Mar","squad_types","")));
+
 	    }
 
 
@@ -1023,6 +1044,7 @@ function scr_load(argument0, argument1) {
 	    obj_controller.restart_cooperation=ini_read_real("Res","cooperation",0);
 	    obj_controller.restart_purity=ini_read_real("Res","purity",0);
 	    obj_controller.restart_stability=ini_read_real("Res","stability",0);
+	    obj_controller.squads = false;
 
 	    i=99;
 	    repeat(3){i+=1;

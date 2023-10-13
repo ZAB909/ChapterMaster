@@ -102,7 +102,7 @@ ready=false;
 chaos_gods = {};
 function build_chaos_gods(){
 	var _god_names = ["Khorne", "Slaanesh", "Nurgle", "Tzeentch"]
-	for (var _i = 0; _i < 4; _i++;){
+	for (var _i = 0; _i < 4; _i++){
 		chaos_gods[$ _god_names[_i]] = {};
 		chaos_gods[$ _god_names[_i]].favour = 0;
 		chaos_gods[$ _god_names[_i]].god_name = _god_names[_i];
@@ -284,7 +284,14 @@ for(var i=100; i<103; i++){
     obj_controller.r_wep2[i,18]="Storm Bolter";
     obj_controller.r_armour[i,18]="Power Armour";
     obj_controller.r_gear[i,18]="";
-    obj_controller.r_mobi[i,18]="";                
+    obj_controller.r_mobi[i,18]=""; 
+
+    obj_controller.r_role[i,19]="Veteran Sergeant";
+    obj_controller.r_wep1[i,19]="Chainsword";
+    obj_controller.r_wep2[i,19]="Storm Bolter";
+    obj_controller.r_armour[i,19]="Power Armour";
+    obj_controller.r_gear[i,19]="";
+    obj_controller.r_mobi[i,19]="";                     
 } // 100 is defaults, 101 is the allowable starting equipment
 // ** Resets all races and equipement for 100 **
 for(var i=0; i<21; i++){
@@ -1329,6 +1336,11 @@ gene_seed=20;
 if (string_count("Sieged",obj_ini.strin2)>0) then gene_seed=floor(random_range(300,500));
 if (global.chapter_name=="Lamenters") then gene_seed=30;
 if (global.chapter_name=="Soul Drinkers") then gene_seed=60;
+
+//   ** sets up the starting squads**
+squads = true;
+game_start_squads()
+squads = false;
 // ** Sets up the number of marines per company **
 marines=0;
 marines=obj_ini.specials+obj_ini.firsts+obj_ini.seconds+obj_ini.thirds+obj_ini.fourths+obj_ini.fifths;

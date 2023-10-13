@@ -277,7 +277,7 @@ if (obj_controller.selecting_planet!=0){
 	var feat_count;
 	var feat_count = array_length(target.p_feature[pp]);
 	if ( feat_count > 0){
-	for (var i =0; i <  feat_count ;i++;){
+	for (var i =0; i <  feat_count ;i++){
 		if (target.p_feature[pp][i].planet_display != 0){
 			if (target.p_feature[pp][i].player_hidden == 1){planet_displays += "???? |"}else{
 				planet_displays += target.p_feature[pp][i].planet_display + "|";

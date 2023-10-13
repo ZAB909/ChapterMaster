@@ -215,9 +215,6 @@ if (did==1){
                 fleet.capital_num[fleet.capital_number]=f;
                 fleet.capital_uid[fleet.capital_number]=obj_ini.ship_uid[fleet.capital_num[fleet.capital_number]];
                 break;
-            default:
-                show_debug_message("🚀 ~ file: Obj_controller Alarm_1.gml:201 ~ obj_ini.ship_size[f]:", obj_ini.ship_size[f])
-                break;
         }
     }
     
@@ -587,6 +584,7 @@ if (did==1){
     // Ork planets here
     with(obj_star){
         if (planets>0) and (owner==2) and (p_type[1]!="Dead"){
+            //this object simply acts as a counter of ork owned planets
             instance_create(x,y,obj_temp3);
         }
     }

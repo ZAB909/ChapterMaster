@@ -175,7 +175,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        descr="More of a sword than knife proper, this tough and thick blade becomes a deadly weapon in the hand of an Astartes.";}
 	    if (thawep="Sarissa"){atta=40;arp=0;rang=1;spli=1;
 	        descr="A vicious combat attachment that is attached to Bolters, in order to allow them to be used in melee combat.";}
-	    if (thawep="Chainsword"){atta=50;arp=0;rang=1;melee_hands+=1.1;spli=1;
+	    if (thawep="Chainsword"){atta=50;arp=0;rang=1;melee_hands+=1;spli=1;
 	        descr="A standard Chainsword.  It is popular among Assault Marines due to the raw power, even with multiple opponents";}
 	    if (thawep="Chainaxe"){atta=90;arp=0;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;
 	        descr="Able to be duel wielded. A weapon most frequently seen in the hands of Chaos, this Chainaxe uses motorized chainsaw teeth to maim and tear.";}
@@ -657,20 +657,28 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	// End repeat(2)
 
 	if (argument6="description") or (argument6="description_long"){
-	    if (!instance_exists(obj_shop)) and (!instance_exists(obj_ncombat)) and (obj_controller.menu=1) and (obj_controller.managing>0){
+	    if ((!instance_exists(obj_shop)) and (!instance_exists(obj_ncombat)) and (obj_controller.menu=1) and (obj_controller.managing>0)) or (obj_controller.squads == true){
 	        // obj_controller.temp[9000]="Melee Hands: "+string(melee_hands)+", Ranged Hands: "+string(ranged_hands);
+	        var melee_limit = 2
+	        var ranged_limit = 2
+	        if(array_contains(["Terminator Armour", "Tartaros"], marine_armour[argument3])){
+	        	melee_limit+=2;
+	        	ranged_limit++;
+	        } else if(obj_controller.squads == true){
+	        	if(array_contains(["Terminator Armour", "Tartaros"], obj_controller.marine_armour[0])){
+	        		melee_limit+=2;
+	        		ranged_limit++;
+	        	}	
+	        }        
 	        if (melee_hands<=2) or (argument4=true) then obj_controller.ui_melee_penalty=0;
 	        if (ranged_hands<=2) or (argument4=true) then obj_controller.ui_ranged_penalty=0;
-	        if (melee_hands>2) and (argument4=false) then obj_controller.ui_melee_penalty=1;
-	        if (ranged_hands>2) and (argument4=false) then obj_controller.ui_ranged_penalty=1;
+	        if (melee_hands>melee_limit) and (argument4=false) then obj_controller.ui_melee_penalty=1;
+	        if (ranged_hands>ranged_limit) and (argument4=false) then obj_controller.ui_ranged_penalty=1;
 	    }
 
 	    if (argument6="description") then return(descr);
 	    if (argument6="description_long") then return(descr2);
 	}
-
-
-
 
 
 	if (argument6!="description") and (argument6!="description_long"){

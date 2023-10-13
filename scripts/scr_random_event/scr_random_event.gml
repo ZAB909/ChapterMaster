@@ -230,13 +230,13 @@ function scr_random_event(execute_now) {
 	if (chosen_event == EVENT.strange_behavior){
 		debugl("RE: Strange Behavior");
 	    var marine_and_company = scr_random_marine("",0);
-		if(marine_and_company == undefined)
+		if(marine_and_company == "none")
 		{
 			debugl("RE: Strange Behavior, couldn't pick a space marine");
 			exit;
 		}
-		var marine=floor(marine_and_company);
-		var company=round((marine_and_company-marine)*100);
+		var marine=marine_and_company[1];
+		var company=marine_and_company[0];
 		var role=obj_ini.role[company,marine];
 		var text = string(role)+" "+string(obj_ini.name[company,marine]);
 		var company_text = scr_convert_company_to_string(company);
@@ -306,14 +306,14 @@ function scr_random_event(execute_now) {
 	
 	else if (chosen_event == EVENT.promotion){
 		debugl("RE: Promotion");
-	    var marine_and_company = scr_random_marine(choose(obj_ini.role[100,8],obj_ini.role[100,12],obj_ini.role[100,9],obj_ini.role[100,10]),0);
-		if(marine_and_company == undefined)
+	    var marine_and_company = scr_random_marine([obj_ini.role[100,8],obj_ini.role[100,12],obj_ini.role[100,9],obj_ini.role[100,10]],0);
+		if(marine_and_company == "none")
 		{
 			debugl("RE: Promotion, couldn't pick a space marine");
 			exit;
 		}
-		var marine=floor(marine_and_company);
-		var company=round((marine_and_company-marine)*100);
+		var marine=marine_and_company[1];
+		var company=marine_and_company[0];
 		
 		var role=obj_ini.role[company,marine];
 		var text = string(role)+" "+string(obj_ini.name[company,marine]);
@@ -339,12 +339,11 @@ function scr_random_event(execute_now) {
 	else if (chosen_event == EVENT.strange_building){
 		debugl("RE: Fey Mood");
 		var marine_and_company = scr_random_marine(obj_ini.role[100,16],0);
-		if(marine_and_company == undefined){
-		
+		if(marine_and_company == "none"){
 			exit;
 		}
-		var marine = floor(marine_and_company);
-		var company = (marine_and_company-marine)*100;
+		var marine = marine_and_company[1];
+		var company = marine_and_company[0];
 		var text="";
 		var role=obj_ini.role[company,marine];
 	    text = role +" "+ string(obj_ini.name[company,marine]);
