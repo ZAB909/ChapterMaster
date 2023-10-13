@@ -10,16 +10,16 @@ if (__b__){
 
     var num, why=0,onceh=0;
     if (obj_controller.cooldown<=0) then {
-        for (var i = -3; i <= 9; i += 4) {
+        for (var i = 1; i <= 9; i += 4) {
             for (var j = 0; j < 4; j++) {
-                if (ship[i + j] != "") {
+                if (obj_ini.ship[i + j] != "") {
                     onceh = 0;
                     var leftX = xx + j * 117 + 47;
                     var topY = yy + 107 + why;
                     var rightX = xx + j * 117 + 161;
                     var bottomY = yy + 122 + why;
 
-                    if (mouse_x >= leftX && mouse_y >= topY && mouse_x < rightX && mouse_y < bottomY) {
+                    if point_in_rectangle(mouse_x, mouse_y, leftX, topY, rightX, bottomY){
                         if (onceh == 0) {
                             onceh = 1;
                             obj_controller.cooldown = 8;
@@ -173,7 +173,7 @@ if (__b__){
             onceh=0;
             if (all_sel=0) and (onceh=0){
                 for(var i=1; i<=30; i++){
-                    if (ship[i]!="") and (ship_all[i]==0){
+                    if (obj_ini.ship[i]!="") and (ship_all[i]==0){
                         ship_all[i]=1;
                         ships_selected+=1;
                     }
@@ -183,7 +183,7 @@ if (__b__){
             }
             if (all_sel=1) and (onceh=0){
                 for(var i=1; i<=30; i++){
-                    if (ship[i]!="") and (ship_all[i]==1){
+                    if (obj_ini.ship[i]!="") and (ship_all[i]==1){
                         ship_all[i]=0;
                         ships_selected-=1;
                     }
