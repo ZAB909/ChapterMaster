@@ -71,7 +71,7 @@ function scr_ui_display_weapons(argument0, termi_tartaros, equiped_weapon) {
         set_as_melee_onehand(spr_weapon_chsword, rl);
     }
     if (string_count("Combat Knife", equiped_weapon) > 0) {
-        set_as_normal_ranged(spr_weapon_knife, rl);
+        set_as_melee_onehand(spr_weapon_knife, rl);
     }
     if (string_count("Power Sword", equiped_weapon) > 0) {
         set_as_melee_onehand(spr_weapon_powswo, rl);
