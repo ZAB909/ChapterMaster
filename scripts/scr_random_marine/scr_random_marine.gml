@@ -8,7 +8,7 @@ function scr_random_marine(role, exp_req, search_params="none"){
 	company=0;i=0;
 	var company_list = [0,1,2,3,4,5,6,7,8,9,10]
 
-	for (var comp_shuffle=0;comp_shuffle<11;comp_shuffle++;){
+	for (var comp_shuffle=0;comp_shuffle<11;comp_shuffle++){
 		// this ensures that companies are searched randomly
 		var new_comp = irandom(array_length(company_list)-1);
 		company = company_list[new_comp];
@@ -23,7 +23,7 @@ function scr_random_marine(role, exp_req, search_params="none"){
 	    	comp_size = array_length(obj_ini.name[company]);
 
 	    	//TODO make sure marines within company are searched randomly
-	        for(i=1;i<comp_size;i++;){
+	        for(i=1;i<comp_size;i++){
 	        	match = true
 	        	unit = obj_ini.TTRPG[company, i]
 
@@ -36,7 +36,7 @@ function scr_random_marine(role, exp_req, search_params="none"){
 	        	//if list of matchable roles given
 	        	if (is_array(role)){
             		match = false;
-            		for(r=0;r<array_length(role);r++;){
+            		for(r=0;r<array_length(role);r++){
             			if (unit_role == role[r]){
             				match = true;
             				break;
@@ -60,7 +60,7 @@ function scr_random_marine(role, exp_req, search_params="none"){
             		if (struct_exists(search_params, "trait")){
             			//list of traits (all required) need an option for if only one is required
             			if (is_array(search_params[$ "trait"])){
-            				for(var trait=0;trait<array_length(search_params[$ "trait"]);trait++;){
+            				for(var trait=0;trait<array_length(search_params[$ "trait"]);trait++){
             					if (!array_contains(unit.traits, search_params[$ "trait"][trait])){
             						match = false;
             						break;
@@ -76,7 +76,7 @@ function scr_random_marine(role, exp_req, search_params="none"){
             			if (!match) then continue;
             		}
             		if (struct_exists(search_params, "stat")){
-            			for (var stat = 0;stat<array_length(search_params[$ "stat"]);stat++;){
+            			for (var stat = 0;stat<array_length(search_params[$ "stat"]);stat++){
             				if (search_params[$ "stat"][stat][2] =="more"){
             					if (unit[$ search_params[$ "stat"][stat][0]] < search_params[$ "stat"][stat][1]){
             						match = false;

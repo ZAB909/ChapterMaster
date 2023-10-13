@@ -62,7 +62,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
         // //v<300 is an arbitrary number, probably linked to a company unit limit somewhere
         // // while ((deploying_unit.name[company, v] != "" ||
         // //         deploying_unit.veh_role[company, v] != "") && v < 300) {
-		for (v=1;v<array_length(obj_ini.TTRPG[company]);v++;){
+		for (v=1;v<array_length(obj_ini.TTRPG[company]);v++){
             okay = 0;
 			unit = obj_ini.TTRPG[company, v];
 			if (unit.name() == ""){continue}
@@ -153,7 +153,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                     }else if (array_contains( [deploying_unit.role[100,8], $"{deploying_unit.role[100, 15]} Aspirant", $"{deploying_unit.role[100, 14]} Aspirant"] , unit.role())) {
                         col = obj_controller.bat_tactical_column;				    //tactical_marines
                         new_combat.tacticals += 1;
-                    }else if (unit.role() = deploying_unit.role[100, 3]) {			//veterans
+                    }else if (unit.role() = deploying_unit.role[100, 3]) or (unit.role() = deploying_unit.role[100, 19]) {			//veterans and veteran sergeants
                         col = obj_controller.bat_veteran_column;
                         new_combat.veterans += 1;
                     }else if (unit.role() = deploying_unit.role[100, 9]) {			//devestatiors

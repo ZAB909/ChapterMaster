@@ -50,7 +50,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
     if (string_count("Splinter", obj_ini.strin2) > 0) then splinter = 1;
 	
 		//loop through companies. try and load whole company onto single ship else spread company across largest ships with remaining space
-	for (_comp = 0; _comp<10;_comp++;){
+	for (_comp = 0; _comp<10;_comp++){
 		vet_check = 0;
 
 		var _company_size = 0;
@@ -58,7 +58,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
 		var company_vehicle = [];//array of companies vehicles
 		var  ship_fit = true;
 
-		for (_unit =1; _unit<(array_length(obj_ini.role[_comp])-1); _unit++;){
+		for (_unit =1; _unit<(array_length(obj_ini.role[_comp])-1); _unit++){
 			_marine = obj_ini.TTRPG[_comp, _unit];
 					// check if marine exists
 			if (_marine.name() != "") {
@@ -93,7 +93,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
 		}		
 			
 			 //fetch company vehicles
-		for (_unit =1;_unit <array_length(obj_ini.veh_role[_comp]);_unit++;){
+		for (_unit =1;_unit <array_length(obj_ini.veh_role[_comp]);_unit++){
 			 if array_contains(_vehicles,obj_ini.veh_role[_comp, _unit]){
 					 var _vehic_size = scr_unit_size(false, obj_ini.veh_role[_comp, _unit], false, false);
 					 _company_size += _vehic_size;
@@ -106,15 +106,15 @@ function scr_start_load(fleet, load_from_star, load_options) {
 		}		
 		//if entire company won't fit on ship test to see if there is any ship in the fleet the company will fit on;
 		 if (ship_fit == false){
-			 for (ship_loop =  1; ship_loop< array_length(obj_ini.ship_carrying);ship_loop++;){
+			 for (ship_loop =  1; ship_loop< array_length(obj_ini.ship_carrying);ship_loop++){
 				 if (escort_load == 2) and (obj_ini.ship_capacity[ship_loop] < 250){continue}
 				  if ((obj_ini.ship_carrying[ship_loop] + _company_size) <= obj_ini.ship_capacity[ship_loop]){
 					  //load marines
-					  for (var m = 0; m <array_length(company_loader);m++;){
+					  for (var m = 0; m <array_length(company_loader);m++){
 						   company_loader[m].load_marine(ship_loop);
 					  }
 					  //load vehicles
-					  for (var m = 0; m <array_length(company_vehicle);m++;){
+					  for (var m = 0; m <array_length(company_vehicle);m++){
 						   load_vehicles(company_vehicle[m][0], company_vehicle[m][1], ship_loop,  company_vehicle[m][2]);
 					  }
 					  ship_fit = true;
@@ -124,7 +124,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
 			 }
 			 // if there are no ships that will hold the entire company loop all ships and jam pac the fuckers in in
 			 if (ship_fit == false){
-				 for (var ship_loop = 1; ship_loop<array_length(obj_ini.ship_carrying); ship_loop++;){
+				 for (var ship_loop = 1; ship_loop<array_length(obj_ini.ship_carrying); ship_loop++){
 				 if (escort_load ==2) and (obj_ini.ship_capacity[ship_loop] < 250){continue}				 
 				 if (obj_ini.ship_carrying[ship_loop] < obj_ini.ship_capacity[ship_loop]){
 					 ship_has_space = true;	
@@ -132,7 +132,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
 					 var comp_edit =[];
 					 var veh_edit = [];
 					 
-					 for (var m = 0; m <array_length(company_loader);m++;){
+					 for (var m = 0; m <array_length(company_loader);m++){
 						 if ((obj_ini.ship_carrying[ship_loop] + company_loader[m].size) <= obj_ini.ship_capacity[ship_loop]){
 							company_loader[m].load_marine(ship_loop);
 						 } else {array_push(comp_edit, company_loader[m])}
@@ -140,7 +140,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
 							 ship_has_space = false;
 						 }
 					  }
-					  for (var m = 0; m <array_length(company_vehicle);m++;){
+					  for (var m = 0; m <array_length(company_vehicle);m++){
 						  if ((obj_ini.ship_carrying[ship_loop] + company_vehicle[m][2]) <= obj_ini.ship_capacity[ship_loop]){
 							load_vehicles(company_vehicle[m][0], company_vehicle[m][1], ship_loop, company_vehicle[m][2]);
 						  } else {array_push( veh_edit, company_vehicle[m])}
@@ -154,10 +154,10 @@ function scr_start_load(fleet, load_from_star, load_options) {
 				 }
 			 }
 		 } else{
-			 for (var m = 0; m <array_length(company_loader);m++;){
+			 for (var m = 0; m <array_length(company_loader);m++){
 				company_loader[m].load_marine(ship);
 			}
-			for (var m = 0; m <array_length(company_vehicle);m++;){
+			for (var m = 0; m <array_length(company_vehicle);m++){
 				load_vehicles(company_vehicle[m][0], company_vehicle[m][1], ship,  company_vehicle[m][2]);
 			}		 
 		 }

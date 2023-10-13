@@ -11,11 +11,11 @@ function scr_special_view(command_group) {
 
 	var squads=0, squad_typ="", squad_loc=0, squad_members=0;
 
-	for (i=0;i<20;i++;){
+	for (i=0;i<20;i++){
 		sel_uni[i]="";
 		sel_veh[i]="";
 	}
-	for (i=0;i<501;i++;){
+	for (i=0;i<501;i++){
 	    man[i]="";
 	    ide[i]=0;
 	    man_sel[i]=0;
@@ -88,12 +88,12 @@ function scr_special_view(command_group) {
 
 	b=0;
 	if (command_group==11) or (command_group==0){				//HQ units
-		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++;){
+		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++){
 			bad=0;
 			if (obj_ini.name[0,v]== ""){continue;}
 			if (obj_ini.lid[0,v]>0){
-			   var ham;ham=obj_ini.lid[0,v];
-			   if (obj_ini.ship_location[ham]="Lost") then continue;
+			   	var ham=obj_ini.lid[0,v];
+			   	if (obj_ini.ship_location[ham]="Lost") then continue;
 			}
 
 			unit = obj_ini.TTRPG[0,v];	    	
@@ -109,7 +109,7 @@ function scr_special_view(command_group) {
 	}
 
 	if (command_group==12) or (command_group==0){// Apothecarion
-		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++;){
+		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++){
 			bad=0;
 		    if (obj_ini.lid[company,v]>0){
 		        var ham=obj_ini.lid[0,v];
@@ -127,7 +127,7 @@ function scr_special_view(command_group) {
 
 	v=0;
 	if (command_group==13) or (command_group==0){// Librarium
-		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++;){
+		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++){
 		    bad=0;
 		    if (obj_ini.lid[company,v]>0){
 		        var ham=obj_ini.lid[0,v];
@@ -153,7 +153,7 @@ function scr_special_view(command_group) {
 
 	v=0;
 	if (command_group==14) or (command_group==0){// Reclusium
-		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++;){
+		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++){
 		    bad=0;
 		    if (obj_ini.lid[company,v]>0){
 		        var ham=obj_ini.lid[0,v];
@@ -178,7 +178,7 @@ function scr_special_view(command_group) {
 	v=0;
 	squads=0;
 	if (command_group==15) or (command_group==0){// Armamentarium
-		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++;){
+		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++){
 		    bad=0;
 		    if (obj_ini.lid[company,v]>0){
 		        var ham=obj_ini.lid[0,v];
@@ -203,7 +203,7 @@ function scr_special_view(command_group) {
 	i=0;
 	last_vehicle=0;
 
-	for (i=1;i<101;i++;){// 100
+	for (i=1;i<101;i++){// 100
 	    if (obj_ini.veh_race[company,i]!=0){b+=1;
 	        man[b]="vehicle";
 	        ide[b]=i;
@@ -227,7 +227,7 @@ function scr_special_view(command_group) {
 
 	i=0;
 	squads=0;
-	for (i=1;i<101;i++;){
+	for (i=1;i<101;i++){
 		onceh=0;
 	    var ahuh=0;
 	    if (man[i]="man"){if (ma_role[i]!="") then ahuh=1;}
@@ -237,7 +237,7 @@ function scr_special_view(command_group) {
 	        // Select All
 	        var go=0,op=0,w=0;
 	        if (man[i]=="man"){
-	            for (w=0;w<20;w++;){
+	            for (w=0;w<20;w++){
 	                if (sel_uni[w]=="") and (op==0) then op=w;
 	                if (sel_uni[w]==ma_role[i]) then go=1;
 	            }
@@ -246,7 +246,7 @@ function scr_special_view(command_group) {
 	        go=0;
 	        op=0;
 	        if (man[i]=="vehicle"){
-	            for (w=0;w<20;w++;){
+	            for (w=0;w<20;w++){
 	                if (sel_veh[w]=="") and (op==0) then op=w;
 	                if (sel_veh[w]==ma_role[i]) then go=1;
 	            }

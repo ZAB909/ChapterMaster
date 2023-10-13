@@ -198,6 +198,7 @@ big_mofo=10;
 en_scouts=0;
 en_tacticals=0;
 en_sgts=0;
+en_vet_sgts=0;
 en_veterans=0;
 en_devastators=0;
 en_assaults=0;
