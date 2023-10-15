@@ -226,6 +226,7 @@ function unit_squad(squad_type) constructor{
 
 	// for creating a new sergeant from existing squad members
 	static new_sergeant = function(veteran=false){
+		var exp_unit;
 		var unit;
 		var highest_exp = 0;
 		var member_length = array_length(members);
@@ -239,17 +240,19 @@ function unit_squad(squad_type) constructor{
 			}			
 			if (unit.experience() > highest_exp){
 				highest_exp = unit.experience();
-				var exp_unit = unit;
+				exp_unit = unit;
 			};
 		}
-		if (unit.name() != ""){
-			var new_role;
-			if (veteran == true){
-				new_role = obj_ini.role[100,19];
-			} else{
-				new_role= obj_ini.role[100,18];
+		if (array_length(members) > 0) and (is_struct(exp_unit)){
+			if (exp_unit.name() != ""){
+				var new_role;
+				if (veteran == true){
+					new_role = obj_ini.role[100,19];
+				} else{
+					new_role= obj_ini.role[100,18];
+				}
+				exp_unit.update_role(new_role);
 			}
-			exp_unit.update_role(new_role);
 		}
 	}
 
