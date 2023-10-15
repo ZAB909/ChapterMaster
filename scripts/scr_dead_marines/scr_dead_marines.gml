@@ -18,7 +18,7 @@ function scr_dead_marines(run) {
 
 	i=0;
 	var unit, squad;
-	if (run > 1){
+	if (run == 1){
 		for (company=0;company<11;company++){
 			comp_length = array_length(obj_ini.name[company]);
 			clean = true;
