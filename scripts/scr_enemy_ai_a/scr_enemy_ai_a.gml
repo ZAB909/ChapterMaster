@@ -621,12 +621,12 @@ function scr_enemy_ai_a() {
         					scr_alert("red", "owner", string(name) + " " + string(run) + " has been overwhelmed by Orks!", x, y);
         					if (visited == 1) { //visited variable check whether the star has been visisted or not 1 for true 0 for false
             					if (p_type[run] == "Forge") {
-					                dispo[run] -= 10; // 10 Disposition decrease for the planet govrnor if it's overrun by orks
-					                obj_controller.disposition[3] -= 10; // obj_controller.disposition[3] refer to the disposition of the toaster jocks.
+					                dispo[run] -= 5; // 10 Disposition decrease for the planet govrnor if it's overrun by orks
+					                obj_controller.disposition[3] -= 5; // obj_controller.disposition[3] refer to the disposition of the toaster jocks.
 					            } else if (planet_feature_bool(p_feature[run], P_features.Sororitas_Cathedral) or(p_type[run] == "Shrine")) {
 					                dispo[run] -= 10; // diso[run] is the disposition of the planet. where run refer to the planet that is currently running the code.
-					                obj_controller.disposition[5] -= 5; // obj_controller.disposition[2] refer to the disposition of the sororitas while 3 refer to mechanicus
-					            } else dispo[run] -= 10;
+					                obj_controller.disposition[5] -= 3; // obj_controller.disposition[2] refer to the disposition of the sororitas while 3 refer to mechanicus
+					            } else dispo[run] -= 5;
 					        }
 					    } // diso[run] is the disposition of the planet. where run refer to the planet that is currently running the code.
 					    if (badd = 2) and(p_tyranids[run] = 0) and(p_necrons[run] = 0) and(p_sisters[run] = 0) {

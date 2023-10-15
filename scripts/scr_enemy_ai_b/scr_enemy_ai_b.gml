@@ -154,15 +154,15 @@ function scr_enemy_ai_b() {
 				if (visited==1) { //visited variable check whether the star has been visited or not 1 for true 0 for false
 					if(p_type[i]=="Forge") { 
 				  		dispo[i]-=10; // 10 disposition decreases for the respective planet
-				  		obj_controller.disposition[3]-=10;// 10 disposition decrease for the toaster Fetishest since they aren't that numerous
+				  		obj_controller.disposition[3]-=3;// 10 disposition decrease for the toaster Fetishest since they aren't that numerous
 					} 
 				    else if(planet_feature_bool(p_feature[i], P_features.Sororitas_Cathedral) or (p_type[i]=="Shrine")) {
-                        dispo[i]-=10; // similarly 10 disposition decrease, note those nurses are a bit pissy and
+                        dispo[i]-=4; // similarly 10 disposition decrease, note those nurses are a bit pissy and
                                       // and you can't easily gain their favor because you cannot ask them to "step down" from office.
 			            obj_controller.disposition[5]-=5;
 					} // the missus diplomacy 0 is when they cringe when you enter the office and cannot ask them for a date.
 				    else { 
-						dispo[i]-=10;
+						dispo[i]-=3;
 					}  // This condition apply when imperium is on control, Because they control so many worlds, you aren't going to gain favor by removing the needle. Also that's your job Astrate take your complaints to your father.
                 }
 
