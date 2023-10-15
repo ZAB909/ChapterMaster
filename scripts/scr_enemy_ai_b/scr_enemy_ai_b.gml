@@ -148,8 +148,24 @@ function scr_enemy_ai_b() {
 	        if (p_heresy[i]+p_heresy_secret[i]>=70) and (rando<=25) and (p_owner[i]!=7) then contin=1;
 	        if (p_heresy[i]+p_heresy_secret[i]>=90) and (rando<=40) and (p_owner[i]!=7) then contin=1;
         
-	        if (contin>0) and (p_pdf[i]=0) and (p_guardsmen[i]=0) and (p_tau[i]=0) and (p_orks[i]=0){p_owner[i]=10;
+	        if (contin>0) and (p_pdf[i]=0) and (p_guardsmen[i]=0) and (p_tau[i]=0) and (p_orks[i]=0){
+				p_owner[i]=10;
 	            scr_alert("red","owner",string(name)+" "+string(i)+" has fallen to heretics!",x,y);
+				if (visited==1) { //visited variable check whether the star has been visited or not 1 for true 0 for false
+					if(p_type[i]=="Forge") { 
+				  		dispo[i]-=10; // 10 disposition decreases for the respective planet
+				  		obj_controller.disposition[3]-=3;// 10 disposition decrease for the toaster Fetishest since they aren't that numerous
+					} 
+				    else if(planet_feature_bool(p_feature[i], P_features.Sororitas_Cathedral) or (p_type[i]=="Shrine")) {
+                        dispo[i]-=4; // similarly 10 disposition decrease, note those nurses are a bit pissy and
+                                      // and you can't easily gain their favor because you cannot ask them to "step down" from office.
+			            obj_controller.disposition[5]-=5;
+					} // the missus diplomacy 0 is when they cringe when you enter the office and cannot ask them for a date.
+				    else { 
+						dispo[i]-=3;
+					}  // This condition apply when imperium is on control, Because they control so many worlds, you aren't going to gain favor by removing the needle. Also that's your job Astrate take your complaints to your father.
+                }
+
 	        }
         
 	        if (contin>0) and (p_type[i]!="Space Hulk"){
@@ -267,7 +283,20 @@ function scr_enemy_ai_b() {
                 
 	                if (have=targ) then badd=2;
                 
-	                if (badd=1) then scr_alert("red","owner","Planet "+string(name)+" "+string(i)+" has succeeded to the Tau Empire!",x,y);
+	                if (badd=1){ 
+						scr_alert("red","owner","Planet "+string(name)+" "+string(i)+" has succeeded to the Tau Empire!",x,y);
+						if (visited==1) {  //visited variable checks whether the star has been visited by the chapter or not 1 for true 0 for false
+							if(p_type[i]=="Forge") { 
+								dispo[i]-=10; // 10 disposition decreases for the respective planet
+								obj_controller.disposition[3]-=10; // 10 disposition decrease for the toaster Fetishest since they aren't that many toasters in 41 millennia
+							}  
+							else if(planet_feature_bool(p_feature[i], P_features.Sororitas_Cathedral) or (p_type[i]=="Shrine")) { 
+								dispo[i]-=10; // 10 disposition decreases for the respective planet
+								obj_controller.disposition[5]-=5;} 
+							else dispo[i]-=10; // you had only 1 job.
+						} 
+					}
+
 	                if (badd=2){
 	                    scr_popup("System Lost","The "+string(name)+" system has been taken by the Tau Empire!","tau","");owner=8;
 	                    scr_event_log("red","System "+string(name)+" has been taken by the Tau Empire.");
@@ -281,10 +310,7 @@ function scr_enemy_ai_b() {
     
     
 	    }// End repeat
-    
-    
-    
-    
+       
 	}
 
 
@@ -303,14 +329,6 @@ function scr_enemy_ai_b() {
 	        if (spread=1) then p_tyranids[i]+=1;
 	    }
 	}
-
-
-
-
-
-
-
-
 
 	i=0;
 	repeat(4){i+=1;
