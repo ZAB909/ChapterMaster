@@ -114,6 +114,7 @@ function scr_company_order(company) {
 	var squadless={};
 	// find units not in a squad
 	for (i=0;i<company_length;i++){
+		if (!is_struct(TTRPG[co,i])) then TTRPG[co,i] = new TTRPG_stats("chapter", co, i, "blank");
 		unit = TTRPG[co,i];
 		if (unit.squad=="none") and (unit.name()!=""){
 			if (!struct_exists(squadless, unit.role)){

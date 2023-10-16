@@ -4,9 +4,9 @@ function scr_load(argument0, argument1) {
 			var marStruct = ini_read_string("Mar","Struct"+string(company)+"."+string(marine),"");
 			if (marStruct != ""){
 				marStruct = json_parse(base64_decode(marStruct));
-			} else {marStruct = {};}
-			obj_ini.TTRPG[company, marine] = new TTRPG_stats("chapter", company, marine);
-			obj_ini.TTRPG[company, marine].load_json_data(marStruct);		
+				obj_ini.TTRPG[company, marine] = new TTRPG_stats("chapter", company, marine);
+				obj_ini.TTRPG[company, marine].load_json_data(marStruct);
+			} else {obj_ini.TTRPG[company, marine] = new TTRPG_stats("chapter", company, marine,"blank");}		
 	};
 	var rang,i,g,stars,pfleets,efleets;
 	rang=0;i=0;g=0;stars=0;pfleets=0;efleets=0;
@@ -731,7 +731,7 @@ function scr_load(argument0, argument1) {
 	            if (good=0){
 	                mah-=1;
 	                if (mah=0){mah=600;coh-=1;}
-	                if (coh=0) and (mah=0) then good=1;
+	                if (coh=0) and (mah=-1) then good=1;
 	                if (coh<0) then good=1;
 
 	                // var temp_name;temp_name="";
