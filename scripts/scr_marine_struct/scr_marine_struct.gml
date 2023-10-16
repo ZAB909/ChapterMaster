@@ -608,6 +608,20 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			melee_att = (((weapon_skill/100) * (strength/20)) + (experience()/1000)+0.1);
 			return melee_att;
 		};
+
+		static remove_from_squad = function(){
+			if (squad != "none"){
+				if (squad < array_length(obj_ini.squads)){
+					for (var r=0;r<array_length(obj_ini.squads[squad].members);r++){
+						squad_member = obj_ini.squads[squad].members[r];
+						if (squad_member[0] == company) and (squad_member[1] == marine_number){
+							array_delete(obj_ini.squads[squad].members, r, 1);
+						}
+					}				
+				}
+				squad = "none"
+			}
+		}
 		static marine_location = function(){
 			var location_id,location_name;
 			var location_type = obj_ini.wid[company,marine_number];
