@@ -1,6 +1,7 @@
 function scr_chapter_new(argument0) {
 
 	// argument0 = chapter
+	// this file does pre-made chapters in the lore players can select from
 
 
 	var i;i=-1;
@@ -360,35 +361,6 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	        company_title[7]="The Wardens of Rynn";company_title[8]="The Red Path";company_title[9]="The Fists of Rynn";
 	        company_title[10]="The Wayfinders";
 
-}
-	
-	if (argument0="Soul Drinkers"){founding="N/A";points=200;
-	    selected_chapter=16;chapter=argument0;icon=14;icon_name="lam";founding=5;
-	    fleet_type=2;strength=2;purity=10;stability=2;cooperation=2;
-	    adv[1]="Melee Enthusiasts";adv[2]="Kings of Space";adv[3]="Boarders";adv[4]="Daemon Binders";dis[1]="Suspicious";
-	    homeworld="Dead";homeworld_name="Entymion";
-	    homeworld_exists=0;recruiting_exists=1;
-	    recruiting_world="Death";recruiting_name=scr_star_name();
-	    homeworld_rule=0;aspirant_trial="Challenge";
-	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Purple";color_to_secondary="Purple";color_to_trim="Gold";
-	    color_to_pauldron2="Purple";color_to_pauldron="Purple";color_to_lens="Red";
-	    color_to_weapon="Purple";col_special=0;trim=1;
-	    battle_cry="Cold and Hard, Soul Drinkers";
-	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
-	    mutations=1;mutations_selected=1;
-	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=1;ossmodula=0;membrane=0;
-	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
-	    disposition[1]=60;// Prog
-	    disposition[2]=15;disposition[3]=20;disposition[4]=10;disposition[5]=25;
-	    disposition[6]=50;// Astartes
-	    disposition[7]=0;// Reserved
-	    chapter_master_name="Sarpedon";chapter_master_melee=7;
-	    chapter_master_ranged=3;chapter_master_specialty=3;
-	}
-
-
-
 
 
 	if (argument0="Lamenters"){founding=5;points=100;
@@ -415,8 +387,57 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    chapter_master_name="Malakim Phoros";chapter_master_melee=2;
 	    chapter_master_ranged=2;chapter_master_specialty=2;
 	}
+	
+	if (argument0="Celestial Lions"){ //TODO
+		selected_chapter=15;chapter=argument0;icon=8;icon_name="sl";founding=0;fleet_type=1;strength=2;purity=8;stability=8;cooperation=10;
+	    adv[1]="Bolter Drilling";adv[2]="Lightning Warriors";adv[3]="Paragon";adv[4]="Enemy:Orks";dis[1]="Suspicious";dis[2]=
+	    homeworld="Lava";homeworld_name="Elysium IX";homeworld_exists=1;recruiting_exists=0;
+	    homeworld_rule=1;aspirant_trial="Apprenticeship";discipline="pyromancy";
+	    // Pauldron2: Left, Pauldron: Right
+	    color_to_main="Green";color_to_secondary="Green";color_to_trim="Copper";
+	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Dark Red";
+	    color_to_weapon="Black";col_special=0;trim=0;
+	    fmaster="Vulkan He'stan";
+	    battle_cry="Into the fires of battle!  Unto the anvil of war";// monastery_name="Fortress of Hera";master_name=
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
+	    mutations=1;mutations_selected=1;
+	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
+	    zygote=0;betchers=0;catalepsean=0;secretions=1;occulobe=0;mucranoid=0;
+	    // disposition[1]=0;// Prog
+	    disposition[2]=80;disposition[3]=65;disposition[4]=65;disposition[5]=60;
+	    disposition[6]=60;// Astartes
+	    disposition[7]=0;// Reserved
+	    chapter_master_name="Ekene Dubaku";chapter_master_melee=2;
+	    chapter_master_ranged=5;chapter_master_specialty=1;
+	   
+	}
 
-
+}
+	
+	if (argument0="Soul Drinkers"){founding="N/A";points=200;
+	    selected_chapter=16;chapter=argument0;icon=14;icon_name="lam";founding=5;
+	    fleet_type=2;strength=2;purity=10;stability=2;cooperation=2;
+	    adv[1]="Melee Enthusiasts";adv[2]="Kings of Space";adv[3]="Boarders";adv[4]="Daemon Binders";dis[1]="Suspicious";
+	    homeworld="Dead";homeworld_name="Entymion";
+	    homeworld_exists=0;recruiting_exists=1;
+	    recruiting_world="Death";recruiting_name=scr_star_name();
+	    homeworld_rule=0;aspirant_trial="Challenge";
+	    // Pauldron2: Left, Pauldron: Right
+	    color_to_main="Purple";color_to_secondary="Purple";color_to_trim="Gold";
+	    color_to_pauldron2="Purple";color_to_pauldron="Purple";color_to_lens="Red";
+	    color_to_weapon="Purple";col_special=0;trim=1;
+	    battle_cry="Cold and Hard, Soul Drinkers";
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
+	    mutations=1;mutations_selected=1;
+	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=1;ossmodula=0;membrane=0;
+	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
+	    disposition[1]=60;// Prog
+	    disposition[2]=15;disposition[3]=20;disposition[4]=10;disposition[5]=25;
+	    disposition[6]=50;// Astartes
+	    disposition[7]=0;// Reserved
+	    chapter_master_name="Sarpedon";chapter_master_melee=7;
+	    chapter_master_ranged=3;chapter_master_specialty=3;
+	}
 
 	if (argument0="Doom Benefactors"){points=100;
 	    selected_chapter=135;chapter=argument0;icon=0;icon_name="eye";founding=0;scr_icon("");

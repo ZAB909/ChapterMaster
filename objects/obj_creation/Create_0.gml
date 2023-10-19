@@ -67,7 +67,7 @@ chapter_string="Unnamed";
 chapter_year=0;
 icon=1;icon_name="da";custom=0;
 founding=1;
-chapter_tooltip="";
+chapter_tooltip=""; // comment out the chapter tooltip of ones that aren't playable.
 points=0;maxpoints=100;
 fleet_type=1;
 strength=5;cooperation=5;
@@ -129,7 +129,7 @@ chapter_master_specialty=2;
 
 
 var i;i=-1;
-repeat(60){i+=1;chapter_id[i]="";chapter_tooltip[i]="Error: The tooltip is missing.";company_title[i]="";}
+repeat(60){i+=1;chapter_id[i]="";chapter_tooltip[i]="This Chapter is not added yet! Stay tuned on discord for new updates.";company_title[i]="";}
 chapter_id[1]="Dark Angels";
 chapter_tooltip[1]="The Dark Angels claim complete allegiance and service to the Emperor of Mankind, though their actions and secret goals seem to run counter to this- above all other things they strive to atone for an ancient crime of betrayal.";
 
@@ -160,8 +160,8 @@ chapter_id[9]="Raven Guard";
 chapter_id[10]="Black Templars";
 //chapter_tooltip[10]="Not adhering to the Codex Astartes, Black Templars are a Chapter on an Eternal Crusade with unique organization and high numbers. Masters of assault, they charge at the enemy with zeal unmatched. They hate psykers, and as such, have no Librarians.";
 
-chapter_id[11]="Minotaurs";
-//chapter_tooltip[11]="Bronze-clad Astartes of unknown Founding, the Minotaurs prefer to channel their righteous fury in a massive storm of fire, with tanks and artillery. They could be considered the Inquisition’s attack dog, since they often attack fellow chapters suspected of heresy.";
+chapter_id[11]="Celestial Lions";
+chapter_tooltip[11]="After a disagreement with the Inquisiton of Exterminatus upon the world of Khattar, the Lions made an enemy of the Holy Ordos. Later, they brought their full strength chapter into the conflict that was Third War of Armageddon. Led astray many times into Ork ambushes by suspicious intel, including directly into Gargants. The Chapter was reduced to 96 Lions in the span of several solar weeks.";
 
 chapter_id[12]="Blood Ravens";
 chapter_tooltip[12]="Of unknown origins and Founding, the origins of the Blood Ravens are shrouded in mystery and are believed to be tied to a dark truth. This elusive Chapter is drawn to the pursuit of knowledge and ancient lore and produces an unusually high number of Librarians.";
