@@ -27,125 +27,156 @@ function scr_planet_map(planet_type,grid_width, grid_height){
             tile_info[#buildings, x, y] = ds_list_create();
             tile_info[#barracks, x, y] = false;
             tile_info[#astartes_monastery, x, y] = false;
+            tile_info[#terrain_type, x, y] = "grass";
+            tile_info[#height, x, y] = 1;
             // TODO continue with the planet generation and types
             // Customize the hex grid based on planet type
             switch (planet_type) {
                 var terrain = random(100);
                 case "Lava":
                     // Defaults to magma
-                    tile_info[#magma, x, y] = true;
+                    tile_info[#terrain_type, x, y] = "magma";
                     // Adds rocks
                     if (terrain < 30){
-                        tile_info[#rock, x, y] = true;
-                        tile_info[#magma, x, y] = false;
+                        tile_info[#terrain_type, x, y] = "rock";
                     }
                     break;
                 case "Desert":
                     // Defaults to sand while on desert planet
-                    tile_info[#sand, x, y] = true;
+                    tile_info[#terrain_type, x, y] = "sand";
                     // Add oasis
                     if (terrain < 5) {
-                        tile_info[#oasis, x, y] = true;
-                        tile_info[#sand, x, y] = false;
+                        tile_info[#terrain_type, x, y] = "oasis";
+                        tile_info[#height, x, y] = 0;
                     }
                     // Add sand dunes
                     else if (terrain < 50) {
-                        tile_info[#sand_dunes, x, y] = true;
-                        tile_info[#sand, x, y] = false;
+                        tile_info[#terrain_type, x, y] = "sand_dunes";
+                        tile_info[#height, x, y] = 2;
                     }
                     break;
                 case "Hive":
                     // Default is waste lands
-                    tile_info[#waste_land, x, y] = true;
+                    tile_info[#terrain_type, x, y] = "waste_land";
                     // Add hive city
                     if(terrain < 10){
-                        tile_info[#hive_city, x, y] = true;
-                        tile_info[#waste_land, x, y] = false;
+                        tile_info[#terrain_type, x, y] = "hive_city";
                     }
                     // Add mountains
-                    else if (terrain < 20) {
-                        tile_info[#mountain, x, y] = true;
-                        tile_info[#waste_land, x, y] = false;
+                    else if (terrain < 30) {
+                        tile_info[#terrain_type, x, y] = "mountain";
+                        tile_info[#height, x, y] = 3;
+                    }
+                    else if (terrain <50) {
+                        tile_info[#terrain_type, x, y] = "hills";
+                        tile_info[#height, x, y] = 2;
                     }
                     break;
                 case "Death":
                     // Defaults to tall grass
-                    tile_info[#tall_grass, x, y] = true;
+                    tile_info[#terrain_type, x, y] = "tall_grass";
                     // Add a mountain
                     if (terrain < 10) {
-                        tile_info[#mountain, x, y] = true;
-                        tile_info[#tall_grass, x, y] = false;
+                        tile_info[#terrain_type, x, y] = "mountain";
+                        tile_info[#height, x, y] = 3;
                     }
                     // Add a jungle
                     else if (terrain < 60) {
-                        tile_info[#jungle, x, y] = true;
-                        tile_info[#tall_grass, x, y] = false;
+                        tile_info[#terrain_type, x, y] = "jungle";
                     }
                     break;
                 case "Agri":
                     // Defaults to plains
-                    tile_info[#plains, x, y] = true;
+                    tile_info[#terrain_type, x, y] = "plains";
                     if (terrain < 50){
-                        tile_info[#field, x, y] = true;
-                        tile_info[#plains, x, y] = false;
+                        tile_info[#terrain_type, x, y] = "field";
                     }
                     break;
                 case "Temperate":
                     // Defaults to grass
-                    tile_info[#grass, x, y] = true;
                     // Adds oceans
                     if(terrain < 20){
-                        tile_info[#ocean, x, y] = true;
-                        tile_info[#grass, x, y] = false;
+                        tile_info[#terrain_type, x, y] = "ocean";
+                        tile_info[#height, x, y] = 0;
                     }
                     break;
                 case "Feudal":
-                    tile_info[#grass, x, y] = true;
                     // Add a mountain
                     if (terrain < 20) {
-                        tile_info[#mountain, x, y] = true;
-                        tile_info[#grass, x, y] = false;
+                        tile_info[#terrain_type, x, y] = "mountain";
+                        tile_info[#height, x, y] = 3;
                     }
                     // Add a forest
                     else if (terrain < 30) {
-                        tile_info[#forest, x, y] = true;
-                        tile_info[#grass, x, y] = false;
+                        tile_info[#terrain_type, x, y] = "forest";
                     }
                     break;
                 case "Shrine":
                     // Defaults to plains
-                    tile_info[#plains, x, y] = true;
+                    tile_info[#terrain_type, x, y] = "plains";
                     // Adds Sororitas Temples
                     if(terrain <10){
-                        tile_info[#sororitas_temple, x, y] = true;
-                        tile_info[#plains, x, y] = false;
+                        tile_info[#terrain_type, x, y] = "sororitas_temple";
                     }
                     break;
                 case "Ice":
                     // Defaults to snow
-                    tile_info[#snow, x, y] = true;
+                    tile_info[#terrain_type, x, y] = "snow";
                     // Add frozen lake
                     if(terrain<20){
-                        tile_info[#frozen_lake, x, y] = true;
-                        tile_info[#snow, x, y] = false;
+                        tile_info[#terrain_type, x, y] = "frozen_lake";
+                        tile_info[#height, x, y] = 0;
                     }
                     // Add snowy mountains
                     else if (terrain < 40){
-                        tile_info[#snow_mountains, x, y] = true;
-                        tile_info[#snow, x, y] = false;
+                        tile_info[#terrain_type, x, y] = "snow_mountains";
+                        tile_info[#height, x, y] = 3;
                     }
                     break;
                 case "Dead":
                     // Defaults to asteroid rocks
-                    tile_info[#asteroid_rocks, x, y] = true;
+                    tile_info[#terrain_type, x, y] = "asteroid_rocks";
                     // Adds a destroyed city in some areas
                     if (terrain <10){
-                        tile_info[#destroyed_city, x, y] = true;
-                        tile_info[#asteroid_rocks, x, y] = false;
+                        tile_info[#terrain_type, x, y] = "destroyed_city";
                     }
             }
         }
     }
+
+    // After generating the entire map, connect the ocean tiles
+    connect_ocean_tiles(grid_width, grid_height);
+
     // Return both the hex grid and tile_info data structure
     return [hexGrid, tile_info];
+}
+
+// Recursive flood-fill function to connect ocean tiles
+function flood_fill(x, y) {
+    if (x < 0 || x >= grid_width || y < 0 || y >= grid_height) {
+        return;
+    }
+    
+    if (tile_info[#terrain_type, x, y] == "ocean") {
+        // Mark the tile as part of the ocean
+        tile_info[#ocean, x, y] = true;
+
+        // Recursively call flood_fill on neighboring tiles
+        flood_fill(x - 1, y); // Left
+        flood_fill(x + 1, y); // Right
+        flood_fill(x, y - 1); // Up
+        flood_fill(x, y + 1); // Down
+    }
+}
+
+// Find and connect ocean tiles
+function connect_ocean_tiles(grid_width, grid_height){
+    for (var x = 0; x < grid_width; x++) {
+        for (var y = 0; y < grid_height; y++) {
+            if (tile_info[#terrain_type, x, y] == "ocean" && !tile_info[#ocean, x, y]) {
+                // If this tile is ocean and not part of the connected ocean, start a flood-fill
+                flood_fill(x, y);
+            }
+        }
+    }
 }
