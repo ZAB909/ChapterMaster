@@ -19,7 +19,12 @@ function scr_planet_map(planet_type,grid_width, grid_height){
             ds_grid_set(hexGrid, x, y, [xpos, ypos, planet_type]);
             // TODO continue with the definition of the data structure
             // Initialize tile_info data structure 
-            tile_info[#movement_cost, x, y] = 1;
+            tile_info[#movement_cost_land, x, y] = 1;
+            tile_info[#movement_cost_sea, x, y] = 1;
+            tile_info[#movement_cost_air, x, y] = 0.25;
+            tile_info[#movement_by_land, x, y] = true;
+            tile_info[#movement_by_sea, x, y] = false;
+            tile_info[#movement_by_air, x, y] = true;
             tile_info[#roads, x, y] = false;
             tile_info[#settlement, x, y] = false;
             tile_info[#fort, x, y] = false;
@@ -36,9 +41,16 @@ function scr_planet_map(planet_type,grid_width, grid_height){
                 case "Lava":
                     // Defaults to magma
                     tile_info[#terrain_type, x, y] = "magma";
+                    tile_info[#movement_by_land, x, y] = false;
+                    tile_info[#movement_cost_air, x, y] = 0.5;
+                    if(terrain < 20){
+                        tile_info[#settlement, x, y] = false;
+                        tile_info[#movement_cost_land, x, y] = 1.5;
+                    }
                     // Adds rocks
-                    if (terrain < 30){
+                    else if (terrain < 30){
                         tile_info[#terrain_type, x, y] = "rock";
+                        tile_info[#movement_cost_land, x, y] = 2;
                     }
                     break;
                 case "Desert":
@@ -52,6 +64,7 @@ function scr_planet_map(planet_type,grid_width, grid_height){
                     // Add sand dunes
                     else if (terrain < 50) {
                         tile_info[#terrain_type, x, y] = "sand_dunes";
+                        tile_info[#movement_cost_land, x, y] = 1.2;
                         tile_info[#height, x, y] = 2;
                     }
                     break;
@@ -61,14 +74,19 @@ function scr_planet_map(planet_type,grid_width, grid_height){
                     // Add hive city
                     if(terrain < 10){
                         tile_info[#terrain_type, x, y] = "hive_city";
+                        tile_info[#movement_cost_land, x, y] = 1.5;
                     }
                     // Add mountains
                     else if (terrain < 30) {
                         tile_info[#terrain_type, x, y] = "mountain";
+                        tile_info[#movement_cost_land, x, y] = 1.8;
+                        tile_info[#movement_cost_air, x, y] = 0.75;
                         tile_info[#height, x, y] = 3;
                     }
                     else if (terrain <50) {
                         tile_info[#terrain_type, x, y] = "hills";
+                        tile_info[#movement_cost_land, x, y] = 1.3;
+                        tile_info[#movement_cost_air, x, y] = 0.5;
                         tile_info[#height, x, y] = 2;
                     }
                     break;
@@ -78,11 +96,14 @@ function scr_planet_map(planet_type,grid_width, grid_height){
                     // Add a mountain
                     if (terrain < 10) {
                         tile_info[#terrain_type, x, y] = "mountain";
+                        tile_info[#movement_cost_land, x, y] = 1.8;
+                        tile_info[#movement_cost_air, x, y] = 0.75;
                         tile_info[#height, x, y] = 3;
                     }
                     // Add a jungle
                     else if (terrain < 60) {
                         tile_info[#terrain_type, x, y] = "jungle";
+                        tile_info[#movement_cost_land, x, y] = 1.5;
                     }
                     break;
                 case "Agri":
@@ -97,6 +118,8 @@ function scr_planet_map(planet_type,grid_width, grid_height){
                     // Adds oceans
                     if(terrain < 20){
                         tile_info[#terrain_type, x, y] = "ocean";
+                        tile_info[#movement_by_land, x, y] = false;
+                        tile_info[#movement_by_sea, x, y] = true;
                         tile_info[#height, x, y] = 0;
                     }
                     break;
@@ -104,11 +127,14 @@ function scr_planet_map(planet_type,grid_width, grid_height){
                     // Add a mountain
                     if (terrain < 20) {
                         tile_info[#terrain_type, x, y] = "mountain";
+                        tile_info[#movement_cost_land, x, y] = 1.8;
+                        tile_info[#movement_cost_air, x, y] = 0.75;
                         tile_info[#height, x, y] = 3;
                     }
                     // Add a forest
                     else if (terrain < 30) {
                         tile_info[#terrain_type, x, y] = "forest";
+                        tile_info[#movement_cost_land, x, y] = 1.25;
                     }
                     break;
                 case "Shrine":
@@ -117,19 +143,24 @@ function scr_planet_map(planet_type,grid_width, grid_height){
                     // Adds Sororitas Temples
                     if(terrain <10){
                         tile_info[#terrain_type, x, y] = "sororitas_temple";
+                        tile_info[#movement_cost_land, x, y] = 1.1;
                     }
                     break;
                 case "Ice":
                     // Defaults to snow
                     tile_info[#terrain_type, x, y] = "snow";
+                    tile_info[#movement_cost_land, x, y] = 1.2;
                     // Add frozen lake
                     if(terrain<20){
                         tile_info[#terrain_type, x, y] = "frozen_lake";
+                        tile_info[#movement_cost_land, x, y] = 1.5;
                         tile_info[#height, x, y] = 0;
                     }
                     // Add snowy mountains
                     else if (terrain < 40){
                         tile_info[#terrain_type, x, y] = "snow_mountains";
+                        tile_info[#movement_cost_land, x, y] = 1.8;
+                        tile_info[#movement_cost_air, x, y] = 0.75;
                         tile_info[#height, x, y] = 3;
                     }
                     break;
@@ -139,6 +170,7 @@ function scr_planet_map(planet_type,grid_width, grid_height){
                     // Adds a destroyed city in some areas
                     if (terrain <10){
                         tile_info[#terrain_type, x, y] = "destroyed_city";
+                        tile_info[#movement_cost_land, x, y] = 1.5;
                     }
             }
         }
@@ -160,6 +192,8 @@ function flood_fill(x, y) {
     if (tile_info[#terrain_type, x, y] == "ocean") {
         // Mark the tile as part of the ocean
         tile_info[#ocean, x, y] = true;
+        tile_info[#movement_by_land, x, y] = false;
+        tile_info[#movement_by_sea, x, y] = true;
 
         // Recursively call flood_fill on neighboring tiles
         flood_fill(x - 1, y); // Left
