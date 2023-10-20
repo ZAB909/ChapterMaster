@@ -371,24 +371,50 @@ function scr_planet_map(planet_type,grid_width, grid_height){
     // Return both the hex grid and tile_info data structure
     return [hexGrid, tile_info];
 }
-// TODO change ocean connection to be improved
+
 // Recursive flood-fill function to connect ocean tiles
-function flood_fill(x, y) {
+function flood_fill(x, y, tilesToConvert) {
+    if (tilesToConvert > 6) tilesToConvert = 6;
     if (x < 0 || x >= grid_width || y < 0 || y >= grid_height) {
         return;
     }
     
-    if (tile_info[#terrain_type, x, y] == "ocean") {
-        // Mark the tile as part of the ocean
-        tile_info[#ocean, x, y] = true;
-        tile_info[#movement_by_land, x, y] = false;
-        tile_info[#movement_by_sea, x, y] = true;
+    if (tile_info[#terrain_type, x, y] == "ocean" && !tile_info[#ocean, x, y]) {
+        // Check if any of the neighboring tiles are part of a settlement
+        var hasSettlementNeighbor = false;
+        for (var dir = 0; dir < 6; dir++) {
+            var neighborX = x + hex_neighbor_x(dir, y % 2);
+            var neighborY = y + hex_neighbor_y(dir, y % 2);
+            
+            if (neighborX >= 0 && neighborX < grid_width && neighborY >= 0 && neighborY < grid_height) {
+                if (tile_info[#settlement, neighborX, neighborY]) {
+                    hasSettlementNeighbor = true;
+                    break;
+                }
+            }
+        }
+        
+        // If there are no neighboring settlements, mark the tile as part of the ocean
+        if (!hasSettlementNeighbor) {
+            tile_info[#ocean, x, y] = true;
+            tile_info[#movement_by_land, x, y] = false;
+            tile_info[#movement_by_sea, x, y] = true;
+            tile_info[#height, x, y] = 0;
 
-        // Recursively call flood_fill on neighboring tiles
-        flood_fill(x - 1, y); // Left
-        flood_fill(x + 1, y); // Right
-        flood_fill(x, y - 1); // Up
-        flood_fill(x, y + 1); // Down
+            // Recursively call flood_fill on neighboring ocean tiles
+            var convertedTiles = 0;
+            for (var dir = 0; dir < 6; dir++) {
+                var neighborX = x + hex_neighbor_x(dir, y % 2);
+                var neighborY = y + hex_neighbor_y(dir, y % 2);
+                
+                if (neighborX >= 0 && neighborX < grid_width && neighborY >= 0 && neighborY < grid_height) {
+                    if (convertedTiles < tilesToConvert) {
+                        flood_fill(neighborX, neighborY, tilesToConvert);
+                        convertedTiles += 1;
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -398,7 +424,8 @@ function connect_ocean_tiles(grid_width, grid_height){
         for (var y = 0; y < grid_height; y++) {
             if (tile_info[#terrain_type, x, y] == "ocean" && !tile_info[#ocean, x, y]) {
                 // If this tile is ocean and not part of the connected ocean, start a flood-fill
-                flood_fill(x, y);
+                var tilesToConvert = choose(1,1,2,2,2,3,3);
+                flood_fill(x, y, tilesToConvert);
             }
         }
     }
