@@ -449,7 +449,7 @@ function flood_fill(x, y, tilesToConvert) {
                 if (neighborX >= 0 && neighborX < grid_width && neighborY >= 0 && neighborY < grid_height) {
                     if (convertedTiles < tilesToConvert) {
                         flood_fill(neighborX, neighborY, tilesToConvert);
-                        convertedTiles += 1;
+                        convertedTiles ++ ;
                     }
                 }
             }
