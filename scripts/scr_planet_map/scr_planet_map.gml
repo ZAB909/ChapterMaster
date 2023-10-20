@@ -91,7 +91,6 @@ function scr_planet_map(planet_type,grid_width, grid_height){
                     }
                     break;
                 case "Hive":
-                    // TODO add nuclear waste
                     // Default is waste lands
                     tile_info[#terrain_type, x, y] = "waste_land";
                     // Add hive city
@@ -358,16 +357,11 @@ function scr_planet_map(planet_type,grid_width, grid_height){
     // After generating the entire map, connect the ocean tiles
     connect_ocean_tiles(grid_width, grid_height);
 
-    // Assuming settlements is a list of [x, y] coordinates for all settlements
-    for (var i = 0; i < ds_list_size(settlements); i++) {
-        var startX = settlements[| i, 0];
-        var startY = settlements[| i, 1];
-        
-        for (var j = 0; j < ds_list_size(settlements); j++) {
-            if (i != j) {
-                var endX = settlements[| j, 0];
-                var endY = settlements[| j, 1];
-                find_nearest_settlement(startX, startY, endX, endY);
+    // Iterate through all hex tiles
+    for (var startX = 0; startX < grid_width; startX++) {
+        for (var startY = 0; startY < grid_height; startY++) {
+            if (tile_info[#settlement, startX, startY]) {
+                find_nearest_settlement(startX, startY, tile_info[#infrastructure_level, startX, startY]);
             }
         }
     }
@@ -408,12 +402,13 @@ function connect_ocean_tiles(grid_width, grid_height){
     }
 }
 
-// Find the nearest settlement with infrastructure level difference of 1
+// Find the nearest settlement with infrastructure level difference of 1 and connects it via roads
 function find_nearest_settlement(x, y, targetInfrastructureLevel) {
     var openList = ds_priority_create();
     var closedList = ds_grid_create(grid_width, grid_height);
     var path = ds_list_create();
     var nearestSettlement = null;
+    var nearestDistance = -1;
     
     // Initialize open list with the current tile
     var currentG = 0;
@@ -432,13 +427,16 @@ function find_nearest_settlement(x, y, targetInfrastructureLevel) {
         if (tile_info[#settlement, currentX, currentY] && (tile_info[#infrastructure_level, currentX, currentY] == targetInfrastructureLevel)) {
             ds_list_add(path, [currentX, currentY]);
 
+            // Calculate the distance to this settlement
+            var settlementDistance = distance(x, y, currentX, currentY);
+
             // Check if it's closer than the previous nearest settlement
-            if (nearestSettlement == null || neighborG < nearestSettlement.distance) {
+            if (nearestSettlement == null || settlementDistance < nearestDistance) {
                 nearestSettlement = {
                     x: currentX,
                     y: currentY,
-                    distance: neighborG
                 };
+                nearestDistance = settlementDistance;
             }
             break;
         }
@@ -487,9 +485,6 @@ function connect_tiles_with_roads(x1, y1, x2, y2) {
     while (currentX != x2 || currentY != y2) {
         // Implement code to connect the two tiles with roads here.
         tile_info[#roads, currentX, currentY] = true;
-        // Move towards the target tile (x2, y2)
-        // You need to determine the logic for moving in the right direction.
-        // You might use A* or another pathfinding algorithm to find the path.
     }
 }
 
