@@ -361,7 +361,9 @@ function scr_planet_map(planet_type,grid_width, grid_height){
     for (var startX = 0; startX < grid_width; startX++) {
         for (var startY = 0; startY < grid_height; startY++) {
             if (tile_info[#settlement, startX, startY]) {
-                find_nearest_settlement(startX, startY, tile_info[#infrastructure_level, startX, startY]);
+                var infrastructure_max = tile_info[#infrastructure_level, startX, startY] + 1;
+                if(infrastructure_max > 5) infrastructure_max = 5;
+                find_nearest_settlement(startX, startY, tile_info[#infrastructure_level, startX, startY], infrastructure_max);
             }
         }
     }
@@ -403,7 +405,7 @@ function connect_ocean_tiles(grid_width, grid_height){
 }
 
 // Find the nearest settlement with infrastructure level difference of 1 and connects it via roads
-function find_nearest_settlement(x, y, targetInfrastructureLevel) {
+function find_nearest_settlement(x, y, targetInfrastructureLevel, targetInfrastructureLevelMax) {
     var openList = ds_priority_create();
     var closedList = ds_grid_create(grid_width, grid_height);
     var path = ds_list_create();
@@ -424,7 +426,9 @@ function find_nearest_settlement(x, y, targetInfrastructureLevel) {
         closedList[currentX, currentY] = 1;
         
         // Add settlement to the list
-        if (tile_info[#settlement, currentX, currentY] && (tile_info[#infrastructure_level, currentX, currentY] == targetInfrastructureLevel)) {
+        var currentInfrastructureLevel = tile_info[#infrastructure_level, currentX, currentY];
+         if ((currentInfrastructureLevel == targetInfrastructureLevel || currentInfrastructureLevel == targetInfrastructureLevel + 1) &&
+            currentInfrastructureLevel <= targetInfrastructureLevelMax) {
             ds_list_add(path, [currentX, currentY]);
 
             // Calculate the distance to this settlement
