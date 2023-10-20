@@ -379,7 +379,7 @@ function scr_planet_map(planet_type,grid_width, grid_height){
         for (var startY = 0; startY < grid_height; startY++) {
             if (tile_info[#settlement, startX, startY]) {
                 var infrastructure_max = tile_info[#infrastructure_level, startX, startY] + 1;
-                if(infrastructure_max > 5) infrastructure_max = 5;
+                if(infrastructure_max > 5) then  infrastructure_max = 5;
                 find_nearest_settlement(startX, startY, tile_info[#infrastructure_level, startX, startY], infrastructure_max);
             }
         }
