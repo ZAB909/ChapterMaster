@@ -502,6 +502,7 @@ function find_nearest_settlement(x, y, targetInfrastructureLevel, targetInfrastr
             var currentTile = ds_list_find_value(path, i);
             var nextTile = ds_list_find_value(path, i + 1);
             connect_tiles_with_roads(currentTile[0], currentTile[1], nextTile[0], nextTile[1]);
+            tile_info[#movement_cost_land, currentTile[0], currentTile[1]] = 0.9;
         }
     }
     
