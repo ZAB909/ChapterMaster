@@ -135,6 +135,12 @@ function scr_planet_map(planet_type,grid_width, grid_height){
                         tile_info[#movement_by_sea, x, y] = true;
                         tile_info[#height, x, y] = 0;
                     }
+                    // Adds nuclear waste
+                    else if (terrain < 70){
+                        tile_info[#terrain_type, x, y] = "nuclear_waste";
+                        tile_info[#movement_cost_land, x, y] = 5;
+                        tile_info[#radioactive, x, y] = true;
+                    }
                     break;
                 case "Death":
                     // Defaults to tall grass
@@ -152,6 +158,13 @@ function scr_planet_map(planet_type,grid_width, grid_height){
                         tile_info[#movement_cost_land, x, y] = 1.8;
                         tile_info[#movement_cost_air, x, y] = 0.75;
                         tile_info[#height, x, y] = 3;
+                    }
+                    // Add hills
+                    else if (terrain < 35) {
+                        tile_info[#terrain_type, x, y] = "hills";
+                        tile_info[#movement_cost_land, x, y] = 1.3;
+                        tile_info[#movement_cost_air, x, y] = 0.5;
+                        tile_info[#height, x, y] = 2;
                     }
                     // Add a jungle
                     else if (terrain < 60) {
@@ -345,10 +358,24 @@ function scr_planet_map(planet_type,grid_width, grid_height){
     // After generating the entire map, connect the ocean tiles
     connect_ocean_tiles(grid_width, grid_height);
 
+    // Assuming settlements is a list of [x, y] coordinates for all settlements
+    for (var i = 0; i < ds_list_size(settlements); i++) {
+        var startX = settlements[| i, 0];
+        var startY = settlements[| i, 1];
+        
+        for (var j = 0; j < ds_list_size(settlements); j++) {
+            if (i != j) {
+                var endX = settlements[| j, 0];
+                var endY = settlements[| j, 1];
+                find_nearest_settlement(startX, startY, endX, endY);
+            }
+        }
+    }
+
     // Return both the hex grid and tile_info data structure
     return [hexGrid, tile_info];
 }
-
+// TODO change ocean connection to be improved
 // Recursive flood-fill function to connect ocean tiles
 function flood_fill(x, y) {
     if (x < 0 || x >= grid_width || y < 0 || y >= grid_height) {
@@ -379,4 +406,101 @@ function connect_ocean_tiles(grid_width, grid_height){
             }
         }
     }
+}
+
+// Find the nearest settlement with infrastructure level difference of 1
+function find_nearest_settlement(x, y, targetInfrastructureLevel) {
+    var openList = ds_priority_create();
+    var closedList = ds_grid_create(grid_width, grid_height);
+    var path = ds_list_create();
+    var nearestSettlement = null;
+    
+    // Initialize open list with the current tile
+    var currentG = 0;
+    var h = 0;
+    var f = currentG + h;
+    ds_priority_add(openList, currentG, x, y);
+    
+    while (!ds_priority_empty(openList)) {
+        // Get the tile with the lowest F score
+        var currentG = ds_priority_delete_min(openList);
+        var currentX = ds_priority_find_value(openList, currentG);
+        var currentY = ds_priority_find_priority(openList, currentG);
+        closedList[currentX, currentY] = 1;
+        
+        // Add settlement to the list
+        if (tile_info[#settlement, currentX, currentY] && (tile_info[#infrastructure_level, currentX, currentY] == targetInfrastructureLevel)) {
+            ds_list_add(path, [currentX, currentY]);
+
+            // Check if it's closer than the previous nearest settlement
+            if (nearestSettlement == null || neighborG < nearestSettlement.distance) {
+                nearestSettlement = {
+                    x: currentX,
+                    y: currentY,
+                    distance: neighborG
+                };
+            }
+            break;
+        }
+        
+        // Explore neighboring tiles
+        for (var dir = 0; dir < 6; dir++) {
+            var neighborX = currentX + hex_neighbor_x(dir, currentY % 2);
+            var neighborY = currentY + hex_neighbor_y(dir, currentY % 2);
+            
+            if (neighborX >= 0 && neighborX < grid_width && neighborY >= 0 && neighborY < grid_height) {
+                if (closedList[neighborX, neighborY] == 0 && tile_info[#movement_by_land, neighborX, neighborY]) {
+                    // Calculate G score and H score for the neighbor
+                    var neighborG = currentG + tile_info[#movement_cost_land, neighborX, neighborY];
+                    var neighborH = distance(neighborX, neighborY, targetX, targetY);
+                    var neighborF = neighborG + neighborH;
+                    
+                    if (!ds_priority_exists(openList, neighborG)) {
+                        ds_priority_add(openList, neighborF, neighborX, neighborY);
+                        ds_list_add(path, [neighborX, neighborY]);
+                    } else if (neighborG < ds_priority_find_priority(openList, neighborF)) {
+                        // Update neighbor's G score and F score
+                        ds_priority_change_priority(openList, neighborF, neighborX, neighborY);
+                    }
+                }
+            }
+        }
+    }
+
+    // After the while loop, connect the path to the nearest settlement
+    if (nearestSettlement != null) {
+        for (var i=0; i < (ds_list_size(path) - 1); i++) {
+            var currentTile = ds_list_find_value(path, i);
+            var nextTile = ds_list_find_value(path, i + 1);
+            connect_tiles_with_roads(currentTile[0], currentTile[1], nextTile[0], nextTile[1]);
+        }
+    }
+    
+    ds_priority_destroy(openList);
+    ds_grid_destroy(closedList);
+}
+
+// Connect two tiles with roads
+function connect_tiles_with_roads(x1, y1, x2, y2) {
+    var currentX = x1;
+    var currentY = y1;
+    while (currentX != x2 || currentY != y2) {
+        // Implement code to connect the two tiles with roads here.
+        tile_info[#roads, currentX, currentY] = true;
+        // Move towards the target tile (x2, y2)
+        // You need to determine the logic for moving in the right direction.
+        // You might use A* or another pathfinding algorithm to find the path.
+    }
+}
+
+// Calculate the x-coordinate of a neighboring hex tile
+function hex_neighbor_x(direction, yOffset) {
+    var xOffsets = [1, 1, 0, -1, 0, 1];
+    return x + xOffsets[direction];
+}
+
+// Calculate the y-coordinate of a neighboring hex tile
+function hex_neighbor_y(direction, yOffset) {
+    var yOffsets = [-1, 0, 1, 0, -1, -1];
+    return y + yOffsets[direction];
 }
