@@ -10,12 +10,15 @@
         1. Terrain type be stored as an enums (see if this improves efficiency)
         2. Create a cunstructor for the tile generation
         3. Continue with the definition of the data structure
+        4. Do properly the cached distances as a ds_map
+        5. Finish changing all values to use ds_map
  */
 function scr_planet_map(planet_type,grid_width, grid_height){
 
     var hexGrid = ds_grid_create(grid_width, grid_height);
-    var tile_info = ds_grid_create(grid_width, grid_height);
+    var tile_info = ds_map_create();
     var settlement_count = 0;
+    // TODO do properly the cached distances as a ds_map
     var cachedDistancesLand = ds_grid_create(grid_width, grid_height);
     var cachedDistancesAir = ds_grid_create(grid_width, grid_height);
 
@@ -34,337 +37,340 @@ function scr_planet_map(planet_type,grid_width, grid_height){
             ds_grid_set(hexGrid, x, y, [xpos, ypos, planet_type]);
             // TODO continue with the definition of the data structure
             // Initialize tile_info data structure 
-            tile_info[#movement_cost_land, x, y] = 1;
-            tile_info[#movement_cost_sea, x, y] = 1;
-            tile_info[#movement_cost_air, x, y] = 0.25;
-            tile_info[#movement_by_land, x, y] = true;
-            tile_info[#movement_by_sea, x, y] = false;
-            tile_info[#movement_by_air, x, y] = true;
-            tile_info[#roads, x, y] = false;
-            tile_info[#settlement, x, y] = false;
-            tile_info[#fort, x, y] = false;
-            tile_info[#infrastructure_level, x, y] = 0; // 0-5 where 0 is non existant and 5 is a developped hive city. 3 Is developped city OR a small hive
-            tile_info[#buildings, x, y] = ds_list_create();
-            tile_info[#barracks, x, y] = false;
-            tile_info[#astartes_monastery, x, y] = false;
-            tile_info[#terrain_type, x, y] = "grass";
-            tile_info[#height, x, y] = 1;
-            tile_info[#habitable, x, y] = true;
-            tile_info[#radioactive, x, y] = false;
-            tile_info[#ocean, x, y] = false;
+            tile_info[? "movement_cost_land"] = 1;
+            tile_info[? "movement_cost_sea"] = 1;
+            tile_info[? "movement_cost_air"] = 0.25;
+            tile_info[? "movement_by_land"] = true;
+            tile_info[? "movement_by_sea"] = false;
+            tile_info[? "movement_by_air"] = true;
+            tile_info[? "roads"] = false;
+            tile_info[? "settlement"] = false;
+            tile_info[? "fort"] = false;
+            tile_info[? "infrastructure_level"] = 0;
+            tile_info[? "buildings"] = ds_list_create();
+            tile_info[? "barracks"] = false;
+            tile_info[? "astartes_monastery"] = false;
+            tile_info[? "terrain_type"] = "grass";
+            tile_info[? "height"] = 1;
+            tile_info[? "habitable"] = true;
+            tile_info[? "radioactive"] = false;
+            tile_info[? "ocean"] = false;
+            // Associate x and y coordinates
+            tile_info[? "x"] = x;
+            tile_info[? "y"] = y;
             // Customize the hex grid based on planet type
             switch (planet_type) {
                 var terrain = random(100);
                 var infrastructure = 0;
                 case "Lava":
                     // Defaults to magma
-                    tile_info[#terrain_type, x, y] = "magma";
-                    tile_info[#movement_by_land, x, y] = false;
-                    tile_info[#habitable, x, y] = false;
-                    tile_info[#movement_cost_air, x, y] = 0.5;
+                    tile_info[? "terrain_type"] = "magma";
+                    tile_info[? "movement_by_land"] = false;
+                    tile_info[? "habitable"] = false;
+                    tile_info[? "movement_cost_air"] = 0.5;
                     // Add settlements
                     if(terrain < 15){
                         infrastructure = choose(1,1,1,1,1,2,2,3);
-                        tile_info[#settlement, x, y] = true;
-                        tile_info[#terrain_type, x, y] = "rock";
-                        tile_info[#movement_cost_land, x, y] = 2.5;
-                        tile_info[#infrastructure_level, x, y] = infrastructure;
+                        tile_info[? "settlement"] = true;
+                        tile_info[? "terrain_type"] = "rock";
+                        tile_info[? "movement_cost_land"] = 2.5;
+                        tile_info[? "infrastructure_level"] = infrastructure;
                         settlement_count++;
                     }
                     // Adds rocks
                     else if (terrain < 30){
-                        tile_info[#terrain_type, x, y] = "rock";
-                        tile_info[#movement_cost_land, x, y] = 2;
+                        tile_info[? "terrain_type"] = "rock";
+                        tile_info[? "movement_cost_land"] = 2;
                     }
                     break;
                 case "Desert":
-                    // Defaults to sand while on desert planet
-                    tile_info[#terrain_type, x, y] = "sand";
+                    // Defaults to sand while on a desert planet
+                    tile_info[? "terrain_type"] = "sand";
                     // Add oasis
                     if (terrain < 5) {
-                        tile_info[#terrain_type, x, y] = "oasis";
-                        tile_info[#height, x, y] = 0;
+                        tile_info[? "terrain_type"] = "oasis";
+                        tile_info[? "height"] = 0;
                     }
                     // Add settlements
-                    else if (terrain < 20){
-                        infrastructure = choose(1,1,1,1,1,2,2,2,2,3,3);
-                        tile_info[#settlement, x, y] = true;
-                        tile_info[#movement_cost_land, x, y] = 1.5;
-                        tile_info[#infrastructure_level, x, y] = infrastructure;
+                    else if (terrain < 20) {
+                        infrastructure = choose(1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3);
+                        tile_info[? "settlement"] = true;
+                        tile_info[? "movement_cost_land"] = 1.5;
+                        tile_info[? "infrastructure_level"] = infrastructure;
                         settlement_count++;
                     }
                     // Add sand dunes
                     else if (terrain < 50) {
-                        tile_info[#terrain_type, x, y] = "sand_dunes";
-                        tile_info[#movement_cost_land, x, y] = 1.2;
-                        tile_info[#height, x, y] = 2;
+                        tile_info[? "terrain_type"] = "sand_dunes";
+                        tile_info[? "movement_cost_land"] = 1.2;
+                        tile_info[? "height"] = 2;
                     }
                     break;
                 case "Hive":
-                    // Default is waste lands
-                    tile_info[#terrain_type, x, y] = "waste_land";
+                    // Default is wastelands
+                    tile_info[? "terrain_type"] = "waste_land";
                     // Add hive city
-                    if(terrain < 10){
-                        infrastructure = choose(3,3,3,4,4,5);
-                        tile_info[#terrain_type, x, y] = "hive_city";
-                        tile_info[#settlement, x, y] = true;
-                        tile_info[#movement_cost_land, x, y] = 1.5;
-                        tile_info[#infrastructure_level, x, y] = infrastructure;
+                    if (terrain < 10) {
+                        infrastructure = choose(3, 3, 3, 4, 4, 5);
+                        tile_info[? "terrain_type"] = "hive_city";
+                        tile_info[? "settlement"] = true;
+                        tile_info[? "movement_cost_land"] = 1.5;
+                        tile_info[? "infrastructure_level"] = infrastructure;
                         settlement_count++;
                     }
                     // Add small fort
-                    else if (terrain < 20){
-                        infrastructure = choose(1,1,1,1,1,2,2,2);
-                        tile_info[#fort, x, y] = true;
-                        tile_info[#movement_cost_land, x, y] = 1.5;
-                        tile_info[#infrastructure_level, x, y] = infrastructure;
+                    else if (terrain < 20) {
+                        infrastructure = choose(1, 1, 1, 1, 1, 2, 2, 2);
+                        tile_info[? "fort"] = true;
+                        tile_info[? "movement_cost_land"] = 1.5;
+                        tile_info[? "infrastructure_level"] = infrastructure;
                     }
                     // Add mountains
                     else if (terrain < 30) {
-                        tile_info[#terrain_type, x, y] = "mountain";
-                        tile_info[#movement_cost_land, x, y] = 1.8;
-                        tile_info[#movement_cost_air, x, y] = 0.75;
-                        tile_info[#height, x, y] = 3;
+                        tile_info[? "terrain_type"] = "mountain";
+                        tile_info[? "movement_cost_land"] = 1.8;
+                        tile_info[? "movement_cost_air"] = 0.75;
+                        tile_info[? "height"] = 3;
                     }
                     // Add hills
-                    else if (terrain <50) {
-                        tile_info[#terrain_type, x, y] = "hills";
-                        tile_info[#movement_cost_land, x, y] = 1.3;
-                        tile_info[#movement_cost_air, x, y] = 0.5;
-                        tile_info[#height, x, y] = 2;
+                    else if (terrain < 50) {
+                        tile_info[? "terrain_type"] = "hills";
+                        tile_info[? "movement_cost_land"] = 1.3;
+                        tile_info[? "movement_cost_air"] = 0.5;
+                        tile_info[? "height"] = 2;
                     }
                     // Add forests
-                    else if (terrain <56) {
-                        tile_info[#terrain_type, x, y] = "forest";
-                        tile_info[#movement_cost_land, x, y] = 1.25;
+                    else if (terrain < 56) {
+                        tile_info[? "terrain_type"] = "forest";
+                        tile_info[? "movement_cost_land"] = 1.25;
                     }
                     // Adds oceans
-                    else if(terrain < 65){
-                        tile_info[#terrain_type, x, y] = "ocean";
-                        tile_info[#movement_by_land, x, y] = false;
-                        tile_info[#movement_by_sea, x, y] = true;
-                        tile_info[#height, x, y] = 0;
+                    else if (terrain < 65) {
+                        tile_info[? "terrain_type"] = "ocean";
+                        tile_info[? "movement_by_land"] = false;
+                        tile_info[? "movement_by_sea"] = true;
+                        tile_info[? "height"] = 0;
                     }
                     // Adds nuclear waste
-                    else if (terrain < 70){
-                        tile_info[#terrain_type, x, y] = "nuclear_waste";
-                        tile_info[#movement_cost_land, x, y] = 5;
-                        tile_info[#radioactive, x, y] = true;
+                    else if (terrain < 70) {
+                        tile_info[? "terrain_type"] = "nuclear_waste";
+                        tile_info[? "movement_cost_land"] = 5;
+                        tile_info[? "radioactive"] = true;
                     }
                     break;
                 case "Death":
                     // Defaults to tall grass
-                    tile_info[#terrain_type, x, y] = "tall_grass";
+                    tile_info[? "terrain_type"] = "tall_grass";
                     // Add a settlement
-                    if (terrain < 10){
-                        infrastructure = choose(1,1,1,1,1,2,2);
-                        tile_info[#settlement, x, y] = true;
-                        tile_info[#movement_cost_land, x, y] = 1.5;
-                        tile_info[#infrastructure_level, x, y] = infrastructure;
+                    if (terrain < 10) {
+                        infrastructure = choose(1, 1, 1, 1, 1, 2, 2);
+                        tile_info[? "settlement"] = true;
+                        tile_info[? "movement_cost_land"] = 1.5;
+                        tile_info[? "infrastructure_level"] = infrastructure;
                         settlement_count++;
                     }
                     // Add a mountain
                     else if (terrain < 25) {
-                        tile_info[#terrain_type, x, y] = "mountain";
-                        tile_info[#movement_cost_land, x, y] = 1.8;
-                        tile_info[#movement_cost_air, x, y] = 0.75;
-                        tile_info[#height, x, y] = 3;
+                        tile_info[? "terrain_type"] = "mountain";
+                        tile_info[? "movement_cost_land"] = 1.8;
+                        tile_info[? "movement_cost_air"] = 0.75;
+                        tile_info[? "height"] = 3;
                     }
                     // Add hills
                     else if (terrain < 35) {
-                        tile_info[#terrain_type, x, y] = "hills";
-                        tile_info[#movement_cost_land, x, y] = 1.3;
-                        tile_info[#movement_cost_air, x, y] = 0.5;
-                        tile_info[#height, x, y] = 2;
+                        tile_info[? "terrain_type"] = "hills";
+                        tile_info[? "movement_cost_land"] = 1.3;
+                        tile_info[? "movement_cost_air"] = 0.5;
+                        tile_info[? "height"] = 2;
                     }
                     // Add a jungle
                     else if (terrain < 60) {
-                        tile_info[#terrain_type, x, y] = "jungle";
-                        tile_info[#movement_cost_land, x, y] = 1.5;
+                        tile_info[? "terrain_type"] = "jungle";
+                        tile_info[? "movement_cost_land"] = 1.5;
                     }
                     // Add an ocean
-                    else if(terrain < 75){
-                        tile_info[#terrain_type, x, y] = "ocean";
-                        tile_info[#movement_by_land, x, y] = false;
-                        tile_info[#movement_by_sea, x, y] = true;
-                        tile_info[#height, x, y] = 0;
+                    else if (terrain < 75) {
+                        tile_info[? "terrain_type"] = "ocean";
+                        tile_info[? "movement_by_land"] = false;
+                        tile_info[? "movement_by_sea"] = true;
+                        tile_info[? "height"] = 0;
                     }
                     break;
                 case "Agri":
                     // Defaults to plains
-                    tile_info[#terrain_type, x, y] = "plains";
+                    tile_info[? "terrain_type"] = "plains";
                     // Add a settlement
-                    if (terrain < 20){
-                        infrastructure = choose(1,1,1,1,1,2,2);
-                        tile_info[#settlement, x, y] = true;
-                        tile_info[#movement_cost_land, x, y] = 1.5;
-                        tile_info[#infrastructure_level, x, y] = infrastructure;
+                    if (terrain < 20) {
+                        infrastructure = choose(1, 1, 1, 1, 1, 2, 2);
+                        tile_info[? "settlement"] = true;
+                        tile_info[? "movement_cost_land"] = 1.5;
+                        tile_info[? "infrastructure_level"] = infrastructure;
                         settlement_count++;
                     }
                     // Add a field
-                    else if (terrain < 50){
-                        tile_info[#terrain_type, x, y] = "field";
+                    else if (terrain < 50) {
+                        tile_info[? "terrain_type"] = "field";
                     }
                     break;
                 case "Temperate":
                     // Defaults to grass
                     // Add a settlement
-                    if (terrain < 20){
-                        infrastructure = choose(1,1,1,1,1,2,2,2,2,3,3);
-                        tile_info[#settlement, x, y] = true;
-                        tile_info[#movement_cost_land, x, y] = 1.5;
-                        tile_info[#infrastructure_level, x, y] = infrastructure;
+                    if (terrain < 20) {
+                        infrastructure = choose(1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3);
+                        tile_info[? "settlement"] = true;
+                        tile_info[? "movement_cost_land"] = 1.5;
+                        tile_info[? "infrastructure_level"] = infrastructure;
                         settlement_count++;
                     }
                     // Add mountains
                     else if (terrain < 30) {
-                        tile_info[#terrain_type, x, y] = "mountain";
-                        tile_info[#movement_cost_land, x, y] = 1.8;
-                        tile_info[#movement_cost_air, x, y] = 0.75;
-                        tile_info[#height, x, y] = 3;
+                        tile_info[? "terrain_type"] = "mountain";
+                        tile_info[? "movement_cost_land"] = 1.8;
+                        tile_info[? "movement_cost_air"] = 0.75;
+                        tile_info[? "height"] = 3;
                     }
                     // Add hills
-                    else if (terrain <50) {
-                        tile_info[#terrain_type, x, y] = "hills";
-                        tile_info[#movement_cost_land, x, y] = 1.3;
-                        tile_info[#movement_cost_air, x, y] = 0.5;
-                        tile_info[#height, x, y] = 2;
+                    else if (terrain < 50) {
+                        tile_info[? "terrain_type"] = "hills";
+                        tile_info[? "movement_cost_land"] = 1.3;
+                        tile_info[? "movement_cost_air"] = 0.5;
+                        tile_info[? "height"] = 2;
                     }
                     // Add forests
-                    else if (terrain <53) {
-                        tile_info[#terrain_type, x, y] = "forest";
-                        tile_info[#movement_cost_land, x, y] = 1.25;
+                    else if (terrain < 53) {
+                        tile_info[? "terrain_type"] = "forest";
+                        tile_info[? "movement_cost_land"] = 1.25;
                     }
                     // Adds oceans
-                    else if(terrain < 65){
-                        tile_info[#terrain_type, x, y] = "ocean";
-                        tile_info[#movement_by_land, x, y] = false;
-                        tile_info[#movement_by_sea, x, y] = true;
-                        tile_info[#height, x, y] = 0;
+                    else if (terrain < 65) {
+                        tile_info[? "terrain_type"] = "ocean";
+                        tile_info[? "movement_by_land"] = false;
+                        tile_info[? "movement_by_sea"] = true;
+                        tile_info[? "height"] = 0;
                     }
                     break;
                 case "Feudal":
                     // Add a settlement
                     if (terrain < 20){
                         infrastructure = choose(1,1,1,1,1,2,2,2);
-                        tile_info[#settlement, x, y] = true;
-                        tile_info[#movement_cost_land, x, y] = 1.5;
-                        tile_info[#infrastructure_level, x, y] = infrastructure;
+                        tile_info[? "settlement"] = true;
+                        tile_info[? "movement_cost_land"] = 1.5;
+                        tile_info[? "infrastructure_level"] = infrastructure;
                         settlement_count++;
                     }
                     // Add mountains
                     else if (terrain < 30) {
-                        tile_info[#terrain_type, x, y] = "mountain";
-                        tile_info[#movement_cost_land, x, y] = 1.8;
-                        tile_info[#movement_cost_air, x, y] = 0.75;
-                        tile_info[#height, x, y] = 3;
+                        tile_info[? "terrain_type"] = "mountain";
+                        tile_info[? "movement_cost_land"] = 1.8;
+                        tile_info[? "movement_cost_air"] = 0.75;
+                        tile_info[? "height"] = 3;
                     }
                     // Add hills
-                    else if (terrain <50) {
-                        tile_info[#terrain_type, x, y] = "hills";
-                        tile_info[#movement_cost_land, x, y] = 1.3;
-                        tile_info[#movement_cost_air, x, y] = 0.5;
-                        tile_info[#height, x, y] = 2;
+                    else if (terrain < 50) {
+                        tile_info[? "terrain_type"] = "hills";
+                        tile_info[? "movement_cost_land"] = 1.3;
+                        tile_info[? "movement_cost_air"] = 0.5;
+                        tile_info[? "height"] = 2;
                     }
                     // Add forests
                     else if (terrain < 60) {
-                        tile_info[#terrain_type, x, y] = "forest";
-                        tile_info[#movement_cost_land, x, y] = 1.25;
+                        tile_info[? "terrain_type"] = "forest";
+                        tile_info[? "movement_cost_land"] = 1.25;
                     }
                     // Add a field
                     else if (terrain < 70){
-                        tile_info[#terrain_type, x, y] = "field";
+                        tile_info[? "terrain_type"] = "field";
                     }
                     // Adds oceans
-                    else if(terrain < 80){
-                        tile_info[#terrain_type, x, y] = "ocean";
-                        tile_info[#movement_by_land, x, y] = false;
-                        tile_info[#movement_by_sea, x, y] = true;
-                        tile_info[#height, x, y] = 0;
+                    else if (terrain < 80){
+                        tile_info[? "terrain_type"] = "ocean";
+                        tile_info[? "movement_by_land"] = false;
+                        tile_info[? "movement_by_sea"] = true;
+                        tile_info[? "height"] = 0;
                     }
                     break;
                 case "Shrine":
                     // The sororitas temple and such will be handled on the buildings features 
                     //(which nelson already re wrote so just add them features with the checks)
                     // Defaults to plains
-                    tile_info[#terrain_type, x, y] = "plains";
+                    tile_info[? "terrain_type"] = "plains";
                     // Adds settlement
-                    if(terrain <10){
+                    if (terrain < 10){
                         infrastructure = choose(1,1,1,1,1,2,2,2,3,3);
-                        tile_info[#settlement, x, y] = true;
-                        tile_info[#movement_cost_land, x, y] = 1.5;
-                        tile_info[#infrastructure_level, x, y] = infrastructure;
+                        tile_info[? "settlement"] = true;
+                        tile_info[? "movement_cost_land"] = 1.5;
+                        tile_info[? "infrastructure_level"] = infrastructure;
                         settlement_count++;
                     }
                     // Adds a forest
                     else if (terrain < 20) {
-                        tile_info[#terrain_type, x, y] = "forest";
-                        tile_info[#movement_cost_land, x, y] = 1.25;
+                        tile_info[? "terrain_type"] = "forest";
+                        tile_info[? "movement_cost_land"] = 1.25;
                     }
                     // Adds a cementery
                     else if (terrain < 60){
-                        tile_info[#terrain_type, x, y] = "cementery";
+                        tile_info[? "terrain_type"] = "cemetery";
                     }
                     // Adds an ocean
                     else if (terrain < 70){
-                        tile_info[#terrain_type, x, y] = "ocean";
-                        tile_info[#movement_by_land, x, y] = false;
-                        tile_info[#movement_by_sea, x, y] = true;
-                        tile_info[#height, x, y] = 0;
+                        tile_info[? "terrain_type"] = "ocean";
+                        tile_info[? "movement_by_land"] = false;
+                        tile_info[? "movement_by_sea"] = true;
+                        tile_info[? "height"] = 0;
                     }
                     break;
                 case "Ice":
                     // Defaults to snow
-                    tile_info[#terrain_type, x, y] = "snow";
-                    tile_info[#movement_cost_land, x, y] = 1.2;
+                    tile_info[? "terrain_type"] = "snow";
+                    tile_info[? "movement_cost_land"] = 1.2;
                     // Add a settlement
-                    if(terrain <10){
+                    if (terrain < 10){
                         infrastructure = choose(1,1,1,1,1,2,2);
-                        tile_info[#settlement, x, y] = true;
-                        tile_info[#movement_cost_land, x, y] = 1.5;
-                        tile_info[#infrastructure_level, x, y] = infrastructure;
+                        tile_info[? "settlement"] = true;
+                        tile_info[? "movement_cost_land"] = 1.5;
+                        tile_info[? "infrastructure_level"] = infrastructure;
                         settlement_count++;
                     }
                     // Add frozen lake
-                    else if(terrain<20){
-                        tile_info[#terrain_type, x, y] = "frozen_lake";
-                        tile_info[#movement_cost_land, x, y] = 1.5;
-                        tile_info[#height, x, y] = 0;
+                    else if (terrain < 20){
+                        tile_info[? "terrain_type"] = "frozen_lake";
+                        tile_info[? "movement_cost_land"] = 1.5;
+                        tile_info[? "height"] = 0;
                     }
                     // Add forests
                     else if (terrain < 40) {
-                        tile_info[#terrain_type, x, y] = "forest";
-                        tile_info[#movement_cost_land, x, y] = 1.4;
+                        tile_info[? "terrain_type"] = "forest";
+                        tile_info[? "movement_cost_land"] = 1.4;
                     }
                     // Add snowy hills
-                    else if (terrain <60) {
-                        tile_info[#terrain_type, x, y] = "hills";
-                        tile_info[#movement_cost_land, x, y] = 1.3;
-                        tile_info[#movement_cost_air, x, y] = 0.5;
-                        tile_info[#height, x, y] = 2;
+                    else if (terrain < 60) {
+                        tile_info[? "terrain_type"] = "hills";
+                        tile_info[? "movement_cost_land"] = 1.3;
+                        tile_info[? "movement_cost_air"] = 0.5;
+                        tile_info[? "height"] = 2;
                     }
                     // Add snowy mountains
                     else if (terrain < 70){
-                        tile_info[#terrain_type, x, y] = "snow_mountains";
-                        tile_info[#movement_cost_land, x, y] = 1.8;
-                        tile_info[#movement_cost_air, x, y] = 0.75;
-                        tile_info[#height, x, y] = 3;
+                        tile_info[? "terrain_type"] = "snow_mountains";
+                        tile_info[? "movement_cost_land"] = 1.8;
+                        tile_info[? "movement_cost_air"] = 0.75;
+                        tile_info[? "height"] = 3;
                     }
                     break;
                 case "Dead":
                     // Defaults to asteroid rocks
-                    tile_info[#terrain_type, x, y] = "asteroid_rocks";
-                    tile_info[#habitable, x, y] = false;
+                    tile_info[? "terrain_type"] = "asteroid_rocks";
+                    tile_info[? "habitable"] = false;
                     // Adds a destroyed city in some areas
-                    if (terrain <10){
-                        tile_info[#terrain_type, x, y] = "destroyed_city";
-                        tile_info[#movement_cost_land, x, y] = 1.5;
+                    if (terrain < 10){
+                        tile_info[? "terrain_type"] = "destroyed_city";
+                        tile_info[? "movement_cost_land"] = 1.5;
                     }
                     // Adds radiation to certain tiles
                     else if (terrain < 15){
-                        tile_info[#terrain_type, x, y] = "nuclear_crater";
-                        tile_info[#movement_cost_land, x, y] = 5;
-                        tile_info[#radioactive, x, y] = true;
+                        tile_info[? "terrain_type"] = "nuclear_crater";
+                        tile_info[? "movement_cost_land"] = 5;
+                        tile_info[? "radioactive"] = true;
                     }
                     break;
             }
@@ -374,13 +380,14 @@ function scr_planet_map(planet_type,grid_width, grid_height){
     // After generating the entire map, connect the ocean tiles
     connect_ocean_tiles(grid_width, grid_height);
 
-    // Finds and connects settlements with roads
     for (var startX = 0; startX < grid_width; startX++) {
         for (var startY = 0; startY < grid_height; startY++) {
-            if (tile_info[#settlement, startX, startY]) {
-                var infrastructure_max = tile_info[#infrastructure_level, startX, startY] + 1;
-                if(infrastructure_max > 5) then  infrastructure_max = 5;
-                find_nearest_settlement(startX, startY, tile_info[#infrastructure_level, startX, startY], infrastructure_max);
+            var settlement = ds_map_find_value(tile_info, "settlement");
+            var infrastructure_level = ds_map_find_value(tile_info, "infrastructure_level");
+            if (settlement) {
+                var infrastructure_max = infrastructure_level + 1;
+                if (infrastructure_max > 5) infrastructure_max = 5;
+                find_nearest_settlement(startX, startY, infrastructure_level, infrastructure_max);
             }
         }
     }
@@ -389,19 +396,23 @@ function scr_planet_map(planet_type,grid_width, grid_height){
     for (var x = 0; x < grid_width; x++) {
         for (var y = 0; y < grid_height; y++) {
             // Check if the hex allows ground and air movement
-            if (tile_info[#movement_by_land, x, y]) {
+            if (tile_info[? "movement_by_land", x, y]) {
                 for (var targetX = 0; targetX < grid_width; targetX++) {
                     for (var targetY = 0; targetY < grid_height; targetY++) {
                         // Only calculate distances if the target hex also allows movement
-                        cachedDistancesLand[#distances, x, y, targetX, targetY] = calculate_distance(x, y, targetX, targetY, "land");
+                        if (tile_info[? "movement_by_land", targetX, targetY]) {
+                            cachedDistancesLand[#distances, x, y, targetX, targetY] = calculate_distance(x, y, targetX, targetY, "land");
+                        }
                     }
                 }
             }
-            if (tile_info[#movement_by_air, x, y]) {
+            if (tile_info[? "movement_by_air", x, y]) {
                 for (var targetX = 0; targetX < grid_width; targetX++) {
                     for (var targetY = 0; targetY < grid_height; targetY++) {
                         // Only calculate distances if the target hex also allows movement
-                        cachedDistancesAir[#distances, x, y, targetX, targetY] = calculate_distance(x, y, targetX, targetY, "air");
+                        if (tile_info[? "movement_by_air", targetX, targetY]) {
+                            cachedDistancesAir[#distances, x, y, targetX, targetY] = calculate_distance(x, y, targetX, targetY, "air");
+                        }
                     }
                 }
             }
@@ -418,7 +429,7 @@ function flood_fill(x, y, tilesToConvert) {
         return;
     }
     
-    if (tile_info[#terrain_type, x, y] == "ocean" && !tile_info[#ocean, x, y]) {
+    if (tile_info[? "terrain_type"] == "ocean" && !tile_info[? "ocean"]) {
         // Check if any of the neighboring tiles are part of a settlement
         var hasSettlementNeighbor = false;
         for (var dir = 0; dir < 6; dir++) {
@@ -435,10 +446,10 @@ function flood_fill(x, y, tilesToConvert) {
         
         // If there are no neighboring settlements, mark the tile as part of the ocean
         if (!hasSettlementNeighbor) {
-            tile_info[#ocean, x, y] = true;
-            tile_info[#movement_by_land, x, y] = false;
-            tile_info[#movement_by_sea, x, y] = true;
-            tile_info[#height, x, y] = 0;
+            tile_info[? "ocean"] = true;
+            tile_info[? "movement_by_land"] = false;
+            tile_info[? "movement_by_sea"] = true;
+            tile_info[? "height"] = 0;
 
             // Recursively call flood_fill on neighboring ocean tiles
             var convertedTiles = 0;
@@ -461,7 +472,7 @@ function flood_fill(x, y, tilesToConvert) {
 function connect_ocean_tiles(grid_width, grid_height){
     for (var x = 0; x < grid_width; x++) {
         for (var y = 0; y < grid_height; y++) {
-            if (tile_info[#terrain_type, x, y] == "ocean" && !tile_info[#ocean, x, y]) {
+            if (tile_info[? "terrain_type"] == "ocean" && !tile_info[? "ocean"]) {
                 // If this tile is ocean and not part of the connected ocean, start a flood-fill
                 var tilesToConvert = choose(1,1,2,2,2,3,3);
                 flood_fill(x, y, tilesToConvert);
