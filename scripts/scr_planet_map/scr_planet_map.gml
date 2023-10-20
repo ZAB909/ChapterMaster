@@ -443,7 +443,7 @@ function flood_fill(x, y, tilesToConvert) {
             // Recursively call flood_fill on neighboring ocean tiles
             var convertedTiles = 0;
             for (var dir = 0; dir < 6; dir++) {
-                var neighborX = x + hex_neighbor_x(dir, y % 2);
+                var neighborX = x + hex_neighbor_x(dir, x % 2);
                 var neighborY = y + hex_neighbor_y(dir, y % 2);
                 
                 if (neighborX >= 0 && neighborX < grid_width && neighborY >= 0 && neighborY < grid_height) {
