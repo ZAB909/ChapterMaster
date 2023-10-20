@@ -5,11 +5,19 @@
         All the information regarding the tile and if it has buildings or any other feature is in the tile_info. 
             The names are pretty self explenatory in regards to what each does
 */
+/* 
+    TODO list:
+        1. Terrain type be stored as an enums (see if this improves efficiency)
+        2. Create a cunstructor for the tile generation
+        3. Continue with the definition of the data structure
+ */
 function scr_planet_map(planet_type,grid_width, grid_height){
 
     var hexGrid = ds_grid_create(grid_width, grid_height);
     var tile_info = ds_grid_create(grid_width, grid_height);
     var settlement_count = 0;
+    var cachedDistancesLand = ds_grid_create(grid_width, grid_height);
+    var cachedDistancesAir = ds_grid_create(grid_width, grid_height);
 
     for (var x = 0; x < grid_width; x++) {
         for (var y = 0; y < grid_height; y++) {
@@ -35,7 +43,7 @@ function scr_planet_map(planet_type,grid_width, grid_height){
             tile_info[#roads, x, y] = false;
             tile_info[#settlement, x, y] = false;
             tile_info[#fort, x, y] = false;
-            tile_info[#infrastructure_level, x, y] = 0; // 0-5 where 0 is non existant and 5 is a developped hive city. 3 Is developped city OR small hive
+            tile_info[#infrastructure_level, x, y] = 0; // 0-5 where 0 is non existant and 5 is a developped hive city. 3 Is developped city OR a small hive
             tile_info[#buildings, x, y] = ds_list_create();
             tile_info[#barracks, x, y] = false;
             tile_info[#astartes_monastery, x, y] = false;
@@ -43,11 +51,10 @@ function scr_planet_map(planet_type,grid_width, grid_height){
             tile_info[#height, x, y] = 1;
             tile_info[#habitable, x, y] = true;
             tile_info[#radioactive, x, y] = false;
-            // TODO continue with the planet generation and types
+            tile_info[#ocean, x, y] = false;
             // Customize the hex grid based on planet type
             switch (planet_type) {
                 var terrain = random(100);
-                var infrastructure = 0;
                 var infrastructure = 0;
                 case "Lava":
                     // Defaults to magma
@@ -367,7 +374,7 @@ function scr_planet_map(planet_type,grid_width, grid_height){
     // After generating the entire map, connect the ocean tiles
     connect_ocean_tiles(grid_width, grid_height);
 
-    // Iterate through all hex tiles
+    // Finds and connects settlements with roads
     for (var startX = 0; startX < grid_width; startX++) {
         for (var startY = 0; startY < grid_height; startY++) {
             if (tile_info[#settlement, startX, startY]) {
@@ -378,6 +385,28 @@ function scr_planet_map(planet_type,grid_width, grid_height){
         }
     }
 
+    // Calculates and caches land and air distances after modifications to the tiles
+    for (var x = 0; x < grid_width; x++) {
+        for (var y = 0; y < grid_height; y++) {
+            // Check if the hex allows ground and air movement
+            if (tile_info[#movement_by_land, x, y]) {
+                for (var targetX = 0; targetX < grid_width; targetX++) {
+                    for (var targetY = 0; targetY < grid_height; targetY++) {
+                        // Only calculate distances if the target hex also allows movement
+                        cachedDistancesLand[#distances, x, y, targetX, targetY] = calculate_distance(x, y, targetX, targetY, "land");
+                    }
+                }
+            }
+            if (tile_info[#movement_by_air, x, y]) {
+                for (var targetX = 0; targetX < grid_width; targetX++) {
+                    for (var targetY = 0; targetY < grid_height; targetY++) {
+                        // Only calculate distances if the target hex also allows movement
+                        cachedDistancesAir[#distances, x, y, targetX, targetY] = calculate_distance(x, y, targetX, targetY, "air");
+                    }
+                }
+            }
+        }
+    }
     // Return the hex grid, tile_info data structure AND settlement count for the planet
     return [hexGrid, tile_info, settlement_count];
 }
@@ -528,6 +557,43 @@ function connect_tiles_with_roads(x1, y1, x2, y2) {
         // Implement code to connect the two tiles with roads here.
         tile_info[#roads, currentX, currentY] = true;
     }
+}
+
+// Function to precompute distances from (0,0) to all other tiles
+function precompute_distances(grid_width, grid_height, movement_type) {
+    for (var x = 0; x < grid_width; x++) {
+        for (var y = 0; y < grid_height; y++) {
+            // Check if the hex allows the specified movement type
+            if (movement_type == "land" && tile_info[#movement_by_land, x, y]) {
+                // Calculate distance from (0,0) to (x, y) and store it
+                cachedDistancesLand[#distances, 0, 0, x, y] = calculate_distance(0, 0, x, y, movement_type);
+            }
+            if (movement_type == "air" && tile_info[#movement_by_air, x, y]) {
+                // Calculate distance from (0,0) to (x, y) and store it
+                cachedDistancesAir[#distances, 0, 0, x, y] = calculate_distance(0, 0, x, y, movement_type);
+            }
+        }
+    }
+}
+
+// Calculates distance
+function calculate_distance(x, y, targetX, targetY, movement_type) {
+    var movement_costs = ds_list_create();
+    var current_x = x;
+    var current_y = y;
+
+    if (movement_type == "land") {
+        movement_cost = tile_info[#movement_cost_land, x, y];
+    } else if (movement_type == "air") {
+        movement_cost = tile_info[#movement_cost_air, x, y];
+    }
+
+    // Calculate the distance based on movement cost
+    var dx = abs(targetX - x);
+    var dy = abs(targetY - y);
+    var dz = abs(-(x + y) + (targetX + targetY));
+
+
 }
 
 // Calculate the x-coordinate of a neighboring hex tile
