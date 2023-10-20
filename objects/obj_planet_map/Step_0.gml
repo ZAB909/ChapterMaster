@@ -3,6 +3,6 @@
 
 
 if(planetType != ""){
-    var [hexGrid, tile_info] = scr_planet_map(planetType, 20, 20);
+    var [hexGrid, tile_info, settlement_count] = scr_planet_map(planetType, 20, 20);
 }
 

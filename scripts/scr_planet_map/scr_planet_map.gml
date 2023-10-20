@@ -9,6 +9,7 @@ function scr_planet_map(planet_type,grid_width, grid_height){
 
     var hexGrid = ds_grid_create(grid_width, grid_height);
     var tile_info = ds_grid_create(grid_width, grid_height);
+    var settlement_count = 0;
 
     for (var x = 0; x < grid_width; x++) {
         for (var y = 0; y < grid_height; y++) {
@@ -61,6 +62,7 @@ function scr_planet_map(planet_type,grid_width, grid_height){
                         tile_info[#terrain_type, x, y] = "rock";
                         tile_info[#movement_cost_land, x, y] = 2.5;
                         tile_info[#infrastructure_level, x, y] = infrastructure;
+                        settlement_count++;
                     }
                     // Adds rocks
                     else if (terrain < 30){
@@ -82,6 +84,7 @@ function scr_planet_map(planet_type,grid_width, grid_height){
                         tile_info[#settlement, x, y] = true;
                         tile_info[#movement_cost_land, x, y] = 1.5;
                         tile_info[#infrastructure_level, x, y] = infrastructure;
+                        settlement_count++;
                     }
                     // Add sand dunes
                     else if (terrain < 50) {
@@ -100,6 +103,7 @@ function scr_planet_map(planet_type,grid_width, grid_height){
                         tile_info[#settlement, x, y] = true;
                         tile_info[#movement_cost_land, x, y] = 1.5;
                         tile_info[#infrastructure_level, x, y] = infrastructure;
+                        settlement_count++;
                     }
                     // Add small fort
                     else if (terrain < 20){
@@ -150,6 +154,7 @@ function scr_planet_map(planet_type,grid_width, grid_height){
                         tile_info[#settlement, x, y] = true;
                         tile_info[#movement_cost_land, x, y] = 1.5;
                         tile_info[#infrastructure_level, x, y] = infrastructure;
+                        settlement_count++;
                     }
                     // Add a mountain
                     else if (terrain < 25) {
@@ -187,6 +192,7 @@ function scr_planet_map(planet_type,grid_width, grid_height){
                         tile_info[#settlement, x, y] = true;
                         tile_info[#movement_cost_land, x, y] = 1.5;
                         tile_info[#infrastructure_level, x, y] = infrastructure;
+                        settlement_count++;
                     }
                     // Add a field
                     else if (terrain < 50){
@@ -201,6 +207,7 @@ function scr_planet_map(planet_type,grid_width, grid_height){
                         tile_info[#settlement, x, y] = true;
                         tile_info[#movement_cost_land, x, y] = 1.5;
                         tile_info[#infrastructure_level, x, y] = infrastructure;
+                        settlement_count++;
                     }
                     // Add mountains
                     else if (terrain < 30) {
@@ -236,6 +243,7 @@ function scr_planet_map(planet_type,grid_width, grid_height){
                         tile_info[#settlement, x, y] = true;
                         tile_info[#movement_cost_land, x, y] = 1.5;
                         tile_info[#infrastructure_level, x, y] = infrastructure;
+                        settlement_count++;
                     }
                     // Add mountains
                     else if (terrain < 30) {
@@ -279,6 +287,7 @@ function scr_planet_map(planet_type,grid_width, grid_height){
                         tile_info[#settlement, x, y] = true;
                         tile_info[#movement_cost_land, x, y] = 1.5;
                         tile_info[#infrastructure_level, x, y] = infrastructure;
+                        settlement_count++;
                     }
                     // Adds a forest
                     else if (terrain < 20) {
@@ -307,6 +316,7 @@ function scr_planet_map(planet_type,grid_width, grid_height){
                         tile_info[#settlement, x, y] = true;
                         tile_info[#movement_cost_land, x, y] = 1.5;
                         tile_info[#infrastructure_level, x, y] = infrastructure;
+                        settlement_count++;
                     }
                     // Add frozen lake
                     else if(terrain<20){
@@ -368,8 +378,8 @@ function scr_planet_map(planet_type,grid_width, grid_height){
         }
     }
 
-    // Return both the hex grid and tile_info data structure
-    return [hexGrid, tile_info];
+    // Return the hex grid, tile_info data structure AND settlement count for the planet
+    return [hexGrid, tile_info, settlement_count];
 }
 
 // Recursive flood-fill function to connect ocean tiles
