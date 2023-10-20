@@ -554,6 +554,8 @@ if (tech_points>=360){
                 if (obj_ini.gear[0,marine_position]!="") then scr_add_item(obj_ini.gear[0,marine_position],1);
                 obj_ini.gear[0,marine_position]="Servo Arms";
             }
+            obj_ini.TTRPG[0,marine_position].religion="cult_mechanicus";
+            obj_ini.TTRPG[0,marine_position].add_trait("mars_trained");
             scr_alert("green","recruitment",string(obj_ini.name[0,marine_position])+" returns from Mars, a "+string(obj_ini.role[100,16])+".",0,0);
             
             if (eq1+eq2!=2){

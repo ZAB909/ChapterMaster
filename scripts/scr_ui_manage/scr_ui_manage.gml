@@ -1,7 +1,8 @@
 function scr_ui_manage() {
-	var unit,i;
+	var unit,i, tool_tip_text,x1,x2,y1,y2, var_text;
 	var romanNumerals=scr_roman_numerals();	
-	var normal_hp=true;
+	var normal_hp=true, bionic_tooltip="",tool_tip_drawing=[];
+	var body_augmentations = {mutations:[], bionics:[]}
 	
 	// Declare non marine roles here
 	var non_marine_roles=[
@@ -94,6 +95,7 @@ function scr_ui_manage() {
 	    var cn=obj_controller;
 		
 	    if (instance_exists(cn)){
+	    	var selected_unit =  temp[120];				//unit struct
 	        if (cn.temp[101]!="") and (cn.temp[100]="1"){
 	            ui_arm[1]=true;
 				ui_arm[2]=true;
@@ -115,7 +117,6 @@ function scr_ui_manage() {
             
 	            var terg,armour_sprite,show1,show2;terg=0;armour_sprite=spr_weapon_blank;
 	            var jump,dev,hood,skull,arm,halo,braz,slow,brothers,body_part;jump=0;dev=0;hood=0;skull=0;arm=0;halo=0;braz=0;slow=0;brothers=-5;
-				var selected_unit =  temp[120];				//unit struct
             
 	            var show_wep1,show_wep2,show_arm,show_gear,show_mobi;
 	            /*show_wep1=string_pos("&",cn.temp[108]);
@@ -595,10 +596,12 @@ function scr_ui_manage() {
 					
 					// bionics
 					
-					if (!array_contains(["Dreadnought", "Terminator Armour", "Tartaros"], selected_unit.armour())){
-						for (body_part = 0; body_part<array_length(global.body_parts);body_part++){
-							if (struct_exists(selected_unit.body[$ global.body_parts[body_part]], "bionic")){
-
+					
+					for (body_part = 0; body_part<array_length(global.body_parts);body_part++){
+						if (struct_exists(selected_unit.body[$ global.body_parts[body_part]], "bionic")){
+							bionic_tooltip+=string("standard bionic {0}#",global.body_parts_display[body_part])
+							array_push(body_augmentations.bionics, body_part);
+							if (!array_contains(["Dreadnought", "Terminator Armour", "Tartaros"], selected_unit.armour())){
 								if (global.body_parts[body_part] == "left_eye") {
 									if (selected_unit.armour() == "MK3 Iron Armour"){
 										draw_sprite(spr_bionics_eye,0,xx+1203,yy+178)
@@ -615,8 +618,8 @@ function scr_ui_manage() {
 								};
 								if (global.body_parts[body_part] == "left_leg") {draw_sprite(spr_bionics_leg,1,xx+1208,yy+178)};
 								if (global.body_parts[body_part] == "right_leg") {draw_sprite(spr_bionics_leg,0,xx+1208,yy+178)};
-								if (global.body_parts[body_part] == "left_arm") {draw_sprite(spr_bionics_arm,0,xx+1208,yy+178)};
-								if (global.body_parts[body_part] == "right_arm") {draw_sprite(spr_bionics_arm,1,xx+1208,yy+178)};
+								if (global.body_parts[body_part] == "left_arm") {draw_sprite(spr_bionics_arm,1,xx+1208,yy+178)};
+								if (global.body_parts[body_part] == "right_arm") {draw_sprite(spr_bionics_arm,0,xx+1208,yy+178)};
 							}
 						}
 					}
@@ -750,20 +753,72 @@ function scr_ui_manage() {
         
 	        if (cn.temp[110]!="") then draw_text_ext(xx+1387,yy+345,string_hash_to_newline(string(cn.temp[110])+"#"+string(cn.temp[111])),-1,187);
 	        if (cn.temp[110]!="") then draw_text_ext(xx+1388,yy+346,string_hash_to_newline(string(cn.temp[110])),-1,187);
-        
 			// Display information on the marine
-	        if (cn.temp[112]!="") then draw_text(xx+1015,yy+420,string_hash_to_newline("Health: "+string(cn.temp[112])));
 	        if (cn.temp[113]!="") then draw_text(xx+1190,yy+420,string_hash_to_newline("Experience: "+string(cn.temp[113])));
-	        if (cn.temp[114]!="") then draw_text(xx+1365,yy+420,string_hash_to_newline("Bionics: "+string(cn.temp[114])));
-        
-	        draw_set_color(c_gray);if (ui_melee_penalty>0) then draw_set_color(c_red);
-	        if (cn.temp[116]!="") then draw_text(xx+1015,yy+442,string_hash_to_newline("Melee Attack: "+string(cn.temp[116])));
-        
-	        draw_set_color(c_gray);if (ui_ranged_penalty>0) then draw_set_color(c_red);
-	        if (cn.temp[117]!="") then draw_text(xx+1190,yy+442,string_hash_to_newline("Ranged Attack: "+string(cn.temp[117])));
-        
-	        draw_set_color(c_gray);
-	        if (cn.temp[118]!="") then draw_text(xx+1365,yy+442,string_hash_to_newline("Damage Resistance: "+string(cn.temp[118])));
+	      	if (cn.temp[114]!=""){
+        		var_text = string_hash_to_newline(string("Bionics: {0}",selected_unit.bionics()))
+	        	x1 = xx+1365;
+	        	y1 = yy+420;
+	        	x2 = x1+string_width(var_text);
+	        	y2 = y1+string_height(var_text);
+		        draw_set_color(c_gray);
+		        draw_text(x1,y1,var_text);
+		        if (bionic_tooltip !=""){
+		        	array_push(tool_tip_drawing, [bionic_tooltip, [x1,y1,x2,y2]]);
+		    	} else{
+		    		array_push(tool_tip_drawing, ["No bionic Augmentations", [x1,y1,x2,y2]]);
+		    	}
+	    	}
+
+        	if (cn.temp[112]!=""){
+        		var_text = string_hash_to_newline(string("Health: {0}",cn.temp[112]))
+	        	tool_tip_text = string_hash_to_newline(string("CON : {0}", selected_unit.constitution));
+	        	x1 = xx+1015;
+	        	y1 = yy+420;
+	        	x2 = x1+string_width(var_text);
+	        	y2 = y1+string_height(var_text);
+		        draw_set_color(c_gray);
+		        draw_text(x1,y1,var_text);
+		        array_push(tool_tip_drawing, [tool_tip_text, [x1,y1,x2,y2]]);
+	    	}	        
+        	
+        	if (cn.temp[116]!=""){
+        		var_text = string_hash_to_newline(string("Melee Attack: {0}",cn.temp[116]))
+	        	tool_tip_text = string_hash_to_newline(string("WS : {0}#STR : {1}", selected_unit.weapon_skill, selected_unit.strength));
+	        	x1 = xx+1015;
+	        	y1 = yy+442;
+	        	x2 = x1+string_width(var_text);
+	        	y2 = y1+string_height(var_text);
+		        draw_set_color(c_gray);
+		        if (ui_melee_penalty>0) then draw_set_color(c_red);
+		        draw_text(x1,y1,var_text);
+		        array_push(tool_tip_drawing, [tool_tip_text, [x1,y1,x2,y2]]);
+	    	}
+
+        	if (cn.temp[117]!=""){
+        		var_text = string_hash_to_newline(string("Ranged Attack: {0}",cn.temp[117]))
+	        	tool_tip_text = string_hash_to_newline(string("BS : {0}#DEX : {1}", selected_unit.ballistic_skill, selected_unit.dexterity));
+	        	x1 = xx+1190;
+	        	y1 = yy+442;
+	        	x2 = x1+string_width(var_text);
+	        	y2 = y1+string_height(var_text);
+		        draw_set_color(c_gray);
+		        if (ui_ranged_penalty>0) then draw_set_color(c_red);
+		        draw_text(x1,y1,var_text);
+		        array_push(tool_tip_drawing, [tool_tip_text, [x1,y1,x2,y2]]);
+	    	}	 
+
+        	if (cn.temp[118]!=""){
+        		var_text = string_hash_to_newline(string("Damage Resistance: {0}",cn.temp[118]))
+	        	tool_tip_text = string_hash_to_newline(string("CON : {0}", selected_unit.constitution));
+	        	x1 = xx+1365;
+	        	y1 = yy+442;
+	        	x2 = x1+string_width(var_text);
+	        	y2 = y1+string_height(var_text);
+		        draw_set_color(c_gray);
+		        draw_text(x1,y1,var_text);
+		        array_push(tool_tip_drawing, [tool_tip_text, [x1,y1,x2,y2]]);
+	    	}
         
 	        draw_set_font(fnt_40k_14i);
 	        if (cn.temp[119]!="") then draw_text(xx+1020,yy+468,string_hash_to_newline(string(cn.temp[119])));
@@ -780,7 +835,7 @@ function scr_ui_manage() {
 	        
 	    yy+=77;
 		
-
+	    var unit_specialism_option=false, spec_tip="", tool_tip_set=[];
 		var repetitions=min(man_max,man_see)
 	    for(var i=0; i<repetitions;i++){
 
@@ -793,7 +848,8 @@ function scr_ui_manage() {
 	        if (man[sel]="man"){
 				unit = display_unit[sel];
 				var unit_location = unit.marine_location();
-	            temp1=$"{unit.role()} {unit.name()}";
+	            temp1=unit.name_role();
+	            unit_specialism_option=false;
 	            // temp1=string(managing)+"."+string(ide[sel]);
             
 	            temp2=string(ma_loc[sel]);
@@ -968,8 +1024,26 @@ function scr_ui_manage() {
 	        if (man_sel[sel]==0) then draw_set_color(c_black);
 	        if (man_sel[sel]!=0) then draw_set_color(6052956);// was gray
 	        draw_rectangle(xx+25,yy+64,xx+974,yy+85,0);
-	        draw_set_color(c_gray);
-			draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);
+
+	        //if unit has techmarine potential
+	        if (unit.technology>=35){
+	        	draw_set_color(c_red);
+	        	unit_specialism_option=true;
+	        	spec_tip = "Techmarine Potential";
+	        //if unit has librarian potential
+	    	} else if(array_contains(unit.traits, "warp_touched")){
+	    		spec_tip = "Librarium potential";
+	    		unit_specialism_option=true;
+	    		draw_set_color(c_blue);
+	    	}else{
+	    		draw_set_color(c_gray);
+	    	}
+	    	if (unit_specialism_option){
+	    		array_push(tool_tip_set, [spec_tip, [xx+25,yy+64,xx+974,yy+85]]);
+	    		draw_rectangle(xx+25+2,yy+64+2,xx+974-2,yy+85-2,1);
+	    	} else{
+				draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);
+	    	}
 
 	        // Squads
 	        var sqi="";
@@ -1387,6 +1461,12 @@ function scr_ui_manage() {
 	            }
 	        }
 	    }
+	    //draws hover overs for specialist potential
+	    for (var i=0;i<array_length(tool_tip_set);i++){
+	    	if (point_in_rectangle(mouse_x, mouse_y, tool_tip_set[i][1][0],tool_tip_set[i][1][1],tool_tip_set[i][1][2],tool_tip_set[i][1][3])){
+	    		tool_tip_draw(mouse_x, mouse_y, tool_tip_set[i][0])
+	    	}
+	    }
     
 	    yy-=8;
     
@@ -1527,6 +1607,164 @@ function scr_ui_manage() {
     
     
 	    scr_scrollbar(974,172,1005,790,34,man_max,man_current);
+	    var tip, coords;
+		for (i=0;i < array_length(tool_tip_drawing); i++){
+			tip = tool_tip_drawing[i];
+			coords=tip[1];
+			if (point_in_rectangle(mouse_x, mouse_y, coords[0],coords[1],coords[2],coords[3])){
+		        	tool_tip_draw(coords[0],coords[3]+4, tip[0]);
+			}
+		}
+		if instance_exists(cn){
+			if (cn.temp[101]!="") and (cn.temp[100]="1"){
+		        if ((point_in_rectangle(mouse_x, mouse_y, xx+1208, yy+168, xx+1374, yy+409)) and (!instance_exists(obj_temp3)) and(!instance_exists(obj_popup))){
+		        	draw_set_color(0);
+		    		draw_rectangle(xx+1004,yy+519,xx+1576,yy+957,0);
+		    		var stat_x = xx+1004;
+		    		var stat_y = yy+519;
+		    		var stat_display = string_hash_to_newline($"DEX#{selected_unit.dexterity}");
+		    		tool_tip_draw(stat_x,stat_y, stat_display,2);
+		    		stat_x += string_width(stat_display)+3;
+
+		    		stat_display = string_hash_to_newline($"STR#{selected_unit.strength}");
+		    		tool_tip_draw(stat_x,stat_y, stat_display,2);
+		    		stat_x += string_width(stat_display)+3;
+
+		    		stat_display = string_hash_to_newline($"CON#{selected_unit.constitution}");
+		    		tool_tip_draw(stat_x,stat_y, stat_display,1);
+		    		stat_x += string_width(stat_display)+2;	    		
+
+		    		stat_display = string_hash_to_newline($"INT#{selected_unit.intelligence}");
+		    		tool_tip_draw(stat_x,stat_y, stat_display,2);
+		    		stat_x += string_width(stat_display)+3;
+
+		    		stat_display = string_hash_to_newline($"WIS#{selected_unit.wisdom}");
+		    		tool_tip_draw(stat_x,stat_y, stat_display,2);
+		    		stat_x += string_width(stat_display)+3;
+
+		    		stat_display = string_hash_to_newline($"FAI#{selected_unit.piety}");
+		    		tool_tip_draw(stat_x,stat_y, stat_display,2);
+		    		stat_x += string_width(stat_display)+3;
+
+		    		stat_display = string_hash_to_newline($"WS#{selected_unit.weapon_skill}");
+		    		tool_tip_draw(stat_x,stat_y, stat_display, 5);
+		    		stat_x += string_width(stat_display)+6;
+
+		    		stat_display = string_hash_to_newline($"BS#{selected_unit.ballistic_skill}");
+		    		tool_tip_draw(stat_x,stat_y, stat_display, 6);
+		    		stat_x += string_width(stat_display)+7;
+
+		    		stat_display = string_hash_to_newline($"LU#{selected_unit.luck}");
+		    		tool_tip_draw(stat_x,stat_y, stat_display, 5);
+		    		stat_x += string_width(stat_display)+6;
+
+		    		stat_display = string_hash_to_newline($"TEC#{selected_unit.technology}");
+		    		tool_tip_draw(stat_x,stat_y, stat_display,2);
+		    		stat_x += string_width(stat_display)+3;
+
+		    		stat_display = string_hash_to_newline($"CHA#{selected_unit.charisma}");
+		    		tool_tip_draw(stat_x,stat_y, stat_display,2);
+		    		stat_x += string_width(stat_display)+5;
+		    		draw_line(stat_x, yy+519, stat_x, yy+957);
+
+		    		draw_set_alpha(0)
+		    		draw_set_color(c_gray);
+
+		        	unit_data_string = selected_unit.name_role();
+		        	if (selected_unit.squad != "none"){
+		        		var chapter_role = ""
+		        		chapter_role += " of the ";
+		        		if (selected_unit.company > 0){
+		        			chapter_role += scr_convert_company_to_string(selected_unit.company);
+		        		} //else{chapter_role = "Command"}
+		        		chapter_role += string(" {0} {1}", selected_unit.squad, obj_ini.squad_types[$ obj_ini.squads[selected_unit.squad].type][$ "display_name"]) + "#";
+		        		unit_data_string += chapter_role
+
+		        		if (selected_unit.base_group == "astartes"){
+		        			unit_data_string += $"He is {selected_unit.age()}, first becoming a marine in {selected_unit.marine_ascension}#"
+		        		}
+
+		        		if (array_contains([obj_ini.role[100,18], obj_ini.role[100,19]], selected_unit.role())){
+		        			unit_data_string +="#";
+		        			if (selected_unit.charisma < 25){
+		        				unit_data_string+= "He is generally disliked by the members of his squad.";
+		        			}else if(selected_unit.charisma >39){
+		        				unit_data_string+= "He is liked grealty by the members of his squad.";
+		        			}
+		        			if (selected_unit.wisdom < 30){
+		        				unit_data_string+= "His squad generally are disatisfied with his tactical decisions";
+		        			} else if ((selected_unit.wisdom < 35) and (selected_unit.wisdom >=30)){
+		        				unit_data_string+= "His squad do not always have a positive veiw his tactical abilities.";
+		        			} else if (selected_unit.wisdom < 45){
+		        				unit_data_string+= "He is considered a good tactician.";
+		        			}
+		        			if (selected_unit.ballistic_skill+selected_unit.weapon_skill>80){
+		        				unit_data_string+= "He is respected by those under his command for his skill at arms.";
+		        			} else if (selected_unit.ballistic_skill+selected_unit.weapon_skill>100){
+		        				unit_data_string+= "He is revered by those under his command and many look to him fo inspiration.";
+		        			} else if(selected_unit.ballistic_skill+selected_unit.weapon_skill<70){
+		        				unit_data_string+= "His men tend to find his skills as a warrior lacking considereing his position";
+		        			}
+		        			else if (selected_unit.wisdom >= 45){
+		        				unit_data_string+= "His military mind has saved his squad many times.";
+		        			}
+		        			unit_data_string +="#";
+		        		}
+		       		} else {unit_data_string+="#"}
+		       		var unit_name = selected_unit.name();
+		       		if (selected_unit.religion != "none"){
+		       			unit_data_string += unit_name+string(" is a follower of the {0}",global.religions[$ selected_unit.religion][$ "name"])
+		       			if (selected_unit.religion_sub_cult != "none"){
+		       				unit_data_string += $", in particular a sub cult known as {selected_unit.religion_sub_cult}"
+		       			}
+		       			if ((selected_unit.piety > 25)and (selected_unit.piety <40)){
+		       				unit_data_string += " and is a close follower of the faith"
+		       			}else if(selected_unit.piety <= 25){
+		       				unit_data_string += " however does not put much stock in religion"
+		       			}else if(selected_unit.piety >= 40){
+		       				unit_data_string += " and is zealous in his worship"
+		       			}else if(selected_unit.piety >= 50){
+		       				unit_data_string += " and is fanatical in his worship"
+		       			}
+		       			unit_data_string+="#";
+		       		}
+		       		if (selected_unit.base_group == "astartes"){
+		       			var bionic_count = selected_unit.bionics();
+		       			if (bionic_count ==0){
+		       				unit_data_string+= unit_name + " has no bodily augmentations besides his astartes gene seed and organs #"
+		       			}else if(bionic_count ==1){
+		       				unit_data_string+= unit_name + string(" Has a bionic {0}#", global.body_parts_display[body_augmentations.bionics[0]])
+		       			}else if((bionic_count >1) and (bionic_count <4)){
+		       				unit_data_string+= unit_name + " Has some bionic replacements #"
+		       			}else if((bionic_count >5) and (bionic_count <8)){
+		       				unit_data_string+= unit_name + " Has many bionic replacements #"
+		       			}else if (bionic_count >8){
+		       				unit_data_string+= unit_name + " Is mostly machine having replaced most of his flesh with bionic repacements.#"
+		       			}
+			       		if (selected_unit.strength > 49){
+			       			unit_data_string+= unit_name + "s strength greatly exceeds that of the standard astartes allowing him to wield weapons that normally require two hands in one.#"
+			       		} 
+			       		if ((selected_unit.technology >=35) and (!array_contains(selected_unit.traits, "mars_trained"))){
+			       			unit_data_string +="displays a talent with technology that might make him suited to a role within the armentarium.#";
+			       		}		
+		       		}
+		       		unit_data_string += "#";
+
+		       		tool_tip_text = "Traits##";
+		       		for (i=0;i<array_length(selected_unit.traits);i++){
+		       			unit_data_string += string(global.trait_list[$ selected_unit.traits[i]].flavour_text, unit_name) +"#";
+		       			tool_tip_text += global.trait_list[$ selected_unit.traits[i]].display_name;
+		       			if (struct_exists(global.trait_list[$ selected_unit.traits[i]], "effect")){
+		       				tool_tip_text += global.trait_list[$ selected_unit.traits[i]].effect;
+		       			}
+		       			tool_tip_text +="#";
+		       		}
+		       		tool_tip_text = string_hash_to_newline(tool_tip_text);
+		       		tool_tip_draw(stat_x+2,stat_y, tool_tip_text);
+		       		tool_tip_draw(xx+25,yy+65, string_hash_to_newline(unit_data_string), 3, 0, 985, 17);
+		        }
+			}
+		}    
 	}
 	
 
@@ -1606,4 +1844,5 @@ function scr_ui_manage() {
 	    // draw_text_transformed(xx+488,yy+426,"Selection Size: "+string(man_size),0.4,0.4,0);
 	    scr_scrollbar(974,172,1005,790,34,ship_max,ship_current);
 	}
+
 }
