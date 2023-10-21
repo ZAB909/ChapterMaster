@@ -88,8 +88,8 @@ function scr_initialize_custom() {
 	third=100;
 	fourth=100;
 	fifth=100;
-	sixth=100;s
-	eventh=100;
+	sixth=100;
+	seventh=100;
 	eighth=100;
 	ninth=100;
 	tenth=100;
@@ -1774,7 +1774,6 @@ function scr_initialize_custom() {
 	for(company=2;company<11;company++){
 	    // Initialize marines
 	    for(i=0;i<501;i++){
-	    	i+=1;
 	        race[company,i]=1;
 	        loc[company,i]="";
 	        name[company,i]="";
@@ -1897,8 +1896,8 @@ function scr_initialize_custom() {
 	        }
 	        if (company=10){
 	            temp1=tenth-2;
-	            company_unit2="";c
-	            ompany_unit3="";
+	            company_unit2="";
+	            company_unit3="";
 	            dready=0;
 	            rhinoy=8;
 	            whirly=0;
