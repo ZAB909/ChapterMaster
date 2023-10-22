@@ -30,6 +30,8 @@ enum location_types {
 	ancient_ruins,
 	warp
 }
+
+global.phy_levels =["Rho","Pi","Omicron","Xi","Nu","Mu","Lambda","Kappa","Iota","Theta","Eta","Zeta","Epsilon","Delta","Gamma","Beta","Alpha","Alpha Plus","Beta","Gamma Plus"]
 global.trait_list = {
 	"champion":{
 		weapon_skill : [10,5,"max"],      
@@ -381,6 +383,7 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	constitution=0; strength=0;luck=0;dexterity=0;wisdom=0;piety=0;charisma=0;technology=0;intelligence=0;weapon_skill=0;ballistic_skill=0;size = 0;
 	religion="none";
+	psionic=0;
 	religion_sub_cult = "none";
 	base_group = "none";
 	role_history = [];
@@ -525,7 +528,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			if (faction ="chapter"){
 				allegiance = global.chapter_name;
 			}
-		   gene_Seed_mutations = {
+		   gene_seed_mutations = {
 		   			"preomnor":obj_ini.preomnor,
 			    	"lyman":obj_ini.lyman,
 			    	"omophagea":obj_ini.omophagea,
@@ -535,9 +538,20 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			    	"catalepsean":obj_ini.catalepsean,
 			    	"occulobe":obj_ini.occulobe,
 			    	"mucranoid":obj_ini.mucranoid,
-			    	"membran":obj_ini.membrane,
+			    	"membrane":obj_ini.membrane,
 			    	"voice":obj_ini.voice,
-			};			
+			};
+			var mutation_names = struct_get_names(gene_seed_mutations)
+			for (var mute =0; mute <array_length(mutation_names); mute++){
+				if (gene_seed_mutations[$ mutation_names[mute]] == 0){
+					if(irandom(999)-10<obj_ini.stability){
+						gene_seed_mutations[$ mutation_names[mute]] = 1;
+					}
+				}
+			}
+			if (gene_seed_mutations[$ "voice"] == 0){
+				charisma-=2;
+			}
 			if (instance_exists(obj_controller)){
 				role_history = [[obj_ini.role[company,marine_number], obj_controller.turn]]; //marines_promotion and demotion history
 				marine_ascension = obj_controller.turn; // on what day did turn did this marine begin to exist
@@ -557,6 +571,26 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			if (irandom(999)>998){
 				 add_trait("paragon");				//paragon chance just like cm
 			};
+			psionic = 0
+			var warp_level = irandom(299)+1{
+				if (warp_level<=190){
+					psionic=choose(0,1);
+				} else if(warp_level<=294){
+					psionic=choose(2,3,4,5,6,7);
+				}else if(warp_level<=297){
+					psionic=choose(8,9,10);
+				} else if(warp_level<=298){
+					psionic=choose(11,12);
+				} else if(warp_level<=299){
+					psionic=choose(11,12,13,14);
+				} else if warp_level<=300{
+					if(irandom(4)==4){
+						psionic=choose(15,16);
+					} else{
+						psionic=choose(13,14);
+					}
+				}
+			}
 			if (irandom(49)>48){
 				 add_trait("warp_touched");			//has phychic potential
 			};		
@@ -674,6 +708,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 						constitution += 4;
 						strength++;
 						dexterity--;						
+					}	else if (new_bionic_pos == "throat"){
+						charisma--;					
 					}else{ 
 						constitution++;
 					}

@@ -98,6 +98,8 @@ function scr_initialize_custom() {
 	devastator=20;
 
 	recruit_trial=obj_creation.aspirant_trial;
+	purity=obj_creation.purity;
+	stability=obj_creation.stability;
 
 	// show_message(instance_number(obj_controller));
 
@@ -1223,9 +1225,9 @@ function scr_initialize_custom() {
 			break;
 		case 3:
 			experience[company,1]=550;
-		gear[company,1]="Psychic Hood";
+			gear[company,1]="Psychic Hood";
 		    var let="";letmax=5;
-
+		    chapter_master.psionic = choose(15,16);
 		    switch(obj_creation.discipline){
 		    	case "default":
 		    		let="D";
@@ -1271,7 +1273,7 @@ function scr_initialize_custom() {
 	if (global.chapter_name="Iron Hands"){
 		repeat(9){spawn_unit.add_bionics();}
 	} else{
-	    repeat(irandom(3)){spawn_unit.add_bionics()};
+	    repeat(irandom(5)+3){spawn_unit.add_bionics()};
 	}
 	// Master of Sanctity (Chaplain)
 	TTRPG[company,3]=new TTRPG_stats("chapter", company,3);
@@ -1304,6 +1306,7 @@ function scr_initialize_custom() {
 	gear[company,4]=gear[101,15];
 	chaos[company,4]=0;experience[company,4]=500;
 	if (global.chapter_name="Lamenters") then armour[company,4]="MK6 Corvus";
+
 	// Chief Librarian
 	TTRPG[company,5]=new TTRPG_stats("chapter", company,5);
 	race[company,5]=1;
@@ -1322,6 +1325,7 @@ function scr_initialize_custom() {
 	if (obj_creation.discipline="telekinesis"){let="T";letmax=5;}
 	if (obj_creation.discipline="rune Magick"){let="R";letmax=5;}
 	spe[company,5]=string(let)+"0|";scr_powers_new(company,5);
+	TTRPG[company,5].psionics = choose(13,14,15,16);
 	TTRPG[company,5].add_trait("warp_touched");
 	k=0;
 	commands+=5;
@@ -1390,7 +1394,8 @@ function scr_initialize_custom() {
 	    if (obj_creation.discipline="rune Magick"){let="R";letmax=5;}
 	    spe[company,k]+=string(let)+"0|";scr_powers_new(company,k);
 	    TTRPG[company,k].spawn_old_guard();
-	    TTRPG[company,k].add_trait("warp_touched");    
+	    TTRPG[company,k].add_trait("warp_touched");  
+	    TTRPG[company,k].psionics = choose(13,14,15,16);  
 	}
 	// Codiciery
 	repeat(codiciery){
@@ -1416,7 +1421,8 @@ function scr_initialize_custom() {
 	    if (obj_creation.discipline="rune Magick"){let="R";letmax=5;}
 	    spe[company,k]+=string(let)+"0|";scr_powers_new(company,k);
 	    TTRPG[company,k].spawn_old_guard();
-	    TTRPG[company,k].add_trait("warp_touched");    
+	    TTRPG[company,k].add_trait("warp_touched");
+	    TTRPG[company,k].psionics = choose(11,12,13,14,15);     
 	}
 	// Lexicanum
 	repeat(lexicanum){k+=1;commands+=1;man_size+=1;
@@ -1440,6 +1446,7 @@ function scr_initialize_custom() {
 	    spe[company,k]+=string(let)+"0|";
 	    TTRPG[company,k].spawn_old_guard();
 	    TTRPG[company,k].add_trait("warp_touched");
+	    TTRPG[company,k].psionics = choose(8,9,10,11,12,13,14);     
 	}
 	// Apothecary
 	repeat(apothecary){

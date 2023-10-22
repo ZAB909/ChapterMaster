@@ -2,7 +2,7 @@ function scr_ui_manage() {
 	var unit,i, tool_tip_text,x1,x2,y1,y2, var_text;
 	var romanNumerals=scr_roman_numerals();	
 	var normal_hp=true, bionic_tooltip="",tool_tip_drawing=[];
-	var body_augmentations = {mutations:[], bionics:[]}
+	var body_augmentations = {mutations:[], bionics:[[],[]]}
 	
 	// Declare non marine roles here
 	var non_marine_roles=[
@@ -20,7 +20,7 @@ function scr_ui_manage() {
 
 	// This is the draw script for showing the main management screen or individual company screens
 
-	if (menu=1) and (managing>0){
+	if (menu==1) and (managing>0){
 	    var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0, bb="", img=0;
 
 	    // Draw BG
@@ -34,38 +34,53 @@ function scr_ui_manage() {
 	    var c=0,fx="",skin=obj_ini.skin_color;
 		
 		
-	    if (managing<=10) then c=managing;
-	    if (managing>20) then c=managing-10;
-		
-		if (managing >= 1) and (managing <=10) {
+	    if (managing>20){
+	    	c=managing-10;
+	    }else if (managing >= 1) and (managing <=10) {
 			fx= romanNumerals[managing - 1] + " Company";
+			c=managing;
+		} else {
+			switch(managing){
+				case 11:
+					fx="Headquarters"
+					break;
+				case 12:
+					fx="Apothecarion";
+					break;
+				case 13:
+					fx="Librarium";
+					break;
+				case 14:
+					fx="Reclusium";
+					break;
+				case 15:
+					fx="Armamentarium";
+					break;
+			}
 		}
-
-	    if (managing=11) then fx="Headquarters";
-	    if (managing=12) then fx="Apothecarion";
-	    if (managing=13) then fx="Librarium";
-	    if (managing=14) then fx="Reclusium";
-	    if (managing=15) then fx="Armamentarium";
 
 		// Draw the company followed by chapters name
 	    draw_text(xx+800,yy+74,string_hash_to_newline(string(fx)+", "+string(global.chapter_name)));
 
 		
 	    if (managing<=10){
-	        var bar_wid=0;
+	        var bar_wid=0,click_check, string_h;
 	        draw_set_alpha(0.25);
 	        if (obj_ini.company_title[managing]!="") then bar_wid=max(400,string_width(string_hash_to_newline(obj_ini.company_title[managing])));
 	        if (obj_ini.company_title[managing]="") then bar_wid=400;
-        
-	        draw_rectangle(xx+800-(bar_wid/2),yy+108,xx+800+(bar_wid/2),yy+100+string_height(string_hash_to_newline("LOL")),1);
+        	string_h = string_height(string_hash_to_newline("LOL"));
+	        draw_rectangle(xx+800-(bar_wid/2),yy+108,xx+800+(bar_wid/2),yy+100+string_h,1);
+	        click_check = scr_hit(xx+800-(bar_wid/2),yy+108,xx+800+(bar_wid/2),yy+100+string_h);
 	        obj_cursor.image_index=0;
-        
-	        if (scr_hit(xx+800-(bar_wid/2),yy+108,xx+800+(bar_wid/2),yy+100+string_height(string_hash_to_newline("LOL")))=false) and (mouse_left=1) and (cooldown<=0) then text_bar=0;
-	        if (scr_hit(xx+800-(bar_wid/2),yy+108,xx+800+(bar_wid/2),yy+100+string_height(string_hash_to_newline("LOL")))=true){
+	        if (!click_check) and (mouse_left==1) and (cooldown<=0){
+	         text_bar=0;
+	        }else if(click_check){
 	            obj_cursor.image_index=2;
             
-	            if (cooldown<=0) and (mouse_left=1) and (text_bar=0){
-	                cooldown=8000;text_bar=1;keyboard_string=obj_ini.company_title[managing];
+	            if (cooldown<=0) and (mouse_left==1) and (text_bar=0){
+	                cooldown=8000;
+	                text_bar=1;
+	                keyboard_string=obj_ini.company_title[managing];
 	            }
             
 	        }
@@ -95,8 +110,8 @@ function scr_ui_manage() {
 	    var cn=obj_controller;
 		
 	    if (instance_exists(cn)){
-	    	var selected_unit =  temp[120];				//unit struct
-	        if (cn.temp[101]!="") and (cn.temp[100]="1"){
+	    	var selected_unit = temp[120];				//unit struct
+	        if (cn.temp[101]!="") and (cn.temp[100]=="1"){
 	            ui_arm[1]=true;
 				ui_arm[2]=true;
 				
@@ -115,8 +130,8 @@ function scr_ui_manage() {
 	            var cpec;
 				cspec=obj_ini.col_special;
             
-	            var terg,armour_sprite,show1,show2;terg=0;armour_sprite=spr_weapon_blank;
-	            var jump,dev,hood,skull,arm,halo,braz,slow,brothers,body_part;jump=0;dev=0;hood=0;skull=0;arm=0;halo=0;braz=0;slow=0;brothers=-5;
+	            var terg=0,armour_sprite=spr_weapon_blank,show1,show2;
+	            var jump=0,dev=0,hood=0,skull=0,arm=0,halo=0,braz=0,slow=0,brothers=-5,body_part;
             
 	            var show_wep1,show_wep2,show_arm,show_gear,show_mobi;
 	            /*show_wep1=string_pos("&",cn.temp[108]);
@@ -147,10 +162,21 @@ function scr_ui_manage() {
 	                if (show_gear="Master Servo Arms") then mas=1;
                 
 	                if (mas=0){
-	                    if (cspec=0) or (cspec>1) then arm=1;if (cspec=1) then arm=0;
+	                    if (cspec=0) or (cspec>1) then arm=1;
+	                    if (cspec=1) then arm=0;
 	                }
 	                if (mas>0){
-	                    if (cspec=0) then arm=10;if (cspec=1) then arm=11;if (cspec>=2) then arm=12;
+	                	switch(cspec){
+	                		case 0:
+	                			arm=10;
+	                			break;
+	                		case 1:
+	                			arm=11;
+	                			break;
+	                		case 2:
+	                			arm=12;
+	                			break;	                				                			
+	                	}
 	                }
 	            }
             
@@ -219,7 +245,7 @@ function scr_ui_manage() {
 	                ui_specialist=0;
 	                if (ma_role[sel]=obj_ini.role[100,14]) then ui_specialist=1;// Chaplain
 	                if (ma_role[sel]=obj_ini.role[100,15]) then ui_specialist=3;// Apothecary
-	                if (ma_role[sel]=obj_ini.role[100,15]) and ((global.chapter_name="Blood Angels") or (obj_ini.progenitor=5)) then ui_specialist=4;// Sanguinary
+	                if (ma_role[sel]=obj_ini.role[100,15]) and ((global.chapter_name="Blood Angels") or (obj_ini.progenitor==5)) then ui_specialist=4;// Sanguinary
 	                if (ma_role[sel]=obj_ini.role[100,16]) then ui_specialist=5;// Techmarine
 	                if (ma_role[sel]=obj_ini.role[100,17]) then ui_specialist=7;// Librarian
 	                */
@@ -298,15 +324,15 @@ function scr_ui_manage() {
 	                //Rejoice!
 	                // draw_sprite(spr_marine_base,img,xx+1208,yy+178);
                 
-	                var clothing_style;clothing_style=3;
-	                if (global.chapter_name="Dark Angels") or (obj_ini.progenitor=1) then clothing_style=0;
-	                if (global.chapter_name="White Scars") or (obj_ini.progenitor=2) then clothing_style=1; 
-	                if (global.chapter_name="Space Wolves") or (obj_ini.progenitor=3) then clothing_style=2;
-	                if (global.chapter_name="Imperial Fists") or (obj_ini.progenitor=4) then clothing_style=0;
-	                if (global.chapter_name="Iron Hands") or (obj_ini.progenitor=6) then clothing_style=0;
-	                if (global.chapter_name="Salamanders") or (obj_ini.progenitor=8) then clothing_style=4;
-	                if (global.chapter_name="Raven Guard") or (obj_ini.progenitor=9) then clothing_style=0;
-	                if (global.chapter_name="Doom Benefactors") then clothing_style=4;
+	                var clothing_style=3;
+	                if (global.chapter_name=="Dark Angels") or (obj_ini.progenitor==1) then clothing_style=0;
+	                if (global.chapter_name=="White Scars") or (obj_ini.progenitor==2) then clothing_style=1; 
+	                if (global.chapter_name=="Space Wolves") or (obj_ini.progenitor==3) then clothing_style=2;
+	                if (global.chapter_name=="Imperial Fists") or (obj_ini.progenitor==4) then clothing_style=0;
+	                if (global.chapter_name=="Iron Hands") or (obj_ini.progenitor==6) then clothing_style=0;
+	                if (global.chapter_name=="Salamanders") or (obj_ini.progenitor==8) then clothing_style=4;
+	                if (global.chapter_name=="Raven Guard") or (obj_ini.progenitor==9) then clothing_style=0;
+	                if (global.chapter_name=="Doom Benefactors") then clothing_style=4;
                 
 	                // Determine Sprite
 	                if (skull=-50) then skull=1;
@@ -374,13 +400,13 @@ function scr_ui_manage() {
 						armour_sprite=spr_tartaros2_colors;
 						if (brothers>-5) then brothers=4;
 						if (hood=-50) then hood=8;
-						if (skull=1) then skull=3;
+						if (skull==1) then skull=3;
 					}
 	                if (show_arm="Terminator Armour"){
 						armour_sprite=spr_terminator2_colors;
 						if (brothers>-5) then brothers=5;
 						if (hood=-50) then hood=9;
-						if (skull=1) then skull=2;
+						if (skull==1) then skull=2;
 					}
 	                if (show_arm="Dreadnought") then armour_sprite=spr_dread_colors;
                 
@@ -401,7 +427,7 @@ function scr_ui_manage() {
 							if (brothers>-5) then brothers=5;
 							armour_sprite=spr_terminator2_colors;
 							if (hood=-50) then hood=9;
-							if (skull=1) then skull=2;
+							if (skull==1) then skull=2;
 						}
 	                    if (string_count("Dread",temp[102])>0) then armour_sprite=spr_dread_colors;
 	                }
@@ -441,56 +467,56 @@ function scr_ui_manage() {
                 
 	                // Draw the backpack
 	                if (ui_back=true) and (terg<5) and (temp[102]!=""){
-	                    if (cspec=0) then draw_sprite(armour_sprite,10,xx+1208,yy+178);
-	                    if (cspec=1) then draw_sprite(armour_sprite,11,xx+1208,yy+178);
+	                    if (cspec==0) then draw_sprite(armour_sprite,10,xx+1208,yy+178);
+	                    if (cspec==1) then draw_sprite(armour_sprite,11,xx+1208,yy+178);
 	                    if (cspec>=2) then draw_sprite(armour_sprite,12,xx+1208,yy+178);
 	                }
 	                if (ui_back=false) and (terg<5) and (temp[102]!=""){
-	                    if (jump=1){
-	                        if (cspec=0) then draw_sprite(spr_pack_jump,0,xx+1208,yy+178);
-	                        if (cspec=1) then draw_sprite(spr_pack_jump,1,xx+1208,yy+178);
+	                    if (jump==1){
+	                        if (cspec==0) then draw_sprite(spr_pack_jump,0,xx+1208,yy+178);
+	                        if (cspec==1) then draw_sprite(spr_pack_jump,1,xx+1208,yy+178);
 	                        if (cspec>=2) then draw_sprite(spr_pack_jump,2,xx+1208,yy+178);
 	                    }
-	                    if (dev=1){
-	                        if (cspec=0) then draw_sprite(spr_pack_devastator,0,xx+1208,yy+178);
-	                        if (cspec=1) then draw_sprite(spr_pack_devastator,1,xx+1208,yy+178);
+	                    if (dev==1){
+	                        if (cspec==0) then draw_sprite(spr_pack_devastator,0,xx+1208,yy+178);
+	                        if (cspec==1) then draw_sprite(spr_pack_devastator,1,xx+1208,yy+178);
 	                        if (cspec>=2) then draw_sprite(spr_pack_devastator,2,xx+1208,yy+178);
 	                    }
 	                }
                 
 	                if (braz=1) and (cn.temp[102]!="") and (blandify=0){
-	                    if (terg=0) then draw_sprite(spr_pack_brazier,0,xx+1208,yy+178);
+	                    if (terg==0) then draw_sprite(spr_pack_brazier,0,xx+1208,yy+178);
 	                    if (terg>0) then draw_sprite(spr_pack_brazier,1,xx+1206,yy+178);
 	                }
                 
 	                // Draw the Iron Halo
 	                if (halo=1) and (temp[102]!=""){var st;st=false;
-	                    if (hood=0) and (terg<1) and (temp[102]!="") and (ui_specialist=14) and ((obj_ini.progenitor=5) or (global.chapter_name="Blood Angels")) then st=true;
-	                    if (st=false) then draw_sprite(spr_gear_halo,0,xx+1208,yy+178);
+	                    if (hood==0) and (terg<1) and (temp[102]!="") and (ui_specialist=14) and ((obj_ini.progenitor=5) or (global.chapter_name="Blood Angels")) then st=true;
+	                    if (st==false) then draw_sprite(spr_gear_halo,0,xx+1208,yy+178);
 	                }
                 
 	                // Weapons for below arms
-	                if (ui_weapon[1]!=0) and (sprite_exists(ui_weapon[1])) and (ui_above[1]=false) and (fix_left<8){
-	                    if (ui_twoh[1]=false) and (ui_twoh[2]=false) then draw_sprite(ui_weapon[1],0,xx+1208+ui_xmod[1],yy+178+ui_ymod[1]);
-	                    if (ui_twoh[1]=true){
+	                if (ui_weapon[1]!=0) and (sprite_exists(ui_weapon[1])) and (ui_above[1]==false) and (fix_left<8){
+	                    if (ui_twoh[1]==false) and (ui_twoh[2]==false) then draw_sprite(ui_weapon[1],0,xx+1208+ui_xmod[1],yy+178+ui_ymod[1]);
+	                    if (ui_twoh[1]==true){
 	                        if (cspec<=1) then draw_sprite(ui_weapon[1],0,xx+1208+ui_xmod[1],yy+178+ui_ymod[1]);
 	                        if (cspec>=2) then draw_sprite(ui_weapon[1],3,xx+1208+ui_xmod[1],yy+178+ui_ymod[1]);
-	                        if (ui_force_both=true){
+	                        if (ui_force_both==true){
 	                            if (cspec<=1) then draw_sprite(ui_weapon[1],0,xx+1208+ui_xmod[1],yy+178+ui_ymod[1]);
 	                            if (cspec>=2) then draw_sprite(ui_weapon[1],1,xx+1208+ui_xmod[1],yy+178+ui_ymod[1]);
 	                        }
 	                    }
 	                }
-	                if (ui_weapon[2]!=0) and (ui_above[2]=false) and (sprite_exists(ui_weapon[2])) and ((ui_twoh[1]=false) or (ui_force_both=true)) and (fix_right<8){
-	                    if (ui_spec[2]=false) then draw_sprite(ui_weapon[2],1,xx+1208+ui_xmod[2],yy+178+ui_ymod[2]);
-	                    if (ui_spec[2]=true){
+	                if (ui_weapon[2]!=0) and (ui_above[2]==false) and (sprite_exists(ui_weapon[2])) and ((ui_twoh[1]==false) or (ui_force_both==true)) and (fix_right<8){
+	                    if (ui_spec[2]==false) then draw_sprite(ui_weapon[2],1,xx+1208+ui_xmod[2],yy+178+ui_ymod[2]);
+	                    if (ui_spec[2]==true){
 	                        if (cspec<=1) then draw_sprite(ui_weapon[2],2,xx+1208+ui_xmod[2],yy+178+ui_ymod[2]);
 	                        if (cspec>=2) then draw_sprite(ui_weapon[2],3,xx+1208+ui_xmod[2],yy+178+ui_ymod[2]);
 	                    }
 	                }
                 
-	                if (temp[102]="") or (temp[102]="None") or (temp[102]="(None)"){
-	                    if (ui_specialist=111) and (global.chapter_name="Doom Benefactors") then skin=6;
+	                if (temp[102]=="") or (temp[102]=="None") or (temp[102]=="(None)"){
+	                    if (ui_specialist==111) and (global.chapter_name=="Doom Benefactors") then skin=6;
                     
 	                    draw_sprite(spr_marine_base,skin,xx+1208,yy+178);
                     
@@ -504,48 +530,48 @@ function scr_ui_manage() {
 	                }
 	                if (temp[102]="MK3 Iron Armour"){
 	                    draw_sprite(armour_sprite,col_special,xx+1208,yy+178);
-	                    if (ttrim=0) and (cspec<=1) then draw_sprite(spr_iron2_colors,4,xx+1208,yy+178);
-	                    if (ttrim=0) and (cspec>=2) then draw_sprite(spr_iron2_colors,5,xx+1208,yy+178);
+	                    if (ttrim==0) and (cspec<=1) then draw_sprite(spr_iron2_colors,4,xx+1208,yy+178);
+	                    if (ttrim==0) and (cspec>=2) then draw_sprite(spr_iron2_colors,5,xx+1208,yy+178);
 	                }
 	                if (temp[102]="MK4 Maximus"){
 	                    draw_sprite(armour_sprite,cspec,xx+1208,yy+178);
-	                    if (ttrim=0) and (cspec<=1) then draw_sprite(spr_maximus_colors,4,xx+1208,yy+178);
-	                    if (ttrim=0) and (cspec>=2) then draw_sprite(spr_maximus_colors,5,xx+1208,yy+178);
+	                    if (ttrim==0) and (cspec<=1) then draw_sprite(spr_maximus_colors,4,xx+1208,yy+178);
+	                    if (ttrim==0) and (cspec>=2) then draw_sprite(spr_maximus_colors,5,xx+1208,yy+178);
 	                }
 	                if (temp[102]="MK5 Heresy"){
 	                    draw_sprite(armour_sprite,cspec,xx+1208,yy+178);
-	                    if (ttrim=0) and (cspec<=1) then draw_sprite(spr_heresy_colors,4,xx+1208,yy+178);
-	                    if (ttrim=0) and (cspec>=2) then draw_sprite(spr_heresy_colors,5,xx+1208,yy+178);
+	                    if (ttrim==0) and (cspec<=1) then draw_sprite(spr_heresy_colors,4,xx+1208,yy+178);
+	                    if (ttrim==0) and (cspec>=2) then draw_sprite(spr_heresy_colors,5,xx+1208,yy+178);
 	                }
 	                if (temp[102]="MK6 Corvus"){
 	                    draw_sprite(armour_sprite,cspec,xx+1208,yy+178);
-	                    if (ttrim=0) and (cspec<=1) then draw_sprite(spr_beakie_colors,4,xx+1208,yy+178);
-	                    if (ttrim=0) and (cspec>=2) then draw_sprite(spr_beakie_colors,5,xx+1208,yy+178);
+	                    if (ttrim==0) and (cspec<=1) then draw_sprite(spr_beakie_colors,4,xx+1208,yy+178);
+	                    if (ttrim==0) and (cspec>=2) then draw_sprite(spr_beakie_colors,5,xx+1208,yy+178);
 	                }
 	                if (temp[102]="MK7 Aquila") or (show_arm="Power Armour"){
 	                    draw_sprite(armour_sprite,cspec,xx+1208,yy+178);
-	                    if (ttrim=0) and (cspec<=1) then draw_sprite(spr_aquila_colors,4,xx+1208,yy+178);
-	                    if (ttrim=0) and (cspec>=2) then draw_sprite(spr_aquila_colors,5,xx+1208,yy+178);
+	                    if (ttrim==0) and (cspec<=1) then draw_sprite(spr_aquila_colors,4,xx+1208,yy+178);
+	                    if (ttrim==0) and (cspec>=2) then draw_sprite(spr_aquila_colors,5,xx+1208,yy+178);
 	                }
 	                if (temp[102]="MK8 Errant"){
 	                    draw_sprite(armour_sprite,cspec,xx+1208,yy+178);
-	                    if (ttrim=0) and (cspec<=1) then draw_sprite(spr_errant_colors,4,xx+1208,yy+178);
-	                    if (ttrim=0) and (cspec>=2) then draw_sprite(spr_errant_colors,5,xx+1208,yy+178);
+	                    if (ttrim==0) and (cspec<=1) then draw_sprite(spr_errant_colors,4,xx+1208,yy+178);
+	                    if (ttrim==0) and (cspec>=2) then draw_sprite(spr_errant_colors,5,xx+1208,yy+178);
 	                }
 	                if (show_arm="Artificer Armour"){
 	                    draw_sprite(armour_sprite,cspec,xx+1208,yy+178);
-	                    if (ttrim=0) and (cspec<=1) then draw_sprite(spr_artificer_colors,4,xx+1208,yy+178);
-	                    if (ttrim=0) and (cspec>=2) then draw_sprite(spr_artificer_colors,5,xx+1208,yy+178);
+	                    if (ttrim==0) and (cspec<=1) then draw_sprite(spr_artificer_colors,4,xx+1208,yy+178);
+	                    if (ttrim==0) and (cspec>=2) then draw_sprite(spr_artificer_colors,5,xx+1208,yy+178);
 	                }
 	                if (terg=2){
 	                    draw_sprite(armour_sprite,cspec,xx+1208,yy+178);
-	                    if (ttrim=0) and (cspec<=1) then draw_sprite(spr_tartaros2_colors,4,xx+1208,yy+178);
-	                    if (ttrim=0) and (cspec>=2) then draw_sprite(spr_tartaros2_colors,5,xx+1208,yy+178);
+	                    if (ttrim==0) and (cspec<=1) then draw_sprite(spr_tartaros2_colors,4,xx+1208,yy+178);
+	                    if (ttrim==0) and (cspec>=2) then draw_sprite(spr_tartaros2_colors,5,xx+1208,yy+178);
 	                }
 	                if (terg=1){
 	                    draw_sprite(armour_sprite,cspec,xx+1208,yy+178);
-	                    if (ttrim=0) and (cspec<=1) then draw_sprite(spr_terminator2_colors,4,xx+1208,yy+178);
-	                    if (ttrim=0) and (cspec>=2) then draw_sprite(spr_terminator2_colors,5,xx+1208,yy+178);
+	                    if (ttrim==0) and (cspec<=1) then draw_sprite(spr_terminator2_colors,4,xx+1208,yy+178);
+	                    if (ttrim==0) and (cspec>=2) then draw_sprite(spr_terminator2_colors,5,xx+1208,yy+178);
 	                }
 	                if (terg=5){
 	                    draw_sprite(spr_dread_colors,cspec,xx+1208,yy+178);
@@ -581,7 +607,7 @@ function scr_ui_manage() {
 	                    }
 	                    if (yep=1) and (hood<7){
 	                        if (ttrim=1) then draw_sprite(spr_gear_hood2,0,xx+1206,yy+167);
-	                        if (ttrim=0) then draw_sprite(spr_gear_hood2,1,xx+1206,yy+167);
+	                        if (ttrim==0) then draw_sprite(spr_gear_hood2,1,xx+1206,yy+167);
 	                    }
 	                }
 					//Chaplain head and Terminator version
@@ -599,8 +625,9 @@ function scr_ui_manage() {
 					
 					for (body_part = 0; body_part<array_length(global.body_parts);body_part++){
 						if (struct_exists(selected_unit.body[$ global.body_parts[body_part]], "bionic")){
-							bionic_tooltip+=string("standard bionic {0}#",global.body_parts_display[body_part])
-							array_push(body_augmentations.bionics, body_part);
+							bionic_tooltip+=string("standard bionic {0}#",global.body_parts_display[body_part]);
+							array_push(body_augmentations.bionics[0], body_part);
+							array_push(body_augmentations.bionics[1], global.body_parts[body_part]);
 							if (!array_contains(["Dreadnought", "Terminator Armour", "Tartaros"], selected_unit.armour())){
 								if (global.body_parts[body_part] == "left_eye") {
 									if (selected_unit.armour() == "MK3 Iron Armour"){
@@ -625,7 +652,7 @@ function scr_ui_manage() {
 					}
                 
 	                // Honor Guard Helm
-	                if (hood=0) and (terg<1) and (temp[102]!="") and (ui_specialist=14){
+	                if (hood==0) and (terg<1) and (temp[102]!="") and (ui_specialist==14){
 	                    var helm_ii,o,yep;
                     	helm_ii=0;
 	                    if (obj_ini.progenitor=7) or (global.chapter_name="Ultramarines") then helm_ii=1;
@@ -640,7 +667,7 @@ function scr_ui_manage() {
 						for(var q=1; q<=4;q++){
 							if (obj_ini.dis[q]="Never Forgive") then yep=1;
 						}
-						if (yep=1) or (obj_ini.progenitor=1) then helm_ii=3;
+						if (yep=1) or (obj_ini.progenitor==1) then helm_ii=3;
 	                    yep=0;
 						for(var r=1; r<=4;r++){
 							if (obj_ini.adv[r]="Reverent Guardians") then yep=1;
@@ -845,7 +872,7 @@ function scr_ui_manage() {
 
 			eventing=false;
         
-	        if (man[sel]="man"){
+	        if (man[sel]=="man"){
 				unit = display_unit[sel];
 				var unit_location = unit.marine_location();
 	            temp1=unit.name_role();
@@ -1026,16 +1053,40 @@ function scr_ui_manage() {
 	        draw_rectangle(xx+25,yy+64,xx+974,yy+85,0);
 
 	        //if unit has techmarine potential
-	        if (unit.technology>=35){
-	        	draw_set_color(c_red);
-	        	unit_specialism_option=true;
-	        	spec_tip = "Techmarine Potential";
-	        //if unit has librarian potential
-	    	} else if(array_contains(unit.traits, "warp_touched")){
-	    		spec_tip = "Librarium potential";
-	    		unit_specialism_option=true;
-	    		draw_set_color(c_blue);
-	    	}else{
+	        unit_specialism_option=false;
+	        if (man[sel]="man"){
+	        	if (!is_specialist(unit.role())){
+			        if (unit.technology>=35){
+			        	draw_set_color(c_orange);
+			        	unit_specialism_option=true;
+			        	spec_tip = $"{obj_ini.role[100,16]} Potential";
+			        //if unit has librarian potential
+			    	} else if (unit.psionic>7){
+			    		spec_tip = "Librarium potential";
+			    		unit_specialism_option=true;
+			    		draw_set_color(c_aqua);
+			    	}else if (unit.piety>=35){
+			    		spec_tip = $"{obj_ini.role[100,15]} potential";
+			    		unit_specialism_option=true;
+			    		draw_set_color(c_olive);
+			    	}else if (unit.technology>=30) and (unit.intelligence>=45){
+			    		spec_tip = $"{obj_ini.role[100,14]} potential";
+			    		unit_specialism_option=true;
+			    		draw_set_color(c_fuchsia);
+			    	}
+		    	} else{
+		    		unit_specialism_option=true;
+		    		if (array_contains(["Lexicanum", "Codiciery",obj_ini.role[100,17], string("Chief {0}",obj_ini.role[100,17])], unit.role())){
+		    			draw_set_color(c_blue);
+		    		} else if(array_contains(["Forge Master",obj_ini.role[100,16]],unit.role())){
+		    			draw_set_color(c_maroon);
+		    		} else if(array_contains([obj_ini.role[100,15],"Master of the Apothecarion"],unit.role())){
+		    			draw_set_color(c_red);
+		    		} else if(array_contains([obj_ini.role[100,14],"Master of Sanctity"],unit.role())){
+		    			draw_set_color(c_teal);
+		    		}
+		    	}
+	    	} else {
 	    		draw_set_color(c_gray);
 	    	}
 	    	if (unit_specialism_option){
@@ -1616,7 +1667,7 @@ function scr_ui_manage() {
 			}
 		}
 		if instance_exists(cn){
-			if (cn.temp[101]!="") and (cn.temp[100]="1"){
+			if (cn.temp[101]!="") and (cn.temp[100]=="1"){
 		        if ((point_in_rectangle(mouse_x, mouse_y, xx+1208, yy+168, xx+1374, yy+409)) and (!instance_exists(obj_temp3)) and(!instance_exists(obj_popup))){
 		        	draw_set_color(0);
 		    		draw_rectangle(xx+1004,yy+519,xx+1576,yy+957,0);
@@ -1624,6 +1675,8 @@ function scr_ui_manage() {
 		    		var stat_y = yy+519;
 		    		var stat_display = string_hash_to_newline($"DEX#{selected_unit.dexterity}");
 		    		tool_tip_draw(stat_x,stat_y, stat_display,2);
+		    		tool_tip_draw(stat_x,stat_y+string_height(stat_display)+6,$"Warp Level:{selected_unit.psionic}");
+
 		    		stat_x += string_width(stat_display)+3;
 
 		    		stat_display = string_hash_to_newline($"STR#{selected_unit.strength}");
@@ -1671,6 +1724,10 @@ function scr_ui_manage() {
 		    		draw_set_color(c_gray);
 
 		        	unit_data_string = selected_unit.name_role();
+		        	var is_astartes = false;
+		        	if(selected_unit.base_group == "astartes"){
+		        		var is_astartes = true;
+		        	}
 		        	if (selected_unit.squad != "none"){
 		        		var chapter_role = ""
 		        		chapter_role += " of the ";
@@ -1726,27 +1783,130 @@ function scr_ui_manage() {
 		       			}else if(selected_unit.piety >= 50){
 		       				unit_data_string += " and is fanatical in his worship"
 		       			}
-		       			unit_data_string+="#";
+		       			unit_data_string+="##";
 		       		}
-		       		if (selected_unit.base_group == "astartes"){
+		       		unit_data_string += $"{unit_name} Has a Imperial Assignment: Positive Psionic Level value of {global.phy_levels[selected_unit.psionic]} ";
+		       		var is_lib = array_contains(["Lexicanum", "Codiciery",obj_ini.role[100,17]], selected_unit.role());
+		       		if (selected_unit.psionic<2){
+		       			unit_data_string += "as such has almost no presence in the warp";
+		       		} else if(selected_unit.psionic<8){
+		       			unit_data_string += "and has a limited presence in the warp causing them to be more prone to attacks from the immaterium";
+		       		} else if(selected_unit.psionic<11){
+		       			unit_data_string += "And is therefore considered a low level psyker with Conscious levels of psionic talent.";
+		       			if (is_astartes){
+			       			if (!is_lib){
+			       				unit_data_string += " He would be eligible for a role in the Librarium however is unlikely to ever exceed the role of Lexicanum";
+			       			}
+		       			}
+		       		}else if(selected_unit.psionic<13){
+		       			unit_data_string += "and has a very high level of mental psychic activity, making them a potent psyker, their presence in the warp is obvious to the daemons of the immaterium"
+		       			if (is_astartes){
+			       			if (!is_lib){
+			       				unit_data_string += " He would be eligible for a role in the Librarium capable of wielding his power to good effect";
+			       			}
+		       			}
+		       		}else if(selected_unit.psionic<15){
+		       			unit_data_string += "Occurring in approximately one-per-billion human births, they are a very potent psyker."
+		       			if (is_astartes){
+			       			if (!is_lib){
+			       				unit_data_string += " He would be eligible for a role in the Librarium And should be enrolled at once in order to train his abilities and stop his untrained mind causing damage to the chapter";
+			       			} else {
+			       				unit_data_string += " His rare talent is of great benefit to the chapter and could one day be a candidate for Chief of the librariam"
+			       			}
+		       			}		       				       			
+		       		} else if(selected_unit.psionic<15){
+		       			unit_data_string += "Exceedingly rare and dangerous but unfathomably powerful."
+		       			if (is_astartes){
+		       				unit_data_string += " Their Talents are both a great boon and huge risk to the chapter."
+			       			if (!is_lib){
+			       				unit_data_string += " He must brought into the guided sphere of the librarium immediately or else dealt with by other methods for the good of the chapter";
+			       			} else {
+			       				unit_data_string += " His rare talent is of great benefit to the chapter and will likely one day be a candidate for Chief of the librariam if he does not succumb to either the material or immaterium"
+			       			}
+		       			}
+		       		}
+		       		unit_data_string += "##"
+		       		if (is_astartes){
 		       			var bionic_count = selected_unit.bionics();
 		       			if (bionic_count ==0){
 		       				unit_data_string+= unit_name + " has no bodily augmentations besides his astartes gene seed and organs #"
 		       			}else if(bionic_count ==1){
-		       				unit_data_string+= unit_name + string(" Has a bionic {0}#", global.body_parts_display[body_augmentations.bionics[0]])
+		       				unit_data_string+= unit_name + string(" Has a bionic {0}#", global.body_parts_display[body_augmentations.bionics[0][0]])
 		       			}else if((bionic_count >1) and (bionic_count <4)){
 		       				unit_data_string+= unit_name + " Has some bionic replacements #"
 		       			}else if((bionic_count >5) and (bionic_count <8)){
 		       				unit_data_string+= unit_name + " Has many bionic replacements #"
 		       			}else if (bionic_count >8){
-		       				unit_data_string+= unit_name + " Is mostly machine having replaced most of his flesh with bionic repacements.#"
+		       				unit_data_string+= unit_name + " Is mostly machine having replaced most of his flesh with bionic replacements."
 		       			}
+		       			if (array_contains(body_augmentations.bionics[1], "throat")){
+		       				unit_data_string+="People tend to find the sound from his augmetic throat unnerving"
+		       			}
+
+		       			unit_data_string+="#";
+
+		       			var mutation_names = struct_get_names(selected_unit.gene_seed_mutations);
+		       			var pure_seed =true;
+		       			var mutation_string = unit_name + " has an impure gene seed."
+						for (var mute =0; mute <array_length(mutation_names); mute++){
+							if (selected_unit.gene_seed_mutations[$ mutation_names[mute]] == 1){
+								pure_seed = false;
+								switch(mutation_names[mute]){
+									case "preomnor":
+										mutation_string += "He lacks the detoxifying gland called the Preomnor- he is more susceptible to poisons and toxins,";
+										break;
+									case "lyman":
+										mutation_string += "Lacks a working Lyman's ear, And therefore struggles with deep strikes and certain other actions";
+										break;
+									case "omophagea":
+										mutation_string += "suffers from a faulty Omophagea,";
+										break;
+									case "ossmodula":
+										mutation_string += "suffers from a faulty Ossmodula, and takes longer to heal from injuries,";
+										break;
+									case "zygote":
+										mutation_string +="One of his Zygotes is faulty or missing.";
+										break;
+									case "betchers":
+										mutation_string +="He is missing his Betchers Gland and therefore cannot spit acid.";
+										break;
+									case "catalepsean":
+										mutation_string +="He has a faulty Catalepsean Node reducing his awareness when tired.";
+										break;
+									case "occulobe":
+										mutation_string += "He suffers from a faulty occulobe limiting his eyesight enhancements.";
+										break;
+									case "mucranoid":
+										mutation_string += "He suffers from a faulty mucranoid reducing his resistance to extreme heat and cold.";
+										break;
+									case "membrane":
+										mutation_string += "He cannot properly activate his Sus-an Membrane, this limits his ability to survive mortal wounds";
+										break;
+									case "voice":
+										mutation_string += "the marine implantation process caused his voice to warp and now produces a sound that the average member of the Imperium finds unnerving to hear.";
+								}
+							}
+						}
+						if (pure_seed){
+							unit_data_string += "Has a pure gene seed suffering no mutations";
+						} else{
+							unit_data_string += mutation_string;
+						}
+		       			unit_data_string+="#";
 			       		if (selected_unit.strength > 49){
 			       			unit_data_string+= unit_name + "s strength greatly exceeds that of the standard astartes allowing him to wield weapons that normally require two hands in one.#"
 			       		} 
-			       		if ((selected_unit.technology >=35) and (!array_contains(selected_unit.traits, "mars_trained"))){
-			       			unit_data_string +="displays a talent with technology that might make him suited to a role within the armentarium.#";
-			       		}		
+			       		if ((selected_unit.technology >=35) and (selected_unit.technology<45)){
+			       			if(!array_contains(selected_unit.traits, "mars_trained")){
+			       				unit_data_string +="displays a talent with technology that might make him suited to a role within the armentarium.#";
+			       			}
+			       		} else if(selected_unit.technology >= 45){
+			       			unit_data_string +="Is a technological prodigy able to understand and build most anything that takes his interest.#";
+			       		} else if (selected_unit.technology <25){
+			       			unit_data_string +="Is a technological luddite capable of little more than cleaning his own bolter.#";
+			       		} else if (selected_unit.technology <35){
+			       			unit_data_string +="Is capable enough with technical skills to carry out basic tasks in the field.#";
+			       		}
 		       		}
 		       		unit_data_string += "#";
 
@@ -1761,7 +1921,7 @@ function scr_ui_manage() {
 		       		}
 		       		tool_tip_text = string_hash_to_newline(tool_tip_text);
 		       		tool_tip_draw(stat_x+2,stat_y, tool_tip_text);
-		       		tool_tip_draw(xx+25,yy+65, string_hash_to_newline(unit_data_string), 3, 0, 985, 17);
+		       		tool_tip_draw(xx+25,yy+65, string_hash_to_newline(unit_data_string), 3, 0, 975, 17);
 		        }
 			}
 		}    

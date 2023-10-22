@@ -431,7 +431,7 @@ if (psyker_points>=round(goal/2)) and (psyker_aspirant!=0) and (recruit_count==0
 if (psyker_points>=goal){
     if (recruit_count>0){
         marine_position=0;
-        random_marine=scr_random_marine(novice_type,0, {"trait":"warp_touched"});
+        random_marine=scr_random_marine(novice_type,0,{"stat":[["psionic", 8, "more"]]});
         if (random_marine != "none"){
             marine_position = random_marine[1];
             psyker_points-=48;
@@ -447,7 +447,7 @@ if (psyker_points>=round(goal/2)) and (psyker_aspirant==0){
     marine_position=0;
     marine_company=0;
 
-    random_marine=scr_random_marine([obj_ini.role[100,8], obj_ini.role[100,18], obj_ini.role[100,9], obj_ini.role[100,10]],30, {"trait":"warp_touched"});
+    random_marine=scr_random_marine([obj_ini.role[100,8], obj_ini.role[100,18], obj_ini.role[100,9], obj_ini.role[100,10]],30, {"stat":[["psionic", 8, "more"]]});
     if (random_marine == "none"){
         training_psyker=0;
         scr_alert("red","recruitment","No remaining warp sensitive marines for training",0,0);
