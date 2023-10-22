@@ -1,13 +1,13 @@
-function tool_tip_draw(base_x, base_y, tool_tip, extra_x=0, extra_y=0, defined_width=false, line_gap=0){
+function tooltip_draw(base_x, base_y, tooltip, extra_x=0, extra_y=0, defined_width=false, line_gap=0){
 	var xx=__view_get( e__VW.XView, 0 )+0;
 	var yy=__view_get( e__VW.YView, 0 )+0;
 	var width,height;
 	if (defined_width != false){
 		width =defined_width+extra_x;
 	} else{
-		width = string_width(string_hash_to_newline(tool_tip)) + extra_x;
+		width = string_width(string_hash_to_newline(tooltip)) + extra_x;
 	}
-	height = string_height(string_hash_to_newline(tool_tip))+extra_y;
+	height = string_height(string_hash_to_newline(tooltip))+extra_y;
 	draw_set_color(0);
 	draw_rectangle(base_x,base_y,width+base_x+6,height+base_y+6,0);
 	draw_set_color(c_gray);
@@ -16,9 +16,9 @@ function tool_tip_draw(base_x, base_y, tool_tip, extra_x=0, extra_y=0, defined_w
 	draw_rectangle(base_x+1,base_y+1,width+base_x+5,height+base_y+5,1);
     draw_set_alpha(1);
     if (defined_width == false){
-    	draw_text(base_x+2.5,base_y+2.5,string_hash_to_newline(string(tool_tip)));
+    	draw_text(base_x+2.5,base_y+2.5,string_hash_to_newline(string(tooltip)));
     } else{
-    	draw_text_ext(base_x+2.5,base_y+2.5, string_hash_to_newline(string(tool_tip)), line_gap, defined_width);
+    	draw_text_ext(base_x+2.5,base_y+2.5, string_hash_to_newline(string(tooltip)), line_gap, defined_width);
     }
 }
 
@@ -700,7 +700,7 @@ function scr_ui_popup() {
 	        }		    
 	    
 		    if (tool1!=""){
-		    	tool_tip_draw(xx+10, yy+42, tool1);
+		    	tooltip_draw(xx+10, yy+42, tool1);
 		    }
 		}
 
@@ -725,7 +725,7 @@ function scr_ui_popup() {
 		    if (tool1="") then tool1="Loyalty";
 	    
 		    if (tool1!=""){
-		        tool_tip_draw(xx+150, yy+42, tool1);
+		        tooltip_draw(xx+150, yy+42, tool1);
 		    }
 		}
 
@@ -734,7 +734,7 @@ function scr_ui_popup() {
 		    var tx=0,ty=0,tool1="",tool2="",plu="";
 		    tool1="Gene-Seed";
 		    if (tool1!=""){
-		        tool_tip_draw(xx+249, yy+42, tool1);
+		        tooltip_draw(xx+249, yy+42, tool1);
 		    }
 		}
 
@@ -743,7 +743,7 @@ function scr_ui_popup() {
 		    tool1="Astartes#(Normal/Command)";
 		    tool2="Astartes";
 		    if (tool1!=""){
-		        tool_tip_draw(xx+373, yy+42, tool1);
+		        tooltip_draw(xx+373, yy+42, tool1);
 		    }
 		}
 		if (menu == 0) and (diplomacy<=0){
@@ -752,7 +752,7 @@ function scr_ui_popup() {
 			    tool1=$"Turn :{obj_controller.turn}";
 			    tool2="Astartes";
 			    if (tool1!=""){
-			    	tool_tip_draw(xx+1480, yy+265, tool1);
+			    	tooltip_draw(xx+1480, yy+265, tool1);
 			    }
 			}
 		}
@@ -782,7 +782,7 @@ function scr_ui_popup() {
 		    }
 	    
 		    if (tool1!=""){
-		        tool_tip_draw(xx+813, yy+42, tool1)
+		        tooltip_draw(xx+813, yy+42, tool1)
 		    }
 		}
 

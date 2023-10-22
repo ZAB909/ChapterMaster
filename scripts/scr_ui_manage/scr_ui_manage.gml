@@ -1,7 +1,7 @@
 function scr_ui_manage() {
-	var unit,i, tool_tip_text,x1,x2,y1,y2, var_text;
+	var unit,i, tooltip_text,x1,x2,y1,y2, var_text;
 	var romanNumerals=scr_roman_numerals();	
-	var normal_hp=true, bionic_tooltip="",tool_tip_drawing=[];
+	var normal_hp=true, bionic_tooltip="",tooltip_drawing=[];
 	var body_augmentations = {mutations:[], bionics:[[],[]]}
 	
 	// Declare non marine roles here
@@ -791,27 +791,27 @@ function scr_ui_manage() {
 		        draw_set_color(c_gray);
 		        draw_text(x1,y1,var_text);
 		        if (bionic_tooltip !=""){
-		        	array_push(tool_tip_drawing, [bionic_tooltip, [x1,y1,x2,y2]]);
+		        	array_push(tooltip_drawing, [bionic_tooltip, [x1,y1,x2,y2]]);
 		    	} else{
-		    		array_push(tool_tip_drawing, ["No bionic Augmentations", [x1,y1,x2,y2]]);
+		    		array_push(tooltip_drawing, ["No bionic Augmentations", [x1,y1,x2,y2]]);
 		    	}
 	    	}
 
         	if (cn.temp[112]!=""){
         		var_text = string_hash_to_newline(string("Health: {0}",cn.temp[112]))
-	        	tool_tip_text = string_hash_to_newline(string("CON : {0}", selected_unit.constitution));
+	        	tooltip_text = string_hash_to_newline(string("CON : {0}", selected_unit.constitution));
 	        	x1 = xx+1015;
 	        	y1 = yy+420;
 	        	x2 = x1+string_width(var_text);
 	        	y2 = y1+string_height(var_text);
 		        draw_set_color(c_gray);
 		        draw_text(x1,y1,var_text);
-		        array_push(tool_tip_drawing, [tool_tip_text, [x1,y1,x2,y2]]);
+		        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
 	    	}	        
         	
         	if (cn.temp[116]!=""){
         		var_text = string_hash_to_newline(string("Melee Attack: {0}",cn.temp[116]))
-	        	tool_tip_text = string_hash_to_newline(string("WS : {0}#STR : {1}", selected_unit.weapon_skill, selected_unit.strength));
+	        	tooltip_text = string_hash_to_newline(string("WS : {0}#STR : {1}", selected_unit.weapon_skill, selected_unit.strength));
 	        	x1 = xx+1015;
 	        	y1 = yy+442;
 	        	x2 = x1+string_width(var_text);
@@ -819,12 +819,12 @@ function scr_ui_manage() {
 		        draw_set_color(c_gray);
 		        if (ui_melee_penalty>0) then draw_set_color(c_red);
 		        draw_text(x1,y1,var_text);
-		        array_push(tool_tip_drawing, [tool_tip_text, [x1,y1,x2,y2]]);
+		        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
 	    	}
 
         	if (cn.temp[117]!=""){
         		var_text = string_hash_to_newline(string("Ranged Attack: {0}",cn.temp[117]))
-	        	tool_tip_text = string_hash_to_newline(string("BS : {0}#DEX : {1}", selected_unit.ballistic_skill, selected_unit.dexterity));
+	        	tooltip_text = string_hash_to_newline(string("BS : {0}#DEX : {1}", selected_unit.ballistic_skill, selected_unit.dexterity));
 	        	x1 = xx+1190;
 	        	y1 = yy+442;
 	        	x2 = x1+string_width(var_text);
@@ -832,19 +832,19 @@ function scr_ui_manage() {
 		        draw_set_color(c_gray);
 		        if (ui_ranged_penalty>0) then draw_set_color(c_red);
 		        draw_text(x1,y1,var_text);
-		        array_push(tool_tip_drawing, [tool_tip_text, [x1,y1,x2,y2]]);
+		        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
 	    	}	 
 
         	if (cn.temp[118]!=""){
         		var_text = string_hash_to_newline(string("Damage Resistance: {0}",cn.temp[118]))
-	        	tool_tip_text = string_hash_to_newline(string("CON : {0}", selected_unit.constitution));
+	        	tooltip_text = string_hash_to_newline(string("CON : {0}", selected_unit.constitution));
 	        	x1 = xx+1365;
 	        	y1 = yy+442;
 	        	x2 = x1+string_width(var_text);
 	        	y2 = y1+string_height(var_text);
 		        draw_set_color(c_gray);
 		        draw_text(x1,y1,var_text);
-		        array_push(tool_tip_drawing, [tool_tip_text, [x1,y1,x2,y2]]);
+		        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
 	    	}
         
 	        draw_set_font(fnt_40k_14i);
@@ -862,7 +862,7 @@ function scr_ui_manage() {
 	        
 	    yy+=77;
 		
-	    var unit_specialism_option=false, spec_tip="", tool_tip_set=[];
+	    var unit_specialism_option=false, spec_tip="", tooltip_set=[];
 		var repetitions=min(man_max,man_see)
 	    for(var i=0; i<repetitions;i++){
 
@@ -1090,7 +1090,7 @@ function scr_ui_manage() {
 	    		draw_set_color(c_gray);
 	    	}
 	    	if (unit_specialism_option){
-	    		array_push(tool_tip_set, [spec_tip, [xx+25,yy+64,xx+974,yy+85]]);
+	    		array_push(tooltip_set, [spec_tip, [xx+25,yy+64,xx+974,yy+85]]);
 	    		draw_rectangle(xx+25+2,yy+64+2,xx+974-2,yy+85-2,1);
 	    	} else{
 				draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);
@@ -1513,9 +1513,9 @@ function scr_ui_manage() {
 	        }
 	    }
 	    //draws hover overs for specialist potential
-	    for (var i=0;i<array_length(tool_tip_set);i++){
-	    	if (point_in_rectangle(mouse_x, mouse_y, tool_tip_set[i][1][0],tool_tip_set[i][1][1],tool_tip_set[i][1][2],tool_tip_set[i][1][3])){
-	    		tool_tip_draw(mouse_x, mouse_y, tool_tip_set[i][0])
+	    for (var i=0;i<array_length(tooltip_set);i++){
+	    	if (point_in_rectangle(mouse_x, mouse_y, tooltip_set[i][1][0],tooltip_set[i][1][1],tooltip_set[i][1][2],tooltip_set[i][1][3])){
+	    		tooltip_draw(mouse_x, mouse_y, tooltip_set[i][0])
 	    	}
 	    }
     
@@ -1659,11 +1659,11 @@ function scr_ui_manage() {
     
 	    scr_scrollbar(974,172,1005,790,34,man_max,man_current);
 	    var tip, coords;
-		for (i=0;i < array_length(tool_tip_drawing); i++){
-			tip = tool_tip_drawing[i];
+		for (i=0;i < array_length(tooltip_drawing); i++){
+			tip = tooltip_drawing[i];
 			coords=tip[1];
 			if (point_in_rectangle(mouse_x, mouse_y, coords[0],coords[1],coords[2],coords[3])){
-		        	tool_tip_draw(coords[0],coords[3]+4, tip[0]);
+		        	tooltip_draw(coords[0],coords[3]+4, tip[0]);
 			}
 		}
 		if instance_exists(cn){
@@ -1674,49 +1674,49 @@ function scr_ui_manage() {
 		    		var stat_x = xx+1004;
 		    		var stat_y = yy+519;
 		    		var stat_display = string_hash_to_newline($"DEX#{selected_unit.dexterity}");
-		    		tool_tip_draw(stat_x,stat_y, stat_display,2);
-		    		tool_tip_draw(stat_x,stat_y+string_height(stat_display)+6,$"Warp Level:{selected_unit.psionic}");
+		    		tooltip_draw(stat_x,stat_y, stat_display,2);
+		    		tooltip_draw(stat_x,stat_y+string_height(stat_display)+6,$"Warp Level:{selected_unit.psionic}");
 
 		    		stat_x += string_width(stat_display)+3;
 
 		    		stat_display = string_hash_to_newline($"STR#{selected_unit.strength}");
-		    		tool_tip_draw(stat_x,stat_y, stat_display,2);
+		    		tooltip_draw(stat_x,stat_y, stat_display,2);
 		    		stat_x += string_width(stat_display)+3;
 
 		    		stat_display = string_hash_to_newline($"CON#{selected_unit.constitution}");
-		    		tool_tip_draw(stat_x,stat_y, stat_display,1);
+		    		tooltip_draw(stat_x,stat_y, stat_display,1);
 		    		stat_x += string_width(stat_display)+2;	    		
 
 		    		stat_display = string_hash_to_newline($"INT#{selected_unit.intelligence}");
-		    		tool_tip_draw(stat_x,stat_y, stat_display,2);
+		    		tooltip_draw(stat_x,stat_y, stat_display,2);
 		    		stat_x += string_width(stat_display)+3;
 
 		    		stat_display = string_hash_to_newline($"WIS#{selected_unit.wisdom}");
-		    		tool_tip_draw(stat_x,stat_y, stat_display,2);
+		    		tooltip_draw(stat_x,stat_y, stat_display,2);
 		    		stat_x += string_width(stat_display)+3;
 
 		    		stat_display = string_hash_to_newline($"FAI#{selected_unit.piety}");
-		    		tool_tip_draw(stat_x,stat_y, stat_display,2);
+		    		tooltip_draw(stat_x,stat_y, stat_display,2);
 		    		stat_x += string_width(stat_display)+3;
 
 		    		stat_display = string_hash_to_newline($"WS#{selected_unit.weapon_skill}");
-		    		tool_tip_draw(stat_x,stat_y, stat_display, 5);
+		    		tooltip_draw(stat_x,stat_y, stat_display, 5);
 		    		stat_x += string_width(stat_display)+6;
 
 		    		stat_display = string_hash_to_newline($"BS#{selected_unit.ballistic_skill}");
-		    		tool_tip_draw(stat_x,stat_y, stat_display, 6);
+		    		tooltip_draw(stat_x,stat_y, stat_display, 6);
 		    		stat_x += string_width(stat_display)+7;
 
 		    		stat_display = string_hash_to_newline($"LU#{selected_unit.luck}");
-		    		tool_tip_draw(stat_x,stat_y, stat_display, 5);
+		    		tooltip_draw(stat_x,stat_y, stat_display, 5);
 		    		stat_x += string_width(stat_display)+6;
 
 		    		stat_display = string_hash_to_newline($"TEC#{selected_unit.technology}");
-		    		tool_tip_draw(stat_x,stat_y, stat_display,2);
+		    		tooltip_draw(stat_x,stat_y, stat_display,2);
 		    		stat_x += string_width(stat_display)+3;
 
 		    		stat_display = string_hash_to_newline($"CHA#{selected_unit.charisma}");
-		    		tool_tip_draw(stat_x,stat_y, stat_display,2);
+		    		tooltip_draw(stat_x,stat_y, stat_display,2);
 		    		stat_x += string_width(stat_display)+5;
 		    		draw_line(stat_x, yy+519, stat_x, yy+957);
 
@@ -1910,18 +1910,18 @@ function scr_ui_manage() {
 		       		}
 		       		unit_data_string += "#";
 
-		       		tool_tip_text = "Traits##";
+		       		tooltip_text = "Traits##";
 		       		for (i=0;i<array_length(selected_unit.traits);i++){
 		       			unit_data_string += string(global.trait_list[$ selected_unit.traits[i]].flavour_text, unit_name) +"#";
-		       			tool_tip_text += global.trait_list[$ selected_unit.traits[i]].display_name;
+		       			tooltip_text += global.trait_list[$ selected_unit.traits[i]].display_name;
 		       			if (struct_exists(global.trait_list[$ selected_unit.traits[i]], "effect")){
-		       				tool_tip_text += global.trait_list[$ selected_unit.traits[i]].effect;
+		       				tooltip_text += global.trait_list[$ selected_unit.traits[i]].effect;
 		       			}
-		       			tool_tip_text +="#";
+		       			tooltip_text +="#";
 		       		}
-		       		tool_tip_text = string_hash_to_newline(tool_tip_text);
-		       		tool_tip_draw(stat_x+2,stat_y, tool_tip_text);
-		       		tool_tip_draw(xx+25,yy+65, string_hash_to_newline(unit_data_string), 3, 0, 975, 17);
+		       		tooltip_text = string_hash_to_newline(tooltip_text);
+		       		tooltip_draw(stat_x+2,stat_y, tooltip_text);
+		       		tooltip_draw(xx+25,yy+65, string_hash_to_newline(unit_data_string), 3, 0, 975, 17);
 		        }
 			}
 		}    

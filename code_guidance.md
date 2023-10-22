@@ -25,11 +25,11 @@ faction key:
 
 Visual and draw functions
 
-tool_tip_draw(x,y,tool_tip_text)
+tooltip_draw(x,y,tooltip_text)
 	creates a hover over tool tip at the given coordinate where:
 		x is the left most point of the tooltip box
 		y is the topmost point of the tooltip box,
-		tool_tip_text is the text to display (text should be preformatted e.g string_hash_to_newline() to create lines)
+		tooltip_text is the text to display (text should be preformatted e.g string_hash_to_newline() to create lines)
 
 scr_convert_company_to_string(marine company)
 	returns a sting representation of a marines compant
