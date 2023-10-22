@@ -8,7 +8,6 @@ the requested squad type , if the squad is not possible it will  not be made*/
 
 function create_squad(squad_type, company, squad_loadout = true){
 	var squad_unit_types, fulfilled,unit, squad, squad_unit;
-	show_debug_message("1")
 	var squad_count = array_length(obj_ini.squads);
 	var fill_squad =  obj_ini.squad_types[$ squad_type];			//grab all the squad struct info from the squad_types struct
 	var squad_fulfilment = {};		
@@ -23,7 +22,6 @@ function create_squad(squad_type, company, squad_loadout = true){
 		}	
 		squad_fulfilment[$ squad_unit_types[i]] =0;	//create a fulfilment structure to log members of squad
 	}
-	show_debug_message("2")
 	squad = new unit_squad(squad_type);
 	squad.base_company = company;
 	var sergeant_found = false;
@@ -47,7 +45,6 @@ function create_squad(squad_type, company, squad_loadout = true){
 			}
 		}
 	}
-	show_debug_message("3")
 	for (i = 0; i < array_length( obj_ini.TTRPG[company]);i++){							//fill squad roles
 		if(!is_struct(obj_ini.TTRPG[company,i])){obj_ini.TTRPG[company,i]= new TTRPG_stats("chapter", company,i,"blank");}
 		unit = obj_ini.TTRPG[company,i];
@@ -66,7 +63,6 @@ function create_squad(squad_type, company, squad_loadout = true){
 			}
 		}
 	}
-	show_debug_message("4")
 	//if a new sergeant is needed find the marine with the highest experience in the squad 
 	//(which if everything works right should be a marine with the old_guard, seasoned, or ancient trait)
 	/*and ((squad_fulfilment[$ obj_ini.role[100,8]] > 4)or (squad_fulfilment[$ obj_ini.role[100,10]] > 4) or (squad_fulfilment[$ obj_ini.role[100,9]] > 4)or (squad_fulfilment[$ obj_ini.role[100,3]] > 4) )*/
@@ -83,7 +79,6 @@ function create_squad(squad_type, company, squad_loadout = true){
 			squad_fulfilment[$ sgt_types[s]]++;
 		}
 	}
-	show_debug_message("5")
 	//evaluate if the minimum unit type requirements have been met to create a new squad
 	fulfilled = true;
 	for (i = 0;i < array_length(squad_unit_types);i++){
