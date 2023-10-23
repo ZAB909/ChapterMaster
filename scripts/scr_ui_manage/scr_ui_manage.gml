@@ -866,9 +866,7 @@ function scr_ui_manage() {
 		var repetitions=min(man_max,man_see)
 	    for(var i=0; i<repetitions;i++){
 
-			for(var j=0; j<500; j++){
-				if (man[sel]="hide") then sel+=1;
-			}
+	    	while (man[sel]=="hide") and (sel<500){sel+=1;}
 
 			eventing=false;
         
@@ -1284,6 +1282,7 @@ function scr_ui_manage() {
 	        }
 	        yy+=20;
 	        sel+=1;
+	        if (man[sel] == ""){break;}
 	    }
 
 	    draw_set_color(c_black);
