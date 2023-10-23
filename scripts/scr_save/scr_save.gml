@@ -76,6 +76,8 @@ function scr_save(save_slot,save_id) {
 	    ini_write_real("Controller","tau_messenger",obj_controller.tau_messenger);
 	    ini_write_real("Controller","fleet_all",obj_controller.fleet_all);
 	    ini_write_real("Controller","tolerant",obj_ini.tolerant);
+	    ini_write_real("Controller","stability",obj_ini.stability);
+	    ini_write_real("Controller","purity",obj_ini.purity);
 	    ini_write_real("Controller","unload",obj_controller.unload);
 	    ini_write_real("Controller","diplomacy",obj_controller.diplomacy);
 	    ini_write_real("Controller","trading",obj_controller.trading);
