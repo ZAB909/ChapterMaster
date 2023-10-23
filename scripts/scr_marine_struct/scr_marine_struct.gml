@@ -412,9 +412,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	static hp = function(){ 
 		return obj_ini.hp[company,marine_number]; //return current health
 	};
-    static update_health = function(new_health){
-      obj_ini.hp[company,marine_number] = new_health;
-   };	
+  static update_health = function(new_health){
+    obj_ini.hp[company,marine_number] = new_health;
+  };	
 	static get_unit_size = function(){
 		var unit_role = role();
 		var arm = armour();

@@ -728,12 +728,16 @@ function scr_initialize_custom() {
 	    name[0,i]="";
 	    role[0,i]="";
 	    wep1[0,i]="";
-	    bio[0,i]=0;lid[0,i]=0;wid[0,i]=2;spe[0,i]="";
+	    bio[0,i]=0;
+	    lid[0,i]=0;
+	    wid[0,i]=2;
+	    spe[0,i]="";
 	    wep2[0,i]="";
 	    armour[0,i]="";
 	    gear[0,i]="";
 	    mobi[0,i]="";
-	    chaos[0,i]=0;experience[0,i]=0;
+	    chaos[0,i]=0;
+	    experience[0,i]=0;
 	    hp[0,i]=0;
 	    age[0,i]=((millenium*1000)+year)-10;
 	    god[0,i]=0;
