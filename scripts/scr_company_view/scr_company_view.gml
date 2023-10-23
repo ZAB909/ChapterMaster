@@ -52,9 +52,8 @@ function scr_company_view(company) {
 	sel_uni[1]="Command";
 
 	// This sets up the mans, but not the vehicles
-	var company_length = array_length(obj_ini.name[company]);
 	// Company_lenght is 501, so we check with 500
-	for (var v = 1; v < (company_length-1); v++){
+	for (var v = 0; v <= 500; v++){
 		bad=0;
 
 	    if (company>=0) and (company<=10){
@@ -62,8 +61,12 @@ function scr_company_view(company) {
 	        if (unit.name()!=""){
 				unit_loc = unit.marine_location() ;
 	            // if (obj_ini.god[company,v]>=10) then bad=1;
+				if (unit_loc[0] == location_types.ship){
+				   	if (obj_ini.ship_location[unit_loc[1]]="Lost") then bad=1;
+				}	            
 	            if (bad==1){
 					man[v]="hide";
+					continue;
 				}else{
 	                mans+=1;
 	                man[v]="man";
@@ -225,15 +228,15 @@ function scr_company_view(company) {
 	                }
 	                if (obj_controller.command_set[2]==1) and (ma_promote[v]==0) then ma_promote[v]=1;
 	            }
+	        } else {
+	        	man[v]="hide";
+	        	continue;
 	        }
-
-	        if (obj_ini.name[company,v+1]=="") and (obj_ini.name[company,v]!="") and
-	        (last_man==0) and (obj_ini.ship_location[obj_ini.lid[company,v]]!="Lost")
-	        then last_man=v;
+	        if (obj_ini.name[company,v+1]=="")and (last_man==0) and (obj_ini.ship_location[obj_ini.lid[company,v]]!="Lost"){last_man=v;break;}
 	    }
 	}
 
-	v=last_man;
+	v=last_man;sqr(x)
 	last_vehicle=0;
 	for (var i=1;i<=100;i++){
 	// if (!instance_exists(obj_popup)) then repeat(100){// 100
