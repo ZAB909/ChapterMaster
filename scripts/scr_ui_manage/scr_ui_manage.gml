@@ -863,7 +863,13 @@ function scr_ui_manage() {
 	    yy+=77;
 		
 	    var unit_specialism_option=false, spec_tip="", tooltip_set=[];
-		var repetitions=min(man_max,man_see)
+		var repetitions=min(man_max,man_see);
+
+		//tooltip text to tell you if a unit is eligible for special roles
+		var spec_tips = [string("{0} Potential",obj_ini.role[100,16]),		
+						string("{0} potential",obj_ini.role[100,15]),
+						string("{0} potential",obj_ini.role[100,14]),
+						"Librarium potential"];
 	    for(var i=0; i<repetitions;i++){
 
 	    	while (man[sel]=="hide") and (sel<500){sel+=1;}
@@ -880,10 +886,8 @@ function scr_ui_manage() {
 	            temp2=string(ma_loc[sel]);
 	            if (unit_location[0]==location_types.planet){
 					temp2 = unit_location[2];
-	                if (unit_location[1]=1) then temp2+=" I";
-	                if (unit_location[1]=2) then temp2+=" II";
-	                if (unit_location[1]=3) then temp2+=" III";
-	                if (unit_location[1]=4) then temp2+=" IV";
+					//get roman numeral for system planet
+					temp2 = scr_roman_numerals()[unit_location[1]];
 	            } else if(unit_location[0]==location_types.ship){
 					temp2 = obj_ini.ship[unit_location[1]]
 				}
@@ -968,10 +972,8 @@ function scr_ui_manage() {
 	            temp2=string(ma_loc[sel]);
             
 	            if (ma_wid[sel]!=0){
-	                if (ma_wid[sel]==1){temp2+=" I"}
-	                else if (ma_wid[sel]==2){temp2+=" II"}
-	                else if (ma_wid[sel]==3){temp2+=" III"}
-	                else if (ma_wid[sel]==4){temp2+=" IV"}
+	            	//numeral for vehicle planet
+	            	temp2 = scr_roman_numerals()[ma_wid[sel]];
 	            }
 	            temp3=string(round(ma_health[sel]))+"% HP";temp4="";
 	            // Need abbreviations here
@@ -1050,25 +1052,26 @@ function scr_ui_manage() {
 	        if (man_sel[sel]!=0) then draw_set_color(6052956);// was gray
 	        draw_rectangle(xx+25,yy+64,xx+974,yy+85,0);
 
-	        //if unit has techmarine potential
 	        unit_specialism_option=false;
 	        if (man[sel]="man"){
+	        	draw_set_color(c_gray);
 	        	if (!is_specialist(unit.role())){
 			        if (unit.technology>=35){
+			        	 //if unit has techmarine potential
 			        	draw_set_color(c_orange);
 			        	unit_specialism_option=true;
-			        	spec_tip = $"{obj_ini.role[100,16]} Potential";
+			        	spec_tip = spec_tips[0];
 			        //if unit has librarian potential
 			    	} else if (unit.psionic>7){
-			    		spec_tip = "Librarium potential";
+			    		spec_tip = spec_tips[3];
 			    		unit_specialism_option=true;
 			    		draw_set_color(c_aqua);
-			    	}else if (unit.piety>=35){
-			    		spec_tip = $"{obj_ini.role[100,15]} potential";
+			    	}else if (unit.piety>=35){  //if unit has chaplain potential
+			    		spec_tip = spec_tips[1];
 			    		unit_specialism_option=true;
 			    		draw_set_color(c_olive);
-			    	}else if (unit.technology>=30) and (unit.intelligence>=45){
-			    		spec_tip = $"{obj_ini.role[100,14]} potential";
+			    	}else if (unit.technology>=30) and (unit.intelligence>=45){ //if unit has apothecary potential
+			    		spec_tip = spec_tips[2];
 			    		unit_specialism_option=true;
 			    		draw_set_color(c_fuchsia);
 			    	}
