@@ -378,51 +378,58 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
 
         var mahreens=0,w=0,god=0,vehi=0,god2=0;
 
-         for (w=1;w<301;w++){w+=1; // Gets the number of marines in the target company
-			if (god=0 and obj_ini.name[target_comp,w]=""){god=1;mahreens=w;}
+         for (w=1;w<301;w++){ // Gets the number of marines in the target company
+			if (god=0 and obj_ini.name[target_comp,w]=""){god=1;mahreens=w; break;}
 		}
 
-        for (w=1;w<101;w++){w+=1; // Gets the number of vehicles in the target company
-			if (god2=0 and obj_ini.veh_role[target_comp,w]=""){god2=1;vehi=w;}
+        for (w=1;w<101;w++){// Gets the number of vehicles in the target company
+			if (god2=0 and obj_ini.veh_role[target_comp,w]=""){god2=1;vehi=w;break;}
 		}
 
         // The MAHREENS and TARGET/FROM seems to check out
 
         for (w=1;w<301;w++){
-            if (obj_controller.man[w]="man") and (obj_controller.man_sel[w]=1){
-                var check=0;
-				scr_move_unit_info(company,target_comp,obj_controller.ide[w],mahreens);
-                mahreens++;
-            }
-            // This seems to execute the correct number of times
-            if (obj_controller.man[w]="vehicle") and (obj_controller.man_sel[w]=1){
-                var check=0;
-				// Check if the target company is within the allowed range
-                if (target_comp >= 1) and (target_comp <= 10) {
-                    obj_ini.veh_race[target_comp,vehi]=obj_ini.veh_race[company,obj_controller.ide[w]];
-                    obj_ini.veh_loc[target_comp,vehi]=obj_ini.veh_loc[company,obj_controller.ide[w]];
-                    obj_ini.veh_role[target_comp,vehi]=obj_ini.veh_role[company,obj_controller.ide[w]];
-                    obj_ini.veh_wep1[target_comp,vehi]=obj_ini.veh_wep1[company,obj_controller.ide[w]];
-                    obj_ini.veh_wep2[target_comp,vehi]=obj_ini.veh_wep2[company,obj_controller.ide[w]];
-                    obj_ini.veh_wep3[target_comp,vehi]=obj_ini.veh_wep3[company,obj_controller.ide[w]];
-                    obj_ini.veh_upgrade[target_comp,vehi]=obj_ini.veh_upgrade[company,obj_controller.ide[w]];
-                    obj_ini.veh_acc[target_comp,vehi]=obj_ini.veh_acc[company,obj_controller.ide[w]];
-                    obj_ini.veh_hp[target_comp,vehi]=obj_ini.veh_hp[company,obj_controller.ide[w]];
-                    obj_ini.veh_chaos[target_comp,vehi]=obj_ini.veh_chaos[company,obj_controller.ide[w]];
-                    obj_ini.veh_pilots[target_comp,vehi]=0;
-                    obj_ini.veh_lid[target_comp,vehi]=obj_ini.veh_lid[company,obj_controller.ide[w]];
-                    obj_ini.veh_wid[target_comp,vehi]=obj_ini.veh_wid[company,obj_controller.ide[w]];
+            if (obj_controller.man_sel[w]==1){
+                if (obj_controller.man[w]=="man"){
+                    var check=0;
+    				scr_move_unit_info(company,target_comp,obj_controller.ide[w],mahreens);
+                    mahreens++;
+                }else if(obj_controller.man[w]=="vehicle"){ // This seems to execute the correct number of times
+                    var check=0;
+    				// Check if the target company is within the allowed range
+                    if (target_comp >= 1) and (target_comp <= 10) {
+                        obj_ini.veh_race[target_comp,vehi]=obj_ini.veh_race[company,obj_controller.ide[w]];
+                        obj_ini.veh_loc[target_comp,vehi]=obj_ini.veh_loc[company,obj_controller.ide[w]];
+                        obj_ini.veh_role[target_comp,vehi]=obj_ini.veh_role[company,obj_controller.ide[w]];
+                        obj_ini.veh_wep1[target_comp,vehi]=obj_ini.veh_wep1[company,obj_controller.ide[w]];
+                        obj_ini.veh_wep2[target_comp,vehi]=obj_ini.veh_wep2[company,obj_controller.ide[w]];
+                        obj_ini.veh_wep3[target_comp,vehi]=obj_ini.veh_wep3[company,obj_controller.ide[w]];
+                        obj_ini.veh_upgrade[target_comp,vehi]=obj_ini.veh_upgrade[company,obj_controller.ide[w]];
+                        obj_ini.veh_acc[target_comp,vehi]=obj_ini.veh_acc[company,obj_controller.ide[w]];
+                        obj_ini.veh_hp[target_comp,vehi]=obj_ini.veh_hp[company,obj_controller.ide[w]];
+                        obj_ini.veh_chaos[target_comp,vehi]=obj_ini.veh_chaos[company,obj_controller.ide[w]];
+                        obj_ini.veh_pilots[target_comp,vehi]=0;
+                        obj_ini.veh_lid[target_comp,vehi]=obj_ini.veh_lid[company,obj_controller.ide[w]];
+                        obj_ini.veh_wid[target_comp,vehi]=obj_ini.veh_wid[company,obj_controller.ide[w]];
 
-                    obj_ini.veh_race[company,obj_controller.ide[w]]=0;obj_ini.veh_loc[company,obj_controller.ide[w]]="";
-                    obj_ini.veh_role[company,obj_controller.ide[w]]="";obj_ini.veh_wep1[company,obj_controller.ide[w]]="";obj_ini.veh_wep2[company,obj_controller.ide[w]]="";
-                    obj_ini.veh_wep3[company,obj_controller.ide[w]]="";obj_ini.veh_upgrade[company,obj_controller.ide[w]]="";obj_ini.veh_acc[company,obj_controller.ide[w]]="";
-                    obj_ini.veh_hp[company,obj_controller.ide[w]]=0;obj_ini.veh_chaos[company,obj_controller.ide[w]]=0;
-                    obj_ini.veh_pilots[company,obj_controller.ide[w]]=0;obj_ini.veh_lid[company,obj_controller.ide[w]]=0;
-                    obj_ini.veh_wid[company,obj_controller.ide[w]]=0;
+                        obj_ini.veh_race[company,obj_controller.ide[w]]=0;
+                        obj_ini.veh_loc[company,obj_controller.ide[w]]="";
+                        obj_ini.veh_role[company,obj_controller.ide[w]]="";
+                        obj_ini.veh_wep1[company,obj_controller.ide[w]]="";
+                        obj_ini.veh_wep2[company,obj_controller.ide[w]]="";
+                        obj_ini.veh_wep3[company,obj_controller.ide[w]]="";
+                        obj_ini.veh_upgrade[company,obj_controller.ide[w]]="";
+                        obj_ini.veh_acc[company,obj_controller.ide[w]]="";
+                        obj_ini.veh_hp[company,obj_controller.ide[w]]=0;
+                        obj_ini.veh_chaos[company,obj_controller.ide[w]]=0;
+                        obj_ini.veh_pilots[company,obj_controller.ide[w]]=0;
+                        obj_ini.veh_lid[company,obj_controller.ide[w]]=0;
+                        obj_ini.veh_wid[company,obj_controller.ide[w]]=0;
 
-                    vehi+=1;
+                        vehi++;
+                    }
+
                 }
-
             }
 		
         }
@@ -430,7 +437,8 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
         // Check this
 
         with(obj_controller){scr_management(1);}
-        obj_ini.selected_company=company;obj_ini.temp_target_company=target_comp;
+            obj_ini.selected_company=company;
+            obj_ini.temp_target_company=target_comp;
         with(obj_ini){
             scr_company_order(selected_company);
             scr_company_order(temp_target_company);
@@ -874,7 +882,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
                 // Pass variables here
 
                 // This changes a marine from MARINE to COMMAND if they get put into a dreadnought
-                var  bef=obj_controller.ma_role[i],aft=role_name[target_role],wco=false,wca=false;
+                var  bef=obj_controller.ma_role[i],aft=role_name[target_role];
 
                 if (do_not_change==true){
                     aft=obj_ini.role[company,obj_controller.ide[i]];
