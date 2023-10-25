@@ -1450,7 +1450,7 @@ function scr_initialize_custom() {
 	    spe[company,k]+=string(let)+"0|";
 	    TTRPG[company,k].spawn_old_guard();
 	    TTRPG[company,k].add_trait("warp_touched");
-	    TTRPG[company,k].psionics = choose(8,9,10,11,12,13,14);     
+	    TTRPG[company,k].psionic = choose(8,9,10,11,12,13,14);     
 	}
 	// Apothecary
 	repeat(apothecary){
