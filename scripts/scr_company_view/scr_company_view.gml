@@ -53,7 +53,9 @@ function scr_company_view(company) {
 
 	// This sets up the mans, but not the vehicles
 	// Company_lenght is 501, so we check with 500
-	for (var v = 0; v <= 500; v++){
+	var company_length = array_length(obj_ini.TTRPG[company]);
+	for (var v = 0; v < company_length; v++){
+		if (v==501) then break;
 		bad=0;
 
 	    if (company>=0) and (company<=10){
@@ -236,7 +238,7 @@ function scr_company_view(company) {
 	    }
 	}
 
-	v=last_man;sqr(x)
+	v=last_man;
 	last_vehicle=0;
 	for (var i=1;i<=100;i++){
 	// if (!instance_exists(obj_popup)) then repeat(100){// 100
