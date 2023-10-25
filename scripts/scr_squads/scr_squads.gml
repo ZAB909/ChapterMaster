@@ -1,5 +1,5 @@
 
-/* okay so basically htis functions loops through a given company and attempts to sort the units in the company not in a squad already into 
+/* okay so basically this function loops through a given company and attempts to sort the units in the company not in a squad already into 
 the requested squad type , if the squad is not possible it will  not be made*/
 // squad_type: the type of squad to be created as a string to access the correct key in obj_ini.squad_types
 // company : the company you wish to create the squad in (int)
@@ -8,12 +8,18 @@ the requested squad type , if the squad is not possible it will  not be made*/
 
 function create_squad(squad_type, company, squad_loadout = true){
 	var squad_unit_types, fulfilled,unit, squad, squad_unit;
-
 	var squad_count = array_length(obj_ini.squads);
 	var fill_squad =  obj_ini.squad_types[$ squad_type];			//grab all the squad struct info from the squad_types struct
 	var squad_fulfilment = {};		
 	squad_unit_types = struct_get_names(fill_squad);		//find out what type of units squad consists of
-	for (var i = 0;i < array_length(squad_unit_types);i++){
+	var unit_type_count = array_length(squad_unit_types);		
+	for (var i = 0;i < unit_type_count;i++){
+		if (squad_unit_types[i] == "display_name"){
+			array_delete(squad_unit_types, i, 1);
+			unit_type_count--;
+			i--;
+			continue;
+		}	
 		squad_fulfilment[$ squad_unit_types[i]] =0;	//create a fulfilment structure to log members of squad
 	}
 	squad = new unit_squad(squad_type);
@@ -24,8 +30,10 @@ function create_squad(squad_type, company, squad_loadout = true){
 	for (var s = 0; s< 2;s++){
 		if (struct_exists(squad_fulfilment ,sgt_types[s])){
 			sergeant_found = false;
-			for (i = 0; i < array_length(obj_ini.TTRPG[company]);i++){	
+			for (i = 0; i < array_length(obj_ini.TTRPG[company]);i++){
+				if(!is_struct(obj_ini.TTRPG[company,i])){obj_ini.TTRPG[company,i]= new TTRPG_stats("chapter", company,i,"blank");}
 				unit = obj_ini.TTRPG[company,i];
+				if ((obj_ini.name[company,i] =="") or (unit.base_group=="none"))then continue;
 				if (unit.squad== "none"){
 					if (unit.role() == sgt_types[s]){
 						squad_fulfilment[$ sgt_types[s]] += 1;
@@ -37,8 +45,10 @@ function create_squad(squad_type, company, squad_loadout = true){
 			}
 		}
 	}
-	for (i = 0; i < array_length( obj_ini.TTRPG[company]);i++){								//fill squad roles
+	for (i = 0; i < array_length( obj_ini.TTRPG[company]);i++){							//fill squad roles
+		if(!is_struct(obj_ini.TTRPG[company,i])){obj_ini.TTRPG[company,i]= new TTRPG_stats("chapter", company,i,"blank");}
 		unit = obj_ini.TTRPG[company,i];
+		if ((obj_ini.name[company,i] =="") or (unit.base_group=="none")) then continue;
 		if (unit.squad== "none") and (array_contains(squad_unit_types, unit.role())){
 			//if no sergeant found add one marine to standard marine selection so that a marine can be promoted
 			if ((struct_exists(squad_fulfilment ,obj_ini.role[100,18])) or (struct_exists(squad_fulfilment ,obj_ini.role[100,19]))) and (sergeant_found == false){
@@ -81,6 +91,9 @@ function create_squad(squad_type, company, squad_loadout = true){
 		for (var s = 0; s< 2;s++){
 			if (struct_exists(squad_fulfilment ,sgt_types[s])) and (sergeant_found == false){
 				exp_unit.update_role(sgt_types[s]); //if squad is viable promote marine to sergeant
+				if (irandom(1) == 0){
+					exp_unit.add_trait("lead_example");
+				}
 			}
 		}			
 		//update units squad marker
@@ -223,6 +236,7 @@ function unit_squad(squad_type) constructor{
 	members = [];
 	squad_fulfilment ={};
 	base_company = -1;
+	//nickname = scr_squad_names();
 
 	// for creating a new sergeant from existing squad members
 	static new_sergeant = function(veteran=false){
@@ -252,6 +266,9 @@ function unit_squad(squad_type) constructor{
 					new_role= obj_ini.role[100,18];
 				}
 				exp_unit.update_role(new_role);
+				if (irandom(1) == 0){
+					exp_unit.add_trait("lead_example");
+				}
 			}
 		}
 	}
@@ -262,9 +279,16 @@ function unit_squad(squad_type) constructor{
 		var unit;
 		squad_fulfilment ={};
 		var fill_squad =  obj_ini.squad_types[$ type];			//grab all the squad struct info from the squad_types struct
-		var squad_fulfilment = {};		
-		squad_unit_types = struct_get_names(fill_squad);		//find out what type of units squad consists of
-		for (var i = 0;i < array_length(squad_unit_types);i++){
+		var squad_fulfilment = {};
+		var squad_unit_types = struct_get_names(fill_squad);		//find out what type of units squad consists of
+		var unit_type_count = array_length(squad_unit_types);		
+		for (var i = 0;i < unit_type_count;i++){
+			if (squad_unit_types[i] == "display_name"){
+				array_delete(squad_unit_types, i, 1);
+				unit_type_count--;
+				i--;
+				continue;				
+			}
 			squad_fulfilment[$ squad_unit_types[i]] =0;	//create a fulfilment structure to log members of squad
 		}
 		var member_length = array_length(members);
