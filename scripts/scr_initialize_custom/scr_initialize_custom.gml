@@ -238,8 +238,8 @@ function scr_initialize_custom() {
 		
 	        if (global.chapter_name="Dark Angels") 
 			{
-			flagship_name="Invincible Reason";
-			battle_barges+=1;
+			      flagship_name="Invincible Reason";
+			      battle_barges++;
 			
 			}
 		}
