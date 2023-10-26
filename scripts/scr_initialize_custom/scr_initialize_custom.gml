@@ -230,6 +230,16 @@ function scr_initialize_custom() {
 			strike_cruisers=8;
 	        gladius=7;
 	        hunters=3;
+			
+			if (global.chapter_name="Salamanders")
+				{
+					flagship_name="Flamewrought";
+				}
+			
+			if (global.chapter_name="Ultramarines")
+				{
+					flagship_name="Laurels of Victory";
+				}
 		
 	        if (global.chapter_name="Imperial Fists")
 	           {
@@ -245,8 +255,13 @@ function scr_initialize_custom() {
 				   strike_cruisers-=4
 			   }
 		
-	        if (global.chapter_name="Dark Angels") then battle_barges+=1;
-	    }
+	        if (global.chapter_name="Dark Angels") 
+			{
+			      flagship_name="Invincible Reason";
+			      battle_barges++;
+			
+			}
+		}
 	    if (obj_creation.fleet_type=3){
 	        if (global.chapter_name="Lamenters"){
 	            strike_cruisers=2;
