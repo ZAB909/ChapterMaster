@@ -4,7 +4,7 @@ function scr_load(argument0, argument1) {
 			var marStruct = ini_read_string("Mar","Struct"+string(company)+"."+string(marine),"");
 			if (marStruct != ""){
 				marStruct = json_parse(base64_decode(marStruct));
-				obj_ini.TTRPG[company, marine] = new TTRPG_stats("chapter", company, marine);
+				obj_ini.TTRPG[company, marine] = new TTRPG_stats("chapter", company, marine, "blank");
 				obj_ini.TTRPG[company, marine].load_json_data(marStruct);
 			} else {obj_ini.TTRPG[company, marine] = new TTRPG_stats("chapter", company, marine,"blank");}		
 	};
@@ -95,6 +95,8 @@ function scr_load(argument0, argument1) {
 	    obj_controller.tau_messenger=ini_read_real("Controller","tau_messenger",0);
 	    obj_controller.fleet_all=ini_read_real("Controller","fleet_all",0);
 	    obj_ini.tolerant=ini_read_real("Controller","tolerant",0);
+	    obj_ini.stability=ini_read_real("Controller","stability",5);
+	    obj_ini.purity=ini_read_real("Controller","purity",5);
 	    obj_controller.tolerant=ini_read_real("Controller","tolerant",0);
 	    obj_controller.unload=ini_read_real("Controller","unload",0);
 	    obj_controller.diplomacy=0;
@@ -726,66 +728,61 @@ function scr_load(argument0, argument1) {
 	            obj_ini.gear[coh,mah]=ini_read_string("Mar","ge"+string(coh)+"."+string(mah),"");
 	            obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");	
 	        }
-	        good=0;coh=10;mah=600;
-	        repeat(6600){
-	            if (good=0){
-	                mah-=1;
-	                if (mah=0){mah=600;coh-=1;}
-	                if (coh=0) and (mah=-1) then good=1;
-	                if (coh<0) then good=1;
+	        for (coh=0;coh<=10;coh++){
+	        	for (mah=0;mah<=500;mah++){
 
 	                // var temp_name;temp_name="";
 	                // temp_name=ini_read_string("Mar","rol"+string(coh)+"."+string(mah),"Error");
 
-	                if (good=0){
-	                    obj_ini.race[coh,mah]=ini_read_real("Mar","co"+string(coh)+"."+string(mah),0);
-	                    obj_ini.loc[coh,mah]=ini_read_string("Mar","lo"+string(coh)+"."+string(mah),"");
-	                    obj_ini.name[coh,mah]=ini_read_string("Mar","num"+string(coh)+"."+string(mah),"");
-	                    obj_ini.role[coh,mah]=ini_read_string("Mar","rol"+string(coh)+"."+string(mah),"");// temp_name;
-	                    obj_ini.lid[coh,mah]=ini_read_real("Mar","li"+string(coh)+"."+string(mah),0);
-	                    obj_ini.bio[coh,mah]=ini_read_real("Mar","bio"+string(coh)+"."+string(mah),0);
-	                    obj_ini.wid[coh,mah]=ini_read_real("Mar","wi"+string(coh)+"."+string(mah),0);								
+                    obj_ini.race[coh,mah]=ini_read_real("Mar","co"+string(coh)+"."+string(mah),0);
+                    obj_ini.loc[coh,mah]=ini_read_string("Mar","lo"+string(coh)+"."+string(mah),"");
+                    obj_ini.name[coh,mah]=ini_read_string("Mar","num"+string(coh)+"."+string(mah),"");
+                    obj_ini.role[coh,mah]=ini_read_string("Mar","rol"+string(coh)+"."+string(mah),"");// temp_name;
+                    obj_ini.lid[coh,mah]=ini_read_real("Mar","li"+string(coh)+"."+string(mah),0);
+                    obj_ini.bio[coh,mah]=ini_read_real("Mar","bio"+string(coh)+"."+string(mah),0);
+                    obj_ini.wid[coh,mah]=ini_read_real("Mar","wi"+string(coh)+"."+string(mah),0);								
 
-	                    if (coh=0){
-	                        if (obj_ini.role[coh,mah]="Chapter Master") then obj_ini.race[coh,mah]=1;
-	                        if (obj_ini.role[coh,mah]="Master of Sanctity") then obj_ini.race[coh,mah]=1;
-	                        if (obj_ini.role[coh,mah]="Master of the Apothecarion") then obj_ini.race[coh,mah]=1;
-	                        if (obj_ini.role[coh,mah]="Forge Master") then obj_ini.race[coh,mah]=1;
-	                        if (string_count("Chief",obj_ini.role[coh,mah])>0) then obj_ini.race[coh,mah]=1;
-	                    }
+                    if (coh=0){
+                        if (obj_ini.role[coh,mah]="Chapter Master"){
+                        	obj_ini.race[coh,mah]=1;
+                        }else if (obj_ini.role[coh,mah]="Master of Sanctity"){
+                        	obj_ini.race[coh,mah]=1;
+                        }else if (obj_ini.role[coh,mah]="Master of the Apothecarion"){
+                        	obj_ini.race[coh,mah]=1;
+                        } else if (obj_ini.role[coh,mah]="Forge Master") then obj_ini.race[coh,mah]=1;
+                        if (string_count("Chief",obj_ini.role[coh,mah])>0) then obj_ini.race[coh,mah]=1;
+                    }
 
-	                    obj_ini.wep1[coh,mah]=ini_read_string("Mar","w1"+string(coh)+"."+string(mah),"");
-	                    obj_ini.wep2[coh,mah]=ini_read_string("Mar","w2"+string(coh)+"."+string(mah),"");
-	                    obj_ini.armour[coh,mah]=ini_read_string("Mar","ar"+string(coh)+"."+string(mah),"");
-	                    obj_ini.gear[coh,mah]=ini_read_string("Mar","ge"+string(coh)+"."+string(mah),"");
-	                    obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");
+                    obj_ini.wep1[coh,mah]=ini_read_string("Mar","w1"+string(coh)+"."+string(mah),"");
+                    obj_ini.wep2[coh,mah]=ini_read_string("Mar","w2"+string(coh)+"."+string(mah),"");
+                    obj_ini.armour[coh,mah]=ini_read_string("Mar","ar"+string(coh)+"."+string(mah),"");
+                    obj_ini.gear[coh,mah]=ini_read_string("Mar","ge"+string(coh)+"."+string(mah),"");
+                    obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");
 
-	                    var arc,teh,teh2;arc=0;teh="";teh2="";// Give daemon weapons their dialogue lines
-	                    repeat(5){arc+=1;teh2=choose("Daemonic1a|","Daemonic2a|","Daemonic3a|","Daemonic4a|");
-	                        if (arc=1) then teh=obj_ini.wep1[coh,mah];
-	                        if (arc=2) then teh=obj_ini.wep2[coh,mah];
-	                        if (arc=3) then teh=obj_ini.armour[coh,mah];
-	                        if (arc=4) then teh=obj_ini.gear[coh,mah];
-	                        if (arc=5) then teh=obj_ini.mobi[coh,mah];
-	                        if (string_pos("&",teh)>0){
-	                            if (string_count("Daemonic|",teh)>0) then teh=string_replace(teh,"Daemonic|",teh2);
-	                            if (arc=1) then obj_ini.wep1[coh,mah]=teh;
-	                            if (arc=2) then obj_ini.wep2[coh,mah]=teh;
-	                            if (arc=3) then obj_ini.armour[coh,mah]=teh;
-	                            if (arc=4) then obj_ini.gear[coh,mah]=teh;
-	                            if (arc=5) then obj_ini.mobi[coh,mah]=teh;
-	                        }
-	                    }
-
-	                    obj_ini.hp[coh,mah]=ini_read_real("Mar","hp"+string(coh)+"."+string(mah),0);
-	                    obj_ini.chaos[coh,mah]=ini_read_real("Mar","cha"+string(coh)+"."+string(mah),0);
-	                    obj_ini.experience[coh,mah]=ini_read_real("Mar","exp"+string(coh)+"."+string(mah),0);
-	                    obj_ini.age[coh,mah]=ini_read_real("Mar","ag"+string(coh)+"."+string(mah),0);
-	                    obj_ini.spe[coh,mah]=ini_read_string("Mar","spe"+string(coh)+"."+string(mah),"");
-	                    obj_ini.god[coh,mah]=ini_read_real("Mar","god"+string(coh)+"."+string(mah),0);
-						load_marine_struct(coh,mah);
-	                }
-
+                    var arc,teh,teh2;arc=0;teh="";teh2="";// Give daemon weapons their dialogue lines
+                    for (arc=1;arc<6;arc++){
+                    	teh2=choose("Daemonic1a|","Daemonic2a|","Daemonic3a|","Daemonic4a|");
+                        if (arc=1) then teh=obj_ini.wep1[coh,mah];
+                        if (arc=2) then teh=obj_ini.wep2[coh,mah];
+                        if (arc=3) then teh=obj_ini.armour[coh,mah];
+                        if (arc=4) then teh=obj_ini.gear[coh,mah];
+                        if (arc=5) then teh=obj_ini.mobi[coh,mah];
+                        if (string_pos("&",teh)>0){
+                            if (string_count("Daemonic|",teh)>0) then teh=string_replace(teh,"Daemonic|",teh2);
+                            if (arc=1) then obj_ini.wep1[coh,mah]=teh;
+                            if (arc=2) then obj_ini.wep2[coh,mah]=teh;
+                            if (arc=3) then obj_ini.armour[coh,mah]=teh;
+                            if (arc=4) then obj_ini.gear[coh,mah]=teh;
+                            if (arc=5) then obj_ini.mobi[coh,mah]=teh;
+                        }
+                    }
+                    obj_ini.hp[coh,mah]=ini_read_real("Mar","hp"+string(coh)+"."+string(mah),0);
+                    obj_ini.chaos[coh,mah]=ini_read_real("Mar","cha"+string(coh)+"."+string(mah),0);
+                    obj_ini.experience[coh,mah]=ini_read_real("Mar","exp"+string(coh)+"."+string(mah),0);
+                    obj_ini.age[coh,mah]=ini_read_real("Mar","ag"+string(coh)+"."+string(mah),0);
+                    obj_ini.spe[coh,mah]=ini_read_string("Mar","spe"+string(coh)+"."+string(mah),"");
+                    obj_ini.god[coh,mah]=ini_read_real("Mar","god"+string(coh)+"."+string(mah),0);
+                    load_marine_struct(coh,mah);
 	            }
 	        }
 
