@@ -1329,7 +1329,7 @@ function scr_initialize_custom() {
 	if (obj_creation.discipline="telekinesis"){let="T";letmax=5;}
 	if (obj_creation.discipline="rune Magick"){let="R";letmax=5;}
 	spe[company,5]=string(let)+"0|";scr_powers_new(company,5);
-	TTRPG[company,5].psionics = choose(13,14,15,16);
+	TTRPG[company,5].psionic = choose(13,14,15,16);
 	TTRPG[company,5].add_trait("warp_touched");
 	k=0;
 	commands+=5;
@@ -1399,7 +1399,7 @@ function scr_initialize_custom() {
 	    spe[company,k]+=string(let)+"0|";scr_powers_new(company,k);
 	    TTRPG[company,k].spawn_old_guard();
 	    TTRPG[company,k].add_trait("warp_touched");  
-	    TTRPG[company,k].psionics = choose(13,14,15,16);  
+	    TTRPG[company,k].psionic = choose(13,14,15,16);  
 	}
 	// Codiciery
 	repeat(codiciery){
@@ -1426,7 +1426,7 @@ function scr_initialize_custom() {
 	    spe[company,k]+=string(let)+"0|";scr_powers_new(company,k);
 	    TTRPG[company,k].spawn_old_guard();
 	    TTRPG[company,k].add_trait("warp_touched");
-	    TTRPG[company,k].psionics = choose(11,12,13,14,15);     
+	    TTRPG[company,k].psionic = choose(11,12,13,14,15);     
 	}
 	// Lexicanum
 	repeat(lexicanum){k+=1;commands+=1;man_size+=1;
@@ -1450,7 +1450,7 @@ function scr_initialize_custom() {
 	    spe[company,k]+=string(let)+"0|";
 	    TTRPG[company,k].spawn_old_guard();
 	    TTRPG[company,k].add_trait("warp_touched");
-	    TTRPG[company,k].psionics = choose(8,9,10,11,12,13,14);     
+	    TTRPG[company,k].psionic = choose(8,9,10,11,12,13,14);     
 	}
 	// Apothecary
 	repeat(apothecary){

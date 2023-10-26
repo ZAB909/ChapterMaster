@@ -862,8 +862,9 @@ function scr_save(save_slot,save_id) {
 	                ini_write_real("Mar","god"+string(coh)+"."+string(mah),obj_ini.god[coh,mah]);
 					if (!is_struct(obj_ini.TTRPG[coh,mah])){
 						TTRPG[coh,mah]= new TTRPG_stats("chapter", coh,mah, "blank");
+					} else{
+						ini_write_string("Mar","Struct"+string(coh)+"."+string(mah),base64_encode(jsonify_marine_struct(coh,mah)));
 					}
-					ini_write_string("Mar","Struct"+string(coh)+"."+string(mah),base64_encode(jsonify_marine_struct(coh,mah)));
 				}	
 	        }
 	    }

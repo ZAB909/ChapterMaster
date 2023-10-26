@@ -22,7 +22,8 @@ global.stat_list = ["constitution", "strength", "luck", "dexterity", "wisdom", "
 // will swap these out for enums or some better method as i develop where this is going
 global.body_parts = ["left_leg", "right_leg", "torso", "right_arm", "left_arm", "left_eye", "right_eye", "throat", "jaw"];
 global.body_parts_display = ["Left Leg", "Right Leg", "Torso", "Right Arm", "Left Arm", "Left Eye", "Right eye", "Throat", "Jaw"];
-global.religions={"imperial_cult":{"name":"Imperial Cult"}, "cult_mechanicus":{"name":"Cult Mechanicus"}}
+global.religions={"imperial_cult":{"name":"Imperial Cult"}, "cult_mechanicus":{"name":"Cult Mechanicus"}};
+global.power_armour=["MK7 Aquila","MK6 Corvus","MK5 Heresy","MK3 Iron Armour","MK4 Maximus","Power Armour"];
 enum location_types {
 	planet,
 	ship,
