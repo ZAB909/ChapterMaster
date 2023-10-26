@@ -73,7 +73,7 @@ function scr_chapter_new(argument0) {
 		company_title[7]="The Unbowed";
 		company_title[8]="The Wrathful";
 		company_title[9]="The Remorseless";
-		company_title[10]="The Redeemed"
+		company_title[10]="The Redeemed";
 		
 		for(i=100;i<=102;i++){
 		role[i,5]="Master";
@@ -301,7 +301,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    color_to_main="Green";color_to_secondary="Green";color_to_trim="Copper";
 	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Dark Red";
 	    color_to_weapon="Black";col_special=0;trim=0;
-	    fmaster="Argos";clibrarian="Velcona";hapothecary="Harath Shen";recruiter="Sol Ba'ken";admiral="Dac'tyr";hchaplain="Elysius"
+	    fmaster="Argos";clibrarian="Velcona";hapothecary="Harath Shen";recruiter="Sol Ba'ken";admiral="Dac'tyr";hchaplain="Elysius";
 	    battle_cry="Into the fires of battle!  Unto the anvil of war";// monastery_name="Fortress of Hera";master_name=
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=2;
 	    mutations=1;mutations_selected=1;

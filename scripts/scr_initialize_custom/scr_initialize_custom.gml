@@ -233,12 +233,12 @@ function scr_initialize_custom() {
 			
 			if (global.chapter_name="Salamanders")
 				{
-					flagship_name="Flamewrought"
+					flagship_name="Flamewrought";
 				}
 			
 			if (global.chapter_name="Ultramarines")
 				{
-					flagship_name="Laurels of Victory"
+					flagship_name="Laurels of Victory";
 				}
 		
 	        if (global.chapter_name="Imperial Fists")
