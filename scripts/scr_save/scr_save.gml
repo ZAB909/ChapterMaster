@@ -76,6 +76,8 @@ function scr_save(save_slot,save_id) {
 	    ini_write_real("Controller","tau_messenger",obj_controller.tau_messenger);
 	    ini_write_real("Controller","fleet_all",obj_controller.fleet_all);
 	    ini_write_real("Controller","tolerant",obj_ini.tolerant);
+	    ini_write_real("Controller","stability",obj_ini.stability);
+	    ini_write_real("Controller","purity",obj_ini.purity);
 	    ini_write_real("Controller","unload",obj_controller.unload);
 	    ini_write_real("Controller","diplomacy",obj_controller.diplomacy);
 	    ini_write_real("Controller","trading",obj_controller.trading);
@@ -835,12 +837,9 @@ function scr_save(save_slot,save_id) {
 	            ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);	
 	        }
 	    }
-	    good=0;coh=10;mah=400;
-	    repeat(4400){
-	        if (good=0){
-	            mah-=1;
-	            if (mah=0){mah=400;coh-=1;}
-	            if (obj_ini.name[coh,mah]!=""){
+	    for (coh=0;coh<=10;coh++){
+	        for (mah=0;mah<=500;mah++){
+	        	if (obj_ini.name[coh,mah] != "none"){
 	                ini_write_real("Mar","co"+string(coh)+"."+string(mah),obj_ini.race[coh,mah]);
 	                ini_write_string("Mar","lo"+string(coh)+"."+string(mah),obj_ini.loc[coh,mah]);
 	                ini_write_string("Mar","num"+string(coh)+"."+string(mah),obj_ini.name[coh,mah]);
@@ -855,18 +854,18 @@ function scr_save(save_slot,save_id) {
 	                ini_write_string("Mar","ge"+string(coh)+"."+string(mah),obj_ini.gear[coh,mah]);
 	                ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);
 
-	                ini_write_real("Mar","hp"+string(coh)+"."+string(mah),obj_ini.hp[coh,mah]);
+	                ini_write_real("Mar","hp"+string(coh)+"."+string(mah),obj_ini.TTRPG[coh,mah].hp());
 	                ini_write_real("Mar","cha"+string(coh)+"."+string(mah),obj_ini.chaos[coh,mah]);
 	                ini_write_real("Mar","exp"+string(coh)+"."+string(mah),obj_ini.experience[coh,mah]);
 	                ini_write_real("Mar","ag"+string(coh)+"."+string(mah),obj_ini.age[coh,mah]);
 	                ini_write_string("Mar","spe"+string(coh)+"."+string(mah),obj_ini.spe[coh,mah]);
 	                ini_write_real("Mar","god"+string(coh)+"."+string(mah),obj_ini.god[coh,mah]);
 					if (!is_struct(obj_ini.TTRPG[coh,mah])){
-						TTRPG[coh,mah]= {};
+						TTRPG[coh,mah]= new TTRPG_stats("chapter", coh,mah, "blank");
+					} else{
+						ini_write_string("Mar","Struct"+string(coh)+"."+string(mah),base64_encode(jsonify_marine_struct(coh,mah)));
 					}
-					ini_write_string("Mar","Struct"+string(coh)+"."+string(mah),base64_encode(jsonify_marine_struct(coh,mah)));					
-	            }
-	            if (coh=0) and (mah=1) then good=1;
+				}	
 	        }
 	    }
 	    var squad_copies = [];
