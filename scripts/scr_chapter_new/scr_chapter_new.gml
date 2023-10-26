@@ -51,7 +51,7 @@ function scr_chapter_new(argument0) {
 	    color_to_pauldron="Dark Green";color_to_pauldron2="Dark Green";color_to_lens="Dark Red";
 	    color_to_weapon="Black";col_special=0;trim=0;
 	    hchaplain="Sapphon";clibrarian="Ezekial";fmaster="Sepharon";hapothecary="Razaek";
-		admiral="Korahael";recruiter="Ranaeus"
+		admiral="Korahael";recruiter="Ranaeus";
 	    battle_cry="Repent!  For tomorow you may die";
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=9;
 	    mutations=0;mutations_selected=0;
