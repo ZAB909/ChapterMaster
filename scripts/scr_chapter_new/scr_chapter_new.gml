@@ -75,7 +75,7 @@ function scr_chapter_new(argument0) {
 		company_title[9]="The Remorseless";
 		company_title[10]="The Redeemed"
 		
-		i=99;repeat(3){i+=1;
+		for(i=100;i<=102;i++){
 		role[i,5]="Master";wep1[i,5]="Power Sword";
 	
 		}
