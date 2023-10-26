@@ -283,7 +283,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    company_title[7]="Clan Borrgos";company_title[8]="Clan Morlaag";company_title[9]="Clan Vurgaan";
 	    company_title[10]="Clan Dorrvok";
     
-	    i=99;repeat(3){i+=1;
+	   for(i=100;i<=102;i++){
 	        race[i,14]=0;role[i,14]="Iron Father";role[i,16]="Iron Father";
 			role[i,5]="Iron Captain";wep1[i,5]="Power Axe";
 	    }
