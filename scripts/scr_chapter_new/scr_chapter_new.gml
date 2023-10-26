@@ -67,7 +67,9 @@ function scr_chapter_new(argument0) {
 	    company_title[1]="Deathwing";
 	    company_title[2]="Ravenwing";
 	    company_title[3]="The Unmerciful";
-		company_title[4]="The Feared"company_title[5]="The Unrelenting"company_title[6]="The Resolute"
+		company_title[4]="The Feared";
+		company_title[5]="The Unrelenting";
+		company_title[6]="The Resolute";
 		company_title[7]="The Unbowed"company_title[8]="The Wrathful"company_title[9]="The Remorseless"
 		company_title[10]="The Redeemed"
 		
