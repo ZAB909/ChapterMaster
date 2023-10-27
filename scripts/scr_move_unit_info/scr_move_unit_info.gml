@@ -67,5 +67,5 @@ function scr_move_unit_info(start_company,end_company, start_slot, end_slot){
 		obj_ini.age[start_company,start_slot]=0;
 		obj_ini.mobi[start_company,start_slot]="";
 		obj_ini.bio[start_company,start_slot]="";
-		obj_ini.TTRPG[start_company,start_slot]=new TTRPG_stats("chapter", end_company,end_slot ,"blank");
+		obj_ini.TTRPG[start_company,start_slot]=new TTRPG_stats("chapter", start_company,start_slot ,"blank");
 }
