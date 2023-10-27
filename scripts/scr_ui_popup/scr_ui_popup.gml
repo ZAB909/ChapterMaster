@@ -99,17 +99,47 @@ function scr_ui_popup() {
                 
 	                if (obj_controller.mouse_left=1) and (obj_controller.cooldown<=0){
 	                    obj_controller.cooldown=8000;var tag;tag="";
-	                    if (r=1) then tag="BRB";if (r=2) then tag="DIS";if (r=3) then tag="FEU";
-	                    if (r=4) then tag="GTH";if (r=5) then tag="MCH";if (r=6) then tag="PRS";
-	                    if (r=7) then tag="RAV";if (r=8) then tag="STL";if (r=9) then tag="UTL";
+						switch (r) {
+						    case 1:
+						        tag = "BRB";
+						        break;
+						    case 2:
+						        tag = "DIS";
+						        break;
+						    case 3:
+						        tag = "FEU";
+						        break;
+						    case 4:
+						        tag = "GTH";
+						        break;
+						    case 5:
+						        tag = "MCH";
+						        break;
+						    case 6:
+						        tag = "PRS";
+						        break;
+						    case 7:
+						        tag = "RAV";
+						        break;
+						    case 8:
+						        tag = "STL";
+						        break;
+						    case 9:
+						        tag = "UTL";
+						        break;
+						    default:
+						        break;
+						}
 						var base_options = {style:tag};
 	                    obj_temp_build.isnew=0;
 						array_push(planet_upgrades, new new_planet_feature(P_features.Secret_Base, base_options));
 	                }
 	            }
 	            draw_set_color(0);
-	            draw_set_font(fnt_40k_14b);draw_text_transformed(xx+23,yy+40+(r*30),string_hash_to_newline(string(wob)),1,0.8,0);
-	            draw_set_font(fnt_40k_14);draw_text_transformed(xx+121,yy+40+(r*30),string_hash_to_newline(string(word)),1,0.8,0);
+	            draw_set_font(fnt_40k_14b);
+	            draw_text_transformed(xx+23,yy+40+(r*30),string_hash_to_newline(string(wob)),1,0.8,0);
+	            draw_set_font(fnt_40k_14);
+	            draw_text_transformed(xx+121,yy+40+(r*30),string_hash_to_newline(string(word)),1,0.8,0);
 	        }
 	    }
 
