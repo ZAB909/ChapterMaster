@@ -83,7 +83,7 @@ if (obj_controller.selecting_planet>0) and (obj_controller.cooldown<=0){
     }
 
     // These need work?
-    if (butt="Build"){
+    if (array_contains(["Build","Base","Arsenal","Gene-Vault"],butt){
         var building=instance_create(x,y,obj_temp_build);
         building.target=self.target;
         building.planet=obj_controller.selecting_planet;

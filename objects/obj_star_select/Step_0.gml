@@ -7,24 +7,25 @@ if (instance_exists(target)){
     x=target.x;y=target.y;
     
     // Buttons that are available
-    
+    var enema=false;
     if (obj_controller.selecting_planet>0){
         if (target.present_fleet[1]=0)/* and (target.p_type[obj_controller.selecting_planet]!="Dead")*/{
-            var enema;enema=false;
             if (target.p_owner[obj_controller.selecting_planet]>5) then enema=true;
             if (obj_controller.faction_status[target.p_owner[obj_controller.selecting_planet]]="War") then enma=true;
             
             if (target.p_player[obj_controller.selecting_planet]>0){
-                if (enema=true){button1="Attack";button2="Purge";}
+                if (enema){
+                    button1="Attack";
+                    button2="Purge";
+                }
             }
         }
         if (target.present_fleet[1]>0)/* and (target.p_type[obj_controller.selecting_planet]!="Dead")*/{
-            var enema;enema=false;
             if (target.p_owner[obj_controller.selecting_planet]>5) then enema=true;
             if (obj_controller.faction_status[target.p_owner[obj_controller.selecting_planet]]="War") then enma=true;
             
-            if (enema=true){button1="Attack";button2="Raid";button3="Bombard";}
-            if (enema=false){button1="Attack";button2="Raid";button3="Purge";}
+            if (enema){button1="Attack";button2="Raid";button3="Bombard";}
+            if (!enema){button1="Attack";button2="Raid";button3="Purge";}
             
             if (torpedo>0){
                 var pfleet;pfleet=instance_nearest(x,y,obj_p_fleet);
@@ -36,28 +37,25 @@ if (instance_exists(target)){
         }
     
     
-    
-    
-        /*
-    
-        if (target.present_fleet[1]>0){
-            // if (target.p_player[obj_controller.selecting_planet]>0){button1="Attack";button2="Raid";button3="Purge";}
-            // if (target.p_player[obj_controller.selecting_planet]=0){button1="Raid";button2="Purge";}
-            button1="Attack";button2="Raid";button3="Purge";
-        }
-        if (target.present_fleet[1]=0) and (target.p_player[obj_controller.selecting_planet]>0){
-            button1="Attack";button2="Purge";
-        }*/
+        var planet_upgrades = target.p_upgrades[obj_controller.selecting_planet];
         if ((target.p_type[obj_controller.selecting_planet]=="Dead") and ((target.present_fleet[1]>0) or (target.p_player[obj_controller.selecting_planet]>0))) or (array_length(target.p_upgrades[obj_controller.selecting_planet])>0){
-            if (array_length(target.p_feature[obj_controller.selecting_planet])==0) or (array_length(target.p_upgrades[obj_controller.selecting_planet])>0){
-            var chock=1;
-                if (target.p_orks[obj_controller.selecting_planet]>0) then chock=0;
-                if (target.p_chaos[obj_controller.selecting_planet]>0) then chock=0;
-                if (target.p_tyranids[obj_controller.selecting_planet]>0) then chock=0;
-                if (target.p_necrons[obj_controller.selecting_planet]>0) then chock=0;
-                if (target.p_tau[obj_controller.selecting_planet]>0) then chock=0;
-                if (target.p_demons[obj_controller.selecting_planet]>0) then chock=0;
-                if (chock=1){button1="Build";button2="";button3="";button4="";button5="";}
+            if (array_length(target.p_feature[obj_controller.selecting_planet])==0) or (array_length(planet_upgrades)>0){
+                var chock=1;
+                if ((target.p_orks[obj_controller.selecting_planet]>0) or
+                    (target.p_chaos[obj_controller.selecting_planet]>0) or
+                    (target.p_tyranids[obj_controller.selecting_planet]>0) or
+                    (target.p_necrons[obj_controller.selecting_planet]>0) or
+                    (target.p_tau[obj_controller.selecting_planet]>0) or
+                    (target.p_demons[obj_controller.selecting_planet]>0)){chock=0;}
+                if (chock=1){
+                    button2="";button3="";button4="";button5="";
+                    if (planet_feature_bool(planet_upgrades, P_features.Secret_Base)==1){button1="Base"}
+                    else if (planet_feature_bool(planet_upgrades, P_features.Arsenal)==1){button1="Arsenal"}
+                    else if (planet_feature_bool(planet_upgrades, P_features.Gene_Vault)==1){button1="Gene-Vault"}
+                    else{
+                        button1="Build";
+                    }
+                }
             }
         }
         
