@@ -11,6 +11,7 @@ function role_groups(group){
 			break;
 
 	}
+	return role_list;
 }
 
 function is_specialist(unit_role, type="standard", include_trainee=false) {

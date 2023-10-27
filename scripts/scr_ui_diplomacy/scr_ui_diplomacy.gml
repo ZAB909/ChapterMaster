@@ -800,24 +800,28 @@ function basic_diplomacy_screen(){
 	        if (force_goodbye=0){
 	            draw_set_halign(fa_center);
             
-	            var opts,slot,dp, opt_cord;opts=0;slot=0;dp=0;opt_cord=0;
-	            repeat(4){dp+=1;if (diplo_option[dp]!="") then opts+=1;}
+	            var opts=0,slot=0,dp=0,opt_cord=0;
+	           for (dp=1;dp<5;dp++){
+	           		if (diplo_option[dp]!="") then opts+=1;
+	           	}
 	            if (opts=4) then yy-=30;
 	            if (opts=2) then yy+=30;
 	            if (opts=1) then yy+=60;
-            
-	            repeat(4){slot+=1;
+            	var left,top,right,base,opt;
+	            for (slot=1;slot<5;slot++){
 	                if (diplo_option[slot]!=""){
-						var left = xx+354;
-						var top = yy+694;
-						var right = xx+887;
-						var base = yy+717;
-						var opt;
-	                    draw_set_color(38144);draw_rectangle(left,top,right,base,0);
+						left = xx+354;
+						top = yy+694;
+						right = xx+887;
+						base = yy+717;
+	                    draw_set_color(38144);
+	                    draw_rectangle(left,top,right,base,0);
 	                    draw_set_color(0);
                     
-	                    var sw;sw=1;
-	                    repeat(4){if (string_width(string_hash_to_newline(diplo_option[slot]))*sw>530) then sw-=0.05;}
+	                    var sw=1;
+	                    for (i=1;i<5;i++){
+	                    	if (string_width(string_hash_to_newline(diplo_option[slot]))*sw>530) then sw-=0.05;
+	                    }
 	                    if (string_width(string_hash_to_newline(diplo_option[slot]))*sw<=530) and (sw=1) then draw_text_transformed(xx+620,yy+696,string_hash_to_newline(string(diplo_option[slot])),sw,sw,0);
 	                    if (string_width(string_hash_to_newline(diplo_option[slot]))*sw<=530) and (sw<1) then draw_text_transformed(xx+620,yy+696+2,string_hash_to_newline(string(diplo_option[slot])),sw,sw,0);
 	                    if (string_width(string_hash_to_newline(diplo_option[slot]))*sw>530){
@@ -827,8 +831,8 @@ function basic_diplomacy_screen(){
 	                        draw_set_alpha(0.2);draw_rectangle(left,top,right,base,0);draw_set_alpha(1);
 	                    }
 	                }
-					opt = {lh:left, top, rh:right, base}
-					option_selections[opt_cord]= opt
+					opt = {lh:left, top, rh:right, base};
+					option_selections[opt_cord]= opt;
 					opt_cord+=1;
 	                yy+=30;
 	            }

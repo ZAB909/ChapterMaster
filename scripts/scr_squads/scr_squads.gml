@@ -286,6 +286,12 @@ function unit_squad(squad_type, company) constructor{
 			}
 		}
 	}
+	static kill_members = function(){
+		for (var i=0;i<array_length(members);i++){
+			kill_unit(members[i][0],members[i][1]);
+		}
+		members = [];
+	}
 
 	/*checks the status of squad so it can be either restocked or 
 		deleted if there are no longer enough members ot make a squad*/

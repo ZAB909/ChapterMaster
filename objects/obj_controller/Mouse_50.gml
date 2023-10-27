@@ -524,30 +524,44 @@ if (menu==20) and (diplomacy==10.1){
 		if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
 			cooldown=8000;
 			diplomacy_pathway = "sacrifice_lib";
-			scr_dialogue(diplomacy_pathway);
-			force_goodbye = 1;
             //grab a random librarian
-            lib = scr_random_marine("lib",0);
+            var lib = scr_random_marine("lib",0);
             if (lib!="none"){
-
+                pop_up = instance_create(0,0,obj_popup);
+                type=98;
+                image = "chaos";
+                scr_kill_unit(lib[0],lib[1]);
             } else {
-                
+                diplomacy_pathway = "daemon_scorn";
             }
+            scr_dialogue(diplomacy_pathway);  
+			force_goodbye = 1;
 
-		}
-		if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
+		} else if (point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base)){
 			cooldown=8000;
 			diplomacy_pathway = "sacrifice_champ";
+            var champ = scr_random_marine(obj_ini.role[100,7],0);
+            if (champ!="none"){
+                scr_kill_unit(champ[0],champ[1]);
+            } else {
+                diplomacy_pathway = "daemon_scorn";
+            }              
 			scr_dialogue(diplomacy_pathway);
 			force_goodbye = 1;
-		}
-		if point_in_rectangle(mouse_x, mouse_y, option_selections[2].lh, option_selections[2].top, option_selections[2].rh, option_selections[2].base){
+		} else if (point_in_rectangle(mouse_x, mouse_y, option_selections[2].lh, option_selections[2].top, option_selections[2].rh, option_selections[2].base)){
 			cooldown=8000;
 			diplomacy_pathway = "sacrifice_squad";
+            var squad;
+            for(var i=0;i<array_length(obj_ini.squads);i++){
+                squad = obj_ini.squads[0];
+                if (squad.type == "tactical_squad"){
+                    squad.kill_members();
+                    break;
+                }
+            }
 			scr_dialogue(diplomacy_pathway);
 			force_goodbye = 1;
-		}
-		if point_in_rectangle(mouse_x, mouse_y, option_selections[2].lh, option_selections[2].top, option_selections[2].rh, option_selections[2].base){
+		} else if ( point_in_rectangle(mouse_x, mouse_y, option_selections[2].lh, option_selections[2].top, option_selections[2].rh, option_selections[2].base)){
 			cooldown=8000;
             diplomacy_pathway = "daemon_scorn";
             scr_dialogue(diplomacy_pathway);
@@ -2239,7 +2253,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             "Standard Bearer",
             "Company Champion",
             "Champion"
-        ]                        
+        ];                   
         var eventing=false, bb="";
         xx=__view_get( e__VW.XView, 0 )+0;
         yy=__view_get( e__VW.YView, 0 )+0;
