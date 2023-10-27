@@ -1066,7 +1066,7 @@ function scr_ui_manage() {
 			    		spec_tip = spec_tips[3];
 			    		unit_specialism_option=true;
 			    		draw_set_color(c_aqua);
-			    	}else if (unit.piety>=35){  //if unit has chaplain potential
+			    	}else if (unit.piety>=35) and (unit.charisma>=30){  //if unit has chaplain potential
 			    		spec_tip = spec_tips[1];
 			    		unit_specialism_option=true;
 			    		draw_set_color(c_olive);

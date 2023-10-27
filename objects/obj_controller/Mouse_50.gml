@@ -479,9 +479,6 @@ if (menu==16) and (cooldown<=0){
 }
 // ** Diplomacy Chaos talks **
 if (menu==20) and (diplomacy==10.1){
-	show_debug_message(diplomacy_pathway, diplo_text);
-	show_debug_message( diplo_text, diplo_text);
-	show_debug_message(cooldown);
 	if (diplomacy_pathway == "intro") and (cooldown <= 0){
 		if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
 			cooldown=8000;
@@ -529,6 +526,14 @@ if (menu==20) and (diplomacy==10.1){
 			diplomacy_pathway = "sacrifice_lib";
 			scr_dialogue(diplomacy_pathway);
 			force_goodbye = 1;
+            //grab a random librarian
+            lib = scr_random_marine("lib",0);
+            if (lib!="none"){
+
+            } else {
+                
+            }
+
 		}
 		if point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base){
 			cooldown=8000;

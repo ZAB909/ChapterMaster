@@ -1,3 +1,18 @@
+function role_groups(group){
+	var role_list = false;
+	switch (group){
+		case "lib":
+			role_list = [
+						string("Chief {0}",obj_ini.role[100,17]),
+						obj_ini.role[100,17], //librarian
+						"Codiciery",
+						"Lexicanum",
+			];
+			break;
+
+	}
+}
+
 function is_specialist(unit_role, type="standard", include_trainee=false) {
 
 	// unit_role
@@ -32,12 +47,7 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 			break;
 
 		case "libs":
-			specialists = [
-						string("Chief {0}",obj_ini.role[100,17]),
-						obj_ini.role[100,17], //librarian
-						"Codiciery",
-						"Lexicanum",
-			];
+			specialists = role_groups("lib");
 			if (include_trainee){
 				array_push(specialists,  string("{0} Aspirant",obj_ini.role[100,17]));
 			}

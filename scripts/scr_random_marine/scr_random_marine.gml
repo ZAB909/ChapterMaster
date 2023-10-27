@@ -4,10 +4,12 @@ function scr_random_marine(role, exp_req, search_params="none"){
 	// exp_req: exp
 	//search params : a struct giving extra search information defaults to "none"
 
-	var company, i,  comp_size, unit, match, r, unit_role;
+	var company, i,  comp_size, unit, match, r, unit_role, marine_list;
 	company=0;i=0;
 	var company_list = [0,1,2,3,4,5,6,7,8,9,10]
-
+	if (role == "lib"){
+		role = role_groups("lib");
+	}
 	for (var comp_shuffle=0;comp_shuffle<11;comp_shuffle++){
 		// this ensures that companies are searched randomly
 		var new_comp = irandom(array_length(company_list)-1);
@@ -22,17 +24,31 @@ function scr_random_marine(role, exp_req, search_params="none"){
 	    if (company<=10){
 	    	comp_size = array_length(obj_ini.name[company]);
 
-	    	//TODO make sure marines within company are searched randomly
-	        for(i=1;i<comp_size;i++){
-	        	match = true
-	        	unit = obj_ini.TTRPG[company, i]
+	    	//This makes sure that cmopanies are searched randomly by creating an array of array positions to be randomly accessed
+	    	marine_list = [];
+	    	for (i=0;i<comp_size;i++){
+	    		marine_list[i] = i;
+	    	}
+	        while (comp_size>0){
+	        	list_place = irandom(comp_size-1);
+	        	i = marine_list[list_place];
+	        	match = true;
+	        	unit = obj_ini.TTRPG[company, i];
 
 	        	//exit if not real name
-	        	if (unit.name() == "") or (unit.name() == 0) then continue;
+	        	if (unit.name() == "") or (unit.name() == 0){
+	        		array_delete(marine_list, list_place ,1);
+					comp_size--;
+					continue;
+	        	}
 
 	        	//check correct search param roles
 	        	unit_role = unit.role()
-	        	if (unit_role == "Chapter Master") then continue;
+	        	if (unit_role == "Chapter Master"){
+	        		array_delete(marine_list, list_place ,1);
+					comp_size--;
+					continue;	        		
+	        	}
 	        	//if list of matchable roles given
 	        	if (is_array(role)){
             		match = false;
@@ -43,15 +59,27 @@ function scr_random_marine(role, exp_req, search_params="none"){
             			}
             		}
             		//if no role matches quit
-            		if (!match) then continue;
+            		if (!match){
+		        		array_delete(marine_list, list_place ,1);
+						comp_size--;
+						continue;	        		
+		        	}
 
             		//if single matchable role given
             	} else if (role!=""){
-            		if (unit_role!=role) then continue;
+            		if (unit_role!=role){
+		        		array_delete(marine_list, list_place ,1);
+						comp_size--;
+						continue;	        		
+		        	}
             	}
 
             	//check corect experience
-            	if (unit.experience()<exp_req) then continue;
+            	if (unit.experience()<exp_req){
+	        		array_delete(marine_list, list_place ,1);
+					comp_size--;
+					continue;	        		
+	        	}
 
             	//if extra search parmas struct submitted
             	if (is_struct(search_params)){
@@ -73,7 +101,11 @@ function scr_random_marine(role, exp_req, search_params="none"){
             				}
             			}
             			//move to next unit if unit did not have required traits
-            			if (!match) then continue;
+            			if (!match){
+			        		array_delete(marine_list, list_place ,1);
+							comp_size--;
+							continue;	        		
+			        	}
             		}
             		if (struct_exists(search_params, "stat")){
             			for (var stat = 0;stat<array_length(search_params[$ "stat"]);stat++){
@@ -89,7 +121,11 @@ function scr_random_marine(role, exp_req, search_params="none"){
             					}           					
             				}
             			}
-            			if (!match) then continue;
+            			if (!match){
+			        		array_delete(marine_list, list_place ,1);
+							comp_size--;
+							continue;	        		
+			        	}
             		}
             	}
             	//if match made exit loop and return unit
