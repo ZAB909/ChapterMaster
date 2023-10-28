@@ -725,7 +725,7 @@ if (menu==1) and (managing>0){
                 }
                 if (ma_bio[sel]>3) then b2=(10.43*ma_bio[sel])-5;
                 if (unit.bionics()>0){
-                    temp[114]=string("{0}({1}%)",unit.bionics(),round(max(0,b2)));
+                    temp[114] = $"{unit.bionics()}({round(max(0,b2))}%)";
                 } else {
                     temp[114]="";
                 }
