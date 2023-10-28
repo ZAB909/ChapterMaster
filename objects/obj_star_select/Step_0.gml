@@ -25,7 +25,7 @@ if (instance_exists(target)){
             if (obj_controller.faction_status[target.p_owner[obj_controller.selecting_planet]]="War") then enma=true;
             
             if (is_enemy){button1="Attack";button2="Raid";button3="Bombard";}
-            else (!is_enemy){button1="Attack";button2="Raid";button3="Purge";}
+            else {button1="Attack";button2="Raid";button3="Purge";}
             
             if (torpedo>0){
                 var pfleet;pfleet=instance_nearest(x,y,obj_p_fleet);
