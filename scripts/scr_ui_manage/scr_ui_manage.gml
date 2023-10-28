@@ -109,7 +109,7 @@ function scr_ui_manage() {
     
 	    var cn=obj_controller;
 		
-	    if (instance_exists(cn)){
+	    if (instance_exists(cn)) and (is_struct(temp[120])){
 	    	var selected_unit = temp[120];				//unit struct
 	        if (cn.temp[101]!="") and (cn.temp[100]=="1"){
 	            ui_arm[1]=true;
@@ -887,7 +887,7 @@ function scr_ui_manage() {
 	            if (unit_location[0]==location_types.planet){
 					temp2 = unit_location[2];
 					//get roman numeral for system planet
-					temp2 = scr_roman_numerals()[unit_location[1]];
+					temp2 += scr_roman_numerals()[unit_location[1]];
 	            } else if(unit_location[0]==location_types.ship){
 					temp2 = obj_ini.ship[unit_location[1]]
 				}
@@ -973,7 +973,7 @@ function scr_ui_manage() {
             
 	            if (ma_wid[sel]!=0){
 	            	//numeral for vehicle planet
-	            	temp2 = scr_roman_numerals()[ma_wid[sel]];
+	            	temp2 += scr_roman_numerals()[ma_wid[sel]];
 	            }
 	            temp3=string(round(ma_health[sel]))+"% HP";temp4="";
 	            // Need abbreviations here
@@ -1668,7 +1668,7 @@ function scr_ui_manage() {
 		        	tooltip_draw(coords[0],coords[3]+4, tip[0]);
 			}
 		}
-		if instance_exists(cn){
+		if instance_exists(cn)and (is_struct(temp[120])){
 			if (cn.temp[101]!="") and (cn.temp[100]=="1"){
 		        if ((point_in_rectangle(mouse_x, mouse_y, xx+1208, yy+168, xx+1374, yy+409)) and (!instance_exists(obj_temp3)) and(!instance_exists(obj_popup))){
 		        	draw_set_color(0);

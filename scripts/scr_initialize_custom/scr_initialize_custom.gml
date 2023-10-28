@@ -1946,9 +1946,19 @@ function scr_initialize_custom() {
 	        wep1[company,k]=wep1[101,5];
 	        name[company,k]=scr_marine_name();
 
-	        if (company=4) then name[company,k]=lord_admiral_name;
-	        if (company=10) then name[company,k]=recruiter_name;
-
+	        if (company==4){
+     	        if (lord_admiral_name!=""){
+     	        	 name[company,k]=lord_admiral_name;
+     	        } else{
+     	        	lord_admiral_name = name[company,k];
+     	        }
+     	    }else if  (company==10){
+     	        if (recruiter_name!=""){
+     	        	 name[company,k]=recruiter_name;
+     	        } else{
+     	        	recruiter_name = name[company,k];
+     	        }
+     	    }
 
 	        wep2[company,k]=wep2[101,5];
 	        spawn_unit = TTRPG[company,k];
@@ -2142,8 +2152,7 @@ function scr_initialize_custom() {
 	                    loc[company,k]=home_name;
 	                    role[company,k]=role[100,12];
 	                    wep1[company,k]=wep1[101,12];
-	              ;
-	              name[company,k]=scr_marine_name();
+	              		name[company,k]=scr_marine_name();
 	                    wep2[company,k]=wep2[101,12];
 	                    armour[company,k]="Scout Armour";
 	                    chaos[company,k]=0;
@@ -2199,8 +2208,7 @@ function scr_initialize_custom() {
 	                race[company,k]=1;
 	                loc[company,k]=home_name;
 	                role[company,k]=role[100,9];
-	          ;
-	          name[company,k]=scr_marine_name();
+	          		name[company,k]=scr_marine_name();
 	                wep2[company,k]=wep2[101,9];
 	                chaos[company,k]=0;
 	                if (wep1[101,9]="Heavy Ranged") then wep1[company,k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
@@ -2350,7 +2358,7 @@ function scr_initialize_custom() {
 	scr_restart_variables(1);
 
 
-	var eqi;eqi=0;
+	var eqi=0;
 	eqi+=1;equipment[eqi]="MK7 Aquila";equipment_number[eqi]=10;equipment_type[eqi]="armour";
 	eqi+=1;equipment[eqi]="MK8 Errant";equipment_number[eqi]=1;equipment_type[eqi]="armour";
 	eqi+=1;equipment[eqi]="Scout Armour";equipment_number[eqi]=20;equipment_type[eqi]="armour";
