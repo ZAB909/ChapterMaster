@@ -22,7 +22,11 @@ global.stat_list = ["constitution", "strength", "luck", "dexterity", "wisdom", "
 // will swap these out for enums or some better method as i develop where this is going
 global.body_parts = ["left_leg", "right_leg", "torso", "right_arm", "left_arm", "left_eye", "right_eye", "throat", "jaw"];
 global.body_parts_display = ["Left Leg", "Right Leg", "Torso", "Right Arm", "Left Arm", "Left Eye", "Right eye", "Throat", "Jaw"];
-global.religions={"imperial_cult":{"name":"Imperial Cult"}, "cult_mechanicus":{"name":"Cult Mechanicus"}};
+global.religions={
+	"imperial_cult":{"name":"Imperial Cult"},
+	"cult_mechanicus":{"name":"Cult Mechanicus"}, 
+	"eight_fold_path":{"name":"The Eight Fold Path"}
+};
 global.power_armour=["MK7 Aquila","MK6 Corvus","MK5 Heresy","MK3 Iron Armour","MK4 Maximus","Power Armour"];
 enum location_types {
 	planet,
@@ -219,7 +223,15 @@ global.trait_list = {
 		display_name:"Tyrannic War Veteran",
 		flavour_text:"{0} Is a veteran of the many wars against the the Tyranid swarms",
 		effect:"Increased lethality against tyranids"
-	}
+	},
+	"blood_for_blood":{
+		strength:[3,2,"max"],
+		weapon_skill:1,
+		piety:1,
+		display_name:"Blood For the Blood God",
+		flavour_text:"{0} Has spilled blood in the name of the blood god",
+		effect:"Has the attention of Khorne"
+	}	
 }
 global.base_stats = { //tempory stats subject to change by anyone that wishes to try their luck
 	"chapter_master":{

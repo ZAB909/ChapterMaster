@@ -501,9 +501,12 @@ if (menu==20) and (diplomacy==10.1){
             //grab a random librarian
             var lib = scr_random_marine("lib",0);
             if (lib!="none"){
+                var dead_lib = obj_ini.TTRPG[lib[0],lib[1]];
                 pop_up = instance_create(0,0,obj_popup);
-                type=98;
-                image = "chaos";
+                pop_up.title = "Skull for the Skull Throne";
+                pop_up.text = $"You summon {dead_lib.name_role()} to your personal chambers. Darting from the shadows you deftly strike his head from his shoulders. With the flesh removed from his skull you place the skull upon a hastily erected shrine."
+                pop_up.type=98;
+                pop_up.image = "chaos";
                 scr_kill_unit(lib[0],lib[1]);
             } else {
                 diplomacy_pathway = "daemon_scorn";
