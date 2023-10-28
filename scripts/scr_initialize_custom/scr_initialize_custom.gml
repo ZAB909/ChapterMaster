@@ -506,8 +506,8 @@ function scr_initialize_custom() {
 	if (array_contains(obj_creation.adv,"Siege Masters")){siege=1;}
 	if (array_contains(obj_creation.adv,"Crafters")){techs+=5;terminator+=5;tenth-=10;}
 	if (array_contains(obj_creation.adv,"Psyker Abundance")){tenth-=10;epistolary+=2;codiciery+=3;lexicanum+=5;psyky=1;}
-	if (array_contains(obj_creation.adv,"Psyker Intolerant")){epistolary=0;codiciery=0;lexicanum=0;veteran+=10;tenth+=10;intolerant=1;}
-	if (array_contains(obj_creation.adv,"Sieged")){
+	if (array_contains(obj_creation.dis,"Psyker Intolerant")){epistolary=0;codiciery=0;lexicanum=0;veteran+=10;tenth+=10;intolerant=1;}
+	if (array_contains(obj_creation.dis,"Sieged")){
 		techs-=10;
 		epistolary-=3;
 		apothecary-=4;
@@ -529,7 +529,7 @@ function scr_initialize_custom() {
 	    devastator=10;
 	}
 
-	if (array_contains(obj_creation.adv,"Tech-Heresy")){techs-=10;tenth+=1;}
+	if (array_contains(obj_creation.dis,"Tech-Heresy")){techs-=10;tenth+=1;}
 	if (array_contains(obj_creation.adv,"Reverent Guardians")){chaap+=10;tenth-=10;}
 	// if (obj_creation.custom>0) or ((global.chapter_name="Doom Benefactors") and (obj_creation.custom=0)){
 	if ((progenitor>=1) and (progenitor<=10)) or ((global.chapter_name="Doom Benefactors") and (obj_creation.custom=0)){
