@@ -495,6 +495,7 @@ if (menu==20) and (diplomacy==10.1){
 		}
 	}
 	if (diplomacy_pathway == "Khorne_path")  and (cooldown  <= 0){
+        var chapter_master = obj_ini.TTRPG[0,0];
 		if point_in_rectangle(mouse_x, mouse_y, option_selections[0].lh, option_selections[0].top, option_selections[0].rh, option_selections[0].base){
 			cooldown=8000;
 			diplomacy_pathway = "sacrifice_lib";
@@ -520,6 +521,9 @@ if (menu==20) and (diplomacy==10.1){
 			diplomacy_pathway = "sacrifice_champ";
             var champ = scr_random_marine(obj_ini.role[100,7],0);
             if (champ!="none"){
+                var dead_champ = obj_ini.TTRPG[champ[0],champ[1]];
+                pop_up = instance_create(0,0,obj_popup);
+                pop_up.title = "Skull for the Skull Throne";
                 scr_kill_unit(champ[0],champ[1]);
             } else {
                 diplomacy_pathway = "daemon_scorn";

@@ -220,7 +220,8 @@ function scr_ui_manage() {
 	            if (ui_twoh[1]=true) and (ui_arm[1]=false) then ui_arm[2]=false;
 	            if (ui_twoh[2]=true) and (ui_arm[2]=false) then ui_arm[1]=false;
             
-	            draw_set_color(38144);draw_rectangle(xx+1208,yy+178,xx+1374,yy+409,0);
+	            draw_set_color(38144);
+	            draw_rectangle(xx+1208,yy+178,xx+1374,yy+409,0);
             
 	            if( shader_is_compiled(sReplaceColor)){
 	                shader_set(sReplaceColor);

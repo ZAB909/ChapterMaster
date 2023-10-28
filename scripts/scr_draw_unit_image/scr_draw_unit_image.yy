@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "Script182",
+  "name": "scr_draw_unit_image",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {

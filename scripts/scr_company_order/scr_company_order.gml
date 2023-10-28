@@ -144,7 +144,7 @@ function scr_company_order(company) {
 
 			/* this finds sqauds that are in need of members and checks ot see if there 
 				are any squadless units in the chapter with
-				the rigth role to fill the gap*/ 
+				the right role to fill the gap*/ 
 			for (var r = 0;r < array_length(wanted_roles);r++){
 
 				if (struct_exists(squadless,wanted_roles[r])){

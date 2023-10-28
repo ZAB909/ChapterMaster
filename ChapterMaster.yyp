@@ -311,7 +311,7 @@
     {"id":{"name":"spr_artificer_colors","path":"sprites/spr_artificer_colors/spr_artificer_colors.yy",},},
     {"id":{"name":"spr_beakie_colors","path":"sprites/spr_beakie_colors/spr_beakie_colors.yy",},},
     {"id":{"name":"spr_dread_colors","path":"sprites/spr_dread_colors/spr_dread_colors.yy",},},
-    {"id":{"name":"Script182","path":"scripts/Script182/Script182.yy",},},
+    {"id":{"name":"scr_draw_unit_image","path":"scripts/scr_draw_unit_image/scr_draw_unit_image.yy",},},
     {"id":{"name":"spr_errant_colors","path":"sprites/spr_errant_colors/spr_errant_colors.yy",},},
     {"id":{"name":"spr_iron_colors","path":"sprites/spr_iron_colors/spr_iron_colors.yy",},},
     {"id":{"name":"spr_iron2_colors","path":"sprites/spr_iron2_colors/spr_iron2_colors.yy",},},
