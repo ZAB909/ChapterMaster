@@ -39,10 +39,7 @@ if (instance_exists(obj_fleet_select)){
 
 
 if (obj_controller.selecting_planet>0) and (obj_controller.cooldown<=0){
-    var pppp, butt;
-    pppp=obj_controller.selecting_planet;
-    butt="";
-    
+    var pppp=obj_controller.selecting_planet, current_button="";
     
     /*if (obj_controller.recruiting_worlds_bought>0) and (target.p_owner[obj_controller.selecting_planet]<=5) and (obj_controller.faction_status[target.p_owner[obj_controller.selecting_planet]]!="War"){
         if (mouse_x>=xx+348) and (mouse_y>=yy+601) and (mouse_x<xx+348+246) and (mouse_y<yy+627) and (string_count("Recr",target.p_feature[obj_controller.selecting_planet])=0){
@@ -63,27 +60,27 @@ if (obj_controller.selecting_planet>0) and (obj_controller.cooldown<=0){
     
     if (button1!="") and (debug=0){
         if (mouse_x>=xx+348) and (mouse_y>=yy+461) and (mouse_x<xx+348+246) and (mouse_y<yy+461+26){
-            butt=button1;obj_controller.cooldown=8000;
+            current_button=button1;obj_controller.cooldown=8000;
         }
     }
     if (button2!="") and (debug=0){
         if (mouse_x>=xx+348) and (mouse_y>=yy+489) and (mouse_x<xx+348+246) and (mouse_y<yy+489+26){
-            butt=button2;obj_controller.cooldown=8000;
+            current_button=button2;obj_controller.cooldown=8000;
         }
     }
     if (button3!="") and (debug=0){
         if (mouse_x>=xx+348) and (mouse_y>=yy+517) and (mouse_x<xx+348+246) and (mouse_y<yy+517+26){
-            butt=button3;obj_controller.cooldown=8000;
+            current_button=button3;obj_controller.cooldown=8000;
         }
     }
     if (button4!="") and (debug=0){
         if (mouse_x>=xx+348) and (mouse_y>=yy+545) and (mouse_x<xx+348+246) and (mouse_y<yy+545+26){
-            butt=button4;obj_controller.cooldown=8000;
+            current_button=button4;obj_controller.cooldown=8000;
         }
     }
 
     // These need work?
-    if (array_contains(["Build","Base","Arsenal","Gene-Vault"],butt){
+    if (array_contains(["Build","Base","Arsenal","Gene-Vault"],current_button)){
         var building=instance_create(x,y,obj_temp_build);
         building.target=self.target;
         building.planet=obj_controller.selecting_planet;
@@ -97,13 +94,13 @@ if (obj_controller.selecting_planet>0) and (obj_controller.cooldown<=0){
         obj_controller.menu=60;
         with(obj_star_select){instance_destroy();}
     }
-    if (butt="Raid"){
+    if (current_button="Raid"){
         instance_create(x,y,obj_drop_select);
         obj_drop_select.p_target=self.target;
         obj_drop_select.sh_target=instance_nearest(x+24,y-24,obj_p_fleet);
         if (instance_nearest(x+24,y-24,obj_p_fleet).acted>1) then with(obj_drop_select){instance_destroy();}
     }
-    if (butt="Attack"){
+    if (current_button="Attack"){
         instance_create(x,y,obj_drop_select);
         obj_drop_select.p_target=self.target;obj_drop_select.attack=1;
         if (target.present_fleet[1]=0) then obj_drop_select.sh_target=-50;
@@ -112,7 +109,7 @@ if (obj_controller.selecting_planet>0) and (obj_controller.cooldown<=0){
             if (instance_nearest(x+24,y-24,obj_p_fleet).acted>=2) then with(obj_drop_select){instance_destroy();}
         }
     }
-    if (butt=="Purge"){
+    if (current_button=="Purge"){
         instance_create(x,y,obj_drop_select);
         obj_drop_select.p_target=self.target;
         obj_drop_select.purge=1;
@@ -122,7 +119,7 @@ if (obj_controller.selecting_planet>0) and (obj_controller.cooldown<=0){
             if (instance_nearest(x+24,y-24,obj_p_fleet).acted>0) then with(obj_drop_select){instance_destroy();}
         }
     }
-    if (butt=="Bombard"){
+    if (current_button=="Bombard"){
         instance_create(x,y,obj_bomb_select);
         if (instance_exists(obj_bomb_select)){
             obj_bomb_select.p_target=self.target;
@@ -131,7 +128,7 @@ if (obj_controller.selecting_planet>0) and (obj_controller.cooldown<=0){
             if (instance_nearest(x+24,y-24,obj_p_fleet).acted>0) then with(obj_bomb_select){instance_destroy();}
         }
     }
-    if (butt="+Recruiting"){
+    if (current_button="+Recruiting"){
     if (obj_controller.recruiting_worlds_bought>0) and (target.p_owner[obj_controller.selecting_planet]<=5) and (obj_controller.faction_status[target.p_owner[obj_controller.selecting_planet]]!="War"){
         if (planet_feature_bool(target.p_feature[obj_controller.selecting_planet],P_features.Recruiting_World)==0){
             obj_controller.cooldown=8000;
@@ -153,7 +150,7 @@ if (obj_controller.selecting_planet>0) and (obj_controller.cooldown<=0){
             // 135 ; popup?
         }
     }}
-    if (butt=="Cyclonic Torpedo"){
+    if (current_button=="Cyclonic Torpedo"){
         obj_controller.cooldown=6000;
         scr_destroy_planet(2);
     }    
