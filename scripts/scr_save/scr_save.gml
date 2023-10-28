@@ -839,7 +839,7 @@ function scr_save(save_slot,save_id) {
 	    }
 	    for (coh=0;coh<=10;coh++){
 	        for (mah=0;mah<=500;mah++){
-	        	if (obj_ini.name[coh,mah] != "none"){
+	        	if (obj_ini.name[coh,mah] != ""){
 	                ini_write_real("Mar","co"+string(coh)+"."+string(mah),obj_ini.race[coh,mah]);
 	                ini_write_string("Mar","lo"+string(coh)+"."+string(mah),obj_ini.loc[coh,mah]);
 	                ini_write_string("Mar","num"+string(coh)+"."+string(mah),obj_ini.name[coh,mah]);
