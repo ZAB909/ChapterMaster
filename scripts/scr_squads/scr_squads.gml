@@ -288,7 +288,7 @@ function unit_squad(squad_type, company) constructor{
 	}
 	static kill_members = function(){
 		for (var i=0;i<array_length(members);i++){
-			kill_unit(members[i][0],members[i][1]);
+			scr_kill_unit(members[i][0],members[i][1]);
 		}
 		members = [];
 	}

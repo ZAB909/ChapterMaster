@@ -67,46 +67,20 @@ if (menu==12) and (cooldown<=0) and (penitorium>0){
                 }
 
                 tek="";
-                if (obj_ini.race[c,e]=1) then tek="m";
-                if (obj_ini.role[c,e]="Captain") then tek="c";
-                if (obj_ini.role[c,e]=obj_ini.role[100,15]) then tek="c";
-                if (obj_ini.role[c,e]=obj_ini.role[100,17]) then tek="c";
-                if (obj_ini.role[c,e]=obj_ini.role[100,14]) then tek="c";
-                if (obj_ini.role[c,e]=obj_ini.role[100,16]) then tek="c";
-                if (obj_ini.role[c,e]="Codiciery") then tek="c";
-                if (obj_ini.role[c,e]="Lexicanum") then tek="c";
-                if (obj_ini.role[c,e]=obj_ini.role[100,6]) then tek="c";
-                if (obj_ini.role[c,e]="Venerable "+string(obj_ini.role[100,6])) then tek="c";
-                if (obj_ini.role[c,e]="Chief "+string(obj_ini.role[100,17])) then tek="c";
-                if (obj_ini.role[c,e]="Master of Sanctity") then tek="c";
-                if (obj_ini.role[c,e]="Master of the Apothecarion") then tek="c";
-                if (obj_ini.role[c,e]="Forge Master") then tek="c";
+                if (obj_ini.race[c,e]=1){
+                    if(is_specialist(obj_ini.role[c,e])){
+                        obj_controller.command-=1;
+                    } else{
+                        obj_controller.marines-=1;
+                    }
+                }
                 if (obj_ini.role[c,e]="Chapter Master"){
                     tek="c";
                     obj_controller.alarm[7]=5;
                     global.defeat=3;
                 }
                 // TODO Needs to be based on role
-                if (tek="m") then obj_controller.marines-=1;
-                if (tek="c") then obj_controller.command-=1;
-
-                obj_ini.race[c,e]=0;
-                obj_ini.loc[c,e]="";
-                obj_ini.name[c,e]="";
-                obj_ini.role[c,e]="";
-                obj_ini.wep1[c,e]="";
-                obj_ini.lid[c,e]=0;
-                obj_ini.wep2[c,e]="";
-                obj_ini.armour[c,e]="";
-                obj_ini.gear[c,e]="";
-                obj_ini.hp[c,e]=100;
-                obj_ini.chaos[c,e]=0;
-                obj_ini.experience[c,e]=0;
-                obj_ini.mobi[c,e]="";
-                obj_ini.age[c,e]=0;
-                obj_ini.spe[c,e]="";
-                obj_ini.god[c,e]=0;
-                obj_ini.TTRPG[c,e]=new TTRPG_stats("chapter",c,e, "blank");
+                scr_kill_unit(c,e);
                 diplo_char=c;
                 with(obj_ini){scr_company_order(obj_controller.diplo_char);}
                 re=1;
@@ -537,7 +511,8 @@ if (menu==20) and (diplomacy==10.1){
             scr_dialogue(diplomacy_pathway);  
 			force_goodbye = 1;
 
-		} else if (point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base)){
+		}
+        if (point_in_rectangle(mouse_x, mouse_y, option_selections[1].lh, option_selections[1].top, option_selections[1].rh, option_selections[1].base)){
 			cooldown=8000;
 			diplomacy_pathway = "sacrifice_champ";
             var champ = scr_random_marine(obj_ini.role[100,7],0);
@@ -548,20 +523,22 @@ if (menu==20) and (diplomacy==10.1){
             }              
 			scr_dialogue(diplomacy_pathway);
 			force_goodbye = 1;
-		} else if (point_in_rectangle(mouse_x, mouse_y, option_selections[2].lh, option_selections[2].top, option_selections[2].rh, option_selections[2].base)){
+		}
+        if (point_in_rectangle(mouse_x, mouse_y, option_selections[2].lh, option_selections[2].top, option_selections[2].rh, option_selections[2].base)){
 			cooldown=8000;
 			diplomacy_pathway = "sacrifice_squad";
-            var squad;
+            var kill_squad;
             for(var i=0;i<array_length(obj_ini.squads);i++){
-                squad = obj_ini.squads[0];
-                if (squad.type == "tactical_squad"){
-                    squad.kill_members();
+                kill_squad = obj_ini.squads[i];
+                if (kill_squad.type == "tactical_squad"){
+                    kill_squad.kill_members();
                     break;
                 }
             }
 			scr_dialogue(diplomacy_pathway);
 			force_goodbye = 1;
-		} else if ( point_in_rectangle(mouse_x, mouse_y, option_selections[2].lh, option_selections[2].top, option_selections[2].rh, option_selections[2].base)){
+		}
+        if ( point_in_rectangle(mouse_x, mouse_y, option_selections[2].lh, option_selections[2].top, option_selections[2].rh, option_selections[2].base)){
 			cooldown=8000;
             diplomacy_pathway = "daemon_scorn";
             scr_dialogue(diplomacy_pathway);
