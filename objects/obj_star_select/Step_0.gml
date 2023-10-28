@@ -7,6 +7,7 @@ if (instance_exists(target)){
     x=target.x;y=target.y;
     
     // Buttons that are available
+<<<<<<< HEAD
     var is_enemy=false;
     if (obj_controller.selecting_planet>0){
         if (target.present_fleet[1]=0)/* and (target.p_type[obj_controller.selecting_planet]!="Dead")*/{
@@ -15,17 +16,35 @@ if (instance_exists(target)){
             
             if (target.p_player[obj_controller.selecting_planet]>0){
                 if (is_enemy){
+=======
+    var enema=false;
+    if (obj_controller.selecting_planet>0){
+        if (target.present_fleet[1]=0)/* and (target.p_type[obj_controller.selecting_planet]!="Dead")*/{
+            if (target.p_owner[obj_controller.selecting_planet]>5) then enema=true;
+            if (obj_controller.faction_status[target.p_owner[obj_controller.selecting_planet]]="War") then enma=true;
+            
+            if (target.p_player[obj_controller.selecting_planet]>0){
+                if (enema){
+>>>>>>> fix_build_button
                     button1="Attack";
                     button2="Purge";
                 }
             }
         }
         if (target.present_fleet[1]>0)/* and (target.p_type[obj_controller.selecting_planet]!="Dead")*/{
+<<<<<<< HEAD
             if (target.p_owner[obj_controller.selecting_planet]>5) then is_enemy=true;
             if (obj_controller.faction_status[target.p_owner[obj_controller.selecting_planet]]="War") then enma=true;
             
             if (is_enemy){button1="Attack";button2="Raid";button3="Bombard";}
             else{button1="Attack";button2="Raid";button3="Purge";}
+=======
+            if (target.p_owner[obj_controller.selecting_planet]>5) then enema=true;
+            if (obj_controller.faction_status[target.p_owner[obj_controller.selecting_planet]]="War") then enma=true;
+            
+            if (enema){button1="Attack";button2="Raid";button3="Bombard";}
+            if (!enema){button1="Attack";button2="Raid";button3="Purge";}
+>>>>>>> fix_build_button
             
             if (torpedo>0){
                 var pfleet;pfleet=instance_nearest(x,y,obj_p_fleet);
