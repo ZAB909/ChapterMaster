@@ -38,7 +38,7 @@ if (instance_exists(target)){
     
     
         var planet_upgrades = target.p_upgrades[obj_controller.selecting_planet];
-        if ((target.p_type[obj_controller.selecting_planet]=="Dead") and ((target.present_fleet[1]>0) or (target.p_player[obj_controller.selecting_planet]>0))) or (array_length(target.p_upgrades[obj_controller.selecting_planet])>0){
+        if (((target.p_type[obj_controller.selecting_planet]=="Dead") or (array_length(target.p_upgrades[obj_controller.selecting_planet])>0)) and ((target.present_fleet[1]>0) or (target.p_player[obj_controller.selecting_planet]>0))){
             if (array_length(target.p_feature[obj_controller.selecting_planet])==0) or (array_length(planet_upgrades)>0){
                 var chock=1;
                 if ((target.p_orks[obj_controller.selecting_planet]>0) or
@@ -47,13 +47,21 @@ if (instance_exists(target)){
                     (target.p_necrons[obj_controller.selecting_planet]>0) or
                     (target.p_tau[obj_controller.selecting_planet]>0) or
                     (target.p_demons[obj_controller.selecting_planet]>0)){chock=0;}
-                if (chock=1){
-                    button2="";button3="";button4="";button5="";
-                    if (planet_feature_bool(planet_upgrades, P_features.Secret_Base)==1){button1="Base"}
-                    else if (planet_feature_bool(planet_upgrades, P_features.Arsenal)==1){button1="Arsenal"}
-                    else if (planet_feature_bool(planet_upgrades, P_features.Gene_Vault)==1){button1="Gene-Vault"}
-                    else{
+                if (chock==1){
+                    if (planet_feature_bool(planet_upgrades, P_features.Secret_Base)==1){
+                        button1="Base";
+                    }else if (planet_feature_bool(planet_upgrades, P_features.Arsenal)==1){
+                        button1="Arsenal"; 
+                    }else if (planet_feature_bool(planet_upgrades, P_features.Gene_Vault)==1){
+                        button1="Gene-Vault";
+                    }else if (array_length(target.p_upgrades[obj_controller.selecting_planet])==0){
                         button1="Build";
+                    }
+                    if (array_contains(["Build","Gene-Vault","Arsenal","Base"],button1)){
+                        button2="";
+                        button3="";
+                        button4="";
+                        button5="";
                     }
                 }
             }
