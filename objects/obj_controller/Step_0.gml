@@ -713,7 +713,7 @@ if (menu==1) and (managing>0){
                 if (tooltip_stat4==0) then temp[111]="("+string(tooltip_stat1)+"DAM, "+string(tooltip_other)+")";
                 if (tooltip_stat4>0) then temp[111]="("+string(tooltip_stat1)+"DAM, "+string(tooltip_stat4)+" ammo, "+string(tooltip_other)+")";
                 // Display Current Health
-                temp[112]=$"{display_unit[sel].hp()}/{display_unit[sel].max_health()}"
+                temp[112]=$"{display_unit[sel].hp()}/{display_unit[sel].max_health()}";
                 // Experience
                 temp[113]=string(floor(ma_exp[sel]));
                 // Bionics
