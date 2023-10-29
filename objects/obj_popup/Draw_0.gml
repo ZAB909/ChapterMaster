@@ -1036,3 +1036,7 @@ if (zm=0) and (type=5.1) and (instance_exists(obj_controller)){
     }
     draw_set_alpha(1);
 }
+
+if (type == "duel"){
+    
+}
