@@ -695,7 +695,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
         if (manag>10) then manag=0;
 
         for(i=0;i<501;i++){
-            if (obj_ini.name[target_comp,i]=""){
+            if (obj_ini.name[target_comp,i]=="") and obj_ini.name[target_comp,i+1]=="") {
                 mahreens=i;
                 break;
             }
