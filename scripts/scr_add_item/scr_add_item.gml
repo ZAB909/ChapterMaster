@@ -1,6 +1,4 @@
 function scr_add_item(item_name, number_of_items) {
-	// item_name = name
-	// number_of_items = number
 
 	var i, ok, last_open, match_slot, open_slot=false, matched=false, last_slot;
 	ok=0;
@@ -14,7 +12,7 @@ function scr_add_item(item_name, number_of_items) {
 	    str1=string_delete(str1,artifact_identifier_position,99);
 	    str2=string_delete(str2,1,string_length(str1)+1);
     
-	   for (i=0;i<last_slot;i++){
+	   for (i=1;i<last_slot;i++){
 	        if (obj_ini.artifact[i]=="") and (open_slot==false){
 	        	last_open=i;
 	        	open_slot=true;
@@ -43,7 +41,7 @@ function scr_add_item(item_name, number_of_items) {
 
 	} else {
 		last_slot=array_length(obj_ini.equipment);
-	    for (i=0;i<last_slot;i++){
+	    for (i=1;i<last_slot;i++){
 	        if (obj_ini.equipment[i]=="") and (open_slot==false){
 	        	last_open=i;
 	        	open_slot=true;

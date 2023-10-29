@@ -1,7 +1,5 @@
 function scr_item_count(item_type) {
 
-	// Argument0: Item name
-
 	// This script checks the equipment variables for the named item and returns the combined quantity
 
 	var i=0;von=0;
