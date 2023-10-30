@@ -345,7 +345,7 @@ if (type=5) and (cooldown<=0){
         }
         if (req_wep2="Heavy Ranged"){
             have_wep2_num+=scr_item_count("Heavy Bolter");
-            have_wep2_num+=scr_item_count("Heavy Bolter");
+            have_wep2_num+=scr_item_count("Lascannon");
             have_wep2_num+=scr_item_count("Missile Launcher");
         }
         if (req_gear!="") then have_gear_num+=scr_item_count(string(req_gear));
@@ -983,6 +983,14 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
 /* */
 
 if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<yy+520){// Equipment
+
+    var w=0
+    for(var w=0;w<=500;w++){ // Gets the number of marines in the selected company
+        if (obj_ini.name[company,w]="") and (obj_ini.name[target_comp,w+1]==""){
+            infantrycount=w;
+            break;
+        }
+    }  
     if (type=6) and (cooldown<=0) and (n_good1+n_good2+n_good3+n_good4+n_good5=5){
         cooldown=999;obj_controller.cooldown=8;
 
@@ -995,19 +1003,13 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
 
         if (company>10) then company=0;
 
-        i=0;
-        repeat(obj_controller.man_max){
-            i+=1;
+        for (var i=1;i<=obj_controller.man_max;i++){
 
-            var infantrycount,w,endcount;
-            infantrycount=0;w=0;endcount=0;
-            repeat(300){w+=1; // Gets the number of marines in the selected company
-            if (endcount=0) and (obj_ini.name[company,w]=""){endcount=1;infantrycount=w;}}
+            var endcount=0;
 
             if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1) and (vehicle_equipment!=-1){
-                var check,scout_check;
+                var check=0,scout_check=0;
 
-                check=0;scout_check=0;
                 if (n_armour=obj_controller.ma_armour[i]) then check=1;
                 if (check=0) and (n_armour!=obj_controller.ma_armour[i]) and (n_armour!="Assortment")and ((vehicle_equipment=1) or (vehicle_equipment=6)){ //normal infantry or dread armour
                     if (string_count("Dread",obj_ini.armour[company,obj_controller.ide[i]])=0){
@@ -1015,9 +1017,13 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                             if (n_armour!="") and (n_armour!="Power Armour") and (n_armour!="Scout Armour") then scout_check=1;
                         }*/
                         if (scout_check=0){
-                            if (obj_ini.armour[company,obj_controller.ide[i]]!="") then scr_add_item(obj_ini.armour[company,obj_controller.ide[i]],1);
-                            obj_controller.ma_armour[i]="";obj_ini.armour[company,obj_controller.ide[i]]="";
-                            scr_add_item(n_armour,-1);obj_controller.ma_armour[i]=n_armour;obj_ini.armour[company,obj_controller.ide[i]]=n_armour;
+                            if (obj_ini.armour[company,obj_controller.ide[i]]!=""){
+                                scr_add_item(obj_ini.armour[company,obj_controller.ide[i]],1);
+                                obj_ini.armour[company,obj_controller.ide[i]]="";
+                            }
+                            obj_controller.ma_armour[i]="";
+                            scr_add_item(n_armour,-1);
+                            obj_controller.ma_armour[i]=n_armour;obj_ini.armour[company,obj_controller.ide[i]]=n_armour;
 
                             if (n_armour="Dreadnought") and (obj_ini.age[company,obj_controller.ide[i]]!=floor(obj_ini.age[company,obj_controller.ide[i]])) then obj_ini.age[company,obj_controller.ide[i]]=floor(obj_ini.age[company,obj_controller.ide[i]]);
                         }
@@ -1026,7 +1032,8 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                     // NOPE
                     if ((n_armour="Terminator Armour") or (n_armour="Tartaros")) and (obj_ini.mobi[company,obj_controller.ide[i]]!=""){
                         scr_add_item(obj_ini.mobi[company,obj_controller.ide[i]],1);
-                        obj_ini.mobi[company,obj_controller.ide[i]]="";obj_controller.ma_mobi[i]="";
+                        obj_ini.mobi[company,obj_controller.ide[i]]="";
+                        obj_controller.ma_mobi[i]="";
                     }
                     if (obj_ini.wep1[company,obj_controller.ide[i]]="Assault Cannon") or (obj_ini.wep2[company,obj_controller.ide[i]]="Assault Cannon"){
                         var bgn,bed;bed=0;bgn=obj_ini.armour[company,obj_controller.ide[i]];
@@ -1046,6 +1053,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                     if (obj_controller.ma_armour[i]!="") then scr_add_item(obj_controller.ma_armour[i],1);
                     obj_controller.ma_armour[i]="";
                     obj_ini.veh_wep3[company,i-infantrycount+1]="";
+
                     if (n_armour!="(None") and (n_armour!=""){
                         obj_controller.ma_armour[i]=n_armour;
                         obj_ini.veh_wep3[company,i-infantrycount+1]=n_armour;
@@ -1066,6 +1074,8 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                     obj_controller.ma_wep2[i]=temp;
                     obj_ini.wep2[company,obj_controller.ide[i]]=temp;
                 }
+
+
                 if (n_wep2=obj_controller.ma_wep1[i]) and (n_wep2!="Assortment") and (n_wep1!="Assortment") and ((vehicle_equipment=1) or (vehicle_equipment=6)){ //normal infantry or dread wep swap
                     var temp;temp="";
                     temp=obj_controller.ma_wep2[i];// Get temp
@@ -1081,29 +1091,33 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                 if (obj_controller.ma_role[i]="Standard Bearer"){
                     if (obj_controller.ma_wep1[i]="Company Standard") and (n_wep1!="Company Standard") and (n_wep2!="Company Standard") then check=1;
                 }
+
                 if (n_wep1=obj_controller.ma_wep1[i]) or (n_wep1="Assortment") then check=1;
-                if (check=0) and (n_wep1!=obj_controller.ma_wep1[i]) and (n_wep1!=obj_controller.ma_wep1[i]) and (n_wep1!="Assortment") and ((vehicle_equipment=1) or (vehicle_equipment=6)){ //normal infantry or dread wep1
-                    if (obj_ini.wep1[company,obj_controller.ide[i]]!="") and (obj_controller.ma_wep1[i]!=n_wep1){
-                        scr_add_item(obj_ini.wep1[company,obj_controller.ide[i]],1);
-                        obj_controller.ma_wep1[i]="";
-                        obj_ini.wep1[company,obj_controller.ide[i]]="";
+
+                if (check=0){
+                    if (n_wep1!=obj_controller.ma_wep1[i]) and (n_wep1!=obj_controller.ma_wep1[i]) and (n_wep1!="Assortment") and ((vehicle_equipment=1) or (vehicle_equipment=6)){ //normal infantry or dread wep1
+                        if (obj_ini.wep1[company,obj_controller.ide[i]]!="") and (obj_controller.ma_wep1[i]!=n_wep1){
+                            scr_add_item(obj_ini.wep1[company,obj_controller.ide[i]],1);
+                            obj_controller.ma_wep1[i]="";
+                            obj_ini.wep1[company,obj_controller.ide[i]]="";
+                        }
+                        if (n_wep1!=""){
+                            scr_add_item(n_wep1,-1);
+                            obj_controller.ma_wep1[i]=n_wep1;
+                            obj_ini.wep1[company,obj_controller.ide[i]]=n_wep1;
+                        }
                     }
-                    if (n_wep1!=""){
-                        scr_add_item(n_wep1,-1);
-                        obj_controller.ma_wep1[i]=n_wep1;
-                        obj_ini.wep1[company,obj_controller.ide[i]]=n_wep1;
-                    }
-                }
-                if (check=0) and (n_wep1!=obj_controller.ma_wep1[i]) and (n_wep1!=obj_controller.ma_wep1[i]) and (n_wep1!="Assortment") and (vehicle_equipment!=1) and (vehicle_equipment!=6){ // vehicle wep1
-                    if (obj_controller.ma_wep1[i]!="") and (obj_controller.ma_wep1[i]!=n_wep1){
-                        scr_add_item(obj_controller.ma_wep1[i],1);
-                        obj_controller.ma_wep1[i]="";
-                        obj_ini.veh_wep1[company,i-infantrycount+1]="";
-                    }
-                    if (n_wep1!=""){
-                        scr_add_item(n_wep1,-1);
-                        obj_controller.ma_wep1[i]=n_wep1;
-                        obj_ini.veh_wep1[company,i-infantrycount+1]=n_wep1;
+                    if (n_wep1!=obj_controller.ma_wep1[i]) and (n_wep1!=obj_controller.ma_wep1[i]) and (n_wep1!="Assortment") and (vehicle_equipment!=1) and (vehicle_equipment!=6){ // vehicle wep1
+                        if (obj_controller.ma_wep1[i]!="") and (obj_controller.ma_wep1[i]!=n_wep1){
+                            scr_add_item(obj_controller.ma_wep1[i],1);
+                            obj_controller.ma_wep1[i]="";
+                            obj_ini.veh_wep1[company,i-infantrycount+1]="";
+                        }
+                        if (n_wep1!=""){
+                            scr_add_item(n_wep1,-1);
+                            obj_controller.ma_wep1[i]=n_wep1;
+                            obj_ini.veh_wep1[company,i-infantrycount+1]=n_wep1;
+                        }
                     }
                 }
                 // End swap weapon1
@@ -1140,9 +1154,11 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                 check=0;
                 if (n_gear=obj_controller.ma_gear[i]) then check=1;
                 if (check=0) and (n_gear!=obj_controller.ma_gear[i]) and (n_gear!="Assortment") and ((vehicle_equipment=1) or (vehicle_equipment=6)){ //normal infantry or dread wargear item
-                    if (obj_ini.gear[company,obj_controller.ide[i]]!="") then scr_add_item(obj_ini.gear[company,obj_controller.ide[i]],1);
+                    if (obj_ini.gear[company,obj_controller.ide[i]]!=""){
+                        scr_add_item(obj_ini.gear[company,obj_controller.ide[i]],1);
+                        obj_ini.gear[company,obj_controller.ide[i]]="";
+                    }
                     obj_controller.ma_gear[i]="";
-                    obj_ini.gear[company,obj_controller.ide[i]]="";
                     if (n_gear!="(None)") and (n_gear!=""){
                         obj_controller.ma_gear[i]=n_gear;
                         obj_ini.gear[company,obj_controller.ide[i]]=n_gear;
@@ -1150,6 +1166,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                     if (n_gear!="") then scr_add_item(n_gear,-1);
                 }
                 if (n_gear=obj_controller.ma_gear[i]) then check=1;
+
                 if (check=0) and (n_gear!=obj_controller.ma_gear[i]) and (n_gear!="Assortment") and (vehicle_equipment!=1) and (vehicle_equipment!=6){ //vehicle upgrade item
                     if (obj_controller.ma_gear[i]!="") then scr_add_item(obj_controller.ma_gear[i],1);
                     obj_controller.ma_gear[i]="";
@@ -1166,9 +1183,13 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                 if (n_mobi=obj_controller.ma_mobi[i]) then check=1;
                 if (check=0) and (n_mobi!=obj_controller.ma_mobi[i]) and (n_mobi!="Assortment") and ((vehicle_equipment=1) or (vehicle_equipment=6)){ //normal infantry or dread mobility item
                     if (string_count("Terminator",obj_ini.armour[company,obj_controller.ide[i]])=0) and (obj_ini.armour[company,obj_controller.ide[i]]!="Tartaros"){
-                        if (obj_ini.mobi[company,obj_controller.ide[i]]!="") then scr_add_item(obj_ini.mobi[company,obj_controller.ide[i]],1);
-                        obj_controller.ma_mobi[i]="";obj_ini.mobi[company,obj_controller.ide[i]]="";
-                        obj_controller.ma_mobi[i]=n_mobi;obj_ini.mobi[company,obj_controller.ide[i]]=n_mobi;
+                        if (obj_ini.mobi[company,obj_controller.ide[i]]!=""){
+                            scr_add_item(obj_ini.mobi[company,obj_controller.ide[i]],1);
+                            obj_ini.mobi[company,obj_controller.ide[i]]="";
+                        }
+                        obj_controller.ma_mobi[i]="";
+                        obj_controller.ma_mobi[i]=n_mobi;
+                        obj_ini.mobi[company,obj_controller.ide[i]]=n_mobi;
                         if (n_mobi!="") then scr_add_item(n_mobi,-1);
                     }
                 }
