@@ -393,8 +393,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	squad = "none";
 	static bionics = function(){return obj_ini.bio[company,marine_number];}// get marine bionics count	
 	static experience =  function(){return obj_ini.experience[company,marine_number];}//get exp
-	static update_exp = function(new_val){obj_ini.experience[company,marine_number] =new_val}//change exp
-	static add_exp = function(add_val){obj_ini.experience[company,marine_number] +=add_val}
+	static update_exp = function(new_val){obj_ini.experience[company,marine_number] = new_val}//change exp
+	static add_exp = function(add_val){obj_ini.experience[company,marine_number] += add_val}
 	static armour = function(){ 
 		return obj_ini.armour[company,marine_number];
 	};
