@@ -1,10 +1,33 @@
+function tooltip_draw(base_x, base_y, tooltip, extra_x=0, extra_y=0, defined_width=false, line_gap=0){
+	var xx=__view_get( e__VW.XView, 0 )+0;
+	var yy=__view_get( e__VW.YView, 0 )+0;
+	var width,height;
+	if (defined_width != false){
+		width =defined_width+extra_x;
+	} else{
+		width = string_width(string_hash_to_newline(tooltip)) + extra_x;
+	}
+	height = string_height(string_hash_to_newline(tooltip))+extra_y;
+	draw_set_color(0);
+	draw_rectangle(base_x,base_y,width+base_x+6,height+base_y+6,0);
+	draw_set_color(c_gray);
+	draw_rectangle(base_x,base_y,width+base_x+6,height+base_y+6,1);
+	draw_set_alpha(0.5);
+	draw_rectangle(base_x+1,base_y+1,width+base_x+5,height+base_y+5,1);
+    draw_set_alpha(1);
+    if (defined_width == false){
+    	draw_text(base_x+2.5,base_y+2.5,string_hash_to_newline(string(tooltip)));
+    } else{
+    	draw_text_ext(base_x+2.5,base_y+2.5, string_hash_to_newline(string(tooltip)), line_gap, defined_width);
+    }
+}
+
 function scr_ui_popup() {
-  
-  
-  
+
 	// 48,48      over like 256, down to 480-128
 
-	if (obj_controller.menu=60){var xx,yy;
+	if (obj_controller.menu=60){
+		var xx,yy;
 	    xx=__view_get( e__VW.XView, 0 )+25;yy=__view_get( e__VW.YView, 0 )+165;
     
 	    draw_sprite(spr_popup_large,1,xx,yy);
@@ -76,17 +99,47 @@ function scr_ui_popup() {
                 
 	                if (obj_controller.mouse_left=1) and (obj_controller.cooldown<=0){
 	                    obj_controller.cooldown=8000;var tag;tag="";
-	                    if (r=1) then tag="BRB";if (r=2) then tag="DIS";if (r=3) then tag="FEU";
-	                    if (r=4) then tag="GTH";if (r=5) then tag="MCH";if (r=6) then tag="PRS";
-	                    if (r=7) then tag="RAV";if (r=8) then tag="STL";if (r=9) then tag="UTL";
+						switch (r) {
+						    case 1:
+						        tag = "BRB";
+						        break;
+						    case 2:
+						        tag = "DIS";
+						        break;
+						    case 3:
+						        tag = "FEU";
+						        break;
+						    case 4:
+						        tag = "GTH";
+						        break;
+						    case 5:
+						        tag = "MCH";
+						        break;
+						    case 6:
+						        tag = "PRS";
+						        break;
+						    case 7:
+						        tag = "RAV";
+						        break;
+						    case 8:
+						        tag = "STL";
+						        break;
+						    case 9:
+						        tag = "UTL";
+						        break;
+						    default:
+						        break;
+						}
 						var base_options = {style:tag};
 	                    obj_temp_build.isnew=0;
 						array_push(planet_upgrades, new new_planet_feature(P_features.Secret_Base, base_options));
 	                }
 	            }
 	            draw_set_color(0);
-	            draw_set_font(fnt_40k_14b);draw_text_transformed(xx+23,yy+40+(r*30),string_hash_to_newline(string(wob)),1,0.8,0);
-	            draw_set_font(fnt_40k_14);draw_text_transformed(xx+121,yy+40+(r*30),string_hash_to_newline(string(word)),1,0.8,0);
+	            draw_set_font(fnt_40k_14b);
+	            draw_text_transformed(xx+23,yy+40+(r*30),string_hash_to_newline(string(wob)),1,0.8,0);
+	            draw_set_font(fnt_40k_14);
+	            draw_text_transformed(xx+121,yy+40+(r*30),string_hash_to_newline(string(word)),1,0.8,0);
 	        }
 	    }
 
@@ -412,9 +465,9 @@ function scr_ui_popup() {
     
 	    robj=instance_nearest(obj_fleet_select.x,obj_fleet_select.y,obj_p_fleet);
     
-	    if (es>0) then ty+=1;
-	    if (fr>0) then ty+=1;
-	    if (ca>0) then ty+=1;
+	    if (es>0) then ty++;
+	    if (fr>0) then ty++;
+	    if (ca>0) then ty++;
     
 	    for(var j=0; j<(es+fr+ca+ty); j++){
 	        y3+=20;
@@ -445,7 +498,7 @@ function scr_ui_popup() {
 	            y3=142;
 	            x3+=223;
 	            posi++;
-	            colu+=1;
+	            colu++;
 	        }
         
 	        if (posi<=ca){
@@ -532,10 +585,15 @@ function scr_ui_popup() {
 	            draw_set_color(c_gray);
 	        }
 	        if (posi>ca+fr) and (posi<=ca+fr+es){
-	            shit=posi-(ca+fr);nem=robj.escort[shit];
-	            if (string_width(string_hash_to_newline(nem))*scale>179) then repeat(9){if (string_width(string_hash_to_newline(nem))*scale>179) then scale-=0.05;}
+	            shit=posi-(ca+fr);
+	            nem=robj.escort[shit];
+	            if (string_width(string_hash_to_newline(nem))*scale>179){
+	            	for (i=0;i<10;i++){if (string_width(string_hash_to_newline(nem))*scale>179) then scale-=0.05;}
+	            }
 	            if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+209) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
-	                if (string_width(string_hash_to_newline(nem))*scale>135) then repeat(9){if (string_width(string_hash_to_newline(nem))*scale>135) then scale-=0.05;}shew=2;
+	                if (string_width(string_hash_to_newline(nem))*scale>135){for (i=0;i<10;i++){
+	                	if (string_width(string_hash_to_newline(nem))*scale>135) then scale-=0.05;}shew=2
+	                }
 	            }
 	            if (mouse_check_button_pressed(mb_left)) and (obj_controller.cooldown<=0){
 	                if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+25) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
@@ -616,21 +674,6 @@ function scr_ui_popup() {
 	    // draw_set_color(c_red);
 	    // draw_rectangle(view_xview[0]+obj_fleet_select.void_x,view_yview[0]+obj_fleet_select.void_y,view_xview[0]+obj_fleet_select.void_x+obj_fleet_select.void_wid,view_yview[0]+obj_fleet_select.void_y+obj_fleet_select.void_hei,1);
 	}
-
-	function tool_tip_draw(base_x, base_y, tool_tip){
-		var xx=__view_get( e__VW.XView, 0 )+0;
-		var yy=__view_get( e__VW.YView, 0 )+0;
-		draw_set_color(0);
-		draw_rectangle(base_x,base_y,string_width(string_hash_to_newline(tool_tip))+base_x+6,string_height(string_hash_to_newline(tool_tip))+base_y+6,0);
-		draw_set_color(c_gray);
-		draw_rectangle(base_x,base_y,string_width(string_hash_to_newline(tool_tip))+base_x+6,string_height(string_hash_to_newline(tool_tip))+base_y+6,1);
-		draw_set_alpha(0.5);
-		draw_rectangle(base_x+1,base_y+1,string_width(string_hash_to_newline(tool_tip))+base_x+5,string_height(string_hash_to_newline(tool_tip))+base_y+5,1);
-	    draw_set_alpha(1);
-	    draw_text(base_x+2.5,base_y+2.5,string_hash_to_newline(string(tool_tip)));
-	    draw_text(base_x+3.5,base_y+3.5,string_hash_to_newline(string(tool_tip)));	    
-	}
-
 	var xx=__view_get( e__VW.XView, 0 )+0;
 	var yy=__view_get( e__VW.YView, 0 )+0;
 	if (zoomed == 0){
@@ -687,7 +730,7 @@ function scr_ui_popup() {
 	        }		    
 	    
 		    if (tool1!=""){
-		    	tool_tip_draw(xx+10, yy+42, tool1);
+		    	tooltip_draw(xx+10, yy+42, tool1);
 		    }
 		}
 
@@ -700,19 +743,19 @@ function scr_ui_popup() {
 		        if (loyal_num[d]>1) and (lines=0){
 		            tool1+=string(loyal[d])+": -"+string(loyal_num[d])+"#";
 		            tool2+=string(loyal[d])+": #";
-		            lines+=1;
+		            lines++;
 		        }
 		        if (loyal_num[d]>1) and (lines>0){
 		            tool1+=string(loyal[d])+": -"+string(loyal_num[d])+"#";
 		            tool2+=string(loyal[d])+": #";
-		            lines+=1;
+		            lines++;
 		        }
 		    }
 	    
 		    if (tool1="") then tool1="Loyalty";
 	    
 		    if (tool1!=""){
-		        tool_tip_draw(xx+150, yy+42, tool1);
+		        tooltip_draw(xx+150, yy+42, tool1);
 		    }
 		}
 
@@ -721,7 +764,7 @@ function scr_ui_popup() {
 		    var tx=0,ty=0,tool1="",tool2="",plu="";
 		    tool1="Gene-Seed";
 		    if (tool1!=""){
-		        tool_tip_draw(xx+249, yy+42, tool1);
+		        tooltip_draw(xx+249, yy+42, tool1);
 		    }
 		}
 
@@ -730,16 +773,18 @@ function scr_ui_popup() {
 		    tool1="Astartes#(Normal/Command)";
 		    tool2="Astartes";
 		    if (tool1!=""){
-		        tool_tip_draw(xx+373, yy+42, tool1);
+		        tooltip_draw(xx+373, yy+42, tool1);
 		    }
 		}
-		if (scr_hit(xx+1435,yy+40,xx+1580,yy+267)){
-		    var tx=0,ty=0,tool1="",tool2="",plu="";
-		    tool1=$"Turn :{obj_controller.turn}";
-		    tool2="Astartes";
-		    if (tool1!=""){
-		    	tool_tip_draw(xx+1480, yy+265, tool1);
-		    }
+		if (menu == 0) and (diplomacy<=0){
+			if (scr_hit(xx+1435,yy+40,xx+1580,yy+267)){
+			    var tx=0,ty=0,tool1="",tool2="",plu="";
+			    tool1=$"Turn :{obj_controller.turn}";
+			    tool2="Astartes";
+			    if (tool1!=""){
+			    	tooltip_draw(xx+1480, yy+265, tool1);
+			    }
+			}
 		}
 
 		if (scr_hit(xx+813,yy+10,xx+960,yy+38)) and (penitent==1) {
@@ -767,7 +812,7 @@ function scr_ui_popup() {
 		    }
 	    
 		    if (tool1!=""){
-		        tool_tip_draw(xx+813, yy+42, tool1)
+		        tooltip_draw(xx+813, yy+42, tool1)
 		    }
 		}
 
@@ -782,7 +827,7 @@ function scr_ui_popup() {
 	        i++;if (loyal_num[i]>1){
 	            blurp+=string(loyal[i])+": -"+string(loyal_num[i])+"#";
 	            blurp2+=string(loyal[i])+": #";
-	            lines+=1;
+	            lines++;
 	        }
 	    }
     

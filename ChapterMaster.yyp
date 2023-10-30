@@ -767,6 +767,7 @@
     {"id":{"name":"scr_chapter_random","path":"scripts/scr_chapter_random/scr_chapter_random.yy",},},
     {"id":{"name":"scr_vehicle_order","path":"scripts/scr_vehicle_order/scr_vehicle_order.yy",},},
     {"id":{"name":"scr_icon","path":"scripts/scr_icon/scr_icon.yy",},},
+    {"id":{"name":"scr_squad_names","path":"scripts/scr_squad_names/scr_squad_names.yy",},},
     {"id":{"name":"scr_initialize_custom","path":"scripts/scr_initialize_custom/scr_initialize_custom.yy",},},
     {"id":{"name":"scr_roman_numerals","path":"scripts/scr_roman_numerals/scr_roman_numerals.yy",},},
     {"id":{"name":"scr_restart_variables","path":"scripts/scr_restart_variables/scr_restart_variables.yy",},},

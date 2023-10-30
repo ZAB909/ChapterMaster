@@ -50,7 +50,8 @@ function scr_chapter_new(argument0) {
 	    color_to_main="Dark Green";color_to_secondary="Dark Green";color_to_trim="Silver";
 	    color_to_pauldron="Dark Green";color_to_pauldron2="Dark Green";color_to_lens="Dark Red";
 	    color_to_weapon="Black";col_special=0;trim=0;
-	    hchaplain="Sapphon";clibrarian="Ezekial";
+	    hchaplain="Sapphon";clibrarian="Ezekial";fmaster="Sepharon";hapothecary="Razaek";
+		admiral="Korahael";recruiter="Ranaeus";
 	    battle_cry="Repent!  For tomorow you may die";
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=9;
 	    mutations=0;mutations_selected=0;
@@ -62,10 +63,24 @@ function scr_chapter_new(argument0) {
 	    disposition[7]=0;// Reserved
 	    chapter_master_name="Azreal";chapter_master_specialty=2;
 	    chapter_master_melee=4;chapter_master_ranged=4;
+		
 	    company_title[1]="Deathwing";
 	    company_title[2]="Ravenwing";
+	    company_title[3]="The Unmerciful";
+		company_title[4]="The Feared";
+		company_title[5]="The Unrelenting";
+		company_title[6]="The Resolute";
+		company_title[7]="The Unbowed";
+		company_title[8]="The Wrathful";
+		company_title[9]="The Remorseless";
+		company_title[10]="The Redeemed";
+		
+		for(i=100;i<=102;i++){
+		role[i,5]="Master";
+		wep1[i,5]="Power Sword";
+	
+		}
 	}
-
 if (argument0="White Scars"){founding="N/A";points=150;
 	    selected_chapter=2;chapter=argument0;icon=2;icon_name="ws";founding=0;fleet_type=1;strength=5;purity=10;stability=8;cooperation=5;
 	    homeworld="Feudal";homeworld_name="Chogoris";
@@ -75,7 +90,8 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    color_to_main="White";color_to_secondary="White";color_to_trim="Red";
 	    color_to_pauldron="White";color_to_pauldron2="White";color_to_lens="Red";
 	    color_to_weapon="Black";col_special=0;
-	    hapothecary="Ogholei";hchaplain="Jaghorin";clibrarian="Saghai";fmaster="Khamkar";admiral="Joghaten";recruiter="Jodagha";
+	    hapothecary="Ogholei";hchaplain="Jaghorin";clibrarian="Saghai";fmaster="Khamkar";
+		admiral="Joghaten";recruiter="Jodagha";
 	    battle_cry="For the Emperor and the Khan!";// monastery_name="Quan Zhou";master_name=
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=12;
 	    mutations=0;mutations_selected=0;
@@ -87,15 +103,9 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    disposition[7]=0;// Reserved
 	    chapter_master_name="Jubal Khan";chapter_master_melee=4;
 	    chapter_master_ranged=3;chapter_master_specialty=1;
-	    company_title[1]="The Spearpoint Brotherhood";
-	    company_title[2]="The Firefist Brotherhood";
-	    company_title[3]="The Eagle Brotherhood";
-	    company_title[4]="The Tulwar Brotherhood";
-	    company_title[5]="The Stormwrath Brotherhood";
-		company_title[6]="The Hawkeye Brotherhood";
-		company_title[7]="The Plainstalker Brotherhood";
-		company_title[8]="The Bloodrider Brotherhood";
-		company_title[9]="The Stormbolt Brotherhood";
+	    company_title[1]="The Spearpoint Brotherhood";company_title[2]="The Firefist Brotherhood";company_title[3]="The Eagle Brotherhood";
+	    company_title[4]="The Tulwar Brotherhood";company_title[5]="The Stormwrath Brotherhood";company_title[6]="The Hawkeye Brotherhood";
+		company_title[7]="The Plainstalker Brotherhood";company_title[8]="The Bloodrider Brotherhood";company_title[9]="The Stormbolt Brotherhood";
 		company_title[10]="The Windspeaker Brotherhood";
 		
 		i=99;repeat(3){i+=1;
@@ -128,11 +138,12 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    disposition[7]=0;// Reserved
 	    chapter_master_name="Marneus Calgar";chapter_master_melee=1;
 	    chapter_master_ranged=1;chapter_master_specialty=1;
-	    company_title[1]="Warriors of Ultramar";
-	    company_title[2]="Guardians of the Temple";
-	    company_title[3]="Scourge of the Xenos";
-	    company_title[4]="Defenders of Ultramar";
-	    company_title[5]="Wardens of the Eastern Fringe";
+	    company_title[1]="Warriors of Ultramar"; company_title[2]="Guardians of the Temple"; company_title[3]="Scourge of the Xenos";
+	    company_title[4]="Defenders of Ultramar"; company_title[5]="Wardens of the Eastern Fringe"; company_title[6]="Brethren of the Forge";
+		company_title[7]="Defenders of Caeserean"; company_title[8]="Honourblades"; company_title[9]="Stormbringers";
+		company_title[10]="The Scions of Ultramar";
+		
+		
 	}
 	//Waiting on new disadv to give anymore adv.
   if (argument0="Imperial Fists"){founding="N/A";points=150;
@@ -255,7 +266,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    color_to_main="Black";color_to_secondary="Black";color_to_trim="Silver";
 	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Dark Red";
 	    color_to_weapon="Silver";col_special=0;trim=0;
-	    hchaplain="Shulgaar";clibrarian="Lydriik";fmaster="Feirros";hapothecary="Grolvoch";
+	    hchaplain="Jorggir Shidd";clibrarian="Lydriik";fmaster="Feirros";hapothecary="Anaar Telech";
 	    battle_cry="The flesh is weak";// monastery_name="Fortress of Hera";master_name=
 	    equal_specialists=1;load_to_ships=[2,0,0];successors=6;
 	    mutations=0;mutations_selected=0;
@@ -268,13 +279,14 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    chapter_master_name="Kardan Stronos";chapter_master_melee=3;
 	    chapter_master_ranged=3;chapter_master_specialty=2;
     
-	    company_title[1]="Clan Avernii";company_title[2]="Clan Garrsak";company_title[3]="Clan Felg";
-	    company_title[4]="Clan Garrsak";company_title[5]="Clan Kaargul";company_title[6]="Clan Morragul";
-	    company_title[7]="Clan Sorrgol";company_title[8]="Clan Borrgar";company_title[9]="Clan Ungavarr";
+	    company_title[1]="Clan Avernii";company_title[2]="Clan Garrsak";company_title[3]="Clan Raukaan";
+	    company_title[4]="Clan Kaargul";company_title[5]="Clan Haarmek";company_title[6]="Clan Sorrgol";
+	    company_title[7]="Clan Borrgos";company_title[8]="Clan Morlaag";company_title[9]="Clan Vurgaan";
 	    company_title[10]="Clan Dorrvok";
     
-	    i=99;repeat(3){i+=1;
+	   for(i=100;i<=102;i++){
 	        race[i,14]=0;role[i,14]="Iron Father";role[i,16]="Iron Father";
+			role[i,5]="Iron Captain";wep1[i,5]="Power Axe";
 	    }
 	}
 
@@ -289,7 +301,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    color_to_main="Green";color_to_secondary="Green";color_to_trim="Copper";
 	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Dark Red";
 	    color_to_weapon="Black";col_special=0;trim=0;
-	    fmaster="Vulkan He'stan";
+	    fmaster="Argos";clibrarian="Velcona";hapothecary="Harath Shen";recruiter="Sol Ba'ken";admiral="Dac'tyr";hchaplain="Elysius";
 	    battle_cry="Into the fires of battle!  Unto the anvil of war";// monastery_name="Fortress of Hera";master_name=
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=2;
 	    mutations=1;mutations_selected=1;
@@ -301,7 +313,10 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    disposition[7]=0;// Reserved
 	    chapter_master_name="Tu'Shan";chapter_master_melee=3;
 	    chapter_master_ranged=2;chapter_master_specialty=2;
-	    company_title[1]="The Firedrakes";
+		
+	    company_title[1]="The Firedrakes";company_title[2]="Defenders of Nocturne";company_title[3]="The Pyroclasts";
+		company_title[4]="The Branded";company_title[5]="The Drake Hunters";company_title[6]="The Flamehammers";
+		company_title[10]="Sons of Nocturne";
 	}
 
 
@@ -344,7 +359,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 		hapothecary="Curien Droga";hchaplain="Marqol Tomasi";clibrarian="Eustace Mendoza";fmaster="Javier Adon";admiral="Alessio Cortez"
                 recruiter="Ishmael Icario"
 		battle_cry="There is only the Emperor!  He is our shield and our protector!";
-	        equal_specialists=0;load_to_ships=[2,1,1];successors=0;
+	        equal_specialists=0;load_to_ships=[2,0,0];successors=0;
 	        mutations=2;mutations_selected=2;
 	        preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=1;
 	        zygote=0;betchers=1;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;

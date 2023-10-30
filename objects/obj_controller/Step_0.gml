@@ -713,7 +713,7 @@ if (menu==1) and (managing>0){
                 if (tooltip_stat4==0) then temp[111]="("+string(tooltip_stat1)+"DAM, "+string(tooltip_other)+")";
                 if (tooltip_stat4>0) then temp[111]="("+string(tooltip_stat1)+"DAM, "+string(tooltip_stat4)+" ammo, "+string(tooltip_other)+")";
                 // Display Current Health
-                temp[112]=$"{display_unit[sel].hp()}/{display_unit[sel].max_health()}"
+                temp[112]=$"{display_unit[sel].hp()}/{display_unit[sel].max_health()}";
                 // Experience
                 temp[113]=string(floor(ma_exp[sel]));
                 // Bionics
@@ -724,7 +724,11 @@ if (menu==1) and (managing>0){
                     if (floor(b1/2)==(b1/2)) then b2=(10.43*ma_bio[sel]);
                 }
                 if (ma_bio[sel]>3) then b2=(10.43*ma_bio[sel])-5;
-                temp[114]=string(unit.bionics())+" ("+string(round(max(0,b2)))+"%)";
+                if (unit.bionics()>0){
+                    temp[114] = $"{unit.bionics()}({round(max(0,b2))}%)";
+                } else {
+                    temp[114]="";
+                }
                 var cah=managing;
                 if (cah>10) then cah=0;
                 // Bonuses
