@@ -1001,8 +1001,9 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
 if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<yy+520){// Equipment
 
     var w=0
-    for(var w=0;w<=500;w++){ // Gets the number of marines in the selected company
-        if (obj_ini.name[company,w]="") and (obj_ini.name[target_comp,w+1]==""){
+    if (company>10) then company=0;
+    for(var w=0;w<500;w++){ // Gets the number of marines in the selected company
+        if (obj_ini.name[company,w]=="") and (obj_ini.name[company,w+1]==""){
             infantrycount=w;
             break;
         }
@@ -1016,8 +1017,6 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
         if (n_gear="(None)") then n_gear="";
         if (n_mobi="(None)") then n_mobi="";
 
-
-        if (company>10) then company=0;
 
         for (var i=1;i<=obj_controller.man_max;i++){
 
