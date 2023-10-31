@@ -2,7 +2,7 @@ function scr_item_count(item_type) {
 
 	// This script checks the equipment variables for the named item and returns the combined quantity
 
-	var i=0;von=0;
+	var i=0,von=0;
 	for (i=0;i<array_length(obj_ini.equipment);i++){
 	   if (obj_ini.equipment[i]==item_type){
 	   		/*in theory we should be able to break here but there seems
