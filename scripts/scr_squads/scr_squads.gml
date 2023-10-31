@@ -165,7 +165,7 @@ function create_squad(squad_type, company, squad_loadout = true){
 											item_to_add = required_load[$ load_out_slot][0]
 											var required_load_set = {};
 											required_load_set[$ load_out_slot] = item_to_add;
-											unit.alter_equipment(required_load_set);
+											unit.alter_equipment(required_load_set,false,false);
 											required_load[$ load_out_slot][2]++;
 											array_delete(copy_squad, new_copy_unit,1);
 											continue;
@@ -209,7 +209,7 @@ function create_squad(squad_type, company, squad_loadout = true){
 								  						}
 														var opt_load_out = {};
 														opt_load_out[$load_out_slot] = item_to_add;
-														unit.alter_equipment(opt_load_out);
+														unit.alter_equipment(opt_load_out,false,false);
 												  		optional_load[$ load_out_slot][load_item][2]++;
 												  		break;
 											  		}
