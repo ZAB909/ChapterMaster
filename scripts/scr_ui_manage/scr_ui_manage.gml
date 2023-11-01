@@ -1728,7 +1728,7 @@ function scr_ui_manage() {
 		        	unit_data_string = selected_unit.name_role();
 		        	var is_astartes = false;
 		        	if(selected_unit.base_group == "astartes"){
-		        		var is_astartes = true;
+		        		is_astartes = true;
 		        	}
 		        	if (selected_unit.squad != "none"){
 		        		var chapter_role = ""
@@ -1832,11 +1832,11 @@ function scr_ui_manage() {
 		       			var bionic_count = selected_unit.bionics();
 		       			if (bionic_count ==0){
 		       				unit_data_string+= unit_name + " has no bodily augmentations besides his astartes gene seed and organs #"
-		       			}else if(bionic_count ==1){
+		       			}else if(bionic_count == 1 && array_length(body_augmentations.bionics[0])>0){
 		       				unit_data_string+= unit_name + string(" Has a bionic {0}#", global.body_parts_display[body_augmentations.bionics[0][0]])
-		       			}else if((bionic_count >1) and (bionic_count <4)){
+		       			}else if((bionic_count >1) and (bionic_count <=4)){
 		       				unit_data_string+= unit_name + " Has some bionic replacements #"
-		       			}else if((bionic_count >5) and (bionic_count <8)){
+		       			}else if((bionic_count >=5) and (bionic_count <8)){
 		       				unit_data_string+= unit_name + " Has many bionic replacements #"
 		       			}else if (bionic_count >8){
 		       				unit_data_string+= unit_name + " Is mostly machine having replaced most of his flesh with bionic replacements."

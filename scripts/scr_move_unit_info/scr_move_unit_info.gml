@@ -1,26 +1,25 @@
 
-function scr_move_unit_info(start_company,end_company, start_slot, end_slot){
+function scr_move_unit_info(start_company,end_company, start_slot, end_slot, eval_squad=true){
+
+	//eval_squad : determine whether movement of units between companies should decide to check their squad coherency or not, defaults to true
 	
 			//this makes sure coherency of the unit's squad and the squads logging of the unit location are kept up to date
 		var unit = obj_ini.TTRPG[start_company, start_slot];
-		if (unit.squad != "none"){
-			var squad_member;
-			var found = false;
-			for (var r=0;r<array_length(obj_ini.squads[unit.squad].members);r++){
-				squad_member = obj_ini.squads[unit.squad].members[r];
-				if (squad_member[0] == unit.company) and (squad_member[1] == unit.marine_number){
-					// if unit will no longer be same company as squad remove unit from squad
-					if (end_company == squad_member[0]){
-						obj_ini.squads[unit.squad].members[r] = [end_company,end_slot];
-						found = true;
-					} else{
-						array_delete(obj_ini.squads[unit.squad].members, r, 1);
-						found = false;
+		if (eval_squad){
+			if (unit.squad != "none"){
+				var squad = obj_ini.squads[unit.squad];
+				var squad_member;
+				if (squad.base_company != end_company){		
+					for (var r=0;r<array_length(squad.members);r++){
+						squad_member = squad.members[r];
+						if (squad_member[0] == start_company) and (squad_member[1] == start_slot){
+							array_delete(squad.members,r,1);
+							// if unit will no longer be same company as squad remove unit from squad
+						}
 					}
-					break;
 				}
+				unit.squad = "none";
 			}
-			if (!found){unit.squad = "none"}
 		}
 		obj_ini.spe[end_company,end_slot]=obj_ini.spe[start_company,start_slot];	
 		obj_ini.race[end_company,end_slot]=obj_ini.race[start_company,start_slot];
