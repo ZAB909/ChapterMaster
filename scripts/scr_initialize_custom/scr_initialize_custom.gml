@@ -1025,7 +1025,87 @@ function scr_initialize_custom() {
 			],
 			[role[100,18], {"max":1,"min":1, "role":"Assualt Sergeant"}],		// sergeant
 			["display_name" , "Tactical Squad"]
-		]		
+		],
+	    "scout_squad":[
+	        [
+	            role[100,12], 
+	            {"max":9,"min":4, "loadout":{
+	                    "required":{
+	                        "wep1":[wep1[100,12],4], 
+	                        "wep2":[wep2[100,12],4]
+	                    },
+	                    "option" :{
+	                        "wep1":[
+	                            [["Flamer","Plasma Gun",], 1],
+	                            [["Bolter","Stalker Pattern Bolter"], 3],
+	                            [["Missile Launcher","Heavy Bolter"], 1]],
+	                        "wep2":[
+	                            [["Chainsword","Combat Knife"], 5],
+	                        ]
+	                    } 
+	                }
+	            },
+	        ],
+	        [
+	            role[100,18], 
+	            {
+	            	"max":1,"min":1,
+	            	"loadout":{
+		                "option":{
+		                    "wep1":[
+		                        [["Power Sword","Chainsword","Power Axe","Power Fist"],1]
+		                    ],
+		                    "wep2":[
+		                        [["Plasma Pistol","CombiFlamer","Stalker Pattern Bolter","Storm Bolter"],1]
+		                    ]
+		                }
+		            },
+	           	 	"role":"Scout Sergeant",
+	            }   
+	        ],
+	        ["display_name" , "Scout Squad"]
+	    ],
+	    "scout_sniper_squad":[
+	        [
+	            role[100,12], 
+	            {
+	                "max":4,
+	                "min":2, 
+	                "loadout":{
+	                    "required":{
+	                        "wep1":["Sniper Rifle",2], 
+	                        "wep2":["Combat Knife",4]
+	                    },
+	                    "option" :{
+	                        "wep1":[
+	                            [["Sniper Rifle","Stalker Pattern Bolter"], 1],
+	                            [["Missile Launcher","Sniper Rifle","Stalker Pattern Bolter"], 1]
+	                        ],
+	                    }
+	                },
+	                "role":"Scout Sharpshooter", 
+	            },
+	        ], 
+	        [
+	        	role[100,18],
+		        {
+		            "max":1,
+		            "min":1,
+		            "loadout":{
+			            "option":{
+			                "wep1":[
+			                    [["Power Sword","Chainsword","Power Axe","Power Fist"],1]
+			                ],
+			                "wep2":[
+			                    [["CombiFlamer","Stalker Pattern Bolter",],1]
+			                ]
+			            }
+		        	},
+		        	"role":"Scout Sergeant",
+		        }
+	        ],
+	        ["display_name" , "Scout Sniper Squad"]
+	    ]	    			
 	};
 	if (global.chapter_name="Salamanders"){ //salamanders squads
 		variable_struct_set(st , "assault_squad",[
@@ -2145,7 +2225,9 @@ function scr_initialize_custom() {
 	                }
 	            }
 	            if (company=10){
-	                repeat(temp1){k+=1;man_size+=1;
+	                repeat(temp1){
+	                	k+=1;
+	                	man_size+=1;
 	                	TTRPG[company,k]=new TTRPG_stats("chapter", company,k);
 					
 	                    race[company,k]=1;
@@ -2156,8 +2238,8 @@ function scr_initialize_custom() {
 	                    wep2[company,k]=wep2[101,12];
 	                    armour[company,k]="Scout Armour";
 	                    chaos[company,k]=0;
+	                     experience[company,k] = 10+irandom(15);
 				        spawn_unit = TTRPG[company,k];
-				        spawn_unit.spawn_exp();
 	                }
 	            }
 	        }
@@ -2192,8 +2274,7 @@ function scr_initialize_custom() {
 	            	role[company,k]=role[100,10];
 	            	wep1[company,k]=wep1[101,10];
 	            	wep2[company,k]=wep2[101,10];
-	       ;
-	       name[company,k]=scr_marine_name();
+	       			name[company,k]=scr_marine_name();
 	            	chaos[company,k]=0;
 	            	mobi[company,k]="Jump Pack";
 					
@@ -2230,6 +2311,7 @@ function scr_initialize_custom() {
 	                wep2[company,k]=wep2[101,12];
 	                armour[company,k]="Scout Armour";
 	                chaos[company,k]=0;
+	                experience[company,k] = 10+irandom(15);
 	            } 
 	            if (company_unit2="assault") then repeat(assault){k+=1;man_size+=1;
 	            	TTRPG[company,k]=new TTRPG_stats("chapter", company,k);

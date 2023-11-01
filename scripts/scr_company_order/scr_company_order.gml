@@ -186,6 +186,7 @@ function scr_company_order(company) {
 			}		
 		}
 	}
+
 	var new_squad_index, role_number;
 	if (struct_exists(squadless,role[100,8])){
 		role_number = array_length(squadless[$ role[100,8]]);
