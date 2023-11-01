@@ -69,11 +69,17 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 	for (var s = 0; s< 2;s++){
 		if (struct_exists(squad_fulfilment ,sgt_types[s])) and (!sergeant_found){
 			var highest_exp = 0;
+			var exp_unit;
 			for (i = 0; i < array_length(squad.members);i++){
+				if (i==0){
+					exp_unit = obj_ini.TTRPG[squad.members[0][0], squad.members[0][1]];
+					highest_exp = obj_ini.TTRPG[squad.members[0][0], squad.members[0][1]].experience();
+					continue;
+				}
 				unit = obj_ini.TTRPG[squad.members[i][0], squad.members[i][1]];
 				if (unit.experience() > highest_exp){
 					highest_exp = unit.experience();
-					var exp_unit = unit;
+					exp_unit = unit;
 				};
 			}
 			squad_fulfilment[$ sgt_types[s]]++;
@@ -399,6 +405,17 @@ function game_start_squads(){
 	while (last_squad_count == array_length(obj_ini.squads)){
 		last_squad_count = (array_length(obj_ini.squads) + 1);
 		create_squad("veteran_squad", company);
+	}
+	company = 10;
+	create_squad("command_squad", company);
+	last_squad_count = array_length(obj_ini.squads);
+	while (last_squad_count == array_length(obj_ini.squads)){ ///keep making tact squads for as long as there are enough tact marines
+		last_squad_count = (array_length(obj_ini.squads) + 1);
+		if(last_squad_count%2 == 0){		
+			create_squad("scout_squad", company);
+		}else{
+			create_squad("scout_sniper_squad", company);
+		}
 	}
 
 	with (obj_ini){
