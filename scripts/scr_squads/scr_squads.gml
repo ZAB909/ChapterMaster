@@ -25,7 +25,7 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 	squad = new unit_squad(squad_type, company);
 	squad.base_company = company;
 	var sergeant_found = false;
-	var sgt_types = [obj_ini.role[100,18], obj_ini.role[100,19]]
+	var sgt_types = [obj_ini.role[100,18], obj_ini.role[100,19]];
 	//if squad has sergeants in find out if there are any available sergeants
 	for (var s = 0; s< 2;s++){
 		if (struct_exists(squad_fulfilment ,sgt_types[s])){
