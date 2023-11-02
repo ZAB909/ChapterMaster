@@ -1,9 +1,7 @@
 // Displays weapon based on the armour type to change the art to match the armour type
-function scr_ui_display_weapons(argument0, termi_tartaros, equiped_weapon) {
+function scr_ui_display_weapons(left_or_right, termi_tartaros, equiped_weapon) {
 
-    // argument0: left?
-
-    var rl = argument0,
+    var rl = left_or_right,
     clear = false;
     ui_xmod[rl] = 0;
     ui_ymod[rl] = 0;
@@ -13,8 +11,8 @@ function scr_ui_display_weapons(argument0, termi_tartaros, equiped_weapon) {
     var display_type = "normal_ranged";
 
     // Checks if armour is either termi or tartaros to display proper fix
-    if (argument0 == 1) then fix_left = 0;
-    if (argument0 == 2) then fix_right = 0;
+    if (left_or_right == 1) then fix_left = 0;
+    if (left_or_right == 2) then fix_right = 0;
 
     // ** Ranged Weapons **
     if (string_count("Bolt Pistol", equiped_weapon) > 0) {
@@ -109,8 +107,8 @@ function scr_ui_display_weapons(argument0, termi_tartaros, equiped_weapon) {
 
     // Fix sprite for termi/tartar
     if (termi_tartaros >= 1) {
-        if (argument0 == 1) and(ui_arm[1] == false) and (fix_left == 0) then fix_left = 1;
-        if (argument0 == 2) and(ui_arm[2] == false) and (fix_right == 0) then fix_right = 1;
+        if (left_or_right == 1) and(ui_arm[1] == false) and (fix_left == 0) then fix_left = 1;
+        if (left_or_right == 2) and(ui_arm[2] == false) and (fix_right == 0) then fix_right = 1;
     }
 
     if (display_type == "normal_ranged") {
@@ -140,28 +138,28 @@ function scr_ui_display_weapons(argument0, termi_tartaros, equiped_weapon) {
             ui_arm[rl] = false;
             ui_above[rl] = true;
         }
-        if (termi_tartaros == 1) and(argument0 == 1) {
+        if (termi_tartaros == 1) and(left_or_right == 1) {
             ui_xmod[rl] = -3;
             ui_ymod[rl] = 10;
             fix_left = 8;
             ui_weapon[rl] = spr_weapon_powfist3;
             clear = true;
         }
-        if (termi_tartaros == 1) and(argument0 == 2) {
+        if (termi_tartaros == 1) and(left_or_right == 2) {
             ui_xmod[rl] = 2;
             ui_ymod[rl] = 10;
             fix_right = 8;
             ui_weapon[rl] = spr_weapon_powfist3;
             clear = true;
         }
-        if (termi_tartaros == 2) and(argument0 == 1) {
+        if (termi_tartaros == 2) and(left_or_right == 1) {
             ui_xmod[rl] = 0;
             ui_ymod[rl] = 10;
             fix_left = 8;
             ui_weapon[rl] = spr_weapon_powfist3;
             clear = true;
         }
-        if (termi_tartaros == 2) and(argument0 == 2) {
+        if (termi_tartaros == 2) and(left_or_right == 2) {
             ui_xmod[rl] = -1;
             ui_ymod[rl] = 10;
             fix_right = 8;
@@ -170,38 +168,38 @@ function scr_ui_display_weapons(argument0, termi_tartaros, equiped_weapon) {
         }
     }
     if (display_type == "lightning_claw") {
-        if (termi_tartaros == 0) and(argument0 == 1) {
+        if (termi_tartaros == 0) and(left_or_right == 1) {
             ui_xmod[rl] += 11;
         }
-        if (termi_tartaros == 0) and(argument0 == 2) {
+        if (termi_tartaros == 0) and(left_or_right == 2) {
             ui_xmod[rl] -= 8;
         }
         if (termi_tartaros > 0) {
             ui_arm[rl] = false;
             ui_above[rl] = true;
         }
-        if (termi_tartaros == 1) and(argument0 == 1) {
+        if (termi_tartaros == 1) and(left_or_right == 1) {
             ui_xmod[rl] = -3;
             ui_ymod[rl] = 10;
             fix_left = 8.1;
             ui_weapon[rl] = spr_weapon_lightning2;
             clear = true;
         }
-        if (termi_tartaros == 1) and(argument0 == 2) {
+        if (termi_tartaros == 1) and(left_or_right == 2) {
             ui_xmod[rl] = 2;
             ui_ymod[rl] = 10;
             fix_right = 8.1;
             ui_weapon[rl] = spr_weapon_lightning2;
             clear = true;
         }
-        if (termi_tartaros == 2) and(argument0 == 1) {
+        if (termi_tartaros == 2) and(left_or_right == 1) {
             ui_xmod[rl] = 0;
             ui_ymod[rl] = 10;
             fix_left = 8.1;
             ui_weapon[rl] = spr_weapon_lightning2;
             clear = true;
         }
-        if (termi_tartaros == 2) and(argument0 == 2) {
+        if (termi_tartaros == 2) and(left_or_right == 2) {
             ui_xmod[rl] = -1;
             ui_ymod[rl] = 10;
             fix_right = 8.1;
@@ -222,7 +220,7 @@ function scr_ui_display_weapons(argument0, termi_tartaros, equiped_weapon) {
         ui_spec[rl] = false;
     }
     // Flip for offhand
-    if (argument0 == 2)
+    if (left_or_right == 2)
         /*and (termi_tartaros=0)*/
         and(ui_xmod[rl] < 0)
     	and(display_type != "power_fist")

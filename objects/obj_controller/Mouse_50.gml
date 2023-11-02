@@ -522,9 +522,9 @@ if (menu==20) and (diplomacy==10.1){
             var champ = scr_random_marine(obj_ini.role[100,7],0);
             if (champ!="none"){
                 var dead_champ = obj_ini.TTRPG[champ[0],champ[1]];
-                obj_duel = instance_create(0,0,obj_duel);
-                obj_duel.title = "Ambush Champion";
-                pop.type="duel";
+               // obj_duel = instance_create(0,0,obj_duel);
+               // obj_duel.title = "Ambush Champion";
+               // pop.type="duel";
                 //scr_kill_unit(champ[0],champ[1]);
             } else {
                 diplomacy_pathway = "daemon_scorn";

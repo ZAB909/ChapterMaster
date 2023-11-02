@@ -1,7 +1,7 @@
 function scr_ui_manage() {
 	var unit,i, tooltip_text,x1,x2,y1,y2, var_text;
 	var romanNumerals=scr_roman_numerals();	
-	var normal_hp=true, bionic_tooltip="",tooltip_drawing=[];
+	var bionic_tooltip="",tooltip_drawing=[];
 	var body_augmentations = {mutations:[], bionics:[[],[]]}
 	
 	// Declare non marine roles here
@@ -111,7 +111,15 @@ function scr_ui_manage() {
 		
 	    if (instance_exists(cn)) and (is_struct(temp[120])){
 	    	var selected_unit = temp[120];				//unit struct
-	        if (cn.temp[101]!="") and (cn.temp[100]=="1"){
+	    	scr_draw_unit_image(1208,178,selected_unit);
+	        /*if (cn.temp[101]!="") and (cn.temp[100]=="1"){
+	        	for (body_part = 0; body_part<array_length(global.body_parts);body_part++){
+					if (struct_exists(selected_unit.body[$ global.body_parts[body_part]], "bionic")){
+						bionic_tooltip+=string("standard bionic {0}#",global.body_parts_display[body_part]);
+						array_push(body_augmentations.bionics[0], body_part);
+						array_push(body_augmentations.bionics[1], global.body_parts[body_part]);						
+					}
+				}
 	            ui_arm[1]=true;
 				ui_arm[2]=true;
 				
@@ -138,7 +146,7 @@ function scr_ui_manage() {
 	            show_wep2=string_pos("&",cn.temp[110]);
 	            show_arm=string_pos("&",cn.temp[102]);
 	            show_gear=string_pos("&",cn.temp[104]);
-	            show_mobi=string_pos("&",cn.temp[106]);*/
+	            show_mobi=string_pos("&",cn.temp[106]);
 				
 	            show_wep1=string_replace(cn.temp[108],"Arti. ","");
 	            show_wep2=string_replace(cn.temp[110],"Arti. ","");
@@ -249,7 +257,7 @@ function scr_ui_manage() {
 	                if (ma_role[sel]=obj_ini.role[100,15]) and ((global.chapter_name="Blood Angels") or (obj_ini.progenitor==5)) then ui_specialist=4;// Sanguinary
 	                if (ma_role[sel]=obj_ini.role[100,16]) then ui_specialist=5;// Techmarine
 	                if (ma_role[sel]=obj_ini.role[100,17]) then ui_specialist=7;// Librarian
-	                */
+	                
                 
 	                ttrim=trim;
 					cspec=obj_ini.col_special;
@@ -320,7 +328,7 @@ function scr_ui_manage() {
 	                trim
 	                pauldron2
 	                weapon
-	                */
+	                
                 
 	                //Rejoice!
 	                // draw_sprite(spr_marine_base,img,xx+1208,yy+178);
@@ -437,7 +445,7 @@ function scr_ui_manage() {
 	                    if (string_count("Artifi",temp[102])>0){if (slow>0) then slow=13;if (brothers>-5) then brothers=1;armour_sprite=spr_artificer_colors;if (hood=-50) then hood=2;}
 	                    if (string_count("Termi",temp[102])>0){if (brothers>-5) then brothers=5;armour_sprite=spr_terminator2_colors;if (hood=-50) then hood=9;if (skull=1) then skull=2;}
 	                    if (string_count("Dread",temp[102])>0) then armour_sprite=spr_dread_colors;
-	                }*/
+	                }
                 
 	                // Draw servo arms
 	                if (arm>0) and (temp[102]!=""){
@@ -753,7 +761,7 @@ function scr_ui_manage() {
 	                if (string_count("Howling Banshee",cn.temp[101])>0) then draw_sprite(spr_eldar_hire,1,xx+1208,yy+178);
 	            }
 	        }
-        
+        		*/
 	        // Crop anything sticking out of the display
 	        draw_set_color(0);
 	        draw_rectangle(xx+1178,yy+168,xx+1208,yy+419,0);// Left
