@@ -89,7 +89,7 @@ global.trait_list = {
 	},
 	"warp_touched":{
 		intelligence:4,
-		flavour_text : "has phychic potential even if unknown to them (can be recruited to the librarius)",
+		flavour_text : " {0} Has interacted with the warp in away that has forever marked them",
 		display_name : "Warp Touched",		
 	},
 	"lucky":{
@@ -209,6 +209,16 @@ global.trait_list = {
 		display_name:"Feet On the Ground",
 		flavour_text:"{0} prefers to keep both feet on the ground",
 		effect:"reduction in combat effectiveness when using Bikes or Jump Packs"
+	},
+	"tyrannic_vet":{
+		wisdom :[2,3,"max"],
+		dexterity:1,
+		weapon_skill:1,
+		ballistic_skill:1,
+		constitution:1,
+		display_name:"Tyrannic War Veteran",
+		flavour_text:"{0} Is a veteran of the many wars against the the Tyranid swarms",
+		effect:"Increased lethality against tyranids"
 	}
 }
 global.base_stats = { //tempory stats subject to change by anyone that wishes to try their luck
@@ -613,7 +623,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					}
 				}
 			}
-			if (irandom(49)>48){
+			if (irandom(299)>298){
 				 add_trait("warp_touched");			//has phychic potential
 			};		
 			if (array_contains(obj_ini.dis,"Shitty Luck")){		//lamentors are unlucky
@@ -682,8 +692,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					add_trait("tinkerer");
 				};
 			}
-			if (global.chapter_name=="Space Wolves"){
-				religion_sub_cult = "The Allfather"
+			if (global.chapter_name=="Space Wolves") or (obj_ini.progenitor=3) {
+				religion_sub_cult = "The Allfather";
+			} else if(global.chapter_name=="Salamanders") or (obj_ini.progenitor==8){
+				religion_sub_cult = "The Promethean Cult";
+			} else if (global.chapter_name=="Iron Hands") or (obj_ini.progenitor=6){
+				religion_sub_cult = "The Cult of Iron";
 			}
 			break;
 		/*case "skitarii":
@@ -1036,7 +1050,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				else if (old_guard>=78 and old_guard<=96){
 					update_armour("MK6 Corvus",false,false);
 					update_age(age - gauss(200, 50));
-					add_trait("seasoned")
+					add_trait("seasoned");
 					add_exp(25);
 				} // 20% chance for devos to have ranged armor, wouldn't want much else
 				else if (company<=2) {
@@ -1061,6 +1075,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					add_trait(choose("old_guard"));
 					add_exp(choose(25, 50));					
 				}
+				if (global.chapter_name=="Ultramarines"){
+					if (choose(true,false)){
+						add_trait("tyrannic_vet");
+						bionic_count+=irandom(1);
+					}
+				}
 				break;
 			case obj_ini.role[100,16]: //techmarines
 				update_armour(choose("MK8 Errant","MK6 Corvus","MK4 Maximus","MK3 Iron Armour"),false,false)
@@ -1069,7 +1089,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					bionic_count = choose(6,6,7,7,7,8,9);
 					add_trait("flesh_is_weak");
 				}else {
-			    bionic_count = irandom(5)
+			    bionic_count = irandom(5)+1;
 				  if (irandom(2) ==0){
 				    add_trait("flesh_is_weak");
 				  }
@@ -1080,6 +1100,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			  add_trait("mars_trained");
 			  if (irandom(1) ==0){
 			    add_trait("tinkerer");
+			  }
+			  if (religion !="cult_mechanicus"){
+			  	religion_sub_cult = "none";
 			  }
 			  religion = "cult_mechanicus"	
 				break;
@@ -1111,9 +1134,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				add_trait("seasoned");
 				break;		
 		}
-		for(var i=0;i<bionic_count;i++){
-				add_bionics();
-		}
+		if (irandom(75)>74){
+			add_trait("tyrannic_vet");
+			bionic_count+=irandom(1);
+		};		
 		if (irandom(399-experience()) == 0){
 			add_trait("still_standing");
 		};
@@ -1123,6 +1147,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if (irandom(499-experience())==0){
 			add_trait("lone_survivor");
 		}
+		for(var i=0;i<bionic_count;i++){
+				add_bionics();
+		}		
 	}
 	static alter_equipment = function(update_equipment, from_armoury=true, to_armoury=true){
 		var equip_areas = struct_get_names(update_equipment);

@@ -1953,11 +1953,23 @@ function scr_ui_manage() {
 			fx= romanNumerals[managing - 1] + " Company";
 		}
     
-	    if (managing==11) then fx="Headquarters";
-	    if (managing==12) then fx="Apothecarion";
-	    if (managing==13) then fx="Librarium";
-	    if (managing==14) then fx="Reclusium";
-	    if (managing==15) then fx="Armamentarium";
+	    switch (managing) {
+		    case 11:
+		        fx = "Headquarters";
+		        break;
+		    case 12:
+		        fx = "Apothecarion";
+		        break;
+		    case 13:
+		        fx = "Librarium";
+		        break;
+		    case 14:
+		        fx = "Reclusium";
+		        break;
+		    case 15:
+		        fx = "Armamentarium";
+		        break;
+		}
     
 	    draw_text(xx+800,yy+74,string_hash_to_newline(string(global.chapter_name)+" "+string(fx)));
 	    if (obj_ini.company_title[managing]!=""){
