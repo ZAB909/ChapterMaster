@@ -878,6 +878,7 @@ function scr_ui_manage() {
         
 	        if (man[sel]=="man"){
 				unit = display_unit[sel];
+				if (unit.name()==""){continue;}
 				var unit_location = unit.marine_location();
 	            temp1=unit.name_role();
 	            unit_specialism_option=false;
@@ -964,9 +965,7 @@ function scr_ui_manage() {
 						ma_we2="Artifact";
 					}
 	            }
-	        }
-			// Vehicle setup
-	        if (man[sel]=="vehicle"){
+	        }else if (man[sel]=="vehicle"){
 	            // temp1="v "+string(managing)+"."+string(ide[sel]);
 	            temp1=string(ma_role[sel]);
 	            temp2=string(ma_loc[sel]);

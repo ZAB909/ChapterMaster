@@ -79,7 +79,8 @@ if (type>0){
         if (obj_creation.text_selected!="unit_name"+string(ide)) then draw_text_transformed(444,550,string_hash_to_newline(obj_creation.role[co,ide]),0.6,0.6,0);
         if (obj_creation.text_selected="unit_name"+string(ide)) and (obj_creation.text_bar>30) then draw_text_transformed(444,550,string_hash_to_newline(string(obj_creation.role[co,ide])),0.6,0.6,0);
         if (obj_creation.text_selected="unit_name"+string(ide)) and (obj_creation.text_bar<=30) then draw_text_transformed(444,550,string_hash_to_newline(string(obj_creation.role[co,ide])+"|"),0.6,0.6,0);
-        var wid,hei;wid=0;hei=string_height_ext(string_hash_to_newline(string(obj_creation.role[co,ide])+"Q"),-1,580)*0.6;
+        var wid=0;
+        var hei=string_height_ext(string_hash_to_newline(string(obj_creation.role[co,ide])+"Q"),-1,580)*0.6;
         if (scr_hit(444,550,820,550+hei)){obj_cursor.image_index=2;
             tooltip="Astartes Role Name";tooltip2="The name of this Astartes Role.  The plural form will be ''"+string(obj_creation.role[co,ide])+"s''.";
             if (obj_creation.mouse_left=1) and (obj_creation.cooldown<=0){
