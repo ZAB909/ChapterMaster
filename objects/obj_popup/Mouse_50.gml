@@ -1045,7 +1045,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                         obj_controller.ma_mobi[i]="";
                     }
                     if (obj_ini.wep1[company,obj_controller.ide[i]]="Assault Cannon") or (obj_ini.wep2[company,obj_controller.ide[i]]="Assault Cannon"){
-                        var bgn,bed;bed=0;bgn=obj_ini.armour[company,obj_controller.ide[i]];
+                        var bed=0,bgn=obj_ini.armour[company,obj_controller.ide[i]];
                         if (bgn!="Terminator Armour") and (bgn!="Tartaros") then bed+=1;
                         if (string_count("Termi",bgn)=0) then bed+=1;
                         if (bed=2){
@@ -1130,13 +1130,13 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                 if (n_wep2=obj_controller.ma_wep2[i]) or (n_wep2="Assortment") then check=1;
                 if (check==0) and (n_wep2!=obj_controller.ma_wep2[i]) and (n_wep2!="Assortment") and ((vehicle_equipment=1) or (vehicle_equipment=6)){ //normal infantry or dread wep2
                     unit.update_weapon_two(n_wep2)
-                    obj_controller.ma_wep2[i]=n_wep1;
+                    obj_controller.ma_wep2[i]=n_wep2;
                 }
                 if (check==0) and (n_wep2!=obj_controller.ma_wep2[i]) and (n_wep2!="Assortment") and (vehicle_equipment!=1) and (vehicle_equipment!=6){ // vehicle wep2
                     if (obj_controller.ma_wep2[i]!="") and (obj_controller.ma_wep2[i]!=n_wep2){
                         scr_add_item(obj_controller.ma_wep2[i],1);
                         obj_controller.ma_wep2[i]="";
-                      obj_ini.veh_wep2[company,i-infantrycount+1]="";
+                        obj_ini.veh_wep2[company,i-infantrycount+1]="";
                     }
                     if (n_wep2!=""){
                         scr_add_item(n_wep2,-1);
