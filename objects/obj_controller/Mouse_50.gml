@@ -1522,6 +1522,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
         if (mouse_y>=__view_get( e__VW.YView, 0 )+27){
             cooldown=8000;
             if (menu>=500) and (temp[menu-434]=""){
+                instance_create(0,0,obj_tester);
                 menu=0;
                 exit;
             }
@@ -1530,7 +1531,6 @@ if (action_if_number(obj_saveload, 0, 0) &&
     }
 
     if (menu>=500) then exit;
-
     var zoomeh=0,diyst=999,onceh=0;
     xx=__view_get( e__VW.XView, 0 );
     yy=__view_get( e__VW.YView, 0 );

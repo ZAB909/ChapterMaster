@@ -229,6 +229,7 @@
     {"name":"spr_ship_daemon","order":5,"path":"sprites/spr_ship_daemon/spr_ship_daemon.yy",},
     {"name":"spr_ship_carnage","order":7,"path":"sprites/spr_ship_carnage/spr_ship_carnage.yy",},
     {"name":"spr_ship_icono","order":9,"path":"sprites/spr_ship_icono/spr_ship_icono.yy",},
+    {"name":"obj_tester","order":70,"path":"objects/obj_tester/obj_tester.yy",},
     {"name":"sprite160","order":11,"path":"sprites/sprite160/sprite160.yy",},
     {"name":"sprite158","order":13,"path":"sprites/sprite158/sprite158.yy",},
     {"name":"spr_ship_dreadclaw","order":15,"path":"sprites/spr_ship_dreadclaw/spr_ship_dreadclaw.yy",},
