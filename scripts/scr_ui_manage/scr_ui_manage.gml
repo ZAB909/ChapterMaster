@@ -888,7 +888,7 @@ function scr_ui_manage() {
 	            if (unit_location[0]==location_types.planet){
 					temp2 = unit_location[2];
 					//get roman numeral for system planet
-					temp2 += scr_roman_numerals()[unit_location[1]];
+					temp2 += romanNumerals[unit_location[1]-1];
 	            } else if(unit_location[0]==location_types.ship){
 					temp2 = obj_ini.ship[unit_location[1]]
 				}
@@ -972,7 +972,7 @@ function scr_ui_manage() {
             
 	            if (ma_wid[sel]!=0){
 	            	//numeral for vehicle planet
-	            	temp2 += scr_roman_numerals()[ma_wid[sel]];
+	            	temp2 += romanNumerals[ma_wid[sel]-1];
 	            }
 	            temp3=string(round(ma_health[sel]))+"% HP";temp4="";
 	            // Need abbreviations here
