@@ -51,7 +51,7 @@ function scr_move_unit_info(start_company,end_company, start_slot, end_slot){
 		}
 
 		obj_ini.spe[start_company,start_slot]="";
-		obj_ini.race[start_company,start_slot]="";
+		obj_ini.race[start_company,start_slot]=0;
 		obj_ini.loc[start_company,start_slot]="";
 		obj_ini.name[start_company,start_slot]="";
 		obj_ini.wep1[start_company,start_slot]="";
