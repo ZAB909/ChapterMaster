@@ -106,8 +106,8 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
             }
         }
     
-        if (ui_twoh[1]=true) and (ui_left_Arm=false) then ui_arm[2]=false;
-        if (ui_twoh[2]=true) and (ui_arm[2]=false) then ui_left_Arm=false;
+        if (ui_twoh[1]=true) and (ui_arm[1]=false) then ui_arm[2]=false;
+        if (ui_twoh[2]=true) and (ui_arm[2]=false) then ui_arm[1]=false;
     
         draw_set_color(38144);
         draw_rectangle(xx+x_draw,yy+y_draw,xx+x_draw+166,yy+y_draw+231,0);    
@@ -452,10 +452,10 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
                 // This draws the arms
                 if (show_arm!="Dreadnought"){
                     if  (specialist_colours<=1){
-                        if (ui_left_Arm=true) then draw_sprite(armour_sprite,6,xx+x_draw,yy+y_draw);
+                        if (ui_arm[1]=true) then draw_sprite(armour_sprite,6,xx+x_draw,yy+y_draw);
                         if (ui_arm[2]=true) then draw_sprite(armour_sprite,8,xx+x_draw,yy+y_draw);
                     }else if(specialist_colours>=2){
-                        if (ui_left_Arm=true) then draw_sprite(armour_sprite,6,xx+x_draw,yy+y_draw);
+                        if (ui_arm[1]=true) then draw_sprite(armour_sprite,6,xx+x_draw,yy+y_draw);
                         if (ui_arm[2]=true) then draw_sprite(armour_sprite,9,xx+x_draw,yy+y_draw);
                     }
                 }

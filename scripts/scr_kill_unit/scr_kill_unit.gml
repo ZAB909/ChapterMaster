@@ -2,7 +2,7 @@
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function scr_kill_unit(company, unit_slot){
 	obj_ini.spe[company,unit_slot]="";
-	obj_ini.race[company,unit_slot]="";
+	obj_ini.race[company,unit_slot]=0;
 	obj_ini.loc[company,unit_slot]="";
 	obj_ini.name[company,unit_slot]="";
 	obj_ini.wep1[company,unit_slot]="";
