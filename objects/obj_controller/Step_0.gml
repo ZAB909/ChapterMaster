@@ -598,37 +598,6 @@ if (menu==1) and (managing>0){
 
                 ui_specialist=0;
                 ui_coloring="";
-
-                if (ma_role[sel]=="Chapter Master") then ui_specialist=111;
-                // Honor Guard
-                if (ma_role[sel]==obj_ini.role[100,2]) then ui_specialist=14;
-                // Chaplain
-                if (ma_role[sel]==obj_ini.role[100,14]) or (ma_role[sel]==string(obj_ini.role[100,14])+" Aspirant") 
-                or (ma_role[sel]=="Master of Sanctity") then ui_specialist=1;
-                // Apothecary
-                if (ma_role[sel]==obj_ini.role[100,15]) or (ma_role[sel]==string(obj_ini.role[100,15])+" Aspirant") 
-                or (ma_role[sel]=="Master of the Apothecarion") then ui_specialist=3;
-                // Techmarine
-                if (ma_role[sel]==obj_ini.role[100,16]) or (ma_role[sel]==string(obj_ini.role[100,16])+" Aspirant") 
-                or (ma_role[sel]=="Forge Master") then ui_specialist=5;
-                // Librarian
-                if (ma_role[sel]==obj_ini.role[100,17]) or (ma_role[sel]==string(obj_ini.role[100,17])+" Aspirant") 
-                or (ma_role[sel]=="Chief "+string(obj_ini.role[100,17])) then ui_specialist=7;
-                // Death Company
-                if (ma_role[sel]=="Death Company") then ui_specialist=15;
-                // Dark Angels bone color
-                if (global.chapter_name=="Dark Angels"){
-                    if (ma_role[sel]==obj_ini.role[100,4]) then ui_coloring="bone";
-                    if (managing==1){
-                        if ((string_count("Terminator",ma_armour[sel])>0) or (ma_armour[sel]=="Tartaros")){
-                            if (ma_role[sel]==obj_ini.role[100,5]) then ui_coloring="bone";
-                            if (ma_role[sel]==obj_ini.role[100,7]) then ui_coloring="bone";
-                            if (ma_role[sel]=="Standard Bearer") then ui_coloring="bone";
-                        }
-                    }
-                }
-                // Blood Angels gold
-                if ((ui_specialist==14) or (ma_role[sel]=="Chapter Master")) and (global.chapter_name=="Blood Angels") then ui_coloring="gold";
                 // Sets up the description for the equipement of current marine
                 temp[101]=string(ma_role[sel])+" "+string(ma_name[sel]);
                 temp[102]=ma_armour[sel];

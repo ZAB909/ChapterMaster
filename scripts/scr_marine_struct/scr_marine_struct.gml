@@ -1185,6 +1185,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}
 		}
 	}
+
+	static draw_unit_image = scr_draw_unit_image;
+	static display_wepaons = scr_ui_display_weapons;
 }
 function jsonify_marine_struct(company, marine){
 		var copy_marine_struct = obj_ini.TTRPG[company, marine]; //grab marine structure
