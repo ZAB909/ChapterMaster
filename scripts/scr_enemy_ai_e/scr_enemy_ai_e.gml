@@ -615,13 +615,12 @@ function scr_enemy_ai_e() {
                     //scr_alert("green","owner", "Recruitment is slowed due to lack of population on our recruitment worlds",0,0);
                     if (p_large[run] = 0) then p_population[run] -= 1;
 
-                    var recruit_chance, aspirant, corr, months_to_neo, dista, onceh;
-                    recruit_chance = 999;
-                    aspirant = 0;
-                    corr = 10;
-                    months_to_neo = 72;
-                    dista = 0;
-                    onceh = 0;
+                    var recruit_chance = 999;
+                    var aspirant = 0;
+                    var corr = 10;
+                    var months_to_neo = 72;
+                    var dista = 0;
+                    var onceh = 0;
 
                     if (obj_controller.recruiting = 1) then recruit_chance = floor(random(250)) + 1; // fast, frantic, slow, ect
                     if (obj_controller.recruiting = 2) then recruit_chance = floor(random(200)) + 1; // the lower recruit_chance is, the more baby astartes
@@ -679,13 +678,14 @@ function scr_enemy_ai_e() {
                         corr += choose(10, 15, 20);
                         recruit_chance -= choose(0.7, 0.7, 0.8, 0.8, 0, 8, 0.9);
 
-                        var failedneo;
-                        failedneo = choose(0, 0, 0, 0, 0, 0, 0, 0, 1);
-                        if (failedneo = 1) {
-                            failedneo += (obj_controller.recruiting);
-                            (obj_controller.gene_seed) -= failedneo;
-                            if (failedneo >= 1) {
-                                scr_alert("red", "owner", "Blood Duels are efficient in time, but costly in risk with gene material. Gene-seed has been lost.", 0, 0);
+                        if (obj_controller.recruiting > 0) {
+                            var wasted_gene_seed = choose(0, 0, 0, 0, 0, 0, 0, 0, 1);
+                            if (wasted_gene_seed = 1) {
+                                wasted_gene_seed += (obj_controller.recruiting);
+                                (obj_controller.gene_seed) -= wasted_gene_seed;
+                                if (wasted_gene_seed >= 1) {
+                                    scr_alert("red", "owner", "Blood Duels are efficient in time, but costly in risk with gene material. Gene-seed has been lost.", 0, 0);
+                                }
                             }
                         }
                     }
@@ -877,7 +877,7 @@ function scr_enemy_ai_e() {
                             display_type = "Gene Vault";
                             obj_controller.und_gene_vaults++;
                         }
-                        tx = $ "Hidden {display_type} on {name} {scr_roman(run)} has been completed.";
+                        tx = $"Hidden {display_type} on {name} {scr_roman(run)} has been completed.";
                         scr_alert("green", "owner", string(tx), x, y);
                         scr_event_log("", string(tx));
                     }
