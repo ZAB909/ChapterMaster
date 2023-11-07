@@ -1,7 +1,7 @@
 
 if (instance_number(obj_cuicons)=0){global.custom_icons=4;instance_create(0,0,obj_cuicons);}
 
-global.version="0.8.2.0";
+global.version="0.8.2.2";
 global.game_seed=0;
 global.cheat_req=false;
 global.cheat_gene=false;
