@@ -18,11 +18,11 @@ function scr_apothecary_ground() {
 	        repeat(11){
 	            com+=1;v=0;
 	            if (com<=10) then repeat(300){v+=1;
-	                if (obj_ini.role[com,v]=obj_ini.role[100,15]) and (obj_ini.hp[com,v]>=10) and (obj_ini.loc[com,v]=name) and (obj_ini.wid[com,v]=run) and (obj_ini.gear[com,v]="Narthecium") then apoth+=4;
-	                if (obj_ini.role[com,v]="Sister Hospitaler") and (obj_ini.hp[com,v]>=40) and (obj_ini.loc[com,v]=name) and (obj_ini.wid[com,v]=run) then apoth+=4;
+	                if (obj_ini.role[com][v]=obj_ini.role[100,15]) and (obj_ini.hp[com][v]>=10) and (obj_ini.loc[com][v]=name) and (obj_ini.wid[com][v]=run) and (obj_ini.gear[com][v]="Narthecium") then apoth+=4;
+	                if (obj_ini.role[com][v]="Sister Hospitaler") and (obj_ini.hp[com][v]>=40) and (obj_ini.loc[com][v]=name) and (obj_ini.wid[com][v]=run) then apoth+=4;
                 
-	                if (obj_ini.role[com,v]=obj_ini.role[100,16]) and (obj_ini.hp[com,v]>=10) and (obj_ini.loc[com,v]=name) and ((obj_ini.gear[com,v]="Servo Arms") or (obj_ini.gear[com,v]="Master Servo Arms")){tick+=2;song+=1;}
-	                if (obj_ini.role[com,v]="Techpriest") and (obj_ini.hp[com,v]>=10) and (obj_ini.loc[com,v]=name){tick+=2;song+=1;}
+	                if (obj_ini.role[com][v]=obj_ini.role[100,16]) and (obj_ini.hp[com][v]>=10) and (obj_ini.loc[com][v]=name) and ((obj_ini.gear[com][v]="Servo Arms") or (obj_ini.gear[com][v]="Master Servo Arms")){tick+=2;song+=1;}
+	                if (obj_ini.role[com][v]="Techpriest") and (obj_ini.hp[com][v]>=10) and (obj_ini.loc[com][v]=name){tick+=2;song+=1;}
 	            }
 	            com=0;
 	        }
@@ -110,9 +110,9 @@ function scr_apothecary_ground() {
 	                    v=0;
 	                    repeat(300){
 	                        v+=1;normal_hp=true;
-	                        if (obj_ini.race[com,v]>1) then normal_hp=false;
-	                        if (obj_ini.wid[com,v]=run) and (obj_ini.loc[com,v]=name) and (obj_ini.armour[com,v]!="Dreadnought") and (apoth>0) and (obj_ini.hp[com,v]<=10) and (normal_hp=true){
-	                            obj_ini.hp[com,v]+=heal;apoth-=1;
+	                        if (obj_ini.race[com][v]>1) then normal_hp=false;
+	                        if (obj_ini.wid[com][v]=run) and (obj_ini.loc[com][v]=name) and (obj_ini.armour[com][v]!="Dreadnought") and (apoth>0) and (obj_ini.hp[com][v]<=10) and (normal_hp=true){
+	                            obj_ini.hp[com][v]+=heal;apoth-=1;
 	                        }
 	                    }
 	                }
@@ -125,9 +125,9 @@ function scr_apothecary_ground() {
 	                    v=0;
 	                    repeat(300){
 	                        v+=1;normal_hp=true;
-	                        if (obj_ini.race[com,v]>1) then normal_hp=false;
-	                        if (obj_ini.wid[com,v]=run) and (obj_ini.loc[com,v]=name) and (obj_ini.armour[com,v]!="Dreadnought") and (apoth>0) and (obj_ini.hp[com,v]<=30) and (normal_hp=true){
-	                            obj_ini.hp[com,v]+=heal;apoth-=1;
+	                        if (obj_ini.race[com][v]>1) then normal_hp=false;
+	                        if (obj_ini.wid[com][v]=run) and (obj_ini.loc[com][v]=name) and (obj_ini.armour[com][v]!="Dreadnought") and (apoth>0) and (obj_ini.hp[com][v]<=30) and (normal_hp=true){
+	                            obj_ini.hp[com][v]+=heal;apoth-=1;
 	                        }
 	                    }
 	                }
@@ -140,28 +140,28 @@ function scr_apothecary_ground() {
 	                    v=0;
 	                    repeat(300){
 	                        v+=1;normal_hp=true;
-	                        if (obj_ini.race[com,v]>1) then normal_hp=false;
+	                        if (obj_ini.race[com][v]>1) then normal_hp=false;
                         
                         
-	                        if (obj_ini.role[com,v]!="Chapter Master"){
-	                            if (obj_ini.wid[com,v]=run) and (obj_ini.loc[com,v]=name) and (obj_ini.armour[com,v]!="Dreadnought") and (apoth>0) and (obj_ini.hp[com,v]<100) and (normal_hp=true){
-	                                obj_ini.hp[com,v]+=heal;apoth-=1;
-	                                if (obj_ini.hp[com,v]>100) then obj_ini.hp[com,v]=100;
+	                        if (obj_ini.role[com][v]!="Chapter Master"){
+	                            if (obj_ini.wid[com][v]=run) and (obj_ini.loc[com][v]=name) and (obj_ini.armour[com][v]!="Dreadnought") and (apoth>0) and (obj_ini.hp[com][v]<100) and (normal_hp=true){
+	                                obj_ini.hp[com][v]+=heal;apoth-=1;
+	                                if (obj_ini.hp[com][v]>100) then obj_ini.hp[com][v]=100;
 	                            }
 	                        }
                         
                         
-	                        if (obj_ini.role[com,v]="Chapter Master"){
+	                        if (obj_ini.role[com][v]="Chapter Master"){
 	                            if (string_count("Paragon",string(obj_ini.adv[1])+string(obj_ini.adv[2])+string(obj_ini.adv[3])+string(obj_ini.adv[4]))>0){
-	                                if (obj_ini.wid[com,v]=run) and (obj_ini.loc[com,v]=name) and (obj_ini.armour[com,v]!="Dreadnought") and (apoth>0) and (obj_ini.hp[com,v]<130) and (normal_hp=true){
-	                                    obj_ini.hp[com,v]+=heal;apoth-=1;
-	                                    if (obj_ini.hp[com,v]>130) then obj_ini.hp[com,v]=130;
+	                                if (obj_ini.wid[com][v]=run) and (obj_ini.loc[com][v]=name) and (obj_ini.armour[com][v]!="Dreadnought") and (apoth>0) and (obj_ini.hp[com][v]<130) and (normal_hp=true){
+	                                    obj_ini.hp[com][v]+=heal;apoth-=1;
+	                                    if (obj_ini.hp[com][v]>130) then obj_ini.hp[com][v]=130;
 	                                }
 	                            }
 	                            if (string_count("Paragon",string(obj_ini.adv[1])+string(obj_ini.adv[2])+string(obj_ini.adv[3])+string(obj_ini.adv[4]))=0){
-	                                if (obj_ini.wid[com,v]=run) and (obj_ini.loc[com,v]=name) and (obj_ini.armour[com,v]!="Dreadnought") and (apoth>0) and (obj_ini.hp[com,v]<100) and (normal_hp=true){
-	                                    obj_ini.hp[com,v]+=heal;apoth-=1;
-	                                    if (obj_ini.hp[com,v]>100) then obj_ini.hp[com,v]=100;
+	                                if (obj_ini.wid[com][v]=run) and (obj_ini.loc[com][v]=name) and (obj_ini.armour[com][v]!="Dreadnought") and (apoth>0) and (obj_ini.hp[com][v]<100) and (normal_hp=true){
+	                                    obj_ini.hp[com][v]+=heal;apoth-=1;
+	                                    if (obj_ini.hp[com][v]>100) then obj_ini.hp[com][v]=100;
 	                                }
 	                            }
 	                        }
@@ -183,19 +183,19 @@ function scr_apothecary_ground() {
 	            com=0;v=0;
 	            repeat(300){
 	                v+=1;normal_hp=true;
-	                if (obj_ini.race[com,v]>1) then normal_hp=false;
-	                if (obj_ini.role[com,v]="Skitarii"){normal_hp=false;mixhp=40;}
-	                if (obj_ini.role[com,v]="Techpriest"){normal_hp=false;mixhp=50;}
-	                if (obj_ini.role[com,v]="Crusader"){normal_hp=false;mixhp=30;}
-	                if (obj_ini.role[com,v]="Ranger"){normal_hp=false;mixhp=40;}
-	                if (obj_ini.role[com,v]="Sister of Battle"){normal_hp=false;mixhp=40;}
-	                if (obj_ini.role[com,v]="Sister Hospitaler"){normal_hp=false;mixhp=40;}
-	                if (obj_ini.role[com,v]="Ork Sniper"){normal_hp=false;mixhp=45;}
-	                if (obj_ini.role[com,v]="Flash Git"){normal_hp=false;mixhp=65;}
+	                if (obj_ini.race[com][v]>1) then normal_hp=false;
+	                if (obj_ini.role[com][v]="Skitarii"){normal_hp=false;mixhp=40;}
+	                if (obj_ini.role[com][v]="Techpriest"){normal_hp=false;mixhp=50;}
+	                if (obj_ini.role[com][v]="Crusader"){normal_hp=false;mixhp=30;}
+	                if (obj_ini.role[com][v]="Ranger"){normal_hp=false;mixhp=40;}
+	                if (obj_ini.role[com][v]="Sister of Battle"){normal_hp=false;mixhp=40;}
+	                if (obj_ini.role[com][v]="Sister Hospitaler"){normal_hp=false;mixhp=40;}
+	                if (obj_ini.role[com][v]="Ork Sniper"){normal_hp=false;mixhp=45;}
+	                if (obj_ini.role[com][v]="Flash Git"){normal_hp=false;mixhp=65;}
                 
-	                if (obj_ini.wid[com,v]=run) and (obj_ini.loc[com,v]=name) and (apoth>0) and (obj_ini.hp[com,v]<mixhp) and (normal_hp=false){
-	                    obj_ini.hp[com,v]+=20;apoth-=1;
-	                    if (obj_ini.hp[com,v]>mixhp) then obj_ini.hp[com,v]=mixhp;
+	                if (obj_ini.wid[com][v]=run) and (obj_ini.loc[com][v]=name) and (apoth>0) and (obj_ini.hp[com][v]<mixhp) and (normal_hp=false){
+	                    obj_ini.hp[com][v]+=20;apoth-=1;
+	                    if (obj_ini.hp[com][v]>mixhp) then obj_ini.hp[com][v]=mixhp;
 	                }
 	            }
 	        }
@@ -210,9 +210,9 @@ function scr_apothecary_ground() {
 	                    v=0;
 	                    repeat(300){
 	                        v+=1;
-	                        if (obj_ini.race[com,v]=1) and (obj_ini.wid[com,v]=run) and (obj_ini.loc[com,v]=name) and (string_count("Dread",obj_ini.armour[com,v])>0) and (tick>0) and (obj_ini.hp[com,v]<100){
-	                            obj_ini.hp[com,v]+=repair;tick-=1;
-	                            if (obj_ini.hp[com,v]>100) then obj_ini.hp[com,v]=100;
+	                        if (obj_ini.race[com][v]=1) and (obj_ini.wid[com][v]=run) and (obj_ini.loc[com][v]=name) and (string_count("Dread",obj_ini.armour[com][v])>0) and (tick>0) and (obj_ini.hp[com][v]<100){
+	                            obj_ini.hp[com][v]+=repair;tick-=1;
+	                            if (obj_ini.hp[com][v]>100) then obj_ini.hp[com][v]=100;
 	                        }
 	                    }
 	                }
@@ -225,9 +225,9 @@ function scr_apothecary_ground() {
 	                    v=0;
 	                    repeat(300){
 	                        v+=1;
-	                        if (obj_ini.race[com,v]=1) and (obj_ini.wid[com,v]=run) and (obj_ini.loc[com,v]=name) and (string_count("Dread",obj_ini.armour[com,v])>0) and (tick>0) and (obj_ini.hp[com,v]<100){
-	                            obj_ini.hp[com,v]+=repair;tick-=1;
-	                            if (obj_ini.hp[com,v]>100) then obj_ini.hp[com,v]=100;
+	                        if (obj_ini.race[com][v]=1) and (obj_ini.wid[com][v]=run) and (obj_ini.loc[com][v]=name) and (string_count("Dread",obj_ini.armour[com][v])>0) and (tick>0) and (obj_ini.hp[com][v]<100){
+	                            obj_ini.hp[com][v]+=repair;tick-=1;
+	                            if (obj_ini.hp[com][v]>100) then obj_ini.hp[com][v]=100;
 	                        }
 	                    }
 	                }
@@ -247,9 +247,9 @@ function scr_apothecary_ground() {
 	                    repeat(200){
 	                        v+=1;
                         
-	                        if (obj_ini.veh_race[com,v]=1) and (obj_ini.veh_wid[com,v]=run) and (obj_ini.veh_loc[com,v]=name) and (tick>0) and (obj_ini.veh_hp[com,v]<50){
-	                            obj_ini.veh_hp[com,v]+=10;tick-=1;
-	                            if (obj_ini.veh_hp[com,v]>100) then obj_ini.veh_hp[com,v]=100;
+	                        if (obj_ini.veh_race[com][v]=1) and (obj_ini.veh_wid[com][v]=run) and (obj_ini.veh_loc[com][v]=name) and (tick>0) and (obj_ini.veh_hp[com][v]<50){
+	                            obj_ini.veh_hp[com][v]+=10;tick-=1;
+	                            if (obj_ini.veh_hp[com][v]>100) then obj_ini.veh_hp[com][v]=100;
 	                        }
 	                    }
 	                }
@@ -262,9 +262,9 @@ function scr_apothecary_ground() {
 	                    v=0;
 	                    repeat(200){
 	                        v+=1;
-	                        if (obj_ini.veh_race[com,v]=1) and (obj_ini.veh_wid[com,v]=run) and (obj_ini.veh_loc[com,v]=name) and (tick>0) and (obj_ini.veh_hp[com,v]<100){
-	                            obj_ini.veh_hp[com,v]+=10;tick-=1;
-	                            if (obj_ini.veh_hp[com,v]>100) then obj_ini.veh_hp[com,v]=100;
+	                        if (obj_ini.veh_race[com][v]=1) and (obj_ini.veh_wid[com][v]=run) and (obj_ini.veh_loc[com][v]=name) and (tick>0) and (obj_ini.veh_hp[com][v]<100){
+	                            obj_ini.veh_hp[com][v]+=10;tick-=1;
+	                            if (obj_ini.veh_hp[com][v]>100) then obj_ini.veh_hp[com][v]=100;
 	                        }
 	                    }
 	                }
@@ -277,9 +277,9 @@ function scr_apothecary_ground() {
 	                    v=0;
 	                    repeat(200){
 	                        v+=1;
-	                        if (obj_ini.veh_race[com,v]=1) and (obj_ini.veh_wid[com,v]=run) and (obj_ini.veh_loc[com,v]=name) and (tick>0) and (obj_ini.veh_hp[com,v]<100){
-	                            obj_ini.veh_hp[com,v]+=10;tick-=1;
-	                            if (obj_ini.veh_hp[com,v]>100) then obj_ini.veh_hp[com,v]=100;
+	                        if (obj_ini.veh_race[com][v]=1) and (obj_ini.veh_wid[com][v]=run) and (obj_ini.veh_loc[com][v]=name) and (tick>0) and (obj_ini.veh_hp[com][v]<100){
+	                            obj_ini.veh_hp[com][v]+=10;tick-=1;
+	                            if (obj_ini.veh_hp[com][v]>100) then obj_ini.veh_hp[com][v]=100;
 	                        }
 	                    }
 	                }

@@ -255,12 +255,12 @@ if (apothecary_points>=4) and (apothecary_aspirant==0){
             command+=1;
             marines-=1;
             scr_move_unit_info(marine_company,0, marine_position, g1)
-            obj_ini.role[0,g1]=novice_type;
-            if (obj_ini.gear[0,g1]!=""){
-                scr_add_item(obj_ini.gear[0,g1],1);
-                obj_ini.gear[0,g1]="";
+            obj_ini.role[0][g1]=novice_type;
+            if (obj_ini.gear[0][g1]!=""){
+                scr_add_item(obj_ini.gear[0][g1],1);
+                obj_ini.gear[0][g1]="";
             }
-            if (obj_ini.mobi[0,g1]!=""){scr_add_item(obj_ini.mobi[0,g1],1);obj_ini.mobi[0,g1]="";}
+            if (obj_ini.mobi[0][g1]!=""){scr_add_item(obj_ini.mobi[0][g1],1);obj_ini.mobi[0][g1]="";}
             with(obj_ini){
                 scr_company_order(marine_company);
                 scr_company_order(0);
@@ -379,16 +379,16 @@ if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands")
                 command+=1;
                 marines-=1;
                 scr_move_unit_info(marine_company,0, marine_position, g1);
-                obj_ini.role[0,g1]=novice_type;
-                if (obj_ini.gear[0,g1]!=""){
-                    scr_add_item(obj_ini.gear[0,g1],1);
-                    obj_ini.gear[0,g1]="";
+                obj_ini.role[0][g1]=novice_type;
+                if (obj_ini.gear[0][g1]!=""){
+                    scr_add_item(obj_ini.gear[0][g1],1);
+                    obj_ini.gear[0][g1]="";
                 }
-                if (obj_ini.mobi[0,g1]!=""){
-                    scr_add_item(obj_ini.mobi[0,g1],1);
-                    obj_ini.mobi[0,g1]="";
+                if (obj_ini.mobi[0][g1]!=""){
+                    scr_add_item(obj_ini.mobi[0][g1],1);
+                    obj_ini.mobi[0][g1]="";
                 }
-                scr_alert("green","recruitment",novice_type+string(obj_ini.name[0,g1])+" begins training.",0,0);
+                scr_alert("green","recruitment",novice_type+string(obj_ini.name[0][g1])+" begins training.",0,0);
                 with(obj_ini){
                     scr_company_order(marine_company);
                     scr_company_order(0);
@@ -465,22 +465,22 @@ if (psyker_points>=round(goal/2)) and (psyker_aspirant==0){
             command+=1;
             marines-=1;
 			scr_move_unit_info(marine_company,0, marine_position, g1)
-            obj_ini.role[0,g1]=novice_type;
+            obj_ini.role[0][g1]=novice_type;
             scr_powers_new(0,g1);
             psyker_aspirant=1;
             
-            if (string_count("Abund",obj_ini.strin)>0) then obj_ini.experience[0,g1]+=floor(random(5))+3;
+            if (string_count("Abund",obj_ini.strin)>0) then obj_ini.experience[0][g1]+=floor(random(5))+3;
             
-            obj_ini.mobi[0,g1]=obj_ini.mobi[marine_company,marine_position];
-            if (obj_ini.gear[0,g1]!=""){
-                scr_add_item(obj_ini.gear[0,g1],1);
-                obj_ini.gear[0,g1]="";
+            obj_ini.mobi[0][g1]=obj_ini.mobi[marine_company,marine_position];
+            if (obj_ini.gear[0][g1]!=""){
+                scr_add_item(obj_ini.gear[0][g1],1);
+                obj_ini.gear[0][g1]="";
             }
-            if (obj_ini.mobi[0,g1]!=""){
-                scr_add_item(obj_ini.mobi[0,g1],1);
-                obj_ini.mobi[0,g1]="";
+            if (obj_ini.mobi[0][g1]!=""){
+                scr_add_item(obj_ini.mobi[0][g1],1);
+                obj_ini.mobi[0][g1]="";
             }
-            scr_alert("green","recruitment",obj_ini.TTRPG[0,g1].name_role()+" begins training.",0,0);
+            scr_alert("green","recruitment",obj_ini.TTRPG[0][g1].name_role()+" begins training.",0,0);
             with(obj_ini){
                 scr_company_order(marine_company);
                 scr_company_order(0);
@@ -568,9 +568,9 @@ if (tech_points>=360){
                 warn+=".";
                 scr_alert("red","recruitment","Not enough equipment: "+string(warn),0,0);
             }
-            obj_ini.loc[0,marine_position]=obj_ini.home_name;
-            obj_ini.wid[0,marine_position]=2;
-            obj_ini.lid[0,marine_position]=0;
+            obj_ini.loc[0][marine_position]=obj_ini.home_name;
+            obj_ini.wid[0][marine_position]=2;
+            obj_ini.lid[0][marine_position]=0;
             // TODO Probably want to change this to take into account fleet type chapters- also increase the man_size of that area by +X
             if (global.chapter_name!="Iron Hands") and (obj_ini.bio[0,marine_position]<4) then obj_ini.bio[0,marine_position]=choose(4,5,6);
             if (global.chapter_name=="Iron Hands") and (obj_ini.bio[0,marine_position]<7) then obj_ini.bio[0,marine_position]=choose(7,8);
@@ -598,32 +598,32 @@ if (tech_points>=4) and (tech_aspirant==0){
             command+=1;
             marines-=1;
             scr_move_unit_info(marine_company,0, marine_position, g1);
-            obj_ini.role[0,g1]=obj_ini.role[100,16]+" Aspirant";
+            obj_ini.role[0][g1]=obj_ini.role[100,16]+" Aspirant";
             // Remove from ship
-            if (obj_ini.lid[0,g1]>0){
-                var man_size=scr_unit_size(obj_ini.armour[0,g1],obj_ini.role[0,g1],true);
-                obj_ini.ship_carrying[obj_ini.lid[0,g1]]-=man_size;
+            if (obj_ini.lid[0][g1]>0){
+                var man_size=scr_unit_size(obj_ini.armour[0][g1],obj_ini.role[0][g1],true);
+                obj_ini.ship_carrying[obj_ini.lid[0][g1]]-=man_size;
             }
-            obj_ini.loc[0,g1]="Terra";
-            obj_ini.wid[0,g1]=4;
-            obj_ini.lid[0,g1]=0;
-            if (obj_ini.wep1[0,g1]!="Power Weapon") and (obj_ini.wep1[0,g1]!=""){
-                scr_add_item(obj_ini.wep1[0,g1],1);
-                obj_ini.wep1[0,g1]="";
+            obj_ini.loc[0][g1]="Terra";
+            obj_ini.wid[0][g1]=4;
+            obj_ini.lid[0][g1]=0;
+            if (obj_ini.wep1[0][g1]!="Power Weapon") and (obj_ini.wep1[0][g1]!=""){
+                scr_add_item(obj_ini.wep1[0][g1],1);
+                obj_ini.wep1[0][g1]="";
             }
-            if (obj_ini.wep2[0,g1]!=""){
-                scr_add_item(obj_ini.wep2[0,g1],1);
-                obj_ini.wep2[0,g1]="";
+            if (obj_ini.wep2[0][g1]!=""){
+                scr_add_item(obj_ini.wep2[0][g1],1);
+                obj_ini.wep2[0][g1]="";
             }
-            if (obj_ini.gear[0,g1]!=""){
-                scr_add_item(obj_ini.gear[0,g1],1);
-                obj_ini.gear[0,g1]="";
+            if (obj_ini.gear[0][g1]!=""){
+                scr_add_item(obj_ini.gear[0][g1],1);
+                obj_ini.gear[0][g1]="";
             }
-            if (obj_ini.mobi[0,g1]!=""){
-                scr_add_item(obj_ini.mobi[0,g1],1);
-                obj_ini.mobi[0,g1]="";
+            if (obj_ini.mobi[0][g1]!=""){
+                scr_add_item(obj_ini.mobi[0][g1],1);
+                obj_ini.mobi[0][g1]="";
             }
-            scr_alert("green","recruitment",string(obj_ini.role[100,16])+" Aspirant "+string(obj_ini.name[0,g1])+" journeys to Mars.",0,0);
+            scr_alert("green","recruitment",string(obj_ini.role[100,16])+" Aspirant "+string(obj_ini.name[0][g1])+" journeys to Mars.",0,0);
             with(obj_ini){
                 scr_company_order(marine_company);
                 scr_company_order(0);

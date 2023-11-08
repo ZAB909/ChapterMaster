@@ -2874,15 +2874,15 @@ if (action_if_number(obj_saveload, 0, 0) &&
 
                                 if (managing<=10){
                                     loc[managing,q]=sh_name[sel];
-                                    obj_ini.lid[managing,ide[q]]=sh_ide[sel];
-                                    obj_ini.wid[managing,ide[q]]=0;
-                                    obj_ini.uid[managing,ide[q]]=sel_uid;
+                                    obj_ini.lid[managing][ide[q]]=sh_ide[sel];
+                                    obj_ini.wid[managing][ide[q]]=0;
+                                    obj_ini.uid[managing][ide[q]]=sel_uid;
                                 }
                                 if (managing>10){
                                     loc[0,q]=sh_name[sel];
-                                    obj_ini.lid[0,ide[q]]=sh_ide[sel];
-                                    obj_ini.wid[0,ide[q]]=0;
-                                    obj_ini.uid[0,ide[q]]=sel_uid;
+                                    obj_ini.lid[0][ide[q]]=sh_ide[sel];
+                                    obj_ini.wid[0][ide[q]]=0;
+                                    obj_ini.uid[0][ide[q]]=sel_uid;
                                 }
                             }
                         }
@@ -2897,14 +2897,14 @@ if (action_if_number(obj_saveload, 0, 0) &&
                                 veh_loc[managing,q]=sh_name[sel];
 
                                 if (managing<=10){
-                                    obj_ini.veh_lid[managing,ide[q]]=sh_ide[sel];
-                                    obj_ini.veh_wid[managing,ide[q]]=0;
-                                    obj_ini.veh_uid[managing,ide[q]]=sel_uid;
+                                    obj_ini.veh_lid[managing][ide[q]]=sh_ide[sel];
+                                    obj_ini.veh_wid[managing][ide[q]]=0;
+                                    obj_ini.veh_uid[managing][ide[q]]=sel_uid;
                                 }
                                 if (managing>10){
-                                    obj_ini.veh_lid[0,ide[q]]=sh_ide[sel];
-                                    obj_ini.veh_wid[0,ide[q]]=0;
-                                    obj_ini.veh_uid[0,ide[q]]=sel_uid;
+                                    obj_ini.veh_lid[0][ide[q]]=sh_ide[sel];
+                                    obj_ini.veh_wid[0][ide[q]]=0;
+                                    obj_ini.veh_uid[0][ide[q]]=sel_uid;
                                 }
                             }
                         }

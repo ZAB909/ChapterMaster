@@ -63,7 +63,7 @@ repeat(11){co+=1;i=0;
             if (obj_ini.veh_role[co,i]="Predator") then l_predators+=1;
             if (obj_ini.veh_role[co,i]="Land Raider") then l_raiders+=1;
         }}
-        if (obj_ini.loc[co,i]=p_target.name) and (obj_ini.wid[co,i]=obj_controller.selecting_planet){
+        if (obj_ini.loc[co,i]=p_target.name) and (obj_ini.wid[co][i]=obj_controller.selecting_planet){
             if ((attack=0) and (string_count("Bike",obj_ini.role[co,i])=0)) or (attack=1){
                 if (obj_ini.role[co,i]="Chapter Master") then l_master+=1;
                 if (obj_ini.role[co,i]=obj_ini.role[100,2]) then l_honor+=1;
