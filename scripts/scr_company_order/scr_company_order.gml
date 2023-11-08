@@ -96,8 +96,8 @@ function scr_company_order(company) {
 		"Standard Bearer",
 		obj_ini.role[100,7],
 		"Death Company",
-		role[100,19],
-		role[100,18],		
+		role[100][19],
+		role[100][18],		
 		role[100,4],
 		role[100,3],
 		role[100,8],
@@ -153,17 +153,17 @@ function scr_company_order(company) {
 			}
 			//if no new sergeants are found for squad someon gets promoted
 			//find a new_sergeant 
-			if (struct_exists(squad.required, role[100,18])){
-				if (squad.required[$ role[100,18]] > 0){
+			if (struct_exists(squad.required, role[100][18])){
+				if (squad.required[$ role[100][18]] > 0){
 					squad.new_sergeant();
-					squad.required[$ role[100,18]]--;
+					squad.required[$ role[100][18]]--;
 				}
 			}
 			//find a new veteran sergeant 
-			if (struct_exists(squad.required, role[100,19])){
-				if (squad.required[$ role[100,19]] > 0){
+			if (struct_exists(squad.required, role[100][19])){
+				if (squad.required[$ role[100][19]] > 0){
 					squad.new_sergeant(true);
-					squad.required[$ role[100,19]]--;
+					squad.required[$ role[100][19]]--;
 				}
 			}		
 		}

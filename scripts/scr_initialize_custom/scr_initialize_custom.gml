@@ -929,7 +929,7 @@ function scr_initialize_custom() {
 				["display_name" , "Command Squad"]
 			],
 			"terminator_squad": [
-				[role[100,19], {"max":1,"min":1, "role":"Veteran Sergeant Terminator"}],			//Veteran sergeant terminator
+				[role[100][19], {"max":1,"min":1, "role":"Veteran Sergeant Terminator"}],			//Veteran sergeant terminator
 				[role[100,4], {"max":9,"min":3,"loadout":{//terminator
 					"required":{
 						"wep1":[wep1[100,4],4],
@@ -969,7 +969,7 @@ function scr_initialize_custom() {
 						]
 					} 
 				}}],		//veterans
-				[role[100,19], {"max":1,"min":1}],
+				[role[100][19], {"max":1,"min":1}],
 				["display_name" , "Veteran Squad"]
 			],
 			"devestator_squad": [
@@ -978,7 +978,7 @@ function scr_initialize_custom() {
 						"wep1":["Bolter",4], 
 						"wep2":["Combat Knife",4]
 					}}}],		//veterans
-				[role[100,18], {"max":1,"min":1, "role":"Devestator Sergeant"}],//sergeant
+				[role[100][18], {"max":1,"min":1, "role":"Devestator Sergeant"}],//sergeant
 				["display_name" , "Devestator Squad"]
 			],				
 			"tactical_squad":[
@@ -1000,7 +1000,7 @@ function scr_initialize_custom() {
 						]
 					} 
 				}}],		//tactical marine
-				[role[100,18], {"max":1,"min":1, "role":"Tactical Sergeant"}],		// sergeant
+				[role[100][18], {"max":1,"min":1, "role":"Tactical Sergeant"}],		// sergeant
 				["display_name" , "Tactical Squad"]
 			],
 			"assault_squad" : [
@@ -1023,7 +1023,7 @@ function scr_initialize_custom() {
 					}
 				}
 			],
-			[role[100,18], {"max":1,"min":1, "role":"Assualt Sergeant"}],		// sergeant
+			[role[100][18], {"max":1,"min":1, "role":"Assualt Sergeant"}],		// sergeant
 			["display_name" , "Tactical Squad"]
 		]		
 	};
@@ -1046,7 +1046,7 @@ function scr_initialize_custom() {
                         ],
                     } 
                 }}],       
-                [role[100,18],{"max":1,"min":1,  //sergeant
+                [role[100][18],{"max":1,"min":1,  //sergeant
 					"loadout":{
                 		 "required":{
 							"wep1":["Bolt Pistol",0], 
@@ -1084,7 +1084,7 @@ function scr_initialize_custom() {
 		}
 	}
 	],       
-	[role[100,18],{"max":1,"min":1, 
+	[role[100][18],{"max":1,"min":1, 
 		"loadout":{ //sergeant
 			"required":{
 					"mobi":["Bike",1]
@@ -1120,7 +1120,7 @@ function scr_initialize_custom() {
                         ]
                     } 
                 }}],   
-                [role[100,18], {"max":1,"min":1, "role":"Tactical Sergeant"}],        // sergeant
+                [role[100][18], {"max":1,"min":1, "role":"Tactical Sergeant"}],        // sergeant
                 ["display_name" , "Tactical Squad"]
             ])
 	}

@@ -1742,7 +1742,7 @@ function scr_ui_manage() {
 		        			unit_data_string += $"He is {selected_unit.age()}, first becoming a marine in {selected_unit.marine_ascension}#"
 		        		}
 
-		        		if (array_contains([obj_ini.role[100,18], obj_ini.role[100,19]], selected_unit.role())){
+		        		if (array_contains([obj_ini.role[100][18], obj_ini.role[100][19]], selected_unit.role())){
 		        			unit_data_string +="#";
 		        			if (selected_unit.charisma < 25){
 		        				unit_data_string+= "He is generally disliked by the members of his squad.";

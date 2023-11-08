@@ -238,7 +238,7 @@ if (apothecary_points>=48){
 }
 recruit_count=0;
 if (apothecary_points>=4) and (apothecary_aspirant==0){
-    random_marine=scr_random_marine([obj_ini.role[100,8],obj_ini.role[100,18],obj_ini.role[100,10],obj_ini.role[100,9]],60);
+    random_marine=scr_random_marine([obj_ini.role[100,8],obj_ini.role[100][18],obj_ini.role[100,10],obj_ini.role[100,9]],60);
     if (random_marine != "none"){
         marine_position=random_marine[1];
         marine_company=random_marine[0];
@@ -363,7 +363,7 @@ if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands")
     }
     if (chaplain_points>=4) and (chaplain_aspirant==0){    
         marine_company=0;
-        random_marine=scr_random_marine([obj_ini.role[100,8],obj_ini.role[100,18],obj_ini.role[100,10],obj_ini.role[100,9]],60);
+        random_marine=scr_random_marine([obj_ini.role[100,8],obj_ini.role[100][18],obj_ini.role[100,10],obj_ini.role[100,9]],60);
         if (random_marine != "none"){
             marine_position = random_marine[1];
             marine_company = random_marine[0];
@@ -447,7 +447,7 @@ if (psyker_points>=round(goal/2)) and (psyker_aspirant==0){
     marine_position=0;
     marine_company=0;
 
-    random_marine=scr_random_marine([obj_ini.role[100,8], obj_ini.role[100,18], obj_ini.role[100,9], obj_ini.role[100,10]],30, {"stat":[["psionic", 8, "more"]]});
+    random_marine=scr_random_marine([obj_ini.role[100,8], obj_ini.role[100][18], obj_ini.role[100,9], obj_ini.role[100,10]],30, {"stat":[["psionic", 8, "more"]]});
     if (random_marine == "none"){
         training_psyker=0;
         scr_alert("red","recruitment","No remaining warp sensitive marines for training",0,0);
@@ -583,7 +583,7 @@ if (tech_points>=4) and (tech_aspirant==0){
     marine_position=0;
     marine_company=0;
     var search_conditions = {"stat":[["technology", 35, "more"]]}
-    random_marine=scr_random_marine([obj_ini.role[100,8],obj_ini.role[100,18],obj_ini.role[100,10],obj_ini.role[100,9]],30);
+    random_marine=scr_random_marine([obj_ini.role[100,8],obj_ini.role[100][18],obj_ini.role[100,10],obj_ini.role[100,9]],30);
     if (random_marine != "none"){
         marine_position = random_marine[1];
         marine_company = random_marine[0];

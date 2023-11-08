@@ -25,7 +25,7 @@ function create_squad(squad_type, company, squad_loadout = true){
 	squad = new unit_squad(squad_type);
 	squad.base_company = company;
 	var sergeant_found = false;
-	var sgt_types = [obj_ini.role[100,18], obj_ini.role[100,19]]
+	var sgt_types = [obj_ini.role[100][18], obj_ini.role[100][19]]
 	//if squad has sergeants in find out if there are any available sergeants
 	for (var s = 0; s< 2;s++){
 		if (struct_exists(squad_fulfilment ,sgt_types[s])){
@@ -51,7 +51,7 @@ function create_squad(squad_type, company, squad_loadout = true){
 		if ((obj_ini.name[company][i] =="") or (unit.base_group=="none")) then continue;
 		if (unit.squad== "none") and (array_contains(squad_unit_types, unit.role())){
 			//if no sergeant found add one marine to standard marine selection so that a marine can be promoted
-			if ((struct_exists(squad_fulfilment ,obj_ini.role[100,18])) or (struct_exists(squad_fulfilment ,obj_ini.role[100,19]))) and (sergeant_found == false){
+			if ((struct_exists(squad_fulfilment ,obj_ini.role[100][18])) or (struct_exists(squad_fulfilment ,obj_ini.role[100][19]))) and (sergeant_found == false){
 				if (squad_fulfilment[$ unit.role()]< (fill_squad[$ unit.role()][$ "max"] + 1)){
 					squad_fulfilment[$ unit.role()]++;
 					array_push(squad.members, [unit.company, unit.marine_number]);	
@@ -261,9 +261,9 @@ function unit_squad(squad_type) constructor{
 			if (exp_unit.name() != ""){
 				var new_role;
 				if (veteran == true){
-					new_role = obj_ini.role[100,19];
+					new_role = obj_ini.role[100][19];
 				} else{
-					new_role= obj_ini.role[100,18];
+					new_role= obj_ini.role[100][18];
 				}
 				exp_unit.update_role(new_role);
 				if (irandom(1) == 0){
