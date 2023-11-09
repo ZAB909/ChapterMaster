@@ -18,10 +18,10 @@ function scr_apothecary_ground() {
 	        repeat(11){
 	            com+=1;v=0;
 	            if (com<=10) then repeat(300){v+=1;
-	                if (obj_ini.role[com][v]=obj_ini.role[100,15]) and (obj_ini.hp[com][v]>=10) and (obj_ini.loc[com][v]=name) and (obj_ini.wid[com][v]=run) and (obj_ini.gear[com][v]="Narthecium") then apoth+=4;
+	                if (obj_ini.role[com][v]=obj_ini.role[100][15]) and (obj_ini.hp[com][v]>=10) and (obj_ini.loc[com][v]=name) and (obj_ini.wid[com][v]=run) and (obj_ini.gear[com][v]="Narthecium") then apoth+=4;
 	                if (obj_ini.role[com][v]="Sister Hospitaler") and (obj_ini.hp[com][v]>=40) and (obj_ini.loc[com][v]=name) and (obj_ini.wid[com][v]=run) then apoth+=4;
                 
-	                if (obj_ini.role[com][v]=obj_ini.role[100,16]) and (obj_ini.hp[com][v]>=10) and (obj_ini.loc[com][v]=name) and ((obj_ini.gear[com][v]="Servo Arms") or (obj_ini.gear[com][v]="Master Servo Arms")){tick+=2;song+=1;}
+	                if (obj_ini.role[com][v]=obj_ini.role[100][16]) and (obj_ini.hp[com][v]>=10) and (obj_ini.loc[com][v]=name) and ((obj_ini.gear[com][v]="Servo Arms") or (obj_ini.gear[com][v]="Master Servo Arms")){tick+=2;song+=1;}
 	                if (obj_ini.role[com][v]="Techpriest") and (obj_ini.hp[com][v]>=10) and (obj_ini.loc[com][v]=name){tick+=2;song+=1;}
 	            }
 	            com=0;
@@ -94,7 +94,7 @@ function scr_apothecary_ground() {
                     
 	                    flit.capital[1]=obj_ini.ship[last_ship];flit.capital_number=1;flit.capital_num[1]=last_ship;flit.capital_uid[1]=obj_ini.ship_uid[last_ship];
                     
-	                    scr_popup("Ancient Ship Restored","The ancient ship within the ruins of "+string(locy)+" has been fully repaired.  It determined to be a Slaughtersong vessel and is bristling with golden age weaponry and armour.  Your "+string(obj_ini.role[100,16])+"s are excited; the Slaughtersong is ready for it's maiden voyage, at your command.","","");                
+	                    scr_popup("Ancient Ship Restored","The ancient ship within the ruins of "+string(locy)+" has been fully repaired.  It determined to be a Slaughtersong vessel and is bristling with golden age weaponry and armour.  Your "+string(obj_ini.role[100][16])+"s are excited; the Slaughtersong is ready for it's maiden voyage, at your command.","","");                
 	                }
 	            }
 	        }

@@ -462,8 +462,8 @@ if (image="mechanicus") and (title="Mechanicus Mission") or (title="Mechanicus M
                     if (that2>0){
                         if (string_count("raider",mission)>0){
                             tempy.p_problem[that,that2]="mech_raider!0!";
-                            text="The Adeptus Mechanicus await your forces at "+string(tempy.name)+" "+scr_roman(that)+".  They are expecting six "+string(obj_ini.role[100,16])+"s and a Land Raider.";
-                            scr_event_log("","Mechanicus Mission Accepted: Six of your "+string(obj_ini.role[100,16])+"s and a Land Raider are to be stationed at "+string(tempy.name)+" "+scr_roman(that)+" for 24 months."); 
+                            text="The Adeptus Mechanicus await your forces at "+string(tempy.name)+" "+scr_roman(that)+".  They are expecting six "+string(obj_ini.role[100][16])+"s and a Land Raider.";
+                            scr_event_log("","Mechanicus Mission Accepted: Six of your "+string(obj_ini.role[100][16])+"s and a Land Raider are to be stationed at "+string(tempy.name)+" "+scr_roman(that)+" for 24 months."); 
                         }
                         if (string_count("bionics",mission)>0){
                             tempy.p_problem[that,that2]="mech_bionics!0!";
@@ -472,8 +472,8 @@ if (image="mechanicus") and (title="Mechanicus Mission") or (title="Mechanicus M
                         }
                         if (string_count("mars",mission)>0){
                             tempy.p_problem[that,that2]="mech_mars";
-                            text="The Adeptus Mechanicus await your "+string(obj_ini.role[100,16])+"s at "+string(tempy.name)+" "+scr_roman(that)+".  They are willing to hold on the voyage for up to 12 months.";
-                            scr_event_log("","Mechanicus Mission Accepted: "+string(obj_ini.role[100,16])+"s are expected at "+string(tempy.name)+" "+scr_roman(that)+" within 12 months, for the voyage to Mars."); 
+                            text="The Adeptus Mechanicus await your "+string(obj_ini.role[100][16])+"s at "+string(tempy.name)+" "+scr_roman(that)+".  They are willing to hold on the voyage for up to 12 months.";
+                            scr_event_log("","Mechanicus Mission Accepted: "+string(obj_ini.role[100][16])+"s are expected at "+string(tempy.name)+" "+scr_roman(that)+" within 12 months, for the voyage to Mars."); 
                         }
                         instance_create(tempy.x+16,tempy.y-24,obj_star_event);
                         tempy.p_timer[that,that2]=49;if (string_count("mars",mission)>0) then tempy.p_timer[that,that2]=13;

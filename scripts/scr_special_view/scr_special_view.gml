@@ -99,7 +99,7 @@ function scr_special_view(command_group) {
 			unit = obj_ini.TTRPG[0,v];	    	
 			var yep=0;
 			if (unit.base_group!="astartes") and (unit.base_group!="none"){yep=1;}
-			if ((unit.role()=="Chapter Master") or (unit.role()==obj_ini.role[100,2])){yep=1;}
+			if ((unit.role()=="Chapter Master") or (unit.role()==obj_ini.role[100][2])){yep=1;}
 			if (yep==1){
 				b+=1;
 		        mans+=1;
@@ -115,12 +115,12 @@ function scr_special_view(command_group) {
 		        var ham=obj_ini.lid[0,v];
 		        if (obj_ini.ship_location[ham]=="Lost") then continue
 		    }
-		    var apoth_roles = ["Master of the Apothecarion", obj_ini.role[100,15], string("{0} Aspirant",obj_ini.role[100,15])]
+		    var apoth_roles = ["Master of the Apothecarion", obj_ini.role[100][15], string("{0} Aspirant",obj_ini.role[100][15])]
 		    if (array_contains(apoth_roles ,obj_ini.role[0,v])){
 		        b+=1;
 		        mans+=1;
 		        special_mar_data_fill(v, b);
-		        if (obj_ini.role[0,v]=obj_ini.role[100,15]) then ma_promote[b]=1;
+		        if (obj_ini.role[0,v]=obj_ini.role[100][15]) then ma_promote[b]=1;
 		    }
 		}
 	}
@@ -164,12 +164,12 @@ function scr_special_view(command_group) {
 			    	b+=1;
 			        mans+=1;
 			        special_mar_data_fill(v, b);
-			        if (obj_ini.role[0,v]=obj_ini.role[100,14]) then ma_promote[b]=1;
-			    }else if ((obj_ini.role[0,v]==obj_ini.role[100,14]) or (obj_ini.role[0,v]==string("{0} Aspirant",obj_ini.role[100,14]))) and (global.chapter_name!="Iron Hands"){
+			        if (obj_ini.role[0,v]=obj_ini.role[100][14]) then ma_promote[b]=1;
+			    }else if ((obj_ini.role[0,v]==obj_ini.role[100][14]) or (obj_ini.role[0,v]==string("{0} Aspirant",obj_ini.role[100][14]))) and (global.chapter_name!="Iron Hands"){
 			    	b+=1;
 			        mans+=1;
 			        special_mar_data_fill(v, b);
-			        if (obj_ini.role[0,v]=obj_ini.role[100,14]) then ma_promote[b]=1;
+			        if (obj_ini.role[0,v]=obj_ini.role[100][14]) then ma_promote[b]=1;
 			    }
 			}
 		}
@@ -184,8 +184,8 @@ function scr_special_view(command_group) {
 		        var ham=obj_ini.lid[0,v];
 		        if (obj_ini.ship_location[ham]=="Lost") then bad=1;
 		    }
-		    if ((obj_ini.role[0,v] == "Forge Master") or (obj_ini.role[0,v]=obj_ini.role[100,16]) 
-		    or (obj_ini.role[0,v]=string("{0} Aspirant",obj_ini.role[100,16])) or (obj_ini.role[0,v]="Techpriest")) and (bad=0){
+		    if ((obj_ini.role[0,v] == "Forge Master") or (obj_ini.role[0,v]=obj_ini.role[100][16]) 
+		    or (obj_ini.role[0,v]=string("{0} Aspirant",obj_ini.role[100][16])) or (obj_ini.role[0,v]="Techpriest")) and (bad=0){
 		        b+=1;
 		        mans+=1;
 		        special_mar_data_fill(v, b);
@@ -257,10 +257,10 @@ function scr_special_view(command_group) {
 	        // Squads
 	        if (squads>0){
 	            var n=1;
-	            if (squad_typ==obj_ini.role[100,15]) then n=0;
-	            if (squad_typ==obj_ini.role[100,14]) then n=0;
+	            if (squad_typ==obj_ini.role[100][15]) then n=0;
+	            if (squad_typ==obj_ini.role[100][14]) then n=0;
 	            if (squad_typ==obj_ini.role[100,17]) then n=0;
-	            if (squad_typ=obj_ini.role[100,16]) then n=0;
+	            if (squad_typ=obj_ini.role[100][16]) then n=0;
 	            if (squad_typ="Codiciery") then n=0;
 	            if (squad_typ="Lexicanum") then n=0;
 	            if (squad_typ=ma_role[i]) then n=0;
@@ -275,7 +275,7 @@ function scr_special_view(command_group) {
 
 	            if (squad_members+1>10) then n=1;
 	            if ((ma_wid[i]+(ma_lid[i]/100))!=squad_loc) then n=1;
-	            if (squad_typ==obj_ini.role[100,6]) then n=2;
+	            if (squad_typ==obj_ini.role[100][6]) then n=2;
 
 	            if (n==0){
 	            	squad_members+=1;

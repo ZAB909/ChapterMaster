@@ -4,8 +4,8 @@ function scr_start_load(fleet, load_from_star, load_options) {
 
     // this distributes the marines and vehicles to the correct ships if the chapter is fleet-based or a home-based chapter
 	var vet_count, scout_count, _unit, _comp, vet_list, vet_check,scout_list, scout_check, _marine;
-	var vet_role = obj_ini.role[100,3];
-	var scout_role = obj_ini.role[100,12];
+	var vet_role = obj_ini.role[100][3];
+	var scout_role = obj_ini.role[100][12];
 	var escort_load = load_options[0];
 	var split_scouts = load_options[1];
 	var split_vets = load_options[2];

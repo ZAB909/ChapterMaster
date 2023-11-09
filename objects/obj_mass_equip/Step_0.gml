@@ -23,11 +23,11 @@ if (engage=true){
                         if (obj_ini.armour[co,i]="Artificer Armour") then yes=true;
                         
                         if (co=1) and ((obj_ini.armour[co,i]="Terminator Armour") or (obj_ini.armour[co,i]="Tartaros")){
-                            if (obj_ini.role[co,i]=obj_ini.role[100,3]) then yes=true;
-                            if (obj_ini.role[co,i]=obj_ini.role[100,5]) then yes=true;
-                            if (obj_ini.role[co,i]=obj_ini.role[100,14]) then yes=true;
-                            if (obj_ini.role[co,i]=obj_ini.role[100,15]) then yes=true;
-                            if (obj_ini.role[co,i]=obj_ini.role[100,16]) then yes=true;
+                            if (obj_ini.role[co,i]=obj_ini.role[100][3]) then yes=true;
+                            if (obj_ini.role[co,i]=obj_ini.role[100][5]) then yes=true;
+                            if (obj_ini.role[co,i]=obj_ini.role[100][14]) then yes=true;
+                            if (obj_ini.role[co,i]=obj_ini.role[100][15]) then yes=true;
+                            if (obj_ini.role[co,i]=obj_ini.role[100][16]) then yes=true;
                             if (obj_ini.role[co,i]=obj_ini.role[100,17]) then yes=true;
                             if (obj_ini.role[co,i]="Lexicanum") then yes=true;
                             if (obj_ini.role[co,i]="Codiciery") then yes=true;

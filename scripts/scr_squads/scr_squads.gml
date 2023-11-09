@@ -65,7 +65,7 @@ function create_squad(squad_type, company, squad_loadout = true){
 	}
 	//if a new sergeant is needed find the marine with the highest experience in the squad 
 	//(which if everything works right should be a marine with the old_guard, seasoned, or ancient trait)
-	/*and ((squad_fulfilment[$ obj_ini.role[100,8]] > 4)or (squad_fulfilment[$ obj_ini.role[100,10]] > 4) or (squad_fulfilment[$ obj_ini.role[100,9]] > 4)or (squad_fulfilment[$ obj_ini.role[100,3]] > 4) )*/
+	/*and ((squad_fulfilment[$ obj_ini.role[100][8]] > 4)or (squad_fulfilment[$ obj_ini.role[100][10]] > 4) or (squad_fulfilment[$ obj_ini.role[100][9]] > 4)or (squad_fulfilment[$ obj_ini.role[100][3]] > 4) )*/
 	for (var s = 0; s< 2;s++){
 		if (struct_exists(squad_fulfilment ,sgt_types[s])) and (!sergeant_found){
 			var highest_exp = 0;

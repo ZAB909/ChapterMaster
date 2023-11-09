@@ -884,18 +884,18 @@ function scr_initialize_custom() {
 		//value 1 = mean, value 10 = sd
 	company_spawn_buffs = [0,[130,10],[110,10],[105,10],[95,10],[80,15],[65,5],[55,5],[45,5],[35,5],[3,4]]
 	role_spawn_buffs = {}
-	variable_struct_set(role_spawn_buffs,role[100,5],[70,40]);
-	variable_struct_set(role_spawn_buffs,role[100,4],[30,10]);
-	variable_struct_set(role_spawn_buffs,role[100,3],[10,5]);
-	variable_struct_set(role_spawn_buffs,role[100,14],[60,30]);
-	variable_struct_set(role_spawn_buffs,role[100,15],[95,20]);
-	variable_struct_set(role_spawn_buffs,role[100,16],[95,20]);
+	variable_struct_set(role_spawn_buffs,role[100][5],[70,40]);
+	variable_struct_set(role_spawn_buffs,role[100][4],[30,10]);
+	variable_struct_set(role_spawn_buffs,role[100][3],[10,5]);
+	variable_struct_set(role_spawn_buffs,role[100][14],[60,30]);
+	variable_struct_set(role_spawn_buffs,role[100][15],[95,20]);
+	variable_struct_set(role_spawn_buffs,role[100][16],[95,20]);
 	variable_struct_set(role_spawn_buffs,"Standard Bearer",[30,30]);
-	variable_struct_set(role_spawn_buffs,role[100,7],[40,5]);
-	variable_struct_set(role_spawn_buffs,role[100,8],[3,5]);
-	variable_struct_set(role_spawn_buffs,role[100,10],0);
-	variable_struct_set(role_spawn_buffs,role[100,9],0);
-	variable_struct_set(role_spawn_buffs,role[100,12],0);
+	variable_struct_set(role_spawn_buffs,role[100][7],[40,5]);
+	variable_struct_set(role_spawn_buffs,role[100][8],[3,5]);
+	variable_struct_set(role_spawn_buffs,role[100][10],0);
+	variable_struct_set(role_spawn_buffs,role[100][9],0);
+	variable_struct_set(role_spawn_buffs,role[100][12],0);
 	
 
 	/*
@@ -920,17 +920,17 @@ function scr_initialize_custom() {
 	squad_types = {};
 	var st = { 
 		"command_squad" :[
-				[role[100,5], {"max":1,"min":1}],		//captain
-				[role[100,7], {"max":1,"min":1}],		//company_champion
-				[role[100,15], {"max":1,"min":1, "role":"Company Apothecary"}],		//Apothecary
-				[role[100,14], {"max":1,"min":0, "role":"Company Chaplain"}],		//chaplain
+				[role[100][5], {"max":1,"min":1}],		//captain
+				[role[100][7], {"max":1,"min":1}],		//company_champion
+				[role[100][15], {"max":1,"min":1, "role":"Company Apothecary"}],		//Apothecary
+				[role[100][14], {"max":1,"min":0, "role":"Company Chaplain"}],		//chaplain
 				["Standard Bearer" , {"max":1,"min":1}],//standard bearer
-				[role[100,3] , {"max":5,"min":0, "role":"Company Command Veteran"}],		//veterans
+				[role[100][3] , {"max":5,"min":0, "role":"Company Command Veteran"}],		//veterans
 				["display_name" , "Command Squad"]
 			],
 			"terminator_squad": [
 				[role[100][19], {"max":1,"min":1, "role":"Veteran Sergeant Terminator"}],			//Veteran sergeant terminator
-				[role[100,4], {"max":9,"min":3,"loadout":{//terminator
+				[role[100][4], {"max":9,"min":3,"loadout":{//terminator
 					"required":{
 						"wep1":[wep1[100,4],4],
 						"wep2":[wep2[100,4],4], 
@@ -950,7 +950,7 @@ function scr_initialize_custom() {
 				["display_name" , "Terminator Squad"]
 			],
 			"veteran_squad": [
-				[role[100,3], {"max":9,"min":4, "loadout":{//tactical marine
+				[role[100][3], {"max":9,"min":4, "loadout":{//tactical marine
 					"required":{
 						"wep1":[wep1[100,3],4],
 						"wep2":[wep2[100,3],4], 
@@ -973,7 +973,7 @@ function scr_initialize_custom() {
 				["display_name" , "Veteran Squad"]
 			],
 			"devestator_squad": [
-				[role[100,9], {"max":9,"min":4,"loadout":{//devestator
+				[role[100][9], {"max":9,"min":4,"loadout":{//devestator
 					"required":{
 						"wep1":["Bolter",4], 
 						"wep2":["Combat Knife",4]
@@ -982,7 +982,7 @@ function scr_initialize_custom() {
 				["display_name" , "Devestator Squad"]
 			],				
 			"tactical_squad":[
-				[role[100,8], {"max":9,"min":4, "loadout":{//tactical marine
+				[role[100][8], {"max":9,"min":4, "loadout":{//tactical marine
 					"required":{
 						"wep1":[wep1[100,8],4], 
 						"wep2":[wep2[100,8],4]
@@ -1004,7 +1004,7 @@ function scr_initialize_custom() {
 				["display_name" , "Tactical Squad"]
 			],
 			"assault_squad" : [
-				[role[100,10] , {
+				[role[100][10] , {
 					"max":9, 
 					"min":4, 
 					"loadout":{
@@ -1029,7 +1029,7 @@ function scr_initialize_custom() {
 	};
 	if (global.chapter_name="Salamanders"){ //salamanders squads
 		variable_struct_set(st , "assault_squad",[
-                [role[100,10], {"max":9,"min":4, "loadout":{//assault_marine
+                [role[100][10], {"max":9,"min":4, "loadout":{//assault_marine
                     "required":{
 							"wep1": [wep1[100,10],4],
 							"wep2": [wep2[100,10],4], 
@@ -1065,7 +1065,7 @@ function scr_initialize_custom() {
 	}
 	if (global.chapter_name == "White Scars"){
 		variable_struct_set(st , "bikers",[
-		[role[100,8], {"max":9,"min":4, "loadout":{ //tactical marine
+		[role[100][8], {"max":9,"min":4, "loadout":{ //tactical marine
 			"required":{
 				"wep1": [wep1[100,8],4],
 				"wep2": [wep2[100,8],4], 
@@ -1104,7 +1104,7 @@ function scr_initialize_custom() {
 	["display_name" , "Tactical Bike Squad"]
 	])
 	variable_struct_set(st , "tactical_squad",[
-                [role[100,8], {"max":9,"min":4, "loadout":{//tactical marine
+                [role[100][8], {"max":9,"min":4, "loadout":{//tactical marine
                     "required":{
 						"wep1": [wep1[100,8],4],
 						"wep2": [wep2[100,8],4], 
@@ -1376,7 +1376,7 @@ function scr_initialize_custom() {
 		TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	    race[company][k]=1;
 	    loc[company][k]=home_name;
-	    role[company][k]=role[100,16];
+	    role[company][k]=role[100][16];
 	    wep1[company][k]=wep1[101,16];
 	    name[company][k]=scr_marine_name();
 	    wep2[company][k]=wep2[101,16];
@@ -1475,7 +1475,7 @@ function scr_initialize_custom() {
 		TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	    race[company][k]=1;
 	    loc[company][k]=home_name;
-	    role[company][k]=role[100,15];
+	    role[company][k]=role[100][15];
 	    wep1[company][k]=wep1[101,15];
 	    name[company][k]=scr_marine_name();
 	    wep2[company][k]=wep2[101,15];
@@ -1503,7 +1503,7 @@ function scr_initialize_custom() {
 		TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	    race[company][k]=1;
 	    loc[company][k]=home_name;
-	    role[company][k]=role[100,2];
+	    role[company][k]=role[100][2];
 	    name[company][k]=scr_marine_name();
 	    gear[company][k]=gear[100,2];
 	    mobi[company][k]=mobi[100,2];
@@ -1556,7 +1556,7 @@ function scr_initialize_custom() {
 	    TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	    race[company][k]=1;
 	    loc[company][k]=home_name;
-	    role[company][k]=role[100,5];
+	    role[company][k]=role[100][5];
 	    wep1[company][k]=wep1[101,5];
 	    name[company][k]=scr_marine_name();
 	    wep2[company][k]=wep2[101,5];
@@ -1590,7 +1590,7 @@ function scr_initialize_custom() {
 	            TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	            race[company][k]=1;
 	            loc[company][k]=home_name;
-	            role[company][k]=role[100,14];
+	            role[company][k]=role[100][14];
 	            wep1[company][k]=wep1[101,14];
 	     		name[company][k]=scr_marine_name();
 	            wep2[company][k]=wep2[101,14];
@@ -1611,7 +1611,7 @@ function scr_initialize_custom() {
 	    race[company][k]=1;
 	    TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	    loc[company][k]=home_name;
-	    role[company][k]=role[100,15];
+	    role[company][k]=role[100][15];
 	    wep1[company][k]=wep1[101,15];
 	    name[company][k]=scr_marine_name();
 	    wep2[company][k]=wep2[101,15];
@@ -1632,7 +1632,7 @@ function scr_initialize_custom() {
 	        TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	        race[company][k]=1;
 	        loc[company][k]=home_name;
-	        role[company][k]=role[100,15];
+	        role[company][k]=role[100][15];
 	        wep1[company][k]=wep1[101,15]
 	  ;
 	  name[company][k]=scr_marine_name();
@@ -1654,7 +1654,7 @@ function scr_initialize_custom() {
 	        TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	        race[company][k]=1;
 	        loc[company][k]=home_name;
-	        role[company][k]=role[100,16];
+	        role[company][k]=role[100][16];
 	        wep1[company][k]=wep1[101,16];
 	  		name[company][k]=scr_marine_name();
 	        wep2[company][k]=wep2[101,16];
@@ -1689,7 +1689,7 @@ function scr_initialize_custom() {
 	    TTRPG[company][k]=new TTRPG_stats("chapter", company,k);// Company Champion
 	    race[company][k]=1;
 	    loc[company][k]=home_name;
-	    role[company][k]=role[100,7];
+	    role[company][k]=role[100][7];
 	    wep1[company][k]=wep1[100,7];
 	    name[company][k]=scr_marine_name();
 	    wep2[company][k]=wep2[100,7];
@@ -1712,7 +1712,7 @@ function scr_initialize_custom() {
 	    race[company][k]=1;
 	    TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	    loc[company][k]=home_name;
-	    role[company][k]=role[100,4];
+	    role[company][k]=role[100][4];
 	    wep1[company][k]=wep1[101,4];
 	    name[company][k]=scr_marine_name();
 	    wep2[company][k]=wep2[101,4];
@@ -1729,7 +1729,7 @@ function scr_initialize_custom() {
 		TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	    race[company][k]=1;
 	    loc[company][k]=home_name;
-	    role[company][k]=role[100,3];
+	    role[company][k]=role[100][3];
 	    wep1[company][k]=wep1[101,3];
 	    name[company][k]=scr_marine_name();
 	    wep2[company][k]=wep2[101,3];
@@ -1747,7 +1747,7 @@ function scr_initialize_custom() {
 		TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 		race[company][k]=1;
 		loc[company][k]=home_name;
-		role[company][k]="Venerable "+string(role[100,6]);
+		role[company][k]="Venerable "+string(role[100][6]);
 		wep1[company][k]=wep1[101,6];man_size+=8;
 		wep2[company][k]=wep2[101,6];
 		armour[company][k]="Dreadnought";
@@ -1942,7 +1942,7 @@ function scr_initialize_custom() {
 	        TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	        race[company][k]=1;
 	        loc[company][k]=home_name;
-	        role[company][k]=role[100,5];
+	        role[company][k]=role[100][5];
 	        wep1[company][k]=wep1[101,5];
 	        name[company][k]=scr_marine_name();
 
@@ -1981,7 +1981,7 @@ function scr_initialize_custom() {
 	                race[company][k]=1;
 	                TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	                loc[company][k]=home_name;
-	                role[company][k]=role[100,14];
+	                role[company][k]=role[100][14];
 	                wep1[company][k]=wep1[101,14];
 	          		name[company][k]=scr_marine_name();
 	                wep2[company][k]=wep2[101,14];
@@ -2001,7 +2001,7 @@ function scr_initialize_custom() {
 	        race[company][k]=1;
 	        loc[company][k]=home_name;
 	        TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
-	        role[company][k]=role[100,15];
+	        role[company][k]=role[100][15];
 	        wep1[company][k]=wep1[101,15];
 	    	name[company][k]=scr_marine_name();
 	        wep2[company][k]=wep2[101,15];
@@ -2018,7 +2018,7 @@ function scr_initialize_custom() {
 	            race[company][k]=1;
 	            TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	            loc[company][k]=home_name;
-	            role[company][k]=role[100,15];
+	            role[company][k]=role[100][15];
 	            wep1[company][k]=wep1[101,15];
 	        	name[company][k]=scr_marine_name();
 	            wep2[company][k]=wep2[101,15];
@@ -2038,7 +2038,7 @@ function scr_initialize_custom() {
 	            race[company][k]=1;
 	            TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	            loc[company][k]=home_name;
-	            role[company][k]=role[100,16];
+	            role[company][k]=role[100][16];
 	            wep1[company][k]=wep1[101,16];
 	      		name[company][k]=scr_marine_name();
 	            wep2[company][k]=wep2[101,16];
@@ -2070,7 +2070,7 @@ function scr_initialize_custom() {
 	        race[company][k]=1;
 	        TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	        loc[company][k]=home_name;
-	        role[company][k]=role[100,7];
+	        role[company][k]=role[100][7];
 	        wep1[company][k]=wep1[100,7];
 	  		name[company][k]=scr_marine_name();
 	        wep2[company][k]=wep2[100,7];
@@ -2093,7 +2093,7 @@ function scr_initialize_custom() {
 
 		                race[company][k]=1;
 		                loc[company][k]=home_name;
-		                role[company][k]=role[100,8];
+		                role[company][k]=role[100][8];
 		                wep1[company][k]=wep1[101,8];
 		                wep2[company][k]=wep2[101,8];
 		          name[company][k]=scr_marine_name();
@@ -2111,7 +2111,7 @@ function scr_initialize_custom() {
 
 		                race[company][k]=1;
 		                loc[company][k]=home_name;
-		                role[company][k]=role[100,10];
+		                role[company][k]=role[100][10];
 		                wep1[company][k]=wep1[101,10];
 		                name[company][k]=scr_marine_name();
 						mobi[company][k]="Jump Pack";
@@ -2129,7 +2129,7 @@ function scr_initialize_custom() {
 
 		                race[company][k]=1;
 		                loc[company][k]=home_name;
-		                role[company][k]=role[100,9];
+		                role[company][k]=role[100][9];
 		                wep2[company][k]=wep2[101,9];
 		                name[company][k]=scr_marine_name();
 		                chaos[company][k]=0;
@@ -2150,7 +2150,7 @@ function scr_initialize_custom() {
 					
 	                    race[company][k]=1;
 	                    loc[company][k]=home_name;
-	                    role[company][k]=role[100,12];
+	                    role[company][k]=role[100][12];
 	                    wep1[company][k]=wep1[101,12];
 	              		name[company][k]=scr_marine_name();
 	                    wep2[company][k]=wep2[101,12];
@@ -2170,7 +2170,7 @@ function scr_initialize_custom() {
 					
 	                race[company][k]=1;
 	                loc[company][k]=home_name;
-	                role[company][k]=role[100,8];
+	                role[company][k]=role[100][8];
 	                wep1[company][k]=wep1[101,8];
 	                wep2[company][k]=wep2[101,8];
 	          		name[company][k]=scr_marine_name();
@@ -2189,7 +2189,7 @@ function scr_initialize_custom() {
 
 	            	race[company][k]=1;
 	            	loc[company][k]=home_name;
-	            	role[company][k]=role[100,10];
+	            	role[company][k]=role[100][10];
 	            	wep1[company][k]=wep1[101,10];
 	            	wep2[company][k]=wep2[101,10];
 	       ;
@@ -2207,7 +2207,7 @@ function scr_initialize_custom() {
 
 	                race[company][k]=1;
 	                loc[company][k]=home_name;
-	                role[company][k]=role[100,9];
+	                role[company][k]=role[100][9];
 	          		name[company][k]=scr_marine_name();
 	                wep2[company][k]=wep2[101,9];
 	                chaos[company][k]=0;
@@ -2224,7 +2224,7 @@ function scr_initialize_custom() {
 	            	TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	                race[company][k]=1;
 	                loc[company][k]=home_name;
-	                role[company][k]=role[100,12];
+	                role[company][k]=role[100][12];
 	                wep1[company][k]=wep1[101,12];
 	            	name[company][k]=scr_marine_name();
 	                wep2[company][k]=wep2[101,12];
@@ -2236,7 +2236,7 @@ function scr_initialize_custom() {
 
 	                race[company][k]=1;
 	                loc[company][k]=home_name;
-	                role[company][k]=role[100,10];
+	                role[company][k]=role[100][10];
 	                wep1[company][k]=wep1[101,10];
 	                wep2[company][k]=wep2[101,10];
 	            	name[company][k]=scr_marine_name();
@@ -2251,7 +2251,7 @@ function scr_initialize_custom() {
 
 	                race[company][k]=1;
 	                loc[company][k]=home_name;
-	                role[company][k]=role[100,9];
+	                role[company][k]=role[100][9];
 	          		name[company][k]=scr_marine_name();
 	                wep2[company][k]=wep2[101,9];
 					chaos[company][k]=0;
@@ -2274,7 +2274,7 @@ function scr_initialize_custom() {
 	                TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	                race[company][k]=1;
 	                loc[company][k]=home_name;
-	                role[company][k]=role[100,6];
+	                role[company][k]=role[100][6];
 	                wep1[company][k]="Close Combat Weapon"
 	          ;
 	          name[company][k]=scr_marine_name();
@@ -2337,7 +2337,7 @@ function scr_initialize_custom() {
 	        TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	        race[company][k]=1;
 	        loc[company][k]=home_name;
-	        role[company][k]=role[100,14];
+	        role[company][k]=role[100][14];
 	        wep1[company][k]=wep1[101,14];
 	  		name[company][k]=scr_marine_name();
 	        wep2[company][k]=wep2[101,14];

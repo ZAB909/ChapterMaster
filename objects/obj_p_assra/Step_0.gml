@@ -288,8 +288,8 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                     repeat(hits){obj_ini.hp[co,i]-=hurt;}
                     
                     if (obj_ini.hp[co,i]<=0){boarders_dead+=1;
-                        if ((obj_ini.role[co,i]=obj_ini.role[100,15]) or (obj_ini.role[co,i]="Master of Sanctity")) and (obj_ini.gear[co,i]="Narthecium") then apothecary-=1;
-                        if ((obj_ini.role[co,i]=obj_ini.role[100,15]) or (obj_ini.role[co,i]="Master of Sanctity")) and (obj_ini.gear[co,i]="Narthecium") then apothecary_had-=1;
+                        if ((obj_ini.role[co,i]=obj_ini.role[100][15]) or (obj_ini.role[co,i]="Master of Sanctity")) and (obj_ini.gear[co,i]="Narthecium") then apothecary-=1;
+                        if ((obj_ini.role[co,i]=obj_ini.role[100][15]) or (obj_ini.role[co,i]="Master of Sanctity")) and (obj_ini.gear[co,i]="Narthecium") then apothecary_had-=1;
                     }
                     
                     // show_message(string(obj_ini.role[co,i])+" "+string(obj_ini.role[co,i])+" hit by "+string(hits)+"x "+string(wep)+", "+string(obj_ini.hp[co,i])+" HP remaining");

@@ -152,7 +152,7 @@ function scr_ui_manage() {
             
 	            if (show_gear="Iron Halo") then halo=1;
             
-	            // if (string_count(obj_ini.role[100,14],cn.temp[101])>0) or (string_count("Master of Sanctity",cn.temp[101])>0) and (global.chapter_name!="Iron Hands") then skull=-50;
+	            // if (string_count(obj_ini.role[100][14],cn.temp[101])>0) or (string_count("Master of Sanctity",cn.temp[101])>0) and (global.chapter_name!="Iron Hands") then skull=-50;
 	            if (ui_specialist=1) and (global.chapter_name!="Iron Hands") then skull=-50;
             
 	            if (show_gear="Servo Arms") or (show_gear="Master Servo Arms"){
@@ -187,7 +187,7 @@ function scr_ui_manage() {
 					jump=1;
 				}
 				
-	            if (string_count(obj_ini.role[100,9],cn.temp[101])>0){
+	            if (string_count(obj_ini.role[100][9],cn.temp[101])>0){
 					ui_back=false;
 					dev=1;
 				}
@@ -243,10 +243,10 @@ function scr_ui_manage() {
 	                // Special specialist stuff here
 	                /*
 	                ui_specialist=0;
-	                if (ma_role[sel]=obj_ini.role[100,14]) then ui_specialist=1;// Chaplain
-	                if (ma_role[sel]=obj_ini.role[100,15]) then ui_specialist=3;// Apothecary
-	                if (ma_role[sel]=obj_ini.role[100,15]) and ((global.chapter_name="Blood Angels") or (obj_ini.progenitor==5)) then ui_specialist=4;// Sanguinary
-	                if (ma_role[sel]=obj_ini.role[100,16]) then ui_specialist=5;// Techmarine
+	                if (ma_role[sel]=obj_ini.role[100][14]) then ui_specialist=1;// Chaplain
+	                if (ma_role[sel]=obj_ini.role[100][15]) then ui_specialist=3;// Apothecary
+	                if (ma_role[sel]=obj_ini.role[100][15]) and ((global.chapter_name="Blood Angels") or (obj_ini.progenitor==5)) then ui_specialist=4;// Sanguinary
+	                if (ma_role[sel]=obj_ini.role[100][16]) then ui_specialist=5;// Techmarine
 	                if (ma_role[sel]=obj_ini.role[100,17]) then ui_specialist=7;// Librarian
 	                */
                 
@@ -866,9 +866,9 @@ function scr_ui_manage() {
 		var repetitions=min(man_max,man_see);
 
 		//tooltip text to tell you if a unit is eligible for special roles
-		var spec_tips = [string("{0} Potential",obj_ini.role[100,16]),		
-						string("{0} potential",obj_ini.role[100,15]),
-						string("{0} potential",obj_ini.role[100,14]),
+		var spec_tips = [string("{0} Potential",obj_ini.role[100][16]),		
+						string("{0} potential",obj_ini.role[100][15]),
+						string("{0} potential",obj_ini.role[100][14]),
 						"Librarium potential"];
 	    for(var i=0; i<repetitions;i++){
 
@@ -1077,11 +1077,11 @@ function scr_ui_manage() {
 		    		unit_specialism_option=true;
 		    		if (array_contains(["Lexicanum", "Codiciery",obj_ini.role[100,17], string("Chief {0}",obj_ini.role[100,17])], unit.role())){
 		    			draw_set_color(c_blue);
-		    		} else if(array_contains(["Forge Master",obj_ini.role[100,16]],unit.role())){
+		    		} else if(array_contains(["Forge Master",obj_ini.role[100][16]],unit.role())){
 		    			draw_set_color(c_maroon);
-		    		} else if(array_contains([obj_ini.role[100,15],"Master of the Apothecarion"],unit.role())){
+		    		} else if(array_contains([obj_ini.role[100][15],"Master of the Apothecarion"],unit.role())){
 		    			draw_set_color(c_red);
-		    		} else if(array_contains([obj_ini.role[100,14],"Master of Sanctity"],unit.role())){
+		    		} else if(array_contains([obj_ini.role[100][14],"Master of Sanctity"],unit.role())){
 		    			draw_set_color(c_teal);
 		    		}
 		    	}

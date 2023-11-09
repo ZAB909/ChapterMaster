@@ -75,18 +75,18 @@ function scr_crusade() {
 	                    if (obj_ini.role[co,i]="Chief "+string(obj_ini.role[100,17])) then command_lost+=1;
 	                    if (obj_ini.role[co,i]="Forge Master") then command_lost+=1;
 	                    if (obj_ini.role[co,i]=obj_ini.role[100,17]) then command_lost+=1;
-	                    if (obj_ini.role[co,i]=obj_ini.role[100,14]) then command_lost+=1;
-	                    if (obj_ini.role[co,i]=obj_ini.role[100,15]) then command_lost+=1;
-	                    if (obj_ini.role[co,i]=obj_ini.role[100,16]) then command_lost+=1;
-	                    if (obj_ini.role[co,i]=obj_ini.role[100,6]) then command_lost+=1;
-	                    if (obj_ini.role[co,i]=obj_ini.role[100,5]) then command_lost+=1;
+	                    if (obj_ini.role[co,i]=obj_ini.role[100][14]) then command_lost+=1;
+	                    if (obj_ini.role[co,i]=obj_ini.role[100][15]) then command_lost+=1;
+	                    if (obj_ini.role[co,i]=obj_ini.role[100][16]) then command_lost+=1;
+	                    if (obj_ini.role[co,i]=obj_ini.role[100][6]) then command_lost+=1;
+	                    if (obj_ini.role[co,i]=obj_ini.role[100][5]) then command_lost+=1;
 	                    if (obj_ini.role[co,i]="Codiciery") then command_lost+=1;
 	                    if (obj_ini.role[co,i]="Lexicanum") then command_lost+=1;
 	                    if (obj_ini.role[co,i]=string(obj_ini.role[100,17])+" Aspirant") then command_lost+=1;
-	                    if (obj_ini.role[co,i]=string(obj_ini.role[100,14])+" Aspirant") then command_lost+=1;
-	                    if (obj_ini.role[co,i]=string(obj_ini.role[100,15])+" Aspirant") then command_lost+=1;
-	                    if (obj_ini.role[co,i]=string(obj_ini.role[100,16])+" Aspirant") then command_lost+=1;
-	                    if (obj_ini.role[co,i]="Venerable "+string(obj_ini.role[100,6])) then command_lost+=1;
+	                    if (obj_ini.role[co,i]=string(obj_ini.role[100][14])+" Aspirant") then command_lost+=1;
+	                    if (obj_ini.role[co,i]=string(obj_ini.role[100][15])+" Aspirant") then command_lost+=1;
+	                    if (obj_ini.role[co,i]=string(obj_ini.role[100][16])+" Aspirant") then command_lost+=1;
+	                    if (obj_ini.role[co,i]="Venerable "+string(obj_ini.role[100][6])) then command_lost+=1;
                     
 	                    clean[co]=1;obj_controller.marines-=1;marines_lost+=1;
 	                    obj_ini.race[co,i]=1;obj_ini.loc[co,i]="";obj_ini.name[co,i]="";obj_ini.role[co,i]="";
@@ -95,7 +95,7 @@ function scr_crusade() {
 	                    obj_ini.chaos[co,i]=0;obj_ini.experience[co,i]=0;obj_ini.age[co,i]=0;
 	                    seed+=2;
 	                }
-	                if (dead=false) and ((obj_ini.role[co,i]=obj_ini.role[100,15]) or (obj_ini.role[co,i]="Master of the Apothecarion")) and (obj_ini.gear[co,i]="Narthecium") then apoth+=1;
+	                if (dead=false) and ((obj_ini.role[co,i]=obj_ini.role[100][15]) or (obj_ini.role[co,i]="Master of the Apothecarion")) and (obj_ini.gear[co,i]="Narthecium") then apoth+=1;
 	                if (dead=false){
 	                    if (type="normal") then obj_ini.experience[co,i]+=floor(random(2))+4;
 	                    if (type="hard") then obj_ini.experience[co,i]+=floor(random(2))+10;
@@ -161,8 +161,8 @@ function scr_crusade() {
 	tixt+=string(marines_lost)+" of your battle brothers fell in combat.";
 
 	if (obj_ini.doomed=0){
-	    if (apoth>0) and (seed>0) then tixt+="  The "+string(apoth)+" surviving "+string(obj_ini.role[100,15])+" were able to recover "+string(seed)+" Gene-Seed.";
-	    if (apoth=0) and (seed>0) then tixt+="  You had no able-bodied "+string(obj_ini.role[100,15])+", or all of them perished in the Crusade.  Foreign Apothecaries were able to recover "+string(seed)+" of your Gene-Seed.";
+	    if (apoth>0) and (seed>0) then tixt+="  The "+string(apoth)+" surviving "+string(obj_ini.role[100][15])+" were able to recover "+string(seed)+" Gene-Seed.";
+	    if (apoth=0) and (seed>0) then tixt+="  You had no able-bodied "+string(obj_ini.role[100][15])+", or all of them perished in the Crusade.  Foreign Apothecaries were able to recover "+string(seed)+" of your Gene-Seed.";
 	}
 	if (obj_ini.doomed=1){
 	    tixt+="  Due to fatal mutations in your marines none of the fallen Gene-Seed was recoverable.";

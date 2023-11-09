@@ -116,7 +116,6 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                 // Start adding unit to battle
                 if (okay >= 1) {
                     var man_size = 1;
-                    show_debug_message("marine {0},{1}, {2},{3}", company, v, deploying_unit.name[company, v], deploying_unit.loc[company, v])
 
                     //Same as co/company and v, but with extra comprovations in case of a meeting (meeting?) 
                     var cooh, va;
@@ -150,7 +149,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                         col = obj_controller.bat_scout_column;
                         new_combat.scouts += 1;
 
-                    }else if (array_contains( [deploying_unit.role[100,8], $"{deploying_unit.role[100, 15]} Aspirant", $"{deploying_unit.role[100, 14]} Aspirant"] , unit.role())) {
+                    }else if (array_contains( [deploying_unit.role[100][8], $"{deploying_unit.role[100, 15]} Aspirant", $"{deploying_unit.role[100, 14]} Aspirant"] , unit.role())) {
                         col = obj_controller.bat_tactical_column;				    //tactical_marines
                         new_combat.tacticals += 1;
                     }else if (unit.role() = deploying_unit.role[100, 3]) or (unit.role() = deploying_unit.role[100, 19]) {			//veterans and veteran sergeants

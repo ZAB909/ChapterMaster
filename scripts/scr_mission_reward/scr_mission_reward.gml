@@ -21,7 +21,7 @@ function scr_mission_reward(argument0, argument1, argument2) {
 
 	    repeat(11){com+=1;i=0;
 	        repeat(300){i+=1;
-	            if (obj_ini.role[com,i]=obj_ini.role[100,16]) and (obj_ini.loc[com,i]="Mechanicus Vessel"){
+	            if (obj_ini.role[com,i]=obj_ini.role[100][16]) and (obj_ini.loc[com,i]="Mechanicus Vessel"){
 	                roll2=floor(random(100))+1;
 	                if (obj_ini.dis[1]="Shitty Luck") or (obj_ini.dis[2]="Shitty Luck") or (obj_ini.dis[3]="Shitty Luck") or (obj_ini.dis[4]="Shitty Luck") then roll2-=10;
 
@@ -58,7 +58,7 @@ function scr_mission_reward(argument0, argument1, argument2) {
 	        }
 	    }
 
-	    var tixt;tixt="The journey into the Mars Catacombs was a success.  Your "+string(techs_alive)+" remaining "+string(obj_ini.role[100,16])+"s were useful to the Mechanicus force and return with a bounty.  They await retrieval at "+string(argument1.name)+" "+scr_roman(argument2)+".#";
+	    var tixt;tixt="The journey into the Mars Catacombs was a success.  Your "+string(techs_alive)+" remaining "+string(obj_ini.role[100][16])+"s were useful to the Mechanicus force and return with a bounty.  They await retrieval at "+string(argument1.name)+" "+scr_roman(argument2)+".#";
 	    tixt+="#"+string(found_requisition)+" Requisition from salvage";
 	    if (found_artifact!=1) then tixt+="#"+string(found_artifact)+" Unidentified Artifacts recovered";
 	    if (found_artifact=1) then tixt+="#"+string(found_artifact)+" Unidentified Artifact recovered";
@@ -66,7 +66,7 @@ function scr_mission_reward(argument0, argument1, argument2) {
 	    if (found_stc=1) then tixt+="#"+string(found_stc)+" STC Fragment recovered";
 
 	    scr_popup("Mechanicus Mission Completed",tixt,"mechanicus","");
-	    tixt="Mechanicus Mission Completed: "+string(techs_alive)+"/"+string(techs_alive+techs_lost)+" of your "+string(obj_ini.role[100,16])+"s return with ";
+	    tixt="Mechanicus Mission Completed: "+string(techs_alive)+"/"+string(techs_alive+techs_lost)+" of your "+string(obj_ini.role[100][16])+"s return with ";
 	    tixt+=string(found_requisition)+" Requisition, ";
 	    if (found_artifact!=1) then tixt+=string(found_artifact)+" Unidentified Artifacts, ";
 	    if (found_artifact=1) then tixt+=string(found_artifact)+" Unidentified Artifact, ";
@@ -98,7 +98,7 @@ function scr_mission_reward(argument0, argument1, argument2) {
 	    if (roll1>66) then result="Requisition";
 
 	    if (result="New"){
-	        scr_popup("Mechanicus Mission Completed","Your "+string(obj_ini.role[100,16])+" have worked with the Adeptus Mechanicus in a satisfactory manor.  The testing and training went well, but your Land Raider was ultimately lost.  300 Requisition has been given to your Chapter and relations are better than before.","mechanicus","");
+	        scr_popup("Mechanicus Mission Completed","Your "+string(obj_ini.role[100][16])+" have worked with the Adeptus Mechanicus in a satisfactory manor.  The testing and training went well, but your Land Raider was ultimately lost.  300 Requisition has been given to your Chapter and relations are better than before.","mechanicus","");
 	        obj_controller.requisition+=300;obj_controller.disposition[3]+=2;
 	        var com,i,onceh;onceh=0;com=-1;i=0;
 	        repeat(11){
@@ -117,7 +117,7 @@ function scr_mission_reward(argument0, argument1, argument2) {
 	        }
 	    }
 	    if (result="Land Raider"){
-	        scr_popup("Mechanicus Mission Completed","Your "+string(obj_ini.role[100,16])+" have worked with the Adeptus Mechanicus in a satisfactory manor.  The testing and training went well, but your Land Raider was ultimately lost.  A new Land Raider has been provided in return.","mechanicus","");
+	        scr_popup("Mechanicus Mission Completed","Your "+string(obj_ini.role[100][16])+" have worked with the Adeptus Mechanicus in a satisfactory manor.  The testing and training went well, but your Land Raider was ultimately lost.  A new Land Raider has been provided in return.","mechanicus","");
 	        var com,i,onceh;onceh=0;com=-1;i=0;obj_controller.disposition[3]+=1;
 	        repeat(11){
 	            if (onceh=0){com+=1;i=0;
@@ -130,7 +130,7 @@ function scr_mission_reward(argument0, argument1, argument2) {
 	        }
 	    }
 	    if (result="Requisition"){
-	        scr_popup("Mechanicus Mission Completed","Your "+string(obj_ini.role[100,16])+" have worked with the Adeptus Mechanicus in a satisfactory manor.  The testing and training went well, but your Land Raider was ultimately lost.  600 Requisition has been given to your Chapter as compensation.","mechanicus","");
+	        scr_popup("Mechanicus Mission Completed","Your "+string(obj_ini.role[100][16])+" have worked with the Adeptus Mechanicus in a satisfactory manor.  The testing and training went well, but your Land Raider was ultimately lost.  600 Requisition has been given to your Chapter as compensation.","mechanicus","");
 	        obj_controller.requisition+=600;obj_controller.disposition[3]+=1;
 	    }
 

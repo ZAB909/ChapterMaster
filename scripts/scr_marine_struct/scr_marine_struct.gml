@@ -1,15 +1,15 @@
 //in future would be better to store old guard data in a struct like this but for now while working out kinks have left hardcoded
 /*old_guard_equipment :{
-	role[100,5]:{"armour":[["MK3 Iron Armour",25]]},
-	role[100,14]:{"armour":[["MK3 Iron Armour",25]],
-	role[100,15]:{"armour":[["MK3 Iron Armour", 10]]}, //apothecary
-	role[100,16]:{"armour":},
+	role[100][5]:{"armour":[["MK3 Iron Armour",25]]},
+	role[100][14]:{"armour":[["MK3 Iron Armour",25]],
+	role[100][15]:{"armour":[["MK3 Iron Armour", 10]]}, //apothecary
+	role[100][16]:{"armour":},
 	"Standard Bearer":{"armour":[["MK3 Iron Armour", 3]]},
-	role[100,7]:{"armour":[]},  //company champion
-	role[100,8]:{"armour":[["MK8 Errant", 3],["MK3 Iron Armour", 3],["MK4 Maximus", 3],["MK5 Heresy", 3]]},     //tacticals
-	role[100,10]:{"armour":},		
-	role[100,9]:{"armour":},
-	role[100,12]:{"armour":},
+	role[100][7]:{"armour":[]},  //company champion
+	role[100][8]:{"armour":[["MK8 Errant", 3],["MK3 Iron Armour", 3],["MK4 Maximus", 3],["MK5 Heresy", 3]]},     //tacticals
+	role[100][10]:{"armour":},		
+	role[100][9]:{"armour":},
+	role[100][12]:{"armour":},
 }*/
 
 /*
@@ -935,7 +935,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			bionic_count = choose(2,3,4,5);
 		}
 		switch(role()){
-			case obj_ini.role[100,5]:  //captain
+			case obj_ini.role[100][5]:  //captain
 				if(old_guard>=75){
 					update_armour("MK3 Iron Armour",false,false);
 					update_age(age - gauss(400, 200))
@@ -950,7 +950,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					add_exp(25);
 				}
 				break;
-			case  obj_ini.role[100,15]:  //apothecary
+			case  obj_ini.role[100][15]:  //apothecary
 				update_armour("MK7 Aquila",false,false);
 				if (company<=2){update_armour(choose("MK8 Errant","MK6 Corvus"),false,false)
 				}else{
@@ -965,7 +965,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				 update_armour("MK5 Heresy",false,false);
 				 update_age(age - gauss(400, 250));
 				break;
-			case  obj_ini.role[100,8]:		//tacticals
+			case  obj_ini.role[100][8]:		//tacticals
 				if (old_guard=99){
 						update_armour("MK3 Iron Armour",false,false)
 						update_age(age - gauss(600, 150));
@@ -994,7 +994,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 						} // company 1 and 2 taccies get beakies by default
 					else{update_armour("MK7 Aquila",false,false)};
 				break;
-			case  obj_ini.role[100,10]:		//assualts
+			case  obj_ini.role[100][10]:		//assualts
 				// due to assault marines not wanting corvus due to worse ac, given them better chances with melee oriented armours. 
 				// melee is risky af anyway so let's reward players who go assault marine heavy at game start
 				if (old_guard>=99 and old_guard<=97){
@@ -1025,7 +1025,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					update_age(age - gauss(150, 30));
 				};
 				break;	
-			case  obj_ini.role[100,9]: 		//devastators	
+			case  obj_ini.role[100][9]: 		//devastators	
 				if ((old_guard>=99) and (old_guard<=97)){
 					update_armour("MK4 Maximus",false,false);
 					update_age(age - gauss(300, 100));
@@ -1043,7 +1043,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				} // company 1 and 2 taccies get beakies by default
 				else{update_armour("MK7 Aquila",false,false)};
 				break;
-			case  obj_ini.role[100,3]: //veterans
+			case  obj_ini.role[100][3]: //veterans
 				if ((old_guard>=80)and (old_guard>=95)){
 					update_armour(choose("MK4 Maximus","MK8 Errant"),false,false);
 					update_age(age - gauss(150, 30));
@@ -1061,7 +1061,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					add_exp(choose(25, 50));					
 				}
 				break;
-			case obj_ini.role[100,16]: //techmarines
+			case obj_ini.role[100][16]: //techmarines
 				update_armour(choose("MK8 Errant","MK6 Corvus","MK4 Maximus","MK3 Iron Armour"),false,false)
 				if ((global.chapter_name="Iron Hands") or (obj_ini.progenitor=6)){
 					add_bionics("right_arm");
@@ -1082,10 +1082,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			  }
 			  religion = "cult_mechanicus"	
 				break;
-			case  obj_ini.role[100,12]: //scouts
+			case  obj_ini.role[100][12]: //scouts
 				bionic_count = choose(0,0,0,0,0,0,0,0,0,0,0,1)
 				break;
-			case  obj_ini.role[100,14]:  //chaplain
+			case  obj_ini.role[100][14]:  //chaplain
 				update_armour(choose("MK5 Heresy","MK6 Corvus","MK7 Aquila", "MK4 Maximus","MK8 Errant"),false,false);
 				update_age(age - gauss(400, 250));
 				if (piety<35){

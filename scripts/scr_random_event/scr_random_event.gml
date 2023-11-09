@@ -306,7 +306,7 @@ function scr_random_event(execute_now) {
 	
 	else if (chosen_event == EVENT.promotion){
 		debugl("RE: Promotion");
-	    var marine_and_company = scr_random_marine([obj_ini.role[100,8],obj_ini.role[100,12],obj_ini.role[100,9],obj_ini.role[100,10]],0);
+	    var marine_and_company = scr_random_marine([obj_ini.role[100][8],obj_ini.role[100][12],obj_ini.role[100][9],obj_ini.role[100][10]],0);
 		if(marine_and_company == "none")
 		{
 			debugl("RE: Promotion, couldn't pick a space marine");
@@ -338,7 +338,7 @@ function scr_random_event(execute_now) {
     
 	else if (chosen_event == EVENT.strange_building){
 		debugl("RE: Fey Mood");
-		var marine_and_company = scr_random_marine(obj_ini.role[100,16],0);
+		var marine_and_company = scr_random_marine(obj_ini.role[100][16],0);
 		if(marine_and_company == "none"){
 			exit;
 		}
@@ -788,7 +788,7 @@ function scr_random_event(execute_now) {
 		
 		if(mechanicus_have_forge_world){
 			array_push(mechanicus_missions, MECHANICUS_MISSION.bionics);
-			if (scr_role_count(obj_ini.role[100,16],"") >= 6) {
+			if (scr_role_count(obj_ini.role[100][16],"") >= 6) {
 				array_push(mechanicus_missions, MECHANICUS_MISSION.land_raider);
 			}
 		}
@@ -837,7 +837,7 @@ function scr_random_event(execute_now) {
 			
 			
 	        if (chosen_mission == MECHANICUS_MISSION.land_raider){
-	            var text="The Adeptus Mechanicus are trusting you with a special mission.  They wish for you to bring a Land Raider and six "+string(obj_ini.role[100,16])+" to a Forge World in "+ string(star.name) + " for testing and training, for a duration of 24 months. You have four years to complete this.  Can your chapter handle this mission?";
+	            var text="The Adeptus Mechanicus are trusting you with a special mission.  They wish for you to bring a Land Raider and six "+string(obj_ini.role[100][16])+" to a Forge World in "+ string(star.name) + " for testing and training, for a duration of 24 months. You have four years to complete this.  Can your chapter handle this mission?";
 	            scr_popup("Mechanicus Mission",text,"mechanicus","mech_raider!0!|"+string(star.name)+"|");
 				evented = true;
 	        }
@@ -847,7 +847,7 @@ function scr_random_event(execute_now) {
 				evented = true;
 	        }
 	        else {
-	            var text="The local Adeptus Mechanicus are preparing to embark on a voyage to Mars, to delve into the catacombs in search of lost technology.  Due to your close relations they have made the offer to take some of your "+string(obj_ini.role[100,16])+"s with them.  Can your chapter handle this mission?";
+	            var text="The local Adeptus Mechanicus are preparing to embark on a voyage to Mars, to delve into the catacombs in search of lost technology.  Due to your close relations they have made the offer to take some of your "+string(obj_ini.role[100][16])+"s with them.  Can your chapter handle this mission?";
 	            scr_popup("Mechanicus Mission",text,"mechanicus","mech_mars|"+string(star.name)+"|");
 				evented = true;
 	        }

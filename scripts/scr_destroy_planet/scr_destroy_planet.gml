@@ -65,18 +65,18 @@ function scr_destroy_planet(argument0) {
 	                if (obj_ini.role[co,i]="Chief "+string(obj_ini.role[100,17])) then comm=true;
 	                if (obj_ini.role[co,i]="Forge Master") then comm=true;
 	                if (obj_ini.role[co,i]=obj_ini.role[100,17]) then comm=true;
-	                if (obj_ini.role[co,i]=obj_ini.role[100,14]) then comm=true;
-	                if (obj_ini.role[co,i]=obj_ini.role[100,15]) then comm=true;
-	                if (obj_ini.role[co,i]=obj_ini.role[100,16]) then comm=true;
-	                if (obj_ini.role[co,i]=obj_ini.role[100,6]) then comm=true;
-	                if (obj_ini.role[co,i]=obj_ini.role[100,5]) then comm=true;
+	                if (obj_ini.role[co,i]=obj_ini.role[100][14]) then comm=true;
+	                if (obj_ini.role[co,i]=obj_ini.role[100][15]) then comm=true;
+	                if (obj_ini.role[co,i]=obj_ini.role[100][16]) then comm=true;
+	                if (obj_ini.role[co,i]=obj_ini.role[100][6]) then comm=true;
+	                if (obj_ini.role[co,i]=obj_ini.role[100][5]) then comm=true;
 	                if (obj_ini.role[co,i]="Codiciery") then comm=true;
 	                if (obj_ini.role[co,i]="Lexicanum") then comm=true;
 	                if (obj_ini.role[co,i]=string(obj_ini.role[100,17])+" Aspirant") then comm=true;
-	                if (obj_ini.role[co,i]=string(obj_ini.role[100,14])+" Aspirant") then comm=true;
-	                if (obj_ini.role[co,i]=string(obj_ini.role[100,15])+" Aspirant") then comm=true;
-	                if (obj_ini.role[co,i]=string(obj_ini.role[100,16])+" Aspirant") then comm=true;
-	                if (obj_ini.role[co,i]="Venerable "+string(obj_ini.role[100,6])) then comm=true;
+	                if (obj_ini.role[co,i]=string(obj_ini.role[100][14])+" Aspirant") then comm=true;
+	                if (obj_ini.role[co,i]=string(obj_ini.role[100][15])+" Aspirant") then comm=true;
+	                if (obj_ini.role[co,i]=string(obj_ini.role[100][16])+" Aspirant") then comm=true;
+	                if (obj_ini.role[co,i]="Venerable "+string(obj_ini.role[100][6])) then comm=true;
                 
 	                // if (obj_ini.race[cah,ed]=1) then obj_controller.marines-=1;
 	                if (comm=false) then obj_controller.marines-=1;

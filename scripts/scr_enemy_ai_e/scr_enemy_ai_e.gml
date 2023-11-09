@@ -768,7 +768,7 @@ function scr_enemy_ai_e() {
 	    repeat(11){co+=1;i=0;
 	        repeat(200){i+=1;good=0;
 	            if (obj_ini.role[co,i]!="") and (obj_ini.loc[co,i]=name) and (obj_ini.wid[co,i]==floor(chaos_meeting)) then good+=1;
-	            if (obj_ini.role[co,i]!=obj_ini.role[100,6]) and (obj_ini.role[co,i]!="Venerable "+string(obj_ini.role[100,6])) then good+=1;
+	            if (obj_ini.role[co,i]!=obj_ini.role[100][6]) and (obj_ini.role[co,i]!="Venerable "+string(obj_ini.role[100][6])) then good+=1;
 	            if (string_count("Dread",obj_ini.armour[co,i])=0) or (obj_ini.role[co,i]="Chapter Master") then good+=1;
             
 	            if (good=3){

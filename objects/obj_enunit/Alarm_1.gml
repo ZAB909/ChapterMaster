@@ -140,7 +140,7 @@ repeat(700){g+=1;
         */
         
         
-        if (dudes[g]=obj_ini.role[100,6]) or (dudes[g]="Venerable "+obj_ini.role[100,6]) and (dudes_hp[g]>0){dreads+=1;dreaded=true;}
+        if (dudes[g]=obj_ini.role[100][6]) or (dudes[g]="Venerable "+obj_ini.role[100][6]) and (dudes_hp[g]>0){dreads+=1;dreaded=true;}
         if (dudes_mobi[g]="Bike") then scr_en_weapon("Twin Linked Bolters",false,1,dudes[g],g);
         if (dudes_mobi[g]!="Bike") and (dudes_mobi[g]!=""){if (string_count("Jump Pack",marine_mobi[g])>0) then scr_en_weapon("hammer_of_wrath",false,1,dudes[g],g);}
         
@@ -173,8 +173,8 @@ repeat(700){g+=1;
             if (dudes[j]="") and (open=0){
                 open=j;// Determine if vehicle here
                 
-                if (dudes[j]="Venerable "+string(obj_ini.role[100,6])) then dudes_vehicle[j]=1;
-                if (dudes[j]=obj_ini.role[100,6]) then dudes_vehicle[j]=1;
+                if (dudes[j]="Venerable "+string(obj_ini.role[100][6])) then dudes_vehicle[j]=1;
+                if (dudes[j]=obj_ini.role[100][6]) then dudes_vehicle[j]=1;
             }
             // if (dudes[g]=dudes[j]){good=1;dudes_num[j]+=1;}
             // if (good=0) and (open!=0){dudes[open]=marine_type[g];dudes_num[open]=1;}

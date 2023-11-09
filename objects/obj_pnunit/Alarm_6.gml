@@ -57,8 +57,8 @@ repeat(600){i+=1;
         obj_ini.veh_pilots[veh_co[i],veh_id[i]]=0;obj_ini.veh_lid[veh_co[i],veh_id[i]]=0;obj_ini.veh_wid[veh_co[i],veh_id[i]]=2;
     }
     if (marine_dead[i]=0) and (ally[i]=false){
-        if (marine_type[i]!=obj_ini.role[100,6]) and (marine_type[i]!="Venerable "+string(obj_ini.role[100,6])){obj_ini.hp[marine_co[i],marine_id[i]]=marine_hp[i];}
-        if (marine_type[i]=obj_ini.role[100,6]) or (marine_type[i]="Venerable "+string(obj_ini.role[100,6])){obj_ini.hp[marine_co[i],marine_id[i]]=marine_hp[i]/2;}
+        if (marine_type[i]!=obj_ini.role[100][6]) and (marine_type[i]!="Venerable "+string(obj_ini.role[100][6])){obj_ini.hp[marine_co[i],marine_id[i]]=marine_hp[i];}
+        if (marine_type[i]=obj_ini.role[100][6]) or (marine_type[i]="Venerable "+string(obj_ini.role[100][6])){obj_ini.hp[marine_co[i],marine_id[i]]=marine_hp[i]/2;}
     }
     if (veh_dead[i]=0) and (veh_type[i]!="") and (veh_ally[i]=false){obj_ini.veh_hp[veh_co[i],veh_id[i]]=veh_hp[i]/veh_hp_multiplier[i];}
 }

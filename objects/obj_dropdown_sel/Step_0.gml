@@ -101,7 +101,7 @@ if (target="event_loc") and (determined_planets=0){
         coo+=1;ide=0;
         
         repeat(300){ide+=1;
-            if (obj_ini.role[coo,ide]!=obj_ini.role[100,6]) and (obj_ini.role[coo,ide]!="Venerable "+string(obj_ini.role[100,6])) and (obj_ini.wid[coo,ide]>0){
+            if (obj_ini.role[coo,ide]!=obj_ini.role[100][6]) and (obj_ini.role[coo,ide]!="Venerable "+string(obj_ini.role[100][6])) and (obj_ini.wid[coo,ide]>0){
                 var stahp,first_open;stahp=0;q=0;first_open=0;
                 
                 repeat(100){

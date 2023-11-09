@@ -9,7 +9,7 @@ function scr_company_view(company) {
 	squad_members=0;
 	last_man=0;
 	last_vehicle=0;
-	var command_roles= [obj_ini.role[100,5],obj_ini.role[100,14],obj_ini.role[100,15],obj_ini.role[100,16],ma_role[v]!=obj_ini.role[100,17],"Standard Bearer","Company Champion","Codiciery","Lexicanum"];
+	var command_roles= [obj_ini.role[100][5],obj_ini.role[100][14],obj_ini.role[100][15],obj_ini.role[100][16],ma_role[v]!=obj_ini.role[100,17],"Standard Bearer","Company Champion","Codiciery","Lexicanum"];
 	var head_roles = ["Master of Sanctity",
 					string("Chief {0}", obj_ini.role[100,17]),
 					"Forge Master", 
@@ -122,11 +122,11 @@ function scr_company_view(company) {
 	                    // if units are not in a squad
 	                    if (unit.squad == "none"){
 
-	                    	if (array_contains(head_roles, obj_ini.role[100,6])) then  n=1;
-    	                    if (squad_type=obj_ini.role[100,6]) and (squad_type!=ma_role[v]) and (squad_type!="Venerable "+string(ma_role[v])) then n=2;
-    	                    if (squad_type=obj_ini.role[100,6]) and (ma_role[v]=obj_ini.role[100,6]) then n=0;
-    	                    if (squad_type=obj_ini.role[100,6]) and (ma_role[v]="Venerable "+string(obj_ini.role[100,6])) then n=0;
-    	                    if (squad_type="Venerable "+string(obj_ini.role[100,6])) and (ma_role[v]=obj_ini.role[100,6]) then n=0;
+	                    	if (array_contains(head_roles, obj_ini.role[100][6])) then  n=1;
+    	                    if (squad_type=obj_ini.role[100][6]) and (squad_type!=ma_role[v]) and (squad_type!="Venerable "+string(ma_role[v])) then n=2;
+    	                    if (squad_type=obj_ini.role[100][6]) and (ma_role[v]=obj_ini.role[100][6]) then n=0;
+    	                    if (squad_type=obj_ini.role[100][6]) and (ma_role[v]="Venerable "+string(obj_ini.role[100][6])) then n=0;
+    	                    if (squad_type="Venerable "+string(obj_ini.role[100][6])) and (ma_role[v]=obj_ini.role[100][6]) then n=0;
 	         			
 	         				//if units are on different ships but the ships are in the same location group them together
 	         				//else split units up in selection area
@@ -183,15 +183,15 @@ function scr_company_view(company) {
 	                }
 	                // Right here is where the promotion check will go
 	                // If EXP is enough for that company then ma_promote[i]=1
-	                if (ma_role[v]==obj_ini.role[100,3]) or (ma_role[v]==obj_ini.role[100,4]){
+	                if (ma_role[v]==obj_ini.role[100][3]) or (ma_role[v]==obj_ini.role[100][4]){
 	                    if (company==1) and (ma_exp[v]>=300) then ma_promote[v]=1;
 	                    if (ma_health[v]<=10) then ma_promote[v]=10;
 	                }
-	                if (ma_role[v]=obj_ini.role[100,6]) and (ma_exp[v]>=400) then ma_promote[v]=1;
-	                if (ma_role[v]=obj_ini.role[100,15]) or (ma_role[v]=obj_ini.role[100,14]) then ma_promote[v]=1;
-	                if (ma_role[v]=obj_ini.role[100,16]) then ma_promote[v]=1;
+	                if (ma_role[v]=obj_ini.role[100][6]) and (ma_exp[v]>=400) then ma_promote[v]=1;
+	                if (ma_role[v]=obj_ini.role[100][15]) or (ma_role[v]=obj_ini.role[100][14]) then ma_promote[v]=1;
+	                if (ma_role[v]=obj_ini.role[100][16]) then ma_promote[v]=1;
 
-	                if (ma_role[v]=obj_ini.role[100,8]) or (ma_role[v]=obj_ini.role[100,12]) or (ma_role[v]=obj_ini.role[100,10]) or (ma_role[v]=obj_ini.role[100,9]){
+	                if (ma_role[v]=obj_ini.role[100][8]) or (ma_role[v]=obj_ini.role[100][12]) or (ma_role[v]=obj_ini.role[100][10]) or (ma_role[v]=obj_ini.role[100][9]){
 	                    if (company==10) and (ma_exp[v]>=40) then ma_promote[v]=1;
 	                    else if (company==9) and (ma_exp[v]>=50) then ma_promote[v]=1;
 	                    else if (company==8) and (ma_exp[v]>=60) then ma_promote[v]=1;
@@ -217,7 +217,7 @@ function scr_company_view(company) {
 	                    if (company=3) and (ma_exp[v]>=75) then ma_promote[v]=1;
 	                }*/
 
-	                if (ma_role[v]=obj_ini.role[100,5]){
+	                if (ma_role[v]=obj_ini.role[100][5]){
 	                    if (company==10) and (ma_exp[v]>=40) then ma_promote[v]=1;
 	                    else if (company==9) and (ma_exp[v]>=50) then ma_promote[v]=1;
 	                    else if (company==8) and (ma_exp[v]>=60) then ma_promote[v]=1;

@@ -99,7 +99,7 @@ function scr_load_decide_loc(role_type, role, is_vehicle) {
 	        	unit_location=ma_loc[i];
 	        	if (ma_lid[i]>0) then unit_location=obj_ini.ship[ma_lid[i]];
 	            if (man[i]="man") and (ma_god[i]<10){
-	                if (ma_role[i]=obj_ini.role[100,5]) or (ma_role[i]=obj_ini.role[100,14]) or (ma_role[i]=obj_ini.role[100,15]) or (ma_role[i]="Standard Bearer") or (ma_role[i]="Company Champion") or (ma_role[i]="Champion"){
+	                if (ma_role[i]=obj_ini.role[100][5]) or (ma_role[i]=obj_ini.role[100][14]) or (ma_role[i]=obj_ini.role[100][15]) or (ma_role[i]="Standard Bearer") or (ma_role[i]="Company Champion") or (ma_role[i]="Champion"){
 	                    j=0;good=0;
 	                    for(j=1;j<91;j++){
 	                    	if (good=0){

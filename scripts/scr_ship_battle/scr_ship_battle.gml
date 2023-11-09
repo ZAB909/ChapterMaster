@@ -26,7 +26,7 @@ function scr_ship_battle(argument0, argument1) {
 	                if (obj_ini.lid[co,v]=argument0) and (obj_ini.hp[co,v]>0) then okay=1;
 	                if (obj_ini.lid[co,v]=argument1) and (argument1=argument1) and (obj_ini.hp[co,v]>0) then okay=1;
                 
-	                if (string_count("spyrer",obj_ncombat.battle_special)>0) and ((obj_ini.role[co,v]=obj_ini.role[100,6]) or (obj_ini.role[co,v]="Venerable "+string(obj_ini.role[100,6]))){
+	                if (string_count("spyrer",obj_ncombat.battle_special)>0) and ((obj_ini.role[co,v]=obj_ini.role[100][6]) or (obj_ini.role[co,v]="Venerable "+string(obj_ini.role[100][6]))){
 	                    okay=0;
 	                }
 	                if (string_count("spyrer",obj_ncombat.battle_special)>0){
@@ -41,24 +41,24 @@ function scr_ship_battle(argument0, argument1) {
                     
 	                    var col,targ;col=0;targ=0;
                     
-	                    if (obj_ini.role[co,v]=obj_ini.role[100,12]){col=obj_controller.bat_scout_column;obj_ncombat.scouts+=1;}
-	                    if (obj_ini.role[co,v]=obj_ini.role[100,8]){col=obj_controller.bat_tactical_column;obj_ncombat.tacticals+=1;}
-	                    if (obj_ini.role[co,v]=obj_ini.role[100,3]){col=obj_controller.bat_veteran_column;obj_ncombat.veterans+=1;}
-	                    if (obj_ini.role[co,v]=obj_ini.role[100,9]){col=obj_controller.bat_devastator_column;obj_ncombat.devastators+=1;}
-	                    if (obj_ini.role[co,v]=obj_ini.role[100,10]){col=obj_controller.bat_assault_column;obj_ncombat.assaults+=1;}
+	                    if (obj_ini.role[co,v]=obj_ini.role[100][12]){col=obj_controller.bat_scout_column;obj_ncombat.scouts+=1;}
+	                    if (obj_ini.role[co,v]=obj_ini.role[100][8]){col=obj_controller.bat_tactical_column;obj_ncombat.tacticals+=1;}
+	                    if (obj_ini.role[co,v]=obj_ini.role[100][3]){col=obj_controller.bat_veteran_column;obj_ncombat.veterans+=1;}
+	                    if (obj_ini.role[co,v]=obj_ini.role[100][9]){col=obj_controller.bat_devastator_column;obj_ncombat.devastators+=1;}
+	                    if (obj_ini.role[co,v]=obj_ini.role[100][10]){col=obj_controller.bat_assault_column;obj_ncombat.assaults+=1;}
 	                    if (obj_ini.role[co,v]=obj_ini.role[100,17]){col=obj_controller.bat_librarian_column;obj_ncombat.librarians+=1;}
 	                    if (obj_ini.role[co,v]="Codiciery"){col=obj_controller.bat_librarian_column;obj_ncombat.librarians+=1;}
 	                    if (obj_ini.role[co,v]="Epistolary"){col=obj_controller.bat_librarian_column;obj_ncombat.librarians+=1;}
 	                    if (obj_ini.role[co,v]="Lexicanum"){col=obj_controller.bat_librarian_column;obj_ncombat.librarians+=1;}
-	                    if (obj_ini.role[co,v]=obj_ini.role[100,16]){col=obj_controller.bat_techmarine_column;obj_ncombat.techmarines+=1;}
-	                    if (obj_ini.role[co,v]=obj_ini.role[100,2]){col=obj_controller.bat_honor_column;obj_ncombat.honors+=1;}
-	                    if (obj_ini.role[co,v]=obj_ini.role[100,6]){col=obj_controller.bat_dreadnought_column;obj_ncombat.dreadnoughts+=1;}
-	                    if (obj_ini.role[co,v]="Venerable "+string(obj_ini.role[100,6])){col=obj_controller.bat_dreadnought_column;obj_ncombat.dreadnoughts+=1;}
-	                    if (obj_ini.role[co,v]=obj_ini.role[100,4]){col=obj_controller.bat_terminator_column;obj_ncombat.terminators+=1;}
+	                    if (obj_ini.role[co,v]=obj_ini.role[100][16]){col=obj_controller.bat_techmarine_column;obj_ncombat.techmarines+=1;}
+	                    if (obj_ini.role[co,v]=obj_ini.role[100][2]){col=obj_controller.bat_honor_column;obj_ncombat.honors+=1;}
+	                    if (obj_ini.role[co,v]=obj_ini.role[100][6]){col=obj_controller.bat_dreadnought_column;obj_ncombat.dreadnoughts+=1;}
+	                    if (obj_ini.role[co,v]="Venerable "+string(obj_ini.role[100][6])){col=obj_controller.bat_dreadnought_column;obj_ncombat.dreadnoughts+=1;}
+	                    if (obj_ini.role[co,v]=obj_ini.role[100][4]){col=obj_controller.bat_terminator_column;obj_ncombat.terminators+=1;}
                     
-	                    if (obj_ini.role[co,v]=obj_ini.role[100,15]) or (obj_ini.role[co,v]=obj_ini.role[100,14]){
-	                        if (obj_ini.role[co,v]=obj_ini.role[100,15]) then obj_ncombat.apothecaries+=1;
-	                        if (obj_ini.role[co,v]=obj_ini.role[100,14]){obj_ncombat.chaplains+=1;if (obj_ncombat.big_mofo>5) then obj_ncombat.big_mofo=5;}
+	                    if (obj_ini.role[co,v]=obj_ini.role[100][15]) or (obj_ini.role[co,v]=obj_ini.role[100][14]){
+	                        if (obj_ini.role[co,v]=obj_ini.role[100][15]) then obj_ncombat.apothecaries+=1;
+	                        if (obj_ini.role[co,v]=obj_ini.role[100][14]){obj_ncombat.chaplains+=1;if (obj_ncombat.big_mofo>5) then obj_ncombat.big_mofo=5;}
                         
 	                        col=obj_controller.bat_tactical_column;
 	                        if (obj_ini.armour[co,v]="Terminator Armour") then col=obj_controller.bat_terminator_column;
@@ -66,10 +66,10 @@ function scr_ship_battle(argument0, argument1) {
 	                        if (co=10) then col=obj_controller.bat_scout_column;
 	                    }
                     
-	                    if (obj_ini.role[co,v]=obj_ini.role[100,5]) or (obj_ini.role[co,v]="Standard Bearer") or (obj_ncombat.role[cooh,va]=obj_ini.role[100,7]){
-	                        if (obj_ini.role[co,v]=obj_ini.role[100,5]){obj_ncombat.captains+=1;if (obj_ncombat.big_mofo>5) then obj_ncombat.big_mofo=5;}
+	                    if (obj_ini.role[co,v]=obj_ini.role[100][5]) or (obj_ini.role[co,v]="Standard Bearer") or (obj_ncombat.role[cooh,va]=obj_ini.role[100][7]){
+	                        if (obj_ini.role[co,v]=obj_ini.role[100][5]){obj_ncombat.captains+=1;if (obj_ncombat.big_mofo>5) then obj_ncombat.big_mofo=5;}
 	                        if (obj_ini.role[co,v]="Standard Bearer") then obj_ncombat.standard_bearers+=1;
-							if (obj_ini.role[co,v]==obj_ini.role[100,7]) then obj_ncombat.champions+=1;
+							if (obj_ini.role[co,v]==obj_ini.role[100][7]) then obj_ncombat.champions+=1;
                         
 	                        if (co=1){
 	                            col=obj_controller.bat_veteran_column;
@@ -130,7 +130,7 @@ function scr_ship_battle(argument0, argument1) {
 	                        if (string_count("Dreadnought",targ.marine_armour[targ.men])>0) then targ.marine_ac[targ.men]=44;
 	                    }
                     
-	                    if (obj_ini.role[co,v]=obj_ini.role[100,6]) or (obj_ini.role[co,v]="Venerable "+string(obj_ini.role[100,6])){
+	                    if (obj_ini.role[co,v]=obj_ini.role[100][6]) or (obj_ini.role[co,v]="Venerable "+string(obj_ini.role[100][6])){
 	                        targ.marine_hp[targ.men]=targ.marine_hp[targ.men]*2;targ.dreads+=1;
 	                    }
                     

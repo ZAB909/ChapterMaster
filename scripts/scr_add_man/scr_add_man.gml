@@ -183,7 +183,7 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
     
     
 	    // Weapons
-	    if (choice_weapons=obj_ini.role[100,12]){wep2=obj_ini.wep2[100,12];wep1=obj_ini.wep1[100,12];arm=obj_ini.armour[100,12];}
+	    if (choice_weapons=obj_ini.role[100][12]){wep2=obj_ini.wep2[100,12];wep1=obj_ini.wep1[100,12];arm=obj_ini.armour[100,12];}
     
 	    var good1,good2,good3,good4;
 	    good1=0;good2=0;good3=0;good4=0;
@@ -257,12 +257,12 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 	        if (obj_ini.gear[target_company][good]!=choice_gear) and (choice_gear!="") then missing=1;
 	        if (obj_ini.mobi[target_company][good]!=mobility_items) and (mobility_items!="") then missing=1;
         
-	        if (choice_weapons=obj_ini.role[100,12]) and (corruption>=13) then obj_ini.god[target_company][good]=2;// Khorne!!!1 XDDDDDDD
+	        if (choice_weapons=obj_ini.role[100][12]) and (corruption>=13) then obj_ini.god[target_company][good]=2;// Khorne!!!1 XDDDDDDD
         
 	        if (missing=1) and (argument0="Scout"){
 	            if (string_count("has joined the X Company",obj_turn_end.alert_text[obj_turn_end.alerts])=1){
 
-	               scr_alert("red","recruiting","Not enough "+string(obj_ini.role[100,12])+" equipment in the armoury!",0,0);
+	               scr_alert("red","recruiting","Not enough "+string(obj_ini.role[100][12])+" equipment in the armoury!",0,0);
 	            }
 	        }
 	    }
