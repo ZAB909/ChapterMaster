@@ -536,7 +536,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if struct_exists(self, stats[stat_iter]){
 
 			if (is_array(variable_struct_get(self, stats[stat_iter]))){
-				//show_debug_message("is array");
 				edit_stat = variable_struct_get(self, stats[stat_iter]);
 				stat_mod =  floor(gauss(edit_stat[0], edit_stat[1]));
 

@@ -840,10 +840,10 @@ if (unload>0){
     for(var q=1; q<=500; q++){
         if (man[q]=="man") and (ma_loc[q]==selecting_location) and (man_sel[q]!=0){
             if (b==0) then b=ma_lid[q];
-            obj_ini.loc[manaj,ide[q]]=obj_ini.ship_location[b];
-            obj_ini.lid[manaj,ide[q]]=0;
-            obj_ini.button_width[manaj,ide[q]]=unload;
-            obj_ini.uid[manaj,ide[q]]=0;
+            obj_ini.loc[manaj][ide[q]]=obj_ini.ship_location[b];
+            obj_ini.lid[manaj][ide[q]]=0;
+            obj_ini.wid[manaj][ide[q]]=unload;
+            obj_ini.uid[manaj][ide[q]]=0;
             
             ma_loc[q]=obj_ini.ship_location[b];
             ma_lid[q]=0;
@@ -851,10 +851,10 @@ if (unload>0){
         }
         if (man[q]=="vehicle") and (ma_loc[q]==selecting_location) and (man_sel[q]!=0){
             if (b==0) then b=ma_lid[q];
-            obj_ini.veh_loc[manaj,ide[q]]=obj_ini.ship_location[b];
-            obj_ini.veh_lid[manaj,ide[q]]=0;
-            obj_ini.veh_wid[manaj,ide[q]]=unload;
-            obj_ini.veh_uid[manaj,ide[q]]=0;
+            obj_ini.veh_loc[manaj][ide[q]]=obj_ini.ship_location[b];
+            obj_ini.veh_lid[manaj][ide[q]]=0;
+            obj_ini.veh_wid[manaj][ide[q]]=unload;
+            obj_ini.veh_uid[manaj][ide[q]]=0;
             
             ma_loc[q]=obj_ini.ship_location[b];
             ma_lid[q]=0;
@@ -862,7 +862,9 @@ if (unload>0){
         }
     }
     selecting_location="";
-    for(var i=0; i<501; i++){man_sel[i]=0;}
+    for(var i=0; i<501; i++){
+        man_sel[i]=0;
+    }
     obj_ini.ship_carrying[b]-=man_size;
     sh_cargo[b]-=man_size;
     cooldown=10;

@@ -883,7 +883,6 @@ function scr_ui_manage() {
 	            temp1=unit.name_role();
 	            unit_specialism_option=false;
 	            // temp1=string(managing)+"."+string(ide[sel]);
-            
 	            temp2=string(ma_loc[sel]);
 	            if (unit_location[0]==location_types.planet){
 					temp2 = unit_location[2];
