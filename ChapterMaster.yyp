@@ -524,6 +524,7 @@
     {"id":{"name":"spr_ship_stalker","path":"sprites/spr_ship_stalker/spr_ship_stalker.yy",},},
     {"id":{"name":"spr_ba_mk5_helm","path":"sprites/spr_ba_mk5_helm/spr_ba_mk5_helm.yy",},},
     {"id":{"name":"spr_ship_prowler","path":"sprites/spr_ship_prowler/spr_ship_prowler.yy",},},
+    {"id":{"name":"spr_techmarine_core","path":"sprites/spr_techmarine_core/spr_techmarine_core.yy",},},
     {"id":{"name":"spr_bio_fighter","path":"sprites/spr_bio_fighter/spr_bio_fighter.yy",},},
     {"id":{"name":"spr_ship_cairn","path":"sprites/spr_ship_cairn/spr_ship_cairn.yy",},},
     {"id":{"name":"spr_ship_reaper","path":"sprites/spr_ship_reaper/spr_ship_reaper.yy",},},

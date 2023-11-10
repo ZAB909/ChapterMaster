@@ -132,7 +132,7 @@ global.trait_list = {
 	"tinkerer":{
 		technology:[5,2,"max"],
 		display_name:"Tinkerer",
-		flavour_text:"{0} has a knack for tinkering around with various technological devices and apparatuses",
+		flavour_text:"{0} has a knack for tinkering around with various technological devices and apparatuses often augmenting and improving his own equipment",
 	},
 	"lead_example":{
 		weapon_skill:[2,1,"max"],
@@ -584,22 +584,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			    	"mucranoid":obj_ini.mucranoid,
 			    	"membrane":obj_ini.membrane,
 			    	"voice":obj_ini.voice,
-			};
-			if (irandom(2)==0){
-				body[$ "torso"][$ "purity_seal"] = [irandom(1),irandom(1),irandom(1),];
-			}
-			if (irandom(3)==0){
-				body[$ "left_arm"][$ "purity_seal"] = [irandom(1),irandom(1),irandom(1),];
-			}
-			if (irandom(3)==0){
-				body[$ "right_arm"][$ "purity_seal"] = [irandom(1),irandom(1),irandom(1),];
-			}	
-			if (irandom(3)==0){
-				body[$ "left_leg"][$ "purity_seal"] = [irandom(1),irandom(1),irandom(1),];
-			}
-			if (irandom(3)==0){
-				body[$ "right_leg"][$ "purity_seal"] = [irandom(1),irandom(1),irandom(1),];
-			}															
+			};														
 			var mutation_names = struct_get_names(gene_seed_mutations)
 			for (var mute =0; mute <array_length(mutation_names); mute++){
 				if (gene_seed_mutations[$ mutation_names[mute]] == 0){
@@ -1175,7 +1160,22 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 		for(var i=0;i<bionic_count;i++){
 				add_bionics();
-		}		
+		}
+		if (irandom(3)==0){
+			body[$ "torso"][$ "purity_seal"] = [irandom(1),irandom(1),irandom(1),];
+		}
+		if (irandom(3)==0){
+			body[$ "left_arm"][$ "purity_seal"] = [irandom(1),irandom(1),irandom(1),];
+		}
+		if (irandom(3)==0){
+			body[$ "right_arm"][$ "purity_seal"] = [irandom(1),irandom(1),irandom(1),];
+		}	
+		if (irandom(3)==0){
+			body[$ "left_leg"][$ "purity_seal"] = [irandom(1),irandom(1),irandom(1),];
+		}
+		if (irandom(3)==0){
+			body[$ "right_leg"][$ "purity_seal"] = [irandom(1),irandom(1),irandom(1),];
+		}			
 	}
 	static alter_equipment = function(update_equipment, from_armoury=true, to_armoury=true){
 		var equip_areas = struct_get_names(update_equipment);

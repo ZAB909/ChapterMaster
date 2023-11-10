@@ -232,6 +232,7 @@
     {"name":"spr_ship_stalker","order":49,"path":"sprites/spr_ship_stalker/spr_ship_stalker.yy",},
     {"name":"spr_ba_mk5_helm","order":18,"path":"sprites/spr_ba_mk5_helm/spr_ba_mk5_helm.yy",},
     {"name":"spr_ship_prowler","order":51,"path":"sprites/spr_ship_prowler/spr_ship_prowler.yy",},
+    {"name":"spr_techmarine_core","order":54,"path":"sprites/spr_techmarine_core/spr_techmarine_core.yy",},
     {"name":"spr_bio_fighter","order":53,"path":"sprites/spr_bio_fighter/spr_bio_fighter.yy",},
     {"name":"spr_ship_cairn","order":55,"path":"sprites/spr_ship_cairn/spr_ship_cairn.yy",},
     {"name":"spr_ship_reaper","order":57,"path":"sprites/spr_ship_reaper/spr_ship_reaper.yy",},
