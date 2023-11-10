@@ -1,9 +1,20 @@
 // SAVE
 
+if(save_part = 1){
+    txt = "Praise to the Machine God";
+    with(obj_controller) {
+        scr_save(1, obj_saveload.save_number, obj_saveload.save_file);
+    }
+    obj_saveload.save[save_number] = 1;
+    trickle = 5;
+}
+
+/*
+
 if (save_part = 6) {
     txt = "Praise to the Machine God";
     with(obj_controller) {
-        scr_save(5, obj_saveload.save_number);
+        scr_save(5, obj_saveload.save_number, _save_file);
     }
     trickle = 50;
 }
@@ -11,7 +22,7 @@ if (save_part = 6) {
 if (save_part = 5) {
     txt = "Astartes Registry";
     with(obj_controller) {
-        scr_save(4, obj_saveload.save_number);
+        scr_save(4, obj_saveload.save_number, _save_file);
     }
     trickle = 40;
     save_part = 6;
@@ -20,7 +31,7 @@ if (save_part = 5) {
 if (save_part = 4) {
     txt = "Sacred Anointing of Oil";
     with(obj_controller) {
-        scr_save(3, obj_saveload.save_number);
+        scr_save(3, obj_saveload.save_number, _save_file);
     }
     trickle = 10;
     save_part = 5;
@@ -29,7 +40,7 @@ if (save_part = 4) {
 if (save_part = 3) {
     txt = "Charting Sector";
     with(obj_controller) {
-        scr_save(2, obj_saveload.save_number);
+        scr_save(2, obj_saveload.save_number, _save_file);
     }
     trickle = 10;
     save_part = 4;
@@ -38,14 +49,14 @@ if (save_part = 3) {
 if (save_part = 2) {
     txt = "Finding Servo Skulls";
     with(obj_controller) {
-        scr_save(1, obj_saveload.save_number);
+        scr_save(1, obj_saveload.save_number, _save_file);
     }
     trickle = 10;
     save_part = 3;
 }
 
 if (save_part = 1) {
-    if (file_exists("save" + string(save_number) + ".ini")) then file_delete("save" + string(save_number) + ".ini");
+    if (file_exists(_save_file)) then file_delete(_save_file);
     if (file_exists("screen" + string(save_number) + ".png")) then file_delete("screen" + string(save_number) + ".png");
     ini_open("saves.ini");
     ini_section_delete(string(save_number));
@@ -55,6 +66,7 @@ if (save_part = 1) {
     trickle = 10;
     txt = "Preparing";
 }
+*/
 
 // LOAD
 

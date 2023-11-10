@@ -4,6 +4,7 @@ menu = 0; // 1 : save, 2: load
 save_part = 0;
 load_part = 0;
 save_number = 0;
+save_file = "";
 trickle = 0;
 txt = "";
 hide = 0;

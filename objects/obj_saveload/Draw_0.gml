@@ -275,55 +275,52 @@ if __b__ {
                     draw_rectangle(x2 + 1317, y2 + 113, x2 + 1461, y2 + 146, 0);
                     draw_set_alpha(1);
                     if (mouse_left >= 1) and(cooldown <= 0) {
-                        var onceh;
-                        onceh = 0;
+                        var _clicked_exactly_once = 0;
                         if (instance_exists(obj_main_menu)) {
                             with(obj_main_menu) {
                                 part_particles_clear(p_system);
                             }
                         }
 
+                        // Check save folder
+                        var _saves_folder = program_directory + "\saves";
+                        if (!directory_exists(_saves_folder)) then directory_create(_saves_folder);
+
+                        // Check open slot 
+                        var _open_slot_id = save[o];
+                        var _potential_open_slot_save_file = _saves_folder + $"\\save{_open_slot_id}.json";
+
                         // If open slot then set the save.ini to the maximum
-                        if (!file_exists("save" + string(save[o]) + ".ini")) or(save[o] = 0) and(onceh = 0) {
-                            save_part = 1;
-                            menu = 0;
+                        if (!file_exists(_potential_open_slot_save_file)) or(_open_slot_id = 0) and(_clicked_exactly_once = 0) {
                             save_number = max_ini;
-                            obj_cursor.image_alpha = 0;
-                            splash = choose(0, 1, 2, 3, 4);
-                            with(obj_new_button) {
-                                instance_destroy();
-                            }
-                            with(obj_ingame_menu) {
-                                instance_destroy();
-                            }
-                            // Other here
-                            alarm[0] = 1;
-                            onceh = 1;
                         }
                         // If file exists then overright
-                        if (file_exists("save" + string(save[o]) + ".ini")) {
-                            file_delete("save" + string(save[o]) + ".ini");
-                            if (file_exists("screen" + string(save[o]) + ".png")) then file_delete("screen" + string(save[o]) + ".png");
-                            save_part = 1;
-                            menu = 0;
+                        if (file_exists(_potential_open_slot_save_file)) {
+                            file_delete(_potential_open_slot_save_file);
                             save_number = o;
-                            obj_cursor.image_alpha = 0;
-                            splash = choose(0, 1, 2, 3, 4);
-                            with(obj_new_button) {
-                                instance_destroy();
-                            }
-                            with(obj_ingame_menu) {
-                                instance_destroy();
-                            }
-                            // Other here
-                            alarm[0] = 1;
-                            onceh = 1;
                         }
+
+                        // Set rest of state
+						save_file = _saves_folder + $"\\save{save_number}.json";
+                        save_part = 1;
+                        menu = 0;
+                        obj_cursor.image_alpha = 0;
+                        splash = choose(0, 1, 2, 3, 4);
+                        with(obj_new_button) {
+                            instance_destroy();
+                        }
+                        with(obj_ingame_menu) {
+                            instance_destroy();
+                        }
+
+                        // Other here
+                        alarm[0] = 1;
+                        _clicked_exactly_once = 1;
                     }
                 }
             }
 
-            o += 1;
+            o++;
             y2 += 158;
         }
 
