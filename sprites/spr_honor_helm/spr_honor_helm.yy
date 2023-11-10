@@ -30,8 +30,8 @@
   "nineSlice": null,
   "origin": 0,
   "parent": {
-    "name": "Gear",
-    "path": "folders/Sprites/New UI/Gear.yy",
+    "name": "helms",
+    "path": "folders/Sprites/New UI/Marine Viewer/helms.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

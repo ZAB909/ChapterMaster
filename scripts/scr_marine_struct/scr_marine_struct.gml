@@ -748,6 +748,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					strength++;
 					dexterity -= 2;
 				}else if (array_contains(["left_eye", "right_eye"], new_bionic_pos)){
+					body[$ new_bionic_pos].variant=irandom(2);
 					constitution += 1;
 					wisdom += 1;
 					dexterity++;
