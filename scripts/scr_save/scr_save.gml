@@ -1,17 +1,12 @@
-function scr_save(save_slot, save_id) {
-
-    var num, tot;
-    num = 0;
-    tot = 0;
-
-    num = instance_number(obj_star);
-    instance_array[tot] = 0;
+function scr_save(save_process_stage, save_id) {
+    var num = instance_number(obj_star);
+    instance_array[0] = 0;
 
     // if (file_exists("save1.ini")) then file_delete("save1.ini");
     // argument 0 = the part of the save to do
     //save_id = the save ID
 
-    if (save_slot = 1) or(save_slot = 0) {
+    if (save_process_stage = 1) or(save_process_stage = 0) {
         debugl("Saving to slot " + string(save_id));
         ini_open("save" + string(save_id) + ".ini");
         // Global variables
@@ -358,7 +353,7 @@ function scr_save(save_slot, save_id) {
     }
 
 
-    if (save_slot = 2) or(save_slot = 0) {
+    if (save_process_stage = 2) or(save_process_stage = 0) {
         debugl("Saving to slot " + string(save_id) + " part 2");
         ini_open("save" + string(save_id) + ".ini");
         // Stars
@@ -489,10 +484,8 @@ function scr_save(save_slot, save_id) {
         }
 
         // PLAYER FLEET OBJECTS
-        num = 0;
-        tot = 0;
         num = instance_number(obj_p_fleet);
-        instance_array[tot] = 0;
+        instance_array[0] = 0;
 
         for (i = 0; i < num; i += 1) {
             instance_array[i] = instance_find(obj_p_fleet, i);
@@ -545,10 +538,8 @@ function scr_save(save_slot, save_id) {
         }
 
         // ENEMY FLEET OBJECTS
-        num = 0;
-        tot = 0;
         num = instance_number(obj_en_fleet);
-        instance_array[tot] = 0;
+        instance_array[0] = 0;
 
         for (i = 0; i < num; i += 1) {
             instance_array[i] = instance_find(obj_en_fleet, i);
@@ -780,7 +771,7 @@ function scr_save(save_slot, save_id) {
     }
 
 
-    if (save_slot = 3) or(save_slot = 0) {
+    if (save_process_stage = 3) or(save_process_stage = 0) {
         debugl("Saving to slot " + string(save_id) + " part 3");
         ini_open("save" + string(save_id) + ".ini");
         var coh, mah, good;
@@ -917,7 +908,7 @@ function scr_save(save_slot, save_id) {
         ini_close();
     }
 
-    if (save_slot = 4) or(save_slot = 0) {
+    if (save_process_stage = 4) or(save_process_stage = 0) {
         debugl("Saving to slot " + string(save_id) + " part 4");
         ini_open("save" + string(save_id) + ".ini");
         var coh, mah, good;
@@ -1006,7 +997,7 @@ function scr_save(save_slot, save_id) {
         ini_close();
     }
 
-    if (save_slot = 5) or(save_slot = 0) {
+    if (save_process_stage = 5) or(save_process_stage = 0) {
         ini_open("save" + string(save_id) + ".ini");
 
         obj_saveload.hide = 1;

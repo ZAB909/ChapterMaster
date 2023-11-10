@@ -1,4 +1,4 @@
-function scr_load(argument0, argument1) {
+function scr_load(load_process_stage, save_id) {
 
     function load_marine_struct(company, marine) {
         var marStruct = ini_read_string("Mar", "Struct" + string(company) + "." + string(marine), "");
@@ -10,20 +10,20 @@ function scr_load(argument0, argument1) {
             obj_ini.TTRPG[company, marine] = new TTRPG_stats("chapter", company, marine, "blank");
         }
     };
-    var rang, i, g, stars, pfleets, efleets;
-    rang = 0;
-    i = 0;
-    g = 0;
-    stars = 0;
-    pfleets = 0;
-    efleets = 0;
+
+    var rang = 0;
+    var i = 0;
+    var g = 0;
+    var stars = 0;
+    var pfleets = 0;
+    var efleets = 0;
 
 
 
-    if (argument0 = 1) or(argument0 = 0) {
+    if (load_process_stage = 1) or(load_process_stage = 0) {
 
-        debugl("Loading slot " + string(argument1));
-        var save_file_name = "save" + string(argument1) + ".ini";
+        debugl("Loading slot " + string(save_id));
+        var save_file_name = "save" + string(save_id) + ".ini";
 
         if (file_exists("tsave.ini")) {
             // file_copy() will fail if destination file already exists
@@ -53,11 +53,8 @@ function scr_load(argument0, argument1) {
         obj_controller.play_time = ini_read_real("Save", "play_time", 0);
 
         obj_ini.progenitor = ini_read_real("Save", "founding", 0);
-        // global.founding_secret=ini_read_string("Save","founding_secret","Error");
         global.custom = ini_read_real("Save", "custom", 1);
         stars = ini_read_real("Save", "stars", 0);
-        // pfleets=ini_read_real("Save","p_fleets",0);
-        // efleets=ini_read_real("Save","en_fleets",0);
         g = ini_read_real("Save", "sod", 0);
         random_set_seed(g);
         g = 0;
@@ -70,7 +67,7 @@ function scr_load(argument0, argument1) {
         }
 
         // obj_controller variables here
-        obj_controller.load_game = argument1;
+        obj_controller.load_game = save_id;
         global.cheat_req = ini_read_real("boolean", "cheat_req", 0);
         global.cheat_gene = ini_read_real("boolean", "cheat_gene", 0);
         global.cheat_debug = ini_read_real("boolean", "cheat_debug", 0);
@@ -518,8 +515,8 @@ function scr_load(argument0, argument1) {
     }
 
 
-    if (argument0 = 2) or(argument0 = 0) {
-        debugl("Loading slot " + string(argument1) + " part 2");
+    if (load_process_stage = 2) or(load_process_stage = 0) {
+        debugl("Loading slot " + string(save_id) + " part 2");
         ini_open("tsave.ini");
 
         stars = ini_read_real("Save", "stars", 0);
@@ -802,8 +799,8 @@ function scr_load(argument0, argument1) {
 
 
 
-    if (argument0 = 3) or(argument0 = 0) {
-        debugl("Loading slot " + string(argument1) + " part 3");
+    if (load_process_stage = 3) or(load_process_stage = 0) {
+        debugl("Loading slot " + string(save_id) + " part 3");
         ini_open("tsave.ini");
 
         var coh, mah, good;
@@ -962,8 +959,8 @@ function scr_load(argument0, argument1) {
 
 
 
-    if (argument0 = 4) or(argument0 = 0) {
-        debugl("Loading slot " + string(argument1) + " part 4"); // PLAYER FLEET OBJECTS
+    if (load_process_stage = 4) or(load_process_stage = 0) {
+        debugl("Loading slot " + string(save_id) + " part 4"); // PLAYER FLEET OBJECTS
         ini_open("tsave.ini");
 
         var num, i, fla;
@@ -1094,7 +1091,7 @@ function scr_load(argument0, argument1) {
         ini_close();
     }
 
-    if (argument0 = 5) or(argument0 = 0) {
+    if (load_process_stage = 5) or(load_process_stage = 0) {
         ini_open("tsave.ini");
         // file_delete("tsave.ini");
 
@@ -1321,7 +1318,7 @@ function scr_load(argument0, argument1) {
 
 
 
-        if (file_exists("save" + string(argument1) + "log.ini")) {
+        if (file_exists("save" + string(save_id) + "log.ini")) {
             ini_open("tsave.ini");
 
             var g, bobby, bobby2, stars;
@@ -1338,7 +1335,7 @@ function scr_load(argument0, argument1) {
             file_delete("tsave.ini");
             bobby += string(g) + "|";
 
-            ini_open("save" + string(argument1) + "log.ini");
+            ini_open("save" + string(save_id) + "log.ini");
             bobby2 = string(ini_read_real("Main", "data1", random(500))) + "|";
             bobby2 += ini_read_string("Main", "data2", "error") + "|";
             bobby2 += ini_read_string("Main", "data3", "error") + "|";
@@ -1358,7 +1355,7 @@ function scr_load(argument0, argument1) {
         obj_saveload.alarm[1] = 30;
         obj_controller.invis = false;
         global.load = 0;
-        debugl("Loading slot " + string(argument1) + " completed");
+        debugl("Loading slot " + string(save_id) + " completed");
     }
 
 
