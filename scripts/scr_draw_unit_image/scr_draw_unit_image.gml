@@ -542,7 +542,43 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
                  }
                 }
             }
-			
+
+            //purity seals/decorations
+            if (base_sprite==0){
+                if (struct_exists(body[$ "torso"],"purity_seal")){
+                    if (body[$ "torso"][$"purity_seal"][2]==1){
+                        draw_sprite(spr_purity_seal,2,xx+x_draw-24,yy+y_draw+14);
+                    }
+                    if (body[$ "torso"][$"purity_seal"][0]==1){
+                        draw_sprite(spr_purity_seal,0,xx+x_draw-44,yy+y_draw+18);
+                    }
+                    if (body[$ "torso"][$"purity_seal"][1]==1){
+                        draw_sprite(spr_purity_seal,0,xx+x_draw-6,yy+y_draw+16);
+                    }                                       
+                }
+                if (struct_exists(body[$ "left_arm"],"purity_seal")){
+                    if (body[$ "left_arm"][$"purity_seal"][0]==1){
+                        draw_sprite(spr_purity_seal,1,xx+x_draw+70,yy+y_draw);
+                    }
+                    if (body[$ "left_arm"][$"purity_seal"][1]==1){
+                        draw_sprite(spr_purity_seal,0,xx+x_draw+26,yy+y_draw+7);
+                    }
+                    if (body[$ "left_arm"][$"purity_seal"][2]==1){
+                        draw_sprite(spr_purity_seal,0,xx+x_draw+15,yy+y_draw+10);
+                    }                                       
+                }
+                if (struct_exists(body[$ "right_arm"],"purity_seal")){
+                    if (body[$ "right_arm"][$"purity_seal"][0]==1){
+                        draw_sprite(spr_purity_seal,2,xx+x_draw-54,yy+y_draw-3);
+                    }
+                    if (body[$ "right_arm"][$"purity_seal"][0]==1){
+                        draw_sprite(spr_purity_seal,0,xx+x_draw-72,yy+y_draw+8);
+                    }
+                    if (body[$ "right_arm"][$"purity_seal"][0]==1){
+                        draw_sprite(spr_purity_seal,0,xx+x_draw-57,yy+y_draw+12);
+                    }                    
+                }            
+            }			
 			// bionics
 			
 			
@@ -588,25 +624,6 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
                 draw_sprite(spr_honor_helm,helm_ii,xx+x_draw-2,yy+y_draw-11);     
 
 			}
-            if (base_sprite==0){
-                if (struct_exists(body[$ "torso"],"purity_seal")){
-                    switch(body[$ "torso"][$"purity_seal"]){
-                        case 0:
-                            draw_sprite(spr_purity_seal,0,xx+x_draw,yy+y_draw);
-                        case 1:
-                            draw_sprite(spr_purity_seal,3,xx+x_draw,yy+y_draw);
-                        case 2:
-                            draw_sprite(spr_purity_seal,0,xx+x_draw,yy+y_draw);
-                            draw_sprite(spr_purity_seal,3,xx+x_draw,yy+y_draw);                                                       
-                    }
-                }
-                if (struct_exists(body[$ "right_arm"],"purity_seal")){
-                    draw_sprite(spr_purity_seal,1,xx+x_draw,yy+y_draw);
-                }
-                if (struct_exists(body[$ "left_arm"],"purity_seal")){
-                    draw_sprite(spr_purity_seal,2,xx+x_draw,yy+y_draw);
-                }               
-            }
             // Weapons for above arms
             if (ui_weapon[1]!=0) and (sprite_exists(ui_weapon[1])) and (ui_above[1]==true) and (fix_left<8){
                 if (ui_twoh[1]==false) and (ui_twoh[2]==false){

@@ -1,7 +1,7 @@
 {
   "FolderOrderSettings": [
-    {"name":"helms","order":52,"path":"folders/Sprites/New UI/Marine Viewer/helms.yy",},
     {"name":"decorations","order":53,"path":"folders/Sprites/New UI/Marine Viewer/decorations.yy",},
+    {"name":"helms","order":52,"path":"folders/Sprites/New UI/Marine Viewer/helms.yy",},
   ],
   "ResourceOrderSettings": [
     {"name":"spr_credits_bg","order":1,"path":"sprites/spr_credits_bg/spr_credits_bg.yy",},

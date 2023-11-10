@@ -586,14 +586,20 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			    	"voice":obj_ini.voice,
 			};
 			if (irandom(2)==0){
-				body[$ "torso"][$ "purity_seal"] = irandom(2);
+				body[$ "torso"][$ "purity_seal"] = [irandom(1),irandom(1),irandom(1),];
 			}
 			if (irandom(3)==0){
-				body[$ "left_arm"][$ "purity_seal"] = 1;
+				body[$ "left_arm"][$ "purity_seal"] = [irandom(1),irandom(1),irandom(1),];
 			}
 			if (irandom(3)==0){
-				body[$ "right_arm"][$ "purity_seal"] = 1;
-			}									
+				body[$ "right_arm"][$ "purity_seal"] = [irandom(1),irandom(1),irandom(1),];
+			}	
+			if (irandom(3)==0){
+				body[$ "left_leg"][$ "purity_seal"] = [irandom(1),irandom(1),irandom(1),];
+			}
+			if (irandom(3)==0){
+				body[$ "right_leg"][$ "purity_seal"] = [irandom(1),irandom(1),irandom(1),];
+			}															
 			var mutation_names = struct_get_names(gene_seed_mutations)
 			for (var mute =0; mute <array_length(mutation_names); mute++){
 				if (gene_seed_mutations[$ mutation_names[mute]] == 0){
