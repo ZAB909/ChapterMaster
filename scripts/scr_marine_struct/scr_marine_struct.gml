@@ -566,7 +566,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}
 		}
 	};
-	
+	body = {"left_leg":{}, "right_leg":{}, "torso":{}, "left_arm":{}, "right_arm":{}, "left_eye":{}, "right_eye":{},"throat":{}, "jaw":{}}; //body parts list can be extended as much as people want
 	switch base_group{
 		case "astartes":				//basic marine class //adds specific mechanics not releveant to most units
 			if (faction ="chapter"){
@@ -585,6 +585,15 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			    	"membrane":obj_ini.membrane,
 			    	"voice":obj_ini.voice,
 			};
+			if (irandom(2)==0){
+				body[$ "torso"][$ "purity_seal"] = irandom(2);
+			}
+			if (irandom(3)==0){
+				body[$ "left_arm"][$ "purity_seal"] = 1;
+			}
+			if (irandom(3)==0){
+				body[$ "right_arm"][$ "purity_seal"] = 1;
+			}									
 			var mutation_names = struct_get_names(gene_seed_mutations)
 			for (var mute =0; mute <array_length(mutation_names); mute++){
 				if (gene_seed_mutations[$ mutation_names[mute]] == 0){
@@ -715,7 +724,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		/*case "skitarii":
 			break;*/	
 	};
-	body = {"left_leg":{}, "right_leg":{}, "torso":{}, "left_arm":{}, "right_arm":{}, "left_eye":{}, "right_eye":{},"throat":{}, "jaw":{}}; //body parts list can be extended as much as people want
 
 	static race = function(){
 		return obj_ini.race[company,marine_number];
