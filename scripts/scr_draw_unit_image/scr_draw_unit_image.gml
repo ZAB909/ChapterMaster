@@ -45,7 +45,7 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
         // Dark Angels bone color
         if (global.chapter_name=="Dark Angels")and (company=1){
             if (role()==obj_ini.role[100,4])then ui_coloring="bone";
-            if (managing==1){
+            if (conmpany==1){
                 if ((string_count("Terminator",ma_armour[sel])>0) or (ma_armour[sel]=="Tartaros")){
                     if (role()==obj_ini.role[100,5]) then ui_coloring="bone";
                     if (role()==obj_ini.role[100,7]) then ui_coloring="bone";
@@ -442,6 +442,18 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
                     specific_armour_sprite = spr_maximus_colors;
                 } else if (armour()=="MK5 Heresy"){
                     specific_armour_sprite = spr_heresy_colors;
+                    if (global.chapter_name=="Dark Angels") or (obj_ini.progenitor==1){specific_helm = spr_da_mk5_helm;}
+                    else if (global.chapter_name=="White Scars") or (obj_ini.progenitor==2){specific_helm = spr_ws_mk5_helm;}
+                    else if (global.chapter_name=="Space Wolves") or (obj_ini.progenitor==3){specific_helm = spr_sw_mk5_helm;}
+                    else if (global.chapter_name=="Imperial Fists") or (obj_ini.progenitor==4)  {specific_helm = spr_if_mk5_helm;}
+                    else if (global.chapter_name="Blood Angels") or (obj_ini.progenitor=5){specific_helm = spr_ba_mk5_helm;}
+                    else if (global.chapter_name=="Iron Hands") or (obj_ini.progenitor==6) {specific_helm = spr_ih_mk5_helm;}
+                    else if (global.chapter_name=="Ultramarines") or (obj_ini.progenitor==7){specific_helm = spr_um_mk5_helm;}
+                    else if (global.chapter_name=="Salamanders") or (obj_ini.progenitor==8){specific_helm = spr_sal_mk5_helm;}
+                    else if (global.chapter_name=="Raven Guard") or (obj_ini.progenitor==9)  {specific_helm = spr_rg_mk5_helm;}
+                    else {
+                         specific_helm = spr_um_mk5_helm;
+                    }                    
                 } else if (armour()=="MK6 Corvus"){
                     specific_armour_sprite = spr_beakie_colors;
                     if (global.chapter_name=="Dark Angels") or (obj_ini.progenitor==1){specific_helm = spr_da_mk6_helm;}
@@ -584,7 +596,7 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
 			
 			for (body_part = 0; body_part<array_length(global.body_parts);body_part++){
 				if (struct_exists(body[$ global.body_parts[body_part]], "bionic")){
-					if (!array_contains(["Dreadnought", "Terminator Armour", "Tartaros"], armour())){
+					if (base_sprite<=0){
 						if (global.body_parts[body_part] == "left_eye") {
 							if (armour() == "MK3 Iron Armour"){
 								draw_sprite(spr_bionics_eye,0,xx+x_draw-2,yy+y_draw)
