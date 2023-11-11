@@ -69,8 +69,10 @@ if (instance_exists(obj_creation)) then custom=obj_creation.custom;
 if (global.load=0) then scr_initialize_custom();
 
 Serialize = function() {
-    var _ini_data =
-    {
+
+    // general data
+
+    var _ini_data = {
         sector_name,
         use_custom_icon,
         progenitor,
@@ -160,28 +162,38 @@ Serialize = function() {
         high_apothecary_name,
         forge_master_name,
         lord_admiral_name,
-        equipment:[],
-        artifacts:[],
-        ships:[],
-        vehicles:[],
+        equipment: [],
+        artifacts: [],
+        ships: [],
+        vehicles: [],
+        marines: [],
+        squads:[],
+        squad_types,
     };
 
     // TODO add indexes to allow easier debugging?
 
-    for(var i = 0; i <= 20; i++){
+    // Company titles // TODO add Companies as well?
+
+    for (var i = 0; i <= 20; i++) {
         _ini_data.company_titles[i] = $"{obj_ini.company_title[i]}";
     }
 
-    for(var i = 0; i <= 120; i++){
+    // Slave batches
+
+    for (var i = 0; i <= 120; i++) {
         _ini_data.slave_batches[i] = {
             slave_batch_num: obj_ini.slave_batch_num[i],
             slave_batch_eta: obj_ini.slave_batch_eta[i]
         }
     }
-    
-    for(var i = 1; i <= 150; i++){
 
-        if(obj_ini.equipment[i] == "") then continue;
+    // Equipment
+
+    for (var i = 1; i <= 150; i++) {
+
+        if (obj_ini.equipment[i] == "") then
+        continue;
 
         _ini_data.equipment[i] = {
             name: obj_ini.equipment[i],
@@ -191,10 +203,13 @@ Serialize = function() {
         }
     }
 
-    for(var i = 1; i <= 150; i++){
+    // Artifacts
 
-        if(obj_ini.artifact[i] == "") then continue;
-        
+    for (var i = 1; i <= 150; i++) {
+
+        if (obj_ini.artifact[i] == "") then
+        continue;
+
         _ini_data.artifacts[i] = {
             name: obj_ini.artifact[i],
             tags: obj_ini.artifact_tags[i],
@@ -205,56 +220,59 @@ Serialize = function() {
         }
     }
 
-    for(var i = 1; i <= 200; i++){
+    // Ships
+
+    for (var i = 1; i <= 200; i++) {
         _ini_data.ships[i] = {
-                name: obj_ini.ship[i],
-                uid: obj_ini.ship_uid[i],
-                class: obj_ini.ship_class[i],
-                size: obj_ini.ship_size[i],
-                leadership: obj_ini.ship_leadership[i],
-                hp: obj_ini.ship_hp[i],
-                maxhp: obj_ini.ship_maxhp[i],
-                location: obj_ini.ship_location[i],
-                shields: obj_ini.ship_shields[i],
-                conditions: obj_ini.ship_conditions[i],
-                speed: obj_ini.ship_speed[i],
-                turning: obj_ini.ship_turning[i],
-                front_armour: obj_ini.ship_front_armour[i],
-                other_armour: obj_ini.ship_other_armour[i],
-                weapons_amount: obj_ini.ship_weapons[i],
-                weapons: [
-                    {
-                        name: obj_ini.ship_wep[i][1],
-                        facing: obj_ini.ship_wep_facing[i][1],
-                        condition: obj_ini.ship_wep_condition[i][1],
-                    },
-                    {
-                        name: obj_ini.ship_wep[i][2],
-                        facing: obj_ini.ship_wep_facing[i][2],
-                        condition: obj_ini.ship_wep_condition[i][2],
-                    },
-                    {
-                        name: obj_ini.ship_wep[i][3],
-                        facing: obj_ini.ship_wep_facing[i][3],
-                        condition: obj_ini.ship_wep_condition[i][3],
-                    },
-                    {
-                        name: obj_ini.ship_wep[i][4],
-                        facing: obj_ini.ship_wep_facing[i][4],
-                        condition: obj_ini.ship_wep_condition[i][4],
-                    },
-                    {
-                        name: obj_ini.ship_wep[i][5],
-                        facing: obj_ini.ship_wep_facing[i][5],
-                        condition: obj_ini.ship_wep_condition[i][5],
-                    },
-                ],
-                capacity: obj_ini.ship_capacity[i],
-                carrying: obj_ini.ship_carrying[i],
-                contents: obj_ini.ship_contents[i],
-                turrets: obj_ini.ship_turrets[i],            
+            name: obj_ini.ship[i],
+            uid: obj_ini.ship_uid[i],
+            class: obj_ini.ship_class[i],
+            size: obj_ini.ship_size[i],
+            leadership: obj_ini.ship_leadership[i],
+            hp: obj_ini.ship_hp[i],
+            maxhp: obj_ini.ship_maxhp[i],
+            location: obj_ini.ship_location[i],
+            shields: obj_ini.ship_shields[i],
+            conditions: obj_ini.ship_conditions[i],
+            speed: obj_ini.ship_speed[i],
+            turning: obj_ini.ship_turning[i],
+            front_armour: obj_ini.ship_front_armour[i],
+            other_armour: obj_ini.ship_other_armour[i],
+            weapons_amount: obj_ini.ship_weapons[i],
+            weapons: [{
+                    name: obj_ini.ship_wep[i][1],
+                    facing: obj_ini.ship_wep_facing[i][1],
+                    condition: obj_ini.ship_wep_condition[i][1],
+                },
+                {
+                    name: obj_ini.ship_wep[i][2],
+                    facing: obj_ini.ship_wep_facing[i][2],
+                    condition: obj_ini.ship_wep_condition[i][2],
+                },
+                {
+                    name: obj_ini.ship_wep[i][3],
+                    facing: obj_ini.ship_wep_facing[i][3],
+                    condition: obj_ini.ship_wep_condition[i][3],
+                },
+                {
+                    name: obj_ini.ship_wep[i][4],
+                    facing: obj_ini.ship_wep_facing[i][4],
+                    condition: obj_ini.ship_wep_condition[i][4],
+                },
+                {
+                    name: obj_ini.ship_wep[i][5],
+                    facing: obj_ini.ship_wep_facing[i][5],
+                    condition: obj_ini.ship_wep_condition[i][5],
+                },
+            ],
+            capacity: obj_ini.ship_capacity[i],
+            carrying: obj_ini.ship_carrying[i],
+            contents: obj_ini.ship_contents[i],
+            turrets: obj_ini.ship_turrets[i],
         }
     }
+
+    // Vehicles
 
     // I think the below tries to iterate over vehicles backwards
     // TODO but why not forwards?
@@ -262,22 +280,21 @@ Serialize = function() {
     var company_index = 10;
     var entity_in_company_index = 100;
     var safety_threshold = 1100;
-    var iteration = 0;
-   
+    var iteration = -1;
+
     // TODO refactor into only checking actually existing entities
-    while(!is_iteration_finished)
-    {
+    while (!is_iteration_finished) {
         iteration++;
 
         entity_in_company_index--;
 
-        if(entity_in_company_index == 0){
+        if (entity_in_company_index == 0) {
             // go to next company, this one is fully checked
             entity_in_company_index = 100;
             company_index--;
         }
 
-        if(obj_ini.veh_role[company_index,entity_in_company_index] != ""){
+        if (obj_ini.veh_role[company_index, entity_in_company_index] != "") {
             _ini_data.vehicles[iteration] = {
                 company_index: company_index,
                 entity_in_company_index: entity_in_company_index,
@@ -287,7 +304,7 @@ Serialize = function() {
                 lid: obj_ini.veh_lid[company_index][entity_in_company_index], // TODO Got no idea what this does
                 uid: obj_ini.veh_uid[company_index][entity_in_company_index], // TODO Got no idea what this does
                 wid: obj_ini.veh_wid[company_index][entity_in_company_index], // TODO Got no idea what this does
-                weapons:[
+                weapons: [
                     obj_ini.veh_wep1[company_index][entity_in_company_index],
                     obj_ini.veh_wep2[company_index][entity_in_company_index],
                     obj_ini.veh_wep3[company_index][entity_in_company_index],
@@ -297,19 +314,128 @@ Serialize = function() {
                 hp: obj_ini.veh_hp[company_index][entity_in_company_index],
                 chaos_corruption_level: obj_ini.veh_chaos[company_index][entity_in_company_index],
                 pilots: obj_ini.veh_pilots[company_index][entity_in_company_index], // TODO this one looks not fully implemented
-             }
+            }
         }
 
-        if(company_index == 1 and entity_in_company_index == 1){
+        if (company_index == 1 and entity_in_company_index == 1) {
             // At this point all possible vehicles have been checked
             is_iteration_finished = true;
         }
 
-        if(iteration >= safety_threshold){
+        if (iteration >= safety_threshold) {
             debugl("obj_ini.Serialize(): serializing Vehicles took too long, cancelling...");
             is_iteration_finished = true;
         }
-        
+
+    }
+
+    // Marines
+
+    company_index = 100;
+    entity_in_company_index = 1;
+    iterator = -1;
+
+    // HQ Marines??
+    for (entity_in_company_index = 1; entity_in_company_index <= 30; entity_in_company_index++) {
+        iterator++;
+        if (obj_ini.role[company_index][entity_in_company_index] != "") {
+            _ini_data.marines[iterator] = {
+                race: obj_ini.race[company_index][entity_in_company_index],
+                name: obj_ini.name[company_index][entity_in_company_index],
+                role: obj_ini.role[company_index][entity_in_company_index],
+                weapon_1: obj_ini.wep1[company_index][entity_in_company_index],
+                weapon_2: obj_ini.wep2[company_index][entity_in_company_index],
+                armour: obj_ini.armour[company_index][entity_in_company_index],
+                gear: obj_ini.gear[company_index][entity_in_company_index],
+                mobility_item: obj_ini.mobi[company_index][entity_in_company_index],
+            }
+        }
+    }
+
+    // Company Marines?
+    for (company_index = 0; company_index <= 10; company_index++) {
+        for (entity_in_company_index = 0; entity_in_company_index <= 500; entity_in_company_index++) {
+            iterator++;
+            if (obj_ini.name[company_index][entity_in_company_index] != "") {
+                _ini_data.marines[iterator] = {
+                    race: obj_ini.race[company_index][entity_in_company_index],
+                    location: obj_ini.loc[company_index][entity_in_company_index],
+                    name: obj_ini.name[company_index][entity_in_company_index],
+                    role: obj_ini.role[company_index][entity_in_company_index],
+                    lid: obj_ini.lid[company_index][entity_in_company_index], // TODO Got no idea what this does
+                    bio: obj_ini.bio[company_index][entity_in_company_index], // TODO Got no idea what this does
+                    wid: obj_ini.wid[company_index][entity_in_company_index], // TODO Got no idea what this does
+                    weapon_1: obj_ini.wep1[company_index][entity_in_company_index],
+                    weapon_2: obj_ini.wep2[company_index][entity_in_company_index],
+                    armour: obj_ini.armour[company_index][entity_in_company_index],
+                    gear: obj_ini.gear[company_index][entity_in_company_index],
+                    mobility_item: obj_ini.mobi[company_index][entity_in_company_index],
+                    hp: obj_ini.TTRPG[company_index][entity_in_company_index].hp(),
+                    chaos_corruption_level: obj_ini.chaos[company_index][entity_in_company_index],
+                    experience: obj_ini.experience[company_index][entity_in_company_index],
+                    age: obj_ini.age[company_index][entity_in_company_index],
+                    is_special: obj_ini.spe[company_index][entity_in_company_index], // TODO Got no idea what this does
+                    god: obj_ini.god[company_index][entity_in_company_index], // TODO Got no idea what this does
+                }
+
+                if(is_struct(obj_ini.TTRPG[company_index][entity_in_company_index])){
+                    _ini_data.marines[iterator].ttrpg_stats = obj_ini.TTRPG[company_index][entity_in_company_index];
+                }
+                else
+                {
+                    debugl($"obj_ini.Serialize(): Marine [{company_index}][{entity_in_company_index}] has no TTRPG_stats struct, creating blank...");
+                    _ini_data.marines[iterator].ttrpg_stats = new TTRPG_stats("chapter",company_index,entity_in_company_index,"blank");
+                }
+            }
+        }
+    }
+
+    // Squads
+
+	var squad_array_length = array_length(obj_ini.squads);
+    if (squad_array_length > 0) {
+        for (var i = 0; i < squad_array_length; i++) {
+            var squad_copy =  obj_ini.squads[i].serialize();
+            _ini_data.squads[i] = squad_copy;
+        }
+    }
+
+    // TODO what are these 2?
+
+    company_index = 100;
+    entity_in_company_index = 0;
+   // iterator = -1;
+
+    for(entity_in_company_index = 0; entity_in_company_index <= 20; entity_in_company_index++){
+        iterator++;
+        if(obj_ini.role[company_index][entity_in_company_index] != ""){
+            _ini_data.marines[iterator] = {
+                role: obj_ini.role[company_index][entity_in_company_index],
+                weapon_1: obj_ini.wep1[company_index][entity_in_company_index],
+                weapon_2: obj_ini.wep2[company_index][entity_in_company_index],
+                armour: obj_ini.armour[company_index][entity_in_company_index],
+                gear: obj_ini.gear[company_index][entity_in_company_index],
+                mobility_item: obj_ini.mobi[company_index][entity_in_company_index],
+            }
+        }
+    }
+
+    company_index = 102;
+    entity_in_company_index = 0;
+   // iterator = -1;
+
+    for(entity_in_company_index = 0; entity_in_company_index <= 20; entity_in_company_index++){
+        iterator++;
+        if(obj_ini.role[company_index][entity_in_company_index] != ""){
+            _ini_data.marines[iterator] = {
+                role: obj_ini.role[company_index][entity_in_company_index],
+                weapon_1: obj_ini.wep1[company_index][entity_in_company_index],
+                weapon_2: obj_ini.wep2[company_index][entity_in_company_index],
+                armour: obj_ini.armour[company_index][entity_in_company_index],
+                gear: obj_ini.gear[company_index][entity_in_company_index],
+                mobility_item: obj_ini.mobi[company_index][entity_in_company_index],
+            }
+        }
     }
 
     return _ini_data;

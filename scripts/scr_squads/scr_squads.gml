@@ -325,6 +325,11 @@ function unit_squad(squad_type) constructor{
 
 	// for saving squads
 	static jsonify = function(){
+		var new_struct = serialize();
+		return json_stringify(new_struct);
+	}
+
+	static serialize = function(){
 		var copy_struct = self; //grab marine structure
 		var new_struct = {};
 		var copy_part;
@@ -335,7 +340,8 @@ function unit_squad(squad_type) constructor{
 				variable_struct_set(new_struct, names[name],copy_part); //if key value is not a method add to copy structure
 			}
 		}
-		return json_stringify(new_struct);
+
+		return new_struct;
 	}
 
 	//function for loading in squad save data
