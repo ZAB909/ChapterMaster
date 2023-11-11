@@ -167,63 +167,75 @@ Serialize = function() {
         ships: [],
         vehicles: [],
         marines: [],
-        squads:[],
+        squads: [],
         squad_types,
     };
-
-    // TODO add indexes to allow easier debugging?
 
     // Company titles // TODO add Companies as well?
 
     for (var i = 0; i <= 20; i++) {
-        _ini_data.company_titles[i] = $"{obj_ini.company_title[i]}";
+
+        if (obj_ini.company_title[i] == "") then continue;
+
+        array_push(_ini_data.company_titles,{
+            _index: i,
+            title: $"{obj_ini.company_title[i]}",
+        });
     }
 
     // Slave batches
 
     for (var i = 0; i <= 120; i++) {
-        _ini_data.slave_batches[i] = {
-            slave_batch_num: obj_ini.slave_batch_num[i],
-            slave_batch_eta: obj_ini.slave_batch_eta[i]
-        }
+
+        if (obj_ini.slave_batch_num[i] == 0) then continue;
+
+        array_push(_ini_data.slave_batches,{
+            _index: i,
+            amount: obj_ini.slave_batch_num[i],
+            eta: obj_ini.slave_batch_eta[i],
+        });
     }
 
     // Equipment
 
     for (var i = 1; i <= 150; i++) {
 
-        if (obj_ini.equipment[i] == "") then
-        continue;
+        if (obj_ini.equipment[i] == "") then continue;
 
-        _ini_data.equipment[i] = {
+        array_push(_ini_data.equipment,{
+            _index: i,
             name: obj_ini.equipment[i],
             type: obj_ini.equipment_type[i],
             amount: obj_ini.equipment_number[i],
             condition: obj_ini.equipment_condition[i],
-        }
+        });
     }
 
     // Artifacts
 
     for (var i = 1; i <= 150; i++) {
 
-        if (obj_ini.artifact[i] == "") then
-        continue;
+        if (obj_ini.artifact[i] == "") then continue;
 
-        _ini_data.artifacts[i] = {
+        array_push(_ini_data.artifacts,{
+            _index: i,
             name: obj_ini.artifact[i],
             tags: obj_ini.artifact_tags[i],
             is_identified: obj_ini.artifact_identified[i],
             condition: obj_ini.artifact_condition[i],
             location: obj_ini.artifact_loc[i],
             sid: obj_ini.artifact_sid[i],
-        }
+        });
     }
 
     // Ships
 
     for (var i = 1; i <= 200; i++) {
-        _ini_data.ships[i] = {
+
+        if (obj_ini.ship[i] == "") then continue;
+
+        array_push(_ini_data.ships,{
+            _index: i,
             name: obj_ini.ship[i],
             uid: obj_ini.ship_uid[i],
             class: obj_ini.ship_class[i],
@@ -239,36 +251,26 @@ Serialize = function() {
             front_armour: obj_ini.ship_front_armour[i],
             other_armour: obj_ini.ship_other_armour[i],
             weapons_amount: obj_ini.ship_weapons[i],
-            weapons: [{
-                    name: obj_ini.ship_wep[i][1],
-                    facing: obj_ini.ship_wep_facing[i][1],
-                    condition: obj_ini.ship_wep_condition[i][1],
-                },
-                {
-                    name: obj_ini.ship_wep[i][2],
-                    facing: obj_ini.ship_wep_facing[i][2],
-                    condition: obj_ini.ship_wep_condition[i][2],
-                },
-                {
-                    name: obj_ini.ship_wep[i][3],
-                    facing: obj_ini.ship_wep_facing[i][3],
-                    condition: obj_ini.ship_wep_condition[i][3],
-                },
-                {
-                    name: obj_ini.ship_wep[i][4],
-                    facing: obj_ini.ship_wep_facing[i][4],
-                    condition: obj_ini.ship_wep_condition[i][4],
-                },
-                {
-                    name: obj_ini.ship_wep[i][5],
-                    facing: obj_ini.ship_wep_facing[i][5],
-                    condition: obj_ini.ship_wep_condition[i][5],
-                },
-            ],
+            weapons: [],
             capacity: obj_ini.ship_capacity[i],
             carrying: obj_ini.ship_carrying[i],
             contents: obj_ini.ship_contents[i],
             turrets: obj_ini.ship_turrets[i],
+        });
+
+        // Try add ship weapons
+        var _last_pushed_ship = array_last(_ini_data.ships);
+        if (_last_pushed_ship.weapons_amount == 0) then continue;
+
+        for (j = 1; j <= 5; j++) {
+            if (obj_ini.ship_wep[i][j] == "") then continue;
+
+            array_push(_last_pushed_ship.weapons,{
+                _index: j,
+                name: obj_ini.ship_wep[i][j],
+                facing: obj_ini.ship_wep_facing[i][j],
+                condition: obj_ini.ship_wep_condition[i][j],
+            });
         }
     }
 
@@ -295,7 +297,7 @@ Serialize = function() {
         }
 
         if (obj_ini.veh_role[company_index, entity_in_company_index] != "") {
-            _ini_data.vehicles[iteration] = {
+            array_push(_ini_data.vehicles,{
                 company_index: company_index,
                 entity_in_company_index: entity_in_company_index,
                 race: obj_ini.veh_race[company_index][entity_in_company_index], // TODO Got no idea what this does
@@ -314,7 +316,7 @@ Serialize = function() {
                 hp: obj_ini.veh_hp[company_index][entity_in_company_index],
                 chaos_corruption_level: obj_ini.veh_chaos[company_index][entity_in_company_index],
                 pilots: obj_ini.veh_pilots[company_index][entity_in_company_index], // TODO this one looks not fully implemented
-            }
+            });
         }
 
         if (company_index == 1 and entity_in_company_index == 1) {
@@ -333,110 +335,113 @@ Serialize = function() {
 
     company_index = 100;
     entity_in_company_index = 1;
-    iterator = -1;
 
     // HQ Marines??
     for (entity_in_company_index = 1; entity_in_company_index <= 30; entity_in_company_index++) {
-        iterator++;
-        if (obj_ini.role[company_index][entity_in_company_index] != "") {
-            _ini_data.marines[iterator] = {
-                race: obj_ini.race[company_index][entity_in_company_index],
-                name: obj_ini.name[company_index][entity_in_company_index],
-                role: obj_ini.role[company_index][entity_in_company_index],
-                weapon_1: obj_ini.wep1[company_index][entity_in_company_index],
-                weapon_2: obj_ini.wep2[company_index][entity_in_company_index],
-                armour: obj_ini.armour[company_index][entity_in_company_index],
-                gear: obj_ini.gear[company_index][entity_in_company_index],
-                mobility_item: obj_ini.mobi[company_index][entity_in_company_index],
-            }
-        }
+        if (obj_ini.role[company_index][entity_in_company_index] == "") then continue;
+
+        array_push(_ini_data.marines,{
+            company_index: company_index,
+            entity_in_company_index: entity_in_company_index,
+            race: obj_ini.race[company_index][entity_in_company_index],
+            name: obj_ini.name[company_index][entity_in_company_index],
+            role: obj_ini.role[company_index][entity_in_company_index],
+            weapon_1: obj_ini.wep1[company_index][entity_in_company_index],
+            weapon_2: obj_ini.wep2[company_index][entity_in_company_index],
+            armour: obj_ini.armour[company_index][entity_in_company_index],
+            gear: obj_ini.gear[company_index][entity_in_company_index],
+            mobility_item: obj_ini.mobi[company_index][entity_in_company_index],
+        });
     }
 
     // Company Marines?
     for (company_index = 0; company_index <= 10; company_index++) {
         for (entity_in_company_index = 0; entity_in_company_index <= 500; entity_in_company_index++) {
-            iterator++;
-            if (obj_ini.name[company_index][entity_in_company_index] != "") {
-                _ini_data.marines[iterator] = {
-                    race: obj_ini.race[company_index][entity_in_company_index],
-                    location: obj_ini.loc[company_index][entity_in_company_index],
-                    name: obj_ini.name[company_index][entity_in_company_index],
-                    role: obj_ini.role[company_index][entity_in_company_index],
-                    lid: obj_ini.lid[company_index][entity_in_company_index], // TODO Got no idea what this does
-                    bio: obj_ini.bio[company_index][entity_in_company_index], // TODO Got no idea what this does
-                    wid: obj_ini.wid[company_index][entity_in_company_index], // TODO Got no idea what this does
-                    weapon_1: obj_ini.wep1[company_index][entity_in_company_index],
-                    weapon_2: obj_ini.wep2[company_index][entity_in_company_index],
-                    armour: obj_ini.armour[company_index][entity_in_company_index],
-                    gear: obj_ini.gear[company_index][entity_in_company_index],
-                    mobility_item: obj_ini.mobi[company_index][entity_in_company_index],
-                    hp: obj_ini.TTRPG[company_index][entity_in_company_index].hp(),
-                    chaos_corruption_level: obj_ini.chaos[company_index][entity_in_company_index],
-                    experience: obj_ini.experience[company_index][entity_in_company_index],
-                    age: obj_ini.age[company_index][entity_in_company_index],
-                    is_special: obj_ini.spe[company_index][entity_in_company_index], // TODO Got no idea what this does
-                    god: obj_ini.god[company_index][entity_in_company_index], // TODO Got no idea what this does
-                }
 
-                if(is_struct(obj_ini.TTRPG[company_index][entity_in_company_index])){
-                    _ini_data.marines[iterator].ttrpg_stats = obj_ini.TTRPG[company_index][entity_in_company_index];
-                }
-                else
-                {
-                    debugl($"obj_ini.Serialize(): Marine [{company_index}][{entity_in_company_index}] has no TTRPG_stats struct, creating blank...");
-                    _ini_data.marines[iterator].ttrpg_stats = new TTRPG_stats("chapter",company_index,entity_in_company_index,"blank");
-                }
+            if (obj_ini.name[company_index][entity_in_company_index] == "") then continue;
+
+            array_push(_ini_data.marines,{
+                company_index: company_index,
+                entity_in_company_index: entity_in_company_index,
+                race: obj_ini.race[company_index][entity_in_company_index],
+                location: obj_ini.loc[company_index][entity_in_company_index],
+                name: obj_ini.name[company_index][entity_in_company_index],
+                role: obj_ini.role[company_index][entity_in_company_index],
+                lid: obj_ini.lid[company_index][entity_in_company_index], // TODO Got no idea what this does
+                bio: obj_ini.bio[company_index][entity_in_company_index], // TODO Got no idea what this does
+                wid: obj_ini.wid[company_index][entity_in_company_index], // TODO Got no idea what this does
+                weapon_1: obj_ini.wep1[company_index][entity_in_company_index],
+                weapon_2: obj_ini.wep2[company_index][entity_in_company_index],
+                armour: obj_ini.armour[company_index][entity_in_company_index],
+                gear: obj_ini.gear[company_index][entity_in_company_index],
+                mobility_item: obj_ini.mobi[company_index][entity_in_company_index],
+                hp: obj_ini.TTRPG[company_index][entity_in_company_index].hp(),
+                chaos_corruption_level: obj_ini.chaos[company_index][entity_in_company_index],
+                experience: obj_ini.experience[company_index][entity_in_company_index],
+                age: obj_ini.age[company_index][entity_in_company_index],
+                is_special: obj_ini.spe[company_index][entity_in_company_index], // TODO Got no idea what this does
+                god: obj_ini.god[company_index][entity_in_company_index], // TODO Got no idea what this does
+            });
+
+            if (is_struct(obj_ini.TTRPG[company_index][entity_in_company_index])) {
+                array_last(_ini_data.marines).ttrpg_stats = obj_ini.TTRPG[company_index][entity_in_company_index];
+            } else {
+                debugl($"obj_ini.Serialize(): Marine [{company_index}][{entity_in_company_index}] has no TTRPG_stats struct, creating blank...");
+                array_last(_ini_data.marines).ttrpg_stats = new TTRPG_stats("chapter", company_index, entity_in_company_index, "blank");
             }
         }
     }
 
     // Squads
 
-	var squad_array_length = array_length(obj_ini.squads);
+    var squad_array_length = array_length(obj_ini.squads);
     if (squad_array_length > 0) {
         for (var i = 0; i < squad_array_length; i++) {
-            var squad_copy =  obj_ini.squads[i].serialize();
-            _ini_data.squads[i] = squad_copy;
+            array_push(_ini_data.squads,obj_ini.squads[i].serialize());
         }
     }
 
-    // TODO what are these 2?
+    // TODO what are these 2 loops supposed to represent??
 
     company_index = 100;
     entity_in_company_index = 0;
-   // iterator = -1;
 
-    for(entity_in_company_index = 0; entity_in_company_index <= 20; entity_in_company_index++){
-        iterator++;
-        if(obj_ini.role[company_index][entity_in_company_index] != ""){
-            _ini_data.marines[iterator] = {
-                role: obj_ini.role[company_index][entity_in_company_index],
-                weapon_1: obj_ini.wep1[company_index][entity_in_company_index],
-                weapon_2: obj_ini.wep2[company_index][entity_in_company_index],
-                armour: obj_ini.armour[company_index][entity_in_company_index],
-                gear: obj_ini.gear[company_index][entity_in_company_index],
-                mobility_item: obj_ini.mobi[company_index][entity_in_company_index],
-            }
-        }
+    for (entity_in_company_index = 0; entity_in_company_index <= 20; entity_in_company_index++) {
+
+        if (obj_ini.role[company_index][entity_in_company_index] == "") then continue;
+
+        array_push(_ini_data.marines,{
+            company_index: company_index,
+            entity_in_company_index: entity_in_company_index,
+            role: obj_ini.role[company_index][entity_in_company_index],
+            weapon_1: obj_ini.wep1[company_index][entity_in_company_index],
+            weapon_2: obj_ini.wep2[company_index][entity_in_company_index],
+            armour: obj_ini.armour[company_index][entity_in_company_index],
+            gear: obj_ini.gear[company_index][entity_in_company_index],
+            mobility_item: obj_ini.mobi[company_index][entity_in_company_index],
+        });
     }
 
     company_index = 102;
     entity_in_company_index = 0;
-   // iterator = -1;
 
-    for(entity_in_company_index = 0; entity_in_company_index <= 20; entity_in_company_index++){
-        iterator++;
-        if(obj_ini.role[company_index][entity_in_company_index] != ""){
-            _ini_data.marines[iterator] = {
-                role: obj_ini.role[company_index][entity_in_company_index],
-                weapon_1: obj_ini.wep1[company_index][entity_in_company_index],
-                weapon_2: obj_ini.wep2[company_index][entity_in_company_index],
-                armour: obj_ini.armour[company_index][entity_in_company_index],
-                gear: obj_ini.gear[company_index][entity_in_company_index],
-                mobility_item: obj_ini.mobi[company_index][entity_in_company_index],
-            }
-        }
+    for (entity_in_company_index = 0; entity_in_company_index <= 20; entity_in_company_index++) {
+
+        if (obj_ini.role[company_index][entity_in_company_index] == "") then continue;
+
+        array_push(_ini_data.marines,{
+            company_index: company_index,
+            entity_in_company_index: entity_in_company_index,
+            role: obj_ini.role[company_index][entity_in_company_index],
+            weapon_1: obj_ini.wep1[company_index][entity_in_company_index],
+            weapon_2: obj_ini.wep2[company_index][entity_in_company_index],
+            armour: obj_ini.armour[company_index][entity_in_company_index],
+            gear: obj_ini.gear[company_index][entity_in_company_index],
+            mobility_item: obj_ini.mobi[company_index][entity_in_company_index],
+        });
     }
+
+    // TODO add more stuff
 
     return _ini_data;
 }
