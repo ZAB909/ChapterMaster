@@ -1648,3 +1648,422 @@ if (vih>=5){
 remov=string_length(string(temp[65])+string(temp[66])+string(temp[67])+string(temp[68])+string(temp[69]))+1;
 
 action_set_alarm(2, 0);
+
+#region serialization
+
+serialize = function() {
+
+    // general data and inits
+
+    var _ctrl_data = {
+        play_time,
+        cheatyface,
+        x,
+        y,
+        alll,
+        zoom: {
+            was_zoomed,
+            zoomed
+        },
+        chaos_rating,
+        fleet_type,
+        homeworld_rule,
+        star_names,
+        craftworld,
+        turn,
+        last_event,
+        last_mission,
+        last_world_inspection,
+        last_fleet_inspection,
+        chaos_turn,
+        chaos_fleets,
+        tau_fleets,
+        tau_stars,
+        tau_messenger,
+        fleet_all,
+        unload,
+        diplomacy,
+        trading,
+        audience,
+        force_goodbye,
+        combat,
+        new_vehicles,
+        hurssy,
+        hurssy_time,
+        artifacts,
+        popup_master_crafted,
+        select_wounded,
+        terra_direction,
+        stc: {
+            wargear: stc_wargear,
+            vehicles: stc_vehicles,
+            ships: stc_ships,
+            un_total: stc_un_total,
+            wargear_un: stc_wargear_un,
+            vehicles_un: stc_vehicles_un,
+            ships_un: stc_ships_un,
+            bonuses: [
+                stc_bonus[1],
+                stc_bonus[2],
+                stc_bonus[3],
+                stc_bonus[4],
+                stc_bonus[5],
+                stc_bonus[6],
+            ],
+        },
+        player_scheduled_event: {
+            feasts: fest_feasts,
+            booze: fest_boozes,
+            drugs: fest_drugses,
+        },
+        recent_happenings,
+        recent_types: [],
+        formation: {
+            last_attack: last_attack_form,
+            last_raid: last_raid_form,
+            formation_lines: [],
+        },
+        random_event_next,
+        genes: {
+            sold: gene_sold,
+            xeno: gene_xeno,
+            tithe: gene_tithe,
+            iou: gene_iou,
+        },
+        underground_structures: {
+            armouries: und_armouries,
+            gene_vaults: und_gene_vaults,
+            lairs: und_lairs,
+        },
+        penitence: {
+            is_penitent: penitent,
+            current: penitent_current,
+            maximum: penitent_max,
+            turnly: penitent_turnly,
+            turn: penitent_turn,
+            turns_left: penitent_end,
+            blood_debt,
+            penitorium
+        },
+        training: {
+            training_apothecary,
+            apothecary_points,
+            apothecary_aspirant,
+            training_chaplain,
+            chaplain_points,
+            chaplain_aspirant,
+            training_psyker,
+            psyker_points,
+            psyker_aspirant,
+            training_techmarine,
+            tech_points,
+            tech_aspirant
+        },
+        recruitment: {
+            worlds: recruiting_worlds,
+            recruiting,
+            trial: recruit_trial,
+            recruits,
+            last: recruit_last,
+            recruiting_worlds_bought,
+            recruits_list: [],
+        },
+        commands: [],
+        blandify,
+        inquisitors: [],
+        factions: [],
+        quests: [],
+        events: [],
+        just_met_faction: faction_justmet,
+        check_number,
+        datetime: {
+            year,
+            year_fraction,
+            millenium
+        },
+        economy: {
+            requisition,
+            gene_seed,
+            income: {
+                current: income,
+                last: income_last,
+                base: income_base,
+                home: income_home,
+                forge: income_forge,
+                agri: income_agri,
+                recruiting: income_recruiting,
+                training: income_training,
+                fleet: income_fleet,
+                trade: income_trade,
+            },
+        },
+        loyalty: {
+            current: loyalty,
+            hidden: loyalty_hidden,
+            modifiers: [],
+        },
+        flags: [{
+                inquisitor_lair_flag: inqis_flag_lair
+            },
+            {
+                inquisitor_gene_flag: inqis_flag_gene
+            }
+        ],
+        marines_amount: marines,
+        command,
+        info_chips,
+        inspection_passes,
+        last_weapons_tab,
+        battle_columns: [{
+                devastators: bat_devastator_column
+            },
+            {
+                assaults: bat_assault_column
+            },
+            {
+                tacticals: bat_tactical_column
+            },
+            {
+                veterans: bat_veteran_column
+            },
+            {
+                hirelings: bat_hire_column
+            },
+            {
+                librarians: bat_librarian_column
+            },
+            {
+                hq: bat_command_column
+            },
+            {
+                techmarines: bat_techmarine_column
+            },
+            {
+                terminators: bat_terminator_column
+            },
+            {
+                honor_guards: bat_honor_column
+            },
+            {
+                dreadnoughts: bat_dreadnought_column
+            },
+            {
+                rhinos: bat_rhino_column
+            },
+            {
+                predators: bat_predator_column
+            },
+            {
+                land_raiders: bat_landraider_column
+            },
+            {
+                scouts: bat_scout_column
+            },
+        ],
+        colors: {
+            main: obj_controller.col[obj_controller.main_color],
+            secondary: obj_controller.col[obj_controller.secondary_color],
+            trim: obj_controller.col[obj_controller.trim_color],
+            pauldron_2: obj_controller.col[obj_controller.pauldron2_color],
+            pauldron: obj_controller.col[obj_controller.pauldron_color],
+            lens: obj_controller.col[obj_controller.lens_color],
+            weapon: obj_controller.col[obj_controller.weapon_color],
+            special: obj_controller.col_special,
+            is_trimmed: obj_controller.trim,
+        },
+        adept_name,
+        recruiter_name,
+        progenitor,
+        mutation,
+        successor_chapters,
+        dispositions: { // TODO is this different from Factions' dispositions?
+            progenitor: progenitor_disposition,
+            imperium: imperium_disposition,
+            astartes: astartes_disposition,
+        },
+        // restart:{} // TODO this is getting removed, no need to prepare Restart vars if we already serialize everything we need
+    };
+
+    // Player scheduled event
+
+    if (fest_type != "") {
+        _ctrl_data.player_scheduled_event.sid = fest_sid; // TODO ???
+        _ctrl_data.player_scheduled_event.wid = fest_wid; // TODO ???
+        _ctrl_data.player_scheduled_event.planet = fest_planet;
+        _ctrl_data.player_scheduled_event.star = fest_star;
+        _ctrl_data.player_scheduled_event.type = fest_type;
+        _ctrl_data.player_scheduled_event.cost = fest_cost;
+        _ctrl_data.player_scheduled_event.warp = fest_warp;
+        _ctrl_data.player_scheduled_event.is_scheduled = fest_scheduled;
+        _ctrl_data.player_scheduled_event.lav = fest_lav; // TODO ???
+        _ctrl_data.player_scheduled_event.locals = fest_locals;
+        _ctrl_data.player_scheduled_event.features = [
+            fest_feature1,
+            fest_feature2,
+            fest_feature3,
+        ];
+        _ctrl_data.player_scheduled_event.display = fest_display;
+        _ctrl_data.player_scheduled_event.display_tags = fest_display_tags;
+        _ctrl_data.player_scheduled_event.repeats = fest_repeats;
+        _ctrl_data.player_scheduled_event.honor_company = fest_honor_co; // TODO not sure
+        _ctrl_data.player_scheduled_event.honor_id = fest_honor_id;
+        _ctrl_data.player_scheduled_event.is_honoring = fest_honoring;
+    }
+
+    // Recent type
+
+    for (var i = 0; i < 600; i++) {
+        if (recent_type[i] == "") then continue;
+
+        array_push(_ctrl_data.recent_types, {
+            _index: i,
+            type: recent_type[i],
+            keyword: recent_keyword[i],
+            turn: recent_turn[i],
+            number: recent_number[i],
+        });
+    }
+
+    // Formation and attacks
+
+    for (var i = 1; i <= 14; i++) {
+        if (bat_formation[i] == "") then continue;
+
+        array_push(_ctrl_data.formation.formation_lines, {
+            _index: i,
+            name: bat_formation[i],
+            positions: {
+                devastators: bat_deva_for[i],
+                assaults: bat_assa_for[i],
+                tacticals: bat_tact_for[i],
+                veterans: bat_vete_for[i],
+                hirelings: bat_hire_for[i],
+                librarians: bat_libr_for[i],
+                hq: bat_comm_for[i],
+                techmarines: bat_tech_for[i],
+                terminators: bat_term_for[i],
+                honor_guard: bat_hono_for[i],
+                dreadnoughts: bat_drea_for[i],
+                rhinos: bat_rhin_for[i],
+                predators: bat_pred_for[i],
+                land_raiders: bat_land_for[i],
+                scouts: bat_scou_for[i],
+            },
+        });
+    }
+
+    // Command
+
+    for (var i = 0; i < 30; i++) {
+
+        if(command_set[i] == 0) then continue;
+
+        array_push(_ctrl_data.commands, {
+            _index: i,
+            is_set: command_set[i],
+        });
+    }
+
+    // Recruits
+
+    for (var i = 0; i <= 200; i++) {
+
+        if(recruit_name[i] == "") then continue;
+
+        array_push(_ctrl_data.recruitment.recruits_list, {
+            _index: i,
+            name: recruit_name[i],
+            corruption: recruit_corruption[i],
+            distance: recruit_distance[i],
+            training: recruit_training[i],
+            exp: recruit_exp[i],
+        });
+    }
+
+    // Loyalty
+
+    for (var i = 0; i < 30; i++) {
+
+        if(loyal[i] == "") then continue;
+
+        array_push(_ctrl_data.loyalty.modifiers, {
+            _index: i,
+            name: loyal[i],
+            amount: loyal_num[i],
+            time: loyal_time[i],
+        });
+    }
+
+    // Inquisitors
+
+    for (var i = 0; i < 11; i++) {
+
+        if(inquisitor[i] == "") then continue;
+
+        array_push(_ctrl_data.inquisitors, {
+            _index: i,
+            name: inquisitor[i],
+            gender: inquisitor_gender[i],
+            type: inquisitor_type[i]
+        });
+    }
+
+    // Factions
+
+    for (var i = 0; i < 14; i++) {
+
+        if(faction[i] == "") then continue;
+
+        array_push(_ctrl_data.factions, {
+            _index: i,
+            name: faction[i],
+            disposition: disposition[i],
+            disposition_max: disposition_max[i],
+            leader: {
+                name: faction_leader[i],
+                gender: faction_gender[i],
+                title: faction_title[i]
+            },
+            status: faction_status[i],
+            is_defeated: faction_defeated[i],
+            is_known: known[i],
+            is_annoyed: annoyed[i],
+            is_ignored: ignore[i],
+            turns_ignored: turns_ignored[i],
+            is_audience: audien[i],
+            audience_topic: audien_topic[i],
+        });
+    }
+
+
+    // Quests
+
+    for (var i = 1; i <= 50; i++) {
+
+        if(quest[i] == "") then continue;
+
+        array_push(_ctrl_data.quests, {
+            _index: i,
+            name: quest[i],
+            faction: quest_faction[i],
+            ends_in: quest_end[i],
+        });
+    }
+
+    // Events
+
+    for (var i = 1; i <= 99; i++) {
+
+        if(event[i] == "") then continue;
+
+        array_push(_ctrl_data.events, {
+            _index: i,
+            name: event[i],
+            duration: event_duration[i],
+        });
+    }
+
+    return _ctrl_data
+}
+
+#endregion serialization

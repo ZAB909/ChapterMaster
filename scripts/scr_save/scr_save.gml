@@ -34,8 +34,6 @@ function SavedGameData() constructor
 		chapter_name : global.chapter_name,		
 		game_seed : global.game_seed
 	}
-	controller = {
-		play_time : obj_controller.play_time
-	}
-	ini = obj_ini.Serialize();
+	controller =  obj_controller.serialize();
+	ini = obj_ini.serialize();
 }

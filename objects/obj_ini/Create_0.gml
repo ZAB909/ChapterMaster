@@ -68,9 +68,11 @@ if (instance_exists(obj_creation)) then custom=obj_creation.custom;
 
 if (global.load=0) then scr_initialize_custom();
 
-Serialize = function() {
+#region serialization
 
-    // general data
+serialize = function() {
+
+    // general data and inits
 
     var _ini_data = {
         sector_name,
@@ -284,7 +286,6 @@ Serialize = function() {
     var safety_threshold = 1100;
     var iteration = -1;
 
-    // TODO refactor into only checking actually existing entities
     while (!is_iteration_finished) {
         iteration++;
 
@@ -441,7 +442,7 @@ Serialize = function() {
         });
     }
 
-    // TODO add more stuff
-
     return _ini_data;
 }
+
+#endregion serialization

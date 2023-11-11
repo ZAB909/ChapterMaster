@@ -950,7 +950,6 @@ function scr_load(load_process_stage, save_id) {
             }
 
             obj_ini.squad_types = json_parse(base64_decode(ini_read_string("Mar", "squad_types", "")));
-
         }
 
 
