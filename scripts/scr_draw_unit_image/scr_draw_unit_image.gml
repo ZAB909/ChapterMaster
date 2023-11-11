@@ -43,13 +43,13 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
         // Death Company
         else if (role()=="Death Company") then ui_specialist=15;
         // Dark Angels bone color
-        if (global.chapter_name=="Dark Angels")and (company=1){
-            if (role()==obj_ini.role[100,4])then ui_coloring="bone";
-            if (conmpany==1){
-                if ((string_count("Terminator",ma_armour[sel])>0 || ma_armour[sel]=="Tartaros")){
-                    if (role()==obj_ini.role[100,5]) then ui_coloring="bone";
-                    if (role()==obj_ini.role[100,7]) then ui_coloring="bone";
-                    if (role()=="Standard Bearer") then ui_coloring="bone";
+        if (global.chapter_name=="Dark Angels" && company=1){
+            if (role()==obj_ini.role[100][4])then ui_coloring="bone";
+            if (company==1){
+                if (string_count("Terminator",armour())>0 || armour()=="Tartaros"){
+                    if (array_contains([obj_ini.role[100][5],obj_ini.role[100][7],obj_ini.role[100][19],"Standard Bearer"],role())){
+                        ui_coloring="bone";
+                    }
                 }
             }
         }
@@ -597,7 +597,7 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
                         draw_sprite(spr_purity_seal,0,xx+x_draw-57,yy+y_draw+12);
                     }                    
                 }            
-            }			
+            }		
 			// bionics
 			
 			var eye_move = 0;
@@ -658,6 +658,18 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
                 draw_sprite(spr_honor_helm,helm_ii,xx+x_draw-2,yy+y_draw-11);     
 
 			}
+            if (base_sprite<1){
+                var robes_mod=[0,0];
+                if (armour()=="MK7 Aquila" || show_arm="Power Armour"){
+                    robes_mod[1]=-7;
+                }
+               if (struct_exists(body[$ "head"],"hood")){
+                     draw_sprite(spr_marine_cloth_hood,0,xx+x_draw+robes_mod[0],yy+y_draw+robes_mod[1]);     
+               }
+                if (struct_exists(body[$ "torso"],"robes")){
+                     draw_sprite(spr_marine_robes,0,xx+x_draw+robes_mod[0],yy+y_draw+robes_mod[1]);     
+               }              
+            }
             // Weapons for above arms
             if (ui_weapon[1]!=0) and (sprite_exists(ui_weapon[1])) and (ui_above[1]==true) and (fix_left<8){
                 if (ui_twoh[1]==false) and (ui_twoh[2]==false){

@@ -20,8 +20,8 @@
 global.stat_list = ["constitution", "strength", "luck", "dexterity", "wisdom", "piety", "charisma", "technology","intelligence", "weapon_skill", "ballistic_skill"];
 
 // will swap these out for enums or some better method as i develop where this is going
-global.body_parts = ["left_leg", "right_leg", "torso", "right_arm", "left_arm", "left_eye", "right_eye", "throat", "jaw"];
-global.body_parts_display = ["Left Leg", "Right Leg", "Torso", "Right Arm", "Left Arm", "Left Eye", "Right eye", "Throat", "Jaw"];
+global.body_parts = ["left_leg", "right_leg", "torso", "right_arm", "left_arm", "left_eye", "right_eye", "throat", "jaw","head"];
+global.body_parts_display = ["Left Leg", "Right Leg", "Torso", "Right Arm", "Left Arm", "Left Eye", "Right eye", "Throat", "Jaw","Head"];
 global.religions={
 	"imperial_cult":{"name":"Imperial Cult"},
 	"cult_mechanicus":{"name":"Cult Mechanicus"}, 
@@ -566,7 +566,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}
 		}
 	};
-	body = {"left_leg":{}, "right_leg":{}, "torso":{}, "left_arm":{}, "right_arm":{}, "left_eye":{}, "right_eye":{},"throat":{}, "jaw":{}}; //body parts list can be extended as much as people want
+	body = {"left_leg":{}, "right_leg":{}, "torso":{}, "left_arm":{}, "right_arm":{}, "left_eye":{}, "right_eye":{},"throat":{}, "jaw":{},"head":{}}; //body parts list can be extended as much as people want
 	switch base_group{
 		case "astartes":				//basic marine class //adds specific mechanics not releveant to most units
 			if (faction ="chapter"){
@@ -690,6 +690,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				if (irandom(99)>98){
 					add_trait("zealous_faith");
 				};
+				if (irandom(14)==0){
+					body[$"torso"].robes =1;
+				}
 			}
 			if ((global.chapter_name=="Iron Hands") or (obj_ini.progenitor=6)){
 				religion="cult_mechanicus";
@@ -710,6 +713,20 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				religion_sub_cult = "The Promethean Cult";
 			} else if (global.chapter_name=="Iron Hands") or (obj_ini.progenitor=6){
 				religion_sub_cult = "The Cult of Iron";
+			} 
+
+			if (array_contains(["Dark Angels","Black Templars"],global.chapter_name) || obj_ini.progenitor==1){
+				if (irandom(19)==0){
+					body[$"torso"].robes =1;
+					if (irandom(2)<2){
+						body[$"head"].hood =1;
+					}
+				}
+			}else  if(irandom(49)==0){
+				body[$"torso"].robes =1;
+				if (irandom(2)==0){
+					body[$"head"].hood =1;
+				}
 			}
 			break;
 		/*case "skitarii":
