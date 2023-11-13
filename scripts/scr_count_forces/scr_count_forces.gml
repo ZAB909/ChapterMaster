@@ -36,8 +36,8 @@ function scr_count_forces(_unit_location, _target_location, _is_planet) {
 				
 				if (i<=array_length(veh_race[company])){
 					if (checked_unit.veh_race[company][i]=1)				&& 
-					   (checked_unit.veh_loc[company][i]=_unit_location)	&& 
-					   (checked_unit.veh_wid[company][i]=_target_location)		
+					   (checked_unit.veh_loc[company][i]==_unit_location)	&& 
+					   (checked_unit.veh_wid[company][i]==_target_location)		
 					{
 						info_vehicles+=1;
 					}
