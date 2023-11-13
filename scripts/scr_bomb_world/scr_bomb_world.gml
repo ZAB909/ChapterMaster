@@ -1,24 +1,21 @@
-function scr_bomb_world(argument0, argument1, argument2, argument3, argument4) {
+function scr_bomb_world(star_system, planet_number, bombard_target_faction, bombard_ment_power, target_strength) {
 
-	// argument0 = object
-	// argument1 = planet
-	// argument2 = faction ID
-	// argument3 = bombardment score
-	// argument4 = score before
+	var pop_before=0,pop_after=0,reduced_bombard_score=0,strength_reduction=0,txt2="",txt3="",txt4="",max_kill,overkill,roll,kill;
+	var score_before=star_system.p_population[planet_number];
 
-	var pop_before,pop_after,sci1,sci2,txt1,txt2,txt3,txt4,max_kill,overkill,score_before,roll,kill;
-	score_before=argument0.p_population[argument1];
-
-	txt1="The heavens rumble and thunder as your ship";
+	var txt1="The heavens rumble and thunder as your ship";
 	if (ships_selected>1) then txt1+="s";
 	txt1+=" unload";
 	if (ships_selected=1) then txt1+="s";
-	txt1+=" annihilation upon "+string(argument0.name)+" "+string(argument1)+".  Even from space the explosions can be seen, clapping across the planet's surface.";
+	txt1+= $" annihilation upon {star_system.name} {scr_roman_numerals()[planet_number-1]}.  Even from space the explosions can be seen, clapping across the planet's surface.";
 
-	if (argument0.p_large[argument1]=0) then kill=argument3*15000000;// Population if normal
-	if (argument0.p_large[argument1]=1) then kill=argument3*0.15;// Population if large
+	if (star_system.p_large[planet_number]=0){
+		kill=bombard_ment_power*15000000;// Population if normal
+	}else if (star_system.p_large[planet_number]=1){
+		kill=bombard_ment_power*0.15;// Population if large
+	}
 
-	pop_before=argument0.p_population[argument1];
+	pop_before=star_system.p_population[planet_number];
  
 	// Minimum kills
 	pop_after=max(0,pop_before-kill);
@@ -26,155 +23,201 @@ function scr_bomb_world(argument0, argument1, argument2, argument3, argument4) {
 
 
 
-	if (argument0.p_type[argument1]!="Space Hulk"){
-	    var tip;tip=1;
-	    if (argument2=2) then txt2="##The Imperial forces are suitably fortified; ";
-	    if (argument2=2.5) and (argument0.p_owner[argument1]<=5) then txt2="##The PDF forces are suitably fortified; ";
-	    if (argument2=2.5) and (argument0.p_owner[argument1]>5) then txt2="##The renegade forces are moderately fortified; ";
-    
-	    if (argument2=3) then txt2="##The Mechanicus forces are suitably fortified; ";
-	    if (argument2=5) then txt2="##The Ecclesiarchy forces are concentrated within their Cathedral; ";
-	    if (argument2=6) then txt2="##The Eldar forces are challenging to pin down; ";
-	    if (argument2=7) then txt2="##The Ork forces are well dug in; ";
-	    if (argument2=8) then txt2="##The Tau forces are suitably fortified; ";
-	    if (argument2=9) then txt2="##The Tyranid Swarm is a large target; ";
-	    if (argument2=10) then txt2="##The Chaos forces are well dug in; ";
-	    if (argument2=13) then txt2="##The Necrons are well dug in; ";
-    
-	    if (argument2=3) then tip=0;
-	    if (argument2=7) or (argument2=10) then tip=2;
-	    if (argument2=6)or (tip=13) then tip=3;
-	    if (argument2=10) and (argument0.p_type[argument1]="Daemon"){
-	        tip=3;txt2="##Reality warps and twists within the planet; ";
+	if (star_system.p_type[planet_number]!="Space Hulk"){
+	    var bombard_protection=1;
+	    switch(bombard_target_faction){
+	    	case 2:
+	    		txt2="##The Imperial forces are suitably fortified; ";
+	    		break;
+	    	case 2.5:
+	    		if (star_system.p_owner[planet_number]<=5){
+	    			txt2="##The PDF forces are suitably fortified; ";
+	    		} else if (star_system.p_owner[planet_number]>5){
+	    			txt2="##The renegade forces are moderately fortified;" ;
+	    		}
+	    		break;
+	    	case 3:
+	    		txt2="##The Mechanicus forces are suitably fortified; ";
+	    		bombard_protection=0;
+	    		break;
+	    	case 5:
+	    		txt2="##The Ecclesiarchy forces are concentrated within their Cathedral; ";
+	    		break;
+	    	case 6:
+	    		txt2="##The Eldar forces are challenging to pin down; ";
+	    		bombard_protection=3;
+	    		break;
+	    	case 7:
+	    		txt2="##The Ork forces are well dug in; ";
+	    		bombard_protection=2;
+	    		break;
+	    	case 8:
+	    		txt2="##The Tau forces are suitably fortified; ";
+	    		break;
+	    	case 9:
+	    		txt2="##The Tyranid Swarm is a large target; ";
+	    		break;
+	    	case 10:
+	    		if (star_system.p_type[planet_number]="Daemon"){
+	    			bombard_protection=3;
+	    			txt2="##Reality warps and twists within the planet; ";
+	    		} else {
+					txt2="##The Chaos forces are well dug in; ";
+					bombard_protection=2;
+	    		}
+	    		bombard_protection=2;
+	    		break;
+	    	case 13:
+	    		txt2="##The Necrons are well dug in; ";
+	    		break;	    			    			    			    			    			    				    		    			    		
 	    }
-	    // Tip : level of fortifieds
     
-	    sci1=argument3/3;// fraction of bombardment score
-	    sci2=0;
+	    reduced_bombard_score=bombard_ment_power/3;
+	    strength_reduction=0;
     
-	    var i;i=sci1;
+	    var i=reduced_bombard_score;
 	    roll=0;
+    	
+	    if (bombard_protection==0){i=i*4;}
+	    else if (bombard_protection==1){i=i*0.9;}
+	    else if (bombard_protection==2){i=i*0.75;}
+	    else if (bombard_protection==3){i=i*0.5;}
     
-	    if (tip=0) then i=i*4;
-	    if (tip=1) then i=i*0.9;
-	    if (tip=2) then i=i*0.75;
-	    if (tip=3) then i=i*0.5;
-    
-	    repeat(100){
-	        if (i>=1){
-	            i-=1;sci2+=1;
-	        }
+	    for(var r=0;r<100;r++){
+	    	if (i < 1) then break;
+            i--;
+            strength_reduction++;
 	    }
 	    if (i<1) and (i>=0.5){
 	        i=i*100;
-	        roll=floor(random(100))=1;
-	        if (roll<=i) then sci2+=1;
+	        roll=irandom(100)=1;
+	        if (roll<=i) then strength_reduction+=1;
 	    }
     
-	    sci2=round(sci2);
+	    strength_reduction=round(strength_reduction);
 	    txt2+="they suffer";
     
-	    if (argument2=10) and (argument0.p_type[argument1]="Daemon") then sci2=0;
+	    if (bombard_target_faction==10) and (star_system.p_type[planet_number]=="Daemon") then strength_reduction=0;
     
-	    var rel;rel=0;
-	    if (sci2!=0) and (argument4!=0){rel=((argument4-sci2)/argument4)*100;}
-	    if (sci2=0) then txt2+=" no losses from the bombardment.";
-	    if (rel>0) and (rel<=20) then txt2+=" minor losses from the bombardment, decreasing "+string(sci2)+" stages.";
-	    if (rel>20) and (rel<=40) then txt2+=" moderate losses from the bombardment, decreasing "+string(sci2)+" stages.";
-	    if (rel>40) and (rel<=60) then txt2+=" heavy losses from the bombardment, decreasing "+string(sci2)+" stages.";
-	    if (rel>60) and ((argument4-sci2)>0) then txt2+=" extreme losses from the bombardment, decreasing "+string(sci2)+" stages.";
-	    if ((argument4-sci2)<=0) then txt2+=" devastating losses from the bombardment.  They have been wiped clean from the planet.";
+	    var rel=0;
+	    if (strength_reduction!=0) and (target_strength!=0){
+	    	rel=((target_strength-strength_reduction)/target_strength)*100;
+		}else if (strength_reduction==0){
+			txt2+=" no losses from the bombardment.";
+		}
+
+		if (rel>0 && rel<=20){
+			txt2+=" minor losses from the bombardment, decreasing "+string(strength_reduction)+" stages.";
+		}else if (rel>20 && rel<=40){ 
+	    	txt2+=" moderate losses from the bombardment, decreasing "+string(strength_reduction)+" stages.";
+	    }else if (rel>40 && rel<=60){ 
+	    	txt2+=" heavy losses from the bombardment, decreasing "+string(strength_reduction)+" stages.";
+	    }else if (rel>60 && (target_strength-strength_reduction)>0){ 
+	    	txt2+=" extreme losses from the bombardment, decreasing "+string(strength_reduction)+" stages.";
+	    }else if ((target_strength-strength_reduction)<=0){ 
+	    	txt2+=" devastating losses from the bombardment.  They have been wiped clean from the planet.";
+	    }
     
 	    // 135; ?
-	    if (argument2>=6){obj_controller.penitent_turn=0;obj_controller.penitent_turnly=0;}
+	    if (bombard_target_faction>=6){
+	    	obj_controller.penitent_turn=0;
+	    	obj_controller.penitent_turnly=0;
+		}
     
-	    if (sci2>0){
-	        // if (argument2=2){argument0.p_guardsmen[argument1]-=sci2;argument0.p_pdf[argument1]-=sci2;}
-	        // 3 is mechanicus
-        
-	        // if (argument2=2){
-	            /*var wib,wob,wob2;
-	            wib="";wob=0;wob2=0;
-            
-	            wob=string_pos(";",txt2);
-	            wob2=string_length(txt2)-(string_length(txt2)-wob);
-	            txt2=string_delete(txt2,wob,wob2);
-            
-	            wob=argument3*3000000+choose(floor(random(100000)),floor(random(100000))*-1);
-	            if (wob>argument0.p_guardsmen[argument1]) then wob=argument0.p_guardsmen[argument1];
-            
-	            argument0.p_guardsmen[argument1]-=argument3*3000000;*/
-	        // }
-	        // if (argument2=2.5) and (argument0.p_owner[argument1]<=5){}
-        
-	        if (argument2=2.5) and (argument0.p_owner[argument1]=8){
-	            var wib,wob;
-	            wib="";wob=0;
+	    if (strength_reduction>0){
+
+	        if (bombard_target_faction=2.5) and (star_system.p_owner[planet_number]=8){
+	            var wib="",wob=0;
             
 	            txt2="##The renegade forces are moderately fortified; ";
             
-	            wob=argument3*5000000+choose(floor(random(100000)),floor(random(100000))*-1);
+	            wob=bombard_ment_power*5000000+choose(floor(random(100000)),floor(random(100000))*-1);
             
-	            if (wob>argument0.p_pdf[argument1]) then wob=argument0.p_pdf[argument1];
-	            rel=(argument0.p_pdf[argument1]/wob)*100;
-	            argument0.p_pdf[argument1]-=wob;
+	            if (wob>star_system.p_pdf[planet_number]) then wob=star_system.p_pdf[planet_number];
+	            rel=(star_system.p_pdf[planet_number]/wob)*100;
+	            star_system.p_pdf[planet_number]-=wob;
             
 	            if (rel>0) and (rel<=20) then txt2+=" they suffer minor losses from the bombardment, "+string(scr_display_number(wob))+" purged.";
 	            if (rel>20) and (rel<=40) then txt2+=" they suffer moderate losses from the bombardment, "+string(scr_display_number(wob))+" purged.";
 	            if (rel>40) and (rel<=60) then txt2+=" they suffer heavy losses from the bombardment, "+string(scr_display_number(wob))+" purged.";
-	            if (rel>60) and (argument0.p_pdf[argument1]>0) then txt2+=" they suffer extreme losses from the bombardment, "+string(scr_display_number(wob))+" purged.";
-	            if (wob>0) and (argument0.p_pdf[argument1]=0) then txt2+=" they suffer devastating losses from the bombardment.  They have been wiped clean from the planet.";
+	            if (rel>60) and (star_system.p_pdf[planet_number]>0) then txt2+=" they suffer extreme losses from the bombardment, "+string(scr_display_number(wob))+" purged.";
+	            if (wob>0) and (star_system.p_pdf[planet_number]=0) then txt2+=" they suffer devastating losses from the bombardment.  They have been wiped clean from the planet.";
 	        }
         
-        
-	        if (argument2=5) then argument0.p_sisters[argument1]-=sci2;
-	        if (argument2=6) then argument0.p_eldar[argument1]-=sci2;
-	        if (argument2=7) then argument0.p_orks[argument1]-=sci2;
-	        if (argument2=8) then argument0.p_tau[argument1]-=sci2;
-	        if (argument2=9) then argument0.p_tyranids[argument1]-=sci2;
-	        if (argument2=10) then argument0.p_traitors[argument1]-=sci2;
-	        if (argument2=13) then argument0.p_necrons[argument1]-=sci2;
+        	switch(bombard_target_faction){
+        		case 5:
+        			star_system.p_sisters[planet_number]-=strength_reduction;
+        			break;
+        		case 6:
+        			star_system.p_eldar[planet_number]-=strength_reduction;
+        			break;
+        		case 7:
+        			star_system.p_orks[planet_number]-=strength_reduction;
+        			break;
+        		case 8:
+        			star_system.p_tau[planet_number]-=strength_reduction;
+        			break;
+        		case 9:
+        			star_system.p_tyranids[planet_number]-=strength_reduction;
+        			break;
+         		case 10:
+        			star_system.p_traitors[planet_number]-=strength_reduction;
+        			break;
+         		case 13:
+        			star_system.p_necrons[planet_number]-=strength_reduction;
+        			break;        			       			        			        			        			       			
+        	}
 	    }
     
-	    if (kill>0) then kill=min(argument0.p_population[argument1],kill);
+	    if (kill>0) then kill=min(star_system.p_population[planet_number],kill);
     
 	    txt3="";
-	    if (pop_before>0) and (argument0.p_type[argument1]!="Daemon"){
-	        if (argument0.p_large[argument1]=0) then pop_after=round(max(0,pop_after-kill));    
-	        if (argument0.p_large[argument1]=0) then txt3="##It had a civilian population of "+string(scr_display_number(floor(pop_before)))+" and "+string(scr_display_number(floor(kill)))+" die over the duration of the bombardment.";
-	        if (argument0.p_large[argument1]=1) then txt3="##It had a civilian population of "+string(pop_before)+" billion and "+string(kill)+" billion die over the duration of the bombardment.";
+	    if (pop_before>0) and (star_system.p_type[planet_number]!="Daemon"){
+	        if (star_system.p_large[planet_number]==0){
+	        	pop_after=round(max(0,pop_after-kill));
+	        	txt3="##It had a civilian population of "+string(scr_display_number(floor(pop_before)))+" and "+string(scr_display_number(floor(kill)))+" die over the duration of the bombardment.";
+	    	}else if (star_system.p_large[planet_number]=1){
+	    		txt3="##It had a civilian population of "+string(pop_before)+" billion and "+string(kill)+" billion die over the duration of the bombardment.";
+	    	}
 	    }
     
     
 	    // DO EET
-	    if (pop_before>0){argument0.p_population[argument1]=pop_before-kill;}
+	    if (pop_before>0){
+	    	star_system.p_population[planet_number]=pop_before-kill;
+		}
     
-	    var pip;
-	    pip=instance_create(0,0,obj_popup);
+	    var pip=instance_create(0,0,obj_popup);
 	    pip.title="Bombard Results";
 	    pip.text=txt1+txt2+txt3;
     
     
-    
-	    if (pop_after=0){
-	        if (argument0.p_owner[argument1]=2) and (obj_controller.faction_status[2]!="War"){
-	            if (argument0.p_type[argument1]="Temperate") or (argument0.p_type[argument1]="Hive") or (argument0.p_type[argument1]="Desert"){
+	    if (pop_after==0 && pop_before>0){
+	        if (star_system.p_owner[planet_number]=2) and (obj_controller.faction_status[2]!="War"){
+	            if (star_system.p_type[planet_number]="Temperate") or (star_system.p_type[planet_number]="Hive") or (star_system.p_type[planet_number]="Desert"){
 	                obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=2;
 	                obj_controller.audien_topic[obj_controller.audiences]="bombard_angry";
 	            }
-	            if (argument0.p_type[argument1]="Temperate") then obj_controller.disposition[2]-=5;
-	            if (argument0.p_type[argument1]="Desert") then obj_controller.disposition[2]-=3;
-	            if (argument0.p_type[argument1]="Hive") then obj_controller.disposition[2]-=10;
-	        }
-	        if (argument0.p_owner[argument1]=3) and (obj_controller.faction_status[3]!="War"){
+	            if (star_system.p_type[planet_number]="Temperate"){ 
+	            	obj_controller.disposition[2]-=5;
+	            }else if (star_system.p_type[planet_number]="Desert"){ 
+	            	obj_controller.disposition[2]-=3;
+	            }else if (star_system.p_type[planet_number]="Hive"){ 
+	            	obj_controller.disposition[2]-=10;
+	            }
+	        }else if (star_system.p_owner[planet_number]=3) and (obj_controller.faction_status[3]!="War"){
 	            obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=3;
 	            obj_controller.audien_topic[obj_controller.audiences]="bombard_angry";
-	            if (argument0.p_type[argument1]="Forge") then obj_controller.disposition[3]-=15;
-	            if (argument0.p_type[argument1]="Ice") then obj_controller.disposition[3]-=7;
+	            if (star_system.p_type[planet_number]="Forge"){
+	            	obj_controller.disposition[3]-=15;
+	        	}else if (star_system.p_type[planet_number]="Ice"){
+	        		obj_controller.disposition[3]-=7;
+	       		}
 	        }
 	    }
-	    if (argument2=8) and (obj_controller.faction_status[8]!="War"){
-	        obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=8;
+	    if (bombard_target_faction=8) and (obj_controller.faction_status[8]!="War"){
+	        obj_controller.audiences+=1;
+	        obj_controller.audien[obj_controller.audiences]=8;
 	        obj_controller.audien_topic[obj_controller.audiences]=choose("declare_war","bombard_angry");
 	        obj_controller.disposition[8]-=15;
 	    }
@@ -188,29 +231,29 @@ function scr_bomb_world(argument0, argument1, argument2, argument3, argument4) {
 
 
 
-	if (argument0.p_type[argument1]="Space Hulk"){
-	    var tip;tip=1;
+	if (star_system.p_type[planet_number]="Space Hulk"){
+	    var bombard_protection=1;
 	    txt1="Torpedoes and Bombardment Cannons rain hell upon the space hulk; ";
     
-	    sci1=argument3/1.25;// fraction of bombardment score
-	    sci2=0;txt3="";
+	    reduced_bombard_score=bombard_ment_power/1.25;// fraction of bombardment score
+	    strength_reduction=0;txt3="";
     
 	    var rel;rel=0;
     
-	    if (sci1!=0) then rel=((argument0.p_fortified[argument1]-sci1)/argument0.p_fortified[argument1])*100;
+	    if (reduced_bombard_score!=0) then rel=((star_system.p_fortified[planet_number]-reduced_bombard_score)/star_system.p_fortified[planet_number])*100;
     
-	    if (sci2=0) then txt2="it suffers minimal damage from the bombardment.";
+	    if (strength_reduction==0) then txt2="it suffers minimal damage from the bombardment.";
 	    if (rel>0) and (rel<=20) then txt2="it suffers minor damage from the bombardment, its integrity reduced by "+string(100-rel)+"%";
 	    if (rel>20) and (rel<=40) then txt2="it suffers moderate damage from the bombardment, its integrity reduced by "+string(100-rel)+"%";
 	    if (rel>40) and (rel<=60) then txt2="it suffers heavy damage from the bombardment, its integrity reduced by "+string(100-rel)+"%";
-	    if (rel>60) and ((argument0.p_fortified[argument1]-sci1)>0) then txt2="it suffers extensive damage from the bombardment, its integrity reduced by "+string(100-rel)+"%";
-	    if ((argument0.p_fortified[argument1]-sci1)<=0) then txt2="it groans and crumbles apart before the onslaught.  It is no more.";
+	    if (rel>60) and ((star_system.p_fortified[planet_number]-reduced_bombard_score)>0) then txt2="it suffers extensive damage from the bombardment, its integrity reduced by "+string(100-rel)+"%";
+	    if ((star_system.p_fortified[planet_number]-reduced_bombard_score)<=0) then txt2="it groans and crumbles apart before the onslaught.  It is no more.";
     
 	    // DO EET
-	    if (sci1>0) then argument0.p_fortified[argument1]-=sci1;
+	    if (reduced_bombard_score>0) then star_system.p_fortified[planet_number]-=reduced_bombard_score;
     
-	    if (argument0.p_fortified[argument1]<=0){
-	        with(argument0){instance_destroy();}
+	    if (star_system.p_fortified[planet_number]<=0){
+	        with(star_system){instance_destroy();}
 	        instance_activate_object(obj_star_select);
 	        with(obj_star_select){instance_destroy();}
 	        obj_controller.sel_system_x=0;obj_controller.sel_system_y=0;
