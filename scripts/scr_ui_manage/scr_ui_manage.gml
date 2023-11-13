@@ -878,6 +878,7 @@ function scr_ui_manage() {
         
 	        if (man[sel]=="man"){
 				unit = display_unit[sel];
+				if (unit.name()==""){continue;}
 				var unit_location = unit.marine_location();
 	            temp1=unit.name_role();
 	            unit_specialism_option=false;
@@ -887,7 +888,7 @@ function scr_ui_manage() {
 	            if (unit_location[0]==location_types.planet){
 					temp2 = unit_location[2];
 					//get roman numeral for system planet
-					temp2 += scr_roman_numerals()[unit_location[1]];
+					temp2 += romanNumerals[unit_location[1]-1];
 	            } else if(unit_location[0]==location_types.ship){
 					temp2 = obj_ini.ship[unit_location[1]]
 				}
@@ -964,16 +965,14 @@ function scr_ui_manage() {
 						ma_we2="Artifact";
 					}
 	            }
-	        }
-			// Vehicle setup
-	        if (man[sel]=="vehicle"){
+	        }else if (man[sel]=="vehicle"){
 	            // temp1="v "+string(managing)+"."+string(ide[sel]);
 	            temp1=string(ma_role[sel]);
 	            temp2=string(ma_loc[sel]);
             
 	            if (ma_wid[sel]!=0){
 	            	//numeral for vehicle planet
-	            	temp2 += scr_roman_numerals()[ma_wid[sel]];
+	            	temp2 += romanNumerals[ma_wid[sel]-1];
 	            }
 	            temp3=string(round(ma_health[sel]))+"% HP";temp4="";
 	            // Need abbreviations here
