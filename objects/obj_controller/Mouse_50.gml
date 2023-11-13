@@ -2259,7 +2259,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             yy+=77;
             sel=top;
             for(var i=0; i<min(man_max,man_see); i++){
-                while (man[sel]=="hide"){sel++;}
+                while (man[sel]=="hide") and (sel<500){sel++;}
                 if point_in_rectangle(mouse_x,mouse_y,xx+25,yy+64,xx+25+8,yy+85){
                     if (squad_sel==0) and (squad[sel]!=0){
                         squad_sel=squad[sel];
@@ -2268,6 +2268,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 }
                 yy+=21;
                 sel++;
+                if (sel==501) then break
             }
 
         }
@@ -2437,7 +2438,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
         sel=top;
         yy=__view_get( e__VW.YView, 0 )+77;
         for(var i=0; i<min(man_max,man_see); i++){
-            while (man[sel]=="hide"){sel++;}
+            while (man[sel]=="hide") and (sel<500){sel++;}
             eventing=false;
 
             // This is the actual individual click right here
@@ -2531,6 +2532,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             }
             yy+=20;
             sel++;
+            if (sel=501) then break;
         }
         if (sel_all!="") then sel_all="";
         // End selecting
