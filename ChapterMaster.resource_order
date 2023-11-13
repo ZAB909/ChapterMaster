@@ -1,10 +1,11 @@
 {
   "FolderOrderSettings": [
-    {"name":"decorations","order":53,"path":"folders/Sprites/New UI/Marine Viewer/decorations.yy",},
-    {"name":"helms","order":52,"path":"folders/Sprites/New UI/Marine Viewer/helms.yy",},
     {"name":"bionics","order":70,"path":"folders/Sprites/New UI/Gear/bionics.yy",},
     {"name":"packs","order":71,"path":"folders/Sprites/New UI/Gear/packs.yy",},
     {"name":"weapons","order":72,"path":"folders/Sprites/New UI/Gear/weapons.yy",},
+    {"name":"decorations","order":53,"path":"folders/Sprites/New UI/Marine Viewer/decorations.yy",},
+    {"name":"helms","order":52,"path":"folders/Sprites/New UI/Marine Viewer/helms.yy",},
+    {"name":"dreadnought","order":55,"path":"folders/Sprites/New UI/Marine Viewer/dreadnought.yy",},
   ],
   "ResourceOrderSettings": [
     {"name":"spr_credits_bg","order":1,"path":"sprites/spr_credits_bg/spr_credits_bg.yy",},
@@ -34,6 +35,7 @@
     {"name":"spr_marine_base","order":15,"path":"sprites/spr_marine_base/spr_marine_base.yy",},
     {"name":"spr_clothing_colors","order":17,"path":"sprites/spr_clothing_colors/spr_clothing_colors.yy",},
     {"name":"spr_facial_colors","order":19,"path":"sprites/spr_facial_colors/spr_facial_colors.yy",},
+    {"name":"spr_chaplain_skull_helm","order":28,"path":"sprites/spr_chaplain_skull_helm/spr_chaplain_skull_helm.yy",},
     {"name":"spr_aquila_colors","order":21,"path":"sprites/spr_aquila_colors/spr_aquila_colors.yy",},
     {"name":"spr_artificer_colors","order":23,"path":"sprites/spr_artificer_colors/spr_artificer_colors.yy",},
     {"name":"spr_beakie_colors","order":25,"path":"sprites/spr_beakie_colors/spr_beakie_colors.yy",},
@@ -533,6 +535,7 @@
     {"name":"action_another_room","order":1,"path":"scripts/action_another_room/action_another_room.yy",},
     {"name":"action_color","order":3,"path":"scripts/action_color/action_color.yy",},
     {"name":"action_draw_ellipse","order":5,"path":"scripts/action_draw_ellipse/action_draw_ellipse.yy",},
+    {"name":"spr_bionics_arm_2","order":4,"path":"sprites/spr_bionics_arm_2/spr_bionics_arm_2.yy",},
     {"name":"action_if_number","order":7,"path":"scripts/action_if_number/action_if_number.yy",},
     {"name":"action_if_variable","order":9,"path":"scripts/action_if_variable/action_if_variable.yy",},
     {"name":"action_kill_object","order":11,"path":"scripts/action_kill_object/action_kill_object.yy",},

@@ -717,13 +717,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 			if (array_contains(["Dark Angels","Black Templars"],global.chapter_name) || obj_ini.progenitor==1){
 				if (irandom(19)==0){
-					body[$"torso"].robes =1;
+					body[$"torso"].robes =choose(0,0,1);
 					if (irandom(2)<2){
 						body[$"head"].hood =1;
 					}
 				}
 			}else  if(irandom(49)==0){
-				body[$"torso"].robes =1;
+				body[$"torso"].robes =choose(0,1);
 				if (irandom(2)==0){
 					body[$"head"].hood =1;
 				}
@@ -765,11 +765,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					strength++;
 					dexterity -= 2;
 				}else if (array_contains(["left_eye", "right_eye"], new_bionic_pos)){
-					body[$ new_bionic_pos].variant=irandom(2);
+					body[$ new_bionic_pos][$"bionic"].variant=irandom(2);
 					constitution += 1;
 					wisdom += 1;
 					dexterity++;
 				} else if (array_contains(["left_arm", "right_arm"], new_bionic_pos)){
+					body[$ new_bionic_pos][$"bionic"].variant=irandom(1);
 					constitution += 2;
 					strength += 2;
 					weapon_skill--;
