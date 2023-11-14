@@ -386,6 +386,7 @@ function scr_save(save_slot,save_id) {
 	                    ini_write_real("Star","sr"+string(i)+"p_silo"+string(g),instance_array[i].p_silo[g]);
 	                    ini_write_real("Star","sr"+string(i)+"p_defenses"+string(g),instance_array[i].p_defenses[g]);
 	                }
+	                save_features = [];
 					if (array_length(instance_array[i].p_upgrades[g])> 0){
 						for (var f = 0;f < array_length(instance_array[i].p_upgrades[g]);f++){
 							save_features[f]=0;

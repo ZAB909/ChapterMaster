@@ -1144,7 +1144,8 @@ if (slide=4){
     if (custom>1){
         if (text_selected="battle_cry") and (text_bar>30) then draw_text_ext(580,144,string_hash_to_newline(string(battle_cry)+"!"),-1,580);
         if (text_selected="battle_cry") and (text_bar<=30) then draw_text_ext(580,144,string_hash_to_newline(string(battle_cry)+"|!"),-1,580);
-        var wid,hei;wid=max(580,string_width_ext(string_hash_to_newline(battle_cry),-1,580));hei=string_height_ext(string_hash_to_newline(battle_cry),-1,580);
+        var wid=max(580,string_width_ext(string_hash_to_newline(battle_cry),-1,580));
+        var hei=string_height_ext(string_hash_to_newline(battle_cry),-1,580);
         if (scr_hit(580-2,144-2,582+wid,146+hei)){obj_cursor.image_index=2;
             if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="battle_cry";cooldown=8000;keyboard_string=battle_cry;}
         }

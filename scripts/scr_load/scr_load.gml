@@ -454,7 +454,7 @@ function scr_load(argument0, argument1) {
 	                new_star.p_silo[g]=ini_read_real("Star","sr"+string(i)+"p_silo"+string(g),0);
 	                new_star.p_defenses[g]=ini_read_real("Star","sr"+string(i)+"p_defenses"+string(g),0);
 					new_star.p_upgrades[g] = [];
-					var  p_upgrades = ini_read_string("Star","sr"+string(i)+"feat"+string(g),"");
+					var  p_upgrades = ini_read_string("Star","sr"+string(i)+"upg"+string(g),"");
 					if (p_upgrades != ""){
 						var p_upgrades = json_parse(base64_decode(p_upgrades));
 						for (var feat = 0;feat < array_length(p_upgrades);feat++){

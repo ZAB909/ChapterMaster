@@ -434,9 +434,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		var bulky_armour = ["Terminator Armour", "Tartaros"]
 	    if (string_count("Dread",arm)>0) {sz+=5;} else if (array_contains(bulky_armour,arm)){sz +=1};
 		var mobi =  mobility_item();
-		if (mobi == "Jump Pack"){
+		/*if (mobi == "Jump Pack"){
 			sz++;
-		}
+		}*/
 		if (unit_role == "Chapter Master"){sz++}
 		size =sz;
 		return size
