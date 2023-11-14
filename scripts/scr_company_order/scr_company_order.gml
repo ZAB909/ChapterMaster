@@ -28,11 +28,15 @@ function scr_company_order(company) {
 	    temp_god[co,i]=0;
 		temp_struct[co,i]={};
 	}
+
+
+	/*takes a template of a role, required role number and if there are enough 
+	of those units not in a squad creates a new squad of a given type*/
 	function create_squad_from_squadless(squadless_and_squads,build_data,company){
-		var squadless = squadless_and_squads[0]
-		var empty_squads = squadless_and_squads[1]
+		var squadless = squadless_and_squads[0];
+		var empty_squads = squadless_and_squads[1];
 		var role = build_data[1];
-		var required_unit_count = build_data[2]
+		var required_unit_count = build_data[2];
 		var new_squad_type = build_data[0];
 		var new_squad_index, role_number;
 		if (struct_exists(squadless,role)){
@@ -236,6 +240,7 @@ function scr_company_order(company) {
 		);
 	}
 
+	//comand squads only get built to a max of one and are specialist so sit outside of general squad creation
 	if (struct_exists(squadless,role[100,5])) && (struct_exists(squadless,role[100,7])) && (struct_exists(squadless,role[100,15])) && (struct_exists(squadless,"Standard Bearer")){
 		if (array_length(squadless[$role[100,5]])>0) && (array_length(squadless[$role[100,7]])>0) && (array_length(squadless[$role[100,15]])>0) && (array_length(squadless[$"Standard Bearer"])>0){
 			new_squad_index=false;
