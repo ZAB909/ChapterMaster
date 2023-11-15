@@ -1,4 +1,4 @@
-function scr_count_forces(_unit_location, _target_location, _is_planet) {
+function scr_count_forces(_unit_location, _target_location, _is_planet, instance=false) {
 
 	// Works similar to scr_battle_roster but merely counts the forces
 	// Used for the obj_turn_end display to give a sense of player forces
@@ -10,12 +10,11 @@ function scr_count_forces(_unit_location, _target_location, _is_planet) {
 	//--------------------------------------------------------------------------------------------------------------------
 	// Global objects used.
 	//--------------------------------------------------------------------------------------------------------------------
-	checked_unit=obj_ini;
 	//--------------------------------------------------------------------------------------------------------------------
 
 	if (_is_planet){
-		info_mahreens=0;
-		info_vehicles=0;
+		var info_mahreens=0;
+		var info_vehicles=0;
 		//For each of the companies (HQ + 10)
 		for(var company=0;company<11;company++)
 		{
@@ -25,25 +24,34 @@ function scr_count_forces(_unit_location, _target_location, _is_planet) {
 			//For each unit in that company, while unit exists
 			//Marines and vehicles get checked AT THE SAME TIME
 			//This is possible since array for saving vehicles and marines are separated
-			while ((checked_unit.name[company][i]!="" || i<=array_length(veh_race[company])) && i<500)
+			while ((obj_ini.name[company][i]!="" || i<array_length(obj_ini.veh_race[company])) && i<500)
 			{
-				if (checked_unit.race[company][i]==1)					&& 
-				   (checked_unit.loc[company][i]==_unit_location)		&& 
-				   (checked_unit.wid[company][i]==_target_location)
+				if (obj_ini.race[company][i]==1)					&& 
+				   (obj_ini.loc[company][i]==_unit_location)		&& 
+				   (obj_ini.wid[company][i]==_target_location)
 				{
-					info_mahreens+=1;
+
+					info_mahreens++;
 				}
 				
-				if (i<=array_length(veh_race[company])){
-					if (checked_unit.veh_race[company][i]=1)				&& 
-					   (checked_unit.veh_loc[company][i]==_unit_location)	&& 
-					   (checked_unit.veh_wid[company][i]==_target_location)		
+				if (i<array_length(obj_ini.veh_race[company])){
+					if (obj_ini.veh_race[company][i]=1)				&& 
+					   (obj_ini.veh_loc[company][i]==_unit_location)	&& 
+					   (obj_ini.veh_wid[company][i]==_target_location)		
 					{
-						info_vehicles+=1;
+						info_vehicles++;
 					}
 				}
 				
 				i++
+			}
+		}
+		if (instance){
+			return [info_mahreens,info_vehicles];
+		} else {
+			if (instance_exists(obj_turn_end)){
+				obj_turn_end.info_mahreens=info_mahreens;
+				obj_turn_end.info_vehicles=info_vehicles;
 			}
 		}
 	}

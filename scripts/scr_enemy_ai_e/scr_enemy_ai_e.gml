@@ -367,8 +367,12 @@ function scr_enemy_ai_e() {
 	run=0;force=1;beetle=0;chaos_meeting=0;
 
 	repeat(4){run+=1;force=1;
+		if (p_player[run]>0){
+	   		var forces_list=scr_count_forces(name, run, true,true)
+	   		var force_count = forces_list[0]+forces_list[1];
+		}
 
-	    if (p_player[run]>0){
+	    if (p_player[run]>0 && force_count>0){
 	        var spyrer,fallen,s;spyrer=0;fallen=0;s=0;
         
 	        repeat(4){s+=1;
@@ -433,66 +437,95 @@ function scr_enemy_ai_e() {
 	            scr_popup("Necron Tomb Excursion",tixt,"necron_cave","blarg|"+string(name)+"|"+string(run)+"|999|");
 	        }
 	    }
-    
-    
-    
-    
-    
-	    if (p_player[run]>0) then repeat(10-1){force+=1;beetle=0;
-	        if (force=3) then force=4;// mechanicus aren't quite in yet
-	        if (force=4) then force=5;
-	        if (force=12) then force=13;
-        
-	        if (force=2){
-	            if (p_player[run]>0) and (p_owner[run]=1) and (p_guardsmen[run]>0) and (obj_controller.faction_status[2]="War") then beetle=2;
-	            if (p_player[run]>=10) and (p_owner[run]!=1) and (p_guardsmen[run]>0) and (obj_controller.faction_status[2]="War") then beetle=2;
-	        }
-	        /*if (force=3){
-	            if (p_player[run]>0) and (p_owner[run]=1) and (p_guardsmen[run]>0) and (obj_controller.faction_status[2]="War") then beetle=2;
-	            if (p_player[run]>=10) and (p_owner[run]!=1) and (p_guardsmen[run]>0) and (obj_controller.faction_status[2]="War") then beetle=2;
-	        }*/
-	        if (force=5){
-	            if (p_player[run]>0) and (p_sisters[run]>0) and (obj_controller.faction_status[5]="War") then beetle=5;
-	        }
-	        if (force=6){
-	            if (p_player[run]>0) and (p_eldar[run]>0) and (obj_controller.faction_status[6]="War") then beetle=6;
-	        }
-	        if (force=7) and (p_guardsmen[run]+p_pdf[run]=0){
-	            if (p_player[run]>0) and (p_orks[run]>0) then beetle=7;
-	        }
-	        if (force=8) and (p_guardsmen[run]=0){
-	            if (p_player[run]>0) and (p_tau[run]>0) then beetle=8;
-	        }
-	        if (force=9) and (p_guardsmen[run]+p_pdf[run]=0){
-	            if (p_player[run]>0) and (p_tyranids[run]>0) then beetle=9;
-	        }
-	        if (force=10) and (p_guardsmen[run]+p_pdf[run]=0){
-	            var pause,r;pause=0;r=0;repeat(4){r+=1;if (p_problem[run,r]="meeting") or (p_problem[run,r]="meeting_trap") then pause=1;}
-	            if (p_player[run]>0) and (p_traitors[run]>0) and (pause=0) and (obj_controller.faction_status[10]="War") then beetle=10;
-	        }
-	        if (force=11) and (p_guardsmen[run]+p_pdf[run]=0){
-	            var pause,r;pause=0;r=0;repeat(4){r+=1;if (p_problem[run,r]="meeting") or (p_problem[run,r]="meeting_trap") then pause=1;}
-	            if (p_player[run]>0) and (p_chaos[run]>0) and (pause=0) and (obj_controller.faction_status[10]="War") then beetle=11;
-	        }
-	        if (force=13) and (p_guardsmen[run]+p_pdf[run]=0){
-	            if (p_player[run]>0) and (p_necrons[run]>0) then beetle=13;
-	        }
-        
-	        // other battle crap here
-	        if (beetle>0){
-	            // obj_controller.x=self.x;obj_controller.y=self.y;
-	            obj_turn_end.battles+=1;
-	            obj_turn_end.battle[obj_turn_end.battles]=1;
-	            obj_turn_end.battle_world[obj_turn_end.battles]=run;
-	            obj_turn_end.battle_opponent[obj_turn_end.battles]=beetle;
-	            obj_turn_end.battle_location[obj_turn_end.battles]=name;
-	            obj_turn_end.battle_object[obj_turn_end.battles]=id;
-	        }
-        
-        
-        
-        
-	    }
+	    if (p_player[run]>0) and (force_count>0){
+	    	for (force=2;force<14;force++){
+		    	battle_opponent=0;
+
+		    	switch (force) {
+				    case 3:
+				        force = 4; // mechanicus aren't quite in yet
+				        break;
+				    case 4:
+				        force = 5;
+				        break;
+				    case 12:
+				        force = 13;
+				        break;
+				    case 2:
+				        if (p_player[run] > 0 && p_owner[run] == 1 && p_guardsmen[run] > 0 && obj_controller.faction_status[2] == "War") {
+				            battle_opponent = 2;
+				        }
+				        if (p_player[run] >= 10 && p_owner[run] != 1 && p_guardsmen[run] > 0 && obj_controller.faction_status[2] == "War") {
+				            battle_opponent = 2;
+				        }
+				        break;
+				    case 5:
+				        if (p_player[run] > 0 && p_sisters[run] > 0 && obj_controller.faction_status[5] == "War") {
+				            battle_opponent = 5;
+				        }
+				        break;
+				    case 6:
+				        if (p_player[run] > 0 && p_eldar[run] > 0 && obj_controller.faction_status[6] == "War") {
+				            battle_opponent = 6;
+				        }
+				        break;
+				    case 7:
+				        if (p_guardsmen[run] + p_pdf[run] == 0 && p_player[run] > 0 && p_orks[run] > 0) {
+				            battle_opponent = 7;
+				        }
+				        break;
+				    case 8:
+				        if (p_guardsmen[run] == 0 && p_player[run] > 0 && p_tau[run] > 0) {
+				            battle_opponent = 8;
+				        }
+				        break;
+				    case 9:
+				        if (p_guardsmen[run] + p_pdf[run] == 0 && p_player[run] > 0 && p_tyranids[run] > 0) {
+				            battle_opponent = 9;
+				        }
+				        break;
+				    case 10:
+				        var  pause = 0, r = 0;
+				        for(r=0;r<array_length(p_problem[run]);r++) {
+				            if (p_problem[run][r] == "meeting" || p_problem[run][r] == "meeting_trap") {
+				                pause = 1;
+				            }
+				        }
+				        if (p_guardsmen[run] + p_pdf[run] == 0 && p_player[run] > 0 && p_traitors[run] > 0 && pause == 0 && obj_controller.faction_status[10] == "War") {
+				            battle_opponent = 10;
+				        }
+				        break;
+				    case 11:
+				        var  pause = 0, r = 0;
+				        for(r=0;r<array_length(p_problem[run]);r++) {
+				            if (p_problem[run][r] == "meeting" || p_problem[run][r] == "meeting_trap") {
+				                pause = 1;
+				            }
+				        }
+				        if (p_guardsmen[run] + p_pdf[run] == 0 && p_player[run] > 0 && p_chaos[run] > 0 && pause == 0 && obj_controller.faction_status[10] == "War") {
+				            battle_opponent = 11;
+				        }
+				        break;
+				    case 13:
+				        if (p_guardsmen[run] + p_pdf[run] == 0 && p_player[run] > 0 && p_necrons[run] > 0) {
+				            battle_opponent = 13;
+				        }
+				        break;
+				}
+
+	        
+		        // other battle crap here
+		        if (battle_opponent>0){
+		            // obj_controller.x=self.x;obj_controller.y=self.y;
+		            obj_turn_end.battles+=1;
+		            obj_turn_end.battle[obj_turn_end.battles]=1;
+		            obj_turn_end.battle_world[obj_turn_end.battles]=run;
+		            obj_turn_end.battle_opponent[obj_turn_end.battles]=battle_opponent;
+		            obj_turn_end.battle_location[obj_turn_end.battles]=name;
+		            obj_turn_end.battle_object[obj_turn_end.battles]=id;
+		        }	        
+		    }
+		}
     
     
     
