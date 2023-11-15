@@ -447,6 +447,9 @@ function scr_enemy_ai_e() {
 				    case 4:
 				        continue;
 				    case 12:
+				    case 3:   // mechanicus aren't quite in yet
+				    case 4:
+				    case 12:
 				        continue;
 				    case 2:
 				        if (p_player[run] > 0 && p_owner[run] == 1 && p_guardsmen[run] > 0 && obj_controller.faction_status[2] == "War") {
