@@ -443,14 +443,11 @@ function scr_enemy_ai_e() {
 
 		    	switch (force) {
 				    case 3:
-				        force = 4; // mechanicus aren't quite in yet
-				        break;
+				        continue; // mechanicus aren't quite in yet
 				    case 4:
-				        force = 5;
-				        break;
+				        continue;
 				    case 12:
-				        force = 13;
-				        break;
+				        continue;
 				    case 2:
 				        if (p_player[run] > 0 && p_owner[run] == 1 && p_guardsmen[run] > 0 && obj_controller.faction_status[2] == "War") {
 				            battle_opponent = 2;
