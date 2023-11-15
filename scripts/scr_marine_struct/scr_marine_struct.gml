@@ -737,7 +737,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		return obj_ini.race[company,marine_number];
 	};	//get race
 
-	static add_bionics = function(area="none", bionic_quality="standard"){
+	static add_bionics = function(area="none", bionic_quality="standard", from_armoury=false){
 		var new_bionic_pos, part, new_bionic = {quality :bionic_quality};
 		if (obj_ini.bio[company,marine_number] < 10){
 			update_health(hp()+30);
