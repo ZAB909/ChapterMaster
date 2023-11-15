@@ -9,12 +9,7 @@ function scr_company_view(company) {
 	squad_members=0;
 	last_man=0;
 	last_vehicle=0;
-	var command_roles= [obj_ini.role[100,5],obj_ini.role[100,14],obj_ini.role[100,15],obj_ini.role[100,16],ma_role[v]!=obj_ini.role[100,17],"Standard Bearer","Company Champion","Codiciery","Lexicanum"];
-	var head_roles = ["Master of Sanctity",
-					string("Chief {0}", obj_ini.role[100,17]),
-					"Forge Master", 
-					"Chapter Master", 
-					"Master of the Apothecarion"]
+
 	var role_list = ds_list_create();
 	// v: check number
 	// mans: number of mans that a hit has gotten
@@ -95,7 +90,7 @@ function scr_company_view(company) {
 					}					
 	                // Select All Infantry Setup
 	                var go=0,op=0;
-					 if (man[v]=="man") and (!array_contains(command_roles,ma_role[v])){
+					 if (man[v]=="man") and (!is_specialist(ma_role[v])){
 	                    for (var j=0; j<20;j++) {
 							if (sel_uni[j] == "") && (op == 0) then op = j;
 							if (sel_uni[j] == ma_role[v]) then go = 1;
@@ -118,11 +113,11 @@ function scr_company_view(company) {
 	                // Should have this be only ran for MAN, somehow run it a second time for VEHICLE
 	                if (squads>0){
 	                	var n=1;
-						if (array_contains(command_roles,squad_type)) or (squad_type=ma_role[v]) then n=0;
+						if (is_specialist(squad_type)) or (squad_type=ma_role[v]) then n=0;
 	                    // if units are not in a squad
 	                    if (unit.squad == "none"){
 
-	                    	if (array_contains(head_roles, obj_ini.role[100,6])) then  n=1;
+	                    	if (is_specialist(obj_ini.role[100,6], "heads")) then  n=1;
     	                    if (squad_type=obj_ini.role[100,6]) and (squad_type!=ma_role[v]) and (squad_type!="Venerable "+string(ma_role[v])) then n=2;
     	                    if (squad_type=obj_ini.role[100,6]) and (ma_role[v]=obj_ini.role[100,6]) then n=0;
     	                    if (squad_type=obj_ini.role[100,6]) and (ma_role[v]="Venerable "+string(obj_ini.role[100,6])) then n=0;
