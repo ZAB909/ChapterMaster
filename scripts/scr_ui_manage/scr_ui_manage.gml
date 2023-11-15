@@ -1051,6 +1051,7 @@ function scr_ui_manage() {
 	        draw_rectangle(xx+25,yy+64,xx+974,yy+85,0);
 
 	        unit_specialism_option=false;
+	        spec_tip = "";
 	        if (man[sel]="man"){
 	        	draw_set_color(c_gray);
 	        	if (!is_specialist(unit.role())){

@@ -128,25 +128,17 @@ function scr_special_view(command_group) {
 	v=0;
 	if (command_group==13) or (command_group==0){// Librarium
 		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++){
-		    bad=0;
 		    if (obj_ini.lid[company,v]>0){
 		        var ham=obj_ini.lid[0,v];
-		        if (obj_ini.ship_location[ham]=="Lost") then bad=1;
+		        if (obj_ini.ship_location[ham]=="Lost") then continue;
 		    }
-		    var cheif_lib = string("Chief {0}", obj_ini.role[100,17]);
-		    var lib = obj_ini.role[100,17];
-		    var lib_trainee = string("{0} Aspirant",obj_ini.role[100,17])
-		    var lib_roles = [cheif_lib,lib, "Lexicanum", "Codiciery", lib_trainee]
-
-		    if (array_contains(lib_roles, obj_ini.role[0,v])) and (bad==0){
+		    //find if mlib specialist or trainee
+		    if (is_specialist(obj_ini.role[0,v],"libs", true)){
 		        b+=1;
 		        mans+=1;
 		        special_mar_data_fill(v, b);
-		        if (obj_ini.role[0,v]!="Chief "+string(obj_ini.role[100,17])){
-		            if (obj_ini.role[0,v]==obj_ini.role[100,17]) then ma_promote[b]=0;
-		            if (obj_ini.role[0,v]=="Lexicanum") and (ma_exp[b]>=80) then ma_promote[b]=1;
-		            if (obj_ini.role[0,v]=="Codiciery") and (ma_exp[b]>=125) then ma_promote[b]=1;
-		        }
+	            if (obj_ini.role[0,v]=="Lexicanum") and (ma_exp[b]>=80) then ma_promote[b]=1;
+	            if (obj_ini.role[0,v]=="Codiciery") and (ma_exp[b]>=125) then ma_promote[b]=1;
 		    }
 		}
 	}
