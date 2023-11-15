@@ -125,7 +125,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                     if (!meeting) {
                         cooh = company;
                         va = v;
-                    }else  (meeting == true) {
+                    }else {
                         if (v <= obj_temp_meeting.dudes) {
                             cooh = obj_temp_meeting.company[v];
                             va = obj_temp_meeting.ide[v];
