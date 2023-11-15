@@ -507,9 +507,9 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
                         if (ui_arm[1]){
                             if (struct_exists(body[$ "right_arm"],"bionic") && base_sprite<=0){
                                 if (body[$ "right_arm"][$ "bionic"].variant == 0){
-                                    draw_sprite(spr_bionics_arm,0,xx+x_draw,yy+y_draw);
+                                    draw_sprite(spr_bionics_arm,0,xx+x_draw,yy+y_draw-4);
                                 }else{
-                                    draw_sprite(spr_bionics_arm_2,1,xx+x_draw,yy+y_draw);
+                                    draw_sprite(spr_bionics_arm_2,1,xx+x_draw+5,yy+y_draw-10);
                                 }
                             } else {
                                 draw_sprite(armour_sprite,6,xx+x_draw,yy+y_draw);
@@ -519,9 +519,9 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
                             if  (specialist_colours<=1){
                                 if (struct_exists(body[$ "left_arm"],"bionic") && base_sprite<=0){
                                         if (body[$ "left_arm"][$ "bionic"].variant == 0){
-                                            draw_sprite(spr_bionics_arm,1,xx+x_draw,yy+y_draw);
+                                            draw_sprite(spr_bionics_arm,1,xx+x_draw,yy+y_draw-4);
                                         } else{
-                                            draw_sprite(spr_bionics_arm_2,0,xx+x_draw,yy+y_draw);
+                                            draw_sprite(spr_bionics_arm_2,0,xx+x_draw,yy+y_draw-10);
                                         }
                                 }else {
                                     draw_sprite(armour_sprite,8,xx+x_draw,yy+y_draw);
@@ -529,9 +529,9 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
                             }else if(specialist_colours>=2){
                                if (struct_exists(body[$ "left_arm"],"bionic") && base_sprite<=0){
                                         if (body[$ "left_arm"][$ "bionic"].variant == 0){
-                                            draw_sprite(spr_bionics_arm,3,xx+x_draw,yy+y_draw);
+                                            draw_sprite(spr_bionics_arm,3,xx+x_draw,yy+y_draw-4);
                                         } else{
-                                            draw_sprite(spr_bionics_arm_2,2,xx+x_draw,yy+y_draw);
+                                            draw_sprite(spr_bionics_arm_2,2,xx+x_draw,yy+y_draw-10);
                                         }
                                 }else {
                                     draw_sprite(armour_sprite,9,xx+x_draw,yy+y_draw);
@@ -584,12 +584,13 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
 
                 //Chaplain head and Terminator version
                 if (skull>0) and (ui_specialist=1){
-                    if (base_sprite!=2) and (base_sprite!=1) then draw_sprite(spr_gear_chap,skull,xx+x_draw-2,yy+y_draw-11);
-                    if (base_sprite=2) then draw_sprite(spr_gear_chap,skull,xx+x_draw-2,yy+y_draw-11);
-                    if (base_sprite=1) then draw_sprite(spr_gear_chap,skull,xx+x_draw-2,yy+y_draw-11);
                     if (armour()!="Terminator"){
-                      if (base_sprite=2 || base_sprite=1) then draw_sprite(spr_terminator_chap,1,xx+x_draw-2,yy+y_draw-11);
-                 }
+                      if (base_sprite==2 || base_sprite==1) then draw_sprite(spr_terminator_chap,1,xx+x_draw-2,yy+y_draw-11);
+                    }
+                    shader_reset();
+                    if (base_sprite!=2 && base_sprite!=1) then draw_sprite(spr_chaplain_skull_helm,0,xx+x_draw,yy+y_draw);
+                    if (base_sprite==2 || base_sprite==1) draw_sprite(spr_chaplain_skull_helm,0,xx+x_draw,yy+y_draw);
+                    shader_set(sReplaceColor);
                 }
             }
             //purity seals/decorations
@@ -641,7 +642,7 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
                         var bionic = body[$ body_part][$"bionic"];
                         switch(body_part){
                             case "left_eye":
-                                 if (bionic.variant ==0){
+                                 if (bionic.variant == 0){
                                     if (armour() == "MK3 Iron Armour"){
                                         draw_sprite(spr_bionics_eye,0,xx+x_draw-2+eye_move,yy+y_draw);
                                     } else{
@@ -701,9 +702,13 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
 			}
             if (base_sprite<1){
                 var robes_mod=[0,0];
-                if (armour()=="MK7 Aquila" || show_arm="Power Armour"||armour()=="MK4 Maximus"){
+                if (array_contains(["MK7 Aquila","Power Armour","MK4 Maximus","Mk5 Heresy"], armour())){
                     robes_mod[1]=-7;
+                } else if (armour()=="MK6 Corvus"){
+                     robes_mod[0]=-1
+                     robes_mod[1]=-1
                 }
+
                if (struct_exists(body[$ "head"],"hood")){
                     draw_sprite(spr_marine_cloth_hood,0,xx+x_draw+robes_mod[0],yy+y_draw+robes_mod[1]);     
                }
