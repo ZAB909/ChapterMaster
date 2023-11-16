@@ -1,7 +1,5 @@
 function scr_enemy_ai_e() {
 
-
-
 	// Guess I'll handle all of the ship combat in here
 	// This needs to keep on running in each sector until only one faction's fleet remains
 
@@ -287,8 +285,6 @@ function scr_enemy_ai_e() {
 	}// End AI battle
 
 
-
-
 	if (battle>0){
 	    if (present_fleet[1]>0) and ((present_fleet[6]+present_fleet[7]+present_fleet[8]+present_fleet[9]+present_fleet[10]+present_fleet[13]>0) or ((present_fleet[2]>0) and (obj_controller.faction_status[2]="War"))){
 	        var i,onceh;i=1;onceh=0;
@@ -341,26 +337,6 @@ function scr_enemy_ai_e() {
 
 	instance_activate_object(obj_p_fleet);
 	instance_activate_object(obj_en_fleet);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	// 2    3   5   6   7   8   9   10  11  13
-
 
 
 	var run,force,beetle,chaos_meeting;
@@ -444,11 +420,6 @@ function scr_enemy_ai_e() {
 		    	battle_opponent=0;
 
 		    	switch (force) {
-				    case 3:
-				        continue; // mechanicus aren't quite in yet
-				    case 4:
-				        continue;
-				    case 12:
 				    case 3:   // mechanicus aren't quite in yet
 				    case 4:
 				    case 12:
@@ -528,13 +499,7 @@ function scr_enemy_ai_e() {
 		        }	        
 		    }
 		}
-    
-    
-    
-    
-    
-    
-    
+
 	    // Other planetary stuff
 
 		var thirdpop;
