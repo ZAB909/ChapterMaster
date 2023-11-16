@@ -367,9 +367,11 @@ function scr_enemy_ai_e() {
 	run=0;force=1;beetle=0;chaos_meeting=0;
 
 	repeat(4){run+=1;force=1;
+		var forces_list =[];
+		var force_count=0;
 		if (p_player[run]>0){
-	   		var forces_list=scr_count_forces(name, run, true,true)
-	   		var force_count = forces_list[0]+forces_list[1];
+	   		forces_list=scr_count_forces(name, run, true,true)
+	   		force_count = forces_list[0]+forces_list[1];
 		}
 
 	    if (p_player[run]>0 && force_count>0){
