@@ -1,17 +1,5 @@
 function scr_count_forces(_unit_location, _target_location, _is_planet, instance=false) {
 
-	// Works similar to scr_battle_roster but merely counts the forces
-	// Used for the obj_turn_end display to give a sense of player forces
-
-	// argument 0 : planet or ship
-	// argument 1 : world number (wid)
-	// argument 2 : is it a planet?  boolean
-
-	//--------------------------------------------------------------------------------------------------------------------
-	// Global objects used.
-	//--------------------------------------------------------------------------------------------------------------------
-	//--------------------------------------------------------------------------------------------------------------------
-
 	if (_is_planet){
 		var info_mahreens=0;
 		var info_vehicles=0;
