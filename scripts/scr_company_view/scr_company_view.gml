@@ -117,10 +117,10 @@ function scr_company_view(company) {
 	                    if (unit.squad == "none"){
 
 
-	                    	if (array_contains(head_roles, obj_ini.role[100][6])) then  n=1;
-    	                    if (squad_type=obj_ini.role[100][6]) and (squad_type!=ma_role[v]) and (squad_type!="Venerable "+string(ma_role[v])) then n=2;
-    	                    if (squad_type=obj_ini.role[100][6]) and (ma_role[v]=obj_ini.role[100][6]) then n=0;
-    	                    if (squad_type=obj_ini.role[100][6]) and (ma_role[v]="Venerable "+string(obj_ini.role[100][6])) then n=0;
+	                    	if (is_specialist(squad_type,"heads")) then  n=1;
+    	                    if (squad_type==obj_ini.role[100][6]) and (squad_type!=ma_role[v]) and (squad_type!="Venerable "+string(ma_role[v])) then n=2;
+    	                    if (squad_type==obj_ini.role[100][6]) and (ma_role[v]=obj_ini.role[100][6]) then n=0;
+    	                    if (squad_type==obj_ini.role[100][6]) and (ma_role[v]="Venerable "+string(obj_ini.role[100][6])) then n=0;
     	                    if (squad_type="Venerable "+string(obj_ini.role[100][6])) and (ma_role[v]=obj_ini.role[100][6]) then n=0;
 
 	         			
