@@ -122,11 +122,10 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                     cooh = 0;
                     va = 0;
 
-                    if (meeting == false) {
+                    if (!meeting) {
                         cooh = company;
                         va = v;
-                    }
-                    if (meeting == true) {
+                    }else {
                         if (v <= obj_temp_meeting.dudes) {
                             cooh = obj_temp_meeting.company[v];
                             va = obj_temp_meeting.ide[v];
@@ -425,25 +424,25 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                     if (vokay >= 1) and(new_combat.dropping = 0) {
                         new_combat.veh_fighting[company, v] = 1;
 
-                        var col, targ;
-                        col = 1;
-                        targ = 0;
+                        var col = 1, targ = 0;
 
-                        if (deploying_unit.veh_role[company, v] = "Rhino") {
-                            col = obj_controller.bat_rhino_column;
-                            new_combat.rhinos += 1;
-                        }
-                        if (deploying_unit.veh_role[company, v] = "Predator") {
-                            col = obj_controller.bat_predator_column;
-                            new_combat.predators += 1;
-                        }
-                        if (deploying_unit.veh_role[company, v] = "Land Raider") {
-                            col = obj_controller.bat_landraider_column;
-                            new_combat.land_raiders += 1;
-                        }
-                        if (deploying_unit.veh_role[company, v] = "Whirlwind") {
-                            col = 1;
-                            new_combat.whirlwinds += 1;
+                        switch (deploying_unit.veh_role[company, v]){
+                            case "Rhino":
+                                col = obj_controller.bat_rhino_column;
+                                new_combat.rhinos += 1;
+                                break;
+                            case "Predator":
+                                col = obj_controller.bat_predator_column;
+                                new_combat.predators += 1;
+                                break;
+                             case "Land Raider":
+                                col = obj_controller.bat_landraider_column;
+                                new_combat.land_raiders += 1;
+                                break;
+                             case "Whirlwind":
+                                col = 1;
+                                new_combat.whirlwinds += 1;;
+                                break;                                    
                         }
 
                         targ = instance_nearest(col * 10, room_height / 2, obj_pnunit);
@@ -481,7 +480,9 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                                 targ.veh_hp_multiplier[targ.veh] = targ.veh_hp_multiplier[targ.veh] * 1.1;
                             }
                             if (obj_controller.stc_bonus[3] = 2) {
-                                targ.veh_ranged[targ.veh] = targ.veh_ranged[targ.veh] * 1.05;
+                                //TODO reimplement STC bonus for ranged vehicle weapons
+                                //veh ranged isn't a thing sooooo.... oh well
+                                //targ.veh_ranged[targ.veh] = targ.veh_ranged[targ.veh] * 1.05;
                             }
                             if (obj_controller.stc_bonus[3] = 5) {
                                 targ.veh_ac[targ.veh] = round(targ.veh_ac[targ.veh] * 1.1);

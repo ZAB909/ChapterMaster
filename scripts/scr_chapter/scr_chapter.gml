@@ -73,7 +73,7 @@ function scr_chapter(argument0) {
 	    battle_cry="For Russ and the Allfather";monastery_name="The Fang";master_name="Logan Grimnar";
 	    main_color="Light Blue";secondary_color="Black";lens_color="Black";weapon_color="Black";
 
-	    initiate_name="Initiate";scout_name="Wolf Scout";tactical_name="Grey Hunter";veteran_name="Veteran";devastator_name="Long Fang";
+	    initiate_name="Initiate";scout_name="Wolf Scout";tactical_name="Grey Hunter";veteran_name="Wolf Guard";devastator_name="Long Fang";
 	    assault_name="Blood Claw";apothecary_name="Wolf Priest";librarian_name="Rune Priest";tech_name="Iron Priest";chaplain_name="Wolf Priest";
 	    role[100][2]="Wolf Guard";captain_name="Wolf Lord";
     

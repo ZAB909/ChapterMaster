@@ -173,7 +173,9 @@ function scr_load_decide_loc(role_type, role, is_vehicle) {
     
     
 	    if (role_type="unit role") and (is_vehicle=true){
-	        for(i=0;i<301;i++){unit_location=ma_loc[i];if (ma_lid[i]>0) then unit_location=obj_ini.ship[ma_lid[i]];
+	        for(i=0;i<301;i++){
+	        	unit_location=ma_loc[i];
+	        	if (ma_lid[i]>0) then unit_location=obj_ini.ship[ma_lid[i]];
 	            if (man[i]="vehicle") and (ma_role[i]=role){
 	                j=0;good=0;
                 

@@ -138,8 +138,9 @@ function scr_initialize_custom() {
 				"Black Legion",
 				"Word Bearers",
 				"Salamanders",
-				"Raven Guard"]		
-		global.founding_secret = legions[irandom(16)];
+				"Raven Guard",
+				"Alpha Legion"]		
+		global.founding_secret = legions[irandom(17)];
 	}
 
 
@@ -871,7 +872,7 @@ function scr_initialize_custom() {
 		mobi[i,19]="";
 		gear[i,19]="";	
 	}// 100 is defaults, 101 is the allowable starting equipment // info
-	for(i=0;i<=20;i++){i+=1;
+	for(i=0;i<=20;i++){
 	    race[100,i]=obj_creation.race[100,i];
 	    role[100,i]=obj_creation.role[100,i];
 	    wep1[100,i]=obj_creation.wep1[100,i];
@@ -917,19 +918,25 @@ function scr_initialize_custom() {
 						of all required loadout options
 
 	*/
+	var squad_name = "Squad";
+	if (global.chapter_name=="Space Wolves" || obj_ini.progenitor==3){
+		squad_name = "Pack";
+	}
 	squad_types = {};
 	var st = { 
 		"command_squad" :[
+
 				[role[100][5], {"max":1,"min":1}],		//captain
 				[role[100][7], {"max":1,"min":1}],		//company_champion
-				[role[100][15], {"max":1,"min":1, "role":"Company Apothecary"}],		//Apothecary
-				[role[100][14], {"max":1,"min":0, "role":"Company Chaplain"}],		//chaplain
-				["Standard Bearer" , {"max":1,"min":1}],//standard bearer
-				[role[100][3] , {"max":5,"min":0, "role":"Company Command Veteran"}],		//veterans
-				["display_name" , "Command Squad"]
+				[role[100][15], {"max":1,"min":0, "role":$"Company {role[100,15]}"}],		//Apothecary
+				[role[100][14], {"max":1,"min":0, "role":$"Company {role[100,14]}"}],		//chaplain
+				["Standard Bearer" , {"max":1,"min":1,"role":"Chapter Ancient"}],//standard bearer
+				[role[100][3] , {"max":5,"min":0, "role":$"Company Command {role[100,3]}"}],		//veterans
+				[role[100][16],{"max":1,"min":0,"role":$"Company {role[100,16]}"}],
+				["display_name" , $"Command {squad_name}"]
 			],
 			"terminator_squad": [
-				[role[100][19], {"max":1,"min":1, "role":"Veteran Sergeant Terminator"}],			//Veteran sergeant terminator
+				[role[100][19], {"max":1,"min":1, "role":$"{role[100,19]} Terminator"}],			//Veteran sergeant terminator
 				[role[100][4], {"max":9,"min":3,"loadout":{//terminator
 					"required":{
 						"wep1":[wep1[100,4],4],
@@ -947,7 +954,7 @@ function scr_initialize_custom() {
 						],
 					} 
 				}}],
-				["display_name" , "Terminator Squad"]
+				["display_name" , $"{role[100,4]} Terminator {squad_name}"]
 			],
 			"veteran_squad": [
 				[role[100][3], {"max":9,"min":4, "loadout":{//tactical marine
@@ -969,8 +976,9 @@ function scr_initialize_custom() {
 						]
 					} 
 				}}],		//veterans
+
 				[role[100][19], {"max":1,"min":1}],
-				["display_name" , "Veteran Squad"]
+				["display_name" , $"{role[100,3]} {squad_name}"]
 			],
 			"devestator_squad": [
 				[role[100][9], {"max":9,"min":4,"loadout":{//devestator
@@ -978,8 +986,9 @@ function scr_initialize_custom() {
 						"wep1":["Bolter",4], 
 						"wep2":["Combat Knife",4]
 					}}}],		//veterans
-				[role[100][18], {"max":1,"min":1, "role":"Devestator Sergeant"}],//sergeant
-				["display_name" , "Devestator Squad"]
+
+				[role[100][18], {"max":1,"min":1, "role":$"{role[100,9]} {role[100,18]}"}],//sergeant
+				["display_name" , $"{role[100,9]} {squad_name}"]
 			],				
 			"tactical_squad":[
 				[role[100][8], {"max":9,"min":4, "loadout":{//tactical marine
@@ -1000,8 +1009,9 @@ function scr_initialize_custom() {
 						]
 					} 
 				}}],		//tactical marine
-				[role[100][18], {"max":1,"min":1, "role":"Tactical Sergeant"}],		// sergeant
-				["display_name" , "Tactical Squad"]
+
+				[role[100][18], {"max":1,"min":1, "role":$"{role[100,8]} {role[100,18]}"}],		// sergeant
+				["display_name" , $"${role[100,8]} {squad_name}"]
 			],
 			"assault_squad" : [
 				[role[100][10] , {
@@ -1023,11 +1033,91 @@ function scr_initialize_custom() {
 					}
 				}
 			],
-			[role[100][18], {"max":1,"min":1, "role":"Assualt Sergeant"}],		// sergeant
-			["display_name" , "Tactical Squad"]
-		]		
+			[role[100][18], {"max":1,"min":1, "role":$"Assualt {role[100][18]}"}],		// sergeant
+			["display_name" , $"{role[100][10]} {squad_name}"]
+		],
+	    "scout_squad":[
+	        [
+	            role[100][12], 
+	            {"max":9,"min":4, "loadout":{
+	                    "required":{
+	                        "wep1":[wep1[100][12],4], 
+	                        "wep2":[wep2[100][12],4]
+	                    },
+	                    "option" :{
+	                        "wep1":[
+	                            [["Flamer","Plasma Gun",], 1],
+	                            [["Bolter","Stalker Pattern Bolter"], 3],
+	                            [["Missile Launcher","Heavy Bolter"], 1]],
+	                        "wep2":[
+	                            [["Chainsword","Combat Knife"], 5],
+	                        ]
+	                    } 
+	                }
+	            },
+	        ],
+	        [
+	            role[100][18], 
+	            {
+	            	"max":1,"min":1,
+	            	"loadout":{
+		                "option":{
+		                    "wep1":[
+		                        [["Power Sword","Chainsword","Power Axe","Power Fist"],1]
+		                    ],
+		                    "wep2":[
+		                        [["Plasma Pistol","CombiFlamer","Stalker Pattern Bolter","Storm Bolter"],1]
+		                    ]
+		                }
+		            },
+	           	 	"role":$"{role[100,12]} {role[100,18]}",
+	            }   
+	        ],
+	        ["display_name" , $"{role[100,12]} {squad_name}"]
+	    ],
+	    "scout_sniper_squad":[
+	        [
+	            role[100][12], 
+	            {
+	                "max":4,
+	                "min":2, 
+	                "loadout":{
+	                    "required":{
+	                        "wep1":["Sniper Rifle",2], 
+	                        "wep2":["Combat Knife",4]
+	                    },
+	                    "option" :{
+	                        "wep1":[
+	                            [["Sniper Rifle","Stalker Pattern Bolter"], 1],
+	                            [["Missile Launcher","Sniper Rifle","Stalker Pattern Bolter"], 1]
+	                        ],
+	                    }
+	                },
+	                "role":$"{role[100][12]} Sharpshooter", 
+	            },
+	        ], 
+	        [
+	        	role[100][18],
+		        {
+		            "max":1,
+		            "min":1,
+		            "loadout":{
+			            "option":{
+			                "wep1":[
+			                    [["Power Sword","Chainsword","Power Axe","Power Fist"],1]
+			                ],
+			                "wep2":[
+			                    [["CombiFlamer","Stalker Pattern Bolter",],1]
+			                ]
+			            }
+		        	},
+		        	"role":$"{role[100][12]} {role[100][18]}",
+		        }
+	        ],
+	        ["display_name" , $"{role[100][12]} Sniper {squad_name}"]
+	    ]	    			
 	};
-	if (global.chapter_name="Salamanders"){ //salamanders squads
+	if (global.chapter_name=="Salamanders") or (obj_ini.progenitor==8){ //salamanders squads
 		variable_struct_set(st , "assault_squad",[
                 [role[100][10], {"max":9,"min":4, "loadout":{//assault_marine
                     "required":{
@@ -1057,13 +1147,13 @@ function scr_initialize_custom() {
 				            "wep2":[[["Plasma Pistol","Combiflamer","Meltagun"],1]]
 			            }
 			       },
-			       "role":"Assualt Sergeant"
+			       "role":$"{role[100,10]} {role[100,18]}"
 			  	}],
-			      ["display_name" , "Assault Squad"]
+			      ["display_name" , $"{role[100,10]} {squad_name}"]
 			      ]
 			      )
 	}
-	if (global.chapter_name == "White Scars"){
+	if (global.chapter_name == "White Scars") or (obj_ini.progenitor==2){
 		variable_struct_set(st , "bikers",[
 		[role[100][8], {"max":9,"min":4, "loadout":{ //tactical marine
 			"required":{
@@ -1098,10 +1188,10 @@ function scr_initialize_custom() {
 					]
 				}
 			},
-			"role":"Tactical Bike Sergeant"
+			"role":$"{role[100,8]} Bike {role[100,18]}"
 		},
 	],
-	["display_name" , "Tactical Bike Squad"]
+	["display_name" , $"{role[100,8]} Bike {squad_name}"]
 	])
 	variable_struct_set(st , "tactical_squad",[
                 [role[100][8], {"max":9,"min":4, "loadout":{//tactical marine
@@ -1120,8 +1210,9 @@ function scr_initialize_custom() {
                         ]
                     } 
                 }}],   
-                [role[100][18], {"max":1,"min":1, "role":"Tactical Sergeant"}],        // sergeant
-                ["display_name" , "Tactical Squad"]
+
+                [role[100][18], {"max":1,"min":1, "role":"{role[100][8]} {role[100][18]}"}],        // sergeant
+                ["display_name" , $"{role[100,8]} {squad_name}"]
             ])
 	}
 
@@ -1205,34 +1296,75 @@ function scr_initialize_custom() {
 	}	
 
 	armour[company,1]="Artificer Armour";
+
+	//TODO will refactor how traits are distributed to chapter masters along with a refactor of chapter data
 	switch(global.chapter_name) {
 		case "Dark Angels":
 			wep2[0,1]="Plasma Gun&UBL|";
+			chapter_master.add_trait("old_guard");
+			chapter_master.add_trait("melee_enthusiast");	
 			break;
 		case "Blood Angels":
 			wep1[0,1]="Master Crafted Power Axe";
+			chapter_master.add_trait("ancient");	
+			chapter_master.add_trait("old_guard");
+			chapter_master.add_trait("melee_enthusiast");			
 			break;
 		case "Iron Hands":
 			wep1[0,1]="Power Axe&ADA|";
 			wep2[0,1]="Storm Shield";
+			chapter_master.add_trait("flesh_is_weak");
+			chapter_master.add_trait("zealous_faith");
+			chapter_master.add_trait("tinkerer");
 			for (i=0;i<10;i++){
 				chapter_master.add_bionics();
 			}
+			chapter_master.add_trait("old_guard");
 			break;
 		case "Doom Benefactors":
 			for (i=0;i<4;i++){
 				chapter_master.add_bionics();
 			}
+			chapter_master.add_trait("old_guard");
 			break;
 		case "Ultramarines":
 			for (i=0;i<4;i++){
 				chapter_master.add_bionics();
-				armour[company,1]="Terminator Armour";
 			}
+			armour[company,1]="Terminator Armour";
+			chapter_master.add_trait("still_standing");
+			chapter_master.add_trait("tyrannic_vet");
+			break;
+		case "Space Wolves":
+			armour[company,1]="Terminator Armour";
+			chapter_master.add_trait("ancient");
+			chapter_master.add_trait("melee_enthusiast");
+			chapter_master.add_trait("feet_floor");			
+			break;
+		case "Black Templars":
+			chapter_master.add_trait("melee_enthusiast");
+			chapter_master.add_trait("zealous_faith");
+			chapter_master.add_trait("old_guard");	
+			break;
+		case "Minotaurs":
+			chapter_master.add_trait("very_hard_to_kill");
+			chapter_master.add_trait("seasoned");	
+		case "Lamenters":
+			chapter_master.add_trait("shitty_luck");
+			chapter_master.add_trait("old_guard");	
+		case "Salamanders":	
+			chapter_master.add_trait("old_guard");
+			chapter_master.add_trait("tinkerer");
+			chapter_master.add_trait("slow_and_purposeful");	
+		default:
+			chapter_master.add_trait("old_guard");
+
 	}
 	spe[company,1]="";
+	chapter_master.add_trait("lead_example");
 
 	//builds in which of the three chapter master types your CM is
+	// all of this can now be handled in teh struct and no longer neades complex methods
 	switch(obj_creation.chapter_master_specialty){
 		case 1:
 			experience[company,1]=550;
@@ -1241,11 +1373,14 @@ function scr_initialize_custom() {
 		case 2:
 			experience[company,1]=650;
 			spe[company,1]+="@";
+			chapter_master.add_trait("champion");
 			break;
 		case 3:
+			//TODO phychic powers need a redo but after weapon refactor
 			experience[company,1]=550;
 			gear[company,1]="Psychic Hood";
-		    var let="";letmax=5;
+		    var let="";
+		    letmax=5;
 		    chapter_master.psionic = choose(15,16);
 		    switch(obj_creation.discipline){
 		    	case "default":
@@ -1265,11 +1400,14 @@ function scr_initialize_custom() {
 		    		let="R";
 		    		break;
 		    }
-		    spe[company,1]+=string(let)+"0|";scr_powers_new(company,1);			
+		    spe[company,1]+=string(let)+"0|";
+		    scr_powers_new(company,1);			
 	}
 	mobi[company,1]=mobi[100,2];
+	//TODO not sure why the strin method is ever used? will investigate and replace later
 	if (string_count("Paragon",strin)>0) then chapter_master.add_trait("paragon")
 
+	//TODO All heads of specialties data should be in chapter data
 	// Forge Master
 	TTRPG[company,2]=new TTRPG_stats("chapter", company,2);
 	race[company,2]=1;
@@ -2145,6 +2283,7 @@ function scr_initialize_custom() {
 	                }
 	            }
 	            if (company=10){
+
 	                repeat(temp1){k+=1;man_size+=1;
 	                	TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 					
@@ -2156,8 +2295,7 @@ function scr_initialize_custom() {
 	                    wep2[company][k]=wep2[101,12];
 	                    armour[company][k]="Scout Armour";
 	                    chaos[company][k]=0;
-				        spawn_unit = TTRPG[company][k];
-				        spawn_unit.spawn_exp();
+	                    experience[company][k] = 10+irandom(15);
 	                }
 	            }
 	        }
@@ -2186,16 +2324,15 @@ function scr_initialize_custom() {
 	            	k+=1;
 	            	man_size+=1; // assault reserve company
 	            	TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
-
 	            	race[company][k]=1;
 	            	loc[company][k]=home_name;
 	            	role[company][k]=role[100][10];
 	            	wep1[company][k]=wep1[101,10];
 	            	wep2[company][k]=wep2[101,10];
-	       ;
-	       name[company][k]=scr_marine_name();
+	              name[company][k]=scr_marine_name();
 	            	chaos[company][k]=0;
 	            	mobi[company][k]="Jump Pack";
+
 					
 			        spawn_unit = TTRPG[company][k]
 					spawn_unit.spawn_exp();
@@ -2221,6 +2358,7 @@ function scr_initialize_custom() {
 	            if (company=10) then for(var i=0;i<temp1;i++){
 	            	k+=1;
 	            	man_size+=1;
+
 	            	TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	                race[company][k]=1;
 	                loc[company][k]=home_name;
@@ -2230,6 +2368,8 @@ function scr_initialize_custom() {
 	                wep2[company][k]=wep2[101,12];
 	                armour[company][k]="Scout Armour";
 	                chaos[company][k]=0;
+	                experience[company][k] = 10+irandom(15);
+
 	            } 
 	            if (company_unit2="assault") then repeat(assault){k+=1;man_size+=1;
 	            	TTRPG[company][k]=new TTRPG_stats("chapter", company,k);

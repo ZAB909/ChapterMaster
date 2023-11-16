@@ -6,7 +6,6 @@ function scr_company_order(company) {
 
 	var i=-1,v=0;
 	var temp_vrace, temp_vloc, temp_vrole, temp_vwep1, temp_vwep2, temp_vup, temp_vhp, temp_vchaos, temp_vpilots, temp_vlid, temp_vwid, unit;
-
 	for (var i=0;i<500;i++){
 	    temp_race[co][i]=0;
 	    temp_loc[co][i]="";
@@ -27,6 +26,41 @@ function scr_company_order(company) {
 	    temp_spe[co][i]="";
 	    temp_god[co][i]=0;
 		temp_struct[co][i]={};
+	}
+
+
+	/*takes a template of a role, required role number and if there are enough 
+	of those units not in a squad creates a new squad of a given type*/
+	function create_squad_from_squadless(squadless_and_squads,build_data,company){
+		var squadless = squadless_and_squads[0];
+		var empty_squads = squadless_and_squads[1];
+		var role = build_data[1];
+		var required_unit_count = build_data[2];
+		var new_squad_type = build_data[0];
+		var new_squad_index, role_number;
+		if (struct_exists(squadless,role)){
+			role_number = array_length(squadless[$ role]);
+			while (role_number >= required_unit_count){
+				new_squad_index=false;
+				if (array_length(empty_squads)>0){
+					new_squad_index = empty_squads[0];
+					array_delete(empty_squads,0,1);
+					create_squad(new_squad_type, company, false, new_squad_index);
+				} else{
+					create_squad(new_squad_type, company, false);
+				}
+				for (i=0;i<role_number;i++){
+					unit = TTRPG[company,squadless[$ role][i]];
+					if (unit.squad != "none"){
+						array_delete(squadless[$ role], i ,1);
+						i--;
+						role_number--;
+					}
+				}
+			}
+
+		}
+		return [squadless,empty_squads];
 	}
 
 	//stashes varibles for marine reordering
@@ -114,6 +148,7 @@ function scr_company_order(company) {
 		"Ork Sniper"
 	]
 
+	var empty_squads=[]
 	var role_shuffle_length = array_length(role_orders);
 	var company_length = array_length(name[co]);
 	var squadless={};
@@ -122,10 +157,10 @@ function scr_company_order(company) {
 		if (!is_struct(TTRPG[co][i])) then TTRPG[co][i] = new TTRPG_stats("chapter", co, i, "blank");
 		unit = TTRPG[co][i];
 		if (unit.squad=="none") and (unit.name()!=""){
-			if (!struct_exists(squadless, unit.role)){
-				squadless[$ unit.role] =[i];
+			if (!struct_exists(squadless, unit.role())){
+				squadless[$ unit.role()] = [i];
 			} else {
-				array_push(squadless[$ unit.role],i)
+				array_push(squadless[$ unit.role()],i);
 			}
 		}
 	}
@@ -133,25 +168,47 @@ function scr_company_order(company) {
 	//at this point check that all squads have the right types and numbers of units in them
 	var squad, wanted_roles;
 	for (i=0;i<array_length(squads);i++){
-		if (squads[i].base_company != company) then continue;
+		if (squads[i].base_company != co){
+			if (array_length(squads[i].members)==0){
+				array_push(empty_squads,i);
+			}
+			continue;
+		}
 		squad = squads[i];
 		squad.update_fulfilment();
-		if (squad.fulfilled == false){
-			wanted_roles=struct_get_names(squad.required);
+
+		//squad has role spaces to fill
+		if (squad.has_space){
+			wanted_roles=struct_get_names(squad.space);
 
 			/* this finds sqauds that are in need of members and checks ot see if there 
 				are any squadless units in the chapter with
 				the rigth role to fill the gap*/ 
 			for (var r = 0;r < array_length(wanted_roles);r++){
+
 				if (struct_exists(squadless,wanted_roles[r])){
-					while(array_length(squadless[$ wanted_roles[r]] > 0)) and (squad.required[$ wanted_roles[r]] > 0){
-						array_push(squad.members,[company,squadless[$ wanted_roles[r]][0]]);
-						array_delete(squadless[$ wanted_roles[r]],0,1);
-						squad.required[$ wanted_roles[r]]--;
+					if (!squad.fulfilled){
+						if (struct_exists(squad.required,wanted_roles[r])){
+							while (array_length(squadless[$ wanted_roles[r]])>0) and (squad.required[$ wanted_roles[r]] > 0){
+								array_push(squad.members,[company,squadless[$ wanted_roles[r]][0]]);
+								TTRPG[co,squadless[$ wanted_roles[r]][0]].squad=i;
+								array_delete(squadless[$ wanted_roles[r]],0,1);
+								squad.required[$ wanted_roles[r]]--;
+								squad.space[$ wanted_roles[r]]--;
+							}
+						}
+					}
+					if (struct_exists(squad.space,wanted_roles[r])){
+						while (array_length(squadless[$ wanted_roles[r]])> 0) and (squad.space[$ wanted_roles[r]] > 0){
+							array_push(squad.members,[company,squadless[$ wanted_roles[r]][0]]);
+							TTRPG[co,squadless[$ wanted_roles[r]][0]].squad=i;
+							array_delete(squadless[$ wanted_roles[r]],0,1);
+							squad.space[$ wanted_roles[r]]--;					
+						}
 					}
 				}
 			}
-			//if no new sergeants are found for squad someon gets promoted
+			//if no new sergeants are found for squad someone gets promoted
 			//find a new_sergeant 
 			if (struct_exists(squad.required, role[100][18])){
 				if (squad.required[$ role[100][18]] > 0){
@@ -166,6 +223,38 @@ function scr_company_order(company) {
 					squad.required[$ role[100][19]]--;
 				}
 			}		
+		}
+	}
+
+	var squadless_and_squad_spaces = [squadless,empty_squads];
+
+	var squad_builder = [
+		["tactical_squad",role[100][8],5],
+		["devestator_squad",role[100][9],5],
+		["veteran_squad",role[100][3],5],
+		["terminator_squad",role[100][4],4],
+		["assault_squad",role[100][10],5],
+	]
+	
+	for (i=0;i<array_length(squad_builder);i++){
+		squadless_and_squad_spaces=create_squad_from_squadless(
+			squadless_and_squad_spaces,
+			squad_builder[i],
+			co
+		);
+	}
+
+	//comand squads only get built to a max of one and are specialist so sit outside of general squad creation
+	if (struct_exists(squadless,role[100,5])) && (struct_exists(squadless,role[100,7])) && (struct_exists(squadless,role[100,15])) && (struct_exists(squadless,"Standard Bearer")){
+		if (array_length(squadless[$role[100,5]])>0) && (array_length(squadless[$role[100,7]])>0) && (array_length(squadless[$role[100,15]])>0) && (array_length(squadless[$"Standard Bearer"])>0){
+			new_squad_index=false;
+			if (array_length(empty_squads)>0){
+				new_squad_index = empty_squads[0];
+				array_delete(empty_squads,0,1);
+				create_squad("command_squad", co, false, new_squad_index);
+			} else{
+				create_squad("command_squad", co, false);
+			}
 		}
 	}
 	var sorted_numbers = [];

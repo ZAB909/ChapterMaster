@@ -378,8 +378,11 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
 
         var mahreens=0,w=0,god=0,vehi=0,god2=0;
 
-         for (w=1;w<301;w++){ // Gets the number of marines in the target company
-			if (god=0 and obj_ini.name[target_comp,w]=""){god=1;mahreens=w; break;}
+         for (w=1;w<500;w++){ // Gets the number of marines in the target company
+			if (obj_ini.name[target_comp,w]=="" && obj_ini.name[target_comp,w+1]==""){
+                mahreens=w; 
+                break;
+            }
 		}
 
         for (w=1;w<101;w++){// Gets the number of vehicles in the target company
@@ -387,13 +390,48 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
 		}
 
         // The MAHREENS and TARGET/FROM seems to check out
-
-        for (w=1;w<301;w++){
+        var unit, move_squad, move_members, moveable, squad;
+        for (w=0;w<500;w++){
             if (obj_controller.man_sel[w]==1){
                 if (obj_controller.man[w]=="man"){
+                    moveable=true;
+                    unit = obj_ini.TTRPG[company,obj_controller.ide[w]];
+                    if (unit.squad != "none"){   // this evaluates if you are tryin to move a whole squad and if so moves teh squad to a new company
+                        move_squad = unit.squad;
+                        squad = obj_ini.squads[move_squad];
+                        if (squad.base_company == company){
+                            move_members = squad.members;
+                            for (var mem = 0;mem<array_length(move_members);mem++){//check all members have been selected and are in the same company
+                                if (w+mem<500){
+                                    if (move_members[mem][0] != company || obj_controller.man_sel[w+mem]!=1 || obj_ini.TTRPG[company,obj_controller.ide[w+mem]].squad != move_squad){
+                                        moveable = false;
+                                        break;
+                                    }
+                                } else{
+                                    moveable = false;
+                                    break;                                    
+                                }
+                            }
+                            //move squad
+                            if (moveable){
+                                for (var mem = 0;mem<array_length(move_members);mem++){
+                                    scr_move_unit_info(company,target_comp,obj_controller.ide[w+mem],mahreens, false);
+                                    obj_ini.TTRPG[target_comp,mahreens].squad = move_squad;
+                                    squad.members[mem][0] = target_comp;
+                                    squad.members[mem][1] = mahreens;
+                                    mahreens++;
+                                }
+                                w+=mem-2;
+                                squad.base_company = target_comp;
+                            }
+                        } else {moveable=false}
+                    } else {moveable=false}
+                    //move individual
+                    if (!moveable){
+                        scr_move_unit_info(company,target_comp,obj_controller.ide[w],mahreens, true);
+                        mahreens++;
+                    }
                     var check=0;
-    				scr_move_unit_info(company,target_comp,obj_controller.ide[w],mahreens);
-                    mahreens++;
                 }else if(obj_controller.man[w]=="vehicle"){ // This seems to execute the correct number of times
                     var check=0;
     				// Check if the target company is within the allowed range
