@@ -1291,6 +1291,8 @@ function scr_initialize_custom() {
 	}	
 
 	armour[company,1]="Artificer Armour";
+
+	//TODO will refactor how traits are distributed to chapter masters along with a refactor of chapter data
 	switch(global.chapter_name) {
 		case "Dark Angels":
 			wep2[0,1]="Plasma Gun&UBL|";
