@@ -480,6 +480,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                                 targ.veh_hp_multiplier[targ.veh] = targ.veh_hp_multiplier[targ.veh] * 1.1;
                             }
                             if (obj_controller.stc_bonus[3] = 2) {
+                                //TODO reimplement STC bonus for ranged vehicle weapons
                                 //veh ranged isn't a thing sooooo.... oh well
                                 //targ.veh_ranged[targ.veh] = targ.veh_ranged[targ.veh] * 1.05;
                             }
