@@ -1359,6 +1359,7 @@ function scr_initialize_custom() {
 	chapter_master.add_trait("lead_example");
 
 	//builds in which of the three chapter master types your CM is
+	// all of this can now be handled in teh struct and no longer neades complex methods
 	switch(obj_creation.chapter_master_specialty){
 		case 1:
 			experience[company,1]=550;
@@ -1370,9 +1371,11 @@ function scr_initialize_custom() {
 			chapter_master.add_trait("champion");
 			break;
 		case 3:
+			//TODO phychic powers need a redo but after weapon refactor
 			experience[company,1]=550;
 			gear[company,1]="Psychic Hood";
-		    var let="";letmax=5;
+		    var let="";
+		    letmax=5;
 		    chapter_master.psionic = choose(15,16);
 		    switch(obj_creation.discipline){
 		    	case "default":
@@ -1392,11 +1395,14 @@ function scr_initialize_custom() {
 		    		let="R";
 		    		break;
 		    }
-		    spe[company,1]+=string(let)+"0|";scr_powers_new(company,1);			
+		    spe[company,1]+=string(let)+"0|";
+		    scr_powers_new(company,1);			
 	}
 	mobi[company,1]=mobi[100,2];
+	//TODO not sure why the strin method is ever used? will investigate and replace later
 	if (string_count("Paragon",strin)>0) then chapter_master.add_trait("paragon")
 
+	//TODO All heads of specialties data should be in chapter data
 	// Forge Master
 	TTRPG[company,2]=new TTRPG_stats("chapter", company,2);
 	race[company,2]=1;

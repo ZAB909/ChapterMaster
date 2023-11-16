@@ -85,7 +85,7 @@ if (type>0){
             tooltip="Astartes Role Name";
             tooltip2=$"The name of this Astartes Role.  The plural form will be ''{obj_creation.role[co,ide]}s''.";
             if (obj_creation.mouse_left=1) and (obj_creation.cooldown<=0){
-                obj_creation.text_selected=$"unit_name{ide}"+;
+                obj_creation.text_selected=$"unit_name{ide}";
                 obj_creation.cooldown=8000;
                 keyboard_string=obj_creation.role[co,ide];
             }
