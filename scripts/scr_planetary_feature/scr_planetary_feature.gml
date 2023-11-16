@@ -94,8 +94,9 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		static find_starship = function(){
 			f_type = P_features.Starship;
 			planet_display = "Ancient Starship";
-			completion_level = 0;
+			funds_spent = 0;
 			player_hidden = 0;
+			engineer_score = 0;
 		}
 		
 		//allows ruins to be entered to retrive fallen marine gear
@@ -225,11 +226,12 @@ function search_planet_features(planet, search_feature){
 	var feature_count = array_length(planet);
 	var feature_positions = [];
 	if (feature_count > 0){
-	for (var fc = 0; fc < feature_count; fc++){
-		if (planet[fc].f_type == search_feature){
-			array_push(feature_positions, fc);
+		for (var fc = 0; fc < feature_count; fc++){
+			if (planet[fc].f_type == search_feature){
+				array_push(feature_positions, fc);
+			}
 		}
-	}}
+	}
 	return feature_positions;
 }
 

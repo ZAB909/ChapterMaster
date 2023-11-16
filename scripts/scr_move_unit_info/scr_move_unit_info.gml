@@ -39,7 +39,6 @@ function scr_move_unit_info(start_company,end_company, start_slot, end_slot){
 		obj_ini.experience[end_company,end_slot]=obj_ini.experience[start_company,start_slot];
 		obj_ini.age[end_company,end_slot]=obj_ini.age[start_company,start_slot];
 		obj_ini.mobi[end_company,end_slot]=obj_ini.mobi[start_company,start_slot];
-		obj_ini.age[end_company,end_slot]=obj_ini.age[start_company,start_slot];
 		obj_ini.bio[end_company,end_slot]=obj_ini.bio[start_company,start_slot];
 		var temp_struct = jsonify_marine_struct(start_company,start_slot);			//jsonified for stransfer of struct (makes a deep copy)
 		obj_ini.TTRPG[end_company,end_slot] = new TTRPG_stats("chapter", end_company,end_slot ,"blank"); // create new empty unit structure
@@ -47,10 +46,12 @@ function scr_move_unit_info(start_company,end_company, start_slot, end_slot){
 			obj_ini.TTRPG[end_company,end_slot].load_json_data(json_parse(temp_struct));				//load in originoal marine data
 			obj_ini.TTRPG[end_company,end_slot].company = end_company;
 			obj_ini.TTRPG[end_company,end_slot].marine_number = end_slot;
-		}	else {obj_ini.TTRPG[end_company,end_slot] = new TTRPG_stats("chapter", co,i ,"blank")}
+		}	else {
+			obj_ini.TTRPG[end_company,end_slot] = new TTRPG_stats("chapter", end_company,end_slot ,"blank");
+		}
 
 		obj_ini.spe[start_company,start_slot]="";
-		obj_ini.race[start_company,start_slot]="";
+		obj_ini.race[start_company,start_slot]=0;
 		obj_ini.loc[start_company,start_slot]="";
 		obj_ini.name[start_company,start_slot]="";
 		obj_ini.wep1[start_company,start_slot]="";
