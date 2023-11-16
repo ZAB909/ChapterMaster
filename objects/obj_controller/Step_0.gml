@@ -641,6 +641,7 @@ if (menu==1) and (managing>0){
                 tooltip_stat3=0;
                 tooltip_stat4=0;
                 tooltip_other="";
+                tooltip=gear_weapon_data(ma_armour[sel]);
                 tooltip=scr_weapon(ma_armour[sel],"",true,0,false,"","description");
                 // Sets AC for current marine equipement
                 if (acy==0){
