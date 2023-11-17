@@ -112,8 +112,8 @@ function scr_start_load(fleet, load_from_star, load_options) {
 			ship_fit = false;
 		}		
 		//if entire company won't fit on ship test to see if there is any ship in the fleet the company will fit on;
-		if (ship_fit == false){
-			for (ship_loop =  ship_loop_start; ship_loop< array_length(obj_ini.ship_carrying);ship_loop++){
+		 if (ship_fit == false){
+			 for (ship_loop =  ship_loop_start; ship_loop< array_length(obj_ini.ship_carrying);ship_loop++){
 				 if (escort_load == 2) and (obj_ini.ship_capacity[ship_loop] < 250){continue}
 				  if ((obj_ini.ship_carrying[ship_loop] + _company_size) <= obj_ini.ship_capacity[ship_loop]){
 					  //load marines

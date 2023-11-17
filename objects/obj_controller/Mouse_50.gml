@@ -2346,7 +2346,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 // Selects all vehicles of type
                 if (sel_all!="Command") and (sel_all!="man") and (sel_all=="vehicle"){
                     if (man[sel]=="vehicle") and (ma_role[sel]==sel_all) and (ma_loc[sel]!="Terra") 
-                    and (ma_loc[sel]!="Mechanicus Vessel") and (ma_loc[sel]!="Lost") and (ma_god[sel]<10) 
+                    and (ma_loc[sel]!="Mechanicus Vessel") and (ma_loc[sel]!="Lost") and (ma_god[sel]<10)
                     and (eventing==false){
                         onceh=0;
                         if (man_sel[sel]==0) and (onceh==0){

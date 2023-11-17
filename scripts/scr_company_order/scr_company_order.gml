@@ -29,6 +29,41 @@ function scr_company_order(company) {
 		temp_struct[co,i]={};
 	}
 
+
+	/*takes a template of a role, required role number and if there are enough 
+	of those units not in a squad creates a new squad of a given type*/
+	function create_squad_from_squadless(squadless_and_squads,build_data,company){
+		var squadless = squadless_and_squads[0];
+		var empty_squads = squadless_and_squads[1];
+		var role = build_data[1];
+		var required_unit_count = build_data[2];
+		var new_squad_type = build_data[0];
+		var new_squad_index, role_number;
+		if (struct_exists(squadless,role)){
+			role_number = array_length(squadless[$ role]);
+			while (role_number >= required_unit_count){
+				new_squad_index=false;
+				if (array_length(empty_squads)>0){
+					new_squad_index = empty_squads[0];
+					array_delete(empty_squads,0,1);
+					create_squad(new_squad_type, company, false, new_squad_index);
+				} else{
+					create_squad(new_squad_type, company, false);
+				}
+				for (i=0;i<role_number;i++){
+					unit = TTRPG[company,squadless[$ role][i]];
+					if (unit.squad != "none"){
+						array_delete(squadless[$ role], i ,1);
+						i--;
+						role_number--;
+					}
+				}
+			}
+
+		}
+		return [squadless,empty_squads];
+	}
+
 	//stashes varibles for marine reordering
 	function temp_marine_variables(co, unit_num ,v){
 			var unit = TTRPG[co, unit_num];
@@ -187,117 +222,25 @@ function scr_company_order(company) {
 		}
 	}
 
-	var new_squad_index, role_number;
-	if (struct_exists(squadless,role[100,8])){
-		role_number = array_length(squadless[$ role[100,8]]);
-		while (role_number > 4){
-			new_squad_index=false;
-			if (array_length(empty_squads)>0){
-				new_squad_index = empty_squads[0];
-				array_delete(empty_squads,0,1);
-				create_squad("tactical_squad", co, false, new_squad_index);
-			} else{
-				create_squad("tactical_squad", co, false);
-			}
-			for (i=0;i<role_number;i++){
-				unit = TTRPG[co,squadless[$ role[100,8]][i]];
-				if (unit.squad != "none"){
-					array_delete(squadless[$ role[100,8]], i ,1);
-					i--;
-					role_number--;
-				}
-			}
-		}
+	var squadless_and_squad_spaces = [squadless,empty_squads];
 
+	var squad_builder = [
+		["tactical_squad",role[100][8],5],
+		["devestator_squad",role[100][9],5],
+		["veteran_squad",role[100][3],5],
+		["terminator_squad",role[100][4],4],
+		["assault_squad",role[100][10],5],
+	]
+	
+	for (i=0;i<array_length(squad_builder);i++){
+		squadless_and_squad_spaces=create_squad_from_squadless(
+			squadless_and_squad_spaces,
+			squad_builder[i],
+			co
+		);
 	}
-	if (struct_exists(squadless,role[100,9])){
-		role_number = array_length(squadless[$ role[100,9]]);
-		while (role_number > 4){
-			new_squad_index=false;
-			if (array_length(empty_squads)>0){
-				new_squad_index = empty_squads[0];
-				array_delete(empty_squads,0,1);
-				create_squad("devestator_squad", co, false, new_squad_index);
-			} else{
-				create_squad("devestator_squad", co, false);
-			}
-			for (i=0;i<role_number;i++){
-				unit = TTRPG[co,squadless[$ role[100,9]][i]];
-				if (unit.squad != "none"){
-					array_delete(squadless[$ role[100,9]], i ,1);
-					i--;
-					role_number--;
-				}
-			}
-		}
 
-	}
-	if (struct_exists(squadless,role[100,3])){
-		role_number = array_length(squadless[$ role[100,3]]);
-		while (role_number > 4){
-			new_squad_index=false;
-			if (array_length(empty_squads)>0){
-				new_squad_index = empty_squads[0];
-				array_delete(empty_squads,0,1);
-				create_squad("veteran_squad", co, false, new_squad_index);
-			} else{
-				create_squad("veteran_squad", co, false);
-			}
-			for (i=0;i<role_number;i++){
-				unit = TTRPG[co,squadless[$ role[100,3]][i]];
-				if (unit.squad != "none"){
-					array_delete(squadless[$ role[100,3]], i ,1);
-					i--;
-					role_number--;
-				}
-			}
-		}
-
-	}
-	if (struct_exists(squadless,role[100,4])){
-		role_number = array_length(squadless[$ role[100,4]]);
-		while (role_number > 3){
-			new_squad_index=false;
-			if (array_length(empty_squads)>0){
-				new_squad_index = empty_squads[0];
-				array_delete(empty_squads,0,1);
-				create_squad("terminator_squad", co, false, new_squad_index);
-			} else{
-				create_squad("terminator_squad", co, false);
-			}
-			for (i=0;i<role_number;i++){
-				unit = TTRPG[co,squadless[$ role[100,4]][i]];
-				if (unit.squad != "none"){
-					array_delete(squadless[$ role[100,4]], i ,1);
-					i--;
-					role_number--;
-				}
-			}
-		}
-
-	}
-	if (struct_exists(squadless,role[100,10])){
-		role_number = array_length(squadless[$ role[100,10]]);
-		while (role_number > 4){
-			new_squad_index=false;
-			if (array_length(empty_squads)>0){
-				new_squad_index = empty_squads[0];
-				array_delete(empty_squads,0,1);
-				create_squad("assault_squad", co, false, new_squad_index);
-			} else{
-				create_squad("assault_squad", co, false);
-			}
-			for (i=0;i<role_number;i++){
-				unit = TTRPG[co,squadless[$ role[100,10]][i]];
-				if (unit.squad != "none"){
-					array_delete(squadless[$ role[100,10]], i ,1);
-					i--;
-					role_number--;
-				}
-			}
-		}
-
-	}
+	//comand squads only get built to a max of one and are specialist so sit outside of general squad creation
 	if (struct_exists(squadless,role[100,5])) && (struct_exists(squadless,role[100,7])) && (struct_exists(squadless,role[100,15])) && (struct_exists(squadless,"Standard Bearer")){
 		if (array_length(squadless[$role[100,5]])>0) && (array_length(squadless[$role[100,7]])>0) && (array_length(squadless[$role[100,15]])>0) && (array_length(squadless[$"Standard Bearer"])>0){
 			new_squad_index=false;
