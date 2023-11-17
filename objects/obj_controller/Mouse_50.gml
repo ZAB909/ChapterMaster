@@ -2279,7 +2279,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             // repeat(min(man_max,man_see)){
             var selection =false;
             for(var i=0; i<man_max; i++){
-                while (man[i]=="hide"){i++;}
+                while (man[i]=="hide")and (i<500){i++;}
                 if (man_sel[i]==1){
                     selecting_location=ma_loc[sel];
                     selecting_ship=ma_lid[sel];
@@ -2308,7 +2308,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             }
             var onceh;
             for(var i=0; i<man_max; i++){
-                while (man[sel]=="hide"){sel++;}
+                while (man[sel]=="hide" && sel<500){sel++;}
                 onceh=0;
                 eventing=false;
                 selection=false;
@@ -2532,7 +2532,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             }
             yy+=20;
             sel++;
-            if (sel=501) then break;
+            if (sel=500) then break;
         }
         if (sel_all!="") then sel_all="";
         // End selecting
