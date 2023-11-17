@@ -94,7 +94,7 @@ if (target="event_honor"){
 if (target="event_loc") and (determined_planets=0){
     // Fill out the options for planets
     
-    var coo][ide,q;
+    var coo,ide,q;
     coo=-1;ide=0;q=0;
     
     repeat(11){

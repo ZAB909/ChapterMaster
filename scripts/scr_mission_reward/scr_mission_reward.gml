@@ -21,19 +21,19 @@ function scr_mission_reward(argument0, argument1, argument2) {
 
 	    repeat(11){com+=1;i=0;
 	        repeat(300){i+=1;
-	            if (obj_ini.role[com,i]=obj_ini.role[100][16]) and (obj_ini.loc[com,i]="Mechanicus Vessel"){
+	            if (obj_ini.role[com][i]=obj_ini.role[100][16]) and (obj_ini.loc[com][i]="Mechanicus Vessel"){
 	                roll2=floor(random(100))+1;
 	                if (obj_ini.dis[1]="Shitty Luck") or (obj_ini.dis[2]="Shitty Luck") or (obj_ini.dis[3]="Shitty Luck") or (obj_ini.dis[4]="Shitty Luck") then roll2-=10;
 
 	                if (roll2<=50){obj_controller.command-=1;techs_lost+=1;
-	                    obj_ini.race[com,i]=0;obj_ini.loc[com,i]="";obj_ini.name[com,i]="";
-	                    obj_ini.role[com,i]="";obj_ini.lid[com,i]=0;obj_ini.wid[com,i]=0;
+	                    obj_ini.race[com][i]=0;obj_ini.loc[com][i]="";obj_ini.name[com][i]="";
+	                    obj_ini.role[com][i]="";obj_ini.lid[com][i]=0;obj_ini.wid[com][i]=0;
 	                    cleanup[com]=1;
 	                }
 	                if (roll2>50){
-	                    argument1.p_player[argument2]+=scr_unit_size(obj_ini.armour[com,i],obj_ini.role[com,i],true);
-	                    obj_ini.loc[com,i]=argument1.name;obj_ini.wid[com,i]=argument2;techs_alive+=1;
-	                    repeat(3){obj_ini.experience[com,i]+=choose(1,2,3,4,5,6);}
+	                    argument1.p_player[argument2]+=scr_unit_size(obj_ini.armour[com][i],obj_ini.role[com][i],true);
+	                    obj_ini.loc[com][i]=argument1.name;obj_ini.wid[com][i]=argument2;techs_alive+=1;
+	                    repeat(3){obj_ini.experience[com][i]+=choose(1,2,3,4,5,6);}
 	                    if (roll2<80) then found_requisition+=floor(random_range(5,40))+1;
 	                }
 	                if (roll2>=80) and (roll2<88) then found_requisition+=100;
@@ -104,12 +104,12 @@ function scr_mission_reward(argument0, argument1, argument2) {
 	        repeat(11){
 	            if (onceh=0){com+=1;i=0;
 	                repeat(100){i+=1;
-	                    if (obj_ini.veh_role[com,i]="Land Raider") and (obj_ini.veh_loc[com,i]=argument1.name) and (obj_ini.veh_wid[com,i]=argument2){
+	                    if (obj_ini.veh_role[com][i]="Land Raider") and (obj_ini.veh_loc[com][i]=argument1.name) and (obj_ini.veh_wid[com][i]=argument2){
 	                        onceh=1;
-	                        obj_ini.veh_race[com,i]=0;obj_ini.veh_loc[com,i]="";obj_ini.veh_name[com,i]="";obj_ini.veh_role[com,i]="";
-	                        obj_ini.veh_lid[com,i]=0;obj_ini.veh_wid[com,i]=0;obj_ini.veh_wep1[com,i]="";obj_ini.veh_wep2[com,i]="";obj_ini.veh_wep3[com,i]="";
-	                        obj_ini.veh_upgrade[com,i]="";obj_ini.veh_acc[com,i]="";obj_ini.veh_hp[com,i]=0;obj_ini.veh_chaos[com,i]=0;
-	                        obj_ini.veh_uid[com,i]=0;cleanup[com]=1;
+	                        obj_ini.veh_race[com][i]=0;obj_ini.veh_loc[com][i]="";obj_ini.veh_name[com][i]="";obj_ini.veh_role[com][i]="";
+	                        obj_ini.veh_lid[com][i]=0;obj_ini.veh_wid[com][i]=0;obj_ini.veh_wep1[com][i]="";obj_ini.veh_wep2[com][i]="";obj_ini.veh_wep3[com][i]="";
+	                        obj_ini.veh_upgrade[com][i]="";obj_ini.veh_acc[com][i]="";obj_ini.veh_hp[com][i]=0;obj_ini.veh_chaos[com][i]=0;
+	                        obj_ini.veh_uid[com][i]=0;cleanup[com]=1;
 	                        argument1.p_player[argument2]-=20;
 	                    }
 	                }
@@ -122,8 +122,8 @@ function scr_mission_reward(argument0, argument1, argument2) {
 	        repeat(11){
 	            if (onceh=0){com+=1;i=0;
 	                repeat(100){i+=1;
-	                    if (obj_ini.veh_role[com,i]="Land Raider") and (obj_ini.veh_loc[com,i]=argument1.name) and (obj_ini.veh_wid[com,i]=argument2){
-	                        onceh=1;obj_ini.veh_hp[com,i]=100;
+	                    if (obj_ini.veh_role[com][i]="Land Raider") and (obj_ini.veh_loc[com][i]=argument1.name) and (obj_ini.veh_wid[com][i]=argument2){
+	                        onceh=1;obj_ini.veh_hp[com][i]=100;
 	                    }
 	                }
 	            }
@@ -154,23 +154,23 @@ function scr_mission_reward(argument0, argument1, argument2) {
 	        repeat(11){
 	            if (onceh<10){com+=1;i=0;
 	                repeat(300){i+=1;
-	                    if (obj_ini.race[com,i]=1) and (obj_ini.loc[com,i]=argument1.name) and (obj_ini.wid[com,i]=argument2){onceh+=1;
+	                    if (obj_ini.race[com][i]=1) and (obj_ini.loc[com][i]=argument1.name) and (obj_ini.wid[com][i]=argument2){onceh+=1;
 	                        obj_controller.requisition+=150;
 
-	                        argument1.p_player[argument2]-=scr_unit_size(obj_ini.armour[com,i],obj_ini.role[com,i],true);
-	                        if (is_specialist(obj_ini.role[com,i])=true) then obj_controller.command-=1;
+	                        argument1.p_player[argument2]-=scr_unit_size(obj_ini.armour[com][i],obj_ini.role[com][i],true);
+	                        if (is_specialist(obj_ini.role[com][i])=true) then obj_controller.command-=1;
 	                        else obj_controller.marines-=1;
 
-	                        if (obj_ini.role[com,i]="Chapter Master"){obj_controller.alarm[7]=10;global.defeat=3;}
+	                        if (obj_ini.role[com][i]="Chapter Master"){obj_controller.alarm[7]=10;global.defeat=3;}
 
-	                        obj_ini.race[com,i]=0;obj_ini.loc[com,i]="";obj_ini.name[com,i]="";
-	                        obj_ini.role[com,i]="";obj_ini.lid[com,i]=0;obj_ini.wid[com,i]=0;
+	                        obj_ini.race[com][i]=0;obj_ini.loc[com][i]="";obj_ini.name[com][i]="";
+	                        obj_ini.role[com][i]="";obj_ini.lid[com][i]=0;obj_ini.wid[com][i]=0;
 
-	                        if (obj_ini.wep1[com,i]!="") then scr_add_item(obj_ini.wep1[com,i],1);
-	                        if (obj_ini.wep2[com,i]!="") then scr_add_item(obj_ini.wep2[com,i],1);
-	                        if (obj_ini.armour[com,i]!="") then scr_add_item(obj_ini.armour[com,i],1);
-	                        if (obj_ini.gear[com,i]!="") then scr_add_item(obj_ini.gear[com,i],1);
-	                        if (obj_ini.mobi[com,i]!="") then scr_add_item(obj_ini.mobi[com,i],1);
+	                        if (obj_ini.wep1[com][i]!="") then scr_add_item(obj_ini.wep1[com][i],1);
+	                        if (obj_ini.wep2[com][i]!="") then scr_add_item(obj_ini.wep2[com][i],1);
+	                        if (obj_ini.armour[com][i]!="") then scr_add_item(obj_ini.armour[com][i],1);
+	                        if (obj_ini.gear[com][i]!="") then scr_add_item(obj_ini.gear[com][i],1);
+	                        if (obj_ini.mobi[com][i]!="") then scr_add_item(obj_ini.mobi[com][i],1);
 
 	                        cleanup[com]=1;
 	                    }
@@ -185,9 +185,9 @@ function scr_mission_reward(argument0, argument1, argument2) {
 	        repeat(11){
 	            if (onceh<10){com+=1;i=0;
 	                repeat(300){i+=1;
-	                    if (obj_ini.race[com,i]=1) and (obj_ini.loc[com,i]=argument1.name) and (obj_ini.wid[com,i]=argument2){onceh+=1;
-	                        obj_ini.hp[com,i]=floor(random_range(2,80))+1;
-	                        obj_ini.bio[com,i]=min(obj_ini.bio[com,i]+choose(2,3,4),10);
+	                    if (obj_ini.race[com][i]=1) and (obj_ini.loc[com][i]=argument1.name) and (obj_ini.wid[com][i]=argument2){onceh+=1;
+	                        obj_ini.hp[com][i]=floor(random_range(2,80))+1;
+	                        obj_ini.bio[com][i]=min(obj_ini.bio[com][i]+choose(2,3,4),10);
 	                    }
 	                }
 	            }
@@ -200,9 +200,9 @@ function scr_mission_reward(argument0, argument1, argument2) {
 	        repeat(11){
 	            if (onceh<10){com+=1;i=0;
 	                repeat(300){i+=1;
-	                    if (obj_ini.race[com,i]=1) and (obj_ini.loc[com,i]=argument1.name) and (obj_ini.wid[com,i]=argument2){onceh+=1;
-	                        obj_ini.hp[com,i]=floor(random_range(2,80))+1;
-	                        obj_ini.bio[com,i]=min(obj_ini.bio[com,i]+choose(2,3,4),10);
+	                    if (obj_ini.race[com][i]=1) and (obj_ini.loc[com][i]=argument1.name) and (obj_ini.wid[com][i]=argument2){onceh+=1;
+	                        obj_ini.hp[com][i]=floor(random_range(2,80))+1;
+	                        obj_ini.bio[com][i]=min(obj_ini.bio[com][i]+choose(2,3,4),10);
 	                    }
 	                }
 	            }

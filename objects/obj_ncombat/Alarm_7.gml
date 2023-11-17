@@ -68,7 +68,7 @@ if (string_count("cs_meeting",battle_special)>0){
             var i,co,ii,otm,good,master_present;ii=0;i=0;co=-1;good=0;master_present=0;
             var run,s,chaos_meeting;run=0;s=0;chaos_meeting=0;
             
-            chaos_meeting=obj_ini.wid[0,1];
+            chaos_meeting=obj_ini.wid[0][1];
             
             // show_message("meeting planet:"+string(chaos_meeting));
             repeat(11){co+=1;i=0;

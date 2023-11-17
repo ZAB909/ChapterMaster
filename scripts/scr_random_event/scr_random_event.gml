@@ -237,8 +237,8 @@ function scr_random_event(execute_now) {
 		}
 		var marine=marine_and_company[1];
 		var company=marine_and_company[0];
-		var role=obj_ini.role[company,marine];
-		var text = string(role)+" "+string(obj_ini.name[company,marine]);
+		var role=obj_ini.role[company][marine];
+		var text = string(role)+" "+string(obj_ini.name[company][marine]);
 		var company_text = scr_convert_company_to_string(company);
 		if(company_text != ""){
 			company_text = "("+company_text+")";
@@ -315,8 +315,8 @@ function scr_random_event(execute_now) {
 		var marine=marine_and_company[1];
 		var company=marine_and_company[0];
 		
-		var role=obj_ini.role[company,marine];
-		var text = string(role)+" "+string(obj_ini.name[company,marine]);
+		var role=obj_ini.role[company][marine];
+		var text = string(role)+" "+string(obj_ini.name[company][marine]);
 		var company_text = scr_convert_company_to_string(company);
 		//var company_text = scr_company_string(company);
 		if(company_text != ""){
@@ -326,10 +326,10 @@ function scr_random_event(execute_now) {
 		text += " has distinguished himself.##He is up for review to be promoted.";
 		
 		if (company != 10){
-			obj_ini.experience[company,marine] += 10;
+			obj_ini.experience[company][marine] += 10;
 		}
 		else {
-			obj_ini.experience[company,marine] = max(20, obj_ini.experience[company,marine]+10);
+			obj_ini.experience[company][marine] = max(20, obj_ini.experience[company][marine]+10);
 		}
 		
 		scr_popup("Promotions!",text,"distinguished","");
@@ -345,8 +345,8 @@ function scr_random_event(execute_now) {
 		var marine = marine_and_company[1];
 		var company = marine_and_company[0];
 		var text="";
-		var role=obj_ini.role[company,marine];
-	    text = role +" "+ string(obj_ini.name[company,marine]);
+		var role=obj_ini.role[company][marine];
+	    text = role +" "+ string(obj_ini.name[company][marine]);
 	    text+=" is taken by a strange mood and starts building!";  
 
         
@@ -372,7 +372,7 @@ function scr_random_event(execute_now) {
         
 	    if (craft_roll<=50){
 			crafted_object=choose("Icon","Icon","Statue");
-			obj_ini.experience[company,marine]+=choose(1,2);
+			obj_ini.experience[company][marine]+=choose(1,2);
 		}
 	    else if ((craft_roll>50) && (craft_roll<=60)) {
 			crafted_object=choose("Bike","Rhino");
@@ -399,15 +399,15 @@ function scr_random_event(execute_now) {
 			
 			scr_popup("Can He Build marine?!?",text,"tech_build","");
 			evented = true;
-	        event[event_index]="strange_building|"+string(obj_ini.name[company,marine])+"|"+string(company)+"|"+string(marine)+"|"+string(crafted_object)+"|";
+	        event[event_index]="strange_building|"+string(obj_ini.name[company][marine])+"|"+string(company)+"|"+string(marine)+"|"+string(crafted_object)+"|";
 	        event_duration[event_index]=1;
         
-			var marine_is_planetside = obj_ini.wid[company,marine]>0
+			var marine_is_planetside = obj_ini.wid[company][marine]>0
 	        if (marine_is_planetside && heritical_item) {
-	            obj_controller.temp[100]=obj_ini.loc[company,marine]; //Why the fuck are we doing that??
-	            obj_controller.temp[101]=obj_ini.wid[company,marine];
+	            obj_controller.temp[100]=obj_ini.loc[company][marine]; //Why the fuck are we doing that??
+	            obj_controller.temp[101]=obj_ini.wid[company][marine];
 	            with(obj_star){
-	                if (this.name = obj_ini.loc[company,marine]){
+	                if (this.name = obj_ini.loc[company][marine]){
 						for(var i = 1; i <= planets; i++){
 							p_hurssy[1]+=6;
 							p_hurssy_time[1]=2;
@@ -417,7 +417,7 @@ function scr_random_event(execute_now) {
 	            }
 	        }
 	        else if (!marine_is_planetside and heritical_item){
-	            obj_controller.temp[101]=obj_ini.lid[company,marine];
+	            obj_controller.temp[101]=obj_ini.lid[company][marine];
             
 	            with(obj_p_fleet){ // TO DO: fix this
 					var u;
@@ -1480,7 +1480,7 @@ function scr_random_event(execute_now) {
 
 		for(var company = 0; company <= 10; company++){
 			for(var marine = 1; marine <= 300; marine++){
-				if(obj_ini.lid[company,marine] == chosen_ship) {
+				if(obj_ini.lid[company][marine] == chosen_ship) {
 					obj_ini.loc[company, marine] = "Lost";
 				}
 			}
