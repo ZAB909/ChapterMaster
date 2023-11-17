@@ -22,42 +22,42 @@ function scr_check_equip(argument0, argument1, argument2, argument3) {
     
 	    if (!instance_exists(obj_ncombat)) then repeat(305){i+=1;// man_c[i]=0;man_i[i]=0;
 	        if (argument1!="") and (argument2>0){
-	            if (obj_ini.name[c,i]!="") and (obj_ini.loc[c,i]=argument1) and (obj_ini.wid[c,i]=argument2){
-	                if (obj_ini.wep1[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.wep1[c,i]="";}}
-	                if (obj_ini.wep2[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.wep2[c,i]="";}}
-	                if (obj_ini.armour[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.armour[c,i]="";}}
-	                if (obj_ini.mobi[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.mobi[c,i]="";}}
-	                if (obj_ini.gear[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.gear[c,i]="";}}
+	            if (obj_ini.name[c][i]!="") and (obj_ini.loc[c][i]=argument1) and (obj_ini.wid[c][i]=argument2){
+	                if (obj_ini.wep1[c][i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.wep1[c][i]="";}}
+	                if (obj_ini.wep2[c][i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.wep2[c][i]="";}}
+	                if (obj_ini.armour[c][i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.armour[c][i]="";}}
+	                if (obj_ini.mobi[c][i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.mobi[c][i]="";}}
+	                if (obj_ini.gear[c][i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.gear[c][i]="";}}
 	            }
 	        }
 	        if (argument1="") and (argument2>0){
-	            if (obj_ini.name[c,i]!="") and (obj_ini.lid[c,i]=argument1) and (obj_ini.wid[c,i]=0){
-	                if (obj_ini.wep1[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.wep1[c,i]="";}}
-	                if (obj_ini.wep2[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.wep2[c,i]="";}}
-	                if (obj_ini.armour[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.armour[c,i]="";}}
-	                if (obj_ini.mobi[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.mobi[c,i]="";}}
-	                if (obj_ini.gear[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.gear[c,i]="";}}
+	            if (obj_ini.name[c][i]!="") and (obj_ini.lid[c][i]=argument1) and (obj_ini.wid[c][i]=0){
+	                if (obj_ini.wep1[c][i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.wep1[c][i]="";}}
+	                if (obj_ini.wep2[c][i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.wep2[c][i]="";}}
+	                if (obj_ini.armour[c][i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.armour[c][i]="";}}
+	                if (obj_ini.mobi[c][i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.mobi[c][i]="";}}
+	                if (obj_ini.gear[c][i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.gear[c][i]="";}}
 	            }
 	        }
 	    }
     
 	    if (instance_exists(obj_ncombat)) then repeat(305){i+=1;
 	        var okay;okay=0;
-	        // show_message(string(obj_ini.name[c,i])+" "+string(fighting[c,i]));
+	        // show_message(string(obj_ini.name[c][i])+" "+string(fighting[c][i]));
     
         
 	        // show_message("crash here?");
         
         
-	        if (obj_ini.name[c,i]!="") and (obj_ncombat.fighting[c,i]=1){
+	        if (obj_ini.name[c][i]!="") and (obj_ncombat.fighting[c][i]=1){
         
-	            // if (obj_ini.gear[c,i]!="") then show_message(string(obj_ini.gear[c,i])+", need "+string(argument0));
+	            // if (obj_ini.gear[c][i]!="") then show_message(string(obj_ini.gear[c][i])+", need "+string(argument0));
         
-	            if (obj_ini.wep1[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.wep1[c,i]="";}}
-	            if (obj_ini.wep2[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.wep2[c,i]="";}}
-	            if (obj_ini.armour[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.armour[c,i]="";}}
-	            if (obj_ini.mobi[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.mobi[c,i]="";}}
-	            if (obj_ini.gear[c,i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.gear[c,i]="";}}
+	            if (obj_ini.wep1[c][i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.wep1[c][i]="";}}
+	            if (obj_ini.wep2[c][i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.wep2[c][i]="";}}
+	            if (obj_ini.armour[c][i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.armour[c][i]="";}}
+	            if (obj_ini.mobi[c][i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.mobi[c][i]="";}}
+	            if (obj_ini.gear[c][i]=argument0){have+=1;if (to_remove>0){to_remove-=1;obj_ini.gear[c][i]="";}}
 	        }
 	    }
     

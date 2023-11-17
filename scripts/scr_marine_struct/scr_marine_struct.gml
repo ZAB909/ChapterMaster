@@ -1,15 +1,15 @@
 //in future would be better to store old guard data in a struct like this but for now while working out kinks have left hardcoded
 /*old_guard_equipment :{
-	role[100,5]:{"armour":[["MK3 Iron Armour",25]]},
-	role[100,14]:{"armour":[["MK3 Iron Armour",25]],
-	role[100,15]:{"armour":[["MK3 Iron Armour", 10]]}, //apothecary
-	role[100,16]:{"armour":},
+	role[100][5]:{"armour":[["MK3 Iron Armour",25]]},
+	role[100][14]:{"armour":[["MK3 Iron Armour",25]],
+	role[100][15]:{"armour":[["MK3 Iron Armour", 10]]}, //apothecary
+	role[100][16]:{"armour":},
 	"Standard Bearer":{"armour":[["MK3 Iron Armour", 3]]},
-	role[100,7]:{"armour":[]},  //company champion
-	role[100,8]:{"armour":[["MK8 Errant", 3],["MK3 Iron Armour", 3],["MK4 Maximus", 3],["MK5 Heresy", 3]]},     //tacticals
-	role[100,10]:{"armour":},		
-	role[100,9]:{"armour":},
-	role[100,12]:{"armour":},
+	role[100][7]:{"armour":[]},  //company champion
+	role[100][8]:{"armour":[["MK8 Errant", 3],["MK3 Iron Armour", 3],["MK4 Maximus", 3],["MK5 Heresy", 3]]},     //tacticals
+	role[100][10]:{"armour":},		
+	role[100][9]:{"armour":},
+	role[100][12]:{"armour":},
 }*/
 
 /*
@@ -413,30 +413,30 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	company = comp;			//marine company
 	marine_number = mar;			//marine number in company
 	squad = "none";
-	static bionics = function(){return obj_ini.bio[company,marine_number];}// get marine bionics count	
-	static experience =  function(){return obj_ini.experience[company,marine_number];}//get exp
-	static update_exp = function(new_val){obj_ini.experience[company,marine_number] = new_val}//change exp
-	static add_exp = function(add_val){obj_ini.experience[company,marine_number] += add_val}
+	static bionics = function(){return obj_ini.bio[company][marine_number];}// get marine bionics count	
+	static experience =  function(){return obj_ini.experience[company][marine_number];}//get exp
+	static update_exp = function(new_val){obj_ini.experience[company][marine_number] = new_val}//change exp
+	static add_exp = function(add_val){obj_ini.experience[company][marine_number] += add_val}
 	static armour = function(){ 
-		return obj_ini.armour[company,marine_number];
+		return obj_ini.armour[company][marine_number];
 	};
 	static role = function(){
-		return obj_ini.role[company,marine_number];
+		return obj_ini.role[company][marine_number];
 	};
 	static update_role = function(new_role){
-		obj_ini.role[company,marine_number]= new_role;
+		obj_ini.role[company][marine_number]= new_role;
 		if instance_exists(obj_controller){
-			array_push(role_history ,[obj_ini.role[company,marine_number], obj_controller.turn])
+			array_push(role_history ,[obj_ini.role[company][marine_number], obj_controller.turn])
 		}
 	};	
 	static mobility_item = function(){ 
-		return obj_ini.mobi[company,marine_number];
+		return obj_ini.mobi[company][marine_number];
 	};	
 	static hp = function(){ 
-		return obj_ini.hp[company,marine_number]; //return current health
+		return obj_ini.hp[company][marine_number]; //return current health
 	};
   static update_health = function(new_health){
-    obj_ini.hp[company,marine_number] = new_health;
+    obj_ini.hp[company][marine_number] = new_health;
   };	
 	static get_unit_size = function(){
 		var unit_role = role();
@@ -461,7 +461,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			if  (change_mob == "Bike"){
 				update_health(hp()/1.25);
 			}
-	    obj_ini.mobi[company,marine_number] = new_mobility_item;
+	    obj_ini.mobi[company][marine_number] = new_mobility_item;
 	    if (from_armoury) and (new_mobility_item!=""){
 	   		scr_add_item(new_mobility_item,-1);
 	  	}
@@ -486,7 +486,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if (change_armour != "") and (to_armoury){
 			scr_add_item(change_armour,1);
 		}
-    obj_ini.armour[company,marine_number] = new_armour;
+    obj_ini.armour[company][marine_number] = new_armour;
 		get_unit_size(); //every time armour is changed see if the marines size has changed
 	};	
 	static max_health =function(){
@@ -558,7 +558,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if struct_exists(self, stats[stat_iter]){
 
 			if (is_array(variable_struct_get(self, stats[stat_iter]))){
-				//show_debug_message("is array");
 				edit_stat = variable_struct_get(self, stats[stat_iter]);
 				stat_mod =  floor(gauss(edit_stat[0], edit_stat[1]));
 
@@ -597,10 +596,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				charisma-=2;
 			}
 			if (instance_exists(obj_controller)){
-				role_history = [[obj_ini.role[company,marine_number], obj_controller.turn]]; //marines_promotion and demotion history
+				role_history = [[obj_ini.role[company][marine_number], obj_controller.turn]]; //marines_promotion and demotion history
 				marine_ascension = obj_controller.turn; // on what day did turn did this marine begin to exist
 			} else {
-				role_history = [[obj_ini.role[company,marine_number], "pre_game"]];
+				role_history = [[obj_ini.role[company][marine_number], "pre_game"]];
 				marine_ascension = "pre_game"; // on what day did turn did this marine begin to exist
 
 			}
@@ -734,12 +733,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	};
 
 	static race = function(){
-		return obj_ini.race[company,marine_number];
+		return obj_ini.race[company][marine_number];
 	};	//get race
 
 	static add_bionics = function(area="none", bionic_quality="standard", from_armoury=false){
 		var new_bionic_pos, part, new_bionic = {quality :bionic_quality};
-		if (obj_ini.bio[company,marine_number] < 10){
+		if (obj_ini.bio[company][marine_number] < 10){
 			update_health(hp()+30);
 			var bionic_possible = [];
 			for (var body_part = 0; body_part < array_length(global.body_parts);body_part++){
@@ -758,7 +757,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				} else {
 					new_bionic_pos = bionic_possible[irandom(array_length(bionic_possible)-1)];
 				}
-				obj_ini.bio[company,marine_number]++;
+				obj_ini.bio[company][marine_number]++;
 				variable_struct_set(body[$ new_bionic_pos], "bionic", new_bionic);
 				if (array_contains(["left_leg", "right_leg"], new_bionic_pos)){
 					constitution += 2;
@@ -791,19 +790,19 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 	};
 	static age = function(){
-		return obj_ini.age[company,marine_number];
+		return obj_ini.age[company][marine_number];
 	};// age
 
 	static update_age = function(new_val){
-		obj_ini.age[company,marine_number] = new_val;
+		obj_ini.age[company][marine_number] = new_val;
 	};		
 
 	static name = function(){
-		return obj_ini.name[company,marine_number];
+		return obj_ini.name[company][marine_number];
 	};// get marine name
 
 	static gear = function(){
-		return obj_ini.gear[company,marine_number];
+		return obj_ini.gear[company][marine_number];
 	};
 
 	static update_gear = function(new_gear,from_armoury=true, to_armoury=true){
@@ -817,7 +816,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if (change_gear != "" && to_armoury){
 			scr_add_item(change_gear,1);
 		}  			
-		obj_ini.gear[company,marine_number] = new_gear;
+		obj_ini.gear[company][marine_number] = new_gear;
 	}
 
 	if (base_group!="none"){
@@ -825,7 +824,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	}
 	   
 	static weapon_one = function(){ 
-		return obj_ini.wep1[company,marine_number];
+		return obj_ini.wep1[company][marine_number];
 	};
 
   static update_weapon_one = function(new_weapon,from_armoury=true, to_armoury=true){
@@ -839,11 +838,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if (change_wep != "") and (to_armoury){
 			scr_add_item(change_wep,1);
 		}       	
-     obj_ini.wep1[company,marine_number] = new_weapon;
+     obj_ini.wep1[company][marine_number] = new_weapon;
 	};
 
 		static weapon_two = function(){
-			return obj_ini.wep2[company,marine_number];
+			return obj_ini.wep2[company][marine_number];
 		};
 
   static update_weapon_two = function(new_weapon,from_armoury=true, to_armoury=true){
@@ -857,24 +856,24 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if (change_wep != "") and (to_armoury){
 			scr_add_item(change_wep,1);
 		}      	
-    obj_ini.wep2[company,marine_number] = new_weapon;
+    obj_ini.wep2[company][marine_number] = new_weapon;
 	 };
 
 
 		static corruption = function(){ 
-			return obj_ini.chaos[company,marine_number];
+			return obj_ini.chaos[company][marine_number];
 		};	   
        static update_corruption = function(new_corruption){
-            obj_ini.chaos[company,marine_number] = new_corruption;
+            obj_ini.chaos[company][marine_number] = new_corruption;
 	   };	
 		static specials = function(){ 
-			return obj_ini.spe[company,marine_number];
+			return obj_ini.spe[company][marine_number];
 		};	   
        static update_specials = function(new_specials){
-            obj_ini.spe[company,marine_number] = new_specials;
+            obj_ini.spe[company][marine_number] = new_specials;
 	   };
 	   	static race = function(){ 
-			return obj_ini.race[company,marine_number];
+			return obj_ini.race[company][marine_number];
 		};	
 		static damage_resistance = function(){
 			 damage_res = (constitution*0.005) + (experience()/1000);
@@ -905,17 +904,17 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 		static marine_location = function(){
 			var location_id,location_name;
-			var location_type = obj_ini.wid[company,marine_number];
+			var location_type = obj_ini.wid[company][marine_number];
 			if ( location_type > 0){ //if marine is on planet
 				location_id = location_type; //planet_number marine is on
 				location_type = location_types.planet; //state marine is on planet
-				if (obj_ini.loc[company,marine_number] == "home"){
-					obj_ini.loc[company,marine_number] = obj_ini.home_name
+				if (obj_ini.loc[company][marine_number] == "home"){
+					obj_ini.loc[company][marine_number] = obj_ini.home_name
 				}
-				location_name = obj_ini.loc[company,marine_number]; //system marine is in
+				location_name = obj_ini.loc[company][marine_number]; //system marine is in
 			} else {
 				location_type =  location_types.ship; //marine is on ship
-				location_id = obj_ini.lid[company,marine_number]; //ship array position
+				location_id = obj_ini.lid[company][marine_number]; //ship array position
 				location_name = obj_ini.ship_location[location_id]; //location of ship
 			}
 			return [location_type,location_id ,location_name];
@@ -946,15 +945,15 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				  if (current_location[2] == "home" ){system = obj_ini.home_name;}
 				 //check if ship is in the same location as marine and has enough space;
 				 if (ship_location == system) and ((obj_ini.ship_carrying[ship] + size) <= obj_ini.ship_capacity[ship]){
-					 obj_ini.wid[company,marine_number] = 0; //mark marine as no longer on planet
-					 obj_ini.lid[company,marine_number] = ship; //id of ship marine is now loaded on
+					 obj_ini.wid[company][marine_number] = 0; //mark marine as no longer on planet
+					 obj_ini.lid[company][marine_number] = ship; //id of ship marine is now loaded on
 					 obj_ini.ship_carrying[ship] += size; //update ship capacity
 				 }
 			 } else if (current_location[0] == location_types.ship){ //with this addition marines can now be moved between ships freely as long as they are in the same system
 				 var off_loading_ship = current_location[1];
 				 if ( (obj_ini.ship_location[ship] == obj_ini.ship_location[off_loading_ship]) and ((obj_ini.ship_carrying[ship] + size) <= obj_ini.ship_capacity[ship])){
 					 obj_ini.ship_carrying[off_loading_ship] -= size; // remove from previous ship capacity
-					 obj_ini.lid[company,marine_number] = ship;             // change marine location to new ship
+					 obj_ini.lid[company][marine_number] = ship;             // change marine location to new ship
 					  obj_ini.ship_carrying[ship] += size;            //add marine capacity to new ship
 				 }
 			 }
@@ -980,7 +979,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			bionic_count = choose(2,3,4,5);
 		}
 		switch(role()){
-			case obj_ini.role[100,5]:  //captain
+			case obj_ini.role[100][5]:  //captain
 				if(old_guard>=75){
 					update_armour("MK3 Iron Armour",false,false);
 					update_age(age - gauss(400, 200))
@@ -995,7 +994,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					add_exp(25);
 				}
 				break;
-			case  obj_ini.role[100,15]:  //apothecary
+			case  obj_ini.role[100][15]:  //apothecary
 				update_armour("MK7 Aquila",false,false);
 				if (company<=2){update_armour(choose("MK8 Errant","MK6 Corvus"),false,false)
 				}else{
@@ -1010,7 +1009,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				 update_armour("MK5 Heresy",false,false);
 				 update_age(age - gauss(400, 250));
 				break;
-			case  obj_ini.role[100,8]:		//tacticals
+			case  obj_ini.role[100][8]:		//tacticals
 				if (old_guard=99){
 						update_armour("MK3 Iron Armour",false,false)
 						update_age(age - gauss(600, 150));
@@ -1039,7 +1038,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 						} // company 1 and 2 taccies get beakies by default
 					else{update_armour("MK7 Aquila",false,false)};
 				break;
-			case  obj_ini.role[100,10]:		//assualts
+			case  obj_ini.role[100][10]:		//assualts
 				// due to assault marines not wanting corvus due to worse ac, given them better chances with melee oriented armours. 
 				// melee is risky af anyway so let's reward players who go assault marine heavy at game start
 				if (old_guard>=99 and old_guard<=97){
@@ -1070,7 +1069,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					update_age(age - gauss(150, 30));
 				};
 				break;	
-			case  obj_ini.role[100,9]: 		//devastators	
+			case  obj_ini.role[100][9]: 		//devastators	
 				if ((old_guard>=99) and (old_guard<=97)){
 					update_armour("MK4 Maximus",false,false);
 					update_age(age - gauss(300, 100));
@@ -1088,7 +1087,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				} // company 1 and 2 taccies get beakies by default
 				else{update_armour("MK7 Aquila",false,false)};
 				break;
-			case  obj_ini.role[100,3]: //veterans
+			case  obj_ini.role[100][3]: //veterans
 				if ((old_guard>=80)and (old_guard>=95)){
 					update_armour(choose("MK4 Maximus","MK8 Errant"),false,false);
 					update_age(age - gauss(150, 30));
@@ -1112,7 +1111,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					}
 				}
 				break;
-			case obj_ini.role[100,16]: //techmarines
+			case obj_ini.role[100][16]: //techmarines
 				update_armour(choose("MK8 Errant","MK6 Corvus","MK4 Maximus","MK3 Iron Armour"),false,false)
 				if ((global.chapter_name="Iron Hands") or (obj_ini.progenitor=6)){
 					add_bionics("right_arm");
@@ -1136,10 +1135,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			  }
 			  religion = "cult_mechanicus"	
 				break;
-			case  obj_ini.role[100,12]: //scouts
+			case  obj_ini.role[100][12]: //scouts
 				bionic_count = choose(0,0,0,0,0,0,0,0,0,0,0,1)
 				break;
-			case  obj_ini.role[100,14]:  //chaplain
+			case  obj_ini.role[100][14]:  //chaplain
 				update_armour(choose("MK5 Heresy","MK6 Corvus","MK7 Aquila", "MK4 Maximus","MK8 Errant"),false,false);
 				update_age(age - gauss(400, 250));
 				if (piety<35){

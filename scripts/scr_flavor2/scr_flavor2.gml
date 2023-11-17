@@ -22,10 +22,10 @@ function scr_flavor2(argument0, argument1) {
 	// show_message(enemy.dudes[1]);
 
 	/*if (enemy.dreads>0) and (enemy.men=0) and (enemy.veh=0){
-	    j1="your "+string(obj_ini.role[100,6])+"s";
-	    j2="your "+string(obj_ini.role[100,6])+"s";
-	    j3="your "+string(obj_ini.role[100,6])+"s";
-	    j5="your "+string(obj_ini.role[100,6])+"s";
+	    j1="your "+string(obj_ini.role[100][6])+"s";
+	    j2="your "+string(obj_ini.role[100][6])+"s";
+	    j3="your "+string(obj_ini.role[100][6])+"s";
+	    j5="your "+string(obj_ini.role[100][6])+"s";
 	}*/
 
 
@@ -265,8 +265,8 @@ function scr_flavor2(argument0, argument1) {
 	        if (lost[w]="Forge Master") then speshul=1;
 	        if (lost[w]="Master of Sanctity") then speshul=1;
 	        if (lost[w]="Master of the Apothecarion") then speshul=1;
-	        if (lost[w]="Venerable "+string(obj_ini.role[100,6])) then speshul=1;
-	        if (lost[w]=obj_ini.role[100,5]) then speshul=1;
+	        if (lost[w]="Venerable "+string(obj_ini.role[100][6])) then speshul=1;
+	        if (lost[w]=obj_ini.role[100][5]) then speshul=1;
         
 	        if (obj_ncombat.player_max<=6) then speshul=1;
         
@@ -286,8 +286,8 @@ function scr_flavor2(argument0, argument1) {
 	                }
 	            }
 	            if (him!=0){obj_ncombat.dead_jims+=1;
-	                if (marine_type[him]=obj_ini.role[100,5]) then obj_ncombat.dead_jim[obj_ncombat.dead_jims]="A "+string(marine_type[him])+" has been critically injured!";
-	                if (marine_type[him]!=obj_ini.role[100,5]){
+	                if (marine_type[him]=obj_ini.role[100][5]) then obj_ncombat.dead_jim[obj_ncombat.dead_jims]="A "+string(marine_type[him])+" has been critically injured!";
+	                if (marine_type[him]!=obj_ini.role[100][5]){
 	                    obj_ncombat.dead_jim[obj_ncombat.dead_jims]=string(marine_type[him])+" "+string(obj_ini.name[marine_co[him],marine_id[him]])+" has been critically injured!";
 	                    // show_message(string(obj_ncombat.dead_jim[obj_ncombat.dead_jims]));
 	                }

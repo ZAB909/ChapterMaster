@@ -144,7 +144,7 @@ function scr_ruins_reward(star_system, planet, _ruins) {
 	if (loot="starship"){// Starship
 	    var pop;pop=instance_create(0,0,obj_popup);
 	    pop.image="ruins_ship";pop.title="Ancient Ruins: Starship";
-	    pop.text="The ground beneath one of your battle brothers crumbles, and he falls a great height.  The other marines go down in pursuit- within a great chamber they find the remains of an ancient starship.  Though derelict, it is possible to land "+string(obj_ini.role[100,16])+"s onto the planet to repair the ship.  10,000 Requisition will be needed to make it operational.";
+	    pop.text="The ground beneath one of your battle brothers crumbles, and he falls a great height.  The other marines go down in pursuit- within a great chamber they find the remains of an ancient starship.  Though derelict, it is possible to land "+string(obj_ini.role[100][16])+"s onto the planet to repair the ship.  10,000 Requisition will be needed to make it operational.";
 		obj_controller.current_planet_feature.find_starship();
 	    scr_event_log("","Ancient Starship discovered on "+string(star_system.name)+" "+scr_roman(planet)+".");
 	}

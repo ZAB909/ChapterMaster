@@ -1683,7 +1683,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 onceh=1;
                 cooldown=8000;
                 click=1;
-                temp[36]=scr_role_count(obj_ini.role[100,15],"");
+                temp[36]=scr_role_count(obj_ini.role[100][15],"");
             }
             if (menu==11) and (onceh==0){
                 menu=0;
@@ -1703,8 +1703,8 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 onceh=1;
                 cooldown=8000;
                 click=1;
-                temp[36]=string(scr_role_count(obj_ini.role[100,14],"field"));
-                temp[37]=string(scr_role_count(obj_ini.role[100,14],"home"));
+                temp[36]=string(scr_role_count(obj_ini.role[100][14],"field"));
+                temp[37]=string(scr_role_count(obj_ini.role[100][14],"home"));
                 penitorium=0;
 
                 // Get list of jailed marines
@@ -1732,14 +1732,14 @@ if (action_if_number(obj_saveload, 0, 0) &&
         if (mouse_x>=xx+591) and (mouse_y>=yy+838) and (mouse_x<xx+704) and (mouse_y<yy+879){
             menu_adept=0;
             hide_banner=1;
-            if (scr_role_count("Chief "+string(obj_ini.role[100,17]),"0")==0) then menu_adept=1;
+            if (scr_role_count("Chief "+string(obj_ini.role[100][17]),"0")==0) then menu_adept=1;
             if (menu!=13) and (onceh==0){
                 menu=13;
                 onceh=1;
                 cooldown=8000;
                 click=1;
                 if (artifacts>0) and (menu_artifact==0) then menu_artifact=1;
-                temp[36]=scr_role_count(obj_ini.role[100,17],"");
+                temp[36]=scr_role_count(obj_ini.role[100][17],"");
                 temp[37]=scr_role_count("Codiciery","");
                 temp[38]=scr_role_count("Lexicanum","");
             }
@@ -1761,8 +1761,8 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 onceh=1;
                 cooldown=8000;
                 click=1;
-                temp[36]=scr_role_count(obj_ini.role[100,16],"");
-                temp[37]=temp[36]+scr_role_count(string(obj_ini.role[100,16])+" Aspirant","");
+                temp[36]=scr_role_count(obj_ini.role[100][16],"");
+                temp[37]=temp[36]+scr_role_count(string(obj_ini.role[100][16])+" Aspirant","");
             }
             if (menu==14) and (onceh==0){
                 menu=0;
@@ -1778,7 +1778,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             for(geh=1; geh<=50; geh++){
                 geh+=1;
                 if (good==0){
-                    if (obj_ini.role[10,geh]==obj_ini.role[100,5]) and (obj_ini.name[10,geh]==obj_ini.recruiter_name) then good=geh;
+                    if (obj_ini.role[10,geh]==obj_ini.role[100][5]) and (obj_ini.name[10,geh]==obj_ini.recruiter_name) then good=geh;
                 }
             }
             menu_adept=0;
@@ -1804,7 +1804,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             var geh=0,good=0;
             for(geh=1; geh<=50; geh++){
                 if (good==0){
-                    if (obj_ini.role[4,geh]=obj_ini.role[100,5]) and (obj_ini.name[10,geh]=obj_ini.lord_admiral_name) then good=geh;
+                    if (obj_ini.role[4,geh]=obj_ini.role[100][5]) and (obj_ini.name[10,geh]=obj_ini.lord_admiral_name) then good=geh;
                 }
             }
             if (menu!=16) and (onceh==0){
@@ -2228,11 +2228,11 @@ if (action_if_number(obj_saveload, 0, 0) &&
     if (menu=1) and (managing>0){
         //TODO make command roles a global variable for reuse
         var command_roles = [
-            obj_ini.role[100,5],
-            obj_ini.role[100,14],
-            obj_ini.role[100,15],
-            obj_ini.role[100,16],
-            obj_ini.role[100,17],
+            obj_ini.role[100][5],
+            obj_ini.role[100][14],
+            obj_ini.role[100][15],
+            obj_ini.role[100][16],
+            obj_ini.role[100][17],
             "Codiciery",
             "Lexicanum",
             "Standard Bearer",
@@ -2283,7 +2283,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             // repeat(min(man_max,man_see)){
             var selection =false;
             for(var i=0; i<man_max; i++){
-                while (man[i]=="hide"){i++;}
+                while (man[i]=="hide")and (i<500){i++;}
                 if (man_sel[i]==1){
                     selecting_location=ma_loc[sel];
                     selecting_ship=ma_lid[sel];
@@ -2312,7 +2312,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             }
             var onceh;
             for(var i=0; i<man_max; i++){
-                while (man[sel]=="hide"){sel++;}
+                while (man[sel]=="hide" && sel<500){sel++;}
                 onceh=0;
                 eventing=false;
                 selection=false;
@@ -2536,7 +2536,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             }
             yy+=20;
             sel++;
-            if (sel=501) then break;
+            if (sel=500) then break;
         }
         if (sel_all!="") then sel_all="";
         // End selecting
@@ -2594,11 +2594,11 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 // Need to make sure that group selected is all the same type
                 for(var f=1; f<man_max; f++){
                     // Set different vih depending on unit type
-                    if (man[f]=="man") and (man_sel[f]==1) and (ma_role[f]!=obj_ini.role[100,6]) 
-                    and (ma_role[f]!="Venerable "+string(obj_ini.role[100,6])) and (vih==0) then vih=1;
+                    if (man[f]=="man") and (man_sel[f]==1) and (ma_role[f]!=obj_ini.role[100][6]) 
+                    and (ma_role[f]!="Venerable "+string(obj_ini.role[100][6])) and (vih==0) then vih=1;
 
-                    if (ma_role[f]==obj_ini.role[100,6]) and (man_sel[f]==1) and (vih==0) then vih=6;
-                    if (ma_role[f]=="Venerable "+string(obj_ini.role[100,6])) and (man_sel[f]==1) and (vih==0) then vih=6;
+                    if (ma_role[f]==obj_ini.role[100][6]) and (man_sel[f]==1) and (vih==0) then vih=6;
+                    if (ma_role[f]=="Venerable "+string(obj_ini.role[100][6])) and (man_sel[f]==1) and (vih==0) then vih=6;
                     if (ma_role[f]=="Land Raider") and (man_sel[f]==1) and (vih==0) then vih=50;
                     if (ma_role[f]=="Rhino") and (man_sel[f]==1) and (vih==0) then vih=51;
                     if (ma_role[f]=="Predator") and (man_sel[f]==1) and (vih==0) then vih=52;
@@ -2606,11 +2606,11 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     if (ma_role[f]=="Whirlwind") and (man_sel[f]==1) and (vih==0) then vih=54;
 
                     // Make output invalid if newly selected unit has a different vih than previous ones by setting vih to -1
-                    if (man[f]=="man") and (man_sel[f]==1) and (ma_role[f]!=obj_ini.role[100,6]) 
-                    and (ma_role[f]!="Venerable "+string(obj_ini.role[100,6])) and (man_sel[f]==1) and (vih!=1) and (vih!=0) then vih=-1;
+                    if (man[f]=="man") and (man_sel[f]==1) and (ma_role[f]!=obj_ini.role[100][6]) 
+                    and (ma_role[f]!="Venerable "+string(obj_ini.role[100][6])) and (man_sel[f]==1) and (vih!=1) and (vih!=0) then vih=-1;
 
-                    if (ma_role[f]==obj_ini.role[100,6]) and (man_sel[f]==1) and (vih!=6) and (vih!=0) then vih=-1;
-                    if (ma_role[f]=="Venerable "+string(obj_ini.role[100,6])) and (man_sel[f]==1) and (vih!=6) and (vih!=0) then vih=-1;
+                    if (ma_role[f]==obj_ini.role[100][6]) and (man_sel[f]==1) and (vih!=6) and (vih!=0) then vih=-1;
+                    if (ma_role[f]=="Venerable "+string(obj_ini.role[100][6])) and (man_sel[f]==1) and (vih!=6) and (vih!=0) then vih=-1;
                     if (ma_role[f]=="Land Raider") and (man_sel[f]==1) and (vih!=50) and (vih!=0) then vih=-1;
                     if (ma_role[f]=="Rhino") and (man_sel[f]==1) and (vih!=51) and (vih!=0) then vih=-1;
                     if (ma_role[f]=="Predator") and (man_sel[f]==1) and (vih!=52) and (vih!=0) then vih=-1;
@@ -2766,8 +2766,8 @@ if (action_if_number(obj_saveload, 0, 0) &&
             bionics_after=bionics_before;
             temp[114]="refresh";
             if (bionics_before>0) then for(var p=1; p<=500; p++){
-                if (man_sel[p]==1) and (man[p]=="man") and (bionics_after>0) and (obj_ini.bio[cah,ide[p]]<10) 
-                and (obj_ini.loc[cah,ide[p]]!="Terra") and (obj_ini.loc[cah,ide[p]]!="Mechanicus Vessel"){
+                if (man_sel[p]==1) and (man[p]=="man") and (bionics_after>0) and (obj_ini.bio[cah][ide[p]]<10) 
+                and (obj_ini.loc[cah][ide[p]]!="Terra") and (obj_ini.loc[cah][ide[p]]!="Mechanicus Vessel"){
                     if (string_count("Dread",ma_armour[p])=0){
     					          obj_ini.TTRPG[cah, ide[p]].add_bionics();
                         if (ma_promote[p]==10) then ma_promote[p]=0;
@@ -2786,17 +2786,17 @@ if (action_if_number(obj_saveload, 0, 0) &&
             if (cah>10) then cah=0;
             temp[114]="refresh";
             for(var p=1; p<=500; p++){
-                if (man_sel[p]==1) and (man[p]=="man") and (obj_ini.lid[cah,ide[p]]>0) and (obj_ini.loc[cah,ide[p]]!="Mechanicus Vessel"){
+                if (man_sel[p]==1) and (man[p]=="man") and (obj_ini.lid[cah][ide[p]]>0) and (obj_ini.loc[cah][ide[p]]!="Mechanicus Vessel"){
                     var onk=0;
-                    if (obj_ini.age[cah,ide[p]]==floor(obj_ini.age[cah,ide[p]])) and (onk==0){
-                        if (ma_role[p]!=obj_ini.role[100,6]) and (ma_role[p]!="Venerable "+string(obj_ini.role[100,6])) 
+                    if (obj_ini.age[cah][ide[p]]==floor(obj_ini.age[cah][ide[p]])) and (onk==0){
+                        if (ma_role[p]!=obj_ini.role[100][6]) and (ma_role[p]!="Venerable "+string(obj_ini.role[100][6])) 
                         and (string_count("Dread",ma_armour[p])==0){
-                            obj_ini.age[cah,ide[p]]+=0.01;
+                            obj_ini.age[cah][ide[p]]+=0.01;
                             onk=1;
                         }
                     }
-                    if (obj_ini.age[cah,ide[p]]!=floor(obj_ini.age[cah,ide[p]])) and (onk==0){
-                        obj_ini.age[cah,ide[p]]=floor(obj_ini.age[cah,ide[p]]);
+                    if (obj_ini.age[cah][ide[p]]!=floor(obj_ini.age[cah][ide[p]])) and (onk==0){
+                        obj_ini.age[cah][ide[p]]=floor(obj_ini.age[cah][ide[p]]);
                         onk=1;
                     }
                 }
@@ -2825,11 +2825,11 @@ if (action_if_number(obj_saveload, 0, 0) &&
                         if (man[f]=="man"){
                             nuuum+=1;
                             checky=1;
-                            if (ma_role[f]==obj_ini.role[100,7]) then checky=0;
-                            if (ma_role[f]==obj_ini.role[100,14]) then checky=0;
-                            if (ma_role[f]==obj_ini.role[100,15]) then checky=0;
-                            if (ma_role[f]==obj_ini.role[100,16]) then checky=0;
-                            if (ma_role[f]==obj_ini.role[100,17]) then checky=0;
+                            if (ma_role[f]==obj_ini.role[100][7]) then checky=0;
+                            if (ma_role[f]==obj_ini.role[100][14]) then checky=0;
+                            if (ma_role[f]==obj_ini.role[100][15]) then checky=0;
+                            if (ma_role[f]==obj_ini.role[100][16]) then checky=0;
+                            if (ma_role[f]==obj_ini.role[100][17]) then checky=0;
                             if (checky==1) then check_number+=1;
                         }
                         if (man[f]=="vehicle") then nuuum2+=1;
@@ -2880,15 +2880,15 @@ if (action_if_number(obj_saveload, 0, 0) &&
 
                                 if (managing<=10){
                                     loc[managing,q]=sh_name[sel];
-                                    obj_ini.lid[managing,ide[q]]=sh_ide[sel];
-                                    obj_ini.wid[managing,ide[q]]=0;
-                                    obj_ini.uid[managing,ide[q]]=sel_uid;
+                                    obj_ini.lid[managing][ide[q]]=sh_ide[sel];
+                                    obj_ini.wid[managing][ide[q]]=0;
+                                    obj_ini.uid[managing][ide[q]]=sel_uid;
                                 }
                                 if (managing>10){
                                     loc[0,q]=sh_name[sel];
-                                    obj_ini.lid[0,ide[q]]=sh_ide[sel];
-                                    obj_ini.wid[0,ide[q]]=0;
-                                    obj_ini.uid[0,ide[q]]=sel_uid;
+                                    obj_ini.lid[0][ide[q]]=sh_ide[sel];
+                                    obj_ini.wid[0][ide[q]]=0;
+                                    obj_ini.uid[0][ide[q]]=sel_uid;
                                 }
                             }
                         }
@@ -2903,14 +2903,14 @@ if (action_if_number(obj_saveload, 0, 0) &&
                                 veh_loc[managing,q]=sh_name[sel];
 
                                 if (managing<=10){
-                                    obj_ini.veh_lid[managing,ide[q]]=sh_ide[sel];
-                                    obj_ini.veh_wid[managing,ide[q]]=0;
-                                    obj_ini.veh_uid[managing,ide[q]]=sel_uid;
+                                    obj_ini.veh_lid[managing][ide[q]]=sh_ide[sel];
+                                    obj_ini.veh_wid[managing][ide[q]]=0;
+                                    obj_ini.veh_uid[managing][ide[q]]=sel_uid;
                                 }
                                 if (managing>10){
-                                    obj_ini.veh_lid[0,ide[q]]=sh_ide[sel];
-                                    obj_ini.veh_wid[0,ide[q]]=0;
-                                    obj_ini.veh_uid[0,ide[q]]=sel_uid;
+                                    obj_ini.veh_lid[0][ide[q]]=sh_ide[sel];
+                                    obj_ini.veh_wid[0][ide[q]]=0;
+                                    obj_ini.veh_uid[0][ide[q]]=sel_uid;
                                 }
                             }
                         }

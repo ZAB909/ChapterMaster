@@ -2,8 +2,8 @@
 var co,i;co=-1;
 repeat(15){co+=1;i=-1;
     repeat(401){i+=1;
-        fighting[co,i]=0;
-        if (i<=150){veh_fighting[co,i]=0;}
+        fighting[co][i]=0;
+        if (i<=150){veh_fighting[co][i]=0;}
     }
 }co=0;i=0;hue=0;
 

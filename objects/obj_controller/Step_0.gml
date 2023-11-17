@@ -253,9 +253,9 @@ if (y_slide>0) then new_button_highlight="";
 var high="";
 var stop = 0;
 if (new_buttons_hide==0) and (y_slide<=0) and (!instance_exists(obj_ingame_menu)){
-    var but=4,bx=1374,by=8,wid=108,hei=42;
+    var but=4,bx=1374,by=8,button_width=108,hei=42;
     if (mouse_y>=__view_get( e__VW.YView, 0 )+by) and (mouse_y<=__view_get( e__VW.YView, 0 )+by+hei){
-        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+wid){
+        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+button_width){
             if (mouse_x>=__view_get( e__VW.XView, 0 )+bx+108){
                 var dif1,dif2;
                 dif1=mouse_x-(__view_get( e__VW.XView, 0 )+bx+108);
@@ -268,10 +268,10 @@ if (new_buttons_hide==0) and (y_slide<=0) and (!instance_exists(obj_ingame_menu)
     but=4;
     bx=1484;
     by=8;
-    wid=108;
+    button_width=108;
     hei=42;
     if (mouse_y>=__view_get( e__VW.YView, 0 )+by) and (mouse_y<=__view_get( e__VW.YView, 0 )+by+hei){
-        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+wid){
+        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+button_width){
             if (mouse_x>=__view_get( e__VW.XView, 0 )+bx+108){
                 var dif1,dif2;
                 dif1=mouse_x-(__view_get( e__VW.XView, 0 )+bx+108);
@@ -284,10 +284,10 @@ if (new_buttons_hide==0) and (y_slide<=0) and (!instance_exists(obj_ingame_menu)
     but=1;
     bx=34;
     by=838;
-    wid=142;
+    button_width=142;
     hei=43;
     if (mouse_y>=__view_get( e__VW.YView, 0 )+by) and (mouse_y<=__view_get( e__VW.YView, 0 )+by+hei){
-        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+wid){
+        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+button_width){
             if (mouse_x>=__view_get( e__VW.XView, 0 )+bx+134){
                 var dif1,dif2;
                 dif1=mouse_x-(__view_get( e__VW.XView, 0 )+bx+134);
@@ -300,10 +300,10 @@ if (new_buttons_hide==0) and (y_slide<=0) and (!instance_exists(obj_ingame_menu)
     but=1;
     bx=179;
     by=838;
-    wid=142;
+    button_width=142;
     hei=43;
     if (mouse_y>=__view_get( e__VW.YView, 0 )+by) and (mouse_y<=__view_get( e__VW.YView, 0 )+by+hei){
-        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+wid){
+        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+button_width){
             if (mouse_x>=__view_get( e__VW.XView, 0 )+bx+134){
                 var dif1,dif2;
                 dif1=mouse_x-(__view_get( e__VW.XView, 0 )+bx+134);
@@ -316,10 +316,10 @@ if (new_buttons_hide==0) and (y_slide<=0) and (!instance_exists(obj_ingame_menu)
     but=1;
     bx=1130;
     by=838;
-    wid=142;
+    button_width=142;
     hei=43;
     if (mouse_y>=__view_get( e__VW.YView, 0 )+by) and (mouse_y<=__view_get( e__VW.YView, 0 )+by+hei){
-        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+wid){
+        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+button_width){
             if (mouse_x>=__view_get( e__VW.XView, 0 )+bx+134){
                 var dif1,dif2;
                 dif1=mouse_x-(__view_get( e__VW.XView, 0 )+bx+134);
@@ -332,10 +332,10 @@ if (new_buttons_hide==0) and (y_slide<=0) and (!instance_exists(obj_ingame_menu)
     but=1;
     bx=1275;
     by=838;
-    wid=142;
+    button_width=142;
     hei=43;
     if (mouse_y>=__view_get( e__VW.YView, 0 )+by) and (mouse_y<=__view_get( e__VW.YView, 0 )+by+hei){
-        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+wid){
+        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+button_width){
             if (mouse_x>=__view_get( e__VW.XView, 0 )+bx+134){
                 var dif1,dif2;
                 dif1=mouse_x-(__view_get( e__VW.XView, 0 )+bx+134);
@@ -348,10 +348,10 @@ if (new_buttons_hide==0) and (y_slide<=0) and (!instance_exists(obj_ingame_menu)
     but=2;
     bx=1420;
     by=838;
-    wid=142;
+    button_width=142;
     hei=43;
     if (mouse_y>=__view_get( e__VW.YView, 0 )+by) and (mouse_y<=__view_get( e__VW.YView, 0 )+by+hei){
-        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+wid){
+        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+button_width){
             if (mouse_x>=__view_get( e__VW.XView, 0 )+bx+134){
                 var dif1,dif2;
                 dif1=mouse_x-(__view_get( e__VW.XView, 0 )+bx+134);
@@ -364,10 +364,10 @@ if (new_buttons_hide==0) and (y_slide<=0) and (!instance_exists(obj_ingame_menu)
     but=3;
     bx=357;
     by=838;
-    wid=115;
+    button_width=115;
     hei=43;
     if (mouse_y>=__view_get( e__VW.YView, 0 )+by) and (mouse_y<=__view_get( e__VW.YView, 0 )+by+hei){
-        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+wid){
+        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+button_width){
             if (mouse_x>=__view_get( e__VW.XView, 0 )+bx+108){
                 var dif1,dif2;
                 dif1=mouse_x-(__view_get( e__VW.XView, 0 )+bx+108);
@@ -380,10 +380,10 @@ if (new_buttons_hide==0) and (y_slide<=0) and (!instance_exists(obj_ingame_menu)
     but=3;
     bx=473;
     by=838;
-    wid=115;
+    button_width=115;
     hei=43;
     if (mouse_y>=__view_get( e__VW.YView, 0 )+by) and (mouse_y<=__view_get( e__VW.YView, 0 )+by+hei){
-        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+wid){
+        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+button_width){
             if (mouse_x>=__view_get( e__VW.XView, 0 )+bx+108){
                 var dif1,dif2;
                 dif1=mouse_x-(__view_get( e__VW.XView, 0 )+bx+108);
@@ -396,10 +396,10 @@ if (new_buttons_hide==0) and (y_slide<=0) and (!instance_exists(obj_ingame_menu)
     but=3;
     bx=590;
     by=838;
-    wid=115;
+    button_width=115;
     hei=43;
     if (mouse_y>=__view_get( e__VW.YView, 0 )+by) and (mouse_y<=__view_get( e__VW.YView, 0 )+by+hei){
-        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+wid){
+        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+button_width){
             if (mouse_x>=__view_get( e__VW.XView, 0 )+bx+108){
                 var dif1,dif2;
                 dif1=mouse_x-(__view_get( e__VW.XView, 0 )+bx+108);
@@ -412,10 +412,10 @@ if (new_buttons_hide==0) and (y_slide<=0) and (!instance_exists(obj_ingame_menu)
     but=3;
     bx=706;
     by=838;
-    wid=115;
+    button_width=115;
     hei=43;
     if (mouse_y>=__view_get( e__VW.YView, 0 )+by) and (mouse_y<=__view_get( e__VW.YView, 0 )+by+hei){
-        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+wid){
+        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+button_width){
             if (mouse_x>=__view_get( e__VW.XView, 0 )+bx+108){
                 var dif1,dif2;
                 dif1=mouse_x-(__view_get( e__VW.XView, 0 )+bx+108);
@@ -428,10 +428,10 @@ if (new_buttons_hide==0) and (y_slide<=0) and (!instance_exists(obj_ingame_menu)
     but=3;
     bx=822;
     by=838;
-    wid=115;
+    button_width=115;
     hei=43;
     if (mouse_y>=__view_get( e__VW.YView, 0 )+by) and (mouse_y<=__view_get( e__VW.YView, 0 )+by+hei){
-        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+wid){
+        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+button_width){
             if (mouse_x>=__view_get( e__VW.XView, 0 )+bx+108){
                 var dif1,dif2;
                 dif1=mouse_x-(__view_get( e__VW.XView, 0 )+bx+108);
@@ -444,10 +444,10 @@ if (new_buttons_hide==0) and (y_slide<=0) and (!instance_exists(obj_ingame_menu)
     but=3;
     bx=938;
     by=838;
-    wid=115;
+    button_width=115;
     hei=43;
     if (mouse_y>=__view_get( e__VW.YView, 0 )+by) and (mouse_y<=__view_get( e__VW.YView, 0 )+by+hei){
-        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+wid){
+        if (mouse_x>=__view_get( e__VW.XView, 0 )+bx) and (mouse_x<=__view_get( e__VW.XView, 0 )+bx+button_width){
             if (mouse_x>=__view_get( e__VW.XView, 0 )+bx+108){
                 var dif1,dif2;
                 dif1=mouse_x-(__view_get( e__VW.XView, 0 )+bx+108);
@@ -809,10 +809,10 @@ if (unload>0){
     for(var q=1; q<=500; q++){
         if (man[q]=="man") and (ma_loc[q]==selecting_location) and (ma_wid[q]<1)and (man_sel[q]!=0){
             if (b==0) then b=ma_lid[q];
-            obj_ini.loc[manaj,ide[q]]=obj_ini.ship_location[b];
-            obj_ini.lid[manaj,ide[q]]=0;
-            obj_ini.wid[manaj,ide[q]]=unload;
-            obj_ini.uid[manaj,ide[q]]=0;
+            obj_ini.loc[manaj][ide[q]]=obj_ini.ship_location[b];
+            obj_ini.lid[manaj][ide[q]]=0;
+            obj_ini.wid[manaj][ide[q]]=unload;
+            obj_ini.uid[manaj][ide[q]]=0;
             
             ma_loc[q]=obj_ini.ship_location[b];
             ma_lid[q]=0;
@@ -820,10 +820,10 @@ if (unload>0){
         }
         if (man[q]=="vehicle") and (ma_loc[q]==selecting_location)  and (ma_wid[q]<1) and(man_sel[q]!=0){
             if (b==0) then b=ma_lid[q];
-            obj_ini.veh_loc[manaj,ide[q]]=obj_ini.ship_location[b];
-            obj_ini.veh_lid[manaj,ide[q]]=0;
-            obj_ini.veh_wid[manaj,ide[q]]=unload;
-            obj_ini.veh_uid[manaj,ide[q]]=0;
+            obj_ini.veh_loc[manaj][ide[q]]=obj_ini.ship_location[b];
+            obj_ini.veh_lid[manaj][ide[q]]=0;
+            obj_ini.veh_wid[manaj][ide[q]]=unload;
+            obj_ini.veh_uid[manaj][ide[q]]=0;
             
             ma_loc[q]=obj_ini.ship_location[b];
             ma_lid[q]=0;
@@ -831,7 +831,9 @@ if (unload>0){
         }
     }
     selecting_location="";
-    for(var i=0; i<501; i++){man_sel[i]=0;}
+    for(var i=0; i<501; i++){
+        man_sel[i]=0;
+    }
     obj_ini.ship_carrying[b]-=man_size;
     sh_cargo[b]-=man_size;
     cooldown=10;

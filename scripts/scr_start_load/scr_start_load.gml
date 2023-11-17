@@ -3,8 +3,10 @@ function scr_start_load(fleet, load_from_star, load_options) {
     // load_from_star: star object
 
     // this distributes the marines and vehicles to the correct ships if the chapter is fleet-based or a home-based chapter
+
 	var  _unit, _comp, _marine, total_vehic_size;
 	var total_distribute_squads = [[],[],[],[],[],[],[],[]];
+
 	var escort_load = load_options[0];
 	var split_scouts = load_options[1];
 	var split_vets = load_options[2];

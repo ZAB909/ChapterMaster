@@ -158,7 +158,7 @@ if (training_apothecary!=0){
         apothecary_points+=4
     }
 }
-novice_type = string("{0} Aspirant",obj_ini.role[100,15])
+novice_type = string("{0} Aspirant",obj_ini.role[100][15])
 if (training_apothecary>0) then recruit_count=scr_role_count(novice_type,"");
 if (apothecary_points>=4) and (apothecary_aspirant!=0) and (recruit_count=0){
     apothecary_points=0;
@@ -174,7 +174,7 @@ if (apothecary_points>=48){
             apothecary_points-=48;
             unit = obj_ini.TTRPG[0,marine_position];
             scr_alert("green","recruitment",unit.name_role()+" has finished training.",0,0);
-            unit.update_role(obj_ini.role[100,15]);
+            unit.update_role(obj_ini.role[100][15]);
             unit.add_exp(10);
             apothecary_aspirant=0;            
 
@@ -238,7 +238,11 @@ if (apothecary_points>=48){
 }
 recruit_count=0;
 if (apothecary_points>=4) and (apothecary_aspirant==0){
+<<<<<<< HEAD
     random_marine=scr_random_marine([obj_ini.role[100,8],obj_ini.role[100,18],obj_ini.role[100,10],obj_ini.role[100,9]],60,{"stat":[["technology", 30, "more"],["intelligence", 45, "more"]]});
+=======
+    random_marine=scr_random_marine([obj_ini.role[100][8],obj_ini.role[100][18],obj_ini.role[100][10],obj_ini.role[100][9]],60);
+>>>>>>> array_accessors_change
     if (random_marine != "none"){
         marine_position=random_marine[1];
         marine_company=random_marine[0];
@@ -255,12 +259,12 @@ if (apothecary_points>=4) and (apothecary_aspirant==0){
             command+=1;
             marines-=1;
             scr_move_unit_info(marine_company,0, marine_position, g1)
-            obj_ini.role[0,g1]=novice_type;
-            if (obj_ini.gear[0,g1]!=""){
-                scr_add_item(obj_ini.gear[0,g1],1);
-                obj_ini.gear[0,g1]="";
+            obj_ini.role[0][g1]=novice_type;
+            if (obj_ini.gear[0][g1]!=""){
+                scr_add_item(obj_ini.gear[0][g1],1);
+                obj_ini.gear[0][g1]="";
             }
-            if (obj_ini.mobi[0,g1]!=""){scr_add_item(obj_ini.mobi[0,g1],1);obj_ini.mobi[0,g1]="";}
+            if (obj_ini.mobi[0][g1]!=""){scr_add_item(obj_ini.mobi[0][g1],1);obj_ini.mobi[0][g1]="";}
             with(obj_ini){
                 scr_company_order(marine_company);
                 scr_company_order(0);
@@ -288,7 +292,7 @@ if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands")
             chaplain_points+=4
         }
     }
-    novice_type = string("{0} Aspirant",obj_ini.role[100,14])
+    novice_type = string("{0} Aspirant",obj_ini.role[100][14])
     if (training_chaplain>0) then recruit_count=scr_role_count(novice_type,"");
     if (chaplain_points>=4) and (chaplain_aspirant!=0) and (recruit_count==0){
         chaplain_points=0;
@@ -302,7 +306,7 @@ if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands")
                 unit = obj_ini.TTRPG[0,marine_position];
                 scr_alert("green","recruitment",unit.name_role()+" has finished training.",0,0);
                 chaplain_points-=48;
-                unit.update_role(obj_ini.role[100,14]);
+                unit.update_role(obj_ini.role[100][14]);
                 unit.add_exp(10);
                 chaplain_aspirant=0;
                 eq1=1;
@@ -363,7 +367,11 @@ if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands")
     }
     if (chaplain_points>=4) and (chaplain_aspirant==0){    
         marine_company=0;
+<<<<<<< HEAD
         random_marine=scr_random_marine([obj_ini.role[100,8],obj_ini.role[100,18],obj_ini.role[100,10],obj_ini.role[100,9]],60,{"stat":[["piety", 35, "more"],["charisma", 30, "more"]]});
+=======
+        random_marine=scr_random_marine([obj_ini.role[100][8],obj_ini.role[100][18],obj_ini.role[100][10],obj_ini.role[100][9]],60);
+>>>>>>> array_accessors_change
         if (random_marine != "none"){
             marine_position = random_marine[1];
             marine_company = random_marine[0];
@@ -379,16 +387,16 @@ if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands")
                 command+=1;
                 marines-=1;
                 scr_move_unit_info(marine_company,0, marine_position, g1);
-                obj_ini.role[0,g1]=novice_type;
-                if (obj_ini.gear[0,g1]!=""){
-                    scr_add_item(obj_ini.gear[0,g1],1);
-                    obj_ini.gear[0,g1]="";
+                obj_ini.role[0][g1]=novice_type;
+                if (obj_ini.gear[0][g1]!=""){
+                    scr_add_item(obj_ini.gear[0][g1],1);
+                    obj_ini.gear[0][g1]="";
                 }
-                if (obj_ini.mobi[0,g1]!=""){
-                    scr_add_item(obj_ini.mobi[0,g1],1);
-                    obj_ini.mobi[0,g1]="";
+                if (obj_ini.mobi[0][g1]!=""){
+                    scr_add_item(obj_ini.mobi[0][g1],1);
+                    obj_ini.mobi[0][g1]="";
                 }
-                scr_alert("green","recruitment",novice_type+string(obj_ini.name[0,g1])+" begins training.",0,0);
+                scr_alert("green","recruitment",novice_type+string(obj_ini.name[0][g1])+" begins training.",0,0);
                 with(obj_ini){
                     scr_company_order(marine_company);
                     scr_company_order(0);
@@ -447,7 +455,7 @@ if (psyker_points>=round(goal/2)) and (psyker_aspirant==0){
     marine_position=0;
     marine_company=0;
 
-    random_marine=scr_random_marine([obj_ini.role[100,8], obj_ini.role[100,18], obj_ini.role[100,9], obj_ini.role[100,10]],30, {"stat":[["psionic", 8, "more"]]});
+    random_marine=scr_random_marine([obj_ini.role[100][8], obj_ini.role[100][18], obj_ini.role[100][9], obj_ini.role[100][10]],30, {"stat":[["psionic", 8, "more"]]});
     if (random_marine == "none"){
         training_psyker=0;
         scr_alert("red","recruitment","No remaining warp sensitive marines for training",0,0);
@@ -465,22 +473,22 @@ if (psyker_points>=round(goal/2)) and (psyker_aspirant==0){
             command+=1;
             marines-=1;
 			scr_move_unit_info(marine_company,0, marine_position, g1)
-            obj_ini.role[0,g1]=novice_type;
+            obj_ini.role[0][g1]=novice_type;
             scr_powers_new(0,g1);
             psyker_aspirant=1;
             
-            if (string_count("Abund",obj_ini.strin)>0) then obj_ini.experience[0,g1]+=floor(random(5))+3;
+            if (string_count("Abund",obj_ini.strin)>0) then obj_ini.experience[0][g1]+=floor(random(5))+3;
             
-            obj_ini.mobi[0,g1]=obj_ini.mobi[marine_company,marine_position];
-            if (obj_ini.gear[0,g1]!=""){
-                scr_add_item(obj_ini.gear[0,g1],1);
-                obj_ini.gear[0,g1]="";
+            obj_ini.mobi[0][g1]=obj_ini.mobi[marine_company,marine_position];
+            if (obj_ini.gear[0][g1]!=""){
+                scr_add_item(obj_ini.gear[0][g1],1);
+                obj_ini.gear[0][g1]="";
             }
-            if (obj_ini.mobi[0,g1]!=""){
-                scr_add_item(obj_ini.mobi[0,g1],1);
-                obj_ini.mobi[0,g1]="";
+            if (obj_ini.mobi[0][g1]!=""){
+                scr_add_item(obj_ini.mobi[0][g1],1);
+                obj_ini.mobi[0][g1]="";
             }
-            scr_alert("green","recruitment",obj_ini.TTRPG[0,g1].name_role()+" begins training.",0,0);
+            scr_alert("green","recruitment",obj_ini.TTRPG[0][g1].name_role()+" begins training.",0,0);
             with(obj_ini){
                 scr_company_order(marine_company);
                 scr_company_order(0);
@@ -506,7 +514,7 @@ if (training_techmarine!=0){
     }
 }
 
-if (training_techmarine>0) then recruit_count=scr_role_count(string("{0} Aspirant",obj_ini.role[100,16]),"");
+if (training_techmarine>0) then recruit_count=scr_role_count(string("{0} Aspirant",obj_ini.role[100][16]),"");
 if (tech_points>=4) and (tech_aspirant!=0) and (recruit_count==0){
     tech_points=0;
     tech_aspirant=0;
@@ -514,12 +522,12 @@ if (tech_points>=4) and (tech_aspirant!=0) and (recruit_count==0){
 if (tech_points>=360){
     if (recruit_count>0){
         marine_position=0;
-        random_marine=scr_random_marine(string("{0} Aspirant",obj_ini.role[100,16]),0);
+        random_marine=scr_random_marine(string("{0} Aspirant",obj_ini.role[100][16]),0);
         if (random_marine != "none"){
             marine_position = random_marine[1];
             tech_points-=360;
             tech_aspirant=0;
-            obj_ini.role[0,marine_position]=obj_ini.role[100,16];
+            obj_ini.role[0,marine_position]=obj_ini.role[100][16];
             obj_ini.experience[0,marine_position]+=10;
             
             eq1=1;
@@ -556,7 +564,7 @@ if (tech_points>=360){
             }
             obj_ini.TTRPG[0,marine_position].religion="cult_mechanicus";
             obj_ini.TTRPG[0,marine_position].add_trait("mars_trained");
-            scr_alert("green","recruitment",string(obj_ini.name[0,marine_position])+" returns from Mars, a "+string(obj_ini.role[100,16])+".",0,0);
+            scr_alert("green","recruitment",string(obj_ini.name[0,marine_position])+" returns from Mars, a "+string(obj_ini.role[100][16])+".",0,0);
             
             if (eq1+eq2!=2){
                 warn="";
@@ -568,9 +576,9 @@ if (tech_points>=360){
                 warn+=".";
                 scr_alert("red","recruitment","Not enough equipment: "+string(warn),0,0);
             }
-            obj_ini.loc[0,marine_position]=obj_ini.home_name;
-            obj_ini.wid[0,marine_position]=2;
-            obj_ini.lid[0,marine_position]=0;
+            obj_ini.loc[0][marine_position]=obj_ini.home_name;
+            obj_ini.wid[0][marine_position]=2;
+            obj_ini.lid[0][marine_position]=0;
             // TODO Probably want to change this to take into account fleet type chapters- also increase the man_size of that area by +X
             if (global.chapter_name!="Iron Hands") and (obj_ini.bio[0,marine_position]<4) then obj_ini.bio[0,marine_position]=choose(4,5,6);
             if (global.chapter_name=="Iron Hands") and (obj_ini.bio[0,marine_position]<7) then obj_ini.bio[0,marine_position]=choose(7,8);
@@ -583,7 +591,7 @@ if (tech_points>=4) and (tech_aspirant==0){
     marine_position=0;
     marine_company=0;
     var search_conditions = {"stat":[["technology", 35, "more"]]}
-    random_marine=scr_random_marine([obj_ini.role[100,8],obj_ini.role[100,18],obj_ini.role[100,10],obj_ini.role[100,9]],30);
+    random_marine=scr_random_marine([obj_ini.role[100][8],obj_ini.role[100][18],obj_ini.role[100][10],obj_ini.role[100][9]],30);
     if (random_marine != "none"){
         marine_position = random_marine[1];
         marine_company = random_marine[0];
@@ -598,32 +606,32 @@ if (tech_points>=4) and (tech_aspirant==0){
             command+=1;
             marines-=1;
             scr_move_unit_info(marine_company,0, marine_position, g1);
-            obj_ini.role[0,g1]=obj_ini.role[100,16]+" Aspirant";
+            obj_ini.role[0][g1]=obj_ini.role[100][16]+" Aspirant";
             // Remove from ship
-            if (obj_ini.lid[0,g1]>0){
-                var man_size=scr_unit_size(obj_ini.armour[0,g1],obj_ini.role[0,g1],true);
-                obj_ini.ship_carrying[obj_ini.lid[0,g1]]-=man_size;
+            if (obj_ini.lid[0][g1]>0){
+                var man_size=scr_unit_size(obj_ini.armour[0][g1],obj_ini.role[0][g1],true);
+                obj_ini.ship_carrying[obj_ini.lid[0][g1]]-=man_size;
             }
-            obj_ini.loc[0,g1]="Terra";
-            obj_ini.wid[0,g1]=4;
-            obj_ini.lid[0,g1]=0;
-            if (obj_ini.wep1[0,g1]!="Power Weapon") and (obj_ini.wep1[0,g1]!=""){
-                scr_add_item(obj_ini.wep1[0,g1],1);
-                obj_ini.wep1[0,g1]="";
+            obj_ini.loc[0][g1]="Terra";
+            obj_ini.wid[0][g1]=4;
+            obj_ini.lid[0][g1]=0;
+            if (obj_ini.wep1[0][g1]!="Power Weapon") and (obj_ini.wep1[0][g1]!=""){
+                scr_add_item(obj_ini.wep1[0][g1],1);
+                obj_ini.wep1[0][g1]="";
             }
-            if (obj_ini.wep2[0,g1]!=""){
-                scr_add_item(obj_ini.wep2[0,g1],1);
-                obj_ini.wep2[0,g1]="";
+            if (obj_ini.wep2[0][g1]!=""){
+                scr_add_item(obj_ini.wep2[0][g1],1);
+                obj_ini.wep2[0][g1]="";
             }
-            if (obj_ini.gear[0,g1]!=""){
-                scr_add_item(obj_ini.gear[0,g1],1);
-                obj_ini.gear[0,g1]="";
+            if (obj_ini.gear[0][g1]!=""){
+                scr_add_item(obj_ini.gear[0][g1],1);
+                obj_ini.gear[0][g1]="";
             }
-            if (obj_ini.mobi[0,g1]!=""){
-                scr_add_item(obj_ini.mobi[0,g1],1);
-                obj_ini.mobi[0,g1]="";
+            if (obj_ini.mobi[0][g1]!=""){
+                scr_add_item(obj_ini.mobi[0][g1],1);
+                obj_ini.mobi[0][g1]="";
             }
-            scr_alert("green","recruitment",string(obj_ini.role[100,16])+" Aspirant "+string(obj_ini.name[0,g1])+" journeys to Mars.",0,0);
+            scr_alert("green","recruitment",string(obj_ini.role[100][16])+" Aspirant "+string(obj_ini.name[0][g1])+" journeys to Mars.",0,0);
             with(obj_ini){
                 scr_company_order(marine_company);
                 scr_company_order(0);
@@ -631,7 +639,7 @@ if (tech_points>=4) and (tech_aspirant==0){
         }    
     } else{
         training_techmarine = 0;
-        scr_alert("red",string("recruitment","No marines with sufficient technology aptitude for {0} training",obj_ini.role[100,16]),0,0);
+        scr_alert("red",string("recruitment","No marines with sufficient technology aptitude for {0} training",obj_ini.role[100][16]),0,0);
     }
 }
 recruit_count=0;
@@ -654,7 +662,7 @@ for(var i=1; i<=300; i++){
 }
 for(var i=1; i<=300; i++){
     if (recruit_name[i]!="") and (recruit_training[i]<=0){
-        scr_add_man(obj_ini.role[100,12],10,"Scout Armour",obj_ini.role[100,12],"",recruit_exp[i],recruit_name[i],recruit_corruption[i],false,"default","");
+        scr_add_man(obj_ini.role[100][12],10,"Scout Armour",obj_ini.role[100][12],"",recruit_exp[i],recruit_name[i],recruit_corruption[i],false,"default","");
         if (recruit_first=="") then recruit_first=recruit_name[i];
         recruits_finished+=1;
         recruit_name[i]="";
@@ -679,8 +687,8 @@ for(var i=1; i<=299; i++){
     }
 }
 
-if (recruits_finished==1) then scr_alert("green","recruitment",string(obj_ini.role[100,12])+" "+string(recruit_first)+" has joined X Company.",0,0);
-if (recruits_finished>1) then scr_alert("green","recruitment",string(recruits_finished)+"x "+string(obj_ini.role[100,12])+" have joined X Company.",0,0);
+if (recruits_finished==1) then scr_alert("green","recruitment",string(obj_ini.role[100][12])+" "+string(recruit_first)+" has joined X Company.",0,0);
+if (recruits_finished>1) then scr_alert("green","recruitment",string(recruits_finished)+"x "+string(obj_ini.role[100][12])+" have joined X Company.",0,0);
 
 
 recruits=tot;
@@ -1116,11 +1124,11 @@ if (disposition[7]>=60) then scr_loyalty("Xeno Associate","+");
 if (disposition[8]>=60) then scr_loyalty("Xeno Associate","+");
 
 var loyalty_counter=0;
-loyalty_counter=scr_role_count(obj_ini.role[100,15],"");
+loyalty_counter=scr_role_count(obj_ini.role[100][15],"");
 if (loyalty_counter==0) then scr_loyalty("Lack of Apothecary","+");
-loyalty_counter=scr_role_count(obj_ini.role[100,16],"");
+loyalty_counter=scr_role_count(obj_ini.role[100][16],"");
 if (loyalty_counter==0) then scr_loyalty("Upset Machine Spirits","+");
-loyalty_counter=scr_role_count(obj_ini.role[100,14],"");
+loyalty_counter=scr_role_count(obj_ini.role[100][14],"");
 if (loyalty_counter==0) then scr_loyalty("Undevout","+");
 // TODO in another PR rework how Non-Codex Size is determined, perhaps the inquisition needs to pass some checks or do an investigation event 
 // which you could eventually interrupt (kill the team) and cover it up?
@@ -1559,24 +1567,24 @@ for(var i=1; i<=99; i++){
                 marine_num=real(explode[3]);
                 item=string(explode[4]);
 
-                var killy=0,tixt=string(obj_ini.role[100,16])+" "+string(marine_name)+" has finished his work- ";
+                var killy=0,tixt=string(obj_ini.role[100][16])+" "+string(marine_name)+" has finished his work- ";
 
                 if (item=="Icon"){
                     tixt+="it is a "+string(global.chapter_name)+" Icon wrought in metal, finely decorated.  Pride for his chapter seems to have overtaken him.  There are no corrections to be made and the item is placed where many may view it.";
                 }
                 if (item=="Statue"){
-                    tixt+="it is a small, finely crafted statue wrought in metal.  The "+string(obj_ini.role[100,16])+" is scolded for the waste of material, but none daresay the quality of the piece.";
+                    tixt+="it is a small, finely crafted statue wrought in metal.  The "+string(obj_ini.role[100][16])+" is scolded for the waste of material, but none daresay the quality of the piece.";
                 }
                 if (item=="Bike"){
                     scr_add_item("Bike",1);
-                    tixt+="it is a finely crafted Bike, conforming mostly to STC standards.  The other "+string(obj_ini.role[100,16])+" are surprised at the rapid pace of his work.";
+                    tixt+="it is a finely crafted Bike, conforming mostly to STC standards.  The other "+string(obj_ini.role[100][16])+" are surprised at the rapid pace of his work.";
                 }
                 if (item=="Rhino"){
                     scr_add_vehicle("Rhino",0,"Storm Bolter","Storm Bolter","","Artificer Hull","Dozer Blades");
-                    tixt+="it is a finely crafted Rhino, conforming to STC standards.  The other "+string(obj_ini.role[100,16])+" are surprised at the rapid pace of his work.";
+                    tixt+="it is a finely crafted Rhino, conforming to STC standards.  The other "+string(obj_ini.role[100][16])+" are surprised at the rapid pace of his work.";
                 }
                 if (item=="Artifact"){
-                    scr_event_log("",string(obj_ini.role[100,16])+" "+string(marine_name)+" constructs an Artifact.");
+                    scr_event_log("",string(obj_ini.role[100][16])+" "+string(marine_name)+" constructs an Artifact.");
                     if (obj_ini.fleet_type==1) then scr_add_artifact("random_nodemon","",0,obj_ini.home_name,2);
                     if (obj_ini.fleet_type!=1) then scr_add_artifact("random_nodemon","",0,obj_ini.ship_location[1],501);
                     var last_artifact=0;
@@ -1593,7 +1601,7 @@ for(var i=1; i<=99; i++){
                 }
                 if (item=="robot"){
                     obj_ini.chaos[comp,marine_num]+=choose(2,4,6,8,10);
-                    tixt+="some form of small, box-like robot.  It seems to teeter around haphazardly, nearly falling over with each step.  "+string(marine_name)+" maintains that it has no AI, though the other "+string(obj_ini.role[100,16])+" express skepticism.";
+                    tixt+="some form of small, box-like robot.  It seems to teeter around haphazardly, nearly falling over with each step.  "+string(marine_name)+" maintains that it has no AI, though the other "+string(obj_ini.role[100][16])+" express skepticism.";
                 }
                 if (item=="demon"){
                     obj_ini.chaos[comp,marine_num]+=choose(8,12,16,20);
@@ -1601,7 +1609,7 @@ for(var i=1; i<=99; i++){
                 }
                 if (item=="fusion"){
                     // obj_ini.chaos[comp,marine_num]+=choose(70);
-                    tixt+="some kind of ill-mannered ascension.  One of your battle-brothers enters the armamentarium to find "+string(marine_name)+" fused to a vehicle, his flesh twisted and submerged into the frame.  Mechendrites and weapons fire upon the marine without warning, a windy scream eminating from the abomination.  It takes several battle-brothers to take out what was once a "+string(obj_ini.role[100,16])+".";
+                    tixt+="some kind of ill-mannered ascension.  One of your battle-brothers enters the armamentarium to find "+string(marine_name)+" fused to a vehicle, his flesh twisted and submerged into the frame.  Mechendrites and weapons fire upon the marine without warning, a windy scream eminating from the abomination.  It takes several battle-brothers to take out what was once a "+string(obj_ini.role[100][16])+".";
 
                     // This is causing the problem
 

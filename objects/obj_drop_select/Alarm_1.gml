@@ -56,45 +56,45 @@ if (arright=false) then formation_current=formation_possible[1];
 var co,i;co=-1;i=0;
 repeat(11){co+=1;i=0;
     repeat(300){i+=1;
-        if (i<=100){if (obj_ini.veh_loc[co,i]=p_target.name) and (obj_ini.veh_wid[co,i]=obj_controller.selecting_planet) and (attack=1){
-            if (obj_ini.veh_role[co,i]="Land Speeder") then l_speeders+=1;
-            if (obj_ini.veh_role[co,i]="Rhino") then l_rhinos+=1;
-            if (obj_ini.veh_role[co,i]="Whirlwind") then l_whirls+=1;
-            if (obj_ini.veh_role[co,i]="Predator") then l_predators+=1;
-            if (obj_ini.veh_role[co,i]="Land Raider") then l_raiders+=1;
+        if (i<=100){if (obj_ini.veh_loc[co][i]=p_target.name) and (obj_ini.veh_wid[co][i]=obj_controller.selecting_planet) and (attack=1){
+            if (obj_ini.veh_role[co][i]="Land Speeder") then l_speeders+=1;
+            if (obj_ini.veh_role[co][i]="Rhino") then l_rhinos+=1;
+            if (obj_ini.veh_role[co][i]="Whirlwind") then l_whirls+=1;
+            if (obj_ini.veh_role[co][i]="Predator") then l_predators+=1;
+            if (obj_ini.veh_role[co][i]="Land Raider") then l_raiders+=1;
         }}
-        if (obj_ini.loc[co,i]=p_target.name) and (obj_ini.wid[co,i]=obj_controller.selecting_planet){
-            if ((attack=0) and (string_count("Bike",obj_ini.role[co,i])=0)) or (attack=1){
-                if (obj_ini.role[co,i]="Chapter Master") then l_master+=1;
-                if (obj_ini.role[co,i]=obj_ini.role[100,2]) then l_honor+=1;
-                if (obj_ini.role[co,i]=obj_ini.role[100,5]) then l_capts+=1;
-                if (obj_ini.role[co,i]="Company Champion") then l_champions+=1;
+        if (obj_ini.loc[co][i]=p_target.name) and (obj_ini.wid[co][i]=obj_controller.selecting_planet){
+            if ((attack=0) and (string_count("Bike",obj_ini.role[co][i])=0)) or (attack=1){
+                if (obj_ini.role[co][i]="Chapter Master") then l_master+=1;
+                if (obj_ini.role[co][i]=obj_ini.role[100][2]) then l_honor+=1;
+                if (obj_ini.role[co][i]=obj_ini.role[100][5]) then l_capts+=1;
+                if (obj_ini.role[co][i]="Company Champion") then l_champions+=1;
                 
-                if (string_count("Bike",obj_ini.role[co,i])=0) or (attack=0){
-                    if (obj_ini.role[co,i]="Standard Bearer") then l_mahreens+=1;
-                    if (obj_ini.role[co,i]=obj_ini.role[100,8]) then l_mahreens+=1;
-                    if (obj_ini.role[co,i]=obj_ini.role[100,9]) then l_mahreens+=1;
-                    if (obj_ini.role[co,i]=obj_ini.role[100,10]) then l_mahreens+=1;
-                    if (obj_ini.role[co,i]=obj_ini.role[100,12]) then l_mahreens+=1;
-                    if (obj_ini.role[co,i]=obj_ini.role[100,3]) then l_veterans+=1;
+                if (string_count("Bike",obj_ini.role[co][i])=0) or (attack=0){
+                    if (obj_ini.role[co][i]="Standard Bearer") then l_mahreens+=1;
+                    if (obj_ini.role[co][i]=obj_ini.role[100][8]) then l_mahreens+=1;
+                    if (obj_ini.role[co][i]=obj_ini.role[100][9]) then l_mahreens+=1;
+                    if (obj_ini.role[co][i]=obj_ini.role[100][10]) then l_mahreens+=1;
+                    if (obj_ini.role[co][i]=obj_ini.role[100][12]) then l_mahreens+=1;
+                    if (obj_ini.role[co][i]=obj_ini.role[100][3]) then l_veterans+=1;
                 }
-                if (string_count("Bike",obj_ini.role[co,i])>0) and (attack=1){
-                    if (obj_ini.role[co,i]="Standard Bearer") then l_bikes+=1;
-                    if (obj_ini.role[co,i]=obj_ini.role[100,8]) then l_bikes+=1;
-                    if (obj_ini.role[co,i]=obj_ini.role[100,9]) then l_bikes+=1;
-                    if (obj_ini.role[co,i]=obj_ini.role[100,10]) then l_bikes+=1;
-                    if (obj_ini.role[co,i]=obj_ini.role[100,12]) then l_bikes+=1;
-                    if (obj_ini.role[co,i]=obj_ini.role[100,3]) then l_bikes+=1;
+                if (string_count("Bike",obj_ini.role[co][i])>0) and (attack=1){
+                    if (obj_ini.role[co][i]="Standard Bearer") then l_bikes+=1;
+                    if (obj_ini.role[co][i]=obj_ini.role[100][8]) then l_bikes+=1;
+                    if (obj_ini.role[co][i]=obj_ini.role[100][9]) then l_bikes+=1;
+                    if (obj_ini.role[co][i]=obj_ini.role[100][10]) then l_bikes+=1;
+                    if (obj_ini.role[co][i]=obj_ini.role[100][12]) then l_bikes+=1;
+                    if (obj_ini.role[co][i]=obj_ini.role[100][3]) then l_bikes+=1;
                 }
                 
-                if (obj_ini.role[co,i]=obj_ini.role[100,4]) then l_terminators+=1;
-                if (obj_ini.role[co,i]=obj_ini.role[100,6]) then l_dreads+=1;
-                if (obj_ini.role[co,i]=obj_ini.role[100,14]) then l_chaplains+=1;
-                if (obj_ini.role[co,i]=obj_ini.role[100,17]) then l_psykers+=1;
-                if (obj_ini.role[co,i]="Codiciery") then l_psykers+=1;
-                if (obj_ini.role[co,i]="Lexicanum") then l_psykers+=1;
-                if (obj_ini.role[co,i]=obj_ini.role[100,15]) then l_apothecaries+=1;
-                if (obj_ini.role[co,i]=obj_ini.role[100,16]) then l_techmarines+=1;
+                if (obj_ini.role[co][i]=obj_ini.role[100][4]) then l_terminators+=1;
+                if (obj_ini.role[co][i]=obj_ini.role[100][6]) then l_dreads+=1;
+                if (obj_ini.role[co][i]=obj_ini.role[100][14]) then l_chaplains+=1;
+                if (obj_ini.role[co][i]=obj_ini.role[100,17]) then l_psykers+=1;
+                if (obj_ini.role[co][i]="Codiciery") then l_psykers+=1;
+                if (obj_ini.role[co][i]="Lexicanum") then l_psykers+=1;
+                if (obj_ini.role[co][i]=obj_ini.role[100][15]) then l_apothecaries+=1;
+                if (obj_ini.role[co][i]=obj_ini.role[100][16]) then l_techmarines+=1;
             }
         }
     }

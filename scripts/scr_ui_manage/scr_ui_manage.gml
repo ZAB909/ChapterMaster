@@ -225,9 +225,9 @@ function scr_ui_manage() {
 		var repetitions=min(man_max,man_see);
 
 		//tooltip text to tell you if a unit is eligible for special roles
-		var spec_tips = [string("{0} Potential",obj_ini.role[100,16]),		
-						string("{0} potential",obj_ini.role[100,15]),
-						string("{0} potential",obj_ini.role[100,14]),
+		var spec_tips = [string("{0} Potential",obj_ini.role[100][16]),		
+						string("{0} potential",obj_ini.role[100][15]),
+						string("{0} potential",obj_ini.role[100][14]),
 						"Librarium potential"];
 	    for(var i=0; i<repetitions;i++){
 
@@ -242,7 +242,6 @@ function scr_ui_manage() {
 	            temp1=unit.name_role();
 	            unit_specialism_option=false;
 	            // temp1=string(managing)+"."+string(ide[sel]);
-            
 	            temp2=string(ma_loc[sel]);
 	            if (unit_location[0]==location_types.planet){
 					temp2 = unit_location[2];
@@ -438,11 +437,11 @@ function scr_ui_manage() {
 		    		unit_specialism_option=true;
 		    		if (array_contains(["Lexicanum", "Codiciery",obj_ini.role[100,17], string("Chief {0}",obj_ini.role[100,17])], unit.role())){
 		    			draw_set_color(c_blue);
-		    		} else if(array_contains(["Forge Master",obj_ini.role[100,16]],unit.role())){
+		    		} else if(array_contains(["Forge Master",obj_ini.role[100][16]],unit.role())){
 		    			draw_set_color(c_maroon);
-		    		} else if(array_contains([obj_ini.role[100,15],"Master of the Apothecarion"],unit.role())){
+		    		} else if(array_contains([obj_ini.role[100][15],"Master of the Apothecarion"],unit.role())){
 		    			draw_set_color(c_red);
-		    		} else if(array_contains([obj_ini.role[100,14],"Master of Sanctity"],unit.role())){
+		    		} else if(array_contains([obj_ini.role[100][14],"Master of Sanctity"],unit.role())){
 		    			draw_set_color(c_teal);
 		    		}
 		    	}
@@ -1102,7 +1101,7 @@ function scr_ui_manage() {
 		        			unit_data_string += $"He is {selected_unit.age()}, first becoming a marine in {selected_unit.marine_ascension}#"
 		        		}
 
-		        		if (array_contains([obj_ini.role[100,18], obj_ini.role[100,19]], selected_unit.role())){
+		        		if (array_contains([obj_ini.role[100][18], obj_ini.role[100][19]], selected_unit.role())){
 		        			unit_data_string +="#";
 		        			if (selected_unit.charisma < 25){
 		        				unit_data_string+= "He is generally disliked by the members of his squad.";

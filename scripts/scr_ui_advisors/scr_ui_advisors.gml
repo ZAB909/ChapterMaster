@@ -218,13 +218,13 @@ function scr_ui_advisors() {
 	        draw_set_font(fnt_40k_14);
 	    }
     
-	    blurp="Milord, I come with a report.  Our Chapter currently boasts "+string(temp[36])+" "+string(obj_ini.role[100,15])+" working on a variety of things, from field-duty to research to administrative duties.  ";
+	    blurp="Milord, I come with a report.  Our Chapter currently boasts "+string(temp[36])+" "+string(obj_ini.role[100][15])+" working on a variety of things, from field-duty to research to administrative duties.  ";
     
-	    if (training_apothecary=0) then blurp+="Our Brothers are currently not assigned to train further "+string(obj_ini.role[100,15])+"; no more can be trained until Apothcarium funds are increased.";
+	    if (training_apothecary=0) then blurp+="Our Brothers are currently not assigned to train further "+string(obj_ini.role[100][15])+"; no more can be trained until Apothcarium funds are increased.";
 	    //
-	    if (training_apothecary>0) then blurp+="Our Brothers assigned to the training of future "+string(obj_ini.role[100,15])+"s have taken up a ";
+	    if (training_apothecary>0) then blurp+="Our Brothers assigned to the training of future "+string(obj_ini.role[100][15])+"s have taken up a ";
 	        if (training_apothecary >= 1 && training_apothecary <= 6) then blurp += recruitment_rates[training_apothecary - 1];
-	    if (training_apothecary>0) then blurp+=" pace and expect to graduate an additional "+string(obj_ini.role[100,15])+" in ";
+	    if (training_apothecary>0) then blurp+=" pace and expect to graduate an additional "+string(obj_ini.role[100][15])+" in ";
 	    // 
 	    if (training_apothecary=1) then eta=floor((47-apothecary_points)/0.8)+1;
 	    if (training_apothecary=2) then eta=floor((47-apothecary_points)/0.9)+1;
@@ -236,15 +236,15 @@ function scr_ui_advisors() {
 	    if (training_apothecary>0) then blurp+=string(eta)+" months.";
         
 	    if (gene_seed<=0) then blurp+="##My lord, our stocks of gene-seed are empty.  It would be best to have some come mechanicus tithe.##Further training of Neophytes is halted until our stocks replenish.";
-	    if (gene_seed>0) and (gene_seed<=10) then blurp+="##My Brother "+string(obj_ini.role[100,15])+"s assigned to the gene-vault have informed me that our stocks are nearly gone.  They only number "+string(gene_seed)+"; this includes those recently recovered from our fallen comerades-in-arms.";
-	    if (gene_seed>10) then blurp+="##My Brother "+string(obj_ini.role[100,15])+"s assigned to the gene-vault have informed me that our stocks of gene-seed currently number "+string(gene_seed)+".  This includes those recently recovered from our fallen comerades-in-arms.";
+	    if (gene_seed>0) and (gene_seed<=10) then blurp+="##My Brother "+string(obj_ini.role[100][15])+"s assigned to the gene-vault have informed me that our stocks are nearly gone.  They only number "+string(gene_seed)+"; this includes those recently recovered from our fallen comerades-in-arms.";
+	    if (gene_seed>10) then blurp+="##My Brother "+string(obj_ini.role[100][15])+"s assigned to the gene-vault have informed me that our stocks of gene-seed currently number "+string(gene_seed)+".  This includes those recently recovered from our fallen comerades-in-arms.";
 	    if (gene_seed>0) then blurp+="##The stocks are stable and show no sign of mutation.";
     
 	    if (menu_adept=1){
-	        blurp="Your Chapter contains "+string(temp[36])+" "+string(obj_ini.role[100,15])+".##";
-	        blurp+="Training of further "+string(obj_ini.role[100,15])+"s";
+	        blurp="Your Chapter contains "+string(temp[36])+" "+string(obj_ini.role[100][15])+".##";
+	        blurp+="Training of further "+string(obj_ini.role[100][15])+"s";
 	        if (training_apothecary >= 0 && training_apothecary <= 6) then blurp += recruitment_pace[training_apothecary];
-	        if (training_apothecary>0) then blurp+="  The next "+string(obj_ini.role[100,15])+" is expected in "+string(eta)+" months.";
+	        if (training_apothecary>0) then blurp+="  The next "+string(obj_ini.role[100][15])+" is expected in "+string(eta)+" months.";
 	        blurp+="##You have "+string(gene_seed)+" gene-seed stocked.";
 	    }
     
@@ -350,11 +350,11 @@ function scr_ui_advisors() {
 	    }
     
 	    draw_set_font(fnt_40k_14);draw_set_alpha(1);draw_set_color(c_gray);
-	    if (temp[36]!="0") then blurp="Sir!  You requested a report?  Currently, we have deployed "+string(temp[36])+" "+string(obj_ini.role[100,14])+"s to watch over the health of our Battle-Brothers in the field.  We have an additional "+string(temp[37])+" "+string(obj_ini.role[100,14])+"s who await only your order to carry the word to the troops.";
-	    if (temp[36]="0") then blurp="Sir!  You requested a report?  Currently, we have "+string(temp[37])+" "+string(obj_ini.role[100,14])+"s who await only your order to carry the word to the troops.";    
+	    if (temp[36]!="0") then blurp="Sir!  You requested a report?  Currently, we have deployed "+string(temp[36])+" "+string(obj_ini.role[100][14])+"s to watch over the health of our Battle-Brothers in the field.  We have an additional "+string(temp[37])+" "+string(obj_ini.role[100][14])+"s who await only your order to carry the word to the troops.";
+	    if (temp[36]="0") then blurp="Sir!  You requested a report?  Currently, we have "+string(temp[37])+" "+string(obj_ini.role[100][14])+"s who await only your order to carry the word to the troops.";    
 	    // 
 	    if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands"){
-	    blurp+="##Currently, we are training additional "+string(obj_ini.role[100,14])+" at a ";
+	    blurp+="##Currently, we are training additional "+string(obj_ini.role[100][14])+" at a ";
 	        if (training_chaplain=1){
 				blurp+=recruitment_rates[training_chaplain -1];
 				eta=floor((47-chaplain_points)/0.8)+1;
@@ -414,11 +414,11 @@ function scr_ui_advisors() {
 		draw_set_color(c_gray);
 
 	    if (menu_adept=1){
-	        blurp="Your Chapter contains "+string(temp[36])+" "+string(obj_ini.role[100,14])+"s.##";
+	        blurp="Your Chapter contains "+string(temp[36])+" "+string(obj_ini.role[100][14])+"s.##";
 	        if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands"){
-	        	blurp+="Training of further "+string(obj_ini.role[100,14])+"s";
+	        	blurp+="Training of further "+string(obj_ini.role[100][14])+"s";
 	        	if (training_chaplain >= 0 && training_chaplain <= 6) then blurp += recruitment_pace[training_chaplain];
-	        	if (training_chaplain>0) then blurp+="  The next "+string(obj_ini.role[100,14])+" is expected in "+string(eta)+" months.";
+	        	if (training_chaplain>0) then blurp+="  The next "+string(obj_ini.role[100][14])+" is expected in "+string(eta)+" months.";
 	        }
 	    }
 
@@ -437,7 +437,7 @@ function scr_ui_advisors() {
 		// TODO rename fest_type and fest_scheduled into feast_type and feast_schedule and refactor scripts
 	    if (menu_adept=0){
 	        if (fest_scheduled=0){
-	            if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands") then blurp2="As our bolters are charged with death for the Emperor's enemies, our thoughts are charged with his wisdom.  As our bodies are armoured with Adamantium, our souls are protected with our loyalty- loyalty to Him, and loyalty to our brothers.  The bonds of this brotherhood are worth revering, even if a lull in duty invites doubt and heresy.  Should you wish to schedule a rousing event, or challenge, I will make it so.  Under the careful watch of our "+string(obj_ini.role[100,14])+"s, our brothers' spirits may be lifted.";
+	            if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands") then blurp2="As our bolters are charged with death for the Emperor's enemies, our thoughts are charged with his wisdom.  As our bodies are armoured with Adamantium, our souls are protected with our loyalty- loyalty to Him, and loyalty to our brothers.  The bonds of this brotherhood are worth revering, even if a lull in duty invites doubt and heresy.  Should you wish to schedule a rousing event, or challenge, I will make it so.  Under the careful watch of our "+string(obj_ini.role[100][14])+"s, our brothers' spirits may be lifted.";
 	            if (global.chapter_name="Space Wolves") then blurp2="";
 	            if (global.chapter_name="Iron Hands") then blurp2="";
 	        }
@@ -496,9 +496,9 @@ function scr_ui_advisors() {
 	                if (fest_feature3=1) then blurp2+="  Smaller, similar deathmatches will be held for Imperial citizens who wish to partake.";
 	            }
 	            if (fest_type="Chapter Relic"){
-	                if (fest_feature1=1) then blurp2+="  Our "+string(obj_ini.role[100,16])+"s aim to create a weapon.";
-	                if (fest_feature2=1) then blurp2+="  Our "+string(obj_ini.role[100,16])+"s aim to create a suit of armour.";
-	                if (fest_feature3=1) then blurp2+="  Our "+string(obj_ini.role[100,16])+"s aim to hone and strengthen an already existing relic.";
+	                if (fest_feature1=1) then blurp2+="  Our "+string(obj_ini.role[100][16])+"s aim to create a weapon.";
+	                if (fest_feature2=1) then blurp2+="  Our "+string(obj_ini.role[100][16])+"s aim to create a suit of armour.";
+	                if (fest_feature3=1) then blurp2+="  Our "+string(obj_ini.role[100][16])+"s aim to hone and strengthen an already existing relic.";
 	            }
 	            if (fest_type="Imperial Mass"){
 	                if (fest_feature2=1) then blurp2+="  An Ecclesiarchy priest has been requested to lead the sermons.";
@@ -1199,14 +1199,14 @@ function scr_ui_advisors() {
 	    if (disposition[3] mod 2 == 0) then yyy+=2;
 	    else{yyy+=1;}
     
-	    blurp="Subject ID confirmed.  Rank Identified: Chapter Master.  Salutations Chapter Master.  We have assembled the following Data: ##"+string(obj_ini.role[100,16])+"s: "+string(temp[36])+".##Summation: ";
-	    if (max_techs>temp[37]) then blurp+="Our Mechanicus Requisitionary powers are sufficient to train "+string(max_techs-temp[37])+" additional "+string(obj_ini.role[100,16])+".";
-	    if (max_techs<=temp[37]) then blurp+="We require "+string(yyy)+" additional Mechanicus Disposition to train one additional "+string(obj_ini.role[100,16])+".";
-	    blurp+="  The training of new "+string(obj_ini.role[100,16])+"s";
+	    blurp="Subject ID confirmed.  Rank Identified: Chapter Master.  Salutations Chapter Master.  We have assembled the following Data: ##"+string(obj_ini.role[100][16])+"s: "+string(temp[36])+".##Summation: ";
+	    if (max_techs>temp[37]) then blurp+="Our Mechanicus Requisitionary powers are sufficient to train "+string(max_techs-temp[37])+" additional "+string(obj_ini.role[100][16])+".";
+	    if (max_techs<=temp[37]) then blurp+="We require "+string(yyy)+" additional Mechanicus Disposition to train one additional "+string(obj_ini.role[100][16])+".";
+	    blurp+="  The training of new "+string(obj_ini.role[100][16])+"s";
     
 	    if (menu_adept=1){
-	        blurp="Your Chapter contains "+string(temp[36])+" "+string(obj_ini.role[100,16])+".##";
-	        blurp+="The training of a new "+string(obj_ini.role[100,16]);
+	        blurp="Your Chapter contains "+string(temp[36])+" "+string(obj_ini.role[100][16])+".##";
+	        blurp+="The training of a new "+string(obj_ini.role[100][16]);
 	    }
     
 	    if (training_techmarine=0){
@@ -1238,18 +1238,18 @@ function scr_ui_advisors() {
 		}
     
 	    if (tech_aspirant>0) and (training_techmarine>0) and (menu_adept=1){
-	        if (eta=1) then blurp+="  Your current "+string(obj_ini.role[100,16])+" Aspirant will finish training in "+string(eta)+" month.";
-	        if (eta!=1) then blurp+="  Your current "+string(obj_ini.role[100,16])+" Aspirant will finish training in "+string(eta)+" months.";
+	        if (eta=1) then blurp+="  Your current "+string(obj_ini.role[100][16])+" Aspirant will finish training in "+string(eta)+" month.";
+	        if (eta!=1) then blurp+="  Your current "+string(obj_ini.role[100][16])+" Aspirant will finish training in "+string(eta)+" months.";
 	    }
 	    if (tech_aspirant>0) and (training_techmarine>0) and (menu_adept=0){
-	        if (eta=1) then blurp+="  The current "+string(obj_ini.role[100,16])+" Aspirant will finish training in "+string(eta)+" month.";
-	        if (eta!=1) then blurp+="  The current "+string(obj_ini.role[100,16])+" Aspirant will finish training in "+string(eta)+" months.";
+	        if (eta=1) then blurp+="  The current "+string(obj_ini.role[100][16])+" Aspirant will finish training in "+string(eta)+" month.";
+	        if (eta!=1) then blurp+="  The current "+string(obj_ini.role[100][16])+" Aspirant will finish training in "+string(eta)+" months.";
 	    }
 	    if (menu_adept=0) then blurp+="##Data compilation complete.  We currently possess the technology to produce the following:";
     
 	    if (menu_adept=1){
-	        if (max_techs>temp[37]) then blurp+="##Mechanicus Requisitionary powers are sufficient to train "+string(max_techs-temp[37])+" additional "+string(obj_ini.role[100,16])+".";
-	        if (max_techs<=temp[37]) then blurp+="You require "+string(yyy)+" additional Mechanicus Disposition to train one additional "+string(obj_ini.role[100,16])+".";
+	        if (max_techs>temp[37]) then blurp+="##Mechanicus Requisitionary powers are sufficient to train "+string(max_techs-temp[37])+" additional "+string(obj_ini.role[100][16])+".";
+	        if (max_techs<=temp[37]) then blurp+="You require "+string(yyy)+" additional Mechanicus Disposition to train one additional "+string(obj_ini.role[100][16])+".";
         
 	        blurp+="##Data compilation complete.  You currently possess the technology to produce the following:";
 	    }
@@ -1581,7 +1581,7 @@ function scr_ui_advisors() {
 		
 	    if (recruit_trial="Blood Duel"){
 			blurp3="-10-30% More recruits#-2-4 Years shorter training time#-10% Chance to burn gene-seed per speed";
-	        blurp2="THE BLOOD DUEL?  HAT DO I EVEN NEED TO EXPLAIN, CHAPTER MASTER?  ASPIRANTS ENTER.  NEOPHYTES LEAVE.  Those worthy of serving the Emperor are rewarded justly and those merely pretending at glory are lost in the BLOOD AND THUNDER of the dome.  Do not be alarmed at the carnage.  The Apothecarium has become quite adept at rebuilding those fit to serve.  The others are given to the "+string(obj_ini.role[100,16])+"s.  The mind is a terrible thing to waste and the Emperor does hate waste.  Not every man is useful as an Astartes but every man is useful.";
+	        blurp2="THE BLOOD DUEL?  HAT DO I EVEN NEED TO EXPLAIN, CHAPTER MASTER?  ASPIRANTS ENTER.  NEOPHYTES LEAVE.  Those worthy of serving the Emperor are rewarded justly and those merely pretending at glory are lost in the BLOOD AND THUNDER of the dome.  Do not be alarmed at the carnage.  The Apothecarium has become quite adept at rebuilding those fit to serve.  The others are given to the "+string(obj_ini.role[100][16])+"s.  The mind is a terrible thing to waste and the Emperor does hate waste.  Not every man is useful as an Astartes but every man is useful.";
 	    }
 	    if (recruit_trial="Hunting the Hunter"){
 			blurp3="-Planet Bonus': Desert, Ice, Death#-Up to 15 bonus XP on Neophytes";
@@ -1593,7 +1593,7 @@ function scr_ui_advisors() {
 	    }
 	    if (recruit_trial="Exposure"){
 			blurp3="-Planet Bonus':3- Desert, Ice, Forge, Lava, Death#-1-3 Years shorter training time";
-	        blurp2="Few worlds of the Imperium are free from the adversity of pollution or toxic waste.  Still others are bequeathed with flows of lava and choking atmosphere.  The glory of rising to astartes is only granted to those that can tackle and overcome these dangerous environments.  Aspirants are placed upon the most hellish of planet in the sector, and then expected to traverse the continent with only himself to rely upon.  Those who face the impossible without faltering and survive past the point they should have perished are recovered by "+string(obj_ini.role[100,15])+"s, judged worthy of becoming a Neophyte.";
+	        blurp2="Few worlds of the Imperium are free from the adversity of pollution or toxic waste.  Still others are bequeathed with flows of lava and choking atmosphere.  The glory of rising to astartes is only granted to those that can tackle and overcome these dangerous environments.  Aspirants are placed upon the most hellish of planet in the sector, and then expected to traverse the continent with only himself to rely upon.  Those who face the impossible without faltering and survive past the point they should have perished are recovered by "+string(obj_ini.role[100][15])+"s, judged worthy of becoming a Neophyte.";
 	    }
 	    if (recruit_trial="Knowledge of Self"){
 			blurp3="-Planet Bonus: Temperate (up to 10 bonus xp)#-1.5-3 Years longer training#-Up to bonus 25 XP on Neophytes.";
@@ -1601,11 +1601,11 @@ function scr_ui_advisors() {
 	    }
 	    if (recruit_trial="Challenge"){
 			blurp3="-Standard generic choice #-Heroic Neophytes gain bonus 10-20 XP";
-	        blurp2="What better gauge of an Aspirant than in a duel with our astartes?  Our brother, unarmed and unarmoured, will face against the armed challenger until one cannot continue.  It is impossible for the Aspirant to actually succeed these trials, but demonstrates how far they can possibly go, and allow us to judge him accordingly.  As with most trials the Aspirant’s life is in their own hands.  He who has failed the duel- yet proven himself worthy- is rescued from the jaws of death by "+string(obj_ini.role[100,15])+" and allowed to progress to the rank of Neophyte.";
+	        blurp2="What better gauge of an Aspirant than in a duel with our astartes?  Our brother, unarmed and unarmoured, will face against the armed challenger until one cannot continue.  It is impossible for the Aspirant to actually succeed these trials, but demonstrates how far they can possibly go, and allow us to judge him accordingly.  As with most trials the Aspirant’s life is in their own hands.  He who has failed the duel- yet proven himself worthy- is rescued from the jaws of death by "+string(obj_ini.role[100][15])+" and allowed to progress to the rank of Neophyte.";
 	    }
 	    if (recruit_trial="Apprenticeship"){
 			blurp3="-Planet Bonus: Lava (+10-50% recruits)#-4-5 Years longer training time#-Almost able for immediate promotion";
-	        blurp2="What better way to cultivate astartes than to raise them from youth?  The capable children of "+string(obj_ini.recruiting_name)+" are apprenticed to our battle brothers.  Beneath their steady guidance the Aspirants spend several years learning the art of the smith.  The most able are judged by our Chapter’s "+string(obj_ini.role[100,15])+"s and "+string(obj_ini.role[100,14])+" to deem if they are compatible with gene-seed implantation.  If so, the Aspirant’s trial culminates in hunting and slaying a massive beast.  Only the brightest and bravest are added to our ranks.";
+	        blurp2="What better way to cultivate astartes than to raise them from youth?  The capable children of "+string(obj_ini.recruiting_name)+" are apprenticed to our battle brothers.  Beneath their steady guidance the Aspirants spend several years learning the art of the smith.  The most able are judged by our Chapter’s "+string(obj_ini.role[100][15])+"s and "+string(obj_ini.role[100][14])+" to deem if they are compatible with gene-seed implantation.  If so, the Aspirant’s trial culminates in hunting and slaying a massive beast.  Only the brightest and bravest are added to our ranks.";
 	    }
     
 	    yyy=string_height_ext(string_hash_to_newline(blurp2),-1,536)+yy+545;
@@ -1815,8 +1815,8 @@ function scr_ui_advisors() {
     
 	    draw_text_ext(xx+222,yy+216,string_hash_to_newline(string(tot_ki)),-1,396);
     
-	    if (obj_ini.lid[0,1]=0) then draw_text(xx+222,yy+380,string_hash_to_newline("Current Location: "+string(obj_ini.loc[0,1])+" "+string(obj_ini.wid[0,1])+"#Health: "+string(obj_ini.hp[0,1])+"%"));
-	    if (obj_ini.lid[0,1]>0) then draw_text(xx+222,yy+380,string_hash_to_newline("Current Location: Onboard "+string(obj_ini.ship[obj_ini.lid[0,1]])+"#Health: "+string(obj_ini.hp[0,1])+"%"));
+	    if (obj_ini.lid[0][1]=0) then draw_text(xx+222,yy+380,string_hash_to_newline("Current Location: "+string(obj_ini.loc[0][1])+" "+string(obj_ini.wid[0][1])+"#Health: "+string(obj_ini.hp[0,1])+"%"));
+	    if (obj_ini.lid[0][1]>0) then draw_text(xx+222,yy+380,string_hash_to_newline("Current Location: Onboard "+string(obj_ini.ship[obj_ini.lid[0][1]])+"#Health: "+string(obj_ini.hp[0,1])+"%"));
 	    draw_text(xx+222.5,yy+380.5,string_hash_to_newline("Current Location:#Health:"));
     
 	    draw_sprite(spr_arrow,0,xx+217,yy+32);
