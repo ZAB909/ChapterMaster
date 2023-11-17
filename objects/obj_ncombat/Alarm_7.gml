@@ -73,16 +73,16 @@ if (string_count("cs_meeting",battle_special)>0){
             // show_message("meeting planet:"+string(chaos_meeting));
             repeat(11){co+=1;i=0;
                 repeat(200){i+=1;good=0;
-                    if (obj_ini.role[co,i]!="") and (obj_ini.loc[co,i]=name) and (obj_ini.wid[co,i]==floor(chaos_meeting)) then good+=1;
-                    if (obj_ini.role[co,i]!=obj_ini.role[100][6]) and (obj_ini.role[co,i]!="Venerable "+string(obj_ini.role[100][6])) then good+=1;
-                    if (string_count("Dread",obj_ini.armour[co,i])=0) or (obj_ini.role[co,i]="Chapter Master") then good+=1;
+                    if (obj_ini.role[co][i]!="") and (obj_ini.loc[co][i]=name) and (obj_ini.wid[co][i]==floor(chaos_meeting)) then good+=1;
+                    if (obj_ini.role[co][i]!=obj_ini.role[100][6]) and (obj_ini.role[co][i]!="Venerable "+string(obj_ini.role[100][6])) then good+=1;
+                    if (string_count("Dread",obj_ini.armour[co][i])=0) or (obj_ini.role[co][i]="Chapter Master") then good+=1;
                     
-                    // if (good>=3) then show_message(string(obj_ini.role[co,i])+": "+string(co)+"."+string(i));
+                    // if (good>=3) then show_message(string(obj_ini.role[co][i])+": "+string(co)+"."+string(i));
                     
                     if (good>=3){
                         obj_temp_meeting.dudes+=1;otm=obj_temp_meeting.dudes;
                         obj_temp_meeting.present[otm]=1;obj_temp_meeting.co[otm]=co;obj_temp_meeting.ide[otm]=i;
-                        if (obj_ini.role[co,i]="Chapter Master") then master_present=1;
+                        if (obj_ini.role[co][i]="Chapter Master") then master_present=1;
                     }
                 }
             }
