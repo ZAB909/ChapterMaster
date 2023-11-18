@@ -1670,7 +1670,7 @@ serialize = function() {
         homeworld_rule,
         star_names,
         craftworld,
-        turn,
+        current_turn: turn,
         last_event,
         last_mission,
         last_world_inspection,

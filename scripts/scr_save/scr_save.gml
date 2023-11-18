@@ -29,10 +29,20 @@ var num = instance_number(obj_star);
 
 function SavedGameData() constructor
 {
-	version = global.version;
+	game_version= global.version;
+	timestamp = date_datetime_string(date_current_datetime());
 	global_data = {
-		chapter_name : global.chapter_name,		
-		game_seed : global.game_seed
+		chapter_name: global.chapter_name,		
+		game_seed: global.game_seed,
+		founding_secret: global.founding_secret,
+		is_custom_chapter: global.custom,
+		cheats:{
+			req: global.cheat_req,
+			gene: global.cheat_gene,
+			debug: global.cheat_debug,
+			disp: global.cheat_disp,
+		},
+		sod: random_get_seed() // TODO what? looks like a checksum?
 	}
 	controller =  obj_controller.serialize();
 	ini = obj_ini.serialize();
