@@ -268,6 +268,24 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			start_gear:{"armour":"power_armour", "wep1":"bolter", "wep2":"chainsword"},
 			base_group : "astartes",
 	},
+	"scout":{
+			title : "Adeptus Astartes",
+			strength:[36,4],
+			constitution:[36,3],
+			weapon_skill : [30,5],
+			ballistic_skill : [30,5],
+			dexterity:[36,3],
+			intelligence:[38,3],
+			wisdom:[35,3],
+			charisma :[28,3],
+			religion : "imperial_cult",
+			piety : [28,3],
+			luck :10,
+			technology :[28,3],
+			skills: {weapons:{"bolter":3, "chainsword":3, "ccw":3, "bolt_pistol":3}},
+			start_gear:{"armour":"power_armour", "wep1":"bolter", "wep2":"chainsword"},
+			base_group : "astartes",
+	},	
 	"skitarii":{
 			title : "Skitarii",
 			strength:20,
@@ -547,6 +565,60 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				}
 			}
 	};
+
+	static distribute_traits = function (distribution_set){
+		for (var i=0;i<array_length(distribution_set);i++){//standard distribution for trait
+			if (array_length(distribution_set[i])==2){
+				if (irandom(distribution_set[i][1][0])>distribution_set[i][1][1]){
+					add_trait(distribution_set[i][0])
+				}
+			} else if (array_length(distribution_set[i])==3){  //trait has conditions
+
+				function is_state_required(mod_area){
+					is_required = false;
+					if (array_length(mod_area)>2){
+						if (mod_area[2] == "require"){
+							is_required =true;
+						}
+					}
+					return is_required;
+				}
+				var dist_modifiers =distribution_set[i][2];
+				var dist_rate = distribution_set[i][1];
+				if (struct_exists(dist_modifiers, "disadvantage")){
+					if (array_contains(obj_ini.dis, dist_modifiers[$"disadvantage"][0])){
+						dist_rate = dist_modifiers[$"disadvantage"][1];  //apply new modifier rate
+					} else if (is_state_required(dist_modifiers[$"disadvantage"])){
+						dist_rate=[0,0];
+					}
+				}
+				if (struct_exists(dist_modifiers, "advantage")){
+					if (array_contains(obj_ini.adv, dist_modifiers[$"advantage"][0])){
+						dist_rate = dist_modifiers[$"advantage"][1];  //apply new modifier rate
+					} else if (is_state_required(dist_modifiers[$"advantage"])){
+						dist_rate=[0,0];
+					}
+				}
+				if (struct_exists(dist_modifiers, "chapter_name")){
+					if (global.chapter_name == dist_modifiers[$ "chapter_name"][0]){
+						dist_rate = dist_modifiers[$"chapter_name"][1]; 
+					}else if (is_state_required(dist_modifiers[$ "chapter_name"])){
+						dist_rate=[0,0];
+					}
+				}
+				if (struct_exists(dist_modifiers, "progenitor")){
+					if (obj_ini.progenitor == dist_modifiers[$ "progenitor"][0]){
+						dist_rate = dist_modifiers[$"progenitor"][1]; 
+					}else if (is_state_required(dist_modifiers[$ "progenitor"])){
+						dist_rate=[0,0];
+					}
+				}				
+				if (irandom(dist_rate[0])>dist_rate[1]){
+					add_trait(distribution_set[i][0])
+				}
+			}
+		}
+	}
 	
 	//takes dict and plumbs dict values into unit struct
 	if (array_contains(variable_struct_get_names(global.base_stats), class)){
@@ -568,6 +640,23 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	body = {"left_leg":{}, "right_leg":{}, "torso":{}, "left_arm":{}, "right_arm":{}, "left_eye":{}, "right_eye":{},"throat":{}, "jaw":{},"head":{}}; //body parts list can be extended as much as people want
 	switch base_group{
 		case "astartes":				//basic marine class //adds specific mechanics not releveant to most units
+			var astartes_trait_dist = [
+				["very_hard_to_kill", [99,98]],
+				["feet_floor", [199,198]],
+				["paragon", [999,998]],
+				["warp_touched",[299,298]],
+				["shitty_luck",[99,98],{"disadvantage":["Shitty Luck",[3,2]]}],
+				["lucky",[99,98]],
+				["slow_and_purposeful",[99,98],{"advantage":["Slow and Purposeful",[3,2]]}],
+				["melee_enthusiast",[99,98],{"advantage":["Melee Enthusiasts",[3,2]]}],
+				["lightning_warriors",[99,98],{"advantage":["Lightning Warriors",[3,2]]}],
+				["slow_and_purposeful",[99,98],{"advantage":["Slow and Purposeful",[3,2]]}],
+				["zealous_faith",[99,98],{"chapter_name":["Black Templars",[3,2]]}],
+				["flesh_is_weak",[1000,999],{"chapter_name":["Iron Hands",[10,9],"required"],"progenitor":[6,[10,9],"required"]}],
+				["tinkerer",[199,198],{"chapter_name":["Iron Hands",[49,47]]}],
+			]
+			distribute_traits(astartes_trait_dist);
+			body[$ "torso"][$ "black_carpace"] = true;
 			if (faction ="chapter"){
 				allegiance = global.chapter_name;
 			}
@@ -603,17 +692,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				marine_ascension = "pre_game"; // on what day did turn did this marine begin to exist
 
 			}
-			
-			//need a niftier way of doing this as it's a lot of bulk and hard coding
-			if (irandom(99)>98){
-				 add_trait("very_hard_to_kill");	 //chance for marine to be exceedingly tough
-			};
-			if (irandom(199)>198){
-				add_trait("feet_floor");		
-			}
-			if (irandom(999)>998){
-				 add_trait("paragon");				//paragon chance just like cm
-			};
+
+			//array index 0 == trait to add
+			// array index 1 == probability e.g 99,98 == if (irandom(99)>98){add_trait}
+			// array index 3 == probability modifiers
 			psionic = 0
 			var warp_level = irandom(299)+1{
 				if (warp_level<=190){
@@ -634,77 +716,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					}
 				}
 			}
-			if (irandom(299)>298){
-				 add_trait("warp_touched");			//has phychic potential
-			};		
-			if (array_contains(obj_ini.dis,"Shitty Luck")){		//lamentors are unlucky
-				if (irandom(3)>2){
-					add_trait("shitty_luck");
-				} else {
-					if (irandom(99)>98){
-						add_trait("lucky");
-					};				
-				}
-			}else{
-				if (irandom(99)>98){
-					add_trait("shitty_luck");
-				} else{
-					if (irandom(99)>98){
-						add_trait("lucky");
-					};					
-				}
-			};
-			if (array_contains(obj_ini.adv, "Slow and Purposeful")){
-				if (irandom(2)>0){								//two thirds
-					add_trait("slow_and_purposeful");
-				}				
-			}else{
-				if (irandom(99)>98){
-					add_trait("slow_and_purposeful");
-				};
-			};
-			if (array_contains(obj_ini.adv, "Melee Enthusiasts")){
-				if (irandom(2)>0){								//two thirds
-					add_trait("melee_enthusiast");
-				}				
-			}else{
-				if (irandom(99)>98){
-					add_trait("melee_enthusiast");
-				};
-			};
-			if (array_contains(obj_ini.adv, "Lightning Warriors")){
-				if (irandom(2)>0){								//two thirds
-					add_trait("lightning_warriors");
-				}				
-			}else{
-				if (irandom(99)>98){
-					add_trait("lightning_warriors");
-				};
-			};
 			if (global.chapter_name=="Black Templars"){
-				if (irandom(3)==0){
-					add_trait("zealous_faith");
-				}
-			}else{
-				if (irandom(99)>98){
-					add_trait("zealous_faith");
-				};
 				if (irandom(14)==0){
 					body[$"torso"].robes =1;
-				}
-			}
-			if ((global.chapter_name=="Iron Hands") or (obj_ini.progenitor=6)){
-				religion="cult_mechanicus";
-				if (irandom(10)==1){
-					add_trait("flesh_is_weak");
-				}
-				if (irandom(49)>47){
-					add_trait("tinkerer");
-				};
-			} else{
-				if (irandom(99)>98){
-					add_trait("tinkerer");
-				};
+				}				
 			}
 			if (global.chapter_name=="Space Wolves") or (obj_ini.progenitor=3) {
 				religion_sub_cult = "The Allfather";
@@ -1165,7 +1180,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 		if (irandom(75)>74){
 			add_trait("tyrannic_vet");
-			bionic_count+=irandom(1);
+			bionic_count+=irandom(2);
 		};		
 		if (irandom(399-experience()) == 0){
 			add_trait("still_standing");
