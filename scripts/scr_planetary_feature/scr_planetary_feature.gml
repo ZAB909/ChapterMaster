@@ -218,6 +218,57 @@ function new_planet_feature(feature_type, other_data={}) constructor{
             variable_struct_set(self, names[i], variable_struct_get(data, names[i]))
         }
 	}
+
+#region serialization
+	
+	serialize = function(index){
+
+		// General data and init
+
+		var	_planetary_feature_data = {
+			_index: index,
+			type: f_type,
+			display_name: planet_display
+		}
+
+		// Handle concrete types
+
+		switch(f_type){
+			case P_features.Secret_Base:
+			case P_features.Arsenal:
+			case P_features.Gene_Vault:
+				_planetary_feature_data.constructed_on_turn = built;
+				break;
+			default:
+				break;
+		}
+
+		switch(f_type){
+			case P_features.Secret_Base:
+				_planetary_feature_data.built_structures = {
+					forge,
+					hippo,
+					beastarium,
+					torture,
+					narcotics,
+					relic,
+					cookery,
+					vox,
+					librarium,
+					throne,
+					stasis,
+					swimming,
+					stock,
+				}
+				break;
+			default:
+				break;
+		}
+
+		return _planetary_feature_data;
+	}
+
+#endregion
 }
 
 // returns an array of all the positions that a certain planet feature occurs on th p_feature array of a planet

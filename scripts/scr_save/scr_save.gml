@@ -29,9 +29,10 @@ var num = instance_number(obj_star);
 
 function SavedGameData() constructor
 {
-	game_version= global.version;
 	timestamp = date_datetime_string(date_current_datetime());
+	
 	global_data = {
+		game_version: global.version,
 		chapter_name: global.chapter_name,		
 		game_seed: global.game_seed,
 		founding_secret: global.founding_secret,
@@ -44,6 +45,44 @@ function SavedGameData() constructor
 		},
 		sod: random_get_seed() // TODO what? looks like a checksum?
 	}
+	
 	controller =  obj_controller.serialize();
+	
 	ini = obj_ini.serialize();
+
+	star_count= instance_number(obj_star);
+	stars=[];
+
+	for(var s = 0; s < star_count; s++){
+		var star = instance_find(obj_star, s);
+		array_push(stars, star.serialize(s));
+	};
+
+	// Temporary artifact objects
+    // TODO this looks like something which should be removed/merged
+	temporary_artifact_count = instance_number(obj_temp_arti);
+	temporary_artifacts = [];
+
+    for(var tio = 0; tio < temporary_artifact_count; tio++){
+        var _temporary_artifact_object = instance_find(obj_temp_arti, i);
+		array_push(temporary_artifacts, _temporary_artifact_object);
+    }
+
+	player_fleet_count = instance_number(obj_p_fleet);
+	player_fleets = [];
+
+	for(var pf = 0; pf < player_fleet_count; pf++){
+		var _player_fleet = instance_find(obj_p_fleet, pf);
+		var _player_fleet_data = _player_fleet.serialize(pf);
+		array_push(player_fleets, _player_fleet_data);
+	}
+
+	enemy_fleet_count = instance_number(obj_en_fleet);
+	enemy_fleets = [];
+
+	for(var ef = 0; ef < enemy_fleet_count; ef++){
+		var _enemy_fleet = instance_find(obj_en_fleet, ef);
+		var _enemy_fleet_data = _enemy_fleet.serialize(ef);
+		array_push(enemy_fleets, _enemy_fleet_data);
+	}
 }
