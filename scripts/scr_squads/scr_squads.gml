@@ -6,7 +6,7 @@ the requested squad type , if the squad is not possible it will  not be made*/
 //squad_loadout: true if you want to use the squad loadout sorting algorithem to re-equip the squad in accordance with the squad type loadout
 
 
-function create_squad(squad_type, company, squad_loadout = true){
+function create_squad(squad_type, company, squad_loadout = true, squad_index=false){
 	var squad_unit_types, fulfilled,unit, squad, squad_unit;
 	var squad_count = array_length(obj_ini.squads);
 	var fill_squad =  obj_ini.squad_types[$ squad_type];			//grab all the squad struct info from the squad_types struct
@@ -22,10 +22,10 @@ function create_squad(squad_type, company, squad_loadout = true){
 		}	
 		squad_fulfilment[$ squad_unit_types[i]] =0;	//create a fulfilment structure to log members of squad
 	}
-	squad = new unit_squad(squad_type);
+	squad = new unit_squad(squad_type, company);
 	squad.base_company = company;
 	var sergeant_found = false;
-	var sgt_types = [obj_ini.role[100,18], obj_ini.role[100,19]]
+	var sgt_types = [obj_ini.role[100,18], obj_ini.role[100,19]];
 	//if squad has sergeants in find out if there are any available sergeants
 	for (var s = 0; s< 2;s++){
 		if (struct_exists(squad_fulfilment ,sgt_types[s])){
@@ -69,11 +69,17 @@ function create_squad(squad_type, company, squad_loadout = true){
 	for (var s = 0; s< 2;s++){
 		if (struct_exists(squad_fulfilment ,sgt_types[s])) and (!sergeant_found){
 			var highest_exp = 0;
+			var exp_unit;
 			for (i = 0; i < array_length(squad.members);i++){
+				if (i==0){
+					exp_unit = obj_ini.TTRPG[squad.members[0][0], squad.members[0][1]];
+					highest_exp = obj_ini.TTRPG[squad.members[0][0], squad.members[0][1]].experience();
+					continue;
+				}
 				unit = obj_ini.TTRPG[squad.members[i][0], squad.members[i][1]];
 				if (unit.experience() > highest_exp){
 					highest_exp = unit.experience();
-					var exp_unit = unit;
+					exp_unit = unit;
 				};
 			}
 			squad_fulfilment[$ sgt_types[s]]++;
@@ -100,9 +106,17 @@ function create_squad(squad_type, company, squad_loadout = true){
 		squad.squad_fulfilment = squad_fulfilment;
 		for (i = 0; i < array_length(squad.members);i++){
 			unit = obj_ini.TTRPG[squad.members[i][0], squad.members[i][1]];
-			unit.squad = squad_count;
+			if (!squad_index){
+				unit.squad = squad_count;
+			} else {
+				unit.squad = squad_index;
+			}
 		}
-		array_push(obj_ini.squads, squad); //push squad to squads array thus creating squad
+		if (!squad_index){
+			array_push(obj_ini.squads, squad); //push squad to squads array thus creating squad
+		} else{
+			obj_ini.squads[squad_index] = squad;
+		}
 
 		// heres where the whole thing gets annoying
 		/*basically each equipment slot is looped through and inside each loop each marine is looped through in a random order to ensure 
@@ -231,11 +245,11 @@ function create_squad(squad_type, company, squad_loadout = true){
 
 
 // constructor for new squad
-function unit_squad(squad_type) constructor{
+function unit_squad(squad_type, company) constructor{
 	type = squad_type;
 	members = [];
 	squad_fulfilment ={};
-	base_company = -1;
+	base_company = company;
 	//nickname = scr_squad_names();
 
 	// for creating a new sergeant from existing squad members
@@ -301,21 +315,21 @@ function unit_squad(squad_type) constructor{
 				i--;
 				continue;
 			}
-			if (struct_exists(squad_fulfilment, unit.role)){
-				squad_fulfilment[$ unit.role]++;
+			if (struct_exists(squad_fulfilment, unit.role())){
+				squad_fulfilment[$ unit.role()]++;
 			} else {
-				squad_fulfilment[$ unit.role] = 1;
+				squad_fulfilment[$ unit.role()] = 1;
 			}
 		}
 		fulfilled = true;
-		space = false;
 		required = {};
 		space = {};
+		has_space = false;
 		for (i = 0;i < array_length(squad_unit_types);i++){
 			if (squad_fulfilment[$ squad_unit_types[i]] < fill_squad[$ squad_unit_types[i]][$ "max"]){
 				space[$ squad_unit_types[i]] = fill_squad[$ squad_unit_types[i]][$ "max"] - squad_fulfilment[$ squad_unit_types[i]];
-				space = true;
 			}
+			has_space = true
 			if (squad_fulfilment[$ squad_unit_types[i]] < fill_squad[$ squad_unit_types[i]][$ "min"]){
 				fulfilled = false;
 				required[$ squad_unit_types[i]] = fill_squad[$ squad_unit_types[i]][$ "min"] - squad_fulfilment[$ squad_unit_types[i]];
@@ -397,6 +411,17 @@ function game_start_squads(){
 	while (last_squad_count == array_length(obj_ini.squads)){
 		last_squad_count = (array_length(obj_ini.squads) + 1);
 		create_squad("veteran_squad", company);
+	}
+	company = 10;
+	create_squad("command_squad", company);
+	last_squad_count = array_length(obj_ini.squads);
+	while (last_squad_count == array_length(obj_ini.squads)){ ///keep making tact squads for as long as there are enough tact marines
+		last_squad_count = (array_length(obj_ini.squads) + 1);
+		if(last_squad_count%2 == 0){		
+			create_squad("scout_squad", company);
+		}else{
+			create_squad("scout_sniper_squad", company);
+		}
 	}
 
 	with (obj_ini){
