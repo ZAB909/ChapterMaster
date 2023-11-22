@@ -811,7 +811,7 @@ function scr_initialize_custom() {
 	    armour[i,7]="Power Armour";
 	    mobi[i,7]="";
 	    gear[i,7]="";
-	    role[i,8]="Tactical Marine";
+	    role[i,8]="Tactical";
 	    wep1[i,8]="Bolter";
 	    wep2[i,8]="Chainsword";
 	    armour[i,8]="Power Armour";
@@ -823,7 +823,7 @@ function scr_initialize_custom() {
 	    armour[i,9]="Power Armour";
 	    mobi[i,9]="";
 	    gear[i,9]="";
-	    role[i,10]="Assault Marine";
+	    role[i,10]="Assault";
 	    wep1[i,10]="Chainsword";
 	    wep2[i,10]="Bolt Pistol";
 	    armour[i,10]="Power Armour";
@@ -954,7 +954,7 @@ function scr_initialize_custom() {
 						],
 					} 
 				}}],
-				["display_name" , $"{role[100,4]} Terminator {squad_name}"]
+				["display_name" , $"{role[100,4]} {squad_name}"]
 			],
 			"veteran_squad": [
 				[role[100][3], {"max":9,"min":4, "loadout":{//tactical marine
@@ -1011,7 +1011,7 @@ function scr_initialize_custom() {
 				}}],		//tactical marine
 
 				[role[100][18], {"max":1,"min":1, "role":$"{role[100,8]} {role[100,18]}"}],		// sergeant
-				["display_name" , $"${role[100,8]} {squad_name}"]
+				["display_name" , $"{role[100,8]} {squad_name}"]
 			],
 			"assault_squad" : [
 				[role[100][10] , {
@@ -1882,7 +1882,7 @@ function scr_initialize_custom() {
 	for (i=0;i<2;i++){
 		k+=1;
 		commands+=1;
-		TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
+		TTRPG[company][k]=new TTRPG_stats("chapter", company,k,"dreadnought");
 		race[company][k]=1;
 		loc[company][k]=home_name;
 		role[company][k]="Venerable "+string(role[100][6]);
@@ -2285,7 +2285,7 @@ function scr_initialize_custom() {
 	            if (company=10){
 
 	                repeat(temp1){k+=1;man_size+=1;
-	                	TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
+	                	TTRPG[company][k]=new TTRPG_stats("chapter", company,k, "scout");
 					
 	                    race[company][k]=1;
 	                    loc[company][k]=home_name;
@@ -2359,7 +2359,7 @@ function scr_initialize_custom() {
 	            	k+=1;
 	            	man_size+=1;
 
-	            	TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
+	            	TTRPG[company][k]=new TTRPG_stats("chapter", company,k, "scout");
 	                race[company][k]=1;
 	                loc[company][k]=home_name;
 	                role[company][k]=role[100][12];
@@ -2411,13 +2411,12 @@ function scr_initialize_custom() {
 	        if (dready>0){
 	            repeat(dready){
 	                k+=1;man_size+=10;commands+=1;
-	                TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
+	                TTRPG[company][k]=new TTRPG_stats("chapter", company,k,"dreadnought");
 	                race[company][k]=1;
 	                loc[company][k]=home_name;
 	                role[company][k]=role[100][6];
-	                wep1[company][k]="Close Combat Weapon"
-	          ;
-	          name[company][k]=scr_marine_name();
+	                wep1[company][k]="Close Combat Weapon";
+	            	name[company][k]=scr_marine_name();
 	                wep2[company][k]=wep2[101,6];
 	                armour[company][k]="Dreadnought";
 	                chaos[company][k]=0;experience[company][k]=300;

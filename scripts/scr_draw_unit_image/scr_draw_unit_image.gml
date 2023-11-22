@@ -1,5 +1,5 @@
 
-function scr_draw_unit_image(x_draw, y_draw,unit){
+function scr_draw_unit_image(x_draw, y_draw){
     draw_set_font(fnt_40k_14b);
     draw_set_color(c_gray);
 	var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0, bb="", img=0;
@@ -148,7 +148,10 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
         if (ui_twoh[2]=true) and (ui_arm[2]=false) then ui_arm[1]=false;
     
         draw_set_color(38144);
-        draw_rectangle(xx+x_draw,yy+y_draw,xx+x_draw+166,yy+y_draw+231,0);    
+        draw_rectangle(xx+x_draw,yy+y_draw,xx+x_draw+166,yy+y_draw+271,0);
+        draw_set_color(c_black);
+        draw_rectangle(xx+x_draw,yy+y_draw,xx+x_draw+166,yy+y_draw+271,1); 
+        y_draw+=40;   
         if(shader_is_compiled(sReplaceColor)){
             shader_set(sReplaceColor);
             shader_set_uniform_f(obj_controller.colour_to_find1, obj_controller.sourceR1,obj_controller.sourceG1,obj_controller.sourceB1 );//body  
@@ -489,14 +492,6 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
                 } else if (base_sprite=1){
                     specific_armour_sprite = spr_terminator2_colors;
                 }
-
-                if (base_sprite<= 0 && ui_specialist==5){
-                    if (array_contains(traits, "tinkerer")){
-                        draw_sprite(spr_techmarine_core,0,xx+x_draw,yy+y_draw);
-                        specific_armour_sprite="none"
-                        arm=0;
-                    }
-                };
                 if (arm>0){
                     if (arm<10) then draw_sprite(spr_pack_arm,arm,xx+x_draw,yy+y_draw);
                     if (arm>=10) then draw_sprite(spr_pack_arms,arm-10,xx+x_draw,yy+y_draw);
@@ -521,7 +516,7 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
                                         if (body[$ "left_arm"][$ "bionic"].variant == 0){
                                             draw_sprite(spr_bionics_arm,1,xx+x_draw,yy+y_draw-4);
                                         } else{
-                                            draw_sprite(spr_bionics_arm_2,0,xx+x_draw,yy+y_draw-10);
+                                            draw_sprite(spr_bionics_arm_2,0,xx+x_draw-8,yy+y_draw-10);
                                         }
                                 }else {
                                     draw_sprite(armour_sprite,8,xx+x_draw,yy+y_draw);
@@ -531,7 +526,7 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
                                         if (body[$ "left_arm"][$ "bionic"].variant == 0){
                                             draw_sprite(spr_bionics_arm,3,xx+x_draw,yy+y_draw-4);
                                         } else{
-                                            draw_sprite(spr_bionics_arm_2,2,xx+x_draw,yy+y_draw-10);
+                                            draw_sprite(spr_bionics_arm_2,2,xx+x_draw-8,yy+y_draw-10);
                                         }
                                 }else {
                                     draw_sprite(armour_sprite,9,xx+x_draw,yy+y_draw);
@@ -540,8 +535,17 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
                         }
                     }                    
                     draw_sprite(armour_sprite,specialist_colours,xx+x_draw,yy+y_draw);
-                    if (ttrim==0) and (specialist_colours<=1) then draw_sprite(specific_armour_sprite,4,xx+x_draw,yy+y_draw);
-                    if (ttrim==0) and (specialist_colours>=2) then draw_sprite(specific_armour_sprite,5,xx+x_draw,yy+y_draw);   
+                    if (base_sprite<= 0 && ui_specialist==5){
+                        if (array_contains(traits, "tinkerer")){
+                            draw_sprite(spr_techmarine_core,0,xx+x_draw,yy+y_draw);
+                            specific_armour_sprite="none"
+                            arm=0;
+                        }
+                    }
+                    if (specific_armour_sprite!="none") {                
+                        if (ttrim==0) and (specialist_colours<=1) then draw_sprite(specific_armour_sprite,4,xx+x_draw,yy+y_draw);
+                        if (ttrim==0) and (specialist_colours>=2) then draw_sprite(specific_armour_sprite,5,xx+x_draw,yy+y_draw);
+                    }
                 }
                 if (base_sprite=5){
                     draw_sprite(spr_dreadnought_chasis_colors,specialist_colours,xx+x_draw,yy+y_draw);
@@ -702,8 +706,9 @@ function scr_draw_unit_image(x_draw, y_draw,unit){
 			}
             if (base_sprite<1){
                 var robes_mod=[0,0];
-                if (array_contains(["MK7 Aquila","Power Armour","MK4 Maximus","Mk5 Heresy"], armour())){
-                    robes_mod[1]=-7;
+                if (array_contains(["MK7 Aquila","Power Armour","MK4 Maximus","Mk5 Heresy", "Mk3 Iron Armour"], armour())){
+                    robes_mod[1]=-8;
+                    robes_mod[2]=-1;
                 } else if (armour()=="MK6 Corvus"){
                      robes_mod[0]=-1
                      robes_mod[1]=-1

@@ -404,6 +404,7 @@
     {"name":"scr_destroy_planet","order":1,"path":"scripts/scr_destroy_planet/scr_destroy_planet.yy",},
     {"name":"scr_crusade","order":3,"path":"scripts/scr_crusade/scr_crusade.yy",},
     {"name":"scr_ship_battle","order":5,"path":"scripts/scr_ship_battle/scr_ship_battle.yy",},
+    {"name":"scr_unit_detail_text","order":71,"path":"scripts/scr_unit_detail_text/scr_unit_detail_text.yy",},
     {"name":"scr_battle_allies","order":7,"path":"scripts/scr_battle_allies/scr_battle_allies.yy",},
     {"name":"scr_battle_roster","order":9,"path":"scripts/scr_battle_roster/scr_battle_roster.yy",},
     {"name":"scr_civil_roster","order":11,"path":"scripts/scr_civil_roster/scr_civil_roster.yy",},

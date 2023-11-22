@@ -38,7 +38,7 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 				if (unit.squad== "none"){
 					if (unit.role() == sgt_types[s]){
 						squad_fulfilment[$ sgt_types[s]] += 1;
-						array_push(squad.members, [unit.company, unit.marine_number]);
+						squad.add_member(unit.company, unit.marine_number);
 						sergeant_found = true;// free sergeant is found mark it so a marine dose not get promoted
 						break;
 					}
@@ -55,12 +55,12 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 			if ((struct_exists(squad_fulfilment ,obj_ini.role[100][18])) or (struct_exists(squad_fulfilment ,obj_ini.role[100][19]))) and (sergeant_found == false){
 				if (squad_fulfilment[$ unit.role()]< (fill_squad[$ unit.role()][$ "max"] + 1)){
 					squad_fulfilment[$ unit.role()]++;
-					array_push(squad.members, [unit.company, unit.marine_number]);	
+					squad.add_member(unit.company, unit.marine_number);
 				}
 			}//if sergeants not required
 			else if (squad_fulfilment[$ unit.role()]< fill_squad[$ unit.role()][$ "max"]){
 				squad_fulfilment[$ unit.role()]++;
-				array_push(squad.members, [unit.company, unit.marine_number]);
+				squad.add_member(unit.company, unit.marine_number);
 			}
 		}
 	}
@@ -251,6 +251,8 @@ function unit_squad(squad_type, company) constructor{
 	members = [];
 	squad_fulfilment ={};
 	base_company = company;
+	life_members=0;
+	nickname="";
 	//nickname = scr_squad_names();
 
 	// for creating a new sergeant from existing squad members
@@ -343,7 +345,10 @@ function unit_squad(squad_type, company) constructor{
 			}
 		}		
 	}
-
+	static add_member = function(comp, unit_number){
+		array_push(members, [comp, unit_number]);
+		life_members++;
+	}
 	// for saving squads
 	static jsonify = function(){
 		var copy_struct = self; //grab marine structure
@@ -365,6 +370,45 @@ function unit_squad(squad_type, company) constructor{
 		 for (var i = 0; i < array_length(names); i++) {
             variable_struct_set(self, names[i], variable_struct_get(data, names[i]))
         }
+	}
+
+	static determine_leader = function(){
+		var member_length = array_length(members);
+		var leader_chosen = false;
+		var hierarchy = role_hierarchy();
+		var leader_hier_pos=array_length(hierarchy);
+		var leader="none", unit;
+		var highest_exp = 0;
+		for (var i=0;i<member_length;i++){
+			unit = obj_ini.TTRPG[members[i][0]][members[i][1]]
+			if (unit.name() == ""){
+				array_delete(members, i, 1);
+				member_length--;
+				i--;
+				continue;
+			} else {
+				if (leader=="none"){
+					leader = [unit.company, unit.marine_number];
+					for (var r=0;r<array_length(hierarchy);r++){
+						if (hierarchy[r]==unit.role()){
+							leader_hier_pos=r;
+						}
+					}
+				}else if (hierarchy[leader_hier_pos]==unit.role()){
+					if (obj_ini.TTRPG[leader[0]][leader[1]].experience()<unit.experience()){
+						leader=[unit.company, unit.marine_number];
+					}
+				}else{
+					for (var r=0;r<leader_hier_pos;r++){
+						if (hierarchy[r]==unit.role()){
+							leader_hier_pos=r;
+							leader=[unit.company, unit.marine_number];
+						}
+					}
+				}
+			}			
+		}
+		return leader;
 	}		
 }
 
@@ -430,5 +474,16 @@ function game_start_squads(){
 			scr_company_order(i)
 		}
 	}
+}
+
+
+function find_company_squads(company){
+	var c_squads = [];
+	for (var i=0;i<array_length(obj_ini.squads);i++){
+		if (array_length(obj_ini.squads[i].members)>0 && obj_ini.squads[i].base_company == company){
+			array_push(c_squads,i);
+		}
+	}
+	return c_squads;
 }
 

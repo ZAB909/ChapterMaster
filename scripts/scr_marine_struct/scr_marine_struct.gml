@@ -227,11 +227,84 @@ global.trait_list = {
 	"blood_for_blood":{
 		strength:[3,2,"max"],
 		weapon_skill:1,
-		piety:1,
+		piety:2,
 		display_name:"Blood For the Blood God",
 		flavour_text:"{0} Has spilled blood in the name of the blood god",
 		effect:"Has the attention of Khorne"
-	}	
+	},
+	"blunt":{
+		strength:[2,2,"max"],
+		wisdom:2,
+		charisma:-2,
+		intelligence:-4,
+		weapon_skill:1,
+		display_name:"Blunt",
+		flavour_text:"{0} tends towards simplistic approaches to achieve goals",
+	},
+	"skeptic":{
+		piety:[-6,4,"min"],
+		wisdom:1,
+		display_name:"Skeptic",
+		flavour_text:"{0} has a skeptical outlook and puts little thought in trivial matters like religion and faith",
+	},
+	"scholar":{
+		intelligence:[4,2,"max"],
+		wisdom:1,
+		technology:2,
+		stength:-1,
+		display_name:"Scholar",
+		flavour_text:"{0} has an keen mind and enjoys to read and train it where possible",
+	},
+	"brute":{
+		strength:[4,2,"max"],
+		weapon_skill:[2,2,"max"],
+		ballistic_skill:[-2,1,"min"],
+		wisdom:-5,
+		intelligence:-5,
+		charisma:-2,
+		display_name:"Brute",
+		flavour_text:"{0} is a brutal character solving problems often with intimidation or violence",
+	},
+	"charismatic":{
+		charisma:[5,3,"max"],
+		display_name:"Charismatic",
+		flavour_text:"{0} is liked by most without even trying",
+	},
+	"recluse":{
+		charisma:[-2,2,"min"],
+		dexterity:1,
+		wisdom:1,
+		display_name:"Reclusive",
+		flavour_text:"{0} is generally withdrawn and reclusive avoiding social engagements were possible",
+	}	,
+	"nimble":{
+		display_name:"Nimble",
+		flavour_text:"{0} is natrually nible and light on their feet",
+		dexterity:[4,3,"max"],
+		weapon_skill:1,
+		constitution:-3,
+	},
+	"jaded":{
+		display_name:"Jaded",
+		flavour_text:"{0}'s past has led to a deep distrust and cynicla outlook on most parts of their life",
+		charisma:-2,
+		wisdom:-1,
+	},
+	"observant":{
+		display_name:"Observant",
+		flavour_text:"{0} tends to notics things that most don't",
+		wisdom:[5,2,"max"],
+		dexterity:2
+	},
+	"perfectionist":{
+		display_name:"Perfectionist",
+		flavour_text:"{0} Is obsessive with doing things correctly",
+		wisdom:[2,2,"max"],
+		weapon_skill:[2,2,"max"],
+		ballistic_skill:[2,2,"max"],
+		intelligence:[2,1],
+		piety:[2,1],
+	}
 }
 global.base_stats = { //tempory stats subject to change by anyone that wishes to try their luck
 	"chapter_master":{
@@ -272,8 +345,8 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			title : "Adeptus Astartes",
 			strength:[36,4],
 			constitution:[36,3],
-			weapon_skill : [30,5],
-			ballistic_skill : [30,5],
+			weapon_skill : [30,2,"max"],
+			ballistic_skill : [30,2,"max"],
 			dexterity:[36,3],
 			intelligence:[38,3],
 			wisdom:[35,3],
@@ -285,7 +358,26 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			skills: {weapons:{"bolter":3, "chainsword":3, "ccw":3, "bolt_pistol":3}},
 			start_gear:{"armour":"power_armour", "wep1":"bolter", "wep2":"chainsword"},
 			base_group : "astartes",
-	},	
+	},
+	"dreadnought":{
+			title : "Adeptus Astartes",
+			strength:[70,4],
+			constitution:[75,3],
+			weapon_skill : [55,5],
+			ballistic_skill : [55,5],
+			dexterity:[30,3],
+			intelligence:[45,3],
+			wisdom:[50,3],
+			charisma :[35,3],
+			religion : "imperial_cult",
+			piety : [32,3],
+			luck :10,
+			technology :[30,3],
+			skills: {weapons:{"bolter":3, "chainsword":3, "ccw":3, "bolt_pistol":3}},
+			start_gear:{"armour":"power_armour", "wep1":"bolter", "wep2":"chainsword"},
+			base_group : "astartes",
+			traits:["ancient","slow_and_purposeful","lead_example","zealous_faith",choose("still_standing","beast_slayer","lone_survivor")]
+	},			
 	"skitarii":{
 			title : "Skitarii",
 			strength:20,
@@ -495,6 +587,17 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
   static update_armour = function(new_armour, from_armoury=true, to_armoury=true){
   	var change_armour=armour()
+  	if (array_contains(global.power_armour, new_armour)){
+  		var has_carpace =false;
+  		if (struct_exists(body[$ "torso"], "black_carpace")){
+  			if (body[$ "torso"][$"black_carpace"]){
+  				has_carpace=true;
+  			}
+  		}
+  		if (!has_carpace){
+  			return "needs_carpace";
+  		}
+  	}
    	if (change_armour == new_armour){
    		return "no change";
    	}   	
@@ -567,22 +670,21 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	};
 
 	static distribute_traits = function (distribution_set){
+			function is_state_required(mod_area){
+				is_required = false;
+				if (array_length(mod_area)>2){
+					if (mod_area[2] == "require"){
+						is_required =true;
+					}
+				}
+				return is_required;
+			}		
 		for (var i=0;i<array_length(distribution_set);i++){//standard distribution for trait
 			if (array_length(distribution_set[i])==2){
 				if (irandom(distribution_set[i][1][0])>distribution_set[i][1][1]){
 					add_trait(distribution_set[i][0])
 				}
 			} else if (array_length(distribution_set[i])==3){  //trait has conditions
-
-				function is_state_required(mod_area){
-					is_required = false;
-					if (array_length(mod_area)>2){
-						if (mod_area[2] == "require"){
-							is_required =true;
-						}
-					}
-					return is_required;
-				}
 				var dist_modifiers =distribution_set[i][2];
 				var dist_rate = distribution_set[i][1];
 				if (struct_exists(dist_modifiers, "disadvantage")){
@@ -614,7 +716,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					}
 				}				
 				if (irandom(dist_rate[0])>dist_rate[1]){
-					add_trait(distribution_set[i][0])
+					add_trait(distribution_set[i][0]);
 				}
 			}
 		}
@@ -642,6 +744,16 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		case "astartes":				//basic marine class //adds specific mechanics not releveant to most units
 			var astartes_trait_dist = [
 				["very_hard_to_kill", [99,98]],
+				["scholar", [99,98]],
+				["brute", [99,98]],
+				["charismatic", [99,98]],
+				["skeptic", [99,98]],
+				["blunt", [99,98]],
+				["nimble", [99,98]],
+				["recluse", [99,98]],
+				["perfectionist", [99,98]],
+				["observant", [99,98]],
+				["jaded", [99,98]],
 				["feet_floor", [199,198]],
 				["paragon", [999,998]],
 				["warp_touched",[299,298]],
@@ -650,13 +762,15 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				["slow_and_purposeful",[99,98],{"advantage":["Slow and Purposeful",[3,2]]}],
 				["melee_enthusiast",[99,98],{"advantage":["Melee Enthusiasts",[3,2]]}],
 				["lightning_warriors",[99,98],{"advantage":["Lightning Warriors",[3,2]]}],
-				["slow_and_purposeful",[99,98],{"advantage":["Slow and Purposeful",[3,2]]}],
 				["zealous_faith",[99,98],{"chapter_name":["Black Templars",[3,2]]}],
 				["flesh_is_weak",[1000,999],{"chapter_name":["Iron Hands",[10,9],"required"],"progenitor":[6,[10,9],"required"]}],
 				["tinkerer",[199,198],{"chapter_name":["Iron Hands",[49,47]]}],
-			]
+			];
 			distribute_traits(astartes_trait_dist);
 			body[$ "torso"][$ "black_carpace"] = true;
+			if (class=="scout" &&  global.chapter_name!="Space Wolves"){
+				body[$ "torso"][$ "black_carpace"] = false;
+			}
 			if (faction ="chapter"){
 				allegiance = global.chapter_name;
 			}
@@ -1235,6 +1349,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 	static draw_unit_image = scr_draw_unit_image;
 	static display_wepaons = scr_ui_display_weapons;
+	static unit_profile_text = scr_unit_detail_text;
 }
 function jsonify_marine_struct(company, marine){
 		var copy_marine_struct = obj_ini.TTRPG[company, marine]; //grab marine structure

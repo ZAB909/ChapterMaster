@@ -106,47 +106,7 @@ function scr_company_order(company) {
 	}
 
 	// the order that marines are displayed in the company view screen(this order is augmented by squads)
-	var role_orders = [
-		"Chapter Master",
-		"Forge Master",
-		"Master of Sanctity",
-		"Master of the Apothecarion",
-		string("Chief {0}",role[100,17]),
-		role[100][2],
-		role[100][5],
-		role[100][14],
-		string("{0} Aspirant",role[100][14]),
-		"Death Company",
-		role[100][16],
-		string("{0} Aspirant",role[100][16]),
-		"Techpriest",
-		role[100][15],
-		string("{0} Aspirant",role[100][15]),
-		"Sister Hospitaler",
-		role[100,17],
-		"Codiciery",
-		"Lexicanum",
-		string("{0} Aspirant",role[100,17]),
-		"Standard Bearer",
-		obj_ini.role[100][7],
-		"Death Company",
-		role[100][19],
-		role[100][18],		
-		role[100][4],
-		role[100][3],
-		role[100][8],
-		role[100][10],
-		role[100][9],
-		role[100][12],
-		"Venerable "+string(role[100][6]),
-		role[100][6],
-		"Skitarii",
-		"Crusader",
-		"Ranger",
-		"Sister of Battle",
-		"Flash Git",
-		"Ork Sniper"
-	]
+	var role_orders = role_hierarchy();
 
 	var empty_squads=[]
 	var role_shuffle_length = array_length(role_orders);
@@ -355,4 +315,51 @@ function scr_company_order(company) {
 	    }
 	}*/
 
+}
+
+function role_hierarchy(){
+
+	var hierarchy = [
+			"Chapter Master",
+			"Forge Master",
+			"Master of Sanctity",
+			"Master of the Apothecarion",
+			string("Chief {0}",obj_ini.role[100,17]),
+			obj_ini.role[100][2],
+			obj_ini.role[100][5],
+			obj_ini.role[100][14],
+			string("{0} Aspirant",obj_ini.role[100][14]),
+			"Death Company",
+			obj_ini.role[100][16],
+			string("{0} Aspirant",obj_ini.role[100][16]),
+			"Techpriest",
+			obj_ini.role[100][15],
+			string("{0} Aspirant",obj_ini.role[100][15]),
+			"Sister Hospitaler",
+			obj_ini.role[100,17],
+			"Codiciery",
+			"Lexicanum",
+			string("{0} Aspirant",obj_ini.role[100,17]),
+			"Standard Bearer",
+			obj_ini.role[100][7],
+			"Death Company",
+			obj_ini.role[100][19],
+			obj_ini.role[100][18],		
+			obj_ini.role[100][4],
+			obj_ini.role[100][3],
+			obj_ini.role[100][8],
+			obj_ini.role[100][10],
+			obj_ini.role[100][9],
+			obj_ini.role[100][12],
+			"Venerable "+string(obj_ini.role[100][6]),
+			obj_ini.role[100][6],
+			"Skitarii",
+			"Crusader",
+			"Ranger",
+			"Sister of Battle",
+			"Flash Git",
+			"Ork Sniper"
+		];
+
+	return hierarchy
 }

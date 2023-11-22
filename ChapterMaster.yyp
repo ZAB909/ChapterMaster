@@ -691,6 +691,7 @@
     {"id":{"name":"scr_destroy_planet","path":"scripts/scr_destroy_planet/scr_destroy_planet.yy",},},
     {"id":{"name":"scr_crusade","path":"scripts/scr_crusade/scr_crusade.yy",},},
     {"id":{"name":"scr_ship_battle","path":"scripts/scr_ship_battle/scr_ship_battle.yy",},},
+    {"id":{"name":"scr_unit_detail_text","path":"scripts/scr_unit_detail_text/scr_unit_detail_text.yy",},},
     {"id":{"name":"scr_battle_allies","path":"scripts/scr_battle_allies/scr_battle_allies.yy",},},
     {"id":{"name":"scr_battle_roster","path":"scripts/scr_battle_roster/scr_battle_roster.yy",},},
     {"id":{"name":"scr_civil_roster","path":"scripts/scr_civil_roster/scr_civil_roster.yy",},},
