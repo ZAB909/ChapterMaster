@@ -830,7 +830,7 @@ function scr_initialize_custom() {
 	    mobi[i,10]="Jump Pack";
 	    gear[i,10]="";
 	    role[i,12]="Scout";
-	    wep1[i,12]="Sniper Rifle";
+	    wep1[i,12]="Bolter";
 	    wep2[i,12]="Combat Knife";
 	    armour[i,12]="Scout Armour";
 	    mobi[i,12]="";
