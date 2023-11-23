@@ -1062,7 +1062,7 @@ function scr_initialize_custom() {
 		                        [["Power Sword","Chainsword","Power Axe","Power Fist"],1]
 		                    ],
 		                    "wep2":[
-		                        [["Plasma Pistol","CombiFlamer","Stalker Pattern Bolter","Storm Bolter"],1]
+		                        [["Plasma Pistol","Combiflamer","Stalker Pattern Bolter","Storm Bolter"],1]
 		                    ]
 		                }
 		            },
@@ -1103,7 +1103,7 @@ function scr_initialize_custom() {
 			                    [["Power Sword","Chainsword","Power Axe","Power Fist"],1]
 			                ],
 			                "wep2":[
-			                    [["CombiFlamer","Stalker Pattern Bolter",],1]
+			                    [["Combiflamer","Stalker Pattern Bolter",],1]
 			                ]
 			            }
 		        	},
