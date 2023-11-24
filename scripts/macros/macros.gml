@@ -3,7 +3,7 @@ function macros() {
 #macro GM_version "1.0.0.4"
 
 
-	enum luck {
+	enum LUCK {
 		bad = -1,
 		neutral = 0,
 		good = 1
