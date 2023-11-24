@@ -54,19 +54,19 @@ function scr_random_event(execute_now) {
 			var has_bad_luck = scr_has_disadv("Shitty Luck");
 			var luck_roll = irandom(100);
 			if (has_bad_luck){
-				if (luck_roll<=30) then player_luck=luck.good;
-			    if (luck_roll>30) and (luck_roll<45) then player_luck=luck.neutral;
-				if (luck_roll>=45) then player_luck=luck.bad;
+				if (luck_roll<=30) then player_luck=LUCK.good;
+			    if (luck_roll>30) and (luck_roll<45) then player_luck=LUCK.neutral;
+				if (luck_roll>=45) then player_luck=LUCK.bad;
 			}
 			else{
-			    if (luck_roll<=45) then player_luck=luck.good;
-			    if (luck_roll>45) and (luck_roll<55) then player_luck=luck.neutral;
-				if (luck_roll>=55) then player_luck=luck.bad;
+			    if (luck_roll<=45) then player_luck=LUCK.good;
+			    if (luck_roll>45) and (luck_roll<55) then player_luck=LUCK.neutral;
+				if (luck_roll>=55) then player_luck=LUCK.bad;
 			}
 
 		
 				var events;
-				if(player_luck == luck.good){
+				if(player_luck == LUCK.good){
 					events = 
 					[
 					EVENT.space_hulk,
@@ -79,7 +79,7 @@ function scr_random_event(execute_now) {
 					EVENT.mechanicus_mission
 					];
 				}
-				else if(player_luck == luck.neutral){
+				else if(player_luck == LUCK.neutral){
 					events = 
 					[
 					EVENT.strange_behavior,
@@ -89,7 +89,7 @@ function scr_random_event(execute_now) {
 					EVENT.random_fun,
 					];
 				}
-				else if(player_luck == luck.bad){
+				else if(player_luck == LUCK.bad){
 					events = 
 					[
 					EVENT.warp_storms,
