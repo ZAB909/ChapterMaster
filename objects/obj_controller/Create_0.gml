@@ -93,7 +93,6 @@ current_eventing="";
 chaos_rating=0;
 obj_cuicons.alarm[1]=1; // Clean up custom icons
 
-
 diplomacy_pathway = "";
 option_selections=[];
 ready=false;
@@ -924,6 +923,20 @@ bat_predator_column=7;
 bat_landraider_column=7;
 bat_scout_column=1;
 // ** Sets up disposition per faction **
+enum eFACTION {
+	Player = 1,
+	Imperium,
+	Mechanicus,
+	Inquisition,
+	Ecclesiarchy,
+	Eldar,
+	Ork,
+	Tau,
+	Tyranids,
+	Chaos,
+	Heretics,
+	Necrons = 13
+}
 faction[0]="";
 disposition[0]=0;
 faction[1]="Player";
@@ -955,7 +968,7 @@ disposition[7]=-40;
 faction[8]="Tau";
 disposition[8]=0;
 faction[9]="Tyranids";
-disposition[9]=floor(random_range(40,100))=1;// use this to countdown genestealer cults, create one at the end
+disposition[9] = irandom_range(40,100) = 1;// use this to countdown genestealer cults, create one at the end
 faction[10]="Chaos";
 disposition[10]=-70;
 faction[11]="Heretics";
