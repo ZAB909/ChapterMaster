@@ -232,6 +232,10 @@ function scr_initialize_custom() {
 	        gladius=7;
 	        hunters=3;
 			
+			if (global.chapter_name="Raven Guard")
+				{
+					flagship_name="Avenger"
+				}
 			if (global.chapter_name="Salamanders")
 				{
 					flagship_name="Flamewrought";
@@ -922,6 +926,9 @@ function scr_initialize_custom() {
 	if (global.chapter_name=="Space Wolves" || obj_ini.progenitor==3){
 		squad_name = "Pack";
 	}
+	if (global.chapter_name=="Iron Hands" || obj_ini.progenitor==6){
+		squad_name = "Clave";
+	}
 	squad_types = {};
 	var st = { 
 		"command_squad" :[
@@ -1351,6 +1358,10 @@ function scr_initialize_custom() {
 			chapter_master.add_trait("old_guard");
 			chapter_master.add_trait("tinkerer");
 			chapter_master.add_trait("slow_and_purposeful");	
+			break;
+		case "Raven Guard":
+		wep1[0,1]="Lightning Claw&DUB|";mobi[0,1]="Jump Pack&SIL|";
+		chapter_master.add_trait("lightning_warriors");
 		default:
 			chapter_master.add_trait("old_guard");
 
