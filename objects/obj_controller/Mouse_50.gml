@@ -1303,13 +1303,13 @@ if (zoomed==0) and (cooldown<=0) and (menu==20) and (diplomacy==0){
             onceh=0;
             cooldown=8000;
             click2=1;
-            if (ignore[2]==0){
+            if (ignore[eFACTION.Imperium]==0){
                 onceh=1;
-                ignore[2]=1;
+                ignore[eFACTION.Imperium]=1;
             }
-            if (ignore[2]==1) and (onceh==0){
+            if (ignore[eFACTION.Imperium]==1) and (onceh==0){
                 onceh=1;
-                ignore[2]=0;
+                ignore[eFACTION.Imperium]=0;
             }
         }
     }
@@ -1325,13 +1325,13 @@ if (zoomed==0) and (cooldown<=0) and (menu==20) and (diplomacy==0){
             onceh=0;
             cooldown=8000;
             click2=1;
-            if (ignore[3]==0){
+            if (ignore[eFACTION.Mechanicus]==0){
                 onceh=1;
-                ignore[3]=1;
+                ignore[eFACTION.Mechanicus]=1;
             }
-            if (ignore[3]==1) and (onceh==0){
+            if (ignore[eFACTION.Mechanicus]==1) and (onceh==0){
                 onceh=1;
-                ignore[3]=0;
+                ignore[eFACTION.Mechanicus]=0;
             }
         }
     }
@@ -1347,13 +1347,13 @@ if (zoomed==0) and (cooldown<=0) and (menu==20) and (diplomacy==0){
             onceh=0;
             cooldown=9;
             click2=1;
-            if (ignore[4]==0){
+            if (ignore[eFACTION.Inquisition]==0){
                 onceh=1;
-                ignore[4]=1;
+                ignore[eFACTION.Inquisition]=1;
             }
-            if (ignore[4]==1) and (onceh==0){
+            if (ignore[eFACTION.Inquisition]==1) and (onceh==0){
                 onceh=1;
-                ignore[4]=0;
+                ignore[eFACTION.Inquisition]=0;
             }
         }
     }
@@ -1369,13 +1369,13 @@ if (zoomed==0) and (cooldown<=0) and (menu==20) and (diplomacy==0){
             onceh=0;
             cooldown=8000;
             click2=1;
-            if (ignore[5]==0){
+            if (ignore[eFACTION.Ecclesiarchy]==0){
                 onceh=1;
-                ignore[5]=1;
+                ignore[eFACTION.Ecclesiarchy]=1;
             }
-            if (ignore[5]==1) and (onceh==0){
+            if (ignore[eFACTION.Ecclesiarchy]==1) and (onceh==0){
                 onceh=1;
-                ignore[5]=0;
+                ignore[eFACTION.Ecclesiarchy]=0;
             }
         }
     }
@@ -1391,13 +1391,13 @@ if (zoomed==0) and (cooldown<=0) and (menu==20) and (diplomacy==0){
             onceh=0;
             cooldown=8000;
             click2=1;
-            if (ignore[6]==0){
+            if (ignore[eFACTION.Eldar]==0){
                 onceh=1;
-                ignore[6]=1;
+                ignore[eFACTION.Eldar]=1;
             }
-            if (ignore[6]==1) and (onceh==0){
+            if (ignore[eFACTION.Eldar]==1) and (onceh==0){
                 onceh=1;
-                ignore[6]=0;
+                ignore[eFACTION.Eldar]=0;
             }
         }
     }
@@ -1413,13 +1413,13 @@ if (zoomed==0) and (cooldown<=0) and (menu==20) and (diplomacy==0){
             onceh=0;
             cooldown=8000;
             click2=1;
-            if (ignore[7]==0){
+            if (ignore[eFACTION.Ork]==0){
                 onceh=1;
-                ignore[7]=1;
+                ignore[eFACTION.Ork]=1;
             }
-            if (ignore[7]==1) and (onceh==0){
+            if (ignore[eFACTION.Ork]==1) and (onceh==0){
                 onceh=1;
-                ignore[7]=0;
+                ignore[eFACTION.Ork]=0;
             }
         }
     }
@@ -1435,13 +1435,13 @@ if (zoomed==0) and (cooldown<=0) and (menu==20) and (diplomacy==0){
             onceh=0;
             cooldown=8000;
             click2=1;
-            if (ignore[8]==0){
+            if (ignore[eFACTION.Tau]==0){
                 onceh=1;
-                ignore[8]=1;
+                ignore[eFACTION.Tau]=1;
             }
-            if (ignore[8]==1) and (onceh==0){
+            if (ignore[eFACTION.Tau]==1) and (onceh==0){
                 onceh=1;
-                ignore[8]=0;
+                ignore[eFACTION.Tau]=0;
             }
         }
     }
@@ -1457,13 +1457,13 @@ if (zoomed==0) and (cooldown<=0) and (menu==20) and (diplomacy==0){
             onceh=0;
             cooldown=8000;
             click2=1;
-            if (ignore[10]==0) and (onceh==0){
+            if (ignore[eFACTION.Chaos]==0) and (onceh==0){
                 onceh=1;
-                ignore[10]=1;
+                ignore[eFACTION.Chaos]=1;
             }
-            if (ignore[10]==1) and (onceh==0){
+            if (ignore[eFACTION.Chaos]==1) and (onceh==0){
                 onceh=1;
-                ignore[10]=0;
+                ignore[eFACTION.Chaos]=0;
             }
         }
     }

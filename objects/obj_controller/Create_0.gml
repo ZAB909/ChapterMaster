@@ -1109,34 +1109,34 @@ known[eFACTION.Necrons]=0;
 // disposition[3]=60;
 // ** Sets diplomacy annoyed status **
 annoyed[0]=0;
-annoyed[1]=0;
-annoyed[2]=0;
-annoyed[3]=0;
-annoyed[4]=0;
-annoyed[5]=0;
-annoyed[6]=0;
-annoyed[7]=0;
-annoyed[8]=0;
-annoyed[9]=0;
-annoyed[10]=0;
-annoyed[11]=0;
+annoyed[eFACTION.Player]=0;
+annoyed[eFACTION.Imperium]=0;
+annoyed[eFACTION.Mechanicus]=0;
+annoyed[eFACTION.Inquisition]=0;
+annoyed[eFACTION.Ecclesiarchy]=0;
+annoyed[eFACTION.Eldar]=0;
+annoyed[eFACTION.Ork]=0;
+annoyed[eFACTION.Tau]=0;
+annoyed[eFACTION.Tyranids]=0;
+annoyed[eFACTION.Chaos]=0;
+annoyed[eFACTION.Heretics]=0;
 annoyed[12]=0;
-annoyed[13]=0;
+annoyed[eFACTION.Necrons]=0;
 // ** Sets diplomacy ignore status **
 ignore[0]=0;
-ignore[1]=0;
-ignore[2]=0;
-ignore[3]=0;
-ignore[4]=0;
-ignore[5]=0;
-ignore[6]=0;
-ignore[7]=0;
-ignore[8]=0;
-ignore[9]=0;
-ignore[10]=0;
-ignore[11]=0;
+ignore[eFACTION.Player]=0;
+ignore[eFACTION.Imperium]=0;
+ignore[eFACTION.Mechanicus]=0;
+ignore[eFACTION.Inquisition]=0;
+ignore[eFACTION.Ecclesiarchy]=0;
+ignore[eFACTION.Eldar]=0;
+ignore[eFACTION.Ork]=0;
+ignore[eFACTION.Tau]=0;
+ignore[eFACTION.Tyranids]=0;
+ignore[eFACTION.Chaos]=0;
+ignore[eFACTION.Heretics]=0;
 ignore[12]=0;
-ignore[13]=0;
+ignore[eFACTION.Necrons]=0;
 // ** Sets diplomacy turns to be ignored **
 turns_ignored[0]=0;
 turns_ignored[1]=0;
@@ -1594,11 +1594,11 @@ if (floor(vih)<vih){
 }
 
 // show_message(string(vih)+" pages");
-man=65;
+var tman=65;
 temp[65]=string(temp[60])+string(temp[61])+string(temp[62]);
 for(var i=0; i<vih; i++){
-    man+=1;
-    temp[man]=string(temp[60])+string(temp[61])+string(temp[62]);
+    tman+=1;
+    temp[tman]=string(temp[60])+string(temp[61])+string(temp[62]);
 }
 
 var lig=0,remov=0,stahp=0;

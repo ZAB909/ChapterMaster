@@ -225,8 +225,8 @@ function scr_ui_diplomacy() {
 	        }
 	        x6=xx+349;x7=x6+51;
 	        draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);draw_set_color(c_black);
-	        if (ignore[2]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
-	        if (ignore[2]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Imperium]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Imperium]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
 	        if (mouse_x>=x6) and (mouse_y>=y6) and (mouse_x<x7) and (mouse_y<y7){
 	            draw_set_alpha(0.2);draw_rectangle(x6,y6,x7,y7,0);draw_set_alpha(1);
 	        }
@@ -234,8 +234,8 @@ function scr_ui_diplomacy() {
     
 	        /*var fis;fis="[Request Audience]";
 	        if (turns_ignored[2]>0) then fis="                  ";
-	        if (ignore[2]<1) then draw_text_transformed(xx+189,yy+354,string(fis)+"  [Ignore]",0.7,0.7,0);
-	        if (ignore[2]>=1) then draw_text_transformed(xx+189,yy+354,string(fis)+"[Unignore]",0.7,0.7,0);*/
+	        if (ignore[eFACTION.Imperium]<1) then draw_text_transformed(xx+189,yy+354,string(fis)+"  [Ignore]",0.7,0.7,0);
+	        if (ignore[eFACTION.Imperium]>=1) then draw_text_transformed(xx+189,yy+354,string(fis)+"[Unignore]",0.7,0.7,0);*/
 	    }
     
 	    if (known[eFACTION.Mechanicus]>0.7) and (faction_defeated[3]=0){
@@ -249,8 +249,8 @@ function scr_ui_diplomacy() {
 	        }
 	        x6=xx+349;x7=x6+51;
 	        draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);draw_set_color(c_black);
-	        if (ignore[3]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
-	        if (ignore[3]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Mechanicus]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Mechanicus]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
 	        if (mouse_x>=x6) and (mouse_y>=y6) and (mouse_x<x7) and (mouse_y<y7){
 	            draw_set_alpha(0.2);draw_rectangle(x6,y6,x7,y7,0);draw_set_alpha(1);
 	        }
@@ -267,8 +267,8 @@ function scr_ui_diplomacy() {
 	        }
 	        x6=xx+349;x7=x6+51;
 	        draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);draw_set_color(c_black);
-	        if (ignore[4]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
-	        if (ignore[4]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Inquisition]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Inquisition]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
 	        if (mouse_x>=x6) and (mouse_y>=y6) and (mouse_x<x7) and (mouse_y<y7){
 	            draw_set_alpha(0.2);draw_rectangle(x6,y6,x7,y7,0);draw_set_alpha(1);
 	        }
@@ -285,8 +285,8 @@ function scr_ui_diplomacy() {
 	        }
 	        x6=xx+349;x7=x6+51;
 	        draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);draw_set_color(c_black);
-	        if (ignore[5]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
-	        if (ignore[5]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Ecclesiarchy]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Ecclesiarchy]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
 	        if (mouse_x>=x6) and (mouse_y>=y6) and (mouse_x<x7) and (mouse_y<y7){
 	            draw_set_alpha(0.2);draw_rectangle(x6,y6,x7,y7,0);draw_set_alpha(1);
 	        }
@@ -308,8 +308,8 @@ function scr_ui_diplomacy() {
 	        }
 	        x6=xx+349+1010;x7=x6+51;
 	        draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);draw_set_color(c_black);
-	        if (ignore[6]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
-	        if (ignore[6]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Eldar]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Eldar]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
 	        if (mouse_x>=x6) and (mouse_y>=y6) and (mouse_x<x7) and (mouse_y<y7){
 	            draw_set_alpha(0.2);draw_rectangle(x6,y6,x7,y7,0);draw_set_alpha(1);
 	        }
@@ -326,8 +326,8 @@ function scr_ui_diplomacy() {
 	        }
 	        x6=xx+349+1010;x7=x6+51;
 	        draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);draw_set_color(c_black);
-	        if (ignore[7]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
-	        if (ignore[7]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Ork]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Ork]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
 	        if (mouse_x>=x6) and (mouse_y>=y6) and (mouse_x<x7) and (mouse_y<y7){
 	            draw_set_alpha(0.2);draw_rectangle(x6,y6,x7,y7,0);draw_set_alpha(1);
 	        }
@@ -344,8 +344,8 @@ function scr_ui_diplomacy() {
 	        }
 	        x6=xx+349+1010;x7=x6+51;
 	        draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);draw_set_color(c_black);
-	        if (ignore[8]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
-	        if (ignore[8]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Tau]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Tau]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
 	        if (mouse_x>=x6) and (mouse_y>=y6) and (mouse_x<x7) and (mouse_y<y7){
 	            draw_set_alpha(0.2);draw_rectangle(x6,y6,x7,y7,0);draw_set_alpha(1);
 	        }
@@ -362,8 +362,8 @@ function scr_ui_diplomacy() {
 	        }
 	        x6=xx+349+1010;x7=x6+51;
 	        draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);draw_set_color(c_black);
-	        if (ignore[10]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
-	        if (ignore[10]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Chaos]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Chaos]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
 	        if (mouse_x>=x6) and (mouse_y>=y6) and (mouse_x<x7) and (mouse_y<y7){
 	            draw_set_alpha(0.2);draw_rectangle(x6,y6,x7,y7,0);draw_set_alpha(1);
 	        }
@@ -380,26 +380,26 @@ function scr_ui_diplomacy() {
 	    /*if (known[eFACTION.Eldar]>0.7) and (faction_defeated[6]=0){
 	        var fis;fis="[Request Audience]";
 	        if (turns_ignored[6]>0) then fis="                  ";
-	        if (ignore[6]<1) then draw_text_transformed(xx+1199,yy+354,string(fis)+"  [Ignore]",0.7,0.7,0);
-	        if (ignore[6]>=1) then draw_text_transformed(xx+1199,yy+354,string(fis)+"[Unignore]",0.7,0.7,0);
+	        if (ignore[eFACTION.Eldar]<1) then draw_text_transformed(xx+1199,yy+354,string(fis)+"  [Ignore]",0.7,0.7,0);
+	        if (ignore[eFACTION.Eldar]>=1) then draw_text_transformed(xx+1199,yy+354,string(fis)+"[Unignore]",0.7,0.7,0);
 	    }
 	    if (known[eFACTION.Ork]>0.7) and (faction_defeated[7]=0){
 	        var fis;fis="[Request Audience]";
 	        if (turns_ignored[7]>0) then fis="                  ";
-	        if (ignore[7]<1) then draw_text_transformed(xx+1199,yy+490,string(fis)+"  [Ignore]",0.7,0.7,0);
-	        if (ignore[7]>=1) then draw_text_transformed(xx+1199,yy+490,string(fis)+"[Unignore]",0.7,0.7,0);
+	        if (ignore[eFACTION.Ork]<1) then draw_text_transformed(xx+1199,yy+490,string(fis)+"  [Ignore]",0.7,0.7,0);
+	        if (ignore[eFACTION.Ork]>=1) then draw_text_transformed(xx+1199,yy+490,string(fis)+"[Unignore]",0.7,0.7,0);
 	    }
 	    if (known[eFACTION.Tau]>0.7) and (faction_defeated[8]=0){
 	        var fis;fis="[Request Audience]";
 	        if (turns_ignored[8]>0) then fis="                  ";
-	        if (ignore[8]<1) then draw_text_transformed(xx+1199,yy+631,string(fis)+"  [Ignore]",0.7,0.7,0);
-	        if (ignore[8]>=1) then draw_text_transformed(xx+1199,yy+631,string(fis)+"[Unignore]",0.7,0.7,0);
+	        if (ignore[eFACTION.Tau]<1) then draw_text_transformed(xx+1199,yy+631,string(fis)+"  [Ignore]",0.7,0.7,0);
+	        if (ignore[eFACTION.Tau]>=1) then draw_text_transformed(xx+1199,yy+631,string(fis)+"[Unignore]",0.7,0.7,0);
 	    }
 	    if (known[eFACTION.Chaos]>0.7) and (faction_defeated[10]=0){
 	        var fis;fis="[Request Audience]";
 	        if (turns_ignored[10]>0) then fis="                  ";
-	        if (ignore[10]<1) then draw_text_transformed(xx+1199,yy+762,string(fis)+"  [Ignore]",0.7,0.7,0);
-	        if (ignore[10]>=1) then draw_text_transformed(xx+1199,yy+762,string(fis)+"[Unignore]",0.7,0.7,0);
+	        if (ignore[eFACTION.Chaos]<1) then draw_text_transformed(xx+1199,yy+762,string(fis)+"  [Ignore]",0.7,0.7,0);
+	        if (ignore[eFACTION.Chaos]>=1) then draw_text_transformed(xx+1199,yy+762,string(fis)+"[Unignore]",0.7,0.7,0);
 	    }*/
     
     
