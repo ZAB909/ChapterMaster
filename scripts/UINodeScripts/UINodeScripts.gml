@@ -40,25 +40,20 @@ function UINode(gui_x, gui_y, width, height, padding = 0, margin = 0) constructo
 		gid = name;	
 		return self;
 	}
-	/**
-	 * Gets a UI component from the node, if it exists, or returns a NullComponent type
-	 * @param {function.UIComponent} component Either a string of the component name to look up, or the constructor function
-	 * used to create that component type.
-	 */
-	static get_component = function(component) {
+	
+	static get_component_type = function(component) {
 		
-		if is_callable(component) {
-			
-			var comp = array_reduce(components, method({component}, function(prev, curr) {
+		static reduction = function(prev, curr) {
 			if is_instanceof(prev, NullComponent) {
 				return is_instanceof(curr, component) ? curr : prev;
 			}
 			return prev
-			}), new NullComponent())
-			
-			return comp
 		}
-		throw "UI: get_component method requires passing in a constructor function to find the component" 
+		
+		if is_callable(component) {
+			return array_reduce(components, method({component}, reduction), new NullComponent())
+		}
+		throw "UI: get_component method requires passing in a constructor function to find the component"
 	}
 	
 	/**
@@ -72,10 +67,10 @@ function UINode(gui_x, gui_y, width, height, padding = 0, margin = 0) constructo
 	}
 
 	static remove_component = function(component) {
-		var new_array = array_filter(components, method({component}, function(elem) {
+		static filter = function(elem) {
 			return elem != component
-		}))
-		components = new_array;
+		}
+		components = array_filter(components, method({component}, filter))
 	}
 	
 	/**
@@ -96,9 +91,14 @@ function UINode(gui_x, gui_y, width, height, padding = 0, margin = 0) constructo
 		return new_node;
 	}
 	
+	/// @desc Function Description
+	/// @returns {Id.Instance|struct.UINode}
 	static finalize = function() {
-		if is_instanceof(creator, UINode)
-			return creator;
+		if is_struct(creator) {
+			if is_instanceof(creator, UINode) {
+				return creator;
+			}
+		}
 		return self;
 	}
 

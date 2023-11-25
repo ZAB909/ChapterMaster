@@ -4,6 +4,7 @@ function NullComponent() constructor {
 	static is_null = function() {
 		return true	
 	}
+	cid = "NULL"
 }
 
 function UIHandle(arg = undefined) {
@@ -24,8 +25,10 @@ function UIComponent(owner, name) constructor {
 	static is_null = function() {
 		return false
 	}
-	static finalize = function(handle = function(arg){}) {
-		NUIComponent.components[$ self.cid] = self;
+	static finalize = function() {
+		//this is here because feather is a little too eager in determining if the static exists yet or not
+		var c = NUIComponent.components ?? {};
+		c[$ self.cid] = self;
 		return owner;
 	}
 	static make_id = function() {
@@ -33,17 +36,20 @@ function UIComponent(owner, name) constructor {
 		return cid++
 	}
 	
-	static cancel_events_of = function(components, type = UIEventComponent) {
+	static cancel_events_of = function(components) {
+
+		static filter = function(elem) {
+			return is_instanceof(elem, UIEventComponent)
+		}
+		
 		components = array_map(components, function(elem) {
 			return NUIComponent(elem) ?? new NullComponent();	
 		})
 		
-		components = array_filter(components, method({type},function(elem) {
-			return is_instanceof(elem, type)
-		}))
+		components = array_filter(components, filter)
 		
 		array_foreach(components, function(elem) {
-			if elem != self
+			if elem.cid != cid
 				elem.is_canceled = true;	
 		})
 	}

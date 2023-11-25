@@ -23,7 +23,7 @@ function UITextRendererComponent(owner, name) : UIRenderComponent(owner, name) c
 	col3 = c_white
 	col4 = c_white
 	sep = 16;
-	font = -1;
+	font = fnt_menu;
 	xscale = 1;
 	yscale = 1;
 	angle = 0;
@@ -37,7 +37,7 @@ function UITextRendererComponent(owner, name) : UIRenderComponent(owner, name) c
 		if !is_visible
 			return;
 		callback();
-		if font >= 0 || draw_get_font() != font {
+		if draw_get_font() != font {
 			draw_set_font(font)	
 		}
 		var orig_valign = draw_get_valign()
