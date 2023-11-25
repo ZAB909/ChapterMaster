@@ -48,7 +48,7 @@ function scr_enemy_ai_c() {
     
 	    if (contin=1){
 	        rando=floor(random(100))+1;
-	        if (obj_controller.known[7]>0) then rando-=10;// Empire bonus, was 15 before
+	        if (obj_controller.known[eFACTION.Ork]>0) then rando-=10;// Empire bonus, was 15 before
         
 	        // Check for industrial facilities
 	        if (p_type[i]!="Dead") and (p_type[i]!="Lava"){// Used to not have Ice either

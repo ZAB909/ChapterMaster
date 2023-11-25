@@ -102,8 +102,8 @@ if (did==1){
             array_push(ed.p_feature[2], new new_planet_feature(P_features.Monastery));ed.p_owner[2]=1;ed.p_first[2]=1; //monestary
             if (homeworld_rule!=1) then ed.dispo[2]=-5000;
             
-            if (obj_ini.home_type=="Shrine") then known[5]=1;
-            if (obj_ini.recruiting_type=="Shrine") then known[5]=1;
+            if (obj_ini.home_type=="Shrine") then known[eFACTION.Ecclesiarchy]=1;
+            if (obj_ini.recruiting_type=="Shrine") then known[eFACTION.Ecclesiarchy]=1;
             
             ed.p_lasers[2]=8;
             ed.p_silo[2]=100;
@@ -129,8 +129,8 @@ if (did==1){
 			ed.p_owner[2]=1;
             ed.p_first[2]=1;
             if (homeworld_rule!=1) then ed.dispo[2]=-5000;
-            if (obj_ini.home_type=="Shrine") then known[5]=1;
-            if (obj_ini.recruiting_type=="Shrine") then known[5]=1;
+            if (obj_ini.home_type=="Shrine") then known[eFACTION.Ecclesiarchy]=1;
+            if (obj_ini.recruiting_type=="Shrine") then known[eFACTION.Ecclesiarchy]=1;
             
             ed.p_lasers[2]=8;
             ed.p_silo[2]=100;

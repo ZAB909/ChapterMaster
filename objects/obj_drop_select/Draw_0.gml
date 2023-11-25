@@ -452,7 +452,7 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
         
         
         if ((attacking=0) or (attacking=10) or (attacking=11)) and (obj_ncombat.battle_object.p_traitors[obj_ncombat.battle_id]=0) and (obj_ncombat.battle_object.p_chaos[obj_ncombat.battle_id]=0){
-            if ( planet_feature_bool(obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id],P_features.Warlord10)==1) and (obj_controller.known[10]=0) and (obj_controller.faction_gender[10]=1) and (obj_controller.turn>=obj_controller.chaos_turn){
+            if ( planet_feature_bool(obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id],P_features.Warlord10)==1) and (obj_controller.known[eFACTION.Chaos]=0) and (obj_controller.faction_gender[10]=1) and (obj_controller.turn>=obj_controller.chaos_turn){
                 var pop;pop=instance_create(0,0,obj_popup);
                 pop.image="chaos_symbol";
                 pop.title="Concealed Heresy";
@@ -464,7 +464,7 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
                 obj_controller.cooldown=8;combating=0;
                 instance_activate_all();exit;exit;
             }
-            if ( planet_feature_bool(obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id],P_features.Warlord10)==1) and (obj_controller.known[10]>=2) and (obj_controller.faction_gender[10]=1) and (obj_controller.turn>=obj_controller.chaos_turn) then with(obj_drop_select){
+            if ( planet_feature_bool(obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id],P_features.Warlord10)==1) and (obj_controller.known[eFACTION.Chaos]>=2) and (obj_controller.faction_gender[10]=1) and (obj_controller.turn>=obj_controller.chaos_turn) then with(obj_drop_select){
                 obj_ncombat.enemy=11;obj_ncombat.threat=0;alarm[6]=1;
                 with(obj_pnunit){instance_destroy();}
                 with(obj_enunit){instance_destroy();}

@@ -197,12 +197,12 @@ if (menu==13) and (cooldown<=0) and (artifacts>0){
         // Gift
         if (mouse_x>=xx+512) and (mouse_y>=yy+789) and (mouse_x<xx+740) and (mouse_y<yy+804) and (cooldown<=0){
             var chick=0;
-            if (known[2]>1) and (faction_defeated[2]==0) then chick=1;
-            if (known[3]>1) and (faction_defeated[3]==0) then chick=1;
-            if (known[4]>1) and (faction_defeated[4]==0) then chick=1;
-            if (known[5]>1) and (faction_defeated[5]==0) then chick=1;
-            if (known[6]>1) and (faction_defeated[6]==0) then chick=1;
-            if (known[8]>1) and (faction_defeated[8]==0) then chick=1;
+            if (known[eFACTION.Imperium]>1) and (faction_defeated[2]==0) then chick=1;
+            if (known[eFACTION.Mechanicus]>1) and (faction_defeated[3]==0) then chick=1;
+            if (known[eFACTION.Inquisition]>1) and (faction_defeated[4]==0) then chick=1;
+            if (known[eFACTION.Ecclesiarchy]>1) and (faction_defeated[5]==0) then chick=1;
+            if (known[eFACTION.Eldar]>1) and (faction_defeated[6]==0) then chick=1;
+            if (known[eFACTION.Tau]>1) and (faction_defeated[8]==0) then chick=1;
             if (chick!=0){
                 var pop=instance_create(0,0,obj_popup);
                 pop.type=9;
@@ -267,12 +267,12 @@ if (menu==14) and (cooldown<=0){
     if (point_in_rectangle(mouse_x, mouse_y, xx + 733, yy + 466, xx + 790, yy + 486) && cooldown <= 0) {
         if (stc_wargear_un+stc_vehicles_un+stc_ships_un>0){
             var chick=0;
-            if (known[2]>1) and (faction_defeated[2]==0) then chick=1;
-            if (known[3]>1) and (faction_defeated[3]==0) then chick=1;
-            if (known[4]>1) and (faction_defeated[4]==0) then chick=1;
-            if (known[5]>1) and (faction_defeated[5]==0) then chick=1;
-            if (known[6]>1) and (faction_defeated[6]==0) then chick=1;
-            if (known[8]>1) and (faction_defeated[8]==0) then chick=1;
+            if (known[eFACTION.Imperium]>1) and (faction_defeated[2]==0) then chick=1;
+            if (known[eFACTION.Mechanicus]>1) and (faction_defeated[3]==0) then chick=1;
+            if (known[eFACTION.Inquisition]>1) and (faction_defeated[4]==0) then chick=1;
+            if (known[eFACTION.Ecclesiarchy]>1) and (faction_defeated[5]==0) then chick=1;
+            if (known[eFACTION.Eldar]>1) and (faction_defeated[6]==0) then chick=1;
+            if (known[eFACTION.Tau]>1) and (faction_defeated[8]==0) then chick=1;
             if (chick!=0){
                 var pop=instance_create(0,0,obj_popup);
                 pop.type=9.1;
@@ -852,7 +852,7 @@ if (menu==20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (cool
                 trade_disp[2]=-10;
                 trade_disp[3]=10;
                 trade_disp[4]=-15;
-                if (random_event_next != EVENT.none) and ((string_count("WL10|",useful_info)>0) or (turn<chaos_turn)) and ((string_count("WL7|",useful_info)>0) or (known[7]<1)) and  (string_count("WG|",useful_info)>1) and (string_count("CM|",useful_info)>0) then trade_disp[4]=1000;
+                if (random_event_next != EVENT.none) and ((string_count("WL10|",useful_info)>0) or (turn<chaos_turn)) and ((string_count("WL7|",useful_info)>0) or (known[eFACTION.Ork]<1)) and  (string_count("WG|",useful_info)>1) and (string_count("CM|",useful_info)>0) then trade_disp[4]=1000;
             }
             // Ork trade goods
             if (diplomacy==7){
@@ -1294,7 +1294,7 @@ if (zoomed==0) and (cooldown<=0) and (menu==20) and (diplomacy==0){
     // Imperium
     if (mouse_y>=yy+355) and (mouse_y<yy+369){
         if (mouse_x>=xx+194) and (mouse_x<xx+288) and (cooldown<=0) and (faction_defeated[2]==0){
-            if (known[2]!=0) and (turns_ignored[2]==0){
+            if (known[eFACTION.Imperium]!=0) and (turns_ignored[2]==0){
                 diplomacy=2;
                 cooldown=8000;
             }
@@ -1316,7 +1316,7 @@ if (zoomed==0) and (cooldown<=0) and (menu==20) and (diplomacy==0){
     // Mechanicus
     if (mouse_y>=yy+491) and (mouse_y<yy+503){
         if (mouse_x>=xx+194) and (mouse_x<xx+288) and (cooldown<=0) and (faction_defeated[3]==0){
-            if (known[3]!=0) and (turns_ignored[3]==0){
+            if (known[eFACTION.Mechanicus]!=0) and (turns_ignored[3]==0){
                 diplomacy=3;
                 cooldown=8000
             }
@@ -1338,7 +1338,7 @@ if (zoomed==0) and (cooldown<=0) and (menu==20) and (diplomacy==0){
     // Inquisition
     if (mouse_y>=yy+630) and (mouse_y<yy+644){
         if (mouse_x>=xx+194) and (mouse_x<xx+288) and (cooldown<=0) and (faction_defeated[4]==0){
-            if (known[4]!=0) and (turns_ignored[4]==0){
+            if (known[eFACTION.Inquisition]!=0) and (turns_ignored[4]==0){
                 diplomacy=4;
                 cooldown=8000;
             }
@@ -1360,7 +1360,7 @@ if (zoomed==0) and (cooldown<=0) and (menu==20) and (diplomacy==0){
     // Ecclesiarchy
     if (mouse_y>=yy+760) and (mouse_y<yy+774){
         if (mouse_x>=xx+194) and (mouse_x<xx+288) and (cooldown<=0) and (faction_defeated[3]==0){
-            if (known[5]!=0) and (turns_ignored[5]==0){
+            if (known[eFACTION.Ecclesiarchy]!=0) and (turns_ignored[5]==0){
                 diplomacy=5;
                 cooldown=8000;
             }
@@ -1382,7 +1382,7 @@ if (zoomed==0) and (cooldown<=0) and (menu==20) and (diplomacy==0){
     // Eldar
     if (mouse_y>=yy+355) and (mouse_y<yy+369){
         if (mouse_x>=xx+1203) and (mouse_x<xx+1300) and (cooldown<=0) and (faction_defeated[6]==0){
-            if (known[6]!=0) and (turns_ignored[6]==0){
+            if (known[eFACTION.Eldar]!=0) and (turns_ignored[6]==0){
                 diplomacy=6;
                 cooldown=8000;
             }
@@ -1404,7 +1404,7 @@ if (zoomed==0) and (cooldown<=0) and (menu==20) and (diplomacy==0){
     // Orks
     if (mouse_y>=yy+491) and (mouse_y<yy+503){
         if (mouse_x>=xx+1203) and (mouse_x<xx+1300) and (cooldown<=0) and (faction_defeated[7]==0){
-            if (known[7]!=0) and (turns_ignored[7]==0){
+            if (known[eFACTION.Ork]!=0) and (turns_ignored[7]==0){
                 diplomacy=7;
                 cooldown=8000;
             }
@@ -1426,7 +1426,7 @@ if (zoomed==0) and (cooldown<=0) and (menu==20) and (diplomacy==0){
     // Tau
     if (mouse_y>=yy+630) and (mouse_y<yy+644){
         if (mouse_x>=xx+1203) and (mouse_x<xx+1300) and (cooldown<=0) and (faction_defeated[8]==0){
-            if (known[8]!=0) and (turns_ignored[8]==0){
+            if (known[eFACTION.Tau]!=0) and (turns_ignored[8]==0){
                 diplomacy=8;
                 cooldown=8000;
             }
@@ -1448,7 +1448,7 @@ if (zoomed==0) and (cooldown<=0) and (menu==20) and (diplomacy==0){
     // Heretics
     if (mouse_y>=yy+760) and (mouse_y<yy+774){
         if (mouse_x>=xx+1203) and (mouse_x<xx+1300) and (cooldown<=0) and (faction_defeated[10]==0){
-            if (known[10]!=0) and (turns_ignored[10]==0){
+            if (known[eFACTION.Chaos]!=0) and (turns_ignored[10]==0){
                 diplomacy=10;
                 cooldown=8000;
             }
@@ -1479,14 +1479,14 @@ if (zoomed==0) and (cooldown<=0) and (menu==20) and (diplomacy==0){
             scr_dialogue("hello");
             onceh=1;
         }
-        if (known[4]==1) and (diplomacy==4) and (onceh==0){
+        if (known[eFACTION.Inquisition]==1) and (diplomacy==4) and (onceh==0){
             scr_dialogue("intro");
             onceh=1;
             known[diplomacy]=2;
             faction_justmet=1;
             obj_controller.last_mission=turn+1;
         }
-        if (known[4]==3) and (diplomacy==4) and (onceh==0){
+        if (known[eFACTION.Inquisition]==3) and (diplomacy==4) and (onceh==0){
             scr_dialogue("intro");
             onceh=1;
             known[diplomacy]=4;

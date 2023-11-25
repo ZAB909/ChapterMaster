@@ -466,11 +466,11 @@ function scr_enemy_ai_d() {
         
 	        var o,yep,yep2;o=0;yep=true;yep2=false;
 	        repeat(4){o+=1;if (obj_ini.dis[o]="Psyker Intolerant") then yep=false;}
-	        if (obj_controller.known[9]=0) and (woop!=0) and (yep!=false){
+	        if (obj_controller.known[eFACTION.Tyranids]=0) and (woop!=0) and (yep!=false){
 	            scr_popup("Shadow in the Warp","Chief "+string(obj_ini.role[100,17])+" "+string(obj_ini.name[0,5])+" reports a disturbance in the warp.  He claims it is like a shadow.","shadow","");
 	            scr_event_log("red","Chief "+string(obj_ini.role[100,17])+" reports a disturbance in the warp.  He claims it is like a shadow.");
 	        }
-	        if (obj_controller.known[9]=0) and (woop=0) and (yep!=false){
+	        if (obj_controller.known[eFACTION.Tyranids]=0) and (woop=0) and (yep!=false){
 	            var q,q2;q=0;q2=0;
 	            repeat(90){
 	                if (q2=0){q+=1;
@@ -487,7 +487,7 @@ function scr_enemy_ai_d() {
         
         
         
-	        g=50;i=50;obj_controller.known[9]=1;
+	        g=50;i=50;obj_controller.known[eFACTION.Tyranids]=1;
 	    }}
     
     

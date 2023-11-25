@@ -786,7 +786,7 @@ function scr_enemy_ai_e() {
 	        scr_popup("Chaos Meeting","A cloaked, ragged figure approaches your forces and hails you.  He is to bring you to meet with their master and you have few enough forces to be permitted.  What is thy will?","chaos_messenger",effect);
 	    }
 	    if (master_present=1) and (otm>21){
-	        scr_popup("Chaos Meeting","A cloaked, ragged figure approaches your forces and hails you.  He is to bring you to their master, but before the meeting proceeds, you must bring fewer forces.  Only yourself and up to two squads will be allowed in the presence of "+string(obj_controller.faction_title[10])+" "+string(obj_controller.faction_leader[10])+".","chaos_messenger","meeting_2");
+	        scr_popup("Chaos Meeting","A cloaked, ragged figure approaches your forces and hails you.  He is to bring you to their master, but before the meeting proceeds, you must bring fewer forces.  Only yourself and up to two squads will be allowed in the presence of "+string(obj_controller.faction_title[10])+" "+string(obj_controller.faction_leader[eFACTION.Chaos])+".","chaos_messenger","meeting_2");
 	        with(obj_temp_meeting){instance_destroy();}
 	    }
 	    if (master_present=0) and (otm>21){

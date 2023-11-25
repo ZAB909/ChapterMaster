@@ -522,7 +522,7 @@ if (obj_ini.omophagea=1){
                 }
 
                 instance_activate_object(obj_turn_end);
-                if (obj_controller.known[4]<3) and (!instance_exists(obj_turn_end)){
+                if (obj_controller.known[eFACTION.Inquisition]<3) and (!instance_exists(obj_turn_end)){
                     var pip;pip=instance_create(0,0,obj_popup);
                     pip.title="Inquisitor Killed";pip.text=msg;pip.image="inquisition";pip.cooldown=30;
                     pip.title="EXCOMMUNICATUS TRAITORUS";
@@ -531,7 +531,7 @@ if (obj_ini.omophagea=1){
                     obj_controller.alarm[8]=1;
                     scr_event_log("red","EXCOMMUNICATUS TRAITORUS");
                 }
-                if (obj_controller.known[4]<3) and (instance_exists(obj_turn_end)){
+                if (obj_controller.known[eFACTION.Inquisition]<3) and (instance_exists(obj_turn_end)){
                     scr_popup("Inquisitor Killed","The Inquisition has noticed your uncalled CONSUMPTION of "+string(msg)+" and declared your chapter Excommunicatus Traitorus.","inquisition","");
                     obj_controller.alarm[8]=1;scr_event_log("red","EXCOMMUNICATUS TRAITORUS");
                 }

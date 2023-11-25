@@ -205,7 +205,7 @@ if (demons>0){bes=12;bes_score=demons;}
 if (bes_score>0) then attacking=bes;
 
 var spesh;spesh=false;
-if (planet_feature_bool(p_target.p_feature[obj_controller.selecting_planet],P_features.Warlord10)==1) and (obj_controller.faction_defeated[10]=0) and (obj_controller.faction_gender[10]=1) and (obj_controller.known[10]>0) and (obj_controller.turn>=obj_controller.chaos_turn) then spesh=true;
+if (planet_feature_bool(p_target.p_feature[obj_controller.selecting_planet],P_features.Warlord10)==1) and (obj_controller.faction_defeated[10]=0) and (obj_controller.faction_gender[10]=1) and (obj_controller.known[eFACTION.Chaos]>0) and (obj_controller.turn>=obj_controller.chaos_turn) then spesh=true;
 
     if (p_target.p_problem[obj_controller.selecting_planet,1]="tyranid_org"){tyranids=2;attacking=9;}
     if (p_target.p_problem[obj_controller.selecting_planet,2]="tyranid_org"){tyranids=2;attacking=9;}

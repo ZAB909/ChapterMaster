@@ -66,7 +66,7 @@ function scr_quest(argument0, argument1, argument2, argument3) {
     
 	    if (argument1="300req") and (argument0=2){
 	        if (trading=0) then quick_trade=6;
-	        obj_controller.known[6]+=1;obj_controller.disposition[6]+=10;
+	        obj_controller.known[eFACTION.Eldar]+=1;obj_controller.disposition[6]+=10;
 	    }
     
     

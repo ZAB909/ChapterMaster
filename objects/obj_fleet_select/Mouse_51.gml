@@ -40,7 +40,7 @@ if (owner  = eFACTION.Player) and (instance_nearest(x,y,obj_p_fleet).action=""){
     
     if (sys_dist<32) and (sys.id!=mine.id) then cont=1;
     if (sys.storm>0) or (instance_nearest(x,y+24,obj_star).storm>0) then cont=0;
-    if (sys.craftworld=1) and (obj_controller.known[6]=0) then cont=0;
+    if (sys.craftworld=1) and (obj_controller.known[eFACTION.Eldar]=0) then cont=0;
     
     var web1,web2,web;
     web1=0;web2=0;web=0;

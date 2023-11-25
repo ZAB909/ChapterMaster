@@ -24,7 +24,7 @@ function scr_event_gossip(argument0) {
 
 	with(obj_temp4){instance_destroy();}
 	with(obj_star){if (owner = eFACTION.Ork) then instance_create(x,y,obj_temp4);}
-	if (instance_number(obj_temp4)>4) and (obj_controller.known[7]>0) and (obj_controller.faction_defeated[7]=0){
+	if (instance_number(obj_temp4)>4) and (obj_controller.known[eFACTION.Ork]>0) and (obj_controller.faction_defeated[7]=0){
 	    p+=1;gossip[p]="ork_waaagh";
 	}
 	with(obj_temp4){instance_destroy();}
@@ -46,11 +46,11 @@ function scr_event_gossip(argument0) {
 	if (obj_controller.faction_status[eFACTION.Imperium]!="War") and (obj_controller.disposition[2]<=25){p+=1;gossip[p]="low_dispo_impe";}
 	if (obj_controller.faction_status[eFACTION.Mechanicus]!="War") and (obj_controller.disposition[3]<=25){p+=1;gossip[p]="low_dispo_mech";}
 
-	if (obj_controller.known[6]>0) and (obj_controller.faction_defeated[6]=0) and (obj_controller.faction_status[eFACTION.Eldar]!="Allied"){p+=1;gossip[p]="smack_talk_eldar";}
-	if (obj_controller.known[7]>0) and (obj_controller.faction_defeated[7]=0) and (obj_controller.faction_status[eFACTION.Ork]!="Allied"){p+=1;gossip[p]="smack_talk_orks";}
-	if (obj_controller.known[8]>0) and (obj_controller.faction_defeated[8]=0) and (obj_controller.faction_status[eFACTION.Tau]!="Allied"){p+=1;gossip[p]="smack_talk_tau";}
-	if (obj_controller.known[9]>0) and (obj_controller.faction_defeated[9]=0) and (obj_controller.faction_status[eFACTION.Tyranids]!="Allied"){p+=1;gossip[p]="smack_talk_tyranids";}
-	if (obj_controller.known[10]>0) and (obj_controller.faction_defeated[10]=0) and (obj_controller.faction_status[eFACTION.Chaos]!="Allied"){p+=1;gossip[p]="smack_talk_chaos";}
+	if (obj_controller.known[eFACTION.Eldar]>0) and (obj_controller.faction_defeated[6]=0) and (obj_controller.faction_status[eFACTION.Eldar]!="Allied"){p+=1;gossip[p]="smack_talk_eldar";}
+	if (obj_controller.known[eFACTION.Ork]>0) and (obj_controller.faction_defeated[7]=0) and (obj_controller.faction_status[eFACTION.Ork]!="Allied"){p+=1;gossip[p]="smack_talk_orks";}
+	if (obj_controller.known[eFACTION.Tau]>0) and (obj_controller.faction_defeated[8]=0) and (obj_controller.faction_status[eFACTION.Tau]!="Allied"){p+=1;gossip[p]="smack_talk_tau";}
+	if (obj_controller.known[eFACTION.Tyranids]>0) and (obj_controller.faction_defeated[9]=0) and (obj_controller.faction_status[eFACTION.Tyranids]!="Allied"){p+=1;gossip[p]="smack_talk_tyranids";}
+	if (obj_controller.known[eFACTION.Chaos]>0) and (obj_controller.faction_defeated[10]=0) and (obj_controller.faction_status[eFACTION.Chaos]!="Allied"){p+=1;gossip[p]="smack_talk_chaos";}
 
 	// All of the custom ones above
 	// Recent events below

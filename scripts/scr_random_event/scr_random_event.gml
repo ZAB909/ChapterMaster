@@ -7,17 +7,17 @@ function scr_random_event(execute_now) {
 	//	var rando4=floor(random(200))+1;
 	//if (obj_controller.turns_ignored[6]<=0) and (obj_controller.faction_gender[6]=2) then rando4-=2;
 	//if (obj_controller.turns_ignored[6]<=0) and (rando4<=3) and execute_now and (faction_defeated[6]=0){
-	//    if (obj_controller.known[6]=2) and (obj_controller.disposition[6]>=-10) and (string_count("Eldar",obj_ini.strin)=0){
+	//    if (obj_controller.known[eFACTION.Eldar]=2) and (obj_controller.disposition[6]>=-10) and (string_count("Eldar",obj_ini.strin)=0){
 	//		debugl("RE: Eldar Mission 1");
 	//        // Need something else here that prevents them from asking missions when they are pissed
         
 	//        obj_turn_end.audiences+=1;// obj_turn_end.audiences+=1;
 	//        obj_turn_end.audien[obj_turn_end.audiences]=6;
         
-	//        // if (obj_controller.known[6]>2) then obj_turn_end.audien_topic[obj_turn_end.audiences]="mission";// Random mission?
-	//        if (obj_controller.known[6]=2){
+	//        // if (obj_controller.known[eFACTION.Eldar]>2) then obj_turn_end.audien_topic[obj_turn_end.audiences]="mission";// Random mission?
+	//        if (obj_controller.known[eFACTION.Eldar]=2){
 	//            obj_turn_end.audien_topic[obj_turn_end.audiences]="mission1";
-	//            obj_controller.known[6]=2.2;
+	//            obj_controller.known[eFACTION.Eldar]=2.2;
 	//            scr_quest(0,"300req",6,24);
 	//        }
         
@@ -29,7 +29,7 @@ function scr_random_event(execute_now) {
 
 	var inquisition_mission_roll = irandom(100);
 	var force_inquisition_mission = false;
-	if (((last_mission+50) <= turn) && (inquisition_mission_roll <= 5) && (known[4] != 0) && (obj_controller.faction_status[eFACTION.Inquisition] != "War")){
+	if (((last_mission+50) <= turn) && (inquisition_mission_roll <= 5) && (known[eFACTION.Inquisition] != 0) && (obj_controller.faction_status[eFACTION.Inquisition] != "War")){
 		force_inquisition_mission = true;
 	}
 
@@ -122,19 +122,19 @@ function scr_random_event(execute_now) {
 					
 					switch (curr_event){
 						case EVENT.inquisition_planet:
-							if (known[4]==0 || obj_controller.faction_status[eFACTION.Inquisition]=="War") {
+							if (known[eFACTION.Inquisition]==0 || obj_controller.faction_status[eFACTION.Inquisition]=="War") {
 								events_share[i] -= 1;
 								events_total -= 1;
 							}
 							break;
 						case EVENT.inquisition_mission:
-							if (known[4]==0 || obj_controller.disposition[4] < 0 || obj_controller.faction_status[eFACTION.Inquisition] == "War") {
+							if (known[eFACTION.Inquisition]==0 || obj_controller.disposition[4] < 0 || obj_controller.faction_status[eFACTION.Inquisition] == "War") {
 								events_share[i] -= 1;
 								events_total -= 1;
 							}
 							break;
 						case EVENT.mechanicus_mission:
-							if (known[3] == 0 || obj_controller.disposition[3] < 50 || obj_controller.faction_status[eFACTION.Mechanicus] == "War") {
+							if (known[eFACTION.Mechanicus] == 0 || obj_controller.disposition[3] < 50 || obj_controller.faction_status[eFACTION.Mechanicus] == "War") {
 								events_share[i] -= 1;
 								events_total -= 1;
 							}
@@ -156,7 +156,7 @@ function scr_random_event(execute_now) {
 							}
 							break;
 						case EVENT.necron_awaken:
-							if((known[4] == 0)){
+							if((known[eFACTION.Inquisition] == 0)){
 								events_share[i] -= 1;
 								events_total -= 1;
 							}
@@ -464,8 +464,8 @@ function scr_random_event(execute_now) {
 			}
 			else{
 	            scr_popup("Sororitas","The Ecclesiarchy have placed a company of sisters on "+string(star_id.name)+" "+string(planet)+".","sororitas","");
-	            if (known[5]==0){
-					known[5]=1; // this seesms like a thing another part of code already does, not sure tho
+	            if (known[eFACTION.Ecclesiarchy]==0){
+					known[eFACTION.Ecclesiarchy]=1; // this seesms like a thing another part of code already does, not sure tho
 				}
 			}
 		}
@@ -1310,16 +1310,16 @@ function scr_random_event(execute_now) {
 		debugl("RE: Enemy");
 		
 		var factions = [];
-		if(known[2] == 1){
+		if(known[eFACTION.Imperium] == 1){
 			array_push(factions,2);
 		}
-		if(known[3] == 1){
+		if(known[eFACTION.Mechanicus] == 1){
 			array_push(factions,3);
 		}
-		if(known[4] == 1){
+		if(known[eFACTION.Inquisition] == 1){
 			array_push(factions,4);
 		}
-		if(known[5] == 1){
+		if(known[eFACTION.Ecclesiarchy] == 1){
 			array_push(factions,5);		
 		}
 		

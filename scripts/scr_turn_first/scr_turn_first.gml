@@ -64,9 +64,9 @@ function scr_turn_first() {
     
 	    if (peace_check=2){
 	        var did_so;did_so=false;
-	        if (turn>=150) and (faction_defeated[10]=0) and (known[10]=0) and (faction_gender[10]=2){
-	        // if (turn>=100000) and (faction_defeated[10]=0) and (known[10]=0){faction_gender[10]=2;
-	            with(obj_turn_end){audiences+=1;audien[audiences]=10;known[10]=2;audien_topic[audiences]="intro";did_so=true;}
+	        if (turn>=150) and (faction_defeated[10]=0) and (known[eFACTION.Chaos]=0) and (faction_gender[10]=2){
+	        // if (turn>=100000) and (faction_defeated[10]=0) and (known[eFACTION.Chaos]=0){faction_gender[10]=2;
+	            with(obj_turn_end){audiences+=1;audien[audiences]=10;known[eFACTION.Chaos]=2;audien_topic[audiences]="intro";did_so=true;}
 	            fdir=terra_direction+choose(-90,90);
 				fdir+=floor(random_range(-35,35));
             
@@ -120,16 +120,16 @@ function scr_turn_first() {
 				nfleet.action_y=skulls.y;
 	            nfleet.alarm[4]=1;
             
-	            var tix;tix="Chaos Lord "+string(obj_controller.faction_leader[10])+" continues his Black Crusade into Sector "+string(obj_ini.sector_name)+".";
+	            var tix;tix="Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+" continues his Black Crusade into Sector "+string(obj_ini.sector_name)+".";
 	            scr_alert("purple","lol",string(tix),nfleet.x,nfleet.y);scr_event_log("purple",tix);
-	            scr_popup("Black Crusade","A Black Crusade led by the Chaos Lord "+string(obj_controller.faction_leader[10])+" has arrived in "+string(obj_ini.sector_name)+".  His forces have already carved a bloody path through many sectors and yours is next.  "+string(obj_controller.faction_leader[10])+" also seems to be set on killing you.  The Black Crusade's current target is system "+string(skulls.name)+".","","");
+	            scr_popup("Black Crusade","A Black Crusade led by the Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+" has arrived in "+string(obj_ini.sector_name)+".  His forces have already carved a bloody path through many sectors and yours is next.  "+string(obj_controller.faction_leader[eFACTION.Chaos])+" also seems to be set on killing you.  The Black Crusade's current target is system "+string(skulls.name)+".","","");
 	            // title / text / image / speshul
             
 	        }
 	        if (did_so=false) and (faction_defeated[7]=1){
-	            with(obj_turn_end){audiences+=1;audien[audiences]=7;known[10]=2;audien_topic[audiences]="new_warboss";did_so=true;}
+	            with(obj_turn_end){audiences+=1;audien[audiences]=7;known[eFACTION.Chaos]=2;audien_topic[audiences]="new_warboss";did_so=true;}
             
-	            faction_defeated[7]=-1;known[7]=0;faction_leader[7]=scr_ork_name();
+	            faction_defeated[7]=-1;known[eFACTION.Ork]=0;faction_leader[eFACTION.Ork]=scr_ork_name();
 	            faction_title[7]="Warboss";faction_status[eFACTION.Ork]="War";disposition[7]=-40;
             
 	            var gold,gnew,starf;gold=faction_gender[7];if (gold=0) then gold=1;gnew=0;
@@ -181,9 +181,9 @@ function scr_turn_first() {
 	            with(obj_star){if (x<-14000) and (y<-14000){x+=20000;y+=20000;}}
 	            with(obj_star){if (x<-14000) and (y<-14000){x+=20000;y+=20000;}}
             
-	            var tix;tix="Warboss "+string(obj_controller.faction_leader[7])+" leads a WAAAGH! into Sector "+string(obj_ini.sector_name)+".";
+	            var tix;tix="Warboss "+string(obj_controller.faction_leader[eFACTION.Ork])+" leads a WAAAGH! into Sector "+string(obj_ini.sector_name)+".";
 	            scr_alert("red","lol",string(tix),starf.x,starf.y);scr_event_log("red",tix);
-	            scr_popup("WAAAAGH!","A WAAAGH! led by the Warboss "+string(obj_controller.faction_leader[7])+" has arrived in "+string(obj_ini.sector_name)+".  With him is a massive Ork fleet.  Numbering in the dozens of battleships, they carry with them countless greenskins.  The forefront of the WAAAGH! is destined for the "+string(starf.name)+" system.","waaagh","");
+	            scr_popup("WAAAAGH!","A WAAAGH! led by the Warboss "+string(obj_controller.faction_leader[eFACTION.Ork])+" has arrived in "+string(obj_ini.sector_name)+".  With him is a massive Ork fleet.  Numbering in the dozens of battleships, they carry with them countless greenskins.  The forefront of the WAAAGH! is destined for the "+string(starf.name)+" system.","waaagh","");
 	        }
 	    }
 	}

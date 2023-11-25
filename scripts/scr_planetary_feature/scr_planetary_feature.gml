@@ -196,7 +196,7 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		Warboss = "alive"
 		kill_warboss = function(){
 			f_type = P_features.Victory_Shrine
-			planet_display= $"{obj_controller.faction_leader[7]} Death Place";
+			planet_display= $"{obj_controller.faction_leader[eFACTION.Ork]} Death Place";
 			Warboss = "dead";
 		}
 		break;
@@ -347,7 +347,7 @@ function scr_planetary_feature(planet_num) {
 			feat.player_hidden =0;
 			switch (feat.f_type){
 				case P_features.Sororitas_Cathedral:
-					if (obj_controller.known[5]=0) then obj_controller.known[5]=1;
+					if (obj_controller.known[eFACTION.Ecclesiarchy]=0) then obj_controller.known[eFACTION.Ecclesiarchy]=1;
 				    var lop="Sororitas Cathedral discovered on "+string(name)+" "+scr_roman(planet_num)+".";debugl(lop);
 				    scr_alert("green","feature",lop,x,y);scr_event_log("",lop);
 				    if (p_heresy[planet_num]>10) then p_heresy[planet_num]-=10;

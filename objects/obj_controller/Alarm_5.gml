@@ -1138,7 +1138,7 @@ if ((turn>=10) or (obj_ini.fleet_type==eFACTION.Mechanicus)) and (faction_defeat
     with(obj_temp2){instance_destroy();}
 }
 
-// if (known[5]=1){var spikky;spikky=choose(0,0,0,1,1);if (spikky=1) then with(obj_turn_end){audiences+=1;audien[audiences]=5;audien_topic[audiences]="intro";}}
+// if (known[eFACTION.Ecclesiarchy]=1){var spikky;spikky=choose(0,0,0,1,1);if (spikky=1) then with(obj_turn_end){audiences+=1;audien[audiences]=5;audien_topic[audiences]="intro";}}
 if (known[eFACTION.Ecclesiarchy]==1){
     spikky=choose(0,1,1);
     if (spikky==1) then with(obj_turn_end){
@@ -1409,9 +1409,9 @@ for(var i=1; i<=99; i++){
             }
             // Sector commander losses its mind
             if (event[i]=="imperium_daemon"){
-                scr_alert("red","lol","Sector Commander "+string(faction_leader[2])+" has gone insane.",0,0);
+                scr_alert("red","lol","Sector Commander "+string(faction_leader[eFACTION.Imperium])+" has gone insane.",0,0);
                 faction_defeated[eFACTION.Imperium]=1;
-                scr_event_log("red","Sector Commander "+string(faction_leader[2])+" has gone insane.");
+                scr_event_log("red","Sector Commander "+string(faction_leader[eFACTION.Imperium])+" has gone insane.");
             }
             // Starts chaos invasion
 		    if (event[i]=="chaos_invasion"){ 
@@ -1721,7 +1721,7 @@ with(obj_turn_end){scr_battle_sort();}
 for(var i=1; i<=10; i++){
     if (turns_ignored[i]>0) and (turns_ignored[i]<500) then turns_ignored[i]-=1;
 }
-if (known[6]>=2) and (faction_gender[6]==2) and (floor(turn/10)==(turn/10)) then turns_ignored[6]+=floor(random_range(0,6));
+if (known[eFACTION.Eldar]>=2) and (faction_gender[6]==2) and (floor(turn/10)==(turn/10)) then turns_ignored[6]+=floor(random_range(0,6));
 
 with(obj_temp4){instance_destroy();}
 if (instance_exists(obj_p_fleet)) then with(obj_p_fleet){scr_apothecary_ship();}

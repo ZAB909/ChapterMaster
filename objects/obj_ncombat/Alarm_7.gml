@@ -158,23 +158,23 @@ if (battle_special="WL10_reveal") or (battle_special="WL10_later"){var moar,ox,o
         obj_controller.audience=10;
         obj_controller.menu=20;
         obj_controller.diplomacy=10;
-        obj_controller.known[10]=2;
+        obj_controller.known[eFACTION.Chaos]=2;
         with(obj_controller){scr_dialogue("intro2");}
     }
     if (defeat=0){
-        obj_controller.known[10]=2;
+        obj_controller.known[eFACTION.Chaos]=2;
         obj_controller.faction_defeated[10]=1;
         
         if (instance_exists(obj_turn_end)){
             scr_event_log("","Enemy Leader Assassinated: Chaos Lord");
-            scr_alert("","ass","Chaos Lord "+string(obj_controller.faction_leader[10])+" has been killed.",0,0);
-            scr_popup("Chaos Lord Killed","Chaos Lord "+string(obj_controller.faction_leader[10])+" has been slain in combat.  Without his leadership the various forces of Chaos in the sector will crumble apart and disintegrate from infighting.  Sector "+string(obj_ini.sector_name)+" is no longer as threatened by the forces of Chaos.","","");
+            scr_alert("","ass","Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+" has been killed.",0,0);
+            scr_popup("Chaos Lord Killed","Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+" has been slain in combat.  Without his leadership the various forces of Chaos in the sector will crumble apart and disintegrate from infighting.  Sector "+string(obj_ini.sector_name)+" is no longer as threatened by the forces of Chaos.","","");
         }
         if (!instance_exists(obj_turn_end)){
             scr_event_log("","Enemy Leader Assassinated: Chaos Lord");
             var pop;pop=instance_create(0,0,obj_popup);
             pop.image="";pop.title="Chaos Lord Killed";
-            pop.text="Chaos Lord "+string(obj_controller.faction_leader[10])+" has been slain in combat.  Without his leadership the various forces of Chaos in the sector will crumble apart and disintegrate from infighting.  Sector "+string(obj_ini.sector_name)+" is no longer as threatened by the forces of Chaos.";
+            pop.text="Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+" has been slain in combat.  Without his leadership the various forces of Chaos in the sector will crumble apart and disintegrate from infighting.  Sector "+string(obj_ini.sector_name)+" is no longer as threatened by the forces of Chaos.";
         }
         
     }
@@ -223,12 +223,12 @@ if (enemy=5) and (obj_controller.faction_status[eFACTION.Ecclesiarchy]!="War"){
     
     if (!instance_exists(obj_turn_end)){
         obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=5;obj_controller.audien_topic[obj_controller.audiences]="declare_war";
-        if (obj_controller.known[4]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=4;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
+        if (obj_controller.known[eFACTION.Inquisition]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=4;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
         obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=2;obj_controller.audien_topic[obj_controller.audiences]="declare_war";
     }
     if (instance_exists(obj_turn_end)){
         obj_turn_end.audiences+=1;obj_turn_end.audien[obj_turn_end.audiences]=5;obj_turn_end.audien_topic[obj_turn_end.audiences]="declare_war";
-        if (obj_turn_end.known[4]>1){obj_turn_end.audiences+=1;obj_turn_end.audien[obj_turn_end.audiences]=4;obj_turn_end.audien_topic[obj_turn_end.audiences]="declare_war";}
+        if (obj_turn_end.known[eFACTION.Inquisition]>1){obj_turn_end.audiences+=1;obj_turn_end.audien[obj_turn_end.audiences]=4;obj_turn_end.audien_topic[obj_turn_end.audiences]="declare_war";}
         obj_turn_end.audiences+=1;obj_turn_end.audien[obj_turn_end.audiences]=2;obj_turn_end.audien_topic[obj_turn_end.audiences]="declare_war";
     }
 }
@@ -541,7 +541,7 @@ if (enemy=1){
             obj_turn_end.combating=0;// obj_turn_end.alarm[1]=1;
         }
         var pip;pip=instance_create(0,0,obj_popup);
-        pip.title="Enemies Vanquished";pip.text="Not only have you killed the Chaos Lord, "+string(obj_controller.faction_leader[10])+", but also all of your battle brothers that questioned your rule.  As you stand, alone, among the broken corpses of your enemies you begin to question what exactly it is that you accomplished.  No matter the results, you feel as though your actions have been noticed.";
+        pip.title="Enemies Vanquished";pip.text="Not only have you killed the Chaos Lord, "+string(obj_controller.faction_leader[eFACTION.Chaos])+", but also all of your battle brothers that questioned your rule.  As you stand, alone, among the broken corpses of your enemies you begin to question what exactly it is that you accomplished.  No matter the results, you feel as though your actions have been noticed.";
     }
 }
 
@@ -555,7 +555,7 @@ if (enemy=10){
             obj_turn_end.combating=0;// obj_turn_end.alarm[1]=1;
         }
         var pip;pip=instance_create(0,0,obj_popup);
-        pip.title="Survived";pip.text="You and the rest of your battle brothers fight your way out of the catacombs, back through the tunnel where you first entered.  By the time you manage it your forces are battered and bloodied and in desperate need of pickup.  The whole meeting was a bust- Chaos Lord "+string(obj_controller.faction_leader[10])+" clearly intended to kill you and simply be done with it.";
+        pip.title="Survived";pip.text="You and the rest of your battle brothers fight your way out of the catacombs, back through the tunnel where you first entered.  By the time you manage it your forces are battered and bloodied and in desperate need of pickup.  The whole meeting was a bust- Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+" clearly intended to kill you and simply be done with it.";
     }
 
     if ((battle_special="cs_meeting_battle5") or (battle_special="cs_meeting_battle6")) and (defeat=0){
@@ -676,14 +676,14 @@ if ((leader=1) or (battle_special="world_eaters")) and (obj_controller.faction_d
         obj_controller.faction_defeated[10]=1;// show_message("WL10 defeated");
         if (instance_exists(obj_turn_end)){
             scr_event_log("","Enemy Leader Assassinated: Chaos Lord");
-            scr_alert("","ass","Chaos Lord "+string(obj_controller.faction_leader[10])+" has been killed.",0,0);
-            scr_popup("Black Crusade Ended","The Chaos Lord "+string(obj_controller.faction_leader[10])+" has been slain in combat.  Without his leadership the Black Crusade is destined to crumble apart and disintegrate from infighting.  Sector "+string(obj_ini.sector_name)+" is no longer at threat by the forces of Chaos.","","");
+            scr_alert("","ass","Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+" has been killed.",0,0);
+            scr_popup("Black Crusade Ended","The Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+" has been slain in combat.  Without his leadership the Black Crusade is destined to crumble apart and disintegrate from infighting.  Sector "+string(obj_ini.sector_name)+" is no longer at threat by the forces of Chaos.","","");
         }
         if (!instance_exists(obj_turn_end)){
             scr_event_log("","Enemy Leader Assassinated: Chaos Lord");
             var pop;pop=instance_create(0,0,obj_popup);
             pop.image="";pop.title="Black Crusade Ended";
-            pop.text="The Chaos Lord "+string(obj_controller.faction_leader[10])+" has been slain in combat.  Without his leadership the Black Crusade is destined to crumble apart and disintegrate from infighting.  Sector "+string(obj_ini.sector_name)+" is no longer at threat by the forces of Chaos.";
+            pop.text="The Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+" has been slain in combat.  Without his leadership the Black Crusade is destined to crumble apart and disintegrate from infighting.  Sector "+string(obj_ini.sector_name)+" is no longer at threat by the forces of Chaos.";
         }
     }
 }}

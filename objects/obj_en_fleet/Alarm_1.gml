@@ -1437,8 +1437,8 @@ if (action=""){
             }
             // End Test-Slave Incubator Crap
             
-            if (obj_controller.known[4]=1){obj_controller.known[4]=3;}
-            if (obj_controller.known[4]=2){obj_controller.known[4]=4;}
+            if (obj_controller.known[eFACTION.Inquisition]=1){obj_controller.known[eFACTION.Inquisition]=3;}
+            if (obj_controller.known[eFACTION.Inquisition]=2){obj_controller.known[eFACTION.Inquisition]=4;}
             
             instance_deactivate_object(spid);
             repeat(choose(1,2)){

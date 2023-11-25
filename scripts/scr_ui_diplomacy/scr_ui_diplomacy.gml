@@ -34,42 +34,42 @@ function scr_ui_diplomacy() {
     
     
 	    var imm;imm=0;
-	    if (known[2]>0) then imm=2;if (known[2]<1) then imm=3;// draw_sprite(spr_diplomacy_med,imm,xx+31,yy+281);
+	    if (known[eFACTION.Imperium]>0) then imm=2;if (known[eFACTION.Imperium]<1) then imm=3;// draw_sprite(spr_diplomacy_med,imm,xx+31,yy+281);
 	    scr_image("diplomacy_icon",imm,xx+31,yy+281,153,135);
 	    if (faction_defeated[2]=1) then draw_sprite(spr_diplomacy_defeated,0,xx+31,yy+281);
     
-	    if (known[3]>0) then imm=4;if (known[3]<1) then imm=5;// draw_sprite(spr_diplomacy_med,imm,xx+31,yy+417);
+	    if (known[eFACTION.Mechanicus]>0) then imm=4;if (known[eFACTION.Mechanicus]<1) then imm=5;// draw_sprite(spr_diplomacy_med,imm,xx+31,yy+417);
 	    scr_image("diplomacy_icon",imm,xx+31,yy+417,153,135);
 	    if (faction_defeated[3]=1) then draw_sprite(spr_diplomacy_defeated,0,xx+31,yy+417);
     
-	    if (known[4]>0) then imm=6;if (known[4]<1) then imm=7;// draw_sprite(spr_diplomacy_med,imm,xx+31,yy+553);
+	    if (known[eFACTION.Inquisition]>0) then imm=6;if (known[eFACTION.Inquisition]<1) then imm=7;// draw_sprite(spr_diplomacy_med,imm,xx+31,yy+553);
 	    scr_image("diplomacy_icon",imm,xx+31,yy+553,153,135);
 	    if (faction_defeated[4]=1) then draw_sprite(spr_diplomacy_defeated,0,xx+31,yy+553);
     
-	    if (known[5]>0) then imm=8;if (known[5]<1) then imm=9;// draw_sprite(spr_diplomacy_med,imm,xx+31,yy+689);
+	    if (known[eFACTION.Ecclesiarchy]>0) then imm=8;if (known[eFACTION.Ecclesiarchy]<1) then imm=9;// draw_sprite(spr_diplomacy_med,imm,xx+31,yy+689);
 	    scr_image("diplomacy_icon",imm,xx+31,yy+689,153,135);
 	    if (faction_defeated[5]=1) then draw_sprite(spr_diplomacy_defeated,0,xx+31,yy+689);
     
     
-	    if (faction_gender[6]=1){if (known[6]>0) then imm=10;if (known[6]<1) then imm=11;// draw_sprite(spr_diplomacy_med,imm,xx+1041,yy+281);
+	    if (faction_gender[6]=1){if (known[eFACTION.Eldar]>0) then imm=10;if (known[eFACTION.Eldar]<1) then imm=11;// draw_sprite(spr_diplomacy_med,imm,xx+1041,yy+281);
 	    scr_image("diplomacy_icon",imm,xx+1041,yy+281,153,135);}
     
-	    if (faction_gender[6]=2){if (known[6]>0) then imm=20;if (known[6]<1) then imm=21;// draw_sprite(spr_diplomacy_med,imm,xx+1041,yy+281);
+	    if (faction_gender[6]=2){if (known[eFACTION.Eldar]>0) then imm=20;if (known[eFACTION.Eldar]<1) then imm=21;// draw_sprite(spr_diplomacy_med,imm,xx+1041,yy+281);
 	    scr_image("diplomacy_icon",imm,xx+1041,yy+281,153,135);
 	    }
     
 	    if (faction_defeated[6]=1) then draw_sprite(spr_diplomacy_defeated,0,xx+1041,yy+281);
     
-	    if (known[7]>0) then imm=12;if (known[7]<1) then imm=13;// draw_sprite(spr_diplomacy_med,imm,xx+1041,yy+417);
+	    if (known[eFACTION.Ork]>0) then imm=12;if (known[eFACTION.Ork]<1) then imm=13;// draw_sprite(spr_diplomacy_med,imm,xx+1041,yy+417);
 	    scr_image("diplomacy_icon",imm,xx+1041,yy+417,153,135);
 	    if (faction_defeated[7]=1) then draw_sprite(spr_diplomacy_defeated,0,xx+1041,yy+417);
     
-	    if (known[8]>0) then imm=14;if (known[8]<1) then imm=15;// draw_sprite(spr_diplomacy_med,imm,xx+1041,yy+553);
+	    if (known[eFACTION.Tau]>0) then imm=14;if (known[eFACTION.Tau]<1) then imm=15;// draw_sprite(spr_diplomacy_med,imm,xx+1041,yy+553);
 	    scr_image("diplomacy_icon",imm,xx+1041,yy+553,153,135);
 	    if (faction_defeated[8]=1) then draw_sprite(spr_diplomacy_defeated,0,xx+1041,yy+553);
     
-	    if (known[10]>0) and (faction_gender[10]=1) then imm=18;if (known[10]>0) and (faction_gender[10]=2) then imm=26;
-	    if (known[10]<1) and (faction_gender[10]=1) then imm=19;if (known[10]<1) and (faction_gender[10]=2) then imm=27;
+	    if (known[eFACTION.Chaos]>0) and (faction_gender[10]=1) then imm=18;if (known[eFACTION.Chaos]>0) and (faction_gender[10]=2) then imm=26;
+	    if (known[eFACTION.Chaos]<1) and (faction_gender[10]=1) then imm=19;if (known[eFACTION.Chaos]<1) and (faction_gender[10]=2) then imm=27;
 	    // draw_sprite(spr_diplomacy_med,imm,xx+1041,yy+689);
 	    scr_image("diplomacy_icon",imm,xx+1041,yy+689,153,135);
 	    if (faction_defeated[10]=1) then draw_sprite(spr_diplomacy_defeated,0,xx+1041,yy+689);
@@ -147,18 +147,18 @@ function scr_ui_diplomacy() {
 	    draw_text_transformed(xx+1441,yy+697,string_hash_to_newline(faction_status[eFACTION.Chaos]),0.7,0.7,0);
     
 	    draw_set_halign(fa_left);var txt;
-	    txt="????";if (known[2]>0) then txt=string(faction_title[2])+" "+string(faction_leader[2]);draw_text_transformed(xx+189,yy+309,string_hash_to_newline(txt),0.7,0.7,0);
-	    txt="????";if (known[3]>0) then txt=string(faction_title[3])+" "+string(faction_leader[3]);draw_text_transformed(xx+189,yy+445,string_hash_to_newline(txt),0.7,0.7,0);
-	    txt="????";if (known[4]>0) then txt=string(faction_title[4])+" "+string(faction_leader[4]);draw_text_transformed(xx+189,yy+581,string_hash_to_newline(txt),0.7,0.7,0);
-	    txt="????";if (known[5]>0) then txt=string(faction_title[5])+" "+string(faction_leader[5]);draw_text_transformed(xx+189,yy+717,string_hash_to_newline(txt),0.7,0.7,0);
-	    /*txt="????";if (known[6]>0) then txt=string(faction_title[6])+" "+string(faction_leader[6]);draw_text_transformed(xx+609,yy+309,txt,0.7,0.7,0);
-	    txt="????";if (known[7]>0) then txt=string(faction_title[7])+" "+string(faction_leader[7]);draw_text_transformed(xx+609,yy+445,txt,0.7,0.7,0);
-	    txt="????";if (known[8]>0) then txt=string(faction_title[8])+" "+string(faction_leader[8]);draw_text_transformed(xx+609,yy+581,txt,0.7,0.7,0);
-	    txt="????";if (known[10]>0) then txt=string(faction_title[10])+" "+string(faction_leader[10]);draw_text_transformed(xx+609,yy+717,txt,0.7,0.7,0);*/
-	    txt="????";if (known[6]>0) then txt=string(faction_title[6])+" "+string(faction_leader[6]);draw_text_transformed(xx+1199,yy+309,string_hash_to_newline(txt),0.7,0.7,0);
-	    txt="????";if (known[7]>0) then txt=string(faction_title[7])+" "+string(faction_leader[7]);draw_text_transformed(xx+1199,yy+445,string_hash_to_newline(txt),0.7,0.7,0);
-	    txt="????";if (known[8]>0) then txt=string(faction_title[8])+" "+string(faction_leader[8]);draw_text_transformed(xx+1199,yy+581,string_hash_to_newline(txt),0.7,0.7,0);
-	    txt="????";if (known[10]>0) then txt=string(faction_title[10])+" "+string(faction_leader[10]);draw_text_transformed(xx+1199,yy+717,string_hash_to_newline(txt),0.7,0.7,0);
+	    txt="????";if (known[eFACTION.Imperium]>0) then txt=string(faction_title[2])+" "+string(faction_leader[eFACTION.Imperium]);draw_text_transformed(xx+189,yy+309,string_hash_to_newline(txt),0.7,0.7,0);
+	    txt="????";if (known[eFACTION.Mechanicus]>0) then txt=string(faction_title[3])+" "+string(faction_leader[eFACTION.Mechanicus]);draw_text_transformed(xx+189,yy+445,string_hash_to_newline(txt),0.7,0.7,0);
+	    txt="????";if (known[eFACTION.Inquisition]>0) then txt=string(faction_title[4])+" "+string(faction_leader[eFACTION.Inquisition]);draw_text_transformed(xx+189,yy+581,string_hash_to_newline(txt),0.7,0.7,0);
+	    txt="????";if (known[eFACTION.Ecclesiarchy]>0) then txt=string(faction_title[5])+" "+string(faction_leader[eFACTION.Ecclesiarchy]);draw_text_transformed(xx+189,yy+717,string_hash_to_newline(txt),0.7,0.7,0);
+	    /*txt="????";if (known[eFACTION.Eldar]>0) then txt=string(faction_title[6])+" "+string(faction_leader[eFACTION.Eldar]);draw_text_transformed(xx+609,yy+309,txt,0.7,0.7,0);
+	    txt="????";if (known[eFACTION.Ork]>0) then txt=string(faction_title[7])+" "+string(faction_leader[eFACTION.Ork]);draw_text_transformed(xx+609,yy+445,txt,0.7,0.7,0);
+	    txt="????";if (known[eFACTION.Tau]>0) then txt=string(faction_title[8])+" "+string(faction_leader[eFACTION.Tau]);draw_text_transformed(xx+609,yy+581,txt,0.7,0.7,0);
+	    txt="????";if (known[eFACTION.Chaos]>0) then txt=string(faction_title[10])+" "+string(faction_leader[eFACTION.Chaos]);draw_text_transformed(xx+609,yy+717,txt,0.7,0.7,0);*/
+	    txt="????";if (known[eFACTION.Eldar]>0) then txt=string(faction_title[6])+" "+string(faction_leader[eFACTION.Eldar]);draw_text_transformed(xx+1199,yy+309,string_hash_to_newline(txt),0.7,0.7,0);
+	    txt="????";if (known[eFACTION.Ork]>0) then txt=string(faction_title[7])+" "+string(faction_leader[eFACTION.Ork]);draw_text_transformed(xx+1199,yy+445,string_hash_to_newline(txt),0.7,0.7,0);
+	    txt="????";if (known[eFACTION.Tau]>0) then txt=string(faction_title[8])+" "+string(faction_leader[eFACTION.Tau]);draw_text_transformed(xx+1199,yy+581,string_hash_to_newline(txt),0.7,0.7,0);
+	    txt="????";if (known[eFACTION.Chaos]>0) then txt=string(faction_title[10])+" "+string(faction_leader[eFACTION.Chaos]);draw_text_transformed(xx+1199,yy+717,string_hash_to_newline(txt),0.7,0.7,0);
     
 	    draw_text_transformed(xx+189,yy+324,string_hash_to_newline("Disposition: "+string(disposition[2])),0.7,0.7,0);
 	    draw_text_transformed(xx+189,yy+460,string_hash_to_newline("Disposition: "+string(disposition[3])),0.7,0.7,0);
@@ -214,7 +214,7 @@ function scr_ui_diplomacy() {
 		
 		
     
-	    if (known[2]>0.7) and (faction_defeated[2]=0){
+	    if (known[eFACTION.Imperium]>0.7) and (faction_defeated[2]=0){
 	        x6=xx+250;y6=yy+334;x7=x6+92;y7=y6+15;
 	        if (turns_ignored[2]<=0){
 	            draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);
@@ -238,7 +238,7 @@ function scr_ui_diplomacy() {
 	        if (ignore[2]>=1) then draw_text_transformed(xx+189,yy+354,string(fis)+"[Unignore]",0.7,0.7,0);*/
 	    }
     
-	    if (known[3]>0.7) and (faction_defeated[3]=0){
+	    if (known[eFACTION.Mechanicus]>0.7) and (faction_defeated[3]=0){
 	        x6=xx+250;y6=yy+334+136;x7=x6+92;y7=y6+15;
 	        if (turns_ignored[3]<=0){
 	            draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);
@@ -256,7 +256,7 @@ function scr_ui_diplomacy() {
 	        }
 	    }
     
-	    if (known[4]>0.7) and (faction_defeated[4]=0){
+	    if (known[eFACTION.Inquisition]>0.7) and (faction_defeated[4]=0){
 	        x6=xx+250;y6=yy+334+272;x7=x6+92;y7=y6+15;
 	        if (turns_ignored[4]<=0){
 	            draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);
@@ -274,7 +274,7 @@ function scr_ui_diplomacy() {
 	        }
 	    }
     
-	    if (known[5]>0.7) and (faction_defeated[5]=0){
+	    if (known[eFACTION.Ecclesiarchy]>0.7) and (faction_defeated[5]=0){
 	        x6=xx+250;y6=yy+334+408;x7=x6+92;y7=y6+15;
 	        if (turns_ignored[5]<=0){
 	            draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);
@@ -297,7 +297,7 @@ function scr_ui_diplomacy() {
     
     
     
-	    if (known[6]>0.7) and (faction_defeated[2]=0){
+	    if (known[eFACTION.Eldar]>0.7) and (faction_defeated[2]=0){
 	        x6=xx+250+1010;y6=yy+334;x7=x6+92;y7=y6+15;
 	        if (turns_ignored[6]<=0){
 	            draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);
@@ -315,7 +315,7 @@ function scr_ui_diplomacy() {
 	        }
 	    }
     
-	    if (known[7]>0.7) and (faction_defeated[3]=0){
+	    if (known[eFACTION.Ork]>0.7) and (faction_defeated[3]=0){
 	        x6=xx+250+1010;y6=yy+334+136;x7=x6+92;y7=y6+15;
 	        if (turns_ignored[7]<=0){
 	            draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);
@@ -333,7 +333,7 @@ function scr_ui_diplomacy() {
 	        }
 	    }
     
-	    if (known[8]>0.7) and (faction_defeated[4]=0){
+	    if (known[eFACTION.Tau]>0.7) and (faction_defeated[4]=0){
 	        x6=xx+250+1010;y6=yy+334+272;x7=x6+92;y7=y6+15;
 	        if (turns_ignored[8]<=0){
 	            draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);
@@ -351,7 +351,7 @@ function scr_ui_diplomacy() {
 	        }
 	    }
     
-	    if (known[10]>0.7) and (faction_defeated[5]=0){
+	    if (known[eFACTION.Chaos]>0.7) and (faction_defeated[5]=0){
 	        x6=xx+250+1010;y6=yy+334+408;x7=x6+92;y7=y6+15;
 	        if (turns_ignored[10]<=0){
 	            draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);
@@ -377,25 +377,25 @@ function scr_ui_diplomacy() {
     
     
     
-	    /*if (known[6]>0.7) and (faction_defeated[6]=0){
+	    /*if (known[eFACTION.Eldar]>0.7) and (faction_defeated[6]=0){
 	        var fis;fis="[Request Audience]";
 	        if (turns_ignored[6]>0) then fis="                  ";
 	        if (ignore[6]<1) then draw_text_transformed(xx+1199,yy+354,string(fis)+"  [Ignore]",0.7,0.7,0);
 	        if (ignore[6]>=1) then draw_text_transformed(xx+1199,yy+354,string(fis)+"[Unignore]",0.7,0.7,0);
 	    }
-	    if (known[7]>0.7) and (faction_defeated[7]=0){
+	    if (known[eFACTION.Ork]>0.7) and (faction_defeated[7]=0){
 	        var fis;fis="[Request Audience]";
 	        if (turns_ignored[7]>0) then fis="                  ";
 	        if (ignore[7]<1) then draw_text_transformed(xx+1199,yy+490,string(fis)+"  [Ignore]",0.7,0.7,0);
 	        if (ignore[7]>=1) then draw_text_transformed(xx+1199,yy+490,string(fis)+"[Unignore]",0.7,0.7,0);
 	    }
-	    if (known[8]>0.7) and (faction_defeated[8]=0){
+	    if (known[eFACTION.Tau]>0.7) and (faction_defeated[8]=0){
 	        var fis;fis="[Request Audience]";
 	        if (turns_ignored[8]>0) then fis="                  ";
 	        if (ignore[8]<1) then draw_text_transformed(xx+1199,yy+631,string(fis)+"  [Ignore]",0.7,0.7,0);
 	        if (ignore[8]>=1) then draw_text_transformed(xx+1199,yy+631,string(fis)+"[Unignore]",0.7,0.7,0);
 	    }
-	    if (known[10]>0.7) and (faction_defeated[10]=0){
+	    if (known[eFACTION.Chaos]>0.7) and (faction_defeated[10]=0){
 	        var fis;fis="[Request Audience]";
 	        if (turns_ignored[10]>0) then fis="                  ";
 	        if (ignore[10]<1) then draw_text_transformed(xx+1199,yy+762,string(fis)+"  [Ignore]",0.7,0.7,0);
@@ -410,15 +410,15 @@ function scr_ui_diplomacy() {
     
 	    /*
 	    faction_leader[0]="";faction_title[0]="";faction_status[0]="";faction_leader[1]="";faction_title[1]="";faction_status[1]="";
-	    faction_leader[2]="";faction_title[2]="Sector Commander";faction_status[eFACTION.Imperium]="Allied";
-	    faction_leader[3]="";faction_title[3]="Magos";faction_status[eFACTION.Mechanicus]="Allied";
-	    faction_leader[4]="";faction_title[4]="Inquisitor Lord";faction_status[eFACTION.Inquisition]="Allied";
-	    faction_leader[5]="";faction_title[5]="Prioress";faction_status[eFACTION.Ecclesiarchy]="Allied";
-	    faction_leader[6]="";faction_title[6]="Farseer";faction_status[eFACTION.Eldar]="War";
-	    faction_leader[7]="";faction_title[7]="Warboss";faction_status[eFACTION.Ork]="War";
-	    faction_leader[8]="";faction_title[8]="Diplomat";faction_status[eFACTION.Tau]="War";
-	    faction_leader[9]="";faction_title[9]="";faction_status[eFACTION.Tyranids]="War";
-	    faction_leader[10]="";faction_title[10]="Master";faction_status[eFACTION.Chaos]="War";
+	    faction_leader[eFACTION.Imperium]="";faction_title[2]="Sector Commander";faction_status[eFACTION.Imperium]="Allied";
+	    faction_leader[eFACTION.Mechanicus]="";faction_title[3]="Magos";faction_status[eFACTION.Mechanicus]="Allied";
+	    faction_leader[eFACTION.Inquisition]="";faction_title[4]="Inquisitor Lord";faction_status[eFACTION.Inquisition]="Allied";
+	    faction_leader[eFACTION.Ecclesiarchy]="";faction_title[5]="Prioress";faction_status[eFACTION.Ecclesiarchy]="Allied";
+	    faction_leader[eFACTION.Eldar]="";faction_title[6]="Farseer";faction_status[eFACTION.Eldar]="War";
+	    faction_leader[eFACTION.Ork]="";faction_title[7]="Warboss";faction_status[eFACTION.Ork]="War";
+	    faction_leader[eFACTION.Tau]="";faction_title[8]="Diplomat";faction_status[eFACTION.Tau]="War";
+	    faction_leader[eFACTION.Tyranids]="";faction_title[9]="";faction_status[eFACTION.Tyranids]="War";
+	    faction_leader[eFACTION.Chaos]="";faction_title[10]="Master";faction_status[eFACTION.Chaos]="War";
 	    */
     
     

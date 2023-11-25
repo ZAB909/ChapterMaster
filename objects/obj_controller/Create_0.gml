@@ -1011,48 +1011,48 @@ faction_leader[1]="";
 faction_title[1]="";
 faction_status[1]="";
 // Sector Command faction
-faction_leader[2]=scr_imperial_name(1);
+faction_leader[eFACTION.Imperium]=scr_imperial_name(1);
 faction_title[2]="Sector Commander";
 faction_status[eFACTION.Imperium]="Allied";
 // Mechanicus faction
-faction_leader[3]=scr_imperial_name(1);
+faction_leader[eFACTION.Mechanicus]=scr_imperial_name(1);
 faction_title[3]="Magos";
 faction_status[eFACTION.Mechanicus]="Allied";
-if (faction_leader[3]==faction_leader[2]) then faction_leader[3]=scr_marine_name();
+if (faction_leader[eFACTION.Mechanicus]==faction_leader[eFACTION.Imperium]) then faction_leader[eFACTION.Mechanicus]=scr_marine_name();
 // Inquisition faction
-faction_leader[4]=scr_imperial_name(1);
-if (faction_leader[4]==faction_leader[3]) then faction_leader[4]=scr_imperial_name(1);
+faction_leader[eFACTION.Inquisition]=scr_imperial_name(1);
+if (faction_leader[eFACTION.Inquisition]==faction_leader[eFACTION.Mechanicus]) then faction_leader[eFACTION.Inquisition]=scr_imperial_name(1);
 faction_title[4]="Inquisitor Lord";
 faction_status[eFACTION.Inquisition]="Allied";
 // Sisters faction
-faction_leader[5]=scr_imperial_name(2);
+faction_leader[eFACTION.Ecclesiarchy]=scr_imperial_name(2);
 faction_title[5]="Prioress";
 faction_status[eFACTION.Ecclesiarchy]="Allied";
 // Eldar faction
-faction_leader[6]=scr_eldar_name(2);
+faction_leader[eFACTION.Eldar]=scr_eldar_name(2);
 faction_title[6]="Farseer";
 faction_status[eFACTION.Eldar]="Antagonism";// If disposition = 0 then instead set it to "Antagonism"
 if (instance_exists(obj_ini)){if (string_count("Eldar",obj_ini.strin)>0) then faction_status[eFACTION.Eldar]="War";}
 // Orkz faction
-faction_leader[7]=scr_ork_name();
+faction_leader[eFACTION.Ork]=scr_ork_name();
 faction_title[7]="Warboss";
 faction_status[eFACTION.Ork]="War";
 // Tau faction
-faction_leader[8]="Por'O ";
+faction_leader[eFACTION.Tau]="Por'O ";
 // TODO put tau names into a script same as scr_eldar_name;
-faction_leader[8]+=choose("Ar","Cha","Doran","Eldi","Kais","Ko","Kunas","M'yen","Ro","Tsua'm","Ukos");
+faction_leader[eFACTION.Tau]+=choose("Ar","Cha","Doran","Eldi","Kais","Ko","Kunas","M'yen","Ro","Tsua'm","Ukos");
 faction_title[8]="Diplomat";
 faction_status[eFACTION.Tau]="Antagonism";
 // Other factions unkown to player
-faction_leader[9]="";
+faction_leader[eFACTION.Tyranids]="";
 faction_title[9]="";
 faction_status[eFACTION.Tyranids]="War";
 
-faction_leader[10]=":D";
+faction_leader[eFACTION.Chaos]=":D";
 faction_title[10]="Chaos Lord";
 faction_status[eFACTION.Chaos]="War";
 
-faction_leader[11]="";
+faction_leader[eFACTION.Heretics]="";
 faction_title[11]="";
 faction_status[eFACTION.Heretics]="War";
 
@@ -1060,7 +1060,7 @@ faction_leader[12]="";
 faction_title[12]="";
 faction_status[12]="War";
 
-faction_leader[13]="";
+faction_leader[eFACTION.Necrons]="";
 faction_title[13]="";
 faction_status[eFACTION.Necrons]="War";
 // ** Sets faction gender for names **
@@ -1075,36 +1075,36 @@ faction_gender[6]=choose(1,2);
 faction_gender[7]=1;
 faction_gender[8]=choose(1,1,2);
 faction_gender[9]=1;
-if (faction_gender[4]=2) then faction_leader[4]=scr_imperial_name(2);
+if (faction_gender[4]=2) then faction_leader[eFACTION.Inquisition]=scr_imperial_name(2);
 faction_gender[10]=choose(1,1,1,2,2);
-if (faction_gender[10]==1) then faction_leader[10]=choose("1","1","1","2");
-if (faction_gender[10]==2) then faction_leader[10]=choose("1","2","2","2");
-if (faction_leader[10]=="1") then faction_leader[10]=scr_marine_name();
-if (faction_leader[10]=="2") then faction_leader[10]=scr_chaos_name();
+if (faction_gender[10]==1) then faction_leader[eFACTION.Chaos]=choose("1","1","1","2");
+if (faction_gender[10]==2) then faction_leader[eFACTION.Chaos]=choose("1","2","2","2");
+if (faction_leader[eFACTION.Chaos]=="1") then faction_leader[eFACTION.Chaos]=scr_marine_name();
+if (faction_leader[eFACTION.Chaos]=="2") then faction_leader[eFACTION.Chaos]=scr_chaos_name();
 faction_gender[11]=1;
 faction_gender[12]=1;
 faction_gender[13]=1;
 
 known[0]=2;
-known[1]=999;
-known[2]=1;
-known[3]=1;
-known[4]=0;
-known[5]=0;
-known[6]=0;
-known[7]=0;
-known[8]=0;
-known[9]=0;
-known[10]=0;
-known[11]=0;
+known[eFACTION.Player]=999;
+known[eFACTION.Imperium]=1;
+known[eFACTION.Mechanicus]=1;
+known[eFACTION.Inquisition]=0;
+known[eFACTION.Ecclesiarchy]=0;
+known[eFACTION.Eldar]=0;
+known[eFACTION.Ork]=0;
+known[eFACTION.Tau]=0;
+known[eFACTION.Tyranids]=0;
+known[eFACTION.Chaos]=0;
+known[eFACTION.Heretics]=0;
 known[12]=0;
-known[13]=0;
+known[eFACTION.Necrons]=0;
 
 // UI testing
-// known[4]=1;known[5]=1;known[6]=1;known[7]=1;known[8]=1;known[9]=1;known[10]=1;
+// known[eFACTION.Inquisition]=1;known[eFACTION.Ecclesiarchy]=1;known[eFACTION.Eldar]=1;known[eFACTION.Ork]=1;known[eFACTION.Tau]=1;known[eFACTION.Tyranids]=1;known[eFACTION.Chaos]=1;
 
 // eldar mission testing
-// known[6]=2;
+// known[eFACTION.Eldar]=2;
 // disposition[4]=90;
 // disposition[3]=60;
 // ** Sets diplomacy annoyed status **

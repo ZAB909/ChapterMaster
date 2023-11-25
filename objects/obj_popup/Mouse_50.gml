@@ -1269,12 +1269,12 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
         }
 
 
-        if (mouse_y>=yy+121) and (mouse_y<=yy+149) and (obj_controller.known[2]>1) then giveto=2;
-        if (mouse_y>=yy+151) and (mouse_y<=yy+179) and (obj_controller.known[3]>1) then giveto=3;
-        if (mouse_y>=yy+181) and (mouse_y<=yy+209) and ((obj_controller.known[4]>1) or (inq_hide=2)) and (inq_hide!=1) then giveto=4;
-        if (mouse_y>=yy+211) and (mouse_y<=yy+239) and (obj_controller.known[5]>1) then giveto=5;
-        if (mouse_y>=yy+241) and (mouse_y<=yy+269) and (obj_controller.known[6]>1) then giveto=6;
-        if (mouse_y>=yy+271) and (mouse_y<=yy+299) and (obj_controller.known[8]>1) then giveto=8;
+        if (mouse_y>=yy+121) and (mouse_y<=yy+149) and (obj_controller.known[eFACTION.Imperium]>1) then giveto=2;
+        if (mouse_y>=yy+151) and (mouse_y<=yy+179) and (obj_controller.known[eFACTION.Mechanicus]>1) then giveto=3;
+        if (mouse_y>=yy+181) and (mouse_y<=yy+209) and ((obj_controller.known[eFACTION.Inquisition]>1) or (inq_hide=2)) and (inq_hide!=1) then giveto=4;
+        if (mouse_y>=yy+211) and (mouse_y<=yy+239) and (obj_controller.known[eFACTION.Ecclesiarchy]>1) then giveto=5;
+        if (mouse_y>=yy+241) and (mouse_y<=yy+269) and (obj_controller.known[eFACTION.Eldar]>1) then giveto=6;
+        if (mouse_y>=yy+271) and (mouse_y<=yy+299) and (obj_controller.known[eFACTION.Tau]>1) then giveto=8;
 
 
 

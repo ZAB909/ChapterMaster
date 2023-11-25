@@ -115,12 +115,12 @@ function scr_destroy_planet(argument0) {
     
 	    obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=3;obj_controller.audien_topic[obj_controller.audiences]="declare_war";
 	    obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=2;obj_controller.audien_topic[obj_controller.audiences]="declare_war";
-	    if (obj_controller.known[4]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=4;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
-	    if (obj_controller.known[5]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=5;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
+	    if (obj_controller.known[eFACTION.Inquisition]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=4;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
+	    if (obj_controller.known[eFACTION.Ecclesiarchy]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=5;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
 
 	    if (planet_feature_bool(you.p_feature[baid], P_features.Sororitas_Cathedral)==1){
 	        obj_controller.disposition[5]-=30;
-	        if (obj_controller.known[3]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=3;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
+	        if (obj_controller.known[eFACTION.Mechanicus]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=3;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
 	    }
 
 	}
@@ -133,7 +133,7 @@ function scr_destroy_planet(argument0) {
 	    obj_controller.faction_status[eFACTION.Inquisition]="War";obj_controller.faction_status[eFACTION.Ecclesiarchy]="War";
     
 	    obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=5;obj_controller.audien_topic[obj_controller.audiences]="declare_war";
-	    if (obj_controller.known[4]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=4;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
+	    if (obj_controller.known[eFACTION.Inquisition]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=4;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
 	    obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=2;obj_controller.audien_topic[obj_controller.audiences]="declare_war";
 	}
 
@@ -149,9 +149,9 @@ function scr_destroy_planet(argument0) {
 	        obj_controller.faction_status[eFACTION.Inquisition]="War";obj_controller.faction_status[eFACTION.Ecclesiarchy]="War";
         
 	        obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=2;obj_controller.audien_topic[obj_controller.audiences]="declare_war";
-	        if (obj_controller.known[4]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=4;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
-	        if (obj_controller.known[5]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=5;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
-	        if (obj_controller.known[3]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=3;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
+	        if (obj_controller.known[eFACTION.Inquisition]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=4;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
+	        if (obj_controller.known[eFACTION.Ecclesiarchy]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=5;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
+	        if (obj_controller.known[eFACTION.Mechanicus]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=3;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
     
 	        if (planet_feature_bool(you.p_feature[baid], P_features.Sororitas_Cathedral)==1) then obj_controller.disposition[5]-=30;
 	    }

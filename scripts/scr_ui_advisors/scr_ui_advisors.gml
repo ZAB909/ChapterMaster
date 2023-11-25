@@ -731,7 +731,7 @@ function scr_ui_advisors() {
         
 	        if (fest_feature2=0) then che=1;
 			if (fest_feature2=1) then che=2;
-	        if (fest_type="Imperial Mass") and (known[5]=0) then draw_set_alpha(0.5);
+	        if (fest_type="Imperial Mass") and (known[eFACTION.Ecclesiarchy]=0) then draw_set_alpha(0.5);
 	        
 			cx=xx+1228+22;
 			cy=yy+326;
@@ -743,7 +743,7 @@ function scr_ui_advisors() {
 	        if (scr_hit(cx,cy,cx+32,cy+32)=true) and (mouse_left=1) and (cooldown<=0) and (dropdown_open=0){
 				var onceh=0;
 				cooldown=8000;
-	            if (fest_type="Imperial Mass") and (known[5]=0) then onceh=1;
+	            if (fest_type="Imperial Mass") and (known[eFACTION.Ecclesiarchy]=0) then onceh=1;
 	            if (onceh=0) and (fest_feature2=0){
 					onceh=1;
 					fest_feature2=1;
@@ -780,7 +780,7 @@ function scr_ui_advisors() {
         
 	        if (fest_feature3=0) then che=1;
 			if (fest_feature3=1) then che=2;
-	        if (fest_type="Imperial Mass") and (known[5]=0) then draw_set_alpha(0.5);
+	        if (fest_type="Imperial Mass") and (known[eFACTION.Ecclesiarchy]=0) then draw_set_alpha(0.5);
 
 	        cx=xx+1388+22;
 			cy=yy+326;
@@ -792,7 +792,7 @@ function scr_ui_advisors() {
 	        if (scr_hit(cx,cy,cx+32,cy+32)=true) and (mouse_left=1) and (cooldown<=0) and (dropdown_open=0){
 				var onceh=0;
 				cooldown=8000;
-	            if (fest_type="Imperial Mass") and (known[5]=0) then onceh=1;
+	            if (fest_type="Imperial Mass") and (known[eFACTION.Ecclesiarchy]=0) then onceh=1;
 	            if (onceh=0) and (fest_feature3=0){
 					onceh=1;
 					fest_feature3=1;
