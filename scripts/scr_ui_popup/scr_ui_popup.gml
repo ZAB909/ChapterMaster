@@ -560,7 +560,8 @@ function scr_ui_popup() {
 	            }
 	            if (mouse_check_button_pressed(mb_left)) and (obj_controller.cooldown<=0){
 	                if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+25) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
-	                    var onceh=0,obj_controller.cooldown=8000;
+	                    var onceh=0;
+						obj_controller.cooldown=8000;
 	                    if (obj_controller.fest_scheduled>0) and (obj_controller.fest_sid=robj.frigate_num[shit]) then onceh=1;
 	                    if (robj.frigate_sel[shit]==1) and (onceh==0){
 	                        robj.frigate_sel[shit]=0;

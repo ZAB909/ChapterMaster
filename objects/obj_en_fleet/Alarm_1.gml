@@ -342,7 +342,7 @@ if (spid != noone) {
 		var to_ignore = [eFACTION.Imperium, eFACTION.Mechanicus,eFACTION.Inquisition, eFACTION.Ecclesiarchy]
 		
 		var dist = point_distance(x,y,ns.x,ns.y)
-		var valid_target = !array_contains_ext(ns.p_owner, to_ignore)
+		var valid_target = !array_contains_ext(ns.p_owner, to_ignore, false)
         if valid_target and dist <= max_dist and dist >= min_dist and (owner = eFACTION.Imperium) 
 			then ok = true;
 
@@ -627,9 +627,8 @@ if navy {
 					if (action="") then instance_create(x,y,obj_temp7);
 				}
 	            with(obj_star) {
-					if (p_owner[1]=1) or (p_owner[2]=1) or (p_owner[3]=1) or (p_owner[4]=1) {
+					if array_contains(p_owner, eFACTION.Player)
 						instance_create(x,y,obj_temp8);
-					}
 				}
             
 	            if (instance_exists(obj_temp7)) {
@@ -941,37 +940,47 @@ if navy {
 	    obj_controller.temp[200]=guard_wanted;trade_goods="";
     
 	    if (planet_needed=1) or (planet_needed=2){
-	        with(obj_star){if (owner<=5){
-	            var good,o;good=0;o=0;
-	            repeat(4){o+=1;
-	                if (p_owner[o]<=5) and (p_type[o]!="Dead") and (p_population[o]>(obj_controller.temp[200]*6)){
-	                    if (p_orks[o]+p_chaos[o]+p_tyranids[o]+p_necrons[o]+p_tau[o]+p_traitors[o]=0) then good=1;
-	                }
-	            }
-	            if (good=1) then instance_create(x,y,obj_temp_inq);
-	        }}
+			var good
+	        with(obj_star){
+				if (scr_is_star_owned_by_allies(self)) {
+					good=0;o=0;
+		            repeat(4){o+=1;
+		                if (scr_is_planet_owned_by_allies(self, o)) and (p_type[o]!="Dead") and (p_population[o]>(obj_controller.temp[200]*6)){
+		                    if (p_orks[o]+p_chaos[o]+p_tyranids[o]+p_necrons[o]+p_tau[o]+p_traitors[o]=0) then good=1;
+		                }
+		            }
+		            if (good=1) then instance_create(x,y,obj_temp_inq);
+		        }
+			}
 	    }
 	    if (planet_needed=3){
-	        with(obj_star){if (owner<=5){
-	            var good,o;good=0;o=0;
-	            repeat(4){o+=1;
-	                if (p_owner[o]<=5) and ((p_population[o]>(obj_controller.temp[200]*6)) or ((p_large[o]=1) and (p_population[o]>0.1))){
-	                    if (p_orks[o]+p_chaos[o]+p_tyranids[o]+p_necrons[o]+p_tau[o]+p_traitors[o]=0) then good=1;
-	                }
-	            }
-	            if (good=1) then instance_create(x,y,obj_temp_inq);
-	        }}
+			var good
+	        with(obj_star) {
+				if (scr_is_star_owned_by_allies(self)) {
+					good=0;o=0;
+			        repeat(4){o+=1;
+			            if (scr_is_planet_owned_by_allies(self, o)) and ((p_population[o]>(obj_controller.temp[200]*6)) or ((p_large[o]=1) and (p_population[o]>0.1))){
+			                if (p_orks[o]+p_chaos[o]+p_tyranids[o]+p_necrons[o]+p_tau[o]+p_traitors[o]=0) then good=1;
+			            }
+			        }
+			        if (good=1) then instance_create(x,y,obj_temp_inq);
+			    }
+			}
 	    }
-	    if (planet_needed=4){
-	        with(obj_star){if (owner<=5){
-	            var good,o;good=0;o=0;
-	            repeat(4){o+=1;
-	                if (p_owner[o]<=5) and ((p_large[o]=1) and (p_population[o]>0.1)){
-	                    if (p_orks[o]+p_chaos[o]+p_tyranids[o]+p_necrons[o]+p_tau[o]+p_traitors[o]=0) then good=1;
-	                }
-	            }
-	            if (good=1) then instance_create(x,y,obj_temp_inq);
-	        }}
+	    if (planet_needed=4) {
+			var good
+	        with(obj_star) {
+				if (scr_is_star_owned_by_allies(self)) {
+					good=0;o=0;
+			        repeat(4) {
+						o+=1;
+			            if (scr_is_planet_owned_by_allies(self, o)) and ((p_large[o]=1) and (p_population[o]>0.1)){
+			                if (p_orks[o]+p_chaos[o]+p_tyranids[o]+p_necrons[o]+p_tau[o]+p_traitors[o]=0) then good=1;
+			            }
+			        }
+			        if (good=1) then instance_create(x,y,obj_temp_inq);
+			    }
+			}
 	    }
     
 	    var closest,c_plan,closest_dist;

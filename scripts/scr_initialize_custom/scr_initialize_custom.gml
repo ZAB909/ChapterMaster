@@ -479,8 +479,8 @@ function scr_initialize_custom() {
 	var company=0;
 	var chaap=1,whirlwind;
 	var second=100,third=100,fourth=100,fifth=100,sixth=100,seventh=100,eighth=100,ninth=100,tenth=100;
-	var assault=20,siege=0,temp1=0,temp2=0, intolerant=0;
-	var size_relative, k, i, v, t;k=0;i=0;v=0;
+	var assault=20,siege=0,temp1=0, intolerant=0;
+	var k, i, v;k=0;i=0;v=0;
 	var techs=20,epistolary=4,apothecary=6,codiciery=6,lexicanum=10,terminator=10,veteran=89;
 	devastator=20;
 

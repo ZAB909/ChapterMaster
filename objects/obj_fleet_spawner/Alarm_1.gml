@@ -126,7 +126,7 @@ if (owner = eFACTION.Eldar){// This is an orderly Eldar ship formation
 
 if (owner = eFACTION.Ork) or (owner = eFACTION.Chaos){// This is spew out random ships without regard for formations
     var xx,yy,dist,targ,numb,man;
-    xx=0;yy=0;dist=0;target=0;numb=0;man=0;
+    xx=0;yy=0;dist=0;targ=0;numb=0;man=0;
     
     var i;i=0;
     

@@ -805,9 +805,10 @@ function basic_diplomacy_screen(){
 	            if (opts=4) then yy-=30;
 	            if (opts=2) then yy+=30;
 	            if (opts=1) then yy+=60;
-            
-	            repeat(4){slot+=1;
-	                if (diplo_option[slot]!=""){
+
+	            repeat(4){
+					slot+=1;
+	                if (diplo_option[slot]!="") {
 						var left = xx+354;
 						var top = yy+694;
 						var right = xx+887;
@@ -832,10 +833,9 @@ function basic_diplomacy_screen(){
 					opt_cord+=1;
 	                yy+=30;
 	            }
-            
 	            yy=__view_get( e__VW.YView, 0 );
 	        }
-        
+
 	        if (force_goodbye=1){
 	            draw_rectangle(xx+818,yy+796,xx+897,yy+815,0);
 	            draw_set_color(0);draw_text(xx+857.5,yy+797,string_hash_to_newline("Exit"));draw_set_alpha(0.2);

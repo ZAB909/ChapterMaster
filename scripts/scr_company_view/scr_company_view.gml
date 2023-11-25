@@ -85,7 +85,6 @@ function scr_company_view(company) {
 	                ma_mobi[v]=obj_ini.mobi[company,v];
 					display_unit[v] = unit;
 					if (unit_loc[0]==location_types.ship){
-						var unit_ship=unit_loc[1];
 						if (unit_loc[2]=="Lost")then ma_loc[v]="Lost";
 					}					
 	                // Select All Infantry Setup

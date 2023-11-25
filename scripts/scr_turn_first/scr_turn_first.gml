@@ -42,7 +42,7 @@ function scr_turn_first() {
 
 	if (peace_check>0){
 	    with(obj_temp3){instance_destroy();}
-		var baddy, iter, total;
+		var baddy, total;
 		total = 0;
 	    with(obj_star){
 	        if (owner>5){
@@ -99,10 +99,10 @@ function scr_turn_first() {
 	            with(obj_star){
 					rep=0;
 					ya=false;
-					filtered_array = array_filter(p_owner, function(val) {
-						return val <= 5
+					//should probably get turned into its own helper if used multiple times
+					filtered_array = array_filter(p_owner, function(val, idx) {
+						return scr_is_planet_owned_by_allies(self, idx)
 					})
-					
 					if array_length(filtered_array)
 						array_push(candidate_systems, self)
 	            }

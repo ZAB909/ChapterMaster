@@ -2,8 +2,7 @@
 function scr_vehicle_order(company_number) {
     // Once it's actually fucking working it should probably join the scr_company_order script in the Interface folder
     var vehicle_count = 0;
-	var co=company_number;
-    var temp_race, temp_loc, temp_name, temp_role, temp_wep1, temp_lid, temp_wid, temp_wep2, temp_wep3, temp_upgrade, temp_acc, temp_armour, temp_gear, temp_hp, temp_chaos, temp_experience, temp_age, temp_uid;
+    var temp_race, temp_loc, temp_name, temp_role, temp_wep1, temp_lid, temp_wid, temp_wep2, temp_wep3, temp_upgrade, temp_acc, temp_hp, temp_chaos, temp_uid;
 
     // init arrays
     for (var i = 0; i < 301; i++) { // TODO why 301?

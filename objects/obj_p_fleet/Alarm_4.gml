@@ -1,5 +1,5 @@
 
-var sys, sys_dist, mine, connected, fleet, cont;
+var sys_dist, mine, connected, fleet, cont;
 sys_dist=9999;connected=0;cont=0;
 
 

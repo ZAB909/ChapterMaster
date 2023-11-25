@@ -433,7 +433,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		sz = 1;
 		var bulky_armour = ["Terminator Armour", "Tartaros"]
 	    if (string_count("Dread",arm)>0) {sz+=5;} else if (array_contains(bulky_armour,arm)){sz +=1};
-		var mobi =  mobility_item();
+		//var mobi =  mobility_item();
 		/*if (mobi == "Jump Pack"){
 			sz++;
 		}*/
@@ -540,7 +540,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	if (array_contains(variable_struct_get_names(global.base_stats), class)){
 		load_json_data(global.base_stats[$ class]);
 	};
-	var random_stat,edit_stat, stat_mod;
+	var edit_stat, stat_mod;
 	var stats = ["constitution", "strength", "luck", "dexterity", "wisdom", "piety", "charisma", "technology","intelligence", "weapon_skill", "ballistic_skill"];
 	for (var stat_iter =0; stat_iter <array_length(stats);stat_iter++){
 		if struct_exists(self, stats[stat_iter]){

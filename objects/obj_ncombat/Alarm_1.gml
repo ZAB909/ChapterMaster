@@ -10,7 +10,7 @@ if (ally>0) and (ally_forces>0){
 
 
 // Player crap here
-var p1,p2,p3,p4,p5,p6,p7,p8,temp,temp2,temp3,temp4,temp5,temp6;
+var p1,p2,p3,p4,p5,p6,p8,temp,temp2,temp3,temp4,temp5,temp6;
 p1="";p2="";p3="";p4="";p5="";p6="";p8="";temp=0;temp2=0;temp3=0;temp4=0;temp5=0;temp6=0;
 var d1,d2,d3,d4,d5,d6,d7,d8;
 d1="";d2="";d3="";d4="";d5="";d6="";d7="";d8="";

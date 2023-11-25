@@ -3,7 +3,7 @@ image_angle=direction;
 if (obj_fleet.start!=5) then exit;
 
 
-var dist, ch_rang, ex;
+var dist;
 
 if (shields>0) and (shields<maxshields) then shields+=0.02;
 if (board_cooldown>=0) then board_cooldown-=1;

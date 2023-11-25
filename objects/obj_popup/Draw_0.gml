@@ -362,7 +362,7 @@ if (type=8) and (instance_exists(obj_controller)){
     draw_sprite_stretched(spr_arrow,3,x2+569,y2+357+356,23,22);
     
     if (target_comp!=-1){
-        var x2,y2,bb="";
+        var x2,y2,
         x2=__view_get( e__VW.XView, 0 )+951;y2=__view_get( e__VW.YView, 0 )+48;
     
         var top,sel,temp1,temp2,temp3,temp4,temp5;temp1="";temp2="";temp3="";temp4="";temp5="";

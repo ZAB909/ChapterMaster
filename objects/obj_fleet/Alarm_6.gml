@@ -126,7 +126,7 @@ obj_ini.weapon_color=obj_creation.weapon_color;
 
 // More prep for player
 
-var i, k, onceh, company;i=0;k=0;onceh=0;
+var i, k, onceh;i=0;k=0;onceh=0;
 
 // instance_activate_object(obj_combat_info);
 

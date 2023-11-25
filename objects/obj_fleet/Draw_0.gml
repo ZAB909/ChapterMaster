@@ -119,9 +119,7 @@ if (start=7){
     draw_rectangle(__view_get( e__VW.XView, 0 )+192-24,__view_get( e__VW.YView, 0 )+128-96,__view_get( e__VW.XView, 0 )+448+24,__view_get( e__VW.YView, 0 )+272-96,0);
     
     draw_set_alpha(1);draw_set_color(0);draw_set_halign(fa_center);draw_set_font(fnt_menu);
-    
-    
-    var wounded, vlost, vdamaged, dlost;
+
     
     if (losses>=0.95){
         draw_text(__view_get( e__VW.XView, 0 )+320,__view_get( e__VW.YView, 0 )+130-96,string_hash_to_newline("Major Victory"));

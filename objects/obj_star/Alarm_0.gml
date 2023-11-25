@@ -50,9 +50,9 @@ if (space_hulk==1){
     p_fortified[1]=5;
     
     var faction=choose(7,9,9,9,9,9,10);
-    if (faction==7) then p_orks[1]=choose(3,4,5);
-    if (faction==9) then p_tyranids[1]=choose(3,4,5);
-    if (faction==10) then p_traitors[1]=choose(2,3,4);
+    if (faction == eFACTION.Ork) then p_orks[1]=choose(3,4,5);
+    if (faction == eFACTION.Tyranids) then p_tyranids[1]=choose(3,4,5);
+    if (faction == eFACTION.Chaos) then p_traitors[1]=choose(2,3,4);
     
     p_first[1]=faction;
     

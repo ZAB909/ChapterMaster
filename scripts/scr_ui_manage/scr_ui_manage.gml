@@ -1,7 +1,7 @@
 function scr_ui_manage() {
 	var unit,i, tooltip_text,x1,x2,y1,y2, var_text;
 	var romanNumerals=scr_roman_numerals();	
-	var normal_hp=true, bionic_tooltip="",tooltip_drawing=[];
+	var bionic_tooltip="",tooltip_drawing=[];
 	var body_augmentations = {mutations:[], bionics:[[],[]]}
 	
 	// Declare non marine roles here

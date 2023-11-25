@@ -5,7 +5,7 @@ function scr_company_order(company) {
 	var co=company;
 
 	var i=-1,v=0;
-	var temp_vrace, temp_vloc, temp_vrole, temp_vwep1, temp_vwep2, temp_vup, temp_vhp, temp_vchaos, temp_vpilots, temp_vlid, temp_vwid, unit;
+	var unit;
 
 	for (var i=0;i<=500;i++){
 	    temp_race[co,i]=0;

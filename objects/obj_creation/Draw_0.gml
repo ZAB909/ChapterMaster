@@ -565,7 +565,7 @@ if (slide=2){
         }
         
         
-        var x1,x2,x3,x4,x5,x6,y1,y2,y3,y4,y5,y6,bs,see_size,total_max,current,top;
+        var x1,x2,x3,x4,x6,y1,y2,y3,y4,y6,bs,see_size,total_max,current,top;
         
         x1=1111;y1=245;x2=1131;y2=671;bs=245;
         draw_rectangle(x1,y1,x2,y2,1);

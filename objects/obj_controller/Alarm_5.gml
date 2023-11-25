@@ -7,7 +7,7 @@ var eq1=1,eq2=1,eq3=1,t=0,r=0;
 var marine_company=0;
 var warn="",w5=0;
 var g1=0,g2=0;
-var onceh=0,up=0,tot=0,stahp=0;
+var onceh=0,tot=0,stahp=0;
 var disc=0,droll=0;
 var rund=0;
 var spikky=0;
@@ -152,8 +152,10 @@ if (instance_number(obj_temp5)>0) and (imp_ships<sha){
 
         if (bool(targeted)) {
 			targeted = array_pop(system_4)
+		}
 		if (bool(targeted)) {
 			targeted = array_pop(system_3)
+		}
 		if (bool(targeted)) {
 			targeted = array_pop(system_other)
 		}
@@ -637,7 +639,7 @@ if (tech_points>=360){
 if (tech_points>=4) and (tech_aspirant==0){    
     marine_position=0;
     marine_company=0;
-    var search_conditions = {"stat":[["technology", 35, "more"]]}
+    //var search_conditions = {"stat":[["technology", 35, "more"]]}
     random_marine=scr_random_marine([obj_ini.role[100,8],obj_ini.role[100,18],obj_ini.role[100,10],obj_ini.role[100,9]],30);
     if (random_marine != "none"){
         marine_position = random_marine[1];
@@ -686,7 +688,7 @@ if (tech_points>=4) and (tech_aspirant==0){
         }    
     } else{
         training_techmarine = 0;
-        scr_alert("red",string("recruitment","No marines with sufficient technology aptitude for {0} training",obj_ini.role[100,16]),0,0);
+        scr_alert("red","recruitment",string("No marines with sufficient technology aptitude for {0} training",obj_ini.role[100,16]),0,0);
     }
 }
 recruit_count=0;
@@ -1110,7 +1112,7 @@ if ((turn>=10) or (obj_ini.fleet_type==eFACTION.Mechanicus)) and (faction_defeat
             with(obj_star){
                 if (owner==eFACTION.Ork){
                     rund=floor(random(planets))+1;
-                    if (p_owner[rund]==7) and (p_pdf[rund]==0) and (p_guardsmen[rund]==0) and (p_orks[rund]>=2) then instance_create(x,y,obj_temp6);
+                    if (p_owner[rund]==eFACTION.Ork) and (p_pdf[rund]==0) and (p_guardsmen[rund]==0) and (p_orks[rund]>=2) then instance_create(x,y,obj_temp6);
                 }
             }
             if (instance_exists(obj_temp6)){
@@ -1381,7 +1383,7 @@ for(var i=1; i<=99; i++){
                     pp=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
                     pp.dispo[tc]=-10;// Resets
                     var twix="Inquisition executes Chapter Serf in control of "+string(tb)+" "+string(tc)+" and installs a new Planetary Governor.";
-                    if (pp.p_owner[tc]=1) then pp.p_owner[tc]=pp.p_first[tc];
+                    if (pp.p_owner[tc]=eFACTION.Player) then pp.p_owner[tc]=pp.p_first[tc];
                     scr_alert("","",string(twix),0,0);scr_event_log("",string(twix));
                 }
                 with(obj_temp5){instance_destroy();}
@@ -1794,14 +1796,14 @@ if (income_controlled_planets>0){
                 alert_type[a+1]=alert_type[a];
                 alert_text[a+1]=alert_text[a];
                 alert_char[a+1]=alert_char[a];
-                alert_txt[a+1]=alert_color[a];
+                alert_text[a+1]=alert_color[a];
             }
         }
     }
     obj_turn_end.alert[1]=1;
     obj_turn_end.alert_type[1]="";
     obj_turn_end.alert_char[1]=0;
-    obj_turn_end.alert_txt[1]="";
+    obj_turn_end.alert_text[1]="";
     obj_turn_end.alert_color[1]="yellow";
     obj_turn_end.alerts+=1;
 

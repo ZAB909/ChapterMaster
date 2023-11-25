@@ -941,7 +941,7 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
     
     if (title="Inquisition Recon"){
         with(obj_temp5){instance_destroy();}
-        var pt1,pt2,pt3,pt4,pt5,you,onceh;onceh=0;
+        var you,onceh;onceh=0;
         obj_controller.temp[200]=string(loc);
         
         with(obj_star){if (name=obj_controller.temp[200]) then instance_create(x,y,obj_temp5);}

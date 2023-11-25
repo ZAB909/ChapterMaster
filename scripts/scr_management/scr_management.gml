@@ -5,7 +5,7 @@ function scr_management(argument0) {
 
 
 	// Variable creation
-	var num=0, nam="", company=50, trainee=0, q=0;	
+	var num=0, nam="", company=50, q=0;	
 	var romanNumerals=scr_roman_numerals();
 
 	if (argument0=1){

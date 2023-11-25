@@ -75,7 +75,7 @@ function scr_income() {
 	            var mine;mine=instance_nearest(x,y,obj_star);
 	            var i;i=0;
 	            repeat(4){i+=1;
-	                if (mine.p_owner[i]=2) or (mine.p_owner[i]=3){
+	                if (mine.p_owner[i]=eFACTION.Imperium) or (mine.p_owner[i]=eFACTION.Mechanicus){
 	                    if (mine.p_type[i]="Desert") or (mine.p_type[i]="Temperate") then obj_controller.income_home+=2*capital_number;
 	                    if (mine.p_type[i]="Forge") or (mine.p_type[i]="Hive") then obj_controller.income_home+=4*capital_number;
 	                }

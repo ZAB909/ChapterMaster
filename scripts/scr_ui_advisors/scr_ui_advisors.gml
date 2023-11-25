@@ -394,7 +394,7 @@ function scr_ui_advisors() {
 	            draw_set_font(fnt_40k_14);
 				draw_set_halign(fa_left);
             
-	            var behav=0,r_eta=0;
+	            var r_eta=0;
 
 	            for(var qp= 1; qp <= min(36,penitorium); qp++){
 	                if (obj_ini.chaos[penit_co[qp],penit_id[qp]]>0) then r_eta=round((obj_ini.chaos[penit_co[qp],penit_id[qp]]*obj_ini.chaos[penit_co[qp],penit_id[qp]])/50);
@@ -1626,8 +1626,7 @@ function scr_ui_advisors() {
 	    if (recruit_name[1]!=""){
 	        draw_set_font(fnt_40k_14);
 			draw_set_halign(fa_left);
-        
-	        var t_eta=0;
+
 	        for (var qp=1, n=0; qp<=300 && n<36; qp++) {
     			if (recruit_name[qp] != "") {
         			n++;
@@ -1676,7 +1675,7 @@ function scr_ui_advisors() {
 	    draw_set_font(fnt_small);
 	    draw_set_halign(fa_left);
     
-	    var eqp="",tempe="";
+	    var eqp="";
 	    /*
 	    if (obj_ini.wep1[0,1]!=""){
 	        tempe=string(obj_ini.wep1[0,1])+": "+string(scr_item_descr(string(obj_ini.wep1[0,1])));

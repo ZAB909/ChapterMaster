@@ -28,7 +28,7 @@ if (obj_ncombat.enemy=1){
     with(obj_enunit){var q;q=0;
         repeat(700){q+=1;
             if (dude_id[q]>0){
-                var nco,nid,commandy,siz;
+                var nco,nid,commandy;
                 nco=0;nid=0;commandy=false;
                 nco=dude_co[q];nid=dude_id[q];
                 cleann[nco]=1;
