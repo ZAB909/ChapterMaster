@@ -175,7 +175,7 @@ if (x>(room_width-800)) then x=room_width-800;
 if (y>(room_height-450)) then y=room_height-450;
 // For testing purposes
 if (is_test_map=true) then with(obj_en_fleet){
-    if (owner=2){
+    if (owner = eFACTION.Imperium){
         capital_number=0;
         frigate_number=1;
         escort_number=2;

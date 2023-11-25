@@ -236,7 +236,7 @@ function scr_enemy_ai_d() {
 	                        }
                             
 	                        var flit;flit=instance_create(x,y-32,obj_en_fleet);
-	                        flit.owner=3;flit.sprite_index=spr_fleet_mechanicus;
+	                        flit.owner = eFACTION.Mechanicus;flit.sprite_index=spr_fleet_mechanicus;
 	                        flit.capital_number=1;flit.image_index=0;flit.image_speed=0;
 	                        flit.trade_goods="mars_spelunk1";
 	                        flit.home_x=x;flit.home_y=y;
@@ -339,7 +339,7 @@ function scr_enemy_ai_d() {
 	            // show_message("x1:"+string(x)+", y1:"+string(y)+"#x2:"+string(x7)+", y2:"+string(y7));
             
 	            flit=instance_create(x7,y7,obj_en_fleet);
-	            flit.owner=4;flit.image_index=0;flit.sprite_index=spr_fleet_inquisition;
+	            flit.owner  = eFACTION.Inquisition;flit.image_index=0;flit.sprite_index=spr_fleet_inquisition;
 	            if (p_problem[i,wob]="inquisitor1") then flit.trade_goods="male_her";
 	            if (p_problem[i,wob]="inquisitor2") then flit.trade_goods="female_her";
 	            flit.action_x=x;flit.action_y=y;flit.alarm[4]=1;flit.action_spd=128;
@@ -417,7 +417,7 @@ function scr_enemy_ai_d() {
 	                xx=random_range(room_width*1.25,room_width*2);xx=choose(xx*-1,xx);xx=x+xx;
 	                yy=random_range(room_height*1.25,room_height*2);yy=choose(yy*-1,yy);yy=y+yy;
 	                fleet=instance_create(xx,yy,obj_en_fleet);
-	                fleet.owner=9;
+	                fleet.owner = eFACTION.Tyranids;
 	                fleet.sprite_index=spr_fleet_tyranid;
 	                fleet.image_speed=0;
                 
@@ -530,7 +530,7 @@ function scr_enemy_ai_d() {
 	with(obj_temp5){instance_destroy();}
 	with(obj_temp6){instance_destroy();}
 	with(obj_en_fleet){
-	    if (owner=2) and ((trade_goods="colonize") or (trade_goods="colonizeL")){
+	    if (owner = eFACTION.Imperium) and ((trade_goods="colonize") or (trade_goods="colonizeL")){
 	        var tirg;tirg=instance_nearest(action_x,action_y,obj_star);
 	        instance_create(tirg.x,tirg.y,obj_temp2);
 	    }
@@ -562,7 +562,7 @@ function scr_enemy_ai_d() {
 	        if (p_owner[r]=2) and (p_type[r]!="Dead") and (p_type[r]!="") and ((p_type[r]="Hive") or (p_type[r]="Temperate") or (p_type[r]="Shrine")) and (p_population[r]=0) then instance_create(x,y,obj_temp5);
 	        if (p_owner[r]=3) and (p_type[r]!="Dead") and (p_type[r]!="") and (p_type[r]="Forge") and (p_population[r]=0) then instance_create(x,y,obj_temp5);
 	        // Count player planets as HIVE PLANETS so that they are prioritized
-	        if (p_owner[r]=1) and (p_type[r]!="Dead") and (p_type[r]!="") and (p_population[r]=0) and (obj_controller.faction_status[2]!="War") then instance_create(x,y,obj_temp5);
+	        if (p_owner[r]=1) and (p_type[r]!="Dead") and (p_type[r]!="") and (p_population[r]=0) and (obj_controller.faction_status[eFACTION.Imperium]!="War") then instance_create(x,y,obj_temp5);
 	    }
 	}
 
@@ -575,7 +575,7 @@ function scr_enemy_ai_d() {
 	        you2=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
 	        you3=instance_nearest(obj_temp6.x,obj_temp6.y,obj_star);
 	        flit=instance_create(you1.x,you1.y,obj_en_fleet);
-	        flit.owner=2;flit.sprite_index=spr_fleet_civilian;flit.image_index=3;
+	        flit.owner = eFACTION.Imperium;flit.sprite_index=spr_fleet_civilian;flit.image_index=3;
         
 	        var l;l=0;
 	        repeat(4){l+=1;
@@ -594,7 +594,7 @@ function scr_enemy_ai_d() {
 	        you2=instance_nearest(obj_temp4.x,obj_temp4.y,obj_star);// Destination star
 	        you3=instance_nearest(obj_temp6.x,obj_temp6.y,obj_star);// Origin star
 	        flit=instance_create(you1.x,you1.y,obj_en_fleet);
-	        flit.owner=2;flit.sprite_index=spr_fleet_civilian;flit.image_index=choose(1,2);
+	        flit.owner = eFACTION.Imperium;flit.sprite_index=spr_fleet_civilian;flit.image_index=choose(1,2);
         
 	        /*show_message("Colonist fleet created at "+string(flit.x)+","+string(flit.y));
 	        obj_controller.x=flit.x;

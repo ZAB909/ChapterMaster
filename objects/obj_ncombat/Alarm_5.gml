@@ -171,7 +171,7 @@ if (fortified>0) and (!instance_exists(obj_nfort)) and (lowf=true){
 
 
 /*if (enemy=5){
-    if (obj_controller.faction_status[5]!="War"){
+    if (obj_controller.faction_status[eFACTION.Ecclesiarchy]!="War"){
         
     }
 }*/

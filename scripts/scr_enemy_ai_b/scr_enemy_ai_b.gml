@@ -34,7 +34,7 @@ function scr_enemy_ai_b() {
 	            if (rob<=15){
 	                if (present_fleet[13]>0){
 	                    nforce=instance_nearest(x+32,y+32,obj_en_fleet);
-	                    if (nforce.owner=13){
+	                    if (nforce.owner = eFACTION.Necrons){
 	                        if (nforce.escort_number<nforce.capital_number*3) and (onceh=0){onceh=1;nforce.escort_number+=2;}
 	                        if (nforce.frigate_number<nforce.capital_number*1.5) and (onceh=0){onceh=1;nforce.frigate_number+=1;}
 	                        if (onceh=0) then nforce.capital_number+=1;
@@ -42,13 +42,13 @@ function scr_enemy_ai_b() {
 	                }
 	                if (present_fleet[13]=0){
 	                    nforce=instance_create(x+32,y+32,obj_en_fleet);
-	                    nforce.owner=13;nforce.capital_number=1;
+	                    nforce.owner = eFACTION.Necrons;nforce.capital_number=1;
 	                    nforce.sprite_index=spr_fleet_necron;nforce.image_speed=0;
 	                    nforce.image_index=1;present_fleet[13]+=1;
 	                }
                 
 	                with(nforce){
-	                    if (owner=13){
+	                    if (owner = eFACTION.Necrons){
 	                        var ii;ii=0;ii+=capital_number;ii+=round((frigate_number/2));ii+=round((escort_number/4));
 	                        if (ii<=1) then ii=1;// image_index=max(8,round(ii));
                         
@@ -74,7 +74,7 @@ function scr_enemy_ai_b() {
                     
 	                    var nforce2;
 	                    nforce2=instance_create(x+32,y+32,obj_en_fleet);
-	                    nforce2.owner=13;nforce2.sprite_index=spr_fleet_necron;
+	                    nforce2.owner = eFACTION.Necrons;nforce2.sprite_index=spr_fleet_necron;
 	                    // nforce2.image_index=0;
 	                    nforce.image_speed=0;
 	                    nforce2.capital_number=1;
@@ -215,8 +215,8 @@ function scr_enemy_ai_b() {
 	i=0;
 	repeat(4){// Spread influence on controlled sector
 	    i+=1;
-	    if (p_heresy[i]<70) and (owner=10) and (p_type[i]!="Space Hulk") and (p_type[i]!="Dead") then p_heresy[i]+=2;
-	    if (p_heresy[i]<70) and (owner=8) and (p_type[i]!="Space Hulk") and (p_type[i]!="Dead"){
+	    if (p_heresy[i]<70) and (owner = eFACTION.Chaos) and (p_type[i]!="Space Hulk") and (p_type[i]!="Dead") then p_heresy[i]+=2;
+	    if (p_heresy[i]<70) and (owner = eFACTION.Tau) and (p_type[i]!="Space Hulk") and (p_type[i]!="Dead"){
 	        var doggy;doggy=floor(random(100))+1;
 	        if (doggy<=5) and (p_heresy[i]>=20) then p_heresy[i]+=1;
 	    }
@@ -225,7 +225,7 @@ function scr_enemy_ai_b() {
 	        if (p_pdf[i]>0) then p_pdf[i]=0;
 	        if (p_guardsmen[i]>0) then p_guardsmen[i]=0;
 	    }
-	    // if (p_heresy[i]>0) and (owner!=10) then p_heresy[i]-=2;
+	    // if (p_heresy[i]>0) and (owner != eFACTION.Chaos) then p_heresy[i]-=2;
 	}
 
 
@@ -234,13 +234,13 @@ function scr_enemy_ai_b() {
 
 
 	// Tau rebellions
-	if (present_fleet[8]>=1) and (owner!=8){
+	if (present_fleet[8]>=1) and (owner != eFACTION.Tau){
 	    var flit, siz, ran1, ran2, ran3;
 	    flit=instance_nearest(x-24,y-24,obj_en_fleet);
 	    ran1=0;ran2=floor(random(planets))+1;
     
     
-	    if (flit.owner=8){
+	    if (flit.owner = eFACTION.Tau){
 	        ran1=floor(random(100))+1;
         
 	        if (flit.image_index=1) and (ran1<=90){
@@ -265,7 +265,7 @@ function scr_enemy_ai_b() {
         
 	        if (i<=planets) and (p_influence[i]>=70) and (p_owner[i]!=8) and (p_owner[i]!=10) and (p_owner[i]!=7) and (p_owner[i]!=9) and (p_type[i]!="Space Hulk"){
 	            if (p_owner[1]=8) then ran3+=5;if (p_owner[2]=8) then ran3+=5;if (p_owner[3]=8) then ran3+=5;if (p_owner[4]=8) then ran3+=5;
-	            if (flit.owner=8){ran3+=(flit.image_index*5)-5;}
+	            if (flit.owner = eFACTION.Tau){ran3+=(flit.image_index*5)-5;}
             
             
 	            if (ran3>=95){/*obj_controller.x=self.x;obj_controller.y=self.y;show_message(string(ran3)+" |"+string(p_orks[i])+"|"+string(p_traitors[i]));*/}
@@ -298,7 +298,7 @@ function scr_enemy_ai_b() {
 					}
 
 	                if (badd=2){
-	                    scr_popup("System Lost","The "+string(name)+" system has been taken by the Tau Empire!","tau","");owner=8;
+	                    scr_popup("System Lost","The "+string(name)+" system has been taken by the Tau Empire!","tau","");owner = eFACTION.Tau;
 	                    scr_event_log("red","System "+string(name)+" has been taken by the Tau Empire.");
 	                }
                 

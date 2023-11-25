@@ -16,12 +16,12 @@ if (action!=""){
     if (connected=0) then eta=eta*2;
     if (connected=1) then connected=1;
     
-    if (owner=4) and (action_eta<2) then action_eta=2;
+    if (owner=eFACTION.Inquisition) and (action_eta<2) then action_eta=2;
     // action_x=sys.x;
     // action_y=sys.y;
     action="move";
     
-    if (owner!=6) and (mine.storm>0) then action_eta+=10000;
+    if (owner != eFACTION.Eldar) and (mine.storm>0) then action_eta+=10000;
     
     x=x+lengthdir_x(24,point_direction(x,y,sys.x,sys.y));
     y=y+lengthdir_y(24,point_direction(x,y,sys.x,sys.y));
@@ -43,8 +43,8 @@ if (action=""){
     act_dist=point_distance(x,y,sys.x,sys.y);
     mine=instance_nearest(x,y,obj_star);
     
-    // if (owner=8) then mine.tau_fleets-=1;
-    // if (owner=8) and (image_index!=1) then mine.tau_fleets-=1;
+    // if (owner = eFACTION.Tau) then mine.tau_fleets-=1;
+    // if (owner = eFACTION.Tau) and (image_index!=1) then mine.tau_fleets-=1;
     // mine.present_fleets-=1;
     
     
@@ -62,7 +62,7 @@ if (action=""){
     if (cont=20){// Move the entire fleet, don't worry about the other crap
         var eta;eta=0;
         
-        if (trade_goods!="") and (owner!=9) and (owner!=10) and (string_count("Inqis",trade_goods)=0) and (string_count("merge",trade_goods)=0)and (string_count("_her",trade_goods)=0) and (trade_goods!="cancel_inspection") and (trade_goods!="return"){
+        if (trade_goods!="") and (owner != eFACTION.Tyranids) and (owner != eFACTION.Chaos) and (string_count("Inqis",trade_goods)=0) and (string_count("merge",trade_goods)=0)and (string_count("_her",trade_goods)=0) and (trade_goods!="cancel_inspection") and (trade_goods!="return"){
             if (target!=0) and (instance_exists(target)){
                 if (target.action!=""){
                     if (target_dist>sys_dist){action_x=target.action_x;action_y=target.action_y;sys=instance_nearest(action_x,action_y,obj_star);}
@@ -74,12 +74,12 @@ if (action=""){
         if (connected=0) then eta=eta*2;
         if (connected=1) then connected=1;
         
-        if (action_eta<=0) or (owner!=4){
+        if (action_eta<=0) or (owner  != eFACTION.Inquisition){
             action_eta=eta;
-            if (owner=4) and (action_eta<2) and (string_count("_her",trade_goods)=0) then action_eta=2;
+            if (owner  = eFACTION.Inquisition) and (action_eta<2) and (string_count("_her",trade_goods)=0) then action_eta=2;
         }
         
-        if (owner!=6) and (mine.storm>0) then action_eta+=10000;
+        if (owner != eFACTION.Eldar) and (mine.storm>0) then action_eta+=10000;
         
         // action_x=sys.x;
         // action_y=sys.y;

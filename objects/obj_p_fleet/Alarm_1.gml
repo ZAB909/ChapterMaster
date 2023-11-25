@@ -85,8 +85,8 @@ if (action="move") or (action="crusade1") or (action="crusade2") or (action="cru
         if (steh.p_owner[1]=5) or (steh.p_owner[2]=5) or (steh.p_owner[3]=5) or (steh.p_owner[4]=5){
             if (obj_controller.faction_defeated[5]=0) and (obj_controller.known[5]=0) then obj_controller.known[5]=1;
         }
-        if (steh.owner=6) and (obj_controller.faction_defeated[6]=0) and (obj_controller.known[6]=0) then obj_controller.known[6]=1;
-        if (steh.owner=8) and (obj_controller.faction_defeated[8]=0) and (obj_controller.known[8]=0) then obj_controller.known[8]=1;
+        if (steh.owner = eFACTION.Eldar) and (obj_controller.faction_defeated[6]=0) and (obj_controller.known[6]=0) then obj_controller.known[6]=1;
+        if (steh.owner = eFACTION.Tau) and (obj_controller.faction_defeated[8]=0) and (obj_controller.known[8]=0) then obj_controller.known[8]=1;
         
         action="";
         x=action_x+24;
@@ -134,7 +134,7 @@ if (action="") and (obj_controller.known[6]=0){
         if (rando>=95) and (dist<=300){
             obj_controller.known[6]=1;
             scr_alert("green","elfs","Eldar Craftworld discovered.",steh.old_x,steh.old_y);
-            with(obj_en_fleet){if (owner=6) then image_alpha=1;}
+            with(obj_en_fleet){if (owner = eFACTION.Eldar) then image_alpha=1;}
         }
         // Quene eldar introduction
         // if (rando>=95) and (dist<=300) then show_message("MON'KEIGH");

@@ -12,13 +12,13 @@ function scr_enemy_ai_e() {
 	}
 
 	if (present_fleet[1]>0){// Battle1 is reserved for player battles
-	    if (present_fleet[2]>0) and (obj_controller.faction_status[2]="War") then battle=1;
-	    if (present_fleet[3]>0) and (obj_controller.faction_status[3]="War") then battle=1;
-	    if (present_fleet[6]>0) and (obj_controller.faction_status[6]="War") then battle=1;
+	    if (present_fleet[2]>0) and (obj_controller.faction_status[eFACTION.Imperium]="War") then battle=1;
+	    if (present_fleet[3]>0) and (obj_controller.faction_status[eFACTION.Mechanicus]="War") then battle=1;
+	    if (present_fleet[6]>0) and (obj_controller.faction_status[eFACTION.Eldar]="War") then battle=1;
 	    if (present_fleet[7]>0) then battle=1;
-	    if (present_fleet[8]>0) and (obj_controller.faction_status[8]="War") then battle=1;
+	    if (present_fleet[8]>0) and (obj_controller.faction_status[eFACTION.Tau]="War") then battle=1;
 	    if (present_fleet[9]>0) then battle=1;
-	    if (present_fleet[10]>0) and (obj_controller.faction_status[10]="War"){
+	    if (present_fleet[10]>0) and (obj_controller.faction_status[eFACTION.Chaos]="War"){
 	        var special_stop,run,s;
 	        special_stop=false;run=0;s=0;
 	        repeat(4){run+=1;s=0;
@@ -286,7 +286,7 @@ function scr_enemy_ai_e() {
 
 
 	if (battle>0){
-	    if (present_fleet[1]>0) and ((present_fleet[6]+present_fleet[7]+present_fleet[8]+present_fleet[9]+present_fleet[10]+present_fleet[13]>0) or ((present_fleet[2]>0) and (obj_controller.faction_status[2]="War"))){
+	    if (present_fleet[1]>0) and ((present_fleet[6]+present_fleet[7]+present_fleet[8]+present_fleet[9]+present_fleet[10]+present_fleet[13]>0) or ((present_fleet[2]>0) and (obj_controller.faction_status[eFACTION.Imperium]="War"))){
 	        var i,onceh;i=1;onceh=0;
         
 	        repeat(9){i+=1;
@@ -315,7 +315,7 @@ function scr_enemy_ai_e() {
 	                    with(obj_temp2){instance_destroy();}
 	                    with(obj_temp3){instance_destroy();}
 	                    with(obj_en_fleet){
-	                        if (action="") and (orbiting=obj_controller.temp[1049]) and (owner=10){
+	                        if (action="") and (orbiting=obj_controller.temp[1049]) and (owner = eFACTION.Chaos){
 	                            if (string_count("BLOOD",trade_goods)>0) then instance_create(x,y,obj_temp2);
 	                            if (string_lower(trade_goods)="csm") then instance_create(x,y,obj_temp3);
 	                        }
@@ -425,20 +425,20 @@ function scr_enemy_ai_e() {
 				    case 12:
 				        continue;
 				    case 2:
-				        if (p_player[run] > 0 && p_owner[run] == 1 && p_guardsmen[run] > 0 && obj_controller.faction_status[2] == "War") {
+				        if (p_player[run] > 0 && p_owner[run] == 1 && p_guardsmen[run] > 0 && obj_controller.faction_status[eFACTION.Imperium] == "War") {
 				            battle_opponent = 2;
 				        }
-				        if (p_player[run] >= 10 && p_owner[run] != 1 && p_guardsmen[run] > 0 && obj_controller.faction_status[2] == "War") {
+				        if (p_player[run] >= 10 && p_owner[run] != 1 && p_guardsmen[run] > 0 && obj_controller.faction_status[eFACTION.Imperium] == "War") {
 				            battle_opponent = 2;
 				        }
 				        break;
 				    case 5:
-				        if (p_player[run] > 0 && p_sisters[run] > 0 && obj_controller.faction_status[5] == "War") {
+				        if (p_player[run] > 0 && p_sisters[run] > 0 && obj_controller.faction_status[eFACTION.Ecclesiarchy] == "War") {
 				            battle_opponent = 5;
 				        }
 				        break;
 				    case 6:
-				        if (p_player[run] > 0 && p_eldar[run] > 0 && obj_controller.faction_status[6] == "War") {
+				        if (p_player[run] > 0 && p_eldar[run] > 0 && obj_controller.faction_status[eFACTION.Eldar] == "War") {
 				            battle_opponent = 6;
 				        }
 				        break;
@@ -464,7 +464,7 @@ function scr_enemy_ai_e() {
 				                pause = 1;
 				            }
 				        }
-				        if (p_guardsmen[run] + p_pdf[run] == 0 && p_player[run] > 0 && p_traitors[run] > 0 && pause == 0 && obj_controller.faction_status[10] == "War") {
+				        if (p_guardsmen[run] + p_pdf[run] == 0 && p_player[run] > 0 && p_traitors[run] > 0 && pause == 0 && obj_controller.faction_status[eFACTION.Chaos] == "War") {
 				            battle_opponent = 10;
 				        }
 				        break;
@@ -475,7 +475,7 @@ function scr_enemy_ai_e() {
 				                pause = 1;
 				            }
 				        }
-				        if (p_guardsmen[run] + p_pdf[run] == 0 && p_player[run] > 0 && p_chaos[run] > 0 && pause == 0 && obj_controller.faction_status[10] == "War") {
+				        if (p_guardsmen[run] + p_pdf[run] == 0 && p_player[run] > 0 && p_chaos[run] > 0 && pause == 0 && obj_controller.faction_status[eFACTION.Chaos] == "War") {
 				            battle_opponent = 11;
 				        }
 				        break;

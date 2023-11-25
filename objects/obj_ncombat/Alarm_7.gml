@@ -118,7 +118,7 @@ if (battle_special="WL10_reveal") or (battle_special="WL10_later"){var moar,ox,o
     
     if (battle_special="WL10_reveal"){
         instance_create(battle_object.x,battle_object.y,obj_temp8);
-        ox=battle_object.x;oy=battle_object.y;// battle_object.owner=10;
+        ox=battle_object.x;oy=battle_object.y;// battle_object.owner = eFACTION.Chaos;
         battle_object.p_traitors[battle_id]=6;
         battle_object.p_chaos[battle_id]=4;
         battle_object.p_pdf[battle_id]=0;
@@ -142,8 +142,8 @@ if (battle_special="WL10_reveal") or (battle_special="WL10_later"){var moar,ox,o
         
         if (battle_object.present_fleet[2]>0){
             with(obj_en_fleet){
-                if (navy=0) and (owner=2) and (point_distance(x,y,obj_temp8.x,obj_temp8.y)<40){
-                    owner=10;sprite_index=spr_fleet_chaos;
+                if (navy=0) and (owner = eFACTION.Imperium) and (point_distance(x,y,obj_temp8.x,obj_temp8.y)<40){
+                    owner = eFACTION.Chaos;sprite_index=spr_fleet_chaos;
                     if (image_index<=2){escort_number+=3;frigate_number+=1;}
                     if (capital_number=0) then capital_number+=1;
                 }
@@ -213,13 +213,13 @@ if (battle_special="study2a") or (battle_special="study2b"){
 
 
 
-if (enemy=5) and (obj_controller.faction_status[5]!="War"){
+if (enemy=5) and (obj_controller.faction_status[eFACTION.Ecclesiarchy]!="War"){
     obj_controller.loyalty-=50;obj_controller.loyalty_hidden-=50;
     obj_controller.disposition[2]-=50;obj_controller.disposition[3]-=80;
     obj_controller.disposition[4]-=40;obj_controller.disposition[5]-=30;
     
-    obj_controller.faction_status[2]="War";obj_controller.faction_status[3]="War";
-    obj_controller.faction_status[4]="War";obj_controller.faction_status[5]="War";
+    obj_controller.faction_status[eFACTION.Imperium]="War";obj_controller.faction_status[eFACTION.Mechanicus]="War";
+    obj_controller.faction_status[eFACTION.Inquisition]="War";obj_controller.faction_status[eFACTION.Ecclesiarchy]="War";
     
     if (!instance_exists(obj_turn_end)){
         obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=5;obj_controller.audien_topic[obj_controller.audiences]="declare_war";

@@ -1013,48 +1013,48 @@ faction_status[1]="";
 // Sector Command faction
 faction_leader[2]=scr_imperial_name(1);
 faction_title[2]="Sector Commander";
-faction_status[2]="Allied";
+faction_status[eFACTION.Imperium]="Allied";
 // Mechanicus faction
 faction_leader[3]=scr_imperial_name(1);
 faction_title[3]="Magos";
-faction_status[3]="Allied";
+faction_status[eFACTION.Mechanicus]="Allied";
 if (faction_leader[3]==faction_leader[2]) then faction_leader[3]=scr_marine_name();
 // Inquisition faction
 faction_leader[4]=scr_imperial_name(1);
 if (faction_leader[4]==faction_leader[3]) then faction_leader[4]=scr_imperial_name(1);
 faction_title[4]="Inquisitor Lord";
-faction_status[4]="Allied";
+faction_status[eFACTION.Inquisition]="Allied";
 // Sisters faction
 faction_leader[5]=scr_imperial_name(2);
 faction_title[5]="Prioress";
-faction_status[5]="Allied";
+faction_status[eFACTION.Ecclesiarchy]="Allied";
 // Eldar faction
 faction_leader[6]=scr_eldar_name(2);
 faction_title[6]="Farseer";
-faction_status[6]="Antagonism";// If disposition = 0 then instead set it to "Antagonism"
-if (instance_exists(obj_ini)){if (string_count("Eldar",obj_ini.strin)>0) then faction_status[6]="War";}
+faction_status[eFACTION.Eldar]="Antagonism";// If disposition = 0 then instead set it to "Antagonism"
+if (instance_exists(obj_ini)){if (string_count("Eldar",obj_ini.strin)>0) then faction_status[eFACTION.Eldar]="War";}
 // Orkz faction
 faction_leader[7]=scr_ork_name();
 faction_title[7]="Warboss";
-faction_status[7]="War";
+faction_status[eFACTION.Ork]="War";
 // Tau faction
 faction_leader[8]="Por'O ";
 // TODO put tau names into a script same as scr_eldar_name;
 faction_leader[8]+=choose("Ar","Cha","Doran","Eldi","Kais","Ko","Kunas","M'yen","Ro","Tsua'm","Ukos");
 faction_title[8]="Diplomat";
-faction_status[8]="Antagonism";
+faction_status[eFACTION.Tau]="Antagonism";
 // Other factions unkown to player
 faction_leader[9]="";
 faction_title[9]="";
-faction_status[9]="War";
+faction_status[eFACTION.Tyranids]="War";
 
 faction_leader[10]=":D";
 faction_title[10]="Chaos Lord";
-faction_status[10]="War";
+faction_status[eFACTION.Chaos]="War";
 
 faction_leader[11]="";
 faction_title[11]="";
-faction_status[11]="War";
+faction_status[eFACTION.Heretics]="War";
 
 faction_leader[12]="";
 faction_title[12]="";
@@ -1062,7 +1062,7 @@ faction_status[12]="War";
 
 faction_leader[13]="";
 faction_title[13]="";
-faction_status[13]="War";
+faction_status[eFACTION.Necrons]="War";
 // ** Sets faction gender for names **
 faction_gender[0]=1;
 faction_gender[1]=1;

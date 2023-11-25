@@ -64,7 +64,7 @@ function scr_purge_world(argument0, argument1, argument2, argument3) {
     
     
 	    if (pop_after=0){
-	        if (argument0.p_owner[argument1]=2) and (obj_controller.faction_status[2]!="War"){
+	        if (argument0.p_owner[argument1]=2) and (obj_controller.faction_status[eFACTION.Imperium]!="War"){
 	            if (argument0.p_type[argument1]="Temperate") or (argument0.p_type[argument1]="Hive") or (argument0.p_type[argument1]="Desert"){
 	                obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=2;
 	                obj_controller.audien_topic[obj_controller.audiences]="bombard_angry";
@@ -74,7 +74,7 @@ function scr_purge_world(argument0, argument1, argument2, argument3) {
 	            if (argument0.p_type[argument1]="Hive") then obj_controller.disposition[2]-=10;
 	        }
 	    }
-	    if (argument0.p_owner[argument1]=3) and (obj_controller.faction_status[3]!="War"){
+	    if (argument0.p_owner[argument1]=3) and (obj_controller.faction_status[eFACTION.Mechanicus]!="War"){
 	        obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=3;
 	        obj_controller.audien_topic[obj_controller.audiences]="bombard_angry";
 	        if (argument0.p_type[argument1]="Forge") then obj_controller.disposition[3]-=15;

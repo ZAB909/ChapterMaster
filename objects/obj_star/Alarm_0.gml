@@ -28,7 +28,7 @@ if (obj_controller.craftworld==1) and (space_hulk==0){
     heresy=-999;
     p_owner[1]=6;
     p_first[1]=6;
-    owner=6;
+    owner = eFACTION.Eldar;
     p_population[1]=floor(random_range(150000,300000));
     p_fortified[1]=6;
     p_eldar[1]=6;

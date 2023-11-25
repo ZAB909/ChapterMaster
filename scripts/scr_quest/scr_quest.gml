@@ -89,7 +89,7 @@ function scr_quest(argument0, argument1, argument2, argument3) {
 
 	if (quick_trade!=0){
 	    if (obj_ini.fleet_type=1) then with(obj_star){
-	            if (owner=1) and ((p_owner[1]=1) or (p_owner[2]=1)) then instance_create(x,y,obj_temp2);
+	            if (owner  = eFACTION.Player) and ((p_owner[1]=1) or (p_owner[2]=1)) then instance_create(x,y,obj_temp2);
 	        }
 	        if (obj_ini.fleet_type!=1) then with(obj_p_fleet){// Get fleet star system
 	            if (capital_number>0) and (action="") then instance_create(instance_nearest(x,y,obj_star).x,instance_nearest(x,y,obj_star).y,obj_temp2);

@@ -34,7 +34,7 @@ for(var i=0; i<100; i++){
                     if (obj_ini.fleet_type==1){
                         ed.p_owner[1]=1;
                         ed.p_first[1]=1;
-                        ed.owner=1;
+                        ed.owner  = eFACTION.Player;
                     }
                     px=ed.x;
                     py=ed.y;
@@ -45,7 +45,7 @@ for(var i=0; i<100; i++){
                     if (obj_ini.fleet_type==1){
                         ed.p_owner[2]=1;
                         ed.p_first[2]=1;
-                        ed.owner=1;
+                        ed.owner  = eFACTION.Player;
                     }
                     px=ed.x;
                     py=ed.y;
@@ -56,7 +56,7 @@ for(var i=0; i<100; i++){
                     if (obj_ini.fleet_type==1){
                         ed.p_owner[3]=1;
                         ed.p_first[3]=1;
-                        ed.owner=1;
+                        ed.owner  = eFACTION.Player;
                     }
                     px=ed.x;
                     py=ed.y;
@@ -67,7 +67,7 @@ for(var i=0; i<100; i++){
                     if (obj_ini.fleet_type==1){
                         ed.p_owner[4]=1;
                         ed.p_first[4]=1;
-                        ed.owner=1;
+                        ed.owner  = eFACTION.Player;
                     }
                     px=ed.x;
                     py=ed.y;
@@ -85,7 +85,7 @@ if (did==1){
 
     ed.planets=2;
     ed.vision=1;
-    if (obj_ini.fleet_type=1) then ed.owner=1;
+    if (obj_ini.fleet_type=1) then ed.owner  = eFACTION.Player;
     ed.p_type[3]="";
     ed.planet[3]=0;
     ed.p_type[4]="";
@@ -178,7 +178,7 @@ if (did==1){
             }
 			if (array_length( search_planet_features(p_feature[f], P_features.Monastery)) >0){
                 if (p_owner[f]!=1) then p_owner[f]=1;
-                owner=1;
+                owner  = eFACTION.Player;
             }
         }
     }
@@ -192,7 +192,7 @@ if (did==1){
     }
     
     var fleet=instance_create(ed.x+24,ed.y-24,obj_p_fleet);
-    fleet.owner=1;
+    fleet.owner  = eFACTION.Player;
     fleet.alarm[5]=5;
     
     for(var f=1; f<=40; f++){
@@ -245,7 +245,7 @@ if (did==1){
     ed.p_first[1]=3;ed.p_first[2]=3;
     ed.p_first[3]=3;
     ed.p_first[4]=3;
-    ed.owner=3;if (ed.planets<2) then ed.planets=2;
+    ed.owner = eFACTION.Mechanicus;if (ed.planets<2) then ed.planets=2;
     
     with(ed){// with ed
         var a=99,b=99,c=99,d=99,e="",f=0,g="",h=0;
@@ -453,54 +453,54 @@ if (did==1){
         
         rando=1;
         ed=instance_nearest(xx,yy,obj_star);
-        if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner==2){
+        if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner == eFACTION.Imperium){
             ed.p_owner[1]=8;
-            ed.owner=8;
+            ed.owner = eFACTION.Tau;
             ed.p_influence[1]=70;
         }
         instance_deactivate_object(ed);
         
         rando=1;
         ed=instance_nearest(xx,yy,obj_star);
-        if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner==2){
+        if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner == eFACTION.Imperium){
             ed.p_owner[1]=8;
-            ed.owner=8;
+            ed.owner = eFACTION.Tau;
             ed.p_influence[1]=70;
         }
         instance_deactivate_object(ed);
         
         rando=1;
         ed=instance_nearest(xx,yy,obj_star);
-        if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner==2){
+        if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner == eFACTION.Imperium){
             ed.p_owner[1]=8;
-            ed.owner=8;
+            ed.owner = eFACTION.Tau;
             ed.p_influence[1]=70;
         }
         instance_deactivate_object(ed);
         
         rando=1;
         ed=instance_nearest(xx,yy,obj_star);
-        if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner==2){
+        if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner == eFACTION.Imperium){
             ed.p_owner[1]=8;
-            ed.owner=8;
+            ed.owner = eFACTION.Tau;
             ed.p_influence[1]=70;
         }
         instance_deactivate_object(ed);
 
         rando=1;
         ed=instance_nearest(xx,yy,obj_star);
-        if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner==2){
+        if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner == eFACTION.Imperium){
             ed.p_owner[1]=8;
-            ed.owner=8;
+            ed.owner = eFACTION.Tau;
             ed.p_influence[1]=70;
         }
         instance_deactivate_object(ed);
 		        
         rando=1;
         ed=instance_nearest(xx,yy,obj_star);
-        if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner==2){
+        if (ed.planets>0) and (ed.p_type[1]!="Dead") and (ed.owner == eFACTION.Imperium){
                 ed.p_owner[1]=8;
-                ed.owner=8;
+                ed.owner = eFACTION.Tau;
                 ed.p_influence[1]=70;
         }
         instance_deactivate_object(ed);
@@ -511,40 +511,40 @@ if (did==1){
     xx=floor(random(1152))+64;
     yy=floor(random(748))+64;
     ed=instance_nearest(xx,yy,obj_star);
-    if (ed.planets>0) and (ed.owner==2){
+    if (ed.planets>0) and (ed.owner == eFACTION.Imperium){
         ed.planet[1]=1;
         ed.p_owner[1]=10;
-        ed.owner=10;
+        ed.owner = eFACTION.Chaos;
         instance_deactivate_object(ed);
     }
 	
     xx=floor(random(1152))+64;
     yy=floor(random(748))+64;
     ed=instance_nearest(xx,yy,obj_star);
-    if (ed.planets>0) and (ed.owner==2){
+    if (ed.planets>0) and (ed.owner == eFACTION.Imperium){
         ed.planet[1]=1;
         ed.p_owner[1]=10;
-        ed.owner=10;
+        ed.owner = eFACTION.Chaos;
         instance_deactivate_object(ed);
     }
 	
     xx=floor(random(1152))+64;
     yy=floor(random(748))+64;
     ed=instance_nearest(xx,yy,obj_star);
-    if (ed.planets>0) and (ed.owner==2){
+    if (ed.planets>0) and (ed.owner == eFACTION.Imperium){
         ed.planet[1]=1;
         ed.p_owner[1]=10;
-        ed.owner=10;
+        ed.owner = eFACTION.Chaos;
         instance_deactivate_object(ed);
     }
 	
 	xx=floor(random(1152))+64;
     yy=floor(random(748))+64;
     ed=instance_nearest(xx,yy,obj_star);
-    if (ed.planets>0) and (ed.owner==2){
+    if (ed.planets>0) and (ed.owner == eFACTION.Imperium){
         ed.planet[1]=1;
         ed.p_owner[1]=10;
-        ed.owner=10;
+        ed.owner = eFACTION.Chaos;
         instance_deactivate_object(ed);
     }
     // More sneaky this way; you have to be noted of rising heresy or something, or have a ship in the system
@@ -557,7 +557,7 @@ if (did==1){
                 p_owner[2]=10;
                 p_owner[3]=10;
                 p_owner[4]=10;
-                owner=10;
+                owner = eFACTION.Chaos;
                 p_heresy[1]=floor(random_range(80,100));
                 p_heresy[2]=floor(random_range(80,100));
                 p_heresy[3]=floor(random_range(80,100));
@@ -583,7 +583,7 @@ if (did==1){
     
     // Ork planets here
     with(obj_star){
-        if (planets>0) and (owner==2) and (p_type[1]!="Dead"){
+        if (planets>0) and (owner == eFACTION.Imperium) and (p_type[1]!="Dead"){
             //this object simply acts as a counter of ork owned planets
             instance_create(x,y,obj_temp3);
         }
@@ -606,13 +606,13 @@ if (did==1){
         ed2.p_owner[2]=7;
         ed2.p_owner[3]=7;
         ed2.p_owner[4]=7;
-        ed2.owner=7;
+        ed2.owner = eFACTION.Ork;
         with(ed){instance_destroy();}
     }
     with(obj_temp3){instance_destroy();}
     
     with(obj_star){
-        if (planets>0) and (owner==2) and (p_type[1]!="Dead"){
+        if (planets>0) and (owner == eFACTION.Imperium) and (p_type[1]!="Dead"){
             instance_create(x,y,obj_temp3);
         }
     }
@@ -629,10 +629,10 @@ if (did==1){
 			
             ed2.planet[1]=1;
             ed2.p_owner[1]=7;
-            ed2.owner=7;
+            ed2.owner = eFACTION.Ork;
             ed2.planet[1]=1;
             ed2.p_owner[1]=9;
-            ed2.owner=9;
+            ed2.owner = eFACTION.Tyranids;
             with(ed){instance_destroy();}
         }
     }
@@ -663,60 +663,60 @@ if (did==1){
     xx=floor(random(1152+640))+64;
     yy=floor(random(748+480))+64;
     ed=instance_nearest(xx,yy,obj_star);
-    if (ed.planets>0) and (ed.owner==2){
+    if (ed.planets>0) and (ed.owner == eFACTION.Imperium){
         ed.planet[1]=1;
         ed.p_type[1]="Forge";
         ed.p_owner[1]=3;
         ed.p_first[1]=3;
-        ed.owner=3;
+        ed.owner = eFACTION.Mechanicus;
         instance_deactivate_object(ed);
     }
     
     xx=floor(random(1152+640))+64;
     yy=floor(random(748+480))+64;
     ed=instance_nearest(xx,yy,obj_star);
-    if (ed.planets>0) and (ed.owner==2){
+    if (ed.planets>0) and (ed.owner == eFACTION.Imperium){
         ed.planet[1]=1;
         ed.p_type[1]="Forge";
         ed.p_owner[1]=3;
         ed.p_first[1]=3;
-        ed.owner=3;
+        ed.owner = eFACTION.Mechanicus;
         instance_deactivate_object(ed);
     }
 
     xx=floor(random(1152+640))+64;
     yy=floor(random(748+480))+64;
     ed=instance_nearest(xx,yy,obj_star);
-    if (ed.planets>0) and (ed.owner==2){
+    if (ed.planets>0) and (ed.owner == eFACTION.Imperium){
         ed.planet[1]=1;
         ed.p_type[1]="Forge";
         ed.p_owner[1]=3;
         ed.p_first[1]=3;
-        ed.owner=3;
+        ed.owner = eFACTION.Mechanicus;
         instance_deactivate_object(ed);
     }
 
     xx=floor(random(1152+640))+64;
     yy=floor(random(748+480))+64;
     ed=instance_nearest(xx,yy,obj_star);
-    if (ed.planets>0) and (ed.owner==2){
+    if (ed.planets>0) and (ed.owner == eFACTION.Imperium){
         ed.planet[1]=1;
         ed.p_type[1]="Forge";
         ed.p_owner[1]=3;
         ed.p_first[1]=3;
-        ed.owner=3;
+        ed.owner = eFACTION.Mechanicus;
         instance_deactivate_object(ed);
     }
  
     xx=floor(random(1152+640))+64;
     yy=floor(random(748+480))+64;
     ed=instance_nearest(xx,yy,obj_star);
-    if (ed.planets>0) and (ed.owner==2){
+    if (ed.planets>0) and (ed.owner == eFACTION.Imperium){
         ed.planet[1]=1;
         ed.p_type[1]="Forge";
         ed.p_owner[1]=3;
         ed.p_first[1]=3;
-        ed.owner=3;
+        ed.owner = eFACTION.Mechanicus;
         instance_deactivate_object(ed);
     }
 }
@@ -752,7 +752,7 @@ for(var i=0; i<100; i++){
 		array_push(craft.p_feature[1],new new_planet_feature(P_features.Warlord6));
         
         var elforce=instance_create(xx-24,yy-24,obj_en_fleet);
-        elforce.sprite_index=spr_fleet_eldar;elforce.owner=6;
+        elforce.sprite_index=spr_fleet_eldar;elforce.owner = eFACTION.Eldar;
         elforce.capital_number=choose(2,3);
         elforce.frigate_number=choose(4,5,6);
         elforce.escort_number=floor(random_range(7,11))+1;
@@ -831,7 +831,7 @@ if (is_test_map==true){
 
 with(obj_temp7){instance_destroy();}
 with(obj_en_fleet){
-    if (owner==8) and (instance_nearest(x,y,obj_star).owner==8) then instance_create(x,y,obj_temp7);
+    if (owner == eFACTION.Tau) and (instance_nearest(x,y,obj_star).owner == eFACTION.Tau) then instance_create(x,y,obj_temp7);
 }
 if (instance_exists(obj_temp7)){
     var t1=instance_nearest(room_width/2,room_height/2,obj_temp7);

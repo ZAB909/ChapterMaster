@@ -193,7 +193,7 @@ demons=p_target.p_demons[obj_controller.selecting_planet];
 if (p_target.p_player[obj_controller.selecting_planet]>0) then max_ships+=1;
 
 var bes,bes_score;bes=0;bes_score=0;
-if (sisters>0) and (obj_controller.faction_status[5]="War"){bes=5;bes_score=sisters;}
+if (sisters>0) and (obj_controller.faction_status[eFACTION.Ecclesiarchy]="War"){bes=5;bes_score=sisters;}
 if (eldar>bes_score){bes=6;bes_score=eldar;}
 if (ork>bes_score){bes=7;bes_score=ork;}
 if (tau>bes_score){bes=8;bes_score=tau;}

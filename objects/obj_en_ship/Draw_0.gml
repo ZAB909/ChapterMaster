@@ -33,7 +33,7 @@ if (class="Battlekroozer") then draw_sprite_ext(sprite_index,0,x,y,0.75,0.75,dir
 
 
 
-if (owner!=8){
+if (owner != eFACTION.Tau){
     if (shields<=0){
     if (obj_controller.zoomed=0){if (maxhp!=0) then draw_text(x,y-(sprite_height/2),string_hash_to_newline(string(floor((hp/maxhp)*100))+"%"));}
     if (obj_controller.zoomed=1){if (maxhp!=0) then draw_text_transformed(x,y-sprite_height,string_hash_to_newline(string(floor((hp/maxhp)*100))+"%"),2,2,0);}
@@ -46,7 +46,7 @@ if (owner!=8){
     }
 }
 
-if (owner=8){
+if (owner = eFACTION.Tau){
     if (shields<=0){
     if (obj_controller.zoomed=0){if (maxhp!=0) then draw_text(x,y-(sprite_width/2),string_hash_to_newline(string(floor((hp/maxhp)*100))+"%"));}
     if (obj_controller.zoomed=1){if (maxhp!=0) then draw_text_transformed(x,y-sprite_width,string_hash_to_newline(string(floor((hp/maxhp)*100))+"%"),2,2,0);}

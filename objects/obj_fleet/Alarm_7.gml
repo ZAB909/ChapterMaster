@@ -137,7 +137,7 @@ if (killer>0){
     instance_activate_object(obj_turn_end);
     
     if (instance_exists(obj_turn_end)) then scr_alert("red","inqis",string(msg),ii.x+16,ii.y-24);
-    if (!instance_exists(obj_turn_end)) and (obj_controller.faction_status[4]!="War"){
+    if (!instance_exists(obj_turn_end)) and (obj_controller.faction_status[eFACTION.Inquisition]!="War"){
         var pip;pip=instance_create(0,0,obj_popup);
         pip.title="Inquisitor Killed";pip.text=msg;pip.image="inquisition";pip.cooldown=20;
         

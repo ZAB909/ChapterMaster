@@ -860,7 +860,7 @@ if (class=="Prowler"){
     weapon_cooldown[1]=30;
 }
 
-if (owner==9){
+if (owner == eFACTION.Tyranids){
     for(var i=1; i<=2; i++){
         if (obj_fleet.en_mutation[i]=="Spore Clouds") then shields=shields+100;
         if (obj_fleet.en_mutation[i]=="Health"){
@@ -874,7 +874,7 @@ if (owner==9){
     }
 }
 
-if (owner!=6){
+if (owner != eFACTION.Eldar){
     hp=hp/2;
     maxhp=hp;
     shields=shields/2;

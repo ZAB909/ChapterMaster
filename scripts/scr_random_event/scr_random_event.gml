@@ -29,7 +29,7 @@ function scr_random_event(execute_now) {
 
 	var inquisition_mission_roll = irandom(100);
 	var force_inquisition_mission = false;
-	if (((last_mission+50) <= turn) && (inquisition_mission_roll <= 5) && (known[4] != 0) && (obj_controller.faction_status[4] != "War")){
+	if (((last_mission+50) <= turn) && (inquisition_mission_roll <= 5) && (known[4] != 0) && (obj_controller.faction_status[eFACTION.Inquisition] != "War")){
 		force_inquisition_mission = true;
 	}
 
@@ -122,19 +122,19 @@ function scr_random_event(execute_now) {
 					
 					switch (curr_event){
 						case EVENT.inquisition_planet:
-							if (known[4]==0 || obj_controller.faction_status[4]=="War") {
+							if (known[4]==0 || obj_controller.faction_status[eFACTION.Inquisition]=="War") {
 								events_share[i] -= 1;
 								events_total -= 1;
 							}
 							break;
 						case EVENT.inquisition_mission:
-							if (known[4]==0 || obj_controller.disposition[4] < 0 || obj_controller.faction_status[4] == "War") {
+							if (known[4]==0 || obj_controller.disposition[4] < 0 || obj_controller.faction_status[eFACTION.Inquisition] == "War") {
 								events_share[i] -= 1;
 								events_total -= 1;
 							}
 							break;
 						case EVENT.mechanicus_mission:
-							if (known[3] == 0 || obj_controller.disposition[3] < 50 || obj_controller.faction_status[3] == "War") {
+							if (known[3] == 0 || obj_controller.disposition[3] < 50 || obj_controller.faction_status[eFACTION.Mechanicus] == "War") {
 								events_share[i] -= 1;
 								events_total -= 1;
 							}
@@ -162,7 +162,7 @@ function scr_random_event(execute_now) {
 							}
 							break;
 						case EVENT.crusade:
-							if (obj_controller.faction_status[2] == "War"){
+							if (obj_controller.faction_status[eFACTION.Imperium] == "War"){
 								events_share[i] -= 1;
 								events_total -= 1;
 							}
@@ -1449,7 +1449,7 @@ function scr_random_event(execute_now) {
 		scr_event_log("red",string(text));
 
 		var lost_ship_fleet = instance_create(-500,-500,obj_p_fleet);
-		lost_ship_fleet.owner = 1;
+		lost_ship_fleet.owner = eFACTION.Player;
 		
 		switch(ship_type) {
 			case "capital":

@@ -42,14 +42,22 @@ function scr_turn_first() {
 
 	if (peace_check>0){
 	    with(obj_temp3){instance_destroy();}
+		var baddy, iter, total;
+		total = 0;
 	    with(obj_star){
-	        if (owner>5){var baddy,o;baddy=0;o=0;
-	            repeat(4){o+=1;if (p_orks[o]+p_tyranids[o]+p_chaos[o]+p_traitors[o]+p_necrons[o]>=3) then baddy+=1;}
-	            if (baddy>0) then instance_create(x,y,obj_temp3);
+	        if (owner>5){
+				baddy = 0;
+				o = 0;
+	            repeat(4){
+					o+=1;
+					if (p_orks[o]+p_tyranids[o]+p_chaos[o]+p_traitors[o]+p_necrons[o]>=3) then baddy+=1;
+				}
+	            if (baddy>0) {
+					total++;
+				}
 	        }
 	    }
-	    if (instance_number(obj_temp3)<=3) then peace_check=2;
-	    with(obj_temp3){instance_destroy();}
+	    if (total<=3) then peace_check=2;
     
 	    // More Testing
 	    // peace_check=2;
@@ -59,18 +67,25 @@ function scr_turn_first() {
 	        if (turn>=150) and (faction_defeated[10]=0) and (known[10]=0) and (faction_gender[10]=2){
 	        // if (turn>=100000) and (faction_defeated[10]=0) and (known[10]=0){faction_gender[10]=2;
 	            with(obj_turn_end){audiences+=1;audien[audiences]=10;known[10]=2;audien_topic[audiences]="intro";did_so=true;}
-	            fdir=terra_direction+choose(-90,90);fdir+=floor(random_range(-35,35));
+	            fdir=terra_direction+choose(-90,90);
+				fdir+=floor(random_range(-35,35));
             
 	            var len,width,height,t,c,s;
 	            width = room_width;height = room_height;
-	            t = degtorad(fdir);c = abs(cos(t));s = abs(sin(t));
-	            if (c * height > s * width) {len = (width/2) / c;}
-	            else {len = (height/2) / s;}
+	            t = degtorad(fdir);
+				c = abs(cos(t));
+				s = abs(sin(t));
+	            if (c * height > s * width) {
+					len = (width/2) / c;
+				} else {
+					len = (height/2) / s;
+				}
 	            ox=width/2+lengthdir_x(len,fdir);
 	            oy=height/2+lengthdir_y(len,fdir);
             
-	            var nfleet;nfleet=instance_create(ox,oy,obj_en_fleet);
-	            nfleet.owner=10;nfleet.sprite_index=spr_fleet_chaos;
+	            var nfleet = instance_create(ox,oy,obj_en_fleet);
+	            nfleet.owner = eFACTION.Chaos;
+				nfleet.sprite_index=spr_fleet_chaos;
 	            nfleet.image_index=9;
 	            nfleet.home_x=x+lengthdir_x(5000,point_direction(x,y,room_width/2,room_height/2));
 	            nfleet.home_y=y+lengthdir_y(5000,point_direction(x,y,room_width/2,room_height/2));
@@ -78,19 +93,31 @@ function scr_turn_first() {
 	            nfleet.capital_number=10;
 	            nfleet.frigate_number=20;
 	            nfleet.escort_number=40;
-            
-	            with(obj_temp3){instance_destroy();}
+				
+				var rep, filtered_array, candidate_systems;
+				candidate_systems = [];
 	            with(obj_star){
-	                var rep,ya;rep=0;ya=false;
-	                repeat(4){rep+=1;if (p_owner[rep]<=5) then ya=true;}
-	                if (ya=true) then instance_create(x,y,obj_temp3);
+					rep=0;
+					ya=false;
+					filtered_array = array_filter(p_owner, function(val) {
+						return val <= 5
+					})
+					
+					if array_length(filtered_array)
+						array_push(candidate_systems, self)
 	            }
-            
-	            var skulls,skulls2;
-	            skulls2=instance_nearest(nfleet.x,nfleet.y,obj_temp3);
-	            skulls=instance_nearest(skulls2.x,skulls2.y,obj_star);
-	            with(obj_temp3){instance_destroy();}
-	            nfleet.action_x=skulls.x;nfleet.action_y=skulls.y;
+				
+				var skulls = array_reduce(candidate_systems, method({nfleet}, function(prev, curr) {
+						if !prev
+							return curr
+						var prev_dist = point_distance(prev.x, prev.y, nfleet.x, nfleet.y)
+						var curr_dist = point_distance(curr.x, curr.y, nfleet.x, nfleet.y)
+						
+						return (prev_dist > curr_dist) ? curr : prev;
+				}),noone)
+
+	            nfleet.action_x=skulls.x;
+				nfleet.action_y=skulls.y;
 	            nfleet.alarm[4]=1;
             
 	            var tix;tix="Chaos Lord "+string(obj_controller.faction_leader[10])+" continues his Black Crusade into Sector "+string(obj_ini.sector_name)+".";
@@ -103,7 +130,7 @@ function scr_turn_first() {
 	            with(obj_turn_end){audiences+=1;audien[audiences]=7;known[10]=2;audien_topic[audiences]="new_warboss";did_so=true;}
             
 	            faction_defeated[7]=-1;known[7]=0;faction_leader[7]=scr_ork_name();
-	            faction_title[7]="Warboss";faction_status[7]="War";disposition[7]=-40;
+	            faction_title[7]="Warboss";faction_status[eFACTION.Ork]="War";disposition[7]=-40;
             
 	            var gold,gnew,starf;gold=faction_gender[7];if (gold=0) then gold=1;gnew=0;
 	            repeat(20){if (gnew=0) or (gnew=gold) then gnew=choose(1,2,3,4);}
@@ -116,10 +143,11 @@ function scr_turn_first() {
 	            if (side="up") then x3=floor(random_range(0,room_width))+1;
 	            if (side="down"){x3=floor(random_range(0,room_width))+1;y3=room_height;}
             
-	            with(obj_star){if (owner=6) then x-=20000;}
+				//lots of this can be wrapped into a single with
+	            with(obj_star){if (owner = eFACTION.Eldar) then x-=20000;}
 	            with(obj_star){if (planets=1) and (p_type[1]="Dead"){x-=20000;y-=20000;}}
 	            with(obj_star){if (planets=2) and (p_type[1]="Dead")and (p_type[2]="Dead"){x-=20000;y-=20000;}}
-            
+				
 	            repeat(8){fnum+=1;
 	                var x4,y4,dire;x4=0;y4=0;dire=0;
 	                if (fnum=1){
@@ -133,7 +161,7 @@ function scr_turn_first() {
 	                }
                 
 	                var nfleet,tplan;nfleet=instance_create(x4,y4,obj_en_fleet);
-	                nfleet.owner=7;nfleet.sprite_index=spr_fleet_ork;
+	                nfleet.owner = eFACTION.Ork;nfleet.sprite_index=spr_fleet_ork;
 	                nfleet.capital_number=4;nfleet.frigate_number=10;
 	                nfleet.image_index=9;
 	                tplan=instance_nearest(nfleet.x,nfleet.y,obj_star);
@@ -146,7 +174,7 @@ function scr_turn_first() {
 	                tplan.x-=20000;tplan.y-=20000;
 	            }
             
-	            with(obj_en_fleet){if (x<-14000) and (y<-14000) and (owner=7){x+=20000;y+=20000;}}
+	            with(obj_en_fleet){if (x<-14000) and (y<-14000) and (owner = eFACTION.Ork){x+=20000;y+=20000;}}
 	            with(obj_star){if (x<-14000) and (y<-14000){x+=20000;y+=20000;}}
 	            with(obj_star){if (x<-14000) and (y<-14000){x+=20000;y+=20000;}}
 	            with(obj_star){if (x<-14000) and (y<-14000){x+=20000;y+=20000;}}

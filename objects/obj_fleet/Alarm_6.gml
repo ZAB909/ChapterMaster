@@ -53,7 +53,7 @@ if (total_allies>0){
             
             spawner=instance_create(200,y1,obj_fleet_spawner);
             
-            if (fug=1) then spawner.owner=1;
+            if (fug=1) then spawner.owner  = eFACTION.Player;
             if (fug>1) then spawner.owner=enemy[fug];// Get the ENEMY after the actual enemies
             
             spawner.height=(y2);

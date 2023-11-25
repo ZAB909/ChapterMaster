@@ -106,7 +106,7 @@ function scr_dialogue(diplo_keyphrase) {
 	        if (obj_controller.disposition[4]>30) then diplo_goto[2]="cs_meeting45";// Not convinced, high inquisition dispositioin
         
 	        var testy=true;
-	        if (obj_controller.faction_status[2]="War") or (obj_controller.marines<=600) then testy=false;
+	        if (obj_controller.faction_status[eFACTION.Imperium]="War") or (obj_controller.marines<=600) then testy=false;
 	        if (testy=false) then diplo_goto[3]="cs_meeting50";// Scurrying like a rat, accepts
 	        if (testy=true) then diplo_goto[3]="cs_meeting55";// Not convinced
         
@@ -299,7 +299,7 @@ function scr_dialogue(diplo_keyphrase) {
 	    complex_event=true;
 		current_eventing="";
 	    force_goodbye=1;
-		faction_status[10]="Antagonism";
+		faction_status[eFACTION.Chaos]="Antagonism";
     
 	    with(obj_star){
 	        for (var run=1; run<=4; run++) {
@@ -1746,7 +1746,7 @@ function scr_dialogue(diplo_keyphrase) {
 	        if (rela=="friendly") then obj_controller.disposition[5]-=2;
 	        if (rela=="neutral") then obj_controller.disposition[5]-=6;
 	        if (rela=="hostile"){obj_controller.disposition[5]-=10;
-			if (obj_controller.faction_status[5]=="Allied") then obj_controller.faction_status[5]="Antagonism";}
+			if (obj_controller.faction_status[eFACTION.Ecclesiarchy]=="Allied") then obj_controller.faction_status[eFACTION.Ecclesiarchy]="Antagonism";}
 	        if (rela=="friendly") then diplo_text=" I am sure it was not your intention, Chapter Master, but to give a daemonic artifact to the Ecclesiarchy is a great insult. Only the Inquisition has been given leave to wield such things, and few among our number agree with the practice. You will be forgiven this time, but do not let it happen again.";
 	        if (rela=="neutral") then diplo_text="It is possible that you did not know of the presence of the daemon within this artifact, but ignorance is no excuse. Maybe you are simply too corrupt to notice the heretical whispers and temptations that the item exudes. I will pray for your soul, or cleanse it with holy fire.";
 	        if (rela=="hostile") then diplo_text="Heretic! You dare to hand us, the Emperor's most devout followers, a artifact tainted by the presence of a monstrous daemon!? Beneath the facade of an Astartes, you are the very embodiment of servant of chaos! We will not forget this.";
@@ -2190,9 +2190,9 @@ function scr_dialogue(diplo_keyphrase) {
 							if (obj_ini.fleet_type!=1) then with(obj_p_fleet){if (capital_number>0) then instance_create(x,y,obj_temp6);}
 						
 							with(obj_star){
-								if (owner!=2) then instance_deactivate_object(id);
-								if (owner==2) and (point_distance(x,y,obj_temp6.x,obj_temp6.y)>250) then instance_deactivate_object(id);
-								if (owner==2) and (planets<1) then instance_deactivate_object(id);
+								if (owner != eFACTION.Imperium) then instance_deactivate_object(id);
+								if (owner == eFACTION.Imperium) and (point_distance(x,y,obj_temp6.x,obj_temp6.y)>250) then instance_deactivate_object(id);
+								if (owner == eFACTION.Imperium) and (planets<1) then instance_deactivate_object(id);
 							}
 							var that,good=0;
 							that=instance_nearest(random(room_width),random(room_height),obj_star);
@@ -2230,9 +2230,9 @@ function scr_dialogue(diplo_keyphrase) {
 							if (obj_ini.fleet_type==1) then with(obj_star){if (owner==1) then instance_create(x,y,obj_temp6);}
 							if (obj_ini.fleet_type!=1) then with(obj_p_fleet){if (capital_number>0) then instance_create(x,y,obj_temp6);}
 							with(obj_star){
-								if (owner!=2) then instance_deactivate_object(id);
-								if (owner==2) and (point_distance(x,y,obj_temp6.x,obj_temp6.y)<800) then instance_deactivate_object(id);
-								if (owner==2) and (planets<1) then instance_deactivate_object(id);
+								if (owner != eFACTION.Imperium) then instance_deactivate_object(id);
+								if (owner == eFACTION.Imperium) and (point_distance(x,y,obj_temp6.x,obj_temp6.y)<800) then instance_deactivate_object(id);
+								if (owner == eFACTION.Imperium) and (planets<1) then instance_deactivate_object(id);
 							}
 							var that,good=0;
 							that=instance_nearest(random(room_width),random(room_height),obj_star);

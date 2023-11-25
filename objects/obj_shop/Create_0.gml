@@ -49,7 +49,7 @@ repeat(40) {
     item_cost[i] = 0;
     nobuy[i] = 0;
 }
-if (obj_controller.faction_status[2] = "War") {
+if (obj_controller.faction_status[eFACTION.Imperium] = "War") {
     rene = 1;
     with(obj_temp6) {
         instance_destroy();

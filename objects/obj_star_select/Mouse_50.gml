@@ -476,7 +476,7 @@ if (instance_exists(obj_p_fleet)){
     targ_targ=instance_nearest(target.x+24,target.y-24,obj_p_fleet);
     // 135 buttons
     
-    if (targ_targ.owner=1) and (targ_targ.action="") and (point_distance(target.x+24,target.y-24,targ_targ.x,targ_targ.y)<=40){
+    if (targ_targ.owner  = eFACTION.Player) and (targ_targ.action="") and (point_distance(target.x+24,target.y-24,targ_targ.x,targ_targ.y)<=40){
         if (obj_controller.selecting_planet>0){
             
             if (target.p_owner[obj_controller.selecting_planet]>=7) or (target.p_owner[obj_controller.selecting_planet]=10){

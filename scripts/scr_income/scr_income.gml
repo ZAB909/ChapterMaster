@@ -63,7 +63,7 @@ function scr_income() {
 	    with(obj_star){
 	        if (planet_feature_bool(p_feature[1], P_features.Monastery)==1){obj_controller.income+=10;instance_create(x,y,obj_temp1);}
 	        if (planet_feature_bool(p_feature[2], P_features.Monastery)==1){obj_controller.income+=10;instance_create(x,y,obj_temp1);}
-	        if (owner=8) then obj_controller.tau_stars+=1;
+	        if (owner = eFACTION.Tau) then obj_controller.tau_stars+=1;
 	        alarm[2]=1;
 	    }
 	}

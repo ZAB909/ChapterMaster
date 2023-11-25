@@ -133,18 +133,18 @@ function scr_ui_diplomacy() {
 	    draw_text(xx+1199,yy+693,string_hash_to_newline("Heretics"));
     
 	    draw_set_font(fnt_40k_14);draw_set_halign(fa_right);
-	    draw_text_transformed(xx+431,yy+289,string_hash_to_newline(string(faction_status[2])),0.7,0.7,0);
-	    draw_text_transformed(xx+431,yy+425,string_hash_to_newline(faction_status[3]),0.7,0.7,0);
-	    draw_text_transformed(xx+431,yy+561,string_hash_to_newline(faction_status[4]),0.7,0.7,0);
-	    draw_text_transformed(xx+431,yy+697,string_hash_to_newline(faction_status[5]),0.7,0.7,0);
-	    /*draw_text_transformed(xx+851,yy+289,faction_status[6],0.7,0.7,0);
-	    draw_text_transformed(xx+851,yy+425,faction_status[7],0.7,0.7,0);
-	    draw_text_transformed(xx+851,yy+561,faction_status[8],0.7,0.7,0);
-	    draw_text_transformed(xx+851,yy+697,faction_status[10],0.7,0.7,0);*/
-	    draw_text_transformed(xx+1441,yy+289,string_hash_to_newline(faction_status[6]),0.7,0.7,0);
-	    draw_text_transformed(xx+1441,yy+425,string_hash_to_newline(faction_status[7]),0.7,0.7,0);
-	    draw_text_transformed(xx+1441,yy+561,string_hash_to_newline(faction_status[8]),0.7,0.7,0);
-	    draw_text_transformed(xx+1441,yy+697,string_hash_to_newline(faction_status[10]),0.7,0.7,0);
+	    draw_text_transformed(xx+431,yy+289,string_hash_to_newline(string(faction_status[eFACTION.Imperium])),0.7,0.7,0);
+	    draw_text_transformed(xx+431,yy+425,string_hash_to_newline(faction_status[eFACTION.Mechanicus]),0.7,0.7,0);
+	    draw_text_transformed(xx+431,yy+561,string_hash_to_newline(faction_status[eFACTION.Inquisition]),0.7,0.7,0);
+	    draw_text_transformed(xx+431,yy+697,string_hash_to_newline(faction_status[eFACTION.Ecclesiarchy]),0.7,0.7,0);
+	    /*draw_text_transformed(xx+851,yy+289,faction_status[eFACTION.Eldar],0.7,0.7,0);
+	    draw_text_transformed(xx+851,yy+425,faction_status[eFACTION.Ork],0.7,0.7,0);
+	    draw_text_transformed(xx+851,yy+561,faction_status[eFACTION.Tau],0.7,0.7,0);
+	    draw_text_transformed(xx+851,yy+697,faction_status[eFACTION.Chaos],0.7,0.7,0);*/
+	    draw_text_transformed(xx+1441,yy+289,string_hash_to_newline(faction_status[eFACTION.Eldar]),0.7,0.7,0);
+	    draw_text_transformed(xx+1441,yy+425,string_hash_to_newline(faction_status[eFACTION.Ork]),0.7,0.7,0);
+	    draw_text_transformed(xx+1441,yy+561,string_hash_to_newline(faction_status[eFACTION.Tau]),0.7,0.7,0);
+	    draw_text_transformed(xx+1441,yy+697,string_hash_to_newline(faction_status[eFACTION.Chaos]),0.7,0.7,0);
     
 	    draw_set_halign(fa_left);var txt;
 	    txt="????";if (known[2]>0) then txt=string(faction_title[2])+" "+string(faction_leader[2]);draw_text_transformed(xx+189,yy+309,string_hash_to_newline(txt),0.7,0.7,0);
@@ -410,15 +410,15 @@ function scr_ui_diplomacy() {
     
 	    /*
 	    faction_leader[0]="";faction_title[0]="";faction_status[0]="";faction_leader[1]="";faction_title[1]="";faction_status[1]="";
-	    faction_leader[2]="";faction_title[2]="Sector Commander";faction_status[2]="Allied";
-	    faction_leader[3]="";faction_title[3]="Magos";faction_status[3]="Allied";
-	    faction_leader[4]="";faction_title[4]="Inquisitor Lord";faction_status[4]="Allied";
-	    faction_leader[5]="";faction_title[5]="Prioress";faction_status[5]="Allied";
-	    faction_leader[6]="";faction_title[6]="Farseer";faction_status[6]="War";
-	    faction_leader[7]="";faction_title[7]="Warboss";faction_status[7]="War";
-	    faction_leader[8]="";faction_title[8]="Diplomat";faction_status[8]="War";
-	    faction_leader[9]="";faction_title[9]="";faction_status[9]="War";
-	    faction_leader[10]="";faction_title[10]="Master";faction_status[10]="War";
+	    faction_leader[2]="";faction_title[2]="Sector Commander";faction_status[eFACTION.Imperium]="Allied";
+	    faction_leader[3]="";faction_title[3]="Magos";faction_status[eFACTION.Mechanicus]="Allied";
+	    faction_leader[4]="";faction_title[4]="Inquisitor Lord";faction_status[eFACTION.Inquisition]="Allied";
+	    faction_leader[5]="";faction_title[5]="Prioress";faction_status[eFACTION.Ecclesiarchy]="Allied";
+	    faction_leader[6]="";faction_title[6]="Farseer";faction_status[eFACTION.Eldar]="War";
+	    faction_leader[7]="";faction_title[7]="Warboss";faction_status[eFACTION.Ork]="War";
+	    faction_leader[8]="";faction_title[8]="Diplomat";faction_status[eFACTION.Tau]="War";
+	    faction_leader[9]="";faction_title[9]="";faction_status[eFACTION.Tyranids]="War";
+	    faction_leader[10]="";faction_title[10]="Master";faction_status[eFACTION.Chaos]="War";
 	    */
     
     

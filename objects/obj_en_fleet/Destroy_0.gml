@@ -1,6 +1,6 @@
 
 
-/*if (owner=10){
+/*if (owner = eFACTION.Chaos){
     show_message("Trade Goods: "+string(trade_goods)+"#Alarms: "+string(alarm[0])+"|"+string(alarm[1])+"|"+string(alarm[2])+"|"+string(alarm[4]));
 }*/
 

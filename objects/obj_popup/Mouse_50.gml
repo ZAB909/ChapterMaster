@@ -1298,25 +1298,46 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
             if (r2=3) then cn.stc_ships_un-=1;
 
             // Modify disposition here
-            if (giveto=2) then obj_controller.disposition[2]+=3;
-            if (giveto=3) then obj_controller.disposition[3]+=choose(5,6,7,8);
-            if (giveto=4) then obj_controller.disposition[4]+=3;
-            if (giveto=5){
-                obj_controller.disposition[5]+=3;
-                var o;o=0;repeat(4){if (o<=4){o+=1;if (obj_ini.adv[o]="Reverent Guardians") then o=500;}}if (o>100) then obj_controller.disposition[5]+=2;
+            if (giveto = eFACTION.Imperium)
+				obj_controller.disposition[giveto]+=3;
+            else if (giveto = eFACTION.Mechanicus)
+				obj_controller.disposition[giveto]+=choose(5,6,7,8);
+            else if (giveto = eFACTION.Inquisition)
+				obj_controller.disposition[giveto]+=3;
+            else if (giveto = eFACTION.Ecclesiarchy) {
+                obj_controller.disposition[giveto]+=3;
+                var o;
+				o=0;
+				repeat(4) {
+					o+=1;
+					if (obj_ini.adv[o]="Reverent Guardians") {
+						obj_controller.disposition[giveto]+=2;
+						break;
+					}
+				}
             }
-            if (giveto=6) then obj_controller.disposition[6]+=2;
-            if (giveto=8){obj_controller.disposition[8]+=15;}// 137 ; chance for mechanicus to get very pissed
+			
+            if (giveto=eFACTION.Eldar)
+				obj_controller.disposition[giveto] +=2;
+            if (giveto=eFACTION.Tau) {
+				obj_controller.disposition[giveto]+=15;
+			}// 137 ; chance for mechanicus to get very pissed
             // End disposition
             obj_controller.cooldown=7000;
             obj_controller.menu=20;
             obj_controller.diplomacy=giveto;
             obj_controller.force_goodbye=-1;
-            var the;the="";if (giveto!=7) and (giveto!=10) then the="the ";
-            scr_event_log("","STC Fragment gifted to "+string(the)+string(obj_controller.faction[giveto])+".");
+            var the;
+			the="";
+			if (giveto!=eFACTION.Ork) and (giveto!=eFACTION.Chaos) then the="the ";
+			
+            scr_event_log("",$"STC Fragment gifted to {the}{obj_controller.faction[giveto]}.");
 
-            with(obj_controller){scr_dialogue("stc_thanks");}
-            instance_destroy();exit;
+            with(obj_controller ) {
+				scr_dialogue("stc_thanks");
+			}
+            instance_destroy();
+			exit;
         }
 
         if (giveto>0) and (type=9){
