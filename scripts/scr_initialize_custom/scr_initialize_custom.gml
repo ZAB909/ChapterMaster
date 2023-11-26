@@ -1255,21 +1255,24 @@ function scr_initialize_custom() {
 			wep1[0,1]="Power Fist&DUB|";
 			break;
 		case 2:
-			wep1[0,1]="Relic Blade&MNR|";
+			wep1[0,1]="Lightning Claw&DUB|";
 			break;
 		case 3:
-			wep1[0,1]="Master Crafted Thunder Hammer";
+			wep1[0,1]="Relic Blade&MNR|";
 			break;
 		case 4:
-			wep1[0,1]="Master Crafted Power Sword";
+			wep1[0,1]="Master Crafted Thunder Hammer";
 			break;
 		case 5:
-			wep1[0,1]="Master Crafted Power Axe";
+			wep1[0,1]="Master Crafted Power Sword";
 			break;
 		case 6:
-			wep1[0,1]="Master Crafted Eviscerator";
+			wep1[0,1]="Master Crafted Power Axe";
 			break;
 		case 7:
+			wep1[0,1]="Master Crafted Eviscerator";
+			break;
+		case 8:
 			wep1[0,1]="Master Crafted Force Weapon";
 			break;	
 	}
@@ -1360,7 +1363,7 @@ function scr_initialize_custom() {
 			chapter_master.add_trait("slow_and_purposeful");	
 			break;
 		case "Raven Guard":
-		wep1[0,1]="Lightning Claw&DUB|";mobi[0,1]="Jump Pack&SIL|";
+		mobi[0,1]="Jump Pack&SIL|";
 		chapter_master.add_trait("lightning_warriors");
 		default:
 			chapter_master.add_trait("old_guard");

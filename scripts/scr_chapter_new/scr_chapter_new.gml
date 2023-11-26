@@ -62,7 +62,7 @@ function scr_chapter_new(argument0) {
 	    disposition[6]=50;// Astartes
 	    disposition[7]=0;// Reserved
 	    chapter_master_name="Azreal";chapter_master_specialty=2;
-	    chapter_master_melee=4;chapter_master_ranged=4;
+	    chapter_master_melee=5;chapter_master_ranged=4;
 		
 	    company_title[1]="Deathwing";
 	    company_title[2]="Ravenwing";
@@ -101,7 +101,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    disposition[2]=50;disposition[3]=50;disposition[4]=50;disposition[5]=50;
 	    disposition[6]=65;// Astartes
 	    disposition[7]=0;// Reserved
-	    chapter_master_name="Jubal Khan";chapter_master_melee=4;
+	    chapter_master_name="Jubal Khan";chapter_master_melee=5;
 	    chapter_master_ranged=3;chapter_master_specialty=1;
 	    company_title[1]="The Spearpoint Brotherhood";company_title[2]="The Firefist Brotherhood";company_title[3]="The Eagle Brotherhood";
 	    company_title[4]="The Tulwar Brotherhood";company_title[5]="The Stormwrath Brotherhood";company_title[6]="The Hawkeye Brotherhood";
@@ -164,7 +164,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	        disposition[2]=75;disposition[3]=60;disposition[4]=50;disposition[5]=60;
 	        disposition[6]=60;// Astartes
 	        disposition[7]=0;// Reserved
-	        chapter_master_name="Vorn Hagen";chapter_master_melee=3;
+	        chapter_master_name="Vorn Hagen";chapter_master_melee=4;
 	        chapter_master_ranged=7;chapter_master_specialty=1;
 
 	        company_title[1]="The Fists of Dorn";company_title[2]="The Scions of Redemption";company_title[3]="The Sentinels of Terra";
@@ -197,7 +197,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    disposition[2]=50;disposition[3]=40;disposition[4]=15;disposition[5]=15;
 	    disposition[6]=40;// Astartes
 	    disposition[7]=0;// Reserved
-	    chapter_master_name="Logan Grimnar";chapter_master_melee=5;
+	    chapter_master_name="Logan Grimnar";chapter_master_melee=6;
 	    chapter_master_ranged=1;chapter_master_specialty=2;
     
 	    company_title[1]="Champions of Fenris";company_title[2]="The Bloodmaws";company_title[3]="The Seawolves";
@@ -243,7 +243,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    disposition[2]=75;disposition[3]=60;disposition[4]=50;disposition[5]=60;
 	    disposition[6]=60;// Astartes
 	    disposition[7]=0;// Reserved
-	    chapter_master_name="Dante";chapter_master_melee=5;
+	    chapter_master_name="Dante";chapter_master_melee=6;
 	    chapter_master_ranged=2;chapter_master_specialty=2;
 	    company_title[1]="Archangels";company_title[2]="The Blooded";company_title[3]="Ironhelms";
 	    company_title[4]="Knights of Baal";company_title[5]="Daemonbanes";company_title[6]="Eternals";
@@ -276,7 +276,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    disposition[2]=30;disposition[3]=80;disposition[4]=35;disposition[5]=30;
 	    disposition[6]=50;// Astartes
 	    disposition[7]=0;// Reserved
-	    chapter_master_name="Kardan Stronos";chapter_master_melee=3;
+	    chapter_master_name="Kardan Stronos";chapter_master_melee=4;
 	    chapter_master_ranged=3;chapter_master_specialty=2;
     
 	    company_title[1]="Clan Avernii";company_title[2]="Clan Garrsak";company_title[3]="Clan Raukaan";
@@ -311,7 +311,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    disposition[2]=80;disposition[3]=65;disposition[4]=65;disposition[5]=60;
 	    disposition[6]=60;// Astartes
 	    disposition[7]=0;// Reserved
-	    chapter_master_name="Tu'Shan";chapter_master_melee=3;
+	    chapter_master_name="Tu'Shan";chapter_master_melee=4;
 	    chapter_master_ranged=2;chapter_master_specialty=2;
 		
 	    company_title[1]="The Firedrakes";company_title[2]="Defenders of Nocturne";company_title[3]="The Pyroclasts";
@@ -344,7 +344,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    disposition[2]=80;disposition[3]=50;disposition[4]=50;disposition[5]=50;
 	    disposition[6]=60;// Astartes
 	    disposition[7]=0;// Reserved
-	    chapter_master_name="Kayvaan Shrike";chapter_master_melee=1;
+	    chapter_master_name="Kayvaan Shrike";chapter_master_melee=2;
 	    chapter_master_ranged=1;chapter_master_specialty=1;
 		
 	    company_title[1]="The Blackwings";company_title[2]="The Shadowborne";company_title[3]="The Ghoststalkers";
@@ -378,7 +378,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    disposition[2]=40;disposition[3]=30;disposition[4]=45;disposition[5]=25;
 	    disposition[6]=35;// Astartes
 	    disposition[7]=0;// Reserved
-	    chapter_master_name="Gabriel Angelos";chapter_master_melee=3;
+	    chapter_master_name="Gabriel Angelos";chapter_master_melee=4;
 	    chapter_master_ranged=3;chapter_master_specialty=1;
 	}
 
@@ -431,7 +431,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    disposition[2]=15;disposition[3]=20;disposition[4]=10;disposition[5]=25;
 	    disposition[6]=50;// Astartes
 	    disposition[7]=0;// Reserved
-	    chapter_master_name="Sarpedon";chapter_master_melee=7;
+	    chapter_master_name="Sarpedon";chapter_master_melee=8;
 	    chapter_master_ranged=3;chapter_master_specialty=3;
 	}
 
@@ -460,7 +460,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    disposition[2]=15;disposition[3]=20;disposition[4]=10;disposition[5]=25;
 	    disposition[6]=50;// Astartes
 	    disposition[7]=0;// Reserved
-	    chapter_master_name="Malakim Phoros";chapter_master_melee=2;
+	    chapter_master_name="Malakim Phoros";chapter_master_melee=3;
 	    chapter_master_ranged=2;chapter_master_specialty=2;
 	}
 
