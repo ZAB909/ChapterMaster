@@ -334,6 +334,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    color_to_main="Black";color_to_secondary="Black";color_to_trim="Silver";
 	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Dark Red";
 	    color_to_weapon="Black";col_special=0;trim=0;
+	    hchaplain="Cordae";fmaster="Dyloss";clibrarian="Taaloss";hapothecary="Vincente"
 	    recruiter="Korvydae";admiral="Aethon Shaan";
 	    battle_cry="Victorus aut Mortis";// monastery_name="Fortress of Hera";master_name=
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=8;
