@@ -369,3 +369,33 @@ if (p_type[1]!="Dead") then p_heresy[1]=floor(random(10))+1;
 if (p_type[2]!="Dead") then p_heresy[2]=floor(random(10))+1;
 if (p_type[3]!="Dead") then p_heresy[3]=floor(random(10))+1;
 if (p_type[4]!="Dead") then p_heresy[4]=floor(random(10))+1;
+
+
+ui_node.add_child(-sprite_width/2, sprite_height, 2*sprite_width, 20)
+	.add_component(UISpriteRendererComponent)
+		.set_sprite(spr_rectangle)
+		.set_callback(function(context) {
+			context.set_color_solid(global.star_name_colors[owner])
+		})
+		.set_alpha(0.5)
+	.finalize()
+	.add_component(UITextRendererComponent)
+		.set_halign(fa_center)
+		.set_valign(fa_middle)
+		.set_color_solid(c_black)
+		.set_callback(function(context) {
+			context.text = name
+		})
+	.finalize()
+	.add_child(1,1, 18, 18)
+		.add_component(UISpriteRendererComponent)
+			.set_sprite(spr_planets)
+			.set_image_index(9)
+			.set_image_speed(0)
+			.set_callback(function(context) {
+				context.is_canceled = !system_player_ground_forces	
+			})
+		.finalize()
+
+
+

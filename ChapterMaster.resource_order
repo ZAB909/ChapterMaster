@@ -1,6 +1,8 @@
 {
   "FolderOrderSettings": [
     {"name":"User Interface","order":69,"path":"folders/Scripts/User Interface.yy",},
+    {"name":"Diplomacy","order":3,"path":"folders/Scripts/User Interface/Diplomacy.yy",},
+    {"name":"Common","order":2,"path":"folders/Scripts/User Interface/Diplomacy/Common.yy",},
     {"name":"Render Components","order":1,"path":"folders/Scripts/User Interface/Render Components.yy",},
   ],
   "ResourceOrderSettings": [
@@ -133,6 +135,7 @@
     {"name":"spr_loc_icon","order":65,"path":"sprites/spr_loc_icon/spr_loc_icon.yy",},
     {"name":"spr_diplo_symbols","order":67,"path":"sprites/spr_diplo_symbols/spr_diplo_symbols.yy",},
     {"name":"spr_defeat","order":69,"path":"sprites/spr_defeat/spr_defeat.yy",},
+    {"name":"spr_rectangle","order":82,"path":"sprites/spr_rectangle/spr_rectangle.yy",},
     {"name":"sprite245","order":71,"path":"sprites/sprite245/sprite245.yy",},
     {"name":"spr_cursor","order":1,"path":"sprites/spr_cursor/spr_cursor.yy",},
     {"name":"spr_arrow","order":3,"path":"sprites/spr_arrow/spr_arrow.yy",},
@@ -194,6 +197,7 @@
     {"name":"spr_def_station","order":33,"path":"sprites/spr_def_station/spr_def_station.yy",},
     {"name":"spr_def_fortress","order":35,"path":"sprites/spr_def_fortress/spr_def_fortress.yy",},
     {"name":"spr_ship_inter","order":37,"path":"sprites/spr_ship_inter/spr_ship_inter.yy",},
+    {"name":"DiploCommonComponents","order":1,"path":"scripts/DiploCommonComponents/DiploCommonComponents.yy",},
     {"name":"spr_ship_craftworld","order":1,"path":"sprites/spr_ship_craftworld/spr_ship_craftworld.yy",},
     {"name":"spr_ship_ammer","order":3,"path":"sprites/spr_ship_ammer/spr_ship_ammer.yy",},
     {"name":"scr_has_adv","order":63,"path":"scripts/scr_has_adv/scr_has_adv.yy",},

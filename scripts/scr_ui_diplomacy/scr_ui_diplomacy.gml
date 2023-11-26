@@ -9,8 +9,12 @@ function scr_ui_diplomacy() {
 	xx+=6;
 
 	if (menu=20) and (diplomacy=0){// Main diplomacy screen
-	    draw_set_alpha(1);draw_set_color(0);draw_rectangle(xx,yy,xx+1600,yy+900,0);
-	    draw_set_alpha(0.5);draw_sprite(spr_rock_bg,0,xx,yy);draw_set_alpha(1);
+	    draw_set_alpha(1);
+		draw_set_color(0);
+		draw_rectangle(xx,yy,xx+1600,yy+900,0);
+	    draw_set_alpha(0.5);
+		draw_sprite(spr_rock_bg,0,xx,yy);
+		draw_set_alpha(1);
 
 	    /*draw_set_color(38144);
 	    draw_rectangle(xx+31,yy+281,xx+438,yy+416,0);
@@ -34,15 +38,18 @@ function scr_ui_diplomacy() {
     
     
 	    var imm;imm=0;
-	    if (known[2]>0) then imm=2;if (known[2]<1) then imm=3;// draw_sprite(spr_diplomacy_med,imm,xx+31,yy+281);
+	    if (known[2]>0) then imm=2;
+		if (known[2]<1) then imm=3;// draw_sprite(spr_diplomacy_med,imm,xx+31,yy+281);
 	    scr_image("diplomacy_icon",imm,xx+31,yy+281,153,135);
 	    if (faction_defeated[2]=1) then draw_sprite(spr_diplomacy_defeated,0,xx+31,yy+281);
     
-	    if (known[3]>0) then imm=4;if (known[3]<1) then imm=5;// draw_sprite(spr_diplomacy_med,imm,xx+31,yy+417);
+	    if (known[3]>0) then imm=4;
+		if (known[3]<1) then imm=5;// draw_sprite(spr_diplomacy_med,imm,xx+31,yy+417);
 	    scr_image("diplomacy_icon",imm,xx+31,yy+417,153,135);
 	    if (faction_defeated[3]=1) then draw_sprite(spr_diplomacy_defeated,0,xx+31,yy+417);
     
-	    if (known[4]>0) then imm=6;if (known[4]<1) then imm=7;// draw_sprite(spr_diplomacy_med,imm,xx+31,yy+553);
+	    if (known[4]>0) then imm=6;
+		if (known[4]<1) then imm=7;// draw_sprite(spr_diplomacy_med,imm,xx+31,yy+553);
 	    scr_image("diplomacy_icon",imm,xx+31,yy+553,153,135);
 	    if (faction_defeated[4]=1) then draw_sprite(spr_diplomacy_defeated,0,xx+31,yy+553);
     
@@ -68,8 +75,10 @@ function scr_ui_diplomacy() {
 	    scr_image("diplomacy_icon",imm,xx+1041,yy+553,153,135);
 	    if (faction_defeated[8]=1) then draw_sprite(spr_diplomacy_defeated,0,xx+1041,yy+553);
     
-	    if (known[10]>0) and (faction_gender[10]=1) then imm=18;if (known[10]>0) and (faction_gender[10]=2) then imm=26;
-	    if (known[10]<1) and (faction_gender[10]=1) then imm=19;if (known[10]<1) and (faction_gender[10]=2) then imm=27;
+	    if (known[10]>0) and (faction_gender[10]=1) then imm=18;
+		if (known[10]>0) and (faction_gender[10]=2) then imm=26;
+	    if (known[10]<1) and (faction_gender[10]=1) then imm=19;
+		if (known[10]<1) and (faction_gender[10]=2) then imm=27;
 	    // draw_sprite(spr_diplomacy_med,imm,xx+1041,yy+689);
 	    scr_image("diplomacy_icon",imm,xx+1041,yy+689,153,135);
 	    if (faction_defeated[10]=1) then draw_sprite(spr_diplomacy_defeated,0,xx+1041,yy+689);
@@ -93,16 +102,24 @@ function scr_ui_diplomacy() {
 	    scr_image("symbol",2,xx+1147,yy+174,217,107);
     
 		
-	    draw_rectangle(xx+31,yy+281,xx+438,yy+416,1);draw_line(xx+184,yy+281,xx+184,yy+416);
-	    draw_rectangle(xx+31,yy+417,xx+438,yy+552,1);draw_line(xx+184,yy+417,xx+184,yy+553);
-	    draw_rectangle(xx+31,yy+553,xx+438,yy+688,1);draw_line(xx+184,yy+553,xx+184,yy+689);
-	    draw_rectangle(xx+31,yy+689,xx+438,yy+824,1);draw_line(xx+184,yy+689,xx+184,yy+824);
+	    draw_rectangle(xx+31,yy+281,xx+438,yy+416,1);
+		draw_line(xx+184,yy+281,xx+184,yy+416);
+	    draw_rectangle(xx+31,yy+417,xx+438,yy+552,1);
+		draw_line(xx+184,yy+417,xx+184,yy+553);
+	    draw_rectangle(xx+31,yy+553,xx+438,yy+688,1);
+		draw_line(xx+184,yy+553,xx+184,yy+689);
+	    draw_rectangle(xx+31,yy+689,xx+438,yy+824,1);
+		draw_line(xx+184,yy+689,xx+184,yy+824);
 	    // 
 		//draes chapter diplomacy
-		draw_rectangle(xx+451,yy+281,xx+675,yy+416,1);draw_line(xx+604,yy+281,xx+604,yy+416);
-	    draw_rectangle(xx+451,yy+417,xx+675,yy+552,1);draw_line(xx+604,yy+417,xx+604,yy+553);
-	    draw_rectangle(xx+451,yy+553,xx+675,yy+688,1);draw_line(xx+604,yy+553,xx+604,yy+689);
-	    draw_rectangle(xx+451,yy+689,xx+675,yy+824,1);draw_line(xx+604,yy+689,xx+604,yy+824);
+		draw_rectangle(xx+451,yy+281,xx+675,yy+416,1);
+		draw_line(xx+604,yy+281,xx+604,yy+416);
+	    draw_rectangle(xx+451,yy+417,xx+675,yy+552,1);
+		draw_line(xx+604,yy+417,xx+604,yy+553);
+	    draw_rectangle(xx+451,yy+553,xx+675,yy+688,1);
+		draw_line(xx+604,yy+553,xx+604,yy+689);
+	    draw_rectangle(xx+451,yy+689,xx+675,yy+824,1);
+		draw_line(xx+604,yy+689,xx+604,yy+824);
 		
 		//draws chaos diplomacy
 	    draw_rectangle(xx+688,yy+281,xx+1028,yy+416,1);
@@ -118,7 +135,10 @@ function scr_ui_diplomacy() {
     
     
     
-	    draw_set_font(fnt_40k_14b);draw_set_halign(fa_left);
+	    draw_set_font(fnt_40k_14b);
+		draw_set_halign(fa_left);
+		
+		//draw faction names, etc
 	    draw_text(xx+189,yy+285,string_hash_to_newline("Imperium"));
 	    draw_text(xx+189,yy+421,string_hash_to_newline("Mechanicus"));
 	    draw_text(xx+189,yy+557,string_hash_to_newline("Inquisition"));
@@ -132,7 +152,9 @@ function scr_ui_diplomacy() {
 	    draw_text(xx+1199,yy+557,string_hash_to_newline("Tau"));
 	    draw_text(xx+1199,yy+693,string_hash_to_newline("Heretics"));
     
-	    draw_set_font(fnt_40k_14);draw_set_halign(fa_right);
+		//render status, i.e. whether at war, that stuff
+	    draw_set_font(fnt_40k_14);
+		draw_set_halign(fa_right);
 	    draw_text_transformed(xx+431,yy+289,string_hash_to_newline(string(faction_status[2])),0.7,0.7,0);
 	    draw_text_transformed(xx+431,yy+425,string_hash_to_newline(faction_status[3]),0.7,0.7,0);
 	    draw_text_transformed(xx+431,yy+561,string_hash_to_newline(faction_status[4]),0.7,0.7,0);
@@ -146,20 +168,37 @@ function scr_ui_diplomacy() {
 	    draw_text_transformed(xx+1441,yy+561,string_hash_to_newline(faction_status[8]),0.7,0.7,0);
 	    draw_text_transformed(xx+1441,yy+697,string_hash_to_newline(faction_status[10]),0.7,0.7,0);
     
-	    draw_set_halign(fa_left);var txt;
-	    txt="????";if (known[2]>0) then txt=string(faction_title[2])+" "+string(faction_leader[2]);draw_text_transformed(xx+189,yy+309,string_hash_to_newline(txt),0.7,0.7,0);
-	    txt="????";if (known[3]>0) then txt=string(faction_title[3])+" "+string(faction_leader[3]);draw_text_transformed(xx+189,yy+445,string_hash_to_newline(txt),0.7,0.7,0);
-	    txt="????";if (known[4]>0) then txt=string(faction_title[4])+" "+string(faction_leader[4]);draw_text_transformed(xx+189,yy+581,string_hash_to_newline(txt),0.7,0.7,0);
-	    txt="????";if (known[5]>0) then txt=string(faction_title[5])+" "+string(faction_leader[5]);draw_text_transformed(xx+189,yy+717,string_hash_to_newline(txt),0.7,0.7,0);
+	    draw_set_halign(fa_left);
+		var txt;
+	    txt="????";
+		if (known[2]>0) then txt=string(faction_title[2])+" "+string(faction_leader[2]);
+		draw_text_transformed(xx+189,yy+309,string_hash_to_newline(txt),0.7,0.7,0);
+	    txt="????";
+		if (known[3]>0) then txt=string(faction_title[3])+" "+string(faction_leader[3]);
+		draw_text_transformed(xx+189,yy+445,string_hash_to_newline(txt),0.7,0.7,0);
+	    txt="????";
+		if (known[4]>0) then txt=string(faction_title[4])+" "+string(faction_leader[4]);
+		draw_text_transformed(xx+189,yy+581,string_hash_to_newline(txt),0.7,0.7,0);
+	    txt="????";
+		if (known[5]>0) then txt=string(faction_title[5])+" "+string(faction_leader[5]);
+		draw_text_transformed(xx+189,yy+717,string_hash_to_newline(txt),0.7,0.7,0);
 	    /*txt="????";if (known[6]>0) then txt=string(faction_title[6])+" "+string(faction_leader[6]);draw_text_transformed(xx+609,yy+309,txt,0.7,0.7,0);
 	    txt="????";if (known[7]>0) then txt=string(faction_title[7])+" "+string(faction_leader[7]);draw_text_transformed(xx+609,yy+445,txt,0.7,0.7,0);
 	    txt="????";if (known[8]>0) then txt=string(faction_title[8])+" "+string(faction_leader[8]);draw_text_transformed(xx+609,yy+581,txt,0.7,0.7,0);
 	    txt="????";if (known[10]>0) then txt=string(faction_title[10])+" "+string(faction_leader[10]);draw_text_transformed(xx+609,yy+717,txt,0.7,0.7,0);*/
-	    txt="????";if (known[6]>0) then txt=string(faction_title[6])+" "+string(faction_leader[6]);draw_text_transformed(xx+1199,yy+309,string_hash_to_newline(txt),0.7,0.7,0);
-	    txt="????";if (known[7]>0) then txt=string(faction_title[7])+" "+string(faction_leader[7]);draw_text_transformed(xx+1199,yy+445,string_hash_to_newline(txt),0.7,0.7,0);
-	    txt="????";if (known[8]>0) then txt=string(faction_title[8])+" "+string(faction_leader[8]);draw_text_transformed(xx+1199,yy+581,string_hash_to_newline(txt),0.7,0.7,0);
-	    txt="????";if (known[10]>0) then txt=string(faction_title[10])+" "+string(faction_leader[10]);draw_text_transformed(xx+1199,yy+717,string_hash_to_newline(txt),0.7,0.7,0);
+	    txt="????";
+		if (known[6]>0) then txt=string(faction_title[6])+" "+string(faction_leader[6]);
+		draw_text_transformed(xx+1199,yy+309,string_hash_to_newline(txt),0.7,0.7,0);
+	    txt="????";
+		if (known[7]>0) then txt=string(faction_title[7])+" "+string(faction_leader[7]);
+		draw_text_transformed(xx+1199,yy+445,string_hash_to_newline(txt),0.7,0.7,0);
+	    txt="????";
+		if (known[8]>0) then txt=string(faction_title[8])+" "+string(faction_leader[8]);
+		draw_text_transformed(xx+1199,yy+581,string_hash_to_newline(txt),0.7,0.7,0);
+	    txt="????";if (known[10]>0) then txt=string(faction_title[10])+" "+string(faction_leader[10]);
+		draw_text_transformed(xx+1199,yy+717,string_hash_to_newline(txt),0.7,0.7,0);
     
+		//disposition score rendering
 	    draw_text_transformed(xx+189,yy+324,string_hash_to_newline("Disposition: "+string(disposition[2])),0.7,0.7,0);
 	    draw_text_transformed(xx+189,yy+460,string_hash_to_newline("Disposition: "+string(disposition[3])),0.7,0.7,0);
 	    draw_text_transformed(xx+189,yy+596,string_hash_to_newline("Disposition: "+string(disposition[4])),0.7,0.7,0);
@@ -174,7 +213,7 @@ function scr_ui_diplomacy() {
 	    draw_text_transformed(xx+1199,yy+732,string_hash_to_newline("Disposition: "+string(disposition[10])),0.7,0.7,0);
     
     
-    
+		//disposition bar rendering
 	    scr_draw_rainbow(xx+270,yy+325,xx+420,yy+335,(disposition[2]/200)+0.5);
 	    scr_draw_rainbow(xx+270,yy+325+136,xx+420,yy+335+136,(disposition[3]/200)+0.5);
 	    scr_draw_rainbow(xx+270,yy+325+272,xx+420,yy+335+272,(disposition[4]/200)+0.5);
@@ -200,35 +239,48 @@ function scr_ui_diplomacy() {
 	    draw_sprite(spr_disposition_small,round((disposition[10]+100)/10),xx+131+286,yy+74+273);*/
     
     
+		//draw the meet chaos button
 	    draw_set_halign(fa_left);
 	    draw_set_color(38144);
-		
-	    draw_set_color(38144);draw_rectangle(xx+688,yy+240,xx+1028,yy+281,0);
-	    draw_set_color(c_black);draw_text_transformed(xx+688,yy+241,string_hash_to_newline(" Meet Chaos Emmissary"),0.7,0.7,0);
+		draw_rectangle(xx+688,yy+240,xx+1028,yy+281,0);
+	    draw_set_color(c_black);
+		draw_text_transformed(xx+688,yy+241,string_hash_to_newline(" Meet Chaos Emmissary"),0.7,0.7,0);
+		//color blending stuff if hovering over the meeting chaos icon
 	    if (point_in_rectangle(mouse_x, mouse_y, xx+688,yy+240,xx+1028,yy+281)){
-	        draw_set_alpha(0.2);draw_rectangle(xx+688,yy+240,xx+1028,yy+281,0);draw_set_alpha(1);
+	        draw_set_alpha(0.2);
+			draw_rectangle(xx+688,yy+240,xx+1028,yy+281,0);
+			draw_set_alpha(1);
 		};
 	    var x6,y6,x7,y7;
 	    x6=0;y6=0;x7=0;y7=0;
 	    xx-=55;yy+=20;
 		
 		
-    
-	    if (known[2]>0.7) and (faction_defeated[2]=0){
+		#region faction talks/ignore stuff
+	    if (known[2]>0.7) and (faction_defeated[2]=0) {
 	        x6=xx+250;y6=yy+334;x7=x6+92;y7=y6+15;
-	        if (turns_ignored[2]<=0){
-	            draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);
-	            draw_set_color(c_black);draw_text_transformed(x6,y6+1,string_hash_to_newline(" Request Audience"),0.7,0.7,0);
+	        if (turns_ignored[2]<=0) {
+	            draw_set_color(38144);
+				draw_rectangle(x6,y6,x7,y7,0);
+	            draw_set_color(c_black);
+				draw_text_transformed(x6,y6+1,string_hash_to_newline(" Request Audience"),0.7,0.7,0);
 	            if (mouse_x>=x6) and (mouse_y>=y6) and (mouse_x<x7) and (mouse_y<y7){
-	                draw_set_alpha(0.2);draw_rectangle(x6,y6,x7,y7,0);draw_set_alpha(1);
+	                draw_set_alpha(0.2);
+					draw_rectangle(x6,y6,x7,y7,0);
+					draw_set_alpha(1);
 	            }
 	        }
-	        x6=xx+349;x7=x6+51;
-	        draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);draw_set_color(c_black);
+	        x6=xx+349;
+			x7=x6+51;
+	        draw_set_color(38144);
+			draw_rectangle(x6,y6,x7,y7,0);
+			draw_set_color(c_black);
 	        if (ignore[2]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
 	        if (ignore[2]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
 	        if (mouse_x>=x6) and (mouse_y>=y6) and (mouse_x<x7) and (mouse_y<y7){
-	            draw_set_alpha(0.2);draw_rectangle(x6,y6,x7,y7,0);draw_set_alpha(1);
+	            draw_set_alpha(0.2);
+				draw_rectangle(x6,y6,x7,y7,0);
+				draw_set_alpha(1);
 	        }
         
     
@@ -240,9 +292,11 @@ function scr_ui_diplomacy() {
     
 	    if (known[3]>0.7) and (faction_defeated[3]=0){
 	        x6=xx+250;y6=yy+334+136;x7=x6+92;y7=y6+15;
-	        if (turns_ignored[3]<=0){
-	            draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);
-	            draw_set_color(c_black);draw_text_transformed(x6,y6+1,string_hash_to_newline(" Request Audience"),0.7,0.7,0);
+	        if (turns_ignored[3]<=0) {
+	            draw_set_color(38144);
+				draw_rectangle(x6,y6,x7,y7,0);
+	            draw_set_color(c_black);
+				draw_text_transformed(x6,y6+1,string_hash_to_newline(" Request Audience"),0.7,0.7,0);
 	            if (mouse_x>=x6) and (mouse_y>=y6) and (mouse_x<x7) and (mouse_y<y7){
 	                draw_set_alpha(0.2);draw_rectangle(x6,y6,x7,y7,0);draw_set_alpha(1);
 	            }
@@ -291,12 +345,7 @@ function scr_ui_diplomacy() {
 	            draw_set_alpha(0.2);draw_rectangle(x6,y6,x7,y7,0);draw_set_alpha(1);
 	        }
 	    }
-    
-    
-    
-    
-    
-    
+      
 	    if (known[6]>0.7) and (faction_defeated[2]=0){
 	        x6=xx+250+1010;y6=yy+334;x7=x6+92;y7=y6+15;
 	        if (turns_ignored[6]<=0){
@@ -369,14 +418,7 @@ function scr_ui_diplomacy() {
 	        }
 	    }
     
-    
-    
-    
-    
-    
-    
-    
-    
+		#endregion
 	    /*if (known[6]>0.7) and (faction_defeated[6]=0){
 	        var fis;fis="[Request Audience]";
 	        if (turns_ignored[6]>0) then fis="                  ";
@@ -432,8 +474,12 @@ function scr_ui_diplomacy() {
 	if (menu=20) and (diplomacy<-5) and (diplomacy>-6){
 	    draw_sprite(spr_rock_bg,0,xx,yy);
 	    // draw_sprite(spr_diplo_splash,diplomacy,xx+916,yy+33);
-	    draw_set_alpha(0.75);draw_set_color(0);draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+820,0);
-	    draw_set_alpha(1);draw_set_color(38144);draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+820,1);
+	    draw_set_alpha(0.75);
+		draw_set_color(0);
+		draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+820,0);
+	    draw_set_alpha(1);
+		draw_set_color(38144);
+		draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+820,1);
     
 	    var advi,fra;advi="";fra=0;
 	    if (diplomacy=-5.1){advi="apoth";fra=1;}
@@ -468,16 +514,24 @@ function scr_ui_diplomacy() {
 
 
 	if (menu=20) and (diplomacy>0){// Diplomacy - Speaking
-	    var daemon;daemon=false;if (diplomacy>10) and (diplomacy<11) then daemon=true;
+	    var daemon;
+		daemon=false;
+		if (diplomacy>10) and (diplomacy<11) then daemon=true;
 	    draw_sprite(spr_rock_bg,0,xx,yy);
 	    // draw_sprite(spr_diplo_splash,diplomacy,xx+916,yy+33);
-	    draw_set_alpha(0.75);draw_set_color(0);draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+820,0);
-	    draw_set_alpha(1);draw_set_color(38144);draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+820,1);
+	    draw_set_alpha(0.75);
+		draw_set_color(0);
+		draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+820,0);
+	    draw_set_alpha(1);
+		draw_set_color(38144);
+		draw_rectangle(xx+326+16,yy+66,xx+887+16,yy+820,1);
 		if (diplomacy==10.1){
 	        // if (diplomacy=10.1) then draw_sprite(spr_diplomacy_dae,0,xx+16,yy+43);
-	        daemon=true;scr_image("diplomacy_daemon",0,xx+16,yy+43,310,828);show_stuff=false;
-			 if (mouse_x>=xx+360) and (mouse_y>=yy+143) and (mouse_x<=xx+884) and (mouse_y<=yy+180) then warning=1;
-			 }
+	        daemon=true;
+			scr_image("diplomacy_daemon",0,xx+16,yy+43,310,828);
+			show_stuff=false;
+			if (mouse_x>=xx+360) and (mouse_y>=yy+143) and (mouse_x<=xx+884) and (mouse_y<=yy+180) then warning=1;
+		}
     
 	    if (daemon=false){
 	        if (diplomacy!=6) then scr_image("diplomacy_splash",diplomacy,xx+16,yy+43,310,828);

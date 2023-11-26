@@ -1302,8 +1302,11 @@ for(var i=0; i<120; i++){
             xx=floor(random(room_width-128))+64;
             yy=floor(random(room_height-256))+128;
             
+			//this can cause a rare to occur crash where instance_nearest returns noone (-4) which has no properties
             me=instance_nearest(xx,yy,obj_star);
-            if (point_distance(me.x,me.y,xx,yy)>=100) then go=1;
+			with(me) {
+				if (point_distance(x,y,xx,yy)>=100) then go=1;
+			}
         }
         if (go==1){
             instance_create(xx,yy,obj_star);

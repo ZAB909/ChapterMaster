@@ -496,9 +496,4 @@ function scr_image(argument0, argument1, argument2, argument3, argument4, argume
 	    draw_set_color(old_color);
     
 	}}
-
-
-
-
-
 }

@@ -66,14 +66,14 @@ function UIComponent(owner, name) constructor {
 function UIEventComponent(owner, name) : UIComponent(owner, name) constructor {
 	
 	static __ev_funcs = [];
-	callback = function(){}
+	callback = function(c){}
 	ev_type = undefined
 	ev_code = undefined
 	use_gui_coords = false;
 	
 	self.event_time_source = time_source_create(time_source_game, 1, time_source_units_frames, function() {
 		if is_event() {
-			callback();	
+			callback(self);	
 		}
 		
 		is_canceled = false
@@ -95,9 +95,6 @@ function UIEventComponent(owner, name) : UIComponent(owner, name) constructor {
 		return self;
 	}
 	
-	static set_chomp_events = function(val) {
-		chomp_parent_evs = val;
-	}
 	static set_ev_code = function(key) {
 		ev_code = key
 		return self;
@@ -266,7 +263,7 @@ function UIMouseButtonEventComponent(owner, name = "") : UIEventComponent(owner,
 
 	time_source_reconfigure(event_time_source, 1, time_source_units_frames, function() {
 		if is_event() {
-			callback();	
+			callback(self);	
 		}
 		
 		is_canceled = false;

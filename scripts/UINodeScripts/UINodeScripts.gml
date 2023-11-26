@@ -26,10 +26,12 @@ function UINode(gui_x, gui_y, width, height, padding = 0, margin = 0) constructo
 	children = [];
 	creator = other;
 	is_active = true;
+	
 	static make_id = function() {
 		static base = 0;
 		return "UINode" + string(base++)
 	}
+	
 	gid = make_id()
 
 	static is_in_bounding_rect = function(px, py) {
@@ -85,8 +87,8 @@ function UINode(gui_x, gui_y, width, height, padding = 0, margin = 0) constructo
 		return self;
 	}
 	
-	static add_child = function(x, y, width, height, padding = 0, allow_child_insertion = true) {
-		var new_node = new UINode(x + gui_x, y + gui_y, width, height)
+	static add_child = function(gx, gy, width, height, padding = 0, allow_child_insertion = true) {
+		var new_node = new UINode(gx + gui_x, gy + gui_y, width, height)
 		add_child_from_existing(new_node, allow_child_insertion)
 		return new_node;
 	}
@@ -133,6 +135,11 @@ function UINode(gui_x, gui_y, width, height, padding = 0, margin = 0) constructo
 			if 	is_instanceof(elem, UIEventComponent)
 				elem.cleanup()
 		})
-		components = [];
+		array_resize(components, 0)
+	}
+
+	static clear = function() {
+		destroy_components()
+		array_resize(children, 0)
 	}
 }

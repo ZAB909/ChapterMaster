@@ -6,7 +6,10 @@ if (p_type[1]="Craftworld") and (obj_controller.known[6]=0){
     draw_set_alpha(1);
     exit;
 }
-
+//big ol temporary way
+system_player_ground_forces = array_reduce(p_player, function(prev, curr) {
+	return prev + curr	
+})
 var show=name;
 
 if (global.cheat_debug=true) then show=string(name)+"#"+string(p_problem[1,1])+":"+string(p_timer[1,1])+"#"+string(p_problem[1,2])+":"+string(p_timer[1,2])+"#"+string(p_problem[1,3])+":"+string(p_timer[1,3]);
@@ -23,9 +26,11 @@ if (storm>0) then draw_sprite_ext(spr_warp_storm,storm_image,x,y,0.75,0.75,0,c_w
 // if (vision=1) then draw_set_alpha(0.5);
 // if (vision=0) then draw_set_alpha(0.3);
 
+/*
 draw_set_halign(fa_center);
 draw_set_font(fnt_menu);
 draw_set_color(38144);
+
 // Checks the owner of the planet
 switch (owner) {
     case 1:
@@ -78,5 +83,7 @@ if (owner==1){
     draw_set_color(c_white);
     draw_text_transformed(x,y+16,string_hash_to_newline(show),siz,siz,0);
 }
-
+*/
 draw_set_alpha(1);
+ui_node.render(x,y)
+draw_set_halign(fa_center);
