@@ -48,6 +48,21 @@ function role_groups(group){
 				obj_ini.role[100,18], //sergeant
 				obj_ini.role[100,19],  //vet sergeant
 			]
+			break;
+		case "command":
+			role_list = [
+	            obj_ini.role[100][5],
+	            obj_ini.role[100][14],
+	            obj_ini.role[100][15],
+	            obj_ini.role[100][16],
+	            obj_ini.role[100][17],
+	            "Codiciery",
+	            "Lexicanum",
+	            "Standard Bearer",
+	            "Company Champion",
+	            "Champion"
+	        ]; 
+	        break;
 	}
 	return role_list;
 }
@@ -120,7 +135,10 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 			break;
 		case "heads":
 			specialists = role_groups("heads");
-			break;								
+			break;
+		case "command":	
+			specialists = role_groups("command");
+			break;						
 	}
 
 	_is_specialist = (array_contains(specialists,unit_role)) ? true : false;

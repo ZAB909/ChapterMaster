@@ -580,6 +580,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                         if (obj_ini.main_color=obj_ini.secondary_color) then draw_sprite(spr_gear_hood1,hood,xx+x_draw,yy+y_draw);
                         if (obj_ini.main_color!=obj_ini.secondary_color) then draw_sprite(spr_gear_hood3,hood,xx+x_draw,yy+y_draw);
                     }
+                    draw_sprite(spr_psy_hood,2,xx+x_draw,yy+y_draw); 
                 } else if (halo=1){ // Draw the Iron Halo
                     if (base_sprite<1) and (ui_specialist=14) and ((obj_ini.progenitor=5 || global.chapter_name="Blood Angels")){
                         draw_sprite(spr_gear_halo,0,xx+x_draw,yy+y_draw);
@@ -674,11 +675,15 @@ function scr_draw_unit_image(x_draw, y_draw){
                                 break;
 
                             case  "left_leg":
-                                draw_sprite(spr_bionics_leg,1,xx+x_draw+3,yy+y_draw)
+                                var sprite_num=3;
+                                 if (specialist_colours>=2){
+                                    sprite_num=4;
+                                 }                                
+                                draw_sprite(spr_bionics_leg_2,sprite_num,xx+x_draw+3,yy+y_draw)
                                 break;
 
                             case "right_leg":
-                                draw_sprite(spr_bionics_leg,0,xx+x_draw-3,yy+y_draw)
+                                draw_sprite(spr_bionics_leg_2,0,xx+x_draw-3,yy+y_draw)
                                 break;
                         }
 					}

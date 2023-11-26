@@ -292,6 +292,7 @@ function scr_ui_manage() {
 						string("{0} potential",obj_ini.role[100][15]),
 						string("{0} potential",obj_ini.role[100][14]),
 						"Librarium potential"];
+		var assignmemt ="none"
 	    
 	    if (!obj_controller.view_squad){
 		    for(var i=0; i<repetitions;i++){
@@ -301,6 +302,7 @@ function scr_ui_manage() {
 				eventing=false;
 	        
 		        if (man[sel]=="man"){
+
 					unit = display_unit[sel];
 					if (unit.name()==""){continue;}
 					var unit_location = unit.marine_location();
@@ -314,6 +316,10 @@ function scr_ui_manage() {
 						temp2 += romanNumerals[unit_location[1]-1];
 		            } else if(unit_location[0]==location_types.ship){
 						temp2 = obj_ini.ship[unit_location[1]]
+					};
+					assignmemt=unit.assignment();
+					if (assignmemt=="garrison"){
+						temp2+= "(garrison)";
 					}
 		            if (fest_planet==0) and (fest_sid>0) and (fest_repeats>0) and (ma_lid[sel]==fest_sid){
 						temp2="=Event=";
@@ -615,7 +621,7 @@ function scr_ui_manage() {
 		        draw_set_color(c_gray);
 		        draw_text_transformed(xx+240+8,yy+66,string_hash_to_newline(string(temp3)),1,1,0);// HP
 		        draw_text_transformed(xx+330+8,yy+66,string_hash_to_newline(string(temp4)),1,1,0);// EXP
-		        if (temp2=="Mechanicus Vessel") or (temp2=="Terra IV") or (temp2=="=Penitorium=") then draw_set_alpha(0.5);
+		        if (temp2=="Mechanicus Vessel") or (temp2=="Terra IV") or (temp2=="=Penitorium=") or (assignmemt!="none") then draw_set_alpha(0.5);
 		        draw_text_transformed(xx+430+8,yy+66,string_hash_to_newline(string(temp2)),1,1,0);// LOC
 		        draw_set_alpha(1);
 	        
@@ -975,6 +981,12 @@ function scr_ui_manage() {
 				x6=xx+1436;
 				y6=yy+805;
 				draw_unit_buttons([x5,y6, x6, y5],"Promote");
+
+				// Transfer to another company button
+				y5=yy+831-26;
+				x6=xx+1436;
+				y6=yy+805-26;
+			    draw_unit_buttons([x5,y6, x6, y5],"Transfer");				
 				
 				// Put in jail button
 			    x5=xx+1297+141;
@@ -989,13 +1001,6 @@ function scr_ui_manage() {
 				x6=xx+1297;
 				y6=yy+805-26;
 			    draw_unit_buttons([x5,y6, x6, y5],"Reset");
-		    
-				// Transfer to another company button
-			    x5=xx+1297;
-				y5=yy+831-26;
-				x6=xx+1436;
-				y6=yy+805-26;
-			    draw_unit_buttons([x5,y6, x6, y5],"Transfer");
 		    
 				// Add bionics button
 			    draw_set_color(38144);
@@ -1116,6 +1121,9 @@ function scr_ui_manage() {
 			        					obj_controller.temp[120] = obj_ini.TTRPG[member[0]][member[1]];
 			        				}
 			        			}
+			        		} else if (view_squad){
+			        			view_squad = false;
+			        			unit_profile =false;
 			        		}
 			        	}
 						var current_squad = obj_ini.squads[selected_unit.squad];
@@ -1136,11 +1144,9 @@ function scr_ui_manage() {
 						draw_set_halign(fa_right);
 						draw_unit_buttons([xx+bound_width[1]-44,yy+bound_height[0]+6], arrow,[1.5,1.5],c_red);
 						if (point_in_rectangle(mouse_x, mouse_y,xx+bound_width[1]-44,yy+bound_height[0]+6,xx+bound_width[1]+string_width(arrow)-36, yy+bound_height[0]+14+string_height(arrow)) && array_length(obj_controller.company_squads) > 0 && mouse_check_button_pressed(mb_left)){
-							show_debug_message("{0},{1}",obj_controller.cur_squad,company_squads)
 							obj_controller.cur_squad = (obj_controller.cur_squad+1>=array_length(obj_controller.company_squads)) ? 0 : obj_controller.cur_squad+1;
 							member = obj_ini.squads[obj_controller.company_squads[obj_controller.cur_squad]].members[0];
 							obj_controller.temp[120] = obj_ini.TTRPG[member[0]][member[1]];
-							show_debug_message("{0},{1}",obj_controller.cur_squad,company_squads)
 						}						
 						draw_set_color(c_gray);
 						draw_set_alpha(1);				
@@ -1156,7 +1162,58 @@ function scr_ui_manage() {
 							var leader_text = $"Squad Leader : {obj_ini.TTRPG[squad_leader[0]][squad_leader[1]].name_role()}"
 							draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+50, leader_text,1,1,0);
 						}
+						var squad_loc = current_squad.squad_loci();
 						draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+75, $"squad life members : {current_squad.life_members}",1,1,0);
+						draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+100, $"squad location : {squad_loc.text}",1,1,0);
+						if (current_squad.assignment == "none"){
+							draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+125, $"squad has no current assigments",1,1,0);
+							tooltip_text="Guard Duty";
+							if (squad_loc.same_system){
+								draw_unit_buttons([xx+bound_width[0]+5, yy+bound_height[0]+150], tooltip_text,[1,1],c_red);
+								if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text), yy+bound_height[0]+150+string_height(tooltip_text))){
+									tooltip_text = "having squads assigned to Guard Duty will increase relations with a planet over time, it will also bolster planet defence forces in case of attack, and reduce corruption growth"
+									tooltip_draw(xx+bound_width[0]+5,yy+bound_height[0]+150+string_height(tooltip_text), tooltip_text,0,0,100,17);
+									if (mouse_check_button_pressed(mb_left)){
+										with (obj_star){
+											if (name == squad_loc.system){
+												obj_controller.cooldown=8000;
+												var unload_squad=instance_create(x,y,obj_star_select);
+												unload_squad.target=self;
+												unload_squad.loading=1;
+												unload_squad.loading_name=name;
+												//unload_squad.loading_name=name;
+												unload_squad.depth=-10000;
+												scr_company_load(name);
+												break;
+											}
+										}
+									}
+								}
+							}
+						} else {
+							if (is_struct(current_squad.assignment)){
+								draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+125, $"assignment : {current_squad.assignment.type}",1,1,0);
+							}
+							var tooltip_text =  "cancel assignment"
+							draw_unit_buttons([xx+bound_width[0]+5, yy+bound_height[0]+150],tooltip_text,[1,1],c_red);
+							if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text), yy+bound_height[0]+150+string_height(tooltip_text))){
+								if (mouse_check_button_pressed(mb_left)){
+									with (obj_star){
+										if (name == squad_loc.system){
+											var planet = current_squad.assignment.ident;
+											var operation;
+											for (var i=0;i<array_length(p_operatives[planet]);i++){
+												operation = p_operatives[planet][i];
+												if (operation.type=="squad" && operation.reference ==obj_controller.company_squads[obj_controller.cur_squad]){
+													array_delete(p_operatives[planet], i, 1);
+												}
+											}
+										}
+									}
+									current_squad.assignment = "none";
+								}
+							}
+						}
 						
 						if (obj_controller.unit_rollover){
 							if (point_in_rectangle(mouse_x, mouse_y, xx+25, yy+144, xx+925, yy+981)){
@@ -1249,7 +1306,7 @@ function scr_ui_manage() {
     
 		// Draw companies
 	    if (managing >= 1) and (managing <=10) {
-			fx= romanNumerals[managing - 1] + " Company";
+			fx= scr_roman_numerals()[managing - 1] + " Company";
 		}
     
 	    switch (managing) {

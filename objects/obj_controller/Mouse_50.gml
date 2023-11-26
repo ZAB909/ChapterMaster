@@ -2230,19 +2230,11 @@ if (action_if_number(obj_saveload, 0, 0) &&
     }
     // Selecting individual marines
     if (menu=1) and (managing>0) and (!obj_controller.view_squad)and (!obj_controller.unit_profile){
-        //TODO make command roles a global variable for reuse
-        var command_roles = [
-            obj_ini.role[100][5],
-            obj_ini.role[100][14],
-            obj_ini.role[100][15],
-            obj_ini.role[100][16],
-            obj_ini.role[100][17],
-            "Codiciery",
-            "Lexicanum",
-            "Standard Bearer",
-            "Company Champion",
-            "Champion"
-        ];                   
+        var company=managing;
+        if (company>10){
+            company=0;
+        }
+        var unit;                 
         var eventing=false, bb="";
         xx=__view_get( e__VW.XView, 0 )+0;
         yy=__view_get( e__VW.YView, 0 )+0;
@@ -2317,6 +2309,15 @@ if (action_if_number(obj_saveload, 0, 0) &&
             var onceh;
             for(var i=0; i<man_max; i++){
                 while (man[sel]=="hide" && sel<500){sel++;}
+                unit=obj_ini.TTRPG[company, ide[sel]];
+                if (unit.assignmemt!="none"){
+                    if (sel<500){
+                        sel++;
+                        continue;
+                    } else{
+                        break;
+                    }
+                }
                 onceh=0;
                 eventing=false;
                 selection=false;
@@ -2410,7 +2411,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 and (eventing==false){
                     var is_command=0;
                     if (managing>0) and (managing<=10){
-                        if (array_contains(command_roles,ma_role[sel])) then is_command=1;
+                        if (is_specialist(ma_role[sel], "command")) then is_command=1;
                     }
                     if (is_command==1){
                         onceh=0;
@@ -2440,6 +2441,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 }
                 yy+=20;
                 sel++;
+                if (sel==500) then break;
             }
             sel_all="";
         }

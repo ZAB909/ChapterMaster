@@ -5,6 +5,7 @@
     {"name":"weapons","order":72,"path":"folders/Sprites/New UI/Gear/weapons.yy",},
     {"name":"decorations","order":53,"path":"folders/Sprites/New UI/Marine Viewer/decorations.yy",},
     {"name":"dreadnought","order":55,"path":"folders/Sprites/New UI/Marine Viewer/dreadnought.yy",},
+    {"name":"gear","order":56,"path":"folders/Sprites/New UI/Marine Viewer/gear.yy",},
     {"name":"helms","order":52,"path":"folders/Sprites/New UI/Marine Viewer/helms.yy",},
   ],
   "ResourceOrderSettings": [
@@ -199,6 +200,7 @@
     {"name":"sprite266","order":81,"path":"sprites/sprite266/sprite266.yy",},
     {"name":"spr_ship_song","order":1,"path":"sprites/spr_ship_song/spr_ship_song.yy",},
     {"name":"sprite235","order":3,"path":"sprites/sprite235/sprite235.yy",},
+    {"name":"spr_bionics_leg_2","order":5,"path":"sprites/spr_bionics_leg_2/spr_bionics_leg_2.yy",},
     {"name":"spr_ship_bb","order":5,"path":"sprites/spr_ship_bb/spr_ship_bb.yy",},
     {"name":"spr_ship_stri","order":7,"path":"sprites/spr_ship_stri/spr_ship_stri.yy",},
     {"name":"spr_ship_th","order":9,"path":"sprites/spr_ship_th/spr_ship_th.yy",},

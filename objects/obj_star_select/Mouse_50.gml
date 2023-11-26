@@ -277,7 +277,7 @@ if (obj_controller.cooldown<=0) and (loading=1){
             arti.type="recon";
             // Right here should pass the man_sel variables
             // var i;i=-1;repeat(150){i+=1;arti.man_sel[i]=obj_controller.man_sel[i];}
-            var i;i=-1;
+            var i=-1;
             repeat(150){i+=1;
                 arti.man_sel[i]=0;arti.ide[i]=0;arti.man[i]="";
                 if (obj_controller.man_sel[i]!=0){

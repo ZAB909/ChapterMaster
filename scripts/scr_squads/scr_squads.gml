@@ -253,6 +253,7 @@ function unit_squad(squad_type, company) constructor{
 	base_company = company;
 	life_members=0;
 	nickname="";
+	assignment="none";
 	//nickname = scr_squad_names();
 
 	// for creating a new sergeant from existing squad members
@@ -372,6 +373,77 @@ function unit_squad(squad_type, company) constructor{
         }
 	}
 
+	static squad_loci = function(){
+		var member_length = array_length(members);
+		var locations = [];
+		var system = ""
+		var unit_loc;
+		var same_system = true;
+		var same_loc_type = true;
+		var loc_type = false;
+		var same_loc_id = false;
+		var loc_id;
+		var in_orbit=false;
+		var planet_side=false;
+		var exact_loc = false;
+		for (i = 0; i < member_length;i++){
+			unit = obj_ini.TTRPG[members[i][0]][members[i][1]];
+			if (unit.name() == ""){
+				array_delete(members, i, 1);
+				member_length--;
+				i--;
+				continue;
+			}
+			unit_loc = unit.marine_location();		
+			if (system==""){
+				system = unit_loc[2];
+				loc_type=unit_loc[0];
+				loc_id = unit_loc[1];
+			}
+			if (system != unit_loc[2]){
+				same_system = false;
+			}
+			if (same_system){
+				if (loc_type!=unit_loc[0]){
+					same_loc_type=false
+				}
+			}
+			if (same_loc_type && same_system){
+				if (loc_id == unit_loc[1]){
+					exact_loc=true;
+				} else{
+					exact_loc=false;
+					if (loc_type==location_types.ship){
+						in_orbit=true;
+					} else if (loc_type==location_types.planet){
+						planet_side=true;
+					}
+				}
+			}
+		}
+		var final_loc_status=""
+		if (!same_system){
+			final_loc_status="Scattered"
+		} else if (same_loc_type){
+			if (loc_type==location_types.ship){
+				if (exact_loc){
+					final_loc_status=$"aboard {obj_ini.ship[loc_id]}"
+				} else if (in_orbit){
+					final_loc_status=$"various ships orbiting {system}"
+				}
+			} else if (loc_type==location_types.planet){
+				if (exact_loc){
+					final_loc_status=$"{system} {scr_roman_numerals()[loc_id-1]}"
+				}else if (planet_side){
+					final_loc_status=$"various planets in {system}"
+				}
+			}
+		} else {
+			final_loc_status=$"system {system}"
+		}
+		return {text:final_loc_status, system:system, same_system:same_system, exact_loc:exact_loc, planet_side:planet_side, in_orbit:in_orbit};
+
+	}
 	static determine_leader = function(){
 		var member_length = array_length(members);
 		var leader_chosen = false;
@@ -409,7 +481,48 @@ function unit_squad(squad_type, company) constructor{
 			}			
 		}
 		return leader;
-	}		
+	}
+
+	static set_location = function(loc, lid, wid){
+		var member_length = array_length(members);
+		var member_location;
+		var system = "none";
+		with (obj_star){
+			if (name==loc){
+				system=self;
+				break;
+			}
+		}
+		if 	(system == "none") then return "invalid system";
+		for (var i=0;i<member_length;i++){
+			unit = obj_ini.TTRPG[members[i][0]][members[i][1]]
+			if (unit.name() == ""){
+				array_delete(members, i, 1);
+				member_length--;
+				i--;
+				continue;
+			} else {
+				member_location=unit.marine_location();
+				if (wid>0 && loc==member_location[2]){
+					if (member_location[0]==location_types.ship){
+						unit.unload(wid, system)
+					} else if(member_location[0]==location_types.planet && member_location[1] != wid && member_location[2]==loc){
+						system.p_player[member_location[1]]--;
+						system.p_player[wid]++;
+						unit.set_planet(wid);
+					}
+				} else {
+					if (wid == 0 && lid>0){
+						unit.load_marine(lid);
+					}
+				}
+			}
+		}	
+	}
+
+	static pdf_support_outcome = function(enemy_force, enemy_type){
+
+	}
 }
 
 

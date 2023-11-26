@@ -304,6 +304,59 @@ global.trait_list = {
 		ballistic_skill:[2,2,"max"],
 		intelligence:[2,1],
 		piety:[2,1],
+	},
+	"guardian":{
+		display_name:"Guardian",
+		weapon_skill:[2,2,"max"],
+		ballistic_skill:[2,2,"max"],
+		charisma:2,
+		flavour_text:"{0} Has a natural sense of protection and will guard those under his protection unto death",
+		effect:"Is a better guardian or body guard",
+	},
+	"cunning":{
+		display_name:"Cunning",
+		weapon_skill:[1,1,"max"],
+		ballistic_skill:[2,2,"max"],
+		dexterity:[2,2,"max"],
+		charisma:2,
+		wisdom:1,
+		flavour_text:"{0} is possessed of a fine cunning",
+	},
+	"strong":{
+		display_name:"Strong",
+		strength:[6,2,"max"],
+		flavour_text:"{0} Is very strong",
+	},	
+	"slow":{
+		display_name:"slow",
+		dexterity:[-3,3,"min"],
+		flavour_text:"{0} is many things but fast ain't one of em",
+	},			
+	"deathworld":{
+		display_name:"Deathworld Born",
+		strength:[2,2,"max"],
+		constitution:[2,2,"max"],
+		dexterity:[2,2,"max"],
+		weapon_skill:[2,2,"max"],
+		ballistic_skill:[2,-2,"min"],
+		wisdom:[2,2,"max"],
+		flavour_text:"{0} started life on a deathworld while this has greatly improved their strength and survival their abilities and skills in technology and other useful 41st millenium skills is reduced",
+		intelligence:-3,
+		technology:[-3,2,"min"],
+		piety:[3,1],
+	},
+	"technophobe":{
+		display_name:"Technophobe",
+		technology:[-7,2,"min"],
+		flavour_text:"{0} Has a deep mistrust and loathing of technology",
+	},
+	"fast_learner":{
+		display_name:"Quick Learner",
+		wisdom:[2,2,"max"],
+		intelligence:[2,2,"max"],
+		technology:[2,2,"max"],
+		flavour_text:"{0} is a fast learner picking up new skills with ease",
+		effect:"learns new skills more easily",
 	}
 }
 global.base_stats = { //tempory stats subject to change by anyone that wishes to try their luck
@@ -520,6 +573,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	religion_sub_cult = "none";
 	base_group = "none";
 	role_history = [];
+	home_world="";
 	company = comp;			//marine company
 	marine_number = mar;			//marine number in company
 	squad = "none";
@@ -753,15 +807,21 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				["recluse", [99,98]],
 				["perfectionist", [99,98]],
 				["observant", [99,98]],
+				["cunning", [99,98]],
+				["guardian", [99,98]],
+				["observant", [99,98]],
+				["technophobe", [99,98],{"progenitor":[6,[1000,999]]}],
 				["jaded", [99,98]],
+				["strong", [99,98]],
+				["fast_learner", [149,148]],
 				["feet_floor", [199,198]],
 				["paragon", [999,998]],
 				["warp_touched",[299,298]],
 				["shitty_luck",[99,98],{"disadvantage":["Shitty Luck",[3,2]]}],
 				["lucky",[99,98]],
-				["slow_and_purposeful",[99,98],{"advantage":["Slow and Purposeful",[3,2]]}],
-				["melee_enthusiast",[99,98],{"advantage":["Melee Enthusiasts",[3,2]]}],
-				["lightning_warriors",[99,98],{"advantage":["Lightning Warriors",[3,2]]}],
+				["slow_and_purposeful",[99,98],{"advantage":["Slow and Purposeful",[3,1]]}],
+				["melee_enthusiast",[99,98],{"advantage":["Melee Enthusiasts",[3,1]]}],
+				["lightning_warriors",[99,98],{"advantage":["Lightning Warriors",[3,1]]}],
 				["zealous_faith",[99,98],{"chapter_name":["Black Templars",[3,2]]}],
 				["flesh_is_weak",[1000,999],{"chapter_name":["Iron Hands",[10,9],"required"],"progenitor":[6,[10,9],"required"]}],
 				["tinkerer",[199,198],{"chapter_name":["Iron Hands",[49,47]]}],
@@ -1018,6 +1078,16 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			return melee_att;
 		};
 
+		static assignment = function(){
+			var job = "none"
+			if (squad != "none"){
+				if (obj_ini.squads[squad].assignment != "none"){
+					job = obj_ini.squads[squad].assignment.type;
+				}
+			}
+			return job;
+		}
+
 		static remove_from_squad = function(){
 			if (squad != "none"){
 				if (squad < array_length(obj_ini.squads)){
@@ -1077,6 +1147,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					 obj_ini.wid[company][marine_number] = 0; //mark marine as no longer on planet
 					 obj_ini.lid[company][marine_number] = ship; //id of ship marine is now loaded on
 					 obj_ini.ship_carrying[ship] += size; //update ship capacity
+					 with (obj_star){
+					 		if (name==system){
+					 			if (p_player[current_location[1]]>0) then p_player[current_location[1]]--;
+					 			break;
+					 		}
+					 }
 				 }
 			 } else if (current_location[0] == location_types.ship){ //with this addition marines can now be moved between ships freely as long as they are in the same system
 				 var off_loading_ship = current_location[1];
@@ -1087,6 +1163,22 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				 }
 			 }
 		};
+	static unload = function(planet_number, system){
+		var current_location = marine_location();
+		if (current_location[0]==location_types.ship){
+			if (!array_contains(["Warp", "Terra", "Mechanicus Vessel"],obj_ini.ship_location[current_location[1]]) && obj_ini.ship_location[current_location[1]]==system.name){
+				obj_ini.loc[company][marine_number]=obj_ini.ship_location[current_location[1]];
+				obj_ini.wid[company][marine_number]=planet_number;
+				obj_ini.lid[company][marine_number]=0;
+				get_unit_size();
+				system.p_player[planet_number]++;
+				obj_ini.ship_carrying[current_location[1]] -= size;
+			}
+		}
+	}
+	static set_planet = function(planet_number){
+		obj_ini.wid[company][marine_number]=planet_number;
+	}
 	static spawn_exp =function(){
 		var spawn_ex = 0;
 		if (obj_ini.company_spawn_buffs[company] != 0){
