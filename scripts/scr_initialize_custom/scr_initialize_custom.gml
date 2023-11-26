@@ -1362,6 +1362,9 @@ function scr_initialize_custom() {
 		case "Raven Guard":
 		wep1[0,1]="Lightning Claw&DUB|";mobi[0,1]="Jump Pack&SIL|";
 		chapter_master.add_trait("lightning_warriors");
+		chapter_master.add_trait("still_standing");
+		chapter_master.add_trait("seasoned");
+		break;
 		default:
 			chapter_master.add_trait("old_guard");
 
