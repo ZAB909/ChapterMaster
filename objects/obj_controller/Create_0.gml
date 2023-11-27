@@ -1295,24 +1295,18 @@ plan=floor(random(5))+19;
 plan=30*1.5;
 plan=70;
 if (is_test_map=true) then plan=20;
-for(var i=0; i<120; i++){
-    go=0;
-    if (instance_number(obj_star)<plan){
-        if (go==0){
-            xx=floor(random(room_width-128))+64;
-            yy=floor(random(room_height-256))+128;
-            
-			//this can cause a rare to occur crash where instance_nearest returns noone (-4) which has no properties
-            me=instance_nearest(xx,yy,obj_star);
-			with(me) {
-				if (point_distance(x,y,xx,yy)>=100) then go=1;
-			}
-        }
-        if (go==1){
-            instance_create(xx,yy,obj_star);
-        }
-    }
+
+
+mask_index = spr_star
+while(instance_number(obj_star)<plan) {
+    xx = irandom(room_width-400)
+    yy = irandom(room_height-400)
+	
+	if !place_meeting(xx, yy, obj_star) {
+		instance_create(xx,yy,obj_star);
+	}
 }
+mask_index = -1;
 
 fleet_type="";
 if (obj_ini.fleet_type==1) then fleet_type="Fleet";

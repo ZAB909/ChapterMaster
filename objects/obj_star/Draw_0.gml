@@ -95,10 +95,8 @@ var h = y1 + view_get_hport(view_current)
 draw_set_alpha(1);
 
 if rectangle_in_rectangle(ui_node.gui_x, ui_node.gui_y, ui_node.gui_x + ui_node.width , ui_node.gui_y + ui_node.height, x1, y1, w, h) > 0 {
-	show_debug_message($"activate {name}")
 	ui_node.activate();
 } else {
-	show_debug_message($"deactivate {name}")
 	ui_node.deactivate();
 }
 
