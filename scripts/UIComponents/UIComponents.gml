@@ -101,7 +101,7 @@ function UIEventComponent(owner, name) : UIComponent(owner, name) constructor {
 	}
 	
 	static is_event = function() {
-		return !is_canceled && __ev_funcs[ev_type](ev_code)
+		return !is_canceled && owner.is_active && __ev_funcs[ev_type](ev_code)
 	}
 	
 	static cleanup = function() {
@@ -257,7 +257,7 @@ function UIMouseButtonEventComponent(owner, name = "") : UIEventComponent(owner,
 	}
 
 	static is_event = function() {
-		return !is_canceled && __ev_funcs[ev_type % MOUSE_BT_EV_TYPE.GLOBAL_DIRECT](ev_code) && (ev_type >= MOUSE_BT_EV_TYPE.GLOBAL_DIRECT || is_mouse_in_rect())
+		return !is_canceled && owner.is_active && __ev_funcs[ev_type % MOUSE_BT_EV_TYPE.GLOBAL_DIRECT](ev_code) && (ev_type >= MOUSE_BT_EV_TYPE.GLOBAL_DIRECT || is_mouse_in_rect())
 	}
 
 

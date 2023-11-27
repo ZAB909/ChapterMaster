@@ -371,7 +371,7 @@ if (p_type[3]!="Dead") then p_heresy[3]=floor(random(10))+1;
 if (p_type[4]!="Dead") then p_heresy[4]=floor(random(10))+1;
 
 
-ui_node.add_child(-sprite_width/2, sprite_height, 2*sprite_width, 20)
+ui_node.add_child(-sprite_width/2, sprite_height - string_height(name), 2*sprite_width, 20)
 	.add_component(UISpriteRendererComponent)
 		.set_sprite(spr_rectangle)
 		.set_callback(function(context) {

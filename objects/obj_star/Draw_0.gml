@@ -84,6 +84,23 @@ if (owner==1){
     draw_text_transformed(x,y+16,string_hash_to_newline(show),siz,siz,0);
 }
 */
+
+//ad hoc way of determining whether stuff is in view or not...needs work
+var cam = view_get_camera(view_current)
+var x1 = camera_get_view_x(cam)
+var y1 = camera_get_view_y(cam)
+var w = x1 + view_get_wport(view_current)
+var h = y1 + view_get_hport(view_current)
+
 draw_set_alpha(1);
+
+if rectangle_in_rectangle(ui_node.gui_x, ui_node.gui_y, ui_node.gui_x + ui_node.width , ui_node.gui_y + ui_node.height, x1, y1, w, h) > 0 {
+	show_debug_message($"activate {name}")
+	ui_node.activate();
+} else {
+	show_debug_message($"deactivate {name}")
+	ui_node.deactivate();
+}
+
 ui_node.render(x,y)
-draw_set_halign(fa_center);
+draw_set_valign(fa_top)

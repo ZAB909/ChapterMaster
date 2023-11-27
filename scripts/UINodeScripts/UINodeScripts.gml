@@ -23,6 +23,8 @@ function UINode(gui_x, gui_y, width, height, padding = 0, margin = 0) constructo
 	self.padding = padding; //currently unused
 	self.margin = margin //currently unused
 	components = []
+	ev_components = []
+	render_components = []
 	children = [];
 	creator = other;
 	is_active = true;
@@ -63,8 +65,15 @@ function UINode(gui_x, gui_y, width, height, padding = 0, margin = 0) constructo
 	 * @param {function.UIComponent} component Description
 	 */
 	static add_component = function(component, name = undefined) {
-		if is_callable(component)
-			array_push(components, new component(self, name))
+		if is_callable(component) {
+			var comp = new component(self, name)
+			array_push(components, comp)
+			if is_instanceof(comp, UIEventComponent)
+				array_push(ev_components, comp)
+			else if is_instanceof(comp, UIRenderComponent) {
+				array_push(render_components, comp)
+			}
+		}
 		return array_last(components)
 	}
 
@@ -72,6 +81,7 @@ function UINode(gui_x, gui_y, width, height, padding = 0, margin = 0) constructo
 		static filter = function(elem) {
 			return elem != component
 		}
+		//need to add stuff to remove it from the specific component stores
 		components = array_filter(components, method({component}, filter))
 	}
 	
@@ -105,9 +115,8 @@ function UINode(gui_x, gui_y, width, height, padding = 0, margin = 0) constructo
 	}
 
 	static render = function(_x = 0, _y = 0) {
-		var render_components = array_filter(components, function(elem) {
-			return is_instanceof(elem, UIRenderComponent)
-		})
+		if !is_active
+			return;
 		array_foreach(render_components, function(elem) {
 			elem.render(gui_x, gui_y)
 		})
@@ -137,7 +146,26 @@ function UINode(gui_x, gui_y, width, height, padding = 0, margin = 0) constructo
 		})
 		array_resize(components, 0)
 	}
-
+	
+	static activate = function() {
+		if is_active {
+			return;
+		}
+		is_active = true;
+		array_foreach(children, function(child) {
+			child.activate();	
+		})
+	}
+	
+	static deactivate = function() {
+		if !is_active {
+			return;
+		}
+		is_active = false;
+		array_foreach(children, function(child) {
+			child.deactivate();
+		})
+	}
 	static clear = function() {
 		destroy_components()
 		array_resize(children, 0)
