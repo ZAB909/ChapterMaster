@@ -1,7 +1,7 @@
 
 
-if ((instance_exists(obj_turn_end)) or (instance_exists(obj_fleet)) or (instance_exists(obj_star_select))) and (force_good=false) then scr_image("force",-50,0,0,0,0);
-if (!instance_exists(obj_turn_end)) and (!instance_exists(obj_fleet) and (!instance_exists(obj_star_select))) and (force_good=true) then scr_image("force",-666,0,0,0,0);
+//if ((instance_exists(obj_turn_end)) or (instance_exists(obj_fleet)) or (instance_exists(obj_star_select))) and (force_good=false) then scr_image("force",-50,0,0,0,0);
+//if (!instance_exists(obj_turn_end)) and (!instance_exists(obj_fleet) and (!instance_exists(obj_star_select))) and (force_good=true) then scr_image("force",-666,0,0,0,0);
 
 
 if (!instance_exists(obj_fleet)) and (!instance_exists(obj_ncombat)){
@@ -20,8 +20,8 @@ if (!instance_exists(obj_fleet)) and (!instance_exists(obj_ncombat)){
         if (adv_goo>0) and (advisor_good=false) then scr_image("advisor",-50,0,0,0,0);
         if (adv_goo=0) and (advisor_good=true) then scr_image("advisor",-666,0,0,0,0);
         
-        if (obj_controller.diplomacy>10) and (obj_controller.diplomacy<11) and (diplomacy_daemon_good=false) then scr_image("diplomacy_daemon",-50,0,0,0,0);
-        if (obj_controller.diplomacy<=10) or (obj_controller.diplomacy>=11) and (diplomacy_daemon_good=true) then scr_image("diplomacy_daemon",-666,0,0,0,0);
+        //if (obj_controller.diplomacy>10) and (obj_controller.diplomacy<11) and (diplomacy_daemon_good=false) then scr_image("diplomacy_daemon",-50,0,0,0,0);
+		//if (obj_controller.diplomacy<=10) or (obj_controller.diplomacy>=11) and (diplomacy_daemon_good=true) then scr_image("diplomacy_daemon",-666,0,0,0,0);
     
         if (obj_controller.menu=24) and (obj_controller.formating>0) and (formation_good=false) then scr_image("formation",-50,0,0,0,0);
         if (obj_controller.menu!=24) or (obj_controller.formating<=0) and (formation_good=true) then scr_image("formation",-666,0,0,0,0);

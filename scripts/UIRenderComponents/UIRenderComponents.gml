@@ -162,7 +162,7 @@ function UISpriteRendererComponent(owner, name) : UIRenderComponent(owner, name)
 			return;
 		callback(self);
 		//test if callback canceled this
-		if is_canceled
+		if is_canceled || sprite == -1
 			return;
 		draw_sprite_general(
 			sprite,

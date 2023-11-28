@@ -6,10 +6,7 @@ if (p_type[1]="Craftworld") and (obj_controller.known[6]=0){
     draw_set_alpha(1);
     exit;
 }
-//big ol temporary way
-system_player_ground_forces = array_reduce(p_player, function(prev, curr) {
-	return prev + curr	
-})
+
 var show=name;
 
 if (global.cheat_debug=true) then show=string(name)+"#"+string(p_problem[1,1])+":"+string(p_timer[1,1])+"#"+string(p_problem[1,2])+":"+string(p_timer[1,2])+"#"+string(p_problem[1,3])+":"+string(p_timer[1,3]);

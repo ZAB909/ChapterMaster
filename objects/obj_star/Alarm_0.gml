@@ -375,7 +375,13 @@ ui_node.add_child(-sprite_width/2, sprite_height - string_height(name), 2*sprite
 	.add_component(UISpriteRendererComponent)
 		.set_sprite(spr_rectangle)
 		.set_callback(function(context) {
-			context.set_color_solid(global.star_name_colors[owner])
+			if owner != 1 {
+				context.set_color_solid(global.star_name_colors[owner])
+			} else {
+				var main_color = make_color_rgb(obj_controller.targetR1 *255, obj_controller.targetG1 * 255, obj_controller.targetB1 * 255)
+				var pauldron_color = make_color_rgb(obj_controller.targetR3 *255, obj_controller.targetG3 *255, obj_controller.targetB3 *255)
+				context.set_vertical_gradient(main_color, pauldron_color)
+			}
 		})
 		.set_alpha(0.5)
 	.finalize()
@@ -385,9 +391,14 @@ ui_node.add_child(-sprite_width/2, sprite_height - string_height(name), 2*sprite
 		.set_color_solid(c_black)
 		.set_callback(function(context) {
 			context.text = name
+			
+			if owner == 1 {
+				var trim_color = make_color_rgb(obj_controller.targetR5 *255, obj_controller.targetG5 *255, obj_controller.targetB5 *255)
+				context.set_color_solid(trim_color)
+			}
 		})
 	.finalize()
-	.add_child(1,1, 18, 18)
+	.add_child(-19,1, 18, 18)
 		.add_component(UISpriteRendererComponent)
 			.set_sprite(spr_planets)
 			.set_image_index(9)
@@ -396,6 +407,20 @@ ui_node.add_child(-sprite_width/2, sprite_height - string_height(name), 2*sprite
 				context.is_canceled = !system_player_ground_forces	
 			})
 		.finalize()
+	.finalize()
+	.add_child(2*sprite_width + 1, 1, 18, 18)
+		.add_component(UISpriteRendererComponent)
+			.set_callback(function(context) {
+				if owner == 1 {
+					context.set_sprite(obj_img.creation[1])
+					context.set_image_index(obj_ini.icon)
+				} else {
+					context.set_sprite(obj_img.force[owner])
+				}
+			})
+			.set_image_speed(0)
+		.finalize()
+	.finalize()
 
 
 

@@ -55,7 +55,7 @@ slate_good=false;
 
 // End Image Replacer
 // Start Text Replacer
-
+scr_image("force",-50,0,0,0,0)
 
 
 

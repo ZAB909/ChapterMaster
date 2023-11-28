@@ -1290,7 +1290,7 @@ if (instance_exists(obj_ini)){
 // 0: none      1: management
 // 11: apothecary       12: chaplain        13: librarium       14: armamentarium
 // ** Sets the star for the chapter ? **
-instance_create(floor(random(room_width-128))+64,floor(random(room_height-256))+128,obj_star);
+instance_create(irandom(room_width-400),irandom(room_height-400),obj_star);
 plan=floor(random(5))+19;
 plan=30*1.5;
 plan=70;
