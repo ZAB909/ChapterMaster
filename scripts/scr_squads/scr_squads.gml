@@ -446,7 +446,6 @@ function unit_squad(squad_type, company) constructor{
 	}
 	static determine_leader = function(){
 		var member_length = array_length(members);
-		var leader_chosen = false;
 		var hierarchy = role_hierarchy();
 		var leader_hier_pos=array_length(hierarchy);
 		var leader="none", unit;
@@ -464,6 +463,7 @@ function unit_squad(squad_type, company) constructor{
 					for (var r=0;r<array_length(hierarchy);r++){
 						if (hierarchy[r]==unit.role()){
 							leader_hier_pos=r;
+							break;
 						}
 					}
 				}else if (hierarchy[leader_hier_pos]==unit.role()){
@@ -475,11 +475,13 @@ function unit_squad(squad_type, company) constructor{
 						if (hierarchy[r]==unit.role()){
 							leader_hier_pos=r;
 							leader=[unit.company, unit.marine_number];
+							break;
 						}
 					}
 				}
 			}			
 		}
+		squad_leader=leader;
 		return leader;
 	}
 
@@ -507,8 +509,9 @@ function unit_squad(squad_type, company) constructor{
 					if (member_location[0]==location_types.ship){
 						unit.unload(wid, system)
 					} else if(member_location[0]==location_types.planet && member_location[1] != wid && member_location[2]==loc){
-						system.p_player[member_location[1]]--;
-						system.p_player[wid]++;
+						unit.get_unit_size();
+						system.p_player[member_location[1]]-=unit.size;
+						system.p_player[wid]+=unit.size;
 						unit.set_planet(wid);
 					}
 				} else {

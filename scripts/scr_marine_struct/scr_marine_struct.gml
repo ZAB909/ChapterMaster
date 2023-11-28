@@ -1147,9 +1147,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					 obj_ini.wid[company][marine_number] = 0; //mark marine as no longer on planet
 					 obj_ini.lid[company][marine_number] = ship; //id of ship marine is now loaded on
 					 obj_ini.ship_carrying[ship] += size; //update ship capacity
+					 var temp_self =self;
 					 with (obj_star){
 					 		if (name==system){
-					 			if (p_player[current_location[1]]>0) then p_player[current_location[1]]--;
+					 			if (p_player[current_location[1]]>0) then p_player[current_location[1]]-=temp_self.size;
 					 			break;
 					 		}
 					 }
@@ -1171,7 +1172,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				obj_ini.wid[company][marine_number]=planet_number;
 				obj_ini.lid[company][marine_number]=0;
 				get_unit_size();
-				system.p_player[planet_number]++;
+				system.p_player[planet_number]+= size;
 				obj_ini.ship_carrying[current_location[1]] -= size;
 			}
 		}

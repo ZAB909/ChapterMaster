@@ -48,8 +48,8 @@ if (menu==12) and (cooldown<=0) and (penitorium>0){
                 cooldown=20;
                 var c=penit_co[qp],e=penit_id[qp];
                 if (obj_ini.race[c,e]=1){
-                    if (obj_ini.age[c,e]<=((obj_controller.millenium*1000)+obj_controller.year)-10) and (obj_ini.zygote==0) and (string_count("Doom",obj_ini.strin2)==0) then obj_controller.gene_seed+=1;
-                    if (obj_ini.age[c,e]<=((obj_controller.millenium*1000)+obj_controller.year)-5) and (string_count("Doom",obj_ini.strin2)==0) then obj_controller.gene_seed+=1;
+                    if (obj_ini.age[c,e]<=((millenium*1000)+year)-10) and (obj_ini.zygote==0) and (string_count("Doom",obj_ini.strin2)==0) then gene_seed+=1;
+                    if (obj_ini.age[c,e]<=((millenium*1000)+year)-5) and (string_count("Doom",obj_ini.strin2)==0) then gene_seed+=1;
                 }
 
                 var tek="";
@@ -69,14 +69,14 @@ if (menu==12) and (cooldown<=0) and (penitorium>0){
                 tek="";
                 if (obj_ini.race[c,e]=1){
                     if(is_specialist(obj_ini.role[c,e])){
-                        obj_controller.command-=1;
+                        command-=1;
                     } else{
-                        obj_controller.marines-=1;
+                        marines-=1;
                     }
                 }
                 if (obj_ini.role[c,e]="Chapter Master"){
                     tek="c";
-                    obj_controller.alarm[7]=5;
+                    alarm[7]=5;
                     global.defeat=3;
                 }
                 // TODO Needs to be based on role
@@ -298,10 +298,10 @@ if (menu==14) and (cooldown<=0){
 // ** Recruitement **
 if (menu==15) and (cooldown<=0){
     if (mouse_x>=xx+748) and (mouse_x<xx+772){
-        if (mouse_y>=yy+355) and (mouse_y<yy+373) and (recruiting<5) and (obj_controller.gene_seed>0) and (obj_ini.doomed==0) and (string_count("|",obj_controller.recruiting_worlds)>0) and (obj_controller.penitent==0){
+        if (mouse_y>=yy+355) and (mouse_y<yy+373) and (recruiting<5) and (gene_seed>0) and (obj_ini.doomed==0) and (string_count("|",recruiting_worlds)>0) and (penitent==0){
             cooldown=8000;
             recruiting+=1;
-            income_recruiting-=2*(string_count("|",obj_controller.recruiting_worlds));
+            income_recruiting-=2*(string_count("|",recruiting_worlds));
             scr_income();
         }
         if (mouse_y>=yy+395) and (mouse_y<yy+413) and (training_apothecary<6){
@@ -689,8 +689,8 @@ if (menu==20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (cool
             }
             if (trading_artifact!=0){
                 for(var h=1; h<=4; h++){
-                    obj_controller.diplo_option[h]="";
-                    obj_controller.diplo_goto[h]="";
+                    diplo_option[h]="";
+                    diplo_goto[h]="";
                 }
                 diplomacy=0;
                 menu=0;
@@ -706,8 +706,8 @@ if (menu==20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (cool
             }
             if (force_goodbye==5){
                 for(var h=1; h<=4; h++){
-                    obj_controller.diplo_option[h]="";
-                    obj_controller.diplo_goto[h]="";
+                    diplo_option[h]="";
+                    diplo_goto[h]="";
                 }
                 diplomacy=0;
                 menu=0;
@@ -758,7 +758,7 @@ if (menu==20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (cool
                 exit;
             }
             if (audience>0) and (instance_exists(obj_turn_end)){
-                if (obj_controller.complex_event==false){
+                if (complex_event==false){
                     cooldown=8;
                     diplomacy=0;
                     menu=0;
@@ -767,26 +767,17 @@ if (menu==20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (cool
                     force_goodbye=0;
                     exit;
                 }
-                if (obj_controller.complex_event=true){
+                if (complex_event=true){
                     // TODO
                 }
             }// Have this check for the next audience, if any
         }
         // Trade goods go here
         if (trading==1) or (trading==2){
-            trade_theirs[1]="";
-            trade_theirs[2]="";
-            trade_theirs[3]="";
-            trade_theirs[4]="";
-            trade_theirs[5]="";
-            trade_theirs[6]="";
-            trade_disp[0]=-100;
-            trade_disp[1]=-100;
-            trade_disp[2]=-100;
-            trade_disp[3]=-100;
-            trade_disp[4]=-100;
-            trade_disp[5]=-100;
-            trade_disp[6]=-100;
+            for(var i=0;i<7;i++){
+                trade_theirs[i]="";
+                trade_disp[i]=-100;
+            }
 
             trade_req=requisition;
             trade_gene=gene_seed;
@@ -1043,7 +1034,7 @@ if (menu==20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (cool
                 click2=1;
                 obj_controller.diplo_option[1]="";
                 obj_controller.diplo_option[2]="";
-                obj_controller.diplo_option[3]="";
+                diplo_option[3]="";
                 diplomacy=0;
                 menu=0;
                 force_goodbye=0;
@@ -1062,30 +1053,13 @@ if (menu==20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (cool
             trading=0;
             scr_dialogue("trade_close");
             click2=1;
-            trade_take[0]="";
-            trade_take[1]="";
-            trade_take[2]="";
-            trade_take[3]="";
-            trade_take[4]="";
-            trade_take[5]="";
-            trade_tnum[0]=0;
-            trade_tnum[1]=0;
-            trade_tnum[2]=0;
-            trade_tnum[3]=0;
-            trade_tnum[4]=0;
-            trade_tnum[5]=0;
-            trade_give[0]="";
-            trade_give[1]="";
-            trade_give[2]="";
-            trade_give[3]="";
-            trade_give[4]="";
-            trade_give[5]="";
-            trade_mnum[0]=0;
-            trade_mnum[1]=0;
-            trade_mnum[2]=0;
-            trade_mnum[3]=0;
-            trade_mnum[4]=0;
-            trade_mnum[5]=0;
+            
+            for(var i=0;i<6;i++){
+                trade_take[i]="";
+                trade_tnum[i]=0;
+                trade_give[i]="";
+                trade_mnum[i]=0;
+            }
             if (trading_artifact!=0){
                 diplomacy=0;
                 menu=0;
@@ -1106,32 +1080,14 @@ if (menu==20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (cool
             trade_chip=stc_wargear_un+stc_vehicles_un+stc_ships_un;
             trade_info=info_chips;
 
-            if (trading_artifact==0){
-                trade_take[0]="";
-                trade_take[1]="";
-                trade_take[2]="";
-                trade_take[3]="";
-                trade_take[4]="";
-                trade_take[5]="";
-                trade_tnum[0]=0;
-                trade_tnum[1]=0;
-                trade_tnum[2]=0;
-                trade_tnum[3]=0;
-                trade_tnum[4]=0;
-                trade_tnum[5]=0;
+            for(var i=0;i<6;i++){
+                if (trading_artifact==0){
+                    trade_take[i]="";
+                    trade_tnum[i]=0;
+                }
+                trade_give[i]="";
+                trade_mnum[i]=0;
             }
-            trade_give[0]="";
-            trade_give[1]="";
-            trade_give[2]="";
-            trade_give[3]="";
-            trade_give[4]="";
-            trade_give[5]="";
-            trade_mnum[0]=0;
-            trade_mnum[1]=0;
-            trade_mnum[2]=0;
-            trade_mnum[3]=0;
-            trade_mnum[4]=0;
-            trade_mnum[5]=0;
         }
         // Trade Here?
         if (scr_hit(xx+630,yy+649,xx+735,yy+668)==true){
@@ -1295,180 +1251,63 @@ if (zoomed==0) and (cooldown<=0) and (menu==20) and (diplomacy==0){
             onceh=1;
             cooldown = 1;
 		}
-    // Imperium
-    if (mouse_y>=yy+355) and (mouse_y<yy+369){
-        if (mouse_x>=xx+194) and (mouse_x<xx+288) and (cooldown<=0) and (faction_defeated[2]==0){
-            if (known[2]!=0) and (turns_ignored[2]==0){
-                diplomacy=2;
+    var faction_interact_coords=[
+        [
+            [xx+194,yy+355,xx+288,yy+369],//imperium
+            [xx+292,yy+355,xx+350,yy+369],
+            2
+        ],
+        [
+            [xx+194,yy+491,xx+288,yy+503],//mechanicus
+            [xx+292,yy+491,xx+350,yy+503],
+            3
+        ],
+        [
+            [xx+194,yy+630,xx+288,yy+644],//Inquisition
+            [xx+292,yy+630,xx+350,yy+644],
+            4
+        ],
+        [
+            [xx+194,yy+760,xx+288,yy+774],//sisters
+            [xx+292,yy+760,xx+350,yy+774],
+            5
+        ], 
+        [
+            [xx+1203,yy+355,xx+1300,yy+369],//eldar
+            [xx+1303,yy+355,xx+1350,yy+369],
+            6
+        ],
+        [
+            [xx+1203,yy+491,xx+1300,yy+503],//orks
+            [xx+1303,yy+491,xx+1350,yy+503],
+            7
+        ],
+        [
+            [xx+1203,yy+630,xx+1300,yy+644],//Tau
+            [xx+1303,yy+630,xx+1350,yy+644],
+            8
+        ],
+        [
+            [xx+1203,yy+760,xx+1300,yy+774],//heretic
+            [xx+1303,yy+760,xx+1350,yy+774],
+            10
+        ],                                           
+    ]
+    for (var i=0;i<array_length(faction_interact_coords);i++){
+        var fac_data = faction_interact_coords[i];
+        if (point_in_rectangle(mouse_x, mouse_y, fac_data[0][0], fac_data[0][1], fac_data[0][2], fac_data[0][3])){
+            if (known[fac_data[2]]!=0) and (turns_ignored[fac_data[2]]==0){
+                diplomacy=fac_data[2];
                 cooldown=8000;
             }
-        }
-        if (mouse_x>=xx+292) and (mouse_x<xx+350) and (cooldown<=0) and (faction_defeated[2]==0){
-            onceh=0;
+        } else if (point_in_rectangle(mouse_x, mouse_y, fac_data[1][0], fac_data[1][1], fac_data[1][2], fac_data[1][3])){
             cooldown=8000;
             click2=1;
-            if (ignore[2]==0){
-                onceh=1;
-                ignore[2]=1;
-            }
-            if (ignore[2]==1) and (onceh==0){
-                onceh=1;
-                ignore[2]=0;
-            }
-        }
-    }
-    // Mechanicus
-    if (mouse_y>=yy+491) and (mouse_y<yy+503){
-        if (mouse_x>=xx+194) and (mouse_x<xx+288) and (cooldown<=0) and (faction_defeated[3]==0){
-            if (known[3]!=0) and (turns_ignored[3]==0){
-                diplomacy=3;
-                cooldown=8000
-            }
-        }
-        if (mouse_x>=xx+292) and (mouse_x<xx+350) and (cooldown<=0) and (faction_defeated[3]==0){
-            onceh=0;
-            cooldown=8000;
-            click2=1;
-            if (ignore[3]==0){
-                onceh=1;
-                ignore[3]=1;
-            }
-            if (ignore[3]==1) and (onceh==0){
-                onceh=1;
-                ignore[3]=0;
-            }
-        }
-    }
-    // Inquisition
-    if (mouse_y>=yy+630) and (mouse_y<yy+644){
-        if (mouse_x>=xx+194) and (mouse_x<xx+288) and (cooldown<=0) and (faction_defeated[4]==0){
-            if (known[4]!=0) and (turns_ignored[4]==0){
-                diplomacy=4;
-                cooldown=8000;
-            }
-        }
-        if (mouse_x>=xx+292) and (mouse_x<xx+350) and (cooldown<=0) and (faction_defeated[4]==0){
-            onceh=0;
-            cooldown=9;
-            click2=1;
-            if (ignore[4]==0){
-                onceh=1;
-                ignore[4]=1;
-            }
-            if (ignore[4]==1) and (onceh==0){
-                onceh=1;
-                ignore[4]=0;
-            }
-        }
-    }
-    // Ecclesiarchy
-    if (mouse_y>=yy+760) and (mouse_y<yy+774){
-        if (mouse_x>=xx+194) and (mouse_x<xx+288) and (cooldown<=0) and (faction_defeated[3]==0){
-            if (known[5]!=0) and (turns_ignored[5]==0){
-                diplomacy=5;
-                cooldown=8000;
-            }
-        }
-        if (mouse_x>=xx+292) and (mouse_x<xx+350) and (cooldown<=0) and (faction_defeated[5]==0){
-            onceh=0;
-            cooldown=8000;
-            click2=1;
-            if (ignore[5]==0){
-                onceh=1;
-                ignore[5]=1;
-            }
-            if (ignore[5]==1) and (onceh==0){
-                onceh=1;
-                ignore[5]=0;
-            }
-        }
-    }
-    // Eldar
-    if (mouse_y>=yy+355) and (mouse_y<yy+369){
-        if (mouse_x>=xx+1203) and (mouse_x<xx+1300) and (cooldown<=0) and (faction_defeated[6]==0){
-            if (known[6]!=0) and (turns_ignored[6]==0){
-                diplomacy=6;
-                cooldown=8000;
-            }
-        }
-        if (mouse_x>=xx+1303) and (mouse_x<xx+1350) and (cooldown<=0) and (faction_defeated[6]==0){
-            onceh=0;
-            cooldown=8000;
-            click2=1;
-            if (ignore[6]==0){
-                onceh=1;
-                ignore[6]=1;
-            }
-            if (ignore[6]==1) and (onceh==0){
-                onceh=1;
-                ignore[6]=0;
-            }
-        }
-    }
-    // Orks
-    if (mouse_y>=yy+491) and (mouse_y<yy+503){
-        if (mouse_x>=xx+1203) and (mouse_x<xx+1300) and (cooldown<=0) and (faction_defeated[7]==0){
-            if (known[7]!=0) and (turns_ignored[7]==0){
-                diplomacy=7;
-                cooldown=8000;
-            }
-        }
-        if (mouse_x>=xx+1303) and (mouse_x<xx+1350) and (cooldown<=0) and (faction_defeated[7]==0){
-            onceh=0;
-            cooldown=8000;
-            click2=1;
-            if (ignore[7]==0){
-                onceh=1;
-                ignore[7]=1;
-            }
-            if (ignore[7]==1) and (onceh==0){
-                onceh=1;
-                ignore[7]=0;
-            }
-        }
-    }
-    // Tau
-    if (mouse_y>=yy+630) and (mouse_y<yy+644){
-        if (mouse_x>=xx+1203) and (mouse_x<xx+1300) and (cooldown<=0) and (faction_defeated[8]==0){
-            if (known[8]!=0) and (turns_ignored[8]==0){
-                diplomacy=8;
-                cooldown=8000;
-            }
-        }
-        if (mouse_x>=xx+1303) and (mouse_x<xx+1350) and (cooldown<=0) and (faction_defeated[8]==0){
-            onceh=0;
-            cooldown=8000;
-            click2=1;
-            if (ignore[8]==0){
-                onceh=1;
-                ignore[8]=1;
-            }
-            if (ignore[8]==1) and (onceh==0){
-                onceh=1;
-                ignore[8]=0;
-            }
-        }
-    }
-    // Heretics
-    if (mouse_y>=yy+760) and (mouse_y<yy+774){
-        if (mouse_x>=xx+1203) and (mouse_x<xx+1300) and (cooldown<=0) and (faction_defeated[10]==0){
-            if (known[10]!=0) and (turns_ignored[10]==0){
-                diplomacy=10;
-                cooldown=8000;
-            }
-        }
-        if (mouse_x>=xx+1303) and (mouse_x<xx+1350) and (cooldown<=0) and (faction_defeated[10]==0){
-            onceh=0;
-            cooldown=8000;
-            click2=1;
-            if (ignore[10]==0) and (onceh==0){
-                onceh=1;
-                ignore[10]=1;
-            }
-            if (ignore[10]==1) and (onceh==0){
-                onceh=1;
-                ignore[10]=0;
-            }
+            if (ignore[fac_data[2]]==0){
+                ignore[fac_data[2]]=1;
+            }else if (ignore[fac_data[2]]==1){
+                ignore[fac_data[2]]=0;
+            }            
         }
     }
     if (diplomacy>0) and (cooldown==8000){
@@ -1817,21 +1656,9 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 temp[39]="";
                 temp[40]="";
                 temp[41]="";
-                temp[101]="";
-                temp[102]="";
-                temp[103]="";
-                temp[104]="";
-                temp[105]="";
-                temp[106]="";
-                temp[107]="";
-                temp[108]="";
-                temp[109]="";
-                temp[110]="";
-                temp[112]="";
-                temp[114]="";
-                temp[116]="";
-                temp[118]="";
-                temp[119]="";
+                for(var i=101;i<120;i++){
+                     temp[i]="";
+                }
 
                 var g=0,u=0,m=0,d=0;
                 for(var i=1; i<=60; i++){
@@ -1936,18 +1763,9 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     turn+=1;
 
                     with(obj_star){
-                        present_fleet[1]=0;
-                        present_fleet[2]=0;
-                        present_fleet[3]=0;
-                        present_fleet[4]=0;
-                        present_fleet[5]=0;
-                        present_fleet[6]=0;
-                        present_fleet[7]=0;
-                        present_fleet[8]=0;
-                        present_fleet[9]=0;
-                        present_fleet[10]=0;
-                        present_fleet[13]=0;
-                        present_fleet[20]=0;
+                        for (var i=0;i<=21;i++){
+                            present_fleet[i]=0;
+                        }
                     }
                     with(obj_p_fleet){
                         if (action=="move") and (obj_controller.faction_status[2]=="War"){
@@ -1970,7 +1788,9 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     if (instance_exists(obj_en_fleet)){obj_en_fleet.alarm[1]=1;}
                     if (instance_exists(obj_crusade)){obj_crusade.alarm[0]=2;}
 
-                    requisition+=income;scr_income();gene_tithe-=1;
+                    requisition+=income;
+                    scr_income();
+                    gene_tithe-=1;
 
                     // Do that after the combats and all of that crap
                     with(obj_star){
@@ -2018,130 +1838,79 @@ if (action_if_number(obj_saveload, 0, 0) &&
 
         xx=xx+0;
         yy=yy+0;
-        // HQ
-        if (mouse_x>=xx+248) and (mouse_y>=yy+64) and (mouse_x<xx+392) and (mouse_y<yy+80+64){
-            managing=11;
-            cooldown=8000;
-        }
-        // Apoth
-        if (mouse_x>=xx+136) and (mouse_y>=yy+64) and (mouse_x<xx+248) and (mouse_y<yy+80+64){
-            managing=12;
-            cooldown=8000;
-        }
-        // Librar
-        if (mouse_x>=xx+392) and (mouse_y>=yy+64) and (mouse_x<xx+504) and (mouse_y<yy+80+144){
-            managing=13;
-            cooldown=8000;
-        }
-        // Reclus
-        if (mouse_x>=xx+136) and (mouse_y>=yy+144) and (mouse_x<xx+248) and (mouse_y<yy+160+64){
-            managing=14;
-            cooldown=8000;
-        }
-        // Armoury
-        if (mouse_x>=xx+248) and (mouse_y>=yy+144) and (mouse_x<xx+392) and (mouse_y<yy+160+64){
-            managing=15;
-            cooldown=8000;
-        }
+        var click_positions_company=[
+            [xx+40,yy+224,xx+152,yy+256+64],// 1st
+            [xx+152,yy+224,xx+264,yy+256+64],// 2nd
+            [xx+264,yy+224,xx+376,yy+256+64],// 3rd
+            [xx+376,yy+224,xx+488,yy+256+64],// 4th
+            [xx+488,yy+224,xx+600,yy+256+64],// 5th
+            [xx+40,yy+224,xx+152,yy+256+64],// 6th
+            [xx+152,yy+224,xx+264,yy+256+64],// 7th
+            [xx+264,yy+224,xx+376,yy+256+64],// 8th
+            [xx+376,yy+224,xx+488,yy+256+64],// 9th
+            [xx+488,yy+224,xx+600,yy+256+64],// 10th
+            [xx+248,yy+64,xx+392,yy+80+64],// HQ
+            [xx+136,yy+64,xx+248,yy+80+64], // Apoth
+            [xx+392,yy+64,xx+504,yy+80+144],// Librar
+            [xx+136,yy+144,xx+248,yy+160+64],// Reclus
+            [xx+248,yy+144,xx+392,yy+160+64],// Armoury
+        ]
         xx+=16;
-        // I Company
-        if (mouse_x>=xx+24) and (mouse_y>=yy+224) and (mouse_x<xx+136) and (mouse_y<yy+256+64){
-            managing=1;
-            cooldown=8000;
-        }
-        // II Company
-        if (mouse_x>=xx+136) and (mouse_y>=yy+224) and (mouse_x<xx+248) and (mouse_y<yy+256+64){
-            managing=2;
-            cooldown=8000;
-        }
-        // III Company
-        if (mouse_x>=xx+248) and (mouse_y>=yy+224) and (mouse_x<xx+360) and (mouse_y<yy+256+64){
-            managing=3;
-            cooldown=8000;
-        }
-        // IV Company
-        if (mouse_x>=xx+360) and (mouse_y>=yy+224) and (mouse_x<xx+472) and (mouse_y<yy+256+64){
-            managing=4;
-            cooldown=8000;
-        }
-        // V Company
-        if (mouse_x>=xx+472) and (mouse_y>=yy+224) and (mouse_x<xx+584) and (mouse_y<yy+256+64){
-            managing=5;
-            cooldown=8000;
-        }
-        // VI Company
-        if (mouse_x>=xx+24) and (mouse_y>=yy+320) and (mouse_x<xx+136) and (mouse_y<yy+352+64){
-            managing=6;
-            cooldown=8000;
-        }
-        // VII Company
-        if (mouse_x>=xx+136) and (mouse_y>=yy+320) and (mouse_x<xx+248) and (mouse_y<yy+352+64){
-            managing=7;
-            cooldown=8000;
-        }
-        // VIII Company
-        if (mouse_x>=xx+248) and (mouse_y>=yy+320) and (mouse_x<xx+360) and (mouse_y<yy+352+64){
-            managing=8;
-            cooldown=8000;
-        }
-        // IX Company
-        if (mouse_x>=xx+360) and (mouse_y>=yy+320) and (mouse_x<xx+472) and (mouse_y<yy+352+64){
-            managing=9;
-            cooldown=8000;
-        }
-        // X Company
-        if (mouse_x>=xx+472) and (mouse_y>=yy+320) and (mouse_x<xx+584) and (mouse_y<yy+352+64){
-            managing=10;
-            cooldown=8000;
-        }
-        if (mouse_x>=xx+426) and (mouse_y>=yy+421) and (mouse_x<xx+556) and (mouse_y<yy+443){
-            managing=0;
-            cooldown=8000;
-            menu=40;
-        }
-        // Resets selections for next turn
-        if (managing!=0) and (managing<=15){
-            man_size=0;
-            selecting_location="";
-            selecting_types="";
-            selecting_ship=0;
-            selecting_planet=0;
-            sel_uid=0;
-            for(var i=0; i<501; i++){
-                man[i]="";
-                ide[i]=0;
-                man_sel[i]=0;
-                ma_lid[i]=0;
-                ma_wid[i]=0;
-                ma_uid[i]=0;
-                ma_race[i]=0;
-                ma_loc[i]="";
-                ma_name[i]="";
-                ma_role[i]="";
-                ma_wep1[i]="";
-                ma_wep2[i]="";
-                ma_armour[i]="";
-                ma_health[i]=100;
-                ma_chaos[i]=0;
-                ma_exp[i]=0;
-                ma_promote[i]=0;
-                sh_ide[i]=0;
-                sh_uid[i]=0;
-                sh_name[i]="";
-                sh_class[i]="";
-                sh_loc[i]="";
-                sh_hp[i]="";
-                sh_cargo[i]=0;
-                sh_cargo_max[i]="";
-                squad[i]=0;
+        for (var i=0;i<array_length(click_positions_company);i++){
+            var pos = click_positions_company[i]
+            if (point_in_rectangle(mouse_x, mouse_y, pos[0], pos[1], pos[2], pos[3])){
+                managing = i+1;
+                cooldown=8000;
+            // Resets selections for next turn
+                man_size=0;
+                selecting_location="";
+                selecting_types="";
+                selecting_ship=0;
+                selecting_planet=0;
+                sel_uid=0;
+                for(var i=0; i<501; i++){
+                    man[i]="";
+                    ide[i]=0;
+                    man_sel[i]=0;
+                    ma_lid[i]=0;
+                    ma_wid[i]=0;
+                    ma_uid[i]=0;
+                    ma_race[i]=0;
+                    ma_loc[i]="";
+                    ma_name[i]="";
+                    ma_role[i]="";
+                    ma_wep1[i]="";
+                    ma_wep2[i]="";
+                    ma_armour[i]="";
+                    ma_health[i]=100;
+                    ma_chaos[i]=0;
+                    ma_exp[i]=0;
+                    ma_promote[i]=0;
+                    sh_ide[i]=0;
+                    sh_uid[i]=0;
+                    sh_name[i]="";
+                    sh_class[i]="";
+                    sh_loc[i]="";
+                    sh_hp[i]="";
+                    sh_cargo[i]=0;
+                    sh_cargo_max[i]="";
+                    squad[i]=0;
+                }
+                alll=0;              
+                cooldown=10;
+                sel_loading=0;
+                unload=0;
+                alarm[6]=7;
+                if (managing<=10){
+                    scr_company_view(managing);
+                    company_squads = find_company_squads(managing);
+                } else if (managing>10) then scr_special_view(managing){
+                    scr_special_view(managing);
+                    company_squads=[];
+                    cur_squad=0;
+                }
+                view_squad=false;               
             }
-            alll=0;
-            if (managing<=10) then scr_company_view(managing);
-            if (managing>10) then scr_special_view(managing);
-            cooldown=10;
-            sel_loading=0;
-            unload=0;
-            alarm[6]=7;
         }
     }
     if (zoomed==0) and (menu==1) and (managing>0) and (cooldown<=0){
@@ -2166,27 +1935,26 @@ if (action_if_number(obj_saveload, 0, 0) &&
             onceh=0;
             text_bar=0;
             if (onceh==0){
-                if (managing>1) and (managing<=10){
+                cooldown=8000;
+                onceh=1;
+                cur_squad=0;
+                if ((managing>1) and (managing<=11)){
                     scr_ui_refresh();
                     managing-=1;
-                    cooldown=8000;
-                    onceh=1;
                     scr_company_view(managing);
-                    obj_controller.company_squads = find_company_squads(managing);
+                    company_squads = find_company_squads(managing);
                 }else if (managing>11){
                     scr_ui_refresh();
                     managing-=1;
-                    cooldown=8000;
-                    onceh=1;
                     scr_special_view(managing);
-                    obj_controller.view_squad=false;
-                }else if (managing=1){
+                    company_squads =[];
+                    view_squad=false;
+                }else if (managing==1){
                     scr_ui_refresh();
                     managing=15;
-                    cooldown=8000;
-                    onceh=1;
                     scr_special_view(managing);
-                    obj_controller.view_squad=false;
+                    company_squads =[];
+                    view_squad=false;
                 }
             }
         }
@@ -2194,27 +1962,28 @@ if (action_if_number(obj_saveload, 0, 0) &&
         if (mouse_x>=xx+1105) and (mouse_y>=yy+80) and (mouse_x<xx+1178) and (mouse_y<yy+128) and (cooldown<=0){
             onceh=0;
             text_bar=0;
-            if (managing<10) and (onceh==0){
-                scr_ui_refresh();
-                managing+=1;
+            if (onceh==0){
                 cooldown=8000;
                 onceh=1;
-                scr_company_view(managing);
-                obj_controller.company_squads = find_company_squads(managing);
-            }
-            if (managing>10) and (managing<15) and (onceh==0){
                 scr_ui_refresh();
-                managing+=1;
-                cooldown=8000;
-                onceh=1;
-                scr_special_view(managing);
-            }
-            if (managing=15) and (onceh==0){
-                scr_ui_refresh();
-                managing=1;
-                cooldown=8000;
-                onceh=1;
-                scr_company_view(managing);
+                cur_squad=0;
+                if (managing<10){
+                    scr_ui_refresh();
+                    managing+=1;
+                    scr_company_view(managing);
+                    company_squads = find_company_squads(managing);
+                }else if (managing>=10) and (managing<15){
+                    scr_ui_refresh();
+                    managing+=1;
+                    scr_special_view(managing);
+                    company_squads =[];
+                    view_squad=false;
+                }else if (managing==15){
+                    scr_ui_refresh();
+                    managing=1;
+                    scr_company_view(managing);
+                    company_squads = find_company_squads(managing);
+                }
             }
         }
     }
@@ -2229,7 +1998,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
         }
     }
     // Selecting individual marines
-    if (menu=1) and (managing>0) and (!obj_controller.view_squad)and (!obj_controller.unit_profile){
+    if (menu=1) and (managing>0) and (!view_squad)and (!unit_profile){
         var company=managing;
         if (company>10){
             company=0;
@@ -2550,7 +2319,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
         xx=xx+0;
         yy=__view_get( e__VW.YView, 0 )+0;
 
-        if (!obj_controller.unit_profile){
+        if (!unit_profile){
             if (mouse_x>=xx+1018) and (mouse_y>yy+805) and (mouse_x<xx+1018+141) and (mouse_y<yy+831){
                 // Load to ship
                 if (man_size>0) and (sel_loading==0) and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel"){
@@ -2846,7 +2615,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     if (nuuum>0) and (nuuum2>0) then pip.unit_role="Units";
                     pip.units=nuuum+nuuum2;
                     if (nuuum>0) and (check_number>0){
-                        if (obj_controller.command_set[1]==0){
+                        if (command_set[1]==0){
                             cooldown=8000;
                             with(pip){instance_destroy();}
                         }

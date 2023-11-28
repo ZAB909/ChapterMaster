@@ -140,18 +140,25 @@ function scr_ui_manage() {
 			var y5=yy+142;
 			var x6=x5+string_width("Toggle Squad View")+4;
 			var y6=y5+string_height("Toggle Squad View")+2;
-			array_push(tooltip_drawing, ["click or press S to toggle, squad view", [x5,y5,x6,y6]]);
-			if ((point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left)) || keyboard_check_pressed(ord("S"))){
-				obj_controller.view_squad = !obj_controller.view_squad;
-				if (stat_tool_tip_text=="Toggle Squad View"){
-					obj_controller.company_squads = find_company_squads(selected_unit.company);
-					obj_controller.unit_profile = true;
-				} else {
-					obj_controller.unit_profile = false;
-				}
-			}		
-
-		    draw_unit_buttons([x5,y5, x6, y6], stat_tool_tip_text,[1,1],c_red);
+			draw_unit_buttons([x5,y5, x6, y6], stat_tool_tip_text,[1,1],c_red);
+			if (managing>0 && managing<11){
+				array_push(tooltip_drawing, ["click or press S to toggle, squad view", [x5,y5,x6,y6]]);
+				if ((point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left)) || keyboard_check_pressed(ord("S"))){
+					obj_controller.view_squad = !obj_controller.view_squad;
+					if (stat_tool_tip_text=="Toggle Squad View"){
+						company_squads = find_company_squads(managing);
+						cur_squad=0;
+						obj_controller.unit_profile = true;
+					} else {
+						obj_controller.unit_profile = false;
+					}
+				}	
+			} else{
+				draw_set_alpha(0.5);
+				draw_set_color(c_black);
+				draw_rectangle(x5,y5,x6,y6,0);
+				draw_set_alpha(1);
+			}
 
 		    stat_tool_tip_text="Unit Profile"
 		    x5=x6;
@@ -159,7 +166,7 @@ function scr_ui_manage() {
 			var y6=y5+string_height(stat_tool_tip_text)+2;	    
 		    draw_unit_buttons([x5,y5,x6,y6], stat_tool_tip_text,[1,1],c_red);
 		    array_push(tooltip_drawing, [ "click or press P to show unit data", [x5,y5,x6,y6]]);
-			if ((keyboard_check_pressed(ord("P"))|| (point_in_rectangle(mouse_x, mouse_y,x6,y6,x6,y6) && mouse_check_button_pressed(mb_left))) && !instance_exists(obj_temp3) && !instance_exists(obj_popup)){
+			if ((keyboard_check_pressed(ord("P"))|| (point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left))) && !instance_exists(obj_temp3) && !instance_exists(obj_popup)){
 				if (view_squad){
 					view_squad =false;
 				}else {
@@ -1104,9 +1111,9 @@ function scr_ui_manage() {
 		        if (obj_controller.view_squad && !instance_exists(obj_temp3) && !instance_exists(obj_popup)){
 		        	var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0
 		        	var member;
-		        	if (selected_unit.squad!="none"){
-		        		with (obj_controller){
-			        		if (array_length(company_squads) > 0){
+	        		with (obj_controller){
+		        		if (array_length(company_squads) > 0){
+		        			if (selected_unit.company == managing){
 			        			if (company_squads[cur_squad] != selected_unit.squad){
 			        				var squad_found =false
 			        				for (var i =0;i<array_length(company_squads);i++){
@@ -1119,13 +1126,20 @@ function scr_ui_manage() {
 			        				if (!squad_found){
 			        					member = obj_ini.squads[company_squads[0]].members[0];
 			        					obj_controller.temp[120] = obj_ini.TTRPG[member[0]][member[1]];
+			        					selected_unit=temp[120];
 			        				}
 			        			}
-			        		} else if (view_squad){
-			        			view_squad = false;
-			        			unit_profile =false;
+			        		} else {
+			        			member = obj_ini.squads[company_squads[0]].members[0];
+			        			obj_controller.temp[120] = obj_ini.TTRPG[member[0]][member[1]];
+			        			selected_unit=temp[120];
 			        		}
-			        	}
+		        		} else if (view_squad){
+		        			view_squad = false;
+		        			unit_profile =false;
+		        		}
+		        	}
+		        	if (selected_unit.squad!="none"){			        	
 						var current_squad = obj_ini.squads[selected_unit.squad];
 						var x_mod=0,y_mod=0;
 						var member_width=0, member_height=0;

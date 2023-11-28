@@ -114,23 +114,66 @@ function scr_enemy_ai_a() {
 
 	var run=0, stop;
 	var rand=0;
-
-    var garrison_force=false, garrisons=[], total_garrison=0;
-	for (run =1;run<5;run++){
-		if (run>planets){break;}
-	      for (var ops=0;ops<array_length(p_operatives[run]);ops++){
-	      	if(p_operatives[run][ops].type=="squad"){
-	      		if (p_operatives[run][ops].job == "garrison"){//marine garrison on planet
-	      			if (array_length(obj_ini.squads[p_operatives[run][ops].reference].members)>0){
-		      			array_push(garrisons, obj_ini.squads[p_operatives[run][ops].reference])
-		      			total_garrison += array_length(obj_ini.squads[p_operatives[run][ops].reference].members);
+	function garrison_force(planet_operatives)constructor{
+		garrison_squads=[];
+		total_garrison = 0;
+		garrison_force=false;
+		 for (var ops=0;ops<array_length(planet_operatives);ops++){
+	      	if(planet_operatives[ops].type=="squad"){
+	      		if (planet_operatives[ops].job == "garrison"){//marine garrison on planet
+	      			if (array_length(obj_ini.squads[planet_operatives[ops].reference].members)>0){
+		      			array_push(garrison_squads, obj_ini.squads[planet_operatives[ops].reference])
+		      			total_garrison += array_length(obj_ini.squads[planet_operatives[ops].reference].members);
 		      			garrison_force=true;
 		      		} else {
-		      			array_delete(p_operatives[run], ops,1);
+		      			array_delete(planet_operatives, ops,1);
 		      		}
 	      		}
-	      	}
-	      }
+	      	}		 	
+		 }
+
+		static find_leader = function(){
+			garrison_leader="none";
+			var hierarchy = role_hierarchy();
+			var leader_hier_pos=array_length(hierarchy);
+			var unit;
+			for (var squad=0;squad<array_length(garrison_squads);squad++){
+				var leader =garrison_squads[squad].determine_leader();
+				unit = obj_ini.TTRPG[leader[0]][leader[1]];
+				if (garrison_leader=="none"){
+					garrison_leader=unit;
+					for (var r=0;r<array_length(hierarchy);r++){
+						if (hierarchy[r]==unit.role()){
+							leader_hier_pos=r;
+							break;
+						}
+					}				
+				}else if (hierarchy[leader_hier_pos]==unit.role()){
+					if (garrison_leader.experience()<unit.experience()){
+						garrison_leader=unit;
+					}
+				}else{
+					for (var r=0;r<leader_hier_pos;r++){
+						if (hierarchy[r]==unit.role()){
+							leader_hier_pos=r;
+							garrison_leader=unit;
+							break;
+						}
+					}
+				}
+			}
+		};
+
+		static determine_battle = function(){
+			
+		}
+	}
+    var garrison_force=false, garrisons=[], total_garrison=0;
+	for (run =1;run<5;run++){
+		garrison_force=false;
+		if (run>planets){break;}
+	     garrison = new garrison_force(p_operatives[run]);
+	     garrison_force = garrison.garrison_force;
 
 		stop=0;
 	    if (p_eldar[run]<0) then p_eldar[run]=0;
@@ -271,10 +314,10 @@ function scr_enemy_ai_a() {
 	        // Eldar don't get into pitched battles so nyuck nyuck nyuck
 	    }
     	var pdf_with_player;
-    	var pdf_loss_reduction=p_defenses[run]*0.001;
-    	if (p_owner[run]!=8) && (p_owner[run]=1 ||obj_controller.faction_status[2]!="War"){
+    	var pdf_loss_reduction=p_defenses[run]*0.001;//redues man loss from battle loss if higher defences
+    	if (p_owner[run]!=8) && (p_owner[run]=1 ||obj_controller.faction_status[2]!="War") && (garrison_force){
     		pdf_with_player = true;
-        	pdf_loss_reduction+=total_garrison*0.0005;
+        	pdf_loss_reduction+=garrison.total_garrison*0.0005;
     	} else{
     		pdf_with_player = false;
     	}
@@ -282,8 +325,10 @@ function scr_enemy_ai_a() {
 	    	var pdf_mod;
 	    	var defence_mult = p_defenses[run]*0.1;
 	    	if (pdf_with_player){//if player supports give garrison bonus
-		    	var garrison_mult = total_garrison*(0.005+(0.001*p_defenses[run]))
+		    	var garrison_mult = garrison.total_garrison*(0.005+(0.001*p_defenses[run]))
+		    	garrison.find_leader();
 		    	defence_mult+=garrison_mult
+		    	defence_mult*=(garrison.garrison_leader.wisdom)/40;//modified by how good a commander the garrison leader is
 		    	//makes pdf more effective if planet has defences or marines present
 	    	}
 	    	pdf_mod=p_pdf[run]
@@ -304,7 +349,7 @@ function scr_enemy_ai_a() {
 			} else if (pdf_mod < 500) {
 			    pdf_score = 0.1;
 			}
-			pdf_score*=(1+defence_mult)
+			pdf_score*=(1+defence_mult);
 	        // 
 	        // if (p_eldar[run]>0) and (p_owner[run]!=6) then pdf_attack="eldar";
 	        if (p_tyranids[run]>=4) then pdf_attack="tyranids";
@@ -475,14 +520,19 @@ function scr_enemy_ai_a() {
     
 	    if (stop=0){// Start stop
     
-	    if (ork_attack="imp") and (guard_score>0) then ork_attack="guard";if (ork_attack="imp") and (guard_score<=0) then ork_attack="pdf";
+	    if (ork_attack="imp") and (guard_score>0){
+	    	ork_attack="guard";
+	    }else if (ork_attack="imp") and (guard_score<=0) then ork_attack="pdf";
 	    if (tau_attack="imp") and (guard_score>0) then tau_attack="guard";// if (tau_attack="imp") and (guard_score<=0) then tau_attack="pdf";
-	    if (traitors_attack="imp") and (guard_score>0) then traitors_attack="guard";if (traitors_attack="imp") and (guard_score<=0) then traitors_attack="pdf";
-	    if (csm_attack="imp") and (guard_score>0) then csm_attack="guard";if (csm_attack="imp") and (guard_score<=0) then csm_attack="pdf";
-	    if (necrons_attack="imp") and (guard_score>0) then necrons_attack="guard";if (necrons_attack="imp") and (guard_score<=0) then necrons_attack="pdf";
+	    if (traitors_attack="imp") and (guard_score>0) then traitors_attack="guard";
+	    if (traitors_attack="imp") and (guard_score<=0) then traitors_attack="pdf";
+	    if (csm_attack="imp") and (guard_score>0) then csm_attack="guard";
+	    if (csm_attack="imp") and (guard_score<=0) then csm_attack="pdf";
+	    if (necrons_attack="imp") and (guard_score>0) then necrons_attack="guard";
+	    if (necrons_attack="imp") and (guard_score<=0) then necrons_attack="pdf";
 	    if (sisters_attack="imp") and (pdf_score>0) then sisters_attack="pdf";
 	    // if (eldar_attack="imp") and (guard_score>0) then eldar_attack="guard";if (eldar_attack="imp") and (guard_score<=0) then eldar_attack="pdf";
-    
+    	
 	    if (ork_attack="guard") and ((guard_score<=0.5) and (pdf_score>1)) then ork_attack="pdf";
 	    if (tau_attack="guard") and ((guard_score<=0.5) and (pdf_score>1)) then tau_attack="pdf";
 	    if (traitors_attack="guard") and ((guard_score<=0.5) and (pdf_score>1)) then traitors_attack="pdf";
@@ -491,19 +541,19 @@ function scr_enemy_ai_a() {
 	    // if (eldar_attack="guard") and ((guard_score<=0.5) and (pdf_score>1)) then eldar_attack="pdf";
     
 	    // if ((traitors_attack="guard") or (traitors_attack="pdf")) and (traitors_score>=3){obj_controller.x=self.x;obj_controller.y=self.y;}
-    
-    
-	    var temp1, temp2, after_combat_ork_force, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11, tempor, rand1, rand2;
-	    temp1=guard_score;temp10=p_guardsmen[run];
-	    temp2=pdf_score;
-	    after_combat_ork_force=ork_score;
-	    temp4=tau_score;
-	    temp5=traitors_score;
-	    temp6=csm_score;if (csm_score=6.1) then csm_score=8;
-	    temp8=necrons_score;
-	    temp9=tyranids_score;
-	    temp11=sisters_score;
-	    tempor=0;rand1=0;rand2=0;
+
+	    var after_combat_guard=guard_score;
+	    var after_combat_guard_count=p_guardsmen[run];
+	    var after_combat_pdf=pdf_score;
+	    var after_combat_ork_force=ork_score;
+	    var after_combat_tau=tau_score;
+	    var after_combat_traitor=traitors_score;
+	    var after_combat_csm=csm_score;
+	    if (csm_score=6.1) then csm_score=8;
+	    var after_combat_necrons=necrons_score;
+	    var after_combat_tyranids=tyranids_score;
+	    var after_combat_sisters=sisters_score;
+	    var tempor=0,rand1=0,rand2=0;
     
 	    // Guard attack
 	    if (guard_score>0) and (guard_attack!="") and (guard_score>0.5){
@@ -524,7 +574,7 @@ function scr_enemy_ai_a() {
         
 	        if (guard_attack="pdf"){
 	            if (pdf_with_player){
-	            	pdf_mod=floor(random(6+total_garrison*0.1))+1;
+	            	pdf_mod=floor(random(6+garrison.total_garrison*0.1))+1;
 	            }else{
 	            	pdf_mod=irandom(5)+1;
 	            }      	
@@ -548,10 +598,10 @@ function scr_enemy_ai_a() {
 	        }
 	        if (guard_attack!="pdf") and (rand1>tempor){
 	            if (guard_attack="ork") then after_combat_ork_force-=1;
-	            if (guard_attack="tau") then temp4-=1;
-	            if (guard_attack="traitors") then temp5-=1;
-	            if (guard_attack="csm") then temp6-=1;
-	            if (guard_attack="tyranids") then temp9-=1;
+	            if (guard_attack="tau") then after_combat_tau-=1;
+	            if (guard_attack="traitors") then after_combat_traitor-=1;
+	            if (guard_attack="csm") then after_combat_csm-=1;
+	            if (guard_attack="tyranids") then after_combat_tyranids-=1;
 	        }
 	    }
     
@@ -578,11 +628,11 @@ function scr_enemy_ai_a() {
 	        if (tempor=1) and (pdf_score>=6) and (rand2=2) then tempor=0;
         
 	        if (pdf_attack=="ork") then after_combat_ork_force=tempor;
-	        if (pdf_attack=="tau") then temp4=tempor;
-	        if (pdf_attack=="traitors") then temp5=tempor;
-	        if (pdf_attack=="csm") then temp6=tempor;
-	        if (pdf_attack=="tyranids") and (tyranids_score>=4) then temp9=tempor;
-	        if (pdf_attack=="sisters") then temp11=tempor;
+	        if (pdf_attack=="tau") then after_combat_tau=tempor;
+	        if (pdf_attack=="traitors") then after_combat_traitor=tempor;
+	        if (pdf_attack=="csm") then after_combat_csm=tempor;
+	        if (pdf_attack=="tyranids") and (tyranids_score>=4) then after_combat_tyranids=tempor;
+	        if (pdf_attack=="sisters") then after_combat_sisters=tempor;
         
 	        if (pdf_attack=="guard"){
 	            rand2=(choose(1,2,3,4,5,6)*guard_score)*choose(1,1.25,2);
@@ -601,30 +651,24 @@ function scr_enemy_ai_a() {
         
 	        if (sisters_attack="tau"){
 	            rand2=(choose(2,3,4,5)*tau_score)*choose(1,1.25);
-	            if (rand1>rand2) then temp4-=1;
-	        }
-	        if (sisters_attack="ork"){
+	            if (rand1>rand2) then after_combat_tau-=1;
+	        }else  if(sisters_attack="ork"){
 	            rand2=(choose(2,3,4,5)*ork_score)*choose(1,1.25);
 	            if (rand1>rand2) then after_combat_ork_force-=1;
-	        }
-	        if (sisters_attack="traitors"){
+	        }else  if(sisters_attack="traitors"){
 	            rand2=(choose(1,2,3,4,5)*traitors_score)*choose(1,1.25);
-	            if (rand1>rand2) then temp5-=1;
-	        }
-	        if (sisters_attack="csm"){
+	            if (rand1>rand2) then after_combat_traitor-=1;
+	        }else if(sisters_attack="csm"){
 	            rand2=(choose(2,3,4,5,6)*csm_score)*choose(1,1.25);
 	            if (csm_score=6.1) then rand2=999;
-	            if (rand1>rand2) then temp6-=1;
-	        }
-	        if (sisters_attack="necrons"){
+	            if (rand1>rand2) then after_combat_csm-=1;
+	        }else  if(sisters_attack="necrons"){
 	            rand2=(choose(4,5,6,7)*necrons_score)*choose(1,1.25);
-	            if (rand1>rand2) then temp8-=1;
-	        }
-	        if (sisters_attack="tyranids"){
+	            if (rand1>rand2) then after_combat_necrons-=1;
+	        }else  if(sisters_attack="tyranids"){
 	            rand2=(choose(3,4,5,6,7)*tyranids_score)*choose(1,1.25);
-	            if (rand1>rand2) and (tyranids_score>=4) then temp9-=1;
-	        }
-	        if (sisters_attack="pdf"){
+	            if (rand1>rand2) and (tyranids_score>=4) then after_combat_tyranids-=1;
+	        }else  if(sisters_attack="pdf"){
 	            rand2=(choose(1,2,3,4,5)*pdf_score)*choose(1,1.25);
 	            if (rand1>rand2){
 	                if (csm_score>=6) then p_pdf[run]=0;
@@ -646,34 +690,28 @@ function scr_enemy_ai_a() {
 	        if (tau_attack="ork"){
 	            rand2=(choose(1,2,3,4,5,6)*ork_score)*choose(1,1.25);
 	            if (rand1>rand2) then after_combat_ork_force-=1;
-	        }
-	        if (tau_attack="traitors"){
+	        }else if (tau_attack="traitors"){
 	            rand2=(choose(1,2,3,4,5,6)*traitors_score)*choose(1,1.25);
-	            if (rand1>rand2) and (traitors_score!=7) then temp5-=1;
-	        }
-	        if (tau_attack="csm"){
+	            if (rand1>rand2) and (traitors_score!=7) then after_combat_traitor-=1;
+	        }else if (tau_attack="csm"){
 	            rand2=(choose(1,2,3,4,5,6)*csm_score)*choose(1,1.25);
 	            if (csm_score=6.1) then rand2=999;
-	            if (rand1>rand2) then temp6-=1;
-	        }
-        
-	        if (tau_attack="guard"){
+	            if (rand1>rand2) then after_combat_csm-=1;
+	        }else if (tau_attack="guard"){
 	            rand2=(choose(1,2,3,4,5,6)*guard_score)*choose(1,1.25);
 	            if (rand1>rand2){
 	                if (tau_score<=3) then p_guardsmen[run]=floor(p_guardsmen[run]*0.7);
 	                if (tau_score>=4) then p_guardsmen[run]=floor(p_guardsmen[run]*0.6);
 	            }
-	        }
-	        if (tau_attack="pdf"){
+	        }else if (tau_attack="pdf"){
 	            rand2=(choose(1,2,3,4,5,6)*pdf_score)*choose(1,1.25);
 	            if (rand1>rand2){
 	                if (tau_score<=3) then p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.7+pdf_loss_reduction)));
 	                if (tau_score>=4) then p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.55+pdf_loss_reduction)));
 	            }
-	        }
-	        if (tau_attack="sisters"){
+	        }else if (tau_attack="sisters"){
 	            rand2=(choose(1,2,3,4,5,6)*sisters_score)*choose(1,1.25);
-	            if (rand1>rand2) then temp11-=1;
+	            if (rand1>rand2) then after_combat_sisters-=1;
 	        }
 	    }
     
@@ -683,18 +721,14 @@ function scr_enemy_ai_a() {
 
 	        if (ork_attack="tau"){
 	            rand2=(choose(1,2,3,4,5,6)*tau_score)*choose(1,1.25);
-	            if (rand1>rand2) then temp4-=1;
-	        }
-	        if (ork_attack="traitors"){
+	            if (rand1>rand2) then after_combat_tau-=1;
+	        }else if (ork_attack="traitors"){
 	            rand2=(choose(1,2,3,4,5,6,7)*traitors_score)*choose(1,1.25);
-	            if (rand1>rand2) and (traitors_score<6) then temp5-=1;
-	        }
-	        if (ork_attack="csm"){
+	            if (rand1>rand2) and (traitors_score<6) then after_combat_traitor-=1;
+	        }else if (ork_attack="csm"){
 	            rand2=(choose(1,2,3,4,5,6)*csm_score)*choose(1,1.25);
-	            if (rand1>rand2) and (csm_score!=6) then temp6-=1;
-	        }
-        
-	        if (ork_attack="guard"){var onc=0;
+	            if (rand1>rand2) and (csm_score!=6) then after_combat_csm-=1;
+	        }else if (ork_attack="guard"){var onc=0;
 	            rand2=(choose(1,2,3,4,5,6)*guard_score)*choose(1,1.25);
 	            if (rand1>rand2){
 	                if (ork_score<=3) and (onc=0){p_guardsmen[run]=floor(p_guardsmen[run]*(min(0.95, 0.7+pdf_loss_reduction)));onc=1;}
@@ -702,19 +736,19 @@ function scr_enemy_ai_a() {
 	                if (ork_score>=4) and (p_guardsmen[run]<15000) and (onc=0){p_guardsmen[run]=0;onc=1;}
 	                if (ork_score>=3) and (p_guardsmen[run]<5000) and (onc=0){p_guardsmen[run]=0;onc=1;}
 	            }
-	        }
-	        if (ork_attack="pdf"){
+	        }else if (ork_attack="pdf"){
 	        	var pdf_randoms = [choose(1,2,3,4,5,6), choose(1,1.25)]
 	            rand2=(pdf_randoms[0]*pdf_score)*pdf_randoms[1];
 	            if (rand1>rand2){
-	                if (ork_score<=3) then p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.7+pdf_loss_reduction)));
-	                if (ork_score>=4) then p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.55+pdf_loss_reduction)));
-	                if (ork_score>=4) and (p_pdf[run]<30000) then p_pdf[run]=0;
-	                if (ork_score>=3) and (p_pdf[run]<10000) then p_pdf[run]=0;
-	                if (ork_score>=2) and (p_pdf[run]<2000) then p_pdf[run]=0;
-	                if (ork_score>=1) and (p_pdf[run]<200) then p_pdf[run]=0;
-	                if (pdf_with_player && total_garrison>0){
-	                	var tixt = $"Chapter Forces on {name} {scr_roman_numerals()[run-1]} were unable to secure PDF victory chapter support requested";
+	                if (ork_score<=3){p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.7+pdf_loss_reduction)));}
+	                else if (ork_score>=4) and (p_pdf[run]<=30000) {p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.55+pdf_loss_reduction)));}
+	                else if (ork_score>=4) and (p_pdf[run]<30000){ p_pdf[run]=0;}
+	                else if (ork_score>=3) and (p_pdf[run]<10000){ p_pdf[run]=0;}
+	                else if (ork_score>=2) and (p_pdf[run]<2000){ p_pdf[run]=0;}
+	                else if (ork_score>=1) and (p_pdf[run]<200){ p_pdf[run]=0;}
+
+	                if (pdf_with_player && garrison.total_garrison>0){
+	                	var tixt = $"Chapter Forces led by {garrison.garrison_leader.name_role()} on {name} {scr_roman_numerals()[run-1]} were unable to secure PDF victory chapter support requested";
 	                	scr_alert("red","owner",tixt,x,y);
 	                }
 	                for (var i=0;i<array_length(garrisons);i++){
@@ -722,7 +756,7 @@ function scr_enemy_ai_a() {
 	                }
 	            } else {
 	            	if (pdf_with_player && (pdf_randoms[0]*(pdf_score/defence_mult))*pdf_randoms[1]<rand1){
-	            		var tixt = $"Chapter Forces on {name} {scr_roman_numerals()[run-1]} secure PDF victory";
+	            		var tixt = $"Chapter Forces led by {garrison.garrison_leader.name_role()} on {name} {scr_roman_numerals()[run-1]} secure PDF victory";
 	            		scr_alert("green","owner",tixt,x,y);
 	            	}
 	            }
@@ -756,30 +790,29 @@ function scr_enemy_ai_a() {
 	        }
 	        if (ork_attack="sisters"){
 	            rand2=(choose(1,2,3,4,5,6)*sisters_score)*choose(1,1.25);
-	            if (rand1>rand2) then temp11-=1;
+	            if (rand1>rand2) then after_combat_sisters-=1;
 	        }
 	    }
     
 	    // traitors attack
 	    if (traitors_score>0) and (traitors_attack!="") and (traitors_attack!="player"){
 	        rand1=choose(1,2,3,4,5,6,7)*traitors_score;
-	        if (traitors_score=6) then rand1=choose(30,36);
-	        if (traitors_score=7) then rand1=999;
+	        if (traitors_score=6){ rand1=choose(30,36);}
+	        else if (traitors_score=7){ rand1=999;}
         
 	        if (traitors_attack="tau"){
 	            rand2=(choose(1,2,3,4,5)*tau_score)*choose(1,1.25);
-	            if (rand1>rand2) then temp4-=1;
-	        }
-	        if (traitors_attack="ork"){
+	            if (rand1>rand2) then after_combat_tau-=1;
+	        }else if (traitors_attack="ork"){
 	            rand2=(choose(1,2,3,4,5)*ork_score)*choose(1,1.25);
 	            if (rand1>rand2) then after_combat_ork_force-=1;
 	        }
 	        /*if (traitors_attack="eldar"){
 	            rand2=(choose(1,2,3,4,5)*eldar_score)*choose(1,1.25);
-	            if (rand1>rand2) then temp6-=1;
+	            if (rand1>rand2) then after_combat_csm-=1;
 	        }*/
         
-	        if (traitors_attack="guard"){
+	        else if (traitors_attack="guard"){
 	            rand2=(choose(1,2,3,4,5)*guard_score)*choose(1,1.25);
 	            if (rand1>rand2){
 	                if (traitors_score<=3) then p_guardsmen[run]=floor(p_guardsmen[run]*0.7);
@@ -790,8 +823,7 @@ function scr_enemy_ai_a() {
 	                if (traitors_score>=2) and (p_guardsmen[run]<1000) then p_guardsmen[run]=0;
 	                if (traitors_score>=1) and (p_guardsmen[run]<500) then p_guardsmen[run]=0;
 	            }
-	        }
-	        if (traitors_attack="pdf"){
+	        }else if (traitors_attack="pdf"){
 	            rand2=(choose(1,2,3,4,5)*pdf_score)*choose(1,1.25);
 	            if (rand1>rand2){
 	                if (traitors_score>=6) then p_pdf[run]=0;
@@ -802,10 +834,9 @@ function scr_enemy_ai_a() {
 	                if (traitors_score>=2) and (p_pdf[run]<3000) then p_pdf[run]=0;
 	                if (traitors_score>=1) and (p_pdf[run]<1000) then p_pdf[run]=0;
 	            }
-	        }
-	        if (traitors_attack="sisters"){
+	        }else if (traitors_attack="sisters"){
 	            rand2=(choose(1,2,3,4,5,6,7)*sisters_score)*choose(1,1.25);
-	            if (rand1>rand2) then temp11-=1;
+	            if (rand1>rand2) then after_combat_sisters-=1;
 	        }
 	    }
     
@@ -817,14 +848,11 @@ function scr_enemy_ai_a() {
         
 	        if (csm_attack="tau"){
 	            rand2=(choose(1,2,3,4,5)*tau_score)*choose(1,1.25);
-	            if (rand1>rand2) then temp4-=1;
-	        }
-	        if (csm_attack="ork"){
+	            if (rand1>rand2) then after_combat_tau-=1;
+	        }else if (csm_attack="ork"){
 	            rand2=(choose(1,2,3,4,5)*ork_score)*choose(1,1.25);
 	            if (rand1>rand2) then after_combat_ork_force-=1;
-	        }
-        
-	        if (csm_attack="guard"){
+	        }else if (csm_attack="guard"){
 	            rand2=(choose(1,2,3,4,5)*guard_score)*choose(1,1.25);
 	            if (rand1>rand2){
 	                if (csm_score<=3) then p_guardsmen[run]=floor(p_guardsmen[run]*0.7);
@@ -835,8 +863,7 @@ function scr_enemy_ai_a() {
 	                if (csm_score>=2) and (p_guardsmen[run]<1000) then p_guardsmen[run]=0;
 	                if (csm_score>=1) and (p_guardsmen[run]<500) then p_guardsmen[run]=0;
 	            }
-	        }
-	        if (csm_attack="pdf"){
+	        }else if (csm_attack="pdf"){
 	            rand2=(choose(1,2,3,4,5)*pdf_score)*choose(1,1.25);
 	            if (rand1>rand2){
 	                if (csm_score>=6) then p_pdf[run]=0;
@@ -847,10 +874,9 @@ function scr_enemy_ai_a() {
 	                if (csm_score>=2) and (p_pdf[run]<3000) then p_pdf[run]=0;
 	                if (csm_score>=1) and (p_pdf[run]<1000) then p_pdf[run]=0;
 	            }
-	        }
-	        if (csm_attack="sisters"){
+	        }else if (csm_attack="sisters"){
 	            rand2=(choose(2,3,4,5,6)*sisters_score)*choose(1,1.25);
-	            if (rand1>rand2) then temp11-=1;
+	            if (rand1>rand2) then after_combat_sisters-=1;
 	        }
 	    }
     
@@ -863,25 +889,20 @@ function scr_enemy_ai_a() {
         
 	        if (tyranids_attack="tau"){
 	            rand2=(choose(1,2,3,4,5)*tau_score)*choose(1,1.25);
-	            if (rand1>rand2) then temp4-=1;
-	        }
-	        if (tyranids_attack="ork"){
+	            if (rand1>rand2) then after_combat_tau-=1;
+	        }else if (tyranids_attack="ork"){
 	            rand2=(choose(1,2,3,4,5)*ork_score)*choose(1,1.25);
 	            if (rand1>rand2) then after_combat_ork_force-=1;
-	        }
-	        if (tyranids_attack="csm"){
+	        }else if (tyranids_attack="csm"){
 	            rand2=(choose(1,2,3,4,5)*csm_score)*choose(1,1.25);
-	            if (rand1>rand2) then temp6-=1;
-	        }
-	        if (tyranids_attack="traitors"){
+	            if (rand1>rand2) then after_combat_csm-=1;
+	        }else if (tyranids_attack="traitors"){
 	            rand2=(choose(1,2,3,4,5)*traitors_score)*choose(1,1.25);
-	            if (rand1>rand2) and (traitors_score!=7) then temp5-=1;
-	        }
-	        if (tyranids_attack="imp"){
+	            if (rand1>rand2) and (traitors_score!=7) then after_combat_traitor-=1;
+	        }else if (tyranids_attack="imp"){
 	            if (p_pdf[run]>0) then tyranids_attack="pdf";
 	            if (p_guardsmen[run]>0) then tyranids_attack="guard";
-	        }
-	        if (tyranids_attack="guard"){
+	        }else if (tyranids_attack="guard"){
 	            rand1=(choose(1,2,3,4,5,6,7)*tyranids_score)*choose(1,1.25);
 	            rand2=(choose(1,2,3,4,5)*guard_score)*choose(1,1.25);
 	            if (rand1>rand2){
@@ -898,8 +919,7 @@ function scr_enemy_ai_a() {
                 
 	                if (p_guardsmen[run]<0) then p_guardsmen[run]=0;
 	            }
-	        }
-	        if (tyranids_attack="pdf"){
+	        }else if (tyranids_attack="pdf"){
 	            rand2=(choose(1,2,3,4,5)*pdf_score)*choose(1,1.25);
 	            if (rand1>rand2){
 	                if (tyranids_score>=6) then p_pdf[run]=0;
@@ -907,10 +927,9 @@ function scr_enemy_ai_a() {
 	                if (tyranids_score>=4) then p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.2+pdf_loss_reduction)));
 	                if (tyranids_score>=4) and (p_pdf[run]<60000) then p_pdf[run]=0;
 	            }
-	        }
-	        if (tyranids_attack="sisters"){
+	        }else if (tyranids_attack="sisters"){
 	            rand2=(choose(1,2,3,4,5)*sisters_score)*choose(1,1.25);
-	            if (rand1>rand2) then temp11-=1;
+	            if (rand1>rand2) then after_combat_sisters-=1;
 	        }
 	    }
     
@@ -923,25 +942,20 @@ function scr_enemy_ai_a() {
         
 	        if (necrons_attack="tau"){
 	            rand2=(choose(1,2,3,4,5)*tau_score)*choose(1,1.25);
-	            if (rand1>rand2) then temp4-=1;
-	        }
-	        if (necrons_attack="ork"){
+	            if (rand1>rand2) then after_combat_tau-=1;
+	        }else if (necrons_attack="ork"){
 	            rand2=(choose(1,2,3,4,5)*ork_score)*choose(1,1.25);
 	            if (rand1>rand2) then after_combat_ork_force-=1;
-	        }
-	        if (necrons_attack="csm"){
+	        }else if (necrons_attack="csm"){
 	            rand2=(choose(1,2,3,4,5)*csm_score)*choose(1,1.25);
-	            if (rand1>rand2) then temp6-=1;
-	        }
-	        if (necrons_attack="traitors"){
+	            if (rand1>rand2) then after_combat_csm-=1;
+	        }else if (necrons_attack="traitors"){
 	            rand2=(choose(1,2,3,4,5)*traitors_score)*choose(1,1.25);
-	            if (rand1>rand2) and (traitors_score!=7) then temp6-=1;
-	        }
-	        if (necrons_attack="imp"){
+	            if (rand1>rand2) and (traitors_score!=7) then after_combat_csm-=1;
+	        }else if (necrons_attack="imp"){
 	            if (p_pdf[run]>0) then necrons_attack="pdf";
 	            if (p_guardsmen[run]>0) then necrons_attack="guard";
-	        }
-	        if (necrons_attack="guard"){
+	        }else if (necrons_attack="guard"){
 	            rand2=(choose(1,2,3,4,5)*guard_score)*choose(1,1.25);
 	            if (rand1>rand2){
 	                if (necrons_score<=3) then p_guardsmen[run]=floor(p_guardsmen[run]*0.6);
@@ -949,8 +963,7 @@ function scr_enemy_ai_a() {
 	                if (necrons_score>=6) then p_guardsmen[run]=floor(p_guardsmen[run]*0.2);
 	                if (necrons_score>=4) and (p_guardsmen[run]<15000) then p_guardsmen[run]=0;
 	            }
-	        }
-	        if (necrons_attack="pdf"){
+	        }else if (necrons_attack="pdf"){
 	            rand2=(choose(1,2,3,4,5)*pdf_score)*choose(1,1.25);
 	            if (rand1>rand2){
 	                if (necrons_score>=6) then p_pdf[run]=0;
@@ -989,19 +1002,19 @@ function scr_enemy_ai_a() {
 	        }
 	        if (necrons_attack="sisters"){
 	            rand2=(choose(1,2,3,4,5)*sisters_score)*choose(1,1.25);
-	            if (rand1>rand2) then temp11-=1;
+	            if (rand1>rand2) then after_combat_sisters-=1;
 	        }
 	    }
     
     
     
 	    p_orks[run]=after_combat_ork_force;
-	    p_tau[run]=temp4;
-	    p_traitors[run]=temp5;
-	    p_chaos[run]=temp6;
-	    p_necrons[run]=temp8;
-	    if (p_tyranids[run]>4) then p_tyranids[run]=temp9;
-	    p_sisters[run]=temp11;
+	    p_tau[run]=after_combat_tau;
+	    p_traitors[run]=after_combat_traitor;
+	    p_chaos[run]=after_combat_csm;
+	    p_necrons[run]=after_combat_necrons;
+	    if (p_tyranids[run]>4) then p_tyranids[run]=after_combat_tyranids;
+	    p_sisters[run]=after_combat_sisters;
     
     
 	    // End stop

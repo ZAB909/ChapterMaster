@@ -79,7 +79,6 @@ global.defeat=0;
 tutorial=0;
 sound_in=0;
 sound_to="";
-fix_left=0;
 fix_right=0;
 text_bar=0;
 bar_fix=0;

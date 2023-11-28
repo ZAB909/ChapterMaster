@@ -1171,7 +1171,8 @@ function scr_initialize_custom() {
 			   [["Power Sword", "Power Axe", "Chainsword"],5],
 			]
 			} 
-		}
+		},
+		"role":$"{role[100,8]} Biker"
 	}
 	],       
 	[role[100][18],{"max":1,"min":1, 
@@ -1211,7 +1212,7 @@ function scr_initialize_custom() {
                     } 
                 }}],   
 
-                [role[100][18], {"max":1,"min":1, "role":"{role[100][8]} {role[100][18]}"}],        // sergeant
+                [role[100][18], {"max":1,"min":1, "role":$"{role[100][8]} {role[100][18]}"}],        // sergeant
                 ["display_name" , $"{role[100,8]} {squad_name}"]
             ])
 	}

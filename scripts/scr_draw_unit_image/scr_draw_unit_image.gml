@@ -21,6 +21,8 @@ function scr_draw_unit_image(x_draw, y_draw){
         ui_xmod[2]=0;
         ui_ymod[1]=0;
         ui_ymod[2]=0;
+        fix_left=0;
+        fix_right=0;
         ui_back=true;
         ui_force_both=false;
         ui_specialist=0;
@@ -61,8 +63,6 @@ function scr_draw_unit_image(x_draw, y_draw){
     
         var base_sprite=0,armour_sprite=spr_weapon_blank,show1,show2;
         var jump=0,dev=0,hood=0,skull=0,arm=0,halo=0,braz=0,slow=0,brothers=-5,body_part;
-        var fix_left = obj_controller.fix_left;
-        var fix_right = obj_controller.fix_right;
 
         var skin=obj_ini.skin_color;
     
@@ -492,9 +492,20 @@ function scr_draw_unit_image(x_draw, y_draw){
                 } else if (base_sprite=1){
                     specific_armour_sprite = spr_terminator2_colors;
                 }
+                var armour_bypass = false;
+                var armour_draw =[];
+                if (base_sprite<= 0 && ui_specialist==5){
+                    if (array_contains(traits, "tinkerer")){
+                        specific_armour_sprite="none";
+                        armour_draw=[spr_techmarine_core,0];
+                        arm=0;
+                        armour_bypass=true;
+                    }
+                }                
                 if (arm>0){
-                    if (arm<10) then draw_sprite(spr_pack_arm,arm,xx+x_draw,yy+y_draw);
-                    if (arm>=10) then draw_sprite(spr_pack_arms,arm-10,xx+x_draw,yy+y_draw);
+                    if (arm<10){
+                        draw_sprite(spr_pack_arm,arm,xx+x_draw,yy+y_draw)
+                    } else if (arm>=10) then draw_sprite(spr_pack_arms,arm-10,xx+x_draw,yy+y_draw);                    
                 }                 
                 if (specific_armour_sprite != "none"){
                     // This draws the arms
@@ -535,16 +546,11 @@ function scr_draw_unit_image(x_draw, y_draw){
                         }
                     }                    
                     draw_sprite(armour_sprite,specialist_colours,xx+x_draw,yy+y_draw);
-                    if (base_sprite<= 0 && ui_specialist==5){
-                        if (array_contains(traits, "tinkerer")){
-                            draw_sprite(spr_techmarine_core,0,xx+x_draw,yy+y_draw);
-                            specific_armour_sprite="none"
-                            arm=0;
-                        }
-                    }
-                    if (specific_armour_sprite!="none") {                
+                    if (specific_armour_sprite!="none")  and (!armour_bypass){                
                         if (ttrim==0) and (specialist_colours<=1) then draw_sprite(specific_armour_sprite,4,xx+x_draw,yy+y_draw);
                         if (ttrim==0) and (specialist_colours>=2) then draw_sprite(specific_armour_sprite,5,xx+x_draw,yy+y_draw);
+                    } else{
+                        draw_sprite(armour_draw[0], armour_draw[1],xx+x_draw,yy+y_draw);
                     }
                 }
                 if (base_sprite=5){
@@ -641,7 +647,7 @@ function scr_draw_unit_image(x_draw, y_draw){
 				if (struct_exists(body[$ global.body_parts[part]], "bionic")){
 					if (base_sprite<=0){
                         if (armour() == "MK3 Iron Armour"){
-                           eye_move = 5;
+                           eye_move = 3;
                         }
                         var body_part = global.body_parts[part];
                         var bionic = body[$ body_part][$"bionic"];

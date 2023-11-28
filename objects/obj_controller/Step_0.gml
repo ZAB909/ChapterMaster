@@ -547,7 +547,6 @@ if (menu==1 && managing>0){
             melee_attack=unit.melee_attack();
             ranged_attack = unit.ranged_attack();
             marine_armour[0]=unit.armour();
-            fix_left=0;
             fix_right=0;
             
             var cah=managing;
