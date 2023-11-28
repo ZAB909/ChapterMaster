@@ -79,7 +79,6 @@ global.defeat=0;
 tutorial=0;
 sound_in=0;
 sound_to="";
-fix_left=0;
 fix_right=0;
 text_bar=0;
 bar_fix=0;
@@ -406,23 +405,13 @@ tooltip_width=0;
 tooltip_height=0;
 
 // ** For weapon display in management **
-ui_weapon[1]=0;
-ui_weapon[2]=0;
-ui_arm[1]=true;
-ui_arm[2]=true;
-ui_above[1]=true;
-ui_above[2]=true;
-ui_spec[1]=false;
-ui_spec[2]=false;
-ui_twoh[1]=false;
-ui_twoh[2]=false;
-ui_xmod[1]=0;
-ui_xmod[2]=0;
-ui_ymod[1]=0;
-ui_ymod[2]=0;
-ui_back=true;
-ui_force_both=false;
-ui_specialist=0;
+unit_profile=false;
+unit_rollover=false;
+view_squad=false;
+exit_period=false;
+cur_squad = 0;
+company_squads = [];
+rollover_sequence=0;
 ttrim=0;
 ui_coloring=""; 
 ui_melee_penalty=0;
@@ -1362,13 +1351,13 @@ for(var mm=1; mm<=100; mm++){
     if (obj_ini.role[com,mm]=="Master of Sanctity") then chapla=1;
     if (obj_ini.role[com,mm]=="Master of the Apothecarion") then apa=1;
     if (obj_ini.role[com,mm]=="Chief "+string(obj_ini.role[100,17])) then liba=1;
-    if (obj_ini.role[com,mm]==obj_ini.role[100,16]) then techa+=1;
+    if (obj_ini.role[com,mm]==obj_ini.role[100][16]) then techa+=1;
     if (obj_ini.role[com,mm]==obj_ini.role[100,17]) then libra+=1;
     if (obj_ini.role[com,mm]=="Codiciery") then coda+=1;
     if (obj_ini.role[com,mm]=="Lexicanum") then lexa+=1;
-    if (obj_ini.role[com,mm]==obj_ini.role[100,14]) then old_dudes+=1;
-    if (obj_ini.role[com,mm]==obj_ini.role[100,15]) then apotha+=1;
-    if (obj_ini.role[com,mm]==obj_ini.role[100,2]) then honoh+=1;
+    if (obj_ini.role[com,mm]==obj_ini.role[100][14]) then old_dudes+=1;
+    if (obj_ini.role[com,mm]==obj_ini.role[100][15]) then apotha+=1;
+    if (obj_ini.role[com,mm]==obj_ini.role[100][2]) then honoh+=1;
 }
 
 temp[njm]="Command staff which includes";
@@ -1384,9 +1373,9 @@ temp[njm]=string_delete(temp[njm],vih,1);
 njm+=1;
 temp[njm] = "";
 temp[njm]+="  It has";
-if (techa>0) then temp[njm]+=", "+string(techa)+" "+string(obj_ini.role[100,16])+"s";
-if (old_dudes>0) then temp[njm]+=", "+string(techa)+" "+string(obj_ini.role[100,16])+"s";
-if (apotha>0) then temp[njm]+=", "+string(apotha)+" "+string(obj_ini.role[100,15])+"s";
+if (techa>0) then temp[njm]+=", "+string(techa)+" "+string(obj_ini.role[100][16])+"s";
+if (old_dudes>0) then temp[njm]+=", "+string(techa)+" "+string(obj_ini.role[100][16])+"s";
+if (apotha>0) then temp[njm]+=", "+string(apotha)+" "+string(obj_ini.role[100][15])+"s";
 if (libra>0) then temp[njm]+=", "+string(libra)+" "+string(obj_ini.role[100,17])+"s";
 if (coda>0) then temp[njm]+=", "+string(coda)+" Codiciery";
 if (lexa>0) then temp[njm]+=", "+string(lexa)+" Lexicanum.";
@@ -1419,19 +1408,19 @@ for(var company=0; company<10; company++){
     whirl=0;
     pred=0;
     for(var mm=1; mm<=400; mm++){
-        if (obj_ini.role[com,mm]==obj_ini.role[100,4]) then termi+=1;
-        if (obj_ini.role[com,mm]==obj_ini.role[100,3]) then veter+=1;
-        if (obj_ini.role[com,mm]=="Venerable "+string(obj_ini.role[100,6])) then dread+=1;
-        if (obj_ini.role[com,mm]==obj_ini.role[100,5]) then capt+=1;
-        if (obj_ini.role[com,mm]==obj_ini.role[100,14]) then chap+=1;
-        if (obj_ini.role[com,mm]==obj_ini.role[100,15]) then apoth+=1;
-        if (obj_ini.role[com,mm]==obj_ini.role[100,16]) then techa+=1;
+        if (obj_ini.role[com,mm]==obj_ini.role[100][4]) then termi+=1;
+        if (obj_ini.role[com,mm]==obj_ini.role[100][3]) then veter+=1;
+        if (obj_ini.role[com,mm]=="Venerable "+string(obj_ini.role[100][6])) then dread+=1;
+        if (obj_ini.role[com,mm]==obj_ini.role[100][5]) then capt+=1;
+        if (obj_ini.role[com,mm]==obj_ini.role[100][14]) then chap+=1;
+        if (obj_ini.role[com,mm]==obj_ini.role[100][15]) then apoth+=1;
+        if (obj_ini.role[com,mm]==obj_ini.role[100][16]) then techa+=1;
         if (obj_ini.role[com,mm]=="Standard Bearer") then standard+=1;
-        if (obj_ini.role[com,mm]==obj_ini.role[100,8]) then tact+=1;
-        if (obj_ini.role[com,mm]==obj_ini.role[100,10]) then assa+=1;
-        if (obj_ini.role[com,mm]==obj_ini.role[100,9]) then deva+=1;
-        if (obj_ini.role[com,mm]==obj_ini.role[100,6]) then dread+=1;
-        if (obj_ini.role[com,mm]==obj_ini.role[100,12]) then scou+=1;
+        if (obj_ini.role[com,mm]==obj_ini.role[100][8]) then tact+=1;
+        if (obj_ini.role[com,mm]==obj_ini.role[100][10]) then assa+=1;
+        if (obj_ini.role[com,mm]==obj_ini.role[100][9]) then deva+=1;
+        if (obj_ini.role[com,mm]==obj_ini.role[100][6]) then dread+=1;
+        if (obj_ini.role[com,mm]==obj_ini.role[100][12]) then scou+=1;
     }
     for(vih=1; vih<=100; vih++){
         if (obj_ini.veh_role[com,vih]=="Land Raider") then raider+=1;
@@ -1457,23 +1446,23 @@ for(var company=0; company<10; company++){
         else{temp[njm]="";}
     }
     
-    if (capt==1) then temp[njm]+=", "+string(capt)+" "+string(obj_ini.role[100,5]);
-    if (chap==1) then temp[njm]+=", "+string(chap)+" "+string(obj_ini.role[100,14]);
-    if (chap>1) then temp[njm]+=", "+string(chap)+" "+string(obj_ini.role[100,14])+"s";
-    if (apoth==1) then temp[njm]+=", "+string(apoth)+" "+string(obj_ini.role[100,15]);
-    if (apoth>1) then temp[njm]+=", "+string(apoth)+" "+string(obj_ini.role[100,15])+"s";
-    if (techa==1) then temp[njm]+=", "+string(techa)+" "+string(obj_ini.role[100,16]);
-    if (techa>1) then temp[njm]+=", "+string(techa)+" "+string(obj_ini.role[100,16])+"s";
+    if (capt==1) then temp[njm]+=", "+string(capt)+" "+string(obj_ini.role[100][5]);
+    if (chap==1) then temp[njm]+=", "+string(chap)+" "+string(obj_ini.role[100][14]);
+    if (chap>1) then temp[njm]+=", "+string(chap)+" "+string(obj_ini.role[100][14])+"s";
+    if (apoth==1) then temp[njm]+=", "+string(apoth)+" "+string(obj_ini.role[100][15]);
+    if (apoth>1) then temp[njm]+=", "+string(apoth)+" "+string(obj_ini.role[100][15])+"s";
+    if (techa==1) then temp[njm]+=", "+string(techa)+" "+string(obj_ini.role[100][16]);
+    if (techa>1) then temp[njm]+=", "+string(techa)+" "+string(obj_ini.role[100][16])+"s";
     
     if (standard==1) then temp[njm]+=", 1 Standard Bearer, 1 Company Champion, ";
-    if (termi>0) then temp[njm]+=", "+string(termi)+" "+string(obj_ini.role[100,4])+"s";
-    if (veter>0) then temp[njm]+=", "+string(veter)+" "+string(obj_ini.role[100,3])+"s";
-    if (tact>0) then temp[njm]+=", "+string(tact)+" "+string(obj_ini.role[100,8])+"s";
-    if (assa>0) then temp[njm]+=", "+string(assa)+" "+string(obj_ini.role[100,10])+"s";
-    if (deva>0) then temp[njm]+=", "+string(deva)+" "+string(obj_ini.role[100,9])+"s";
-    if (scou>0) then temp[njm]+=", "+string(scou)+" "+string(obj_ini.role[100,12])+"s";
-    if (dread==1) then temp[njm]+=", "+string(dread)+" "+string(obj_ini.role[100,6])+"";
-    if (dread>1) then temp[njm]+=", "+string(dread)+" "+string(obj_ini.role[100,6])+"s";
+    if (termi>0) then temp[njm]+=", "+string(termi)+" "+string(obj_ini.role[100][4])+"s";
+    if (veter>0) then temp[njm]+=", "+string(veter)+" "+string(obj_ini.role[100][3])+"s";
+    if (tact>0) then temp[njm]+=", "+string(tact)+" "+string(obj_ini.role[100][8])+"s";
+    if (assa>0) then temp[njm]+=", "+string(assa)+" "+string(obj_ini.role[100][10])+"s";
+    if (deva>0) then temp[njm]+=", "+string(deva)+" "+string(obj_ini.role[100][9])+"s";
+    if (scou>0) then temp[njm]+=", "+string(scou)+" "+string(obj_ini.role[100][12])+"s";
+    if (dread==1) then temp[njm]+=", "+string(dread)+" "+string(obj_ini.role[100][6])+"";
+    if (dread>1) then temp[njm]+=", "+string(dread)+" "+string(obj_ini.role[100][6])+"s";
     if (raider==1) then temp[njm]+=", "+string(raider)+" Land Raider";
     if (raider>1) then temp[njm]+=", "+string(raider)+" Land Raiders";
     if (pred==1) then temp[njm]+=", "+string(pred)+" Predator";

@@ -95,7 +95,7 @@ function scr_enemy_ai_d() {
 	                        var t1,t2,check1,check2;check1=0;check2=0;
 	                        explode_script(p_problem[i,wob],"!");
 	                        t1=string(explode[0]);t2=real(explode[1]);
-	                        check1=scr_role_count(obj_ini.role[100,16],string(name)+"|"+string(i)+"|");
+	                        check1=scr_role_count(obj_ini.role[100][16],string(name)+"|"+string(i)+"|");
 	                        check2=scr_vehicle_count("Land Raider",string(name)+"|"+string(i)+"|");
 	                        if (check1>=6) and (check2>=1){t2+=1;scr_alert("","mission","Mechanicus Mission on "+string(name)+" "+scr_roman(i)+" is "+string(round((t2/24)*100))+"% complete.",0,0);}
 	                        p_problem[i,wob]=string(t1)+"!"+string(t2)+"!";
@@ -201,18 +201,18 @@ function scr_enemy_ai_d() {
                         
 	                        repeat(11){com+=1;ide=0;
 	                            repeat(300){ide+=1;
-	                                if (obj_ini.role[com,ide]=obj_ini.role[100,16]){
+	                                if (obj_ini.role[com][ide]=obj_ini.role[100][16]){
 	                                    // Case 1: on planet
-	                                    if (obj_ini.loc[com,ide]=name) and (obj_ini.wid[com,ide]=i){
-	                                        p_player[i]-=scr_unit_size(obj_ini.armour[com,ide],obj_ini.role[com,ide],true);
-	                                        obj_ini.loc[com,ide]="Mechanicus Vessel";obj_ini.wid[com,ide]=0;obj_ini.lid[com,ide]=0;
+	                                    if (obj_ini.loc[com][ide]=name) and (obj_ini.wid[com][ide]=i){
+	                                        p_player[i]-=scr_unit_size(obj_ini.armour[com][ide],obj_ini.role[com][ide],true);
+	                                        obj_ini.loc[com][ide]="Mechanicus Vessel";obj_ini.wid[com][ide]=0;obj_ini.lid[com][ide]=0;
 	                                        techs_taken+=1;
 	                                    }
-	                                    if (obj_ini.lid[com,ide]>0){
-	                                        ship_planet=obj_ini.ship_location[obj_ini.lid[com,ide]];
+	                                    if (obj_ini.lid[com][ide]>0){
+	                                        ship_planet=obj_ini.ship_location[obj_ini.lid[com][ide]];
 	                                        if (ship_planet=name){
-	                                            obj_ini.ship_carrying[obj_ini.lid[com,ide]]-=scr_unit_size(obj_ini.armour[com,ide],obj_ini.role[com,ide],true);
-	                                            obj_ini.loc[com,ide]="Mechanicus Vessel";obj_ini.wid[com,ide]=0;obj_ini.lid[com,ide]=0;
+	                                            obj_ini.ship_carrying[obj_ini.lid[com][ide]]-=scr_unit_size(obj_ini.armour[com][ide],obj_ini.role[com][ide],true);
+	                                            obj_ini.loc[com][ide]="Mechanicus Vessel";obj_ini.wid[com][ide]=0;obj_ini.lid[com][ide]=0;
 	                                            techs_taken+=1;
 	                                        }
 	                                    }
@@ -231,7 +231,7 @@ function scr_enemy_ai_d() {
                         
 	                        if (techs_taken>0){
 	                            if (techs_taken>=20) then obj_controller.disposition[3]+=1;
-	                            var taxt;taxt="Mechanicus Ship departs for the Mars catacombs.  Onboard are "+string(techs_taken)+" of your "+string(obj_ini.role[100,16])+"s.";
+	                            var taxt;taxt="Mechanicus Ship departs for the Mars catacombs.  Onboard are "+string(techs_taken)+" of your "+string(obj_ini.role[100][16])+"s.";
 	                            scr_alert("","mission",taxt,0,0);scr_event_log("green",taxt);
 	                        }
                             

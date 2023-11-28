@@ -101,20 +101,20 @@ if (target="event_loc") and (determined_planets=0){
         coo+=1;ide=0;
         
         repeat(300){ide+=1;
-            if (obj_ini.role[coo,ide]!=obj_ini.role[100,6]) and (obj_ini.role[coo,ide]!="Venerable "+string(obj_ini.role[100,6])) and (obj_ini.wid[coo,ide]>0){
+            if (obj_ini.role[coo][ide]!=obj_ini.role[100][6]) and (obj_ini.role[coo][ide]!="Venerable "+string(obj_ini.role[100][6])) and (obj_ini.wid[coo][ide]>0){
                 var stahp,first_open;stahp=0;q=0;first_open=0;
                 
                 repeat(100){
                     if (stahp=0){q+=1;
                         if (star[q]="") and (first_open=0) then first_open=q;
-                        if (star[q]=obj_ini.loc[coo,ide]) and (star_planet[q]=obj_ini.wid[coo,ide]){
+                        if (star[q]=obj_ini.loc[coo][ide]) and (star_planet[q]=obj_ini.wid[coo][ide]){
                             stahp=1;star_mahreens[q]+=1;
                         }
                     }
                 }
                 if (stahp=0){
-                    star[first_open]=obj_ini.loc[coo,ide];
-                    star_planet[first_open]=obj_ini.wid[coo,ide];
+                    star[first_open]=obj_ini.loc[coo][ide];
+                    star_planet[first_open]=obj_ini.wid[coo][ide];
                     star_marheens[first_open]=1;
                 }
             }

@@ -250,17 +250,17 @@ function scr_event_gossip(argument0) {
 	    }
     
 	    if (blah="captain_promote") and (cn.recent_number[gossip_recent[that]]=attend_co[argument0]){rando=choose(1,2);
-	        words+="gives a cheer to "+string(cn.recent_keyword[gossip_recent[that]])+", for his promotion to "+string(obj_ini.role[100,5])+".";
+	        words+="gives a cheer to "+string(cn.recent_keyword[gossip_recent[that]])+", for his promotion to "+string(obj_ini.role[100][5])+".";
 	        if (rando=1) then words+="  May he lead the company to glory!";
 	        if (rando=2) then words+="  May the company benefit from his wisdom!";
 	    }
 	    if (blah="terminator_promote") and (cn.recent_number[gossip_recent[that]]=attend_co[argument0]){rando=choose(1,2);
-	        words+="gives a cheer to "+string(cn.recent_keyword[gossip_recent[that]])+", for his promotion to "+string(obj_ini.role[100,4])+".";
+	        words+="gives a cheer to "+string(cn.recent_keyword[gossip_recent[that]])+", for his promotion to "+string(obj_ini.role[100][4])+".";
 	        if (rando=1) then words+="  Let the enemies of man die at his feet!";
 	        if (rando=2) then words+="  He will be a bulwark against the foes of man!";
 	    }
 	    if (blah="honor_promote") and (cn.recent_number[gossip_recent[that]]=attend_co[argument0]){rando=choose(1,2);
-	        words+="gives a cheer to "+string(cn.recent_keyword[gossip_recent[that]])+", for his promotion to "+string(obj_ini.role[100,2])+".";
+	        words+="gives a cheer to "+string(cn.recent_keyword[gossip_recent[that]])+", for his promotion to "+string(obj_ini.role[100][2])+".";
 	        if (rando>=1) then words+="  Let the enemies of man die at his feet!";
 	    }
 	}

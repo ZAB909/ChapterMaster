@@ -22,7 +22,7 @@ function scr_crusade() {
 	    repeat(305){
 	        i+=1;// man_c[i]=0;man_i[i]=0;
         
-	        /*show_message(string(co)+"."+string(i)+": "+string(obj_ini.name[co,i])+"
+	        /*show_message(string(co)+"."+string(i)+": "+string(obj_ini.name[co][i])+"
 	        "+string(co)+"."+string(i+1)+": "+string(obj_ini.name[co,i+1])+"
 	        "+string(co)+"."+string(i+2)+": "+string(obj_ini.name[co,i+2])+"
 	        "+string(co)+"."+string(i+3)+": "+string(obj_ini.name[co,i+3])+"
@@ -39,12 +39,12 @@ function scr_crusade() {
 	            if (shi>capital_number) and (frigate_number>0){shipp="frigate";eff=shi-capital_number;}
 	            if (shi>capital_number+frigate_number) and (escort_number>0){shipp="escort";eff=shi-(capital_number+frigate_number);}
             
-	            if (shipp="capital"){if (obj_ini.lid[co,i]=capital_num[eff]) then good=1;}
-	            if (shipp="frigate"){if (obj_ini.lid[co,i]=frigate_num[eff]) then good=1;}
-	            if (shipp="escort"){if (obj_ini.lid[co,i]=escort_num[eff]) then good=1;}
+	            if (shipp="capital"){if (obj_ini.lid[co][i]=capital_num[eff]) then good=1;}
+	            if (shipp="frigate"){if (obj_ini.lid[co][i]=frigate_num[eff]) then good=1;}
+	            if (shipp="escort"){if (obj_ini.lid[co][i]=escort_num[eff]) then good=1;}
             
-	            if (obj_ini.name[co,i]!="") and (good=1){
-	                roll1=floor(random(100))+1;roll2=roll1;roll1-=obj_ini.experience[co,i];
+	            if (obj_ini.name[co][i]!="") and (good=1){
+	                roll1=floor(random(100))+1;roll2=roll1;roll1-=obj_ini.experience[co][i];
 	                if (string_count("Slow",obj_ini.strin)>0) then roll1-=20;
                 
 	                var dead;dead=false;
@@ -52,58 +52,58 @@ function scr_crusade() {
 	                if (type="hard") and ((roll1>60) or (roll2>80)) then dead=true;
 	                if (type="brutal") and ((roll1>20) or (roll2>65)) then dead=true;
                 
-	                if (obj_ini.role[co,i]="Standard Bearer") then dead=false;
-	                if (obj_ini.role[co,i]="Chapter Master") then dead=false;
+	                if (obj_ini.role[co][i]="Standard Bearer") then dead=false;
+	                if (obj_ini.role[co][i]="Chapter Master") then dead=false;
                 
 	                if (dead=true){
 	                    var man_size;man_size=0;
-	                    man_size=scr_unit_size(obj_ini.armour[co,i],obj_ini.role[co,i],true);
+	                    man_size=scr_unit_size(obj_ini.armour[co][i],obj_ini.role[co][i],true);
                     
 	                    /*
                     
-	                    // if (obj_ini.armour[co,i]="Terminator Armour") then man_size+=1;
-	                    if (obj_ini.armour[co,i]="Tartaros") then man_size+=1;
-	                    if (string_count("Terminator",obj_ini.armour[co,i])>0) then man_size+=1;
-	                    if (string_count("Dread",obj_ini.armour[co,i])>0) then man_size+=7;
-	                    // if (obj_ini.mobi[co,i]="Jump Pack") then man_size+=1;
-	                    if (obj_ini.role[co,i]="Chapter Master") then man_size+=1;*/
-	                    obj_ini.ship_carrying[obj_ini.lid[co,i]]-=man_size;
+	                    // if (obj_ini.armour[co][i]="Terminator Armour") then man_size+=1;
+	                    if (obj_ini.armour[co][i]="Tartaros") then man_size+=1;
+	                    if (string_count("Terminator",obj_ini.armour[co][i])>0) then man_size+=1;
+	                    if (string_count("Dread",obj_ini.armour[co][i])>0) then man_size+=7;
+	                    // if (obj_ini.mobi[co][i]="Jump Pack") then man_size+=1;
+	                    if (obj_ini.role[co][i]="Chapter Master") then man_size+=1;*/
+	                    obj_ini.ship_carrying[obj_ini.lid[co][i]]-=man_size;
                     
-	                    if (obj_ini.role[co,i]="Chapter Master") then command_lost+=1;
-	                    if (obj_ini.role[co,i]="Master of Sanctity") then command_lost+=1;
-	                    if (obj_ini.role[co,i]="Master of the Apothecarion") then command_lost+=1;
-	                    if (obj_ini.role[co,i]="Chief "+string(obj_ini.role[100,17])) then command_lost+=1;
-	                    if (obj_ini.role[co,i]="Forge Master") then command_lost+=1;
-	                    if (obj_ini.role[co,i]=obj_ini.role[100,17]) then command_lost+=1;
-	                    if (obj_ini.role[co,i]=obj_ini.role[100,14]) then command_lost+=1;
-	                    if (obj_ini.role[co,i]=obj_ini.role[100,15]) then command_lost+=1;
-	                    if (obj_ini.role[co,i]=obj_ini.role[100,16]) then command_lost+=1;
-	                    if (obj_ini.role[co,i]=obj_ini.role[100,6]) then command_lost+=1;
-	                    if (obj_ini.role[co,i]=obj_ini.role[100,5]) then command_lost+=1;
-	                    if (obj_ini.role[co,i]="Codiciery") then command_lost+=1;
-	                    if (obj_ini.role[co,i]="Lexicanum") then command_lost+=1;
-	                    if (obj_ini.role[co,i]=string(obj_ini.role[100,17])+" Aspirant") then command_lost+=1;
-	                    if (obj_ini.role[co,i]=string(obj_ini.role[100,14])+" Aspirant") then command_lost+=1;
-	                    if (obj_ini.role[co,i]=string(obj_ini.role[100,15])+" Aspirant") then command_lost+=1;
-	                    if (obj_ini.role[co,i]=string(obj_ini.role[100,16])+" Aspirant") then command_lost+=1;
-	                    if (obj_ini.role[co,i]="Venerable "+string(obj_ini.role[100,6])) then command_lost+=1;
+	                    if (obj_ini.role[co][i]="Chapter Master") then command_lost+=1;
+	                    if (obj_ini.role[co][i]="Master of Sanctity") then command_lost+=1;
+	                    if (obj_ini.role[co][i]="Master of the Apothecarion") then command_lost+=1;
+	                    if (obj_ini.role[co][i]="Chief "+string(obj_ini.role[100,17])) then command_lost+=1;
+	                    if (obj_ini.role[co][i]="Forge Master") then command_lost+=1;
+	                    if (obj_ini.role[co][i]=obj_ini.role[100,17]) then command_lost+=1;
+	                    if (obj_ini.role[co][i]=obj_ini.role[100][14]) then command_lost+=1;
+	                    if (obj_ini.role[co][i]=obj_ini.role[100][15]) then command_lost+=1;
+	                    if (obj_ini.role[co][i]=obj_ini.role[100][16]) then command_lost+=1;
+	                    if (obj_ini.role[co][i]=obj_ini.role[100][6]) then command_lost+=1;
+	                    if (obj_ini.role[co][i]=obj_ini.role[100][5]) then command_lost+=1;
+	                    if (obj_ini.role[co][i]="Codiciery") then command_lost+=1;
+	                    if (obj_ini.role[co][i]="Lexicanum") then command_lost+=1;
+	                    if (obj_ini.role[co][i]=string(obj_ini.role[100,17])+" Aspirant") then command_lost+=1;
+	                    if (obj_ini.role[co][i]=string(obj_ini.role[100][14])+" Aspirant") then command_lost+=1;
+	                    if (obj_ini.role[co][i]=string(obj_ini.role[100][15])+" Aspirant") then command_lost+=1;
+	                    if (obj_ini.role[co][i]=string(obj_ini.role[100][16])+" Aspirant") then command_lost+=1;
+	                    if (obj_ini.role[co][i]="Venerable "+string(obj_ini.role[100][6])) then command_lost+=1;
                     
 	                    clean[co]=1;obj_controller.marines-=1;marines_lost+=1;
-	                    obj_ini.race[co,i]=1;obj_ini.loc[co,i]="";obj_ini.name[co,i]="";obj_ini.role[co,i]="";
-	                    obj_ini.wep1[co,i]="";obj_ini.lid[co,i]=0;obj_ini.wid[co,i]=0;obj_ini.wep2[co,i]="";
-	                    obj_ini.armour[co,i]="";obj_ini.gear[co,i]="";obj_ini.mobi[co,i]="";obj_ini.hp[co,i]=0;
-	                    obj_ini.chaos[co,i]=0;obj_ini.experience[co,i]=0;obj_ini.age[co,i]=0;
+	                    obj_ini.race[co][i]=1;obj_ini.loc[co][i]="";obj_ini.name[co][i]="";obj_ini.role[co][i]="";
+	                    obj_ini.wep1[co][i]="";obj_ini.lid[co][i]=0;obj_ini.wid[co][i]=0;obj_ini.wep2[co][i]="";
+	                    obj_ini.armour[co][i]="";obj_ini.gear[co][i]="";obj_ini.mobi[co][i]="";obj_ini.hp[co][i]=0;
+	                    obj_ini.chaos[co][i]=0;obj_ini.experience[co][i]=0;obj_ini.age[co][i]=0;
 	                    seed+=2;
 	                }
-	                if (dead=false) and ((obj_ini.role[co,i]=obj_ini.role[100,15]) or (obj_ini.role[co,i]="Master of the Apothecarion")) and (obj_ini.gear[co,i]="Narthecium") then apoth+=1;
+	                if (dead=false) and ((obj_ini.role[co][i]=obj_ini.role[100][15]) or (obj_ini.role[co][i]="Master of the Apothecarion")) and (obj_ini.gear[co][i]="Narthecium") then apoth+=1;
 	                if (dead=false){
-	                    if (type="normal") then obj_ini.experience[co,i]+=floor(random(2))+4;
-	                    if (type="hard") then obj_ini.experience[co,i]+=floor(random(2))+10;
-	                    if (type="brutal") then obj_ini.experience[co,i]+=floor(random(5))+15;
+	                    if (type="normal") then obj_ini.experience[co][i]+=floor(random(2))+4;
+	                    if (type="hard") then obj_ini.experience[co][i]+=floor(random(2))+10;
+	                    if (type="brutal") then obj_ini.experience[co][i]+=floor(random(5))+15;
                     
-	                    if (obj_ini.role[co,i]=obj_ini.role[100,17]) then scr_powers_new(co,i);
-	                    if (obj_ini.role[co,i]="Codiciery") then scr_powers_new(co,i);
-	                    if (obj_ini.role[co,i]="Lexicanum") then scr_powers_new(co,i);
+	                    if (obj_ini.role[co][i]=obj_ini.role[100,17]) then scr_powers_new(co,i);
+	                    if (obj_ini.role[co][i]="Codiciery") then scr_powers_new(co,i);
+	                    if (obj_ini.role[co][i]="Lexicanum") then scr_powers_new(co,i);
 	                }
 	            }
         
@@ -161,8 +161,8 @@ function scr_crusade() {
 	tixt+=string(marines_lost)+" of your battle brothers fell in combat.";
 
 	if (obj_ini.doomed=0){
-	    if (apoth>0) and (seed>0) then tixt+="  The "+string(apoth)+" surviving "+string(obj_ini.role[100,15])+" were able to recover "+string(seed)+" Gene-Seed.";
-	    if (apoth=0) and (seed>0) then tixt+="  You had no able-bodied "+string(obj_ini.role[100,15])+", or all of them perished in the Crusade.  Foreign Apothecaries were able to recover "+string(seed)+" of your Gene-Seed.";
+	    if (apoth>0) and (seed>0) then tixt+="  The "+string(apoth)+" surviving "+string(obj_ini.role[100][15])+" were able to recover "+string(seed)+" Gene-Seed.";
+	    if (apoth=0) and (seed>0) then tixt+="  You had no able-bodied "+string(obj_ini.role[100][15])+", or all of them perished in the Crusade.  Foreign Apothecaries were able to recover "+string(seed)+" of your Gene-Seed.";
 	}
 	if (obj_ini.doomed=1){
 	    tixt+="  Due to fatal mutations in your marines none of the fallen Gene-Seed was recoverable.";

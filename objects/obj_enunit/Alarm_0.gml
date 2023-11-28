@@ -173,8 +173,8 @@ if (engaged=0){// Shooting
                                 var j,totes;j=0;totes=0;
                                 repeat(600){j+=1;
                                     if (enemy2.marine_hp[j]>0){
-                                        if (enemy2.marine_type[j]=obj_ini.role[100,6]) then totes+=1;
-                                        if (enemy2.marine_type[j]="Venerable "+string(obj_ini.role[100,6])) then totes+=1;
+                                        if (enemy2.marine_type[j]=obj_ini.role[100][6]) then totes+=1;
+                                        if (enemy2.marine_type[j]="Venerable "+string(obj_ini.role[100][6])) then totes+=1;
                                     }
                                     if (enemy2.veh_hp[j]>0){
                                         if (enemy2.veh_type[i]="Rhino") then totes+=1;
@@ -493,8 +493,8 @@ var range_shooti;
                                 var j,totes;j=0;totes=0;
                                 repeat(600){j+=1;
                                     if (enemy2.marine_hp[j]>0){
-                                        if (enemy2.marine_type[j]=obj_ini.role[100,6]) then totes+=1;
-                                        if (enemy2.marine_type[j]="Venerable "+string(obj_ini.role[100,6])) then totes+=1;
+                                        if (enemy2.marine_type[j]=obj_ini.role[100][6]) then totes+=1;
+                                        if (enemy2.marine_type[j]="Venerable "+string(obj_ini.role[100][6])) then totes+=1;
                                     }
                                     if (enemy2.veh_hp[j]>0){
                                         if (enemy2.veh_type[i]="Rhino") then totes+=1;

@@ -144,24 +144,24 @@ if (string_count("_attack",battle_special)>0){
 
 
 if (tacticals>0) and (veterans>0){
-    p2=string(tacticals+veterans)+" "+string(obj_ini.role[100,8])+"s, ";
+    p2=string(tacticals+veterans)+" "+string(obj_ini.role[100][8])+"s, ";
 }
 if (tacticals>0) and (veterans=0){
-    if (tacticals=1) then p2=string(tacticals)+" "+string(obj_ini.role[100,8])+", ";
-    if (tacticals>1) then p2=string(tacticals)+" "+string(obj_ini.role[100,8])+"s, ";
+    if (tacticals=1) then p2=string(tacticals)+" "+string(obj_ini.role[100][8])+", ";
+    if (tacticals>1) then p2=string(tacticals)+" "+string(obj_ini.role[100][8])+"s, ";
 }
 if (tacticals=0) and (veterans>0){
-    if (veterans=1) then p2=string(veterans)+" "+string(obj_ini.role[100,3])+", ";
-    if (veterans>1) then p2=string(veterans)+" "+string(obj_ini.role[100,3])+"s, ";
+    if (veterans=1) then p2=string(veterans)+" "+string(obj_ini.role[100][3])+", ";
+    if (veterans>1) then p2=string(veterans)+" "+string(obj_ini.role[100][3])+"s, ";
 }
 
 if (assaults>0){
-    if (assaults=1) then p2+=string(assaults)+" "+string(obj_ini.role[100,10])+", ";
-    if (assaults>1) then p2+=string(assaults)+" "+string(obj_ini.role[100,10])+"s, ";
+    if (assaults=1) then p2+=string(assaults)+" "+string(obj_ini.role[100][10])+", ";
+    if (assaults>1) then p2+=string(assaults)+" "+string(obj_ini.role[100][10])+"s, ";
 }
 if (devastators>0){
-    if (devastators=1) then p2+=string(devastators)+" "+string(obj_ini.role[100,9])+", ";
-    if (devastators>1) then p2+=string(devastators)+" "+string(obj_ini.role[100,9])+"s, ";
+    if (devastators=1) then p2+=string(devastators)+" "+string(obj_ini.role[100][9])+", ";
+    if (devastators>1) then p2+=string(devastators)+" "+string(obj_ini.role[100][9])+"s, ";
 }
 
 if (temp<200) and (terminators>0){
@@ -170,13 +170,13 @@ if (temp<200) and (terminators>0){
 }
 
 if (temp<200) and (chaplains>0){
-    if (chaplains=1) then p2+=string(chaplains)+" "+string(obj_ini.role[100,14])+", ";
-    if (chaplains>1) then p2+=string(chaplains)+" "+string(obj_ini.role[100,14])+", ";
+    if (chaplains=1) then p2+=string(chaplains)+" "+string(obj_ini.role[100][14])+", ";
+    if (chaplains>1) then p2+=string(chaplains)+" "+string(obj_ini.role[100][14])+", ";
 }
 
 if (temp<200) and (apothecaries>0){
-    if (apothecaries=1) then p2+=string(apothecaries)+" "+string(obj_ini.role[100,15])+", ";
-    if (apothecaries>1) then p2+=string(apothecaries)+" "+string(obj_ini.role[100,15])+", ";
+    if (apothecaries=1) then p2+=string(apothecaries)+" "+string(obj_ini.role[100][15])+", ";
+    if (apothecaries>1) then p2+=string(apothecaries)+" "+string(obj_ini.role[100][15])+", ";
 }
 
 if (temp<200) and (librarians>0){
@@ -185,14 +185,14 @@ if (temp<200) and (librarians>0){
 }
 
 if (temp<200) and (techmarines>0){
-    if (techmarines=1) then p2+=string(techmarines)+" "+string(obj_ini.role[100,16])+", ";
-    if (techmarines>1) then p2+=string(techmarines)+" "+string(obj_ini.role[100,16])+", ";
+    if (techmarines=1) then p2+=string(techmarines)+" "+string(obj_ini.role[100][16])+", ";
+    if (techmarines>1) then p2+=string(techmarines)+" "+string(obj_ini.role[100][16])+", ";
 }
 
 
 if (scouts>0){
-    if (scouts=1) then p2+=string(scouts)+" "+string(obj_ini.role[100,12])+", ";
-    if (scouts>1) then p2+=string(scouts)+" "+string(obj_ini.role[100,12])+"s, ";
+    if (scouts=1) then p2+=string(scouts)+" "+string(obj_ini.role[100][12])+", ";
+    if (scouts>1) then p2+=string(scouts)+" "+string(obj_ini.role[100][12])+"s, ";
 }
 
 
@@ -229,8 +229,8 @@ if (standard_bearers>1) and (dropping=0) then p5="  The Battle Standard Bearers 
 
 if (dreadnoughts+predators+land_raiders>3){
     p6="  Forming up the armoured division is ";
-    if (dreadnoughts=1) then p6+=string(dreadnoughts)+" "+string(obj_ini.role[100,6])+", ";
-    if (dreadnoughts>1) then p6+=string(dreadnoughts)+" "+string(obj_ini.role[100,6])+"s, ";
+    if (dreadnoughts=1) then p6+=string(dreadnoughts)+" "+string(obj_ini.role[100][6])+", ";
+    if (dreadnoughts>1) then p6+=string(dreadnoughts)+" "+string(obj_ini.role[100][6])+"s, ";
     
     if (rhinos=1) then p6+=string(rhinos)+" Rhino, ";
     if (rhinos>1) then p6+=string(rhinos)+" Rhinos, ";

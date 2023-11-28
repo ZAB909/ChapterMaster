@@ -72,22 +72,22 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
             // show_message(string(origin.board_co[1]));
         
             co=origin.board_co[o];i=origin.board_id[o];difficulty=50;ac=0;dr=1;
-            if (obj_ini.hp[co,i]>0){
+            if (obj_ini.hp[co][i]>0){
                 
                 // Bonuses
-                difficulty+=obj_ini.experience[co,i]/20;
+                difficulty+=obj_ini.experience[co][i]/20;
                 difficulty+=(1-(target.hp/target.maxhp))*33;
-                if (obj_ini.wep1[co,i]="Chainfist") or (obj_ini.wep1[co,i]="Lascutter") then difficulty+=3;
-                if (obj_ini.wep2[co,i]="Chainfist") or (obj_ini.wep2[co,i]="Lascutter") then difficulty+=3;
-                if (obj_ini.wep1[co,i]="Meltagun") or (obj_ini.wep2[co,i]="Meltagun") then difficulty+=2;
+                if (obj_ini.wep1[co][i]="Chainfist") or (obj_ini.wep1[co][i]="Lascutter") then difficulty+=3;
+                if (obj_ini.wep2[co][i]="Chainfist") or (obj_ini.wep2[co][i]="Lascutter") then difficulty+=3;
+                if (obj_ini.wep1[co][i]="Meltagun") or (obj_ini.wep2[co][i]="Meltagun") then difficulty+=2;
                 var g,yea;
                 g=0;yea=false;repeat(4){g+=1;if (obj_ini.adv[g]="Boarders") then yea=true;}if (yea=true) then difficulty+=7;
                 g=0;yea=false;repeat(4){g+=1;if (obj_ini.adv[g]="Melee Enthusiasts") then yea=true;}if (yea=true) then difficulty+=3;
                 g=0;yea=false;repeat(4){g+=1;if (obj_ini.adv[g]="Lightning Warriors") then yea=true;}if (yea=true) then difficulty+=3;
                 
                 // Penalties
-                if (obj_ini.wep1[co,i]="") and (obj_ini.wep2[co,i]="") then difficulty-=10;
-                if (obj_ini.wep1[co,i]="") or (obj_ini.wep2[co,i]="") then difficulty-=10;
+                if (obj_ini.wep1[co][i]="") and (obj_ini.wep2[co][i]="") then difficulty-=10;
+                if (obj_ini.wep1[co][i]="") or (obj_ini.wep2[co][i]="") then difficulty-=10;
                 if (obj_ini.occulobe=1) then difficulty-=5;
                 if (target.owner=2) or ((target.owner=10) and (obj_fleet.csm_exp=0)) then difficulty-=0;// Cultists/Pirates/Humans
                 if (target.owner=1) or (target.owner=5) or (target.owner=7) or (target.owner=6) or (target.owner=13) then difficulty-=10;
@@ -100,16 +100,16 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                 if (roll1<=difficulty){// Success
                     if (damage=true) and (steal=false){// Damaging
                         var to_bomb;to_bomb=false;
-                        if (plasma_bomb=true) and (obj_ini.gear[co,i]="Plasma Bomb") then to_bomb=true;
+                        if (plasma_bomb=true) and (obj_ini.gear[co][i]="Plasma Bomb") then to_bomb=true;
                         if (choose(1,2,3,4,5)<4) then to_bomb=false;
                         if (to_bomb=false){target.hp-=7;damaged_ship=max(1,damaged_ship);}
-                        if (to_bomb=true){target.hp-=200;damaged_ship=2;obj_ini.gear[co,i]="";}
+                        if (to_bomb=true){target.hp-=200;damaged_ship=2;obj_ini.gear[co][i]="";}
                     }
                     if (steal=true) and (damage=false){// Stealing
                         var bridge_damage;bridge_damage=0;
                         damaged_ship=max(1,damaged_ship);
                         
-                        var we,whi,we1,we2;we="";we1=obj_ini.wep1[co,i];we2=obj_ini.wep2[co,i];whi=0;
+                        var we,whi,we1,we2;we="";we1=obj_ini.wep1[co][i];we2=obj_ini.wep2[co][i];whi=0;
                         we1=string_replace(we1,"Master Crafted","");we2=string_replace(we2,"Master Crafted","");
                         
                         bridge_damage=3;
@@ -121,7 +121,7 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                         we="Thunder Hammer";if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,6);
                         we="Plasma Gun";if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,5);
                         we="Relic Blade";if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,4);
-                        if (string_pos("&",string(obj_ini.wep1[co,i])+string(obj_ini.wep2[co,i]))>0) then bridge_damage=9;
+                        if (string_pos("&",string(obj_ini.wep1[co][i])+string(obj_ini.wep2[co][i]))>0) then bridge_damage=9;
                         
                         target.bridge-=bridge_damage;
                     }
@@ -165,41 +165,41 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                 
                 
                 if (roll1>difficulty){// FAILURE
-                    dr=0.7-((obj_ini.experience[co,i]*obj_ini.experience[co,i])/40000);
-                    if (obj_ini.gear[co,i]="Rosarius") then dr-=0.33;
-                    if (obj_ini.gear[co,i]="Iron Halo") then dr-=0.33;
-                    if (obj_ini.mobi[co,i]="Jump Pack") then dr-=0.1;
+                    dr=0.7-((obj_ini.experience[co][i]*obj_ini.experience[co][i])/40000);
+                    if (obj_ini.gear[co][i]="Rosarius") then dr-=0.33;
+                    if (obj_ini.gear[co][i]="Iron Halo") then dr-=0.33;
+                    if (obj_ini.mobi[co][i]="Jump Pack") then dr-=0.1;
                     if (dr<0.25) then dr=0.25;
                     
                     ac=0;
-                    if (obj_ini.armour[co,i]="Scout Armour") then ac=8;
-                    if (obj_ini.armour[co,i]="MK3 Iron Armour") then ac=26;
-                    if (obj_ini.armour[co,i]="MK4 Maximus") then ac=19;
-                    if (obj_ini.armour[co,i]="MK5 Heresy") then ac=17;
-                    if (obj_ini.armour[co,i]="MK6 Corvus") then ac=15;
-                    if (obj_ini.armour[co,i]="MK7 Aquila") then ac=18;
-                    if (obj_ini.armour[co,i]="MK8 Errant") then ac=22;
-                    if (obj_ini.armour[co,i]="Power Armour") then ac=17;
-                    if (obj_ini.armour[co,i]="Artificer Armour") then ac=37;
-                    if (obj_ini.armour[co,i]="Terminator Armour") then ac=42;
-                    if (obj_ini.armour[co,i]="Tartaros") then ac=44;
-                    if (obj_ini.armour[co,i]="Dreadnought") then ac=50;
-                    if (obj_ini.armour[co,i]="Ork Armour") then ac=15;
-                    if (string_count("&",obj_ini.armour[co,i])>0){
+                    if (obj_ini.armour[co][i]="Scout Armour") then ac=8;
+                    if (obj_ini.armour[co][i]="MK3 Iron Armour") then ac=26;
+                    if (obj_ini.armour[co][i]="MK4 Maximus") then ac=19;
+                    if (obj_ini.armour[co][i]="MK5 Heresy") then ac=17;
+                    if (obj_ini.armour[co][i]="MK6 Corvus") then ac=15;
+                    if (obj_ini.armour[co][i]="MK7 Aquila") then ac=18;
+                    if (obj_ini.armour[co][i]="MK8 Errant") then ac=22;
+                    if (obj_ini.armour[co][i]="Power Armour") then ac=17;
+                    if (obj_ini.armour[co][i]="Artificer Armour") then ac=37;
+                    if (obj_ini.armour[co][i]="Terminator Armour") then ac=42;
+                    if (obj_ini.armour[co][i]="Tartaros") then ac=44;
+                    if (obj_ini.armour[co][i]="Dreadnought") then ac=50;
+                    if (obj_ini.armour[co][i]="Ork Armour") then ac=15;
+                    if (string_count("&",obj_ini.armour[co][i])>0){
                         // Artifact armour
-                        if (string_count("Power",obj_ini.armour[co,i])>0) then ac=30;
-                        if (string_count("Artificer",obj_ini.armour[co,i])>0) then ac=37;
-                        if (string_count("Terminator",obj_ini.armour[co,i])>0) then ac=46;
-                        if (string_count("Dreadnought",obj_ini.armour[co,i])>0) then ac=44;
+                        if (string_count("Power",obj_ini.armour[co][i])>0) then ac=30;
+                        if (string_count("Artificer",obj_ini.armour[co][i])>0) then ac=37;
+                        if (string_count("Terminator",obj_ini.armour[co][i])>0) then ac=46;
+                        if (string_count("Dreadnought",obj_ini.armour[co][i])>0) then ac=44;
                     }
-                    if (obj_ini.armour[co,i]!=""){// STC Bonuses
+                    if (obj_ini.armour[co][i]!=""){// STC Bonuses
                         if (obj_controller.stc_bonus[1]=5){if (ac>=40) then ac+=2;if (ac<40) then ac+=1;}
                         if (obj_controller.stc_bonus[2]=3){if (ac>=40) then ac+=2;if (ac<40) then ac+=1;}
                     }
-                    if (obj_ini.wep1[co,i]="Boarding Shield") then ac+=8;
-                    if (obj_ini.wep2[co,i]="Boarding Shield") then ac+=8;
-                    if (obj_ini.wep1[co,i]="Storm Shield") then ac+=16;
-                    if (obj_ini.wep2[co,i]="Storm Shield") then ac+=16;
+                    if (obj_ini.wep1[co][i]="Boarding Shield") then ac+=8;
+                    if (obj_ini.wep2[co][i]="Boarding Shield") then ac+=8;
+                    if (obj_ini.wep1[co][i]="Storm Shield") then ac+=16;
+                    if (obj_ini.wep2[co][i]="Storm Shield") then ac+=16;
                     
                     roll2=floor(random(100))+1;
                     
@@ -285,14 +285,14 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                     if (arp=1) then hurt=max(0,attack*dr);
                     if (arp=0) then hurt=max(0,(attack*dr)-ac);
                     
-                    repeat(hits){obj_ini.hp[co,i]-=hurt;}
+                    repeat(hits){obj_ini.hp[co][i]-=hurt;}
                     
-                    if (obj_ini.hp[co,i]<=0){boarders_dead+=1;
-                        if ((obj_ini.role[co,i]=obj_ini.role[100,15]) or (obj_ini.role[co,i]="Master of Sanctity")) and (obj_ini.gear[co,i]="Narthecium") then apothecary-=1;
-                        if ((obj_ini.role[co,i]=obj_ini.role[100,15]) or (obj_ini.role[co,i]="Master of Sanctity")) and (obj_ini.gear[co,i]="Narthecium") then apothecary_had-=1;
+                    if (obj_ini.hp[co][i]<=0){boarders_dead+=1;
+                        if ((obj_ini.role[co][i]=obj_ini.role[100][15]) or (obj_ini.role[co][i]="Master of Sanctity")) and (obj_ini.gear[co][i]="Narthecium") then apothecary-=1;
+                        if ((obj_ini.role[co][i]=obj_ini.role[100][15]) or (obj_ini.role[co][i]="Master of Sanctity")) and (obj_ini.gear[co][i]="Narthecium") then apothecary_had-=1;
                     }
                     
-                    // show_message(string(obj_ini.role[co,i])+" "+string(obj_ini.role[co,i])+" hit by "+string(hits)+"x "+string(wep)+", "+string(obj_ini.hp[co,i])+" HP remaining");
+                    // show_message(string(obj_ini.role[co][i])+" "+string(obj_ini.role[co][i])+" hit by "+string(hits)+"x "+string(wep)+", "+string(obj_ini.hp[co][i])+" HP remaining");
                 }
             }
             
@@ -303,9 +303,9 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
         
         if (experience>0){var o,co,i;o=0;co=0;i=0;
             repeat(boarders){o+=1;var exp_roll;exp_roll=floor(random(150))+1;co=origin.board_co[o];i=origin.board_id[o];
-                if (exp_roll>=obj_ini.experience[co,i]) and (obj_ini.experience[co,i]<50) then obj_ini.experience[co,i]+=experience;
-                if (exp_roll>=obj_ini.experience[co,i]) and (obj_ini.experience[co,i]>=50) and (obj_ini.experience[co,i]<100) then obj_ini.experience[co,i]+=floor(experience/3);
-                if (exp_roll>=obj_ini.experience[co,i]) and (obj_ini.experience[co,i]>=100) and (obj_ini.experience[co,i]<150) then obj_ini.experience[co,i]+=1;
+                if (exp_roll>=obj_ini.experience[co][i]) and (obj_ini.experience[co][i]<50) then obj_ini.experience[co][i]+=experience;
+                if (exp_roll>=obj_ini.experience[co][i]) and (obj_ini.experience[co][i]>=50) and (obj_ini.experience[co][i]<100) then obj_ini.experience[co][i]+=floor(experience/3);
+                if (exp_roll>=obj_ini.experience[co][i]) and (obj_ini.experience[co][i]>=100) and (obj_ini.experience[co][i]<150) then obj_ini.experience[co][i]+=1;
             }
             experience=0;
         }

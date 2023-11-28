@@ -277,7 +277,7 @@ if (obj_controller.cooldown<=0) and (loading=1){
             arti.type="recon";
             // Right here should pass the man_sel variables
             // var i;i=-1;repeat(150){i+=1;arti.man_sel[i]=obj_controller.man_sel[i];}
-            var i;i=-1;
+            var i=-1;
             repeat(150){i+=1;
                 arti.man_sel[i]=0;arti.ide[i]=0;arti.man[i]="";
                 if (obj_controller.man_sel[i]!=0){
@@ -313,7 +313,7 @@ if (obj_controller.cooldown<=0) and (loading=1){
             var i,tch,mch;i=0;tch=0;mch=0;
             repeat(300){i+=1;
                 if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1){
-                    if (obj_controller.ma_role[i]=obj_ini.role[100,16]) or ((obj_controller.ma_role[i]="Forge Master")){
+                    if (obj_controller.ma_role[i]=obj_ini.role[100][16]) or ((obj_controller.ma_role[i]="Forge Master")){
                         tch+=1;
                     }
                     if (obj_controller.ma_role[i]="Techpriest"){

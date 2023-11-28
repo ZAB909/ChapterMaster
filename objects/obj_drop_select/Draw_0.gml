@@ -487,13 +487,13 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
                 if (v>300){co+=1;v=1;}
                 if (co>10) then stop=1;
                 if (stop=0){
-                    if (fighting[co,v]!=0){obj_ncombat.fighting[co,v]=1;}// show_message(string(co)+":"+string(v)+" is fighting");
+                    if (fighting[co][v]!=0){obj_ncombat.fighting[co][v]=1;}// show_message(string(co)+":"+string(v)+" is fighting");
                     if (attack=1) and (v<=100){
-                        if (veh_fighting[co,v]!=0) then obj_ncombat.veh_fighting[co,v]=1;
+                        if (veh_fighting[co][v]!=0) then obj_ncombat.veh_fighting[co][v]=1;
                     }
                     if (attack=1) and (ship_all[500]=1){
-                        if (obj_ini.loc[co,v]=p_target.name) and (obj_ini.wid[co,v]=obj_controller.selecting_planet) and (fighting[co,v]=1) then obj_ncombat.fighting[co,v]=1;
-                        if (v<=100){if (obj_ini.veh_loc[co,v]=p_target.name) and (obj_ini.veh_wid[co,v]=obj_controller.selecting_planet) then obj_ncombat.veh_fighting[co,v]=1;}
+                        if (obj_ini.loc[co][v]=p_target.name) and (obj_ini.wid[co][v]=obj_controller.selecting_planet) and (fighting[co][v]=1) then obj_ncombat.fighting[co][v]=1;
+                        if (v<=100){if (obj_ini.veh_loc[co][v]=p_target.name) and (obj_ini.veh_wid[co][v]=obj_controller.selecting_planet) then obj_ncombat.veh_fighting[co][v]=1;}
                     }
                 }
             }
@@ -823,28 +823,28 @@ if (menu=0) and (purge>=2){
     var sel;sel="";
     if (purge>2){
         if (master=1) then sel+="Chapter Master "+string(obj_ini.master_name)+", ";
-        if (honor>1) then sel+=string(honor)+" "+string(obj_ini.role[100,2])+"s, ";
-        if (honor=1) then sel+="1 "+string(obj_ini.role[100,2])+", ";
-        if (capts>1) then sel+=string(capts)+" "+string(obj_ini.role[100,5])+"s, ";
+        if (honor>1) then sel+=string(honor)+" "+string(obj_ini.role[100][2])+"s, ";
+        if (honor=1) then sel+="1 "+string(obj_ini.role[100][2])+", ";
+        if (capts>1) then sel+=string(capts)+" "+string(obj_ini.role[100][5])+"s, ";
         if (champions>1) then sel+=string(capts)+" Champions, ";
         if (champions=1) then sel+="1 Champion, ";
-        if (capts=1) then sel+="1 "+string(obj_ini.role[100,5])+", ";
-        if (chaplains>1) then sel+=string(chaplains)+" "+string(obj_ini.role[100,14])+"s, ";
-        if (chaplains=1) then sel+="1 "+string(obj_ini.role[100,14])+", ";
-        if (apothecaries>1) then sel+=string(apothecaries)+" "+string(obj_ini.role[100,15])+"s, ";
-        if (apothecaries=1) then sel+="1 "+string(obj_ini.role[100,15])+", ";
+        if (capts=1) then sel+="1 "+string(obj_ini.role[100][5])+", ";
+        if (chaplains>1) then sel+=string(chaplains)+" "+string(obj_ini.role[100][14])+"s, ";
+        if (chaplains=1) then sel+="1 "+string(obj_ini.role[100][14])+", ";
+        if (apothecaries>1) then sel+=string(apothecaries)+" "+string(obj_ini.role[100][15])+"s, ";
+        if (apothecaries=1) then sel+="1 "+string(obj_ini.role[100][15])+", ";
         if (psykers>1) then sel+=string(psykers)+" Psykers, ";
         if (psykers=1) then sel+="1 Psyker, ";
-        if (techmarines>1) then sel+=string(techmarines)+" "+string(obj_ini.role[100,16])+"s, ";
-        if (techmarines=1) then sel+="1 "+string(obj_ini.role[100,16])+", ";
-        if (terminators>1) then sel+=string(terminators)+" "+string(obj_ini.role[100,4])+"s, ";
-        if (terminators=1) then sel+="1 "+string(obj_ini.role[100,4])+", ";
-        if (veterans>1) then sel+=string(veterans)+" "+string(obj_ini.role[100,3])+"s, ";
-        if (veterans=1) then sel+="1 "+string(obj_ini.role[100,3])+", ";
+        if (techmarines>1) then sel+=string(techmarines)+" "+string(obj_ini.role[100][16])+"s, ";
+        if (techmarines=1) then sel+="1 "+string(obj_ini.role[100][16])+", ";
+        if (terminators>1) then sel+=string(terminators)+" "+string(obj_ini.role[100][4])+"s, ";
+        if (terminators=1) then sel+="1 "+string(obj_ini.role[100][4])+", ";
+        if (veterans>1) then sel+=string(veterans)+" "+string(obj_ini.role[100][3])+"s, ";
+        if (veterans=1) then sel+="1 "+string(obj_ini.role[100][3])+", ";
         if (mahreens>1) then sel+=string(mahreens)+" Marines, ";
         if (mahreens=1) then sel+="1 Marine, ";
-        if (dreads>1) then sel+=string(dreads)+" "+string(obj_ini.role[100,6])+", ";
-        if (dreads=1) then sel+="1 "+string(obj_ini.role[100,6])+", ";
+        if (dreads>1) then sel+=string(dreads)+" "+string(obj_ini.role[100][6])+", ";
+        if (dreads=1) then sel+="1 "+string(obj_ini.role[100][6])+", ";
         sel=string_delete(sel,string_length(sel)-1,2);
     }
     // draw_text_ext(xx+310,yy+234,string(sel),-1,206);

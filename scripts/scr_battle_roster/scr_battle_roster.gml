@@ -60,11 +60,11 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
         // //Marines and vehicles get added AT THE SAME TIME, (index [0][1] adds marine AND vehicle at index at the same time for loop x)
         // //This is possible since array for saving vehicles and marines are separated
         // //v<300 is an arbitrary number, probably linked to a company unit limit somewhere
-        // // while ((deploying_unit.name[company, v] != "" ||
-        // //         deploying_unit.veh_role[company, v] != "") && v < 300) {
+        // // while ((deploying_unit.name[company][v] != "" ||
+        // //         deploying_unit.veh_role[company][v] != "") && v < 300) {
 		for (v=1;v<array_length(obj_ini.TTRPG[company]);v++){
             okay = 0;
-			unit = obj_ini.TTRPG[company, v];
+			unit = obj_ini.TTRPG[company][v];
 			if (unit.name() == ""){continue}
             if (man_limit_reached) {
                 break;
@@ -75,24 +75,24 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
             if (stop == 0) {
                 //Special (okay -1) battle cases go here
                 if (string_count("spyrer", new_combat.battle_special) > 0) or(new_combat.battle_special == "space_hulk") or(string_count("chaos_meeting", new_combat.battle_special) > 0) {
-                    if (string_count("Dread", deploying_unit.armour[company, v]) > 0) then okay = -1;
+                    if (string_count("Dread", deploying_unit.armour[company][v]) > 0) then okay = -1;
                 }
                 if (string_count("spyrer", new_combat.battle_special) > 0) {
                     if (okay == 1) and(sofar > 2) then okay = -1;
                 }
-                if (okay <= -1) then new_combat.fighting[company, v] = 0;
+                if (okay <= -1) then new_combat.fighting[company][v] = 0;
 
                 //Normal and other battle cases checks go here
                 else if (okay >= 0) {
                     if (instance_exists(obj_temp4)) { //Exploring ruins ambush case
-                        if (deploying_unit.loc[company, v] == required_location) and(deploying_unit.wid[company, v] == _target_location) and(deploying_unit.hp[company, v] > 0) {
+                        if (deploying_unit.loc[company][v] == required_location) and(deploying_unit.wid[company][v] == _target_location) and(deploying_unit.hp[company][v] > 0) {
                             okay = 1;
                         } else {
                             okay = 0;
                         }
                     } else if (!instance_exists(obj_drop_select)) { // Only when attacked, normal battle
-                        if (_is_planet) and(deploying_unit.loc[company, v] == required_location) and(deploying_unit.wid[company, v] == _target_location) and(deploying_unit.hp[company, v] > 0) and(deploying_unit.god[company, v] < 10) then okay = 1;
-                        else if (!_is_planet) and(deploying_unit.lid[company, v] == _target_location) and(deploying_unit.hp[company, v] > 0) and(deploying_unit.god[company, v] < 10) then okay = 1;
+                        if (_is_planet) and(deploying_unit.loc[company][v] == required_location) and(deploying_unit.wid[company][v] == _target_location) and(deploying_unit.hp[company][v] > 0) and(deploying_unit.god[company][v] < 10) then okay = 1;
+                        else if (!_is_planet) and(deploying_unit.lid[company][v] == _target_location) and(deploying_unit.hp[company][v] > 0) and(deploying_unit.god[company][v] < 10) then okay = 1;
 
                         if (instance_exists(obj_temp_meeting)) {
                             meeting = true;
@@ -101,14 +101,14 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                         }
                     } else if (instance_exists(obj_drop_select)) { // When attacking, normal battle
                         //If not fighting (obj_drop_select pre-check), we skip the unit
-                        if (obj_drop_select.fighting[company, v] == 0) then okay = 0;
+                        if (obj_drop_select.fighting[company][v] == 0) then okay = 0;
 
                         else if (obj_drop_select.attack == 1) {
-                            if (_is_planet) and(deploying_unit.loc[company, v] == required_location) and(deploying_unit.wid[company, v] == _target_location) and(deploying_unit.hp[company, v] > 0) and(deploying_unit.god[company, v] < 10) then okay = 1;
-                            else if (!_is_planet) and(deploying_unit.lid[company, v] == _target_location) and(deploying_unit.hp[company, v] > 0) and(deploying_unit.god[company, v] < 10) then okay = 1;
+                            if (_is_planet) and(deploying_unit.loc[company][v] == required_location) and(deploying_unit.wid[company][v] == _target_location) and(deploying_unit.hp[company][v] > 0) and(deploying_unit.god[company][v] < 10) then okay = 1;
+                            else if (!_is_planet) and(deploying_unit.lid[company][v] == _target_location) and(deploying_unit.hp[company][v] > 0) and(deploying_unit.god[company][v] < 10) then okay = 1;
                         } else if (obj_drop_select.attack != 1) {
                             //Related to defensive battles (¿?). Without the above check, it duplicates marines on offensive ones.
-                            if (obj_drop_select.fighting[company, v] == 1) and(deploying_unit.lid[company, v] == _target_location) then okay = 1;
+                            if (obj_drop_select.fighting[company][v] == 1) and(deploying_unit.lid[company][v] == _target_location) then okay = 1;
                         }
                     }
                 }
@@ -148,7 +148,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                         col = obj_controller.bat_scout_column;
                         new_combat.scouts += 1;
 
-                    }else if (array_contains( [deploying_unit.role[100,8], $"{deploying_unit.role[100, 15]} Aspirant", $"{deploying_unit.role[100, 14]} Aspirant"] , unit.role())) {
+                    }else if (array_contains( [deploying_unit.role[100][8], $"{deploying_unit.role[100, 15]} Aspirant", $"{deploying_unit.role[100, 14]} Aspirant"] , unit.role())) {
                         col = obj_controller.bat_tactical_column;				    //tactical_marines
                         new_combat.tacticals += 1;
                     }else if (unit.role() = deploying_unit.role[100, 3]) or (unit.role() = deploying_unit.role[100, 19]) {			//veterans and veteran sergeants
@@ -401,7 +401,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                     var vokay;
                     vokay = 0;
 
-                    if (deploying_unit.veh_race[company, v] != 0) and(deploying_unit.veh_loc[company, v] = required_location) and(deploying_unit.veh_wid[company, v] = _target_location) then vokay = 1;
+                    if (deploying_unit.veh_race[company][v] != 0) and(deploying_unit.veh_loc[company][v] = required_location) and(deploying_unit.veh_wid[company][v] = _target_location) then vokay = 1;
 
                     if (_is_planet) and(new_combat.local_forces = 1) {
                         var world_name, p_num;
@@ -410,9 +410,9 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                         if (instance_exists(obj_drop_select)) {
                             world_name = obj_drop_select.p_target.name;
                         }
-                        if (deploying_unit.veh_race[company, v] != 0) and(deploying_unit.veh_loc[company, v] = world_name) and(deploying_unit.wid[company, v] = p_num) then vokay = 2;
+                        if (deploying_unit.veh_race[company][v] != 0) and(deploying_unit.veh_loc[company][v] = world_name) and(deploying_unit.wid[company][v] = p_num) then vokay = 2;
                     }
-                    if (!_is_planet) and(deploying_unit.veh_lid[company, v] = _target_location) and(deploying_unit.veh_hp[company, v] > 0) then vokay = 1;
+                    if (!_is_planet) and(deploying_unit.veh_lid[company][v] = _target_location) and(deploying_unit.veh_hp[company][v] > 0) then vokay = 1;
 
                     if (instance_exists(obj_drop_select)) {
                         if (obj_drop_select.attack = 0) then vokay = 0;
@@ -422,11 +422,11 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                     // if (obj_ncombat.veh_fighting[company,v]=1) then vokay=2;// Fuck on me, AI
 
                     if (vokay >= 1) and(new_combat.dropping = 0) {
-                        new_combat.veh_fighting[company, v] = 1;
+                        new_combat.veh_fighting[company][v] = 1;
 
                         var col = 1, targ = 0;
 
-                        switch (deploying_unit.veh_role[company, v]){
+                        switch (deploying_unit.veh_role[company][v]){
                             case "Rhino":
                                 col = obj_controller.bat_rhino_column;
                                 new_combat.rhinos += 1;
@@ -449,26 +449,26 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                         targ.veh += 1;
                         targ.veh_co[targ.veh] = company;
                         targ.veh_id[targ.veh] = v;
-                        targ.veh_type[targ.veh] = deploying_unit.veh_role[company, v];
-                        targ.veh_wep1[targ.veh] = deploying_unit.veh_wep1[company, v];
-                        targ.veh_wep2[targ.veh] = deploying_unit.veh_wep2[company, v];
-                        targ.veh_wep3[targ.veh] = deploying_unit.veh_wep3[company, v];
-                        targ.veh_upgrade[targ.veh] = deploying_unit.veh_upgrade[company, v];
-                        targ.veh_acc[targ.veh] = deploying_unit.veh_acc[company, v];
+                        targ.veh_type[targ.veh] = deploying_unit.veh_role[company][v];
+                        targ.veh_wep1[targ.veh] = deploying_unit.veh_wep1[company][v];
+                        targ.veh_wep2[targ.veh] = deploying_unit.veh_wep2[company][v];
+                        targ.veh_wep3[targ.veh] = deploying_unit.veh_wep3[company][v];
+                        targ.veh_upgrade[targ.veh] = deploying_unit.veh_upgrade[company][v];
+                        targ.veh_acc[targ.veh] = deploying_unit.veh_acc[company][v];
                         if (vokay = 2) then targ.veh_local[targ.veh] = 1;
 
-                        if (deploying_unit.veh_role[company, v] = "Rhino") or(deploying_unit.veh_role[company, v] = "Whirlwind") or(deploying_unit.veh_role[company, v] = "Land Speeder") {
-                            targ.veh_hp[targ.veh] = deploying_unit.veh_hp[company, v] * 2;
+                        if (deploying_unit.veh_role[company][v] = "Rhino") or(deploying_unit.veh_role[company][v] = "Whirlwind") or(deploying_unit.veh_role[company][v] = "Land Speeder") {
+                            targ.veh_hp[targ.veh] = deploying_unit.veh_hp[company][v] * 2;
                             targ.veh_hp_multiplier[targ.veh] = 2;
                             targ.veh_ac[targ.veh] = 20;
                         }
-                        if (deploying_unit.veh_role[company, v] = "Predator") {
-                            targ.veh_hp[targ.veh] = deploying_unit.veh_hp[company, v] * 3;
+                        if (deploying_unit.veh_role[company][v] = "Predator") {
+                            targ.veh_hp[targ.veh] = deploying_unit.veh_hp[company][v] * 3;
                             targ.veh_hp_multiplier[targ.veh] = 3;
                             targ.veh_ac[targ.veh] = 30;
                         }
-                        if (deploying_unit.veh_role[company, v] = "Land Raider") {
-                            targ.veh_hp[targ.veh] = deploying_unit.veh_hp[company, v] * 4;
+                        if (deploying_unit.veh_role[company][v] = "Land Raider") {
+                            targ.veh_hp[targ.veh] = deploying_unit.veh_hp[company][v] * 4;
                             targ.veh_hp_multiplier[targ.veh] = 4;
                             targ.veh_ac[targ.veh] = 40;
                         }

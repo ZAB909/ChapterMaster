@@ -29,6 +29,7 @@ for(run=1; run<=8; run++){
     planet[run]=0;
     dispo[run]=-50;
     p_type[run]="";
+    p_operatives[run]=[];
     p_feature[run]=[];
     p_owner[run]=0;
     p_first[run]=0;

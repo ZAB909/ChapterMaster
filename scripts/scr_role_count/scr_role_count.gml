@@ -30,7 +30,7 @@ function scr_role_count(argument0, argument1) {
 	if (coom>=0){
 	    i=0;com=coom;
 	    repeat(300){
-	        i+=1;if (obj_ini.role[com,i]=argument0) and (obj_ini.god[com,i]<10) then count+=1;
+	        i+=1;if (obj_ini.role[com][i]=argument0) and (obj_ini.god[com][i]<10) then count+=1;
 	    }    
 	    com+=1;
 	}
@@ -40,13 +40,13 @@ function scr_role_count(argument0, argument1) {
 	    i=0;
 	    repeat(300){
 	        i+=1;
-	        if (obj_ini.role[com,i]=argument0) and (argument1="") then count+=1;
-	        if (obj_ini.role[com,i]=argument0) and (obj_ini.loc[com,i]=obj_ini.home_name) and (argument1="home") then count+=1;
-	        if (obj_ini.role[com,i]=argument0) and (argument1="field") and ((obj_ini.loc[com,i]!=obj_ini.home_name) or (obj_ini.lid[com,i]>0)) then count+=1;
+	        if (obj_ini.role[com][i]=argument0) and (argument1="") then count+=1;
+	        if (obj_ini.role[com][i]=argument0) and (obj_ini.loc[com][i]=obj_ini.home_name) and (argument1="home") then count+=1;
+	        if (obj_ini.role[com][i]=argument0) and (argument1="field") and ((obj_ini.loc[com][i]!=obj_ini.home_name) or (obj_ini.lid[com][i]>0)) then count+=1;
         
 	        if (argument1!="home") and (argument1!="field"){
-	            if (obj_ini.role[com,i]=argument0){
-	                var t1;t1=string(obj_ini.loc[com,i])+"|"+string(obj_ini.wid[com,i])+"|";
+	            if (obj_ini.role[com][i]=argument0){
+	                var t1;t1=string(obj_ini.loc[com][i])+"|"+string(obj_ini.wid[com][i])+"|";
 	                if (argument1=t1) then count+=1;
 	            }
 	        }

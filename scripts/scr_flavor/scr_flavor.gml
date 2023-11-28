@@ -162,8 +162,8 @@ function scr_flavor(argument0, argument1, argument2, argument3, argument4) {
 	    }
 	}
 	if (wepp="Close Combat Weapon") and (solod=false){flavored=1;
-	    if (argument3=1) then p1="A "+string(duhs)+" is struck by a "+string(obj_ini.role[100,6])+".";
-	    if (argument3>1) then p1=string(argument3)+" "+string(obj_ini.role[100,6])+"s stomp, wrench, and smash at the "+string(duhs)+" ranks.";
+	    if (argument3=1) then p1="A "+string(duhs)+" is struck by a "+string(obj_ini.role[100][6])+".";
+	    if (argument3>1) then p1=string(argument3)+" "+string(obj_ini.role[100][6])+"s stomp, wrench, and smash at the "+string(duhs)+" ranks.";
 	}
 	if (wepp="Chainsword") and (solod=false){flavored=1;
 	    if (argument3=1) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+".";
@@ -399,10 +399,10 @@ function scr_flavor(argument0, argument1, argument2, argument3, argument4) {
 	    }
 	}
 	if (wepp="Close Combat Weapon") and (solod=false){flavored=1;
-	    if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is struck by a "+string(obj_ini.role[100,6])+" but survives.";
-	    if (argument3=1) and (argument4=1) then p1="A "+string(duhs)+" is struck down by a "+string(obj_ini.role[100,6])+".";
-	    if (argument3>1) and (argument4=0) then p1=string(argument3)+" "+string(obj_ini.role[100,6])+"s wrench and smash at a "+string(duhs)+" but fail to destroy it.";
-	    if (argument3>1) and (argument4>1) then p1=string(argument3)+" "+string(obj_ini.role[100,6])+"s stomp, wrench, and smash "+string(argument4)+" "+string(duhs)+" into paste.";
+	    if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is struck by a "+string(obj_ini.role[100][6])+" but survives.";
+	    if (argument3=1) and (argument4=1) then p1="A "+string(duhs)+" is struck down by a "+string(obj_ini.role[100][6])+".";
+	    if (argument3>1) and (argument4=0) then p1=string(argument3)+" "+string(obj_ini.role[100][6])+"s wrench and smash at a "+string(duhs)+" but fail to destroy it.";
+	    if (argument3>1) and (argument4>1) then p1=string(argument3)+" "+string(obj_ini.role[100][6])+"s stomp, wrench, and smash "+string(argument4)+" "+string(duhs)+" into paste.";
 	}
 	if (wepp="Chainsword") and (solod=false){flavored=1;
 	    if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+" but survives.";
@@ -792,10 +792,10 @@ function scr_flavor(argument0, argument1, argument2, argument3, argument4) {
 	    }
 	}
 	if (wepp="Close Combat Weapon") and (solod=false){flavored=1;
-	    if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is struck by a "+string(obj_ini.role[100,6])+" but survives.";
-	    if (argument3=1) and (argument4=1) then p1="A "+string(duhs)+" is struck down by a "+string(obj_ini.role[100,6])+".";
-	    if (argument3>1) and (argument4=0) then p1=string(argument3)+" "+string(obj_ini.role[100,6])+"s wrench and smash at a "+string(duhs)+" but fail to destroy it.";
-	    if (argument3>1) and (argument4>1) then p1=string(argument3)+" "+string(obj_ini.role[100,6])+"s stomp, wrench, and smash "+string(argument4)+" "+string(duhs)+" into paste.";
+	    if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is struck by a "+string(obj_ini.role[100][6])+" but survives.";
+	    if (argument3=1) and (argument4=1) then p1="A "+string(duhs)+" is struck down by a "+string(obj_ini.role[100][6])+".";
+	    if (argument3>1) and (argument4=0) then p1=string(argument3)+" "+string(obj_ini.role[100][6])+"s wrench and smash at a "+string(duhs)+" but fail to destroy it.";
+	    if (argument3>1) and (argument4>1) then p1=string(argument3)+" "+string(obj_ini.role[100][6])+"s stomp, wrench, and smash "+string(argument4)+" "+string(duhs)+" into paste.";
 	}
 	if (wepp="Chainsword") and (solod=false){flavored=1;
 	    if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+" but survives.";

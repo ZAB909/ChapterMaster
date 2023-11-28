@@ -15,10 +15,10 @@ function scr_apothecary_ship() {
 	for (co = 0;co<11;co++){// This retrieves the amount of apothecaries in each fleet, across all the chapters
 		d=0;
 	    repeat(100){d++;maybe=0;maybe2=0;
-	        if (obj_ini.role[co,d]=obj_ini.role[100,15]) and (obj_ini.hp[co,d]>=10) and (obj_ini.lid[co,d]>0) and (obj_ini.gear[co,d]="Narthecium") then maybe=1;
+	        if (obj_ini.role[co,d]=obj_ini.role[100][15]) and (obj_ini.hp[co,d]>=10) and (obj_ini.lid[co,d]>0) and (obj_ini.gear[co,d]="Narthecium") then maybe=1;
 	        if (obj_ini.role[co,d]="Sister Hospitaler") and (obj_ini.hp[co,d]>=40) and (obj_ini.lid[co,d]>0) then maybe=1;
         
-	        if (obj_ini.role[co,d]=obj_ini.role[100,16]) and (obj_ini.hp[co,d]>=10) and (obj_ini.lid[co,d]>0) and ((obj_ini.gear[co,d]="Servo Arms") or (obj_ini.gear[co,d]="Master Servo Arms")) then maybe2=1;
+	        if (obj_ini.role[co,d]=obj_ini.role[100][16]) and (obj_ini.hp[co,d]>=10) and (obj_ini.lid[co,d]>0) and ((obj_ini.gear[co,d]="Servo Arms") or (obj_ini.gear[co,d]="Master Servo Arms")) then maybe2=1;
 	        if (obj_ini.role[co,d]="Techpriest") and (obj_ini.hp[co,d]>=10) and (obj_ini.lid[co,d]>0) then maybe2=1;
         
 	        if (maybe=1){
