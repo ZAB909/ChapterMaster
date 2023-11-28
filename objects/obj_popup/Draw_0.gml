@@ -17,18 +17,14 @@ if (type=99){
     if (obj_controller.zoomed=1){draw_text_transformed(room_width/2,60*3,string_hash_to_newline("SELECT DESTINATION"),1.5,1.5,0);}
     
     draw_set_halign(fa_left);
-}
-
-if (type=10){
+}else if (type=10){
     target_comp+=1;
     draw_set_color(0);
     draw_set_alpha(target_comp/60);
     draw_rectangle(0,0,room_width,room_height,0);
     draw_set_alpha(1);
     exit;
-}
-
-if ((type=9) or (type=9.1)) and (instance_exists(obj_controller)){
+}else if  ((type=9) or (type=9.1)) and (instance_exists(obj_controller)){
     draw_sprite(spr_planet_screen,0,xx+231,yy+112);
     draw_set_font(fnt_40k_14);
     draw_set_halign(fa_center);
@@ -1039,4 +1035,8 @@ if (zm=0) and (type=5.1) and (instance_exists(obj_controller)){
         draw_text(xx+1521.5,yy+501.5,string_hash_to_newline("Transfer!"));
     }
     draw_set_alpha(1);
+}
+
+if (type == "duel"){
+    
 }

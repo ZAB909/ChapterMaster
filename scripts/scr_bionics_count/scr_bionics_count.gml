@@ -14,7 +14,7 @@ function scr_bionics_count(argument0, argument1, argument2, argument3) {
 	repeat(11){i=0;
 	    repeat(300){i+=1;
 	        if (argument0="star"){
-	            if (obj_ini.race[com,i]=1) and (obj_ini.loc[com,i]=argument1) and (obj_ini.wid[com,i]=argument2){
+	            if (obj_ini.race[com,i]=1) and (obj_ini.loc[com][i]=argument1) and (obj_ini.wid[com][i]=argument2){
 	                if (argument3="total") then count+=obj_ini.bio[com,i];
 	                if (argument3="number") and (obj_ini.bio[com,i]>0) then count+=1;
 	            }

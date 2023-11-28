@@ -6,27 +6,26 @@ function scr_company_order(company) {
 
 	var i=-1,v=0;
 	var temp_vrace, temp_vloc, temp_vrole, temp_vwep1, temp_vwep2, temp_vup, temp_vhp, temp_vchaos, temp_vpilots, temp_vlid, temp_vwid, unit;
-
-	for (var i=0;i<=500;i++){
-	    temp_race[co,i]=0;
-	    temp_loc[co,i]="";
-	    temp_name[co,i]="";
-	    temp_role[co,i]="";
-	    temp_lid[co,i]=0;
-	    temp_bio[co,i]=0;
-	    temp_wid[co,i]=0;
-	    temp_wep1[co,i]="";
-	    temp_wep2[co,i]="";
-	    temp_armour[co,i]="";
-	    temp_gear[co,i]="";
-	    temp_mobi[co,i]="";
-	    temp_hp[co,i]=100;
-	    temp_chaos[co,i]=0;
-	    temp_experience[co,i]=0;
-	    temp_age[co,i]=0;
-	    temp_spe[co,i]="";
-	    temp_god[co,i]=0;
-		temp_struct[co,i]={};
+	for (var i=0;i<500;i++){
+	    temp_race[co][i]=0;
+	    temp_loc[co][i]="";
+	    temp_name[co][i]="";
+	    temp_role[co][i]="";
+	    temp_lid[co][i]=0;
+	    temp_bio[co][i]=0;
+	    temp_wid[co][i]=0;
+	    temp_wep1[co][i]="";
+	    temp_wep2[co][i]="";
+	    temp_armour[co][i]="";
+	    temp_gear[co][i]="";
+	    temp_mobi[co][i]="";
+	    temp_hp[co][i]=100;
+	    temp_chaos[co][i]=0;
+	    temp_experience[co][i]=0;
+	    temp_age[co][i]=0;
+	    temp_spe[co][i]="";
+	    temp_god[co][i]=0;
+		temp_struct[co][i]={};
 	}
 
 
@@ -66,83 +65,48 @@ function scr_company_order(company) {
 
 	//stashes varibles for marine reordering
 	function temp_marine_variables(co, unit_num ,v){
-			var unit = TTRPG[co, unit_num];
+			var unit = TTRPG[co][unit_num];
 			if (unit.squad != "none"){
 				var squad_member;
 				var found = false;
 				for (var r=0;r<array_length(squads[unit.squad].members);r++){
 					squad_member = squads[unit.squad].members[r];
-					if (squad_member[0] == unit.company) and (squad_member[1] == unit.marine_number){
-						squads[unit.squad].members[r] = [co,v];
-						found = true;
-						break;
+					try{
+						if (squad_member[0] == unit.company) and (squad_member[1] == unit.marine_number){
+							squads[unit.squad].members[r] = [co,v];
+							found = true;
+							break;
+						}
+					} catch( _exception) {
+						show_debug_message("{0}",_exception)
+						show_debug_message("{0},{1}",squad_member,squads[unit.squad].members)
 					}
 				}
 				if (!found){unit.squad = "none"}
 			}
-	        temp_race[co,v]=race[co,unit_num];
-	        temp_loc[co,v]=loc[co,unit_num];
-	        temp_name[co,v]=name[co,unit_num];
-	        temp_role[co,v]=role[co,unit_num];
-	        temp_lid[co,v]=lid[co,unit_num];
-	        temp_wid[co,v]=wid[co,unit_num];
-	        temp_wep1[co,v]=wep1[co,unit_num];
-	        temp_wep2[co,v]=wep2[co,unit_num];
-	        temp_armour[co,v]=armour[co,unit_num];
-	        temp_gear[co,v]=gear[co,unit_num];
-	        temp_hp[co,v]=hp[co,unit_num];
-	        temp_chaos[co,v]=chaos[co,unit_num];
-	        temp_experience[co,v]=experience[co,unit_num];
-	        temp_age[co,v]=age[co,unit_num];
-	        temp_mobi[co,v]=mobi[co,unit_num];
-	        temp_spe[co,v]=spe[co,unit_num];
-	        temp_god[co,v]=god[co,unit_num];
-	        temp_bio[co,v]=bio[co,unit_num];
-	        temp_struct[co,v]=jsonify_marine_struct(co,unit_num);
+	        temp_race[co][v]=race[co][unit_num];
+	        temp_loc[co][v]=loc[co][unit_num];
+	        temp_name[co][v]=name[co][unit_num];
+	        temp_role[co][v]=role[co][unit_num];
+	        temp_lid[co][v]=lid[co][unit_num];
+	        temp_wid[co][v]=wid[co][unit_num];
+	        temp_wep1[co][v]=wep1[co][unit_num];
+	        temp_wep2[co][v]=wep2[co][unit_num];
+	        temp_armour[co][v]=armour[co][unit_num];
+	        temp_gear[co][v]=gear[co][unit_num];
+	        temp_hp[co][v]=hp[co][unit_num];
+	        temp_chaos[co][v]=chaos[co][unit_num];
+	        temp_experience[co][v]=experience[co][unit_num];
+	        temp_age[co][v]=age[co][unit_num];
+	        temp_mobi[co][v]=mobi[co][unit_num];
+	        temp_spe[co][v]=spe[co][unit_num];
+	        temp_god[co][v]=god[co][unit_num];
+	        temp_bio[co][v]=bio[co][unit_num];
+	        temp_struct[co][v]=jsonify_marine_struct(co,unit_num);
 	}
 
 	// the order that marines are displayed in the company view screen(this order is augmented by squads)
-	var role_orders = [
-		"Chapter Master",
-		"Forge Master",
-		"Master of Sanctity",
-		"Master of the Apothecarion",
-		string("Chief {0}",role[100,17]),
-		role[100,2],
-		role[100,5],
-		role[100,14],
-		string("{0} Aspirant",role[100,14]),
-		"Death Company",
-		role[100,16],
-		string("{0} Aspirant",role[100,16]),
-		"Techpriest",
-		role[100,15],
-		string("{0} Aspirant",role[100,15]),
-		"Sister Hospitaler",
-		role[100,17],
-		"Codiciery",
-		"Lexicanum",
-		string("{0} Aspirant",role[100,17]),
-		"Standard Bearer",
-		obj_ini.role[100,7],
-		"Death Company",
-		role[100,19],
-		role[100,18],		
-		role[100,4],
-		role[100,3],
-		role[100,8],
-		role[100,10],
-		role[100,9],
-		role[100,12],
-		"Venerable "+string(role[100,6]),
-		role[100,6],
-		"Skitarii",
-		"Crusader",
-		"Ranger",
-		"Sister of Battle",
-		"Flash Git",
-		"Ork Sniper"
-	]
+	var role_orders = role_hierarchy();
 
 	var empty_squads=[]
 	var role_shuffle_length = array_length(role_orders);
@@ -150,8 +114,8 @@ function scr_company_order(company) {
 	var squadless={};
 	// find units not in a squad
 	for (i=0;i<company_length;i++){
-		if (!is_struct(TTRPG[co,i])) then TTRPG[co,i] = new TTRPG_stats("chapter", co, i, "blank");
-		unit = TTRPG[co,i];
+		if (!is_struct(TTRPG[co][i])) then TTRPG[co][i] = new TTRPG_stats("chapter", co, i, "blank");
+		unit = TTRPG[co][i];
 		if (unit.squad=="none") and (unit.name()!=""){
 			if (!struct_exists(squadless, unit.role())){
 				squadless[$ unit.role()] = [i];
@@ -179,7 +143,7 @@ function scr_company_order(company) {
 
 			/* this finds sqauds that are in need of members and checks ot see if there 
 				are any squadless units in the chapter with
-				the rigth role to fill the gap*/ 
+				the right role to fill the gap*/ 
 			for (var r = 0;r < array_length(wanted_roles);r++){
 
 				if (struct_exists(squadless,wanted_roles[r])){
@@ -206,17 +170,17 @@ function scr_company_order(company) {
 			}
 			//if no new sergeants are found for squad someone gets promoted
 			//find a new_sergeant 
-			if (struct_exists(squad.required, role[100,18])){
-				if (squad.required[$ role[100,18]] > 0){
+			if (struct_exists(squad.required, role[100][18])){
+				if (squad.required[$ role[100][18]] > 0){
 					squad.new_sergeant();
-					squad.required[$ role[100,18]]--;
+					squad.required[$ role[100][18]]--;
 				}
 			}
 			//find a new veteran sergeant 
-			if (struct_exists(squad.required, role[100,19])){
-				if (squad.required[$ role[100,19]] > 0){
+			if (struct_exists(squad.required, role[100][19])){
+				if (squad.required[$ role[100][19]] > 0){
 					squad.new_sergeant(true);
-					squad.required[$ role[100,19]]--;
+					squad.required[$ role[100][19]]--;
 				}
 			}		
 		}
@@ -302,53 +266,100 @@ function scr_company_order(company) {
 	//position 2 in role order
 	/*if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands"){
 	i=0;repeat(300){i+=1;
-	    if (role[co,i]=role[100,14]){v+=1;
+	    if (role[co][i]=role[100][14]){v+=1;
 	        temp_marine_variables(co, i ,v);
 	    }
 	}*/
 
 	// Return here
 	for (i=0;i<array_length(temp_name[co]);i++){
-	        race[co,i]=temp_race[co,i];
-	        loc[co,i]=temp_loc[co,i];
-	        name[co,i]=temp_name[co,i];
-	        role[co,i]=temp_role[co,i];
-	        lid[co,i]=temp_lid[co,i];
-	        wid[co,i]=temp_wid[co,i];
-	        wep1[co,i]=temp_wep1[co,i];
-	        wep2[co,i]=temp_wep2[co,i];
-	        armour[co,i]=temp_armour[co,i];
-	        gear[co,i]=temp_gear[co,i];
-	        mobi[co,i]=temp_mobi[co,i];
-	        hp[co,i]=temp_hp[co,i];
-	        chaos[co,i]=temp_chaos[co,i];
-	        experience[co,i]=temp_experience[co,i];
-	        age[co,i]=temp_age[co,i];
-	        spe[co,i]=temp_spe[co,i];
-	        god[co,i]=temp_god[co,i];
-	        bio[co,i]=temp_bio[co,i];
-			TTRPG[co,i] = new TTRPG_stats("chapter", co, i, "blank");
+	        race[co][i]=temp_race[co][i];
+	        loc[co][i]=temp_loc[co][i];
+	        name[co][i]=temp_name[co][i];
+	        role[co][i]=temp_role[co][i];
+	        lid[co][i]=temp_lid[co][i];
+	        wid[co][i]=temp_wid[co][i];
+	        wep1[co][i]=temp_wep1[co][i];
+	        wep2[co][i]=temp_wep2[co][i];
+	        armour[co][i]=temp_armour[co][i];
+	        gear[co][i]=temp_gear[co][i];
+	        mobi[co][i]=temp_mobi[co][i];
+	        hp[co][i]=temp_hp[co][i];
+	        chaos[co][i]=temp_chaos[co][i];
+	        experience[co][i]=temp_experience[co][i];
+	        age[co][i]=temp_age[co][i];
+	        spe[co][i]=temp_spe[co][i];
+	        god[co][i]=temp_god[co][i];
+	        bio[co][i]=temp_bio[co][i];
+			TTRPG[co][i] = new TTRPG_stats("chapter", co, i, "blank");
 			// if stashed marine struct data load it into new structure
-			if (is_string(temp_struct[co,i])){
-				TTRPG[co,i].load_json_data(json_parse(temp_struct[co,i]));
-				TTRPG[co,i].company = co;
-				TTRPG[co,i].marine_number = i;
+			if (is_string(temp_struct[co][i])){
+				TTRPG[co][i].load_json_data(json_parse(temp_struct[co][i]));
+				TTRPG[co][i].company = co;
+				TTRPG[co][i].marine_number = i;
 			}
 	}
 /*	i=0;repeat(300){i+=1;
-	    if (role[co,i]="Death Company"){
-	        if (string_count("Dreadnought",armour[co,i])>0){v+=1;
+	    if (role[co][i]="Death Company"){
+	        if (string_count("Dreadnought",armour[co][i])>0){v+=1;
 	            temp_marine_variables(co, i ,v);
 	        }
 	    }
 	}
 
 	i=0;repeat(300){i+=1;
-	    if (role[co,i]="Death Company"){
-	        if (string_count("Dreadnought",armour[co,i])=0) and (string_count("Terminator",armour[co,i])=0) and (armour[co,i]!="Tartaros"){v+=1;
+	    if (role[co][i]="Death Company"){
+	        if (string_count("Dreadnought",armour[co][i])=0) and (string_count("Terminator",armour[co][i])=0) and (armour[co][i]!="Tartaros"){v+=1;
 	            temp_marine_variables(co, i ,v);
 	        }
 	    }
 	}*/
 
+}
+
+function role_hierarchy(){
+
+	var hierarchy = [
+			"Chapter Master",
+			"Forge Master",
+			"Master of Sanctity",
+			"Master of the Apothecarion",
+			string("Chief {0}",obj_ini.role[100,17]),
+			obj_ini.role[100][2],
+			obj_ini.role[100][5],
+			obj_ini.role[100][14],
+			string("{0} Aspirant",obj_ini.role[100][14]),
+			"Death Company",
+			obj_ini.role[100][16],
+			string("{0} Aspirant",obj_ini.role[100][16]),
+			"Techpriest",
+			obj_ini.role[100][15],
+			string("{0} Aspirant",obj_ini.role[100][15]),
+			"Sister Hospitaler",
+			obj_ini.role[100,17],
+			"Codiciery",
+			"Lexicanum",
+			string("{0} Aspirant",obj_ini.role[100,17]),
+			"Standard Bearer",
+			obj_ini.role[100][7],
+			"Death Company",
+			obj_ini.role[100][19],
+			obj_ini.role[100][18],		
+			obj_ini.role[100][4],
+			obj_ini.role[100][3],
+			obj_ini.role[100][8],
+			obj_ini.role[100][10],
+			obj_ini.role[100][9],
+			obj_ini.role[100][12],
+			"Venerable "+string(obj_ini.role[100][6]),
+			obj_ini.role[100][6],
+			"Skitarii",
+			"Crusader",
+			"Ranger",
+			"Sister of Battle",
+			"Flash Git",
+			"Ork Sniper"
+		];
+
+	return hierarchy
 }

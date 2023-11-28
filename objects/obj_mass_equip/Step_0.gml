@@ -8,44 +8,44 @@ if (engage=true){
         var i=0;
         if (role_number[co]>0){
 			for(i=1; i<=300; i++){
-                if (obj_ini.role[co,i]=obj_ini.role[100,role]){
+                if (obj_ini.role[co][i]=obj_ini.role[100,role]){
                     // ** Start Armour **
                     var yes=false,done="";
 					
                     if (req_armour="Power Armour"){
-                        if (obj_ini.armour[co,i]="Power Armour") then yes=true;
-                        if (obj_ini.armour[co,i]="MK3 Iron Armour") then yes=true;
-                        if (obj_ini.armour[co,i]="MK4 Maximus") then yes=true;
-                        if (obj_ini.armour[co,i]="MK5 Heresy") then yes=true;
-                        if (obj_ini.armour[co,i]="MK6 Corvus") then yes=true;
-                        if (obj_ini.armour[co,i]="MK7 Aquila") then yes=true;
-                        if (obj_ini.armour[co,i]="MK8 Errant") then yes=true;
-                        if (obj_ini.armour[co,i]="Artificer Armour") then yes=true;
+                        if (obj_ini.armour[co][i]="Power Armour") then yes=true;
+                        if (obj_ini.armour[co][i]="MK3 Iron Armour") then yes=true;
+                        if (obj_ini.armour[co][i]="MK4 Maximus") then yes=true;
+                        if (obj_ini.armour[co][i]="MK5 Heresy") then yes=true;
+                        if (obj_ini.armour[co][i]="MK6 Corvus") then yes=true;
+                        if (obj_ini.armour[co][i]="MK7 Aquila") then yes=true;
+                        if (obj_ini.armour[co][i]="MK8 Errant") then yes=true;
+                        if (obj_ini.armour[co][i]="Artificer Armour") then yes=true;
                         
-                        if (co=1) and ((obj_ini.armour[co,i]="Terminator Armour") or (obj_ini.armour[co,i]="Tartaros")){
-                            if (obj_ini.role[co,i]=obj_ini.role[100,3]) then yes=true;
-                            if (obj_ini.role[co,i]=obj_ini.role[100,5]) then yes=true;
-                            if (obj_ini.role[co,i]=obj_ini.role[100,14]) then yes=true;
-                            if (obj_ini.role[co,i]=obj_ini.role[100,15]) then yes=true;
-                            if (obj_ini.role[co,i]=obj_ini.role[100,16]) then yes=true;
-                            if (obj_ini.role[co,i]=obj_ini.role[100,17]) then yes=true;
-                            if (obj_ini.role[co,i]="Lexicanum") then yes=true;
-                            if (obj_ini.role[co,i]="Codiciery") then yes=true;
+                        if (co=1) and ((obj_ini.armour[co][i]="Terminator Armour") or (obj_ini.armour[co][i]="Tartaros")){
+                            if (obj_ini.role[co][i]=obj_ini.role[100][3]) then yes=true;
+                            if (obj_ini.role[co][i]=obj_ini.role[100][5]) then yes=true;
+                            if (obj_ini.role[co][i]=obj_ini.role[100][14]) then yes=true;
+                            if (obj_ini.role[co][i]=obj_ini.role[100][15]) then yes=true;
+                            if (obj_ini.role[co][i]=obj_ini.role[100][16]) then yes=true;
+                            if (obj_ini.role[co][i]=obj_ini.role[100,17]) then yes=true;
+                            if (obj_ini.role[co][i]="Lexicanum") then yes=true;
+                            if (obj_ini.role[co][i]="Codiciery") then yes=true;
                         }
                     }
                     if (req_armour="Terminator Armour"){
-                        if (obj_ini.armour[co,i]="Terminator Armour") then yes=true;
-                        if (obj_ini.armour[co,i]="Tartaros") then yes=true;
-                        if (obj_ini.armour[co,i]!="Terminator Armour") and (obj_ini.armour[co,i]!="Tartaros") and (obj_ini.experience[co,i]<179) then yes=true;
+                        if (obj_ini.armour[co][i]="Terminator Armour") then yes=true;
+                        if (obj_ini.armour[co][i]="Tartaros") then yes=true;
+                        if (obj_ini.armour[co][i]!="Terminator Armour") and (obj_ini.armour[co][i]!="Tartaros") and (obj_ini.experience[co][i]<179) then yes=true;
                     }
-                    if (req_armour="Scout Armour") and (obj_ini.armour[co,i]="Scout Armour") then yes=true;
-                    if (string_count("&",obj_ini.armour[co,i])>0) then yes=true;
+                    if (req_armour="Scout Armour") and (obj_ini.armour[co][i]="Scout Armour") then yes=true;
+                    if (string_count("&",obj_ini.armour[co][i])>0) then yes=true;
                     if (yes=false){
-                        if (obj_ini.armour[co,i]!=""){
-							scr_add_item(obj_ini.armour[co,i],1);
-							obj_ini.armour[co,i]="";
+                        if (obj_ini.armour[co][i]!=""){
+							scr_add_item(obj_ini.armour[co][i],1);
+							obj_ini.armour[co][i]="";
 						}
-                        if (obj_ini.armour[co,i]="") and (req_armour="Power Armour"){
+                        if (obj_ini.armour[co][i]="") and (req_armour="Power Armour"){
                             if (done="") and (scr_item_count("MK7 Aquila")>0) then done="MK7 Aquila";
                             if (done="") and (scr_item_count("MK6 Corvus")>0) then done="MK6 Corvus";
                             if (done="") and (scr_item_count("Power Armour")>0) then done="Power Armour";
@@ -54,90 +54,90 @@ if (engage=true){
                             if (done="") and (scr_item_count("MK3 Iron")>0) then done="MK3 Iron";
                             if (done!=""){
 								scr_add_item(done,-1);
-								obj_ini.armour[co,i]=done;
+								obj_ini.armour[co][i]=done;
 							}
                         }
-                        if (obj_ini.armour[co,i]="") and (req_armour="Terminator Armour"){
+                        if (obj_ini.armour[co][i]="") and (req_armour="Terminator Armour"){
                             if (done="") and (scr_item_count("Terminator Armour")>0) then done="Terminator Armour";
                             if (done="") and (scr_item_count("Tartaros")>0) then done="Tartaros";
                             if (done!=""){
 								scr_add_item(done,-1);
-								obj_ini.armour[co,i]=done;
+								obj_ini.armour[co][i]=done;
 							}
                         }
-                        if (obj_ini.armour[co,i]="") and (req_armour="Scout Armour"){
+                        if (obj_ini.armour[co][i]="") and (req_armour="Scout Armour"){
                             if (done="") and (scr_item_count("Scout Armour")>0) then done="Scout Armour";
                             if (done!=""){
 								scr_add_item(done,-1);
-								obj_ini.armour[co,i]=done;
+								obj_ini.armour[co][i]=done;
 							}
                         }
                     }
                     // ** End armour **
                     
                     // ** Start Weapons **
-                    if (obj_ini.wep1[co,i]!=req_wep1) or (obj_ini.wep2[co,i]!=req_wep2){
+                    if (obj_ini.wep1[co][i]!=req_wep1) or (obj_ini.wep2[co][i]!=req_wep2){
                         var stop_one=false,stop_two=false;
                         
-                        if (string_count("&",obj_ini.wep1[co,i])>0) then stop_one=true;
-                        if (string_count("&",obj_ini.wep2[co,i])>0) then stop_two=true;
-                        if (req_wep1="Assault Cannon") and (obj_ini.armour[co,i]!="Terminator Armour") and (obj_ini.armour[co,i]!="Tartaros") and (obj_ini.armour[co,i]!="Dreadnought") then stop_one=true;
-                        if (req_wep2="Assault Cannon") and (obj_ini.armour[co,i]!="Terminator Armour") and (obj_ini.armour[co,i]!="Tartaros") and (obj_ini.armour[co,i]!="Dreadnought") then stop_two=true;
-                        if (req_wep1="Thunder Hammer") and (obj_ini.experience[co,i]<70) then stop_one=true;
-                        if (req_wep2="Thunder Hammer") and (obj_ini.experience[co,i]<70) then stop_two=true;
+                        if (string_count("&",obj_ini.wep1[co][i])>0) then stop_one=true;
+                        if (string_count("&",obj_ini.wep2[co][i])>0) then stop_two=true;
+                        if (req_wep1="Assault Cannon") and (obj_ini.armour[co][i]!="Terminator Armour") and (obj_ini.armour[co][i]!="Tartaros") and (obj_ini.armour[co][i]!="Dreadnought") then stop_one=true;
+                        if (req_wep2="Assault Cannon") and (obj_ini.armour[co][i]!="Terminator Armour") and (obj_ini.armour[co][i]!="Tartaros") and (obj_ini.armour[co][i]!="Dreadnought") then stop_two=true;
+                        if (req_wep1="Thunder Hammer") and (obj_ini.experience[co][i]<70) then stop_one=true;
+                        if (req_wep2="Thunder Hammer") and (obj_ini.experience[co][i]<70) then stop_two=true;
                         
-                        if (obj_ini.wep1[co,i]!="") and (stop_one=false){
-							scr_add_item(obj_ini.wep1[co,i],1);
-							obj_ini.wep1[co,i]="";
+                        if (obj_ini.wep1[co][i]!="") and (stop_one=false){
+							scr_add_item(obj_ini.wep1[co][i],1);
+							obj_ini.wep1[co][i]="";
 						}
-                        if (obj_ini.wep2[co,i]!="") and (stop_two=false){
-							scr_add_item(obj_ini.wep2[co,i],1);
-							obj_ini.wep2[co,i]="";
+                        if (obj_ini.wep2[co][i]!="") and (stop_two=false){
+							scr_add_item(obj_ini.wep2[co][i],1);
+							obj_ini.wep2[co][i]="";
 						}
-                        if (obj_ini.wep1[co,i]="") and (stop_one=false){
+                        if (obj_ini.wep1[co][i]="") and (stop_one=false){
 							scr_add_item(req_wep1,-1);
-							obj_ini.wep1[co,i]=req_wep1;
+							obj_ini.wep1[co][i]=req_wep1;
 						}
-                        if (obj_ini.wep2[co,i]="") and (stop_two=false){
+                        if (obj_ini.wep2[co][i]="") and (stop_two=false){
 							scr_add_item(req_wep2,-1);
-							obj_ini.wep2[co,i]=req_wep2;
+							obj_ini.wep2[co][i]=req_wep2;
 						}
                     }
                     
                     // ** Start Gear **
-                    if (obj_ini.gear[co,i]!=req_gear) and (string_count("&",obj_ini.gear[co,i])=0){
-                        if (obj_ini.gear[co,i]!=""){
-							scr_add_item(obj_ini.gear[co,i],1);
-							obj_ini.gear[co,i]="";
+                    if (obj_ini.gear[co][i]!=req_gear) and (string_count("&",obj_ini.gear[co][i])=0){
+                        if (obj_ini.gear[co][i]!=""){
+							scr_add_item(obj_ini.gear[co][i],1);
+							obj_ini.gear[co][i]="";
 						}
-                        if (obj_ini.gear[co,i]=""){
+                        if (obj_ini.gear[co][i]=""){
 							scr_add_item(req_gear,-1);
-							obj_ini.gear[co,i]=req_gear;
+							obj_ini.gear[co][i]=req_gear;
 						}
                     }
                     
                     // ** Start Mobility Items **
-                    if (obj_ini.mobi[co,i]!=req_mobi) and (string_count("&",obj_ini.mobi[co,i])=0){
+                    if (obj_ini.mobi[co][i]!=req_mobi) and (string_count("&",obj_ini.mobi[co][i])=0){
                         var stop_mobi=false;
                     
-                        if (obj_ini.armour[co,i]="Terminator Armour") or (obj_ini.armour[co,i]="Tartaros") or (obj_ini.armour[co,i]="Dreadnought") then stop_mobi=true;
-                        if (string_pos("&",obj_ini.armour[co,i])>0){
-                            if (string_count("Termi",obj_ini.armour[co,i])>0) then stop_mobi=true;
-                            if (string_count("Dreadnou",obj_ini.armour[co,i])>0) then stop_mobi=true;
+                        if (obj_ini.armour[co][i]="Terminator Armour") or (obj_ini.armour[co][i]="Tartaros") or (obj_ini.armour[co][i]="Dreadnought") then stop_mobi=true;
+                        if (string_pos("&",obj_ini.armour[co][i])>0){
+                            if (string_count("Termi",obj_ini.armour[co][i])>0) then stop_mobi=true;
+                            if (string_count("Dreadnou",obj_ini.armour[co][i])>0) then stop_mobi=true;
                         }
-                        if (stop_mobi=true) and (obj_ini.mobi[co,i]!=""){
-							scr_add_item(obj_ini.mobi[co,i],1);
-							obj_ini.mobi[co,i]="";
+                        if (stop_mobi=true) and (obj_ini.mobi[co][i]!=""){
+							scr_add_item(obj_ini.mobi[co][i],1);
+							obj_ini.mobi[co][i]="";
 						}
                         
                         if (stop_mobi=false){
-                            if (obj_ini.mobi[co,i]!=""){
-								scr_add_item(obj_ini.mobi[co,i],1);
-								obj_ini.mobi[co,i]="";
+                            if (obj_ini.mobi[co][i]!=""){
+								scr_add_item(obj_ini.mobi[co][i],1);
+								obj_ini.mobi[co][i]="";
 							}
-                            if (obj_ini.mobi[co,i]=""){
+                            if (obj_ini.mobi[co][i]=""){
 								scr_add_item(req_mobi,-1);
-								obj_ini.mobi[co,i]=req_mobi;
+								obj_ini.mobi[co][i]=req_mobi;
 							}
                         }                        
                     }                   
@@ -206,35 +206,35 @@ if (refresh=true) and (obj_controller.settings>0){
 	
 	for(var co=0; co<11; co++){
 		for(var i=1; i<=300; i++){
-            if (obj_ini.role[co,i]=obj_ini.role[100,role]){
+            if (obj_ini.role[co][i]=obj_ini.role[100,role]){
                 role_number[co]+=1;
                 
                 // Weapon1
                 var onc=0;
-                if (string_count("&",obj_ini.wep1[co,i])>0) and (onc=0){
+                if (string_count("&",obj_ini.wep1[co][i])>0) and (onc=0){
 					onc=1;
 					have_wep1_num+=1;
 				}
-                if (obj_ini.wep1[co,i]=req_wep1) and (onc=0){
+                if (obj_ini.wep1[co][i]=req_wep1) and (onc=0){
 					have_wep1_num+=1;
 					onc=1;
 				}
-                if (obj_ini.wep2[co,i]=req_wep1) and (onc=0){
+                if (obj_ini.wep2[co][i]=req_wep1) and (onc=0){
 					have_wep1_num+=1;
 					onc=1;
 				}
                 
                 // Weapon2
                 onc=0;
-                if (string_count("&",obj_ini.wep2[co,i])>0) and (onc=0){
+                if (string_count("&",obj_ini.wep2[co][i])>0) and (onc=0){
 					onc=1;
 					have_wep2_num+=1;
 				}
-                if (obj_ini.wep1[co,i]=req_wep2) and (onc=0){
+                if (obj_ini.wep1[co][i]=req_wep2) and (onc=0){
 					have_wep2_num+=1;
 					onc=1;
 				}
-                if (obj_ini.wep2[co,i]=req_wep2) and (onc=0){
+                if (obj_ini.wep2[co][i]=req_wep2) and (onc=0){
 					have_wep2_num+=1;
 					onc=1;
 				}
@@ -242,42 +242,42 @@ if (refresh=true) and (obj_controller.settings>0){
                 if (req_armour!=""){
                     var yes=false;
                     if (req_armour="Power Armour"){
-                        if (obj_ini.armour[co,i]="Power Armour") then yes=true;
-                        if (obj_ini.armour[co,i]="MK3 Iron Armour") then yes=true;
-                        if (obj_ini.armour[co,i]="MK4 Maximus") then yes=true;
-                        if (obj_ini.armour[co,i]="MK6 Corvus") then yes=true;
-                        if (obj_ini.armour[co,i]="MK7 Aquila") then yes=true;
-                        if (obj_ini.armour[co,i]="MK8 Errant") then yes=true;
-                        if (obj_ini.armour[co,i]="Artificer Armour") then yes=true;
+                        if (obj_ini.armour[co][i]="Power Armour") then yes=true;
+                        if (obj_ini.armour[co][i]="MK3 Iron Armour") then yes=true;
+                        if (obj_ini.armour[co][i]="MK4 Maximus") then yes=true;
+                        if (obj_ini.armour[co][i]="MK6 Corvus") then yes=true;
+                        if (obj_ini.armour[co][i]="MK7 Aquila") then yes=true;
+                        if (obj_ini.armour[co][i]="MK8 Errant") then yes=true;
+                        if (obj_ini.armour[co][i]="Artificer Armour") then yes=true;
                     }
                     if (req_armour="Terminator Armour"){
-                        if (obj_ini.armour[co,i]="Terminator Armour") then yes=true;
-                        if (obj_ini.armour[co,i]="Tartaros") then yes=true;
+                        if (obj_ini.armour[co][i]="Terminator Armour") then yes=true;
+                        if (obj_ini.armour[co][i]="Tartaros") then yes=true;
                     }
-                    if (req_armour="Scout Armour") and (obj_ini.armour[co,i]="Scout Armour") then yes=true;
-                    if (string_count("&",obj_ini.armour[co,i])>0) then yes=true;
+                    if (req_armour="Scout Armour") and (obj_ini.armour[co][i]="Scout Armour") then yes=true;
+                    if (string_count("&",obj_ini.armour[co][i])>0) then yes=true;
                     if (yes=true) then have_armour_num+=1;
                 }
                 
                 if (req_gear!=""){
-                    if (string_count("&",obj_ini.gear[co,i])=0){if (obj_ini.gear[co,i]=req_gear) then have_gear_num+=1;}
-                    if (string_count("&",obj_ini.gear[co,i])>0) then have_gear_num+=1;
+                    if (string_count("&",obj_ini.gear[co][i])=0){if (obj_ini.gear[co][i]=req_gear) then have_gear_num+=1;}
+                    if (string_count("&",obj_ini.gear[co][i])>0) then have_gear_num+=1;
                 }
                 
                 if (req_mobi!=""){
-                    if (string_count("&",obj_ini.mobi[co,i])=0){if (obj_ini.mobi[co,i]=req_mobi) then have_mobi_num+=1;}
-                    if (string_count("&",obj_ini.mobi[co,i])>0) then have_mobi_num+=1;
+                    if (string_count("&",obj_ini.mobi[co][i])=0){if (obj_ini.mobi[co][i]=req_mobi) then have_mobi_num+=1;}
+                    if (string_count("&",obj_ini.mobi[co][i])>0) then have_mobi_num+=1;
                 }
             }
-            if (obj_ini.role[co,i]=obj_ini.role[100,role]){
+            if (obj_ini.role[co][i]=obj_ini.role[100,role]){
                 var hue=0,hue2=0;
                 
-                if (obj_ini.wep1[co,i]!=""){
+                if (obj_ini.wep1[co][i]!=""){
 					hue=0;
                     hue2=0;
 					for(hue=1;hue<=60;hue++){
 						if (hue2=0){
-							if (we1[hue]=obj_ini.wep1[co,i]){
+							if (we1[hue]=obj_ini.wep1[co][i]){
 								hue2=-5;
                                 we1_n[hue]+=1;
 							}
@@ -288,7 +288,7 @@ if (refresh=true) and (obj_controller.settings>0){
 							if (hue2=0){
 								if (we1[hue+1]=""){
 									hue2=-5;
-									we1[hue+1]=obj_ini.wep1[co,i];
+									we1[hue+1]=obj_ini.wep1[co][i];
 									we1_n[hue+1]=1;
 								}
 							}
@@ -296,11 +296,11 @@ if (refresh=true) and (obj_controller.settings>0){
 					}
                 }
                 hue2=0;
-                if (obj_ini.wep2[co,i]!=""){
+                if (obj_ini.wep2[co][i]!=""){
 					hue2=0;
 					for(hue=1;hue<=60;hue++){
 						if (hue2=0){
-							if (we2[hue]=obj_ini.wep2[co,i]){
+							if (we2[hue]=obj_ini.wep2[co][i]){
 								hue2=-5;
 								we2_n[hue]+=1;
 							}
@@ -310,7 +310,7 @@ if (refresh=true) and (obj_controller.settings>0){
 						for(hue=0;hue<30;hue++){
 							if (hue2=0){
 								if (we2[hue+1]=""){
-									hue2=-5;we2[hue+1]=obj_ini.wep2[co,i];
+									hue2=-5;we2[hue+1]=obj_ini.wep2[co][i];
 									we2_n[hue+1]=1;
 								}
 							}
@@ -318,11 +318,11 @@ if (refresh=true) and (obj_controller.settings>0){
 					}
                 }
                 hue2=0;
-                if (obj_ini.armour[co,i]!=""){
+                if (obj_ini.armour[co][i]!=""){
 					hue2=0;
 					for(hue=1; hue<=60; hue++){
 						if (hue2=0){
-							if (arm[hue]=obj_ini.armour[co,i]){
+							if (arm[hue]=obj_ini.armour[co][i]){
 								hue2=-5;
 								arm_n[hue]+=1;
 							}
@@ -333,7 +333,7 @@ if (refresh=true) and (obj_controller.settings>0){
 							if (hue2=0){
 								if (arm[hue+1]=""){
 									hue2=-5;
-									arm[hue+1]=obj_ini.armour[co,i];
+									arm[hue+1]=obj_ini.armour[co][i];
 									arm_n[hue+1]=1;
 								}
 							}
@@ -341,11 +341,11 @@ if (refresh=true) and (obj_controller.settings>0){
 					}
                 }
                 hue2=0;
-                if (obj_ini.gear[co,i]!=""){
+                if (obj_ini.gear[co][i]!=""){
 					hue2=0;
 					for(hue=1; hue<=60; hue++){
 						if (hue2=0){
-							if (gea[hue]=obj_ini.gear[co,i]){
+							if (gea[hue]=obj_ini.gear[co][i]){
 								hue2=-5;
 								gea_n[hue]+=1;
 							}
@@ -357,7 +357,7 @@ if (refresh=true) and (obj_controller.settings>0){
 							if (hue2=0){
 								if (gea[hue+1]=""){
 									hue2=-5;
-									gea[hue+1]=obj_ini.gear[co,i];
+									gea[hue+1]=obj_ini.gear[co][i];
 									gea_n[hue+1]=1;
 								}
 							}
@@ -365,12 +365,12 @@ if (refresh=true) and (obj_controller.settings>0){
 					}
                 }
                 hue2=0;
-                if (obj_ini.mobi[co,i]!=""){
+                if (obj_ini.mobi[co][i]!=""){
 					hue=0;
 					hue2=0;
 					for(hue=1;hue<=60;hue++){
 						if (hue2=0){
-							if (mob[hue]=obj_ini.mobi[co,i]){
+							if (mob[hue]=obj_ini.mobi[co][i]){
 								hue2=-5;
 								mob_n[hue]+=1;
 							}
@@ -381,7 +381,7 @@ if (refresh=true) and (obj_controller.settings>0){
 							if (hue2=0){
 								if (mob[hue+1]=""){
 									hue2=-5;
-									mob[hue+1]=obj_ini.mobi[co,i];
+									mob[hue+1]=obj_ini.mobi[co][i];
 									mob_n[hue+1]=1;
 								}
 							}

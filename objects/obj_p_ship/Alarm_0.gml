@@ -88,7 +88,7 @@ var co,i,b;
 co=-1;i=0;b=0;
 repeat(11){co+=1;i=0;
     repeat(300){i+=1;
-        if (obj_ini.lid[co,i]=ship_id) and (obj_ini.age[co,i]!=floor(obj_ini.age[co,i])){
+        if (obj_ini.lid[co][i]=ship_id) and (obj_ini.age[co][i]!=floor(obj_ini.age[co][i])){
             b+=1;board_co[b]=co;board_id[b]=i;board_location[b]=0;boarders+=1;
             // Loc 0: on origin ship
             // Loc 1: in transit

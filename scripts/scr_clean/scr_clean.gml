@@ -181,21 +181,21 @@ function scr_clean(argument0) {
 	                if (marine_type[you]="Chief "+string(obj_ini.role[100,17])) then command_lost+=1;
 	                if (marine_type[you]="Forge Master") then command_lost+=1;
 	                if (marine_type[you]=obj_ini.role[100,17]) then command_lost+=1;
-	                if (marine_type[you]=obj_ini.role[100,14]) then command_lost+=1;
-	                if (marine_type[you]=obj_ini.role[100,15]) then command_lost+=1;
-	                if (marine_type[you]=obj_ini.role[100,16]) then command_lost+=1;
-	                if (marine_type[you]=obj_ini.role[100,6]) then command_lost+=1;
-	                if (marine_type[you]=obj_ini.role[100,5]) then command_lost+=1;
+	                if (marine_type[you]=obj_ini.role[100][14]) then command_lost+=1;
+	                if (marine_type[you]=obj_ini.role[100][15]) then command_lost+=1;
+	                if (marine_type[you]=obj_ini.role[100][16]) then command_lost+=1;
+	                if (marine_type[you]=obj_ini.role[100][6]) then command_lost+=1;
+	                if (marine_type[you]=obj_ini.role[100][5]) then command_lost+=1;
 	                if (marine_type[you]="Codiciery") then command_lost+=1;
 	                if (marine_type[you]="Lexicanum") then command_lost+=1;
 	                if (marine_type[you]=string(obj_ini.role[100,17])+" Aspirant") then command_lost+=1;
-	                if (marine_type[you]=string(obj_ini.role[100,14])+" Aspirant") then command_lost+=1;
-	                if (marine_type[you]=string(obj_ini.role[100,15])+" Aspirant") then command_lost+=1;
-	                if (marine_type[you]=string(obj_ini.role[100,16])+" Aspirant") then command_lost+=1;
-	                if (marine_type[you]="Venerable "+string(obj_ini.role[100,6])) then command_lost+=1;*/
+	                if (marine_type[you]=string(obj_ini.role[100][14])+" Aspirant") then command_lost+=1;
+	                if (marine_type[you]=string(obj_ini.role[100][15])+" Aspirant") then command_lost+=1;
+	                if (marine_type[you]=string(obj_ini.role[100][16])+" Aspirant") then command_lost+=1;
+	                if (marine_type[you]="Venerable "+string(obj_ini.role[100][6])) then command_lost+=1;*/
                 
 	                men-=1;
-	                if (marine_type[you]=obj_ini.role[100,6]) or (marine_type[you]="Venerable "+string(obj_ini.role[100,6])) then dreads-=1;
+	                if (marine_type[you]=obj_ini.role[100][6]) or (marine_type[you]="Venerable "+string(obj_ini.role[100][6])) then dreads-=1;
 	                obj_ncombat.player_forces-=1;marine_dead[you]=1;
 	                if (obj_ncombat.red_thirst=1) and (marine_type[you]!="Death Company") and ((obj_ncombat.player_forces/obj_ncombat.player_max)<0.9) then obj_ncombat.red_thirst=2;
 	            }

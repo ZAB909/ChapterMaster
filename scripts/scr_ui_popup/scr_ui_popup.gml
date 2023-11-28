@@ -7,23 +7,27 @@ function tooltip_draw(base_x, base_y, tooltip, extra_x=0, extra_y=0, defined_wid
 	} else{
 		width = string_width(string_hash_to_newline(tooltip)) + extra_x;
 	}
+	base_2 =0;
+	if (defined_width){
+		base_2=string_height_ext(string_hash_to_newline(string(tooltip)), line_gap, defined_width);
+	}
 	height = string_height(string_hash_to_newline(tooltip))+extra_y;
 	draw_set_color(0);
-	draw_rectangle(base_x,base_y,width+base_x+6,height+base_y+6,0);
+	draw_rectangle(base_x,base_y,width+base_x+6,height+base_y+6+base_2,0);
 	draw_set_color(c_gray);
-	draw_rectangle(base_x,base_y,width+base_x+6,height+base_y+6,1);
+	draw_rectangle(base_x,base_y,width+base_x+6,height+base_y+6+base_2,1);
 	draw_set_alpha(0.5);
-	draw_rectangle(base_x+1,base_y+1,width+base_x+5,height+base_y+5,1);
+	draw_rectangle(base_x+1,base_y+1,width+base_x+5,height+base_y+5+base_2,1);
     draw_set_alpha(1);
     if (defined_width == false){
     	draw_text(base_x+2.5,base_y+2.5,string_hash_to_newline(string(tooltip)));
     } else{
     	draw_text_ext(base_x+2.5,base_y+2.5, string_hash_to_newline(string(tooltip)), line_gap, defined_width);
     }
+    return [width+6,height+6+base_2]
 }
 
 function scr_ui_popup() {
-
 	// 48,48      over like 256, down to 480-128
 
 	if (obj_controller.menu=60){
