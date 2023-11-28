@@ -56,7 +56,7 @@ function scr_enemy_ai_a() {
 	        with(obj_after_combat_ork_force){instance_destroy();}
 	        instance_create(x,y,obj_temp2);
 	        with(obj_en_fleet){
-	            if (owner=4){
+	            if (owner  = eFACTION.Inquisition){
 	                var near;near=instance_nearest(action_x,action_y,obj_temp2);
 	                if (point_distance(action_x,action_y,near.x,near.y)<2) and (string_count("investigate_dead",trade_goods)>0) then instance_create(action_x,action_y,obj_after_combat_ork_force);
 	            }
@@ -75,7 +75,7 @@ function scr_enemy_ai_a() {
 	            }
 	            plap=instance_nearest(old_x,old_y,obj_star);
 	            flee=instance_create(plap.x,plap.y-24,obj_en_fleet);
-	            flee.owner=4;flee.frigate_number=1;
+	            flee.owner  = eFACTION.Inquisition;flee.frigate_number=1;
 	            flee.action_x=old_x;flee.action_y=old_y;
 	            flee.sprite_index=spr_fleet_inquisition;
 	            flee.image_index=0;
@@ -257,8 +257,8 @@ function scr_enemy_ai_a() {
 	    if ((p_guardsmen[run]>0) or (p_sisters[run]>0)) and ((p_pdf[run]>0) or (p_tau[run]>0)) and (p_owner[run]=8) and (stop=1) then stop=0;
     
 	    // Attack heretics whenever possible, even player controlled ones
-	    if (p_player[run]+p_pdf[run]>0) and (p_guardsmen[run]>0) and (obj_controller.faction_status[2]="War") then stop=0;
-	    if (p_player[run]+p_pdf[run]>0) and (p_sisters[run]>0) and (obj_controller.faction_status[5]="War") then stop=0;
+	    if (p_player[run]+p_pdf[run]>0) and (p_guardsmen[run]>0) and (obj_controller.faction_status[eFACTION.Imperium]="War") then stop=0;
+	    if (p_player[run]+p_pdf[run]>0) and (p_sisters[run]>0) and (obj_controller.faction_status[eFACTION.Ecclesiarchy]="War") then stop=0;
     
     
 	    if (p_tyranids[run]>0) and (stop!=1) and (p_owner[run]!=9){// This might have been causing the problem
@@ -301,10 +301,10 @@ function scr_enemy_ai_a() {
 	        if (p_traitors[run]>0) then guard_attack="traitors";
 	        if (p_chaos[run]>0) then guard_attack="csm";
 	        if (p_pdf[run]>0) and (p_owner[run]=8) then guard_attack="pdf";
-	        if (p_pdf[run]>0) and (p_owner[run]=1) and (obj_controller.faction_status[2]="War") then guard_attack="pdf";
+	        if (p_pdf[run]>0) and (p_owner[run]=1) and (obj_controller.faction_status[eFACTION.Imperium]="War") then guard_attack="pdf";
 	        // Always goes after traitors first, unless
 	        if (p_traitors[run]<=1) and (p_tau[run]>=4) and (p_owner[run]!=8) then guard_attack="tau";
-	        if (p_pdf[run]>0) and (obj_controller.faction_status[2]="War") and (p_owner[run]=1) then guard_attack="pdf";
+	        if (p_pdf[run]>0) and (obj_controller.faction_status[eFACTION.Imperium]="War") and (p_owner[run]=1) then guard_attack="pdf";
 	        if (p_traitors[run]<=1) and (p_orks[run]>=4) then guard_attack="ork";
 	        // if (p_tyranids[run]>0) and (guard_attack="") then guard_attack="tyranids";
 	        if (p_tyranids[run]>=4) then guard_attack="tyranids";
@@ -313,15 +313,7 @@ function scr_enemy_ai_a() {
 	        // Tend to prioritize traitors > Orks > Tau
 	        // Eldar don't get into pitched battles so nyuck nyuck nyuck
 	    }
-    	var pdf_with_player;
-    	var pdf_loss_reduction=p_defenses[run]*0.001;//redues man loss from battle loss if higher defences
-    	if (p_owner[run]!=8) && (p_owner[run]=1 ||obj_controller.faction_status[2]!="War") && (garrison_force){
-    		pdf_with_player = true;
-        	pdf_loss_reduction+=garrison.total_garrison*0.0005;
-    	} else{
-    		pdf_with_player = false;
-    	}
-	    if (((p_guardsmen[run]=0) or ((guard_score<=0.5))) or (p_owner[run]==8)) or ((p_guardsmen[run]>0) and (obj_controller.faction_status[2]="War")) and (p_pdf[run]>0) and (stop!=1){
+	    if (((p_guardsmen[run]=0) or ((guard_score<=0.5))) or (p_owner[run]=8)) or ((p_guardsmen[run]>0) and (obj_controller.faction_status[eFACTION.Imperium]="War")) and (p_pdf[run]>0) and (stop!=1){
 	    	var pdf_mod;
 	    	var defence_mult = p_defenses[run]*0.1;
 	    	if (pdf_with_player){//if player supports give garrison bonus
@@ -358,7 +350,7 @@ function scr_enemy_ai_a() {
 	        if (p_traitors[run]>0) then pdf_attack="traitors";
 	        if (p_chaos[run]>0) then pdf_attack="csm";
 	        if (p_guardsmen[run]>0) and (p_owner[run]=8) then pdf_attack="guard";
-	        if (p_guardsmen[run]>0) and (p_owner[run]=1) and (obj_controller.faction_status[2]="War") then pdf_attack="guard";
+	        if (p_guardsmen[run]>0) and (p_owner[run]=1) and (obj_controller.faction_status[eFACTION.Imperium]="War") then pdf_attack="guard";
 	        // Always goes after traitors first, unless
 	        if (p_traitors[run]<=1) and (p_tau[run]>=4) and (p_owner[run]!=8) then pdf_attack="tau";
 	        if (p_traitors[run]<=1) and (p_orks[run]>=4) then pdf_attack="ork";
@@ -370,10 +362,10 @@ function scr_enemy_ai_a() {
 	        if (p_orks[run]>0) then sisters_attack="ork";
 	        if (p_necrons[run]>0) then sisters_attack="necrons";
 	        if (p_pdf[run]>0) and (p_owner[run]=8) then sisters_attack="pdf";
-	        if (p_pdf[run]>0) and (p_owner[run]=1) and (obj_controller.faction_status[5]="War") then sisters_attack="pdf";
+	        if (p_pdf[run]>0) and (p_owner[run]=1) and (obj_controller.faction_status[eFACTION.Ecclesiarchy]="War") then sisters_attack="pdf";
 	        if (p_traitors[run]>0) then sisters_attack="traitors";
 	        if (p_chaos[run]>0) then sisters_attack="csm";
-	        if (p_player[run]>0) and (obj_controller.faction_status[5]="War") then sisters_attack="player";
+	        if (p_player[run]>0) and (obj_controller.faction_status[eFACTION.Ecclesiarchy]="War") then sisters_attack="player";
 	        // Always goes after traitors first
 	        if (sisters_attack="tyranids") then tyranids_score=p_tyranids[run];
 	    }
@@ -439,7 +431,7 @@ function scr_enemy_ai_a() {
 	        if (csm_score>=4) then tau_attack="csm";
 	        if (ork_score>=4) then tau_attack="ork";
 	        if (tau_attack="") and (p_sisters[run]>0) then tau_attack="sisters";
-	        if (tau_attack="") and (obj_controller.faction_status[8]="War") and (p_player[run]>0) then tau_attack="player";
+	        if (tau_attack="") and (obj_controller.faction_status[eFACTION.Tau]="War") and (p_player[run]>0) then tau_attack="player";
 	    }
 	    if (p_tau[run]>0) and (stop!=1) and (p_owner[run]=8){// They own the planet
 	        // if (eldar_score>0) then tau_attack="eldar";
@@ -450,7 +442,7 @@ function scr_enemy_ai_a() {
 	        if (csm_score>=4) then tau_attack="csm";
 	        if (ork_score>=4) then tau_attack="ork";
 	        if (tau_attack="") and (p_sisters[run]>0) then tau_attack="sisters";
-	        if (tau_attack="") and (obj_controller.faction_status[8]="War") and (p_player[run]>0) then tau_attack="player";
+	        if (tau_attack="") and (obj_controller.faction_status[eFACTION.Tau]="War") and (p_player[run]>0) then tau_attack="player";
 	    }
     
 	    if ((p_tyranids[run]>=4) or (guard_attack="tyranids")) and (stop!=1){
@@ -783,7 +775,7 @@ function scr_enemy_ai_a() {
 					    if (badd = 2) and(p_tyranids[run] = 0) and(p_necrons[run] = 0) and(p_sisters[run] = 0) {
 					        scr_popup("System Lost", "The " + string(name) + " system has been ovewhelmed by Orks!", "orks", "");
 					        scr_event_log("red", "System " + string(name) + " has been overwhelmed by Orkz.");
-					        // owner=7;p_owner[1]=7;p_owner[2]=7;p_owner[3]=7;p_owner[4]=7;
+					        // owner = eFACTION.Ork;p_owner[1]=7;p_owner[2]=7;p_owner[3]=7;p_owner[4]=7;
 					    }
 					}
 	            }

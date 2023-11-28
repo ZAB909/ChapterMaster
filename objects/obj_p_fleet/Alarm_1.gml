@@ -83,10 +83,10 @@ if (action="move") or (action="crusade1") or (action="crusade2") or (action="cru
         
         var b;b=0;repeat(4){b+=1;if (steh.p_first[b]<=5) and (steh.dispo[b]>-30) and (steh.dispo[b]<0) then steh.dispo[b]=min(obj_ini.imperium_disposition,obj_controller.disposition[2])+choose(-1,-2,-3,-4,0,1,2,3,4);}
         if (steh.p_owner[1]=5) or (steh.p_owner[2]=5) or (steh.p_owner[3]=5) or (steh.p_owner[4]=5){
-            if (obj_controller.faction_defeated[5]=0) and (obj_controller.known[5]=0) then obj_controller.known[5]=1;
+            if (obj_controller.faction_defeated[5]=0) and (obj_controller.known[eFACTION.Ecclesiarchy]=0) then obj_controller.known[eFACTION.Ecclesiarchy]=1;
         }
-        if (steh.owner=6) and (obj_controller.faction_defeated[6]=0) and (obj_controller.known[6]=0) then obj_controller.known[6]=1;
-        if (steh.owner=8) and (obj_controller.faction_defeated[8]=0) and (obj_controller.known[8]=0) then obj_controller.known[8]=1;
+        if (steh.owner = eFACTION.Eldar) and (obj_controller.faction_defeated[6]=0) and (obj_controller.known[eFACTION.Eldar]=0) then obj_controller.known[eFACTION.Eldar]=1;
+        if (steh.owner = eFACTION.Tau) and (obj_controller.faction_defeated[8]=0) and (obj_controller.known[eFACTION.Tau]=0) then obj_controller.known[eFACTION.Tau]=1;
         
         action="";
         x=action_x+24;
@@ -115,7 +115,7 @@ if (action="move") or (action="crusade1") or (action="crusade2") or (action="cru
     
 }
 
-if (action="") and (obj_controller.known[6]=0){
+if (action="") and (obj_controller.known[eFACTION.Eldar]=0){
     instance_activate_object(obj_star);// Kind of half-ass band-aiding that bug, might need to remove this later; this might cause problems later
     
     
@@ -132,9 +132,9 @@ if (action="") and (obj_controller.known[6]=0){
         // show_message("Dist: "+string(dist)+", Rando: "+string(rando));
         
         if (rando>=95) and (dist<=300){
-            obj_controller.known[6]=1;
+            obj_controller.known[eFACTION.Eldar]=1;
             scr_alert("green","elfs","Eldar Craftworld discovered.",steh.old_x,steh.old_y);
-            with(obj_en_fleet){if (owner=6) then image_alpha=1;}
+            with(obj_en_fleet){if (owner = eFACTION.Eldar) then image_alpha=1;}
         }
         // Quene eldar introduction
         // if (rando>=95) and (dist<=300) then show_message("MON'KEIGH");

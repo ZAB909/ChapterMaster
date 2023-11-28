@@ -106,7 +106,7 @@ if (number>0) and (owner!=1){
     en_capital=obj_fleet.en_capital[number];
 
     
-    if (owner=2){
+    if (owner = eFACTION.Imperium){
         if (en_escort>0){en_column[4]="Sword Class Frigate";en_num[4]=en_escort;en_size[4]=1;}
         
         if (en_frigate>0){en_column[3]="Avenger Class Grand Cruiser";en_num[3]=en_frigate;en_size[3]=2;}
@@ -123,7 +123,7 @@ if (number>0) and (owner!=1){
     
     
     
-    if (owner=6){
+    if (owner = eFACTION.Eldar){
         if (en_escort>0){en_column[4]="Aconite";en_num[4]=max(1,floor(en_escort/2));en_size[4]=1;}
         if (en_escort>1){en_column[3]="Hellebore";en_num[3]=max(1,floor(en_escort/2));en_size[3]=1;}
         if (en_frigate>0){en_column[2]="Shadow Class";en_num[2]=en_frigate;en_size[2]=2;}
@@ -133,7 +133,7 @@ if (number>0) and (owner!=1){
     
     
     
-    if (owner=7){
+    if (owner = eFACTION.Ork){
         var i;i=0;i=en_capital;
         
         if (i>0){en_column[1]="Dethdeala";en_num[1]=floor(random(i))+1;i-=en_num[1];en_size[1]=3;}
@@ -147,7 +147,7 @@ if (number>0) and (owner!=1){
         if (en_escort>0){en_column[5]="Ravager";en_num[5]=en_escort;en_size[5]=1;}// en_num[5]+=en_num[4]+1;
     }
     
-    if (owner=8){
+    if (owner = eFACTION.Tau){
         var i;i=0;i=en_frigate;
         
         if (en_capital>0){en_column[1]="Custodian";en_num[1]=en_capital;en_size[1]=3;}
@@ -161,7 +161,7 @@ if (number>0) and (owner!=1){
         if (en_escort>2){en_column[5]="Warden";en_num[5]=en_escort-en_num[5];en_size[5]=1;}
     }
     
-    if (owner=9){
+    if (owner = eFACTION.Tyranids){
         var i;i=0;i=en_escort;
         
         if (en_capital>0){en_column[1]="Leviathan";en_num[1]=en_capital;en_size[1]=3;}
@@ -173,7 +173,7 @@ if (number>0) and (owner!=1){
         if (i>0){en_column[4]="Prowler";en_num[4]=i;en_size[4]=1;}// en_num[5]+=en_num[4]+1;
     }
     
-    if (owner=10){
+    if (owner = eFACTION.Chaos){
         var i;i=0;i=en_frigate;
         
         if (en_capital>0){en_column[1]="Desecrator";en_num[1]=en_capital;en_size[1]=3;}
@@ -187,7 +187,7 @@ if (number>0) and (owner!=1){
         if (en_escort>0){en_column[5]="Iconoclast";en_num[5]=en_escort;en_size[5]=1;}// en_num[5]+=en_num[4]+1;
     }
     
-    if (owner=13){
+    if (owner = eFACTION.Necrons){
         var i;i=0;i=en_escort;
         
         if (en_capital>0){en_column[1]="Reaper Class";en_num[1]=en_capital;en_size[1]=3;}

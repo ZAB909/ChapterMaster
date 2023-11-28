@@ -171,12 +171,12 @@ if (menu==13) and (cooldown<=0) and (artifacts>0){
         // Gift
         if (mouse_x>=xx+512) and (mouse_y>=yy+789) and (mouse_x<xx+740) and (mouse_y<yy+804) and (cooldown<=0){
             var chick=0;
-            if (known[2]>1) and (faction_defeated[2]==0) then chick=1;
-            if (known[3]>1) and (faction_defeated[3]==0) then chick=1;
-            if (known[4]>1) and (faction_defeated[4]==0) then chick=1;
-            if (known[5]>1) and (faction_defeated[5]==0) then chick=1;
-            if (known[6]>1) and (faction_defeated[6]==0) then chick=1;
-            if (known[8]>1) and (faction_defeated[8]==0) then chick=1;
+            if (known[eFACTION.Imperium]>1) and (faction_defeated[2]==0) then chick=1;
+            if (known[eFACTION.Mechanicus]>1) and (faction_defeated[3]==0) then chick=1;
+            if (known[eFACTION.Inquisition]>1) and (faction_defeated[4]==0) then chick=1;
+            if (known[eFACTION.Ecclesiarchy]>1) and (faction_defeated[5]==0) then chick=1;
+            if (known[eFACTION.Eldar]>1) and (faction_defeated[6]==0) then chick=1;
+            if (known[eFACTION.Tau]>1) and (faction_defeated[8]==0) then chick=1;
             if (chick!=0){
                 var pop=instance_create(0,0,obj_popup);
                 pop.type=9;
@@ -241,12 +241,12 @@ if (menu==14) and (cooldown<=0){
     if (point_in_rectangle(mouse_x, mouse_y, xx + 733, yy + 466, xx + 790, yy + 486) && cooldown <= 0) {
         if (stc_wargear_un+stc_vehicles_un+stc_ships_un>0){
             var chick=0;
-            if (known[2]>1) and (faction_defeated[2]==0) then chick=1;
-            if (known[3]>1) and (faction_defeated[3]==0) then chick=1;
-            if (known[4]>1) and (faction_defeated[4]==0) then chick=1;
-            if (known[5]>1) and (faction_defeated[5]==0) then chick=1;
-            if (known[6]>1) and (faction_defeated[6]==0) then chick=1;
-            if (known[8]>1) and (faction_defeated[8]==0) then chick=1;
+            if (known[eFACTION.Imperium]>1) and (faction_defeated[2]==0) then chick=1;
+            if (known[eFACTION.Mechanicus]>1) and (faction_defeated[3]==0) then chick=1;
+            if (known[eFACTION.Inquisition]>1) and (faction_defeated[4]==0) then chick=1;
+            if (known[eFACTION.Ecclesiarchy]>1) and (faction_defeated[5]==0) then chick=1;
+            if (known[eFACTION.Eldar]>1) and (faction_defeated[6]==0) then chick=1;
+            if (known[eFACTION.Tau]>1) and (faction_defeated[8]==0) then chick=1;
             if (chick!=0){
                 var pop=instance_create(0,0,obj_popup);
                 pop.type=9.1;
@@ -847,7 +847,7 @@ if (menu==20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (cool
                 trade_disp[2]=-10;
                 trade_disp[3]=10;
                 trade_disp[4]=-15;
-                if (random_event_next != EVENT.none) and ((string_count("WL10|",useful_info)>0) or (turn<chaos_turn)) and ((string_count("WL7|",useful_info)>0) or (known[7]<1)) and  (string_count("WG|",useful_info)>1) and (string_count("CM|",useful_info)>0) then trade_disp[4]=1000;
+                if (random_event_next != EVENT.none) and ((string_count("WL10|",useful_info)>0) or (turn<chaos_turn)) and ((string_count("WL7|",useful_info)>0) or (known[eFACTION.Ork]<1)) and  (string_count("WG|",useful_info)>1) and (string_count("CM|",useful_info)>0) then trade_disp[4]=1000;
             }
             // Ork trade goods
             if (diplomacy==7){
@@ -1322,14 +1322,14 @@ if (zoomed==0) and (cooldown<=0) and (menu==20) and (diplomacy==0){
             scr_dialogue("hello");
             onceh=1;
         }
-        if (known[4]==1) and (diplomacy==4) and (onceh==0){
+        if (known[eFACTION.Inquisition]==1) and (diplomacy==4) and (onceh==0){
             scr_dialogue("intro");
             onceh=1;
             known[diplomacy]=2;
             faction_justmet=1;
             obj_controller.last_mission=turn+1;
         }
-        if (known[4]==3) and (diplomacy==4) and (onceh==0){
+        if (known[eFACTION.Inquisition]==3) and (diplomacy==4) and (onceh==0){
             scr_dialogue("intro");
             onceh=1;
             known[diplomacy]=4;
@@ -1768,7 +1768,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                         }
                     }
                     with(obj_p_fleet){
-                        if (action=="move") and (obj_controller.faction_status[2]=="War"){
+                        if (action=="move") and (obj_controller.faction_status[eFACTION.Imperium]=="War"){
                             var him=instance_nearest(action_x,action_y,obj_star);
                             if (point_distance(action_x,action_y,him.x,him.y)<10){
                                 him.present_fleet[20]=1;

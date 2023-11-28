@@ -4,8 +4,8 @@ if (cooldown>0) then cooldown-=1;
 
 var dist;
 if (instance_exists(target)){
-    if (target.owner=9) or (target.owner=13){damage=true;plasma_bomb=true;steal=false;} 
-    if (target.owner!=9) and (target.owner!=13){
+    if (target.owner = eFACTION.Tyranids) or (target.owner = eFACTION.Necrons){damage=true;plasma_bomb=true;steal=false;} 
+    if (target.owner != eFACTION.Tyranids) and (target.owner != eFACTION.Necrons){
         if (obj_controller.command_set[20]=1) then damage=true;
         if (obj_controller.command_set[21]=1) then plasma_bomb=true;
         if (obj_controller.command_set[22]=1) then steal=true; // important for boarding and commandeering ships later down the line?
@@ -89,10 +89,10 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                 if (obj_ini.wep1[co][i]="") and (obj_ini.wep2[co][i]="") then difficulty-=10;
                 if (obj_ini.wep1[co][i]="") or (obj_ini.wep2[co][i]="") then difficulty-=10;
                 if (obj_ini.occulobe=1) then difficulty-=5;
-                if (target.owner=2) or ((target.owner=10) and (obj_fleet.csm_exp=0)) then difficulty-=0;// Cultists/Pirates/Humans
-                if (target.owner=1) or (target.owner=5) or (target.owner=7) or (target.owner=6) or (target.owner=13) then difficulty-=10;
-                if (target.owner=10) and (obj_fleet.csm_exp=1) then difficulty-=20;//       Veteran marines
-                if ((target.owner=10) and (obj_fleet.csm_exp=2)) or (target.owner=9) then difficulty-=30;// Daemons, veteran CSM, tyranids
+                if (target.owner = eFACTION.Imperium) or ((target.owner = eFACTION.Chaos) and (obj_fleet.csm_exp=0)) then difficulty-=0;// Cultists/Pirates/Humans
+                if (target.owner  = eFACTION.Player) or (target.owner = eFACTION.Ecclesiarchy) or (target.owner = eFACTION.Ork) or (target.owner = eFACTION.Eldar) or (target.owner = eFACTION.Necrons) then difficulty-=10;
+                if (target.owner = eFACTION.Chaos) and (obj_fleet.csm_exp=1) then difficulty-=20;//       Veteran marines
+                if ((target.owner = eFACTION.Chaos) and (obj_fleet.csm_exp=2)) or (target.owner = eFACTION.Tyranids) then difficulty-=30;// Daemons, veteran CSM, tyranids
                 
                 roll1=floor(random(100))+1;
                 
@@ -129,10 +129,10 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                         var husk;husk=instance_create(target.x,target.y,obj_en_husk);
                         
                         if (experience=0){experience=2;
-                            if (target.owner=5) or (target.owner=7) or (target.owner=6) or (target.owner=13) then experience+=1;
-                            if (target.owner=10) and (obj_fleet.csm_exp=1) then experience+=2;
-                            if (target.owner=10) and (obj_fleet.csm_exp=2) then experience+=3;
-                            if (target.owner=9) then experience+=3;if (target.bridge<=0) then experience+=2;
+                            if (target.owner = eFACTION.Ecclesiarchy) or (target.owner = eFACTION.Ork) or (target.owner = eFACTION.Eldar) or (target.owner = eFACTION.Necrons) then experience+=1;
+                            if (target.owner = eFACTION.Chaos) and (obj_fleet.csm_exp=1) then experience+=2;
+                            if (target.owner = eFACTION.Chaos) and (obj_fleet.csm_exp=2) then experience+=3;
+                            if (target.owner = eFACTION.Tyranids) then experience+=3;if (target.bridge<=0) then experience+=2;
                         }
                         
                         with(target){
@@ -203,7 +203,7 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                     
                     roll2=floor(random(100))+1;
                     
-                    if (target.owner=2) or (target.owner=10) or (target.owner=5){
+                    if (target.owner = eFACTION.Imperium) or (target.owner = eFACTION.Chaos) or (target.owner = eFACTION.Ecclesiarchy){
                         // Make worse for CSM
                         wep="Lasgun";hits=1;
                         if (roll2<=90) then hits=2;
@@ -215,7 +215,7 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                         if (roll2<=10){wep="Plasma Pistol";hits=1;}
                         if (roll2<=5){wep="Meltagun";hits=1;}
                     }
-                    if (target.owner=6){
+                    if (target.owner = eFACTION.Eldar){
                         wep="Shuriken Pistol";hits=1;
                         if (roll2<=90) then hits=2;
                         if (roll2<=75) then hits=3;
@@ -226,7 +226,7 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                         if (roll2<=20){wep="Singing Spear";hits=1;}
                         if (roll2<=10){wep="Meltagun";hits=1;}
                     }
-                    if (target.owner=7){
+                    if (target.owner = eFACTION.Ork){
                         wep="Shoota";hits=1;
                         if (roll2<=90) then hits=2;
                         if (roll2<=75) then hits=3;
@@ -236,7 +236,7 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                         if (roll2<=30){wep="Big Shoota";hits=2;}
                         if (roll2<=15){wep="Rokkit";hits=1;}
                     }
-                    if (target.owner=8){
+                    if (target.owner = eFACTION.Tau){
                         wep="Pulse Rifle";hits=1;
                         if (roll2<=80) then hits=2;
                         if (roll2<=65) then hits=3;
@@ -245,7 +245,7 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                         if (roll2<=30){wep="Burst Rifle";hits=1;}
                         if (roll2<=15){wep="Meltagun";hits=1;}
                     }
-                    if (target.owner=9){
+                    if (target.owner = eFACTION.Tyranids){
                         wep="Flesh Hooks";hits=1;
                         if (roll2<=90) then hits=2;
                         if (roll2<=75) then hits=3;

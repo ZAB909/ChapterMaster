@@ -7,7 +7,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
         if (obj_controller.cooldown>0) then exit;
         if ((obj_controller.zoomed==0) and (mouse_y<__view_get( e__VW.YView, 0 )+62)) or (obj_controller.menu!=0) then exit;
         if ((obj_controller.zoomed==0) and (mouse_y>__view_get( e__VW.YView, 0 )+830)) or (obj_controller.menu!=0) then exit;
-        if (p_type[1]=="Craftworld") and (obj_controller.known[6]==0) then exit;
+        if (p_type[1]=="Craftworld") and (obj_controller.known[eFACTION.Eldar]==0) then exit;
         if (vision==0) then exit;
 
         if (!scr_void_click()) then exit;

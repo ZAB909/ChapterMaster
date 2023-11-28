@@ -8,32 +8,32 @@ witch.audien[witch.audiences]=4;
 witch.audien_topic[witch.audiences]="declare_war";
 if (gene_xeno>99995) then witch.audien_topic[witch.audiences]="gene_xeno";
 obj_controller.disposition[4]-=50;
-obj_controller.faction_status[4]="War";
+obj_controller.faction_status[eFACTION.Inquisition]="War";
 obj_controller.turns_ignored[4]=9999;
-if (known[4]>0) then known[4]=4;
+if (known[eFACTION.Inquisition]>0) then known[eFACTION.Inquisition]=4;
 
 witch.audiences+=1;
 witch.audien[witch.audiences]=2;
 witch.audien_topic[witch.audiences]="declare_war";
 obj_controller.disposition[2]-=40;
-obj_controller.faction_status[2]="War";
+obj_controller.faction_status[eFACTION.Imperium]="War";
 obj_controller.turns_ignored[2]=9999;
-if (known[2]>0) then known[2]=2;
+if (known[eFACTION.Imperium]>0) then known[eFACTION.Imperium]=2;
 
-obj_controller.faction_status[3]="War";
+obj_controller.faction_status[eFACTION.Mechanicus]="War";
 obj_controller.turns_ignored[3]=9999;
 obj_controller.disposition[3]-=30;
-if (known[3]>0) then known[3]=2;
+if (known[eFACTION.Mechanicus]>0) then known[eFACTION.Mechanicus]=2;
 
-if (known[5]>0){
+if (known[eFACTION.Ecclesiarchy]>0){
     witch.audiences+=1;witch.audien[witch.audiences]=5;
-    witch.audien_topic[witch.audiences]="declare_war";known[5]=2;
+    witch.audien_topic[witch.audiences]="declare_war";known[eFACTION.Ecclesiarchy]=2;
 }
-obj_controller.faction_status[5]="War";
+obj_controller.faction_status[eFACTION.Ecclesiarchy]="War";
 obj_controller.turns_ignored[5]=9999;
 obj_controller.disposition[5]-=40;
 
-if (obj_controller.faction_gender[10]==1) and (obj_controller.known[10]==0) and (obj_controller.faction_defeated[10]==0){
+if (obj_controller.faction_gender[10]==1) and (obj_controller.known[eFACTION.Chaos]==0) and (obj_controller.faction_defeated[10]==0){
     witch.audiences+=1;
     witch.audien[witch.audiences]=10;
     witch.audien_topic[witch.audiences]="intro";

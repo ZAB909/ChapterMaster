@@ -19,7 +19,7 @@ repeat(31){i+=1;if (ship_all[i]!=0) and (ship[i]!="") then ships_selected+=1;
 
 
 
-var i, fy, why, num, onceh, loca, add_ground;i=0;why=0;onceh=0;loca=0;add_ground=0;
+var i, fy, why, onceh, loca, add_ground;i=0;why=0;onceh=0;loca=0;add_ground=0;
 
 if (l_size>0) then loca=1;
 

@@ -19,8 +19,8 @@ for(var i=1; i<=4; i++){
             }
             if (contin==2){
                 fleet=instance_nearest(x+32,y,obj_en_fleet);
-                if (fleet.owner!=7) or (point_distance(x+32,y,fleet.x,fleet.y)>5) or (fleet.action!="") then contin=3;
-                if (fleet.owner==7) and (point_distance(x+32,y,fleet.x,fleet.y)<=5) and (fleet.action=="") and (contin!=3){
+                if (fleet.owner != eFACTION.Ork) or (point_distance(x+32,y,fleet.x,fleet.y)>5) or (fleet.action!="") then contin=3;
+                if (fleet.owner == eFACTION.Ork) and (point_distance(x+32,y,fleet.x,fleet.y)<=5) and (fleet.action=="") and (contin!=3){
                     rando=choose(1,1,1,1,1,2,2,2,2);
                     switch (rando) {
                         case 1:
@@ -43,13 +43,13 @@ for(var i=1; i<=4; i++){
                         for(var j=0; j<10; j++){
                             if (!locationOk){
                                 targetStar=instance_nearest(fleet.x+choose(random(400),random(400)*-1),fleet.y+choose(random(100),random(100)*-1),obj_star);
-                                if (targetStar.owner!=7) then locationOk=true;
+                                if (targetStar.owner != eFACTION.Ork) then locationOk=true;
                                 // New code testing
-                                if (nearestStar.owner==7) and (instance_exists(nearestStar)){
+                                if (nearestStar.owner == eFACTION.Ork) and (instance_exists(nearestStar)){
                                     if (nearestStar.present_fleet[7]>0){
                                         var fli=instance_nearest(nearestStar.x,nearestStar.y,obj_en_fleet);
-                                        if (fli.action=="") and (owner!=7) and (point_distance(nearestStar.x,nearestStar.y,fli.x,fli.y)<60) then locationOk=true;
-                                        if (fli.action=="") and (owner!=7) and (point_distance(nearestStar.x,nearestStar.y,fli.x,fli.y)<60) then locationOk=true;
+                                        if (fli.action=="") and (owner != eFACTION.Ork) and (point_distance(nearestStar.x,nearestStar.y,fli.x,fli.y)<60) then locationOk=true;
+                                        if (fli.action=="") and (owner != eFACTION.Ork) and (point_distance(nearestStar.x,nearestStar.y,fli.x,fli.y)<60) then locationOk=true;
                                     }
                                 }// End new code testing
                                 
@@ -67,7 +67,7 @@ for(var i=1; i<=4; i++){
             if (contin==3) and (rando<=25){// Create a fleet
                 // fleet=instance_create
                 fleet=instance_create(x+32,y,obj_en_fleet);
-                fleet.owner=7;
+                fleet.owner = eFACTION.Ork;
                 fleet.sprite_index=spr_fleet_ork;
                 fleet.image_index=1;
                 fleet.capital_number=2;

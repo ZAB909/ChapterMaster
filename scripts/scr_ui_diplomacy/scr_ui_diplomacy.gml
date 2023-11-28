@@ -53,25 +53,25 @@ function scr_ui_diplomacy() {
 	    scr_image("diplomacy_icon",imm,xx+31,yy+553,153,135);
 	    if (faction_defeated[4]=1) then draw_sprite(spr_diplomacy_defeated,0,xx+31,yy+553);
     
-	    if (known[5]>0) then imm=8;if (known[5]<1) then imm=9;// draw_sprite(spr_diplomacy_med,imm,xx+31,yy+689);
+	    if (known[eFACTION.Ecclesiarchy]>0) then imm=8;if (known[eFACTION.Ecclesiarchy]<1) then imm=9;// draw_sprite(spr_diplomacy_med,imm,xx+31,yy+689);
 	    scr_image("diplomacy_icon",imm,xx+31,yy+689,153,135);
 	    if (faction_defeated[5]=1) then draw_sprite(spr_diplomacy_defeated,0,xx+31,yy+689);
     
     
-	    if (faction_gender[6]=1){if (known[6]>0) then imm=10;if (known[6]<1) then imm=11;// draw_sprite(spr_diplomacy_med,imm,xx+1041,yy+281);
+	    if (faction_gender[6]=1){if (known[eFACTION.Eldar]>0) then imm=10;if (known[eFACTION.Eldar]<1) then imm=11;// draw_sprite(spr_diplomacy_med,imm,xx+1041,yy+281);
 	    scr_image("diplomacy_icon",imm,xx+1041,yy+281,153,135);}
     
-	    if (faction_gender[6]=2){if (known[6]>0) then imm=20;if (known[6]<1) then imm=21;// draw_sprite(spr_diplomacy_med,imm,xx+1041,yy+281);
+	    if (faction_gender[6]=2){if (known[eFACTION.Eldar]>0) then imm=20;if (known[eFACTION.Eldar]<1) then imm=21;// draw_sprite(spr_diplomacy_med,imm,xx+1041,yy+281);
 	    scr_image("diplomacy_icon",imm,xx+1041,yy+281,153,135);
 	    }
     
 	    if (faction_defeated[6]=1) then draw_sprite(spr_diplomacy_defeated,0,xx+1041,yy+281);
     
-	    if (known[7]>0) then imm=12;if (known[7]<1) then imm=13;// draw_sprite(spr_diplomacy_med,imm,xx+1041,yy+417);
+	    if (known[eFACTION.Ork]>0) then imm=12;if (known[eFACTION.Ork]<1) then imm=13;// draw_sprite(spr_diplomacy_med,imm,xx+1041,yy+417);
 	    scr_image("diplomacy_icon",imm,xx+1041,yy+417,153,135);
 	    if (faction_defeated[7]=1) then draw_sprite(spr_diplomacy_defeated,0,xx+1041,yy+417);
     
-	    if (known[8]>0) then imm=14;if (known[8]<1) then imm=15;// draw_sprite(spr_diplomacy_med,imm,xx+1041,yy+553);
+	    if (known[eFACTION.Tau]>0) then imm=14;if (known[eFACTION.Tau]<1) then imm=15;// draw_sprite(spr_diplomacy_med,imm,xx+1041,yy+553);
 	    scr_image("diplomacy_icon",imm,xx+1041,yy+553,153,135);
 	    if (faction_defeated[8]=1) then draw_sprite(spr_diplomacy_defeated,0,xx+1041,yy+553);
     
@@ -286,11 +286,11 @@ function scr_ui_diplomacy() {
     
 	        /*var fis;fis="[Request Audience]";
 	        if (turns_ignored[2]>0) then fis="                  ";
-	        if (ignore[2]<1) then draw_text_transformed(xx+189,yy+354,string(fis)+"  [Ignore]",0.7,0.7,0);
-	        if (ignore[2]>=1) then draw_text_transformed(xx+189,yy+354,string(fis)+"[Unignore]",0.7,0.7,0);*/
+	        if (ignore[eFACTION.Imperium]<1) then draw_text_transformed(xx+189,yy+354,string(fis)+"  [Ignore]",0.7,0.7,0);
+	        if (ignore[eFACTION.Imperium]>=1) then draw_text_transformed(xx+189,yy+354,string(fis)+"[Unignore]",0.7,0.7,0);*/
 	    }
     
-	    if (known[3]>0.7) and (faction_defeated[3]=0){
+	    if (known[eFACTION.Mechanicus]>0.7) and (faction_defeated[3]=0){
 	        x6=xx+250;y6=yy+334+136;x7=x6+92;y7=y6+15;
 	        if (turns_ignored[3]<=0) {
 	            draw_set_color(38144);
@@ -303,14 +303,14 @@ function scr_ui_diplomacy() {
 	        }
 	        x6=xx+349;x7=x6+51;
 	        draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);draw_set_color(c_black);
-	        if (ignore[3]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
-	        if (ignore[3]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Mechanicus]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Mechanicus]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
 	        if (mouse_x>=x6) and (mouse_y>=y6) and (mouse_x<x7) and (mouse_y<y7){
 	            draw_set_alpha(0.2);draw_rectangle(x6,y6,x7,y7,0);draw_set_alpha(1);
 	        }
 	    }
     
-	    if (known[4]>0.7) and (faction_defeated[4]=0){
+	    if (known[eFACTION.Inquisition]>0.7) and (faction_defeated[4]=0){
 	        x6=xx+250;y6=yy+334+272;x7=x6+92;y7=y6+15;
 	        if (turns_ignored[4]<=0){
 	            draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);
@@ -321,14 +321,14 @@ function scr_ui_diplomacy() {
 	        }
 	        x6=xx+349;x7=x6+51;
 	        draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);draw_set_color(c_black);
-	        if (ignore[4]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
-	        if (ignore[4]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Inquisition]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Inquisition]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
 	        if (mouse_x>=x6) and (mouse_y>=y6) and (mouse_x<x7) and (mouse_y<y7){
 	            draw_set_alpha(0.2);draw_rectangle(x6,y6,x7,y7,0);draw_set_alpha(1);
 	        }
 	    }
     
-	    if (known[5]>0.7) and (faction_defeated[5]=0){
+	    if (known[eFACTION.Ecclesiarchy]>0.7) and (faction_defeated[5]=0){
 	        x6=xx+250;y6=yy+334+408;x7=x6+92;y7=y6+15;
 	        if (turns_ignored[5]<=0){
 	            draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);
@@ -339,8 +339,8 @@ function scr_ui_diplomacy() {
 	        }
 	        x6=xx+349;x7=x6+51;
 	        draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);draw_set_color(c_black);
-	        if (ignore[5]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
-	        if (ignore[5]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Ecclesiarchy]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Ecclesiarchy]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
 	        if (mouse_x>=x6) and (mouse_y>=y6) and (mouse_x<x7) and (mouse_y<y7){
 	            draw_set_alpha(0.2);draw_rectangle(x6,y6,x7,y7,0);draw_set_alpha(1);
 	        }
@@ -357,14 +357,14 @@ function scr_ui_diplomacy() {
 	        }
 	        x6=xx+349+1010;x7=x6+51;
 	        draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);draw_set_color(c_black);
-	        if (ignore[6]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
-	        if (ignore[6]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Eldar]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Eldar]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
 	        if (mouse_x>=x6) and (mouse_y>=y6) and (mouse_x<x7) and (mouse_y<y7){
 	            draw_set_alpha(0.2);draw_rectangle(x6,y6,x7,y7,0);draw_set_alpha(1);
 	        }
 	    }
     
-	    if (known[7]>0.7) and (faction_defeated[3]=0){
+	    if (known[eFACTION.Ork]>0.7) and (faction_defeated[3]=0){
 	        x6=xx+250+1010;y6=yy+334+136;x7=x6+92;y7=y6+15;
 	        if (turns_ignored[7]<=0){
 	            draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);
@@ -375,14 +375,14 @@ function scr_ui_diplomacy() {
 	        }
 	        x6=xx+349+1010;x7=x6+51;
 	        draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);draw_set_color(c_black);
-	        if (ignore[7]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
-	        if (ignore[7]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Ork]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Ork]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
 	        if (mouse_x>=x6) and (mouse_y>=y6) and (mouse_x<x7) and (mouse_y<y7){
 	            draw_set_alpha(0.2);draw_rectangle(x6,y6,x7,y7,0);draw_set_alpha(1);
 	        }
 	    }
     
-	    if (known[8]>0.7) and (faction_defeated[4]=0){
+	    if (known[eFACTION.Tau]>0.7) and (faction_defeated[4]=0){
 	        x6=xx+250+1010;y6=yy+334+272;x7=x6+92;y7=y6+15;
 	        if (turns_ignored[8]<=0){
 	            draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);
@@ -393,14 +393,14 @@ function scr_ui_diplomacy() {
 	        }
 	        x6=xx+349+1010;x7=x6+51;
 	        draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);draw_set_color(c_black);
-	        if (ignore[8]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
-	        if (ignore[8]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Tau]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Tau]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
 	        if (mouse_x>=x6) and (mouse_y>=y6) and (mouse_x<x7) and (mouse_y<y7){
 	            draw_set_alpha(0.2);draw_rectangle(x6,y6,x7,y7,0);draw_set_alpha(1);
 	        }
 	    }
     
-	    if (known[10]>0.7) and (faction_defeated[5]=0){
+	    if (known[eFACTION.Chaos]>0.7) and (faction_defeated[5]=0){
 	        x6=xx+250+1010;y6=yy+334+408;x7=x6+92;y7=y6+15;
 	        if (turns_ignored[10]<=0){
 	            draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);
@@ -411,8 +411,8 @@ function scr_ui_diplomacy() {
 	        }
 	        x6=xx+349+1010;x7=x6+51;
 	        draw_set_color(38144);draw_rectangle(x6,y6,x7,y7,0);draw_set_color(c_black);
-	        if (ignore[10]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
-	        if (ignore[10]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Chaos]<1) then draw_text_transformed(x6,y6+1,string_hash_to_newline("   Ignore"),0.7,0.7,0);
+	        if (ignore[eFACTION.Chaos]>=1) then draw_text_transformed(x6,y6+1,string_hash_to_newline(" Unignore"),0.7,0.7,0);
 	        if (mouse_x>=x6) and (mouse_y>=y6) and (mouse_x<x7) and (mouse_y<y7){
 	            draw_set_alpha(0.2);draw_rectangle(x6,y6,x7,y7,0);draw_set_alpha(1);
 	        }
@@ -422,26 +422,26 @@ function scr_ui_diplomacy() {
 	    /*if (known[6]>0.7) and (faction_defeated[6]=0){
 	        var fis;fis="[Request Audience]";
 	        if (turns_ignored[6]>0) then fis="                  ";
-	        if (ignore[6]<1) then draw_text_transformed(xx+1199,yy+354,string(fis)+"  [Ignore]",0.7,0.7,0);
-	        if (ignore[6]>=1) then draw_text_transformed(xx+1199,yy+354,string(fis)+"[Unignore]",0.7,0.7,0);
+	        if (ignore[eFACTION.Eldar]<1) then draw_text_transformed(xx+1199,yy+354,string(fis)+"  [Ignore]",0.7,0.7,0);
+	        if (ignore[eFACTION.Eldar]>=1) then draw_text_transformed(xx+1199,yy+354,string(fis)+"[Unignore]",0.7,0.7,0);
 	    }
-	    if (known[7]>0.7) and (faction_defeated[7]=0){
+	    if (known[eFACTION.Ork]>0.7) and (faction_defeated[7]=0){
 	        var fis;fis="[Request Audience]";
 	        if (turns_ignored[7]>0) then fis="                  ";
-	        if (ignore[7]<1) then draw_text_transformed(xx+1199,yy+490,string(fis)+"  [Ignore]",0.7,0.7,0);
-	        if (ignore[7]>=1) then draw_text_transformed(xx+1199,yy+490,string(fis)+"[Unignore]",0.7,0.7,0);
+	        if (ignore[eFACTION.Ork]<1) then draw_text_transformed(xx+1199,yy+490,string(fis)+"  [Ignore]",0.7,0.7,0);
+	        if (ignore[eFACTION.Ork]>=1) then draw_text_transformed(xx+1199,yy+490,string(fis)+"[Unignore]",0.7,0.7,0);
 	    }
-	    if (known[8]>0.7) and (faction_defeated[8]=0){
+	    if (known[eFACTION.Tau]>0.7) and (faction_defeated[8]=0){
 	        var fis;fis="[Request Audience]";
 	        if (turns_ignored[8]>0) then fis="                  ";
-	        if (ignore[8]<1) then draw_text_transformed(xx+1199,yy+631,string(fis)+"  [Ignore]",0.7,0.7,0);
-	        if (ignore[8]>=1) then draw_text_transformed(xx+1199,yy+631,string(fis)+"[Unignore]",0.7,0.7,0);
+	        if (ignore[eFACTION.Tau]<1) then draw_text_transformed(xx+1199,yy+631,string(fis)+"  [Ignore]",0.7,0.7,0);
+	        if (ignore[eFACTION.Tau]>=1) then draw_text_transformed(xx+1199,yy+631,string(fis)+"[Unignore]",0.7,0.7,0);
 	    }
-	    if (known[10]>0.7) and (faction_defeated[10]=0){
+	    if (known[eFACTION.Chaos]>0.7) and (faction_defeated[10]=0){
 	        var fis;fis="[Request Audience]";
 	        if (turns_ignored[10]>0) then fis="                  ";
-	        if (ignore[10]<1) then draw_text_transformed(xx+1199,yy+762,string(fis)+"  [Ignore]",0.7,0.7,0);
-	        if (ignore[10]>=1) then draw_text_transformed(xx+1199,yy+762,string(fis)+"[Unignore]",0.7,0.7,0);
+	        if (ignore[eFACTION.Chaos]<1) then draw_text_transformed(xx+1199,yy+762,string(fis)+"  [Ignore]",0.7,0.7,0);
+	        if (ignore[eFACTION.Chaos]>=1) then draw_text_transformed(xx+1199,yy+762,string(fis)+"[Unignore]",0.7,0.7,0);
 	    }*/
     
     
@@ -452,15 +452,15 @@ function scr_ui_diplomacy() {
     
 	    /*
 	    faction_leader[0]="";faction_title[0]="";faction_status[0]="";faction_leader[1]="";faction_title[1]="";faction_status[1]="";
-	    faction_leader[2]="";faction_title[2]="Sector Commander";faction_status[2]="Allied";
-	    faction_leader[3]="";faction_title[3]="Magos";faction_status[3]="Allied";
-	    faction_leader[4]="";faction_title[4]="Inquisitor Lord";faction_status[4]="Allied";
-	    faction_leader[5]="";faction_title[5]="Prioress";faction_status[5]="Allied";
-	    faction_leader[6]="";faction_title[6]="Farseer";faction_status[6]="War";
-	    faction_leader[7]="";faction_title[7]="Warboss";faction_status[7]="War";
-	    faction_leader[8]="";faction_title[8]="Diplomat";faction_status[8]="War";
-	    faction_leader[9]="";faction_title[9]="";faction_status[9]="War";
-	    faction_leader[10]="";faction_title[10]="Master";faction_status[10]="War";
+	    faction_leader[eFACTION.Imperium]="";faction_title[2]="Sector Commander";faction_status[eFACTION.Imperium]="Allied";
+	    faction_leader[eFACTION.Mechanicus]="";faction_title[3]="Magos";faction_status[eFACTION.Mechanicus]="Allied";
+	    faction_leader[eFACTION.Inquisition]="";faction_title[4]="Inquisitor Lord";faction_status[eFACTION.Inquisition]="Allied";
+	    faction_leader[eFACTION.Ecclesiarchy]="";faction_title[5]="Prioress";faction_status[eFACTION.Ecclesiarchy]="Allied";
+	    faction_leader[eFACTION.Eldar]="";faction_title[6]="Farseer";faction_status[eFACTION.Eldar]="War";
+	    faction_leader[eFACTION.Ork]="";faction_title[7]="Warboss";faction_status[eFACTION.Ork]="War";
+	    faction_leader[eFACTION.Tau]="";faction_title[8]="Diplomat";faction_status[eFACTION.Tau]="War";
+	    faction_leader[eFACTION.Tyranids]="";faction_title[9]="";faction_status[eFACTION.Tyranids]="War";
+	    faction_leader[eFACTION.Chaos]="";faction_title[10]="Master";faction_status[eFACTION.Chaos]="War";
 	    */
     
     
@@ -890,10 +890,9 @@ function basic_diplomacy_screen(){
 					opt_cord+=1;
 	                yy+=30;
 	            }
-            
 	            yy=__view_get( e__VW.YView, 0 );
 	        }
-        
+
 	        if (force_goodbye=1){
 	            draw_rectangle(xx+818,yy+796,xx+897,yy+815,0);
 	            draw_set_color(0);draw_text(xx+857.5,yy+797,string_hash_to_newline("Exit"));draw_set_alpha(0.2);

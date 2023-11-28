@@ -34,7 +34,7 @@ if (action_if_number(obj_saveload, 0, 0) && (action_if_number(obj_fleet, 0, 0)) 
                 present_fleet[20]=0;
             }
             with(obj_p_fleet){
-                if (action=="move") and (obj_controller.faction_status[2]=="War"){
+                if (action=="move") and (obj_controller.faction_status[eFACTION.Imperium]=="War"){
                     targetStar=instance_nearest(action_x,action_y,obj_star);
                     if (point_distance(action_x,action_y,targetStar.x,targetStar.y)<10){
                         targetStar.present_fleet[20]=1;

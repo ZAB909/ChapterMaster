@@ -8,7 +8,7 @@ if (__b__){
 
     with(obj_star_select){instance_deactivate_object(id);}
 
-    var num, why=0,onceh=0;
+    var why=0,onceh=0;
     if (obj_controller.cooldown<=0) then {
         for (var i = 1; i <= 9; i += 4) {
             for (var j = 0; j < 4; j++) {

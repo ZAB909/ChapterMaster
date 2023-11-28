@@ -125,7 +125,7 @@ if (zoomed==0) and (zui==0){
     draw_text(__view_get( e__VW.XView, 0 )+662.5,__view_get( e__VW.YView, 0 )+17.5,string_hash_to_newline("Sector "+string(obj_ini.sector_name)));
     
     // Checks if you are penitent
-    if (obj_controller.faction_status[2]!="War"){
+    if (obj_controller.faction_status[eFACTION.Imperium]!="War"){
         if (penitent_max==0){
             draw_text(__view_get( e__VW.XView, 0 )+887,__view_get( e__VW.YView, 0 )+17,string_hash_to_newline("Loyal"));
             draw_text(__view_get( e__VW.XView, 0 )+887,__view_get( e__VW.YView, 0 )+17.5,string_hash_to_newline("Loyal"));
@@ -142,7 +142,7 @@ if (zoomed==0) and (zui==0){
         }
     }
     // Sets you to renegade
-    if (obj_controller.faction_status[2]=="War"){
+    if (obj_controller.faction_status[eFACTION.Imperium]=="War"){
         draw_set_color(255);
         draw_text(__view_get( e__VW.XView, 0 )+887,__view_get( e__VW.YView, 0 )+17,string_hash_to_newline("Renegade"));
         draw_text(__view_get( e__VW.XView, 0 )+887,__view_get( e__VW.YView, 0 )+17.5,string_hash_to_newline("Renegade"));

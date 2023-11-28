@@ -193,7 +193,7 @@ function scr_bomb_world(star_system, planet_number, bombard_target_faction, bomb
     
     
 	    if (pop_after==0 && pop_before>0){
-	        if (star_system.p_owner[planet_number]=2) and (obj_controller.faction_status[2]!="War"){
+	        if (star_system.p_owner[planet_number]=2) and (obj_controller.faction_status[eFACTION.Imperium]!="War"){
 	            if (star_system.p_type[planet_number]="Temperate") or (star_system.p_type[planet_number]="Hive") or (star_system.p_type[planet_number]="Desert"){
 	                obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=2;
 	                obj_controller.audien_topic[obj_controller.audiences]="bombard_angry";
@@ -205,7 +205,7 @@ function scr_bomb_world(star_system, planet_number, bombard_target_faction, bomb
 	            }else if (star_system.p_type[planet_number]="Hive"){ 
 	            	obj_controller.disposition[2]-=10;
 	            }
-	        }else if (star_system.p_owner[planet_number]=3) and (obj_controller.faction_status[3]!="War"){
+	        }else if (star_system.p_owner[planet_number]=3) and (obj_controller.faction_status[eFACTION.Mechanicus]!="War"){
 	            obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=3;
 	            obj_controller.audien_topic[obj_controller.audiences]="bombard_angry";
 	            if (star_system.p_type[planet_number]="Forge"){
@@ -215,7 +215,7 @@ function scr_bomb_world(star_system, planet_number, bombard_target_faction, bomb
 	       		}
 	        }
 	    }
-	    if (bombard_target_faction=8) and (obj_controller.faction_status[8]!="War"){
+	    if (bombard_target_faction=8) and (obj_controller.faction_status[eFACTION.Tau]!="War"){
 	        obj_controller.audiences+=1;
 	        obj_controller.audien[obj_controller.audiences]=8;
 	        obj_controller.audien_topic[obj_controller.audiences]=choose("declare_war","bombard_angry");

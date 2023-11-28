@@ -120,8 +120,8 @@ function scr_loyalty(argument0, argument1) {
     
 	    if (argument1="inspect_world"){
 	        with(obj_en_fleet){
-	            // if (owner=4) then show_message(trade_goods);
-	            // if (string_count("Inqis",trade_goods)=0) or (owner!=4) then instance_deactivate_object(id);
+	            // if (owner  = eFACTION.Inquisition) then show_message(trade_goods);
+	            // if (string_count("Inqis",trade_goods)=0) or (owner  != eFACTION.Inquisition) then instance_deactivate_object(id);
 	            if (string_count("Inqis",trade_goods)=0) then instance_deactivate_object(id);
 	        }
 	        // show_message(instance_number(obj_en_fleet));
@@ -163,7 +163,7 @@ function scr_loyalty(argument0, argument1) {
     
 	    if (argument1="inspect_fleet"){
 	        with(obj_en_fleet){
-	            if (string_count("Inqis",trade_goods)=0) or (owner!=4) then instance_deactivate_object(id);
+	            if (string_count("Inqis",trade_goods)=0) or (owner  != eFACTION.Inquisition) then instance_deactivate_object(id);
 	        }
 	        if (instance_exists(obj_en_fleet)) and (instance_exists(obj_p_fleet)){
 	            that=instance_nearest(obj_en_fleet.x,obj_en_fleet.y,obj_p_fleet);

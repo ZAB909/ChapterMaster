@@ -39,7 +39,7 @@ if (!__b__){
         
         image_alpha=0.5;
         
-        if (owner!=9){
+        if (owner != eFACTION.Tyranids){
             husk=instance_create(x,y,obj_en_husk);
             husk.sprite_index=sprite_index;
             husk.direction=direction;
@@ -54,7 +54,7 @@ if (!__b__){
                 explo.y+=random_range(sprite_width*0.25,sprite_width*-0.25);
             }
         }
-        if (owner==9) then effect_create_above(ef_firework,x,y,1,c_purple);
+        if (owner == eFACTION.Tyranids) then effect_create_above(ef_firework,x,y,1,c_purple);
         instance_destroy();
     }
     // While ship is alive, attack
@@ -206,7 +206,7 @@ if (!__b__){
             if (dist>64) and (dist<300){
                 bull=instance_create(x,y,obj_al_round);
                 bull.direction=point_direction(x,y,targe.x,targe.y);
-                if (owner==9) then bull.sprite_index=spr_glob;
+                if (owner == eFACTION.Tyranids) then bull.sprite_index=spr_glob;
                 bull.speed=20;
                 bull.dam=3;
                 bull.image_xscale=0.5;
@@ -330,12 +330,12 @@ if (!__b__){
                         bull.image_xscale=2;
                         bullimage_yscale=2;
                     }
-                    if (string_count("Weapons",wep)==1) and (owner==6){
+                    if (string_count("Weapons",wep)==1) and (owner == eFACTION.Eldar){
                         bull.sprite_index=spr_ground_las;
                         bull.image_xscale=2;
                         bull.image_yscale=2;
                     }
-                    if (string_count("Pulse",wep)==1) and (owner==6){
+                    if (string_count("Pulse",wep)==1) and (owner == eFACTION.Eldar){
                         bull.sprite_index=spr_pulse;
                         bull.image_xscale=1.5;
                         bull.image_yscale=1.5;
@@ -477,8 +477,8 @@ if (__b__){
             if (dist>64) and (dist<300){
                 bull=instance_create(x,y,obj_al_round);
                 bull.direction=point_direction(x,y,targe.x,targe.y);
-                if (owner=9) then bull.sprite_index=spr_glob;
-                if (owner=8) or (owner=6) then bull.sprite_index=spr_pulse;
+                if (owner = eFACTION.Tyranids) then bull.sprite_index=spr_glob;
+                if (owner = eFACTION.Tau) or (owner = eFACTION.Eldar) then bull.sprite_index=spr_pulse;
                 bull.speed=20;
                 bull.dam=3;
                 bull.image_xscale=0.5;
@@ -606,12 +606,12 @@ if (__b__){
                         bull.image_xscale=2;
                         bullimage_yscale=2;
                     }
-                    if (string_count("Weapons",wep)==1) and (owner=6){
+                    if (string_count("Weapons",wep)==1) and (owner = eFACTION.Eldar){
                         bull.sprite_index=spr_ground_las;
                         bull.image_xscale=2;
                         bull.image_yscale=2;
                     }
-                    if (string_count("Pulse",wep)==1) and (owner=6){
+                    if (string_count("Pulse",wep)==1) and (owner = eFACTION.Eldar){
                         bull.sprite_index=spr_pulse;
                         bull.image_xscale=1.5;
                         bull.image_yscale=1.5;

@@ -5,7 +5,7 @@ if __b__
 __b__ = action_if_number(obj_drop_select, 0, 0);
 if __b__
 {
-if (owner=1) and (instance_nearest(x,y,obj_p_fleet).action=""){
+if (owner  = eFACTION.Player) and (instance_nearest(x,y,obj_p_fleet).action=""){
 
 
 
@@ -40,7 +40,7 @@ if (owner=1) and (instance_nearest(x,y,obj_p_fleet).action=""){
     
     if (sys_dist<32) and (sys.id!=mine.id) then cont=1;
     if (sys.storm>0) or (instance_nearest(x,y+24,obj_star).storm>0) then cont=0;
-    if (sys.craftworld=1) and (obj_controller.known[6]=0) then cont=0;
+    if (sys.craftworld=1) and (obj_controller.known[eFACTION.Eldar]=0) then cont=0;
     
     var web1,web2,web;
     web1=0;web2=0;web=0;
@@ -130,7 +130,7 @@ if (owner=1) and (instance_nearest(x,y,obj_p_fleet).action=""){
         new_fleet.action_x=sys.x;
         new_fleet.action_y=sys.y;
         new_fleet.action="move";
-        new_fleet.owner=1;
+        new_fleet.owner  = eFACTION.Player;
         new_fleet.x=new_fleet.x+lengthdir_x(48,point_direction(new_fleet.x,new_fleet.y,sys.x,sys.y));
         new_fleet.y=new_fleet.y+lengthdir_y(48,point_direction(new_fleet.x,new_fleet.y,sys.x,sys.y));
         
