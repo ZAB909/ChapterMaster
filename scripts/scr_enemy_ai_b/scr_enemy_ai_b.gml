@@ -3,7 +3,7 @@ function scr_enemy_ai_b() {
 	// Imperial Repleneshes numbers
 	// If no enemies and guard < pop /470 then increase guardsman
 	// If no enemies and population < max_pop then increase by like 1%
-	var rando=0,contin=0,i=0, garrison_force=false, garrisons=[], total_garrison=0;
+	var rando=0,success=false,i=0, garrison_force=false, garrisons=[], total_garrison=0;
 
 
 	i=0;
@@ -20,7 +20,7 @@ function scr_enemy_ai_b() {
       }		
 			// Orks grow in number
 		var ork_growth=floor(random(100))+1;
-		contin=0;// This part handles the increasing in numbers
+		success=false;// This part handles the increasing in numbers
     if (p_owner[i]=7) and (p_orks[i]<5) and (p_traitors[i]=0) and (p_player[i]<=0 || !garrison_force){
         if (p_orks[i]>0) and (p_orks[i]<5) and (ork_growth<=15){
         	p_orks[i]+=1;
@@ -145,20 +145,30 @@ function scr_enemy_ai_b() {
 	        }
 	    }
 	// traitors cults
-	    var notixt=false;
+	    var notixt;
+			var is_ork;
+			notixt=false;
 	    rando=floor(random(100))+1;
-	    if (p_owner[i]=eFACTION.Chaos) and (p_heresy[i]<80)
+	    if (p_owner[i]=eFACTION.Chaos) and (p_heresy[i]<80) then p_heresy[i]+=1;
 			p_heresy[i]+=1;
     
-	    if (p_owner[i]!=10) and (p_owner[i]!=6) and (planets>=i) and (p_type[i]!="Dead") and (p_type[i]!="Craftworld"){
-	    	contin=0;
-	    	if ((p_owner[i]!=7)){
-	    		if (p_heresy[i]+p_heresy_secret[i]>=90) and (rando<=40){contin=1;}
-	        else if (p_heresy[i]+p_heresy_secret[i]>=70) and (rando<=25){contin=1;}
-	        else if (p_heresy[i]+p_heresy_secret[i]>=50) and (rando<=10){contin=1;}	
-	        else if (p_heresy[i]+p_heresy_secret[i]>=25) and (rando<=3){contin=1;}
-        }
-	        if (contin>0) and (p_pdf[i]=0) and (p_guardsmen[i]=0) and (p_tau[i]=0) and (p_orks[i]=0){
+	    if (p_owner[i]!=eFACTION.Chaos) and (p_owner[i]!=eFACTION.Eldar) and (planets>=i) and (p_type[i]!="Dead") and (p_type[i]!="Craftworld") {
+	    	success=true;
+	    	var success = true;
+			is_ork = p_owner[i] != eFACTION.Ork
+			if !is_ork {
+					//made a linear function for this while here...now the minimum for the roll is a bit higher, but 
+					var score_to_beat = (3/4)*(p_heresy[i] + p_heresy_secret[i]) - 27.5
+					/*
+			        if (p_heresy[i]+p_heresy_secret[i]>=25) and (rando<=3) then contin=1;
+			        if (p_heresy[i]+p_heresy_secret[i]>=50) and (rando<=10) then contin=1;
+			        if (p_heresy[i]+p_heresy_secret[i]>=70) and (rando<=25) then contin=1;
+			        if (p_heresy[i]+p_heresy_secret[i]>=90) and (rando<=40) then contin=1;
+					*/
+
+					success = rando > score_to_beat
+			}
+	        if (success) and (p_pdf[i]=0) and (p_guardsmen[i]=0) and (p_tau[i]=0) and (p_orks[i]=0){
 				p_owner[i]=10;
 	            scr_alert("red","owner",string(name)+" "+string(i)+" has fallen to heretics!",x,y);
 				if (visited==1) { //visited variable check whether the star has been visited or not 1 for true 0 for false
