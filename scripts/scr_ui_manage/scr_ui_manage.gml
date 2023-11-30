@@ -299,7 +299,7 @@ function scr_ui_manage() {
 						string("{0} potential",obj_ini.role[100][15]),
 						string("{0} potential",obj_ini.role[100][14]),
 						"Librarium potential"];
-		var assignmemt ="none"
+		var assignment ="none"
 	    
 	    if (!obj_controller.view_squad){
 		    for(var i=0; i<repetitions;i++){
@@ -324,8 +324,8 @@ function scr_ui_manage() {
 		            } else if(unit_location[0]==location_types.ship){
 						temp2 = obj_ini.ship[unit_location[1]]
 					};
-					assignmemt=unit.assignment();
-					if (assignmemt=="garrison"){
+					assignment=unit.assignment();
+					if (assignment=="garrison"){
 						temp2+= "(garrison)";
 					}
 		            if (fest_planet==0) and (fest_sid>0) and (fest_repeats>0) and (ma_lid[sel]==fest_sid){
@@ -628,7 +628,7 @@ function scr_ui_manage() {
 		        draw_set_color(c_gray);
 		        draw_text_transformed(xx+240+8,yy+66,string_hash_to_newline(string(temp3)),1,1,0);// HP
 		        draw_text_transformed(xx+330+8,yy+66,string_hash_to_newline(string(temp4)),1,1,0);// EXP
-		        if (temp2=="Mechanicus Vessel") or (temp2=="Terra IV") or (temp2=="=Penitorium=") or (assignmemt!="none") then draw_set_alpha(0.5);
+		        if (temp2=="Mechanicus Vessel") or (temp2=="Terra IV") or (temp2=="=Penitorium=") or (assignment!="none") then draw_set_alpha(0.5);
 		        draw_text_transformed(xx+430+8,yy+66,string_hash_to_newline(string(temp2)),1,1,0);// LOC
 		        draw_set_alpha(1);
 	        

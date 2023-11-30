@@ -2078,8 +2078,8 @@ if (action_if_number(obj_saveload, 0, 0) &&
             var onceh;
             for(var i=0; i<man_max; i++){
                 while (man[sel]=="hide" && sel<500){sel++;}
-                unit=obj_ini.TTRPG[company, ide[sel]];
-                if (unit.assignmemt!="none"){
+                unit=obj_ini.TTRPG[company][ide[sel]];
+                if (unit.assignment!="none"){
                     if (sel<500){
                         sel++;
                         continue;
@@ -2101,11 +2101,11 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 or ((selecting_ship>0) and (ma_lid[sel]==0)){sel++;continue;}
                 // Selects all men of type
                 if (!array_contains(["Command","man","vehicle"],sel_all)){
-                    if (man[sel]=="man") and (ma_role[sel]==sel_all)
+                    if (man[sel]=="man") and (ma_role[sel]==sel_all)//TODO make unit selectable function
                     and (!array_contains(["Terra","Lost","Mechanicus Vessel"],ma_loc[sel]))
                     and (ma_god[sel]<10)
                     and (eventing==false){
-                        if (man_sel[sel]==0){
+                        if (man_sel[sel]==0) and (unit.assignment()=="none"){
                             man_sel[sel]=1;
                             man_size+=scr_unit_size(ma_armour[sel],ma_role[sel],true);
                             onceh=1;
@@ -2118,9 +2118,9 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     }
                 }
                 // Selects all vehicles of type
-                if (sel_all!="Command") and (sel_all!="man") and (sel_all=="vehicle"){
-                    if (man[sel]=="vehicle") and (ma_role[sel]==sel_all) and (ma_loc[sel]!="Terra") 
-                    and (ma_loc[sel]!="Mechanicus Vessel") and (ma_loc[sel]!="Lost") and (ma_god[sel]<10)
+                if (sel_all=="vehicle"){
+                    if (man[sel]=="vehicle") and (ma_role[sel]==sel_all)and (!array_contains(["Terra","Lost","Mechanicus Vessel"],ma_loc[sel]))
+					and (ma_god[sel]<10)
                     and (eventing==false){
                         onceh=0;
                         if (man_sel[sel]==0) and (onceh==0){
@@ -2138,11 +2138,10 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 }
                 // Selects all men
                 if (sel_all=="man"){
-                    if (man[sel]=="man") and (ma_loc[sel]!="Terra") and (ma_loc[sel]!="Lost") 
-                    and (ma_loc[sel]!="Mechanicus Vessel") and (ma_god[sel]<10) 
+                    if (man[sel]=="man")and (!array_contains(["Terra","Lost","Mechanicus Vessel"],ma_loc[sel])) and (ma_god[sel]<10) 
                     and (eventing==false){
                         onceh=0;
-                        if (man_sel[sel]==0) and (onceh==0){
+                        if (man_sel[sel]==0) and (onceh==0) and (unit.assignment()=="none"){
                             man_sel[sel]=1;
                             man_size+=scr_unit_size(ma_armour[sel],ma_role[sel],true);
                             onceh=1;
@@ -2157,8 +2156,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 }
                 // Selects all vehicles
                 if (sel_all=="vehicle"){
-                    if (man[sel]=="vehicle") and (ma_loc[sel]!="Terra") and (ma_loc[sel]!="Lost") 
-                    and (ma_loc[sel]!="Mechanicus Vessel") and (ma_god[sel]<10) 
+                    if (man[sel]=="vehicle")and (!array_contains(["Terra","Lost","Mechanicus Vessel"],ma_loc[sel])) and (ma_god[sel]<10) 
                     and (eventing==false){
                         onceh=0;
                         if (man_sel[sel]==0) and (onceh==0){
@@ -2175,8 +2173,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     }
                 }
                 // Selecting command
-                if (sel_all=="Command") and (man[sel]=="man") and (ma_loc[sel]!="Terra") 
-                and (ma_loc[sel]!="Mechanicus Vessel") and (ma_god[sel]<10) 
+                if (sel_all=="Command") and (man[sel]=="man")and (!array_contains(["Terra","Lost","Mechanicus Vessel"],ma_loc[sel])) and (ma_god[sel]<10) 
                 and (eventing==false){
                     var is_command=0;
                     if (managing>0) and (managing<=10){
@@ -2184,13 +2181,12 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     }
                     if (is_command==1){
                         onceh=0;
-                        if (man_sel[sel]==0) and (onceh==0){
+                        if (man_sel[sel]==0) and (onceh==0) and (unit.assignment()=="none"){
                             man_sel[sel]=1;
                             man_size+=scr_unit_size(ma_armour[sel],ma_role[sel],true);
                             onceh=1;
                             selection=true;
-                        }
-                        if (man_sel[sel]==1) and (onceh==0){
+                        }else{
                             man_sel[sel]=0;
                             man_size-=scr_unit_size(ma_armour[sel],ma_role[sel],true);
                             onceh=1;
@@ -2261,7 +2257,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                         for(var bi=1; bi<=300; bi++){
                             if (man_sel[bi]==0) and (ma_god[bi]<10) and (ma_loc[bi]!="Terra") 
                             and (ma_loc[bi]!="Mechanicus Vessel") and (ma_loc[bi]!="Lost"){
-                                if (ma_loc[bi]==selecting_location) and (selecting_planet==ma_wid[bi]) and (ma_role[bi]==ma_role[double_was]) and (bi!=double_was){
+                                if (ma_loc[bi]==selecting_location) and (selecting_planet==ma_wid[bi]) and (ma_role[bi]==ma_role[double_was]) and (bi!=double_was) and (unit.assignment()=="none" || man[sel]=="vehicle"){
                                     man_sel[bi]=1;
 
                                     if (man[bi]=="man") then man_size+=scr_unit_size(ma_armour[bi],ma_role[bi],true);

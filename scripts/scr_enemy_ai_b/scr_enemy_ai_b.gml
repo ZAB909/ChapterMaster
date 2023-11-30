@@ -90,14 +90,9 @@ function scr_enemy_ai_b() {
 	                        if (ii<=1) then ii=1;// image_index=max(8,round(ii));
                         
 	                        if (ii>=7) and (capital_number>1){
-	                            if (orbiting.present_fleet[1]>0) then enemy_fleets+=1;
-	                            if (orbiting.present_fleet[2]>0) then enemy_fleets+=1;
-	                            if (orbiting.present_fleet[6]>0) then enemy_fleets+=1;
-	                            if (orbiting.present_fleet[7]>0) then enemy_fleets+=1;
-	                            if (orbiting.present_fleet[8]>0) then enemy_fleets+=1;
-	                            if (orbiting.present_fleet[9]>0) then enemy_fleets+=1;
-	                            if (orbiting.present_fleet[10]>0) then enemy_fleets+=1;
-                          
+	                        	for (var fleet_n =1;fleet_n<=10;fleetn_n++){
+	                        		if (orbiting.present_fleet[fleet_n]>0) then enemy_fleets++;
+	                        	}
 	                        }
 	                    }
 	                }                
@@ -148,15 +143,14 @@ function scr_enemy_ai_b() {
 	    var notixt;
 			var is_ork;
 			notixt=false;
-	    rando=floor(random(100))+1;
+	    rando=irandom(99)+1;
 	    if (p_owner[i]=eFACTION.Chaos) and (p_heresy[i]<80) then p_heresy[i]+=1;
-			p_heresy[i]+=1;
+			p_heresy[i]++;
     
 	    if (p_owner[i]!=eFACTION.Chaos) and (p_owner[i]!=eFACTION.Eldar) and (planets>=i) and (p_type[i]!="Dead") and (p_type[i]!="Craftworld") {
-	    	success=true;
-	    	var success = true;
-			is_ork = p_owner[i] != eFACTION.Ork
-			if !is_ork {
+	    success=false;
+			is_ork = p_owner[i] == eFACTION.Ork;
+			if (!is_ork ){
 					//made a linear function for this while here...now the minimum for the roll is a bit higher, but 
 					var score_to_beat = (3/4)*(p_heresy[i] + p_heresy_secret[i]) - 27.5
 					/*
@@ -168,7 +162,7 @@ function scr_enemy_ai_b() {
 
 					success = rando > score_to_beat
 			}
-	        if (success) and (p_pdf[i]=0) and (p_guardsmen[i]=0) and (p_tau[i]=0) and (p_orks[i]=0){
+	    if (success) and (p_pdf[i]=0) and (p_guardsmen[i]=0) and (p_tau[i]=0) and (p_orks[i]=0){
 				p_owner[i]=10;
 	            scr_alert("red","owner",string(name)+" "+string(i)+" has fallen to heretics!",x,y);
 				if (visited==1) { //visited variable check whether the star has been visited or not 1 for true 0 for false
