@@ -86,12 +86,12 @@ if (owner==1){
 var cam = view_get_camera(view_current)
 var x1 = camera_get_view_x(cam)
 var y1 = camera_get_view_y(cam)
-var w = x1 + view_get_wport(view_current)
-var h = y1 + view_get_hport(view_current)
+var w = x1 + camera_get_view_width(view_current)
+var h = y1 + camera_get_view_height(view_current)
 
 draw_set_alpha(1);
 
-if rectangle_in_rectangle(ui_node.gui_x, ui_node.gui_y, ui_node.gui_x + ui_node.width , ui_node.gui_y + ui_node.height, x1, y1, w, h) > 0 {
+if obj_controller.zoomed || rectangle_in_rectangle(ui_node.gui_x, ui_node.gui_y, ui_node.gui_x + ui_node.width , ui_node.gui_y + ui_node.height, x1, y1, w, h) > 0 {
 	ui_node.activate();
 } else {
 	ui_node.deactivate();
