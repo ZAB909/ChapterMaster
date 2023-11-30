@@ -113,4 +113,65 @@ global.star_name_colors = [
 	#80FF00 // Sleepy robots
 ]
 
-ui_node = new UINode(x - sprite_xoffset, y - sprite_yoffset, sprite_width, sprite_height)
+
+var star_base_ui_elem = new UIElement(sprite_width, sprite_height + 32, eUI_ALIGN_X.x_left, eUI_ALIGN_Y.y_top)
+ui_node = new UINode(star_base_ui_elem, x - sprite_xoffset, y - sprite_yoffset)
+
+
+
+var system_name_element = new UIElement(string_width(name) + 60, 32, eUI_ALIGN_X.x_center, eUI_ALIGN_Y.y_bottom)
+var left_align_element = new UIElement(18, 18, eUI_ALIGN_X.x_left, eUI_ALIGN_Y.y_center)
+var right_align_element = new UIElement(18,18, eUI_ALIGN_X.x_right, eUI_ALIGN_Y.y_center)
+
+ui_node.add_element(system_name_element, 0, 0, 0, 0)
+	.add_component(UISpriteRendererComponent)
+		.set_sprite(spr_p_name_bg)
+		.set_callback(function(context) {
+			if (owner != eFACTION.Player ){
+				context.set_color_solid(global.star_name_colors[owner])
+			} else {
+				var main_color = make_color_rgb(obj_controller.targetR1 *255, obj_controller.targetG1 * 255, obj_controller.targetB1 * 255)
+				var pauldron_color = make_color_rgb(obj_controller.targetR3 *255, obj_controller.targetG3 *255, obj_controller.targetB3 *255)
+				context.set_vertical_gradient(main_color, pauldron_color)
+			}
+		})
+	.finalize()
+	.add_component(UITextRendererComponent)
+		.set_color_solid(c_white)
+		.set_callback(function(context) {
+			context.text = name
+			
+			var new_w = string_width(name) + 60
+			context.set_halign(fa_center)
+			context.set_valign(fa_middle)
+			context.owner.resize(new_w, 32)
+			if (owner == eFACTION.Player){
+				var trim_color = make_color_rgb(obj_controller.targetR5 *255, obj_controller.targetG5 *255, obj_controller.targetB5 *255)
+				context.set_color_solid(trim_color)
+			}
+		})
+	.finalize()
+	.add_element(left_align_element, 0, 0, 0, 0)
+		.add_component(UISpriteRendererComponent)
+			.set_sprite(spr_planets)
+			.set_image_index(9)
+			.set_image_speed(0)
+			.set_callback(function(context) {
+				context.is_canceled = !system_player_ground_forces	
+			})
+		.finalize()
+	.finalize()
+	.add_element(right_align_element, 0, 0, 0, 0)
+		.add_component(UISpriteRendererComponent)
+			.set_callback(function(context) {
+				if (owner == eFACTION.Player) {
+					context.set_sprite(obj_img.creation[1])
+					context.set_image_index(obj_ini.icon)
+				} else {
+					context.set_sprite(obj_img.force[owner])
+				}
+			})
+			.set_image_speed(0)
+		.finalize()
+	.finalize()
+

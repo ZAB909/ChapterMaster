@@ -47,7 +47,7 @@ repeat(91){
     
     alert_char[i]=0;
     alert_alpha[i]=0;
-    alert_text[i]="";
+    alert_txt[i]="";
     alert_color[i]="";
     
     battle[i]=0;// Set to 0 for none, 1 for battle to do, and 2 for resolved
