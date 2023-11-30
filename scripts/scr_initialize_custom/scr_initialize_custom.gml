@@ -830,7 +830,7 @@ function scr_initialize_custom() {
 	    mobi[i,10]="Jump Pack";
 	    gear[i,10]="";
 	    role[i,12]="Scout";
-	    wep1[i,12]="Sniper Rifle";
+	    wep1[i,12]="Bolter";
 	    wep2[i,12]="Combat Knife";
 	    armour[i,12]="Scout Armour";
 	    mobi[i,12]="";
@@ -1066,7 +1066,7 @@ function scr_initialize_custom() {
 		                        [["Power Sword","Chainsword","Power Axe","Power Fist"],1]
 		                    ],
 		                    "wep2":[
-		                        [["Plasma Pistol","CombiFlamer","Stalker Pattern Bolter","Storm Bolter"],1]
+		                        [["Plasma Pistol","Combiflamer","Stalker Pattern Bolter","Storm Bolter"],1]
 		                    ]
 		                }
 		            },
@@ -1107,7 +1107,7 @@ function scr_initialize_custom() {
 			                    [["Power Sword","Chainsword","Power Axe","Power Fist"],1]
 			                ],
 			                "wep2":[
-			                    [["CombiFlamer","Stalker Pattern Bolter",],1]
+			                    [["Combiflamer","Stalker Pattern Bolter",],1]
 			                ]
 			            }
 		        	},
