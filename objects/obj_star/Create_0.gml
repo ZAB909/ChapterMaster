@@ -127,7 +127,7 @@ ui_node.add_element(system_name_element, 0, 0, 0, 0)
 	.add_component(UISpriteRendererComponent)
 		.set_sprite(spr_p_name_bg)
 		.set_callback(function(context) {
-			if owner != 1 {
+			if (owner != eFACTION.Player ){
 				context.set_color_solid(global.star_name_colors[owner])
 			} else {
 				var main_color = make_color_rgb(obj_controller.targetR1 *255, obj_controller.targetG1 * 255, obj_controller.targetB1 * 255)
