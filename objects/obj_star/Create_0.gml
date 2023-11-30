@@ -164,7 +164,7 @@ ui_node.add_element(system_name_element, 0, 0, 0, 0)
 	.add_element(right_align_element, 0, 0, 0, 0)
 		.add_component(UISpriteRendererComponent)
 			.set_callback(function(context) {
-				if owner == 1 {
+				if (owner == eFACTION.Player) {
 					context.set_sprite(obj_img.creation[1])
 					context.set_image_index(obj_ini.icon)
 				} else {
