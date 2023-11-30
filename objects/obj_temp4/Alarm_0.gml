@@ -13,7 +13,7 @@ if (num>0){// Hmmmmmmm
             pop.title="STC Fragment Located";
             
             
-            if (stah.p_owner[num]!=3) then pop.text="An STC Fragment has been located upon "+string(stah.name)+" "+string(num)+"; what it might contain is unknown.  Your "+string(obj_ini.role[100,16])+"s wish to reclaim, identify, and put it to use immediately.  What is thy will?";
+            if (stah.p_owner[num]!=3) then pop.text="An STC Fragment has been located upon "+string(stah.name)+" "+string(num)+"; what it might contain is unknown.  Your "+string(obj_ini.role[100][16])+"s wish to reclaim, identify, and put it to use immediately.  What is thy will?";
             if (stah.p_owner[num]=3) then pop.text="An STC Fragment has been located upon "+string(stah.name)+" "+string(num)+"; what it might contain is unknown.  It appears to be located deep within a Mechanicus Vault.  Taking it may be seen as an act of war.  What is thy will?";
             
             
@@ -27,9 +27,9 @@ if (num>0){// Hmmmmmmm
                 pop=instance_create(0,0,obj_popup);
                 pop.image="stc";
                 pop.title="STC Fragment Located";
-                // pop.text="An STC Fragment has been located upon "+string(stah.name)+" "+string(num)+".  Your "+string(obj_ini.role[100,16])+"s and present Mechanicus Techpriests are bickering over what should be done with it.  What is thy will?";
+                // pop.text="An STC Fragment has been located upon "+string(stah.name)+" "+string(num)+".  Your "+string(obj_ini.role[100][16])+"s and present Mechanicus Techpriests are bickering over what should be done with it.  What is thy will?";
                 
-                pop.text="An STC Fragment has been located upon "+string(stah.name)+" "+string(num)+".  Your "+string(obj_ini.role[100,16])+"s wish to reclaim, identify, and put it to use immediately, and the Tech Priests wish to send it to the closest forge world.  What is thy will?";
+                pop.text="An STC Fragment has been located upon "+string(stah.name)+" "+string(num)+".  Your "+string(obj_ini.role[100][16])+"s wish to reclaim, identify, and put it to use immediately, and the Tech Priests wish to send it to the closest forge world.  What is thy will?";
                 // if (stah.p_owner[num]=3) then pop.text="An STC Fragment has been located upon "+string(stah.name)+" "+string(num)+".  It appears to be located deep within a Mechanicus Vault.  The present Tech Priests warn that taking it will be seen as an act of war.  What is thy will?";
                 
                 own=stah.p_owner[num];

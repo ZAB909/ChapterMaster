@@ -22,7 +22,7 @@ function scr_income() {
 	income_recruiting=0;
 	income_training=0;
 
-	var pid;pid=0;pid=scr_role_count(obj_ini.role[100,16],"");
+	var pid;pid=0;pid=scr_role_count(obj_ini.role[100][16],"");
 	if (pid>=((disposition[3]/2)+5)) then training_techmarine=0;
 
 	if (training_apothecary=1) then income_training-=1;
@@ -63,7 +63,7 @@ function scr_income() {
 	    with(obj_star){
 	        if (planet_feature_bool(p_feature[1], P_features.Monastery)==1){obj_controller.income+=10;instance_create(x,y,obj_temp1);}
 	        if (planet_feature_bool(p_feature[2], P_features.Monastery)==1){obj_controller.income+=10;instance_create(x,y,obj_temp1);}
-	        if (owner=8) then obj_controller.tau_stars+=1;
+	        if (owner = eFACTION.Tau) then obj_controller.tau_stars+=1;
 	        alarm[2]=1;
 	    }
 	}
@@ -75,7 +75,7 @@ function scr_income() {
 	            var mine;mine=instance_nearest(x,y,obj_star);
 	            var i;i=0;
 	            repeat(4){i+=1;
-	                if (mine.p_owner[i]=2) or (mine.p_owner[i]=3){
+	                if (mine.p_owner[i]=eFACTION.Imperium) or (mine.p_owner[i]=eFACTION.Mechanicus){
 	                    if (mine.p_type[i]="Desert") or (mine.p_type[i]="Temperate") then obj_controller.income_home+=2*capital_number;
 	                    if (mine.p_type[i]="Forge") or (mine.p_type[i]="Hive") then obj_controller.income_home+=4*capital_number;
 	                }

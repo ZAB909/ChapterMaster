@@ -12,7 +12,7 @@ var run=0;
 name="";
 star="";
 planets=0;
-owner=2;
+owner = eFACTION.Imperium;
 image_speed=0;
 image_alpha=0;
 x2=0;
@@ -29,6 +29,7 @@ for(run=1; run<=8; run++){
     planet[run]=0;
     dispo[run]=-50;
     p_type[run]="";
+    p_operatives[run]=[];
     p_feature[run]=[];
     p_owner[run]=0;
     p_first[run]=0;
@@ -80,6 +81,8 @@ for(run=1; run<=8; run++){
     p_timer[5,run]=0;
 }
 
+system_player_ground_forces = 0;
+
 for(run=8; run<=30; run++){
     present_fleet[run]=0;
 }
@@ -92,3 +95,22 @@ ai_b=-1;
 ai_c=-1;
 ai_d=-1;
 ai_e=-1;
+
+global.star_name_colors = [
+	38144,
+	c_white, //player
+	c_gray, //imperium
+	c_red, // toaster fuckers
+	38144, //nothing for inquisition
+	c_white, //ecclesiarchy
+	#FF8000, //Hi, I'm Elfo
+	#009500, // waagh
+	#FECB01, // the greater good
+	#AD5272,// bug boys
+	c_purple, // chaos
+	38144, //nothing for heretics either
+	38144, //why 12 is skipped in general, we will never know
+	#80FF00 // Sleepy robots
+]
+
+ui_node = new UINode(x - sprite_xoffset, y - sprite_yoffset, sprite_width, sprite_height)

@@ -565,7 +565,7 @@ if (slide=2){
         }
         
         
-        var x1,x2,x3,x4,x5,x6,y1,y2,y3,y4,y5,y6,bs,see_size,total_max,current,top;
+        var x1,x2,x3,x4,x6,y1,y2,y3,y4,y6,bs,see_size,total_max,current,top;
         
         x1=1111;y1=245;x2=1131;y2=671;bs=245;
         draw_rectangle(x1,y1,x2,y2,1);
@@ -1144,9 +1144,9 @@ if (slide=4){
     if (custom>1){
         if (text_selected="battle_cry") and (text_bar>30) then draw_text_ext(580,144,string_hash_to_newline(string(battle_cry)+"!"),-1,580);
         if (text_selected="battle_cry") and (text_bar<=30) then draw_text_ext(580,144,string_hash_to_newline(string(battle_cry)+"|!"),-1,580);
-        var wid=max(580,string_width_ext(string_hash_to_newline(battle_cry),-1,580));
+        var str_width=max(580,string_width_ext(string_hash_to_newline(battle_cry),-1,580));
         var hei=string_height_ext(string_hash_to_newline(battle_cry),-1,580);
-        if (scr_hit(580-2,144-2,582+wid,146+hei)){obj_cursor.image_index=2;
+        if (scr_hit(580-2,144-2,582+str_width,146+hei)){obj_cursor.image_index=2;
             if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="battle_cry";cooldown=8000;keyboard_string=battle_cry;}
         }
         if (text_selected="battle_cry") then battle_cry=keyboard_string;
@@ -1162,89 +1162,89 @@ if (slide=4){
     
     draw_set_font(fnt_40k_30b);
     draw_text_transformed(444,215,string_hash_to_newline("Livelry"),0.6,0.6,0);
-    var str,wid,hei,x8,y8;x8=0;y8=0;
+    var str,str_width,hei,x8,y8;x8=0;y8=0;
     
     
     draw_set_color(38144);draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
     str="Primary: "+string(col[main_color]);x8=620;y8=252;
-    wid=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
-    draw_rectangle(x8,y8,x8+wid,y8+hei,0);draw_set_color(0);
+    str_width=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
+    draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
     draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-    if (scr_hit(x8,y8,x8+wid,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
+    if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
         tooltip="Primary";tooltip2="The main color of your Astartes and their vehicles.";
-        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+wid,y8+hei,0);draw_set_alpha(1);
+        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
         if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=1;}
     }
     
     y8+=35;
     draw_set_color(38144);draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
     str="Secondary: "+string(col[secondary_color]);
-    wid=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
-    draw_rectangle(x8,y8,x8+wid,y8+hei,0);draw_set_color(0);
+    str_width=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
+    draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
     draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-    if (scr_hit(x8,y8,x8+wid,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
+    if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
         tooltip="Secondary";tooltip2="The secondary color of your Astartes and their vehicles.";
-        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+wid,y8+hei,0);draw_set_alpha(1);
+        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
         if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=2;}
     }
     
     y8+=35;
     draw_set_color(38144);draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
     str="Pauldron 1: "+string(col[pauldron2_color]);
-    wid=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
-    draw_rectangle(x8,y8,x8+wid,y8+hei,0);draw_set_color(0);
+    str_width=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
+    draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
     draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-    if (scr_hit(x8,y8,x8+wid,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
+    if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
         tooltip="First Pauldron";tooltip2="The color of your Astartes' right Pauldron.  Normally this Pauldron displays their rank and designation.";
-        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+wid,y8+hei,0);draw_set_alpha(1);
+        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
         if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=3;}
     }
     
     y8+=35;
     draw_set_color(38144);draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
     str="Pauldron 2: "+string(col[pauldron_color]);
-    wid=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
-    draw_rectangle(x8,y8,x8+wid,y8+hei,0);draw_set_color(0);
+    str_width=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
+    draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
     draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-    if (scr_hit(x8,y8,x8+wid,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
+    if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
         tooltip="Second Pauldron";tooltip2="The color of your Astartes' left Pauldron.  Normally this Pauldron contains the Chapter Insignia.";
-        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+wid,y8+hei,0);draw_set_alpha(1);
+        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
         if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=4;}
     }
     
     y8+=35;
     draw_set_color(38144);draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
     str="Trim: "+string(col[trim_color]);
-    wid=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
-    draw_rectangle(x8,y8,x8+wid,y8+hei,0);draw_set_color(0);
+    str_width=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
+    draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
     draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-    if (scr_hit(x8,y8,x8+wid,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
+    if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
         tooltip="Trim";tooltip2="The trim color that appears on the Pauldrons, armour plating, and any decorations.";
-        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+wid,y8+hei,0);draw_set_alpha(1);
+        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
         if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=5;}
     }
     
     y8+=35;
     draw_set_color(38144);draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
     str="Lens: "+string(col[lens_color]);
-    wid=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
-    draw_rectangle(x8,y8,x8+wid,y8+hei,0);draw_set_color(0);
+    str_width=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
+    draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
     draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-    if (scr_hit(x8,y8,x8+wid,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
+    if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
         tooltip="Lens";tooltip2="The color of your Astartes' lenses.  Most of the time this will be the visor color.";
-        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+wid,y8+hei,0);draw_set_alpha(1);
+        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
         if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=6;}
     }
     
     y8+=35;
     draw_set_color(38144);draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
     str="Weapon: "+string(col[weapon_color]);
-    wid=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
-    draw_rectangle(x8,y8,x8+wid,y8+hei,0);draw_set_color(0);
+    str_width=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
+    draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
     draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-    if (scr_hit(x8,y8,x8+wid,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
+    if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
         tooltip="Weapon";tooltip2="The primary color of your Astartes' weapons.";
-        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+wid,y8+hei,0);draw_set_alpha(1);
+        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
         if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=7;}
     }
     
@@ -1330,7 +1330,7 @@ if (slide=4){
     
     if (custom<2) then draw_set_alpha(0.5);
     yar=0;if (equal_specialists=1) then yar=1;draw_sprite(spr_creation_check,yar,860,645);yar=0;
-    if (scr_hit(860,645,1150,765)=true) and (!instance_exists(obj_creation_popup)){tooltip="Specialist Distribution";tooltip2="Check if you wish for your Companies to be uniform and each contain "+string(role[100,10])+"s and "+string(role[100,9])+"s.";}
+    if (scr_hit(860,645,1150,765)=true) and (!instance_exists(obj_creation_popup)){tooltip="Specialist Distribution";tooltip2="Check if you wish for your Companies to be uniform and each contain "+string(role[100][10])+"s and "+string(role[100][9])+"s.";}
     if (scr_hit(860,650,860+32,650+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
         cooldown=8000;var onceh;onceh=0;
         if (equal_specialists=1) and (onceh=0){equal_specialists=0;onceh=1;}
@@ -1410,7 +1410,7 @@ if (slide=4){
             if (custom>1){
                 if (text_selected="capoth") and (text_bar>30) then draw_text_ext(600,575,string_hash_to_newline(string(hapothecary)),-1,580);
                 if (text_selected="capoth") and (text_bar<=30) then draw_text_ext(600,575,string_hash_to_newline(string(hapothecary)+"|"),-1,580);
-                var wid,hei;wid=0;hei=string_height_ext(string_hash_to_newline(hapothecary),-2,580);
+                var str_width,hei;str_width=0;hei=string_height_ext(string_hash_to_newline(hapothecary),-2,580);
                 if (scr_hit(600,575,785,575+hei)){obj_cursor.image_index=2;
                     if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="capoth";cooldown=8000;keyboard_string=hapothecary;}
                 }
@@ -1425,7 +1425,7 @@ if (slide=4){
             if (custom>1){
                 if (text_selected="chap") and (text_bar>30) then draw_text_ext(600,597,string_hash_to_newline(string(hchaplain)),-1,580);
                 if (text_selected="chap") and (text_bar<=30) then draw_text_ext(600,597,string_hash_to_newline(string(hchaplain)+"|"),-1,580);
-                var wid,hei;wid=0;hei=string_height_ext(string_hash_to_newline(hchaplain),-2,580);
+                var str_width,hei;str_width=0;hei=string_height_ext(string_hash_to_newline(hchaplain),-2,580);
                 if (scr_hit(600,597,785,597+hei)){obj_cursor.image_index=2;
                     if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="chap";cooldown=8000;keyboard_string=hchaplain;}
                 }
@@ -1440,7 +1440,7 @@ if (slide=4){
             if (custom>1){
                 if (text_selected="libra") and (text_bar>30) then draw_text_ext(600,619,string_hash_to_newline(string(clibrarian)),-1,580);
                 if (text_selected="libra") and (text_bar<=30) then draw_text_ext(600,619,string_hash_to_newline(string(clibrarian)+"|"),-1,580);
-                var wid,hei;wid=0;hei=string_height_ext(string_hash_to_newline(clibrarian),-2,580);
+                var str_width,hei;str_width=0;hei=string_height_ext(string_hash_to_newline(clibrarian),-2,580);
                 if (scr_hit(600,619,785,619+hei)){obj_cursor.image_index=2;
                     if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="libra";cooldown=8000;keyboard_string=clibrarian;}
                 }
@@ -1455,7 +1455,7 @@ if (slide=4){
             if (custom>1){
                 if (text_selected="forge") and (text_bar>30) then draw_text_ext(600,641,string_hash_to_newline(string(fmaster)),-1,580);
                 if (text_selected="forge") and (text_bar<=30) then draw_text_ext(600,641,string_hash_to_newline(string(fmaster)+"|"),-1,580);
-                var wid,hei;wid=0;hei=string_height_ext(string_hash_to_newline(fmaster),-2,580);
+                var str_width,hei;str_width=0;hei=string_height_ext(string_hash_to_newline(fmaster),-2,580);
                 if (scr_hit(600,641,785,641+hei)){obj_cursor.image_index=2;
                     if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="forge";cooldown=8000;keyboard_string=fmaster;}
                 }
@@ -1469,7 +1469,7 @@ if (slide=4){
         if (custom>1){
             if (text_selected="recr") and (text_bar>30) then draw_text_ext(600,663,string_hash_to_newline(string(recruiter)),-1,580);
             if (text_selected="recr") and (text_bar<=30) then draw_text_ext(600,663,string_hash_to_newline(string(recruiter)+"|"),-1,580);
-            var wid,hei;wid=0;hei=string_height_ext(string_hash_to_newline(recruiter),-2,580);
+            var str_width,hei;str_width=0;hei=string_height_ext(string_hash_to_newline(recruiter),-2,580);
             if (scr_hit(600,663,785,663+hei)){obj_cursor.image_index=2;
                 if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="recr";cooldown=8000;keyboard_string=recruiter;}
             }
@@ -1482,7 +1482,7 @@ if (slide=4){
         if (custom>1){
             if (text_selected="admi") and (text_bar>30) then draw_text_ext(600,685,string_hash_to_newline(string(admiral)),-1,580);
             if (text_selected="admi") and (text_bar<=30) then draw_text_ext(600,685,string_hash_to_newline(string(admiral)+"|"),-1,580);
-            var wid,hei;wid=0;hei=string_height_ext(string_hash_to_newline(admiral),-2,580);
+            var str_width,hei;str_width=0;hei=string_height_ext(string_hash_to_newline(admiral),-2,580);
             if (scr_hit(600,685,785,685+hei)){obj_cursor.image_index=2;
                 if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="admi";cooldown=8000;keyboard_string=admiral;}
             }
@@ -1699,8 +1699,8 @@ if (slide=6){
     if (custom>0) and (restarted=0){
         if (text_selected="cm") and (text_bar>30) then draw_text(580,144,string_hash_to_newline(string(chapter_master_name)));
         if (text_selected="cm") and (text_bar<=30) then draw_text(580,144,string_hash_to_newline(string(chapter_master_name)+"|"));
-        var wid,hei;wid=max(400,string_width(string_hash_to_newline(chapter_master_name)));hei=string_height(string_hash_to_newline(chapter_master_name));
-        if (scr_hit(580-2,144-2,582+wid,146+hei)){obj_cursor.image_index=2;
+        var str_width,hei;str_width=max(400,string_width(string_hash_to_newline(chapter_master_name)));hei=string_height(string_hash_to_newline(chapter_master_name));
+        if (scr_hit(580-2,144-2,582+str_width,146+hei)){obj_cursor.image_index=2;
             if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="cm";cooldown=8000;keyboard_string=chapter_master_name;}
         }
         if (text_selected="cm") then chapter_master_name=keyboard_string;

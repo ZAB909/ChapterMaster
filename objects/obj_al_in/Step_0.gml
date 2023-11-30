@@ -3,7 +3,7 @@ if (owner == 6) then sprite_index = spr_darkstar;
 if (owner == 7) then sprite_index = spr_fighta;
 if (owner == 8) then sprite_index = spr_manta;
 if (owner == 9) then sprite_index = spr_bio_fighter;
-if (owner == 10) then sprite_index = spr_ship_dreadclaw;
+if (owner == eFACTION.Chaos) then sprite_index = spr_ship_dreadclaw;
 
 image_angle = direction;
 if (cooldown1 > 0) then cooldown1 -= 1;

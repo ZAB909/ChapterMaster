@@ -261,7 +261,7 @@ if (class="Prowler"){sprite_index=spr_ship_prowler;ship_size=1;
 
 
 
-if (owner=9){
+if (owner = eFACTION.Tyranids){
     var i;i=0;
     repeat(2){
         i+=1;
@@ -326,7 +326,7 @@ if (class="Dirge Class"){ship_size=2;sprite_index=spr_ship_dirge;
 
 
 
-if (owner!=6) and (owner!=13){
+if (owner != eFACTION.Eldar) and (owner != eFACTION.Necrons){
     hp=hp/2;maxhp=hp;shields=shields/2;maxshields=shields;
 }
 

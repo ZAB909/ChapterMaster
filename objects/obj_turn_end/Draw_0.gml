@@ -300,16 +300,29 @@ draw_set_halign(fa_left);
 draw_set_color(38144);
 
 if (alerts>0) and (popups_end=1){
+	var f = function() {
+		return true;	
+	}
+	var ctext = array_copy_while(alert_text, f)
+	var calpha = array_copy_while(alert_alpha, f)
+	var ccolor = array_copy_while(alert_color, f)
+	
     repeat(alerts){
-        i+=1;
+        //i+=1;
+		var txt = array_pop(ctext)
+		var alpha = array_pop(calpha)
+		var color = array_pop(ccolor)
+		
+		if txt == undefined || alpha == undefined || color == undefined
+			break;
         draw_set_color(38144);
-        if (alert_color[i]="red") then draw_set_color(c_red);
-        if (alert_color[i]="yellow") then draw_set_color(57586);
+        if (color == "red") then draw_set_color(c_red);
+        if (color == "yellow") then draw_set_color(57586);
         // if (alert_color[i]="purple") then draw_set_color(c_red);
-        draw_set_alpha(min(1,alert_alpha[i]));
+        draw_set_alpha(min(1,alpha));
         
         if (obj_controller.zoomed=0){
-            draw_text(__view_get( e__VW.XView, 0 )+16,__view_get( e__VW.YView, 0 )+46+(i*20),string_hash_to_newline(string(alert_txt[i])));
+            draw_text(__view_get( e__VW.XView, 0 )+16,__view_get( e__VW.YView, 0 )+46+(i*20),string_hash_to_newline(string(txt)));
             // draw_text(view_xview[0]+16.5,view_yview[0]+40.5+(i*12),string(alert_txt[i]));
         }
         /*if (obj_controller.zoomed=1){
@@ -318,11 +331,9 @@ if (alerts>0) and (popups_end=1){
         }*/
         
         if (obj_controller.zoomed=1){
-            draw_text_transformed(32,92+(i*40),string_hash_to_newline(string(alert_txt[i])),2,2,0);
+            draw_text_transformed(32,92+(i*40),string_hash_to_newline(string(txt)),2,2,0);
             // draw_text_transformed(122,122+(i*36),string(alert_txt[i]),3,3,0);
         }
-        
-        
     }
 }
 

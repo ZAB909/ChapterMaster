@@ -8,7 +8,7 @@ repeat(301){i+=1;
     advisor[i]=0;advisor_exists[i]=-1;
     diplomacy_splash[i]=0;diplomacy_splash_exists[i]=-1;
     diplomacy_daemon[i]=0;diplomacy_daemon_exists[i]=-1;
-    diplomacy_icon[i]=0;diplomacy_icon_exists[i]=-1;
+    diplomacy_icon[i]=-1;diplomacy_icon_exists[i]=-1;
     menu[i]=0;menu_exists[i]=-1;
     loading[i]=0;loading_exists[i]=-1;
     postbattle[i]=0;postbattle_exists[i]=-1;
@@ -55,7 +55,7 @@ slate_good=false;
 
 // End Image Replacer
 // Start Text Replacer
-
+scr_image("force",-50,0,0,0,0)
 
 
 

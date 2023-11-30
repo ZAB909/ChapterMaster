@@ -47,7 +47,7 @@ repeat(91){
     
     alert_char[i]=0;
     alert_alpha[i]=0;
-    alert_txt[i]="";
+    alert_text[i]="";
     alert_color[i]="";
     
     battle[i]=0;// Set to 0 for none, 1 for battle to do, and 2 for resolved
@@ -90,7 +90,7 @@ repeat(11){i+=1;
 
 
 repeat(99){i+=1;
-    if (obj_controller.event[i]!="") and (obj_controller.event_duration[i]=1) and (obj_controller.faction_status[2]!="War"){
+    if (obj_controller.event[i]!="") and (obj_controller.event_duration[i]=1) and (obj_controller.faction_status[eFACTION.Imperium]!="War"){
         if (obj_controller.event[i]="governor_assassination_1"){
             with(obj_star){var o;o=0;repeat(4){o+=1;if (dispo[o]>0) and (dispo[o]<90) then dispo[o]=max(dispo[o]-2,0);}}
             obj_controller.disposition[2]-=7;obj_controller.disposition[4]-=10;obj_controller.disposition[5]-=4;
@@ -100,7 +100,7 @@ repeat(99){i+=1;
                 scr_audience(4,top,0,"",0,0);
             }
         }
-        if (string_count("governor_assassination_2",obj_controller.event[i])>0) and (obj_controller.faction_status[4]!="War"){
+        if (string_count("governor_assassination_2",obj_controller.event[i])>0) and (obj_controller.faction_status[eFACTION.Inquisition]!="War"){
             with(obj_star){var o;o=0;repeat(4){o+=1;if (dispo[o]>0) and (dispo[o]<90) then dispo[o]=max(dispo[o]-4,0);}}
             obj_controller.disposition[2]-=15;obj_controller.disposition[4]-=30;obj_controller.disposition[5]-=10;
             if (obj_controller.disposition[4]<=0) or (obj_controller.disposition[2]<=0) then obj_controller.alarm[8]=1;

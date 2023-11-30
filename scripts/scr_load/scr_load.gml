@@ -1068,18 +1068,18 @@ function scr_load(argument0, argument1) {
 
 
 	    with(obj_en_fleet){
-	        if (owner=2) and (string_count("colon",trade_goods)=0) then sprite_index=spr_fleet_imperial;
-	        if (owner=2) and (string_count("colon",trade_goods)>0) then sprite_index=spr_fleet_civilian;
-	        if (owner=3) then sprite_index=spr_fleet_mechanicus;
-	        if (owner=4) and (string_count("_fleet",trade_goods)>0) and (target>0){
+	        if (owner = eFACTION.Imperium) and (string_count("colon",trade_goods)=0) then sprite_index=spr_fleet_imperial;
+	        if (owner = eFACTION.Imperium) and (string_count("colon",trade_goods)>0) then sprite_index=spr_fleet_civilian;
+	        if (owner = eFACTION.Mechanicus) then sprite_index=spr_fleet_mechanicus;
+	        if (owner  = eFACTION.Inquisition) and (string_count("_fleet",trade_goods)>0) and (target>0){
 	            target=instance_nearest(target_x,target_y,obj_p_fleet);
 	        }
-	        if (owner=4) then sprite_index=spr_fleet_inquisition;
-	        if (owner=6) then sprite_index=spr_fleet_eldar;
-	        if (owner=7) then sprite_index=spr_fleet_ork;
-	        if (owner=8) then sprite_index=spr_fleet_tau;
-	        if (owner=9) then sprite_index=spr_fleet_tyranid;
-	        if (owner=10) then sprite_index=spr_fleet_chaos;
+	        if (owner  = eFACTION.Inquisition) then sprite_index=spr_fleet_inquisition;
+	        if (owner = eFACTION.Eldar) then sprite_index=spr_fleet_eldar;
+	        if (owner = eFACTION.Ork) then sprite_index=spr_fleet_ork;
+	        if (owner = eFACTION.Tau) then sprite_index=spr_fleet_tau;
+	        if (owner = eFACTION.Tyranids) then sprite_index=spr_fleet_tyranid;
+	        if (owner = eFACTION.Chaos) then sprite_index=spr_fleet_chaos;
 	        image_speed=0;
 	    }
 

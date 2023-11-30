@@ -9,13 +9,13 @@ function scr_battle_allies() {
 	with(obj_star){if (name=obj_ncombat.battle_loc) then instance_create(x,y,obj_temp3);}
 	that_star=instance_nearest(x,y,obj_star);plant=obj_ncombat.battle_id;
 
-	if (obj_controller.faction_status[2]!="War") and (that_star.p_pdf[plant]>0) then obj_ncombat.allies=1;
-	if (obj_controller.faction_status[2]!="War") and (that_star.p_guardsmen[plant]>0) then obj_ncombat.allies=2;
+	if (obj_controller.faction_status[eFACTION.Imperium]!="War") and (that_star.p_pdf[plant]>0) then obj_ncombat.allies=1;
+	if (obj_controller.faction_status[eFACTION.Imperium]!="War") and (that_star.p_guardsmen[plant]>0) then obj_ncombat.allies=2;
 
 	instance_activate_object(obj_en_fleet);
 
 	with(obj_en_fleet){
-	    if (owner=4) and (string_count("Inqis",trade_goods)>0) and (action="") and (point_distance(x,y,obj_temp3.x,obj_temp3.y)<=40){
+	    if (owner  = eFACTION.Inquisition) and (string_count("Inqis",trade_goods)>0) and (action="") and (point_distance(x,y,obj_temp3.x,obj_temp3.y)<=40){
 	        obj_ncombat.present_inquisitor=1;
 	        obj_ncombat.inquisitor_ship=id;
 	    }

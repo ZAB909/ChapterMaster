@@ -1,23 +1,21 @@
 function scr_random_event(execute_now) {
 
 	var evented = false;
-
-
 	// This is some eldar mission, it should be fixed
 	//	var rando4=floor(random(200))+1;
 	//if (obj_controller.turns_ignored[6]<=0) and (obj_controller.faction_gender[6]=2) then rando4-=2;
 	//if (obj_controller.turns_ignored[6]<=0) and (rando4<=3) and execute_now and (faction_defeated[6]=0){
-	//    if (obj_controller.known[6]=2) and (obj_controller.disposition[6]>=-10) and (string_count("Eldar",obj_ini.strin)=0){
+	//    if (obj_controller.known[eFACTION.Eldar]=2) and (obj_controller.disposition[6]>=-10) and (string_count("Eldar",obj_ini.strin)=0){
 	//		debugl("RE: Eldar Mission 1");
 	//        // Need something else here that prevents them from asking missions when they are pissed
         
 	//        obj_turn_end.audiences+=1;// obj_turn_end.audiences+=1;
 	//        obj_turn_end.audien[obj_turn_end.audiences]=6;
         
-	//        // if (obj_controller.known[6]>2) then obj_turn_end.audien_topic[obj_turn_end.audiences]="mission";// Random mission?
-	//        if (obj_controller.known[6]=2){
+	//        // if (obj_controller.known[eFACTION.Eldar]>2) then obj_turn_end.audien_topic[obj_turn_end.audiences]="mission";// Random mission?
+	//        if (obj_controller.known[eFACTION.Eldar]=2){
 	//            obj_turn_end.audien_topic[obj_turn_end.audiences]="mission1";
-	//            obj_controller.known[6]=2.2;
+	//            obj_controller.known[eFACTION.Eldar]=2.2;
 	//            scr_quest(0,"300req",6,24);
 	//        }
         
@@ -29,7 +27,7 @@ function scr_random_event(execute_now) {
 
 	var inquisition_mission_roll = irandom(100);
 	var force_inquisition_mission = false;
-	if (((last_mission+50) <= turn) && (inquisition_mission_roll <= 5) && (known[4] != 0) && (obj_controller.faction_status[4] != "War")){
+	if (((last_mission+50) <= turn) && (inquisition_mission_roll <= 5) && (known[eFACTION.Inquisition] != 0) && (obj_controller.faction_status[eFACTION.Inquisition] != "War")){
 		force_inquisition_mission = true;
 	}
 
@@ -122,19 +120,19 @@ function scr_random_event(execute_now) {
 					
 					switch (curr_event){
 						case EVENT.inquisition_planet:
-							if (known[4]==0 || obj_controller.faction_status[4]=="War") {
+							if (known[eFACTION.Inquisition]==0 || obj_controller.faction_status[eFACTION.Inquisition]=="War") {
 								events_share[i] -= 1;
 								events_total -= 1;
 							}
 							break;
 						case EVENT.inquisition_mission:
-							if (known[4]==0 || obj_controller.disposition[4] < 0 || obj_controller.faction_status[4] == "War") {
+							if (known[eFACTION.Inquisition]==0 || obj_controller.disposition[4] < 0 || obj_controller.faction_status[eFACTION.Inquisition] == "War") {
 								events_share[i] -= 1;
 								events_total -= 1;
 							}
 							break;
 						case EVENT.mechanicus_mission:
-							if (known[3] == 0 || obj_controller.disposition[3] < 50 || obj_controller.faction_status[3] == "War") {
+							if (known[eFACTION.Mechanicus] == 0 || obj_controller.disposition[3] < 50 || obj_controller.faction_status[eFACTION.Mechanicus] == "War") {
 								events_share[i] -= 1;
 								events_total -= 1;
 							}
@@ -156,13 +154,13 @@ function scr_random_event(execute_now) {
 							}
 							break;
 						case EVENT.necron_awaken:
-							if((known[4] == 0)){
+							if((known[eFACTION.Inquisition] == 0)){
 								events_share[i] -= 1;
 								events_total -= 1;
 							}
 							break;
 						case EVENT.crusade:
-							if (obj_controller.faction_status[2] == "War"){
+							if (obj_controller.faction_status[eFACTION.Imperium] == "War"){
 								events_share[i] -= 1;
 								events_total -= 1;
 							}
@@ -237,8 +235,8 @@ function scr_random_event(execute_now) {
 		}
 		var marine=marine_and_company[1];
 		var company=marine_and_company[0];
-		var role=obj_ini.role[company,marine];
-		var text = string(role)+" "+string(obj_ini.name[company,marine]);
+		var role=obj_ini.role[company][marine];
+		var text = string(role)+" "+string(obj_ini.name[company][marine]);
 		var company_text = scr_convert_company_to_string(company);
 		if(company_text != ""){
 			company_text = "("+company_text+")";
@@ -306,7 +304,7 @@ function scr_random_event(execute_now) {
 	
 	else if (chosen_event == EVENT.promotion){
 		debugl("RE: Promotion");
-	    var marine_and_company = scr_random_marine([obj_ini.role[100,8],obj_ini.role[100,12],obj_ini.role[100,9],obj_ini.role[100,10]],0);
+	    var marine_and_company = scr_random_marine([obj_ini.role[100][8],obj_ini.role[100][12],obj_ini.role[100][9],obj_ini.role[100][10]],0);
 		if(marine_and_company == "none")
 		{
 			debugl("RE: Promotion, couldn't pick a space marine");
@@ -315,8 +313,8 @@ function scr_random_event(execute_now) {
 		var marine=marine_and_company[1];
 		var company=marine_and_company[0];
 		
-		var role=obj_ini.role[company,marine];
-		var text = string(role)+" "+string(obj_ini.name[company,marine]);
+		var role=obj_ini.role[company][marine];
+		var text = string(role)+" "+string(obj_ini.name[company][marine]);
 		var company_text = scr_convert_company_to_string(company);
 		//var company_text = scr_company_string(company);
 		if(company_text != ""){
@@ -326,10 +324,10 @@ function scr_random_event(execute_now) {
 		text += " has distinguished himself.##He is up for review to be promoted.";
 		
 		if (company != 10){
-			obj_ini.experience[company,marine] += 10;
+			obj_ini.experience[company][marine] += 10;
 		}
 		else {
-			obj_ini.experience[company,marine] = max(20, obj_ini.experience[company,marine]+10);
+			obj_ini.experience[company][marine] = max(20, obj_ini.experience[company][marine]+10);
 		}
 		
 		scr_popup("Promotions!",text,"distinguished","");
@@ -338,15 +336,15 @@ function scr_random_event(execute_now) {
     
 	else if (chosen_event == EVENT.strange_building){
 		debugl("RE: Fey Mood");
-		var marine_and_company = scr_random_marine(obj_ini.role[100,16],0);
+		var marine_and_company = scr_random_marine(obj_ini.role[100][16],0);
 		if(marine_and_company == "none"){
 			exit;
 		}
 		var marine = marine_and_company[1];
 		var company = marine_and_company[0];
 		var text="";
-		var role=obj_ini.role[company,marine];
-	    text = role +" "+ string(obj_ini.name[company,marine]);
+		var role=obj_ini.role[company][marine];
+	    text = role +" "+ string(obj_ini.name[company][marine]);
 	    text+=" is taken by a strange mood and starts building!";  
 
         
@@ -372,7 +370,7 @@ function scr_random_event(execute_now) {
         
 	    if (craft_roll<=50){
 			crafted_object=choose("Icon","Icon","Statue");
-			obj_ini.experience[company,marine]+=choose(1,2);
+			obj_ini.experience[company][marine]+=choose(1,2);
 		}
 	    else if ((craft_roll>50) && (craft_roll<=60)) {
 			crafted_object=choose("Bike","Rhino");
@@ -399,15 +397,15 @@ function scr_random_event(execute_now) {
 			
 			scr_popup("Can He Build marine?!?",text,"tech_build","");
 			evented = true;
-	        event[event_index]="strange_building|"+string(obj_ini.name[company,marine])+"|"+string(company)+"|"+string(marine)+"|"+string(crafted_object)+"|";
+	        event[event_index]="strange_building|"+string(obj_ini.name[company][marine])+"|"+string(company)+"|"+string(marine)+"|"+string(crafted_object)+"|";
 	        event_duration[event_index]=1;
         
-			var marine_is_planetside = obj_ini.wid[company,marine]>0
+			var marine_is_planetside = obj_ini.wid[company][marine]>0
 	        if (marine_is_planetside && heritical_item) {
-	            obj_controller.temp[100]=obj_ini.loc[company,marine]; //Why the fuck are we doing that??
-	            obj_controller.temp[101]=obj_ini.wid[company,marine];
+	            obj_controller.temp[100]=obj_ini.loc[company][marine]; //Why the fuck are we doing that??
+	            obj_controller.temp[101]=obj_ini.wid[company][marine];
 	            with(obj_star){
-	                if (this.name = obj_ini.loc[company,marine]){
+	                if (this.name = obj_ini.loc[company][marine]){
 						for(var i = 1; i <= planets; i++){
 							p_hurssy[1]+=6;
 							p_hurssy_time[1]=2;
@@ -417,7 +415,7 @@ function scr_random_event(execute_now) {
 	            }
 	        }
 	        else if (!marine_is_planetside and heritical_item){
-	            obj_controller.temp[101]=obj_ini.lid[company,marine];
+	            obj_controller.temp[101]=obj_ini.lid[company][marine];
             
 	            with(obj_p_fleet){ // TO DO: fix this
 					var u;
@@ -464,8 +462,8 @@ function scr_random_event(execute_now) {
 			}
 			else{
 	            scr_popup("Sororitas","The Ecclesiarchy have placed a company of sisters on "+string(star_id.name)+" "+string(planet)+".","sororitas","");
-	            if (known[5]==0){
-					known[5]=1; // this seesms like a thing another part of code already does, not sure tho
+	            if (known[eFACTION.Ecclesiarchy]==0){
+					known[eFACTION.Ecclesiarchy]=1; // this seesms like a thing another part of code already does, not sure tho
 				}
 			}
 		}
@@ -534,18 +532,21 @@ function scr_random_event(execute_now) {
 			var valid_stars = 0;
 			
 			if(mission_flavour == 3) {
-				valid_stars = array_filter_ext(stars,
-					function(star,index){	
-						return scr_star_has_planet_with_type(star, "Hive") && star.p_owner[scr_get_planet_with_type(star,"Hive")] <= 5;
+				valid_stars = array_filter_ext(stars, function(star,index){
+					var hive_idx = scr_get_planet_with_type(star,"Hive")
+					return scr_is_planet_owned_by_allies(star, hive_idx);
 				});
-			}
-			else {
+			} else {
 				valid_stars = array_filter_ext(stars,
-					function(star,index){	
-						var has_hive = (scr_star_has_planet_with_type(star, "Hive") && star.p_owner[scr_get_planet_with_type(star,"Hive")] <= 5);
-						var has_desert = (scr_star_has_planet_with_type(star, "Desert") && star.p_owner[scr_get_planet_with_type(star,"Desert")] <= 5);
-						var has_temparate = (scr_star_has_planet_with_type(star, "Temparate") && star.p_owner[scr_get_planet_with_type(star,"Temparate")] <= 5);
-						return has_hive || has_desert || has_temparate;
+					function(star,index){
+						var hive_idx = scr_get_planet_with_type(star,"Hive")
+						var desert_idx =  scr_get_planet_with_type(star,"Desert")
+						var temperate_idx = scr_get_planet_with_type(star,"Temparate")
+						var allied_hive = scr_is_planet_owned_by_allies(star, hive_idx)
+						var allied_desert = scr_is_planet_owned_by_allies(star, desert_idx)
+						var allied_temperate =scr_is_planet_owned_by_allies(star, temperate_idx)
+
+						return allied_hive || allied_desert || allied_temperate;
 				});
 			}
 
@@ -559,21 +560,15 @@ function scr_random_event(execute_now) {
 			var planet = -1;
 			if(mission_flavour == 3) {
 				planet = scr_get_planet_with_type(star, "Hive");
-			}
-			else {
+			} else {
 				var hive_planet = scr_get_planet_with_type(star,"Hive");
 				var desert_planet = scr_get_planet_with_type(star,"Desert");
 				var temperate_planet = scr_get_planet_with_type(star,"Temperate");
-				if(hive_planet != -1 && star.p_owner[hive_planet] <= 5)
-				{
+				if(scr_is_planet_owned_by_allies(star, hive_planet)) {
 					planet = hive_planet;
-				}
-				else if(temperate_planet != -1 && star.p_owner[temperate_planet] <= 5)
-				{
+				} else if(scr_is_planet_owned_by_allies(star, temperate_planet)) {
 					planet = temperate_planet;
-				}
-				else if(desert_planet != -1 && star.p_owner[desert_planet] <= 5)
-				{
+				} else if(scr_is_planet_owned_by_allies(star, desert_planet)) {
 					planet = desert_planet;
 				}
 			}
@@ -740,28 +735,24 @@ function scr_random_event(execute_now) {
 	        text+=" is ripe with Tyranid organisms.  They require that you capture one of the Gaunt species for research purposes.  Can your chapter handle this mission?";
 	        scr_popup("Inquisition Mission",text,"inquisition","tyranid_org|"+string(star.name)+"|"+string(planet)+"|"+string(eta+1)+"|");
 			evented = true;
-	    }
-    
-	    else if (chosen_mission == INQUISITION_MISSION.ethereal) { 
+	    } else if (chosen_mission == INQUISITION_MISSION.ethereal) { 
 			debugl("RE: Ethereal Capture");
 			var stars = scr_get_stars();
-			var valid_stars = array_filter_ext(stars, 
-				function(star, index){
-					for(var i = 1; i <= star.planets; i++){
-						if(star.p_owner[i]==8 && star.p_tau[i] >= 4){
-							return true;
-						}
+			var valid_stars = array_filter_ext(stars, function(star, index) {
+				for(var i = 1; i <= star.planets; i++){
+					if(star.p_owner[i]==eFACTION.Tau && star.p_tau[i] >= 4) {
+						return true;
 					}
+				}
 				return false;
 			});
-			if(vaid_stars == 0){
-			
+			if(valid_stars == 0){
 				exit;
 			}
 			
 			var planet = -1;
 			for(var i = 1; i <= star.planets; i++){
-				if(star.p_owner[i]==8 && star.p_tau[i] >= 4){
+				if(star.p_owner[i]==eFACTION.Tau && star.p_tau[i] >= 4){
 					planet = i;
 					break;
 				}
@@ -788,7 +779,7 @@ function scr_random_event(execute_now) {
 		
 		if(mechanicus_have_forge_world){
 			array_push(mechanicus_missions, MECHANICUS_MISSION.bionics);
-			if (scr_role_count(obj_ini.role[100,16],"") >= 6) {
+			if (scr_role_count(obj_ini.role[100][16],"") >= 6) {
 				array_push(mechanicus_missions, MECHANICUS_MISSION.land_raider);
 			}
 		}
@@ -797,7 +788,7 @@ function scr_random_event(execute_now) {
 		with(obj_star){
 			if(scr_star_has_planet_with_feature(id,P_features.Necron_Tomb)) and (awake_necron_Star(id)!= 0){
 				var planet = scr_get_planet_with_feature(id, P_features.Necron_Tomb);
-				if(p_owner[planet] <= 5){
+				if(scr_is_planet_owned_by_allies(self, planet)){
 					array_push(mechanicus_missions, MECHANICUS_MISSION.necron_study);
 					break;
 				}
@@ -823,7 +814,7 @@ function scr_random_event(execute_now) {
 				function(star, index){
 					var planet = scr_get_planet_with_feature(star, P_features.Mechanicus_Forge);
 					if(planet != -1){
-						return star.p_owner[planet] == 3;
+						return star.p_owner[planet] == eFACTION.Mechanicus;
 					}
 					return false;
 			});
@@ -837,7 +828,7 @@ function scr_random_event(execute_now) {
 			
 			
 	        if (chosen_mission == MECHANICUS_MISSION.land_raider){
-	            var text="The Adeptus Mechanicus are trusting you with a special mission.  They wish for you to bring a Land Raider and six "+string(obj_ini.role[100,16])+" to a Forge World in "+ string(star.name) + " for testing and training, for a duration of 24 months. You have four years to complete this.  Can your chapter handle this mission?";
+	            var text="The Adeptus Mechanicus are trusting you with a special mission.  They wish for you to bring a Land Raider and six "+string(obj_ini.role[100][16])+" to a Forge World in "+ string(star.name) + " for testing and training, for a duration of 24 months. You have four years to complete this.  Can your chapter handle this mission?";
 	            scr_popup("Mechanicus Mission",text,"mechanicus","mech_raider!0!|"+string(star.name)+"|");
 				evented = true;
 	        }
@@ -847,7 +838,7 @@ function scr_random_event(execute_now) {
 				evented = true;
 	        }
 	        else {
-	            var text="The local Adeptus Mechanicus are preparing to embark on a voyage to Mars, to delve into the catacombs in search of lost technology.  Due to your close relations they have made the offer to take some of your "+string(obj_ini.role[100,16])+"s with them.  Can your chapter handle this mission?";
+	            var text="The local Adeptus Mechanicus are preparing to embark on a voyage to Mars, to delve into the catacombs in search of lost technology.  Due to your close relations they have made the offer to take some of your "+string(obj_ini.role[100][16])+"s with them.  Can your chapter handle this mission?";
 	            scr_popup("Mechanicus Mission",text,"mechanicus","mech_mars|"+string(star.name)+"|");
 				evented = true;
 	        }
@@ -861,7 +852,7 @@ function scr_random_event(execute_now) {
 			function(star,index) {
 				if(scr_star_has_planet_with_feature(star,P_features.Necron_Tomb)) and (awake_necron_Star(star)!= 0){
 					var planet = scr_get_planet_with_feature(star, "Necron Tomb");
-					if(star.p_owner[planet] <= 5){
+					if(scr_is_planet_owned_by_allies(star, planet)) {
 						return true;
 					}
 				}
@@ -928,8 +919,9 @@ function scr_random_event(execute_now) {
 		var eligible_stars = [];
 		with(obj_star) {
 			for(var i = 0; i <= 4; i++) {
-				if(p_owner[i] == 1){
-					array_push(eligible_stars,id);
+				//feather sometimes thinks the Player part is an object..silly feather
+				if(p_owner[i] == eFACTION.Player) {
+					array_push(eligible_stars,self);
 					break;
 				}
 			}
@@ -953,7 +945,7 @@ function scr_random_event(execute_now) {
 		text += " system to trade.  ";
 		var owns_planet_on_star = false;
 		for(var i = 0; i <= 4; i++) {
-			if(star.p_owner[i] == 1){
+			if(star.p_owner[i] == eFACTION.Player){
 				owns_planet_on_star = true;
 				break;
 			}
@@ -993,7 +985,7 @@ function scr_random_event(execute_now) {
 		
     
 	    if (fleet.action="move"){
-	            var targ,tixt,delay;targ=0;delay=0;
+	            var targ,delay;targ=0;delay=0;
 	            if (instance_exists(fleet)){
 	                delay=choose(1,2,2,3);
 					fleet.action_eta += delay;
@@ -1055,7 +1047,7 @@ function scr_random_event(execute_now) {
 		var eligible_stars=[];
 	    with(obj_star){
 	        for(var planet = 1; planet <= planets; planet++){
-				if(p_owner[planet] == 2 && p_type[planet] != "Dead" && p_type[planet] != "Ice" &&p_type[planet] != "Lava") {
+				if(p_owner[planet] == eFACTION.Imperium && p_type[planet] != "Dead" && p_type[planet] != "Ice" &&p_type[planet] != "Lava") {
 					array_push(eligible_stars,id);
 					break;
 				}
@@ -1071,7 +1063,7 @@ function scr_random_event(execute_now) {
 		var star = eligible_stars[irandom(star_count-1)];
 		var planet;
 		for(var i = 1; i <= star.planets; i++){
-			if(star.p_owner[i] == 2 && star.p_type[i] != "Dead" && star.p_type[i] != "Ice" && star.p_type[i] != "Lava") {
+			if(star.p_owner[i] == eFACTION.Imperium && star.p_type[i] != "Dead" && star.p_type[i] != "Ice" && star.p_type[i] != "Lava") {
 				planet = i;
 				break;
 			}
@@ -1310,16 +1302,16 @@ function scr_random_event(execute_now) {
 		debugl("RE: Enemy");
 		
 		var factions = [];
-		if(known[2] == 1){
+		if(known[eFACTION.Imperium] == 1){
 			array_push(factions,2);
 		}
-		if(known[3] == 1){
+		if(known[eFACTION.Mechanicus] == 1){
 			array_push(factions,3);
 		}
-		if(known[4] == 1){
+		if(known[eFACTION.Inquisition] == 1){
 			array_push(factions,4);
 		}
-		if(known[5] == 1){
+		if(known[eFACTION.Ecclesiarchy] == 1){
 			array_push(factions,5);		
 		}
 		
@@ -1449,7 +1441,7 @@ function scr_random_event(execute_now) {
 		scr_event_log("red",string(text));
 
 		var lost_ship_fleet = instance_create(-500,-500,obj_p_fleet);
-		lost_ship_fleet.owner = 1;
+		lost_ship_fleet.owner = eFACTION.Player;
 		
 		switch(ship_type) {
 			case "capital":
@@ -1480,7 +1472,7 @@ function scr_random_event(execute_now) {
 
 		for(var company = 0; company <= 10; company++){
 			for(var marine = 1; marine <= 300; marine++){
-				if(obj_ini.lid[company,marine] == chosen_ship) {
+				if(obj_ini.lid[company][marine] == chosen_ship) {
 					obj_ini.loc[company, marine] = "Lost";
 				}
 			}

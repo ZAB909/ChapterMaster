@@ -68,7 +68,7 @@ if (image="debug_banshee") and (cooldown<=0){
             if (press=1) then amount=7;
             if (press=3) then amount=9;
             with(obj_star){
-                if (choose(0,1,1)=1) and (owner!=6) and (owner!=1){
+                if (choose(0,1,1)=1) and (owner != eFACTION.Eldar) and (owner!=1){
                     var fleet;
                     fleet=instance_create(x+32,y,obj_en_fleet);
                     fleet.owner=obj_popup.amount;
@@ -85,7 +85,7 @@ if (image="debug_banshee") and (cooldown<=0){
         }
         if (press=2){
             with(obj_star){
-                if (choose(0,1,1)=1) and (owner!=6) and (owner!=1){
+                if (choose(0,1,1)=1) and (owner != eFACTION.Eldar) and (owner!=1){
                     var h;h=0;repeat(4){h+=1;if (p_type[h]!="Dead") and (p_type[h]!=""){p_traitors[h]=5;p_chaos[h]=4;}}
                 }
             }
@@ -96,7 +96,7 @@ if (image="debug_banshee") and (cooldown<=0){
         if (press=1){
             var fleet,tar;tar=instance_nearest(x,y,obj_star);
             fleet=instance_create(tar.x+32,tar.y-0,obj_en_fleet);
-            fleet.owner=7;fleet.sprite_index=spr_fleet_ork;
+            fleet.owner = eFACTION.Ork;fleet.sprite_index=spr_fleet_ork;
             fleet.capital_number=2;fleet.frigate_number=5;
             tar.present_fleet[7]+=1;fleet.image_index=4;
             fleet.orbiting=id;instance_destroy();
@@ -104,7 +104,7 @@ if (image="debug_banshee") and (cooldown<=0){
         if (press=2){
             var fleet,tar;tar=instance_nearest(x,y,obj_star);
             fleet=instance_create(tar.x-24,tar.y-24,obj_en_fleet);
-            fleet.owner=8;fleet.sprite_index=spr_fleet_tau;
+            fleet.owner = eFACTION.Tau;fleet.sprite_index=spr_fleet_tau;
             fleet.capital_number=2;fleet.frigate_number=5;
             tar.present_fleet[8]+=1;fleet.image_index=4;
             fleet.orbiting=id;instance_destroy();
@@ -115,7 +115,7 @@ if (image="debug_banshee") and (cooldown<=0){
         if (press=1){
             var fleet,tar;tar=instance_nearest(x,y,obj_star);
             fleet=instance_create(tar.x+0,tar.y-24,obj_en_fleet);
-            fleet.owner=2;fleet.sprite_index=spr_fleet_imperial;
+            fleet.owner = eFACTION.Imperium;fleet.sprite_index=spr_fleet_imperial;
             fleet.capital_number=2;fleet.frigate_number=5;
             tar.present_fleet[2]+=1;fleet.image_index=4;
             fleet.orbiting=id;
@@ -124,7 +124,7 @@ if (image="debug_banshee") and (cooldown<=0){
         if (press=2){
             var fleet,tar;tar=instance_nearest(x,y,obj_star);
             fleet=instance_create(tar.x-32,tar.y-0,obj_en_fleet);
-            fleet.owner=10;fleet.sprite_index=spr_fleet_chaos;
+            fleet.owner = eFACTION.Chaos;fleet.sprite_index=spr_fleet_chaos;
             fleet.capital_number=2;fleet.frigate_number=5;
             tar.present_fleet[10]+=1;fleet.image_index=4;
             fleet.orbiting=id;
@@ -185,7 +185,7 @@ if (image="chaos_messenger") and (title="Chaos Meeting"){
             }
             if (press=2) and (mission="meeting_1"){
                 obj_controller.complex_event=true;obj_controller.current_eventing="chaos_meeting_1";
-                text="You signal your readiness to the heretic.  Nearly twenty minutes of following the man passes before you all enter an ordinary-looking structure.  Down, within the basement, you then pass into the entrance of a tunnel.  As the trek downward continues more and more heretics appear- cultists, renegades that appear to be from the local garrison, and occasionally even the fallen of your kind.  Overall the heretics seem well supplied and equip.  This observation is interrupted as your group enters into a larger chamber, revealing a network of tunnels and what appears to be ancient catacombs.  Bones of the ancient dead, the forgotten, litter the walls and floor.  And the chamber seems to open up wider, and wider, until you find yourself within a hall.  Within this hall, waiting for you, are several dozen Chaos Terminators, a Greater Daemon of Tzeentch and Slaanesh, and Chaos Lord "+string(obj_controller.faction_leader[10])+".";
+                text="You signal your readiness to the heretic.  Nearly twenty minutes of following the man passes before you all enter an ordinary-looking structure.  Down, within the basement, you then pass into the entrance of a tunnel.  As the trek downward continues more and more heretics appear- cultists, renegades that appear to be from the local garrison, and occasionally even the fallen of your kind.  Overall the heretics seem well supplied and equip.  This observation is interrupted as your group enters into a larger chamber, revealing a network of tunnels and what appears to be ancient catacombs.  Bones of the ancient dead, the forgotten, litter the walls and floor.  And the chamber seems to open up wider, and wider, until you find yourself within a hall.  Within this hall, waiting for you, are several dozen Chaos Terminators, a Greater Daemon of Tzeentch and Slaanesh, and Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+".";
                 option1="";option2="";option3="";mission="cslord1";image="";img=0;image_wid=0;size=3;
                 cooldown=20;exit;
             }
@@ -462,8 +462,8 @@ if (image="mechanicus") and (title="Mechanicus Mission") or (title="Mechanicus M
                     if (that2>0){
                         if (string_count("raider",mission)>0){
                             tempy.p_problem[that,that2]="mech_raider!0!";
-                            text="The Adeptus Mechanicus await your forces at "+string(tempy.name)+" "+scr_roman(that)+".  They are expecting six "+string(obj_ini.role[100,16])+"s and a Land Raider.";
-                            scr_event_log("","Mechanicus Mission Accepted: Six of your "+string(obj_ini.role[100,16])+"s and a Land Raider are to be stationed at "+string(tempy.name)+" "+scr_roman(that)+" for 24 months."); 
+                            text="The Adeptus Mechanicus await your forces at "+string(tempy.name)+" "+scr_roman(that)+".  They are expecting six "+string(obj_ini.role[100][16])+"s and a Land Raider.";
+                            scr_event_log("","Mechanicus Mission Accepted: Six of your "+string(obj_ini.role[100][16])+"s and a Land Raider are to be stationed at "+string(tempy.name)+" "+scr_roman(that)+" for 24 months."); 
                         }
                         if (string_count("bionics",mission)>0){
                             tempy.p_problem[that,that2]="mech_bionics!0!";
@@ -472,8 +472,8 @@ if (image="mechanicus") and (title="Mechanicus Mission") or (title="Mechanicus M
                         }
                         if (string_count("mars",mission)>0){
                             tempy.p_problem[that,that2]="mech_mars";
-                            text="The Adeptus Mechanicus await your "+string(obj_ini.role[100,16])+"s at "+string(tempy.name)+" "+scr_roman(that)+".  They are willing to hold on the voyage for up to 12 months.";
-                            scr_event_log("","Mechanicus Mission Accepted: "+string(obj_ini.role[100,16])+"s are expected at "+string(tempy.name)+" "+scr_roman(that)+" within 12 months, for the voyage to Mars."); 
+                            text="The Adeptus Mechanicus await your "+string(obj_ini.role[100][16])+"s at "+string(tempy.name)+" "+scr_roman(that)+".  They are willing to hold on the voyage for up to 12 months.";
+                            scr_event_log("","Mechanicus Mission Accepted: "+string(obj_ini.role[100][16])+"s are expected at "+string(tempy.name)+" "+scr_roman(that)+" within 12 months, for the voyage to Mars."); 
                         }
                         instance_create(tempy.x+16,tempy.y-24,obj_star_event);
                         tempy.p_timer[that,that2]=49;if (string_count("mars",mission)>0) then tempy.p_timer[that,that2]=13;
@@ -941,7 +941,7 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
     
     if (title="Inquisition Recon"){
         with(obj_temp5){instance_destroy();}
-        var pt1,pt2,pt3,pt4,pt5,you,onceh;onceh=0;
+        var you,onceh;onceh=0;
         obj_controller.temp[200]=string(loc);
         
         with(obj_star){if (name=obj_controller.temp[200]) then instance_create(x,y,obj_temp5);}

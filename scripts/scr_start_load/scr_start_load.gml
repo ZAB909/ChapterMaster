@@ -3,8 +3,10 @@ function scr_start_load(fleet, load_from_star, load_options) {
     // load_from_star: star object
 
     // this distributes the marines and vehicles to the correct ships if the chapter is fleet-based or a home-based chapter
+
 	var  _unit, _comp, _marine, total_vehic_size;
 	var total_distribute_squads = [[],[],[],[],[],[],[],[]];
+
 	var escort_load = load_options[0];
 	var split_scouts = load_options[1];
 	var split_vets = load_options[2];
@@ -130,25 +132,24 @@ function scr_start_load(fleet, load_from_star, load_options) {
 
 				  }
 			 }
-			  if (!ship_fit ){
-				 for (ship_loop =  1; ship_loop<ship_loop_start;ship_loop++){
-					 if (escort_load == 2) and (obj_ini.ship_capacity[ship_loop] < 250){continue}
-					  if ((obj_ini.ship_carrying[ship_loop] + _company_size) <= obj_ini.ship_capacity[ship_loop]){
-						  //load marines
-						  for (var m = 0; m <array_length(company_loader);m++){
-							   company_loader[m].load_marine(ship_loop);
-						  }
-						  //load vehicles
-						  for (var m = 0; m <array_length(company_vehicle);m++){
-							   load_vehicles(company_vehicle[m][0], company_vehicle[m][1], ship_loop,  company_vehicle[m][2]);
-						  }
-						  ship_fit = true;
-						  break;
+			if (!ship_fit ){
+				for (ship_loop =  1; ship_loop<ship_loop_start;ship_loop++){
+					if (escort_load == 2) and (obj_ini.ship_capacity[ship_loop] < 250){continue}
+					 if ((obj_ini.ship_carrying[ship_loop] + _company_size) <= obj_ini.ship_capacity[ship_loop]){
+							  //load marines
+							for (var m = 0; m <array_length(company_loader);m++){
+								   company_loader[m].load_marine(ship_loop);
+							}
+							  //load vehicles
+						 for (var m = 0; m <array_length(company_vehicle);m++){
+						   load_vehicles(company_vehicle[m][0], company_vehicle[m][1], ship_loop,  company_vehicle[m][2]);
+							}
+							ship_fit = true;
+							break;
 
-					  }
-				 }			  	
-			  }
-			 // if there are no ships that will hold the entire company loop all ships and jam pac the fuckers in in
+						}
+				}			  	
+			}
 			 if (!ship_fit ){
 			 	//see if all troops can be grouped together
 				 for (ship_loop =  ship_loop_start; ship_loop< array_length(obj_ini.ship_carrying);ship_loop++){
@@ -164,7 +165,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
 
 					  }
 				 }
-				 if (!ship_fit ){
+				 if (!ship_fit){
 					 for (ship_loop =  1; ship_loop< ship_loop_start;ship_loop++){
 						 if (escort_load == 2) and (obj_ini.ship_capacity[ship_loop] < 250){continue}
 						  if ((obj_ini.ship_carrying[ship_loop] + _company_size-total_vehic_size) <= obj_ini.ship_capacity[ship_loop]){
@@ -179,6 +180,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
 					 }				 	
 				 }
 			}
+			// if there are no ships that will hold the entire company or all the troops loop all ships and jam pac the fuckers in it
 			if (!ship_fit ){	 	
 				 for (var ship_loop = 1; ship_loop<array_length(obj_ini.ship_carrying); ship_loop++){
 				 if (escort_load ==2) and (obj_ini.ship_capacity[ship_loop] < 250){continue}				 
@@ -218,7 +220,9 @@ function scr_start_load(fleet, load_from_star, load_options) {
 			for (var m = 0; m <array_length(company_vehicle);m++){
 				load_vehicles(company_vehicle[m][0], company_vehicle[m][1], ship_loop_start,  company_vehicle[m][2]);
 			}
-			ship_loop_start++;	 
+			if (_comp!=0){
+				ship_loop_start++;	
+			} 
 		 }
 	}
 }

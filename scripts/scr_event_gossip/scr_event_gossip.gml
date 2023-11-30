@@ -23,8 +23,8 @@ function scr_event_gossip(argument0) {
 	if (obj_ini.mobi[attend_co[argument0],attend_id[argument0]]="Jump Pack"){p+=1;gossip[p]="mah_jump";}
 
 	with(obj_temp4){instance_destroy();}
-	with(obj_star){if (owner=7) then instance_create(x,y,obj_temp4);}
-	if (instance_number(obj_temp4)>4) and (obj_controller.known[7]>0) and (obj_controller.faction_defeated[7]=0){
+	with(obj_star){if (owner = eFACTION.Ork) then instance_create(x,y,obj_temp4);}
+	if (instance_number(obj_temp4)>4) and (obj_controller.known[eFACTION.Ork]>0) and (obj_controller.faction_defeated[7]=0){
 	    p+=1;gossip[p]="ork_waaagh";
 	}
 	with(obj_temp4){instance_destroy();}
@@ -33,24 +33,24 @@ function scr_event_gossip(argument0) {
 	p+=1;gossip[p]="eager";
 
 
-	with(obj_temp4){instance_destroy();}with(obj_star){if (owner=7) then instance_create(x,y,obj_temp4);}
+	with(obj_temp4){instance_destroy();}with(obj_star){if (owner = eFACTION.Ork) then instance_create(x,y,obj_temp4);}
 	if (instance_number(obj_temp4)>=8){p+=1;gossip[p]="ork_numbers";}with(obj_temp4){instance_destroy();}
 
-	with(obj_temp4){instance_destroy();}with(obj_star){if (owner=8) then instance_create(x,y,obj_temp4);}
+	with(obj_temp4){instance_destroy();}with(obj_star){if (owner = eFACTION.Tau) then instance_create(x,y,obj_temp4);}
 	if (instance_number(obj_temp4)>=8){p+=1;gossip[p]="tau_numbers";}with(obj_temp4){instance_destroy();}
 
-	with(obj_temp4){instance_destroy();}with(obj_star){if (owner=10) then instance_create(x,y,obj_temp4);}
+	with(obj_temp4){instance_destroy();}with(obj_star){if (owner = eFACTION.Chaos) then instance_create(x,y,obj_temp4);}
 	if (instance_number(obj_temp4)>=8){p+=1;gossip[p]="chaos_numbers";}with(obj_temp4){instance_destroy();}
 
-	if (obj_controller.faction_status[4]!="War") and (obj_controller.disposition[4]<=25){p+=1;gossip[p]="low_dispo_inqi";}
-	if (obj_controller.faction_status[2]!="War") and (obj_controller.disposition[2]<=25){p+=1;gossip[p]="low_dispo_impe";}
-	if (obj_controller.faction_status[3]!="War") and (obj_controller.disposition[3]<=25){p+=1;gossip[p]="low_dispo_mech";}
+	if (obj_controller.faction_status[eFACTION.Inquisition]!="War") and (obj_controller.disposition[4]<=25){p+=1;gossip[p]="low_dispo_inqi";}
+	if (obj_controller.faction_status[eFACTION.Imperium]!="War") and (obj_controller.disposition[2]<=25){p+=1;gossip[p]="low_dispo_impe";}
+	if (obj_controller.faction_status[eFACTION.Mechanicus]!="War") and (obj_controller.disposition[3]<=25){p+=1;gossip[p]="low_dispo_mech";}
 
-	if (obj_controller.known[6]>0) and (obj_controller.faction_defeated[6]=0) and (obj_controller.faction_status[6]!="Allied"){p+=1;gossip[p]="smack_talk_eldar";}
-	if (obj_controller.known[7]>0) and (obj_controller.faction_defeated[7]=0) and (obj_controller.faction_status[7]!="Allied"){p+=1;gossip[p]="smack_talk_orks";}
-	if (obj_controller.known[8]>0) and (obj_controller.faction_defeated[8]=0) and (obj_controller.faction_status[8]!="Allied"){p+=1;gossip[p]="smack_talk_tau";}
-	if (obj_controller.known[9]>0) and (obj_controller.faction_defeated[9]=0) and (obj_controller.faction_status[9]!="Allied"){p+=1;gossip[p]="smack_talk_tyranids";}
-	if (obj_controller.known[10]>0) and (obj_controller.faction_defeated[10]=0) and (obj_controller.faction_status[10]!="Allied"){p+=1;gossip[p]="smack_talk_chaos";}
+	if (obj_controller.known[eFACTION.Eldar]>0) and (obj_controller.faction_defeated[6]=0) and (obj_controller.faction_status[eFACTION.Eldar]!="Allied"){p+=1;gossip[p]="smack_talk_eldar";}
+	if (obj_controller.known[eFACTION.Ork]>0) and (obj_controller.faction_defeated[7]=0) and (obj_controller.faction_status[eFACTION.Ork]!="Allied"){p+=1;gossip[p]="smack_talk_orks";}
+	if (obj_controller.known[eFACTION.Tau]>0) and (obj_controller.faction_defeated[8]=0) and (obj_controller.faction_status[eFACTION.Tau]!="Allied"){p+=1;gossip[p]="smack_talk_tau";}
+	if (obj_controller.known[eFACTION.Tyranids]>0) and (obj_controller.faction_defeated[9]=0) and (obj_controller.faction_status[eFACTION.Tyranids]!="Allied"){p+=1;gossip[p]="smack_talk_tyranids";}
+	if (obj_controller.known[eFACTION.Chaos]>0) and (obj_controller.faction_defeated[10]=0) and (obj_controller.faction_status[eFACTION.Chaos]!="Allied"){p+=1;gossip[p]="smack_talk_chaos";}
 
 	// All of the custom ones above
 	// Recent events below
@@ -250,17 +250,17 @@ function scr_event_gossip(argument0) {
 	    }
     
 	    if (blah="captain_promote") and (cn.recent_number[gossip_recent[that]]=attend_co[argument0]){rando=choose(1,2);
-	        words+="gives a cheer to "+string(cn.recent_keyword[gossip_recent[that]])+", for his promotion to "+string(obj_ini.role[100,5])+".";
+	        words+="gives a cheer to "+string(cn.recent_keyword[gossip_recent[that]])+", for his promotion to "+string(obj_ini.role[100][5])+".";
 	        if (rando=1) then words+="  May he lead the company to glory!";
 	        if (rando=2) then words+="  May the company benefit from his wisdom!";
 	    }
 	    if (blah="terminator_promote") and (cn.recent_number[gossip_recent[that]]=attend_co[argument0]){rando=choose(1,2);
-	        words+="gives a cheer to "+string(cn.recent_keyword[gossip_recent[that]])+", for his promotion to "+string(obj_ini.role[100,4])+".";
+	        words+="gives a cheer to "+string(cn.recent_keyword[gossip_recent[that]])+", for his promotion to "+string(obj_ini.role[100][4])+".";
 	        if (rando=1) then words+="  Let the enemies of man die at his feet!";
 	        if (rando=2) then words+="  He will be a bulwark against the foes of man!";
 	    }
 	    if (blah="honor_promote") and (cn.recent_number[gossip_recent[that]]=attend_co[argument0]){rando=choose(1,2);
-	        words+="gives a cheer to "+string(cn.recent_keyword[gossip_recent[that]])+", for his promotion to "+string(obj_ini.role[100,2])+".";
+	        words+="gives a cheer to "+string(cn.recent_keyword[gossip_recent[that]])+", for his promotion to "+string(obj_ini.role[100][2])+".";
 	        if (rando>=1) then words+="  Let the enemies of man die at his feet!";
 	    }
 	}

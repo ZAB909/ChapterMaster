@@ -95,7 +95,7 @@ function scr_enemy_ai_d() {
 	                        var t1,t2,check1,check2;check1=0;check2=0;
 	                        explode_script(p_problem[i,wob],"!");
 	                        t1=string(explode[0]);t2=real(explode[1]);
-	                        check1=scr_role_count(obj_ini.role[100,16],string(name)+"|"+string(i)+"|");
+	                        check1=scr_role_count(obj_ini.role[100][16],string(name)+"|"+string(i)+"|");
 	                        check2=scr_vehicle_count("Land Raider",string(name)+"|"+string(i)+"|");
 	                        if (check1>=6) and (check2>=1){t2+=1;scr_alert("","mission","Mechanicus Mission on "+string(name)+" "+scr_roman(i)+" is "+string(round((t2/24)*100))+"% complete.",0,0);}
 	                        p_problem[i,wob]=string(t1)+"!"+string(t2)+"!";
@@ -201,18 +201,18 @@ function scr_enemy_ai_d() {
                         
 	                        repeat(11){com+=1;ide=0;
 	                            repeat(300){ide+=1;
-	                                if (obj_ini.role[com,ide]=obj_ini.role[100,16]){
+	                                if (obj_ini.role[com][ide]=obj_ini.role[100][16]){
 	                                    // Case 1: on planet
-	                                    if (obj_ini.loc[com,ide]=name) and (obj_ini.wid[com,ide]=i){
-	                                        p_player[i]-=scr_unit_size(obj_ini.armour[com,ide],obj_ini.role[com,ide],true);
-	                                        obj_ini.loc[com,ide]="Mechanicus Vessel";obj_ini.wid[com,ide]=0;obj_ini.lid[com,ide]=0;
+	                                    if (obj_ini.loc[com][ide]=name) and (obj_ini.wid[com][ide]=i){
+	                                        p_player[i]-=scr_unit_size(obj_ini.armour[com][ide],obj_ini.role[com][ide],true);
+	                                        obj_ini.loc[com][ide]="Mechanicus Vessel";obj_ini.wid[com][ide]=0;obj_ini.lid[com][ide]=0;
 	                                        techs_taken+=1;
 	                                    }
-	                                    if (obj_ini.lid[com,ide]>0){
-	                                        ship_planet=obj_ini.ship_location[obj_ini.lid[com,ide]];
+	                                    if (obj_ini.lid[com][ide]>0){
+	                                        ship_planet=obj_ini.ship_location[obj_ini.lid[com][ide]];
 	                                        if (ship_planet=name){
-	                                            obj_ini.ship_carrying[obj_ini.lid[com,ide]]-=scr_unit_size(obj_ini.armour[com,ide],obj_ini.role[com,ide],true);
-	                                            obj_ini.loc[com,ide]="Mechanicus Vessel";obj_ini.wid[com,ide]=0;obj_ini.lid[com,ide]=0;
+	                                            obj_ini.ship_carrying[obj_ini.lid[com][ide]]-=scr_unit_size(obj_ini.armour[com][ide],obj_ini.role[com][ide],true);
+	                                            obj_ini.loc[com][ide]="Mechanicus Vessel";obj_ini.wid[com][ide]=0;obj_ini.lid[com][ide]=0;
 	                                            techs_taken+=1;
 	                                        }
 	                                    }
@@ -231,12 +231,12 @@ function scr_enemy_ai_d() {
                         
 	                        if (techs_taken>0){
 	                            if (techs_taken>=20) then obj_controller.disposition[3]+=1;
-	                            var taxt;taxt="Mechanicus Ship departs for the Mars catacombs.  Onboard are "+string(techs_taken)+" of your "+string(obj_ini.role[100,16])+"s.";
+	                            var taxt;taxt="Mechanicus Ship departs for the Mars catacombs.  Onboard are "+string(techs_taken)+" of your "+string(obj_ini.role[100][16])+"s.";
 	                            scr_alert("","mission",taxt,0,0);scr_event_log("green",taxt);
 	                        }
                             
 	                        var flit;flit=instance_create(x,y-32,obj_en_fleet);
-	                        flit.owner=3;flit.sprite_index=spr_fleet_mechanicus;
+	                        flit.owner = eFACTION.Mechanicus;flit.sprite_index=spr_fleet_mechanicus;
 	                        flit.capital_number=1;flit.image_index=0;flit.image_speed=0;
 	                        flit.trade_goods="mars_spelunk1";
 	                        flit.home_x=x;flit.home_y=y;
@@ -339,7 +339,7 @@ function scr_enemy_ai_d() {
 	            // show_message("x1:"+string(x)+", y1:"+string(y)+"#x2:"+string(x7)+", y2:"+string(y7));
             
 	            flit=instance_create(x7,y7,obj_en_fleet);
-	            flit.owner=4;flit.image_index=0;flit.sprite_index=spr_fleet_inquisition;
+	            flit.owner  = eFACTION.Inquisition;flit.image_index=0;flit.sprite_index=spr_fleet_inquisition;
 	            if (p_problem[i,wob]="inquisitor1") then flit.trade_goods="male_her";
 	            if (p_problem[i,wob]="inquisitor2") then flit.trade_goods="female_her";
 	            flit.action_x=x;flit.action_y=y;flit.alarm[4]=1;flit.action_spd=128;
@@ -417,7 +417,7 @@ function scr_enemy_ai_d() {
 	                xx=random_range(room_width*1.25,room_width*2);xx=choose(xx*-1,xx);xx=x+xx;
 	                yy=random_range(room_height*1.25,room_height*2);yy=choose(yy*-1,yy);yy=y+yy;
 	                fleet=instance_create(xx,yy,obj_en_fleet);
-	                fleet.owner=9;
+	                fleet.owner = eFACTION.Tyranids;
 	                fleet.sprite_index=spr_fleet_tyranid;
 	                fleet.image_speed=0;
                 
@@ -466,11 +466,11 @@ function scr_enemy_ai_d() {
         
 	        var o,yep,yep2;o=0;yep=true;yep2=false;
 	        repeat(4){o+=1;if (obj_ini.dis[o]="Psyker Intolerant") then yep=false;}
-	        if (obj_controller.known[9]=0) and (woop!=0) and (yep!=false){
+	        if (obj_controller.known[eFACTION.Tyranids]=0) and (woop!=0) and (yep!=false){
 	            scr_popup("Shadow in the Warp","Chief "+string(obj_ini.role[100,17])+" "+string(obj_ini.name[0,5])+" reports a disturbance in the warp.  He claims it is like a shadow.","shadow","");
 	            scr_event_log("red","Chief "+string(obj_ini.role[100,17])+" reports a disturbance in the warp.  He claims it is like a shadow.");
 	        }
-	        if (obj_controller.known[9]=0) and (woop=0) and (yep!=false){
+	        if (obj_controller.known[eFACTION.Tyranids]=0) and (woop=0) and (yep!=false){
 	            var q,q2;q=0;q2=0;
 	            repeat(90){
 	                if (q2=0){q+=1;
@@ -487,7 +487,7 @@ function scr_enemy_ai_d() {
         
         
         
-	        g=50;i=50;obj_controller.known[9]=1;
+	        g=50;i=50;obj_controller.known[eFACTION.Tyranids]=1;
 	    }}
     
     
@@ -530,7 +530,7 @@ function scr_enemy_ai_d() {
 	with(obj_temp5){instance_destroy();}
 	with(obj_temp6){instance_destroy();}
 	with(obj_en_fleet){
-	    if (owner=2) and ((trade_goods="colonize") or (trade_goods="colonizeL")){
+	    if (owner = eFACTION.Imperium) and ((trade_goods="colonize") or (trade_goods="colonizeL")){
 	        var tirg;tirg=instance_nearest(action_x,action_y,obj_star);
 	        instance_create(tirg.x,tirg.y,obj_temp2);
 	    }
@@ -562,7 +562,7 @@ function scr_enemy_ai_d() {
 	        if (p_owner[r]=2) and (p_type[r]!="Dead") and (p_type[r]!="") and ((p_type[r]="Hive") or (p_type[r]="Temperate") or (p_type[r]="Shrine")) and (p_population[r]=0) then instance_create(x,y,obj_temp5);
 	        if (p_owner[r]=3) and (p_type[r]!="Dead") and (p_type[r]!="") and (p_type[r]="Forge") and (p_population[r]=0) then instance_create(x,y,obj_temp5);
 	        // Count player planets as HIVE PLANETS so that they are prioritized
-	        if (p_owner[r]=1) and (p_type[r]!="Dead") and (p_type[r]!="") and (p_population[r]=0) and (obj_controller.faction_status[2]!="War") then instance_create(x,y,obj_temp5);
+	        if (p_owner[r]=1) and (p_type[r]!="Dead") and (p_type[r]!="") and (p_population[r]=0) and (obj_controller.faction_status[eFACTION.Imperium]!="War") then instance_create(x,y,obj_temp5);
 	    }
 	}
 
@@ -575,7 +575,7 @@ function scr_enemy_ai_d() {
 	        you2=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
 	        you3=instance_nearest(obj_temp6.x,obj_temp6.y,obj_star);
 	        flit=instance_create(you1.x,you1.y,obj_en_fleet);
-	        flit.owner=2;flit.sprite_index=spr_fleet_civilian;flit.image_index=3;
+	        flit.owner = eFACTION.Imperium;flit.sprite_index=spr_fleet_civilian;flit.image_index=3;
         
 	        var l;l=0;
 	        repeat(4){l+=1;
@@ -594,7 +594,7 @@ function scr_enemy_ai_d() {
 	        you2=instance_nearest(obj_temp4.x,obj_temp4.y,obj_star);// Destination star
 	        you3=instance_nearest(obj_temp6.x,obj_temp6.y,obj_star);// Origin star
 	        flit=instance_create(you1.x,you1.y,obj_en_fleet);
-	        flit.owner=2;flit.sprite_index=spr_fleet_civilian;flit.image_index=choose(1,2);
+	        flit.owner = eFACTION.Imperium;flit.sprite_index=spr_fleet_civilian;flit.image_index=choose(1,2);
         
 	        /*show_message("Colonist fleet created at "+string(flit.x)+","+string(flit.y));
 	        obj_controller.x=flit.x;

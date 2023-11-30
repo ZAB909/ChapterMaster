@@ -9,7 +9,6 @@ function scr_company_view(company) {
 	squad_members=0;
 	last_man=0;
 	last_vehicle=0;
-
 	var role_list = ds_list_create();
 	// v: check number
 	// mans: number of mans that a hit has gotten
@@ -68,24 +67,23 @@ function scr_company_view(company) {
 	                mans+=1;
 	                man[v]="man";
 	                ide[v]=v;
-	                ma_race[v]=obj_ini.race[company,v];
-	                ma_loc[v]=obj_ini.loc[company,v];
-	                ma_name[v]=obj_ini.name[company,v];
-	                ma_role[v]=obj_ini.role[company,v];
-	                ma_wep1[v]=obj_ini.wep1[company,v];
-	                ma_wep2[v]=obj_ini.wep2[company,v];
-	                ma_armour[v]=obj_ini.armour[company,v];
-	                ma_gear[v]=obj_ini.gear[company,v];
-	                ma_health[v]=obj_ini.hp[company,v];
-	                ma_exp[v]=obj_ini.experience[company,v];
-	                ma_lid[v]=obj_ini.lid[company,v];
-	                ma_wid[v]=obj_ini.wid[company,v];
-	                ma_god[v]=obj_ini.god[company,v];
-	                ma_bio[v]=obj_ini.bio[company,v];
-	                ma_mobi[v]=obj_ini.mobi[company,v];
+	                ma_race[v]=obj_ini.race[company][v];
+	                ma_loc[v]=obj_ini.loc[company][v];
+	                ma_name[v]=obj_ini.name[company][v];
+	                ma_role[v]=obj_ini.role[company][v];
+	                ma_wep1[v]=obj_ini.wep1[company][v];
+	                ma_wep2[v]=obj_ini.wep2[company][v];
+	                ma_armour[v]=obj_ini.armour[company][v];
+	                ma_gear[v]=obj_ini.gear[company][v];
+	                ma_health[v]=obj_ini.hp[company][v];
+	                ma_exp[v]=obj_ini.experience[company][v];
+	                ma_lid[v]=obj_ini.lid[company][v];
+	                ma_wid[v]=obj_ini.wid[company][v];
+	                ma_god[v]=obj_ini.god[company][v];
+	                ma_bio[v]=obj_ini.bio[company][v];
+	                ma_mobi[v]=obj_ini.mobi[company][v];
 					display_unit[v] = unit;
 					if (unit_loc[0]==location_types.ship){
-						var unit_ship=unit_loc[1];
 						if (unit_loc[2]=="Lost")then ma_loc[v]="Lost";
 					}					
 	                // Select All Infantry Setup
@@ -117,11 +115,13 @@ function scr_company_view(company) {
 	                    // if units are not in a squad
 	                    if (unit.squad == "none"){
 
-	                    	if (is_specialist(obj_ini.role[100,6], "heads")) then  n=1;
-    	                    if (squad_type=obj_ini.role[100,6]) and (squad_type!=ma_role[v]) and (squad_type!="Venerable "+string(ma_role[v])) then n=2;
-    	                    if (squad_type=obj_ini.role[100,6]) and (ma_role[v]=obj_ini.role[100,6]) then n=0;
-    	                    if (squad_type=obj_ini.role[100,6]) and (ma_role[v]="Venerable "+string(obj_ini.role[100,6])) then n=0;
-    	                    if (squad_type="Venerable "+string(obj_ini.role[100,6])) and (ma_role[v]=obj_ini.role[100,6]) then n=0;
+
+	                    	if (is_specialist(squad_type,"heads")) then  n=1;
+    	                    if (squad_type==obj_ini.role[100][6]) and (squad_type!=ma_role[v]) and (squad_type!="Venerable "+string(ma_role[v])) then n=2;
+    	                    if (squad_type==obj_ini.role[100][6]) and (ma_role[v]=obj_ini.role[100][6]) then n=0;
+    	                    if (squad_type==obj_ini.role[100][6]) and (ma_role[v]="Venerable "+string(obj_ini.role[100][6])) then n=0;
+    	                    if (squad_type="Venerable "+string(obj_ini.role[100][6])) and (ma_role[v]=obj_ini.role[100][6]) then n=0;
+
 	         			
 	         				//if units are on different ships but the ships are in the same location group them together
 	         				//else split units up in selection area
@@ -178,15 +178,15 @@ function scr_company_view(company) {
 	                }
 	                // Right here is where the promotion check will go
 	                // If EXP is enough for that company then ma_promote[i]=1
-	                if (ma_role[v]==obj_ini.role[100,3]) or (ma_role[v]==obj_ini.role[100,4]){
+	                if (ma_role[v]==obj_ini.role[100][3]) or (ma_role[v]==obj_ini.role[100][4]){
 	                    if (company==1) and (ma_exp[v]>=300) then ma_promote[v]=1;
 	                    if (ma_health[v]<=10) then ma_promote[v]=10;
 	                }
-	                if (ma_role[v]=obj_ini.role[100,6]) and (ma_exp[v]>=400) then ma_promote[v]=1;
-	                if (ma_role[v]=obj_ini.role[100,15]) or (ma_role[v]=obj_ini.role[100,14]) then ma_promote[v]=1;
-	                if (ma_role[v]=obj_ini.role[100,16]) then ma_promote[v]=1;
+	                if (ma_role[v]=obj_ini.role[100][6]) and (ma_exp[v]>=400) then ma_promote[v]=1;
+	                if (ma_role[v]=obj_ini.role[100][15]) or (ma_role[v]=obj_ini.role[100][14]) then ma_promote[v]=1;
+	                if (ma_role[v]=obj_ini.role[100][16]) then ma_promote[v]=1;
 
-	                if (ma_role[v]=obj_ini.role[100,8]) or (ma_role[v]=obj_ini.role[100,12]) or (ma_role[v]=obj_ini.role[100,10]) or (ma_role[v]=obj_ini.role[100,9]){
+	                if (ma_role[v]=obj_ini.role[100][8]) or (ma_role[v]=obj_ini.role[100][12]) or (ma_role[v]=obj_ini.role[100][10]) or (ma_role[v]=obj_ini.role[100][9]){
 	                    if (company==10) and (ma_exp[v]>=40) then ma_promote[v]=1;
 	                    else if (company==9) and (ma_exp[v]>=50) then ma_promote[v]=1;
 	                    else if (company==8) and (ma_exp[v]>=60) then ma_promote[v]=1;
@@ -212,7 +212,7 @@ function scr_company_view(company) {
 	                    if (company=3) and (ma_exp[v]>=75) then ma_promote[v]=1;
 	                }*/
 
-	                if (ma_role[v]=obj_ini.role[100,5]){
+	                if (ma_role[v]=obj_ini.role[100][5]){
 	                    if (company==10) and (ma_exp[v]>=40) then ma_promote[v]=1;
 	                    else if (company==9) and (ma_exp[v]>=50) then ma_promote[v]=1;
 	                    else if (company==8) and (ma_exp[v]>=60) then ma_promote[v]=1;
@@ -239,10 +239,10 @@ function scr_company_view(company) {
 	// if (!instance_exists(obj_popup)) then repeat(100){// 100
 		bad=0;
 
-	    // if (obj_ini.veh_race[company,i]=company) and (obj_ini.veh_role[company,i]!=""){
-	    if (obj_ini.veh_race[company,i]!=0){
-	        if (obj_ini.veh_lid[company,i]>0){
-	            if (obj_ini.ship_location[obj_ini.veh_lid[company,i]]=="Lost") then bad=1;
+	    // if (obj_ini.veh_race[company][i]=company) and (obj_ini.veh_role[company][i]!=""){
+	    if (obj_ini.veh_race[company][i]!=0){
+	        if (obj_ini.veh_lid[company][i]>0){
+	            if (obj_ini.ship_location[obj_ini.veh_lid[company][i]]=="Lost") then bad=1;
 	        }
 
 	        if (bad==0){
@@ -258,16 +258,16 @@ function scr_company_view(company) {
 	                man[v]="vehicle";
 					ide[v]=i;
 					last_vehicle+=1;
-	                ma_loc[v]=obj_ini.veh_loc[company,i];
-					ma_role[v]=obj_ini.veh_role[company,i];
-					ma_wep1[v]=obj_ini.veh_wep1[company,i];
-	                ma_wep2[v]=obj_ini.veh_wep2[company,i];
-					ma_armour[v]=obj_ini.veh_wep3[company,i];
-					ma_gear[v]=obj_ini.veh_upgrade[company,i];
-					ma_mobi[v]=obj_ini.veh_acc[company,i];
-					ma_health[v]=obj_ini.veh_hp[company,i];
-	                ma_lid[v]=obj_ini.veh_lid[company,i];
-					ma_wid[v]=obj_ini.veh_wid[company,i];
+	                ma_loc[v]=obj_ini.veh_loc[company][i];
+					ma_role[v]=obj_ini.veh_role[company][i];
+					ma_wep1[v]=obj_ini.veh_wep1[company][i];
+	                ma_wep2[v]=obj_ini.veh_wep2[company][i];
+					ma_armour[v]=obj_ini.veh_wep3[company][i];
+					ma_gear[v]=obj_ini.veh_upgrade[company][i];
+					ma_mobi[v]=obj_ini.veh_acc[company][i];
+					ma_health[v]=obj_ini.veh_hp[company][i];
+	                ma_lid[v]=obj_ini.veh_lid[company][i];
+					ma_wid[v]=obj_ini.veh_wid[company][i];
 	                if (ma_lid[v]>0){
 	                    ma_loc[v]=obj_ini.ship[ma_lid[v]];
 	                    if (obj_ini.ship_location[ma_lid[v]]=="Lost") then ma_loc[v]="Lost";

@@ -109,7 +109,7 @@ for(var i=1; i<=4; i++){
         p_guardsmen[i]=0;
         p_pdf[i]=0;
         p_eldar[i]=6;
-        owner=6;
+        owner = eFACTION.Eldar;
         p_owner[1]=6;
         buddy=0;
         x2=0;
@@ -121,7 +121,7 @@ for(var i=1; i<=4; i++){p_guardsmen[i]=0;}
 
 var fleet, system_fleet=0,capital=0,frigate=0,escort=0;
 // Create Imperium Fleet
-if (owner==2) or (owner==7) or (owner==3){
+if (owner == eFACTION.Imperium) or (owner == eFACTION.Ork) or (owner == eFACTION.Mechanicus){
     for(var g=1; g<=4; g++){
         switch (p_type[g]) {
             case "Hive":
@@ -153,7 +153,7 @@ if (owner==2) or (owner==7) or (owner==3){
     
     if (system_fleet>0){                                                      // DISABLED FOR TESTING FLEET COMBAT
         fleet=instance_create(x,y-32,obj_en_fleet);
-        fleet.owner=2;
+        fleet.owner = eFACTION.Imperium;
         
         fleet.capital_number=capital;
         fleet.frigate_number=frigate;
@@ -172,7 +172,7 @@ if (owner==2) or (owner==7) or (owner==3){
     }
 }
 // Creates Ork forces
-if (owner==7){
+if (owner == eFACTION.Ork){
     if (p_population[1]>0) then p_orks[1]=1;
     if (p_population[2]>0) then p_orks[2]=1;
     if (p_population[3]>0) then p_orks[3]=1;
@@ -193,7 +193,7 @@ capital=0;
 frigate=0;
 escort=0;
 // Create Tau Fleet
-if (owner==8){
+if (owner == eFACTION.Tau){
     for (var i = 1; i <= 4; i++) {
         if (p_type[i] == "Desert") {
             system_fleet += 5;
@@ -212,7 +212,7 @@ if (owner==8){
     }
     if (system_fleet>0){
         fleet=instance_create(x-24,y-24,obj_en_fleet);
-        fleet.owner=8;
+        fleet.owner = eFACTION.Tau;
         // Create ships here
         fleet.sprite_index=spr_fleet_tau;
         fleet.image_speed=0;
@@ -270,7 +270,7 @@ if (owner==8){
     p_influence[4]=70;
 }
 // Create Nids
-if (owner==9){
+if (owner == eFACTION.Tyranids){
     for (var i = 1; i <= 4; i++) {
         if (p_population[i] > 0) {
             p_tyranids[i] = 1;
@@ -293,7 +293,7 @@ if (owner>20){
         }
         p_owner[i] = 2;
     }
-    owner=9;
+    owner = eFACTION.Tyranids;
 }
 
 for(var i=1; i<=4; i++){
@@ -309,7 +309,7 @@ for(var i=1; i<=4; i++){
     // if (p_owner[i]=3) or (p_owner[i]=5){p_feature[i]="Artifact|";}Testing ; 137
 }
 
-if (name=="Kim Jong") and (owner==10){
+if (name=="Kim Jong") and (owner == eFACTION.Chaos){
     for (var i = 1; i <= 4; i++) {
         if (p_type[i] != "Dead") {
             p_heresy[i] = 100;
@@ -418,7 +418,7 @@ for(var i=1; i<=4; i++){
     }
     if (p_first[i]<=5) and (dispo[i]>-5000) then dispo[i]=-20;
 }
-if (hyu==0) and (owner==9) then owner=2;
+if (hyu==0) and (owner == eFACTION.Tyranids) then owner = eFACTION.Imperium;
 
 scr_star_ownership(false);
 
@@ -447,7 +447,7 @@ if (p_owner[2]=1){
     /*
     p_guardsmen[2]=10000000;
     p_pdf[2]=0;
-    obj_controller.faction_status[2]="War";
+    obj_controller.faction_status[eFACTION.Imperium]="War";
     */
     
     // p_type[1]="Dead";
@@ -458,7 +458,7 @@ if (p_owner[2]=1){
     
     /*repeat(4){
         var fleet;fleet=instance_create(x+(floor(random_range(100,200))*choose(1,-1)),y+(floor(random_range(100,200))*choose(1,-1)),obj_en_fleet);
-        fleet.owner=10;fleet.sprite_index=spr_fleet_chaos;fleet.orbiting=0;
+        fleet.owner = eFACTION.Chaos;fleet.sprite_index=spr_fleet_chaos;fleet.orbiting=0;
         fleet.action_x=x;fleet.action_y=y;fleet.alarm[4]=1;
         
         fleet.capital_number=0;

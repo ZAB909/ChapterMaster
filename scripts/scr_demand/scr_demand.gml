@@ -14,14 +14,14 @@ function scr_demand(argument0) {
 	annoyed[trading_demand]+=2;
 
 	if (trading_demand=2){// Imperium
-	    with(obj_star){if (owner=2) then instance_create(x,y,obj_temp2);}
+	    with(obj_star){if (owner = eFACTION.Imperium) then instance_create(x,y,obj_temp2);}
 	    resistance=min(instance_number(obj_temp2),8);
 	    with(obj_temp2){instance_destroy();}
 	    if (obj_controller.disposition[2]<30) then resistance+=1;
 	    if (obj_controller.disposition[2]<10) then resistance+=2;    
 	    if (obj_controller.disposition[2]<=-60) then resistance+=100;
-	    if (rela="hostile") or (faction_status[2]="Antagonism") then resistance+=2;
-	    if (faction_status[2]="War") then resistance+=3;
+	    if (rela="hostile") or (faction_status[eFACTION.Imperium]="Antagonism") then resistance+=2;
+	    if (faction_status[eFACTION.Imperium]="War") then resistance+=3;
 
 	    if (argument0=1){// Requisition
 	        rull=floor(random(10))+1;
@@ -70,7 +70,7 @@ function scr_demand(argument0) {
 	            last_world_inspection=turn+12;
 	            last_fleet_inspection=turn+12;
 	            obj_controller.liscensing=5;
-	            with(obj_en_fleet){if (owner=4) and (string_count("Inqis",trade_goods)>0){trade_goods="cancel_inspection";target=0;}}
+	            with(obj_en_fleet){if (owner  = eFACTION.Inquisition) and (string_count("Inqis",trade_goods)>0){trade_goods="cancel_inspection";target=0;}}
 	        }
 	        if (rull<=resistance){worked=false;}
 	    }
@@ -80,7 +80,7 @@ function scr_demand(argument0) {
 	        last_world_inspection=turn+12;
 	        last_fleet_inspection=turn+12;
 	        obj_controller.liscensing=5;
-	        with(obj_en_fleet){if (owner=4) and (string_count("Inqis",trade_goods)>0){trade_goods="cancel_inspection";target=0;}}
+	        with(obj_en_fleet){if (owner  = eFACTION.Inquisition) and (string_count("Inqis",trade_goods)>0){trade_goods="cancel_inspection";target=0;}}
 	    }
 	}
 
@@ -99,10 +99,10 @@ function scr_demand(argument0) {
 	    if (rela="friendly") then resistance-=3;
 	    if (argument0=2) then resistance-=2;
     
-	    if (obj_controller.faction_status[6]="War") or (obj_controller.faction_status[6]="Antagonism"){
-	        with(obj_star){if (owner=6) and (craftworld=1) then instance_create(x,y,obj_temp5);}
+	    if (obj_controller.faction_status[eFACTION.Eldar]="War") or (obj_controller.faction_status[eFACTION.Eldar]="Antagonism"){
+	        with(obj_star){if (owner = eFACTION.Eldar) and (craftworld=1) then instance_create(x,y,obj_temp5);}
 	        with(obj_p_fleet){if (point_distance(x,y,obj_temp5.x,obj_temp5.y)<37) and (action="") then instance_create(x,y,obj_temp4);}
-	        with(obj_en_fleet){if (point_distance(x,y,obj_temp5.x,obj_temp5.y)<37) and (action="") and (owner=6) then instance_create(x,y,obj_temp3);}
+	        with(obj_en_fleet){if (point_distance(x,y,obj_temp5.x,obj_temp5.y)<37) and (action="") and (owner = eFACTION.Eldar) then instance_create(x,y,obj_temp3);}
         
 	        with(obj_temp5){instance_destroy();}
 	        if (instance_number(obj_temp4)>1) and (instance_number(obj_temp3)=0) then resistance-=5;
@@ -154,12 +154,12 @@ function scr_demand(argument0) {
 
 
 	if (trading_demand=8){
-	    with(obj_star){if (owner=8) then instance_create(x,y,obj_temp2);}
+	    with(obj_star){if (owner = eFACTION.Tau) then instance_create(x,y,obj_temp2);}
 	    resistance=min(instance_number(obj_temp2)*2,8)+4;
 	    with(obj_temp2){instance_destroy();}
 	    if (rela="friendly") then resistance-=3;
 	    if (rela="neutral") then resistance-=1;
-	    if (faction_status[8]="War") then resistance+=3;
+	    if (faction_status[eFACTION.Tau]="War") then resistance+=3;
     
 	    // If only one planet, and player is at it, should probably get a bonus
     
@@ -172,7 +172,7 @@ function scr_demand(argument0) {
 	        rull=floor(random(10))+1;
         
         
-	        with(obj_en_fleet){if (owner!=8) then instance_deactivate_object(id);}
+	        with(obj_en_fleet){if (owner != eFACTION.Tau) then instance_deactivate_object(id);}
 	        if (instance_exists(obj_p_fleet)) then with (obj_p_fleet){
 	            var ns;ns=instance_nearest(x,y,obj_en_fleet);
 	            if (point_distance(x,y,ns.x,ns.y)<=50) and (action="") and (image_index>3) then instance_create(x,y,obj_temp1);
@@ -180,7 +180,7 @@ function scr_demand(argument0) {
 	        }
         
 	        with(obj_star){
-	            if (owner=8) and (instance_exists(obj_p_fleet)){
+	            if (owner = eFACTION.Tau) and (instance_exists(obj_p_fleet)){
 	                var mahr;mahr=instance_nearest(x,y,obj_p_fleet);
 	                if (point_distance(x,y,mahr.x,mahr.y)<50) and (mahr.action="") then instance_create(x,y,obj_temp1);
 	            }
@@ -195,10 +195,10 @@ function scr_demand(argument0) {
         
 	        if (rull>resistance){
 	            worked=true;
-	            with(obj_en_fleet){if (owner=8) and (instance_nearest(x,y,obj_star).owner=8) and (action="") then instance_deactivate_object(id);}
-	            with(obj_star){if (owner!=8) then instance_deactivate_object(id);}
+	            with(obj_en_fleet){if (owner = eFACTION.Tau) and (instance_nearest(x,y,obj_star).owner = eFACTION.Tau) and (action="") then instance_deactivate_object(id);}
+	            with(obj_star){if (owner != eFACTION.Tau) then instance_deactivate_object(id);}
 	            with(obj_en_fleet){
-	                if (owner=8){
+	                if (owner = eFACTION.Tau){
 	                    action_x=instance_nearest(x,y,obj_star).x;
 	                    action_y=instance_nearest(x,y,obj_star).y;
 	                    alarm[4]=1;

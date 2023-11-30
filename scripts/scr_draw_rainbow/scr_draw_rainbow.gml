@@ -24,7 +24,8 @@ function scr_draw_rainbow(argument0, argument1, argument2, argument3, argument4)
 	}
 	if (rat>1) then rat=1;if (rat<-1) then rat=-1;
 	draw_rectangle(argument0,argument1,argument0+(wid*rat),argument3,0);
-	draw_set_color(c_gray);draw_rectangle(argument0,argument1,argument2,argument3,1);
+	draw_set_color(c_gray);
+	draw_rectangle(argument0,argument1,argument2,argument3,1);
 
 
 }

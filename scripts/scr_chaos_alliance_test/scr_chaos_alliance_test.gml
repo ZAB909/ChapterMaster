@@ -69,7 +69,7 @@ function scr_chaos_alliance_test() {
 	        var rando,new_event;rando=choose(1,2);
 	        if (rando=1) then diplo_text+="A proposal that needs further consideration and some negotiation.  Meet me at "+string(that_title)+" and we shall resolve this.";
 	        if (rando=2) then diplo_text+="Interesting. I shall be at "+string(that_title)+" and, if you are sincere, you will come to me and we can take this proposal to its logical conclusion.";
-	        scr_event_log("","Chaos Lord "+string(obj_controller.faction_leader[10])+" agrees to meet with you on "+string(that_title)+" to discuss an alliance.");
+	        scr_event_log("","Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+" agrees to meet with you on "+string(that_title)+" to discuss an alliance.");
 	        new_event=instance_create(that_star.x+16,that_star.y-24,obj_star_event);
 	    }
     

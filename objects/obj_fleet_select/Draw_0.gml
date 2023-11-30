@@ -20,10 +20,10 @@ draw_set_font(fnt_40k_14b);
 draw_set_halign(fa_center);
 
 var ppp;ppp="";
-if (owner=1) then ppp=global.chapter_name;
-if (owner=2) then ppp="Imperial Navy";
-if (owner=3) then ppp="Mechanicus Fleet";
-if (owner=8) then ppp="Tau Fleet";
+if (owner  = eFACTION.Player) then ppp=global.chapter_name;
+if (owner = eFACTION.Imperium) then ppp="Imperial Navy";
+if (owner = eFACTION.Mechanicus) then ppp="Mechanicus Fleet";
+if (owner = eFACTION.Tau) then ppp="Tau Fleet";
 // 
 
 if (obj_controller.zoomed=0) then draw_text_transformed(x,y-32,string_hash_to_newline(string(ppp)),1,1,0);
@@ -36,7 +36,7 @@ draw_set_halign(fa_left);
 // Order here
 
 
-if (owner=1) and (instance_nearest(x,y,obj_p_fleet).action=""){
+if (owner  = eFACTION.Player) and (instance_nearest(x,y,obj_p_fleet).action=""){
     var free,z;free=1;z=obj_fleet_select;
     if (mouse_x>=__view_get( e__VW.XView, 0 )+z.void_x) and (mouse_y>=__view_get( e__VW.YView, 0 )+z.void_y) 
     and (mouse_x<__view_get( e__VW.XView, 0 )+z.void_x+z.void_wid) and (mouse_y<__view_get( e__VW.YView, 0 )+z.void_y+z.void_hei) and (obj_controller.fleet_minimized=0) then free=0;
@@ -48,7 +48,7 @@ if (owner=1) and (instance_nearest(x,y,obj_p_fleet).action=""){
         var sys, sys_dist, mine, connected;
         sys_dist=9999;connected=0;
         
-        with(obj_star){if (p_type[1]="Craftworld") and (obj_controller.known[6]=0) then instance_deactivate_object(id);}
+        with(obj_star){if (p_type[1]="Craftworld") and (obj_controller.known[eFACTION.Eldar]=0) then instance_deactivate_object(id);}
         sys=instance_nearest(mouse_x,mouse_y,obj_star);
         sys_dist=point_distance(mouse_x,mouse_y,sys.x,sys.y);
         act_dist=point_distance(x,y,sys.x,sys.y);

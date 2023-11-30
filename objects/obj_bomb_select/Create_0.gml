@@ -40,7 +40,7 @@ necrons=0;
 
 
 with(obj_en_fleet){
-    if (owner==2) or (owner==3) or (owner==4) or (action!="") then instance_deactivate_object(id);
+    if (owner == eFACTION.Imperium) or (owner == eFACTION.Mechanicus) or (owner  == eFACTION.Inquisition) or (action!="") then instance_deactivate_object(id);
 }
 instance_create(obj_star_select.target.x,obj_star_select.target.y,obj_temp3);
 with(obj_fleet){

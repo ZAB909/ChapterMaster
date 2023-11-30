@@ -41,7 +41,7 @@ if (bad=0){
     draw_set_color(38144);
     if (event_text[1]="") and (event_text[2]="") and (event_text[3]="") then draw_text(xx+25,yy+120,string_hash_to_newline("No entries logged."));
     
-    var x1,y1,x2,y2,cube,scrolly,chunk_size,my,y5;
+    var x1,y1,x2,y2,scrolly,chunk_size,my,y5;
     x1=xx+1557;y1=yy+117;
     x2=xx+1583;y2=yy+823;
     draw_rectangle(x1,y1,x2,y2,1);

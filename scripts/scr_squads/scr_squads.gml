@@ -7,7 +7,7 @@ the requested squad type , if the squad is not possible it will  not be made*/
 
 
 function create_squad(squad_type, company, squad_loadout = true, squad_index=false){
-	var squad_unit_types, fulfilled,unit, squad, squad_unit;
+	var squad_unit_types, fulfilled,unit, squad;
 	var squad_count = array_length(obj_ini.squads);
 	var fill_squad =  obj_ini.squad_types[$ squad_type];			//grab all the squad struct info from the squad_types struct
 	var squad_fulfilment = {};		
@@ -25,19 +25,20 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 	squad = new unit_squad(squad_type, company);
 	squad.base_company = company;
 	var sergeant_found = false;
-	var sgt_types = [obj_ini.role[100,18], obj_ini.role[100,19]];
+	var sgt_types = [obj_ini.role[100][18], obj_ini.role[100][19]]
+
 	//if squad has sergeants in find out if there are any available sergeants
 	for (var s = 0; s< 2;s++){
 		if (struct_exists(squad_fulfilment ,sgt_types[s])){
 			sergeant_found = false;
 			for (i = 0; i < array_length(obj_ini.TTRPG[company]);i++){
-				if(!is_struct(obj_ini.TTRPG[company,i])){obj_ini.TTRPG[company,i]= new TTRPG_stats("chapter", company,i,"blank");}
-				unit = obj_ini.TTRPG[company,i];
-				if ((obj_ini.name[company,i] =="") or (unit.base_group=="none"))then continue;
+				if(!is_struct(obj_ini.TTRPG[company][i])){obj_ini.TTRPG[company][i]= new TTRPG_stats("chapter", company,i,"blank");}
+				unit = obj_ini.TTRPG[company][i];
+				if ((obj_ini.name[company][i] =="") or (unit.base_group=="none"))then continue;
 				if (unit.squad== "none"){
 					if (unit.role() == sgt_types[s]){
 						squad_fulfilment[$ sgt_types[s]] += 1;
-						array_push(squad.members, [unit.company, unit.marine_number]);
+						squad.add_member(unit.company, unit.marine_number);
 						sergeant_found = true;// free sergeant is found mark it so a marine dose not get promoted
 						break;
 					}
@@ -46,26 +47,26 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 		}
 	}
 	for (i = 0; i < array_length( obj_ini.TTRPG[company]);i++){							//fill squad roles
-		if(!is_struct(obj_ini.TTRPG[company,i])){obj_ini.TTRPG[company,i]= new TTRPG_stats("chapter", company,i,"blank");}
-		unit = obj_ini.TTRPG[company,i];
-		if ((obj_ini.name[company,i] =="") or (unit.base_group=="none")) then continue;
+		if(!is_struct(obj_ini.TTRPG[company][i])){obj_ini.TTRPG[company][i]= new TTRPG_stats("chapter", company,i,"blank");}
+		unit = obj_ini.TTRPG[company][i];
+		if ((obj_ini.name[company][i] =="") or (unit.base_group=="none")) then continue;
 		if (unit.squad== "none") and (array_contains(squad_unit_types, unit.role())){
 			//if no sergeant found add one marine to standard marine selection so that a marine can be promoted
-			if ((struct_exists(squad_fulfilment ,obj_ini.role[100,18])) or (struct_exists(squad_fulfilment ,obj_ini.role[100,19]))) and (sergeant_found == false){
+			if ((struct_exists(squad_fulfilment ,obj_ini.role[100][18])) or (struct_exists(squad_fulfilment ,obj_ini.role[100][19]))) and (sergeant_found == false){
 				if (squad_fulfilment[$ unit.role()]< (fill_squad[$ unit.role()][$ "max"] + 1)){
 					squad_fulfilment[$ unit.role()]++;
-					array_push(squad.members, [unit.company, unit.marine_number]);	
+					squad.add_member(unit.company, unit.marine_number);
 				}
 			}//if sergeants not required
 			else if (squad_fulfilment[$ unit.role()]< fill_squad[$ unit.role()][$ "max"]){
 				squad_fulfilment[$ unit.role()]++;
-				array_push(squad.members, [unit.company, unit.marine_number]);
+				squad.add_member(unit.company, unit.marine_number);
 			}
 		}
 	}
 	//if a new sergeant is needed find the marine with the highest experience in the squad 
 	//(which if everything works right should be a marine with the old_guard, seasoned, or ancient trait)
-	/*and ((squad_fulfilment[$ obj_ini.role[100,8]] > 4)or (squad_fulfilment[$ obj_ini.role[100,10]] > 4) or (squad_fulfilment[$ obj_ini.role[100,9]] > 4)or (squad_fulfilment[$ obj_ini.role[100,3]] > 4) )*/
+	/*and ((squad_fulfilment[$ obj_ini.role[100][8]] > 4)or (squad_fulfilment[$ obj_ini.role[100][10]] > 4) or (squad_fulfilment[$ obj_ini.role[100][9]] > 4)or (squad_fulfilment[$ obj_ini.role[100][3]] > 4) )*/
 	for (var s = 0; s< 2;s++){
 		if (struct_exists(squad_fulfilment ,sgt_types[s])) and (!sergeant_found){
 			var highest_exp = 0;
@@ -245,11 +246,14 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 
 
 // constructor for new squad
-function unit_squad(squad_type, company) constructor{
+function unit_squad(squad_type = undefined, company = undefined) constructor{
 	type = squad_type;
 	members = [];
 	squad_fulfilment ={};
 	base_company = company;
+	life_members=0;
+	nickname="";
+	assignment="none";
 	//nickname = scr_squad_names();
 
 	// for creating a new sergeant from existing squad members
@@ -259,7 +263,7 @@ function unit_squad(squad_type, company) constructor{
 		var highest_exp = 0;
 		var member_length = array_length(members);
 		for (i = 0; i < member_length;i++){
-			unit = obj_ini.TTRPG[members[i][0], members[i][1]];
+			unit = obj_ini.TTRPG[members[i][0]][members[i][1]];
 			if (unit.name() == ""){
 				array_delete(members, i, 1);
 				member_length--;
@@ -275,9 +279,9 @@ function unit_squad(squad_type, company) constructor{
 			if (exp_unit.name() != ""){
 				var new_role;
 				if (veteran == true){
-					new_role = obj_ini.role[100,19];
+					new_role = obj_ini.role[100][19];
 				} else{
-					new_role= obj_ini.role[100,18];
+					new_role= obj_ini.role[100][18];
 				}
 				exp_unit.update_role(new_role);
 				if (irandom(1) == 0){
@@ -285,6 +289,12 @@ function unit_squad(squad_type, company) constructor{
 				}
 			}
 		}
+	}
+	static kill_members = function(){
+		for (var i=0;i<array_length(members);i++){
+			scr_kill_unit(members[i][0],members[i][1]);
+		}
+		members = [];
 	}
 
 	/*checks the status of squad so it can be either restocked or 
@@ -308,7 +318,7 @@ function unit_squad(squad_type, company) constructor{
 		var member_length = array_length(members);
 		for (var i=0;i<member_length;i++){
 			//checks squad member is still valid
-			unit = obj_ini.TTRPG[members[i][0], members[i][1]];
+			unit = obj_ini.TTRPG[members[i][0]][members[i][1]];
 			if (unit.name() == ""){
 				array_delete(members, i, 1);
 				member_length--;
@@ -336,7 +346,10 @@ function unit_squad(squad_type, company) constructor{
 			}
 		}		
 	}
-
+	static add_member = function(comp, unit_number){
+		array_push(members, [comp, unit_number]);
+		life_members++;
+	}
 	// for saving squads
 	static jsonify = function(){
 		var copy_struct = self; //grab marine structure
@@ -358,7 +371,161 @@ function unit_squad(squad_type, company) constructor{
 		 for (var i = 0; i < array_length(names); i++) {
             variable_struct_set(self, names[i], variable_struct_get(data, names[i]))
         }
-	}		
+	}
+
+	static squad_loci = function(){
+		var member_length = array_length(members);
+		var locations = [];
+		var system = ""
+		var unit_loc;
+		var same_system = true;
+		var same_loc_type = true;
+		var loc_type = false;
+		var same_loc_id = false;
+		var loc_id;
+		var in_orbit=false;
+		var planet_side=false;
+		var exact_loc = false;
+		for (i = 0; i < member_length;i++){
+			unit = obj_ini.TTRPG[members[i][0]][members[i][1]];
+			if (unit.name() == ""){
+				array_delete(members, i, 1);
+				member_length--;
+				i--;
+				continue;
+			}
+			unit_loc = unit.marine_location();		
+			if (system==""){
+				system = unit_loc[2];
+				loc_type=unit_loc[0];
+				loc_id = unit_loc[1];
+			}
+			if (system != unit_loc[2]){
+				same_system = false;
+			}
+			if (same_system){
+				if (loc_type!=unit_loc[0]){
+					same_loc_type=false
+				}
+			}
+			if (same_loc_type && same_system){
+				if (loc_id == unit_loc[1]){
+					exact_loc=true;
+				} else{
+					exact_loc=false;
+					if (loc_type==location_types.ship){
+						in_orbit=true;
+					} else if (loc_type==location_types.planet){
+						planet_side=true;
+					}
+				}
+			}
+		}
+		var final_loc_status=""
+		if (!same_system){
+			final_loc_status="Scattered"
+		} else if (same_loc_type){
+			if (loc_type==location_types.ship){
+				if (exact_loc){
+					final_loc_status=$"aboard {obj_ini.ship[loc_id]}"
+				} else if (in_orbit){
+					final_loc_status=$"various ships orbiting {system}"
+				}
+			} else if (loc_type==location_types.planet){
+				if (exact_loc){
+					final_loc_status=$"{system} {scr_roman_numerals()[loc_id-1]}"
+				}else if (planet_side){
+					final_loc_status=$"various planets in {system}"
+				}
+			}
+		} else {
+			final_loc_status=$"system {system}"
+		}
+		return {text:final_loc_status, system:system, same_system:same_system, exact_loc:exact_loc, planet_side:planet_side, in_orbit:in_orbit};
+
+	}
+	static determine_leader = function(){
+		var member_length = array_length(members);
+		var hierarchy = role_hierarchy();
+		var leader_hier_pos=array_length(hierarchy);
+		var leader="none", unit;
+		var highest_exp = 0;
+		for (var i=0;i<member_length;i++){
+			unit = obj_ini.TTRPG[members[i][0]][members[i][1]]
+			if (unit.name() == ""){
+				array_delete(members, i, 1);
+				member_length--;
+				i--;
+				continue;
+			} else {
+				if (leader=="none"){
+					leader = [unit.company, unit.marine_number];
+					for (var r=0;r<array_length(hierarchy);r++){
+						if (hierarchy[r]==unit.role()){
+							leader_hier_pos=r;
+							break;
+						}
+					}
+				}else if (hierarchy[leader_hier_pos]==unit.role()){
+					if (obj_ini.TTRPG[leader[0]][leader[1]].experience()<unit.experience()){
+						leader=[unit.company, unit.marine_number];
+					}
+				}else{
+					for (var r=0;r<leader_hier_pos;r++){
+						if (hierarchy[r]==unit.role()){
+							leader_hier_pos=r;
+							leader=[unit.company, unit.marine_number];
+							break;
+						}
+					}
+				}
+			}			
+		}
+		squad_leader=leader;
+		return leader;
+	}
+
+	static set_location = function(loc, lid, wid){
+		var member_length = array_length(members);
+		var member_location;
+		var system = "none";
+		with (obj_star){
+			if (name==loc){
+				system=self;
+				break;
+			}
+		}
+		if 	(system == "none") then return "invalid system";
+		for (var i=0;i<member_length;i++){
+			unit = obj_ini.TTRPG[members[i][0]][members[i][1]]
+			if (unit.name() == ""){
+				array_delete(members, i, 1);
+				member_length--;
+				i--;
+				continue;
+			} else {
+				member_location=unit.marine_location();
+				if (wid>0 && loc==member_location[2]){
+					if (member_location[0]==location_types.ship){
+						unit.unload(wid, system)
+					} else if(member_location[0]==location_types.planet && member_location[1] != wid && member_location[2]==loc){
+						unit.get_unit_size();
+						system.p_player[member_location[1]]-=unit.size;
+						system.p_player[wid]+=unit.size;
+						unit.set_planet(wid);
+					}
+				} else {
+					if (wid == 0 && lid>0){
+						unit.load_marine(lid);
+					}
+				}
+			}
+		}	
+	}
+
+	static pdf_support_outcome = function(enemy_force, enemy_type){
+
+	}
 }
 
 
@@ -423,5 +590,16 @@ function game_start_squads(){
 			scr_company_order(i)
 		}
 	}
+}
+
+
+function find_company_squads(company){
+	var c_squads = [];
+	for (var i=0;i<array_length(obj_ini.squads);i++){
+		if (array_length(obj_ini.squads[i].members)>0 && obj_ini.squads[i].base_company == company){
+			array_push(c_squads,i);
+		}
+	}
+	return c_squads;
 }
 

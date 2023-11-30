@@ -28,7 +28,7 @@ function scr_shoot(argument0, argument1, argument2, argument3, argument4) {
 
 	// argument1.hostile_men=0;
 
-	if (argument0>0) and (instance_exists(argument1)) and (owner=2){
+	if (argument0>0) and (instance_exists(argument1)) and (owner=eFACTION.Imperium){
 	    var shots_fired,stop,damage_type,doom;
 	    shots_fired=wep_num[argument0];doom=0;
     
@@ -190,7 +190,7 @@ function scr_shoot(argument0, argument1, argument2, argument3, argument4) {
 
 
 
-	if (instance_exists(argument1)) and (owner=1){
+	if (instance_exists(argument1)) and (owner  = eFACTION.Player){
 	    var shots_fired,stop,damage_type;
     
 	    if (argument0>0){shots_fired=wep_num[argument0];}
@@ -591,7 +591,7 @@ function scr_shoot(argument0, argument1, argument2, argument3, argument4) {
 	exit;
 	// Old player shooting code beneath here
 
-	if (instance_exists(argument1)) and (owner=1){
+	if (instance_exists(argument1)) and (owner  = eFACTION.Player){
 	    var shots_fired,stop,damage_type;
     
 	    if (argument0>0){shots_fired=wep_num[argument0];}

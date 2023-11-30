@@ -28,7 +28,7 @@ if (instance_exists(target)){
             else {button1="Attack";button2="Raid";button3="Purge";}
             
             if (torpedo>0){
-                var pfleet;pfleet=instance_nearest(x,y,obj_p_fleet);
+                var pfleet=instance_nearest(x,y,obj_p_fleet);
                 if (instance_exists(pfleet)) and (point_distance(pfleet.x,pfleet.y,target.x,target.y)<=40) and (pfleet.action=""){
                     if (pfleet.capital_number+pfleet.frigate_number>0) and (button4="") then button4="Cyclonic Torpedo";
                 }
@@ -137,6 +137,21 @@ if (loading=1){
     if (target.planets>=4) and (obj_controller.cooldown<=0){
         dist=point_distance(xx+282,yy+287,mouse_x,mouse_y);   
         if (dist<=22) then obj_controller.selecting_planet=4; 
+    }
+    if (obj_controller.menu=1 && obj_controller.managing>0 && obj_controller.view_squad && obj_controller.selecting_planet>0){
+        var current_squad=obj_ini.squads[obj_controller.company_squads[obj_controller.cur_squad]];
+        current_squad.set_location(loading_name,0,obj_controller.selecting_planet);
+        current_squad.assignment={
+            type:"garrison",
+            location:target.name,
+            ident:obj_controller.selecting_planet,
+        };
+        var operation_data = {
+            type:"squad", 
+            reference:obj_controller.company_squads[obj_controller.cur_squad],
+            job:"garrison",
+        };
+        array_push(target.p_operatives[obj_controller.selecting_planet],operation_data)
     }
 }
 

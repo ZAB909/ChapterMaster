@@ -11,7 +11,7 @@ function scr_marine_count(argument0, argument1, argument2) {
 	    if (check<sca){com+=1;ide=0;
 	        repeat(300){
 	            if (check<sca){ide+=1;
-	                if (obj_ini.role[com,ide]!="") and (obj_ini.race[com,ide]<=5) and (obj_ini.loc[com,ide]=argument0.name) and (obj_ini.wid[com,ide]=argument1) then check+=1;
+	                if (obj_ini.role[com][ide]!="") and (obj_ini.race[com][ide]<=5) and (obj_ini.loc[com][ide]=argument0.name) and (obj_ini.wid[com][ide]=argument1) then check+=1;
 	            }
 	        }
 	    }

@@ -586,7 +586,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	        if (good=0) and (open!=0){lost_num[open]=1;lost[open]=marine_type[argument3];}
 	        units_lost+=1;men-=1;
         
-	        if (marine_type[argument3]=obj_ini.role[100,6]) or (marine_type[argument3]="Venerable "+string(obj_ini.role[100,6])) then dreads-=1;
+	        if (marine_type[argument3]=obj_ini.role[100][6]) or (marine_type[argument3]="Venerable "+string(obj_ini.role[100][6])) then dreads-=1;
 	        if (obj_ncombat.red_thirst=1) and (marine_type[argument3]!="Death Company") then obj_ncombat.red_thirst=2;
 	    }
     

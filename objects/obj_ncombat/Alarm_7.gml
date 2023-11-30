@@ -28,7 +28,7 @@ if (obj_ncombat.enemy=1){
     with(obj_enunit){var q;q=0;
         repeat(700){q+=1;
             if (dude_id[q]>0){
-                var nco,nid,commandy,siz;
+                var nco,nid,commandy;
                 nco=0;nid=0;commandy=false;
                 nco=dude_co[q];nid=dude_id[q];
                 cleann[nco]=1;
@@ -68,21 +68,21 @@ if (string_count("cs_meeting",battle_special)>0){
             var i,co,ii,otm,good,master_present;ii=0;i=0;co=-1;good=0;master_present=0;
             var run,s,chaos_meeting;run=0;s=0;chaos_meeting=0;
             
-            chaos_meeting=obj_ini.wid[0,1];
+            chaos_meeting=obj_ini.wid[0][1];
             
             // show_message("meeting planet:"+string(chaos_meeting));
             repeat(11){co+=1;i=0;
                 repeat(200){i+=1;good=0;
-                    if (obj_ini.role[co,i]!="") and (obj_ini.loc[co,i]=name) and (obj_ini.wid[co,i]==floor(chaos_meeting)) then good+=1;
-                    if (obj_ini.role[co,i]!=obj_ini.role[100,6]) and (obj_ini.role[co,i]!="Venerable "+string(obj_ini.role[100,6])) then good+=1;
-                    if (string_count("Dread",obj_ini.armour[co,i])=0) or (obj_ini.role[co,i]="Chapter Master") then good+=1;
+                    if (obj_ini.role[co][i]!="") and (obj_ini.loc[co][i]=name) and (obj_ini.wid[co][i]==floor(chaos_meeting)) then good+=1;
+                    if (obj_ini.role[co][i]!=obj_ini.role[100][6]) and (obj_ini.role[co][i]!="Venerable "+string(obj_ini.role[100][6])) then good+=1;
+                    if (string_count("Dread",obj_ini.armour[co][i])=0) or (obj_ini.role[co][i]="Chapter Master") then good+=1;
                     
-                    // if (good>=3) then show_message(string(obj_ini.role[co,i])+": "+string(co)+"."+string(i));
+                    // if (good>=3) then show_message(string(obj_ini.role[co][i])+": "+string(co)+"."+string(i));
                     
                     if (good>=3){
                         obj_temp_meeting.dudes+=1;otm=obj_temp_meeting.dudes;
                         obj_temp_meeting.present[otm]=1;obj_temp_meeting.co[otm]=co;obj_temp_meeting.ide[otm]=i;
-                        if (obj_ini.role[co,i]="Chapter Master") then master_present=1;
+                        if (obj_ini.role[co][i]="Chapter Master") then master_present=1;
                     }
                 }
             }
@@ -118,7 +118,7 @@ if (battle_special="WL10_reveal") or (battle_special="WL10_later"){var moar,ox,o
     
     if (battle_special="WL10_reveal"){
         instance_create(battle_object.x,battle_object.y,obj_temp8);
-        ox=battle_object.x;oy=battle_object.y;// battle_object.owner=10;
+        ox=battle_object.x;oy=battle_object.y;// battle_object.owner = eFACTION.Chaos;
         battle_object.p_traitors[battle_id]=6;
         battle_object.p_chaos[battle_id]=4;
         battle_object.p_pdf[battle_id]=0;
@@ -142,8 +142,8 @@ if (battle_special="WL10_reveal") or (battle_special="WL10_later"){var moar,ox,o
         
         if (battle_object.present_fleet[2]>0){
             with(obj_en_fleet){
-                if (navy=0) and (owner=2) and (point_distance(x,y,obj_temp8.x,obj_temp8.y)<40){
-                    owner=10;sprite_index=spr_fleet_chaos;
+                if (navy=0) and (owner = eFACTION.Imperium) and (point_distance(x,y,obj_temp8.x,obj_temp8.y)<40){
+                    owner = eFACTION.Chaos;sprite_index=spr_fleet_chaos;
                     if (image_index<=2){escort_number+=3;frigate_number+=1;}
                     if (capital_number=0) then capital_number+=1;
                 }
@@ -158,23 +158,23 @@ if (battle_special="WL10_reveal") or (battle_special="WL10_later"){var moar,ox,o
         obj_controller.audience=10;
         obj_controller.menu=20;
         obj_controller.diplomacy=10;
-        obj_controller.known[10]=2;
+        obj_controller.known[eFACTION.Chaos]=2;
         with(obj_controller){scr_dialogue("intro2");}
     }
     if (defeat=0){
-        obj_controller.known[10]=2;
+        obj_controller.known[eFACTION.Chaos]=2;
         obj_controller.faction_defeated[10]=1;
         
         if (instance_exists(obj_turn_end)){
             scr_event_log("","Enemy Leader Assassinated: Chaos Lord");
-            scr_alert("","ass","Chaos Lord "+string(obj_controller.faction_leader[10])+" has been killed.",0,0);
-            scr_popup("Chaos Lord Killed","Chaos Lord "+string(obj_controller.faction_leader[10])+" has been slain in combat.  Without his leadership the various forces of Chaos in the sector will crumble apart and disintegrate from infighting.  Sector "+string(obj_ini.sector_name)+" is no longer as threatened by the forces of Chaos.","","");
+            scr_alert("","ass","Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+" has been killed.",0,0);
+            scr_popup("Chaos Lord Killed","Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+" has been slain in combat.  Without his leadership the various forces of Chaos in the sector will crumble apart and disintegrate from infighting.  Sector "+string(obj_ini.sector_name)+" is no longer as threatened by the forces of Chaos.","","");
         }
         if (!instance_exists(obj_turn_end)){
             scr_event_log("","Enemy Leader Assassinated: Chaos Lord");
             var pop;pop=instance_create(0,0,obj_popup);
             pop.image="";pop.title="Chaos Lord Killed";
-            pop.text="Chaos Lord "+string(obj_controller.faction_leader[10])+" has been slain in combat.  Without his leadership the various forces of Chaos in the sector will crumble apart and disintegrate from infighting.  Sector "+string(obj_ini.sector_name)+" is no longer as threatened by the forces of Chaos.";
+            pop.text="Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+" has been slain in combat.  Without his leadership the various forces of Chaos in the sector will crumble apart and disintegrate from infighting.  Sector "+string(obj_ini.sector_name)+" is no longer as threatened by the forces of Chaos.";
         }
         
     }
@@ -213,22 +213,22 @@ if (battle_special="study2a") or (battle_special="study2b"){
 
 
 
-if (enemy=5) and (obj_controller.faction_status[5]!="War"){
+if (enemy=5) and (obj_controller.faction_status[eFACTION.Ecclesiarchy]!="War"){
     obj_controller.loyalty-=50;obj_controller.loyalty_hidden-=50;
     obj_controller.disposition[2]-=50;obj_controller.disposition[3]-=80;
     obj_controller.disposition[4]-=40;obj_controller.disposition[5]-=30;
     
-    obj_controller.faction_status[2]="War";obj_controller.faction_status[3]="War";
-    obj_controller.faction_status[4]="War";obj_controller.faction_status[5]="War";
+    obj_controller.faction_status[eFACTION.Imperium]="War";obj_controller.faction_status[eFACTION.Mechanicus]="War";
+    obj_controller.faction_status[eFACTION.Inquisition]="War";obj_controller.faction_status[eFACTION.Ecclesiarchy]="War";
     
     if (!instance_exists(obj_turn_end)){
         obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=5;obj_controller.audien_topic[obj_controller.audiences]="declare_war";
-        if (obj_controller.known[4]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=4;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
+        if (obj_controller.known[eFACTION.Inquisition]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=4;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
         obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=2;obj_controller.audien_topic[obj_controller.audiences]="declare_war";
     }
     if (instance_exists(obj_turn_end)){
         obj_turn_end.audiences+=1;obj_turn_end.audien[obj_turn_end.audiences]=5;obj_turn_end.audien_topic[obj_turn_end.audiences]="declare_war";
-        if (obj_turn_end.known[4]>1){obj_turn_end.audiences+=1;obj_turn_end.audien[obj_turn_end.audiences]=4;obj_turn_end.audien_topic[obj_turn_end.audiences]="declare_war";}
+        if (obj_turn_end.known[eFACTION.Inquisition]>1){obj_turn_end.audiences+=1;obj_turn_end.audien[obj_turn_end.audiences]=4;obj_turn_end.audien_topic[obj_turn_end.audiences]="declare_war";}
         obj_turn_end.audiences+=1;obj_turn_end.audien[obj_turn_end.audiences]=2;obj_turn_end.audien_topic[obj_turn_end.audiences]="declare_war";
     }
 }
@@ -473,7 +473,7 @@ if ((string_count("fallen",battle_special)>0)) and (defeat=0){
     tixt+=scr_roman(obj_turn_end.battle_world[obj_turn_end.current_battle]);
     scr_event_log("","Mission Succesful: "+string(tixt)+" have been captured or purged.");
     
-    tixt+=" have been captured or purged.  They shall be brought to the Chapter "+string(obj_ini.role[100,14])+"s posthaste, in order to account for their sins.  ";
+    tixt+=" have been captured or purged.  They shall be brought to the Chapter "+string(obj_ini.role[100][14])+"s posthaste, in order to account for their sins.  ";
     var ran;ran=choose(1,1,2,3);
     if (ran=1) then tixt+="Suffering is the beginning to penance.";
     if (ran=2) then tixt+="Their screams shall be the harbringer of their contrition.";
@@ -541,7 +541,7 @@ if (enemy=1){
             obj_turn_end.combating=0;// obj_turn_end.alarm[1]=1;
         }
         var pip;pip=instance_create(0,0,obj_popup);
-        pip.title="Enemies Vanquished";pip.text="Not only have you killed the Chaos Lord, "+string(obj_controller.faction_leader[10])+", but also all of your battle brothers that questioned your rule.  As you stand, alone, among the broken corpses of your enemies you begin to question what exactly it is that you accomplished.  No matter the results, you feel as though your actions have been noticed.";
+        pip.title="Enemies Vanquished";pip.text="Not only have you killed the Chaos Lord, "+string(obj_controller.faction_leader[eFACTION.Chaos])+", but also all of your battle brothers that questioned your rule.  As you stand, alone, among the broken corpses of your enemies you begin to question what exactly it is that you accomplished.  No matter the results, you feel as though your actions have been noticed.";
     }
 }
 
@@ -555,7 +555,7 @@ if (enemy=10){
             obj_turn_end.combating=0;// obj_turn_end.alarm[1]=1;
         }
         var pip;pip=instance_create(0,0,obj_popup);
-        pip.title="Survived";pip.text="You and the rest of your battle brothers fight your way out of the catacombs, back through the tunnel where you first entered.  By the time you manage it your forces are battered and bloodied and in desperate need of pickup.  The whole meeting was a bust- Chaos Lord "+string(obj_controller.faction_leader[10])+" clearly intended to kill you and simply be done with it.";
+        pip.title="Survived";pip.text="You and the rest of your battle brothers fight your way out of the catacombs, back through the tunnel where you first entered.  By the time you manage it your forces are battered and bloodied and in desperate need of pickup.  The whole meeting was a bust- Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+" clearly intended to kill you and simply be done with it.";
     }
 
     if ((battle_special="cs_meeting_battle5") or (battle_special="cs_meeting_battle6")) and (defeat=0){
@@ -676,14 +676,14 @@ if ((leader=1) or (battle_special="world_eaters")) and (obj_controller.faction_d
         obj_controller.faction_defeated[10]=1;// show_message("WL10 defeated");
         if (instance_exists(obj_turn_end)){
             scr_event_log("","Enemy Leader Assassinated: Chaos Lord");
-            scr_alert("","ass","Chaos Lord "+string(obj_controller.faction_leader[10])+" has been killed.",0,0);
-            scr_popup("Black Crusade Ended","The Chaos Lord "+string(obj_controller.faction_leader[10])+" has been slain in combat.  Without his leadership the Black Crusade is destined to crumble apart and disintegrate from infighting.  Sector "+string(obj_ini.sector_name)+" is no longer at threat by the forces of Chaos.","","");
+            scr_alert("","ass","Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+" has been killed.",0,0);
+            scr_popup("Black Crusade Ended","The Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+" has been slain in combat.  Without his leadership the Black Crusade is destined to crumble apart and disintegrate from infighting.  Sector "+string(obj_ini.sector_name)+" is no longer at threat by the forces of Chaos.","","");
         }
         if (!instance_exists(obj_turn_end)){
             scr_event_log("","Enemy Leader Assassinated: Chaos Lord");
             var pop;pop=instance_create(0,0,obj_popup);
             pop.image="";pop.title="Black Crusade Ended";
-            pop.text="The Chaos Lord "+string(obj_controller.faction_leader[10])+" has been slain in combat.  Without his leadership the Black Crusade is destined to crumble apart and disintegrate from infighting.  Sector "+string(obj_ini.sector_name)+" is no longer at threat by the forces of Chaos.";
+            pop.text="The Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+" has been slain in combat.  Without his leadership the Black Crusade is destined to crumble apart and disintegrate from infighting.  Sector "+string(obj_ini.sector_name)+" is no longer at threat by the forces of Chaos.";
         }
     }
 }}
