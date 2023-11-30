@@ -145,7 +145,7 @@ ui_node.add_element(system_name_element, 0, 0, 0, 0)
 			context.set_halign(fa_center)
 			context.set_valign(fa_middle)
 			context.owner.resize(new_w, 32)
-			if owner == 1 {
+			if (owner == eFACTION.Player){
 				var trim_color = make_color_rgb(obj_controller.targetR5 *255, obj_controller.targetG5 *255, obj_controller.targetB5 *255)
 				context.set_color_solid(trim_color)
 			}
