@@ -917,14 +917,15 @@ enum eFACTION {
 	Imperium,
 	Mechanicus,
 	Inquisition,
-	Ecclesiarchy,
+	Ecclesiarchy,   // 5, last Imperial faction
 	Eldar,
 	Ork,
 	Tau,
 	Tyranids,
-	Chaos,
+	Chaos,          // 10
 	Heretics,
-	Necrons = 13
+    Placeholder_1,  // 12, not used anywhere currently, will be removed after creating proper structs for Factions
+	Necrons         // 13
 }
 faction[0]="";
 disposition[0]=0;
