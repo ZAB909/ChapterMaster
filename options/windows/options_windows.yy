@@ -8,7 +8,7 @@
   "option_windows_copy_exe_to_dest": false,
   "option_windows_copyright_info": "",
   "option_windows_description_info": "Become the 40,000th warhammer",
-  "option_windows_disable_sandbox": false,
+  "option_windows_disable_sandbox": true,
   "option_windows_display_cursor": false,
   "option_windows_display_name": "Chapter Master Adeptus Dominus 0.8.1.1",
   "option_windows_enable_steam": false,
