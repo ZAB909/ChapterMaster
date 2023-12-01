@@ -47,10 +47,10 @@ repeat(600){i+=1;
         if (marine_type[i]!="") and (obj_ncombat.defeat=1) and (marine_dead[i]<2){marine_dead[i]=1;marine_hp[i]=-50;}
         if (veh_type[i]!="") and (obj_ncombat.defeat=1){veh_dead[i]=1;veh_hp[i]=-200;}
     
-        if (marine_type[i]=obj_ini.role[100,15]) and (marine_gear[i]="Narthecium") and (marine_dead[i]=0){
+        if (marine_type[i]=obj_ini.role[100][15]) and (marine_gear[i]="Narthecium") and (marine_dead[i]=0){
             obj_ncombat.apothecaries_alive+=1;obj_ncombat.apoth+=1;
         }
-        if (marine_type[i]=obj_ini.role[100,16]) and (marine_gear[i]="Servo Arms") and (marine_dead[i]=0){
+        if (marine_type[i]=obj_ini.role[100][16]) and (marine_gear[i]="Servo Arms") and (marine_dead[i]=0){
             obj_ncombat.techmarines_alive+=1;obj_ncombat.techma+=1;
         }
         

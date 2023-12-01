@@ -23,24 +23,24 @@ if (menu==1) and (managing>0){
             // sets up count for the marines
             if (man[f]=="man"){
                 manz+=1;
-                if (ma_role[f]==obj_ini.role[100,5]) then cap+=1;
-                if (ma_role[f]==obj_ini.role[100,15]) then apo+=1;
-                if (ma_role[f]==obj_ini.role[100,14]) then chap+=1;
+                if (ma_role[f]==obj_ini.role[100][5]) then cap+=1;
+                if (ma_role[f]==obj_ini.role[100][15]) then apo+=1;
+                if (ma_role[f]==obj_ini.role[100][14]) then chap+=1;
                 if (ma_role[f]==obj_ini.role[100,17]) then lib+=1;
-                if (ma_role[f]==obj_ini.role[100,16]) then tech+=1;
-                if (ma_role[f]==obj_ini.role[100,6]) or (ma_role[f]=="Venerable "+string(obj_ini.role[100,6])) then drea+=1;
+                if (ma_role[f]==obj_ini.role[100][16]) then tech+=1;
+                if (ma_role[f]==obj_ini.role[100][6]) or (ma_role[f]=="Venerable "+string(obj_ini.role[100][6])) then drea+=1;
                 if (ma_role[f]=="Standard Bearer") then bear+=1;
-                if (ma_role[f]==obj_ini.role[100,8]) then tct+=1;
-                if (ma_role[f]==obj_ini.role[100,10]) then assa+=1;
-                if (ma_role[f]==obj_ini.role[100,9]) then dev+=1;
-                if (ma_role[f]==obj_ini.role[100,12]) then sco+=1;
-                if (ma_role[f]==obj_ini.role[100,2]) then hon+=1;
-                if (ma_role[f]==obj_ini.role[100,3]) then ve+=1;
-                if (ma_role[f]==obj_ini.role[100,4]) then ter+=1;
-                if (ma_role[f]==obj_ini.role[100,6]) then drea+=1;
-				if (ma_role[f]==obj_ini.role[100,18]) then sgt++;
-                if (ma_role[f]==obj_ini.role[100,19]) then vet_sgt++;
-                if (ma_role[f]=="Venerable "+string(obj_ini.role[100,6])) then vdrea+=1;
+                if (ma_role[f]==obj_ini.role[100][8]) then tct+=1;
+                if (ma_role[f]==obj_ini.role[100][10]) then assa+=1;
+                if (ma_role[f]==obj_ini.role[100][9]) then dev+=1;
+                if (ma_role[f]==obj_ini.role[100][12]) then sco+=1;
+                if (ma_role[f]==obj_ini.role[100][2]) then hon+=1;
+                if (ma_role[f]==obj_ini.role[100][3]) then ve+=1;
+                if (ma_role[f]==obj_ini.role[100][4]) then ter+=1;
+                if (ma_role[f]==obj_ini.role[100][6]) then drea+=1;
+				if (ma_role[f]==obj_ini.role[100][18]) then sgt++;
+                if (ma_role[f]==obj_ini.role[100][19]) then vet_sgt++;
+                if (ma_role[f]=="Venerable "+string(obj_ini.role[100][6])) then vdrea+=1;
                 if (ma_role[f]=="Codiciery") then codi+=1;
                 if (ma_role[f]=="Lexicanum") then lexi+=1;
             }
@@ -60,17 +60,17 @@ if (menu==1) and (managing>0){
     selecting_dudes="";
     // Infantry text
     if (cap>0){
-        selecting_dudes+=string(cap)+" "+string(obj_ini.role[100,5]);
+        selecting_dudes+=string(cap)+" "+string(obj_ini.role[100][5]);
         if (cap>1) then selecting_dudes+="s";
         selecting_dudes+=", ";
     }
     if (chap>0){
-        selecting_dudes+=string(chap)+" "+string(obj_ini.role[100,14]);
+        selecting_dudes+=string(chap)+" "+string(obj_ini.role[100][14]);
         if (chap>1) then selecting_dudes+="s";
         selecting_dudes+=", ";
     }
     if (apo>0){
-        selecting_dudes+=string(apo)+" "+string(obj_ini.role[100,15]);
+        selecting_dudes+=string(apo)+" "+string(obj_ini.role[100][15]);
         if (apo>1) then selecting_dudes+="s";
         selecting_dudes+=", ";
     }
@@ -95,12 +95,12 @@ if (menu==1) and (managing>0){
         selecting_dudes+=", ";
     }
     if (hon>0){
-        selecting_dudes+=string(hon)+" "+string(obj_ini.role[100,2]);
+        selecting_dudes+=string(hon)+" "+string(obj_ini.role[100][2]);
         if (hon>1) then selecting_dudes+="s";
         selecting_dudes+=", ";
     }
     if (tech>0){
-        selecting_dudes+=string(tech)+" "+string(obj_ini.role[100,16]);
+        selecting_dudes+=string(tech)+" "+string(obj_ini.role[100][16]);
         if (tech>1) then selecting_dudes+="s";
         selecting_dudes+=", ";
     }
@@ -110,37 +110,37 @@ if (menu==1) and (managing>0){
         selecting_dudes+=", ";
     }
     if (ve>0){
-        selecting_dudes+=string(ve)+" "+string(obj_ini.role[100,3]);
+        selecting_dudes+=string(ve)+" "+string(obj_ini.role[100][3]);
         if (ve>1) then selecting_dudes+="s";
         selecting_dudes+=", ";
     }
     if (tct>0){
-        selecting_dudes+=string(tct)+" "+string(obj_ini.role[100,8]);
+        selecting_dudes+=string(tct)+" "+string(obj_ini.role[100][8]);
         if (tct>1) then selecting_dudes+="s";
         selecting_dudes+=", ";
     }
     if (dev>0){
-        selecting_dudes+=string(dev)+" "+string(obj_ini.role[100,9]);
+        selecting_dudes+=string(dev)+" "+string(obj_ini.role[100][9]);
         if (dev>1) then selecting_dudes+="s";
         selecting_dudes+=", ";
     }
     if (sco>0){
-        selecting_dudes+=string(sco)+" "+string(obj_ini.role[100,12]);
+        selecting_dudes+=string(sco)+" "+string(obj_ini.role[100][12]);
         if (sco>1) then selecting_dudes+="s";
         selecting_dudes+=", ";
     }
     if (drea>0){
-        selecting_dudes+=string(drea)+" "+string(obj_ini.role[100,6]);
+        selecting_dudes+=string(drea)+" "+string(obj_ini.role[100][6]);
         if (drea>1) then selecting_dudes+="s";
         selecting_dudes+=", ";
     }
     if (sgt>0){
-        selecting_dudes+=string(sgt)+" "+string(obj_ini.role[100,18]);
+        selecting_dudes+=string(sgt)+" "+string(obj_ini.role[100][18]);
         if (sgt>1) then selecting_dudes+="s";
         selecting_dudes+=", ";
     }
     if (vet_sgt>0){
-        selecting_dudes+=string(vet_sgt)+" "+string(obj_ini.role[100,19]);
+        selecting_dudes+=string(vet_sgt)+" "+string(obj_ini.role[100][19]);
         if (vet_sgt>1) then selecting_dudes+="s";
         selecting_dudes+=", ";
     }    

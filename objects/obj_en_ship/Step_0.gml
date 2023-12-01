@@ -38,7 +38,7 @@ if (hp<=0){
     image_alpha=0.5;
     
     
-    if (owner!=9){
+    if (owner != eFACTION.Tyranids){
         // ex=instance_create(x,y,obj_explosion);
         // ex.image_xscale=2;ex.image_yscale=2;ex.image_speed=0.75;
         var husk;husk=instance_create(x,y,obj_en_husk);
@@ -51,7 +51,7 @@ if (hp<=0){
             explo.y+=random_range(sprite_width*0.25,sprite_width*-0.25);
         }
     }
-    if (owner=9) then effect_create_above(ef_firework,x,y,1,c_purple);
+    if (owner = eFACTION.Tyranids) then effect_create_above(ef_firework,x,y,1,c_purple);
     instance_destroy();
 }
 
@@ -171,9 +171,9 @@ if (hp>0) and (instance_exists(obj_p_ship)){
         
         if (dist>64) and (dist<300){
             bull=instance_create(x,y,obj_en_round);bull.direction=point_direction(x,y,targe.x,targe.y);
-            if (owner=9) then bull.sprite_index=spr_glob;
+            if (owner = eFACTION.Tyranids) then bull.sprite_index=spr_glob;
             bull.speed=20;bull.dam=3;bull.image_xscale=0.5;bull.image_yscale=0.5;turret_cool=floor(60/turrets);
-            if (owner=13){bull.sprite_index=spr_green_las;bull.image_yscale=1;}
+            if (owner = eFACTION.Necrons){bull.sprite_index=spr_green_las;bull.image_yscale=1;}
             bull.direction+=choose(random(10),1*-(random(10)));
         }
     }
@@ -246,7 +246,7 @@ if (hp>0) and (instance_exists(obj_p_ship)){
             if (ammo<0) then ok=0;
             ok=3;
             
-            if (string_count("orpedo",wep)=0) and (string_count("Interceptor",wep)=0) and (string_count("ommerz",wep)=0) and (string_count("Claws",wep)=0) and (string_count("endrils",wep)=0) and (ok=3) and (owner!=13){
+            if (string_count("orpedo",wep)=0) and (string_count("Interceptor",wep)=0) and (string_count("ommerz",wep)=0) and (string_count("Claws",wep)=0) and (string_count("endrils",wep)=0) and (ok=3) and (owner != eFACTION.Necrons){
                 bull=instance_create(x+lengthdir_x(32,direction),y+lengthdir_y(32,direction),obj_en_round);
                 bull.speed=20;bull.dam=dam;
                 if (targe=target) then bull.direction=point_direction(x+lengthdir_x(32,direction),y+lengthdir_y(32,direction),target.x,target.y);
@@ -260,11 +260,11 @@ if (hp>0) and (instance_exists(obj_p_ship)){
                 if (string_count("Plasma",wep)=1){bull.sprite_index=spr_ground_plasma;bull.image_xscale=2;bullimage_yscale=2;bull.speed=15;}
                 if (string_count("Pyro-Acid",wep)=1){bull.sprite_index=spr_glob;bull.image_xscale=2;bullimage_yscale=2;}
                 
-                if (string_count("Weapons",wep)=1) and (owner=6){bull.sprite_index=spr_ground_las;bull.image_xscale=2;bull.image_yscale=2;}
-                if (string_count("Pulse",wep)=1) and (owner=6){bull.sprite_index=spr_pulse;bull.image_xscale=1.5;bull.image_yscale=1.5;}
+                if (string_count("Weapons",wep)=1) and (owner = eFACTION.Eldar){bull.sprite_index=spr_ground_las;bull.image_xscale=2;bull.image_yscale=2;}
+                if (string_count("Pulse",wep)=1) and (owner = eFACTION.Eldar){bull.sprite_index=spr_pulse;bull.image_xscale=1.5;bull.image_yscale=1.5;}
                 
             }
-            if (string_count("orpedo",wep)=1) and (ok=3) and (owner!=13){
+            if (string_count("orpedo",wep)=1) and (ok=3) and (owner != eFACTION.Necrons){
                 if (class!="Ravager"){
                     bull=instance_create(x,y+lengthdir_y(-30,direction+90),obj_en_round);
                     bull.speed=10;bull.direction=direction;bull.sprite_index=spr_torpedo;bull.dam=dam;
@@ -412,8 +412,8 @@ if (hp>0) and (instance_exists(obj_p_ship)){
         
         if (dist>64) and (dist<300){
             bull=instance_create(x,y,obj_en_round);bull.direction=point_direction(x,y,targe.x,targe.y);
-            if (owner=9) then bull.sprite_index=spr_glob;
-            if (owner=8) or (owner=6) then bull.sprite_index=spr_pulse;
+            if (owner = eFACTION.Tyranids) then bull.sprite_index=spr_glob;
+            if (owner = eFACTION.Tau) or (owner = eFACTION.Eldar) then bull.sprite_index=spr_pulse;
             bull.speed=20;bull.dam=3;bull.image_xscale=0.5;bull.image_yscale=0.5;turret_cool=floor(60/turrets);
             bull.direction+=choose(random(10),1*-(random(10)));
         }
@@ -500,8 +500,8 @@ if (hp>0) and (instance_exists(obj_p_ship)){
                 if (string_count("Plasma",wep)=1){bull.sprite_index=spr_ground_plasma;bull.image_xscale=2;bullimage_yscale=2;bull.speed=15;}
                 if (string_count("Pyro-Acid",wep)=1){bull.sprite_index=spr_glob;bull.image_xscale=2;bullimage_yscale=2;}
                 
-                if (string_count("Weapons",wep)=1) and (owner=6){bull.sprite_index=spr_ground_las;bull.image_xscale=2;bull.image_yscale=2;}
-                if (string_count("Pulse",wep)=1) and (owner=6){bull.sprite_index=spr_pulse;bull.image_xscale=1.5;bull.image_yscale=1.5;}
+                if (string_count("Weapons",wep)=1) and (owner = eFACTION.Eldar){bull.sprite_index=spr_ground_las;bull.image_xscale=2;bull.image_yscale=2;}
+                if (string_count("Pulse",wep)=1) and (owner = eFACTION.Eldar){bull.sprite_index=spr_pulse;bull.image_xscale=1.5;bull.image_yscale=1.5;}
                 
             }
             if (string_count("orpedo",wep)=1) and (ok=3){

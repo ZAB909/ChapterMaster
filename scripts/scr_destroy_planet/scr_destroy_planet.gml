@@ -59,24 +59,24 @@ function scr_destroy_planet(argument0) {
 	            if (obj_ini.role[cah,ed]="Chapter Master"){obj_controller.alarm[7]=15;if (global.defeat<=1) then global.defeat=1;}
             
 	            if (obj_ini.race[cah,ed]=1){var comm;comm=false;
-	                if (obj_ini.role[co,i]="Chapter Master") then comm=true;
-	                if (obj_ini.role[co,i]="Master of Sanctity") then comm=true;
-	                if (obj_ini.role[co,i]="Master of the Apothecarion") then comm=true;
-	                if (obj_ini.role[co,i]="Chief "+string(obj_ini.role[100,17])) then comm=true;
-	                if (obj_ini.role[co,i]="Forge Master") then comm=true;
-	                if (obj_ini.role[co,i]=obj_ini.role[100,17]) then comm=true;
-	                if (obj_ini.role[co,i]=obj_ini.role[100,14]) then comm=true;
-	                if (obj_ini.role[co,i]=obj_ini.role[100,15]) then comm=true;
-	                if (obj_ini.role[co,i]=obj_ini.role[100,16]) then comm=true;
-	                if (obj_ini.role[co,i]=obj_ini.role[100,6]) then comm=true;
-	                if (obj_ini.role[co,i]=obj_ini.role[100,5]) then comm=true;
-	                if (obj_ini.role[co,i]="Codiciery") then comm=true;
-	                if (obj_ini.role[co,i]="Lexicanum") then comm=true;
-	                if (obj_ini.role[co,i]=string(obj_ini.role[100,17])+" Aspirant") then comm=true;
-	                if (obj_ini.role[co,i]=string(obj_ini.role[100,14])+" Aspirant") then comm=true;
-	                if (obj_ini.role[co,i]=string(obj_ini.role[100,15])+" Aspirant") then comm=true;
-	                if (obj_ini.role[co,i]=string(obj_ini.role[100,16])+" Aspirant") then comm=true;
-	                if (obj_ini.role[co,i]="Venerable "+string(obj_ini.role[100,6])) then comm=true;
+	                if (obj_ini.role[co][i]="Chapter Master") then comm=true;
+	                if (obj_ini.role[co][i]="Master of Sanctity") then comm=true;
+	                if (obj_ini.role[co][i]="Master of the Apothecarion") then comm=true;
+	                if (obj_ini.role[co][i]="Chief "+string(obj_ini.role[100,17])) then comm=true;
+	                if (obj_ini.role[co][i]="Forge Master") then comm=true;
+	                if (obj_ini.role[co][i]=obj_ini.role[100,17]) then comm=true;
+	                if (obj_ini.role[co][i]=obj_ini.role[100][14]) then comm=true;
+	                if (obj_ini.role[co][i]=obj_ini.role[100][15]) then comm=true;
+	                if (obj_ini.role[co][i]=obj_ini.role[100][16]) then comm=true;
+	                if (obj_ini.role[co][i]=obj_ini.role[100][6]) then comm=true;
+	                if (obj_ini.role[co][i]=obj_ini.role[100][5]) then comm=true;
+	                if (obj_ini.role[co][i]="Codiciery") then comm=true;
+	                if (obj_ini.role[co][i]="Lexicanum") then comm=true;
+	                if (obj_ini.role[co][i]=string(obj_ini.role[100,17])+" Aspirant") then comm=true;
+	                if (obj_ini.role[co][i]=string(obj_ini.role[100][14])+" Aspirant") then comm=true;
+	                if (obj_ini.role[co][i]=string(obj_ini.role[100][15])+" Aspirant") then comm=true;
+	                if (obj_ini.role[co][i]=string(obj_ini.role[100][16])+" Aspirant") then comm=true;
+	                if (obj_ini.role[co][i]="Venerable "+string(obj_ini.role[100][6])) then comm=true;
                 
 	                // if (obj_ini.race[cah,ed]=1) then obj_controller.marines-=1;
 	                if (comm=false) then obj_controller.marines-=1;
@@ -105,53 +105,53 @@ function scr_destroy_planet(argument0) {
 	    if (obj_controller.blood_debt=1){obj_controller.penitent_current+=1500;obj_controller.penitent_turn=0;obj_controller.penitent_turnly=0;}
 	}
 
-	if ((you.p_owner[baid]=3) or (you.p_first[baid]=3)) and (obj_controller.faction_status[3]!="War"){
+	if ((you.p_owner[baid]=3) or (you.p_first[baid]=3)) and (obj_controller.faction_status[eFACTION.Mechanicus]!="War"){
 	    obj_controller.loyalty-=50;obj_controller.loyalty_hidden-=50;
 	    obj_controller.disposition[2]-=50;obj_controller.disposition[3]-=80;
 	    obj_controller.disposition[4]-=40;obj_controller.disposition[5]-=30;
     
-	    obj_controller.faction_status[2]="War";obj_controller.faction_status[3]="War";
-	    obj_controller.faction_status[4]="War";obj_controller.faction_status[5]="War";
+	    obj_controller.faction_status[eFACTION.Imperium]="War";obj_controller.faction_status[eFACTION.Mechanicus]="War";
+	    obj_controller.faction_status[eFACTION.Inquisition]="War";obj_controller.faction_status[eFACTION.Ecclesiarchy]="War";
     
 	    obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=3;obj_controller.audien_topic[obj_controller.audiences]="declare_war";
 	    obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=2;obj_controller.audien_topic[obj_controller.audiences]="declare_war";
-	    if (obj_controller.known[4]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=4;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
-	    if (obj_controller.known[5]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=5;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
+	    if (obj_controller.known[eFACTION.Inquisition]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=4;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
+	    if (obj_controller.known[eFACTION.Ecclesiarchy]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=5;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
 
 	    if (planet_feature_bool(you.p_feature[baid], P_features.Sororitas_Cathedral)==1){
 	        obj_controller.disposition[5]-=30;
-	        if (obj_controller.known[3]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=3;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
+	        if (obj_controller.known[eFACTION.Mechanicus]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=3;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
 	    }
 
 	}
-	if (enemy9=5) and (obj_controller.faction_status[5]!="War"){
+	if (enemy9=5) and (obj_controller.faction_status[eFACTION.Ecclesiarchy]!="War"){
 	    obj_controller.loyalty-=50;obj_controller.loyalty_hidden-=50;
 	    obj_controller.disposition[2]-=50;obj_controller.disposition[3]-=80;
 	    obj_controller.disposition[4]-=40;obj_controller.disposition[5]-=30;
     
-	    obj_controller.faction_status[2]="War";obj_controller.faction_status[3]="War";
-	    obj_controller.faction_status[4]="War";obj_controller.faction_status[5]="War";
+	    obj_controller.faction_status[eFACTION.Imperium]="War";obj_controller.faction_status[eFACTION.Mechanicus]="War";
+	    obj_controller.faction_status[eFACTION.Inquisition]="War";obj_controller.faction_status[eFACTION.Ecclesiarchy]="War";
     
 	    obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=5;obj_controller.audien_topic[obj_controller.audiences]="declare_war";
-	    if (obj_controller.known[4]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=4;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
+	    if (obj_controller.known[eFACTION.Inquisition]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=4;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
 	    obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=2;obj_controller.audien_topic[obj_controller.audiences]="declare_war";
 	}
 
 
 
 	if (you.p_tyranids[baid]<5){
-	    if (you.p_first[baid]=2) and (you.p_type[baid]="Hive") and (planet_feature_bool(you.p_feature[baid], P_features.Daemonic_Incursion)==0) and (obj_controller.faction_status[2]!="War"){
+	    if (you.p_first[baid]=2) and (you.p_type[baid]="Hive") and (planet_feature_bool(you.p_feature[baid], P_features.Daemonic_Incursion)==0) and (obj_controller.faction_status[eFACTION.Imperium]!="War"){
 	        obj_controller.loyalty-=50;obj_controller.loyalty_hidden-=50;
 	        obj_controller.disposition[2]-=60;obj_controller.disposition[3]-=30;
 	        obj_controller.disposition[4]-=40;obj_controller.disposition[5]-=40;
         
-	        obj_controller.faction_status[2]="War";obj_controller.faction_status[3]="War";
-	        obj_controller.faction_status[4]="War";obj_controller.faction_status[5]="War";
+	        obj_controller.faction_status[eFACTION.Imperium]="War";obj_controller.faction_status[eFACTION.Mechanicus]="War";
+	        obj_controller.faction_status[eFACTION.Inquisition]="War";obj_controller.faction_status[eFACTION.Ecclesiarchy]="War";
         
 	        obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=2;obj_controller.audien_topic[obj_controller.audiences]="declare_war";
-	        if (obj_controller.known[4]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=4;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
-	        if (obj_controller.known[5]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=5;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
-	        if (obj_controller.known[3]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=3;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
+	        if (obj_controller.known[eFACTION.Inquisition]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=4;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
+	        if (obj_controller.known[eFACTION.Ecclesiarchy]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=5;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
+	        if (obj_controller.known[eFACTION.Mechanicus]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=3;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
     
 	        if (planet_feature_bool(you.p_feature[baid], P_features.Sororitas_Cathedral)==1) then obj_controller.disposition[5]-=30;
 	    }

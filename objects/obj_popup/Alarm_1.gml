@@ -13,17 +13,17 @@ repeat(obj_controller.man_max){
     if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1) and (vehicle_equipment=0) and (obj_controller.man[i]="man"){
         var check,ih,gi;check=0;ih=0;gi="";
         
-        if (obj_controller.ma_role[i]=obj_ini.role[100,2]) then ih=2;
-        if (obj_controller.ma_role[i]=obj_ini.role[100,3]) then ih=3;
-        if (obj_controller.ma_role[i]=obj_ini.role[100,4]) then ih=4;
-        if (obj_controller.ma_role[i]=obj_ini.role[100,6]) then ih=6;
-        if (obj_controller.ma_role[i]=obj_ini.role[100,8]) then ih=8;
-        if (obj_controller.ma_role[i]=obj_ini.role[100,9]) then ih=9;
-        if (obj_controller.ma_role[i]=obj_ini.role[100,10]) then ih=10;
-        if (obj_controller.ma_role[i]=obj_ini.role[100,12]) then ih=12;
-        if (obj_controller.ma_role[i]=obj_ini.role[100,14]) then ih=14;
-        if (obj_controller.ma_role[i]=obj_ini.role[100,15]) then ih=5;
-        if (obj_controller.ma_role[i]=obj_ini.role[100,16]) then ih=16;
+        if (obj_controller.ma_role[i]=obj_ini.role[100][2]) then ih=2;
+        if (obj_controller.ma_role[i]=obj_ini.role[100][3]) then ih=3;
+        if (obj_controller.ma_role[i]=obj_ini.role[100][4]) then ih=4;
+        if (obj_controller.ma_role[i]=obj_ini.role[100][6]) then ih=6;
+        if (obj_controller.ma_role[i]=obj_ini.role[100][8]) then ih=8;
+        if (obj_controller.ma_role[i]=obj_ini.role[100][9]) then ih=9;
+        if (obj_controller.ma_role[i]=obj_ini.role[100][10]) then ih=10;
+        if (obj_controller.ma_role[i]=obj_ini.role[100][12]) then ih=12;
+        if (obj_controller.ma_role[i]=obj_ini.role[100][14]) then ih=14;
+        if (obj_controller.ma_role[i]=obj_ini.role[100][15]) then ih=5;
+        if (obj_controller.ma_role[i]=obj_ini.role[100][16]) then ih=16;
         if (obj_controller.ma_role[i]=obj_ini.role[100,17]) then ih=17;
         if (ih!=0){
             gi=obj_ini.wep1[100,ih];if (gi!="") then n_wep1=gi;

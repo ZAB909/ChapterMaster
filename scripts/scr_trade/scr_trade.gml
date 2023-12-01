@@ -276,7 +276,7 @@ function scr_trade(argument0) {
 	                if (p_owner[1]=2) or (p_owner[2]=2) or (p_owner[3]=2) or (p_owner[4]=2) then instance_create(x,y,obj_temp3);
 	            }
             
-	            // if (obj_controller.diplomacy=4) and (owner=2) then instance_create(x,y,obj_temp3);
+	            // if (obj_controller.diplomacy=4) and (owner = eFACTION.Imperium) then instance_create(x,y,obj_temp3);
 	        }
 	        if (diplomacy=5){
 	            with(obj_star){var ahuh,q;ahuh=0;q=0;
@@ -372,12 +372,12 @@ function scr_trade(argument0) {
 	        flit.owner=diplomacy;
 	        flit.home_x=targ.x;flit.home_y=targ.y;
         
-	        if (diplomacy=5) then flit.owner=2;
+	        if (diplomacy=5) then flit.owner = eFACTION.Imperium;
         
 	        if (diplomacy=2) then flit.sprite_index=spr_fleet_imperial;
 	        if (diplomacy=3) then flit.sprite_index=spr_fleet_mechanicus;
-	        if (diplomacy=4){flit.sprite_index=spr_fleet_inquisition;flit.owner=4;}
-	        // if (diplomacy=4){flit.sprite_index=spr_fleet_imperial;flit.owner=2;}
+	        if (diplomacy=4){flit.sprite_index=spr_fleet_inquisition;flit.owner  = eFACTION.Inquisition;}
+	        // if (diplomacy=4){flit.sprite_index=spr_fleet_imperial;flit.owner = eFACTION.Imperium;}
 	        if (diplomacy=6){
 	            flit.action_spd=6400;
 	            flit.action_eta=1;

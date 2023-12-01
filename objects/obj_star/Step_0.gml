@@ -37,3 +37,7 @@ if (ai_e==0){
     scr_enemy_ai_e();
     scr_apothecary_ground();
 }
+//big ol temporary way
+system_player_ground_forces = array_reduce(p_player, function(prev, curr) {
+	return prev + curr	
+})

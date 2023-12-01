@@ -54,7 +54,7 @@ if (mission="bad") and (plan.p_first[num]=3) and (plan.p_type[num]="Forge"){
     if (plan.p_owner[num]=8) then obj_controller.disposition[8]-=8;*/
     
     if (plan.p_owner[num]>3) and (plan.p_owner[num]<=6){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=plan.p_owner[num];obj_controller.audien_topic[obj_controller.audiences]="artifact_angry";}
-    if (plan.p_owner[num]=3) and (obj_controller.faction_status[3]!="War"){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=plan.p_owner[num];obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
+    if (plan.p_owner[num]=3) and (obj_controller.faction_status[eFACTION.Mechanicus]!="War"){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=plan.p_owner[num];obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
     
     // Start battle
     pop.battle_special=3.1;
@@ -107,8 +107,8 @@ with(obj_fleet_select){instance_destroy();}
 if (string_count("Daemonic",obj_ini.artifact_tags[last_artifact-1])=1) then repeat(140){
     i+=1;
     if (man_sel[i]=1){
-        if (obj_controller.man[i]="man"){obj_ini.chaos[comp,i]+=choose(0,2,4,6,8);}
-        if (obj_controller.man[i]="vehicle"){obj_ini.veh_chaos[comp,i]+=choose(0,2,4,6,8);}
+        if (obj_controller.man[i]="man"){obj_ini.chaos[comp][i]+=choose(0,2,4,6,8);}
+        if (obj_controller.man[i]="vehicle"){obj_ini.veh_chaos[comp][i]+=choose(0,2,4,6,8);}
     }
 }*/
 

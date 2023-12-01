@@ -28,7 +28,7 @@ if (obj_controller.craftworld==1) and (space_hulk==0){
     heresy=-999;
     p_owner[1]=6;
     p_first[1]=6;
-    owner=6;
+    owner = eFACTION.Eldar;
     p_population[1]=floor(random_range(150000,300000));
     p_fortified[1]=6;
     p_eldar[1]=6;
@@ -50,9 +50,9 @@ if (space_hulk==1){
     p_fortified[1]=5;
     
     var faction=choose(7,9,9,9,9,9,10);
-    if (faction==7) then p_orks[1]=choose(3,4,5);
-    if (faction==9) then p_tyranids[1]=choose(3,4,5);
-    if (faction==10) then p_traitors[1]=choose(2,3,4);
+    if (faction == eFACTION.Ork) then p_orks[1]=choose(3,4,5);
+    if (faction == eFACTION.Tyranids) then p_tyranids[1]=choose(3,4,5);
+    if (faction == eFACTION.Chaos) then p_traitors[1]=choose(2,3,4);
     
     p_first[1]=faction;
     
@@ -369,3 +369,58 @@ if (p_type[1]!="Dead") then p_heresy[1]=floor(random(10))+1;
 if (p_type[2]!="Dead") then p_heresy[2]=floor(random(10))+1;
 if (p_type[3]!="Dead") then p_heresy[3]=floor(random(10))+1;
 if (p_type[4]!="Dead") then p_heresy[4]=floor(random(10))+1;
+
+
+ui_node.add_child(-sprite_width/2, sprite_height - string_height(name), 2*sprite_width, 20)
+	.add_component(UISpriteRendererComponent)
+		.set_sprite(spr_rectangle)
+		.set_callback(function(context) {
+			if owner != 1 {
+				context.set_color_solid(global.star_name_colors[owner])
+			} else {
+				var main_color = make_color_rgb(obj_controller.targetR1 *255, obj_controller.targetG1 * 255, obj_controller.targetB1 * 255)
+				var pauldron_color = make_color_rgb(obj_controller.targetR3 *255, obj_controller.targetG3 *255, obj_controller.targetB3 *255)
+				context.set_vertical_gradient(main_color, pauldron_color)
+			}
+		})
+		.set_alpha(0.5)
+	.finalize()
+	.add_component(UITextRendererComponent)
+		.set_halign(fa_center)
+		.set_valign(fa_middle)
+		.set_color_solid(c_black)
+		.set_callback(function(context) {
+			context.text = name
+			
+			if owner == 1 {
+				var trim_color = make_color_rgb(obj_controller.targetR5 *255, obj_controller.targetG5 *255, obj_controller.targetB5 *255)
+				context.set_color_solid(trim_color)
+			}
+		})
+	.finalize()
+	.add_child(-19,1, 18, 18)
+		.add_component(UISpriteRendererComponent)
+			.set_sprite(spr_planets)
+			.set_image_index(9)
+			.set_image_speed(0)
+			.set_callback(function(context) {
+				context.is_canceled = !system_player_ground_forces	
+			})
+		.finalize()
+	.finalize()
+	.add_child(2*sprite_width + 1, 1, 18, 18)
+		.add_component(UISpriteRendererComponent)
+			.set_callback(function(context) {
+				if owner == 1 {
+					context.set_sprite(obj_img.creation[1])
+					context.set_image_index(obj_ini.icon)
+				} else {
+					context.set_sprite(obj_img.force[owner])
+				}
+			})
+			.set_image_speed(0)
+		.finalize()
+	.finalize()
+
+
+

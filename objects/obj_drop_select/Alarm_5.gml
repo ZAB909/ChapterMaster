@@ -87,14 +87,14 @@ for (var i=0; i<3600; i++) {
         }
         if (company>10) then stop=true;
         if (stop=false){
-            if (fighting[company,unit_index]!=0) then obj_ncombat.fighting[company,unit_index]=1;// show_message(string(company)+":"+string(v)+" is fighting");
+            if (fighting[company][unit_index]!=0) then obj_ncombat.fighting[company][unit_index]=1;// show_message(string(company)+":"+string(v)+" is fighting");
             if (attack=1) and (v<=100){
-                if (veh_fighting[company,unit_index]!=0) then obj_ncombat.veh_fighting[company,unit_index]=1;
+                if (veh_fighting[company][unit_index]!=0) then obj_ncombat.veh_fighting[company][unit_index]=1;
             }
             if (attack=1) and (ship_all[500]=1){
-                if (obj_ini.loc[company,unit_index]=p_target.name) and (obj_ini.wid[company,unit_index]=obj_controller.selecting_planet) and (fighting[company,unit_index]=1) then obj_ncombat.fighting[company,unit_index]=1;
+                if (obj_ini.loc[company][unit_index]=p_target.name) and (obj_ini.wid[company][unit_index]=obj_controller.selecting_planet) and (fighting[company][unit_index]=1) then obj_ncombat.fighting[company][unit_index]=1;
                 if (unit_index<=100){
-                    if (obj_ini.veh_loc[company,unit_index]=p_target.name) and (obj_ini.veh_wid[company,unit_index]=obj_controller.selecting_planet) then obj_ncombat.veh_fighting[company,unit_index]=1;
+                    if (obj_ini.veh_loc[company][unit_index]=p_target.name) and (obj_ini.veh_wid[company][unit_index]=obj_controller.selecting_planet) then obj_ncombat.veh_fighting[company][unit_index]=1;
                 }
             }
         }

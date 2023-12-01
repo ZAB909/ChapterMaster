@@ -129,7 +129,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	            spe_descr="Restores 30HP";if (global.chapter_name="Iron Hands") then spe_descr="Restores 50 HP";
 	            descr="Bionics may be given to wounded marines to quickly get them back into combat-ready status, replacing damaged flesh.";}
 	        if (argument0="Narthecium"){spe_descr="Medical field kit";
-	            descr="An advanced medical field kit, these allow "+string(obj_ini.role[100,15])+"s to heal or recover Gene-Seed from fallen marines.";}
+	            descr="An advanced medical field kit, these allow "+string(obj_ini.role[100][15])+"s to heal or recover Gene-Seed from fallen marines.";}
 	        if (argument0="Psychic Hood"){spe_descr="-50% chance of perils*";
 	            descr="An arcane hood that protects "+string(obj_ini.role[100,17])+"s from enemy psychic powers and enhances their control.";}
 	        if (argument0="Rosarius"){spe_descr="+33% Damage Resistance";

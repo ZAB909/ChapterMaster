@@ -1,5 +1,5 @@
 
-owner=1;
+owner  = eFACTION.Player;
 capital_number=0;
 frigate_number=0;
 escort_number=0;

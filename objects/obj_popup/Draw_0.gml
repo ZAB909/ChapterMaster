@@ -17,18 +17,14 @@ if (type=99){
     if (obj_controller.zoomed=1){draw_text_transformed(room_width/2,60*3,string_hash_to_newline("SELECT DESTINATION"),1.5,1.5,0);}
     
     draw_set_halign(fa_left);
-}
-
-if (type=10){
+}else if (type=10){
     target_comp+=1;
     draw_set_color(0);
     draw_set_alpha(target_comp/60);
     draw_rectangle(0,0,room_width,room_height,0);
     draw_set_alpha(1);
     exit;
-}
-
-if ((type=9) or (type=9.1)) and (instance_exists(obj_controller)){
+}else if  ((type=9) or (type=9.1)) and (instance_exists(obj_controller)){
     draw_sprite(spr_planet_screen,0,xx+231,yy+112);
     draw_set_font(fnt_40k_14);
     draw_set_halign(fa_center);
@@ -46,37 +42,37 @@ if ((type=9) or (type=9.1)) and (instance_exists(obj_controller)){
     }
     
     if (obj_controller.disposition[2]>0) then ch="+";
-    if (obj_controller.known[2]>1) then draw_text(xx+740,yy+120,string_hash_to_newline("Imperium ("+string(ch)+string(obj_controller.disposition[2])+")#"+string(obj_controller.faction_title[2])));
+    if (obj_controller.known[eFACTION.Imperium]>1) then draw_text(xx+740,yy+120,string_hash_to_newline("Imperium ("+string(ch)+string(obj_controller.disposition[2])+")#"+string(obj_controller.faction_title[2])));
     draw_line(xx+239+420,yy+150,xx+398+420,yy+150);
     ch="";
     if (obj_controller.disposition[3]>0) then ch="+";
-    if (obj_controller.known[3]>1) then draw_text(xx+740,yy+150,string_hash_to_newline("Mechanicus ("+string(ch)+string(obj_controller.disposition[3])+")#"+string(obj_controller.faction_title[3])));
+    if (obj_controller.known[eFACTION.Mechanicus]>1) then draw_text(xx+740,yy+150,string_hash_to_newline("Mechanicus ("+string(ch)+string(obj_controller.disposition[3])+")#"+string(obj_controller.faction_title[3])));
     draw_line(xx+239+420,yy+180,xx+398+420,yy+180);
     ch="";
     if (obj_controller.disposition[4]>0) then ch="+";
-    if ((obj_controller.known[4]>1) or (inq_hide=2)) and (inq_hide!=1) then draw_text(xx+740,yy+180,string_hash_to_newline("Inquisition ("+string(ch)+string(obj_controller.disposition[4])+")#"+string(obj_controller.faction_title[4])));
+    if ((obj_controller.known[eFACTION.Inquisition]>1) or (inq_hide=2)) and (inq_hide!=1) then draw_text(xx+740,yy+180,string_hash_to_newline("Inquisition ("+string(ch)+string(obj_controller.disposition[4])+")#"+string(obj_controller.faction_title[4])));
     draw_line(xx+239+420,yy+210,xx+398+420,yy+210);
     ch="";
     if (obj_controller.disposition[5]>0) then ch="+";
-    if (obj_controller.known[5]>1) then draw_text(xx+740,yy+210,string_hash_to_newline("Ecclesiarchy ("+string(ch)+string(obj_controller.disposition[5])+")#"+string(obj_controller.faction_title[5])));
+    if (obj_controller.known[eFACTION.Ecclesiarchy]>1) then draw_text(xx+740,yy+210,string_hash_to_newline("Ecclesiarchy ("+string(ch)+string(obj_controller.disposition[5])+")#"+string(obj_controller.faction_title[5])));
     draw_line(xx+239+420,yy+240,xx+398+420,yy+240);
     ch="";
     if (obj_controller.disposition[6]>0) then ch="+";
-    if (obj_controller.known[6]>1) then draw_text(xx+740,yy+240,string_hash_to_newline("Eldar ("+string(ch)+string(obj_controller.disposition[6])+")#"+string(obj_controller.faction_title[6])));
+    if (obj_controller.known[eFACTION.Eldar]>1) then draw_text(xx+740,yy+240,string_hash_to_newline("Eldar ("+string(ch)+string(obj_controller.disposition[6])+")#"+string(obj_controller.faction_title[6])));
     draw_line(xx+239+420,yy+270,xx+398+420,yy+270);
     ch="";
     if (obj_controller.disposition[8]>0) then ch="+";
-    if (obj_controller.known[8]>1) then draw_text(xx+740,yy+270,string_hash_to_newline("Tau ("+string(ch)+string(obj_controller.disposition[8])+")#"+string(obj_controller.faction_title[8])));
+    if (obj_controller.known[eFACTION.Tau]>1) then draw_text(xx+740,yy+270,string_hash_to_newline("Tau ("+string(ch)+string(obj_controller.disposition[8])+")#"+string(obj_controller.faction_title[8])));
     draw_line(xx+239+420,yy+300,xx+398+420,yy+300);
     
     if (mouse_x>=xx+240+420) and (mouse_x<=xx+387+420){
         draw_set_alpha(0.33);draw_set_color(c_gray);
-        if (mouse_y>=yy+121) and (mouse_y<=yy+149) and (obj_controller.known[2]>1) then draw_rectangle(xx+340+420,yy+121,xx+398+420,yy+149,0);
-        if (mouse_y>=yy+151) and (mouse_y<=yy+179) and (obj_controller.known[3]>1) then draw_rectangle(xx+340+420,yy+151,xx+398+420,yy+179,0);
-        if (mouse_y>=yy+181) and (mouse_y<=yy+209) and ((obj_controller.known[4]>1) or (inq_hide=2)) and (inq_hide!=1) then draw_rectangle(xx+340,yy+181,xx+398+420,yy+209,0);
-        if (mouse_y>=yy+211) and (mouse_y<=yy+239) and (obj_controller.known[5]>1) then draw_rectangle(xx+340+420,yy+211,xx+398+420,yy+239,0);
-        if (mouse_y>=yy+241) and (mouse_y<=yy+269) and (obj_controller.known[6]>1) then draw_rectangle(xx+340+420,yy+241,xx+398+420,yy+269,0);
-        if (mouse_y>=yy+271) and (mouse_y<=yy+299) and (obj_controller.known[8]>1) then draw_rectangle(xx+340+420,yy+271,xx+398+420,yy+299,0);
+        if (mouse_y>=yy+121) and (mouse_y<=yy+149) and (obj_controller.known[eFACTION.Imperium]>1) then draw_rectangle(xx+340+420,yy+121,xx+398+420,yy+149,0);
+        if (mouse_y>=yy+151) and (mouse_y<=yy+179) and (obj_controller.known[eFACTION.Mechanicus]>1) then draw_rectangle(xx+340+420,yy+151,xx+398+420,yy+179,0);
+        if (mouse_y>=yy+181) and (mouse_y<=yy+209) and ((obj_controller.known[eFACTION.Inquisition]>1) or (inq_hide=2)) and (inq_hide!=1) then draw_rectangle(xx+340,yy+181,xx+398+420,yy+209,0);
+        if (mouse_y>=yy+211) and (mouse_y<=yy+239) and (obj_controller.known[eFACTION.Ecclesiarchy]>1) then draw_rectangle(xx+340+420,yy+211,xx+398+420,yy+239,0);
+        if (mouse_y>=yy+241) and (mouse_y<=yy+269) and (obj_controller.known[eFACTION.Eldar]>1) then draw_rectangle(xx+340+420,yy+241,xx+398+420,yy+269,0);
+        if (mouse_y>=yy+271) and (mouse_y<=yy+299) and (obj_controller.known[eFACTION.Tau]>1) then draw_rectangle(xx+340+420,yy+271,xx+398+420,yy+299,0);
     }
     
     draw_set_alpha(1);
@@ -362,7 +358,7 @@ if (type=8) and (instance_exists(obj_controller)){
     draw_sprite_stretched(spr_arrow,3,x2+569,y2+357+356,23,22);
     
     if (target_comp!=-1){
-        var x2,y2,bb="";
+        var x2,y2,
         x2=__view_get( e__VW.XView, 0 )+951;y2=__view_get( e__VW.YView, 0 )+48;
     
         var top,sel,temp1,temp2,temp3,temp4,temp5;temp1="";temp2="";temp3="";temp4="";temp5="";
@@ -1039,4 +1035,8 @@ if (zm=0) and (type=5.1) and (instance_exists(obj_controller)){
         draw_text(xx+1521.5,yy+501.5,string_hash_to_newline("Transfer!"));
     }
     draw_set_alpha(1);
+}
+
+if (type == "duel"){
+    
 }

@@ -15,7 +15,7 @@ draw_set_color(0);
 
 if (obj_controller.menu=60) then exit;
 
-var xx, yy, temp1, dist, close;
+var xx, yy, dist, close;
 xx=__view_get( e__VW.XView, 0 )+0;
 yy=__view_get( e__VW.YView, 0 )+0;
 dist=999;close=false;
@@ -39,7 +39,7 @@ if (instance_exists(obj_fleet_select)){
 
 
 if (obj_controller.selecting_planet>0) and (obj_controller.cooldown<=0){
-    var pppp=obj_controller.selecting_planet, current_button="";
+    var current_button="";
     
     /*if (obj_controller.recruiting_worlds_bought>0) and (target.p_owner[obj_controller.selecting_planet]<=5) and (obj_controller.faction_status[target.p_owner[obj_controller.selecting_planet]]!="War"){
         if (mouse_x>=xx+348) and (mouse_y>=yy+601) and (mouse_x<xx+348+246) and (mouse_y<yy+627) and (string_count("Recr",target.p_feature[obj_controller.selecting_planet])=0){
@@ -277,7 +277,7 @@ if (obj_controller.cooldown<=0) and (loading=1){
             arti.type="recon";
             // Right here should pass the man_sel variables
             // var i;i=-1;repeat(150){i+=1;arti.man_sel[i]=obj_controller.man_sel[i];}
-            var i;i=-1;
+            var i=-1;
             repeat(150){i+=1;
                 arti.man_sel[i]=0;arti.ide[i]=0;arti.man[i]="";
                 if (obj_controller.man_sel[i]!=0){
@@ -313,7 +313,7 @@ if (obj_controller.cooldown<=0) and (loading=1){
             var i,tch,mch;i=0;tch=0;mch=0;
             repeat(300){i+=1;
                 if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1){
-                    if (obj_controller.ma_role[i]=obj_ini.role[100,16]) or ((obj_controller.ma_role[i]="Forge Master")){
+                    if (obj_controller.ma_role[i]=obj_ini.role[100][16]) or ((obj_controller.ma_role[i]="Forge Master")){
                         tch+=1;
                     }
                     if (obj_controller.ma_role[i]="Techpriest"){
@@ -476,7 +476,7 @@ if (instance_exists(obj_p_fleet)){
     targ_targ=instance_nearest(target.x+24,target.y-24,obj_p_fleet);
     // 135 buttons
     
-    if (targ_targ.owner=1) and (targ_targ.action="") and (point_distance(target.x+24,target.y-24,targ_targ.x,targ_targ.y)<=40){
+    if (targ_targ.owner  = eFACTION.Player) and (targ_targ.action="") and (point_distance(target.x+24,target.y-24,targ_targ.x,targ_targ.y)<=40){
         if (obj_controller.selecting_planet>0){
             
             if (target.p_owner[obj_controller.selecting_planet]>=7) or (target.p_owner[obj_controller.selecting_planet]=10){
