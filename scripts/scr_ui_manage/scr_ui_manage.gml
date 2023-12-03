@@ -311,7 +311,7 @@ function scr_ui_manage() {
 		        if (man[sel]=="man"){
 
 					unit = display_unit[sel];
-					if (unit.name()==""){continue;}
+					if (unit.name()=="" || unit.base_group=="none"){continue;}
 					var unit_location = unit.marine_location();
 		            temp1=unit.name_role();
 		            unit_specialism_option=false;
@@ -327,12 +327,10 @@ function scr_ui_manage() {
 					assignment=unit.assignment();
 					if (assignment=="garrison"){
 						temp2+= "(garrison)";
-					}
-		            if (fest_planet==0) and (fest_sid>0) and (fest_repeats>0) and (ma_lid[sel]==fest_sid){
+					}else if (fest_planet==0) and (fest_sid>0) and (fest_repeats>0) and (ma_lid[sel]==fest_sid){
 						temp2="=Event=";
 						eventing=true;
-					}
-		            if (fest_planet==1) and (fest_wid>0) and (fest_repeats>0) and (ma_wid[sel]==fest_wid) and (ma_loc[sel]==fest_star){
+					}else if (fest_planet==1) and (fest_wid>0) and (fest_repeats>0) and (ma_wid[sel]==fest_wid) and (ma_loc[sel]==fest_star){
 						temp2="=Event=";
 						eventing=true;
 					}
@@ -536,39 +534,9 @@ function scr_ui_manage() {
 		        // Squads
 		        var sqi="";
 		        draw_set_color(c_black);
+		        var squad_colours=[c_teal,c_red,c_green,c_orange,c_aqua,c_fuchsia,c_green,c_blue,c_fuchsia,c_maroon]
 		        var squad_modulo = squad[sel]%10;
-		        switch(squad_modulo){
-		        	case 1:
-		        		draw_set_color(c_red);
-		        		break;
-		        	case 2:
-		        		draw_set_color(c_green);
-		        		break;
-		        	case 3:
-		        		draw_set_color(c_orange);
-		        		break;
-		        	case 4:
-		        		draw_set_color(c_aqua);
-		        		break;
-		        	case 5:
-		        		draw_set_color(c_fuchsia);
-		        		break;
-		        	case 6:
-		        		draw_set_color(c_green);
-		        		break;
-		        	case 7:
-		        		draw_set_color(c_blue);
-		        		break;
-		        	case 8:
-		        		draw_set_color(c_fuchsia);
-		        		break;	
-		        	case 9:
-		        		draw_set_color(c_maroon);
-		        		break;
-		        	case 0:
-		        		draw_set_color(c_teal);
-		        		break;		        			        		        			        			        			        			        			        			        		
-		        }
+		        draw_set_color(squad_colours[squad_modulo])
 	        
 		        if (sel>0){
 		            if (squad[sel]==squad[sel+1]) and (squad[sel]!=squad[sel-1]){sqi="top"}
@@ -617,8 +585,7 @@ function scr_ui_manage() {
 		            draw_text_transformed(xx+27+8,yy+66,string_hash_to_newline(string(temp1)),name_xr,1,0);
 		            draw_text_transformed(xx+28+8,yy+67,string_hash_to_newline(string(temp1)),name_xr,1,0);
 		            draw_set_color(c_gray);
-		        }
-		        if (temp1=="Chapter Master "+string(obj_ini.master_name)){
+		        }else if (temp1=="Chapter Master "+string(obj_ini.master_name)){
 		            draw_text_transformed(xx+27+16+8,yy+66,string_hash_to_newline(string(temp1)),name_xr,1,0);
 		            draw_text_transformed(xx+28+16+8,yy+67,string_hash_to_newline(string(temp1)),name_xr,1,0);
 		            draw_sprite(spr_inspect_small,0,xx+27+8,yy+68);
@@ -1165,12 +1132,13 @@ function scr_ui_manage() {
 						draw_set_color(c_gray);
 						draw_set_alpha(1);				
 						draw_set_halign(fa_center);
-						draw_text_transformed(xx+bound_width[0]+((bound_width[1]-bound_width[0])/2)-6, yy+bound_height[0]+6,$"{selected_unit.squad} {obj_ini.squad_types[$ current_squad.type][$ "display_name"]}",1.5,1.5,0);
+						draw_text_transformed(xx+bound_width[0]+((bound_width[1]-bound_width[0])/2)-6, yy+bound_height[0]+6,$"{selected_unit.squad} {current_squad.display_name}",1.5,1.5,0);
 						if (current_squad.nickname!=""){
-							draw_text_transformed(xx+bound_width[0]+((bound_width[1]-bound_width[0])/2), yy+bound_height[0]+30,$"{obj_ini.squad_types[$ current_squad.type][$ "display_name"]}",1.5,1.5,0);
+							draw_text_transformed(xx+bound_width[0]+((bound_width[1]-bound_width[0])/2), yy+bound_height[0]+30,$"{current_squad.display_name}",1.5,1.5,0);
 						}
 
-						draw_set_halign(fa_left);				
+						draw_set_halign(fa_left);
+						//should be moved elsewhere for efficiency
 						var squad_leader = current_squad.determine_leader();
 						if (squad_leader != "none"){
 							var leader_text = $"Squad Leader : {obj_ini.TTRPG[squad_leader[0]][squad_leader[1]].name_role()}"
@@ -1179,30 +1147,50 @@ function scr_ui_manage() {
 						var squad_loc = current_squad.squad_loci();
 						draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+75, $"squad life members : {current_squad.life_members}",1,1,0);
 						draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+100, $"squad location : {squad_loc.text}",1,1,0);
+						var send_on_mission=false, mission_type;
 						if (current_squad.assignment == "none"){
+							var button_row_offset = 0;
 							draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+125, $"squad has no current assigments",1,1,0);
 							tooltip_text="Guard Duty";
-							if (squad_loc.same_system){
+							if (squad_loc.same_system) and (squad_loc.system!="Warp"){
+								button_row_offset+=string_width(tooltip_text)+6;
 								draw_unit_buttons([xx+bound_width[0]+5, yy+bound_height[0]+150], tooltip_text,[1,1],c_red);
 								if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text), yy+bound_height[0]+150+string_height(tooltip_text))){
-									tooltip_text = "having squads assigned to Guard Duty will increase relations with a planet over time, it will also bolster planet defence forces in case of attack, and reduce corruption growth"
-									tooltip_draw(xx+bound_width[0]+5,yy+bound_height[0]+150+string_height(tooltip_text), tooltip_text,0,0,100,17);
+									tooltip_text = "having squads assigned to Guard Duty will increase relations with a planet over time, it will also bolster planet defence forces in case of attack, and reduce corruption growth";
+									tooltip_draw(xx+bound_width[0]+5,yy+bound_height[0]+150+string_height(tooltip_text), tooltip_text,0,0,150,17);
 									if (mouse_check_button_pressed(mb_left)){
-										with (obj_star){
-											if (name == squad_loc.system){
-												obj_controller.cooldown=8000;
-												var unload_squad=instance_create(x,y,obj_star_select);
-												unload_squad.target=self;
-												unload_squad.loading=1;
-												unload_squad.loading_name=name;
-												//unload_squad.loading_name=name;
-												unload_squad.depth=-10000;
-												scr_company_load(name);
-												break;
-											}
+										send_on_mission=true;
+										mission_type="garrison";
+									}
+								}
+								if (array_contains(current_squad.class, "scout")){
+									tooltip_text="Sabotage";
+									draw_unit_buttons([xx+bound_width[0]+5 + button_row_offset, yy+bound_height[0]+150], tooltip_text,[1,1],c_red);
+									if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5+ button_row_offset, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text), yy+bound_height[0]+150+string_height(tooltip_text))){
+										tooltip_text = "sabotage missions can reduce enemy growth while avoiding direct enemy contact however they are not without risk";
+										tooltip_draw(xx+bound_width[0]+5+ button_row_offset,yy+bound_height[0]+150+string_height(tooltip_text), tooltip_text,0,0,150,17);
+										if (mouse_check_button_pressed(mb_left)){
+											send_on_mission=true;
+											mission_type="sabotage";
 										}
 									}
 								}
+							}
+							if (send_on_mission){
+								with (obj_star){
+									if (name == squad_loc.system){
+										obj_controller.cooldown=8000;
+										var unload_squad=instance_create(x,y,obj_star_select);
+										unload_squad.target=self;
+										unload_squad.loading=1;
+										unload_squad.loading_name=name;
+										//unload_squad.loading_name=name;
+										unload_squad.depth=-10000;
+										unload_squad.mission=mission_type;
+										scr_company_load(name);
+										break;
+									}
+								}								
 							}
 						} else {
 							if (is_struct(current_squad.assignment)){

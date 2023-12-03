@@ -933,7 +933,7 @@ function scr_initialize_custom() {
 				["Standard Bearer" , {"max":1,"min":1,"role":"Chapter Ancient"}],//standard bearer
 				[role[100][3] , {"max":5,"min":0, "role":$"Company Command {role[100,3]}"}],		//veterans
 				[role[100][16],{"max":1,"min":0,"role":$"Company {role[100,16]}"}],
-				["display_name" , $"Command {squad_name}"]
+				["type_data" , {"display_data":$"Command {squad_name}"}]
 			],
 			"terminator_squad": [
 				[role[100][19], {"max":1,"min":1, "role":$"{role[100,19]} Terminator"}],			//Veteran sergeant terminator
@@ -954,7 +954,7 @@ function scr_initialize_custom() {
 						],
 					} 
 				}}],
-				["display_name" , $"{role[100,4]} {squad_name}"]
+				["type_data" , {"display_data":$"{role[100,4]} {squad_name}"}]
 			],
 			"veteran_squad": [
 				[role[100][3], {"max":9,"min":4, "loadout":{//tactical marine
@@ -978,7 +978,7 @@ function scr_initialize_custom() {
 				}}],		//veterans
 
 				[role[100][19], {"max":1,"min":1}],
-				["display_name" , $"{role[100,3]} {squad_name}"]
+				["type_data" , {"display_data":$"{role[100,3]} {squad_name}"}]
 			],
 			"devestator_squad": [
 				[role[100][9], {"max":9,"min":4,"loadout":{//devestator
@@ -988,7 +988,7 @@ function scr_initialize_custom() {
 					}}}],		//veterans
 
 				[role[100][18], {"max":1,"min":1, "role":$"{role[100,9]} {role[100,18]}"}],//sergeant
-				["display_name" , $"{role[100,9]} {squad_name}"]
+				["type_data" , {"display_data":$"{role[100,9]} {squad_name}"}]
 			],				
 			"tactical_squad":[
 				[role[100][8], {"max":9,"min":4, "loadout":{//tactical marine
@@ -1011,7 +1011,7 @@ function scr_initialize_custom() {
 				}}],		//tactical marine
 
 				[role[100][18], {"max":1,"min":1, "role":$"{role[100,8]} {role[100,18]}"}],		// sergeant
-				["display_name" , $"{role[100,8]} {squad_name}"]
+				["type_data" , {"display_data":$"{role[100,8]} {squad_name}"}]
 			],
 			"assault_squad" : [
 				[role[100][10] , {
@@ -1034,7 +1034,7 @@ function scr_initialize_custom() {
 				}
 			],
 			[role[100][18], {"max":1,"min":1, "role":$"Assualt {role[100][18]}"}],		// sergeant
-			["display_name" , $"{role[100][10]} {squad_name}"]
+			["type_data" , {"display_data":$"{role[100][10]} {squad_name}"}]
 		],
 	    "scout_squad":[
 	        [
@@ -1073,7 +1073,7 @@ function scr_initialize_custom() {
 	           	 	"role":$"{role[100,12]} {role[100,18]}",
 	            }   
 	        ],
-	        ["display_name" , $"{role[100,12]} {squad_name}"]
+	        ["type_data" , {"display_data":$"{role[100,12]} {squad_name}","class" : ["scout"]}],
 	    ],
 	    "scout_sniper_squad":[
 	        [
@@ -1114,7 +1114,7 @@ function scr_initialize_custom() {
 		        	"role":$"{role[100][12]} {role[100][18]}",
 		        }
 	        ],
-	        ["display_name" , $"{role[100][12]} Sniper {squad_name}"]
+	       ["type_data" , {"display_data":$"{role[100][12]} Sniper {squad_name}","class" : ["scout"]}],
 	    ]	    			
 	};
 	if (global.chapter_name=="Salamanders") or (obj_ini.progenitor==8){ //salamanders squads
@@ -1149,7 +1149,7 @@ function scr_initialize_custom() {
 			       },
 			       "role":$"{role[100,10]} {role[100,18]}"
 			  	}],
-			      ["display_name" , $"{role[100,10]} {squad_name}"]
+			      ["type_data" , {"display_data":$"{role[100,10]} {squad_name}"}]
 			      ]
 			      )
 	}
@@ -1192,7 +1192,7 @@ function scr_initialize_custom() {
 			"role":$"{role[100,8]} Bike {role[100,18]}"
 		},
 	],
-	["display_name" , $"{role[100,8]} Bike {squad_name}"]
+	["type_data" , {"display_data":$"{role[100,8]} Bike {squad_name}"}]
 	])
 	variable_struct_set(st , "tactical_squad",[
                 [role[100][8], {"max":9,"min":4, "loadout":{//tactical marine
@@ -1213,7 +1213,7 @@ function scr_initialize_custom() {
                 }}],   
 
                 [role[100][18], {"max":1,"min":1, "role":$"{role[100][8]} {role[100][18]}"}],        // sergeant
-                ["display_name" , $"{role[100,8]} {squad_name}"]
+               ["type_data" , {"display_data":$"{role[100,8]} {squad_name}"}]
             ])
 	}
 
