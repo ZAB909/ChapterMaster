@@ -48,6 +48,17 @@ function garrison_force(planet_operatives)constructor{
 		}
 	};
 
+	static exp_rewards =  function(){
+		var mem;
+		var unit;
+		for (var s=0;s<array_length(garrison_squads);s++){
+			squad = garrison_squads[s];
+			for (mem=0; mem<array_length(squad.members);mem++){
+				unit = obj_ini.TTRPG[squad.members[mem][0]][squad.members[mem][1]];
+			}
+		}
+	}
+
 	/* this is probably going to become infinatly complex with many different functions and far more complex inputs
 	but for now i'm just trying to set up a concept with some simple examples*/
 	static determine_battle = function(attack_defend, win, margin, enemy, location, planet=0, ship=0){

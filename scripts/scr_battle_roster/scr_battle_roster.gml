@@ -262,7 +262,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
 
                     targ = instance_nearest(col * 10, 240, obj_pnunit);
                     targ.men += 1;
-                    targ.unit_struct = unit;
+                    targ.unit_struct[targ.men] = unit;
                     targ.marine_co[targ.men] = company;
                     targ.marine_id[targ.men] = v;
                     targ.marine_type[targ.men] = _u_role;
@@ -271,7 +271,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                     targ.marine_armour[targ.men] = deploying_unit.armour[cooh, va];
                     targ.marine_gear[targ.men] = deploying_unit.gear[cooh, va];
                     targ.marine_mobi[targ.men] = deploying_unit.mobi[cooh, va];
-                    targ.marine_hp[targ.men] = deploying_unit.hp[cooh, va];
+                    targ.marine_hp[targ.men] = unit.hp();
                     targ.marine_exp[targ.men] = deploying_unit.experience[cooh, va];
                     targ.marine_powers[targ.men] = deploying_unit.spe[cooh, va];
                     targ.marine_ranged[targ.men] = unit.ranged_attack();

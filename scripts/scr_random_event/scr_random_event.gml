@@ -312,9 +312,9 @@ function scr_random_event(execute_now) {
 		}
 		var marine=marine_and_company[1];
 		var company=marine_and_company[0];
-		
-		var role=obj_ini.role[company][marine];
-		var text = string(role)+" "+string(obj_ini.name[company][marine]);
+		var unit = obj_ini.TTRPG[company][marine];
+		var role=unit.role();
+		var text = unit.name_role();
 		var company_text = scr_convert_company_to_string(company);
 		//var company_text = scr_company_string(company);
 		if(company_text != ""){
@@ -324,10 +324,10 @@ function scr_random_event(execute_now) {
 		text += " has distinguished himself.##He is up for review to be promoted.";
 		
 		if (company != 10){
-			obj_ini.experience[company][marine] += 10;
+			unit.add_exp(10);
 		}
 		else {
-			obj_ini.experience[company][marine] = max(20, obj_ini.experience[company][marine]+10);
+			unit.add_exp(max(20, unit.experience()));
 		}
 		
 		scr_popup("Promotions!",text,"distinguished","");
@@ -343,8 +343,9 @@ function scr_random_event(execute_now) {
 		var marine = marine_and_company[1];
 		var company = marine_and_company[0];
 		var text="";
-		var role=obj_ini.role[company][marine];
-	    text = role +" "+ string(obj_ini.name[company][marine]);
+		var unit = obj_ini.TTRPG[company][marine];
+		var role= unit.role();
+	    text = unit.name_role();
 	    text+=" is taken by a strange mood and starts building!";  
 
         
@@ -370,7 +371,7 @@ function scr_random_event(execute_now) {
         
 	    if (craft_roll<=50){
 			crafted_object=choose("Icon","Icon","Statue");
-			obj_ini.experience[company][marine]+=choose(1,2);
+			unit.add_exp(choose(5,10));
 		}
 	    else if ((craft_roll>50) && (craft_roll<=60)) {
 			crafted_object=choose("Bike","Rhino");

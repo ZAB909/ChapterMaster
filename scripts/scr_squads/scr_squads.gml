@@ -501,6 +501,28 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 	}
 
 	static set_location = function(loc, lid, wid){
+		set_member_loc = function(loc_data){
+			var loc=loc_data.loc;
+			var lid=loc_data.lid;
+			var wid=loc_data.wid;
+			var system = loc_data.system
+			var member_location=unit.marine_location();
+			if (wid>0 && loc==member_location[2]){
+				if (member_location[0]==location_types.ship){
+					unit.unload(wid, system)
+				} else if(member_location[0]==location_types.planet && member_location[1] != wid && member_location[2]==loc){
+					unit.get_unit_size();
+					system.p_player[member_location[1]]-=unit.size;
+					system.p_player[wid]+=unit.size;
+					unit.set_planet(wid);
+				}
+			} else {
+				if (wid == 0 && lid>0){
+					unit.load_marine(lid);
+				}
+			}
+			return loc_data;
+		}
 		var member_length = array_length(members);
 		var member_location;
 		var system = "none";
@@ -511,31 +533,29 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 			}
 		}
 		if 	(system == "none") then return "invalid system";
+		member_loop(set_member_loc,{loc:loc, lid:lid, wid:wid,system:system})		
+	}
+
+	static member_loop = function(member_func, data_pack){
+		member_length = array_length(members);
 		for (var i=0;i<member_length;i++){
-			unit = obj_ini.TTRPG[members[i][0]][members[i][1]]
+			unit = obj_ini.TTRPG[members[i][0]][members[i][1]];
 			if (unit.name() == ""){
 				array_delete(members, i, 1);
 				member_length--;
 				i--;
 				continue;
 			} else {
-				member_location=unit.marine_location();
-				if (wid>0 && loc==member_location[2]){
-					if (member_location[0]==location_types.ship){
-						unit.unload(wid, system)
-					} else if(member_location[0]==location_types.planet && member_location[1] != wid && member_location[2]==loc){
-						unit.get_unit_size();
-						system.p_player[member_location[1]]-=unit.size;
-						system.p_player[wid]+=unit.size;
-						unit.set_planet(wid);
-					}
-				} else {
-					if (wid == 0 && lid>0){
-						unit.load_marine(lid);
+				data_pack=member_func(data_pack);
+				if (struct_exists(data_pack ,"action")){
+					if (data_pack.action=="break"){
+						break;
 					}
 				}
 			}
-		}	
+		}
+		return data_pack;
+
 	}
 }
 

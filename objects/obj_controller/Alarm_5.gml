@@ -183,22 +183,7 @@ with(obj_star){
 
 var training_points_values = [ 0, 0.8, 0.9, 1, 1.5, 2, 4 ]
 apothecary_points += training_points_values[training_apothecary]
-/*
-if (training_apothecary!=0){
-    if (training_apothecary==1){
-        apothecary_points+=0.8
-    }else if (training_apothecary==2){
-        apothecary_points+=0.9
-    } else if(training_apothecary==3){
-        apothecary_points+=1
-    }else if(training_apothecary==4){
-        apothecary_points+=1.5
-    }else if(training_apothecary==5){
-        apothecary_points+=2
-    }else if(training_apothecary==6){
-        apothecary_points+=4
-    }
-}
+
 novice_type = string("{0} Aspirant",obj_ini.role[100][15])
 if (training_apothecary>0) then recruit_count=scr_role_count(novice_type,"");
 if (apothecary_points>=4) and (apothecary_aspirant!=0) and (recruit_count=0){
@@ -316,25 +301,9 @@ if (apothecary_points>=4) and (apothecary_aspirant==0){
 // * Chaplain training *
 // TODO add functionality for Space Wolves and Iron Hands
 if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands"){
-	
-	chaplain_points += training_points_values[training_chaplain]
-	/*
-    if (training_chaplain!=0){
-        if (training_chaplain==1){
-            chaplain_points+=0.8
-        }else if (training_chaplain==2){
-            chaplain_points+=0.9
-        }else if (training_chaplain==3){
-            chaplain_points+=1
-        }else if (training_chaplain==4){
-            chaplain_points+=1.5
-        }else if (training_chaplain==5){
-            chaplain_points+=2
-        }else if (training_chaplain==6){
-            chaplain_points+=4
-        }
-    }
-    novice_type = string("{0} Aspirant",obj_ini.role[100][14])
+	chaplain_points += training_points_values[training_chaplain];
+
+    novice_type = string("{0} Aspirant",obj_ini.role[100][14]);
     if (training_chaplain>0) then recruit_count=scr_role_count(novice_type,"");
     if (chaplain_points>=4) and (chaplain_aspirant!=0) and (recruit_count==0){
         chaplain_points=0;
@@ -446,24 +415,8 @@ if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands")
 recruit_count=0;
 // * Psycher Training *
 
-psyker_points += training_points_values[training_psyker]
-/*
-if (training_psyker!=0){
-    if (training_psyker==1){
-        psyker_points+=0.8
-    }else if (training_psyker==2){
-        psyker_points+=0.9
-    }else if (training_psyker==3){
-        psyker_points+=1
-    }else if (training_psyker==4){
-        psyker_points+=1.5
-    }else if (training_psyker==5){
-        psyker_points+=2
-    }else if (training_psyker==6){
-        psyker_points+=4
-    }
-}
-*/
+psyker_points += training_points_values[training_psyker];
+
 var goal=48,yep=0;
 novice_type = string("{0} Aspirant",obj_ini.role[100,17]);
 for(var o=1; o<=4; o++){
@@ -541,24 +494,7 @@ if (psyker_points>=round(goal/2)) and (psyker_aspirant==0){
 recruit_count=0;
 
 
-tech_points += training_points_values[training_techmarine]
-/*
-// * Tech Marine *
-if (training_techmarine!=0){
-    if (training_techmarine==1){
-        tech_points+=0.8
-    }else if (training_techmarine==2){
-        tech_points+=0.9
-    }else if (training_techmarine==3){
-        tech_points+=1
-    }else if (training_techmarine==4){
-        tech_points+=1.5
-    }else if (training_techmarine==5){
-        tech_points+=2
-    }else if (training_techmarine==6){
-        tech_points+=4
-    }
-}
+tech_points += training_points_values[training_techmarine];
 
 if (training_techmarine>0) then recruit_count=scr_role_count(string("{0} Aspirant",obj_ini.role[100][16]),"");
 if (tech_points>=4) and (tech_aspirant!=0) and (recruit_count==0){
@@ -571,10 +507,11 @@ if (tech_points>=360){
         random_marine=scr_random_marine(string("{0} Aspirant",obj_ini.role[100][16]),0);
         if (random_marine != "none"){
             marine_position = random_marine[1];
+            unit = obj_ini.TTRPG[0,marine_position];
             tech_points-=360;
             tech_aspirant=0;
-            obj_ini.role[0,marine_position]=obj_ini.role[100][16];
-            obj_ini.experience[0,marine_position]+=10;
+            unit.update_role(obj_ini.role[100][16]);
+            unit.add_exp(30);
             
             eq1=1;
             eq2=1;
@@ -608,8 +545,8 @@ if (tech_points>=360){
                 if (obj_ini.gear[0,marine_position]!="") then scr_add_item(obj_ini.gear[0,marine_position],1);
                 obj_ini.gear[0,marine_position]="Servo Arms";
             }
-            obj_ini.TTRPG[0,marine_position].religion="cult_mechanicus";
-            obj_ini.TTRPG[0,marine_position].add_trait("mars_trained");
+            unit.religion="cult_mechanicus";
+            unit.add_trait("mars_trained");
             scr_alert("green","recruitment",string(obj_ini.name[0,marine_position])+" returns from Mars, a "+string(obj_ini.role[100][16])+".",0,0);
             
             if (eq1+eq2!=2){

@@ -56,7 +56,7 @@ if (boarding=true) and (!instance_exists(target)){
         if (obj_controller.command_set[24]=1) or (!instance_exists(obj_en_ship)) then action="return";
     }
 }
-
+var unit;
 if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (instance_exists(origin)){
     board_cooldown-=1;
 
@@ -65,30 +65,36 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
         o=firstest-1;difficulty=50;challenge=0;roll1=0;roll2=0;attack=0;arp=0;wep="";hits=0;hurt=0;damaged_ship=0;
         co=0;i=0;ac=0;dr=1;
         
-        repeat(boarders){o+=1;
+        repeat(boarders){
+            o+=1;
             if (!instance_exists(target)) then exit;
             
             // show_message(origin);
             // show_message(string(origin.board_co[1]));
         
-            co=origin.board_co[o];i=origin.board_id[o];difficulty=50;ac=0;dr=1;
-            if (obj_ini.hp[co][i]>0){
+            co=origin.board_co[o];
+            i=origin.board_id[o];
+            difficulty=50;
+            ac=0;
+            dr=1;
+            unit=obj_ini.TTRPG[co][i]
+            if (unit.hp()>0){
                 
                 // Bonuses
-                difficulty+=obj_ini.experience[co][i]/20;
+                difficulty+=unit.experience()/20;
                 difficulty+=(1-(target.hp/target.maxhp))*33;
-                if (obj_ini.wep1[co][i]="Chainfist") or (obj_ini.wep1[co][i]="Lascutter") then difficulty+=3;
-                if (obj_ini.wep2[co][i]="Chainfist") or (obj_ini.wep2[co][i]="Lascutter") then difficulty+=3;
-                if (obj_ini.wep1[co][i]="Meltagun") or (obj_ini.wep2[co][i]="Meltagun") then difficulty+=2;
-                var g,yea;
-                g=0;yea=false;repeat(4){g+=1;if (obj_ini.adv[g]="Boarders") then yea=true;}if (yea=true) then difficulty+=7;
-                g=0;yea=false;repeat(4){g+=1;if (obj_ini.adv[g]="Melee Enthusiasts") then yea=true;}if (yea=true) then difficulty+=3;
-                g=0;yea=false;repeat(4){g+=1;if (obj_ini.adv[g]="Lightning Warriors") then yea=true;}if (yea=true) then difficulty+=3;
-                
+                if (array_contains(["Chainfist","Meltagun","Lascutter"], unit.weapon_one)) then difficulty+=3;
+                if (array_contains(["Chainfist","Meltagun","Lascutter"], unit.weapon_two)) then difficulty+=3;
+
+                if (array_contains(obj_ini.adv, "Boarders")) then  difficulty+=7;
+                if (array_contains(obj_ini.adv, "Melee Enthusiasts")) then  difficulty+=3;
+                if (array_contains(obj_ini.adv, "Lightning Warriors")) then  difficulty+=3;
+
                 // Penalties
-                if (obj_ini.wep1[co][i]="") and (obj_ini.wep2[co][i]="") then difficulty-=10;
-                if (obj_ini.wep1[co][i]="") or (obj_ini.wep2[co][i]="") then difficulty-=10;
-                if (obj_ini.occulobe=1) then difficulty-=5;
+                if (unit.weapon_one()=="")then difficulty-=10;
+                if (unit.weapon_two()=="")then difficulty-=10;
+
+                if (unit.gene_seed_mutations.occulobe==1) then difficulty-=5;
                 if (target.owner = eFACTION.Imperium) or ((target.owner = eFACTION.Chaos) and (obj_fleet.csm_exp=0)) then difficulty-=0;// Cultists/Pirates/Humans
                 if (target.owner  = eFACTION.Player) or (target.owner = eFACTION.Ecclesiarchy) or (target.owner = eFACTION.Ork) or (target.owner = eFACTION.Eldar) or (target.owner = eFACTION.Necrons) then difficulty-=10;
                 if (target.owner = eFACTION.Chaos) and (obj_fleet.csm_exp=1) then difficulty-=20;//       Veteran marines
@@ -301,11 +307,25 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
         }
         
         
-        if (experience>0){var o,co,i;o=0;co=0;i=0;
-            repeat(boarders){o+=1;var exp_roll;exp_roll=floor(random(150))+1;co=origin.board_co[o];i=origin.board_id[o];
-                if (exp_roll>=obj_ini.experience[co][i]) and (obj_ini.experience[co][i]<50) then obj_ini.experience[co][i]+=experience;
-                if (exp_roll>=obj_ini.experience[co][i]) and (obj_ini.experience[co][i]>=50) and (obj_ini.experience[co][i]<100) then obj_ini.experience[co][i]+=floor(experience/3);
-                if (exp_roll>=obj_ini.experience[co][i]) and (obj_ini.experience[co][i]>=100) and (obj_ini.experience[co][i]<150) then obj_ini.experience[co][i]+=1;
+        if (experience>0){
+            var o=0,co=0,i=0;
+            var new_exp, unit_exp, exp_roll;
+            repeat(boarders){
+                o+=1;
+                co=origin.board_co[o];
+                unit = obj_ini.TTRPG[co][o];
+                unit_exp=unit.experience()                
+                exp_roll=irandom(150+unit_exp)+1;
+                i=origin.board_id[o];
+                if (exp_roll>=unit_exp){
+                    if (unit_exp<50){new_exp=experience
+                    }else if (unit_exp>=50 && unit_exp<100){
+                        new_exp=(experience/3);
+                    }else if(unit_exp>=100){
+                        new_exp=1;
+                    }
+                    unit.add_exp(new_exp);
+                }
             }
             experience=0;
         }

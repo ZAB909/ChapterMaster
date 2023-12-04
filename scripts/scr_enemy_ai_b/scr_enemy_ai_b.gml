@@ -8,39 +8,49 @@ function scr_enemy_ai_b() {
 
 	i=0;
 	for (i=1;i<5;i++){
-		garrison_force=false;
 		if (i>planets){break;}
-      for (var ops=0;ops<array_length(p_operatives[i]);ops++){
-      	if(p_operatives[i][ops].type=="squad"){
-      		squad_operation = p_operatives[i][ops];
-      		if (squad_operation== "garrison"){//marine garrison on planet
-      			garrison_force=true;
-      			array_push(garrisons, obj_ini.squads[p_operatives[i][ops].reference])
-      			total_garrison += array_length(obj_ini.squads[p_operatives[i][ops].reference].members);
-      		} else if (squad_operation=="sabotage"){
-      			sabotage_force=true;
-      		}
-      	}
-      }		
-			// Orks grow in number
-	var ork_growth=floor(random(100))+1;
-	success=false;// This part handles the increasing in numbers
-    if (p_owner[i]=7) and (p_orks[i]<5) and (p_traitors[i]=0) and (p_player[i]<=0 || !garrison_force){
-        if (p_orks[i]>0) and (p_orks[i]<5) and (ork_growth<=15){
-        	p_orks[i]+=1;
-        }
-    }
-    if (p_population[i]<p_max_population[i]) and (p_type[i]!="Dead") and (p_type[i]!="Craftworld") and (p_owner[i]<=5)
-    	and (p_traitors[i]=0) and (p_tau[i]=0) and (p_orks[i]=0) and (p_necrons[i]=0) and (p_tyranids[i]=0){
-        if (p_large[i]=0){
-        	p_population[i]=round(p_population[i]*1.0008);
-      	}else if (p_large[i]=1){
-      		p_population[i]+=choose(0,0.01)
-      	}
-    }
+		sabotage_force=false;
+		garrison_force=false;
+		var planet_string = $"{string(name)} {scr_roman_numerals()[i-1]}";
+	    for (var ops=0;ops<array_length(p_operatives[i]);ops++){
+	      	if(p_operatives[i][ops].type=="squad"){
+	      		squad_operation = p_operatives[i][ops];
+	      		if (squad_operation== "garrison"){//marine garrison on planet
+	      			garrison_force=true;
+	      			array_push(garrisons, obj_ini.squads[p_operatives[i][ops].reference])
+	      			total_garrison += array_length(obj_ini.squads[p_operatives[i][ops].reference].members);
+	      		} else if (squad_operation=="sabotage"){
+	      			sabotage_force=true;
+	      		}
+	      	}
+	      }		
+				// Orks grow in number
+		var ork_growth=floor(random(100))+1;
+		success=false;// This part handles the increasing in numbers
+	    if (p_owner[i]=7) and (p_orks[i]<5) and (p_traitors[i]=0) and (p_player[i]<=0 || !garrison_force){
+	        if (p_orks[i]>0) and (p_orks[i]<5) and (ork_growth<=15){
+	        	if(sabotage_force){
+	        		if (irandom(3)<2){
+	        			 scr_event_log("green", $"sabotage force on {planet_string} disrupts ork forces");
+	        		}else {
+	        			p_orks[i]+=1;
+	        		}
+	        	} else {
+	        		p_orks[i]+=1;
+	        	}
+	        }
+	    }
+	    if (p_population[i]<p_max_population[i]) and (p_type[i]!="Dead") and (p_type[i]!="Craftworld") and (p_owner[i]<=5)
+	    	and (p_traitors[i]=0) and (p_tau[i]=0) and (p_orks[i]=0) and (p_necrons[i]=0) and (p_tyranids[i]=0){
+	        if (p_large[i]=0){
+	        	p_population[i]=round(p_population[i]*1.0008);
+	      	}else if (p_large[i]=1){
+	      		p_population[i]+=choose(0,0.01);
+	      	}
+	    }
     
 
-    // increasing necrons
+    	// increasing necrons
 	    if (array_length(p_feature[i])!=0){
 	    	var has_awake_tomb=false,nfleet=0;
 	        if (awake_tomb_world(p_feature[i])==1) then has_awake_tomb=true;
@@ -51,7 +61,10 @@ function scr_enemy_ai_b() {
 	        		p_necrons[i]+=1;
 	        	}
 	        }
-	        if (sabotage_force) then p_necrons[i]--;
+	        if (sabotage_force && irandom(2)<2){
+	        	p_necrons[i]--;
+	        	scr_event_log("green", $"sabotage force on {planet_string} disrupts necron forces");
+	        }
         
 	        if (has_awake_tomb){// Necron fleets, woooo
 	        		//necrons kill populatin
@@ -62,32 +75,32 @@ function scr_enemy_ai_b() {
             
 	            var fleet_spawn_chance=irandom(99)+1
 	            onceh=0;
-	            if (array_contains(obj_ini.dis[1],"Shitty Luck")) then fleet_spawn_chance-=5;
+	            if (array_contains(obj_ini.dis,"Shitty Luck")) then fleet_spawn_chance-=5;
 
 	            if (fleet_spawn_chance<=15){
-	                if (present_fleet[13] > 0) {//if necron fleet
-									    necron_fleet = instance_nearest(x + 32, y + 32, obj_en_fleet);
+	                if (present_fleet[eFACTION.Necrons] > 0) {//if necron fleet
+						    necron_fleet = instance_nearest(x + 32, y + 32, obj_en_fleet);
 
-									    if (necron_fleet.owner == 13) {
-									        if (necron_fleet.escort_number < necron_fleet.capital_number * 1.5) {
-									            necron_fleet.escort_number += 2;
-									        } else if (necron_fleet.frigate_number < necron_fleet.capital_number * 3) {
-									            necron_fleet.frigate_number += 1;
-									        } else {
-									            necron_fleet.capital_number += 1;
-									        }
-									    }
-									}else if (present_fleet[13]==0){
+						    if (necron_fleet.owner == eFACTION.Necrons) {
+						        if (necron_fleet.escort_number < necron_fleet.capital_number * 1.5) {
+						            necron_fleet.escort_number += 2;
+						        } else if (necron_fleet.frigate_number < necron_fleet.capital_number * 3) {
+						            necron_fleet.frigate_number += 1;
+						        } else {
+						            necron_fleet.capital_number += 1;
+						        }
+						    }
+						}else if (present_fleet[eFACTION.Necrons]==0){
 	                    necron_fleet=instance_create(x+32,y+32,obj_en_fleet);
-	                    necron_fleet.owner=13;
+	                    necron_fleet.owner=eFACTION.Necrons;
 	                    necron_fleet.capital_number=1;
 	                    necron_fleet.sprite_index=spr_fleet_necron;necron_fleet.image_speed=0;
 	                    necron_fleet.image_index=1;
-	                    present_fleet[13]+=1;
+	                    present_fleet[eFACTION.Necrons]+=1;
 	                }
                 	var enemy_fleets = 0;
 	                with(necron_fleet){
-	                    if (owner=13){
+	                    if (owner=eFACTION.Necrons){
 	                        var ii=0;
 	                        ii+=capital_number;
 	                        ii+=round((frigate_number/2));
@@ -104,14 +117,14 @@ function scr_enemy_ai_b() {
 	                if (enemy_fleets>0){
 	                    var necron_fleet2;
 	                    necron_fleet2=instance_create(x+32,y+32,obj_en_fleet);
-	                    necron_fleet2.owner=13;
+	                    necron_fleet2.owner=eFACTION.Necrons;
 	                    necron_fleet2.sprite_index=spr_fleet_necron;
 	                    // necron_fleet2.image_index=0;
 	                    necron_fleet.image_speed=0;
 	                    necron_fleet2.capital_number=1;
 	                    necron_fleet2.frigate_number=round(necron_fleet.frigate_number/2);
 	                    necron_fleet2.escort_number=round(necron_fleet.escort_number/2);
-	                    present_fleet[13]+=1;
+	                    present_fleet[eFACTION.Necrons]+=1;
                     
 	                    necron_fleet.capital_number-=1;
 	                    necron_fleet.frigate_number-=necron_fleet2.frigate_number;
@@ -119,7 +132,7 @@ function scr_enemy_ai_b() {
                     	var nearest_planet_coords = [0,0]
                     	var found_near_planet = false;
 	                    with(obj_star){
-                        if (present_fleet[13]=0){
+                        if (present_fleet[eFACTION.Necrons]=0){
                         	if (!array_contains(p_type,"Dead")){
                         		for (var plan=1; plan<=planets;plan++){
                         			if (p_owner[plan]<=5){
@@ -195,7 +208,6 @@ function scr_enemy_ai_b() {
 	        }
 
 	        var tixt = "";
-	        var planet_string = $"{string(name)} {scr_roman_numerals()[i-1]}";
 
 	        // controls losing pdf due to heretic cults
 	        var traitor_mod = 0;
@@ -270,11 +282,11 @@ function scr_enemy_ai_b() {
 	            p_owner[i] = 10;
 	            array_push(p_feature[i], new new_planet_feature(P_features.Daemonic_Incursion));
 
-	            if (p_heresy[i] >= 80) then
-	                p_heresy[i] = 95;
-
-	            if (p_heresy[i] < 80) then
-	                p_heresy[i] = 80;
+	            if (p_heresy[i] >= 80){
+	            	p_heresy[i] = 95;
+	            }else if (p_heresy[i] < 80) {
+	            	p_heresy[i] = 80;
+	            }
 
 	            tixt = "Daemonic incursion on " + string(name) + " " + string(i) + "!";
 	        } // Oh god what
@@ -315,14 +327,9 @@ function scr_enemy_ai_b() {
 	    // if (p_heresy[i]>0) and (owner != eFACTION.Chaos) then p_heresy[i]-=2;
 	}
 
-
-
-
-
-
 	// Tau rebellions
 	if (present_fleet[8]>=1) and (owner != eFACTION.Tau){
-	    var flit, ran1, ran2, ran3;
+	    var flit, ran1, ran2, tau_chance;
 	    flit=instance_nearest(x-24,y-24,obj_en_fleet);
 	    ran1=0;ran2=floor(random(planets))+1;
     
@@ -332,36 +339,35 @@ function scr_enemy_ai_b() {
         
 	        if (flit.image_index=1) and (ran1<=90){
 	            if (p_type[ran2]!="Dead") and (p_influence[ran2]<90) then p_influence[ran2]+=choose(2,3);
-	            if (p_type[ran2]="Forge") and (p_influence[ran2]>=3) then p_influence[ran2]-=3;
+	            if (p_type[ran2]=="Forge") and (p_influence[ran2]>=3) then p_influence[ran2]-=3;
 	        }
 	        if (flit.image_index>1) and (flit.image_index<4) and (ran1<=90){
 	            if (p_type[ran2]!="Dead") and (p_influence[ran2]<90) then p_influence[ran2]+=choose(7,9,11,13);
-	            if (p_type[ran2]="Forge") and (p_influence[ran2]>=10) then p_influence[ran2]-=10;
+	            if (p_type[ran2]=="Forge") and (p_influence[ran2]>=10) then p_influence[ran2]-=10;
 	        }
 	        if (flit.image_index>=4){
 	            if (p_type[ran2]!="Dead") and (p_influence[ran2]<90) then p_influence[ran2]+=choose(9,11,13,15,17);
-	            if (p_type[ran2]="Forge") and (p_influence[ran2]>=13) then p_influence[ran2]-=13;
+	            if (p_type[ran2]=="Forge") and (p_influence[ran2]>=13) then p_influence[ran2]-=13;
 	        }
 	        if (p_type[ran2]="Lava") and (p_influence[ran2]<90) then p_influence[ran2]+=10;
 	    }
     
     
-	    var i;i=0;
-	    repeat(4){i+=1;
-	        ran3=floor(random(100))+1;
+		for (i=1;i<5;i++){
+			if (i>planets){break;}
+	        tau_chance=floor(random(100))+1;
         
 	        if (i<=planets) and (p_influence[i]>=70) and (p_owner[i]!=8) and (p_owner[i]!=10) and (p_owner[i]!=7) and (p_owner[i]!=9) and (p_type[i]!="Space Hulk"){
-	            if (p_owner[1]=8) then ran3+=5;
-				if (p_owner[2]=8) then ran3+=5;
-				if (p_owner[3]=8) then ran3+=5;
-				if (p_owner[4]=8) then ran3+=5;
+	        	for (var s=1;s<=planets){
+	        		 if (p_owner[s]=8) then tau_chance+=5;
+	        	}
 				
-	            if (flit.owner = eFACTION.Tau){ran3+=(flit.image_index*5)-5;}
+	            if (flit.owner = eFACTION.Tau){tau_chance+=(flit.image_index*5)-5;}
             
             
-	            if (ran3>=95){/*obj_controller.x=self.x;obj_controller.y=self.y;show_message(string(ran3)+" |"+string(p_orks[i])+"|"+string(p_traitors[i]));*/}
+	            if (tau_chance>=95){/*obj_controller.x=self.x;obj_controller.y=self.y;show_message(string(tau_chance)+" |"+string(p_orks[i])+"|"+string(p_traitors[i]));*/}
             
-	            if (ran3>=95) and (p_orks[i]=0) and (p_traitors[i]=0) and (p_necrons[i]=0) and (p_demons[i]=0) and (p_chaos[i]=0){
+	            if (tau_chance>=95) and (p_orks[i]=0) and (p_traitors[i]=0) and (p_necrons[i]=0) and (p_demons[i]=0) and (p_chaos[i]=0){
 	                p_owner[i]=8;
 	                if (p_guardsmen[i]>0){
 	                	p_pdf[i]+=p_guardsmen[i];
@@ -371,13 +377,15 @@ function scr_enemy_ai_b() {
 	                var targ=0,have=0,badd=1;
                 
 	                targ=planets;
-	                if (p_type[1]="Dead") then targ-=1;if (p_type[2]="Dead") then targ-=1;if (p_type[3]="Dead") then targ-=1;if (p_type[4]="Dead") then targ-=1;
-	                if (p_owner[1]=8) then have+=1;if (p_owner[2]=8) then have+=1;if (p_owner[3]=8) then have+=1;if (p_owner[4]=8) then have+=1;
+	                for (var s=1;s<=planets){
+	                	if (p_type[s]="Dead") then targ-=1;
+	                	if (p_owner[s]=8) then have+=1;
+	                }
                 
 	                if (have=targ) then badd=2;
                 
 	                if (badd=1){ 
-						scr_alert("red","owner","Planet "+string(name)+" "+string(i)+" has succeeded to the Tau Empire!",x,y);
+						scr_alert("red","owner","Planet "+planet_string+" has succeeded to the Tau Empire!",x,y);
 						if (visited==1) {  //visited variable checks whether the star has been visited by the chapter or not 1 for true 0 for false
 							if(p_type[i]=="Forge") { 
 								dispo[i]-=10; // 10 disposition decreases for the respective planet
@@ -399,17 +407,12 @@ function scr_enemy_ai_b() {
 	                if (p_guardsmen[i]!=0) then p_guardsmen[i]=round(p_guardsmen[i]*0.75);
 	            }
 	        }
-        
-    
-    
+		    if (p_owner[i]=8) and (p_influence[i]<80){
+		    	if ((p_type[i]!="Forge") and (p_type[i]!="Shrine")){p_influence[i]+=2;}
+		    	else if ((p_type[i]="Forge") or (p_type[i]="Shrine")) then p_influence[i]+=choose(0,1);
+		    }        
 	    }// End repeat
        
-	}
-
-	i=0;
-	repeat(4){i+=1;
-	    if (p_owner[i]=8) and (p_influence[i]<80) and ((p_type[i]!="Forge") and (p_type[i]!="Shrine")) then p_influence[i]+=2;
-	    if (p_owner[i]=8) and (p_influence[i]<80) and ((p_type[i]="Forge") or (p_type[i]="Shrine")) then p_influence[i]+=choose(0,1);
 	}
 
 

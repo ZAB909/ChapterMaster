@@ -22,7 +22,7 @@ highlight3="";
 
 var i;i=-1;
 repeat(1500){i+=1;
-	unit_struct = {};
+	unit_struct[i] = {};
     marine_type[i]="";
     marine_co[i]=0;
     marine_id[i]=0;

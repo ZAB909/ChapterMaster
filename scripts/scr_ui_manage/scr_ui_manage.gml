@@ -1166,7 +1166,7 @@ function scr_ui_manage() {
 								if (array_contains(current_squad.class, "scout")){
 									tooltip_text="Sabotage";
 									draw_unit_buttons([xx+bound_width[0]+5 + button_row_offset, yy+bound_height[0]+150], tooltip_text,[1,1],c_red);
-									if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5+ button_row_offset, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text), yy+bound_height[0]+150+string_height(tooltip_text))){
+									if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5+ button_row_offset, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text)+ button_row_offset, yy+bound_height[0]+150+string_height(tooltip_text))){
 										tooltip_text = "sabotage missions can reduce enemy growth while avoiding direct enemy contact however they are not without risk";
 										tooltip_draw(xx+bound_width[0]+5+ button_row_offset,yy+bound_height[0]+150+string_height(tooltip_text), tooltip_text,0,0,150,17);
 										if (mouse_check_button_pressed(mb_left)){

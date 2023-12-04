@@ -577,10 +577,36 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	company = comp;			//marine company
 	marine_number = mar;			//marine number in company
 	squad = "none";
+	stat_point_exp_marker = 0;
 	static bionics = function(){return obj_ini.bio[company][marine_number];}// get marine bionics count	
-	static experience =  function(){return obj_ini.experience[company][marine_number];}//get exp
+	static experience =  function(){
+		return obj_ini.experience[company][marine_number];
+	}//get exp
+	turn_stat_gains = {};
 	static update_exp = function(new_val){obj_ini.experience[company][marine_number] = new_val}//change exp
-	static add_exp = function(add_val){obj_ini.experience[company][marine_number] += add_val}
+	static add_exp = function(add_val){
+		var instace_stat_point_gains = {};
+		stat_point_exp_marker += add_val;
+		obj_ini.experience[company][marine_number] += add_val;
+		if (base_group == "astartes"){
+			while (stat_point_exp_marker>=15){
+				var stat_gains = choose("weapon_skill", "ballistic_skill", "wisdom");
+				self[$ stat_gains]++;
+				stat_point_exp_marker-=15;
+				if (struct_exists(instace_stat_point_gains, stat_gains)){
+					instace_stat_point_gains[$ stat_gains]++;
+				} else {
+					instace_stat_point_gains[$ stat_gains]=1;
+				}
+				if (struct_exists(turn_stat_gains, stat_gains)){
+					turn_stat_gains[$ stat_gains]++;
+				} else {
+					turn_stat_gains[$ stat_gains]=1;
+				}
+			}
+		}
+		return instace_stat_point_gains;
+	}
 	static armour = function(){ 
 		return obj_ini.armour[company][marine_number];
 	};
@@ -685,9 +711,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
   	if (from_armoury) and (new_armour!=""){
 	   	scr_add_item(new_armour,-1);
 	  }
-		if (change_armour != "") and (to_armoury){
-			scr_add_item(change_armour,1);
-		}
+	if (change_armour != "") and (to_armoury){
+		scr_add_item(change_armour,1);
+	}
     obj_ini.armour[company][marine_number] = new_armour;
 		get_unit_size(); //every time armour is changed see if the marines size has changed
 	};	
@@ -750,6 +776,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				}
 			}
 	};
+
+	static has_trait = function(wanted_trait){
+		return array_contains(traits, wanted_trait);
+	}
 
 	static add_feat = function(feat){
 		feat_data = {};
