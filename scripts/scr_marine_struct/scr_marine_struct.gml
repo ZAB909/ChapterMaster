@@ -614,6 +614,21 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		return obj_ini.role[company][marine_number];
 	};
 	static update_role = function(new_role){
+		if (base_group=="astartes"){
+			if (role() == obj_ini.role[100][12] && new_role!=obj_ini.role[100][12]){
+		  		var has_carpace =false;
+		  		if (struct_exists(body[$ "torso"], "black_carpace")){
+		  			if (body[$ "torso"][$"black_carpace"]){
+		  				has_carpace=true;
+		  			}
+		  		} if (!has_carpace){
+		  			body[$ "torso"][$"black_carpace"]=true;
+		  			strength+=4;
+		  			constitution+=4;
+		  			dexterity+=4;
+		  		}	
+			}
+		}		
 		obj_ini.role[company][marine_number]= new_role;
 		if instance_exists(obj_controller){
 			array_push(role_history ,[obj_ini.role[company][marine_number], obj_controller.turn])
@@ -675,54 +690,64 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
    		if (change_mob == new_mobility_item){
    			return "no change";
    		}
-			if  (change_mob == "Bike"){
-				update_health(hp()/1.25);
-			}
-	    obj_ini.mobi[company][marine_number] = new_mobility_item;
-	    if (from_armoury) and (new_mobility_item!=""){
-	   		scr_add_item(new_mobility_item,-1);
-	  	}
-			if (new_mobility_item == "Bike"){
-				update_health(hp()*1.25);
-			}
-			if (change_mob != "") and (to_armoury){
-				scr_add_item(change_mob,1);
-			}
-			get_unit_size(); //every time mobility_item is changed see if the marines size has changed
-	 };		
+		if  (change_mob == "Bike"){
+			update_health(hp()/1.25);
+		}
+	  	if (from_armoury && new_mobility_item!=""){
+	  		if (scr_item_count(new_mobility_item)>0){
+		   		scr_add_item(new_mobility_item,-1);
+		    } else {
+		    	return "no_items";
+		    }
+		}
+		if (new_mobility_item == "Bike"){
+			update_health(hp()*1.25);
+		}
+		if (change_mob != "") and (to_armoury){
+			scr_add_item(change_mob,1);
+		}
+		obj_ini.mobi[company][marine_number] = new_mobility_item;
+		get_unit_size(); //every time mobility_item is changed see if the marines size has changed
+		return "complete";
+	};		
 
 
   static update_armour = function(new_armour, from_armoury=true, to_armoury=true){
-  	var change_armour=armour()
-  	if (array_contains(global.power_armour, new_armour)){
-  		var has_carpace =false;
-  		if (struct_exists(body[$ "torso"], "black_carpace")){
-  			if (body[$ "torso"][$"black_carpace"]){
-  				has_carpace=true;
-  			}
-  		}
-  		if (!has_carpace){
-  			return "needs_carpace";
-  		}
-  	}
-   	if (change_armour == new_armour){
-   		return "no change";
-   	}   	
-  	if (from_armoury) and (new_armour!=""){
-	   	scr_add_item(new_armour,-1);
-	  }
-	if (change_armour != "") and (to_armoury){
-		scr_add_item(change_armour,1);
-	}
-    obj_ini.armour[company][marine_number] = new_armour;
+	  	var change_armour=armour();
+	  	if (array_contains(global.power_armour, new_armour)){
+	  		var has_carpace =false;
+	  		if (struct_exists(body[$ "torso"], "black_carpace")){
+	  			if (body[$ "torso"][$"black_carpace"]){
+	  				has_carpace=true;
+	  			}
+	  		}
+	  		if (!has_carpace){
+	  			return "needs_carpace";
+	  		}
+	  	}
+	   	if (change_armour == new_armour){
+	   		return "no change";
+	   	}   	
+	  	if (from_armoury && new_armour!=""){
+	  		if (scr_item_count(new_armour)>0){
+		   		scr_add_item(new_armour,-1);
+		    } else {
+				return "no_items";
+		    }
+		}
+		if (change_armour != "") and (to_armoury){
+			scr_add_item(change_armour,1);
+		}
+	    obj_ini.armour[company][marine_number] = new_armour;
 		get_unit_size(); //every time armour is changed see if the marines size has changed
+		return "complete";
 	};	
 	static max_health =function(){
 		var max_h = 100 * (1+((constitution - 40)*0.025));
 		if (mobility_item() == "Bike"){
 			max_h *= 1.25;
 		}
-		return max_h
+		return max_h;
 	};	
 	static increase_max_health = function(increase){
 		return max_health() + (increase*(1+((constitution - 40)*0.025))); //calculate the effect of health buffs
@@ -1072,13 +1097,18 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if (change_gear == new_gear){
 	 		return "no change";
 	 	}
-		if (from_armoury && (new_gear != "")){
-	   	scr_add_item(new_gear,-1);
-	  }
+	  	if (from_armoury) and (new_gear!=""){
+	  		if (scr_item_count(new_gear)>0){
+		   		scr_add_item(new_gear,-1);
+		    } else {
+		    	return "no_items";
+		    }
+		}
 		if (change_gear != "" && to_armoury){
 			scr_add_item(change_gear,1);
 		}  			
 		obj_ini.gear[company][marine_number] = new_gear;
+		 return "complete";
 	}
 
 	if (base_group!="none"){
@@ -1095,31 +1125,41 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
    		return "no change";
    	}  	
   	if (from_armoury) and (new_weapon!=""){
-	   	scr_add_item(new_weapon,-1);
-	  }
-		if (change_wep != "") and (to_armoury){
-			scr_add_item(change_wep,1);
-		}       	
+  		if (scr_item_count(new_weapon)>0){
+	   		scr_add_item(new_weapon,-1);
+	    } else {
+	    	return "no_items";
+	    }
+	}
+	if (change_wep != "") and (to_armoury){
+		scr_add_item(change_wep,1);
+	}       	
      obj_ini.wep1[company][marine_number] = new_weapon;
+     return "complete";
 	};
 
-		static weapon_two = function(){
-			return obj_ini.wep2[company][marine_number];
-		};
+	static weapon_two = function(){
+		return obj_ini.wep2[company][marine_number];
+	};
 
-  static update_weapon_two = function(new_weapon,from_armoury=true, to_armoury=true){
-   	var change_wep = weapon_two();
-  	if (change_wep == new_weapon){
-   		return "no change";
-   	}     	
-  	if (from_armoury) and (new_weapon!=""){
-	   	scr_add_item(new_weapon,-1);
-	  }
+  	static update_weapon_two = function(new_weapon,from_armoury=true, to_armoury=true){
+	   	var change_wep = weapon_two();
+	  	if (change_wep == new_weapon){
+	   		return "no change";
+	   	}     	
+	  	if (from_armoury) and (new_weapon!=""){
+	  		if (scr_item_count(new_weapon)>0){
+		   		scr_add_item(new_weapon,-1);
+		    } else {
+		    	return "no_items";
+		    }
+		}
 		if (change_wep != "") and (to_armoury){
 			scr_add_item(change_wep,1);
 		}      	
-    obj_ini.wep2[company][marine_number] = new_weapon;
-	 };
+    	obj_ini.wep2[company][marine_number] = new_weapon;
+    	return "complete";
+	};
 
 
 		static corruption = function(){ 

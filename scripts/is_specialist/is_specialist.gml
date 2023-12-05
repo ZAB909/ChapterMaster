@@ -142,7 +142,10 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 			break;	
 		case "trainee":	
 			specialists = role_groups("trainee");
-			break;			
+			break;
+		case "rank_and_file":
+			specialists = role_groups("rank_and_file");
+			break;
 	}
 
 	_is_specialist = (array_contains(specialists,unit_role)) ? true : false;

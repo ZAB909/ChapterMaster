@@ -176,6 +176,8 @@ function scr_company_view(company) {
 	                    squad[v]=squads;
 	                    squad_loc=unit_loc;
 	                }
+	                //requirements to be promoted through companies index 0 = command comapny requirement
+	                var company_promotion_limits = [0,0,150,120,110,100,80,70,60,50,40];
 	                // Right here is where the promotion check will go
 	                // If EXP is enough for that company then ma_promote[i]=1
 	                if (ma_role[v]==obj_ini.role[100][3]) or (ma_role[v]==obj_ini.role[100][4]){
@@ -186,18 +188,17 @@ function scr_company_view(company) {
 	                if (ma_role[v]=obj_ini.role[100][15]) or (ma_role[v]=obj_ini.role[100][14]) then ma_promote[v]=1;
 	                if (ma_role[v]=obj_ini.role[100][16]) then ma_promote[v]=1;
 
-	                if (ma_role[v]=obj_ini.role[100][8]) or (ma_role[v]=obj_ini.role[100][12]) or (ma_role[v]=obj_ini.role[100][10]) or (ma_role[v]=obj_ini.role[100][9]){
-	                    if (company==10) and (ma_exp[v]>=40) then ma_promote[v]=1;
-	                    else if (company==9) and (ma_exp[v]>=50) then ma_promote[v]=1;
-	                    else if (company==8) and (ma_exp[v]>=60) then ma_promote[v]=1;
-	                    else if (company==7) and (ma_exp[v]>=70) then ma_promote[v]=1;
-	                    else if (company==6) and (ma_exp[v]>=80) then ma_promote[v]=1;
-	                    else if (company==5) and (ma_exp[v]>=100) then ma_promote[v]=1;
-	                    else if (company==4) and (ma_exp[v]>=110) then ma_promote[v]=1;
-	                    else if (company==3) and (ma_exp[v]>=120) then ma_promote[v]=1;
-	                    else if (company==2) and (ma_exp[v]>=150) then ma_promote[v]=1;
-                    
-	                    if (ma_health[v]<=10) then ma_promote[v]=10;
+	                if (is_specialist(unit.role, "rank_and_file")){
+	                	var promotion_limit = company_promotion_limits[company]
+						if (unit.experience()>=promotion_limit && promotion_limit>0){
+	                		ma_promote[v]=1;
+	                	}
+	                	 if (ma_health[v]<=10) then ma_promote[v]=10;	                	
+	                } else if  (ma_role[v]=obj_ini.role[100][5]){
+	                	var promotion_limit = company_promotion_limits[company]
+	                	if (unit.experience()>=promotion_limit+25 && promotion_limit>0){
+
+	                	}
 	                }
 
 	                // Need something to verify there is no standard bearer in the previous company
@@ -211,25 +212,13 @@ function scr_company_view(company) {
 	                    if (company=4) and (ma_exp[v]>=65) then ma_promote[v]=1;
 	                    if (company=3) and (ma_exp[v]>=75) then ma_promote[v]=1;
 	                }*/
-
-	                if (ma_role[v]=obj_ini.role[100][5]){
-	                    if (company==10) and (ma_exp[v]>=40) then ma_promote[v]=1;
-	                    else if (company==9) and (ma_exp[v]>=50) then ma_promote[v]=1;
-	                    else if (company==8) and (ma_exp[v]>=60) then ma_promote[v]=1;
-	                    else if (company==7) and (ma_exp[v]>=70) then ma_promote[v]=1;
-	                    else if (company==6) and (ma_exp[v]>=80) then ma_promote[v]=1;
-	                    else if (company==5) and (ma_exp[v]>=100) then ma_promote[v]=1;
-	                    else if (company==4) and (ma_exp[v]>=110) then ma_promote[v]=1;
-	                    else if (company==3) and (ma_exp[v]>=120) then ma_promote[v]=1;
-	                    else if (company==2) and (ma_exp[v]>=150) then ma_promote[v]=1;
-	                }
 	                if (obj_controller.command_set[2]==1) and (ma_promote[v]==0) then ma_promote[v]=1;
 	            }
 	        } else {
 	        	man[v]="hide";
 	        	continue;
 	        }
-	        if (obj_ini.name[company,v+1]=="")and (last_man==0) and (obj_ini.ship_location[obj_ini.lid[company,v]]!="Lost"){last_man=v;break;}
+	        if (obj_ini.name[company][v+1]=="")and (last_man==0) and (obj_ini.ship_location[obj_ini.lid[company,v]]!="Lost"){last_man=v;break;}
 	    }
 	}
 
