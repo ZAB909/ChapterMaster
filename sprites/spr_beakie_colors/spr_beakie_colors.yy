@@ -37,8 +37,8 @@
   "nineSlice": null,
   "origin": 9,
   "parent": {
-    "name": "Marine Viewer",
-    "path": "folders/Sprites/New UI/Marine Viewer.yy",
+    "name": "body_types",
+    "path": "folders/Sprites/New UI/Marine Viewer/body_types.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

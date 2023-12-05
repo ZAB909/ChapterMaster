@@ -892,7 +892,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}
 		}
 	};
-	body = {"left_leg":{}, "right_leg":{}, "torso":{}, "left_arm":{}, "right_arm":{}, "left_eye":{}, "right_eye":{},"throat":{}, "jaw":{},"head":{}}; //body parts list can be extended as much as people want
+	body = {"left_leg":{}, "right_leg":{}, "torso":{armour_choice:choose(1)}, "left_arm":{}, "right_arm":{}, "left_eye":{}, "right_eye":{},"throat":{}, "jaw":{},"head":{}}; //body parts list can be extended as much as people want
 	switch base_group{
 		case "astartes":				//basic marine class //adds specific mechanics not releveant to most units
 			var astartes_trait_dist = [
@@ -1051,6 +1051,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					constitution += 2;
 					strength++;
 					dexterity -= 2;
+					body[$ new_bionic_pos][$"bionic"].variant=irandom(2);
 				}else if (array_contains(["left_eye", "right_eye"], new_bionic_pos)){
 					body[$ new_bionic_pos][$"bionic"].variant=irandom(2);
 					constitution += 1;
