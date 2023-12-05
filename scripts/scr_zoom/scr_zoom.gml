@@ -4,7 +4,8 @@ function scr_zoom() {
 
 	var onceh;onceh=0;
 	if (zoomed=1) and (onceh=0) {
-		was_zoomed=1;zoomed=0;
+		was_zoomed=1;
+		zoomed=0;
 		onceh=1;
 		__view_set( e__VW.Visible, 0, true );
 		__view_set( e__VW.Visible, 1, false );
