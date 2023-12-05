@@ -81,6 +81,7 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 							string("Chief {0}",obj_ini.role[100][17]),//chief librarian
 							obj_ini.role[100][5],//captain
 							obj_ini.role[100][6],//dreadnought
+							string("Venerable {0}",obj_ini.role[100][6]),
 							obj_ini.role[100][7],//company_champion
 							obj_ini.role[100][14],//chaplain
 							obj_ini.role[100][15],//apothecary
@@ -138,7 +139,13 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 			break;
 		case "command":	
 			specialists = role_groups("command");
-			break;						
+			break;	
+		case "trainee":	
+			specialists = role_groups("trainee");
+			break;
+		case "rank_and_file":
+			specialists = role_groups("rank_and_file");
+			break;
 	}
 
 	_is_specialist = (array_contains(specialists,unit_role)) ? true : false;

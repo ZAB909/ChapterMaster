@@ -14,7 +14,7 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 	squad_unit_types = struct_get_names(fill_squad);		//find out what type of units squad consists of
 	var unit_type_count = array_length(squad_unit_types);		
 	for (var i = 0;i < unit_type_count;i++){
-		if (squad_unit_types[i] == "display_name"){
+		if (squad_unit_types[i] == "type_data"){
 			array_delete(squad_unit_types, i, 1);
 			unit_type_count--;
 			i--;
@@ -24,6 +24,7 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 	}
 	squad = new unit_squad(squad_type, company);
 	squad.base_company = company;
+	squad.add_type_data(fill_squad[$ "type_data"]);
 	var sergeant_found = false;
 	var sgt_types = [obj_ini.role[100][18], obj_ini.role[100][19]]
 
@@ -254,8 +255,16 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 	life_members=0;
 	nickname="";
 	assignment="none";
+	class =[];
+	type_data={};
 	//nickname = scr_squad_names();
-
+	static add_type_data = function(data){
+		type_data=data;
+		display_name = type_data[$ "display_data"];
+		if (struct_exists(type_data, "class")){
+			class = type_data[$ "class"]
+		}
+	}
 	// for creating a new sergeant from existing squad members
 	static new_sergeant = function(veteran=false){
 		var exp_unit;
@@ -307,7 +316,7 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 		var squad_unit_types = struct_get_names(fill_squad);		//find out what type of units squad consists of
 		var unit_type_count = array_length(squad_unit_types);		
 		for (var i = 0;i < unit_type_count;i++){
-			if (squad_unit_types[i] == "display_name"){
+			if (squad_unit_types[i] == "type_data"){
 				array_delete(squad_unit_types, i, 1);
 				unit_type_count--;
 				i--;
@@ -373,6 +382,7 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
         }
 	}
 
+//this dermine the relative coherency of a squad on the basis that a squad needs to more or less be all together in order ot undertake squad actions
 	static squad_loci = function(){
 		var member_length = array_length(members);
 		var locations = [];
@@ -442,8 +452,13 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 			final_loc_status=$"system {system}"
 		}
 		return {text:final_loc_status, system:system, same_system:same_system, exact_loc:exact_loc, planet_side:planet_side, in_orbit:in_orbit};
+		//returns all the squad coherency data
 
 	}
+
+	//determines the leader of a squad by using the hierarchy array returned by role_hierarchy()
+	//this means the highest ranking dude in a squad will always be the squad leader
+	//failing that the highest experience dude
 	static determine_leader = function(){
 		var member_length = array_length(members);
 		var hierarchy = role_hierarchy();
@@ -486,6 +501,28 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 	}
 
 	static set_location = function(loc, lid, wid){
+		set_member_loc = function(loc_data){
+			var loc=loc_data.loc;
+			var lid=loc_data.lid;
+			var wid=loc_data.wid;
+			var system = loc_data.system
+			var member_location=unit.marine_location();
+			if (wid>0 && loc==member_location[2]){
+				if (member_location[0]==location_types.ship){
+					unit.unload(wid, system)
+				} else if(member_location[0]==location_types.planet && member_location[1] != wid && member_location[2]==loc){
+					unit.get_unit_size();
+					system.p_player[member_location[1]]-=unit.size;
+					system.p_player[wid]+=unit.size;
+					unit.set_planet(wid);
+				}
+			} else {
+				if (wid == 0 && lid>0){
+					unit.load_marine(lid);
+				}
+			}
+			return loc_data;
+		}
 		var member_length = array_length(members);
 		var member_location;
 		var system = "none";
@@ -496,34 +533,28 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 			}
 		}
 		if 	(system == "none") then return "invalid system";
+		member_loop(set_member_loc,{loc:loc, lid:lid, wid:wid,system:system})		
+	}
+
+	static member_loop = function(member_func, data_pack){
+		member_length = array_length(members);
 		for (var i=0;i<member_length;i++){
-			unit = obj_ini.TTRPG[members[i][0]][members[i][1]]
+			unit = obj_ini.TTRPG[members[i][0]][members[i][1]];
 			if (unit.name() == ""){
 				array_delete(members, i, 1);
 				member_length--;
 				i--;
 				continue;
 			} else {
-				member_location=unit.marine_location();
-				if (wid>0 && loc==member_location[2]){
-					if (member_location[0]==location_types.ship){
-						unit.unload(wid, system)
-					} else if(member_location[0]==location_types.planet && member_location[1] != wid && member_location[2]==loc){
-						unit.get_unit_size();
-						system.p_player[member_location[1]]-=unit.size;
-						system.p_player[wid]+=unit.size;
-						unit.set_planet(wid);
-					}
-				} else {
-					if (wid == 0 && lid>0){
-						unit.load_marine(lid);
+				data_pack=member_func(data_pack);
+				if (struct_exists(data_pack ,"action")){
+					if (data_pack.action=="break"){
+						break;
 					}
 				}
 			}
-		}	
-	}
-
-	static pdf_support_outcome = function(enemy_force, enemy_type){
+		}
+		return data_pack;
 
 	}
 }
@@ -551,7 +582,7 @@ function game_start_squads(){
 			}
 		}
 		last_squad_count = array_length(obj_ini.squads);
-		while (last_squad_count == array_length(obj_ini.squads)){ ///keep making tact squads for as long as there are enough tact marines
+		while (last_squad_count == array_length(obj_ini.squads)){ ///keep making dev squads for as long as there are enough tact marines
 			last_squad_count = (array_length(obj_ini.squads) + 1);
 			create_squad("devestator_squad", company);
 		}		
@@ -592,7 +623,9 @@ function game_start_squads(){
 	}
 }
 
-
+//finds all the squads linked to a given company
+//TODO coalece lots of these functions to make make a company object
+//maybe then we can have more than 10 companies
 function find_company_squads(company){
 	var c_squads = [];
 	for (var i=0;i<array_length(obj_ini.squads);i++){

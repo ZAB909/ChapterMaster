@@ -14,7 +14,7 @@ function scr_unit_detail_text(){
 		if (company > 0){
 			chapter_role += scr_convert_company_to_string(company);
 		} //else{chapter_role = "Command"}
-		chapter_role += string(" {0} {1}", squad, obj_ini.squad_types[$ obj_ini.squads[squad].type][$ "display_name"]) + "#";
+		chapter_role += string(" {0} {1}", squad, obj_ini.squads[squad].display_name) + "#";
 		unit_data_string += chapter_role
 
 		if (base_group == "astartes"){

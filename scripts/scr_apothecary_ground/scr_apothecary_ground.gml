@@ -4,12 +4,11 @@ function scr_apothecary_ground() {
 	// Note that this should not be ran unless the star's p_player[x] is >0 to save on processing
 
 	var run=0,apoth=0,company=0,v=0,tick=0,repair=0,engineers=[],unit;
-
-	heal=50;
-	if (obj_ini.ossmodula=1) then heal=25;
 	repair=50;
 
 	repeat(planets){
+		on_planet = [];
+		planet_vehicles=[];
 	    run+=1;
         
 	    if (p_player[run]>0){
@@ -25,16 +24,27 @@ function scr_apothecary_ground() {
 	           			}
 	           		}
 	           		unit = obj_ini.TTRPG[company][v];
-	                if (unit.role()==obj_ini.role[100,15]) and (obj_ini.hp[company][v]>=10) and (obj_ini.loc[company][v]=name) and (obj_ini.wid[company][v]=run) and (obj_ini.gear[company][v]="Narthecium"){apoth+=4;}
-	                else if (unit.role()=="Sister Hospitaler") and (obj_ini.hp[company][v]>=40) and (obj_ini.loc[company][v]=name) and (obj_ini.wid[company][v]=run){apoth+=4;}
-                
-	                else if (unit.role()==obj_ini.role[100,16]) and (obj_ini.hp[company][v]>=10) and (obj_ini.loc[company][v]=name) and ((obj_ini.gear[company][v]="Servo Arms") or (obj_ini.gear[company][v]="Master Servo Arms")){
-	                	tick+=2;
-	                	array_push(engineers,unit)
-	                }else if (unit.role()=="Techpriest") and (obj_ini.hp[company][v]>=10) and (obj_ini.loc[company][v]=name){
-	                	tick+=2;
-	                	array_push(engineers,unit)
-	                }
+	           		if (unit.is_at_location(name,run,0)){
+	           			array_push(on_planet, unit);
+		           		if (((is_specialist(unit.role(),"apoth") && unit.gear()=="Narthecium") || (unit.role()=="Sister Hospitaler")) && unit.hp()>=10){
+		           			apoth+=((unit.technology/2)+(unit.wisdom/2)+unit.intelligence)/8;//general display of how talented healer the apoth is
+		           		}
+	                
+		                else if (unit.role()==obj_ini.role[100,16]) and (obj_ini.hp[company][v]>=10) and (obj_ini.loc[company][v]=name) and ((obj_ini.gear[company][v]="Servo Arms") or (obj_ini.gear[company][v]="Master Servo Arms")){
+		                	tick+=2;
+		                	array_push(engineers,unit)
+		                }else if (unit.role()=="Techpriest") and (obj_ini.hp[company][v]>=10) and (obj_ini.loc[company][v]=name){
+		                	tick+=2;
+		                	array_push(engineers,unit)
+		                }
+		            }
+
+
+		            if (v<array_length(obj_ini.veh_race[company])){
+		            	if (obj_ini.veh_loc[company][v]==name && obj_ini.veh_wid[company][v]==run){
+		            		array_push(planet_vehicles, [company, v]);
+		            	}
+		            }
 	            }
 	        }
         
@@ -101,222 +111,48 @@ function scr_apothecary_ground() {
 	                    obj_ini.ship_capacity[last_ship]=800;obj_ini.ship_carrying[last_ship]=0;obj_ini.ship_contents[last_ship]="";
 	                    obj_ini.ship_turrets[last_ship]=8;
                     
-	                    flit.capital[1]=obj_ini.ship[last_ship];flit.capital_number=1;flit.capital_num[1]=last_ship;flit.capital_uid[1]=obj_ini.ship_uid[last_ship];
+	                    flit.capital[1]=obj_ini.ship[last_ship];
+	                    flit.capital_number=1;
+	                    flit.capital_num[1]=last_ship;
+	                    flit.capital_uid[1]=obj_ini.ship_uid[last_ship];
                     
 	                    scr_popup("Ancient Ship Restored","The ancient ship within the ruins of "+string(locy)+" has been fully repaired.  It determined to be a Slaughtersong vessel and is bristling with golden age weaponry and armour.  Your "+string(obj_ini.role[100][16])+"s are excited; the Slaughtersong is ready for it's maiden voyage, at your command.","","");                
 	                }
 	            }
 	        }
-    
-	        var normal_hp,mixhp,ratio;
-	        normal_hp=true;mixhp=0;ratio=0;
-    
-        
-	        if (apoth>0){    
-	            repeat(11){
-	                if (company+1<=10){
-	                    company+=1;
-	                    v=0;
-	                    repeat(300){
-	                        v+=1;normal_hp=true;
-
-	                        if (obj_ini.race[company][v]>1) then normal_hp=false;
-	                        if (obj_ini.wid[company][v]=run) and (obj_ini.loc[company][v]=name) and (obj_ini.armour[company][v]!="Dreadnought") and (apoth>0) and (obj_ini.hp[company][v]<=10) and (normal_hp=true){
-	                            obj_ini.hp[company][v]+=heal;apoth-=1;
-	                        }
-	                    }
-	                }
-	            }
-	            company=-1;
-            
-	            repeat(11){
-	                if (company+1<=10){
-	                    company+=1;
-	                    v=0;
-	                    repeat(300){
-	                        v+=1;normal_hp=true;
-
-	                        if (obj_ini.race[company][v]>1) then normal_hp=false;
-	                        if (obj_ini.wid[company][v]=run) and (obj_ini.loc[company][v]=name) and (obj_ini.armour[company][v]!="Dreadnought") and (apoth>0) and (obj_ini.hp[company][v]<=30) and (normal_hp=true){
-	                            obj_ini.hp[company][v]+=heal;apoth-=1;
-
-	                        }
-	                    }
-	                }
-	            }
-	            company=-1;
-            
-	            repeat(11){
-	                if (company+1<=10){
-	                    company+=1;
-	                    v=0;
-	                    repeat(300){
-	                        v+=1;normal_hp=true;
-
-	                        if (obj_ini.race[company][v]>1) then normal_hp=false;
-                        
-                        
-	                        if (obj_ini.role[company][v]!="Chapter Master"){
-	                            if (obj_ini.wid[company][v]=run) and (obj_ini.loc[company][v]=name) and (obj_ini.armour[company][v]!="Dreadnought") and (apoth>0) and (obj_ini.hp[company][v]<100) and (normal_hp=true){
-	                                obj_ini.hp[company][v]+=heal;apoth-=1;
-	                                if (obj_ini.hp[company][v]>100) then obj_ini.hp[company][v]=100;
-	                            }
-	                        }
-                        
-                        
-	                        if (obj_ini.role[company][v]="Chapter Master"){
-	                            if (string_count("Paragon",string(obj_ini.adv[1])+string(obj_ini.adv[2])+string(obj_ini.adv[3])+string(obj_ini.adv[4]))>0){
-	                                if (obj_ini.wid[company][v]=run) and (obj_ini.loc[company][v]=name) and (obj_ini.armour[company][v]!="Dreadnought") and (apoth>0) and (obj_ini.hp[company][v]<130) and (normal_hp=true){
-	                                    obj_ini.hp[company][v]+=heal;apoth-=1;
-	                                    if (obj_ini.hp[company][v]>130) then obj_ini.hp[company][v]=130;
-	                                }
-	                            }
-	                            if (string_count("Paragon",string(obj_ini.adv[1])+string(obj_ini.adv[2])+string(obj_ini.adv[3])+string(obj_ini.adv[4]))=0){
-	                                if (obj_ini.wid[company][v]=run) and (obj_ini.loc[company][v]=name) and (obj_ini.armour[company][v]!="Dreadnought") and (apoth>0) and (obj_ini.hp[company][v]<100) and (normal_hp=true){
-	                                    obj_ini.hp[company][v]+=heal;apoth-=1;
-	                                    if (obj_ini.hp[company][v]>100) then obj_ini.hp[company][v]=100;
-	                                }
-	                            }
-	                        }
-                        
-                        
-                        
-	                    }
-	                }
-	            }
-	            company=-1;
-            
-            
-            
-            
-            
+	        if (array_length(on_planet)>0){
+	        	for (var i=0;i<array_length(on_planet);i++){
+	        		unit = on_planet[i];
+	        		if (unit.armour() != "Dreadnought")and (unit.hp()<unit.max_health()){
+	        			if (apoth >0){
+	        				unit.healing(true);
+	        				apoth--;
+	        			} else {
+	        				unit.healing(false);
+	        			}
+	        		}else if (unit.armour() == "Dreadnought" && unit.hp()<unit.max_health() && tick >0){
+	        			unit.healing(true);
+	        			tick--;
+	        		}
+	        	}
+	        } else if (array_length(planet_vehicles)==0){
+	        	p_player[run]=0;
 	        }
-        
-	        if (apoth>0){
-	            company=0;v=0;
-	            repeat(300){
-	                v+=1;normal_hp=true;
-
-	                if (obj_ini.race[company][v]>1) then normal_hp=false;
-	                if (obj_ini.role[company][v]="Skitarii"){normal_hp=false;mixhp=40;}
-	                if (obj_ini.role[company][v]="Techpriest"){normal_hp=false;mixhp=50;}
-	                if (obj_ini.role[company][v]="Crusader"){normal_hp=false;mixhp=30;}
-	                if (obj_ini.role[company][v]="Ranger"){normal_hp=false;mixhp=40;}
-	                if (obj_ini.role[company][v]="Sister of Battle"){normal_hp=false;mixhp=40;}
-	                if (obj_ini.role[company][v]="Sister Hospitaler"){normal_hp=false;mixhp=40;}
-	                if (obj_ini.role[company][v]="Ork Sniper"){normal_hp=false;mixhp=45;}
-	                if (obj_ini.role[company][v]="Flash Git"){normal_hp=false;mixhp=65;}
-                
-	                if (obj_ini.wid[company][v]=run) and (obj_ini.loc[company][v]=name) and (apoth>0) and (obj_ini.hp[company][v]<mixhp) and (normal_hp=false){
-	                    obj_ini.hp[company][v]+=20;apoth-=1;
-	                    if (obj_ini.hp[company][v]>mixhp) then obj_ini.hp[company][v]=mixhp;
-	                }
-	            }
+	        if (array_length(planet_vehicles)>0){
+	        	for (var i=0;i<array_length(planet_vehicles);i++){
+	        		veh_ident =planet_vehicles[i];
+		        	if (tick>0){
+						if (obj_ini.veh_hp[veh_ident[0]][veh_ident[1]]>0) and (obj_ini.veh_hp[veh_ident[0]][veh_ident[1]]<100){
+							obj_ini.veh_hp[veh_ident[0]][veh_ident[1]]+=10;
+							tick--;
+							if (obj_ini.veh_hp[veh_ident[0]][veh_ident[1]]>100)then obj_ini.veh_hp[veh_ident[0]][veh_ident[1]]=100;
+						}
+		        	}
+		        	if (tick==0) then break;
+		        }
 	        }
-        
-        
-        
-	        company=-1;
-	        if (tick>0){
-	            repeat(11){
-	                if (company+1<=10){
-	                    company+=1;
-	                    v=0;
-	                    repeat(300){
-	                        v+=1;
 
-	                        if (obj_ini.race[company][v]=1) and (obj_ini.wid[company][v]=run) and (obj_ini.loc[company][v]=name) and (string_count("Dread",obj_ini.armour[company][v])>0) and (tick>0) and (obj_ini.hp[company][v]<100){
-	                            obj_ini.hp[company][v]+=repair;tick-=1;
-	                            if (obj_ini.hp[company][v]>100) then obj_ini.hp[company][v]=100;
 
-	                        }
-	                    }
-	                }
-	            }
-	            company=-1;
-            
-	            repeat(11){
-	                if (company+1<=10){
-	                    company+=1;
-	                    v=0;
-	                    repeat(300){
-	                        v+=1;
-
-	                        if (obj_ini.race[company][v]=1) and (obj_ini.wid[company][v]=run) and (obj_ini.loc[company][v]=name) and (string_count("Dread",obj_ini.armour[company][v])>0) and (tick>0) and (obj_ini.hp[company][v]<100){
-	                            obj_ini.hp[company][v]+=repair;tick-=1;
-	                            if (obj_ini.hp[company][v]>100) then obj_ini.hp[company][v]=100;
-
-	                        }
-	                    }
-	                }
-	            }
-	            company=-1;
-	        }
-        
-        
-        
-        
-	        company=-1;
-	        if (tick>0){
-	            repeat(11){
-	                if (company+1<=10){
-	                    company+=1;
-	                    v=0;
-	                    repeat(200){
-	                        v+=1;
-                        
-
-	                        if (obj_ini.veh_race[company][v]=1) and (obj_ini.veh_wid[company][v]=run) and (obj_ini.veh_loc[company][v]=name) and (tick>0) and (obj_ini.veh_hp[company][v]<50){
-	                            obj_ini.veh_hp[company][v]+=10;tick-=1;
-	                            if (obj_ini.veh_hp[company][v]>100) then obj_ini.veh_hp[company][v]=100;
-
-	                        }
-	                    }
-	                }
-	            }
-	            company=-1;
-            
-	            repeat(11){
-	                if (company+1<=10){
-	                    company+=1;
-	                    v=0;
-	                    repeat(200){
-	                        v+=1;
-
-	                        if (obj_ini.veh_race[company][v]=1) and (obj_ini.veh_wid[company][v]=run) and (obj_ini.veh_loc[company][v]=name) and (tick>0) and (obj_ini.veh_hp[company][v]<100){
-	                            obj_ini.veh_hp[company][v]+=10;tick-=1;
-	                            if (obj_ini.veh_hp[company][v]>100) then obj_ini.veh_hp[company][v]=100;
-
-	                        }
-	                    }
-	                }
-	            }
-	            company=-1;
-            
-	            repeat(11){
-	                if (company+1<=10){
-	                    company+=1;
-	                    v=0;
-	                    repeat(200){
-	                        v+=1;
-
-	                        if (obj_ini.veh_race[company][v]=1) and (obj_ini.veh_wid[company][v]=run) and (obj_ini.veh_loc[company][v]=name) and (tick>0) and (obj_ini.veh_hp[company][v]<100){
-	                            obj_ini.veh_hp[company][v]+=10;tick-=1;
-	                            if (obj_ini.veh_hp[company][v]>100) then obj_ini.veh_hp[company][v]=100;
-
-	                        }
-	                    }
-	                }
-	            }
-	            company=-1;
-            
-	        }
-        
-        
-        
-        
-        
-        
 	    }
     
 	}

@@ -14,14 +14,37 @@ enum UINODE_STATUS {
 }
 
 
-function UINode(gui_x, gui_y, width, height, padding = 0, margin = 0) constructor {
+function UIElement(width, height, align_x, align_y) constructor {
+	
+	self.width = width
+	self.height = height;
+	self.align_x = align_x
+	self.align_y = align_y
+	
+	enum eUI_ALIGN_X {
+		x_left,
+		x_right,
+		x_center
+	}
+	enum eUI_ALIGN_Y {
+		y_top,
+		y_bottom,
+		y_center
+	}
+}
 
+function UINode(elem, gui_x, gui_y, padding = 0, margin = 0, parent = undefined) constructor {
+	
 	self.gui_x = gui_x;
 	self.gui_y = gui_y;
-	self.width = width
-	self.height = height
+	self.width = elem.width
+	self.height = elem.height
 	self.padding = padding; //currently unused
 	self.margin = margin //currently unused
+	self.align_x = elem.align_x
+	self.align_y = elem.align_y
+	self.parent = parent;
+	
 	components = []
 	ev_components = []
 	render_components = []
@@ -91,16 +114,90 @@ function UINode(gui_x, gui_y, width, height, padding = 0, margin = 0) constructo
 	 * @param {bool} [allow_child_insertion]=true  default true: Whether the added node should be added to a child node or only the root
 	 * @param {array} [callstack]=[] internal use only...
 	 * @returns {struct.UINode}  blah
-	 */	
+	 */
 	static add_child_from_existing = function(ui_node, allow_child_insertion = true) {
 		array_push(children, ui_node)
 		return self;
 	}
 	
-	static add_child = function(gx, gy, width, height, padding = 0, allow_child_insertion = true) {
-		var new_node = new UINode(gx + gui_x, gy + gui_y, width, height)
+	static add_child = function(elem, gx, gy, allow_child_insertion = true) {
+		var new_node = new UINode(elem, gx + gui_x + padding, gy + gui_y + padding)
 		add_child_from_existing(new_node, allow_child_insertion)
 		return new_node;
+	}
+	
+	static add_element = function(elem, gx, gy, padding, margin) {
+		var new_node = new UINode(elem, gui_x + gx, gui_y + gy, padding, margin, self)
+		with(new_node) {
+			var offsets = self.get_offset_values()
+			gui_x += offsets.xoffset
+			gui_y += offsets.yoffset
+		}
+		add_child_from_existing(new_node, false)
+		return new_node;
+	}
+	
+	static get_offset_values = function() {
+		var xoffset = 0
+		var yoffset = 0
+		if parent {
+			if align_x == eUI_ALIGN_X.x_left {
+				xoffset += parent.padding + margin
+			} else if align_x == eUI_ALIGN_X.x_center {
+				xoffset += parent.width/2 - width/2 + margin + parent.padding
+			} else {
+				xoffset += parent.width - width - margin - parent.padding
+			}
+		
+			if align_y == eUI_ALIGN_Y.y_top {
+				yoffset += parent.padding + margin	
+			} else if align_y == eUI_ALIGN_Y.y_center {
+				yoffset += parent.height/2 - height/2 + margin + parent.padding
+			} else {
+				yoffset += parent.height - height - margin - parent.padding
+			}
+		}
+		return {xoffset, yoffset}
+	}
+	
+	static recalc = function() {
+		if parent {
+			var offsets = get_offset_values()
+			gui_x = offsets.xoffset + parent.gui_x
+			gui_y = offsets.yoffset + parent.gui_y
+			array_foreach(children, function(elem) {
+				elem.recalc()	
+			})
+		}
+	}
+	
+	static reposition = function(gx, gy) {
+		gui_x += gx
+		gui_y += gy
+		array_foreach(children,method({gx,gy}, function(elem) {
+			elem.reposition(gx,gy)
+		}))
+	}
+	
+	static resize = function(w, h) {
+		if width == w && height = h
+			return;
+		width = w
+		height = h
+		recalc()
+		array_foreach(children, function(elem) {
+			elem.recalc();
+		})
+	}
+	
+	static set_padding = function(val) {
+		padding = val
+		return self
+	}
+	
+	static set_margin = function(val) {
+		margin = val
+		return self;
 	}
 	
 	/// @desc Function Description

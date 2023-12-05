@@ -449,7 +449,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                     else if (global.chapter_name=="Iron Hands" || obj_ini.progenitor==6){specific_helm = spr_ih_mk5_helm;}
                     else if (global.chapter_name=="Ultramarines" || obj_ini.progenitor==7){specific_helm = spr_um_mk5_helm;}
                     else if (global.chapter_name=="Salamanders" || obj_ini.progenitor==8){specific_helm = spr_sal_mk5_helm;}
-                    else if (global.chapter_name=="Raven Guard" || obj_ini.progenitor==9)  {specific_helm = spr_rg_mk5_helm;}
+                    else if (global.chapter_name=="Raven Guard" || obj_ini.progenitor==9) {specific_helm = spr_rg_mk5_helm;}
                     else {
                          specific_helm = spr_um_mk5_helm;
                     }                    
@@ -546,12 +546,14 @@ function scr_draw_unit_image(x_draw, y_draw){
                         }
                     }                    
                     draw_sprite(armour_sprite,specialist_colours,xx+x_draw,yy+y_draw);
-                    if (specific_armour_sprite!="none")  and (!armour_bypass){                
-                        if (ttrim==0) and (specialist_colours<=1) then draw_sprite(specific_armour_sprite,4,xx+x_draw,yy+y_draw);
-                        if (ttrim==0) and (specialist_colours>=2) then draw_sprite(specific_armour_sprite,5,xx+x_draw,yy+y_draw);
+                    if (!armour_bypass){                
+                        if (ttrim==0 && specialist_colours<=1) then draw_sprite(specific_armour_sprite,4,xx+x_draw,yy+y_draw);
+                        if (ttrim==0 && specialist_colours>=2) then draw_sprite(specific_armour_sprite,5,xx+x_draw,yy+y_draw);
                     } else{
                         draw_sprite(armour_draw[0], armour_draw[1],xx+x_draw,yy+y_draw);
                     }
+                }else if (armour_bypass){
+                    draw_sprite(armour_draw[0], armour_draw[1],xx+x_draw,yy+y_draw);
                 }
                 if (base_sprite=5){
                     draw_sprite(spr_dreadnought_chasis_colors,specialist_colours,xx+x_draw,yy+y_draw);

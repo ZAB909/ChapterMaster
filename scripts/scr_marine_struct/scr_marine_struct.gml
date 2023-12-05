@@ -577,10 +577,36 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	company = comp;			//marine company
 	marine_number = mar;			//marine number in company
 	squad = "none";
+	stat_point_exp_marker = 0;
 	static bionics = function(){return obj_ini.bio[company][marine_number];}// get marine bionics count	
-	static experience =  function(){return obj_ini.experience[company][marine_number];}//get exp
+	static experience =  function(){
+		return obj_ini.experience[company][marine_number];
+	}//get exp
+	turn_stat_gains = {};
 	static update_exp = function(new_val){obj_ini.experience[company][marine_number] = new_val}//change exp
-	static add_exp = function(add_val){obj_ini.experience[company][marine_number] += add_val}
+	static add_exp = function(add_val){
+		var instace_stat_point_gains = {};
+		stat_point_exp_marker += add_val;
+		obj_ini.experience[company][marine_number] += add_val;
+		if (base_group == "astartes"){
+			while (stat_point_exp_marker>=15){
+				var stat_gains = choose("weapon_skill", "ballistic_skill", "wisdom");
+				self[$ stat_gains]++;
+				stat_point_exp_marker-=15;
+				if (struct_exists(instace_stat_point_gains, stat_gains)){
+					instace_stat_point_gains[$ stat_gains]++;
+				} else {
+					instace_stat_point_gains[$ stat_gains]=1;
+				}
+				if (struct_exists(turn_stat_gains, stat_gains)){
+					turn_stat_gains[$ stat_gains]++;
+				} else {
+					turn_stat_gains[$ stat_gains]=1;
+				}
+			}
+		}
+		return instace_stat_point_gains;
+	}
 	static armour = function(){ 
 		return obj_ini.armour[company][marine_number];
 	};
@@ -588,6 +614,22 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		return obj_ini.role[company][marine_number];
 	};
 	static update_role = function(new_role){
+		if (base_group=="astartes"){
+			if (role() == obj_ini.role[100][12] && new_role!=obj_ini.role[100][12]){
+		  		var has_carpace =false;
+		  		if (struct_exists(body[$ "torso"], "black_carpace")){
+		  			if (body[$ "torso"][$"black_carpace"]){
+		  				has_carpace=true;
+		  			}
+		  		} 
+		  		if (!has_carpace){
+		  			body[$ "torso"][$"black_carpace"]=true;
+		  			strength+=4;
+		  			constitution+=4;
+		  			dexterity+=4;
+		  		}	
+			}
+		}		
 		obj_ini.role[company][marine_number]= new_role;
 		if instance_exists(obj_controller){
 			array_push(role_history ,[obj_ini.role[company][marine_number], obj_controller.turn])
@@ -599,6 +641,33 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	static hp = function(){ 
 		return obj_ini.hp[company][marine_number]; //return current health
 	};
+
+	static healing = function(apoth){
+		var health_portion = 20;
+		var m_health = max_health();
+		var new_health;
+		if (apoth){
+			if (base_group == "astartes"){
+				if (gene_seed_mutations[$ "ossmodula"]==1){
+					health_portion=6;
+				}else{
+					health_portion=4;
+				}
+			} else {
+				health_portion=10;
+			}
+		} else {
+			if (base_group == "astartes"){
+				health_portion = 8;
+				if (gene_seed_mutations[$ "ossmodula"]==1){
+					health_portion = 10;
+				}
+			}
+		}
+		new_health=hp()+(m_health/health_portion);
+		if (new_health>m_health) then new_health=m_health;
+		update_health(new_health);	
+	}
   static update_health = function(new_health){
     obj_ini.hp[company][marine_number] = new_health;
   };	
@@ -622,54 +691,64 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
    		if (change_mob == new_mobility_item){
    			return "no change";
    		}
-			if  (change_mob == "Bike"){
-				update_health(hp()/1.25);
-			}
-	    obj_ini.mobi[company][marine_number] = new_mobility_item;
-	    if (from_armoury) and (new_mobility_item!=""){
-	   		scr_add_item(new_mobility_item,-1);
-	  	}
-			if (new_mobility_item == "Bike"){
-				update_health(hp()*1.25);
-			}
-			if (change_mob != "") and (to_armoury){
-				scr_add_item(change_mob,1);
-			}
-			get_unit_size(); //every time mobility_item is changed see if the marines size has changed
-	 };		
+		if  (change_mob == "Bike"){
+			update_health(hp()/1.25);
+		}
+	  	if (from_armoury && new_mobility_item!=""){
+	  		if (scr_item_count(new_mobility_item)>0){
+		   		scr_add_item(new_mobility_item,-1);
+		    } else {
+		    	return "no_items";
+		    }
+		}
+		if (new_mobility_item == "Bike"){
+			update_health(hp()*1.25);
+		}
+		if (change_mob != "") and (to_armoury){
+			scr_add_item(change_mob,1);
+		}
+		obj_ini.mobi[company][marine_number] = new_mobility_item;
+		get_unit_size(); //every time mobility_item is changed see if the marines size has changed
+		return "complete";
+	};		
 
 
   static update_armour = function(new_armour, from_armoury=true, to_armoury=true){
-  	var change_armour=armour()
-  	if (array_contains(global.power_armour, new_armour)){
-  		var has_carpace =false;
-  		if (struct_exists(body[$ "torso"], "black_carpace")){
-  			if (body[$ "torso"][$"black_carpace"]){
-  				has_carpace=true;
-  			}
-  		}
-  		if (!has_carpace){
-  			return "needs_carpace";
-  		}
-  	}
-   	if (change_armour == new_armour){
-   		return "no change";
-   	}   	
-  	if (from_armoury) and (new_armour!=""){
-	   	scr_add_item(new_armour,-1);
-	  }
+	  	var change_armour=armour();
+	  	if (array_contains(global.power_armour, new_armour)){
+	  		var has_carpace =false;
+	  		if (struct_exists(body[$ "torso"], "black_carpace")){
+	  			if (body[$ "torso"][$"black_carpace"]){
+	  				has_carpace=true;
+	  			}
+	  		}
+	  		if (!has_carpace){
+	  			return "needs_carpace";
+	  		}
+	  	}
+	   	if (change_armour == new_armour){
+	   		return "no change";
+	   	}   	
+	  	if (from_armoury && new_armour!=""){
+	  		if (scr_item_count(new_armour)>0){
+		   		scr_add_item(new_armour,-1);
+		    } else {
+				return "no_items";
+		    }
+		}
 		if (change_armour != "") and (to_armoury){
 			scr_add_item(change_armour,1);
 		}
-    obj_ini.armour[company][marine_number] = new_armour;
+	    obj_ini.armour[company][marine_number] = new_armour;
 		get_unit_size(); //every time armour is changed see if the marines size has changed
+		return "complete";
 	};	
 	static max_health =function(){
 		var max_h = 100 * (1+((constitution - 40)*0.025));
 		if (mobility_item() == "Bike"){
 			max_h *= 1.25;
 		}
-		return max_h
+		return max_h;
 	};	
 	static increase_max_health = function(increase){
 		return max_health() + (increase*(1+((constitution - 40)*0.025))); //calculate the effect of health buffs
@@ -682,45 +761,65 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
         }
 	};
 	traits = [];			//marine trait list	
+	feats = [];
 	allegiance =faction;	//faction alligience defaults to the chapter
 	
+	static stat_boosts = function(stat_boosters){
+		stats = global.stat_list;
+		var edits = struct_get_names(stat_boosters);
+		var edit_stat,random_stat,stat_mod;		
+		for (var stat_iter =0; stat_iter <array_length(stats);stat_iter++){
+			if (array_contains(edits ,stats[stat_iter])){
+				edit_stat = variable_struct_get(stat_boosters, stats[stat_iter]);
+				if (is_array(edit_stat)){
+					stat_mod = floor(gauss(edit_stat[0], edit_stat[1]));
+					if (array_length(edit_stat) > 2){
+						if (edit_stat[2] == "max"){
+							stat_mod = max(stat_mod, edit_stat[0]);
+						} else if(edit_stat[2] == "min") {
+							stat_mod = min(stat_mod, edit_stat[0]);
+						}
+					}
+				} else{stat_mod = edit_stat}
+				if (stats[stat_iter] == "constitution"){
+					balance_value = (hp()/max_health());
+				}
+				variable_struct_set(self,stats[stat_iter],  (variable_struct_get(self, stats[stat_iter])+  stat_mod));
+				if (stats[stat_iter] == "constitution"){
+					update_health(max_health()*balance_value)
+				}
+			}
+		}		
+	}
 	//adds a trait to a marines trait list
 	static add_trait = function(trait){
 			var balance_value;
 			if struct_exists(global.trait_list, trait){
 				if (!array_contains(traits, trait)){
 					var selec_trait = global.trait_list[$ trait];
-					var edits = variable_struct_get_names(selec_trait);
-					var edit_stat,random_stat,stat_mod;
-				
-					//loop over stats and add stats where needed
-					stats = global.stat_list;
-					for (var stat_iter =0; stat_iter <array_length(stats);stat_iter++){
-						if (array_contains(edits ,stats[stat_iter])){
-							edit_stat = variable_struct_get(selec_trait, stats[stat_iter]);
-							if (is_array(edit_stat)){
-								stat_mod = gauss(edit_stat[0], edit_stat[1]);
-								if (array_length(edit_stat) > 2){
-									if (edit_stat[2] == "max"){
-										stat_mod = floor(max(stat_mod, edit_stat[0]));
-									} else if(edit_stat[2] == "min") {
-										stat_mod = floor(min(stat_mod, edit_stat[0]));
-									}
-								}
-							} else{stat_mod = edit_stat}
-							if (stats[stat_iter] == "constitution"){
-								balance_value = (hp()/max_health());
-							}
-							variable_struct_set(self,stats[stat_iter],  (variable_struct_get(self, stats[stat_iter])+  stat_mod));
-							if (stats[stat_iter] == "constitution"){
-								update_health(max_health()*balance_value)
-							}
-						}
-					}
-					//max_health() = 100 * (1+((constitution - 20)*0.05));
+					stat_boosts(selec_trait);
 					array_push(traits, trait);
 				}
 			}
+	};
+
+	static has_trait = function(wanted_trait){
+		return array_contains(traits, wanted_trait);
+	}
+
+	static add_feat = function(feat){
+		feat_data = {};
+		if struct_exists(global.trait_list, feat.ident){
+			feat_data = global.trait_list[$ feat.ident];
+			var feat_name_set = struct_get_names(feat);
+			for (var i=0;i<array_length(feat_name_set);i++){
+				feat_data[$ feat_name_set[i]] = feat[$ feat_name_set[i]];
+			}
+		} else {
+			feat_data = feat
+		}
+		stat_boosts(feat_data);
+		array_push(feats, feat_data);
 	};
 
 	static distribute_traits = function (distribution_set){
@@ -999,13 +1098,18 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if (change_gear == new_gear){
 	 		return "no change";
 	 	}
-		if (from_armoury && (new_gear != "")){
-	   	scr_add_item(new_gear,-1);
-	  }
+	  	if (from_armoury) and (new_gear!=""){
+	  		if (scr_item_count(new_gear)>0){
+		   		scr_add_item(new_gear,-1);
+		    } else {
+		    	return "no_items";
+		    }
+		}
 		if (change_gear != "" && to_armoury){
 			scr_add_item(change_gear,1);
 		}  			
 		obj_ini.gear[company][marine_number] = new_gear;
+		 return "complete";
 	}
 
 	if (base_group!="none"){
@@ -1022,31 +1126,41 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
    		return "no change";
    	}  	
   	if (from_armoury) and (new_weapon!=""){
-	   	scr_add_item(new_weapon,-1);
-	  }
-		if (change_wep != "") and (to_armoury){
-			scr_add_item(change_wep,1);
-		}       	
+  		if (scr_item_count(new_weapon)>0){
+	   		scr_add_item(new_weapon,-1);
+	    } else {
+	    	return "no_items";
+	    }
+	}
+	if (change_wep != "") and (to_armoury){
+		scr_add_item(change_wep,1);
+	}       	
      obj_ini.wep1[company][marine_number] = new_weapon;
+     return "complete";
 	};
 
-		static weapon_two = function(){
-			return obj_ini.wep2[company][marine_number];
-		};
+	static weapon_two = function(){
+		return obj_ini.wep2[company][marine_number];
+	};
 
-  static update_weapon_two = function(new_weapon,from_armoury=true, to_armoury=true){
-   	var change_wep = weapon_two();
-  	if (change_wep == new_weapon){
-   		return "no change";
-   	}     	
-  	if (from_armoury) and (new_weapon!=""){
-	   	scr_add_item(new_weapon,-1);
-	  }
+  	static update_weapon_two = function(new_weapon,from_armoury=true, to_armoury=true){
+	   	var change_wep = weapon_two();
+	  	if (change_wep == new_weapon){
+	   		return "no change";
+	   	}     	
+	  	if (from_armoury) and (new_weapon!=""){
+	  		if (scr_item_count(new_weapon)>0){
+		   		scr_add_item(new_weapon,-1);
+		    } else {
+		    	return "no_items";
+		    }
+		}
 		if (change_wep != "") and (to_armoury){
 			scr_add_item(change_wep,1);
 		}      	
-    obj_ini.wep2[company][marine_number] = new_weapon;
-	 };
+    	obj_ini.wep2[company][marine_number] = new_weapon;
+    	return "complete";
+	};
 
 
 		static corruption = function(){ 
@@ -1133,11 +1247,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			return string("{0} {1}", temp_role, name())
 		}
 		
-		static load_marine = function(ship){
+		static load_marine = function(ship, star="none"){
 			 get_unit_size(); // make sure marines size given it's current equipment is correct
 			 var current_location = marine_location();
 			 var system = current_location[2];
 			 var ship_location= obj_ini.ship_location[ship];
+			 if (assignment()!="none") then return "on assignment";
 			 if (ship_location == "home" ){ship_location = obj_ini.home_name;}
 			
 			 if (current_location[0] == location_types.planet){//if marine is on a planet
@@ -1148,12 +1263,14 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					 obj_ini.lid[company][marine_number] = ship; //id of ship marine is now loaded on
 					 obj_ini.ship_carrying[ship] += size; //update ship capacity
 					 var temp_self =self;
-					 with (obj_star){
-					 		if (name==system){
-					 			if (p_player[current_location[1]]>0) then p_player[current_location[1]]-=temp_self.size;
-					 			break;
-					 		}
-					 }
+					 if (star=="none"){
+	 					 with (obj_star){
+	 					 		if (name==system){
+	 					 			if (p_player[current_location[1]]>0) then p_player[current_location[1]]-=temp_self.size;
+	 					 			break;
+	 					 		}
+	 					 }
+	 				}
 				 }
 			 } else if (current_location[0] == location_types.ship){ //with this addition marines can now be moved between ships freely as long as they are in the same system
 				 var off_loading_ship = current_location[1];
@@ -1179,6 +1296,24 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	}
 	static set_planet = function(planet_number){
 		obj_ini.wid[company][marine_number]=planet_number;
+	}
+
+	static is_at_location = function(location, planet, ship){
+		var is_at_loc = false;
+		if (planet>0){
+			if (obj_ini.loc[company][marine_number]==location && obj_ini.wid[company][marine_number]=planet){
+				is_at_loc=true;
+			}
+		} else if (ship>0){
+			if (obj_ini.lid[company][marine_number]==ship){
+				is_at_loc=true;
+			}
+		} else if (ship==0 && planet==0){
+			if (obj_ini.loc[company][marine_number]==location){
+				is_at_loc=true;
+			}
+		}
+		return is_at_loc;
 	}
 	static spawn_exp =function(){
 		var spawn_ex = 0;
