@@ -34,8 +34,8 @@
   "nineSlice": null,
   "origin": 0,
   "parent": {
-    "name": "Marine Viewer",
-    "path": "folders/Sprites/New UI/Marine Viewer.yy",
+    "name": "body_types",
+    "path": "folders/Sprites/New UI/Marine Viewer/body_types.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {
@@ -75,7 +75,7 @@
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"eaa3802a-7de0-40e5-bfac-374977ba2f38","path":"sprites/spr_tartaros2_colors/spr_tartaros2_colors.yy",},},},"Disabled":false,"id":"146c5be4-70b9-49a4-af82-06b7e9692228","IsCreationKey":false,"Key":9.0,"Length":1.0,"Stretch":false,},
           ],},"modifiers":[],"spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
-    "visibleRange": {"x":0.0,"y":0.0,},
+    "visibleRange": null,
     "volume": 1.0,
     "xorigin": 0,
     "yorigin": 0,
