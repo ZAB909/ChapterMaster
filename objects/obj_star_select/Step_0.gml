@@ -142,14 +142,14 @@ if (loading=1){
         var current_squad=obj_ini.squads[obj_controller.company_squads[obj_controller.cur_squad]];
         current_squad.set_location(loading_name,0,obj_controller.selecting_planet);
         current_squad.assignment={
-            type:"garrison",
+            type:mission,
             location:target.name,
             ident:obj_controller.selecting_planet,
         };
         var operation_data = {
             type:"squad", 
             reference:obj_controller.company_squads[obj_controller.cur_squad],
-            job:"garrison",
+            job:mission,
         };
         array_push(target.p_operatives[obj_controller.selecting_planet],operation_data)
     }

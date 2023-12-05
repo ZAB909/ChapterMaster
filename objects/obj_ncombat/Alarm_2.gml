@@ -5,7 +5,7 @@ instance_activate_object(obj_enunit);
 
 if (dropping=1){
     repeat(10){
-        var mm;mm=instance_nearest(5000,240,obj_pnunit);
+        var mm=instance_nearest(5000,240,obj_pnunit);
         if (!collision_point(mm.x+10,mm.y,obj_enunit,0,1)) then with(obj_pnunit){x+=10;}
     }
     repeat(10){
@@ -29,7 +29,8 @@ if (ally>0) and (ally_forces>0){
                 ii=good;
                 if (good>0){
                     repeat(10){
-                        thata.marine_type[ii]="Techpriest";thata.marine_hp[ii]=50;
+                        thata.marine_type[ii]="Techpriest";
+                        thata.marine_hp[ii]=50;
                         thata.marine_ac[ii]=20;thata.marine_exp[ii]=100;
                         thata.marine_wep1[ii]="Power Weapon";thata.marine_wep2[ii]="Conversion Beam Projector";
                         thata.marine_armour[ii]="Dragon Scales";thata.marine_gear[ii]="Servo Arms";

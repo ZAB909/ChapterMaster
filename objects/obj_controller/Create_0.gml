@@ -928,9 +928,9 @@ enum eFACTION {
 }
 faction[0]="";
 disposition[0]=0;
-faction[1]="Player";
+faction[eFACTION.Player]="Player";
 disposition[1]=0;
-faction[2]="Imperium";
+faction[eFACTION.Imperium]="Imperium";
 disposition[3]=0;
 faction[3]="Mechanicus";
 disposition[4]=0;
