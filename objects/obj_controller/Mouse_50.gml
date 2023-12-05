@@ -256,39 +256,41 @@ if (menu==14) and (cooldown<=0){
     }
     // Identify STC
     if (mouse_x>xx+621) and (mouse_y>yy+466) and (mouse_x<xx+720) and (mouse_y<yy+486){
-        if (stc_wargear_un+stc_vehicles_un+stc_ships_un>0){
-            var r1,r2=0;
+        if (stc_wargear_un + stc_vehicles_un + stc_ships_un > 0){
+				
             cooldown=8000;
             audio_play_sound(snd_stc,-500,0)
             audio_sound_gain(snd_stc,master_volume*effect_volume,0);
-            r1=irandom(stc_wargear_un+stc_vehicles_un+stc_ships_un)+1;
 
-            if (r1<stc_wargear_un) and (stc_wargear_un>0) then r2=1;
-            if (r1>stc_wargear_un) and (r1<=stc_wargear_un+stc_vehicles_un) and (stc_vehicles_un>0) then r2=2;
-            if (r1>stc_wargear_un+stc_vehicles_un) and (r2<=stc_wargear_un+stc_vehicles_un+stc_ships_un) and (stc_ships_un>0) then r2=3;
 
-            if (stc_wargear_un>0) and (stc_vehicles_un+stc_ships_un==0) then r2=1;
-            if (stc_vehicles_un>0) and (stc_wargear_un+stc_ships_un==0) then r2=2;
-            if (stc_ships_un>0) and (stc_vehicles_un+stc_wargear_un==0) then r2=3;
-
-            if (r2==1){
-                stc_wargear_un-=1;
-                stc_wargear+=1;
+			if(stc_wargear_un > 0 && 
+			stc_wargear < MAX_STC_PER_SUBCATEGORY &&
+			stc_wargear <= min(stc_vehicles, stc_ships)) {
+					
+				stc_wargear_un--;
+                stc_wargear++;
                 if (stc_wargear==2) then stc_bonus[1]=choose(1,2,3,4,5);
                 if (stc_wargear==4) then stc_bonus[2]=choose(1,2,3);
-            }
-            if (r2==2){
-                stc_vehicles_un-=1;
-                stc_vehicles+=1;
+			}
+			else if(stc_vehicles_un > 0 && 
+			stc_vehicles < MAX_STC_PER_SUBCATEGORY &&
+			stc_vehicles <= min(stc_wargear, stc_ships)) {
+					
+				stc_vehicles_un--;
+                stc_vehicles++;
                 if (stc_vehicles==2) then stc_bonus[3]=choose(1,2,3,4,5);
                 if (stc_vehicles==4) then stc_bonus[4]=choose(1,2,3);
-            }
-            if (r2==3){
-                stc_ships_un-=1;
-                stc_ships+=1;
+			}
+			else if(stc_ships_un > 0 && 
+			stc_ships < MAX_STC_PER_SUBCATEGORY &&
+			stc_ships <= min(stc_vehicles, stc_wargear)) {
+				
+				stc_ships_un--;
+                stc_ships++;
                 if (stc_ships==2) then stc_bonus[5]=choose(1,2,3,4,5);
                 if (stc_ships==4) then stc_bonus[6]=choose(1,2,3);
-            }
+			}
+			
             // Refresh the shop
             instance_create(1000,1000,obj_shop);
         }
