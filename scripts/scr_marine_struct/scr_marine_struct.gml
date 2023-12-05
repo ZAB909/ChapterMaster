@@ -621,7 +621,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		  			if (body[$ "torso"][$"black_carpace"]){
 		  				has_carpace=true;
 		  			}
-		  		} if (!has_carpace){
+		  		} 
+		  		if (!has_carpace){
 		  			body[$ "torso"][$"black_carpace"]=true;
 		  			strength+=4;
 		  			constitution+=4;
