@@ -10,9 +10,11 @@ function scr_load_all(select_units) {
 		// This sets the maximum size of marines in a company to 200 size
 		for(var i=1; i<=500; i++){
 			unit=obj_ini.TTRPG[company][ide[i]]
-	        if (man[i]=="man") and (ma_loc[i]==selecting_location) and (ma_wid[i]==selecting_planet) and (ma_god[i]<10 && unit.assignment()=="none"){
-				man_sel[i]=1;
-	            man_size+=scr_unit_size(ma_armour[i],ma_role[i],true);
+	        if (man[i]=="man") and (ma_loc[i]==selecting_location) and (ma_wid[i]==selecting_planet) and (ma_god[i]<10){
+	        	if (unit.assignment()=="none"){
+					man_sel[i]=1;
+		            man_size+=scr_unit_size(ma_armour[i],ma_role[i],true);
+		        }
 	        }
 	        //if (i<=200){
 	            if (man[i]=="vehicle") and (ma_loc[i]==selecting_location) and (ma_wid[i]==selecting_planet){

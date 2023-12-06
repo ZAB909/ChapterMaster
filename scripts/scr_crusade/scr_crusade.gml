@@ -65,7 +65,7 @@ function scr_crusade() {
                     
 	                    obj_ini.ship_carrying[obj_ini.lid[co][i]]-=man_size;
                     	if (is_specialist(unit.role(), "standard", true)){
-                    		command_lost--;
+                    		command_lost++;
                     	}
                     
 	                    clean[co]=1;

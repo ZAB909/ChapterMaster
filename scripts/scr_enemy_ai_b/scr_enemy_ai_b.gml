@@ -15,11 +15,11 @@ function scr_enemy_ai_b() {
 	    for (var ops=0;ops<array_length(p_operatives[i]);ops++){
 	      	if(p_operatives[i][ops].type=="squad"){
 	      		squad_operation = p_operatives[i][ops];
-	      		if (squad_operation== "garrison"){//marine garrison on planet
+	      		if (squad_operation.job== "garrison"){//marine garrison on planet
 	      			garrison_force=true;
 	      			array_push(garrisons, obj_ini.squads[p_operatives[i][ops].reference])
 	      			total_garrison += array_length(obj_ini.squads[p_operatives[i][ops].reference].members);
-	      		} else if (squad_operation=="sabotage"){
+	      		} else if (squad_operation.job=="sabotage"){
 	      			sabotage_force=true;
 	      		}
 	      	}
@@ -108,7 +108,7 @@ function scr_enemy_ai_b() {
 	                        if (ii<=1) then ii=1;// image_index=max(8,round(ii));
                         
 	                        if (ii>=7) and (capital_number>1){
-	                        	for (var fleet_n =1;fleet_n<=10;fleetn_n++){
+	                        	for (var fleet_n =1;fleet_n<=10;fleet_n++){
 	                        		if (orbiting.present_fleet[fleet_n]>0) then enemy_fleets++;
 	                        	}
 	                        }
