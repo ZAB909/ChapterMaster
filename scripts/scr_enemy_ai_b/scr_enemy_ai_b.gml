@@ -132,17 +132,17 @@ function scr_enemy_ai_b() {
                     	var nearest_planet_coords = [0,0]
                     	var found_near_planet = false;
 	                    with(obj_star){
-                        if (present_fleet[eFACTION.Necrons]=0){
-                        	if (!array_contains(p_type,"Dead")){
-                        		for (var plan=1; plan<=planets;plan++){
-                        			if (p_owner[plan]<=5){
-                        				found_near_planet=true;
-                        				nearest_planet_coords =[x,y];
-                        				break;
-                        			}
-                        		}
-                        	}
-                        }
+	                        if (present_fleet[eFACTION.Necrons]=0){
+	                        	if (!array_contains(p_type,"Dead")){
+	                        		for (var plan=1; plan<=planets;plan++){
+	                        			if (p_owner[plan]<=5){
+	                        				found_near_planet=true;
+	                        				nearest_planet_coords =[x,y];
+	                        				break;
+	                        			}
+	                        		}
+	                        	}
+	                        }
 	                    }
                     
 	                    if (found_near_planet){

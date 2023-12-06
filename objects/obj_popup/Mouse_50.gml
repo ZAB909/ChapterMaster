@@ -782,6 +782,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
                                 if (unit.update_weapon_one(heavy_ranged[heavy_choice])=="complete"){
                                     break;
                                 }
+                                array_delete(heavy_ranged,heavy_choice, 1)
                             }
                         } // End swap first weapon
 
