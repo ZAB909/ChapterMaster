@@ -1402,7 +1402,7 @@ function scr_initialize_custom() {
 		    		break;
 		    }
 		    spe[company,1]+=string(let)+"0|";
-		    scr_powers_new(company,1);			
+		    chapter_master.update_powers();
 	}
 	mobi[company,1]=mobi[100,2];
 	//TODO not sure why the strin method is ever used? will investigate and replace later
@@ -1467,6 +1467,7 @@ function scr_initialize_custom() {
 
 	// Chief Librarian
 	TTRPG[company,5]=new TTRPG_stats("chapter", company,5);
+	var cheif_lib = TTRPG[company,5];
 	race[company,5]=1;
 	loc[company,5]=home_name;
 	role[company,5]=string("Chief {0}",role[100,17]);
@@ -1482,9 +1483,10 @@ function scr_initialize_custom() {
 	if (obj_creation.discipline="pyromancy"){let="P";letmax=5;}
 	if (obj_creation.discipline="telekinesis"){let="T";letmax=5;}
 	if (obj_creation.discipline="rune Magick"){let="R";letmax=5;}
-	spe[company,5]=string(let)+"0|";scr_powers_new(company,5);
-	TTRPG[company,5].psionic = choose(13,14,15,16);
-	TTRPG[company,5].add_trait("warp_touched");
+	spe[company,5]=string(let)+"0|";
+	cheif_lib.psionic = choose(13,14,15,16);
+	cheif_lib.update_powers();
+	cheif_lib.add_trait("warp_touched");
 	k=0;
 	commands+=5;
 	k=5;
@@ -1544,16 +1546,17 @@ function scr_initialize_custom() {
 	    experience[company][k]=125;
 	    if (psyky=1) then experience[company][k]+=10;
 
-	    var let,letmax;let="";letmax=0;
+	    var let="",letmax=0;
 	    if (obj_creation.discipline="default"){let="D";letmax=7;}
 	    if (obj_creation.discipline="biomancy"){let="B";letmax=5;}
 	    if (obj_creation.discipline="pyromancy"){let="P";letmax=5;}
 	    if (obj_creation.discipline="telekinesis"){let="T";letmax=5;}
 	    if (obj_creation.discipline="rune Magick"){let="R";letmax=5;}
-	    spe[company][k]+=string(let)+"0|";scr_powers_new(company,k);
+	    spe[company][k]+=string(let)+"0|";
 	    TTRPG[company][k].spawn_old_guard();
 	    TTRPG[company][k].add_trait("warp_touched");  
 	    TTRPG[company][k].psionic = choose(13,14,15,16);  
+	    TTRPG[company][k].update_powers();
 	}
 	// Codiciery
 	repeat(codiciery){
@@ -1568,7 +1571,8 @@ function scr_initialize_custom() {
 	    name[company][k]=scr_marine_name();
 	    wep2[company][k]="Bolt Pistol";
 	    gear[company][k]="Psychic Hood";
-	    chaos[company][k]=0;experience[company][k]=80;
+	    chaos[company][k]=0;
+	    experience[company][k]=80;
 	    if (psyky=1) then experience[company][k]+=10;
 
 	    var let,letmax;let="";letmax=0;
@@ -1577,13 +1581,17 @@ function scr_initialize_custom() {
 	    if (obj_creation.discipline="pyromancy"){let="P";letmax=5;}
 	    if (obj_creation.discipline="telekinesis"){let="T";letmax=4;}
 	    if (obj_creation.discipline="rune Magick"){let="R";letmax=5;}
-	    spe[company][k]+=string(let)+"0|";scr_powers_new(company,k);
+	    spe[company][k]+=string(let)+"0|";
 	    TTRPG[company][k].spawn_old_guard();
 	    TTRPG[company][k].add_trait("warp_touched");
-	    TTRPG[company][k].psionic = choose(11,12,13,14,15);     
+	    TTRPG[company][k].psionic = choose(11,12,13,14,15); 
+	    TTRPG[company][k].update_powers();   
 	}
 	// Lexicanum
-	repeat(lexicanum){k+=1;commands+=1;man_size+=1;
+	repeat(lexicanum){
+		k+=1;
+		commands+=1;
+		man_size+=1;
 		TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	    race[company][k]=1;
 	    loc[company][k]=home_name;
@@ -1595,7 +1603,7 @@ function scr_initialize_custom() {
 	    experience[company][k]=40;
 	    if (psyky=1) then experience[company][k]+=10;
 
-	    var let,letmax;let="";letmax=0;
+	    var let="",letmax=0;
 	    if (obj_creation.discipline="default"){let="D";letmax=7;}
 	    if (obj_creation.discipline="biomancy"){let="B";letmax=5;}
 	    if (obj_creation.discipline="pyromancy"){let="P";letmax=5;}
@@ -1655,7 +1663,8 @@ function scr_initialize_custom() {
 
 	    chaos[company][k]=0;
 	    unit.add_exp(210+irandom(30));
-	    TTRPG[company][k].spawn_old_guard();
+	    unit.spawn_old_guard();
+	    unit.add_trait(choose("guardian", "champion","observant","perfectionist"));
 	}
 
 

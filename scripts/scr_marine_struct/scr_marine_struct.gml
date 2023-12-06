@@ -896,7 +896,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	switch base_group{
 		case "astartes":				//basic marine class //adds specific mechanics not releveant to most units
 			var astartes_trait_dist = [
-				["very_hard_to_kill", [99,98]],
+				["very_hard_to_kill", [149,148]],
 				["scholar", [99,98]],
 				["brute", [99,98]],
 				["charismatic", [99,98]],
@@ -1074,6 +1074,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				if (array_contains(traits, "flesh_is_weak")){
 					piety++;
 				}
+				scr_add_item("Bionics",-1);
 			}
 			if (hp()>max_health()){update_health(max_health())}
 		}
@@ -1173,9 +1174,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		static specials = function(){ 
 			return obj_ini.spe[company][marine_number];
 		};	   
-       static update_specials = function(new_specials){
-            obj_ini.spe[company][marine_number] = new_specials;
-	   };
+       static update_powers = scr_powers_new;
 	   	static race = function(){ 
 			return obj_ini.race[company][marine_number];
 		};	
