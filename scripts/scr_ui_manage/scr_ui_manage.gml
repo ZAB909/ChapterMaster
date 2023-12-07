@@ -146,7 +146,7 @@ function scr_ui_manage() {
 				if ((point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left)) || keyboard_check_pressed(ord("S"))){
 					obj_controller.view_squad = !obj_controller.view_squad;
 					if (stat_tool_tip_text=="Toggle Squad View"){
-						obj_controller.company_data = scr_company_struct(managing);
+						obj_controller.company_data = new scr_company_struct(obj_controller.managing);
 						obj_controller.unit_profile = true;
 					} else {
 						obj_controller.unit_profile = false;

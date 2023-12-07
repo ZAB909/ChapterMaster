@@ -1907,7 +1907,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 unload=0;
                 alarm[6]=7;
                 if (managing<=10){
-                    company_data = scr_company_struct(managing);
+                    company_data = new scr_company_struct(managing);
                 } else if (managing>10) then scr_special_view(managing){
                     scr_special_view(managing);
                     company_data={};
@@ -1946,7 +1946,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     scr_ui_refresh();
                     managing-=1;
                     scr_company_view(managing);
-                    company_data = scr_company_struct(managing);
+                    company_data = new scr_company_struct(managing);
                 }else if (managing>11){
                     scr_ui_refresh();
                     managing-=1;
@@ -1974,7 +1974,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     scr_ui_refresh();
                     managing+=1;
                     scr_company_view(managing);
-                    company_data = scr_company_struct(managing);
+                    company_data = new scr_company_struct(managing);
                 }else if (managing>=10) and (managing<15){
                     scr_ui_refresh();
                     managing+=1;
@@ -1985,7 +1985,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     scr_ui_refresh();
                     managing=1;
                     scr_company_view(managing);
-                    company_data = scr_company_struct(managing);
+                    company_data = new scr_company_struct(managing);
                 }
             }
         }

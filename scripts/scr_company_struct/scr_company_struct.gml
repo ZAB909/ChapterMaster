@@ -1,20 +1,27 @@
 
-function scr_company_struct(company) constructor{
-	company = company;
-	static find_company_squads = find_company_squads;
-	company_squads = find_company_squads(company);
+function scr_company_struct(comp) constructor{
+	company = comp;
+	company_squads = [];
+	static squad_search = function(){
+		company_squads = [];
+		for (var i=0;i<array_length(obj_ini.squads);i++){
+			if (array_length(obj_ini.squads[i].members)>0 && obj_ini.squads[i].base_company == company){
+				array_push(company_squads,i);
+			}
+		}
+	}
+	squad_search();
 	cur_squad = 0;
 	exit_period=false;
 	unit_rollover=false;
 	rollover_sequence=0;
-	selected_unit=temp[120];
+	selected_unit=obj_controller.temp[120];
 
 	static draw_squad_view = function(){
-		var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0
+		var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0;
     	var member;
-		var company_squads = company_squads;
 		if (array_length(company_squads) > 0){
-			if (selected_unit.company == managing){
+			if (selected_unit.company == company){
     			if (company_squads[cur_squad] != selected_unit.squad){
     				var squad_found =false
     				for (var i =0;i<array_length(company_squads);i++){
