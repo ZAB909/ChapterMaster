@@ -288,7 +288,12 @@ function scr_draw_unit_image(x_draw, y_draw){
 			
             if (armour()=="Scout Armour"){
 				if (slow>0) then slow=10;
-				armour_sprite=spr_scout_colors;
+				armour_sprite=spr_scout_colors2;
+                if (squad!="none"){
+                    if (obj_ini.squads[squad].type=="scout_sniper_squad" || weapon_one()=="Sniper Rifle" || weapon_two()=="Sniper Rifle"){
+                        armour_sprite=spr_scout_colors;
+                    }
+                }
 				if (hood=-50) then hood=0;
 			}else if (armour()=="MK3 Iron Armour"){
 				if (slow>0) then slow=13;

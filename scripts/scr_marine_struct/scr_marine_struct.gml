@@ -1574,7 +1574,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}
 		}
 	}
-
+	
 	static draw_unit_image = scr_draw_unit_image;
 	static display_wepaons = scr_ui_display_weapons;
 	static unit_profile_text = scr_unit_detail_text;
