@@ -1907,12 +1907,10 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 unload=0;
                 alarm[6]=7;
                 if (managing<=10){
-                    scr_company_view(managing);
-                    company_squads = find_company_squads(managing);
+                    company_data = scr_company_struct(managing);
                 } else if (managing>10) then scr_special_view(managing){
                     scr_special_view(managing);
-                    company_squads=[];
-                    cur_squad=0;
+                    company_data={};
                 }
                 view_squad=false;               
             }
@@ -1944,23 +1942,22 @@ if (action_if_number(obj_saveload, 0, 0) &&
             if (onceh==0){
                 cooldown=8000;
                 onceh=1;
-                cur_squad=0;
                 if ((managing>1) and (managing<=11)){
                     scr_ui_refresh();
                     managing-=1;
                     scr_company_view(managing);
-                    company_squads = find_company_squads(managing);
+                    company_data = scr_company_struct(managing);
                 }else if (managing>11){
                     scr_ui_refresh();
                     managing-=1;
                     scr_special_view(managing);
-                    company_squads =[];
+                    company_data={};
                     view_squad=false;
                 }else if (managing==1){
                     scr_ui_refresh();
                     managing=15;
                     scr_special_view(managing);
-                    company_squads =[];
+                    company_data={};
                     view_squad=false;
                 }
             }
@@ -1973,23 +1970,22 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 cooldown=8000;
                 onceh=1;
                 scr_ui_refresh();
-                cur_squad=0;
                 if (managing<10){
                     scr_ui_refresh();
                     managing+=1;
                     scr_company_view(managing);
-                    company_squads = find_company_squads(managing);
+                    company_data = scr_company_struct(managing);
                 }else if (managing>=10) and (managing<15){
                     scr_ui_refresh();
                     managing+=1;
                     scr_special_view(managing);
-                    company_squads =[];
+                    company_data={};
                     view_squad=false;
                 }else if (managing==15){
                     scr_ui_refresh();
                     managing=1;
                     scr_company_view(managing);
-                    company_squads = find_company_squads(managing);
+                    company_data = scr_company_struct(managing);
                 }
             }
         }
@@ -2005,7 +2001,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
         }
     }
     // Selecting individual marines
-    if (menu=1) and (managing>0) and (!view_squad)and (!unit_profile){
+    if (menu=1) and (managing>0) and (!view_squad && !unit_profile && !company_report){
         var company=managing;
         if (company>10){
             company=0;
