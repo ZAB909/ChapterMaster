@@ -687,7 +687,7 @@ function scr_enemy_ai_a() {
 	                	//garrisons.pdf_support_outcome(ork_score,rand2-rand1,"orks", pdf_score/defence_mult);
 	                }
 	            } else {
-	            	if (pdf_with_player && (pdf_randoms[0]*(pdf_score/defence_mult))*pdf_randoms[1]<rand1){
+	            	if (pdf_with_player && (pdf_random*(pdf_score/(1+defence_mult)))<rand1){
 	            		var tixt = $"Chapter Forces led by {garrison.garrison_leader.name_role()} on {name} {scr_roman_numerals()[run-1]} secure PDF victory";
 	            		scr_alert("green","owner",tixt,x,y);
 	            	}
