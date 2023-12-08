@@ -14,7 +14,12 @@ if (obj_controller.craftworld==0) and (space_hulk==0){
 }
 // Generate star name
 for(var i=0; i<80; i++){
-    if ((name=="random") or (name=="")) and (craftworld==0) and (space_hulk==0) then scr_star_name();
+    var starNameGenerator = new StarNameGenerator();
+    if ((name=="random") or (name=="")) and (craftworld==0) and (space_hulk==0) {
+         var new_star_name = starNameGenerator.generate_random_name();
+         name = new_star_name;
+         obj_controller.star_names+=new_star_name; // TODO make sure it's always unique. Although star_names should just be removed, frankly.
+         };
     if (name=="") and (craftworld==1) then name=scr_eldar_name(3);
 }
 // Sets up an eldar craftworld

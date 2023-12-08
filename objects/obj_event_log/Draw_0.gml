@@ -108,7 +108,7 @@ repeat(20){t+=1;
             
             if (obj_controller.mouse_left=1) and (obj_controller.cooldown<=0){
                 obj_controller.cooldown=8000;topic=topics[t];
-                ini_open("help.ini");
+                ini_open("main\help.ini");
                 info=ini_read_string(string(t),"info","");
                 strategy=ini_read_string(string(t),"strategy","");
                 main_info=ini_read_string(string(t),"main_info","");

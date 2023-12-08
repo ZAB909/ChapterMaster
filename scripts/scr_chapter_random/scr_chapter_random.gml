@@ -3,7 +3,7 @@ function scr_chapter_random(argument0) {
 
 
 	// if argument0=0 then it just gives a name
-
+    var starNameGenerator = new StarNameGenerator();
 
 	var i;i=-1;
 	repeat(21){i+=1;
@@ -23,8 +23,8 @@ function scr_chapter_random(argument0) {
 	points=0;maxpoints=100;
 	fleet_type=1;strength=5;cooperation=5;purity=5;stability=5;
 	var i;i=-1;repeat(6){i+=1;adv[i]="";adv_num[i]=0;dis[i]="";dis_num[i]=0;}
-	homeworld="Temperate";homeworld_name=scr_star_name();
-	recruiting="Death";recruiting_name=scr_star_name();
+	homeworld="Temperate";homeworld_name=starNameGenerator.generate_random_name();
+	recruiting="Death";recruiting_name=starNameGenerator.generate_random_name();
 	flagship_name=scr_ship_name("imperial");
 	recruiting_exists=1;homeworld_exists=1;
 	homeworld_rule=1;aspirant_trial="Blood Duel";

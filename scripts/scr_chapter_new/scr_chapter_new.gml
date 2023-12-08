@@ -14,6 +14,7 @@ function scr_chapter_new(argument0) {
 	fmaster=scr_marine_name();
 	recruiter=scr_marine_name();
 	admiral=scr_marine_name();
+	var starNameGenerator = new StarNameGenerator();
 
 	i=99;
 	repeat(3){i+=1;// First is for the correct slot, second is for default
@@ -383,7 +384,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    adv[1]="Melee Enthusiasts";adv[2]="Kings of Space";adv[3]="Boarders";adv[4]="Daemon Binders";dis[1]="Suspicious";
 	    homeworld="Dead";homeworld_name="Entymion";
 	    homeworld_exists=0;recruiting_exists=1;
-	    recruiting_world="Death";recruiting_name=scr_star_name();
+	    recruiting_world="Death";recruiting_name=starNameGenerator.generate_random_name();
 	    homeworld_rule=0;aspirant_trial="Challenge";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Purple";color_to_secondary="Purple";color_to_trim="Gold";
@@ -412,7 +413,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    adv[1]="Melee Enthusiasts";dis[1]="Shitty Luck";dis[2]="Sieged";dis[3]="Suspicious";
 	    homeworld="Dead";homeworld_name="Lacrima Vex";
 	    homeworld_exists=0;recruiting_exists=1;
-	    recruiting_world="Death";recruiting_name=scr_star_name();
+	    recruiting_world="Death";recruiting_name=starNameGenerator.generate_random_name();
 	    homeworld_rule=0;aspirant_trial="Challenge";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Gold";color_to_secondary="Gold";color_to_trim="Gold";
@@ -436,7 +437,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	if (argument0="Doom Benefactors"){points=100;
 	    selected_chapter=135;chapter=argument0;icon=0;icon_name="eye";founding=0;scr_icon("");
 	    fleet_type=1;strength=1;purity=10;stability=7;cooperation=8;
-	    homeworld="Forge";homeworld_name="Ariana Prime";recruiting_world="Death";recruiting_name=scr_star_name();
+	    homeworld="Forge";homeworld_name="Ariana Prime";recruiting_world="Death";recruiting_name=starNameGenerator.generate_random_name();
 	    homeworld_exists=1;recruiting_exists=1;homeworld_rule=2;aspirant_trial="Apprenticeship";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Dark Red";color_to_secondary="Black";color_to_trim="Copper";
