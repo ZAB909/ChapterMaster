@@ -255,7 +255,7 @@ function scr_enemy_ai_a() {
 	    	var pdf_mod;
 	    	var defence_mult = p_defenses[run]*0.1;
 	    	if (pdf_with_player){//if player supports give garrison bonus
-		    	var garrison_mult = garrison.total_garrison*(0.005+(0.001*p_defenses[run]))
+		    	var garrison_mult = garrison.total_garrison*(0.008+(0.001*p_defenses[run]))
 		    	garrison.find_leader();
 		    	defence_mult+=garrison_mult
 		    	defence_mult*=(garrison.garrison_leader.wisdom)/40;//modified by how good a commander the garrison leader is
