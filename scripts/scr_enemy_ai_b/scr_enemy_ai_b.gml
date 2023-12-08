@@ -353,12 +353,11 @@ function scr_enemy_ai_b() {
 	    }
     
     
-		for (i=1;i<5;i++){
-			if (i>planets){break;}
+		for (i=1;i<=planets;i++){
 	        tau_chance=floor(random(100))+1;
         
 	        if (i<=planets) and (p_influence[i]>=70) and (p_owner[i]!=8) and (p_owner[i]!=10) and (p_owner[i]!=7) and (p_owner[i]!=9) and (p_type[i]!="Space Hulk"){
-	        	for (var s=1;s<=planets){
+	        	for (var s=1;s<=planets;s++){
 	        		 if (p_owner[s]=8) then tau_chance+=5;
 	        	}
 				
