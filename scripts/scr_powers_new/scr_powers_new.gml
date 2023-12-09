@@ -8,7 +8,7 @@ function scr_powers_new(){
 	var random_learn;
 	random_learn=false;
 
-	var powers_should_have,powers_have;
+	var letmax, powers_should_have, powers_have;
 	var power_code="";letmax=0;
 
 	if (obj_ini.psy_powers="default"){power_code="D";letmax=7;}
