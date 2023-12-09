@@ -232,6 +232,10 @@ function scr_initialize_custom() {
 	        gladius=7;
 	        hunters=3;
 			
+			if (global.chapter_name="Raven Guard")
+				{
+					flagship_name="Avenger"
+				}
 			if (global.chapter_name="Salamanders")
 				{
 					flagship_name="Flamewrought";
@@ -922,6 +926,9 @@ function scr_initialize_custom() {
 	if (global.chapter_name=="Space Wolves" || obj_ini.progenitor==3){
 		squad_name = "Pack";
 	}
+	if (global.chapter_name=="Iron Hands" || obj_ini.progenitor==6){
+		squad_name = "Clave";
+	}
 	squad_types = {};
 	var st = { 
 		"command_squad" :[
@@ -1254,21 +1261,24 @@ function scr_initialize_custom() {
 			wep1[0,1]="Power Fist&DUB|";
 			break;
 		case 2:
-			wep1[0,1]="Relic Blade&MNR|";
+			wep1[0,1]="Lightning Claw&DUB|";
 			break;
 		case 3:
-			wep1[0,1]="Master Crafted Thunder Hammer";
+			wep1[0,1]="Relic Blade&MNR|";
 			break;
 		case 4:
-			wep1[0,1]="Master Crafted Power Sword";
+			wep1[0,1]="Master Crafted Thunder Hammer";
 			break;
 		case 5:
-			wep1[0,1]="Master Crafted Power Axe";
+			wep1[0,1]="Master Crafted Power Sword";
 			break;
 		case 6:
-			wep1[0,1]="Master Crafted Eviscerator";
+			wep1[0,1]="Master Crafted Power Axe";
 			break;
 		case 7:
+			wep1[0,1]="Master Crafted Eviscerator";
+			break;
+		case 8:
 			wep1[0,1]="Master Crafted Force Weapon";
 			break;	
 	}
@@ -1357,6 +1367,13 @@ function scr_initialize_custom() {
 			chapter_master.add_trait("old_guard");
 			chapter_master.add_trait("tinkerer");
 			chapter_master.add_trait("slow_and_purposeful");	
+			break;
+		case "Raven Guard":
+		mobi[0,1]="Jump Pack&SIL|";
+		chapter_master.add_trait("lightning_warriors");
+		chapter_master.add_trait("still_standing");
+		chapter_master.add_trait("seasoned");
+		break;
 		default:
 			chapter_master.add_trait("old_guard");
 
