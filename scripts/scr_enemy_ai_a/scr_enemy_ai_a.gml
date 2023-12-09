@@ -255,7 +255,7 @@ function scr_enemy_ai_a() {
 	    	var pdf_mod;
 	    	var defence_mult = p_defenses[run]*0.1;
 	    	if (pdf_with_player){//if player supports give garrison bonus
-		    	var garrison_mult = garrison.total_garrison*(0.005+(0.001*p_defenses[run]))
+		    	var garrison_mult = garrison.total_garrison*(0.008+(0.001*p_defenses[run]))
 		    	garrison.find_leader();
 		    	defence_mult+=garrison_mult
 		    	defence_mult*=(garrison.garrison_leader.wisdom)/40;//modified by how good a commander the garrison leader is
@@ -687,7 +687,7 @@ function scr_enemy_ai_a() {
 	                	//garrisons.pdf_support_outcome(ork_score,rand2-rand1,"orks", pdf_score/defence_mult);
 	                }
 	            } else {
-	            	if (pdf_with_player && (pdf_randoms[0]*(pdf_score/defence_mult))*pdf_randoms[1]<rand1){
+	            	if (pdf_with_player && (pdf_random*(pdf_score/(1+defence_mult)))<rand1){
 	            		var tixt = $"Chapter Forces led by {garrison.garrison_leader.name_role()} on {name} {scr_roman_numerals()[run-1]} secure PDF victory";
 	            		scr_alert("green","owner",tixt,x,y);
 	            	}
