@@ -1018,7 +1018,8 @@ faction_leader[eFACTION.Ecclesiarchy]=scr_imperial_name(2);
 faction_title[5]="Prioress";
 faction_status[eFACTION.Ecclesiarchy]="Allied";
 // Eldar faction
-faction_leader[eFACTION.Eldar]=scr_eldar_name(2);
+var eldar_name_generator = new EldarNameGenerator();
+faction_leader[eFACTION.Eldar]=eldar_name_generator.generate_random_name(2);
 faction_title[6]="Farseer";
 faction_status[eFACTION.Eldar]="Antagonism";// If disposition = 0 then instead set it to "Antagonism"
 if (instance_exists(obj_ini)){if (string_count("Eldar",obj_ini.strin)>0) then faction_status[eFACTION.Eldar]="War";}

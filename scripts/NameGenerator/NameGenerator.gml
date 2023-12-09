@@ -3,4 +3,5 @@
 function NameGenerator() constructor
 {
 	// TODO, thinking how to make name generation bit more generic
+	
 }

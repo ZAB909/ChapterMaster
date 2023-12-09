@@ -3,39 +3,15 @@ function SectorNameGenerator() constructor {
     static used_names = [];
 
     if (array_length(names) == 0) {
-        // load names
-        var file_buffer = undefined;
-        try {
-            var file_path = working_directory + "main\\names\\sector.json";
-            file_buffer = buffer_load(file_path);
+        var file_loader = new JsonFileListLoader();
 
-            if (file_buffer == -1) {
-                throw ("Could not open file");
-            }
+        var load_result = file_loader.load_list_from_json_file("main\\names\\sector.json", ["names"]);
 
-            var json_string = buffer_read(file_buffer, buffer_string);
-            var raw_data = json_parse(json_string);
-
-            if (is_array(raw_data) == false) {
-                throw ("No string array found");
-            }
-
-            var data_array = array_unique(raw_data);
-
-            if(array_length(data_array) == 0){
-                throw ("No (unique) values found");
-            }
-
-            names = array_shuffle(data_array);
-
-            debugl($"Successfully loaded {array_length(names)} unique Sector names");
-        } catch (_ex) {
-            debugl($"Could not parse {file_path}: {_ex.message}. Using backup name list.");
-            names = ["Andromedae"];
-        } finally {
-            if (is_undefined(file_buffer) == false) {
-                buffer_delete(file_buffer);
-            }
+        if(load_result.is_success){
+            names = load_result.values[$ "names"];
+        }
+        else{
+            names = ["Sector 1"];
         }
     }
 
