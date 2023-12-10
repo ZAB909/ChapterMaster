@@ -622,7 +622,7 @@ if (tech_points>=4) and (tech_aspirant==0){
         }    
     } else{
         training_techmarine = 0;
-        scr_alert("red",string("recruitment","No marines with sufficient technology aptitude for {0} training",obj_ini.role[100][16]),0,0);
+        scr_alert("red", "recruitment", "No marines with sufficient technology aptitude for Techmarine training", 0, 0);
     }
 }
 recruit_count=0;
