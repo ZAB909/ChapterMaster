@@ -12,45 +12,7 @@ strin2="";
 tolerant=0;
 companies=10;
 progenitor=0;
-sector_name = "";
-stability = 0;
-purity = 0;
-
-home_name = "";
-home_type = "";
-recruiting_name = "";
-recruiting_type = "";
-chapter_name = "";
-flagship_name = "";
-psy_powers = "";
-battle_cry = "";
-skin_color = 0;
-adv = [0];
-dis = [0];
-squads = [0];
-
-//chapter leadership
-master_name = "";
-chief_librarian_name = "";
-high_chaplain_name = "";
-high_apothecary_name = "";
-forge_master_name = "";
-lord_admiral_name = "";
-
-// geenseed mutations 
-preomnor = 0;
-voice = 0;
-doomed = 0;
-lyman = 0;
-omophagea = 0;
-ossmodula = 0;
-membrane = 0;
-zygote = 0;
-betchers = 0;
-catalepsean = 0;
-secretions = 0;
-occulobe = 0;
-mucranoid = 0;
+adv = [0]
 
 load_to_ships=[2,0,0];
 if (instance_exists(obj_creation)){load_to_ships=obj_creation.load_to_ships;}
