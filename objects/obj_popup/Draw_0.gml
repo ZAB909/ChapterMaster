@@ -741,93 +741,67 @@ if (zm=0) and (type=5) and (instance_exists(obj_controller)){
     if (target_comp=0) or (target_comp>10) then check="x";
     draw_text(xx+1470,yy+210,string_hash_to_newline("HQ ["+string(check)+"]"));
     check=" ";
-
     // TODO refactor Promoting and Transfer to use a function or a for loop
     if ((unit_role!=obj_ini.role[100,17]) or (obj_controller.command_set[1]!=0)) and (unit_role!="Lexicanum") and (unit_role!="Codiciery"){
-        // I Company
-        if (min_exp<80) then draw_set_alpha(0.25);
-        if (target_comp==1) then check="x";
-        draw_text(xx+1030,yy+230,string_hash_to_newline(romanNumerals[0]+" ["+string(check)+"]"));
-        check=" ";
-        draw_set_alpha(1);
-        // II Company
-        if (min_exp<70) then draw_set_alpha(0.25);
-        if (target_comp==2) then check="x";
-        draw_text(xx+1140,yy+230,string_hash_to_newline(romanNumerals[1]+" ["+string(check)+"]"));
-        check=" ";
-        draw_set_alpha(1);
-        // III Company
-        if (min_exp<60) then draw_set_alpha(0.25);
-        if (target_comp==3) then check="x";
-        draw_text(xx+1250,yy+230,string_hash_to_newline(romanNumerals[2]+" ["+string(check)+"]"));
-        check=" ";
-        draw_set_alpha(1);
-        // IV Company
-        if (min_exp<50) then draw_set_alpha(0.25);
-        if (target_comp==4) then check="x";
-        draw_text(xx+1360,yy+230,string_hash_to_newline(romanNumerals[3]+" ["+string(check)+"]"));
-        check=" ";
-        draw_set_alpha(1);
-        // V Company
-        if (min_exp<40) then draw_set_alpha(0.25);
-        if (target_comp=5) then check="x";
-        draw_text(xx+1470,yy+230,string_hash_to_newline(romanNumerals[4]+" ["+string(check)+"]"));
-        check=" ";
-        draw_set_alpha(1);
-        // VI Company
-        if (min_exp<35) then draw_set_alpha(0.25);
-        if (target_comp=6) then check="x";
-        draw_text(xx+1030,yy+250,string_hash_to_newline(romanNumerals[5]+" ["+string(check)+"]"));
-        check=" ";
-        draw_set_alpha(1);
-        // VII Company
-        if (min_exp<30) then draw_set_alpha(0.25);
-        if (target_comp=7) then check="x";
-        draw_text(xx+1140,yy+250,string_hash_to_newline(romanNumerals[6]+" ["+string(check)+"]"));
-        check=" ";draw_set_alpha(1);
-        // VIII Company
-        if (min_exp<25) then draw_set_alpha(0.25);
-        if (target_comp=8) then check="x";
-        draw_text(xx+1250,yy+250,string_hash_to_newline(romanNumerals[7]+" ["+string(check)+"]"));
-        check=" ";
-        draw_set_alpha(1);
-        // IX Company
-        if (min_exp<20) then draw_set_alpha(0.25);
-        if (target_comp=9) then check="x";
-        draw_text(xx+1360,yy+250,string_hash_to_newline(romanNumerals[8]+" ["+string(check)+"]"));
-        check=" ";
-        draw_set_alpha(1);
-        // X Company
-        if (target_comp=10) then check="x";
-        draw_text(xx+1470,yy+250,string_hash_to_newline(romanNumerals[9]+" ["+string(check)+"]"));
-        check=" ";
+        for (i=1;i<=10;i++){
+            var comp_data = company_promote_data[i-1];
+            if (obj_controller.command_set[2]==0){//cecks if exp requirements are activated
+                if (min_exp<comp_data[2]){
+                    draw_set_alpha(0.25);
+                }
+            }
+            check=" ";
+            if (target_comp==i) then check="x";
+            var select_text = $"{romanNumerals[i-1]}[{check}]";
+            draw_text(xx+comp_data[0],yy+comp_data[1],select_text);
+            if (mouse_check_button_pressed(mb_left) && point_in_rectangle(mouse_x, mouse_y, comp_data[0], comp_data[1], comp_data[0]+90, comp_data[0]+20)){
+                target_comp=i;
+                cooldown=8000;
+            }
+        }
     }
     
     draw_text(xx+1014,yy+290,string_hash_to_newline("Target Role:"));
     
     if (target_comp!=-1){
-        if (role_name[1]!=""){draw_set_alpha(1);check=" ";if (target_role=1) then check="x";
+        if (role_name[1]!=""){
+            draw_set_alpha(1);
+            check=" ";if (target_role=1) then check="x";
             if (min_exp<role_exp[1]) then draw_set_alpha(0.25);
             draw_text(xx+1030,yy+310,string_hash_to_newline(string(role_name[1])+" ["+string(check)+"]"));
         }
-        if (role_name[2]!=""){draw_set_alpha(1);check=" ";if (target_role=2) then check="x";
+        if (role_name[2]!=""){
+            draw_set_alpha(1);
+            check=" ";
+        if (target_role=2) then check="x";
             if (min_exp<role_exp[2]) then draw_set_alpha(0.25);
             draw_text(xx+1200,yy+310,string_hash_to_newline(string(role_name[2])+" ["+string(check)+"]"));
         }
-        if (role_name[3]!=""){draw_set_alpha(1);check=" ";if (target_role=3) then check="x";
+        if (role_name[3]!=""){
+            draw_set_alpha(1);
+            check=" ";if (target_role=3) then check="x";
             if (min_exp<role_exp[3]) then draw_set_alpha(0.25);
             draw_text(xx+1370,yy+310,string_hash_to_newline(string(role_name[3])+" ["+string(check)+"]"));
         }
         
-        if (role_name[4]!=""){draw_set_alpha(1);check=" ";if (target_role=4) then check="x";
+        if (role_name[4]!=""){
+            draw_set_alpha(1);
+            check=" ";
+        if (target_role=4) then check="x";
             if (min_exp<role_exp[4]) then draw_set_alpha(0.25);
             draw_text(xx+1030,yy+330,string_hash_to_newline(string(role_name[4])+" ["+string(check)+"]"));
         }
-        if (role_name[5]!=""){draw_set_alpha(1);check=" ";if (target_role=5) then check="x";
+        if (role_name[5]!=""){
+            draw_set_alpha(1);
+            check=" ";
+        if (target_role=5) then check="x";
             if (min_exp<role_exp[5]) then draw_set_alpha(0.25);
             draw_text(xx+1200,yy+330,string_hash_to_newline(string(role_name[5])+" ["+string(check)+"]"));
         }
-        if (role_name[6]!=""){draw_set_alpha(1);check=" ";if (target_role=6) then check="x";
+        if (role_name[6]!=""){
+            draw_set_alpha(1);
+            check=" ";
+        if (target_role=6) then check="x";
             if (min_exp<role_exp[6]) then draw_set_alpha(0.25);
             draw_text(xx+1370,yy+330,string_hash_to_newline(string(role_name[6])+" ["+string(check)+"]"));
         }

@@ -82,20 +82,6 @@ if (type=5) and (cooldown<=0){
         if (mouse_y>=yy+210) and (mouse_y<yy+230){
             if (mouse_x>=xx+1468) and (mouse_x<=xx+1515) and (min_exp>=0){target_comp=0;cooldown=8000;}
         }
-        if (mouse_y>=yy+230) and (mouse_y<yy+250) and (unit_role!="Lexicanum") and (unit_role!="Codiciery"){
-            if (mouse_x>=xx+1030) and (mouse_x<=xx+1120) and (min_exp>=80){target_comp=1;cooldown=8000;}
-            if (mouse_x>=xx+1140) and (mouse_x<=xx+1230) and (min_exp>=70){target_comp=2;cooldown=8000;}
-            if (mouse_x>=xx+1250) and (mouse_x<=xx+1340) and (min_exp>=60){target_comp=3;cooldown=8000;}
-            if (mouse_x>=xx+1360) and (mouse_x<=xx+1450) and (min_exp>=50){target_comp=4;cooldown=8000;}
-            if (mouse_x>=xx+1470) and (mouse_x<=xx+1560) and (min_exp>=40){target_comp=5;cooldown=8000;}
-        }
-        if (mouse_y>=yy+250) and (mouse_y<yy+270) and (unit_role!="Lexicanum") and (unit_role!="Codiciery"){
-            if (mouse_x>=xx+1030) and (mouse_x<=xx+1120) and (min_exp>=35){target_comp=6;cooldown=8000;}
-            if (mouse_x>=xx+1140) and (mouse_x<=xx+1230) and (min_exp>=30){target_comp=7;cooldown=8000;}
-            if (mouse_x>=xx+1250) and (mouse_x<=xx+1340) and (min_exp>=25){target_comp=8;cooldown=8000;}
-            if (mouse_x>=xx+1360) and (mouse_x<=xx+1450) and (min_exp>=20){target_comp=9;cooldown=8000;}
-            if (mouse_x>=xx+1470) and (mouse_x<=xx+1560) and (min_exp>=0){target_comp=10;cooldown=8000;}
-        }
     }
 
     if (mouse_y>=yy+310) and (mouse_y<yy+330) and (type=5){
@@ -138,7 +124,9 @@ if (type=5) and (cooldown<=0){
         // honour guard xp requirement
         if ((target_comp=0) or (target_comp>10)) and (spec=0){
             i=0;cap=0;bear=0;champ=0;
-            i+=1;role_name[i]=obj_ini.role[100][2];role_exp[i]=200;
+            i+=1;
+            role_name[i]=obj_ini.role[100][2];
+            role_exp[i]=200;
         }
        // this area does the required exp for roles per company
         if (target_comp=1) and (spec=0){
@@ -164,9 +152,12 @@ if (type=5) and (cooldown<=0){
 
         if (target_comp=3) and (spec=0){
             i=0;cap=0;bear=0;champ=0;
-            if (units=1){cap=scr_role_count(obj_ini.role[100][5],"3");if (cap=0){i+=1;role_name[i]=obj_ini.role[100][5];role_exp[i]=190;}}
-            if (units=1){bear=scr_role_count("Standard Bearer","3");if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=65;}}
-            if (units=1){champ=scr_role_count(obj_ini.role[100][7],"3");if (champ=0){i+=1;role_name[i]=obj_ini.role[100][7];role_exp[i]=160;}}
+            if (units=1){cap=scr_role_count(obj_ini.role[100][5],"3");
+            if (cap=0){i+=1;role_name[i]=obj_ini.role[100][5];role_exp[i]=190;}}
+            if (units=1){bear=scr_role_count("Standard Bearer","3");
+            if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=65;}}
+            if (units=1){champ=scr_role_count(obj_ini.role[100][7],"3");
+            if (champ=0){i+=1;role_name[i]=obj_ini.role[100][7];role_exp[i]=160;}}
             i+=1;role_name[i]=obj_ini.role[100][8];role_exp[i]=110;
             i+=1;role_name[i]=obj_ini.role[100][10];role_exp[i]=110;
             i+=1;role_name[i]=obj_ini.role[100][9];role_exp[i]=110;
@@ -186,9 +177,12 @@ if (type=5) and (cooldown<=0){
 
         if (target_comp=5) and (spec=0){
             i=0;cap=0;bear=0;champ=0;
-            if (units=1){cap=scr_role_count(obj_ini.role[100][5],"5");if (cap=0){i+=1;role_name[i]=obj_ini.role[100][5];role_exp[i]=160;}}
-            if (units=1){bear=scr_role_count("Standard Bearer","5");if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=45;}
-            if (units=1){champ=scr_role_count(obj_ini.role[100][7],"5");if (champ=0){i+=1;role_name[i]=obj_ini.role[100][7];role_exp[i]=130;}}}
+            if (units=1){cap=scr_role_count(obj_ini.role[100][5],"5");
+            if (cap=0){i+=1;role_name[i]=obj_ini.role[100][5];role_exp[i]=160;}}
+            if (units=1){bear=scr_role_count("Standard Bearer","5");
+            if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=45;}
+            if (units=1){champ=scr_role_count(obj_ini.role[100][7],"5");
+            if (champ=0){i+=1;role_name[i]=obj_ini.role[100][7];role_exp[i]=130;}}}
             i+=1;role_name[i]=obj_ini.role[100][8];role_exp[i]=80;
             i+=1;role_name[i]=obj_ini.role[100][10];role_exp[i]=80;
             i+=1;role_name[i]=obj_ini.role[100][9];role_exp[i]=80;
@@ -224,9 +218,14 @@ if (type=5) and (cooldown<=0){
 
         if (target_comp=9) and (spec=0){
             i=0;cap=0;bear=0;champ=0;
-            if (units=1){cap=scr_role_count(obj_ini.role[100][5],"9");if (cap=0){i+=1;role_name[i]=obj_ini.role[100][5];role_exp[i]=120;}}
-            if (units=1){bear=scr_role_count("Standard Bearer","9");if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=25;}
-            if (units=1){champ=scr_role_count(obj_ini.role[100][7],"9");if (champ=0){i+=1;role_name[i]=obj_ini.role[100][7];role_exp[i]=100;}}}
+            if (units=1){
+                cap=scr_role_count(obj_ini.role[100][5],"9");
+                if (cap=0){i+=1;role_name[i]=obj_ini.role[100][5];role_exp[i]=120;}
+            }
+            if (units=1){bear=scr_role_count("Standard Bearer","9");
+            if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=25;}
+            if (units=1){champ=scr_role_count(obj_ini.role[100][7],"9");
+            if (champ=0){i+=1;role_name[i]=obj_ini.role[100][7];role_exp[i]=100;}}}
             i+=1;role_name[i]=obj_ini.role[100][9];role_exp[i]=40;
             if (units=1){i+=1;role_name[i]=obj_ini.role[100][6];role_exp[i]=40;}
         }
@@ -496,7 +495,9 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
             alll=0;
             if (managing<=10) and (managing!=0) then scr_company_view(managing);
             if (managing>10) or (managing=0) then scr_special_view(managing);
-            cooldown=10;sel_loading=0;unload=0;alarm[6]=30;
+            cooldown=10;sel_loading=0;
+            unload=0;
+            alarm[6]=30;
         }
 
         with(obj_managment_panel){instance_destroy();}

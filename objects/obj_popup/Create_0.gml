@@ -55,7 +55,18 @@ new_target=0;
 
 if (instance_exists(obj_controller)){obj_controller.cooldown=9999;}
 number=0;
-
+company_promote_data = [
+    [1030,230,150],//1st company
+    [1140,230,120],
+    [1250,230,110],
+    [1360,230,100],
+    [1470,230,80],
+    [1030,250,70],
+    [1140,250,60],
+    [1250,250,50],
+    [1360,250,40],
+    [1470,250,0],//10th company
+]
 var i;i=-1;
 repeat(11){i+=1;role_name[i]="";role_exp[i]=0;}
 
@@ -71,7 +82,6 @@ a_wep1="";a_wep2="";a_armour="";a_gear="";a_mobi="";
 n_good1=1;n_good2=1;n_good3=1;n_good4=1;n_good5=1;
 sel1=0;sel2=0;sel3=0;sel4=0;sel5=0;
 vehicle_equipment=0;warning="";
-
 var i;i=-1;
 repeat(51){
     i+=1;item_name[i]="";
