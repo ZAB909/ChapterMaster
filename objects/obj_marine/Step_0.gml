@@ -1,4 +1,4 @@
-
+/*
 if (instance_number(obj_ork)>30) then blind_fire=1;
 else blind_fire=0;
 
@@ -162,7 +162,7 @@ if (action="fire"){
     
     */
     
-    
+/*    
     speed=0;
     
     if (firing=1) and (ii<=3){

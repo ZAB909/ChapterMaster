@@ -1,4 +1,4 @@
-
+/*
 action="move";
 animation="";
 range=400;
@@ -60,7 +60,7 @@ repeat(21){i+=1;
     marine_wep2_ammo[i]=0;
     marine_wep2_reload[i]=0;
     marine_wep2_spec[i]=0;*/
-    marine_cqc[i]=0;
+/*    marine_cqc[i]=0;
     
     marine_ranged[i]=1;
     marine_melee[i]=1;
@@ -107,7 +107,7 @@ i=0;repeat(10){i+=1;
     /*marine_wep2[i]="Chainsword";
     marine_wep2_ammo[i]=0;
     marine_wep2_reload[i]=999;*/
-}
+/*}
 
 
 var i,n,g;
