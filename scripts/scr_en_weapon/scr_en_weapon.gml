@@ -49,7 +49,7 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
 	    if (name="Lightning Gun"){atta=choose(80,80,80,150);arp=0;rang=5;spli=0;}
 	    if (name="Thallax Melee"){atta=80;arp=0;rang=1;spli=1;}
 		if (name="Combat Knife"){atta=25;arp=0;rang=1;spli=0;}
-		if (name="Hellgun"){atta=30;arp=0;rang=6.1;amm=10;spli=1;}
+		if (name="Hellgun"){atta=30;arp=0;rang=6.1;amm=15;spli=1;}
 		if (name="Power Axe"){atta=160;arp=1;rang=1;spli=1;}
 		if (name="Flamer"){atta=100;arp=-1;rang=3.1;amm=4;spli=1;}
 	}
@@ -99,6 +99,8 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
 	    if (argument0="Titan Starcannon"){atta=220;arp=1;rang=4;spli=1;}
 	    if (argument0="Phantom Pulsar"){atta=500;arp=1;rang=20;spli=1;}
 		if (name="Combat Knife"){atta=25;arp=0;rang=1;spli=0;}
+		if (name="Medium Vehicle Melee"){atta=80;arp=0;rang=1;}
+		if (name="Light Vehicle Melee"){atta=70;arp=0;rang=1;}
 	}
 
 
@@ -113,31 +115,35 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
 	    if (argument0="Dakkagun"){atta=150;arp=0;rang=10;amm=10;spli=1;}
 	    if (argument0="Deffgun"){atta=120;arp=0;rang=8;amm=10;spli=1;}
 	    if (argument0="Snazzgun"){atta=80;arp=0;rang=12;amm=8;spli=1;}
-	    if (argument0="Grot Blasta"){atta=12;arp=0;rang=3.1;amm=6;}
+	    if (argument0="Grot Blasta"){atta=12;arp=0;rang=3.1;amm=6;spli=1;}
 	    if (argument0="Kannon"){atta=200;arp=1;rang=10.1;amm=5;spli=1;}
-	    if (argument0="Shoota"){atta=25;arp=0;rang=6.1;amm=6;spli=1;}
+	    if (argument0="Shoota"){atta=25;arp=0;rang=6.1;amm=8;spli=1;}
 	    if (argument0="Burna"){atta=80;arp=-1;rang=3.1;amm=4;spli=1;}
 	    if (argument0="Skorcha"){atta=160;arp=0;rang=3.1;amm=6;spli=1;}
-	    if (argument0="Rokkit Launcha"){atta=150;arp=1;rang=10;spli=1;}
-	    if (argument0="Krooz Missile"){atta=250;arp=1;rang=15;spli=1;}
+	    if (argument0="Rokkit Launcha"){atta=150;arp=1;rang=10;amm=6;spli=1;}
+	    if (argument0="Krooz Missile"){atta=250;arp=1;rang=15;amm=2;spli=1;}
+		if (name="Medium Vehicle Melee"){atta=80;arp=0;rang=1;}
 
 	}
 
 
 
 	if (obj_ncombat.enemy=8){
-	    if (name="Fusion Blaster"){atta=200;arp=1;rang=2;amm=4;}
-	    if (name="Plasma Rifle"){atta=120;arp=1;rang=10;}
-	    if (name="Cyclic Ion Blaster"){atta=180;arp=0;rang=6;spli=1;}// x6
-	    if (name="Burst Rifle"){atta=130;arp=0;rang=16;spli=1;}
+	    if (name="Fusion Blaster"){atta=200;arp=1;rang=3.1;amm=4;}
+	    if (name="Plasma Rifle"){atta=120;arp=1;rang=10;amm=6;}
+	    if (name="Cyclic Ion Blaster"){atta=180;arp=0;rang=6;amm=6;spli=1;}// x6
+	    if (name="Burst Rifle"){atta=130;arp=0;rang=16;amm=6;spli=1;}
 	    if (name="Missile Pod"){atta=160;arp=1;rang=15;amm=6;spli=1;}
-	    if (name="Smart Missile System"){atta=150;arp=1;rang=15;}
-	    if (name="Small Railgun"){atta=150;arp=1;rang=18;}
-	    if (name="Pulse Rifle"){atta=37;arp=0;rang=12;}
-	    if (name="Rail Rifle"){atta=65;arp=0;rang=14;}
-	    if (name="Kroot Rifle"){atta=25;arp=0;rang=6;}
-	    if (name="Vespid Crystal"){atta=60;arp=0;rang=2.1;}
-	    if (name="Railgun"){atta=400;arp=1;rang=20;}
+	    if (name="Smart Missile System"){atta=150;arp=1;rang=15;amm=2;}
+	    if (name="Small Railgun"){atta=150;arp=1;rang=18;amm=4;}
+	    if (name="Pulse Rifle"){atta=37;arp=0;rang=12;;amm=9}
+	    if (name="Rail Rifle"){atta=65;arp=0;rang=14;;amm=8}
+	    if (name="Kroot Rifle"){atta=25;arp=0;rang=6.1;amm=6;}
+		if (name="Kroot Melee"){atta=75;arp=0;rang=1;}
+	    if (name="Vespid Crystal"){atta=60;arp=0;rang=3.1;amm=6;}
+	    if (name="Railgun"){atta=400;arp=1;rang=20;amm=6;}
+		if (name="Combat Knife"){atta=25;arp=0;rang=1;spli=0;}
+		if (name="Light Vehicle Melee"){atta=70;arp=0;rang=1;}
 	}
 
 
@@ -163,6 +169,7 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
 	    if (argument0="Lictor Claws"){atta=300;arp=0;rang=1;}
 	    if (argument0="Flesh Hooks"){atta=50;arp=0;rang=2;amm=1;}
 		if (name="Combat Knife"){atta=25;arp=0;rang=1;spli=0;}
+		if (name="Medium Vehicle Melee"){atta=80;arp=0;rang=1;}
 
 	}
 
@@ -176,8 +183,8 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
 	    if (argument0="Chainfist"){atta=300;arp=1;rang=1;spli=1;}
 	    if (argument0="Meltagun"){atta=200;arp=1;rang=3.1;amm=4;}
 	    if (argument0="Flamer"){atta=100;arp=-1;rang=3.1;amm=4;spli=1;}
-	    if (argument0="Heavy Flamer"){atta=250;arp=0;rang=2.1;amm=6;spli=1;}
-	    if (argument0="Combi-Flamer"){atta=160;arp=0;rang=2.1;amm=1;spli=1;}
+	    if (argument0="Heavy Flamer"){atta=250;arp=0;rang=4.1;amm=6;spli=1;}
+	    if (argument0="Combi-Flamer"){atta=160;arp=0;rang=3.1;amm=1;spli=1;}
 	    if (argument0="Bolter"){atta=75;arp=0;rang=12;amm=15;spli=1;if (obj_ncombat.enemy=5) then atta=50;}// Bursts
 		if (argument0="Light Bolter"){atta=50;arp=0;rang=12;amm=15;spli=1;}
 	    if (argument0="Power Fist"){atta=425;arp=1;rang=1;}
@@ -187,28 +194,30 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
 	    if (argument0="Bolt Pistol"){atta=35;arp=0;rang=3.1;amm=18;}
 	    if (argument0="Chainaxe"){atta=55;arp=0;rang=1;}
 	    if (argument0="Poisoned Chainsword"){atta=90;arp=0;rang=1;if (obj_ini.preomnor=1){atta=130;}}
-	    if (argument0="Sonic Blaster"){atta=120;arp=0;rang=3;spli=1;}
-	    if (argument0="Rubric Bolter"){atta=80;arp=0;rang=12;amm=15;}// Bursts
+	    if (argument0="Sonic Blaster"){atta=120;arp=0;rang=3.1;spli=1;}
+	    if (argument0="Rubric Bolter"){atta=80;arp=0;rang=12;amm=15;spli=1;}// Bursts
 	    if (argument0="Witchfire"){atta=200;arp=1;rang=5.1;}
-	    if (argument0="Autogun"){atta=20;arp=0;rang=6;amm=12;}
+	    if (argument0="Autogun"){atta=20;arp=0;rang=6.1;amm=10;spli=1;}
 	    if (argument0="Storm Bolter"){atta=65;arp=0;rang=8;amm=10;spli=1;}
 	    if (argument0="Lascannon"){atta=200;arp=1;rang=20;amm=8;}
-	    if (argument0="Twin Linked Heavy Bolters"){atta=240;arp=0;rang=16;spli=1;}
-	    if (argument0="Twin-Linked Heavy Bolters"){atta=240;arp=0;rang=16;spli=1;}
-	    if (argument0="Twin Linked Lascannon"){atta=300;arp=1;rang=20;}
-	    if (argument0="Twin-Linked Lascannon"){atta=300;arp=1;rang=20;}
-	    if (argument0="Battle Cannon"){atta=300;arp=1;rang=12;}
-	    if (argument0="Demolisher Cannon"){atta=500;arp=1;rang=2;if (instance_exists(obj_nfort)) then rang=5;}
-	    if (argument0="Earthshaker Cannon"){atta=300;arp=0;rang=12;spli=1;}
+	    if (argument0="Twin Linked Heavy Bolters"){atta=240;arp=0;rang=16;amm=20;spli=1;}
+	    if (argument0="Twin-Linked Heavy Bolters"){atta=240;arp=0;rang=16;amm=20;spli=1;}
+	    if (argument0="Twin Linked Lascannon"){atta=300;arp=1;rang=20;amm=20;}
+	    if (argument0="Twin-Linked Lascannon"){atta=300;arp=1;rang=20;amm=20;}
+	    if (argument0="Battle Cannon"){atta=300;arp=1;rang=12;amm=10;spli=1;}
+	    if (argument0="Demolisher Cannon"){atta=500;arp=1;rang=3.1;amm=5;if (instance_exists(obj_nfort)) then rang=5;}
+	    if (argument0="Earthshaker Cannon"){atta=300;arp=0;rang=12;amm=5;spli=1;}
 	    if (argument0="Havoc Launcher"){atta=100;arp=0;rang=12;}
 	    if (argument0="Baleflame"){atta=120;arp=0;rang=2;}
 	    if (argument0="Defiler Claws"){atta=350;arp=1;rang=1;spli=1;}
 	    if (argument0="Reaper Autocannon"){atta=320;arp=0;rang=18;amm=10;spli=1;}
     
-	    if (name="Ripper Gun"){atta=40;arp=0;rang=3;amm=5;spli=0;}
+	    if (name="Ripper Gun"){atta=40;arp=0;rang=3.1;amm=5;spli=0;}
 	    if (name="Ogryn Melee"){atta=90;arp=0;rang=1;}
 	    if (name="Multi-Laser"){atta=choose(60,75,90,105);arp=0;rang=10;}
     
+		if (name="Medium Vehicle Melee"){atta=80;arp=0;rang=1;}
+		if (name="Light Vehicle Melee"){atta=70;arp=0;rang=1;}
 
 	    if (argument0="Blessed Weapon"){atta=150;arp=1;rang=1;}
 	    if (argument0="Electro-Flail"){atta=125;arp=1;rang=1;spli=1;}
@@ -216,9 +225,9 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
   	    if (argument0="Sarissa"){atta=40;arp=0;rang=1;}
 	    if (argument0="Seraphim Pistols"){atta=200;arp=1;rang=4;}
 	    if (argument0="Laser Mace"){atta=200;arp=1;rang=5.1;amm=3;}
-	    if (argument0="Heavy Bolter"){atta=120;arp=0;rang=16;spli=0;}
+	    if (argument0="Heavy Bolter"){atta=120;arp=0;rang=16;amm=20;spli=1;}
     
-	    if (name="Lasgun"){atta=20;arp=0;rang=6.1;amm=30;}
+	    if (name="Lasgun"){atta=25;arp=0;rang=6.1;amm=30;spli=1;}
 		if (name="Combat Knife"){atta=25;arp=0;rang=1;spli=0;}
 	    if (name="Daemonhost Claws"){atta=350;arp=1;rang=1;spli=1;}
 	    if (name="Daemonhost_Powers"){
@@ -241,6 +250,7 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
 	    if (name="Particle Whip"){atta=300;arp=1;rang=4.1;spli=1;}
 	    if (name="Gauss Flayer Array"){atta=180;arp=1;rang=8.1;spli=1;}
 	    if (name="Doomsday Cannon"){atta=300;arp=1;rang=6.1;spli=1;}
+		if (name="Large Vehicle Melee"){atta=100;arp=0;rang=1;spli=1;}
 	}
 
 

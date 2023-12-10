@@ -295,6 +295,10 @@ if (shop = "equipment") {
 }
 if (shop = "equipment2") {
     i = 0;
+	i += 1;
+    item[i] = "Scout Armour";
+    item_stocked[i] = scr_item_count(item[i]);
+    item_cost[i] = 5;
     i += 1;
     item[i] = "MK3 Iron Armour";
     item_stocked[i] = scr_item_count("MK3 Iron Armour");
@@ -340,10 +344,6 @@ if (shop = "equipment2") {
         item_cost[i] = 0;
     }
     i += 1;
-    item[i] = "Scout Armour";
-    item_stocked[i] = scr_item_count(item[i]);
-    item_cost[i] = 5;
-    i += 1;
     item[i] = "Artificer Armour";
     item_stocked[i] = scr_item_count("Artificer Armour");
     nobuy[i] = 1;
@@ -351,6 +351,10 @@ if (shop = "equipment2") {
         nobuy[i] = 1;
         item_cost[i] = 0;
     }
+	i += 1;
+    item[i] = "Power Armour";
+    item_stocked[i] = scr_item_count("Power Armour");
+    item_cost[i] = 150;
     i += 1;
     item[i] = "Terminator Armour";
     item_stocked[i] = scr_item_count("Terminator Armour");

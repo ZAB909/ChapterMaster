@@ -183,7 +183,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        descr="A smaller, 0.5 caliber bolter, made to be used by regular humans, such as sisters of battle.";}
 		if (thawep="Sarissa"){atta=40;arp=0;rang=1;spli=1;
 	        descr="A vicious combat attachment that is attached to Bolters, in order to allow them to be used in melee combat.";}
-		if (thawep="Hellgun"){atta=30;arp=0;rang=6.1;ranged_hands+=1.1;amm=10;spli=1;
+		if (thawep="Hellgun"){atta=30;arp=0;rang=6.1;ranged_hands+=1.1;amm=15;spli=1;
 	        descr="The weapon of the foot soldiers of the Adeptus Mechanicus and several other organizations.";}
 	    if (thawep="Hellrifle"){atta=150;arp=90;rang=8;ranged_hands+=1.1;
 	        descr="Normally used by Radical Inquisitors, it appears an antiquated rifle but fires razor-sharp shards of Daemonic matter.";}
@@ -381,7 +381,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 		    	descr="A significant upgrade over the more common patterns of Rhino-chassis engines, these engines provide greater output.";}
 
 					// Vehicle Accessories
-			if (thawep="Dozer Blades"){atta=60;arp=0;rang=1;melee_hands+=1;spli=1
+			if (thawep="Dozer Blades"){atta=90;arp=0;rang=1;melee_hands+=1;spli=1
 			   	descr="An attachment for the front of vehicles, useful for clearing difficult terrain and can be used as an improvised weapon. ";}
 			if (thawep="Searchlight"){
 					descr="A simple solution for fighting in dark environments, searchlights serve to illuminate enemies for easier targeting. ";}

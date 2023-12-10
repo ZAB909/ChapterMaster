@@ -240,27 +240,32 @@ repeat(20){j+=1;
     }
     
     if (dudes[j]="Chimera"){
-        scr_en_weapon("Multi-Laster",false,dudes_num[j],dudes[j],j);
-		scr_en_weapon("Heavy Bolter",false,dudes_num[j],dudes[j],j);
+        scr_en_weapon("Multi-Laser",false,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Flamer",false,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Medium Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=20;dudes_hp[j]=150;veh+=dudes_num[j];dudes_vehicle[j]=1;
     }
     if (dudes[j]="Basilisk"){
         scr_en_weapon("Earthshaker Cannon",false,dudes_num[j],dudes[j],j);
 		scr_en_weapon("Storm Bolter",false,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Medium Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=15;dudes_hp[j]=150;veh+=dudes_num[j];dudes_vehicle[j]=1;
     }
     if (dudes[j]="Leman Russ Battle Tank"){
         scr_en_weapon("Battle Cannon",false,dudes_num[j],dudes[j],j);
 		scr_en_weapon("Lascannon",false,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Medium Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=40;dudes_hp[j]=250;veh+=dudes_num[j];dudes_vehicle[j]=1;
     }
     if (dudes[j]="Leman Russ Demolisher"){
         scr_en_weapon("Demolisher Cannon",false,dudes_num[j],dudes[j],j);
 		scr_en_weapon("Lascannon",false,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Medium Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=40;dudes_hp[j]=250;veh+=dudes_num[j];dudes_vehicle[j]=1;
     }
     if (dudes[j]="Vendetta"){
 		scr_en_weapon("Twin-Linked Lascannon",false,dudes_num[j]*3,dudes[j],j);
+		scr_en_weapon("Medium Vehicle Melee",false,dudes_num[j],dudes[j],j);
 		dudes_ac[j]=20;dudes_hp[j]=300;veh+=dudes_num[j];dudes_vehicle[j]=1;}
     
 }
@@ -395,19 +400,23 @@ repeat(20){j+=1;
     
     if (dudes[j]="Rhino"){
 		scr_en_weapon("Storm Bolter",false,dudes_num[j]*2,dudes[j],j);
+		scr_en_weapon("Medium Vehicle Melee",false,dudes_num[j],dudes[j],j);
 		dudes_ac[j]=20;dudes_hp[j]=200;veh+=dudes_num[j];dudes_vehicle[j]=1;}
     
     if (dudes[j]="Chimera"){
 		scr_en_weapon("Heavy Flamer",false,dudes_num[j]*2,dudes[j],j);
+		scr_en_weapon("Medium Vehicle Melee",false,dudes_num[j],dudes[j],j);
 		dudes_ac[j]=23;dudes_hp[j]=200;veh+=dudes_num[j];dudes_vehicle[j]=1;}
     
     if (dudes[j]="Immolator"){
         scr_en_weapon("Twin Linked Heavy Flamers",false,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Medium Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=20;dudes_hp[j]=200;veh+=dudes_num[j];dudes_vehicle[j]=1;
     }
     if (dudes[j]="Exorcist"){
         scr_en_weapon("Exorcist Missile Launcher",false,dudes_num[j],dudes[j],j);
         scr_en_weapon("Storm Bolter",false,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Medium Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=30;
         if (obj_ncombat.started=0) or (dudes_num[j]>1){dudes_hp[j]=300;}
         veh+=dudes_num[j];dudes_vehicle[j]=1;
@@ -534,6 +543,7 @@ repeat(20){j+=1;
 		dudes_ac[j]=15;dudes_hp[j]=30;men+=dudes_num[j];}
     if (dudes[j]="Grav Platform"){
 		scr_en_weapon("Pulse Laser",false,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Light Vehicle Melee",false,dudes_num[j],dudes[j],j);
 		dudes_ac[j]=15;dudes_hp[j]=70;men+=dudes_num[j];}
     
     if (dudes[j]="Trouper"){
@@ -551,6 +561,7 @@ repeat(20){j+=1;
     if (dudes[j]="Vyper"){
         scr_en_weapon("Twin Linked Shuriken Catapult",false,dudes_num[j],dudes[j],j);
         scr_en_weapon("Pulse Laser",false,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Light Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=40;dudes_hp[j]=100;
         veh+=dudes_num[j];dudes_vehicle[j]=1;
     }
@@ -558,17 +569,20 @@ repeat(20){j+=1;
         scr_en_weapon("Pulse Laser",false,dudes_num[j],dudes[j],j);
         scr_en_weapon("Shuriken Cannon",false,dudes_num[j],dudes[j],j);
         scr_en_weapon("Bright Lance",false,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Medium Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=40;dudes_hp[j]=200;
         veh+=dudes_num[j];dudes_vehicle[j]=1;
     }
     if (dudes[j]="Fire Prism"){
         scr_en_weapon("Twin Linked Shuriken Catapult",false,dudes_num[j],dudes[j],j);
         scr_en_weapon("Prism Cannon",false,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Light Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=40;dudes_hp[j]=200;
         veh+=dudes_num[j];dudes_vehicle[j]=1;
     }
     if (dudes[j]="Nightspinner"){
         scr_en_weapon("Twin Linked Doomweaver",false,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Light Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=40;dudes_hp[j]=170;
         veh+=dudes_num[j];dudes_vehicle[j]=1;
     }
@@ -680,6 +694,7 @@ repeat(20){j+=1;
         scr_en_weapon("Kannon",false,dudes_num[j],dudes[j],j);
         scr_en_weapon("Big Shoota",false,dudes_num[j]*2,dudes[j],j);
         scr_en_weapon("Rokkit Launcha",false,dudes_num[j]*2,dudes[j],j);
+		scr_en_weapon("Medium Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=40;dudes_hp[j]=200;
         veh+=dudes_num[j];dudes_vehicle[j]=1;
     }
@@ -703,22 +718,27 @@ repeat(20){j+=1;
         scr_en_weapon("Plasma Rifle",true,dudes_num[j],dudes[j],j);
         scr_en_weapon("Fusion Blaster",true,dudes_num[j],dudes[j],j);
         scr_en_weapon("Cyclic Ion Blaster",true,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Light Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=30;dudes_hp[j]=150;medi+=dudes_num[j];dudes_vehicle[j]=1;
     }
     if (dudes[j]="XV8 Bodyguard"){
         scr_en_weapon("Plasma Rifle",true,dudes_num[j],dudes[j],j);
 		scr_en_weapon("Burst Rifle",true,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Light Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=30;dudes_hp[j]=100;medi+=dudes_num[j];dudes_vehicle[j]=1;
     }
     if (dudes[j]="XV8 Crisis"){
         scr_en_weapon("Plasma Rifle",true,dudes_num[j],dudes[j],j);
 		scr_en_weapon("Missile Pod",true,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Light Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=30;dudes_hp[j]=75;medi+=dudes_num[j];dudes_vehicle[j]=1;
     }
     if (dudes[j]="XV8 (Brightknife)"){
 		scr_en_weapon("Fusion Blaster",true,dudes_num[j]*2,dudes[j],j);
+		scr_en_weapon("Light Vehicle Melee",false,dudes_num[j],dudes[j],j);
 		dudes_ac[j]=30;dudes_hp[j]=75;medi+=dudes_num[j];dudes_vehicle[j]=1;}
     if (dudes[j]="Shield Drone"){
+		scr_en_weapon("Light Vehicle Melee",false,dudes_num[j],dudes[j],j);
 		dudes_ac[j]=30;dudes_hp[j]=100;medi+=dudes_num[j];dudes_vehicle[j]=1;}
     
     if (dudes[j]="XV88 Broadside"){
@@ -728,17 +748,20 @@ repeat(20){j+=1;
     }
     if (dudes[j]="XV25 Stealthsuit"){
 		scr_en_weapon("Burst Rifle",true,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Light Vehicle Melee",false,dudes_num[j],dudes[j],j);
 		dudes_ac[j]=20;dudes_hp[j]=50;men+=dudes_num[j];dudes_vehicle[j]=1;}
     
     if (dudes[j]="Fire Warrior"){
 		scr_en_weapon("Pulse Rifle",true,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Combat Knife",true,dudes_num[j],dudes[j],j);
 		dudes_ac[j]=20;dudes_hp[j]=20;men+=dudes_num[j];}
     if (dudes[j]="Pathfinder"){
 		scr_en_weapon("Rail Rifle",true,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Combat Knife",true,dudes_num[j],dudes[j],j);
 		dudes_ac[j]=20;dudes_hp[j]=20;men+=dudes_num[j];}
     if (dudes[j]="Kroot"){
 		scr_en_weapon("Kroot Rifle",true,dudes_num[j],dudes[j],j);
-		scr_en_weapon("Combat Knife",true,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Kroot Melee",true,dudes_num[j],dudes[j],j);
 		dudes_ac[j]=5;dudes_hp[j]=30;men+=dudes_num[j];}
     if (dudes[j]="Vespid"){
 		scr_en_weapon("Vespid Crystal",true,dudes_num[j],dudes[j],j);
@@ -747,10 +770,12 @@ repeat(20){j+=1;
     
     if (dudes[j]="Devilfish"){
 		scr_en_weapon("Smart Missile System",false,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Light Vehicle Melee",false,dudes_num[j],dudes[j],j);
 		dudes_ac[j]=30;dudes_hp[j]=150;veh+=dudes_num[j];dudes_vehicle[j]=1;}
     if (dudes[j]="Hammerhead"){
         scr_en_weapon("Railgun",false,dudes_num[j],dudes[j],j);
         scr_en_weapon("Smart Missile System",false,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Light Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=40;dudes_hp[j]=250;veh+=dudes_num[j];dudes_vehicle[j]=1;
     }
 }
@@ -804,6 +829,7 @@ repeat(20){j+=1;
 		dudes_ac[j]=20;dudes_hp[j]=150;dudes_dr[j]=0.75;men+=dudes_num[j];}
     if (dudes[j]="Armoured Limousine"){
 		scr_en_weapon("Autogun",false,dudes_num[j]*4,dudes[j],j);
+		scr_en_weapon("Medium Vehicle Melee",false,dudes_num[j],dudes[j],j);
 		dudes_ac[j]=10;dudes_hp[j]=150;veh+=dudes_num[j];dudes_vehicle[j]=1;}
     if (dudes[j]="Lictor"){
 		scr_en_weapon("Lictor Claws",true,dudes_num[j],dudes[j],j);
@@ -946,24 +972,29 @@ repeat(20){j+=1;
     }
     if (dudes[j]="Rhino"){
 		scr_en_weapon("Storm Bolter",false,dudes_num[j]*2,dudes[j],j);
+		scr_en_weapon("Medium Vehicle Melee",false,dudes_num[j],dudes[j],j);
 		dudes_ac[j]=20;dudes_hp[j]=200;veh+=dudes_num[j];dudes_vehicle[j]=1;}
     if (dudes[j]="Predator"){
         scr_en_weapon("Lascannon",false,dudes_num[j]*2,dudes[j],j);
         scr_en_weapon("Twin Linked Lascannon",false,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Medium Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=30;dudes_hp[j]=300;veh+=dudes_num[j];dudes_vehicle[j]=1;
     }
     if (dudes[j]="Vindicator"){
         scr_en_weapon("Demolisher Cannon",false,dudes_num[j],dudes[j],j);
         scr_en_weapon("Havoc Launcher",false,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Medium Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=40;dudes_hp[j]=300;veh+=dudes_num[j];dudes_vehicle[j]=1;
     }
     if (dudes[j]="Land Raider"){
         scr_en_weapon("Twin Linked Heavy Bolters",false,dudes_num[j],dudes[j],j);
         scr_en_weapon("Twin Linked Lascannon",false,dudes_num[j]*2,dudes[j],j);
+		scr_en_weapon("Medium Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=40;dudes_hp[j]=400;veh+=dudes_num[j];dudes_vehicle[j]=1;
     }
     if (dudes[j]="Heldrake"){
 		scr_en_weapon("Baleflame",false,dudes_num[j]*5,dudes[j],j);
+		scr_en_weapon("Medium Vehicle Melee",false,dudes_num[j],dudes[j],j);
 		dudes_ac[j]=25;dudes_hp[j]=400;veh+=dudes_num[j];dudes_vehicle[j]=1;}
     if (dudes[j]="Defiler"){
         scr_en_weapon("Defiler Claws",false,dudes_num[j],dudes[j],j);
@@ -1017,17 +1048,20 @@ repeat(20){j+=1;
     if (dudes[j]="Technical"){
         scr_en_weapon("Autogun",false,dudes_num[j]*2,dudes[j],j);
 		scr_en_weapon("Heavy Bolter",false,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Light Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=10;dudes_hp[j]=100;veh+=dudes_num[j];dudes_vehicle[j]=1;
     }
     
     if (dudes[j]="Chaos Leman Russ"){
         scr_en_weapon("Battle Cannon",false,dudes_num[j],dudes[j],j);
 		scr_en_weapon("Heavy Bolter",false,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Medium Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=40;dudes_hp[j]=250;veh+=dudes_num[j];dudes_vehicle[j]=1;
     }
     if (dudes[j]="Chaos Basilisk"){
         scr_en_weapon("Earthshaker Cannon",false,dudes_num[j],dudes[j],j);
 		scr_en_weapon("Heavy Bolter",false,dudes_num[j],dudes[j],j);
+		scr_en_weapon("Medium Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=20;dudes_hp[j]=150;veh+=dudes_num[j];dudes_vehicle[j]=1;
     }
     
@@ -1100,6 +1134,7 @@ repeat(20){j+=1;
     if (dudes[j]="Doomsday Arc"){
         scr_en_weapon("Gauss Flayer Array",false,dudes_num[j]*2,dudes[j],j);
         scr_en_weapon("Doomsday Cannon",false,dudes_num[j]*1,dudes[j],j);
+		scr_en_weapon("Large Vehicle Melee",false,dudes_num[j],dudes[j],j);
         dudes_ac[j]=30;dudes_hp[j]=150;veh+=dudes_num[j];dudes_vehicle[j]=1;
     }
     
