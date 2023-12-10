@@ -17,7 +17,7 @@ function scr_save(save_slot,save_id) {
 	    ini_write_string("Save","chapter_name",global.chapter_name);
 	    ini_write_string("Save","sector_name",obj_ini.sector_name);
 	    ini_write_string("Save","version",global.version);
-	    ini_write_real("Save","play_time",obj_controler.play_time);
+	    ini_write_real("Save","play_time",obj_controller.play_time);
 	    ini_write_real("Save","game_seed",global.game_seed);
 	    ini_write_real("Save","use_custom_icon",obj_ini.use_custom_icon);
 	    var t,month,day,year,hour,minute,pm;
@@ -49,9 +49,9 @@ function scr_save(save_slot,save_id) {
 	    ini_write_real("Save","corrupt",1);
 	    // obj_controller variables here
 	    ini_write_real("boolean", "cheat_req", global.cheat_req);
-            ini_write_real("boolean", "cheat_gene", global.cheat_gene);
-            ini_write_real("boolean", "cheat_debug", global.cheat_debug);
-            ini_write_real("boolean", "cheat_disp", global.cheat_disp);
+        ini_write_real("boolean", "cheat_gene", global.cheat_gene);
+        ini_write_real("boolean", "cheat_debug", global.cheat_debug);
+        ini_write_real("boolean", "cheat_disp", global.cheat_disp);
 	    ini_write_real("Controller","cheatyface",obj_controller.cheatyface);
 	    ini_write_real("Controller","x",obj_controller.x);
 	    ini_write_real("Controller","y",obj_controller.y);
@@ -90,15 +90,16 @@ function scr_save(save_slot,save_id) {
 	    ini_write_real("Controller","artifacts",obj_controller.artifacts);
 	    ini_write_real("Controller","pmc",obj_controller.popup_master_crafted);
 	    ini_write_real("Controller","wndsel",obj_controller.select_wounded);
-	    ini_write_real("Controller","imdis",obj_ini.imperium_disposition);
+	    ini_write_real("Controller","imdis",obj_controller.imperium_disposition);
 	    ini_write_real("Controller","terra_dir",obj_controller.terra_direction);
-	        ini_write_real("Controller","stc_wargear",obj_controller.stc_wargear);
-	        ini_write_real("Controller","stc_vehicles",obj_controller.stc_vehicles);
-	        ini_write_real("Controller","stc_ships",obj_controller.stc_ships);
-	        ini_write_real("Controller","stc_un_total",obj_controller.stc_un_total);
-	        ini_write_real("Controller","stc_wargear_un",obj_controller.stc_wargear_un);
-	        ini_write_real("Controller","stc_vehicles_un",obj_controller.stc_vehicles_un);
-	        ini_write_real("Controller","stc_ships_un",obj_controller.stc_ships_un);
+	    ini_write_real("Controller","stc_wargear",obj_controller.stc_wargear);
+	    ini_write_real("Controller","stc_vehicles",obj_controller.stc_vehicles);
+	    ini_write_real("Controller","stc_ships",obj_controller.stc_ships);
+	    ini_write_real("Controller","stc_un_total",obj_controller.stc_un_total);
+	    ini_write_real("Controller","stc_wargear_un",obj_controller.stc_wargear_un);
+	    ini_write_real("Controller","stc_vehicles_un",obj_controller.stc_vehicles_un);
+	    ini_write_real("Controller","stc_ships_un",obj_controller.stc_ships_un);
+		
 	    var j;j=0;repeat(6){j+=1;ini_write_real("Controller","stc_bonus_"+string(j),obj_controller.stc_bonus[j]);}
 
 	    j=0;repeat(4){j+=1;
@@ -168,11 +169,7 @@ function scr_save(save_slot,save_id) {
 	        }
 	    }
 
-    
-    
-
-
-	    ini_write_string("Controller","random_event_next",obj_controller.random_event_next);
+        ini_write_string("Controller","random_event_next",obj_controller.random_event_next);
 
 	    ini_write_string("Controller","useful_info",obj_controller.useful_info);
 		ini_write_real("Controller","random_event_next",obj_controller.random_event_next);
