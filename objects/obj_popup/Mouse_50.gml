@@ -723,6 +723,7 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
 
 if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<yy+518){// Promoting right here
     if (type=5) and (cooldown<=0) and (all_good=1) and (target_comp!=-1) and (role_name[target_role]!=""){
+        var allow_change=false;
         cooldown=999;obj_controller.cooldown=8000;
 
         var mahreens=0;i=0;
@@ -739,14 +740,14 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
             }
         }
         // Gets the number of marines in the target company
-        if (role_name[target_role]=="DoNotChange") then do_not_change=true;
-        var unit;
+        if (role_name[target_role]=="DoNotChange") then allow_change=true;
+        var unit, squad_mover;
         for(i=0;i<=obj_controller.man_max;i++){
 
             if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1) and (obj_controller.ma_promote[i]>=1) and (obj_controller.ma_exp[i]>=min_exp){
                 unit = obj_controller.display_unit[i];
 
-                if (!do_not_change){
+                if (allow_change){
                     if (req_armour="Power Armour"){
                         unit.update_armour("");
                         for (var pa=0;pa<array_length(global.power_armour);pa++){
@@ -798,7 +799,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
                 // This changes a marine from MARINE to COMMAND if they get put into a dreadnought
                 var  bef=obj_controller.ma_role[i],aft=role_name[target_role];
 
-                if (do_not_change==true){
+                if (!allow_change){
                     aft=obj_ini.role[company,obj_controller.ide[i]];
                 } else{
                     unit.update_role(role_name[target_role]);
@@ -815,9 +816,15 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
                 } else {
                    if  (!is_specialist(aft)){obj_controller.marines+=1;obj_controller.command-=1;}
                 }
-
-                scr_move_unit_info(company,target_comp,unit.marine_number,mahreens);	
-                if (role_name[target_role]==obj_ini.role[100][6]) and (do_not_change==false){
+                if (unit.squad!="none"){
+                    if (!array_contains(squad_mover, unit.squad)){
+                        array_push(squad_mover,unit.squad);
+                    }
+                }
+                if (company!=target_comp){
+                    scr_move_unit_info(company,target_comp,unit.marine_number,mahreens);
+                }
+                if (role_name[target_role]==obj_ini.role[100][6]) and (allow_change){
                     obj_ini.hp[target_comp,mahreens]=100;
                     var dread_weapons =["Close Combat Weapon","Force Weapon","Lascannon","Assault Cannon","Missile Launcher","Heavy Bolter"];
 

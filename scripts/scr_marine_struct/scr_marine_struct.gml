@@ -616,14 +616,14 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	static update_role = function(new_role){
 		if (base_group=="astartes"){
 			if (role() == obj_ini.role[100][12] && new_role!=obj_ini.role[100][12]){
-		  		var has_carpace =false;
-		  		if (struct_exists(body[$ "torso"], "black_carpace")){
-		  			if (body[$ "torso"][$"black_carpace"]){
-		  				has_carpace=true;
+		  		var has_carapace =false;
+		  		if (struct_exists(body[$ "torso"], "black_carapace")){
+		  			if (body[$ "torso"][$"black_carapace"]){
+		  				has_carapace=true;
 		  			}
 		  		} 
-		  		if (!has_carpace){
-		  			body[$ "torso"][$"black_carpace"]=true;
+		  		if (!has_carapace){
+		  			body[$ "torso"][$"black_carapace"]=true;
 		  			strength+=4;
 		  			constitution+=4;
 		  			dexterity+=4;
@@ -716,14 +716,14 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
   static update_armour = function(new_armour, from_armoury=true, to_armoury=true){
 	  	var change_armour=armour();
 	  	if (array_contains(global.power_armour, new_armour)){
-	  		var has_carpace =false;
-	  		if (struct_exists(body[$ "torso"], "black_carpace")){
-	  			if (body[$ "torso"][$"black_carpace"]){
-	  				has_carpace=true;
+	  		var has_carapace =false;
+	  		if (struct_exists(body[$ "torso"], "black_carapace")){
+	  			if (body[$ "torso"][$"black_carapace"]){
+	  				has_carapace=true;
 	  			}
 	  		}
-	  		if (!has_carpace){
-	  			return "needs_carpace";
+	  		if (!has_carapace){
+	  			return "needs_carapace";
 	  		}
 	  	}
 	   	if (change_armour == new_armour){
@@ -926,9 +926,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				["tinkerer",[199,198],{"chapter_name":["Iron Hands",[49,47]]}],
 			];
 			distribute_traits(astartes_trait_dist);
-			body[$ "torso"][$ "black_carpace"] = true;
+			body[$ "torso"][$ "black_carapace"] = true;
 			if (class=="scout" &&  global.chapter_name!="Space Wolves"){
-				body[$ "torso"][$ "black_carpace"] = false;
+				body[$ "torso"][$ "black_carapace"] = false;
 			}
 			if (faction ="chapter"){
 				allegiance = global.chapter_name;
