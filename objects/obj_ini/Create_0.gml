@@ -1,4 +1,7 @@
+//Sector setup
+sector_name = ""
 
+// Chapter Setup
 use_custom_icon=0;
 icon=0;icon_name="";
 
@@ -7,13 +10,89 @@ sixths=0;sevenths=0;eighths=0;ninths=0;tenths=0;commands=0;
 
 heh1=0;heh2=0;
 
+
 strin="";
 strin2="";
 tolerant=0;
 companies=10;
 progenitor=0;
+
+sector_name = "";
+stability = 0;
+purity = 0;
+
+home_name = "";
+home_type = "";
+recruiting_name = "";
+recruiting_type = "";
+chapter_name = "";
+flagship_name = "";
+psy_powers = "";
+battle_cry = "";
+skin_color = 0;
 adv = [0];
 dis = [0];
+squads = [0];
+
+//chapter leadership
+master_name = "";
+chief_librarian_name = "";
+high_chaplain_name = "";
+high_apothecary_name = "";
+forge_master_name = "";
+lord_admiral_name = "";
+
+// geenseed mutations 
+preomnor = 0;
+voice = 0;
+doomed = 0;
+lyman = 0;
+omophagea = 0;
+ossmodula = 0;
+membrane = 0;
+zygote = 0;
+betchers = 0;
+catalepsean = 0;
+secretions = 0;
+occulobe = 0;
+mucranoid = 0;
+
+adv = [0];
+dis = [0];
+
+// enemys killed by chapter master?
+master_autarch = 0;
+master_avatar = 0;
+master_farseer = 0;
+master_aspect = 0;
+master_eldar = 0;
+master_eldar_vehicles = 0;
+master_tau = 0;
+master_battlesuits = 0;
+master_kroot = 0;
+master_tau_vehicles = 0;
+master_ork_boyz = 0;
+master_ork_nobz = 0;
+master_ork_warboss = 0;
+master_ork_vehicles = 0;
+master_heretics = 0;
+master_chaos_marines = 0;
+master_lesser_demons = 0;
+master_greater_demons = 0;
+master_chaos_vehicles = 0;
+master_gaunts = 0;
+master_warriors = 0;
+master_carnifex = 0;
+master_synapse = 0;
+master_tyrant = 0;
+master_gene = 0;
+master_necron_overlord = 0;
+master_destroyer = 0;
+master_necron = 0;
+master_wraith = 0;
+master_necron_vehicles = 0;
+master_monolith = 0;
+master_special_killed = 0;
 
 load_to_ships=[2,0,0];
 if (instance_exists(obj_creation)){load_to_ships=obj_creation.load_to_ships;}

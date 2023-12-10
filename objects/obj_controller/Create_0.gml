@@ -130,6 +130,7 @@ obj_controller.restart_recruiting_name="";
 obj_controller.restart_home_type="";
 obj_controller.restart_home_name="";
 obj_controller.restart_fleet_type=0;
+obj_controller.restart_flagship_name = "";
 obj_controller.restart_recruiting_exists=0;
 obj_controller.restart_homeworld_exists=0;
 obj_controller.restart_homeworld_rule=0;
