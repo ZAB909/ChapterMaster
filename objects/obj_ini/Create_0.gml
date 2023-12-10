@@ -16,8 +16,6 @@ strin2="";
 tolerant=0;
 companies=10;
 progenitor=0;
-
-sector_name = "";
 stability = 0;
 purity = 0;
 
