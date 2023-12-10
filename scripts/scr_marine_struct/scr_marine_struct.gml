@@ -1365,19 +1365,19 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				else if (old_guard>=91 and old_guard<=96){
 					update_armour("MK3 Iron Armour",false,false);
 					update_age(age - gauss(600, 100));
-					add_trait(choose("ancient","old_guard"),false,false);
+					add_trait(choose("ancient","old_guard"));
 					add_exp(choose(10, 30, 50));
 				} // 6% 
 				else if (old_guard>=80 and old_guard<=90){
 					update_armour("MK4 Maximus",false,false);
 					update_age(age - gauss(300, 75));
-					add_trait("old_guard")
+					add_trait("old_guard");
 					add_exp(25);
 				} // 12%
 				else if (old_guard>=57 and old_guard<=79){
 					update_armour("MK5 Heresy",false,false);
 					update_age(age - gauss(240, 40));
-					add_trait("seasoned")
+					add_trait("seasoned");
 					add_exp(choose(10,25));
 				} // 24%
 				else{
