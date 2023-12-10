@@ -39,12 +39,19 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
 	if (name="Lash Whip"){atta=80;arp=0;rang=2;}
 	if (name="Nurgle Vomit"){atta=100;arp=0;rang=2;spli=1;if (obj_ini.preomnor=1){atta=260;}}
 	if (name="Multi-Melta"){atta=200;arp=1;rang=4.1;spli=0;amm=6;}
+	if (name="Combat Knife"){atta=25;arp=0;rang=1;spli=0;}
+
 
 
 	if (obj_ncombat.enemy=3){
+		if (name="Conversion Beam Projector"){atta=500;arp=1;rang=20;amm=1;spli=1;}
 	    if (name="Phased Plasma-fusil"){atta=100;arp=1;rang=7.1;spli=1;}
 	    if (name="Lightning Gun"){atta=choose(80,80,80,150);arp=0;rang=5;spli=0;}
 	    if (name="Thallax Melee"){atta=80;arp=0;rang=1;spli=1;}
+		if (name="Combat Knife"){atta=25;arp=0;rang=1;spli=0;}
+		if (name="Hellgun"){atta=30;arp=0;rang=6.1;amm=10;spli=1;}
+		if (name="Power Axe"){atta=160;arp=1;rang=1;spli=1;}
+		if (name="Flamer"){atta=100;arp=-1;rang=3.1;amm=4;spli=1;}
 	}
 
 
@@ -88,9 +95,10 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
 	    if (argument0="Twin Linked Doomweaver"){atta=100;arp=0;rang=2;}// Also create difficult terrain?
 	    if (argument0="Starcannon"){atta=140;arp=1;rang=3;spli=1;}
 	    if (argument0="Two Power Fists"){atta=300;arp=1;rang=1;}
-	    if (argument0="Flamer"){atta=100;arp=0;rang=2;amm=4;spli=1;}
+	    if (argument0="Flamer"){atta=100;arp=-1;rang=3.1;amm=4;spli=1;}
 	    if (argument0="Titan Starcannon"){atta=220;arp=1;rang=4;spli=1;}
 	    if (argument0="Phantom Pulsar"){atta=500;arp=1;rang=20;spli=1;}
+		if (name="Combat Knife"){atta=25;arp=0;rang=1;spli=0;}
 	}
 
 
@@ -99,18 +107,18 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
 
 	    if (argument0="Choppa"){atta=28;arp=0;rang=1;spli=1;}
 	    if (argument0="Power Klaw"){atta=150;arp=1;rang=1;spli=1;}
-	    if (argument0="Slugga"){atta=27;arp=0;rang=3.1;amm=4;spli=1;}
-	    if (argument0="Tankbusta Bomb"){atta=264;arp=1;rang=1;amm=2;spli=1;}
-	    if (argument0="Big Shoota"){atta=100;arp=0;rang=12;amm=30;spli=0;}
-	    if (argument0="Dakkagun"){atta=150;arp=0;rang=10;amm=20;spli=0;}
-	    if (argument0="Deffgun"){atta=120;arp=0;rang=8;amm=20;spli=0;}
-	    if (argument0="Snazzgun"){atta=80;arp=0;rang=10;spli=0;}
-	    if (argument0="Grot Blasta"){atta=12;arp=0;rang=2;amm=6;}
+	    if (argument0="Slugga"){atta=20;arp=0;rang=3.1;amm=4;spli=1;}
+	    if (argument0="Tankbusta Bomb"){atta=264;arp=1;rang=1;amm=2;spli=0;}
+	    if (argument0="Big Shoota"){atta=100;arp=0;rang=12;amm=10;spli=1;}
+	    if (argument0="Dakkagun"){atta=150;arp=0;rang=10;amm=10;spli=1;}
+	    if (argument0="Deffgun"){atta=120;arp=0;rang=8;amm=10;spli=1;}
+	    if (argument0="Snazzgun"){atta=80;arp=0;rang=12;amm=8;spli=1;}
+	    if (argument0="Grot Blasta"){atta=12;arp=0;rang=3.1;amm=6;}
 	    if (argument0="Kannon"){atta=200;arp=1;rang=10.1;amm=5;spli=1;}
-	    if (argument0="Shoota"){atta=30;arp=0;rang=6;}
-	    if (argument0="Burna"){atta=140;arp=1;rang=2;amm=4;spli=1;}
-	    if (argument0="Skorcha"){atta=160;arp=1;rang=2;amm=6;spli=1;}
-	    if (argument0="Rokkit Launcha"){atta=150;arp=1;rang=15;spli=1;}
+	    if (argument0="Shoota"){atta=25;arp=0;rang=6.1;amm=6;spli=1;}
+	    if (argument0="Burna"){atta=80;arp=-1;rang=3.1;amm=4;spli=1;}
+	    if (argument0="Skorcha"){atta=160;arp=0;rang=3.1;amm=6;spli=1;}
+	    if (argument0="Rokkit Launcha"){atta=150;arp=1;rang=10;spli=1;}
 	    if (argument0="Krooz Missile"){atta=250;arp=1;rang=15;spli=1;}
 
 	}
@@ -154,6 +162,7 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
 	    if (argument0="Autogun"){atta=20;arp=0;rang=6;amm=12;spli=1;}
 	    if (argument0="Lictor Claws"){atta=300;arp=0;rang=1;}
 	    if (argument0="Flesh Hooks"){atta=50;arp=0;rang=2;amm=1;}
+		if (name="Combat Knife"){atta=25;arp=0;rang=1;spli=0;}
 
 	}
 
@@ -161,15 +170,16 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
 	if (obj_ncombat.enemy>=10) or (obj_ncombat.enemy=2) or (obj_ncombat.enemy=5) or (obj_ncombat.enemy=1){
 
 	    if (argument0="Plasma Pistol"){atta=70;arp=1;rang=3.1;}
-	    if (argument0="Power Weapon"){atta=120;arp=0;rang=1;}
-	    if (argument0="Power Sword"){atta=120;arp=0;rang=1;}
+	    if (argument0="Power Weapon"){atta=120;arp=1;rang=1;}
+	    if (argument0="Power Sword"){atta=120;arp=1;rang=1;}
 	    if (argument0="Force Weapon"){atta=400;arp=1;rang=1;}
 	    if (argument0="Chainfist"){atta=300;arp=1;rang=1;spli=1;}
-	    if (argument0="Meltagun"){atta=200;arp=1;rang=2;amm=4;}
-	    if (argument0="Flamer"){atta=160;arp=0;rang=2.1;amm=4;spli=1;}
+	    if (argument0="Meltagun"){atta=200;arp=1;rang=3.1;amm=4;}
+	    if (argument0="Flamer"){atta=100;arp=-1;rang=3.1;amm=4;spli=1;}
 	    if (argument0="Heavy Flamer"){atta=250;arp=0;rang=2.1;amm=6;spli=1;}
 	    if (argument0="Combi-Flamer"){atta=160;arp=0;rang=2.1;amm=1;spli=1;}
-	    if (argument0="Bolter"){atta=45;arp=0;rang=12;amm=15;if (obj_ncombat.enemy=5) then atta=35;}// Bursts
+	    if (argument0="Bolter"){atta=75;arp=0;rang=12;amm=15;spli=1;if (obj_ncombat.enemy=5) then atta=50;}// Bursts
+		if (argument0="Light Bolter"){atta=50;arp=0;rang=12;amm=15;spli=1;}
 	    if (argument0="Power Fist"){atta=425;arp=1;rang=1;}
 	    if (argument0="Possessed Claws"){atta=250;arp=1;rang=1;spli=1;}
 	    if (argument0="Missile Launcher"){atta=200;arp=1;rang=20;amm=4;spli=1;}
@@ -203,12 +213,13 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
 	    if (argument0="Blessed Weapon"){atta=150;arp=1;rang=1;}
 	    if (argument0="Electro-Flail"){atta=125;arp=1;rang=1;spli=1;}
 	    if (argument0="Neural Whip"){atta=85;arp=0;rang=1;spli=1}
-  	  if (argument0="Sarissa"){atta=65;arp=0;rang=2;}
+  	    if (argument0="Sarissa"){atta=40;arp=0;rang=1;}
 	    if (argument0="Seraphim Pistols"){atta=200;arp=1;rang=4;}
 	    if (argument0="Laser Mace"){atta=200;arp=1;rang=5.1;amm=3;}
 	    if (argument0="Heavy Bolter"){atta=120;arp=0;rang=16;spli=0;}
     
-	    if (name="Lasgun"){atta=20;arp=0;rang=6;amm=30;}
+	    if (name="Lasgun"){atta=20;arp=0;rang=6.1;amm=30;}
+		if (name="Combat Knife"){atta=25;arp=0;rang=1;spli=0;}
 	    if (name="Daemonhost Claws"){atta=350;arp=1;rang=1;spli=1;}
 	    if (name="Daemonhost_Powers"){
 	        atta=round(random_range(100,300));arp=round(random_range(100,300));rang=round(random_range(1,6));spli=choose(0,1);
