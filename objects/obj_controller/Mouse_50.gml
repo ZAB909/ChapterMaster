@@ -2660,7 +2660,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     if (company>10){company=0}
                     for(var q=1; q<=500; q++){
                         // Load man to ship
-                        if (man[q]=="man"){
+                        if (man[q]=="man" && man_sel[q]==1){
                             unit = obj_ini.TTRPG[company][ide[q]];
                             unit.load_marine(sh_ide[sel]);
                             ma_loc[q]=sh_name[sel];
