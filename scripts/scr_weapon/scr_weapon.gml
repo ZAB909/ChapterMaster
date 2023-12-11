@@ -48,26 +48,26 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        // Artifact Armour
 	        var arti_armour;
 	        arti_armour=false;
-	        if (string_count("Power Armour",thawep)>0){statt=30;emor=1;arti_armour=true;spe_descr="+5% Melee, +5% Ranged";}
-	        if (string_count("Artificer",thawep)>0){statt=38;emor=1;arti_armour=true;spe_descr="+20% Melee, +20% Ranged";}
-	        if (string_count("Terminator",thawep)>0){statt=50;emor=1;arti_armour=true;spe_descr="+5% Melee, +5% Ranged, Strength";}
-	        if (string_count("Dreadnought",thawep)>0){statt=60;emor=1;arti_armour=true;}
+	        if (string_count("Power Armour",thawep)>0){statt=30;emor=1;arti_armour=true;}
+	        if (string_count("Artificer",thawep)>0){statt=35;emor=1;arti_armour=true;spe_descr="+10% Melee";}
+	        if (string_count("Terminator",thawep)>0){statt=45;emor=1;arti_armour=true;spe_descr="+20% Melee, -10% Ranged, Strength";}
+	        if (string_count("Dreadnought",thawep)>0){statt=50;emor=1;arti_armour=true;}
 
 	        // Artifact weapons
 	        if (arti_armour=false){
 	            if (string_count("Bolter",thawep)>0){
-	                atta=75;arp=0;rang=12;ranged_hands+=1.1;amm=15;spli=1;
+	                atta=65;arp=0;rang=12;ranged_hands+=2;amm=15;spli=1;
 	                if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
 	            }
-	            if (string_count("Plasma Pistol",thawep)>0){atta=115;arp=1;rang=3.1;}
-	            if (string_count("Plasma Gun",thawep)>0){atta=250;arp=1;rang=10;ranged_hands+=1.9;spli=1;}
+	            if (string_count("Plasma Pistol",thawep)>0){atta=115;arp=1;rang=3.1;melee_hands+=1;}
+	            if (string_count("Plasma Gun",thawep)>0){atta=250;arp=1;rang=10;ranged_hands+=2;spli=1;}
 	            if (string_count("Power Sword",thawep)>0){atta=180;arp=1;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";}
-	            if (string_count("Power Spear",thawep)>0){atta=200;arp=1;rang=1;melee_hands+=1.9;spli=1;spe_descr="Parry";}
-	            if (string_count("Power Axe",thawep)>0){atta=190;arp=1;rang=1;melee_hands+=1;spli=1;}
-	            if (string_count("Power Fist",thawep)>0){atta=450;arp=1;rang=1;melee_hands+=1;ranged_hands+=0.1;spli=1;}
+	            if (string_count("Power Spear",thawep)>0){atta=200;arp=1;rang=1;melee_hands+=2;spli=1;}
+	            if (string_count("Power Axe",thawep)>0){atta=190;arp=1;rang=1.2;melee_hands+=1;spli=1;}
+	            if (string_count("Power Fist",thawep)>0){atta=450;arp=1;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;}
 	            if (string_count("Lightning Claw",thawep)>0){atta=400;arp=1;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;}
-                if (string_count("Thunder Hammer",thawep)>0){atta=650;arp=1;rang=1;melee_hands+=1;spli=1;}
-	            if (string_count("Relic Blade",thawep)>0){atta=700;arp=1;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";}
+                    if (string_count("Thunder Hammer",thawep)>0){atta=650;arp=1;rang=1;melee_hands+=2;spli=1;}
+	            if (string_count("Relic Blade",thawep)>0){atta=700;arp=1;rang=1;melee_hands+=1;spli=1;}
 
 	            if (string_count("Relic Blade",thawep)=0) and (atta>0){atta=atta*1;}
 
@@ -94,54 +94,34 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 
 	    if (i=1){
-	        if (argument0="Ork Armour"){statt=15;spe_descr="";emor=1;
-				descr="A crude collection of plates and other armour components. Based on how they fit together, they can be worn by orks.";}
+	        if (argument0="Ork Armour"){statt=15;spe_descr="";emor=1;}
+            
+			if (argument0="Skitarii Armour"){statt=5;spe_descr="";emor=1;}
 
-			if (argument0="Skitarii Armour"){statt=6;spe_descr="";emor=1;
-				descr="An armour that is worn by the adeptus mechanicus foot soldiers, known as skitarii.";}
-			if (argument0="Dragon Scales"){statt=12;spe_descr="";emor=1;
-				descr="A type of power armour that is worn by the techpriests of the adeptus mechanicus.";}
-			if (argument0="Light Power Armour"){statt=10;spe_descr="-15% Melee, -15% Ranged";emor=1;
-				descr="A type of power armour that can be used by average humans. Lacking certain features, average person would not be able to use this armour to it's full potential.";}
-			
 	        if (argument0="Scout Armour"){statt=8;spe_descr="";emor=1;
 	            descr="A non-powered suit made up of carapace armour and ballistic nylon.  Includes biohazard shielding, nutrient feed, and camoflauge.";}
-
-	        if (argument0="MK1 Thunder Armour"){statt=13;spe_descr="-10% Melee, -10% Ranged";emor=1;
-	            descr="The very first variant of power armour. Lacking life support and other later improvements, this armour is mostly suited to ceremonial duty nowadays.";}
-	        if (argument0="MK2 Crusade Armour"){statt=20;spe_descr="";emor=1;
-	            descr="Armour made with Great Crusade in mind. Often believed to be the most efficient power armour design.";}
-	        if (argument0="MK3 Iron Armour"){statt=25;spe_descr="-5% Melee, -5% Ranged";emor=1;
-	            descr="An ancient set of Armorum Ferrum. Has thicker armour plating but the added weight slows down the wearer.";}
+	        if (argument0="MK3 Iron Armour"){statt=26;spe_descr="-10% Ranged";emor=1;
+	            descr="An ancient set of Armorum Ferrum.  Has thicker armour plating but the added weight slows down the wearer.";}
 	        if (argument0="MK4 Maximus"){statt=22;spe_descr="+5% Melee, +5% Ranged";emor=1;
 	            descr="Armour dating to the end of the Great Crusade.  Often considered the ultimate Space Marine armour.  The components are no longer reproducable.";}
-			if (argument0="MK5 Heresy"){statt=14;spe_descr="-10% Melee, -10% Ranged";emor=1;
-	            descr="A non-standard variants of Power armour, that were developed during the Horus Heresy, made from various components that could still be produced. With the ad-hoc nature of these suits, it is one of the weaker armours.";}
-	        if (argument0="MK6 Corvus"){statt=16;spe_descr="+15% Melee, +15% Ranged";emor=1;
+          if (argument0="MK5 Heresy"){statt=15;spe_descr="+20% Melee, -5% Ranged";emor=1;
+	            descr="A Hastily assembled Power armour during the Horus Heresy to act as a stop gap. Excels at melee, alongside some downsides.";}
+	        if (argument0="MK6 Corvus"){statt=15;spe_descr="+15% Ranged";emor=1;
 	            descr="Relatively old beakie armour, sleek as can be.  Boosted olfactory and auditory sensors increase the ranged accuracy of the wearer. Making it more fragile";}
 	        if (argument0="MK7 Aquila"){statt=17;spe_descr="";emor=1;
 	            descr="Developed during the Horus Heresy, this Mark of armour is the most commonly used amongst all the Adeptus Astartes.";}
-	        if (argument0="MK8 Errant"){statt=19;spe_descr="";emor=1;
+	        if (argument0="MK8 Errant"){statt=22;spe_descr="";emor=1;
 	            descr="Highly modified MK7, this armour has additional protection along the neck and cables.  It is oft worn as a symbol of high rank.";}
 	        if (argument0="Power Armour"){statt=19;spe_descr="";emor=1;
-	            descr="A suit of Adeptus Astartes power armour. The Mark can no longer be determined- it appears to be a combination of several types.";}
-	        if (argument0="Artificer Armour"){statt=37;spe_descr="+20% Melee, +20% Ranged";emor=1;
+	            descr="A suit of Adeptus Astartes power armour.  The Mark can no longer be determined- it appears to be a combination of several types.";}
+	        if (argument0="Artificer Armour"){statt=37;spe_descr="+10% Melee";emor=1;
 	            descr="Heavily modified by the chapter artificers, and decorated without compare, this ancient Power Armour is beyond priceless.";}
-
-	        if (argument0="Early Terminator Armour"){statt=35;spe_descr="-20% Melee, -20% Ranged, Strength";emor=1;
-	            descr="An early and non-standard variant of heavy power armor. With the non-standard nature, it tends to be the weakest of terminator armours.";}
-			if (argument0="Cataphractii"){statt=50;spe_descr="-10% Melee, -10% Ranged, Strength";emor=1;
-	            descr="The first pattern of Terminator Armour issued to the Space Marine Legions, mostly used during the late Great Crusade and Horus Heresy.";}
-			if (argument0="Tartaros"){statt=45;spe_descr="+5% Melee, +5% Ranged, Strength";emor=1;
+	        if (argument0="Terminator Armour"){statt=42;spe_descr="+20% Melee, -10% Ranged, Strength";emor=1;
+	            descr="The toughest and most powerful armour designed by humanity.  Only the most veteran of Astartes are allowed to wear these.";}
+	        if (argument0="Tartaros"){statt=45;spe_descr="+20% Melee, -5% Ranged, Strength";emor=1;
 	            descr="Even more advanced than the Indomitus Terminator Armour, this upgraded armour offer greater mobility at no cost to protection.";}
-	        if (argument0="Terminator Armour"){statt=45;spe_descr="-5% Melee, -5% Ranged, Strength";emor=1;
-	            descr="The most widespread terminator armour pattern, otherwise known as Indomitus Pattern. Only the most veteran of Astartes are allowed to wear these.";}
-			if (argument0="Aegis"){statt=45;spe_descr="+5% Melee, +5% Ranged, Strength, -50% chance of perils*";emor=1;
-	            descr="Used by Grey Knights Terminators, this suit is equipped with Aegis system.";}
-	        
-	        if (argument0="Dreadnought"){statt=60;spe_descr="";emor=1;
+	        if (argument0="Dreadnought"){statt=50;spe_descr="";emor=1;
 	            descr="A massive war-machine that can be piloted by a honored Space Marine, who otherwise would have fallen in combat.";}
-
 	        if (argument0="Jump Pack"){spe_descr="+10% Damage Resistance, Jump Pack";
 	            descr="A back mounted device containing turbines or jets powerful enough to lift even a user in Power Armour.";}
 	        if (argument0="hammer_of_wrath"){atta=120;arp=0;rang=1;spli=0;amm=1;}
@@ -171,52 +151,49 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	    }
 
 	    // Other stuff above
-	    if (thawep="Choppa"){atta=28;arp=0;rang=1;melee_hands+=1;spli=1;
-			descr="This appears to be a shoddy stick with a bit of metal attached. Most likely, an ork melee weapon.";}
-	    if (thawep="Snazzgun"){atta=80;arp=0;rang=12;ranged_hands+=1.9;spli=1;
-			descr="Despite awful and shoddy construction, this weapon actually functions... for orks.";}
-	    if (thawep="Shuriken Pistol"){atta=25;arp=0;rang=3.1;melee_hands+=1;spli=1;}
+	    if (thawep="Choppa"){atta=28;arp=0;rang=1;melee_hands+=1;spli=1;}
+	    if (thawep="Snazzgun"){atta=80;arp=0;rang=10;ranged_hands+=2;spli=1;}
+	    if (thawep="Shuriken Pistol"){atta=25;arp=0;rang=2.1;melee_hands+=1;spli=1;}
 	    if (thawep="Ranger Long Rifle"){atta=60;arp=0;rang=25;ranged_hands+=2;spli=0;}
-		if (thawep="Eldar Power Sword"){atta=170;arp=1;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";
-	        descr="Power weapons, infused with arcane energy, are used by Howling Banshees and Dire Avenger Exarchs. Swords such as these are as much artistic statement as weapon, and effective against even heavily armoured troops.";}
-		if (thawep="Light Bolter"){atta=50;arp=0;rang=12;ranged_hands+=1.1;amm=15;spli=1;
-	        descr="A smaller, 0.5 caliber bolter, made to be used by regular humans, such as sisters of battle.";}
-		if (thawep="Sarissa"){atta=40;arp=0;rang=1;spli=1;
-	        descr="A vicious combat attachment that is attached to Bolters, in order to allow them to be used in melee combat.";}
-		if (thawep="Hellgun"){atta=30;arp=0;rang=6.1;ranged_hands+=1.1;amm=15;spli=1;
-	        descr="The weapon of the foot soldiers of the Adeptus Mechanicus and several other organizations.";}
-	    if (thawep="Hellrifle"){atta=150;arp=90;rang=8;ranged_hands+=1.1;
-	        descr="Normally used by Radical Inquisitors, it appears an antiquated rifle but fires razor-sharp shards of Daemonic matter.";}
 
 
-	    if (thawep="Storm Shield"){melee_hands+=0.1;atta=0;arp=0;rang=0;spli=0;
+
+	    if (thawep="Storm Shield"){melee_hands+=0.9;atta=0;arp=0;rang=0;spli=0;
 	        descr="Protects twice as well when boarding. A powered shield that must be held with a hand.  While powered by the marines armour it shimmers with blue energy.";
 	        spe_descr="+30% HP, +8 Armour";}
-	    if (thawep="Boarding Shield"){melee_hands+=0.1;atta=0;arp=0;rang=0;spli=0;
+	    if (thawep="Boarding Shield"){melee_hands+=0.9;atta=0;arp=0;rang=0;spli=0;
 	        descr="Protects twice as well when boarding. Used in siege or boarding operations, this shield offers additional protection.  It may be used with a 2-handed ranged weapon.";
 	        spe_descr="+15% HP, +4 Armour";}
-	    if (thawep="Archeotech Laspistol"){atta=120;arp=1;rang=3.1;ranged_hands+=1;
+	    if (thawep="Hellgun"){atta=30;arp=0;rang=6.1;ranged_hands+=2;amm=10;
+	        descr="";}
+	    if (thawep="Hellrifle"){atta=150;arp=90;rang=8;ranged_hands+=2;
+	        descr="Normally used by Radical Inquisitors, it appears an antiquated rifle but fires razor-sharp shards of Daemonic matter.";}
+	    if (thawep="Archeotech Laspistol"){atta=120;arp=0;rang=3.1;ranged_hands+=1;
 	        descr="Known as a Lasrod or Gelt Gun, this pistol is an ancient design of Laspistol with much greater range and power.";}
     
 	    if (thawep="Combat Knife"){atta=25;arp=0;rang=1;melee_hands+=0;spli=0;
 	        descr="More of a sword than knife proper, this tough and thick blade becomes a deadly weapon in the hand of an Astartes.";}
+	    if (thawep="Sarissa"){atta=40;arp=0;rang=1;spli=1;
+	        descr="A vicious combat attachment that is attached to Bolters, in order to allow them to be used in melee combat.";}
 	    if (thawep="Chainsword"){atta=50;arp=0;rang=1;melee_hands+=1;spli=1;
-	        descr="A standard Chainsword. It is popular among Assault Marines due to the raw power, even with multiple opponents";}
+	        descr="A standard Chainsword.  It is popular among Assault Marines due to the raw power, even with multiple opponents";}
 	    if (thawep="Chainaxe"){atta=90;arp=0;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;
-	        descr="Able to be dual wielded. A weapon most frequently seen in the hands of Chaos, this Chainaxe uses motorized chainsaw teeth to maim and tear.";}
+	        descr="Able to be duel wielded. A weapon most frequently seen in the hands of Chaos, this Chainaxe uses motorized chainsaw teeth to maim and tear.";}
 	    if (thawep="Eviscerator"){atta=180;arp=1;rang=1;melee_hands+=2;spli=1;
 	        descr="An obscenely large Chainsword, this two-handed weapon can carve through flesh and plasteel with equal ease.";}
-	    if (thawep="Power Sword"){atta=125;arp=1;rang=1;melee_hands+=1;spli=0;spe_descr="Parry";
-	        descr="A preeminent type of Power Weapon. When active the blade becomes sheathed in a lethal haze of disruptive energy.";}
+	    if (thawep="Power Sword"){atta=125;arp=1;rang=1;melee_hands+=1.1;spli=0;spe_descr="Parry";
+	        descr="A preeminent type of Power Weapon.  When active the blade becomes sheathed in a lethal haze of disruptive energy.";}
 	    if (thawep="Master Crafted Power Sword"){atta=185;arp=1;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";
 	        descr="A master-crafted weapon is usually incredibly ornate and highly decorated compared to standard weapons of the same pattern, while also possessing augmented functionality. Any standard Imperial weapon can be master-crafted. Due to the improved design of a master-crafted weapon, it is more likely that a target will be hit by attacks from this weapon.";}
+	    if (thawep="Eldar Power Sword"){atta=170;arp=1;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";
+	        descr="Power weapons, infused with arcane energy, are used by Howling Banshees and Dire Avenger Exarchs. Swords such as these are as much artistic statement as weapon, and effective against even heavily armoured troops.";}
 	    if (thawep="Power Weapon"){atta=135;arp=1;rang=1;melee_hands+=1;spli=1;
 	        descr="Often the signature weapons of elite warriors, power swords are perhaps the most dangerous of melee weapons in the galaxy.";}
-	    if (thawep="Power Axe"){atta=160;arp=1;rang=1;melee_hands+=1;spli=1;
+	    if (thawep="Power Axe"){atta=160;arp=1;rang=1;melee_hands+=1;spli=0;
 	        descr="Similar to the Power Sword. Able to be duel wielded. This weapon can be activated to sheathe the axe-head in a lethal haze of disruptive energy.";}
-	    if (thawep="Power Fist"){atta=275;arp=1;rang=1;melee_hands+=1;ranged_hands+=0.1;spli=1;
-	        descr="A large, metal gauntlet surrounded by an energy field. Though large and slow it dishes out tremendous damage.";}
-	    if (thawep="Lightning Claw"){atta=450;arp=1;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;
+	    if (thawep="Power Fist"){atta=275;arp=1;rang=1;melee_hands+=1;ranged_hands+=1;spli=1;
+	        descr="A large, metal gauntlet surrounded by an energy field.  Though large and slow it dishes out tremendous damage.";}
+	    if (thawep="Lightning Claw"){atta=450;arp=0;rang=1;melee_hands+=2;ranged_hands+=2;spli=1;
 	        descr="Created by attaching several long, energized blades to a standard power fist.  Allows better ripping and tearing.";}
 	    if (thawep="Chainfist"){atta=300;arp=1;rang=1;melee_hands+=1;ranged_hands+=1;spli=0;
 	        descr="Created by mounting a chainsword to a power fist, this weapon is easily able to carve through armoured bulkheads.";}
@@ -225,18 +202,18 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 
 	    if (thawep="Force Weapon"){
-	        atta=400;arp=1;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";
+	        atta=400;arp=1;rang=1;melee_hands+=1;spli=1;
 	        descr="An advanced, psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.";
 	        if (argument6!="description") and (argument6!="description_long"){
-	        if (string_count("0",marine_powers[argument3])>0){atta=400;arp=1;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";}
+	        if (string_count("0",marine_powers[argument3])>0){atta=400;arp=0;rang=1;melee_hands+=1;spli=1;}
 	        if (string_count("0",marine_powers[argument3])=0){thawep="Inactive Force Weapon";atta=30;arp=0;rang=1;melee_hands+=1;}}
 	        // if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then melee_hands-=1;
 	    }
 	    if (thawep="Master Crafted Force Weapon"){
-	        atta=500;arp=1;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";
+	        atta=500;arp=1;rang=1;melee_hands+=1;spli=1;
 	        descr="A more expertly crafted Force Weapon, the fine craftsmanship confers greater ease and control with disrupting matter.";
 	        if (argument6!="description") and (argument6!="description_long"){
-	        if (string_count("0",marine_powers[argument3])>0){atta=500;arp=1;rang=1;melee_hands+=1;spli=1;spe_descr="Parry";}
+	        if (string_count("0",marine_powers[argument3])>0){atta=480;arp=0;rang=1;melee_hands+=1;spli=1;}
 	        if (string_count("0",marine_powers[argument3])=0){thawep="Inactive Master Crafted Force Weapon";atta=30;arp=0;rang=1;melee_hands+=1;}}
 	        // if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then melee_hands-=1;
 	    }
@@ -246,41 +223,41 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	    if (thawep="Master Crafted Thunder Hammer"){atta=560;arp=1;rang=1;melee_hands+=1;spli=1;
 	        descr="The Master Crafted Thunder Hammer incorporates superior craftsmanship, advanced technology, and special modifications, making it more potent and effective in combat. It possesses all the qualities of a standard Thunder Hammer but with enhanced performance and additional features.";}
     
-	    if (thawep="Bolt Pistol"){atta=75;arp=0;rang=3.1;amm=18;
-	        descr="A smaller, more compact version of the venerable Boltgun. Standard Godwyn pattern.";}
+	    if (thawep="Bolt Pistol"){atta=30;arp=0;rang=3.1;amm=18;
+
+	        descr="A smaller, more compact version of the venerable Boltgun.  Standard Godwyn pattern.";}
 	    if (thawep="Webber"){atta=35;arp=0;rang=4.1;ranged_hands+=2;amm=5;spli=0;
 	        descr="The Webber is a close-range weapon that fires strands of sticky web-like substance. It is designed to ensnare and immobilize enemies, restricting their movement and rendering them vulnerable to further attacks. ";}
-	    if (thawep="Underslung Bolter"){atta=60;arp=0;rang=10;amm=8;spli=1;// Bursts
-			descr="Error, data corrupted.";}
-        if (thawep="Stalker Pattern Bolter"){atta=100;arp=1;rang=15;ranged_hands+=2;amm=20;spli=0;
+	    if (thawep="Underslung Bolter"){atta=60;arp=0;rang=10;amm=8;spli=1;}// Bursts
+            if (thawep="Stalker Pattern Bolter"){atta=100;arp=1;rang=15;ranged_hands+=2;amm=20;spli=0;
 	        descr="The Stalker Bolter is a scoped long-range variant of the standard Bolter. Depending on the specific modifications made by the wielder, the Stalker Bolter can serve as a precision battle rifle or a high-powered sniper weapon.";}
 
 
-	    if (thawep="Bolter"){atta=75;arp=0;rang=12;ranged_hands+=1.1;amm=16;spli=1;
+	    if (thawep="Bolter"){atta=50;arp=0;rang=12;ranged_hands+=2;amm=16;spli=1;
 
 	        if (argument6!="description") and (argument6!="description_long"){
 	        if (string_count("Terminator",marine_armour[argument3])>0) then melee_hands-=1;
 	        if (marine_armour[argument3]="Tartaros") then melee_hands-=1;}
 	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
-	        descr="A miniaturized grenade launcher or an autocannon, roughly 0.75 caliber. This weapon is the standard issue Adeptus Astartes weapon.";}// Bursts
-	    if (thawep="Master Crafted Combiflamer"){atta=200;arp=1;rang=12;ranged_hands+=1.1;amm=12;spli=1;
+	        descr="A standard Godwyn Pattern Bolter.  This blessed weapon is used by most Adeptus Astartes.";}// Bursts
+	    if (thawep="Master Crafted Combiflamer"){atta=200;arp=1;rang=12;ranged_hands+=2;amm=15;spli=1;
 	        descr="The Master Crafted Combiflamer incorporates superior craftsmanship, advanced modifications, and enhancements compared to its standard counterpart. ";}// Bursts
-	    if (thawep="Combiflamer"){atta=100;arp=0;rang=12;ranged_hands+=1.1;amm=12;spli=1;
+	    if (thawep="Combiflamer"){atta=100;arp=1;rang=10;ranged_hands+=2;amm=15;spli=1;
 	        descr="A Boltgun with a one-shot Flamer strapped to the side.  It is useful for close quarters fighting.";}// Bursts
-	    if (thawep="Twin Linked Bolters"){atta=75;arp=0;rang=12;ranged_hands+=1.9;amm=30;spli=1;
+	    if (thawep="Twin Linked Bolters"){atta=70;arp=0;rang=12;ranged_hands+=2;amm=30;spli=1;
 	        descr="A Twin-linked Bolter consists of two Bolter weapons mounted side by side, typically on a vehicle or a special weapon platform.";}// Bursts
 
-	    if (thawep="Heavy Bolter"){atta=120;arp=0;rang=16;ranged_hands+=1.9;amm=20;spli=1;
+	    if (thawep="Heavy Bolter"){atta=120;arp=0;rang=16;ranged_hands+=2;melee_hands+=1;amm=20;spli=1;
 	        descr="An enormous Boltgun.This weapon can fire a hail of powerful bolts at the enemy.";}
-	    if (thawep="Master Crafted Heavy Bolter"){atta=220;arp=1;rang=16;ranged_hands+=1.9;amm=20;spli=1;
+	    if (thawep="Master Crafted Heavy Bolter"){atta=220;arp=1;rang=16;ranged_hands+=2;amm=25;spli=1;
 	        descr="A Master Crafted Heavy Bolter incorporates superior craftsmanship, advanced modifications, and enhancements compared to its standard counterpart";}
-	    if (thawep="Storm Bolter"){atta=80;arp=0;rang=10;ranged_hands+=1.1;amm=10;spli=1;
+	    if (thawep="Storm Bolter"){atta=80;arp=0;rang=10;ranged_hands+=2;amm=10;spli=1;
 	        if (argument6!="description") and (argument6!="description_long"){
 	        if (string_count("Terminator",marine_armour[argument3])>0) then melee_hands-=1;
 	        if (marine_armour[argument3]="Tartaros") then melee_hands-=1;}
 	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
 	        descr="Compact, and double barreled, this bolt weapon is inaccurate but grants an enormous amount of firepower.";}
-	    if (thawep="Flamer"){atta=100;arp=-1;rang=3.1;ranged_hands+=1.1;amm=4;spli=1;
+	    if (thawep="Flamer"){atta=350;arp=-1;rang=2.1;ranged_hands+=2;amm=4;spli=1;
 	        if (argument6!="description") and (argument6!="description_long"){
 	        if (string_count("Terminator",marine_armour[argument3])>0) then melee_hands-=1;
 	        if (marine_armour[argument3]="Tartaros") then melee_hands-=1;
@@ -288,11 +265,10 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        }
 	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
 	        descr="Blackened at the tip, this weapon unleashes a torrent of burning promethium- all the better to cleanse sin and impurity with.";}
-	    if (thawep="Underslung Flamer"){atta=200;arp=-1;rang=3.1;amm=4;spli=1;
+	    if (thawep="Underslung Flamer"){atta=200;arp=-1;rang=2.1;amm=4;spli=1;
 	        // if (obj_ncombat.enemy=3) or (obj_ncombat.enemy=13) then atta=35;
-			descr="Error, data corrupted.";
 	    }
-	    if (thawep="Incinerator"){atta=200;arp=-1;rang=3.1;ranged_hands+=1.1;amm=4;spli=1;
+	    if (thawep="Incinerator"){atta=200;arp=-1;rang=2.1;ranged_hands+=2;amm=4;spli=1;
 	        if (argument6!="description") and (argument6!="description_long"){
 	        if (string_count("Terminator",marine_armour[argument3])>0) then melee_hands-=1;
 	        if (marine_armour[argument3]="Tartaros") then melee_hands-=1;
@@ -300,14 +276,13 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        }
 	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
 	        descr="This flamer weapon includes special promethium and sacred oils.  It is particularly effective against Daemons and their ilk.";}
-	    if (thawep="Heavy Flamer"){atta=500;arp=0;rang=4.1;ranged_hands+=1.9;melee_hands+=1;amm=8;spli=1;
+	    if (thawep="Heavy Flamer"){atta=500;arp=-1;rang=2;ranged_hands+=2;melee_hands+=1;amm=8;spli=1;
 	        if (argument6!="description") and (argument6!="description_long"){
 	        // if (obj_ncombat.enemy=3) or (obj_ncombat.enemy=13) then atta=60;
 	        }
 	        descr="A much larger and bulkier flamer.  Few armies carry them on hand, instead choosing to mount them to vehicles.";}
-	    if (thawep="CCW Heavy Flamer"){atta=250;arp=0;rang=4.1;amm=6;spli=1;
+	    if (thawep="CCW Heavy Flamer"){atta=250;arp=-1;rang=2.1;amm=6;spli=1;
 	        // if (obj_ncombat.enemy=3) or (obj_ncombat.enemy=13) then atta=60;
-			descr="Error, data corrupted.";
 	    }
 	    if (thawep="Inferno Cannon"){atta=400;arp=-1;rang=3.1;spli=1;
 	        if (argument6!="description") and (argument6!="description_long"){
@@ -316,56 +291,57 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        descr="A huge, vehicle mounted flame weapon that fires with explosive force.  The resevoir is liable to explode.";}
 
 
-	    if (thawep="Meltagun"){atta=250;arp=1;rang=3.1;ranged_hands+=1.1;amm=4;
+	    if (thawep="Meltagun"){atta=250;arp=1;rang=2.1;ranged_hands+=2;amm=4;
 	        descr="A relatively quiet weapon, this gun vaporizes flesh and armour alike.  Due to heat dissipation it has only a short range.";}
-	    if (thawep="Master Crafted Meltagun"){atta=500;arp=1;rang=3.1;ranged_hands+=1.1;amm=4;
+	        if (thawep="Master Crafted Meltagun"){atta=250;arp=1;rang=2.1;ranged_hands+=2;amm=4;
 	        descr="A Master Crafted Meltagun incorporates superior craftsmanship, advanced modifications, and enhancements compared to its standard counterpart.";}
-	    if (thawep="Multi-Melta"){atta=500;arp=1;rang=3.1;ranged_hands+=1.9;melee_hands+=1;amm=8;spli=1;
+	    if (thawep="Multi-Melta"){atta=500;arp=1;rang=4.1;ranged_hands+=2;melee_hands+=1;amm=8;spli=1;
 	        descr="Though bearing longer range than the Meltagun, this weapon's great size usually restricts it to vehicles.";}
-	    if (thawep="Plasma Pistol"){atta=90;arp=1;rang=3.1;spli=1;
+	    if (thawep="Plasma Pistol"){atta=90;arp=1;rang=3.1;melee_hands+=1;
 	        descr="A smaller version of the plasma gun, this dangerous-to-use weapon has exceptional armour-piercing capabilities.";}
-	    if (thawep="Master Crafted Plasma Pistol"){atta=180;arp=1;rang=3.1;
+	    if (thawep="Master Crafted Plasma Pistol"){atta=120;arp=0;rang=3.1;melee_hands+=1;
 	        descr="A Master Crafted Plasma Pistol incorporates superior craftsmanship, advanced modifications, and enhancements compared to its standard counterpart.";}
-	    if (thawep="Infernus Pistol"){atta=100;arp=1;rang=3.1;amm=4;
+	    if (thawep="Infernus Pistol"){atta=100;arp=1;rang=2.1;melee_hands+=1;amm=4;
 	        descr="The Infernus Pistol is a compact and portable flamethrower-style weapon. It unleashes a torrent of fiery promethium, which engulfs its targets in flames.";}
-	    if (thawep="Plasma Gun"){atta=150;arp=1;rang=12;ranged_hands+=1.9;spli=1;
+	    if (thawep="Plasma Gun"){atta=150;arp=1;rang=12;ranged_hands+=2;spli=1;
 	        descr="A 2-handed firearm that launches bolts of plasma.  They are considered both sacred and dangerous, occasionally overheating.";}
-	    if (thawep="Master Crafted Plasma Gun"){atta=300;arp=1;rang=14;ranged_hands+=1.9;spli=1;
+	    if (thawep="Master Crafted Plasma Gun"){atta=175;arp=1;rang=14;ranged_hands+=2;spli=1;
 	        descr="A Master Crafted Plasma Gun incorporates superior craftsmanship, advanced modifications, and enhancements compared to its standard counterpart.";}
 
-	    if (thawep="Sniper Rifle"){atta=80;arp=0;rang=25;ranged_hands+=2;amm=20;
+	    if (thawep="Sniper Rifle"){atta=80;arp=0;rang=18;ranged_hands+=2;melee_hands+=1;amm=20;
+
 	        descr="Fires a solid shell and boasts powerful telescopic sights, allowing the user to target enemy weak points and distant foes.";}
-	    if (thawep="Assault Cannon"){atta=200;arp=0;rang=15;ranged_hands+=1.9;amm=5;spli=1;
+	    if (thawep="Assault Cannon"){atta=240;arp=0;rang=12;ranged_hands+=2;amm=5;spli=1;
 	        descr="A heavy, rotary auto-cannon frequently used by Dreadnoughts and Terminators.  Has an incredible rate of fire.";
 	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
 	    }
-	    if (thawep="Autocannon"){atta=180;arp=1;rang=18;ranged_hands+=1.9;amm=25;spli=1;
+	    if (thawep="Autocannon"){atta=180;arp=0;rang=18;ranged_hands+=2;amm=25;spli=1;
 	        descr="A rapid-firing weapon able to use a wide variety of ammunition, from mass-reactive explosive to solid shells.";
 	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
 	    }
-	    if (thawep="Missile Launcher"){atta=125;arp=1;rang=24;ranged_hands+=1.9;amm=4;spli=1;
+	    if (thawep="Missile Launcher"){atta=250;arp=0;rang=24;ranged_hands+=2;melee_hands+=1;amm=6;spli=1;
 	        descr="This heavy weapon is capable of firing either armour-piercing or fragmentation rockets.  Has low ammunition count.";}
-	    if (thawep="Lascannon"){atta=200;arp=1;rang=20;ranged_hands+=2;melee_hands+=1.9;amm=6;spli=0;
+	    if (thawep="Lascannon"){atta=200;arp=1;rang=24;ranged_hands+=2;melee_hands+=1;amm=8;spli=0;
 	        descr="A formidable laser weapon, this lascannon can pierce most vehicle or power armour from a tremendous range.";}
 
 	    if (thawep="Conversion Beam Projector"){atta=500;arp=1;rang=20;ranged_hands+=1;amm=1;spli=1;
 	        descr="The Conversion Beam Projector is a heavy energy weapon that harnesses advanced technology to project a concentrated beam of destructive energy. It is capable of cutting through armour, vehicles, and even heavily fortified structures.";}
 	    if (thawep="Integrated Bolters"){atta=75;arp=1;rang=8.1;amm=20;spli=1;
 	        descr="Integrated Bolters are a set of Bolter weapons that are integrated or built directly into the structure of the vehicle,armour or Dreadnought.";}
-	    if (thawep="Power Fists"){atta=425;arp=1;rang=1;melee_hands+=2;spli=1;
+	    if (thawep="Power Fists"){atta=425;arp=0;rang=1;melee_hands+=2;spli=1;
 	        descr="While not quite as strong as two Power Fist, these artifacts allow the use of an additional, third weapon.";}
 
 
 	    if (thawep="Close Combat Weapon"){atta=250;arp=1;rang=1;melee_hands+=1;spli=1;
 	        descr="While a variety of melee weapons are used by dreadnoughts, this power fist with flamer is the most common.";}
 
-	    if (thawep="Twin Linked Heavy Bolter"){atta=240;arp=0;rang=16;amm=20;spli=1;
+	    if (thawep="Twin Linked Heavy Bolter"){atta=240;arp=1;rang=16;amm=20;spli=1;
 	        descr="Twin-linked Heavy Bolters are an upgraded version of the standard Heavy Bolter weapon, which is known for its high rate of fire and effectiveness against infantry and light vehicles. ";}
 	    if (thawep="Twin Linked Lascannon"){atta=250;arp=1;rang=20;amm=10;
 	        descr="Lascannons are powerful anti-armour weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armour. ";}
-	    if (thawep="Lascannons"){atta=300;arp=1;rang=20;amm=6;
+	    if (thawep="Lascannons"){atta=300;arp=1;rang=20;amm=5;
 	        descr="Lascannons are powerful anti-armour weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armour. ";}
-	    if (thawep="Heavy Bolters"){atta=320;arp=0;rang=16;amm=10;spli=1;
+	    if (thawep="Heavy Bolters"){atta=320;arp=1;rang=16;amm=10;spli=1;
 	        descr="The Heavy Bolter is a heavy weapon that fires larger and more powerful bolt shells compared to the standard Bolter.";}
 	    if (thawep="Whirlwind Missiles"){atta=400;arp=1;rang=20;amm=6;spli=1;
 	        descr="The Whirlwind Missile Launcher is a vehicle-mounted artillery weapon that launches a barrage of powerful missiles at the enemy.";}
@@ -381,7 +357,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 		    	descr="A significant upgrade over the more common patterns of Rhino-chassis engines, these engines provide greater output.";}
 
 					// Vehicle Accessories
-			if (thawep="Dozer Blades"){atta=90;arp=0;rang=1;melee_hands+=1;spli=1
+			if (thawep="Dozer Blades"){atta=60;arp=0;rang=1;melee_hands+=1;spli=1
 			   	descr="An attachment for the front of vehicles, useful for clearing difficult terrain and can be used as an improvised weapon. ";}
 			if (thawep="Searchlight"){
 					descr="A simple solution for fighting in dark environments, searchlights serve to illuminate enemies for easier targeting. ";}
@@ -403,51 +379,51 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 			   descr="An archaic twin-linked autocannon design dating back to the Great Crusade. Effective against a variety of targets. ";}
 
 					// Land Raider Sponsons
-			if (thawep="Quad Linked Heavy Bolter Sponsons"){atta=480;arp=0;rang=16;amm=10;spli=1;
-				descr="Quad-linked Heavy Bolters are a significantly upgraded version of the standard Heavy Bolter mount; already punishing in a single mount, this quad mount is devastating against a variety of targets. ";}
+			if (thawep="Quad Linked Heavy Bolter Sponsons"){atta=480;arp=1;rang=16;amm=10;spli=1;
+					descr="Quad-linked Heavy Bolters are a significantly upgraded version of the standard Heavy Bolter mount; already punishing in a single mount, this quad mount is devastating against a variety of targets. ";}
 			if (thawep="Twin Linked Lascannon Sponsons"){atta=375;arp=1;rang=20;amm=5;
 			    descr="Lascannons are powerful anti-armour weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armour. ";}
 			if (thawep="Hurricane Bolter Sponsons"){atta=405;arp=0;rang=12;amm=20;spli=1;
 			    descr="Hurricane Bolters are large hex-mount bolter arrays that are able to deliver a withering hail of anti-infantry fire at short ranges. ";}
-			if (thawep="Flamestorm Cannon Sponsons"){atta=600;arp=1;rang=3.1;amm=6;spli=1;
+			if (thawep="Flamestorm Cannon Sponsons"){atta=600;arp=1;rang=3;amm=6;spli=1;
 			    descr="A huge vehicle-mounted flamethrower, the heat produced by this terrifying weapon can crack even armoured ceramite. ";}
-			if (thawep="Twin Linked Heavy Flamer Sponsons"){atta=550;arp=0;rang=4.1;amm=12;spli=1;
+			if (thawep="Twin Linked Heavy Flamer Sponsons"){atta=550;arp=-1;rang=2.1;amm=12;spli=1;
 			    descr="A much larger and bulkier flamer.  Few armies carry them on hand, instead choosing to mount them to vehicles.";}
-			if (thawep="Twin Linked Multi-Melta Sponsons"){atta=450;arp=1;rang=3.1;amm=6;spli=1;
+			if (thawep="Twin Linked Multi-Melta Sponsons"){atta=450;arp=1;rang=4.1;amm=6;
 			    descr="Though bearing longer range than the Meltagun, this weapon's great size usually restricts it to vehicles.";}
 			if (thawep="Twin Linked Volkite Culverin Sponsons"){atta=480;arp=0;rang=18;amm=25;spli=1;
-				descr="An advanced thermal weapon from a bygone era, Volkite Culverins are able to ignite entire formations of enemy forces. ";}
+					descr="An advanced thermal weapon from a bygone era, Volkite Culverins are able to ignite entire formations of enemy forces. ";}
 
 
 				// Predator Turrets
 				if (thawep="Twin Linked Lascannon Turret"){atta=250;arp=1;rang=20;amm=10;
-					descr="A Predator-compatible turret mounting a pair of anti-armour lascannons. ";}
-				if (thawep="Autocannon Turret"){atta=125;arp=1;rang=18;amm=50;spli=1;
+						descr="A Predator-compatible turret mounting a pair of anti-armour lascannons. ";}
+				if (thawep="Autocannon Turret"){atta=130;arp=0;rang=18;amm=50;spli=1;
 				    descr="A Predator-compatible turret mounting a reliable all-purpose autocannon. ";}
 				if (thawep="Twin Linked Assault Cannon Turret"){atta=360;arp=0;rang=12;amm=10;spli=1;
 				   	descr="A Predator-compatible turret mounting a pair of short range anti-infantry assault cannons. ";}
-				if (thawep="Flamestorm Cannon Turret"){atta=400;arp=1;rang=3.1;amm=12;spli=1;
-					descr="A Predator-compatible turret housing a huge flamethrower, the heat produced by this terrifying weapon can crack even armoured ceramite. ";}
+				if (thawep="Flamestorm Cannon Turret"){atta=400;arp=1;rang=2.1;amm=12;spli=1;
+					  descr="A Predator-compatible turret housing a huge flamethrower, the heat produced by this terrifying weapon can crack even armoured ceramite. ";}
 				if (thawep="Magna-Melta Turret"){atta=400;arp=1;rang=6;amm=12;
-					descr="A Predator-compatible turret housing a magna-melta, a devastating short-range anti-tank weapon. ";}
+					  descr="A Predator-compatible turret housing a magna-melta, a devastating short-range anti-tank weapon. ";}
 				if (thawep="Plasma Destroyer Turret"){atta=350;arp=1;rang=15;spli=1;
-					descr="A Predator-compatible turret housing a plasma destroyer, sometimes called the plasma executioner after the vehicle variants that mount this terrifying anti-armour weapon. ";}
+					  descr="A Predator-compatible turret housing a plasma destroyer, sometimes called the plasma executioner after the vehicle variants that mount this terrifying anti-armour weapon. ";}
 				if (thawep="Heavy Conversion Beamer Turret"){atta=750;arp=1;rang=25;amm=3;spli=1;
 				   	descr="A Predator-compatible turret housing a Heavy Conversion Beam Projector, a heavy energy weapon that turns a target's own matter against it by converting it into destructive energy.";}
 				if (thawep="Neutron Blaster Turret"){atta=400;arp=1;rang=15;amm=10
-					descr="A Predator-compatible turret housing a neutron blaster; a weapon from the Dark Age of Technology, this weapon is capable of destroying enemy armour with impunity. ";}
+					  descr="A Predator-compatible turret housing a neutron blaster; a weapon from the Dark Age of Technology, this weapon is capable of destroying enemy armour with impunity. ";}
 				if (thawep="Volkite Saker Turret"){atta=400;arp=0;rang=18;amm=50;spli=1;
-					descr="A Predator-compatible turret housing a Volkite Saker, capable of igniting entire formations of enemy forces with a single sweep. ";}
+						descr="A Predator-compatible turret housing a Volkite Saker, capable of igniting entire formations of enemy forces with a single sweep. ";}
 
 				// Predator Sponsons
 				if (thawep="Lascannon Sponsons"){atta=250;arp=1;rang=20;amm=5;
-					descr="Lascannons are powerful anti-armour weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armour. ";}
+		        descr="Lascannons are powerful anti-armour weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armour. ";}
 				if (thawep="Heavy Bolter Sponsons"){atta=240;arp=0;rang=16;amm=20;spli=1;
 				    descr="The Heavy Bolter is a heavy weapon that fires larger and more powerful bolt shells compared to the standard Bolter.";}
-				if (thawep="Heavy Flamer Sponsons"){atta=375;arp=0;rang=3.1;amm=6;spli=1;
+				if (thawep="Heavy Flamer Sponsons"){atta=375;arp=-1;rang=2.1;amm=6;spli=1;
 				   	descr="A much larger and bulkier flamer. Few armies carry them on hand, instead choosing to mount them to vehicles. ";}
 				if (thawep="Volkite Culverin Sponsons"){atta=320;arp=0;rang=18;amm=25;spli=1;
-					descr="An advanced thermal weapon from a bygone era, Volkite Culverins are able to ignite entire formations of enemy forces. ";}
+						descr="An advanced thermal weapon from a bygone era, Volkite Culverins are able to ignite entire formations of enemy forces. ";}
 
 
 	    // STC Bonuses

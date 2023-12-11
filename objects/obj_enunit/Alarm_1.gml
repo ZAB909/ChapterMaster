@@ -273,63 +273,8 @@ if __b__
 {
 
 repeat(20){j+=1;
-    if (dudes[j]="Leader"){
-	    scr_en_weapon("Melee Mechadendrites",true,dudes_num[j],dudes[j],j);
-		scr_en_weapon("Power Axe",true,dudes_num[j],dudes[j],j);
-		scr_en_weapon("Lascutter",true,dudes_num[j],dudes[j],j);
-        scr_en_weapon("Conversion Beam Projector",true,dudes_num[j],dudes[j],j);
-        scr_en_weapon("Heavy Flamer",true,dudes_num[j],dudes[j],j);
-		scr_en_weapon("Multi-Melta",true,dudes_num[j],dudes[j],j);
-        dudes_ac[j]=50;
-        if (obj_ncombat.started=0) or (dudes_num[j]>1){dudes_hp[j]=300;}
-        men+=dudes_num[j];
-    }// Forge Lord in chief, in 40k terms - fabricator-general, example would be Kelbor-Hal.
-	if (dudes[j]="Forgelord"){
-		scr_en_weapon("Melee Mechadendrites",true,dudes_num[j],dudes[j],j);
-		scr_en_weapon("Power Axe",true,dudes_num[j],dudes[j],j);
-		scr_en_weapon("Lascutter",true,dudes_num[j],dudes[j],j);
-		scr_en_weapon("Conversion Beam Projector",true,dudes_num[j],dudes[j],j);
-		scr_en_weapon("Meltagun",true,dudes_num[j],dudes[j],j);
-		dudes_ac[j]=30;dudes_hp[j]=125;men+=dudes_num[j];}// Fabricator-General of a different FW, or Fabricator-Locum near the Leader.
-	if (dudes[j]="Minor Forgelord"){
-		scr_en_weapon("Melee Mechadendrites",true,dudes_num[j],dudes[j],j);
-		scr_en_weapon("Power Axe",true,dudes_num[j],dudes[j],j);
-		scr_en_weapon("Conversion Beam Projector",true,dudes_num[j],dudes[j],j);
-		scr_en_weapon("Flamer",true,dudes_num[j],dudes[j],j);
-		dudes_ac[j]=20;dudes_hp[j]=75;men+=dudes_num[j];}// A local leader of a world belonging to the Admech, but not being a HW or FW.
-//Leadership
-	if (dudes[j]="Techpriest"){
-		scr_en_weapon("Power Axe",true,dudes_num[j],dudes[j],j);
-		scr_en_weapon("Conversion Beam Projector",true,dudes_num[j],dudes[j],j);
-		scr_en_weapon("Flamer",true,dudes_num[j],dudes[j],j);
-		dudes_ac[j]=12;dudes_hp[j]=40;men+=dudes_num[j];}// May be a little too weak for a squad/expedition leader and a hireling.
-//Minor leaders
-    if (dudes[j]="Thallax"){
-		scr_en_weapon("Lightning Gun",true,dudes_num[j],dudes[j],j);
-		scr_en_weapon("Thallax Melee",true,dudes_num[j],dudes[j],j);
-		dudes_ac[j]=30;dudes_hp[j]=80;men+=dudes_num[j];}
-    if (dudes[j]="Praetorian Servitor"){
-		scr_en_weapon("Phased Plasma-fusil",true,dudes_num[j],dudes[j],j);
-		scr_en_weapon("Combat Knife",true,dudes_num[j],dudes[j],j);
-		dudes_ac[j]=25;dudes_hp[j]=150;medi+=dudes_num[j];}
-	if (dudes[j]="Skitarii"){
-		scr_en_weapon("Hellgun",true,dudes_num[j],dudes[j],j);
-		scr_en_weapon("Combat Knife",true,dudes_num[j],dudes[j],j);
-		dudes_ac[j]=6;dudes_hp[j]=40;men+=dudes_num[j];}
-	if (dudes[j]="Combat Servitor"){
-		scr_en_weapon("Storm Bolter",true,dudes_num[j],dudes[j],j);
-		scr_en_weapon("Combat Knife",true,dudes_num[j],dudes[j],j);
-		dudes_ac[j]=6;dudes_hp[j]=30;men+=dudes_num[j];}
-//Infantry roster
-    if (dudes[j]="Rhino"){
-		scr_en_weapon("Storm Bolter",false,dudes_num[j]*2,dudes[j],j);
-		scr_en_weapon("Medium Vehicle Melee",false,dudes_num[j],dudes[j],j);
-		dudes_ac[j]=20;dudes_hp[j]=200;veh+=dudes_num[j];dudes_vehicle[j]=1;}
-    if (dudes[j]="Castellax Battle-Automaton"){
-		scr_en_weapon("Power Fist",false,dudes_num[j]*2,dudes[j],j);
-		scr_en_weapon("Lascannon",false,dudes_num[j],dudes[j],j);
-		dudes_ac[j]=35;dudes_hp[j]=300;veh+=dudes_num[j];dudes_vehicle[j]=1;}
-//Vehicle roster
+    if (dudes[j]="Thallax"){scr_en_weapon("Lightning Gun",true,dudes_num[j],dudes[j],j);scr_en_weapon("Thallax Melee",true,dudes_num[j],dudes[j],j);dudes_ac[j]=30;dudes_hp[j]=80;men+=dudes_num[j];}
+    if (dudes[j]="Praetorian Servitor"){scr_en_weapon("Phased Plasma-fusil",true,dudes_num[j],dudes[j],j);dudes_ac[j]=25;dudes_hp[j]=150;medi+=dudes_num[j];}
 }
 
 // 
