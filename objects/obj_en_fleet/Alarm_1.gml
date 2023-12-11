@@ -1,7 +1,7 @@
 
 var orb;orb=orbiting;
 
-if (round(owner)!=eFACTION.Imperium) and (navy=1) then owner= noone;
+if ((owner)!=eFACTION.Imperium) and (navy=1) then owner= noone;
 
 if ((trade_goods="BLOODBLOODBLOOD") or (trade_goods="BLOODBLOODBLOODBLOOD")) and (owner=eFACTION.Chaos) {
     if (orb!=0) and (instance_exists(orb)) and (action=""){
