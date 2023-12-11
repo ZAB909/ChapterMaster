@@ -43,6 +43,7 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
 
 	if (obj_ncombat.enemy=3){
 		if (name="Conversion Beam Projector"){atta=500;arp=1;rang=20;amm=1;spli=1;}
+		if (name="Lascannon"){atta=200;arp=1;rang=20;amm=8;}
 	    if (name="Phased Plasma-fusil"){atta=100;arp=1;rang=7.1;spli=1;}
 	    if (name="Lightning Gun"){atta=choose(80,80,80,150);arp=0;rang=5;spli=0;}
 		if (name="Hellgun"){atta=30;arp=0;rang=6.1;amm=15;spli=1;}
