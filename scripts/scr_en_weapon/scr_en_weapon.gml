@@ -42,9 +42,21 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
 
 
 	if (obj_ncombat.enemy=3){
+		if (name="Conversion Beam Projector"){atta=500;arp=1;rang=20;amm=1;spli=1;}
+		if (name="Lascannon"){atta=200;arp=1;rang=20;amm=8;}
 	    if (name="Phased Plasma-fusil"){atta=100;arp=1;rang=7.1;spli=1;}
 	    if (name="Lightning Gun"){atta=choose(80,80,80,150);arp=0;rang=5;spli=0;}
+		if (name="Hellgun"){atta=30;arp=0;rang=6.1;amm=15;spli=1;}
+	    if (name="Storm Bolter"){atta=65;arp=0;rang=8;amm=10;spli=1;}
+		if (name="Flamer"){atta=160;arp=0;rang=2.1;amm=4;spli=1;}
+		if (name="Multi-Melta"){atta=200;arp=1;rang=4.1;amm=6;spli=1;}
+		if (name="Melee Mechadendrites"){atta=100;arp=1;rang=1;spli=1;}
+		if (name="Medium Vehicle Melee"){atta=80;arp=0;rang=1;}
+	    if (name="Power Fist"){atta=425;arp=1;rang=1;}
+		if (name="Power Axe"){atta=100;arp=1;rang=1;spli=1;}
 	    if (name="Thallax Melee"){atta=80;arp=0;rang=1;spli=1;}
+		if (name="Lascutter"){atta=100;arp=1;rang=1;spli=0;}
+		if (name="Combat Knife"){atta=25;arp=0;rang=1;spli=0;}
 	}
 
 
