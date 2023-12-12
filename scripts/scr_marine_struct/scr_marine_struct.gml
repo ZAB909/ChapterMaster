@@ -616,15 +616,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	static update_role = function(new_role){
 		if (base_group=="astartes"){
 			if (role() == obj_ini.role[100][12] && new_role!=obj_ini.role[100][12]){
-		  		var has_carapace =false;
-		  		if (struct_exists(body[$ "torso"], "black_carapace")){
-		  			if (body[$ "torso"][$"black_carapace"]){
-		  				has_carapace=true;
-		  			}
-		  		} 
-		  		if (!has_carapace){
-		  			body[$ "torso"][$"black_carapace"]=true;
-		  			strength+=4;
+		  		if (!get_body_data("black_carapace","torso")){
+		  			alter_body("torso", "black_carapace", true);
+		  			strength+=4;//will decide on if these are needed
 		  			constitution+=4;
 		  			dexterity+=4;
 		  		}	
@@ -893,6 +887,43 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 	};
 	body = {"left_leg":{}, "right_leg":{}, "torso":{}, "left_arm":{}, "right_arm":{}, "left_eye":{}, "right_eye":{},"throat":{}, "jaw":{},"head":{}}; //body parts list can be extended as much as people want
+
+	static alter_body = function(body_slot, body_item_key, new_body_data, overwrite=true){//overwrite means it will replace any existing data
+		if (struct_exists(body, body_slot)){
+			if (!(struct_exists(body[$ body_slot], body_item_key)) || overwrite){
+				body[$ body_slot][$ body_item_key] = new_body_data;
+			}
+		} else {
+			return "invalid body area"
+		}
+	}
+
+	static get_body_data = function(body_item_key,body_slot="none"){
+		if (body_slot!="none"){
+			if (struct_exists(body, body_slot)){
+				if (struct_exists(body[$ body_slot], body_item_key)){
+					return body[$ body_slot][$ body_item_key]
+				} else {
+					return false;
+				}
+			}else {
+				return "invalid body area";
+			}
+		} else {
+			var body_part_area_keys
+			for (var i=0;i<array_length(global.body_parts);i++){//search all body parts
+				body_area = body[$ global.body_parts]
+				body_part_area_keys=struct_get_names(body_area)
+				for (var b=0;b<array_length(body_part_area_keys);b++){
+					if (body_part_area_keys[b]==body_item_key){
+						return body_area[$ body_item_key];
+					}
+				}
+				
+			}
+		}
+		return false;
+	} 
 	switch base_group{
 		case "astartes":				//basic marine class //adds specific mechanics not releveant to most units
 			var astartes_trait_dist = [
@@ -926,9 +957,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				["tinkerer",[199,198],{"chapter_name":["Iron Hands",[49,47]]}],
 			];
 			distribute_traits(astartes_trait_dist);
-			body[$ "torso"][$ "black_carapace"] = true;
+			alter_body("torso","black_carapace",true);
 			if (class=="scout" &&  global.chapter_name!="Space Wolves"){
-				body[$ "torso"][$ "black_carapace"] = false;
+				alter_body("torso","black_carapace",false);
 			}
 			if (faction ="chapter"){
 				allegiance = global.chapter_name;
@@ -1031,7 +1062,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			var bionic_possible = [];
 			for (var body_part = 0; body_part < array_length(global.body_parts);body_part++){
 				part = global.body_parts[body_part];
-				if (!struct_exists(body[$part], "bionic")){
+				if (!get_body_data("bionic",part)){
 					array_push(bionic_possible, part);
 				}
 			}
@@ -1046,7 +1077,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					new_bionic_pos = bionic_possible[irandom(array_length(bionic_possible)-1)];
 				}
 				obj_ini.bio[company][marine_number]++;
-				variable_struct_set(body[$ new_bionic_pos], "bionic", new_bionic);
+				alter_body(new_bionic_pos, "bionic",new_bionic)
 				if (array_contains(["left_leg", "right_leg"], new_bionic_pos)){
 					constitution += 2;
 					strength++;

@@ -80,23 +80,14 @@ if (type=5) and (cooldown<=0){
 
     if (unit_role!=obj_ini.role[100,17]) or (obj_controller.command_set[1]!=0){
         if (mouse_y>=yy+210) and (mouse_y<yy+230){
-            if (mouse_x>=xx+1468) and (mouse_x<=xx+1515) and (min_exp>=0){target_comp=0;cooldown=8000;}
+            if (mouse_x>=xx+1468) and (mouse_x<=xx+1515) and (min_exp>=0){
+                target_comp=0;
+                get_unit_promotion_options();
+                cooldown=8000;
+            }
         }
     }
-
-    if (mouse_y>=yy+310) and (mouse_y<yy+330) and (type=5){
-        if (mouse_x>=xx+1030) and (mouse_x<xx+1180) and (min_exp>=role_exp[1]) and (role_name[1]!=""){target_role=1;cooldown=8;}
-        if (mouse_x>=xx+1200) and (mouse_x<xx+1350) and (min_exp>=role_exp[2]) and (role_name[2]!=""){target_role=2;cooldown=8;}
-        if (mouse_x>=xx+1370) and (mouse_x<xx+1520) and (min_exp>=role_exp[3]) and (role_name[3]!=""){target_role=3;cooldown=8;}
-    }
-    if (mouse_y>=yy+330) and (mouse_y<yy+350) and (type=5){
-        if (mouse_x>=xx+1030) and (mouse_x<xx+1180) and (min_exp>=role_exp[4]) and (role_name[4]!=""){target_role=4;cooldown=8;}
-        if (mouse_x>=xx+1200) and (mouse_x<xx+1350) and (min_exp>=role_exp[5]) and (role_name[5]!=""){target_role=5;cooldown=8;}
-        if (mouse_x>=xx+1370) and (mouse_x<xx+1520) and (min_exp>=role_exp[6]) and (role_name[6]!=""){target_role=6;cooldown=8;}
-    }
-
-
-    if (before!=target_comp) and (type=5){
+    /*if (before!=target_comp) and (type=5){
         var i,cap,bear,spec,champ;i=0;cap=0;bear=0;spec=0;champ=0;
 
         var i;i=-1;
@@ -113,134 +104,15 @@ if (type=5) and (cooldown<=0){
 
 
         if (unit_role=obj_ini.role[100][14]) and (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands"){role_name[1]=obj_ini.role[100][14];role_exp[1]=5;spec=1;}
-        if (unit_role="Lexicanum") and (target_comp=0){
+        if (unit_role=="Lexicanum"){
             role_name[1]=obj_ini.role[100,17];role_exp[1]=125;spec=1;
             role_name[2]="Codiciery";role_exp[2]=80;
         }
-        if (unit_role="Codiciery") and (target_comp=0){
+        if (unit_role=="Codiciery") and (target_comp=0){
             role_name[1]=obj_ini.role[100,17];role_exp[1]=125;spec=1;
         }
 
-        // honour guard xp requirement
-        if ((target_comp=0) or (target_comp>10)) and (spec=0){
-            i=0;cap=0;bear=0;champ=0;
-            i+=1;
-            role_name[i]=obj_ini.role[100][2];
-            role_exp[i]=200;
-        }
-       // this area does the required exp for roles per company
-        if (target_comp=1) and (spec=0){
-            i=0;cap=0;bear=0;champ=0;
-            if (units=1){cap=scr_role_count(obj_ini.role[100][5],"1");if (cap=0){i+=1;role_name[i]=obj_ini.role[100][5];role_exp[i]=210;}}
-            if (units=1){bear=scr_role_count("Standard Bearer","1");if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=95;}}
-            if (units=1){champ=scr_role_count(obj_ini.role[100][7],"1");if (champ=0){i+=1;role_name[i]=obj_ini.role[100][7];role_exp[i]=180;}}
-            i+=1;role_name[i]="Terminator";role_exp[i]=180;
-            i+=1;role_name[i]=obj_ini.role[100][3];role_exp[i]=150;
-            if (units=1){i+=1;role_name[i]=obj_ini.role[100][6];role_exp[i]=150;}
-        }
-
-        if (target_comp=2) and (spec=0){
-            i=0;cap=0;bear=0;champ=0;
-            if (units=1){cap=scr_role_count(obj_ini.role[100][5],"2");if (cap=0){i+=1;role_name[i]=obj_ini.role[100][5];role_exp[i]=200;}}
-            if (units=1){bear=scr_role_count("Standard Bearer","2");if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=75;}}
-            if (units=1){champ=scr_role_count(obj_ini.role[100][7],"2");if (champ=0){i+=1;role_name[i]=obj_ini.role[100][7];role_exp[i]=170;}}
-            i+=1;role_name[i]=obj_ini.role[100][8];role_exp[i]=120;
-            i+=1;role_name[i]=obj_ini.role[100][10];role_exp[i]=120;
-            i+=1;role_name[i]=obj_ini.role[100][9];role_exp[i]=120;
-            if (units=1){i+=1;role_name[i]=obj_ini.role[100][6];role_exp[i]=120;}
-        }
-
-        if (target_comp=3) and (spec=0){
-            i=0;cap=0;bear=0;champ=0;
-            if (units=1){cap=scr_role_count(obj_ini.role[100][5],"3");
-            if (cap=0){i+=1;role_name[i]=obj_ini.role[100][5];role_exp[i]=190;}}
-            if (units=1){bear=scr_role_count("Standard Bearer","3");
-            if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=65;}}
-            if (units=1){champ=scr_role_count(obj_ini.role[100][7],"3");
-            if (champ=0){i+=1;role_name[i]=obj_ini.role[100][7];role_exp[i]=160;}}
-            i+=1;role_name[i]=obj_ini.role[100][8];role_exp[i]=110;
-            i+=1;role_name[i]=obj_ini.role[100][10];role_exp[i]=110;
-            i+=1;role_name[i]=obj_ini.role[100][9];role_exp[i]=110;
-            if (units=1){i+=1;role_name[i]=obj_ini.role[100][6];role_exp[i]=110;}
-        }
-      
-        if (target_comp=4) and (spec=0){
-            i=0;cap=0;bear=0;champ=0;
-            if (units=1){cap=scr_role_count(obj_ini.role[100][5],"4");if (cap=0){i+=1;role_name[i]=obj_ini.role[100][5];role_exp[i]=170;}}
-            if (units=1){bear=scr_role_count("Standard Bearer","4");if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=55;}}
-            if (units=1){champ=scr_role_count(obj_ini.role[100][7],"4");if (champ=0){i+=1;role_name[i]=obj_ini.role[100][7];role_exp[i]=140;}}
-            i+=1;role_name[i]=obj_ini.role[100][8];role_exp[i]=100;
-            i+=1;role_name[i]=obj_ini.role[100][10];role_exp[i]=100;
-            i+=1;role_name[i]=obj_ini.role[100][9];role_exp[i]=100;
-            if (units=1){i+=1;role_name[i]=obj_ini.role[100][6];role_exp[i]=50;}
-        }
-
-        if (target_comp=5) and (spec=0){
-            i=0;cap=0;bear=0;champ=0;
-            if (units=1){cap=scr_role_count(obj_ini.role[100][5],"5");
-            if (cap=0){i+=1;role_name[i]=obj_ini.role[100][5];role_exp[i]=160;}}
-            if (units=1){bear=scr_role_count("Standard Bearer","5");
-            if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=45;}
-            if (units=1){champ=scr_role_count(obj_ini.role[100][7],"5");
-            if (champ=0){i+=1;role_name[i]=obj_ini.role[100][7];role_exp[i]=130;}}}
-            i+=1;role_name[i]=obj_ini.role[100][8];role_exp[i]=80;
-            i+=1;role_name[i]=obj_ini.role[100][10];role_exp[i]=80;
-            i+=1;role_name[i]=obj_ini.role[100][9];role_exp[i]=80;
-            if (units=1){i+=1;role_name[i]=obj_ini.role[100][6];role_exp[i]=80;}
-        }
-
-        if (target_comp=6) and (spec=0){
-            i=0;cap=0;bear=0;champ=0;
-            if (units=1){cap=scr_role_count(obj_ini.role[100][5],"6");if (cap=0){i+=1;role_name[i]=obj_ini.role[100][5];role_exp[i]=120;}}
-            if (units=1){bear=scr_role_count("Standard Bearer","6");if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=40;}}
-            if (units=1){champ=scr_role_count(obj_ini.role[100][7],"6");if (champ=0){i+=1;role_name[i]=obj_ini.role[100][7];role_exp[i]=100;}}
-            i+=1;role_name[i]=obj_ini.role[100][8];role_exp[i]=70;
-            if (units=1){i+=1;role_name[i]=obj_ini.role[100][6];role_exp[i]=70;}
-        }
-
-        if (target_comp=7) and (spec=0){
-            i=0;cap=0;bear=0;champ=0;
-            if (units=1){cap=scr_role_count(obj_ini.role[100][5],"7");if (cap=0){i+=1;role_name[i]=obj_ini.role[100][5];role_exp[i]=120;}}
-            if (units=1){bear=scr_role_count("Standard Bearer","7");if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=35;}}
-            if (units=1){champ=scr_role_count(obj_ini.role[100][7],"7");if (champ=0){i+=1;role_name[i]=obj_ini.role[100][7];role_exp[i]=100;}}
-            i+=1;role_name[i]=obj_ini.role[100][8];role_exp[i]=60;
-            if (units=1){i+=1;role_name[i]=obj_ini.role[100][6];role_exp[i]=60;}
-        }
-
-        if (target_comp=8) and (spec=0){
-            i=0;cap=0;bear=0;champ=0;
-            if (units=1){cap=scr_role_count(obj_ini.role[100][5],"8");if (cap=0){i+=1;role_name[i]=obj_ini.role[100][5];role_exp[i]=120;}}
-            if (units=1){bear=scr_role_count("Standard Bearer","8");if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=30;}}
-            if (units=1){champ=scr_role_count(obj_ini.role[100][7],"8");if (champ=0){i+=1;role_name[i]=obj_ini.role[100][7];role_exp[i]=100;}}
-            i+=1;role_name[i]=obj_ini.role[100][10];role_exp[i]=50;
-            if (units=1){i+=1;role_name[i]=obj_ini.role[100][6];role_exp[i]=50;}
-        }
-
-        if (target_comp=9) and (spec=0){
-            i=0;cap=0;bear=0;champ=0;
-            if (units=1){
-                cap=scr_role_count(obj_ini.role[100][5],"9");
-                if (cap=0){i+=1;role_name[i]=obj_ini.role[100][5];role_exp[i]=120;}
-            }
-            if (units=1){bear=scr_role_count("Standard Bearer","9");
-            if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=25;}
-            if (units=1){champ=scr_role_count(obj_ini.role[100][7],"9");
-            if (champ=0){i+=1;role_name[i]=obj_ini.role[100][7];role_exp[i]=100;}}}
-            i+=1;role_name[i]=obj_ini.role[100][9];role_exp[i]=40;
-            if (units=1){i+=1;role_name[i]=obj_ini.role[100][6];role_exp[i]=40;}
-        }
-
-        if (target_comp=10) and (spec=0){
-            i=0;cap=0;bear=0;champ=0;
-            if (units=1){cap=scr_role_count(obj_ini.role[100][5],"10");if (cap=0){i+=1;role_name[i]=obj_ini.role[100][5];role_exp[i]=120;}}
-            if (units=1){bear=scr_role_count("Standard Bearer","10");if (bear=0){i+=1;role_name[i]="Standard Bearer";role_exp[i]=25;}}
-            if (units=1){champ=scr_role_count(obj_ini.role[100][7],"10");if (champ=0){i+=1;role_name[i]=obj_ini.role[100][7];role_exp[i]=100;}}
-            i+=1;role_name[i]=obj_ini.role[100][12];role_exp[i]=0;
-        }
-
-
-
-        var huj;huj=1;
+        var huj=1;
         if (unit_role=obj_ini.role[100][5]){
             huj-=scr_role_count(obj_ini.role[100][5],string(target_comp));
             huj-=scr_role_count("Company Champion",string(target_comp));
@@ -250,110 +122,20 @@ if (type=5) and (cooldown<=0){
         target_role=0;all_good=0;
 
 
-        if (obj_controller.command_set[2]=1){var w;w=0;
+        if (obj_controller.command_set[2]=1){var w=0;
             repeat(10){w+=1;if (role_name[w]!="") and (role_exp[w]>5) then role_exp[w]=5;}
         }
 
         /* More elaborate checking here; the EXP should be the minimum for that company.
-        If any of the units are captain, dread, special, etc. then it should be greyed out.*/
+        If any of the units are captain, dread, special, etc. then it should be greyed out.
 
-    }
-
-
-
-    if (before2!=target_role) and (type=5){
-        var i,rall;i=0;rall="";all_good=0;
-
-        req_armour="";req_armour_num=0;have_armour_num=0;
-        req_gear="";req_gear_num=0;have_gear_num=0;
-        req_mobi="";req_mobi_num=0;have_mobi_num=0;
-        req_wep1="";req_wep1_num=0;have_wep1_num=0;
-        req_wep2="";req_wep2_num=0;have_wep2_num=0;
-
-        rall=role_name[target_role];
-
-        if (rall=obj_ini.role[100][14]) and (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands"){req_armour="";req_armour_num=0;req_wep1="";req_wep1_num=0;req_wep2="";req_wep2_num=0;req_mobi="";req_mobi_num=0;}
-        if (rall=obj_ini.role[100][15]){req_armour="";req_armour_num=0;req_wep1="";req_wep1_num=0;req_wep2="";req_wep2_num=0;req_mobi="";req_mobi_num=0;}
-
-        if (rall=obj_ini.role[100,17]){req_armour="";req_armour_num=0;req_wep1=obj_ini.wep1[100,17];req_wep1_num=units;req_wep2=obj_ini.wep2[100,17];req_wep2_num=units;req_gear=obj_ini.gear[100,17];req_gear_num=units;}
-        if (rall="Codiciery"){req_armour="";req_armour_num=0;req_wep1="";req_wep1_num=0;req_wep2="";req_wep2_num=0;req_mobi="";req_mobi_num=0;req_gear=obj_ini.gear[100,17];req_gear_num=units;}
-        if (rall="Lexicanum"){req_armour="";req_armour_num=0;req_wep1="";req_wep1_num=0;req_wep2="";req_wep2_num=0;req_mobi="";req_mobi_num=0;}
-
-        if (rall=obj_ini.role[100][5]){req_armour=obj_ini.armour[100,5];req_armour_num=units;req_wep1="Chainsword";req_wep1_num=units;req_wep2="Bolt Pistol";req_wep2_num=units;}
-        if (rall="Standard Bearer"){req_armour="Power Armour";req_armour_num=units;req_wep2="Company Standard";req_wep2_num=units;}
-        if (rall=obj_ini.role[100][3]){req_armour=obj_ini.armour[100,3];req_armour_num=units;req_wep1=obj_ini.wep1[100,3];req_wep1_num=units;req_wep2=obj_ini.wep2[100,3];req_wep2_num=units;}
-        if (rall=obj_ini.role[100][4]){req_armour=obj_ini.armour[100,4];req_armour_num=units;req_wep1=obj_ini.wep1[100,4];req_wep1_num=units;req_wep2=obj_ini.wep2[100,4];req_wep2_num=units;}
-        if (rall=obj_ini.role[100][8]){req_armour=obj_ini.armour[100,8];req_armour_num=units;req_wep1=obj_ini.wep1[100,8];req_wep1_num=units;req_wep2=obj_ini.wep2[100,8];req_wep2_num=units;}
-        if (rall=obj_ini.role[100][9]){req_armour=obj_ini.armour[100,9];req_armour_num=units;req_wep1=obj_ini.wep1[100,9];req_wep1_num=units;req_wep2=obj_ini.wep2[100,9];req_wep2_num=units;}
-        if (rall=obj_ini.role[100][10]){req_armour=obj_ini.armour[100,10];req_armour_num=units;req_wep1=obj_ini.wep1[100,10];req_wep1_num=units;req_wep2=obj_ini.wep2[100,10];req_wep2_num=units;req_mobi="Jump Pack";req_mobi_num=units;}
-
-        if (rall=obj_ini.role[100][2]){req_wep1=obj_ini.wep1[100,2];req_wep1_num=units;req_wep2=obj_ini.wep2[100,2];req_wep2_num=units;req_mobi=obj_ini.mobi[100,2];req_mobi_num=units;}
-
-        if (rall=obj_ini.role[100][6]){req_armour="Dreadnought";req_armour_num=units;req_wep1=obj_ini.wep1[100,6];req_wep1_num=units;req_wep2=obj_ini.wep2[100,6];req_wep2_num=units;}
-        if (rall="Venerable "+string(obj_ini.role[100][6])){req_armour="";req_armour_num=0;req_wep1="";req_wep1_num=0;req_wep2="";req_wep2_num=0;}
+    }*/
 
 
 
-        repeat(obj_controller.man_max){
-            i+=1;
-
-            if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1) and (obj_controller.ma_promote[i]=1) and (obj_controller.ma_exp[i]>=min_exp){
-                if (req_armour="Power Armour"){
-                    if (obj_controller.ma_armour[i]="MK3 Iron Armour") or (obj_controller.ma_armour[i]="MK4 Maximus") or (obj_controller.ma_armour[i]="MK5 Heresy") or (obj_controller.ma_armour[i]="MK6 Corvus") then have_armour_num+=1;
-                    if (obj_controller.ma_armour[i]="MK7 Aquila") or (obj_controller.ma_armour[i]="Power Armour") then have_armour_num+=1;
-                }
-                if (req_armour="Terminator Armour"){if (obj_controller.ma_armour[i]="Terminator Armour") or (obj_controller.ma_armour[i]="Tartaros") then have_armour_num+=1;}
-
-                if (obj_controller.ma_wep1[i]=req_wep1) or (obj_controller.ma_wep2[i]=req_wep1) then have_wep1_num+=1;
-                if (obj_controller.ma_wep2[i]=req_wep2) or (obj_controller.ma_wep1[i]=req_wep2) then have_wep2_num+=1;
-
-
-                if (obj_controller.ma_gear[i]=req_gear) then have_gear_num+=1;
-                if (obj_controller.ma_mobi[i]=req_mobi) then have_mobi_num+=1;
-
-                if (req_wep1="Heavy Ranged"){
-                    if (obj_controller.ma_wep1[i]="Heavy Bolter") or (obj_controller.ma_wep1[i]="Lascannon") or (obj_controller.ma_wep1[i]="Missile Launcher") then have_wep1_num+=1;
-                }
-            }
-
-            // if (n_wep1=n_wep2) and ((o_wep1!=n_wep1) or (o_wep2!=n_wep2)){have_wep1_num-=1;have_wep2_num-=1;}
-
-        }// End Repeat
-
-        // This checks to see if there is any more in the armoury
-        if (req_armour="Power Armour"){
-            have_armour_num+=scr_item_count("MK3 Iron Armour");
-            have_armour_num+=scr_item_count("MK4 Maximus");
-            have_armour_num+=scr_item_count("MK5 Heresy");
-            have_armour_num+=scr_item_count("MK6 Corvus");
-            have_armour_num+=scr_item_count("MK7 Aquila");
-            have_armour_num+=scr_item_count("Power Armour");
-        }
-        if (req_armour="Terminator Armour"){
-            have_armour_num+=scr_item_count("Terminator Armour");
-            have_armour_num+=scr_item_count("Tartaros");
-        }
-        if (req_armour="Dreadnought") then have_armour_num+=scr_item_count("Dreadnought");
-
-        if (req_wep1!="Heavy Ranged") then have_wep1_num+=scr_item_count(string(req_wep1));
-        if (req_wep2!="Heavy Ranged") then have_wep2_num+=scr_item_count(string(req_wep2));
-        if (req_wep1="Heavy Ranged"){
-            have_wep1_num+=scr_item_count("Lascannon");
-            have_wep1_num+=scr_item_count("Heavy Bolter");
-            have_wep1_num+=scr_item_count("Missile Launcher");
-        }
-        if (req_wep2="Heavy Ranged"){
-            have_wep2_num+=scr_item_count("Heavy Bolter");
-            have_wep2_num+=scr_item_count("Lascannon");
-            have_wep2_num+=scr_item_count("Missile Launcher");
-        }
-        if (req_gear!="") then have_gear_num+=scr_item_count(string(req_gear));
-        if (req_mobi!="") then have_mobi_num+=scr_item_count(string(req_mobi));
-
-        if ((have_armour_num>=req_armour_num) or (req_armour="")) and ((have_wep1_num>=req_wep1_num) or (req_wep1="")) and ((have_wep2_num>=req_wep2_num) or (req_wep2="")) then all_good=0.4;
-        if (req_gear="") or (req_gear_num<=have_gear_num) then all_good+=0.3;
-        if (req_mobi="") or (req_mobi_num<=have_mobi_num) then all_good+=0.3;
-    }
+   /* if (before2!=target_role) and (type=5){
+    
+    }*/
 }
 
 /* */
@@ -722,9 +504,9 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
 
 
 
-if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<yy+518){// Promoting right here
-    if (type=5) and (cooldown<=0) and (all_good=1) and (target_comp!=-1) and (role_name[target_role]!=""){
-        var allow_change=false;
+if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Promoting right here
+    if (type=5) and (cooldown<=0) and (all_good=1) and (target_comp>=0) and (role_name[target_role]!=""){
+        var allow_change=true;
         cooldown=999;obj_controller.cooldown=8000;
 
         var mahreens=0;i=0;
@@ -741,7 +523,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
             }
         }
         // Gets the number of marines in the target company
-        if (role_name[target_role]=="DoNotChange") then allow_change=true;
+        if (role_name[target_role]=="DoNotChange") then allow_change=false;
         var unit, squad_mover;
         for(i=0;i<=obj_controller.man_max;i++){
 
@@ -804,24 +586,23 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
                     aft=obj_ini.role[company,obj_controller.ide[i]];
                 } else{
                     unit.update_role(role_name[target_role]);
-                    
-                    if (role_name[target_role]==obj_ini.role[100][5]){// Restock recruiter or admiral dude
-                        if (target_comp=4) then obj_ini.lord_admiral_name=obj_controller.ma_name[i];
-                        if (target_comp=10) then obj_ini.recruiter_name=obj_controller.ma_name[i];
-                    }
-
                 }
+                if (role_name[target_role]==obj_ini.role[100][5]){// Restock recruiter or admiral dude
+                    if (target_comp=4) then obj_ini.lord_admiral_name=obj_controller.ma_name[i];
+                    if (target_comp=10) then obj_ini.recruiter_name=obj_controller.ma_name[i];
+                    scr_recent("captain_promote",obj_ini.name[target_comp,mahreens],target_comp);
+                }                
 
                 if (!is_specialist(bef)){
                     if (is_specialist(aft)){obj_controller.marines-=1;obj_controller.command+=1;}
                 } else {
                    if  (!is_specialist(aft)){obj_controller.marines+=1;obj_controller.command-=1;}
                 }
-                if (unit.squad!="none"){
+                /*if (unit.squad!="none"){
                     if (!array_contains(squad_mover, unit.squad)){
                         array_push(squad_mover,unit.squad);
                     }
-                }
+                }*/
                 if (company!=target_comp){
                     scr_move_unit_info(company,target_comp,unit.marine_number,mahreens);
                 }
@@ -838,7 +619,6 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
                     unit.update_gear("");
                     unit.update_mobility_item("");
                 }             
-                if (role_name[target_role]=obj_ini.role[100][5]) then scr_recent("captain_promote",obj_ini.name[target_comp,mahreens],target_comp);
                 if (role_name[target_role]=obj_ini.role[100][4]) then scr_recent("terminator_promote",obj_ini.name[target_comp,mahreens],target_comp);
                 if (role_name[target_role]=obj_ini.role[100][2]) then scr_recent("honor_promote",obj_ini.name[target_comp,mahreens],target_comp);			
 

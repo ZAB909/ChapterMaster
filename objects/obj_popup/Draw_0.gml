@@ -712,7 +712,7 @@ if (zm=0) and (type=6) and (instance_exists(obj_controller)){
 }
 
 // ** Promoting **
-if (zm=0) and (type=5) and (instance_exists(obj_controller)){
+if (zm=0) and (type==5) and (instance_exists(obj_controller)){
 
     draw_set_color(0);
     draw_rectangle(xx+1006,yy+143,xx+1577,yy+518,0);
@@ -741,69 +741,52 @@ if (zm=0) and (type=5) and (instance_exists(obj_controller)){
     if (target_comp=0) or (target_comp>10) then check="x";
     draw_text(xx+1470,yy+210,string_hash_to_newline("HQ ["+string(check)+"]"));
     check=" ";
-    // TODO refactor Promoting and Transfer to use a function or a for loop
-    if ((unit_role!=obj_ini.role[100,17]) or (obj_controller.command_set[1]!=0)) and (unit_role!="Lexicanum") and (unit_role!="Codiciery"){
-        for (i=1;i<=10;i++){
-            var comp_data = company_promote_data[i-1];
-            if (obj_controller.command_set[2]==0){//cecks if exp requirements are activated
-                if (min_exp<comp_data[2]){
-                    draw_set_alpha(0.25);
-                }
+   // if (obj_controller.command_set[1]!=0 && !is_specialist(unit_role, "libs")){
+    for (i=1;i<=10;i++){
+        var comp_data = company_promote_data[i-1];
+        if (obj_controller.command_set[2]==0){//cecks if exp requirements are activated
+            if (min_exp<comp_data[2]){
+                draw_set_alpha(0.6);
             }
-            check=" ";
-            if (target_comp==i) then check="x";
-            var select_text = $"{romanNumerals[i-1]}[{check}]";
-            draw_text(xx+comp_data[0],yy+comp_data[1],select_text);
-            if (mouse_check_button_pressed(mb_left) && point_in_rectangle(mouse_x, mouse_y, comp_data[0], comp_data[1], comp_data[0]+90, comp_data[0]+20)){
-                target_comp=i;
-                cooldown=8000;
-            }
+        }
+        check=" ";
+        if (target_comp==i) then check="x";
+        var select_text = $"{romanNumerals[i-1]} [{check}]";
+        draw_text(xx+comp_data[0],yy+comp_data[1],select_text);
+        if (mouse_check_button_pressed(mb_left) && point_in_rectangle(mouse_x, mouse_y, xx+comp_data[0], yy+comp_data[1], xx+comp_data[0]+90, yy+comp_data[1]+20)){
+            target_comp=i;
+            target_role=0;
+            get_unit_promotion_options();
+            cooldown=8000;
         }
     }
+   // }
     
-    draw_text(xx+1014,yy+290,string_hash_to_newline("Target Role:"));
-    
+    draw_text(xx+1014,yy+290,string_hash_to_newline("Target Role:"));//choose new role
+    var role_x=0;role_y=0;
     if (target_comp!=-1){
-        if (role_name[1]!=""){
-            draw_set_alpha(1);
-            check=" ";if (target_role=1) then check="x";
-            if (min_exp<role_exp[1]) then draw_set_alpha(0.25);
-            draw_text(xx+1030,yy+310,string_hash_to_newline(string(role_name[1])+" ["+string(check)+"]"));
-        }
-        if (role_name[2]!=""){
-            draw_set_alpha(1);
-            check=" ";
-        if (target_role=2) then check="x";
-            if (min_exp<role_exp[2]) then draw_set_alpha(0.25);
-            draw_text(xx+1200,yy+310,string_hash_to_newline(string(role_name[2])+" ["+string(check)+"]"));
-        }
-        if (role_name[3]!=""){
-            draw_set_alpha(1);
-            check=" ";if (target_role=3) then check="x";
-            if (min_exp<role_exp[3]) then draw_set_alpha(0.25);
-            draw_text(xx+1370,yy+310,string_hash_to_newline(string(role_name[3])+" ["+string(check)+"]"));
-        }
-        
-        if (role_name[4]!=""){
-            draw_set_alpha(1);
-            check=" ";
-        if (target_role=4) then check="x";
-            if (min_exp<role_exp[4]) then draw_set_alpha(0.25);
-            draw_text(xx+1030,yy+330,string_hash_to_newline(string(role_name[4])+" ["+string(check)+"]"));
-        }
-        if (role_name[5]!=""){
-            draw_set_alpha(1);
-            check=" ";
-        if (target_role=5) then check="x";
-            if (min_exp<role_exp[5]) then draw_set_alpha(0.25);
-            draw_text(xx+1200,yy+330,string_hash_to_newline(string(role_name[5])+" ["+string(check)+"]"));
-        }
-        if (role_name[6]!=""){
-            draw_set_alpha(1);
-            check=" ";
-        if (target_role=6) then check="x";
-            if (min_exp<role_exp[6]) then draw_set_alpha(0.25);
-            draw_text(xx+1370,yy+330,string_hash_to_newline(string(role_name[6])+" ["+string(check)+"]"));
+        for (var r=1;r<=11;r++){
+            if (role_name[r]!=""){
+                draw_set_alpha(1);
+                check=" ";
+                if (target_role==r) then check="x";
+                if (min_exp<role_exp[r]) then draw_set_alpha(0.25);
+                draw_text(xx+1030+role_x,yy+310+role_y,string_hash_to_newline(string(role_name[r])+" ["+string(check)+"]"));
+                if (mouse_check_button_pressed(mb_left) && point_in_rectangle(mouse_x, mouse_y, xx+1030+role_x, yy+310+role_y, xx+1180+role_x, yy+330+role_y)){
+                    if (min_exp>=role_exp[r]){
+                        target_role=r;
+                        calculate_equipment_needs();
+                        all_good=1;
+                        cooldown=8;
+                    }
+                }
+                if (r%3==0){
+                    role_y+=20
+                    role_x=0;
+                } else {
+                    role_x+=170;
+                }
+            }
         }
     }
     

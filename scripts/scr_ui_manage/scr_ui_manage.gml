@@ -954,7 +954,10 @@ function scr_ui_manage() {
 				y5=yy+831;
 				x6=xx+1436;
 				y6=yy+805;
-				draw_unit_buttons([x5,y6, x6, y5],"Promote");
+				if (sel_promoting==1){
+					draw_unit_buttons([x5,y6, x6, y5],"Promote");
+				}
+
 
 				// Transfer to another company button
 				y5=yy+831-26;

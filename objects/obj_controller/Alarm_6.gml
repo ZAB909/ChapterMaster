@@ -14,7 +14,7 @@ if (menu==1) and (managing>0){
         // cooldown=8;
         if (man_sel[f]==1){
             
-            if (ma_promote[f]==0) then sel_promoting=-1;
+            if (ma_promote[f]==0 && !is_specialist(ma_role[f], "rank_and_file")) then sel_promoting=-1;
             
             if (ma_role[f]=="Ork Sniper") or (ma_role[f]=="Flash Git") or (ma_role[f]=="Crusader") or (ma_role[f]=="Skitarii") then otha=1;
             if (ma_role[f]=="Sister of Battle") or (ma_role[f]=="Sister Hospitaler") or (ma_role[f]=="Ranger") then otha=1;

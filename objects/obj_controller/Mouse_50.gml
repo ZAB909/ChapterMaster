@@ -2499,7 +2499,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
 
                     var god=0,nuuum=0;
                     for(var f=1; f<=man_max; f++){
-                        if (ma_promote[f]>=1) and (man_sel[f]==1){
+                        if ((ma_promote[f]>=1 || is_specialist(ma_role[f], "rank_and_file")) && man_sel[f]==1){
                             nuuum+=1;
                             if (pip.min_exp==0) then pip.min_exp=ma_exp[f];
                             pip.min_exp=min(ma_exp[f],pip.min_exp);
