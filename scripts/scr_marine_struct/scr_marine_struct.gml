@@ -621,9 +621,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			if (role() == obj_ini.role[100][12] && new_role!=obj_ini.role[100][12]){
 		  		if (!get_body_data("black_carapace","torso")){
 		  			alter_body("torso", "black_carapace", true);
-		  			strength+=4;//will decide on if these are needed
-		  			constitution+=4;
-		  			dexterity+=4;
+		  			stat_boosts({strength:4, constitution:4,dexterity:4})//will decide on if these are needed
 		  		}	
 			}
 			if (!is_specialist(role())){//logs changes too and from specialist status
