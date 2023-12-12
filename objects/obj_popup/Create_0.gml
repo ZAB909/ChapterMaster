@@ -266,7 +266,7 @@ calculate_equipment_needs =  function (){
         }// End Repeat
 
         // This checks to see if there is any more in the armoury
-        if (req_armour="Power Armour"){
+        if (req_armour=="Power Armour"){
             for (i=0;i<array_length(global.power_armour);i++){
                 have_armour_num+=scr_item_count(global.power_armour[i]);
             }

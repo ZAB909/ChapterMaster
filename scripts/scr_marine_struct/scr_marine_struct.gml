@@ -614,6 +614,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		return obj_ini.role[company][marine_number];
 	};
 	static update_role = function(new_role){
+		if(role()==new_role){
+			return "no change"
+		}
 		if (base_group=="astartes"){
 			if (role() == obj_ini.role[100][12] && new_role!=obj_ini.role[100][12]){
 		  		if (!get_body_data("black_carapace","torso")){
@@ -623,12 +626,42 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		  			dexterity+=4;
 		  		}	
 			}
+			if (!is_specialist(role())){//logs changes too and from specialist status
+				if (is_specialist(new_role)){
+					obj_controller.marines-=1;
+					obj_controller.command+=1;
+				}
+			} else {
+				if  (!is_specialist(new_role)){
+					obj_controller.marines+=1;
+					obj_controller.command-=1;
+				}
+			}
 		}		
 		obj_ini.role[company][marine_number]= new_role;
 		if instance_exists(obj_controller){
-			array_push(role_history ,[obj_ini.role[company][marine_number], obj_controller.turn])
+			array_push(role_history ,[role(), obj_controller.turn])
 		}
-	};	
+		if (new_role==obj_ini.role[100][5]){
+	        if (company==4) then obj_ini.lord_admiral_name=name();
+	        if (company==10) then obj_ini.recruiter_name=name();
+	        scr_recent("captain_promote",name(),company);			
+		} else  if (new_role==obj_ini.role[100][4]){
+			scr_recent("terminator_promote",name(),company);
+		} else if (new_role==obj_ini.role[100][2]){
+			scr_recent("honor_promote",name(),company);
+		} else if (new_role==obj_ini.role[100][6]){
+            var dread_weapons =["Close Combat Weapon","Force Weapon","Lascannon","Assault Cannon","Missile Launcher","Heavy Bolter"];
+
+            if (!array_contains(dread_weapons,weapon_one())){
+                update_weapon_one("");
+            }
+            if (!array_contains(dread_weapons,weapon_two())){
+                update_weapon_two("");
+            }  			
+		}	
+	};
+
 	static mobility_item = function(){ 
 		return obj_ini.mobi[company][marine_number];
 	};	
@@ -709,20 +742,41 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
   static update_armour = function(new_armour, from_armoury=true, to_armoury=true){
 	  	var change_armour=armour();
-	  	if (array_contains(global.power_armour, new_armour)){
-	  		var has_carapace =false;
-	  		if (struct_exists(body[$ "torso"], "black_carapace")){
-	  			if (body[$ "torso"][$"black_carapace"]){
-	  				has_carapace=true;
-	  			}
+	  	var require_carpace=false;
+	  	var armour_list=[];
+	  	var _new_power_armour = array_contains(global.power_armour, new_armour);
+	  	var _old_power_armour = array_contains(global.power_armour, change_armour);
+	   	if (change_armour == new_armour || (_old_power_armour && _new_power_armour)){
+	   		return "no change";
+	   	}
+	  	if (_new_power_armour){
+	  		require_carpace=true;
+	  		if (new_armour=="Power Armour"){
+	  			armour_list = global.power_armour;
 	  		}
-	  		if (!has_carapace){
+	  	} else if (new_armour="Terminator Armour"){
+	  		require_carpace=true;
+	  		armour_list = ["Terminator Armour","Tartarus"];
+	  	}
+	  	if (require_carpace){
+	  		if (!get_body_data("black_carapace","torso")){
 	  			return "needs_carapace";
 	  		}
-	  	}
-	   	if (change_armour == new_armour){
-	   		return "no change";
-	   	}   	
+	  	}//using this method this should be adaptable for a whole range of classes and archeotypes
+	  	if (array_length(armour_list)>0){
+	  		var armour_found=false;
+            for (var pa=0;pa<array_length(armour_list);pa++){
+            	if (scr_item_count(armour_list[pa])>0){
+            		new_armour = armour_list[pa];
+            		armour_found=true;
+            		break;
+            	}
+            }
+            if (!armour_found){
+            	return "no_items";
+            } 
+        }		
+	   		
 	  	if (from_armoury && new_armour!=""){
 	  		if (scr_item_count(new_armour)>0){
 		   		scr_add_item(new_armour,-1);
@@ -734,6 +788,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			scr_add_item(change_armour,1);
 		}
 	    obj_ini.armour[company][marine_number] = new_armour;
+	    if (armour=="Dreadnought"){
+	    	obj_ini.age[company][marine_number]=floor(age());
+	    	unit.update_gear("");
+	    	unit.update_mobility_item("");
+	    }
 		get_unit_size(); //every time armour is changed see if the marines size has changed
 		return "complete";
 	};	
@@ -1153,9 +1212,32 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
   static update_weapon_one = function(new_weapon,from_armoury=true, to_armoury=true){
   	var change_wep = weapon_one();
-  	if (change_wep == new_weapon){
+  	var weapon_list = [];
+    if (new_weapon == "Heavy Ranged"){
+    	weapon_list=["Heavy Bolter","Lascannon","Missile Launcher"];
+    	if array_contains(weapon_list, change_wep){
+    		return "no change";
+    	}
+    }else if (change_wep == new_weapon){
    		return "no change";
-   	}  	
+   	}
+
+  	if (array_length(weapon_list)>0){
+  		var weapon_found=false;
+  		var _wep_choice;
+  		while (array_length(weapon_list)>0){//randomises heavy weapon choice
+  			_wep_choice=irandom(array_length(weapon_list)-1);
+  			if (scr_item_count(weapon_list[_wep_choice])>0){
+  				weapon_found=true;
+  				new_weapon=weapon_list[_wep_choice];
+  				break;
+  			}
+  			array_delete(weapon_list,_wep_choice, 1)
+  		}
+        if (!weapon_found){
+        	return "no_items";
+        } 
+    }   	
   	if (from_armoury) and (new_weapon!=""){
   		if (scr_item_count(new_weapon)>0){
 	   		scr_add_item(new_weapon,-1);

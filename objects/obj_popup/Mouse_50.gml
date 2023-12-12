@@ -176,7 +176,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
             if (obj_controller.man_sel[w]==1){
                 if (obj_controller.man[w]=="man"){
                     moveable=true;
-                    unit = obj_ini.TTRPG[company,obj_controller.ide[w]];
+                    unit = obj_ini.TTRPG[company][obj_controller.ide[w]];
                     if (unit.squad != "none"){   // this evaluates if you are tryin to move a whole squad and if so moves teh squad to a new company
                         move_squad = unit.squad;
                         squad = obj_ini.squads[move_squad];
@@ -217,33 +217,33 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
                     var check=0;
     				// Check if the target company is within the allowed range
                     if (target_comp >= 1) and (target_comp <= 10) {
-                        obj_ini.veh_race[target_comp,vehi]=obj_ini.veh_race[company,obj_controller.ide[w]];
-                        obj_ini.veh_loc[target_comp,vehi]=obj_ini.veh_loc[company,obj_controller.ide[w]];
-                        obj_ini.veh_role[target_comp,vehi]=obj_ini.veh_role[company,obj_controller.ide[w]];
-                        obj_ini.veh_wep1[target_comp,vehi]=obj_ini.veh_wep1[company,obj_controller.ide[w]];
-                        obj_ini.veh_wep2[target_comp,vehi]=obj_ini.veh_wep2[company,obj_controller.ide[w]];
-                        obj_ini.veh_wep3[target_comp,vehi]=obj_ini.veh_wep3[company,obj_controller.ide[w]];
-                        obj_ini.veh_upgrade[target_comp,vehi]=obj_ini.veh_upgrade[company,obj_controller.ide[w]];
-                        obj_ini.veh_acc[target_comp,vehi]=obj_ini.veh_acc[company,obj_controller.ide[w]];
-                        obj_ini.veh_hp[target_comp,vehi]=obj_ini.veh_hp[company,obj_controller.ide[w]];
-                        obj_ini.veh_chaos[target_comp,vehi]=obj_ini.veh_chaos[company,obj_controller.ide[w]];
-                        obj_ini.veh_pilots[target_comp,vehi]=0;
-                        obj_ini.veh_lid[target_comp,vehi]=obj_ini.veh_lid[company,obj_controller.ide[w]];
-                        obj_ini.veh_wid[target_comp,vehi]=obj_ini.veh_wid[company,obj_controller.ide[w]];
+                        obj_ini.veh_race[target_comp][vehi]=obj_ini.veh_race[company][obj_controller.ide[w]];
+                        obj_ini.veh_loc[target_comp][vehi]=obj_ini.veh_loc[company][obj_controller.ide[w]];
+                        obj_ini.veh_role[target_comp][vehi]=obj_ini.veh_role[company][obj_controller.ide[w]];
+                        obj_ini.veh_wep1[target_comp][vehi]=obj_ini.veh_wep1[company][obj_controller.ide[w]];
+                        obj_ini.veh_wep2[target_comp][vehi]=obj_ini.veh_wep2[company][obj_controller.ide[w]];
+                        obj_ini.veh_wep3[target_comp][vehi]=obj_ini.veh_wep3[company][obj_controller.ide[w]];
+                        obj_ini.veh_upgrade[target_comp][vehi]=obj_ini.veh_upgrade[company][obj_controller.ide[w]];
+                        obj_ini.veh_acc[target_comp][vehi]=obj_ini.veh_acc[company][obj_controller.ide[w]];
+                        obj_ini.veh_hp[target_comp][vehi]=obj_ini.veh_hp[company][obj_controller.ide[w]];
+                        obj_ini.veh_chaos[target_comp][vehi]=obj_ini.veh_chaos[company][obj_controller.ide[w]];
+                        obj_ini.veh_pilots[target_comp][vehi]=0;
+                        obj_ini.veh_lid[target_comp][vehi]=obj_ini.veh_lid[company][obj_controller.ide[w]];
+                        obj_ini.veh_wid[target_comp][vehi]=obj_ini.veh_wid[company][obj_controller.ide[w]];
 
-                        obj_ini.veh_race[company,obj_controller.ide[w]]=0;
-                        obj_ini.veh_loc[company,obj_controller.ide[w]]="";
-                        obj_ini.veh_role[company,obj_controller.ide[w]]="";
-                        obj_ini.veh_wep1[company,obj_controller.ide[w]]="";
-                        obj_ini.veh_wep2[company,obj_controller.ide[w]]="";
-                        obj_ini.veh_wep3[company,obj_controller.ide[w]]="";
-                        obj_ini.veh_upgrade[company,obj_controller.ide[w]]="";
-                        obj_ini.veh_acc[company,obj_controller.ide[w]]="";
-                        obj_ini.veh_hp[company,obj_controller.ide[w]]=0;
-                        obj_ini.veh_chaos[company,obj_controller.ide[w]]=0;
-                        obj_ini.veh_pilots[company,obj_controller.ide[w]]=0;
-                        obj_ini.veh_lid[company,obj_controller.ide[w]]=0;
-                        obj_ini.veh_wid[company,obj_controller.ide[w]]=0;
+                        obj_ini.veh_race[company][obj_controller.ide[w]]=0;
+                        obj_ini.veh_loc[company][obj_controller.ide[w]]="";
+                        obj_ini.veh_role[company][obj_controller.ide[w]]="";
+                        obj_ini.veh_wep1[company][obj_controller.ide[w]]="";
+                        obj_ini.veh_wep2[company][obj_controller.ide[w]]="";
+                        obj_ini.veh_wep3[company][obj_controller.ide[w]]="";
+                        obj_ini.veh_upgrade[company][obj_controller.ide[w]]="";
+                        obj_ini.veh_acc[company][obj_controller.ide[w]]="";
+                        obj_ini.veh_hp[company][obj_controller.ide[w]]=0;
+                        obj_ini.veh_chaos[company][obj_controller.ide[w]]=0;
+                        obj_ini.veh_pilots[company][obj_controller.ide[w]]=0;
+                        obj_ini.veh_lid[company][obj_controller.ide[w]]=0;
+                        obj_ini.veh_wid[company][obj_controller.ide[w]]=0;
 
                         vehi++;
                     }
@@ -449,7 +449,7 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
         have_armour_num+=scr_item_count(n_armour);
 
         if (have_armour_num>=req_armour_num) or (n_armour="(None") then n_good3=1;
-        if (have_armour_num<req_armour_num){n_good3=0;warning="Not enough "+string(n_armour)+"; "+string(units-req_armour_num)+" more are required.";}
+        if (have_armour_num<req_armour_num){n_good3=0;warning="Not enough "+string(n_armour)+"; "+string(units-have_armour_num)+" more are required.";}
 
         var g,exp_check;g=0;exp_check=0;
         if (n_armour="Terminator Armour") or (n_armour="Tartaros") then repeat(obj_controller.man_max){
@@ -506,15 +506,14 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
 
 if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Promoting right here
     if (type=5) and (cooldown<=0) and (all_good=1) and (target_comp>=0) and (role_name[target_role]!=""){
-        var allow_change=true;
         cooldown=999;obj_controller.cooldown=8000;
 
         var mahreens=0;i=0;
 
         if (target_comp>10) then target_comp=0;
-        if (company>10) then company=0;
         manag=obj_controller.managing;
         if (manag>10) then manag=0;
+        var company=manag;
 
         for(i=0;i<501;i++){
             if (obj_ini.name[target_comp][i]=="" and obj_ini.name[target_comp][i+1]=="") {
@@ -523,103 +522,84 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
             }
         }
         // Gets the number of marines in the target company
-        if (role_name[target_role]=="DoNotChange") then allow_change=false;
-        var unit, squad_mover;
+        var unit, squad_mover,moveable;
+        var role_squad_equivilances = {};//this is the only way to set variables as keys in gml
+        variable_struct_set(role_squad_equivilances,obj_ini.role[100][8],"tactical_squad");
+        variable_struct_set(role_squad_equivilances,obj_ini.role[100][9],"devestator_squad");
+        variable_struct_set(role_squad_equivilances,obj_ini.role[100][10],"assualt_squad");
+        variable_struct_set(role_squad_equivilances,obj_ini.role[100][12],"scout_squad");
+        variable_struct_set(role_squad_equivilances,obj_ini.role[100][3],"veteran_squad");
+        variable_struct_set(role_squad_equivilances,obj_ini.role[100][4],"terminator_squad");
+
         for(i=0;i<=obj_controller.man_max;i++){
-
-            if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]==1) and (obj_controller.ma_exp[i]>=min_exp){
-                unit = obj_controller.display_unit[i];
-                if (!allow_change){
-                    aft=obj_ini.role[company,obj_controller.ide[i]];
-                } else{
-                    unit.update_role(role_name[target_role]);
-                    if (req_armour="Power Armour"){
-                        unit.update_armour("");
-                        for (var pa=0;pa<array_length(global.power_armour);pa++){
-                            if (unit.update_armour(global.power_armour[pa])=="complete"){
-                                obj_controller.ma_armour[i]=global.power_armour[pa];
-                                break;
-                            }
-                        }
-                    }else if (req_armour="Terminator Armour"){
-                        if (unit.update_armour("Terminator Armour")!="complete"){
-                            unit.update_armour("Tartarus");
-                            obj_controller.ma_armour[i]="Tartarus"
-                        } else{
-                             obj_controller.ma_armour[i]="Terminator Armour"
-                        }
-                    }else if (req_armour="Scout Armour"){
-                        unit.update_armour("Scout Armour");
-                    }else if (req_armour="Dreadnought"){
-
-                        if (obj_ini.age[company,obj_controller.ide[i]]!=floor(obj_ini.age[company,obj_controller.ide[i]])) then obj_ini.age[company,obj_controller.ide[i]]=floor(obj_ini.age[company,obj_controller.ide[i]]);
-                         unit.update_armour("Dreadnought");
-                    }
-
-                // End swap armour
-                    if (req_wep1!="Heavy Ranged"){
-                        unit.update_weapon_one(req_wep1)
-                    }else {
-                        var heavy_ranged = ["Heavy Bolter","Lascannon","Missile Launcher"];
-                        var heavy_choice;
-                        if (!array_contains(heavy_ranged, unit.weapon_one())){
-                            while (array_length(heavy_ranged)>0){
-                                heavy_choice=irandom(array_length(heavy_ranged)-1);
-                                if (unit.update_weapon_one(heavy_ranged[heavy_choice])=="complete"){
+            if (obj_controller.man[i]=="man") and (obj_controller.man_sel[i]==1) and (obj_controller.ma_exp[i]>=min_exp){
+                moveable=true;
+                unit = obj_ini.TTRPG[company][obj_controller.ide[i]];
+                if (unit.squad != "none"){   // this evaluates if you are trying promote a whole squad
+                    move_squad = unit.squad;
+                    squad = obj_ini.squads[move_squad];
+                    if (squad.base_company == company){
+                        move_members = squad.members;
+                        for (var mem = 0;mem<array_length(move_members);mem++){//check all members have been selected and are in the same company
+                            if (i+mem<500){
+                                if (move_members[mem][0] != company || obj_controller.man_sel[i+mem]!=1 || obj_ini.TTRPG[company][obj_controller.ide[i+mem]].squad != move_squad){
+                                    moveable = false;
                                     break;
                                 }
-                                array_delete(heavy_ranged,heavy_choice, 1)
+                            } else{
+                                moveable = false;
+                                break;                                    
                             }
-                        } // End swap first weapon
-
+                        }
+                        //move squad
+                        if (moveable){
+                            var mem_unit;
+                            for (var mem = 0;mem<array_length(move_members);mem++){
+                                if (company!=target_comp){
+                                    scr_move_unit_info(company,target_comp,obj_controller.ide[i+mem],mahreens, false);
+                                    squad.members[mem][0] = target_comp;
+                                    squad.members[mem][1] = mahreens;
+                                }
+                                mem_unit=obj_ini.TTRPG[target_comp][mahreens];
+                                mem_unit.squad = move_squad; 
+                                if (!is_specialist(mem_unit.role(), "squad_leaders")){
+                                    mem_unit.update_role(role_name[target_role]);
+                                    mem_unit.alter_equipment({
+                                        "wep1":req_wep1,
+                                        "wep2":req_wep2,
+                                        "mobi":req_mobi,
+                                        "armour":req_armour,
+                                        "gear":req_gear,
+                                    });                                     
+                                }                           
+                                mahreens++;
+                            }
+                            i+=mem-2;
+                            if (company!=target_comp){
+                                squad.base_company = target_comp;
+                            }
+                            if (struct_exists(role_squad_equivilances,role_name[target_role])){
+                                squad.change_type(role_squad_equivilances[$ role_name[target_role]]);
+                            }
+                        }
+                    } else {moveable=false}
+                } else {moveable=false}
+                //move individual
+                if (!moveable){
+                    if (company!=target_comp){
+                        scr_move_unit_info(company,target_comp,unit.marine_number,mahreens);
+                        unit = obj_ini.TTRPG[target_comp][mahreens]; 
                     }
-                    unit.update_weapon_two(req_wep2); // End swap second weapon
-                    unit.update_gear(req_gear);// End swap gear
-                    unit.update_mobility_item(req_mobi);// End swap gear
-                }                    
-                // End swap gear
-
-                // Pass variables here
-
-                // This changes a marine from MARINE to COMMAND if they get put into a dreadnought
-                var  bef=obj_controller.ma_role[i],aft=role_name[target_role];
-                if (role_name[target_role]==obj_ini.role[100][5]){// Restock recruiter or admiral dude
-                    if (target_comp=4) then obj_ini.lord_admiral_name=obj_controller.ma_name[i];
-                    if (target_comp=10) then obj_ini.recruiter_name=obj_controller.ma_name[i];
-                    scr_recent("captain_promote",obj_ini.name[target_comp,mahreens],target_comp);
-                }                
-
-                if (!is_specialist(bef)){
-                    if (is_specialist(aft)){obj_controller.marines-=1;obj_controller.command+=1;}
-                } else {
-                   if  (!is_specialist(aft)){obj_controller.marines+=1;obj_controller.command-=1;}
-                }
-                /*if (unit.squad!="none"){
-                    if (!array_contains(squad_mover, unit.squad)){
-                        array_push(squad_mover,unit.squad);
-                    }
-                }*/
-                if (company!=target_comp){
-                    scr_move_unit_info(company,target_comp,unit.marine_number,mahreens);
-                }
-                if (role_name[target_role]==obj_ini.role[100][6]) and (allow_change){
-                    obj_ini.hp[target_comp,mahreens]=100;
-                    var dread_weapons =["Close Combat Weapon","Force Weapon","Lascannon","Assault Cannon","Missile Launcher","Heavy Bolter"];
-
-                    if (!array_contains(dread_weapons,obj_ini.wep1[target_comp,mahreens])){
-                        unit.update_weapon_one("");
-                    }
-                    if (!array_contains(dread_weapons,obj_ini.wep2[target_comp,mahreens])){
-                         unit.update_weapon_two("");
-                    }                    
-                    unit.update_gear("");
-                    unit.update_mobility_item("");
-                }             
-                if (role_name[target_role]=obj_ini.role[100][4]) then scr_recent("terminator_promote",obj_ini.name[target_comp,mahreens],target_comp);
-                if (role_name[target_role]=obj_ini.role[100][2]) then scr_recent("honor_promote",obj_ini.name[target_comp,mahreens],target_comp);			
-
-                mahreens+=1;
-
+                    unit.update_role(role_name[target_role]);
+                    unit.alter_equipment({
+                        "wep1":req_wep1,
+                        "wep2":req_wep2,
+                        "mobi":req_mobi,
+                        "armour":req_armour,
+                        "gear":req_gear,
+                    }); 
+                    mahreens++;
+                }                                           	
             }// End that [i]
 
         }// End repeat
