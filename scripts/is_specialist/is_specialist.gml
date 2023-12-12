@@ -71,7 +71,6 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 
 	// unit_role
 	//TODO need to make all string roles not strings but array references
-	var _is_specialist=false;
 	switch(type){
 		case "standard":
 			specialists = ["Chapter Master",
@@ -148,7 +147,5 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 			break;
 	}
 
-	_is_specialist = (array_contains(specialists,unit_role)) ? true : false;
-
-	return _is_specialist;
+	return array_contains(specialists,unit_role)
 }
