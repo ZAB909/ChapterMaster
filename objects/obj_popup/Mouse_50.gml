@@ -690,14 +690,14 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
 
                 if (n_armour=obj_controller.ma_armour[i]) then check=1;
                 if (check=0) and (n_armour!=obj_controller.ma_armour[i]) and (n_armour!="Assortment")and ((vehicle_equipment=1) or (vehicle_equipment=6)){ //normal infantry or dread armour
-                    if (string_count("Dread",obj_ini.armour[company,obj_controller.ide[i]])=0){
+                    if (string_count("Dread",obj_ini.armour[company][obj_controller.ide[i]])=0){
                         /* if (obj_controller.ma_role[i]=obj_ini.role[100][12]){
                             if (n_armour!="") and (n_armour!="Power Armour") and (n_armour!="Scout Armour") then scout_check=1;
                         }*/
                         if (scout_check=0){
                             unit.update_armour(n_armour)
                             obj_controller.ma_armour[i]=n_armour;
-                            if (n_armour="Dreadnought") and (obj_ini.age[company,obj_controller.ide[i]]!=floor(obj_ini.age[company,obj_controller.ide[i]])) then obj_ini.age[company,obj_controller.ide[i]]=floor(obj_ini.age[company,obj_controller.ide[i]]);
+                            if (n_armour="Dreadnought") and (obj_ini.age[company][obj_controller.ide[i]]!=floor(obj_ini.age[company][obj_controller.ide[i]])) then obj_ini.age[company][obj_controller.ide[i]]=floor(obj_ini.age[company][obj_controller.ide[i]]);
                         }
                     }
 
@@ -706,16 +706,18 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                         unit.update_mobility_item("");
                         obj_controller.ma_mobi[i]="";
                     }
-                    if (obj_ini.wep1[company,obj_controller.ide[i]]="Assault Cannon") or (obj_ini.wep2[company,obj_controller.ide[i]]="Assault Cannon"){
-                        var bed=0,bgn=obj_ini.armour[company,obj_controller.ide[i]];
+                    if (obj_ini.wep1[company][obj_controller.ide[i]]="Assault Cannon") or (obj_ini.wep2[company][obj_controller.ide[i]]="Assault Cannon"){
+                        var bed=0,bgn=obj_ini.armour[company][obj_controller.ide[i]];
                         if (bgn!="Terminator Armour") and (bgn!="Tartaros") then bed+=1;
                         if (string_count("Termi",bgn)=0) then bed+=1;
                         if (bed=2){
-                            if (obj_ini.wep1[company,obj_controller.ide[i]]="Assault Cannon"){
-                                scr_add_item(obj_ini.wep1[company,obj_controller.ide[i]],1);obj_ini.wep1[company,obj_controller.ide[i]]="";
+                            if (obj_ini.wep1[company][obj_controller.ide[i]]=="Assault Cannon"){
+                                scr_add_item(obj_ini.wep1[company][obj_controller.ide[i]],1);
+                                obj_ini.wep1[company][obj_controller.ide[i]]="";
                             }
-                            if (obj_ini.wep2[company,obj_controller.ide[i]]="Assault Cannon"){
-                                scr_add_item(obj_ini.wep2[company,obj_controller.ide[i]],1);obj_ini.wep2[company,obj_controller.ide[i]]="";
+                            if (obj_ini.wep2[company][obj_controller.ide[i]]=="Assault Cannon"){
+                                scr_add_item(obj_ini.wep2[company][obj_controller.ide[i]],1);
+                                obj_ini.wep2[company][obj_controller.ide[i]]="";
                             }
                         }
                     }
@@ -741,9 +743,9 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                     var temp;temp="";
                     temp=obj_controller.ma_wep1[i];// Get temp
                     obj_controller.ma_wep1[i]=obj_controller.ma_wep2[i];
-                    obj_ini.wep1[company,obj_controller.ide[i]]=obj_ini.wep2[company,obj_controller.ide[i]];// Wep2 -> Wep1
+                    obj_ini.wep1[company][obj_controller.ide[i]]=obj_ini.wep2[company][obj_controller.ide[i]];// Wep2 -> Wep1
                     obj_controller.ma_wep2[i]=temp;
-                    obj_ini.wep2[company,obj_controller.ide[i]]=temp;
+                    obj_ini.wep2[company][obj_controller.ide[i]]=temp;
                 }
 
 
@@ -751,9 +753,9 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                     var temp;temp="";
                     temp=obj_controller.ma_wep2[i];// Get temp
                     obj_controller.ma_wep2[i]=obj_controller.ma_wep1[i];
-                    obj_ini.wep2[company,obj_controller.ide[i]]=obj_ini.wep1[company,obj_controller.ide[i]];// Wep1 -> Wep2
+                    obj_ini.wep2[company][obj_controller.ide[i]]=obj_ini.wep1[company][obj_controller.ide[i]];// Wep1 -> Wep2
                     obj_controller.ma_wep1[i]=temp;
-                    obj_ini.wep1[company,obj_controller.ide[i]]=temp;
+                    obj_ini.wep1[company][obj_controller.ide[i]]=temp;
                 }
 
 
@@ -830,7 +832,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                 check=0;
                 if (n_mobi=obj_controller.ma_mobi[i]) then check=1;
                 if (check=0) and (n_mobi!=obj_controller.ma_mobi[i]) and (n_mobi!="Assortment") and ((vehicle_equipment=1) or (vehicle_equipment=6)){ //normal infantry or dread mobility item
-                    if (string_count("Terminator",obj_ini.armour[company,obj_controller.ide[i]])=0) and (obj_ini.armour[company,obj_controller.ide[i]]!="Tartaros"){
+                    if (string_count("Terminator",obj_ini.armour[company][obj_controller.ide[i]])=0) and (obj_ini.armour[company][obj_controller.ide[i]]!="Tartaros"){
                         unit.update_mobility_item(n_mobi);
                         obj_controller.ma_mobi[i]=n_mobi;
                     }
@@ -851,10 +853,10 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                 if (obj_controller.ma_armour[i]="(None)") then obj_controller.ma_armour[i]="";
                 if (obj_controller.ma_gear[i]="(None)") then obj_controller.ma_gear[i]="";
                 if (obj_controller.ma_mobi[i]="(None)") then obj_controller.ma_mobi[i]="";
-                if (obj_ini.wep1[company,obj_controller.ide[i]]="(None)") then obj_ini.wep1[company,obj_controller.ide[i]]="";
-                if (obj_ini.wep2[company,obj_controller.ide[i]]="(None)") then obj_ini.wep2[company,obj_controller.ide[i]]="";
-                if (obj_ini.armour[company,obj_controller.ide[i]]="(None)") then obj_ini.armour[company,obj_controller.ide[i]]="";
-                if (obj_ini.gear[company,obj_controller.ide[i]]="(None)") then obj_ini.gear[company,obj_controller.ide[i]]="";
+                if (obj_ini.wep1[company][obj_controller.ide[i]]="(None)") then obj_ini.wep1[company][obj_controller.ide[i]]="";
+                if (obj_ini.wep2[company][obj_controller.ide[i]]="(None)") then obj_ini.wep2[company][obj_controller.ide[i]]="";
+                if (obj_ini.armour[company][obj_controller.ide[i]]="(None)") then obj_ini.armour[company][obj_controller.ide[i]]="";
+                if (obj_ini.gear[company][obj_controller.ide[i]]="(None)") then obj_ini.gear[company][obj_controller.ide[i]]="";
                 */
 
             }// End that [i]
