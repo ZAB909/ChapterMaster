@@ -527,10 +527,12 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
         var unit, squad_mover;
         for(i=0;i<=obj_controller.man_max;i++){
 
-            if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1) and (obj_controller.ma_promote[i]>=1) and (obj_controller.ma_exp[i]>=min_exp){
+            if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]==1) and (obj_controller.ma_exp[i]>=min_exp){
                 unit = obj_controller.display_unit[i];
-
-                if (allow_change){
+                if (!allow_change){
+                    aft=obj_ini.role[company,obj_controller.ide[i]];
+                } else{
+                    unit.update_role(role_name[target_role]);
                     if (req_armour="Power Armour"){
                         unit.update_armour("");
                         for (var pa=0;pa<array_length(global.power_armour);pa++){
@@ -581,12 +583,6 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
 
                 // This changes a marine from MARINE to COMMAND if they get put into a dreadnought
                 var  bef=obj_controller.ma_role[i],aft=role_name[target_role];
-
-                if (!allow_change){
-                    aft=obj_ini.role[company,obj_controller.ide[i]];
-                } else{
-                    unit.update_role(role_name[target_role]);
-                }
                 if (role_name[target_role]==obj_ini.role[100][5]){// Restock recruiter or admiral dude
                     if (target_comp=4) then obj_ini.lord_admiral_name=obj_controller.ma_name[i];
                     if (target_comp=10) then obj_ini.recruiter_name=obj_controller.ma_name[i];
