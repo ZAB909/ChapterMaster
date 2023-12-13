@@ -188,7 +188,7 @@ function scr_company_view(company) {
 	                if (ma_role[v]=obj_ini.role[100][15]) or (ma_role[v]=obj_ini.role[100][14]) then ma_promote[v]=1;
 	                if (ma_role[v]=obj_ini.role[100][16]) then ma_promote[v]=1;
 
-	                if (is_specialist(unit.role(), "rank_and_file")){
+	                if (unit.IsSpecialist("rank_and_file")){
 	                	var promotion_limit = company_promotion_limits[company-1]
 						if (unit.experience()>=promotion_limit && promotion_limit>0){
 	                		ma_promote[v]=1;

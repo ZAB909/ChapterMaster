@@ -1483,8 +1483,8 @@ function scr_initialize_custom() {
 	if (global.chapter_name="Lamenters") then armour[company,4]="MK6 Corvus";
 
 	// Chief Librarian
-	TTRPG[company,5]=new TTRPG_stats("chapter", company,5);
-	var cheif_lib = TTRPG[company,5];
+	TTRPG[company][5]=new TTRPG_stats("chapter", company,5);
+	var cheif_lib = TTRPG[company][5];
 	race[company,5]=1;
 	loc[company,5]=home_name;
 	role[company,5]=string("Chief {0}",role[100,17]);

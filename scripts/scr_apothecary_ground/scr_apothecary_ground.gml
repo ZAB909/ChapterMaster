@@ -26,7 +26,7 @@ function scr_apothecary_ground() {
 	           		unit = obj_ini.TTRPG[company][v];
 	           		if (unit.is_at_location(name,run,0)){
 	           			array_push(on_planet, unit);
-		           		if (((is_specialist(unit.role(),"apoth") && unit.gear()=="Narthecium") || (unit.role()=="Sister Hospitaler")) && unit.hp()>=10){
+		           		if (((unit.IsSpecialist("apoth",true) && unit.gear()=="Narthecium") || (unit.role()=="Sister Hospitaler")) && unit.hp()>=10){
 		           			apoth+=((unit.technology/2)+(unit.wisdom/2)+unit.intelligence)/8;//general display of how talented healer the apoth is
 		           		}
 	                

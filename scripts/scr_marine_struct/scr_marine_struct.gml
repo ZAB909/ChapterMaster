@@ -613,6 +613,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	static role = function(){
 		return obj_ini.role[company][marine_number];
 	};
+
+	static IsSpecialist = function(search_type="standard",include_trainee=false){
+		return is_specialist(role(), search_type,include_trainee)
+	}
 	static update_role = function(new_role){
 		if(role()==new_role){
 			return "no change"

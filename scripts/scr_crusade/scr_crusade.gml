@@ -64,7 +64,7 @@ function scr_crusade() {
 	                    man_size=scr_unit_size(obj_ini.armour[co][i],obj_ini.role[co][i],true);
                     
 	                    obj_ini.ship_carrying[obj_ini.lid[co][i]]-=man_size;
-                    	if (is_specialist(unit.role(), "standard", true)){
+                    	if (unit.IsSpecialist("standard",true)){
                     		command_lost++;
                     	}
                     
@@ -88,7 +88,7 @@ function scr_crusade() {
 	                	}
 	                	unit.add_exp(new_exp);
                     
-	                    if (is_specialist(unit.role(), "libs")) then unit.update_powers()
+	                    if (unit.IsSpecialist("libs")) then unit.update_powers()
 	                }
 	            }
         

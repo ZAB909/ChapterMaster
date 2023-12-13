@@ -1,5 +1,5 @@
-function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,align=fa_left, font=fnt_40k_14b){
-	draw_set_alpha(1);
+function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,align=fa_left, font=fnt_40k_14b, alpha_mult=1){
+	draw_set_alpha(1*alpha_mult);
 	draw_set_font(font);
 	draw_set_halign(align);
 	var full_width;
@@ -16,9 +16,9 @@ function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,align
 	}
 	draw_text_transformed(position[0]+4,position[1]+2,string_hash_to_newline(text),size_mod[0],size_mod[1],0);
 	draw_rectangle(position[0],position[1], full_width,full_height,1)
-	draw_set_alpha(0.5);
+	draw_set_alpha(0.5*alpha_mult);
 	draw_rectangle(position[0]+1,position[1]+1, full_width-1,full_height-1,1)
-	draw_set_alpha(0.25);
+	draw_set_alpha(0.25*alpha_mult);
 	if (point_in_rectangle(mouse_x,mouse_y, position[0],position[1], full_width,full_height)){
 		draw_rectangle(position[0],position[1], full_width,full_height,0);
 	}
@@ -956,6 +956,8 @@ function scr_ui_manage() {
 				y6=yy+805;
 				if (sel_promoting==1){
 					draw_unit_buttons([x5,y6, x6, y5],"Promote");
+				}else {
+					draw_unit_buttons([x5,y6, x6, y5],"Promote",[1.5,1.5],c_gray,fa_left, fnt_40k_14b, 0.5);
 				}
 
 

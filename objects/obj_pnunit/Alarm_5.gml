@@ -37,7 +37,7 @@ if (obj_ncombat.defeat=0){
                 unit.add_exp(new_exp);
                 obj_ncombat.total_battle_exp_gain+=new_exp;
             }
-            if (is_specialist(unit.role(), "libs"))  then unit.update_powers();
+            if (unit.IsSpecialist("libs")) then unit.update_powers();
             // Need some kind of report here
         }
         
@@ -123,7 +123,7 @@ i=0;
     
     
         var comm=false;
-        if (is_specialist(unit.role(), "standard", true)){
+        if (unit.IsSpecialist("standard",true)){
             obj_ncombat.final_command_deaths+=1;
             var recent=true;
             if (is_specialist(unit.role, "trainee")){
