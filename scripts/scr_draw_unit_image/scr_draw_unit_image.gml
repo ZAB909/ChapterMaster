@@ -27,6 +27,8 @@ function scr_draw_unit_image(x_draw, y_draw){
         ui_force_both=false;
         ui_specialist=0;
         ttrim=0;
+        var armour_bypass = false;
+        var armour_draw =[];        
         ui_coloring=""; 
 		var specialist_colours=obj_ini.col_special; 
         var specific_armour_sprite = "none";
@@ -286,7 +288,12 @@ function scr_draw_unit_image(x_draw, y_draw){
 			
             if (armour()=="Scout Armour"){
 				if (slow>0) then slow=10;
-				armour_sprite=spr_scout_colors;
+				armour_sprite=spr_scout_colors2;
+                if (squad!="none"){
+                    if (obj_ini.squads[squad].type=="scout_sniper_squad" || weapon_one()=="Sniper Rifle" || weapon_two()=="Sniper Rifle"){
+                        armour_sprite=spr_scout_colors;
+                    }
+                }
 				if (hood=-50) then hood=0;
 			}else if (armour()=="MK3 Iron Armour"){
 				if (slow>0) then slow=13;
@@ -325,7 +332,7 @@ function scr_draw_unit_image(x_draw, y_draw){
 				if (skull==1) then skull=3;
 			}
             if (show_arm=="Terminator Armour"){
-				armour_sprite=spr_terminator2_colors;
+				armour_sprite=spr_terminator3_colors;
 				if (brothers>-5) then brothers=5;
 				if (hood=-50) then hood=9;
 				if (skull==1) then skull=2;
@@ -351,7 +358,7 @@ function scr_draw_unit_image(x_draw, y_draw){
 				}
                 if (string_count("Termi",armour())>0){
 					if (brothers>-5) then brothers=5;
-					armour_sprite=spr_terminator2_colors;
+					armour_sprite=spr_terminator3_colors;
 					if (hood=-50) then hood=9;
 					if (skull==1) then skull=2;
 				}
@@ -359,13 +366,13 @@ function scr_draw_unit_image(x_draw, y_draw){
             }
         
             // Draw the fixed upper arms for Terminators and Tartaros
-            if (base_sprite=1){
+            if (base_sprite==1){
                 if (fix_left>0) then draw_sprite(spr_termi_wep_fix,0,xx+x_draw,yy+y_draw);
                 if (fix_right>0){
                     if (specialist_colours<=1) then draw_sprite(spr_termi_wep_fix,2,xx+x_draw,yy+y_draw);
                     if (specialist_colours>=2) then draw_sprite(spr_termi_wep_fix,3,xx+x_draw,yy+y_draw);
                 }
-            }else if (base_sprite=2){
+            }else if (base_sprite==2){
                 if (fix_left>0) then draw_sprite(spr_tartaros_wep_fix,0,xx+x_draw,yy+y_draw);
                 if (fix_right>0){
                     if (specialist_colours<=1) then draw_sprite(spr_tartaros_wep_fix,2,xx+x_draw,yy+y_draw);
@@ -439,6 +446,10 @@ function scr_draw_unit_image(x_draw, y_draw){
                     specific_armour_sprite = spr_iron2_colors;
                 } else if (armour()=="MK4 Maximus"){
                     specific_armour_sprite = spr_maximus_colors;
+                    if (global.chapter_name=="Ultramarines" && array_contains(["Company Champion",obj_ini.role[100][2],obj_ini.role[100][5]], role())){
+                        armour_draw=[spr_ultra_honor_guard,body.torso.armour_choice];
+                        armour_bypass=true;
+                    }                    
                 } else if (armour()=="MK5 Heresy"){
                     specific_armour_sprite = spr_heresy_colors;
                     if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1){specific_helm = spr_da_mk5_helm;}
@@ -490,10 +501,9 @@ function scr_draw_unit_image(x_draw, y_draw){
                 } else if (base_sprite=2){
                     specific_armour_sprite = spr_tartaros2_colors;
                 } else if (base_sprite=1){
-                    specific_armour_sprite = spr_terminator2_colors;
+                    specific_armour_sprite = spr_terminator3_colors;
                 }
-                var armour_bypass = false;
-                var armour_draw =[];
+
                 if (base_sprite<= 0 && ui_specialist==5){
                     if (array_contains(traits, "tinkerer")){
                         specific_armour_sprite="none";
@@ -686,12 +696,20 @@ function scr_draw_unit_image(x_draw, y_draw){
                                 var sprite_num=3;
                                  if (specialist_colours>=2){
                                     sprite_num=4;
-                                 }                                
-                                draw_sprite(spr_bionics_leg_2,sprite_num,xx+x_draw+3,yy+y_draw)
+                                 }
+                                if(bionic.variant == 0){                             
+                                    draw_sprite(spr_bionics_leg_2,sprite_num,xx+x_draw+3,yy+y_draw)
+                                } else {
+                                    draw_sprite(spr_bionics_leg_3,sprite_num,xx+x_draw+1,yy+y_draw)
+                                }
                                 break;
 
                             case "right_leg":
-                                draw_sprite(spr_bionics_leg_2,0,xx+x_draw-3,yy+y_draw)
+                                if(bionic.variant == 0){  
+                                    draw_sprite(spr_bionics_leg_2,0,xx+x_draw-3,yy+y_draw)
+                                }else{
+                                    draw_sprite(spr_bionics_leg_3,0,xx+x_draw-1,yy+y_draw)
+                                }
                                 break;
                         }
 					}
@@ -699,10 +717,9 @@ function scr_draw_unit_image(x_draw, y_draw){
 			}
         
             // Honor Guard Helm
-            if (hood==0) and (base_sprite<1) and (armour()!="") and (ui_specialist==14){
+            if (hood==0) and (base_sprite<1) and (armour()!="") and (role()==obj_ini.role[100][2]) && (global.chapter_name!="Ultramarines"){
                 var helm_ii,o,yep;
             	helm_ii=0;
-                if (obj_ini.progenitor=7 || global.chapter_name="Ultramarines") then helm_ii=1;
                 if (obj_ini.progenitor=5 || global.chapter_name="Blood Angels") then helm_ii=5;
 
 				yep=0;

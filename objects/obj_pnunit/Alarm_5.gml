@@ -33,12 +33,11 @@ if (obj_ncombat.defeat=0){
                 if (cur_exp>=20) and (cur_exp<40) then new_exp+=choose(4,6,8);
                 if (cur_exp<20) then new_exp+=10;
             }
-            
-            if (marine_type[i]="Lexicanum") or (marine_type[i]="Codiciery") or (marine_type[i]=obj_ini.role[100,17]) then scr_powers_new(marine_co[i],marine_id[i]);
             if (new_exp>0){
                 unit.add_exp(new_exp);
                 obj_ncombat.total_battle_exp_gain+=new_exp;
             }
+            if (is_specialist(unit.role(), "libs"))  then unit.update_powers();
             // Need some kind of report here
         }
         

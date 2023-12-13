@@ -646,7 +646,7 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
         if (have_wep2_num>=req_wep2_num) or (n_wep2="(None") then n_good2=1;
         if (have_wep2_num<req_wep2_num){n_good2=0;warning="Not enough "+string(n_wep2)+"; "+string(req_wep2_num-have_wep2_num)+" more are required.";}
         if (n_wep2="Thunder Hammer"){
-            var g,exp_check;g=0;exp_check=0;
+            var g=0,exp_check=0;
             repeat(obj_controller.man_max){
                 g+=1;if (obj_controller.man_sel[g]=1) and (obj_controller.ma_exp[g]<140) then exp_check=1;
             }
@@ -733,7 +733,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
         if (manag>10) then manag=0;
 
         for(i=0;i<501;i++){
-            if (obj_ini.name[target_[comp][i]]=="" and obj_ini.name[target_[comp][i]+1]=="") {
+            if (obj_ini.name[target_comp][i]=="" and obj_ini.name[target_comp][i+1]=="") {
                 mahreens=i;
                 break;
             }
@@ -744,188 +744,53 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
         for(i=0;i<=obj_controller.man_max;i++){
 
             if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1) and (obj_controller.ma_promote[i]>=1) and (obj_controller.ma_exp[i]>=min_exp){
-                var check;
                 unit = obj_controller.display_unit[i];
-                check=0;
 
-                if (req_armour="") or (do_not_change=true) then check=1;
-                if (req_armour="Power Armour"){
-                    if (array_contains(global.power_armour,obj_controller.ma_armour[i]))  then check=1;
-                }
-                if (req_armour="Terminator Armour"){if (obj_controller.ma_armour[i]="Terminator Armour") or (obj_controller.ma_armour[i]="Tartaros") then check=1;}
-                if (req_armour="Scout Armour"){if (obj_controller.ma_armour[i]="Scout Armour") then check=1;}
-                if (req_armour="Dreadnought"){if (obj_controller.ma_armour[i]="Dreadnought") then check=1;}
-
-                if (check=0){
-                    var satisfied = 0;
+                if (!do_not_change){
                     if (req_armour="Power Armour"){
-                        if (obj_controller.ma_armour[i]!=""){// Move current armour to armoury
-                            scr_add_item(obj_ini.armour[company,obj_controller.ide[i]],1);
-                            obj_controller.ma_armour[i]="";obj_ini.armour[company,obj_controller.ide[i]]="";
-                        }
-                        var pa_type = ""
+                        unit.update_armour("");
                         for (var pa=0;pa<array_length(global.power_armour);pa++){
-                            satisfied = 0;
-                            if (obj_controller.ma_armour[i]=""){
-                                pa_type = global.power_armour[pa];
-                                satisfied=scr_item_count(pa_type);
-                                if (satisfied>0){
-                                    scr_add_item(pa_type,-1);
-                                    obj_controller.ma_armour[i]=pa_type;
-                                    obj_ini.armour[company,obj_controller.ide[i]]=pa_type;
-                                    break;
-                                }
+                            if (unit.update_armour(global.power_armour[pa])=="complete"){
+                                obj_controller.ma_armour[i]=global.power_armour[pa];
+                                break;
                             }
                         }
                     }else if (req_armour="Terminator Armour"){
-                        if (obj_controller.ma_armour[i]!=""){// Move current armour to armoury
-                            scr_add_item(obj_ini.armour[company,obj_controller.ide[i]],1);
-                            obj_controller.ma_armour[i]="";obj_ini.armour[company,obj_controller.ide[i]]="";
-                        }
-
-                        if (obj_controller.ma_armour[i]=""){
-                            satisfied=scr_item_count("Terminator Armour");
-                            if (satisfied>0){scr_add_item("Terminator Armour",-1);obj_controller.ma_armour[i]="Terminator Armour";obj_ini.armour[company,obj_controller.ide[i]]="Terminator Armour";}
-                        }
-                        if (obj_controller.ma_armour[i]=""){
-                           satisfied=scr_item_count("Tartarus");
-                            if (satisfied>0){scr_add_item("Tartarus",-1);obj_controller.ma_armour[i]="Tartarus";obj_ini.armour[company,obj_controller.ide[i]]="Tartarus";}
+                        if (unit.update_armour("Terminator Armour")!="complete"){
+                            unit.update_armour("Tartarus");
+                            obj_controller.ma_armour[i]="Tartarus"
+                        } else{
+                             obj_controller.ma_armour[i]="Terminator Armour"
                         }
                     }else if (req_armour="Scout Armour"){
-                        if (obj_controller.ma_armour[i]!=""){// Move current armour to armoury
-                            scr_add_item(obj_ini.armour[company,obj_controller.ide[i]],1);
-                            obj_controller.ma_armour[i]="";obj_ini.armour[company,obj_controller.ide[i]]="";
-                        }
-
-                        if (obj_controller.ma_armour[i]=""){
-                            satisfied=scr_item_count("Scout Armour");
-                            if (satisfied>0){scr_add_item("Scout Armour",-1);obj_controller.ma_armour[i]="Scout Armour";obj_ini.armour[company,obj_controller.ide[i]]="Scout Armour";}
-                        }
+                        unit.update_armour("Scout Armour");
                     }else if (req_armour="Dreadnought"){
-                        if (obj_controller.ma_armour[i]!=""){// Move current armour to armoury
-                            scr_add_item(obj_ini.armour[company,obj_controller.ide[i]],1);
-                            obj_controller.ma_armour[i]="";obj_ini.armour[company,obj_controller.ide[i]]="";
-                            if (obj_ini.age[company,obj_controller.ide[i]]!=floor(obj_ini.age[company,obj_controller.ide[i]])) then obj_ini.age[company,obj_controller.ide[i]]=floor(obj_ini.age[company,obj_controller.ide[i]]);
-                        }
 
-                        if (obj_controller.ma_armour[i]=""){
-                            satisfied=scr_item_count("Dreadnought");
-                            if (satisfied>0){scr_add_item("Dreadnought",-1);obj_controller.ma_armour[i]="Dreadnought";obj_ini.armour[company,obj_controller.ide[i]]="Dreadnought";}
-                        }
+                        if (obj_ini.age[company,obj_controller.ide[i]]!=floor(obj_ini.age[company,obj_controller.ide[i]])) then obj_ini.age[company,obj_controller.ide[i]]=floor(obj_ini.age[company,obj_controller.ide[i]]);
+                         unit.update_armour("Dreadnought");
                     }
-                }
 
                 // End swap armour
-
-
-                if (obj_controller.ma_wep1[i]!=req_wep1) and (req_wep1!="Heavy Ranged") and (req_wep1!="") and (do_not_change=false){// NOT HEAVY RANGED
-                    check=0;var satisfied;satisfied=0;
-
-                    if (obj_controller.ma_wep2[i]=req_wep1)/* and (role_name[target_role]!=obj_ini.role[100][6])*/{
-                        var temp;temp="";temp=obj_controller.ma_wep1[i];// Get temp
-                        obj_controller.ma_wep1[i]=obj_controller.ma_wep2[i];obj_ini.wep1[company,obj_controller.ide[i]]=obj_ini.wep2[company,obj_controller.ide[i]];// Wep2 -> Wep1
-                        obj_controller.ma_wep2[i]=temp;obj_ini.wep2[company,obj_controller.ide[i]]=temp;// Temp -> Wep2
-                    }
-
-                    if (obj_controller.ma_wep1[i]!=req_wep1){// If still not it, and has weapon, return to armoury
-                        if (obj_controller.ma_wep1[i]!=""){
-                            scr_add_item(obj_ini.wep1[company,obj_controller.ide[i]],1);
-                            obj_controller.ma_wep1[i]="";obj_ini.wep1[company,obj_controller.ide[i]]="";
-                        }
-                        if (obj_controller.ma_wep1[i]="") and (req_wep1!="")/* and (role_name[target_role]!=obj_ini.role[100][6])*/{// Check armoury for the weapon
-                            satisfied=scr_item_count(req_wep1);
-                            if (satisfied>0){scr_add_item(req_wep1,-1);obj_controller.ma_wep1[i]=req_wep1;obj_ini.wep1[company,obj_controller.ide[i]]=req_wep1;}
-                        }
-                    }
-                }
-                if (obj_controller.ma_wep1[i]!="Heavy Bolter") and (obj_controller.ma_wep1[i]!="Lascannon") and (obj_controller.ma_wep1[i]!="Missile Launcher") and (req_wep1="Heavy Ranged") and (req_wep1!="") and (do_not_change=false){// HEAVY RANGED
-                    check=0;var satisfied;satisfied=0;
-
-                    if (obj_controller.ma_wep2[i]="Heavy Bolter") or (obj_controller.ma_wep2[i]="Lascannon") or (obj_controller.ma_wep2[i]="Missile Launcher"){
-                        var temp;temp="";temp=obj_controller.ma_wep1[i];// Get temp
-                        obj_controller.ma_wep1[i]=obj_controller.ma_wep2[i];obj_ini.wep1[company,obj_controller.ide[i]]=obj_ini.wep2[company,obj_controller.ide[i]];// Wep2 -> Wep1
-                        obj_controller.ma_wep2[i]=temp;obj_ini.wep2[company,obj_controller.ide[i]]=temp;// Temp -> Wep2
-                    }
-
-                    if (obj_controller.ma_wep1[i]!="Heavy Bolter") and (obj_controller.ma_wep1[i]!="Lascannon") and (obj_controller.ma_wep1[i]!="Missile Launcher"){// If still not it, and has weapon, return to armoury
-                        if (obj_controller.ma_wep1[i]!=""){
-                            scr_add_item(obj_ini.wep1[company,obj_controller.ide[i]],1);
-                            obj_controller.ma_wep1[i]="";obj_ini.wep1[company,obj_controller.ide[i]]="";
-                        }
-
-                        if (obj_controller.ma_wep1[i]=""){// Check armoury for lascannon
-                            satisfied=scr_item_count("Lascannon");
-                            if (satisfied>0){scr_add_item("Lascannon",-1);obj_controller.ma_wep1[i]="Lascannon";obj_ini.wep1[company,obj_controller.ide[i]]="Lascannon";}
-                        }
-                        if (obj_controller.ma_wep1[i]=""){// Check armoury for Heavy Bolter
-                            satisfied=scr_item_count("Heavy Bolter");
-                            if (satisfied>0){scr_add_item("Heavy Bolter",-1);obj_controller.ma_wep1[i]="Heavy Bolter";obj_ini.wep1[company,obj_controller.ide[i]]="Heavy Bolter";}
-                        }
-                        if (obj_controller.ma_wep1[i]=""){// Check armoury for Missile Launcher
-                            satisfied=scr_item_count("Missile Launcher");
-                            if (satisfied>0){scr_add_item("Missile Launcher",-1);obj_controller.ma_wep1[i]="Missile Launcher";obj_ini.wep1[company,obj_controller.ide[i]]="Missile Launcher";}
-                        }
-                    }
-                }
-                // End swap first weapon
-
-                if (obj_controller.ma_wep2[i]!=req_wep1) and (req_wep2!="") and (do_not_change=false){// SECOND WEAPON
-                    check=0;var satisfied;satisfied=0;
-
-                    if (obj_controller.ma_wep2[i]!=req_wep2){// If still not it, and has weapon, return to armoury
-                        if (obj_controller.ma_wep2[i]!=""){
-                            scr_add_item(obj_ini.wep2[company,obj_controller.ide[i]],1);
-                            obj_controller.ma_wep2[i]="";obj_ini.wep2[company,obj_controller.ide[i]]="";
-                        }
-                        if (obj_controller.ma_wep2[i]="") and (req_wep2!="")/* and (role_name[target_role]!=obj_ini.role[100][6])*/{// Check armoury for the weapon
-                            satisfied=scr_item_count(req_wep2);
-                            if (satisfied>0){scr_add_item(req_wep2,-1);obj_controller.ma_wep2[i]=req_wep2;obj_ini.wep2[company,obj_controller.ide[i]]=req_wep2;}
-                        }
-                    }
-                }
-                // End swap second weapon
-
-                if (obj_controller.ma_gear[i]!=req_gear) and (req_gear!="") and (do_not_change=false){// GEAR
-                    check=0;var satisfied;satisfied=0;
-
-                    if (obj_controller.ma_gear[i]!=req_gear){// If still not it, and have gear, return to armoury
-                        if (obj_controller.ma_gear[i]!=""){
-                            scr_add_item(obj_ini.gear[company,obj_controller.ide[i]],1);
-                            obj_controller.ma_gear[i]="";
-                            obj_ini.gear[company,obj_controller.ide[i]]="";
-                        }
-                        if (obj_controller.ma_gear[i]="") and (req_gear!=""){// Check armoury for the gear
-                            satisfied=scr_item_count(req_gear);
-                            if (satisfied>0){
-                                scr_add_item(req_gear,-1);
-                                obj_controller.ma_gear[i]=req_gear;
-                                obj_ini.gear[company,obj_controller.ide[i]]=req_gear;
+                    if (req_wep1!="Heavy Ranged"){
+                        unit.update_weapon_one(req_wep1)
+                    }else {
+                        var heavy_ranged = ["Heavy Bolter","Lascannon","Missile Launcher"];
+                        var heavy_choice;
+                        if (!array_contains(heavy_ranged, unit.weapon_one())){
+                            while (array_length(heavy_ranged)>0){
+                                heavy_choice=irandom(array_length(heavy_ranged)-1);
+                                if (unit.update_weapon_one(heavy_ranged[heavy_choice])=="complete"){
+                                    break;
+                                }
                             }
-                        }
-                    }
-                }
+                        } // End swap first weapon
 
+                    }
+                    unit.update_weapon_two(req_wep2); // End swap second weapon
+                    unit.update_gear(req_gear);// End swap gear
+                    unit.update_mobility_item(req_mobi);// End swap gear
+                }                    
                 // End swap gear
-
-                if (obj_controller.ma_mobi[i]!=req_mobi) and (req_mobi!="") and (do_not_change=false){// mobi
-                    check=0;
-                    var satisfied=0;
-
-                    if (obj_controller.ma_mobi[i]!=req_mobi){// If still not it, and have mobi, return to armoury
-                        if (obj_controller.ma_mobi[i]!=""){
-                            scr_add_item(unit.mobility_item(),1);
-                            obj_controller.ma_mobi[i]="";
-                            unit.update_mobility_item("");
-                        }
-                        if (obj_controller.ma_mobi[i]="") and (req_mobi!=""){// Check armoury for the mobi
-                            satisfied=scr_item_count(req_mobi);
-                            if (satisfied>0){scr_add_item(req_mobi,-1);
-                                obj_controller.ma_mobi[i]=req_mobi;
-                                unit.update_mobility_item(req_mobi);
-                            }
-                        }
-                    }
-                }
 
                 // Pass variables here
 
@@ -935,7 +800,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
                 if (do_not_change==true){
                     aft=obj_ini.role[company,obj_controller.ide[i]];
                 } else{
-                    obj_ini.role[company,obj_controller.ide[i]] = role_name[target_role];
+                    unit.update_role(role_name[target_role]);
                     
                     if (role_name[target_role]==obj_ini.role[100][5]){// Restock recruiter or admiral dude
                         if (target_comp=4) then obj_ini.lord_admiral_name=obj_controller.ma_name[i];
@@ -944,31 +809,25 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
 
                 }
 
-                if (!is_specialist(bef)) and (is_specialist(aft)){obj_controller.marines-=1;obj_controller.command+=1;}
-                if (is_specialist(bef)) and (!is_specialist(aft)){obj_controller.marines+=1;obj_controller.command-=1;}
+                if (!is_specialist(bef)){
+                    if (is_specialist(aft)){obj_controller.marines-=1;obj_controller.command+=1;}
+                } else {
+                   if  (!is_specialist(aft)){obj_controller.marines+=1;obj_controller.command-=1;}
+                }
 
-                scr_move_unit_info(company,target_comp,obj_controller.ide[i],mahreens);	
+                scr_move_unit_info(company,target_comp,unit.marine_number,mahreens);	
                 if (role_name[target_role]==obj_ini.role[100][6]) and (do_not_change==false){
                     obj_ini.hp[target_comp,mahreens]=100;
                     var dread_weapons =["Close Combat Weapon","Force Weapon","Lascannon","Assault Cannon","Missile Launcher","Heavy Bolter"];
 
                     if (!array_contains(dread_weapons,obj_ini.wep1[target_comp,mahreens])){
-                        scr_add_item(obj_ini.wep1[target_comp,mahreens],1);
-                        obj_ini.wep1[target_comp,mahreens]="";
+                        unit.update_weapon_one("");
                     }
                     if (!array_contains(dread_weapons,obj_ini.wep2[target_comp,mahreens])){
-                        scr_add_item(obj_ini.wep2[target_comp,mahreens],1);
-                        obj_ini.wep2[target_comp,mahreens]="";
+                         unit.update_weapon_two("");
                     }                    
-                    if (obj_ini.mobi[target_comp,mahreens]!=""){
-                        scr_add_item(obj_ini.mobi[target_comp,mahreens],1);
-                        obj_ini.mobi[target_comp,mahreens]="";
-                    }
-                    if (obj_ini.gear[target_comp,mahreens]!=""){
-                        scr_add_item(obj_ini.gear[target_comp,mahreens],1);
-                        obj_ini.gear[target_comp,mahreens]="";
-                    }
-                    // Remove illegal weapons here
+                    unit.update_gear("");
+                    unit.update_mobility_item("");
                 }             
                 if (role_name[target_role]=obj_ini.role[100][5]) then scr_recent("captain_promote",obj_ini.name[target_comp,mahreens],target_comp);
                 if (role_name[target_role]=obj_ini.role[100][4]) then scr_recent("terminator_promote",obj_ini.name[target_comp,mahreens],target_comp);
