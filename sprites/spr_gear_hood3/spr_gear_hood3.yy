@@ -34,8 +34,8 @@
   "nineSlice": null,
   "origin": 0,
   "parent": {
-    "name": "Marine Viewer",
-    "path": "folders/Sprites/New UI/Marine Viewer.yy",
+    "name": "decorations",
+    "path": "folders/Sprites/New UI/Marine Viewer/decorations.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

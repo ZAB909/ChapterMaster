@@ -943,7 +943,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}
 		}
 	};
-	body = {"left_leg":{}, "right_leg":{}, "torso":{}, "left_arm":{}, "right_arm":{}, "left_eye":{}, "right_eye":{},"throat":{}, "jaw":{},"head":{}}; //body parts list can be extended as much as people want
+	body = {"left_leg":{}, "right_leg":{}, "torso":{armour_choice:irandom(1)}, "left_arm":{}, "right_arm":{}, "left_eye":{}, "right_eye":{},"throat":{}, "jaw":{},"head":{}}; //body parts list can be extended as much as people want
 
 	static alter_body = function(body_slot, body_item_key, new_body_data, overwrite=true){//overwrite means it will replace any existing data
 		if (struct_exists(body, body_slot)){
@@ -984,7 +984,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	switch base_group{
 		case "astartes":				//basic marine class //adds specific mechanics not releveant to most units
 			var astartes_trait_dist = [
-				["very_hard_to_kill", [99,98]],
+				["very_hard_to_kill", [149,148]],
 				["scholar", [99,98]],
 				["brute", [99,98]],
 				["charismatic", [99,98]],
@@ -1139,6 +1139,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					constitution += 2;
 					strength++;
 					dexterity -= 2;
+					body[$ new_bionic_pos][$"bionic"].variant=irandom(2);
 				}else if (array_contains(["left_eye", "right_eye"], new_bionic_pos)){
 					body[$ new_bionic_pos][$"bionic"].variant=irandom(2);
 					constitution += 1;
@@ -1161,6 +1162,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				if (array_contains(traits, "flesh_is_weak")){
 					piety++;
 				}
+				scr_add_item("Bionics",-1);
 			}
 			if (hp()>max_health()){update_health(max_health())}
 		}
@@ -1283,9 +1285,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		static specials = function(){ 
 			return obj_ini.spe[company][marine_number];
 		};	   
-       static update_specials = function(new_specials){
-            obj_ini.spe[company][marine_number] = new_specials;
-	   };
+       static update_powers = scr_powers_new;
 	   	static race = function(){ 
 			return obj_ini.race[company][marine_number];
 		};	
@@ -1436,7 +1436,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				spawn_ex += floor(gauss(obj_ini.role_spawn_buffs[$ role()][0], obj_ini.role_spawn_buffs[$ role()][1]));
 			}
 		}
-		if (spawn_ex != 0){update_exp(spawn_ex)}  //update the marines exp with updated guass value
+		if (spawn_ex != 0){add_exp(spawn_ex)}  //update the marines exp with updated guass value
 
 	};
 	static spawn_old_guard =function(){
@@ -1685,7 +1685,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}
 		}
 	}
-
+	
 	static draw_unit_image = scr_draw_unit_image;
 	static display_wepaons = scr_ui_display_weapons;
 	static unit_profile_text = scr_unit_detail_text;

@@ -2549,14 +2549,13 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     if (man_sel[p]==1) and (man[p]=="man") and (bionics_after>0) and (obj_ini.bio[cah][ide[p]]<10) 
                     and (obj_ini.loc[cah][ide[p]]!="Terra") and (obj_ini.loc[cah][ide[p]]!="Mechanicus Vessel"){
                         if (string_count("Dread",ma_armour[p])=0){
-        					          obj_ini.TTRPG[cah, ide[p]].add_bionics();
-                                      bionics_after--;
+					          obj_ini.TTRPG[cah, ide[p]].add_bionics();
+                              bionics_after--;
                             if (ma_promote[p]==10) then ma_promote[p]=0;
                         }
                     }
                     if (bionics_before!=bionics_after){
                         click=1;
-                        scr_add_item("Bionics",bionics_after-bionics_before);
                     }
                 }
             }
@@ -2661,7 +2660,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     if (company>10){company=0}
                     for(var q=1; q<=500; q++){
                         // Load man to ship
-                        if (man[q]=="man"){
+                        if (man[q]=="man" && man_sel[q]==1){
                             unit = obj_ini.TTRPG[company][ide[q]];
                             unit.load_marine(sh_ide[sel]);
                             ma_loc[q]=sh_name[sel];

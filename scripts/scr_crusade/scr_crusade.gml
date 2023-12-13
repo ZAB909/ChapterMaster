@@ -88,9 +88,7 @@ function scr_crusade() {
 	                	}
 	                	unit.add_exp(new_exp);
                     
-	                    if (obj_ini.role[co][i]=obj_ini.role[100,17]) then scr_powers_new(co,i);
-	                    if (obj_ini.role[co][i]="Codiciery") then scr_powers_new(co,i);
-	                    if (obj_ini.role[co][i]="Lexicanum") then scr_powers_new(co,i);
+	                    if (is_specialist(unit.role(), "libs")) then unit.update_powers()
 	                }
 	            }
         

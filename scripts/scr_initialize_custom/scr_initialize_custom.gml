@@ -1419,7 +1419,7 @@ function scr_initialize_custom() {
 		    		break;
 		    }
 		    spe[company,1]+=string(let)+"0|";
-		    scr_powers_new(company,1);			
+		    chapter_master.update_powers();
 	}
 	mobi[company,1]=mobi[100,2];
 	//TODO not sure why the strin method is ever used? will investigate and replace later
@@ -1484,6 +1484,7 @@ function scr_initialize_custom() {
 
 	// Chief Librarian
 	TTRPG[company,5]=new TTRPG_stats("chapter", company,5);
+	var cheif_lib = TTRPG[company,5];
 	race[company,5]=1;
 	loc[company,5]=home_name;
 	role[company,5]=string("Chief {0}",role[100,17]);
@@ -1499,9 +1500,10 @@ function scr_initialize_custom() {
 	if (obj_creation.discipline="pyromancy"){let="P";letmax=5;}
 	if (obj_creation.discipline="telekinesis"){let="T";letmax=5;}
 	if (obj_creation.discipline="rune Magick"){let="R";letmax=5;}
-	spe[company,5]=string(let)+"0|";scr_powers_new(company,5);
-	TTRPG[company,5].psionic = choose(13,14,15,16);
-	TTRPG[company,5].add_trait("warp_touched");
+	spe[company,5]=string(let)+"0|";
+	cheif_lib.psionic = choose(13,14,15,16);
+	cheif_lib.update_powers();
+	cheif_lib.add_trait("warp_touched");
 	k=0;
 	commands+=5;
 	k=5;
@@ -1561,16 +1563,17 @@ function scr_initialize_custom() {
 	    experience[company][k]=125;
 	    if (psyky=1) then experience[company][k]+=10;
 
-	    var let,letmax;let="";letmax=0;
+	    var let="",letmax=0;
 	    if (obj_creation.discipline="default"){let="D";letmax=7;}
 	    if (obj_creation.discipline="biomancy"){let="B";letmax=5;}
 	    if (obj_creation.discipline="pyromancy"){let="P";letmax=5;}
 	    if (obj_creation.discipline="telekinesis"){let="T";letmax=5;}
 	    if (obj_creation.discipline="rune Magick"){let="R";letmax=5;}
-	    spe[company][k]+=string(let)+"0|";scr_powers_new(company,k);
+	    spe[company][k]+=string(let)+"0|";
 	    TTRPG[company][k].spawn_old_guard();
 	    TTRPG[company][k].add_trait("warp_touched");  
 	    TTRPG[company][k].psionic = choose(13,14,15,16);  
+	    TTRPG[company][k].update_powers();
 	}
 	// Codiciery
 	repeat(codiciery){
@@ -1585,7 +1588,8 @@ function scr_initialize_custom() {
 	    name[company][k]=scr_marine_name();
 	    wep2[company][k]="Bolt Pistol";
 	    gear[company][k]="Psychic Hood";
-	    chaos[company][k]=0;experience[company][k]=80;
+	    chaos[company][k]=0;
+	    experience[company][k]=80;
 	    if (psyky=1) then experience[company][k]+=10;
 
 	    var let,letmax;let="";letmax=0;
@@ -1594,13 +1598,17 @@ function scr_initialize_custom() {
 	    if (obj_creation.discipline="pyromancy"){let="P";letmax=5;}
 	    if (obj_creation.discipline="telekinesis"){let="T";letmax=4;}
 	    if (obj_creation.discipline="rune Magick"){let="R";letmax=5;}
-	    spe[company][k]+=string(let)+"0|";scr_powers_new(company,k);
+	    spe[company][k]+=string(let)+"0|";
 	    TTRPG[company][k].spawn_old_guard();
 	    TTRPG[company][k].add_trait("warp_touched");
-	    TTRPG[company][k].psionic = choose(11,12,13,14,15);     
+	    TTRPG[company][k].psionic = choose(11,12,13,14,15); 
+	    TTRPG[company][k].update_powers();   
 	}
 	// Lexicanum
-	repeat(lexicanum){k+=1;commands+=1;man_size+=1;
+	repeat(lexicanum){
+		k+=1;
+		commands+=1;
+		man_size+=1;
 		TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	    race[company][k]=1;
 	    loc[company][k]=home_name;
@@ -1612,7 +1620,7 @@ function scr_initialize_custom() {
 	    experience[company][k]=40;
 	    if (psyky=1) then experience[company][k]+=10;
 
-	    var let,letmax;let="";letmax=0;
+	    var let="",letmax=0;
 	    if (obj_creation.discipline="default"){let="D";letmax=7;}
 	    if (obj_creation.discipline="biomancy"){let="B";letmax=5;}
 	    if (obj_creation.discipline="pyromancy"){let="P";letmax=5;}
@@ -1646,7 +1654,7 @@ function scr_initialize_custom() {
 
 	// Honor Guard
 
-	var hong,chapter_option,o;hong=0;
+	var hong=0,chapter_option,o,unit;
 	o=0;chapter_option=0;repeat(4){o+=1;
 	if (obj_creation.adv[o]="Brothers, All") then chapter_option=1;}
 	if (chapter_option=1) then hong+=20;
@@ -1657,6 +1665,7 @@ function scr_initialize_custom() {
 		commands+=1;
 		man_size+=1;
 		TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
+		unit = TTRPG[company][k];
 	    race[company][k]=1;
 	    loc[company][k]=home_name;
 	    role[company][k]=role[100][2];
@@ -1670,8 +1679,9 @@ function scr_initialize_custom() {
 	    armour[company][k]="MK4 Maximus";
 
 	    chaos[company][k]=0;
-	    experience[company][k]=210+irandom(30);
-	    TTRPG[company][k].spawn_old_guard();
+	    unit.add_exp(210+irandom(30));
+	    unit.spawn_old_guard();
+	    unit.add_trait(choose("guardian", "champion","observant","perfectionist"));
 	}
 
 
@@ -2347,7 +2357,7 @@ function scr_initialize_custom() {
 	            	role[company][k]=role[100][10];
 	            	wep1[company][k]=wep1[101,10];
 	            	wep2[company][k]=wep2[101,10];
-	              name[company][k]=scr_marine_name();
+	              	name[company][k]=scr_marine_name();
 	            	chaos[company][k]=0;
 	            	mobi[company][k]="Jump Pack";
 
@@ -2428,7 +2438,9 @@ function scr_initialize_custom() {
 
 	        if (dready>0){
 	            repeat(dready){
-	                k+=1;man_size+=10;commands+=1;
+	                k+=1;
+	                man_size+=10;
+	                commands+=1;
 	                TTRPG[company][k]=new TTRPG_stats("chapter", company,k,"dreadnought");
 	                race[company][k]=1;
 	                loc[company][k]=home_name;
@@ -2437,7 +2449,8 @@ function scr_initialize_custom() {
 	            	name[company][k]=scr_marine_name();
 	                wep2[company][k]=wep2[101,6];
 	                armour[company][k]="Dreadnought";
-	                chaos[company][k]=0;experience[company][k]=300;
+	                chaos[company][k]=0;
+	                experience[company][k]=300;
 	                if (company=9) then wep1[company][k]="Missile Launcher";
 	            }
 	        }
@@ -2448,12 +2461,31 @@ function scr_initialize_custom() {
 	            veh_upgrade[company,v]="";veh_acc[company,v]="Dozer Blades";veh_hp[company,v]=100;veh_chaos[company,v]=0;veh_pilots[company,v]=0;veh_lid[company,v]=0;veh_wid[company,v]=2;
 	        }
 	        if (whirly>0) then repeat(whirly){v+=1;man_size+=10;
-	            veh_race[company,v]=1;veh_loc[company,v]=home_name;veh_role[company,v]="Whirlwind";veh_wep1[company,v]="Whirlwind Missiles";veh_wep2[company,v]="HK Missile";veh_wep3[company,v]="";
-	            veh_upgrade[company,v]="";veh_acc[company,v]="";veh_hp[company,v]=100;veh_chaos[company,v]=0;veh_pilots[company,v]=0;veh_lid[company,v]=0;veh_wid[company,v]=2;
+	            veh_race[company,v]=1;
+	            veh_loc[company,v]=home_name;
+	            veh_role[company,v]="Whirlwind";
+	            veh_wep1[company,v]="Whirlwind Missiles";
+	            veh_wep2[company,v]="HK Missile";
+	            veh_wep3[company,v]="";
+	            veh_upgrade[company,v]="";veh_acc[company,v]="";
+	            veh_hp[company,v]=100;
+	            veh_chaos[company,v]=0;
+	            veh_pilots[company,v]=0;veh_lid[company,v]=0;
+	            veh_wid[company,v]=2;
 	        }
-	        if (speedy>0) then repeat(speedy){v+=1;man_size+=6;
-	            veh_race[company,v]=1;veh_loc[company,v]=home_name;veh_role[company,v]="Land Speeder";veh_wep1[company,v]="Heavy Bolter";veh_wep2[company,v]="";veh_wep3[company,v]="";
-	            veh_upgrade[company,v]="";veh_acc[company,v]="";veh_hp[company,v]=100;veh_chaos[company,v]=0;veh_pilots[company,v]=0;veh_lid[company,v]=0;veh_wid[company,v]=2;
+	        if (speedy>0) then repeat(speedy){
+	        	v+=1;
+	        	man_size+=6;
+	            veh_race[company,v]=1;
+	            veh_loc[company,v]=home_name;
+	            veh_role[company,v]="Land Speeder";
+	            veh_wep1[company,v]="Heavy Bolter";veh_wep2[company,v]="";veh_wep3[company,v]="";
+	            veh_upgrade[company,v]="";veh_acc[company,v]="";
+	            veh_hp[company,v]=100;
+	            veh_chaos[company,v]=0;
+	            veh_pilots[company,v]=0;
+	            veh_lid[company,v]=0;
+	            veh_wid[company,v]=2;
 	        }
 	        if (company=9) or (global.chapter_name="Iron Hands"){
 	            var predy;predy=5;
@@ -2500,7 +2532,8 @@ function scr_initialize_custom() {
 	        wep2[company][k]=wep2[101,14];
 	        armour[company][k]="MK7 Aquila";// if (company<=2) then armour[company][k]=choose("MK8 Errant","MK6 Corvus");
 	        gear[company][k]=gear[101,14];
-	        chaos[company][k]=0;experience[company][k]=100;
+	        chaos[company][k]=0;
+	        experience[company][k]=100;
 	        bio[company][k]=0;
 	        // if (company=8) then mobi[company][k]="Jump Pack";
 	        if (mobi[101,14]!="") then mobi[company][k]=mobi[101,14];
@@ -2516,15 +2549,42 @@ function scr_initialize_custom() {
 
 
 	var eqi=0;
-	eqi+=1;equipment[eqi]="MK7 Aquila";equipment_number[eqi]=10;equipment_type[eqi]="armour";
-	eqi+=1;equipment[eqi]="MK8 Errant";equipment_number[eqi]=1;equipment_type[eqi]="armour";
-	eqi+=1;equipment[eqi]="Scout Armour";equipment_number[eqi]=20;equipment_type[eqi]="armour";
-	eqi+=1;equipment[eqi]="Bolter";equipment_number[eqi]=20;equipment_type[eqi]="weapon";
-	eqi+=1;equipment[eqi]="Chainsword";equipment_number[eqi]=20;equipment_type[eqi]="weapon";
-	eqi+=1;equipment[eqi]="Lascannon";equipment_number[eqi]=5;equipment_type[eqi]="weapon";
-	eqi+=1;equipment[eqi]="Heavy Bolter";equipment_number[eqi]=5;equipment_type[eqi]="weapon";
-	eqi+=1;equipment[eqi]="Jump Pack";equipment_number[eqi]=10;equipment_type[eqi]="gear";
-	eqi+=1;equipment[eqi]="Bike";equipment_number[eqi]=40;equipment_type[eqi]="vehicle";
+	eqi+=1;
+	equipment[eqi]="MK7 Aquila";
+	equipment_number[eqi]=10;
+	equipment_type[eqi]="armour";
+	eqi+=1;
+	equipment[eqi]="MK8 Errant";
+	equipment_number[eqi]=1;
+	equipment_type[eqi]="armour";
+	eqi+=1;
+	equipment[eqi]="Scout Armour";
+	equipment_number[eqi]=20;
+	equipment_type[eqi]="armour";
+	eqi+=1;
+	equipment[eqi]="Bolter";
+	equipment_number[eqi]=20;
+	equipment_type[eqi]="weapon";
+	eqi+=1;
+	equipment[eqi]="Chainsword";
+	equipment_number[eqi]=20;
+	equipment_type[eqi]="weapon";
+	eqi+=1;
+	equipment[eqi]="Lascannon";
+	equipment_number[eqi]=5;
+	equipment_type[eqi]="weapon";
+	eqi+=1;
+	equipment[eqi]="Heavy Bolter";
+	equipment_number[eqi]=5;
+	equipment_type[eqi]="weapon";
+	eqi+=1;
+	equipment[eqi]="Jump Pack";
+	equipment_number[eqi]=10;
+	equipment_type[eqi]="gear";
+	eqi+=1;
+	equipment[eqi]="Bike";
+	equipment_number[eqi]=40;
+	equipment_type[eqi]="vehicle";
 	scr_add_item("Bolt Pistol",5);
 	scr_add_item(wep1[101,12],20);
 	scr_add_item(wep2[101,12],20);
