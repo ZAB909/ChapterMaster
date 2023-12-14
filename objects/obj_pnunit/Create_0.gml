@@ -4,7 +4,7 @@ men=0;
 veh=0;
 charge=0;
 engaged=0;
-owner=1;
+owner  = eFACTION.Player;
 medi=0;
 attacked_dudes=0;
 dreads=0;
@@ -22,7 +22,7 @@ highlight3="";
 
 var i;i=-1;
 repeat(1500){i+=1;
-	unit_struct = {};
+	unit_struct[i] = {};
     marine_type[i]="";
     marine_co[i]=0;
     marine_id[i]=0;

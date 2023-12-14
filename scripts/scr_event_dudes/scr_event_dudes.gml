@@ -37,8 +37,8 @@ function scr_event_dudes(argument0, argument1, argument2, argument3) {
 	            if (obj_ini.race[coh,ide]=1) or (obj_ini.race[coh,ide]=5) then adding=true;
 	        }
         
-	        if (obj_ini.role[coh,ide]=obj_ini.role[100,6]) then adding=false;
-	        if (obj_ini.role[coh,ide]="Venerable "+string(obj_ini.role[100,6])) then adding=false;
+	        if (obj_ini.role[coh,ide]=obj_ini.role[100][6]) then adding=false;
+	        if (obj_ini.role[coh,ide]="Venerable "+string(obj_ini.role[100][6])) then adding=false;
 	        if (string_count("Dread",obj_ini.armour[coh,ide])>0) then adding=false;
         
 	        // Just compile a list

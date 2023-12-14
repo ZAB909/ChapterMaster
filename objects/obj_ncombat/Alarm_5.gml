@@ -14,19 +14,15 @@ alarm[8]=999999;
 // check for wounded marines here to finish off, if defeated defending
 
 
-
-
-
-
 if (final_deaths+final_command_deaths>0){
     part1="Marines Lost: "+string(final_deaths+final_command_deaths);
-    if (apoth=1) then part1+=" ("+string(obj_ini.role[100,15])+" prevented the death of "+string(units_saved)+")";
-    if (apoth>1) then part1+=" ("+string(obj_ini.role[100,15])+"s prevented the death of "+string(units_saved)+")";
+    if (apoth=1) then part1+=" ("+string(obj_ini.role[100][15])+" prevented the death of "+string(units_saved)+")";
+    if (apoth>1) then part1+=" ("+string(obj_ini.role[100][15])+"s prevented the death of "+string(units_saved)+")";
     if (injured>0) then part8="Marines Critically Injured: "+string(injured);
     
     var i;i=0;
-    repeat(30){i+=1;
-        if (post_unit_lost[i]!="") and (post_units_lost[i]>0) and (post_unit_veh[i]=0){
+    for (var i=1;i<array_length(post_unit_lost);i++){
+            if (post_unit_lost[i]!="") and (post_units_lost[i]>0) and (post_unit_veh[i]=0){
             part2+=string(post_units_lost[i])+"x "+string(post_unit_lost[i])+", ";
         }
     }
@@ -47,22 +43,19 @@ if (instance_exists(obj_temp4)){
 seed_saved=(min(seed_max,apoth*40))-gene_penalty;
 if (string_count("Doom",obj_ini.strin2)>0) then seed_saved=0;
 if (seed_saved>0) then obj_controller.gene_seed+=seed_saved;
-
-if (apoth>0) and (final_deaths+final_command_deaths>0) and (string_count("Doom",obj_ini.strin2)=0){
+if (string_count("Doom",obj_ini.strin2)>0){
+    part3="Chapter Mutation prevents retrieving Gene-Seed.  "+string(seed_max)+" Gene-Seed lost.";
+    newline=part3;scr_newtext();
+    newline=" ";scr_newtext();
+}else if (apoth=0) and (string_count("Doom",obj_ini.strin2)=0){
+    part3="No able-bodied "+string(obj_ini.role[100][15])+".  "+string(seed_max)+" Gene-Seed lost.";
+    newline=part3;scr_newtext();
+    newline=" ";scr_newtext();
+}else if (apoth>0) and (final_deaths+final_command_deaths>0) and (string_count("Doom",obj_ini.strin2)=0){
     part3="Gene-Seed Recovered: "+string(seed_saved)+" (";
     if (seed_saved>0) then part3+=string(round((seed_saved/seed_max)*100));
     if (seed_saved=0) then part3+="0";
     part3+="%)";
-    newline=part3;scr_newtext();
-    newline=" ";scr_newtext();
-}
-if (apoth=0) and (string_count("Doom",obj_ini.strin2)=0){
-    part3="No able-bodied "+string(obj_ini.role[100,15])+".  "+string(seed_max)+" Gene-Seed lost.";
-    newline=part3;scr_newtext();
-    newline=" ";scr_newtext();
-}
-if (string_count("Doom",obj_ini.strin2)>0){
-    part3="Chapter Mutation prevents retrieving Gene-Seed.  "+string(seed_max)+" Gene-Seed lost.";
     newline=part3;scr_newtext();
     newline=" ";scr_newtext();
 }
@@ -81,8 +74,8 @@ if (red_thirst>2){
 
 if (vehicle_deaths>0){
     part4="Vehicles Lost: "+string(vehicle_deaths);
-    if (techma=1) then part4+=" ("+string(obj_ini.role[100,16])+" prevented the destruction of "+string(vehicles_saved)+")";
-    if (techma>1) then part4+=" ("+string(obj_ini.role[100,16])+"s prevented the destruction of "+string(vehicles_saved)+")";
+    if (techma=1) then part4+=" ("+string(obj_ini.role[100][16])+" prevented the destruction of "+string(vehicles_saved)+")";
+    if (techma>1) then part4+=" ("+string(obj_ini.role[100][16])+"s prevented the destruction of "+string(vehicles_saved)+")";
     
     var i;i=0;
     repeat(30){i+=1;
@@ -101,17 +94,26 @@ if (vehicle_deaths>0){
 if (post_equipment_lost[1]!=""){
     part6="Equipment Lost: ";
     
-    var i;i=0;
-    repeat(50){i+=1;
+    var i=0;
+    for (var i=0;i<array_length(post_equipment_lost);i++){
         if (post_equipment_lost[i]!="") and (post_equipments_lost[i]>0){
             part7+=string(post_equipments_lost[i])+"x "+string(post_equipment_lost[i])+", ";
         }
     }
     part7=string_delete(part7,string_length(part7)-1,2);part7+=".";i=0;
 	if (instance_exists(obj_temp4)){part7 += "Some may be recoverable"}
-    newline=part6;scr_newtext();
-    newline=part7;scr_newtext();
-    newline=" ";scr_newtext();
+    newline=part6;
+    scr_newtext();
+    newline=part7;
+    scr_newtext();
+    newline=" ";
+    scr_newtext();
+}
+if (total_battle_exp_gain>0){
+    newline=" ";
+    scr_newtext();
+    newline = $"Marines gained a total of {total_battle_exp_gain} experience";
+    scr_newtext();
 }
 if (instance_exists(obj_temp4)){
 	obj_temp4.post_equipment_lost = post_equipment_lost
@@ -171,7 +173,7 @@ if (fortified>0) and (!instance_exists(obj_nfort)) and (lowf=true){
 
 
 /*if (enemy=5){
-    if (obj_controller.faction_status[5]!="War"){
+    if (obj_controller.faction_status[eFACTION.Ecclesiarchy]!="War"){
         
     }
 }*/
@@ -467,7 +469,7 @@ if (obj_ini.omophagea=1){
             newline+=choose("  Bone snaps and pops.","  Strange-colored blood squirts from between his teeth.","  Veins and tendons squish wetly.");
         }
         if (really_thirsty>0){
-            newline="One of your Death Company "+string(obj_ini.role[100,6])+" blitzes to the fallen enemy lines.  Massive mechanical hands begin to rend and smash at the fallen corpses, trying to squeeze their flesh and blood through the sarcophogi opening.";
+            newline="One of your Death Company "+string(obj_ini.role[100][6])+" blitzes to the fallen enemy lines.  Massive mechanical hands begin to rend and smash at the fallen corpses, trying to squeeze their flesh and blood through the sarcophogi opening.";
         }
 
         newline+="  Almost at once most of the present "+string(global.chapter_name)+" follow suite, joining in and starting a massive feeding frenzy.  The sight is gruesome to behold.";
@@ -522,7 +524,7 @@ if (obj_ini.omophagea=1){
                 }
 
                 instance_activate_object(obj_turn_end);
-                if (obj_controller.known[4]<3) and (!instance_exists(obj_turn_end)){
+                if (obj_controller.known[eFACTION.Inquisition]<3) and (!instance_exists(obj_turn_end)){
                     var pip;pip=instance_create(0,0,obj_popup);
                     pip.title="Inquisitor Killed";pip.text=msg;pip.image="inquisition";pip.cooldown=30;
                     pip.title="EXCOMMUNICATUS TRAITORUS";
@@ -531,7 +533,7 @@ if (obj_ini.omophagea=1){
                     obj_controller.alarm[8]=1;
                     scr_event_log("red","EXCOMMUNICATUS TRAITORUS");
                 }
-                if (obj_controller.known[4]<3) and (instance_exists(obj_turn_end)){
+                if (obj_controller.known[eFACTION.Inquisition]<3) and (instance_exists(obj_turn_end)){
                     scr_popup("Inquisitor Killed","The Inquisition has noticed your uncalled CONSUMPTION of "+string(msg)+" and declared your chapter Excommunicatus Traitorus.","inquisition","");
                     obj_controller.alarm[8]=1;scr_event_log("red","EXCOMMUNICATUS TRAITORUS");
                 }

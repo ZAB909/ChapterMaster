@@ -3,7 +3,7 @@ image_angle=direction;
 if (obj_fleet.start!=5) then exit;
 
 
-var dist, ch_rang, ex;
+var dist;
 
 if (shields>0) and (shields<maxshields) then shields+=0.02;
 if (board_cooldown>=0) then board_cooldown-=1;
@@ -278,7 +278,7 @@ if (instance_exists(obj_en_ship)) and (boarders>0) and (board_cooldown<=0) and (
                 repeat(20){
                     if (board_id[o]!=0) and (board_location[o]=0){
                         board_raft[o]=bear;board_location[o]=-1;boarders-=1;bear.boarders+=1;
-                        if (obj_ini.role[board_co[o],board_id[o]]=obj_ini.role[100,15]) or (obj_ini.role[board_co[o],board_id[o]]="Master of Sanctity"){
+                        if (obj_ini.role[board_co[o],board_id[o]]=obj_ini.role[100][15]) or (obj_ini.role[board_co[o],board_id[o]]="Master of Sanctity"){
                             if (obj_ini.gear[board_co[o],board_id[o]]="Narthecium") and (obj_ini.hp[board_co[o],board_id[o]]>=10) then bear.apothecary+=1;
                         }
                     }

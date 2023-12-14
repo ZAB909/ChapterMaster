@@ -340,7 +340,9 @@ function scr_image(argument0, argument1, argument2, argument3, argument4, argume
             
 	            if (argument0="force"){
 	                if (file_exists(working_directory + "\\images\\ui\\force"+string(i)+".png")){
-	                    force[i-1]=sprite_add(working_directory + "\\images\\ui\\force"+string(i)+".png",1,false,false,0,0);force_exists[i-1]=1;w+=1;
+	                    force[i-1]=sprite_add(working_directory + "\\images\\ui\\force"+string(i)+".png",1,false,false,0,0);
+						force_exists[i-1]=1;
+						w+=1;
 	                }
 	                if (w>0) then force_good=true;
 	            }
@@ -496,9 +498,4 @@ function scr_image(argument0, argument1, argument2, argument3, argument4, argume
 	    draw_set_color(old_color);
     
 	}}
-
-
-
-
-
 }

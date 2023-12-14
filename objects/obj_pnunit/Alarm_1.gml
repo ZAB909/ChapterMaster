@@ -45,7 +45,7 @@ repeat(700){g+=1;
         if (marine_hp[g]>0) then men+=1;
 
 
-        if (marine_type[g]=obj_ini.role[100,6]) or (marine_type[g]="Venerable "+obj_ini.role[100,6]) and (marine_hp[g]>0){dreads+=1;dreaded=true;}
+        if (marine_type[g]=obj_ini.role[100][6]) or (marine_type[g]="Venerable "+obj_ini.role[100][6]) and (marine_hp[g]>0){dreads+=1;dreaded=true;}
         if (marine_mobi[g]="Bike") then scr_special_weapon("Twin Linked Bolters",g,true);
 
 
@@ -89,8 +89,8 @@ repeat(700){g+=1;
             if (dudes[j]="") and (open=0){
                 open=j;// Determine if vehicle here
 
-                if (dudes[j]="Venerable "+string(obj_ini.role[100,6])) then dudes_vehicle[j]=1;
-                if (dudes[j]=obj_ini.role[100,6]) then dudes_vehicle[j]=1;
+                if (dudes[j]="Venerable "+string(obj_ini.role[100][6])) then dudes_vehicle[j]=1;
+                if (dudes[j]=obj_ini.role[100][6]) then dudes_vehicle[j]=1;
             }
             if (marine_type[g]=dudes[j]){good=1;dudes_num[j]+=1;}
             if (good=0) and (open!=0){dudes[open]=marine_type[g];dudes_num[open]=1;}

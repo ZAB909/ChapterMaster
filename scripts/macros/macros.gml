@@ -13,6 +13,8 @@ function macros() {
 		artifact
 	}
 
+	#macro MAX_STC_PER_SUBCATEGORY 6
+
 	enum INQUISITION_MISSION {
 		purge,
 		inquisitor,

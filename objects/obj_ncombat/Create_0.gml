@@ -2,8 +2,8 @@
 var co,i;co=-1;
 repeat(15){co+=1;i=-1;
     repeat(401){i+=1;
-        fighting[co,i]=0;
-        if (i<=150){veh_fighting[co,i]=0;}
+        fighting[co][i]=0;
+        if (i<=150){veh_fighting[co][i]=0;}
     }
 }co=0;i=0;hue=0;
 
@@ -21,7 +21,7 @@ if (nope!=1){audio_sound_gain(snd_battle,0.25*obj_controller.master_volume*obj_c
 man_size_limit = 0;
 fack=0;
 cd=0;
-owner=1;
+owner  = eFACTION.Player;
 fix_timer=0;
 formation_set=0;
 big_boom=0;
@@ -29,6 +29,7 @@ kamehameha=false;
 on_ship=false;
 alpha_strike=0;
 Warlord = 0;
+total_battle_exp_gain=0;
 
 view_x=obj_controller.x;view_y=obj_controller.y;
 obj_controller.x=0;obj_controller.y=0;

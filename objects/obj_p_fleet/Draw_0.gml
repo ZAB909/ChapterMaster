@@ -48,7 +48,7 @@ if (within=1) or (selected>0){
     draw_set_halign(fa_center);
     
     var ppp;
-    if (owner=1) then ppp=global.chapter_name;
+    if (owner  = eFACTION.Player) then ppp=global.chapter_name;
     
     if (capital_number=1) and (frigate_number=0) and (escort_number=0) then ppp=capital[1];
     if (capital_number=0) and (frigate_number=1) and (escort_number=0) then ppp=frigate[1];

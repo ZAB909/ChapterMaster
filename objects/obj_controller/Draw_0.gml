@@ -125,7 +125,7 @@ if (zoomed==0) and (zui==0){
     draw_text(__view_get( e__VW.XView, 0 )+662.5,__view_get( e__VW.YView, 0 )+17.5,string_hash_to_newline("Sector "+string(obj_ini.sector_name)));
     
     // Checks if you are penitent
-    if (obj_controller.faction_status[2]!="War"){
+    if (obj_controller.faction_status[eFACTION.Imperium]!="War"){
         if (penitent_max==0){
             draw_text(__view_get( e__VW.XView, 0 )+887,__view_get( e__VW.YView, 0 )+17,string_hash_to_newline("Loyal"));
             draw_text(__view_get( e__VW.XView, 0 )+887,__view_get( e__VW.YView, 0 )+17.5,string_hash_to_newline("Loyal"));
@@ -142,20 +142,20 @@ if (zoomed==0) and (zui==0){
         }
     }
     // Sets you to renegade
-    if (obj_controller.faction_status[2]=="War"){
+    if (obj_controller.faction_status[eFACTION.Imperium]=="War"){
         draw_set_color(255);
         draw_text(__view_get( e__VW.XView, 0 )+887,__view_get( e__VW.YView, 0 )+17,string_hash_to_newline("Renegade"));
         draw_text(__view_get( e__VW.XView, 0 )+887,__view_get( e__VW.YView, 0 )+17.5,string_hash_to_newline("Renegade"));
         draw_set_color(38144);
     }
-    // Checks if the chapter name is less than 140 chars, adjusts wid accordingly
-    var wid=1;
+    // Checks if the chapter name is less than 140 chars, adjusts chapter_master_name_width accordingly
+    var chapter_master_name_width=1;
     for(var i=0; i<10; i++){
-        if ((string_width(string_hash_to_newline(string(global.chapter_name)))*wid)>140) then wid-=0.1;
+        if ((string_width(string_hash_to_newline(string(global.chapter_name)))*chapter_master_name_width)>140) then chapter_master_name_width-=0.1;
     }
 
-    draw_text_transformed(__view_get( e__VW.XView, 0 )+1520+new_banner_x,__view_get( e__VW.YView, 0 )+208,string_hash_to_newline(string(global.chapter_name)),wid,1,0);
-    draw_text_transformed(__view_get( e__VW.XView, 0 )+1520.5+new_banner_x,__view_get( e__VW.YView, 0 )+208.5,string_hash_to_newline(string(global.chapter_name)),wid,1,0);
+    draw_text_transformed(__view_get( e__VW.XView, 0 )+1520+new_banner_x,__view_get( e__VW.YView, 0 )+208,string_hash_to_newline(string(global.chapter_name)),chapter_master_name_width,1,0);
+    draw_text_transformed(__view_get( e__VW.XView, 0 )+1520.5+new_banner_x,__view_get( e__VW.YView, 0 )+208.5,string_hash_to_newline(string(global.chapter_name)),chapter_master_name_width,1,0);
     // Shows the date to be displayed
     var yf="";
     if (year_fraction<10) then yf="00"+string(year_fraction);

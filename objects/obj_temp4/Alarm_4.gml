@@ -93,8 +93,8 @@ i=0;
 if (string_count("Daemonic",obj_ini.artifact_tags[last_artifact-1])=1) then repeat(140){
     i+=1;
     if (man_sel[i]=1){
-        if (obj_controller.man[i]="man"){obj_ini.chaos[comp,i]+=choose(0,2,4,6,8);}
-        if (obj_controller.man[i]="vehicle"){obj_ini.veh_chaos[comp,i]+=choose(0,2,4,6,8);}
+        if (obj_controller.man[i]="man"){obj_ini.chaos[comp][i]+=choose(0,2,4,6,8);}
+        if (obj_controller.man[i]="vehicle"){obj_ini.veh_chaos[comp][i]+=choose(0,2,4,6,8);}
     }
 }
 

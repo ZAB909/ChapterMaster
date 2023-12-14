@@ -6,7 +6,7 @@ combating=0;
 instance_activate_object(obj_star);
 
 if (battles>0) and (current_battle<=battles){
-    var ii, xx, yy, good;
+    var ii, good;
     ii=0;good=0;
     
     obj_controller.temp[1060]=battle_location[current_battle];

@@ -300,11 +300,13 @@ draw_set_halign(fa_left);
 draw_set_color(38144);
 
 if (alerts>0) and (popups_end=1){
+	
     repeat(alerts){
         i+=1;
+
         draw_set_color(38144);
-        if (alert_color[i]="red") then draw_set_color(c_red);
-        if (alert_color[i]="yellow") then draw_set_color(57586);
+        if (alert_color[i] == "red") then draw_set_color(c_red);
+        if (alert_color[i] == "yellow") then draw_set_color(57586);
         // if (alert_color[i]="purple") then draw_set_color(c_red);
         draw_set_alpha(min(1,alert_alpha[i]));
         
@@ -321,8 +323,6 @@ if (alerts>0) and (popups_end=1){
             draw_text_transformed(32,92+(i*40),string_hash_to_newline(string(alert_txt[i])),2,2,0);
             // draw_text_transformed(122,122+(i*36),string(alert_txt[i]),3,3,0);
         }
-        
-        
     }
 }
 

@@ -136,7 +136,7 @@ if (tooltip="Tournament") then tooltip2="Hosts a non-lethal tournament for frien
 if (tooltip="Deathmatch") then tooltip2="Pits all those present to fight until one remains standing.  HQ are unable to participate.";
 if (tooltip="Imperial Mass") then tooltip2="Hosts Imperial Cult Mass for your astartes, in praise of the Emperor.";
 if (tooltip="Chapter Sermon") then tooltip2="Hosts a Chapter Cult sermon for your astartes, praising the "+string(global.chapter_name)+".";
-if (tooltip="Chapter Relic") then tooltip2="Instructs your "+string(obj_ini.role[100,16])+"s and "+string(obj_ini.role[100,14])+"s to construct a Chapter artifact.";
+if (tooltip="Chapter Relic") then tooltip2="Instructs your "+string(obj_ini.role[100][16])+"s and "+string(obj_ini.role[100][14])+"s to construct a Chapter artifact.";
 if (tooltip="Triumphal March") then tooltip2="Present Astartes will participate in a massive march to present a show of arms and power.";
 */
 

@@ -27,12 +27,13 @@ trim=1;firing=0;
 marines_alive=10;
 marines_max=10;
 
-var i;i=-1;
+var i=-1;
 repeat(21){i+=1;
     marine[i]=1;
     if (i>10) then marine[i]=0;
     
-    marine_co[i]=2;marine_id[i]=0;
+    marine_co[i]=2;
+    marine_id[i]=0;
     marine_role[i]="Tactical";
     marine_name[i]=scr_marine_name();
     
