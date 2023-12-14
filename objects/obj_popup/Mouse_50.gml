@@ -662,7 +662,8 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
 
 if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<yy+520){// Equipment
 
-    var w=0
+    var w=0;
+    var company = obj_controller.managing<=10 ? obj_controller.managing :0;
     if (company>10) then company=0;
     for(var w=0;w<500;w++){ // Gets the number of marines in the selected company
         if (obj_ini.name[company,w]=="") and (obj_ini.name[company,w+1]==""){

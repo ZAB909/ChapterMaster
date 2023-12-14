@@ -1,5 +1,5 @@
 function role_groups(group){
-	var role_list = false;
+	var role_list = [];
 	switch (group){
 		case "lib":
 			role_list = [
@@ -63,6 +63,11 @@ function role_groups(group){
 	            "Champion"
 	        ]; 
 	        break;
+	    case "dreadnoughts":
+	        role_list = [
+				obj_ini.role[100][6],//dreadnought
+				string("Venerable {0}",obj_ini.role[100][6]),
+			]
 	}
 	return role_list;
 }
@@ -147,7 +152,9 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 			break;
 		case "squad_leaders":
 			specialists = role_groups("squad_leaders");
+		case "dreadnoughts":
+			specialists = role_groups("dreadnoughts");			
 	}
 
-	return array_contains(specialists,unit_role)
+	return array_contains(specialists,unit_role);
 }

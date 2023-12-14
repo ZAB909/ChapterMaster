@@ -741,96 +741,43 @@ function scr_ui_manage() {
 		     //TODO handle recursively
 		    if (!obj_controller.unit_profile){
 
-			    if (sel_uni[1]!=""){
-			        draw_text(xx+1010,yy+636,string_hash_to_newline("All Infantry"));
-			        draw_rectangle(xx+1010,yy+634,xx+1010+string_width(string_hash_to_newline("All Infantry")),yy+634+string_height(string_hash_to_newline("All Infantry")),1);
-			        if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			            if (mouse_x>=xx+1010) and (mouse_y>=yy+634) and (mouse_x<xx+1010+string_width(string_hash_to_newline("All Infantry"))) and (mouse_y<yy+634+string_height(string_hash_to_newline("All Infantry"))){
-							cooldown=8;
-							sel_all="man";
-						}
-			        }
-			        if (sel_uni[1]!=""){
-			            draw_text(xx+1016,yy+662,string_hash_to_newline(sel_uni[1]));
-						draw_rectangle(xx+1015,yy+661,xx+1016+string_width(string_hash_to_newline(sel_uni[1])),yy+661+string_height(string_hash_to_newline(sel_uni[1])),1);
-			            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			                if (mouse_x>=xx+1015) and (mouse_y>=yy+661) and (mouse_x<xx+1016+string_width(string_hash_to_newline(sel_uni[1]))) and (mouse_y<yy+661+string_height(string_hash_to_newline(sel_uni[1]))){
-								cooldown=8;
-								sel_all=sel_uni[1];
-							}
-			            }
-			        }
-			        if (sel_uni[2]!=""){
-			            draw_text(xx+1016,yy+684,string_hash_to_newline(sel_uni[2]));
-						draw_rectangle(xx+1015,yy+683,xx+1016+string_width(string_hash_to_newline(sel_uni[2])),yy+683+string_height(string_hash_to_newline(sel_uni[2])),1);
-			            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			                if (mouse_x>=xx+1016) and (mouse_y>=yy+684) and (mouse_x<xx+1016+string_width(string_hash_to_newline(sel_uni[2]))) and (mouse_y<yy+683+string_height(string_hash_to_newline(sel_uni[2]))){
-								cooldown=8;
-								sel_all=sel_uni[2];
-							}
-			            }
-			        }
-			        if (sel_uni[3]!=""){
-			            draw_text(xx+1016,yy+706,string_hash_to_newline(sel_uni[3]));
-						draw_rectangle(xx+1015,yy+705,xx+1016+string_width(string_hash_to_newline(sel_uni[3])),yy+705+string_height(string_hash_to_newline(sel_uni[3])),1);
-			            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			                if (mouse_x>=xx+1016) and (mouse_y>=yy+706) and (mouse_x<xx+1016+string_width(string_hash_to_newline(sel_uni[3]))) and (mouse_y<yy+705+string_height(string_hash_to_newline(sel_uni[3]))){
-								cooldown=8;
-								sel_all=sel_uni[3];
-							}
-			            }
-			        }
-			        if (sel_uni[4]!=""){
-			            draw_text(xx+1016,yy+728,string_hash_to_newline(sel_uni[4]));
-						draw_rectangle(xx+1015,yy+727,xx+1016+string_width(string_hash_to_newline(sel_uni[4])),yy+727+string_height(string_hash_to_newline(sel_uni[4])),1);
-			            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			                if (mouse_x>=xx+1016) and (mouse_y>=yy+727) and (mouse_x<xx+1016+string_width(string_hash_to_newline(sel_uni[4]))) and (mouse_y<yy+727+string_height(string_hash_to_newline(sel_uni[4]))){
-								cooldown=8;
-								sel_all=sel_uni[4];
-							}
-			            }
-			        }
-			        if (sel_uni[5]!=""){
-			            draw_text(xx+1160,yy+662,string_hash_to_newline(sel_uni[5]));
-						draw_rectangle(xx+1015+144,yy+661,xx+1160+string_width(string_hash_to_newline(sel_uni[5])),yy+661+string_height(string_hash_to_newline(sel_uni[5])),1);
-			            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			                if (mouse_x>=xx+1160) and (mouse_y>=yy+661) and (mouse_x<xx+1160+string_width(string_hash_to_newline(sel_uni[5]))) and (mouse_y<yy+661+string_height(string_hash_to_newline(sel_uni[5]))){
-								cooldown=8;
-								sel_all=sel_uni[5];
-							}
-			            }
-			        }
-			        if (sel_uni[6]!=""){
-			            draw_text(xx+1160,yy+684,string_hash_to_newline(sel_uni[6]));
-						draw_rectangle(xx+1015+144,yy+683,xx+1160+string_width(string_hash_to_newline(sel_uni[6])),yy+683+string_height(string_hash_to_newline(sel_uni[6])),1);
-			            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			                if (mouse_x>=xx+1160) and (mouse_y>=yy+684) and (mouse_x<xx+1160+string_width(string_hash_to_newline(sel_uni[6]))) and (mouse_y<yy+684+string_height(string_hash_to_newline(sel_uni[6]))){
-								cooldown=8;
-								sel_all=sel_uni[6];
-							}
-			            }
-			        }
-			        if (sel_uni[7]!=""){
-			            draw_text(xx+1160,yy+706,string_hash_to_newline(sel_uni[7]));
-						draw_rectangle(xx+1015+144,yy+705,xx+1160+string_width(string_hash_to_newline(sel_uni[7])),yy+705+string_height(string_hash_to_newline(sel_uni[7])),1);
-			            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			                if (mouse_x>=xx+1160) and (mouse_y>=yy+706) and (mouse_x<xx+1160+string_width(string_hash_to_newline(sel_uni[7]))) and (mouse_y<yy+706+string_height(string_hash_to_newline(sel_uni[7]))){
-								cooldown=8;
-								sel_all=sel_uni[7];
-							}
-			            }
-			        }
-			        if (sel_uni[8]!=""){
-			            draw_text(xx+1160,yy+728,string_hash_to_newline(sel_uni[8]));
-						draw_rectangle(xx+1015+144,yy+727,xx+1160+string_width(string_hash_to_newline(sel_uni[8])),yy+727+string_height(string_hash_to_newline(sel_uni[8])),1);
-			            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			                if (mouse_x>=xx+1160) and (mouse_y>=yy+728) and (mouse_x<xx+1160+string_width(string_hash_to_newline(sel_uni[8]))) and (mouse_y<yy+727+string_height(string_hash_to_newline(sel_uni[8]))){
-								cooldown=8;
-								sel_all=sel_uni[8];
-							}
-			            }
-			        }
-			    }
+			    if (sel_uni[1] != "") {
+				    draw_text(xx + 1010, yy + 636, string_hash_to_newline("All Infantry"));
+				    draw_rectangle(xx + 1010, yy + 634, xx + 1010 + string_width(string_hash_to_newline("All Infantry")), yy + 634 + string_height(string_hash_to_newline("All Infantry")), 1);
+				    if (mouse_check_button_pressed(mb_left) && cooldown <= 0) {
+				        if (mouse_x >= xx + 1010 && mouse_y >= yy + 634 && mouse_x < xx + 1010 + string_width(string_hash_to_newline("All Infantry")) && mouse_y < yy + 634 + string_height(string_hash_to_newline("All Infantry"))) {
+				            cooldown = 8;
+				            sel_all = "man";
+				        }
+				    }
+				    var y_offset,x_offset;
+				    var x1,x2,y1,y2;
+				    for (var i = 1; i <= 8; i++) {
+				        if (sel_uni[i] != "") {
+				        	if (i<=4){
+					            y_offset = 26 * (i - 1);
+					        	x_offset=0;
+				        	}
+				            if (i>4){
+				            	y_offset = 26 * (i - 5);
+				            	x_offset=144;
+				            }
+				            x1=xx + 1016 +x_offset;
+				            x2=x1+ string_width(string_hash_to_newline(sel_uni[i]));
+				            y1=yy + 662 + y_offset;
+				            y2=y1+string_height(string_hash_to_newline(sel_uni[i]))
+				            draw_text(x1, y1, string_hash_to_newline(sel_uni[i]));
+				            draw_rectangle(x1, y1, x2, y2, 1);
+
+				            if (mouse_check_button_pressed(mb_left) && cooldown <= 0) {
+				            	if (point_in_rectangle(mouse_x, mouse_y,x1, y1, x2, y2)){
+				                    cooldown = 8;
+				                    sel_all = sel_uni[i];
+				                }
+				            }
+				        }
+				    }
+				}
 			    if (sel_veh[1]!=""){
 			        draw_text(xx+1010+288,yy+636,string_hash_to_newline("All Vehicles"));
 			        draw_rectangle(xx+1010+288,yy+634,xx+1010+288+string_width(string_hash_to_newline("All Vehicles")),yy+634+string_height(string_hash_to_newline("All Vehicles")),1);

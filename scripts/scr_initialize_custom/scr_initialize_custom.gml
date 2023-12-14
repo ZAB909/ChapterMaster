@@ -940,6 +940,7 @@ function scr_initialize_custom() {
 				["Standard Bearer" , {"max":1,"min":1,"role":"Chapter Ancient"}],//standard bearer
 				[role[100][3] , {"max":5,"min":0, "role":$"Company Command {role[100,3]}"}],		//veterans
 				[role[100][16],{"max":1,"min":0,"role":$"Company {role[100,16]}"}],
+				[role[100][17],{"max":1,"min":0,"role":$"Company {role[100,17]}"}],
 				["type_data" , {"display_data":$"Command {squad_name}"}]
 			],
 			"terminator_squad": [
