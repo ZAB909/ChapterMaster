@@ -2651,6 +2651,7 @@ gear = {
         "artifact": 0
       }
     },
+
     "Jump Pack": {
       "special_description": "+10% Damage Resistance, Jump Pack",
       "description": "A back-mounted device containing turbines or jets powerful enough to lift even a user in Power Armour.",
@@ -2670,17 +2671,40 @@ gear = {
   
 }
 
-function gear_weapon_data(search_area,item,wanted_data, sub_class=false){
+function gear_weapon_data(search_area,item,wanted_data="all", sub_class=false, quality="standard"){
 	var item_data_set;
-	if (search_area == "armour"){
-		if struct_exists(global.gear[$"armour"],item){
-			var item_data_set = global.gear[$"armour"][$ item]
-			if (struct_exists(item_data_set, wanted_data)){
-				return (item_data_set[$ wanted_data])
-			}
-		}
-	}
-	return false;
+    var equip_area=false;
+	if (array_contains(["equipment","armour","mobility"],search_area)){ 
+        equip_area=global.gear;
+    } else if (search_area=="weapon"){
+       equip_area=global.weapons;
+    }
+    if (equip_area){
+        if (struct_exists(equip_area[$ search_area],item)){
+            var item_data_set = equip_area[$ search_area][$ item]
+            if (wanted_data=="all"){
+                return item_data_set;
+            }
+            if (struct_exists(item_data_set, wanted_data)){
+                if (is_struct(item_data_set[$ wanted_data])){
+                    if (struct_exists(item_data_set[$ wanted_data], quality)){
+                        return data_set[$ wanted_data][$ quality];
+                    } else {
+                        if (struct_exists(item_data_set[$ wanted_data],"standard")){
+                            return set[$ wanted_data][$ "standard"]
+                        } else {
+                            return 0;//default value
+                        }
+                    }
+                } else {
+                    return item_data_set[$ wanted_data]
+                }
+            } else {
+                return 0;//default value
+            }
+        }
+    }
+	return false;//nothing found
 }
 
 function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, is_dreadnought, nuum, information_wanted) {
