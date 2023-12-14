@@ -538,7 +538,7 @@ function scr_ui_manage() {
 		        var squad_modulo = squad[sel]%10;
 		        draw_set_color(squad_colours[squad_modulo])
 	        
-		        if (sel>0){
+		        if (sel>0 && sel<500){
 		            if (squad[sel]==squad[sel+1]) and (squad[sel]!=squad[sel-1]){sqi="top"}
 		            else if (squad[sel]==squad[sel+1]) and (squad[sel]==squad[sel-1]){sqi="mid"}
 		            else if (squad[sel]!=squad[sel+1]) and (squad[sel]==squad[sel-1]) then sqi="bot";
