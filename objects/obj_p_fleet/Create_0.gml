@@ -6,8 +6,7 @@ selected = 0;
 orbiting = 0;
 ii_check = choose(8, 9, 10, 11, 12);
 
-var wop;
-wop = instance_nearest(x, y, obj_star);
+var wop = instance_nearest(x, y, obj_star);
 if (instance_exists(wop)) and (y > 0) and (x > 0)
 	{
 	    if (point_distance(x, y, wop.x, wop.y) <= 40)
