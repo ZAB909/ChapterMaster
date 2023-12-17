@@ -540,7 +540,7 @@ if (menu==1 && managing>0){
         }
     }
     if (is_struct(temp[120])){
-        var ach=0,damage_res=1,melee_attack,ranged_attack,acy=0;
+        var ach=0,damage_res=1,melee_attack,ranged_attack,armour_value=0;
         // Checks if the marine is not hidden
         if (temp[120].base_group != 0){
             var unit = temp[120];
@@ -567,50 +567,51 @@ if (menu==1 && managing>0){
             if (unit.mobility_item()=="Bike") then ach+=25;
             if (unit.weapon_one()=="Boarding Shield"){
                 ach+=20;
-                acy+=4;
+                armour_value+=4;
             }
             if (unit.weapon_two()=="Boarding Shield"){
                 ach+=20;
-                acy+=4;
+                armour_value+=4;
             }
             if (unit.weapon_one()=="Storm Shield"){
                 ach+=30;
-                acy+=8;
+                armour_value+=8;
             }
             if (unit.weapon_two()=="Storm Shield"){
                 ach+=30;
-                acy+=8;
+                armour_value+=8;
             }
-            if (unit.armour()=="MK3 Iron Armour") then ranged_attack-=0.1;
-            if (unit.armour()=="MK4 Maximus"){
-                ranged_attack+=0.05;
-                melee_attack+=0.05;
+            var gear_data = gear_weapon_data("gear",unit.gear());
+            var armour_data = gear_weapon_data("armour",unit.armour());
+            var mobility_data = gear_weapon_data("mobility",unit.mobility_item());
+            var weapon1 = gear_weapon_data("armour",unit.weapone_one());
+            var weapon2 = gear_weapon_data("armour",unit.weapone_two());
+
+            if (struct_exists(gear_data,"damage_resistance_mod")){
+                ranged_attack+=armour_data.damage_resistance_mod.standard/100
             }
-            // heresy should be lower damage resistance, lowered ap for now so it's easier for players to digest
-            if (unit.armour()=="MK5 Heresy"){
-                melee_attack+=0.2;
-                ranged_attack-=0.05;
+
+            var armour_tooltip = "";
+
+            if (struct_exists(armour_data,"ranged_mod")){
+                var range_mod=armour_data.ranged_mod.standard
+                if (range_mod!=0){
+                    ranged_attack+=range_mod/100
+                    armour_tooltip += $"Ranged {range_mod}%"
+                }
             }
-            if (unit.armour()=="MK6 Corvus"){
-                ranged_attack+=0.1;
+            if (struct_exists(armour_data,"melee_mod")){
+                melee_attack+=armour_data.melee_mod.standard/100
             }
-            if (string_count("Artificer",unit.armour())>0){
-                melee_attack+=0.1;
+            if (struct_exists(armour_data,"armour_value")){
+                armour_value+=melee_attack+=armour_data.armour_value.standard
             }
-            if (string_count("Terminator",unit.armour())>0){
-                ranged_attack-=0.1;
-                melee_attack+=0.2;
-            }
-            if (unit.armour()=="Tartaros"){
-                ranged_attack-=0.05;
-                melee_attack+=0.2;
-            }
+
+            temp[103]="({armour_value} AC,)"
 
             ui_specialist=0;
             ui_coloring="";
             // Sets up the description for the equipement of current marine
-            temp[101]=unit.name_role();
-            temp[102]=unit.armour();
             temp[103]="";
             if (string_count("&",temp[102])>0) then temp[102]=clean_tags(temp[102]);
             tooltip="";
@@ -622,13 +623,13 @@ if (menu==1 && managing>0){
             tooltip_other="";
             tooltip=scr_weapon(unit.armour(),"",true,0,false,"","description");
             // Sets AC for current marine equipement
-            if (acy==0){
+            if (armour_value==0){
                 if (tooltip_other=="") then temp[103]="("+string(tooltip_stat1)+"AC)";
                 if (tooltip_other!="") then temp[103]="("+string(tooltip_stat1)+"AC, "+string(tooltip_other)+")";
             }
-            if (acy>0){
-                if (tooltip_other=="") then temp[103]="("+string(tooltip_stat1)+"+"+string(acy)+"AC)";
-                if (tooltip_other!="") then temp[103]="("+string(tooltip_stat1)+"+"+string(acy)+"AC, "+string(tooltip_other)+")";
+            if (armour_value>0){
+                if (tooltip_other=="") then temp[103]="("+string(tooltip_stat1)+"+"+string(armour_value)+"AC)";
+                if (tooltip_other!="") then temp[103]="("+string(tooltip_stat1)+"+"+string(armour_value)+"AC, "+string(tooltip_other)+")";
             }
             // Gear
             temp[104]=unit.gear();

@@ -1003,7 +1003,7 @@ function scr_ui_manage() {
 			}
 		}
 		if instance_exists(cn)and (is_struct(cn.temp[120])){
-			if (cn.temp[101]!="") and (cn.temp[100]=="1"){
+			if (cn.temp[120].name()!="") and (cn.temp[120].race()=="1"){
 				draw_set_alpha(1);
 				var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0
 		        if ((point_in_rectangle(mouse_x, mouse_y, xx+1208, yy+168, xx+1374, yy+409) || obj_controller.unit_profile) and (!instance_exists(obj_temp3)) and(!instance_exists(obj_popup))){
