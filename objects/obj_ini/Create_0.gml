@@ -28,7 +28,6 @@ flagship_name = "";
 psy_powers = "";
 battle_cry = "";
 skin_color = 0;
-dis = [0];
 squads = [];
 
 //chapter leadership
