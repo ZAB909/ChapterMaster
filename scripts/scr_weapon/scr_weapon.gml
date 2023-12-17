@@ -1716,12 +1716,12 @@ global.gear = {
       "hp_mod": {
         "standard": 25,
         "master_crafted": 25,
-        "artifact": 25
+        "artifact": 35
       },
       "damage_resistance_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
+        "standard": 5,
+        "master_crafted": 10,
+        "artifact": 10
       }
     },
 
@@ -1729,9 +1729,9 @@ global.gear = {
       "special_description": "+10% Damage Resistance, Jump Pack",
       "description": "A back-mounted device containing turbines or jets powerful enough to lift even a user in Power Armour.",
       "hp_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
+        "standard": 5,
+        "master_crafted": 5,
+        "artifact": 5
       },
       "damage_resistance_mod": {
         "standard": 10,
@@ -1743,39 +1743,83 @@ global.gear = {
   }
 }
 
+function equiment_struct(item_data, core_type,quality="none") constructor{
+    var names = ["hp_mod", "description","damage_resistance_mod", "ranged_mod", "melee_mod","armour_value"];
+    var defaults = [0,"",0,0,0,0];
+    type = core_type;
+    for (var i=0;i<array_length(names);i++){
+        if (struct_exists(item_data,names[i])){
+            self[$names[i]] = item_data[$names[i]];
+            if (quality!="none"){
+                if (is_struct(self[$names[i]])){
+                    if (struct_exists(self[$names[i]],quality)){
+                        self[$names[i]]=self[$names[i]][$quality];
+                    } else {
+                        self[$names[i]]=self[$names[i]].standard;
+                    }
+                }
+            }            
+        } else {
+            self[$names[i]]=defaults[i];
+        }
+    }
+    spe_desc = "";
+    static special_description = function(){
+        if (ranged_mod!=0){
+            spe_desc += $"Ranged {ranged_mod}%,"
+        }
+        if (melee_mod!=0){
+            spe_desc += $"Melee {melee_mod}%,"
+        }
+        if (hp_mod!=0){
+            spe_desc += $"HP {hp_mod}%,"
+        }
+        if (damage_resistance_mod!=0){
+            spe_desc += $"Damage Res {damage_resistance_mod}%,"
+        }
+        if (armour_value!=0){
+            spe_desc += $"AC {armour_value},"
+        }
+        return  spe_desc
+    }
+}
 function gear_weapon_data(search_area,item,wanted_data="all", sub_class=false, quality="standard"){
-	var item_data_set;
+	var item_data_set=false;
     var equip_area=false;
 	if (array_contains(["equipment","armour","mobility"],search_area)){ 
         equip_area=global.gear;
+        if (struct_exists(equip_area[$ search_area],item)){
+            item_data_set = equip_area[$ search_area][$ item]
+        }        
     } else if (search_area=="weapon"){
        equip_area=global.weapons;
+       if (struct_exists(equip_area,item)){
+            item_data_set=equip_area[$item]
+       }
     }
-    if (equip_area){
-        if (struct_exists(equip_area[$ search_area],item)){
-            var item_data_set = equip_area[$ search_area][$ item]
-            if (wanted_data=="all"){
-                return item_data_set;
-            }
-            if (struct_exists(item_data_set, wanted_data)){
-                if (is_struct(item_data_set[$ wanted_data])){
-                    if (struct_exists(item_data_set[$ wanted_data], quality)){
-                        return data_set[$ wanted_data][$ quality];
-                    } else {
-                        if (struct_exists(item_data_set[$ wanted_data],"standard")){
-                            return set[$ wanted_data][$ "standard"]
-                        } else {
-                            return 0;//default value
-                        }
-                    }
+
+    if (is_struct(item_data_set)){
+        if (wanted_data=="all"){
+            return new equiment_struct(item_data_set,search_area,quality);
+        }
+        if (struct_exists(item_data_set, wanted_data)){
+            if (is_struct(item_data_set[$ wanted_data])){
+                if (struct_exists(item_data_set[$ wanted_data], quality)){
+                    return item_data_set[$ wanted_data][$ quality];
                 } else {
-                    return item_data_set[$ wanted_data]
+                    if (struct_exists(item_data_set[$ wanted_data],"standard")){
+                        return item_data_set[$ wanted_data][$ "standard"]
+                    } else {
+                        return 0;//default value
+                    }
                 }
             } else {
-                return 0;//default value
+                return item_data_set[$ wanted_data]
             }
+        } else {
+            return 0;//default value
         }
-    }
+    }    
 	return false;//nothing found
 }
 

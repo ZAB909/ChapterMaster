@@ -745,9 +745,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	};	
 	static max_health =function(){
 		var max_h = 100 * (1+((constitution - 40)*0.025));
-		if (mobility_item() == "Bike"){
-			max_h *= 1.25;
-		}
+		max_h+=gear_weapon_data("armour",armour(),"hp_mod",false,"standard");
+		max_h+=gear_weapon_data("gear",gear(),"hp_mod",false,"standard");
+		max_h+=gear_weapon_data("mobility",mobility_item(),"hp_mod",false,"standard");
+		max_h+=gear_weapon_data("weapon",weapon_one(),"hp_mod",false,"standard");
+		max_h+=gear_weapon_data("weapon",weapon_two(),"hp_mod",false,"standard");
 		return max_h;
 	};	
 	static increase_max_health = function(increase){
@@ -1578,6 +1580,21 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	static draw_unit_image = scr_draw_unit_image;
 	static display_wepaons = scr_ui_display_weapons;
 	static unit_profile_text = scr_unit_detail_text;
+	static unit_equipment_data= function(){
+		var armour_data=gear_weapon_data("armour",armour(),"all",false,"standard");
+		var gear_data=gear_weapon_data("gear",gear(),"all",false,"standard");
+		var mobility_data=gear_weapon_data("mobility",mobility_item(),"all",false,"standard");
+		var weapon_one_data=gear_weapon_data("weapon",weapon_one(),"all",false,"standard");
+		var weapon_two_data=gear_weapon_data("weapon",weapon_two(),"all",false,"standard");
+		var equip_data = {
+				armour_data:armour_data,
+				gear_data:gear_data,
+				mobility_data:mobility_data,
+				weapon_one_data:weapon_one_data,
+				weapon_two_data:weapon_two_data
+			};
+		return equip_data;
+	}
 }
 function jsonify_marine_struct(company, marine){
 		var copy_marine_struct = obj_ini.TTRPG[company, marine]; //grab marine structure
