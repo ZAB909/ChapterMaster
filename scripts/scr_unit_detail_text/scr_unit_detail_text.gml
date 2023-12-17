@@ -123,14 +123,14 @@ function scr_unit_detail_text(){
 			}
 
 			unit_data_string+="#";
-			var has_carpace =false;
-			if (struct_exists(body[$ "torso"], "black_carpace")){
-				if (body[$ "torso"][$"black_carpace"]){
-					has_carpace=true;
+			var has_carapace =false;
+			if (struct_exists(body[$ "torso"], "black_carapace")){
+				if (body[$ "torso"][$"black_carapace"]){
+					has_carapace=true;
 				}
 			}
-			if (!has_carpace){
-				unit_data_string+="He does not benefit from the full black carpace and therefore cannot equip power armour#"
+			if (!has_carapace){
+				unit_data_string+="He does not benefit from the full black carapace and therefore cannot equip power armour#"
 			}
 			var mutation_names = struct_get_names(gene_seed_mutations);
 			var pure_seed =true;
