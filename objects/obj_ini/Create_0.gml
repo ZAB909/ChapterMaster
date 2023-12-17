@@ -30,7 +30,7 @@ battle_cry = "";
 skin_color = 0;
 adv = [0];
 dis = [0];
-squads = [0];
+squads = [];
 
 //chapter leadership
 master_name = "";
