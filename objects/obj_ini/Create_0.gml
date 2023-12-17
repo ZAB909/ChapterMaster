@@ -57,6 +57,40 @@ mucranoid = 0;
 adv = [""];
 dis = [""];
 
+// enemys killed by chapter master
+master_autarch = 0;
+master_avatar = 0;
+master_farseer = 0;
+master_aspect = 0;
+master_eldar = 0;
+master_eldar_vehicles = 0;
+master_tau = 0;
+master_battlesuits = 0;
+master_kroot = 0;
+master_tau_vehicles = 0;
+master_ork_boyz = 0;
+master_ork_nobz = 0;
+master_ork_warboss = 0;
+master_ork_vehicles = 0;
+master_heretics = 0;
+master_chaos_marines = 0;
+master_lesser_demons = 0;
+master_greater_demons = 0;
+master_chaos_vehicles = 0;
+master_gaunts = 0;
+master_warriors = 0;
+master_carnifex = 0;
+master_synapse = 0;
+master_tyrant = 0;
+master_gene = 0;
+master_necron_overlord = 0;
+master_destroyer = 0;
+master_necron = 0;
+master_wraith = 0;
+master_necron_vehicles = 0;
+master_monolith = 0;
+master_special_killed = 0;
+
 load_to_ships=[2,0,0];
 if (instance_exists(obj_creation)){load_to_ships=obj_creation.load_to_ships;}
 
