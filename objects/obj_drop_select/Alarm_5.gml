@@ -4,9 +4,10 @@ attacking=10;
 // Local Forces here
 var add_ground=0;        
 var w=-1,smin=0,smax=0;
-
+var ships_selected;
 // Sets up the ground forces
 if (add_ground==1){
+
     ships_selected+=1;
     remove_local=-1;
     bikes+=l_bikes;
@@ -38,7 +39,7 @@ add_ground=0;
 
 obj_controller.cooldown=30;
 // ** Starts the battle **
-is_in_combat=true;
+is_in_combat = true;
 
 instance_deactivate_all(true);
 instance_activate_object(obj_controller);
@@ -101,7 +102,7 @@ for (var i=0; i<3600; i++) {
     }
 }
 
-var ships_selected=0;
+ships_selected=0;
 for (var i=0; i<31; i++) {
     if (ship_all[i]!=0) then scr_battle_roster(ship[i],ship_ide[i],false);
 }

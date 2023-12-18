@@ -16,11 +16,15 @@ remove_local=1;
 
 // 
 
-var i;i=-1;formation_current=0;
-repeat(100){i+=1;via[i]=0;
-    if (i<=50) then force_present[i]=0;
-    if (i<=12){formation_possible[i]=0;}
-}
+var i=-1;
+formation_current=0;
+repeat(100)
+	{
+		i+=1;
+		via[i]=0;
+	    if (i<=50) then force_present[i]=0;
+	    if (i<=12){formation_possible[i]=0;}
+	}
 
 r_master=0;
 r_honor=0;
@@ -60,16 +64,17 @@ tooltip2="";
 all_sel=0;
 
 
-var i;i=-1;
-repeat(61){
-    i+=1;
-    ship[i]="";
-    ship_size[i]=0;
-    ship_all[i]=0;
-    ship_use[i]=0;
-    ship_max[i]=0;
-    ship_ide[i]=0;
-}
+i=-1;
+repeat(61)
+	{
+	    i+=1;
+	    ship[i]="";
+	    ship_size[i]=0;
+	    ship_all[i]=0;
+	    ship_use[i]=0;
+	    ship_max[i]=0;
+	    ship_ide[i]=0;
+	}
 i=500;
 ship[i]="Local";
 ship_size[i]=0;
@@ -78,10 +83,7 @@ ship_use[i]=0;
 ship_max[i]=0;
 ship_ide[i]=-42;
 
-
 menu=0;
-
-
 
 master=0;
 honor=0;
@@ -125,10 +127,8 @@ l_predators=0;
 l_raiders=0;
 l_speeders=0;
 
-
-
-
-
+combating = 0;
+is_in_combat = false;
 attacking=0;
 sisters=0;
 eldar=0;
@@ -140,23 +140,21 @@ csm=0;
 necrons=0;
 demons=0;
 
-
-var j;j=-1;
-repeat(501){j+=1;
-    fighting[0,j]=0;veh_fighting[0,j]=0;
-    fighting[1,j]=0;veh_fighting[1,j]=0;
-    fighting[2,j]=0;veh_fighting[2,j]=0;
-    fighting[3,j]=0;veh_fighting[3,j]=0;
-    fighting[4,j]=0;veh_fighting[4,j]=0;
-    fighting[5,j]=0;veh_fighting[5,j]=0;
-    fighting[6,j]=0;veh_fighting[6,j]=0;
-    fighting[7,j]=0;veh_fighting[7,j]=0;
-    fighting[8,j]=0;veh_fighting[8,j]=0;
-    fighting[9,j]=0;veh_fighting[9,j]=0;
-    fighting[10,j]=0;veh_fighting[10,j]=0;
-}
-
-
+var j=-1;
+repeat(501)
+	{
+		j+=1;
+	    fighting[0,j]=0;veh_fighting[0,j]=0;
+	    fighting[1,j]=0;veh_fighting[1,j]=0;
+	    fighting[2,j]=0;veh_fighting[2,j]=0;
+	    fighting[3,j]=0;veh_fighting[3,j]=0;
+	    fighting[4,j]=0;veh_fighting[4,j]=0;
+	    fighting[5,j]=0;veh_fighting[5,j]=0;
+	    fighting[6,j]=0;veh_fighting[6,j]=0;
+	    fighting[7,j]=0;veh_fighting[7,j]=0;
+	    fighting[8,j]=0;veh_fighting[8,j]=0;
+	    fighting[9,j]=0;veh_fighting[9,j]=0;
+	    fighting[10,j]=0;veh_fighting[10,j]=0;
+	}
 alarm[1]=1;
-
 }
