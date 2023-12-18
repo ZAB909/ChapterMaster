@@ -331,7 +331,7 @@ repeat(20){j+=1;
     
     if (dudes[j]="Battle Sister"){
         if (dudes_num[j]<=4) then scr_en_weapon("Bolter",true,dudes_num[j],dudes[j],j);
-        if (dudes_num[j]>=5){var nem;nem=round(dudes_num[j]/4);
+        if (dudes_num[j]>=5){var nem=round(dudes_num[j]/4);
             scr_en_weapon("Flamer",true,nem,dudes[j],j);
             scr_en_weapon("Bolter",true,dudes_num[j]-nem,dudes[j],j);
         }
@@ -348,7 +348,7 @@ repeat(20){j+=1;
     }
     if (dudes[j]="Retributor"){
         if (dudes_num[j]<=3) then scr_en_weapon("Heavy Bolter",true,dudes_num[j],dudes[j],j);
-        if (dudes_num[j]>=4){var nem;nem=round(dudes_num[j]/4);
+        if (dudes_num[j]>=4){var nem=round(dudes_num[j]/4);
             scr_en_weapon("Missile Launcher",true,nem,dudes[j],j);
             scr_en_weapon("Heavy Bolter",true,dudes_num[j]-nem,dudes[j],j);
         }
@@ -813,7 +813,8 @@ repeat(20){j+=1;
 /* */
 }
 
-if (obj_ncombat.battle_special="ruins") or (obj_ncombat.battle_special="ruins_eldar"){var i;i=0;
+if (obj_ncombat.battle_special="ruins") or (obj_ncombat.battle_special="ruins_eldar"){
+	i=0;
     repeat(20){i+=1;
         if (dudes_vehicle[i]>0) and (dudes_num[i]>0){
             obj_ncombat.enemy_forces-=dudes_num[i];

@@ -103,7 +103,7 @@ if (engaged=0){// Shooting
                     
                     with(obj_temp5){instance_destroy();}
                     with(obj_pnunit){
-                        var i = 0;
+                        i = 0;
                         repeat(200){
                             i+=1;if (marine_type[i]="Chapter Master"){
                                 obj_ncombat.hue=i;instance_create(x,y,obj_temp5);
@@ -126,7 +126,7 @@ if (engaged=0){// Shooting
                         scr_shoot(i,enemy,chapter_fuck,"arp","ranged");
                     }
                     if (good=0) and (instance_number(obj_pnunit)>1) and (obj_ncombat.enemy!=7){// First target does not have vehicles, cycle through objects to find one that has vehicles
-                        var x2;x2=enemy.x;
+                        var x2=enemy.x;
                         repeat(instance_number(obj_pnunit)-1){
                             if (good=0){
                                 if (flank=0) then x2-=10;
@@ -343,7 +343,7 @@ var range_shooti;
     
     
     if (wep[i]!="") and (range_shoot="ranged") and (range[i]>=dist){// Weapon meets preliminary checks
-        var ap;ap=0;if (apa[i]>att[i]) then ap=1;// Determines if it is AP or not
+        var ap=0;if (apa[i]>att[i]) then ap=1;// Determines if it is AP or not
         
         // if (wep[i]="Missile Launcher") then ap=1;
         
@@ -371,7 +371,8 @@ var range_shooti;
                             x2+=10;enemy2=instance_nearest(x2,y,obj_pnunit);
                             if (enemy2.veh+enemy2.dreads>0) and (good=0){
                                 good=scr_target(enemy2,"veh");// This target has vehicles, blow it to hell
-                                scr_shoot(i,enemy2,good,"arp","ranged");once_only=1;
+                                scr_shoot(i,enemy2,good,"arp","ranged");
+								once_only=1;
                             }
                         }
                     }
