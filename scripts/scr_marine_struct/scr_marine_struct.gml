@@ -1296,16 +1296,31 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			return obj_ini.race[company][marine_number];
 		};	
 		static damage_resistance = function(){
-			 damage_res = (constitution*0.005) + (experience()/1000);
-			 return damage_res
+			damage_res = min(75,floor(((constitution*0.005) + (experience()/1000))*100));
+			damage_res+=gear_weapon_data("armour",armour(),"damage_resistance_mod",false,"standard");
+			damage_res+=gear_weapon_data("gear",gear(),"damage_resistance_mod",false,"standard");
+			damage_res+=gear_weapon_data("mobility",mobility_item(),"damage_resistance_mod",false,"standard");
+			damage_res+=gear_weapon_data("weapon",weapon_one(),"damage_resistance_mod",false,"standard");
+			damage_res+=gear_weapon_data("weapon",weapon_two(),"damage_resistance_mod",false,"standard");				 
+			return damage_res
 		};
 		static ranged_attack = function(){
-			ranged_att = ((ballistic_skill/50) + (dexterity/400)+ (experience()/500));
-			return ranged_att;
+			ranged_att = floor(((ballistic_skill/50) + (dexterity/400)+ (experience()/500))*100);
+			ranged_att+=gear_weapon_data("armour",armour(),"ranged_mod",false,"standard");
+			ranged_att+=gear_weapon_data("gear",gear(),"ranged_mod",false,"standard");
+			ranged_att+=gear_weapon_data("mobility",mobility_item(),"ranged_mod",false,"standard");
+			ranged_att+=gear_weapon_data("weapon",weapon_one(),"ranged_mod",false,"standard");
+			ranged_att+=gear_weapon_data("weapon",weapon_two(),"ranged_mod",false,"standard");				
+			return ranged_att
 		};
 		
 		static melee_attack = function(){
-			melee_att = (((weapon_skill/100) * (strength/20)) + (experience()/1000)+0.1);
+			melee_att = floor((((weapon_skill/100) * (strength/20)) + (experience()/1000)+0.1)*100);
+			melee_att+=gear_weapon_data("armour",armour(),"melee_mod",false,"standard");
+			melee_att+=gear_weapon_data("gear",gear(),"melee_mod",false,"standard");
+			melee_att+=gear_weapon_data("mobility",mobility_item(),"melee_mod",false,"standard");
+			melee_att+=gear_weapon_data("weapon",weapon_one(),"melee_mod",false,"standard");
+			melee_att+=gear_weapon_data("weapon",weapon_two(),"melee_mod",false,"standard");			
 			return melee_att;
 		};
 

@@ -1579,7 +1579,17 @@ global.gear = {
         "artifact": 10 // Augmented
       },
       "description": "The MK10 Indomitus is the most advanced pattern of power armour available to the Space Marines, featuring advanced materials and systems."
-    },   
+    }, 
+    {
+        "Skitarii Armour":{
+            "description": "Skitarri Armour is something of a misnomer as most Skitarii are in fact bonded more or less permenantly to their advanced mars armour",
+             "armour_value": {
+                "standard": 5,
+                "master_crafted": 7, // Augmented
+                "artifact": 9 // Augmented
+            },                   
+        }
+    }  
   },
   "equipment": {
     "Narthecium": {
@@ -1611,7 +1621,7 @@ global.gear = {
       }
     },
     "Rosarius": {
-      "special_description": "+33% Damage Resistance",
+      "special_description": "",
       "description": "Also called the 'Soul's Armour', this amulet has a built-in, powerful shield generator. They are an icon of the Imperial Creed.",
       "damage_resistance_mod": {
         "standard": 10, // Adjusted
@@ -1625,7 +1635,7 @@ global.gear = {
       }
     },
     "Iron Halo": {
-      "special_description": "+33% Damage Resistance, +20 HP",
+      "special_description": "",
       "description": "An ancient artifact, these powerful conversion field generators are granted to high ranking battle brothers or heroes. Bearers are often looked to for guidance.",
       "damage_resistance_mod": {
         "standard": 10, // Adjusted
@@ -1711,7 +1721,7 @@ global.gear = {
   },
   "mobility":{
    "Bike": {
-      "special_description": "+25% HP, Bike",
+      "special_description": "",
       "description": "A robust bike that can propel a marine at very high speeds. Boasts highly responsive controls and Twin Linked Bolters.",
       "hp_mod": {
         "standard": 25,
@@ -1726,7 +1736,7 @@ global.gear = {
     },
 
     "Jump Pack": {
-      "special_description": "+10% Damage Resistance, Jump Pack",
+      "special_description": "Jump Pack",
       "description": "A back-mounted device containing turbines or jets powerful enough to lift even a user in Power Armour.",
       "hp_mod": {
         "standard": 5,
@@ -1743,9 +1753,9 @@ global.gear = {
   }
 }
 
-function equiment_struct(item_data, core_type,quality="none") constructor{
-    var names = ["hp_mod", "description","damage_resistance_mod", "ranged_mod", "melee_mod","armour_value"];
-    var defaults = [0,"",0,0,0,0];
+function equiment_struct(item_data, core_type,quality="none") constructor{ 
+    var names = ["hp_mod", "description","damage_resistance_mod", "ranged_mod", "melee_mod","armour_value" ,"attack","melee_hands","ranged_hands","ammo","range","spli","arp","special_description"];
+    var defaults = [0,"",0,0,0,0,0,0,0,0,0,0,0,""];
     type = core_type;
     for (var i=0;i<array_length(names);i++){
         if (struct_exists(item_data,names[i])){
@@ -1763,8 +1773,11 @@ function equiment_struct(item_data, core_type,quality="none") constructor{
             self[$names[i]]=defaults[i];
         }
     }
-    spe_desc = "";
-    static special_description = function(){
+    spe_desc = special_description;
+    static special_description_gen = function(){
+        if (attack!=0){
+            spe_desc+=$"DAM {attack}%,"
+        }
         if (ranged_mod!=0){
             spe_desc += $"Ranged {ranged_mod}%,"
         }
@@ -1780,22 +1793,55 @@ function equiment_struct(item_data, core_type,quality="none") constructor{
         if (armour_value!=0){
             spe_desc += $"AC {armour_value},"
         }
+        if (ammo!=0){
+            spe_desc += $"AMMO {ammo},"
+        }
+        if (range!=0){
+            spe_desc += $"Range {range},"
+        }
+        if (arp!=0){
+            spe_desc += $"Armour piercing,"
+        } 
+        if (spli!=0){
+            spe_desc += $"Rapid Fire,"
+        }            
         return  spe_desc
     }
 }
-function gear_weapon_data(search_area,item,wanted_data="all", sub_class=false, quality="standard"){
+function gear_weapon_data(search_area="any",item,wanted_data="all", sub_class=false, quality="standard"){
 	var item_data_set=false;
     var equip_area=false;
-	if (array_contains(["equipment","armour","mobility"],search_area)){ 
-        equip_area=global.gear;
-        if (struct_exists(equip_area[$ search_area],item)){
-            item_data_set = equip_area[$ search_area][$ item]
-        }        
-    } else if (search_area=="weapon"){
-       equip_area=global.weapons;
-       if (struct_exists(equip_area,item)){
-            item_data_set=equip_area[$item]
-       }
+    gear_areas =  ["equipment","armour","mobility"];
+    if (search_area=="any"){
+        data_found=false;
+        for (i=0;i<3;i++){
+           if (struct_exists(global.gear[$ gear_areas[i]],item)){
+                equip_area=global.gear;
+                item_data_set=global.gear[$ gear_areas[i]][$item];
+                data_found=true;
+                search_area=gear_areas[i];
+                break;
+           }
+        }
+        if (!data_found){
+            equip_area=global.weapons;
+            if (struct_exists(equip_area,item)){
+                item_data_set=equip_area[$item];
+            }
+        }
+    } else {
+    	if (array_contains(gear_areas,search_area)){ 
+            equip_area=global.gear;
+            if (struct_exists(equip_area[$ search_area],item)){
+                item_data_set = equip_area[$ search_area][$ item]
+            }        
+        } else if (search_area=="weapon"){
+           equip_area=global.weapons;
+           if (struct_exists(equip_area,item)){
+                item_data_set=equip_area[$item]
+                search_area="weapon";
+           }
+        }
     }
 
     if (is_struct(item_data_set)){
@@ -1918,34 +1964,7 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 
 
 	    if (i=1){
-	        if (equipment_1="Ork Armour"){statt=15;special_description="";emor=1;}
-            
-			if (equipment_1="Skitarii Armour"){statt=5;special_description="";emor=1;}
-
-	        if (equipment_1="Scout Armour"){statt=8;special_description="";emor=1;
-	            descr="A non-powered suit made up of carapace armour and ballistic nylon.  Includes biohazard shielding, nutrient feed, and camoflauge.";}
-	        if (equipment_1="MK3 Iron Armour"){statt=26;special_description="-10% Ranged";emor=1;
-	            descr="An ancient set of Armorum Ferrum.  Has thicker armour plating but the added weight slows down the wearer.";}
-	        if (equipment_1="MK4 Maximus"){statt=22;special_description="+5% Melee, +5% Ranged";emor=1;
-	            descr="Armour dating to the end of the Great Crusade.  Often considered the ultimate Space Marine armour.  The components are no longer reproducable.";}
-          if (equipment_1="MK5 Heresy"){statt=15;special_description="+20% Melee, -5% Ranged";emor=1;
-	            descr="A Hastily assembled Power armour during the Horus Heresy to act as a stop gap. Excels at melee, alongside some downsides.";}
-	        if (equipment_1="MK6 Corvus"){statt=15;special_description="+15% Ranged";emor=1;
-	            descr="Relatively old beakie armour, sleek as can be.  Boosted olfactory and auditory sensors increase the ranged accuracy of the wearer. Making it more fragile";}
-	        if (equipment_1="MK7 Aquila"){statt=17;special_description="";emor=1;
-	            descr="Developed during the Horus Heresy, this Mark of armour is the most commonly used amongst all the Adeptus Astartes.";}
-	        if (equipment_1="MK8 Errant"){statt=22;special_description="";emor=1;
-	            descr="Highly modified MK7, this armour has additional protection along the neck and cables.  It is oft worn as a symbol of high rank.";}
-	        if (equipment_1="Power Armour"){statt=19;special_description="";emor=1;
-	            descr="A suit of Adeptus Astartes power armour.  The Mark can no longer be determined- it appears to be a combination of several types.";}
-	        if (equipment_1="Artificer Armour"){statt=37;special_description="+10% Melee";emor=1;
-	            descr="Heavily modified by the chapter artificers, and decorated without compare, this ancient Power Armour is beyond priceless.";}
-	        if (equipment_1="Terminator Armour"){statt=42;special_description="+20% Melee, -10% Ranged, Strength";emor=1;
-	            descr="The toughest and most powerful armour designed by humanity.  Only the most veteran of Astartes are allowed to wear these.";}
-	        if (equipment_1="Tartaros"){statt=45;special_description="+20% Melee, -5% Ranged, Strength";emor=1;
-	            descr="Even more advanced than the Indomitus Terminator Armour, this upgraded armour offer greater mobility at no cost to protection.";}
-	        if (equipment_1="Dreadnought"){statt=50;special_description="";emor=1;
-	            descr="A massive war-machine that can be piloted by a honored Space Marine, who otherwise would have fallen in combat.";}
+	        gear_weapon_data("any",item[i],"all");
 	        if (equipment_1="Jump Pack"){special_description="+10% Damage Resistance, Jump Pack";
 	            descr="A back mounted device containing turbines or jets powerful enough to lift even a user in Power Armour.";}
 	        if (equipment_1="hammer_of_wrath"){attack=120;arp=0;range=1;spli=0;amm=1;}

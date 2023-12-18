@@ -205,27 +205,41 @@ function scr_ui_manage() {
         
 	        draw_set_font(fnt_40k_14);
 	        draw_set_halign(fa_left);
-        
-	        if (cn.temp[102]!="") then draw_text_ext(xx+1015,yy+215,string_hash_to_newline(string(cn.temp[102])+"#"+string(cn.temp[103])),-1,187);
-	        if (cn.temp[102]!="") then draw_text_ext(xx+1016,yy+216,string_hash_to_newline(string(cn.temp[102])),-1,187);
-        
-	        if (cn.temp[104]!="") then draw_text_ext(xx+1015,yy+280,string_hash_to_newline(string(cn.temp[104])+"#"+string(cn.temp[105])),-1,187);
-	        if (cn.temp[104]!="") then draw_text_ext(xx+1016,yy+281,string_hash_to_newline(string(cn.temp[104])),-1,187);
-        
-	        if (cn.temp[106]!="") then draw_text_ext(xx+1015,yy+345,string_hash_to_newline(string(cn.temp[106])+"#"+string(cn.temp[107])),-1,187);
-	        if (cn.temp[106]!="") then draw_text_ext(xx+1016,yy+346,string_hash_to_newline(string(cn.temp[106])),-1,187);
-        
-	        if (cn.temp[108]!="") then draw_text_ext(xx+1387,yy+215,string_hash_to_newline(string(cn.temp[108])+"#"+string(cn.temp[109])),-1,187);
-	        if (cn.temp[108]!="") then draw_text_ext(xx+1388,yy+216,string_hash_to_newline(string(cn.temp[108])),-1,187);
-        
-	        if (cn.temp[110]!="") then draw_text_ext(xx+1387,yy+295,string_hash_to_newline(string(cn.temp[110])+"#"+string(cn.temp[111])),-1,187);
-	        if (cn.temp[110]!="") then draw_text_ext(xx+1388,yy+2916,string_hash_to_newline(string(cn.temp[110])),-1,187);
+        	
+        	var armour = selected_unit.armour();
+	        if (armour!=""){
+	        	draw_text_ext(xx+1015,yy+215,string_hash_to_newline(armour+"#"+string(cn.temp[103])),-1,187);
+	        	draw_text_ext(xx+1016,yy+216,string_hash_to_newline(armour),-1,187);
+	        } 
+
+	        var gear = selected_unit.gear();
+	        if (selected_unit.gear()!=""){
+				draw_text_ext(xx+1015,yy+280,string_hash_to_newline(gear+"#"+string(cn.temp[105])),-1,187);
+	       		draw_text_ext(xx+1016,yy+281,string_hash_to_newline(gear),-1,187);	        	
+	        }
+
+	        var mobi = selected_unit.mobility_item();
+	        if (mobi!=""){
+				draw_text_ext(xx+1015,yy+345,string_hash_to_newline(mobi+"#"+string(cn.temp[107])),-1,187);
+				draw_text_ext(xx+1016,yy+346,string_hash_to_newline(mobi),-1,187);	        	
+	        }
+        	var wep1= selected_unit.weapon_one();
+        	if (wep1!=""){
+				draw_text_ext(xx+1387,yy+215,string_hash_to_newline(wep1+"#"+string(cn.temp[109])),-1,187);
+		      	draw_text_ext(xx+1388,yy+216,string_hash_to_newline(wep1),-1,187);        		
+        	}
+        	
+        	var wep2 = selected_unit.weapon_two();
+        	if (wep2!=""){
+				draw_text_ext(xx+1387,yy+315,string_hash_to_newline(wep2+"#"+string(cn.temp[111])),-1,187);
+				draw_text_ext(xx+1388,yy+316,string_hash_to_newline(wep2),-1,187);        		
+        	}
 
         	if (cn.temp[116]!=""){
         		var_text = string_hash_to_newline(string("Melee Attack: {0}",cn.temp[116]))
 	        	tooltip_text = string_hash_to_newline(string("WS : {0}#STR : {1}", selected_unit.weapon_skill, selected_unit.strength));
 	        	x1 = xx+1387;
-	        	y1 = yy+355;
+	        	y1 = yy+405;
 	        	x2 = x1+string_width(var_text);
 	        	y2 = y1+string_height(var_text);
 		        draw_set_color(c_gray);
@@ -238,7 +252,7 @@ function scr_ui_manage() {
         		var_text = string_hash_to_newline(string("Ranged Attack: {0}",cn.temp[117]))
 	        	tooltip_text = string_hash_to_newline(string("BS : {0}#DEX : {1}", selected_unit.ballistic_skill, selected_unit.dexterity));
 	        	x1 = xx+1387;
-	        	y1 = yy+385;
+	        	y1 = yy+435;
 	        	x2 = x1+string_width(var_text);
 	        	y2 = y1+string_height(var_text);
 		        draw_set_color(c_gray);
@@ -271,7 +285,7 @@ function scr_ui_manage() {
     		var_text = string_hash_to_newline($"Health: {selected_unit.hp()}/{selected_unit.max_health()}")
         	tooltip_text = string_hash_to_newline(string("CON : {0}", selected_unit.constitution));
         	x1 = xx+1015;
-        	y1 = yy+420;
+        	y1 = yy+40;
         	x2 = x1+string_width(var_text);
         	y2 = y1+string_height(var_text);
 	        draw_set_color(c_gray);
@@ -284,7 +298,7 @@ function scr_ui_manage() {
         		var_text = string_hash_to_newline(string("Damage Resistance: {0}",cn.temp[118]))
 	        	tooltip_text = string_hash_to_newline(string("CON : {0}", selected_unit.constitution));
 	        	x1 = xx+1387;
-	        	y1 = yy+442;
+	        	y1 = yy+492;
 	        	x2 = x1+string_width(var_text);
 	        	y2 = y1+string_height(var_text);
 		        draw_set_color(c_gray);
