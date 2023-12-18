@@ -1,4 +1,4 @@
-function scr_apothecary_ship(capital_number, frigate_number, escort_number) {
+function scr_apothecary_ship() {
 
 	// Executed by each obj_p_fleet to heal or repair units on ships at the end of the turn
 

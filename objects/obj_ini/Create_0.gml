@@ -15,6 +15,7 @@ strin="";
 strin2="";
 tolerant=0;
 companies=10;
+squads = [];
 progenitor=0;
 stability = 0;
 purity = 0;
@@ -28,9 +29,7 @@ flagship_name = "";
 psy_powers = "";
 battle_cry = "";
 skin_color = 0;
-adv = [0];
-dis = [0];
-squads = [0];
+
 
 //chapter leadership
 master_name = "";
@@ -55,10 +54,10 @@ secretions = 0;
 occulobe = 0;
 mucranoid = 0;
 
-adv = [0];
-dis = [0];
+adv = [""];
+dis = [""];
 
-// enemys killed by chapter master?
+// enemys killed by chapter master
 master_autarch = 0;
 master_avatar = 0;
 master_farseer = 0;
