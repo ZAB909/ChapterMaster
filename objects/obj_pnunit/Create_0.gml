@@ -106,7 +106,7 @@ hostile_men=0;
 hostile_range=0;
 hostile_splash=0;
 
-
+total_battle_exp_gain = 0;
 
 alarm[1]=4;
 

@@ -62,7 +62,7 @@ if (instance_exists(obj_enunit)) then repeat(60){i+=1;once_only=0;
     
     
     if (wep[i]!="") and (range_shoot="ranged") and (range[i]>=dist){// Weapon meets preliminary checks
-        var ap;ap=0;if (apa[i]>att[i]) then ap=1;// Determines if it is AP or not
+        var ap=0;if (apa[i]>att[i]) then ap=1;// Determines if it is AP or not
         if (wep[i]="Missile Launcher") then ap=1;if (string_count("Lascan",wep[i])>0) then ap=1;
         if (instance_number(obj_enunit)=1) and (obj_enunit.men=0) and (obj_enunit.veh>0) then ap=1;
         
@@ -78,7 +78,7 @@ if (instance_exists(obj_enunit)) then repeat(60){i+=1;once_only=0;
                     scr_shoot(i,enemy,good,"arp","ranged");
                 }
                 if (good=0) and (instance_number(obj_enunit)>1){// First target does not have vehicles, cycle through objects to find one that has vehicles
-                    var x2;x2=enemy.x;
+                    var x2=enemy.x;
                     repeat(instance_number(obj_enunit)-1){
                         if (good=0){
                             x2+=10;enemy2=instance_nearest(x2,y,obj_enunit);
@@ -104,7 +104,7 @@ if (instance_exists(obj_enunit)) then repeat(60){i+=1;once_only=0;
                 scr_shoot(i,enemy,good,"medi","ranged");
             
                 if (good=0) and (instance_number(obj_enunit)>1){// First target does not have vehicles, cycle through objects to find one that has vehicles
-                    var x2;x2=enemy.x;
+                    var x2=enemy.x;
                     repeat(instance_number(obj_enunit)-1){
                         if (good=0){
                             x2+=10;enemy2=instance_nearest(x2,y,obj_enunit);
@@ -133,7 +133,7 @@ if (instance_exists(obj_enunit)) then repeat(60){i+=1;once_only=0;
                     scr_shoot(i,enemy,good,"att","ranged");
                 }
                 if (good=0) and (instance_number(obj_enunit)>1){// First target does not have vehicles, cycle through objects to find one that has vehicles
-                    var x2;x2=enemy.x;
+                    var x2=enemy.x;
                     repeat(instance_number(obj_enunit)-1){
                         if (good=0){
                             x2+=10;enemy2=instance_nearest(x2,y,obj_enunit);
@@ -150,7 +150,7 @@ if (instance_exists(obj_enunit)) then repeat(60){i+=1;once_only=0;
     
     
     if (wep[i]!="") and (range_shoot="melee") and ((range[i]=1) or (range[i]!=floor(range[i]))){// Weapon meets preliminary checks    
-        var ap;ap=0;if (apa[i]>att[i]) then ap=1;// Determines if it is AP or not
+        var ap=0;if (apa[i]>att[i]) then ap=1;// Determines if it is AP or not
         
         if (enemy.men=0) and (apa[i]=0) and (att[i]>=80){
             apa[i]=floor(att[i]/2);ap=1;
@@ -239,10 +239,11 @@ if (instance_exists(obj_enunit)) then repeat(700){i+=1;
             }
         }
         
-        enemy=instance_nearest(0,y,obj_enunit);enemy2=enemy;
-        if (enemy.men+enemy.veh+enemy.medi<=0){var x5;x5=enemy.x;with(enemy){instance_destroy();}enemy=instance_nearest(0,y,obj_enunit);enemy2=enemy;}
+        enemy=instance_nearest(0,y,obj_enunit);
+		enemy2=enemy;
+        if (enemy.men+enemy.veh+enemy.medi<=0){var x5=enemy.x;with(enemy){instance_destroy();}enemy=instance_nearest(0,y,obj_enunit);enemy2=enemy;}
         
-        var ham;ham=false;
+        var ham = false;
         if (marine_type[i]="Chapter Master") and (obj_ncombat.kamehameha=true) and ((obj_ncombat.big_boom>0) or (choose(1,2)=2)){
             if (obj_ncombat.enemy_forces>=40) then ham=true;
         }
