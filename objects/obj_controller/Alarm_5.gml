@@ -637,7 +637,8 @@ if (obj_ini.fleet_type!=1){
     with(obj_temp5){instance_destroy();}
 }
 
-var recruits_finished=0,tot=0,recruit_first="";
+var recruits_finished=0,recruit_first="";
+tot = 0
 // ** Assign recruits to X Company **
 for(var i=1; i<=300; i++){
     if (recruit_name[i]!="") then tot+=1;

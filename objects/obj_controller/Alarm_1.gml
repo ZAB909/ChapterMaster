@@ -731,7 +731,9 @@ if (did!=0) then obj_star.alarm[1]=1;
 
 // Eldar craftworld here
 
-var go=0,xx=0,yy=0;
+var go = 0;
+xx = 0;
+yy = 0;
 
 craftworld=1;
 

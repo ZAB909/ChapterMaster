@@ -2366,13 +2366,13 @@ if (action_if_number(obj_saveload, 0, 0) &&
             if (mouse_x>=xx+1018+141) and (mouse_y>yy+805) and (mouse_x<xx+1297) and (mouse_y<yy+831) 
             and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel") and (otha==0){
                 if (man_size>0) and (instance_number(obj_popup)==0){
-                    var f=0,god=0,nuuum=0;
+                    var god=0,nuuum=0;
                     var o_wep1="",o_wep2="",o_armour="",o_gear="",o_mobi="";
                     var b_wep1=0,b_wep2=0,b_armour=0,b_gear=0,b_mobi=0;
                     var vih=0;
 
                     // Need to make sure that group selected is all the same type
-                    for(var f=1; f<man_max; f++){
+                    for(var f = 1; f<man_max; f++){
                         // Set different vih depending on unit type
                         if (man[f]=="man") and (man_sel[f]==1) and (ma_role[f]!=obj_ini.role[100][6]) 
                         and (ma_role[f]!="Venerable "+string(obj_ini.role[100][6])) and (vih==0) then vih=1;
