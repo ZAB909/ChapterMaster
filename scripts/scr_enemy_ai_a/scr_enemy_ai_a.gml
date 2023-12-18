@@ -58,7 +58,7 @@ function scr_enemy_ai_a() {
 	        instance_create(x,y,obj_temp2);
 	        with(obj_en_fleet){
 	            if (owner=4){
-	                var near;near=instance_nearest(action_x,action_y,obj_temp2);
+	                var near=instance_nearest(action_x,action_y,obj_temp2);
 	                if (point_distance(action_x,action_y,near.x,near.y)<2) and (string_count("investigate_dead",trade_goods)>0) then instance_create(action_x,action_y,obj_after_combat_ork_force);
 	            }
 	        }
@@ -162,13 +162,28 @@ function scr_enemy_ai_a() {
     		}
     	}
     
-
-	    var guard_score, pdf_score, ork_score, tau_score, traitors_score, csm_score, eldar_score, tyranids_score, necrons_score, sisters_score, large;
-	    large=0;guard_score=0;pdf_score=0;ork_score=0;tau_score=0;traitors_score=0;csm_score=0;eldar_score=0;tyranids_score=0;necrons_score=0;sisters_score=0;
-    
-	    var guard_attack, pdf_attack, ork_attack, tau_attack, traitors_attack, csm_attack, eldar_attack, tyranids_attack, necrons_attack, sisters_attack;
-	    guard_attack="";pdf_attack="";ork_attack="";tau_attack="";traitors_attack="";csm_attack="";
-	    eldar_attack="";tyranids_attack="";necrons_attack="";sisters_attack="";
+	    var large=0;
+		var guard_score=0;
+		var pdf_score=0;
+		var ork_score=0;
+		var tau_score=0;
+		var traitors_score=0;
+		var csm_score=0;
+		var eldar_score=0;
+		var tyranids_score=0;
+		var necrons_score=0;
+		var sisters_score=0;
+    	    
+		var guard_attack="";
+		var pdf_attack="";
+		var ork_attack="";
+		var tau_attack="";
+		var traitors_attack="";
+		var csm_attack="";
+	    var eldar_attack="";
+		var tyranids_attack="";
+		var necrons_attack="";
+		var sisters_attack="";
     
 	    ork_score=p_orks[run];tau_score=p_tau[run];
 	    traitors_score=p_traitors[run];
@@ -840,7 +855,7 @@ function scr_enemy_ai_a() {
 	            if (rand1>rand2){
 	                /*if (tyranids_score<=3) then p_guardsmen[run]=floor(p_guardsmen[run]*0.6);
 	                if (tyranids_score>=4) then p_guardsmen[run]=floor(p_guardsmen[run]*0.5);*/
-	                var onh;onh=0;
+	                var onh = 0;
 	                if (tyranids_score=1) and (onh=0){p_guardsmen[run]-=2000;onh=1;}
 	                if (tyranids_score=2) and (onh=0){p_guardsmen[run]-=30000;onh=1;}
 	                if (tyranids_score=3) and (onh=0){p_guardsmen[run]-=100000;onh=1;}
@@ -906,7 +921,7 @@ function scr_enemy_ai_a() {
             
             
 	            if (p_pdf[run]=0) and (p_player[run]<=0) and (p_necrons[run]>0){
-	                var badd;badd=1;
+	                var badd = 1;
                 
 	                if (p_pdf[1]+p_pdf[2]+p_pdf[3]+p_pdf[4]=0) and (p_guardsmen[1]+p_guardsmen[2]+p_guardsmen[3]+p_guardsmen[4]=0){
 	                    badd=2;
@@ -1087,11 +1102,10 @@ function scr_enemy_ai_a() {
 	        }
 
 	        if (p_owner[i] = 2) and(p_type[i] != "Dead") and(planets >= i) and(p_tyranids[i] = 0) and(p_chaos[i] = 0) and(p_traitors[i] = 0) and(p_eldar[i] = 0) and(p_tau[i] = 0) {
-	            var military, pdf, rando, contin;
-	            military = 0;
-	            pdf = 0;
-	            contin = 0;
-	            rando = floor(random(100)) + 1;
+	            var military = 0;
+	            var pdf = 0;
+	            var contin = 0;
+	            var rando = floor(random(100)) + 1;
 
 	            if (p_population[i] >= 10000000) {
 	                military = (p_population[i] / 470);

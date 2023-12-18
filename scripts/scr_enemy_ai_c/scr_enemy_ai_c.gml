@@ -30,7 +30,7 @@ function scr_enemy_ai_c() {
 	    // ^ And extermination
     
     
-	    var chick;chick=0;
+	    var chick = 0;
 	    if (p_type[1]!="Dead") then chick+=p_owner[1];
 	    if (p_type[2]!="Dead") then chick+=p_owner[2];
 	    if (p_type[3]!="Dead") then chick+=p_owner[3];
@@ -53,12 +53,12 @@ function scr_enemy_ai_c() {
 	        // Check for industrial facilities
 	        if (p_type[i]!="Dead") and (p_type[i]!="Lava"){// Used to not have Ice either
 	            if (p_orks[i]>=4){// Have the proppa facilities and size
-	                var fleet;fleet=0;contin=2;
+	                var fleet=0;contin=2;
 	                if (instance_number(obj_en_fleet)=0) then contin=3;
 	                if (instance_number(obj_en_fleet)>0) then contin=2;
                 
 	                if (instance_exists(obj_p_fleet)){
-	                    var ppp;ppp=instance_nearest(x,y,obj_p_fleet);
+	                    var ppp = instance_nearest(x,y,obj_p_fleet);
 	                    if (point_distance(x,y,ppp.x,ppp.y)<50) and (ppp.action="") then contin=0;
 	                }
 	                if (contin=2){
@@ -75,8 +75,9 @@ function scr_enemy_ai_c() {
                         
 	                        if (fleet.image_index>=5){
 	                            // eh heh heh
-	                            var stue, stue2;stue=0;stue2=0;
-	                            var goood;goood=0;
+								var stue=0;
+								var stue2=0;
+	                            var goood=0;
                             
 	                            with(obj_star){if (planets=1) and (p_type[1]="Dead"){x-=20000;y-=20000;}}
 	                            stue=instance_nearest(fleet.x,fleet.y,obj_star);
@@ -94,7 +95,7 @@ function scr_enemy_ai_c() {
 	                            }
                             
 	                            if (instance_exists(obj_temp_inq)){
-	                                var stue3;stue3=instance_nearest(x,y,obj_temp_inq);
+	                                var stue3=instance_nearest(x,y,obj_temp_inq);
 	                                stue2=instance_nearest(stue3.x,stue3.y,obj_star);
 	                                fleet.action_x=stue2.x;fleet.action_y=stue2.y;fleet.alarm[4]=1;
 	                            }
@@ -148,7 +149,7 @@ function scr_enemy_ai_c() {
 	    if (planets>=4) and (p_type[4]!="Dead") and ((p_guardsmen[4]+p_pdf[4]+p_player[4]+p_traitors[4]+p_tau[4]>0) or ((p_owner[4]!=7) and (p_orks[4]<=0))) then landi=1;
     
     
-	    var i;i=5;
+	    i = 5;
     
 	    if (landi=1) then repeat(4){i-=1;
 	        if (p_type[i]!="Dead") and (p_orks[i]<4) and (i<=planets) and (instance_exists(boat)){
@@ -231,12 +232,13 @@ function scr_enemy_ai_c() {
 	        // Check for industrial facilities
 	        if (p_type[i]!="Dead") and (p_type[i]!="Lava"){
 	            if (p_traitors[i]>=2) and (p_heresy[i]>=80){// Have the proppa facilities and size
-	                var fleet;fleet=0;contin=2;
+	                var fleet = 0;
+					contin = 2;
 	                if (instance_number(obj_en_fleet)=0) then contin=3;
 	                if (instance_number(obj_en_fleet)>0) then contin=2;
                 
 	                if (instance_exists(obj_p_fleet)){
-	                    var ppp;ppp=instance_nearest(x,y,obj_p_fleet);
+	                    var ppp=instance_nearest(x,y,obj_p_fleet);
 	                    if (point_distance(x,y,ppp.x,ppp.y)<50) and (ppp.action="") then contin=0;
 	                }
                 
@@ -254,8 +256,9 @@ function scr_enemy_ai_c() {
                         
 	                        if (fleet.image_index>=5){
 	                            // eh heh heh
-	                            var stue, stue2;stue=0;stue2=0;
-	                            var goood;goood=0;
+								var stue=0;
+								var stue2=0;
+	                            var goood=0;
                             
 	                            with(obj_star){if (planets=1) and (p_type[1]="Dead"){x-=20000;y-=20000;}}
 	                            stue=instance_nearest(fleet.x,fleet.y,obj_star);
@@ -299,14 +302,15 @@ function scr_enemy_ai_c() {
 	}
 
 	// This is the traitors corruption code
-	var boat, kay, temp5, temp6, temp7;
-	boat=0;kay=0;temp5=0;temp6=0;temp7=0;
-
-	boat=instance_nearest(x-32,y,obj_en_fleet);
+	kay = 0;
+	temp5 = 0;
+	temp6 = 0;
+	temp7 = 0;
+	boat = instance_nearest(x-32,y,obj_en_fleet);
 
 	if (present_fleet[10]>0) and (present_fleet[1]+present_fleet[2]=0) and (boat.owner = eFACTION.Chaos) and (boat.action="") and (owner != eFACTION.Chaos) and (planets>0){
 
-	var i;i=0;
+		i = 0;
 	    repeat(5){
 	        if (p_type[1]!="Dead") and (p_owner[1]!=10) then kay=1;if (p_type[2]!="Dead") and (p_owner[2]!=10) then kay=2;
 	        if (p_type[3]!="Dead") and (p_owner[3]!=10) then kay=3;if (p_type[4]!="Dead") and (p_owner[4]!=10) then kay=4;
@@ -323,7 +327,7 @@ function scr_enemy_ai_c() {
 	        if (kay>4) then kay=50;
         
 	        if (kay>0) and (kay!=50){// Ere we go!    
-	            var cor;cor=floor(image_index)+1;
+	            var cor=floor(image_index)+1;
             
 	            if (p_type[kay]="Shrine") then cor=round(cor/3);
 	            if (p_type[kay]!="Dead"){p_heresy[kay]+=cor;if (p_heresy[kay]>=70) and (p_traitors[kay]<2) then p_traitors[kay]+=1;}
@@ -334,12 +338,15 @@ function scr_enemy_ai_c() {
 
 
 	// This is the CSM landing code
-	var boat, kay, temp5, temp6, temp7, boat_dist;
-	boat=0;kay=0;temp5=0;temp6=0;temp7=0;boat_dist=999;
-
+	kay = 0;
+	temp5 = 0;
+	temp6 = 0;
+	temp7 = 0;
+	boat_dist = 999;
 	boat=instance_nearest(x-32,y,obj_en_fleet);
+	
 	if (instance_exists(boat)){boat_dist=point_distance(x,y,boat.x,boat.y);}
-	var aler;aler=0;
+	aler=0;
 	if (present_fleet[10]>0) and (present_fleet[1]+present_fleet[2]=0) and (boat.owner = eFACTION.Chaos) and (boat.action="") and (planets>0) and (boat_dist<=40){
 
 	    var ii,gud;ii=0;gud=0;
@@ -409,12 +416,12 @@ function scr_enemy_ai_c() {
 	        // Check for industrial facilities
 	        if (p_type[i]!="Dead") and (p_type[i]!="Lava"){
 	            if (p_tau[i]>=2) and (p_influence[i]>=70){// Have the proppa facilities and size
-	                var fleet;fleet=0;contin=2;
+	                var fleet=0;contin=2;
 	                if (instance_number(obj_en_fleet)=0) then contin=3;
 	                if (instance_number(obj_en_fleet)>0) then contin=2;
                 
 	                if (instance_exists(obj_p_fleet)){
-	                    var ppp;ppp=instance_nearest(x,y,obj_p_fleet);
+	                    var ppp=instance_nearest(x,y,obj_p_fleet);
 	                    if (point_distance(x,y,ppp.x,ppp.y)<50) and (ppp.action="") then contin=0;
 	                }
                 
@@ -432,8 +439,12 @@ function scr_enemy_ai_c() {
                         
                         
 	                        if (fleet.image_index>=5){
-	                            var kawaii, think, xx, yy;
-	                            kawaii=0;think=0;xx=0;yy=0;
+
+								var kawaii = 0; 
+								var think = 0;
+								var xx = 0;
+								var yy = 0;
+
                             
 	                            repeat(50){
 	                                if (think=0) and (kawaii=0){
@@ -450,9 +461,9 @@ function scr_enemy_ai_c() {
 	                            }
                             
 	                            if (kawaii=1) and (instance_exists(obj_crusade)){// NOPE, stay home and defend
-	                                var him,own,dis;
-	                                him=instance_nearest(x,y,obj_crusade);
-	                                own=him.owner;dis=him.radius;
+	                                var him = instance_nearest(x,y,obj_crusade);
+	                                var own = him.owner;
+									var dis = him.radius;
 	                                if (point_distance(x,y,him.x,him.y)<=dis) then kawaii=0;
 	                            }
 	                            if (kawaii=1){//Go out and take planet
@@ -495,10 +506,10 @@ function scr_enemy_ai_c() {
 
 
 	// Tyranids here
-	var i;i=0;
+	i = 0;
 	repeat(4){i+=1;
 	    if (p_tyranids[i]>=5) and (planets>=i) and (p_player[i]+p_orks[i]+p_guardsmen[i]+p_pdf[i]+p_chaos[i]=0){
-	        var ship;ship=instance_nearest(x,y+32,obj_en_fleet);
+	        var ship = instance_nearest(x,y+32,obj_en_fleet);
 	        if (point_distance(x,y+32,ship.x,ship.y)<5) and (ship.owner = eFACTION.Tyranids) and (ship.capital_number>0) and (p_type[i]!="Dead") and (array_length(p_feature[i])!=0){
 	            if (planet_feature_bool(p_feature[i], P_features.Reclamation_pools) ==1){
 	                p_tyranids[i]=0;

@@ -77,11 +77,10 @@ function scr_enemy_ai_e() {
 
 
     instance_activate_object(obj_en_fleet);
-    if (battle2 > 0) and(battle = 0) { // AI only battle
-        var i, f, shiyp;
-        i = 0;
-        f = 1;
-        shiyp = 0;
+    if (battle2 > 0) and(battle = 0) { // AI only battle        
+		i = 0;
+        var vf = 1;
+        var shiyp = 0;
 
         repeat(10) {
             f += 1;
@@ -273,8 +272,6 @@ function scr_enemy_ai_e() {
         // Those 5 battle intervals have finished
         // Clean up the surviving fleet(s)
 
-
-        var i;
         i = 1;
         repeat(10) {
             i += 1;
@@ -359,9 +356,9 @@ function scr_enemy_ai_e() {
 
     if (battle > 0) {
         if (present_fleet[1] > 0) and((present_fleet[6] + present_fleet[7] + present_fleet[8] + present_fleet[9] + present_fleet[10] + present_fleet[13] > 0) or((present_fleet[2] > 0) and(obj_controller.faction_status[2] = "War"))) {
-            var i, onceh;
+
             i = 1;
-            onceh = 0;
+            var onceh = 0;
 
             repeat(9) {
                 i += 1;
@@ -426,17 +423,11 @@ function scr_enemy_ai_e() {
     instance_activate_object(obj_p_fleet);
     instance_activate_object(obj_en_fleet);
 
-    var run, force, beetle, chaos_meeting;
+
     var run = 0;
     var force = 1;
     var beetle = 0;
     var chaos_meeting = 0;
-
-    var run, force, beetle, chaos_meeting;
-    run = 0;
-    force = 1;
-    beetle = 0;
-    chaos_meeting = 0;
 
     repeat(4) {
         run += 1;
@@ -880,7 +871,9 @@ function scr_enemy_ai_e() {
 
         // Work on upgrades
         if (array_length(p_upgrades[run]) > 0) {
-            var upgrade_type, tx, display_type;
+            var display_type = "";
+			var tx = "";
+			var upgrade_type = [];
             for (var upgrade = 0; upgrade < array_length(p_upgrades[run]); upgrade++) {
                 if (struct_exists(p_upgrades[run][upgrade], "built")) {
                     if (p_upgrades[run][upgrade].built == obj_controller.turn) {
@@ -912,13 +905,14 @@ function scr_enemy_ai_e() {
         // Run through forces and determine what all is there
 
         instance_create(0, 0, obj_temp_meeting);
-
-        var i, co, ii, otm, good, master_present;
-        ii = 0;
+		
         i = 0;
-        co = -1;
-        good = 0;
-        master_present = 0;
+        var otm;
+        var ii = 0;
+        var co = -1;
+        var good = 0;
+        var master_present = 0;
+		
         repeat(11) {
             co += 1;
             i = 0;
