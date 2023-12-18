@@ -630,13 +630,5 @@ function game_start_squads(){
 //finds all the squads linked to a given company
 //TODO coalece lots of these functions to make make a company object
 //maybe then we can have more than 10 companies
-function find_company_squads(company){
-	var c_squads = [];
-	for (var i=0;i<array_length(obj_ini.squads);i++){
-		if (array_length(obj_ini.squads[i].members)>0 && obj_ini.squads[i].base_company == company){
-			array_push(c_squads,i);
-		}
-	}
-	return c_squads;
-}
+
 

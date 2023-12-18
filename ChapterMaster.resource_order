@@ -615,6 +615,7 @@
     {"name":"obj_al_capital","order":37,"path":"objects/obj_al_capital/obj_al_capital.yy",},
     {"name":"obj_al_cruiser","order":39,"path":"objects/obj_al_cruiser/obj_al_cruiser.yy",},
     {"name":"obj_al_in","order":41,"path":"objects/obj_al_in/obj_al_in.yy",},
+    {"name":"scr_company_struct","order":72,"path":"scripts/scr_company_struct/scr_company_struct.yy",},
     {"name":"scr_system_search_helpers","order":40,"path":"scripts/scr_system_search_helpers/scr_system_search_helpers.yy",},
     {"name":"obj_p_round","order":43,"path":"objects/obj_p_round/obj_p_round.yy",},
     {"name":"obj_en_round","order":45,"path":"objects/obj_en_round/obj_en_round.yy",},
