@@ -6,7 +6,9 @@ repeat(20){i+=1;
 }i=0;
 // men=0;veh=0;
 
-j=0;good=0;open=0;
+var j=0;
+var good=0;
+var open=0;
 
 
 
