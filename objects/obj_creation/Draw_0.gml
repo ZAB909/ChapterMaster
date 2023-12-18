@@ -481,8 +481,30 @@ if (slide=2){
         draw_set_alpha(1);
     }
     
-    
-    
+	    if (popup!="icons"){
+        draw_line(445,615,1125,615);
+        draw_line(445,616,1125,616);
+        draw_line(445,617,1125,617);
+    }
+
+	    if (popup!="icons"){
+        draw_set_halign(fa_left);draw_set_font(fnt_40k_30b);
+        draw_text_transformed(450,625,string_hash_to_newline("Chapter Combat Doctrine"),0.6,0.6,0);draw_set_font(fnt_40k_14);
+		if (scr_hit(450,625,700,670)=true){tooltip="Combat Doctrine";tooltip2="The style of warfare your Chapter has specialized in.";}
+		
+		var doct_info;doct_info=""
+		//if (doctrine="generalist") then doct_info="-Psychic Blasts and Barriers";
+        //if (doctrine="breakthrough") then doct_info="-Manipulates Biology to Buff or Heal";
+        //if (doctrine="shock assault") then doct_info="-Unleashes Blasts and Walls of Flame";
+        //if (doctrine="irregular warfare") then doct_info="-Manipulates Gravity to Throw or Shield";
+        draw_text_transformed(550,668,string_hash_to_newline("TEST"),1.25,1.25,0);//string(doct_info)),0.5,0.5,0);
+		if (custom<2) then draw_set_alpha(0.5);
+        if (custom=2) then draw_sprite_stretched(spr_creation_arrow,0,450,665,32,32);
+        if (custom=2) then draw_sprite_stretched(spr_creation_arrow,1,495,665,32,32);
+        draw_set_alpha(1);
+		
+	
+		}
     if (popup="icons"){
         draw_set_alpha(1);
         draw_set_color(0);
