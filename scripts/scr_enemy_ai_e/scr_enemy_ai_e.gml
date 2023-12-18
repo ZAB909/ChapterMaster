@@ -725,7 +725,7 @@ function scr_enemy_ai_e() {
                     // as well as planet type buffs or nerfs
                     if (aspirant != 0) {
                         i = 0;
-                        var varnew_recruit = 0;
+                        var new_recruit = 0;
 
                         // gets the next empty recruit space on the array
                         repeat(300) {
