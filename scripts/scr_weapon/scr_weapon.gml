@@ -29,7 +29,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 	repeat(2){
 	    i+=1;amm=-1;spli=0;
-	    var emor;emor=0;
+	    var emor=0;
 
 	    if (argument6="description") or (argument6="description_long"){
 	        if (i=1) then thawep=argument1;
@@ -46,8 +46,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 	    if (string_count("&",thawep)>0) or (string_count("|",thawep)>0){
 	        // Artifact Armour
-	        var arti_armour;
-	        arti_armour=false;
+	        var arti_armour = false;
 	        if (string_count("Power Armour",thawep)>0){statt=30;emor=1;arti_armour=true;}
 	        if (string_count("Artificer",thawep)>0){statt=35;emor=1;arti_armour=true;spe_descr="+10% Melee";}
 	        if (string_count("Terminator",thawep)>0){statt=45;emor=1;arti_armour=true;spe_descr="+20% Melee, -10% Ranged, Strength";}
@@ -562,7 +561,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	        if (thawep="Whirlwind Missiles") then amm=6;
 
 	        if (rending1=1){
-	            var rend;rend=choose(1,2,3,4,5,6);
+	            var rend=choose(1,2,3,4,5,6);
 	            if (rend=6){
 	                if (atta>0) then atta=atta*2;
 	                // if (arm>0) then arp=arp*2;
@@ -599,7 +598,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 	        if (argument2=true){
 	            if (marine_exp[argument3]>30){
-	                var ttt;ttt=marine_exp[argument3]-30;
+	                var ttt = marine_exp[argument3]-30;
 	                ttt=(ttt*0.0014)+1;ttt=max(1,(min(ttt,1.5)));// was 1.25
 	                if (ttt>=1) then atta=floor(atta*ttt);
 	                // if (ttt>=1) then arp=floor(arp*ttt);
@@ -626,9 +625,10 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 	        // This is giving problems
 	        if (melee_hands=0) and (argument2=true) and (argument4=false) and (i=2){
-	            var atta;
 	            atta=obj_ncombat.global_attack*10;
-	            var b,goody,opn;b=0;goody=0;opn=0;
+				var b=0; 
+				var goody=0;
+				var opn=0;
 	            repeat(30){b+=1;
 	                if (wep[b]="melee"){
 	                    goody=b;att[b]+=atta;range[b]=1;wep_num[b]+=1;splash[b]=0;ammo[b]=-1;
@@ -694,7 +694,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 
 	        // show_message(string(goody));
 
-	        var canc;canc=false;
+	        var canc=false;
 	        if (rang1>1) and (marine_ranged[argument3]=0){
 	             canc=true;if (floor(rang1)==rang1) then canc=false
 	        }if (canc=true) then goody=1;
@@ -713,7 +713,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	                    // if (marine_type[argument3]="Death Company") and (range[b]=1){att[b]+=att1;wep_num[b]+=1;wep_rnum[b]+=1;}
 	                    ammo[b]=ammo1;
 
-	                    var title;title=true;
+	                    var title=true;
 	                    if (marine_type[argument3]="Chapter Master") then title=false;
 	                    if (marine_type[argument3]="Master of Sanctity") then title=false;
 	                    if (marine_type[argument3]="Chief "+string(obj_ini.role[100,17])) then title=false;
@@ -728,7 +728,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	                att[b]+=att1;apa[b]=apa1;range[b]=rang1;wep_num[b]+=1;splash[b]=spli1;wep[b]=thawep;goody=1;
 	                // if (marine_type[argument3]="Death Company") and (range[b]=1){att[b]+=att1;wep_num[b]+=1;wep_rnum[b]+=1;}
 
-	                var title;title=true;
+	                var title=true;
 	                if (marine_type[argument3]="Chapter Master") then title=false;
 	                if (marine_type[argument3]="Master of Sanctity") then title=false;
 	                if (marine_type[argument3]="Chief "+string(obj_ini.role[100,17])) then title=false;
@@ -743,7 +743,7 @@ function scr_weapon(argument0, argument1, argument2, argument3, argument4, argum
 	    b=0;
 	    if (stack=1) and (goody=0){
 	        repeat(60){b+=1;
-	            var canc;canc=false;
+	            var canc=false;
 	            if (rang1>1) and (marine_ranged[argument3]=0){
 	                 canc=true;if (floor(rang1)==rang1) then canc=false
 	            }
