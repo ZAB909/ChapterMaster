@@ -32,7 +32,7 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 	for (var s = 0; s< 2;s++){
 		if (struct_exists(squad_fulfilment ,sgt_types[s])){
 			sergeant_found = false;
-			for (i = 0; i < array_length(obj_ini.TTRPG[company]);i++){
+			for (var i = 0; i < array_length(obj_ini.TTRPG[company]);i++){
 				if(!is_struct(obj_ini.TTRPG[company][i])){obj_ini.TTRPG[company][i]= new TTRPG_stats("chapter", company,i,"blank");}
 				unit = obj_ini.TTRPG[company][i];
 				if ((obj_ini.name[company][i] =="") or (unit.base_group=="none"))then continue;
@@ -47,7 +47,7 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 			}
 		}
 	}
-	for (i = 0; i < array_length( obj_ini.TTRPG[company]);i++){							//fill squad roles
+	for (var i = 0; i < array_length( obj_ini.TTRPG[company]);i++){							//fill squad roles
 		if(!is_struct(obj_ini.TTRPG[company][i])){obj_ini.TTRPG[company][i]= new TTRPG_stats("chapter", company,i,"blank");}
 		unit = obj_ini.TTRPG[company][i];
 		if ((obj_ini.name[company][i] =="") or (unit.base_group=="none")) then continue;
@@ -72,7 +72,7 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 		if (struct_exists(squad_fulfilment ,sgt_types[s])) and (!sergeant_found){
 			var highest_exp = 0;
 			var exp_unit;
-			for (i = 0; i < array_length(squad.members);i++){
+			for (var i = 0; i < array_length(squad.members);i++){
 				if (i==0){
 					exp_unit = obj_ini.TTRPG[squad.members[0][0], squad.members[0][1]];
 					highest_exp = obj_ini.TTRPG[squad.members[0][0], squad.members[0][1]].experience();
@@ -89,7 +89,7 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 	}
 	//evaluate if the minimum unit type requirements have been met to create a new squad
 	fulfilled = true;
-	for (i = 0;i < array_length(squad_unit_types);i++){
+	for (var i = 0;i < array_length(squad_unit_types);i++){
 		if (squad_fulfilment[$ squad_unit_types[i]] < fill_squad[$ squad_unit_types[i]][$ "min"]){
 			fulfilled = false;
 			break
@@ -106,7 +106,7 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 		}			
 		//update units squad marker
 		squad.squad_fulfilment = squad_fulfilment;
-		for (i = 0; i < array_length(squad.members);i++){
+		for (var i = 0; i < array_length(squad.members);i++){
 			unit = obj_ini.TTRPG[squad.members[i][0], squad.members[i][1]];
 			if (!squad_index){
 				unit.squad = squad_count;
@@ -129,7 +129,7 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 		*/
 		if (squad_loadout){
 			var required_load, unit_type, load_out_name, load_out_areas, load_out_slot,load_item, optional_load, item_to_add;
-			for (i = 0;i < array_length(squad_unit_types);i++){
+			for (var i = 0;i < array_length(squad_unit_types);i++){
 				unit_type = squad_unit_types[i];
 				required_load = "none";
 				optional_load = "none";
@@ -344,7 +344,7 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 		required = {};
 		space = {};
 		has_space = false;
-		for (i = 0;i < array_length(squad_unit_types);i++){
+		for (var i = 0;i < array_length(squad_unit_types);i++){
 			if (squad_fulfilment[$ squad_unit_types[i]] < fill_squad[$ squad_unit_types[i]][$ "max"]){
 				space[$ squad_unit_types[i]] = fill_squad[$ squad_unit_types[i]][$ "max"] - squad_fulfilment[$ squad_unit_types[i]];
 			}
