@@ -784,7 +784,6 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
         obj_ini.gear[ma_co,ma_id]="";obj_ini.hp[ma_co,ma_id]=100;obj_ini.chaos[ma_co,ma_id]=0;obj_ini.experience[ma_co,ma_id]=0;
         obj_ini.mobi[ma_co,ma_id]="";obj_ini.age[ma_co,ma_id]=0;
         obj_ini.TTRPG[ma_co,ma_id]=new TTRPG_stats("chapter",ma_co,ma_id, "blank");
-;
         with(obj_ini){scr_company_order(0);}
     }
     
