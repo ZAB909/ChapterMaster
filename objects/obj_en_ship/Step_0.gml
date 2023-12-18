@@ -378,7 +378,7 @@ if (hp>0) and (instance_exists(obj_p_ship)){
     if (target!=0){
         if (speed<((spid)/10)) then speed+=0.02;
         
-        var dist, range;
+        var range;
         if (instance_exists(target)){
             dist=point_distance(x,y,target.x,target.y);
             
@@ -402,7 +402,7 @@ if (hp>0) and (instance_exists(obj_p_ship)){
     if (turret_cool>0) then turret_cool-=1;
 
     
-    var bull, targe, rdir, dirr, dist, xx, yy, ok;
+    var bull, targe, rdir, dirr, xx, yy, ok;
     targe=0;rdir=0;dirr="";dist=9999;xx=x;yy=y;
     
     
