@@ -45,7 +45,7 @@ if (hp<=0){
         husk.sprite_index=sprite_index;husk.direction=direction;
         husk.image_angle=image_angle;husk.depth=depth;husk.image_speed=0;
         repeat(choose(4,5,6)){
-            var explo;explo=instance_create(x,y,obj_explosion);
+            var explo = instance_create(x,y,obj_explosion);
             explo.image_xscale=0.5;explo.image_yscale=0.5;
             explo.x+=random_range(sprite_width*0.25,sprite_width*-0.25);
             explo.y+=random_range(sprite_width*0.25,sprite_width*-0.25);
@@ -353,7 +353,7 @@ if (hp<=0){
     husk.sprite_index=sprite_index;husk.direction=direction;
     husk.image_angle=image_angle;husk.depth=depth;husk.image_speed=0;
     repeat(choose(4,5,6)){
-        var explo;explo=instance_create(x,y,obj_explosion);
+        var explo = instance_create(x,y,obj_explosion);
         explo.image_xscale=0.5;explo.image_yscale=0.5;
         explo.x+=random_range(sprite_width*0.25,sprite_width*-0.25);
         explo.y+=random_range(sprite_width*0.25,sprite_width*-0.25);

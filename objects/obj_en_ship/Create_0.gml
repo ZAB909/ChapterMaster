@@ -24,7 +24,12 @@ turret_cool=0;
 
 name="";
 class="";
-size=0;
+ship_size = 0;// we have ship_size and size should be combined?
+size = 0;
+carrying = 0;
+capacity = 0;
+leadership = 0;
+
 hp=0;
 maxhp=0;
 conditions="";
