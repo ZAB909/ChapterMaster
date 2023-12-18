@@ -77,7 +77,8 @@ if (audien[1]=0) or (current_audience>audiences){
         pip.number=1;
         
         if (pip.title="Ship Lost"){
-            var iii,yar;cah=0;iii=0;yar=0;
+            var iii,yar;
+			iii=0;yar=0;
             repeat(30){iii+=1;if (obj_ini.role[0,iii]="Chapter Master") then yar=iii;}
             if (obj_ini.lid[0,yar]>0){
                 if (obj_ini.ship_location[obj_ini.lid[0,yar]]="Lost"){{obj_controller.alarm[7]=70;if (global.defeat<=1) then global.defeat=1;}}
