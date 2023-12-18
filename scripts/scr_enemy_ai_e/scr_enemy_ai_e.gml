@@ -79,7 +79,7 @@ function scr_enemy_ai_e() {
     instance_activate_object(obj_en_fleet);
     if (battle2 > 0) and(battle = 0) { // AI only battle        
 		i = 0;
-        var vf = 1;
+        var f = 1;
         var shiyp = 0;
 
         repeat(10) {
