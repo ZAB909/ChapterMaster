@@ -309,7 +309,7 @@ function scr_chapter(argument0) {
 	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=3;master_ranged=2;forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";
 	    home_type="random";recruiting_type="Temperate";recruiting_name="random";home_name="random";lord_admiral_name=scr_marine_name();
-	    chief_librarian_name=scr_marine_name();;high_chaplain_name=scr_marine_name();;high_apothecary_name=scr_marine_name();;forge_master_name=scr_marine_name();;
+	    chief_librarian_name=scr_marine_name();high_chaplain_name=scr_marine_name();high_apothecary_name=scr_marine_name();forge_master_name=scr_marine_name();
 	    chaplain_melee=1;chaplain_ranged=1;apothecary_melee=1;apothecary_ranged=1;sergeant_melee=1;
 	    sergeant_ranged=1;scout_melee=2;scout_ranged=1;honor_melee=1;honor_ranged=1;honor_mobi=1;
 	    successor_chapters=0;progenitor_disposition=16;astartes_disposition=12;imperium_disposition=11;guard_disposition=11;

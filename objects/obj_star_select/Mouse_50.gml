@@ -190,7 +190,7 @@ if (obj_controller.selecting_planet>0){// Lose focus on no button click
 
 
 if (obj_controller.menu=0) and (obj_controller.zoomed=0) and (!instance_exists(obj_bomb_select)) and (!instance_exists(obj_drop_select)) and (obj_controller.cooldown<=0){
-    var closes,sta1,sta2;closes=0;;sta1=0;sta2=0;
+    var closes,sta1,sta2;closes=0;sta1=0;sta2=0;
     sta1=instance_nearest(mouse_x,mouse_y,obj_star);
     sta2=point_distance(mouse_x,mouse_y,sta1.x,sta1.y);
 

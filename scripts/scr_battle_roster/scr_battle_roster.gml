@@ -436,7 +436,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                                 break;
                              case "Whirlwind":
                                 col = 1;
-                                new_combat.whirlwinds += 1;;
+                                new_combat.whirlwinds += 1;
                                 break;                                    
                         }
 
