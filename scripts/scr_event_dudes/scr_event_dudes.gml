@@ -28,7 +28,7 @@ function scr_event_dudes(argument0, argument1, argument2, argument3) {
 	co=-1;ide=0;
 	repeat(11){coh+=1;ide=0;
 	    repeat(300){ide+=1;
-	        var adding;adding=false;
+	        var adding = false;
         
 	        if (argument1=0) and (obj_ini.lid[coh,ide]=argument3){
 	            if (obj_ini.race[coh,ide]=1) or (obj_ini.race[coh,ide]=5) then adding=true;
@@ -56,7 +56,7 @@ function scr_event_dudes(argument0, argument1, argument2, argument3) {
         
 	        // Don't compile a list and create an array in obj_event instead
 	        if (adding=true) and (argument0=1){
-	            var speshul;speshul=false;
+	            var speshul = false;
             
 	                if (obj_ini.role[coh,ide]="Chapter Master") then speshul=true;
 	                if (obj_ini.role[coh,ide]="Master of the Apothecarion") then speshul=true;
@@ -86,8 +86,7 @@ function scr_event_dudes(argument0, argument1, argument2, argument3) {
                 
 	                // Determine attend confused here
                 
-	                var base_confusion;
-	                base_confusion=0;
+	                var base_confusion = 0;
                 
 	                if (obj_controller.fest_type="Great Feast"){
 	                    base_confusion=choose(1,2,2,3);

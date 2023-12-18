@@ -45,7 +45,7 @@ repeat(45){l+=1;
     if (lines_color[l]="bright") then draw_set_color(65280);
     if (lines_color[l]="white") then draw_set_color(c_silver);
     if (lines_color[l]="blue"){
-        var yep;yep=false;
+        var yep = false;
         if (obj_ini.adv[1]="Daemon Binders") or (obj_ini.adv[2]="Daemon Binders") or (obj_ini.adv[3]="Daemon Binders") or (obj_ini.adv[4]="Daemon Binders") then yep=true;
         if (yep=false) then draw_set_color(16711680);
         if (yep=true) then draw_set_color(16646566);

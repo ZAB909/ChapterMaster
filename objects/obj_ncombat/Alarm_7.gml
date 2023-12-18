@@ -25,12 +25,14 @@ if (obj_ncombat.enemy=1){
     var cleann,j;
     j=-1;repeat(11){j+=1;cleann[j]=0;}
 
-    with(obj_enunit){var q;q=0;
+    with(obj_enunit){var q=0;
         repeat(700){q+=1;
             if (dude_id[q]>0){
-                var nco,nid,commandy;
-                nco=0;nid=0;commandy=false;
-                nco=dude_co[q];nid=dude_id[q];
+                var nco=0;
+				var nid=0;
+				var commandy=false;
+                nco=dude_co[q];
+				nid=dude_id[q];
                 cleann[nco]=1;
                 
                 // show_message("dude ID:"+string(q)+" ("+string(obj_ini.name[nco,nid])+") is being removed from the array");

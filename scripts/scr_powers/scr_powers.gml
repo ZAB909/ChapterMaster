@@ -494,7 +494,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	        m2="Capricious voices eminate from the surrounding area, whispering poisonous lies and horrible truths.";
 	        obj_ini.chaos[marine_co[argument3],marine_id[argument3]]+=choose(10,15,20);
 	        repeat(6){
-	            var t;t=floor(random(men))+1;
+	            var t=floor(random(men))+1;
 	            if (marine_type[t]!="") then obj_ini.chaos[marine_co[t],marine_id[t]]+=choose(6,9,12,15);
 	        }
 	    }
@@ -519,7 +519,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	        m2="There is a massive explosion of warp energy which incapacitates him and injures several other marines!";
 	        marine_hp[argument3]-=65;marine_hp[argument3]-=5000;
 	        repeat(7){
-	            var t;t=floor(random(men))+1;
+	            var t=floor(random(men))+1;
 	            if (marine_type[t]!="") then marine_hp[t]-=choose(10,20,30);
 	        }
 	    }
@@ -677,7 +677,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	            repeat(10){
 	                if (good2=0) and (instance_exists(obj_enunit)){
 	                    enemy5=instance_nearest(x,y,obj_enunit);
-	                    var s;s=0;
+	                    var s=0;
                     
 	                    repeat(20){
 	                        if (point_distance(x,y,enemy5.x,enemy5.y)<(p_rang*10)){
@@ -694,7 +694,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	                }
 	            }
             
-	            var onk;onk=0;
+	            var onk=0;
 	            if (p_tar=3) and (good=0) and (good2=0) and (p_arp>0) and (onk=0){p_tar=4;onk=1;}
 	            if (p_tar=4) and (good=0) and (good2=0) and (p_att>0) and (onk=0){p_tar=3;onk=1;}
             
@@ -703,7 +703,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	            repeat(10){
 	                if (good2=0) and (instance_exists(obj_enunit)){
 	                    enemy5=instance_nearest(x,y,obj_enunit);
-	                    var s;s=0;
+	                    var s=0;
                     
 	                    repeat(20){
 	                        if (point_distance(x,y,enemy5.x,enemy5.y)<(p_rang*10)){
@@ -728,8 +728,9 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	    // show_message(string(m1)+string(m2)+"#"+string(enemy5));
         
 	        if (good2>0){
-	            var damage_type,stap;
-	            damage_type="att";stap=0;
+
+	            var damage_type="att";
+				var stap=0;
             
 	            damage_type="att";
 	            if (p_arp>0) and (p_att>=100) then damage_type="arp";
@@ -739,8 +740,9 @@ function scr_powers(argument0, argument1, argument2, argument3) {
             
             
 	            if (damage_type="att") and (stap=0) and (instance_exists(enemy5)) and (enemy5.dudes_num[good2]>0){
-	                var a,b,c,eac;eac=enemy5.dudes_ac[good2];
-	                a=p_att;// Average damage
+	                var b,c;
+					var eac=enemy5.dudes_ac[good2];
+	                var a=p_att;// Average damage
                 
 	                // b=a-enemy5.dudes_ac[good2];// Average after armour
                 
@@ -766,7 +768,9 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	                    show_message(string(enemy5.dudes_hp[good2]));
 	                }
                 
-	                var casualties,ponies,onceh;onceh=0;ponies=0;
+	                var casualties;
+					var onceh=0;
+					var ponies=0;
 	                if (p_spli=0) then casualties=min(floor(c/enemy5.dudes_hp[good2]),1);
 	                if (p_spli!=0) then casualties=floor(c/enemy5.dudes_hp[good2]);
                 
@@ -785,7 +789,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
                 
                 
 	                if (casualties>0){
-	                    var duhs;duhs=enemy5.dudes[good2];
+	                    var duhs=enemy5.dudes[good2];
 	                    if (obj_ncombat.battle_special="WL10_reveal") or (obj_ncombat.battle_special="WL10_later"){
 	                        if (duhs="Veteran Chaos Terminator") then obj_ncombat.chaos_angry+=casualties*2;
 	                        if (duhs="Veteran Chaos Chosen") then obj_ncombat.chaos_angry+=casualties;
@@ -816,8 +820,9 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	            }
             
 	            if (damage_type="arp") and (stap=0) and (instance_exists(enemy5)) and (enemy5.dudes_num[good2]>0){
-	                var a,b,c,eac;eac=enemy5.dudes_ac[good2];
-	                a=p_att;// Average damage
+	                var b,c;
+					var eac = enemy5.dudes_ac[good2];
+	                var a = p_att;// Average damage
 	                // b=a-enemy5.dudes_ac[good2];// Average after armour
                 
 	                if (enemy5.dudes_vehicle[good2]=0){
@@ -842,7 +847,9 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	                    show_message(string(enemy5.dudes_hp[good2]));
 	                }
                 
-	                var casualties,ponies,onceh;onceh=0;ponies=0;
+	                var casualties;
+					var onceh=0;
+					var ponies=0;
 	                if (p_spli=0) then casualties=min(floor(c/enemy5.dudes_hp[good2]),1);
 	                if (p_spli!=0) then casualties=floor(c/enemy5.dudes_hp[good2]);
                 
@@ -863,7 +870,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	                with(obj_ncombat){scr_newtext();}*/
                 
 	                if (casualties>0){
-	                    var duhs;duhs=enemy5.dudes[good2];
+	                    var duhs = enemy5.dudes[good2];
 	                    if (obj_ncombat.battle_special="WL10_reveal") or (obj_ncombat.battle_special="WL10_later"){
 	                        if (duhs="Veteran Chaos Terminator") then obj_ncombat.chaos_angry+=casualties*2;
 	                        if (duhs="Veteran Chaos Chosen") then obj_ncombat.chaos_angry+=casualties;

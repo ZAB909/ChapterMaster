@@ -1203,9 +1203,9 @@ function scr_ui_manage() {
 									with (obj_star){
 										if (name == squad_loc.system){
 											var planet = current_squad.assignment.ident;
-											var operation;
+											//var operation;
 											for (var i=0;i<array_length(p_operatives[planet]);i++){
-												operation = p_operatives[planet][i];
+												var operation = p_operatives[planet][i];
 												if (operation.type=="squad" && operation.reference ==obj_controller.company_squads[obj_controller.cur_squad]){
 													array_delete(p_operatives[planet], i, 1);
 												}

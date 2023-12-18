@@ -41,7 +41,7 @@ function scr_star_ownership(argument0) {
 	        }
 	        if (array_length(p_feature[run])!=0){
 	            if (p_type[run]!="Dead") and (planet_feature_bool(p_feature[run], P_features.Daemonic_Incursion)==1) and (p_heresy[run]>=100){
-	                var randoo;randoo=choose(1,2,3,4);
+	                var randoo=choose(1,2,3,4);
 	                if (randoo=4){
 	                    p_type[run]="Daemon";p_fortified[run]=6;p_traitors[run]=7;p_owner[run]=10;
 	                    delete_features(p_feature[run],P_features.Daemonic_Incursion);

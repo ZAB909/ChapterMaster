@@ -2252,10 +2252,9 @@ if (action="move") and (action_eta<5000){
             var good;good=0;
             
             repeat(100){
-                var xx, yy;
                 if (good=0){
-                    xx=x+choose(random(300),random(300)*-1);
-                    yy=y+choose(random(300),random(300)*-1);
+                    var xx=x+choose(random(300),random(300)*-1);
+                    var yy=y+choose(random(300),random(300)*-1);
                     new_star=instance_nearest(xx,yy,obj_star);
                     if (new_star.owner!=eFACTION.Tau) then with(new_star){instance_deactivate_object(id);}
                     if (new_star.owner=eFACTION.Tau) then good=1;

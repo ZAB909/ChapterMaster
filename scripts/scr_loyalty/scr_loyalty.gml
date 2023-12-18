@@ -11,7 +11,7 @@ function scr_loyalty(argument0, argument1) {
 	        i+=1;noplus=0;
         
 	        if (obj_controller.loyal[i]=argument0){// Increases detection chance by a variable amount
-	            var amount;amount=0;
+	            var amount=0;
 	            if (obj_controller.loyal_num[i]<1) then amount=0.03;
             
 	            if (argument0="Xeno Associate"){
@@ -90,7 +90,9 @@ function scr_loyalty(argument0, argument1) {
 	                    obj_controller.loyal_num[i]+=30;
 	                    obj_controller.loyal_time[i]=9999;
 	                }
-	                amount=0;noplus=1;var one;one=0;
+	                amount=0;
+					noplus=1;
+					var one=0;
 	                obj_controller.useful_info+="|SC|";
                 
 	                if (obj_controller.disposition[4]>=50) and (one=0) and (string_count("|SC|",obj_controller.useful_info)=1){obj_controller.disposition[4]=20;one=1;}
@@ -188,7 +190,7 @@ function scr_loyalty(argument0, argument1) {
 	            if (t>0) then repeat(4400){
 	                if (ca<=10) and (ca>=0){
 	                    ia+=1;if (ia=400){ca+=1;ia=1;if (ca=11) then ca=-5;}
-	                    if (ca>=0) and (ca<11){var geh;geh=0;
+	                    if (ca>=0) and (ca<11){var geh=0;
 	                        i=0;repeat(40){i+=1;if (obj_ini.lid[ca,ia]=valid[i]) and (valid[i]>0) then geh=1;}
 	                        if (geh=1){
 	                            if (obj_ini.role[ca,ia]="Ork Sniper") and (obj_ini.race[ca,ia]!=1){hurr+=1;sniper+=1;}
@@ -231,7 +233,7 @@ function scr_loyalty(argument0, argument1) {
 	                    obj_controller.loyal_num[i]=80;obj_controller.loyal_time[i]=9999;
 	                    scr_alert("red","inspect","Inquisitor discovers evidence of Chaos Lord correspondence.",0,0);
                     
-	                    var one;one=0;
+	                    var one=0;
 	                    if (obj_controller.disposition[4]>=80) and (one=0){obj_controller.disposition[4]=30;one=1;}
 	                    if (obj_controller.disposition[4]<80) and (obj_controller.disposition[4]>10) and (one=0){obj_controller.disposition[4]=5;one=2;}
 	                    if (obj_controller.disposition[4]<=10) and (one=0){obj_controller.disposition[4]=0;one=3;}

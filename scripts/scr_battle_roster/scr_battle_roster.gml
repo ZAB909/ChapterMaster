@@ -118,9 +118,8 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                     var man_size = 1;
 
                     //Same as co/company and v, but with extra comprovations in case of a meeting (meeting?) 
-                    var cooh, va;
-                    cooh = 0;
-                    va = 0;
+                    var cooh = 0;
+                    var va = 0;
 
                     if (!meeting) {
                         cooh = company;
@@ -132,10 +131,9 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                         }
                     }
 
-                    var col, moov, targ;
-                    col = 0;
-                    targ = 0;
-                    moov = 0;
+                    var col = 0;
+                    var targ = 0;
+                    var moov = 0;
                     _u_role = unit.role();
 
                     if (new_combat.battle_special == "space_hulk") then new_combat.player_starting_dudes += 1;
@@ -279,8 +277,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
 
 
                     if (unit.role() = "Death Company") { // Ahahahahah
-                        var really;
-                        really = false;
+                        var really = false;
                         if (string_count("Dreadnought", targ.marine_armour[targ.men]) > 0) then really = true;
                         if (really = false) then new_combat.thirsty += 1;
                         if (really = true) then new_combat.really_thirsty += 1;
@@ -398,15 +395,13 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
 
                 // Vehicle checks
                 if (v <= 100) and(string_count("spyrer", new_combat.battle_special) = 0) and(company <= 10) and(meeting = false) {
-                    var vokay;
-                    vokay = 0;
+                    var vokay = 0;
 
                     if (deploying_unit.veh_race[company][v] != 0) and(deploying_unit.veh_loc[company][v] = required_location) and(deploying_unit.veh_wid[company][v] = _target_location) then vokay = 1;
 
                     if (_is_planet) and(new_combat.local_forces = 1) {
-                        var world_name, p_num;
-                        world_name = "";
-                        p_num = obj_controller.selecting_planet;
+                        var world_name = "";
+                        var p_num = obj_controller.selecting_planet;
                         if (instance_exists(obj_drop_select)) {
                             world_name = obj_drop_select.p_target.name;
                         }

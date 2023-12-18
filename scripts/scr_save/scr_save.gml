@@ -344,7 +344,7 @@ function scr_save(save_slot,save_id) {
 	        ini_write_real("Star","sr"+string(i)+"craftworld",instance_array[i].craftworld);
 	        ini_write_real("Star","sr"+string(i)+"spacehulk",instance_array[i].space_hulk);
 
-	        var g;g=0;
+	        var g=0;
 	        repeat(4){g+=1;
 	            if (instance_array[i].planets>=g){
 	                ini_write_real("Star","sr"+string(i)+"plan"+string(g),instance_array[i].planet[g]);
@@ -469,7 +469,7 @@ function scr_save(save_slot,save_id) {
 	        ini_write_real("Fleet","pf"+string(i)+"hurssy",instance_array[i].hurssy);
 	        ini_write_real("Fleet","pf"+string(i)+"hurssy_time",instance_array[i].hurssy_time);
 	        ini_write_real("Fleet","pf"+string(i)+"orb",instance_array[i].orbiting);
-	        var g;g=-1;repeat(10){g+=1;
+	        var g=-1;repeat(10){g+=1;
 	            ini_write_string("Fleet","pf"+string(i)+"capital"+string(g),instance_array[i].capital[g]);
 	            ini_write_real("Fleet","pf"+string(i)+"capital_num"+string(g),instance_array[i].capital_num[g]);
 	            ini_write_real("Fleet","pf"+string(i)+"capital_sel"+string(g),instance_array[i].capital_sel[g]);
@@ -525,7 +525,7 @@ function scr_save(save_slot,save_id) {
 	        ini_write_real("Fleet","ef"+string(i)+"navy",instance_array[i].navy);
 	        ini_write_real("Fleet","ef"+string(i)+"unl",instance_array[i].guardsmen_unloaded);
 
-	        if (instance_array[i].navy=1){var e;e=-1;
+	        if (instance_array[i].navy=1){var e=-1;
 	            repeat(20){e+=1;
 	                ini_write_real("Fleet","ef"+string(i)+"navy_cap."+string(e),instance_array[i].capital_imp[e]);
 	                ini_write_real("Fleet","ef"+string(i)+"navy_cap_max."+string(e),instance_array[i].capital_max_imp[e]);
@@ -801,7 +801,7 @@ function scr_save(save_slot,save_id) {
 	    ini_write_real("Res","stability",obj_controller.restart_stability);
 	    i=99;
 	    repeat(3){i+=1;
-	         var o;o=1;
+	         var o=1;
 	         repeat(14){o+=1;
 	            if (o=11) then o=12;
 	            if (o=13) then o=14;

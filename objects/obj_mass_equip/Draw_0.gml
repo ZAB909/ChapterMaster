@@ -135,7 +135,7 @@ if (total_role_number>0) and (tab>0){
                 }
                 
                 if (obj_controller.mouse_left=1) and (obj_controller.cooldown<=0){
-                    var buh;buh=item_name[h];obj_controller.cooldown=8000;
+                    var buh=item_name[h];obj_controller.cooldown=8000;
                     if (item_name[h]="(None)") then buh="";
                     if (tab=1) then obj_ini.wep1[100,role]=buh;
                     if (tab=2) then obj_ini.wep2[100,role]=buh;

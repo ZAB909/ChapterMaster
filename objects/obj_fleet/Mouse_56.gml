@@ -3,18 +3,22 @@
 var pressy;pressy=0;
 
 
-if (instance_exists(obj_p_ship)) and (control=1){left_down=0;
-    with(obj_p_ship){
-        var casey;casey=2;sel_x2=mouse_x;sel_y2=mouse_y;
+if (instance_exists(obj_p_ship)) and (control=1)
+{
+	left_down=0;
+    with(obj_p_ship)
+		{
+	        var casey=2;sel_x2=mouse_x;sel_y2=mouse_y;
         
-        if (point_distance(sel_x1,sel_y1,sel_x2,sel_y2)<30) then casey=1;
+	        if (point_distance(sel_x1,sel_y1,sel_x2,sel_y2)<30) then casey=1;
         
-        if (casey=1){selected=0;
+	        if (casey=1){selected=0;
         
-        if (casey=2){
-            if (x>=sel_x1) and (y>=sel_y1) and (x<=sel_x2) and (y<=sel_y2){selected=1;obj_fleet.ships_selected+=1;}
-        }
-    }
+	        if (casey=2){
+	            if (x>=sel_x1) and (y>=sel_y1) and (x<=sel_x2) and (y<=sel_y2){selected=1;obj_fleet.ships_selected+=1;}
+	        }
+	    }
+	}
 }
 
 if (start = 5) and (obj_controller.zoomed = 0)

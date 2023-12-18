@@ -147,8 +147,7 @@ function scr_enemy_ai_e() {
             // show_message(string(name)+" Round "+string(rond)+": "+string(still_battling));
 
             if (still_battling = true) {
-                var who;
-                who = 0;
+                var who = 0;
 
                 // Imperial Fleet Attacks
                 who = 2;
@@ -239,7 +238,6 @@ function scr_enemy_ai_e() {
                 }
 
                 // Attacking has been determined, work out damage
-                var i;
                 i = 1;
                 repeat(9) {
                     i += 1;
@@ -367,13 +365,11 @@ function scr_enemy_ai_e() {
 
             repeat(9) {
                 i += 1;
-                var special_stop;
-                special_stop = false;
+                var special_stop = false;
 
                 if (i = 10) or(i = 11) {
-                    var run, s;
-                    run = 0;
-                    s = 0;
+                    var run = 0;
+					var  s = 0;
                     repeat(4) {
                         run += 1;
                         s = 0;
@@ -453,10 +449,10 @@ function scr_enemy_ai_e() {
         }
 
         if (p_player[run] > 0 && force_count > 0) {
-            var spyrer, fallen, s;
-            spyrer = 0;
-            fallen = 0;
-            s = 0;
+            
+            var spyrer = 0;
+            var fallen = 0;
+            var s = 0;
 
             repeat(4) {
                 s += 1;
@@ -465,8 +461,7 @@ function scr_enemy_ai_e() {
                     if (p_problem[run, s] = "meeting_trap") then chaos_meeting = run + 0.1;
                 }
                 if (p_player[run] > 20) and(p_problem[run, s] = "spyrer") {
-                    var tixt;
-                    tixt = "The Spyrer on " + string(name);
+                    var tixt = "The Spyrer on " + string(name);
                     if (run = 1) then tixt += " I";
                     if (run = 2) then tixt += " II";
                     if (run = 3) then tixt += " III";
@@ -484,8 +479,8 @@ function scr_enemy_ai_e() {
                     obj_turn_end.battle_special[obj_turn_end.battles] = "spyrer";
                 }
                 if (p_player[run] > 0) and(p_problem[run, s] = "fallen") {
-                    var chan;
-                    chan = choose(1, 2, 3, 4);
+                    
+                    var chan = choose(1, 2, 3, 4);
                     if (chan <= 2) {
                         obj_turn_end.battles += 1;
                         obj_turn_end.battle[obj_turn_end.battles] = 1;
@@ -503,8 +498,7 @@ function scr_enemy_ai_e() {
                         if (p_problem[run, 4] = "fallen") then fallen = 4;
                         p_problem[run, fallen] = "";
                         p_timer[run, fallen] = 0;
-                        var tixt;
-                        tixt = "Your marines have scoured " + string(name);
+                        var tixt = "Your marines have scoured " + string(name);
                         if (run = 1) then tixt += " I";
                         if (run = 2) then tixt += " II";
                         if (run = 3) then tixt += " III";
@@ -520,11 +514,9 @@ function scr_enemy_ai_e() {
             }
         }
         if (p_player[run] > 0) and((p_problem[run, 1] = "bomb") or(p_problem[run, 2] = "bomb") or(p_problem[run, 3] = "bomb") or(p_problem[run, 4] = "bomb")) {
-            var have_bomb;
-            have_bomb = scr_check_equip("Plasma Bomb", name, run, 0);
+            var have_bomb = scr_check_equip("Plasma Bomb", name, run, 0);
             if (have_bomb > 0) {
-                var tixt;
-                tixt = "Your marines on " + string(name);
+                var tixt = "Your marines on " + string(name);
                 if (run = 1) then tixt += " I";
                 if (run = 2) then tixt += " II";
                 if (run = 3) then tixt += " III";
@@ -622,11 +614,8 @@ function scr_enemy_ai_e() {
 
         // Other planetary stuff
 
-        var thirdpop;
-        var halfpop;
-
-        thirdpop = p_max_population[run] / 3;
-        halfpop = p_max_population[run] / 2;
+        var thirdpop = p_max_population[run] / 3;
+        var halfpop = p_max_population[run] / 2;
 
         if (array_length(p_feature[run]) != 0) {
             if (planet_feature_bool(p_feature[run], P_features.Recruiting_World) == 1) and(obj_controller.gene_seed = 0) and(obj_controller.recruiting > 0) {
@@ -744,9 +733,8 @@ function scr_enemy_ai_e() {
                     // xp gain for the recruit is here
                     // as well as planet type buffs or nerfs
                     if (aspirant != 0) {
-                        var i, new_recruit;
                         i = 0;
-                        new_recruit = 0;
+                        var varnew_recruit = 0;
 
                         // gets the next empty recruit space on the array
                         repeat(300) {
@@ -862,12 +850,11 @@ function scr_enemy_ai_e() {
         // Work on fortifications
         if (p_owner[run] = 1) {
             if (planet_feature_bool(p_feature[run], P_features.Monastery) == 1) {
-                var md, ms, ml, build_rate, build_rate2;
-                md = 225;
-                ms = 300;
-                ml = 32;
-                build_rate = 4;
-                build_rate2 = 6;
+                var md = 225;
+                var ms = 300;
+                var ml = 32;
+                var build_rate = 4;
+                var build_rate2 = 6;
 
                 if (string_count("Siege Masters", obj_ini.strin) > 0) {
                     md = 300;

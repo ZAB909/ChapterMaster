@@ -28,9 +28,10 @@ if (type>0){
                 if (tot<=obj_creation.colors){
                     draw_set_color(make_color_rgb(obj_creation.col_r[tot],obj_creation.col_g[tot],obj_creation.col_b[tot]));
                     
-                    var x1,x2,y1,y2;
-                    x1=395+(cu*40);y1=541+(coli*40);
-                    x2=435+(cu*40);y2=581+(coli*40);
+                    var x1=395+(cu*40);
+					var y1=541+(coli*40);
+                    var x2=435+(cu*40);
+					var y2=581+(coli*40);
                     
                     draw_rectangle(x1,y1,x2,y2,0);
                     draw_set_color(38144);
@@ -125,7 +126,7 @@ if (type>0){
                 draw_rectangle(x5,y5,x5-string_width(string_hash_to_newline(title)),y5+string_height(string_hash_to_newline(title))-2,0);
                 if (obj_creation.mouse_left=1) and (obj_creation.cooldown<=0){
                 
-                    var bad;bad=0;
+                    var bad = 0;
                     if (type=106) and ((gg=3) or (gg=4) or (gg=5)) then bad=1;
                     
                     if (bad=0){
@@ -201,7 +202,7 @@ if (target_gear>0){
                 }
                 
                 if (obj_creation.mouse_left=1) and (obj_creation.cooldown<=0){
-                    var buh;buh=item_name[h];obj_creation.cooldown=8000;
+                    var buh = item_name[h];obj_creation.cooldown=8000;
                     if (item_name[h]="(None)") then buh="";
                     if (target_gear=1) then obj_creation.wep1[co,ide]=buh;
                     if (target_gear=2) then obj_creation.wep2[co,ide]=buh;
@@ -236,7 +237,7 @@ if (target_gear>0){
                     }
                     
                     if (obj_creation.mouse_left=1) and (obj_creation.cooldown<=0){
-                        var buh;buh=item_name[h];obj_creation.cooldown=8000;
+                        var buh = item_name[h];obj_creation.cooldown=8000;
                         if (item_name[h]="(None)") then buh="";
                         if (target_gear=1) then obj_creation.wep1[co,ide]=buh;
                         if (target_gear=2) then obj_creation.wep2[co,ide]=buh;

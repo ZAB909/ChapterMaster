@@ -400,7 +400,8 @@ function scr_trade(argument0) {
 	            }
 	            if (trade_give[i]="Info Chip") and (trade_mnum[i]>0) then info_chips-=trade_mnum[i];
 	            if (trade_give[i]="STC Fragment") and (trade_mnum[i]>0){
-	                var remov,p;remov=0;p=0;
+					var remov = 0;
+					var p = 0;
 	                repeat(100){
 	                    if (remov=0){p=choose(1,2,3);
 	                        if (p=1) and (stc_wargear_un>0){stc_wargear_un-=1;remov=1;}
@@ -504,7 +505,8 @@ function scr_trade(argument0) {
 	            }
 	            if (trade_give[i]="Info Chip") and (trade_mnum[i]>0) then info_chips-=trade_mnum[i];
 	            if (trade_give[i]="STC Fragment") and (trade_mnum[i]>0){
-	                var remov,p;remov=0;p=0;
+	                var remov = 0;
+					var p = 0;
 	                repeat(100){
 	                    if (remov=0){p=choose(1,2,3);
 	                        if (p=1) and (stc_wargear_un>0){stc_wargear_un-=1;remov=1;}

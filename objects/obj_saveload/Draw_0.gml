@@ -106,7 +106,7 @@ if (menu=1) or (menu=2){// This is the other one
             if (o=top+3) and (save[o]!=0) and (img4!=0) and (sprite_exists(img4)){draw_sprite_stretched(img4,0,x2+64,y2+28,166,94);}
             
             
-            var high;high=0;
+            var high=0;
             if (scr_hit(x2,y2,x2+1526,y2+149)=true){
                 // high=1;
                 debug="Save:"+string(save[o])+", array position:"+string(o)+", turn:"+string(save_turn[o]);
@@ -124,9 +124,14 @@ if (menu=1) or (menu=2){// This is the other one
                 draw_text_transformed(x2+270,y2+48,string_hash_to_newline(string(save_chapter[save[o]])+" ("+string(save_date[save[o]])+")"),0.7,0.7,0);
                 draw_text_transformed(x2+774,y2+48,string_hash_to_newline(string(save_marines[save[o]])),0.7,0.7,0);
                 draw_text_transformed(x2+1024,y2+48,string_hash_to_newline(string(save_turn[save[o]])),0.7,0.7,0);
-                var ohboy,result,tsec,tmin,thour,tday;
-                ohboy=save_time[save[o]];result="";
-                tsec=0;tmin=0;thour=0;tday=0;
+
+                var ohboy = save_time[save[o]];
+				var result = "";
+                var tsec = 0;
+				var tmin = 0;
+				var thour = 0;
+				var tday = 0;
+				
                 if (ohboy>0){
                     tday=floor(ohboy/86400);if (tday>=1) then ohboy-=(tday*86400);
                     thour=floor(ohboy/3600);if (thour>=1) then ohboy-=(thour*3600);
@@ -241,7 +246,7 @@ if (menu=1) or (menu=2){// This is the other one
             draw_text_transformed(x2+1386,y2+117,string_hash_to_newline("Save Game"),0.7,0.7,0);
             if (scr_hit(x2+1317,y2+113,x2+1461,y2+146)=true){
                 draw_set_alpha(0.1);draw_set_color(c_white);draw_rectangle(x2+1317,y2+113,x2+1461,y2+146,0);draw_set_alpha(1);
-                if (mouse_left>=1) and (cooldown<=0){var onceh;onceh=0;
+                if (mouse_left>=1) and (cooldown<=0){var onceh=0;
                     if (instance_exists(obj_main_menu)){with(obj_main_menu){part_particles_clear(p_system);}}
                     
                     // If open slot then set the save.ini to the maximum

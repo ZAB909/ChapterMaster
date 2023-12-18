@@ -10,11 +10,9 @@ function scr_image(argument0, argument1, argument2, argument3, argument4, argume
 
 	if (!instance_exists(obj_img)) then exit;
 
-
-
-
 	if (argument1<=-666) or (argument1=666){with(obj_img){// Clear out these images
-	    var i,single_image;i=-1;single_image=false;
+	    var i=-1;
+		var single_image=false;
     
 	    if (argument0="creation") or (argument0="all") or (argument0=""){creation_good=false;single_image=true;}
 	    if (argument0="main_splash") or (argument0="existing_splash") or (argument0="other_splash") or (argument0="all") or (argument0="") then splash_good=false;
@@ -122,7 +120,8 @@ function scr_image(argument0, argument1, argument2, argument3, argument4, argume
 
 	if (argument1>-600) and (argument1<0){with(obj_img){// Initialize these images
     
-	    var i,single_image;i=-1;single_image=false;
+		var i=-1;
+		var single_image=false;
 	    repeat(80){i+=1;
     
 	        if (argument0="creation") and (creation_exists[i]>0) and (sprite_exists(creation[i])){
@@ -238,7 +237,8 @@ function scr_image(argument0, argument1, argument2, argument3, argument4, argume
 	    }
     
 	    if (single_image=false){
-	        var i,w;i=0;w=0;
+			i = 0;
+			var w = 0;
         
 	        repeat(40){i+=1;
 	            if (argument0="main_splash"){
@@ -397,11 +397,15 @@ function scr_image(argument0, argument1, argument2, argument3, argument4, argume
 
 
 	if (argument0!="") and (argument1>=0) and (argument1!=666){with(obj_img){// Draw the image
-	    var drawing_sprite,drawing_exists,old_alpha,old_color,x13,y13,x14,y14;
-	    drawing_sprite=0;drawing_exists=false;x13=0;y13=0;x14=0;y14=0;
+	    var drawing_sprite = 0;
+		var drawing_exists = false;
+		var x13 = 0;
+		var y13 = 0;
+		var x14 = 0;
+		var y14 = 0;
     
-	    old_alpha=draw_get_alpha();
-	    old_color=draw_get_colour();
+	    var old_alpha=draw_get_alpha();
+	    var old_color=draw_get_colour();
     
 	    if (argument0="creation"){
 	        if (creation_exists[1]>0) and (sprite_exists(creation[1])){drawing_sprite=creation[1];drawing_exists=true;}

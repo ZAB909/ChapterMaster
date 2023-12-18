@@ -1317,7 +1317,7 @@ if (slide=4){
             draw_set_color(0);draw_text(xxx,yyy,string_hash_to_newline(role[c,ide]));
             if (scr_hit(xxx,yyy,1150,yyy+20)=true) and (!instance_exists(obj_creation_popup)){if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_set_color(c_white);draw_rectangle(xxx,yyy,1150,yyy+20,0);
                 draw_set_alpha(1);tooltip=string(role[c,ide])+" Settings";tooltip2="Click to open the settings for this unit.";
-                if (mouse_left>=1) and (custom>0) and (cooldown<=0) and (custom=2){var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=ide+100;cooldown=8000;}
+                if (mouse_left>=1) and (custom>0) and (cooldown<=0) and (custom=2){var pp=instance_create(0,0,obj_creation_popup);pp.type=ide+100;cooldown=8000;}
             }
         }
     }
@@ -1733,7 +1733,7 @@ if (slide=6){
         
         yar=0;if (chapter_master_melee=h) then yar=1;draw_sprite(spr_creation_check,yar,x6,y6);yar=0;
         if (scr_hit(x6,y6,x6+32,y6+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>0) and (restarted=0) and (!instance_exists(obj_creation_popup)){
-            cooldown=8000;var onceh;onceh=0;
+            cooldown=8000;var onceh=0;
             if (chapter_master_melee=h) and (onceh=0){chapter_master_melee=0;onceh=1;}
             if (chapter_master_melee!=h) and (onceh=0){chapter_master_melee=h;onceh=1;}
         }
@@ -1753,7 +1753,7 @@ if (slide=6){
         
         yar=0;if (chapter_master_ranged=h) then yar=1;draw_sprite(spr_creation_check,yar,x6,y6);yar=0;
         if (scr_hit(x6,y6,x6+32,y6+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>0) and (restarted=0) and (!instance_exists(obj_creation_popup)){
-            cooldown=8000;var onceh;onceh=0;
+            cooldown=8000;var onceh = 0;
             if (chapter_master_ranged=h) and (onceh=0){chapter_master_ranged=0;onceh=1;}
             if (chapter_master_ranged!=h) and (onceh=0){chapter_master_ranged=h;onceh=1;}
         }
@@ -1789,10 +1789,10 @@ if (slide=6){
         
         yar=0;if (chapter_master_specialty=h) then yar=1;draw_sprite(spr_creation_check,yar,x6,y6+214);yar=0;
         
-        var nope;nope=0;if (h=3) and ((race[100,17]=0) or (string_count("Psyker Intolerant",ha2)>0)) then nope=1;
+        var nope=0;if (h=3) and ((race[100,17]=0) or (string_count("Psyker Intolerant",ha2)>0)) then nope=1;
         
         if (scr_hit(x6,y6+214,x6+32,y6+32+214)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (restarted=0) and (nope=0){
-            cooldown=8000;var onceh;onceh=0;
+            cooldown=8000;var onceh = 0;
             if (chapter_master_specialty!=h) and (onceh=0){chapter_master_specialty=h;onceh=1;}
         }
         if (scr_hit(x6,y6+214,x6+162,y6+234)=true) and (nope=0){

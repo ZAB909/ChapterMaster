@@ -76,18 +76,18 @@ if (engaged=0){// Shooting
             i+=1;block=0;
             if (flank=0){enemy=instance_nearest(4000,y,obj_pnunit);enemy2=enemy;dist=point_distance(x,y,enemy.x,enemy.y)/10;}
             if (flank=1){enemy=instance_nearest(0,y,obj_pnunit);enemy2=enemy;dist=point_distance(x,y,enemy.x,enemy.y)/10;}
-            if (enemy.men+enemy.veh<=0){var x5;x5=enemy.x;with(enemy){x=-100;instance_deactivate_object(id);}enemy=instance_nearest(4000,y,obj_pnunit);enemy2=enemy;}
+            if (enemy.men+enemy.veh<=0){var x5=enemy.x;with(enemy){x=-100;instance_deactivate_object(id);}enemy=instance_nearest(4000,y,obj_pnunit);enemy2=enemy;}
         
             if (instance_exists(obj_nfort)) and (obj_nfort.hp[1]>0){// Give the wall the melee D
                 enemy=instance_nearest(x,y,obj_nfort);
-                var bug1;bug1=instance_nearest(40,y,obj_enunit);
+                var bug1 = instance_nearest(40,y,obj_enunit);
                 if (range[i]=1) and (bug1.id=self.id) then range[i]=2;
                 enemy2=enemy;dist=2;
             }
             
             if (wep[i]!="") and (wep_num[i]>0) and (range[i]>=dist) and (range[i]!=1) and (combi[i]<2) and (ammo[i]!=0){// Weapon meets preliminary checks
                 
-                var ap;ap=0;if (apa[i]>0) then ap=1;// Determines if it is AP or not
+                var ap = 0;if (apa[i]>0) then ap=1;// Determines if it is AP or not
                 // if (string_count("Gauss",wep[i])>0) then ap=1;
                 
                 // show_message(string(wep[i])+" is in range and AP:"+string(ap));
@@ -103,7 +103,7 @@ if (engaged=0){// Shooting
                     
                     with(obj_temp5){instance_destroy();}
                     with(obj_pnunit){
-                        var i;i=0;
+                        var i = 0;
                         repeat(200){
                             i+=1;if (marine_type[i]="Chapter Master"){
                                 obj_ncombat.hue=i;instance_create(x,y,obj_temp5);

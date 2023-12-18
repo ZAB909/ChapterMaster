@@ -105,17 +105,21 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                 
                 if (roll1<=difficulty){// Success
                     if (damage=true) and (steal=false){// Damaging
-                        var to_bomb;to_bomb=false;
+                        var to_bomb = false;
                         if (plasma_bomb=true) and (obj_ini.gear[co][i]="Plasma Bomb") then to_bomb=true;
                         if (choose(1,2,3,4,5)<4) then to_bomb=false;
                         if (to_bomb=false){target.hp-=7;damaged_ship=max(1,damaged_ship);}
                         if (to_bomb=true){target.hp-=200;damaged_ship=2;obj_ini.gear[co][i]="";}
                     }
                     if (steal=true) and (damage=false){// Stealing
-                        var bridge_damage;bridge_damage=0;
+                        var bridge_damage = 0;
                         damaged_ship=max(1,damaged_ship);
                         
-                        var we,whi,we1,we2;we="";we1=obj_ini.wep1[co][i];we2=obj_ini.wep2[co][i];whi=0;
+						var we = "";
+						var we1 = obj_ini.wep1[co][i];
+						var we2 = obj_ini.wep2[co][i];
+						var whi = 0;
+						
                         we1=string_replace(we1,"Master Crafted","");we2=string_replace(we2,"Master Crafted","");
                         
                         bridge_damage=3;
@@ -132,7 +136,7 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                         target.bridge-=bridge_damage;
                     }
                     if ((target.hp<=0) or (target.bridge<=0)){
-                        var husk;husk=instance_create(target.x,target.y,obj_en_husk);
+                        var husk = instance_create(target.x,target.y,obj_en_husk);
                         
                         if (experience=0){experience=2;
                             if (target.owner = eFACTION.Ecclesiarchy) or (target.owner = eFACTION.Ork) or (target.owner = eFACTION.Eldar) or (target.owner = eFACTION.Necrons) then experience+=1;
@@ -142,7 +146,8 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                         }
                         
                         with(target){
-                            var wh,gud;wh=0;gud=0;
+							var wh=0;
+							var gud=0;
                             repeat(5){wh+=1;if (obj_fleet.enemy[wh]=owner) then gud=wh;}
                             if (size=3) then obj_fleet.en_capital_lost[gud]+=1;
                             if (size=2) then obj_fleet.en_frigate_lost[gud]+=1;
@@ -157,7 +162,7 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                         
                         if (instance_exists(target)){
                             if (target.hp<=0) and (target.bridge>0) then repeat(choose(3,4,5)){
-                                var explo;explo=instance_create(target.x,target.y,obj_explosion);
+                                var explo=instance_create(target.x,target.y,obj_explosion);
                                 explo.image_xscale=0.5;explo.image_yscale=0.5;
                                 explo.x+=random_range(target.sprite_width*0.25,target.sprite_width*-0.25);
                                 explo.y+=random_range(target.sprite_width*0.25,target.sprite_width*-0.25);
@@ -339,7 +344,7 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
         }
         if (damaged_ship=2) and (instance_exists(target)){
             repeat(3){
-                var explo;explo=instance_create(target.x,target.y,obj_explosion);
+                var explo=instance_create(target.x,target.y,obj_explosion);
                 explo.sprite_index=spr_explosion_plas;explo.image_xscale=0.65;explo.image_yscale=0.65;
                 explo.x+=random_range(target.sprite_width*0.25,target.sprite_width*-0.25);
                 explo.y+=random_range(target.sprite_width*0.25,target.sprite_width*-0.25);

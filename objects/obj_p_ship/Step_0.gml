@@ -46,7 +46,7 @@ if (hp<=0) and (x>-5000){
         husk.sprite_index=sprite_index;husk.direction=direction;
         husk.image_angle=image_angle;husk.depth=depth;husk.image_speed=0;
         repeat(choose(4,5,6)){
-            var explo;explo=instance_create(x,y,obj_explosion);
+            var explo=instance_create(x,y,obj_explosion);
             explo.image_xscale=0.5;explo.image_yscale=0.5;
             explo.x+=random_range(sprite_width*0.25,sprite_width*-0.25);
             explo.y+=random_range(sprite_width*0.25,sprite_width*-0.25);
@@ -262,9 +262,9 @@ if (instance_exists(obj_en_ship)) and (boarders>0) and (board_cooldown<=0) and (
         if (eh=2) and (board_frigate=true){if (instance_exists(obj_en_cruiser)) then te=instance_nearest(x,y,obj_en_cruiser);}
         
         if (te!=0) and (instance_exists(te)){
-            if (point_distance(x,y,te.x,te.y)<=428){
-                var first,o;
-                first=0;o=0;
+            if (point_distance(x,y,te.x,te.y)<=428){                 
+                var first = 0;
+				var o = 0;
                 
                 repeat(500){o+=1;
                     if (first=0) and (board_id[o]!=0) and (board_location[o]=0) then first=o;
@@ -272,7 +272,7 @@ if (instance_exists(obj_en_ship)) and (boarders>0) and (board_cooldown<=0) and (
                 
                 board_cooldown=45;
                 
-                var bear;bear=instance_create(x,y,obj_p_assra);
+                var bear=instance_create(x,y,obj_p_assra);
                 o=first;
                 
                 repeat(20){

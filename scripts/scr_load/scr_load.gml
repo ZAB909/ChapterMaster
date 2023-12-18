@@ -868,7 +868,7 @@ function scr_load(argument0, argument1) {
 	        fla.hurssy_time=ini_read_real("Fleet","pf"+string(i)+"hurssy_time",0);
 	        fla.orbiting=ini_read_real("Fleet","pf"+string(i)+"orb",0);
 
-	        var g;g=-1;repeat(10){g+=1;
+	        var g=-1;repeat(10){g+=1;
 	            fla.capital[g]=ini_read_string("Fleet","pf"+string(i)+"capital"+string(g),"");
 	            fla.capital_num[g]=ini_read_real("Fleet","pf"+string(i)+"capital_num"+string(g),0);
 	            fla.capital_sel[g]=ini_read_real("Fleet","pf"+string(i)+"capital_sel"+string(g),0);
@@ -921,7 +921,7 @@ function scr_load(argument0, argument1) {
 	        fla.navy=ini_read_real("Fleet","ef"+string(i)+"navy",0);
 	        fla.guardsmen_unloaded=ini_read_real("Fleet","ef"+string(i)+"unl",0);
 
-	        if (fla.navy=1){var e;e=-1;
+	        if (fla.navy=1){var e=-1;
 	            repeat(20){e+=1;
 	                fla.capital_imp[e]=ini_read_real("Fleet","ef"+string(i)+"navy_cap."+string(e),0);
 	                fla.capital_max_imp[e]=ini_read_real("Fleet","ef"+string(i)+"navy_cap_max."+string(e),0);
@@ -1045,7 +1045,7 @@ function scr_load(argument0, argument1) {
 
 	    i=99;
 	    repeat(3){i+=1;
-	         var o;o=1;
+	         var o=1;
 	         repeat(14){o+=1;
 	            if (o=11) then o=12;
 	            if (o=13) then o=14;

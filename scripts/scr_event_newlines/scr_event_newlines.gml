@@ -17,7 +17,7 @@ function scr_event_newlines(argument0) {
 	        nl=(lines+nls)-17;
         
 	        repeat(nl){
-	            var q;q=0;
+	            q=0;
 	            repeat(17){q+=1;
 	                line[q]=line[q+1];
 	            }

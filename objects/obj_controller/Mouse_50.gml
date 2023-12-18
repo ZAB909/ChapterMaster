@@ -2647,11 +2647,10 @@ if (action_if_number(obj_saveload, 0, 0) &&
             for (var i=0; i<(min(ship_max,ship_see)); i++){
                 if (mouse_x>=xx+25+8) and (mouse_y>=yy+64) and (mouse_x<xx+974) and (mouse_y<yy+85) and (cooldown<=0) 
                 and (((sh_cargo[sel]+man_size)<=sh_cargo_max[sel])){
-                    var load_from_star;
                     var sel_loc = selecting_location;
                      with (obj_star){
                         if (name==sel_loc){
-                            load_from_star=self;
+                            var load_from_star=self;
                         }
                      }           
                     var onceh=0;

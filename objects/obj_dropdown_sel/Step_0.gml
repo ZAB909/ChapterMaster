@@ -37,7 +37,7 @@ if (target="event_type"){
         if (fest_type="Great Feast"){
             fest_cost=fest_lav*20;if (fest_lav=0) then fest_cost=20;
             if (fest_locals>0) then fest_cost+=20*fest_locals;
-            var tt;tt=fest_cost;
+            var tt=fest_cost;
             if (fest_feature1=0) then fest_cost=0;
             if (fest_feature2>0) then fest_cost+=round(tt/2);
             if (fest_feature3>0) then fest_cost+=tt;
@@ -45,7 +45,7 @@ if (target="event_type"){
         if (fest_type="Tournament") or (fest_type="Deathmatch"){
             fest_cost=fest_lav*20;if (fest_lav=0) then fest_cost=20;
             if (fest_locals>0) then fest_cost+=20*fest_locals;
-            var tt;tt=fest_cost;
+            var tt=fest_cost;
             
             if (fest_feature2>0) then fest_cost+=30;
             if (fest_type="Tournament") and (fest_feature3>0) then fest_cost+=100;
@@ -63,21 +63,21 @@ if (target="event_type"){
         if (fest_type="Imperial Mass"){
             fest_cost=fest_lav*40;if (fest_lav=0) then fest_cost=40;
             if (fest_locals>0) then fest_cost+=40*fest_locals;
-            var tt;tt=fest_cost;
+            var tt=fest_cost;
             if (fest_feature2>0) then fest_cost+=100;
             if (fest_feature3>0) then fest_cost+=50;
         }
         if (fest_type="Chapter Sermon"){
             fest_cost=fest_lav*20;if (fest_lav=0) then fest_cost=20;
             if (fest_locals>0) then fest_cost+=20*fest_locals;
-            var tt;tt=fest_cost;
+            var tt=fest_cost;
             if (fest_feature2>0) then fest_cost+=round(tt/2);
             if (fest_feature3>0) then fest_cost+=tt;
         }
         if (fest_type="Triumphal March"){
             fest_cost=fest_lav*10;if (fest_lav=0) then fest_cost=10;
             if (fest_locals>0) then fest_cost+=10*fest_locals;
-            var tt;tt=fest_cost;
+            var tt=fest_cost;
             if (fest_feature1>0) then fest_cost+=tt;
         }
         

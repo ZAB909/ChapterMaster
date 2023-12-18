@@ -39,7 +39,8 @@ function scr_ship_battle(argument0, argument1) {
 	                if (okay=1){
 	                    obj_ncombat.fighting[co][v]=1;sofar+=1;
                     
-	                    var col,targ;col=0;targ=0;
+						var col = 0;
+						var targ = 0;
                     
 	                    if (obj_ini.role[co][v]=obj_ini.role[100][12]){col=obj_controller.bat_scout_column;obj_ncombat.scouts+=1;}
 	                    if (obj_ini.role[co][v]=obj_ini.role[100][8]){col=obj_controller.bat_tactical_column;obj_ncombat.tacticals+=1;}

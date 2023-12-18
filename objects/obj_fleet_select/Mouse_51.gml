@@ -208,7 +208,7 @@ if (owner  = eFACTION.Player) and (instance_nearest(x,y,obj_p_fleet).action=""){
             capital_sel[4]=1;capital_sel[5]=1;
             capital_sel[6]=1;capital_sel[7]=1;
             capital_sel[8]=1;
-            var i;i=-1;
+            var i=-1;
             repeat(31){i+=1;
                 frigate_sel[i]=1;
                 escort_sel[i]=1;

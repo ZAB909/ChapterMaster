@@ -36,7 +36,7 @@ if (player_started=1){
     
     if (instance_exists(obj_star_select)) then with(obj_star_select){
         alarm[1]=1;player_fleet=0;
-        var i;i=-1;repeat(15){i+=1;en_fleet[i]=0;}
+        var i=-1;repeat(15){i+=1;en_fleet[i]=0;}
     }
     if (instance_exists(pla_fleet)){
         pla_fleet.acted=2;

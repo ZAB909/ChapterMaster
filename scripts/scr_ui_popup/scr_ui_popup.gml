@@ -102,7 +102,8 @@ function scr_ui_popup() {
 	                draw_set_color(c_black);draw_set_alpha(0.2);draw_rectangle(xx+21,yy+38+(r*30),xx+600,yy+56+(r*30),0);draw_set_alpha(1);
                 
 	                if (obj_controller.mouse_left=1) and (obj_controller.cooldown<=0){
-	                    obj_controller.cooldown=8000;var tag;tag="";
+	                    obj_controller.cooldown=8000;
+						var tag = "";
 						switch (r) {
 						    case 1:
 						        tag = "BRB";
@@ -602,7 +603,7 @@ function scr_ui_popup() {
 	            }
 	            if (mouse_check_button_pressed(mb_left)) and (obj_controller.cooldown<=0){
 	                if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+25) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
-	                    var onceh;onceh=0;obj_controller.cooldown=8000;
+	                    var onceh=0;obj_controller.cooldown=8000;
 	                    if (obj_controller.fest_scheduled>0) and (obj_controller.fest_sid=robj.escort_num[shit]) then onceh=1;
 	                    if (robj.escort_sel[shit]=1) and (onceh=0){robj.escort_sel[shit]=0;onceh=1;}
 	                    if (robj.escort_sel[shit]=0) and (onceh=0){robj.escort_sel[shit]=1;onceh=1;}
