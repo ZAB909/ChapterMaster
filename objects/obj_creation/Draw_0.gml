@@ -490,19 +490,39 @@ if (slide=2){
 	    if (popup!="icons"){
         draw_set_halign(fa_left);draw_set_font(fnt_40k_30b);
         draw_text_transformed(450,625,string_hash_to_newline("Chapter Combat Doctrine"),0.6,0.6,0);draw_set_font(fnt_40k_14);
-		if (scr_hit(450,625,700,670)=true){tooltip="Combat Doctrine";tooltip2="The style of warfare your Chapter has specialized in.";}
+		if (scr_hit(445,625,700,650)=true){tooltip="Combat Doctrine";tooltip2="The style of warfare your Chapter has specialized in.";}
 		
 		var doct_info;doct_info=""
-		//if (doctrine="generalist") then doct_info="-Psychic Blasts and Barriers";
-        //if (doctrine="breakthrough") then doct_info="-Manipulates Biology to Buff or Heal";
-        //if (doctrine="shock assault") then doct_info="-Unleashes Blasts and Walls of Flame";
-        //if (doctrine="irregular warfare") then doct_info="-Manipulates Gravity to Throw or Shield";
-        draw_text_transformed(550,668,string_hash_to_newline("TEST"),1.25,1.25,0);//string(doct_info)),0.5,0.5,0);
+		if (doctrine="Generalist") then doct_info="-A well rounded approach to tactics as described in the Codex astartes favoring no particular troop or vehicle your chapter is inherently adaptable as a jack of all trades.";
+        if (doctrine="Breakthrough") then doct_info="-Vehicle based spearheads supported by heavily armed and armored Astartes seek to crush enemy lines with walls of Ceramite and unmatched firepower your chapter favors Terminators, Devastators, Predators, and Land Raiders.";
+        if (doctrine="Shock Assault") then doct_info="-Nimble infantry ravage enemy lines at high speeds getting stuck in and crushing the enemy before redeploying just as swiftly your chapter favors Land speeders, Assault Marines, Bikes, and Drop assaults.";
+        if (doctrine="Irregular Warfare") then doct_info="-Stealthy combatants eliminate enemy leaders from afar, or ambush vulnerable supply trains seeking to bleed the enemy dry with a thousand cuts your chapter favors Scouts, and capable small strike-forces.";
+        //if (scr_hit(550,670,600,680)=true){tooltip=string(doctrine);tooltip2=doct_info;}
+		
 		if (custom<2) then draw_set_alpha(0.5);
         if (custom=2) then draw_sprite_stretched(spr_creation_arrow,0,450,665,32,32);
         if (custom=2) then draw_sprite_stretched(spr_creation_arrow,1,495,665,32,32);
         draw_set_alpha(1);
-		
+
+		var fug,fug2;fug=string_delete(doctrine,2,string_length(doctrine));
+        fug2=string_delete(doctrine,1,1);draw_text_transformed(550,670,string_hash_to_newline(string_upper(fug)+string(fug2)),1.25,1.25,0);
+        
+
+
+if (scr_hit(450,665,450+32,665+32)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
+            var onceh;onceh=0;cooldown=8000;
+            if (doctrine="Generalist") and (onceh=0){doctrine="Breakthrough";onceh=1;}
+            if (doctrine="Breakthrough") and (onceh=0){doctrine="Shock Assault";onceh=1;}
+            if (doctrine="Shock Assault") and (onceh=0){doctrine="Irregular Warfare";onceh=1;}
+            if (doctrine="Irregular Warfare") and (onceh=0){doctrine="Generalist";onceh=1;}
+        }
+        if (scr_hit(495,665,495+32,665+32)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
+            var onceh;onceh=0;cooldown=8000;
+            if (doctrine="Generalist") and (onceh=0){doctrine="Irregular Warfare";onceh=1;}
+            if (doctrine="Irregular Warfare") and (onceh=0){doctrine="Shock Assault";onceh=1;}
+            if (doctrine="Shock Assault") and (onceh=0){doctrine="Breakthrough";onceh=1;}
+            if (doctrine="Breakthrough") and (onceh=0){doctrine="Generalist";onceh=1;}
+        }
 	
 		}
     if (popup="icons"){

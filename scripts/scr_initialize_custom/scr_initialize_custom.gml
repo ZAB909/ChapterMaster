@@ -163,6 +163,7 @@ function scr_initialize_custom() {
 	icon_name=obj_creation.icon_name;
 	man_size=0;
 	psy_powers=obj_creation.discipline;
+	cmbt_doct=obj_creation.doctrine;
 
 	strin=string(obj_creation.adv[1])+string(obj_creation.adv[2])+string(obj_creation.adv[3])+string(obj_creation.adv[4]);
 	strin2=string(obj_creation.dis[1])+string(obj_creation.dis[2])+string(obj_creation.dis[3])+string(obj_creation.dis[4]);
