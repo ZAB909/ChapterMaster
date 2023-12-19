@@ -316,7 +316,7 @@ if (title="Planetary Governor Assassinated") and (option1!="") and (cooldown<=0)
     }
     
     if (press=1){
-        new_target.dispo[planet]=min(obj_ini.imperium_disposition,obj_controller.disposition[2])+choose(-1,-2,-3,-4,0,1,2,3,4);
+        new_target.dispo[planet]=min(obj_controller.imperium_disposition, obj_controller.disposition[2])+choose(-1,-2,-3,-4,0,1,2,3,4);
         if (randa<=3) then new_target.dispo[planet]=min(new_target.dispo[planet],choose(1,2,3,4,5,6)*3);
         if (randa>=95) then new_target.dispo[planet]=max(new_target.dispo[planet],60+choose(1,2,3,4,5,6)*3);
         scr_event_log("","Planetary Governor of "+string(new_target.name)+" "+scr_roman(planet)+" assassinated.  The next in line takes over.");
