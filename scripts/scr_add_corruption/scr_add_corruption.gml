@@ -1,4 +1,4 @@
-function scr_add_corruption(is_fleet, amount, capital_number,frigate_number, escort_number) 
+function scr_add_corruption(is_fleet, amount) 
 	{
 
 		// argument0: fleet (true) or planet (false)

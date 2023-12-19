@@ -1191,7 +1191,7 @@ if (press=2) and (option2!=""){
             with(obj_en_fleet){
                 if (trade_goods="male_her") or (trade_goods="female_her"){
                     with(obj_p_fleet){if (action!="") then instance_deactivate_object(id);}
-                    with(instance_nearest(x,y,obj_p_fleet)){scr_add_corruption(true,"1d3", capital_number, frigate_number, escort_number);}
+                    with(instance_nearest(x,y,obj_p_fleet)){scr_add_corruption(true,"1d3");}
                     instance_activate_object(obj_p_fleet);
                     instance_destroy();
                 }
