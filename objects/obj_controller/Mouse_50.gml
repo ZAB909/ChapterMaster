@@ -1474,6 +1474,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 hide_banner=1;
                 with(obj_star_select){instance_destroy();}
                 with(obj_fleet_select){instance_destroy();}
+                view_squad=false;
             }
             if (menu==1) and (onceh==0){
                 menu=0;
@@ -2548,14 +2549,13 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     if (man_sel[p]==1) and (man[p]=="man") and (bionics_after>0) and (obj_ini.bio[cah][ide[p]]<10) 
                     and (obj_ini.loc[cah][ide[p]]!="Terra") and (obj_ini.loc[cah][ide[p]]!="Mechanicus Vessel"){
                         if (string_count("Dread",ma_armour[p])=0){
-        					          obj_ini.TTRPG[cah, ide[p]].add_bionics();
-                                      bionics_after--;
+					          obj_ini.TTRPG[cah, ide[p]].add_bionics();
+                              bionics_after--;
                             if (ma_promote[p]==10) then ma_promote[p]=0;
                         }
                     }
                     if (bionics_before!=bionics_after){
                         click=1;
-                        scr_add_item("Bionics",bionics_after-bionics_before);
                     }
                 }
             }

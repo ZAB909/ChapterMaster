@@ -457,19 +457,19 @@ if (psyker_points>=round(goal/2)) and (psyker_aspirant==0){
     }else if (random_marine != "none"){
         marine_position=random_marine[1];
         marine_company=random_marine[0];
-        g1=0;
+        unit = obj_ini.TTRPG[marine_company,marine_position];
         // This gets the last open slot for company 0
         for(var h=1; h<=300; h++){
             if (g1==0){
                 if (obj_ini.role[0,h]=="") then g1=h;
             }
         }
-        if (g1!=0){
+        if (marine_company=0){
             command+=1;
             marines-=1;
-			scr_move_unit_info(marine_company,0, marine_position, g1)
-            obj_ini.role[0][g1]=novice_type;
-            scr_powers_new(0,g1);
+			scr_move_unit_info(marine_company,0, marine_position, g1);
+            unit.update_role(novice_type)
+            unit.update_powers();
             psyker_aspirant=1;
             
             if (string_count("Abund",obj_ini.strin)>0) then obj_ini.experience[0][g1]+=floor(random(5))+3;
