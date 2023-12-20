@@ -244,7 +244,8 @@ function scr_flavor2(argument0, argument1) {
 	        obj_ncombat.alarm[3]=2;
 	    }
 	    if (obj_nfort.hp[1]<=0){
-	        s=0;him=0;
+	        var s=0;
+			var him=0;
 	        obj_ncombat.dead_jims+=1;
 	        obj_ncombat.dead_jim[obj_ncombat.dead_jims]="The fortified wall has been breached!";
 	        obj_ncombat.wall_destroyed=1;
