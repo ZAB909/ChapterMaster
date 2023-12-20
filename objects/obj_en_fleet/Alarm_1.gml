@@ -111,7 +111,7 @@ if ((trade_goods="BLOODBLOODBLOOD") or (trade_goods="BLOODBLOODBLOODBLOOD")) and
                 }
                 
                 
-                
+				var next_star                
                 if (good=0){
                     if (trade_goods="BLOODBLOODBLOODBLOOD") {
                         debugl("BLOOD: A");
@@ -165,7 +165,7 @@ if ((trade_goods="BLOODBLOODBLOOD") or (trade_goods="BLOODBLOODBLOODBLOOD")) and
                                 var thatp = instance_nearest(that.x,that.y,obj_star);
                                 
                                 if (thatp != noone){
-									var next_star = noone;
+									next_star = noone;
                                     my_dis= point_distance(orbiting.x,orbiting.y,thatp.x,thatp.y)/48;
                                     if rectangle_in_rectangle(thatp.x, thatp.y, thatp.x2, thatp.y2, orbiting.x, orbiting.y, orbiting.x2, orbiting.y2) > 0
 										then my_dis=my_dis/2;
@@ -582,8 +582,7 @@ if navy {
 	        with(obj_p_fleet) {
 	            if (action="move") and (x>0) and (x<room_width) and (y>0) and (y<room_height) {
 	                if (action_x>0) and (action_x<room_width) and (action_y>0) and (action_y<room_width) {
-	                    var tem;
-						tem=instance_create(action_x,action_y,obj_temp8);
+	                    var tem=instance_create(action_x,action_y,obj_temp8);
 						tem.eta=action_eta;
 	                }
 	            }
@@ -825,7 +824,8 @@ if navy {
 	    if (action="") and (trade_goods="") and (instance_exists(orbiting)){
 	        with(obj_temp_inq){instance_destroy();}
 	        with(obj_star){
-	            var cont,p;cont=0;p=0;
+	            var cont=0;
+				var p=0;
 	            repeat(4){p+=1;
 	                if (p_type[p]="Forge"){
 	                    if (p_orks[o]+p_chaos[o]+p_tyranids[o]+p_necrons[o]+p_tau[o]+p_traitors[o]=0){
@@ -1050,7 +1050,7 @@ if navy {
 	        // New shit here, prioritize higher population worlds
 	        if (orbiting.p_orks[o]+orbiting.p_chaos[o]+orbiting.p_tyranids[o]+orbiting.p_necrons[o]+orbiting.p_tau[o]+orbiting.p_traitors[o]>=highest) and (orbiting.p_type[o]!="Daemon") and (o>1){
 	            if (orbiting.p_orks[o]+orbiting.p_chaos[o]+orbiting.p_tyranids[o]+orbiting.p_necrons[o]+orbiting.p_tau[o]+orbiting.p_traitors[o]>0){
-	                var isnew;isnew=false;
+	                var isnew = false;
                 
 	                if (popu_large=false) and (orbiting.p_large[o]=true) and (floor(popu/1000000000)<orbiting.p_population[o]) then isnew=true;
 	                if (popu_large=true) and (orbiting.p_large[o]=true) and (popu<orbiting.p_population[o]) then isnew=true;
@@ -1176,7 +1176,7 @@ if (action=""){
         with(obj_crusade){if (owner!=obj_controller.temp[88]){x-=40000;}}
         
         with(obj_star){
-            var ns;ns=instance_nearest(x,y,obj_crusade);
+            var ns=instance_nearest(x,y,obj_crusade);
             if (point_distance(x,y,ns.x,ns.y)>ns.radius){x-=40000;}
             if (owner=ns.owner){x-=40000;}
         }
@@ -1333,12 +1333,12 @@ if (action=""){
                             popup=3;if ((dem*10)+(cha*3)>=10) then popup=4;
           
                             if ((obj_controller.disposition[4]<0) or (obj_controller.loyalty<=0)) and (obj_controller.faction_status[eFACTION.Inquisition]!="War") and (popup=3){popup=0.3;
-                                var moo;moo=false;
+                                var moo=false;
                                 if (obj_controller.penitent=1) and (moo=false){obj_controller.alarm[8]=1;moo=true;}
                                 if (obj_controller.penitent=0) and (moo=false) then scr_audience(4,"loyalty_zero",0,"",0,0);
                             }
                             if ((obj_controller.disposition[4]<0) or (obj_controller.loyalty<=0)) and (obj_controller.faction_status[eFACTION.Inquisition]!="War") and (popup=4){popup=0.4;
-                                var moo;moo=false;
+                                var moo=false;
                                 if (obj_controller.penitent=1) and (moo=false){obj_controller.alarm[8]=1;moo=true;}
                                 if (obj_controller.penitent=0) and (moo=false) then scr_audience(4,"loyalty_zero",0,"",0,0);
                             }
@@ -1370,8 +1370,9 @@ if (action=""){
                         if (popup=4) or (popup=0.4) then scr_event_log("red","Inquisitor "+string(obj_controller.inquisitor[whom])+" discovers your Secret Arsenal on "+string(thata.name)+" "+scr_roman(t)+".");
                         if (popup>=5) or (popup=0.6) then scr_event_log("","Inquisitor "+string(obj_controller.inquisitor[whom])+" discovers your Secret Gene-Vault on "+string(thata.name)+" "+scr_roman(t)+".");
                         
-                        var pop_tit,pop_txt,pop_spe;
-                        pop_tit="";pop_txt="";pop_spe="";
+                        var pop_tit=""; 
+						var pop_txt=""; 
+						var pop_spe="";
                         
                         if (popup=1){pop_tit="Inquisition Discovers Lair";pop_txt="Inquisitor "+string(obj_controller.inquisitor[whom])+" has discovered your Secret Lair on "+string(thata.name)+" "+scr_roman(t)+".  A quick inspection revealed that there was no contraband or heresy, though the Inquisition does not appreciate your secrecy at all.";}
                         if (popup=2){pop_tit="Inquisition Discovers Lair";pop_txt="Inquisitor "+string(obj_controller.inquisitor[whom])+" has discovered your Secret Lair on "+string(thata.name)+" "+scr_roman(t)+".  A quick inspection turned up heresy, most foul, and it has all been reported to the Inquisition.  They are seething, as a whole, and relations are damaged.";}
@@ -1564,8 +1565,7 @@ if (action=""){
                         if (plin2.planets=3) and (plin2.p_type[1]!="Dead") and (plin2.p_type[2]!="Dead") and (plin2.p_type[3]!="Dead") then good=2;
                         if (plin2.planets=4) and (plin2.p_type[1]!="Dead") and (plin2.p_type[2]!="Dead") and (plin2.p_type[3]!="Dead") and (plin2.p_type[4]!="Dead") then good=2;
                         
-                        var new_fleet;
-                        new_fleet=instance_create(x,y,obj_en_fleet);
+                        var new_fleet=instance_create(x,y,obj_en_fleet);
                         new_fleet.capital_number=floor(capital_number*0.4);
                         new_fleet.frigate_number=floor(frigate_number*0.4);
                         new_fleet.escort_number=floor(escort_number*0.4);

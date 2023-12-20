@@ -222,7 +222,7 @@ function scr_company_view(company) {
 	    }
 	}
 
-	v=last_man;
+	var v=last_man;
 	last_vehicle=0;
 	for (var i=1;i<=100;i++){
 	// if (!instance_exists(obj_popup)) then repeat(100){// 100

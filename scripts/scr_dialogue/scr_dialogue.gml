@@ -2127,15 +2127,15 @@ function scr_dialogue(diplo_keyphrase) {
 							instance_activate_object(obj_star);
 	                    	with(obj_temp5){instance_destroy();}
 	                    	with(obj_star){
-								for(var i=1; i<=4; i++){
+								for(i=1; i<=4; i++){
 									if (planet_feature_bool(p_feature[1], P_features.Warlord10)==1) then instance_create(x,y,obj_temp5);
 								}
 						}
 	                    if (instance_exists(obj_temp5)){
-	                        var you,nuum,plan=0;
-	                        you=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
-	                        nuum=you.name;
-							for(var i=1; i<=4; i++){
+	                        var plan=0;
+	                        var you=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
+	                        var nuum=you.name;
+							for(i=1; i<=4; i++){
 								if (planet_feature_bool(you.p_feature[1], P_features.Warlord10)==1) then plan=i;
 							}
 							found=1;
@@ -2155,15 +2155,15 @@ function scr_dialogue(diplo_keyphrase) {
 						instance_activate_object(obj_star);
 	                	with(obj_temp5){instance_destroy();}
 						with(obj_star){
-							for(var i=1; i<=4; i++){
+							for(i=1; i<=4; i++){
 								if (planet_feature_bool(p_feature[1], P_features.Warlord7)==1) then instance_create(x,y,obj_temp5);
 							}
 						}
 						if (instance_exists(obj_temp5)){
-							var you,nuum,plan=0;
-							you=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
-							nuum=you.name;
-							for(var i=1; i<=4; i++){
+							var plan=0;
+							var you=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
+							var nuum=you.name;
+							for(i=1; i<=4; i++){
 								if (planet_feature_bool(you.p_feature[1], P_features.Warlord7)==1) then plan=i;
 							}
 							if (you.p_orks[plan]<6) then you.p_orks[plan]=6;
@@ -2197,7 +2197,7 @@ function scr_dialogue(diplo_keyphrase) {
 							}
 							var that,good=0;
 							that=instance_nearest(random(room_width),random(room_height),obj_star);
-							for(var i=0; i<5; i++){
+							for(i=0; i<5; i++){
 								if (good==0) then with(that){
 									var j=0,onceh=0;
 									for(var k=0; k<10; k++){
@@ -2239,7 +2239,8 @@ function scr_dialogue(diplo_keyphrase) {
 							that=instance_nearest(random(room_width),random(room_height),obj_star);
 							for(var j=0; j<5; j++){
 								if (good==0) then with(that){
-									var i=0,onceh=0;
+									i=0;
+									var onceh=0;
 									for(var k=0; k<10; k++){
 										i=floor(random(planets))+1;
 										if (array_length(p_feature[i])==0) and (onceh==0) then onceh=i;}

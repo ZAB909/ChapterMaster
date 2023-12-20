@@ -126,7 +126,8 @@ if (instance_exists(obj_enunit)) then repeat(60){i+=1;once_only=0;
         
         if (instance_exists(enemy)){
             if (ap=0) and (once_only=0){// Check for men
-                var g,good;g=0;good=0;
+                var g = 0;
+				var good = 0;
                 
                 if (enemy.men+enemy.medi>0){
                     good=scr_target(enemy,"men");// First target has vehicles, blow it to hell
@@ -156,20 +157,23 @@ if (instance_exists(obj_enunit)) then repeat(60){i+=1;once_only=0;
             apa[i]=floor(att[i]/2);ap=1;
         }
         
-        if (ap=1) and (once_only=0){// Check for vehicles
-            var g,good;g=0;good=0;
+        if (ap=1) and (once_only=0)
+			{// Check for vehicles
+				var g = 0;
+				var good = 0;
             
-            if (enemy.veh>0){
-                good=scr_target(enemy,"veh");// First target has vehicles, blow it to hell
-                if (range[i]=1) then scr_shoot(i,enemy,good,"arp","melee");
-                if (range[i]!=1) then scr_shoot(i,enemy,good,"arp","ranged");
-            }
-            if (good!=0) then once_only=1;
-            if (good=0) and (att[i]>0) then ap=0;// Fuck it, shoot at infantry
-        }
+	            if (enemy.veh>0){
+	                good=scr_target(enemy,"veh");// First target has vehicles, blow it to hell
+	                if (range[i]=1) then scr_shoot(i,enemy,good,"arp","melee");
+	                if (range[i]!=1) then scr_shoot(i,enemy,good,"arp","ranged");
+	            }
+	            if (good!=0) then once_only=1;
+	            if (good=0) and (att[i]>0) then ap=0;// Fuck it, shoot at infantry
+	        }
         
         if (enemy.veh=0) and (enemy.medi>0) and (once_only=0){// Check for vehicles
-            var g,good;g=0;good=0;
+				var g = 0;
+				var good = 0;
             
             if (enemy.medi>0){
                 good=scr_target(enemy,"medi");// First target has vehicles, blow it to hell
@@ -183,7 +187,8 @@ if (instance_exists(obj_enunit)) then repeat(60){i+=1;once_only=0;
         
         
         if (ap=0) and (once_only=0){// Check for men
-            var g,good;g=0;good=0;
+				var g = 0;
+				var good = 0;
             
             if (enemy.men>0) and (once_only=0){
                 // show_message(string(wep[i])+" attacking");

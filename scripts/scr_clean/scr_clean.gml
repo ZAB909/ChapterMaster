@@ -51,14 +51,18 @@ function scr_clean(argument0) {
 	        if (veh_hp[you]<0) and (veh_dead[you]=1) then stahp=1;
         
 	        if (stahp=0){
-	            var minus;
-	            minus=hostile_damage;shotted-=1;
-	            minus-=veh_ac[you];if (minus<0) then minus=0.25;
+	            var minus = hostile_damage;
+				shotted -= 1;
+	            minus -= veh_ac[you];
+				
+				if (minus<0) then minus=0.25;
 	            if (enemy=13) and (minus<1) then minus=1;
 	            veh_hp[you]-=minus;
 	            if (veh_hp[you]<=0) and (veh_dead[you]=0){
             
-	                var h,good,open;h=0;good=0;open=0;
+	                var h = 0;
+					var good = 0;
+					var open = 0;
 	                repeat(30){// Need to find the open slot
 	                    h+=1;
 	                    if (veh_type[you]=lost[hh]) and (good=0){lost_num[hh]+=1;good=1;}// If one unit is all the same, and get smashed, this should speed up the repeats
@@ -117,8 +121,8 @@ function scr_clean(argument0) {
 	        // if (marine_armour[you]="Dreadnought") or (marine_hp[you]<0) then stahp=1;
         
 	        if (stahp=0){
-	            var dr,minus;
-	            dr=0;minus=0;minus=hostile_damage;
+	            var dr = 0;
+				var minus = hostile_damage;
             
 	            // minus-=(marine_ac[you]/2);
             
@@ -149,8 +153,8 @@ function scr_clean(argument0) {
 	            if (minus<0) then minus=0.15;
 	            if (minus=0.15) and (hostile_weapon="Fleshborer") then minus=1.5;
 	            if (hostile_weapon="Web Spinner"){
-	                var chunk,webr;webr=floor(random(100))+1;
-	                chunk=max(10,62-(marine_ac[you]*2));
+					var webr = floor(random(100))+1;
+	                var chunk = max(10,62-(marine_ac[you]*2));
 	                minus=0;if (webr<=chunk) then minus=5000;
 	                /*
 	                if (marine_ac[you]<25) then minus=choose(0,0,0,0,5000);

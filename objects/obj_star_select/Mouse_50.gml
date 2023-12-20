@@ -582,7 +582,8 @@ if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_
                         }
                     }
                     
-                    var l1,l2;l1=0;l2=0;
+                    var l1=0;
+					var l2=0;
                     if (obj_controller.faction_status[e]!="War") and (e!=combating){
                         repeat(10){l1+=1;if (allied_fleet[l1]=0) and (l2=0) then l2=l1;}
                         allied_fleet[l2]=e;

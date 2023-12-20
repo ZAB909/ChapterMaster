@@ -25,7 +25,8 @@ if (final_deaths+final_command_deaths>0){
             part2+=string(post_units_lost[i])+"x "+string(post_unit_lost[i])+", ";
         }
     }
-    part2=string_delete(part2,string_length(part2)-1,2);part2+=".";i=0;
+    part2=string_delete(part2,string_length(part2)-1,2);part2+=".";
+	var i=0;
     
     if (injured>0){newline=part8;scr_newtext();}
     newline=part1;scr_newtext();
@@ -98,7 +99,8 @@ if (post_equipment_lost[1]!=""){
             part7+=string(post_equipments_lost[i])+"x "+string(post_equipment_lost[i])+", ";
         }
     }
-    part7=string_delete(part7,string_length(part7)-1,2);part7+=".";i=0;
+    part7=string_delete(part7,string_length(part7)-1,2);part7+=".";
+	var i=0;
 	if (instance_exists(obj_temp4)){part7 += "Some may be recoverable"}
     newline=part6;
     scr_newtext();
@@ -124,7 +126,7 @@ if (slime>0){
     var s1,s2,s3,s4;
     s1="";s2="";s3="";s4="";
     
-    i=-1;
+    var i=-1;
     
     s1="Slime has short-circuited and destroyed "+string(slime);
     
@@ -388,7 +390,7 @@ if (defeat=0) and (enemy=9) and (battle_special="tyranid_org"){
         // thatta=obj_star;
 
         with(obj_star){
-            var u;u=0;
+            var u = 0;
             repeat(4){u+=1;
                 if (p_problem[u,1]="tyranid_org"){p_problem[u,1]="";p_timer[u,1]=0;}
                 if (p_problem[u,2]="tyranid_org"){p_problem[u,2]="";p_timer[u,2]=0;}

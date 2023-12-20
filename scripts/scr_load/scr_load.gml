@@ -402,7 +402,7 @@ function scr_load(argument0, argument1) {
 	    // Stars
 	    i=-1;
 	    repeat(stars){i+=1;
-	        var new_star;new_star=instance_create(0,0,obj_star);
+	        var new_star=instance_create(0,0,obj_star);
 
 	        new_star.name=ini_read_string("Star","sr"+string(i)+"name","");
 	        new_star.star=ini_read_string("Star","sr"+string(i)+"star","");
@@ -757,7 +757,9 @@ function scr_load(argument0, argument1) {
                     obj_ini.gear[coh,mah]=ini_read_string("Mar","ge"+string(coh)+"."+string(mah),"");
                     obj_ini.mobi[coh,mah]=ini_read_string("Mar","mb"+string(coh)+"."+string(mah),"");
 
-                    var arc,teh,teh2;arc=0;teh="";teh2="";// Give daemon weapons their dialogue lines
+                    var arc=0;
+					var teh="";
+					var teh2="";// Give daemon weapons their dialogue lines
                     for (arc=1;arc<6;arc++){
                     	teh2=choose("Daemonic1a|","Daemonic2a|","Daemonic3a|","Daemonic4a|");
                         if (arc=1) then teh=obj_ini.wep1[coh,mah];

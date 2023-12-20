@@ -742,7 +742,7 @@ for(var i=0; i<100; i++){
         xx=floor(random(1152+600))+104;
         yy=floor(random(748+440))+104;
         if (point_distance(room_width/2,room_height/2,xx,yy)>=50) then go=1;
-        me=instance_nearest(xx,yy,obj_star);
+        var me=instance_nearest(xx,yy,obj_star);
         if (go==1) and (point_distance(me.x,me.y,xx,yy)>=150) then go=2;
         if (go==1) then go=0;
         if (xx>=1050+640) or (yy<=300+480) then go=0;

@@ -46,7 +46,7 @@ function scr_role_count(argument0, argument1) {
         
 	        if (argument1!="home") and (argument1!="field"){
 	            if (obj_ini.role[com][i]=argument0){
-	                var t1;t1=string(obj_ini.loc[com][i])+"|"+string(obj_ini.wid[com][i])+"|";
+	                var t1=string(obj_ini.loc[com][i])+"|"+string(obj_ini.wid[com][i])+"|";
 	                if (argument1=t1) then count+=1;
 	            }
 	        }
@@ -54,21 +54,8 @@ function scr_role_count(argument0, argument1) {
 	    com+=1;
 	}
 
-
-
-
-
-
-
-
 	return(count);
-
-
-
-
 	// temp[36]=scr_role_count("Chaplain","field");
 	// temp[37]=scr_role_count("Chaplain","home");
 	// temp[37]=scr_role_count("Chaplain","");
-
-
 }

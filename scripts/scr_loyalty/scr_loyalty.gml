@@ -177,20 +177,22 @@ function scr_loyalty(argument0, argument1) {
 	            repeat(that.frigate_number){i+=1;if (that.frigate_num[i]>0){t+=1;valid[t]=that.frigate_num[i];}}i=0;
 	            repeat(that.escort_number){i+=1;if (that.escort_num[i]>0){t+=1;valid[t]=that.escort_num[i];}}i=0;
             
-	            repeat(30){g+=1;good=0;geh=0;
+	            repeat(30){g+=1;good=0;
+					var geh=0;
 	                i=0;repeat(40){i+=1;if ((obj_ini.artifact_sid[g]-500)=valid[i]) and (valid[i]>0) then geh=1;}
 	                if (obj_ini.artifact[g]!="") and (geh=1) and (string_count("Daemon",obj_ini.artifact_tags[g])>0){
 	                    if (obj_controller.und_armouries=0){hurr+=8;demonic+=1;}
 	                }
 	            }
-	            i=0;geh=0;good=0;
+	            i=0;
+				var geh=0;good=0;
             
 	            if (that.hurssy>0) then hurr+=that.hurssy;
             
 	            if (t>0) then repeat(4400){
 	                if (ca<=10) and (ca>=0){
 	                    ia+=1;if (ia=400){ca+=1;ia=1;if (ca=11) then ca=-5;}
-	                    if (ca>=0) and (ca<11){var geh=0;
+	                    if (ca>=0) and (ca<11){geh=0;
 	                        i=0;repeat(40){i+=1;if (obj_ini.lid[ca,ia]=valid[i]) and (valid[i]>0) then geh=1;}
 	                        if (geh=1){
 	                            if (obj_ini.role[ca,ia]="Ork Sniper") and (obj_ini.race[ca,ia]!=1){hurr+=1;sniper+=1;}

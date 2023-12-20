@@ -119,7 +119,8 @@ if (engaged=0){// Shooting
                 
                 
                 if (ap=1) and ((!instance_exists(obj_nfort)) or (flank=1)){// Check for vehicles
-                    var g,good; g=0;good=0;
+                    var g = 0;
+					var good = 0;
                     
                     if (enemy.veh+enemy.dreads>0) or (enemy.veh_type[1]="Defenses"){
                         // good=scr_target(enemy,"veh");// First target has vehicles, blow it to hell
@@ -153,7 +154,8 @@ if (engaged=0){// Shooting
                 if (string_count("Gauss",wep[i])>0) then ap=0;
                 
                 if (ap=0) and ((!instance_exists(obj_nfort)) or (flank=1)) and (instance_exists(obj_pnunit)) and (instance_exists(enemy)){// Check for men
-                    var g,good;g=0;good=0;
+                    var g = 0;
+					var good = 0;
                     if ((enemy.men-enemy.dreads)>0){
                         // good=scr_target(enemy,"men");// First target has vehicles, blow it to hell
                         scr_shoot(i,enemy,chapter_fuck,"att","ranged");
@@ -163,14 +165,15 @@ if (engaged=0){// Shooting
                     // Note that unless the player has 10+ vehicles in the front rank they can fire on through
                     
                     if (good=0) and (instance_number(obj_pnunit)>1) and (enemy.veh+enemy.dreads<=10){
-                        var x2;x2=enemy.x;
+                        var x2=enemy.x;
                         repeat(instance_number(obj_pnunit)-1){
                             if (good=0){
                                 if (flank=0) then x2-=10;
                                 if (flank=1) then x2+=10;
                                 enemy2=instance_nearest(x2,y,obj_pnunit);
                                 
-                                var j,totes;j=0;totes=0;
+                                var j = 0;
+								var totes = 0;
                                 repeat(600){j+=1;
                                     if (enemy2.marine_hp[j]>0){
                                         if (enemy2.marine_type[j]=obj_ini.role[100][6]) then totes+=1;
@@ -212,13 +215,13 @@ if (!instance_exists(enemy)) or (!instance_exists(obj_pnunit)) then exit;
     var i,dist,no_ap;i=0;dist=999;no_ap=1;
     // dist=point_distance(x,y,enemy.x,enemy.y)/10;
     
-    if (instance_exists(obj_pnunit)) then repeat(30){i+=1;var ap;ap=0;
+    if (instance_exists(obj_pnunit)) then repeat(30){i+=1;var ap=0;
         if (!instance_exists(obj_pnunit)) then exit;
         if (flank=0){enemy=instance_nearest(4000,y,obj_pnunit);enemy2=enemy;dist=point_distance(x,y,enemy.x,enemy.y)/10;}
         if (flank=1){enemy=instance_nearest(0,y,obj_pnunit);enemy2=enemy;dist=point_distance(x,y,enemy.x,enemy.y)/10;}
     
         
-        if (enemy.men+enemy.veh<=0){var x5;x5=enemy.x;with(enemy){x=-100;instance_deactivate_object(id);}enemy=instance_nearest(4000,y,obj_pnunit);enemy2=enemy;}
+        if (enemy.men+enemy.veh<=0){var x5=enemy.x;with(enemy){x=-100;instance_deactivate_object(id);}enemy=instance_nearest(4000,y,obj_pnunit);enemy2=enemy;}
     
         
         
@@ -234,7 +237,8 @@ if (!instance_exists(enemy)) or (!instance_exists(obj_pnunit)) then exit;
             if (apa[i]>att[i]) then ap=1;// Determines if it is AP or not
             
             if (ap=1){// Check for vehicles
-                var g,good;g=0;good=0;
+                    var g = 0;
+					var good = 0;
                 
                 if (enemy.veh+enemy.dreads>0){
                     // good=scr_target(enemy,"veh");// First target has vehicles, blow it to hell
@@ -244,7 +248,8 @@ if (!instance_exists(enemy)) or (!instance_exists(obj_pnunit)) then exit;
             }
             if (ap=0) and (instance_exists(enemy)){// Check for men
                 // show_message(string(wep[i]));
-                var g,good;g=0;good=0;
+                    var g = 0;
+					var good = 0;
                 if ((enemy.men-enemy.dreads)>0){
                     // good=scr_target(enemy,"men");// First target has vehicles, blow it to hell
                     scr_shoot(i,enemy,1,"att","melee");
@@ -316,32 +321,18 @@ if (collision_point(x+10,y,obj_pnunit,0,1)) or (collision_point(x-10,y,obj_pnuni
 
 var range_shooti;
 
-    i=0;
-    
-    
-    repeat(30){i+=1;
-
-
-    
-    dist=floor(point_distance(enemy2.x,enemy2.y,x,y)/10);
-    
-    
-    
-    
-    
-    range_shoot="";
+    var i=0;
+  
+    repeat(30){i+=1; 
+    var dist=floor(point_distance(enemy2.x,enemy2.y,x,y)/10);
+   
+    var range_shoot="";
     
     if (wep[i]!="") and (range[i]>=dist) and (ammo[i]!=0){
         if (range[i]!=1) and (engaged=0) then range_shoot="ranged";
         if ((range[i]!=floor(range[i])) or (range[i]=1)) and (engaged=1) then range_shoot="melee";
     }
-    
-    
-    
-    
-    
-    
-    
+  
     if (wep[i]!="") and (range_shoot="ranged") and (range[i]>=dist){// Weapon meets preliminary checks
         var ap=0;if (apa[i]>att[i]) then ap=1;// Determines if it is AP or not
         
@@ -356,16 +347,17 @@ var range_shooti;
         
         if (instance_exists(enemy2)){
             if (enemy2.veh+enemy2.dreads>0) and (enemy2.men=0) and (apa[i]>10) then ap=1;
-            
+            var once_only = 0;
             if (ap=1) and (once_only=0){// Check for vehicles
-                var g,good;g=0;good=0;
+                var gg = 0;
+				var good = 0;
                 
                 if (enemy.veh>0){
                     // good=scr_target(enemy,"veh");// First target has vehicles, blow it to hell
                     scr_shoot(i,enemy2,good,"arp","ranged");
                 }
                 if (good=0) and (instance_number(obj_pnunit)>1){// First target does not have vehicles, cycle through objects to find one that has vehicles
-                    var x2;x2=enemy2.x;
+                    var x2=enemy2.x;
                     repeat(instance_number(obj_enunit)-1){
                         if (good=0){
                             x2+=10;enemy2=instance_nearest(x2,y,obj_pnunit);

@@ -67,7 +67,7 @@ repeat(700){g+=1;
 
 
         if (marine_casting[g]>-1){
-            var cast_dice;cast_dice=floor(random(100))+1;
+            var cast_dice=floor(random(100))+1;
 
             if (obj_ini.dis[1]="Warp Touched") then cast_dice-=5;
             if (obj_ini.dis[2]="Warp Touched") then cast_dice-=5;
@@ -84,7 +84,9 @@ repeat(700){g+=1;
             }
         }
 
-        var j,good,open;j=0;good=0;open=0;// Counts the number and types of marines within this object
+		var j = 0;
+		var good = 0;
+		var open = 0;// Counts the number and types of marines within this object
         repeat(20){j+=1;
             if (dudes[j]="") and (open=0){
                 open=j;// Determine if vehicle here
@@ -118,7 +120,9 @@ repeat(700){g+=1;
         if (veh_id[g]>0) and (veh_hp[g]>0) then veh_dead[g]=0;
         if (veh_hp[g]>0) then veh+=1;
 
-        var j,good,open;j=0;good=0;open=0;// Counts the number and types of marines within this object
+		var j = 0;
+		var good = 0;
+		var open = 0;// Counts the number and types of marines within this object
         if (veh_dead[g]!=1) then repeat(20){j+=1;
             if (dudes[j]="") and (open=0){open=j;}
             if (veh_type[g]=dudes[j]){good=1;dudes_num[j]+=1;dudes_vehicle[j]=1;}

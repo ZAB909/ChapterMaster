@@ -221,7 +221,7 @@ if (owner  = eFACTION.Player) and (instance_nearest(x,y,obj_p_fleet).action=""){
         if (ii<=1) then ii=1;fleet.image_index=ii;
         
         // Temporary fixing thing
-        with(new_fleet){var w, tempp;
+        with(new_fleet){
             w=0;repeat(capital_number+1){
                 w+=1;if (capital[w]!=""){tempp=capital_num[w];obj_ini.ship_location[tempp]="Warp";}
             }

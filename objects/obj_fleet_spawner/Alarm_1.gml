@@ -134,11 +134,13 @@ if (owner = eFACTION.Ork) or (owner = eFACTION.Chaos){// This is spew out random
     
         i+=1;
     
-        if (en_column[i]!="") then for(s = 0; s < en_num[i]; s += 1){
-            if (en_size[i]>1) then man=instance_create(random_range(1200,1400),round(random_range(y,y+height)+50),obj_en_capital);
-            if (en_size[i]=1) then man=instance_create(random_range(1200,1400),round(random_range(y,y+height)+50),obj_en_cruiser);
-            man.class=en_column[i];man.owner=owner;man.size=en_size[i];
-        }
+        if (en_column[i]!="") then 
+		for(var s = 0; s < en_num[i]; s += 1)
+			{
+	            if (en_size[i]>1) then man=instance_create(random_range(1200,1400),round(random_range(y,y+height)+50),obj_en_capital);
+	            if (en_size[i]=1) then man=instance_create(random_range(1200,1400),round(random_range(y,y+height)+50),obj_en_cruiser);
+	            man.class=en_column[i];man.owner=owner;man.size=en_size[i];
+	        }
     
     
     }

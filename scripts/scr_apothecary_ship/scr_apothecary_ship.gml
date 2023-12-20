@@ -24,16 +24,14 @@ function scr_apothecary_ship() {
 	        if (obj_ini.role[co][d]="Techpriest") and (obj_ini.hp[co][d]>=10) and (obj_ini.lid[co][d]>0) then maybe2=1;
         
 	        if (maybe=1){
-	            var c;
-	            c=0;repeat(capital_number){c++;if (obj_ini.lid[co][d]=capital_num[c]) then maybe=2;}
+	            var c=0;repeat(capital_number){c++;if (obj_ini.lid[co][d]=capital_num[c]) then maybe=2;}
 	            c=0;repeat(frigate_number){c++;if (obj_ini.lid[co][d]=frigate_num[c]) then maybe=2;}
 	            c=0;repeat(escort_number){c++;if (obj_ini.lid[co][d]=escort_num[c]) then maybe=2;}
             
 	            if (maybe=2) then ship_apoth+=20;
 	        }
 	        if (maybe2=1){
-	            var c;
-	            c=0;repeat(capital_number){c++;if (obj_ini.lid[co][d]=capital_num[c]) then maybe2=2;}
+	            var c=0;repeat(capital_number){c++;if (obj_ini.lid[co][d]=capital_num[c]) then maybe2=2;}
 	            c=0;repeat(frigate_number){c++;if (obj_ini.lid[co][d]=frigate_num[c]) then maybe2=2;}
 	            c=0;repeat(escort_number){c++;if (obj_ini.lid[co][d]=escort_num[c]) then maybe2=2;}
             
@@ -62,8 +60,8 @@ function scr_apothecary_ship() {
         
 	        // show_message("maybe=1");
         
-	        if (maybe=1){var c;
-	            c=0;
+	        if (maybe=1){
+	            var c=0;
 	            repeat(capital_number){
 	            	c++;
 	            	if (obj_ini.lid[co][d]=capital_num[c]) then maybe=2;
@@ -91,7 +89,7 @@ function scr_apothecary_ship() {
     
     
 	    d=0;
-		var max_health, location;
+		var max_health =0, location = "";
 	    while (ship_apoth>0) and (d < company_size-1){
 	        d++;
 	        maybe=0;
@@ -100,8 +98,8 @@ function scr_apothecary_ship() {
 			location =  unit.marine_location();
 	        if (unit.hp()<0) or (location[0]!=location_types.ship) then continue;
 			max_health = unit.max_health();
-	        var c;
-            c=0;repeat(capital_number){c++;
+
+            var c=0;repeat(capital_number){c++;
             	if (location[1]=capital_num[c]) then maybe=2;
         	}
             c=0;repeat(frigate_number){c++;
@@ -128,8 +126,8 @@ function scr_apothecary_ship() {
 	    if (ship_tech>0) then repeat(300){// Last techmarines repair shit
 	        d++;normal_hp=true;maybe=0;
 	        if (string_count("Dread",obj_ini.armour[co][d])>0) and (obj_ini.hp[co][d]>0) and (obj_ini.hp[co][d]<100) and (obj_ini.lid[co][d]>0) then maybe=1;
-	        if (maybe=1){var c;
-	            c=0;repeat(capital_number){c++;if (obj_ini.lid[co][d]=capital_num[c]) then maybe=2;}
+	        if (maybe=1){
+	            var c=0;repeat(capital_number){c++;if (obj_ini.lid[co][d]=capital_num[c]) then maybe=2;}
 	            c=0;repeat(frigate_number){c++;if (obj_ini.lid[co][d]=frigate_num[c]) then maybe=2;}
 	            c=0;repeat(escort_number){c++;if (obj_ini.lid[co][d]=escort_num[c]) then maybe=2;}
             
@@ -146,8 +144,8 @@ function scr_apothecary_ship() {
 	    d=0;
 	    if (ship_tech>0) then repeat(200){d++;maybe=0;
 	        if (obj_ini.veh_hp[co][d]>0) and (obj_ini.veh_hp[co][d]<50) and (obj_ini.veh_lid[co][d]>0) then maybe=1;
-	        if (maybe=1){var c;
-	            c=0;repeat(capital_number){c++;if (obj_ini.veh_lid[co][d]=capital_num[c]) then maybe=2;}
+	        if (maybe=1){
+	            var c=0;repeat(capital_number){c++;if (obj_ini.veh_lid[co][d]=capital_num[c]) then maybe=2;}
 	            c=0;repeat(frigate_number){c++;if (obj_ini.veh_lid[co][d]=frigate_num[c]) then maybe=2;}
 	            c=0;repeat(escort_number){c++;if (obj_ini.veh_lid[co][d]=escort_num[c]) then maybe=2;}
 	            if (obj_ini.veh_race[co][d]=1) and (maybe=2){
@@ -158,8 +156,8 @@ function scr_apothecary_ship() {
 	    d=0;
 	    if (ship_tech>0) then repeat(200){d++;maybe=0;
 	        if (obj_ini.veh_hp[co][d]>0) and (obj_ini.veh_hp[co][d]<100) and (obj_ini.veh_lid[co][d]>0) then maybe=1;
-	        if (maybe=1){var c;
-	            c=0;repeat(capital_number){c++;if (obj_ini.veh_lid[co][d]=capital_num[c]) then maybe=2;}
+	        if (maybe=1){
+	            var c=0;repeat(capital_number){c++;if (obj_ini.veh_lid[co][d]=capital_num[c]) then maybe=2;}
 	            c=0;repeat(frigate_number){c++;if (obj_ini.veh_lid[co][d]=frigate_num[c]) then maybe=2;}
 	            c=0;repeat(escort_number){c++;if (obj_ini.veh_lid[co][d]=escort_num[c]) then maybe=2;}
 	            if (obj_ini.veh_race[co][d]=1) and (maybe=2){

@@ -46,8 +46,10 @@ if (instance_exists(obj_temp2)) then targ=instance_nearest(obj_temp2.x,obj_temp2
 if (!instance_exists(obj_temp2)) and (instance_exists(obj_temp7)) then targ=instance_nearest(obj_temp7.x,obj_temp7.y,obj_temp3);
 
 // If player fleet is flying about then get their target for new target
+		var pop;
 if (!instance_exists(obj_temp2)) and (!instance_exists(obj_temp7)) and (instance_exists(obj_p_fleet)) and (obj_ini.fleet_type!=1){chasing=1;
-    with(obj_p_fleet){var pop;
+    with(obj_p_fleet){
+
         if (capital_number>0) and (action!=""){pop=instance_create(action_x,action_y,obj_temp2);pop.action_eta=action_eta;}
         if (frigate_number>0) and (action!=""){pop=instance_create(action_x,action_y,obj_temp7);pop.action_eta=action_eta;}
     }

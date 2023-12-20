@@ -246,7 +246,10 @@ if (obj_controller.selecting_planet!=0){
     
     var temp8,t;temp8="";t=-1;
     repeat(8){
-        var ahuh,ahuh2,ahuh3;ahuh="";ahuh2=0;ahuh3=0;t+=1;
+
+		var ahuh="";
+		var ahuh2=0;
+		var ahuh3=0;t+=1;
         
         if (t=0){ahuh="Adepta Sororitas: ";ahuh2=target.p_sisters[pp];}
         if (t=1){ahuh="Ork Presence: ";ahuh2=target.p_orks[pp];}

@@ -87,11 +87,10 @@ function scr_start_load(fleet, load_from_star, load_options) {
 			}
 		}
 		if (_comp > 1) and (_comp < 10){
-			var squaddy;
 			var company_squad_dist = total_distribute_squads[_comp-2];
 			for (var squad=0;squad<array_length(company_squad_dist);squad++){
 				for (var squad_member =0;squad_member<array_length(obj_ini.squads[company_squad_dist[squad]].members);squad_member++){
-					squaddy = obj_ini.squads[company_squad_dist[squad]].members[squad_member]
+					var squaddy = obj_ini.squads[company_squad_dist[squad]].members[squad_member]
 					_marine = obj_ini.TTRPG[squaddy[0],squaddy[1]];
 					var marine_size =  _marine.get_unit_size();
 					_company_size += marine_size;

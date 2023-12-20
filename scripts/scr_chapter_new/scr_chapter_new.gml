@@ -5,7 +5,7 @@ function scr_chapter_new(argument0) {
 
 	var i;i=-1;
 	repeat(21){i+=1;world[i]="";world_type[i]="";world_feature[i]="";}
-	var i;i=-1;repeat(6){i+=1;adv[i]="";adv_num[i]=0;dis[i]="";dis_num[i]=0;}
+	i=-1;repeat(6){i+=1;adv[i]="";adv_num[i]=0;dis[i]="";dis_num[i]=0;}
 	points=100;maxpoints=100;custom=0;
 
 	hapothecary=scr_marine_name();
@@ -536,7 +536,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 
 
 
-	var i,a;i=0;a=0;
+	var a;i=0;a=0;
 	repeat(4){a+=1;i=0;
 	    repeat(40){i+=1;
 	        if (adv[a]!="") and (advantage[i]=adv[a]) then adv_num[a]=i;
