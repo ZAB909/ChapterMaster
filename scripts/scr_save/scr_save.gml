@@ -520,7 +520,7 @@ function scr_save(save_slot,save_id) {
 	        ini_write_real("Fleet","ef"+string(i)+"loaded",instance_array[i].loaded);
 	        ini_write_string("Fleet","ef"+string(i)+"trade",instance_array[i].trade_goods);
 	        ini_write_real("Fleet","ef"+string(i)+"guardsmen",instance_array[i].guardsmen);
-	        ini_write_real("Fleet","ef"+string(i)+"orb",instance_array[i].orbiting);
+	        ini_write_string("Fleet","ef"+string(i)+"orb",instance_array[i].orbiting);
 	        ini_write_real("Fleet","ef"+string(i)+"navy",instance_array[i].navy);
 	        ini_write_real("Fleet","ef"+string(i)+"unl",instance_array[i].guardsmen_unloaded);
 

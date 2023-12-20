@@ -95,7 +95,7 @@ if (owner  = eFACTION.Player) and (instance_nearest(x,y,obj_p_fleet).action=""){
         fleet.action_x=sys.x;
         fleet.action_y=sys.y;
         fleet.action="move";
-        orbiting=0;
+        fleet.orbiting = undefined;
         
         // mine.present_fleet[1]-=1;
         

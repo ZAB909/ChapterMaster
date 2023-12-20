@@ -864,7 +864,7 @@ function scr_load(argument0, argument1) {
 	        fla.acted=ini_read_real("Fleet","pf"+string(i)+"acted",0);
 	        fla.hurssy=ini_read_real("Fleet","pf"+string(i)+"hurssy",0);
 	        fla.hurssy_time=ini_read_real("Fleet","pf"+string(i)+"hurssy_time",0);
-	        fla.orbiting=ini_read_real("Fleet","pf"+string(i)+"orb",0);
+	        fla.orbiting=ini_read_string("Fleet","pf"+string(i)+"orb",0);
 
 				g=-1;repeat(10){g+=1;
 	            fla.capital[g]=ini_read_string("Fleet","pf"+string(i)+"capital"+string(g),"");

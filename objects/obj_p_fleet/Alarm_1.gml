@@ -11,20 +11,23 @@ if (action="lost"){var i;
 }
 
 
-if (action=""){
-    spid=instance_nearest(x,y,obj_star);
-    // spid.present_fleets+=1;
-    spid.present_fleet[1]+=1;
-    if (spid.vision=0) then spid.vision=1;
-    orbiting=spid;
+if (action="") // when we take no action with the fleet or when the fleet arrives?
+	{
+	    var _star_id = instance_nearest(x,y,obj_star);
+	    // _star_id.present_fleets+=1;
+	    _star_id.present_fleet[1] += 1;
+	    if (_star_id.vision = 0) then _star_id.vision = 1;
+	    orbiting=_star_id;
     
-    if (orbiting!=0) and (instance_exists(orbiting) and (orbiting.visited == 0)){
-		for (var planet_num = 1; planet_num < 5; planet_num += 1){
-			if (array_length(orbiting.p_feature[planet_num])!=0) then with(orbiting){scr_planetary_feature(planet_num);}
-		}
-		orbiting.visited = 1;
-    }
-}
+	    if (orbiting != undefined) and (instance_exists(orbiting) and (orbiting.visited == false))
+			{
+				for (var planet_num = 1; planet_num < 5; planet_num += 1)
+					{
+						if (array_length(orbiting.p_feature[planet_num])!=0) then with(orbiting){scr_planetary_feature(planet_num);}
+					}
+				orbiting.visited = true;
+		    }
+	}
 
 
 if (action="move") or (action="crusade1") or (action="crusade2") or (action="crusade3"){
