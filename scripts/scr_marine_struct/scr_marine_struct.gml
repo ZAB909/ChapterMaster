@@ -1020,9 +1020,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			break;*/	
 	};
 
-	static race = function(){
-		return obj_ini.race[company][marine_number];
-	};	//get race
+	//static race = function(){
+	//	return obj_ini.race[company][marine_number];
+	//};	//get race
 
 	static add_bionics = function(area="none", bionic_quality="standard", from_armoury=false){
 		var new_bionic_pos, part, new_bionic = {quality :bionic_quality};
