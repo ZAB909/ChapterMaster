@@ -1,4 +1,15 @@
 global.weapons={
+    "Ranger Long Rifle":{
+        "abbreviation": "RangeLoRife",
+        "description":"Advanced and accurate rifles from mars given to skitarii sharpshooters",
+        "attack": {
+          "standard": 60,
+          "master_crafted": 70,
+          "artifact": 90
+        },
+        "ranged_hands": 2,
+        "range": 25,
+    },
   "Choppa": {
     "abbreviation": "Chop",
     "attack": {
@@ -6,7 +17,10 @@ global.weapons={
       "master_crafted": 32,
       "artifact": 36
     },
-    // ... (other attributes)
+    "melee_hands": 1,
+    "range": 1,
+    "spli": 1, 
+    "tags":["axe"]
   },
   "Snazzgun": {
     "abbreviation": "Snazz",
@@ -15,7 +29,12 @@ global.weapons={
       "master_crafted": 92,
       "artifact": 104
     },
-    // ... (other attributes)
+    "ranged_hands": 2,
+    "ammo": 20,
+    "range": 3.1,
+    "spli": 1,
+    "arp": 0,
+    "tags":["rifle"]
   },
   "Shuriken Pistol": {
     "abbreviation": "ShurikP",
@@ -24,20 +43,50 @@ global.weapons={
       "master_crafted": 28,
       "artifact": 31
     },
-    // ... (other attributes)
+    "melee_hands": 1,
+    "ranged_hands": 0,
+    "ammo": 6,
+    "range": 2.1,
+    "spli": 1,
+    "arp": 0,
+    "tags":["pistol"]
   },
   "Storm Shield": {
+    "description":"Protects twice as well when boarding. A powered shield that must be held with a hand.  While powered by the marines armour it shimmers with blue energy.",
     "abbreviation": "StShield",
     "attack": {
-      "standard": 0,
-      "master_crafted": 0,
-      "artifact": 0
+      "standard": 5,
+      "master_crafted": 5,
+      "artifact": 10
     },
-    // ... (other attributes)
+    "armour_value": {
+        "standard": 8,
+        "master_crafted": 10,
+        "artifact": 12
+    } ,
+    "melee_hands": 0.9,
+    "tags":["shield"],
+    "hp_mod":{
+      "standard": 30,
+      "master_crafted": 35,
+      "artifact": 40
+    },
   },
   "Boarding Shield": {
+    "description":"Protects twice as well when boarding. Used in siege or boarding operations, this shield offers additional protection.  It may be used with a 2-handed ranged weapon.",    
     "abbreviation": "BoShield",
-    // ... (other attributes)
+    "armour_value": {
+        "standard": 4,
+        "master_crafted": 5,
+        "artifact": 6
+    } ,
+    "melee_hands": 0.9,
+     "tags":["shield"],
+    "hp_mod":{
+      "standard": 15,
+      "master_crafted": 17.5,
+      "artifact": 20
+    },        
   },
   "Hellgun": {
     "abbreviation": "HGun",
@@ -46,15 +95,28 @@ global.weapons={
       "master_crafted": 34,
       "artifact": 38
     },
+    "ammo": 10,
+    "range": 6.1,
+    "spli": 1,
+    "arp": 0,
+    "tags":[],
+    "ranged_hands":2,
     // ... (other attributes)
   },
   "Hellrifle": {
+    "description":"Normally used by Radical Inquisitors, it appears an antiquated rifle but fires razor-sharp shards of Daemonic matter.",
     "abbreviation": "HRifle",
     "attack": {
       "standard": 150,
       "master_crafted": 160,
       "artifact": 170
     },
+    "ammo": 10,
+    "range": 6.1,
+    "spli": 1,
+    "arp": 0,
+    "tags":["rifle","arcane"],
+    "ranged_hands":2,    
     // ... (other attributes)
   },
     "Archeotech Laspistol": {
@@ -69,7 +131,8 @@ global.weapons={
         "ammo": 0,
         "range": 3.1,
         "spli": 0,
-        "arp": 0
+        "arp": 0,
+        "tags":["pistol", "ancient"],
     },
     "Combat Knife": {
         "attack": {
@@ -83,7 +146,8 @@ global.weapons={
         "ammo": 0,
         "range": 1,
         "spli": 0,
-        "arp": 0
+        "arp": 0,
+        "tags":["knife"],
     },
     "Sarissa": {
         "attack": {
@@ -116,7 +180,8 @@ global.weapons={
         "ammo": 0,
         "range": 1,
         "spli": 1,
-        "arp": 0
+        "arp": 0,
+        "tags":["chain", "sword"],
     },
     "Chainaxe": {
         "attack": {
@@ -135,7 +200,27 @@ global.weapons={
         "ammo": 0,
         "range": 1,
         "spli": 1,
-        "arp": 0
+        "arp": 0,
+        "tags":["chain", "axe"],
+    },
+    "Company Standard": {
+      "special_description": "Boosts morale",
+      "description": "A banner that represents the honor of a particular company and will bolster the morale abilities of nearby Space Marines.",
+        "attack": {
+            "standard": 45,
+            "master_crafted": 60,
+            "artifact": 100
+        },      
+            "hp_mod": {
+            "standard": 20, // Adjusted
+            "master_crafted": 20, // Adjusted
+            "artifact": 20 // Adjusted
+        },
+        "melee_hands": 1,
+        "ranged_hands": 1,
+        "range": 1,
+        "spli": 1,
+        "tags":["banner"],   
     },
     "Eviscerator": {
         "attack": {
@@ -154,7 +239,8 @@ global.weapons={
         "ammo": 0,
         "range": 1,
         "spli": 1,
-        "arp": 1
+        "arp": 1,
+        "tags":["chain", "axe"],
     },
     "Power Sword": {
         "attack": {
@@ -174,7 +260,8 @@ global.weapons={
         "range": 1,
         "spli": 1,
         "arp": 1,
-        "special_description": "Parry"
+        "special_description": "Parry",
+        "tags":["power", "sword"],
     },
     "Power Spear": {
         "attack": {
@@ -194,7 +281,8 @@ global.weapons={
         "range": 1,
         "spli": 0,
         "arp": 1,
-        "special_description": "Parry"
+        "special_description": "Parry",
+        "tags":["power", "spear"],
     },
     "Master Crafted Power Sword": {
         "attack": {
@@ -214,8 +302,35 @@ global.weapons={
         "range": 1,
         "spli": 1,
         "arp": 1,
-        "special_description": "Parry"
+        "special_description": "Parry",
+        "tags":["power", "sword"],
     },
+    "Chainfist": {
+        "attack": {
+            "standard": 300,
+            "master_crafted": 325,
+            "artifact": 350
+        },
+        "description": "Created by mounting a chainsword to a power fist, this weapon is easily able to carve through armoured bulkheads.",
+        "melee_hands": 1,
+        "ranged_hands": 1,
+        "range": 1,
+        "spli": 1,
+        "arp": 1,
+        "tags":["power", "chain", "fist"],
+    },
+    "Lascutter": {
+        "attack": {
+            "standard": 100,
+            "master_crafted": 150,
+            "artifact": 200
+        },
+        "description": "Origonally industrial tools used for breaking through bulkheads, this laser weapon is devastating in close combat.",
+        "melee_hands": 1,
+        "range": 1,
+        "arp": 1,
+        "tags":["laser"],
+    },    
     "Eldar Power Sword": {
         "attack": {
             "standard": 170,
@@ -234,7 +349,8 @@ global.weapons={
         "range": 1,
         "spli": 1,
         "arp": 1,
-        "special_description": "Parry"
+        "special_description": "Parry",
+        "tags":["power", "sword"],
     },
     "Power Weapon": {
         "attack": {
@@ -253,7 +369,8 @@ global.weapons={
         "ammo": 0,
         "range": 1,
         "spli": 1,
-        "arp": 1
+        "arp": 1,
+        "tags":["power"],
     },
     "Power Axe": {
         "attack": {
@@ -270,9 +387,10 @@ global.weapons={
         "melee_hands": 1,
         "ranged_hands": 0,
         "ammo": 0,
-        "range": 1.2,
+        "range": 1.1,
         "spli": 0,
-        "arp": 1
+        "arp": 1,
+        "tags":["power", "axe"],
     },
     "Power Fist": {
         "attack": {
@@ -291,7 +409,8 @@ global.weapons={
         "ammo": 0,
         "range": 1,
         "spli": 1,
-        "arp": 1
+        "arp": 1,
+        "tags":["power"],
     },
     "Lightning Claw": {
         "attack": {
@@ -325,7 +444,8 @@ global.weapons={
         "ammo": 0,
         "range": 1,
         "spli": 1,
-        "arp": 1
+        "arp": 1,
+        "tags":["power"],
     },
     "Dreadnought Lightning Claw": {
         "attack": {
@@ -344,7 +464,8 @@ global.weapons={
         "ammo": 0,
         "range": 1,
         "spli": 1,
-        "arp": 0
+        "arp": 0,
+        "tags":["power"],
     },
     "Thunder Hammer": {
         "attack": {
@@ -363,7 +484,8 @@ global.weapons={
         "ammo": 0,
         "range": 1,
         "spli": 1,
-        "arp": 1
+        "arp": 1,
+        "tags":["power", "hammer"],
     },
     "Tome":{
         "attack": {
@@ -382,7 +504,8 @@ global.weapons={
         "ammo": 0,
         "range": 1,
         "spli": 0,
-        "arp": 0
+        "arp": 0,
+        "tags":["arcane"],
     },
     "Relic Blade": {
         "attack": {
@@ -401,7 +524,8 @@ global.weapons={
         "ammo": 0,
         "range": 1,
         "spli": 1,
-        "arp": 1
+        "arp": 1,
+         "tags":["arcane", "sword"],
     },
     "Master Crafted Thunder Hammer": {
         "attack": {
@@ -420,7 +544,8 @@ global.weapons={
         "ammo": 0,
         "range": 1,
         "spli": 1,
-        "arp": 1
+        "arp": 1,
+        "tags":["power", "hammer"],
     },
     "Bolt Pistol": {
         "attack": {
@@ -1374,6 +1499,8 @@ global.gear = {
         "master_crafted": 25,
         "artifact": 30
       },
+      "melee_hands":2,
+      "ranged_hands":2,
       "description": "The toughest and most powerful armour designed by humanity. Only the most veteran of Astartes are allowed to wear these."
     },
     "Dreadnought": {
@@ -1410,6 +1537,8 @@ global.gear = {
         "master_crafted": 25,
         "artifact": 30
       },
+      "melee_hands":2,
+      "ranged_hands":2,      
       "description": "Even more advanced than the Indomitus Terminator Armour, this upgraded armour offers greater mobility at no cost to protection."
     },
     "Cataphractii Pattern Terminator":{
@@ -1426,8 +1555,11 @@ global.gear = {
       "melee_mod": {
         "standard": 20,
         "master_crafted": 25,
-        "artifact": 30
-      },
+        "artifact": 30,
+	},
+      "melee_hands":2,
+      "ranged_hands":2,      
+
       "description": "Among the first issued to the Space Marine Legions, it is functionally distinct from other patterns, bearing additional plating and shield generators installed within the shoulder pads"
     },
      "Ork Armour": {
@@ -1580,7 +1712,6 @@ global.gear = {
       },
       "description": "The MK10 Indomitus is the most advanced pattern of power armour available to the Space Marines, featuring advanced materials and systems."
     }, 
-    {
         "Skitarii Armour":{
             "description": "Skitarri Armour is something of a misnomer as most Skitarii are in fact bonded more or less permenantly to their advanced mars armour",
              "armour_value": {
@@ -1589,9 +1720,17 @@ global.gear = {
                 "artifact": 9 // Augmented
             },                   
         }
-    }  
-  },
+    } , 
   "equipment": {
+    "Bionics": {
+      "special_description": "Restores critcal health",
+      "description": "Bionics may be given to wounded marines to quickly get them back into combat-ready status, replacing damaged flesh.",
+      "hp_mod": {
+        "standard": 30, // Adjusted
+        "master_crafted": 50, // Adjusted
+        "artifact": 50 // Adjusted
+      }
+    },    
     "Narthecium": {
       "special_description": "Medical field kit",
       "description": "An advanced medical field kit, these allow Space Marines to heal or recover Gene-Seed from fallen marines.",
@@ -1624,14 +1763,14 @@ global.gear = {
       "special_description": "",
       "description": "Also called the 'Soul's Armour', this amulet has a built-in, powerful shield generator. They are an icon of the Imperial Creed.",
       "damage_resistance_mod": {
-        "standard": 10, // Adjusted
-        "master_crafted": 15, // Adjusted
-        "artifact": 20 // Adjusted
+        "standard": 15, // Adjusted
+        "master_crafted": 20, // Adjusted
+        "artifact": 25 // Adjusted
       },
       "hp_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
+        "standard": 5,
+        "master_crafted": 10,
+        "artifact": 10
       }
     },
     "Iron Halo": {
@@ -1651,16 +1790,6 @@ global.gear = {
     "Plasma Bomb": {
       "special_description": "Destroys destructibles",
       "description": "A special plasma charge, this bomb can be used to seal underground caves or destroy enemy structures.",
-      "damage_resistance_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-      },
-      "hp_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-      }
     },
     "Exterminatus": {
       "special_description": "Destroys planets",
@@ -1674,20 +1803,6 @@ global.gear = {
         "standard": 0,
         "master_crafted": 0,
         "artifact": 0
-      }
-    },
-    "Company Standard": {
-      "special_description": "Boosts morale",
-      "description": "A banner that represents the honor of a particular company and will bolster the morale abilities of nearby Space Marines.",
-      "damage_resistance_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-      },
-      "hp_mod": {
-        "standard": 20, // Adjusted
-        "master_crafted": 20, // Adjusted
-        "artifact": 20 // Adjusted
       }
     },
     "Servo Arms": {
@@ -1753,9 +1868,9 @@ global.gear = {
   }
 }
 
-function equiment_struct(item_data, core_type,quality="none") constructor{ 
-    var names = ["hp_mod", "description","damage_resistance_mod", "ranged_mod", "melee_mod","armour_value" ,"attack","melee_hands","ranged_hands","ammo","range","spli","arp","special_description"];
-    var defaults = [0,"",0,0,0,0,0,0,0,0,0,0,0,""];
+function equipment_struct(item_data, core_type,quality="none") constructor{ 
+    var names = ["hp_mod", "description","damage_resistance_mod", "ranged_mod", "melee_mod","armour_value" ,"attack","melee_hands","ranged_hands","ammo","range","spli","arp","special_description","abbreviation","tags"];
+    var defaults = [0,"",0,0,0,0,0,0,0,0,0,0,0,"","",[]];
     type = core_type;
     for (var i=0;i<array_length(names);i++){
         if (struct_exists(item_data,names[i])){
@@ -1775,38 +1890,83 @@ function equiment_struct(item_data, core_type,quality="none") constructor{
     }
     spe_desc = special_description;
     static special_description_gen = function(){
+        spe_desc+=" "
         if (attack!=0){
-            spe_desc+=$"DAM {attack}%,"
+            spe_desc+=$"DAM {attack}, "
         }
         if (ranged_mod!=0){
-            spe_desc += $"Ranged {ranged_mod}%,"
+            spe_desc += $"Ranged {ranged_mod}%, "
         }
         if (melee_mod!=0){
-            spe_desc += $"Melee {melee_mod}%,"
+            spe_desc += $"Melee {melee_mod}%, "
         }
         if (hp_mod!=0){
-            spe_desc += $"HP {hp_mod}%,"
+            spe_desc += $"HP {hp_mod}%, "
         }
         if (damage_resistance_mod!=0){
-            spe_desc += $"Damage Res {damage_resistance_mod}%,"
+            spe_desc += $"Damage Res {damage_resistance_mod}%, "
         }
         if (armour_value!=0){
-            spe_desc += $"AC {armour_value},"
+            spe_desc += $"AC {armour_value}, "
         }
         if (ammo!=0){
-            spe_desc += $"AMMO {ammo},"
+            spe_desc += $"Ammo {ammo}, "
         }
-        if (range!=0){
-            spe_desc += $"Range {range},"
+        if (range>1.1){
+            spe_desc += $"Range {range}, "
         }
-        if (arp!=0){
-            spe_desc += $"Armour piercing,"
-        } 
+        if (arp>0){
+            spe_desc += $"Armour piercing, "
+        } else if (arp<0){
+            spe_desc += $"Low Penetration, "
+        }
         if (spli!=0){
-            spe_desc += $"Rapid Fire,"
+            if (range>1.1){
+                spe_desc += $"Ranged, Rapid Fire, "
+            } else {
+                spe_desc += $"Melee, Splash, "
+            }
         }            
         return  spe_desc
     }
+    static has_tag =  function(tag){
+        return array_contains(tags, tag);
+    }
+
+    static has_tags =  function(search_tags){
+        var satisfied=false;
+        var wanted_tags_length=array_length(search_tags);
+        for (var i=0;i<array_length(tags);i++){
+            for (var s=0;s<wanted_tags_length;s++){
+                if (search_tags[s]==tags[i]){
+                    satisfied=true;
+                    break;
+                }
+            }
+            if (satisfied) then break;
+        }
+        return satisfied;
+    }
+
+    static has_tags_all = function(search_tags, require_all=false){
+        var satisfied=false;
+        var wanted_tags_length=array_length(search_tags);
+        for (var i=0;i<array_Length(tags);i++){
+            for (var s=0;s<wanted_tags_length;s++){
+                if (search_tags[s]==tags[i]){
+                    array_delete(search_tags,s,1);
+                    wanted_tags_length--;
+                    s--;
+                    if (wanted_tags_length==0){
+                        satisfied=true;
+                        break;
+                    }
+                }
+            }
+            if (satisfied) then break;
+        }
+        return satisfied;
+    }        
 }
 function gear_weapon_data(search_area="any",item,wanted_data="all", sub_class=false, quality="standard"){
 	var item_data_set=false;
@@ -1846,7 +2006,7 @@ function gear_weapon_data(search_area="any",item,wanted_data="all", sub_class=fa
 
     if (is_struct(item_data_set)){
         if (wanted_data=="all"){
-            return new equiment_struct(item_data_set,search_area,quality);
+            return new equipment_struct(item_data_set,search_area,quality);
         }
         if (struct_exists(item_data_set, wanted_data)){
             if (is_struct(item_data_set[$ wanted_data])){
@@ -1962,87 +2122,10 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 
 	    }
 
-
-	    if (i=1){
-	        gear_weapon_data("any",item[i],"all");
-	        if (equipment_1="Jump Pack"){special_description="+10% Damage Resistance, Jump Pack";
-	            descr="A back mounted device containing turbines or jets powerful enough to lift even a user in Power Armour.";}
-	        if (equipment_1="hammer_of_wrath"){attack=120;arp=0;range=1;spli=0;amm=1;}
-	        if (equipment_1="Bionics"){
-	            special_description="Restores 30HP";if (global.chapter_name="Iron Hands") then special_description="Restores 50 HP";
-	            descr="Bionics may be given to wounded marines to quickly get them back into combat-ready status, replacing damaged flesh.";}
-	        if (equipment_1="Narthecium"){special_description="Medical field kit";
-	            descr="An advanced medical field kit, these allow "+string(obj_ini.role[100,15])+"s to heal or recover Gene-Seed from fallen marines.";}
-	        if (equipment_1="Psychic Hood"){special_description="-50% chance of perils*";
-	            descr="An arcane hood that protects "+string(obj_ini.role[100,17])+"s from enemy psychic powers and enhances their control.";}
-	        if (equipment_1="Rosarius"){special_description="+33% Damage Resistance";
-	            descr="Also called the 'Soul's Armour', this amulet has a built-in, powerful shield generator.  They are an icon of the Imperial Creed.";}
-	        if (equipment_1="Iron Halo"){special_description="+33% Damage Resistance, +20 HP";
-	            descr="An ancient artifact, these powerful conversion field generators are granted to high ranking battle brothers or heroes.  Bearers are oft looked to for guidance.";}
-	        if (equipment_1="Plasma Bomb"){special_description="Destroys destructibles";
-	            descr="A special plasma charge, this bomb can be used to seal underground caves or destroy enemy structures.";}
-	        if (equipment_1="Exterminatus"){special_description="Destroys planets";
-	            descr="A weapon of the Emperor, and His divine judgement, this weapon can be placed upon a planet to obliterate it entirely.";}
-	        if (equipment_1="Bike"){special_description="+25% HP, Bike";
-	            descr="A robust bike that can propel a marine at very high speeds.  Boasts highly responsive controls and Twin Linked Bolters.";}
-	        if (thawep="Company Standard"){special_description="Boosts morale";attack=45;arp=0;range=1;melee_hands+=1;ranged_hands+=0;spli=1;
-	            descr="A banner that represents the honour of a particular company and will bolster the morale abilities of nearby Space Marines.";}
-	        if (equipment_1="Servo Arms"){special_description="Integrated flamer, repairs";
-	            descr="A pair of powerful, mechanical arms.  They include several tools that allow trained marines to repair vehicles rapidly.";}
-	        if (equipment_1="Master Servo Arms"){special_description="Integrated flamer, repairs";
-	            descr="This master servo harness includes additional mechanical arms and tools, allowing a greater capacity and rate of repairs.";}
-	    }
-
-	    // Other stuff above
-	    if (thawep="Choppa"){attack=28;arp=0;range=1;melee_hands+=1;spli=1;}
-	    if (thawep="Snazzgun"){attack=80;arp=0;range=10;ranged_hands+=2;spli=1;}
-	    if (thawep="Shuriken Pistol"){attack=25;arp=0;range=2.1;melee_hands+=1;spli=1;}
-	    if (thawep="Ranger Long Rifle"){attack=60;arp=0;range=25;ranged_hands+=2;spli=0;}
-
-
-
-	    if (thawep="Storm Shield"){melee_hands+=0.9;attack=0;arp=0;range=0;spli=0;
-	        descr="Protects twice as well when boarding. A powered shield that must be held with a hand.  While powered by the marines armour it shimmers with blue energy.";
-	        special_description="+30% HP, +8 Armour";}
-	    if (thawep="Boarding Shield"){melee_hands+=0.9;attack=0;arp=0;range=0;spli=0;
-	        descr="Protects twice as well when boarding. Used in siege or boarding operations, this shield offers additional protection.  It may be used with a 2-handed ranged weapon.";
-	        special_description="+15% HP, +4 Armour";}
-	    if (thawep="Hellgun"){attack=30;arp=0;range=6.1;ranged_hands+=2;amm=10;
-	        descr="";}
-	    if (thawep="Hellrifle"){attack=150;arp=90;range=8;ranged_hands+=2;
-	        descr="Normally used by Radical Inquisitors, it appears an antiquated rifle but fires razor-sharp shards of Daemonic matter.";}
-	    if (thawep="Archeotech Laspistol"){attack=120;arp=0;range=3.1;ranged_hands+=1;
-	        descr="Known as a Lasrod or Gelt Gun, this pistol is an ancient design of Laspistol with much greater range and power.";}
-    
-	    if (thawep="Combat Knife"){attack=25;arp=0;range=1;melee_hands+=0;spli=0;
-	        descr="More of a sword than knife proper, this tough and thick blade becomes a deadly weapon in the hand of an Astartes.";}
-	    if (thawep="Sarissa"){attack=40;arp=0;range=1;spli=1;
-	        descr="A vicious combat attachment that is attached to Bolters, in order to allow them to be used in melee combat.";}
-	    if (thawep="Chainsword"){atta=50;arp=0;rang=1;melee_hands+=1;spli=1;
-	        descr="A standard Chainsword.  It is popular among Assault Marines due to the raw power, even with multiple opponents";}
-	    if (thawep="Chainaxe"){attack=90;arp=0;range=1;melee_hands+=1;ranged_hands+=1;spli=1;
-	        descr="Able to be duel wielded. A weapon most frequently seen in the hands of Chaos, this Chainaxe uses motorized chainsaw teeth to maim and tear.";}
-	    if (thawep="Eviscerator"){attack=180;arp=1;range=1;melee_hands+=2;spli=1;
-	        descr="An obscenely large Chainsword, this two-handed weapon can carve through flesh and plasteel with equal ease.";}
-	    if (thawep="Power Sword"){attack=125;arp=1;range=1;melee_hands+=1.1;spli=0;special_description="Parry";
-	        descr="A preeminent type of Power Weapon.  When active the blade becomes sheathed in a lethal haze of disruptive energy.";}
-	    if (thawep="Master Crafted Power Sword"){attack=185;arp=1;range=1;melee_hands+=1;spli=1;special_description="Parry";
-	        descr="A master-crafted weapon is usually incredibly ornate and highly decorated compared to standard weapons of the same pattern, while also possessing augmented functionality. Any standard Imperial weapon can be master-crafted. Due to the improved design of a master-crafted weapon, it is more likely that a target will be hit by attacks from this weapon.";}
-	    if (thawep="Eldar Power Sword"){attack=170;arp=1;range=1;melee_hands+=1;spli=1;special_description="Parry";
-	        descr="Power weapons, infused with arcane energy, are used by Howling Banshees and Dire Avenger Exarchs. Swords such as these are as much artistic statement as weapon, and effective against even heavily armoured troops.";}
-	    if (thawep="Power Weapon"){attack=135;arp=1;range=1;melee_hands+=1;spli=1;
-	        descr="Often the signature weapons of elite warriors, power swords are perhaps the most dangerous of melee weapons in the galaxy.";}
-	    if (thawep="Power Axe"){attack=160;arp=1;range=1;melee_hands+=1;spli=0;
-	        descr="Similar to the Power Sword. Able to be duel wielded. This weapon can be activated to sheathe the axe-head in a lethal haze of disruptive energy.";}
-	    if (thawep="Power Fist"){attack=275;arp=1;range=1;melee_hands+=1;ranged_hands+=1;spli=1;
-	        descr="A large, metal gauntlet surrounded by an energy field.  Though large and slow it dishes out tremendous damage.";}
-	    if (thawep="Lightning Claw"){attack=450;arp=0;range=1;melee_hands+=2;ranged_hands+=2;spli=1;
-	        descr="Created by attaching several long, energized blades to a standard power fist.  Allows better ripping and tearing.";}
-	    if (thawep="Chainfist"){attack=300;arp=1;range=1;melee_hands+=1;ranged_hands+=1;spli=0;
-	        descr="Created by mounting a chainsword to a power fist, this weapon is easily able to carve through armoured bulkheads.";}
-	    if (thawep="Lascutter"){attack=100;arp=1;range=1;melee_hands+=1;spli=0;
-	        descr="Origonally industrial tools used for breaking through bulkheads, this laser weapon is devastating in close combat.";}
-
+        var gear_data;
+        if (i=1){
+            gear_data=gear_weapon_data("any",equipment_1,"all");
+        }
 
 	    if (thawep="Force Weapon"){
 	        attack=400;arp=1;range=1;melee_hands+=1;spli=1;
@@ -2290,116 +2373,6 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 	    }
 
 
-
-
-
-
-
-
-	    if (information_wanted="description") or (information_wanted="description_long"){// was i=2
-	        /*if (i=1){
-	            disk1=descr;
-	            atta1=attack;
-	            arp1=arp;
-	            rang1=range;
-	            ammo1=amm;
-	            spli1=spli;
-	            rending1=rending;
-	            spe_descr1=special_description;
-	        }
-
-	        descr=disk1;
-	        attack=att1;
-	        arp=apa1;
-	        range=rang1;
-	        amm=ammo1;
-	        spli=spli1;
-	        rending=rending1;
-	        special_description=spe_descr1;*/
-
-
-
-	        if (string_count("Bolter",thawep)>0) and (string_count("Drilling",obj_ini.strin)>0){
-	            if (attack>0) then attack=round(attack*1.15);
-	            // if (arp>0) then arp=round(arp*1.15);
-	        }
-
-	        if (instance_exists(obj_shop)){
-	            if (attack>0){
-	                obj_shop.tooltip_weapon=1;
-	                obj_shop.tooltip_stat1=attack;
-	                obj_shop.tooltip_stat2=arp;
-	                obj_shop.tooltip_stat3=max(ranged_hands,melee_hands);
-	                obj_shop.tooltip_stat4=amm;
-
-	                if (range<=1.1){
-	                    obj_shop.tooltip_other="Melee";
-	                    if (spli=1) then obj_shop.tooltip_other+=", Splash";
-	                }
-	                if (range>1.1){
-	                    obj_shop.tooltip_other=string(round(range))+" Range";
-	                    if (spli=1) then obj_shop.tooltip_other+=", Rapid Fire";
-	                }
-
-	                if (arp=-1) then obj_shop.tooltip_other+=", Low Penetration";
-	                if (arp=1) then obj_shop.tooltip_other+=", Armour Piercing";
-
-	            }
-	            if (attack=0) and (statt=0){// Held something
-	                obj_shop.tooltip_weapon=2;
-	                obj_shop.tooltip_other=special_description;
-	            }
-	            if (attack=0) and (melee_hands+ranged_hands=0) and (statt>0){// Armour
-	                obj_shop.tooltip_weapon=3;
-	                obj_shop.tooltip_stat1=statt;
-	                obj_shop.tooltip_other=special_description;
-	            }
-	        }
-
-	        if (!instance_exists(obj_shop)) and (!instance_exists(obj_ncombat)) and (((obj_controller.menu=1) and (obj_controller.managing>0)) or (obj_controller.menu=13)){
-	            // 0.6
-	            menu_artifact_type=4;
-
-	            if (attack>0){
-	                obj_controller.tooltip_stat1=attack;
-	                obj_controller.tooltip_stat2=arp;
-	                obj_controller.tooltip_stat3=max(ranged_hands,melee_hands);
-	                obj_controller.tooltip_stat4=amm;
-
-	                if (range<=1.1){menu_artifact_type=1;
-	                    obj_controller.tooltip_other="Melee";
-	                    if (spli=1) then obj_controller.tooltip_other+=", Splash";
-	                }
-	                if (range>1.1){menu_artifact_type=1;
-	                    obj_controller.tooltip_other=string(round(range))+" Range";
-	                    if (spli=1) then obj_controller.tooltip_other+=", Rapid Fire";
-	                }
-
-	                if (arp=-1) then obj_controller.tooltip_other+=", Low Penetration";
-	                if (arp=1) then obj_controller.tooltip_other+=", Armour Piercing";
-	            }
-	            if (attack=0) and (statt=0){// Held something
-	                obj_controller.tooltip_other=special_description;
-	                menu_artifact_type=3;
-	                obj_controller.tooltip_stat1=0;
-	                obj_controller.tooltip_stat2=0;
-	                obj_controller.tooltip_stat3=max(ranged_hands,melee_hands);
-	                obj_controller.tooltip_stat4=0;
-	            }
-	            if (attack=0) and (statt>0){// Armour
-	                obj_controller.tooltip_stat1=statt;
-	                obj_controller.tooltip_other=special_description;
-	                menu_artifact_type=2;
-	            }
-	        }
-
-	        // exit;exit;
-	    }
-
-
-
-
-
 	    if (information_wanted!="description") and (information_wanted!="description_long"){
 	        if (base_group!=false){if (string_count("Dreadnought",marine_armour[unit_array_position])>0) and (marine_mobi[unit_array_position]="") then amm=-1;}
 	        if (thawep="Whirlwind Missiles") then amm=6;
@@ -2455,16 +2428,17 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 	            // arp=arp*obj_ncombat.global_attack;
 	        }
 
-
-	        if (ranged_hands>2) and (range>1) and (base_group=true) and (is_dreadnought=false){
-	            attack=attack*0.6;// arp=arp*0.6;
-	        }
-	        if (melee_hands>2) and (range<=1) and (base_group=true) and (is_dreadnought=false){
-	            attack=attack*0.6;// arp=arp*0.6;
-	        }
-
-	        if (i=1){att1=attack;apa1=arp;rang1=range;ammo1=amm;spli1=spli;}
-	        if (i=2){att2=attack;apa2=arp;rang2=range;ammo2=amm;spli2=spli;}
+	        if (i=1){att1=attack;
+                apa1=arp;
+                rang1=range;
+                ammo1=amm;
+                spli1=spli;
+            }else if (i=2){att2=attack;
+                apa2=arp;
+                rang2=range;
+                ammo2=amm;
+                spli2=spli;
+            }
 
 
 	        // This is giving problems
@@ -2492,37 +2466,6 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 
 	    obj_controller.temp[9000]+=string(thawep)+": "+string(melee_hands)+","+string(ranged_hands)+"|";
 	}
-
-
-
-
-
-	// End repeat(2)
-
-	if (information_wanted="description") or (information_wanted="description_long"){
-	    if ((!instance_exists(obj_shop)) and (!instance_exists(obj_ncombat)) and (obj_controller.menu=1) and (obj_controller.managing>0)) or (obj_controller.squads == true){
-	        // obj_controller.temp[9000]="Melee Hands: "+string(melee_hands)+", Ranged Hands: "+string(ranged_hands);
-	        var melee_limit = 2
-	        var ranged_limit = 2
-	        if(array_contains(["Terminator Armour", "Tartaros"], marine_armour[unit_array_position])){
-	        	melee_limit+=2;
-	        	ranged_limit++;
-	        } else if(obj_controller.squads == true){
-	        	if(array_contains(["Terminator Armour", "Tartaros"], obj_controller.marine_armour[0])){
-	        		melee_limit+=2;
-	        		ranged_limit++;
-	        	}	
-	        }        
-	        if (melee_hands<=2) or (is_dreadnought=true) then obj_controller.ui_melee_penalty=0;
-	        if (ranged_hands<=2) or (is_dreadnought=true) then obj_controller.ui_ranged_penalty=0;
-	        if (melee_hands>melee_limit) and (is_dreadnought=false) then obj_controller.ui_melee_penalty=1;
-	        if (ranged_hands>ranged_limit) and (is_dreadnought=false) then obj_controller.ui_ranged_penalty=1;
-	    }
-
-	    if (information_wanted="description") then return(descr);
-	    if (information_wanted="description_long") then return(descr2);
-	}
-
 
 	if (information_wanted!="description") and (information_wanted!="description_long"){
 	    var b,goody,found,stack;b=0;goody=0;found=0;stack=1;
@@ -2593,7 +2536,13 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 
 	            if (wep[b]="") and (goody=0) and (canc=false){
 	                // if (thawep=wip1){
-	                    att[b]+=att1;apa[b]=apa1;range[b]=rang1;wep_num[b]+=1;splash[b]=spli1;wep[b]=thawep;goody=1;
+	                    att[b]+=att1;
+                        apa[b]=apa1;
+                        range[b]=rang1;
+                        wep_num[b]+=1;
+                        splash[b]=spli1;
+                        wep[b]=thawep;
+                        goody=1;
 	                    // if (marine_type[unit_array_position]="Death Company") and (range[b]=1){att[b]+=att1;wep_num[b]+=1;wep_rnum[b]+=1;}
 	                    if (obj_ncombat.started=0) then ammo[b]=ammo1;
 	                // }

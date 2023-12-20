@@ -243,7 +243,10 @@ function scr_ui_manage() {
 	        	x2 = x1+string_width(var_text);
 	        	y2 = y1+string_height(var_text);
 		        draw_set_color(c_gray);
-		        if (ui_melee_penalty>0) then draw_set_color(c_red);
+		        if (selected_unit.encumbered_melee){
+		        	draw_set_color(c_red);
+		        	tooltip_text+="#encumbered"
+		        }
 		        draw_text(x1,y1,var_text);
 		        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
 	    	}
@@ -256,7 +259,10 @@ function scr_ui_manage() {
 	        	x2 = x1+string_width(var_text);
 	        	y2 = y1+string_height(var_text);
 		        draw_set_color(c_gray);
-		        if (ui_ranged_penalty>0) then draw_set_color(c_red);
+		        if (selected_unit.encumbered_ranged){
+		        	draw_set_color(c_red);
+		        	tooltip_text+="#encumbered"
+		        }
 		        draw_text(x1,y1,var_text);
 		        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
 	    	}
@@ -265,7 +271,7 @@ function scr_ui_manage() {
 
     		var_text = string_hash_to_newline(string("Bionics: {0}",selected_unit.bionics()))
         	x1 = xx+1387;
-        	y1 = yy+420;
+        	y1 = yy+460;
         	x2 = x1+string_width(var_text);
         	y2 = y1+string_height(var_text);
 	        draw_set_color(c_gray);
@@ -285,7 +291,7 @@ function scr_ui_manage() {
     		var_text = string_hash_to_newline($"Health: {selected_unit.hp()}/{selected_unit.max_health()}")
         	tooltip_text = string_hash_to_newline(string("CON : {0}", selected_unit.constitution));
         	x1 = xx+1015;
-        	y1 = yy+40;
+        	y1 = yy+420;
         	x2 = x1+string_width(var_text);
         	y2 = y1+string_height(var_text);
 	        draw_set_color(c_gray);
