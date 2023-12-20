@@ -533,7 +533,7 @@ if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_
     if (combating>0){
         obj_controller.combat=combating;
     
-        var ii, xx, yy, good, pfleet, enemy_fleet, allied_fleet, ecap, efri, eesc, acap, afri, aesc, e1,e2,e3;
+        var ii, good, pfleet, enemy_fleet, allied_fleet, ecap, efri, eesc, acap, afri, aesc, e1,e2,e3;
         ii=0;xx=0;yy=0;good=0;pfleet=0;enemy_fleet=0;allied_fleet=0;ecap=0;efri=0;eesc=0;e1=0;e2=0;e3=0;
         ii=-1;repeat(20){ii+=1;enemy_fleet[ii]=0;allied_fleet[ii]=0;ecap[ii]=0;efri[ii]=0;eesc[ii]=0;acap[ii]=0;afri[ii]=0;aesc[ii]=0;}
         
