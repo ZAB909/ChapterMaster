@@ -54,7 +54,7 @@ function scr_enemy_ai_a() {
     
 	    if (yep>0){
 	        with(obj_temp2){instance_destroy();}
-	        with(obj_after_combat_ork_force){instance_destroy();}
+	        //with(obj_after_combat_ork_force){instance_destroy();}this does not exist? also used below with out error
 	        instance_create(x,y,obj_temp2);
 	        with(obj_en_fleet){
 	            if (owner=4){
@@ -62,9 +62,9 @@ function scr_enemy_ai_a() {
 	                if (point_distance(action_x,action_y,near.x,near.y)<2) and (string_count("investigate_dead",trade_goods)>0) then instance_create(action_x,action_y,obj_after_combat_ork_force);
 	            }
 	        }
-	        if (instance_exists(obj_after_combat_ork_force)) then stop=true;
+	        //if (instance_exists(obj_after_combat_ork_force)) then stop=true;
 	        with(obj_temp2){instance_destroy();}
-	        with(obj_after_combat_ork_force){instance_destroy();}
+	       // with(obj_after_combat_ork_force){instance_destroy();}
         
 	        if (stop=false){
 	            var plap,old_x,old_y,flee;plap=0;old_x=x;old_y=y;flee=0;
