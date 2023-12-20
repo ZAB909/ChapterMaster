@@ -83,7 +83,7 @@ audien_topic[6]="";audien_topic[7]="";audien_topic[8]="";audien_topic[9]="";audi
 alert_alpha[1]=0.2;
 alert_char[1]=1;
 
-var i;i=0;
+i = 0;
 repeat(11){i+=1;
     if (obj_controller.audien[i]!=0){audiences+=1;audien[audiences]=obj_controller.audien[i];audien_topic[audiences]=obj_controller.audien_topic[i];}
 }i=0;// LOLOLOLOLOL
@@ -118,7 +118,7 @@ repeat(99){i+=1;
 
 
 if (audiences>0){// This is a one-off change all messages to declare war
-    var i;i=0;
+	i = 0;
     var war;repeat(11){i+=1;war[i]=0;}
     
     i=0;
@@ -150,7 +150,7 @@ if (audiences>0){// This is a one-off change all messages to declare war
         }*/
     }
 }
-var i;i=0;
+	i = 0;
 if (audiences>0){
     repeat(10){i+=1;
         if (audien_topic[i]="") and (audien_topic[i+1]!=""){
