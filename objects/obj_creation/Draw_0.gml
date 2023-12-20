@@ -493,11 +493,11 @@ if (slide=2){
 		if (scr_hit(445,625,700,650)=true){tooltip="Combat Doctrine";tooltip2="The style of warfare your Chapter has specialized in.";}
 		
 		var doct_info;doct_info=""
-		if (doctrine="Generalist") then doct_info="-A well rounded approach to tactics as described in the Codex astartes favoring no particular troop or vehicle your chapter is inherently adaptable as a jack of all trades.";
-        if (doctrine="Breakthrough") then doct_info="-Vehicle based spearheads supported by heavily armed and armored Astartes seek to crush enemy lines with walls of Ceramite and unmatched firepower your chapter favors Terminators, Devastators, Predators, and Land Raiders.";
-        if (doctrine="Shock Assault") then doct_info="-Nimble infantry ravage enemy lines at high speeds getting stuck in and crushing the enemy before redeploying just as swiftly your chapter favors Land speeders, Assault Marines, Bikes, and Drop assaults.";
-        if (doctrine="Irregular Warfare") then doct_info="-Stealthy combatants eliminate enemy leaders from afar, or ambush vulnerable supply trains seeking to bleed the enemy dry with a thousand cuts your chapter favors Scouts, and capable small strike-forces.";
-        //if (scr_hit(550,670,600,680)=true){tooltip=string(doctrine);tooltip2=doct_info;}
+		if (doctrine=="Generalist") then doct_info="-A well rounded approach to tactics as described in the Codex astartes favoring no particular troop or vehicle your chapter is inherently adaptable as a jack of all trades.";
+        if (doctrine=="Breakthrough") then doct_info="-Vehicle based spearheads supported by heavily armed and armored Astartes seek to crush enemy lines with walls of Ceramite and unmatched firepower your chapter favors Terminators, Devastators, Predators, and Land Raiders.";
+        if (doctrine=="Shock Assault") then doct_info="-Nimble infantry ravage enemy lines at high speeds getting stuck in and crushing the enemy before redeploying just as swiftly your chapter favors Land speeders, Assault Marines, Bikes, and Drop assaults.";
+        if (doctrine=="Irregular Warfare") then doct_info="-Stealthy combatants eliminate enemy leaders from afar, or ambush vulnerable supply trains seeking to bleed the enemy dry with a thousand cuts your chapter favors Scouts, and capable small strike-forces.";
+        if (scr_hit(550,670,600,680)=true){tooltip=string(doctrine);tooltip2=doct_info;}
 		
 		if (custom<2) then draw_set_alpha(0.5);
         if (custom=2) then draw_sprite_stretched(spr_creation_arrow,0,450,665,32,32);
@@ -509,19 +509,19 @@ if (slide=2){
         
 
 
-if (scr_hit(450,665,450+32,665+32)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
+if (scr_hit(450,665,482,697)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
             var onceh;onceh=0;cooldown=8000;
-            if (doctrine="Generalist") and (onceh=0){doctrine="Breakthrough";onceh=1;}
-            if (doctrine="Breakthrough") and (onceh=0){doctrine="Shock Assault";onceh=1;}
-            if (doctrine="Shock Assault") and (onceh=0){doctrine="Irregular Warfare";onceh=1;}
-            if (doctrine="Irregular Warfare") and (onceh=0){doctrine="Generalist";onceh=1;}
+            if (doctrine=="Generalist") and (onceh=0){doctrine="Breakthrough";onceh=1;}
+            if (doctrine=="Breakthrough") and (onceh=0){doctrine="Shock Assault";onceh=1;}
+            if (doctrine=="Shock Assault") and (onceh=0){doctrine="Irregular Warfare";onceh=1;}
+            if (doctrine=="Irregular Warfare") and (onceh=0){doctrine="Generalist";onceh=1;}
         }
-        if (scr_hit(495,665,495+32,665+32)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
+        if (scr_hit(495,665,527,697)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
             var onceh;onceh=0;cooldown=8000;
-            if (doctrine="Generalist") and (onceh=0){doctrine="Irregular Warfare";onceh=1;}
-            if (doctrine="Irregular Warfare") and (onceh=0){doctrine="Shock Assault";onceh=1;}
-            if (doctrine="Shock Assault") and (onceh=0){doctrine="Breakthrough";onceh=1;}
-            if (doctrine="Breakthrough") and (onceh=0){doctrine="Generalist";onceh=1;}
+            if (doctrine=="Generalist") and (onceh=0){doctrine="Irregular Warfare";onceh=1;}
+            if (doctrine=="Irregular Warfare") and (onceh=0){doctrine="Shock Assault";onceh=1;}
+            if (doctrine=="Shock Assault") and (onceh=0){doctrine="Breakthrough";onceh=1;}
+            if (doctrine=="Breakthrough") and (onceh=0){doctrine="Generalist";onceh=1;}
         }
 	
 		}
