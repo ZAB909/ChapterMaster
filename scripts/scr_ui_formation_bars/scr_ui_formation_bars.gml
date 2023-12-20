@@ -75,9 +75,11 @@ function scr_ui_formation_bars() {
                 }
             }
 
-            if (instance_exists(ui_formations_data.nbar)) {
-                ui_formations_data.nbar.width = 39;
-            }
+
+            if (struct_exists(ui_formations_data, nbar))
+				{
+	                ui_formations_data.nbar.width = 39;
+	            }
 
             if (temp[4800 + bar] > 10) {
                 bat_deva_for[bar] = 1;
