@@ -126,7 +126,7 @@ if (hp>0) and (instance_exists(obj_en_ship)){
     }
     if (paction="move") or (paction="attack_move"){
         direction=turn_towards_point(direction,x,y,target_x,target_y,ts/2);
-        var dist;dist=point_distance(x,y,target_x,target_y);
+        dist=point_distance(x,y,target_x,target_y);
         if (y>target_y) then direction=turn_towards_point(direction,x,y,target_x,target_y,ts);
         if (y<target_y) then direction=turn_towards_point(direction,x,y,target_x,target_y,ts);
         
@@ -145,7 +145,7 @@ if (hp>0) and (instance_exists(obj_en_ship)){
     if (turret_cool>0) then turret_cool-=1;
     
     
-    var bull, targe, rdir, dirr, dist, xx, yy, ok;
+    var bull, targe, rdir, dirr, xx, yy, ok;
     targe=0;rdir=0;dirr="";dist=9999;xx=x;yy=y;
     
     

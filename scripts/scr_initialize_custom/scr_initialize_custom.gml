@@ -2419,7 +2419,7 @@ function scr_initialize_custom() {
 					spawn_unit.spawn_old_guard();
 								
 	            }
-	            if (company=10) then for(var i=0;i<temp1;i++){
+	            if (company=10) then for(i=0;i<temp1;i++){
 	            	k+=1;
 	            	man_size+=1;
 

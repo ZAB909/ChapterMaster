@@ -113,7 +113,7 @@ if (type=5) and (cooldown<=0){
     if (before!=target_comp) and (type=5){
         var i,cap,bear,spec,champ;i=0;cap=0;bear=0;spec=0;champ=0;
 
-        var i;i=-1;
+        i=-1;
         repeat(10){i+=1;role_name[i]="";role_exp[i]=0;}
         req_armour="";req_armour_num=0;
         req_gear="";req_gear_num=0;
@@ -508,7 +508,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
 
 /* */
 
-var xx,yy,change_tab,do_not_change;
+var do_not_change;
 xx=__view_get( e__VW.XView, 0 );
 yy=__view_get( e__VW.YView, 0 );
 change_tab=0;
@@ -897,7 +897,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
 
 if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<yy+520){// Equipment
 
-    var w=0
+
     if (company>10) then company=0;
     for(var w=0;w<500;w++){ // Gets the number of marines in the selected company
         if (obj_ini.name[company,w]=="") and (obj_ini.name[company,w+1]==""){
@@ -1457,7 +1457,7 @@ if (mouse_x>=xx+408) and (mouse_y>=yy+393) and (mouse_x<xx+518) and (mouse_y<yy+
 }
 
 if (type=8) and (cooldown<=0){
-    var xx,yy,before;
+    var before;
     xx=__view_get( e__VW.XView, 0 )+951;yy=__view_get( e__VW.YView, 0 )+48;
     before=target_comp;
 
@@ -1497,7 +1497,9 @@ if (type=8) and (cooldown<=0){
 
 
     if (cooldown<=0) and (target_comp!=-1){
-        var xx,yy,bb;bb="";x2=__view_get( e__VW.XView, 0 )+951;y2=__view_get( e__VW.YView, 0 )+398;
+        var bb;bb="";
+		var x2=__view_get( e__VW.XView, 0 )+951;
+		var y2=__view_get( e__VW.YView, 0 )+398;
         var top,sel,temp1,temp2,temp3,temp4,temp5;temp1="";temp2="";temp3="";temp4="";temp5="";
         top=obj_controller.man_current;var stop;stop=0;sel=top;
 

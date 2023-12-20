@@ -212,7 +212,7 @@ function scr_trade(argument0) {
     
     
 	    // Temporary work around
-	    if (lisc>0){var i;i=0;
+	    if (lisc>0){i=0;
 	        repeat(4){i+=1;
 	            if (trade_give[i]="Requisition") then requisition-=trade_mnum[i];
 	            if (trade_give[i]="Gene-Seed") and (trade_mnum[i]>0){
@@ -291,7 +291,7 @@ function scr_trade(argument0) {
 	        // show_message("TG2:"+string(instance_number(obj_temp2))+", TG3:"+string(instance_number(obj_temp3))+", TG4:"+string(instance_number(obj_temp4)));
         
         
-	        var targ, flit, i,chasing;chasing=0;targ=0;// Set target, chase
+	        var targ, flit,chasing;chasing=0;targ=0;// Set target, chase
         
 	        // if (obj_ini.fleet_type!=1){
 	            if (instance_exists(obj_temp2)) then targ=instance_nearest(obj_temp2.x,obj_temp2.y,obj_temp3);

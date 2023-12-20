@@ -152,7 +152,7 @@ function scr_load(argument0, argument1) {
 	    obj_controller.fest_boozes=ini_read_real("Controller","f_boo",0);
 	    obj_controller.fest_drugses=ini_read_real("Controller","f_dru",0);
 	    obj_controller.recent_happenings=ini_read_real("Controller","rech",0);
-	    var i;i=-1;
+	    i=-1;
 	    repeat(obj_controller.recent_happenings+1){i+=1;
 	        if (recent_type[i]!=""){
 	            obj_controller.recent_type[i]=ini_write_string("Controller","rect"+string(i),"");
@@ -233,7 +233,7 @@ function scr_load(argument0, argument1) {
 	    obj_controller.recruits=ini_read_real("Controller","recruits",0);
 	    obj_controller.recruit_last=ini_read_real("Controller","recruit_last",0);
 
-	    var g;g=-1;repeat(30){g+=1;
+	    g=-1;repeat(30){g+=1;
 	        obj_controller.command_set[g]=ini_read_real("Controller","command"+string(g),0);
 	    }
 	    if (obj_controller.command_set[20]=0) and (obj_controller.command_set[21]=0) and (obj_controller.command_set[22]=0) then obj_controller.command_set[20]=1;
@@ -241,7 +241,7 @@ function scr_load(argument0, argument1) {
 
 
 	    ini_read_real("Controller","blandify",0);
-	    var g;g=-1;repeat(obj_controller.recruits){g+=1;
+			g=-1;repeat(obj_controller.recruits){g+=1;
 	        obj_controller.recruit_name[g]=ini_read_string("Recruit","rcr"+string(g),"Error");
 	        // ini_write_string("Recruit","rcr"+string(g),obj_controller.recruit_name[g]);
 	        obj_controller.recruit_corruption[g]=ini_read_real("Recruit","rcr_cr"+string(g),0);
@@ -249,18 +249,18 @@ function scr_load(argument0, argument1) {
 	        obj_controller.recruit_training[g]=ini_read_real("Recruit","rcr_tr"+string(g),0);
 	        obj_controller.recruit_exp[g]=ini_read_real("Recruit","rcr_ex"+string(g),0);
 	    }
-	    var g;g=-1;repeat(30){g+=1;
+			g=-1;repeat(30){g+=1;
 	        obj_controller.loyal[g]=ini_read_string("Controller","lyl"+string(g),"Error");
 	        obj_controller.loyal_num[g]=ini_read_real("Controller","lyl_nm"+string(g),0);
 	        obj_controller.loyal_tm[g]=ini_read_real("Controller","lyl_tm"+string(g),0);
 	    }
-	    var g;g=-1;repeat(30){g+=1;
+			g=-1;repeat(30){g+=1;
 	        obj_controller.inquisitor[g]=ini_read_string("Controller","inq"+string(g),"Error");
 	        obj_controller.inquisitor_gender[g]=ini_read_real("Controller","inq_ge"+string(g),1);
 	        obj_controller.inquisitor_type[g]=ini_read_string("Controller","inq_ty"+string(g),"Error");
 	    }
 
-	    var g;g=-1;repeat(14){g+=1;
+			g=-1;repeat(14){g+=1;
 	        obj_controller.faction[g]=ini_read_string("Factions","fac"+string(g),"Error");
 	        obj_controller.disposition[g]=ini_read_real("Factions","dis"+string(g),0);
 	        obj_controller.disposition_max[g]=ini_read_real("Factions","dis_max"+string(g),0);
@@ -279,13 +279,13 @@ function scr_load(argument0, argument1) {
 	        obj_controller.audien_topic[g]=ini_read_string("Factions","audience_topic"+string(g),"");
 	    }
 	    //
-	    var g;g=0;
+	    g=0;
 	    repeat(50){g+=1;
 	        obj_controller.quest[g]=ini_read_string("Ongoing","quest"+string(g),"");
 	        obj_controller.quest_faction[g]=ini_read_real("Ongoing","quest_faction"+string(g),0);
 	        obj_controller.quest_end[g]=ini_read_real("Ongoing","quest_end"+string(g),0);
 	    }
-	    var g;g=0;
+	    g=0;
 	    repeat(99){g+=1;
 	        obj_controller.event[g]=ini_read_string("Ongoing","event"+string(g),"");
 	        obj_controller.event_duration[g]=ini_read_real("Ongoing","event_duration"+string(g),0);
@@ -400,7 +400,7 @@ function scr_load(argument0, argument1) {
 	    stars=ini_read_real("Save","stars",0);
 
 	    // Stars
-	    var i;i=-1;
+	    i=-1;
 	    repeat(stars){i+=1;
 	        var new_star;new_star=instance_create(0,0,obj_star);
 
@@ -422,7 +422,7 @@ function scr_load(argument0, argument1) {
 	        new_star.space_hulk=ini_read_real("Star","sr"+string(i)+"spacehulk",0);
 	        if (new_star.space_hulk=1) then new_star.sprite_index=spr_star_hulk;
 
-	        var g;g=0;
+	        g=0;
 	        repeat(4){g+=1;
 	            if (new_star.planets>=g){
 	                new_star.planet[g]=ini_read_real("Star","sr"+string(i)+"plan"+string(g),0);
@@ -431,7 +431,7 @@ function scr_load(argument0, argument1) {
 					new_star.p_feature[g] = [];
 					var  p_features = ini_read_string("Star","sr"+string(i)+"feat"+string(g),"");
 					if (p_features != ""){
-						var p_features = json_parse(base64_decode(p_features));
+						p_features = json_parse(base64_decode(p_features));
 						for (var feat = 0;feat < array_length(p_features);feat++){
 							var new_feat = new new_planet_feature(p_features[feat].f_type);
 							new_feat.load_json_data(p_features[feat]);
@@ -456,7 +456,7 @@ function scr_load(argument0, argument1) {
 					new_star.p_upgrades[g] = [];
 					var  p_upgrades = ini_read_string("Star","sr"+string(i)+"upg"+string(g),"");
 					if (p_upgrades != ""){
-						var p_upgrades = json_parse(base64_decode(p_upgrades));
+						p_upgrades = json_parse(base64_decode(p_upgrades));
 						for (var feat = 0;feat < array_length(p_upgrades);feat++){
 							var new_feat = new new_planet_feature(p_upgrades[feat].f_type);
 							new_feat.load_json_data(p_upgrades[feat]);
@@ -529,8 +529,8 @@ function scr_load(argument0, argument1) {
 	    obj_ini.psy_powers=ini_read_string("Ini","psy_powers","default");
 
 	    obj_ini.companies=ini_read_real("Ini","companies",10);
-	    var i;i=-1;repeat(21){i+=1;obj_ini.company_title[i]=ini_read_string("Ini","comp_title"+string(i),"");}
-	    var i;i=-1;repeat(121){i+=1;obj_ini.slave_batch_num[i]=ini_read_real("Ini","slave_num_"+string(i),0);obj_ini.slave_batch_eta[i]=ini_read_real("Ini","slave_eta_"+string(i),0);}
+	    i=-1;repeat(21){i+=1;obj_ini.company_title[i]=ini_read_string("Ini","comp_title"+string(i),"");}
+	    i=-1;repeat(121){i+=1;obj_ini.slave_batch_num[i]=ini_read_real("Ini","slave_num_"+string(i),0);obj_ini.slave_batch_eta[i]=ini_read_real("Ini","slave_eta_"+string(i),0);}
 
 
 
@@ -603,7 +603,7 @@ function scr_load(argument0, argument1) {
 	    obj_ini.forbidden_unit2=ini_read_string("Ini","forbidden_unit2","Error");
 	    obj_ini.forbidden_unit3=ini_read_string("Ini","forbidden_unit3","Error");
 	    //
-	    var g;g=-1;
+	    g=-1;
 	    repeat(150){g+=1;
 	        obj_ini.equipment[g]=ini_read_string("Ini","equipment"+string(g),"");
 	        obj_ini.equipment_type[g]=ini_read_string("Ini","equipment_type"+string(g),"");
@@ -624,7 +624,7 @@ function scr_load(argument0, argument1) {
 
 
 	    if (global.restart=0){
-	        var g;g=-1;repeat(200){g+=1;
+	        g=-1;repeat(200){g+=1;
 	            obj_ini.ship[g]=ini_read_string("Ships","shi"+string(g),"");
 	            obj_ini.ship_uid[g]=ini_read_real("Ships","shi_uid"+string(g),0);
 	            obj_ini.ship_class[g]=ini_read_string("Ships","shi_class"+string(g),"");
@@ -684,7 +684,6 @@ function scr_load(argument0, argument1) {
 	    good=0;coh=100;mah=-1;
 
 	    if (global.restart=0){
-	        var coh,mah,good;
 	        good=0;coh=10;mah=205;
 	        repeat(2255){
 	            if (good=0){
@@ -716,7 +715,6 @@ function scr_load(argument0, argument1) {
 	            }
 	        }
 
-	        var coh,mah,good;
 	        good=0;coh=100;mah=-1;
 	        repeat(31){mah+=1;
 	            obj_ini.race[coh,mah]=ini_read_real("Mar","co"+string(coh)+"."+string(mah),0);
@@ -833,7 +831,7 @@ function scr_load(argument0, argument1) {
 	if (argument0=4) or (argument0=0){debugl("Loading slot "+string(argument1)+" part 4");// PLAYER FLEET OBJECTS
 	    ini_open("tsave.ini");
 
-	    var num,i,fla;
+	    var num, fla;
 	    // Temporary artifact objects
 	    num=ini_read_real("Controller","temp_arti",0);
 	    i=-1;fla=0;
@@ -868,19 +866,19 @@ function scr_load(argument0, argument1) {
 	        fla.hurssy_time=ini_read_real("Fleet","pf"+string(i)+"hurssy_time",0);
 	        fla.orbiting=ini_read_real("Fleet","pf"+string(i)+"orb",0);
 
-	        var g=-1;repeat(10){g+=1;
+				g=-1;repeat(10){g+=1;
 	            fla.capital[g]=ini_read_string("Fleet","pf"+string(i)+"capital"+string(g),"");
 	            fla.capital_num[g]=ini_read_real("Fleet","pf"+string(i)+"capital_num"+string(g),0);
 	            fla.capital_sel[g]=ini_read_real("Fleet","pf"+string(i)+"capital_sel"+string(g),0);
 	            fla.capital_uid[g]=ini_read_real("Fleet","pf"+string(i)+"capital_uid"+string(g),0);
 	        }
-	        g=-1;repeat(21){g+=1;
+				g=-1;repeat(21){g+=1;
 	            fla.frigate[g]=ini_read_string("Fleet","pf"+string(i)+"frigate"+string(g),"");
 	            fla.frigate_num[g]=ini_read_real("Fleet","pf"+string(i)+"frigate_num"+string(g),0);
 	            fla.frigate_sel[g]=ini_read_real("Fleet","pf"+string(i)+"frigate_sel"+string(g),0);
 	            fla.frigate_uid[g]=ini_read_real("Fleet","pf"+string(i)+"frigate_uid"+string(g),0);
 	        }
-	        g=-1;repeat(35){g+=1;
+				g=-1;repeat(35){g+=1;
 	            fla.escort[g]=ini_read_string("Fleet","pf"+string(i)+"escort"+string(g),"");
 	            fla.escort_num[g]=ini_read_real("Fleet","pf"+string(i)+"escort_num"+string(g),0);
 	            fla.escort_sel[g]=ini_read_real("Fleet","pf"+string(i)+"escort_sel"+string(g),0);
@@ -944,12 +942,12 @@ function scr_load(argument0, argument1) {
 	    ini_open("tsave.ini");
 	    // file_delete("tsave.ini");
 
-	    var i;i=0;
+	    i=0;
 	    obj_controller.restart_name=ini_read_string("Res","nm","");
 	    obj_controller.restart_founding=ini_read_real("Res","found",0);
 	    obj_controller.restart_secret=ini_read_string("Res","secre","");
 	    obj_controller.restart_title[0]=ini_read_string("Res","tit0","");
-	    var i;i=0;repeat(11){i+=1;obj_controller.restart_title[i]=ini_read_string("Res","tit"+string(i),"");}
+	    i=0;repeat(11){i+=1;obj_controller.restart_title[i]=ini_read_string("Res","tit"+string(i),"");}
 	    obj_controller.restart_icon=ini_read_real("Res","ico",0);
 	    obj_controller.restart_icon_name=ini_read_string("Res","icn","");
 	    obj_controller.restart_powers=ini_read_string("Res","power","");
@@ -1089,7 +1087,7 @@ function scr_load(argument0, argument1) {
 	        // ini_open("save"+string(argument1)+"log.ini");
 	        ini_open("tsave.ini");
 
-	        var g,bobby,bobby2,stars;bobby="";bobby2="";g=0;
+	        var bobby,bobby2;bobby="";bobby2="";g=0;
 	        stars=ini_read_real("Save","stars",0);
 	        bobby+=string(stars)+"|";
 	        bobby+=string(global.chapter_name)+"|";

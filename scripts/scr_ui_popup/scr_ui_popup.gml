@@ -166,7 +166,7 @@ function scr_ui_popup() {
 		    var search_list =search_planet_features(planet_upgrades, P_features.Secret_Base);
 		    if (array_length(search_list) > 0){
 			    var woob="",secret=true;
-				var s_base = planet_upgrades[search_list[0]];
+				s_base = planet_upgrades[search_list[0]];
 				if (s_base.built>obj_controller.turn){
 					draw_set_font(fnt_40k_14b);
 		        	draw_text(xx+21,yy+65,string_hash_to_newline($"This feature will be constructed in {s_base.built-obj_controller.turn} months."));
@@ -338,16 +338,17 @@ function scr_ui_popup() {
 	    }
 	     draw_set_font(fnt_40k_14b);
 	     woob=""
-	     var arsenal = 0,gene_vault=0;
+	     arsenal = 0;
+		 gene_vault=0;
     		if (planet_feature_bool(planet_upgrades, P_features.Arsenal)==1){
-    		  var arsenal = planet_upgrades[search_planet_features(planet_upgrades, P_features.Arsenal)[0]];
- 	          if (arsenal.inquis_hidden == 1) then woob="A moderate sized secret Arsenal, this structure has ample holding area to store any number of artifacts and wargear.  Chaos and Daemonic items will be sent here by your Master of Relics, and due to the secret nature of its existance, the Inquisition will not find them during routine inspections.";
-	          if (arsenal.inquis_hidden == 0) then woob="A moderate sized Arsenal, this structure has ample holding area to store any number of artifacts and wargear.  Since being discovered it may no longer hide Chaos and Daemonic wargear from routine Inquisition inspections.  You may wish to construct another Arsenal on a different planet.";   			
+    			arsenal = planet_upgrades[search_planet_features(planet_upgrades, P_features.Arsenal)[0]];
+ 				if (arsenal.inquis_hidden == 1) then woob="A moderate sized secret Arsenal, this structure has ample holding area to store any number of artifacts and wargear.  Chaos and Daemonic items will be sent here by your Master of Relics, and due to the secret nature of its existance, the Inquisition will not find them during routine inspections.";
+				if (arsenal.inquis_hidden == 0) then woob="A moderate sized Arsenal, this structure has ample holding area to store any number of artifacts and wargear.  Since being discovered it may no longer hide Chaos and Daemonic wargear from routine Inquisition inspections.  You may wish to construct another Arsenal on a different planet.";   			
     		}
     		if (planet_feature_bool(planet_upgrades, P_features.Gene_Vault)==1){
-    			var gene_vault = planet_upgrades[search_planet_features(planet_upgrades, P_features.Gene_Vault)[0]];
-	          if (gene_vault.inquis_hidden == 1) then woob="A large facility with Gene-Vaults and additional spare rooms, this structure safely stores the majority of your Gene-Seed and is ran by servitors.  Due to its secret nature you may amass Gene-Seed and Test-Slave Incubators without fear of Inquisition reprisal or taking offense.";
-	          if (gene_vault.inquis_hidden == 0) then woob="A large facility with Gene-Vaults and additional spare rooms, this structure safely stores the majority of your Gene-Seed and is ran by servitors.  Since being discovered all the contents are known to the Inquisition.  Your Gene-Seed remains protected but you may wish to build a new, secret one.";  
+				gene_vault = planet_upgrades[search_planet_features(planet_upgrades, P_features.Gene_Vault)[0]];
+				if (gene_vault.inquis_hidden == 1) then woob="A large facility with Gene-Vaults and additional spare rooms, this structure safely stores the majority of your Gene-Seed and is ran by servitors.  Due to its secret nature you may amass Gene-Seed and Test-Slave Incubators without fear of Inquisition reprisal or taking offense.";
+				if (gene_vault.inquis_hidden == 0) then woob="A large facility with Gene-Vaults and additional spare rooms, this structure safely stores the majority of your Gene-Seed and is ran by servitors.  Since being discovered all the contents are known to the Inquisition.  Your Gene-Seed remains protected but you may wish to build a new, secret one.";  
 	     }
 	     if (arsenal!=0) or (gene_vault!=0){
  			draw_text_ext(xx+21,yy+65,string_hash_to_newline(string(woob)),-1,595);
@@ -744,7 +745,7 @@ function scr_ui_popup() {
 		if (scr_hit(xx+153,yy+10,xx+221,yy+38)){
 		    var  tx=0,ty=0,tool1="",tool2="",plu="";
 
-		    var d,lines;d=0;lines=0;
+		    var lines;d=0;lines=0;
 		    for(var d=1; d<=20; d++){
 		        if (loyal_num[d]>1) and (lines=0){
 		            tool1+=string(loyal[d])+": -"+string(loyal_num[d])+"#";

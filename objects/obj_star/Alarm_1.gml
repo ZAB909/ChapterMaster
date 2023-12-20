@@ -408,7 +408,7 @@ if (i==1) and (planets>0){
 }
 
 var hyu=0;
-for(var i=1; i<=4; i++){
+for(i=1; i<=4; i++){
     if (p_tyranids[i]>=5){
         p_guardsmen[i]=0;
         p_pdf[i]=0;
@@ -476,5 +476,5 @@ if (p_owner[2]=1){
 
 obj_controller.alarm[9]=2;
 if (obj_controller.is_test_map!=true) and (p_owner[2]!=1){
-    for(var i=1; i<=4; i++){p_guardsmen[i]=0;}
+    for(i=1; i<=4; i++){p_guardsmen[i]=0;}
 }

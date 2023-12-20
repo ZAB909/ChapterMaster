@@ -89,7 +89,7 @@ if (obj_ncombat.red_thirst>=2) and (obj_ncombat.battle_over=0){
             miss=string_replace(miss,", "," and ");
         }
         if (string_count(", ",miss)>1){
-            var woo;woo=string_rpos(", ",miss);
+            woo=string_rpos(", ",miss);
             
             miss=string_delete(miss,woo-1,3);
             if (r_lost>=3) then miss=string_insert(", and ",miss,woo-1);

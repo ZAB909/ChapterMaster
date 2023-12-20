@@ -161,7 +161,7 @@ if (hp>0) and (instance_exists(obj_p_ship)){
     
     
     
-    var bull, targe, rdir, dirr, dist, xx, yy, ok;
+    var bull, targe, rdir, dirr, xx, yy, ok;
     targe=0;rdir=0;dirr="";dist=9999;xx=x;yy=y;
     
     

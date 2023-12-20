@@ -313,8 +313,8 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
         
         
         if (experience>0){
-            var o=0,co=0,i=0;
             var new_exp, unit_exp, exp_roll;
+			o = 0;
             repeat(boarders){
                 o+=1;
                 co=origin.board_co[o];

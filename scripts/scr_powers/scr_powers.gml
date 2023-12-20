@@ -574,7 +574,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	        units_lost=0;going_up=0;
 	        var important,u,hh,stahp;u=-1;hh=0;stahp=0;
 	        repeat(50){u+=1;if (u<=20) then important[u]="";lost[u]="";lost_num[u]=0;}
-	        var h,good,open;h=0;good=0;open=0;
+	        var h,open;h=0;good=0;open=0;
 	        repeat(30){// Need to find the open slot
 	            h+=1;
 	            if (obj_ncombat.player_forces>6){
@@ -900,7 +900,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	            }
             
 	            if (stap=0) then with(enemy5){
-	                var j,good,open;
+	                var j,open;
 	                j=0;good=0;open=0;
 	                repeat(20){j+=1;
 	                    if (dudes_num[j]<=0){

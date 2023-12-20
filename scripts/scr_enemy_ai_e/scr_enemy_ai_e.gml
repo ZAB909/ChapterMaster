@@ -519,7 +519,7 @@ function scr_enemy_ai_e() {
         if (p_player[run] > 0) and(force_count > 0) {
             for (force = 2; force < 14; force++) {
                 battle_opponent = 0;
-
+				var pause = 0;
                 switch (force) {
                     case 3: // mechanicus aren't quite in yet
                     case 4:
@@ -559,7 +559,6 @@ function scr_enemy_ai_e() {
                         }
                         break;
                     case 10:
-                        var pause = 0,
                             r = 0;
                         for (r = 0; r < array_length(p_problem[run]); r++) {
                             if (p_problem[run][r] == "meeting" || p_problem[run][r] == "meeting_trap") {
@@ -570,8 +569,7 @@ function scr_enemy_ai_e() {
                             battle_opponent = 10;
                         }
                         break;
-                    case 11:
-                        var pause = 0,
+                    case 11:                        
                             r = 0;
                         for (r = 0; r < array_length(p_problem[run]); r++) {
                             if (p_problem[run][r] == "meeting" || p_problem[run][r] == "meeting_trap") {
@@ -801,8 +799,6 @@ function scr_enemy_ai_e() {
                         obj_controller.recruit_training[new_recruit] = months_to_neo;
                         obj_controller.gene_seed -= 1;
                         if (obj_controller.recruit_exp[new_recruit] >= 40) then obj_controller.recruit_exp[new_recruit] = 38; // we don't want immediate battle bros
-
-                        var i = 0;
 
                         repeat(5) {
                             i = 0;

@@ -65,7 +65,7 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 	        wop=instance_nearest(x,y,obj_p_fleet);
         
 	        if (wop.capital_number>0) and (loaded=0){
-	            var i,f;i=0;f=0;
+	            var f;i=0;f=0;
 	            repeat(wop.capital_number){
 	                i+=1;
 	                if (loaded=0){
@@ -78,7 +78,7 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 	            }
 	        }
 	        if (wop.frigate_number>0) and (loaded=0){
-	            var i,f;i=0;f=0;
+	            var f;i=0;f=0;
 	            repeat(wop.frigate_number){
 	                i+=1;
 	                if (loaded=0){
@@ -91,7 +91,7 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 	            }
 	        }
 	        if (wop.escort_number>0) and (loaded=0){
-	            var i,f;i=0;f=0;
+	            var f;i=0;f=0;
 	            repeat(wop.escort_number){
 	                i+=1;
 	                if (loaded=0){

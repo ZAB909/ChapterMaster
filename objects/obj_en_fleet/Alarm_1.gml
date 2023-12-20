@@ -781,7 +781,7 @@ if navy {
 
 
 	if (action="") and (instance_exists(orbiting)) and (guardsmen_unloaded=1){// Move from one planet to another
-	    var o,that,highest,cr;
+	    var that,highest,cr;
 	    o=0;that=0;highest=0;cr=0;
     
 	    repeat(4){o+=1;
@@ -852,7 +852,7 @@ if navy {
 	            var hol;hol=false;if ((orbiting.present_fleet[1]>0) and (obj_controller.faction_status[eFACTION.Imperium]="War")) then hol=true;
         
 	            if (hol=false){
-	                var o,bombard,deaths,hurss,scare,onceh,wob,kill;
+	                var bombard,deaths,hurss,scare,onceh,wob,kill;
 	                o=0;bombard=0;deaths=0;hurss=0;onceh=0;wob=0;kill=0;
                 
 	                repeat(4){o+=1;
@@ -920,9 +920,10 @@ if navy {
 
 
 	// If the guardsmen all die then move on
-	var o;o=0;
+	o=0;
 	if (guardsmen_unloaded=1) and (instance_exists(orbiting)){
-	    var o,bad;o=0;bad=1;
+		o=0;
+		var bad=1;
 	    repeat(4){o+=1;
 	        if (orbiting.p_guardsmen[o]>0) then bad-=1;
 	    }
@@ -1000,7 +1001,7 @@ if navy {
 	// Get recruits
 	if (action="") and (trade_goods="goto_recruiting"){
 	    if (instance_exists(orbiting)){
-	        var o,that,te,te_large;o=0;that=0;te=0;te_large=0;
+	        var that,te,te_large;o=0;that=0;te=0;te_large=0;
 	        repeat(4){o+=1;
 	            if (orbiting.p_owner[o]<=5){
 	                if (orbiting.p_population[o]>te) and (orbiting.p_orks[o]+orbiting.p_chaos[o]+orbiting.p_tyranids[o]+orbiting.p_necrons[o]+orbiting.p_tau[o]+orbiting.p_traitors[o]=0){
@@ -1037,7 +1038,7 @@ if navy {
 
 
 	if (action="") and (instance_exists(orbiting)) and (guardsmen_unloaded=0){// Unload if problem sector, otherwise patrol
-	    var o,that,highest,popu,popu_large;
+	    var that,highest,popu,popu_large;
 	    o=0;that=0;highest=0;popu=0;popu_large=false;
     
 	    repeat(4){o+=1;
@@ -1143,7 +1144,9 @@ if navy {
 	}
 }
 
-var spid, dir;spid=0;dir=0;
+var dir;
+spid = 0;
+dir = 0;
 var ret;ret=0;
 
 
@@ -1167,7 +1170,6 @@ if (action=""){
     
     
     if (instance_exists(obj_crusade)) and (owner=eFACTION.Ork) and (spid.owner=eFACTION.Ork){// Ork crusade AI
-        var max_dis;
         max_dis=400;
     
         obj_controller.temp[88]=owner;
@@ -1676,7 +1678,8 @@ if (action="move") and (action_eta<5000){
     if (instance_nearest(action_x,action_y,obj_star).storm>0) then exit;
     if (action_x+action_y=0) then exit;
     
-    var spid,dos;dos=0;spid=0;
+    var dos;
+	spid=0;
     dos=point_distance(x,y,action_x,action_y);
     spid=dos/action_eta;
     dir=point_direction(x,y,action_x,action_y);
@@ -1862,7 +1865,8 @@ if (action="move") and (action_eta<5000){
                     with(obj_temp3){instance_destroy();}
                     with(obj_temp4){instance_destroy();}
                     
-                    var targ, steh;steh=instance_nearest(x,y,obj_star);
+                    var targ; 
+					steh=instance_nearest(x,y,obj_star);
                     var bleh;bleh="";
                     if (owner!=eFACTION.Inquisition) 
 						bleh=string(obj_controller.faction[owner])+" Fleet finalizes trade at "+string(steh.name)+".";
@@ -2313,7 +2317,7 @@ if (action="move") and (action_eta<5000){
             var kay, temp5, temp6, temp7;
             kay=0;temp5=0;temp6=0;temp7=0;
             
-            var steh;steh=0;// Opposite of what normally is
+            steh=0;// Opposite of what normally is
 			//the hell is this jank? Doesn't even make sense since all the tests will fail
             if (owner = eFACTION.Imperium) then steh=instance_nearest(x,y+32,obj_star);
             if (owner = eFACTION.Mechanicus) then steh=instance_nearest(x,y+32,obj_star);

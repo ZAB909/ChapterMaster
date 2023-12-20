@@ -6,13 +6,13 @@ function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,align
 	var full_height;
 	draw_set_color(colour);
 	if (array_length(position)>2){
-		var full_width = position[2];
-		var full_height= position[3];
+		full_width = position[2];
+		full_height= position[3];
 	} else {
 		var text_width = string_width(string_hash_to_newline(text))*size_mod[0];
 		var text_height =string_height(string_hash_to_newline(text))*size_mod[1];
-		var full_width = position[0]+text_width+8
-		var full_height = position[1]+text_height+4;
+		full_width = position[0]+text_width+8
+		full_height = position[1]+text_height+4;
 	}
 	draw_text_transformed(position[0]+4,position[1]+2,string_hash_to_newline(text),size_mod[0],size_mod[1],0);
 	draw_rectangle(position[0],position[1], full_width,full_height,1)
@@ -162,8 +162,8 @@ function scr_ui_manage() {
 
 		    stat_tool_tip_text="Unit Profile"
 		    x5=x6;
-			var x6=x5+string_width(stat_tool_tip_text)+4;
-			var y6=y5+string_height(stat_tool_tip_text)+2;	    
+			x6=x5+string_width(stat_tool_tip_text)+4;
+			y6=y5+string_height(stat_tool_tip_text)+2;	    
 		    draw_unit_buttons([x5,y5,x6,y6], stat_tool_tip_text,[1,1],c_red);
 		    array_push(tooltip_drawing, [ "click or press P to show unit data", [x5,y5,x6,y6]]);
 			if ((keyboard_check_pressed(ord("P"))|| (point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left))) && !instance_exists(obj_temp3) && !instance_exists(obj_popup)){
@@ -302,7 +302,7 @@ function scr_ui_manage() {
 		var assignment ="none"
 	    
 	    if (!obj_controller.view_squad){
-		    for(var i=0; i<repetitions;i++){
+		    for(i=0; i<repetitions;i++){
 
 		    	while (man[sel]=="hide") and (sel<499){sel+=1;}
 
@@ -922,7 +922,7 @@ function scr_ui_manage() {
 			        }
 			    }
 			    //draws hover overs for specialist potential
-			    for (var i=0;i<array_length(tooltip_set);i++){
+			    for (i=0;i<array_length(tooltip_set);i++){
 			    	if (point_in_rectangle(mouse_x, mouse_y, tooltip_set[i][1][0],tooltip_set[i][1][1],tooltip_set[i][1][2],tooltip_set[i][1][3])){
 			    		tooltip_draw(mouse_x, mouse_y, tooltip_set[i][0])
 			    	}
@@ -1077,14 +1077,15 @@ function scr_ui_manage() {
 		       		//tooltip_draw(stat_x, stat_y+string_height(stat_display),0,0,100,17);
 		        }
 		        if (obj_controller.view_squad && !instance_exists(obj_temp3) && !instance_exists(obj_popup)){
-		        	var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0
+		        	xx=__view_get( e__VW.XView, 0 )+0;
+					yy=__view_get( e__VW.YView, 0 )+0;
 		        	var member;
 	        		with (obj_controller){
 		        		if (array_length(company_squads) > 0){
 		        			if (selected_unit.company == managing){
 			        			if (company_squads[cur_squad] != selected_unit.squad){
 			        				var squad_found =false
-			        				for (var i =0;i<array_length(company_squads);i++){
+			        				for (i =0;i<array_length(company_squads);i++){
 			        					if (company_squads[i] == selected_unit.squad){
 			        						cur_squad = i;
 			        						squad_found =true;
@@ -1197,7 +1198,7 @@ function scr_ui_manage() {
 							if (is_struct(current_squad.assignment)){
 								draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+125, $"assignment : {current_squad.assignment.type}",1,1,0);
 							}
-							var tooltip_text =  "cancel assignment"
+							tooltip_text =  "cancel assignment"
 							draw_unit_buttons([xx+bound_width[0]+5, yy+bound_height[0]+150],tooltip_text,[1,1],c_red);
 							if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text), yy+bound_height[0]+150+string_height(tooltip_text))){
 								if (mouse_check_button_pressed(mb_left)){
@@ -1205,7 +1206,7 @@ function scr_ui_manage() {
 										if (name == squad_loc.system){
 											var planet = current_squad.assignment.ident;
 											//var operation;
-											for (var i=0;i<array_length(p_operatives[planet]);i++){
+											for (i=0;i<array_length(p_operatives[planet]);i++){
 												var operation = p_operatives[planet][i];
 												if (operation.type=="squad" && operation.reference ==obj_controller.company_squads[obj_controller.cur_squad]){
 													array_delete(p_operatives[planet], i, 1);
@@ -1229,7 +1230,7 @@ function scr_ui_manage() {
 						}
 						var sprite_draw_delay="none"
 						var unit_sprite_coords=[];
-						for (var i=0;i<array_length(current_squad.members);i++){
+						for (i=0;i<array_length(current_squad.members);i++){
 							member = obj_ini.TTRPG[current_squad.members[i][0]][current_squad.members[i][1]];
 							if (member.name()!=""){
 								if (member_width==5){

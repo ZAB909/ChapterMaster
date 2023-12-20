@@ -1874,7 +1874,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 selecting_ship=0;
                 selecting_planet=0;
                 sel_uid=0;
-                for(var i=0; i<501; i++){
+                for(i=0; i<501; i++){
                     man[i]="";
                     ide[i]=0;
                     man_sel[i]=0;
@@ -1920,7 +1920,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
         }
     }
     if (zoomed==0) and (menu==1) and (managing>0) and (cooldown<=0){
-        var onceh=0;
+        onceh=0;
         xx=xx+0;
         yy=yy+0;
 
@@ -2083,7 +2083,6 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     }
                 }
             }
-            var onceh;
             for(var i=0; i<man_max; i++){
                 while (man[sel]=="hide" && sel<500){sel++;}
                 unit=obj_ini.TTRPG[company][ide[sel]];
@@ -2220,7 +2219,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
         }
         sel=top;
         yy=__view_get( e__VW.YView, 0 )+77;
-        var unit;
+
         for(var i=0; i<min(man_max,man_see); i++){
             while (man[sel]=="hide") and (sel<500){sel++;}
             eventing=false;
@@ -2228,7 +2227,8 @@ if (action_if_number(obj_saveload, 0, 0) &&
             // This is the actual individual click right here
             if (point_in_rectangle(mouse_x,mouse_y,xx+25+8,yy+64,xx+974,yy+85) and (cooldown<=0)) 
             or ((squad[sel]=squad_sel) and (squad_sel!=0)){
-                var onceh=0,dib=0;
+                onceh=0
+				var dib=0;
                 stop=0;
 
                 eventing=false;
@@ -2653,7 +2653,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                             var load_from_star=self;
                         }
                      }           
-                    var onceh=0;
+                    onceh=0;
                     stop=0;
                     var company=managing;
                     if (company>10){company=0}

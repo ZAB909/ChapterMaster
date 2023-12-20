@@ -1,6 +1,6 @@
 function scr_company_view(company) {
-	var v, mans, bad, squads, squad_type, squad_loc, squad_members, unit, unit_loc, last_man, last_vehicle;
-	v=0;
+	var mans, bad, squads, squad_type, squad_loc, squad_members, unit, unit_loc, last_man, last_vehicle;
+
 	mans=0;
 	bad=0;
 	squads=0;

@@ -250,16 +250,16 @@ obj_ini.weapon_color=obj_creation.weapon_color;
 
 
 /* */
-var i, k, onceh;i=0;k=0;onceh=0;
+var k, onceh;
+i=0;
+k=0;
+onceh=0;
 
 // instance_activate_object(obj_combat_info);
 
 repeat(100){i+=1;
     if (fighting[i]=1) and (obj_ini.ship_class[i]!="") then ships_max+=1;
 }
-
-
-
 
 i=0;
 repeat(100){i+=1;

@@ -95,7 +95,7 @@ if (action="move") or (action="crusade1") or (action="crusade2") or (action="cru
         action_y=0;
         
         
-        var i;
+
         i=0;if (capital_number>0) then repeat(capital_number){
             i+=1;obj_ini.ship_location[capital_num[i]]=steh.name;
         }

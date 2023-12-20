@@ -1,6 +1,6 @@
 
 var yeehaw1, yeehaw2, tstar;
-yeehaw1=0;yeehaw2=0;tstar=0;
+yeehaw1=0;yeehaw2=undefined;tstar=0;
 
 if (player_started=1){yeehaw1=pla_fleet;yeehaw2=ene_fleet;}
 
@@ -111,7 +111,11 @@ if (killer>0){
     if (obj_controller.loyalty>=50) and (obj_controller.loyalty<70) then obj_controller.last_world_inspection-=20;
     if (obj_controller.loyalty<50) then scr_loyalty("Inquisitor Killer","+");
     
-    var msg,msg2,i,remove;msg="";msg2="";i=0;remove=0;
+    var msg,msg2,i;
+	msg="";
+	msg2="";
+	i=0;
+	remove=0;
     if (string_count("Inqis1",killer_tg)=1){msg+="Inquisitor "+string(obj_controller.inquisitor[1])+" has been killed!";remove=1;msg2="Inquisitor "+string(obj_controller.inquisitor[1]);}
     if (string_count("Inqis2",killer_tg)=1){msg+="Inquisitor "+string(obj_controller.inquisitor[2])+" has been killed!";remove=2;msg2="Inquisitor "+string(obj_controller.inquisitor[2]);}
     if (string_count("Inqis3",killer_tg)=1){msg+="Inquisitor "+string(obj_controller.inquisitor[3])+" has been killed!";remove=3;msg2="Inquisitor "+string(obj_controller.inquisitor[3]);}

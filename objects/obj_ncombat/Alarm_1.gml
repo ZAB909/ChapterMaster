@@ -209,11 +209,11 @@ var woo;woo=string_length(p2);
 p2=string_delete(p2,woo-1,2);
 
 if (string_count(", ",p2)>1){
-    var woo;woo=string_rpos(", ",p2);
+    woo=string_rpos(", ",p2);
     p2=string_insert(" and",p2,woo+1);
 }
 if (string_count(", ",p2)=1){
-    var woo;woo=string_rpos(", ",p2);
+    woo=string_rpos(", ",p2);
     p2=string_delete(p2,woo-1,2);
     p2=string_insert(" and",p2,woo+1);
 }
@@ -246,15 +246,15 @@ if (dreadnoughts+predators+land_raiders>3){
         
     // Other vehicles here?
     
-    var woo;woo=string_length(p6);
+    woo=string_length(p6);
     p6=string_delete(p6,woo-1,2);
     
     if (string_count(", ",p6)>1){
-        var woo;woo=string_rpos(", ",p6);    
+        woo=string_rpos(", ",p6);    
         p6=string_insert(" and",p6,woo+1);
     }
     if (string_count(", ",p6)=1){
-        var woo;woo=string_rpos(", ",p6);
+        woo=string_rpos(", ",p6);
         p6=string_delete(p6,woo-1,2);
         p6=string_insert(" and",p6,woo+1);
     }
@@ -458,7 +458,7 @@ if (temp>=100) and (threat>1) and (big_mofo>0) and (big_mofo<10) and (dropping=0
     
     var standard_cry;standard_cry=0;
     if (global.chapter_name="Salamanders"){standard_cry=1;
-        var rand;rand=choose(1,2,3,4,5);
+        rand=choose(1,2,3,4,5);
         if (rand=1) and (big_mofo!=1){p2="breaks the silence, begining the Chapter Battlecry-";}if (rand=1) and (big_mofo=1){p2="break the silence, begining the Chapter Battlecry-";}
         if (rand=2) and (big_mofo!=1){p2="roars the first half of the Chapter Battlecry-";}if (rand=2) and (big_mofo=1){p2="roar the first half of the Chapter Battlecry-";}
         if (rand=3) and (big_mofo!=1){p2="shouts the start of the Chapter Battlecry-";}if (rand=3) and (big_mofo=1){p2="shout the start of the Chapter Battlecry-";}
@@ -479,7 +479,7 @@ if (temp>=100) and (threat>1) and (big_mofo>0) and (big_mofo<10) and (dropping=0
     // show_message(string(global.chapter_name)+"|"+string(global.custom)+"|"+string(standard_cry));
     
     if (global.chapter_name="Iron Warriors") and (global.custom=0){standard_cry=1;
-        var rand;rand=choose(1,2,3,4,5);
+        rand=choose(1,2,3,4,5);
         if (rand=1) and (big_mofo!=1){p2="breaks the silence, begining the Chapter Battlecry-";}if (rand=1) and (big_mofo=1){p2="break the silence, begining the Chapter Battlecry-";}
         if (rand=2) and (big_mofo!=1){p2="roars the first half of the Chapter Battlecry-";}if (rand=2) and (big_mofo=1){p2="roar the first half of the Chapter Battlecry-";}
         if (rand=3) and (big_mofo!=1){p2="shouts the start of the Chapter Battlecry-";}if (rand=3) and (big_mofo=1){p2="shout the start of the Chapter Battlecry-";}
@@ -499,7 +499,7 @@ if (temp>=100) and (threat>1) and (big_mofo>0) and (big_mofo<10) and (dropping=0
     
     
     if (standard_cry=0){standard_cry=1;
-        var rand;rand=choose(1,2,3,4);
+        rand=choose(1,2,3,4);
         if (rand=1){if (big_mofo!=1) then p2="breaks ";if (big_mofo=1) then p2="break ";p2+="the silence, calling out the Chapter Battlecry-";}
         if (rand=2){if (big_mofo!=1) then p2="roars ";if (big_mofo=1) then p2="roar ";p2+="the Chapter Battlecry-";}
         if (rand=3){if (big_mofo!=1) then p2="shouts ";if (big_mofo=1) then p2="shout ";p2+="the Chapter Battlecry-";}

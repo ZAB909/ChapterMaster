@@ -243,7 +243,7 @@ if (exterminatus>0) and (dropping!=0) and (string_count("mech",battle_special)=0
 }
 
 if (string_count("mech",battle_special)>0) and (defeat=0) then with(obj_temp4){
-    var comp,plan,i;i=0;comp=0;plan=0;
+	i=0;comp=0;plan=0;
     plan=instance_nearest(x,y,obj_star);
     scr_return_ship(obj_temp4.loc,obj_temp4,obj_temp4.num);
     with(obj_temp4){instance_destroy();}
@@ -506,7 +506,8 @@ if (enemy=1) and (on_ship=true) and (defeat=0){
     var o;o=0;repeat(4){i+=1;if (obj_ini.dis[o]="Shitty Luck") then diceh-=15;}
     
     if (diceh<=15){
-        var ship,ship_hp,i;i=-1;
+        var ship,ship_hp; 
+		i=-1;
         repeat(51){i+=1;
             ship[i]=obj_ini.ship[i];ship_hp[i]=obj_ini.ship_hp[i];
             if (i=battle_id){obj_ini.ship_hp[i]=-50;scr_recent("ship_destroyed",obj_ini.ship[i],i);}
@@ -597,7 +598,8 @@ if (enemy=10){
 
 if (battle_special="ship_demon"){
     if (defeat=1){
-        var ship,ship_hp,i;i=-1;
+        var ship,ship_hp;
+		i=-1;
         repeat(51){i+=1;
             ship[i]=obj_ini.ship[i];ship_hp[i]=obj_ini.ship_hp[i];
             if (i=battle_id){obj_ini.ship_hp[i]=-50;scr_recent("ship_destroyed",obj_ini.ship[i],i);}
@@ -635,7 +637,7 @@ if (battle_special="space_hulk") and (defeat=0) and (hulk_treasure>0){
     }
     if (hulk_treasure=2){// Artifact
         scr_add_artifact("random","random",4,loc,shi+500);
-        var i,last_artifact;i=0;last_artifact=0;
+        var last_artifact;i=0;last_artifact=0;
         repeat(100){if (last_artifact=0){i+=1;if (obj_ini.artifact[i]="") then last_artifact=i-1;}}
         var pop;pop=instance_create(0,0,obj_popup);
         pop.image="space_hulk_done";

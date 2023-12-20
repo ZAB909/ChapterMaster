@@ -40,7 +40,7 @@ with(obj_star){// Get origin star system for enemy fleet
     }
 }
 
-var targ, flit, i,chasing;chasing=0;// Set target
+var targ, flit, chasing;chasing=0;// Set target
 
 if (instance_exists(obj_temp2)) then targ=instance_nearest(obj_temp2.x,obj_temp2.y,obj_temp3);
 if (!instance_exists(obj_temp2)) and (instance_exists(obj_temp7)) then targ=instance_nearest(obj_temp7.x,obj_temp7.y,obj_temp3);

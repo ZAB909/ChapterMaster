@@ -7,7 +7,7 @@ repeat(30){i+=1;if (obj_ini.ship[i]=loc) then ship_id=i;}i=0;
 plan=instance_nearest(x,y,obj_star);
 scr_add_artifact("random","random",4,loc,ship_id+500);
 
-var i,last_artifact;
+var last_artifact;
 i=0;last_artifact=0;
 repeat(100){if (last_artifact=0){i+=1;if (obj_ini.artifact[i]="") then last_artifact=i-1;}}
 

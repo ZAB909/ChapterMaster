@@ -1186,7 +1186,6 @@ if (press=2) and (option2!=""){
         }
         
         if (offer=3){
-            var gender2;
             if (planet=1) then gender2="his";if (planet=2) then gender2="her";
             with(obj_en_fleet){
                 if (trade_goods="male_her") or (trade_goods="female_her"){
@@ -1310,7 +1309,7 @@ if (press=3) and (option3!=""){
 			}
             
             scr_return_ship(obj_temp4.loc,obj_temp4,obj_temp4.num);
-            var man_size,ship_id,comp,plan,i;
+            var man_size,ship_id,comp,i;
             i=0;ship_id=0;man_size=0;comp=0;plan=0;
             repeat(30){i+=1;if (obj_ini.ship[i]=obj_temp4.loc) then ship_id=i;}i=0;
             obj_controller.menu=0;obj_controller.managing=0;

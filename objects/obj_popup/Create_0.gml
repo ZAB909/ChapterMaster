@@ -72,7 +72,7 @@ n_good1=1;n_good2=1;n_good3=1;n_good4=1;n_good5=1;
 sel1=0;sel2=0;sel3=0;sel4=0;sel5=0;
 vehicle_equipment=0;warning="";
 
-var i;i=-1;
+i=-1;
 repeat(51){
     i+=1;item_name[i]="";
 }

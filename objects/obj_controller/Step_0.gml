@@ -693,7 +693,7 @@ if (menu==1 && managing>0){
             if (tooltip_stat4>0) then temp[111]="("+string(tooltip_stat1)+"DAM, "+string(tooltip_stat4)+" ammo, "+string(tooltip_other)+")";
             // Experience
             temp[113]=string(floor(unit.experience()));
-            var cah=managing;
+            cah=managing;
             if (cah>10) then cah=0;
             // Bonuses
             temp[119]="";

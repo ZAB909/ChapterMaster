@@ -14,7 +14,7 @@ function scr_chapter(argument0) {
 	}
 
 
-	var i;i=-1;
+	i=-1;
 	repeat(21){i+=1;
 	    world[i]="";
 	    world_type[i]="";

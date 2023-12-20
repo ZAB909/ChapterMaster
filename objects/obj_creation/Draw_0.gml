@@ -565,7 +565,7 @@ if (slide=2){
         }
         
         
-        var x1,x2,x3,x4,x6,y1,y2,y3,y4,y6,bs,see_size,total_max,current,top;
+        var x1,x2,x4,x6,y1,y2,y4,y6,bs,see_size,total_max,current,top;
         
         x1=1111;y1=245;x2=1131;y2=671;bs=245;
         draw_rectangle(x1,y1,x2,y2,1);
@@ -762,7 +762,7 @@ if (slide=2){
 
 /* */
 
-var yar;yar=0;
+yar = 0;
 
 if (slide=3){
     draw_set_color(38144);
@@ -1410,7 +1410,8 @@ if (slide=4){
             if (custom>1){
                 if (text_selected="capoth") and (text_bar>30) then draw_text_ext(600,575,string_hash_to_newline(string(hapothecary)),-1,580);
                 if (text_selected="capoth") and (text_bar<=30) then draw_text_ext(600,575,string_hash_to_newline(string(hapothecary)+"|"),-1,580);
-                var str_width,hei;str_width=0;hei=string_height_ext(string_hash_to_newline(hapothecary),-2,580);
+				str_width=0;
+				hei=string_height_ext(string_hash_to_newline(hapothecary),-2,580);
                 if (scr_hit(600,575,785,575+hei)){obj_cursor.image_index=2;
                     if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="capoth";cooldown=8000;keyboard_string=hapothecary;}
                 }
@@ -1425,7 +1426,8 @@ if (slide=4){
             if (custom>1){
                 if (text_selected="chap") and (text_bar>30) then draw_text_ext(600,597,string_hash_to_newline(string(hchaplain)),-1,580);
                 if (text_selected="chap") and (text_bar<=30) then draw_text_ext(600,597,string_hash_to_newline(string(hchaplain)+"|"),-1,580);
-                var str_width,hei;str_width=0;hei=string_height_ext(string_hash_to_newline(hchaplain),-2,580);
+                str_width=0;
+				hei=string_height_ext(string_hash_to_newline(hchaplain),-2,580);
                 if (scr_hit(600,597,785,597+hei)){obj_cursor.image_index=2;
                     if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="chap";cooldown=8000;keyboard_string=hchaplain;}
                 }
@@ -1440,7 +1442,8 @@ if (slide=4){
             if (custom>1){
                 if (text_selected="libra") and (text_bar>30) then draw_text_ext(600,619,string_hash_to_newline(string(clibrarian)),-1,580);
                 if (text_selected="libra") and (text_bar<=30) then draw_text_ext(600,619,string_hash_to_newline(string(clibrarian)+"|"),-1,580);
-                var str_width,hei;str_width=0;hei=string_height_ext(string_hash_to_newline(clibrarian),-2,580);
+				str_width=0;
+				hei=string_height_ext(string_hash_to_newline(clibrarian),-2,580);
                 if (scr_hit(600,619,785,619+hei)){obj_cursor.image_index=2;
                     if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="libra";cooldown=8000;keyboard_string=clibrarian;}
                 }
@@ -1455,7 +1458,8 @@ if (slide=4){
             if (custom>1){
                 if (text_selected="forge") and (text_bar>30) then draw_text_ext(600,641,string_hash_to_newline(string(fmaster)),-1,580);
                 if (text_selected="forge") and (text_bar<=30) then draw_text_ext(600,641,string_hash_to_newline(string(fmaster)+"|"),-1,580);
-                var str_width,hei;str_width=0;hei=string_height_ext(string_hash_to_newline(fmaster),-2,580);
+				str_width=0;
+				hei=string_height_ext(string_hash_to_newline(fmaster),-2,580);
                 if (scr_hit(600,641,785,641+hei)){obj_cursor.image_index=2;
                     if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="forge";cooldown=8000;keyboard_string=fmaster;}
                 }
@@ -1469,7 +1473,8 @@ if (slide=4){
         if (custom>1){
             if (text_selected="recr") and (text_bar>30) then draw_text_ext(600,663,string_hash_to_newline(string(recruiter)),-1,580);
             if (text_selected="recr") and (text_bar<=30) then draw_text_ext(600,663,string_hash_to_newline(string(recruiter)+"|"),-1,580);
-            var str_width,hei;str_width=0;hei=string_height_ext(string_hash_to_newline(recruiter),-2,580);
+			str_width=0;
+			hei=string_height_ext(string_hash_to_newline(recruiter),-2,580);
             if (scr_hit(600,663,785,663+hei)){obj_cursor.image_index=2;
                 if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="recr";cooldown=8000;keyboard_string=recruiter;}
             }
@@ -1482,19 +1487,15 @@ if (slide=4){
         if (custom>1){
             if (text_selected="admi") and (text_bar>30) then draw_text_ext(600,685,string_hash_to_newline(string(admiral)),-1,580);
             if (text_selected="admi") and (text_bar<=30) then draw_text_ext(600,685,string_hash_to_newline(string(admiral)+"|"),-1,580);
-            var str_width,hei;str_width=0;hei=string_height_ext(string_hash_to_newline(admiral),-2,580);
+			str_width=0;
+			hei=string_height_ext(string_hash_to_newline(admiral),-2,580);
             if (scr_hit(600,685,785,685+hei)){obj_cursor.image_index=2;
                 if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="admi";cooldown=8000;keyboard_string=admiral;}
             }
             if (text_selected="admi") then admiral=keyboard_string;
             draw_rectangle(600-1,685-1,785,685+hei,1);
-        }
-        
-        
-    
-    }
-    
-    
+        }    
+    }    
 }
 
 /* */
@@ -1684,7 +1685,8 @@ if (slide=6){
     draw_set_color(38144);
     draw_set_font(fnt_40k_30b);
     draw_set_halign(fa_center);
-    draw_set_alpha(1);var yar;yar=0;
+    draw_set_alpha(1);
+	yar = 0;
     
     tooltip="";tooltip2="";
     obj_cursor.image_index=0;
@@ -1813,8 +1815,6 @@ if (slide=6){
 
 
 // 850,860
-
-var xx,yy;
 xx=375;yy=10;
 
 

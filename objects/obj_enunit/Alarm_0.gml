@@ -119,7 +119,7 @@ if (engaged=0){// Shooting
                 
                 
                 if (ap=1) and ((!instance_exists(obj_nfort)) or (flank=1)){// Check for vehicles
-                    var g,good,enemy2;g=0;good=0;
+                    var g,good; g=0;good=0;
                     
                     if (enemy.veh+enemy.dreads>0) or (enemy.veh_type[1]="Defenses"){
                         // good=scr_target(enemy,"veh");// First target has vehicles, blow it to hell
@@ -153,7 +153,7 @@ if (engaged=0){// Shooting
                 if (string_count("Gauss",wep[i])>0) then ap=0;
                 
                 if (ap=0) and ((!instance_exists(obj_nfort)) or (flank=1)) and (instance_exists(obj_pnunit)) and (instance_exists(enemy)){// Check for men
-                    var g,good,enemy2;g=0;good=0;
+                    var g,good;g=0;good=0;
                     if ((enemy.men-enemy.dreads)>0){
                         // good=scr_target(enemy,"men");// First target has vehicles, blow it to hell
                         scr_shoot(i,enemy,chapter_fuck,"att","ranged");
@@ -234,7 +234,7 @@ if (!instance_exists(enemy)) or (!instance_exists(obj_pnunit)) then exit;
             if (apa[i]>att[i]) then ap=1;// Determines if it is AP or not
             
             if (ap=1){// Check for vehicles
-                var g,good,enemy2;g=0;good=0;
+                var g,good;g=0;good=0;
                 
                 if (enemy.veh+enemy.dreads>0){
                     // good=scr_target(enemy,"veh");// First target has vehicles, blow it to hell
@@ -244,7 +244,7 @@ if (!instance_exists(enemy)) or (!instance_exists(obj_pnunit)) then exit;
             }
             if (ap=0) and (instance_exists(enemy)){// Check for men
                 // show_message(string(wep[i]));
-                var g,good,enemy2;g=0;good=0;
+                var g,good;g=0;good=0;
                 if ((enemy.men-enemy.dreads)>0){
                     // good=scr_target(enemy,"men");// First target has vehicles, blow it to hell
                     scr_shoot(i,enemy,1,"att","melee");
@@ -280,7 +280,7 @@ if __b__
 
 
 
-var leftest,charge,enemy2;charge=0;enemy2=0;
+charge=0;enemy2=0;
 
 with(obj_pnunit){if (x<-4000) then instance_deactivate_object(id);}
 

@@ -51,7 +51,7 @@ function scr_management(argument0) {
 			t = string(romanNumerals[i - 1]);
 			t += " COMPANY";
     
-			var pane = instance_create(xx, yy, obj_managment_panel);
+			pane = instance_create(xx, yy, obj_managment_panel);
 			pane.company = i;
 			pane.manage = i;
 			pane.header = 1;
@@ -71,7 +71,7 @@ function scr_management(argument0) {
 				t = string(i) + "th ";
 				t += "COMPANY";
         
-				var pane = instance_create(xx, yy, obj_managment_panel);
+				pane = instance_create(xx, yy, obj_managment_panel);
 				pane.company = i;
 				pane.manage = i + 100;
 				pane.header = 1;

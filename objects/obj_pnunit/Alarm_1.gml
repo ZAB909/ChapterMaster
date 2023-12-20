@@ -125,7 +125,7 @@ repeat(700){g+=1;
             if (good=0) and (open!=0){dudes[open]=veh_type[g];dudes_num[open]=1;dudes_vehicle[open]=1;}
         }
 
-        var j,good,open;j=0;good=0;open=0;
+        j=0;good=0;open=0;
         if (veh_dead[g]!=1) then repeat(20){j+=1;
             if (veh_wep1[g]!=""){
                 if (wep[j]="") and (open=0){open=j;}
@@ -354,7 +354,8 @@ if (dudes_num[1]=0) and (obj_ncombat.started=0){
 
 if (men+veh=1) and (obj_ncombat.player_forces=1){
     if (men=1) and (veh=0){
-        var i,h;i=0;h=0;
+        i=0;
+		var h=0;
         repeat(500){if (h=0){i+=1;if (marine_hp[i]>0) and (marine_dead[i]=0){
             h=marine_hp[i];obj_ncombat.display_p1=h;
             obj_ncombat.display_p1n=string(marine_type[i])+" "+string(obj_ini.name[marine_co[i],marine_id[i]]);}

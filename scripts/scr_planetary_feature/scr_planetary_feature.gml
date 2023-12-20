@@ -355,27 +355,27 @@ function scr_planetary_feature(planet_num) {
 				    p_sisters[planet_num]=choose(2,2,3);goo=1;
 					break;
 				case P_features.Necron_Tomb:
-				    var lop="Necron Tomb discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
+				    lop="Necron Tomb discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
 				    scr_alert("red","feature",lop,x,y);scr_event_log("red",lop);
 					break;
 				case P_features.Artifact:
-					var lop="Artifact discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
+					lop="Artifact discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
 					scr_alert("green","feature",lop,x,y);scr_event_log("",lop);
 					break;
 				case P_features.STC_Fragment:
-					var lop="STC Fragment located on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
+					 lop="STC Fragment located on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
 					 scr_alert("green","feature",lop,x,y);scr_event_log("",lop);
 					 break;
 				case P_features.Ancient_Ruins:
-					var lop=$"A {feat.ruins_size} Ancient Ruins discovered on {string(name)} {scr_roman(planet_num)}."debugl(lop);
+					lop=$"A {feat.ruins_size} Ancient Ruins discovered on {string(name)} {scr_roman(planet_num)}."debugl(lop);
 					scr_alert("green","feature",lop,x,y);scr_event_log("",lop);
 					break;
 				case P_features.Cave_Network:
-					var lop="Extensive Cave Network discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
+					lop="Extensive Cave Network discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
 			        scr_alert("green","feature",lop,x,y);scr_event_log("",lop);
 					break;
 				case P_features.Warlord7:
-				    var lop="Ork Warboss discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
+				    lop="Ork Warboss discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
 				    scr_alert("red","feature",lop,x,y);scr_event_log("red",lop);
 					break;
 		

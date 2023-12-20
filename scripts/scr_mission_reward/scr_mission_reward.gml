@@ -15,7 +15,7 @@ function scr_mission_reward(argument0, argument1, argument2) {
 
 	if (argument0="mars_spelunk"){
 	    var roll1,roll2,techs_lost,techs_alive,found_stc,found_artifact,found_requisition;
-	    var com,i,onceh;onceh=0;com=-1;i=0;
+	    var com,onceh;onceh=0;com=-1;i=0;
 	    roll1=floor(random(100))+1;// For the first STC
 	    found_stc=0;found_artifact=0;found_requisition=0;techs_lost=0;techs_alive=0;
 
@@ -100,7 +100,7 @@ function scr_mission_reward(argument0, argument1, argument2) {
 	    if (result="New"){
 	        scr_popup("Mechanicus Mission Completed","Your "+string(obj_ini.role[100][16])+" have worked with the Adeptus Mechanicus in a satisfactory manor.  The testing and training went well, but your Land Raider was ultimately lost.  300 Requisition has been given to your Chapter and relations are better than before.","mechanicus","");
 	        obj_controller.requisition+=300;obj_controller.disposition[3]+=2;
-	        var com,i,onceh;onceh=0;com=-1;i=0;
+	        var com,onceh;onceh=0;com=-1;i=0;
 	        repeat(11){
 	            if (onceh=0){com+=1;i=0;
 	                repeat(100){i+=1;
@@ -118,7 +118,7 @@ function scr_mission_reward(argument0, argument1, argument2) {
 	    }
 	    if (result="Land Raider"){
 	        scr_popup("Mechanicus Mission Completed","Your "+string(obj_ini.role[100][16])+" have worked with the Adeptus Mechanicus in a satisfactory manor.  The testing and training went well, but your Land Raider was ultimately lost.  A new Land Raider has been provided in return.","mechanicus","");
-	        var com,i,onceh;onceh=0;com=-1;i=0;obj_controller.disposition[3]+=1;
+	        var com,onceh;onceh=0;com=-1;i=0;obj_controller.disposition[3]+=1;
 	        repeat(11){
 	            if (onceh=0){com+=1;i=0;
 	                repeat(100){i+=1;
@@ -150,7 +150,7 @@ function scr_mission_reward(argument0, argument1, argument2) {
 
 	    if (result="Marines Lost"){
 	        scr_popup("Mechanicus Mission Completed","The Adeptus Mechanicus have finished experimenting on your marines- unfortunantly none of them have survived.  150 Requisition has provided as weregild for each Astartes lost.","mechanicus","");
-	        obj_controller.disposition[3]+=2;var com,i,onceh;onceh=0;com=-1;i=0;
+	        obj_controller.disposition[3]+=2;var com,onceh;onceh=0;com=-1;i=0;
 	        repeat(11){
 	            if (onceh<10){com+=1;i=0;
 	                repeat(300){i+=1;
@@ -180,7 +180,7 @@ function scr_mission_reward(argument0, argument1, argument2) {
 	    }
 	    if (result="Bionics"){
 	        scr_popup("Mechanicus Mission Completed","The Adeptus Mechanicus have finished experimenting on your marines.  All of your astartes have survived, though they refuse to speak of the experience.  A large amount of additional Bionics have been provided by the Mechanicus as a reward.","mechanicus","");
-	        obj_controller.disposition[3]+=1;var com,i,onceh;onceh=0;com=-1;i=0;
+	        obj_controller.disposition[3]+=1;var com,onceh;onceh=0;com=-1;i=0;
 	        scr_add_item("Bionics",floor(random_range(40,100))+1);
 	        repeat(11){
 	            if (onceh<10){com+=1;i=0;
@@ -196,7 +196,7 @@ function scr_mission_reward(argument0, argument1, argument2) {
 	    if (result="Requisition"){
 	        scr_popup("Mechanicus Mission Completed","The Adeptus Mechanicus have finished experimenting on your marines.  All of your astartes have survived, though they refuse to speak of the experience.  200 Requisition has been provided by the Mechanicus as a reward.","mechanicus","");
 	        obj_controller.disposition[3]+=1;obj_controller.requisition+=200;
-	        var com,i,onceh;onceh=0;com=-1;i=0;
+	        var com,onceh;onceh=0;com=-1;i=0;
 	        repeat(11){
 	            if (onceh<10){com+=1;i=0;
 	                repeat(300){i+=1;

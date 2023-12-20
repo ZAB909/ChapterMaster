@@ -180,7 +180,7 @@ function scr_random_event(execute_now) {
 							}
 							break;
 						case EVENT.ship_lost:
-							var has_moving_fleet = false;
+							has_moving_fleet = false;
 							with(obj_p_fleet){
 								if(action=="move")
 								{
@@ -730,7 +730,7 @@ function scr_random_event(execute_now) {
 			}
 			
 			var eta = scr_mission_eta(star.x, star.y, 1);
-			var eta = min(max(eta,6),50);
+			eta = min(max(eta,6),50);
 			
 			var text="An Inquisitor is trusting you with a special mission.  The planet " + string(star.name) + " " + scr_roman(planet);
 	        text+=" is ripe with Tyranid organisms.  They require that you capture one of the Gaunt species for research purposes.  Can your chapter handle this mission?";

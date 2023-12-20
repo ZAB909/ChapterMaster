@@ -20,7 +20,6 @@ if (final_deaths+final_command_deaths>0){
     if (apoth>1) then part1+=" ("+string(obj_ini.role[100][15])+"s prevented the death of "+string(units_saved)+")";
     if (injured>0) then part8="Marines Critically Injured: "+string(injured);
     
-    var i;i=0;
     for (var i=1;i<array_length(post_unit_lost);i++){
             if (post_unit_lost[i]!="") and (post_units_lost[i]>0) and (post_unit_veh[i]=0){
             part2+=string(post_units_lost[i])+"x "+string(post_unit_lost[i])+", ";
@@ -94,7 +93,6 @@ if (vehicle_deaths>0){
 if (post_equipment_lost[1]!=""){
     part6="Equipment Lost: ";
     
-    var i=0;
     for (var i=0;i<array_length(post_equipment_lost);i++){
         if (post_equipment_lost[i]!="") and (post_equipments_lost[i]>0){
             part7+=string(post_equipments_lost[i])+"x "+string(post_equipment_lost[i])+", ";
@@ -498,7 +496,7 @@ if (obj_ini.omophagea=1){
                 if (obj_controller.loyalty>=50) and (obj_controller.loyalty<70) then obj_controller.last_world_inspection-=20;
                 if (obj_controller.loyalty<50) then scr_loyalty("Inquisitor Killer","+");
 
-                var msg,msg2,i,remove;msg="";msg2="";i=0;remove=0;
+                var msg,msg2;msg="";msg2="";i=0;remove=0;
                 // if (string_count("Inqis",inquisitor_ship.trade_goods)>0) then show_message("B");
                 if (string_count("Inqis1",inquisitor_ship.trade_goods)=1){newline="Inquisitor "+string(obj_controller.inquisitor[1])+" has been eaten!";msg="Inquisitor "+string(obj_controller.inquisitor[1]);remove=1;scr_event_log("red","Your Astartes consume "+string(msg)+".");}
                 if (string_count("Inqis2",inquisitor_ship.trade_goods)=1){newline="Inquisitor "+string(obj_controller.inquisitor[2])+" has been eaten!";msg="Inquisitor "+string(obj_controller.inquisitor[2]);remove=2;scr_event_log("red","Your Astartes consume "+string(msg)+".");}

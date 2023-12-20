@@ -127,8 +127,7 @@ chapter_master_melee=1;
 chapter_master_ranged=1;
 chapter_master_specialty=2;
 
-
-var i;i=-1;
+i=-1;
 repeat(60){i+=1;chapter_id[i]="";chapter_tooltip[i]="Error: The tooltip is missing.";company_title[i]="";}
 chapter_id[1]="Dark Angels";
 chapter_tooltip[1]="The Dark Angels claim complete allegiance and service to the Emperor of Mankind, though their actions and secret goals seem to run counter to this- above all other things they strive to atone for an ancient crime of betrayal.";
@@ -242,7 +241,7 @@ i+=1;
 disadvantage[i]="Cancel";dis_tooltip[i]="";
 
 // Default Marine Loadouts
-var ye,i;
+var ye;
 ye=99;i=-1;repeat(51){i+=1;
     race[ye,i]=1;loc[ye,i]="";
     role[ye,i]="";

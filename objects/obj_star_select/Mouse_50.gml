@@ -329,7 +329,7 @@ if (obj_controller.cooldown<=0) and (loading=1){
                 arti.tch=tch;arti.mch=mch;
                 // Right here should pass the man_sel variables
                 // var i;i=-1;repeat(150){i+=1;arti.man_sel[i]=obj_controller.man_sel[i];}
-                var i;i=-1;
+                i=-1;
                 repeat(150){i+=1;
                     arti.man_sel[i]=0;arti.ide[i]=0;arti.man[i]="";
                     if (obj_controller.man_sel[i]!=0){
@@ -677,7 +677,7 @@ if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_
         // 
         
         
-        var i;i=0;
+        i=0;
         repeat(8){
             i+=1;if (pfleet.capital[i]!="") then obj_fleet.fighting[pfleet.capital_num[i]]=1;
         }
