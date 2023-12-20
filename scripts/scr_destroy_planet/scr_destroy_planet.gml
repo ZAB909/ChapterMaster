@@ -1,4 +1,4 @@
-function scr_destroy_planet(argument0) {
+function scr_destroy_planet(exterminatus_type) {
 
 	// argument0: method   (1 being combat exterminatus, 2 being star select cyclonic torpedo)
 
@@ -7,7 +7,7 @@ function scr_destroy_planet(argument0) {
 	baid=0;enemy9=0;
 
 
-	if (argument0=2){
+	if (exterminatus_type=2){
 	    var pip;pip=instance_create(0,0,obj_popup);
 	    with(pip){
 	        title="Exterminatus";
@@ -25,7 +25,7 @@ function scr_destroy_planet(argument0) {
 
 
 
-	if (argument0=1){
+	if (exterminatus_type=1){
 	    var pip;pip=instance_create(0,0,obj_popup);
 	    with(pip){
 	        title="Exterminatus";
@@ -51,6 +51,7 @@ function scr_destroy_planet(argument0) {
 
 	// No survivors!
 	var cah,ed;cah=-1;ed=0;
+	var you;
 	repeat(11){
 	    cah+=1;ed=0;
 
@@ -58,7 +59,7 @@ function scr_destroy_planet(argument0) {
 	        if (obj_ini.loc[cah,ed]=you.name) and (obj_ini.wid[cah,ed]=baid){
 	            if (obj_ini.role[cah,ed]="Chapter Master"){obj_controller.alarm[7]=15;if (global.defeat<=1) then global.defeat=1;}
             
-	            if (obj_ini.race[cah,ed]=1){var comm;comm=false;
+	            if (obj_ini.race[cah,ed]=1){var comm=false;
 	                if (obj_ini.role[co][i]="Chapter Master") then comm=true;
 	                if (obj_ini.role[co][i]="Master of Sanctity") then comm=true;
 	                if (obj_ini.role[co][i]="Master of the Apothecarion") then comm=true;
@@ -181,7 +182,8 @@ function scr_destroy_planet(argument0) {
 	    p_problem[2,baid]="";p_timer[2,baid]=0;p_problem[3,baid]="";p_timer[3,baid]=0;
 	    p_problem[4,baid]="";p_timer[4,baid]=0;p_problem[5,baid]="";p_timer[5,baid]=0;
 	}
-
+	
+	var pip;
 	pip.text+=", scouring all life across the planet.  It has been rendered a barren, lifeless chunk of rock.";
 	pip.number=1;
 
