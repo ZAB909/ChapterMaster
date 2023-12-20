@@ -265,7 +265,7 @@ function scr_flavor(weapon_name, target_object, target_dudes, shots_fired, casua
 
 	exit;
 
-
+/* old flavor code?
 
 
 
