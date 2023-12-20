@@ -77,25 +77,25 @@ function scr_initialize_custom() {
 
 	// Initializes all of the marine/vehicle/ship variables for the chapter.
 
-	techs=20;
-	epistolary=5;
-	apothecary=6;
-	codiciery=6;
-	lexicanum=10;
-	terminator=30;
-	veteran=70;
-	second=100;
-	third=100;
-	fourth=100;
-	fifth=100;
-	sixth=100;
-	seventh=100;
-	eighth=100;
-	ninth=100;
-	tenth=100;
-	assault=20;
-	siege=0;
-	devastator=20;
+	var techs=20;
+	var epistolary=5;
+	var apothecary=6;
+	var codiciery=6;
+	var lexicanum=10;
+	var terminator=30;
+	var veteran=70;
+	var second=100;
+	var third=100;
+	var fourth=100;
+	var fifth=100;
+	var sixth=100;
+	var seventh=100;
+	var eighth=100;
+	var ninth=100;
+	var tenth=100;
+	var assault=20;
+	var siege=0;
+	var devastator=20;
 
 	recruit_trial=obj_creation.aspirant_trial;
 	purity=obj_creation.purity;
@@ -281,7 +281,10 @@ function scr_initialize_custom() {
 	    if (global.chapter_name!="Lamenters") and (global.chapter_name!="Doom Benefactors") and (global.chapter_name!="Blood Ravens") then battle_barges+=2;
 	}
 
-	var i=-1;v=0;
+	var i=-1;
+	var v = 0;
+	
+	
 	/*repeat(110){i+=1;
 	    ship[i]="";ship_owner[i]=0;ship_class[i]="";ship_size[i]=0;
 	    ship_leadership[i]=0;ship_hp[i]=0;ship_maxhp[i]=0;ship_location[i]="";ship_shields[i]=0;
@@ -481,11 +484,34 @@ function scr_initialize_custom() {
 	millenium=41;
 
 	var company=0;
+	var temp1=0;
+	var intolerant=0;
 	var chaap=1,whirlwind;
-	var second=100,third=100,fourth=100,fifth=100,sixth=100,seventh=100,eighth=100,ninth=100,tenth=100;
-	var assault=20,siege=0,temp1=0, intolerant=0;
-	var k, i, v;k=0;i=0;v=0;
-	var techs=20,epistolary=4,apothecary=6,codiciery=6,lexicanum=10,terminator=10,veteran=89;
+	
+	k=0;
+	i=0;
+	v=0;
+	
+	second=100;
+	third=100;
+	fourth=100;
+	fifth=100;
+	sixth=100;
+	seventh=100;
+	eighth=100;
+	ninth=100;
+	tenth=100;
+	
+	
+	assault=20;
+	siege=0;
+	techs=20;
+	epistolary=4;
+	apothecary=6;
+	codiciery=6;
+	lexicanum=10;
+	terminator=10;
+	veteran=89;
 	devastator=20;
 
 	whirlwind=4;
@@ -543,7 +569,8 @@ function scr_initialize_custom() {
 	    if (obj_creation.strength<=2) then seventh=0;
 	    if (obj_creation.strength<=1) then sixth=0;
 
-	    var bonus_marines=0,o=0;
+	    var bonus_marines=0;
+		o=0;
 	    if (obj_creation.strength>5) then bonus_marines=(obj_creation.strength-5)*50;
 
 	    /*repeat(20){
@@ -561,7 +588,8 @@ function scr_initialize_custom() {
 	}
 
 	if (obj_creation.custom!=0){
-	    var bonus_marines=0,o=0;
+	    var bonus_marines=0;
+		o=0;
 	    if (obj_creation.strength>5) then bonus_marines=(obj_creation.strength-5)*50;
 	    i=0
 	    while(bonus_marines>=5){
@@ -1398,7 +1426,7 @@ function scr_initialize_custom() {
 			experience[company,1]=550;
 			gear[company,1]="Psychic Hood";
 		    var let="";
-		    letmax=5;
+		    var letmax=5;
 		    chapter_master.psionic = choose(15,16);
 		    switch(obj_creation.discipline){
 		    	case "default":
@@ -1438,7 +1466,7 @@ function scr_initialize_custom() {
 	gear[company,2]="Master Servo Arms";
 	chaos[company,2]=0;
 	experience[company,2]=475;
-	spawn_unit = TTRPG[company,2];
+	var spawn_unit = TTRPG[company,2];
 	if (spawn_unit.technology<40){
 		spawn_unit.technology=40;
 	}
@@ -1494,6 +1522,10 @@ function scr_initialize_custom() {
 	armour[company,5]="Artificer Armour";
 	gear[company,5]=gear[101,17];
 	chaos[company,5]=0;experience[company,5]=550;
+	
+	var let = "";
+	var letmax = 0;
+	
 	if (global.chapter_name="Lamenters") then armour[company,5]="MK6 Corvus";
 	if (obj_creation.discipline="default"){let="D";letmax=7;}
 	if (obj_creation.discipline="biomancy"){let="B";letmax=5;}
@@ -1563,7 +1595,8 @@ function scr_initialize_custom() {
 	    experience[company][k]=125;
 	    if (psyky=1) then experience[company][k]+=10;
 
-	    var let="",letmax=0;
+		let="";
+		letmax=0;
 	    if (obj_creation.discipline="default"){let="D";letmax=7;}
 	    if (obj_creation.discipline="biomancy"){let="B";letmax=5;}
 	    if (obj_creation.discipline="pyromancy"){let="P";letmax=5;}
@@ -1592,7 +1625,8 @@ function scr_initialize_custom() {
 	    experience[company][k]=80;
 	    if (psyky=1) then experience[company][k]+=10;
 
-	    var let,letmax;let="";letmax=0;
+		let="";
+		letmax=0;
 	    if (obj_creation.discipline="default"){let="D";letmax=7;}
 	    if (obj_creation.discipline="biomancy"){let="B";letmax=5;}
 	    if (obj_creation.discipline="pyromancy"){let="P";letmax=5;}
@@ -1620,7 +1654,8 @@ function scr_initialize_custom() {
 	    experience[company][k]=40;
 	    if (psyky=1) then experience[company][k]+=10;
 
-	    var let="",letmax=0;
+	    let="";
+		letmax=0;
 	    if (obj_creation.discipline="default"){let="D";letmax=7;}
 	    if (obj_creation.discipline="biomancy"){let="B";letmax=5;}
 	    if (obj_creation.discipline="pyromancy"){let="P";letmax=5;}
@@ -1654,8 +1689,11 @@ function scr_initialize_custom() {
 
 	// Honor Guard
 
-	var hong=0,chapter_option,o,unit;
-	o=0;chapter_option=0;repeat(4){o+=1;
+	var hong=0;
+	chapter_option=0;
+	var unit;
+	o=0;
+	chapter_option=0;repeat(4){o+=1;
 	if (obj_creation.adv[o]="Brothers, All") then chapter_option=1;}
 	if (chapter_option=1) then hong+=20;
 	if (progenitor=0) and (obj_creation.custom=0) then hong+=10;
@@ -1942,8 +1980,7 @@ function scr_initialize_custom() {
 	repeat(predrelic){
 		v+=1;
 		man_size+=10;
-		var predtype;
-		predtype=choose(1,2,3,4)
+		var predtype=choose(1,2,3,4)
 		veh_race[company,v]=1;veh_loc[company,v]=home_name;veh_role[company,v]="Predator";
 		if (predtype=1){veh_wep1[company,v]="Plasma Destroyer Turret";veh_wep2[company,v]="Lascannon Sponsons";veh_wep3[company,v]="HK Missile";veh_upgrade[company,v]="Artificer Hull";veh_acc[company,v]="Searchlight";}
 		if (predtype=2){veh_wep1[company,v]="Heavy Conversion Beamer Turret";veh_wep2[company,v]="Lascannon Sponsons";veh_wep3[company,v]="HK Missile";veh_upgrade[company,v]="Artificer Hull";veh_acc[company,v]="Searchlight";}
@@ -2101,7 +2138,6 @@ function scr_initialize_custom() {
 	        }
 	    }
 
-	    var spawn_unit;
 	    if (stahp=0){
 	        k+=1;
 	        commands+=1;// Captain
@@ -2140,7 +2176,7 @@ function scr_initialize_custom() {
 	        if (global.chapter_name="Iron Hands") then armour[company][k]="Terminator Armour";
 
 	        if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands"){
-	            var skl;skl=1;
+	            var skl=1;
 	            if (chaap>0){skl=2;chaap-=1;}
 	            repeat(skl){
 	                k+=1;commands+=1;// Chaplain
@@ -2488,7 +2524,7 @@ function scr_initialize_custom() {
 	            veh_wid[company,v]=2;
 	        }
 	        if (company=9) or (global.chapter_name="Iron Hands"){
-	            var predy;predy=5;
+	            var predy=5;
 	            if (global.chapter_name="Iron Hands") then predy=2;
 
 	            repeat(predy){v+=1;man_size+=10;
@@ -2625,7 +2661,7 @@ function scr_initialize_custom() {
 	if (string_count("Crafter",strin)>0) and (string_count("Enthusi",strin)=0){eqi+=1;equipment[eqi]="MK4 Maximus";equipment_number[eqi]=round(random_range(3,18));equipment_type[eqi]="armour";}
 
 
-	var i;i=-1;
+	i =- 1;
 	repeat(121){i+=1;
 	    slave_batch_num[i]=0;
 	    slave_batch_eta[i]=0;
@@ -2634,7 +2670,9 @@ function scr_initialize_custom() {
 
 
 
-	var o,bloo;bloo=0;o=0;repeat(4){o+=1;
+	var bloo=0;
+	o=0;
+	repeat(4){o+=1;
 		if (obj_creation.dis[o]="Blood Debt") then bloo=1;}
 	if (bloo=1) and (instance_exists(obj_controller)){obj_controller.blood_debt=1;}
 	if (bloo=1){
