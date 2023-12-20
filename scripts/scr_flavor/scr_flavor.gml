@@ -3,8 +3,8 @@ function scr_flavor(weapon_name, target_object, target_dudes, shots_fired, casua
 	// I forget the arguments for this, you'll have to deal
 	// Generates flavor based on the damage and casualties from scr_shoot, only for the player
 
-	targeh=target_dudes;
-	var p1,p2,p3,mes,targeh;
+	var targeh = target_dudes;
+	var p1,p2,p3,mes;
 	mes="";p1="";p2="";p3="";
 
 	var wepp;wepp="";
@@ -264,7 +264,7 @@ function scr_flavor(weapon_name, target_object, target_dudes, shots_fired, casua
 
 
 	exit;
-
+}
 /* old flavor code?
 
 
