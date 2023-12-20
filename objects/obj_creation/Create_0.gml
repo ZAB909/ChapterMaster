@@ -81,7 +81,7 @@ homeworld_exists=1;
 homeworld_rule=1;
 aspirant_trial="Blood Duel";
 discipline="default";
-
+doctrine="Generalist";
 battle_cry="For the Emperor";
 
 main_color=1;secondary_color=1;trim_color=1;
