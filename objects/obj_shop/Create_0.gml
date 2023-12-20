@@ -55,8 +55,7 @@ if (obj_controller.faction_status[eFACTION.Imperium] = "War") {
         instance_destroy();
     }
     with(obj_star) {
-        var u;
-        u = 0;
+        var u = 0;
         repeat(4) {
             u += 1;
             if (p_type[u] = "Forge") and(p_owner[u] = 1) then instance_create(x, y, obj_temp6);
@@ -772,8 +771,7 @@ if (shop = "warships") {
 
 with(obj_p_fleet) {
     if (capital_number > 0) and(action = "") {
-        var you;
-        you = instance_nearest(x, y, obj_star);
+        var you = instance_nearest(x, y, obj_star);
         if (you.trader > 0) then obj_shop.discount = 1;
     }
 }
@@ -783,8 +781,7 @@ with(obj_star) {
 
 
 if (shop = "equipment") or(shop = "equipment2") {
-    var disc;
-    disc = 1;
+    var disc = 1;
     if (obj_controller.stc_wargear >= 1) then disc = 0.92;
     if (obj_controller.stc_wargear >= 3) then disc = 0.86;
     if (obj_controller.stc_wargear >= 5) then disc = 0.75;
@@ -803,8 +800,7 @@ if (shop = "vehicles") {
     i = 0;
     repeat(31) {
         i += 1;
-        var ahuh;
-        ahuh = 1;
+        var ahuh = 1;
         if (i >= 7) and(i <= 12) then ahuh = 0;
         if (ahuh = 1) {
             if (item_cost[i] > 1) then item_cost[i] = round(item_cost[i] * disc);
