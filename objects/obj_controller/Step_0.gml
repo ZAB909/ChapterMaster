@@ -602,7 +602,7 @@ if (menu==1 && managing>0){
                 if (string_count("$",unit.specials())>0) then temp[119]="Born Leader Bonus";
                 if (string_count("@",unit.specials())>0){
                     temp[119]="Champion Bonus";
-                    melee_attack=melee_attack*1.15;ranged_attack=ranged_attack*1.15;
+                    //melee_attack=melee_attack*1.15;ranged_attack=ranged_attack*1.15;
                 }
                 if (string_count("0",unit.specials())>0){
                     temp[119]="PSYKER ("+string_upper(string(obj_ini.psy_powers))+"): ";
@@ -614,7 +614,7 @@ if (menu==1 && managing>0){
             if (obj_controller.chaos_rating>0) and (temp[119]!="") then temp[119]+="#"+string(max(0,unit.corruption()))+"% Corruption.";
             if (obj_controller.chaos_rating>0) and (temp[119]="") then temp[119]=string(max(0,unit.corruption()))+"% Corruption.";
             // Melee Attack
-            temp[116]=$"{melee_attack}";
+            temp[116]=melee_attack;
             // Ranged Attack
             temp[117]=$"{ranged_attack}";
             // Damage Resistance

@@ -1310,12 +1310,19 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		static ranged_attack = function(weapon_slot=0){
 			//base modifyer based on unit skill set
 			ranged_att = 100*(((ballistic_skill/50) + (dexterity/400)+ (experience()/500)));
-
+			var explanation_string = $"base ranged:X{ranged_att/100}#"
 			//determine capavbility to weild bulky weapons
 			var hands_limit = 2;
-			hands_limit += gear_weapon_data("armour",armour(),"ranged_hands",false,"standard");
+			var carry_string="base:2#";
+			var armour_carry = gear_weapon_data("armour",armour(),"ranged_hands",false,"standard");
+			if (armour_carry!=0){
+				hands_limit+=armour_carry;
+				var symbol = armour_carry>0 ? "+":"-"
+				carry_string=$"armour:{symbol}{armour_carry}#";
+			}			
 			if (strength>50){
-				hands_limit+=0.5
+				hands_limit+=0.5;
+				carry_string="strength:+0.5#";
 			}
 
 			//base multiplyer
@@ -1328,11 +1335,15 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			//default to fists
 			if (!is_struct(_wep1)) then _wep1 = new equipment_struct({},"");
 			if (!is_struct(_wep2)) then _wep2 = new equipment_struct({},"");
+			if (allegiance==global.chapter_name){
+				_wep1.owner_data("chapter");
+				_wep2.owner_data("chapter");
+			}
 			var primary_weapon;
 			if (weapon_slot==0){
 				//decide if any weapons are ranged
 				if (_wep1.range<=1.1 && _wep2.range<=1.1){
-					return "no ranged weapon"
+					return "no ranged weapon";
 				} else {
 					if (_wep1.range<=1.1){
 						primary_weapon=_wep2;
@@ -1353,55 +1364,61 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			//calculate chapter specific bonus
 			if (allegiance==global.chapter_name){//calculate player specific bonuses
 				if (primary_weapon.has_tag("bolt")){
-					if (array_contains(obj_ini.advantages, "Bolter Drilling") && base_group=="astartes"){
+					if (array_contains(obj_ini.adv, "Bolter Drilling") && base_group=="astartes"){
 						range_multiplyer+=0.15;
-					}
-					if (obj_controller.stc_bonus[1]==1){
-						primary_weapon.attack*=1.07;
-					}
-				}else if (primary_weapon.has_tag("flame")){
-					if (obj_controller.stc_bonus[1]==3){
-						primary_weapon.attack*=1.1;
-					}
-				}else if (primary_weapon.has_tag("explosive")){
-					if (obj_controller.stc_bonus[1]==4){
-						primary_weapon.attack*=1.07;
 					}
 				}
 			}
-
-			//calculate bonus' from gear
-			ranged_att*=range_multiplyer;
-			ranged_att+=_wep1.ranged_mod;
-			ranged_att+=_wep2.ranged_mod;
-			ranged_att+=gear_weapon_data("armour",armour(),"ranged_mod",false,"standard");
-			ranged_att+=gear_weapon_data("gear",gear(),"ranged_mod",false,"standard");
-			ranged_att+=gear_weapon_data("mobility",mobility_item(),"ranged_mod",false,"standard");
 			if ((_wep1.ranged_hands+_wep2.ranged_hands)>hands_limit){
 				encumbered_ranged=true;					
 				ranged_att*=0.6;
+				explanation_string+=$"encumbered penalty:X0.6#"
 			}
-			if (has_trait("feet_floor") && mobility_item()!=""){
-				ranged_att*=0.9;
+			if (!encumbered_ranged){
+			 	var total_gear_mod=0;							
+				total_gear_mod+=gear_weapon_data("armour",armour(),"ranged_mod",false,"standard");
+				total_gear_mod+=gear_weapon_data("gear",gear(),"ranged_mod",false,"standard");
+				total_gear_mod+=gear_weapon_data("mobility",mobility_item(),"ranged_mod",false,"standard");
+				total_gear_mod+=_wep1.ranged_mod;
+				total_gear_mod+=_wep2.ranged_mod;
+				melee_att+=total_gear_mod;
+				explanation_string+=$"gear mod:X{(total_gear_mod/100)+1}#";			
+				if (has_trait("feet_floor") && mobility_item()!=""){
+					ranged_att*=0.9;
+				}
 			}
 			//return final ranged damage output
-			return floor((ranged_att/100)* primary_weapon.attack);
+			var final_range_attack = floor((ranged_att/100)* primary_weapon.attack);
+			ranged_damage_data = [final_range_attack,explanation_string,[melee_carrying,hands_limit,carry_string],primary_weapon, secondary_weapon];;
+			return ranged_damage_data;
 		};
 		
 		static melee_attack = function(weapon_slot=0){
 			melee_att = 100*(((weapon_skill/100) * (strength/20)) + (experience()/1000)+0.1);
+			var explanation_string = $"base melee:X{melee_att/100}#"
+			var carry_string="base:2#"
 			var hands_limit = 2;
-			hands_limit+=gear_weapon_data("armour",armour(),"melee_hands",false,"standard");
+			var armour_carry = gear_weapon_data("armour",armour(),"melee_hands",false,"standard");
+			if (armour_carry!=0){
+				hands_limit+=armour_carry;
+				carry_string=$"armour:{armour_carry}#"
+			}
 			if (strength>50){
 				hands_limit+=0.25;
+				carry_string="strength:+0.25#";
 			}
 			if (weapon_skill>50){
 				hands_limit+=0.25;
+				carry_string="skill:+0.25#";
 			}
 			var _wep1 = gear_weapon_data("weapon",weapon_one(),"all",false,"standard");
 			var _wep2 = gear_weapon_data("weapon",weapon_two(),"all",false,"standard");
 			if (!is_struct(_wep1)) then _wep1 = new equipment_struct({},"");
 			if (!is_struct(_wep2)) then _wep2 = new equipment_struct({},"");
+			if (allegiance==global.chapter_name){
+				_wep1.owner_data("chapter");
+				_wep2.owner_data("chapter");
+			}
 			var primary_weapon;
 			var secondary_weapon="none";
 			if (weapon_slot==0){
@@ -1409,10 +1426,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				if (((_wep1.range>1.1 ||_wep1.range==0) && (_wep2.range>1.1||_wep2.range==0)) && (!_wep1.has_tags(["pistol","flame"]) && !_wep2.has_tags(["pistol","flame"]))){
 					primary_weapon=new equipment_struct({},"");//create blank weapon struct
 					primary_weapon.attack=strength/3;//calculate damage from player fists
+					primary_weapon.name="fists";
 				} else {
-					if (_wep1.range>1.1 || !_wep1.has_tags(["pistol","flame"])){
+					if (_wep1.range>1.1 && !_wep1.has_tags(["pistol","flame"])){
 						primary_weapon=_wep2;
-					} else if (_wep2.range>1.1 || !_wep2.has_tags(["pistol","flame"])){
+					} else if (_wep2.range>1.1 && !_wep2.has_tags(["pistol","flame"])){
 						primary_weapon=_wep1;
 					} else {
 						if (_wep1.attack>_wep2.attack){
@@ -1430,33 +1448,68 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				} else if (weapon_slot==2){
 					primary_weapon=_wep2;
 				}
-			};									
-			melee_att+=gear_weapon_data("armour",armour(),"melee_mod",false,"standard");
-			melee_att+=gear_weapon_data("gear",gear(),"melee_mod",false,"standard");
-			melee_att+=gear_weapon_data("mobility",mobility_item(),"melee_mod",false,"standard");
-			melee_att+=_wep1.melee_mod;
-			melee_att+=_wep2.melee_mod;
-			var hands_1 = gear_weapon_data("weapon",weapon_one(),"melee_hands",false,"standard");
-			var hands_2 = gear_weapon_data("weapon",weapon_two(),"melee_hands",false,"standard");
-			if ((hands_1+hands_2)>hands_limit){
+			};
+
+			var melee_carrying=_wep1.melee_hands+_wep2.melee_hands;
+			if (melee_carrying>=hands_limit){
 				encumbered_melee=true;	
 				melee_att*=0.6;
+				explanation_string+=$"encumbered penalty:X0.6#"
 			}
-			if (has_trait("feet_floor") && mobility_item()!=""){
-				melee_att*=0.9;
+			if (!encumbered_melee){
+			 	var total_gear_mod=0;							
+				total_gear_mod+=gear_weapon_data("armour",armour(),"melee_mod",false,"standard");
+				total_gear_mod+=gear_weapon_data("gear",gear(),"melee_mod",false,"standard");
+				total_gear_mod+=gear_weapon_data("mobility",mobility_item(),"melee_mod",false,"standard");
+				total_gear_mod+=_wep1.melee_mod;
+				total_gear_mod+=_wep2.melee_mod;
+				melee_att+=total_gear_mod;
+				explanation_string+=$"gear mod:X{(total_gear_mod/100)+1}#";
+				//TODO make trait data like this more structured to be able to be moddable
+				if (has_trait("feet_floor") && mobility_item()!=""){
+					melee_att*=0.9;
+					explanation_string+=$"{global.traits.feet_floor.flavour_text}:X0.9#";
+				}
+
 			}
 			var final_attack =  floor((melee_att/100)*primary_weapon.attack);
 			if (secondary_weapon!="none" && !encumbered_melee){
 				var secondary_modifier = 0.5;
 				if (primary_weapon.has_tag("dual") && secondary_weapon.has_tag("dual")){
 					secondary_modifier=1
-				} else if (secondary.has_tag("pistol")){
-					secondary_modifier = 0.7;
+				} else if (secondary_weapon.has_tag("pistol")){
+					if (melee_carrying+0.9>=hands_limit){
+						secondary_modifier=0;
+					}else {
+						secondary_modifier = 0.6;
+					}
 				}
-				final_attack+=floor(secondary_modifier*((melee_att/100)*secondary_weapon.attack));
+				var side_arm = floor(secondary_modifier*((melee_att/100)*secondary_weapon.attack));
+				if (side_arm>0){
+					final_attack+=side_arm;
+					explanation_string+=$"side_arm:+{side_arm}#";
+				}
 			}
-			return final_attack;
+			melee_damage_data=[final_attack,explanation_string,[melee_carrying,hands_limit,carry_string],primary_weapon, secondary_weapon];
+			return melee_damage_data;
 		};
+
+		static armour_calc = function(){
+			armour_rating=0;
+			armour_rating+=gear_weapon_data("armour",armour(),"armour_value",false,"standard");
+			armour_rating+=gear_weapon_data("gear",gear(),"armour_value",false,"standard");
+			armour_rating+=gear_weapon_data("mobility",mobility_item(),"armour_value",false,"standard");
+			armour_rating+=gear_weapon_data("weapon",weapon_two(),"armour_value",false,"standard");
+			armour_rating+=gear_weapon_data("weapon",weapon_one(),"armour_value",false,"standard");
+            if (armour() != ""&& allegiance==global.chapter_name){ // STC Bonuses
+                if (obj_controller.stc_bonus[1] = 5) {
+                    armour_rating*=1.05
+                }
+                if (obj_controller.stc_bonus[2] = 3) {
+                     armour_rating*=1.05
+                }
+            }			
+		}
 
 		static assignment = function(){
 			var job = "none"

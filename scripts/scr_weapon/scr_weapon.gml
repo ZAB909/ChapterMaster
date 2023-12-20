@@ -9,6 +9,7 @@ global.weapons={
         },
         "ranged_hands": 2,
         "range": 25,
+        "tags":["las", "rifle", "precision"],
     },
   "Choppa": {
     "abbreviation": "Chop",
@@ -101,6 +102,7 @@ global.weapons={
     "arp": 0,
     "tags":[],
     "ranged_hands":2,
+    "tags":["arcane"],
     // ... (other attributes)
   },
   "Hellrifle": {
@@ -132,7 +134,7 @@ global.weapons={
         "range": 3.1,
         "spli": 0,
         "arp": 0,
-        "tags":["pistol", "ancient"],
+        "tags":["pistol", "ancient","las"],
     },
     "Combat Knife": {
         "attack": {
@@ -169,11 +171,6 @@ global.weapons={
             "master_crafted": 60,
             "artifact": 70
         },
-        "melee_mod": {
-            "standard": 1.1,
-            "master_crafted": 1.1,
-            "artifact": 1.1
-        },
         "description": "A standard Chainsword. It is popular among Assault Marines due to the raw power, even with multiple opponents.",
         "melee_hands": 1.1,
         "ranged_hands": 0,
@@ -190,9 +187,9 @@ global.weapons={
             "artifact": 110
         },
         "melee_mod": {
-            "standard": 1,
-            "master_crafted": 1,
-            "artifact": 1
+            "standard": 5,
+            "master_crafted": 10,
+            "artifact": 15
         },
         "description": "Able to be dual-wielded. A weapon most frequently seen in the hands of Chaos, this Chainaxe uses motorized chainsaw teeth to maim and tear.",
         "melee_hands": 1,
@@ -212,9 +209,9 @@ global.weapons={
             "artifact": 100
         },      
             "hp_mod": {
-            "standard": 20, // Adjusted
-            "master_crafted": 20, // Adjusted
-            "artifact": 20 // Adjusted
+            "standard": 20, 
+            "master_crafted": 20,
+            "artifact": 20
         },
         "melee_hands": 1,
         "ranged_hands": 1,
@@ -235,12 +232,12 @@ global.weapons={
         },
         "description": "An obscenely large Chainsword, this two-handed weapon can carve through flesh and plasteel with equal ease.",
         "melee_hands": 2,
-        "ranged_hands": 0,
+        "ranged_hands": 1,
         "ammo": 0,
         "range": 1,
         "spli": 1,
         "arp": 1,
-        "tags":["chain", "axe"],
+        "tags":["chain", "sword"],
     },
     "Power Sword": {
         "attack": {
@@ -387,7 +384,7 @@ global.weapons={
         "melee_hands": 1,
         "ranged_hands": 0,
         "ammo": 0,
-        "range": 1.1,
+        "range": 1,
         "spli": 0,
         "arp": 1,
         "tags":["power", "axe"],
@@ -414,29 +411,9 @@ global.weapons={
     },
     "Lightning Claw": {
         "attack": {
-            "standard": 400,
-            "master_crafted": 425,
-            "artifact": 475
-        },
-        "melee_mod": {
-            "standard": 1.2,
-            "master_crafted": 1.2,
-            "artifact": 1.2
-        },
-        "ranged_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "hp_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "damage_resistance_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
+            "standard": 130,
+            "master_crafted": 160,
+            "artifact": 190
         },
         "description": "Lightning claws are specialized close combat weapons with built-in disruptor fields. These fields disrupt matter on a molecular level, tearing through armor and flesh with ease.",
         "melee_hands": 1,
@@ -445,7 +422,7 @@ global.weapons={
         "range": 1,
         "spli": 1,
         "arp": 1,
-        "tags":["power"],
+        "tags":["power","dual"],
     },
     "Dreadnought Lightning Claw": {
         "attack": {
@@ -465,7 +442,7 @@ global.weapons={
         "range": 1,
         "spli": 1,
         "arp": 0,
-        "tags":["power"],
+        "tags":["power", "vehicle"],
     },
     "Thunder Hammer": {
         "attack": {
@@ -559,7 +536,8 @@ global.weapons={
         "ammo": 18,
         "range": 3.1,
         "spli": 0,
-        "arp": 0
+        "arp": 0,
+        "tags":["bolt", "pistol"],
     },
     "Webber": {
         "attack": {
@@ -573,7 +551,8 @@ global.weapons={
         "ammo": 5,
         "range": 4.1,
         "spli": 0,
-        "arp": 0
+        "arp": 0,
+        "tags":["immobolise"]
     },
     "Underslung Bolter": {
         "attack": {
@@ -583,26 +562,12 @@ global.weapons={
         },
         "description": "A compact, secondary Bolter weapon often attached under the barrel of a larger firearm. It allows for rapid fire in close quarters.",
         "melee_hands": 0,
-        "ranged_hands": 2,
+        "ranged_hands": 1,
         "ammo": 0,
         "range": 10,
         "spli": 1,
-        "arp": 0
-    },
-    // ... (Other weapons)
-    "Underslung Bolter": {
-        "attack": {
-            "standard": 60,
-            "master_crafted": 70,
-            "artifact": 80
-        },
-        "description": "An underslung Bolter attached to another weapon for additional firepower. It provides a burst of rapid automatic fire.",
-        "melee_hands": 0,
-        "ranged_hands": 2,
-        "ammo": 8,
-        "range": 10,
-        "spli": 1,
-        "arp": 0
+        "arp": 0,
+         "tags":["bolt", "attached"]
     },
     "Stalker Pattern Bolter": {
         "attack": {
@@ -616,7 +581,8 @@ global.weapons={
         "ammo": 20,
         "range": 15,
         "spli": 0,
-        "arp": 1
+        "arp": 1,
+        "tags":["bolt","precision"]
     },
     "Bolter": {
         "attack": {
@@ -630,7 +596,8 @@ global.weapons={
         "ammo": 16,
         "range": 12,
         "spli": 1,
-        "arp": 0
+        "arp": 0,
+        "tags":["bolt"]
     },
     "Heavy Flamer": {
         "attack": {
@@ -644,7 +611,8 @@ global.weapons={
         "ammo": 8,
         "range": 2,
         "spli": 1,
-        "arp": -1
+        "arp": -1,
+        "tags":["flame","heavy_ranged"]
     },
     "CCW Heavy Flamer": {
         "attack": {
@@ -672,7 +640,8 @@ global.weapons={
         "ammo": 0,
         "range": 3.1,
         "spli": 1,
-        "arp": -1
+        "arp": -1,
+        "tags":["vehicle","flame"]
     },
     "Meltagun": {
         "attack": {
@@ -680,33 +649,14 @@ global.weapons={
             "master_crafted": 275,
             "artifact": 300
         },
-        "melee_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "ranged_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "hp_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "damage_resistance_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
         "description": "A relatively quiet weapon, this gun vaporizes flesh and armor alike. Due to heat dissipation, it has only a short range.",
-        "melee_hands": 0,
+        "melee_hands": 1,
         "ranged_hands": 2,
         "ammo": 4,
         "range": 2.1,
         "spli": 0,
-        "arp": 1
+        "arp": 1,
+        "tags":["melta"]
     },
     "Master Crafted Meltagun": {
         "attack": {
@@ -734,7 +684,8 @@ global.weapons={
         "ammo": 8,
         "range": 4.1,
         "spli": 1,
-        "arp": 1
+        "arp": 1,
+        "tags":["melta","heavy_ranged"]
     },
     "Plasma Pistol": {
         "attack": {
@@ -743,12 +694,13 @@ global.weapons={
             "artifact": 150
         },
         "description": "A smaller version of the plasma gun, this dangerous-to-use weapon has exceptional armor-piercing capabilities.",
-        "melee_hands": 1,
-        "ranged_hands": 0,
+        "melee_hands": 0,
+        "ranged_hands": 1,
         "ammo": 0,
         "range": 3.1,
         "spli": 0,
-        "arp": 1
+        "arp": 1,
+        "tags":["plasma","pistol"]
     },
     "Master Crafted Plasma Pistol": {
         "attack": {
@@ -757,8 +709,8 @@ global.weapons={
             "artifact": 144
         },
         "description": "A Master Crafted Plasma Pistol incorporates superior craftsmanship, advanced modifications, and enhancements compared to its standard counterpart.",
-        "melee_hands": 1,
-        "ranged_hands": 0,
+        "melee_hands": 0,
+        "ranged_hands": 1,
         "ammo": 0,
         "range": 3.1,
         "spli": 0,
@@ -772,11 +724,12 @@ global.weapons={
         },
         "description": "The Infernus Pistol is a compact and portable flamethrower-style weapon. It unleashes a torrent of fiery promethium, which engulfs its targets in flames.",
         "melee_hands": 1,
-        "ranged_hands": 0,
+        "ranged_hands": 1,
         "ammo": 4,
         "range": 2.1,
         "spli": 0,
-        "arp": 1
+        "arp": 1,
+        "tags":["flame","pistol"]
     },
     "Plasma Gun": {
         "attack": {
@@ -790,7 +743,8 @@ global.weapons={
         "ammo": 16,
         "range": 12,
         "spli": 1,
-        "arp": 1
+        "arp": 1,
+        "tags":["plasma"]
     },
     "Master Crafted Plasma Gun": {
         "attack": {
@@ -818,7 +772,8 @@ global.weapons={
         "ammo": 20,
         "range": 18,
         "spli": 1,
-        "arp": 0
+        "arp": 0,
+        "tags":["precision"]
     },
     "Assault Cannon": {
         "attack": {
@@ -827,12 +782,13 @@ global.weapons={
             "artifact": 288
         },
         "description": "A heavy, rotary auto-cannon frequently used by Dreadnoughts and Terminators. Has an incredible rate of fire.",
-        "melee_hands": 0,
-        "ranged_hands": 2,
+        "melee_hands": 2.1,
+        "ranged_hands": 2.1,
         "ammo": 5,
         "range": 12,
         "spli": 1,
-        "arp": 0
+        "arp": 0,
+        "tags":["heavy_ranged"]
     },
     "Autocannon": {
         "attack": {
@@ -846,7 +802,8 @@ global.weapons={
         "ammo": 25,
         "range": 18,
         "spli": 1,
-        "arp": 0
+        "arp": 0,
+        "tags":["heavy_ranged"]
     },
     "Missile Launcher": {
         "attack": {
@@ -860,7 +817,8 @@ global.weapons={
         "ammo": 6,
         "range": 24,
         "spli": 1,
-        "arp": 0
+        "arp": 0,
+        "tags":["heavy_ranged"]
     },
     "Lascannon": {
         "attack": {
@@ -874,7 +832,8 @@ global.weapons={
         "ammo": 8,
         "range": 24,
         "spli": 0,
-        "arp": 1
+        "arp": 1,
+         "tags":["heavy_ranged"]
     },
     "Conversion Beam Projector": {
         "attack": {
@@ -924,33 +883,14 @@ global.weapons={
             "master_crafted": 264,
             "artifact": 288
         },
-        "melee_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "ranged_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "hp_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "damage_resistance_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
         "description": "Twin-linked Heavy Bolters are an upgraded version of the standard Heavy Bolter weapon, which is known for its high rate of fire and effectiveness against infantry and light vehicles.",
         "melee_hands": 0,
         "ranged_hands": 0,
         "ammo": 20,
         "range": 16,
         "spli": 1,
-        "arp": 1
+        "arp": 1,
+        "tags":["vehicle"]
     },
     "Twin Linked Lascannon": {
         "attack": {
@@ -958,33 +898,14 @@ global.weapons={
             "master_crafted": 275,
             "artifact": 300
         },
-        "melee_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "ranged_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "hp_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "damage_resistance_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
         "description": "Lascannons are powerful anti-armour weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armor.",
         "melee_hands": 0,
         "ranged_hands": 0,
         "ammo": 10,
         "range": 20,
         "spli": 0,
-        "arp": 1
+        "arp": 1,
+        "tags":["heavy_ranged"]
     },
     "Lascannons": {
         "attack": {
@@ -992,93 +913,35 @@ global.weapons={
             "master_crafted": 330,
             "artifact": 360
         },
-        "melee_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "ranged_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "hp_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "damage_resistance_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
         "description": "Lascannons are powerful anti-armour weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armor.",
-        "melee_hands": 0,
-        "ranged_hands": 0,
+        "melee_hands": 1,
+        "ranged_hands": 2,
         "ammo": 5,
         "range": 20,
         "spli": 0,
-        "arp": 1
+        "arp": 1,
+        "tags":["heavy_ranged"]
     },
-    "Heavy Bolters": {
+    "Heavy Bolter": {
         "attack": {
             "standard": 320,
             "master_crafted": 352,
             "artifact": 384
         },
-        "melee_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "ranged_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "hp_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "damage_resistance_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
         "description": "The Heavy Bolter is a heavy weapon that fires larger and more powerful bolt shells compared to the standard Bolter.",
-        "melee_hands": 0,
-        "ranged_hands": 0,
+        "melee_hands": 1,
+        "ranged_hands": 2,
         "ammo": 10,
         "range": 16,
         "spli": 1,
-        "arp": 1
+        "arp": 1,
+        "tags":["heavy_ranged"]
     },
     "Whirlwind Missiles": {
         "attack": {
             "standard": 400,
             "master_crafted": 440,
             "artifact": 480
-        },
-        "melee_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "ranged_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "hp_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "damage_resistance_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
         },
         "description": "The Whirlwind Missile Launcher is a vehicle-mounted artillery weapon that launches a barrage of powerful missiles at the enemy.",
         "melee_hands": 0,
@@ -1094,26 +957,6 @@ global.weapons={
             "master_crafted": 264,
             "artifact": 288
         },
-        "melee_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "ranged_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "hp_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "damage_resistance_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
         "description": "Twin-linked Heavy Bolters are an upgraded version of the standard Heavy Bolter weapon, which is known for its high rate of fire and effectiveness against infantry and light vehicles.",
         "melee_hands": 0,
         "ranged_hands": 0,
@@ -1127,26 +970,6 @@ global.weapons={
             "standard": 250,
             "master_crafted": 275,
             "artifact": 300
-        },
-        "melee_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "ranged_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "hp_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "damage_resistance_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
         },
         "description": "Lascannons are powerful anti-armour weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armour.",
         "melee_hands": 0,
@@ -1374,7 +1197,8 @@ global.weapons={
         "ammo": 10,
         "range": 10,
         "spli": 1,
-        "arp": 0
+        "arp": 0,
+        "tags":["flame"]
     },
     "Flamer": {
         "attack": {
@@ -1393,7 +1217,8 @@ global.weapons={
         "ammo": 4,
         "range": 2.1,
         "spli": 1,
-        "arp": -1
+        "arp": -1,
+        "tags":["flame"]
     },
     "Underslung Flamer": {
         "attack": {
@@ -1401,33 +1226,14 @@ global.weapons={
             "master_crafted": 220,
             "artifact": 240
         },
-        "melee_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "ranged_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "hp_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "damage_resistance_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
         "description": "",
         "melee_hands": 0,
         "ranged_hands": 0,
         "ammo": 4,
         "range": 2.1,
         "spli": 1,
-        "arp": 0
+        "arp": 0,
+        "tags":["flame"]
     },
     "Incinerator": {
         "attack": {
@@ -1441,7 +1247,8 @@ global.weapons={
         "ammo": 4,
         "range": 2.1,
         "spli": 1,
-        "arp": -1
+        "arp": -1,
+        "tags":["flame"]
     }
 }
 
@@ -1869,8 +1676,8 @@ global.gear = {
 }
 
 function equipment_struct(item_data, core_type,quality="none") constructor{ 
-    var names = ["hp_mod", "description","damage_resistance_mod", "ranged_mod", "melee_mod","armour_value" ,"attack","melee_hands","ranged_hands","ammo","range","spli","arp","special_description","abbreviation","tags"];
-    var defaults = [0,"",0,0,0,0,0,0,0,0,0,0,0,"","",[]];
+    var names = ["hp_mod", "description","damage_resistance_mod", "ranged_mod", "melee_mod","armour_value" ,"attack","melee_hands","ranged_hands","ammo","range","spli","arp","special_description","abbreviation","tags","name"];
+    var defaults = [0,"",0,0,0,0,0,0,0,0,0,0,0,"","",[],""];
     type = core_type;
     for (var i=0;i<array_length(names);i++){
         if (struct_exists(item_data,names[i])){
@@ -1926,7 +1733,13 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
             } else {
                 spe_desc += $"Melee, Splash, "
             }
-        }            
+        } 
+        if (melee_hands!=0){
+            spe_desc += $"melee carry {-1*melee_hands}, "
+        }
+        if (ranged_hands!=0){
+            spe_desc += $"ranged carry {-1*ranged_hands}, "
+        }     
         return  spe_desc
     }
     static has_tag =  function(tag){
@@ -1966,7 +1779,31 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
             if (satisfied) then break;
         }
         return satisfied;
-    }        
+    }
+    static owner_data = function(owner){
+        if (owner=="chapter"){
+            if (type=="weapon"){
+                if (obj_controller.stc_bonus[1]>0 && obj_controller.stc_bonus[1]<5){
+                    if (obj_controller.stc_bonus[1]=2 && has_tag("chain")){
+                        attack*1.07;
+                    } else if (obj_controller.stc_bonus[1]=3 && has_tag("flame")){
+                        attack*1.1;
+                    }else if (obj_controller.stc_bonus[1]=4 && has_tag("explosive")){
+                        attack*1.07;
+                    }else if (obj_controller.stc_bonus[1]=1 && has_tag("bolt")){
+                        attack*1.07;
+                    }
+                }
+                if (obj_controller.stc_bonus[2]>0 && obj_controller.stc_bonus[2]<3){
+                    if (obj_controller.stc_bonus[1]=1 && has_tag("fist")){
+                        attack*1.1;
+                    } else if (obj_controller.stc_bonus[1]=2 && has_tag("Plasma")){
+                        attack*1.1;
+                    }                   
+                }
+            }
+        }
+    }      
 }
 function gear_weapon_data(search_area="any",item,wanted_data="all", sub_class=false, quality="standard"){
 	var item_data_set=false;
@@ -2006,6 +1843,7 @@ function gear_weapon_data(search_area="any",item,wanted_data="all", sub_class=fa
 
     if (is_struct(item_data_set)){
         if (wanted_data=="all"){
+            item_data_set.name=item;
             return new equipment_struct(item_data_set,search_area,quality);
         }
         if (struct_exists(item_data_set, wanted_data)){
@@ -2351,22 +2189,6 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 				if (thawep="Volkite Culverin Sponsons"){attack=320;arp=0;range=18;amm=25;spli=1;
 						descr="An advanced thermal weapon from a bygone era, Volkite Culverins are able to ignite entire formations of enemy forces. ";}
 
-
-	    // STC Bonuses
-	    if (obj_controller.stc_bonus[1]>0){
-	        if (obj_controller.stc_bonus[1]=1){if (string_count("Bolt",thawep)>0){attack=round(attack*1.07);}}
-	        if (obj_controller.stc_bonus[1]=2){if (string_count("Chain",thawep)>0){attack=round(attack*1.07);}}
-	        if (obj_controller.stc_bonus[1]=3) and ((thawep="Flamer") or (thawep="Heavy Flamer")
-	         or (thawep="Inferno Cannon") or (thawep="CCW Heavy Flamer")){attack=round(attack*1.1);}
-	        if (obj_controller.stc_bonus[1]=4){if (thawep="Missile Launcher") or (thawep="Whirlwind Missiles"){attack=round(attack*1.1);}}
-	        if (obj_controller.stc_bonus[1]=5) and (emor>0) and (statt>0){if (statt>=40) then statt+=2;if (statt<40) then statt+=1;}
-	    }
-	    if (obj_controller.stc_bonus[2]>0){
-	        if (obj_controller.stc_bonus[2]=1){if (string_count("ist",thawep)>0){attack=round(attack*1.1);}}
-	        if (obj_controller.stc_bonus[2]=2){if (string_count("Plasma",thawep)>0){attack=round(attack*1.1);}}
-	        if (obj_controller.stc_bonus[2]=3) and (emor>0) and (statt>0){if (statt>=40) then statt+=2;if (statt<40) then statt+=1;}
-	    }
-
 	    if (base_group=false) and (obj_controller.stc_bonus[3]=2){
 	        if (attack>0) then attack=round(attack*1.05);
 	        // if (arp>0) then arp=round(arp*1.05);
@@ -2378,14 +2200,15 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 	        if (thawep="Whirlwind Missiles") then amm=6;
 
 	        if (rending1=1){
-	            var rend;rend=choose(1,2,3,4,5,6);
+	            var rend=choose(1,2,3,4,5,6);
 	            if (rend=6){
 	                if (attack>0) then attack=attack*2;
 	                // if (arm>0) then arp=arp*2;
 	            }
 	        }
 	        if (rang1=1){
-	            attack=attack*marine_attack[unit_array_position];// arp=arp*marine_attack[unit_array_position];
+	            attack=marine_attack[unit_array_position][0];// arp=arp*marine_attack[unit_array_position];
+                var weapon = marine_attack[unit_array_position][3];
 	            if (marine_might[unit_array_position]>0){
 	                attack=attack*2;// arp=arp*2;
 	            }
@@ -2397,12 +2220,9 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 	            }
 	        }
 	        if (rang1>1){
-	            attack=attack*marine_ranged[unit_array_position];
+	            attack=marine_ranged[unit_array_position][0];;
+                var weapon = marine_ranged[unit_array_position][3];
 	            // arp=arp*marine_ranged[unit_array_position];
-	        }
-
-	        if (obj_ncombat.bolter_drilling=1) and ((string_count("Bolt",thawep)>0) or (string_count("ombi",thawep)>0)){
-	            attack=round(attack*1.15);// arp=round(arp*1.15)
 	        }
 	        if (obj_ncombat.melee=1) and (range=1){
 	            attack=round(attack*1.1);// arp=round(arp*1.1);
@@ -2412,35 +2232,20 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 	            // arp=round(arp*obj_ncombat.global_melee);
 	        }
 
+            thawep=weapon.name;
+            att2=attack;
+            apa2=arp;
+            rang2=range;
+            ammo2=amm;
+            spli2=spli;
 
-	        if (base_group=true){
-	            if (marine_exp[unit_array_position]>30){
-	                var ttt;ttt=marine_exp[unit_array_position]-30;
-	                ttt=(ttt*0.0014)+1;ttt=max(1,(min(ttt,1.5)));// was 1.25
-	                if (ttt>=1) then attack=floor(attack*ttt);
-	                // if (ttt>=1) then arp=floor(arp*ttt);
-	                attack=attack*obj_ncombat.global_attack;
-	                // arp=arp*obj_ncombat.global_attack;
-	            }
-	        }
-	        if (base_group=false){
-	            attack=attack*obj_ncombat.global_attack;
-	            // arp=arp*obj_ncombat.global_attack;
-	        }
-
-	        if (i=1){att1=attack;
-                apa1=arp;
-                rang1=range;
-                ammo1=amm;
-                spli1=spli;
-            }else if (i=2){att2=attack;
-                apa2=arp;
-                rang2=range;
-                ammo2=amm;
-                spli2=spli;
-            }
-
-
+            att[b]+=att1;
+            apa[b]=apa1;
+            range[b]=rang1;
+            wep_num[b]+=1;
+            splash[b]=spli1;
+            wep[b]=thawep;
+            goody=1;
 	        // This is giving problems
 	        if (melee_hands=0) and (base_group=true) and (is_dreadnought=false) and (i=2){
 	            var attack;
@@ -2448,11 +2253,21 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 	            var b,goody,opn;b=0;goody=0;opn=0;
 	            repeat(30){b+=1;
 	                if (wep[b]="melee"){
-	                    goody=b;att[b]+=attack;range[b]=1;wep_num[b]+=1;splash[b]=0;ammo[b]=-1;
+	                    goody=b;
+                        att[b]+=attack;
+                        range[b]=1;
+                        wep_num[b]+=1;
+                        splash[b]=0;
+                        ammo[b]=-1;
 	                }
 	                if (wep[b]="") and (opn=0) then opn=b;
 	                if (goody=0){
-	                    wep[opn]="melee";att[opn]+=attack;range[opn]=1;wep_num[opn]=1;splash[opn]=0;ammo[opn]=-1;
+	                    wep[opn]="melee";
+                        att[opn]+=attack;
+                        range[opn]=1;
+                        wep_num[opn]=1;
+                        splash[opn]=0;
+                        ammo[opn]=-1;
 	                }
 	            }
 	        }
@@ -2482,8 +2297,10 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 
 	        var canc;canc=false;
 	        if (rang1>1) and (marine_ranged[unit_array_position]=0){
-	             canc=true;if (floor(rang1)==rang1) then canc=false
-	        }if (canc=true) then goody=1;
+	             canc=true;
+                 if (floor(rang1)==rang1) then canc=false
+	        }
+            if (canc=true) then goody=1;
 
 	        if (goody=0){
 	            if (stack=1) and (wep[b]=thawep) and (goody=0){
@@ -2511,15 +2328,17 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 	            }
 
 	            if (stack=0) and (obj_ncombat.started=1) and (wep[b]=thawep) and (wep_solo[b]=nuum) and (goody=0){
-	                att[b]+=att1;apa[b]=apa1;range[b]=rang1;wep_num[b]+=1;splash[b]=spli1;wep[b]=thawep;goody=1;
+	                att[b]+=att1;
+                    apa[b]=apa1;
+                    range[b]=rang1;
+                    wep_num[b]+=1;
+                    splash[b]=spli1;
+                    wep[b]=thawep;goody=1;
 	                // if (marine_type[unit_array_position]="Death Company") and (range[b]=1){att[b]+=att1;wep_num[b]+=1;wep_rnum[b]+=1;}
 
-	                var title;title=true;
-	                if (marine_type[unit_array_position]="Chapter Master") then title=false;
-	                if (marine_type[unit_array_position]="Master of Sanctity") then title=false;
-	                if (marine_type[unit_array_position]="Chief "+string(obj_ini.role[100,17])) then title=false;
-	                if (marine_type[unit_array_position]="Forge Master") then title=false;
-	                if (marine_type[unit_array_position]="Master of the Apothecarion") then title=false;
+	                var title=true;
+                    if (unit_struct[unit_array_position].IsSpecialist("heads")) then title=false;
+
 	                if (title=true) then wep_title[b]=string(marine_type[unit_array_position]);
 	                wep_solo[b]=string(obj_ini.name[marine_co[unit_array_position],marine_id[unit_array_position]]);
 	            }
@@ -2529,7 +2348,7 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 	    b=0;
 	    if (stack=1) and (goody=0){
 	        repeat(60){b+=1;
-	            var canc;canc=false;
+	            var canc=false;
 	            if (rang1>1) and (marine_ranged[unit_array_position]=0){
 	                 canc=true;if (floor(rang1)==rang1) then canc=false
 	            }

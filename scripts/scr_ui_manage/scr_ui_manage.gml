@@ -236,8 +236,8 @@ function scr_ui_manage() {
         	}
 
         	if (cn.temp[116]!=""){
-        		var_text = string_hash_to_newline(string("Melee Attack: {0}",cn.temp[116]))
-	        	tooltip_text = string_hash_to_newline(string("WS : {0}#STR : {1}", selected_unit.weapon_skill, selected_unit.strength));
+        		var_text = string_hash_to_newline(string("Melee Attack: {0}",cn.temp[116][0]))
+	        	tooltip_text = string_hash_to_newline(string("WS : {0}#STR : {1}#{2}", selected_unit.weapon_skill, selected_unit.strength,cn.temp[116][1]));
 	        	x1 = xx+1387;
 	        	y1 = yy+405;
 	        	x2 = x1+string_width(var_text);
@@ -245,7 +245,7 @@ function scr_ui_manage() {
 		        draw_set_color(c_gray);
 		        if (selected_unit.encumbered_melee){
 		        	draw_set_color(c_red);
-		        	tooltip_text+="#encumbered"
+		        	//tooltip_text+="#encumbered"
 		        }
 		        draw_text(x1,y1,var_text);
 		        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
@@ -298,7 +298,19 @@ function scr_ui_manage() {
 	        draw_text(x1,y1,var_text);
 	        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 
 
-	        if (cn.temp[113]!="") then draw_text(xx+1015,yy+442,string_hash_to_newline("Experience: "+string(cn.temp[113])));    
+	        if (cn.temp[113]!="") then draw_text(xx+1015,yy+442,string_hash_to_newline("Experience: "+string(cn.temp[113])));
+
+	        if (cn.temp[116]!=""){
+	        	carry_data = cn.temp[116][2];
+	        	var carry_string = $"melee carry: {carry_data[0]}/{carry_data[1]}"
+	        	x1 = xx+1015;
+	        	y1 = yy+464;
+	        	x2 = x1+string_width(carry_string);
+	        	y2 = y1+string_height(carry_string);
+	        	draw_text(x1,y1,string_hash_to_newline(carry_string));
+	        	tooltip_text = string_hash_to_newline(carry_data[2]);
+	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
+	        }
         		 
         	if (cn.temp[118]!=""){
         		var_text = string_hash_to_newline(string("Damage Resistance: {0}",cn.temp[118]))
@@ -980,16 +992,16 @@ function scr_ui_manage() {
 				draw_unit_buttons([x5,y6, x6, y5], "Set Boarder",[1,1],c_red)
 		    
 			    scr_scrollbar(974,172,1005,790,34,man_max,man_current);
-			    var tip, coords;
-				for (i=0;i < array_length(tooltip_drawing); i++){
-					tip = tooltip_drawing[i];
-					coords=tip[1];
-					if (point_in_rectangle(mouse_x, mouse_y, coords[0],coords[1],coords[2],coords[3])){
-				        	tooltip_draw(coords[0],coords[3]+4, tip[0]);
-					}
-				}
 			}
 		}
+	    var tip, coords;
+		for (i=0;i < array_length(tooltip_drawing); i++){
+			tip = tooltip_drawing[i];
+			coords=tip[1];
+			if (point_in_rectangle(mouse_x, mouse_y, coords[0],coords[1],coords[2],coords[3])){
+		        	tooltip_draw(coords[0],coords[3]+4, tip[0]);
+			}
+		}		
 		if instance_exists(cn)and (is_struct(cn.temp[120])){
 			if (cn.temp[120].name()!="") and (cn.temp[120].race()=="1"){
 				draw_set_alpha(1);
