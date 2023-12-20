@@ -45,7 +45,7 @@ function scr_chapter_new(argument0) {
 	    selected_chapter=1;chapter=argument0;icon=1;icon_name="da";founding=0;fleet_type=1;strength=10;purity=8;stability=10;cooperation=5;
 	    homeworld="Dead";homeworld_name="The Rock";recruiting_world="Death";recruiting_name="Kimmeria";
 	    homeworld_exists=1;recruiting_exists=1;homeworld_rule=3;aspirant_trial="Survival of the Fittest";
-	    adv[1]="Enemy: Fallen";dis[1]="Never Forgive";
+	    adv[1]="Enemy: Fallen";dis[1]="Never Forgive";doctrine="Breakthrough"
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Dark Green";color_to_secondary="Dark Green";color_to_trim="Silver";
 	    color_to_pauldron="Dark Green";color_to_pauldron2="Dark Green";color_to_lens="Dark Red";
@@ -83,7 +83,7 @@ function scr_chapter_new(argument0) {
 	}
 if (argument0="White Scars"){founding="N/A";points=150;
 	    selected_chapter=2;chapter=argument0;icon=2;icon_name="ws";founding=0;fleet_type=1;strength=5;purity=10;stability=8;cooperation=5;
-	    homeworld="Feudal";homeworld_name="Chogoris";
+	    homeworld="Feudal";homeworld_name="Chogoris";doctrine="Shock Assault"
 	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=3;aspirant_trial="Survival of the Fittest";discipline="rune Magick";
 		adv[1]="Lightning Warriors";adv[2]="Brothers, All";adv[3]="Melee Enthusiasts";dis[1]="Splintered";
 	    // Pauldron2: Left, Pauldron: Right
@@ -120,7 +120,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 
 	if (argument0="Ultramarines"){founding="N/A";points=150;
 	    selected_chapter=7;chapter=argument0;icon=7;icon_name="um";founding=0;fleet_type=1;strength=5;purity=10;stability=10;cooperation=10;
-	    homeworld="Temperate";homeworld_name="Macragge";recruiting_world="Death";recruiting_name="Parmenio";doctrine="generalist";
+	    homeworld="Temperate";homeworld_name="Macragge";recruiting_world="Death";recruiting_name="Parmenio";doctrine="Generalist";
 	    homeworld_exists=1;recruiting_exists=1;homeworld_rule=3;aspirant_trial="Exposure";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Ultramarine";color_to_secondary="Ultramarine";color_to_trim="Gold";
@@ -149,7 +149,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
   if (argument0="Imperial Fists"){founding="N/A";points=150;
 		selected_chapter=4;chapter=argument0;icon=4;icon_name="if";founding=0;fleet_type=1;strength=6;purity=7;stability=10;cooperation=8;
 		adv[1]="Bolter Drilling";adv[2]="Siege Masters";
-		homeworld="Ice";homeworld_name="Inwit";recruiting_world="Hive";recruiting_name="Necromunda";doctrine="generalist";
+		homeworld="Ice";homeworld_name="Inwit";recruiting_world="Hive";recruiting_name="Necromunda";doctrine="Generalist";
 		homeworld_exists=1;recruiting_exists=1;homeworld_rule=2;aspirant_trial="Survival of the Fittest";
 		color_to_main="Gold";color_to_secondary="Gold";color_to_trim="Red";color_to_pauldron="Gold"
 		color_to_pauldron2="Gold";color_to_lens="Red";color_to_weapon="Black"
@@ -181,7 +181,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	if (argument0="Space Wolves"){founding="N/A";points=150;
 	    selected_chapter=3;chapter=argument0;icon=3;icon_name="sw";founding=0;fleet_type=1;strength=10;purity=8;stability=5;cooperation=4;
 	    adv[1]="Melee Enthusiasts";dis[1]="Black Rage";dis[2]="Suspicious";
-	    homeworld="Ice";homeworld_name="Fenris";recruiting_world="Death";recruiting_name="Parmenio";
+	    homeworld="Ice";homeworld_name="Fenris";recruiting_world="Death";recruiting_name="Parmenio";doctrine="Shock Assault";
 	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=2;aspirant_trial="Exposure";discipline="rune Magick";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Fenrisian Grey";color_to_secondary="Fenrisian Grey";color_to_trim="Gold";
@@ -227,7 +227,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	if (argument0="Blood Angels"){founding="N/A";points=150;
 	    selected_chapter=5;chapter=argument0;icon=5;icon_name="ba";founding=0;fleet_type=1;strength=5;purity=9;stability=9;cooperation=7;
 	    adv[1]="Melee Enthusiasts";dis[1]="Black Rage";
-	    homeworld="Desert";homeworld_name="Baal";
+	    homeworld="Desert";homeworld_name="Baal";doctrine="Shock Assault"
 	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=3;aspirant_trial="Blood Duel";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Red";color_to_secondary="Red";color_to_trim="Black";
@@ -260,7 +260,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	if (argument0="Iron Hands"){founding="N/A";points=150;
 	    selected_chapter=6;chapter=argument0;icon=6;icon_name="ih";founding=0;fleet_type=1;strength=5;purity=8;stability=8;cooperation=2;
 	    adv[1]="Tech-Brothers";adv[2]="Slow and Purposeful";dis[1]="Splintered";dis[2]="Suspicious";
-	    homeworld="Lava";homeworld_name="Medusa";homeworld_exists=1;recruiting_exists=0;
+	    homeworld="Lava";homeworld_name="Medusa";homeworld_exists=1;recruiting_exists=0;doctrine="Breakthrough"
 	    homeworld_rule=3;aspirant_trial="Knowledge of Self";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Black";color_to_secondary="Black";color_to_trim="Silver";
@@ -295,7 +295,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	if (argument0="Salamanders"){founding="N/A";points=150;
 	    selected_chapter=8;chapter=argument0;icon=8;icon_name="sl";founding=0;fleet_type=1;strength=2;purity=8;stability=8;cooperation=10;
 	    adv[1]="Crafters";adv[2]="Slow and Purposeful";
-	    homeworld="Lava";homeworld_name="Nocturne";homeworld_exists=1;recruiting_exists=0;doctrine="generalist";
+	    homeworld="Lava";homeworld_name="Nocturne";homeworld_exists=1;recruiting_exists=0;doctrine="Generalist";
 	    homeworld_rule=1;aspirant_trial="Apprenticeship";discipline="pyromancy";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Green";color_to_secondary="Green";color_to_trim="Copper";
@@ -327,7 +327,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 
 	if (argument0="Raven Guard"){founding="N/A";points=150;
 		selected_chapter=9;chapter=argument0;icon=9;icon_name="rg";founding=0;fleet_type=1;strength=5;purity=8;stability=4;cooperation=5;
-	    adv[1]="Ambushers";adv[2]="Melee Enthusiasts";dis[1]="Splintered";
+	    adv[1]="Ambushers";adv[2]="Melee Enthusiasts";dis[1]="Splintered";doctrine="Irregular Warfare";
 	    homeworld="Dead";homeworld_name="Deliverance";homeworld_exists=1;recruiting_exists=1;
 	    homeworld_rule=1;aspirant_trial="Exposure";
 	    // Pauldron2: Left, Pauldron: Right
@@ -359,7 +359,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	if (argument0="Blood Ravens"){
 		founding=10;points=100;
 	    selected_chapter=12;chapter=argument0;icon=12;icon_name="br";
-	    fleet_type=2;strength=5;purity=10;stability=6;cooperation=7;
+	    fleet_type=2;strength=5;purity=10;stability=6;cooperation=7;doctrine="Generalists";
 	    adv[1]="Scavengers";adv[2]="Psyker Abundance";dis[1]="Suspicious";
 	    // hapothecary="Ranek Icewalker";hchaplain="Mikelus";clibrarian="Njal Stormcaller";fmaster="Krom Dragongaz";admiral="Engir Krakendoom";
 	    homeworld="Dead";homeworld_name="Aurelia";flagship_name="Omnis Arcanum";
@@ -386,7 +386,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 if (argument0="Crimson Fists"){founding="N/A";points=150;
 		selected_chapter=13;chapter=argument0;icon=4;icon_name="cf";founding=4;fleet_type=1;strength=2;purity=7;stability=10;cooperation=8;
 		adv[1]="Bolter Drilling";adv[2]="Enemy: Orks";dis[1]="Sieged";
-		homeworld="Agri";homeworld_name="Rynn's World";doctrine="generalist";
+		homeworld="Agri";homeworld_name="Rynn's World";doctrine="Generalist";
 		homeworld_exists=1;recruiting_exists=0;homeworld_rule=1;aspirant_trial="Challenge"
 		color_to_main="Blue";color_to_secondary="Blue";color_to_trim="White";color_to_pauldron="Blue"
 		color_to_pauldron2="Blue";color_to_lens="Red";color_to_weapon="Black"
@@ -415,7 +415,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    selected_chapter=16;chapter=argument0;icon=14;icon_name="lam";founding=5;
 	    fleet_type=2;strength=2;purity=10;stability=2;cooperation=2;
 	    adv[1]="Melee Enthusiasts";adv[2]="Kings of Space";adv[3]="Boarders";adv[4]="Daemon Binders";dis[1]="Suspicious";
-	    homeworld="Dead";homeworld_name="Entymion";
+	    homeworld="Dead";homeworld_name="Entymion";doctrine="Shock Assault"
 	    homeworld_exists=0;recruiting_exists=1;
 	    recruiting_world="Death";recruiting_name=scr_star_name();
 	    homeworld_rule=0;aspirant_trial="Challenge";
@@ -444,7 +444,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    selected_chapter=14;chapter=argument0;icon=14;icon_name="lam";founding=5;
 	    fleet_type=3;strength=1;purity=10;stability=9;cooperation=10;
 	    adv[1]="Melee Enthusiasts";dis[1]="Shitty Luck";dis[2]="Sieged";dis[3]="Suspicious";
-	    homeworld="Dead";homeworld_name="Lacrima Vex";
+	    homeworld="Dead";homeworld_name="Lacrima Vex";doctrine="Generalist"
 	    homeworld_exists=0;recruiting_exists=1;
 	    recruiting_world="Death";recruiting_name=scr_star_name();
 	    homeworld_rule=0;aspirant_trial="Challenge";
