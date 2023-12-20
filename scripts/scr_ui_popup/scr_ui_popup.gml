@@ -58,6 +58,7 @@ function scr_ui_popup() {
         
 	        var r=0,wob="",word="";
 	        for (r=1;r<10;r++){
+			var tag = "";
 		        switch(wob){
 		        	case "Barbarian":
 		        		word="Heavy on leather, hides, and trophy body parts.";
@@ -103,7 +104,6 @@ function scr_ui_popup() {
                 
 	                if (obj_controller.mouse_left=1) and (obj_controller.cooldown<=0){
 	                    obj_controller.cooldown=8000;
-						var tag = "";
 						switch (r) {
 						    case 1:
 						        tag = "BRB";
@@ -337,7 +337,7 @@ function scr_ui_popup() {
 	     	}
 	    }
 	     draw_set_font(fnt_40k_14b);
-	     woob=""
+	     var woob=""
 	     arsenal = 0;
 		 gene_vault=0;
     		if (planet_feature_bool(planet_upgrades, P_features.Arsenal)==1){
@@ -511,13 +511,13 @@ function scr_ui_popup() {
 	            shit=posi;
 	            nem=robj.capital[shit];
 	            if (string_width(string_hash_to_newline(nem))*scale>179){
-	            	for (i=0;i<9;i++){
+	            	for (var i=0;i<9;i++){
 	            		if (string_width(string_hash_to_newline(nem))*scale>179) then scale-=0.05;
 	            	}
 	            }
 	            if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+209) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
 	                if (string_width(string_hash_to_newline(nem))*scale>135){
-	                	for (i=0;i<9;i++){
+	                	for (var i=0;i<9;i++){
 	                		if (string_width(string_hash_to_newline(nem))*scale>135) then scale-=0.05;
 	                	}
 	                }
@@ -554,11 +554,11 @@ function scr_ui_popup() {
 	            shit=posi-ca;
 	            nem=robj.frigate[shit];
 	            if (string_width(string_hash_to_newline(nem))*scale>179){
-	            	for (i=0;i<9;i++){if (string_width(string_hash_to_newline(nem))*scale>179) then scale-=0.05;}
+	            	for (var i=0;i<9;i++){if (string_width(string_hash_to_newline(nem))*scale>179) then scale-=0.05;}
 	            }
 	            if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+209) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
 	                if (string_width(string_hash_to_newline(nem))*scale>135) { 
-	                	for (i=0;i<9;i++){
+	                	for (var i=0;i<9;i++){
 	                		if (string_width(string_hash_to_newline(nem))*scale>135) then scale-=0.05;
 	                	}
 	                }
@@ -595,10 +595,10 @@ function scr_ui_popup() {
 	            shit=posi-(ca+fr);
 	            nem=robj.escort[shit];
 	            if (string_width(string_hash_to_newline(nem))*scale>179){
-	            	for (i=0;i<10;i++){if (string_width(string_hash_to_newline(nem))*scale>179) then scale-=0.05;}
+	            	for (var i=0;i<10;i++){if (string_width(string_hash_to_newline(nem))*scale>179) then scale-=0.05;}
 	            }
 	            if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+209) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
-	                if (string_width(string_hash_to_newline(nem))*scale>135){for (i=0;i<10;i++){
+	                if (string_width(string_hash_to_newline(nem))*scale>135){for (var i=0;i<10;i++){
 	                	if (string_width(string_hash_to_newline(nem))*scale>135) then scale-=0.05;}shew=2
 	                }
 	            }
@@ -662,14 +662,14 @@ function scr_ui_popup() {
 	                fleet_all=0;
 	            }
 	            if (fleet_all==1) then with(obj_fleet_select){
-	                for (i=0;i<91;i++){
+	                for (var i=0;i<91;i++){
 	                    if (i<=20) then capital_sel[i]=1;
 	                    frigate_sel[i]=1;
 	                    escort_sel[i]=1;
 	                }
 	            }
 	            if (fleet_all==0) then with(obj_fleet_select){
-	                for (i=0;i<91;i++){
+	                for (var i=0;i<91;i++){
 	                    if (i<=20) then capital_sel[i]=0;
 	                    frigate_sel[i]=0;
 	                    escort_sel[i]=0;
@@ -745,7 +745,7 @@ function scr_ui_popup() {
 		if (scr_hit(xx+153,yy+10,xx+221,yy+38)){
 		    var  tx=0,ty=0,tool1="",tool2="",plu="";
 
-		    var lines;d=0;lines=0;
+		    var lines;lines=0;
 		    for(var d=1; d<=20; d++){
 		        if (loyal_num[d]>1) and (lines=0){
 		            tool1+=string(loyal[d])+": -"+string(loyal_num[d])+"#";

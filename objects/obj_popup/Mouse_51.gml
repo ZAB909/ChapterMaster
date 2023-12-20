@@ -53,7 +53,7 @@ if (instance_exists(obj_controller)){
             repeat(50){
                 diceh=floor(random(100))+1;
                 if (diceh<=ratio){ratio-=100;
-                    var onceh;onceh=0;
+                    onceh=0;
                     
                     if (mfleet.escort_number>0) and (onceh=0){
                         esc_lost+=1;

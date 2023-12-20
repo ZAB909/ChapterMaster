@@ -18,7 +18,9 @@ if (instance_exists(obj_controller)){
         
         with(obj_temp4){instance_destroy();}
         with(obj_star){
-            var run,s;run=0;s=0;
+
+			var run = 0;
+			var s = 0;
             repeat(4){run+=1;s=0;
                 repeat(4){s+=1;
                     if (p_problem[run,s]="meeting") or (p_problem[run,s]="meeting_trap"){
@@ -45,7 +47,8 @@ if (instance_exists(obj_controller)){
         obj_ncombat.enemy=10;obj_ncombat.threat=3;
         
         with(obj_star){
-            var run,s;run=0;s=0;
+			var run = 0;
+			var s = 0;
             repeat(4){run+=1;s=0;
                 repeat(4){s+=1;
                     if (p_problem[run,s]="meeting") or (p_problem[run,s]="meeting_trap"){p_problem[run,s]="";p_timer[run,s]=-1;}

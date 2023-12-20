@@ -486,7 +486,11 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
 
         with(obj_controller){
             // man_current=0;
-            var i;i=-1;man_size=0;selecting_location="";selecting_types="";selecting_ship=0;
+            var i = -1;
+			var man_size = 0;
+			selecting_location = "";
+			selecting_types = "";
+			selecting_ship = 0;
             repeat(501){w+=1;
                 man[w]="";ide[w]=0;man_sel[w]=0;ma_lid[w]=0;ma_wid[w]=0;ma_god[w]=0;ma_bio[w]=0;
                 ma_race[w]=0;ma_loc[w]="";ma_name[w]="";ma_role[w]="";ma_wep1[w]="";display_unit[w]={};
@@ -725,14 +729,15 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
     if (type=5) and (cooldown<=0) and (all_good=1) and (target_comp!=-1) and (role_name[target_role]!=""){
         cooldown=999;obj_controller.cooldown=8000;
 
-        var mahreens=0;i=0;
+        var mahreens=0;
+
 
         if (target_comp>10) then target_comp=0;
         if (company>10) then company=0;
         manag=obj_controller.managing;
         if (manag>10) then manag=0;
 
-        for(i=0;i<501;i++){
+        for(var i=0;i<501;i++){
             if (obj_ini.name[target_comp][i]=="" and obj_ini.name[target_comp][i+1]=="") {
                 mahreens=i;
                 break;
@@ -741,7 +746,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
         // Gets the number of marines in the target company
         if (role_name[target_role]=="DoNotChange") then do_not_change=true;
         var unit;
-        for(i=0;i<=obj_controller.man_max;i++){
+        for(var i=0;i<=obj_controller.man_max;i++){
 
             if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1) and (obj_controller.ma_promote[i]>=1) and (obj_controller.ma_exp[i]>=min_exp){
                 unit = obj_controller.display_unit[i];
@@ -921,7 +926,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
 
             if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1) and (vehicle_equipment!=-1){
                 var check=0,scout_check=0;
-                unit = obj_controller.display_unit[i];
+                var unit = obj_controller.display_unit[i];
 
                 if (n_armour=obj_controller.ma_armour[i]) then check=1;
                 if (check=0) and (n_armour!=obj_controller.ma_armour[i]) and (n_armour!="Assortment")and ((vehicle_equipment=1) or (vehicle_equipment=6)){ //normal infantry or dread armour
@@ -973,7 +978,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
 
 
                 if (n_wep1=obj_controller.ma_wep2[i]) and (n_wep2!="Assortment") and (n_wep1!="Assortment") and ((vehicle_equipment=1) or (vehicle_equipment=6)){ //normal infantry or dread wep swap
-                    var temp;temp="";
+                    var temp="";
                     temp=obj_controller.ma_wep1[i];// Get temp
                     obj_controller.ma_wep1[i]=obj_controller.ma_wep2[i];
                     obj_ini.wep1[company,obj_controller.ide[i]]=obj_ini.wep2[company,obj_controller.ide[i]];// Wep2 -> Wep1
@@ -983,7 +988,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
 
 
                 if (n_wep2=obj_controller.ma_wep1[i]) and (n_wep2!="Assortment") and (n_wep1!="Assortment") and ((vehicle_equipment=1) or (vehicle_equipment=6)){ //normal infantry or dread wep swap
-                    var temp;temp="";
+                    var temp="";
                     temp=obj_controller.ma_wep2[i];// Get temp
                     obj_controller.ma_wep2[i]=obj_controller.ma_wep1[i];
                     obj_ini.wep2[company,obj_controller.ide[i]]=obj_ini.wep1[company,obj_controller.ide[i]];// Wep1 -> Wep2
@@ -1505,7 +1510,7 @@ if (type=8) and (cooldown<=0){
 
         repeat(min(obj_controller.man_max,23)){
             if (mouse_x>=xx+29) and (mouse_y>=yy+150) and (mouse_x<xx+569) and (mouse_y<yy+175.4){
-                var onceh;onceh=0;stop=0;
+                var onceh=0;stop=0;
                 if (obj_controller.man_sel[sel]=0) and (onceh=0){cooldown=8000;units=1;
                     if (stop=0){onceh=1;obj_controller.man_sel[sel]=1;stop=sel;}
                 }
