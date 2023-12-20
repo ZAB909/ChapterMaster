@@ -29,11 +29,15 @@ function scr_crusade() {
 	        "+string(co)+"."+string(i+4)+": "+string(obj_ini.name[co,i+4]));*/
         
 	        shi=0;good=0;dead=false;
+
+	        shi = 0;
+			good = 0;
         
-	        var command_lost;comand_lost=0;
+	        command_lost = 0;
         
 	        repeat(capital_number+frigate_number+escort_number){
 	            shi+=1;
+
             
 	            if (shi<=capital_number) and (capital_number>0){shipp="capital";eff=shi;}
 	            if (shi>capital_number) and (frigate_number>0){shipp="frigate";eff=shi-capital_number;}
@@ -60,7 +64,7 @@ function scr_crusade() {
 	                if (obj_ini.role[co][i]="Chapter Master") then dead=false;
                 
 	                if (dead=true){
-	                    var man_size;man_size=0;
+	                    var man_size = 0;
 	                    man_size=scr_unit_size(obj_ini.armour[co][i],obj_ini.role[co][i],true);
                     
 	                    obj_ini.ship_carrying[obj_ini.lid[co][i]]-=man_size;
