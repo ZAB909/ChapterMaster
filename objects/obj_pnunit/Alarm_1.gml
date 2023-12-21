@@ -2,60 +2,68 @@
 
 
 if (defenses=1){
-    var i;i=0;
+    var i=0;
 
-    i+=1;wep[i]="Heavy Bolter Emplacement";wep_num[i]=round(obj_ncombat.player_defenses/2);
+    i+=1;
+    wep[i]="Heavy Bolter Emplacement";
+    wep_num[i]=round(obj_ncombat.player_defenses/2);
     range[i]=99;
     att[i]=160*wep_num[i];
     apa[i]=0;ammo[i]=-1;splash[i]=1;
 
-    i+=1;wep[i]="Missile Launcher Emplacement";wep_num[i]=round(obj_ncombat.player_defenses/2);
+    i+=1;
+    wep[i]="Missile Launcher Emplacement";
+    wep_num[i]=round(obj_ncombat.player_defenses/2);
     range[i]=99;
     att[i]=200*wep_num[i];
     apa[i]=120*wep_num[i];
     ammo[i]=-1;
     splash[i]=1;
 
-    i+=1;wep[i]="Missile Silo";wep_num[i]=min(30,obj_ncombat.player_silos);
+    i+=1;wep[i]="Missile Silo";
+    wep_num[i]=min(30,obj_ncombat.player_silos);
     range[i]=99;
     att[i]=350*wep_num[i];
     apa[i]=200*wep_num[i];
     ammo[i]=-1;s
     plash[i]=1;
 
-    var rightest;rightest=instance_nearest(2000,240,obj_pnunit);
+    var rightest=instance_nearest(2000,240,obj_pnunit);
     if (rightest.id=self.id) then instance_destroy();
 }
 if (defenses=1) then exit;
 
 
-var i,g;i=0;g=0;men=0;veh=0;dreads=0;
-repeat(20){i+=1;
+var i,g=0;men=0;veh=0;dreads=0;
+for (i=1;i<=20;i++){
     // dudes[i]="";
     dudes_num[i]=0;
     // dudes_vehicle[i]=0;
-    att[i]=0;apa[i]=0;wep_num[i]=0;wep_rnum[i]=0;
+    att[i]=0;
+    apa[i]=0;
+    wep_num[i]=0;
+    wep_rnum[i]=0;
     // if (wep_owner[i]!="") and (wep_num[i]>1) then wep_owner[i]="assorted";// What if they are using two ranged weapons?  Hmmmmm?
-}i=0;
+}
 
 i=0;
-repeat(60){i+=1;
+for (i=1;i<=60;i++){
     lost[i]="";
     lost_num[i]=0;
 }
 
-var dreaded;dreaded=false;
+var dreaded=false, unit;
 
-for (g=1;g<array_length(marine_id);g++){
+for (g=1;g<=men;g++){
+    unit = unit_struct[g];
     if (marine_casting[g]>=0) then marine_casting[g]=0;
-    if (marine_casting[g]<0) then marine_casting[g]+=1;
+    if (marine_casting[g]<0) then marine_casting[g]+=1;//timer for libs to be able to cast
 
     if ((marine_id[g]>0) or (ally[g]=true)) and (marine_hp[g]>0) then marine_dead[g]=0;
     if ((marine_id[g]>0) or (ally[g]=true)) and (marine_hp[g]>0) and (marine_dead[g]!=1){
         if (marine_hp[g]>0) then men+=1;
 
-
-        if (marine_type[g]=obj_ini.role[100][6]) or (marine_type[g]="Venerable "+obj_ini.role[100][6]) and (marine_hp[g]>0){dreads+=1;dreaded=true;}
+        if (unit.armour()=="Dreadnought"){dreads+=1;dreaded=true;}
         if (marine_mobi[g]="Bike") then scr_special_weapon("Twin Linked Bolters",g,true);
 
 
@@ -67,9 +75,8 @@ for (g=1;g<array_length(marine_id);g++){
         if (marine_gear[g]="Servo Arms") then scr_special_weapon("Flamer",g,true);
         if (marine_gear[g]="Master Servo Arms") then scr_special_weapon("Heavy Flamer",g,true);
 
-
-        if (marine_casting[g]>-1){
-            var cast_dice;cast_dice=floor(random(100))+1;
+        if (unit.IsSpecialist("libs",true)||(unit.role()=="Chapter Master"&&obj_ncombat.chapter_master_psyker=1)){
+            var cast_dice=floor(random(100))+1;
             if (array_contains(obj_ini.dis,"Warp Touched")) then cast_dice-=5;
 
             if (marine_type[g]="Lexicanum") and (cast_dice<=20) then marine_casting[g]=1;
@@ -83,15 +90,21 @@ for (g=1;g<array_length(marine_id);g++){
         }
 
         var j,good,open;j=0;good=0;open=0;// Counts the number and types of marines within this object
-        repeat(20){j+=1;
-            if (dudes[j]="") and (open=0){
+        for (j=1;j<=20;j++){
+            if (dudes[j]=="") and (open==0){
                 open=j;// Determine if vehicle here
 
-                if (dudes[j]="Venerable "+string(obj_ini.role[100][6])) then dudes_vehicle[j]=1;
-                if (dudes[j]=obj_ini.role[100][6]) then dudes_vehicle[j]=1;
+                //if (dudes[j]="Venerable "+string(obj_ini.role[100][6])) then dudes_vehicle[j]=1;
+                //if (dudes[j]=obj_ini.role[100][6]) then dudes_vehicle[j]=1;
             }
-            if (marine_type[g]=dudes[j]){good=1;dudes_num[j]+=1;}
-            if (good=0) and (open!=0){dudes[open]=marine_type[g];dudes_num[open]=1;}
+            if (marine_type[g]=dudes[j]){
+                good=1;
+                dudes_num[j]+=1;
+            }
+            if (good=0) and (open!=0){
+                dudes[open]=marine_type[g];
+                dudes_num[open]=1;
+            }
         }
 
         if (marine_wep1[g]!="") and (marine_casting[g]!=1){// Do not add weapons to the roster while casting
@@ -118,22 +131,34 @@ for (g=1;g<array_length(marine_id);g++){
 
         var j,good,open;j=0;good=0;open=0;// Counts the number and types of marines within this object
         if (veh_dead[g]!=1) then repeat(20){j+=1;
-            if (dudes[j]="") and (open=0){open=j;}
-            if (veh_type[g]=dudes[j]){good=1;dudes_num[j]+=1;dudes_vehicle[j]=1;}
-            if (good=0) and (open!=0){dudes[open]=veh_type[g];dudes_num[open]=1;dudes_vehicle[open]=1;}
+            if (dudes[j]="") and (open=0){
+                open=j;
+            }
+            if (veh_type[g]=dudes[j]){
+                good=1;
+                dudes_num[j]+=1;
+                dudes_vehicle[j]=1;
+            }
+            if (good=0) and (open!=0){
+                dudes[open]=veh_type[g];
+                dudes_num[open]=1
+                ;dudes_vehicle[open]=1;
+            }
         }
 
         var j,good,open;j=0;good=0;open=0;
-        if (veh_dead[g]!=1) then repeat(20){j+=1;
-            if (veh_wep1[g]!=""){
-                if (wep[j]="") and (open=0){open=j;}
-                if (veh_wep1[g]=wep[j]){
-                    good=1;
-                    scr_weapon(string(veh_wep1[g]),string(veh_wep2[g]),false,g,dreaded,"","");
-                }
-                if (good=0) and (open!=0){
-                    wep[open]=veh_wep1[g];good=1;
-                    scr_weapon(string(veh_wep1[g]),string(veh_wep2[g]),false,g,dreaded,"","");
+        if (veh_dead[g]!=1){ 
+            for (j=1;j<=20;j++){
+                if (veh_wep1[g]!=""){
+                    if (wep[j]="") and (open=0){open=j;}
+                    if (veh_wep1[g]=wep[j]){
+                        good=1;
+                        scr_weapon(string(veh_wep1[g]),string(veh_wep2[g]),false,g,dreaded,"","");
+                    }
+                    if (good=0) and (open!=0){
+                        wep[open]=veh_wep1[g];good=1;
+                        scr_weapon(string(veh_wep1[g]),string(veh_wep2[g]),false,g,dreaded,"","");
+                    }
                 }
             }
         }

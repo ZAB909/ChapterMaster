@@ -1918,10 +1918,6 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 	        // Artifact Armour
 	        var arti_armour;
 	        arti_armour=false;
-	        if (string_count("Power Armour",thawep)>0){statt=30;emor=1;arti_armour=true;}
-	        if (string_count("Artificer",thawep)>0){statt=35;emor=1;arti_armour=true;special_description="+10% Melee";}
-	        if (string_count("Terminator",thawep)>0){statt=45;emor=1;arti_armour=true;special_description="+20% Melee, -10% Ranged, Strength";}
-	        if (string_count("Dreadnought",thawep)>0){statt=50;emor=1;arti_armour=true;}
 
 	        // Artifact weapons
 	        if (arti_armour=false){
@@ -2317,11 +2313,7 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 	                    ammo[b]=ammo1;
 
 	                    var title;title=true;
-	                    if (marine_type[unit_array_position]="Chapter Master") then title=false;
-	                    if (marine_type[unit_array_position]="Master of Sanctity") then title=false;
-	                    if (marine_type[unit_array_position]="Chief "+string(obj_ini.role[100,17])) then title=false;
-	                    if (marine_type[unit_array_position]="Forge Master") then title=false;
-	                    if (marine_type[unit_array_position]="Master of the Apothecarion") then title=false;
+	                    if (unit_struct[unit_array_position].IsSpecialist("heads")) then title=false;
 	                    if (title=true) then wep_title[b]=string(marine_type[unit_array_position]);
 	                    wep_solo[b]=string(obj_ini.name[marine_co[unit_array_position],marine_id[unit_array_position]]);
 	                }
@@ -2333,7 +2325,8 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
                     range[b]=rang1;
                     wep_num[b]+=1;
                     splash[b]=spli1;
-                    wep[b]=thawep;goody=1;
+                    wep[b]=thawep;
+                    goody=1;
 	                // if (marine_type[unit_array_position]="Death Company") and (range[b]=1){att[b]+=att1;wep_num[b]+=1;wep_rnum[b]+=1;}
 
 	                var title=true;
@@ -2350,7 +2343,8 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 	        repeat(60){b+=1;
 	            var canc=false;
 	            if (rang1>1) and (marine_ranged[unit_array_position]=0){
-	                 canc=true;if (floor(rang1)==rang1) then canc=false
+	                 canc=true;
+                     if (floor(rang1)==rang1) then canc=false
 	            }
 
 	            if (wep[b]="") and (goody=0) and (canc=false){

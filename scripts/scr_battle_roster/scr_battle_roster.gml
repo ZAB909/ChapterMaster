@@ -163,7 +163,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
 
                         //librarium roles
 
-                    }else if (array_contains(["Codiciery", "Epistolary", "Lexicanum",deploying_unit.role[100, 17], $"{deploying_unit.role[100, 17]} Aspirant"], unit.role())){
+                    }else if (unit.IsSpecialist("libs",true)){
                         col = obj_controller.bat_librarian_column;					//librarium
                         new_combat.librarians += 1;
                         moov = 1;

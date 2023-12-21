@@ -58,7 +58,7 @@ function scr_flavor(argument0, argument1, argument2, argument3, argument4) {
 
 	if (argument1.flank=1) and (argument1.flyer=0) then duhs="flanking "+string(duhs);
     
-	var flavored;flavored=0;
+	var flavored=0;
 
 
 
