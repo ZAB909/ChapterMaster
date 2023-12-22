@@ -1,49 +1,41 @@
+var yeehaw1, yeehaw2;
 
-var yeehaw1, yeehaw2, tstar;
-yeehaw1=0;yeehaw2=undefined;tstar=0;
+if (player_started == 1)
+	{
+		yeehaw1 = pla_fleet;
+		yeehaw2 = ene_fleet;
+	}
 
-if (player_started=1){yeehaw1=pla_fleet;yeehaw2=ene_fleet;}
+if (player_started == 0) and (instance_exists(obj_turn_end))
+	{
+	    yeehaw1 = obj_turn_end.battle_pobject[obj_turn_end.current_battle];
+	}
 
-if (player_started=0) and (instance_exists(obj_turn_end)){
-    yeehaw1=obj_turn_end.battle_pobject[obj_turn_end.current_battle];
-}
-
-
-if (instance_number(obj_en_ship)>0){
-    scr_recent("fleet_defeat",star_name,(capital_lost*6)+(frigate_lost*2)+escort_lost);
-}
-if (instance_number(obj_en_ship)<=0){
-    with(obj_p_ship){
-        if (hp<=0) then scr_recent("ship_destroyed",obj_ini.ship[ship_id],ship_id);
-    }
-}
-
-
-
-
-
-yeehaw1.capital_number=max(capital,0);
-yeehaw1.frigate_number=max(frigate,0);
-yeehaw1.escort_number=max(escort,0);
-yeehaw1.alarm[6]=1;// Check for low health ships
+if (instance_number(obj_en_ship) > 0)
+	{
+	    scr_recent("fleet_defeat",star_name,(capital_lost * 6) + (frigate_lost * 2) + escort_lost);
+	}
+	
+if (instance_number(obj_en_ship) <= 0)
+	{
+	    with(obj_p_ship)
+			{
+		        if (hp <= 0) then scr_recent("ship_destroyed", obj_ini.ship[ship_id], ship_id);
+		    }
+	}
+	
+yeehaw1.capital_number = max(capital, 0);
+yeehaw1.frigate_number = max(frigate, 0);
+yeehaw1.escort_number = max(escort, 0);
+yeehaw1.alarm[6] = 1;// Check for low health ships
 
 var op,remove,ii,killer,killer_tg;op=0;remove=0;killer=0;killer_tg="";ii=-50;
-
-
-
-
 
 if (player_started=0) and (instance_exists(obj_turn_end)) then with(obj_star){if (name!=obj_turn_end.battle_location[obj_turn_end.current_battle]){x-=10000;y-=10000;}}
 if (player_started=1) then with(obj_star){if (id!=obj_fleet.ene_fleet){x-=10000;y-=10000;}}
 ii=instance_nearest(room_width,room_height,obj_star);
 obj_controller.temp[1070]=ii.id;
 with(obj_star){if (x<-5000) and (y<-5000){x+=10000;y+=10000;}}
-
-
-
-
-
-
 
 op=0;var ofleet;ofleet=0;
 repeat(5){op+=1;
@@ -98,10 +90,6 @@ repeat(5){op+=1;
     }
 }
 
-
-
-
-
 obj_controller.cooldown=20;
 
 if (killer>0){
@@ -150,17 +138,10 @@ if (killer>0){
             pip.text="The Inquisition has noticed your uncalled murder of "+string(msg2)+" and declared your chapter Excommunicatus Traitorus.";
             obj_controller.alarm[8]=1;
         }
-    }
-    
-    
+    }   
     // if (obj_controller.known[eFACTION.Inquisition]<3) then with(obj_popup){instance_destroy();}
-    
-    
-    
     // excommunicatus traitorus
 }
-
-
 // if (yeehaw1.capital_number+yeehaw1.frigate_number+yeehaw1.escort_number<=0) then with(yeehaw1){instance_destroy();}
 // if (yeehaw2.capital_number+yeehaw2.frigate_number+yeehaw2.escort_number<=0) or (victory=true) then with(yeehaw2){instance_destroy();}
 
@@ -169,6 +150,3 @@ instance_activate_all();
 
 if (instance_exists(obj_p_assra)){obj_p_assra.alarm[0]=1;}
 alarm[4]=2;
-
-
-

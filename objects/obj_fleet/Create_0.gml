@@ -32,8 +32,8 @@ player_started=0;
 player_lasers=0;
 player_lasers_cd=70;
 player_lasers_target = undefined;
-pla_fleet=0;
-ene_fleet=0;
+pla_fleet = undefined;
+ene_fleet = undefined;
 victory=false;
 
 instance_deactivate_all(true);
@@ -127,20 +127,8 @@ if (obj_controller.stc_bonus[6]=1) then global_defense+=0.1;
 // Kings of Space Bonus
 if (string_count("Kings of Space",obj_ini.strin)>0){control=1;global_defense+=0.1;global_attack+=0.1;}
 
-
-
-// 
 master=0;
 time=0;
-
-
-
-
-
-
-
-
-
 
 var i;i=-1;
 repeat(110){i+=1;
@@ -176,7 +164,6 @@ column[2]="";column_width[2]=0;column_num[3]=0;
 column[3]="Capital";column_width[3]=270;column_num[3]=0;
 column[4]="Strike Cruiser";column_width[4]=140;column_num[4]=0;
 column[5]="Escort";column_width[5]=76;column_num[5]=0;// Furthest right
-
 
 color_index=0;
 

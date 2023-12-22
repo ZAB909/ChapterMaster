@@ -19,7 +19,6 @@ instance_activate_object(obj_turn_end);
 // instance_activate_object(obj_star_select);
 // show_message(obj_turn_end.current_battle);
 
-
 if (player_started=0){
     with(obj_turn_end){
         current_battle+=1;
@@ -40,7 +39,7 @@ if (player_started=1){
     }
     if (instance_exists(pla_fleet)){
         pla_fleet.acted=2;
-        if (capital+frigate+escort=0) then with(pla_fleet){instance_destroy();}
+        if (capital+frigate+escort=0) then instance_destroy(pla_fleet)
     }
     if (enemy[1]!=4) and (obj_controller.faction_status[enemy[1]]!="War"){
         obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=enemy[1];
@@ -53,9 +52,6 @@ if (view_x+view_y>0){
     obj_controller.x=view_x;
     obj_controller.y=view_y;
 }
-
-
-
 
 // show_message(obj_turn_end.current_battle);
 with(obj_controller){instance_activate_all();}

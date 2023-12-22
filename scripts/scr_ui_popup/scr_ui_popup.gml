@@ -148,8 +148,6 @@ function scr_ui_popup() {
 	        }
 	    }
 
-    
-
 	    if (un_upgraded==0){
 	    	title="Build ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
 		}else if(un_upgraded!=0){
@@ -331,9 +329,7 @@ function scr_ui_popup() {
 			            draw_sprite(spr_requisition,0,mouse_x+22,mouse_y+45+string_height_ext(string_hash_to_newline(tooltip4),-1,500));
 			            draw_text(mouse_x+42,mouse_y+42+string_height_ext(string_hash_to_newline(tooltip4),-1,500),string_hash_to_newline(string(tcost)));
 			        }
-		    	}
-	        
-        
+		    	}      
 	     	}
 	    }
 	     draw_set_font(fnt_40k_14b);
@@ -434,16 +430,9 @@ function scr_ui_popup() {
 	    }draw_set_halign(fa_left);
 	}
 
+	if (selected != undefined) and (!instance_exists(selected)) then selected = undefined;
 
-
-
-
-
-	if (selected!=0) and (!instance_exists(selected)) then selected=0;
-
-
-
-	if (popup>0) and (selected!=0) and (zoomed=0) and (sel_system_x+sel_system_y=0) and (diplomacy<=0) and (instance_exists(obj_fleet_select)){
+	if (popup>0) and (selected != undefined) and (zoomed=0) and (sel_system_x+sel_system_y=0) and (diplomacy<=0) and (instance_exists(obj_fleet_select)){
 	    var zm=1,tit="",mnz=0;
     
 	    if (fleet_minimized=0){
@@ -634,12 +623,9 @@ function scr_ui_popup() {
 	    draw_set_halign(fa_left);
     
 	    draw_set_color(c_gray);
-	    draw_rectangle(__view_get( e__VW.XView, 0 )+18+obj_fleet_select.void_wid,__view_get( e__VW.YView, 0 )+116,__view_get( e__VW.XView, 0 )+36+obj_fleet_select.void_wid,__view_get( e__VW.YView, 0 )+134,0);
-    
-    
-    
-    
+	    draw_rectangle(__view_get( e__VW.XView, 0 )+18+obj_fleet_select.void_wid,__view_get( e__VW.YView, 0 )+116,__view_get( e__VW.XView, 0 )+36+obj_fleet_select.void_wid,__view_get( e__VW.YView, 0 )+134,0);  
 	    draw_set_color(c_black);
+		
 	    if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+25+obj_fleet_select.void_wid,__view_get( e__VW.YView, 0 )+117,string_hash_to_newline("-"));
 	    if (mnz=1) then draw_text(__view_get( e__VW.XView, 0 )+23+obj_fleet_select.void_wid,__view_get( e__VW.YView, 0 )+116,string_hash_to_newline("+"));
     
