@@ -25,8 +25,8 @@ if (beg!=0)/* and (instance_exists(obj_fleet_controller))*/{
 
 
 if (start=5){
-    if (player_lasers>0) and (instance_exists(obj_en_ship)){
-        if (player_lasers_target=0) or (!instance_exists(player_lasers_target)) then player_lasers_target=instance_nearest(-50,room_height/2,obj_en_ship);
+    if (player_lasers > 0) and (instance_exists(obj_en_ship)){
+        if (player_lasers_target == undefined) or (!instance_exists(player_lasers_target)) then player_lasers_target = instance_nearest(-50,room_height/2,obj_en_ship);
         
         player_lasers_cd=max(player_lasers_cd-1,0);
         if (player_lasers_cd<=0){
