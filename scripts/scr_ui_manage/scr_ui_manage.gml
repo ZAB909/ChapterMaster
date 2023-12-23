@@ -314,7 +314,7 @@ function scr_ui_manage() {
 	        	carry_data = cn.temp[117][2];
 	        	var carry_string = $"ranged carry: {carry_data[0]}/{carry_data[1]}"
 	        	x1 = xx+1015;
-	        	y1 = yy+586;
+	        	y1 = yy+486;
 	        	x2 = x1+string_width(carry_string);
 	        	y2 = y1+string_height(carry_string);
 	        	draw_text(x1,y1,string_hash_to_newline(carry_string));

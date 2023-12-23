@@ -1308,16 +1308,16 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		};
 
 		static ranged_hands_limit = function(){
-			ranged_hands_limit = 2;
+			var ranged_hands_limit = 2;
 			var ranged_carrying=0
 			var carry_string="base:2#";
 			if (strength>50){
-				hands_limit+=0.5;
+				ranged_hands_limit+=0.5;
 				carry_string="strength:+0.5#";
 			}
 			var armour_carry = gear_weapon_data("armour",armour(),"ranged_hands",false,"standard");	
 			if (armour_carry!=0){
-				hands_limit+=armour_carry;
+				ranged_hands_limit+=armour_carry;
 				var symbol = armour_carry>0 ? "+":"-"
 				carry_string=$"armour:{symbol}{armour_carry}#";
 			}
@@ -1329,7 +1329,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			ranged_att = 100*(((ballistic_skill/50) + (dexterity/400)+ (experience()/500)));
 			var explanation_string = $"base ranged:X{ranged_att/100}#"
 			//determine capavbility to weild bulky weapons
-			carry_data =ranged_hands_limit();
+			var carry_data =ranged_hands_limit();
 
 			//base multiplyer
 			var range_multiplyer = 1;
@@ -1341,7 +1341,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			//default to fists
 			if (!is_struct(_wep1)) then _wep1 = new equipment_struct({},"");
 			if (!is_struct(_wep2)) then _wep2 = new equipment_struct({},"");
-			ranged_carrying = _wep1.ranged_hands+_wep2.ranged_hands;
+			carry_data[0] = _wep1.ranged_hands+_wep2.ranged_hands;
 			if (allegiance==global.chapter_name){
 				_wep1.owner_data("chapter");
 				_wep2.owner_data("chapter");
@@ -1379,10 +1379,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					}
 				}
 			}
-			if ((_wep1.ranged_hands+_wep2.ranged_hands)>ranged_hands_limit){
+			if ((_wep1.ranged_hands+_wep2.ranged_hands)>carry_data[1]){
 				encumbered_ranged=true;					
 				ranged_att*=0.6;
-				explanation_string+=$"encumbered penalty:X0.6#"
+				explanation_string+=$"encumbered penalty:X0.6#";
 			}
 			if (!encumbered_ranged){
 			 	var total_gear_mod=0;							
