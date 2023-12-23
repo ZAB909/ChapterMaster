@@ -616,7 +616,7 @@ if (menu==1 && managing>0){
             // Melee Attack
             temp[116]=melee_attack;
             // Ranged Attack
-            temp[117]=$"{ranged_attack}";
+            temp[117]=ranged_attack;
             // Damage Resistance
             temp[118]=string(damage_res)+"%";
         }

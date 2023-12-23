@@ -804,7 +804,7 @@ function scr_initialize_custom() {
 	    mobi[i,5]="";
 	    gear[i,5]="";
 	    role[i,6]="Dreadnought";
-	    wep1[i,6]="Close Combat Weapon";
+	    wep1[i,6]="Dreadnought Lightning Claw";
 	    wep2[i,6]="Lascannon";
 	    armour[i,6]="Dreadnought";
 	    mobi[i,6]="";

@@ -22,6 +22,7 @@ function scr_company_struct(comp) constructor{
 	static draw_squad_view = function(){
 		var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0;
     	var member;
+    	selected_unit=obj_controller.temp[120];
 		if (array_length(company_squads) > 0){
 			if (selected_unit.company == company){
     			if (company_squads[cur_squad] != selected_unit.squad){
@@ -67,7 +68,7 @@ function scr_company_struct(comp) constructor{
 			draw_set_halign(fa_right);
 			draw_unit_buttons([xx+bound_width[1]-44,yy+bound_height[0]+6], arrow,[1.5,1.5],c_red);
 			if (point_in_rectangle(mouse_x, mouse_y,xx+bound_width[1]-44,yy+bound_height[0]+6,xx+bound_width[1]+string_width(arrow)-36, yy+bound_height[0]+14+string_height(arrow)) && array_length(company_squads) > 0 && mouse_check_button_pressed(mb_left)){
-				cur_squad = (cur_squad+1>=array_length(company_squads)) ? 0 : cur_squad+1;
+				cur_squad = cur_squad+1>=array_length(company_squads) ? 0 : cur_squad+1;
 				member = obj_ini.squads[company_squads[cur_squad]].members[0];
 				obj_controller.temp[120] = obj_ini.TTRPG[member[0]][member[1]];
 			}						

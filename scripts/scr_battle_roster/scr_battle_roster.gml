@@ -139,7 +139,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                     _u_role = unit.role();
 
                     if (new_combat.battle_special == "space_hulk") then new_combat.player_starting_dudes += 1;
-                    if (unit.role() = deploying_unit.role[100, 18]) {
+                    if (unit.role() = deploying_unit.role[100][18]) {
                     	 col = obj_controller.bat_tactical_column;				    //sergeants
                         new_combat.tacticals += 1;
                     }
@@ -276,7 +276,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                     targ.marine_powers[targ.men] = deploying_unit.spe[cooh][va];
                     targ.marine_ranged[targ.men] = unit.ranged_attack();
                     targ.marine_ac[targ.men]=unit.armour_calc();
-                    targ.marine_attack=unit.melee_attack();
+                    targ.marine_attack[targ.men]=unit.melee_attack();
                     if (okay = 2) then targ.marine_local[targ.men] = 1;
 
 

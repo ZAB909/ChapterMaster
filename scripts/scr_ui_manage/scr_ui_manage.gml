@@ -235,7 +235,7 @@ function scr_ui_manage() {
 				draw_text_ext(xx+1388,yy+316,string_hash_to_newline(wep2),-1,187);        		
         	}
 
-        	if (cn.temp[116]!=""){
+        	if (is_array(cn.temp[117])){
         		var_text = string_hash_to_newline(string("Melee Attack: {0}",cn.temp[116][0]))
 	        	tooltip_text = string_hash_to_newline(string("WS : {0}#STR : {1}#{2}", selected_unit.weapon_skill, selected_unit.strength,cn.temp[116][1]));
 	        	x1 = xx+1387;
@@ -251,9 +251,9 @@ function scr_ui_manage() {
 		        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
 	    	}
 
-        	if (cn.temp[117]!=""){
-        		var_text = string_hash_to_newline(string("Ranged Attack: {0}",cn.temp[117]))
-	        	tooltip_text = string_hash_to_newline(string("BS : {0}#DEX : {1}", selected_unit.ballistic_skill, selected_unit.dexterity));
+        	if (is_array(cn.temp[117])){
+        		var_text = string_hash_to_newline(string("Ranged Attack: {0}",cn.temp[117][0]))
+	        	tooltip_text = string_hash_to_newline(string("BS : {0}#DEX : {1}#{2}", selected_unit.ballistic_skill, selected_unit.dexterity,cn.temp[117][1]));
 	        	x1 = xx+1387;
 	        	y1 = yy+435;
 	        	x2 = x1+string_width(var_text);
@@ -261,7 +261,6 @@ function scr_ui_manage() {
 		        draw_set_color(c_gray);
 		        if (selected_unit.encumbered_ranged){
 		        	draw_set_color(c_red);
-		        	tooltip_text+="#encumbered"
 		        }
 		        draw_text(x1,y1,var_text);
 		        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
@@ -311,6 +310,17 @@ function scr_ui_manage() {
 	        	tooltip_text = string_hash_to_newline(carry_data[2]);
 	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
 	        }
+	        if (cn.temp[117]!=""){
+	        	carry_data = cn.temp[117][2];
+	        	var carry_string = $"ranged carry: {carry_data[0]}/{carry_data[1]}"
+	        	x1 = xx+1015;
+	        	y1 = yy+586;
+	        	x2 = x1+string_width(carry_string);
+	        	y2 = y1+string_height(carry_string);
+	        	draw_text(x1,y1,string_hash_to_newline(carry_string));
+	        	tooltip_text = string_hash_to_newline(carry_data[2]);
+	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
+	        }	        
         		 
         	if (cn.temp[118]!=""){
         		var_text = string_hash_to_newline(string("Damage Resistance: {0}",cn.temp[118]))

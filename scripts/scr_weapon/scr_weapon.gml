@@ -426,9 +426,9 @@ global.weapons={
     },
     "Dreadnought Lightning Claw": {
         "attack": {
-            "standard": 95,
-            "master_crafted": 105,
-            "artifact": 115
+            "standard": 300,
+            "master_crafted": 400,
+            "artifact": 600
         },
         "melee_mod": {
             "standard": 1.2,
@@ -436,7 +436,7 @@ global.weapons={
             "artifact": 1.2
         },
         "description": "A specialized Lightning Claw variant designed for Dreadnoughts, these claws are capable of ripping through enemy vehicles and infantry with ease.",
-        "melee_hands": 1.2,
+        "melee_hands": 5,
         "ranged_hands": 0,
         "ammo": 0,
         "range": 1,
@@ -628,6 +628,30 @@ global.weapons={
         "spli": 1,
         "arp": -1
     },
+    "Dreadnought Power Claw":{
+        "attack": {
+            "standard": 400,
+            "master_crafted": 600,
+            "artifact": 800
+        },
+        "description": "A brutal crushing claw capable of tearing open armour and felsh with ease.",
+        "melee_hands": 5, 
+        "range": 1,
+        "spli": 1,
+        "arp": 1   
+    },
+    "Close Combat Weapon":{
+        "attack": {
+            "standard": 350,
+            "master_crafted": 450,
+            "artifact": 550
+        },
+        "description": "While a variety of melee weapons are used by dreadnoughts, this power fist with flamer is the most common.",
+        "melee_hands": 5, 
+        "range": 1,
+        "spli": 1,
+        "arp": 1   
+    },       
     "Inferno Cannon": {
         "attack": {
             "standard": 400,
@@ -1326,6 +1350,8 @@ global.gear = {
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
       },
+      "melee_hands":8,
+      "ranged_hands":8,      
       "description": "A massive war-machine that can be piloted by an honored Space Marine, who otherwise would have fallen in combat."
     },
     "Tartaros": {
@@ -1676,6 +1702,7 @@ global.gear = {
 }
 
 function equipment_struct(item_data, core_type,quality="none") constructor{ 
+    //This could be done with 2d arrays [[],[]]
     var names = ["hp_mod", "description","damage_resistance_mod", "ranged_mod", "melee_mod","armour_value" ,"attack","melee_hands","ranged_hands","ammo","range","spli","arp","special_description","abbreviation","tags","name"];
     var defaults = [0,"",0,0,0,0,0,0,0,0,0,0,0,"","",[],""];
     type = core_type;
@@ -1785,20 +1812,20 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
             if (type=="weapon"){
                 if (obj_controller.stc_bonus[1]>0 && obj_controller.stc_bonus[1]<5){
                     if (obj_controller.stc_bonus[1]=2 && has_tag("chain")){
-                        attack*1.07;
+                        attack*=1.07;
                     } else if (obj_controller.stc_bonus[1]=3 && has_tag("flame")){
-                        attack*1.1;
+                        attack*=1.1;
                     }else if (obj_controller.stc_bonus[1]=4 && has_tag("explosive")){
-                        attack*1.07;
+                        attack*=1.07;
                     }else if (obj_controller.stc_bonus[1]=1 && has_tag("bolt")){
-                        attack*1.07;
+                        attack*=1.07;
                     }
                 }
                 if (obj_controller.stc_bonus[2]>0 && obj_controller.stc_bonus[2]<3){
                     if (obj_controller.stc_bonus[1]=1 && has_tag("fist")){
-                        attack*1.1;
+                        attack*=1.1;
                     } else if (obj_controller.stc_bonus[1]=2 && has_tag("Plasma")){
-                        attack*1.1;
+                        attack*=1.1;
                     }                   
                 }
             }
@@ -2301,18 +2328,30 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 	        if (goody=0){
 	            if (stack=1) and (wep[b]=thawep) and (goody=0){
 	                // if (thawep=wip1){
-	                    att[b]+=att1;apa[b]=apa1;range[b]=rang1;wep_num[b]+=1;splash[b]=spli1;wep[b]=thawep;goody=1;
+	                    att[b]+=att1;
+                        apa[b]=apa1;
+                        range[b]=rang1;
+                        wep_num[b]+=1;
+                        splash[b]=spli1;
+                        wep[b]=thawep;
+                        goody=1;
 	                    // if (marine_type[unit_array_position]="Death Company") and (range[b]=1){att[b]+=att1;wep_num[b]+=1;wep_rnum[b]+=1;}
 	                    if (obj_ncombat.started=0) then ammo[b]=ammo1;
 	                // }
 	            }
 	            if (stack=0) and (obj_ncombat.started=0) and (wep[b]="") and (goody=0) and (wep_solo[b]=""){
 	                if (goody=0){
-	                    att[b]+=att1;apa[b]=apa1;range[b]=rang1;wep_num[b]+=1;splash[b]=spli1;wep[b]=thawep;goody=1;
+	                    att[b]+=att1;
+                        apa[b]=apa1;
+                        range[b]=rang1;
+                        wep_num[b]+=1;
+                        splash[b]=spli1;
+                        wep[b]=thawep;
+                        goody=1;
 	                    // if (marine_type[unit_array_position]="Death Company") and (range[b]=1){att[b]+=att1;wep_num[b]+=1;wep_rnum[b]+=1;}
 	                    ammo[b]=ammo1;
 
-	                    var title;title=true;
+	                    var title=true;
 	                    if (unit_struct[unit_array_position].IsSpecialist("heads")) then title=false;
 	                    if (title=true) then wep_title[b]=string(marine_type[unit_array_position]);
 	                    wep_solo[b]=string(obj_ini.name[marine_co[unit_array_position],marine_id[unit_array_position]]);
@@ -2337,33 +2376,6 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 	            }
 	        }
 	    }
-
-	    b=0;
-	    if (stack=1) and (goody=0){
-	        repeat(60){b+=1;
-	            var canc=false;
-	            if (rang1>1) and (marine_ranged[unit_array_position]=0){
-	                 canc=true;
-                     if (floor(rang1)==rang1) then canc=false
-	            }
-
-	            if (wep[b]="") and (goody=0) and (canc=false){
-	                // if (thawep=wip1){
-	                    att[b]+=att1;
-                        apa[b]=apa1;
-                        range[b]=rang1;
-                        wep_num[b]+=1;
-                        splash[b]=spli1;
-                        wep[b]=thawep;
-                        goody=1;
-	                    // if (marine_type[unit_array_position]="Death Company") and (range[b]=1){att[b]+=att1;wep_num[b]+=1;wep_rnum[b]+=1;}
-	                    if (obj_ncombat.started=0) then ammo[b]=ammo1;
-	                // }
-	            }
-	        }
-	    }
-
-
 	}
 
 
