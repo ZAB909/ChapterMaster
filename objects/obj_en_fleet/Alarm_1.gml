@@ -1405,7 +1405,7 @@ if (action=""){
                 scr_loyalty("blarg","inspect_fleet");// This updates the loyalties
                 if (whom=0) then scr_alert("green","duhuhuhu","Inquisitor Ship finishes inspection of your fleet.",x,y);
                 if (whom>0) then scr_alert("green","duhuhuhu","Inquisitor "+string(obj_controller.inquisitor[whom])+" finishes inspecting your fleet.",x,y);
-                target=0;
+                target=noone;
             }
             
             // Test-Slave Incubator Crap
@@ -1820,7 +1820,7 @@ if (action="move") and (action_eta<5000){
             if (trade_goods="csm") then cancel=true;
             
             if (trade_goods!="") and (owner!=eFACTION.Tyranids) and (owner!=eFACTION.Chaos) and (cancel=false) and ((instance_exists(target)) or (obj_ini.fleet_type=1)) {
-                if ((trade_goods!="return") and (target!=0) and ((target.action!="") or (point_distance(x,y,target.x,target.y)>30))) and (obj_ini.fleet_type!=1) and (navy=0){
+                if ((trade_goods!="return") and (target!=noone) and ((target.action!="") or (point_distance(x,y,target.x,target.y)>30))) and (obj_ini.fleet_type!=1) and (navy=0){
                     var mah_x,mah_y;
                     mah_x=instance_nearest(x,y,obj_star).x;
                     mah_y=instance_nearest(x,y,obj_star).y;
