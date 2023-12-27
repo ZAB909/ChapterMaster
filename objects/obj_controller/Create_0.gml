@@ -671,7 +671,6 @@ trade_gene=0;
 trade_chip=0;
 trade_info=0;
 zui=0;
-was_zoomed=1;
 // Variables for management
 for(var t=0; i<200; t++){
     temp[t]="";
