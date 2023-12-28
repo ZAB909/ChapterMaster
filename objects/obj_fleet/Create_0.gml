@@ -2,7 +2,7 @@
 instance_activate_object(obj_controller);
 debugl("Fleet Combat Started");
 
-start=0;beg=0;fallen=0;fallen_command=0;
+beg=0;fallen=0;fallen_command=0;
 obj_controller.cooldown=20;
 sel_x1=0;sel_y1=0;control=0;
 ships_selected=0;
