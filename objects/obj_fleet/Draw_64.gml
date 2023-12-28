@@ -119,9 +119,9 @@ if (start == 7) {
 
     var _margin_categories = max(!!capital_max + !!frigate_max + !!escort_max, 1);
     var _margin_percent = (
-        (max(capital, 0) / max(0, capital_max)) +
-        (max(frigate, 0) / max(0, frigate_max)) +
-        (max(escort, 0) / max(0, escort_max))
+        (max(capital, 0) / max(1, capital_max)) +
+        (max(frigate, 0) / max(1, frigate_max)) +
+        (max(escort, 0) / max(1, escort_max))
     );
     _margin_percent /= max(_margin_categories, 1);
     var _result_box_header;
