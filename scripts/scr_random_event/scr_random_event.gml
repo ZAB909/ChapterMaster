@@ -22,8 +22,7 @@ function scr_random_event(execute_now) {
 	//        exit;
 	//    }
 	//}
-
-
+	var chosen_event;
 
 	var inquisition_mission_roll = irandom(100);
 	var force_inquisition_mission = false;
@@ -31,7 +30,6 @@ function scr_random_event(execute_now) {
 		force_inquisition_mission = true;
 	}
 
-	var chosen_event;
 	if (force_inquisition_mission && random_event_next == EVENT.none) {
 		chosen_event = EVENT.inquisition_mission;
 	}
@@ -67,38 +65,38 @@ function scr_random_event(execute_now) {
 				if(player_luck == luck.good){
 					events = 
 					[
-					EVENT.space_hulk,
-					EVENT.promotion,
-					EVENT.strange_building,
-					EVENT.sororitas,
-					EVENT.rogue_trader,
-					EVENT.inquisition_mission,
-					EVENT.inquisition_planet,
-					EVENT.mechanicus_mission
+						EVENT.space_hulk,
+						EVENT.promotion,
+						EVENT.strange_building,
+						EVENT.sororitas,
+						EVENT.rogue_trader,
+						EVENT.inquisition_mission,
+						EVENT.inquisition_planet,
+						EVENT.mechanicus_mission
 					];
 				}
 				else if(player_luck == luck.neutral){
 					events = 
 					[
-					EVENT.strange_behavior,
-					EVENT.fleet_delay,
-					EVENT.harlequins,
-					EVENT.succession_war,
-					EVENT.random_fun,
+						EVENT.strange_behavior,
+						EVENT.fleet_delay,
+						EVENT.harlequins,
+						EVENT.succession_war,
+						EVENT.random_fun,
 					];
 				}
 				else if(player_luck == luck.bad){
 					events = 
 					[
-					EVENT.warp_storms,
-					EVENT.enemy_forces,
-					EVENT.crusade,
-					EVENT.enemy,
-					EVENT.mutation,
-					EVENT.ship_lost,
-					EVENT.chaos_invasion,
-					EVENT.necron_awaken,
-					EVENT.fallen,
+						EVENT.warp_storms,
+						EVENT.enemy_forces,
+						EVENT.crusade,
+						EVENT.enemy,
+						EVENT.mutation,
+						EVENT.ship_lost,
+						EVENT.chaos_invasion,
+						EVENT.necron_awaken,
+						EVENT.fallen,
 					];
 				}
 	
@@ -223,9 +221,9 @@ function scr_random_event(execute_now) {
 		random_event_next = chosen_event;
 		exit;
 	}
-	
 
 	if (chosen_event == EVENT.strange_behavior){
+		//TODO this event currenlty dose'nt do anything but now we have marine structs there is lots of potential here
 		debugl("RE: Strange Behavior");
 	    var marine_and_company = scr_random_marine("",0);
 		if(marine_and_company == "none")
@@ -354,6 +352,7 @@ function scr_random_event(execute_now) {
 		var heritical_item = false;
         
 		//this bit should be improved, idk what duke was checking for here
+		//TODO make craft chance reflective of crafters skill, rewards players for having skilled tech area
         if (string_count("Shit",obj_ini.strin2)>0) {
 			craft_roll+=20;
 		}
@@ -1268,35 +1267,8 @@ function scr_random_event(execute_now) {
 	}
 
 	else if ((chosen_event == EVENT.crusade)){
-	    var star_id = scr_random_find(2,true,"","");
-		if(star_id == undefined){
-			debugl("RE: Crusade, couldn't find a star for the crusade");
-			exit;	
-		}
-		else{
-			var assigned_crusade = false;
-			for(var i = 1; i <= star_id.planets && !assigned_crusade;i++){
-				for(var j = 1; j <= 4 && !assigned_crusade;  j++){
-					if(star_id.p_problem[i,j] == ""){
-						star_id.p_problem[i,j] = "great_crusade";
-						star_id.p_timer[i,j] = 24;
-						assigned_crusade = true;
-					}
-				}
-			}
-			if(!assigned_crusade){
-				debugl("RE: Crusade, couldn't assign a crusade at the system");
-				exit;
-			}
-			else{
-				scr_popup("Crusade","Fellow Astartes legions are preparing to embark on a Crusade to a nearby sector.  Your forces are expected at "+string(star_id.name)+"; 24 turns from now your ships there shall begin their journey.","crusade","");
-				var star_alert = instance_create(star_id.x+16,star_id.y-24,obj_star_event);
-				star_alert.image_alpha=1;
-				star_alert.image_speed=1;
-				scr_event_log("","A Crusade is called; our forces are expected at "+string(star_id.name)+" in 24 months.");
-				evented = true;	
-			}
-		}
+		//i think all events should be hanlded like this then we have far more options on when to call them and how they work
+		evented = launch_crusade();
 	}
     
 	else if (chosen_event == EVENT.enemy) {
@@ -1369,6 +1341,7 @@ function scr_random_event(execute_now) {
 	}
     
 	else if ((chosen_event == EVENT.mutation)) {
+		//TODO make reprocussions to ignoring this
 		debugl("RE: Gene-Seed Mutation");
 	    var text = "The Chapter's gene-seed has mutated!  Apothecaries are scrambling to control the damage and prevent further contamination.  What is thy will?";
 	    scr_popup("Gene-Seed Mutated!",text,"gene_bad","");

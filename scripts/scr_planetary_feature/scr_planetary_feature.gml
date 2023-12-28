@@ -313,8 +313,9 @@ function seal_tomb_world(planet){
 				awake_tomb = 1;
 				planet[tombs[tomb]].awake = 0;
 				planet[tombs[tomb]].sealed = 1;
+				planet[tombs[tomb]].planet_display = "Sealed Necron Tomb";
 			 }
-			 if (awake_tomb = 1){break;}
+			 if (awake_tomb = 1) then break;
 		 }
 	 }
 }
@@ -326,11 +327,12 @@ function awaken_tomb_world(planet){
 	 var tombs = search_planet_features(planet, search_feature);
 	 if (array_length(tombs)>0){
 		 for (var tomb =0;tomb<array_length(tombs);tomb++){
-			 if (planet[tombs[tomb]].awake == 0){
+			if (planet[tombs[tomb]].awake == 0){
 				awake_tomb = 1;
 				planet[tombs[tomb]].awake = 1;
-			 }
-			 if (awake_tomb = 1){break;}
+				planet[tombs[tomb]].planet_display = "Active Necron Tomb";
+			}
+			if (awake_tomb = 1){break;}
 		 }
 		 
 	 }
@@ -355,30 +357,34 @@ function scr_planetary_feature(planet_num) {
 					break;
 				case P_features.Necron_Tomb:
 				    var lop="Necron Tomb discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
-				    scr_alert("red","feature",lop,x,y);scr_event_log("red",lop);
+				    scr_alert("red","feature",lop,x,y);
+				    scr_event_log("red",lop);
 					break;
 				case P_features.Artifact:
 					var lop="Artifact discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
-					scr_alert("green","feature",lop,x,y);scr_event_log("",lop);
+					scr_alert("green","feature",lop,x,y);
+					scr_event_log("",lop);
 					break;
 				case P_features.STC_Fragment:
 					var lop="STC Fragment located on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
-					 scr_alert("green","feature",lop,x,y);scr_event_log("",lop);
+					 scr_alert("green","feature",lop,x,y);
+					 scr_event_log("",lop);
 					 break;
 				case P_features.Ancient_Ruins:
 					var lop=$"A {feat.ruins_size} Ancient Ruins discovered on {string(name)} {scr_roman(planet_num)}."debugl(lop);
-					scr_alert("green","feature",lop,x,y);scr_event_log("",lop);
+					scr_alert("green","feature",lop,x,y);
+					scr_event_log("",lop);
 					break;
 				case P_features.Cave_Network:
 					var lop="Extensive Cave Network discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
-			        scr_alert("green","feature",lop,x,y);scr_event_log("",lop);
+			        scr_alert("green","feature",lop,x,y);
+			        scr_event_log("",lop);
 					break;
 				case P_features.Warlord7:
 				    var lop="Ork Warboss discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
-				    scr_alert("red","feature",lop,x,y);scr_event_log("red",lop);
-					break;
-		
-			
+				    scr_alert("red","feature",lop,x,y);
+				    scr_event_log("red",lop);
+					break;		
 			}
 		}
 	}

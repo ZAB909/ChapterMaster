@@ -1361,6 +1361,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}
 			return string("{0} {1}", temp_role, name())
 		}
+
+		static full_title = function(){
+			return $"{name_role()} of the {scr_roman_numerals()[company-1]}co.";
+		}
 		
 		static load_marine = function(ship, star="none"){
 			 get_unit_size(); // make sure marines size given it's current equipment is correct
