@@ -161,7 +161,10 @@ function scr_enemy_ai_c() {
 	                    if (orbiting.name=obj_controller.temp[1049]) then instance_create(x,y,obj_temp2);
 	                }
 	            }
-	            if (instance_exists(obj_temp2)){array_push(feature[i], new new_planet_feature(P_features.Warlord7));p_orks[i]=6;}
+	            if (instance_exists(obj_temp2)){
+	            	array_push(p_feature[i], new new_planet_feature(P_features.Warlord7));
+	            	p_orks[i]=6;
+	            }
 	            with(obj_temp2){instance_destroy();}
             
 	            if (p_orks[i]>6) then p_orks[i]=6;
