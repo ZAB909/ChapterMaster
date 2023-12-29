@@ -699,9 +699,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if (new_health>m_health) then new_health=m_health;
 		update_health(new_health);	
 	}
-  static update_health = function(new_health){
-    obj_ini.hp[company][marine_number] = new_health;
-  };	
+	 static update_health = function(new_health){
+	    obj_ini.hp[company][marine_number] = new_health;
+	 };	
 	static get_unit_size = function(){
 		var unit_role = role();
 		var arm = armour();
@@ -722,18 +722,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
    		if (change_mob == new_mobility_item){
    			return "no change";
    		}
-		if  (change_mob == "Bike"){
-			update_health(hp()/1.25);
-		}
 	  	if (from_armoury && new_mobility_item!=""){
 	  		if (scr_item_count(new_mobility_item)>0){
 		   		scr_add_item(new_mobility_item,-1);
 		    } else {
 		    	return "no_items";
 		    }
-		}
-		if (new_mobility_item == "Bike"){
-			update_health(hp()*1.25);
 		}
 		if (change_mob != "") and (to_armoury){
 			scr_add_item(change_mob,1);
@@ -1218,6 +1212,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		return obj_ini.wep1[company][marine_number];
 	};
 
+	weapon_one_data={quality:"standard"};
+
   static update_weapon_one = function(new_weapon,from_armoury=true, to_armoury=true){
   	var change_wep = weapon_one();
   	var weapon_list = [];
@@ -1311,10 +1307,14 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			var ranged_hands_limit = 2;
 			var ranged_carrying=0
 			var carry_string="base:2#";
-			if (strength>50){
+			if (strength>=50){
 				ranged_hands_limit+=0.5;
 				carry_string="strength:+0.5#";
 			}
+			if (ballistic_skill>=50){
+				ranged_hands_limit+=0.25;
+				carry_string="skill:+0.5#";
+			}			
 			var armour_carry = gear_weapon_data("armour",armour(),"ranged_hands",false,"standard");	
 			if (armour_carry!=0){
 				ranged_hands_limit+=armour_carry;
@@ -1431,11 +1431,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				hands_limit+=armour_carry;
 				carry_string=$"armour:{armour_carry}#"
 			}
-			if (strength>50){
+			if (strength>=50){
 				hands_limit+=0.25;
 				carry_string+="strength:+0.25#";
 			}
-			if (weapon_skill>50){
+			if (weapon_skill>=50){
 				hands_limit+=0.25;
 				carry_string+="skill:+0.25#";
 			}
@@ -1463,13 +1463,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					} else {
 						var highest = _wep1.attack>_wep2.attack ? _wep1 :_wep2;
 						var lowest = _wep1.attack<=_wep2.attack ? _wep1 :_wep2;
-						if (highest.has_tags(["pistol","flame"] && !lowest.has_tags(["pistol","flame"]){
+						if (highest.has_tags(["pistol","flame"]) && !lowest.has_tags(["pistol","flame"])){
 							primary_weapon = lowest;
 							secondary=highest;
 						} else {
 							primary_weapon=highest;
 							melee_att*=0.5;
-							if (primary_weapon.has_tag("flame"){
+							if (primary_weapon.has_tag("flame")){
 								explanation_string+=$"primary is flame:X0.5#"
 							} else if primary_weapon.has_tag("pistol"){
 								explanation_string+=$"primary is pistol:X0.5#"

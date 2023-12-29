@@ -6,7 +6,7 @@ function scr_weapons_equip() {
 	var tc,tb,dude;
 	tc=0;tb=0;dude=0;
 
-	var i;i=-1;
+	var i=-1;
 	repeat(50){i+=1;item_name[i]="";}
 
 	if (instance_exists(obj_controller)) and (instance_exists(obj_popup)) and (!instance_exists(obj_mass_equip)){
@@ -34,55 +34,46 @@ function scr_weapons_equip() {
 // dude=52 for Predator
 // dude=53 for Land Speeder
 // dude=54 for Whirlwind
-
-	if (tc<3) and (tb=1) and (dude=1){var i;i=0; // Infantry Ranged
-	    i+=1;item_name[i]="(None)";
-	    i+=1;item_name[i]="Archeotech Laspistol";
-      i+=1;item_name[i]="Assault Cannon";
-	   	i+=1;item_name[i]="Bolt Pistol";
-	    i+=1;item_name[i]="Bolter";
-		i+=1;item_name[i]="Stalker Pattern Bolter";
-	  	i+=1;item_name[i]="Combiflamer";
-	    i+=1;item_name[i]="Flamer";
-			i+=1;item_name[i]="Heavy Bolter";
-	    i+=1;item_name[i]="Heavy Flamer";
-			i+=1;item_name[i]="Hellrifle";
-	    i+=1;item_name[i]="Incinerator";
-	    i+=1;item_name[i]="Integrated Bolters";
-			i+=1;item_name[i]="Lascannon";
-	    i+=1;item_name[i]="Lascutter";
-	    i+=1;item_name[i]="Meltagun";
-	    i+=1;item_name[i]="Missile Launcher";
-	    i+=1;item_name[i]="Multi-Melta";
-			i+=1;item_name[i]="Autocannon";
-			i+=1;item_name[i]="Plasma Gun";
-			i+=1;item_name[i]="Plasma Pistol";
-			i+=1;item_name[i]="Sniper Rifle";
-			i+=1;item_name[i]="Storm Bolter";
-			i+=1;item_name[i]="Webber";
+	var equip_data;
+	if (tc<3) and (dude=1){
+		if(tb=1){ // Infantry Ranged
+			item_name[1]="(None)";
+			item_name[2]="(any)";
+			var valid=3;
+			for (i=1;i<array_length(obj_ini.equipment);i++){
+				equip_data=gear_weapon_data("weapon",obj_ini.equipment[i],"all", false, "standard");
+				if (is_struct(equip_data) && obj_ini.equipment_number[i]>0){
+					if (equip_data.range>1.1){
+						item_name[valid]=equip_data.name;
+						valid++;
+					}
+				}
+			}
+		}
+	
+		//if (tb=2) and (!instance_exists(obj_creation)) and (!instance_exists(obj_controller)){ // Infantry Melee
+		if (tb=2){
+			item_name[1]="(None)";
+			item_name[1]="(None)";
+			item_name[2]="(any)";
+			var valid=3;	
+			for (i=1;i<array_length(obj_ini.equipment);i++){
+				equip_data=gear_weapon_data("weapon",obj_ini.equipment[i],"all", false, "standard");
+				if (is_struct(equip_data) && obj_ini.equipment_number[i]>0){
+					if (equip_data.range<=1.1){
+						item_name[valid]=equip_data.name;
+						valid++;
+					}
+				}
+			}
+			if (instance_exists(obj_mass_equip)){
+				item_name[valid]="Company Standard";
+				valid++;
+			}		
+		}
 	}
 
-	if (tc<3) and (tb=2) and (dude=1){var i;i=0; // Infantry Melee
-	    if (!instance_exists(obj_creation)) and (!instance_exists(obj_controller)){i+=1;item_name[i]="(None)";}
-			i+=1;item_name[i]="Combat Knife";
-			i+=1;item_name[i]="Chainsword";
-			i+=1;item_name[i]="Chainaxe";
-			i+=1;item_name[i]="Eviscerator";
-			i+=1;item_name[i]="Power Sword";
-			i+=1;item_name[i]="Power Axe";
-			i+=1;item_name[i]="Power Fist";
-			i+=1;item_name[i]="Chainfist";
-			i+=1;item_name[i]="Lightning Claw";
-			i+=1;item_name[i]="Force Weapon";
-			i+=1;item_name[i]="Thunder Hammer";
-			i+=1;item_name[i]="Boarding Shield";
-			i+=1;item_name[i]="Storm Shield";
-			i+=1;item_name[i]="Bolt Pistol";
-			i+=1;item_name[i]="Bolter";
-			if (instance_exists(obj_mass_equip)){i+=1;item_name[i]="Company Standard";}
-	}
-
-	if (tc<3) and (tb=1) and (dude=6){var i;i=0; // Dreadnought Ranged
+	if (tc<3) and (tb=1) and (dude=6){var i=0; // Dreadnought Ranged
 	    i+=1;item_name[i]="(None)";
       i+=1;item_name[i]="Assault Cannon";
 	    i+=1;item_name[i]="Missile Launcher";
@@ -203,7 +194,7 @@ function scr_weapons_equip() {
 		i+=1;item_name[i]="HK Missile";
 	}
 
-	if (tc=4) and (tb=1) and ((dude=50) or (dude=51) or (dude=52) or (dude=54)){var i;i=0; // Tank Upgrade
+	if (tc=4) and (tb=1) and ((dude=50) or (dude=51) or (dude=52) or (dude=54)){var i=0; // Tank Upgrade
 			i+=1;item_name[i]="(None)";
 	    i+=1;item_name[i]="Armoured Ceramite";
 	    i+=1;item_name[i]="Artificer Hull";
@@ -240,30 +231,30 @@ function scr_weapons_equip() {
 
 
 	if (tc=3) and (dude=1){ // dude=1 for normal infantry gear
-	    var i;i=0;
+	    var i=0;
 
 	    if (!instance_exists(obj_creation)) and (!instance_exists(obj_mass_equip)){
-	        i+=1;item_name[i]="(None)";
-	        i+=1;item_name[i]="Scout Armour";
-	        i+=1;item_name[i]="Power Armour";
-	        i+=1;item_name[i]="MK3 Iron Armour";
-	        i+=1;item_name[i]="MK4 Maximus";
-	        i+=1;item_name[i]="MK5 Heresy";
-	        i+=1;item_name[i]="MK6 Corvus";
-	        i+=1;item_name[i]="MK7 Aquila";
-	        i+=1;item_name[i]="MK8 Errant";
-	        i+=1;item_name[i]="Artificer Armour";
-	        i+=1;item_name[i]="Terminator Armour";
-	        i+=1;item_name[i]="Tartaros";
+			item_name[1]="(None)";
+			item_name[2]="(any)";
+			var valid=3;		
+			for (i=1;i<array_length(obj_ini.equipment);i++){
+				equip_data=gear_weapon_data("armour",obj_ini.equipment[i],"all", false, "standard");
+				if (is_struct(equip_data) && obj_ini.equipment_number[i]>0){
+					item_name[valid]=equip_data.name;
+					valid++;
+				}
+			}
 	    }
 
 	    if (instance_exists(obj_creation)) or (instance_exists(obj_mass_equip)){
-	        var bub;bub=0;
-	        i+=1;item_name[i]="Scout Armour";
+	    	var valid=1
+	        var bub=0;
 	        if (instance_exists(obj_creation)){if (type=112) then bub=1;}
 	        if (instance_exists(obj_mass_equip)){if (obj_controller.settings=12) then bub=1;}
-	        i+=1;item_name[i]="Power Armour";
-	        i+=1;item_name[i]="Terminator Armour";
+	        item_name[valid]="Power Armour";
+	        valid++;
+	        item_name[valid]="Terminator Armour";
+	        valid++;
 	    }
 
 	    else i+=1;
@@ -272,24 +263,28 @@ function scr_weapons_equip() {
 	    // if (bad=0){item_name[i]="Dreadnought";}
 	}
 	if (tc=4) and (dude=1){ // dude=1 for normal infantry gear
-	    var i;i=0;
-	    i+=1;item_name[i]="(None)";
-	    // i+=1;item_name[i]="Bionics";
-	    i+=1;item_name[i]="Iron Halo";
-	    i+=1;item_name[i]="Master Servo Arms";
-	    i+=1;item_name[i]="Narthecium";
-	    i+=1;item_name[i]="Psychic Hood";
-	    i+=1;item_name[i]="Rosarius";
-	    i+=1;item_name[i]="Servo Arms";
-	    i+=1;
-	    if (!instance_exists(obj_creation)){i+=1;item_name[i]="Exterminatus";}
-	    if (!instance_exists(obj_creation)){i+=1;item_name[i]="Plasma Bomb";}
+		item_name[1]="(None)";
+		item_name[2]="(any)";
+		var valid=3;		
+		for (i=1;i<array_length(obj_ini.equipment);i++){
+			equip_data=gear_weapon_data("gear",obj_ini.equipment[i],"all", false, "standard");
+			if (is_struct(equip_data) && obj_ini.equipment_number[i]>0){
+				item_name[valid]=equip_data.name;
+				valid++;
+			}
+		}
 	}
 	if (tc=5) and (dude=1){ // dude=1 for normal infantry gear
-	    var i;i=0;
-	    i+=1;item_name[i]="(None)";
-	    i+=1;item_name[i]="Bike";
-	    i+=1;item_name[i]="Jump Pack";
+		item_name[1]="(None)";
+		item_name[2]="(any)";
+		var valid=3;		
+		for (i=1;i<array_length(obj_ini.equipment);i++){
+			equip_data=gear_weapon_data("mobility",obj_ini.equipment[i],"all", false, "standard");
+			if (is_struct(equip_data) && obj_ini.equipment_number[i]>0){
+				item_name[valid]=equip_data.name;
+				valid++;
+			}
+		}
 	}
 
 

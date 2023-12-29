@@ -1,4 +1,4 @@
-function scr_add_item(item_name, number_of_items) {
+function scr_add_item(item_name, number_of_items, quality="standard") {
 
 	var i, ok, last_open, match_slot, open_slot=false, matched=false, last_slot;
 	ok=0;

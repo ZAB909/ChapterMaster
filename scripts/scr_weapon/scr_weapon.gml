@@ -173,7 +173,7 @@ global.weapons={
             "artifact": 70
         },
         "description": "A standard Chainsword. It is popular among Assault Marines due to the raw power, even with multiple opponents.",
-        "melee_hands": 1.1,
+        "melee_hands": 1,
         "ranged_hands": 0,
         "ammo": 0,
         "range": 1,
@@ -348,7 +348,7 @@ global.weapons={
         "spli": 1,
         "arp": 1,
         "special_description": "Parry",
-        "tags":["power", "sword"],
+        "tags":["power", "sword","elder","xenos"],
     },
     "Power Weapon": {
         "attack": {
@@ -496,7 +496,7 @@ global.weapons={
             "master_crafted": 1.3,
             "artifact": 1.3
         },
-        "description": "Ancient Blades of various origins either through arcane forging or lost technique thes blades are beyond deadly.",
+        "description": "Ancient Blades of various origins either through arcane forging or lost technique these blades are beyond deadly.",
         "melee_hands": 1,
         "ranged_hands": 0,
         "ammo": 0,
@@ -1660,16 +1660,6 @@ global.gear = {
     "Exterminatus": {
       "special_description": "Destroys planets",
       "description": "A weapon of the Emperor, and His divine judgment, this weapon can be placed upon a planet to obliterate it entirely.",
-      "damage_resistance_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-      },
-      "hp_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-      }
     },
     "Servo Arms": {
       "special_description": "Integrated flamer, repairs",
