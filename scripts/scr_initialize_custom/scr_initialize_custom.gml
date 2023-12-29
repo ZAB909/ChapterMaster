@@ -23,7 +23,7 @@ function scr_initialize_custom() {
 	homeworld_rule=1;
 	aspirant_trial="Blood Duel";
 	discipline="default";
-
+	doctrine="Generalist"
 	battle_cry="For the Emperor";
 
 	main_color=1;secondary_color=1;trim_color=1;
@@ -560,7 +560,31 @@ function scr_initialize_custom() {
 	        if (bonus_marines>=5) and (tenth>0){bonus_marines-=5;second+=5;}
 	    }*/
 	}
-
+	
+	switch(obj_creation.doctrine){
+		case "Generalist":
+		 terminator=20
+		 veteran=80
+		break;
+		case "Breakthrough":
+	devastator=30;
+	assault=10;
+	terminator=30;
+	veteran=70;
+		break;
+	case "Shock Assault":
+	assault=30;
+	devastator=10;
+	terminator=10;
+	veteran=90;
+		break;
+	case "Irregular Warfare":
+	assault=10;
+	devastator=10;
+	
+	break;
+	}
+	
 	if (obj_creation.custom!=0){
 	    var bonus_marines=0,o=0;
 	    if (obj_creation.strength>5) then bonus_marines=(obj_creation.strength-5)*50;
@@ -656,7 +680,7 @@ function scr_initialize_custom() {
 			veteran-=20;
 			break;
 		case "Crimson Fists":
-			veteran+=30;
+			veteran-=30;
 			break;
 		case "Space Wolves":
 	    	veteran+=40;
@@ -951,18 +975,22 @@ function scr_initialize_custom() {
 						"wep2":[wep2[100,4],4], 
 					},
 					"option" :{
-						"wep1":[
-							[["Thunder Hammer", "Chainfist"],1],
-							[["Lightning Claw", "Power Axe", "Power Fist", "Power Sword"], 7]],
 						"wep2":[
-							[["Storm Shield"],1],
-							[["Assault Cannon","Heavy Flamer"], 1],
-							[["Multi-Melta", "Heavy Flamer", "Heavy Bolter"], 1],
-							[["Lightning Claw", "Meltagun", "Storm Bolter"], 6]
+							[["Assault Cannon","Heavy Flamer"], 4],
 						],
 					} 
 				}}],
 				["type_data" , {"display_data":$"{role[100,4]} {squad_name}"}]
+			],
+			"terminator_assault_squad": [
+				[role[100][19], {"max":1,"min":1, "role":$"{role[100,19]} Terminator"}],			//Veteran sergeant terminator
+				[role[100][4], {"max":9,"min":3,"loadout":{//terminator
+					"required":{
+						"wep1":["Thunder Hammer",max],
+						"wep2":["Storm Shield",max], 
+					},
+				}}],
+				["type_data" , {"display_data":$"{role[100,4]} Assault {squad_name}"}]
 			],
 			"veteran_squad": [
 				[role[100][3], {"max":9,"min":4, "loadout":{//tactical marine
