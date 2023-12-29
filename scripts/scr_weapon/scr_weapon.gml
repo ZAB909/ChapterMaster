@@ -66,6 +66,7 @@ global.weapons={
         "artifact": 12
     } ,
     "melee_hands": 0.9,
+    "ranged_hands":1,
     "tags":["shield"],
     "hp_mod":{
       "standard": 30,
@@ -387,7 +388,7 @@ global.weapons={
         "range": 1,
         "spli": 0,
         "arp": 1,
-        "tags":["power", "axe"],
+        "tags":["power", "axe", "dual"],
     },
     "Power Fist": {
         "attack": {
@@ -442,7 +443,7 @@ global.weapons={
         "range": 1,
         "spli": 1,
         "arp": 0,
-        "tags":["power", "vehicle"],
+        "tags":["power", "vehicle","dual"],
     },
     "Thunder Hammer": {
         "attack": {
@@ -1216,13 +1217,13 @@ global.weapons={
             "artifact": 96
         },
         "description": "Compact, and double-barreled, this bolt weapon is inaccurate but grants an enormous amount of firepower.",
-        "melee_hands": 0,
-        "ranged_hands": 1,
+        "melee_hands": 1.1,
+        "ranged_hands": 1.1,
         "ammo": 10,
         "range": 10,
         "spli": 1,
         "arp": 0,
-        "tags":["flame"]
+        "tags":["bolt"]
     },
     "Flamer": {
         "attack": {
@@ -1236,7 +1237,7 @@ global.weapons={
             "artifact": 0
         },
         "description": "Blackened at the tip, this weapon unleashes a torrent of burning promethium - all the better to cleanse sin and impurity with.",
-        "melee_hands": 0,
+        "melee_hands": 1,
         "ranged_hands": 1,
         "ammo": 4,
         "range": 2.1,
@@ -1259,6 +1260,22 @@ global.weapons={
         "arp": 0,
         "tags":["flame"]
     },
+    "Combiflamer": {
+        "attack": {
+            "standard": 100,
+            "master_crafted": 130,
+            "artifact": 160
+        },
+        "description": "a standard bolter with a single shot flamer attached for tactical use",
+        "melee_hands": 1,
+        "ranged_hands": 1.5,
+        "ammo": 15,
+        "range": 10,
+        "spli": 1,
+        "arp": 0,
+        "second_profiles":["Flamer"],
+        "tags":["combi", "bolt"]
+    },    
     "Incinerator": {
         "attack": {
             "standard": 200,
@@ -1266,14 +1283,28 @@ global.weapons={
             "artifact": 240
         },
         "description": "This flamer weapon includes special promethium and sacred oils. It is particularly effective against Daemons and their ilk.",
-        "melee_hands": 0,
+        "melee_hands": 1,
         "ranged_hands": 1,
         "ammo": 4,
         "range": 2.1,
         "spli": 1,
         "arp": -1,
         "tags":["flame"]
-    }
+    },
+    "Force Weapon": {
+        "attack": {
+            "standard": 50,
+            "master_crafted": 100,
+            "artifact": 150
+        },
+        "description": "An advanced, psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.",
+        "melee_hands": 1,
+        "ranged_hands": 1,
+        "range": 1,
+        "spli": 0,
+        "arp": 0,
+        "tags":["psi"]
+    },
 }
 
 global.gear = {
@@ -1508,7 +1539,8 @@ global.gear = {
         "standard": 0,
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
-      }
+      },
+      "description": "The staple power armour of the adeptus astartes and the only power armour still widely manufactured."
     },
     "MK8 Errant": {
       "armour_value": {
@@ -1525,7 +1557,8 @@ global.gear = {
         "standard": 0,
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
-      }
+      },
+    "description": "The newest and most advanced of the standard mark power armours as such production has not yet reached maximum capacity creating a supply shortage."
     },
     "MK10 Indomitus": {
       "armour_value": {
@@ -1703,8 +1736,8 @@ global.gear = {
 
 function equipment_struct(item_data, core_type,quality="none") constructor{ 
     //This could be done with 2d arrays [[],[]]
-    var names = ["hp_mod", "description","damage_resistance_mod", "ranged_mod", "melee_mod","armour_value" ,"attack","melee_hands","ranged_hands","ammo","range","spli","arp","special_description","abbreviation","tags","name"];
-    var defaults = [0,"",0,0,0,0,0,0,0,0,0,0,0,"","",[],""];
+    var names = ["hp_mod", "description","damage_resistance_mod", "ranged_mod", "melee_mod","armour_value" ,"attack","melee_hands","ranged_hands","ammo","range","spli","arp","special_description","abbreviation","tags","name","second_profiles"];
+    var defaults = [0,"",0,0,0,0,0,0,0,0,0,0,0,"","",[],"",[]];
     type = core_type;
     for (var i=0;i<array_length(names);i++){
         if (struct_exists(item_data,names[i])){
