@@ -1,6 +1,4 @@
-
-
-
+ 
 if (defenses=1){
     var i=0;
 
@@ -53,7 +51,33 @@ for (i=1;i<=60;i++){
 }
 
 var dreaded=false, unit;
+add_data_to_stack = function(stack_index, weapon, unit_damage=false){
+    if (!unit_damage==false){
+        att[stack_index]+=unit_damage;
+    }
+    apa[stack_index]=weapon.arp;
+    range[stack_index]=weapon.range;
+    wep_num[stack_index]++;
+    splash[stack_index]=weapon.spli;;
+    wep[stack_index]=weapon.name;
+    if (obj_ncombat.started=0) then ammo[stack_index]=weapon.ammo;
 
+
+    if (array_length(weapon.second_profiles)>0){//for adding in intergrated weaponry
+        var secondary_profile;
+        for (var p=0;p<array_length(weapon.second_profiles);p++){
+
+            secondary_profile = gear_weapon_data("weapon",weapon.second_profiles[p],"all")
+            if (!is_struct(secondary_profile))then continue;
+            for (var wep_stack=1;wep_stack<array_length(wep);wep_stack++){
+                if (wep[wep_stack]==""||wep[wep_stack]==weapon.name){
+                    add_data_to_stack(wep_stack,secondary_profile)
+                }
+            }    
+        }
+    }
+}
+var mobi_item;
 for (g=1;g<array_length(marine_type);g++){
     unit = unit_struct[g];
     if (marine_casting[g]>=0) then marine_casting[g]=0;
@@ -71,21 +95,31 @@ for (g=1;g<array_length(marine_type);g++){
 
 
         if (marine_mobi[g]!="Bike") and (marine_mobi[g]!=""){
-            //if (string_count("Jump Pack",marine_mobi[g])>0) then scr_special_weapon("hammer_of_wrath",g,false);
+           mobi_item=gear_weapon_data("mobility",unit.mobility_item(),"all");
+           if (is_struct(mobi_item)){
+            if( mobi_item.has_tag("jump")){
+                for (weapon_stack_index=1;weapon_stack_index<array_length(wep);weapon_stack_index++){
+                    if (wep[weapon_stack_index]==""||(wep[weapon_stack_index]=="hammer_of_wrath" && !head_role)){
+                        add_data_to_stack(weapon_stack_index,primary_ranged,unit.ranged_damage_data[0]);
+                        if (head_role){
+                            wep_title[stack_index]=unit.role();
+                            wep_solo[stack_index]=unit.name();
+                        }
+                        break;
+                    }
+                }                
+            }
+           }
         }
 
-
-        //if (marine_gear[g]="Servo Arms") then scr_special_weapon("Flamer",g,true);
-        //if (marine_gear[g]="Master Servo Arms") then scr_special_weapon("Heavy Flamer",g,true);
-
         if (unit.IsSpecialist("libs",true)||(unit.role()=="Chapter Master"&&obj_ncombat.chapter_master_psyker=1)){
-            var cast_dice=floor(random(100))+1;
+            var cast_dice=irandom(99)+1;
             if (array_contains(obj_ini.dis,"Warp Touched")) then cast_dice-=5;
 
-            if (marine_type[g]="Lexicanum") and (cast_dice<=20) then marine_casting[g]=1;
-            if (marine_type[g]="Codiciery") and (cast_dice<=25) then marine_casting[g]=1;
-            if (marine_type[g]=obj_ini.role[100,17]) and (cast_dice<=25) then marine_casting[g]=1;
-            if (marine_type[g]="Chief "+string(obj_ini.role[100,17])) and (cast_dice<=80) then marine_casting[g]=1;
+            cast_dice-=unit.psionic-(unit.experience/60);
+
+            if (cast_dice<=50) then marine_casting[g]=1;
+
             if (marine_type[g]="Chapter Master") and (obj_ncombat.chapter_master_psyker=1){
                 if (cast_dice<=66) then marine_casting[g]=1;
                 if (obj_ncombat.big_boom>0) and (obj_ncombat.kamehameha=true) then marine_casting[g]=1;
@@ -115,34 +149,22 @@ for (g=1;g<array_length(marine_type);g++){
             var primary_ranged = unit.ranged_damage_data[3];//collect unit ranged data
             for (weapon_stack_index=1;weapon_stack_index<array_length(wep);weapon_stack_index++){
                 if (wep[weapon_stack_index]==""||(wep[weapon_stack_index]==primary_ranged.name && !head_role)){
-                    att[weapon_stack_index]+=unit.ranged_damage_data[0];
-                    apa[weapon_stack_index]=primary_ranged.arp;
-                    range[weapon_stack_index]=primary_ranged.range;
-                    wep_num[weapon_stack_index]++;
-                    splash[weapon_stack_index]=primary_ranged.spli;;
-                    wep[weapon_stack_index]=primary_ranged.name;
+                    add_data_to_stack(weapon_stack_index,primary_ranged,unit.ranged_damage_data[0]);
                     if (head_role){
-                        wep_title[weapon_stack_index]=unit.role();
-                        wep_solo[weapon_stack_index]=unit.name();
+                        wep_title[stack_index]=unit.role();
+                        wep_solo[stack_index]=unit.name();
                     }
-                    if (obj_ncombat.started=0) then ammo[weapon_stack_index]=primary_ranged.ammo;
                     break;
                 }
             }
             var primary_melee = unit.melee_damage_data[3];//collect unit melee data
             for (weapon_stack_index=1;weapon_stack_index<array_length(wep);weapon_stack_index++){
                 if (wep[weapon_stack_index]==""||(wep[weapon_stack_index]==primary_melee.name && !head_role)){
-                    att[weapon_stack_index]+=unit.melee_damage_data[0];
-                    apa[weapon_stack_index]=primary_melee.arp;
-                    range[weapon_stack_index]=primary_melee.range;
-                    wep_num[weapon_stack_index]++;
-                    splash[weapon_stack_index]=primary_melee.spli;
-                    wep[weapon_stack_index]=primary_melee.name;
+                    add_data_to_stack(weapon_stack_index,primary_melee,unit.melee_damage_data[0]);
                     if (head_role){
                         wep_title[weapon_stack_index]=unit.role();
                         wep_solo[weapon_stack_index]=unit.name();
                     }
-                    if (obj_ncombat.started=0) then ammo[weapon_stack_index]=primary_melee.ammo;
                     break;
                 }
             }     
@@ -180,17 +202,7 @@ for (g=1;g<array_length(marine_type);g++){
                     if (is_struct(weapon)){
                         for (j=1;j<=40;j++){
                             if (wep[j]==""||wep[j]==weapon.name){
-                                att[open]+=weapon.attack;
-                                apa[open]=weapon.arp;
-                                range[open]=weapon.range;
-                                wep_num[open]++;
-                                splash[open]=weapon.spli;;
-                                wep[open]=weapon.name;
-                                /*if (head_role){
-                                    wep_title[open]=unit.role();
-                                    wep_solo[open]=unit.name();
-                                }*/
-                                if (obj_ncombat.started=0) then ammo[weapon_stack_index]=weapon.ammo;
+                                add_data_to_stack(open,weapon)
                                 break;                             
                             }
                         }

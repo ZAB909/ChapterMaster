@@ -1325,7 +1325,8 @@ global.gear = {
         "master_crafted": 5,
         "artifact": 10
       },
-      "description": "A suit of Adeptus Astartes power armour. The Mark can no longer be determined- it appears to be a combination of several types."
+      "description": "A suit of Adeptus Astartes power armour. The Mark can no longer be determined- it appears to be a combination of several types.",
+      "tags":["power_armour"],
     },
     "Artificer Armour": {
       "armour_value": {
@@ -1343,7 +1344,8 @@ global.gear = {
         "master_crafted": 15,
         "artifact": 20
       },
-      "description": "Heavily modified by the chapter artificers, and decorated without compare, this ancient Power Armour is beyond priceless."
+      "description": "Heavily modified by the chapter artificers, and decorated without compare, this ancient Power Armour is beyond priceless.",
+      "tags":["power_armour"],
     },
     "Terminator Armour": {
       "armour_value": {
@@ -1363,7 +1365,8 @@ global.gear = {
       },
       "melee_hands":2,
       "ranged_hands":2,
-      "description": "The toughest and most powerful armour designed by humanity. Only the most veteran of Astartes are allowed to wear these."
+      "description": "The toughest and most powerful armour designed by humanity. Only the most veteran of Astartes are allowed to wear these.",
+       "tags":["teminator"],
     },
     "Dreadnought": {
       "armour_value": {
@@ -1403,7 +1406,8 @@ global.gear = {
       },
       "melee_hands":2,
       "ranged_hands":2,      
-      "description": "Even more advanced than the Indomitus Terminator Armour, this upgraded armour offers greater mobility at no cost to protection."
+      "description": "Even more advanced than the Indomitus Terminator Armour, this upgraded armour offers greater mobility at no cost to protection.",
+      "tags":["teminator"],
     },
     "Cataphractii Pattern Terminator":{
       "armour_value": {
@@ -1423,8 +1427,8 @@ global.gear = {
 	},
       "melee_hands":2,
       "ranged_hands":2,      
-
-      "description": "Among the first issued to the Space Marine Legions, it is functionally distinct from other patterns, bearing additional plating and shield generators installed within the shoulder pads"
+      "description": "Among the first issued to the Space Marine Legions, it is functionally distinct from other patterns, bearing additional plating and shield generators installed within the shoulder pads",
+        "tags":["teminator"],
     },
      "Ork Armour": {
       "ranged_mod": {
@@ -1437,7 +1441,7 @@ global.gear = {
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
       },
-      "description": ""
+      "description": "Mismatched basic armour used by ork forces"
     },
     "Scout Armour": {
       "ranged_mod": {
@@ -1468,7 +1472,8 @@ global.gear = {
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
       },
-      "description": "An ancient set of Armorum Ferrum. Has thicker armour plating but the added weight slows down the wearer."
+      "description": "An ancient set of Armorum Ferrum. Has thicker armour plating but the added weight slows down the wearer.",
+       "tags":["power_armour"],
     },
     "MK4 Maximus": {
       "armour_value": {
@@ -1486,7 +1491,8 @@ global.gear = {
         "master_crafted": 10, // Augmented
         "artifact": 15 // Augmented
       },
-      "description": "Armour dating to the end of the Great Crusade. Often considered the ultimate Space Marine armour. The components are no longer reproducible."
+      "description": "Armour dating to the end of the Great Crusade. Often considered the ultimate Space Marine armour. The components are no longer reproducible.",
+      "tags":["power_armour"],
     },
     "MK5 Heresy": {
       "armour_value": {
@@ -1504,7 +1510,8 @@ global.gear = {
         "master_crafted": 0,
         "artifact": 0
       },
-      "description": "A hastily assembled Power armour during the Horus Heresy to act as a stopgap. Excels at melee, alongside some downsides."
+      "description": "A hastily assembled Power armour during the Horus Heresy to act as a stopgap. Excels at melee, alongside some downsides.",
+      "tags":["power_armour"],
     },
     "MK6 Corvus": {
       "armour_value": {
@@ -1522,7 +1529,8 @@ global.gear = {
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
       },
-      "description": "Relatively old beakie armour, sleek as can be. Boosted olfactory and auditory sensors increase the ranged accuracy of the wearer. Making it more fragile."
+      "description": "Relatively old beakie armour, sleek as can be. Boosted olfactory and auditory sensors increase the ranged accuracy of the wearer. Making it more fragile.",
+      "tags":["power_armour"],
     },
     "MK7 Aquila": {
       "armour_value": {
@@ -1540,7 +1548,8 @@ global.gear = {
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
       },
-      "description": "The staple power armour of the adeptus astartes and the only power armour still widely manufactured."
+      "description": "The staple power armour of the adeptus astartes and the only power armour still widely manufactured.",
+      "tags":["power_armour"],
     },
     "MK8 Errant": {
       "armour_value": {
@@ -1558,7 +1567,8 @@ global.gear = {
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
       },
-    "description": "The newest and most advanced of the standard mark power armours as such production has not yet reached maximum capacity creating a supply shortage."
+    "description": "The newest and most advanced of the standard mark power armours as such production has not yet reached maximum capacity creating a supply shortage.",
+    "tags":["power_armour"],
     },
     "MK10 Indomitus": {
       "armour_value": {
@@ -1576,7 +1586,8 @@ global.gear = {
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
       },
-      "description": "The MK10 Indomitus is the most advanced pattern of power armour available to the Space Marines, featuring advanced materials and systems."
+      "description": "The MK10 Indomitus is the most advanced pattern of power armour available to the Space Marines, featuring advanced materials and systems.",
+      "tags":["power_armour"],
     }, 
         "Skitarii Armour":{
             "description": "Skitarri Armour is something of a misnomer as most Skitarii are in fact bonded more or less permenantly to their advanced mars armour",
@@ -1718,7 +1729,8 @@ global.gear = {
         "standard": 10,
         "master_crafted": 10,
         "artifact": 10
-      }
+      },
+      "tags":["jump"],
     }
     // Add more mobility items as needed...
   }
@@ -1830,7 +1842,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
         }
         return satisfied;
     }
-    static owner_data = function(owner){
+    static owner_data = function(owner){//centralization of bonuses originating from weapon improvwments e.g stc
         if (owner=="chapter"){
             if (type=="weapon"){
                 if (obj_controller.stc_bonus[1]>0 && obj_controller.stc_bonus[1]<5){

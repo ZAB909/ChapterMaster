@@ -1690,6 +1690,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if (spawn_ex != 0){add_exp(spawn_ex)}  //update the marines exp with updated guass value
 
 	};
+
+	static hammer_of_wrath = function(){
+		
+	}
 	static spawn_old_guard =function(){
 		var old_guard=irandom(100);
 		var age = (obj_ini.millenium*1000)+obj_ini.year;
