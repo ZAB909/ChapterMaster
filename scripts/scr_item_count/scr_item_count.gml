@@ -1,4 +1,4 @@
-function scr_item_count(item_type) {
+function scr_item_count(item_type, quality="any") {
 
 	// This script checks the equipment variables for the named item and returns the combined quantity
 
@@ -10,7 +10,13 @@ function scr_item_count(item_type) {
 	   		equipemnt list more than once so will have to leave till I can
 	   		find where stuff is added
 	   		*/
-	   		von+=obj_ini.equipment_number[i];
+	   		if (quality=="any"){
+	   			von+=obj_ini.equipment_number[i];
+	   		} else {
+	   			for (var q=0;q<array_length(equipment_quality[i];q++)){
+	   				if (equipment_quality[i][q] == "quality") then von++;
+	   			}
+	   		}
 	   }
 	}
 	return(von);

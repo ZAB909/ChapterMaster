@@ -1842,24 +1842,24 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
         }
         return satisfied;
     }
-    static owner_data = function(owner){//centralization of bonuses originating from weapon improvwments e.g stc
+    static owner_data = function(owner){//centralization of bonuses originating from weapon improvements e.g STCs
         if (owner=="chapter"){
             if (type=="weapon"){
                 if (obj_controller.stc_bonus[1]>0 && obj_controller.stc_bonus[1]<5){
-                    if (obj_controller.stc_bonus[1]=2 && has_tag("chain")){
+                    if (obj_controller.stc_bonus[1]==2 && has_tag("chain")){
                         attack*=1.07;
-                    } else if (obj_controller.stc_bonus[1]=3 && has_tag("flame")){
+                    } else if (obj_controller.stc_bonus[1]==3 && has_tag("flame")){
                         attack*=1.1;
-                    }else if (obj_controller.stc_bonus[1]=4 && has_tag("explosive")){
+                    }else if (obj_controller.stc_bonus[1]==4 && has_tag("explosive")){
                         attack*=1.07;
-                    }else if (obj_controller.stc_bonus[1]=1 && has_tag("bolt")){
+                    }else if (obj_controller.stc_bonus[1]==1 && has_tag("bolt")){
                         attack*=1.07;
                     }
                 }
                 if (obj_controller.stc_bonus[2]>0 && obj_controller.stc_bonus[2]<3){
-                    if (obj_controller.stc_bonus[1]=1 && has_tag("fist")){
+                    if (obj_controller.stc_bonus[1]==1 && has_tag("fist")){
                         attack*=1.1;
-                    } else if (obj_controller.stc_bonus[1]=2 && has_tag("Plasma")){
+                    } else if (obj_controller.stc_bonus[1]==2 && has_tag("Plasma")){
                         attack*=1.1;
                     }                   
                 }

@@ -1,4 +1,4 @@
-function scr_add_item(item_name, number_of_items, quality="standard") {
+function scr_add_item(item_name, number_of_items, quality="any") {
 
 	var i, ok, last_open, match_slot, open_slot=false, matched=false, last_slot;
 	ok=0;
@@ -54,11 +54,38 @@ function scr_add_item(item_name, number_of_items, quality="standard") {
 	    }
 
 	    if (matched){
+	    	var start_count = obj_ini.equipment_number[match_slot];
 	    	obj_ini.equipment_number[match_slot]+=number_of_items;
+	    	if (number_of_items>0){
+		    	for (var q=start_count;q<start_count+number_of_items;q++){
+		    		obj_ini.equipment_quality[i][q]=quality;
+		    	}
+		    } else if (number_of_items<0){
+		    	var end_count = obj_ini.equipment_number[match_slot];
+		    	if (end_count<0) then end_count=0;
+		    	if (number_of_items==-1){
+		    		if (quality=="any"){
+		    			return array_pop(obj_ini.equipment_quality[i]);
+		    		}else {
+		    			for (var q=0;q>array_length(equipment_quality[i]);q++){
+		    				if (equipment_quality[i][q]==quality){
+		    					array_delete(equipment_quality[i], q, 1);
+		    					return quality
+		    				}
+		    			}
+		    		}
+		    	}
+		    	for (var q=start_count-1;q>end_count;q--){
+		    		obj_ini.equipment_quality[i][q]="";
+		    	}
+		    }
 	    } else if (open_slot){
 	        obj_ini.equipment[last_open]=item_name;
 	        obj_ini.equipment_number[last_open]=number_of_items;
 	        obj_ini.equipment_condition[last_open]=100
+	        for (var q=0;q<number_of_items;q++){
+	        	obj_ini.equipment_quality[i][q]=quality;
+	        }
 	        if (string_count("MK",item_name)>0) or (string_count("Armour",item_name)>0) or (item_name="Tartaros") then obj_ini.equipment_type[last_open]="armour";
 	        if (string_count("Bolts",item_name)>0) then obj_ini.equipment_type[last_open]="gear";
 	    } else {

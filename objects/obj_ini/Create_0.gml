@@ -25,8 +25,17 @@ man_size=0;
 // Equipment- maybe the bikes should go here or something?          yes they should
 i=-1;
 repeat(200){i+=1;
-    equipment[i]="";equipment_type[i]="";equipment_number[i]=0;equipment_condition[i]=100;
-    artifact[i]="";artifact_tags[i]="";artifact_identified[i]=0;artifact_condition[i]=100;artifact_loc[i]="";artifact_sid[i]=0;// Over 500 : ship
+    equipment[i]="";
+    equipment_type[i]="";
+    equipment_number[i]=0;
+    equipment_condition[i]=100;
+    equipment_quality=[];
+    artifact[i]="";
+    artifact_tags[i]="";
+    artifact_identified[i]=0;
+    artifact_condition[i]=100
+    ;artifact_loc[i]="";
+    artifact_sid[i]=0;// Over 500 : ship
     // Weapon           Unidentified            
 }
 
