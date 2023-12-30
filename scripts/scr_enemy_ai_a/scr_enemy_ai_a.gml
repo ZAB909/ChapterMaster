@@ -3,10 +3,14 @@ function scr_enemy_ai_a() {
 
 	// guardsmen hop from planet to planet
 	if (p_guardsmen[1]+p_guardsmen[2]+p_guardsmen[3]+p_guardsmen[4]>0) and (present_fleet[2]>0){
-	    var o,mx,cr,tr;o=0;mx=0;cr=0;tr=0;
-	    repeat(4){o+=1;if (p_guardsmen[o]>0) and (cr=0) then cr=o;}
+	    var o=0,mx=0,cr=0,tr=0;
+	    repeat(planets){
+	    	o+=1;
+	    	if (p_guardsmen[o]>0) and (cr=0) then cr=o;
+	    }
 	    o=0;
-	    repeat(4){o+=1;
+	    repeat(planets){
+	    	o+=1;
 	        if (p_orks[o]+p_tau[o]+p_chaos[o]+p_traitors[o]+p_tyranids[o]+p_necrons[o]>mx){
 	            mx=p_orks[o]+p_tau[o]+p_chaos[o]+p_traitors[o]+p_tyranids[o]+p_necrons[o];
 	            tr=o;
@@ -18,7 +22,9 @@ function scr_enemy_ai_a() {
 	}
 
 	if (obj_controller.faction_defeated[10]>0) and (obj_controller.faction_gender[10]=2){
-	    var o;o=0;repeat(4){o+=1;
+	    var o=0;
+	    repeat(planets){
+	    	o+=1;
 	        if (array_length(p_feature[o])!=0){
 	            if (planet_feature_bool(p_feature[o], P_features.World_Eaters)==1) and (p_chaos[o]<=0){
 	                delete_features(p_feature[o],P_features.World_Eaters);
@@ -28,75 +34,82 @@ function scr_enemy_ai_a() {
 	}
 
 	// checking for inquisition dead world inspections here
-	if (present_fleet[1]>=0) and (present_fleet[4]=0){
-	    var o,yep,chanceh,stop,shitty;o=0;yep=0;stop=false;shitty=false;
+	if (present_fleet[eFACTION.Player]>=0) and (present_fleet[eFACTION.Inquisition]==0){
+	    var chapter_asset_discovery,o=0,yep=0,stop=false,shitty=false;
     
-	    chanceh=floor(random(200))+1;
-	    repeat(4){o+=1;if (obj_ini.dis[o]="Shitty Luck") then shitty=true;}
-	    if (shitty=true) then chanceh=floor(random(50))+1;
+	    chapter_asset_discovery=floor(random(200))+1;
+	    repeat(planets){
+	    	o+=1;
+	    	if (array_contains(obj_ini.dis,"Shitty Luck")) then shitty=true;}
+	    if (shitty=true) then chapter_asset_discovery=floor(random(50))+1;
     
 	    if (present_fleet[1]=0){
-	        chanceh=floor(random(2000))+1;
-	        if (shitty=true) then chanceh=floor(random(800))+1;
+	        chapter_asset_discovery=floor(random(2000))+1;
+	        if (shitty=true) then chapter_asset_discovery=floor(random(800))+1;
 	    }
     
-	    // 137 ; chanceh=floor(random(20))+1;
+	    // 137 ; chapter_asset_discovery=floor(random(20))+1;
     
 	    o=0;
-	    repeat(4){o+=1;
+	    repeat(planets){
+	    	o+=1;
 	        if (p_first[o]=1) and (p_owner[o]=2) then p_owner[o]=1;
 	        if (p_type[o]="Dead") and (array_length(p_upgrades[o])>0){
 	            if (planet_feature_bool(p_feature[o], P_features.Secret_Base)==0) /*and (string_count(".0|",p_upgrades[o])>0)*/{
-	                if (chanceh<=2) then yep=o;
+	                if (chapter_asset_discovery<=2) then yep=o;
 	            }
 	        }
 	    }
-    
+    	
+    	//if an inquis wants to check out a dead world with chapter assets
 	    if (yep>0){
-	        with(obj_temp2){instance_destroy();}
-	        //with(obj_after_combat_ork_force){instance_destroy();}this does not exist? also used below with out error
-	        instance_create(x,y,obj_temp2);
+	        var planet_coords = [x,y];
 	        with(obj_en_fleet){
+	        	//checks if there is already an inquis ship investigating planet
 	            if (owner=4){
-	                var near=instance_nearest(action_x,action_y,obj_temp2);
-	                if (point_distance(action_x,action_y,near.x,near.y)<2) and (string_count("investigate_dead",trade_goods)>0) then instance_create(action_x,action_y,obj_after_combat_ork_force);
+	                if (point_distance(action_x,action_y,planet_coords[0],planet_coords[1])<2 && 
+	                	string_count("investigate_dead",trade_goods)>0){
+	                		stop=true;
+	            		}
 	            }
 	        }
-	        //if (instance_exists(obj_after_combat_ork_force)) then stop=true;
-	        with(obj_temp2){instance_destroy();}
-	       // with(obj_after_combat_ork_force){instance_destroy();}
-        
+        	
+
 	        if (stop=false){
-	            var plap,old_x,old_y,flee;plap=0;old_x=x;old_y=y;flee=0;
-	            x-=20000;y-=20000;
-            
-	            repeat(choose(2,3)){
-	                plap=instance_nearest(old_x,old_y,obj_star);
-	                with(plap){x-=20000;y-=20000;}
-	            }
-	            plap=instance_nearest(old_x,old_y,obj_star);
-	            flee=instance_create(plap.x,plap.y-24,obj_en_fleet);
-	            flee.owner=4;flee.frigate_number=1;
-	            flee.action_x=old_x;flee.action_y=old_y;
-	            flee.sprite_index=spr_fleet_inquisition;
-	            flee.image_index=0;
-            
-	            var roll;roll=floor(random(100))+1;
-	            if (roll<=60) then flee.trade_goods="Inqis1";
-	            if (roll<=70) and (roll>60) then flee.trade_goods="Inqis2";
-	            if (roll<=80) and (roll>70) then flee.trade_goods="Inqis3";
-	            if (roll<=90) and (roll>80) then flee.trade_goods="Inqis4";
-	            if (roll<=100) and (roll>90) then flee.trade_goods="Inqis5";
-	            flee.trade_goods+="|investigate_dead|";
-	            flee.alarm[4]=1;
+	            var plap=0,old_x=x,old_y=y,flee=0;
+            	var _current_planet_name = name;
+            	var launch_planet, launch_point_found=false;
+            	with (obj_star){
+            		if (name!=_current_planet_name && (owner=eFACTION.Imperium || owner=eFACTION.Mechanicus)){
+            			if (point_in_rectangle(x,y, old_x-1000, old_y-1000,old_x+1000, old_y+1000)){
+            				launch_planet=self;
+            				launch_point_found=true;
+            				break;
+            			}
+            		}
+            	}
+            	if (launch_point_found){
+		            flee=instance_create(launch_planet.x,launch_planet.y-24,obj_en_fleet);
+		            flee.owner=4;
+		            flee.frigate_number=1;
+		            flee.action_x=x;
+		            flee.action_y=y;
+		            flee.sprite_index=spr_fleet_inquisition;
+		            flee.image_index=0;
+	            
+		            var roll=floor(random(100))+1;
+		            if (roll<=60) then flee.trade_goods="Inqis1";
+		            if (roll<=70) and (roll>60) then flee.trade_goods="Inqis2";
+		            if (roll<=80) and (roll>70) then flee.trade_goods="Inqis3";
+		            if (roll<=90) and (roll>80) then flee.trade_goods="Inqis4";
+		            if (roll<=100) and (roll>90) then flee.trade_goods="Inqis5";
+		            flee.trade_goods+="|investigate_dead|";
+		            flee.alarm[4]=1;
+            	}
 	        }
 	    }
     
 	}
-
-	with(obj_star){repeat(50){if (x<-15000){x+=20000;y+=20000;}}}
-	// This is all executed by the star object
-
 
 	var run=0, stop;
 	var rand=0;

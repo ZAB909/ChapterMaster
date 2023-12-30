@@ -111,7 +111,7 @@ function scr_apothecary_ship() {
         
             if (maybe=2){
             	if (unit.armour()!="Dreadnought") and (unit.hp()<unit.max_health()){
-	                 if (ship_apoth>0){
+	                if (ship_apoth>0){
 						unit.healing(true);
 						ship_apoth--;                           
 	                } else {

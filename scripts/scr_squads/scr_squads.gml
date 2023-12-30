@@ -265,6 +265,10 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 			class = type_data[$ "class"]
 		}
 	}
+	static change_type = function(new_type){
+		type=new_type;
+		add_type_data(obj_ini.squad_types[$ type].type_data)
+	}
 	// for creating a new sergeant from existing squad members
 	static new_sergeant = function(veteran=false){
 		var exp_unit;
