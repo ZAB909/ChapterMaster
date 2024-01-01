@@ -482,14 +482,13 @@ function scr_initialize_custom() {
 	millenium=41;
 
 	var company=0;
-	var chaap=1,whirlwind;
+	var chaap=1,whirlwind=4;
 	var second=100,third=100,fourth=100,fifth=100,sixth=100,seventh=100,eighth=100,ninth=100,tenth=100;
 	var assault=20,siege=0,temp1=0, intolerant=0;
 	var k, i, v;k=0;i=0;v=0;
 	var techs=20,epistolary=4,apothecary=6,codiciery=6,lexicanum=10,terminator=10,veteran=89;
 	devastator=20;
 
-	whirlwind=4;
 
 	specials=0;firsts=0;seconds=0;thirds=0;fourths=0;fifths=0;
 	sixths=0;sevenths=0;eighths=0;ninths=0;tenths=0;
@@ -559,30 +558,6 @@ function scr_initialize_custom() {
 	        if (bonus_marines>=5) and (ninth>0){bonus_marines-=5;second+=5;}
 	        if (bonus_marines>=5) and (tenth>0){bonus_marines-=5;second+=5;}
 	    }*/
-	}
-	
-	switch(obj_creation.doctrine){
-		case "Generalist":
-		 terminator=20
-		 veteran=80
-		break;
-		case "Breakthrough":
-	devastator=30;
-	assault=10;
-	terminator=30;
-	veteran=70;
-		break;
-	case "Shock Assault":
-	assault=30;
-	devastator=10;
-	terminator=10;
-	veteran=90;
-		break;
-	case "Irregular Warfare":
-	assault=10;
-	devastator=10;
-	
-	break;
 	}
 	
 	if (obj_creation.custom!=0){
@@ -1216,7 +1191,7 @@ function scr_initialize_custom() {
 			      ]
 			      )
 	}
-	if (global.chapter_name == "White Scars") or (obj_ini.progenitor==2){
+	if (global.chapter_name == "White Scars") or (obj_ini.progenitor==2) or (obj_creation.doctrine="Shock Assault"){
 		variable_struct_set(st , "bikers",[
 		[role[100][8], {"max":9,"min":4, "loadout":{ //tactical marine
 			"required":{
@@ -2513,7 +2488,7 @@ function scr_initialize_custom() {
 	        }
 	        if (company=9) or (global.chapter_name="Iron Hands"){
 	            var predy;predy=5;
-	            if (global.chapter_name="Iron Hands") then predy=2;
+	            if (global.chapter_name="Iron Hands") or (obj_creation.doctrine="Breakthrough") then predy=2;
 
 	            repeat(predy){v+=1;man_size+=10;
 	                veh_race[company,v]=1;veh_loc[company,v]=home_name;veh_role[company,v]="Predator";
@@ -2522,6 +2497,33 @@ function scr_initialize_custom() {
 	                veh_hp[company,v]=100;veh_chaos[company,v]=0;veh_pilots[company,v]=0;veh_lid[company,v]=0;
 	            }
 	        }
+	switch(obj_creation.doctrine){
+		case "Generalist":
+		 terminator=20;
+		 veteran=80;
+		 //predy+=1;
+		 
+		break;
+		case "Breakthrough":
+		devastator=30;
+		assault=10;
+		terminator=30;
+		veteran=70;
+		//rhinoy+=9;
+		break;
+		case "Shock Assault":
+		assault=30;
+		devastator=10;
+		terminator=10;
+		veteran=90;
+		//rhinoy-=1
+		break;
+		case "Irregular Warfare":
+		
+		
+		
+		break;
+	}
 	        man_size+=k;
 	    }
 
