@@ -992,7 +992,8 @@ function scr_initialize_custom() {
 				}}],
 				["type_data" , {"display_data":$"{role[100,4]} Assault {squad_name}"}]
 			],
-			"veteran_squad": [
+			
+			"sternguard_veteran_squad": [
 				[role[100][3], {"max":9,"min":4, "loadout":{//tactical marine
 					"required":{
 						"wep1":[wep1[100,3],4],
@@ -1000,8 +1001,8 @@ function scr_initialize_custom() {
 					},
 					"option" :{
 						"wep1":[
-							["Chainsword",2],
-							[["Power Sword", "Power Axe", "Lightning Claw"],4],
+							["Chainsword",4],
+							[["Power Sword", "Power Axe",],2],
 							[["Chainfist", "Power Fist"],1],
 						],
 						"wep2":[
@@ -1014,7 +1015,33 @@ function scr_initialize_custom() {
 				}}],		//veterans
 
 				[role[100][19], {"max":1,"min":1}],
-				["type_data" , {"display_data":$"{role[100,3]} {squad_name}"}]
+				["type_data" , {"display_data":$"Sternguard {role[100,3]} {squad_name}"}]
+			],
+						"vanguard_veteran_squad": [
+				[role[100][3], {"max":9,"min":4, "loadout":{//tactical marine
+					"required":{
+						"wep1":[wep1[100,3],4],
+						"wep2":["Bolt Pistol",4],
+						"mobi":["Jump Pack","max"]
+					},
+					"option" :{
+						"wep1":[
+							[["Power Sword","Power Axe","Lightning Claw"],4],
+							[["Thunder Hammer","Lightning Claw","Power Fist"],1],
+						],
+						"wep2":[
+							[["Flamer", "Plasma Pistol"],2],
+							[["Storm Shield"], 4],
+						]
+					} 
+				}}],		//veterans
+
+				[role[100][19], {"max":1,"min":1, "loadout":{
+					"required":{
+						"mobi":["Jump Pack",1]
+					}
+				}}],
+				["type_data" , {"display_data":$"Vanguard {role[100,3]} {squad_name}"}]
 			],
 			"devestator_squad": [
 				[role[100][9], {"max":9,"min":4,"loadout":{//devestator
