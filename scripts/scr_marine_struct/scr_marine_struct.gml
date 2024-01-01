@@ -357,7 +357,14 @@ global.trait_list = {
 		technology:[2,2,"max"],
 		flavour_text:"{0} is a fast learner picking up new skills with ease",
 		effect:"learns new skills more easily",
-	}
+	},
+	"brawler":{
+		display_name:"Brawler",
+		strength:[2,2,"max"],
+		constitution:[2,2,"max"],
+		flavour_text:"{0} is drawn to fighting and scraps often using little more than there fists",
+		effect:"bonus to fist type weaponry",
+	}	
 }
 global.base_stats = { //tempory stats subject to change by anyone that wishes to try their luck
 	"chapter_master":{
@@ -725,6 +732,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
    		}
 	  	if (from_armoury && new_mobility_item!=""){
 	  		if (scr_item_count(new_mobility_item, quality)>0){
+	  			var exp_require=gear_weapon_data("weapon",new_armour,"exp",false,quality);
+	  			if (exp_require>experience()){
+	  				return "exp_low";
+	  			} 	  				  			
 		   		quality=scr_add_item(new_mobility_item,-1, quality);
 		   		quality = quality!=undefined? quality:"standard";
 		    } else {
@@ -782,6 +793,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	   		
 	  	if (from_armoury && new_armour!=""){
 	  		if (scr_item_count(new_armour,quality)>0){
+	  			var exp_require=gear_weapon_data("weapon",new_armour,"exp",false,quality);
+	  			if (exp_require>experience()){
+	  				return "exp_low";
+	  			} 	  			
 		   		quality=scr_add_item(new_armour,-1,quality);
 		   		quality = quality!=undefined? quality:"standard";
 		    } else {
@@ -795,7 +810,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 	    obj_ini.armour[company][marine_number] = new_armour;
 	    armour_quality=quality;
-	    if (armour=="Dreadnought"){
+	    if (armour()=="Dreadnought"){
 	    	obj_ini.age[company][marine_number]=floor(age());
 	    	unit.update_gear("");
 	    	unit.update_mobility_item("");
@@ -997,6 +1012,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			var astartes_trait_dist = [
 				["very_hard_to_kill", [149,148]],
 				["scholar", [99,98]],
+				["brawler", [99,98],{"chapter_name":["Space Wolves",[10,9]]}],
 				["brute", [99,98]],
 				["charismatic", [99,98]],
 				["skeptic", [99,98]],
@@ -1124,7 +1140,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	};	//get race
 
 	static add_bionics = function(area="none", bionic_quality="standard", from_armoury=true){
-		if (from_armoury && scr_item_count(new_gear)<1){
+		if (from_armoury && scr_item_count(new_gear,bionic_quality)<1){
 			return "no bionics";
 		}
 		var new_bionic_pos, part, new_bionic = {quality :bionic_quality};
@@ -1207,13 +1223,17 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	 	}
 	  	if (from_armoury) and (new_gear!=""){
 	  		if (scr_item_count(new_gear,quality)>0){
+	  			var exp_require=gear_weapon_data("gear",new_gear,"exp",false,quality);
+	  			if (exp_require>experience()){
+	  				return "exp_low";
+	  			}
 		   		quality=scr_add_item(new_gear,-1, quality);
 		   		quality = quality!=undefined? quality:"standard";
 		    } else {
 		    	return "no_items";
 		    }
 		} else {
-			quality= quality=="any"?"standard":quality;
+			quality = quality=="any"?"standard":quality;
 		}
 		if (change_gear != "" && to_armoury){
 			scr_add_item(change_gear,1,gear_quality);
@@ -1252,7 +1272,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	}
 
 	weapon_one_data={quality:"standard"};
-
   weapon_one_quality = "standard";
   static update_weapon_one = function(new_weapon,from_armoury=true, to_armoury=true,quality="any"){
   	var change_wep = weapon_one();
@@ -1281,9 +1300,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
         if (!weapon_found){
         	return "no_items";
         } 
-    }   	
+    } 	
   	if (from_armoury) and (new_weapon!=""){
   		if (scr_item_count(new_weapon, quality)>0){
+  			var exp_require=gear_weapon_data("weapon",new_weapon,"exp",false,quality);
+  			if (exp_require>experience()){
+  				return "exp_low";
+  			}  			
 	   		quality=scr_add_item(new_weapon,-1,quality);
 	   		quality = quality!=undefined? quality:"standard";
 	    } else {
@@ -1313,6 +1336,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	   	}     	
 	  	if (from_armoury) and (new_weapon!=""){
 	  		if (scr_item_count(new_weapon,quality)>0){
+	  			var exp_require=gear_weapon_data("weapon",new_weapon,"exp",false,quality);
+	  			if (exp_require>experience()){
+	  				return "exp_low";
+	  			} 	  			
 		   		quality=scr_add_item(new_weapon,-1,quality);
 		   		quality = quality!=undefined? quality:"standard";
 		    } else {
@@ -1522,7 +1549,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					} else {
 						var highest = _wep1.attack>_wep2.attack ? _wep1 :_wep2;
 						var lowest = _wep1.attack<=_wep2.attack ? _wep1 :_wep2;
-						if (highest.has_tags(["pistol","flame"]) && !lowest.has_tags(["pistol","flame"])){
+						if (!highest.has_tags(["pistol","flame"])){
+							primary_weapon = highest;
+							secondary=lowest;
+						}else if (!lowest.has_tags(["pistol","flame"])){
 							primary_weapon = lowest;
 							secondary=highest;
 						} else {
@@ -1564,6 +1594,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				if (has_trait("feet_floor") && mobility_item()!=""){
 					melee_att*=0.9;
 					explanation_string+=$"{global.trait_list.feet_floor.display_name}:X0.9#";
+				}
+				if (primary_weapon.has_tag("fist") && has_trait("brawler")){
+					melee_att*=1.1;
+					explanation_string+=$"{global.trait_list.brawler.display_name}:X1.1#";
 				}
 
 			}
@@ -2007,11 +2041,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	static display_wepaons = scr_ui_display_weapons;
 	static unit_profile_text = scr_unit_detail_text;
 	static unit_equipment_data= function(){
-		var armour_data=gear_weapon_data("armour",armour(),"all",false,"standard");
-		var gear_data=gear_weapon_data("gear",gear(),"all",false,"standard");
-		var mobility_data=gear_weapon_data("mobility",mobility_item(),"all",false,"standard");
-		var weapon_one_data=gear_weapon_data("weapon",weapon_one(),"all",false,"standard");
-		var weapon_two_data=gear_weapon_data("weapon",weapon_two(),"all",false,"standard");
+		var armour_data=get_armour_data()
+		var gear_data=get_gear_data()
+		var mobility_data=get_mobility_data()
+		var weapon_one_data=get_weapon_one_data()
+		var weapon_two_data=get_weapon_two_data()
 		var equip_data = {
 				armour_data:armour_data,
 				gear_data:gear_data,

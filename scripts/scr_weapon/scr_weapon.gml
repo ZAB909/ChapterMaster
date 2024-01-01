@@ -408,7 +408,7 @@ global.weapons={
         "range": 1,
         "spli": 1,
         "arp": 1,
-        "tags":["power"],
+        "tags":["power","fist"],
     },
     "Lightning Claw": {
         "attack": {
@@ -423,7 +423,7 @@ global.weapons={
         "range": 1,
         "spli": 1,
         "arp": 1,
-        "tags":["power","dual"],
+        "tags":["power","dual","fist"],
     },
     "Dreadnought Lightning Claw": {
         "attack": {
@@ -443,7 +443,7 @@ global.weapons={
         "range": 1,
         "spli": 1,
         "arp": 0,
-        "tags":["power", "vehicle","dual"],
+        "tags":["power", "vehicle","dual","fist"],
     },
     "Thunder Hammer": {
         "attack": {
@@ -464,6 +464,7 @@ global.weapons={
         "spli": 1,
         "arp": 1,
         "tags":["power", "hammer"],
+        "req_exp":90,
     },
     "Tome":{
         "attack": {
@@ -504,26 +505,6 @@ global.weapons={
         "spli": 1,
         "arp": 1,
          "tags":["arcane", "sword"],
-    },
-    "Master Crafted Thunder Hammer": {
-        "attack": {
-            "standard": 560,
-            "master_crafted": 620,
-            "artifact": 680
-        },
-        "melee_mod": {
-            "standard": 1,
-            "master_crafted": 1,
-            "artifact": 1
-        },
-        "description": "The Master Crafted Thunder Hammer incorporates superior craftsmanship, advanced technology, and special modifications, making it more potent and effective in combat. It possesses all the qualities of a standard Thunder Hammer but with enhanced performance and additional features.",
-        "melee_hands": 1,
-        "ranged_hands": 0,
-        "ammo": 0,
-        "range": 1,
-        "spli": 1,
-        "arp": 1,
-        "tags":["power", "hammer"],
     },
     "Bolt Pistol": {
         "attack": {
@@ -627,7 +608,8 @@ global.weapons={
         "ammo": 6,
         "range": 2.1,
         "spli": 1,
-        "arp": -1
+        "arp": -1,
+        "tags":["dreadnought","flame"]
     },
     "Dreadnought Power Claw":{
         "attack": {
@@ -639,7 +621,8 @@ global.weapons={
         "melee_hands": 5, 
         "range": 1,
         "spli": 1,
-        "arp": 1   
+        "arp": 1,
+        "tags":["dreadnought"]  
     },
     "Close Combat Weapon":{
         "attack": {
@@ -651,7 +634,8 @@ global.weapons={
         "melee_hands": 5, 
         "range": 1,
         "spli": 1,
-        "arp": 1   
+        "arp": 1,
+        "tags":["dreadnought","fist"]
     },       
     "Inferno Cannon": {
         "attack": {
@@ -666,7 +650,7 @@ global.weapons={
         "range": 3.1,
         "spli": 1,
         "arp": -1,
-        "tags":["vehicle","flame"]
+        "tags":["vehicle","flame","dreadnought"]
     },
     "Meltagun": {
         "attack": {
@@ -710,7 +694,7 @@ global.weapons={
         "range": 4.1,
         "spli": 1,
         "arp": 1,
-        "tags":["melta","heavy_ranged"]
+        "tags":["melta","heavy_ranged", "dreadnought"]
     },
     "Plasma Pistol": {
         "attack": {
@@ -813,7 +797,7 @@ global.weapons={
         "range": 12,
         "spli": 1,
         "arp": 0,
-        "tags":["heavy_ranged"]
+        "tags":["heavy_ranged","dreadnought"]
     },
     "Autocannon": {
         "attack": {
@@ -828,7 +812,7 @@ global.weapons={
         "range": 18,
         "spli": 1,
         "arp": 0,
-        "tags":["heavy_ranged"]
+        "tags":["heavy_ranged","dreadnought"]
     },
     "Missile Launcher": {
         "attack": {
@@ -843,7 +827,7 @@ global.weapons={
         "range": 24,
         "spli": 1,
         "arp": 0,
-        "tags":["heavy_ranged"]
+        "tags":["heavy_ranged","dreadnought"]
     },
     "Lascannon": {
         "attack": {
@@ -915,7 +899,7 @@ global.weapons={
         "range": 16,
         "spli": 1,
         "arp": 1,
-        "tags":["vehicle"]
+        "tags":["heavy_ranged","vehicle","dreadnought"]
     },
     "Twin Linked Lascannon": {
         "attack": {
@@ -930,7 +914,7 @@ global.weapons={
         "range": 20,
         "spli": 0,
         "arp": 1,
-        "tags":["heavy_ranged"]
+        "tags":["heavy_ranged","vehicle","dreadnought"]
     },
     "Lascannons": {
         "attack": {
@@ -945,7 +929,7 @@ global.weapons={
         "range": 20,
         "spli": 0,
         "arp": 1,
-        "tags":["heavy_ranged"]
+        "tags":["heavy_ranged","vehicle","dreadnought"]
     },
     "Heavy Bolter": {
         "attack": {
@@ -1180,8 +1164,22 @@ global.weapons={
         "ammo": 12,
         "range": 2.1,
         "spli": 1,
-        "arp": -1
+        "arp": -1,
+        "tags":["flame", "vehicle","sponson"]
     },
+"Twin Linked Bolters": {
+        "attack": {
+            "standard": 80,
+            "master_crafted": 140,
+            "artifact": 180
+        },
+        "description": "A Twin-linked Bolter consists of two Bolter weapons mounted side by side, typically on a vehicle or a special weapon platform.",
+        "melee_hands": 1,
+        "ranged_hands": 2,
+        "ammo": 30,
+        "range": 12,
+        "spli": 1,
+    },        
     "Twin Linked Multi-Melta Sponsons": {
         "attack": {
             "standard": 450,
@@ -1366,7 +1364,7 @@ global.gear = {
       "melee_hands":2,
       "ranged_hands":2,
       "description": "The toughest and most powerful armour designed by humanity. Only the most veteran of Astartes are allowed to wear these.",
-       "tags":["teminator"],
+       "tags":["terminator"],
     },
     "Dreadnought": {
       "armour_value": {
@@ -1738,8 +1736,8 @@ global.gear = {
 
 function equipment_struct(item_data, core_type,quality="none") constructor{ 
     //This could be done with 2d arrays [[],[]]
-    var names = ["hp_mod", "description","damage_resistance_mod", "ranged_mod", "melee_mod","armour_value" ,"attack","melee_hands","ranged_hands","ammo","range","spli","arp","special_description","abbreviation","tags","name","second_profiles"];
-    var defaults = [0,"",0,0,0,0,0,0,0,0,0,0,0,"","",[],"",[]];
+    var names = ["hp_mod", "description","damage_resistance_mod", "ranged_mod", "melee_mod","armour_value" ,"attack","melee_hands","ranged_hands","ammo","range","spli","arp","special_description","abbreviation","tags","name","second_profiles","req_exp"];
+    var defaults = [0,"",0,0,0,0,0,0,0,0,0,0,0,"","",[],"",[],0];
     type = core_type;
     for (var i=0;i<array_length(names);i++){
         if (struct_exists(item_data,names[i])){
@@ -1801,10 +1799,13 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
         }
         if (ranged_hands!=0){
             spe_desc += $"ranged carry {-1*ranged_hands},#"
-        } 
+        }
+        if (req_exp>0){
+            spe_desc += $"requires {req_exp} exp,#"
+        }
         if (array_length(tags)>0){
-            spe_desc += $"string(tags),#"
-        }    
+            spe_desc += $"[{string(tags)}],#"
+        }  
         return  spe_desc
     }
     static has_tag =  function(tag){
@@ -1945,75 +1946,11 @@ function quality_string_conversion(quality){
     } else {return "";}
 }
 
-function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, is_dreadnought, nuum, information_wanted) {
-
-	// equipment_1: name of the first piece of equipment
-	// equipment_2: name of second piece of equipment if any
-	// base_group: the unit type defualts to true which means a marine (this needs work)
-	// unit_array_position: the position of the marine inside the tempory combat array
-	// is_dreadnought: is unit a dreadnought
-	// nuum: not a good god damn fucking clue
-	// information_wanted: what type of information do you want returned
-
-	// More spaghetti code.  This either calculates damage for battle blocks or generates a tooltip for the shop/management.
-	// it also gets informatino abou marine equipment for the chapter managment screens
-	// let it be known that this represents everything wrong with this code base
-
-	var i,wip,wip1,wip2,attack,arp,acr,att1,apa1,att2,apa2,acr1,acr2,melee_hands,ranged_hands,rang1,rang2,range,ammo1,ammo2,amm,spli1,spli2,spli,rending,thawep,descr,descr2,special_description,statt, weapon_data, weapon_ammo;
-	var disk1,rending1,spe_descr1;
-	i=0;wip1="";wip2="";wip="";thawep="";descr="";descr2="";special_description="";spe_descr1="";statt=0;rending=0;disk1="";rending1=0;
-	melee_hands=0;ranged_hands=0;
-	range=0;attack=0;arp=0;acr=0;
-	att1=0;apa1=0;att2=0;
-	apa2=0;acr1=0;acr2=0;
-	rang1=0;rang2=0;
-	spli=0;spli1=0;spli2=0;
-	ammo1=-1;ammo2=-1;amm=-1;
-
-
-	thawep=equipment_1;
-
-	obj_controller.temp[9000]="";
+/*
 
 	repeat(2){
-	    i+=1;amm=-1;spli=0;
-	    var emor;emor=0;
-
-	    if (information_wanted="description") or (information_wanted="description_long"){
-	        if (i=1) then thawep=equipment_2;
-	        if (i=2) then thawep=equipment_1;
-	        if (i=2){wip1=thawep;}
-	        if (i=1){wip2=equipment_2;}
-	    }
-	    if (information_wanted!="description") and (information_wanted!="description_long"){
-	        if (i=1) then thawep=equipment_1;
-	        if (i=2) then thawep=equipment_2;
-	        if (i=1){wip1=thawep;}
-	        if (i=2){wip2=equipment_2;}
-	    }
-
-	    if (string_count("&",thawep)>0) or (string_count("|",thawep)>0){
-	        // Artifact Armour
-	        var arti_armour;
-	        arti_armour=false;
-
 	        // Artifact weapons
 	        if (arti_armour=false){
-	            if (string_count("Bolter",thawep)>0){
-	                attack=65;arp=0;range=12;ranged_hands+=2;amm=15;spli=1;
-	                if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
-	            }
-	            if (struct_exists(global.weapons, thawep)){
-	            	weapon_data = global.weapons[$ thawep];
-	            	attack = weapon_data[$ attack][$ standard];
-	            	arp = weapon_data[$ arp];
-	            	range = weapon_data[$ range];
-	            	melee_hands += weapon_data[$ melee_hands];
-	            	ranged_hands += weapon_data[$ ranged_hands];
-	            	spli = weapon_data[$ spli];
-	            	special_description = weapon_data[$ special_description];
-	            	weapon_ammo = weapon_data[$ ammo];
-	            }
 
 	            if (string_count("DUB",thawep)>0){attack=floor(attack*1.5);melee_hands+=1;ranged_hands+=1;spli=1;}
 	            if (string_count("Dae",thawep)>0){attack=floor(attack*1.5);amm=-1;}
@@ -2024,167 +1961,8 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 	            if (string_count("MNR",thawep)>0){attack=floor(attack*0.85);}
 	        }
 
-
-	        /*
-	        if (string_count("Power",targ.marine_armour[targ.men])>0) then targ.marine_ac[targ.men]=30;
-	        if (string_count("Artificer",targ.marine_armour[targ.men])>0){targ.marine_ac[targ.men]=37;targ.marine_attack[targ.men]+=0.1;}
-	        if (string_count("Terminator",targ.marine_armour[targ.men])>0){targ.marine_ac[targ.men]=42;targ.marine_ranged[targ.men]-=0.1;targ.marine_attack[targ.men]+=0.2;}
-	        if (string_count("Dreadnought",targ.marine_armour[targ.men])>0) then targ.marine_ac[targ.men]=44;
-	        */
-
 	    }
-
-        var gear_data;
-        if (i=1){
-            gear_data=gear_weapon_data("any",equipment_1,"all");
-        }
-
-	    if (thawep="Force Weapon"){
-	        attack=400;arp=1;range=1;melee_hands+=1;spli=1;
-	        descr="An advanced, psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.";
-	        if (information_wanted!="description") and (information_wanted!="description_long"){
-	        if (string_count("0",marine_powers[unit_array_position])>0){attack=400;arp=0;range=1;melee_hands+=1;spli=1;}
-	        if (string_count("0",marine_powers[unit_array_position])=0){thawep="Inactive Force Weapon";attack=30;arp=0;range=1;melee_hands+=1;}}
-	        // if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then melee_hands-=1;
-	    }
-	    if (thawep="Master Crafted Force Weapon"){
-	        attack=500;arp=1;range=1;melee_hands+=1;spli=1;
-	        descr="A more expertly crafted Force Weapon, the fine craftsmanship confers greater ease and control with disrupting matter.";
-	        if (information_wanted!="description") and (information_wanted!="description_long"){
-	        if (string_count("0",marine_powers[unit_array_position])>0){attack=480;arp=0;range=1;melee_hands+=1;spli=1;}
-	        if (string_count("0",marine_powers[unit_array_position])=0){thawep="Inactive Master Crafted Force Weapon";attack=30;arp=0;range=1;melee_hands+=1;}}
-	        // if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then melee_hands-=1;
-	    }
-
-	    if (thawep="Thunder Hammer"){attack=450;arp=1;range=1;melee_hands+=1;spli=1;
-	        descr="This weapon unleashes a massive, disruptive field on impact.  Only experienced marines can use Thunder Hammers.";}
-	    if (thawep="Master Crafted Thunder Hammer"){attack=560;arp=1;range=1;melee_hands+=1;spli=1;
-	        descr="The Master Crafted Thunder Hammer incorporates superior craftsmanship, advanced technology, and special modifications, making it more potent and effective in combat. It possesses all the qualities of a standard Thunder Hammer but with enhanced performance and additional features.";}
-    
-	    if (thawep="Bolt Pistol"){attack=30;arp=0;range=3.1;amm=18;
-
-	        descr="A smaller, more compact version of the venerable Boltgun.  Standard Godwyn pattern.";}
-	    if (thawep="Webber"){attack=35;arp=0;range=4.1;ranged_hands+=2;amm=5;spli=0;
-	        descr="The Webber is a close-range weapon that fires strands of sticky web-like substance. It is designed to ensnare and immobilize enemies, restricting their movement and rendering them vulnerable to further attacks. ";}
-	    if (thawep="Underslung Bolter"){attack=60;arp=0;range=10;amm=8;spli=1;}// Bursts
-            if (thawep="Stalker Pattern Bolter"){attack=100;arp=1;range=15;ranged_hands+=2;amm=20;spli=0;
-	        descr="The Stalker Bolter is a scoped long-range variant of the standard Bolter. Depending on the specific modifications made by the wielder, the Stalker Bolter can serve as a precision battle rifle or a high-powered sniper weapon.";}
-
-
-	    if (thawep="Bolter"){attack=50;arp=0;range=12;ranged_hands+=2;amm=16;spli=1;
-
-	        if (information_wanted!="description") and (information_wanted!="description_long"){
-	        if (string_count("Terminator",marine_armour[unit_array_position])>0) then melee_hands-=1;
-	        if (marine_armour[unit_array_position]="Tartaros") then melee_hands-=1;}
-	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
-	        descr="A standard Godwyn Pattern Bolter.  This blessed weapon is used by most Adeptus Astartes.";}// Bursts
-	    if (thawep="Master Crafted Combiflamer"){attack=200;arp=1;range=12;ranged_hands+=2;amm=15;spli=1;
-	        descr="The Master Crafted Combiflamer incorporates superior craftsmanship, advanced modifications, and enhancements compared to its standard counterpart. ";}// Bursts
-	    if (thawep="Combiflamer"){attack=100;arp=1;range=10;ranged_hands+=2;amm=15;spli=1;
-	        descr="A Boltgun with a one-shot Flamer strapped to the side.  It is useful for close quarters fighting.";}// Bursts
-	    if (thawep="Twin Linked Bolters"){attack=70;arp=0;range=12;ranged_hands+=2;amm=30;spli=1;
-	        descr="A Twin-linked Bolter consists of two Bolter weapons mounted side by side, typically on a vehicle or a special weapon platform.";}// Bursts
-
-	    if (thawep="Heavy Bolter"){attack=120;arp=0;range=16;ranged_hands+=2;melee_hands+=1;amm=20;spli=1;
-	        descr="An enormous Boltgun.This weapon can fire a hail of powerful bolts at the enemy.";}
-	    if (thawep="Master Crafted Heavy Bolter"){attack=220;arp=1;range=16;ranged_hands+=2;amm=25;spli=1;
-	        descr="A Master Crafted Heavy Bolter incorporates superior craftsmanship, advanced modifications, and enhancements compared to its standard counterpart";}
-	    if (thawep="Storm Bolter"){attack=80;arp=0;range=10;ranged_hands+=2;amm=10;spli=1;
-	        if (information_wanted!="description") and (information_wanted!="description_long"){
-	        if (string_count("Terminator",marine_armour[unit_array_position])>0) then melee_hands-=1;
-	        if (marine_armour[unit_array_position]="Tartaros") then melee_hands-=1;}
-	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
-	        descr="Compact, and double barreled, this bolt weapon is inaccurate but grants an enormous amount of firepower.";}
-	    if (thawep="Flamer"){attack=350;arp=-1;range=2.1;ranged_hands+=2;amm=4;spli=1;
-	        if (information_wanted!="description") and (information_wanted!="description_long"){
-	        if (string_count("Terminator",marine_armour[unit_array_position])>0) then melee_hands-=1;
-	        if (marine_armour[unit_array_position]="Tartaros") then melee_hands-=1;
-	        // if (obj_ncombat.enemy=3) or (obj_ncombat.enemy=13) then attack=40;
-	        }
-	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
-	        descr="Blackened at the tip, this weapon unleashes a torrent of burning promethium- all the better to cleanse sin and impurity with.";}
-	    if (thawep="Underslung Flamer"){attack=200;arp=-1;range=2.1;amm=4;spli=1;
-	        // if (obj_ncombat.enemy=3) or (obj_ncombat.enemy=13) then attack=35;
-	    }
-	    if (thawep="Incinerator"){attack=200;arp=-1;range=2.1;ranged_hands+=2;amm=4;spli=1;
-	        if (information_wanted!="description") and (information_wanted!="description_long"){
-	        if (string_count("Terminator",marine_armour[unit_array_position])>0) then melee_hands-=1;
-	        if (marine_armour[unit_array_position]="Tartaros") then melee_hands-=1;
-	        if (obj_ncombat.enemy=10) and (obj_ncombat.threat=7) then attack=300;
-	        }
-	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
-	        descr="This flamer weapon includes special promethium and sacred oils.  It is particularly effective against Daemons and their ilk.";}
-	    if (thawep="Heavy Flamer"){attack=500;arp=-1;range=2;ranged_hands+=2;melee_hands+=1;amm=8;spli=1;
-	        if (information_wanted!="description") and (information_wanted!="description_long"){
-	        // if (obj_ncombat.enemy=3) or (obj_ncombat.enemy=13) then attack=60;
-	        }
-	        descr="A much larger and bulkier flamer.  Few armies carry them on hand, instead choosing to mount them to vehicles.";}
-	    if (thawep="CCW Heavy Flamer"){attack=250;arp=-1;range=2.1;amm=6;spli=1;
-	        // if (obj_ncombat.enemy=3) or (obj_ncombat.enemy=13) then attack=60;
-	    }
-	    if (thawep="Inferno Cannon"){attack=400;arp=-1;range=3.1;spli=1;
-	        if (information_wanted!="description") and (information_wanted!="description_long"){
-	        // if (obj_ncombat.enemy=3) or (obj_ncombat.enemy=13) then attack=90;
-	        }
-	        descr="A huge, vehicle mounted flame weapon that fires with explosive force.  The resevoir is liable to explode.";}
-
-
-	    if (thawep="Meltagun"){attack=250;arp=1;range=2.1;ranged_hands+=2;amm=4;
-	        descr="A relatively quiet weapon, this gun vaporizes flesh and armour alike.  Due to heat dissipation it has only a short range.";}
-	        if (thawep="Master Crafted Meltagun"){attack=250;arp=1;range=2.1;ranged_hands+=2;amm=4;
-	        descr="A Master Crafted Meltagun incorporates superior craftsmanship, advanced modifications, and enhancements compared to its standard counterpart.";}
-	    if (thawep="Multi-Melta"){attack=500;arp=1;range=4.1;ranged_hands+=2;melee_hands+=1;amm=8;spli=1;
-	        descr="Though bearing longer range than the Meltagun, this weapon's great size usually restricts it to vehicles.";}
-	    if (thawep="Plasma Pistol"){attack=90;arp=1;range=3.1;melee_hands+=1;
-	        descr="A smaller version of the plasma gun, this dangerous-to-use weapon has exceptional armour-piercing capabilities.";}
-	    if (thawep="Master Crafted Plasma Pistol"){attack=120;arp=0;range=3.1;melee_hands+=1;
-	        descr="A Master Crafted Plasma Pistol incorporates superior craftsmanship, advanced modifications, and enhancements compared to its standard counterpart.";}
-	    if (thawep="Infernus Pistol"){attack=100;arp=1;range=2.1;melee_hands+=1;amm=4;
-	        descr="The Infernus Pistol is a compact and portable flamethrower-style weapon. It unleashes a torrent of fiery promethium, which engulfs its targets in flames.";}
-	    if (thawep="Plasma Gun"){attack=150;arp=1;range=12;ranged_hands+=2;spli=1;
-	        descr="A 2-handed firearm that launches bolts of plasma.  They are considered both sacred and dangerous, occasionally overheating.";}
-	    if (thawep="Master Crafted Plasma Gun"){attack=175;arp=1;range=14;ranged_hands+=2;spli=1;
-	        descr="A Master Crafted Plasma Gun incorporates superior craftsmanship, advanced modifications, and enhancements compared to its standard counterpart.";}
-
-	    if (thawep="Sniper Rifle"){attack=80;arp=0;range=18;ranged_hands+=2;melee_hands+=1;amm=20;
-
-	        descr="Fires a solid shell and boasts powerful telescopic sights, allowing the user to target enemy weak points and distant foes.";}
-	    if (thawep="Assault Cannon"){attack=240;arp=0;range=12;ranged_hands+=2;amm=5;spli=1;
-	        descr="A heavy, rotary auto-cannon frequently used by Dreadnoughts and Terminators.  Has an incredible rate of fire.";
-	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
-	    }
-	    if (thawep="Autocannon"){attack=180;arp=0;range=18;ranged_hands+=2;amm=25;spli=1;
-	        descr="A rapid-firing weapon able to use a wide variety of ammunition, from mass-reactive explosive to solid shells.";
-	        if (obj_controller.menu=1) and ((string_count("Terminator",marine_armour[0])>0) or (marine_armour[0]="Tartaros")) then ranged_hands-=1;
-	    }
-	    if (thawep="Missile Launcher"){attack=250;arp=0;range=24;ranged_hands+=2;melee_hands+=1;amm=6;spli=1;
-	        descr="This heavy weapon is capable of firing either armour-piercing or fragmentation rockets.  Has low ammunition count.";}
-	    if (thawep="Lascannon"){attack=200;arp=1;range=24;ranged_hands+=2;melee_hands+=1;amm=8;spli=0;
-	        descr="A formidable laser weapon, this lascannon can pierce most vehicle or power armour from a tremendous range.";}
-
-	    if (thawep="Conversion Beam Projector"){attack=500;arp=1;range=20;ranged_hands+=1;amm=1;spli=1;
-	        descr="The Conversion Beam Projector is a heavy energy weapon that harnesses advanced technology to project a concentrated beam of destructive energy. It is capable of cutting through armour, vehicles, and even heavily fortified structures.";}
-	    if (thawep="Integrated Bolters"){attack=75;arp=1;range=8.1;amm=20;spli=1;
-	        descr="Integrated Bolters are a set of Bolter weapons that are integrated or built directly into the structure of the vehicle,armour or Dreadnought.";}
-	    if (thawep="Power Fists"){attack=425;arp=0;range=1;melee_hands+=2;spli=1;
-	        descr="While not quite as strong as two Power Fist, these artifacts allow the use of an additional, third weapon.";}
-
-
-	    if (thawep="Close Combat Weapon"){attack=250;arp=1;range=1;melee_hands+=1;spli=1;
-	        descr="While a variety of melee weapons are used by dreadnoughts, this power fist with flamer is the most common.";}
-
-	    if (thawep="Twin Linked Heavy Bolter"){attack=240;arp=1;range=16;amm=20;spli=1;
-	        descr="Twin-linked Heavy Bolters are an upgraded version of the standard Heavy Bolter weapon, which is known for its high rate of fire and effectiveness against infantry and light vehicles. ";}
-	    if (thawep="Twin Linked Lascannon"){attack=250;arp=1;range=20;amm=10;
-	        descr="Lascannons are powerful anti-armour weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armour. ";}
-	    if (thawep="Lascannons"){attack=300;arp=1;range=20;amm=5;
-	        descr="Lascannons are powerful anti-armour weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armour. ";}
-	    if (thawep="Heavy Bolters"){attack=320;arp=1;range=16;amm=10;spli=1;
-	        descr="The Heavy Bolter is a heavy weapon that fires larger and more powerful bolt shells compared to the standard Bolter.";}
-	    if (thawep="Whirlwind Missiles"){attack=400;arp=1;range=20;amm=6;spli=1;
-	        descr="The Whirlwind Missile Launcher is a vehicle-mounted artillery weapon that launches a barrage of powerful missiles at the enemy.";}
-
-					// Vehicle Upgrades
+	// Vehicle Upgrades
 			if (equipment_1="Armoured Ceramite"){statt=20;special_description="";emor=1;
 	        descr="Supplemental ceramite armour packages provide protection far beyond stock configurations.";}
 			if (equipment_1="Artificer Hull"){statt=20;special_description="";emor=1;
@@ -2263,171 +2041,5 @@ function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, i
 				if (thawep="Volkite Culverin Sponsons"){attack=320;arp=0;range=18;amm=25;spli=1;
 						descr="An advanced thermal weapon from a bygone era, Volkite Culverins are able to ignite entire formations of enemy forces. ";}
 
-	    if (base_group=false) and (obj_controller.stc_bonus[3]=2){
-	        if (attack>0) then attack=round(attack*1.05);
-	        // if (arp>0) then arp=round(arp*1.05);
-	    }
 
 
-	    if (information_wanted!="description") and (information_wanted!="description_long"){
-	        if (base_group!=false){if (string_count("Dreadnought",marine_armour[unit_array_position])>0) and (marine_mobi[unit_array_position]="") then amm=-1;}
-	        if (thawep="Whirlwind Missiles") then amm=6;
-
-	        if (rending1=1){
-	            var rend=choose(1,2,3,4,5,6);
-	            if (rend=6){
-	                if (attack>0) then attack=attack*2;
-	                // if (arm>0) then arp=arp*2;
-	            }
-	        }
-	        if (rang1=1){
-	            attack=marine_attack[unit_array_position][0];// arp=arp*marine_attack[unit_array_position];
-                var weapon = marine_attack[unit_array_position][3];
-	            if (marine_might[unit_array_position]>0){
-	                attack=attack*2;// arp=arp*2;
-	            }
-	            if (marine_spatial[unit_array_position]>0){
-	                attack=attack*1.75;// arp=arp*1.75;
-	            }
-	            if (marine_fiery[unit_array_position]>0){
-	                attack=attack*1.3;// arp=arp*1.3;
-	            }
-	        }
-	        if (rang1>1){
-	            attack=marine_ranged[unit_array_position][0];;
-                var weapon = marine_ranged[unit_array_position][3];
-	            // arp=arp*marine_ranged[unit_array_position];
-	        }
-	        if (obj_ncombat.melee=1) and (range=1){
-	            attack=round(attack*1.1);// arp=round(arp*1.1);
-	        }
-	        if (range=1){
-	            attack=round(attack*obj_ncombat.global_melee);
-	            // arp=round(arp*obj_ncombat.global_melee);
-	        }
-
-            thawep=weapon.name;
-            att2=attack;
-            apa2=arp;
-            rang2=range;
-            ammo2=amm;
-            spli2=spli;
-
-            att[b]+=att1;
-            apa[b]=apa1;
-            range[b]=rang1;
-            wep_num[b]+=1;
-            splash[b]=spli1;
-            wep[b]=thawep;
-            goody=1;
-	        // This is giving problems
-	        if (melee_hands=0) and (base_group=true) and (is_dreadnought=false) and (i=2){
-	            var attack;
-	            attack=obj_ncombat.global_attack*10;
-	            var b,goody,opn;b=0;goody=0;opn=0;
-	            repeat(30){b+=1;
-	                if (wep[b]="melee"){
-	                    goody=b;
-                        att[b]+=attack;
-                        range[b]=1;
-                        wep_num[b]+=1;
-                        splash[b]=0;
-                        ammo[b]=-1;
-	                }
-	                if (wep[b]="") and (opn=0) then opn=b;
-	                if (goody=0){
-	                    wep[opn]="melee";
-                        att[opn]+=attack;
-                        range[opn]=1;
-                        wep_num[opn]=1;
-                        splash[opn]=0;
-                        ammo[opn]=-1;
-	                }
-	            }
-	        }
-
-
-
-
-
-	    }
-
-
-	    obj_controller.temp[9000]+=string(thawep)+": "+string(melee_hands)+","+string(ranged_hands)+"|";
-	}
-
-	if (information_wanted!="description") and (information_wanted!="description_long"){
-	    var b,goody,found,stack;b=0;goody=0;found=0;stack=1;
-
-	    thawep=equipment_1;// 137 135 136 flip fix?
-
-
-	    if (nuum!="") then stack=0;
-
-
-	    repeat(60){b+=1;
-
-	        // show_message(string(goody));
-
-	        var canc;canc=false;
-	        if (rang1>1) and (marine_ranged[unit_array_position]=0){
-	             canc=true;
-                 if (floor(rang1)==rang1) then canc=false
-	        }
-            if (canc=true) then goody=1;
-
-	        if (goody=0){
-	            if (stack=1) and (wep[b]=thawep) and (goody=0){
-	                // if (thawep=wip1){
-	                    att[b]+=att1;
-                        apa[b]=apa1;
-                        range[b]=rang1;
-                        wep_num[b]+=1;
-                        splash[b]=spli1;
-                        wep[b]=thawep;
-                        goody=1;
-	                    // if (marine_type[unit_array_position]="Death Company") and (range[b]=1){att[b]+=att1;wep_num[b]+=1;wep_rnum[b]+=1;}
-	                    if (obj_ncombat.started=0) then ammo[b]=ammo1;
-	                // }
-	            }
-	            if (stack=0) and (obj_ncombat.started=0) and (wep[b]="") and (goody=0) and (wep_solo[b]=""){
-	                if (goody=0){
-	                    att[b]+=att1;
-                        apa[b]=apa1;
-                        range[b]=rang1;
-                        wep_num[b]+=1;
-                        splash[b]=spli1;
-                        wep[b]=thawep;
-                        goody=1;
-	                    // if (marine_type[unit_array_position]="Death Company") and (range[b]=1){att[b]+=att1;wep_num[b]+=1;wep_rnum[b]+=1;}
-	                    ammo[b]=ammo1;
-
-	                    var title=true;
-	                    if (unit_struct[unit_array_position].IsSpecialist("heads")) then title=false;
-	                    if (title=true) then wep_title[b]=string(marine_type[unit_array_position]);
-	                    wep_solo[b]=string(obj_ini.name[marine_co[unit_array_position],marine_id[unit_array_position]]);
-	                }
-	            }
-
-	            if (stack=0) and (obj_ncombat.started=1) and (wep[b]=thawep) and (wep_solo[b]=nuum) and (goody=0){
-	                att[b]+=att1;
-                    apa[b]=apa1;
-                    range[b]=rang1;
-                    wep_num[b]+=1;
-                    splash[b]=spli1;
-                    wep[b]=thawep;
-                    goody=1;
-	                // if (marine_type[unit_array_position]="Death Company") and (range[b]=1){att[b]+=att1;wep_num[b]+=1;wep_rnum[b]+=1;}
-
-	                var title=true;
-                    if (unit_struct[unit_array_position].IsSpecialist("heads")) then title=false;
-
-	                if (title=true) then wep_title[b]=string(marine_type[unit_array_position]);
-	                wep_solo[b]=string(obj_ini.name[marine_co[unit_array_position],marine_id[unit_array_position]]);
-	            }
-	        }
-	    }
-	}
-
-
-}

@@ -14,7 +14,7 @@ function scr_item_count(item_type, quality="any") {
 	   			von+=obj_ini.equipment_number[i];
 	   		} else {
 	   			for (var q=0;q<array_length(obj_ini.equipment_quality[i]);q++){
-	   				if (obj_ini.equipment_quality[i][q] == "quality") then von++;
+	   				if (obj_ini.equipment_quality[i][q] == quality) then von++;
 	   			}
 	   		}
 	   }

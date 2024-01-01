@@ -238,14 +238,15 @@ calculate_equipment_needs =  function (){
         if (rall=$"Venerable {obj_ini.role[100][6]}"){req_armour="";req_armour_num=0;req_wep1="";req_wep1_num=0;req_wep2="";req_wep2_num=0;}
 
 
-
+        var unit_armour;
+        var unit_wep_one;
         repeat(obj_controller.man_max){
             i+=1;
-
+            unit_armour = gear_weapon_data("armour",obj_controller.ma_armour[i],"all", sub_class=false, quality="standard");
+            unit_wep_one=gear_weapon_data("weapon",obj_controller.ma_wep1[i],"all", sub_class=false, quality="standard");
             if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1) and (obj_controller.ma_promote[i]=1) and (obj_controller.ma_exp[i]>=min_exp){
-                if (req_armour="Power Armour"){
-                    if (obj_controller.ma_armour[i]="MK3 Iron Armour") or (obj_controller.ma_armour[i]="MK4 Maximus") or (obj_controller.ma_armour[i]="MK5 Heresy") or (obj_controller.ma_armour[i]="MK6 Corvus") then have_armour_num+=1;
-                    if (obj_controller.ma_armour[i]="MK7 Aquila") or (obj_controller.ma_armour[i]="Power Armour") then have_armour_num+=1;
+                if (req_armour="Power Armour" && is_struct(unit_armour)){
+                    if(unit_armour.has_tag("power_armour")) then have_armour_num+=1;
                 }
                 if (req_armour="Terminator Armour"){if (obj_controller.ma_armour[i]="Terminator Armour") or (obj_controller.ma_armour[i]="Tartaros") then have_armour_num+=1;}
 
@@ -256,8 +257,8 @@ calculate_equipment_needs =  function (){
                 if (obj_controller.ma_gear[i]=req_gear) then have_gear_num+=1;
                 if (obj_controller.ma_mobi[i]=req_mobi) then have_mobi_num+=1;
 
-                if (req_wep1="Heavy Ranged"){
-                    if (obj_controller.ma_wep1[i]="Heavy Bolter") or (obj_controller.ma_wep1[i]="Lascannon") or (obj_controller.ma_wep1[i]="Missile Launcher") then have_wep1_num+=1;
+                if (req_wep1=="Heavy Ranged" && is_struct(unit_wep_one)){
+                   if (unit_wep_one.has_tag("heavy_ranged")) then have_wep1_num+=1;
                 }
             }
 

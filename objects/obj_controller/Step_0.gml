@@ -540,7 +540,7 @@ if (menu==1 && managing>0){
         }
     }
     if (is_struct(temp[120])){
-        var ach=0,damage_res=1,melee_attack,ranged_attack,armour_value=0;
+        var ach=0,damage_res=1,armour_value=0;
         // Checks if the marine is not hidden
         var unit = temp[120];
         if (!is_array(last_unit)){
@@ -548,8 +548,6 @@ if (menu==1 && managing>0){
         }
         if (unit.base_group != "none") && (last_unit[1]!=unit.marine_number){
             last_unit=[unit.company,unit.marine_number]
-            melee_attack=unit.melee_attack();
-            ranged_attack = unit.ranged_attack();
             marine_armour[0]=unit.armour();
             fix_right=0;
             equip_data = unit.unit_equipment_data();
@@ -558,7 +556,7 @@ if (menu==1 && managing>0){
             temp[100]="1";
             if (unit.race()!=1) then temp[100]=unit.race();
             
-            damage_res= unit.damage_resistance();
+            damage_res = unit.damage_resistance();
             
             var armour_tooltip = "";
             if (is_struct(equip_data.armour_data)){
@@ -571,7 +569,7 @@ if (menu==1 && managing>0){
             if (is_struct(equip_data.gear_data)){
                 temp[105]=equip_data.gear_data.special_description_gen();
             } else {
-                temp[105]=""
+                temp[105]="";
             }            
             //if (string_count("&",temp[104])>0) then temp[104]=clean_tags(temp[104]);
             // Mobility Item
@@ -579,17 +577,17 @@ if (menu==1 && managing>0){
             if (is_struct(equip_data.mobility_data)){
                 temp[107]=equip_data.mobility_data.special_description_gen();
             } else {
-                temp[107]=""
+                temp[107]="";
             } 
             if (is_struct(equip_data.weapon_one_data)){
                 temp[109]=equip_data.weapon_one_data.special_description_gen();
             } else {
-                temp[109]=""
+                temp[109]="";
             }
             if (is_struct(equip_data.weapon_two_data)){
                 temp[111]=equip_data.weapon_two_data.special_description_gen();
             } else {
-                temp[111]=""
+                temp[111]="";
             }                                      
             //if (string_count("&",temp[106])>0) then temp[106]=clean_tags(temp[106]);
             // Experience
@@ -599,30 +597,29 @@ if (menu==1 && managing>0){
             // Bonuses
             temp[119]="";
             if (string_length(unit.specials())>0){
-                if (string_count("$",unit.specials())>0) then temp[119]="Born Leader Bonus";
-                if (string_count("@",unit.specials())>0){
-                    temp[119]="Champion Bonus";
-                    //melee_attack=melee_attack*1.15;ranged_attack=ranged_attack*1.15;
-                }
-                if (string_count("0",unit.specials())>0){
-                    temp[119]="PSYKER ("+string_upper(string(obj_ini.psy_powers))+"): ";
-                    temp[119]+=string(string_count("|",unit.specials()));
-                    temp[119]+=" Powers known.";
-                }
+            //if (string_count("$",unit.specials())>0) then temp[119]="Born Leader Bonus";
+            //if (string_count("@",unit.specials())>0){
+                //temp[119]="Champion Bonus";
+                //melee_attack=melee_attack*1.15;ranged_attack=ranged_attack*1.15;
+            }
+            if (string_count("0",unit.specials())>0){
+                temp[119]="PSYKER ("+string_upper(string(obj_ini.psy_powers))+"): ";
+                temp[119]+=string(string_count("|",unit.specials()));
+                temp[119]+=" Powers known.";
             }
             // Corruption
             if (obj_controller.chaos_rating>0) and (temp[119]!="") then temp[119]+="#"+string(max(0,unit.corruption()))+"% Corruption.";
             if (obj_controller.chaos_rating>0) and (temp[119]="") then temp[119]=string(max(0,unit.corruption()))+"% Corruption.";
             // Melee Attack
-            temp[116]=melee_attack;
+            temp[116]=unit.melee_attack();
             // Ranged Attack
-            temp[117]=ranged_attack;
+            temp[117]=unit.ranged_attack();
             // Damage Resistance
             temp[118]=string(damage_res)+"%";
-        }
         /*if (man[sel]="vehicle"){
             // TODO
         }*/
+        }
     }    
 }
 

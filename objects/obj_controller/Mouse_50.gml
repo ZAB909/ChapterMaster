@@ -54,7 +54,7 @@ if (menu==12) and (cooldown<=0) and (penitorium>0){
 
                 var tek="";
                 if (obj_ini.race[c,e]==1){
-                    tek=obj_ini.wep1[c,e];
+                    tek=obj_ini.wep1[c][e];
                     if (tek!="") then scr_add_item(tek,1);
                     tek=obj_ini.wep2[c,e];
                     if (tek!="") then scr_add_item(tek,1);
