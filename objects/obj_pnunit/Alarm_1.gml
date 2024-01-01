@@ -85,6 +85,7 @@ for (g=1;g<array_length(marine_type);g++){
 
     if ((marine_id[g]>0) or (ally[g]=true)) and (marine_hp[g]>0) then marine_dead[g]=0;
     if ((marine_id[g]>0) or (ally[g]=true)) and (marine_hp[g]>0) and (marine_dead[g]!=1){
+        var head_role=unit.IsSpecialist("heads");
         if (marine_hp[g]>0) then men+=1;
 
         if (unit.armour()=="Dreadnought"){
@@ -95,12 +96,12 @@ for (g=1;g<array_length(marine_type);g++){
 
 
         if (marine_mobi[g]!="Bike") and (marine_mobi[g]!=""){
-           mobi_item=gear_weapon_data("mobility",unit.mobility_item(),"all");
+           mobi_item=unit.get_mobility_data();
            if (is_struct(mobi_item)){
             if( mobi_item.has_tag("jump")){
-                for (weapon_stack_index=1;weapon_stack_index<array_length(wep);weapon_stack_index++){
-                    if (wep[weapon_stack_index]==""||(wep[weapon_stack_index]=="hammer_of_wrath" && !head_role)){
-                        add_data_to_stack(weapon_stack_index,primary_ranged,unit.ranged_damage_data[0]);
+                for (var stack_index=1;stack_index<array_length(wep);stack_index++){
+                    if (wep[stack_index]==""||(wep[stack_index]=="hammer_of_wrath" && !head_role)){
+                        add_data_to_stack(stack_index,unit.hammer_of_wrath());
                         if (head_role){
                             wep_title[stack_index]=unit.role();
                             wep_solo[stack_index]=unit.name();
@@ -145,7 +146,6 @@ for (g=1;g<array_length(marine_type);g++){
         }
         if (marine_casting[g]!=1){
             var weapon_stack_index=0;
-            var head_role=unit.IsSpecialist("heads");
             var primary_ranged = unit.ranged_damage_data[3];//collect unit ranged data
             for (weapon_stack_index=1;weapon_stack_index<array_length(wep);weapon_stack_index++){
                 if (wep[weapon_stack_index]==""||(wep[weapon_stack_index]==primary_ranged.name && !head_role)){

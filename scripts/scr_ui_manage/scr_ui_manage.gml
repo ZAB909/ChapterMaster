@@ -208,31 +208,61 @@ function scr_ui_manage() {
         	
         	var armour = selected_unit.armour();
 	        if (armour!=""){
-	        	draw_text_ext(xx+1015,yy+215,string_hash_to_newline(armour+"#"+string(cn.temp[103])),-1,187);
-	        	draw_text_ext(xx+1016,yy+216,string_hash_to_newline(armour),-1,187);
+	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("armour") + "#AC" + string(selected_unit.get_armour_data("armour_value")));
+	        	tooltip_text = cn.temp[103];
+	        	x1 = xx+1015;
+	        	y1 = yy+215;
+	        	x2 = x1+string_width_ext(var_text, -1,187);
+	        	y2 = y1+string_height_ext(var_text, -1,187);	 
+	        	draw_text_ext(x1,y1,var_text,-1,187);
+	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);      	
 	        } 
 
 	        var gear = selected_unit.gear();
 	        if (selected_unit.gear()!=""){
-				draw_text_ext(xx+1015,yy+280,string_hash_to_newline(gear+"#"+string(cn.temp[105])),-1,187);
-	       		draw_text_ext(xx+1016,yy+281,string_hash_to_newline(gear),-1,187);	        	
+	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("gear"));
+	        	tooltip_text = cn.temp[105];
+	        	x1 = xx+1015;
+	        	y1 = yy+280;
+	        	x2 = x1+string_width_ext(var_text, -1,187);
+	        	y2 = y1+string_height_ext(var_text, -1,187);	 
+	        	draw_text_ext(x1,y1,var_text,-1,187);
+	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);  	        	        	
 	        }
 
 	        var mobi = selected_unit.mobility_item();
 	        if (mobi!=""){
-				draw_text_ext(xx+1015,yy+345,string_hash_to_newline(mobi+"#"+string(cn.temp[107])),-1,187);
-				draw_text_ext(xx+1016,yy+346,string_hash_to_newline(mobi),-1,187);	        	
+	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("mobi"));
+	        	tooltip_text = cn.temp[107];
+	        	x1 = xx+1015;
+	        	y1 = yy+345;
+	        	x2 = x1+string_width_ext(var_text, -1,187);
+	        	y2 = y1+string_height_ext(var_text, -1,187);	  
+	        	draw_text_ext(x1,y1,var_text,-1,187);
+	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 	        	        	
 	        }
         	var wep1= selected_unit.weapon_one();
         	if (wep1!=""){
-				draw_text_ext(xx+1387,yy+215,string_hash_to_newline(wep1+"#"+string(cn.temp[109])),-1,187);
-		      	draw_text_ext(xx+1388,yy+216,string_hash_to_newline(wep1),-1,187);        		
+	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("wep1")+ "#DAM" + string(selected_unit.get_weapon_one_data("attack")));
+	        	tooltip_text = cn.temp[109];
+	        	x1 = xx+1387;
+	        	y1 = yy+215;
+	        	x2 = x1+string_width_ext(var_text, -1,187);
+	        	y2 = y1+string_height_ext(var_text, -1,187);	 	 
+	        	draw_text_ext(x1,y1,var_text,-1,187);
+	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 	         		       		
         	}
         	
         	var wep2 = selected_unit.weapon_two();
         	if (wep2!=""){
-				draw_text_ext(xx+1387,yy+315,string_hash_to_newline(wep2+"#"+string(cn.temp[111])),-1,187);
-				draw_text_ext(xx+1388,yy+316,string_hash_to_newline(wep2),-1,187);        		
+	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("wep2")+ "#DAM" + string(selected_unit.get_weapon_two_data("attack")));
+	        	tooltip_text = cn.temp[111];
+	        	x1 = xx+1387;
+	        	y1 = yy+315;
+	        	x2 = x1+string_width_ext(var_text, -1,187);
+	        	y2 = y1+string_height_ext(var_text, -1,187);	 
+	        	draw_text_ext(x1,y1,var_text,-1,187); 
+	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 	         		      		
         	}
 
         	if (is_array(cn.temp[117])){
@@ -1003,14 +1033,6 @@ function scr_ui_manage() {
 		    
 			    scr_scrollbar(974,172,1005,790,34,man_max,man_current);
 			}
-		}
-	    var tip, coords;
-		for (i=0;i < array_length(tooltip_drawing); i++){
-			tip = tooltip_drawing[i];
-			coords=tip[1];
-			if (point_in_rectangle(mouse_x, mouse_y, coords[0],coords[1],coords[2],coords[3])){
-		        	tooltip_draw(coords[0],coords[3]+4, tip[0]);
-			}
 		}		
 		if instance_exists(cn)and (is_struct(cn.temp[120])){
 			if (cn.temp[120].name()!="") and (cn.temp[120].race()=="1"){
@@ -1097,6 +1119,14 @@ function scr_ui_manage() {
     			}
 			}
 		}
+	    var tip, coords;
+		for (i=0;i < array_length(tooltip_drawing); i++){
+			tip = tooltip_drawing[i];
+			coords=tip[1];
+			if (point_in_rectangle(mouse_x, mouse_y, coords[0],coords[1],coords[2],coords[3])){
+		        	tooltip_draw(coords[0],coords[3]+4, tip[0]);
+			}
+		}		
 	}
 	
 

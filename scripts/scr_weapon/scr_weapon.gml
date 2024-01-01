@@ -1761,47 +1761,50 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
     static special_description_gen = function(){
         spe_desc+=" "
         if (attack!=0){
-            spe_desc+=$"DAM {attack}, "
+            spe_desc+=$"DAM {attack},#"
         }
         if (ranged_mod!=0){
-            spe_desc += $"Ranged {ranged_mod}%, "
+            spe_desc += $"Ranged {ranged_mod}%,#"
         }
         if (melee_mod!=0){
-            spe_desc += $"Melee {melee_mod}%, "
+            spe_desc += $"Melee {melee_mod}%,#"
         }
         if (hp_mod!=0){
-            spe_desc += $"HP {hp_mod}%, "
+            spe_desc += $"HP {hp_mod}%,#"
         }
         if (damage_resistance_mod!=0){
-            spe_desc += $"Damage Res {damage_resistance_mod}%, "
+            spe_desc += $"Damage Res {damage_resistance_mod}%,#"
         }
         if (armour_value!=0){
-            spe_desc += $"AC {armour_value}, "
+            spe_desc += $"AC {armour_value},#"
         }
         if (ammo!=0){
-            spe_desc += $"Ammo {ammo}, "
+            spe_desc += $"Ammo {ammo},#"
         }
         if (range>1.1){
-            spe_desc += $"Range {range}, "
+            spe_desc += $"Range {range},#"
         }
         if (arp>0){
-            spe_desc += $"Armour piercing, "
+            spe_desc += $"Armour piercing,#"
         } else if (arp<0){
-            spe_desc += $"Low Penetration, "
+            spe_desc += $"Low Penetration,#"
         }
         if (spli!=0){
             if (range>1.1){
-                spe_desc += $"Ranged, Rapid Fire, "
+                spe_desc += $"Ranged, Rapid Fire,#"
             } else {
-                spe_desc += $"Melee, Splash, "
+                spe_desc += $"Melee, Splash,#"
             }
         } 
         if (melee_hands!=0){
-            spe_desc += $"melee carry {-1*melee_hands}, "
+            spe_desc += $"melee carry {-1*melee_hands},#"
         }
         if (ranged_hands!=0){
-            spe_desc += $"ranged carry {-1*ranged_hands}, "
-        }     
+            spe_desc += $"ranged carry {-1*ranged_hands},#"
+        } 
+        if (array_length(tags)>0){
+            spe_desc += $"string(tags),#"
+        }    
         return  spe_desc
     }
     static has_tag =  function(tag){
@@ -1927,6 +1930,19 @@ function gear_weapon_data(search_area="any",item,wanted_data="all", sub_class=fa
         }
     }    
 	return false;//nothing found
+}
+
+function quality_string_conversion(quality){
+    if (quality=="standard") then return "";
+    var qaulity_conversions = {
+        master_crafted:"Master Crafted ",
+        artificer:"Articifer ",
+        artifact:"Artifact ",
+        exemplary:"Exemplary "
+    }
+    if (struct_exists(qaulity_conversions, quality)){
+        return qaulity_conversions[$ quality]
+    } else {return "";}
 }
 
 function scr_weapon(equipment_1, equipment_2, base_group, unit_array_position, is_dreadnought, nuum, information_wanted) {

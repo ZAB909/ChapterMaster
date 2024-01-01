@@ -57,6 +57,7 @@ function scr_add_item(item_name, number_of_items, quality="any") {
 	    	var start_count = obj_ini.equipment_number[match_slot];
 	    	obj_ini.equipment_number[match_slot]+=number_of_items;
 	    	if (number_of_items>0){
+	    		if (quality=="any") then quality="standard"
 		    	for (var q=start_count;q<start_count+number_of_items;q++){
 		    		obj_ini.equipment_quality[i][q]=quality;
 		    	}
@@ -65,18 +66,29 @@ function scr_add_item(item_name, number_of_items, quality="any") {
 		    	if (end_count<0) then end_count=0;
 		    	if (number_of_items==-1){
 		    		if (quality=="any"){
-		    			return array_pop(obj_ini.equipment_quality[i]);
+		    			if (array_length(obj_ini.equipment_quality[i])>0){
+		    				return array_pop(obj_ini.equipment_quality[i]);
+		    			} else {return "standard"}
 		    		}else {
-		    			for (var q=0;q>array_length(equipment_quality[i]);q++){
-		    				if (equipment_quality[i][q]==quality){
-		    					array_delete(equipment_quality[i], q, 1);
-		    					return quality
+		    			var quality_item_found=false;
+		    			for (var q=0;q>array_length(obj_ini.equipment_quality[i]);q++){
+		    				if (obj_ini.equipment_quality[i][q]==quality){
+		    					array_delete(obj_ini.equipment_quality[i], q, 1);
+		    					quality_item_found=true;
+		    					break;
+		    				}
+		    				if(quality_item_found){
+		    					return quality;
+		    				} else{
+		    					equipment_number[match_slot]++;
+		    					return "no_item";
 		    				}
 		    			}
 		    		}
-		    	}
-		    	for (var q=start_count-1;q>end_count;q--){
-		    		obj_ini.equipment_quality[i][q]="";
+		    	} else{
+			    	for (var q=start_count-1;q>end_count;q--){
+			    		array_delete(obj_ini.equipment_quality[i], q, 1);
+			    	}
 		    	}
 		    }
 	    } else if (open_slot){
@@ -89,9 +101,14 @@ function scr_add_item(item_name, number_of_items, quality="any") {
 	        if (string_count("MK",item_name)>0) or (string_count("Armour",item_name)>0) or (item_name="Tartaros") then obj_ini.equipment_type[last_open]="armour";
 	        if (string_count("Bolts",item_name)>0) then obj_ini.equipment_type[last_open]="gear";
 	    } else {
-	    	array_set(obj_ini.equipment, last_slot, item_name)
-	    	array_set(obj_ini.equipment_number, last_slot, number_of_items)
-	    	array_set(obj_ini.equipment_condition, last_slot, 100)
+	    	array_set(obj_ini.equipment, last_slot, item_name);
+	    	array_set(obj_ini.equipment_number, last_slot, number_of_items);
+	    	array_set(obj_ini.equipment_condition, last_slot, 100);
+	    	array_set(obj_ini.equipment_quality, last_slot, []);
+	    	if (quality=="any") then quality="standard"
+	        for (var q=0;q<number_of_items;q++){
+	        	obj_ini.equipment_quality[last_slot][q]=quality;
+	        }	    	
 	        if (string_count("MK",item_name)>0) or (string_count("Armour",item_name)>0) or (item_name="Tartaros") then obj_ini.equipment_type[last_slot]="armour";
 	        if (string_count("Bolts",item_name)>0) then obj_ini.equipment_type[last_slot]="gear";	    	
 	    }   
