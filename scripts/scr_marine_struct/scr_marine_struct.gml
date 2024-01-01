@@ -1551,10 +1551,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 						var lowest = _wep1.attack<=_wep2.attack ? _wep1 :_wep2;
 						if (!highest.has_tags(["pistol","flame"])){
 							primary_weapon = highest;
-							secondary=lowest;
+							secondary_weapon=lowest;
 						}else if (!lowest.has_tags(["pistol","flame"])){
 							primary_weapon = lowest;
-							secondary=highest;
+							secondary_weapon=highest;
 						} else {
 							primary_weapon=highest;
 							melee_att*=0.5;
@@ -1563,7 +1563,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 							} else if primary_weapon.has_tag("pistol"){
 								explanation_string+=$"primary is pistol:X0.5#"
 							}
-							secondary=lowest;
+							secondary_weapon=lowest;
 						}
 					}
 				}
