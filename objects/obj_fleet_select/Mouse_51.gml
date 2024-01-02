@@ -95,7 +95,7 @@ if (owner  = eFACTION.Player) and (instance_nearest(x,y,obj_p_fleet).action=""){
         fleet.action_x=sys.x;
         fleet.action_y=sys.y;
         fleet.action="move";
-        orbiting=0;
+        fleet.orbiting = undefined;
         
         // mine.present_fleet[1]-=1;
         
@@ -208,7 +208,7 @@ if (owner  = eFACTION.Player) and (instance_nearest(x,y,obj_p_fleet).action=""){
             capital_sel[4]=1;capital_sel[5]=1;
             capital_sel[6]=1;capital_sel[7]=1;
             capital_sel[8]=1;
-            var i;i=-1;
+            var i=-1;
             repeat(31){i+=1;
                 frigate_sel[i]=1;
                 escort_sel[i]=1;
@@ -221,7 +221,7 @@ if (owner  = eFACTION.Player) and (instance_nearest(x,y,obj_p_fleet).action=""){
         if (ii<=1) then ii=1;fleet.image_index=ii;
         
         // Temporary fixing thing
-        with(new_fleet){var w, tempp;
+        with(new_fleet){
             w=0;repeat(capital_number+1){
                 w+=1;if (capital[w]!=""){tempp=capital_num[w];obj_ini.ship_location[tempp]="Warp";}
             }

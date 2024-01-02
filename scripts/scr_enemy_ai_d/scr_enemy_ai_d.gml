@@ -18,7 +18,7 @@ function scr_enemy_ai_d() {
 	    if (p_problem[i,4]!="") then p_timer[i,4]-=1;
     
     
-	    var wob;wob=0;
+	    var wob=0;
 	    repeat(4){wob+=1;
 	        if (p_problem[i,wob]="fallen") and (storm-1>0) then p_timer[i,wob]+=1;
 	    }
@@ -29,8 +29,10 @@ function scr_enemy_ai_d() {
 	        if (p_orks[i]+p_tau[i]+p_traitors[i]+p_chaos[i]+p_necrons[i]=0) and (p_tyranids[i]<4) then p_halp[i]=0;
 	    }
 	    if (p_halp[i]=0) and (p_population[i]>0) and (p_owner[i]<6) and (p_owner[i]!=1) and (present_fleet[1]<=0) and (p_player[i]<=0){
-	        var enemy1,enemies,minimum,tx;
-	        enemy1="";enemies=0;minimum=5;tx="";
+	        var enemy1 = "";
+			var enemies = 0;
+			var minimum = 5;
+			var tx = "";
         
 	        if (p_guardsmen[i]+p_pdf[i]<=1000000) then minimum=4;
 	        if (p_guardsmen[i]+p_pdf[i]<=500000) then minimum=3;
@@ -52,16 +54,16 @@ function scr_enemy_ai_d() {
 	        }
 	    }
     
-	    var wob;wob=0;
+	    wob=0;
 	    repeat(4){wob+=1;
 	        if (p_problem[i,wob]="succession") and (p_timer[i,wob]=0){
-	            var dice1,dice2,result,tixt;
-	            dice1=floor(random(100))+1;
-	            dice2=floor(random(100))+1;
-            
-	            result="";tixt="";
-	            if (dice1<=(p_heresy[i]*2)) then result="chaos";
-	            if (dice2<=(p_influence[i]*2)) and (result="") then result="tau";
+
+	            var dice1 = floor(random(100))+1;
+	            var dice2 = floor(random(100))+1;            
+	            var result = "";
+				var tixt = "";
+	            if (dice1 <= (p_heresy[i]*2)) then result="chaos";
+	            if (dice2 <= (p_influence[i]*2)) and (result="") then result="tau";
 	            if (result="") then result="imperial";
             
 	            if (wob=1) then tixt="War of Succession on "+string(name)+" I has ended";
@@ -92,11 +94,11 @@ function scr_enemy_ai_d() {
 	            if (string_pos("mech_",p_problem[i,wob])>0){
 	                if (p_timer[i,wob]>0){
 	                    if (string_count("mech_raider",p_problem[i,wob])>0){
-	                        var t1,t2,check1,check2;check1=0;check2=0;
 	                        explode_script(p_problem[i,wob],"!");
-	                        t1=string(explode[0]);t2=real(explode[1]);
-	                        check1=scr_role_count(obj_ini.role[100][16],string(name)+"|"+string(i)+"|");
-	                        check2=scr_vehicle_count("Land Raider",string(name)+"|"+string(i)+"|");
+	                        var t1=string(explode[0]);
+							var t2=real(explode[1]);
+	                        var check1=scr_role_count(obj_ini.role[100][16],string(name)+"|"+string(i)+"|");
+	                        var check2=scr_vehicle_count("Land Raider",string(name)+"|"+string(i)+"|");
 	                        if (check1>=6) and (check2>=1){t2+=1;scr_alert("","mission","Mechanicus Mission on "+string(name)+" "+scr_roman(i)+" is "+string(round((t2/24)*100))+"% complete.",0,0);}
 	                        p_problem[i,wob]=string(t1)+"!"+string(t2)+"!";
                         
@@ -105,10 +107,10 @@ function scr_enemy_ai_d() {
 	                        }
 	                    }// End raider
 	                    if (string_count("mech_bioni",p_problem[i,wob])>0){
-	                        var t1,t2,check1;check1=0;
 	                        explode_script(p_problem[i,wob],"!");
-	                        t1=string(explode[0]);t2=real(explode[1]);
-	                        check1=scr_bionics_count("star",string(name),i,"number");
+	                        var t1 = string(explode[0]);
+							var t2 = real(explode[1]);
+	                        var check1 = scr_bionics_count("star",string(name),i,"number");
 	                        if (check1>=10){t2+=1;scr_alert("","mission","Mechanicus Mission on "+string(name)+" "+scr_roman(i)+" is "+string(round((t2/24)*100))+"% complete.",0,0);}
                         
 	                        p_problem[i,wob]=string(t1)+"!"+string(t2)+"!";
@@ -117,10 +119,13 @@ function scr_enemy_ai_d() {
 	                        }
 	                    }// End bionics
 	                    if (string_count("mech_tomb2",p_problem[i,wob])>0){
-	                        var t1,t2,roll1,roll2,check1,battli;check1=0;
-	                        roll1=floor(random(100))+1;roll2=0;battli=0;
+							var check1=0;
+	                        var roll1 = floor(random(100))+1;
+							var roll2=0;
+							var battli=0;
 	                        explode_script(p_problem[i,wob],"!");
-	                        t1=string(explode[0]);t2=real(explode[1]);
+	                        var t1=string(explode[0]);
+							var t2=real(explode[1]);
                         
 	                        t2+=1;
                         
@@ -161,7 +166,8 @@ function scr_enemy_ai_d() {
 	                            if (roll1>40) then scr_alert("","mission","Adeptus Mechanicus research within the Necron Tomb of "+string(name)+" "+scr_roman(i)+" continues.",0,0);
                             
 	                            if (roll1<=40){// Complete
-	                                var reward,text;reward=choose(1,1,2);
+	                                var text = "";
+									var reward=choose(1,1,2);
 	                                if (obj_ini.adv[1]="Tech-Brothers") or (obj_ini.adv[2]="Tech-Brothers") or (obj_ini.adv[3]="Tech-Brothers") or (obj_ini.adv[4]="Tech-Brothers") then reward=choose(1,2);
                                 
 	                                if (reward=1){obj_controller.requisition+=400;
@@ -185,7 +191,7 @@ function scr_enemy_ai_d() {
                     
                     
 	                    if (p_problem[i,wob]="mech_tomb1") and (p_player[i]>=20){
-	                        var check;check=scr_marine_count(id,i,20);
+	                        var check = scr_marine_count(id,i,20);
                         
 	                        if (check>=20){
 	                            p_problem[i,wob]="mech_tomb2!0!";p_timer[i,wob]=999;
@@ -196,8 +202,10 @@ function scr_enemy_ai_d() {
 	                if (p_timer[i,wob]=0){
                 
 	                    if (string_count("mech_mars",p_problem[i,wob])>0){
-	                        var techs_taken,com,ide,ship_planet;
-	                        techs_taken=0;com=-1;ide=0;ship_planet="";
+	                        var techs_taken=0;
+							var com=-1;
+							var ide=0;
+							var ship_planet="";
                         
 	                        repeat(11){com+=1;ide=0;
 	                            repeat(300){ide+=1;
@@ -223,7 +231,7 @@ function scr_enemy_ai_d() {
                         
                         
 	                        if (techs_taken=0){
-	                            var tixt;tixt="Mechanicus Mission Failed: Journey to Mars Catacombs at "+string(name)+" "+scr_roman(i)+".";
+	                            var tixt="Mechanicus Mission Failed: Journey to Mars Catacombs at "+string(name)+" "+scr_roman(i)+".";
 	                            scr_alert("red","mission_failed",string(tixt),0,0);scr_event_log("red",tixt);
 	                            obj_controller.disposition[3]-=10;
 	                        }
@@ -231,11 +239,11 @@ function scr_enemy_ai_d() {
                         
 	                        if (techs_taken>0){
 	                            if (techs_taken>=20) then obj_controller.disposition[3]+=1;
-	                            var taxt;taxt="Mechanicus Ship departs for the Mars catacombs.  Onboard are "+string(techs_taken)+" of your "+string(obj_ini.role[100][16])+"s.";
+	                            var taxt="Mechanicus Ship departs for the Mars catacombs.  Onboard are "+string(techs_taken)+" of your "+string(obj_ini.role[100][16])+"s.";
 	                            scr_alert("","mission",taxt,0,0);scr_event_log("green",taxt);
 	                        }
                             
-	                        var flit;flit=instance_create(x,y-32,obj_en_fleet);
+	                        var flit = instance_create(x,y-32,obj_en_fleet);
 	                        flit.owner = eFACTION.Mechanicus;flit.sprite_index=spr_fleet_mechanicus;
 	                        flit.capital_number=1;flit.image_index=0;flit.image_speed=0;
 	                        flit.trade_goods="mars_spelunk1";
@@ -248,17 +256,17 @@ function scr_enemy_ai_d() {
                     
                     
 	                    if (p_problem[i,wob]="mech_tomb1"){
-	                        var tixt;tixt="Mechanicus Mission Failed: Necron Tomb Study at "+string(name)+" "+scr_roman(i)+".";
+	                        var tixt="Mechanicus Mission Failed: Necron Tomb Study at "+string(name)+" "+scr_roman(i)+".";
 	                        scr_alert("red","mission_failed",string(tixt),0,0);scr_event_log("red",tixt);
 	                        obj_controller.disposition[3]-=15;
 	                    }
 	                    if (string_count("mech_raider",p_problem[i,wob])>0){
-	                        var tixt;tixt="Mechanicus Mission Failed: Land Raider testing at "+string(name)+" "+scr_roman(i)+".";
+	                        var tixt="Mechanicus Mission Failed: Land Raider testing at "+string(name)+" "+scr_roman(i)+".";
 	                        scr_alert("red","mission_failed",string(tixt),0,0);scr_event_log("red",tixt);
 	                        obj_controller.disposition[3]-=6;
 	                    }
 	                    if (string_count("mech_bioni",p_problem[i,wob])>0){
-	                        var tixt;tixt="Mechanicus Mission Failed: Experiment on Astartes bionics at "+string(name)+" "+scr_roman(i)+".";
+	                        var tixt="Mechanicus Mission Failed: Experiment on Astartes bionics at "+string(name)+" "+scr_roman(i)+".";
 	                        scr_alert("red","mission_failed",string(tixt),0,0);scr_event_log("red",tixt);
 	                        obj_controller.disposition[3]-=6;
 	                    }
@@ -268,7 +276,7 @@ function scr_enemy_ai_d() {
 	        }
         
 	        if (p_problem[i,wob]="recon") and (p_timer[i,wob]=0){
-	            var tixt;tixt="Inquisition Mission Failed: Investigate ";
+	            var tixt="Inquisition Mission Failed: Investigate ";
 	            tixt+=string(name)+" "+scr_roman(i)+".";
 	            scr_alert("red","mission_failed",string(tixt),0,0);
 	            scr_event_log("red",tixt);
@@ -276,8 +284,7 @@ function scr_enemy_ai_d() {
 	        }
         
 	        if (p_problem[i,wob]="bomb") and (p_timer[i,wob]=0){
-	            var tixt;
-	            tixt="The Necron Tomb of planet ";
+	            var tixt="The Necron Tomb of planet ";
 	            if (i=1) then tixt+=string(name)+" I";if (i=2) then tixt+=string(name)+" II";
 	            if (i=3) then tixt+=string(name)+" III";if (i=4) then tixt+=string(name)+" IV";
 	            tixt+=" has not been deactivated in time.  It has awakened, rank upon rank of Necrons pouring out to the planet's surface.  The Inquisition is not pleased with your failure.";
@@ -295,15 +302,15 @@ function scr_enemy_ai_d() {
 	        }
         
 	        if (p_problem[i,wob]="great_crusade") and (p_timer[i,wob]=0){
-	            var flet,cont,dir;cont=0;
-	            flet=instance_nearest(x,y,obj_p_fleet);
+	            var cont = 0;
+	            var flet = instance_nearest(x,y,obj_p_fleet);
             
 	            if (flet.action="") then cont=1;
 	            if (cont=1) and (point_distance(x,y,flet.x,flet.y)<40) then cont=2;
             
 	            if (cont=2){
 	                flet.action="crusade1";
-	                dir=point_direction(room_width/2,room_height/2,x,y);
+	                var dir=point_direction(room_width/2,room_height/2,x,y);
 	                flet.action_x=x+lengthdir_x(2000,dir);
 	                flet.action_y=y+lengthdir_y(2000,dir);
 	                // flet.action_eta=floor(random(8))+12;
@@ -326,10 +333,10 @@ function scr_enemy_ai_d() {
 	        }
         
 	        if ((p_problem[i,wob]="inquisitor1") or (p_problem[i,wob]="inquisitor2")) and (p_timer[i,wob]=6){
-	            var flit, x7,y7,drr;
-	            drr=random(floor(360))+1;
-	            x7=x+lengthdir_x(384,drr);
-	            y7=y+lengthdir_y(384,drr);
+
+	            var drr=random(floor(360))+1;
+	            var x7=x+lengthdir_x(384,drr);
+	            var y7=y+lengthdir_y(384,drr);
             
 	            if (x7<0) or (x7>room_width) or (y7>room_height) or (y7<0){
 	                drr=point_direction(x,y,room_width/2,room_height/2);
@@ -338,7 +345,7 @@ function scr_enemy_ai_d() {
             
 	            // show_message("x1:"+string(x)+", y1:"+string(y)+"#x2:"+string(x7)+", y2:"+string(y7));
             
-	            flit=instance_create(x7,y7,obj_en_fleet);
+	            var flit=instance_create(x7,y7,obj_en_fleet);
 	            flit.owner  = eFACTION.Inquisition;flit.image_index=0;flit.sprite_index=spr_fleet_inquisition;
 	            if (p_problem[i,wob]="inquisitor1") then flit.trade_goods="male_her";
 	            if (p_problem[i,wob]="inquisitor2") then flit.trade_goods="female_her";
@@ -347,16 +354,15 @@ function scr_enemy_ai_d() {
 	        }
         
 	        if (p_problem[i,wob]="spyrer") and (p_timer[i,wob]=0){
-	            var tixt,text;
-	            tixt="The Spyrer on "+string(name)+" "+scr_roman(i)+" has been left unchecked.  In the ensuing carnage some high-ranking officials have been killed, along with several Nobles.  Panic is running amock in several parts of the hives and the Inquisition is less than pleased.";
-	            text="Inquisition Mission Failed: The Spyrer on "+string(name)+" "+scr_roman(i)+" was not removed.";
+	            var tixt ="The Spyrer on "+string(name)+" "+scr_roman(i)+" has been left unchecked.  In the ensuing carnage some high-ranking officials have been killed, along with several Nobles.  Panic is running amock in several parts of the hives and the Inquisition is less than pleased.";
+	            var text = "Inquisition Mission Failed: The Spyrer on "+string(name)+" "+scr_roman(i)+" was not removed.";
 	            scr_popup("Inquisition Mission Failed",tixt,"spyrer","");
 	            obj_controller.disposition[4]-=3;scr_event_log("red",text);
 	            p_problem[i,wob]="";
 	        }
         
 	        if (p_problem[i,wob]="fallen") and (p_timer[i,wob]=0){
-	            var tixt;tixt="";
+	            var tixt="";
 	            // if (string_count("Shitty",obj_ini.strin2)>0) then ran+=20;
             
 	            /*if (ran<=33){// Nothing
@@ -367,7 +373,8 @@ function scr_enemy_ai_d() {
 	                scr_popup("Hunt the Fallen Failed",tixt,"fallen","");
 	            }
 	            if (ran>33){// Give all marines +3d6 corruption and reduce loyalty by 20*/
-	                var co,me;co=-1;me=0;
+					var co=-1;
+					var me=0;
 	                repeat(obj_ini.companies+1){co+=1;me=0;
 	                    repeat(500){me+=1;
 	                        if (obj_ini.race[co,me]=1) and (obj_ini.role[co,me]!="") then obj_ini.chaos[co,me]+=choose(1,2,3,4,5,6)+choose(1,2,3,4,5,6)+choose(1,2,3,4,5,6);
@@ -388,9 +395,8 @@ function scr_enemy_ai_d() {
     
 	    if ((p_tyranids[i]=3) or (p_tyranids[i]=4)) and (p_population[i]>0){
 	        if (p_problem[i,1]!="Hive Fleet") and (p_problem[i,2]!="Hive Fleet") and (p_problem[i,3]!="Hive Fleet") and (p_problem[i,4]!="Hive Fleet"){
-	            var roll, cont;
-	            roll=floor(random(100))+201;
-	            cont=0;
+	            var roll = floor(random(100))+201;
+	            var cont = 0;
         
             
 	            if (p_tyranids[i]=3) and (roll<=5) then cont=1;
@@ -398,8 +404,7 @@ function scr_enemy_ai_d() {
             
             
 	            if (cont=1){
-	                var firstest;
-	                firstest=0;
+	                var firstest = 0;
                 
 	                if (p_problem[i,4]="") then firstest=4;
 	                if (p_problem[i,3]="") then firstest=3;
@@ -411,12 +416,10 @@ function scr_enemy_ai_d() {
 	                p_timer[i,firstest]+=floor(random_range(80,120))+1;
 	                // p_timer[i,firstest]=floor(random_range(3,6))+1;
 	                // show_message("Hive Fleet Destination: "+string(name)+"#ETA: "+string(p_timer[i,firstest]));
-                
-                
-	                var fleet, xx, yy;
-	                xx=random_range(room_width*1.25,room_width*2);xx=choose(xx*-1,xx);xx=x+xx;
-	                yy=random_range(room_height*1.25,room_height*2);yy=choose(yy*-1,yy);yy=y+yy;
-	                fleet=instance_create(xx,yy,obj_en_fleet);
+
+	                var xx=random_range(room_width*1.25,room_width*2);xx=choose(xx*-1,xx);xx=x+xx;
+	                var yy=random_range(room_height*1.25,room_height*2);yy=choose(yy*-1,yy);yy=y+yy;
+	                var fleet=instance_create(xx,yy,obj_en_fleet);
 	                fleet.owner = eFACTION.Tyranids;
 	                fleet.sprite_index=spr_fleet_tyranid;
 	                fleet.image_speed=0;
@@ -461,17 +464,20 @@ function scr_enemy_ai_d() {
 	        g=50;i=50;
 	    }}*/
 	    if (g<5) and (i<5){if (p_problem[g,h]="Hive Fleet") and (p_timer[g,h]=3){
-	        var woop;
-	        woop=0;woop=scr_role_count("Chief "+string(obj_ini.role[100,17]),"");
+	        var woop=scr_role_count("Chief "+string(obj_ini.role[100,17]),"");
         
-	        var o,yep,yep2;o=0;yep=true;yep2=false;
+	        var o = 0;
+			var yep = true;
+			var yep2 = false;
 	        repeat(4){o+=1;if (obj_ini.dis[o]="Psyker Intolerant") then yep=false;}
 	        if (obj_controller.known[eFACTION.Tyranids]=0) and (woop!=0) and (yep!=false){
 	            scr_popup("Shadow in the Warp","Chief "+string(obj_ini.role[100,17])+" "+string(obj_ini.name[0,5])+" reports a disturbance in the warp.  He claims it is like a shadow.","shadow","");
 	            scr_event_log("red","Chief "+string(obj_ini.role[100,17])+" reports a disturbance in the warp.  He claims it is like a shadow.");
 	        }
 	        if (obj_controller.known[eFACTION.Tyranids]=0) and (woop=0) and (yep!=false){
-	            var q,q2;q=0;q2=0;
+	            var q = 0;
+				var q2 = 0;
+				
 	            repeat(90){
 	                if (q2=0){q+=1;
 	                    if (obj_ini.role[0,q]="Chapter Master"){q2=q;
@@ -537,7 +543,7 @@ function scr_enemy_ai_d() {
 	}
 	with(obj_star){
 	    if (instance_exists(obj_temp2)){
-	        var tirg;tirg=instance_nearest(x,y,obj_temp2);
+	        var tirg = instance_nearest(x,y,obj_temp2);
 	        if (point_distance(x,y,tirg.x,tirg.y)<5){x-=20000;y-=20000;}
 	    }
 	    if (planets<=0){x-=20000;y-=20000;}
@@ -545,7 +551,7 @@ function scr_enemy_ai_d() {
 	with(obj_temp2){instance_destroy();}
 
 	with(obj_star){
-	    var r;r=0;
+	    var r=0;
 	    repeat(4){r+=1;// temp6: origin hive, temp5: new hive, temp4: new planet
 	        // if (p_owner[r]=2) and (p_type[r]!="Dead") and (p_type[r]!="Lava") and (p_type[r]!="Hive") and (p_type[r]!="Temperate") and (p_population[r]=0) then instance_create(x,y,obj_temp4);
 	        // if (p_owner[r]=2) and (p_type[r]!="Dead") and ((p_type[r]="Hive") or (p_type[r]="Temperate")) and (p_population[r]=0) then instance_create(x,y,obj_temp5);

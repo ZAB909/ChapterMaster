@@ -13,7 +13,8 @@ function scr_turn_first() {
         
 	        if (instance_exists(obj_p_fleet)) and (identifiable=0){
 	            with(obj_p_fleet){
-	                var i,good;i=0;good=0;
+	                var i = 0;
+					var good = 0;
 	                repeat(20){i+=1;
 	                    if (i<=9){if (capital_num[i]=obj_ini.artifact_sid[other.unload]-500) then good=1;}
 	                    if (frigate_num[i]=obj_ini.artifact_sid[other.unload]-500) then good=1;
@@ -148,8 +149,12 @@ function scr_turn_first() {
 	            with(obj_star){if (planets=1) and (p_type[1]="Dead"){x-=20000;y-=20000;}}
 	            with(obj_star){if (planets=2) and (p_type[1]="Dead")and (p_type[2]="Dead"){x-=20000;y-=20000;}}
 				
-	            repeat(8){fnum+=1;
-	                var x4,y4,dire;x4=0;y4=0;dire=0;
+	            repeat(8){
+					fnum += 1;
+					var x4 = 0;
+					var y4 = 0;
+					var dire = 0;
+					
 	                if (fnum=1){
 	                    dire=point_direction(x4,y4,room_width/2,room_height/2);
 	                    x4=x3+lengthdir_x(60,dire);y4=y3+lengthdir_y(60,dire);
@@ -160,11 +165,11 @@ function scr_turn_first() {
 	                    y4=y3+choose(round(random_range(30,50)),round(random_range(-30,-50)));
 	                }
                 
-	                var nfleet,tplan;nfleet=instance_create(x4,y4,obj_en_fleet);
+	                var nfleet = instance_create(x4,y4,obj_en_fleet);
 	                nfleet.owner = eFACTION.Ork;nfleet.sprite_index=spr_fleet_ork;
 	                nfleet.capital_number=4;nfleet.frigate_number=10;
 	                nfleet.image_index=9;
-	                tplan=instance_nearest(nfleet.x,nfleet.y,obj_star);
+	                var tplan = instance_nearest(nfleet.x,nfleet.y,obj_star);
 	                nfleet.action_x=tplan.x;nfleet.action_y=tplan.y;
 	                nfleet.alarm[4]=1;
                 

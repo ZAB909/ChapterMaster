@@ -1,7 +1,7 @@
 
 projectile_infos=0;
 life=0;
-owner=0;
+owner= undefined;
 
 var i;i=-1;
 repeat(11){i+=1;

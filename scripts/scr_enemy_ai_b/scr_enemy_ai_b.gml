@@ -113,8 +113,7 @@ function scr_enemy_ai_b() {
 	                    }
 	                }                
 	                if (enemy_fleets>0){
-	                    var necron_fleet2;
-	                    necron_fleet2=instance_create(x+32,y+32,obj_en_fleet);
+	                    var necron_fleet2=instance_create(x+32,y+32,obj_en_fleet);
 	                    necron_fleet2.owner=eFACTION.Necrons;
 	                    necron_fleet2.sprite_index=spr_fleet_necron;
 	                    // necron_fleet2.image_index=0;
@@ -156,9 +155,8 @@ function scr_enemy_ai_b() {
 	        }
 	    }
 			// traitors cults
-		var notixt;
 		var is_ork;
-		notixt = false;
+		var notixt = false;
 
 		rando = irandom(99) + 1;
 

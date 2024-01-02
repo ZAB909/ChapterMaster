@@ -6,7 +6,9 @@ repeat(20){i+=1;
 }i=0;
 // men=0;veh=0;
 
-j=0;good=0;open=0;
+var j=0;
+var good=0;
+var open=0;
 
 
 
@@ -85,7 +87,9 @@ neww=0;
 
 if (men+veh=1) and (instance_number(obj_enunit)=1){
     if (men=1) and (veh=0){
-        var i,h;i=0;h=0;
+        var h;
+		i=0;
+		h=0;
         repeat(20){if (h=0){i+=1;if (dudes_num[i]=1){
             h=dudes_hp[i];obj_ncombat.display_p2=h;
             obj_ncombat.display_p2n=string(dudes[i]);}
@@ -99,7 +103,7 @@ __b__ = action_if_variable(obj_ncombat.enemy, 1, 0);
 if __b__
 {
 
-var j;j=0;men=0;
+j=0;men=0;
 repeat(100){j+=1;veh=0;dreads=0;
     if (dudes[j]!="") and (dudes_vehicle[j]=0){
         men+=dudes_num[j];
@@ -108,7 +112,8 @@ repeat(100){j+=1;veh=0;dreads=0;
 
 // show_message("dudes1:"+string(dudes[1])+", men:"+string(men));
 
-var i,g;i=0;g=0;
+i=0;
+g=0;
 repeat(100){i+=1;
     att[i]=0;apa[i]=0;wep_num[i]=0;wep_rnum[i]=0;
 }i=0;
@@ -168,7 +173,9 @@ repeat(700){g+=1;
         
         
         
-        var j,good,open;j=0;good=0;open=0;// Counts the number and types of marines within this object
+        j=0;
+		good=0;
+		open=0;// Counts the number and types of marines within this object
         repeat(20){j+=1;
             if (dudes[j]="") and (open=0){
                 open=j;// Determine if vehicle here
@@ -329,7 +336,7 @@ repeat(20){j+=1;
     
     if (dudes[j]="Battle Sister"){
         if (dudes_num[j]<=4) then scr_en_weapon("Bolter",true,dudes_num[j],dudes[j],j);
-        if (dudes_num[j]>=5){var nem;nem=round(dudes_num[j]/4);
+        if (dudes_num[j]>=5){var nem=round(dudes_num[j]/4);
             scr_en_weapon("Flamer",true,nem,dudes[j],j);
             scr_en_weapon("Bolter",true,dudes_num[j]-nem,dudes[j],j);
         }
@@ -346,7 +353,7 @@ repeat(20){j+=1;
     }
     if (dudes[j]="Retributor"){
         if (dudes_num[j]<=3) then scr_en_weapon("Heavy Bolter",true,dudes_num[j],dudes[j],j);
-        if (dudes_num[j]>=4){var nem;nem=round(dudes_num[j]/4);
+        if (dudes_num[j]>=4){var nem=round(dudes_num[j]/4);
             scr_en_weapon("Missile Launcher",true,nem,dudes[j],j);
             scr_en_weapon("Heavy Bolter",true,dudes_num[j]-nem,dudes[j],j);
         }
@@ -811,7 +818,8 @@ repeat(20){j+=1;
 /* */
 }
 
-if (obj_ncombat.battle_special="ruins") or (obj_ncombat.battle_special="ruins_eldar"){var i;i=0;
+if (obj_ncombat.battle_special="ruins") or (obj_ncombat.battle_special="ruins_eldar"){
+	i=0;
     repeat(20){i+=1;
         if (dudes_vehicle[i]>0) and (dudes_num[i]>0){
             obj_ncombat.enemy_forces-=dudes_num[i];

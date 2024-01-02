@@ -39,7 +39,7 @@ instance_activate_object(obj_cursor);
 instance_activate_object(obj_ini);
 instance_activate_object(obj_img)
 
-var i,u;i=11;
+var u;i=11;
 repeat(10){i-=1;// This creates the objects to then be filled in
     u=instance_create(i*10,240,obj_pnunit);
 }

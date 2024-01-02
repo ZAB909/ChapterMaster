@@ -87,11 +87,10 @@ function scr_start_load(fleet, load_from_star, load_options) {
 			}
 		}
 		if (_comp > 1) and (_comp < 10){
-			var squaddy;
 			var company_squad_dist = total_distribute_squads[_comp-2];
 			for (var squad=0;squad<array_length(company_squad_dist);squad++){
 				for (var squad_member =0;squad_member<array_length(obj_ini.squads[company_squad_dist[squad]].members);squad_member++){
-					squaddy = obj_ini.squads[company_squad_dist[squad]].members[squad_member]
+					var squaddy = obj_ini.squads[company_squad_dist[squad]].members[squad_member]
 					_marine = obj_ini.TTRPG[squaddy[0],squaddy[1]];
 					var marine_size =  _marine.get_unit_size();
 					_company_size += marine_size;
@@ -115,7 +114,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
 		}		
 		//if entire company won't fit on ship test to see if there is any ship in the fleet the company will fit on;
 		 if (ship_fit == false){
-			 for (ship_loop =  ship_loop_start; ship_loop< array_length(obj_ini.ship_carrying);ship_loop++){
+			 for (var ship_loop =  ship_loop_start; ship_loop< array_length(obj_ini.ship_carrying);ship_loop++){
 				 if (escort_load == 2) and (obj_ini.ship_capacity[ship_loop] < 250){continue}
 				  if ((obj_ini.ship_carrying[ship_loop] + _company_size) <= obj_ini.ship_capacity[ship_loop]){
 					  //load marines
@@ -133,7 +132,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
 				  }
 			 }
 			if (!ship_fit ){
-				for (ship_loop =  1; ship_loop<ship_loop_start;ship_loop++){
+				for (var ship_loop =  1; ship_loop<ship_loop_start;ship_loop++){
 					if (escort_load == 2) and (obj_ini.ship_capacity[ship_loop] < 250){continue}
 					 if ((obj_ini.ship_carrying[ship_loop] + _company_size) <= obj_ini.ship_capacity[ship_loop]){
 							  //load marines
@@ -152,7 +151,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
 			}
 			 if (!ship_fit ){
 			 	//see if all troops can be grouped together
-				 for (ship_loop =  ship_loop_start; ship_loop< array_length(obj_ini.ship_carrying);ship_loop++){
+				 for (var ship_loop =  ship_loop_start; ship_loop< array_length(obj_ini.ship_carrying);ship_loop++){
 					 if (escort_load == 2) and (obj_ini.ship_capacity[ship_loop] < 250){continue}
 					  if ((obj_ini.ship_carrying[ship_loop] + _company_size-total_vehic_size) <= obj_ini.ship_capacity[ship_loop]){
 						  //load marines
@@ -166,7 +165,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
 					  }
 				 }
 				 if (!ship_fit){
-					 for (ship_loop =  1; ship_loop< ship_loop_start;ship_loop++){
+					 for (var ship_loop =  1; ship_loop< ship_loop_start;ship_loop++){
 						 if (escort_load == 2) and (obj_ini.ship_capacity[ship_loop] < 250){continue}
 						  if ((obj_ini.ship_carrying[ship_loop] + _company_size-total_vehic_size) <= obj_ini.ship_capacity[ship_loop]){
 							  //load marines

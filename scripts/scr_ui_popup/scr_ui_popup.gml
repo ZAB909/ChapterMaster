@@ -58,6 +58,7 @@ function scr_ui_popup() {
         
 	        var r=0,wob="",word="";
 	        for (r=1;r<10;r++){
+			var tag = "";
 		        switch(wob){
 		        	case "Barbarian":
 		        		word="Heavy on leather, hides, and trophy body parts.";
@@ -102,7 +103,7 @@ function scr_ui_popup() {
 	                draw_set_color(c_black);draw_set_alpha(0.2);draw_rectangle(xx+21,yy+38+(r*30),xx+600,yy+56+(r*30),0);draw_set_alpha(1);
                 
 	                if (obj_controller.mouse_left=1) and (obj_controller.cooldown<=0){
-	                    obj_controller.cooldown=8000;var tag;tag="";
+	                    obj_controller.cooldown=8000;
 						switch (r) {
 						    case 1:
 						        tag = "BRB";
@@ -147,8 +148,6 @@ function scr_ui_popup() {
 	        }
 	    }
 
-    
-
 	    if (un_upgraded==0){
 	    	title="Build ("+string(obj_temp_build.target.name)+" "+scr_roman(obj_temp_build.planet)+")";
 		}else if(un_upgraded!=0){
@@ -165,7 +164,7 @@ function scr_ui_popup() {
 		    var search_list =search_planet_features(planet_upgrades, P_features.Secret_Base);
 		    if (array_length(search_list) > 0){
 			    var woob="",secret=true;
-				var s_base = planet_upgrades[search_list[0]];
+				s_base = planet_upgrades[search_list[0]];
 				if (s_base.built>obj_controller.turn){
 					draw_set_font(fnt_40k_14b);
 		        	draw_text(xx+21,yy+65,string_hash_to_newline($"This feature will be constructed in {s_base.built-obj_controller.turn} months."));
@@ -330,23 +329,22 @@ function scr_ui_popup() {
 			            draw_sprite(spr_requisition,0,mouse_x+22,mouse_y+45+string_height_ext(string_hash_to_newline(tooltip4),-1,500));
 			            draw_text(mouse_x+42,mouse_y+42+string_height_ext(string_hash_to_newline(tooltip4),-1,500),string_hash_to_newline(string(tcost)));
 			        }
-		    	}
-	        
-        
+		    	}      
 	     	}
 	    }
 	     draw_set_font(fnt_40k_14b);
-	     woob=""
-	     var arsenal = 0,gene_vault=0;
+	     var woob=""
+	     arsenal = 0;
+		 gene_vault=0;
     		if (planet_feature_bool(planet_upgrades, P_features.Arsenal)==1){
-    		  var arsenal = planet_upgrades[search_planet_features(planet_upgrades, P_features.Arsenal)[0]];
- 	          if (arsenal.inquis_hidden == 1) then woob="A moderate sized secret Arsenal, this structure has ample holding area to store any number of artifacts and wargear.  Chaos and Daemonic items will be sent here by your Master of Relics, and due to the secret nature of its existance, the Inquisition will not find them during routine inspections.";
-	          if (arsenal.inquis_hidden == 0) then woob="A moderate sized Arsenal, this structure has ample holding area to store any number of artifacts and wargear.  Since being discovered it may no longer hide Chaos and Daemonic wargear from routine Inquisition inspections.  You may wish to construct another Arsenal on a different planet.";   			
+    			arsenal = planet_upgrades[search_planet_features(planet_upgrades, P_features.Arsenal)[0]];
+ 				if (arsenal.inquis_hidden == 1) then woob="A moderate sized secret Arsenal, this structure has ample holding area to store any number of artifacts and wargear.  Chaos and Daemonic items will be sent here by your Master of Relics, and due to the secret nature of its existance, the Inquisition will not find them during routine inspections.";
+				if (arsenal.inquis_hidden == 0) then woob="A moderate sized Arsenal, this structure has ample holding area to store any number of artifacts and wargear.  Since being discovered it may no longer hide Chaos and Daemonic wargear from routine Inquisition inspections.  You may wish to construct another Arsenal on a different planet.";   			
     		}
     		if (planet_feature_bool(planet_upgrades, P_features.Gene_Vault)==1){
-    			var gene_vault = planet_upgrades[search_planet_features(planet_upgrades, P_features.Gene_Vault)[0]];
-	          if (gene_vault.inquis_hidden == 1) then woob="A large facility with Gene-Vaults and additional spare rooms, this structure safely stores the majority of your Gene-Seed and is ran by servitors.  Due to its secret nature you may amass Gene-Seed and Test-Slave Incubators without fear of Inquisition reprisal or taking offense.";
-	          if (gene_vault.inquis_hidden == 0) then woob="A large facility with Gene-Vaults and additional spare rooms, this structure safely stores the majority of your Gene-Seed and is ran by servitors.  Since being discovered all the contents are known to the Inquisition.  Your Gene-Seed remains protected but you may wish to build a new, secret one.";  
+				gene_vault = planet_upgrades[search_planet_features(planet_upgrades, P_features.Gene_Vault)[0]];
+				if (gene_vault.inquis_hidden == 1) then woob="A large facility with Gene-Vaults and additional spare rooms, this structure safely stores the majority of your Gene-Seed and is ran by servitors.  Due to its secret nature you may amass Gene-Seed and Test-Slave Incubators without fear of Inquisition reprisal or taking offense.";
+				if (gene_vault.inquis_hidden == 0) then woob="A large facility with Gene-Vaults and additional spare rooms, this structure safely stores the majority of your Gene-Seed and is ran by servitors.  Since being discovered all the contents are known to the Inquisition.  Your Gene-Seed remains protected but you may wish to build a new, secret one.";  
 	     }
 	     if (arsenal!=0) or (gene_vault!=0){
  			draw_text_ext(xx+21,yy+65,string_hash_to_newline(string(woob)),-1,595);
@@ -432,16 +430,9 @@ function scr_ui_popup() {
 	    }draw_set_halign(fa_left);
 	}
 
+	if (selected != undefined) and (!instance_exists(selected)) then selected = undefined;
 
-
-
-
-
-	if (selected!=0) and (!instance_exists(selected)) then selected=0;
-
-
-
-	if (popup>0) and (selected!=0) and (zoomed=0) and (sel_system_x+sel_system_y=0) and (diplomacy<=0) and (instance_exists(obj_fleet_select)){
+	if (popup>0) and (selected != undefined) and (zoomed=0) and (sel_system_x+sel_system_y=0) and (diplomacy<=0) and (instance_exists(obj_fleet_select)){
 	    var zm=1,tit="",mnz=0;
     
 	    if (fleet_minimized=0){
@@ -509,13 +500,13 @@ function scr_ui_popup() {
 	            shit=posi;
 	            nem=robj.capital[shit];
 	            if (string_width(string_hash_to_newline(nem))*scale>179){
-	            	for (i=0;i<9;i++){
+	            	for (var i=0;i<9;i++){
 	            		if (string_width(string_hash_to_newline(nem))*scale>179) then scale-=0.05;
 	            	}
 	            }
 	            if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+209) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
 	                if (string_width(string_hash_to_newline(nem))*scale>135){
-	                	for (i=0;i<9;i++){
+	                	for (var i=0;i<9;i++){
 	                		if (string_width(string_hash_to_newline(nem))*scale>135) then scale-=0.05;
 	                	}
 	                }
@@ -552,11 +543,11 @@ function scr_ui_popup() {
 	            shit=posi-ca;
 	            nem=robj.frigate[shit];
 	            if (string_width(string_hash_to_newline(nem))*scale>179){
-	            	for (i=0;i<9;i++){if (string_width(string_hash_to_newline(nem))*scale>179) then scale-=0.05;}
+	            	for (var i=0;i<9;i++){if (string_width(string_hash_to_newline(nem))*scale>179) then scale-=0.05;}
 	            }
 	            if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+209) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
 	                if (string_width(string_hash_to_newline(nem))*scale>135) { 
-	                	for (i=0;i<9;i++){
+	                	for (var i=0;i<9;i++){
 	                		if (string_width(string_hash_to_newline(nem))*scale>135) then scale-=0.05;
 	                	}
 	                }
@@ -593,16 +584,16 @@ function scr_ui_popup() {
 	            shit=posi-(ca+fr);
 	            nem=robj.escort[shit];
 	            if (string_width(string_hash_to_newline(nem))*scale>179){
-	            	for (i=0;i<10;i++){if (string_width(string_hash_to_newline(nem))*scale>179) then scale-=0.05;}
+	            	for (var i=0;i<10;i++){if (string_width(string_hash_to_newline(nem))*scale>179) then scale-=0.05;}
 	            }
 	            if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+209) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
-	                if (string_width(string_hash_to_newline(nem))*scale>135){for (i=0;i<10;i++){
+	                if (string_width(string_hash_to_newline(nem))*scale>135){for (var i=0;i<10;i++){
 	                	if (string_width(string_hash_to_newline(nem))*scale>135) then scale-=0.05;}shew=2
 	                }
 	            }
 	            if (mouse_check_button_pressed(mb_left)) and (obj_controller.cooldown<=0){
 	                if (mouse_x>=__view_get( e__VW.XView, 0 )+x3) and (mouse_x<__view_get( e__VW.XView, 0 )+x3+25) and (mouse_y>=__view_get( e__VW.YView, 0 )+y3) and (mouse_y<=__view_get( e__VW.YView, 0 )+y3+18){
-	                    var onceh;onceh=0;obj_controller.cooldown=8000;
+	                    var onceh=0;obj_controller.cooldown=8000;
 	                    if (obj_controller.fest_scheduled>0) and (obj_controller.fest_sid=robj.escort_num[shit]) then onceh=1;
 	                    if (robj.escort_sel[shit]=1) and (onceh=0){robj.escort_sel[shit]=0;onceh=1;}
 	                    if (robj.escort_sel[shit]=0) and (onceh=0){robj.escort_sel[shit]=1;onceh=1;}
@@ -632,12 +623,9 @@ function scr_ui_popup() {
 	    draw_set_halign(fa_left);
     
 	    draw_set_color(c_gray);
-	    draw_rectangle(__view_get( e__VW.XView, 0 )+18+obj_fleet_select.void_wid,__view_get( e__VW.YView, 0 )+116,__view_get( e__VW.XView, 0 )+36+obj_fleet_select.void_wid,__view_get( e__VW.YView, 0 )+134,0);
-    
-    
-    
-    
+	    draw_rectangle(__view_get( e__VW.XView, 0 )+18+obj_fleet_select.void_wid,__view_get( e__VW.YView, 0 )+116,__view_get( e__VW.XView, 0 )+36+obj_fleet_select.void_wid,__view_get( e__VW.YView, 0 )+134,0);  
 	    draw_set_color(c_black);
+		
 	    if (mnz=0) then draw_text(__view_get( e__VW.XView, 0 )+25+obj_fleet_select.void_wid,__view_get( e__VW.YView, 0 )+117,string_hash_to_newline("-"));
 	    if (mnz=1) then draw_text(__view_get( e__VW.XView, 0 )+23+obj_fleet_select.void_wid,__view_get( e__VW.YView, 0 )+116,string_hash_to_newline("+"));
     
@@ -660,14 +648,14 @@ function scr_ui_popup() {
 	                fleet_all=0;
 	            }
 	            if (fleet_all==1) then with(obj_fleet_select){
-	                for (i=0;i<91;i++){
+	                for (var i=0;i<91;i++){
 	                    if (i<=20) then capital_sel[i]=1;
 	                    frigate_sel[i]=1;
 	                    escort_sel[i]=1;
 	                }
 	            }
 	            if (fleet_all==0) then with(obj_fleet_select){
-	                for (i=0;i<91;i++){
+	                for (var i=0;i<91;i++){
 	                    if (i<=20) then capital_sel[i]=0;
 	                    frigate_sel[i]=0;
 	                    escort_sel[i]=0;
@@ -743,7 +731,7 @@ function scr_ui_popup() {
 		if (scr_hit(xx+153,yy+10,xx+221,yy+38)){
 		    var  tx=0,ty=0,tool1="",tool2="",plu="";
 
-		    var d,lines;d=0;lines=0;
+		    var lines;lines=0;
 		    for(var d=1; d<=20; d++){
 		        if (loyal_num[d]>1) and (lines=0){
 		            tool1+=string(loyal[d])+": -"+string(loyal_num[d])+"#";

@@ -78,7 +78,7 @@ function scr_apothecary_ground() {
 	                    if (run=1) then locy=string(name)+" I";if (run=2) then locy=string(name)+" II";
 	                    if (run=3) then locy=string(name)+" III";if (run=4) then locy=string(name)+" IV";
                     
-	                    var flit;flit=instance_create(x+24,y-24,obj_p_fleet);
+	                    var flit=instance_create(x+24,y-24,obj_p_fleet);
 	                    var i=0,ship_names="",new_name="",last_ship=0;
 	                    for(i=0;i<=40;i++){
 	                        if (last_ship=0) and (obj_ini.ship[i]="") then last_ship=i;

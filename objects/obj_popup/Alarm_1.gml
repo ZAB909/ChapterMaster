@@ -11,7 +11,10 @@ repeat(obj_controller.man_max){
     n_wep1="Assortment";n_wep2="Assortment";n_armour="Assortment";n_gear="Assortment";n_mobi="Assortment";
     
     if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1) and (vehicle_equipment=0) and (obj_controller.man[i]="man"){
-        var check,ih,gi;check=0;ih=0;gi="";
+
+		var check =  0;
+		var ih = 0;
+		var gi = "";
         
         if (obj_controller.ma_role[i]=obj_ini.role[100][2]) then ih=2;
         if (obj_controller.ma_role[i]=obj_ini.role[100][3]) then ih=3;
@@ -28,7 +31,7 @@ repeat(obj_controller.man_max){
         if (ih!=0){
             gi=obj_ini.wep1[100,ih];if (gi!="") then n_wep1=gi;
             if (gi="Heavy Ranged"){
-                var onceh;onceh=0;
+                var onceh = 0;
                 if (scr_item_count("Missile Launcher")>0) and (onceh=0){n_wep1="Missile Launcher";onceh=1;}
                 if (scr_item_count("Lascannon")>0) and (onceh=0){n_wep1="Lascannon";onceh=1;}
                 if (scr_item_count("Heavy Bolter")>0) and (onceh=0){n_wep1="Heavy Bolter";onceh=1;}
@@ -56,7 +59,7 @@ repeat(obj_controller.man_max){
         
         
         if (n_wep1=obj_controller.ma_wep2[i]) and (n_wep2!="Assortment") and (n_wep1!="Assortment"){
-            var temp;temp="";
+            var temp="";
             temp=obj_controller.ma_wep1[i];// Get temp
             obj_controller.ma_wep1[i]=obj_controller.ma_wep2[i];
             obj_ini.wep1[company,obj_controller.ide[i]]=obj_ini.wep2[company,obj_controller.ide[i]];// Wep2 -> Wep1
@@ -64,7 +67,7 @@ repeat(obj_controller.man_max){
             obj_ini.wep2[company,obj_controller.ide[i]]=temp;
         }
         if (n_wep2=obj_controller.ma_wep1[i]) and (n_wep2!="Assortment") and (n_wep1!="Assortment"){
-            var temp;temp="";
+            var temp="";
             temp=obj_controller.ma_wep2[i];// Get temp
             obj_controller.ma_wep2[i]=obj_controller.ma_wep1[i];
             obj_ini.wep2[company,obj_controller.ide[i]]=obj_ini.wep1[company,obj_controller.ide[i]];// Wep1 -> Wep2

@@ -1877,7 +1877,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 selecting_ship=0;
                 selecting_planet=0;
                 sel_uid=0;
-                for(var i=0; i<501; i++){
+                for(i=0; i<501; i++){
                     man[i]="";
                     ide[i]=0;
                     man_sel[i]=0;
@@ -1921,7 +1921,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
         }
     }
     if (zoomed==0) and (menu==1) and (managing>0) and (cooldown<=0){
-        var onceh=0;
+        onceh=0;
         xx=xx+0;
         yy=yy+0;
 
@@ -2167,7 +2167,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
         }
         sel=top;
         yy=__view_get( e__VW.YView, 0 )+77;
-        var unit;
+
         for(var i=0; i<min(man_max,man_see); i++){
             while (man[sel]=="hide") and (sel<500){sel++;}
             eventing=false;
@@ -2175,7 +2175,8 @@ if (action_if_number(obj_saveload, 0, 0) &&
             // This is the actual individual click right here
             if (point_in_rectangle(mouse_x,mouse_y,xx+25+8,yy+64,xx+974,yy+85) and (cooldown<=0)) 
             or ((squad[sel]=squad_sel) and (squad_sel!=0)){
-                var onceh=0,dib=0;
+                onceh=0
+				var dib=0;
                 stop=0;
 
                 eventing=false;
@@ -2314,7 +2315,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             if (mouse_x>=xx+1018+141) and (mouse_y>yy+805) and (mouse_x<xx+1297) and (mouse_y<yy+831) 
             and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel") and (otha==0){
                 if (man_size>0) and (instance_number(obj_popup)==0){
-                    var f=0,god=0,nuuum=0;
+                    var god=0,nuuum=0;
                     var o_wep1="",o_wep2="",o_armour="",o_gear="",o_mobi="";
                     var b_wep1=0,b_wep2=0,b_armour=0,b_gear=0,b_mobi=0;
                     var vih=0, unit;
@@ -2619,14 +2620,13 @@ if (action_if_number(obj_saveload, 0, 0) &&
             for (var i=0; i<(min(ship_max,ship_see)); i++){
                 if (mouse_x>=xx+25+8) and (mouse_y>=yy+64) and (mouse_x<xx+974) and (mouse_y<yy+85) and (cooldown<=0) 
                 and (((sh_cargo[sel]+man_size)<=sh_cargo_max[sel])){
-                    var load_from_star;
                     var sel_loc = selecting_location;
                      with (obj_star){
                         if (name==sel_loc){
-                            load_from_star=self;
+                            var load_from_star=self;
                         }
                      }           
-                    var onceh=0;
+                    onceh=0;
                     stop=0;
                     var company=managing;
                     if (company>10){company=0}

@@ -21,7 +21,8 @@ function scr_mission_eta(argument0, argument1, argument2) {
 	    }
 	    if (argument2>1){
 	        with(obj_p_fleet){
-	            var good,i;good=0;i=0;
+				var good=0;
+				var i = 0;
             
 	            repeat(50){i+=1;
 	                if (i<=20){if (capital[i]!="") and (obj_ini.ship_carrying[capital_num[i]]>0) then good=1;}

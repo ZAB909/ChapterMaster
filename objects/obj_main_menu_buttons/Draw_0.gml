@@ -83,8 +83,10 @@ if (instance_exists(obj_main_menu)) and (!instance_exists(obj_saveload)) and (!i
     if (obj_main_menu.tim4>0) and (obj_main_menu.menu!=3) then with(obj_main_menu){
         draw_set_font(fnt_menu);draw_set_halign(fa_center);
         
-        var wfd,xx,yy,wad;wfd="";// xx=1138;yy=532;wad=430;
-        xx=room_width/2;yy=850;wad=800;
+        var wfd = "";// xx=1138;yy=532;wad=430;
+        var xx = room_width / 2;
+		var yy = 850;
+		var wad = 800;
         
         if (word_from_duke!="blank") and (word_from_duke!="") then wfd=word_from_duke;
         if (word_from_duke2!="blank") and (word_from_duke2!="") then wfd=word_from_duke2;
@@ -95,7 +97,7 @@ if (instance_exists(obj_main_menu)) and (!instance_exists(obj_saveload)) and (!i
             draw_text_ext_transformed(xx,yy,string_hash_to_newline("Server: "+string(wfd)),-1,wad,1,1,0);
             draw_text_ext_transformed(xx+0.5,yy+0.5,string_hash_to_newline("Server: "+string(wfd)),-1,wad,1,1,0);
             
-            var da;da=0;
+            var da = 0;
             if (mess_alpha<=60) then da=mess_alpha/60;
             if (mess_alpha>60) then da=1+(((mess_alpha-60)*-1)/60);
             draw_set_alpha(min(da,((obj_main_menu.tim4-20)/50)));

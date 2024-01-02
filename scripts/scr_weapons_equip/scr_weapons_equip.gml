@@ -192,14 +192,16 @@ function scr_weapons_equip() {
 			//i+=1;item_name[i]="Graviton Cannon Mount";
 	}
 
-	if (tc=2) and (tb=1) and (dude=50){var i;i=0; // Land Raider Regular Sponsons
+	if (tc=2) and (tb=1) and (dude=50){
+			i=0; // Land Raider Regular Sponsons
 			i+=1;item_name[i]="(None)";
 			i+=1;item_name[i]="Twin Linked Lascannon Sponsons";
 			i+=1;item_name[i]="Hurricane Bolter Sponsons";
 			i+=1;item_name[i]="Flamestorm Cannon Sponsons";
 	}
 
-	if (tc=2) and (tb=2) and (dude=50){var i;i=0; // Land Raider Relic Sponsons
+	if (tc=2) and (tb=2) and (dude=50){
+			i=0; // Land Raider Relic Sponsons
 			i+=1;item_name[i]="(None)";
 			i+=1;item_name[i]="Quad Linked Heavy Bolter Sponsons";
 			i+=1;item_name[i]="Twin Linked Heavy Flamer Sponsons";
@@ -207,7 +209,8 @@ function scr_weapons_equip() {
 			i+=1;item_name[i]="Twin Linked Volkite Culverin Sponsons";
 	}
 
-	if (tc=3) and (tb=1) and (dude=50){var i;i=0; // Land Raider Pintle
+	if (tc=3) and (tb=1) and (dude=50){
+			i=0; // Land Raider Pintle
 			i+=1;item_name[i]="(None)";
 			i+=1;item_name[i]="Bolter";
 			i+=1;item_name[i]="Combiflamer";
@@ -216,16 +219,18 @@ function scr_weapons_equip() {
 			i+=1;item_name[i]="HK Missile";
 	}
 
-	if (tc<3) and (tb=1) and (dude=51){var i;i=0; // Rhino Weapons
-	    i+=1;item_name[i]="(None)";
-		  i+=1;item_name[i]="Bolter";
+	if (tc<3) and (tb=1) and (dude=51){
+			i=0; // Rhino Weapons
+			i+=1;item_name[i]="(None)";
+			i+=1;item_name[i]="Bolter";
 			i+=1;item_name[i]="Combiflamer";
 			i+=1;item_name[i]="Twin Linked Bolters";
 			i+=1;item_name[i]="Storm Bolter";
 			i+=1;item_name[i]="HK Missile";
 	}
 
-	if (tc=1) and (tb=1) and (dude=52){var i;i=0; // Predator Turret
+	if (tc=1) and (tb=1) and (dude=52){
+			i=0; // Predator Turret
 			i+=1;item_name[i]="(None)";
 			i+=1;item_name[i]="Autocannon Turret";
 			i+=1;item_name[i]="Twin Linked Lascannon Turret";
@@ -238,14 +243,16 @@ function scr_weapons_equip() {
 			i+=1;item_name[i]="Volkite Saker Turret";
 			//i+=1;item_name[i]="Graviton Cannon Turret";
 	}
-	if (tc=2) and (tb=1) and (dude=52){var i;i=0; // Predator Sponsons
+	if (tc=2) and (tb=1) and (dude=52){
+			i=0; // Predator Sponsons
 			i+=1;item_name[i]="(None)";
 			i+=1;item_name[i]="Heavy Bolter Sponsons";
 			i+=1;item_name[i]="Lascannon Sponsons";
 			i+=1;item_name[i]="Heavy Flamer Sponsons";
 			i+=1;item_name[i]="Volkite Culverin Sponsons";
 	}
-	if (tc=3) and (tb=1) and (dude=52){var i;i=0; // Predator Pintle
+	if (tc=3) and (tb=1) and (dude=52){
+			i=0; // Predator Pintle
 			i+=1;item_name[i]="(None)";
 			i+=1;item_name[i]="Bolter";
 			i+=1;item_name[i]="Combiflamer";
@@ -253,24 +260,28 @@ function scr_weapons_equip() {
 			i+=1;item_name[i]="Storm Bolter";
 			i+=1;item_name[i]="HK Missile";
 	}
-	if (tc=1) and (tb=1) and (dude=53){var i;i=0; // Land Speeder Primary
+	if (tc=1) and (tb=1) and (dude=53){
+			i=0; // Land Speeder Primary
 			i+=1;item_name[i]="(None)";
-	    i+=1;item_name[i]="Multi-Melta";
+			i+=1;item_name[i]="Multi-Melta";
 			i+=1;item_name[i]="Heavy Bolter";
 	}
 
-	if (tc=2) and (tb=1) and (dude=53){var i;i=0; // Land Speeder Secondary
+	if (tc=2) and (tb=1) and (dude=53){
+			i=0; // Land Speeder Secondary
 			i+=1;item_name[i]="(None)";
-	    i+=1;item_name[i]="Assault Cannon";
+			i+=1;item_name[i]="Assault Cannon";
 			i+=1;item_name[i]="Heavy Flamer";
 	}
 
-	if (tc=1) and (tb=1) and (dude=54){var i;i=0; // Whirlwind Missiles
+	if (tc=1) and (tb=1) and (dude=54){
+			i=0; // Whirlwind Missiles
 			i+=1;item_name[i]="(None)";
-	    i+=1;item_name[i]="Whirlwind Missiles";
+			i+=1;item_name[i]="Whirlwind Missiles";
 	}
 
-	if (tc=2) and (tb=1) and (dude=54){var i;i=0; // Whirlwind Pintle
+	if (tc=2) and (tb=1) and (dude=54){
+		i=0; // Whirlwind Pintle
 		i+=1;item_name[i]="(None)";
 		i+=1;item_name[i]="Bolter";
 		i+=1;item_name[i]="Combiflamer";
@@ -286,8 +297,9 @@ function scr_weapons_equip() {
 	    i+=1;item_name[i]="Heavy Armour";
 			if dude!=50{i+=1;item_name[i]="Lucifer Pattern Engine";} //not available for Land Raiders
 	}
-	if (tc=5) and (tb=1) and ((dude=50) or (dude=51) or (dude=52) or (dude=54)){var i;i=0; // Tank Accessory
-			i+=1;item_name[i]="(None)";
+	if (tc=5) and (tb=1) and ((dude=50) or (dude=51) or (dude=52) or (dude=54)){
+		i=0; // Tank Accessory
+		i+=1;item_name[i]="(None)";
 	    i+=1;item_name[i]="Dozer Blades";
 	    i+=1;item_name[i]="Searchlight";
 	    i+=1;item_name[i]="Smoke Launchers";
@@ -374,6 +386,4 @@ function scr_weapons_equip() {
 		    i+=1;item_name[i]="Jump Pack";	
 	    }	
 	}
-
-
 }

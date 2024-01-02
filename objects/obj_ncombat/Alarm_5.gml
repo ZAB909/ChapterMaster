@@ -20,13 +20,13 @@ if (final_deaths+final_command_deaths>0){
     if (apoth>1) then part1+=" ("+string(obj_ini.role[100][15])+"s prevented the death of "+string(units_saved)+")";
     if (injured>0) then part8="Marines Critically Injured: "+string(injured);
     
-    var i;i=0;
     for (var i=1;i<array_length(post_unit_lost);i++){
             if (post_unit_lost[i]!="") and (post_units_lost[i]>0) and (post_unit_veh[i]=0){
             part2+=string(post_units_lost[i])+"x "+string(post_unit_lost[i])+", ";
         }
     }
-    part2=string_delete(part2,string_length(part2)-1,2);part2+=".";i=0;
+    part2=string_delete(part2,string_length(part2)-1,2);part2+=".";
+	var i=0;
     
     if (injured>0){newline=part8;scr_newtext();}
     newline=part1;scr_newtext();
@@ -94,13 +94,13 @@ if (vehicle_deaths>0){
 if (post_equipment_lost[1]!=""){
     part6="Equipment Lost: ";
     
-    var i=0;
     for (var i=0;i<array_length(post_equipment_lost);i++){
         if (post_equipment_lost[i]!="") and (post_equipments_lost[i]>0){
             part7+=string(post_equipments_lost[i])+"x "+string(post_equipment_lost[i])+", ";
         }
     }
-    part7=string_delete(part7,string_length(part7)-1,2);part7+=".";i=0;
+    part7=string_delete(part7,string_length(part7)-1,2);part7+=".";
+	var i=0;
 	if (instance_exists(obj_temp4)){part7 += "Some may be recoverable"}
     newline=part6;
     scr_newtext();
@@ -126,7 +126,7 @@ if (slime>0){
     var s1,s2,s3,s4;
     s1="";s2="";s3="";s4="";
     
-    i=-1;
+    var i=-1;
     
     s1="Slime has short-circuited and destroyed "+string(slime);
     
@@ -390,7 +390,7 @@ if (defeat=0) and (enemy=9) and (battle_special="tyranid_org"){
         // thatta=obj_star;
 
         with(obj_star){
-            var u;u=0;
+            var u = 0;
             repeat(4){u+=1;
                 if (p_problem[u,1]="tyranid_org"){p_problem[u,1]="";p_timer[u,1]=0;}
                 if (p_problem[u,2]="tyranid_org"){p_problem[u,2]="";p_timer[u,2]=0;}
@@ -498,7 +498,7 @@ if (obj_ini.omophagea=1){
                 if (obj_controller.loyalty>=50) and (obj_controller.loyalty<70) then obj_controller.last_world_inspection-=20;
                 if (obj_controller.loyalty<50) then scr_loyalty("Inquisitor Killer","+");
 
-                var msg,msg2,i,remove;msg="";msg2="";i=0;remove=0;
+                var msg,msg2;msg="";msg2="";i=0;remove=0;
                 // if (string_count("Inqis",inquisitor_ship.trade_goods)>0) then show_message("B");
                 if (string_count("Inqis1",inquisitor_ship.trade_goods)=1){newline="Inquisitor "+string(obj_controller.inquisitor[1])+" has been eaten!";msg="Inquisitor "+string(obj_controller.inquisitor[1]);remove=1;scr_event_log("red","Your Astartes consume "+string(msg)+".");}
                 if (string_count("Inqis2",inquisitor_ship.trade_goods)=1){newline="Inquisitor "+string(obj_controller.inquisitor[2])+" has been eaten!";msg="Inquisitor "+string(obj_controller.inquisitor[2]);remove=2;scr_event_log("red","Your Astartes consume "+string(msg)+".");}

@@ -65,7 +65,7 @@ if (opened=1){
                     obj_controller.dropdown_open=0;
                     opened=0;
                     
-                    var no;no=false;
+                    var no = false;
                     if (target="event_type") and (option[ii]!="Great Feast") then no=true;
                     if (no=false) then option_selected=ii;
                     

@@ -21,11 +21,18 @@ cooldown[5]=0;
 turret_cool=0;
 shield_size=0;
 
+// general stats
 name="";
 class="";
 hp=0;
 maxhp=0;
 conditions="";
+ship_size = 3;
+leadership = 0;
+capacity=150;
+carrying=0;
+
+// weapons and defences
 shields=1;
 maxshields=1;
 armour_front=0;
@@ -35,6 +42,9 @@ turrets=0;
 fighters=0;
 bombers=0;
 thunderhawks=0;
+
+// image scaling
+bullimage_yscale = 0
 
 for(var i=0; i<8; i++){
     weapon[i]="";

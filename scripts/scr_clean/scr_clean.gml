@@ -52,14 +52,18 @@ function scr_clean(argument0) {
 	        if (veh_hp[you]<0) and (veh_dead[you]=1) then stahp=1;
         
 	        if (stahp=0){
-	            var minus;
-	            minus=hostile_damage;shotted-=1;
-	            minus-=veh_ac[you];if (minus<0) then minus=0.25;
+	            var minus = hostile_damage;
+				shotted -= 1;
+	            minus -= veh_ac[you];
+				
+				if (minus<0) then minus=0.25;
 	            if (enemy=13) and (minus<1) then minus=1;
 	            veh_hp[you]-=minus;
 	            if (veh_hp[you]<=0) and (veh_dead[you]=0){
             
-	                var h,good,open;h=0;good=0;open=0;
+	                var h = 0;
+					var good = 0;
+					var open = 0;
 	                repeat(30){// Need to find the open slot
 	                    h+=1;
 	                    if (veh_type[you]=lost[hh]) and (good=0){

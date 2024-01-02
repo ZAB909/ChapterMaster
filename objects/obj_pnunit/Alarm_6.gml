@@ -11,7 +11,7 @@
 var i;i=0;
 repeat(600){i+=1;
     if (marine_dead[i]>0) and (marine_type[i]!="") and (ally[i]=false){
-        var man_size;man_size=scr_unit_size(marine_armour[i],marine_type[i],true);
+        var man_size=scr_unit_size(marine_armour[i],marine_type[i],true);
 
         /*if (string_count("Terminator",marine_armour[i])>0) then man_size+=1;
         if (marine_armour[i]="Tartaros") then man_size+=1;
@@ -34,7 +34,7 @@ repeat(600){i+=1;
     // if (veh_type[i]="Predator") or (veh_type[i]="Land Raider") then show_message(string(veh_type[i])+" ("+string(veh_co[i])+"."+string(veh_id[i])+")#HP: "+string(veh_hp[i])+"#Dead: "+string(veh_dead[i])+"");
 
     if (veh_dead[i]>0) and (veh_type[i]!="") and (veh_ally[i]=false){
-        var man_size;man_size=scr_unit_size("",veh_type[i],true);
+        var man_size=scr_unit_size("",veh_type[i],true);
 
         /*
         if (veh_type[i]="Rhino") then man_size+=10;

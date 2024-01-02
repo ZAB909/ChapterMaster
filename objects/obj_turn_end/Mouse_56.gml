@@ -71,7 +71,7 @@ __b__ = action_if_number(obj_popup, 0, 0);
 			                obj_fleet.en_escort[ee]=eesc[g];
 			            }
 			        }
-			        var g,ee;g=0;
+			        g=0;
 			        repeat(6){g+=1;
 			            if (allied_fleet[g]!=0){ee+=1;
 			                obj_fleet.enemy[ee]=allied_fleet[g];

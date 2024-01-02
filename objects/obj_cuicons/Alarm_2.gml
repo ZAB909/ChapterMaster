@@ -13,7 +13,9 @@ repeat(300){i+=1;
 global.custom_icons=0;
 
 if (custom_using>0) or (room_get_name(room)="Main_Menu"){
-    var i;i=0;spr_custom[0]=0;spr_custom_icon[0]=0;
+    i=0;
+	spr_custom[0] = 0;
+	spr_custom_icon[0] = 0;
     repeat(300){i+=1;spr_custom[i]=0;spr_custom_icon[i]=-1;
         if (file_exists(working_directory + "\\icons\\custom"+string(i)+".png")){
             spr_custom_icon[i]=sprite_add(working_directory + "\\icons\\custom"+string(i)+".png",1,false,false,0,0);

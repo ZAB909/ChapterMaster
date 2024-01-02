@@ -565,7 +565,7 @@ if (slide=2){
         }
         
         
-        var x1,x2,x3,x4,x6,y1,y2,y3,y4,y6,bs,see_size,total_max,current,top;
+        var x1,x2,x4,x6,y1,y2,y4,y6,bs,see_size,total_max,current,top;
         
         x1=1111;y1=245;x2=1131;y2=671;bs=245;
         draw_rectangle(x1,y1,x2,y2,1);
@@ -762,7 +762,7 @@ if (slide=2){
 
 /* */
 
-var yar;yar=0;
+yar = 0;
 
 if (slide=3){
     draw_set_color(38144);
@@ -1317,7 +1317,7 @@ if (slide=4){
             draw_set_color(0);draw_text(xxx,yyy,string_hash_to_newline(role[c,ide]));
             if (scr_hit(xxx,yyy,1150,yyy+20)=true) and (!instance_exists(obj_creation_popup)){if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_set_color(c_white);draw_rectangle(xxx,yyy,1150,yyy+20,0);
                 draw_set_alpha(1);tooltip=string(role[c,ide])+" Settings";tooltip2="Click to open the settings for this unit.";
-                if (mouse_left>=1) and (custom>0) and (cooldown<=0) and (custom=2){var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=ide+100;cooldown=8000;}
+                if (mouse_left>=1) and (custom>0) and (cooldown<=0) and (custom=2){var pp=instance_create(0,0,obj_creation_popup);pp.type=ide+100;cooldown=8000;}
             }
         }
     }
@@ -1410,7 +1410,8 @@ if (slide=4){
             if (custom>1){
                 if (text_selected="capoth") and (text_bar>30) then draw_text_ext(600,575,string_hash_to_newline(string(hapothecary)),-1,580);
                 if (text_selected="capoth") and (text_bar<=30) then draw_text_ext(600,575,string_hash_to_newline(string(hapothecary)+"|"),-1,580);
-                var str_width,hei;str_width=0;hei=string_height_ext(string_hash_to_newline(hapothecary),-2,580);
+				str_width=0;
+				hei=string_height_ext(string_hash_to_newline(hapothecary),-2,580);
                 if (scr_hit(600,575,785,575+hei)){obj_cursor.image_index=2;
                     if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="capoth";cooldown=8000;keyboard_string=hapothecary;}
                 }
@@ -1425,7 +1426,8 @@ if (slide=4){
             if (custom>1){
                 if (text_selected="chap") and (text_bar>30) then draw_text_ext(600,597,string_hash_to_newline(string(hchaplain)),-1,580);
                 if (text_selected="chap") and (text_bar<=30) then draw_text_ext(600,597,string_hash_to_newline(string(hchaplain)+"|"),-1,580);
-                var str_width,hei;str_width=0;hei=string_height_ext(string_hash_to_newline(hchaplain),-2,580);
+                str_width=0;
+				hei=string_height_ext(string_hash_to_newline(hchaplain),-2,580);
                 if (scr_hit(600,597,785,597+hei)){obj_cursor.image_index=2;
                     if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="chap";cooldown=8000;keyboard_string=hchaplain;}
                 }
@@ -1440,7 +1442,8 @@ if (slide=4){
             if (custom>1){
                 if (text_selected="libra") and (text_bar>30) then draw_text_ext(600,619,string_hash_to_newline(string(clibrarian)),-1,580);
                 if (text_selected="libra") and (text_bar<=30) then draw_text_ext(600,619,string_hash_to_newline(string(clibrarian)+"|"),-1,580);
-                var str_width,hei;str_width=0;hei=string_height_ext(string_hash_to_newline(clibrarian),-2,580);
+				str_width=0;
+				hei=string_height_ext(string_hash_to_newline(clibrarian),-2,580);
                 if (scr_hit(600,619,785,619+hei)){obj_cursor.image_index=2;
                     if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="libra";cooldown=8000;keyboard_string=clibrarian;}
                 }
@@ -1455,7 +1458,8 @@ if (slide=4){
             if (custom>1){
                 if (text_selected="forge") and (text_bar>30) then draw_text_ext(600,641,string_hash_to_newline(string(fmaster)),-1,580);
                 if (text_selected="forge") and (text_bar<=30) then draw_text_ext(600,641,string_hash_to_newline(string(fmaster)+"|"),-1,580);
-                var str_width,hei;str_width=0;hei=string_height_ext(string_hash_to_newline(fmaster),-2,580);
+				str_width=0;
+				hei=string_height_ext(string_hash_to_newline(fmaster),-2,580);
                 if (scr_hit(600,641,785,641+hei)){obj_cursor.image_index=2;
                     if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="forge";cooldown=8000;keyboard_string=fmaster;}
                 }
@@ -1469,7 +1473,8 @@ if (slide=4){
         if (custom>1){
             if (text_selected="recr") and (text_bar>30) then draw_text_ext(600,663,string_hash_to_newline(string(recruiter)),-1,580);
             if (text_selected="recr") and (text_bar<=30) then draw_text_ext(600,663,string_hash_to_newline(string(recruiter)+"|"),-1,580);
-            var str_width,hei;str_width=0;hei=string_height_ext(string_hash_to_newline(recruiter),-2,580);
+			str_width=0;
+			hei=string_height_ext(string_hash_to_newline(recruiter),-2,580);
             if (scr_hit(600,663,785,663+hei)){obj_cursor.image_index=2;
                 if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="recr";cooldown=8000;keyboard_string=recruiter;}
             }
@@ -1482,19 +1487,15 @@ if (slide=4){
         if (custom>1){
             if (text_selected="admi") and (text_bar>30) then draw_text_ext(600,685,string_hash_to_newline(string(admiral)),-1,580);
             if (text_selected="admi") and (text_bar<=30) then draw_text_ext(600,685,string_hash_to_newline(string(admiral)+"|"),-1,580);
-            var str_width,hei;str_width=0;hei=string_height_ext(string_hash_to_newline(admiral),-2,580);
+			str_width=0;
+			hei=string_height_ext(string_hash_to_newline(admiral),-2,580);
             if (scr_hit(600,685,785,685+hei)){obj_cursor.image_index=2;
                 if (mouse_left>=1) and (cooldown<=0) and (!instance_exists(obj_creation_popup)){text_selected="admi";cooldown=8000;keyboard_string=admiral;}
             }
             if (text_selected="admi") then admiral=keyboard_string;
             draw_rectangle(600-1,685-1,785,685+hei,1);
-        }
-        
-        
-    
-    }
-    
-    
+        }    
+    }    
 }
 
 /* */
@@ -1684,7 +1685,8 @@ if (slide=6){
     draw_set_color(38144);
     draw_set_font(fnt_40k_30b);
     draw_set_halign(fa_center);
-    draw_set_alpha(1);var yar;yar=0;
+    draw_set_alpha(1);
+	yar = 0;
     
     tooltip="";tooltip2="";
     obj_cursor.image_index=0;
@@ -1733,7 +1735,7 @@ if (slide=6){
         
         yar=0;if (chapter_master_melee=h) then yar=1;draw_sprite(spr_creation_check,yar,x6,y6);yar=0;
         if (scr_hit(x6,y6,x6+32,y6+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>0) and (restarted=0) and (!instance_exists(obj_creation_popup)){
-            cooldown=8000;var onceh;onceh=0;
+            cooldown=8000;var onceh=0;
             if (chapter_master_melee=h) and (onceh=0){chapter_master_melee=0;onceh=1;}
             if (chapter_master_melee!=h) and (onceh=0){chapter_master_melee=h;onceh=1;}
         }
@@ -1753,7 +1755,7 @@ if (slide=6){
         
         yar=0;if (chapter_master_ranged=h) then yar=1;draw_sprite(spr_creation_check,yar,x6,y6);yar=0;
         if (scr_hit(x6,y6,x6+32,y6+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>0) and (restarted=0) and (!instance_exists(obj_creation_popup)){
-            cooldown=8000;var onceh;onceh=0;
+            cooldown=8000;var onceh = 0;
             if (chapter_master_ranged=h) and (onceh=0){chapter_master_ranged=0;onceh=1;}
             if (chapter_master_ranged!=h) and (onceh=0){chapter_master_ranged=h;onceh=1;}
         }
@@ -1789,10 +1791,10 @@ if (slide=6){
         
         yar=0;if (chapter_master_specialty=h) then yar=1;draw_sprite(spr_creation_check,yar,x6,y6+214);yar=0;
         
-        var nope;nope=0;if (h=3) and ((race[100,17]=0) or (string_count("Psyker Intolerant",ha2)>0)) then nope=1;
+        var nope=0;if (h=3) and ((race[100,17]=0) or (string_count("Psyker Intolerant",ha2)>0)) then nope=1;
         
         if (scr_hit(x6,y6+214,x6+32,y6+32+214)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (restarted=0) and (nope=0){
-            cooldown=8000;var onceh;onceh=0;
+            cooldown=8000;var onceh = 0;
             if (chapter_master_specialty!=h) and (onceh=0){chapter_master_specialty=h;onceh=1;}
         }
         if (scr_hit(x6,y6+214,x6+162,y6+234)=true) and (nope=0){
@@ -1813,8 +1815,6 @@ if (slide=6){
 
 
 // 850,860
-
-var xx,yy;
 xx=375;yy=10;
 
 

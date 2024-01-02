@@ -1,9 +1,9 @@
 
 if (global.load>0) or (instance_exists(obj_saveload)) then exit;
 
-if (action!="") and (orbiting!=0){
+if (action!="") and (orbiting!=undefined){
     if (instance_exists(orbiting)){orbiting.present_fleet[owner]-=1;}
-    orbiting=0;
+    orbiting = undefined;
 }
 
 if (capital_number<0) then capital_number=0;

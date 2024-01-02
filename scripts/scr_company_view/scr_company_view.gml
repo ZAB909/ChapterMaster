@@ -1,6 +1,6 @@
 function scr_company_view(company) {
-	var v, mans, bad, squads, squad_type, squad_loc, squad_members, unit, unit_loc, last_man, last_vehicle;
-	v=0;
+	var mans, bad, squads, squad_type, squad_loc, squad_members, unit, unit_loc, last_man, last_vehicle;
+
 	mans=0;
 	bad=0;
 	squads=0;
@@ -222,7 +222,7 @@ function scr_company_view(company) {
 	    }
 	}
 
-	v=last_man;
+	var v=last_man;
 	last_vehicle=0;
 	for (var i=1;i<=100;i++){
 	// if (!instance_exists(obj_popup)) then repeat(100){// 100

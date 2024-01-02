@@ -3,9 +3,10 @@ var __b__;
 __b__ = action_if_variable(purge, 0, 0);
 if __b__
 {
-
+}
 exit;
 
+/* this code is unreachable
 var xx, yy;
 xx=__view_get( e__VW.XView, 0 );
 yy=__view_get( e__VW.YView, 0 );
@@ -19,7 +20,7 @@ repeat(31){i+=1;if (ship_all[i]!=0) and (ship[i]!="") then ships_selected+=1;
 
 
 
-var i, fy, why, onceh, loca, add_ground;i=0;why=0;onceh=0;loca=0;add_ground=0;
+var  fy, why, onceh, loca, add_ground;i=0;why=0;onceh=0;loca=0;add_ground=0;
 
 if (l_size>0) then loca=1;
 
@@ -73,7 +74,8 @@ if (obj_controller.cooldown<=0){
     }
     
     if (mouse_x>=xx+76) and (mouse_y>=yy+82) and (mouse_x<xx+102) and (mouse_y<yy+95){
-        var onceh;once=0;i=0;
+		once=0;
+		i=0;
         if (all_sel=0) and (onceh=0){
             repeat(30){i+=1;
                 if (ship[i]!="") and (ship_all[i]=0){ship_all[i]=1;scr_drop_fiddle(ship_ide[i],true,i,attack);}
@@ -227,7 +229,7 @@ if (obj_controller.cooldown<=0) and (once_only=0){// Need to change max_ships to
             }
         }
         
-        var i;i=-1;ships_selected=0;
+		i=-1;ships_selected=0;
         repeat(31){
             i+=1;if (ship_all[i]!=0) then scr_battle_roster(ship[i],ship_ide[i],false);
         }

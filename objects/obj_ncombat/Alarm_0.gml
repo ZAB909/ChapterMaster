@@ -283,7 +283,6 @@ if (battle_special="space_hulk"){
     }
     // * CSM Space Hulk *
     if (enemy=10){
-        var make,modi;
         modi=random_range(0.80,1.20)+1;
         make=round(max(3,player_starting_dudes*modi));
         
@@ -3022,7 +3021,7 @@ if (player_defenses+player_silos>0){
     u=instance_create(-50,240,obj_pnunit);
     u.defenses=1;
     
-    for(var i=1; i<=3; i++){
+    for(i=1; i<=3; i++){
         u.veh_co[i]=0;
         u.veh_id[i]=0;
         u.veh_type[i]="Defenses";

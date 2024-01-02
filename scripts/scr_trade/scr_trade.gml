@@ -1,9 +1,4 @@
 function scr_trade(argument0) {
-
-
-
-
-
 	// argument0: true for trade, false for just tabulate score
 
 	var my_worth, their_worth, rando4, rando5;
@@ -11,10 +6,6 @@ function scr_trade(argument0) {
 	their_worth=0;
 	rando4=floor(random(100))+1;
 	rando5=floor(random(100))+1;
-
-
-
-
 
 	var i;i=0;
 	repeat(4){i+=1;
@@ -212,7 +203,7 @@ function scr_trade(argument0) {
     
     
 	    // Temporary work around
-	    if (lisc>0){var i;i=0;
+	    if (lisc>0){i=0;
 	        repeat(4){i+=1;
 	            if (trade_give[i]="Requisition") then requisition-=trade_mnum[i];
 	            if (trade_give[i]="Gene-Seed") and (trade_mnum[i]>0){
@@ -223,7 +214,8 @@ function scr_trade(argument0) {
 	            }
 	            if (trade_give[i]="Info Chip") and (trade_mnum[i]>0) then info_chips-=trade_mnum[i];
 	            if (trade_give[i]="STC Fragment") and (trade_mnum[i]>0){
-	                var remov,p;remov=0;p=0;
+	                var remov=0;
+					var p=0;
 	                repeat(100){
 	                    if (remov=0){p=choose(1,2,3);
 	                        if (p=1) and (stc_wargear_un>0){stc_wargear_un-=1;remov=1;}
@@ -233,8 +225,6 @@ function scr_trade(argument0) {
 	                }
 	            }
 	        }
-        
-        
 	    }
     
     
@@ -279,7 +269,10 @@ function scr_trade(argument0) {
 	            // if (obj_controller.diplomacy=4) and (owner = eFACTION.Imperium) then instance_create(x,y,obj_temp3);
 	        }
 	        if (diplomacy=5){
-	            with(obj_star){var ahuh,q;ahuh=0;q=0;
+	            with(obj_star)
+				{
+					var ahuh = 0;
+					var q = 0;
 	                repeat(4){q+=1;if (p_owner[q]=5) then ahuh=1;
 	                    if (p_owner[q]<6) and (planet_feature_bool(p_feature[q],P_features.Sororitas_Cathedral )==1) then ahuh=1;
 	                }
@@ -291,7 +284,7 @@ function scr_trade(argument0) {
 	        // show_message("TG2:"+string(instance_number(obj_temp2))+", TG3:"+string(instance_number(obj_temp3))+", TG4:"+string(instance_number(obj_temp4)));
         
         
-	        var targ, flit, i,chasing;chasing=0;targ=0;// Set target, chase
+	        var targ, flit,chasing;chasing=0;targ=0;// Set target, chase
         
 	        // if (obj_ini.fleet_type!=1){
 	            if (instance_exists(obj_temp2)) then targ=instance_nearest(obj_temp2.x,obj_temp2.y,obj_temp3);
@@ -400,7 +393,8 @@ function scr_trade(argument0) {
 	            }
 	            if (trade_give[i]="Info Chip") and (trade_mnum[i]>0) then info_chips-=trade_mnum[i];
 	            if (trade_give[i]="STC Fragment") and (trade_mnum[i]>0){
-	                var remov,p;remov=0;p=0;
+					var remov = 0;
+					var p = 0;
 	                repeat(100){
 	                    if (remov=0){p=choose(1,2,3);
 	                        if (p=1) and (stc_wargear_un>0){stc_wargear_un-=1;remov=1;}
@@ -504,7 +498,8 @@ function scr_trade(argument0) {
 	            }
 	            if (trade_give[i]="Info Chip") and (trade_mnum[i]>0) then info_chips-=trade_mnum[i];
 	            if (trade_give[i]="STC Fragment") and (trade_mnum[i]>0){
-	                var remov,p;remov=0;p=0;
+	                var remov = 0;
+					var p = 0;
 	                repeat(100){
 	                    if (remov=0){p=choose(1,2,3);
 	                        if (p=1) and (stc_wargear_un>0){stc_wargear_un-=1;remov=1;}

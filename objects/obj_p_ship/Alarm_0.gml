@@ -84,8 +84,10 @@ repeat(100){i+=1;
 }
 
 
-var co,i,b;
-co=-1;i=0;b=0;
+var co,b;
+co=-1;
+i=0;
+b=0;
 repeat(11){co+=1;i=0;
     repeat(300){i+=1;
         if (obj_ini.lid[co][i]=ship_id) and (obj_ini.age[co][i]!=floor(obj_ini.age[co][i])){

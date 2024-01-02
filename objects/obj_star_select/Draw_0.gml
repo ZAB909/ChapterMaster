@@ -95,7 +95,9 @@ repeat(4){
 
 if (obj_controller.selecting_planet!=0){
     var pp;pp=obj_controller.selecting_planet;
-    var nm, temp1;temp1=0;nm=scr_roman(pp);
+    var nm;
+	temp1=0;
+	nm=scr_roman(pp);
     draw_set_halign(fa_center);
     draw_set_font(fnt_40k_14);
     draw_sprite(spr_planet_screen,0,xx+27,yy+165);
@@ -244,7 +246,10 @@ if (obj_controller.selecting_planet!=0){
     
     var temp8,t;temp8="";t=-1;
     repeat(8){
-        var ahuh,ahuh2,ahuh3;ahuh="";ahuh2=0;ahuh3=0;t+=1;
+
+		var ahuh="";
+		var ahuh2=0;
+		var ahuh3=0;t+=1;
         
         if (t=0){ahuh="Adepta Sororitas: ";ahuh2=target.p_sisters[pp];}
         if (t=1){ahuh="Ork Presence: ";ahuh2=target.p_orks[pp];}
@@ -275,7 +280,7 @@ if (obj_controller.selecting_planet!=0){
     repeat(11){t+=1;fit[t]="";}
 	var planet_displays = "";
 	var feat_count;
-	var feat_count = array_length(target.p_feature[pp]);
+	feat_count = array_length(target.p_feature[pp]);
 	if ( feat_count > 0){
 	for (var i =0; i <  feat_count ;i++){
 		if (target.p_feature[pp][i].planet_display != 0){
@@ -304,7 +309,9 @@ if (obj_controller.selecting_planet!=0){
     
     
     if (obj_controller.selecting_planet>0){
-        var pppp,pp;pppp=obj_controller.selecting_planet;pp=pppp;
+        var pppp;
+		pppp=obj_controller.selecting_planet;
+		pp=pppp;
         draw_set_color(c_black);
         draw_set_halign(fa_center);
         
@@ -395,7 +402,7 @@ if (target!=0){
 
 
 if (debug=1){
-    var xx,yy,pp;
+    var pp;
     xx=__view_get( e__VW.XView, 0 )+0;
     yy=__view_get( e__VW.YView, 0 )+0;
     

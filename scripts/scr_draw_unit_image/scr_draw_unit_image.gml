@@ -661,7 +661,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                         if (armour() == "MK3 Iron Armour"){
                            eye_move = 3;
                         }
-                        var body_part = global.body_parts[part];
+                        body_part = global.body_parts[part];
                         var bionic = body[$ body_part][$"bionic"];
                         switch(body_part){
                             case "left_eye":

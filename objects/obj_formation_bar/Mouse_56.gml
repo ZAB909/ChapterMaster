@@ -1,11 +1,9 @@
 
 
-var mah_target;mah_target=0;
+var mah_target;
+mah_target = col_target;
 /*if (dragging=true) and (nobar=true) then mah_target=col_target;
 if (dragging=true) and (nobar=false) then mah_target=nearest_col;*/
-
-
-mah_target=col_target;
 
 
 if (dragging=true) and (instance_exists(mah_target)){

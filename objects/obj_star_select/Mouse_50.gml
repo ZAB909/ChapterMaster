@@ -190,7 +190,7 @@ if (obj_controller.selecting_planet>0){// Lose focus on no button click
 
 
 if (obj_controller.menu=0) and (obj_controller.zoomed=0) and (!instance_exists(obj_bomb_select)) and (!instance_exists(obj_drop_select)) and (obj_controller.cooldown<=0){
-    var closes,sta1,sta2;closes=0;;sta1=0;sta2=0;
+    var closes,sta1,sta2;closes=0;sta1=0;sta2=0;
     sta1=instance_nearest(mouse_x,mouse_y,obj_star);
     sta2=point_distance(mouse_x,mouse_y,sta1.x,sta1.y);
 
@@ -329,7 +329,7 @@ if (obj_controller.cooldown<=0) and (loading=1){
                 arti.tch=tch;arti.mch=mch;
                 // Right here should pass the man_sel variables
                 // var i;i=-1;repeat(150){i+=1;arti.man_sel[i]=obj_controller.man_sel[i];}
-                var i;i=-1;
+                i=-1;
                 repeat(150){i+=1;
                     arti.man_sel[i]=0;arti.ide[i]=0;arti.man[i]="";
                     if (obj_controller.man_sel[i]!=0){
@@ -533,7 +533,7 @@ if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_
     if (combating>0){
         obj_controller.combat=combating;
     
-        var ii, xx, yy, good, pfleet, enemy_fleet, allied_fleet, ecap, efri, eesc, acap, afri, aesc, e1,e2,e3;
+        var ii, good, pfleet, enemy_fleet, allied_fleet, ecap, efri, eesc, acap, afri, aesc, e1,e2,e3;
         ii=0;xx=0;yy=0;good=0;pfleet=0;enemy_fleet=0;allied_fleet=0;ecap=0;efri=0;eesc=0;e1=0;e2=0;e3=0;
         ii=-1;repeat(20){ii+=1;enemy_fleet[ii]=0;allied_fleet[ii]=0;ecap[ii]=0;efri[ii]=0;eesc[ii]=0;acap[ii]=0;afri[ii]=0;aesc[ii]=0;}
         
@@ -582,7 +582,8 @@ if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_
                         }
                     }
                     
-                    var l1,l2;l1=0;l2=0;
+                    var l1=0;
+					var l2=0;
                     if (obj_controller.faction_status[e]!="War") and (e!=combating){
                         repeat(10){l1+=1;if (allied_fleet[l1]=0) and (l2=0) then l2=l1;}
                         allied_fleet[l2]=e;
@@ -677,7 +678,7 @@ if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_
         // 
         
         
-        var i;i=0;
+        i=0;
         repeat(8){
             i+=1;if (pfleet.capital[i]!="") then obj_fleet.fighting[pfleet.capital_num[i]]=1;
         }

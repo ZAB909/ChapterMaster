@@ -250,16 +250,16 @@ obj_ini.weapon_color=obj_creation.weapon_color;
 
 
 /* */
-var i, k, onceh;i=0;k=0;onceh=0;
+var k, onceh;
+i=0;
+k=0;
+onceh=0;
 
 // instance_activate_object(obj_combat_info);
 
 repeat(100){i+=1;
     if (fighting[i]=1) and (obj_ini.ship_class[i]!="") then ships_max+=1;
 }
-
-
-
 
 i=0;
 repeat(100){i+=1;
@@ -274,7 +274,7 @@ repeat(100){i+=1;
         ship_conditions[i]=obj_ini.ship_conditions[i];ship_speed[i]=obj_ini.ship_speed[i];ship_turning[i]=obj_ini.ship_turning[i];
         ship_front_armour[i]=obj_ini.ship_front_armour[i];ship_other_armour[i]=obj_ini.ship_other_armour[i];ship_weapons[i]=obj_ini.ship_weapons[i];
         
-        var t;t=0;
+        var t = 0;
         t+=1;ship_wep[i,t]=obj_ini.ship_wep[i,t];ship_wep_facing[i,t]=obj_ini.ship_wep_facing[i,t];ship_wep_condition[i,t]=obj_ini.ship_wep_condition[i,t];
         t+=1;ship_wep[i,t]=obj_ini.ship_wep[i,t];ship_wep_facing[i,t]=obj_ini.ship_wep_facing[i,t];ship_wep_condition[i,t]=obj_ini.ship_wep_condition[i,t];
         t+=1;ship_wep[i,t]=obj_ini.ship_wep[i,t];ship_wep_facing[i,t]=obj_ini.ship_wep_facing[i,t];ship_wep_condition[i,t]=obj_ini.ship_wep_condition[i,t];

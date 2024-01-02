@@ -88,8 +88,13 @@ if (column_num[col]>0){// Start ship creation
 
 
 if (enemy=2){// This is an orderly Tau ship formation
-    var xx,yy,i, temp1, x2, man;
-    xx=0;yy=0;i=0;temp1=0;x2=1200;man=0;
+    var xx,yy;
+    xx=0;
+	yy=0;
+	i=0;
+	temp1=0;
+	x2=1200;
+	man=0;
     
     if (en_num[4]>0){
         yy=(room_height/2)-((en_height[4]*en_num[4])/2);
@@ -139,7 +144,7 @@ if (en_capital>0){en_column[1]="Void Stalker";en_num[1]=en_capital;en_size[1]=3;
 
 
 if (enemy=6){// This is an orderly Tau ship formation
-    var xx,yy,i, temp1, x2, man;
+    var xx,yy;
     xx=0;yy=0;i=0;temp1=0;x2=1200;man=0;
     
     if (en_num[4]>0){
@@ -179,10 +184,10 @@ if (enemy=6){// This is an orderly Tau ship formation
 
 
 if (enemy=7) or (enemy=10){// This is spew out random ships without regard for formations
-    var xx,yy,dist,targ,numb,man;
+    var xx,yy,dist,targ,numb;
     xx=0;yy=0;dist=0;target=0;numb=0;man=0;
     
-    var i;i=0;
+    i=0;
     
     repeat(5){
     
@@ -205,7 +210,7 @@ if (enemy=7) or (enemy=10){// This is spew out random ships without regard for f
 
 
 if (enemy=8){// This is an orderly Tau ship formation
-    var xx,yy,i, temp1, x2, man;
+    var xx,yy;
     xx=0;yy=0;i=0;temp1=0;x2=1200;man=0;
     
     yy=(room_height/2)-((en_height[5]*en_num[5])/2);
@@ -244,8 +249,7 @@ if (enemy=8){// This is an orderly Tau ship formation
 
 
 if (enemy=9){// This is an orderly Tyranid ship formation
-    var xx,yy,i, temp1, x2, man;
-    xx=0;yy=0;i=0;temp1=0;x2=1200;man=0;
+    var xx,yy;
     
     yy=(room_height/2)-((en_height[4]*en_num[4])/2);
     yy+=(en_height[4]/2);

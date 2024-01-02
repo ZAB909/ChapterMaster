@@ -71,7 +71,7 @@ function scr_quest(argument0, argument1, argument2, argument3) {
     
     
 	    if (argument0=4){
-	        var first_quest,i;
+	        var first_quest;
 	        first_quest=0;i=0;
         
 	        repeat(30){if (first_quest=0){i+=1;if (obj_controller.quest[i]=argument1) then first_quest=i;}}

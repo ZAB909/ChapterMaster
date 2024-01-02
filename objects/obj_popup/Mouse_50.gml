@@ -90,7 +90,7 @@ if (type=5) and (cooldown<=0){
     /*if (before!=target_comp) and (type=5){
         var i,cap,bear,spec,champ;i=0;cap=0;bear=0;spec=0;champ=0;
 
-        var i;i=-1;
+        i=-1;
         repeat(10){i+=1;role_name[i]="";role_exp[i]=0;}
         req_armour="";req_armour_num=0;
         req_gear="";req_gear_num=0;
@@ -267,7 +267,11 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
 
         with(obj_controller){
             // man_current=0;
-            var i;i=-1;man_size=0;selecting_location="";selecting_types="";selecting_ship=0;
+            var i = -1;
+			var man_size = 0;
+			selecting_location = "";
+			selecting_types = "";
+			selecting_ship = 0;
             repeat(501){w+=1;
                 man[w]="";ide[w]=0;man_sel[w]=0;ma_lid[w]=0;ma_wid[w]=0;ma_god[w]=0;ma_bio[w]=0;
                 ma_race[w]=0;ma_loc[w]="";ma_name[w]="";ma_role[w]="";ma_wep1[w]="";display_unit[w]={};
@@ -291,7 +295,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
 
 /* */
 
-var xx,yy,change_tab,do_not_change;
+var do_not_change;
 xx=__view_get( e__VW.XView, 0 );
 yy=__view_get( e__VW.YView, 0 );
 change_tab=0;
@@ -508,14 +512,15 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
     if (type=5) and (cooldown<=0) and (all_good=1) and (target_comp>=0) and (role_name[target_role]!=""){
         cooldown=999;obj_controller.cooldown=8000;
 
-        var mahreens=0;i=0;
+        var mahreens=0;
+
 
         if (target_comp>10) then target_comp=0;
         manag=obj_controller.managing;
         if (manag>10) then manag=0;
         var company=manag;
 
-        for(i=0;i<501;i++){
+        for(var i=0;i<501;i++){
             if (obj_ini.name[target_comp][i]=="" and obj_ini.name[target_comp][i+1]=="") {
                 mahreens=i;
                 break;
@@ -687,7 +692,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
 
             if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1) and (vehicle_equipment!=-1){
                 var check=0,scout_check=0;
-                unit = obj_controller.display_unit[i];
+                var unit = obj_controller.display_unit[i];
 
                 if (n_armour=obj_controller.ma_armour[i]) then check=1;
                 if (check=0) and (n_armour!=obj_controller.ma_armour[i]) and (n_armour!="Assortment")and ((vehicle_equipment=1) or (vehicle_equipment=6)){ //normal infantry or dread armour
@@ -741,7 +746,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
 
 
                 if (n_wep1=obj_controller.ma_wep2[i]) and (n_wep2!="Assortment") and (n_wep1!="Assortment") and ((vehicle_equipment=1) or (vehicle_equipment=6)){ //normal infantry or dread wep swap
-                    var temp;temp="";
+                    var temp="";
                     temp=obj_controller.ma_wep1[i];// Get temp
                     obj_controller.ma_wep1[i]=obj_controller.ma_wep2[i];
                     obj_ini.wep1[company][obj_controller.ide[i]]=obj_ini.wep2[company][obj_controller.ide[i]];// Wep2 -> Wep1
@@ -751,7 +756,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
 
 
                 if (n_wep2=obj_controller.ma_wep1[i]) and (n_wep2!="Assortment") and (n_wep1!="Assortment") and ((vehicle_equipment=1) or (vehicle_equipment=6)){ //normal infantry or dread wep swap
-                    var temp;temp="";
+                    var temp="";
                     temp=obj_controller.ma_wep2[i];// Get temp
                     obj_controller.ma_wep2[i]=obj_controller.ma_wep1[i];
                     obj_ini.wep2[company][obj_controller.ide[i]]=obj_ini.wep1[company][obj_controller.ide[i]];// Wep1 -> Wep2
@@ -1235,7 +1240,7 @@ if (mouse_x>=xx+408) and (mouse_y>=yy+393) and (mouse_x<xx+518) and (mouse_y<yy+
 }
 
 if (type=8) and (cooldown<=0){
-    var xx,yy,before;
+    var before;
     xx=__view_get( e__VW.XView, 0 )+951;yy=__view_get( e__VW.YView, 0 )+48;
     before=target_comp;
 
@@ -1275,13 +1280,15 @@ if (type=8) and (cooldown<=0){
 
 
     if (cooldown<=0) and (target_comp!=-1){
-        var xx,yy,bb;bb="";x2=__view_get( e__VW.XView, 0 )+951;y2=__view_get( e__VW.YView, 0 )+398;
+        var bb;bb="";
+		var x2=__view_get( e__VW.XView, 0 )+951;
+		var y2=__view_get( e__VW.YView, 0 )+398;
         var top,sel,temp1,temp2,temp3,temp4,temp5;temp1="";temp2="";temp3="";temp4="";temp5="";
         top=obj_controller.man_current;var stop;stop=0;sel=top;
 
         repeat(min(obj_controller.man_max,23)){
             if (mouse_x>=xx+29) and (mouse_y>=yy+150) and (mouse_x<xx+569) and (mouse_y<yy+175.4){
-                var onceh;onceh=0;stop=0;
+                var onceh=0;stop=0;
                 if (obj_controller.man_sel[sel]=0) and (onceh=0){cooldown=8000;units=1;
                     if (stop=0){onceh=1;obj_controller.man_sel[sel]=1;stop=sel;}
                 }

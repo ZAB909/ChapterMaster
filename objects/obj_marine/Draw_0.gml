@@ -1,4 +1,4 @@
-
+/*
 // if (wounded>0) then d3d_set_fog(true,16645629,0,0);
 if (wounded>0) then d3d_set_fog(true,255,0,0);
 if (wounded<=0){

@@ -74,8 +74,8 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	        }
         
 	        if (okay>=1){
-	            var cooh,va;
-	            cooh=0;va=0;
+	            var cooh=0;
+				var va=0;
             
 	            if (meeting=false){cooh=co;va=v;}
 	            if (meeting=true){if (v<=obj_temp_meeting.dudes){
@@ -112,7 +112,9 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
             
 	                // show_message("enemy marine found");
             
-	                var col,moov,targ;col=0;targ=0;moov=0;
+					var col = 0;
+					var targ = 0;
+					var moov = 0;
                 
 	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][12]){col=22-obj_controller.bat_scout_column;new_combat.en_scouts+=1;}
 	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][8]){col=22-obj_controller.bat_tactical_column;new_combat.en_tacticals+=1;}
@@ -184,8 +186,8 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
                 
 	                targ=instance_nearest(col*10,240,obj_enunit);
                 
-	                var t,first_openz;
-	                t=0;first_openz=0;
+	                var t=0;
+					var first_openz=0;
 	                repeat(700){t+=1;
 	                    if (first_openz=0){
 	                        if (targ.dudes[t]="") and (first_openz=0) then first_openz=t;
@@ -208,7 +210,7 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	                new_combat.enemy_forces+=1;
 	                new_combat.enemy_max+=1;
                 
-	                var dr;dr=0;
+	                var dr = 0;
 	                dr=0.7-((targ.dudes_exp[targ.men]*targ.dudes_exp[targ.men])/40000);
 	                if (targ.dudes_gear[targ.men]="Rosarius") then dr-=0.33;
 	                if (targ.dudes_gear[targ.men]="Iron Halo") then dr-=0.33;
@@ -217,7 +219,7 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	                targ.dudes_dr[targ.men]=dr;
                 
 	                if (deploying_unit.role[cooh,va]="Death Company"){// Ahahahahah
-	                    var really;really=false;
+	                    var really = false;
 
 	                    if (string_count("Dreadnought",obj_ini.armour[co][v])>0) then really=true;
 	                    col=min(22-obj_controller.bat_assault_column,22-obj_controller.bat_command_column,22-obj_controller.bat_honor_column,22-obj_controller.bat_dreadnought_column,22-obj_controller.bat_veteran_column);
@@ -271,7 +273,9 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	            }
             
 	            if (he_good=1){sofar+=1;
-	                var col,moov,targ;col=0;targ=0;moov=0;
+					var col=0;
+					var targ=0;
+					var moov=0;
                 
 	                if (new_combat.battle_special="space_hulk") then new_combat.player_starting_dudes+=1;
                 
@@ -364,7 +368,7 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
                 
                 
 	                if (deploying_unit.role[cooh,va]="Death Company"){// Ahahahahah
-	                    var really;really=false;
+	                    var really = false;
 
 	                    if (string_count("Dreadnought",targ.marine_armour[targ.men])>0) then really=true;
 	                    if (really=false) then obj_ncombat.thirsty+=1;if (really=true) then obj_ncombat.really_thirsty+=1;
@@ -376,7 +380,7 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	                if (targ.marine_armour[targ.men]="Scout Armour") then targ.marine_ac[targ.men]=8;
 	                if (targ.marine_armour[targ.men]="MK3 Iron Armour"){targ.marine_ac[targ.men]=20;targ.marine_ranged[targ.men]-=0.1;}
 	                if (targ.marine_armour[targ.men]="MK4 Maximus"){targ.marine_ac[targ.men]=19;targ.marine_ranged[targ.men]+=0.05;targ.marine_attack[targ.men]+=0.05;}
-                        if (targ.marine_armour[targ.men]="MK5 Heresy"){targ.marine_ac[targ.men]=17;targ.marine_attack[targ.men]+=0.1;targ.marine_ranged[targ.men]-=0.05;}
+                    if (targ.marine_armour[targ.men]="MK5 Heresy"){targ.marine_ac[targ.men]=17;targ.marine_attack[targ.men]+=0.1;targ.marine_ranged[targ.men]-=0.05;}
 	                if (targ.marine_armour[targ.men]="MK6 Corvus"){targ.marine_ac[targ.men]=18;targ.marine_ranged[targ.men]+=0.1;}
 	                if (targ.marine_armour[targ.men]="MK7 Aquila") then targ.marine_ac[targ.men]=18;
 	                if (targ.marine_armour[targ.men]="MK8 Errant") then targ.marine_ac[targ.men]=19;

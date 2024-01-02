@@ -17,7 +17,7 @@ vehicles_saved=0;
 // show_message("pnunit alarm 5; lol casualties");
 
 var i=0,new_exp, cur_exp, unit;
-total_battle_exp_gain = 0;
+
 if (obj_ncombat.defeat=0){
     for (i=1;i<array_length(marine_co);i++){
         unit=obj_ini.TTRPG[marine_co[i]][marine_id[i]];
@@ -61,9 +61,8 @@ if (obj_ncombat.defeat=0){
         }
         
         if (veh_type[i]!="") and (veh_dead[i]=1) and (obj_controller.stc_bonus[3]=4) and (veh_ally[i]=false){
-            var rand1, survival;onceh=0;
-            survival=20;
-            rand1=floor(random(100))+1;
+            var survival = 20;
+            var rand1 = floor(random(100))+1;
             if (rand1<=survival) and (veh_dead[i]!=2){
                 veh_hp[i]=10;veh_dead[i]=0;
                 obj_ncombat.vehicles_saved+=1;
@@ -118,7 +117,7 @@ i=0;
         }
     }
     
-    var destroy;destroy=0;
+    var destroy=0;
     if ((marine_dead[i]>0) or (obj_ncombat.defeat!=0)) and (marine_type[i]!="") and (ally[i]=false){
         
     
@@ -149,8 +148,8 @@ i=0;
             obj_controller.penitent_turnly=0;
         }
         
-        if  (obj_ini.race[marine_co[i],marine_id[i]]=1){
-            var age;age=obj_ini.age[marine_co[i],marine_id[i]];
+        if  (obj_ini.race[marine_co[i]][marine_id[i]]=1){
+            var age=obj_ini.age[marine_co[i]][marine_id[i]];
             if (age<=((obj_controller.millenium*1000)+obj_controller.year)-10) and (obj_ini.zygote=0) then obj_ncombat.seed_max+=1;
             if (age<=((obj_controller.millenium*1000)+obj_controller.year)-5) then obj_ncombat.seed_max+=1;
         }
@@ -179,9 +178,10 @@ i=0;
         repeat(5){
             wah+=1;
             artif=false;
-            var eqp_chance, dece;
-            eqp_chance=50;
-            dece=floor(random(100))+1;
+			
+            var eqp_chance=50;
+            var dece=floor(random(100))+1;
+			
             if (obj_ncombat.attacker=1) then eqp_chance-=10;
             if (obj_ncombat.dropping=1) then eqp_chance-=20;
             if (obj_ncombat.dropping=1) and (obj_ncombat.defeat=1) then dece=9999;
@@ -194,7 +194,8 @@ i=0;
                 if (marine_armour[i]="Terminator Armour") or (marine_armour[i]="Tartaros") then eqp_chance+=30;
                 if (string_count("&",marine_armour[i])>0){eqp_chance=90;artif=true;}
                 if (dece>eqp_chance){
-                    var last,o;last=0;o=0;
+                    var last = 0;
+					var o = 0;
                     repeat(50){
                         if (last=0){
                             o+=1;artif=false;
@@ -224,7 +225,8 @@ i=0;
                 if (obj_ini.race[marine_co[i],marine_id[i]]!=1) then dece=9999;
             
                 if (dece>eqp_chance){
-                    var last,o;last=0;o=0;
+                    var last = 0;
+					var o = 0;
                     repeat(50){
                         if (last=0){
                             o+=1;artif=false;
@@ -248,7 +250,8 @@ i=0;
                 if (obj_ini.race[marine_co[i],marine_id[i]]!=1) then dece=9999;
                 
                 if (dece>eqp_chance){
-                    var last,o;last=0;o=0;
+                    var last = 0;
+					var o = 0;
                     repeat(50){
                         if (last=0){
                             o+=1;artif=false;
@@ -276,7 +279,8 @@ i=0;
                 }
                 
                 if (dece>eqp_chance){
-                    var last,o;last=0;o=0;
+                    var last = 0;
+					var o = 0;
                     repeat(50){
                         if (last=0){
                             o+=1;artif=false;
@@ -296,7 +300,8 @@ i=0;
                 if (obj_ini.race[marine_co[i],marine_id[i]]!=1) then dece=9999;
                 
                 if (dece>eqp_chance){
-                    var last,o;last=0;o=0;
+                    var last = 0;
+					var o = 0;
                     repeat(50){
                         if (last=0){
                             o+=1;artif=false;
@@ -319,7 +324,9 @@ i=0;
     if ((veh_dead[i]=1) or (obj_ncombat.defeat!=0)) and (veh_type[i]!="") and (veh_ally[i]=false){
         obj_ncombat.vehicle_deaths+=1;
         
-        var last,o;last=0;o=0;
+        var last = 0;
+		var o = 0;
+		
         repeat(50){
             if (last=0){
                 o+=1;

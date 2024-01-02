@@ -16,8 +16,10 @@ function scr_target(argument0, argument1) {
 
 	repeat(1){
 	    if (final_target=0){
-	        var targets,target_num,target_id,target_min,target_max,roll,dice,f;
-	        targets=0;roll=0;dice=0;
+	        var target_num,target_id,target_min,target_max,f;
+	        var targets = 0;
+			var roll = 0;
+			var dice = 0;
         
 	        f=-1;
 	        repeat(31){f+=1;

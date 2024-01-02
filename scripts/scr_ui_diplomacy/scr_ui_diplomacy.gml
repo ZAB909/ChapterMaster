@@ -2,7 +2,7 @@ function scr_ui_diplomacy() {
 	var xx,yy,show_stuff;
 	xx=__view_get( e__VW.XView, 0 )+0;
 	yy=__view_get( e__VW.YView, 0 )+0;
-	var show_stuff=false;var warning=0;
+	show_stuff=false;var warning=0;
 
 	// This script draws all of the diplomacy stuff, up to and including trading.
 
@@ -495,7 +495,7 @@ function scr_ui_diplomacy() {
 	    draw_set_color(38144);
 	    draw_set_font(fnt_40k_30b);
     
-	    var fac, fac2, fac3,warning;fac="";
+	    var fac, fac2, fac3;fac="";
 	    fac2=string(global.chapter_name)+" (Imperium)";fac3="";warning=0;
     
 	    if (advi="flee") then fac="Master of the Fleet "+string(obj_ini.lord_admiral_name);
@@ -548,7 +548,7 @@ function scr_ui_diplomacy() {
 	    draw_set_color(38144);
 	    draw_set_font(fnt_40k_30b);
     
-	    var fac, fac2, fac3,warning;fac="";fac2=" (Imperium)";fac3="";warning=0;
+	    var fac, fac2, fac3;fac="";fac2=" (Imperium)";fac3="";warning=0;
 	    if (diplomacy>=6) then fac2="";
     
     

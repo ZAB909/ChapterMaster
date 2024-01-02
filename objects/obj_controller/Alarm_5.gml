@@ -616,7 +616,7 @@ if (tech_points>=4) and (tech_aspirant==0){
         }    
     } else{
         training_techmarine = 0;
-        scr_alert("red",string("recruitment","No marines with sufficient technology aptitude for {0} training",obj_ini.role[100][16]),0,0);
+        scr_alert("red", "recruitment", "No marines with sufficient technology aptitude for " + string(obj_ini.role[100][16]) + " training", 0, 0);
     }
 }
 recruit_count=0;
@@ -631,7 +631,8 @@ if (obj_ini.fleet_type!=1){
     with(obj_temp5){instance_destroy();}
 }
 
-var recruits_finished=0,tot=0,recruit_first="";
+var recruits_finished=0,recruit_first="";
+tot = 0
 // ** Assign recruits to X Company **
 for(var i=1; i<=300; i++){
     if (recruit_name[i]!="") then tot+=1;
@@ -1299,16 +1300,16 @@ for(var i=1; i<=99; i++){
             if (event[i]=="game_over_man") then obj_controller.alarm[8]=1;
             // Removes planetary governor installed by the chapter
             if (string_count("remove_serf",event[i])>0){
-                var ta,tb,tc,pp;
+                //var pp;
                 explode_script(event[i],"|");
-                ta=string(explode[0]);
-                tb=string(explode[1]);
-                tc=real(explode[2]);
+                var ta=string(explode[0]);
+                var tb=string(explode[1]);
+                var tc=real(explode[2]);
                 obj_controller.temp[1007]=string(tb);
                 with(obj_temp5){instance_destroy();}
                 with(obj_star){if (name==obj_controller.temp[1007]) then instance_create(x,y,obj_temp5);}
                 if (instance_exists(obj_temp5)){
-                    pp=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
+                    var pp=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
                     pp.dispo[tc]=-10;// Resets
                     var twix="Inquisition executes Chapter Serf in control of "+string(tb)+" "+string(tc)+" and installs a new Planetary Governor.";
                     if (pp.p_owner[tc]=eFACTION.Player) then pp.p_owner[tc]=pp.p_first[tc];
@@ -1381,10 +1382,9 @@ for(var i=1; i<=99; i++){
                     }
                 }
                 if (instance_number(obj_temp5)>0){
-                    var that,that2,new_defense_fleet;
-                    that=instance_nearest(random(room_width),random(room_height),obj_temp5);
-                    that2=instance_nearest(that.x,that.y,obj_star);
-                    new_defense_fleet=instance_create(that2.x+24,that2.y-24,obj_p_fleet);
+                    var that=instance_nearest(random(room_width),random(room_height),obj_temp5);
+                    var that2=instance_nearest(that.x,that.y,obj_star);
+                    var new_defense_fleet=instance_create(that2.x+24,that2.y-24,obj_p_fleet);
 
                     var ship_names="",new_name="",last_ship=0;
                     for(var k=1; k<=40; k++){

@@ -36,7 +36,8 @@ function scr_chaos_alliance_test() {
     
 	    with(obj_temp8){instance_destroy();}
 	    with(obj_star){
-	        var yeah,ii;yeah=0;ii=0;
+			var yeah=0;
+			var ii=0;
 	        repeat(4){ii+=1;
 	            if (array_length(p_feature[ii])>0){
 	                if (planet_feature_bool(p_feature[ii],P_features.Warlord10)>0) then yeah=ii;

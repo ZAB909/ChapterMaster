@@ -1,32 +1,35 @@
-function scr_destroy_planet(argument0) {
+function scr_destroy_planet(exterminatus_type) {
 
 	// argument0: method   (1 being combat exterminatus, 2 being star select cyclonic torpedo)
 
-
-	var baid,enemy9;
-	baid=0;enemy9=0;
-
-
-	if (argument0=2){
-	    var pip;pip=instance_create(0,0,obj_popup);
-	    with(pip){
-	        title="Exterminatus";
-	        image="exterminatus";
-	        text="You give the order to fire the Cyclonic Torpedo.  After a short descent it lands upon the surface and detonates- the air itself igniting across ";
-	    }
-
-	    var you;you=obj_star_select.target;pip.text+=you.name;
-	    pip.text+=" "+scr_roman(obj_controller.selecting_planet);
-	    baid=obj_controller.selecting_planet;
-	    scr_add_item("Cyclonic Torpedo",-1);
-	    obj_star_select.torpedo-=1;
-	    enemy9=you.p_owner[obj_controller.selecting_planet];
-	}
+	var baid = 0;
+	var enemy9 = 0;
+	var you;
+	var pip;
 
 
+	if (exterminatus_type == 2)
+		{
+		    pip = instance_create(0,0,obj_popup);
+		    with(pip)
+				{
+			        title="Exterminatus";
+			        image="exterminatus";
+			        text="You give the order to fire the Cyclonic Torpedo.  After a short descent it lands upon the surface and detonates- the air itself igniting across ";
+			    }
 
-	if (argument0=1){
-	    var pip;pip=instance_create(0,0,obj_popup);
+		    you=obj_star_select.target;pip.text+=you.name;
+		    pip.text+=" "+scr_roman(obj_controller.selecting_planet);
+		    baid=obj_controller.selecting_planet;
+		    scr_add_item("Cyclonic Torpedo",-1);
+		    obj_star_select.torpedo-=1;
+		    enemy9=you.p_owner[obj_controller.selecting_planet];
+		}
+
+
+
+	if (exterminatus_type == 1){
+	    pip=instance_create(0,0,obj_popup);
 	    with(pip){
 	        title="Exterminatus";
 	        image="exterminatus";
@@ -34,7 +37,7 @@ function scr_destroy_planet(argument0) {
 	    }
 
 	    instance_activate_object(obj_star);
-	    var you;you=battle_object;
+	    you=battle_object;
 	    pip.text+=you.name;
     
 	    if (obj_ncombat.battle_id=1) then pip.text+=" I";if (obj_ncombat.battle_id=2) then pip.text+=" II";
@@ -44,10 +47,6 @@ function scr_destroy_planet(argument0) {
     
 	    enemy9=enemy;
 	}
-    
-    
-
-    
 
 	// No survivors!
 	var cah,ed;cah=-1;ed=0;
@@ -187,6 +186,4 @@ function scr_destroy_planet(argument0) {
 
 	with(obj_temp5){instance_destroy();}
 	with(obj_temp8){instance_destroy();}
-
-
 }

@@ -10,9 +10,8 @@ if __b__
 {
 
 
-var xx, yy;
-xx=__view_get( e__VW.XView, 0 );
-yy=__view_get( e__VW.YView, 0 );
+var xx=__view_get( e__VW.XView, 0 );
+var yy=__view_get( e__VW.YView, 0 );
 
 
 draw_sprite(spr_popup_large,1,xx+534,yy+201);
@@ -34,7 +33,10 @@ draw_set_halign(fa_left);
 draw_rectangle(xx+1084,yy+215,xx+1142,yy+273,0);
 
 // Target
-var tt1,tt2,fork;tt1="";tt2="";fork=0;
+
+var tt1="";
+var tt2="";
+var fork=0;
 if (attacking=5){fork=sisters;tt1="Ecclesiarchy (";}
 if (attacking=6){fork=eldar;tt1="Eldar (";}
 if (attacking=7){fork=ork;tt1="Orks (";}
@@ -66,26 +68,15 @@ if (obj_controller.cooldown<=0) and (mouse_left>=1) and (scr_hit(x9,y9,x9+120,y9
     if (formation_possible[formation_current]=0) then formation_current=1;
 }
 
-
-
-
-
-
-
-
-
-
-
 // Ships Are Up, Fuck Me
-draw_text(xx+550,yy+273,string_hash_to_newline("Available Forces:"));
+draw_text(xx + 550,yy + 273, string_hash_to_newline("Available Forces:"));
 
+var e = 500;
+var x8 = xx + 552;
+var y8 = yy + 299;
+var sip = 1;
 
-
-var column,row,e,x8,y8,sigh,sip;e=0;sigh=0;sip=1;
-column=1;row=1;x8=xx+552;y8=yy+299;e=500;
-
-
-var add_ground;add_ground=0;        // Local Forces here
+var add_ground=0;        // Local Forces here
 
 if (ship_max[500]>0) and (attack=1){
     if (ship_all[e]=0) then draw_set_alpha(0.35);
@@ -106,7 +97,8 @@ repeat(50){                                 // Ship Forces here
         draw_set_alpha(1);if (ship_all[e]=0) then draw_set_alpha(0.35);
         draw_set_color(c_gray);draw_rectangle(x8,y8,x8+160,y8+16,0);// 160
         draw_set_color(c_black);draw_text_transformed(x8+2,y8,string_hash_to_newline(string(ship[e])+" ("+string(ship_use[e])+"/"+string(ship_max[e])+")"),0.8,0.8,0);
-        if (obj_controller.cooldown<=0) and (mouse_left>=1) and (scr_hit(x8,y8,x8+160,y8+16)=true){var onceh;onceh=0;
+        if (obj_controller.cooldown<=0) and (mouse_left>=1) and (scr_hit(x8,y8,x8+160,y8+16)=true){
+			var onceh=0;
             if (onceh=0) and (ship_all[e]=0){onceh=1;obj_controller.cooldown=8000;scr_drop_fiddle(ship_ide[e],true,e,attack);}
             if (onceh=0) and (ship_all[e]=1){onceh=1;obj_controller.cooldown=8000;scr_drop_fiddle(ship_ide[e],false,e,attack);}
             if (onceh=1) then refresh_raid=1;
@@ -120,9 +112,7 @@ repeat(50){                                 // Ship Forces here
 
 draw_set_font(fnt_40k_14);draw_set_color(c_gray);draw_set_alpha(1);
 
-
-
-var sel;sel="";
+var sel="";
 if (master=1) then sel+="Chapter Master "+string(obj_ini.master_name)+", ";
 if (honor>1) then sel+=string(honor)+" Honor Guard, ";
 if (honor=1) then sel+="1 Honor Guard, ";
@@ -161,54 +151,69 @@ if (raiders>1) then sel+=string(raiders)+" Land Raider, ";
 if (raiders=1) then sel+="1 Land Raider, ";
 draw_text_ext(xx+550,yy+486,string_hash_to_newline(string(sel)),-1,590);
 
+var caption="";
+e=0;
+x8= xx + 553;
+y8= yy + 555;
 
+draw_set_halign(fa_center);	
 
-var caption;caption="";e=0;x8=xx+553;y8=yy+555;
-draw_set_halign(fa_center);
-repeat(8){e+=1;
-    if (e=6){x8=xx+553;y8=yy+585;}
-    if (e=8) then x8=xx+826;
+repeat(8)
+	{
+		e+=1;
+	    if (e=6){x8=xx+553;y8=yy+585;}
+	    if (e=8) then x8=xx+826;
     
-    var onceh;onceh=0;
-    draw_set_alpha(1);
+		var onceh=0;
+	    draw_set_alpha(1);
     
-    if (e=1) and (raid_tact=0) then draw_set_alpha(0.35);if (e=1) then caption="Tacticals";
-    if (e=2) and (raid_vet=0) then draw_set_alpha(0.35);if (e=2) then caption="Veterans";
-    if (e=3) and (raid_assa=0) then draw_set_alpha(0.35);if (e=3) then caption="Assault Marines";
-    if (e=4) and (raid_deva=0) then draw_set_alpha(0.35);if (e=4) then caption="Devastators";
-    if (e=5) and (raid_scou=0) then draw_set_alpha(0.35);if (e=5) then caption="Scouts";
-    if (e=6) and (raid_term=0) then draw_set_alpha(0.35);if (e=6) then caption="Terminators";
-    if (e=7) and (raid_spec=0) then draw_set_alpha(0.35);if (e=7) then caption="Specialists";
-    if (e=8) and (raid_wounded=0) then draw_set_alpha(0.35);if (e=8) then caption="Wounded";
+	    if (e=1) and (raid_tact=0) then draw_set_alpha(0.35);if (e=1) then caption="Tacticals";
+	    if (e=2) and (raid_vet=0) then draw_set_alpha(0.35);if (e=2) then caption="Veterans";
+	    if (e=3) and (raid_assa=0) then draw_set_alpha(0.35);if (e=3) then caption="Assault Marines";
+	    if (e=4) and (raid_deva=0) then draw_set_alpha(0.35);if (e=4) then caption="Devastators";
+	    if (e=5) and (raid_scou=0) then draw_set_alpha(0.35);if (e=5) then caption="Scouts";
+	    if (e=6) and (raid_term=0) then draw_set_alpha(0.35);if (e=6) then caption="Terminators";
+	    if (e=7) and (raid_spec=0) then draw_set_alpha(0.35);if (e=7) then caption="Specialists";
+	    if (e=8) and (raid_wounded=0) then draw_set_alpha(0.35);if (e=8) then caption="Wounded";
     
-    draw_set_color(c_gray);draw_rectangle(x8,y8,x8+105,y8+16,0);
-    draw_set_alpha(1);draw_set_color(0);draw_text(x8+52,y8,string_hash_to_newline(string(caption)));
+	    draw_set_color(c_gray);
+		draw_rectangle(x8,y8,x8+105,y8+16,0);
+	    draw_set_alpha(1);draw_set_color(0);
+		draw_text(x8+52,y8,string_hash_to_newline(string(caption)));
     
-    if (scr_hit(x8,y8,x8+105,y8+16)=true){
-        draw_set_alpha(0.2);draw_rectangle(x8,y8,x8+105,y8+16,0);draw_set_alpha(1);
-        if (mouse_left=1) and (obj_controller.cooldown<=0){
-            if (e=1){if (raid_tact=1) and (onceh=0){onceh=1;raid_tact=0;refresh_raid=1;}if (raid_tact=0) and (onceh=0){onceh=1;raid_tact=1;refresh_raid=1;}}
-            if (e=2){if (raid_vet=1) and (onceh=0){onceh=1;raid_vet=0;refresh_raid=1;}if (raid_vet=0) and (onceh=0){onceh=1;raid_vet=1;refresh_raid=1;}}
-            if (e=3){if (raid_assa=1) and (onceh=0){onceh=1;raid_assa=0;refresh_raid=1;}if (raid_assa=0) and (onceh=0){onceh=1;raid_assa=1;refresh_raid=1;}}
-            if (e=4){if (raid_deva=1) and (onceh=0){onceh=1;raid_deva=0;refresh_raid=1;}if (raid_deva=0) and (onceh=0){onceh=1;raid_deva=1;refresh_raid=1;}}
-            if (e=5){if (raid_scou=1) and (onceh=0){onceh=1;raid_scou=0;refresh_raid=1;}if (raid_scou=0) and (onceh=0){onceh=1;raid_scou=1;refresh_raid=1;}}
-            if (e=6){if (raid_term=1) and (onceh=0){onceh=1;raid_term=0;refresh_raid=1;}if (raid_term=0) and (onceh=0){onceh=1;raid_term=1;refresh_raid=1;}}
-            if (e=7){if (raid_spec=1) and (onceh=0){onceh=1;raid_spec=0;refresh_raid=1;}if (raid_spec=0) and (onceh=0){onceh=1;raid_spec=1;refresh_raid=1;}}
-            if (e=8){if (raid_wounded=1) and (onceh=0){onceh=1;raid_wounded=0;refresh_raid=1;}if (raid_wounded=0) and (onceh=0){onceh=1;raid_wounded=1;refresh_raid=1;}}
+	    if (scr_hit(x8,y8,x8+105,y8+16)=true){
+	        draw_set_alpha(0.2);draw_rectangle(x8,y8,x8+105,y8+16,0);draw_set_alpha(1);
+	        if (mouse_left=1) and (obj_controller.cooldown<=0){
+	            if (e=1){if (raid_tact=1) and (onceh=0){onceh=1;raid_tact=0;refresh_raid=1;}if (raid_tact=0) and (onceh=0){onceh=1;raid_tact=1;refresh_raid=1;}}
+	            if (e=2){if (raid_vet=1) and (onceh=0){onceh=1;raid_vet=0;refresh_raid=1;}if (raid_vet=0) and (onceh=0){onceh=1;raid_vet=1;refresh_raid=1;}}
+	            if (e=3){if (raid_assa=1) and (onceh=0){onceh=1;raid_assa=0;refresh_raid=1;}if (raid_assa=0) and (onceh=0){onceh=1;raid_assa=1;refresh_raid=1;}}
+	            if (e=4){if (raid_deva=1) and (onceh=0){onceh=1;raid_deva=0;refresh_raid=1;}if (raid_deva=0) and (onceh=0){onceh=1;raid_deva=1;refresh_raid=1;}}
+	            if (e=5){if (raid_scou=1) and (onceh=0){onceh=1;raid_scou=0;refresh_raid=1;}if (raid_scou=0) and (onceh=0){onceh=1;raid_scou=1;refresh_raid=1;}}
+	            if (e=6){if (raid_term=1) and (onceh=0){onceh=1;raid_term=0;refresh_raid=1;}if (raid_term=0) and (onceh=0){onceh=1;raid_term=1;refresh_raid=1;}}
+	            if (e=7){if (raid_spec=1) and (onceh=0){onceh=1;raid_spec=0;refresh_raid=1;}if (raid_spec=0) and (onceh=0){onceh=1;raid_spec=1;refresh_raid=1;}}
+	            if (e=8){if (raid_wounded=1) and (onceh=0){onceh=1;raid_wounded=0;refresh_raid=1;}if (raid_wounded=0) and (onceh=0){onceh=1;raid_wounded=1;refresh_raid=1;}}
             
-            if (e=8) and (onceh=1) then obj_controller.select_wounded=raid_wounded;
-            if (refresh_raid>0) then obj_controller.cooldown=8000;
-        }
-    }
-    x8+=117;
-}
+	            if (e=8) and (onceh=1) then obj_controller.select_wounded=raid_wounded;
+	            if (refresh_raid>0) then obj_controller.cooldown=8000;
+	        }
+	    }
+	    x8+=117;
+	}
 
 
 draw_set_color(c_gray);draw_set_alpha(1);
-yar=2;if (all_sel=1) then yar=3;draw_sprite(spr_creation_check,yar,xx+770,yy+270);yar=0;
-if (scr_hit(xx+770,yy+270,xx+770+32,yy+270+32)=true) and (obj_controller.cooldown<=0) and (mouse_left>=1){
-obj_controller.cooldown=8000;var onceh;onceh=0;
-var onceh;once=0;i=0;
+var yar=2; // i think this is ok as a local var 
+
+if (all_sel=1) then yar=3;
+draw_sprite(spr_creation_check,yar,xx+770,yy+270);
+yar=0;
+if (scr_hit(xx+770,yy+270,xx+770+32,yy+270+32)=true) and (obj_controller.cooldown<=0) and (mouse_left>=1)
+{
+obj_controller.cooldown=8000;
+
+var onceh=0;
+var i=0;
+
 if (all_sel=0) and (onceh=0){
     repeat(60){i+=1;
         if (ship[i]!="") and (ship_all[i]=0){ship_all[i]=1;scr_drop_fiddle(ship_ide[i],true,i,attack);}
@@ -217,34 +222,38 @@ if (all_sel=0) and (onceh=0){
             if (ship_all[500]=1) then add_ground=-1;
         }
     }
-    onceh=1;all_sel=1;refresh_raid=1;
+    onceh=1;
+	all_sel=1;
+	refresh_raid=1;
 }
-if (all_sel=1) and (onceh=0){
-    repeat(60){i+=1;
-            if (ship[i]!="") and (ship_all[i]=1){ship_all[i]=0;scr_drop_fiddle(ship_ide[i],false,i,attack);}
+if (all_sel=1) and (onceh=0)
+	{
+    repeat(60)
+		{
+			i+=1;
+            if (ship[i]!="") and (ship_all[i]=1)
+				{
+					ship_all[i]=0;
+					scr_drop_fiddle(ship_ide[i],false,i,attack);
+				}
             if (attack=1){
-                if (ship_all[500]=0) then add_ground=1;
-                if (ship_all[500]=1) then add_ground=-1;
+                if (ship_all[500]=0) then add_ground = 1;
+                if (ship_all[500]=1) then add_ground = -1;
             }
         }
-        onceh=1;all_sel=0;refresh_raid=1;
+        onceh=1;
+		all_sel=0;
+		refresh_raid=1;
     }
 }
 draw_set_halign(fa_left);
 draw_text_transformed(xx+770+30,yy+270+4,string_hash_to_newline("Select All"),1,1,0);
 
-
-
-
-
-
-var smin,smax;
-var w;w=-1;smin=0;smax=0;
+var smin = 0;
+var smax = 0;
+var w = -1;
 
 // if (purge=2){repeat(61){w+=1;if (ship[w]!="") and (ship_size[w]>1){smax+=1;if (ship_all[w]>0) then smin+=1;}}}
-
-
-
 
 if (add_ground=1){ships_selected+=1;remove_local=-1;
     /*master+=l_master;honor+=l_honor;
@@ -292,14 +301,16 @@ if (ship_max[500]>0) and (ship_all[500]>0){smax+=ship_max[500];smin+=ship_max[50
 
 
 
-var q;q=0;
+var q=0;
 repeat(20){q+=1;
     draw_set_alpha(0.4);if (attacking=force_present[q]) and (attacking>0){draw_set_alpha(1);}
     if (force_present[q]>0) then draw_sprite(spr_force_icon,force_present[q],xx+700+(q*50),yy+250);
     if (attacking=force_present[q]) and (attacking>0) then draw_sprite(spr_force_icon,15,xx+700+(q*50),yy+250);
     
-    if (scr_hit(xx+700-8+(q*50),yy+250-16,xx+750+8+(q*50),yy+250+16)=true) and (force_present[q]!=0){
-        var tt1,tt2,fork;tt1="";tt2="";fork=0;
+    if (scr_hit(xx+700-8+(q*50),yy+250-16,xx+750+8+(q*50),yy+250+16)=true) and (force_present[q]!=0){	
+		tt1="";
+		tt2="";
+		fork=0;
         
         if (force_present[q]=5){fork=sisters;tt1="Ecclesiarchy ("+string(fork)+")";}
         if (force_present[q]=6){fork=eldar;tt1="Eldar ("+string(fork)+")";}
@@ -347,7 +358,8 @@ draw_set_alpha(1);
 
 
 // Back / Purge buttons
-xx+=100;yy+=38;
+xx+=100;
+yy+=38;
 draw_set_halign(fa_center);
 
 draw_set_color(c_gray);draw_rectangle(xx+852,yy+556,xx+921,yy+579,0);
@@ -365,7 +377,8 @@ if (attack=1) then draw_text_transformed(xx+999,yy+559,string_hash_to_newline("A
 if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
     draw_set_alpha(0.2);draw_rectangle(xx+954,yy+556,xx+1043,yy+579,0);draw_set_alpha(1);
     if (mouse_left>=1) and (obj_controller.cooldown<=0) and (string_length(sel)>1){
-        obj_controller.cooldown=30;combating=1;// Start battle here
+        obj_controller.cooldown=30; 
+		combating=1;// Start battle here
         
         if (attack=1) then obj_controller.last_attack_form=formation_possible[formation_current];
         if (attack=0) then obj_controller.last_raid_form=formation_possible[formation_current];
@@ -434,14 +447,15 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
         if (obj_ncombat.enemy=13) then obj_ncombat.threat=necrons;
         
         if (obj_ncombat.enemy=8){
-            var eth;eth=0;eth=scr_quest(4,"ethereal_capture",8,0);
-            if (eth>0) and (obj_ncombat.battle_object.p_owner[obj_ncombat.battle_id]=8){
-                var rolli;rolli=floor(random(100))+1;
-                if (obj_ncombat.threat=6) and (rolli<=80) then obj_ncombat.ethereal=1;
-                if (obj_ncombat.threat=5) and (rolli<=65) then obj_ncombat.ethereal=1;
-                if (obj_ncombat.threat=4) and (rolli<=50) then obj_ncombat.ethereal=1;
-                if (obj_ncombat.threat=3) and (rolli<=35) then obj_ncombat.ethereal=1;
-            }
+            var eth = scr_quest(4,"ethereal_capture",8,0);
+            if (eth > 0) and (obj_ncombat.battle_object.p_owner[obj_ncombat.battle_id]=8)
+				{
+	                var rolli;rolli=floor(random(100))+1;
+	                if (obj_ncombat.threat=6) and (rolli<=80) then obj_ncombat.ethereal=1;
+	                if (obj_ncombat.threat=5) and (rolli<=65) then obj_ncombat.ethereal=1;
+	                if (obj_ncombat.threat=4) and (rolli<=50) then obj_ncombat.ethereal=1;
+	                if (obj_ncombat.threat=3) and (rolli<=35) then obj_ncombat.ethereal=1;
+	            }
             // show_message("Ethereal Quest?: "+string(eth)+"#Ethereal?: "+string(obj_ncombat.ethereal));
         }
         
@@ -453,7 +467,7 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
         
         if ((attacking=0) or (attacking=10) or (attacking=11)) and (obj_ncombat.battle_object.p_traitors[obj_ncombat.battle_id]=0) and (obj_ncombat.battle_object.p_chaos[obj_ncombat.battle_id]=0){
             if ( planet_feature_bool(obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id],P_features.Warlord10)==1) and (obj_controller.known[eFACTION.Chaos]=0) and (obj_controller.faction_gender[10]=1) and (obj_controller.turn>=obj_controller.chaos_turn){
-                var pop;pop=instance_create(0,0,obj_popup);
+                var pop=instance_create(0,0,obj_popup);
                 pop.image="chaos_symbol";
                 pop.title="Concealed Heresy";
                 pop.text="Your astartes set out and begin to cleanse "+string(obj_ncombat.battle_object.name)+" "+scr_roman(obj_ncombat.battle_id)+" of possible heresy.  The general populace appears to be devout in their faith, but a disturbing trend appears- the odd citizen cursing your forces, frothing at the mouth, and screaming out heresy most foul.  One week into the cleansing a large hostile force is detected approaching and encircling your forces.";        
@@ -480,8 +494,9 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
         
         scr_battle_allies();
         
-        var co, v, stop;
-        co=0;v=0;stop=0;  
+        var co=0;
+		var v=0;
+		var stop=0;  
         repeat(3600){
             if (co<11){v+=1;
                 if (v>300){co+=1;v=1;}
@@ -501,7 +516,9 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
         
         // Iterates through all selected "ships" (max 30), including the planet (Local on the drop menu), 
         // and fills the battle roster with any marines found.
-        var i;i=-1;ships_selected=0;
+        var i;
+		i=-1;
+		ships_selected=0;
         repeat(31){
             i+=1;if (ship_all[i]!=0) then scr_battle_roster(ship[i],ship_ide[i],false);
         }
@@ -523,9 +540,9 @@ __b__ = action_if_number(obj_ncombat, 0, 0);
 if __b__
 {
 
-var xx, yy;
-xx=__view_get( e__VW.XView, 0 );
-yy=__view_get( e__VW.YView, 0 );
+
+var xx=__view_get( e__VW.XView, 0 );
+var yy=__view_get( e__VW.YView, 0 );
 
 
 if (menu=0) and (purge=1){
@@ -615,9 +632,9 @@ if (menu=0) and (purge>=2){
     
     
     
-    
-    var x2,y2;
-    x2=__view_get( e__VW.XView, 0 )+535;y2=__view_get( e__VW.YView, 0 )+200;
+ 
+    var x2=__view_get(e__VW.XView, 0) + 535;
+	var y2=__view_get(e__VW.YView, 0) + 200;
     draw_set_halign(fa_left);draw_set_color(c_gray);
     if (purge=2) then draw_text_transformed(x2+14,y2+12,string_hash_to_newline("Bombard Purging "+string(p_target.name)+" "+scr_roman(obj_controller.selecting_planet)),0.6,0.6,0);
     if (purge=3) then draw_text_transformed(x2+14,y2+12,string_hash_to_newline("Fire Cleansing "+string(p_target.name)+" "+scr_roman(obj_controller.selecting_planet)),0.6,0.6,0);
@@ -627,11 +644,17 @@ if (menu=0) and (purge>=2){
     
     
     // Disposition here
-    var succession,yyy,pp;succession=0;yyy=0;pp=obj_controller.selecting_planet
-    repeat(4){yyy+=1;if (p_target.p_problem[pp,yyy]="succession") then succession=1;}
+	var succession = 0;
+	var yyy = 0;
+	var pp= obj_controller.selecting_planet
+    repeat(4)
+		{
+			yyy+=1;
+			if (p_target.p_problem[pp, yyy]="succession") then succession = 1;
+		}
     
     if ((p_target.dispo[pp]>=0) and (p_target.p_owner[pp]<=5) and (p_target.p_population[pp]>0)) and (succession=0){
-        var wack;wack=0;
+        var wack=0;
         draw_set_color(c_blue);
         draw_rectangle(x2+12,y2+53,x2+12+max(0,(min(100,p_target.dispo[pp])*4.37)),y2+71,0);
     }
@@ -659,17 +682,20 @@ if (menu=0) and (purge>=2){
     // Ships Are Up, Fuck Me
     draw_text(x2+13,y2+80,string_hash_to_newline("Available Forces:"));
     
-    var column,row,e,x8,y8,sigh,sip;e=0;sigh=0;sip=1;
-    column=1;row=1;x8=x2+17;y8=y2+105;e=500;
+	var sip = 1;
+	var x8 = x2 + 17;
+	var y8 = y2 + 105;
+	var e = 500;
     
     
-    var add_ground;add_ground=0;
-    
+    var add_ground=0;
+	
     if (purge_d>0) and (purge!=2){
         if (ship_all[e]=0) then draw_set_alpha(0.35);
         draw_set_color(c_gray);draw_rectangle(x8,y8,x8+160,y8+16,0);
         draw_set_color(c_black);draw_text(x8+2,y8,string_hash_to_newline("Local ("+string(ship_use[e])+"/"+string(ship_max[e])+")"))
-        if (obj_controller.cooldown<=0) and (mouse_left>=1) and (scr_hit(x8,y8,x8+160,y8+16)=true){var onceh;onceh=0;
+        if (obj_controller.cooldown<=0) and (mouse_left>=1) and (scr_hit(x8,y8,x8+160,y8+16)=true){
+			var onceh=0;
             obj_controller.cooldown=8000;
             if (ship_all[e]=0) then add_ground=1;
             if (ship_all[e]=1) then add_ground=-1;
@@ -679,14 +705,15 @@ if (menu=0) and (purge>=2){
     e=1;
     
     
-    
+   
     if (purge=2){               // Bombard
         repeat(50){
             if (ship[e]!="") and (ship_size[e]>1){
                 draw_set_alpha(1);if (ship_all[e]=0) then draw_set_alpha(0.35);
                 draw_set_color(c_gray);draw_rectangle(x8,y8,x8+160,y8+16,0);// 160
                 draw_set_color(c_black);draw_text_transformed(x8+2,y8,string_hash_to_newline(string(ship[e])+" ("+string(ship_size[e])+")"),0.8,0.8,0);
-                if (obj_controller.cooldown<=0) and (mouse_left>=1) and (scr_hit(x8,y8,x8+160,y8+16)=true){var onceh;onceh=0;
+                if (obj_controller.cooldown<=0) and (mouse_left>=1) and (scr_hit(x8,y8,x8+160,y8+16)=true){
+					var onceh=0;
                     if (onceh=0) and (ship_all[e]=0){onceh=1;obj_controller.cooldown=8000;ship_all[e]=1;ships_selected+=1;}
                     if (onceh=0) and (ship_all[e]=1){onceh=1;obj_controller.cooldown=8000;ship_all[e]=0;ships_selected-=1;}
                 }
@@ -697,15 +724,15 @@ if (menu=0) and (purge>=2){
             e+=1;
         }
     }
-    
-    
+     
     if (purge>=3){              // Anything not bombardment
         repeat(50){
             if (ship[e]!="") and (ship_max[e]>0){
                 draw_set_alpha(1);if (ship_all[e]=0) then draw_set_alpha(0.35);
                 draw_set_color(c_gray);draw_rectangle(x8,y8,x8+160,y8+16,0);// 160
                 draw_set_color(c_black);draw_text_transformed(x8+2,y8,string_hash_to_newline(string(ship[e])+" ("+string(ship_use[e])+"/"+string(ship_max[e])+")"),0.8,0.8,0);
-                if (obj_controller.cooldown<=0) and (mouse_left>=1) and (scr_hit(x8,y8,x8+160,y8+16)=true){var onceh;onceh=0;
+                if (obj_controller.cooldown<=0) and (mouse_left>=1) and (scr_hit(x8,y8,x8+160,y8+16)=true){
+					var onceh=0;
                     if (onceh=0) and (ship_all[e]=0){onceh=1;obj_controller.cooldown=8000;scr_drop_fiddle(ship_ide[e],true,e,attack);}
                     if (onceh=0) and (ship_all[e]=1){onceh=1;obj_controller.cooldown=8000;scr_drop_fiddle(ship_ide[e],false,e,attack);}
                 }
@@ -716,52 +743,50 @@ if (menu=0) and (purge>=2){
             e+=1;
         }
     }
-    
-    
-    
-    
-    
-    
+
+
     draw_set_font(fnt_40k_14);draw_set_color(c_gray);draw_set_alpha(1);
-    
-    var hers,influ,poppy;
-    hers=p_target.p_heresy[obj_controller.selecting_planet]+p_target.p_heresy_secret[obj_controller.selecting_planet];
-    influ=p_target.p_influence[obj_controller.selecting_planet];
+
+	var poppy;
+	
+    var hers=p_target.p_heresy[obj_controller.selecting_planet]+p_target.p_heresy_secret[obj_controller.selecting_planet];
+    var influ=p_target.p_influence[obj_controller.selecting_planet];
     if (p_target.p_large[obj_controller.selecting_planet]=1) then poppy=string(p_target.p_population[obj_controller.selecting_planet])+"B";
     if (p_target.p_large[obj_controller.selecting_planet]=0) then poppy=string(scr_display_number(p_target.p_population[obj_controller.selecting_planet]));
     draw_text(x2+14,y2+312,string_hash_to_newline("Heresy: "+string(max(hers,influ))+"%"));
-    draw_text(x2+14,y2+332,string_hash_to_newline("Population: "+string(poppy)));
-    
-    
-    
-    
-    
-    
-    if (purge=2){// Bombardment select all
-        draw_set_alpha(1);
-        yar=2;if (all_sel=1) then yar=3;draw_sprite(spr_creation_check,yar,x2+233,y2+75);yar=0;
-        if (scr_hit(x2+233,y2+75,x2+233+32,y2+75+32)=true) and (obj_controller.cooldown<=0) and (mouse_left>=1){
-            obj_controller.cooldown=8000;var onceh;onceh=0;
-            var onceh;once=0;i=0;
-            if (all_sel=0) and (onceh=0){
-                repeat(60){i+=1;if (ship[i]!="") and (ship_all[i]=0){ship_all[i]=1;ships_selected+=1;}}
-                onceh=1;all_sel=1;
-            }
-            if (all_sel=1) and (onceh=0){
-                repeat(60){i+=1;if (ship[i]!="") and (ship_all[i]=1){ship_all[i]=0;ships_selected-=1;}}
-                onceh=1;all_sel=0;
-            }
-        }
-        draw_text_transformed(x2+233+30,y2+75+4,string_hash_to_newline("Select All"),1,1,0);
-    }
-    
-    
+    draw_text(x2+14,y2+332,string_hash_to_newline("Population: "+string(poppy))); 
+
+    if (purge=2) // Bombardment select all
+		{
+	        draw_set_alpha(1);
+	        var yar = 2;
+			if (all_sel = 1) then yar=3;
+				draw_sprite(spr_creation_check,yar,x2+233,y2+75);
+				yar = 0;
+	        if (scr_hit(x2+233,y2+75,x2+233+32,y2+75+32)=true) and (obj_controller.cooldown<=0) and (mouse_left>=1){
+	            obj_controller.cooldown=8000;
+				var onceh = 0;
+				var i = 0;
+	            if (all_sel=0) and (onceh=0){
+	                repeat(60){i+=1;if (ship[i]!="") and (ship_all[i]=0){ship_all[i]=1;ships_selected+=1;}}
+	                onceh=1;all_sel=1;
+	            }
+	            if (all_sel=1) and (onceh=0){
+	                repeat(60){i+=1;if (ship[i]!="") and (ship_all[i]=1){ship_all[i]=0;ships_selected-=1;}}
+	                onceh = 1;
+					all_sel=0;
+	            }
+	        }
+	        draw_text_transformed(x2+233+30,y2+75+4,string_hash_to_newline("Select All"),1,1,0);
+	    }
+     
     if (purge>=3){// Anything not bombardment, select all
         draw_set_alpha(1);
-        yar=2;if (all_sel=1) then yar=3;draw_sprite(spr_creation_check,yar,x2+233,y2+75);yar=0;
+        var yar=2;if (all_sel=1) then yar=3;draw_sprite(spr_creation_check,yar,x2+233,y2+75);yar=0;
         if (scr_hit(x2+233,y2+75,x2+233+32,y2+75+32)=true) and (obj_controller.cooldown<=0) and (mouse_left>=1){
-            obj_controller.cooldown=8000;var onceh;onceh=0;
-            var onceh;once=0;i=0;
+            obj_controller.cooldown=8000; 
+			var onceh = 0;
+			var i=0;
             if (all_sel=0) and (onceh=0){
                 repeat(60){i+=1;
                     if (ship[i]!="") and (ship_all[i]=0){ship_all[i]=1;scr_drop_fiddle(ship_ide[i],true,i,attack);}
@@ -782,8 +807,9 @@ if (menu=0) and (purge>=2){
         draw_text_transformed(x2+233+30,y2+75+4,string_hash_to_newline("Select All"),1,1,0);
     }
     
-    var smin,smax;
-    var w;w=-1;smin=0;smax=0;
+    var smin = 0;
+	var smax = 0;
+    var w = -1;
     
     if (purge=2){repeat(61){w+=1;if (ship[w]!="") and (ship_size[w]>1){smax+=1;if (ship_all[w]>0) then smin+=1;}}}
     
@@ -820,7 +846,7 @@ if (menu=0) and (purge>=2){
     
     
     
-    var sel;sel="";
+    var sel = "";
     if (purge>2){
         if (master=1) then sel+="Chapter Master "+string(obj_ini.master_name)+", ";
         if (honor>1) then sel+=string(honor)+" "+string(obj_ini.role[100][2])+"s, ";
@@ -869,7 +895,8 @@ if (menu=0) and (purge>=2){
         if (mouse_left>=1) and (obj_controller.cooldown<=0){
             obj_controller.cooldown=30;// Start purge here
             
-            if (purge=2){var i;i=0;
+            if (purge=2){
+				var i = 0;
                 repeat(50){i+=1;
                     if (ship[i]!="") and (ship_all[i]>0){
                         if (obj_ini.ship_class[ship_ide[i]]="Slaughtersong") then purge_score+=3;
@@ -879,7 +906,7 @@ if (menu=0) and (purge>=2){
                 }
             }
             if (purge>=3){
-                var i;i=-1;purge_score=0;
+                var i=-1;purge_score=0;
                 repeat(51){i+=1;
                     if (ship_all[i]!=0) then purge_score+=ship_use[i];
                 }

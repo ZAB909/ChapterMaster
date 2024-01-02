@@ -72,7 +72,7 @@ if (num>0){// Hmmmmmmm
             // pop.option1="Leave it.";
             // get bitched at by the mechanicus
         }
-        
+        var pop
         pop.ma_co=tch;pop.ma_id=mch;
         pop.target_comp=stah.p_owner[num];
     }

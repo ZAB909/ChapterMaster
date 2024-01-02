@@ -592,7 +592,7 @@ if (menu==1 && managing>0){
             //if (string_count("&",temp[106])>0) then temp[106]=clean_tags(temp[106]);
             // Experience
             temp[113]=string(floor(unit.experience()));
-            var cah=managing;
+            cah=managing;
             if (cah>10) then cah=0;
             // Bonuses
             temp[119]="";

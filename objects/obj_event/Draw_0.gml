@@ -25,24 +25,25 @@ draw_set_halign(fa_center);
 draw_text(__view_get( e__VW.XView, 0 )+800,__view_get( e__VW.YView, 0 )+165,string_hash_to_newline(string(obj_controller.fest_type)));
 
 if (avatars>0){
-    if( shader_is_compiled(sReplaceColor)){
-        shader_set(sReplaceColor);
+    if( shader_is_compiled(sReplaceColor))
+		{
+	        shader_set(sReplaceColor);
         
-        shader_set_uniform_f(colour_to_find1, sourceR1,sourceG1,sourceB1 );       
-        shader_set_uniform_f(colour_to_set1, targetR1,targetG1,targetB1 );
-        shader_set_uniform_f(colour_to_find2, sourceR2,sourceG2,sourceB2 );       
-        shader_set_uniform_f(colour_to_set2, targetR2,targetG2,targetB2 );
-        shader_set_uniform_f(colour_to_find3, sourceR3,sourceG3,sourceB3 );       
-        shader_set_uniform_f(colour_to_set3, targetR3,targetG3,targetB3 );
-        shader_set_uniform_f(colour_to_find4, sourceR4,sourceG4,sourceB4 );       
-        shader_set_uniform_f(colour_to_set4, targetR4,targetG4,targetB4 );
-        shader_set_uniform_f(colour_to_find5, sourceR5,sourceG5,sourceB5 );
-        shader_set_uniform_f(colour_to_set5, targetR5,targetG5,targetB5 );
-        shader_set_uniform_f(colour_to_find6, sourceR6,sourceG6,sourceB6 );
-        shader_set_uniform_f(colour_to_set6, targetR6,targetG6,targetB6 );
-        shader_set_uniform_f(colour_to_find7, sourceR7,sourceG7,sourceB7 );
-        shader_set_uniform_f(colour_to_set7, targetR7,targetG7,targetB7 );
-    }
+	        shader_set_uniform_f(colour_to_find1, obj_controller.sourceR1, obj_controller.sourceG1, obj_controller.sourceB1);       
+	        shader_set_uniform_f(colour_to_set1, obj_controller.targetR1, obj_controller.targetG1, obj_controller.targetB1);
+	        shader_set_uniform_f(colour_to_find2, obj_controller.sourceR2, obj_controller.sourceG2, obj_controller.sourceB2);       
+	        shader_set_uniform_f(colour_to_set2, obj_controller.targetR2, obj_controller.targetG2, obj_controller.targetB2);
+	        shader_set_uniform_f(colour_to_find3, obj_controller.sourceR3, obj_controller.sourceG3, obj_controller.sourceB3);       
+	        shader_set_uniform_f(colour_to_set3, obj_controller.targetR3, obj_controller.targetG3, obj_controller.targetB3);
+	        shader_set_uniform_f(colour_to_find4, obj_controller.sourceR4, obj_controller.sourceG4, obj_controller.sourceB4);       
+	        shader_set_uniform_f(colour_to_set4, obj_controller.targetR4, obj_controller.targetG4, obj_controller.targetB4);
+	        shader_set_uniform_f(colour_to_find5, obj_controller.sourceR5, obj_controller.sourceG5, obj_controller.sourceB5);
+	        shader_set_uniform_f(colour_to_set5, obj_controller.targetR5, obj_controller.targetG5, obj_controller.targetB5);
+	        shader_set_uniform_f(colour_to_find6, obj_controller.sourceR6, obj_controller.sourceG6, obj_controller.sourceB6);
+	        shader_set_uniform_f(colour_to_set6, obj_controller.targetR6, obj_controller.targetG6, obj_controller.targetB6);
+	        shader_set_uniform_f(colour_to_find7, obj_controller.sourceR7, obj_controller.sourceG7, obj_controller.sourceB7);
+	        shader_set_uniform_f(colour_to_set7, obj_controller.targetR7, obj_controller.targetG7, obj_controller.targetB7);
+	    }
     
     draw_set_font(fnt_40k_14b);
     draw_set_halign(fa_center);

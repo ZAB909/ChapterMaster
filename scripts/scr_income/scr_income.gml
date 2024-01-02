@@ -72,8 +72,8 @@ function scr_income() {
 	if (obj_ini.fleet_type!=1){
 	    with(obj_p_fleet){
 	        if (action="") and (capital_number>0){
-	            var mine;mine=instance_nearest(x,y,obj_star);
-	            var i;i=0;
+	            var mine = instance_nearest(x,y,obj_star);
+	            var i = 0;
 	            repeat(4){i+=1;
 	                if (mine.p_owner[i]=eFACTION.Imperium) or (mine.p_owner[i]=eFACTION.Mechanicus){
 	                    if (mine.p_type[i]="Desert") or (mine.p_type[i]="Temperate") then obj_controller.income_home+=2*capital_number;
@@ -86,7 +86,7 @@ function scr_income() {
 
 
 	with(obj_star){
-	    var o;o=0;
+	    var o=0;
 	    repeat(4){o+=1;
 	        if (dispo[o]>=100){
 	            if (planet_feature_bool(p_feature[1], P_features.Monastery)==0){

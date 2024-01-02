@@ -2,8 +2,8 @@
 image_xscale=0.5;
 image_yscale=0.5;
 
-origin=0;
-target=0;
+origin=undefined;
+target=undefined;
 cooldown=0;
 board_cooldown=0;
 hp=9999;

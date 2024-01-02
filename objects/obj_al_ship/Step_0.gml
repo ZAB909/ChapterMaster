@@ -515,7 +515,6 @@ if (__b__){
         range=0;
         wep="";
         dam=0;
-        gg=0;
         
         for(var gg=1; gg<=weapons; gg++){
             ok=0;

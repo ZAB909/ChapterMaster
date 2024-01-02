@@ -13,7 +13,7 @@ if (obj_controller.cooldown<=0){
         
         with(obj_controller){
             if (managing!=0) and (managing<=15){
-                var i;i=-1;man_size=0;selecting_location="";selecting_types="";selecting_ship=0;sel_uid=0;
+                var i=-1;man_size=0;selecting_location="";selecting_types="";selecting_ship=0;sel_uid=0;
                 repeat(501){i+=1;
                     man[i]="";ide[i]=0;man_sel[i]=0;ma_lid[i]=0;ma_wid[i]=0;ma_bio[i]=0;
                     ma_race[i]=0;ma_loc[i]="";ma_name[i]="";ma_role[i]="";ma_wep1[i]="";

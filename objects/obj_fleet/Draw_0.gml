@@ -28,7 +28,8 @@
         
     }
     
-    if (room_speed!=90){
+    if game_get_speed(gamespeed_fps) != 90
+	{
         if (start=5) and (obj_controller.zoomed=0) then draw_sprite(spr_fast_forward,0,__view_get( e__VW.XView, 0 )+12,__view_get( e__VW.YView, 0 )+436);
         if (start=5) and (obj_controller.zoomed=1) then draw_sprite_ext(spr_fast_forward,0,24,872,2,2,0,c_white,1);
     }

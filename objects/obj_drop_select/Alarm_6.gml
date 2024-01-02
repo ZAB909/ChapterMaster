@@ -1,8 +1,10 @@
-
 attacking=10;
 
-var add_ground;add_ground=0;        // Local Forces here
-var smin,smax,w;w=-1;smin=0;smax=0;
+var add_ground = 0;        // Local Forces here
+var smin = 0;
+var smax = 0;
+var w=-1;
+smax=0;
 
 if (add_ground=1){ships_selected+=1;remove_local=-1;
     bikes+=l_bikes;rhinos+=l_rhinos;
@@ -20,7 +22,8 @@ if (add_ground=-1){ships_selected-=1;remove_local=1;
 }add_ground=0;
 
 
-obj_controller.cooldown=30;combating=1;// Start battle here
+obj_controller.cooldown=30;
+combating=1;// Start battle here
 
 instance_deactivate_all(true);
 instance_activate_object(obj_controller);
@@ -56,8 +59,10 @@ argument0.p_chaos[argument1]=4;
 argument0.p_owner[argument1]=10;
 */
 
-var co, v, stop;
-co=0;v=0;stop=0;  
+var co = 0; 
+var v = 0;
+var stop = 0;
+
 repeat(3600){
     if (co<11){v+=1;
         if (v>300){co+=1;v=1;}
@@ -77,7 +82,8 @@ repeat(3600){
 
 // Iterates through all selected "ships" (max 30), including the planet (Local on the drop menu), 
 // and fills the battle roster with any marines found.
-var i;i=-1;ships_selected=0;
+var i=-1;
+ships_selected=0;
 repeat(31){
     i+=1;if (ship_all[i]!=0) then scr_battle_roster(ship[i],ship_ide[i],false);
 }

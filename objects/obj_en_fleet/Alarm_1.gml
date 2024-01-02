@@ -1,7 +1,7 @@
 
 var orb;orb=orbiting;
 
-if (round(owner)!=eFACTION.Imperium) and (navy=1) then owner= noone;
+if ((owner)!=eFACTION.Imperium) and (navy=1) then owner= noone;
 
 if ((trade_goods="BLOODBLOODBLOOD") or (trade_goods="BLOODBLOODBLOODBLOOD")) and (owner=eFACTION.Chaos) {
     if (orb!=0) and (instance_exists(orb)) and (action=""){
@@ -111,7 +111,7 @@ if ((trade_goods="BLOODBLOODBLOOD") or (trade_goods="BLOODBLOODBLOODBLOOD")) and
                 }
                 
                 
-                
+				var next_star                
                 if (good=0){
                     if (trade_goods="BLOODBLOODBLOODBLOOD") {
                         debugl("BLOOD: A");
@@ -165,7 +165,7 @@ if ((trade_goods="BLOODBLOODBLOOD") or (trade_goods="BLOODBLOODBLOODBLOOD")) and
                                 var thatp = instance_nearest(that.x,that.y,obj_star);
                                 
                                 if (thatp != noone){
-									var next_star = noone;
+									next_star = noone;
                                     my_dis= point_distance(orbiting.x,orbiting.y,thatp.x,thatp.y)/48;
                                     if rectangle_in_rectangle(thatp.x, thatp.y, thatp.x2, thatp.y2, orbiting.x, orbiting.y, orbiting.x2, orbiting.y2) > 0
 										then my_dis=my_dis/2;
@@ -582,8 +582,7 @@ if navy {
 	        with(obj_p_fleet) {
 	            if (action="move") and (x>0) and (x<room_width) and (y>0) and (y<room_height) {
 	                if (action_x>0) and (action_x<room_width) and (action_y>0) and (action_y<room_width) {
-	                    var tem;
-						tem=instance_create(action_x,action_y,obj_temp8);
+	                    var tem=instance_create(action_x,action_y,obj_temp8);
 						tem.eta=action_eta;
 	                }
 	            }
@@ -781,7 +780,7 @@ if navy {
 
 
 	if (action="") and (instance_exists(orbiting)) and (guardsmen_unloaded=1){// Move from one planet to another
-	    var o,that,highest,cr;
+	    var that,highest,cr;
 	    o=0;that=0;highest=0;cr=0;
     
 	    repeat(4){o+=1;
@@ -825,7 +824,8 @@ if navy {
 	    if (action="") and (trade_goods="") and (instance_exists(orbiting)){
 	        with(obj_temp_inq){instance_destroy();}
 	        with(obj_star){
-	            var cont,p;cont=0;p=0;
+	            var cont=0;
+				var p=0;
 	            repeat(4){p+=1;
 	                if (p_type[p]="Forge"){
 	                    if (p_orks[o]+p_chaos[o]+p_tyranids[o]+p_necrons[o]+p_tau[o]+p_traitors[o]=0){
@@ -852,7 +852,7 @@ if navy {
 	            var hol;hol=false;if ((orbiting.present_fleet[1]>0) and (obj_controller.faction_status[eFACTION.Imperium]="War")) then hol=true;
         
 	            if (hol=false){
-	                var o,bombard,deaths,hurss,scare,onceh,wob,kill;
+	                var bombard,deaths,hurss,scare,onceh,wob,kill;
 	                o=0;bombard=0;deaths=0;hurss=0;onceh=0;wob=0;kill=0;
                 
 	                repeat(4){o+=1;
@@ -920,9 +920,10 @@ if navy {
 
 
 	// If the guardsmen all die then move on
-	var o;o=0;
+	o=0;
 	if (guardsmen_unloaded=1) and (instance_exists(orbiting)){
-	    var o,bad;o=0;bad=1;
+		o=0;
+		var bad=1;
 	    repeat(4){o+=1;
 	        if (orbiting.p_guardsmen[o]>0) then bad-=1;
 	    }
@@ -1000,7 +1001,7 @@ if navy {
 	// Get recruits
 	if (action="") and (trade_goods="goto_recruiting"){
 	    if (instance_exists(orbiting)){
-	        var o,that,te,te_large;o=0;that=0;te=0;te_large=0;
+	        var that,te,te_large;o=0;that=0;te=0;te_large=0;
 	        repeat(4){o+=1;
 	            if (orbiting.p_owner[o]<=5){
 	                if (orbiting.p_population[o]>te) and (orbiting.p_orks[o]+orbiting.p_chaos[o]+orbiting.p_tyranids[o]+orbiting.p_necrons[o]+orbiting.p_tau[o]+orbiting.p_traitors[o]=0){
@@ -1037,7 +1038,7 @@ if navy {
 
 
 	if (action="") and (instance_exists(orbiting)) and (guardsmen_unloaded=0){// Unload if problem sector, otherwise patrol
-	    var o,that,highest,popu,popu_large;
+	    var that,highest,popu,popu_large;
 	    o=0;that=0;highest=0;popu=0;popu_large=false;
     
 	    repeat(4){o+=1;
@@ -1049,7 +1050,7 @@ if navy {
 	        // New shit here, prioritize higher population worlds
 	        if (orbiting.p_orks[o]+orbiting.p_chaos[o]+orbiting.p_tyranids[o]+orbiting.p_necrons[o]+orbiting.p_tau[o]+orbiting.p_traitors[o]>=highest) and (orbiting.p_type[o]!="Daemon") and (o>1){
 	            if (orbiting.p_orks[o]+orbiting.p_chaos[o]+orbiting.p_tyranids[o]+orbiting.p_necrons[o]+orbiting.p_tau[o]+orbiting.p_traitors[o]>0){
-	                var isnew;isnew=false;
+	                var isnew = false;
                 
 	                if (popu_large=false) and (orbiting.p_large[o]=true) and (floor(popu/1000000000)<orbiting.p_population[o]) then isnew=true;
 	                if (popu_large=true) and (orbiting.p_large[o]=true) and (popu<orbiting.p_population[o]) then isnew=true;
@@ -1143,7 +1144,9 @@ if navy {
 	}
 }
 
-var spid, dir;spid=0;dir=0;
+var dir;
+spid = 0;
+dir = 0;
 var ret;ret=0;
 
 
@@ -1167,14 +1170,13 @@ if (action=""){
     
     
     if (instance_exists(obj_crusade)) and (owner=eFACTION.Ork) and (spid.owner=eFACTION.Ork){// Ork crusade AI
-        var max_dis;
         max_dis=400;
     
         obj_controller.temp[88]=owner;
         with(obj_crusade){if (owner!=obj_controller.temp[88]){x-=40000;}}
         
         with(obj_star){
-            var ns;ns=instance_nearest(x,y,obj_crusade);
+            var ns=instance_nearest(x,y,obj_crusade);
             if (point_distance(x,y,ns.x,ns.y)>ns.radius){x-=40000;}
             if (owner=ns.owner){x-=40000;}
         }
@@ -1331,12 +1333,12 @@ if (action=""){
                             popup=3;if ((dem*10)+(cha*3)>=10) then popup=4;
           
                             if ((obj_controller.disposition[4]<0) or (obj_controller.loyalty<=0)) and (obj_controller.faction_status[eFACTION.Inquisition]!="War") and (popup=3){popup=0.3;
-                                var moo;moo=false;
+                                var moo=false;
                                 if (obj_controller.penitent=1) and (moo=false){obj_controller.alarm[8]=1;moo=true;}
                                 if (obj_controller.penitent=0) and (moo=false) then scr_audience(4,"loyalty_zero",0,"",0,0);
                             }
                             if ((obj_controller.disposition[4]<0) or (obj_controller.loyalty<=0)) and (obj_controller.faction_status[eFACTION.Inquisition]!="War") and (popup=4){popup=0.4;
-                                var moo;moo=false;
+                                var moo=false;
                                 if (obj_controller.penitent=1) and (moo=false){obj_controller.alarm[8]=1;moo=true;}
                                 if (obj_controller.penitent=0) and (moo=false) then scr_audience(4,"loyalty_zero",0,"",0,0);
                             }
@@ -1368,8 +1370,9 @@ if (action=""){
                         if (popup=4) or (popup=0.4) then scr_event_log("red","Inquisitor "+string(obj_controller.inquisitor[whom])+" discovers your Secret Arsenal on "+string(thata.name)+" "+scr_roman(t)+".");
                         if (popup>=5) or (popup=0.6) then scr_event_log("","Inquisitor "+string(obj_controller.inquisitor[whom])+" discovers your Secret Gene-Vault on "+string(thata.name)+" "+scr_roman(t)+".");
                         
-                        var pop_tit,pop_txt,pop_spe;
-                        pop_tit="";pop_txt="";pop_spe="";
+                        var pop_tit=""; 
+						var pop_txt=""; 
+						var pop_spe="";
                         
                         if (popup=1){pop_tit="Inquisition Discovers Lair";pop_txt="Inquisitor "+string(obj_controller.inquisitor[whom])+" has discovered your Secret Lair on "+string(thata.name)+" "+scr_roman(t)+".  A quick inspection revealed that there was no contraband or heresy, though the Inquisition does not appreciate your secrecy at all.";}
                         if (popup=2){pop_tit="Inquisition Discovers Lair";pop_txt="Inquisitor "+string(obj_controller.inquisitor[whom])+" has discovered your Secret Lair on "+string(thata.name)+" "+scr_roman(t)+".  A quick inspection turned up heresy, most foul, and it has all been reported to the Inquisition.  They are seething, as a whole, and relations are damaged.";}
@@ -1562,8 +1565,7 @@ if (action=""){
                         if (plin2.planets=3) and (plin2.p_type[1]!="Dead") and (plin2.p_type[2]!="Dead") and (plin2.p_type[3]!="Dead") then good=2;
                         if (plin2.planets=4) and (plin2.p_type[1]!="Dead") and (plin2.p_type[2]!="Dead") and (plin2.p_type[3]!="Dead") and (plin2.p_type[4]!="Dead") then good=2;
                         
-                        var new_fleet;
-                        new_fleet=instance_create(x,y,obj_en_fleet);
+                        var new_fleet=instance_create(x,y,obj_en_fleet);
                         new_fleet.capital_number=floor(capital_number*0.4);
                         new_fleet.frigate_number=floor(frigate_number*0.4);
                         new_fleet.escort_number=floor(escort_number*0.4);
@@ -1676,7 +1678,8 @@ if (action="move") and (action_eta<5000){
     if (instance_nearest(action_x,action_y,obj_star).storm>0) then exit;
     if (action_x+action_y=0) then exit;
     
-    var spid,dos;dos=0;spid=0;
+    var dos;
+	spid=0;
     dos=point_distance(x,y,action_x,action_y);
     spid=dos/action_eta;
     dir=point_direction(x,y,action_x,action_y);
@@ -1741,7 +1744,7 @@ if (action="move") and (action_eta<5000){
                     if (r=3) then scr_alert("green","duhuhuhu","Imperial citizens recolonize "+string(sta.name)+" III.",sta.x,sta.y);
                     if (r=4) then scr_alert("green","duhuhuhu","Imperial citizens recolonize "+string(sta.name)+" IV.",sta.x,sta.y);
                     
-                    sta.dispo[r]=min(obj_ini.imperium_disposition,obj_controller.disposition[2])+choose(-1,-2,-3,-4,0,1,2,3,4);;
+                    sta.dispo[r]=min(obj_ini.imperium_disposition,obj_controller.disposition[2])+choose(-1,-2,-3,-4,0,1,2,3,4);
                     if (sta.name=obj_ini.home_name) and (sta.p_type[r]=obj_ini.home_type) and (obj_controller.homeworld_rule!=1) then sta.dispo[r]=-5000;
                     
                     // sta.present_fleet[owner]-=1;
@@ -1862,7 +1865,8 @@ if (action="move") and (action_eta<5000){
                     with(obj_temp3){instance_destroy();}
                     with(obj_temp4){instance_destroy();}
                     
-                    var targ, steh;steh=instance_nearest(x,y,obj_star);
+                    var targ; 
+					steh=instance_nearest(x,y,obj_star);
                     var bleh;bleh="";
                     if (owner!=eFACTION.Inquisition) 
 						bleh=string(obj_controller.faction[owner])+" Fleet finalizes trade at "+string(steh.name)+".";
@@ -2252,10 +2256,9 @@ if (action="move") and (action_eta<5000){
             var good;good=0;
             
             repeat(100){
-                var xx, yy;
                 if (good=0){
-                    xx=x+choose(random(300),random(300)*-1);
-                    yy=y+choose(random(300),random(300)*-1);
+                    var xx=x+choose(random(300),random(300)*-1);
+                    var yy=y+choose(random(300),random(300)*-1);
                     new_star=instance_nearest(xx,yy,obj_star);
                     if (new_star.owner!=eFACTION.Tau) then with(new_star){instance_deactivate_object(id);}
                     if (new_star.owner=eFACTION.Tau) then good=1;
@@ -2314,7 +2317,7 @@ if (action="move") and (action_eta<5000){
             var kay, temp5, temp6, temp7;
             kay=0;temp5=0;temp6=0;temp7=0;
             
-            var steh;steh=0;// Opposite of what normally is
+            steh=0;// Opposite of what normally is
 			//the hell is this jank? Doesn't even make sense since all the tests will fail
             if (owner = eFACTION.Imperium) then steh=instance_nearest(x,y+32,obj_star);
             if (owner = eFACTION.Mechanicus) then steh=instance_nearest(x,y+32,obj_star);

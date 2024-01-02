@@ -25,12 +25,14 @@ if (obj_ncombat.enemy=1){
     var cleann,j;
     j=-1;repeat(11){j+=1;cleann[j]=0;}
 
-    with(obj_enunit){var q;q=0;
+    with(obj_enunit){var q=0;
         repeat(700){q+=1;
             if (dude_id[q]>0){
-                var nco,nid,commandy;
-                nco=0;nid=0;commandy=false;
-                nco=dude_co[q];nid=dude_id[q];
+                var nco=0;
+				var nid=0;
+				var commandy=false;
+                nco=dude_co[q];
+				nid=dude_id[q];
                 cleann[nco]=1;
                 
                 // show_message("dude ID:"+string(q)+" ("+string(obj_ini.name[nco,nid])+") is being removed from the array");
@@ -65,8 +67,14 @@ if (string_count("cs_meeting",battle_special)>0){
     with(obj_star){
         if (name=obj_ncombat.battle_loc){
             instance_create(x,y,obj_temp_meeting);
-            var i,co,ii,otm,good,master_present;ii=0;i=0;co=-1;good=0;master_present=0;
-            var run,s,chaos_meeting;run=0;s=0;chaos_meeting=0;
+            var ii=0;
+			var i=0;
+			var co=-1;
+			var good=0;
+			var master_present=0;
+            var run=0;
+			var s=0;
+			var chaos_meeting=0;
             
             chaos_meeting=obj_ini.wid[0][1];
             
@@ -126,7 +134,7 @@ if (battle_special="WL10_reveal") or (battle_special="WL10_later"){var moar,ox,o
         
         var corro;corro=0;
         
-        repeat(100){var ii;ii=0;
+        repeat(100){var ii=0;
             if (corro<=5){
                 moar=instance_nearest(ox,oy,obj_star);
                 
@@ -241,7 +249,7 @@ if (exterminatus>0) and (dropping!=0) and (string_count("mech",battle_special)=0
 }
 
 if (string_count("mech",battle_special)>0) and (defeat=0) then with(obj_temp4){
-    var comp,plan,i;i=0;comp=0;plan=0;
+	i=0;comp=0;plan=0;
     plan=instance_nearest(x,y,obj_star);
     scr_return_ship(obj_temp4.loc,obj_temp4,obj_temp4.num);
     with(obj_temp4){instance_destroy();}
@@ -385,7 +393,7 @@ if (string_count("_attack",battle_special)>0) and (string_count("mech",battle_sp
                     
                     // show_message("TEMP5: "+string(instance_number(obj_temp5))+"#Star: "+string(you));
                     
-                    var ppp;ppp=0;
+                    var ppp=0;
                     if (you.p_problem[obj_temp8.wid,1]="bomb"){ppp=1;seal_tomb_world(you.p_feature[obj_temp8.wid]);you.p_problem[obj_temp8.wid,1]="";you.p_timer[obj_temp8.wid,1]=0;}
                     if (you.p_problem[obj_temp8.wid,2]="bomb"){ppp=2;seal_tomb_world(you.p_feature[obj_temp8.wid]);you.p_problem[obj_temp8.wid,2]="";you.p_timer[obj_temp8.wid,2]=0;}
                     if (you.p_problem[obj_temp8.wid,3]="bomb"){ppp=3;seal_tomb_world(you.p_feature[obj_temp8.wid]);you.p_problem[obj_temp8.wid,3]="";you.p_timer[obj_temp8.wid,3]=0;}
@@ -409,7 +417,7 @@ if (string_count("_attack",battle_special)>0) and (string_count("mech",battle_sp
                     
                     with(obj_temp5){instance_destroy();}
                     instance_activate_object(obj_star);
-                    var have_bomb;have_bomb=scr_check_equip("Plasma Bomb",obj_temp8.loc,obj_temp8.wid,1);
+                    var have_bomb=scr_check_equip("Plasma Bomb",obj_temp8.loc,obj_temp8.wid,1);
                 }
             }
         }
@@ -483,6 +491,7 @@ if ((string_count("fallen",battle_special)>0)) and (defeat=0){
 
 if (defeat=0) and (enemy=9) and (battle_special="tyranid_org"){
     if (captured_gaunt>1){
+		var pop;
         pop=instance_create(0,0,obj_popup);
         pop.image="inquisition";
         pop.title="Inquisition Mission Completed";
@@ -504,7 +513,8 @@ if (enemy=1) and (on_ship=true) and (defeat=0){
     var o;o=0;repeat(4){i+=1;if (obj_ini.dis[o]="Shitty Luck") then diceh-=15;}
     
     if (diceh<=15){
-        var ship,ship_hp,i;i=-1;
+        var ship,ship_hp; 
+		i=-1;
         repeat(51){i+=1;
             ship[i]=obj_ini.ship[i];ship_hp[i]=obj_ini.ship_hp[i];
             if (i=battle_id){obj_ini.ship_hp[i]=-50;scr_recent("ship_destroyed",obj_ini.ship[i],i);}
@@ -595,7 +605,8 @@ if (enemy=10){
 
 if (battle_special="ship_demon"){
     if (defeat=1){
-        var ship,ship_hp,i;i=-1;
+        var ship,ship_hp;
+		i=-1;
         repeat(51){i+=1;
             ship[i]=obj_ini.ship[i];ship_hp[i]=obj_ini.ship_hp[i];
             if (i=battle_id){obj_ini.ship_hp[i]=-50;scr_recent("ship_destroyed",obj_ini.ship[i],i);}
@@ -633,7 +644,7 @@ if (battle_special="space_hulk") and (defeat=0) and (hulk_treasure>0){
     }
     if (hulk_treasure=2){// Artifact
         scr_add_artifact("random","random",4,loc,shi+500);
-        var i,last_artifact;i=0;last_artifact=0;
+        var last_artifact;i=0;last_artifact=0;
         repeat(100){if (last_artifact=0){i+=1;if (obj_ini.artifact[i]="") then last_artifact=i-1;}}
         var pop;pop=instance_create(0,0,obj_popup);
         pop.image="space_hulk_done";

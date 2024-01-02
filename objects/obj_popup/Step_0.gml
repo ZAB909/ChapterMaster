@@ -69,8 +69,7 @@ if (image="debug_banshee") and (cooldown<=0){
             if (press=3) then amount=9;
             with(obj_star){
                 if (choose(0,1,1)=1) and (owner != eFACTION.Eldar) and (owner!=1){
-                    var fleet;
-                    fleet=instance_create(x+32,y,obj_en_fleet);
+                    var fleet=instance_create(x+32,y,obj_en_fleet);
                     fleet.owner=obj_popup.amount;
                     if (obj_popup.amount=7){fleet.sprite_index=spr_fleet_ork;fleet.capital_number=3;present_fleet[7]+=1;}
                     if (obj_popup.amount=9){
@@ -86,7 +85,11 @@ if (image="debug_banshee") and (cooldown<=0){
         if (press=2){
             with(obj_star){
                 if (choose(0,1,1)=1) and (owner != eFACTION.Eldar) and (owner!=1){
-                    var h;h=0;repeat(4){h+=1;if (p_type[h]!="Dead") and (p_type[h]!=""){p_traitors[h]=5;p_chaos[h]=4;}}
+                    var h=0;
+                    repeat(planets){
+                         h+=1;
+                         if (p_type[h]!="Dead") and (p_type[h]!=""){p_traitors[h]=5;p_chaos[h]=4;}
+                    }
                 }
             }
             instance_destroy();
@@ -173,9 +176,14 @@ if (image="chaos_messenger") and (title="Chaos Meeting"){
         }
         if (option1!=""){
             if (press=1){
-                with(obj_star){var i,r;i=0;r=0;
-                    repeat(4){i+=1;r=0;repeat(4){r+=1;if (p_problem[i,r]="meeting") or (p_problem[i,r]="meeting_trap"){p_problem[i,r]="";p_timer[i,r]=-1;}}}
-                }
+                with(obj_star)
+					{
+						var i=0;
+						var r=0;
+	                    repeat(planets){
+	                    i+=1;r=0;
+	                    for(r=1;r<array_length(p_problem[i]);r++){if (p_problem[i][r]="meeting") or (p_problem[i][r]="meeting_trap"){p_problem[i][r]="";p_timer[i][r]=-1;}}}
+	                }
                 obj_controller.disposition[10]-=10;
                 text="The heretic is killed in a most violent fashion.  With a lack of go-between the meeting cannot proceed.";
                 option1="";option2="";option3="";mission="";// image="";
@@ -316,7 +324,7 @@ if (title="Planetary Governor Assassinated") and (option1!="") and (cooldown<=0)
     }
     
     if (press=1){
-        new_target.dispo[planet]=min(obj_ini.imperium_disposition,obj_controller.disposition[2])+choose(-1,-2,-3,-4,0,1,2,3,4);
+        new_target.dispo[planet]=min(obj_controller.imperium_disposition, obj_controller.disposition[2])+choose(-1,-2,-3,-4,0,1,2,3,4);
         if (randa<=3) then new_target.dispo[planet]=min(new_target.dispo[planet],choose(1,2,3,4,5,6)*3);
         if (randa>=95) then new_target.dispo[planet]=max(new_target.dispo[planet],60+choose(1,2,3,4,5,6)*3);
         scr_event_log("","Planetary Governor of "+string(new_target.name)+" "+scr_roman(planet)+" assassinated.  The next in line takes over.");
@@ -600,7 +608,11 @@ if (image="ancient_ruins") and (option1!=""){
         obj_controller.menu=1;
         // obj_controller.managing=manag;
         with(obj_controller){
-            var i;i=-1;man_size=0;selecting_location="";selecting_types="";selecting_ship=0;sel_uid=0;
+            var i=-1;
+			var man_size=0;
+			selecting_location="";
+			selecting_types="";selecting_ship=0;
+			sel_uid=0;
             repeat(501){i+=1;
                 man[i]="";ide[i]=0;man_sel[i]=0;ma_lid[i]=0;ma_wid[i]=0;ma_bio[i]=0;
                 ma_race[i]=0;ma_loc[i]="";ma_name[i]="";ma_role[i]="";ma_wep1[i]="";display_unit[i]={};
@@ -784,7 +796,6 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
         obj_ini.gear[ma_co,ma_id]="";obj_ini.hp[ma_co,ma_id]=100;obj_ini.chaos[ma_co,ma_id]=0;obj_ini.experience[ma_co,ma_id]=0;
         obj_ini.mobi[ma_co,ma_id]="";obj_ini.age[ma_co,ma_id]=0;
         obj_ini.TTRPG[ma_co,ma_id]=new TTRPG_stats("chapter",ma_co,ma_id, "blank");
-;
         with(obj_ini){scr_company_order(0);}
     }
     
@@ -854,7 +865,7 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
                 
                 // with(obj_star){if (name=obj_controller.temp[200]) then instance_create(x,y,obj_temp5);}
                 // you=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);onceh=0;
-                you=instance_nearest(0,0,obj_star);
+                var you=instance_nearest(0,0,obj_star);
                 instance_activate_object(obj_star);
                 
                 var ppp;ppp=0;
@@ -1060,7 +1071,7 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
         if (mission="ethereal"){
             with(obj_star){
                 if (p_tau[1]>=4) or (p_tau[2]>=4) or (p_tau[3]>=4) or (p_tau[4]>=4){
-                    var bob;bob=instance_create(x+16,y-24,obj_star_event);bob.image_alpha=1;bob.image_speed=1;bob.color="green";
+                    var bob = instance_create(x+16,y-24,obj_star_event);bob.image_alpha=1;bob.image_speed=1;bob.color="green";
                 }
             }
             scr_quest(0,"ethereal_capture",4,estimate);
@@ -1187,7 +1198,6 @@ if (press=2) and (option2!=""){
         }
         
         if (offer=3){
-            var gender2;
             if (planet=1) then gender2="his";if (planet=2) then gender2="her";
             with(obj_en_fleet){
                 if (trade_goods="male_her") or (trade_goods="female_her"){
@@ -1311,7 +1321,7 @@ if (press=3) and (option3!=""){
 			}
             
             scr_return_ship(obj_temp4.loc,obj_temp4,obj_temp4.num);
-            var man_size,ship_id,comp,plan,i;
+            var man_size,ship_id,comp,i;
             i=0;ship_id=0;man_size=0;comp=0;plan=0;
             repeat(30){i+=1;if (obj_ini.ship[i]=obj_temp4.loc) then ship_id=i;}i=0;
             obj_controller.menu=0;obj_controller.managing=0;

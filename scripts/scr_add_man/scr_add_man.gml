@@ -65,7 +65,7 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 	        wop=instance_nearest(x,y,obj_p_fleet);
         
 	        if (wop.capital_number>0) and (loaded=0){
-	            var i,f;i=0;f=0;
+	            var f;i=0;f=0;
 	            repeat(wop.capital_number){
 	                i+=1;
 	                if (loaded=0){
@@ -78,7 +78,7 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 	            }
 	        }
 	        if (wop.frigate_number>0) and (loaded=0){
-	            var i,f;i=0;f=0;
+	            var f;i=0;f=0;
 	            repeat(wop.frigate_number){
 	                i+=1;
 	                if (loaded=0){
@@ -91,7 +91,7 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 	            }
 	        }
 	        if (wop.escort_number>0) and (loaded=0){
-	            var i,f;i=0;f=0;
+	            var f;i=0;f=0;
 	            repeat(wop.escort_number){
 	                i+=1;
 	                if (loaded=0){
@@ -259,7 +259,7 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
         
 	        if (choice_weapons=obj_ini.role[100][12]) and (corruption>=13) then obj_ini.god[target_company][good]=2;// Khorne!!!1 XDDDDDDD
         
-	        if (missing=1) and (argument0="Scout"){
+	        if (missing=1) and (man_role="Scout"){
 	            if (string_count("has joined the X Company",obj_turn_end.alert_text[obj_turn_end.alerts])=1){
 
 	               scr_alert("red","recruiting","Not enough "+string(obj_ini.role[100][12])+" equipment in the armoury!",0,0);
