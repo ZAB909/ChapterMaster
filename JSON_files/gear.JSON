@@ -2,7 +2,7 @@
   "armour": {
     "Power Armour": {
       "armour_value": {
-        "standard": 19,
+        "standard": 17,
         "master_crafted": 25,
         "artifact": 30
       },
@@ -25,14 +25,14 @@
         "artifact": 38
       },
       "ranged_mod": {
-        "standard": 5,
-        "master_crafted": 10,
-        "artifact": 15
+        "standard": 15,
+        "master_crafted": 20,
+        "artifact": 25
       },
       "melee_mod": {
-        "standard": 10,
-        "master_crafted": 15,
-        "artifact": 20
+        "standard": 15,
+        "master_crafted": 20,
+        "artifact": 25
       },
       "description": "Heavily modified by the chapter artificers, and decorated without compare, this ancient Power Armour is beyond priceless."
     },
@@ -48,9 +48,9 @@
         "artifact": 0
       },
       "melee_mod": {
-        "standard": 20,
-        "master_crafted": 25,
-        "artifact": 30
+        "standard": 30,
+        "master_crafted": 40,
+        "artifact": 50
       },
       "description": "The toughest and most powerful armour designed by humanity. Only the most veteran of Astartes are allowed to wear these."
     },
@@ -74,17 +74,17 @@
     },
     "Tartaros": {
       "armour_value": {
-        "standard": 42,
+        "standard": 46,
         "master_crafted": 46,
         "artifact": 50
       },
       "ranged_mod": {
-        "standard": 0,
-        "master_crafted": 5, // Augmented
-        "artifact": 10 // Augmented
+        "standard": 20,
+        "master_crafted": 30, // Augmented
+        "artifact": 40 // Augmented
       },
       "melee_mod": {
-        "standard": 20,
+        "standard": 15,
         "master_crafted": 25,
         "artifact": 30
       },
@@ -92,36 +92,46 @@
     },
     "Cataphractii Pattern Terminator":{
       "armour_value": {
-        "standard": 42,
-        "master_crafted": 46,
-        "artifact": 50
+        "standard": 50,
+        "master_crafted": 55,
+        "artifact": 60
       },
       "ranged_mod": {
-        "standard": 0,
-        "master_crafted": 5, // Augmented
-        "artifact": 10 // Augmented
+        "standard": 10,
+        "master_crafted": 15, // Augmented
+        "artifact": 20 // Augmented
       },
       "melee_mod": {
-        "standard": 20,
+        "standard": 10,
         "master_crafted": 25,
         "artifact": 30
       },
       "description": "Among the first issued to the Space Marine Legions, it is functionally distinct from other patterns, bearing additional plating and shield generators installed within the shoulder pads"
     },
      "Ork Armour": {
+      "armour_value": {
+        "standard": 6,
+        "master_crafted": 10,
+        "artifact": 14
+      },
       "ranged_mod": {
-        "standard": 0,
-        "master_crafted": 5, // Augmented
-        "artifact": 10 // Augmented
+        "standard": -30,
+        "master_crafted": -15, // Augmented
+        "artifact": 0 // Augmented
       },
       "melee_mod": {
-        "standard": 0,
-        "master_crafted": 5, // Augmented
-        "artifact": 10 // Augmented
+        "standard": 60,
+        "master_crafted": 70, // Augmented
+        "artifact": 80 // Augmented
       },
       "description": ""
     },
     "Scout Armour": {
+      "armour_value": {
+        "standard": 8,
+        "master_crafted": 12,
+        "artifact": 16
+      },
       "ranged_mod": {
         "standard": 15,
         "master_crafted": 20, // Augmented
@@ -159,16 +169,16 @@
         "artifact": 28
       },
       "ranged_mod": {
-        "standard": 5,
-        "master_crafted": 10,
-        "artifact": 15
+        "standard": 10,
+        "master_crafted": 15,
+        "artifact": 20
       },
       "melee_mod": {
-        "standard": 5,
-        "master_crafted": 10, // Augmented
-        "artifact": 15 // Augmented
+        "standard": 10,
+        "master_crafted": 15, // Augmented
+        "artifact": 20 // Augmented
       },
-      "description": "Armour dating to the end of the Great Crusade. Often considered the ultimate Space Marine armour. The components are no longer reproducible."
+      "description": "Armour dating to the end of the Great Crusade. Often considered the ultimate Space Marine armour. The components are no longer reproducible"
     },
     "MK5 Heresy": {
       "armour_value": {
@@ -196,15 +206,15 @@
       },
       "ranged_mod": {
         "standard": 15,
-        "master_crafted": 20, // Augmented
-        "artifact": 25 // Augmented
+        "master_crafted": 25, // Augmented
+        "artifact": 35 // Augmented
       },
       "melee_mod": {
         "standard": 0,
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
       },
-      "description": "Relatively old beakie armour, sleek as can be. Boosted olfactory and auditory sensors increase the ranged accuracy of the wearer. Making it more fragile."
+      "description": "Sharing some similarities with the MK5 Heresy in sub-standard parts. The conical nose houses additional sensors, providing a ranged niche it excels at."
     },
     "MK7 Aquila": {
       "armour_value": {
