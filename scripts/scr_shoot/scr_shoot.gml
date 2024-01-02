@@ -6,27 +6,18 @@ function scr_shoot(weapon_count, target_object, target_type, damage_data, melee_
 	// damage_data: "att" or "arp" or "highest"
 	// melee_or_ranged: melee or ranged
 
-	// I forget the arguments for this, you'll have to deal
-	// Generates flavor based on the damage and casualties from scr_shoot, only for the player
+	// This massive clusterfuck of a script uses the newly determined weapon and target data to attack and assign damage
 
 
-	targeh=argument2;
-	var p1,p2,p3,mes,targeh;
-	mes="";p1="";p2="";p3="";
-
-	var wepp;wepp="";
-	if (argument0>0){wepp=wep[argument0];}
-	if (argument0=-51) then wepp="Heavy Bolter Emplacement";
-	if (argument0=-52) then wepp="Missile Launcher Emplacement";
-	if (argument0=-53) then wepp="Missile Silo";
 
 
-	var duhs;duhs=argument1.dudes[targeh];
+	var j;j=0;
+	repeat(100){j+=1;
+	    obj_ncombat.dead_ene[j]="";
+	    obj_ncombat.dead_ene_n[j]=0;
+	}obj_ncombat.dead_enemies=0;
 
-	if (duhs="Leader") and (obj_ncombat.enemy<=10){
-	    duhs=obj_controller.faction_leader[obj_ncombat.enemy];
-	}
-	var solod,full_name,cm_kill;solod=false;full_name="";cm_kill=0;
+
 
 	if (obj_ncombat.wall_destroyed=1) then exit;
 
@@ -218,22 +209,6 @@ function scr_shoot(weapon_count, target_object, target_type, damage_data, melee_
 	    }
 	    if (wep[weapon_count]="Missile Silo") then obj_ncombat.player_silos-=min(obj_ncombat.player_silos,30);
 
-
-
-	if (wepp="hammer_of_wrath"){
-	    if (solod=false){flavored=1;
-	        if (argument3<20) then p1=string(argument3)+" Astartes with Jump Packs leap to the skies.  Sputtering and roaring flames herald their advance.  Once at a suitable height they crash back down amongst the enemy- ";
-	        if (argument3>=20) and (argument3<100) then p1="Several squads of Astartes take to the sky, their Jump Packs roaring and shooting flames.  Once at a suitable height they crash back down amongst the enemy- ";
-	        if (argument3>=100) then p1="A literal wave of Astartes take to the sky, their Jump Packs roaring like one massive, angry beast.  Almost simultaneously they all crash back down, smashing their enemey- ";
-        
-	        if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1+=" they smash into the "+string(duhs)+" ranks but fail to kill any.";
-	        if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1+=" they smash into the "+string(duhs)+" ranks and pulverize "+string(argument4)+".";
-	        if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1+="a "+string(duhs)+" survives the attack.";
-	        if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1+="a "+string(duhs)+" takes one of the charges and dies.";
-	    }
-	    if (solod=true){
-	        if (argument1.dudes_num[targeh]=1) then p1=string(full_name)+" activates his Jump Pack and launches up into the air, and then crashes down into a "+string(duhs)+"- ";
-	        if (argument1.dudes_num[targeh]>1) then p1=string(full_name)+" activates his Jump Pack and launches up into the air, and then crashes down into the "+string(duhs)+" ranks- ";
     
 	    if (damage_data!="highest") then damage_type=damage_data;
 	    if (damage_data="highest") and (weapon_count>0){
@@ -494,25 +469,11 @@ function scr_shoot(weapon_count, target_object, target_type, damage_data, melee_
 	    if (target_object.men+target_object.veh+target_object.medi=0) and (target_object.owner!=1) {
 	        with(target_object){instance_destroy();}
 	    }
-	}
-
-
-	if (p1!=""){
-	    obj_ncombat.messages+=1;
-	    obj_ncombat.message[obj_ncombat.messages]=mes;
     
 	    if (melee_or_ranged="melee"){
 	        // lololol
 	    }
     
-	    if (argument1.dudes_vehicle[targeh]=1) then obj_ncombat.message_sz[obj_ncombat.messages]=max(argument3,argument4*10)+(0.5-(obj_ncombat.messages/100));
-	    else{obj_ncombat.message_sz[obj_ncombat.messages]=max(argument3,argument4)+(0.5-(obj_ncombat.messages/100));}
-    
-	    obj_ncombat.message_priority[obj_ncombat.messages]=led;
-	    if (defenses=1) then obj_ncombat.message_priority[obj_ncombat.messages]+=3;
-    
-	    obj_ncombat.alarm[3]=2;
-	    // need some method of determining who is firing
 	}
 
 }
