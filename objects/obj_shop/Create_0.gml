@@ -56,7 +56,8 @@ if (obj_controller.faction_status[eFACTION.Imperium] = "War") {
     }
     with(obj_star) {
         var u = 0;
-        repeat(4) {
+        repeat(planets) {
+
             u += 1;
             if (p_type[u] = "Forge") and(p_owner[u] = 1) then instance_create(x, y, obj_temp6);
         }
