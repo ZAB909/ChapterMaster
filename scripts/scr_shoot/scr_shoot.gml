@@ -1,515 +1,893 @@
-function scr_shoot(weapon_count, target_object, target_type, damage_data, melee_or_ranged) {
-
-	// weapon_count: Weapon number
-	// target_object: Target object
-	// target_type: Target dudes
-	// damage_data: "att" or "arp" or "highest"
-	// melee_or_ranged: melee or ranged
-
-		// This massive clusterfuck of a script uses the newly determined weapon and target data to attack and assign damage
-
-		var j = 0;
-		repeat(100)
-			{
-				j += 1;
-			    obj_ncombat.dead_ene[j] = "";
-			    obj_ncombat.dead_ene_n[j] = 0;
-			}
-		
-		obj_ncombat.dead_enemies = 0;
-
-		if (obj_ncombat.wall_destroyed = 1) then exit;
-
-		// target_object.hostile_men=0;
-
-	var j;j=0;
-	repeat(100){j+=1;
-	    obj_ncombat.dead_ene[j]="";
-	    obj_ncombat.dead_ene_n[j]=0;
-	}obj_ncombat.dead_enemies=0;
+function scr_flavor(argument0, argument1, argument2, argument3, argument4) {
 
 
+	// I forget the arguments for this, you'll have to deal
+	// Generates flavor based on the damage and casualties from scr_shoot, only for the player
 
-	if (obj_ncombat.wall_destroyed=1) then exit;
 
-	// target_object.hostile_men=0;
+	targeh=argument2;
+	var p1,p2,p3,mes,targeh;
+	mes="";p1="";p2="";p3="";
 
-	if (weapon_count>0) and (instance_exists(target_object)) and (owner=eFACTION.Imperium){
-	    var shots_fired,stop,damage_type,doom;
-	    shots_fired=wep_num[weapon_count];
-	    doom=0;
-    	if (shots_fired!=1)and (melee_or_ranged!="melee"){
-    		switch (obj_ncombat.enemy){
-    			case eFACTION.Ecclesiarchy:
-    			 doom=0.3;
-    			 break;
-     			case eFACTION.Eldar:
-    			 doom=0.4;
-    			 break;
-     			case eFACTION.Ork:
-    			 doom=0.2;
-    			 break;
-    			case eFACTION.Tau:
-    			 doom=0.4;
-    			 break;
-    			case eFACTION.Tyranids:
-    			 doom=0.4;
-    			 break;    			     			    			    			 
-    		}
-    	}
-	    if (obj_ncombat.enemy=11){
-	    	att[weapon_count]=round(att[weapon_count]*1.15);
-	    	apa[weapon_count]=round(apa[weapon_count]*1.15);
-	    }
-	    if (obj_ncombat.enemy=10) and (obj_ncombat.threat=7) then doom=1;
-    
-	    damage_type="";
-	    stop=0;targeh=target_type;
-    
-	    if (shots_fired=0) then exit;
-	    if (ammo[weapon_count]=0){
-	    	stop=1;
-	    	exit;
-	    }
-	    if (ammo[weapon_count]>0) then ammo[weapon_count]-=1;
-    
-    
-    
-    
-	    if (damage_data!="medi") then damage_type=damage_data;
-	    if (damage_data="medi"){
-	        damage_type="att";
-	        if (att[weapon_count]<apa[weapon_count]) then damage_type="arp";
-	    }
-	    if (wep[weapon_count]="Web Spinner") then damage_type="status";
-    
-    
-    
-    
-    
-	    if (damage_type="status") and (stop=0) and (shots_fired>0){
-	        var a,b;a=0;b=shots_fired;
-	        if (splash[weapon_count]=1) and (melee_or_ranged!="wall"){shots_fired=shots_fired*3;}
-	        if (b>0) and (melee_or_ranged!="wall") and (instance_exists(target_object)){
-	            target_object.hostile_shots=b;
-	            if (wep_owner[weapon_count]="assorted") then target_object.hostile_shooters=999;
-	            if (wep_owner[weapon_count]!="assorted") then target_object.hostile_shooters=1;
-	            target_object.hostile_damage=0;
-	            target_object.hostile_weapon=wep[weapon_count];
-	            target_object.hostile_men=1;
-	            // target_object.hostile_men=0;
-	            target_object.hostile_range=range[weapon_count];
-	            target_object.hostile_splash=splash[weapon_count];
-	            with(target_object){scr_clean(999);}
+	var wepp;wepp="";
+	if (argument0>0){wepp=wep[argument0];}
+	if (argument0=-51) then wepp="Heavy Bolter Emplacement";
+	if (argument0=-52) then wepp="Missile Launcher Emplacement";
+	if (argument0=-53) then wepp="Missile Silo";
+
+
+	var duhs;duhs=argument1.dudes[targeh];
+
+	if (duhs="Leader") and (obj_ncombat.enemy<=10){
+	    duhs=obj_controller.faction_leader[obj_ncombat.enemy];
+	}
+	var solod,full_name,cm_kill;solod=false;full_name="";cm_kill=0;
+
+	if (argument0>0){
+	    if (wep_solo[argument0]!=""){
+	        solod=true;full_name=wep_solo[argument0];
+	        if (wep_title[argument0]!=""){
+	            full_name=wep_title[argument0]+" "+wep_solo[argument0];
 	        }
-	    }
-	    if (damage_type="att") and (att[weapon_count]>0) and (stop=0) and (shots_fired>0){
-	        var a,b;
-	        a=att[weapon_count];
-	        if (melee_or_ranged="melee"){
-	            if (shots_fired>(target_object.men-target_object.dreads)*2){
-	                doom=((target_object.men-target_object.dreads)*2)/shots_fired;
-	            }
-	        }
-	        b=shots_fired;
-        
-	        if (doom!=0) and (shots_fired>1){
-	        	a=floor((doom*a));
-	        	b=floor(b*doom);
-	        }
-	        if (splash[weapon_count]=1) and (melee_or_ranged!="wall"){shots_fired=shots_fired*3;}
-        
-	        if (b>0) and (melee_or_ranged!="wall") and (instance_exists(target_object)){
-	            target_object.hostile_shots=b;
-	            if (wep_owner[weapon_count]="assorted") then target_object.hostile_shooters=999;
-	            if (wep_owner[weapon_count]!="assorted") then target_object.hostile_shooters=1;
-	            target_object.hostile_damage=a/b;
-	            target_object.hostile_weapon=wep[weapon_count];
-	            // target_object.hostile_men=0;
-	            target_object.hostile_men=1;
-	            target_object.hostile_range=range[weapon_count];
-	            target_object.hostile_splash=splash[weapon_count];
-	            if (target_object.hostile_splash=1) then target_object.hostile_damage+=10;
-            
-	            with(target_object){scr_clean(999);}
-	        }
-	    }
-    
-	    if ((damage_type="arp") or (damage_type="dread")) and (apa[weapon_count]>0) and (stop=0) and (shots_fired>0){
-	        var a,b;
-	        a=att[weapon_count];
-	        if (att[weapon_count]=0) then a=shots_fired;
-        
-	        if (melee_or_ranged="melee"){
-	            if (shots_fired>((target_object.veh+target_object.dreads)*5)){
-	                doom=((target_object.veh+target_object.dreads)*5)/shots_fired;
-	            }
-	        }
-	        b=shots_fired;
-        
-	        if (doom!=0) and (shots_fired>1){a=floor((doom*a));b=floor(b*doom);}
-	        if (splash[weapon_count]=1) and (melee_or_ranged!="wall"){shots_fired=shots_fired*3;}
-        
-			        if (a = 0) then a = shots_fired * doom;
-        
-	        if (a=0) then a=shots_fired*doom;
-        
-	        if (b>0) and (melee_or_ranged!="wall") and (instance_exists(target_object)){
-	            target_object.hostile_shots=b;
-	            if (wep_owner[weapon_count]="assorted") then target_object.hostile_shooters=999;
-	            if (wep_owner[weapon_count]!="assorted") then target_object.hostile_shooters=1;
-	            target_object.hostile_damage=a/b;
-	            target_object.hostile_weapon=wep[weapon_count];
-            
-	            // 135; this might be the problem right here
-	            // this is the problem right here
-	            target_object.hostile_men=0;
-	            // if (damage_type="dread") then target_object.hostile_men=1;
-            
-	            target_object.hostile_range=range[weapon_count];
-	            target_object.hostile_splash=splash[weapon_count];
-	            if (target_object.hostile_splash=1) then target_object.hostile_damage+=10;
-            
-            
-	            with(target_object){scr_clean(999);}
-	        }
-        
-        
-	        if (b>0) and (melee_or_ranged="wall") and (instance_exists(target_object)){
-	            var dam2,totes_dam,dest;
-	            dest=0;dam2=(a/b)-target_object.ac[1];
-	            if (dam2<0) then dam2=0;totes_dam=round(dam2)*b;
-	            target_object.hp[1]-=dam2;
-	            target_object.hostile_shots=b;
-	            target_object.hostile_weapon=wep[weapon_count];
-	            target_object.hostile_range=range[weapon_count];
-	            target_object.hostile_damage=dam2;
-            
-	            if (target_object.hp[1]<=0) then dest=1;
-	            scr_flavor2(dest,"wall");
-	        }
-        
+	        if (wep_solo[argument0]=obj_ini.master_name) then cm_kill=1;
 	    }
 	}
 
 
-	if (instance_exists(target_object)) and (owner  = eFACTION.Player){
-	    var shots_fired,stop,damage_type;
-    
-	    if (weapon_count>0){shots_fired=wep_num[weapon_count];}
-	    if (shots_fired=0) then exit;
-	    /*if (weapon_count<-40){
-	        if (weapon_count=-53){
-	            if (player_silos>30) then shots_fired=30;
-	            if (player_silos<30) then shots_fired=player_silos;
-	        }
-	        if (weapon_count=-51) or (weapon_count=-52){
-	            shots_fired=round(player_silos/2);
-	        }
-	    }*/
-    
-	    damage_type="";stop=0;targeh=target_type;
-    
-			    repeat(10)
-					{
-						if (target_object.dudes_hp[targeh] = 0) then targeh += 1;
-					}
-			    if (target_object.dudes_hp[targeh] = 0) then stop = 1;    
-    
-	    repeat(10){if (target_object.dudes_hp[targeh]=0) then targeh+=1;}
-	    if (target_object.dudes_hp[targeh]=0) then stop=1;
-    
-    
-	    if (weapon_count>0){
-	        if (ammo[weapon_count]=0) then stop=1;
-	        if (ammo[weapon_count]>0) then ammo[weapon_count]-=1;
-	    }
-	    if (wep[weapon_count]="Missile Silo") then obj_ncombat.player_silos-=min(obj_ncombat.player_silos,30);
+	// show_message("Flavor is being ran");
+	// if (cm_kill=1) then show_message("CMKILL1");
 
-    
-	    if (damage_data!="highest") then damage_type=damage_data;
-	    if (damage_data="highest") and (weapon_count>0){
-	        damage_type="att";if (att[weapon_count]>=100) and (apa[weapon_count]>0) then damage_type="arp";
-	    }
-	    if (damage_data="highest"){
-	    	if (weapon_count=-51||weapon_count=-52||weapon_count=-53)then damage_type="att";
-	    }
-    
-	    if (weapon_count>0) or (weapon_count<-40){// Normal shooting
-	        var overkill=0,damage_remaining=0,shots_remaining=0;
-	        overkill=0;damage_remaining=0;shots_remaining=0;
-        
-				        if (weapon_number > 0)
-							{
-								if (att[weapon_number] > 0) and (stop = 0) then that_works = true;
-							}
-				        if (weapon_number <- 40) and (stop = 0) then that_works = true;
-        
-	        var that_works;that_works=false;
-        
-	        if (weapon_count>0){
-	        	if (att[weapon_count]>0) and (stop=0) then that_works=true;
-	        }
-	        if (weapon_count<-40) and (stop=0) then that_works=true;
-        
-	        if (that_works=true){
-	            var a,b,c,eac,ap,spla,wii;
-	            a=0;b=0;c=0;eac=0;ap=0;spla=0;wii="";
-            
-	            if (weapon_count>0){
-	                a=(att[weapon_count]/wep_num[weapon_count])*target_object.dudes_dr[targeh];
-	                ap=apa[weapon_count];
-	                spla=splash[weapon_count];
-	            }// Average damage
-	            if (weapon_count<-40){
-	                wii="";spla=1;
-                
-	                if (weapon_count=-51){
-	                	wii="Heavy Bolter Emplacement";
-	                	at=160;
-	                	ap=0;
-	                }
-	                if (weapon_count=-52){
-	                	wii="Missile Launcher Emplacement";
-	                	at=200;
-	                	ap=1;
-	                }
-	                if (weapon_count=-53){wii="Missile Silo";at=250;ar=0;}
-	            }
-            
-	            eac=target_object.dudes_ac[targeh];
-	            if (target_object.dudes_vehicle[targeh]=0){
-	                if (ap=1) then eac=0;
-	                if (ap=-1) then eac=eac*6;
-	            }
-	            if (target_object.dudes_vehicle[targeh]=1){
-	                if (ap=0) then eac=eac*6;
-	                if (ap=-1) then eac=a;
-	            }
-	            b=a-eac;if (b<=0) then b=0;// Average after armour
-            
-					            c = b * shots_fired;// New damage
-            
-	            var casualties,ponies,onceh;onceh=0;ponies=0;
-	            if (spla=0) then casualties=min(floor(c/target_object.dudes_hp[targeh]),shots_fired);
-	            if (spla!=0) then casualties=floor(c/target_object.dudes_hp[targeh]);
-            
-	            ponies=target_object.dudes_num[targeh];
-	            if (target_object.dudes_num[targeh]=1) and ((target_object.dudes_hp[targeh]-c)<=0){casualties=1;}
-            
-            
-                     
-            
-            
-            
-	            if (target_object.dudes_num[targeh]-casualties<0){
-	                overkill=casualties-target_object.dudes_num[targeh];
-	                damage_remaining=c-(overkill*target_object.dudes_hp[targeh]);
-                
-						                var proportional_shots;
-						                proportional_shots = round(damage_remaining / a);
-						                shots_remaining = proportional_shots;
-                
-	                // show_message("killed "+string(casualties)+"x "+string(target_object.dudes[targeh]));
-	                // show_message("did "+string(c)+" damage with "+string(shots_fired)+" shots fired, have "+string(damage_remaining)+" damage remaining (about "+string(shots_remaining)+" shots)");
-	            }
-            
-					            if (target_object.dudes_num[targeh] - casualties < 0) then casualties = ponies;
-					            if (casualties < 0) then casualties = 0;
-            
-            
-            
-            
-	            if (target_object.dudes_num[targeh]-casualties<0) then casualties=ponies;
-	            if (casualties<0) then casualties=0;
-            
-            
-	            if (casualties>=1){
-	                var iii,found,openz;
-	                iii=0;found=0;openz=0;
-	                repeat(40){iii+=1;
-	                    if (found=0){
-	                        if (obj_ncombat.dead_ene[iii]="") and (openz=0) then openz=iii;
-	                        if (obj_ncombat.dead_ene[iii]=target_object.dudes[targeh]) and (found=0){
-	                            found=iii;obj_ncombat.dead_ene_n[obj_ncombat.dead_enemies]+=casualties;
-	                        }
-	                    }
-	                }
-	                if (found=0){
-	                    obj_ncombat.dead_enemies+=1;
-	                    obj_ncombat.dead_ene[openz]=string(target_object.dudes[targeh]);
-	                    obj_ncombat.dead_ene_n[openz]=casualties;
-	                }
-                
-	                // if (casualties=1) then obj_ncombat.dead_ene[obj_ncombat.dead_enemies]="1 "+string(target_object.dudes[targeh]);
-	                // if (casualties>1) then obj_ncombat.dead_ene[obj_ncombat.dead_enemies]=string(casualties)+" "+string(target_object.dudes[targeh]);
-	            }
-            
-								var proportional_shots;
-								var godd;
-								var a2,b2,c2,eac2,ap2
-					            var casualties2,ponies2,onceh2;
-								var iii,found,openz;
-					            var k = 0;
-					
-					            if (damage_remaining > 0) and (shots_remaining > 0) then repeat(10)
-									{
-						                if (damage_remaining>0) and (shots_remaining>0)
-											{
-							                    godd = 0;
-							                    k = targeh;
-                    
-	                    // Find similar target in this same group
-	                    repeat(10){k+=1;
-	                        if (godd=0){
-	                            if (target_object.dudes_num[k]>0) and (target_object.dudes_vehicle[k]=target_object.dudes_vehicle[targeh]){
-	                                godd=k;
-	                            }
-	                        }
-	                    }
-	                    k=targeh;
-	                    if (godd=0) then repeat(10){k-=1;
-	                        if (godd=0) and (k>=1){
-	                            if (target_object.dudes_num[k]>0) and (target_object.dudes_vehicle[k]=target_object.dudes_vehicle[targeh]){
-	                                godd=k;
-	                            }
-	                        }
-	                    }
-                    
-							                    // Found a similar target to get the damage
-							                    if (godd > 0) and (damage_remaining > 0) and (shots_remaining > 0)
-													{
-								                        ap2 = damage_remaining;
-								                        a2 = a;// Average damage
-                        
-	                        eac2=target_object.dudes_ac[godd];
-	                        if (target_object.dudes_vehicle[godd]=0){
-	                            if (ap2=1) then eac2=0;
-	                            if (ap2=-1) then eac2=eac2*6;
-	                        }
-	                        if (target_object.dudes_vehicle[godd]=1){
-	                            if (ap2=0) then eac2=eac2*6;
-	                            if (ap2=-1) then eac2=a;
-	                        }
-	                        b2=a2-eac2;if (b2<=0) then b2=0;// Average after armour
-                        
-								                        c2 = b2 * shots_remaining;// New damage
-                        
-	                        var casualties2,ponies2,onceh2;onceh2=0;ponies2=0;
-	                        if (spla=0) then casualties2=min(floor(c2/target_object.dudes_hp[godd]),shots_remaining);
-	                        if (spla!=0) then casualties2=floor(c2/target_object.dudes_hp[godd]);
-                        
-	                        ponies2=target_object.dudes_num[godd];
-	                        if (target_object.dudes_num[godd]=1) and ((target_object.dudes_hp[godd]-c2)<=0){casualties2=1;}
-	                        if (target_object.dudes_num[godd]<casualties2) then casualties2=target_object.dudes_num[godd];
-	                        if (casualties2<1){casualties2=0;damage_remaining=0;overkill=0;shots_remaining=0;}
-                        
-	                        if (casualties2>=1) and (shots_fired>0){
-	                            var iii,found,openz;
-	                            iii=0;found=0;openz=0;
-	                            repeat(40){iii+=1;
-	                                if (found=0){
-	                                    if (obj_ncombat.dead_ene[iii]="") and (openz=0) then openz=iii;
-	                                    if (obj_ncombat.dead_ene[iii]=target_object.dudes[godd]) and (found=0){
-	                                        found=iii;obj_ncombat.dead_ene_n[obj_ncombat.dead_enemies]+=casualties;
-	                                    }
-	                                }
-	                            }
-	                            if (found=0){
-	                                obj_ncombat.dead_enemies+=1;
-	                                obj_ncombat.dead_ene[openz]=string(target_object.dudes[godd]);
-	                                obj_ncombat.dead_ene_n[openz]=casualties;
-	                            }
-                            
-                            
-	                            /*obj_ncombat.dead_enemies+=1;
-	                            if (casualties2=1) then obj_ncombat.dead_ene[obj_ncombat.dead_enemies]="1 "+string(target_object.dudes[godd]);
-	                            if (casualties2>1) then obj_ncombat.dead_ene[obj_ncombat.dead_enemies]=string(casualties2)+" "+string(target_object.dudes[godd]);
-	                            obj_ncombat.dead_enemies+=1;
-	                            obj_ncombat.dead_ene[obj_ncombat.dead_enemies]=string(target_object.dudes[godd]);
-	                            obj_ncombat.dead_ene_n[obj_ncombat.dead_enemies]=casualties;*/
-                            
-	                            target_object.dudes_num[godd]-=casualties2;
-	                            obj_ncombat.enemy_forces-=casualties2;
-	                        }
-                        
-	                        if (casualties2>=1){
-	                            if (target_object.dudes_num[godd]<=0){
-	                                overkill=casualties2-target_object.dudes_num[godd];
-	                                damage_remaining-=casualties2*target_object.dudes_hp[godd];
-                                
-				                               
-										                                proportional_shots = round(damage_remaining / a2);
-										                                shots_remaining = proportional_shots;
-                                
-	                                // show_message("killed "+string(casualties2)+"x "+string(target_object.dudes[godd]));
-	                                // show_message("did "+string(c)+" damage with "+string(proportional_shots)+" shots fired, have "+string(damage_remaining)+" damage remaining");
-	                            }
-	                        }
-                    
-      
-	                    }
-	                }
-	            }// End repeat 10
-
-            
-	            scr_flavor(weapon_count,target_object,target_type,shots_fired-wep_rnum[weapon_count],casualties);
-            
-            
-            
-            
-            
-            
-	            if (target_object.dudes_num[targeh]=1) and (c>0) then target_object.dudes_hp[targeh]-=c;// Need special flavor here for just damaging
-            
-	            if (casualties>=1){
-	                target_object.dudes_num[targeh]-=casualties;
-	                obj_ncombat.enemy_forces-=casualties;
-                              
-	            }
-	        }
-	    }
-    
-			    if (melee_or_ranged = "melee")
-					{
-				        // lololol
-				    }
-    
-	    if (stop=0) then with(target_object){
-	        var j,good,open;
-	        j=0;good=0;open=0;
-	        repeat(20){j+=1;
-	            if (dudes_num[j]<=0){
-	                dudes[j]="";dudes_special[j]="";dudes_num[j]=0;dudes_ac[j]=0;
-	                dudes_hp[j]=0;dudes_vehicle[j]=0;dudes_damage[j]=0;
-	            }
-	            if (dudes[j]="") and (dudes[j+1]!=""){
-	                dudes[j]=dudes[j+1];
-	                dudes_special[j]=dudes_special[j+1];
-	                dudes_num[j]=dudes_num[j+1];
-	                dudes_ac[j]=dudes_ac[j+1];
-	                dudes_hp[j]=dudes_hp[j+1];
-	                dudes_vehicle[j]=dudes_vehicle[j+1];
-	                dudes_damage[j]=dudes_damage[j+1];
-                
-	                dudes[j+1]="";
-	                dudes_special[j+1]="";
-	                dudes_num[j+1]=0;dudes_ac[j+1]=0;
-	                dudes_hp[j+1]=0;
-	                dudes_vehicle[j+1]=0;
-	                dudes_damage[j+1]=0;
-	            }
-	        }
-	        j=0;
-	    }
-	    if (target_object.men+target_object.veh+target_object.medi=0) and (target_object.owner!=1) {
-	        with(target_object){instance_destroy();}
-	    }
-    
-	    if (melee_or_ranged="melee"){
-	        // lololol
-	    }
-    
+	if (string_count("&",wepp)>0) or (string_count("|",wepp)>0){// Artifact description
+	    if (string_count("Bolter",wepp)>0) then wepp="Bolter";
+	    if (string_count("Plasma Pistol",wepp)>0) then wepp="Plasma Pistol";
+	    if (string_count("Plasma Gun",wepp)>0) then wepp="Plasma Gun";
+	    if (string_count("Power Sword",wepp)>0) then wepp="Power Sword";
+	    if (string_count("Power Spear",wepp)>0) then wepp="Power Spear";
+	    if (string_count("Power Axe",wepp)>0) then wepp="Power Axe";
+	    if (string_count("Power Fist",wepp)>0) then wepp="Power Fist";
+	    if (string_count("Relic Blade",wepp)>0) then wepp="Relic Blade";
+	    if (string_count("&",wepp)>0) then wepp=clean_tags(wepp);
 	}
+
+	if (obj_ncombat.battle_special="WL10_reveal") or (obj_ncombat.battle_special="WL10_later"){
+	    if (duhs="Veteran Chaos Terminator") and (duhs>0) then obj_ncombat.chaos_angry+=argument4*2;
+	    if (duhs="Veteran Chaos Chosen") and (duhs>0) then obj_ncombat.chaos_angry+=argument4;
+	    if (duhs="Greater Daemon of Slaanesh") then obj_ncombat.chaos_angry+=argument4*5;
+	    if (duhs="Greater Daemon of Tzeentch") then obj_ncombat.chaos_angry+=argument4*5;
+	}
+
+	if (argument1.flank=1) and (argument1.flyer=0) then duhs="flanking "+string(duhs);
+    
+	var flavored=0;
+
+
+
+
+
+
+	if (string_count("Bolt",wepp)>0) and (solod=false){flavored=1;
+	    if (obj_ncombat.bolter_drilling=1) then wepp="Accurate "+string(wepp);
+	    if (argument3<200){
+	        if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s fire.";
+	        if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+"s fire.";
+	        if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire strike the enemy ranks.";
+	        if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" rip through the enemy ranks.";
+	    }
+	    if (argument3>=200){
+	        if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s fire.  Explosions clap across the "+string(duhs)+".";
+	        if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+"s fire.  Explosions clap around the "+string(duhs)+".";
+	        if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s rip through the enemy ranks.";
+	        if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+"s rip through the enemy ranks.";
+	    }
+	}
+	if (string_count("Bolt",wepp)>0) and (solod=true){flavored=1;
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(full_name)+" fires his "+string(wepp)+" into the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(full_name)+" fires his "+string(wepp)+" into the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(full_name)+" fires his "+string(wepp)+" into a "+string(duhs)+" but fails to kill it.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4>0) then p1=string(full_name)+" fires his "+string(wepp)+" into a "+string(duhs)+".";
+	}
+
+
+
+	if (wepp="hammer_of_wrath"){
+	    if (solod=false){flavored=1;
+	        if (argument3<20) then p1=string(argument3)+" Astartes with Jump Packs leap to the skies.  Sputtering and roaring flames herald their advance.  Once at a suitable height they crash back down amongst the enemy- ";
+	        if (argument3>=20) and (argument3<100) then p1="Several squads of Astartes take to the sky, their Jump Packs roaring and shooting flames.  Once at a suitable height they crash back down amongst the enemy- ";
+	        if (argument3>=100) then p1="A literal wave of Astartes take to the sky, their Jump Packs roaring like one massive, angry beast.  Almost simultaneously they all crash back down, smashing their enemey- ";
+        
+	        if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1+="they smash into the "+string(duhs)+" ranks.";
+	        if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1+="they smash into the "+string(duhs)+" ranks.";
+	        if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1+="a "+string(duhs)+" survives the attack.";
+	        if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1+="a "+string(duhs)+" takes one of the charges.";
+	    }
+	    if (solod=true){
+	        if (argument1.dudes_num[targeh]=1) then p1=string(full_name)+" activates his Jump Pack and launches up into the air, and then crashes down into a "+string(duhs)+"- ";
+	        if (argument1.dudes_num[targeh]>1) then p1=string(full_name)+" activates his Jump Pack and launches up into the air, and then crashes down into the "+string(duhs)+" ranks- ";
+	        if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1+="it survives the attack.";
+	        if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1+="all survive the attack.";
+	    }
+	}
+
+
+
+
+	if (string_count("Plasma Pistol",wepp)>0) and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) then p1=string(argument3)+" "+string(wepp)+" shoot bolts of energy into a "+string(duhs)+".";
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" shoot bolts of energy into the "+string(duhs)+" ranks.";
+	}
+	if (wepp="Assault Cannon") and (solod=false){flavored=1;
+	    if (argument3=1) then p1="An "+string(wepp)+" hums and rotates, belching out bullets and flame alike.";
+	    if (argument3>1) then p1=string(argument3)+" "+string(wepp)+" hum and rotat, belching out bullets and flame alike.";
+	}
+	if (string_count("Flamer",wepp)>0) and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) then p1=string(argument3)+" "+string(wepp)+" bathe the "+string(duhs)+" in holy promethium.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" bathe the "+string(duhs)+" ranks in holy promethium.";
+	}
+	if (wepp="Missile Launcher") and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+".";
+	    if (argument1.dudes_num[targeh]>1) then p1=string(argument3)+" "+string(wepp)+" fire on the "+string(duhs)+" ranks.";
+	}
+	if (wepp="Whirlwind Missiles") and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) then p1=string(argument3)+" Whirlwinds fire upon the "+string(duhs)+".";
+	    if (argument1.dudes_num[targeh]>1) then p1=string(argument3)+" Whirlwinds fire on the "+string(duhs)+" ranks.";
+	}
+	if (wepp="Sniper Rifle") and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+".";
+	    if (argument1.dudes_num[targeh]>1) then p1=string(argument3)+" "+string(wepp)+" fire on the "+string(duhs)+" ranks.";
+	}
+	if (wepp="Stalker Pattern Bolter") and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) then p1=$"{string(argument3)} {string(wepp)} fire upon the {string(duhs)}.";
+	    if (argument1.dudes_num[targeh]>1) then p1=$"{string(argument3)} {string(wepp)} fire on the {string(duhs)}.";
+	}
+	if ((wepp="Lascannon") or (wepp="Twin Linked Lascannon") or (wepp="Lascannons")) and (solod=false){flavored=1;
+	    if (wepp="Lascannons"){wepp="Lascannon";argument3=argument3*2;}
+	    if (argument3=1) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+".";
+	    if (argument3>1) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" ranks.";        
+	}
+	if (wepp="Webber") and (solod=false){flavored=1;
+	    if ((duhs="Termagaunt") or (duhs="Hormagaunt")) and (argument4>0) then obj_ncombat.captured_gaunt+=argument4;
+	    if (argument1.dudes_num[targeh]=1) then p1=string(argument3)+" "+string(wepp)+" spray ooze on the "+string(duhs)+".";
+	    if (argument1.dudes_num[targeh]>1) then p1=string(argument3)+" "+string(wepp)+" spray ooze on the "+string(duhs)+" ranks.";
+	}
+
+	if (wepp="melee") or (wepp="Melee") and (solod=false){flavored=1;var ra;ra=choose(1,2,3,4);
+	    // This needs to be worked out
+	    if (argument4=0) then p2="MELEE";
+	    if (argument4>0){
+	        p1="The "+string(duhs)+" ranks ";
+	        if (ra=1) then p2="are struck with gun-barrels and combat knifes.";
+	        if (ra=2) then p2="are savaged by your marines in hand-to-hand combat.";
+	        if (ra=3) then p2="are smashed by your marines.";
+	        if (ra=4) then p2="are struck by your marines in melee.";
+	    }
+	}
+	if (wepp="Close Combat Weapon") and (solod=false){flavored=1;
+	    if (argument3=1) then p1="A "+string(duhs)+" is struck by a "+string(obj_ini.role[100][6])+".";
+	    if (argument3>1) then p1=string(argument3)+" "+string(obj_ini.role[100][6])+"s stomp, wrench, and smash at the "+string(duhs)+" ranks.";
+	}
+	if (wepp="Chainsword") and (solod=false){flavored=1;
+	    if (argument3=1) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+".";
+	    if (argument3>1) then p1=string(argument3)+" Chainsword motors rev and hack at the "+string(duhs)+" ranks.";
+	}
+	if (wepp="Sarissa") and (solod=false){flavored=1;
+	    if (argument3=1) then p1="A "+string(duhs)+" is struck by a Battle Sister's "+string(wepp)+".";
+	    // if (argument3>1) and (argument4=0) then p1="A Battle Sister "+choose("howls out","roars")+" and hacks at the "+string(duhs)+" ranks with her Sarissa.";
+	    if (argument3>1) then p1=string(argument3)+" Battle Sisters "+choose("howl out","roar")+" as they hack away at the "+string(duhs)+" ranks with their Sarissas.";
+	}
+	if (wepp="Eviscerator") and (solod=false){flavored=1;
+	    if (argument3=1) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+".";
+	    if (argument3>1) then p1=string(argument3)+" Eviscerators rev and howl, hacking at the "+string(duhs)+" ranks.";
+	}
+	if (wepp="Force Weapon") and (solod=false){flavored=1;
+	    if (argument3=1) then p1="A "+string(duhs)+" is blasted by a "+string(wepp)+".";
+	    if (argument3>1) then p1=string(argument3)+" "+string(wepp)+" crackle and swing into the "+string(duhs)+" ranks.";
+	}
+	if (wepp="Inactive Force Weapon") and (solod=false){flavored=1;
+	    if (argument3=1) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+".";
+	    if (argument3>1) then p1=string(argument3)+" "+string(wepp)+" are swung into the "+string(duhs)+" ranks.";
+	}
+	if ((string_count("Power",wepp)>0) or (wepp="Lightning Claw")) and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1){
+	        if (argument3=1) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+".";
+	        if (argument3>1) then p1="A "+string(duhs)+" is struck by "+string(argument3)+" "+string(wepp)+"s.";
+	    }
+	    if (argument1.dudes_num[targeh]>1){
+	        if (argument3>1) then p1=string(argument3)+" "+string(wepp)+"s crackle and spark, striking at the "+string(duhs)+" ranks.";
+	    }
+	}
+	if ((string_count("Power",wepp)>0) or (wepp="Force Weapon") or (wepp="Inactive Force Weapon") or (wepp="Lightning Claw")) and (solod=true){flavored=1;
+	    if (argument1.dudes_num[targeh]>1) then p1=string(full_name)+" swings his "+string(wepp)+".";
+	}
+
+
+	if (flavored=0) and (solod=false){p1=string(argument3)+" "+string(wepp)+"|";}
+	if (flavored=0) and (solod=true){p1="("+string(full_name)+"."+string(wepp)+")|";}
+
+
+
+
+	var j,chunks;j=0;chunks=0;
+	repeat(40){j+=1;
+	    if (obj_ncombat.dead_ene[j]!="") and (j=1) then p2+="  ";
+	    if (obj_ncombat.dead_enemies=1) and (j=1){
+	        p2+=string(obj_ncombat.dead_ene[j])+" have been destroyed.";
+	    }
+	    if (obj_ncombat.dead_enemies=2){
+	        if (j=1) then p2+=string(obj_ncombat.dead_ene[j])+" and ";
+	        if (j=2) then p2+=string(obj_ncombat.dead_ene[j])+" have been destroyed.";
+	    }
+	    if (obj_ncombat.dead_enemies>=3){
+	        if (obj_ncombat.dead_ene[j]!="") and (obj_ncombat.dead_ene[j+1]!="") then p2+=string(obj_ncombat.dead_ene[j])+", ";
+	        if (obj_ncombat.dead_ene[j]!="") and (obj_ncombat.dead_ene[j+1]="") then p2+=" and "+string(obj_ncombat.dead_ene[j])+" have been destroyed.";
+	    }
+	}
+	j=0;repeat(100){j+=1;obj_ncombat.dead_ene[j]="";}
+	obj_ncombat.dead_enemies=0;
+
+	mes=p1+p2+p3;
+
+
+
+
+
+	var led;led=0;
+	if (wep[argument0]="hammer_of_wrath") then led=2.1;
+	if (obj_ncombat.enemy<=10){
+	    if (duhs=obj_controller.faction_leader[obj_ncombat.enemy]){// Cleaning up the message for the enemy leader
+	        mes=string_replace(mes,"a "+string(duhs),string(duhs));
+	        mes=string_replace(mes,"the "+string(duhs),string(duhs));
+	        mes=string_replace(mes,string(duhs)+" ranks",string(duhs));
+	        if (enemy=5) then mes=string_replace(mes,"it","her");
+	        if (enemy=6) and (obj_controller.faction_gender[6]=1) then mes=string_replace(mes,"it","him");
+	        if (enemy=6) and (obj_controller.faction_gender[6]=2) then mes=string_replace(mes,"it","her");
+	        if (enemy!=6) and (enemy!=5) then mes=string_replace(mes,"it","him");
+	        led=5;
+	    }
+	}
+
+
+
+
+
+
+	if (p1!=""){
+	    obj_ncombat.messages+=1;
+	    obj_ncombat.message[obj_ncombat.messages]=mes;
+    
+	    // show_message("Added to message slot: "+string(obj_ncombat.messages)+"#"+string(mes));
+	    // show_message(string(obj_ncombat.message[obj_ncombat.messages]));
+    
+	    if (argument1.dudes_vehicle[targeh]=1) then obj_ncombat.message_sz[obj_ncombat.messages]=max(argument3,argument4*10)+(0.5-(obj_ncombat.messages/100));
+	    else{obj_ncombat.message_sz[obj_ncombat.messages]=max(argument3,argument4)+(0.5-(obj_ncombat.messages/100));}
+    
+	    obj_ncombat.message_priority[obj_ncombat.messages]=led;
+	    if (defenses=1) then obj_ncombat.message_priority[obj_ncombat.messages]+=3;
+    
+	    obj_ncombat.alarm[3]=2;
+	    // need some method of determining who is firing
+	}
+
+
+
+
+
+
+	exit;
+
+
+
+
+
+
+
+
+
+	if (string_count("Bolt",wepp)>0) and (solod=false){flavored=1;
+	    if (obj_ncombat.bolter_drilling=1) then wepp="Accurate "+string(wepp);
+	    if (argument3<200){
+	        if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s fire.  A "+string(duhs)+" is rocked by the bolts but survives.";
+	        if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+"s fire.  A "+string(duhs)+" absorbs most of the bolts and dies instantly.";
+	        if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire strikes the ranks of the "+string(duhs)+" but seemingly does no damage.";
+	        if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" rip through the "+string(duhs)+" and purge "+string(argument4)+".";
+	    }
+	    if (argument3>=200){
+	        if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s fire.  Explosions clap across the armour of the "+string(duhs)+".";
+	        if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+"s fire.  Explosions clap around the "+string(duhs)+" and kill it instantly.";
+	        if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s rip through the ranks of "+string(duhs)+", seemingly doing no damage.";
+	        if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+"s rip through the ranks of "+string(duhs)+", "+string(argument4)+" dying immediately.";
+	    }
+	}
+	if (string_count("Bolt",wepp)>0) and (solod=true){flavored=1;
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(full_name)+" fires his "+string(wepp)+" into the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(full_name)+" fires his "+string(wepp)+" into the "+string(duhs)+" ranks and kills "+string(argument4)+".";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(full_name)+" fires his "+string(wepp)+" into a "+string(duhs)+" but fails to kill it.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4>0) then p1=string(full_name)+" fires his "+string(wepp)+" into a "+string(duhs)+", killing it.";
+	}
+
+
+
+	if (wepp="hammer_of_wrath"){
+	    if (solod=false){flavored=1;
+	        if (argument3<20) then p1=string(argument3)+" Astartes with Jump Packs leap to the skies.  Sputtering and roaring flames herald their advance.  Once at a suitable height they crash back down amongst the enemy- ";
+	        if (argument3>=20) and (argument3<100) then p1="Several squads of Astartes take to the sky, their Jump Packs roaring and shooting flames.  Once at a suitable height they crash back down amongst the enemy- ";
+	        if (argument3>=100) then p1="A literal wave of Astartes take to the sky, their Jump Packs roaring like one massive, angry beast.  Almost simultaneously they all crash back down, smashing their enemey- ";
+        
+	        if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1+=" they smash into the "+string(duhs)+" ranks but fail to kill any.";
+	        if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1+=" they smash into the "+string(duhs)+" ranks and pulverize "+string(argument4)+".";
+	        if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1+="a "+string(duhs)+" survives the attack.";
+	        if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1+="a "+string(duhs)+" takes one of the charges and dies.";
+	    }
+	    if (solod=true){
+	        if (argument1.dudes_num[targeh]=1) then p1=string(full_name)+" activates his Jump Pack and launches up into the air, and then crashes down into a "+string(duhs)+"- ";
+	        if (argument1.dudes_num[targeh]>1) then p1=string(full_name)+" activates his Jump Pack and launches up into the air, and then crashes down into the "+string(duhs)+" ranks- ";
+    
+	        if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1+="it survives the attack.";
+	        if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1+="it is crumpled to the ground, dead instantly.";
+	    }
+	}
+
+
+
+
+	if (string_count("Plasma Pistol",wepp)>0) and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" shoot bolts of energy into a "+string(duhs)+".";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" overwhelm a "+string(duhs)+" with bolts of energy.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" shoot bolts of energy into the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" shoot bolts of energy into the "+string(duhs)+", cleansing "+string(argument4)+".";
+	}
+	if (wepp="Assault Cannon") and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s hum and rotate, belching out bullets and flame alike.  Explosions clap across the armour of the "+string(duhs)+".";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+"s hum and rotate, belching out bullets and flame alike. A "+string(duhs)+" is ripped apart by the rounds.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s hum and rotate, belching out bullets and flame alike .  The "+string(duhs)+"s are rocked but unharmed.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+"s hum and rotate, belching out bullets and flame alike.  "+string(argument4)+" "+string(duhs)+" are purged.";
+	}
+	if (string_count("Flamer",wepp)>0) and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" bathe the "+string(duhs)+" in holy promethium.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" flash-fry the "+string(duhs)+" inside its armour.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" wash over the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" bathe the "+string(duhs)+" ranks in holy promethium, cleansing "+string(argument4)+".";
+	}
+	if (wepp="Missile Launcher") and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" and fail to do damage.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" and blow it to small pieces.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire on the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" ranks and blow "+string(argument4)+" to pieces.";
+	}
+	if (wepp="Whirlwind Missiles") and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" Whirlwinds fire upon the "+string(duhs)+" and fail to do damage.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" Whirlwinds fire upon the "+string(duhs)+" and blow it to small pieces.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" Whirlwinds fire on the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" Whirlwinds fire upon the "+string(duhs)+" ranks and blow "+string(argument4)+" to pieces.";
+	}
+	if (wepp="Sniper Rifle") and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" and fail to do damage.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" and destroy it.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire on the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" ranks and kill "+string(argument4)+".";
+	}
+	if (wepp="Stalker Pattern Bolter") and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" and fail to do damage.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" and destroy it.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire on the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" ranks and kill "+string(argument4)+".";
+	}
+	if ((wepp="Lascannon") or (wepp="Twin Linked Lascannon") or (wepp="Lascannons")) and (solod=false){flavored=1;
+	    if (wepp="Lascannons"){wepp="Lascannon";argument3=argument3*2;}
+	    if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+".";
+	    if (argument3=1) and (argument4=1) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+" and killed instantly.";
+	    if (argument3>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire upon a "+string(duhs)+" and fail to kill it.";
+	    if (argument3>1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" fire upon a "+string(duhs)+" and turn it into paste.";
+	    if (argument3>1) and (argument4>1) then p1=string(argument3)+" "+string(wepp)+" fire and purge "+string(argument4)+" "+string(duhs)+".";        
+	}
+	if (wepp="Webber") and (solod=false){flavored=1;
+	    if ((duhs="Termagaunt") or (duhs="Hormagaunt")) and (argument4>0) then obj_ncombat.captured_gaunt+=argument4;
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" spray ooze on the "+string(duhs)+" but fail to immobilize it.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" spray ooze on the "+string(duhs)+" and fully immobilize it.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" spray ooze on the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" spray ooze on the "+string(duhs)+" ranks and immobilize "+string(argument4)+" of them.";
+	}
+
+	if (wepp="melee") or (wepp="Melee") and (solod=false){flavored=1;var ra;ra=choose(1,2,3,4);
+	    // This needs to be worked out
+	    if (argument4=0) then p2="MELEE";
+	    if (argument4>0){
+	        p1=string(argument4)+" "+string(duhs)+" ";
+	        if (ra=1) then p2="are struck down with gun-barrels and combat knifes.";
+	        if (ra=2) then p2="are killed by your marines in hand-to-hand combat.";
+	        if (ra=3) then p2="are smashed aside by your marines.";
+	        if (ra=4) then p2="are struck down by your marines in melee.";
+	    }
+	}
+	if (wepp="Close Combat Weapon") and (solod=false){flavored=1;
+	    if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is struck by a "+string(obj_ini.role[100][6])+" but survives.";
+	    if (argument3=1) and (argument4=1) then p1="A "+string(duhs)+" is struck down by a "+string(obj_ini.role[100][6])+".";
+	    if (argument3>1) and (argument4=0) then p1=string(argument3)+" "+string(obj_ini.role[100][6])+"s wrench and smash at a "+string(duhs)+" but fail to destroy it.";
+	    if (argument3>1) and (argument4>1) then p1=string(argument3)+" "+string(obj_ini.role[100][6])+"s stomp, wrench, and smash "+string(argument4)+" "+string(duhs)+" into paste.";
+	}
+	if (wepp="Chainsword") and (solod=false){flavored=1;
+	    if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+" but survives.";
+	    if (argument3=1) and (argument4=1) then p1="A "+string(duhs)+" is cut down by a "+string(wepp)+".";
+	    if (argument3>1) and (argument4=0) then p1=string(argument3)+" Chainsword motors rev and hack at the "+string(duhs)+" ranks.";
+	    if (argument3>1) and (argument4>0) then p1=string(argument3)+" Chainsword motors rev and hack away at the "+string(duhs)+" ranks.  "+string(argument4)+" are cut down.";
+	}
+	if (wepp="Sarissa") and (solod=false){flavored=1;
+	    if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is struck by a Battle Sister's "+string(wepp)+" but survives.";
+	    if (argument3=1) and (argument4=1) then p1="A "+string(duhs)+" is struck down by a Battle Sister's "+string(wepp)+".";
+	    if (argument3>1) and (argument4=0) then p1="A Battle Sister "+choose("howls out","roars")+" and hacks at the "+string(duhs)+" ranks with her Sarissa.";
+	    if (argument3>1) and (argument4>0) then p1=string(argument3)+" Battle Sisters "+choose("howl out","roar")+" as they hack away at the "+string(duhs)+" ranks with their Sarissas.  "+string(argument4)+" are cut down.";
+	}
+	if (wepp="Eviscerator") and (solod=false){flavored=1;
+	    if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+" but survives.";
+	    if (argument3=1) and (argument4=1) then p1="A "+string(duhs)+" is cut down by a "+string(wepp)+".";
+	    if (argument3>1) and (argument4=0) then p1=string(argument3)+" Eviscerators rev and howl, hacking at the "+string(duhs)+" ranks.";
+	    if (argument3>1) and (argument4>0) then p1=string(argument3)+" Eviscerators rev and howl, hacking at the "+string(duhs)+" ranks.  "+string(argument4)+" are cut down.";
+	}
+	if (wepp="Force Weapon") and (solod=false){flavored=1;
+	    if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is blasted by a "+string(wepp)+" but survives.";
+	    if (argument3=1) and (argument4=1) then p1="A "+string(duhs)+" is incinerated by a "+string(wepp)+".";
+	    if (argument3>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" crackle and swing into the "+string(duhs)+" ranks.";
+	    if (argument3>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" crackle and swing into the "+string(duhs)+" ranks.  "+string(argument4)+" are smashed.";
+	}
+	if (wepp="Inactive Force Weapon") and (solod=false){flavored=1;
+	    if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+" but survives.";
+	    if (argument3=1) and (argument4=1) then p1="A "+string(duhs)+" is smashed by a "+string(wepp)+".";
+	    if (argument3>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" are swung into the "+string(duhs)+" ranks.";
+	    if (argument3>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" are swung into the "+string(duhs)+" ranks.  "+string(argument4)+" are smashed.";
+	}
+	if ((string_count("Power",wepp)>0) or (wepp="Lightning Claw")) and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1){
+	        if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+" but survives.";
+	        if (argument3=1) and (argument4=1) then p1="A "+string(duhs)+" is struck down by a "+string(wepp)+".";
+        
+	        if (argument3>1) and (argument4=0) then p1="A "+string(duhs)+" is struck by "+string(argument3)+" "+string(wepp)+"s but survives.";
+	        if (argument3>1) and (argument4=1) then p1="A "+string(duhs)+" is struck down by "+string(argument3)+" "+string(wepp)+"s.";
+	    }
+	    if (argument1.dudes_num[targeh]>1){
+	        if (argument3>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s crackle and spark, striking at the "+string(duhs)+" ranks.";
+	        if (argument3>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+"s crackle and spark, hewing through the "+string(duhs)+" ranks.  "+string(argument4)+" are cut down.";
+	    }
+	}
+	if ((string_count("Power",wepp)>0) or (wepp="Force Weapon") or (wepp="Inactive Force Weapon") or (wepp="Lightning Claw")) and (solod=true){flavored=1;
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(full_name)+" swings his "+string(wepp)+" into the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(full_name)+" swings his "+string(wepp)+" into the "+string(duhs)+" ranks and kills "+string(argument4)+".";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(full_name)+" swings his "+string(wepp)+" into a "+string(duhs)+" but fails to kill it.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4>0) then p1=string(full_name)+" swings his "+string(wepp)+" into a "+string(duhs)+", killing it.";
+	}
+
+
+	if (flavored=0) and (solod=false){p1=string(argument3)+" "+string(wepp)+"|"+string(duhs)+"|"+string(argument4)+"|";}
+	if (flavored=0) and (solod=true){p1="("+string(full_name)+"."+string(wepp)+") |"+string(duhs)+"|"+string(argument4)+"|";}
+
+	// if (string_length(p1+p2+p3)<8) then show_message(string(wepp)+" is not displaying anything");
+
+	mes=p1+p2+p3;
+
+
+	var led;led=0;
+	if (wep[argument0]="hammer_of_wrath") then led=2.1;
+	if (obj_ncombat.enemy<=10){
+	    if (duhs=obj_controller.faction_leader[obj_ncombat.enemy]){// Cleaning up the message for the enemy leader
+	        mes=string_replace(mes,"a "+string(duhs),string(duhs));
+	        mes=string_replace(mes,"the "+string(duhs),string(duhs));
+	        mes=string_replace(mes,string(duhs)+" ranks",string(duhs));
+	        if (enemy=5) then mes=string_replace(mes,"it","her");
+	        if (enemy=6) and (obj_controller.faction_gender[6]=1) then mes=string_replace(mes,"it","him");
+	        if (enemy=6) and (obj_controller.faction_gender[6]=2) then mes=string_replace(mes,"it","her");
+	        if (enemy!=6) and (enemy!=5) then mes=string_replace(mes,"it","him");
+	        led=5;
+	    }
+	}
+
+
+	if (p1!=""){
+	    obj_ncombat.messages+=1;
+	    obj_ncombat.message[obj_ncombat.messages]=mes;
+    
+	    // show_message("Added to message slot: "+string(obj_ncombat.messages)+"#"+string(mes));
+	    // show_message(string(obj_ncombat.message[obj_ncombat.messages]));
+    
+	    if (argument1.dudes_vehicle[targeh]=1) then obj_ncombat.message_sz[obj_ncombat.messages]=max(argument3,argument4*10)+(0.5-(obj_ncombat.messages/100));
+	    else{obj_ncombat.message_sz[obj_ncombat.messages]=max(argument3,argument4)+(0.5-(obj_ncombat.messages/100));}
+    
+	    obj_ncombat.message_priority[obj_ncombat.messages]=led;
+	    if (defenses=1) then obj_ncombat.message_priority[obj_ncombat.messages]+=3;
+    
+	    obj_ncombat.alarm[3]=2;
+	    // need some method of determining who is firing
+	}
+
+
+
+
+
+
+
+
+
+
+
+	exit;
+
+
+
+
+
+
+	// I forget the arguments for this, you'll have to deal
+	// Generates flavor based on the damage and casualties from scr_shoot, only for the player
+
+	targeh=argument2;
+	var p1,p2,p3,mes,targeh;
+	mes="";p1="";p2="";p3="";
+
+	var wepp;wepp="";
+	if (argument0>0){wepp=wep[argument0];}
+	if (argument0=-51) then wepp="Heavy Bolter Emplacement";
+	if (argument0=-52) then wepp="Missile Launcher Emplacement";
+	if (argument0=-53) then wepp="Missile Silo";
+
+
+	var duhs;duhs=argument1.dudes[targeh];
+
+	if (duhs="Leader") and (obj_ncombat.enemy<=10){
+	    duhs=obj_controller.faction_leader[obj_ncombat.enemy];
+	}
+	var solod,full_name,cm_kill;solod=false;full_name="";cm_kill=0;
+
+	if (argument0>0){
+	    if (wep_solo[argument0]!=""){
+	        solod=true;full_name=wep_solo[argument0];
+	        if (wep_title[argument0]!=""){
+	            full_name=wep_title[argument0]+" "+wep_solo[argument0];
+	        }
+	        if (wep_solo[argument0]=obj_ini.master_name) then cm_kill=1;
+	    }
+	}
+
+
+	// show_message("Flavor is being ran");
+
+	// if (cm_kill=1) then show_message("CMKILL1");
+
+	if (string_count("&",wepp)>0) or (string_count("|",wepp)>0){// Artifact description
+	    if (string_count("Bolter",wepp)>0) then wepp="Bolter";
+	    if (string_count("Plasma Pistol",wepp)>0) then wepp="Plasma Pistol";
+	    if (string_count("Plasma Gun",wepp)>0) then wepp="Plasma Gun";
+	    if (string_count("Power Sword",wepp)>0) then wepp="Power Sword";
+	    if (string_count("Power Spear",wepp)>0) then wepp="Power Spear";
+	    if (string_count("Power Axe",wepp)>0) then wepp="Power Axe";
+	    if (string_count("Power Fist",wepp)>0) then wepp="Power Fist";
+	    if (string_count("Relic Blade",wepp)>0) then wepp="Relic Blade";
+	    if (string_count("&",wepp)>0) then wepp=clean_tags(wepp);
+	}
+
+
+
+
+	if (cm_kill=1) and (argument4>0){
+	    if (duhs="Autarch") then obj_ini.master_autarch+=argument4;
+	    if (duhs="Farseer") then obj_ini.master_farseer+=argument4;
+	    if (duhs="Warlock") then obj_ini.master_warlock+=argument4;
+	    if (duhs="Avatar") or (duhs="Mighty Avatar") or (duhs="Godly Avatar") then obj_ini.master_avatar+=argument4;
+	    if (duhs="Ranger") then obj_ini.master_aspect+=argument4;
+	    if (duhs="Pathfinder") and (enemy=6) then obj_ini.master_aspect+=argument4;
+	    if (duhs="Dire Avenger") then obj_ini.master_aspect+=argument4;
+	    if (duhs="Dire Avenger Exarch") then obj_ini.master_aspect+=argument4;
+	    if (duhs="Howling Banshee") then obj_ini.master_aspect+=argument4;
+	    if (duhs="Howling Banshee Exarch") then obj_ini.master_aspect+=argument4;
+	    if (duhs="Striking Scorpian") then obj_ini.master_aspect+=argument4;
+	    if (duhs="Striking Scorpian Exarch") then obj_ini.master_aspect+=argument4;
+	    if (duhs="Warp Spider") then obj_ini.master_aspect+=argument4;
+	    if (duhs="Warp Spider Exarch") then obj_ini.master_aspect+=argument4;
+	    if (duhs="Dark Reaper") then obj_ini.master_aspect+=argument4;
+	    if (duhs="Dark Reaper Exarch") then obj_ini.master_aspect+=argument4;
+	    if (duhs="Shining Spear") then obj_ini.master_aspect+=argument4;
+	    if (duhs="Wraithguard") then obj_ini.master_aspect+=argument4;
+	    if (duhs="Guardian") then obj_ini.master_eldar+=argument4;
+	    if (duhs="Grav Platform") then obj_ini.master_eldar_vehicles+=argument4;
+	    if (duhs="Trouper") then obj_ini.master_eldar+=argument4;
+	    if (duhs="Athair") then obj_ini.master_eldar+=argument4;
+	    if (duhs="Vyper") then obj_ini.master_eldar_vehicles+=argument4;
+	    if (duhs="Falcon") then obj_ini.master_eldar_vehicles+=argument4;
+	    if (duhs="Fire Prism") then obj_ini.master_eldar_vehicles+=argument4;
+	    if (duhs="Nightspinner") then obj_ini.master_eldar_vehicles+=argument4;
+	    if (duhs="Wraithlord") then obj_ini.master_eldar_vehicles+=argument4;
+	    if (duhs="Phantom Titan") then obj_ini.master_eldar_vehicles+=argument4;
+    
+	    if (duhs="Minor Warboss") then obj_ini.master_ork_nobz+=argument4;
+	    if (duhs="Warboss") then obj_ini.master_ork_warboss+=argument4;
+	    if (duhs="Big Warboss") then obj_ini.master_ork_warboss+=argument4;
+	    if (string_count("oy",duhs)>0) then obj_ini.master_ork_boyz+=argument4;
+	    if (duhs="Mekboy") or (duhs="Meganob") or (duhs="Flash Git") or (duhs="Cybork") then obj_ini.master_ork_nobz+=argument4;
+	    if (duhs="Ard Boy") or (duhs="Kommando") or (duhs="Tank Busta") then obj_ini.master_ork_boyz+=argument4;
+	    if (duhs="Dread") or (duhs="Battle Wagon") then obj_ini.master_ork_vehicles+=argument4;
+    
+	    if (duhs="Fire Warrior") or ((duhs="Pathfinder") and (enemy=8)) then obj_ini.master_tau+=argument4;
+	    if (string_count("XV",duhs)>0) then obj_ini.master_battlesuits+=argument4;
+	    if (duhs="Kroot") then obj_ini.master_kroot+=argument4;
+	    if (duhs="Devilfish") or (duhs="Hammerhead") then obj_ini.master_tau_vehicles+=argument4;
+
+	    if (duhs="Hive Tyrant") then obj_ini.master_tyrant+=argument4;
+	    if (duhs="Zoanthrope") or (duhs="Lictor") then obj_ini.master_synapse+=argument4;
+	    if (duhs="Tyrant Guard") or (duhs="Tyranid Warrior") then obj_ini.master_warriors+=argument4;;
+	    if (duhs="Cultist") then obj_ini.master_heretics+=argument4;
+	    if (duhs="Carnifex") then obj_ini.master_carnifex+=argument4;
+	    if (duhs="Termagaunt") or (duhs="Hormagaunt") then obj_ini.master_gaunts+=argument4;
+	    if (duhs="Genestealer") or (duhs="Genestealer Patriarch") then obj_ini.master_gene+=argument4;
+    
+	    if (duhs="Chaos Lord") then obj_ini.master_chaos_marines+=argument4;
+	    if (duhs="Chaos Sorcerer") then obj_ini.master_chaos_marines+=argument4;
+	    if (duhs="Warpsmith") then obj_ini.master_chaos_marines+=argument4;
+	    if (duhs="Chaos Terminator") then obj_ini.master_chaos_marines+=argument4;
+	    if (duhs="Obliterator") then obj_ini.master_chaos_marines+=argument4;
+	    if (duhs="Chaos Chosen") then obj_ini.master_chaos_marines+=argument4;
+	    if (duhs="Possessed") then obj_ini.master_chaos_marines+=argument4;
+	    if (duhs="Chaos Space Marine") then obj_ini.master_chaos_marines+=argument4;
+	    if (duhs="Havoc") then obj_ini.master_chaos_marines+=argument4;
+	    if (duhs="Raptor") then obj_ini.master_chaos_marines+=argument4;
+	    if (duhs="Khorne Berzerker") then obj_ini.master_chaos_marines+=argument4;
+	    if (duhs="Plague Marine") then obj_ini.master_chaos_marines+=argument4;
+	    if (duhs="Noise Marine") then obj_ini.master_chaos_marines+=argument4;
+	    if (duhs="Rubric Marine") then obj_ini.master_chaos_marines+=argument4;
+	    if (duhs="Cultist") then obj_ini.master_heretics+=argument4;
+	    if (duhs="Rhino") then obj_ini.master_chaos_vehicles+=argument4;
+	    if (duhs="Predator") then obj_ini.master_chaos_vehicles+=argument4;
+	    if (duhs="Vindicator") then obj_ini.master_chaos_vehicles+=argument4;
+	    if (duhs="Land Raider") then obj_ini.master_chaos_vehicles+=argument4;
+	    if (duhs="Heldrake") then obj_ini.master_chaos_vehicles+=argument4;
+	    if (duhs="Defiler") then obj_ini.master_chaos_vehicles+=argument4;
+	    if (duhs="Arch Heretic") then obj_ini.master_heretics+=argument4;
+	    if (duhs="Cultist Elite") then obj_ini.master_heretics+=argument4;
+	    if (duhs="Mutant") then obj_ini.master_heretics+=argument4;
+	    if (duhs="Daemonhost") then obj_ini.master_greater_demons+=argument4;
+	    if (duhs="Greater Daemon of Khorne") then obj_ini.master_greater_demons+=argument4;
+	    if (duhs="Greater Daemon of Slaanesh") then obj_ini.master_greater_demons+=argument4;
+	    if (duhs="Greater Daemon of Nurgle") then obj_ini.master_greater_demons+=argument4;
+	    if (duhs="Greater Daemon of Tzeentch") then obj_ini.master_greater_demons+=argument4;
+	    if (duhs="Technical") then obj_ini.master_chaos_vehicles+=argument4;
+	    if (duhs="Chaos Leman Russ") then obj_ini.master_chaos_vehicles+=argument4;
+	    if (duhs="Chaos Basilisk") then obj_ini.master_chaos_vehicles+=argument4;
+    
+	    if (duhs="Necron Overlord") then obj_ini.master_necron_overlord+=argument4;
+	    if (duhs="Lychguard") then obj_ini.master_necron+=argument4;
+	    if (duhs="Flayed One") then obj_ini.master_necron+=argument4;
+	    if (duhs="Necron Warrior") then obj_ini.master_necron+=argument4;
+	    if (duhs="Necron Immortal") then obj_ini.master_necron+=argument4;
+	    if (duhs="Necron Wraith") then obj_ini.master_wraith+=argument4;
+	    if (duhs="Necron Destroyer") then obj_ini.master_destroyer+=argument4;
+	    if (duhs="Tomb Stalker") then obj_ini.master_necron_vehicles+=argument4;
+	    if (duhs="Canoptek Spyder") then obj_ini.master_necron_vehicles+=argument4;
+	    if (duhs="Necron Monolith") then obj_ini.master_monolith+=argument4;
+	    if (duhs="Doomsday Arc") then obj_ini.master_necron_vehicles+=argument4;
+	}
+
+
+	if (obj_ncombat.battle_special="WL10_reveal") or (obj_ncombat.battle_special="WL10_later"){
+	    if (duhs="Veteran Chaos Terminator") and (duhs>0) then obj_ncombat.chaos_angry+=argument4*2;
+	    if (duhs="Veteran Chaos Chosen") and (duhs>0) then obj_ncombat.chaos_angry+=argument4;
+	    if (duhs="Greater Daemon of Slaanesh") then obj_ncombat.chaos_angry+=argument4*5;
+	    if (duhs="Greater Daemon of Tzeentch") then obj_ncombat.chaos_angry+=argument4*5;
+	}
+
+
+
+	if (argument1.flank=1) and (argument1.flyer=0) then duhs="flanking "+string(duhs);
+    
+	var flavored;flavored=0;
+
+	if (string_count("Bolt",wepp)>0) and (solod=false){flavored=1;
+	    if (obj_ncombat.bolter_drilling=1) then wepp="Accurate "+string(wepp);
+	    if (argument3<200){
+	        if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s fire.  A "+string(duhs)+" is rocked by the bolts but survives.";
+	        if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+"s fire.  A "+string(duhs)+" absorbs most of the bolts and dies instantly.";
+	        if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire strikes the ranks of the "+string(duhs)+" but seemingly does no damage.";
+	        if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" rip through the "+string(duhs)+" and purge "+string(argument4)+".";
+	    }
+	    if (argument3>=200){
+	        if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s fire.  Explosions clap across the armour of the "+string(duhs)+".";
+	        if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+"s fire.  Explosions clap around the "+string(duhs)+" and kill it instantly.";
+	        if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s rip through the ranks of "+string(duhs)+", seemingly doing no damage.";
+	        if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+"s rip through the ranks of "+string(duhs)+", "+string(argument4)+" dying immediately.";
+	    }
+	}
+	if (string_count("Bolt",wepp)>0) and (solod=true){flavored=1;
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(full_name)+" fires his "+string(wepp)+" into the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(full_name)+" fires his "+string(wepp)+" into the "+string(duhs)+" ranks and kills "+string(argument4)+".";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(full_name)+" fires his "+string(wepp)+" into a "+string(duhs)+" but fails to kill it.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4>0) then p1=string(full_name)+" fires his "+string(wepp)+" into a "+string(duhs)+", killing it.";
+	}
+
+
+
+	if (wepp="hammer_of_wrath"){
+	    if (solod=false){flavored=1;
+	        if (argument3<20) then p1=string(argument3)+" Astartes with Jump Packs leap to the skies.  Sputtering and roaring flames herald their advance.  Once at a suitable height they crash back down amongst the enemy- ";
+	        if (argument3>=20) and (argument3<100) then p1="Several squads of Astartes take to the sky, their Jump Packs roaring and shooting flames.  Once at a suitable height they crash back down amongst the enemy- ";
+	        if (argument3>=100) then p1="A literal wave of Astartes take to the sky, their Jump Packs roaring like one massive, angry beast.  Almost simultaneously they all crash back down, smashing their enemey- ";
+        
+	        if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1+=" they smash into the "+string(duhs)+" ranks but fail to kill any.";
+	        if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1+=" they smash into the "+string(duhs)+" ranks and pulverize "+string(argument4)+".";
+	        if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1+="a "+string(duhs)+" survives the attack.";
+	        if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1+="a "+string(duhs)+" takes one of the charges and dies.";
+	    }
+	    if (solod=true){
+	        if (argument1.dudes_num[targeh]=1) then p1=string(full_name)+" activates his Jump Pack and launches up into the air, and then crashes down into a "+string(duhs)+"- ";
+	        if (argument1.dudes_num[targeh]>1) then p1=string(full_name)+" activates his Jump Pack and launches up into the air, and then crashes down into the "+string(duhs)+" ranks- ";
+    
+	        if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1+="it survives the attack.";
+	        if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1+="it is crumpled to the ground, dead instantly.";
+	    }
+	}
+
+
+
+
+	if (string_count("Plasma Pistol",wepp)>0) and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" shoot bolts of energy into a "+string(duhs)+".";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" overwhelm a "+string(duhs)+" with bolts of energy.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" shoot bolts of energy into the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" shoot bolts of energy into the "+string(duhs)+", cleansing "+string(argument4)+".";
+	}
+	if (wepp="Assault Cannon") and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s hum and rotate, belching out bullets and flame alike.  Explosions clap across the armour of the "+string(duhs)+".";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+"s hum and rotate, belching out bullets and flame alike. A "+string(duhs)+" is ripped apart by the rounds.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s hum and rotate, belching out bullets and flame alike .  The "+string(duhs)+"s are rocked but unharmed.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+"s hum and rotate, belching out bullets and flame alike.  "+string(argument4)+" "+string(duhs)+" are purged.";
+	}
+	if (string_count("Flamer",wepp)>0) and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" bathe the "+string(duhs)+" in holy promethium.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" flash-fry the "+string(duhs)+" inside its armour.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" wash over the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" bathe the "+string(duhs)+" ranks in holy promethium, cleansing "+string(argument4)+".";
+	}
+	if (wepp="Missile Launcher") and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" and fail to do damage.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" and blow it to small pieces.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire on the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" ranks and blow "+string(argument4)+" to pieces.";
+	}
+	if (wepp="Whirlwind Missiles") and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" Whirlwinds fire upon the "+string(duhs)+" and fail to do damage.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" Whirlwinds fire upon the "+string(duhs)+" and blow it to small pieces.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" Whirlwinds fire on the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" Whirlwinds fire upon the "+string(duhs)+" ranks and blow "+string(argument4)+" to pieces.";
+	}
+	if (wepp="Sniper Rifle") and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" and fail to do damage.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" and destroy it.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire on the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" ranks and kill "+string(argument4)+".";
+	}
+	if (wepp="Stalker Pattern Bolter") and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" and fail to do damage.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" and destroy it.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire on the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" fire upon the "+string(duhs)+" ranks and kill "+string(argument4)+".";
+	}
+	if ((wepp="Lascannon") or (wepp="Twin Linked Lascannon") or (wepp="Lascannons")) and (solod=false){flavored=1;
+	    if (wepp="Lascannons"){wepp="Lascannon";argument3=argument3*2;}
+	    if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+".";
+	    if (argument3=1) and (argument4=1) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+" and killed instantly.";
+	    if (argument3>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" fire upon a "+string(duhs)+" and fail to kill it.";
+	    if (argument3>1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" fire upon a "+string(duhs)+" and turn it into paste.";
+	    if (argument3>1) and (argument4>1) then p1=string(argument3)+" "+string(wepp)+" fire and purge "+string(argument4)+" "+string(duhs)+".";        
+	}
+	if (wepp="Webber") and (solod=false){flavored=1;
+	    if ((duhs="Termagaunt") or (duhs="Hormagaunt")) and (argument4>0) then obj_ncombat.captured_gaunt+=argument4;
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" spray ooze on the "+string(duhs)+" but fail to immobilize it.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=1) then p1=string(argument3)+" "+string(wepp)+" spray ooze on the "+string(duhs)+" and fully immobilize it.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" spray ooze on the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" spray ooze on the "+string(duhs)+" ranks and immobilize "+string(argument4)+" of them.";
+	}
+
+	if (wepp="melee") or (wepp="Melee") and (solod=false){flavored=1;var ra;ra=choose(1,2,3,4);
+	    // This needs to be worked out
+	    if (argument4=0) then p2="MELEE";
+	    if (argument4>0){
+	        p1=string(argument4)+" "+string(duhs)+" ";
+	        if (ra=1) then p2="are struck down with gun-barrels and combat knifes.";
+	        if (ra=2) then p2="are killed by your marines in hand-to-hand combat.";
+	        if (ra=3) then p2="are smashed aside by your marines.";
+	        if (ra=4) then p2="are struck down by your marines in melee.";
+	    }
+	}
+	if (wepp="Close Combat Weapon") and (solod=false){flavored=1;
+	    if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is struck by a "+string(obj_ini.role[100][6])+" but survives.";
+	    if (argument3=1) and (argument4=1) then p1="A "+string(duhs)+" is struck down by a "+string(obj_ini.role[100][6])+".";
+	    if (argument3>1) and (argument4=0) then p1=string(argument3)+" "+string(obj_ini.role[100][6])+"s wrench and smash at a "+string(duhs)+" but fail to destroy it.";
+	    if (argument3>1) and (argument4>1) then p1=string(argument3)+" "+string(obj_ini.role[100][6])+"s stomp, wrench, and smash "+string(argument4)+" "+string(duhs)+" into paste.";
+	}
+	if (wepp="Chainsword") and (solod=false){flavored=1;
+	    if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+" but survives.";
+	    if (argument3=1) and (argument4=1) then p1="A "+string(duhs)+" is cut down by a "+string(wepp)+".";
+	    if (argument3>1) and (argument4=0) then p1=string(argument3)+" Chainsword motors rev and hack at the "+string(duhs)+" ranks.";
+	    if (argument3>1) and (argument4>0) then p1=string(argument3)+" Chainsword motors rev and hack away at the "+string(duhs)+" ranks.  "+string(argument4)+" are cut down.";
+	}
+	if (wepp="Sarissa") and (solod=false){flavored=1;
+	    if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is struck by a Battle Sister's "+string(wepp)+" but survives.";
+	    if (argument3=1) and (argument4=1) then p1="A "+string(duhs)+" is struck down by a Battle Sister's "+string(wepp)+".";
+	    if (argument3>1) and (argument4=0) then p1="A Battle Sister "+choose("howls out","roars")+" and hacks at the "+string(duhs)+" ranks with her Sarissa.";
+	    if (argument3>1) and (argument4>0) then p1=string(argument3)+" Battle Sisters "+choose("howl out","roar")+" as they hack away at the "+string(duhs)+" ranks with their Sarissas.  "+string(argument4)+" are cut down.";
+	}
+	if (wepp="Eviscerator") and (solod=false){flavored=1;
+	    if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+" but survives.";
+	    if (argument3=1) and (argument4=1) then p1="A "+string(duhs)+" is cut down by a "+string(wepp)+".";
+	    if (argument3>1) and (argument4=0) then p1=string(argument3)+" Eviscerators rev and howl, hacking at the "+string(duhs)+" ranks.";
+	    if (argument3>1) and (argument4>0) then p1=string(argument3)+" Eviscerators rev and howl, hacking at the "+string(duhs)+" ranks.  "+string(argument4)+" are cut down.";
+	}
+	if (wepp="Force Weapon") and (solod=false){flavored=1;
+	    if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is blasted by a "+string(wepp)+" but survives.";
+	    if (argument3=1) and (argument4=1) then p1="A "+string(duhs)+" is incinerated by a "+string(wepp)+".";
+	    if (argument3>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" crackle and swing into the "+string(duhs)+" ranks.";
+	    if (argument3>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" crackle and swing into the "+string(duhs)+" ranks.  "+string(argument4)+" are smashed.";
+	}
+	if (wepp="Inactive Force Weapon") and (solod=false){flavored=1;
+	    if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+" but survives.";
+	    if (argument3=1) and (argument4=1) then p1="A "+string(duhs)+" is smashed by a "+string(wepp)+".";
+	    if (argument3>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+" are swung into the "+string(duhs)+" ranks.";
+	    if (argument3>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+" are swung into the "+string(duhs)+" ranks.  "+string(argument4)+" are smashed.";
+	}
+	if ((string_count("Power",wepp)>0) or (wepp="Lightning Claw")) and (solod=false){flavored=1;
+	    if (argument1.dudes_num[targeh]=1){
+	        if (argument3=1) and (argument4=0) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+" but survives.";
+	        if (argument3=1) and (argument4=1) then p1="A "+string(duhs)+" is struck down by a "+string(wepp)+".";
+        
+	        if (argument3>1) and (argument4=0) then p1="A "+string(duhs)+" is struck by "+string(argument3)+" "+string(wepp)+"s but survives.";
+	        if (argument3>1) and (argument4=1) then p1="A "+string(duhs)+" is struck down by "+string(argument3)+" "+string(wepp)+"s.";
+	    }
+	    if (argument1.dudes_num[targeh]>1){
+	        if (argument3>1) and (argument4=0) then p1=string(argument3)+" "+string(wepp)+"s crackle and spark, striking at the "+string(duhs)+" ranks.";
+	        if (argument3>1) and (argument4>0) then p1=string(argument3)+" "+string(wepp)+"s crackle and spark, hewing through the "+string(duhs)+" ranks.  "+string(argument4)+" are cut down.";
+	    }
+	}
+	if ((string_count("Power",wepp)>0) or (wepp="Force Weapon") or (wepp="Inactive Force Weapon") or (wepp="Lightning Claw")) and (solod=true){flavored=1;
+	    if (argument1.dudes_num[targeh]>1) and (argument4=0) then p1=string(full_name)+" swings his "+string(wepp)+" into the "+string(duhs)+" ranks.";
+	    if (argument1.dudes_num[targeh]>1) and (argument4>0) then p1=string(full_name)+" swings his "+string(wepp)+" into the "+string(duhs)+" ranks and kills "+string(argument4)+".";
+	    if (argument1.dudes_num[targeh]=1) and (argument4=0) then p1=string(full_name)+" swings his "+string(wepp)+" into a "+string(duhs)+" but fails to kill it.";
+	    if (argument1.dudes_num[targeh]=1) and (argument4>0) then p1=string(full_name)+" swings his "+string(wepp)+" into a "+string(duhs)+", killing it.";
+	}
+
+
+	if (flavored=0) and (solod=false){p1=string(argument3)+" "+string(wepp)+"|"+string(duhs)+"|"+string(argument4)+"|";}
+	if (flavored=0) and (solod=true){p1="("+string(full_name)+"."+string(wepp)+") |"+string(duhs)+"|"+string(argument4)+"|";}
+
+	// if (string_length(p1+p2+p3)<8) then show_message(string(wepp)+" is not displaying anything");
+
+	mes=p1+p2+p3;
+
+
+	var led;led=0;
+	if (wep[argument0]="hammer_of_wrath") then led=2.1;
+	if (obj_ncombat.enemy<=10){
+	    if (duhs=obj_controller.faction_leader[obj_ncombat.enemy]){// Cleaning up the message for the enemy leader
+	        mes=string_replace(mes,"a "+string(duhs),string(duhs));
+	        mes=string_replace(mes,"the "+string(duhs),string(duhs));
+	        mes=string_replace(mes,string(duhs)+" ranks",string(duhs));
+	        if (enemy=5) then mes=string_replace(mes,"it","her");
+	        if (enemy=6) and (obj_controller.faction_gender[6]=1) then mes=string_replace(mes,"it","him");
+	        if (enemy=6) and (obj_controller.faction_gender[6]=2) then mes=string_replace(mes,"it","her");
+	        if (enemy!=6) and (enemy!=5) then mes=string_replace(mes,"it","him");
+	        led=5;
+	    }
+	}
+
+
+	if (p1!=""){
+	    obj_ncombat.messages+=1;
+	    obj_ncombat.message[obj_ncombat.messages]=mes;
+    
+	    // show_message("Added to message slot: "+string(obj_ncombat.messages)+"#"+string(mes));
+	    // show_message(string(obj_ncombat.message[obj_ncombat.messages]));
+    
+	    if (argument1.dudes_vehicle[targeh]=1) then obj_ncombat.message_sz[obj_ncombat.messages]=max(argument3,argument4*10)+(0.5-(obj_ncombat.messages/100));
+	    else{obj_ncombat.message_sz[obj_ncombat.messages]=max(argument3,argument4)+(0.5-(obj_ncombat.messages/100));}
+    
+	    obj_ncombat.message_priority[obj_ncombat.messages]=led;
+	    if (defenses=1) then obj_ncombat.message_priority[obj_ncombat.messages]+=3;
+    
+	    obj_ncombat.alarm[3]=2;
+	    // need some method of determining who is firing
+	}
+
 
 }
