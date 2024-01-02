@@ -9,14 +9,16 @@ if (instance_exists(obj_temp1)){
     if (tempy_d>10) and (tempy_d<=180){
         for(var i=1; i<=4; i++){
             if (p_type[i]=="Forge") and (p_owner[i]==3) then obj_controller.income_forge+=6;
-            if (p_type[i]=="Agri") and (p_owner[i]==2) then obj_controller.income_agri+=3;
+            if (p_type[i]=="Hive") and (p_owner[i]==2) then obj_controller.income_hive+=2;
+            if (p_type[i]=="Agri") and (p_owner[i]==2) then obj_controller.income_agri+=2;
         }
     }
     biggy=instance_nearest(obj_temp1.x,obj_temp1.y,obj_star);
     if (biggy.owner==1) and (tempy_d>180) and ((biggy.buddy==id) or (buddy==biggy)){
         for(var i=1; i<=4; i++){
             if (p_type[i]=="Forge") and (p_owner[i]==3) then obj_controller.income_forge+=6;
-            if (p_type[i]=="Agri") and (p_owner[i]==2) then obj_controller.income_agri+=3;
+            if (p_type[i]=="Hive") and (p_owner[i]==2) then obj_controller.income_hive+=2;
+            if (p_type[i]=="Agri") and (p_owner[i]==2) then obj_controller.income_agri+=2;
         }
     }
 }

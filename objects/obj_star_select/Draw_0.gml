@@ -200,11 +200,11 @@ if (obj_controller.selecting_planet!=0){
                     obj_controller.cooldown=8000;obj_controller.requisition-=improve_cost;target.p_fortified[pp]+=1;
                     
                     if (target.dispo[pp]>0) and (target.dispo[pp]<=100){
-                        if (target.p_fortified[pp]=1) then target.dispo[pp]=min(100,target.dispo[pp]+8);
-                        if (target.p_fortified[pp]=2) then target.dispo[pp]=min(100,target.dispo[pp]+7);
-                        if (target.p_fortified[pp]=3) then target.dispo[pp]=min(100,target.dispo[pp]+6);
-                        if (target.p_fortified[pp]=4) then target.dispo[pp]=min(100,target.dispo[pp]+5);
-                        if (target.p_fortified[pp]=5) then target.dispo[pp]=min(100,target.dispo[pp]+4);
+                        if (target.p_fortified[pp]=1) then target.dispo[pp]=min(100,target.dispo[pp]+choose(1,2,3,4,5)+5);
+                        if (target.p_fortified[pp]=2) then target.dispo[pp]=min(100,target.dispo[pp]+choose(1,2,3,4,5)+7);
+                        if (target.p_fortified[pp]=3) then target.dispo[pp]=min(100,target.dispo[pp]+choose(1,2,3,4,5)+9);
+                        if (target.p_fortified[pp]=4) then target.dispo[pp]=min(100,target.dispo[pp]+choose(1,2,3,4,5)+10);
+                        if (target.p_fortified[pp]=5) then target.dispo[pp]=min(100,target.dispo[pp]+choose(1,2,3,4,5)+10);
                     }
                 }
                 

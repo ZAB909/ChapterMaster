@@ -18,6 +18,7 @@ function scr_income() {
 	if (obj_ini.fleet_type!=1) then obj_controller.income_fleet_maint=round(obj_controller.income_fleet_maint/2);
 
 	income_forge=0;
+	income_hive=0;
 	income_agri=0;
 	income_recruiting=0;
 	income_training=0;

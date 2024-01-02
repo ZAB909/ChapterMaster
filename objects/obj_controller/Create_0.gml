@@ -849,6 +849,7 @@ income_base=0;
 income_home=0;
 income_forge=0;
 income_agri=0;
+income_hive=0;
 income_recruiting=0;
 income_training=0;
 income_fleet_maint=0;

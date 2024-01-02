@@ -303,9 +303,9 @@ if (p_target.p_player[obj_controller.selecting_planet]>0) then max_ships+=1;
 
 var succession,yyy,pp;succession=0;yyy=0;pp=obj_controller.selecting_planet
 repeat(4){yyy+=1;
-    if (planet_feature_bool(p_target.p_feature[pp],P_features.Monastery)==1) and (obj_controller.homeworld_rule!=1) then purge_d=0;
+    if (planet_feature_bool(p_target.p_feature[pp],P_features.Monastery)==1) and (obj_controller.homeworld_rule!=1) then purge_d=0; // you can't purge the governor if you are the governor
     if (p_target.p_problem[pp,yyy]="succession") then succession=1;
-    if (p_target.dispo[yyy]<-2000) then purge_d=0;
+    if (p_target.dispo[yyy]<-2000) then purge_d=0; // you can't purge the governor if you are the governor
 }
 if (succession=1) then purge_d=0;
 if (p_target.p_type[pp]="Dead") then purge_d=0;

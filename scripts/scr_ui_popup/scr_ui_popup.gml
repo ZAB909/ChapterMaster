@@ -703,6 +703,10 @@ function scr_ui_popup() {
 		        	tool1+=string("#Nearby Agri Worlds: +{0}",income_agri);
 		        	tool2+="#Nearby Agri Worlds:";
 		        }
+				if (income_hive>0){
+		        	tool1+=string("#Nearby Hive Worlds: +{0}",income_hive);
+		        	tool2+="#Nearby Hive Worlds:";
+		        }
 		    }
 		    if (obj_ini.fleet_type!=1){
 		        plu="";
