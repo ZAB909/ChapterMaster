@@ -722,9 +722,9 @@ function scr_ui_popup() {
 	        	tool2+="#Specialist Training:";
 	        }
 	        plu="";
-	        if (income_fleet>0) then plu="+";
-	        if (income_fleet!=0){
-		        tool1+=string("#Fleet Maintenance: {0}{1}",plu,income_fleet);
+	        if (income_fleet_maint>0) then plu="+";
+	        if (income_fleet_maint!=0){
+		        tool1+=string("#Fleet Maintenance: {0}{1}",plu,income_fleet_maint);
 		        tool2+="#Fleet Maintenance:";
 	    	}
 	        plu="";

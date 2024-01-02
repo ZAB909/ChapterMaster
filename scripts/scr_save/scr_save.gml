@@ -285,7 +285,7 @@ function scr_save(save_slot,save_id) {
 	    ini_write_real("Controller","income_agri",obj_controller.income_agri);
 	    ini_write_real("Controller","income_recruiting",obj_controller.income_recruiting);
 	    ini_write_real("Controller","income_training",obj_controller.income_training);
-	    ini_write_real("Controller","income_fleet",obj_controller.income_fleet);
+	    ini_write_real("Controller","income_fleet_maint",obj_controller.income_fleet_maint);
 	    ini_write_real("Controller","income_trade",obj_controller.income_trade);
 	    ini_write_real("Controller","loyalty",obj_controller.loyalty);
 	    ini_write_real("Controller","loyalty_hidden",obj_controller.loyalty_hidden);

@@ -307,7 +307,7 @@ function scr_load(argument0, argument1) {
 	    obj_controller.income_agri=ini_read_real("Controller","income_agri",0);
 	    obj_controller.income_recruiting=ini_read_real("Controller","income_recruiting",0);
 	    obj_controller.income_training=ini_read_real("Controller","income_training",0);
-	    obj_controller.income_fleet=ini_read_real("Controller","income_fleet",0);
+	    obj_controller.income_fleet_maint=ini_read_real("Controller","income_fleet_maint",0);
 	    obj_controller.income_trade=ini_read_real("Controller","income_trade",0);
 	    obj_controller.loyalty=ini_read_real("Controller","loyalty",0);
 	    obj_controller.loyalty_hidden=ini_read_real("Controller","loyalty_hidden",0);

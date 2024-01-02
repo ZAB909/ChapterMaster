@@ -9,13 +9,13 @@ function scr_income() {
 	income_home=0;
 	if (obj_ini.fleet_type=1) then income_home=8;// Homeworld-based income
 
-	income_fleet=0;
+	income_fleet_maint=0; // upkeep for maintenance per ship
 	with(obj_p_fleet){
-	    obj_controller.income_fleet-=capital_number;
-	    obj_controller.income_fleet-=frigate_number/2;
-	    obj_controller.income_fleet-=escort_number/10;
+	    obj_controller.income_fleet_maint-=capital_number;
+	    obj_controller.income_fleet_maint-=frigate_number/2;
+	    obj_controller.income_fleet_maint-=escort_number/10;
 	}
-	if (obj_ini.fleet_type!=1) then obj_controller.income_fleet=round(obj_controller.income_fleet/2);
+	if (obj_ini.fleet_type!=1) then obj_controller.income_fleet_maint=round(obj_controller.income_fleet_maint/2);
 
 	income_forge=0;
 	income_agri=0;
@@ -90,7 +90,8 @@ function scr_income() {
 	    repeat(4){o+=1;
 	        if (dispo[o]>=100){
 	            if (planet_feature_bool(p_feature[1], P_features.Monastery)==0){
-	                obj_controller.income_controlled_planets+=1;obj_controller.income_tribute+=1;
+	                obj_controller.income_controlled_planets+=1; // tracks singular or plural for printing string
+					obj_controller.income_tribute+=1;
 	                if (p_type[o]="Feudal") then obj_controller.income_tribute+=1;
 	                if (p_type[o]="Desert") or (p_type[o]="Temperate") then obj_controller.income_tribute+=2;
 	                if (p_type[o]="Forge") or (p_type[o]="Hive") then obj_controller.income_tribute+=3;
