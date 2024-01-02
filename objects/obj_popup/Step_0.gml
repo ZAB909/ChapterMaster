@@ -85,7 +85,11 @@ if (image="debug_banshee") and (cooldown<=0){
         if (press=2){
             with(obj_star){
                 if (choose(0,1,1)=1) and (owner != eFACTION.Eldar) and (owner!=1){
-                    var h=0;repeat(4){h+=1;if (p_type[h]!="Dead") and (p_type[h]!=""){p_traitors[h]=5;p_chaos[h]=4;}}
+                    var h=0;
+                    repeat(planets){
+                         h+=1;
+                         if (p_type[h]!="Dead") and (p_type[h]!=""){p_traitors[h]=5;p_chaos[h]=4;}
+                    }
                 }
             }
             instance_destroy();
@@ -176,7 +180,9 @@ if (image="chaos_messenger") and (title="Chaos Meeting"){
 					{
 						var i=0;
 						var r=0;
-	                    repeat(4){i+=1;r=0;repeat(4){r+=1;if (p_problem[i,r]="meeting") or (p_problem[i,r]="meeting_trap"){p_problem[i,r]="";p_timer[i,r]=-1;}}}
+	                    repeat(planets){
+	                    i+=1;r=0;
+	                    for(r=1;r<array_length(p_problem[i]);r++){if (p_problem[i][r]="meeting") or (p_problem[i][r]="meeting_trap"){p_problem[i][r]="";p_timer[i][r]=-1;}}}
 	                }
                 obj_controller.disposition[10]-=10;
                 text="The heretic is killed in a most violent fashion.  With a lack of go-between the meeting cannot proceed.";

@@ -1118,7 +1118,7 @@ function scr_enemy_ai_a() {
 	            var military = 0;
 	            var pdf = 0;
 	            var contin = 0;
-	            var rando = floor(random(100)) + 1;
+	            var rando = irandom(99)+1;
 
 	            if (p_population[i] >= 10000000) {
 	                military = (p_population[i] / 470);
