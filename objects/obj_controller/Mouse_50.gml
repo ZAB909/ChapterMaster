@@ -191,7 +191,7 @@ if (menu==13) and (cooldown<=0) and (artifacts>0){
 
             if (menu_artifact==fest_display) then fest_display=0;
 
-            if (string_count("Daemon",obj_ini.artifact_tags[i])>0){
+            if (array_contains(obj_ini.artifact_tags[i],"Daemon")){
                 if (obj_ini.artifact_sid[i]>=500){
                     var demonSummonChance=irandom(100)+1;
 
@@ -217,7 +217,7 @@ if (menu==13) and (cooldown<=0) and (artifacts>0){
             }
 
             obj_ini.artifact[i]="";
-            obj_ini.artifact_tags[i]="";
+            obj_ini.artifact_tags[i]=[];
             obj_ini.artifact_identified[i]=0;
             obj_ini.artifact_condition[i]=100;
             obj_ini.artifact_loc[i]="";
@@ -226,10 +226,12 @@ if (menu==13) and (cooldown<=0) and (artifacts>0){
             cooldown=12;
             if (menu_artifact>artifacts) then menu_artifact=artifacts;
             for(var j=0; j<20; j++){
-                obj_ini.artifact[i]=obj_ini.artifact[i+1];obj_ini.artifact_tags[i]=obj_ini.artifact_tags[i+1];
+                obj_ini.artifact[i]=obj_ini.artifact[i+1];
+                obj_ini.artifact_tags[i]=obj_ini.artifact_tags[i+1];
                 obj_ini.artifact_identified[i]=obj_ini.artifact_identified[i+1];
                 obj_ini.artifact_condition[i]=obj_ini.artifact_condition[i+1];
-                obj_ini.artifact_loc[i]=obj_ini.artifact_loc[i+1];obj_ini.artifact_sid[i]=obj_ini.artifact_sid[i+1];
+                obj_ini.artifact_loc[i]=obj_ini.artifact_loc[i+1];
+                obj_ini.artifact_sid[i]=obj_ini.artifact_sid[i+1];
                 i+=1;
             }
         }
@@ -360,6 +362,7 @@ if (menu==15) and (cooldown<=0){
         }
     }
     // Change trial type
+
     if (mouse_y>=yy+518) and (mouse_y<=yy+542){
         var onceh=0;
         if (mouse_x>=xx+713) and (mouse_x<=xx+752){

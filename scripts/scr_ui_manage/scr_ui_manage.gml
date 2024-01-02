@@ -173,7 +173,8 @@ function scr_ui_manage() {
 				}
 			}
 			x5=x6;
-			var x6=x5+string_width(stat_tool_tip_text)+4;
+
+			/*var x6=x5+string_width(stat_tool_tip_text)+4;
 			var y6=y5+string_height(stat_tool_tip_text)+2;	    
 		    draw_unit_buttons([x5,y5,x6,y6], stat_tool_tip_text,[1,1],c_red);
 		    if (company_data!={}){
@@ -188,7 +189,8 @@ function scr_ui_manage() {
 				draw_set_color(c_black);
 				draw_rectangle(x5,y5,x6,y6,0);
 				draw_set_alpha(1);
-			}				    
+			}
+			*/			    
 	    
 		    draw_set_color(c_gray);	    	
 	    	selected_unit.draw_unit_image(1190,210);

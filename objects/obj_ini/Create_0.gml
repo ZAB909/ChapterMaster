@@ -31,10 +31,12 @@ repeat(200){i+=1;
     equipment_condition[i]=100;
     equipment_quality[i]=[];
     artifact[i]="";
-    artifact_tags[i]="";
+    artifact_tags[i]=[];
     artifact_identified[i]=0;
-    artifact_condition[i]=100
-    ;artifact_loc[i]="";
+    artifact_condition[i]=100;
+    artifact_quality[i]=[];
+    other_artifact_data = {};
+    artifact_loc[i]="";
     artifact_sid[i]=0;// Over 500 : ship
     // Weapon           Unidentified            
 }

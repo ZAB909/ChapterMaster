@@ -15,12 +15,12 @@ if (closing=true) and (fading=-1) and (fade_alpha<=0){
     var ide;ide=0;
     repeat(700){ide+=1;
         if (attend_corrupted[ide]=0) and (attend_id[ide]>0){
-            if (string_count("Chaos",obj_ini.artifact_tags[obj_controller.fest_display])>0){
+            if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display],"Chaos")){
                 obj_ini.chaos[attend_co[ide],attend_id[ide]]+=choose(1,2,3,4);
             }
-            if (string_count("Daem",obj_ini.artifact_tags[obj_controller.fest_display])>0){
+            if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display],"Daemon")){
                 obj_ini.chaos[attend_co[ide],attend_id[ide]]+=choose(6,7,8,9);
-            }
+            }            
             attend_corrupted[ide]=1;
         }
     }
@@ -271,21 +271,25 @@ if (ticked=1){// Select a random marine and have them perform an action
     }
     
     if (activity="artifact"){
-        var spesh,woa;spesh="";
-        woa=string(obj_ini.artifact[obj_controller.fest_display]);
-        
-        if (string_count("GOAT",obj_ini.artifact_tags[obj_controller.fest_display])>0) then spesh="nerves";
-        if (string_count("CHE",obj_ini.artifact_tags[obj_controller.fest_display])>0) then spesh="nerves";
-        if (string_count("SPE",obj_ini.artifact_tags[obj_controller.fest_display])>0) then spesh="nerves";
-        if (string_count("THI",obj_ini.artifact_tags[obj_controller.fest_display])>0) then spesh="nerves";
-        if (string_count("TEN",obj_ini.artifact_tags[obj_controller.fest_display])>0) then spesh="nerves";
-        if (string_count("JUM",obj_ini.artifact_tags[obj_controller.fest_display])>0) then spesh="nerves";
-        if (string_count("PRE",obj_ini.artifact_tags[obj_controller.fest_display])>0) then spesh="nerves";
-        if (string_count("DYI",obj_ini.artifact_tags[obj_controller.fest_display])>0) then spesh="offend";        
-        if (spesh="") and (string_count("MNR",obj_ini.artifact_tags[obj_controller.fest_display])>0) then spesh="minor";
-        
-        
-        textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" ";
+        var spesh="";
+        var woa=string(obj_ini.artifact[obj_controller.fest_display]);
+        var nerves_spesh = ["GOAT","CHE","THI","TEN","JUM","PRE"]
+        for (var sp=0;sp<array_length(nerves_spesh);sp++){
+            if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display],nerves_spesh[sp])){
+                spesh="nerves";
+                break;
+            }
+        }
+
+        if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display], "DYI")){
+            spesh = "offend";
+        }
+
+        if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display], "MNR")){
+            spesh="minor";
+        }        
+        var unit = obj_ini.TTRPG[attend_co[ide]][attend_id[ide]];
+        var textt=unit.name_role()
         
         if (spesh=""){rando=choose(1,2,3,4,5);
             if (rando=1) then textt+="inspects the "+string(woa)+" on display, admiring the craftsmanship.";
@@ -307,10 +311,10 @@ if (ticked=1){// Select a random marine and have them perform an action
         
         
         if (attend_corrupted[ide]=0){
-            if (string_count("Chaos",obj_ini.artifact_tags[obj_controller.fest_display])>0){
-                obj_ini.chaos[attend_co[ide],attend_id[ide]]+=choose(1,2,3,4);
+            if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display], "Chaos")){
+                obj_ini.chaos[attend_co[ide]][attend_id[ide]]+=choose(1,2,3,4);
             }
-            if (string_count("Daem",obj_ini.artifact_tags[obj_controller.fest_display])>0){
+            if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display], "Daemon")){
                 obj_ini.chaos[attend_co[ide],attend_id[ide]]+=choose(6,7,8,9);
             }
             attend_corrupted[ide]=1;

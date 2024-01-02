@@ -117,7 +117,7 @@ for (g=1;g<array_length(marine_type);g++){
             var cast_dice=irandom(99)+1;
             if (array_contains(obj_ini.dis,"Warp Touched")) then cast_dice-=5;
 
-            cast_dice-=unit.psionic-(unit.experience/60);
+            cast_dice-=(unit.psionic+(unit.experience()/60))
 
             if (cast_dice<=50) then marine_casting[g]=1;
 
@@ -151,8 +151,8 @@ for (g=1;g<array_length(marine_type);g++){
                 if (wep[weapon_stack_index]==""||(wep[weapon_stack_index]==primary_ranged.name && !head_role)){
                     add_data_to_stack(weapon_stack_index,primary_ranged,unit.ranged_damage_data[0]);
                     if (head_role){
-                        wep_title[stack_index]=unit.role();
-                        wep_solo[stack_index]=unit.name();
+                        wep_title[weapon_stack_index]=unit.role();
+                        wep_solo[weapon_stack_index]=unit.name();
                     }
                     break;
                 }

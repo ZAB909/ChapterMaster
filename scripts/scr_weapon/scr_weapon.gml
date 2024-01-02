@@ -402,7 +402,7 @@ global.weapons={
             "artifact": 1
         },
         "description": "A large, metal gauntlet surrounded by an energy field. Though large and slow, it dishes out tremendous damage.",
-        "melee_hands": 1,
+        "melee_hands": 1.1,
         "ranged_hands": 1,
         "ammo": 0,
         "range": 1,
@@ -573,7 +573,7 @@ global.weapons={
             "artifact": 60
         },
         "description": "A standard Bolter, a 2-handed firearm that launches bolts of explosive material. It's a versatile and iconic weapon of Space Marines.",
-        "melee_hands": 0,
+        "melee_hands": 1,
         "ranged_hands": 2,
         "ammo": 16,
         "range": 12,
