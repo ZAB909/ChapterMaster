@@ -1,4 +1,7 @@
 global.weapons={
+
+    // trade items
+
     "Ranger Long Rifle":{
         "abbreviation": "RangeLoRife",
         "description":"Advanced and accurate rifles from mars given to skitarii sharpshooters",
@@ -51,6 +54,107 @@ global.weapons={
     "spli": 1,
     "arp": 0,
     "tags":["pistol"]
+
+  },
+  "Hellgun": {
+    "abbreviation": "HGun",
+    "attack": {
+      "standard": 30,
+      "master_crafted": 34,
+      "artifact": 38
+    },
+    "ammo": 10,
+    "range": 6.1,
+    "spli": 1,
+    "arp": 0,
+    "tags":[],
+    "ranged_hands":2,
+    "tags":["arcane"],
+    // ... (other attributes)
+   },
+   "Hellrifle": {
+    "description":"Normally used by Radical Inquisitors, it appears an antiquated rifle but fires razor-sharp shards of Daemonic matter.",
+    "abbreviation": "HRifle",
+    "attack": {
+      "standard": 150,
+      "master_crafted": 160,
+      "artifact": 170
+    },
+    "ammo": 10,
+    "range": 6.1,
+    "spli": 1,
+    "arp": 0,
+    "tags":["rifle","arcane"],
+    "ranged_hands":2,    
+    // ... (other attributes)
+    },
+    "Archeotech Laspistol": {
+        "attack": {
+            "standard": 120,
+            "master_crafted": 130,
+            "artifact": 140
+        },
+        "description": "Known as a Lasrod or Gelt Gun, this pistol is an ancient design of Laspistol with much greater range and power.",
+        "melee_hands": 0,
+        "ranged_hands": 1,
+        "ammo": 0,
+        "range": 3.1,
+        "spli": 0,
+        "arp": 0,
+        "tags":["pistol", "ancient","las"],
+    },
+    "Sarissa": {
+        "attack": {
+            "standard": 40,
+            "master_crafted": 45,
+            "artifact": 50
+        },
+        "description": "A vicious combat attachment that is attached to Bolters, in order to allow them to be used in melee combat.",
+        "melee_hands": 0,
+        "ranged_hands": 0,
+        "ammo": 0,
+        "range": 1,
+        "spli": 1,
+        "arp": 0
+    },
+     "Webber": {
+        "attack": {
+            "standard": 35,
+            "master_crafted": 40,
+            "artifact": 45
+        },
+        "description": "The Webber is a close-range weapon that fires strands of sticky web-like substance. It is designed to ensnare and immobilize enemies, restricting their movement and rendering them vulnerable to further attacks.",
+        "melee_hands": 0,
+        "ranged_hands": 2,
+        "ammo": 5,
+        "range": 4.1,
+        "spli": 0,
+        "arp": 0,
+        "tags":["immobolise"]
+    },
+    "Eldar Power Sword": {
+        "attack": {
+            "standard": 170,
+            "master_crafted": 180,
+            "artifact": 190
+        },
+        "melee_mod": {
+            "standard": 1.1,
+            "master_crafted": 1.1,
+            "artifact": 1.1
+        },
+        "description": "Power weapons, infused with arcane energy, are used by Howling Banshees and Dire Avenger Exarchs. Swords such as these are as much an artistic statement as a weapon and are effective against even heavily armored troops.",
+        "melee_hands": 1.1,
+        "ranged_hands": 0,
+        "ammo": 0,
+        "range": 1,
+        "spli": 1,
+        "arp": 1,
+        "special_description": "Parry",
+        "tags":["power", "sword","elder","xenos"],
+    },
+    // shields
+
   },
   "Storm Shield": {
     "description":"Protects twice as well when boarding. A powered shield that must be held with a hand.  While powered by the marines armour it shimmers with blue energy.",
@@ -89,54 +193,7 @@ global.weapons={
       "master_crafted": 17.5,
       "artifact": 20
     },        
-  },
-  "Hellgun": {
-    "abbreviation": "HGun",
-    "attack": {
-      "standard": 30,
-      "master_crafted": 34,
-      "artifact": 38
-    },
-    "ammo": 10,
-    "range": 6.1,
-    "spli": 1,
-    "arp": 0,
-    "tags":[],
-    "ranged_hands":2,
-    "tags":["arcane"],
-    // ... (other attributes)
-  },
-  "Hellrifle": {
-    "description":"Normally used by Radical Inquisitors, it appears an antiquated rifle but fires razor-sharp shards of Daemonic matter.",
-    "abbreviation": "HRifle",
-    "attack": {
-      "standard": 150,
-      "master_crafted": 160,
-      "artifact": 170
-    },
-    "ammo": 10,
-    "range": 6.1,
-    "spli": 1,
-    "arp": 0,
-    "tags":["rifle","arcane"],
-    "ranged_hands":2,    
-    // ... (other attributes)
-  },
-    "Archeotech Laspistol": {
-        "attack": {
-            "standard": 120,
-            "master_crafted": 130,
-            "artifact": 140
-        },
-        "description": "Known as a Lasrod or Gelt Gun, this pistol is an ancient design of Laspistol with much greater range and power.",
-        "melee_hands": 0,
-        "ranged_hands": 1,
-        "ammo": 0,
-        "range": 3.1,
-        "spli": 0,
-        "arp": 0,
-        "tags":["pistol", "ancient","las"],
-    },
+
     "Combat Knife": {
         "attack": {
             "standard": 25,
@@ -152,28 +209,15 @@ global.weapons={
         "arp": 0,
         "tags":["knife"],
     },
-    "Sarissa": {
-        "attack": {
-            "standard": 40,
-            "master_crafted": 45,
-            "artifact": 50
-        },
-        "description": "A vicious combat attachment that is attached to Bolters, in order to allow them to be used in melee combat.",
-        "melee_hands": 0,
-        "ranged_hands": 0,
-        "ammo": 0,
-        "range": 1,
-        "spli": 1,
-        "arp": 0
-    },
+
     "Chainsword": {
         "attack": {
             "standard": 50,
             "master_crafted": 60,
             "artifact": 70
         },
-        "description": "A standard Chainsword. It is popular among Assault Marines due to the raw power, even with multiple opponents.",
-        "melee_hands": 1,
+        "description": "A standard Chainsword. It is popular among Assault Marines due to the raw power.",
+        "melee_hands": 1.1,
         "ranged_hands": 0,
         "ammo": 0,
         "range": 1,
@@ -199,7 +243,7 @@ global.weapons={
         "range": 1,
         "spli": 1,
         "arp": 0,
-        "tags":["chain", "axe"],
+        "tags":["chain","dual", "axe"],
     },
     "Company Standard": {
       "special_description": "Boosts morale",
@@ -329,27 +373,7 @@ global.weapons={
         "arp": 1,
         "tags":["laser"],
     },    
-    "Eldar Power Sword": {
-        "attack": {
-            "standard": 170,
-            "master_crafted": 180,
-            "artifact": 190
-        },
-        "melee_mod": {
-            "standard": 1.1,
-            "master_crafted": 1.1,
-            "artifact": 1.1
-        },
-        "description": "Power weapons, infused with arcane energy, are used by Howling Banshees and Dire Avenger Exarchs. Swords such as these are as much an artistic statement as a weapon and are effective against even heavily armored troops.",
-        "melee_hands": 1.1,
-        "ranged_hands": 0,
-        "ammo": 0,
-        "range": 1,
-        "spli": 1,
-        "arp": 1,
-        "special_description": "Parry",
-        "tags":["power", "sword","elder","xenos"],
-    },
+
     "Power Weapon": {
         "attack": {
             "standard": 135,
@@ -403,7 +427,7 @@ global.weapons={
         },
         "description": "A large, metal gauntlet surrounded by an energy field. Though large and slow, it dishes out tremendous damage.",
         "melee_hands": 1.1,
-        "ranged_hands": 1,
+        "ranged_hands": 2,
         "ammo": 0,
         "range": 1,
         "spli": 1,
@@ -425,26 +449,7 @@ global.weapons={
         "arp": 1,
         "tags":["power","dual","fist"],
     },
-    "Dreadnought Lightning Claw": {
-        "attack": {
-            "standard": 300,
-            "master_crafted": 400,
-            "artifact": 600
-        },
-        "melee_mod": {
-            "standard": 1.2,
-            "master_crafted": 1.2,
-            "artifact": 1.2
-        },
-        "description": "A specialized Lightning Claw variant designed for Dreadnoughts, these claws are capable of ripping through enemy vehicles and infantry with ease.",
-        "melee_hands": 5,
-        "ranged_hands": 0,
-        "ammo": 0,
-        "range": 1,
-        "spli": 1,
-        "arp": 0,
-        "tags":["power", "vehicle","dual","fist"],
-    },
+
     "Thunder Hammer": {
         "attack": {
             "standard": 650,
@@ -521,21 +526,7 @@ global.weapons={
         "arp": 0,
         "tags":["bolt", "pistol"],
     },
-    "Webber": {
-        "attack": {
-            "standard": 35,
-            "master_crafted": 40,
-            "artifact": 45
-        },
-        "description": "The Webber is a close-range weapon that fires strands of sticky web-like substance. It is designed to ensnare and immobilize enemies, restricting their movement and rendering them vulnerable to further attacks.",
-        "melee_hands": 0,
-        "ranged_hands": 2,
-        "ammo": 5,
-        "range": 4.1,
-        "spli": 0,
-        "arp": 0,
-        "tags":["immobolise"]
-    },
+
     "Underslung Bolter": {
         "attack": {
             "standard": 60,
@@ -572,9 +563,9 @@ global.weapons={
             "master_crafted": 55,
             "artifact": 60
         },
-        "description": "A standard Bolter, a 2-handed firearm that launches bolts of explosive material. It's a versatile and iconic weapon of Space Marines.",
+        "description": "A standard Bolter, a classic firearm that launches bolts of explosive material. It's a versatile and iconic weapon of Space Marines.",
         "melee_hands": 1,
-        "ranged_hands": 2,
+        "ranged_hands": 0.9,
         "ammo": 16,
         "range": 12,
         "spli": 1,
@@ -588,7 +579,7 @@ global.weapons={
             "artifact": 600
         },
         "description": "A much larger and bulkier flamer. Few armies carry them on hand, instead choosing to mount them to vehicles.",
-        "melee_hands": 1,
+        "melee_hands": 1.1,
         "ranged_hands": 2,
         "ammo": 8,
         "range": 2,
@@ -610,6 +601,27 @@ global.weapons={
         "spli": 1,
         "arp": -1,
         "tags":["dreadnought","flame"]
+    },
+
+    "Dreadnought Lightning Claw": {
+        "attack": {
+            "standard": 300,
+            "master_crafted": 400,
+            "artifact": 600
+        },
+        "melee_mod": {
+            "standard": 1.2,
+            "master_crafted": 1.2,
+            "artifact": 1.2
+        },
+        "description": "A specialized Lightning Claw variant designed for Dreadnoughts, these claws are capable of ripping through enemy vehicles and infantry with ease.",
+        "melee_hands": 5,
+        "ranged_hands": 0,
+        "ammo": 0,
+        "range": 1,
+        "spli": 1,
+        "arp": 0,
+        "tags":["power", "vehicle","dual","fist"],
     },
     "Dreadnought Power Claw":{
         "attack": {
@@ -946,6 +958,105 @@ global.weapons={
         "arp": 1,
         "tags":["heavy_ranged"]
     },
+
+    "Storm Bolter": {
+        "attack": {
+            "standard": 80,
+            "master_crafted": 88,
+            "artifact": 96
+        },
+        "description": "Compact, and double-barreled, this bolt weapon is inaccurate but grants an enormous amount of firepower.",
+        "melee_hands": 1,
+        "ranged_hands": 1,
+        "ammo": 10,
+        "range": 10,
+        "spli": 1,
+        "arp": 0,
+        "tags":["bolt"]
+    },
+    "Flamer": {
+        "attack": {
+            "standard": 350,
+            "master_crafted": 385,
+            "artifact": 420
+        },
+        "melee_mod": {
+            "standard": 0,
+            "master_crafted": 0,
+            "artifact": 0
+        },
+        "description": "Blackened at the tip, this weapon unleashes a torrent of burning promethium - all the better to cleanse sin and impurity with.",
+        "melee_hands": 0.9,
+        "ranged_hands": 1.1,
+        "ammo": 4,
+        "range": 2.1,
+        "spli": 1,
+        "arp": -1,
+        "tags":["flame"]
+    },
+    "Underslung Flamer": {
+        "attack": {
+            "standard": 200,
+            "master_crafted": 220,
+            "artifact": 240
+        },
+        "description": "",
+        "melee_hands": 0,
+        "ranged_hands": 0,
+        "ammo": 4,
+        "range": 2.1,
+        "spli": 1,
+        "arp": 0,
+        "tags":["flame"]
+    },
+    "Combiflamer": {
+        "attack": {
+            "standard": 100,
+            "master_crafted": 130,
+            "artifact": 160
+        },
+        "description": "a standard bolter with a single shot flamer attached for tactical use",
+        "melee_hands": 1,
+        "ranged_hands": 1.5,
+        "ammo": 15,
+        "range": 10,
+        "spli": 1,
+        "arp": 0,
+        "second_profiles":["Flamer"],
+        "tags":["combi", "bolt"]
+    },    
+    "Incinerator": {
+        "attack": {
+            "standard": 700,
+            "master_crafted": 800,
+            "artifact": 900
+        },
+        "description": "This flamer weapon includes special promethium and sacred oils. It is particularly effective against Daemons and their ilk.",
+        "melee_hands": 1,
+        "ranged_hands": 2,
+        "ammo": 4,
+        "range": 2.1,
+        "spli": 1,
+        "arp": -1,
+        "tags":["flame"]
+    },
+    "Force Weapon": {
+        "attack": {
+            "standard": 50,
+            "master_crafted": 100,
+            "artifact": 150
+        },
+        "description": "An advanced, psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.",
+        "melee_hands": 1,
+        "ranged_hands": 1,
+        "range": 1,
+        "spli": 0,
+        "arp": 0,
+        "tags":["psi"]
+    },
+
+// vehicle weapons
+
     "Whirlwind Missiles": {
         "attack": {
             "standard": 400,
@@ -1208,102 +1319,10 @@ global.weapons={
         "spli": 1,
         "arp": 0
     },
-    "Storm Bolter": {
-        "attack": {
-            "standard": 80,
-            "master_crafted": 88,
-            "artifact": 96
-        },
-        "description": "Compact, and double-barreled, this bolt weapon is inaccurate but grants an enormous amount of firepower.",
-        "melee_hands": 1.1,
-        "ranged_hands": 1.1,
-        "ammo": 10,
-        "range": 10,
-        "spli": 1,
-        "arp": 0,
-        "tags":["bolt"]
-    },
-    "Flamer": {
-        "attack": {
-            "standard": 350,
-            "master_crafted": 385,
-            "artifact": 420
-        },
-        "melee_mod": {
-            "standard": 0,
-            "master_crafted": 0,
-            "artifact": 0
-        },
-        "description": "Blackened at the tip, this weapon unleashes a torrent of burning promethium - all the better to cleanse sin and impurity with.",
-        "melee_hands": 1,
-        "ranged_hands": 1,
-        "ammo": 4,
-        "range": 2.1,
-        "spli": 1,
-        "arp": -1,
-        "tags":["flame"]
-    },
-    "Underslung Flamer": {
-        "attack": {
-            "standard": 200,
-            "master_crafted": 220,
-            "artifact": 240
-        },
-        "description": "",
-        "melee_hands": 0,
-        "ranged_hands": 0,
-        "ammo": 4,
-        "range": 2.1,
-        "spli": 1,
-        "arp": 0,
-        "tags":["flame"]
-    },
-    "Combiflamer": {
-        "attack": {
-            "standard": 100,
-            "master_crafted": 130,
-            "artifact": 160
-        },
-        "description": "a standard bolter with a single shot flamer attached for tactical use",
-        "melee_hands": 1,
-        "ranged_hands": 1.5,
-        "ammo": 15,
-        "range": 10,
-        "spli": 1,
-        "arp": 0,
-        "second_profiles":["Flamer"],
-        "tags":["combi", "bolt"]
-    },    
-    "Incinerator": {
-        "attack": {
-            "standard": 200,
-            "master_crafted": 220,
-            "artifact": 240
-        },
-        "description": "This flamer weapon includes special promethium and sacred oils. It is particularly effective against Daemons and their ilk.",
-        "melee_hands": 1,
-        "ranged_hands": 1,
-        "ammo": 4,
-        "range": 2.1,
-        "spli": 1,
-        "arp": -1,
-        "tags":["flame"]
-    },
-    "Force Weapon": {
-        "attack": {
-            "standard": 50,
-            "master_crafted": 100,
-            "artifact": 150
-        },
-        "description": "An advanced, psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.",
-        "melee_hands": 1,
-        "ranged_hands": 1,
-        "range": 1,
-        "spli": 0,
-        "arp": 0,
-        "tags":["psi"]
-    },
+
 }
+
+
 
 global.gear = {
   "armour": {
