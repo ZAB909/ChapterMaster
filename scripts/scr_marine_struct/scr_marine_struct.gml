@@ -362,7 +362,7 @@ global.trait_list = {
 		display_name:"Brawler",
 		strength:[2,2,"max"],
 		constitution:[2,2,"max"],
-		flavour_text:"{0} is drawn to fighting and scraps often using little more than there fists",
+		flavour_text:"{0} is drawn to fighting and scraps often using little more than their fists",
 		effect:"bonus to fist type weaponry",
 	}	
 }
