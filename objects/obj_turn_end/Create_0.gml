@@ -92,7 +92,7 @@ repeat(11){i+=1;
 repeat(99){i+=1;
     if (obj_controller.event[i]!="") and (obj_controller.event_duration[i]=1) and (obj_controller.faction_status[eFACTION.Imperium]!="War"){
         if (obj_controller.event[i]="governor_assassination_1"){
-            with(obj_star){var o=0;repeat(4){o+=1;if (dispo[o]>0) and (dispo[o]<90) then dispo[o]=max(dispo[o]-2,0);}}
+            with(obj_star){var o=0;repeat(planets){o+=1;if (dispo[o]>0) and (dispo[o]<90) then dispo[o]=max(dispo[o]-2,0);}}
             obj_controller.disposition[2]-=7;obj_controller.disposition[4]-=10;obj_controller.disposition[5]-=4;
             if (obj_controller.disposition[4]<=0) or (obj_controller.disposition[2]<=0) then obj_controller.alarm[8]=1;
             if (obj_controller.disposition[4]>0) and (obj_controller.disposition[2]>0){
