@@ -5,39 +5,6 @@
 var i;i=0;
 repeat(600){i+=1;
     if (marine_type[i]!="") and (marine_hp[i]<-3000) and (obj_ncombat.defeat=0){marine_dead[i]=0;marine_hp[i]+=5000;}// For incapitated
-
-    if (marine_mobi[i]="Bike"){// 135 ; 
-        var onceh;onceh=0;
-        if (marine_hp[i]>0) and (marine_hp[i]<=25) and (onceh=0){marine_hp[i]=1;onceh=1;}
-        if (onceh=0) then marine_hp[i]-=25;
-    }
-    if (marine_gear[i]="Iron Halo"){// 135 ; 
-        var onceh;onceh=0;
-        if (marine_hp[i]>0) and (marine_hp[i]<=20) and (onceh=0){marine_hp[i]=1;onceh=1;}
-        if (onceh=0) then marine_hp[i]-=20;
-    }
-    if (marine_wep1[i]="Boarding Shield"){// 135 ; 
-        var onceh;onceh=0;
-        if (marine_hp[i]>0) and (marine_hp[i]<=20) and (onceh=0){marine_hp[i]=1;onceh=1;}
-        if (onceh=0) then marine_hp[i]-=20;
-    }
-    if (marine_wep2[i]="Boarding Shield"){// 135 ; 
-        var onceh;onceh=0;
-        if (marine_hp[i]>0) and (marine_hp[i]<=20) and (onceh=0){marine_hp[i]=1;onceh=1;}
-        if (onceh=0) then marine_hp[i]-=20;
-    }
-    if (marine_wep1[i]="Storm Shield"){// 135 ; 
-        var onceh;onceh=0;
-        if (marine_hp[i]>0) and (marine_hp[i]<=30) and (onceh=0){marine_hp[i]=1;onceh=1;}
-        if (onceh=0) then marine_hp[i]-=30;
-    }
-    if (marine_wep2[i]="Storm Shield"){// 135 ; 
-        var onceh;onceh=0;
-        if (marine_hp[i]>0) and (marine_hp[i]<=30) and (onceh=0){marine_hp[i]=1;onceh=1;}
-        if (onceh=0) then marine_hp[i]-=30;
-    }
-    
-    
     
     if (ally[i]=false){
         if (obj_ncombat.dropping=1) and (obj_ncombat.defeat=1) and (marine_dead[i]<2) then marine_dead[i]=1;

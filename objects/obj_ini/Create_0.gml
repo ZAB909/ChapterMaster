@@ -25,23 +25,47 @@ man_size=0;
 // Equipment- maybe the bikes should go here or something?          yes they should
 i=-1;
 repeat(200){i+=1;
-    equipment[i]="";equipment_type[i]="";equipment_number[i]=0;equipment_condition[i]=100;
-    artifact[i]="";artifact_tags[i]="";artifact_identified[i]=0;artifact_condition[i]=100;artifact_loc[i]="";artifact_sid[i]=0;// Over 500 : ship
+    equipment[i]="";
+    equipment_type[i]="";
+    equipment_number[i]=0;
+    equipment_condition[i]=100;
+    equipment_quality[i]=[];
+    artifact[i]="";
+    artifact_tags[i]=[];
+    artifact_identified[i]=0;
+    artifact_condition[i]=100;
+    artifact_quality[i]=[];
+    other_artifact_data = {};
+    artifact_loc[i]="";
+    artifact_sid[i]=0;// Over 500 : ship
     // Weapon           Unidentified            
 }
 
-var i, v;i=-1;v=0;
+var i=-1,v=0;
 repeat(210){i+=1;
-    ship[i]="";ship_uid[i]=0;ship_owner[i]=0;ship_class[i]="";ship_size[i]=0;ship_uid[i]=0;
-    ship_leadership[i]=0;ship_hp[i]=0;ship_maxhp[i]=0;ship_location[i]="";ship_shields[i]=0;
-    ship_conditions[i]="";ship_speed[i]=0;ship_turning[i]=0;
-    ship_front_armour[i]=0;ship_other_armour[i]=0;ship_weapons[i]=0;ship_shields[i]=0;
-    ship_wep[i,0]="";ship_wep_facing[i,0]="";ship_wep_condition[i,0]="";
-    ship_wep[i,1]="";ship_wep_facing[i,1]="";ship_wep_condition[i,1]="";
-    ship_wep[i,2]="";ship_wep_facing[i,2]="";ship_wep_condition[i,2]="";
-    ship_wep[i,3]="";ship_wep_facing[i,3]="";ship_wep_condition[i,3]="";
-    ship_wep[i,4]="";ship_wep_facing[i,4]="";ship_wep_condition[i,4]="";
-    ship_wep[i,5]="";ship_wep_facing[i,5]="";ship_wep_condition[i,5]="";
+    ship[i]="";
+    ship_uid[i]=0;
+    ship_owner[i]=0;
+    ship_class[i]="";
+    ship_size[i]=0;
+    ship_uid[i]=0;
+    ship_leadership[i]=0;
+    ship_hp[i]=0;
+    ship_maxhp[i]=0;
+    ship_location[i]="";
+    ship_shields[i]=0;
+    ship_conditions[i]="";
+    ship_speed[i]=0;
+    ship_turning[i]=0;
+    ship_front_armour[i]=0;
+    ship_other_armour[i]=0;
+    ship_weapons[i]=0;
+    ship_shields[i]=0;
+    for (var s=0;s<6;s++){
+         ship_wep[i,s]="";
+         ship_wep_facing[i,s]="";
+         ship_wep_condition[i,s]="";
+    }
     ship_capacity[i]=0;ship_carrying[i]=0;ship_contents[i]="";ship_turrets[i]=0;
 }
 

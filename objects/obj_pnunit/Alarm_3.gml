@@ -7,7 +7,7 @@ if (obj_ncombat.started=0){
     
     
     if (men<=4) and (veh=0) and (dreads=0){// Squish leftt
-        var leftt;leftt=instance_nearest(x-12,y,obj_pnunit);
+        var leftt=instance_nearest(x-12,y,obj_pnunit);
         
         /*if (instance_exists(leftt)) and (leftt.men>men){
             var jj,targ_manz;jj=0;targ_manz=leftt.men;

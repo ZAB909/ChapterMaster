@@ -912,6 +912,7 @@
     {"id":{"name":"obj_al_capital","path":"objects/obj_al_capital/obj_al_capital.yy",},},
     {"id":{"name":"obj_al_cruiser","path":"objects/obj_al_cruiser/obj_al_cruiser.yy",},},
     {"id":{"name":"obj_al_in","path":"objects/obj_al_in/obj_al_in.yy",},},
+    {"id":{"name":"scr_company_struct","path":"scripts/scr_company_struct/scr_company_struct.yy",},},
     {"id":{"name":"scr_system_search_helpers","path":"scripts/scr_system_search_helpers/scr_system_search_helpers.yy",},},
     {"id":{"name":"obj_p_round","path":"objects/obj_p_round/obj_p_round.yy",},},
     {"id":{"name":"obj_en_round","path":"objects/obj_en_round/obj_en_round.yy",},},

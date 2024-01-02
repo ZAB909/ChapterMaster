@@ -32,8 +32,8 @@ if (type=99){
     
     var ch,inq_hide;ch="";inq_hide=0;
     if (type=9){
-        if (string_count("inq",obj_ini.artifact_tags[obj_controller.menu_artifact])>0){
-            var i;i=0;
+        if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display], "inq")){
+            var i=0;
             repeat(10){i+=1;
                 if (obj_controller.quest[i]="artifact_loan") then inq_hide=1;
                 if (obj_controller.quest[i]="artifact_return") then inq_hide=2;

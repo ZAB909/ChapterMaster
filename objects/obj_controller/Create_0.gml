@@ -405,13 +405,11 @@ tooltip_height=0;
 
 // ** For weapon display in management **
 unit_profile=false;
-unit_rollover=false;
 view_squad=false;
-exit_period=false;
-cur_squad = 0;
-company_squads = [];
-rollover_sequence=0;
+company_report=false;
+company_data = {};
 ttrim=0;
+last_unit=[0,0];
 ui_coloring=""; 
 ui_melee_penalty=0;
 ui_ranged_penalty=0;

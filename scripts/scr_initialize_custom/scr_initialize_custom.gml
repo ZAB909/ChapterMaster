@@ -804,7 +804,7 @@ function scr_initialize_custom() {
 	    mobi[i,5]="";
 	    gear[i,5]="";
 	    role[i,6]="Dreadnought";
-	    wep1[i,6]="Close Combat Weapon";
+	    wep1[i,6]="Dreadnought Lightning Claw";
 	    wep2[i,6]="Lascannon";
 	    armour[i,6]="Dreadnought";
 	    mobi[i,6]="";
@@ -1256,31 +1256,37 @@ function scr_initialize_custom() {
 	name[company,1]=obj_creation.chapter_master_name;
 	role[company,1]="Chapter Master";
 	TTRPG[company,1]=new TTRPG_stats("chapter", company,1, "chapter_master");
-	var chapter_master = TTRPG[company,1]
+	var chapter_master = TTRPG[company,1];
+	var chapter_master_equip={}
 	switch (master_melee){
 		case 1:
-			wep1[0,1]="Power Fist&DUB|";
+			chapter_master_equip={
+				"wep1":"Power Fist",
+				"wep2":"Power Fist"
+			};
 			break;
 		case 2:
-			wep1[0,1]="Lightning Claw&DUB|";
+			chapter_master_equip.wep1="Lightning Claw";
+			chapter_master_equip.wep2="Lightning Claw";
 			break;
 		case 3:
-			wep1[0,1]="Relic Blade&MNR|";
+			chapter_master_equip.wep1="Relic Blade";
+			//wep1[0,1]="Relic Blade&MNR|";
 			break;
 		case 4:
-			wep1[0,1]="Master Crafted Thunder Hammer";
+			chapter_master_equip.wep1="Thunder Hammer";
 			break;
 		case 5:
-			wep1[0,1]="Master Crafted Power Sword";
+			chapter_master_equip.wep1="Power Sword";
 			break;
 		case 6:
-			wep1[0,1]="Master Crafted Power Axe";
+			chapter_master_equip.wep1="Power Axe";
 			break;
 		case 7:
-			wep1[0,1]="Master Crafted Eviscerator";
+			chapter_master_equip.wep1="Eviscerator";
 			break;
 		case 8:
-			wep1[0,1]="Master Crafted Force Weapon";
+			chapter_master_equip.wep1="Force Weapon";
 			break;	
 	}
 	switch (master_ranged){
@@ -1288,26 +1294,26 @@ function scr_initialize_custom() {
 			wep2[0,1]="Integrated Bolters";
 			break;
 		case 2:
-			wep2[0,1]="Infernus Pistol";
+			chapter_master_equip.wep2="Infernus Pistol";
 			break;
 		case 3:
-			wep2[0,1]="Master Crafted Plasma Pistol";
+			chapter_master_equip.wep2="Plasma Pistol";
 			break;
 		case 4:
-			wep2[0,1]="Master Crafted Plasma Gun";
+			chapter_master_equip.wep2="Plasma Gun";
 			break;
 		case 5:
-			wep2[0,1]="Master Crafted Heavy Bolter";
+			chapter_master_equip.wep2="Heavy Bolter";
 			break;
 		case 6:
-			wep2[0,1]="Master Crafted Meltagun";
+			chapter_master_equip.wep2="Meltagun";
 			break;
 		case 7:
-			wep2[0,1]="Storm Shield";
+			chapter_master_equip.wep2="Storm Shield";
 			break;	
 	}	
 
-	armour[company,1]="Artificer Armour";
+	chapter_master_equip.armour="Artificer Armour";
 
 	//TODO will refactor how traits are distributed to chapter masters along with a refactor of chapter data
 	switch(global.chapter_name) {
@@ -1329,26 +1335,26 @@ function scr_initialize_custom() {
 			chapter_master.add_trait("zealous_faith");
 			chapter_master.add_trait("tinkerer");
 			for (i=0;i<10;i++){
-				chapter_master.add_bionics();
+				chapter_master.add_bionics("none", "standard",false);
 			}
 			chapter_master.add_trait("old_guard");
 			break;
 		case "Doom Benefactors":
 			for (i=0;i<4;i++){
-				chapter_master.add_bionics();
+				chapter_master.add_bionics("none", "standard",false);
 			}
 			chapter_master.add_trait("old_guard");
 			break;
 		case "Ultramarines":
 			for (i=0;i<4;i++){
-				chapter_master.add_bionics();
+				chapter_master.add_bionics("none", "standard",false);
 			}
-			armour[company,1]="Terminator Armour";
+			chapter_master_equip.armour="Terminator Armour";
 			chapter_master.add_trait("still_standing");
 			chapter_master.add_trait("tyrannic_vet");
 			break;
 		case "Space Wolves":
-			armour[company,1]="Terminator Armour";
+			chapter_master_equip.armour="Terminator Armour";
 			chapter_master.add_trait("ancient");
 			chapter_master.add_trait("melee_enthusiast");
 			chapter_master.add_trait("feet_floor");			
@@ -1423,6 +1429,7 @@ function scr_initialize_custom() {
 		    chapter_master.update_powers();
 	}
 	mobi[company,1]=mobi[100,2];
+	chapter_master.alter_equipment(chapter_master_equip,false,false,"master_crafted")
 	//TODO not sure why the strin method is ever used? will investigate and replace later
 	if (string_count("Paragon",strin)>0) then chapter_master.add_trait("paragon")
 
@@ -1444,12 +1451,12 @@ function scr_initialize_custom() {
 		spawn_unit.technology=40;
 	}
 	spawn_unit.add_trait("mars_trained");
-	spawn_unit.add_bionics("right_arm");
+	spawn_unit.add_bionics("right_arm", "standard",false);
 	if (global.chapter_name="Lamenters") then armour[company,2]="MK6 Corvus";
 	if (global.chapter_name="Iron Hands"){
-		repeat(9){spawn_unit.add_bionics();}
+		repeat(9){spawn_unit.add_bionics("none", "standard",false);}
 	} else{
-	    repeat(irandom(5)+3){spawn_unit.add_bionics()};
+	    repeat(irandom(5)+3){spawn_unit.add_bionics("none", "standard",false)};
 	}
 	// Master of Sanctity (Chaplain)
 	TTRPG[company,3]=new TTRPG_stats("chapter", company,3);
@@ -2635,30 +2642,29 @@ function scr_initialize_custom() {
 
 
 
-	var o,bloo;bloo=0;o=0;repeat(4){o+=1;
-		if (obj_creation.dis[o]="Blood Debt") then bloo=1;}
-	if (bloo=1) and (instance_exists(obj_controller)){obj_controller.blood_debt=1;}
-	if (bloo=1){
-	    penitent=1;penitent_max=(obj_creation.strength*1000)+300;
-	    penitent_current=300;penitent_end=obj_creation.strength*48;
+	var bloo=0,o=0;
+	if (array_contains(obj_creation.dis,"Blood Debt")){
+		 bloo=1;
+		 if (instance_exists(obj_controller)){
+		 	obj_controller.blood_debt=1;
+		    penitent=1;
+		    penitent_max=(obj_creation.strength*1000)+300;
+		    penitent_current=300;
+		    penitent_end=obj_creation.strength*48;		 	
+		}
+	} else {
+		if (fleet_type=3){
+		    penitent=1;
+		    penitent_max=(obj_creation.strength*60);
+		    penitent_current=1;
+		    penitent_end=obj_creation.strength*5;
+
+		    if (obj_creation.chapter="Lamenters"){
+		        penitent_max=600;penitent_end=600;
+		        // obj_controller.loyalty=50;obj_controller.loyalty_hidden=50;
+		    }
+		}
 	}
-	if (bloo=0) and (fleet_type=3){
-	    penitent=1;penitent_max=(obj_creation.strength*60);
-	    penitent_current=1;
-	    penitent_end=obj_creation.strength*5;
-
-	    if (obj_creation.chapter="Lamenters"){
-	        penitent_max=600;penitent_end=600;
-	        // obj_controller.loyalty=50;obj_controller.loyalty_hidden=50;
-	    }
-	}
-
-
-	// if (obj_creation.chapter="Lamenters"){
-	    // penitent_max=100300;penitent_end=1200;
-	    // obj_controller.loyalty=50;obj_controller.loyalty_hidden=50;
-	// }
-
 }
 
 //function for making deep copies of structs as gml has no function
