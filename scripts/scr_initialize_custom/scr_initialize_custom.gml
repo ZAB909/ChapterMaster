@@ -1,6 +1,8 @@
 
 function scr_initialize_custom() {
 
+	var starNameGenerator = new StarNameGenerator();
+
 	// These are the new variables that are being read, for the new creation
 	// They will also have to be loaded and saved
 	// Worry about that later
@@ -15,8 +17,8 @@ function scr_initialize_custom() {
 	strength=5;cooperation=5;
 	purity=5;stability=5;
 	var i;i=-1;repeat(6){i+=1;adv[i]="";adv_num[i]=0;dis[i]="";dis_num[i]=0;}
-	homeworld="Temperate";homeworld_name=scr_star_name();
-	recruiting="Death";recruiting_name=scr_star_name();
+	homeworld="Temperate";homeworld_name=starNameGenerator.generate_random_name();
+	recruiting="Death";recruiting_name=starNameGenerator.generate_random_name();
 	flagship_name=scr_ship_name("imperial");
 	recruiting_exists=1;
 	homeworld_exists=1;
@@ -158,7 +160,7 @@ function scr_initialize_custom() {
 	// fortress_name="";
 	flagship_name=obj_creation.flagship_name;
 	obj_creation.restart_flagship_name=flagship_name;
-	sector_name=scr_sector_name();
+	sector_name= new SectorNameGenerator().generate_random_name();
 	icon=obj_creation.icon;
 	icon_name=obj_creation.icon_name;
 	man_size=0;

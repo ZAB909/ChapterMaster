@@ -1781,8 +1781,9 @@ function scr_dialogue(diplo_keyphrase) {
 	            if (rando==1) then diplo_text+="random1.";
 	            if (rando==2) then diplo_text+="random2.";
 	            if (rando==3){
+					var starNameGenerator = new StarNameGenerator();
 					diplo_text+="rumors of her involvement at the massacre of ";
-					diplo_text+=scr_star_name();
+					diplo_text+=starNameGenerator.generate_random_name();
 					diplo_text+=" "+choose("I.","II.","III.","IV.");
 				}
 	            diplo_text+="  Do not expect futher contact.]]";

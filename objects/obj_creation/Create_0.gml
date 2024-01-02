@@ -73,8 +73,9 @@ fleet_type=1;
 strength=5;cooperation=5;
 purity=5;stability=5;
 var i;i=-1;repeat(6){i+=1;adv[i]="";adv_num[i]=0;dis[i]="";dis_num[i]=0;}
-homeworld="Temperate";homeworld_name=scr_star_name();
-recruiting="Death";recruiting_name=scr_star_name();
+var starNameGenerator = new StarNameGenerator();
+homeworld="Temperate";homeworld_name=starNameGenerator.generate_random_name();
+recruiting="Death";recruiting_name=starNameGenerator.generate_random_name();
 flagship_name=scr_ship_name("imperial");
 recruiting_exists=1;
 homeworld_exists=1;

@@ -109,9 +109,10 @@ if (change_slide==35) or (change_slide==36) or (chapter=="Doom Benefactors") or 
             dis_num[i]=0;
         }
         homeworld="Temperate";
-        homeworld_name=scr_star_name();
+        var starNameGenerator = new StarNameGenerator();
+        homeworld_name=starNameGenerator.generate_random_name();
         recruiting="Death";
-        recruiting_name=scr_star_name();
+        recruiting_name=starNameGenerator.generate_random_name();
         flagship_name=scr_ship_name("imperial");
         recruiting_exists=1;
         homeworld_exists=1;homeworld_rule=1;
