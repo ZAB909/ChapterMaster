@@ -429,15 +429,21 @@ function scr_load(argument0, argument1) {
 	                new_star.dispo[g]=ini_read_real("Star","sr"+string(i)+"dispo"+string(g),-10);
 	                new_star.p_type[g]=ini_read_string("Star","sr"+string(i)+"type"+string(g),"");
 					new_star.p_feature[g] = [];
-					var  p_features = ini_read_string("Star","sr"+string(i)+"feat"+string(g),"");
-					if (p_features != ""){
-						p_features = json_parse(base64_decode(p_features));
-						for (var feat = 0;feat < array_length(p_features);feat++){
-							var new_feat = new new_planet_feature(p_features[feat].f_type);
-							new_feat.load_json_data(p_features[feat]);
-							array_push(new_star.p_feature[g], new_feat);
+					
+					var  p_features_string = ini_read_string("Star","sr"+string(i)+"feat"+string(g),"");
+					if (p_features_string != "")
+						{
+							var p_features_array = json_parse(base64_decode(p_features_string));
+							var _array_length = array_length(p_features_array);
+							
+							for (var feat = 0;feat < _array_length; feat++)
+								{
+									var new_feat = new new_planet_feature(p_features_array[feat].f_type);
+									new_feat.load_json_data(p_features_array[feat]);
+									array_push(new_star.p_feature[g], new_feat);
+								}
 						}
-					}
+						
 	                new_star.p_owner[g]=ini_read_real("Star","sr"+string(i)+"own"+string(g),0);
 	                new_star.p_first[g]=ini_read_real("Star","sr"+string(i)+"fir"+string(g),0);
 	                new_star.p_population[g]=ini_read_real("Star","sr"+string(i)+"popul"+string(g),0);
@@ -454,15 +460,21 @@ function scr_load(argument0, argument1) {
 	                new_star.p_silo[g]=ini_read_real("Star","sr"+string(i)+"p_silo"+string(g),0);
 	                new_star.p_defenses[g]=ini_read_real("Star","sr"+string(i)+"p_defenses"+string(g),0);
 					new_star.p_upgrades[g] = [];
-					var  p_upgrades = ini_read_string("Star","sr"+string(i)+"upg"+string(g),"");
-					if (p_upgrades != ""){
-						p_upgrades = json_parse(base64_decode(p_upgrades));
-						for (var feat = 0;feat < array_length(p_upgrades);feat++){
-							var new_feat = new new_planet_feature(p_upgrades[feat].f_type);
-							new_feat.load_json_data(p_upgrades[feat]);
-							array_push(new_star.p_upgrades[g], new_feat);
-						}
-					}					
+					
+					var  p_upgrades_string = ini_read_string("Star","sr"+string(i)+"upg"+string(g),"");
+					
+					if (p_upgrades_string != "")
+						{
+							var p_upgrades_array = json_parse(base64_decode(p_upgrades_string));
+							var _array_length = array_length(p_upgrades_array);
+							
+							for (var feat = 0;feat < _array_length;feat++)
+								{
+									var new_feat = new new_planet_feature(p_upgrades_array[feat].f_type);
+									new_feat.load_json_data(p_upgrades_array[feat]);
+									array_push(new_star.p_upgrades[g], new_feat);
+								}
+						}					
 
 	                new_star.p_orks[g]=ini_read_real("Star","sr"+string(i)+"or"+string(g),0);
 	                new_star.p_tau[g]=ini_read_real("Star","sr"+string(i)+"ta"+string(g),0);
@@ -811,14 +823,18 @@ function scr_load(argument0, argument1) {
 	        }
 
 	        obj_ini.squads = [];
-	        var squad_fetch = ini_read_string("Mar","squads","");
-	        if (squad_fetch != ""){
-	        	squad_fetch = json_parse(base64_decode(squad_fetch));
-	        	for (i=0;i<array_length(squad_fetch);i++){
-	        		array_push(obj_ini.squads, new unit_squad());
-	        		obj_ini.squads[i].load_json_data(json_parse(squad_fetch[i]));
-	        	}
-	        }
+	        var squad_fetch_string = ini_read_string("Mar","squads","");
+	        if (squad_fetch_string != "")
+				{
+		        	var squad_fetch_array = json_parse(base64_decode(squad_fetch_string));
+		        	var _array_length = array_length(squad_fetch_array);
+					
+					for (i = 0; i < _array_length; i++)
+						{
+			        		array_push(obj_ini.squads, new unit_squad());
+			        		obj_ini.squads[i].load_json_data(json_parse(squad_fetch_array[i]));
+			        	}
+		        }
 
 	        obj_ini.squad_types = json_parse(base64_decode(ini_read_string("Mar","squad_types","")));
 
