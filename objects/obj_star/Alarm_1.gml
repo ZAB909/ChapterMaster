@@ -408,7 +408,7 @@ if (i==1) and (planets>0){
 }
 
 var hyu=0;
-for(i=1; i<=4; i++){
+for(i=1; i<=planets; i++){
     if (p_tyranids[i]>=5){
         p_guardsmen[i]=0;
         p_pdf[i]=0;
