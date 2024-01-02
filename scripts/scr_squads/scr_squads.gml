@@ -203,23 +203,21 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 
 								  						// this ensures a marine never gets overloaded with an overly bulky weapon loadout
 								  						if (load_out_slot == "wep1") {
-								  							obj_controller.marine_armour[0] = unit.armour();
-								  							scr_weapon(item_to_add,unit.weapon_two(),true,0,false,"","description");
-								  							if (obj_controller.ui_melee_penalty>0) or (obj_controller.ui_ranged_penalty>0){
+								  							var return_item = unit.weapon_one();
+								  							unit.update_weapon_one(item_to_add,false,false);
+								  							unit.ranged_attack();
+								  							unit.melee_attack();
+								  							if (unit.encumbered_ranged || unit.encumbered_melee){
+								  								unit.update_weapon_one(return_item,false,false);
 								  								continue;
-								  							}
-															scr_weapon(unit.weapon_two(),item_to_add,true,0,false,"","description");
-								  							if (obj_controller.ui_melee_penalty>0) or (obj_controller.ui_ranged_penalty>0){
-								  								continue;								  								
 								  							}
 								  						} else if (load_out_slot == "wep2"){
-								  							obj_controller.marine_armour[0] = unit.armour();
-								  							scr_weapon(unit.weapon_one(),item_to_add,true,0,false,"","description");
-								  							if (obj_controller.ui_melee_penalty>0) or (obj_controller.ui_ranged_penalty>0){
-								  								continue;
-								  							}								  							
-								  							scr_weapon(item_to_add,unit.weapon_one(),true,0,false,"","description");
-								  							if (obj_controller.ui_melee_penalty>0) or (obj_controller.ui_ranged_penalty>0){
+								  							var return_item = unit.weapon_two();
+								  							unit.update_weapon_two(item_to_add,false,false);
+								  							unit.ranged_attack();
+								  							unit.melee_attack();
+								  							if (unit.encumbered_ranged|| unit.encumbered_melee){
+								  								unit.update_weapon_two(return_item,false,false);
 								  								continue;
 								  							}
 								  						}
@@ -630,13 +628,5 @@ function game_start_squads(){
 //finds all the squads linked to a given company
 //TODO coalece lots of these functions to make make a company object
 //maybe then we can have more than 10 companies
-function find_company_squads(company){
-	var c_squads = [];
-	for (var i=0;i<array_length(obj_ini.squads);i++){
-		if (array_length(obj_ini.squads[i].members)>0 && obj_ini.squads[i].base_company == company){
-			array_push(c_squads,i);
-		}
-	}
-	return c_squads;
-}
+
 

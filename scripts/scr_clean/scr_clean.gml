@@ -28,14 +28,15 @@ function scr_clean(argument0) {
 
 
 	if (hostile_men=0) and (veh>0){// show_message("A");
-	    var units_lost,going_up,you;
-	    units_lost=0;going_up=0;you=1;
+	    var units_lost=0,going_up=0,you=1, unit;
     
-	    var p1,p2,p3,p4,p5;
-	    p1="";p2="";p3="";p4="";p5="";
+	    var p1="",p2="",p3="",p4="",p5="";
     
 	    var important,u,hh,stahp;u=-1;hh=0;stahp=0;
-	    repeat(50){u+=1;if (u<=20) then important[u]="";lost[u]="";lost_num[u]=0;}
+	    repeat(50){
+	    	u+=1;
+	    	if (u<=20) then important[u]="";lost[u]="";lost_num[u]=0;
+	    }
     
     
 	    repeat(hostile_shots){stahp=0;
@@ -65,13 +66,24 @@ function scr_clean(argument0) {
 					var open = 0;
 	                repeat(30){// Need to find the open slot
 	                    h+=1;
-	                    if (veh_type[you]=lost[hh]) and (good=0){lost_num[hh]+=1;good=1;}// If one unit is all the same, and get smashed, this should speed up the repeats
-	                    if (veh_type[you]=lost[h]) and (good=0){lost_num[h]+=1;good=1;hh=h;}
+	                    if (veh_type[you]=lost[hh]) and (good=0){
+	                    	lost_num[hh]+=1;
+	                    	good=1;
+	                    }// If one unit is all the same, and get smashed, this should speed up the repeats
+	                    if (veh_type[you]=lost[h]) and (good=0){
+	                    	lost_num[h]+=1;
+	                    	good=1;
+	                    	hh=h;
+	                    }
 	                    if (lost[h]="") and (open=0) then open=h;// Find the first open
 	                }
-	                if (good=0) and (open!=0){lost_num[open]=1;lost[open]=veh_type[you];}
+	                if (good=0) and (open!=0){
+	                	lost_num[open]=1;
+	                	lost[open]=veh_type[you];
+	                }
 	                units_lost+=1;
-	                veh-=1;obj_ncombat.player_forces-=1;
+	                veh-=1;
+	                obj_ncombat.player_forces-=1;
 	                veh_dead[you]=1;// show_message("Veh dead");
 	            }
 	        }
@@ -119,88 +131,71 @@ function scr_clean(argument0) {
 	            }
 	        }
 	        // if (marine_armour[you]="Dreadnought") or (marine_hp[you]<0) then stahp=1;
-        
-	        if (stahp=0){
-	            var dr = 0;
-				var minus = hostile_damage;
+  
+	        if (stahp=0 && struct_exists(unit_struct[you],"base_group")){
+	        	unit=unit_struct[you];
+	            var damage_resistance=0,minus=0;
+	            minus=hostile_damage;
+	       
+	           
             
-	            // minus-=(marine_ac[you]/2);
+	            //if (damage_resistance<0.25) then damage_resistance=0.25;
+	            // if (damage_resistance<0.05) then damage_resistance=0.05;
             
-	            // dr=round(-25+(marine_exp[you]*0.1875));dr=dr/100;dr=0.75-dr;
-	            dr=0.7-((marine_exp[you]*marine_exp[you])/40000);
-	            if (marine_gear[you]="Rosarius") then dr-=0.33;
-	            if (marine_gear[you]="Iron Halo") then dr-=0.33;
-	            if (marine_mobi[you]="Jump Pack") then dr-=0.1;
-	            if (marine_mshield[you]>0) then dr-=0.1;
-	            if (marine_fiery[you]>0) then dr-=0.15;
-	            if (marine_fshield[you]>0) then dr-=0.08;
-	            if (marine_quick[you]>0) then dr-=0.2;// Needs to be only if melee
-	            if (marine_dome[you]>0) then dr-=0.15;
-	            if (marine_iron[you]>0){
-	                if (dr<=0) then marine_hp[you]+=20;
-	                if (dr>0) then dr-=(marine_iron[you]/5);
+	            minus-=2*marine_ac[you];
+	            if (minus>0){
+					damage_resistance=(unit.damage_resistance()/100);
+		            if (marine_mshield[you]>0) then damage_resistance+=0.1;
+		            if (marine_fiery[you]>0) then damage_resistance+=0.15;
+		            if (marine_fshield[you]>0) then damage_resistance+=0.08;
+		            if (marine_quick[you]>0) then damage_resistance+=0.2;// Needs to be only if melee
+		            if (marine_dome[you]>0) then damage_resistance+=0.15;
+		            if (marine_iron[you]>0){
+		                if (damage_resistance<=0) then marine_hp[you]+=20;
+		                if (damage_resistance>0) then damage_resistance+=(marine_iron[you]/5);
+		            }	            	
+	            	minus=round(minus*(1-damage_resistance));
 	            }
-            
-	            if (dr<0.25) then dr=0.25;
-	            // if (dr<0.05) then dr=0.05;
-            
-	            if (minus>0) then minus=round(minus*(dr));
-            
-	            minus-=marine_ac[you];
-	            if (marine_mshield[you]>0) then minus-=8;
-	            if (marine_fshield[you]>0) then minus-=6;
             
 	            if (minus<0) then minus=0.15;
 	            if (minus=0.15) and (hostile_weapon="Fleshborer") then minus=1.5;
 	            if (hostile_weapon="Web Spinner"){
-					var webr = floor(random(100))+1;
-	                var chunk = max(10,62-(marine_ac[you]*2));
-	                minus=0;if (webr<=chunk) then minus=5000;
-	                /*
-	                if (marine_ac[you]<25) then minus=choose(0,0,0,0,5000);
-	                if (marine_ac[you]>=25) then minus=choose(0,0,0,0,0,0,0,0,0,5000);
-	                if (marine_ac[you]<=15) then minus=choose(0,0,5000);
-	                if (marine_ac[you]=0) then minus=choose(0,5000);*/
+	                var chunk,webr;webr=floor(random(100))+1;
+	                chunk=max(10,62-(marine_ac[you]*2));
+	                minus=0;
+	                if (webr<=chunk) then minus=5000;
 	            }
 	            marine_hp[you]-=minus;
             
 	            if (marine_hp[you]<=0) and (marine_dead[you]!=1){
-	                var h,good,open;h=0;good=0;open=0;
-	                repeat(30){// Need to find the open slot
-	                    h+=1;
-                    
-	                    if (obj_ncombat.player_forces>6){
-	                        if (marine_type[you]=lost[hh]) and (good=0){lost_num[hh]+=1;good=1;}// If one unit is all the same, and get smashed, this should speed up the repeats
-	                        if (marine_type[you]=lost[h]) and (good=0){lost_num[h]+=1;good=1;hh=h;}
-	                    }
-                    
-	                    if (lost[h]="") and (open=0) then open=h;// Find the first open
-	                }
-	                if (good=0) and (open!=0){lost_num[open]=1;lost[open]=marine_type[you];}
+	                var h=0,good=0,open=0;
+                    if (unit.role()=lost[hh]){
+                    	lost_num[hh]++;
+                    	break;
+                    } else {                
+		                for (var h=1;h<=50;h++){// Need to find the open slot
+		                    if (obj_ncombat.player_forces>6){
+		                        if (unit.role()=lost[h]){
+		                        	lost_num[h]++;
+		                        	hh=h;
+		                        	break;
+		                        }
+		                    }
+	                    
+		                    if (lost[h]=""){
+			                	lost_num[open]=1;
+			                	lost[open]=marine_type[you];	
+			                	hh=h;
+			                	break;                    	
+		                    }
+		                }
+	            	}
 	                units_lost+=1;// marine_type[you]="";
                 
-	                /*if (marine_type[you]="Chapter Master") then command_lost+=1;
-	                if (marine_type[you]="Master of Sanctity") then command_lost+=1;
-	                if (marine_type[you]="Master of the Apothecarion") then command_lost+=1;
-	                if (marine_type[you]="Chief "+string(obj_ini.role[100,17])) then command_lost+=1;
-	                if (marine_type[you]="Forge Master") then command_lost+=1;
-	                if (marine_type[you]=obj_ini.role[100,17]) then command_lost+=1;
-	                if (marine_type[you]=obj_ini.role[100][14]) then command_lost+=1;
-	                if (marine_type[you]=obj_ini.role[100][15]) then command_lost+=1;
-	                if (marine_type[you]=obj_ini.role[100][16]) then command_lost+=1;
-	                if (marine_type[you]=obj_ini.role[100][6]) then command_lost+=1;
-	                if (marine_type[you]=obj_ini.role[100][5]) then command_lost+=1;
-	                if (marine_type[you]="Codiciery") then command_lost+=1;
-	                if (marine_type[you]="Lexicanum") then command_lost+=1;
-	                if (marine_type[you]=string(obj_ini.role[100,17])+" Aspirant") then command_lost+=1;
-	                if (marine_type[you]=string(obj_ini.role[100][14])+" Aspirant") then command_lost+=1;
-	                if (marine_type[you]=string(obj_ini.role[100][15])+" Aspirant") then command_lost+=1;
-	                if (marine_type[you]=string(obj_ini.role[100][16])+" Aspirant") then command_lost+=1;
-	                if (marine_type[you]="Venerable "+string(obj_ini.role[100][6])) then command_lost+=1;*/
-                
 	                men-=1;
-	                if (marine_type[you]=obj_ini.role[100][6]) or (marine_type[you]="Venerable "+string(obj_ini.role[100][6])) then dreads-=1;
-	                obj_ncombat.player_forces-=1;marine_dead[you]=1;
+	                if (unit.IsSpecialist("dreadnoughts")) then dreads-=1;
+	                obj_ncombat.player_forces-=1;
+	                marine_dead[you]=1;
 	                if (obj_ncombat.red_thirst=1) and (marine_type[you]!="Death Company") and ((obj_ncombat.player_forces/obj_ncombat.player_max)<0.9) then obj_ncombat.red_thirst=2;
 	            }
 	        }
@@ -210,14 +205,6 @@ function scr_clean(argument0) {
 	        hostile_shots=old_hs;
 	        scr_flavor2(units_lost,"");
 	    }
-	    /*show_message("Shot by "+string(hostile_unit)+", "+string(dread_shots)+"x "+string(hostile_weapon)+"...
-	    "+string(killed_num[1])+"x "+string(killed[1])+"
-	    "+string(killed_num[2])+"x "+string(killed[2])+"
-	    "+string(killed_num[3])+"x "+string(killed[3])+"
-	    "+string(killed_num[4])+"x "+string(killed[4])+"
-	    "+string(killed_num[5])+"x "+string(killed[5])+"
-	    "+string(killed_num[6])+"x "+string(killed[6]));*/
-    
 	}
 
 

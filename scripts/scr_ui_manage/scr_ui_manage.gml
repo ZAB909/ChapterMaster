@@ -131,7 +131,7 @@ function scr_ui_manage() {
 	    	///tooltip_text stacks hover over type tooltips into an array and draws them last so as not to create drawing order issues
 		    draw_set_color(c_red);
 		    var stat_tool_tip_text;
-		    if (!obj_controller.view_squad){
+		    if (!obj_controller.view_squad && !obj_controller.company_report){
 			    stat_tool_tip_text = "Toggle Squad View";
 			} else {
 				stat_tool_tip_text = "Standard View"; 
@@ -146,8 +146,7 @@ function scr_ui_manage() {
 				if ((point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left)) || keyboard_check_pressed(ord("S"))){
 					obj_controller.view_squad = !obj_controller.view_squad;
 					if (stat_tool_tip_text=="Toggle Squad View"){
-						company_squads = find_company_squads(managing);
-						cur_squad=0;
+						obj_controller.company_data = new scr_company_struct(obj_controller.managing);
 						obj_controller.unit_profile = true;
 					} else {
 						obj_controller.unit_profile = false;
@@ -165,14 +164,33 @@ function scr_ui_manage() {
 			x6=x5+string_width(stat_tool_tip_text)+4;
 			y6=y5+string_height(stat_tool_tip_text)+2;	    
 		    draw_unit_buttons([x5,y5,x6,y6], stat_tool_tip_text,[1,1],c_red);
-		    array_push(tooltip_drawing, [ "click or press P to show unit data", [x5,y5,x6,y6]]);
+		    array_push(tooltip_drawing, ["click or press P to show unit data", [x5,y5,x6,y6]]);
 			if ((keyboard_check_pressed(ord("P"))|| (point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left))) && !instance_exists(obj_temp3) && !instance_exists(obj_popup)){
 				if (view_squad){
 					view_squad =false;
 				}else {
 					obj_controller.unit_profile = !obj_controller.unit_profile;
 				}
-			}		    
+			}
+			x5=x6;
+
+			/*var x6=x5+string_width(stat_tool_tip_text)+4;
+			var y6=y5+string_height(stat_tool_tip_text)+2;	    
+		    draw_unit_buttons([x5,y5,x6,y6], stat_tool_tip_text,[1,1],c_red);
+		    if (company_data!={}){
+    		    array_push(tooltip_drawing, ["click or press R to show Company Report", [x5,y5,x6,y6]]);
+    			if ((keyboard_check_pressed(ord("R"))|| (point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left))) && !instance_exists(obj_temp3) && !instance_exists(obj_popup)){
+    				view_squad =false;
+    				unit_profile=false;
+    				company_report = !company_report;
+    			}
+    		}else{
+				draw_set_alpha(0.5);
+				draw_set_color(c_black);
+				draw_rectangle(x5,y5,x6,y6,0);
+				draw_set_alpha(1);
+			}
+			*/			    
 	    
 		    draw_set_color(c_gray);	    	
 	    	selected_unit.draw_unit_image(1190,210);
@@ -189,44 +207,93 @@ function scr_ui_manage() {
         
 	        draw_set_font(fnt_40k_14);
 	        draw_set_halign(fa_left);
-        
-	        if (cn.temp[102]!="") then draw_text_ext(xx+1015,yy+215,string_hash_to_newline(string(cn.temp[102])+"#"+string(cn.temp[103])),-1,187);
-	        if (cn.temp[102]!="") then draw_text_ext(xx+1016,yy+216,string_hash_to_newline(string(cn.temp[102])),-1,187);
-        
-	        if (cn.temp[104]!="") then draw_text_ext(xx+1015,yy+280,string_hash_to_newline(string(cn.temp[104])+"#"+string(cn.temp[105])),-1,187);
-	        if (cn.temp[104]!="") then draw_text_ext(xx+1016,yy+281,string_hash_to_newline(string(cn.temp[104])),-1,187);
-        
-	        if (cn.temp[106]!="") then draw_text_ext(xx+1015,yy+345,string_hash_to_newline(string(cn.temp[106])+"#"+string(cn.temp[107])),-1,187);
-	        if (cn.temp[106]!="") then draw_text_ext(xx+1016,yy+346,string_hash_to_newline(string(cn.temp[106])),-1,187);
-        
-	        if (cn.temp[108]!="") then draw_text_ext(xx+1387,yy+215,string_hash_to_newline(string(cn.temp[108])+"#"+string(cn.temp[109])),-1,187);
-	        if (cn.temp[108]!="") then draw_text_ext(xx+1388,yy+216,string_hash_to_newline(string(cn.temp[108])),-1,187);
-        
-	        if (cn.temp[110]!="") then draw_text_ext(xx+1387,yy+295,string_hash_to_newline(string(cn.temp[110])+"#"+string(cn.temp[111])),-1,187);
-	        if (cn.temp[110]!="") then draw_text_ext(xx+1388,yy+2916,string_hash_to_newline(string(cn.temp[110])),-1,187);
+        	
+        	var armour = selected_unit.armour();
+	        if (armour!=""){
+	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("armour") + "#AC" + string(selected_unit.get_armour_data("armour_value")));
+	        	tooltip_text = cn.temp[103];
+	        	x1 = xx+1015;
+	        	y1 = yy+215;
+	        	x2 = x1+string_width_ext(var_text, -1,187);
+	        	y2 = y1+string_height_ext(var_text, -1,187);	 
+	        	draw_text_ext(x1,y1,var_text,-1,187);
+	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);      	
+	        } 
 
-        	if (cn.temp[116]!=""){
-        		var_text = string_hash_to_newline(string("Melee Attack: {0}",cn.temp[116]))
-	        	tooltip_text = string_hash_to_newline(string("WS : {0}#STR : {1}", selected_unit.weapon_skill, selected_unit.strength));
+	        var gear = selected_unit.gear();
+	        if (selected_unit.gear()!=""){
+	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("gear"));
+	        	tooltip_text = cn.temp[105];
+	        	x1 = xx+1015;
+	        	y1 = yy+280;
+	        	x2 = x1+string_width_ext(var_text, -1,187);
+	        	y2 = y1+string_height_ext(var_text, -1,187);	 
+	        	draw_text_ext(x1,y1,var_text,-1,187);
+	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);  	        	        	
+	        }
+
+	        var mobi = selected_unit.mobility_item();
+	        if (mobi!=""){
+	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("mobi"));
+	        	tooltip_text = cn.temp[107];
+	        	x1 = xx+1015;
+	        	y1 = yy+345;
+	        	x2 = x1+string_width_ext(var_text, -1,187);
+	        	y2 = y1+string_height_ext(var_text, -1,187);	  
+	        	draw_text_ext(x1,y1,var_text,-1,187);
+	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 	        	        	
+	        }
+        	var wep1= selected_unit.weapon_one();
+        	if (wep1!=""){
+	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("wep1")+ "#DAM" + string(selected_unit.get_weapon_one_data("attack")));
+	        	tooltip_text = cn.temp[109];
 	        	x1 = xx+1387;
-	        	y1 = yy+355;
+	        	y1 = yy+215;
+	        	x2 = x1+string_width_ext(var_text, -1,187);
+	        	y2 = y1+string_height_ext(var_text, -1,187);	 	 
+	        	draw_text_ext(x1,y1,var_text,-1,187);
+	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 	         		       		
+        	}
+        	
+        	var wep2 = selected_unit.weapon_two();
+        	if (wep2!=""){
+	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("wep2")+ "#DAM" + string(selected_unit.get_weapon_two_data("attack")));
+	        	tooltip_text = cn.temp[111];
+	        	x1 = xx+1387;
+	        	y1 = yy+315;
+	        	x2 = x1+string_width_ext(var_text, -1,187);
+	        	y2 = y1+string_height_ext(var_text, -1,187);	 
+	        	draw_text_ext(x1,y1,var_text,-1,187); 
+	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 	         		      		
+        	}
+
+        	if (is_array(cn.temp[117])){
+        		var_text = string_hash_to_newline(string("Melee Attack: {0}",cn.temp[116][0]))
+	        	tooltip_text = string_hash_to_newline(string("WS : {0}#STR : {1}#{2}", selected_unit.weapon_skill, selected_unit.strength,cn.temp[116][1]));
+	        	x1 = xx+1387;
+	        	y1 = yy+405;
 	        	x2 = x1+string_width(var_text);
 	        	y2 = y1+string_height(var_text);
 		        draw_set_color(c_gray);
-		        if (ui_melee_penalty>0) then draw_set_color(c_red);
+		        if (selected_unit.encumbered_melee){
+		        	draw_set_color(c_red);
+		        	//tooltip_text+="#encumbered"
+		        }
 		        draw_text(x1,y1,var_text);
 		        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
 	    	}
 
-        	if (cn.temp[117]!=""){
-        		var_text = string_hash_to_newline(string("Ranged Attack: {0}",cn.temp[117]))
-	        	tooltip_text = string_hash_to_newline(string("BS : {0}#DEX : {1}", selected_unit.ballistic_skill, selected_unit.dexterity));
+        	if (is_array(cn.temp[117])){
+        		var_text = string_hash_to_newline(string("Ranged Attack: {0}",cn.temp[117][0]))
+	        	tooltip_text = string_hash_to_newline(string("BS : {0}#DEX : {1}#{2}", selected_unit.ballistic_skill, selected_unit.dexterity,cn.temp[117][1]));
 	        	x1 = xx+1387;
-	        	y1 = yy+385;
+	        	y1 = yy+435;
 	        	x2 = x1+string_width(var_text);
 	        	y2 = y1+string_height(var_text);
 		        draw_set_color(c_gray);
-		        if (ui_ranged_penalty>0) then draw_set_color(c_red);
+		        if (selected_unit.encumbered_ranged){
+		        	draw_set_color(c_red);
+		        }
 		        draw_text(x1,y1,var_text);
 		        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
 	    	}
@@ -235,7 +302,7 @@ function scr_ui_manage() {
 
     		var_text = string_hash_to_newline(string("Bionics: {0}",selected_unit.bionics()))
         	x1 = xx+1387;
-        	y1 = yy+420;
+        	y1 = yy+460;
         	x2 = x1+string_width(var_text);
         	y2 = y1+string_height(var_text);
 	        draw_set_color(c_gray);
@@ -262,13 +329,36 @@ function scr_ui_manage() {
 	        draw_text(x1,y1,var_text);
 	        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 
 
-	        if (cn.temp[113]!="") then draw_text(xx+1015,yy+442,string_hash_to_newline("Experience: "+string(cn.temp[113])));    
+	        if (cn.temp[113]!="") then draw_text(xx+1015,yy+442,string_hash_to_newline("Experience: "+string(cn.temp[113])));
+
+	        if (cn.temp[116]!=""){
+	        	carry_data = cn.temp[116][2];
+	        	var carry_string = $"melee carry: {carry_data[0]}/{carry_data[1]}"
+	        	x1 = xx+1015;
+	        	y1 = yy+464;
+	        	x2 = x1+string_width(carry_string);
+	        	y2 = y1+string_height(carry_string);
+	        	draw_text(x1,y1,string_hash_to_newline(carry_string));
+	        	tooltip_text = string_hash_to_newline(carry_data[2]);
+	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
+	        }
+	        if (cn.temp[117]!=""){
+	        	carry_data = cn.temp[117][2];
+	        	var carry_string = $"ranged carry: {carry_data[0]}/{carry_data[1]}"
+	        	x1 = xx+1015;
+	        	y1 = yy+486;
+	        	x2 = x1+string_width(carry_string);
+	        	y2 = y1+string_height(carry_string);
+	        	draw_text(x1,y1,string_hash_to_newline(carry_string));
+	        	tooltip_text = string_hash_to_newline(carry_data[2]);
+	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
+	        }	        
         		 
         	if (cn.temp[118]!=""){
         		var_text = string_hash_to_newline(string("Damage Resistance: {0}",cn.temp[118]))
 	        	tooltip_text = string_hash_to_newline(string("CON : {0}", selected_unit.constitution));
 	        	x1 = xx+1387;
-	        	y1 = yy+442;
+	        	y1 = yy+492;
 	        	x2 = x1+string_width(var_text);
 	        	y2 = y1+string_height(var_text);
 		        draw_set_color(c_gray);
@@ -944,18 +1034,10 @@ function scr_ui_manage() {
 				draw_unit_buttons([x5,y6, x6, y5], "Set Boarder",[1,1],c_red)
 		    
 			    scr_scrollbar(974,172,1005,790,34,man_max,man_current);
-			    var tip, coords;
-				for (i=0;i < array_length(tooltip_drawing); i++){
-					tip = tooltip_drawing[i];
-					coords=tip[1];
-					if (point_in_rectangle(mouse_x, mouse_y, coords[0],coords[1],coords[2],coords[3])){
-				        	tooltip_draw(coords[0],coords[3]+4, tip[0]);
-					}
-				}
 			}
-		}
+		}		
 		if instance_exists(cn)and (is_struct(cn.temp[120])){
-			if (cn.temp[101]!="") and (cn.temp[100]=="1"){
+			if (cn.temp[120].name()!="") and (cn.temp[120].race()=="1"){
 				draw_set_alpha(1);
 				xx=__view_get( e__VW.XView, 0 )+0;
 				yy=__view_get( e__VW.YView, 0 )+0
@@ -1027,218 +1109,27 @@ function scr_ui_manage() {
 		       			}
 		       		}
 		       		//tooltip_draw(stat_x, stat_y+string_height(stat_display),0,0,100,17);
-		        }
-		        if (obj_controller.view_squad && !instance_exists(obj_temp3) && !instance_exists(obj_popup)){
-		        	xx=__view_get( e__VW.XView, 0 )+0;
-					yy=__view_get( e__VW.YView, 0 )+0;
-		        	var member;
-	        		with (obj_controller){
-		        		if (array_length(company_squads) > 0){
-		        			if (selected_unit.company == managing){
-			        			if (company_squads[cur_squad] != selected_unit.squad){
-			        				var squad_found =false
-			        				for (i =0;i<array_length(company_squads);i++){
-			        					if (company_squads[i] == selected_unit.squad){
-			        						cur_squad = i;
-			        						squad_found =true;
-			        						break;
-			        					}
-			        				}
-			        				if (!squad_found){
-			        					member = obj_ini.squads[company_squads[0]].members[0];
-			        					obj_controller.temp[120] = obj_ini.TTRPG[member[0]][member[1]];
-			        					selected_unit=temp[120];
-			        				}
-			        			}
-			        		} else {
-			        			member = obj_ini.squads[company_squads[0]].members[0];
-			        			obj_controller.temp[120] = obj_ini.TTRPG[member[0]][member[1]];
-			        			selected_unit=temp[120];
-			        		}
-		        		} else if (view_squad){
-		        			view_squad = false;
-		        			unit_profile =false;
-		        		}
-		        	}
-		        	if (selected_unit.squad!="none"){			        	
-						var current_squad = obj_ini.squads[selected_unit.squad];
-						var x_mod=0,y_mod=0;
-						var member_width=0, member_height=0;
-						var x_overlap_mod =0;
-						var bound_width = [580,1005];
-						var bound_height = [144,957];
-						draw_set_halign(fa_left);
-						var arrow="<--";
-						draw_unit_buttons([xx+bound_width[0], yy+bound_height[0]+6], arrow,[1.5,1.5],c_red);
-						if (point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0],yy+bound_height[0]+6,xx+bound_width[0]+string_width(arrow)+4, yy+bound_height[0]+14+string_height(arrow)) && array_length(obj_controller.company_squads) > 0 && mouse_check_button_pressed(mb_left)){
-							obj_controller.cur_squad = (obj_controller.cur_squad-1<0) ? 0 : obj_controller.cur_squad-1;
-							member = obj_ini.squads[obj_controller.company_squads[obj_controller.cur_squad]].members[0];
-							obj_controller.temp[120] = obj_ini.TTRPG[member[0]][member[1]];
-						}
-						arrow="-->";
-						draw_set_halign(fa_right);
-						draw_unit_buttons([xx+bound_width[1]-44,yy+bound_height[0]+6], arrow,[1.5,1.5],c_red);
-						if (point_in_rectangle(mouse_x, mouse_y,xx+bound_width[1]-44,yy+bound_height[0]+6,xx+bound_width[1]+string_width(arrow)-36, yy+bound_height[0]+14+string_height(arrow)) && array_length(obj_controller.company_squads) > 0 && mouse_check_button_pressed(mb_left)){
-							obj_controller.cur_squad = (obj_controller.cur_squad+1>=array_length(obj_controller.company_squads)) ? 0 : obj_controller.cur_squad+1;
-							member = obj_ini.squads[obj_controller.company_squads[obj_controller.cur_squad]].members[0];
-							obj_controller.temp[120] = obj_ini.TTRPG[member[0]][member[1]];
-						}						
-						draw_set_color(c_gray);
-						draw_set_alpha(1);				
-						draw_set_halign(fa_center);
-						draw_text_transformed(xx+bound_width[0]+((bound_width[1]-bound_width[0])/2)-6, yy+bound_height[0]+6,$"{selected_unit.squad} {current_squad.display_name}",1.5,1.5,0);
-						if (current_squad.nickname!=""){
-							draw_text_transformed(xx+bound_width[0]+((bound_width[1]-bound_width[0])/2), yy+bound_height[0]+30,$"{current_squad.display_name}",1.5,1.5,0);
-						}
-
-						draw_set_halign(fa_left);
-						//should be moved elsewhere for efficiency
-						var squad_leader = current_squad.determine_leader();
-						if (squad_leader != "none"){
-							var leader_text = $"Squad Leader : {obj_ini.TTRPG[squad_leader[0]][squad_leader[1]].name_role()}"
-							draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+50, leader_text,1,1,0);
-						}
-						var squad_loc = current_squad.squad_loci();
-						draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+75, $"squad life members : {current_squad.life_members}",1,1,0);
-						draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+100, $"squad location : {squad_loc.text}",1,1,0);
-						var send_on_mission=false, mission_type;
-						if (current_squad.assignment == "none"){
-							var button_row_offset = 0;
-							draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+125, $"squad has no current assigments",1,1,0);
-							tooltip_text="Guard Duty";
-							if (squad_loc.same_system) and (squad_loc.system!="Warp"){
-								button_row_offset+=string_width(tooltip_text)+6;
-								draw_unit_buttons([xx+bound_width[0]+5, yy+bound_height[0]+150], tooltip_text,[1,1],c_red);
-								if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text), yy+bound_height[0]+150+string_height(tooltip_text))){
-									tooltip_text = "having squads assigned to Guard Duty will increase relations with a planet over time, it will also bolster planet defence forces in case of attack, and reduce corruption growth";
-									tooltip_draw(xx+bound_width[0]+5,yy+bound_height[0]+150+string_height(tooltip_text), tooltip_text,0,0,150,17);
-									if (mouse_check_button_pressed(mb_left)){
-										send_on_mission=true;
-										mission_type="garrison";
-									}
-								}
-								if (array_contains(current_squad.class, "scout")){
-									tooltip_text="Sabotage";
-									draw_unit_buttons([xx+bound_width[0]+5 + button_row_offset, yy+bound_height[0]+150], tooltip_text,[1,1],c_red);
-									if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5+ button_row_offset, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text)+ button_row_offset, yy+bound_height[0]+150+string_height(tooltip_text))){
-										tooltip_text = "sabotage missions can reduce enemy growth while avoiding direct enemy contact however they are not without risk";
-										tooltip_draw(xx+bound_width[0]+5+ button_row_offset,yy+bound_height[0]+150+string_height(tooltip_text), tooltip_text,0,0,150,17);
-										if (mouse_check_button_pressed(mb_left)){
-											send_on_mission=true;
-											mission_type="sabotage";
-										}
-									}
-								}
-							}
-							if (send_on_mission){
-								with (obj_star){
-									if (name == squad_loc.system){
-										obj_controller.cooldown=8000;
-										var unload_squad=instance_create(x,y,obj_star_select);
-										unload_squad.target=self;
-										unload_squad.loading=1;
-										unload_squad.loading_name=name;
-										//unload_squad.loading_name=name;
-										unload_squad.depth=-10000;
-										unload_squad.mission=mission_type;
-										scr_company_load(name);
-										break;
-									}
-								}								
-							}
-						} else {
-							if (is_struct(current_squad.assignment)){
-								draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+125, $"assignment : {current_squad.assignment.type}",1,1,0);
-							}
-							tooltip_text =  "cancel assignment"
-							draw_unit_buttons([xx+bound_width[0]+5, yy+bound_height[0]+150],tooltip_text,[1,1],c_red);
-							if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text), yy+bound_height[0]+150+string_height(tooltip_text))){
-								if (mouse_check_button_pressed(mb_left)){
-									with (obj_star){
-										if (name == squad_loc.system){
-											var planet = current_squad.assignment.ident;
-											//var operation;
-											for (i=0;i<array_length(p_operatives[planet]);i++){
-												var operation = p_operatives[planet][i];
-												if (operation.type=="squad" && operation.reference ==obj_controller.company_squads[obj_controller.cur_squad]){
-													array_delete(p_operatives[planet], i, 1);
-												}
-											}
-										}
-									}
-									current_squad.assignment = "none";
-								}
-							}
-						}
-						
-						if (obj_controller.unit_rollover){
-							if (point_in_rectangle(mouse_x, mouse_y, xx+25, yy+144, xx+925, yy+981)){
-								x_overlap_mod =180;
-							} else {
-								obj_controller.unit_rollover = !obj_controller.unit_rollover;
-							}
-						} else {
-							x_overlap_mod =90+(9*obj_controller.rollover_sequence);							
-						}
-						var sprite_draw_delay="none"
-						var unit_sprite_coords=[];
-						for (i=0;i<array_length(current_squad.members);i++){
-							member = obj_ini.TTRPG[current_squad.members[i][0]][current_squad.members[i][1]];
-							if (member.name()!=""){
-								if (member_width==5){
-									member_width=0;
-									x_mod=0;
-									member_height++;
-									y_mod += 231;
-								}
-								member_width++;
-								unit_sprite_coords = [xx+25+x_mod, yy+144+y_mod, xx+25+x_mod+166, yy+144+y_mod+271];
-								if (point_in_rectangle(mouse_x, mouse_y, unit_sprite_coords[0], unit_sprite_coords[1], unit_sprite_coords[2], unit_sprite_coords[3]-40) && !obj_controller.exit_period && obj_controller.unit_rollover){
-									sprite_draw_delay = [member,unit_sprite_coords];
-									obj_controller.temp[120] = member;									
-								}else {
-									if (obj_controller.temp[120].company==member.company && obj_controller.temp[120].marine_number==member.marine_number && !is_array(sprite_draw_delay)){
-										sprite_draw_delay = [member,unit_sprite_coords];
-										obj_controller.temp[120] = member;
-									}else{
-										member.draw_unit_image(unit_sprite_coords[0]-xx,unit_sprite_coords[1]-yy);
-									}								
-								}
-								x_mod+=x_overlap_mod;
-							}
-						}
-						if (is_array(sprite_draw_delay)){
-							member = sprite_draw_delay[0];
-							unit_sprite_coords=sprite_draw_delay[1]
-							member.draw_unit_image(unit_sprite_coords[0]-xx,unit_sprite_coords[1]-yy);
-							draw_set_color(c_red);
-							draw_rectangle(unit_sprite_coords[0], unit_sprite_coords[1], unit_sprite_coords[2], unit_sprite_coords[3], 1);
-							draw_set_color(c_gray);
-							if (mouse_check_button_pressed(mb_left)){
-								obj_controller.unit_rollover = false;
-								obj_controller.exit_period = true;
-							}
-						}						
-						if (!obj_controller.unit_rollover){
-							if (point_in_rectangle(mouse_x, mouse_y, xx+25, yy+144, xx+525, yy+981) && !obj_controller.exit_period){
-								if (obj_controller.rollover_sequence<10){
-									obj_controller.rollover_sequence++;
-								} else {
-									obj_controller.unit_rollover=true;
-								}
-							} else{
-								if (obj_controller.rollover_sequence>0){
-									obj_controller.rollover_sequence--;
-								}
-							}
-						}
-						if (obj_controller.exit_period and !point_in_rectangle(mouse_x, mouse_y, xx+25, yy+144, xx+525, yy+981)){
-							obj_controller.exit_period=false;
-						}
-					}	
-				}
+		        } 
+		        with (obj_controller){
+    		        if (view_squad && !instance_exists(obj_temp3) && !instance_exists(obj_popup)){
+    		        	if (managing>10){
+    		        		view_squad=false;
+    		        		unit_profile=false;
+    		        	} else if (company_data!={}){
+    		        		company_data.draw_squad_view();
+    		        	}
+    				}
+    			}
 			}
 		}
+	    var tip, coords;
+		for (i=0;i < array_length(tooltip_drawing); i++){
+			tip = tooltip_drawing[i];
+			coords=tip[1];
+			if (point_in_rectangle(mouse_x, mouse_y, coords[0],coords[1],coords[2],coords[3])){
+		        	tooltip_draw(coords[0],coords[3]+4, tip[0]);
+			}
+		}		
 	}
 	
 

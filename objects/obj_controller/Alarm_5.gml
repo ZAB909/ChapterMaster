@@ -199,7 +199,7 @@ if (apothecary_points>=48){
         if (random_marine != "none"){
             marine_position=random_marine[1];
             apothecary_points-=48;
-            unit = obj_ini.TTRPG[0,marine_position];
+            unit = obj_ini.TTRPG[0][marine_position];
             scr_alert("green","recruitment",unit.name_role()+" has finished training.",0,0);
             unit.update_role(obj_ini.role[100][15]);
             unit.add_exp(10);
@@ -211,14 +211,12 @@ if (apothecary_points>=48){
             t=0;
             r=0;
 
-            if (obj_ini.wep1[0,marine_position]!=obj_ini.wep1[100,15]){
+            if (unit.weapon_one()!=obj_ini.wep1[100,15]){
                 for (t=1; t<=50; t++){
                     if (obj_ini.equipment[t]=obj_ini.wep1[100,15]) and (obj_ini.equipment_number[t]>=1) and (r=0) then r=t;
                 }
                 if (r!=0){
-                    if (obj_ini.wep1[0,marine_position]!="") then scr_add_item(obj_ini.wep1[0,marine_position],1);
-                    scr_add_item(obj_ini.wep1[100,15],-1);
-                    obj_ini.wep1[0,marine_position]=obj_ini.wep1[100,15];
+                    unit.update_weapon_one(obj_ini.wep1[100][15]);
                 }
                 if (r==0) then eq1=0;
             }
@@ -228,9 +226,7 @@ if (apothecary_points>=48){
                     if (obj_ini.equipment[t]=obj_ini.wep2[100,15]) and (obj_ini.equipment_number[t]>=1) and (r=0) then r=t;
                 }
                 if (r!=0){
-                    if (obj_ini.wep2[0,marine_position]!="") then scr_add_item(obj_ini.wep2[0,marine_position],1);
-                    scr_add_item(obj_ini.wep2[100,15],-1);
-                    obj_ini.wep2[0,marine_position]=obj_ini.wep2[100,15];
+                     unit.update_weapon_two(obj_ini.wep2[100][15]);
                 }
                 if (r==0) then eq2=0;
             }
@@ -240,18 +236,16 @@ if (apothecary_points>=48){
                     if (obj_ini.equipment[t]=obj_ini.gear[100,15]) and (obj_ini.equipment_number[t]>=1) and (r=0) then r=t;
                 }
                 if (r!=0){
-                    if (obj_ini.gear[0,marine_position]!="") then scr_add_item(obj_ini.gear[0,marine_position],1);
-                    scr_add_item(obj_ini.gear[100,15],-1);
-                    obj_ini.gear[0,marine_position]=obj_ini.gear[100,15];
+                    unit.update_gear(obj_ini.gear[100][15]);
                 }
                 if (r==0) then eq3=0;
             }
             if (eq1+eq2+eq3!=3){
                 warn="";
                 w5=0;
-                if (eq1==0) then warn+=string(obj_ini.wep1[100,15])+", ";
-                if (eq2==0) then warn+=string(obj_ini.wep2[100,15])+", ";
-                if (eq3==0) then warn+=string(obj_ini.gear[100,15])+", ";
+                if (eq1==0) then warn+=string(obj_ini.wep1[100][15])+", ";
+                if (eq2==0) then warn+=string(obj_ini.wep2[100][15])+", ";
+                if (eq3==0) then warn+=string(obj_ini.gear[100][15])+", ";
                 
                 w5=string_length(warn)-1;
                 warn=string_delete(warn,w5,2);

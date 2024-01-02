@@ -139,7 +139,9 @@ if (loading=1){
         if (dist<=22) then obj_controller.selecting_planet=4; 
     }
     if (obj_controller.menu=1 && obj_controller.managing>0 && obj_controller.view_squad && obj_controller.selecting_planet>0){
-        var current_squad=obj_ini.squads[obj_controller.company_squads[obj_controller.cur_squad]];
+        var company_data = obj_controller.company_data;
+        var squad_index = company_data.company_squads[company_data.cur_squad];
+        var current_squad=obj_ini.squads[squad_index];
         current_squad.set_location(loading_name,0,obj_controller.selecting_planet);
         current_squad.assignment={
             type:mission,
@@ -148,7 +150,7 @@ if (loading=1){
         };
         var operation_data = {
             type:"squad", 
-            reference:obj_controller.company_squads[obj_controller.cur_squad],
+            reference:squad_index,
             job:mission,
         };
         array_push(target.p_operatives[obj_controller.selecting_planet],operation_data)

@@ -1,77 +1,69 @@
-function scr_add_artifact(argument0, argument1, argument2, argument3, argument4) {
+function scr_add_artifact(artifact_type, artifact_tags, is_identified, artifact_location, ship_id) {
 
-	// argument0 : type
-	// argument1 : tags
-	// argument2 : identified
-	// argument3: location
-	// argument4: sid
-
-
-
-
-	var i,last_artifact;
-	i=0;last_artifact=0;
-	repeat(100){if (last_artifact=0){i+=1;if (obj_ini.artifact[i]="") then last_artifact=i;}}
-
-
-
-	var rand1,rand2,good;
-	rand1=floor(random(100))+1;
-	rand2=floor(random(100))+1;
-	good=0;
-
-	var t1,t2,t3,t4,t5;
-	t1="";t2="";t3="";t4="";t5="";
-
-
-	if (argument0="random") or (argument0="random_nodemon"){
-	    if (rand1<=45) and (good=0){t1="Weapon";good=1;}
-	    if (rand1<=80) and (good=0){t1="Armour";good=1;}
-	    if (rand1<=90) and (good=0){t1="Gear";good=1;}
-	    if (rand1<=100) and (good=0){t1="Device";good=1;}
+	var i=0,last_artifact=0;
+	repeat(100){
+		if (last_artifact=0){
+			i+=1;
+			if (obj_ini.artifact[i]="") then last_artifact=i;
+		}
 	}
 
-	if (argument0="Weapon") then t1=argument0;
-	if (argument0="Armour") then t1=argument0;
-	if (argument0="Gear") then t1=argument0;
-	if (argument0="Device") then t1=argument0;
-	    if (argument0="Robot"){t1="Device";t2="Robot";}
-	    if (argument0="Tome"){t1="Device";t2="Tome";}
-	if (argument0="chaos_gift"){t1="Device";t2=choose("Casket","Chalice","Statue");}
+
+
+	var good=0, new_tags;
+	var rand1=floor(random(100))+1;
+	var rand2=floor(random(100))+1;
+
+	var t1="",t2="",t3="",t4="",t5="";
+
+	if (artifact_type="random") or (artifact_type="random_nodemon"){
+	    if (rand1<=45 && good=0){t1="Weapon";good=1;}
+	    if (rand1<=80 && good=0){t1="Armour";good=1;}
+	    if (rand1<=90 && good=0){t1="Gear";good=1;}
+	    if (rand1<=100 && good=0){t1="Device";good=1;}
+	}
+
+	if (artifact_type="Weapon") then t1=artifact_type;
+	if (artifact_type="Armour") then t1=artifact_type;
+	if (artifact_type="Gear") then t1=artifact_type;
+	if (artifact_type="Device") then t1=artifact_type;
+	    if (artifact_type="Robot"){t1="Device";t2="Robot";}
+	    if (artifact_type="Tome"){t1="Device";t2="Tome";}
+	if (artifact_type="chaos_gift"){t1="Device";t2=choose("Casket","Chalice","Statue");}
 
 
 	if (t1="Weapon") and (t2=""){good=0;
-	    if (rand2<=30) and (good=0){t2="Bolter";good=1;}
-	    if (rand2<=40) and (good=0){t2="Plasma Pistol";good=1;}
-	    if (rand2<=50) and (good=0){t2="Plasma Gun";good=1;}
-	    if (rand2<=70) and (good=0){t2=choose("Power Sword","Power Axe","Power Spear","Lightning Claw");good=1;}
-	    if (rand2<=90) and (good=0){t2=choose("Power Fist","Power Fist","Lightning Claw");good=1;}
-	    if (rand2<=100) and (good=0){t2=choose("Relic Blade","Thunder Hammer");good=1;}
+	    if (rand2<=30 && good=0){t2="Bolter";good=1;}
+	    if (rand2<=40 && good=0){t2="Plasma Pistol";good=1;}
+	    if (rand2<=50 && good=0){t2="Plasma Gun";good=1;}
+	    if (rand2<=70 && good=0){t2=choose("Power Sword","Power Axe","Power Spear","Lightning Claw");good=1;}
+	    if (rand2<=90 && good=0){t2=choose("Power Fist","Power Fist","Lightning Claw");good=1;}
+	    if (rand2<=100 && good=0){t2=choose("Relic Blade","Thunder Hammer");good=1;}
 	}
 
 	if (t1="Armour") and (t2=""){good=0;
-	    if (rand2<=70) and (good=0){t2="Power Armour";good=1;}
-	    if (rand2<=80) and (good=0){t2="Terminator Armour";good=1;}
-	    if (rand2<=90) and (good=0){t2="Dreadnought Armour";good=1;}
-	    if (rand2<=100) and (good=0){t2="Artificer Armour";good=1;}
+	    if (rand2<=70 && good=0){t2="Power Armour";good=1;}
+	    if (rand2<=80 && good=0){t2="Terminator Armour";good=1;}
+	    if (rand2<=90 && good=0){t2="Dreadnought Armour";good=1;}
+	    if (rand2<=100 && good=0){t2="Artificer Armour";good=1;}
 	}
 
 	if (t1="Gear") and (t2=""){good=0;
-	    if (rand2<=20) and (good=0){t2="Rosarius";good=1;}
-	    if (rand2<=45) and (good=0){t2="Psychic Hood";good=1;}
-	    if (rand2<=80) and (good=0){t2="Jump Pack";good=1;}
-	    if (rand2<=100) and (good=0){t2="Servo Arms";good=1;}
+	    if (rand2<=20 && good=0){t2="Rosarius";good=1;}
+	    if (rand2<=45 && good=0){t2="Psychic Hood";good=1;}
+	    if (rand2<=80 && good=0){t2="Jump Pack";good=1;}
+	    if (rand2<=100 && good=0){t2="Servo Arms";good=1;}
 	}
 
 	if (t1="Device") and (t2=""){good=0;
-	    if (rand2<=30) and (good=0){t2="Casket";good=1;}
-	    if (rand2<=50) and (good=0){t2="Chalice";good=1;}
-	    if (rand2<=70) and (good=0){t2="Statue";good=1;}
-	    if (rand2<=90) and (good=0){t2="Tome";good=1;}
-	    if (rand2<=100) and (good=0){t2="Robot";good=1;}
+	    if (rand2<=30 && good=0){t2="Casket";good=1;}
+	    if (rand2<=50 && good=0){t2="Chalice";good=1;}
+	    if (rand2<=70 && good=0){t2="Statue";good=1;}
+	    if (rand2<=90 && good=0){t2="Tome";good=1;}
+	    if (rand2<=100 && good=0){t2="Robot";good=1;}
 	}
 
-	if (argument0="good"){
+	if (artifact_type="good"){
 	    var haha;haha=choose(1,2,3,4);
 	    if (haha=1){t1="Weapon";t2="Relic Blade";}
 	    if (haha=2){t1="Weapon";t2="Plasma Gun";}
@@ -83,9 +75,9 @@ function scr_add_artifact(argument0, argument1, argument2, argument3, argument4)
 
 	rand2=floor(random(100))+1;good=0;
 	if (string_count("Shit",obj_ini.strin2)>0){rand2=min(rand2+20,100);}
-	if (rand2<=70) and (good=0){t3="";good=1;}
-	if (rand2<=90) and (good=0) and (argument0!="random_nodemon"){t3="Chaos";good=1;}
-	if (rand2<=100) and (good=0) and (argument0!="random_nodemon"){t3="Daemonic";good=1;}
+	if (rand2<=70 && good=0){t3="";good=1;}
+	if (rand2<=90 && good=0 && artifact_type!="random_nodemon"){t3="Chaos";good=1;}
+	if (rand2<=100 && good=0 && artifact_type!="random_nodemon"){t3="Daemonic";good=1;}
 
 	if (t1="Weapon"){
 	    // gold, glowing, underslung bolter, underslung flamer
@@ -127,23 +119,24 @@ function scr_add_artifact(argument0, argument1, argument2, argument3, argument4)
 	}
 
 	var big;big=choose(1,2);
-	// if (big=1) or (argument1="minor") then t5="";
-	if (argument1="minor"){t4="";t5="";t3+="|mnr";}
-	if (argument1="inquisition") then t3+="|inq";
-	if ((argument1="daemonic") or (argument1="Daemonic")) and (t2!="Tome") then t3="Daemonic"+choose("1a","2a","3a","4a");
-	if ((argument1="daemonic") or (argument1="Daemonic")) and (t2="Tome") then t3="Daemonic"+choose("2a","3a","4a");
-	if (argument0="chaos_gift") then t3="|cgfDaemonic3a";
+	// if (big=1 || artifact_tags="minor") then t5="";
+	if (artifact_tags="minor"){t4="";t5="";t3+="|mnr";}
+	if (artifact_tags="inquisition") then t3+="|inq";
+	if ((artifact_tags="daemonic"||artifact_tags="Daemonic")) and (t2!="Tome") then t3="Daemonic"+choose("1a","2a","3a","4a");
+	if ((artifact_tags="daemonic" || artifact_tags="Daemonic")) and (t2="Tome") then t3="Daemonic"+choose("2a","3a","4a");
+	if (artifact_type="chaos_gift") then t3="|cgfDaemonic3a";
 	// show_message(string(t3));
 
 	obj_ini.artifact[last_artifact]=t2;
-	obj_ini.artifact_tags[last_artifact]=string(t4)+"|"+string(t5)+"|"+string(t3)+"|";
+	obj_ini.artifact_tags[last_artifact]=[t4,t5,t3];
 
 	// show_message(string(obj_ini.artifact_tags[last_artifact]));
 
-	obj_ini.artifact_identified[last_artifact]=argument2;
+	obj_ini.artifact_identified[last_artifact]=is_identified;
 	obj_ini.artifact_condition[last_artifact]=100;
-	obj_ini.artifact_loc[last_artifact]=argument3;
-	obj_ini.artifact_sid[last_artifact]=argument4;
+	obj_ini.artifact_loc[last_artifact]=artifact_location;
+	obj_ini.artifact_sid[last_artifact]=ship_id;
+	obj_ini.artifact_quality[last_artifact]="artifact";
 
 	obj_controller.artifacts+=1;
 

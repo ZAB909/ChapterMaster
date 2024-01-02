@@ -890,8 +890,8 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
 
         inq_hide=0;
         if (type=9){
-            if (string_count("inq",obj_ini.artifact_tags[obj_controller.menu_artifact])>0){
-                var i;i=0;
+            if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display], "inq")){
+                var i=0;
                 repeat(10){
                     i+=1;
                     if (obj_controller.quest[i]="artifact_loan") then inq_hide=1;
@@ -991,10 +991,14 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
 
 
             old_tags=obj_ini.artifact_tags[obj_controller.menu_artifact];
-            obj_ini.artifact[obj_controller.menu_artifact]="";obj_ini.artifact_tags[obj_controller.menu_artifact]="";
-            obj_ini.artifact_identified[obj_controller.menu_artifact]=0;obj_ini.artifact_condition[obj_controller.menu_artifact]=100;
-            obj_ini.artifact_loc[obj_controller.menu_artifact]="";obj_ini.artifact_sid[obj_controller.menu_artifact]=0;
-            obj_controller.artifacts-=1;cooldown=7000;
+            obj_ini.artifact[obj_controller.menu_artifact]="";
+            obj_ini.artifact_tags[obj_controller.menu_artifact]="";
+            obj_ini.artifact_identified[obj_controller.menu_artifact]=0;
+            obj_ini.artifact_condition[obj_controller.menu_artifact]=100;
+            obj_ini.artifact_loc[obj_controller.menu_artifact]="";
+            obj_ini.artifact_sid[obj_controller.menu_artifact]=0;
+            obj_controller.artifacts-=1;
+            cooldown=7000;
 
             var g;g=obj_controller.menu_artifact;
             repeat(20){
@@ -1140,8 +1144,9 @@ if (mouse_x>=xx+408) and (mouse_y>=yy+393) and (mouse_x<xx+518) and (mouse_y<yy+
                 if (obj_ini.artifact[obj_controller.menu_artifact]="Terminator Armour") or (obj_ini.artifact[obj_controller.menu_artifact]="Dreadnought Armour"){
                     if (obj_ini.mobi[target_comp,obj_controller.ide[i]]!=""){// NOPE
                         scr_add_item(obj_ini.mobi[target_comp,obj_controller.ide[i]],1);
-                        obj_ini.mobi[target_comp,obj_controller.ide[i]]="";obj_controller.ma_mobi[i]="";
-                        if (obj_ini.artifact[obj_controller.menu_artifact]="Dreadnought Armour"){
+                        obj_ini.mobi[target_comp,obj_controller.ide[i]]="";
+                        obj_controller.ma_mobi[i]="";
+                        if (obj_ini.artifact[obj_controller.menu_artifact]=="Dreadnought Armour"){
                             if (obj_ini.age[target_comp,obj_controller.ide[i]]!=floor(obj_ini.age[target_comp,obj_controller.ide[i]])) then obj_ini.age[target_comp,obj_controller.ide[i]]=floor(obj_ini.age[target_comp,obj_controller.ide[i]]);
                         }
 
@@ -1153,7 +1158,8 @@ if (mouse_x>=xx+408) and (mouse_y>=yy+393) and (mouse_x<xx+518) and (mouse_y<yy+
 
                 // NOPE
                 if (obj_ini.wep1[target_comp,obj_controller.ide[i]]="Assault Cannon") or (obj_ini.wep2[target_comp,obj_controller.ide[i]]="Assault Cannon"){
-                    var bgn,bed;bed=0;bgn=obj_ini.armour[target_comp,obj_controller.ide[i]];
+                    var bgn,bed=0;
+                    bgn=obj_ini.armour[target_comp,obj_controller.ide[i]];
                     if (string_count("Termi",bgn)=0) then bed+=2;
                     if (bed=2){
                         if (obj_ini.wep1[target_comp,obj_controller.ide[i]]="Assault Cannon"){
@@ -1187,15 +1193,19 @@ if (mouse_x>=xx+408) and (mouse_y>=yy+393) and (mouse_x<xx+518) and (mouse_y<yy+
             }
             if (replace="weapon2"){
                 if (obj_controller.ma_wep2[i]!="") and (obj_controller.ma_wep2[i]!="None") then scr_add_item(obj_ini.wep2[target_comp,obj_controller.ide[i]],1);
-                obj_controller.ma_wep2[i]="";obj_ini.wep2[target_comp,obj_controller.ide[i]]="";
+                obj_controller.ma_wep2[i]="";
+                obj_ini.wep2[target_comp,obj_controller.ide[i]]="";
                 obj_controller.ma_wep2[i]=obj_ini.artifact[obj_controller.menu_artifact]+string("&")+obj_ini.artifact_tags[obj_controller.menu_artifact];
                 obj_ini.wep2[target_comp,obj_controller.ide[i]]=obj_ini.artifact[obj_controller.menu_artifact]+string("&")+obj_ini.artifact_tags[obj_controller.menu_artifact];
             }
 
 
-            obj_ini.artifact[obj_controller.menu_artifact]="";obj_ini.artifact_tags[obj_controller.menu_artifact]="";
-            obj_ini.artifact_identified[obj_controller.menu_artifact]=0;obj_ini.artifact_condition[obj_controller.menu_artifact]=100;
-            obj_ini.artifact_loc[obj_controller.menu_artifact]="";obj_ini.artifact_sid[obj_controller.menu_artifact]=0;
+            obj_ini.artifact[obj_controller.menu_artifact]="";
+            obj_ini.artifact_tags[obj_controller.menu_artifact]="";
+            obj_ini.artifact_identified[obj_controller.menu_artifact]=0;
+            obj_ini.artifact_condition[obj_controller.menu_artifact]=100;
+            obj_ini.artifact_loc[obj_controller.menu_artifact]="";
+            obj_ini.artifact_sid[obj_controller.menu_artifact]=0;
             obj_controller.artifacts-=1;cooldown=12;
 
             var g;g=obj_controller.menu_artifact;

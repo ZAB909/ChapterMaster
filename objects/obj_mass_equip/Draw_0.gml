@@ -15,7 +15,8 @@ if (total_role_number>0){
     draw_text_ext_transformed(xx+107,yy+190+(string_height_ext(string_hash_to_newline(total_roles),-1,471*1.66)*0.6),string_hash_to_newline(string(all_equip)),-1,471*1.66,0.6,0.6,0);
     
     
-    draw_set_alpha(1);if (good1+good2+good3+good4+good5!=5) then draw_set_alpha(0.5);draw_set_font(fnt_40k_14b);
+    draw_set_alpha(1);
+    if (good1+good2+good3+good4+good5!=5) then draw_set_alpha(0.5);draw_set_font(fnt_40k_14b);
     draw_set_halign(fa_center);draw_set_color(c_gray);
     draw_rectangle(xx+114,yy+626,xx+560,yy+665,0);
     draw_set_color(0);draw_text(xx+333,yy+636,string_hash_to_newline("Requip All "+string(obj_ini.role[100,role])+" With Default Items"));
@@ -60,7 +61,7 @@ if (total_role_number>0){
 
 
 if (total_role_number>0) and (tab>0){
-    var i,told;i=-1;repeat(50){i+=1;item_name[i]="";}
+    var i=-1,told;repeat(50){i+=1;item_name[i]="";}
     
     if (tab<=2){told=tab;tab=1;}
     if (tab>2){told=tab;tab=tab;}
@@ -83,42 +84,9 @@ if (total_role_number>0) and (tab>0){
     draw_set_font(fnt_40k_14b);
     
     
-    /*
     var x3,y3,space,h;h=0;x3=xx+1205;y3=yy+205;space=18;
-    repeat(32){h+=1;draw_set_color(c_gray);
-        if (item_name[h]!=""){
-            draw_text_transformed(x3,y3,item_name[h],1,1,0);y3+=space;
-            if (scr_hit(x3,y3-space,xx+1450,y3+17-space)=true){
-                draw_set_color(c_white);draw_set_alpha(0.2);draw_text_transformed(x3,y3-space,item_name[h],1,1,0);draw_set_alpha(1);
-                if (obj_controller.mouse_left=1) and (obj_controller.cooldown<=0){
-                    var buh;buh=item_name[h];obj_controller.cooldown=8000;
-                    if (item_name[h]="(None)") then buh="";
-                    if (tab=1) then obj_ini.wep1[100,role]=buh;
-                    if (tab=2) then obj_ini.wep2[100,role]=buh;
-                    if (tab=3){
-                        obj_ini.armour[100,role]=buh;
-                        if (buh="Terminator Armour") then obj_ini.mobi[100,role]="";
-                    }
-                    if (tab=4) then obj_ini.gear[100,role]=buh;
-                    if (tab=5) then obj_ini.mobi[100,role]=buh;
-                    tab=0;refresh=true;
-                }
-            }
-        }
-    }
-    
-    draw_set_halign(fa_center);draw_set_font(fnt_40k_14b);
-    draw_set_color(c_gray);draw_rectangle(xx+1347-(string_width("CANCEL")/2),yy+720,xx+1347+(string_width("CANCEL")/2),yy+741,0);
-    draw_set_color(0);draw_text(xx+1347,yy+721,"CANCEL");
-    if (scr_hit(xx+1347-(string_width("CANCEL")/2),yy+720,xx+1347+(string_width("CANCEL")/2),yy+741)=true){
-        draw_set_color(c_white);draw_set_alpha(0.2);
-        draw_rectangle(xx+1347-(string_width("CANCEL")/2),yy+720,xx+1347+(string_width("CANCEL")/2),yy+741,0);draw_set_alpha(1);
-        if (obj_controller.mouse_left=1){obj_controller.cooldown=8000;tab=0;}
-    }draw_set_alpha(1);*/
-    
-    
-    var x3,y3,space,h;h=0;x3=xx+1205;y3=yy+205;space=18;
-    repeat(23){h+=1;draw_set_color(c_gray);
+    repeat(23){
+        h+=1;draw_set_color(c_gray);
         if (item_name[h]!=""){
             if (string_width(string_hash_to_newline(item_name[h]))>=140) then draw_text_transformed(x3,y3,string_hash_to_newline(item_name[h]),0.75,1,0);
             if (string_width(string_hash_to_newline(item_name[h]))<140) then draw_text_transformed(x3,y3,string_hash_to_newline(item_name[h]),1,1,0);y3+=space;
@@ -137,8 +105,8 @@ if (total_role_number>0) and (tab>0){
                 if (obj_controller.mouse_left=1) and (obj_controller.cooldown<=0){
                     var buh=item_name[h];obj_controller.cooldown=8000;
                     if (item_name[h]="(None)") then buh="";
-                    if (tab=1) then obj_ini.wep1[100,role]=buh;
-                    if (tab=2) then obj_ini.wep2[100,role]=buh;
+                    if (tab=1) then obj_ini.wep1[100][role]=buh;
+                    if (tab=2) then obj_ini.wep2[100][role]=buh;
                     if (tab=3){
                         obj_ini.armour[100,role]=buh;
                         if (buh="Terminator Armour") then obj_ini.mobi[100,role]="";
@@ -150,7 +118,6 @@ if (total_role_number>0) and (tab>0){
             }
         }
     }
-    
     if (tab=1) or (tab=2){
         i=-1;repeat(50){i+=1;item_name[i]="";}
         if (tab<=2){told=tab;tab=2;}

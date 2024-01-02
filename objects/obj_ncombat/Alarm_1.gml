@@ -134,7 +134,8 @@ if (string_count("_attack",battle_special)>0){
     if (string_count("wraith",battle_special)>0) then p1+="two Necron Wraiths appear out of nowhere and begin to attack.";
     if (string_count("spyder",battle_special)>0) then p1+="a large Canoptek Spyder launches towards your marines, a small group of scuttling Scarabs quickly following.";
     if (string_count("stalker",battle_special)>0) then p1+="the tunnel begins to shake and a massive Tomb Stalker scuttles into your midst.";
-    newline=p1;scr_newtext();
+    newline=p1;
+    scr_newtext();
     exit;
 }
 

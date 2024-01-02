@@ -56,8 +56,7 @@ function scr_flavor(weapon_name, target_object, target_dudes, shots_fired, casua
 
 	if (target_object.flank=1) and (target_object.flyer=0) then duhs="flanking "+string(duhs);
     
-	var flavored;
-	flavored=0;
+	var flavored=0;
 
 	if (string_count("Bolt",wepp)>0) and (solod=false){flavored=1;
 	    if (obj_ncombat.bolter_drilling=1) then wepp="Accurate "+string(wepp);
