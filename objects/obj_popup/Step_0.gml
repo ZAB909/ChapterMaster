@@ -85,7 +85,11 @@ if (image="debug_banshee") and (cooldown<=0){
         if (press=2){
             with(obj_star){
                 if (choose(0,1,1)=1) and (owner != eFACTION.Eldar) and (owner!=1){
-                    var h=0;repeat(4){h+=1;if (p_type[h]!="Dead") and (p_type[h]!=""){p_traitors[h]=5;p_chaos[h]=4;}}
+                    var h=0;
+                    repeat(planets){
+                         h+=1;
+                         if (p_type[h]!="Dead") and (p_type[h]!=""){p_traitors[h]=5;p_chaos[h]=4;}
+                    }
                 }
             }
             instance_destroy();
