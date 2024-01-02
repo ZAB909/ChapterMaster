@@ -38,7 +38,7 @@ function scr_ship_battle(argument0, argument1) {
 	                if (okay=0) then obj_ncombat.fighting[co][v]=0;
 	                if (okay=1){
 	                    obj_ncombat.fighting[co][v]=1;
-	                    sofar+=1;]
+	                    sofar+=1;
 	                    unit=obj_ini.TTRPG[co][v];
                     
 	                    var col=0,targ=0;
