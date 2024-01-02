@@ -40,7 +40,7 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	obj_controller.bat_landraider_column=obj_controller.bat_land_for[new_combat.formation_set];
 	obj_controller.bat_scout_column=obj_controller.bat_scou_for[new_combat.formation_set];
 
-	var co, v, meeting, he_good;
+	var co, v, meeting, he_good,unit;
 	co=0;v=0;meeting=true;he_good=false;
 
 	instance_activate_object(obj_pnunit);
@@ -82,7 +82,7 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	                cooh=obj_temp_meeting.co[v];
 	                va=obj_temp_meeting.ide[v];
 	            }}
-            
+            	unit=obj_ini.TTRPG[cooh][va];
             
             
             
@@ -345,86 +345,36 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
                 
 	                if (col=0) then col=obj_controller.bat_hire_column;
                 
-	                targ=instance_nearest(col*10,240,obj_pnunit);
-	                targ.men+=1;
-	                targ.marine_co[targ.men]=co;
-	                targ.marine_id[targ.men]=v;
-
-	                targ.marine_type[targ.men]=obj_ini.role[cooh,va];
-	                targ.marine_wep1[targ.men]=obj_ini.wep1[cooh,va];
-	                targ.marine_wep2[targ.men]=obj_ini.wep2[cooh,va];
-	                targ.marine_armour[targ.men]=obj_ini.armour[cooh,va];
-	                targ.marine_gear[targ.men]=obj_ini.gear[cooh,va];
-	                targ.marine_mobi[targ.men]=obj_ini.mobi[cooh,va];
-	                targ.marine_hp[targ.men]=obj_ini.hp[cooh,va];
-	                targ.marine_exp[targ.men]=obj_ini.experience[cooh,va];
-	                targ.marine_powers[targ.men]=obj_ini.spe[cooh,va];
+                    targ = instance_nearest(col * 10, 240, obj_pnunit);
+                    targ.men += 1;
+                    targ.unit_struct[targ.men] = unit;
+                    targ.marine_co[targ.men] = company;
+                    targ.marine_id[targ.men] = v;
+                    targ.marine_type[targ.men] = _u_role;
+                    targ.marine_wep1[targ.men] = deploying_unit.wep1[cooh][va];
+                    targ.marine_wep2[targ.men] = deploying_unit.wep2[cooh][va];
+                    targ.marine_armour[targ.men] = deploying_unit.armour[cooh][va];
+                    targ.marine_gear[targ.men] = deploying_unit.gear[cooh][va];
+                    targ.marine_mobi[targ.men] = unit.mobility_item();
+                    targ.marine_hp[targ.men] = unit.hp();
+                    targ.marine_exp[targ.men] = deploying_unit.experience[cooh][va];
+                    targ.marine_powers[targ.men] = deploying_unit.spe[cooh][va];
+                    targ.marine_ranged[targ.men] = unit.ranged_attack();
+                    targ.marine_ac[targ.men]=unit.armour_calc();
+                    targ.marine_attack[targ.men]=unit.melee_attack();
 
 	                if (okay=2) then targ.marine_local[targ.men]=1;
                 
                 
-	                if (deploying_unit.role[cooh,va]="Death Company"){// Ahahahahah
-	                    var really;really=false;
+	                if (unit.role()=="Death Company"){// Ahahahahah
+	                    var really=false;
 
 	                    if (string_count("Dreadnought",targ.marine_armour[targ.men])>0) then really=true;
-	                    if (really=false) then obj_ncombat.thirsty+=1;if (really=true) then obj_ncombat.really_thirsty+=1;
+	                    if (really=false) then obj_ncombat.thirsty++;
+	                    if (really=true) then obj_ncombat.really_thirsty++;
 
 	                    col=max(obj_controller.bat_assault_column,obj_controller.bat_command_column,obj_controller.bat_honor_column,obj_controller.bat_dreadnought_column,obj_controller.bat_veteran_column);
 	                }
-                
-
-	                if (targ.marine_armour[targ.men]="Scout Armour") then targ.marine_ac[targ.men]=8;
-	                if (targ.marine_armour[targ.men]="MK3 Iron Armour"){targ.marine_ac[targ.men]=20;targ.marine_ranged[targ.men]-=0.1;}
-	                if (targ.marine_armour[targ.men]="MK4 Maximus"){targ.marine_ac[targ.men]=19;targ.marine_ranged[targ.men]+=0.05;targ.marine_attack[targ.men]+=0.05;}
-                        if (targ.marine_armour[targ.men]="MK5 Heresy"){targ.marine_ac[targ.men]=17;targ.marine_attack[targ.men]+=0.1;targ.marine_ranged[targ.men]-=0.05;}
-	                if (targ.marine_armour[targ.men]="MK6 Corvus"){targ.marine_ac[targ.men]=18;targ.marine_ranged[targ.men]+=0.1;}
-	                if (targ.marine_armour[targ.men]="MK7 Aquila") then targ.marine_ac[targ.men]=18;
-	                if (targ.marine_armour[targ.men]="MK8 Errant") then targ.marine_ac[targ.men]=19;
-	                if (targ.marine_armour[targ.men]="Power Armour") then targ.marine_ac[targ.men]=19;
-	                if (targ.marine_armour[targ.men]="Artificer Armour"){targ.marine_ac[targ.men]=35;targ.marine_attack[targ.men]+=0.1;}
-	                if (targ.marine_armour[targ.men]="Terminator Armour"){targ.marine_ac[targ.men]=40;targ.marine_ranged[targ.men]-=0.1;targ.marine_attack[targ.men]+=0.2;}
-	                if (targ.marine_armour[targ.men]="Tartaros"){targ.marine_ac[targ.men]=44;targ.marine_ranged[targ.men]-=0.05;targ.marine_attack[targ.men]+=0.2;}
-	                if (targ.marine_armour[targ.men]="Dreadnought") then targ.marine_ac[targ.men]=40;
-	                if (targ.marine_armour[targ.men]="Ork Armour") then targ.marine_ac[targ.men]=15;
-                
-	                if (deploying_unit.role[cooh,va]="Chapter Master"){
-	                    if (deploying_unit.adv[1]="Paragon") or (deploying_unit.adv[2]="Paragon") or (deploying_unit.adv[3]="Paragon") or (deploying_unit.adv[4]="Paragon"){
-	                        targ.marine_attack[targ.men]+=0.2;targ.marine_ranged[targ.men]+=0.2;
-	                    }
-	                }
-                
-                
-	                // marine_attack[i]=1;
-	                // marine_ranged[i]=1;
-	                // marine_defense[i]=1;
-                
-	                if (targ.marine_wep1[targ.men]="Boarding Shield") then targ.marine_ac[targ.men]+=4;
-	                if (targ.marine_wep2[targ.men]="Boarding Shield") then targ.marine_ac[targ.men]+=4;
-	                if (targ.marine_wep1[targ.men]="Storm Shield") then targ.marine_ac[targ.men]+=8;
-	                if (targ.marine_wep2[targ.men]="Storm Shield") then targ.marine_ac[targ.men]+=8;
-                
-                
-	                if (string_count("&",targ.marine_armour[targ.men])>0){
-	                    // Artifact armour
-	                    if (string_count("Power",targ.marine_armour[targ.men])>0) then targ.marine_ac[targ.men]=30;
-	                    if (string_count("Artificer",targ.marine_armour[targ.men])>0){targ.marine_ac[targ.men]=37;targ.marine_attack[targ.men]+=0.1;}
-	                    if (string_count("Terminator",targ.marine_armour[targ.men])>0){targ.marine_ac[targ.men]=46;targ.marine_ranged[targ.men]-=0.1;targ.marine_attack[targ.men]+=0.2;}
-	                    if (string_count("Dreadnought",targ.marine_armour[targ.men])>0) then targ.marine_ac[targ.men]=44;
-	                }
-	                if (targ.marine_armour[targ.men]!=""){// STC Bonuses
-	                    if (obj_controller.stc_bonus[1]=5){if (targ.marine_ac[targ.men]>=40) then targ.marine_ac[targ.men]+=2;if (targ.marine_ac[targ.men]<40) then targ.marine_ac[targ.men]+=1;}
-	                    if (obj_controller.stc_bonus[2]=3){if (targ.marine_ac[targ.men]>=40) then targ.marine_ac[targ.men]+=2;if (targ.marine_ac[targ.men]<40) then targ.marine_ac[targ.men]+=1;}
-	                }
-                
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][6]) or (deploying_unit.role[cooh,va]="Venerable "+string(deploying_unit.role[100][6])){
-	                    targ.marine_hp[targ.men]=targ.marine_hp[targ.men]*2;targ.dreads+=1;
-	                }
-	                if (deploying_unit.mobi[cooh,va]="Bike") then targ.marine_hp[targ.men]+=25;
-	                if (deploying_unit.wep1[cooh,va]="Boarding Shield") then targ.marine_hp[targ.men]+=20;
-	                if (deploying_unit.wep2[cooh,va]="Boarding Shield") then targ.marine_hp[targ.men]+=20;
-	                if (deploying_unit.wep1[cooh,va]="Storm Shield") then targ.marine_hp[targ.men]+=30;
-	                if (deploying_unit.wep2[cooh,va]="Storm Shield") then targ.marine_hp[targ.men]+=30;
-	                if (deploying_unit.wep2[cooh,va]="Iron Halo") then targ.marine_hp[targ.men]+=20;
 	            }
 	        }
 	    }
