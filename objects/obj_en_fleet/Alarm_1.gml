@@ -1319,12 +1319,16 @@ if (action=""){
                         	e=0;
                         	arsenal = thata.p_upgrades[t][arsenal_search[0]];
                         	arsenal.inquis_hidden = 0;
-                            for (e=0;e<array_length(obj_ini.artifact_tags[e]);e++){
-                                if (obj_ini.artifact[e]!="") and (obj_ini.artifact_loc[e]=thata.name) and (obj_controller.und_armouries<=1){
-                                    if (string_count("Daemon",obj_ini.artifact_tags[e])>0) then dem+=1;
-                                    if (string_count("Chaos",obj_ini.artifact_tags[e])>0) then cha+=1;
-                                }
-                            }
+							
+						 var _array_length = array_length(obj_ini.artifact_tags);
+                            for (e = 0; e < _array_length; e++)
+								{
+	                                if (obj_ini.artifact[e] != "") and (obj_ini.artifact_loc[e] = thata.name) and (obj_controller.und_armouries <= 1)
+										{
+		                                    if (string_count("Daemon", obj_ini.artifact_tags[e]) > 0) then dem += 1;
+		                                    if (string_count("Chaos", obj_ini.artifact_tags[e]) > 0) then cha += 1;
+		                                }
+	                            }
                             perc=((dem*10)+(cha*3))/100;
                             obj_controller.disposition[2]-=max(round((obj_controller.disposition[2]/6)*perc),round(8*perc));
                             obj_controller.disposition[4]-=max(round((obj_controller.disposition[4]/4)*perc),round(10*perc));
