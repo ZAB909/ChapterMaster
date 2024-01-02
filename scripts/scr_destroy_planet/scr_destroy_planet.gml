@@ -2,31 +2,34 @@ function scr_destroy_planet(exterminatus_type) {
 
 	// argument0: method   (1 being combat exterminatus, 2 being star select cyclonic torpedo)
 
-
-	var baid,enemy9;
-	baid=0;enemy9=0;
-
-
-	if (exterminatus_type=2){
-	    var pip;pip=instance_create(0,0,obj_popup);
-	    with(pip){
-	        title="Exterminatus";
-	        image="exterminatus";
-	        text="You give the order to fire the Cyclonic Torpedo.  After a short descent it lands upon the surface and detonates- the air itself igniting across ";
-	    }
-
-	    var you;you=obj_star_select.target;pip.text+=you.name;
-	    pip.text+=" "+scr_roman(obj_controller.selecting_planet);
-	    baid=obj_controller.selecting_planet;
-	    scr_add_item("Cyclonic Torpedo",-1);
-	    obj_star_select.torpedo-=1;
-	    enemy9=you.p_owner[obj_controller.selecting_planet];
-	}
+	var baid = 0;
+	var enemy9 = 0;
+	var you;
+	var pip;
 
 
+	if (exterminatus_type == 2)
+		{
+		    pip = instance_create(0,0,obj_popup);
+		    with(pip)
+				{
+			        title="Exterminatus";
+			        image="exterminatus";
+			        text="You give the order to fire the Cyclonic Torpedo.  After a short descent it lands upon the surface and detonates- the air itself igniting across ";
+			    }
 
-	if (exterminatus_type=1){
-	    var pip;pip=instance_create(0,0,obj_popup);
+		    you=obj_star_select.target;pip.text+=you.name;
+		    pip.text+=" "+scr_roman(obj_controller.selecting_planet);
+		    baid=obj_controller.selecting_planet;
+		    scr_add_item("Cyclonic Torpedo",-1);
+		    obj_star_select.torpedo-=1;
+		    enemy9=you.p_owner[obj_controller.selecting_planet];
+		}
+
+
+
+	if (exterminatus_type == 1){
+	    pip=instance_create(0,0,obj_popup);
 	    with(pip){
 	        title="Exterminatus";
 	        image="exterminatus";
@@ -34,7 +37,7 @@ function scr_destroy_planet(exterminatus_type) {
 	    }
 
 	    instance_activate_object(obj_star);
-	    var you;you=battle_object;
+	    you=battle_object;
 	    pip.text+=you.name;
     
 	    if (obj_ncombat.battle_id=1) then pip.text+=" I";if (obj_ncombat.battle_id=2) then pip.text+=" II";
@@ -44,14 +47,9 @@ function scr_destroy_planet(exterminatus_type) {
     
 	    enemy9=enemy;
 	}
-    
-    
-
-    
 
 	// No survivors!
 	var cah,ed;cah=-1;ed=0;
-	var you;
 	repeat(11){
 	    cah+=1;ed=0;
 
@@ -59,7 +57,7 @@ function scr_destroy_planet(exterminatus_type) {
 	        if (obj_ini.loc[cah,ed]=you.name) and (obj_ini.wid[cah,ed]=baid){
 	            if (obj_ini.role[cah,ed]="Chapter Master"){obj_controller.alarm[7]=15;if (global.defeat<=1) then global.defeat=1;}
             
-	            if (obj_ini.race[cah,ed]=1){var comm=false;
+	            if (obj_ini.race[cah,ed]=1){var comm;comm=false;
 	                if (obj_ini.role[co][i]="Chapter Master") then comm=true;
 	                if (obj_ini.role[co][i]="Master of Sanctity") then comm=true;
 	                if (obj_ini.role[co][i]="Master of the Apothecarion") then comm=true;
@@ -182,13 +180,10 @@ function scr_destroy_planet(exterminatus_type) {
 	    p_problem[2,baid]="";p_timer[2,baid]=0;p_problem[3,baid]="";p_timer[3,baid]=0;
 	    p_problem[4,baid]="";p_timer[4,baid]=0;p_problem[5,baid]="";p_timer[5,baid]=0;
 	}
-	
-	var pip;
+
 	pip.text+=", scouring all life across the planet.  It has been rendered a barren, lifeless chunk of rock.";
 	pip.number=1;
 
 	with(obj_temp5){instance_destroy();}
 	with(obj_temp8){instance_destroy();}
-
-
 }
