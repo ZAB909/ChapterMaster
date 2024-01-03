@@ -33,7 +33,7 @@ draw_set_color(c_gray);
 
 if (shop="warships"){
     if (construction_started>0){
-        var apa;apa=construction_started/30;draw_set_alpha(apa);
+        var apa=construction_started/30;draw_set_alpha(apa);
         draw_set_color(c_yellow);
         draw_set_halign(fa_center);
         draw_text_transformed(__view_get( e__VW.XView, 0 )+420,yy+370,string_hash_to_newline("CONSTRUCTION STARTED!#ETA: "+string(eta)+" months"),1.5,1.5,0);
