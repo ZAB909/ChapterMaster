@@ -512,7 +512,7 @@ if (tech_points>=360){
             eq3=1;
             t=0;
             r=0;
-            if (obj_ini.wep1[0,marine_position]!=obj_ini.wep1[100,16]){
+            if (unit.weapon_one()!=obj_ini.wep1[100,16]){
                 for (t=1; t<=50; t++){
                     if (obj_ini.equipment[t]==obj_ini.wep1[100,16]) and (obj_ini.equipment_number[t]>=1) and (r==0) then r=t;
                 }

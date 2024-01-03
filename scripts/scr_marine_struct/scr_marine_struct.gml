@@ -812,8 +812,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	    armour_quality=quality;
 	    if (armour()=="Dreadnought"){
 	    	obj_ini.age[company][marine_number]=floor(age());
-	    	unit.update_gear("");
-	    	unit.update_mobility_item("");
+	    	update_gear("");
+	    	update_mobility_item("");
 	    }
 		get_unit_size(); //every time armour is changed see if the marines size has changed
 		return "complete";
