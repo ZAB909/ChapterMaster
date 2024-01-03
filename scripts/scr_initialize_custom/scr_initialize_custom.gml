@@ -2056,13 +2056,13 @@ function scr_initialize_custom() {
 					predy=2;
 					break;
 					case "Breakthrough":
-					rhinoy-=3; dready+=2; speedy-=3; predy+=3;assault-=10;devastator+=10;
+					rhinoy-=3;dready+=2;speedy-=3;predy+=3;assault-=10;devastator+=10;
 					break;
 					case "Shock Assault": //rhino is stand in until new vehs are added(Razorback)
-					rhinoy-=3; predy=3;speedy-=3;assault+=10;devastator-=10;
+					rhinoy-=3;predy=3;speedy-=3;assault+=10;devastator-=10;
 					break;
 					case "Irregular Warfare":
-					speedy+=2; whirly+=1;assault-=10;devastator-=10;
+					speedy+=2;whirly+=1;assault-=10;devastator-=10;
 					break;
 				}
 	      }
@@ -2078,13 +2078,13 @@ function scr_initialize_custom() {
 					predy=2;
 					break;
 					case "Breakthrough":
-					rhinoy-=3; dready+=2; speedy-=3; predy+=3;
+					rhinoy-=3;dready+=2;speedy-=3; predy+=3;
 					break;
 					case "Shock Assault": //rhino is stand in until new vehs are added(Razorback)
-					rhinoy-=3; predy=3;speedy-=3;
+					rhinoy-=3;predy=3;speedy-=3;
 					break;
 					case "Irregular Warfare":
-					speedy+=2; whirly+=1;assault-=10;devastator-=10;
+					speedy+=2; whirly+=1;
 					break;
 				}
 	        }
@@ -2100,13 +2100,13 @@ function scr_initialize_custom() {
 					predy=2;
 					break;
 					case "Breakthrough":
-					rhinoy-=3; dready+=2; speedy-=3; predy+=3;
+					rhinoy-=3;dready+=2;speedy-=3; predy+=3;
 					break;
 					case "Shock Assault": //rhino is stand in until new vehs are added(Razorback)
-					rhinoy-=3; predy=3;speedy-=3;
+					rhinoy-=3;predy=3;speedy-=3;
 					break;
 					case "Irregular Warfare":
-					speedy+=2; whirly+=1;assault-=10;devastator-=10;
+					speedy+=2;whirly+=1;
 					break;
 				}
 	        }
@@ -2122,13 +2122,13 @@ function scr_initialize_custom() {
 					predy=2;
 					break;
 					case "Breakthrough":
-					rhinoy-=3; dready+=2; speedy-=3; predy+=3;
+					rhinoy-=3;dready+=2; speedy-=3; predy+=3;
 					break;
 					case "Shock Assault": //rhino is stand in until new vehs are added(Razorback)
-					rhinoy-=3; predy=3;speedy-=3;
+					rhinoy-=3;predy=3;speedy-=3;
 					break;
 					case "Irregular Warfare":
-					speedy+=2; whirly+=1;assault-=10;devastator-=10;
+					speedy+=2;whirly+=1;
 					break;
 				}
 	        }
