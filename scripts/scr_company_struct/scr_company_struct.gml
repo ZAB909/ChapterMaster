@@ -142,16 +142,20 @@ function scr_company_struct(comp) constructor{
 				var tooltip_text =  "cancel assignment"
 				draw_unit_buttons([xx+bound_width[0]+5, yy+bound_height[0]+150],tooltip_text,[1,1],c_red);
 				if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text), yy+bound_height[0]+150+string_height(tooltip_text))){
+					var cancel_system=noone;
 					if (mouse_check_button_pressed(mb_left)){
 						with (obj_star){
 							if (name == squad_loc.system){
-								var planet = current_squad.assignment.ident;
-								var operation;
-								for (var i=0;i<array_length(p_operatives[planet]);i++){
-									operation = p_operatives[planet][i];
-									if (operation.type=="squad" && operation.reference ==company_squads[cur_squad]){
-										array_delete(p_operatives[planet], i, 1);
-									}
+								cancel_system=self;
+							}
+						}
+						if (cancel_system!=noone){
+							var planet = current_squad.assignment.ident;
+							var operation;
+							for (var i=0;i<array_length(cancel_system.p_operatives[planet]);i++){
+								operation = cancel_system.p_operatives[planet][i];
+								if (operation.type=="squad" && operation.reference ==company_squads[cur_squad]){
+									array_delete(cancel_system.p_operatives[planet], i, 1);
 								}
 							}
 						}
