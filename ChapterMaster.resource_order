@@ -590,6 +590,7 @@
     {"name":"fnt_menu","order":7,"path":"fonts/fnt_menu/fnt_menu.yy",},
     {"name":"fnt_info","order":9,"path":"fonts/fnt_info/fnt_info.yy",},
     {"name":"fnt_tiny","order":11,"path":"fonts/fnt_tiny/fnt_tiny.yy",},
+    {"name":"scr_necron_tombs","order":73,"path":"scripts/scr_necron_tombs/scr_necron_tombs.yy",},
     {"name":"fnt_small","order":13,"path":"fonts/fnt_small/fnt_small.yy",},
     {"name":"fnt_legal","order":15,"path":"fonts/fnt_legal/fnt_legal.yy",},
     {"name":"obj_fleet","order":1,"path":"objects/obj_fleet/obj_fleet.yy",},

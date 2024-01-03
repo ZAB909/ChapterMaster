@@ -306,7 +306,7 @@ function awake_tomb_world(planet){
 //selas a tomb world and switche off awake so will no longer spawn necrons or necron fleets
 function seal_tomb_world(planet){
 	var awake_tomb = 0;
-	 var tombs = search_planet_features(planet, search_feature);
+	 var tombs = search_planet_features(planet, P_features.Necron_Tomb);
 	 if (array_length(tombs)>0){
 		 for (var tomb =0;tomb<array_length(tombs);tomb++){
 			 if (planet[tombs[tomb]].awake == 1){
@@ -324,7 +324,7 @@ function seal_tomb_world(planet){
 //awakens a tomb world so necrons and necron fleets will spawn
 function awaken_tomb_world(planet){
 	var awake_tomb = 0;
-	 var tombs = search_planet_features(planet, search_feature);
+	 var tombs = search_planet_features(planet, P_features.Necron_Tomb);
 	 if (array_length(tombs)>0){
 		 for (var tomb =0;tomb<array_length(tombs);tomb++){
 			if (planet[tombs[tomb]].awake == 0){

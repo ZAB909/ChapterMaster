@@ -28,6 +28,11 @@ function scr_cheatcode(argument0) {
                   with(obj_controller){
                     launch_crusade();
                 }           
+            }else if (string_count("tomb", cheatcode_string) >0){
+                show_debug_message("necron_tomb_awaken");
+                with(obj_controller){
+                    awaken_tomb_event();
+                }  
             }else {
                 with(obj_controller){
                     scr_random_event(1);

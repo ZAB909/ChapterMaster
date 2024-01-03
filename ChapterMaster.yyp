@@ -887,6 +887,7 @@
     {"id":{"name":"fnt_menu","path":"fonts/fnt_menu/fnt_menu.yy",},},
     {"id":{"name":"fnt_info","path":"fonts/fnt_info/fnt_info.yy",},},
     {"id":{"name":"fnt_tiny","path":"fonts/fnt_tiny/fnt_tiny.yy",},},
+    {"id":{"name":"scr_necron_tombs","path":"scripts/scr_necron_tombs/scr_necron_tombs.yy",},},
     {"id":{"name":"fnt_small","path":"fonts/fnt_small/fnt_small.yy",},},
     {"id":{"name":"fnt_legal","path":"fonts/fnt_legal/fnt_legal.yy",},},
     {"id":{"name":"obj_fleet","path":"objects/obj_fleet/obj_fleet.yy",},},

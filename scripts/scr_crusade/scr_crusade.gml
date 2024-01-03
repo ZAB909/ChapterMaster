@@ -172,7 +172,7 @@ function launch_crusade(){
 			for(var j = 1; j <= 4 && !assigned_crusade;  j++){
 				if(star_id.p_problem[i][j] == ""){
 					star_id.p_problem[i][j] = "great_crusade";
-					star_id.p_timer[i][j] = 24;
+					star_id.p_timer[i][j] = 36;
 					assigned_crusade = true;
 					break;
 				}
@@ -184,11 +184,11 @@ function launch_crusade(){
 		}
 		else{
 			//TODO decide the target/purpose of the crusade to create more variety and to help with post crusade rewards
-			scr_popup("Crusade","Fellow Astartes legions are preparing to embark on a Crusade to a nearby sector.  Your forces are expected at "+string(star_id.name)+"; 24 turns from now your ships there shall begin their journey.","crusade","");
+			scr_popup("Crusade","Fellow Astartes legions are preparing to embark on a Crusade to a nearby sector.  Your forces are expected at "+string(star_id.name)+"; 36 turns from now your ships there shall begin their journey.","crusade","");
 			var star_alert = instance_create(star_id.x+16,star_id.y-24,obj_star_event);
 			star_alert.image_alpha=1;
 			star_alert.image_speed=1;
-			scr_event_log("","A Crusade is called; our forces are expected at "+string(star_id.name)+" in 24 months.");
+			scr_event_log("","A Crusade is called; our forces are expected at "+string(star_id.name)+" in 36 months.");
 			return true;	
 		}
 	}

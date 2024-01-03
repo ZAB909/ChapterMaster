@@ -335,7 +335,9 @@ if (defeat=0) and (npowers=true){
         if (plasma_bomb>0){
             // scr_check_equip("Plasma Bomb",battle_loc,battle_id,1);
             // scr_check_equip("Plasma Bomb","","",1);
-            newline="Plasma Bomb used to seal the Necron Tomb.";newline_color="yellow";scr_newtext();
+            newline="Plasma Bomb used to seal the Necron Tomb.";
+            newline_color="yellow";
+            scr_newtext();
 			seal_tomb_world(battle_object.p_feature[battle_id])
         }
 
