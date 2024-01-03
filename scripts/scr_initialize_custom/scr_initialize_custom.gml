@@ -979,13 +979,12 @@ function scr_initialize_custom() {
 					"option" :{
 						"wep1":[
 							["Chainsword",4],
-							[["Power Sword", "Power Fist", "Power Axe",],2],
+							[["Power Sword", "Power Axe"],2],
 						],
 						"wep2":[
-							[["Flamer", "Meltagun", "Plasma Pistol"],3],
-							[["Plasma Gun","Storm Bolter"], 1],
-							[["Multi-Melta", "Heavy Flamer", "Bolter"], 1],
-							[["Missile Launcher", "Lascannon", "Bolter"], 1],
+							[["Flamer", "Meltagun", "Plasma Gun","Storm Bolter"],2],
+							[["Multi-Melta","Heavy Bolter", "Lascannon",], 1],
+
 						]
 					} 
 				}}],		//veterans
@@ -1019,8 +1018,8 @@ function scr_initialize_custom() {
 				}}],
 				["type_data" , {"display_data":$"Vanguard {role[100,3]} {squad_name}"}]
 			],
-			"devestator_squad": [
-				[role[100][9], {"max":9,"min":4,"loadout":{//devestator
+			"devastator_squad": [
+				[role[100][9], {"max":9,"min":4,"loadout":{//devastator
 					"required":{
 						"wep1":["Bolter",4], 
 						"wep2":["Combat Knife",4]
@@ -1037,14 +1036,8 @@ function scr_initialize_custom() {
 					},
 					"option" :{
 						"wep1":[
-							[["Flamer", "Meltagun"],1],
-							[["Plasma Gun","Storm Bolter"], 1],
-							[["Multi-Melta", "Heavy Flamer", "Bolter"], 1],
-							[["Missile Launcher", "Lascannon", "Bolter"], 1]],
-						"wep2":[
-							["Chainsword",2],
-							[["Power Sword", "Power Axe", "Lightning Claw"],1],
-							[["Chainfist", "Power Fist"],1]
+							[["Flamer", "Meltagun", "Plasma Gun"],2],
+							[["Multi-Melta", "Heavy Flamer", "Missile Launcher", "Lascannon"], 1],
 						]
 					} 
 				}}],		//tactical marine
@@ -1063,10 +1056,10 @@ function scr_initialize_custom() {
 						},
 						"option" : {
 							"wep1":[
-								[["Flamer"], 1], [["Eviscerator"],2],
+								[["Eviscerator"],2],
 							],
 							"wep2":[
-								[["Plasma Pistol"], 1]
+								[["Plasma Pistol", "Flamer"], 1]
 							]
 						}
 					}
@@ -1085,8 +1078,7 @@ function scr_initialize_custom() {
 	                    },
 	                    "option" :{
 	                        "wep1":[
-	                            [["Flamer","Plasma Gun",], 1],
-	                            [["Bolter","Stalker Pattern Bolter"], 3],
+	                            [["Bolter","Stalker Pattern Bolter"], 2],
 	                            [["Missile Launcher","Heavy Bolter"], 1]],
 	                        "wep2":[
 	                            [["Chainsword","Combat Knife"], 5],
@@ -1102,7 +1094,7 @@ function scr_initialize_custom() {
 	            	"loadout":{
 		                "option":{
 		                    "wep1":[
-		                        [["Power Sword","Chainsword","Power Axe","Power Fist"],1]
+		                        [["Power Sword","Chainsword","Power Axe",],1]
 		                    ],
 		                    "wep2":[
 		                        [["Plasma Pistol","Combiflamer","Stalker Pattern Bolter","Storm Bolter"],1]
@@ -1143,7 +1135,7 @@ function scr_initialize_custom() {
 		            "loadout":{
 			            "option":{
 			                "wep1":[
-			                    [["Power Sword","Chainsword","Power Axe","Power Fist"],1]
+			                    [["Power Sword","Chainsword","Power Axe",],1]
 			                ],
 			                "wep2":[
 			                    [["Combiflamer","Stalker Pattern Bolter",],1]
@@ -1166,11 +1158,9 @@ function scr_initialize_custom() {
                     "option" :{
                         "wep1":[
                             [["Power Sword","Power Axe","Chainsword"],5],
-                            [["Power Fist","Lightning Claw"],1]
                          ],
                         "wep2":[
-                            [["Flamer", "Meltagun","Bolt Pistol"],2],
-                            [["Plasma Pistol","Bolt Pistol"], 4],
+                            [["Flamer", "Meltagun","Plasma Pistol","Bolt Pistol"],2],
                             
                         ],
                     } 
@@ -1202,12 +1192,9 @@ function scr_initialize_custom() {
 			},
 			"option" :{
 			"wep1":[
-			   [["Flamer", "Meltagun"],1],
-			   [["Plasma Gun","Storm Bolter"], 2],
-			   [["Multi-Melta", "Heavy Flamer", "Bolter"], 1],
-			   [["Missile Launcher", "Multi-Melta", "Bolter"], 1]],
-			"wep2":[
-			   [["Power Sword", "Power Axe", "Chainsword"],5],
+			   [["Plasma Gun","Storm Bolter","Flamer", "Meltagun"], 2],
+			   [["Multi-Melta", "Heavy Bolter"] 1]],
+
 			]
 			} 
 		},
