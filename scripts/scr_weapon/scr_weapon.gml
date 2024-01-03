@@ -1729,6 +1729,17 @@ global.gear = {
         "artifact": 10
       },
       "tags":["jump"],
+    },
+    "Heavy Weapons Pack": {
+      "description": "A Heavy power pack commonly used by devastators in conjunction with a heavy ranged weapon.",
+      "ranged_mod": {
+        "standard": 5,
+        "master_crafted": 10,
+        "artifact": 15
+      },
+    "melee_hands": -1,
+    "ranged_hands": 1,      
+      "tags":["power"],
     }
     // Add more mobility items as needed...
   }

@@ -113,15 +113,13 @@ function scr_draw_unit_image(x_draw, y_draw){
     
         // if (base_sprite>0) then ui_back=false;
     
-        if (show_mobi="Jump Pack"){
+        if (mobility_item()=="Jump Pack"){
 			ui_back=false;
 			jump=1;
-		}
-		
-        if (role()==obj_ini.role[100,9]){
-			ui_back=false;
-			dev=1;
-		}
+		}else if (mobility_item()=="Heavy Weapons Pack"){
+            ui_back=false;
+            dev=1;            
+        }
 		
         if (show_arm="Terminator Armour"){
 			ui_back=false;

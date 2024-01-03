@@ -1,75 +1,6 @@
 
 function scr_initialize_custom() {
 
-	// These are the new variables that are being read, for the new creation
-	// They will also have to be loaded and saved
-	// Worry about that later
-    // this has starting XP for marines !
-
-	/*
-	chapter="Unnamed";
-	chapter_string="Unnamed";
-	icon=1;icon_name="da";custom=0;
-	founding=1;
-	fleet_type=1;
-	strength=5;cooperation=5;
-	purity=5;stability=5;
-	var i;i=-1;repeat(6){i+=1;adv[i]="";adv_num[i]=0;dis[i]="";dis_num[i]=0;}
-	homeworld="Temperate";homeworld_name=scr_star_name();
-	recruiting="Death";recruiting_name=scr_star_name();
-	flagship_name=scr_ship_name("imperial");
-	recruiting_exists=1;
-	homeworld_exists=1;
-	homeworld_rule=1;
-	aspirant_trial="Blood Duel";
-	discipline="default";
-
-	battle_cry="For the Emperor";
-
-	main_color=1;secondary_color=1;trim_color=1;
-	pauldron2_color=1;pauldron_color=1;// Left/Right pauldron
-	lens_color=1;weapon_color=1;col_special=0;trim=1;
-
-	hapothecary=scr_marine_name();
-	hchaplain=scr_marine_name();
-	clibrarian=scr_marine_name();
-	fmaster=scr_marine_name();
-	recruiter=scr_marine_name();
-	admiral=scr_marine_name();
-
-	equal_specialists=0;
-	load_to_ships=2;
-
-	successors=0;
-
-	mutations=0;mutations_selected=0;
-	preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
-	zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
-
-	disposition[0]=0;
-	disposition[1]=0;// Prog
-	disposition[2]=0;// Imp
-	disposition[3]=0;// Mech
-	disposition[4]=0;// Inq
-	disposition[5]=0;// Ecclesiarchy
-	disposition[6]=0;// Astartes
-	disposition[7]=0;// Reserved
-
-	chapter_master_name=scr_marine_name();
-	chapter_master_melee=1;
-	chapter_master_ranged=1;
-	chapter_master_specialty=2;
-	*/
-
-
-
-
-
-
-
-
-
-
 	progenitor=obj_creation.founding;
 	successors=obj_creation.successors;
 	homeworld_rule=obj_creation.homeworld_rule;
@@ -825,7 +756,7 @@ function scr_initialize_custom() {
 	    wep1[i,9]="Heavy Ranged";
 	    wep2[i,9]="Combat Knife";
 	    armour[i,9]="Power Armour";
-	    mobi[i,9]="";
+	    mobi[i,9]="Heavy Weapons Pack";
 	    gear[i,9]="";
 	    role[i,10]="Assault";
 	    wep1[i,10]="Chainsword";
@@ -2304,12 +2235,13 @@ function scr_initialize_custom() {
 		                race[company][k]=1;
 		                loc[company][k]=home_name;
 		                role[company][k]=role[100][9];
-		                wep2[company][k]=wep2[101,9];
+		                wep2[company][k]=wep2[101][9];
+		                mobi[company][k]=mobi[100][9];
 		                name[company][k]=scr_marine_name();
 		                chaos[company][k]=0;
 		                TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 
-	                    if (wep1[101,9]="Heavy Ranged") then wep1[company][k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
+	                    if (wep1[101,9]=="Heavy Ranged") then wep1[company][k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
 	                    if (wep1[101,9]!="Heavy Ranged") then wep1[company][k]=wep1[101,9];
 
 			        spawn_unit = TTRPG[company][k];
@@ -2384,6 +2316,8 @@ function scr_initialize_custom() {
 	          		name[company][k]=scr_marine_name();
 	                wep2[company][k]=wep2[101,9];
 	                chaos[company][k]=0;
+					mobi[company][k]=mobi[100][9];
+
 	                if (wep1[101,9]="Heavy Ranged") then wep1[company][k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
 	                if (wep1[101,9]!="Heavy Ranged") then wep1[company][k]=wep1[101,9];
 			        spawn_unit = TTRPG[company][k]
@@ -2431,6 +2365,8 @@ function scr_initialize_custom() {
 	          		name[company][k]=scr_marine_name();
 	                wep2[company][k]=wep2[101,9];
 					chaos[company][k]=0;
+					mobi[company][k]=mobi[100][9];
+
 					
 
 	                if (wep1[101,9]="Heavy Ranged") then wep1[company][k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
@@ -2594,6 +2530,7 @@ function scr_initialize_custom() {
 	equipment_number[eqi]=40;
 	equipment_type[eqi]="vehicle";
 	scr_add_item("Bolt Pistol",5);
+	scr_add_item("Heavy Weapons Pack",10);
 	scr_add_item(wep1[101,12],20);
 	scr_add_item(wep2[101,12],20);
 	if (global.chapter_name="Iron Hands") then scr_add_item("Bionics",200);

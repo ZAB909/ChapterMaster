@@ -1415,6 +1415,18 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				var symbol = armour_carry>0 ? "+":"-"
 				carry_string+=$"armour:{symbol}{armour_carry}#";
 			}
+			var gear_carry = get_gear_data("ranged_hands");
+			if (gear_carry!=0){
+				ranged_hands_limit+=gear_carry;
+				var symbol = armour_carry>0 ? "+":"-"
+				carry_string+=$"gear:{symbol}{armour_carry}#";
+			}
+			var mobility_carry = get_mobility_data("ranged_hands");
+			if (mobility_carry!=0){
+				ranged_hands_limit+=mobility_carry;
+				var symbol = armour_carry>0 ? "+":"-"
+				carry_string+=$"gear:{symbol}{armour_carry}#";
+			}							
 			return [ranged_carrying,ranged_hands_limit,carry_string]						
 		}
 
@@ -1516,6 +1528,18 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				var symbol = armour_carry>0 ? "+":"-";
 				carry_string+=$"armour:{symbol}{armour_carry}#";
 			}
+			var gear_carry = get_gear_data("melee_hands");
+			if (gear_carry!=0){
+				melee_hands_limit+=gear_carry;
+				var symbol = armour_carry>0 ? "+":"-"
+				carry_string+=$"gear:{symbol}{armour_carry}#";
+			}
+			var mobility_carry = get_mobility_data("melee_hands");
+			if (mobility_carry!=0){
+				melee_hands_limit+=mobility_carry;
+				var symbol = armour_carry>0 ? "+":"-"
+				carry_string+=$"gear:{symbol}{armour_carry}#";
+			}						
 			return [melee_carrying,melee_hands_limit,carry_string]						
 		}		
 		static melee_attack = function(weapon_slot=0){
