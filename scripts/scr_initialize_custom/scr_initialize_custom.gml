@@ -968,8 +968,7 @@ function scr_initialize_custom() {
 				}}],
 				["type_data" , {"display_data":$"{role[100,4]} Assault {squad_name}"}]
 			],
-			
-			"sternguard_veteran_squad": [
+			"veteran_squad": [
 				[role[100][3], {"max":9,"min":4, "loadout":{//tactical marine
 					"required":{
 						"wep1":[wep1[100,3],4],
@@ -990,7 +989,7 @@ function scr_initialize_custom() {
 				}}],		//veterans
 
 				[role[100][19], {"max":1,"min":1}],
-				["type_data" , {"display_data":$"Sternguard {role[100,3]} {squad_name}"}]
+				["type_data" , {"display_data":$"{role[100,3]} {squad_name}"}]
 			],
 			"vanguard_veteran_squad": [
 				[role[100][3], {"max":9,"min":4, "loadout":{//tactical marine
