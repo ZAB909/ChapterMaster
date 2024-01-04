@@ -964,7 +964,7 @@ function scr_initialize_custom() {
 				[role[100][4], {"max":9,"min":3,"loadout":{//terminator
 					"required":{
 						"wep1":["Thunder Hammer","max"],
-						"wep2":["Storm Shield",max], 
+						"wep2":["Storm Shield","max"], 
 					},
 				}}],
 				["type_data" , {"display_data":$"{role[100,4]} Assault {squad_name}"}]
