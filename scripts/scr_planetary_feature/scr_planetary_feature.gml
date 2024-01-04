@@ -77,7 +77,14 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		planet_display = "Arsenal";
 		player_hidden = 0;
 		built = obj_controller.turn+3;
-		break;		
+		break;
+	case P_features.Starship:
+		f_type = P_features.Starship;
+		planet_display = "Ancient Starship";
+		funds_spent = 0;
+		player_hidden = 0;
+		engineer_score = 0;
+	break;	
 	case P_features.Ancient_Ruins:
 		var ruin_data = choose(["tiny", 5], ["small", 15], ["medium", 55], ["large",110], ["sprawling", 0])
 		ruins_size =  ruin_data[0]
@@ -389,4 +396,15 @@ function scr_planetary_feature(planet_num) {
 		}
 	}
 }
-		
+
+function create_starship_event(){
+	var star = scr_random_find(2,true,"","");
+	if(star == undefined){
+		debugl("RE: couldn't find starship target");
+		return false;
+	}else {
+		var planet=irandom(star.planets-1)+1;
+		array_push(star.p_feature[planet], new new_planet_feature(P_features.Starship))
+		scr_event_log("","Ancient Starship discovered on "+string(star.name)+" "+scr_roman(planet)+".");
+	}
+}

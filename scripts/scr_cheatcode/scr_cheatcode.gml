@@ -22,6 +22,9 @@ function scr_cheatcode(argument0) {
         cheatcode_m_digits = (cheatcode_digits * -1)
 
     if (cheatcode_digits == "") {
+        if (cheatcode_string=="slaughtersong"){
+            create_starship_event();
+        }
         if (string_count("event", cheatcode_string) >0) {
             if (string_count("crusade", cheatcode_string) >0) {
                 show_debug_message("crusading");
