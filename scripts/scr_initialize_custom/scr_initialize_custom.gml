@@ -963,7 +963,7 @@ function scr_initialize_custom() {
 				[role[100][19], {"max":1,"min":1, "role":$"{role[100,19]} Terminator"}],			//Veteran sergeant terminator
 				[role[100][4], {"max":9,"min":3,"loadout":{//terminator
 					"required":{
-						"wep1":["Thunder Hammer",max],
+						"wep1":["Thunder Hammer","max"],
 						"wep2":["Storm Shield",max], 
 					},
 				}}],
