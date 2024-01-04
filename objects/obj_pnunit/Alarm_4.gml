@@ -5,6 +5,7 @@
 var i=0,unit;
 repeat(600){i+=1;
     unit = unit_struct[i];
+     if (!is_struct(unit))then continue;
     if (marine_type[i]!="") and (marine_hp[i]<-3000) and (obj_ncombat.defeat=0){marine_dead[i]=0;marine_hp[i]+=5000;}// For incapitated
     
     if (ally[i]=false){

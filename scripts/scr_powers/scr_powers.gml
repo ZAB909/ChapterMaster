@@ -9,6 +9,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	// executes them, and applies the effect and flavor.  All in one.  Because I eventually
 	// got better at this sort of thing.
 	var unit = unit_struct[argument3];
+	if (!is_struct(unit))then exit;
 	var school,power_name,target_type,enemy5,onc,m1,m2,m3,m4,using,binders,book_powers,book_roll,tome_bad,tome_slot,tome_tags,damnyou;
 	school="";
 	power_name="";

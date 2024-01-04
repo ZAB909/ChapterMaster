@@ -80,94 +80,96 @@ add_data_to_stack = function(stack_index, weapon, unit_damage=false){
 var mobi_item;
 for (g=1;g<array_length(marine_type);g++){
     unit = unit_struct[g];
-    if (marine_casting[g]>=0) then marine_casting[g]=0;
-    if (marine_casting[g]<0) then marine_casting[g]+=1;//timer for libs to be able to cast
+    if (is_struct(unit)){
+        if (marine_casting[g]>=0) then marine_casting[g]=0;
+        if (marine_casting[g]<0) then marine_casting[g]+=1;//timer for libs to be able to cast
 
-    if ((marine_id[g]>0) or (ally[g]=true)) and (unit.hp()>0) then marine_dead[g]=0;
-    if ((marine_id[g]>0) or (ally[g]=true)) and (unit.hp()>0) and (marine_dead[g]!=1){
-        var head_role=unit.IsSpecialist("heads");
-        if (unit.hp()>0) then men+=1;
+        if ((marine_id[g]>0) or (ally[g]=true)) and (unit.hp()>0) then marine_dead[g]=0;
+        if ((marine_id[g]>0) or (ally[g]=true)) and (unit.hp()>0) and (marine_dead[g]!=1){
+            var head_role=unit.IsSpecialist("heads");
+            if (unit.hp()>0) then men+=1;
 
-        if (unit.armour()=="Dreadnought"){
-            dreads+=1;
-            dreaded=true;
-        }
-        //if (marine_mobi[g]="Bike") then scr_special_weapon("Twin Linked Bolters",g,true);
+            if (unit.armour()=="Dreadnought"){
+                dreads+=1;
+                dreaded=true;
+            }
+            //if (marine_mobi[g]="Bike") then scr_special_weapon("Twin Linked Bolters",g,true);
 
 
-        if (marine_mobi[g]!="Bike") and (marine_mobi[g]!=""){
-           mobi_item=unit.get_mobility_data();
-           if (is_struct(mobi_item)){
-            if( mobi_item.has_tag("jump")){
-                for (var stack_index=1;stack_index<array_length(wep);stack_index++){
-                    if (wep[stack_index]==""||(wep[stack_index]=="hammer_of_wrath" && !head_role)){
-                        add_data_to_stack(stack_index,unit.hammer_of_wrath());
+            if (marine_mobi[g]!="Bike") and (marine_mobi[g]!=""){
+               mobi_item=unit.get_mobility_data();
+               if (is_struct(mobi_item)){
+                if( mobi_item.has_tag("jump")){
+                    for (var stack_index=1;stack_index<array_length(wep);stack_index++){
+                        if (wep[stack_index]==""||(wep[stack_index]=="hammer_of_wrath" && !head_role)){
+                            add_data_to_stack(stack_index,unit.hammer_of_wrath());
+                            if (head_role){
+                                wep_title[stack_index]=unit.role();
+                                wep_solo[stack_index]=unit.name();
+                            }
+                            break;
+                        }
+                    }                
+                }
+               }
+            }
+
+            if (unit.IsSpecialist("libs",true)||(unit.role()=="Chapter Master"&&obj_ncombat.chapter_master_psyker=1)){
+                var cast_dice=irandom(99)+1;
+                if (array_contains(obj_ini.dis,"Warp Touched")) then cast_dice-=5;
+
+                cast_dice-=(unit.psionic+(unit.experience()/60))
+
+                if (cast_dice<=50) then marine_casting[g]=1;
+
+                if (marine_type[g]="Chapter Master") and (obj_ncombat.chapter_master_psyker=1){
+                    if (cast_dice<=66) then marine_casting[g]=1;
+                    if (obj_ncombat.big_boom>0) and (obj_ncombat.kamehameha=true) then marine_casting[g]=1;
+                }
+            }
+
+            var j=0,good=0,open=0;// Counts the number and types of marines within this object
+            for (j=1;j<=40;j++){
+                if (dudes[j]=="") and (open==0){
+                    open=j;// Determine if vehicle here
+
+                    //if (dudes[j]="Venerable "+string(obj_ini.role[100][6])) then dudes_vehicle[j]=1;
+                    //if (dudes[j]=obj_ini.role[100][6]) then dudes_vehicle[j]=1;
+                }
+                if (marine_type[g]==dudes[j]){
+                    good=1;
+                    dudes_num[j]+=1;
+                }
+                if (good=0) and (open!=0){
+                    dudes[open]=marine_type[g];
+                    dudes_num[open]=1;
+                }
+            }
+            if (marine_casting[g]!=1){
+                var weapon_stack_index=0;
+                var primary_ranged = unit.ranged_damage_data[3];//collect unit ranged data
+                for (weapon_stack_index=1;weapon_stack_index<array_length(wep);weapon_stack_index++){
+                    if (wep[weapon_stack_index]==""||(wep[weapon_stack_index]==primary_ranged.name && !head_role)){
+                        add_data_to_stack(weapon_stack_index,primary_ranged,unit.ranged_damage_data[0]);
                         if (head_role){
-                            wep_title[stack_index]=unit.role();
-                            wep_solo[stack_index]=unit.name();
+                            wep_title[weapon_stack_index]=unit.role();
+                            wep_solo[weapon_stack_index]=unit.name();
                         }
                         break;
                     }
-                }                
-            }
-           }
-        }
-
-        if (unit.IsSpecialist("libs",true)||(unit.role()=="Chapter Master"&&obj_ncombat.chapter_master_psyker=1)){
-            var cast_dice=irandom(99)+1;
-            if (array_contains(obj_ini.dis,"Warp Touched")) then cast_dice-=5;
-
-            cast_dice-=(unit.psionic+(unit.experience()/60))
-
-            if (cast_dice<=50) then marine_casting[g]=1;
-
-            if (marine_type[g]="Chapter Master") and (obj_ncombat.chapter_master_psyker=1){
-                if (cast_dice<=66) then marine_casting[g]=1;
-                if (obj_ncombat.big_boom>0) and (obj_ncombat.kamehameha=true) then marine_casting[g]=1;
-            }
-        }
-
-        var j=0,good=0,open=0;// Counts the number and types of marines within this object
-        for (j=1;j<=40;j++){
-            if (dudes[j]=="") and (open==0){
-                open=j;// Determine if vehicle here
-
-                //if (dudes[j]="Venerable "+string(obj_ini.role[100][6])) then dudes_vehicle[j]=1;
-                //if (dudes[j]=obj_ini.role[100][6]) then dudes_vehicle[j]=1;
-            }
-            if (marine_type[g]==dudes[j]){
-                good=1;
-                dudes_num[j]+=1;
-            }
-            if (good=0) and (open!=0){
-                dudes[open]=marine_type[g];
-                dudes_num[open]=1;
-            }
-        }
-        if (marine_casting[g]!=1){
-            var weapon_stack_index=0;
-            var primary_ranged = unit.ranged_damage_data[3];//collect unit ranged data
-            for (weapon_stack_index=1;weapon_stack_index<array_length(wep);weapon_stack_index++){
-                if (wep[weapon_stack_index]==""||(wep[weapon_stack_index]==primary_ranged.name && !head_role)){
-                    add_data_to_stack(weapon_stack_index,primary_ranged,unit.ranged_damage_data[0]);
-                    if (head_role){
-                        wep_title[weapon_stack_index]=unit.role();
-                        wep_solo[weapon_stack_index]=unit.name();
-                    }
-                    break;
                 }
-            }
-            var primary_melee = unit.melee_damage_data[3];//collect unit melee data
-            for (weapon_stack_index=1;weapon_stack_index<array_length(wep);weapon_stack_index++){
-                if (wep[weapon_stack_index]==""||(wep[weapon_stack_index]==primary_melee.name && !head_role)){
-                    add_data_to_stack(weapon_stack_index,primary_melee,unit.melee_damage_data[0]);
-                    if (head_role){
-                        wep_title[weapon_stack_index]=unit.role();
-                        wep_solo[weapon_stack_index]=unit.name();
+                var primary_melee = unit.melee_damage_data[3];//collect unit melee data
+                for (weapon_stack_index=1;weapon_stack_index<array_length(wep);weapon_stack_index++){
+                    if (wep[weapon_stack_index]==""||(wep[weapon_stack_index]==primary_melee.name && !head_role)){
+                        add_data_to_stack(weapon_stack_index,primary_melee,unit.melee_damage_data[0]);
+                        if (head_role){
+                            wep_title[weapon_stack_index]=unit.role();
+                            wep_solo[weapon_stack_index]=unit.name();
+                        }
+                        break;
                     }
-                    break;
-                }
-            }     
+                }     
+            }
         }
     }
 
@@ -230,6 +232,7 @@ if (men+veh=1) and (obj_ncombat.player_forces=1){
         var i=0,h=0;
         repeat(500){
             unit = unit_struct[g];
+             if (!is_struct(unit))then continue;
             if (h=0){
                 i+=1;
                 if (unit.hp()>0) and (marine_dead[i]=0){

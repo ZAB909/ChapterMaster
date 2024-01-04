@@ -119,6 +119,7 @@ function scr_clean(argument0) {
 	        if (men>0) then you=floor(random(men))+1;// Need a max_men / max_veh    for the amount of them initialized
 	        repeat(700){// This gets a different mahreen if it is not valid
 	            unit = unit_struct[you];
+	            if (!is_struct(unit))then continue;
 	            if (unit.hp()<0){
 	                if (you=1) then going_up=1;
 	                if (going_up=0) and (you>0) you-=1;
@@ -160,9 +161,9 @@ function scr_clean(argument0) {
 	                minus=0;
 	                if (webr<=chunk) then minus=5000;
 	            }
-	            unit.update_health(unit.hp-minus)
+	            unit.update_health(unit.hp()-minus)
             
-	            if (marine_hp[you]<=0) and (marine_dead[you]!=1){
+	            if (unit.hp()<=0) and (marine_dead[you]!=1){
 	                var h=0,good=0,open=0;
                     if (unit.role()=lost[hh]){
                     	lost_num[hh]++;

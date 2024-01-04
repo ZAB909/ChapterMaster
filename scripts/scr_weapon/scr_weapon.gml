@@ -138,6 +138,7 @@ global.weapons={
         "tags":["pistol", "ancient","las"],
     },
     "Combat Knife": {
+        "abbreviation": "CmbtKni", 
         "attack": {
             "standard": 25,
             "master_crafted": 30,
@@ -297,12 +298,12 @@ global.weapons={
             "artifact": 350
         },
         "description": "Created by mounting a chainsword to a power fist, this weapon is easily able to carve through armoured bulkheads.",
-        "melee_hands": 1,
+        "melee_hands": 1.25,
         "ranged_hands": 1,
         "range": 1,
         "spli": 1,
         "arp": 1,
-        "tags":["power", "chain", "fist"],
+        "tags":["power", "chain", "fist", "siege"],
     },
     "Lascutter": {
        "abbreviation": "LCutter",
@@ -315,7 +316,7 @@ global.weapons={
         "melee_hands": 1,
         "range": 1,
         "arp": 1,
-        "tags":["laser"],
+        "tags":["laser", "siege"],
     },    
     "Eldar Power Sword": {
         "abbreviation": "EPoSword",
@@ -410,7 +411,7 @@ global.weapons={
             "artifact": 190
         },
         "description": "Lightning claws are specialized close combat weapons with built-in disruptor fields. These fields disrupt matter on a molecular level, tearing through armor and flesh with ease.",
-        "melee_hands": 1,
+        "melee_hands": 1.1,
         "ranged_hands": 1,
         "ammo": 0,
         "range": 1,
@@ -452,13 +453,13 @@ global.weapons={
             "artifact": 1.3
         },
         "description": "This weapon unleashes a massive, disruptive field on impact. Only experienced marines can use Thunder Hammers.",
-        "melee_hands": 2,
-        "ranged_hands": 1,
+        "melee_hands": 2.25,
+        "ranged_hands": 2,
         "ammo": 0,
         "range": 1,
         "spli": 1,
         "arp": 1,
-        "tags":["power", "hammer"],
+        "tags":["power", "hammer", "siege"],
         "req_exp":90,
     },
     "Tome":{
@@ -592,7 +593,7 @@ global.weapons={
         },
         "description": "A much larger and bulkier flamer. Few armies carry them on hand, instead choosing to mount them to vehicles.",
         "melee_hands": 1,
-        "ranged_hands": 2,
+        "ranged_hands": 2.25,
         "ammo": 8,
         "range": 2,
         "spli": 1,
@@ -652,7 +653,7 @@ global.weapons={
         },
         "description": "A huge, vehicle-mounted flame weapon that fires with explosive force. The reservoir is liable to explode.",
         "melee_hands": 0,
-        "ranged_hands": 2,
+        "ranged_hands": 2.25,
         "ammo": 0,
         "range": 3.1,
         "spli": 1,
@@ -684,7 +685,7 @@ global.weapons={
         },
         "description": "Though bearing longer range than the Meltagun, this weapon's great size usually restricts it to vehicles.",
         "melee_hands": 1,
-        "ranged_hands": 2,
+        "ranged_hands": 2.25,
         "ammo": 8,
         "range": 4.1,
         "spli": 1,
@@ -764,7 +765,7 @@ global.weapons={
         },
         "description": "A heavy, rotary auto-cannon frequently used by Dreadnoughts and Terminators. Has an incredible rate of fire.",
         "melee_hands": 2.1,
-        "ranged_hands": 2.1,
+        "ranged_hands": 2.25,
         "ammo": 5,
         "range": 12,
         "spli": 1,
@@ -780,7 +781,7 @@ global.weapons={
         },
         "description": "A rapid-firing weapon able to use a wide variety of ammunition, from mass-reactive explosive to solid shells.",
         "melee_hands": 0,
-        "ranged_hands": 2,
+        "ranged_hands": 2.25,
         "ammo": 25,
         "range": 18,
         "spli": 1,
@@ -796,7 +797,7 @@ global.weapons={
         },
         "description": "This heavy weapon is capable of firing either armor-piercing or fragmentation rockets. Has a low ammunition count.",
         "melee_hands": 1,
-        "ranged_hands": 2,
+        "ranged_hands": 2.25,
         "ammo": 6,
         "range": 24,
         "spli": 1,
@@ -812,7 +813,7 @@ global.weapons={
         },
         "description": "A formidable laser weapon, this lascannon can pierce most vehicle or power armor from a tremendous range.",
         "melee_hands": 1,
-        "ranged_hands": 2,
+        "ranged_hands": 2.25,
         "ammo": 8,
         "range": 24,
         "spli": 0,
@@ -847,8 +848,31 @@ global.weapons={
         "ammo": 20,
         "range": 8.1,
         "spli": 1,
-        "arp": 1
+        "arp": 1,
+        "tags":["bolt"]
     },
+    "Power Fist with Intergrated Bolters": {
+       "abbreviation": "PoFist IntBolt",       
+        "attack": {
+            "standard": 450,
+            "master_crafted": 500,
+            "artifact": 600
+        },
+        "melee_mod": {
+            "standard": 1,
+            "master_crafted": 1,
+            "artifact": 1
+        },
+        "description": "Powerfist but with built in bolters for close combat and ranged firepower",
+        "melee_hands": 1.1,
+        "ranged_hands": 1,
+        "ammo": 0,
+        "range": 1,
+        "spli": 1,
+        "arp": 1,
+        "second_profiles":["Integrated Bolters"],
+        "tags":["power","fist"],
+    },    
     "Power Fists": {
         "abbreviation": "PowFists", 
         "attack": {
@@ -905,7 +929,7 @@ global.weapons={
         },
         "description": "Lascannons are powerful anti-armour weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armor.",
         "melee_hands": 1,
-        "ranged_hands": 2,
+        "ranged_hands": 2.25,
         "ammo": 5,
         "range": 20,
         "spli": 0,
@@ -921,7 +945,7 @@ global.weapons={
         },
         "description": "The Heavy Bolter is a heavy weapon that fires larger and more powerful bolt shells compared to the standard Bolter.",
         "melee_hands": 1,
-        "ranged_hands": 2,
+        "ranged_hands": 2.25,
         "ammo": 10,
         "range": 16,
         "spli": 1,
@@ -1097,6 +1121,7 @@ global.weapons={
         "spli": 1,
     },        
     "Twin Linked Multi-Melta Sponsons": {
+        "abbreviation": "TL MMelt Spons", 
         "attack": {
             "standard": 450,
             "master_crafted": 495,
@@ -1108,9 +1133,11 @@ global.weapons={
         "ammo": 6,
         "range": 4.1,
         "spli": 1,
-        "arp": 1
+        "arp": 1,
+        "tags":["vehicle", "Sponson", "melta"]
     },
     "Twin Linked Volkite Culverin Sponsons": {
+        "abbreviation": "TL VolcCulv Spons", 
         "attack": {
             "standard": 480,
             "master_crafted": 528,
@@ -1122,8 +1149,25 @@ global.weapons={
         "ammo": 25,
         "range": 18,
         "spli": 1,
-        "arp": 0
+        "arp": 0,
+        "tags":["vehicle", "Sponson", "volkite"]
     },
+    "Autocannon Turret": {
+        "abbreviation": "AutCanTur", 
+        "attack": {
+            "standard": 130,
+            "master_crafted": 528,
+            "artifact": 576
+        },
+        "description": "A Predator-compatible turret mounting a reliable all-purpose autocannon. ",
+        "melee_hands": 0,
+        "ranged_hands": 0,
+        "ammo": 50,
+        "range": 18,
+        "spli": 1,
+        "arp": 0,
+        "tags":["vehicle", "turrent"]
+    },     
     "Storm Bolter": {
         "abbreviation": "StrmBlt", 
         "attack": {
@@ -1141,6 +1185,7 @@ global.weapons={
         "tags":["bolt"]
     },
     "Flamer": {
+        "abbreviation": "Flame", 
         "attack": {
             "standard": 350,
             "master_crafted": 385,
@@ -1176,6 +1221,7 @@ global.weapons={
         "tags":["flame"]
     },
     "Combiflamer": {
+        "abbreviation": "ComFlame", 
         "attack": {
             "standard": 100,
             "master_crafted": 130,
@@ -1966,8 +2012,6 @@ function quality_string_conversion(quality){
 					// Land Raider Sponsons
 				// Predator Turrets
 
-				if (thawep="Autocannon Turret"){attack=130;arp=0;range=18;amm=50;spli=1;
-				    descr="A Predator-compatible turret mounting a reliable all-purpose autocannon. ";}
 				if (thawep="Twin Linked Assault Cannon Turret"){attack=360;arp=0;range=12;amm=10;spli=1;
 				   	descr="A Predator-compatible turret mounting a pair of short range anti-infantry assault cannons. ";}
 				if (thawep="Flamestorm Cannon Turret"){attack=400;arp=1;range=2.1;amm=12;spli=1;
