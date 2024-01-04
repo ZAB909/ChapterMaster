@@ -341,6 +341,7 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
     wep1[i,9]="Heavy Ranged";
     wep2[i,9]="Combat Knife";
     armour[i,9]="Power Armour";
+    mobi[i,9]="Heavy Weapons Pack";
 
     race[i,10]=1;
     role[i,10]="Assault Marine";

@@ -1,6 +1,7 @@
 
 function scr_initialize_custom() {
 
+
 	// These are the new variables that are being read, for the new creation
 	// They will also have to be loaded and saved
 	// Worry about that later
@@ -826,7 +827,7 @@ function scr_initialize_custom() {
 	    wep1[i,9]="Heavy Ranged";
 	    wep2[i,9]="Combat Knife";
 	    armour[i,9]="Power Armour";
-	    mobi[i,9]="";
+	    mobi[i,9]="Heavy Weapons Pack";
 	    gear[i,9]="";
 	    role[i,10]="Assault";
 	    wep1[i,10]="Chainsword";
@@ -2404,12 +2405,13 @@ function scr_initialize_custom() {
 		                race[company][k]=1;
 		                loc[company][k]=home_name;
 		                role[company][k]=role[100][9];
-		                wep2[company][k]=wep2[101,9];
+		                wep2[company][k]=wep2[101][9];
+		                mobi[company][k]=mobi[100][9];
 		                name[company][k]=scr_marine_name();
 		                chaos[company][k]=0;
 		                TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 
-	                    if (wep1[101,9]="Heavy Ranged") then wep1[company][k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
+	                    if (wep1[101,9]=="Heavy Ranged") then wep1[company][k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
 	                    if (wep1[101,9]!="Heavy Ranged") then wep1[company][k]=wep1[101,9];
 
 			        spawn_unit = TTRPG[company][k];
@@ -2484,6 +2486,8 @@ function scr_initialize_custom() {
 	          		name[company][k]=scr_marine_name();
 	                wep2[company][k]=wep2[101,9];
 	                chaos[company][k]=0;
+					mobi[company][k]=mobi[100][9];
+
 	                if (wep1[101,9]="Heavy Ranged") then wep1[company][k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
 	                if (wep1[101,9]!="Heavy Ranged") then wep1[company][k]=wep1[101,9];
 			        spawn_unit = TTRPG[company][k]
@@ -2531,6 +2535,8 @@ function scr_initialize_custom() {
 	          		name[company][k]=scr_marine_name();
 	                wep2[company][k]=wep2[101,9];
 					chaos[company][k]=0;
+					mobi[company][k]=mobi[100][9];
+
 					
 
 	                if (wep1[101,9]="Heavy Ranged") then wep1[company][k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
@@ -2691,6 +2697,7 @@ function scr_initialize_custom() {
 	equipment_number[eqi]=40;
 	equipment_type[eqi]="vehicle";
 	scr_add_item("Bolt Pistol",5);
+	scr_add_item("Heavy Weapons Pack",10);
 	scr_add_item(wep1[101,12],20);
 	scr_add_item(wep2[101,12],20);
 	if (global.chapter_name="Iron Hands") then scr_add_item("Bionics",200);

@@ -380,6 +380,17 @@ if (shop = "equipment2") {
 
     i += 1;
     x_mod[i] = 9;
+    item[i] = "Heavy Weapons Pack";
+    item_stocked[i] = scr_item_count(item[i]);
+    item_cost[i] = 25;    
+    if (rene = 1) {
+        nobuy[i] = 1;
+        item_cost[i] = 0;
+    }
+
+    
+    i += 1;
+    x_mod[i] = 9;
     item[i] = "Servo Arms";
     item_stocked[i] = scr_item_count(item[i]);
     item_cost[i] = 30;
@@ -433,11 +444,13 @@ if (shop = "equipment2") {
     item[i] = "Plasma Bomb";
     item_stocked[i] = scr_item_count(item[i]);
     item_cost[i] = 175;
+
     i += 1;
     x_mod[i] = 9;
     item[i] = "Exterminatus";
     item_stocked[i] = scr_item_count(item[i]);
     item_cost[i] = 2500;
+
 }
 
 
