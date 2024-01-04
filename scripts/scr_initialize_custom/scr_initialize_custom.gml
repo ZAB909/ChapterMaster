@@ -997,7 +997,9 @@ function scr_initialize_custom() {
 				["type_data" , {"display_data":$"Sternguard {role[100,3]} {squad_name}"}]
 			],
 			"vanguard_veteran_squad": [
-				[role[100][3], {"max":9,"min":4, "loadout":{//tactical marine
+				[role[100][3], {"max":9,"min":4, 
+				      "role":$"Vanguard {role[100][3]}",
+				      "loadout":{//tactical marine
 					"required":{
 						"wep1":[wep1[100,3],4],
 						"wep2":["Bolt Pistol",4],
