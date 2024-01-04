@@ -960,7 +960,11 @@ function scr_initialize_custom() {
 				["type_data" , {"display_data":$"{role[100,4]} {squad_name}"}]
 			],
 			"terminator_assault_squad": [
-				[role[100][19], {"max":1,"min":1, "role":$"{role[100,19]} Terminator"}],			//Veteran sergeant terminator
+				[role[100][19], {
+				      "max":1,
+				      "min":1, 
+				      "role":$"{role[100,19]} Assault Terminator"
+				 }],			//Veteran sergeant terminator
 				[role[100][4], {"max":9,"min":3,"loadout":{//terminator
 					"required":{
 						"wep1":["Thunder Hammer","max"],
