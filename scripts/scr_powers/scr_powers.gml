@@ -8,7 +8,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	// This is a stand-alone script that determines powers based on the POWERS variable,
 	// executes them, and applies the effect and flavor.  All in one.  Because I eventually
 	// got better at this sort of thing.
-
+	var unit = unit_struct[argument3];
 	var school,power_name,target_type,enemy5,onc,m1,m2,m3,m4,using,binders,book_powers,book_roll,tome_bad,tome_slot,tome_tags,damnyou;
 	school="";
 	power_name="";
@@ -480,14 +480,14 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	    if (string_count("daemon",book_powers)>0) then peril1+=25;
 	    m1=string(marine_type[argument3])+" "+string(obj_ini.name[marine_co[argument3],marine_id[argument3]])+" suffers Perils of the Warp!  ";
     
-	    if (peril3>0) and (peril3<=15){marine_hp[argument3]-=choose(8,12,16,20);m2="He begins to gibber as psychic backlash overtakes him.";obj_ini.chaos[marine_co[argument3],marine_id[argument3]]+=choose(2,4,6,8);}
-	    if (peril3>15) and (peril3<=23){marine_hp[argument3]-=choose(30,35,40,45);m2="His mind is burned fiercly by the warp.";}
-	    if (peril3>23) and (peril3<=31){marine_hp[argument3]-=5000;m2="Psychic backlash knocks him out entirely, incapacitating the marine.";}
+	    if (peril3>0) and (peril3<=15){unit.hp()-=choose(8,12,16,20);m2="He begins to gibber as psychic backlash overtakes him.";obj_ini.chaos[marine_co[argument3],marine_id[argument3]]+=choose(2,4,6,8);}
+	    if (peril3>15) and (peril3<=23){unit.hp()-=choose(30,35,40,45);m2="His mind is burned fiercly by the warp.";}
+	    if (peril3>23) and (peril3<=31){unit.hp()-=5000;m2="Psychic backlash knocks him out entirely, incapacitating the marine.";}
 	    if (peril3>31) and (peril3<=39){marine_casting[argument3]-=999;m2="His mind is seared by the warp, now unable to cast more powers this battle.";obj_ini.chaos[marine_co[argument3],marine_id[argument3]]+=choose(7,10,13,15);}
-	    if (peril3>39) and (peril3<=47){marine_hp[argument3]-=choose(30,35,40,45);
+	    if (peril3>39) and (peril3<=47){unit.hp()-=choose(30,35,40,45);
 	        m2="The psychic blast he had prepared runs loose, striking himself!";
 	        if (school="biomancy"){m2="The psychic blast he had prepared runs loose, boiling his own blood!";}
-	        if (school="pyromancy"){m2="He lights on fire from the inside out, incapacitated in agony!";marine_hp[argument3]-=5000;}
+	        if (school="pyromancy"){m2="He lights on fire from the inside out, incapacitated in agony!";unit.hp()-=5000;}
 	        if (school="telekinesis"){m2="The blast he had prepared runs loose, smashing himself into the ground!";}
 	    }
 	    if (peril3>47) and (peril3<=55){
@@ -517,7 +517,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	    }
 	    if (peril3>63) and (peril3<=71){
 	        m2="There is a massive explosion of warp energy which incapacitates him and injures several other marines!";
-	        marine_hp[argument3]-=65;marine_hp[argument3]-=5000;
+	        unit.hp()-=65;unit.hp()-=5000;
 	        repeat(7){
 	            var t;t=floor(random(men))+1;
 	            if (marine_type[t]!="") then marine_hp[t]-=choose(10,20,30);
@@ -525,10 +525,10 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	    }
 	    if (peril3>71) and (peril3<=79){obj_ncombat.global_perils+=25;m2="Wind shrieks and blood pours from the sky!  The warp feels unstable.";}
 	    if (peril3>79) and (peril3<=87){
-	        marine_casting[argument3]=-999;marine_hp[argument3]-=70;m2="A massive shockwave eminates from the marine, who is knocked out cold!  All of his equipment is destroyed!";
+	        marine_casting[argument3]=-999;unit.hp()-=70;m2="A massive shockwave eminates from the marine, who is knocked out cold!  All of his equipment is destroyed!";
 	        marine_wep1[argument3]="";marine_wep2[argument3]="";marine_armour[argument3]="";marine_gear[argument3]="";marine_mobi[argument3]="";
 	    }
-	    if (peril3>87) and (peril3<=95){marine_hp[argument3]=-150;marine_dead[argument3]=2;
+	    if (peril3>87) and (peril3<=95){unit.hp()=-150;marine_dead[argument3]=2;
 	        var woah;woah=choose(1,2);
 	        if (obj_ini.role[marine_co[argument3],marine_id[argument3]]="Chapter Master") then global.defeat=3;
 	        if (obj_ini.age[marine_co[argument3],marine_id[argument3]]<=((obj_controller.millenium*1000)+obj_controller.year)-10) and (obj_ini.zygote=0) and (string_count("Doom",obj_ini.strin2)=0) then obj_ncombat.gene_penalty+=1;
@@ -537,7 +537,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	        if (woah=2) then m2="He explodes into a cloud of gore, splattering guts and ceramite across the battlefield.";
 	    }
     
-	    if (peril3>95){marine_hp[argument3]=-150;marine_dead[argument3]=2;
+	    if (peril3>95){unit.hp()=-150;marine_dead[argument3]=2;
 	        if (obj_ini.role[marine_co[argument3],marine_id[argument3]]="Chapter Master") then global.defeat=3;
 	        m2="The marine's flesh begins to twist and rip, seemingly turning inside out.  His form looms up, and up, and up.  Within seconds a Greater Daemon of ";
 	        if (obj_ini.age[marine_co[argument3],marine_id[argument3]]<=((obj_controller.millenium*1000)+obj_controller.year)-10) and (obj_ini.zygote=0) and (string_count("Doom",obj_ini.strin2)=0) then obj_ncombat.gene_penalty+=1;
@@ -566,7 +566,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
         
 	    }
     
-	    if (marine_hp[argument3]<0){
+	    if (unit.hp()<0){
 	        if (marine_dead[argument3]=0) then marine_dead[argument3]=1;
 	        obj_ncombat.player_forces-=1;
         
@@ -632,7 +632,7 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	            if (buf>0){h=floor(random(men))+1;if (marine_type[h]!="") and (marine_attack[h]<2.5) and (marine_dead[h]=0){buf-=1;marine_attack[h]+=1.5;marine_defense[h]-=0.15;}}
 	        }
 	    }
-	    if (power_name="Regenerate"){marine_hp[argument3]+=choose(2,3,4)*5;if (marine_hp[argument3]>100) then marine_hp[argument3]=100;}
+	    if (power_name="Regenerate"){unit.hp()+=choose(2,3,4)*5;if (unit.hp()>100) then unit.hp()=100;}
 
 	    if (power_name="Telekinetic Dome"){if (marine_dome[argument3]<3) then marine_dome[argument3]=3;}
 	    if (power_name="Spatial Distortion"){if (marine_spatial[argument3]<3) then marine_spatial[argument3]=3;}

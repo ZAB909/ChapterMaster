@@ -1959,10 +1959,6 @@ function quality_string_conversion(quality){
 			if (equipment_1="Lucifer Pattern Engine"){statt=5;special_description="";emor=1;
 		    	descr="A significant upgrade over the more common patterns of Rhino-chassis engines, these engines provide greater output.";}
 
-					// Vehicle Accessories
-			if (thawep="Searchlight"){
-					descr="A simple solution for fighting in dark environments, searchlights serve to illuminate enemies for easier targeting. ";}
-
 					// Vehicle Utility Weapons
 			if (thawep="HK Missile"){attack=350;arp=1;range=50;ranged_hands+=1;amm=1;spli=1;
 			    descr="A single-use long-range anti-tank missile, this weapon can surgically destroy armoured targets in the opening stages of a battle.";}

@@ -83,10 +83,10 @@ for (g=1;g<array_length(marine_type);g++){
     if (marine_casting[g]>=0) then marine_casting[g]=0;
     if (marine_casting[g]<0) then marine_casting[g]+=1;//timer for libs to be able to cast
 
-    if ((marine_id[g]>0) or (ally[g]=true)) and (marine_hp[g]>0) then marine_dead[g]=0;
-    if ((marine_id[g]>0) or (ally[g]=true)) and (marine_hp[g]>0) and (marine_dead[g]!=1){
+    if ((marine_id[g]>0) or (ally[g]=true)) and (unit.hp()>0) then marine_dead[g]=0;
+    if ((marine_id[g]>0) or (ally[g]=true)) and (unit.hp()>0) and (marine_dead[g]!=1){
         var head_role=unit.IsSpecialist("heads");
-        if (marine_hp[g]>0) then men+=1;
+        if (unit.hp()>0) then men+=1;
 
         if (unit.armour()=="Dreadnought"){
             dreads+=1;
@@ -229,10 +229,11 @@ if (men+veh=1) and (obj_ncombat.player_forces=1){
     if (men=1) and (veh=0){
         var i=0,h=0;
         repeat(500){
+            unit = unit_struct[g];
             if (h=0){
                 i+=1;
-                if (marine_hp[i]>0) and (marine_dead[i]=0){
-                    h=marine_hp[i];
+                if (unit.hp()>0) and (marine_dead[i]=0){
+                    h=unit.hp();
                     obj_ncombat.display_p1=h;
                     obj_ncombat.display_p1n=string(marine_type[i])+" "+string(obj_ini.name[marine_co[i],marine_id[i]]);
                 }

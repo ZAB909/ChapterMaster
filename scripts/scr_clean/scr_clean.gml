@@ -17,7 +17,7 @@ function scr_clean(argument0) {
 
 	// show_message("clean up clean up everybody clean up");
 
-	var arg1;
+	var arg1, unit;
 	var onceh;onceh=0;
 	arg1=argument0;
 	var old_hs,shotted;
@@ -118,15 +118,14 @@ function scr_clean(argument0) {
 	    repeat(hostile_shots){
 	        if (men>0) then you=floor(random(men))+1;// Need a max_men / max_veh    for the amount of them initialized
 	        repeat(700){// This gets a different mahreen if it is not valid
-	            // if (marine_armour[you]="Dreadnought") or (marine_hp[you]<0){
-	            if (marine_hp[you]<0){
+	            unit = unit_struct[you];
+	            if (unit.hp()<0){
 	                if (you=1) then going_up=1;
 	                if (going_up=0) and (you>0) you-=1;
 	                if (going_up=1) then you+=1;
 	                if (going_up=1) and (you=950) then going_up=0;
 	            }
 	        }
-	        // if (marine_armour[you]="Dreadnought") or (marine_hp[you]<0) then stahp=1;
   
 	        if (stahp=0 && struct_exists(unit_struct[you],"base_group")){
 	        	unit=unit_struct[you];
@@ -135,7 +134,7 @@ function scr_clean(argument0) {
 	       
 	           
             
-	            //if (damage_resistance<0.25) then damage_resistance=0.25;
+	            //if (damage_resistance<0.25) then damage_resistance=0.25;marine_hp[argument3]
 	            // if (damage_resistance<0.05) then damage_resistance=0.05;
             
 	            minus-=2*marine_ac[you];
@@ -147,7 +146,7 @@ function scr_clean(argument0) {
 		            if (marine_quick[you]>0) then damage_resistance+=0.2;// Needs to be only if melee
 		            if (marine_dome[you]>0) then damage_resistance+=0.15;
 		            if (marine_iron[you]>0){
-		                if (damage_resistance<=0) then marine_hp[you]+=20;
+		                if (damage_resistance<=0) then unit.update_health(unit.hp()+20);
 		                if (damage_resistance>0) then damage_resistance+=(marine_iron[you]/5);
 		            }	            	
 	            	minus=round(minus*(1-damage_resistance));
@@ -161,7 +160,7 @@ function scr_clean(argument0) {
 	                minus=0;
 	                if (webr<=chunk) then minus=5000;
 	            }
-	            marine_hp[you]-=minus;
+	            unit.update_health(unit.hp-minus)
             
 	            if (marine_hp[you]<=0) and (marine_dead[you]!=1){
 	                var h=0,good=0,open=0;
