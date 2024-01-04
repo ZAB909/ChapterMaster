@@ -694,16 +694,20 @@ function scr_ui_manage() {
 		        if (ma_loc[sel]=="Mechanicus Vessel") then draw_sprite(spr_loc_icon,2,xx+427+8,yy+66);
 		        if (man[sel]=="man"){
 		            if (ma_loc[sel]!="Mechanicus Vessel"){
-						var berd=false;
-		                if (managing<11) and (obj_ini.age[managing,ide[sel]]!=floor(obj_ini.age[managing,ide[sel]])) then berd=true;
-		                if (managing>=11)and (obj_ini.age[0,ide[sel]]!=floor(obj_ini.age[0,ide[sel]])) then berd=true;
-	                
-		                if (ma_lid[sel]==0) and (ma_wid[sel]>0) then draw_sprite(spr_loc_icon,0,xx+427+8,yy+66);
-		                if (ma_lid[sel]>0) and (ma_wid[sel]==0) and (berd==false) then draw_sprite(spr_loc_icon,1,xx+427+8,yy+66);
-		                if (ma_lid[sel]>0) and (ma_wid[sel]==0) and (berd==true) then draw_sprite(spr_loc_icon,2,xx+427+8,yy+66);
+						var berd=false, unit= obj_ini.TTRPG[managing][ide[sel]];
+						if (managing<11 || managing>=11){
+							berd=unit.is_boarder;
+						}
+	  
+		                if (ma_lid[sel]>0) and (ma_wid[sel]==0){
+		                	if (berd){
+		                		draw_sprite(spr_loc_icon,2,xx+427+8,yy+66);
+		                	} else {draw_sprite(spr_loc_icon,1,xx+427+8,yy+66);}
+		                }  else if (ma_wid[sel]>0){
+		                	draw_sprite(spr_loc_icon,0,xx+427+8,yy+66);
+		                }
 		            }
-		        }
-		        if (man[sel]!="man"){
+		        }else if (man[sel]!="man"){
 		            if (ma_loc[sel]!="Mechanicus Vessel"){
 		                if (ma_lid[sel]==0) and (ma_wid[sel]>0) then draw_sprite(spr_loc_icon,0,xx+427+8,yy+66);
 		                if (ma_lid[sel]>0) and (ma_wid[sel]==0) then draw_sprite(spr_loc_icon,1,xx+427+8,yy+66);
