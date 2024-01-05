@@ -108,7 +108,6 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 	    obj_ini.wep1[target_company][good]="";
 	    obj_ini.wep2[target_company][good]="";
 	    obj_ini.armour[target_company][good]="";
-	    obj_ini.chaos[target_company][good]=corruption;
 	    obj_ini.experience[target_company][good]=spawn_exp;
 	    obj_ini.spe[target_company][good]="";
 	    obj_ini.god[target_company][good]=0;
@@ -269,6 +268,7 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
     
     if (!array_contains(non_marine_roles,man_role)){
 		obj_ini.TTRPG[target_company, good] = new TTRPG_stats("chapter", target_company, good);
+		obj_ini.TTRPG[target_company, good].corruption=corruption
 		marines+=1;
 		}    
 	    with(obj_ini){scr_company_order(target_company);}

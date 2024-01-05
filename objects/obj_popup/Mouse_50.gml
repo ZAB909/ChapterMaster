@@ -1125,7 +1125,7 @@ if (mouse_x>=xx+408) and (mouse_y>=yy+393) and (mouse_x<xx+518) and (mouse_y<yy+
             if (target_comp>10) then target_comp=0;
 
             if (string_count("aemon",obj_ini.artifact_tags[obj_controller.menu_artifact])>0){
-                obj_ini.chaos[target_comp,obj_controller.ide[i]]+=choose(1,2,3,4,5,6)+choose(1,2,3,4,5,6);
+                obj_ini.TTRPG[target_comp][obj_controller.ide[i]].corruption+=choose(1,2,3,4,5,6)+choose(1,2,3,4,5,6);
                 if (string_count("dwarn|",obj_controller.useful_info)=0) and (obj_ini.role[target_comp,obj_controller.ide[i]]="Chapter Master"){
                     obj_controller.useful_info+="dwarn|";dwarn=true;
                 }

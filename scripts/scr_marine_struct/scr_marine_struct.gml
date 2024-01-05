@@ -577,6 +577,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	constitution=0; strength=0;luck=0;dexterity=0;wisdom=0;piety=0;charisma=0;technology=0;intelligence=0;weapon_skill=0;ballistic_skill=0;size = 0;
 	religion="none";
 	psionic=0;
+	corruption=0;
 	religion_sub_cult = "none";
 	base_group = "none";
 	role_history = [];

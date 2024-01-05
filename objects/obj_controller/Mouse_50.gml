@@ -507,6 +507,7 @@ if (menu==20) and (diplomacy==10.1){
             //grab a random librarian
             var lib = scr_random_marine("lib",0);
             if (lib!="none"){
+                var chapter_master = obj_ini.TTRPG[0][1];
                 var dead_lib = obj_ini.TTRPG[lib[0],lib[1]];
                 pop_up = instance_create(0,0,obj_popup);
                 pop_up.title = "Skull for the Skull Throne";
@@ -514,6 +515,7 @@ if (menu==20) and (diplomacy==10.1){
                 pop_up.type=98;
                 pop_up.image = "chaos";
                 scr_kill_unit(lib[0],lib[1]);
+                chapter_master.add_trait("blood_for_blood");
             } else {
                 diplomacy_pathway = "daemon_scorn";
             }
@@ -526,7 +528,15 @@ if (menu==20) and (diplomacy==10.1){
 			diplomacy_pathway = "sacrifice_champ";
             var champ = scr_random_marine(obj_ini.role[100,7],0);
             if (champ!="none"){
-                var dead_champ = obj_ini.TTRPG[champ[0],champ[1]];
+                var chapter_master = obj_ini.TTRPG[0][1];
+                 chapter_master.add_trait("blood_for_blood");
+                var dead_champ = obj_ini.TTRPG[champ[0]][champ[1]];
+                //TODO make this into a real dual with consequences
+                pop_up = instance_create(0,0,obj_popup);
+                pop_up.title = "Skull for the Skull Throne";
+                pop_up.text = $"You summon {dead_champ.name_role()} to your personal chambers. Darting from the shadows {dead_champ.name()} is a cunning warrior and reacts with precision gowever eventually you previal and strike him down. With the flesh removed from his skull you place the skull upon a hastily erected shrine."
+                pop_up.type=98;
+                pop_up.image = "chaos";                
                // obj_duel = instance_create(0,0,obj_duel);
                // obj_duel.title = "Ambush Champion";
                // pop.type="duel";
@@ -540,13 +550,22 @@ if (menu==20) and (diplomacy==10.1){
         if (point_in_rectangle(mouse_x, mouse_y, option_selections[2].lh, option_selections[2].top, option_selections[2].rh, option_selections[2].base)){
 			cooldown=8000;
 			diplomacy_pathway = "sacrifice_squad";
-            var kill_squad;
+            var kill_squad, squad_found=false;
             for(var i=0;i<array_length(obj_ini.squads);i++){
                 kill_squad = obj_ini.squads[i];
-                if (kill_squad.type == "tactical_squad"){
+                if (kill_squad.type == "tactical_squad" && array_length(kill_squad.members)>4){
+                    var chapter_master = obj_ini.TTRPG[0][1];
+                    chapter_master.add_trait("blood_for_blood");                    
                     kill_squad.kill_members();
+                    with(obj_ini){
+                        scr_company_order(kill_squad.base_company);
+                    }
+                    squad_found=true
                     break;
                 }
+            }
+            if (!squad_found){
+                diplomacy_pathway = "daemon_scorn";
             }
 			scr_dialogue(diplomacy_pathway);
 			force_goodbye = 1;
