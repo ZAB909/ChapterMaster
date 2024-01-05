@@ -43,6 +43,7 @@ global.trait_list = {
 		ballistic_skill:[10,5, "max"],
 		display_name : "Champion",
 		flavour_text : "Through either natural talent, or obsessive training {0} is a master of arms",
+		effect:"increase melee carry"
 	},
 	"lightning_warriors":{
 		constitution: -6,
@@ -1522,6 +1523,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			if (weapon_skill>=50){
 				melee_hands_limit+=0.25;
 				carry_string+="skill:+0.25#";
+			}
+			if (has_trait("champion")){
+				melee_hands_limit+=0.25;
+				carry_string+="Champion:+0.25#";
 			}
 			var armour_carry = get_armour_data("melee_hands")
 			if (armour_carry!=0){
