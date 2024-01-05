@@ -586,7 +586,7 @@ function game_start_squads(){
 		last_squad_count = array_length(obj_ini.squads);
 		while (last_squad_count == array_length(obj_ini.squads)){ ///keep making dev squads for as long as there are enough tact marines
 			last_squad_count = (array_length(obj_ini.squads) + 1);
-			create_squad("devestator_squad", company);
+			create_squad("devastator_squad", company);
 		}		
 		last_squad_count = array_length(obj_ini.squads);
 		while (last_squad_count == array_length(obj_ini.squads)){

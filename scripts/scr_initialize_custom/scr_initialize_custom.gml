@@ -946,8 +946,12 @@ function scr_initialize_custom() {
 				["type_data" , {"display_data":$"Command {squad_name}"}]
 			],
 			"terminator_squad": [
-				[role[100][19], {"max":1,"min":1, "role":$"{role[100,19]} Terminator"}],			//Veteran sergeant terminator
-				[role[100][4], {"max":9,"min":3,"loadout":{//terminator
+				[role[100][19], {"max":1,"min":1, "role":$"{role[100,19]} {role[100][4]}"}],			//Veteran sergeant terminator
+				[role[100][4], {
+					"max":9,
+				"min":3,
+				"role":$"{role[100][4]}"
+				"loadout":{//terminator
 					"required":{
 						"wep1":[wep1[100,4],4],
 						"wep2":[wep2[100,4],4], 
@@ -964,9 +968,11 @@ function scr_initialize_custom() {
 				[role[100][19], {
 				      "max":1,
 				      "min":1, 
-				      "role":$"{role[100,19]} Assault Terminator"
+				      "role":$"{role[100,19]} Assault {role[100][4]}"
 				 }],			//Veteran sergeant terminator
-				[role[100][4], {"max":9,"min":3,"loadout":{//terminator
+				[role[100][4], {"max":9,"min":3,
+				"role":$"Assault {role[100][4]}"
+				"loadout":{//terminator
 					"required":{
 						"wep1":["Thunder Hammer","max"],
 						"wep2":["Storm Shield","max"], 
@@ -976,7 +982,9 @@ function scr_initialize_custom() {
 			],
 			
 			"sternguard_veteran_squad": [
-				[role[100][3], {"max":9,"min":4, "loadout":{//tactical marine
+				[role[100][3], {"max":9,"min":4, 
+				"role":$"Sternguard {role[100][3]}",
+				"loadout":{//tactical marine
 					"required":{
 						"wep1":[wep1[100,3],4],
 						"wep2":[wep2[100,3],4], 
@@ -1026,11 +1034,16 @@ function scr_initialize_custom() {
 				["type_data" , {"display_data":$"Vanguard {role[100,3]} {squad_name}"}]
 			],
 			"devastator_squad": [
-				[role[100][9], {"max":9,"min":4,"loadout":{//devastator
-					"required":{
-						"wep1":["Bolter",4], 
-						"wep2":["Combat Knife",4]
-					}}}],		//veterans
+				[role[100][9], 
+					{"max":9,"min":4,
+						"loadout":{//devastator
+							"required":{
+								"wep1":["Bolter",4], 
+								"wep2":["Combat Knife",4]
+							}
+						}
+					}
+				],		//veterans
 
 				[role[100][18], {"max":1,"min":1, "role":$"{role[100,9]} {role[100,18]}"}],//sergeant
 				["type_data" , {"display_data":$"{role[100,9]} {squad_name}"}]
@@ -1200,7 +1213,7 @@ function scr_initialize_custom() {
 			"option" :{
 			"wep1":[
 			   [["Plasma Gun","Storm Bolter","Flamer", "Meltagun"], 2],
-			   [["Multi-Melta", "Heavy Bolter"] 1]],
+			   [["Multi-Melta", "Heavy Bolter"], 1],
 
 			]
 			} 
