@@ -190,8 +190,8 @@ function scr_company_order(company) {
 
 	var squad_builder = [
 		["tactical_squad",role[100][8],5],
-		["devestator_squad",role[100][9],5],
-		["veteran_squad",role[100][3],5],
+		["devastator_squad",role[100][9],5],
+		["sternguard_veteran_squad",role[100][3],5],
 		["terminator_squad",role[100][4],4],
 		["assault_squad",role[100][10],5],
 		["scout_squad",role[100][12],5],
