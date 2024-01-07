@@ -1,6 +1,76 @@
 
 function scr_initialize_custom() {
 
+
+	// These are the new variables that are being read, for the new creation
+	// They will also have to be loaded and saved
+	// Worry about that later
+    // this has starting XP for marines !
+
+	/*
+	chapter="Unnamed";
+	chapter_string="Unnamed";
+	icon=1;icon_name="da";custom=0;
+	founding=1;
+	fleet_type=1;
+	strength=5;cooperation=5;
+	purity=5;stability=5;
+	var i;i=-1;repeat(6){i+=1;adv[i]="";adv_num[i]=0;dis[i]="";dis_num[i]=0;}
+	homeworld="Temperate";homeworld_name=scr_star_name();
+	recruiting="Death";recruiting_name=scr_star_name();
+	flagship_name=scr_ship_name("imperial");
+	recruiting_exists=1;
+	homeworld_exists=1;
+	homeworld_rule=1;
+	aspirant_trial="Blood Duel";
+	discipline="default";
+	doctrine="Generalist"
+	battle_cry="For the Emperor";
+
+	main_color=1;secondary_color=1;trim_color=1;
+	pauldron2_color=1;pauldron_color=1;// Left/Right pauldron
+	lens_color=1;weapon_color=1;col_special=0;trim=1;
+
+	hapothecary=scr_marine_name();
+	hchaplain=scr_marine_name();
+	clibrarian=scr_marine_name();
+	fmaster=scr_marine_name();
+	recruiter=scr_marine_name();
+	admiral=scr_marine_name();
+
+	equal_specialists=0;
+	load_to_ships=2;
+
+	successors=0;
+
+	mutations=0;mutations_selected=0;
+	preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
+	zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
+
+	disposition[0]=0;
+	disposition[1]=0;// Prog
+	disposition[2]=0;// Imp
+	disposition[3]=0;// Mech
+	disposition[4]=0;// Inq
+	disposition[5]=0;// Ecclesiarchy
+	disposition[6]=0;// Astartes
+	disposition[7]=0;// Reserved
+
+	chapter_master_name=scr_marine_name();
+	chapter_master_melee=1;
+	chapter_master_ranged=1;
+	chapter_master_specialty=2;
+	*/
+
+
+
+
+
+
+
+
+
+
 	progenitor=obj_creation.founding;
 	successors=obj_creation.successors;
 	homeworld_rule=obj_creation.homeworld_rule;
@@ -94,6 +164,7 @@ function scr_initialize_custom() {
 	icon_name=obj_creation.icon_name;
 	man_size=0;
 	psy_powers=obj_creation.discipline;
+	cmbt_doct=obj_creation.doctrine;
 
 	strin=string(obj_creation.adv[1])+string(obj_creation.adv[2])+string(obj_creation.adv[3])+string(obj_creation.adv[4]);
 	strin2=string(obj_creation.dis[1])+string(obj_creation.dis[2])+string(obj_creation.dis[3])+string(obj_creation.dis[4]);
@@ -412,14 +483,13 @@ function scr_initialize_custom() {
 	millenium=41;
 
 	var company=0;
-	var chaap=1,whirlwind;
+	var chaap=1,whirlwind=4;
 	var second=100,third=100,fourth=100,fifth=100,sixth=100,seventh=100,eighth=100,ninth=100,tenth=100;
-	var assault=20,siege=0,temp1=0, intolerant=0;
+	var assault=20,siege=0,temp1=0,intolerant=0, devastator=20;
 	var k, i, v;k=0;i=0;v=0;
 	var techs=20,epistolary=4,apothecary=6,codiciery=6,lexicanum=10,terminator=10,veteran=89;
-	devastator=20;
+	
 
-	whirlwind=4;
 
 	specials=0;firsts=0;seconds=0;thirds=0;fourths=0;fifths=0;
 	sixths=0;sevenths=0;eighths=0;ninths=0;tenths=0;
@@ -490,7 +560,7 @@ function scr_initialize_custom() {
 	        if (bonus_marines>=5) and (tenth>0){bonus_marines-=5;second+=5;}
 	    }*/
 	}
-
+	
 	if (obj_creation.custom!=0){
 	    var bonus_marines=0,o=0;
 	    if (obj_creation.strength>5) then bonus_marines=(obj_creation.strength-5)*50;
@@ -586,7 +656,7 @@ function scr_initialize_custom() {
 			veteran-=20;
 			break;
 		case "Crimson Fists":
-			veteran+=30;
+			veteran+=20;
 			break;
 		case "Space Wolves":
 	    	veteran+=40;
@@ -605,6 +675,7 @@ function scr_initialize_custom() {
 		    veteran+=10;
 		    break;
 	}
+
 	if (obj_creation.custom=0) and (global.chapter_name!="Iron Hands") and (global.chapter_name!="Doom Benefactors"){
 	    if (veteran>=20) and (global.founding=0){veteran-=20;terminator+=20;}
 	    if (veteran>=10) and (global.founding!=0) and (global.chapter_name!="Lamenters"){veteran-=10;terminator+=10;}
@@ -875,56 +946,104 @@ function scr_initialize_custom() {
 				["type_data" , {"display_data":$"Command {squad_name}"}]
 			],
 			"terminator_squad": [
-				[role[100][19], {"max":1,"min":1, "role":$"{role[100,19]} Terminator"}],			//Veteran sergeant terminator
-				[role[100][4], {"max":9,"min":3,"loadout":{//terminator
+				[role[100][19], {"max":1,"min":1, "role":$"{role[100,19]} {role[100][4]}"}],			//Veteran sergeant terminator
+				[role[100][4], {
+					"max":9,
+				"min":3,
+				"role":$"{role[100][4]}"
+				"loadout":{//terminator
 					"required":{
 						"wep1":[wep1[100,4],4],
 						"wep2":[wep2[100,4],4], 
 					},
 					"option" :{
-						"wep1":[
-							[["Thunder Hammer", "Chainfist"],1],
-							[["Lightning Claw", "Power Axe", "Power Fist", "Power Sword"], 7]],
 						"wep2":[
-							[["Storm Shield"],1],
-							[["Assault Cannon","Heavy Flamer"], 1],
-							[["Multi-Melta", "Heavy Flamer", "Heavy Bolter"], 1],
-							[["Lightning Claw", "Meltagun", "Storm Bolter"], 6]
+							[["Assault Cannon","Heavy Flamer"], 4],
 						],
 					} 
 				}}],
 				["type_data" , {"display_data":$"{role[100,4]} {squad_name}"}]
 			],
-			"veteran_squad": [
-				[role[100][3], {"max":9,"min":4, "loadout":{//tactical marine
+			"terminator_assault_squad": [
+				[role[100][19], {
+				      "max":1,
+				      "min":1, 
+				      "role":$"{role[100,19]} Assault {role[100][4]}"
+				 }],			//Veteran sergeant terminator
+				[role[100][4], {"max":9,"min":3,
+				"role":$"Assault {role[100][4]}"
+				"loadout":{//terminator
+					"required":{
+						"wep1":["Thunder Hammer","max"],
+						"wep2":["Storm Shield","max"], 
+					},
+				}}],
+				["type_data" , {"display_data":$"{role[100,4]} Assault {squad_name}"}]
+			],
+			
+			"sternguard_veteran_squad": [
+				[role[100][3], {"max":9,"min":4, 
+				"role":$"Sternguard {role[100][3]}",
+				"loadout":{//tactical marine
 					"required":{
 						"wep1":[wep1[100,3],4],
 						"wep2":[wep2[100,3],4], 
 					},
 					"option" :{
 						"wep1":[
-							["Chainsword",2],
-							[["Power Sword", "Power Axe", "Lightning Claw"],4],
-							[["Chainfist", "Power Fist"],1],
+							["Chainsword",4],
+							[["Power Sword", "Power Axe"],2],
 						],
 						"wep2":[
-							[["Flamer", "Meltagun", "Plasma Pistol"],3],
-							[["Plasma Gun","Storm Bolter"], 1],
-							[["Multi-Melta", "Heavy Flamer", "Bolter"], 1],
-							[["Missile Launcher", "Lascannon", "Bolter"], 1],
+							[["Flamer", "Meltagun", "Plasma Gun","Storm Bolter"],2],
+							[["Multi-Melta","Heavy Bolter", "Lascannon",], 1],
+
 						]
 					} 
 				}}],		//veterans
 
 				[role[100][19], {"max":1,"min":1}],
-				["type_data" , {"display_data":$"{role[100,3]} {squad_name}"}]
+				["type_data" , {"display_data":$"Sternguard {role[100,3]} {squad_name}"}]
 			],
-			"devestator_squad": [
-				[role[100][9], {"max":9,"min":4,"loadout":{//devestator
+			"vanguard_veteran_squad": [
+				[role[100][3], {"max":9,"min":4, 
+				      "role":$"Vanguard {role[100][3]}",
+				      "loadout":{//tactical marine
 					"required":{
-						"wep1":["Bolter",4], 
-						"wep2":["Combat Knife",4]
-					}}}],		//veterans
+						"wep1":[wep1[100,3],4],
+						"wep2":["Bolt Pistol",4],
+						"mobi":["Jump Pack","max"]
+					},
+					"option" :{
+						"wep1":[
+							[["Power Sword","Power Axe","Lightning Claw"],4],
+							[["Thunder Hammer","Lightning Claw","Power Fist"],1],
+						],
+						"wep2":[
+							[["Flamer", "Plasma Pistol"],2],
+							[["Storm Shield"], 4],
+						]
+					} 
+				}}],		//veterans
+
+				[role[100][19], {"max":1,"min":1, "loadout":{
+					"required":{
+						"mobi":["Jump Pack",1]
+					}
+				}}],
+				["type_data" , {"display_data":$"Vanguard {role[100,3]} {squad_name}"}]
+			],
+			"devastator_squad": [
+				[role[100][9], 
+					{"max":9,"min":4,
+						"loadout":{//devastator
+							"required":{
+								"wep1":["Bolter",4], 
+								"wep2":["Combat Knife",4]
+							}
+						}
+					}
+				],		//veterans
 
 				[role[100][18], {"max":1,"min":1, "role":$"{role[100,9]} {role[100,18]}"}],//sergeant
 				["type_data" , {"display_data":$"{role[100,9]} {squad_name}"}]
@@ -937,14 +1056,8 @@ function scr_initialize_custom() {
 					},
 					"option" :{
 						"wep1":[
-							[["Flamer", "Meltagun"],1],
-							[["Plasma Gun","Storm Bolter"], 1],
-							[["Multi-Melta", "Heavy Flamer", "Bolter"], 1],
-							[["Missile Launcher", "Lascannon", "Bolter"], 1]],
-						"wep2":[
-							["Chainsword",2],
-							[["Power Sword", "Power Axe", "Lightning Claw"],1],
-							[["Chainfist", "Power Fist"],1]
+							[["Flamer", "Meltagun", "Plasma Gun"],2],
+							[["Multi-Melta", "Heavy Flamer", "Missile Launcher", "Lascannon"], 1],
 						]
 					} 
 				}}],		//tactical marine
@@ -963,10 +1076,10 @@ function scr_initialize_custom() {
 						},
 						"option" : {
 							"wep1":[
-								[["Flamer"], 1], [["Eviscerator"],2],
+								[["Eviscerator"],2],
 							],
 							"wep2":[
-								[["Plasma Pistol"], 1]
+								[["Plasma Pistol", "Flamer"], 1]
 							]
 						}
 					}
@@ -985,8 +1098,7 @@ function scr_initialize_custom() {
 	                    },
 	                    "option" :{
 	                        "wep1":[
-	                            [["Flamer","Plasma Gun",], 1],
-	                            [["Bolter","Stalker Pattern Bolter"], 3],
+	                            [["Bolter","Stalker Pattern Bolter"], 2],
 	                            [["Missile Launcher","Heavy Bolter"], 1]],
 	                        "wep2":[
 	                            [["Chainsword","Combat Knife"], 5],
@@ -1002,7 +1114,7 @@ function scr_initialize_custom() {
 	            	"loadout":{
 		                "option":{
 		                    "wep1":[
-		                        [["Power Sword","Chainsword","Power Axe","Power Fist"],1]
+		                        [["Power Sword","Chainsword","Power Axe",],1]
 		                    ],
 		                    "wep2":[
 		                        [["Plasma Pistol","Combiflamer","Stalker Pattern Bolter","Storm Bolter"],1]
@@ -1043,7 +1155,7 @@ function scr_initialize_custom() {
 		            "loadout":{
 			            "option":{
 			                "wep1":[
-			                    [["Power Sword","Chainsword","Power Axe","Power Fist"],1]
+			                    [["Power Sword","Chainsword","Power Axe",],1]
 			                ],
 			                "wep2":[
 			                    [["Combiflamer","Stalker Pattern Bolter",],1]
@@ -1066,11 +1178,9 @@ function scr_initialize_custom() {
                     "option" :{
                         "wep1":[
                             [["Power Sword","Power Axe","Chainsword"],5],
-                            [["Power Fist","Lightning Claw"],1]
                          ],
                         "wep2":[
-                            [["Flamer", "Meltagun","Bolt Pistol"],2],
-                            [["Plasma Pistol","Bolt Pistol"], 4],
+                            [["Flamer", "Meltagun","Plasma Pistol","Bolt Pistol"],2],
                             
                         ],
                     } 
@@ -1092,7 +1202,7 @@ function scr_initialize_custom() {
 			      ]
 			      )
 	}
-	if (global.chapter_name == "White Scars") or (obj_ini.progenitor==2){
+	if (global.chapter_name == "White Scars") or (obj_ini.progenitor==2) or (obj_creation.doctrine="Shock Assault"){
 		variable_struct_set(st , "bikers",[
 		[role[100][8], {"max":9,"min":4, "loadout":{ //tactical marine
 			"required":{
@@ -1102,12 +1212,9 @@ function scr_initialize_custom() {
 			},
 			"option" :{
 			"wep1":[
-			   [["Flamer", "Meltagun"],1],
-			   [["Plasma Gun","Storm Bolter"], 2],
-			   [["Multi-Melta", "Heavy Flamer", "Bolter"], 1],
-			   [["Missile Launcher", "Multi-Melta", "Bolter"], 1]],
-			"wep2":[
-			   [["Power Sword", "Power Axe", "Chainsword"],5],
+			   [["Plasma Gun","Storm Bolter","Flamer", "Meltagun"], 2],
+			   [["Multi-Melta", "Heavy Bolter"], 1],
+
 			]
 			} 
 		},
@@ -1877,7 +1984,7 @@ function scr_initialize_custom() {
 	    veh_lid[company,v]=0;veh_wid[company,v]=2;
 	}
 	var predrelic=2;
-	if (global.chapter_name="Iron Hands") then predrelic=3;
+	if (global.chapter_name="Iron Hands") or (obj_creation.doctrine="Breakthrough") then predrelic=3;
 	repeat(predrelic){
 		v+=1;
 		man_size+=10;
@@ -1926,7 +2033,7 @@ function scr_initialize_custom() {
 			TTRPG[company,i]= new TTRPG_stats("chapter", company,i, "blank");
 	    }
 
-	    var company_experience=0, company_unit2="", company_unit3="", dready=0, rhinoy=0, whirly=0, speedy=0,stahp=0;
+	    var company_experience=0, company_unit2="", company_unit3="", dready=0, rhinoy=0, whirly=0, speedy=0, predy=0,stahp=0;
 
 	    v=0;
 	    i=-1;
@@ -1947,13 +2054,13 @@ function scr_initialize_custom() {
 
 	        company_experience=(16-company)*5;
 
+			}
 	        // temp1=(100-(assault*devastator))*10;company_experience=(16-company)*5;
 	        // temp1-=1;
 
 	        // if (company=2){dready=1;
-	        	if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=1;
-	        rhinoy=8;whirly=whirlwind;speedy=2;
-	    }
+
+
 
 		// random xp for each marine company
 		// this gives the entire company the same xp
@@ -1967,33 +2074,88 @@ function scr_initialize_custom() {
 
 	            dready=1;
 	            if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=1;
-	            rhinoy=8;whirly=whirlwind;speedy=2;
+	            rhinoy=8;whirly=whirlwind;speedy=3;
 	            if (second=0) then stahp=1;
-			
+				switch(obj_creation.doctrine){
+					case "Generalist":
+					predy=2;
+					break;
+					case "Breakthrough":
+					rhinoy-=3;dready+=2;speedy-=3;predy+=3;assault-=10;devastator+=10;
+					break;
+					case "Shock Assault": //rhino is stand in until new vehs are added(Razorback)
+					rhinoy-=3;predy=3;speedy-=3;assault+=10;devastator-=10;
+					break;
+					case "Irregular Warfare":
+					speedy+=2;whirly+=1;assault-=10;devastator-=10;
+					break;
+				}
 	      }
 	        if (company=3){
 	            temp1=(third-(assault+devastator));company_unit2="assault";company_unit3="devastator";
 	            temp1-=2;
 	            // dready=2;
 	            if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=2;
-	            rhinoy=8;whirly=whirlwind;speedy=2;
+	            rhinoy=8;whirly=whirlwind;speedy=3;
 	            if (third=0) then stahp=1;
+				switch(obj_creation.doctrine){
+					case "Generalist":
+					predy=2;
+					break;
+					case "Breakthrough":
+					rhinoy-=3;dready+=2;speedy-=3; predy+=3;
+					break;
+					case "Shock Assault": //rhino is stand in until new vehs are added(Razorback)
+					rhinoy-=3;predy=3;speedy-=3;
+					break;
+					case "Irregular Warfare":
+					speedy+=2; whirly+=1;
+					break;
+				}
 	        }
 	        if (company=4){
 	            temp1=(fourth-(assault+devastator));company_unit2="assault";company_unit3="devastator";
 	            temp1-=2;
 	            // dready=2;
 	            if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=2;
-	            rhinoy=8;whirly=whirlwind;speedy=2;
+	            rhinoy=8;whirly=whirlwind;speedy=3;
 	            if (fourth=0) then stahp=1;
+				switch(obj_creation.doctrine){
+					case "Generalist":
+					predy=2;
+					break;
+					case "Breakthrough":
+					rhinoy-=3;dready+=2;speedy-=3; predy+=3;
+					break;
+					case "Shock Assault": //rhino is stand in until new vehs are added(Razorback)
+					rhinoy-=3;predy=3;speedy-=3;
+					break;
+					case "Irregular Warfare":
+					speedy+=2;whirly+=1;
+					break;
+				}
 	        }
 	        if (company=5){
 	            temp1=(fifth-(assault+devastator));company_unit2="assault";company_unit3="devastator";
 	            temp1-=2;
 	            // dready=2;
 	            if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=2;
-	            rhinoy=8;whirly=whirlwind;speedy=2;
+	            rhinoy=8;whirly=whirlwind;speedy=3;
 	            if (fifth=0) then stahp=1;
+				switch(obj_creation.doctrine){
+					case "Generalist":
+					predy=2;
+					break;
+					case "Breakthrough":
+					rhinoy-=3;dready+=2; speedy-=3; predy+=3;
+					break;
+					case "Shock Assault": //rhino is stand in until new vehs are added(Razorback)
+					rhinoy-=3;predy=3;speedy-=3;
+					break;
+					case "Irregular Warfare":
+					speedy+=2;whirly+=1;
+					break;
+				}
 	        }
 	        if (company=6){
 	            temp1=sixth;company_unit2="";company_unit3="";
@@ -2009,6 +2171,8 @@ function scr_initialize_custom() {
 	            if (obj_creation.custom=0) then dready=2;
 	            rhinoy=8;whirly=0;speedy=8;
 	            if (seventh=0) then stahp=1;
+				if (obj_creation.doctrine="Irregular Warfare") then
+				speedy-=6
 	        }
 	        if (company=8){
 	            temp1=eighth;company_unit2="";company_unit3="";
@@ -2024,7 +2188,22 @@ function scr_initialize_custom() {
 	            if (obj_creation.custom=0) then dready=2;
 	            rhinoy=2;whirly=0;speedy=0;
 	            if (ninth=0) then stahp=1;
-	        }
+				switch(obj_creation.doctrine){
+					case "Generalist":
+					predy=4;
+					break;
+					case "Breakthrough":
+					predy=5;
+					break;
+					case "Shock Assault":
+					predy=3;
+					break;
+					case "Irregular Warfare":
+					predy=6;
+					break;
+				}
+			}
+			
 	        if (company=10){
 	            temp1=tenth-2;
 	            company_unit2="";
@@ -2033,6 +2212,10 @@ function scr_initialize_custom() {
 	            rhinoy=8;
 	            whirly=0;
 	            speedy=0;
+				if (obj_creation.doctrine="Irregular Warfare") then
+				speedy=5
+				whirly=6
+			
 
 	            // if (obj_creation.custom=0) then temp1-=5;
 
@@ -2431,17 +2614,14 @@ function scr_initialize_custom() {
 	            veh_lid[company,v]=0;
 	            veh_wid[company,v]=2;
 	        }
-	        if (company=9) or (global.chapter_name="Iron Hands"){
-	            var predy;predy=5;
-	            if (global.chapter_name="Iron Hands") then predy=2;
-
-	            repeat(predy){v+=1;man_size+=10;
+			
+	        if (predy>0) then repeat(predy){v+=1;man_size+=10;
 	                veh_race[company,v]=1;veh_loc[company,v]=home_name;veh_role[company,v]="Predator";
 	                if (!floor(v mod 2) == 1){veh_wep1[company,v]="Twin Linked Lascannon Turret";veh_wep2[company,v]="Lascannon Sponsons";veh_wep3[company,v]="HK Missile";veh_upgrade[company,v]="";veh_acc[company,v]="Searchlight";}
 	                if (floor(v mod 2) == 1){veh_wep1[company,v]="Autocannon Turret";veh_wep2[company,v]="Heavy Bolter Sponsons";veh_wep3[company,v]="Storm Bolter";veh_upgrade[company,v]="";veh_acc[company,v]="Dozer Blades";}veh_wid[company,v]=2;
 	                veh_hp[company,v]=100;veh_chaos[company,v]=0;veh_pilots[company,v]=0;veh_lid[company,v]=0;
-	            }
 	        }
+	        
 	        man_size+=k;
 	    }
 

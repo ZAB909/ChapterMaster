@@ -409,9 +409,9 @@ if (slide=2){
     }
     
     if (popup!="icons"){
-        draw_line(445,551,1125,551);
-        draw_line(445,552,1125,552);
-        draw_line(445,553,1125,553);
+        draw_line(445,531,1125,531);
+        draw_line(445,532,1125,532);
+        draw_line(445,533,1125,533);
     }
     
     if (popup!="") or (custom<2) then draw_set_alpha(0.5);
@@ -419,70 +419,112 @@ if (slide=2){
     
     if (popup!="icons"){
         draw_set_halign(fa_left);draw_set_font(fnt_40k_30b);
-        draw_text_transformed(436,564,string_hash_to_newline("Chapter Advantages"),0.5,0.5,0);draw_set_font(fnt_40k_14);
-        if (adv_num[1]=0) then draw_text(436,590,string_hash_to_newline("[+]"));if (adv_num[1]>0) then draw_text(436,590,string_hash_to_newline("[-] "+string(adv[1])));
-        if (adv_num[2]=0) and (adv_num[1]>0) then draw_text(436,610,string_hash_to_newline("[+]"));if (adv_num[2]>0) then draw_text(436,610,string_hash_to_newline("[-] "+string(adv[2])));
-        if (adv_num[3]=0) and (adv_num[2]>0) then draw_text(436,630,string_hash_to_newline("[+]"));if (adv_num[3]>0) then draw_text(436,630,string_hash_to_newline("[-] "+string(adv[3])));
-        if (adv_num[4]=0) and (adv_num[3]>0) then draw_text(436,650,string_hash_to_newline("[+]"));if (adv_num[4]>0) then draw_text(436,650,string_hash_to_newline("[-] "+string(adv[4])));
+        draw_text_transformed(500,539,string_hash_to_newline("Chapter Advantages"),0.5,0.5,0);draw_set_font(fnt_40k_14);
+        if (adv_num[1]=0) then draw_text(436,565,string_hash_to_newline("[+]"));if (adv_num[1]>0) then draw_text(436,565,string_hash_to_newline("[-] "+string(adv[1])));
+        if (adv_num[2]=0) and (adv_num[1]>0) then draw_text(436,585,string_hash_to_newline("[+]"));if (adv_num[2]>0) then draw_text(436,585,string_hash_to_newline("[-] "+string(adv[2])));
+        if (adv_num[3]=0) and (adv_num[2]>0) then draw_text(610,565,string_hash_to_newline("[+]"));if (adv_num[3]>0) then draw_text(610,565,string_hash_to_newline("[-] "+string(adv[3])));
+        if (adv_num[4]=0) and (adv_num[3]>0) then draw_text(610,585,string_hash_to_newline("[+]"));if (adv_num[4]>0) then draw_text(610,585,string_hash_to_newline("[-] "+string(adv[4])));
         
-        draw_set_font(fnt_40k_30b);draw_text_transformed(810,564,string_hash_to_newline("Chapter Disadvantages"),0.5,0.5,0);draw_set_font(fnt_40k_14);
-        if (dis_num[1]=0) then draw_text(810,590,string_hash_to_newline("[+]"));if (dis_num[1]>0) then draw_text(810,590,string_hash_to_newline("[-] "+string(dis[1])));
-        if (dis_num[2]=0) and (dis_num[1]>0) then draw_text(810,610,string_hash_to_newline("[+]"));if (dis_num[2]>0) then draw_text(810,610,string_hash_to_newline("[-] "+string(dis[2])));
-        if (dis_num[3]=0) and (dis_num[2]>0) then draw_text(810,630,string_hash_to_newline("[+]"));if (dis_num[3]>0) then draw_text(810,630,string_hash_to_newline("[-] "+string(dis[3])));
-        if (dis_num[4]=0) and (dis_num[3]>0) then draw_text(810,650,string_hash_to_newline("[+]"));if (dis_num[4]>0) then draw_text(810,650,string_hash_to_newline("[-] "+string(dis[4])));
+        draw_set_font(fnt_40k_30b);draw_text_transformed(860,539,string_hash_to_newline("Chapter Disadvantages"),0.5,0.5,0);draw_set_font(fnt_40k_14);
+        if (dis_num[1]=0) then draw_text(810,565,string_hash_to_newline("[+]"));if (dis_num[1]>0) then draw_text(810,565,string_hash_to_newline("[-] "+string(dis[1])));
+        if (dis_num[2]=0) and (dis_num[1]>0) then draw_text(810,585,string_hash_to_newline("[+]"));if (dis_num[2]>0) then draw_text(810,585,string_hash_to_newline("[-] "+string(dis[2])));
+        if (dis_num[3]=0) and (dis_num[2]>0) then draw_text(960,565,string_hash_to_newline("[+]"));if (dis_num[3]>0) then draw_text(960,565,string_hash_to_newline("[-] "+string(dis[3])));
+        if (dis_num[4]=0) and (dis_num[3]>0) then draw_text(960,585,string_hash_to_newline("[+]"));if (dis_num[4]>0) then draw_text(960,585,string_hash_to_newline("[-] "+string(dis[4])));
         
-        if (scr_hit(436,564,631,583)=true){tooltip="Chapter Advantages";tooltip2="Advantages cost 20 points, and improve the performance of your chapter in a specific domain.";}
-        if (scr_hit(810,564,1030,583)=true){tooltip="Chapter Disadvantages";tooltip2="Disadvantages Grant 20 additional points, and penalize the performance of your chapter.";}
+        if (scr_hit(500,539,655,558)=true){tooltip="Chapter Advantages";tooltip2="Advantages cost 20 points, and improve the performance of your chapter in a specific domain.";}
+        if (scr_hit(860,539,1035,558)=true){tooltip="Chapter Disadvantages";tooltip2="Disadvantages Grant 20 additional points, and penalize the performance of your chapter.";}
     }
     
     if (popup!="icons"){
-        if (scr_hit(436,590,640,619)=true){
+        if (scr_hit(436,565,600,594)=true){
             if (adv_num[1]!=0){tooltip=advantage[adv_num[1]];tooltip2=advantage_tooltip[adv_num[1]];}
             if (mouse_left>=1) and (cooldown<=0) and (points+20<=maxpoints) and (adv_num[1]=0) and (popup="") and (custom>1){popup="advantages";cooldown=8000;temp=1;}
-            if (mouse_left>=1) and (mouse_x<=456) and (adv_num[1]>0) and (adv_num[2]=0) and (cooldown<=0) and (custom>1){points-=20;adv[1]="";adv_num[1]=0;cooldown=8000;}
+            if (mouse_left>=1) and (mouse_x<=446) and (adv_num[1]>0) and (adv_num[2]=0) and (cooldown<=0) and (custom>1){points-=20;adv[1]="";adv_num[1]=0;cooldown=8000;}
         }
-        if (scr_hit(436,610,640,639)=true){
+        if (scr_hit(436,585,600,614)=true){
             if (adv_num[2]!=0){tooltip=advantage[adv_num[2]];tooltip2=advantage_tooltip[adv_num[2]];}
             if (mouse_left>=1) and (cooldown<=0) and (points+20<=maxpoints) and (adv_num[2]=0) and (adv_num[1]!=0) and (popup="") and (custom>1){popup="advantages";cooldown=8000;temp=2;}
-            if (mouse_left>=1) and (mouse_x<=456) and (adv_num[2]>0) and (adv_num[3]=0) and (cooldown<=0) and (custom>1){points-=20;adv[2]="";adv_num[2]=0;cooldown=8000;}
+            if (mouse_left>=1) and (mouse_x<=446) and (adv_num[2]>0) and (adv_num[3]=0) and (cooldown<=0) and (custom>1){points-=20;adv[2]="";adv_num[2]=0;cooldown=8000;}
         }
-        if (scr_hit(436,630,640,659)=true){
+        if (scr_hit(610,565,764,594)=true){
             if (adv_num[3]!=0){tooltip=advantage[adv_num[3]];tooltip2=advantage_tooltip[adv_num[3]];}
             if (mouse_left>=1) and (cooldown<=0) and (points+20<=maxpoints) and (adv_num[3]=0) and (adv_num[2]!=0) and (popup="") and (custom>1){popup="advantages";cooldown=8000;temp=3;}
-            if (mouse_left>=1) and (mouse_x<=456) and (adv_num[3]>0) and (adv_num[4]=0) and (cooldown<=0) and (custom>1){points-=20;adv[3]="";adv_num[3]=0;cooldown=8000;}
+            if (mouse_left>=1) and (mouse_x<=620) and (adv_num[3]>0) and (adv_num[4]=0) and (cooldown<=0) and (custom>1){points-=20;adv[3]="";adv_num[3]=0;cooldown=8000;}
         }
-        if (scr_hit(436,650,640,679)=true){
+        if (scr_hit(610,585,764,614)=true){
             if (adv_num[4]!=0){tooltip=advantage[adv_num[4]];tooltip2=advantage_tooltip[adv_num[4]];}
             if (mouse_left>=1) and (cooldown<=0) and (points+20<=maxpoints) and (adv_num[4]=0) and (adv_num[3]!=0) and (popup="") and (custom>1){popup="advantages";cooldown=8000;temp=4;}
-            if (mouse_left>=1) and (mouse_x<=456) and (adv_num[4]>0) and (cooldown<=0) and (custom>1){points-=20;adv[4]="";adv_num[4]=0;cooldown=8000;}
+            if (mouse_left>=1) and (mouse_x<=620) and (adv_num[4]>0) and (cooldown<=0) and (custom>1){points-=20;adv[4]="";adv_num[4]=0;cooldown=8000;}
         }
         
-        if (scr_hit(810,590,1014,619)=true){
+        if (scr_hit(810,565,950,594)=true){
             if (dis_num[1]!=0){tooltip=disadvantage[dis_num[1]];tooltip2=dis_tooltip[dis_num[1]];}
             if (mouse_left>=1) and (cooldown<=0) and (dis_num[1]=0) and (dis_num[2]=0) and (popup="") and (custom>1){popup="disadvantages";cooldown=8000;temp=1;}
-            if (mouse_left>=1) and (mouse_x<=830) and (dis_num[1]>0) and (dis_num[2]=0) and (cooldown<=0) and (points+20<=maxpoints) and (custom>1){points+=20;dis[1]="";dis_num[1]=0;cooldown=8000;}
+            if (mouse_left>=1) and (mouse_x<=820) and (dis_num[1]>0) and (dis_num[2]=0) and (cooldown<=0) and (points+20<=maxpoints) and (custom>1){points+=20;dis[1]="";dis_num[1]=0;cooldown=8000;}
         }
-        if (scr_hit(810,610,1014,639)=true){
+        if (scr_hit(810,585,950,614)=true){
             if (dis_num[2]!=0){tooltip=disadvantage[dis_num[2]];tooltip2=dis_tooltip[dis_num[2]];}
             if (mouse_left>=1) and (cooldown<=0) and (dis_num[2]=0) and (dis_num[3]=0) and (dis_num[1]>0) and (popup="") and (custom>1){popup="disadvantages";cooldown=8000;temp=2;}
-            if (mouse_left>=1) and (mouse_x<=830) and (dis_num[2]>0) and (dis_num[3]=0) and (cooldown<=0) and (points+20<=maxpoints) and (custom>1){points+=20;dis[2]="";dis_num[2]=0;cooldown=8000;}
+            if (mouse_left>=1) and (mouse_x<=820) and (dis_num[2]>0) and (dis_num[3]=0) and (cooldown<=0) and (points+20<=maxpoints) and (custom>1){points+=20;dis[2]="";dis_num[2]=0;cooldown=8000;}
         }
-        if (scr_hit(810,630,1014,659)=true){
+        if (scr_hit(960,565,1100,594)=true){
             if (dis_num[3]!=0){tooltip=disadvantage[dis_num[3]];tooltip2=dis_tooltip[dis_num[3]];}
             if (mouse_left>=1) and (cooldown<=0) and (dis_num[3]=0) and (dis_num[4]=0) and (dis_num[2]>0) and (popup="") and (custom>1){popup="disadvantages";cooldown=8000;temp=3;}
-            if (mouse_left>=1) and (mouse_x<=830) and (dis_num[3]>0) and (dis_num[4]=0) and (cooldown<=0) and (points+20<=maxpoints) and (custom>1){points+=20;dis[3]="";dis_num[3]=0;cooldown=8000;}
+            if (mouse_left>=1) and (mouse_x<=970) and (dis_num[3]>0) and (dis_num[4]=0) and (cooldown<=0) and (points+20<=maxpoints) and (custom>1){points+=20;dis[3]="";dis_num[3]=0;cooldown=8000;}
         }
-        if (scr_hit(810,650,1014,679)=true){
+        if (scr_hit(960,585,1100,614)=true){
             if (dis_num[4]!=0){tooltip=disadvantage[dis_num[4]];tooltip2=dis_tooltip[dis_num[4]];}
             if (mouse_left>=1) and (cooldown<=0) and (dis_num[4]=0) and (popup="") and (dis_num[3]>0) and (custom>1){popup="disadvantages";cooldown=8000;temp=4;}
-            if (mouse_left>=1) and (mouse_x<=830) and (dis_num[4]>0) and (cooldown<=0) and (points+20<=maxpoints) and (custom>1){points+=20;dis[4]="";dis_num[4]=0;cooldown=8000;}
+            if (mouse_left>=1) and (mouse_x<=970) and (dis_num[4]>0) and (cooldown<=0) and (points+20<=maxpoints) and (custom>1){points+=20;dis[4]="";dis_num[4]=0;cooldown=8000;}
         }
         
         draw_set_alpha(1);
     }
     
-    
-    
+	    if (popup!="icons"){
+        draw_line(445,615,1125,615);
+        draw_line(445,616,1125,616);
+        draw_line(445,617,1125,617);
+    }
+
+	    if (popup!="icons"){
+        draw_set_halign(fa_left);draw_set_font(fnt_40k_30b);
+        draw_text_transformed(450,625,string_hash_to_newline("Chapter Combat Doctrine"),0.6,0.6,0);draw_set_font(fnt_40k_14);
+		if (scr_hit(445,625,700,650)=true){tooltip="Combat Doctrine";tooltip2="The style of warfare your Chapter has specialized in.";}
+		
+		var doct_info;doct_info=""
+		if (doctrine=="Generalist") then doct_info="-A well rounded approach to tactics as described in the Codex astartes favoring no particular troop or vehicle your chapter is inherently adaptable as a jack of all trades.";
+        if (doctrine=="Breakthrough") then doct_info="-Vehicle based spearheads supported by heavily armed and armored Astartes seek to crush enemy lines with walls of Ceramite and unmatched firepower your chapter favors Terminators, Devastators, Predators, and Land Raiders.";
+        if (doctrine=="Shock Assault") then doct_info="-Nimble infantry ravage enemy lines at high speeds getting stuck in and crushing the enemy before redeploying just as swiftly your chapter favors Assault Marines, Bikes, and Drop assaults.";
+        if (doctrine=="Irregular Warfare") then doct_info="-Stealthy combatants eliminate enemy leaders from afar, or ambush vulnerable supply trains seeking to bleed the enemy dry with a thousand cuts your chapter favors Scouts, Land speeders, and capable small strike-forces.";
+        if (scr_hit(550,670,550+string_width(doctrine),690)=true){tooltip=string(doctrine);tooltip2=doct_info;}
+		
+		if (custom<2) then draw_set_alpha(0.5);
+        if (custom=2) then draw_sprite_stretched(spr_creation_arrow,0,450,665,32,32);
+        if (custom=2) then draw_sprite_stretched(spr_creation_arrow,1,495,665,32,32);
+        draw_set_alpha(1);
+
+		var fug,fug2;fug=string_delete(doctrine,2,string_length(doctrine));
+        fug2=string_delete(doctrine,1,1);draw_text_transformed(550,670,string_hash_to_newline(string_upper(fug)+string(fug2)),1.25,1.25,0);
+        
+
+
+		if (scr_hit(495,665,527,697)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
+            var onceh;onceh=0;cooldown=8000;
+            if (doctrine=="Generalist") and (onceh=0){doctrine="Breakthrough";onceh=1;}
+            if (doctrine=="Breakthrough") and (onceh=0){doctrine="Shock Assault";onceh=1;}
+            if (doctrine=="Shock Assault") and (onceh=0){doctrine="Irregular Warfare";onceh=1;}
+            if (doctrine=="Irregular Warfare") and (onceh=0){doctrine="Generalist";onceh=1;}
+        }
+        if (scr_hit(450,665,482,697)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
+            var onceh;onceh=0;cooldown=8000;
+            if (doctrine=="Generalist") and (onceh=0){doctrine="Irregular Warfare";onceh=1;}
+            if (doctrine=="Irregular Warfare") and (onceh=0){doctrine="Shock Assault";onceh=1;}
+            if (doctrine=="Shock Assault") and (onceh=0){doctrine="Breakthrough";onceh=1;}
+            if (doctrine=="Breakthrough") and (onceh=0){doctrine="Generalist";onceh=1;}
+        }
+	
+		}
     if (popup="icons"){
         draw_set_alpha(1);
         draw_set_color(0);

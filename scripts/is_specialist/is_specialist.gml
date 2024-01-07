@@ -37,7 +37,7 @@ function role_groups(group){
 		case "rank_and_file":
 			role_list = [
 				obj_ini.role[100,8], //tactical marine
-				obj_ini.role[100,9], //devestator
+				obj_ini.role[100,9], //devastator
 				obj_ini.role[100,10], //assualt
 				obj_ini.role[100,12], //scout
 			];
