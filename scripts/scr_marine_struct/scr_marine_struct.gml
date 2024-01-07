@@ -1431,7 +1431,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 
 		static ranged_attack = function(weapon_slot=0){
-			encumbered_ranged=false;			
+			encumbered_ranged=false;
+			var final_range_attack=0;		
 			//base modifyer based on unit skill set
 			ranged_att = 100*(((ballistic_skill/50) + (dexterity/400)+ (experience()/500)));
 			var explanation_string = $"base ranged:X{ranged_att/100}#"
@@ -1454,10 +1455,31 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}
 			var primary_weapon= new equipment_struct({},"");
 			var secondary_weapon= new equipment_struct({},"");
+			if (carry_data[0]>carry_data[1]){
+				encumbered_ranged=true;					
+				ranged_att*=0.6;
+				explanation_string+=$"encumbered penalty:X0.6#";
+			}			
 			if (weapon_slot==0){
 				//decide if any weapons are ranged
 				if (_wep1.range<=1.1 && _wep2.range<=1.1){
-					ranged_damage_data= [0,explanation_string,carry_data,primary_weapon, secondary_weapon];
+					if (array_length(_wep1.second_profiles) + array_length(_wep2.second_profiles) ==0){
+						ranged_damage_data = [final_range_attack,explanation_string,carry_data,primary_weapon, secondary_weapon];
+					} else {
+						var other_profiles = array_concat(_wep1.second_profiles,_wep2.second_profiles);
+						for (var sec = 0;sec<array_length(other_profiles);sec++){
+							var sec_profile = gear_weapon_data("weapon",other_profiles[sec],"all",false,weapon_one_quality);
+							if (is_struct(sec_profile)){
+								if (sec_profile.range>1.1 && sec_profile.attack>0){
+									final_range_attack+=(sec_profile.attack*(ranged_att/100));
+									explanation_string+=$"{sec_profile.name} +{sec_profile.attack}#";
+								}
+							}
+						}
+						if (array_length(_wep1.second_profiles)>0) then primary_weapon=gear_weapon_data("weapon",_wep1.second_profiles[0],"all",false,weapon_one_quality);
+						if (array_length(_wep2.second_profiles)>0) then primary_weapon=gear_weapon_data("weapon",_wep2.second_profiles[0],"all",false,weapon_two_quality);
+						ranged_damage_data = [final_range_attack,explanation_string,carry_data,primary_weapon, secondary_weapon];
+					}
 					return ranged_damage_data;
 				} else {
 					if (_wep1.range<=1.1){
@@ -1466,7 +1488,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 						primary_weapon=_wep1;
 					} else {
 						//if both weapons are ranged pick best
-						primary_weapon = _wep1.attack>_wep2.attack ? _wep1 : _wep2;
+						if (_wep1.attack>_wep2.attack){
+							primary_weapon=_wep1;
+							secondary_weapon=_wep2;
+						} else{
+							secondary_weapon=_wep1;
+							primary_weapon=_wep2;
+						}
 					}
 				}
 			} else {
@@ -1485,11 +1513,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					}
 				}
 			}
-			if (carry_data[0]>carry_data[1]){
-				encumbered_ranged=true;					
-				ranged_att*=0.6;
-				explanation_string+=$"encumbered penalty:X0.6#";
-			}
 			if (!encumbered_ranged){
 			 	var total_gear_mod=0;							
 				total_gear_mod+=get_armour_data("ranged_mod");
@@ -1505,7 +1528,17 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				}
 			}
 			//return final ranged damage output
-			var final_range_attack = floor((ranged_att/100)* primary_weapon.attack);
+			final_range_attack = floor((ranged_att/100)* primary_weapon.attack);
+			if (!encumbered_ranged){
+				if (primary_weapon.has_tag("pistol") &&secondary_weapon.has_tag("pistol")){
+					final_range_attack+=floor((ranged_att/100)* secondary_weapon.attack);
+					explanation_string+=$"dual pistols:+{secondary_weapon.attack}#";			
+				} else if (secondary_weapon.attack>0){
+					var second_attack =floor((ranged_att/100)* secondary_weapon.attack)*0.5;
+					final_range_attack+=second_attack;
+					explanation_string+=$"secondary:+{second_attack}#";			
+				}
+			}
 			ranged_damage_data = [final_range_attack,explanation_string,carry_data,primary_weapon, secondary_weapon];
 			return ranged_damage_data;
 		};

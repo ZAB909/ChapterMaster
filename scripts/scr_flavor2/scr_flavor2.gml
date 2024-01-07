@@ -259,7 +259,7 @@ function scr_flavor2(argument0, argument1) {
 	    w+=1;
     
 	    if (lost[w]!="") and (lost_num[w]>0){
-	        var speshul;speshul=0;
+	        var speshul=0;
 	        if (lost[w]="Chapter Master") then speshul=1;
 	        if (lost[w]="Chief "+string(obj_ini.role[100,17])) then speshul=1;
 	        if (lost[w]="Forge Master") then speshul=1;
