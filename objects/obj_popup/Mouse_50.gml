@@ -698,7 +698,6 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                         if (scout_check=0){
                             unit.update_armour(n_armour)
                             obj_controller.ma_armour[i]=n_armour;
-                            if (n_armour="Dreadnought") and (obj_ini.age[company][obj_controller.ide[i]]!=floor(obj_ini.age[company][obj_controller.ide[i]])) then obj_ini.age[company][obj_controller.ide[i]]=floor(obj_ini.age[company][obj_controller.ide[i]]);
                         }
                     }
 
@@ -1141,10 +1140,6 @@ if (mouse_x>=xx+408) and (mouse_y>=yy+393) and (mouse_x<xx+518) and (mouse_y<yy+
                         scr_add_item(obj_ini.mobi[target_comp,obj_controller.ide[i]],1);
                         obj_ini.mobi[target_comp,obj_controller.ide[i]]="";
                         obj_controller.ma_mobi[i]="";
-                        if (obj_ini.artifact[obj_controller.menu_artifact]=="Dreadnought Armour"){
-                            if (obj_ini.age[target_comp,obj_controller.ide[i]]!=floor(obj_ini.age[target_comp,obj_controller.ide[i]])) then obj_ini.age[target_comp,obj_controller.ide[i]]=floor(obj_ini.age[target_comp,obj_controller.ide[i]]);
-                        }
-
                     }
                 }
                 obj_controller.ma_armour[i]="";obj_ini.armour[target_comp,obj_controller.ide[i]]="";
