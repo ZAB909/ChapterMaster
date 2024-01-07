@@ -56,7 +56,6 @@ function scr_save(save_slot,save_id) {
 	    ini_write_real("Controller","x",obj_controller.x);
 	    ini_write_real("Controller","y",obj_controller.y);
 	    ini_write_real("Controller","alll",obj_controller.alll);
-	    ini_write_real("Controller","was_zoomed",obj_controller.was_zoomed);
 	    ini_write_real("Controller","zoomed",obj_controller.zoomed);
 	    ini_write_real("Controller","chaos_rating",obj_controller.chaos_rating);
 	    ini_write_string("Controller","fleet_type",obj_controller.fleet_type);
