@@ -896,19 +896,20 @@ if (gene_xeno>0){
         }
     }
 }
-var p=0,penitorium=0;
+var p=0,penitorium=0, unit;
 for(var c=0; c<11; c++){
     for(var e=1; e<=250; e++){
         if (obj_ini.god[c,e]>=10){
+            unit=obj_ini.TTRPG[c][e];
             p+=1;
             penit_co[p]=c;
             penit_id[p]=e;
             penitorium+=1;
-            if (obj_ini.chaos[c,e]<90) and (obj_ini.chaos[c,e]>0){
+            if (unit.corruption<90) and (unit.corruption>0){
                 var heresy_old=0,heresy_new=0;
-                heresy_old=round((obj_ini.chaos[c,e]*obj_ini.chaos[c,e])/50)-0.5;
-                heresy_new=(heresy_old*50)/obj_ini.chaos[c,e];
-                obj_ini.chaos[c,e]=max(0,heresy_new);
+                heresy_old=round((unit.corruption*unit.corruption)/50)-0.5;
+                heresy_new=(heresy_old*50)/unit.corruption;
+                unit.corruption=max(0,heresy_new);
             }
         }
     }
@@ -1559,12 +1560,13 @@ for(var i=1; i<=99; i++){
             }
 
             if (string_count("strange_building",event[i])>0){
-                var b_event="",marine_name="",comp=0,marine_num=0,item="";
+                var b_event="",marine_name="",comp=0,marine_num=0,item="",unit;
                 explode_script(event[i],"|");
                 b_event=string(explode[0]);
                 marine_name=string(explode[1]);
                 comp=real(explode[2]);
                 marine_num=real(explode[3]);
+                unit=obj_ini.TTRPG[comp][marine_num];
                 item=string(explode[4]);
 
                 var killy=0,tixt=string(obj_ini.role[100][16])+" "+string(marine_name)+" has finished his work- ";
@@ -1596,38 +1598,24 @@ for(var i=1; i<=99; i++){
                     tixt+="some form of divine inspiration has seemed to have taken hold of him.  An artifact "+string(obj_ini.artifact[k])+" has been crafted.";
                 }
                 if (item=="baby"){
-                    obj_ini.chaos[comp,marine_num]+=choose(8,12,16,20);
+                    unit.corruption+=choose(8,12,16,20);
                     tixt+="some form of horrendous statue.  A weird amalgram of limbs and tentacles, the sheer atrocity of it is made worse by the tiny, baby-like form, the once natural shape of a human child twisted nearly beyond recognition.";
                 }
                 if (item=="robot"){
-                    obj_ini.chaos[comp,marine_num]+=choose(2,4,6,8,10);
+                    unit.corruption+=choose(2,4,6,8,10);
                     tixt+="some form of small, box-like robot.  It seems to teeter around haphazardly, nearly falling over with each step.  "+string(marine_name)+" maintains that it has no AI, though the other "+string(obj_ini.role[100][16])+" express skepticism.";
                 }
                 if (item=="demon"){
-                    obj_ini.chaos[comp,marine_num]+=choose(8,12,16,20);
+                    unit.corruption+=choose(8,12,16,20);
                     tixt+="some form of horrendous statue.  What was meant to be some sort of angel, or primarch, instead has a mishappen face that is hardly human in nature.  Between the fetid, ragged feathers and empty sockets it is truly blasphemous.";
                 }
                 if (item=="fusion"){
-                    // obj_ini.chaos[comp,marine_num]+=choose(70);
+                    // unit.corruption+=choose(70);
                     tixt+="some kind of ill-mannered ascension.  One of your battle-brothers enters the armamentarium to find "+string(marine_name)+" fused to a vehicle, his flesh twisted and submerged into the frame.  Mechendrites and weapons fire upon the marine without warning, a windy scream eminating from the abomination.  It takes several battle-brothers to take out what was once a "+string(obj_ini.role[100][16])+".";
 
                     // This is causing the problem
 
-                    obj_ini.race[comp,marine_num]=0;
-                    obj_ini.loc[comp,marine_num]="";
-                    obj_ini.name[comp,marine_num]="";
-                    obj_ini.role[comp,marine_num]="";
-                    obj_ini.wep1[comp,marine_num]="";
-                    obj_ini.lid[comp,marine_num]=0;
-                    obj_ini.wep2[comp,marine_num]="";
-                    obj_ini.armour[comp,marine_num]="";
-                    obj_ini.gear[comp,marine_num]="";
-                    obj_ini.hp[comp,marine_num]=100;
-                    obj_ini.chaos[comp,marine_num]=0;
-                    obj_ini.experience[comp,marine_num]=0;
-                    obj_ini.mobi[comp,marine_num]="";
-                    obj_ini.age[comp,marine_num]=0;
-					obj_ini.TTRPG[comp,marine_num]=new TTRPG_stats("chapter",comp,marine_num, "blank");
+                    scr_kill_unit(comp,marine_num)
                     with(obj_ini){scr_company_order(0);}
                 }
                 scr_popup("He Built It",tixt,"tech_build","target_marine|"+string(marine_name)+"|"+string(comp)+"|"+string(marine_num)+"|");

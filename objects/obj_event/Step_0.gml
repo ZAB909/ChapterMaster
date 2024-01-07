@@ -12,14 +12,15 @@ if (closing=true) and (fading=-1) and (fade_alpha<=0){
         if (obj_controller.fest_feature3=1) then obj_controller.fest_drugses+=1;
     }
     
-    var ide;ide=0;
+    var ide=0, unit;
     repeat(700){ide+=1;
+        unit = obj_ini.TTRPG[attend_co[ide]][attend_id[ide]];
         if (attend_corrupted[ide]=0) and (attend_id[ide]>0){
             if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display],"Chaos")){
-                obj_ini.chaos[attend_co[ide],attend_id[ide]]+=choose(1,2,3,4);
+                unit.corruption+=choose(1,2,3,4);
             }
             if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display],"Daemon")){
-                obj_ini.chaos[attend_co[ide],attend_id[ide]]+=choose(6,7,8,9);
+                unit.corruption+=choose(6,7,8,9);
             }            
             attend_corrupted[ide]=1;
         }
@@ -82,15 +83,12 @@ if (ticked=1){// Select a random marine and have them perform an action
     dice1=floor(random(100))+1;
     dice2=floor(random(100))+1;
     dice3=floor(random(100))+1;
+    var unit = obj_ini.TTRPG[attend_co[ide]][attend_id[ide]];
     
     repeat(20){
         if (good=false){
             good=true;ide=floor(random(attendants))+1;
-            if (obj_ini.role[attend_co[ide],attend_id[ide]]="Chapter Master") then good=false;
-            if (obj_ini.role[attend_co[ide],attend_id[ide]]="Master of Sanctity") then good=false;
-            if (obj_ini.role[attend_co[ide],attend_id[ide]]="Master of the Apothecarion") then good=false;
-            if (obj_ini.role[attend_co[ide],attend_id[ide]]="Forge Master") then good=false;
-            if (obj_ini.role[attend_co[ide],attend_id[ide]]="Chief "+string(obj_ini.role[100,17])) then good=false;
+            if (unit.IsSpecialist("heads")) then good=false;
         }
     }
     if (good=false) then good=true;
@@ -140,7 +138,7 @@ if (ticked=1){// Select a random marine and have them perform an action
         if (dice1>70) then doso=true;
     }
     if (attend_confused[ide]<=0) and (activity="") then doso=true;
-    
+    var unit = obj_ini.TTRPG[attend_co[ide]][attend_id[ide]];
     if (doso=true){
         dice1=floor(random(100))+1;
         dice2=floor(random(100))+1;
@@ -155,8 +153,8 @@ if (ticked=1){// Select a random marine and have them perform an action
             rep2=attend_drunk[ide]+1;
             rep3=attend_high[ide]+1;
             
-            mod2=obj_ini.chaos[attend_co[ide],attend_id[ide]]/5;
-            mod3=obj_ini.chaos[attend_co[ide],attend_id[ide]]/10;
+            mod2=unit.corruption/5;
+            mod3=unit.corruption/10;
             
             activity="talk";
             
@@ -179,52 +177,52 @@ if (ticked=1){// Select a random marine and have them perform an action
     
     if (activity="confused"){
         rando=choose(1,2,2,3);
-        if (rando=1) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" is unsure of what to do.  He sits at the table silently, doing nothing.";
-        if (rando=2) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" is confused.  He sits at the table and does nothing, wishing he were "+choose("killing xenos","praying","training","training","studying")+" instead.";
+        if (rando=1) then textt=unit.name_role()+" is unsure of what to do.  He sits at the table silently, doing nothing.";
+        if (rando=2) then textt=unit.name_role()+" is confused.  He sits at the table and does nothing, wishing he were "+choose("killing xenos","praying","training","training","studying")+" instead.";
         
         // Special CONFUS for the various event types
         if (rando=3){
-            if (obj_controller.fest_type="Great Feast") and (obj_controller.fest_feature1>0) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" picks up silverwear to begin to feast, but then has second thoughts and puts them back down.";
-            if (obj_controller.fest_type="Great Feast") and (obj_controller.fest_feature1<=0) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" is unsure of what to do.  He sits at the table silently, doing nothing.";
+            if (obj_controller.fest_type="Great Feast") and (obj_controller.fest_feature1>0) then textt=unit.name_role()+" picks up silverwear to begin to feast, but then has second thoughts and puts them back down.";
+            if (obj_controller.fest_type="Great Feast") and (obj_controller.fest_feature1<=0) then textt=unit.name_role()+" is unsure of what to do.  He sits at the table silently, doing nothing.";
         }
         
     }
     if (activity="eat"){
-        var eater_type;eater_type=1;
+        var eater_type=1;
         if (global.chapter_name="Space Wolves") or (obj_ini.progenitor=3) then eater_type=2;
         
         if (stage=5) and (eater_type=1){rando=choose(1,2,3);
-            if (rando=1) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" digs into the food and begins to eat.";
-            if (rando=2) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" begins to feast, eating the food slowly to enjoy the taste.";
-            if (rando=3) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" grabs a portion of food for himself and begins to eat.";
+            if (rando=1) then textt=unit.name_role()+" digs into the food and begins to eat.";
+            if (rando=2) then textt=unit.name_role()+" begins to feast, eating the food slowly to enjoy the taste.";
+            if (rando=3) then textt=unit.name_role()+" grabs a portion of food for himself and begins to eat.";
         }
         if (stage=5) and (eater_type=2){rando=choose(1,2,3);
-            if (rando=1) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" digs into the food and begins to eat.";
-            if (rando=2) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" makes a show out of eating, consuming the food as loudly and dramaticaly as possible.";
-            if (rando=3) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" begins to stuff their face full of food, hardly bothering to chew.";
+            if (rando=1) then textt=unit.name_role()+" digs into the food and begins to eat.";
+            if (rando=2) then textt=unit.name_role()+" makes a show out of eating, consuming the food as loudly and dramaticaly as possible.";
+            if (rando=3) then textt=unit.name_role()+" begins to stuff their face full of food, hardly bothering to chew.";
         }
         if (stage=6){
             if (part2="fish"){rando=choose(1,2,3,3,3);
-                if (rando=1) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" selects some of the sushi rolls and begins to pop them into his mouth.";
-                if (rando=2) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" chooses a bit of each dish, chapter serfs setting up quite the variety of foods on his plate.";
-                if (rando=3) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" grabs a portion of the broadbill and begins to eat it slowly, savoring the taste.";
+                if (rando=1) then textt=unit.name_role()+" selects some of the sushi rolls and begins to pop them into his mouth.";
+                if (rando=2) then textt=unit.name_role()+" chooses a bit of each dish, chapter serfs setting up quite the variety of foods on his plate.";
+                if (rando=3) then textt=unit.name_role()+" grabs a portion of the broadbill and begins to eat it slowly, savoring the taste.";
             }
             if (part2="fruit"){rando=choose(1,2,3,3,3);
-                if (rando=1) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" selects an assortment of fruit and begins to eat.";
-                if (rando=2) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" finishes up the rest of his plate, and hails a serf to bring him some "+choose("pineapple","strawberries","grapes","apples","oranges","of each fruit")+".";
-                if (rando=3) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" hails a chapter serf, and orders a variety of different fruits.  He then eats them slowly, enjoying the taste.";
+                if (rando=1) then textt=unit.name_role()+" selects an assortment of fruit and begins to eat.";
+                if (rando=2) then textt=unit.name_role()+" finishes up the rest of his plate, and hails a serf to bring him some "+choose("pineapple","strawberries","grapes","apples","oranges","of each fruit")+".";
+                if (rando=3) then textt=unit.name_role()+" hails a chapter serf, and orders a variety of different fruits.  He then eats them slowly, enjoying the taste.";
             }
         }
         if (stage=7){
             if (part3="lobster"){
                 rando=choose(1,2,2,3,3);
                 if (eater_type=2) then rando=choose(1,2,2,3,3,4);
-                if (rando=1) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" helps break open one of the massive legs of the Deathcoleri, then scoops out some of the meat within.";
-                if (rando=2) and (eater_type=1) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" tears some of the tendrils free from the crustacean and begins to eat them.";
-                if (rando=3) and (eater_type=1) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" rips some of the delectable meat free from the Deathcoleri's leg, and then eats it slowly, enjoying the treat.";
-                if (rando=2) and (eater_type=2) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" begins to shovel Deathcoleri meat down his throat, boasting that he will eat more than anyone else.";
-                if (rando=3) and (eater_type=2) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" rips tendrils free from the crustaceans face and begins to eat them, loudly.";
-                if (rando=4) then text=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" wants the good parts.  He shoves his arm through the beast's shell and scoops out the innards, taking some for himself and sharing other bits.";
+                if (rando=1) then textt=unit.name_role()+" helps break open one of the massive legs of the Deathcoleri, then scoops out some of the meat within.";
+                if (rando=2) and (eater_type=1) then textt=unit.name_role()+" tears some of the tendrils free from the crustacean and begins to eat them.";
+                if (rando=3) and (eater_type=1) then textt=unit.name_role()+" rips some of the delectable meat free from the Deathcoleri's leg, and then eats it slowly, enjoying the treat.";
+                if (rando=2) and (eater_type=2) then textt=unit.name_role()+" begins to shovel Deathcoleri meat down his throat, boasting that he will eat more than anyone else.";
+                if (rando=3) and (eater_type=2) then textt=unit.name_role()+" rips tendrils free from the crustaceans face and begins to eat them, loudly.";
+                if (rando=4) then text=unit.name_role()+" wants the good parts.  He shoves his arm through the beast's shell and scoops out the innards, taking some for himself and sharing other bits.";
             }
         }
         
@@ -236,30 +234,30 @@ if (ticked=1){// Select a random marine and have them perform an action
         if (global.chapter_name="Blood Angels") or (obj_ini.progenitor=5) then eater_type=3;
         
         if (eater_type=1){
-            if (attend_drunk[ide]<=0) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" hails a serf and has "+choose("him","her")+" pour some Amasec.";
-            if (attend_drunk[ide]>0) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" sips at his Amasec, "+choose("enjoying the taste","judging the quality","savoring the treat")+".";
+            if (attend_drunk[ide]<=0) then textt=unit.name_role()+" hails a serf and has "+choose("him","her")+" pour some Amasec.";
+            if (attend_drunk[ide]>0) then textt=unit.name_role()+" sips at his Amasec, "+choose("enjoying the taste","judging the quality","savoring the treat")+".";
         }
         if (eater_type=2){
-            // if (attend_drunk[ide]<=0) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" hails a serf and has "+choose("him","her")+" bring him a tankard of Mjod.";
+            // if (attend_drunk[ide]<=0) then textt=unit.name_role()+" hails a serf and has "+choose("him","her")+" bring him a tankard of Mjod.";
             // if (attend_drunk[ide]>0){
                 rando=choose(1,2,3);
-                if (rando=1) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" pounds down Mjod, the concoction already beginning to inebriate the astartes.";
-                if (rando=2) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" boasts that he will outdrink anyone, and then pounds down his tankard.  Nearby battlebrothers laugh and begin to meet his challenge.";
-                if (rando=3) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" begins to drink down Mjod, a large frothing glass of the substance in each hand.  He alternates between the two.";
+                if (rando=1) then textt=unit.name_role()+" pounds down Mjod, the concoction already beginning to inebriate the astartes.";
+                if (rando=2) then textt=unit.name_role()+" boasts that he will outdrink anyone, and then pounds down his tankard.  Nearby battlebrothers laugh and begin to meet his challenge.";
+                if (rando=3) then textt=unit.name_role()+" begins to drink down Mjod, a large frothing glass of the substance in each hand.  He alternates between the two.";
             // }
         }
         if (eater_type=3){
-            if (attend_drunk[ide]<=0) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" hails a serf and has "+choose("him","her")+" pour him a glass of "+choose("red wine","Amasec","Dammassine")+".";
-            if (attend_drunk[ide]>0) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" sips at his drink slowly, "+choose("enjoying the taste","judging the quality","analyzing the components")+".";
+            if (attend_drunk[ide]<=0) then textt=unit.name_role()+" hails a serf and has "+choose("him","her")+" pour him a glass of "+choose("red wine","Amasec","Dammassine")+".";
+            if (attend_drunk[ide]>0) then textt=unit.name_role()+" sips at his drink slowly, "+choose("enjoying the taste","judging the quality","analyzing the components")+".";
         }
         
         attend_drunk[ide]+=1;
     }
     if (activity="drugs"){
         attend_high[ide]+=1;
-        obj_ini.chaos[attend_co[ide],attend_id[ide]]=min(100,obj_ini.chaos[attend_co[ide],attend_id[ide]]+10);
-        if (attend_high[ide]<=1) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" snorts up a line of powder through a straw.  Why not?";
-        if (attend_high[ide]>1) then textt=string(obj_ini.role[attend_co[ide],attend_id[ide]])+" "+string(obj_ini.name[attend_co[ide],attend_id[ide]])+" snorts another line of powder.";
+        unit.corruption=min(100,unit.corruption+10);
+        if (attend_high[ide]<=1) then textt=unit.name_role()+" snorts up a line of powder through a straw.  Why not?";
+        if (attend_high[ide]>1) then textt=unit.name_role()+" snorts another line of powder.";
     }
     
     
@@ -312,10 +310,10 @@ if (ticked=1){// Select a random marine and have them perform an action
         
         if (attend_corrupted[ide]=0){
             if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display], "Chaos")){
-                obj_ini.chaos[attend_co[ide]][attend_id[ide]]+=choose(1,2,3,4);
+                unit.corruption+=choose(1,2,3,4);
             }
             if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display], "Daemon")){
-                obj_ini.chaos[attend_co[ide],attend_id[ide]]+=choose(6,7,8,9);
+                unit.corruption+=choose(6,7,8,9);
             }
             attend_corrupted[ide]=1;
         }

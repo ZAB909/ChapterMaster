@@ -23,12 +23,7 @@ repeat(600){i+=1;
         if (obj_ini.wid[marine_co[i],marine_id[i]]>0) then obj_ncombat.world_size+=man_size;
         if (obj_ini.lid[marine_co[i],marine_id[i]]>0) then obj_ini.ship_carrying[obj_ini.lid[marine_co[i],marine_id[i]]]-=man_size;
         //
-        obj_ini.race[marine_co[i],marine_id[i]]=0;obj_ini.loc[marine_co[i],marine_id[i]]="";obj_ini.name[marine_co[i],marine_id[i]]="";
-        obj_ini.role[marine_co[i],marine_id[i]]="";obj_ini.wep1[marine_co[i],marine_id[i]]="";obj_ini.lid[marine_co[i],marine_id[i]]=0;
-        obj_ini.wid[marine_co[i],marine_id[i]]=2;obj_ini.wep2[marine_co[i],marine_id[i]]="";obj_ini.armour[marine_co[i],marine_id[i]]="";
-        obj_ini.gear[marine_co[i],marine_id[i]]="";obj_ini.hp[marine_co[i],marine_id[i]]=100;obj_ini.chaos[marine_co[i],marine_id[i]]=0;
-        obj_ini.experience[marine_co[i],marine_id[i]]=0;obj_ini.age[marine_co[i],marine_id[i]]=0;obj_ini.mobi[marine_co[i],marine_id[i]]="";
-        obj_ini.mobi[marine_co[i],marine_id[i]]="";obj_ini.spe[marine_co[i],marine_id[i]]="";
+        scr_kill_unit(marine_co[i],marine_id[i]);
     }
 
     // if (veh_type[i]="Predator") or (veh_type[i]="Land Raider") then show_message(string(veh_type[i])+" ("+string(veh_co[i])+"."+string(veh_id[i])+")#HP: "+string(veh_hp[i])+"#Dead: "+string(veh_dead[i])+"");

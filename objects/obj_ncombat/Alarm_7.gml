@@ -49,10 +49,7 @@ if (obj_ncombat.enemy=1){
                 
                 obj_ncombat.world_size+=scr_unit_size(obj_ini.armour[nco,nid],obj_ini.role[nco,nid],true, obj_ini.mobi[nco,nid]);
                 
-                obj_ini.race[nco,nid]=0;obj_ini.loc[nco,nid]="";obj_ini.name[nco,nid]="";obj_ini.role[nco,nid]="";obj_ini.wep1[nco,nid]="";
-                obj_ini.lid[nco,nid]=0;obj_ini.wep2[nco,nid]="";obj_ini.armour[nco,nid]="";obj_ini.gear[nco,nid]="";obj_ini.hp[nco,nid]=100;
-                obj_ini.chaos[nco,nid]=0;obj_ini.experience[nco,nid]=0;obj_ini.mobi[nco,nid]="";obj_ini.age[nco,nid]=0;
-                obj_ini.spe[nco,nid]="";obj_ini.god[nco,nid]=0;obj_ini.bio[nco,nid]=0;
+                scr_kill_unit(nco,nid);
             }
         }
     }

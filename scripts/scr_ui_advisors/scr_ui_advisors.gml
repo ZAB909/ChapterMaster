@@ -422,14 +422,15 @@ function scr_ui_advisors() {
                 draw_set_halign(fa_left);
 
                 var behav = 0,
-                    r_eta = 0;
+                    r_eta = 0,unit;
 
                 for (var qp = 1; qp <= min(36, penitorium); qp++) {
-                    if (obj_ini.chaos[penit_co[qp], penit_id[qp]] > 0) then r_eta = round((obj_ini.chaos[penit_co[qp], penit_id[qp]] * obj_ini.chaos[penit_co[qp], penit_id[qp]]) / 50);
-                    if (obj_ini.chaos[penit_co[qp], penit_id[qp]] >= 90) then r_eta = "Never";
-                    if (obj_ini.chaos[penit_co[qp], penit_id[qp]] <= 0) then r_eta = "0";
+                    unit = obj_ini.TTRPG[penit_co[qp]][penit_id[qp]];
+                    if (unit.corruption > 0) then r_eta = round((unit.corruption * unit.corruption) / 50);
+                    if (unit.corruption >= 90) then r_eta = "Never";
+                    if (unit.corruption <= 0) then r_eta = "0";
                     draw_rectangle(xx + 947, yy + 100 + ((qp - 1) * 20), xx + 1577, yy + 100 + (qp * 20), 1);
-                    draw_text(xx + 950, yy + 100 + ((qp - 1) * 20), string_hash_to_newline(string(obj_ini.role[penit_co[qp], penit_id[qp]]) + " " + string(obj_ini.name[penit_co[qp], penit_id[qp]])));
+                    draw_text(xx + 950, yy + 100 + ((qp - 1) * 20), string_hash_to_newline(unit.name_role()));
                     draw_text(xx + 1200, yy + 100 + ((qp - 1) * 20), string_hash_to_newline("ETA: " + string(r_eta)));
                     draw_text(xx + 1432, yy + 100 + ((qp - 1) * 20), string_hash_to_newline("[Execute]  [Release]"));
                 }

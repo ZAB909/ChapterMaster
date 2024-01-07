@@ -51,7 +51,6 @@ function scr_dead_marines(run) {
 		            obj_ini.armour[company,i]="";
 		            obj_ini.gear[company,i]="";
 		            obj_ini.hp[company,i]=100;
-		            obj_ini.chaos[company,i]=0;
 		            obj_ini.experience[company,i]=0;
 		            obj_ini.mobi[company,i]="";
 		            obj_ini.age[company,i]=0;

@@ -1,10 +1,10 @@
-function scr_max_marine(argument0) {
+function scr_max_marine(max_type) {
 
-	// argument0 : "chaos" or "age" or "exp"
+	// max_type : "chaos" or "age" or "exp"
 
 	// Returns the marine with the highest value
 
-	var man_c, man_i, c, i, value;
+	var man_c, man_i, c, i, value, unit;
 	man_c=0;man_i=0;c=0;i=0;value=0;
 
 	i=-1;c=-1;
@@ -14,9 +14,23 @@ function scr_max_marine(argument0) {
 	        i+=1;// man_c[i]=0;man_i[i]=0;
         
 	        if (obj_ini.name[c,i]!=""){
-	            if (argument0="chaos"){if (obj_ini.chaos[c,i]>value){value=obj_ini.chaos[c,i];man_c=c;man_i=i;}}
-	            if (argument0="age"){if (obj_ini.age[c,i]<value){value=obj_ini.age[c,i];man_c=c;man_i=i;}}
-	            if (argument0="exp"){if (obj_ini.experience[c,i]>value){value=obj_ini.experience[c,i];man_c=c;man_i=i;}}
+	        	unit=obj_ini.TTRPG[c][i];
+	            if (max_type="chaos"){
+	            	if (unit.corruption>value){
+	            		value=unit.corruption;
+	            		man_c=c;man_i=i;
+	            	}
+	            }else if (max_type="age"){
+	            	if (obj_ini.age[c,i]<value){
+	            		value=obj_ini.age[c,i];
+	            		man_c=c;
+	            		man_i=i;
+	            	}
+	            }else if (max_type="exp"){
+	            	if (obj_ini.experience[c,i]>value){
+	            		value=obj_ini.experience[c,i];man_c=c;man_i=i;
+	            	}
+	            }
 	        }
 	    }
 	}
