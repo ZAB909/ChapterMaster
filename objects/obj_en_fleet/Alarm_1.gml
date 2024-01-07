@@ -461,8 +461,8 @@ if navy {
 	}
 
 	// Bombard the shit out of the player homeworld
-	if (obj_controller.faction_status[eFACTION.Imperium]="War") and (action="") and (trade_goods="") and (guardsmen_unloaded=0){
-	    if (instance_exists(orbiting)) {
+	if (obj_controller.faction_status[eFACTION.Imperium]="War") and (action="") and (trade_goods="") and (guardsmen_unloaded=0) and (instance_exists(orbiting)){
+	    if (orbiting!=noone){
 			var orbiting_guardsmen = array_reduce(orbiting.p_guardsman, function(prev, curr) {
 				return prev + curr
 			})
@@ -504,7 +504,8 @@ if navy {
 						
 	                    scare=(capital_number*3)+frigate_number;
 
-	                    if (scare>2) then scare=2;if (scare<1) then scare=0;
+	                    if (scare>2) then scare=2;
+                        if (scare<1) then scare=0;
 	                    //onceh=2;
 
 	                    if (orbiting.p_large[bombard]) {

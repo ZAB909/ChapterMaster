@@ -22,31 +22,51 @@ function scr_cheatcode(argument0) {
         cheatcode_m_digits = (cheatcode_digits * -1)
 
     if (cheatcode_digits == "") {
-
+        if (cheatcode_string=="slaughtersong"){
+            create_starship_event();
+        }
+        if (string_count("event", cheatcode_string) >0) {
+            if (string_count("crusade", cheatcode_string) >0) {
+                show_debug_message("crusading");
+                  with(obj_controller){
+                    launch_crusade();
+                }           
+            }else if (string_count("tomb", cheatcode_string) >0){
+                show_debug_message("necron_tomb_awaken");
+                with(obj_controller){
+                    awaken_tomb_event();
+                }  
+            }else {
+                with(obj_controller){
+                    scr_random_event(1);
+                }
+            }
+        }
+        
         if (cheatcode_string == "infreq" && global.cheat_req == 0) {
-            global.cheat_req = 1
-            cheatyface = 1
+            global.cheat_req = 1;
+            cheatyface = 1;
             obj_controller.tempRequisition = obj_controller.requisition
             obj_controller.requisition = 51234
         } else if (cheatcode_string == "infreq" && global.cheat_req == 1) {
-            global.cheat_req = 0
-            cheatyface = 1
+            global.cheat_req = 0;
+            cheatyface = 1;
             obj_controller.requisition = obj_controller.tempRequisition
         } else if (cheatcode_string == "infseed" && global.cheat_gene == 0) {
-            global.cheat_gene = 1
-            cheatyface = 1
+            global.cheat_gene = 1;
+            cheatyface = 1;
             obj_controller.tempGene_seed = obj_controller.gene_seed
             obj_controller.gene_seed = 9999
         } else if (cheatcode_string == "infseed" && global.cheat_gene == 1) {
-            global.cheat_gene = 0
-            cheatyface = 1
+            global.cheat_gene = 0;
+            cheatyface = 1;
             obj_controller.gene_seed = obj_controller.tempGene_seed
         } else if (cheatcode_string == "debug" && global.cheat_debug == 0) {
-            global.cheat_debug = 1
-            cheatyface = 1
+            global.cheat_debug = 1;
+            cheatyface = 1;
         } else if (cheatcode_string == "debug" && global.cheat_debug == 1) {
-            global.cheat_debug = 0
-            cheatyface = 1
+            global.cheat_debug = 0;
+            cheatyface = 1;
         }
 
         if (cheatcode == "test") {
@@ -96,14 +116,10 @@ function scr_cheatcode(argument0) {
             obj_controller.disposition[9] = real(cheatcode_m_digits)
             obj_controller.disposition[10] = real(cheatcode_m_digits)
         }
-    }
-    else if (cheatcode_string == "stc") {
+    }else if (cheatcode_string == "stc") {
         cheatcode_digits = clamp(cheatcode_digits, 0, 100)
         repeat cheatcode_digits
         scr_add_stc_fragment()
-    } else if (string_count("event", cheatcode) == 1) {
-        with(obj_controller)
-        scr_random_event(1)
     } else if (cheatcode_string == "recruit") {
         var _start_pos = 0
         var length = (array_length(obj_controller.recruit_name) - 1)
