@@ -889,20 +889,21 @@ function scr_initialize_custom() {
 				}}],
 				["type_data" , {"display_data":$"{role[100,4]} {squad_name}"}]
 			],
-						"terminator_assault_squad": [
+			"terminator_assault_squad": [
 				[role[100][19], {
 				      "max":1,
 				      "min":1, 
 				      "role":$"{role[100,19]} Assault {role[100][4]}"
 				 }],			//Veteran sergeant terminator
 				[role[100][4], {"max":9,"min":3,
-				"role":$"Assault {role[100][4]}"
+				"role":$"Assault {role[100][4]}" ,
 				"loadout":{//terminator
 					"required":{
 						"wep1":["Thunder Hammer","max"],
 						"wep2":["Storm Shield","max"], 
 					},
-				}}],
+				},
+				},	],
 				["type_data" , {"display_data":$"{role[100,4]} Assault {squad_name}"}]
 			],
 
