@@ -708,7 +708,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	}
 	 static update_health = function(new_health){
 	    obj_ini.hp[company][marine_number] = new_health;
-	 };	
+	 };
+
+	static add_or_sub_health = function(health_augment){
+		obj_ini.hp[company][marine_number]+=health_augment;
+	}
 	static get_unit_size = function(){
 		var unit_role = role();
 		var arm = armour();
@@ -1145,7 +1149,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 		var new_bionic_pos, part, new_bionic = {quality :bionic_quality};
 		if (obj_ini.bio[company][marine_number] < 10){
-			update_health(hp()+30);
+			unit.add_or_sub_health(30);
 			var bionic_possible = [];
 			for (var body_part = 0; body_part < array_length(global.body_parts);body_part++){
 				part = global.body_parts[body_part];

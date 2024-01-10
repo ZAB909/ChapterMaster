@@ -46,14 +46,14 @@ if (obj_ncombat.defeat=0){
                 if (marine_type[i]=="Chapter Master"){
                     if (obj_ncombat.apothecaries_alive>0){
                         obj_ncombat.apothecaries_alive-=0.5;
-                        unit.update_health(unit.hp()+2);
+                        unit.add_or_sub_health(2);
                         marine_dead[i]=0;
                         obj_ncombat.units_saved+=1;                
                     }
                 }else if (marine_type[i]!="Chapter Master") and (marine_type[i]!=""){
                     if (obj_ncombat.apothecaries_alive>0){
                         obj_ncombat.apothecaries_alive-=0.5;
-                        unit.update_health(unit.hp()+2);
+                        unit.add_or_sub_health(2);
                         marine_dead[i]=0;
                         obj_ncombat.units_saved+=1;
                         // show_message(string(marine_type[i])+" is saved by an apothecary");

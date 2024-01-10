@@ -147,7 +147,7 @@ function scr_clean(argument0) {
 		            if (marine_quick[you]>0) then damage_resistance+=0.2;// Needs to be only if melee
 		            if (marine_dome[you]>0) then damage_resistance+=0.15;
 		            if (marine_iron[you]>0){
-		                if (damage_resistance<=0) then unit.update_health(unit.hp()+20);
+		                if (damage_resistance<=0) then unit.add_or_sub_health(20);
 		                if (damage_resistance>0) then damage_resistance+=(marine_iron[you]/5);
 		            }	            	
 	            	minus=round(minus*(1-damage_resistance));
@@ -161,7 +161,7 @@ function scr_clean(argument0) {
 	                minus=0;
 	                if (webr<=chunk) then minus=5000;
 	            }
-	            unit.update_health(unit.hp()-minus)
+	            unit.unit.add_or_sub_health(-minus);
             
 	            if (unit.hp()<=0) and (marine_dead[you]!=1){
 	                var h=0,good=0,open=0;
