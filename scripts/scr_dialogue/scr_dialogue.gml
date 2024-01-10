@@ -472,7 +472,7 @@ function scr_dialogue(diplo_keyphrase) {
 				diplo_text="Sooo many good souls how sweet on my tounge. Enjoy your gift";
 			break;
 			case "Slaanesh_arti":
-				diplo_text="Fetch this for her and you shll have their favour";
+				diplo_text="Fetch this for her and you shall have their favour";
 			break;
 			case "Nurgle_gift":
 				diplo_text="The father is a loving figure. Farewell may your men rot gently.";
