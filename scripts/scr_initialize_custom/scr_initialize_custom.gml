@@ -666,7 +666,7 @@ function scr_initialize_custom() {
 	    armour[100,i]="";
 	    gear[100,i]="";
 	    mobi[100,i]="";
-	    chaos[100,i]=0;experience[100,i]=0;
+	    experience[100,i]=0;
 	    hp[100,i]=0;
 	    age[100,i]=((millenium*1000)+year)-10;
 	    god[100,i]=0;
@@ -687,7 +687,6 @@ function scr_initialize_custom() {
 	    armour[0,i]="";
 	    gear[0,i]="";
 	    mobi[0,i]="";
-	    chaos[0,i]=0;
 	    experience[0,i]=0;
 	    hp[0,i]=0;
 	    age[0,i]=((millenium*1000)+year)-10;
@@ -1458,7 +1457,6 @@ function scr_initialize_custom() {
 	    armour[company,5]="";
 	    gear[company,5]="";
 	    hp[company,5]=0;
-	    chaos[company,5]=0;
 	    experience[company,5]=0;
 	    man_size-=1;
 	    commands-=1;
@@ -1479,7 +1477,7 @@ function scr_initialize_custom() {
 	    wep2[company][k]=wep2[101,16];
 	    armour[company][k]="Power Armour";
 	    gear[company][k]=gear[101,16];
-	    chaos[company][k]=0;
+	    
 	    experience[company][k]=100;
 		spawn_unit = TTRPG[company][k];
 		spawn_unit.spawn_old_guard();
@@ -1498,7 +1496,7 @@ function scr_initialize_custom() {
 	    wep2[company][k]=wep2[101,17];
 	    armour[company][k]="MK7 Aquila";
 	    gear[company][k]=gear[101,17];
-	    chaos[company][k]=0;
+	    
 	    experience[company][k]=125;
 	    if (psyky=1) then experience[company][k]+=10;
 
@@ -1527,7 +1525,7 @@ function scr_initialize_custom() {
 	    name[company][k]=scr_marine_name();
 	    wep2[company][k]="Bolt Pistol";
 	    gear[company][k]="Psychic Hood";
-	    chaos[company][k]=0;
+	    
 	    experience[company][k]=80;
 	    if (psyky=1) then experience[company][k]+=10;
 
@@ -1555,7 +1553,7 @@ function scr_initialize_custom() {
 	    wep1[company][k]="Bolter";
 	    name[company][k]=scr_marine_name();
 	    wep2[company][k]="Chainsword";
-	    chaos[company][k]=0;
+	    
 	    experience[company][k]=40;
 	    if (psyky=1) then experience[company][k]+=10;
 
@@ -1584,7 +1582,7 @@ function scr_initialize_custom() {
 	    wep2[company][k]=wep2[101,15];
 	    armour[company][k]="MK7 Aquila";
 	    gear[company][k]=gear[101,15];
-	    chaos[company][k]=0;
+	    
 	    experience[company][k]=100;
 		spawn_unit.spawn_old_guard();
 		spawn_unit.spawn_exp();
@@ -1617,7 +1615,7 @@ function scr_initialize_custom() {
 	    wep2[company][k]=wep2[101,2];
 	    armour[company][k]="MK4 Maximus";
 
-	    chaos[company][k]=0;
+	    
 	    unit.add_exp(210+irandom(30));
 	    unit.spawn_old_guard();
 	    unit.add_trait(choose("guardian", "champion","observant","perfectionist"));
@@ -1665,7 +1663,7 @@ function scr_initialize_custom() {
 	    wep1[company][k]=wep1[101,5];
 	    name[company][k]=scr_marine_name();
 	    wep2[company][k]=wep2[101,5];
-	    chaos[company][k]=0;
+	    
 	    gear[company][k]=gear[101,5];
 	    spawn_unit = TTRPG[company][k]
 		spawn_unit.spawn_old_guard();
@@ -1703,7 +1701,7 @@ function scr_initialize_custom() {
 				spawn_unit.spawn_old_guard();
 				spawn_unit.spawn_exp();
 	            armour[company][k]="Terminator Armour";
-	            gear[company][k]=gear[101,14]chaos[company][k]=0;
+	            gear[company][k]=gear[101,14]
 	            if (string_count("Crafter",strin)>0) then armour[company][k]="Tartaros";
 	            if (terminator<=0) then armour[company][k]="MK6 Corvus";
 	            if (mobi[101,14]!="") then mobi[company][k]=mobi[101,14];
@@ -1725,7 +1723,7 @@ function scr_initialize_custom() {
 		spawn_unit.spawn_exp();
 	    armour[company][k]="Terminator Armour";
 	    gear[company][k]=gear[101,15];
-	    chaos[company][k]=0;
+	    
 	    if (string_count("Crafter",strin)>0) then armour[company][k]="Tartaros";
 	    if (terminator<=0) then armour[company][k]="MK6 Corvus";
 	    if (mobi[101,15]!="") then mobi[company][k]=mobi[101,15];
@@ -1744,7 +1742,7 @@ function scr_initialize_custom() {
 	        wep2[company][k]=wep2[101,15];
 	        armour[company][k]="Terminator Armour";
 	        gear[company][k]=gear[101,15];
-	        chaos[company][k]=0;
+	        
 	        spawn_unit = TTRPG[company][k]
 			spawn_unit.spawn_old_guard();
 			spawn_unit.spawn_exp();
@@ -1767,7 +1765,7 @@ function scr_initialize_custom() {
 	        spawn_unit = TTRPG[company][k]
 			spawn_unit.spawn_old_guard();
 			spawn_unit.spawn_exp();
-	        chaos[company][k]=0;
+	        
 	        if (mobi[101,16]!="") then mobi[company][k]=mobi[101,16];
 	        if (armour[company][k]="Terminator") or (armour[company][k]="Tartaros") then man_size+=1;
 	    }
@@ -1784,7 +1782,7 @@ function scr_initialize_custom() {
 	    spawn_unit = TTRPG[company][k]
 		spawn_unit.spawn_old_guard();
 		spawn_unit.spawn_exp();
-	    chaos[company][k]=0;
+	    
 	    if (string_count("Crafter",strin)>0) then armour[company][k]="Tartaros";
 	    if (terminator<=0) then armour[company][k]="MK6 Corvus";
 	    if (armour[company][k]="Terminator") or (armour[company][k]="Tartaros") then man_size+=1;
@@ -1802,7 +1800,7 @@ function scr_initialize_custom() {
 		spawn_unit.spawn_old_guard();
 		spawn_unit.spawn_exp();
 	    armour[company][k]="Terminator Armour";
-	    chaos[company][k]=0;
+	    
 	    if (string_count("Crafter",strin)>0) then armour[company][k]="Tartaros";
 	    if (terminator<=0) then armour[company][k]="MK6 Corvus";
 	    if (armour[company][k]="Terminator") or (armour[company][k]="Tartaros") then man_size+=1;
@@ -1825,7 +1823,7 @@ function scr_initialize_custom() {
 		spawn_unit.spawn_old_guard();
 		spawn_unit.spawn_exp();
 	    armour[company][k]="Terminator Armour";
-	    chaos[company][k]=0;
+	    
 	    if (string_count("Crafter",strin)>0) and (k<=20) then armour[company][k]="Tartaros";
 	}
 	repeat(veteran){
@@ -1839,7 +1837,7 @@ function scr_initialize_custom() {
 	    name[company][k]=scr_marine_name();
 	    wep2[company][k]=wep2[101,3];
 	    armour[company][k]="MK6 Corvus";
-	    chaos[company][k]=0;
+	    
 	    mobi[company][k]=mobi[101,3];
 	    spawn_unit = TTRPG[company][k]
 		spawn_unit.spawn_old_guard();
@@ -1856,7 +1854,7 @@ function scr_initialize_custom() {
 		wep1[company][k]=wep1[101,6];man_size+=8;
 		wep2[company][k]=wep2[101,6];
 		armour[company][k]="Dreadnought";
-		chaos[company][k]=0;
+		
 		experience[company][k]=400;
 		name[company][k]=scr_marine_name();
 	}
@@ -2070,7 +2068,7 @@ function scr_initialize_custom() {
 			// used to randomly make a marine an old guard of their company, giving a bit more xp (TODO) and fancier armor they've hanged onto all these years	
 			spawn_unit.spawn_exp();
 	        spawn_unit.spawn_old_guard();
-	        chaos[company][k]=0;
+	        
 
 	        if (company=8) then mobi[company][k]="Jump Pack";
 	        if (mobi[101,5]!="") then mobi[company][k]=mobi[101,5];
@@ -2093,7 +2091,7 @@ function scr_initialize_custom() {
 	                armour[company][k]="MK7 Aquila";
 	                if (company<=2) then armour[company][k]=choose("MK8 Errant","MK6 Corvus");
 	                gear[company][k]=gear[101,14];
-	                chaos[company][k]=0;
+	                
 	                if (company=8) then mobi[company][k]="Jump Pack";
 	                if (mobi[101,14]!="") then mobi[company][k]=mobi[101,14];
 					spawn_unit = TTRPG[company][k]
@@ -2114,7 +2112,7 @@ function scr_initialize_custom() {
 			spawn_unit.spawn_exp();
 	        spawn_unit.spawn_old_guard();
 	        gear[company][k]=gear[101,15];
-	        chaos[company][k]=0;
+	        
 	        if (company=8) then mobi[company][k]="Jump Pack";
 	        if (mobi[101,15]!="") then mobi[company][k]=mobi[101,15];
 
@@ -2130,7 +2128,7 @@ function scr_initialize_custom() {
 	            armour[company][k]="MK7 Aquila";
 	            if (company<=2) then armour[company][k]=choose("MK8 Errant","MK6 Corvus");
 	            gear[company][k]=gear[101,15];
-	            chaos[company][k]=0;
+	            
 	            if (company=8) then mobi[company][k]="Jump Pack";
 	            if (mobi[101,15]!="") then mobi[company][k]=mobi[101,15];
 				spawn_unit = TTRPG[company][k]
@@ -2149,7 +2147,7 @@ function scr_initialize_custom() {
 	            wep2[company][k]=wep2[101,16];
 	            armour[company][k]="Power Armour";
 	            gear[company][k]=gear[101,16];
-	            chaos[company][k]=0;
+	            
 	            if (mobi[101,16]!="") then mobi[company][k]=mobi[101,16];
 				spawn_unit = TTRPG[company][k]
 				spawn_unit.spawn_exp();
@@ -2165,7 +2163,7 @@ function scr_initialize_custom() {
 	  		name[company][k]=scr_marine_name();
 	        wep2[company][k]="Company Standard";
 	        armour[company][k]="MK5 Heresy";
-	        chaos[company][k]=0;
+	        
 	        if (company=8) then mobi[company][k]="Jump Pack";
 	        spawn_unit = TTRPG[company][k];
 			spawn_unit.spawn_exp();
@@ -2180,7 +2178,7 @@ function scr_initialize_custom() {
 	  		name[company][k]=scr_marine_name();
 	        wep2[company][k]=wep2[100,7];
 	        armour[company][k]="MK4 Maximus";
-	        chaos[company][k]=0;
+	        
 			spawn_unit = TTRPG[company][k];
 			spawn_unit.add_trait("champion");
 			spawn_unit.spawn_exp();
@@ -2202,7 +2200,7 @@ function scr_initialize_custom() {
 		                wep1[company][k]=wep1[101,8];
 		                wep2[company][k]=wep2[101,8];
 		          name[company][k]=scr_marine_name();
-		                chaos[company][k]=0;
+		                
 
 				        spawn_unit = TTRPG[company][k];
 						spawn_unit.spawn_exp();
@@ -2220,7 +2218,7 @@ function scr_initialize_custom() {
 		                wep1[company][k]=wep1[101,10];
 		                name[company][k]=scr_marine_name();
 						mobi[company][k]="Jump Pack";
-						chaos[company][k]=0;
+						
 						wep2[company][k]=wep2[101,10]; 
 							
 				        spawn_unit = TTRPG[company][k];
@@ -2238,7 +2236,7 @@ function scr_initialize_custom() {
 		                wep2[company][k]=wep2[101][9];
 		                mobi[company][k]=mobi[100][9];
 		                name[company][k]=scr_marine_name();
-		                chaos[company][k]=0;
+		                
 		                TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 
 	                    if (wep1[101,9]=="Heavy Ranged") then wep1[company][k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
@@ -2262,7 +2260,7 @@ function scr_initialize_custom() {
 	              		name[company][k]=scr_marine_name();
 	                    wep2[company][k]=wep2[101,12];
 	                    armour[company][k]="Scout Armour";
-	                    chaos[company][k]=0;
+	                    
 	                    experience[company][k] = 10+irandom(15);
 	                }
 	            }
@@ -2280,7 +2278,7 @@ function scr_initialize_custom() {
 	                wep1[company][k]=wep1[101,8];
 	                wep2[company][k]=wep2[101,8];
 	          		name[company][k]=scr_marine_name();
-	                chaos[company][k]=0;
+	                
 
 					
 			        spawn_unit = TTRPG[company][k];
@@ -2298,7 +2296,7 @@ function scr_initialize_custom() {
 	            	wep1[company][k]=wep1[101,10];
 	            	wep2[company][k]=wep2[101,10];
 	              	name[company][k]=scr_marine_name();
-	            	chaos[company][k]=0;
+	            	
 	            	mobi[company][k]="Jump Pack";
 
 					
@@ -2315,7 +2313,7 @@ function scr_initialize_custom() {
 	                role[company][k]=role[100][9];
 	          		name[company][k]=scr_marine_name();
 	                wep2[company][k]=wep2[101,9];
-	                chaos[company][k]=0;
+	                
 					mobi[company][k]=mobi[100][9];
 
 	                if (wep1[101,9]="Heavy Ranged") then wep1[company][k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
@@ -2337,7 +2335,7 @@ function scr_initialize_custom() {
 	            	name[company][k]=scr_marine_name();
 	                wep2[company][k]=wep2[101,12];
 	                armour[company][k]="Scout Armour";
-	                chaos[company][k]=0;
+	                
 	                experience[company][k] = 10+irandom(15);
 
 	            } 
@@ -2351,7 +2349,7 @@ function scr_initialize_custom() {
 	                wep2[company][k]=wep2[101,10];
 	            	name[company][k]=scr_marine_name();
 	                mobi[company][k]=mobi[101,10];
-	                chaos[company][k]=0;
+	                
 			        spawn_unit = TTRPG[company][k]
 					spawn_unit.spawn_exp();
 					spawn_unit.spawn_old_guard();	
@@ -2364,7 +2362,7 @@ function scr_initialize_custom() {
 	                role[company][k]=role[100][9];
 	          		name[company][k]=scr_marine_name();
 	                wep2[company][k]=wep2[101,9];
-					chaos[company][k]=0;
+					
 					mobi[company][k]=mobi[100][9];
 
 					
@@ -2393,7 +2391,7 @@ function scr_initialize_custom() {
 	            	name[company][k]=scr_marine_name();
 	                wep2[company][k]=wep2[101,6];
 	                armour[company][k]="Dreadnought";
-	                chaos[company][k]=0;
+	                
 	                experience[company][k]=300;
 	                if (company=9) then wep1[company][k]="Missile Launcher";
 	            }
@@ -2476,7 +2474,7 @@ function scr_initialize_custom() {
 	        wep2[company][k]=wep2[101,14];
 	        armour[company][k]="MK7 Aquila";// if (company<=2) then armour[company][k]=choose("MK8 Errant","MK6 Corvus");
 	        gear[company][k]=gear[101,14];
-	        chaos[company][k]=0;
+	        
 	        experience[company][k]=100;
 	        bio[company][k]=0;
 	        // if (company=8) then mobi[company][k]="Jump Pack";
@@ -2597,7 +2595,8 @@ function scr_initialize_custom() {
 		    penitent_end=obj_creation.strength*5;
 
 		    if (obj_creation.chapter="Lamenters"){
-		        penitent_max=600;penitent_end=600;
+		        penitent_max=600;
+		        penitent_end=600;
 		        // obj_controller.loyalty=50;obj_controller.loyalty_hidden=50;
 		    }
 		}

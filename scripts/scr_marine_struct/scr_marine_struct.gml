@@ -1358,13 +1358,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
     	return "complete";
 	};
 
-
-		static corruption = function(){ 
-			return obj_ini.chaos[company][marine_number];
-		};	   
-       static update_corruption = function(new_corruption){
-            obj_ini.chaos[company][marine_number] = new_corruption;
-	   };	
 		static specials = function(){ 
 			return obj_ini.spe[company][marine_number];
 		};	   
