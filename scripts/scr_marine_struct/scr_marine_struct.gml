@@ -1140,7 +1140,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	};	//get race
 
 	static add_bionics = function(area="none", bionic_quality="standard", from_armoury=true){
-		if (from_armoury && scr_item_count(new_gear,bionic_quality)<1){
+		if (from_armoury && scr_item_count("Bionics",bionic_quality)<1){
 			return "no bionics";
 		}
 		var new_bionic_pos, part, new_bionic = {quality :bionic_quality};
