@@ -174,7 +174,7 @@ function scr_restart_variables(saved_game) {
 	        obj_restart_vars.r_race[i,14]=1;
 	        obj_restart_vars.r_role[i,14]="Chaplain";
 			obj_restart_vars.r_wep1[i,14]="Power Sword";
-			obj_restart_vars.r_wep2[i,14]="Storm Bolter";
+			obj_restart_vars.r_wep2[i,14]="Bolt Pistol";
 	        obj_restart_vars.r_armour[i,14]="Power Armour";
 			obj_restart_vars.r_gear[i,14]="Rosarius";
 			obj_restart_vars.r_mobi[i,14]="";
@@ -182,7 +182,7 @@ function scr_restart_variables(saved_game) {
 	        obj_restart_vars.r_race[i,15]=1;
 	        obj_restart_vars.r_role[i,15]="Apothecary";
 			obj_restart_vars.r_wep1[i,15]="Power Sword";
-			obj_restart_vars.r_wep2[i,15]="Storm Bolter";
+			obj_restart_vars.r_wep2[i,15]="Bolt Pistol";
 	        obj_restart_vars.r_armour[i,15]="Power Armour";
 			obj_restart_vars.r_gear[i,15]="Narthecium";
 			obj_restart_vars.r_mobi[i,15]="";
@@ -404,14 +404,14 @@ function scr_restart_variables(saved_game) {
 	        obj_controller.r_race[i,14]=1;
 	        obj_controller.r_role[i,14]="Chaplain";
 			obj_controller.r_wep1[i,14]="Power Sword";
-			obj_controller.r_wep2[i,14]="Storm Bolter";
+			obj_controller.r_wep2[i,14]="Bolt Pistol";
 	        obj_controller.r_armour[i,14]="Power Armour";
 			obj_controller.r_gear[i,14]="Rosarius";
 			obj_controller.r_mobi[i,14]="";
         
 	        obj_controller.r_race[i,15]=1;
 	        obj_controller.r_role[i,15]="Apothecary";
-			obj_controller.r_wep1[i,15]="Power Sword";obj_controller.r_wep2[i,15]="Storm Bolter";
+			obj_controller.r_wep1[i,15]="Power Sword";obj_controller.r_wep2[i,15]="Bolt Pistol";
 	        obj_controller.r_armour[i,15]="Power Armour";
 			obj_controller.r_gear[i,15]="Narthecium";obj_controller.r_mobi[i,15]="";
         
@@ -639,14 +639,14 @@ function scr_restart_variables(saved_game) {
 			race[i,14]=1;
 			role[i,14]="Chaplain";
 			wep1[i,14]="Power Sword";
-			wep2[i,14]="Storm Bolter";
+			wep2[i,14]="Bolt Pistol";
 			armour[i,14]="Power Armour";
 			gear[i,14]="Rosarius";
 	        
 			race[i,15]=1;
 			role[i,15]="Apothecary";
 			wep1[i,15]="Power Sword";
-			wep2[i,15]="Storm Bolter";
+			wep2[i,15]="Bolt Pistol";
 			armour[i,15]="Power Armour";
 			gear[i,15]="Narthecium";
 	        

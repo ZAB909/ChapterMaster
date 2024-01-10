@@ -1609,30 +1609,12 @@ global.gear = {
     "Narthecium": {
       "special_description": "Medical field kit",
       "description": "An advanced medical field kit, these allow Space Marines to heal or recover Gene-Seed from fallen marines.",
-      "damage_resistance_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-      },
-      "hp_mod": {
-        "standard": 30, // Adjusted
-        "master_crafted": 50, // Adjusted
-        "artifact": 50 // Adjusted
-      }
+        "melee_hands": -0.5,
+        "ranged_hands": -0.5,       
     },
     "Psychic Hood": {
       "special_description": "-50% chance of perils*",
       "description": "An arcane hood that protects Psykers from enemy psychic powers and enhances their control.",
-      "damage_resistance_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-      },
-      "hp_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-      }
     },
     "Rosarius": {
       "special_description": "",
@@ -1673,30 +1655,14 @@ global.gear = {
     "Servo Arms": {
       "special_description": "Integrated flamer, repairs",
       "description": "A pair of powerful, mechanical arms. They include several tools that allow trained marines to repair vehicles rapidly.",
-      "damage_resistance_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-      },
-      "hp_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-      }
+        "melee_hands": 0.25,
+        "ranged_hands": 0.25,  
     },
     "Master Servo Arms": {
       "special_description": "Integrated flamer, repairs",
       "description": "This master servo harness includes additional mechanical arms and tools, allowing a greater capacity and rate of repairs.",
-      "damage_resistance_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-      },
-      "hp_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-      }
+        "melee_hands": 0.25,
+        "ranged_hands": 0.25,  
     }
   },
   "mobility":{
@@ -1712,7 +1678,9 @@ global.gear = {
         "standard": 5,
         "master_crafted": 10,
         "artifact": 10
-      }
+      },
+        "melee_hands": -0.5,
+        "ranged_hands": -0.5,        
     },
 
     "Jump Pack": {

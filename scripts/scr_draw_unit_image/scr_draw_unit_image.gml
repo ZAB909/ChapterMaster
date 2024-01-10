@@ -381,8 +381,11 @@ function scr_draw_unit_image(x_draw, y_draw){
             // Draw the lights
             if (ui_specialist=3) and (armour()!=""){
                 draw_sprite(spr_gear_apoth,0,xx+x_draw,yy+y_draw);
+                if (gear() == "Narthecium"){
+                    ui_weapon[2]=0;
+                }
             }
-        
+            
             // Weapons for below arms
             if (ui_weapon[1]!=0) and (sprite_exists(ui_weapon[1])) and (ui_above[1]==false) and (fix_left<8){
                 if (ui_twoh[1]==false) and (ui_twoh[2]==false) then draw_sprite(ui_weapon[1],0,xx+x_draw+ui_xmod[1],yy+y_draw+ui_ymod[1]);
@@ -404,7 +407,7 @@ function scr_draw_unit_image(x_draw, y_draw){
             }
         
             if (armour()=="" || armour()=="None" || armour()=="(None)"){            
-                if (ui_specialist==111) and (global.chapter_name=="Doom Benefactors") then skin=6;
+                if (ui_specialist==111 && global.chapter_name=="Doom Benefactors") then skin=6;
             
                 draw_sprite(spr_marine_base,skin,xx+x_draw,yy+y_draw);
             
@@ -502,12 +505,20 @@ function scr_draw_unit_image(x_draw, y_draw){
                     specific_armour_sprite = spr_terminator3_colors;
                 }
 
-                if (base_sprite<= 0 && ui_specialist==5){
-                    if (array_contains(traits, "tinkerer")){
-                        specific_armour_sprite="none";
-                        armour_draw=[spr_techmarine_core,0];
-                        arm=0;
-                        armour_bypass=true;
+                if (base_sprite<= 0){
+                    if (ui_specialist==5){
+                        if (array_contains(traits, "tinkerer")){
+                            specific_armour_sprite="none";
+                            armour_draw=[spr_techmarine_core,0];
+                            arm=0;
+                            armour_bypass=true;
+                        }
+                    } else if (role()=="Chapter Master"){
+                        if (global.chapter_name=="Blood Angels"){
+                            specific_armour_sprite="none";
+                            armour_draw=[spr_dante,0];
+                            armour_bypass=true;
+                        }
                     }
                 }                
                 if (arm>0){
@@ -584,6 +595,9 @@ function scr_draw_unit_image(x_draw, y_draw){
                     if (base_sprite=2) then draw_sprite(spr_gear_apoth,1,xx+x_draw-2,yy+y_draw-3);// was y_draw-4 with old tartar
                     if (base_sprite=1) then draw_sprite(spr_gear_apoth,1,xx+x_draw-4,yy+y_draw-2);
                     if (base_sprite!=1) and (base_sprite!=2) then draw_sprite(spr_gear_apoth,1,xx+x_draw,yy+y_draw);
+                    if (gear() == "Narthecium"){
+                        draw_sprite(spr_narthecium_2,0,xx+x_draw+70,yy+y_draw+5);
+                    }
                 }
             
                 // Hood

@@ -772,13 +772,13 @@ function scr_initialize_custom() {
 	    gear[i,12]="";
 	    role[i,14]="Chaplain";
 	    wep1[i,14]="Power Sword";
-	    wep2[i,14]="Storm Bolter";
+	    wep2[i,14]="Bolt Pistol";
 	    armour[i,14]="Power Armour";
 	    gear[i,14]="Rosarius";
 	    mobi[i,14]="";
 	    role[i,15]="Apothecary";
 	    wep1[i,15]="Power Sword";
-	    wep2[i,15]="Storm Bolter";
+	    wep2[i,15]="Bolt Pistol";
 	    armour[i,15]="Power Armour";
 	    gear[i,15]="Narthecium";
 	    mobi[i,15]="";
