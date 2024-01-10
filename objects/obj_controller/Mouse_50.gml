@@ -534,7 +534,7 @@ if (menu==20) and (diplomacy==10.1){
                 //TODO make this into a real dual with consequences
                 pop_up = instance_create(0,0,obj_popup);
                 pop_up.title = "Skull for the Skull Throne";
-                pop_up.text = $"You summon {dead_champ.name_role()} to your personal chambers. Darting from the shadows {dead_champ.name()} is a cunning warrior and reacts with precision gowever eventually you previal and strike him down. With the flesh removed from his skull you place the skull upon a hastily erected shrine."
+                pop_up.text = $"You summon {dead_champ.name_role()} to your personal chambers. Darting from the shadows towards {dead_champ.name()} who is a cunning warrior and reacts with precision to your attack, however eventually you prevail and strike him down. With the flesh removed from his skull you place it upon a hastily erected shrine."
                 pop_up.type=98;
                 pop_up.image = "chaos";                
                // obj_duel = instance_create(0,0,obj_duel);
