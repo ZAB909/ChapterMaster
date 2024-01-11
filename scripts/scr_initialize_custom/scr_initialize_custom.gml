@@ -953,15 +953,20 @@ function scr_initialize_custom() {
 				}}],		//veterans
 
 				[role[100][19], {"max":1,"min":1, "loadout":{
-									"mobi":["Jump Pack",1]
+						"required":{
+							"wep1":["Power Sword",1],
+							"wep2":["Plasma Pistol",1],
+							"mobi":["Jump Pack",1]
+						},
 					}
-				}],
+				}
+				],
 				["type_data" , {"display_data":$"Vanguard {role[100,3]} {squad_name}"}]
 			],
 			"devastator_squad": [
 					[role[100][9], 
 						{"max":9,"min":4,
-							"loadout":{//devestator
+							"loadout":{//devastator
 								"required":{
 									"wep1":["Bolter",4], 
 									"wep2":["Combat Knife",4]
