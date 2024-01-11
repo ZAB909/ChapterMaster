@@ -700,9 +700,11 @@ function scr_ui_manage() {
 						}
 	  
 		                if (ma_lid[sel]>0) and (ma_wid[sel]==0){
-		                	if (berd){
-		                		draw_sprite(spr_loc_icon,2,xx+427+8,yy+66);
-		                	} else {draw_sprite(spr_loc_icon,1,xx+427+8,yy+66);}
+		                    draw_sprite(
+		                        spr_loc_icon,
+		                        berd ? 2 : 1,
+		                        xx+427+8,
+		                        yy+66);
 		                }  else if (ma_wid[sel]>0){
 		                	draw_sprite(spr_loc_icon,0,xx+427+8,yy+66);
 		                }
