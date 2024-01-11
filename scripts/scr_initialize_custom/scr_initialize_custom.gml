@@ -94,6 +94,7 @@ function scr_initialize_custom() {
 	icon_name=obj_creation.icon_name;
 	man_size=0;
 	psy_powers=obj_creation.discipline;
+	cmbt_doct=obj_creation.doctrine;
 
 	strin=string(obj_creation.adv[1])+string(obj_creation.adv[2])+string(obj_creation.adv[3])+string(obj_creation.adv[4]);
 	strin2=string(obj_creation.dis[1])+string(obj_creation.dis[2])+string(obj_creation.dis[3])+string(obj_creation.dis[4]);
@@ -412,14 +413,13 @@ function scr_initialize_custom() {
 	millenium=41;
 
 	var company=0;
-	var chaap=1,whirlwind;
+	var chaap=1,whirlwind=4;
 	var second=100,third=100,fourth=100,fifth=100,sixth=100,seventh=100,eighth=100,ninth=100,tenth=100;
-	var assault=20,siege=0,temp1=0, intolerant=0;
+	var assault=20,siege=0,temp1=0,intolerant=0, devastator=20;
 	var k, i, v;k=0;i=0;v=0;
 	var techs=20,epistolary=4,apothecary=6,codiciery=6,lexicanum=10,terminator=10,veteran=89;
-	devastator=20;
+	
 
-	whirlwind=4;
 
 	specials=0;firsts=0;seconds=0;thirds=0;fourths=0;fifths=0;
 	sixths=0;sevenths=0;eighths=0;ninths=0;tenths=0;
@@ -586,7 +586,7 @@ function scr_initialize_custom() {
 			veteran-=20;
 			break;
 		case "Crimson Fists":
-			veteran+=30;
+			veteran+=20;
 			break;
 		case "Space Wolves":
 	    	veteran+=40;
@@ -605,6 +605,7 @@ function scr_initialize_custom() {
 		    veteran+=10;
 		    break;
 	}
+
 	if (obj_creation.custom=0) and (global.chapter_name!="Iron Hands") and (global.chapter_name!="Doom Benefactors"){
 	    if (veteran>=20) and (global.founding=0){veteran-=20;terminator+=20;}
 	    if (veteran>=10) and (global.founding!=0) and (global.chapter_name!="Lamenters"){veteran-=10;terminator+=10;}
@@ -902,9 +903,8 @@ function scr_initialize_custom() {
 					},
 					"option" :{
 						"wep1":[
-							["Chainsword",2],
-							[["Power Sword", "Power Axe", "Lightning Claw"],4],
-							[["Chainfist", "Power Fist"],1],
+							["Chainsword",4],
+							[["Power Sword", "Power Fist", "Power Axe",],2],
 						],
 						"wep2":[
 							[["Flamer", "Meltagun", "Plasma Pistol"],3],
@@ -1091,7 +1091,7 @@ function scr_initialize_custom() {
 			      ]
 			      )
 	}
-	if (global.chapter_name == "White Scars") or (obj_ini.progenitor==2){
+	if (global.chapter_name == "White Scars") or (obj_ini.progenitor==2) or (obj_creation.doctrine="Shock Assault"){
 		variable_struct_set(st , "bikers",[
 		[role[100][8], {"max":9,"min":4, "loadout":{ //tactical marine
 			"required":{
@@ -1875,7 +1875,7 @@ function scr_initialize_custom() {
 	    veh_lid[company,v]=0;veh_wid[company,v]=2;
 	}
 	var predrelic=2;
-	if (global.chapter_name="Iron Hands") then predrelic=3;
+	if (global.chapter_name="Iron Hands") or (obj_creation.doctrine="Breakthrough") then predrelic=3;
 	repeat(predrelic){
 		v+=1;
 		man_size+=10;
@@ -1924,7 +1924,7 @@ function scr_initialize_custom() {
 			TTRPG[company,i]= new TTRPG_stats("chapter", company,i, "blank");
 	    }
 
-	    var company_experience=0, company_unit2="", company_unit3="", dready=0, rhinoy=0, whirly=0, speedy=0,stahp=0;
+	    var company_experience=0, company_unit2="", company_unit3="", dready=0, rhinoy=0, whirly=0, speedy=0, predy=0,stahp=0;
 
 	    v=0;
 	    i=-1;
@@ -1945,13 +1945,13 @@ function scr_initialize_custom() {
 
 	        company_experience=(16-company)*5;
 
+			}
 	        // temp1=(100-(assault*devastator))*10;company_experience=(16-company)*5;
 	        // temp1-=1;
 
 	        // if (company=2){dready=1;
-	        	if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=1;
-	        rhinoy=8;whirly=whirlwind;speedy=2;
-	    }
+
+
 
 		// random xp for each marine company
 		// this gives the entire company the same xp
@@ -1965,33 +1965,88 @@ function scr_initialize_custom() {
 
 	            dready=1;
 	            if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=1;
-	            rhinoy=8;whirly=whirlwind;speedy=2;
+	            rhinoy=8;whirly=whirlwind;speedy=3;
 	            if (second=0) then stahp=1;
-			
+				switch(obj_creation.doctrine){
+					case "Generalist":
+					predy=2;
+					break;
+					case "Breakthrough":
+					rhinoy-=3;dready+=2;speedy-=3;predy+=3;assault-=10;devastator+=10;
+					break;
+					case "Shock Assault": //rhino is stand in until new vehs are added(Razorback)
+					rhinoy-=3;predy=3;speedy-=3;assault+=10;devastator-=10;
+					break;
+					case "Irregular Warfare":
+					speedy+=2;whirly+=1;assault-=10;devastator-=10;
+					break;
+				}
 	      }
 	        if (company=3){
 	            temp1=(third-(assault+devastator));company_unit2="assault";company_unit3="devastator";
 	            temp1-=2;
 	            // dready=2;
 	            if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=2;
-	            rhinoy=8;whirly=whirlwind;speedy=2;
+	            rhinoy=8;whirly=whirlwind;speedy=3;
 	            if (third=0) then stahp=1;
+				switch(obj_creation.doctrine){
+					case "Generalist":
+					predy=2;
+					break;
+					case "Breakthrough":
+					rhinoy-=3;dready+=2;speedy-=3; predy+=3;
+					break;
+					case "Shock Assault": //rhino is stand in until new vehs are added(Razorback)
+					rhinoy-=3;predy=3;speedy-=3;
+					break;
+					case "Irregular Warfare":
+					speedy+=2; whirly+=1;
+					break;
+				}
 	        }
 	        if (company=4){
 	            temp1=(fourth-(assault+devastator));company_unit2="assault";company_unit3="devastator";
 	            temp1-=2;
 	            // dready=2;
 	            if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=2;
-	            rhinoy=8;whirly=whirlwind;speedy=2;
+	            rhinoy=8;whirly=whirlwind;speedy=3;
 	            if (fourth=0) then stahp=1;
+				switch(obj_creation.doctrine){
+					case "Generalist":
+					predy=2;
+					break;
+					case "Breakthrough":
+					rhinoy-=3;dready+=2;speedy-=3; predy+=3;
+					break;
+					case "Shock Assault": //rhino is stand in until new vehs are added(Razorback)
+					rhinoy-=3;predy=3;speedy-=3;
+					break;
+					case "Irregular Warfare":
+					speedy+=2;whirly+=1;
+					break;
+				}
 	        }
 	        if (company=5){
 	            temp1=(fifth-(assault+devastator));company_unit2="assault";company_unit3="devastator";
 	            temp1-=2;
 	            // dready=2;
 	            if (string_count("Sieged",strin2)>0) or (obj_creation.custom=0) then dready+=2;
-	            rhinoy=8;whirly=whirlwind;speedy=2;
+	            rhinoy=8;whirly=whirlwind;speedy=3;
 	            if (fifth=0) then stahp=1;
+				switch(obj_creation.doctrine){
+					case "Generalist":
+					predy=2;
+					break;
+					case "Breakthrough":
+					rhinoy-=3;dready+=2; speedy-=3; predy+=3;
+					break;
+					case "Shock Assault": //rhino is stand in until new vehs are added(Razorback)
+					rhinoy-=3;predy=3;speedy-=3;
+					break;
+					case "Irregular Warfare":
+					speedy+=2;whirly+=1;
+					break;
+				}
 	        }
 	        if (company=6){
 	            temp1=sixth;company_unit2="";company_unit3="";
@@ -2007,6 +2062,8 @@ function scr_initialize_custom() {
 	            if (obj_creation.custom=0) then dready=2;
 	            rhinoy=8;whirly=0;speedy=8;
 	            if (seventh=0) then stahp=1;
+				if (obj_creation.doctrine="Irregular Warfare") then
+				speedy-=6
 	        }
 	        if (company=8){
 	            temp1=eighth;company_unit2="";company_unit3="";
@@ -2022,7 +2079,22 @@ function scr_initialize_custom() {
 	            if (obj_creation.custom=0) then dready=2;
 	            rhinoy=2;whirly=0;speedy=0;
 	            if (ninth=0) then stahp=1;
-	        }
+				switch(obj_creation.doctrine){
+					case "Generalist":
+					predy=4;
+					break;
+					case "Breakthrough":
+					predy=5;
+					break;
+					case "Shock Assault":
+					predy=3;
+					break;
+					case "Irregular Warfare":
+					predy=6;
+					break;
+				}
+			}
+			
 	        if (company=10){
 	            temp1=tenth-2;
 	            company_unit2="";
@@ -2031,6 +2103,10 @@ function scr_initialize_custom() {
 	            rhinoy=8;
 	            whirly=0;
 	            speedy=0;
+				if (obj_creation.doctrine="Irregular Warfare") then
+				speedy=5
+				whirly=6
+			
 
 	            // if (obj_creation.custom=0) then temp1-=5;
 
@@ -2429,17 +2505,14 @@ function scr_initialize_custom() {
 	            veh_lid[company,v]=0;
 	            veh_wid[company,v]=2;
 	        }
-	        if (company=9) or (global.chapter_name="Iron Hands"){
-	            var predy;predy=5;
-	            if (global.chapter_name="Iron Hands") then predy=2;
-
-	            repeat(predy){v+=1;man_size+=10;
+			
+	        if (predy>0) then repeat(predy){v+=1;man_size+=10;
 	                veh_race[company,v]=1;veh_loc[company,v]=home_name;veh_role[company,v]="Predator";
 	                if (!floor(v mod 2) == 1){veh_wep1[company,v]="Twin Linked Lascannon Turret";veh_wep2[company,v]="Lascannon Sponsons";veh_wep3[company,v]="HK Missile";veh_upgrade[company,v]="";veh_acc[company,v]="Searchlight";}
 	                if (floor(v mod 2) == 1){veh_wep1[company,v]="Autocannon Turret";veh_wep2[company,v]="Heavy Bolter Sponsons";veh_wep3[company,v]="Storm Bolter";veh_upgrade[company,v]="";veh_acc[company,v]="Dozer Blades";}veh_wid[company,v]=2;
 	                veh_hp[company,v]=100;veh_chaos[company,v]=0;veh_pilots[company,v]=0;veh_lid[company,v]=0;
-	            }
 	        }
+	        
 	        man_size+=k;
 	    }
 

@@ -29,7 +29,7 @@ function scr_chapter_random(argument0) {
 	recruiting_exists=1;homeworld_exists=1;
 	homeworld_rule=1;aspirant_trial="Blood Duel";
 	discipline="default";battle_cry="For the Emperor";
-
+	doctrine="Generalist"
 	main_color=1;secondary_color=1;trim_color=1;
 	pauldron2_color=1;pauldron_color=1;// Left/Right pauldron
 	lens_color=1;weapon_color=1;col_special=choose(0,0,0,0,0,1,2,3);
