@@ -855,7 +855,6 @@ function scr_save(save_slot,save_id) {
 	                ini_write_string("Mar","mb"+string(coh)+"."+string(mah),obj_ini.mobi[coh,mah]);
 
 	                ini_write_real("Mar","hp"+string(coh)+"."+string(mah),obj_ini.TTRPG[coh,mah].hp());
-	                ini_write_real("Mar","cha"+string(coh)+"."+string(mah),obj_ini.chaos[coh,mah]);
 	                ini_write_real("Mar","exp"+string(coh)+"."+string(mah),obj_ini.experience[coh,mah]);
 	                ini_write_real("Mar","ag"+string(coh)+"."+string(mah),obj_ini.age[coh,mah]);
 	                ini_write_string("Mar","spe"+string(coh)+"."+string(mah),obj_ini.spe[coh,mah]);

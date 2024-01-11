@@ -43,6 +43,7 @@ global.trait_list = {
 		ballistic_skill:[10,5, "max"],
 		display_name : "Champion",
 		flavour_text : "Through either natural talent, or obsessive training {0} is a master of arms",
+		effect:"increase melee carry"
 	},
 	"lightning_warriors":{
 		constitution: -6,
@@ -577,6 +578,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	constitution=0; strength=0;luck=0;dexterity=0;wisdom=0;piety=0;charisma=0;technology=0;intelligence=0;weapon_skill=0;ballistic_skill=0;size = 0;
 	religion="none";
 	psionic=0;
+	corruption=0;
 	religion_sub_cult = "none";
 	base_group = "none";
 	role_history = [];
@@ -1356,13 +1358,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
     	return "complete";
 	};
 
-
-		static corruption = function(){ 
-			return obj_ini.chaos[company][marine_number];
-		};	   
-       static update_corruption = function(new_corruption){
-            obj_ini.chaos[company][marine_number] = new_corruption;
-	   };	
 		static specials = function(){ 
 			return obj_ini.spe[company][marine_number];
 		};	   
@@ -1521,6 +1516,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			if (weapon_skill>=50){
 				melee_hands_limit+=0.25;
 				carry_string+="skill:+0.25#";
+			}
+			if (has_trait("champion")){
+				melee_hands_limit+=0.25;
+				carry_string+="Champion:+0.25#";
 			}
 			var armour_carry = get_armour_data("melee_hands")
 			if (armour_carry!=0){
