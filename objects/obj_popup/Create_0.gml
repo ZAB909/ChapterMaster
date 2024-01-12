@@ -242,8 +242,8 @@ calculate_equipment_needs =  function (){
         var unit_wep_one;
         repeat(obj_controller.man_max){
             i+=1;
-            unit_armour = gear_weapon_data("armour",obj_controller.ma_armour[i],"all", sub_class=false, quality="standard");
-            unit_wep_one=gear_weapon_data("weapon",obj_controller.ma_wep1[i],"all", sub_class=false, quality="standard");
+            unit_armour = gear_weapon_data("armour", obj_controller.ma_armour[i], "all", false, "standard");
+            unit_wep_one = gear_weapon_data("weapon", obj_controller.ma_wep1[i], "all", false, "standard");
             if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1) and (obj_controller.ma_promote[i]=1) and (obj_controller.ma_exp[i]>=min_exp){
                 if (req_armour="Power Armour" && is_struct(unit_armour)){
                     if(unit_armour.has_tag("power_armour")) then have_armour_num+=1;
