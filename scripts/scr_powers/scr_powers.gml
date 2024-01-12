@@ -1,176 +1,4 @@
-global.combat_perils = [
-	[15, function(unit){
-			unit.add_or_sub_health(-1*choose(8,12,16,20));
-	    	flavour_text2="He begins to gibber as psychic backlash overtakes him.";obj_ini.chaos[marine_co[unit_id],marine_id[unit_id]]+=choose(2,4,6,8);
-	    	return flavour_text2;
-	}],
-	[23, function(unit){
-		unit.add_or_sub_health(-1*choose(30,35,40,45));
-	   	flavour_text2="His mind is burned fiercly by the warp.";
-	   	return flavour_text2;
-	}],
-	[31, function(unit){
-		unit.add_or_sub_health(-5000);
-	    flavour_text2="Psychic backlash knocks him out entirely, incapacitating the marine.";
-	    return flavour_text2;
-	}],
-	[39, function(unit){
-    	flavour_text2="His mind is seared by the warp, now unable to cast more powers this battle.";
-    	obj_ini.chaos[marine_co[unit_id],marine_id[unit_id]]+=choose(7,10,13,15);}
-    	return flavour_text2;
-	}]
-	[47, function(unit){
-		unit.add_or_sub_health(-1*choose(30,35,40,45));
-        flavour_text2="The psychic blast he had prepared runs loose, striking himself!";
-        if (school="biomancy"){flavour_text2="The psychic blast he had prepared runs loose, boiling his own blood!";}
-        if (school="pyromancy"){flavour_text2="He lights on fire from the inside out, incapacitated in agony!";}
-        if (school="telekinesis"){flavour_text2="The blast he had prepared runs loose, smashing himself into the ground!";}
-        return flavour_text2;
-	}],
-	[55, function(unit){
-	        flavour_text2="Capricious voices eminate from the surrounding area, whispering poisonous lies and horrible truths.";
-	        obj_ini.chaos[marine_co[unit_id],marine_id[unit_id]]+=choose(10,15,20);
-	        repeat(6){
-	            var t=floor(random(men))+1;
-	            if (marine_type[t]!="") then obj_ini.chaos[marine_co[t],marine_id[t]]+=choose(6,9,12,15);
-	        }
-	        return flavour_text2;
-	}],
-	[63, function(unit){
-	        flavour_text2="Dark, shifting lights form into several ";
-	        var d1,d2,d3;
-	        var dem=choose("Pink Horror","Daemonette","Bloodletter","Plaguebearer");
-	        flavour_text2+=string(dem)+"s.";d1=0;d2=0;d3=0;d1=instance_nearest(x,y,obj_enunit);
-	        var exist;exist=0;
-	        repeat(30)
-	        	{
-	        		if (d3=0){
-	        			d2+=1;
-		        		if (d1.dudes[d2]=dem){
-		        			exist=d2;
-		        			d3=5;
-		        		}
-		        	}
-		        }
-	        if (exist>0){d2=choose(3,4,5,6);d1.dudes_num[exist]+=d2;obj_ncombat.enemy_forces+=d2;obj_ncombat.enemy_max+=d2;d1.men+=d2;}
-	        d2=0;
-	        if (exist=0){
-	            repeat(30){
-	            	if (d3=0){
-	            		d2+=1;
-	            		if (d1.dudes[d2]=""){
-	            		d3=d2;
-	            	}
-	            }
-	            }
-	            d2=choose(3,4,5,6);
-	            d1.dudes[d3]=dem;
-	            d1.dudes_special[d3]="";
-	            d1.dudes_num[d3]=d2;
-	            d1.dudes_ac[d3]=15;
-	            d1.dudes_hp[d3]=150;
-	            d1.dudes_dr[d3]=0.7;
-	            d1.dudes_vehicle[d3]=0;d1.dudes_damage[d3]=0;
-	            d1.men+=d2;
-	            obj_ncombat.enemy_forces+=d2;
-	            obj_ncombat.enemy_max+=d2;
-	        }
-	        return flavour_text2;
-	}],	
-	[71, function(unit){
-	        flavour_text2="There is a massive explosion of warp energy which incapacitates him and injures several other marines!";
-	        unit.add_or_sub_health(-65);
-	        unit.hp()-=5000;
-	        repeat(7){
-	            var t;t=floor(random(men))+1;
-	            if (marine_type[t]!="") then marine_hp[t]-=choose(10,20,30);
-	        }
-	        return flavour_text2;
-	}],	
-	[79, function(unit){
-		obj_ncombat.global_perils+=25;
-		flavour_text2="Wind shrieks and blood pours from the sky!  The warp feels unstable.";
-		return flavour_text2;
-	}],	
-	[87, function(unit){
-	        marine_casting[unit_id]=-999;unit.hp()-=70;flavour_text2="A massive shockwave eminates from the marine, who is knocked out cold!  All of his equipment is destroyed!";
-	        unit.alter_equipment({wep1:"",wep2:"",armour:"",gear:"",mobi:""},false,false);
-	        return flavour_text2;
-	}],	
-	[87, function(unit){
-        var woah=choose(1,2);
-        if (unit.role()="Chapter Master") then global.defeat=3;
-        //if (obj_ini.age[marine_co[unit_id],marine_id[unit_id]]<=((obj_controller.millenium*1000)+obj_controller.year)-10) and (obj_ini.zygote=0) and (string_count("Doom",obj_ini.strin2)=0) then obj_ncombat.gene_penalty+=1;
-        //if (obj_ini.age[marine_co[unit_id],marine_id[unit_id]]<=((obj_controller.millenium*1000)+obj_controller.year)-5) and (string_count("Doom",obj_ini.strin2)=0) then obj_ncombat.gene_penalty+=1;
-        if (woah=1) then flavour_text2="There is a snap, and pop, and he disappears entirely.";
-        if (woah=2) then flavour_text2="He explodes into a cloud of gore, splattering guts and ceramite across the battlefield.";
-        return flavour_text2;
-	}],
-	[95, function(unit){
-			unit.add_or_sub_health(-150);
-			marine_dead[unit_id]=2;
-	        var woah=choose(1,2);
-	        if (unit.role()="Chapter Master") then global.defeat=3;
-	        //if (obj_ini.age[marine_co[unit_id],marine_id[unit_id]]<=((obj_controller.millenium*1000)+obj_controller.year)-10) and (obj_ini.zygote=0) and (string_count("Doom",obj_ini.strin2)=0) then obj_ncombat.gene_penalty+=1;
-	        //if (obj_ini.age[marine_co[unit_id],marine_id[unit_id]]<=((obj_controller.millenium*1000)+obj_controller.year)-5) and (string_count("Doom",obj_ini.strin2)=0) then obj_ncombat.gene_penalty+=1;
-	        if (woah=1) then flavour_text2="There is a snap, and pop, and he disappears entirely.";
-	        if (woah=2) then flavour_text2="He explodes into a cloud of gore, splattering guts and ceramite across the battlefield.";
-	        return flavour_text2;
-	}],	
-	[200, function(unit){
-			unit.add_or_sub_health(-150);
-			marine_dead[unit_id]=2;
-	        if (unit.role()="Chapter Master") then global.defeat=3;
-	        flavour_text2="The marine's flesh begins to twist and rip, seemingly turning inside out.  His form looms up, and up, and up.  Within seconds a Greater Daemon of ";
-	        //if (obj_ini.age[marine_co[unit_id],marine_id[unit_id]]<=((obj_controller.millenium*1000)+obj_controller.year)-10) and (obj_ini.zygote=0) and (string_count("Doom",obj_ini.strin2)=0) then obj_ncombat.gene_penalty+=1;
-	        //if (obj_ini.age[marine_co[unit_id],marine_id[unit_id]]<=((obj_controller.millenium*1000)+obj_controller.year)-5) and (string_count("Doom",obj_ini.strin2)=0) then obj_ncombat.gene_penalty+=1;
-        
-	        var dem,d1,d2,d3;
-	        dem=choose("Slaanesh","Nurgle","Tzeentch");
-	        if (book_powers!=""){
-		        if (string_count("Dae",marine_gear[unit_id])>0){
-		            if (string_count("2",marine_gear[unit_id])>0) then dem="Slaanesh";
-		            if (string_count("3",marine_gear[unit_id])>0) then dem="Nurgle";
-		            if (string_count("4",marine_gear[unit_id])>0) then dem="Tzeentch";
-		        }
-		    }
-        
-	        flavour_text2+=string(dem)+" has taken form.";d1=0;d2=0;d3=0;d1=instance_nearest(x,y,obj_enunit);
-	        repeat(30){
-	        	if (d3=0){
-		        	d2+=1;
-		        	if (d1.dudes[d2]=""){
-		        		d3=d2;
-		        	}
-		        }
-		    }
-	        d1.dudes[d3]="Greater Daemon of "+string(dem);d1.dudes_special[d3]="";d1.dudes_num[d3]=1;
-	        d1.dudes_ac[d3]=30;
-	        d1.dudes_hp[d3]=700;
-	        d1.dudes_dr[d3]=0.5;
-	        d1.dudes_vehicle[d3]=0;
-	        d1.dudes_damage[d3]=0;
-	        d1.medi+=1;
-	        obj_ncombat.enemy_forces+=1;obj_ncombat.enemy_max+=1;
-	        d1.neww=1;
-	        d1.alarm[1]=1;
-	        return flavour_text2;
-	}],    					
-]
 
-global.psy_powers = {
-	D:{
-		"name":"Default"
-		"powers":["Minor Smite";
-	    if (onc=1) then power_name="Smite";
-	    if (onc=2) then power_name="Force Dome";
-	    if (onc=3) then power_name="Machine Curse";
-	    if (onc=4) then power_name="Avenge";
-	    if (onc=5) then power_name="Quickening";
-	    if (onc=6) then power_name="Might of the Ancients";
-	    if (onc=7) then power_name="Vortex of Doom";]
-	}
-}
 function scr_powers(power_set, power_count, enemy_target, unit_id) {
 
 	// power_set: letter
@@ -183,8 +11,8 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	// got better at this sort of thing.
 	var unit = unit_struct[unit_id];
 	if (!is_struct(unit))then exit;
-	var school,power_name,target_type,enemy5,onc,using,binders,book_powers,book_roll,tome_bad,tome_slot,tome_tags,damnyou;
-	var school="";
+	var psy_discipline,power_name,target_type,enemy5,onc,using,binders,book_powers,book_roll,tome_bad,tome_slot,tome_tags,damnyou;
+	var psy_discipline="";
 	var power_name="";
 	var target_type="";
 	enemy5=enemy_target;
@@ -246,9 +74,9 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	var p_type="";p_rang=0;p_tar=0;p_spli=0;p_att=0;p_arp=0;p_duration=0;
 
 
-	if (string_count("Z",using)>0){school="hacks";power_name="gather_energy";}
+	if (string_count("Z",using)>0){psy_discipline="hacks";power_name="gather_energy";}
 
-	if (string_count("D",using)>0){school="default";
+	if (string_count("D",using)>0){psy_discipline="default";
 	    if (onc=0) then power_name="Minor Smite";
 	    if (onc=1) then power_name="Smite";
 	    if (onc=2) then power_name="Force Dome";
@@ -258,7 +86,7 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	    if (onc=6) then power_name="Might of the Ancients";
 	    if (onc=7) then power_name="Vortex of Doom";
 	}
-	if (string_count("B",using)>0){school="biomancy";
+	if (string_count("B",using)>0){psy_discipline="biomancy";
 	    if (onc=0) then power_name="Minor Smite";
 	    if (onc=1) then power_name="Blood Boil";
 	    if (onc=2) then power_name="Iron Arm";
@@ -266,7 +94,7 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	    if (onc=4) then power_name="Regenerate";
 	    if (onc=5) then power_name="Haemorrhage";
 	}
-	if (string_count("P",using)>0){school="pyromancy";
+	if (string_count("P",using)>0){psy_discipline="pyromancy";
 	    if (onc=0) then power_name="Breathe Fire";
 	    if (onc=1) then power_name="Fiery Form";
 	    if (onc=2) then power_name="Fire Shield";
@@ -274,7 +102,7 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	    if (onc=4) then power_name="Sun Burst";
 	    if (onc=5) then power_name="Molten Beam";
 	}
-	if (string_count("T",using)>0){school="telekinesis";
+	if (string_count("T",using)>0){psy_discipline="telekinesis";
 	    if (onc=0) then power_name="Crush";
 	    if (onc=1) then power_name="Shockwave";
 	    if (onc=2) then power_name="Wave of Force";
@@ -282,7 +110,7 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	    if (onc=4) then power_name="Spatial Distortion";
 	    if (onc=5) then power_name="Vortex of Doom";
 	}
-	if (string_count("R",using)>0){school="rune Magick";
+	if (string_count("R",using)>0){psy_discipline="rune Magick";
 	    if (onc=0) then power_name="Living Lightning";
 	    if (onc=1) then power_name="Murderous Hurricane";
 	    if (onc=2) then power_name="Stormbringer";
@@ -656,11 +484,7 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 
 
 	    flavour_text1=$"{unit.name_role()} suffers Perils of the Warp!  ";
-    	for (var i =0; i <array_length(global.combat_perils);i++){
-    		if (peril3<global.combat_perils[i][0]){
-    			flavour_text2=global.combat_perils[i][1](unit);
-    		}
-    	}
+	    flavour_text2=scr_perils_table(peril3, unit, psy_discipline, power_name);
     
 	    if (unit.hp()<0){
 	        if (marine_dead[unit_id]=0) then marine_dead[unit_id]=1;
@@ -673,13 +497,20 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	        	{u+=1;
 	        		if (u<=20) then important[u]="";
 	        		lost[u]="";
-	        		lost_num[u]=0;}
-	        var h,good,open;h=0;good=0;open=0;
+	        		lost_num[u]=0;
+	        	}
+	        var h=0,good=0,open=0;
 	        repeat(30){// Need to find the open slot
 	            h+=1;
 	            if (obj_ncombat.player_forces>6){
-	                if (marine_type[unit_id]=lost[hh]) and (good=0){lost_num[hh]+=1;good=1;}// If one unit is all the same, and get smashed, this should speed up the repeats
-	                if (marine_type[unit_id]=lost[h]) and (good=0){lost_num[h]+=1;good=1;hh=h;}
+	                if (marine_type[unit_id]=lost[hh]) and (good=0){
+	                	lost_num[hh]+=1;
+	                	good=1;
+	                }// If one unit is all the same, and get smashed, this should speed up the repeats
+	                if (marine_type[unit_id]=lost[h]) and (good=0){
+	                	lost_num[h]+=1;
+	                	good=1;
+	                	hh=h;}
 	            }
 	            if (lost[h]="") and (open=0) then open=h;// Find the first open
 	        }
@@ -718,8 +549,18 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	    if (power_name="Fire Shield"){
 	        var buf,h;buf=9;h=0;
 	        repeat(100){
-	            if (buf>0){h=floor(random(men))+1;if (marine_type[h]!="") and (marine_dead[h]=0) and (marine_fshield[h]=0){buf-=1;marine_fshield[h]=2;}}
-	            if (buf=0){if (marine_fshield[unit_id]<2){buf-=1;marine_fshield[unit_id]=2;}}
+	            if (buf>0){
+	            	h=irandom(men-1)+1;
+	            	if (marine_type[h]!="") and (marine_dead[h]=0) and (marine_fshield[h]=0){
+	            		buf-=1;
+	            		marine_fshield[h]=2;
+	            	}
+	            }
+	            if (buf=0){
+	            	if (marine_fshield[unit_id]<2){
+	            		buf-=1;marine_fshield[unit_id]=2;
+	            	}
+	            }
 	        }
 	    }
     

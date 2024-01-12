@@ -43,6 +43,7 @@ global.trait_list = {
 		ballistic_skill:[10,5, "max"],
 		display_name : "Champion",
 		flavour_text : "Through either natural talent, or obsessive training {0} is a master of arms",
+		effect:"increase melee carry"
 	},
 	"lightning_warriors":{
 		constitution: -6,
@@ -577,6 +578,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	constitution=0; strength=0;luck=0;dexterity=0;wisdom=0;piety=0;charisma=0;technology=0;intelligence=0;weapon_skill=0;ballistic_skill=0;size = 0;
 	religion="none";
 	psionic=0;
+	corruption=0;
 	religion_sub_cult = "none";
 	base_group = "none";
 	role_history = [];
@@ -708,11 +710,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	}
 	 static update_health = function(new_health){
 	    obj_ini.hp[company][marine_number] = new_health;
-	 };
-
-	static add_or_sub_health = function(health_augment){
-		obj_ini.hp[company][marine_number]+=health_augment;
-	}
+	 };	
 	static get_unit_size = function(){
 		var unit_role = role();
 		var arm = armour();
@@ -736,7 +734,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
    		}
 	  	if (from_armoury && new_mobility_item!=""){
 	  		if (scr_item_count(new_mobility_item, quality)>0){
-	  			var exp_require=gear_weapon_data("weapon",new_armour,"exp",false,quality);
+				var exp_require = gear_weapon_data("weapon", new_armour, "exp", false, quality);
 	  			if (exp_require>experience()){
 	  				return "exp_low";
 	  			} 	  				  			
@@ -797,7 +795,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	   		
 	  	if (from_armoury && new_armour!=""){
 	  		if (scr_item_count(new_armour,quality)>0){
-	  			var exp_require=gear_weapon_data("weapon",new_armour,"exp",false,quality);
+				var exp_require = gear_weapon_data("weapon", new_armour, "exp", false, quality);
 	  			if (exp_require>experience()){
 	  				return "exp_low";
 	  			} 	  			
@@ -824,11 +822,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	};	
 	static max_health =function(){
 		var max_h = 100 * (1+((constitution - 40)*0.025));
-		max_h+=gear_weapon_data("armour",armour(),"hp_mod",false,"standard");
-		max_h+=gear_weapon_data("gear",gear(),"hp_mod",false,"standard");
-		max_h+=gear_weapon_data("mobility",mobility_item(),"hp_mod",false,"standard");
-		max_h+=gear_weapon_data("weapon",weapon_one(),"hp_mod",false,"standard");
-		max_h+=gear_weapon_data("weapon",weapon_two(),"hp_mod",false,"standard");
+		max_h += gear_weapon_data("armour", armour(), "hp_mod");
+		max_h += gear_weapon_data("gear", gear(), "hp_mod");
+		max_h += gear_weapon_data("mobility", mobility_item(), "hp_mod");
+		max_h += gear_weapon_data("weapon", weapon_one(), "hp_mod");
+		max_h += gear_weapon_data("weapon", weapon_two(), "hp_mod");
 		return max_h;
 	};	
 	static increase_max_health = function(increase){
@@ -1144,12 +1142,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	};	//get race
 
 	static add_bionics = function(area="none", bionic_quality="standard", from_armoury=true){
-		if (from_armoury && scr_item_count(new_gear,bionic_quality)<1){
+		if (from_armoury && scr_item_count("Bionics",bionic_quality)<1){
 			return "no bionics";
 		}
 		var new_bionic_pos, part, new_bionic = {quality :bionic_quality};
 		if (obj_ini.bio[company][marine_number] < 10){
-			unit.add_or_sub_health(30);
+			update_health(hp()+30);
 			var bionic_possible = [];
 			for (var body_part = 0; body_part < array_length(global.body_parts);body_part++){
 				part = global.body_parts[body_part];
@@ -1227,7 +1225,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	 	}
 	  	if (from_armoury) and (new_gear!=""){
 	  		if (scr_item_count(new_gear,quality)>0){
-	  			var exp_require=gear_weapon_data("gear",new_gear,"exp",false,quality);
+				var exp_require = gear_weapon_data("gear", new_gear, "exp", false, quality);
 	  			if (exp_require>experience()){
 	  				return "exp_low";
 	  			}
@@ -1307,7 +1305,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
     } 	
   	if (from_armoury) and (new_weapon!=""){
   		if (scr_item_count(new_weapon, quality)>0){
-  			var exp_require=gear_weapon_data("weapon",new_weapon,"exp",false,quality);
+			var exp_require = gear_weapon_data("weapon", new_weapon, "exp", false, quality);
   			if (exp_require>experience()){
   				return "exp_low";
   			}  			
@@ -1340,7 +1338,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	   	}     	
 	  	if (from_armoury) and (new_weapon!=""){
 	  		if (scr_item_count(new_weapon,quality)>0){
-	  			var exp_require=gear_weapon_data("weapon",new_weapon,"exp",false,quality);
+				var exp_require = gear_weapon_data("weapon", new_weapon, "exp", false, quality);
 	  			if (exp_require>experience()){
 	  				return "exp_low";
 	  			} 	  			
@@ -1360,13 +1358,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
     	return "complete";
 	};
 
-
-		static corruption = function(){ 
-			return obj_ini.chaos[company][marine_number];
-		};	   
-       static update_corruption = function(new_corruption){
-            obj_ini.chaos[company][marine_number] = new_corruption;
-	   };	
 		static specials = function(){ 
 			return obj_ini.spe[company][marine_number];
 		};	   
@@ -1377,19 +1368,19 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 		//get equipment data methods by deafult they garb all equipment data and return an equipment struct e.g new equipment_struct(item_data, core_type,quality="none")
 		static get_armour_data= function(type="all"){
-			return gear_weapon_data("armour",armour(),type,false,armour_quality);
+			return gear_weapon_data("armour", armour(), type, false, armour_quality);
 		}
 		static get_gear_data= function(type="all"){
-			return gear_weapon_data("gear",gear(),type,false,gear_quality);
+			return gear_weapon_data("gear", gear(), type, false, gear_quality);
 		}
 		static get_mobility_data= function(type="all"){
-			return gear_weapon_data("mobility",mobility_item(),type,false,mobility_item_quality);
+			return gear_weapon_data("mobility", mobility_item(), type, false, mobility_item_quality);
 		}
 		static get_weapon_one_data= function(type="all"){
-			return gear_weapon_data("weapon",weapon_one(),type,false,weapon_one_quality);
+			return gear_weapon_data("weapon", weapon_one(), type, false, weapon_one_quality);
 		}
 		static get_weapon_two_data= function(type="all"){
-			return gear_weapon_data("weapon",weapon_two(),type,false,weapon_two_quality);
+			return gear_weapon_data("weapon", weapon_two(), type, false, weapon_two_quality);
 		}								
 		static damage_resistance = function(){
 			damage_res = min(75,floor(((constitution*0.005) + (experience()/1000))*100));
@@ -1435,8 +1426,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 
 		static ranged_attack = function(weapon_slot=0){
-			encumbered_ranged=false;
-			var final_range_attack=0;		
+			encumbered_ranged=false;			
 			//base modifyer based on unit skill set
 			ranged_att = 100*(((ballistic_skill/50) + (dexterity/400)+ (experience()/500)));
 			var explanation_string = $"base ranged:X{ranged_att/100}#"
@@ -1459,31 +1449,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}
 			var primary_weapon= new equipment_struct({},"");
 			var secondary_weapon= new equipment_struct({},"");
-			if (carry_data[0]>carry_data[1]){
-				encumbered_ranged=true;					
-				ranged_att*=0.6;
-				explanation_string+=$"encumbered penalty:X0.6#";
-			}			
 			if (weapon_slot==0){
 				//decide if any weapons are ranged
 				if (_wep1.range<=1.1 && _wep2.range<=1.1){
-					if (array_length(_wep1.second_profiles) + array_length(_wep2.second_profiles) ==0){
-						ranged_damage_data = [final_range_attack,explanation_string,carry_data,primary_weapon, secondary_weapon];
-					} else {
-						var other_profiles = array_concat(_wep1.second_profiles,_wep2.second_profiles);
-						for (var sec = 0;sec<array_length(other_profiles);sec++){
-							var sec_profile = gear_weapon_data("weapon",other_profiles[sec],"all",false,weapon_one_quality);
-							if (is_struct(sec_profile)){
-								if (sec_profile.range>1.1 && sec_profile.attack>0){
-									final_range_attack+=(sec_profile.attack*(ranged_att/100));
-									explanation_string+=$"{sec_profile.name} +{sec_profile.attack}#";
-								}
-							}
-						}
-						if (array_length(_wep1.second_profiles)>0) then primary_weapon=gear_weapon_data("weapon",_wep1.second_profiles[0],"all",false,weapon_one_quality);
-						if (array_length(_wep2.second_profiles)>0) then primary_weapon=gear_weapon_data("weapon",_wep2.second_profiles[0],"all",false,weapon_two_quality);
-						ranged_damage_data = [final_range_attack,explanation_string,carry_data,primary_weapon, secondary_weapon];
-					}
+					ranged_damage_data= [0,explanation_string,carry_data,primary_weapon, secondary_weapon];
 					return ranged_damage_data;
 				} else {
 					if (_wep1.range<=1.1){
@@ -1492,13 +1461,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 						primary_weapon=_wep1;
 					} else {
 						//if both weapons are ranged pick best
-						if (_wep1.attack>_wep2.attack){
-							primary_weapon=_wep1;
-							secondary_weapon=_wep2;
-						} else{
-							secondary_weapon=_wep1;
-							primary_weapon=_wep2;
-						}
+						primary_weapon = _wep1.attack>_wep2.attack ? _wep1 : _wep2;
 					}
 				}
 			} else {
@@ -1517,6 +1480,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					}
 				}
 			}
+			if (carry_data[0]>carry_data[1]){
+				encumbered_ranged=true;					
+				ranged_att*=0.6;
+				explanation_string+=$"encumbered penalty:X0.6#";
+			}
 			if (!encumbered_ranged){
 			 	var total_gear_mod=0;							
 				total_gear_mod+=get_armour_data("ranged_mod");
@@ -1532,17 +1500,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				}
 			}
 			//return final ranged damage output
-			final_range_attack = floor((ranged_att/100)* primary_weapon.attack);
-			if (!encumbered_ranged){
-				if (primary_weapon.has_tag("pistol") &&secondary_weapon.has_tag("pistol")){
-					final_range_attack+=floor((ranged_att/100)* secondary_weapon.attack);
-					explanation_string+=$"dual pistols:+{secondary_weapon.attack}#";			
-				} else if (secondary_weapon.attack>0){
-					var second_attack =floor((ranged_att/100)* secondary_weapon.attack)*0.5;
-					final_range_attack+=second_attack;
-					explanation_string+=$"secondary:+{second_attack}#";			
-				}
-			}
+			var final_range_attack = floor((ranged_att/100)* primary_weapon.attack);
 			ranged_damage_data = [final_range_attack,explanation_string,carry_data,primary_weapon, secondary_weapon];
 			return ranged_damage_data;
 		};
@@ -1558,6 +1516,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			if (weapon_skill>=50){
 				melee_hands_limit+=0.25;
 				carry_string+="skill:+0.25#";
+			}
+			if (has_trait("champion")){
+				melee_hands_limit+=0.25;
+				carry_string+="Champion:+0.25#";
 			}
 			var armour_carry = get_armour_data("melee_hands")
 			if (armour_carry!=0){
@@ -1768,6 +1730,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				}
 			}
 			return string("{0} {1}", temp_role, name())
+		}
+
+		static full_title = function(){
+			return $"{name_role()} of the {scr_roman_numerals()[company-1]}co.";
 		}
 		
 		static load_marine = function(ship, star="none"){
