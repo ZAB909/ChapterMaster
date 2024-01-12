@@ -21,7 +21,7 @@ function scr_event_dudes(argument0, argument1, argument2, argument3) {
 	}
 
 
-	var coh,ide,oc,ocn,ty,g,good,blur;;
+	var coh,ide,oc,ocn,ty,g,good,blur;
 	coh=-1;ide=0;ide=-1;ty=0;g=0;good=0;blur="";
 	repeat(200){ide+=1;oc[ide]="";ocn[ide]=0;}
 

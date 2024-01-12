@@ -1,8 +1,5 @@
 
 function scr_initialize_custom() {
-
-	var starNameGenerator = new StarNameGenerator();
-
 	// These are the new variables that are being read, for the new creation
 	// They will also have to be loaded and saved
 	// Worry about that later
@@ -17,9 +14,9 @@ function scr_initialize_custom() {
 	strength=5;cooperation=5;
 	purity=5;stability=5;
 	var i;i=-1;repeat(6){i+=1;adv[i]="";adv_num[i]=0;dis[i]="";dis_num[i]=0;}
-	homeworld="Temperate";homeworld_name=starNameGenerator.generate_random_name();
-	recruiting="Death";recruiting_name=starNameGenerator.generate_random_name();
-	flagship_name=scr_ship_name("imperial");
+	homeworld="Temperate";homeworld_name=global.name_generator.generate_star_name();
+	recruiting="Death";recruiting_name=global.name_generator.generate_star_name();
+	flagship_name=global.name_generator.generate_imperial_ship_name();
 	recruiting_exists=1;
 	homeworld_exists=1;
 	homeworld_rule=1;
@@ -32,12 +29,12 @@ function scr_initialize_custom() {
 	pauldron2_color=1;pauldron_color=1;// Left/Right pauldron
 	lens_color=1;weapon_color=1;col_special=0;trim=1;
 
-	hapothecary=scr_marine_name();
-	hchaplain=scr_marine_name();
-	clibrarian=scr_marine_name();
-	fmaster=scr_marine_name();
-	recruiter=scr_marine_name();
-	admiral=scr_marine_name();
+	hapothecary=global.name_generator.generate_space_marine_name();
+	hchaplain=global.name_generator.generate_space_marine_name();
+	clibrarian=global.name_generator.generate_space_marine_name();
+	fmaster=global.name_generator.generate_space_marine_name();
+	recruiter=global.name_generator.generate_space_marine_name();
+	admiral=global.name_generator.generate_space_marine_name();
 
 	equal_specialists=0;
 	load_to_ships=2;
@@ -57,7 +54,7 @@ function scr_initialize_custom() {
 	disposition[6]=0;// Astartes
 	disposition[7]=0;// Reserved
 
-	chapter_master_name=scr_marine_name();
+	chapter_master_name=global.name_generator.generate_space_marine_name();
 	chapter_master_melee=1;
 	chapter_master_ranged=1;
 	chapter_master_specialty=2;
@@ -160,7 +157,7 @@ function scr_initialize_custom() {
 	// fortress_name="";
 	flagship_name=obj_creation.flagship_name;
 	obj_creation.restart_flagship_name=flagship_name;
-	sector_name= new SectorNameGenerator().generate_random_name();
+	sector_name= global.name_generator.generate_sector_name();
 	icon=obj_creation.icon;
 	icon_name=obj_creation.icon_name;
 	man_size=0;
@@ -299,7 +296,7 @@ function scr_initialize_custom() {
 	if (battle_barges>=1){
 	 	for (v=1;v<=battle_barges;v++){
 		    if (flagship_name!="") and (v=1) then ship[v]=flagship_name;
-		    if (flagship_name="") or (v>1) then ship[v]=scr_ship_name("imperial");
+		    if (flagship_name="") or (v>1) then ship[v]=global.name_generator.generate_imperial_ship_name();
 		    ship_uid[v]=floor(random(99999999))+1;
 		    ship_owner[v]=1;ship_class[v]="Battle Barge";
 		    ship_size[v]=3;
@@ -335,7 +332,7 @@ function scr_initialize_custom() {
 
 	for(i=0;i<strike_cruisers;i++){
 		v+=1;
-	    ship[v]=scr_ship_name("imperial");
+	    ship[v]=global.name_generator.generate_imperial_ship_name();
 	    ship_owner[v]=1;
 	    ship_class[v]="Strike Cruiser";ship_size[v]=2;
 	    ship_uid[v]=floor(random(99999999))+1;
@@ -360,7 +357,7 @@ function scr_initialize_custom() {
 	    ship_contents[v]="";
 	    ship_turrets[v]=1;
 	    while (array_contains(ship_names,ship[v])){
-	    	ship[v]=scr_ship_name("imperial");
+	    	ship[v]=global.name_generator.generate_imperial_ship_name();
 	    }
 	    array_push(ship_names,ship[v])
 	}
@@ -368,7 +365,7 @@ function scr_initialize_custom() {
 
 	for(i=0;i<gladius;i++){
 		v+=1;// Single weapon battery has 25% more damage than the hunter class destroyer
-	    ship[v]=scr_ship_name("imperial");
+	    ship[v]=global.name_generator.generate_imperial_ship_name();
 	    ship_owner[v]=1;
 	    ship_class[v]="Gladius";ship_size[v]=1;
 	    ship_uid[v]=floor(random(99999999))+1;
@@ -389,14 +386,14 @@ function scr_initialize_custom() {
 	    ship_capacity[v]=100;ship_carrying[v]=0;ship_contents[v]="";
 	    ship_turrets[v]=1;
 	    while (array_contains(ship_names,ship[v])){
-	    	ship[v]=scr_ship_name("imperial");
+	    	ship[v]=global.name_generator.generate_imperial_ship_name();
 	    }
 	    array_push(ship_names,ship[v])
 	}
 
 	for(i=0;i<hunters;i++){
 		v+=1;
-	    ship[v]=scr_ship_name("imperial");
+	    ship[v]=global.name_generator.generate_imperial_ship_name();
 	    ship_owner[v]=1;
 	    ship_class[v]="Hunter";
 	    ship_size[v]=1;
@@ -421,7 +418,7 @@ function scr_initialize_custom() {
 	    ship_carrying[v]=0;ship_contents[v]="";
 	    ship_turrets[v]=1;
 	    while (array_contains(ship_names,ship[v])){
-	    	ship[v]=scr_ship_name("imperial");
+	    	ship[v]=global.name_generator.generate_imperial_ship_name();
 	    }
 	    array_push(ship_names,ship[v])
 	}
@@ -1519,7 +1516,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]=role[100][16];
 	    wep1[company][k]=wep1[101,16];
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]=wep2[101,16];
 	    armour[company][k]="Power Armour";
 	    gear[company][k]=gear[101,16];
@@ -1538,7 +1535,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]=role[100,17];
 	    wep1[company][k]=wep1[101,17];
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]=wep2[101,17];
 	    armour[company][k]="MK7 Aquila";
 	    gear[company][k]=gear[101,17];
@@ -1567,7 +1564,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]="Codiciery";
 	    wep1[company][k]="Power Sword";
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]="Bolt Pistol";
 	    gear[company][k]="Psychic Hood";
 	    chaos[company][k]=0;experience[company][k]=80;
@@ -1591,7 +1588,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]="Lexicanum";
 	    wep1[company][k]="Bolter";
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]="Chainsword";
 	    chaos[company][k]=0;
 	    experience[company][k]=40;
@@ -1618,7 +1615,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]=role[100][15];
 	    wep1[company][k]=wep1[101,15];
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]=wep2[101,15];
 	    armour[company][k]="MK7 Aquila";
 	    gear[company][k]=gear[101,15];
@@ -1645,7 +1642,7 @@ function scr_initialize_custom() {
 	    race[company][k]=1;
 	    loc[company][k]=home_name;
 	    role[company][k]=role[100][2];
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    gear[company][k]=gear[100,2];
 	    mobi[company][k]=mobi[100,2];
 // wep1 power sword // wep2 storm bolter default
@@ -1699,7 +1696,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]=role[100][5];
 	    wep1[company][k]=wep1[101,5];
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]=wep2[101,5];
 	    chaos[company][k]=0;
 	    gear[company][k]=gear[101,5];
@@ -1733,7 +1730,7 @@ function scr_initialize_custom() {
 	            loc[company][k]=home_name;
 	            role[company][k]=role[100][14];
 	            wep1[company][k]=wep1[101,14];
-	     		name[company][k]=scr_marine_name();
+	     		name[company][k]=global.name_generator.generate_space_marine_name();
 	            wep2[company][k]=wep2[101,14];
 	            spawn_unit = TTRPG[company][k]
 				spawn_unit.spawn_old_guard();
@@ -1754,7 +1751,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]=role[100][15];
 	    wep1[company][k]=wep1[101,15];
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]=wep2[101,15];
 	    spawn_unit = TTRPG[company][k]
 		spawn_unit.spawn_old_guard();
@@ -1776,7 +1773,7 @@ function scr_initialize_custom() {
 	        role[company][k]=role[100][15];
 	        wep1[company][k]=wep1[101,15]
 	  ;
-	  name[company][k]=scr_marine_name();
+	  name[company][k]=global.name_generator.generate_space_marine_name();
 	        wep2[company][k]=wep2[101,15];
 	        armour[company][k]="Terminator Armour";
 	        gear[company][k]=gear[101,15];
@@ -1797,7 +1794,7 @@ function scr_initialize_custom() {
 	        loc[company][k]=home_name;
 	        role[company][k]=role[100][16];
 	        wep1[company][k]=wep1[101,16];
-	  		name[company][k]=scr_marine_name();
+	  		name[company][k]=global.name_generator.generate_space_marine_name();
 	        wep2[company][k]=wep2[101,16];
 	        gear[company][k]=gear[101,16];
 	        spawn_unit = TTRPG[company][k]
@@ -1814,7 +1811,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]="Standard Bearer";
 	    wep1[company][k]="Company Standard";
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]="Power Fist";
 	    armour[company][k]="Terminator Armour";
 	    spawn_unit = TTRPG[company][k]
@@ -1832,7 +1829,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]=role[100][7];
 	    wep1[company][k]=wep1[100,7];
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]=wep2[100,7];
 	    spawn_unit = TTRPG[company][k]
 		spawn_unit.spawn_old_guard();
@@ -1855,7 +1852,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]=role[100][4];
 	    wep1[company][k]=wep1[101,4];
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]=wep2[101,4];
 	    spawn_unit = TTRPG[company][k]
 		spawn_unit.spawn_old_guard();
@@ -1872,7 +1869,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]=role[100][3];
 	    wep1[company][k]=wep1[101,3];
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]=wep2[101,3];
 	    armour[company][k]="MK6 Corvus";
 	    chaos[company][k]=0;
@@ -1894,7 +1891,7 @@ function scr_initialize_custom() {
 		armour[company][k]="Dreadnought";
 		chaos[company][k]=0;
 		experience[company][k]=400;
-		name[company][k]=scr_marine_name();
+		name[company][k]=global.name_generator.generate_space_marine_name();
 	}
 
 	for(i=0;i<4;i++){
@@ -2085,7 +2082,7 @@ function scr_initialize_custom() {
 	        loc[company][k]=home_name;
 	        role[company][k]=role[100][5];
 	        wep1[company][k]=wep1[101,5];
-	        name[company][k]=scr_marine_name();
+	        name[company][k]=global.name_generator.generate_space_marine_name();
 
 	        if (company==4){
      	        if (lord_admiral_name!=""){
@@ -2124,7 +2121,7 @@ function scr_initialize_custom() {
 	                loc[company][k]=home_name;
 	                role[company][k]=role[100][14];
 	                wep1[company][k]=wep1[101,14];
-	          		name[company][k]=scr_marine_name();
+	          		name[company][k]=global.name_generator.generate_space_marine_name();
 	                wep2[company][k]=wep2[101,14];
 	                armour[company][k]="MK7 Aquila";
 	                if (company<=2) then armour[company][k]=choose("MK8 Errant","MK6 Corvus");
@@ -2144,7 +2141,7 @@ function scr_initialize_custom() {
 	        TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	        role[company][k]=role[100][15];
 	        wep1[company][k]=wep1[101,15];
-	    	name[company][k]=scr_marine_name();
+	    	name[company][k]=global.name_generator.generate_space_marine_name();
 	        wep2[company][k]=wep2[101,15];
 	        spawn_unit = TTRPG[company][k]
 			spawn_unit.spawn_exp();
@@ -2161,7 +2158,7 @@ function scr_initialize_custom() {
 	            loc[company][k]=home_name;
 	            role[company][k]=role[100][15];
 	            wep1[company][k]=wep1[101,15];
-	        	name[company][k]=scr_marine_name();
+	        	name[company][k]=global.name_generator.generate_space_marine_name();
 	            wep2[company][k]=wep2[101,15];
 	            armour[company][k]="MK7 Aquila";
 	            if (company<=2) then armour[company][k]=choose("MK8 Errant","MK6 Corvus");
@@ -2181,7 +2178,7 @@ function scr_initialize_custom() {
 	            loc[company][k]=home_name;
 	            role[company][k]=role[100][16];
 	            wep1[company][k]=wep1[101,16];
-	      		name[company][k]=scr_marine_name();
+	      		name[company][k]=global.name_generator.generate_space_marine_name();
 	            wep2[company][k]=wep2[101,16];
 	            armour[company][k]="Power Armour";
 	            gear[company][k]=gear[101,16];
@@ -2198,7 +2195,7 @@ function scr_initialize_custom() {
 	        TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	        role[company][k]="Standard Bearer";
 	        wep1[company][k]="Chainsword";
-	  		name[company][k]=scr_marine_name();
+	  		name[company][k]=global.name_generator.generate_space_marine_name();
 	        wep2[company][k]="Company Standard";
 	        armour[company][k]="MK5 Heresy";
 	        chaos[company][k]=0;
@@ -2213,7 +2210,7 @@ function scr_initialize_custom() {
 	        loc[company][k]=home_name;
 	        role[company][k]=role[100][7];
 	        wep1[company][k]=wep1[100,7];
-	  		name[company][k]=scr_marine_name();
+	  		name[company][k]=global.name_generator.generate_space_marine_name();
 	        wep2[company][k]=wep2[100,7];
 	        armour[company][k]="MK4 Maximus";
 	        chaos[company][k]=0;
@@ -2237,7 +2234,7 @@ function scr_initialize_custom() {
 		                role[company][k]=role[100][8];
 		                wep1[company][k]=wep1[101,8];
 		                wep2[company][k]=wep2[101,8];
-		          name[company][k]=scr_marine_name();
+		          name[company][k]=global.name_generator.generate_space_marine_name();
 		                chaos[company][k]=0;
 
 				        spawn_unit = TTRPG[company][k];
@@ -2254,7 +2251,7 @@ function scr_initialize_custom() {
 		                loc[company][k]=home_name;
 		                role[company][k]=role[100][10];
 		                wep1[company][k]=wep1[101,10];
-		                name[company][k]=scr_marine_name();
+		                name[company][k]=global.name_generator.generate_space_marine_name();
 						mobi[company][k]="Jump Pack";
 						chaos[company][k]=0;
 						wep2[company][k]=wep2[101,10]; 
@@ -2272,7 +2269,7 @@ function scr_initialize_custom() {
 		                loc[company][k]=home_name;
 		                role[company][k]=role[100][9];
 		                wep2[company][k]=wep2[101,9];
-		                name[company][k]=scr_marine_name();
+		                name[company][k]=global.name_generator.generate_space_marine_name();
 		                chaos[company][k]=0;
 		                TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 
@@ -2294,7 +2291,7 @@ function scr_initialize_custom() {
 	                    loc[company][k]=home_name;
 	                    role[company][k]=role[100][12];
 	                    wep1[company][k]=wep1[101,12];
-	              		name[company][k]=scr_marine_name();
+	              		name[company][k]=global.name_generator.generate_space_marine_name();
 	                    wep2[company][k]=wep2[101,12];
 	                    armour[company][k]="Scout Armour";
 	                    chaos[company][k]=0;
@@ -2314,7 +2311,7 @@ function scr_initialize_custom() {
 	                role[company][k]=role[100][8];
 	                wep1[company][k]=wep1[101,8];
 	                wep2[company][k]=wep2[101,8];
-	          		name[company][k]=scr_marine_name();
+	          		name[company][k]=global.name_generator.generate_space_marine_name();
 	                chaos[company][k]=0;
 
 					
@@ -2332,7 +2329,7 @@ function scr_initialize_custom() {
 	            	role[company][k]=role[100][10];
 	            	wep1[company][k]=wep1[101,10];
 	            	wep2[company][k]=wep2[101,10];
-	              name[company][k]=scr_marine_name();
+	              name[company][k]=global.name_generator.generate_space_marine_name();
 	            	chaos[company][k]=0;
 	            	mobi[company][k]="Jump Pack";
 
@@ -2348,7 +2345,7 @@ function scr_initialize_custom() {
 	                race[company][k]=1;
 	                loc[company][k]=home_name;
 	                role[company][k]=role[100][9];
-	          		name[company][k]=scr_marine_name();
+	          		name[company][k]=global.name_generator.generate_space_marine_name();
 	                wep2[company][k]=wep2[101,9];
 	                chaos[company][k]=0;
 	                if (wep1[101,9]="Heavy Ranged") then wep1[company][k]=choose("Lascannon","Missile Launcher","Heavy Bolter");
@@ -2367,7 +2364,7 @@ function scr_initialize_custom() {
 	                loc[company][k]=home_name;
 	                role[company][k]=role[100][12];
 	                wep1[company][k]=wep1[101,12];
-	            	name[company][k]=scr_marine_name();
+	            	name[company][k]=global.name_generator.generate_space_marine_name();
 	                wep2[company][k]=wep2[101,12];
 	                armour[company][k]="Scout Armour";
 	                chaos[company][k]=0;
@@ -2382,7 +2379,7 @@ function scr_initialize_custom() {
 	                role[company][k]=role[100][10];
 	                wep1[company][k]=wep1[101,10];
 	                wep2[company][k]=wep2[101,10];
-	            	name[company][k]=scr_marine_name();
+	            	name[company][k]=global.name_generator.generate_space_marine_name();
 	                mobi[company][k]=mobi[101,10];
 	                chaos[company][k]=0;
 			        spawn_unit = TTRPG[company][k]
@@ -2395,7 +2392,7 @@ function scr_initialize_custom() {
 	                race[company][k]=1;
 	                loc[company][k]=home_name;
 	                role[company][k]=role[100][9];
-	          		name[company][k]=scr_marine_name();
+	          		name[company][k]=global.name_generator.generate_space_marine_name();
 	                wep2[company][k]=wep2[101,9];
 					chaos[company][k]=0;
 					
@@ -2419,7 +2416,7 @@ function scr_initialize_custom() {
 	                loc[company][k]=home_name;
 	                role[company][k]=role[100][6];
 	                wep1[company][k]="Close Combat Weapon";
-	            	name[company][k]=scr_marine_name();
+	            	name[company][k]=global.name_generator.generate_space_marine_name();
 	                wep2[company][k]=wep2[101,6];
 	                armour[company][k]="Dreadnought";
 	                chaos[company][k]=0;experience[company][k]=300;
@@ -2481,7 +2478,7 @@ function scr_initialize_custom() {
 	        loc[company][k]=home_name;
 	        role[company][k]=role[100][14];
 	        wep1[company][k]=wep1[101,14];
-	  		name[company][k]=scr_marine_name();
+	  		name[company][k]=global.name_generator.generate_space_marine_name();
 	        wep2[company][k]=wep2[101,14];
 	        armour[company][k]="MK7 Aquila";// if (company<=2) then armour[company][k]=choose("MK8 Errant","MK6 Corvus");
 	        gear[company][k]=gear[101,14];

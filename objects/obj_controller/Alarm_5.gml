@@ -1399,7 +1399,7 @@ for(var i=1; i<=99; i++){
                     }
                     for(var k=1; k<=50; k++){
                         if (new_name==""){
-                            new_name=scr_ship_name("imperial");
+                            new_name=global.name_generator.generate_imperial_ship_name();
                             if (string_count(new_name,ship_names)>0) then new_name="";
                         } else {break};
                     }

@@ -882,6 +882,6 @@ if (owner != eFACTION.Eldar){
 }
 // if (obj_fleet.enemy=2){hp=hp*0.75;maxhp=hp;shields=shields*0.75;maxshields=shields;}
 // hp=1;shields=1;
-// if (obj_fleet.enemy="orks") then name=scr_ship_name("ork");
+// if (obj_fleet.enemy="orks") then name=global.name_generator.generate_ork_ship_name();
 name="sdagdsagdasg";
 // show_message(string(class));

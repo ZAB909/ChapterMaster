@@ -119,7 +119,7 @@ function scr_cheatcode(argument0) {
         }
 
         for (i = _start_pos; i < (cheatcode_m_digits + _start_pos); i++) {
-            obj_controller.recruit_name[i] = scr_marine_name()
+            obj_controller.recruit_name[i] = global.name_generator.generate_space_marine_name()
             obj_controller.recruit_exp[i] = 20
             obj_controller.recruit_corruption[i] = 0
             obj_controller.recruit_distance[i] = 0
