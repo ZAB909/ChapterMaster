@@ -1882,7 +1882,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
         }
     }      
 }
-function gear_weapon_data(search_area="any",item,wanted_data="all", sub_class=false, quality="standard"){
+function gear_weapon_data(search_area, item, wanted_data="all", sub_class=false, quality="standard"){
 	var item_data_set=false;
     var equip_area=false;
     gear_areas =  ["gear","armour","mobility"];
