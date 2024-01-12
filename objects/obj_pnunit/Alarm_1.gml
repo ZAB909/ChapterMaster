@@ -67,7 +67,7 @@ add_data_to_stack = function(stack_index, weapon, unit_damage=false){
         var secondary_profile;
         for (var p=0;p<array_length(weapon.second_profiles);p++){
 
-            secondary_profile = gear_weapon_data("weapon",weapon.second_profiles[p],"all")
+            secondary_profile = gear_weapon_data("weapon", weapon.second_profiles[p])
             if (!is_struct(secondary_profile))then continue;
             for (var wep_stack=1;wep_stack<array_length(wep);wep_stack++){
                 if (wep[wep_stack]==""||wep[wep_stack]==weapon.name){
@@ -198,7 +198,7 @@ for (g=1;g<array_length(marine_type);g++){
             for (wep_slot=0;wep_slot<3;wep_slot++){
                 var weapon_check = vehicle_weapon_set[wep_slot];
                 if (weapon_check!=""){
-                    weapon=gear_weapon_data("weapon",weapon_check,"all", false, "standard");
+                    weapon = gear_weapon_data("weapon", weapon_check);
                     if (is_struct(weapon)){
                         for (j=1;j<=40;j++){
                             if (wep[j]==""||wep[j]==weapon.name){
