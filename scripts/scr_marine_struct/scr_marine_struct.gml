@@ -734,7 +734,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
    		}
 	  	if (from_armoury && new_mobility_item!=""){
 	  		if (scr_item_count(new_mobility_item, quality)>0){
-				var exp_require = gear_weapon_data("weapon", new_armour, "exp", false, quality);
+				var exp_require = gear_weapon_data("weapon", new_mobility_item, "exp", false, quality);
 	  			if (exp_require>experience()){
 	  				return "exp_low";
 	  			} 	  				  			

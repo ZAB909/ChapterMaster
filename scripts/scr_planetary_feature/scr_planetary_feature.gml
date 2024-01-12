@@ -77,7 +77,14 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		planet_display = "Arsenal";
 		player_hidden = 0;
 		built = obj_controller.turn+3;
-		break;		
+		break;
+	case P_features.Starship:
+		f_type = P_features.Starship;
+		planet_display = "Ancient Starship";
+		funds_spent = 0;
+		player_hidden = 0;
+		engineer_score = 0;
+	break;	
 	case P_features.Ancient_Ruins:
 		var ruin_data = choose(["tiny", 5], ["small", 15], ["medium", 55], ["large",110], ["sprawling", 0])
 		ruins_size =  ruin_data[0]
@@ -306,15 +313,16 @@ function awake_tomb_world(planet){
 //selas a tomb world and switche off awake so will no longer spawn necrons or necron fleets
 function seal_tomb_world(planet){
 	var awake_tomb = 0;
-	 var tombs = search_planet_features(planet, search_feature);
+	 var tombs = search_planet_features(planet, P_features.Necron_Tomb);
 	 if (array_length(tombs)>0){
 		 for (var tomb =0;tomb<array_length(tombs);tomb++){
 			 if (planet[tombs[tomb]].awake == 1){
 				awake_tomb = 1;
 				planet[tombs[tomb]].awake = 0;
 				planet[tombs[tomb]].sealed = 1;
+				planet[tombs[tomb]].planet_display = "Sealed Necron Tomb";
 			 }
-			 if (awake_tomb = 1){break;}
+			 if (awake_tomb = 1) then break;
 		 }
 	 }
 }
@@ -323,14 +331,15 @@ function seal_tomb_world(planet){
 //awakens a tomb world so necrons and necron fleets will spawn
 function awaken_tomb_world(planet){
 	var awake_tomb = 0;
-	 var tombs = search_planet_features(planet, search_feature);
+	 var tombs = search_planet_features(planet, P_features.Necron_Tomb);
 	 if (array_length(tombs)>0){
 		 for (var tomb =0;tomb<array_length(tombs);tomb++){
-			 if (planet[tombs[tomb]].awake == 0){
+			if (planet[tombs[tomb]].awake == 0){
 				awake_tomb = 1;
 				planet[tombs[tomb]].awake = 1;
-			 }
-			 if (awake_tomb = 1){break;}
+				planet[tombs[tomb]].planet_display = "Active Necron Tomb";
+			}
+			if (awake_tomb = 1){break;}
 		 }
 		 
 	 }
@@ -355,32 +364,47 @@ function scr_planetary_feature(planet_num) {
 					break;
 				case P_features.Necron_Tomb:
 				    var lop="Necron Tomb discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
-				    scr_alert("red","feature",lop,x,y);scr_event_log("red",lop);
+				    scr_alert("red","feature",lop,x,y);
+				    scr_event_log("red",lop);
 					break;
 				case P_features.Artifact:
 					var lop="Artifact discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
-					scr_alert("green","feature",lop,x,y);scr_event_log("",lop);
+					scr_alert("green","feature",lop,x,y);
+					scr_event_log("",lop);
 					break;
 				case P_features.STC_Fragment:
 					var lop="STC Fragment located on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
-					 scr_alert("green","feature",lop,x,y);scr_event_log("",lop);
+					 scr_alert("green","feature",lop,x,y);
+					 scr_event_log("",lop);
 					 break;
 				case P_features.Ancient_Ruins:
 					var lop=$"A {feat.ruins_size} Ancient Ruins discovered on {string(name)} {scr_roman(planet_num)}."debugl(lop);
-					scr_alert("green","feature",lop,x,y);scr_event_log("",lop);
+					scr_alert("green","feature",lop,x,y);
+					scr_event_log("",lop);
 					break;
 				case P_features.Cave_Network:
 					var lop="Extensive Cave Network discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
-			        scr_alert("green","feature",lop,x,y);scr_event_log("",lop);
+			        scr_alert("green","feature",lop,x,y);
+			        scr_event_log("",lop);
 					break;
 				case P_features.Warlord7:
 				    var lop="Ork Warboss discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
-				    scr_alert("red","feature",lop,x,y);scr_event_log("red",lop);
-					break;
-		
-			
+				    scr_alert("red","feature",lop,x,y);
+				    scr_event_log("red",lop);
+					break;		
 			}
 		}
 	}
 }
-		
+
+function create_starship_event(){
+	var star = scr_random_find(2,true,"","");
+	if(star == undefined){
+		debugl("RE: couldn't find starship target");
+		return false;
+	}else {
+		var planet=irandom(star.planets-1)+1;
+		array_push(star.p_feature[planet], new new_planet_feature(P_features.Starship))
+		scr_event_log("","Ancient Starship discovered on "+string(star.name)+" "+scr_roman(planet)+".");
+	}
+}

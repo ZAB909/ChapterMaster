@@ -88,22 +88,22 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
             
 	            // Chaos corruption check here
 	            if (new_combat.battle_special="cs_meeting_battle1"){
-	                if (deploying_unit.chaos[cooh,va]>=30) then new_combat.fighting[cooh,va]=1;
-	                if (deploying_unit.chaos[cooh,va]<30) then new_combat.fighting[cooh,va]=-5;
-	                if (deploying_unit.role[cooh,va]="Master of Sanctity") then new_combat.fighting[cooh,va]=-5;
+	                if (unit.corruption>=30) then new_combat.fighting[cooh,va]=1;
+	                if (unit.corruption<30) then new_combat.fighting[cooh,va]=-5;
+	                if (unit.role()="Master of Sanctity") then new_combat.fighting[cooh,va]=-5;
 	            }
 	            if (new_combat.battle_special="cs_meeting_battle2"){
-	                if (deploying_unit.chaos[cooh,va]>=3) then new_combat.fighting[cooh,va]=0;
-	                if (deploying_unit.chaos[cooh,va]<3) then new_combat.fighting[cooh,va]=-5;
-	                if (deploying_unit.role[cooh,va]="Master of Sanctity") then new_combat.fighting[cooh,va]=-5;
+	                if (unit.corruption>=3) then new_combat.fighting[cooh,va]=0;
+	                if (unit.corruption<3) then new_combat.fighting[cooh,va]=-5;
+	                if (unit.role()="Master of Sanctity") then new_combat.fighting[cooh,va]=-5;
 	            }
 	            if (new_combat.battle_special="cs_meeting_battle5") then new_combat.fighting[cooh,va]=1;
 	            if (new_combat.battle_special="cs_meeting_battle6") then new_combat.fighting[cooh,va]=1;
 	            if (new_combat.battle_special="cs_meeting_battle7"){
-	                if (deploying_unit.role[cooh,va]!="Chapter Master") then new_combat.fighting[cooh,va]=-5;
+	                if (unit.role()!="Chapter Master") then new_combat.fighting[cooh,va]=-5;
 	            }
             
-	            if (deploying_unit.role[cooh,va]="Chapter Master") then new_combat.fighting[cooh,va]=1;
+	            if (unit.role()="Chapter Master") then new_combat.fighting[cooh,va]=1;
 	            if (new_combat.fighting[cooh,va]=1) then he_good=1;
 	            if (new_combat.fighting[cooh,va]=-5) then he_good=-1;
             
@@ -114,23 +114,23 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
             
 	                var col,moov,targ;col=0;targ=0;moov=0;
                 
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][12]){col=22-obj_controller.bat_scout_column;new_combat.en_scouts+=1;}
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][8]){col=22-obj_controller.bat_tactical_column;new_combat.en_tacticals+=1;}
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][3]){col=22-obj_controller.bat_veteran_column;new_combat.en_veterans+=1;}
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][9]){col=22-obj_controller.bat_devastator_column;new_combat.en_devastators+=1;}
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][10]){col=22-obj_controller.bat_assault_column;new_combat.en_assaults+=1;}
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100,17]){col=22-obj_controller.bat_librarian_column;new_combat.en_librarians+=1;moov=1;}
-	                if (deploying_unit.role[cooh,va]=string(deploying_unit.role[100,17])+" Aspirant"){col=22-obj_controller.bat_librarian_column;new_combat.en_librarians+=1;moov=1;}
+	                if (unit.role()=deploying_unit.role[100][12]){col=22-obj_controller.bat_scout_column;new_combat.en_scouts+=1;}
+	                if (unit.role()=deploying_unit.role[100][8]){col=22-obj_controller.bat_tactical_column;new_combat.en_tacticals+=1;}
+	                if (unit.role()=deploying_unit.role[100][3]){col=22-obj_controller.bat_veteran_column;new_combat.en_veterans+=1;}
+	                if (unit.role()=deploying_unit.role[100][9]){col=22-obj_controller.bat_devastator_column;new_combat.en_devastators+=1;}
+	                if (unit.role()=deploying_unit.role[100][10]){col=22-obj_controller.bat_assault_column;new_combat.en_assaults+=1;}
+	                if (unit.role()=deploying_unit.role[100,17]){col=22-obj_controller.bat_librarian_column;new_combat.en_librarians+=1;moov=1;}
+	                if (unit.role()=string(deploying_unit.role[100,17])+" Aspirant"){col=22-obj_controller.bat_librarian_column;new_combat.en_librarians+=1;moov=1;}
                 
-	                if (deploying_unit.role[cooh,va]="Codiciery"){col=22-obj_controller.bat_librarian_column;new_combat.en_librarians+=1;moov=1;}
-	                if (deploying_unit.role[cooh,va]="Epistolary"){col=22-obj_controller.bat_librarian_column;new_combat.en_librarians+=1;moov=1;}
-	                if (deploying_unit.role[cooh,va]="Lexicanum"){col=22-obj_controller.bat_librarian_column;new_combat.en_librarians+=1;moov=1;}
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][16]){col=22-obj_controller.bat_techmarine_column;new_combat.en_techmarines+=1;moov=2;}
+	                if (unit.role()="Codiciery"){col=22-obj_controller.bat_librarian_column;new_combat.en_librarians+=1;moov=1;}
+	                if (unit.role()="Epistolary"){col=22-obj_controller.bat_librarian_column;new_combat.en_librarians+=1;moov=1;}
+	                if (unit.role()="Lexicanum"){col=22-obj_controller.bat_librarian_column;new_combat.en_librarians+=1;moov=1;}
+	                if (unit.role()=deploying_unit.role[100][16]){col=22-obj_controller.bat_techmarine_column;new_combat.en_techmarines+=1;moov=2;}
                 
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][2]){col=22-obj_controller.bat_honor_column;new_combat.en_honors+=1;}
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][6]){col=22-obj_controller.bat_dreadnought_column;new_combat.en_dreadnoughts+=1;}
-	                if (deploying_unit.role[cooh,va]="Venerable "+string(deploying_unit.role[100][6])){col=22-obj_controller.bat_dreadnought_column;new_combat.en_dreadnoughts+=1;}
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][4]){col=22-obj_controller.bat_terminator_column;new_combat.en_terminators+=1;}
+	                if (unit.role()=deploying_unit.role[100][2]){col=22-obj_controller.bat_honor_column;new_combat.en_honors+=1;}
+	                if (unit.role()=deploying_unit.role[100][6]){col=22-obj_controller.bat_dreadnought_column;new_combat.en_dreadnoughts+=1;}
+	                if (unit.role()="Venerable "+string(deploying_unit.role[100][6])){col=22-obj_controller.bat_dreadnought_column;new_combat.en_dreadnoughts+=1;}
+	                if (unit.role()=deploying_unit.role[100][4]){col=22-obj_controller.bat_terminator_column;new_combat.en_terminators+=1;}
                 
 	                if (moov>0){
 	                    if ((moov=1) and (obj_controller.command_set[8]=1)) or ((moov=2) and (obj_controller.command_set[9]=1)){
@@ -140,31 +140,31 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	                    }
 	                }
                 
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][15]) or (deploying_unit.role[cooh,va]=deploying_unit.role[100][14]) or (string_count("Aspirant",deploying_unit.role[cooh,va])>0){
-	                    if (deploying_unit.role[cooh,va]=string(deploying_unit.role[100][15])+" Aspirant"){col=22-obj_controller.bat_tactical_column;new_combat.en_tacticals+=1;}
-	                    if (deploying_unit.role[cooh,va]=string(deploying_unit.role[100][14])+" Aspirant"){col=22-obj_controller.bat_tactical_column;new_combat.en_tacticals+=1;}
+	                if (unit.role()=deploying_unit.role[100][15]) or (unit.role()=deploying_unit.role[100][14]) or (string_count("Aspirant",unit.role())>0){
+	                    if (unit.role()=string(deploying_unit.role[100][15])+" Aspirant"){col=22-obj_controller.bat_tactical_column;new_combat.en_tacticals+=1;}
+	                    if (unit.role()=string(deploying_unit.role[100][14])+" Aspirant"){col=22-obj_controller.bat_tactical_column;new_combat.en_tacticals+=1;}
                 
-	                    if (deploying_unit.role[cooh,va]=deploying_unit.role[100][15]) then new_combat.en_apothecaries+=1;
-	                    if (deploying_unit.role[cooh,va]=deploying_unit.role[100][14]){new_combat.en_chaplains+=1;if (new_combat.en_big_mofo>5) then new_combat.en_big_mofo=5;}
+	                    if (unit.role()=deploying_unit.role[100][15]) then new_combat.en_apothecaries+=1;
+	                    if (unit.role()=deploying_unit.role[100][14]){new_combat.en_chaplains+=1;if (new_combat.en_big_mofo>5) then new_combat.en_big_mofo=5;}
                     
 	                    col=22-obj_controller.bat_tactical_column;
 
-	                    if (obj_ini.armour[cooh,va]="Terminator Armour") then col=22-obj_controller.bat_terminator_column;
-	                    if (obj_ini.armour[cooh,va]="Tartaros Armour") then col=22-obj_controller.bat_terminator_column;
+	                    if (unit.armour()="Terminator Armour") then col=22-obj_controller.bat_terminator_column;
+	                    if (unit.armour()="Tartaros Armour") then col=22-obj_controller.bat_terminator_column;
 
 	                    if (co=10) then col=22-obj_controller.bat_scout_column;
 	                }
                 
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][5]) or (deploying_unit.role[cooh,va]="Standard Bearer") or (deploying_unit.role[cooh,va]=deploying_unit.role[100][7]){
-	                    if (deploying_unit.role[cooh,va]=deploying_unit.role[100][5]){new_combat.en_captains+=1;if (new_combat.en_big_mofo>5) then new_combat.en_big_mofo=5;}
-	                    if (deploying_unit.role[cooh,va]="Standard Bearer") then new_combat.en_standard_bearers+=1;
-						if (deploying_unit.role[cooh,va]=deploying_unit.role[100][7]) then new_combat.champions+=1;
+	                if (unit.role()=deploying_unit.role[100][5]) or (unit.role()="Standard Bearer") or (unit.role()=deploying_unit.role[100][7]){
+	                    if (unit.role()=deploying_unit.role[100][5]){new_combat.en_captains+=1;if (new_combat.en_big_mofo>5) then new_combat.en_big_mofo=5;}
+	                    if (unit.role()="Standard Bearer") then new_combat.en_standard_bearers+=1;
+						if (unit.role()=deploying_unit.role[100][7]) then new_combat.champions+=1;
                     
 	                    if (co=1){
 	                        col=22-obj_controller.bat_veteran_column;
 
-	                        if (obj_ini.armour[cooh,va]="Terminator Armour") then col=22-obj_controller.bat_terminator_column;
-	                        if (obj_ini.armour[cooh,va]="Tartaros Armour") then col=22-obj_controller.bat_terminator_column;
+	                        if (unit.armour()="Terminator Armour") then col=22-obj_controller.bat_terminator_column;
+	                        if (unit.armour()="Tartaros Armour") then col=22-obj_controller.bat_terminator_column;
 
 	                    }
 	                    if (co>=2) then col=22-obj_controller.bat_tactical_column;
@@ -172,10 +172,12 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	                    if (deploying_unit.mobi[cooh,va]="Jump Pack") then col=22-obj_controller.bat_assault_column;
 	                }
                 
-	                if (deploying_unit.role[cooh,va]="Forge Master"){col=22-obj_controller.bat_command_column;new_combat.en_important_dudes+=1;}
-	                if (deploying_unit.role[cooh,va]="Master of Sanctity"){col=22-obj_controller.bat_command_column;new_combat.en_important_dudes+=1;if (new_combat.en_big_mofo>2) then new_combat.en_big_mofo=2;}
-	                if (deploying_unit.role[cooh,va]="Master of the Apothecarion"){col=22-obj_controller.bat_command_column;new_combat.en_important_dudes+=1;}
-	                if (deploying_unit.role[cooh,va]="Chief "+string(deploying_unit.role[100,17])){col=22-obj_controller.bat_command_column;new_combat.en_important_dudes+=1;if (new_combat.en_big_mofo>3) then new_combat.en_big_mofo=3;}
+	                if (unit.role()="Forge Master"){col=22-obj_controller.bat_command_column;new_combat.en_important_dudes+=1;}
+	                if (unit.role()="Master of Sanctity"){col=22-obj_controller.bat_command_column;new_combat.en_important_dudes+=1;
+	                if (new_combat.en_big_mofo>2) then new_combat.en_big_mofo=2;}
+	                if (unit.role()="Master of the Apothecarion"){col=22-obj_controller.bat_command_column;new_combat.en_important_dudes+=1;}
+	                if (unit.role()="Chief "+string(deploying_unit.role[100,17])){col=22-obj_controller.bat_command_column;new_combat.en_important_dudes+=1;
+	                if (new_combat.en_big_mofo>3) then new_combat.en_big_mofo=3;}
                 
 	                if (col=0) then col=22-obj_controller.bat_hire_column;
                 
@@ -195,7 +197,7 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	                targ.men+=1;
 	                targ.dude_co[targ.men]=cooh;
 	                targ.dude_id[targ.men]=va;
-	                targ.dudes[targ.men]=deploying_unit.role[cooh,va];
+	                targ.dudes[targ.men]=unit.role();
 	                targ.dudes_num[targ.men]=1;
 	                targ.dudes_hp[targ.men]=deploying_unit.hp[cooh,va];
 	                targ.dudes_exp[targ.men]=deploying_unit.experience[cooh,va];
@@ -216,7 +218,7 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	                if (dr<0.25) then dr=0.25;
 	                targ.dudes_dr[targ.men]=dr;
                 
-	                if (deploying_unit.role[cooh,va]="Death Company"){// Ahahahahah
+	                if (unit.role()="Death Company"){// Ahahahahah
 	                    var really;really=false;
 
 	                    if (string_count("Dreadnought",obj_ini.armour[co][v])>0) then really=true;
@@ -256,7 +258,7 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	                    if (obj_controller.stc_bonus[2]=3){if (targ.dudes_ac[targ.men]>=40) then targ.dudes_ac[targ.men]+=2;if (targ.dudes_ac[targ.men]<40) then targ.dudes_ac[targ.men]+=1;}
 	                }
                 
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][6]) or (deploying_unit.role[cooh,va]="Venerable "+string(deploying_unit.role[100][6])){
+	                if (unit.role()=deploying_unit.role[100][6]) or (unit.role()="Venerable "+string(deploying_unit.role[100][6])){
 	                    targ.dudes_hp[targ.men]=targ.dudes_hp[targ.men]*2;targ.dreads+=1;
 	                }
 	                if (deploying_unit.mobi[cooh,va]="Bike") then targ.dudes_hp[targ.men]+=25;
@@ -275,23 +277,23 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
                 
 	                if (new_combat.battle_special="space_hulk") then new_combat.player_starting_dudes+=1;
                 
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][12]){col=obj_controller.bat_scout_column;new_combat.scouts+=1;}
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][8]){col=obj_controller.bat_tactical_column;new_combat.tacticals+=1;}
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][3]){col=obj_controller.bat_veteran_column;new_combat.veterans+=1;}
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][9]){col=obj_controller.bat_devastator_column;new_combat.devastators+=1;}
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][10]){col=obj_controller.bat_assault_column;new_combat.assaults+=1;}
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100,17]){col=obj_controller.bat_librarian_column;new_combat.librarians+=1;moov=1;}
-	                if (deploying_unit.role[cooh,va]=string(deploying_unit.role[100,17])+" Aspirant"){col=obj_controller.bat_librarian_column;new_combat.librarians+=1;moov=1;}
+	                if (unit.role()=deploying_unit.role[100][12]){col=obj_controller.bat_scout_column;new_combat.scouts+=1;}
+	                if (unit.role()=deploying_unit.role[100][8]){col=obj_controller.bat_tactical_column;new_combat.tacticals+=1;}
+	                if (unit.role()=deploying_unit.role[100][3]){col=obj_controller.bat_veteran_column;new_combat.veterans+=1;}
+	                if (unit.role()=deploying_unit.role[100][9]){col=obj_controller.bat_devastator_column;new_combat.devastators+=1;}
+	                if (unit.role()=deploying_unit.role[100][10]){col=obj_controller.bat_assault_column;new_combat.assaults+=1;}
+	                if (unit.role()=deploying_unit.role[100,17]){col=obj_controller.bat_librarian_column;new_combat.librarians+=1;moov=1;}
+	                if (unit.role()=string(deploying_unit.role[100,17])+" Aspirant"){col=obj_controller.bat_librarian_column;new_combat.librarians+=1;moov=1;}
                 
-	                if (deploying_unit.role[cooh,va]="Codiciery"){col=obj_controller.bat_librarian_column;new_combat.librarians+=1;moov=1;}
-	                if (deploying_unit.role[cooh,va]="Epistolary"){col=obj_controller.bat_librarian_column;new_combat.librarians+=1;moov=1;}
-	                if (deploying_unit.role[cooh,va]="Lexicanum"){col=obj_controller.bat_librarian_column;new_combat.librarians+=1;moov=1;}
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][16]){col=obj_controller.bat_techmarine_column;new_combat.techmarines+=1;moov=2;}
+	                if (unit.role()="Codiciery"){col=obj_controller.bat_librarian_column;new_combat.librarians+=1;moov=1;}
+	                if (unit.role()="Epistolary"){col=obj_controller.bat_librarian_column;new_combat.librarians+=1;moov=1;}
+	                if (unit.role()="Lexicanum"){col=obj_controller.bat_librarian_column;new_combat.librarians+=1;moov=1;}
+	                if (unit.role()=deploying_unit.role[100][16]){col=obj_controller.bat_techmarine_column;new_combat.techmarines+=1;moov=2;}
                 
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][2]){col=obj_controller.bat_honor_column;new_combat.honors+=1;}
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][6]){col=obj_controller.bat_dreadnought_column;new_combat.dreadnoughts+=1;}
-	                if (deploying_unit.role[cooh,va]="Venerable "+string(deploying_unit.role[100][6])){col=obj_controller.bat_dreadnought_column;new_combat.dreadnoughts+=1;}
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][4]){col=obj_controller.bat_terminator_column;new_combat.terminators+=1;}
+	                if (unit.role()=deploying_unit.role[100][2]){col=obj_controller.bat_honor_column;new_combat.honors+=1;}
+	                if (unit.role()=deploying_unit.role[100][6]){col=obj_controller.bat_dreadnought_column;new_combat.dreadnoughts+=1;}
+	                if (unit.role()="Venerable "+string(deploying_unit.role[100][6])){col=obj_controller.bat_dreadnought_column;new_combat.dreadnoughts+=1;}
+	                if (unit.role()=deploying_unit.role[100][4]){col=obj_controller.bat_terminator_column;new_combat.terminators+=1;}
                 
 	                if (moov>0){
 	                    if ((moov=1) and (obj_controller.command_set[8]=1)) or ((moov=2) and (obj_controller.command_set[9]=1)){
@@ -301,31 +303,31 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	                    }
 	                }
                 
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][15]) or (deploying_unit.role[cooh,va]=deploying_unit.role[100][14]) or (string_count("Aspirant",deploying_unit.role[cooh,va])>0){
-	                    if (deploying_unit.role[cooh,va]=string(deploying_unit.role[100][15])+" Aspirant"){col=obj_controller.bat_tactical_column;new_combat.tacticals+=1;}
-	                    if (deploying_unit.role[cooh,va]=string(deploying_unit.role[100][14])+" Aspirant"){col=obj_controller.bat_tactical_column;new_combat.tacticals+=1;}
+	                if (unit.role()=deploying_unit.role[100][15]) or (unit.role()=deploying_unit.role[100][14]) or (string_count("Aspirant",unit.role())>0){
+	                    if (unit.role()=string(deploying_unit.role[100][15])+" Aspirant"){col=obj_controller.bat_tactical_column;new_combat.tacticals+=1;}
+	                    if (unit.role()=string(deploying_unit.role[100][14])+" Aspirant"){col=obj_controller.bat_tactical_column;new_combat.tacticals+=1;}
                 
-	                    if (deploying_unit.role[cooh,va]=deploying_unit.role[100][15]) then new_combat.apothecaries+=1;
-	                    if (deploying_unit.role[cooh,va]=deploying_unit.role[100][14]){new_combat.chaplains+=1;if (new_combat.big_mofo>5) then new_combat.big_mofo=5;}
+	                    if (unit.role()=deploying_unit.role[100][15]) then new_combat.apothecaries+=1;
+	                    if (unit.role()=deploying_unit.role[100][14]){new_combat.chaplains+=1;if (new_combat.big_mofo>5) then new_combat.big_mofo=5;}
                     
 	                    col=obj_controller.bat_tactical_column;
 
-	                    if (obj_ini.armour[cooh,va]="Terminator Armour") then col=obj_controller.bat_terminator_column;
-	                    if (obj_ini.armour[cooh,va]="Tartaros Armour") then col=obj_controller.bat_terminator_column;
+	                    if (unit.armour()="Terminator Armour") then col=obj_controller.bat_terminator_column;
+	                    if (unit.armour()="Tartaros Armour") then col=obj_controller.bat_terminator_column;
 
 	                    if (co=10) then col=obj_controller.bat_scout_column;
 	                }
                 
-	                if (deploying_unit.role[cooh,va]=deploying_unit.role[100][5]) or (deploying_unit.role[cooh,va]="Standard Bearer") or (deploying_unit.role[cooh,va]=deploying_unit.role[100][7]){
-	                    if (deploying_unit.role[cooh,va]=deploying_unit.role[100][5]){new_combat.captains+=1;if (new_combat.big_mofo>5) then new_combat.big_mofo=5;}
-	                    if (deploying_unit.role[cooh,va]="Standard Bearer") then new_combat.standard_bearers+=1;
-						if (deploying_unit.role[cooh,va]=deploying_unit.role[100][7]) then new_combat.champions+=1;
+	                if (unit.role()=deploying_unit.role[100][5]) or (unit.role()="Standard Bearer") or (unit.role()=deploying_unit.role[100][7]){
+	                    if (unit.role()=deploying_unit.role[100][5]){new_combat.captains+=1;if (new_combat.big_mofo>5) then new_combat.big_mofo=5;}
+	                    if (unit.role()="Standard Bearer") then new_combat.standard_bearers+=1;
+						if (unit.role()=deploying_unit.role[100][7]) then new_combat.champions+=1;
                     
 	                    if (co=1){
 	                        col=obj_controller.bat_veteran_column;
 
-	                        if (obj_ini.armour[cooh,va]="Terminator Armour") then col=obj_controller.bat_terminator_column;
-	                        if (obj_ini.armour[cooh,va]="Tartaros Armour") then col=obj_controller.bat_terminator_column;
+	                        if (unit.armour()="Terminator Armour") then col=obj_controller.bat_terminator_column;
+	                        if (unit.armour()="Tartaros Armour") then col=obj_controller.bat_terminator_column;
 
 	                    }
 	                    if (co>=2) then col=obj_controller.bat_tactical_column;
@@ -333,15 +335,15 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	                    if (deploying_unit.mobi[cooh,va]="Jump Pack") then col=obj_controller.bat_assault_column;
 	                }
                 
-	                if (deploying_unit.role[cooh,va]="Chapter Master"){
+	                if (unit.role()="Chapter Master"){
 	                    col=obj_controller.bat_command_column;new_combat.important_dudes+=1;new_combat.big_mofo=1;
 	                    if (string_count("0",deploying_unit.spe[cooh,va])>0) then new_combat.chapter_master_psyker=1;
 	                    else{new_combat.chapter_master_psyker=0;}
 	                }
-	                if (deploying_unit.role[cooh,va]="Forge Master"){col=obj_controller.bat_command_column;new_combat.important_dudes+=1;}
-	                if (deploying_unit.role[cooh,va]="Master of Sanctity"){col=obj_controller.bat_command_column;new_combat.important_dudes+=1;if (new_combat.big_mofo>2) then new_combat.big_mofo=2;}
-	                if (deploying_unit.role[cooh,va]="Master of the Apothecarion"){col=obj_controller.bat_command_column;new_combat.important_dudes+=1;}
-	                if (deploying_unit.role[cooh,va]="Chief "+string(deploying_unit.role[100,17])){col=obj_controller.bat_command_column;new_combat.important_dudes+=1;if (new_combat.big_mofo>3) then new_combat.big_mofo=3;}
+	                if (unit.role()="Forge Master"){col=obj_controller.bat_command_column;new_combat.important_dudes+=1;}
+	                if (unit.role()="Master of Sanctity"){col=obj_controller.bat_command_column;new_combat.important_dudes+=1;if (new_combat.big_mofo>2) then new_combat.big_mofo=2;}
+	                if (unit.role()="Master of the Apothecarion"){col=obj_controller.bat_command_column;new_combat.important_dudes+=1;}
+	                if (unit.role()="Chief "+string(deploying_unit.role[100,17])){col=obj_controller.bat_command_column;new_combat.important_dudes+=1;if (new_combat.big_mofo>3) then new_combat.big_mofo=3;}
                 
 	                if (col=0) then col=obj_controller.bat_hire_column;
                 

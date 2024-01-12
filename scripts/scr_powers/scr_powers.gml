@@ -434,8 +434,8 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
     
 	    if (tome_bad>0){
 	        var tome_roll;tome_roll=floor(random(100))+1;
-	        if (tome_roll<=10) and (tome_bad=1) then obj_ini.chaos[marine_co[unit_id],marine_id[unit_id]]+=choose(1,2);
-	        if (tome_roll<=20) and (tome_bad>1) then obj_ini.chaos[marine_co[unit_id],marine_id[unit_id]]+=choose(3,4,5);
+	        if (tome_roll<=10) and (tome_bad=1) then obj_ini.TTRPG[marine_co[argument3],marine_id[argument3]].corruption+=choose(1,2);
+	        if (tome_roll<=20) and (tome_bad>1) then obj_ini.TTRPG[marine_co[argument3],marine_id[argument3]].corruption+=choose(3,4,5);
 	    }
     
 	}

@@ -36,7 +36,8 @@ function scr_return_ship(ship_name, object, planet_number) {
     
 	    if (object.man_sel[i]>0){
 	        if (object.man[i]="man"){
-	            obj_ini.lid[comp][object.ide[i]]=object.man_sel[i];obj_ini.wid[comp][object.ide[i]]=0;
+	            obj_ini.lid[comp][object.ide[i]]=object.man_sel[i];
+	            obj_ini.wid[comp][object.ide[i]]=0;
 	        }
 	        // if (comp!=0) then show_message(comp);
 	        // show_message(string(i)+"] ide:"+string(object.ide[i])+" = "+string(obj_ini.role[comp][object.ide[i]]));
