@@ -23,7 +23,7 @@ for (o=1;o<=20;o++){
             }
             
             // obj_fleet.marines_lost+=1;
-            if (obj_ini.role[co][i]="Chapter Master"){
+            if (unit.role()=="Chapter Master"){
                 obj_controller.alarm[7]=1;
                 if (global.defeat<=1) then global.defeat=1;
             }

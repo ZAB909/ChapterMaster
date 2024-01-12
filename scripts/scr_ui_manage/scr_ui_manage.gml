@@ -695,7 +695,7 @@ function scr_ui_manage() {
 		        if (man[sel]=="man"){
 		            if (ma_loc[sel]!="Mechanicus Vessel"){
 						var berd=false, unit= obj_ini.TTRPG[managing][ide[sel]];
-						if (managing<11 || managing>=11){
+						if (managing=<15 ){
 							berd=unit.is_boarder;
 						}
 	  
