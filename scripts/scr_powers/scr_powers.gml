@@ -11,7 +11,8 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	// got better at this sort of thing.
 	var unit = unit_struct[unit_id];
 	if (!is_struct(unit))then exit;
-	var psy_discipline,power_name,target_type,enemy5,onc,using,binders,book_powers,book_roll,tome_bad,tome_slot,tome_tags,damnyou;
+	if (unit.name()=="")then exit;
+	var psy_discipline,power_name,target_type,enemy5,onc,using,binders,book_powers,book_roll,tome_bad,tome_slot,tome_tags;
 	var psy_discipline="";
 	var power_name="";
 	var target_type="";
@@ -21,8 +22,8 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	var flavour_text1="",flavour_text2="",flavour_text3="",flavour_text_4="";
 	binders=false;
 	book_powers="";
-	book_roll=floor(random(100))+1;
-	tome_bad=0;tome_slot=0;tome_tags="";damnyou=string(marine_wep1[unit_id])+string(marine_wep2[unit_id]);
+	book_roll=irandom(99)+1;
+	tome_bad=0;tome_slot=0;tome_tags="";
 
 	// In here check if have book
 
@@ -36,10 +37,9 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	    		tomes++;
 	    	}
 	    }
-
-	    if (tomes=1) and (onf=0){onf=1;tomes=1;}
-	    if (tomes=2) and (onf=0){onf=1;tomes=2;}
-	    if (tomes=3) and (onf=0){onf=1;tomes=choose(1,2);}
+	    if (tomes==3){
+	    	tomes=choose(1,2)
+	    }
 	    if (tomes=1) then tome_tags=marine_wep1[unit_id];
 	    if (tomes=2) then tome_tags=marine_wep2[unit_id];
     
@@ -73,8 +73,10 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	if (array_contains(obj_ini.adv,"Daemon Binders")) then binders=true;
 	var p_type="";p_rang=0;p_tar=0;p_spli=0;p_att=0;p_arp=0;p_duration=0;
 
-
-	if (string_count("Z",using)>0){psy_discipline="hacks";power_name="gather_energy";}
+	if (string_count("Z",using)>0){
+		psy_discipline="hacks";
+		power_name="gather_energy";
+	}
 
 	if (string_count("D",using)>0){psy_discipline="default";
 	    if (onc=0) then power_name="Minor Smite";
@@ -410,13 +412,13 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	//     flavour_text2="- a hole between real and warp space is torn open with deadly effect.  ";
 	// }
 
-	if (binders=true) and (p_type="attack"){
+	if (binders==true) and (p_type=="attack"){
 	    if (p_att>0) then p_att=round(p_att)*1.15;
 	    // if (p_arp>0) then p_arp=round(p_arp)*1.15;
 	    if (p_rang>0) then p_rang=round(p_rang)*1.2;
 	}
 	if (marine_type[unit_id]="Chapter Master"){
-	    if (obj_ini.adv[1]="Paragon") or (obj_ini.adv[2]="Paragon") or (obj_ini.adv[3]="Paragon") or (obj_ini.adv[4]="Paragon"){
+	    if (unit.has_trait("paragon")){
 	        if (p_att>0) then p_att=round(p_att)*1.25;
 	        // if (p_arp>0) then p_arp=round(p_arp)*1.25;
 	        if (p_rang>0) then p_rang=round(p_rang)*1.25;
@@ -425,31 +427,31 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 
 
 
-	flavour_text1=string(marine_type[unit_id])+" "+string(obj_ini.name[marine_co[unit_id],marine_id[unit_id]]+" casts '"+string(power_name)+"'");
+	flavour_text1=$"{unit.name_role()} casts '{power_name}'"
 	if (book_powers!="") and (book_roll<=33) and (power_name!="Imperator Maior") and (power_name!="gather_energy"){
-	    flavour_text1=string(marine_type[unit_id])+" "+string(obj_ini.name[marine_co[unit_id],marine_id[unit_id]]);
+	    flavour_text1=unit.name_role();
 	    if (string_char_at(flavour_text1,string_length(flavour_text1))="s") then flavour_text1+="' tome ";
 	    if (string_char_at(flavour_text1,string_length(flavour_text1))!="s") then flavour_text1+="'s tome ";
 	    flavour_text1+="confers knowledge upon him.  He casts '"+string(power_name)+"'";
     
 	    if (tome_bad>0){
-	        var tome_roll;tome_roll=floor(random(100))+1;
-	        if (tome_roll<=10) and (tome_bad=1) then obj_ini.TTRPG[marine_co[argument3],marine_id[argument3]].corruption+=choose(1,2);
-	        if (tome_roll<=20) and (tome_bad>1) then obj_ini.TTRPG[marine_co[argument3],marine_id[argument3]].corruption+=choose(3,4,5);
+	        var tome_roll=irandom(99)+1;
+	        if (tome_roll<=10) and (tome_bad=1) then unit.corruption+=choose(1,2);
+	        if (tome_roll<=20) and (tome_bad>1) then unit.corruption+=choose(3,4,5);
 	    }
     
 	}
 
-	if (power_name="gather_energy") then flavour_text1=string(marine_type[unit_id])+" "+string(obj_ini.name[marine_co[unit_id],marine_id[unit_id]])+" ";
-	if (power_name="Imperator Maior") then flavour_text1=string(marine_type[unit_id])+" "+string(obj_ini.name[marine_co[unit_id],marine_id[unit_id]]+" casts '"+string(power_name)+"'");
+	if (power_name="gather_energy") then flavour_text1=unit.name_role()+" ";
+	if (power_name="Imperator Maior") then flavour_text1=unit.name_role()+" casts '"+string(power_name)+"'";
 
 
 
 
 
 	// determine target here
-	var good,good2,peril1,peril2,heh,perils;good=0;good2=0;peril1=0;peril2=0;perils=0;
-	heh=choose(0,0,0,2);
+	var good=0,good2=0,peril1=0,peril2=0,perils=0;
+	var heh=choose(0,0,0,2);
 
 	peril1=(marine_exp[unit_id]*-0.03)+9;
 	// peril1+=30;
@@ -476,7 +478,8 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	if (peril2<=peril1) and (heh=2){
 	    if (obj_ncombat.sorcery_seen=1) then obj_ncombat.sorcery_seen=0;
 
-	    p_type="perils";flavour_text3="";
+	    p_type="perils";
+	    flavour_text3="";
 	    if (array_contains(obj_ini.dis,"Warp Touched")) then peril3+=20;
 	    if (array_contains(obj_ini.dis,"Shitty Luck")) then peril3+=25;
 
@@ -489,12 +492,12 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	    if (unit.hp()<0){
 	        if (marine_dead[unit_id]=0) then marine_dead[unit_id]=1;
 	        obj_ncombat.player_forces-=1;
-        
-	        var units_lost,going_up;
-	        units_lost=0;going_up=0;
-	        var important,u,hh,stahp;u=-1;hh=0;stahp=0;
+       
+	        var units_lost=0,going_up=0;
+	        var important=[],u=-1,hh=0,stahp=0;
 	        repeat(50)
-	        	{u+=1;
+	        	{
+	        		u+=1;
 	        		if (u<=20) then important[u]="";
 	        		lost[u]="";
 	        		lost_num[u]=0;
@@ -730,7 +733,8 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
                 
                 
 	                if (casualties>0){
-	                    var duhs;duhs=enemy5.dudes[good2];
+	                    var duhs;
+	                    duhs=enemy5.dudes[good2];
 	                    if (obj_ncombat.battle_special="WL10_reveal") or (obj_ncombat.battle_special="WL10_later"){
 	                        if (duhs="Veteran Chaos Terminator") then obj_ncombat.chaos_angry+=casualties*2;
 	                        if (duhs="Veteran Chaos Chosen") then obj_ncombat.chaos_angry+=casualties;
@@ -808,7 +812,8 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	                with(obj_ncombat){scr_newtext();}*/
                 
 	                if (casualties>0){
-	                    var duhs;duhs=enemy5.dudes[good2];
+	                    var duhs;
+	                    duhs=enemy5.dudes[good2];
 	                    if (obj_ncombat.battle_special="WL10_reveal") or (obj_ncombat.battle_special="WL10_later"){
 	                        if (duhs="Veteran Chaos Terminator") then obj_ncombat.chaos_angry+=casualties*2;
 	                        if (duhs="Veteran Chaos Chosen") then obj_ncombat.chaos_angry+=casualties;
@@ -842,17 +847,30 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	                j=0;good=0;open=0;
 	                repeat(20){j+=1;
 	                    if (dudes_num[j]<=0){
-	                        dudes[j]="";dudes_special[j]="";dudes_num[j]=0;dudes_ac[j]=0;
-	                        dudes_hp[j]=0;dudes_vehicle[j]=0;dudes_damage[j]=0;
+	                        dudes[j]="";
+	                        dudes_special[j]="";
+	                        dudes_num[j]=0;
+	                        dudes_ac[j]=0;
+	                        dudes_hp[j]=0;
+	                        dudes_vehicle[j]=0;
+	                        dudes_damage[j]=0;
 	                    }
 	                    if (dudes[j]="") and (dudes[j+1]!=""){
-	                        dudes[j]=dudes[j+1]dudes_special[j]=dudes_special[j+1];
-	                        dudes_num[j]=dudes_num[j+1];dudes_ac[j]=dudes_ac[j+1];
-	                        dudes_hp[j]=dudes_hp[j+1];dudes_vehicle[j]=dudes_vehicle[j+1];
+	                        dudes[j]=dudes[j+1];
+	                        dudes_special[j]=dudes_special[j+1];
+	                        dudes_num[j]=dudes_num[j+1];
+	                        dudes_ac[j]=dudes_ac[j+1];
+	                        dudes_hp[j]=dudes_hp[j+1];
+	                        dudes_vehicle[j]=dudes_vehicle[j+1];
 	                        dudes_damage[j]=dudes_damage[j+1];
                         
-	                        dudes[j+1]="";dudes_special[j+1]="";dudes_num[j+1]=0;dudes_ac[j+1]=0;
-	                        dudes_hp[j+1]=0;dudes_vehicle[j+1]=0;dudes_damage[j+1]=0;
+	                        dudes[j+1]="";
+	                        dudes_special[j+1]="";
+	                        dudes_num[j+1]=0;
+	                        dudes_ac[j+1]=0;
+	                        dudes_hp[j+1]=0;
+	                        dudes_vehicle[j+1]=0;
+	                        dudes_damage[j+1]=0;
 	                    }
 	                }
 	                j=0;
