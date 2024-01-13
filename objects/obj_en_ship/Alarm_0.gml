@@ -337,7 +337,7 @@ bridge=maxhp;
 // hp=1;shields=1;
 
 
-// if (obj_fleet.enemy="orks") then name=scr_ship_name("ork");
+// if (obj_fleet.enemy="orks") then name=global.name_generator.generate_ork_ship_name();
 name="sdagdsagdasg";
 
 

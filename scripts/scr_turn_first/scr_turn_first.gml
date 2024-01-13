@@ -129,7 +129,7 @@ function scr_turn_first() {
 	        if (did_so=false) and (faction_defeated[7]=1){
 	            with(obj_turn_end){audiences+=1;audien[audiences]=7;known[eFACTION.Chaos]=2;audien_topic[audiences]="new_warboss";did_so=true;}
             
-	            faction_defeated[7]=-1;known[eFACTION.Ork]=0;faction_leader[eFACTION.Ork]=scr_ork_name();
+	            faction_defeated[7]=-1;known[eFACTION.Ork]=0;faction_leader[eFACTION.Ork]=global.name_generator.generate_ork_name();
 	            faction_title[7]="Warboss";faction_status[eFACTION.Ork]="War";disposition[7]=-40;
             
 	            var gold,gnew,starf;gold=faction_gender[7];if (gold=0) then gold=1;gnew=0;

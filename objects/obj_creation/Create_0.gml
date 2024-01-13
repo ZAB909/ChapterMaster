@@ -73,9 +73,9 @@ fleet_type=1;
 strength=5;cooperation=5;
 purity=5;stability=5;
 var i;i=-1;repeat(6){i+=1;adv[i]="";adv_num[i]=0;dis[i]="";dis_num[i]=0;}
-homeworld="Temperate";homeworld_name=scr_star_name();
-recruiting="Death";recruiting_name=scr_star_name();
-flagship_name=scr_ship_name("imperial");
+homeworld="Temperate";homeworld_name=global.name_generator.generate_star_name();
+recruiting="Death";recruiting_name=global.name_generator.generate_star_name();
+flagship_name=global.name_generator.generate_imperial_ship_name();
 recruiting_exists=1;
 homeworld_exists=1;
 homeworld_rule=1;
@@ -97,12 +97,12 @@ color_to_pauldron2="";
 color_to_lens="";
 color_to_weapon="";
 
-hapothecary=scr_marine_name();
-hchaplain=scr_marine_name();
-clibrarian=scr_marine_name();
-fmaster=scr_marine_name();
-recruiter=scr_marine_name();
-admiral=scr_marine_name();
+hapothecary=global.name_generator.generate_space_marine_name();
+hchaplain=global.name_generator.generate_space_marine_name();
+clibrarian=global.name_generator.generate_space_marine_name();
+fmaster=global.name_generator.generate_space_marine_name();
+recruiter=global.name_generator.generate_space_marine_name();
+admiral=global.name_generator.generate_space_marine_name();
 
 equal_specialists=0;
 load_to_ships=[2,0,0];
@@ -122,7 +122,7 @@ disposition[5]=0;// Ecclesiarchy
 disposition[6]=0;// Astartes
 disposition[7]=0;// Reserved
 
-chapter_master_name=scr_marine_name();
+chapter_master_name=global.name_generator.generate_space_marine_name();
 chapter_master_melee=1;
 chapter_master_ranged=1;
 chapter_master_specialty=2;

@@ -1742,7 +1742,7 @@ if (action="move") and (action_eta<5000){
                     if (r=3) then scr_alert("green","duhuhuhu","Imperial citizens recolonize "+string(sta.name)+" III.",sta.x,sta.y);
                     if (r=4) then scr_alert("green","duhuhuhu","Imperial citizens recolonize "+string(sta.name)+" IV.",sta.x,sta.y);
                     
-                    sta.dispo[r]=min(obj_ini.imperium_disposition,obj_controller.disposition[2])+choose(-1,-2,-3,-4,0,1,2,3,4);;
+                    sta.dispo[r]=min(obj_ini.imperium_disposition,obj_controller.disposition[2])+choose(-1,-2,-3,-4,0,1,2,3,4);
                     if (sta.name=obj_ini.home_name) and (sta.p_type[r]=obj_ini.home_type) and (obj_controller.homeworld_rule!=1) then sta.dispo[r]=-5000;
                     
                     // sta.present_fleet[owner]-=1;

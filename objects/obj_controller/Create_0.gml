@@ -729,9 +729,9 @@ for(var i=0; i<501; i++){
         loyal_time[i]=0;
     }
     if (i<=10){
-        inquisitor_gender[i]=choose(1,1,1,1,2,2,2);
+        inquisitor_gender[i]=choose(0,0,0,1,1,1,1); // 4:3 chance of male Inquisitor
         inquisitor_type[i]=choose("Ordo Malleus","Ordo Xenos","Ordo Hereticus","Ordo Hereticus","Ordo Hereticus","Ordo Hereticus","Ordo Hereticus","Ordo Hereticus");
-        inquisitor[i]=scr_imperial_name(inquisitor_gender[i]);// For 'random inquisitor wishes to inspect your fleet
+        inquisitor[i]=global.name_generator.generate_imperial_name(inquisitor_gender[i]);// For 'random inquisitor wishes to inspect your fleet
     }
     if (i<60){
         quest[i]="";// 300req
@@ -997,36 +997,34 @@ faction_leader[1]="";
 faction_title[1]="";
 faction_status[1]="";
 // Sector Command faction
-faction_leader[eFACTION.Imperium]=scr_imperial_name(1);
+faction_leader[eFACTION.Imperium]=global.name_generator.generate_imperial_name();
 faction_title[2]="Sector Commander";
 faction_status[eFACTION.Imperium]="Allied";
 // Mechanicus faction
-faction_leader[eFACTION.Mechanicus]=scr_imperial_name(1);
+faction_leader[eFACTION.Mechanicus]=global.name_generator.generate_imperial_name();
 faction_title[3]="Magos";
 faction_status[eFACTION.Mechanicus]="Allied";
-if (faction_leader[eFACTION.Mechanicus]==faction_leader[eFACTION.Imperium]) then faction_leader[eFACTION.Mechanicus]=scr_marine_name();
+if (faction_leader[eFACTION.Mechanicus]==faction_leader[eFACTION.Imperium]) then faction_leader[eFACTION.Mechanicus]=global.name_generator.generate_space_marine_name();
 // Inquisition faction
-faction_leader[eFACTION.Inquisition]=scr_imperial_name(1);
-if (faction_leader[eFACTION.Inquisition]==faction_leader[eFACTION.Mechanicus]) then faction_leader[eFACTION.Inquisition]=scr_imperial_name(1);
+faction_leader[eFACTION.Inquisition]=global.name_generator.generate_imperial_name();
+if (faction_leader[eFACTION.Inquisition]==faction_leader[eFACTION.Mechanicus]) then faction_leader[eFACTION.Inquisition]=global.name_generator.generate_imperial_name();
 faction_title[4]="Inquisitor Lord";
 faction_status[eFACTION.Inquisition]="Allied";
 // Sisters faction
-faction_leader[eFACTION.Ecclesiarchy]=scr_imperial_name(2);
+faction_leader[eFACTION.Ecclesiarchy]=global.name_generator.generate_imperial_name(false);
 faction_title[5]="Prioress";
 faction_status[eFACTION.Ecclesiarchy]="Allied";
 // Eldar faction
-faction_leader[eFACTION.Eldar]=scr_eldar_name(2);
+faction_leader[eFACTION.Eldar]=global.name_generator.generate_eldar_name(2);
 faction_title[6]="Farseer";
 faction_status[eFACTION.Eldar]="Antagonism";// If disposition = 0 then instead set it to "Antagonism"
 if (instance_exists(obj_ini)){if (string_count("Eldar",obj_ini.strin)>0) then faction_status[eFACTION.Eldar]="War";}
 // Orkz faction
-faction_leader[eFACTION.Ork]=scr_ork_name();
+faction_leader[eFACTION.Ork]=global.name_generator.generate_ork_name();
 faction_title[7]="Warboss";
 faction_status[eFACTION.Ork]="War";
 // Tau faction
-faction_leader[eFACTION.Tau]="Por'O ";
-// TODO put tau names into a script same as scr_eldar_name;
-faction_leader[eFACTION.Tau]+=choose("Ar","Cha","Doran","Eldi","Kais","Ko","Kunas","M'yen","Ro","Tsua'm","Ukos");
+faction_leader[eFACTION.Tau] = global.name_generator.generate_tau_leader_name();
 faction_title[8]="Diplomat";
 faction_status[eFACTION.Tau]="Antagonism";
 // Other factions unkown to player
@@ -1061,12 +1059,12 @@ faction_gender[6]=choose(1,2);
 faction_gender[7]=1;
 faction_gender[8]=choose(1,1,2);
 faction_gender[9]=1;
-if (faction_gender[4]=2) then faction_leader[eFACTION.Inquisition]=scr_imperial_name(2);
+if (faction_gender[4]=2) then faction_leader[eFACTION.Inquisition]=global.name_generator.generate_imperial_name(false);
 faction_gender[10]=choose(1,1,1,2,2);
 if (faction_gender[10]==1) then faction_leader[eFACTION.Chaos]=choose("1","1","1","2");
 if (faction_gender[10]==2) then faction_leader[eFACTION.Chaos]=choose("1","2","2","2");
-if (faction_leader[eFACTION.Chaos]=="1") then faction_leader[eFACTION.Chaos]=scr_marine_name();
-if (faction_leader[eFACTION.Chaos]=="2") then faction_leader[eFACTION.Chaos]=scr_chaos_name();
+if (faction_leader[eFACTION.Chaos]=="1") then faction_leader[eFACTION.Chaos]=global.name_generator.generate_space_marine_name();
+if (faction_leader[eFACTION.Chaos]=="2") then faction_leader[eFACTION.Chaos]=global.name_generator.generate_chaos_name();
 faction_gender[11]=1;
 faction_gender[12]=1;
 faction_gender[13]=1;
@@ -1222,7 +1220,7 @@ if (instance_exists(obj_ini)){
             for(var i=0; i<3; i++){scr_add_artifact("random_nodemon","",0,obj_ini.ship[1],501);}
         }
         // TODO should add special bonus to different chapters based on lore
-        adept_name=scr_marine_name();
+        adept_name=global.name_generator.generate_space_marine_name();
         recruiter_name=obj_ini.recruiter_name;
         progenitor=obj_ini.progenitor;
         successor_chapters=obj_ini.successors;
