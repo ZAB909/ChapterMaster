@@ -609,7 +609,7 @@ function scr_flavor(argument0, argument1, argument2, argument3, argument4) {
 
 	    if (duhs="Hive Tyrant") then obj_ini.master_tyrant+=argument4;
 	    if (duhs="Zoanthrope") or (duhs="Lictor") then obj_ini.master_synapse+=argument4;
-	    if (duhs="Tyrant Guard") or (duhs="Tyranid Warrior") then obj_ini.master_warriors+=argument4;;
+	    if (duhs="Tyrant Guard") or (duhs="Tyranid Warrior") then obj_ini.master_warriors+=argument4;
 	    if (duhs="Cultist") then obj_ini.master_heretics+=argument4;
 	    if (duhs="Carnifex") then obj_ini.master_carnifex+=argument4;
 	    if (duhs="Termagaunt") or (duhs="Hormagaunt") then obj_ini.master_gaunts+=argument4;

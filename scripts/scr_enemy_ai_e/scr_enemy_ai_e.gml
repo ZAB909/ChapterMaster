@@ -758,7 +758,7 @@ function scr_enemy_ai_e() {
                             }
                         }
 
-                        obj_controller.recruit_name[new_recruit] = scr_marine_name();
+                        obj_controller.recruit_name[new_recruit] = global.name_generator.generate_space_marine_name();
                         obj_controller.recruit_exp[new_recruit] += irandom(5);
 
                         // gives planet buffs

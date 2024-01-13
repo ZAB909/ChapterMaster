@@ -127,9 +127,9 @@ if (killer>0){
             obj_controller.inquisitor[i]=obj_controller.inquisitor[i+1];
         }
         if (i=10){
-            obj_controller.inquisitor_gender[i]=choose(1,1,1,1,2,2,2);
+            obj_controller.inquisitor_gender[i]=choose(0,0,0,1,1,1,1); // 4:3 chance of male Inquisitor
             obj_controller.inquisitor_type[i]=choose("Ordo Malleus","Ordo Xenos","Ordo Hereticus","Ordo Hereticus","Ordo Hereticus","Ordo Hereticus","Ordo Hereticus","Ordo Hereticus");
-            obj_controller.inquisitor[i]=scr_imperial_name(obj_controller.inquisitor_gender[i]);// For 'random inquisitor wishes to inspect your fleet
+            obj_controller.inquisitor[i]=global.name_generator.generate_imperial_name(obj_controller.inquisitor_gender[i]);// For 'random inquisitor wishes to inspect your fleet
         }
         i+=1;
     }

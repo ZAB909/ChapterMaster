@@ -8,12 +8,12 @@ function scr_chapter_new(argument0) {
 	var i;i=-1;repeat(6){i+=1;adv[i]="";adv_num[i]=0;dis[i]="";dis_num[i]=0;}
 	points=100;maxpoints=100;custom=0;
 
-	hapothecary=scr_marine_name();
-	hchaplain=scr_marine_name();
-	clibrarian=scr_marine_name();
-	fmaster=scr_marine_name();
-	recruiter=scr_marine_name();
-	admiral=scr_marine_name();
+	hapothecary=global.name_generator.generate_space_marine_name();
+	hchaplain=global.name_generator.generate_space_marine_name();
+	clibrarian=global.name_generator.generate_space_marine_name();
+	fmaster=global.name_generator.generate_space_marine_name();
+	recruiter=global.name_generator.generate_space_marine_name();
+	admiral=global.name_generator.generate_space_marine_name();
 
 	i=99;
 	repeat(3){i+=1;// First is for the correct slot, second is for default
@@ -26,10 +26,10 @@ function scr_chapter_new(argument0) {
 	    role[i,9]="Devastator";wep1[i,9]="Heavy Ranged";wep2[i,9]="Combat Knife";armour[i,9]="Power Armour";
 	    role[i,10]="Assault Marine";wep1[i,10]="Chainsword";wep2[i,10]="Bolt Pistol";armour[i,10]="Power Armour";mobi[i,10]="Jump Pack";
 	    role[i,12]="Scout";wep1[i,12]="Bolter";wep2[i,12]="Combat Knife";armour[i,12]="Scout Armour";
-	    role[i,14]="Chaplain";wep1[i,14]="Power Sword";wep2[i,14]="Storm Bolter";armour[i,14]="Power Armour";gear[i,14]="Rosarius";
-	    role[i,15]="Apothecary";wep1[i,15]="Power Sword";wep2[i,15]="Storm Bolter";armour[i,15]="Power Armour";gear[i,15]="Narthecium";
-	    role[i,16]="Techmarine";wep1[i,16]="Power Axe";wep2[i,16]="Storm Bolter";armour[i,16]="Power Armour";gear[i,16]="Servo Arms";
-	    role[i,17]="Librarian";wep1[i,17]="Force Weapon";wep2[i,17]="Storm Bolter";armour[i,17]="Power Armour";gear[i,17]="Psychic Hood";
+	    role[i,14]="Chaplain";wep1[i,14]="Power Sword";wep2[i,14]="Bolter";armour[i,14]="Power Armour";gear[i,14]="Rosarius";
+	    role[i,15]="Apothecary";wep1[i,15]="Power Sword";wep2[i,15]="Bolter";armour[i,15]="Power Armour";gear[i,15]="Narthecium";
+	    role[i,16]="Techmarine";wep1[i,16]="Power Axe";wep2[i,16]="Bolter";armour[i,16]="Power Armour";gear[i,16]="Servo Arms";
+	    role[i,17]="Librarian";wep1[i,17]="Force Weapon";wep2[i,17]="Bolter";armour[i,17]="Power Armour";gear[i,17]="Psychic Hood";
 		role[i,18]="Sergeant";wep1[i,18]="Chainsword";wep2[i,18]="Storm Bolter";armour[i,18]="Power Armour";gear[i,18]="";
 		role[i,19]="Veteran Sergeant";wep1[i,19]="Chainsword";wep2[i,19]="Storm Bolter";armour[i,19]="Power Armour";gear[i,19]="";
 	}i=100;
@@ -417,7 +417,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    adv[1]="Melee Enthusiasts";adv[2]="Kings of Space";adv[3]="Boarders";adv[4]="Daemon Binders";dis[1]="Suspicious";
 	    homeworld="Dead";homeworld_name="Entymion";
 	    homeworld_exists=0;recruiting_exists=1;
-	    recruiting_world="Death";recruiting_name=scr_star_name();
+	    recruiting_world="Death";recruiting_name=global.name_generator.generate_star_name();
 	    homeworld_rule=0;aspirant_trial="Challenge";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Purple";color_to_secondary="Purple";color_to_trim="Gold";
@@ -446,7 +446,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    adv[1]="Melee Enthusiasts";dis[1]="Shitty Luck";dis[2]="Sieged";dis[3]="Suspicious";
 	    homeworld="Dead";homeworld_name="Lacrima Vex";
 	    homeworld_exists=0;recruiting_exists=1;
-	    recruiting_world="Death";recruiting_name=scr_star_name();
+	    recruiting_world="Death";recruiting_name=global.name_generator.generate_star_name();
 	    homeworld_rule=0;aspirant_trial="Challenge";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Gold";color_to_secondary="Gold";color_to_trim="Gold";
@@ -470,7 +470,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	if (argument0="Doom Benefactors"){points=100;
 	    selected_chapter=135;chapter=argument0;icon=0;icon_name="eye";founding=0;scr_icon("");
 	    fleet_type=1;strength=1;purity=10;stability=7;cooperation=8;
-	    homeworld="Forge";homeworld_name="Ariana Prime";recruiting_world="Death";recruiting_name=scr_star_name();
+	    homeworld="Forge";homeworld_name="Ariana Prime";recruiting_world="Death";recruiting_name=global.name_generator.generate_star_name();
 	    homeworld_exists=1;recruiting_exists=1;homeworld_rule=2;aspirant_trial="Apprenticeship";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Dark Red";color_to_secondary="Black";color_to_trim="Copper";
@@ -480,7 +480,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    hchaplain="Eli";
 	    clibrarian="Dagoth";
 	    fmaster="Mjenzi";
-	    admiral=scr_marine_name();
+	    admiral=global.name_generator.generate_space_marine_name();
 	    battle_cry="Death to the enemy!  DEATH";// monastery_name="Fortress of Hera";master_name=
 	    equal_specialists=0;
     

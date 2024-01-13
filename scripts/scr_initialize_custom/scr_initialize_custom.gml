@@ -89,7 +89,7 @@ function scr_initialize_custom() {
 	// fortress_name="";
 	flagship_name=obj_creation.flagship_name;
 	obj_creation.restart_flagship_name=flagship_name;
-	sector_name=scr_sector_name();
+	sector_name= global.name_generator.generate_sector_name();
 	icon=obj_creation.icon;
 	icon_name=obj_creation.icon_name;
 	man_size=0;
@@ -232,7 +232,7 @@ function scr_initialize_custom() {
 	if (battle_barges>=1){
 	 	for (v=1;v<=battle_barges;v++){
 		    if (flagship_name!="") and (v=1) then ship[v]=flagship_name;
-		    if (flagship_name="") or (v>1) then ship[v]=scr_ship_name("imperial");
+		    if (flagship_name="") or (v>1) then ship[v]=global.name_generator.generate_imperial_ship_name();
 		    ship_uid[v]=floor(random(99999999))+1;
 		    ship_owner[v]=1;ship_class[v]="Battle Barge";
 		    ship_size[v]=3;
@@ -268,7 +268,7 @@ function scr_initialize_custom() {
 
 	for(i=0;i<strike_cruisers;i++){
 		v+=1;
-	    ship[v]=scr_ship_name("imperial");
+	    ship[v]=global.name_generator.generate_imperial_ship_name();
 	    ship_owner[v]=1;
 	    ship_class[v]="Strike Cruiser";ship_size[v]=2;
 	    ship_uid[v]=floor(random(99999999))+1;
@@ -293,7 +293,7 @@ function scr_initialize_custom() {
 	    ship_contents[v]="";
 	    ship_turrets[v]=1;
 	    while (array_contains(ship_names,ship[v])){
-	    	ship[v]=scr_ship_name("imperial");
+	    	ship[v]=global.name_generator.generate_imperial_ship_name();
 	    }
 	    array_push(ship_names,ship[v])
 	}
@@ -301,7 +301,7 @@ function scr_initialize_custom() {
 
 	for(i=0;i<gladius;i++){
 		v+=1;// Single weapon battery has 25% more damage than the hunter class destroyer
-	    ship[v]=scr_ship_name("imperial");
+	    ship[v]=global.name_generator.generate_imperial_ship_name();
 	    ship_owner[v]=1;
 	    ship_class[v]="Gladius";ship_size[v]=1;
 	    ship_uid[v]=floor(random(99999999))+1;
@@ -322,14 +322,14 @@ function scr_initialize_custom() {
 	    ship_capacity[v]=100;ship_carrying[v]=0;ship_contents[v]="";
 	    ship_turrets[v]=1;
 	    while (array_contains(ship_names,ship[v])){
-	    	ship[v]=scr_ship_name("imperial");
+	    	ship[v]=global.name_generator.generate_imperial_ship_name();
 	    }
 	    array_push(ship_names,ship[v])
 	}
 
 	for(i=0;i<hunters;i++){
 		v+=1;
-	    ship[v]=scr_ship_name("imperial");
+	    ship[v]=global.name_generator.generate_imperial_ship_name();
 	    ship_owner[v]=1;
 	    ship_class[v]="Hunter";
 	    ship_size[v]=1;
@@ -354,7 +354,7 @@ function scr_initialize_custom() {
 	    ship_carrying[v]=0;ship_contents[v]="";
 	    ship_turrets[v]=1;
 	    while (array_contains(ship_names,ship[v])){
-	    	ship[v]=scr_ship_name("imperial");
+	    	ship[v]=global.name_generator.generate_imperial_ship_name();
 	    }
 	    array_push(ship_names,ship[v])
 	}
@@ -881,49 +881,98 @@ function scr_initialize_custom() {
 						"wep2":[wep2[100,4],4], 
 					},
 					"option" :{
-						"wep1":[
-							[["Thunder Hammer", "Chainfist"],1],
-							[["Lightning Claw", "Power Axe", "Power Fist", "Power Sword"], 7]],
 						"wep2":[
-							[["Storm Shield"],1],
-							[["Assault Cannon","Heavy Flamer"], 1],
-							[["Multi-Melta", "Heavy Flamer", "Heavy Bolter"], 1],
-							[["Lightning Claw", "Meltagun", "Storm Bolter"], 6]
+							[["Assault Cannon","Heavy Flamer"], 4],
 						],
 					} 
 				}}],
 				["type_data" , {"display_data":$"{role[100,4]} {squad_name}"}]
 			],
-			"veteran_squad": [
-				[role[100][3], {"max":9,"min":4, "loadout":{//tactical marine
+			"terminator_assault_squad": [
+				[role[100][19], {
+				      "max":1,
+				      "min":1, 
+				      "role":$"{role[100,19]} Assault {role[100][4]}"
+				 }],			//Veteran sergeant terminator
+				[role[100][4], {"max":9,"min":3,
+				"role":$"Assault {role[100][4]}" ,
+				"loadout":{//terminator
+					"required":{
+						"wep1":["Thunder Hammer","max"],
+						"wep2":["Storm Shield","max"], 
+					},
+				},
+				},	],
+				["type_data" , {"display_data":$"{role[100,4]} Assault {squad_name}"}]
+			],
+
+			"sternguard_veteran_squad": [
+				[role[100][3], {"max":9,"min":4, 
+				"role":$"Sternguard {role[100][3]}",
+				"loadout":{//tactical marine
 					"required":{
 						"wep1":[wep1[100,3],4],
 						"wep2":[wep2[100,3],4], 
 					},
 					"option" :{
 						"wep1":[
-							["Chainsword",2],
-							[["Power Sword", "Power Axe", "Lightning Claw"],4],
-							[["Chainfist", "Power Fist"],1],
+							["Chainsword",4],
+							[["Power Sword","Power Axe"],2]
 						],
 						"wep2":[
-							[["Flamer", "Meltagun", "Plasma Pistol"],3],
-							[["Plasma Gun","Storm Bolter"], 1],
-							[["Multi-Melta", "Heavy Flamer", "Bolter"], 1],
-							[["Missile Launcher", "Lascannon", "Bolter"], 1],
+							[["Flamer","Meltagun","Plasma Gun","Storm Bolter"],2],
+							[["Multi-Melta","Heavy Bolter","Lascannon"], 1],
 						]
 					} 
 				}}],		//veterans
 
 				[role[100][19], {"max":1,"min":1}],
-				["type_data" , {"display_data":$"{role[100,3]} {squad_name}"}]
+				["type_data" , {"display_data":$"Sternguard {role[100,3]} {squad_name}"}]
 			],
-			"devestator_squad": [
-				[role[100][9], {"max":9,"min":4,"loadout":{//devestator
+			
+			"vanguard_veteran_squad": [
+				[role[100][3], {"max":9,"min":4, 
+				      "role":$"Vanguard {role[100][3]}",
+				      "loadout":{//tactical marine
 					"required":{
-						"wep1":["Bolter",4], 
-						"wep2":["Combat Knife",4]
-					}}}],		//veterans
+						"wep1":[wep1[100,3],4],
+						"wep2":["Bolt Pistol",4],
+						"mobi":["Jump Pack","max"]
+					},
+					"option" :{
+						"wep1":[
+							[["Power Sword","Power Axe","Lightning Claw"],4],
+							[["Thunder Hammer","Lightning Claw","Power Fist"],1],
+						],
+						"wep2":[
+							[["Flamer", "Plasma Pistol"],2],
+							[["Storm Shield"], 4],
+						]
+					} 
+				}}],		//veterans
+
+				[role[100][19], {"max":1,"min":1, "loadout":{
+						"required":{
+							"wep1":["Power Sword",1],
+							"wep2":["Plasma Pistol",1],
+							"mobi":["Jump Pack",1]
+						},
+					}
+				}
+				],
+				["type_data" , {"display_data":$"Vanguard {role[100,3]} {squad_name}"}]
+			],
+			"devastator_squad": [
+					[role[100][9], 
+						{"max":9,"min":4,
+							"loadout":{//devastator
+								"required":{
+									"wep1":["Bolter",4], 
+									"wep2":["Combat Knife",4]
+								}
+							}
+						}
+					],			//veterans
 
 				[role[100][18], {"max":1,"min":1, "role":$"{role[100,9]} {role[100,18]}"}],//sergeant
 				["type_data" , {"display_data":$"{role[100,9]} {squad_name}"}]
@@ -936,15 +985,8 @@ function scr_initialize_custom() {
 					},
 					"option" :{
 						"wep1":[
-							[["Flamer", "Meltagun"],1],
-							[["Plasma Gun","Storm Bolter"], 1],
-							[["Multi-Melta", "Heavy Flamer", "Bolter"], 1],
-							[["Missile Launcher", "Lascannon", "Bolter"], 1]],
-						"wep2":[
-							["Chainsword",2],
-							[["Power Sword", "Power Axe", "Lightning Claw"],1],
-							[["Chainfist", "Power Fist"],1]
-						]
+							[["Flamer","Plasma Gun", "Meltagun"],2],
+							[["Multi-Melta", "Heavy Flamer","Missile Launcher", "Lascannon", "Heavy Bolter"], 1]],
 					} 
 				}}],		//tactical marine
 
@@ -962,10 +1004,10 @@ function scr_initialize_custom() {
 						},
 						"option" : {
 							"wep1":[
-								[["Flamer"], 1], [["Eviscerator"],2],
+								[["Eviscerator"],2],
 							],
 							"wep2":[
-								[["Plasma Pistol"], 1]
+								[["Plasma Pistol","Flamer"], 1]
 							]
 						}
 					}
@@ -984,8 +1026,7 @@ function scr_initialize_custom() {
 	                    },
 	                    "option" :{
 	                        "wep1":[
-	                            [["Flamer","Plasma Gun",], 1],
-	                            [["Bolter","Stalker Pattern Bolter"], 3],
+	                            [["Bolter","Stalker Pattern Bolter"], 2],
 	                            [["Missile Launcher","Heavy Bolter"], 1]],
 	                        "wep2":[
 	                            [["Chainsword","Combat Knife"], 5],
@@ -1001,7 +1042,7 @@ function scr_initialize_custom() {
 	            	"loadout":{
 		                "option":{
 		                    "wep1":[
-		                        [["Power Sword","Chainsword","Power Axe","Power Fist"],1]
+		                        [["Power Sword","Chainsword","Power Axe"],1]
 		                    ],
 		                    "wep2":[
 		                        [["Plasma Pistol","Combiflamer","Stalker Pattern Bolter","Storm Bolter"],1]
@@ -1042,7 +1083,7 @@ function scr_initialize_custom() {
 		            "loadout":{
 			            "option":{
 			                "wep1":[
-			                    [["Power Sword","Chainsword","Power Axe","Power Fist"],1]
+			                    [["Power Sword","Chainsword","Power Axe"],1]
 			                ],
 			                "wep2":[
 			                    [["Combiflamer","Stalker Pattern Bolter",],1]
@@ -1064,12 +1105,10 @@ function scr_initialize_custom() {
                     },
                     "option" :{
                         "wep1":[
-                            [["Power Sword","Power Axe","Chainsword"],5],
-                            [["Power Fist","Lightning Claw"],1]
+                            [["Power Sword","Power Axe","Eviscerator"],2],
                          ],
                         "wep2":[
-                            [["Flamer", "Meltagun","Bolt Pistol"],2],
-                            [["Plasma Pistol","Bolt Pistol"], 4],
+                            [["Flamer", "Meltagun","Plasma Pistol","Bolt Pistol"],2],
                             
                         ],
                     } 
@@ -1101,12 +1140,10 @@ function scr_initialize_custom() {
 			},
 			"option" :{
 			"wep1":[
-			   [["Flamer", "Meltagun"],1],
-			   [["Plasma Gun","Storm Bolter"], 2],
-			   [["Multi-Melta", "Heavy Flamer", "Bolter"], 1],
-			   [["Missile Launcher", "Multi-Melta", "Bolter"], 1]],
+			   [["Plasma Gun","Storm Bolter","Flamer", "Meltagun"], 2],
+			   [[ "Multi-Melta", "Heavy Bolter"], 1]],
 			"wep2":[
-			   [["Power Sword", "Power Axe", "Chainsword"],5],
+			   [["Power Sword", "Power Axe", "Chainsword"],3],
 			]
 			} 
 		},
@@ -1472,7 +1509,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]=role[100][16];
 	    wep1[company][k]=wep1[101,16];
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]=wep2[101,16];
 	    armour[company][k]="Power Armour";
 	    gear[company][k]=gear[101,16];
@@ -1491,7 +1528,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]=role[100,17];
 	    wep1[company][k]=wep1[101,17];
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]=wep2[101,17];
 	    armour[company][k]="MK7 Aquila";
 	    gear[company][k]=gear[101,17];
@@ -1521,7 +1558,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]="Codiciery";
 	    wep1[company][k]="Power Sword";
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]="Bolt Pistol";
 	    gear[company][k]="Psychic Hood";
 	    
@@ -1550,7 +1587,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]="Lexicanum";
 	    wep1[company][k]="Bolter";
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]="Chainsword";
 	    
 	    experience[company][k]=40;
@@ -1577,7 +1614,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]=role[100][15];
 	    wep1[company][k]=wep1[101,15];
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]=wep2[101,15];
 	    armour[company][k]="MK7 Aquila";
 	    gear[company][k]=gear[101,15];
@@ -1605,7 +1642,7 @@ function scr_initialize_custom() {
 	    race[company][k]=1;
 	    loc[company][k]=home_name;
 	    role[company][k]=role[100][2];
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    gear[company][k]=gear[100,2];
 	    mobi[company][k]=mobi[100,2];
 // wep1 power sword // wep2 storm bolter default
@@ -1660,7 +1697,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]=role[100][5];
 	    wep1[company][k]=wep1[101,5];
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]=wep2[101,5];
 	    
 	    gear[company][k]=gear[101,5];
@@ -1694,7 +1731,7 @@ function scr_initialize_custom() {
 	            loc[company][k]=home_name;
 	            role[company][k]=role[100][14];
 	            wep1[company][k]=wep1[101,14];
-	     		name[company][k]=scr_marine_name();
+	     		name[company][k]=global.name_generator.generate_space_marine_name();
 	            wep2[company][k]=wep2[101,14];
 	            spawn_unit = TTRPG[company][k]
 				spawn_unit.spawn_old_guard();
@@ -1715,7 +1752,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]=role[100][15];
 	    wep1[company][k]=wep1[101,15];
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]=wep2[101,15];
 	    spawn_unit = TTRPG[company][k]
 		spawn_unit.spawn_old_guard();
@@ -1737,7 +1774,7 @@ function scr_initialize_custom() {
 	        role[company][k]=role[100][15];
 	        wep1[company][k]=wep1[101,15]
 	  ;
-	  name[company][k]=scr_marine_name();
+	  name[company][k]=global.name_generator.generate_space_marine_name();
 	        wep2[company][k]=wep2[101,15];
 	        armour[company][k]="Terminator Armour";
 	        gear[company][k]=gear[101,15];
@@ -1758,7 +1795,7 @@ function scr_initialize_custom() {
 	        loc[company][k]=home_name;
 	        role[company][k]=role[100][16];
 	        wep1[company][k]=wep1[101,16];
-	  		name[company][k]=scr_marine_name();
+	  		name[company][k]=global.name_generator.generate_space_marine_name();
 	        wep2[company][k]=wep2[101,16];
 	        gear[company][k]=gear[101,16];
 	        spawn_unit = TTRPG[company][k]
@@ -1775,7 +1812,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]="Standard Bearer";
 	    wep1[company][k]="Company Standard";
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]="Power Fist";
 	    armour[company][k]="Terminator Armour";
 	    spawn_unit = TTRPG[company][k]
@@ -1793,7 +1830,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]=role[100][7];
 	    wep1[company][k]=wep1[100,7];
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]=wep2[100,7];
 	    spawn_unit = TTRPG[company][k]
 		spawn_unit.spawn_old_guard();
@@ -1816,7 +1853,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]=role[100][4];
 	    wep1[company][k]=wep1[101,4];
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]=wep2[101,4];
 	    spawn_unit = TTRPG[company][k]
 		spawn_unit.spawn_old_guard();
@@ -1833,7 +1870,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]=role[100][3];
 	    wep1[company][k]=wep1[101,3];
-	    name[company][k]=scr_marine_name();
+	    name[company][k]=global.name_generator.generate_space_marine_name();
 	    wep2[company][k]=wep2[101,3];
 	    armour[company][k]="MK6 Corvus";
 	    
@@ -1855,7 +1892,7 @@ function scr_initialize_custom() {
 		armour[company][k]="Dreadnought";
 		
 		experience[company][k]=400;
-		name[company][k]=scr_marine_name();
+		name[company][k]=global.name_generator.generate_space_marine_name();
 	}
 
 	for(i=0;i<4;i++){
@@ -2046,7 +2083,7 @@ function scr_initialize_custom() {
 	        loc[company][k]=home_name;
 	        role[company][k]=role[100][5];
 	        wep1[company][k]=wep1[101,5];
-	        name[company][k]=scr_marine_name();
+	        name[company][k]=global.name_generator.generate_space_marine_name();
 
 	        if (company==4){
      	        if (lord_admiral_name!=""){
@@ -2085,7 +2122,7 @@ function scr_initialize_custom() {
 	                loc[company][k]=home_name;
 	                role[company][k]=role[100][14];
 	                wep1[company][k]=wep1[101,14];
-	          		name[company][k]=scr_marine_name();
+	          		name[company][k]=global.name_generator.generate_space_marine_name();
 	                wep2[company][k]=wep2[101,14];
 	                armour[company][k]="MK7 Aquila";
 	                if (company<=2) then armour[company][k]=choose("MK8 Errant","MK6 Corvus");
@@ -2105,7 +2142,7 @@ function scr_initialize_custom() {
 	        TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	        role[company][k]=role[100][15];
 	        wep1[company][k]=wep1[101,15];
-	    	name[company][k]=scr_marine_name();
+	    	name[company][k]=global.name_generator.generate_space_marine_name();
 	        wep2[company][k]=wep2[101,15];
 	        spawn_unit = TTRPG[company][k]
 			spawn_unit.spawn_exp();
@@ -2122,7 +2159,7 @@ function scr_initialize_custom() {
 	            loc[company][k]=home_name;
 	            role[company][k]=role[100][15];
 	            wep1[company][k]=wep1[101,15];
-	        	name[company][k]=scr_marine_name();
+	        	name[company][k]=global.name_generator.generate_space_marine_name();
 	            wep2[company][k]=wep2[101,15];
 	            armour[company][k]="MK7 Aquila";
 	            if (company<=2) then armour[company][k]=choose("MK8 Errant","MK6 Corvus");
@@ -2142,7 +2179,7 @@ function scr_initialize_custom() {
 	            loc[company][k]=home_name;
 	            role[company][k]=role[100][16];
 	            wep1[company][k]=wep1[101,16];
-	      		name[company][k]=scr_marine_name();
+	      		name[company][k]=global.name_generator.generate_space_marine_name();
 	            wep2[company][k]=wep2[101,16];
 	            armour[company][k]="Power Armour";
 	            gear[company][k]=gear[101,16];
@@ -2159,7 +2196,7 @@ function scr_initialize_custom() {
 	        TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 	        role[company][k]="Standard Bearer";
 	        wep1[company][k]="Chainsword";
-	  		name[company][k]=scr_marine_name();
+	  		name[company][k]=global.name_generator.generate_space_marine_name();
 	        wep2[company][k]="Company Standard";
 	        armour[company][k]="MK5 Heresy";
 	        
@@ -2174,7 +2211,7 @@ function scr_initialize_custom() {
 	        loc[company][k]=home_name;
 	        role[company][k]=role[100][7];
 	        wep1[company][k]=wep1[100,7];
-	  		name[company][k]=scr_marine_name();
+	  		name[company][k]=global.name_generator.generate_space_marine_name();
 	        wep2[company][k]=wep2[100,7];
 	        armour[company][k]="MK4 Maximus";
 	        
@@ -2198,8 +2235,7 @@ function scr_initialize_custom() {
 		                role[company][k]=role[100][8];
 		                wep1[company][k]=wep1[101,8];
 		                wep2[company][k]=wep2[101,8];
-		          name[company][k]=scr_marine_name();
-		                
+		                name[company][k]=global.name_generator.generate_space_marine_name();
 
 				        spawn_unit = TTRPG[company][k];
 						spawn_unit.spawn_exp();
@@ -2215,7 +2251,7 @@ function scr_initialize_custom() {
 		                loc[company][k]=home_name;
 		                role[company][k]=role[100][10];
 		                wep1[company][k]=wep1[101,10];
-		                name[company][k]=scr_marine_name();
+		                name[company][k]=global.name_generator.generate_space_marine_name();
 						mobi[company][k]="Jump Pack";
 						
 						wep2[company][k]=wep2[101,10]; 
@@ -2234,7 +2270,7 @@ function scr_initialize_custom() {
 		                role[company][k]=role[100][9];
 		                wep2[company][k]=wep2[101][9];
 		                mobi[company][k]=mobi[100][9];
-		                name[company][k]=scr_marine_name();
+		                name[company][k]=global.name_generator.generate_space_marine_name();
 		                
 		                TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
 
@@ -2256,7 +2292,7 @@ function scr_initialize_custom() {
 	                    loc[company][k]=home_name;
 	                    role[company][k]=role[100][12];
 	                    wep1[company][k]=wep1[101,12];
-	              		name[company][k]=scr_marine_name();
+	              		name[company][k]=global.name_generator.generate_space_marine_name();
 	                    wep2[company][k]=wep2[101,12];
 	                    armour[company][k]="Scout Armour";
 	                    
@@ -2276,8 +2312,7 @@ function scr_initialize_custom() {
 	                role[company][k]=role[100][8];
 	                wep1[company][k]=wep1[101,8];
 	                wep2[company][k]=wep2[101,8];
-	          		name[company][k]=scr_marine_name();
-	                
+	          		name[company][k]=global.name_generator.generate_space_marine_name();
 
 					
 			        spawn_unit = TTRPG[company][k];
@@ -2294,8 +2329,7 @@ function scr_initialize_custom() {
 	            	role[company][k]=role[100][10];
 	            	wep1[company][k]=wep1[101,10];
 	            	wep2[company][k]=wep2[101,10];
-	              	name[company][k]=scr_marine_name();
-	            	
+	              name[company][k]=global.name_generator.generate_space_marine_name();
 	            	mobi[company][k]="Jump Pack";
 
 					
@@ -2310,7 +2344,7 @@ function scr_initialize_custom() {
 	                race[company][k]=1;
 	                loc[company][k]=home_name;
 	                role[company][k]=role[100][9];
-	          		name[company][k]=scr_marine_name();
+	          		name[company][k]=global.name_generator.generate_space_marine_name();
 	                wep2[company][k]=wep2[101,9];
 	                
 					mobi[company][k]=mobi[100][9];
@@ -2331,7 +2365,7 @@ function scr_initialize_custom() {
 	                loc[company][k]=home_name;
 	                role[company][k]=role[100][12];
 	                wep1[company][k]=wep1[101,12];
-	            	name[company][k]=scr_marine_name();
+	            	name[company][k]=global.name_generator.generate_space_marine_name();
 	                wep2[company][k]=wep2[101,12];
 	                armour[company][k]="Scout Armour";
 	                
@@ -2346,7 +2380,7 @@ function scr_initialize_custom() {
 	                role[company][k]=role[100][10];
 	                wep1[company][k]=wep1[101,10];
 	                wep2[company][k]=wep2[101,10];
-	            	name[company][k]=scr_marine_name();
+	            	name[company][k]=global.name_generator.generate_space_marine_name();
 	                mobi[company][k]=mobi[101,10];
 	                
 			        spawn_unit = TTRPG[company][k]
@@ -2359,7 +2393,7 @@ function scr_initialize_custom() {
 	                race[company][k]=1;
 	                loc[company][k]=home_name;
 	                role[company][k]=role[100][9];
-	          		name[company][k]=scr_marine_name();
+	          		name[company][k]=global.name_generator.generate_space_marine_name();
 	                wep2[company][k]=wep2[101,9];
 					
 					mobi[company][k]=mobi[100][9];
@@ -2387,7 +2421,7 @@ function scr_initialize_custom() {
 	                loc[company][k]=home_name;
 	                role[company][k]=role[100][6];
 	                wep1[company][k]="Close Combat Weapon";
-	            	name[company][k]=scr_marine_name();
+	            	name[company][k]=global.name_generator.generate_space_marine_name();
 	                wep2[company][k]=wep2[101,6];
 	                armour[company][k]="Dreadnought";
 	                
@@ -2469,7 +2503,7 @@ function scr_initialize_custom() {
 	        loc[company][k]=home_name;
 	        role[company][k]=role[100][14];
 	        wep1[company][k]=wep1[101,14];
-	  		name[company][k]=scr_marine_name();
+	  		name[company][k]=global.name_generator.generate_space_marine_name();
 	        wep2[company][k]=wep2[101,14];
 	        armour[company][k]="MK7 Aquila";// if (company<=2) then armour[company][k]=choose("MK8 Errant","MK6 Corvus");
 	        gear[company][k]=gear[101,14];

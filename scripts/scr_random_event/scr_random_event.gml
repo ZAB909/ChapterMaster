@@ -288,7 +288,7 @@ function scr_random_event(execute_now) {
 			var spaceHulk = instance_create(spaceHulkX,spaceHulkY,obj_star); 
 	        spaceHulk.space_hulk=1;
 	        spaceHulk.p_type[1]="Space Hulk";
-	        spaceHulk.name=scr_hulk_name();
+	        spaceHulk.name=global.name_generator.generate_hulk_name();
 	        if (own=1){
 				scr_alert("red","space_hulk","The Space Hulk "+string(spaceHulk.name)+" appears near the "+string(star_id.name)+" system.",spaceHulkX,spaceHulkY);
 			}
@@ -634,8 +634,8 @@ function scr_random_event(execute_now) {
 				
 			var star = stars[irandom(valid_stars-1)];
 			
-			var gender = choose(1,2);
-			var name=scr_imperial_name(gender);
+			var gender = choose(0,1);
+			var name=global.name_generator.generate_imperial_name(gender);
 			
 	        var eta = scr_mission_eta(star.x,star.y,1);
 	        eta=max(eta, 8);

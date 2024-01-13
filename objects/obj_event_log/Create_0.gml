@@ -44,8 +44,8 @@ repeat(101){e+=1;
     topics[e]="";
 }
 
-if (file_exists("help.ini")){
-    ini_open("help.ini");var ch;ch=0;
+if (file_exists("main\help.ini")){
+    ini_open("main\help.ini");var ch;ch=0;
     repeat(100){ch+=1;
         if (ini_section_exists(string(ch))){help_topics+=1;
             topics[help_topics]=ini_read_string(string(ch),"topic","Error");

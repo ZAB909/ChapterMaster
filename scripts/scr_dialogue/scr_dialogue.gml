@@ -200,7 +200,7 @@ function scr_dialogue(diplo_keyphrase) {
 	if (diplo_keyphrase=="cs_meeting45"){
 	    diplo_text="Do you take me as a fool, "+string(obj_ini.master_name)+"?  Even in the Eye there are whispers of your running to and fro at the Inquisition’s beck and call, like a dog playing fetch. You’re a well-trained, and maybe even a clever, dog. I’ve killed so many clever dogs in my time. How do I know this isn’t just a hopelessly doomed plot to try and kill me, hatched by your Inquisition masters still holding your leash?";
         
-	    diplo_option[1]="There are advantages to staying on the Inquisition’s good side, and I’m not one to ignore an advantage.";;
+	    diplo_option[1]="There are advantages to staying on the Inquisition’s good side, and I’m not one to ignore an advantage.";
 	    diplo_option[2]="Appeasing the Inquisition is no hard choice when your options are obey, or eventually be branded a heretic and be destroyed.";
 	    diplo_option[3]="Given enough time, everyone becomes a heretic in the eyes of the Inquisition. I will not wait for them to make their move against us.";
 	    diplo_option[4]="You have one thing right, "+string(obj_controller.faction_leader[eFACTION.Chaos])+". I am here to kill you. Open fire brothers, NOW!  [Battle Chaos forces]";
@@ -1785,7 +1785,7 @@ function scr_dialogue(diplo_keyphrase) {
 	            if (rando==2) then diplo_text+="random2.";
 	            if (rando==3){
 					diplo_text+="rumors of her involvement at the massacre of ";
-					diplo_text+=scr_star_name();
+					diplo_text+=global.name_generator.generate_star_name();
 					diplo_text+=" "+choose("I.","II.","III.","IV.");
 				}
 	            diplo_text+="  Do not expect futher contact.]]";
