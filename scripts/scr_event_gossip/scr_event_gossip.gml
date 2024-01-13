@@ -4,7 +4,7 @@ function scr_event_gossip(argument0) {
 
 	var possible_gossips,gossip,that,that_type,p,words,him_chaos;
 	possible_gossips=0;that=0;that_type="";words="";
-	him_chaos=obj_ini.chaos[attend_co[argument0],attend_id[argument0]];
+	him_chaos=obj_ini.TTRPG[attend_co[argument0],attend_id[argument0]].corruption;
 
 	p=-1;
 	repeat(101){p+=1;

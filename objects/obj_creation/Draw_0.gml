@@ -1718,17 +1718,18 @@ if (slide=6){
     
     
     var x6,y6,spac,h,it;
-    x6=444;y6=265;spac=30;h=0;it="";
+    x6=444;y6=265;spac=25;h=0;it="";
     if (custom=0) or (restarted>0) then draw_set_alpha(0.5);
     
-    repeat(7){h+=1;
-        if (h=1) then it="Power Fists";
-        if (h=2) then it="Relic Blade";
-        if (h=3) then it="Master Crafted Thunder Hammer";
-        if (h=4) then it="Master Crafted Power Sword";
-        if (h=5) then it="Master Crafted Power Axe";
-        if (h=6) then it="Master Crafted Eviscerator";
-        if (h=7) then it="Master Crafted Force Weapon";
+    repeat(8){h+=1;
+        if (h=1) then it="Twin Power Fists";
+		if (h=2) then it="Twin Lightning Claws";
+        if (h=3) then it="Relic Blade";
+        if (h=4) then it="Master Crafted Thunder Hammer";
+        if (h=5) then it="Master Crafted Power Sword";
+        if (h=6) then it="Master Crafted Power Axe";
+        if (h=7) then it="Master Crafted Eviscerator";
+        if (h=8) then it="Master Crafted Force Weapon";
         
         yar=0;if (chapter_master_melee=h) then yar=1;draw_sprite(spr_creation_check,yar,x6,y6);yar=0;
         if (scr_hit(x6,y6,x6+32,y6+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>0) and (restarted=0) and (!instance_exists(obj_creation_popup)){

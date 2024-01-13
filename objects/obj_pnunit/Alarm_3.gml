@@ -7,48 +7,8 @@ if (obj_ncombat.started=0){
     
     
     if (men<=4) and (veh=0) and (dreads=0){// Squish leftt
-        var leftt;leftt=instance_nearest(x-12,y,obj_pnunit);
+        var leftt=instance_nearest(x-12,y,obj_pnunit);
         
-        /*if (instance_exists(leftt)) and (leftt.men>men){
-            var jj,targ_manz;jj=0;targ_manz=leftt.men;
-            repeat(700){
-                jj+=1;
-                
-                if (marine_hp[jj]>0) and (marine_gear[jj]="Jump Pack"){
-                    targ_manz+=1;men-=1;leftt.men+=1;
-                    
-                    leftt.marine_type[targ_manz]=marine_type[jj];
-                    leftt.marine_co[targ_manz]=marine_co[jj];
-                    leftt.marine_id[targ_manz]=marine_id[jj];
-                    leftt.marine_hp[targ_manz]=marine_hp[jj];
-                    leftt.marine_ac[targ_manz]=marine_ac[jj];
-                    leftt.marine_exp[targ_manz]=marine_exp[jj];
-                    leftt.marine_wep1[targ_manz]=marine_wep1[jj];
-                    leftt.marine_wep2[targ_manz]=marine_wep2[jj];
-                    leftt.marine_armour[targ_manz]=marine_armour[jj];
-                    leftt.marine_gear[targ_manz]=marine_gear[jj];
-                    leftt.marine_mobi[targ_manz]=marine_mobi[jj];
-                    leftt.marine_local[targ_manz]=marine_mobi[jj];
-                    
-                    marine_type[jj]="";
-                    marine_co[jj]=0;
-                    marine_id[jj]=0;
-                    marine_hp[jj]=0;
-                    marine_ac[jj]=0;
-                    marine_exp[jj]=0;
-                    marine_wep1[jj]="";
-                    marine_wep2[jj]="";
-                    marine_armour[jj]="";
-                    marine_gear[jj]="";
-                    marine_mobi[jj]="";
-
-                }
-            }
-            
-            leftt.alarm[3]=2;
-            instance_destroy();
-        
-        }*/
     
     }
     
@@ -71,7 +31,12 @@ if (obj_ncombat.red_thirst>=2) and (obj_ncombat.battle_over=0){
             
             
             if (marine_dead[raar]=0) and (marine_type[raar]!="Death Company") and (marine_type[raar]!="Chapter Master") and (r_roll<=4){
-                r_lost+=1;marine_type[raar]="Death Company";marine_attack[raar]+=1;marine_defense[raar]=0.75;marine_ranged[raar]=0.75;obj_ncombat.red_thirst+=1;
+                r_lost+=1;
+                marine_type[raar]="Death Company";
+                //marine_attack[raar]+=1;
+                marine_defense[raar]=0.75;
+                //marine_ranged[raar]=0.75;
+                obj_ncombat.red_thirst+=1;
                 if (r_lost=1) then miss+="Battle Brother "+string(obj_ini.name[marine_co[raar],marine_id[raar]])+", ";
                 if (r_lost>1) then miss+=string(obj_ini.name[marine_co[raar],marine_id[raar]])+", ";
             }

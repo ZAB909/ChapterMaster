@@ -199,7 +199,7 @@ if (apothecary_points>=48){
         if (random_marine != "none"){
             marine_position=random_marine[1];
             apothecary_points-=48;
-            unit = obj_ini.TTRPG[0,marine_position];
+            unit = obj_ini.TTRPG[0][marine_position];
             scr_alert("green","recruitment",unit.name_role()+" has finished training.",0,0);
             unit.update_role(obj_ini.role[100][15]);
             unit.add_exp(10);
@@ -211,14 +211,12 @@ if (apothecary_points>=48){
             t=0;
             r=0;
 
-            if (obj_ini.wep1[0,marine_position]!=obj_ini.wep1[100,15]){
+            if (unit.weapon_one()!=obj_ini.wep1[100,15]){
                 for (t=1; t<=50; t++){
                     if (obj_ini.equipment[t]=obj_ini.wep1[100,15]) and (obj_ini.equipment_number[t]>=1) and (r=0) then r=t;
                 }
                 if (r!=0){
-                    if (obj_ini.wep1[0,marine_position]!="") then scr_add_item(obj_ini.wep1[0,marine_position],1);
-                    scr_add_item(obj_ini.wep1[100,15],-1);
-                    obj_ini.wep1[0,marine_position]=obj_ini.wep1[100,15];
+                    unit.update_weapon_one(obj_ini.wep1[100][15]);
                 }
                 if (r==0) then eq1=0;
             }
@@ -228,9 +226,7 @@ if (apothecary_points>=48){
                     if (obj_ini.equipment[t]=obj_ini.wep2[100,15]) and (obj_ini.equipment_number[t]>=1) and (r=0) then r=t;
                 }
                 if (r!=0){
-                    if (obj_ini.wep2[0,marine_position]!="") then scr_add_item(obj_ini.wep2[0,marine_position],1);
-                    scr_add_item(obj_ini.wep2[100,15],-1);
-                    obj_ini.wep2[0,marine_position]=obj_ini.wep2[100,15];
+                     unit.update_weapon_two(obj_ini.wep2[100][15]);
                 }
                 if (r==0) then eq2=0;
             }
@@ -240,18 +236,16 @@ if (apothecary_points>=48){
                     if (obj_ini.equipment[t]=obj_ini.gear[100,15]) and (obj_ini.equipment_number[t]>=1) and (r=0) then r=t;
                 }
                 if (r!=0){
-                    if (obj_ini.gear[0,marine_position]!="") then scr_add_item(obj_ini.gear[0,marine_position],1);
-                    scr_add_item(obj_ini.gear[100,15],-1);
-                    obj_ini.gear[0,marine_position]=obj_ini.gear[100,15];
+                    unit.update_gear(obj_ini.gear[100][15]);
                 }
                 if (r==0) then eq3=0;
             }
             if (eq1+eq2+eq3!=3){
                 warn="";
                 w5=0;
-                if (eq1==0) then warn+=string(obj_ini.wep1[100,15])+", ";
-                if (eq2==0) then warn+=string(obj_ini.wep2[100,15])+", ";
-                if (eq3==0) then warn+=string(obj_ini.gear[100,15])+", ";
+                if (eq1==0) then warn+=string(obj_ini.wep1[100][15])+", ";
+                if (eq2==0) then warn+=string(obj_ini.wep2[100][15])+", ";
+                if (eq3==0) then warn+=string(obj_ini.gear[100][15])+", ";
                 
                 w5=string_length(warn)-1;
                 warn=string_delete(warn,w5,2);
@@ -457,19 +451,19 @@ if (psyker_points>=round(goal/2)) and (psyker_aspirant==0){
     }else if (random_marine != "none"){
         marine_position=random_marine[1];
         marine_company=random_marine[0];
-        g1=0;
+        unit = obj_ini.TTRPG[marine_company,marine_position];
         // This gets the last open slot for company 0
         for(var h=1; h<=300; h++){
             if (g1==0){
                 if (obj_ini.role[0,h]=="") then g1=h;
             }
         }
-        if (g1!=0){
+        if (marine_company=0){
             command+=1;
             marines-=1;
-			scr_move_unit_info(marine_company,0, marine_position, g1)
-            obj_ini.role[0][g1]=novice_type;
-            scr_powers_new(0,g1);
+			scr_move_unit_info(marine_company,0, marine_position, g1);
+            unit.update_role(novice_type)
+            unit.update_powers();
             psyker_aspirant=1;
             
             if (string_count("Abund",obj_ini.strin)>0) then obj_ini.experience[0][g1]+=floor(random(5))+3;
@@ -518,7 +512,7 @@ if (tech_points>=360){
             eq3=1;
             t=0;
             r=0;
-            if (obj_ini.wep1[0,marine_position]!=obj_ini.wep1[100,16]){
+            if (unit.weapon_one()!=obj_ini.wep1[100,16]){
                 for (t=1; t<=50; t++){
                     if (obj_ini.equipment[t]==obj_ini.wep1[100,16]) and (obj_ini.equipment_number[t]>=1) and (r==0) then r=t;
                 }
@@ -902,19 +896,20 @@ if (gene_xeno>0){
         }
     }
 }
-var p=0,penitorium=0;
+var p=0,penitorium=0, unit;
 for(var c=0; c<11; c++){
     for(var e=1; e<=250; e++){
         if (obj_ini.god[c,e]>=10){
+            unit=obj_ini.TTRPG[c][e];
             p+=1;
             penit_co[p]=c;
             penit_id[p]=e;
             penitorium+=1;
-            if (obj_ini.chaos[c,e]<90) and (obj_ini.chaos[c,e]>0){
+            if (unit.corruption<90) and (unit.corruption>0){
                 var heresy_old=0,heresy_new=0;
-                heresy_old=round((obj_ini.chaos[c,e]*obj_ini.chaos[c,e])/50)-0.5;
-                heresy_new=(heresy_old*50)/obj_ini.chaos[c,e];
-                obj_ini.chaos[c,e]=max(0,heresy_new);
+                heresy_old=round((unit.corruption*unit.corruption)/50)-0.5;
+                heresy_new=(heresy_old*50)/unit.corruption;
+                unit.corruption=max(0,heresy_new);
             }
         }
     }
@@ -1565,12 +1560,13 @@ for(var i=1; i<=99; i++){
             }
 
             if (string_count("strange_building",event[i])>0){
-                var b_event="",marine_name="",comp=0,marine_num=0,item="";
+                var b_event="",marine_name="",comp=0,marine_num=0,item="",unit;
                 explode_script(event[i],"|");
                 b_event=string(explode[0]);
                 marine_name=string(explode[1]);
                 comp=real(explode[2]);
                 marine_num=real(explode[3]);
+                unit=obj_ini.TTRPG[comp][marine_num];
                 item=string(explode[4]);
 
                 var killy=0,tixt=string(obj_ini.role[100][16])+" "+string(marine_name)+" has finished his work- ";
@@ -1602,38 +1598,24 @@ for(var i=1; i<=99; i++){
                     tixt+="some form of divine inspiration has seemed to have taken hold of him.  An artifact "+string(obj_ini.artifact[k])+" has been crafted.";
                 }
                 if (item=="baby"){
-                    obj_ini.chaos[comp,marine_num]+=choose(8,12,16,20);
+                    unit.corruption+=choose(8,12,16,20);
                     tixt+="some form of horrendous statue.  A weird amalgram of limbs and tentacles, the sheer atrocity of it is made worse by the tiny, baby-like form, the once natural shape of a human child twisted nearly beyond recognition.";
                 }
                 if (item=="robot"){
-                    obj_ini.chaos[comp,marine_num]+=choose(2,4,6,8,10);
+                    unit.corruption+=choose(2,4,6,8,10);
                     tixt+="some form of small, box-like robot.  It seems to teeter around haphazardly, nearly falling over with each step.  "+string(marine_name)+" maintains that it has no AI, though the other "+string(obj_ini.role[100][16])+" express skepticism.";
                 }
                 if (item=="demon"){
-                    obj_ini.chaos[comp,marine_num]+=choose(8,12,16,20);
+                    unit.corruption+=choose(8,12,16,20);
                     tixt+="some form of horrendous statue.  What was meant to be some sort of angel, or primarch, instead has a mishappen face that is hardly human in nature.  Between the fetid, ragged feathers and empty sockets it is truly blasphemous.";
                 }
                 if (item=="fusion"){
-                    // obj_ini.chaos[comp,marine_num]+=choose(70);
+                    // unit.corruption+=choose(70);
                     tixt+="some kind of ill-mannered ascension.  One of your battle-brothers enters the armamentarium to find "+string(marine_name)+" fused to a vehicle, his flesh twisted and submerged into the frame.  Mechendrites and weapons fire upon the marine without warning, a windy scream eminating from the abomination.  It takes several battle-brothers to take out what was once a "+string(obj_ini.role[100][16])+".";
 
                     // This is causing the problem
 
-                    obj_ini.race[comp,marine_num]=0;
-                    obj_ini.loc[comp,marine_num]="";
-                    obj_ini.name[comp,marine_num]="";
-                    obj_ini.role[comp,marine_num]="";
-                    obj_ini.wep1[comp,marine_num]="";
-                    obj_ini.lid[comp,marine_num]=0;
-                    obj_ini.wep2[comp,marine_num]="";
-                    obj_ini.armour[comp,marine_num]="";
-                    obj_ini.gear[comp,marine_num]="";
-                    obj_ini.hp[comp,marine_num]=100;
-                    obj_ini.chaos[comp,marine_num]=0;
-                    obj_ini.experience[comp,marine_num]=0;
-                    obj_ini.mobi[comp,marine_num]="";
-                    obj_ini.age[comp,marine_num]=0;
-					obj_ini.TTRPG[comp,marine_num]=new TTRPG_stats("chapter",comp,marine_num, "blank");
+                    scr_kill_unit(comp,marine_num)
                     with(obj_ini){scr_company_order(0);}
                 }
                 scr_popup("He Built It",tixt,"tech_build","target_marine|"+string(marine_name)+"|"+string(comp)+"|"+string(marine_num)+"|");

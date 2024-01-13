@@ -461,8 +461,8 @@ if navy {
 	}
 
 	// Bombard the shit out of the player homeworld
-	if (obj_controller.faction_status[eFACTION.Imperium]="War") and (action="") and (trade_goods="") and (guardsmen_unloaded=0){
-	    if (instance_exists(orbiting)) {
+	if (obj_controller.faction_status[eFACTION.Imperium]="War") and (action="") and (trade_goods="") and (guardsmen_unloaded=0) and (instance_exists(orbiting)){
+	    if (orbiting!=noone){
 			var orbiting_guardsmen = array_reduce(orbiting.p_guardsman, function(prev, curr) {
 				return prev + curr
 			})
@@ -504,7 +504,8 @@ if navy {
 						
 	                    scare=(capital_number*3)+frigate_number;
 
-	                    if (scare>2) then scare=2;if (scare<1) then scare=0;
+	                    if (scare>2) then scare=2;
+                        if (scare<1) then scare=0;
 	                    //onceh=2;
 
 	                    if (orbiting.p_large[bombard]) {
@@ -1319,8 +1320,8 @@ if (action=""){
                         	arsenal.inquis_hidden = 0;
                             for (e=0;e<array_length(obj_ini.artifact_tags[e]);e++){
                                 if (obj_ini.artifact[e]!="") and (obj_ini.artifact_loc[e]=thata.name) and (obj_controller.und_armouries<=1){
-                                    if (string_count("Daemon",obj_ini.artifact_tags[e])>0) then dem+=1;
-                                    if (string_count("Chaos",obj_ini.artifact_tags[e])>0) then cha+=1;
+                                    if (array_contains(obj_ini.artifact_tags[e],"Chaos")) then cha+=1;
+                                    if (array_contains(obj_ini.artifact_tags[e],"Daemon")) then dem+=1;
                                 }
                             }
                             perc=((dem*10)+(cha*3))/100;
@@ -1405,7 +1406,7 @@ if (action=""){
                 scr_loyalty("blarg","inspect_fleet");// This updates the loyalties
                 if (whom=0) then scr_alert("green","duhuhuhu","Inquisitor Ship finishes inspection of your fleet.",x,y);
                 if (whom>0) then scr_alert("green","duhuhuhu","Inquisitor "+string(obj_controller.inquisitor[whom])+" finishes inspecting your fleet.",x,y);
-                target=0;
+                target=noone;
             }
             
             // Test-Slave Incubator Crap
@@ -1820,7 +1821,7 @@ if (action="move") and (action_eta<5000){
             if (trade_goods="csm") then cancel=true;
             
             if (trade_goods!="") and (owner!=eFACTION.Tyranids) and (owner!=eFACTION.Chaos) and (cancel=false) and ((instance_exists(target)) or (obj_ini.fleet_type=1)) {
-                if ((trade_goods!="return") and (target!=0) and ((target.action!="") or (point_distance(x,y,target.x,target.y)>30))) and (obj_ini.fleet_type!=1) and (navy=0){
+                if ((trade_goods!="return") and (target!=noone) and ((target.action!="") or (point_distance(x,y,target.x,target.y)>30))) and (obj_ini.fleet_type!=1) and (navy=0){
                     var mah_x,mah_y;
                     mah_x=instance_nearest(x,y,obj_star).x;
                     mah_y=instance_nearest(x,y,obj_star).y;

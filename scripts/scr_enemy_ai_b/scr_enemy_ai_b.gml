@@ -1,5 +1,4 @@
 function scr_enemy_ai_b() {
-
 	// Imperial Repleneshes numbers
 	// If no enemies and guard < pop /470 then increase guardsman
 	// If no enemies and population < max_pop then increase by like 1%
@@ -7,19 +6,18 @@ function scr_enemy_ai_b() {
 
 
 	i=0;
-	for (i=1;i<5;i++){
-		if (i>planets){break;}
+	for (i=1;i<=planets;i++){
 		sabotage_force=false;
 		garrison_force=false;
 		var planet_string = $"{string(name)} {scr_roman_numerals()[i-1]}";
 	    for (var ops=0;ops<array_length(p_operatives[i]);ops++){
 	      	if(p_operatives[i][ops].type=="squad"){
 	      		squad_operation = p_operatives[i][ops];
-	      		if (squad_operation== "garrison"){//marine garrison on planet
+	      		if (squad_operation.job== "garrison"){//marine garrison on planet
 	      			garrison_force=true;
 	      			array_push(garrisons, obj_ini.squads[p_operatives[i][ops].reference])
 	      			total_garrison += array_length(obj_ini.squads[p_operatives[i][ops].reference].members);
-	      		} else if (squad_operation=="sabotage"){
+	      		} else if (squad_operation.job=="sabotage"){
 	      			sabotage_force=true;
 	      		}
 	      	}
@@ -108,7 +106,7 @@ function scr_enemy_ai_b() {
 	                        if (ii<=1) then ii=1;// image_index=max(8,round(ii));
                         
 	                        if (ii>=7) and (capital_number>1){
-	                        	for (var fleet_n =1;fleet_n<=10;fleetn_n++){
+	                        	for (var fleet_n =1;fleet_n<=10;fleet_n++){
 	                        		if (orbiting.present_fleet[fleet_n]>0) then enemy_fleets++;
 	                        	}
 	                        }
@@ -132,17 +130,17 @@ function scr_enemy_ai_b() {
                     	var nearest_planet_coords = [0,0]
                     	var found_near_planet = false;
 	                    with(obj_star){
-                        if (present_fleet[eFACTION.Necrons]=0){
-                        	if (!array_contains(p_type,"Dead")){
-                        		for (var plan=1; plan<=planets;plan++){
-                        			if (p_owner[plan]<=5){
-                        				found_near_planet=true;
-                        				nearest_planet_coords =[x,y];
-                        				break;
-                        			}
-                        		}
-                        	}
-                        }
+	                        if (present_fleet[eFACTION.Necrons]=0){
+	                        	if (!array_contains(p_type,"Dead")){
+	                        		for (var plan=1; plan<=planets;plan++){
+	                        			if (p_owner[plan]<=5){
+	                        				found_near_planet=true;
+	                        				nearest_planet_coords =[x,y];
+	                        				break;
+	                        			}
+	                        		}
+	                        	}
+	                        }
 	                    }
                     
 	                    if (found_near_planet){
@@ -157,161 +155,162 @@ function scr_enemy_ai_b() {
             
 	        }
 	    }
-		// traitors cults
-	var notixt;
-	var is_ork;
-	notixt = false;
+			// traitors cults
+		var notixt;
+		var is_ork;
+		notixt = false;
 
-	rando = irandom(99) + 1;
+		rando = irandom(99) + 1;
 
-	if (p_owner[i] == eFACTION.Chaos) and (p_heresy[i] < 80) then
-	    p_heresy[i] += 1;
+		if (p_owner[i] == eFACTION.Chaos) and (p_heresy[i] < 80) then
+		    p_heresy[i] += 1;
 
-	if (p_owner[i] != eFACTION.Chaos) and (p_owner[i] != eFACTION.Eldar) and (planets >= i) and (p_type[i] != "Dead") and (p_type[i] != "Craftworld") {
-	    success = false;
-	    is_ork = p_owner[i] == eFACTION.Ork;
+		if (p_owner[i] != eFACTION.Chaos) and (p_owner[i] != eFACTION.Eldar) and (planets >= i) and (p_type[i] != "Dead") and (p_type[i] != "Craftworld") {
+		    success = false;
+		    is_ork = p_owner[i] == eFACTION.Ork;
+		
 
-	    if (!is_ork) {
-	        //made a linear function for this while here...now the minimum for the roll is a bit higher, but
-	        var score_to_beat = (3 / 4) * (p_heresy[i] + p_heresy_secret[i]) - 27.5;
 
-	        //if (p_heresy[i]+p_heresy_secret[i]>=25) and (rando<=3) then success=true;
-	        //if (p_heresy[i]+p_heresy_secret[i]>=50) and (rando<=10) then success=true;
-	        //if (p_heresy[i]+p_heresy_secret[i]>=70) and (rando<=25) then success=true;
-	        //if (p_heresy[i]+p_heresy_secret[i]>=90) and (rando<=40) then success=true;
-	        if (rando < score_to_beat) then success=true;
-	    }
+		    if (!is_ork) {
+		        //made a linear function for this while here...now the minimum for the roll is a bit higher, but
+		        var score_to_beat = (3 / 4) * (p_heresy[i] + p_heresy_secret[i]) - 27.5;
 
-	    if (success) and (p_pdf[i] = 0) and (p_guardsmen[i] = 0) and (p_tau[i] = 0) and (p_orks[i] = 0) {
-	        p_owner[i] = 10;
-	        scr_alert("red", "owner", string(name) + " " + string(i) + " has fallen to heretics!", x, y);
+		        //if (p_heresy[i]+p_heresy_secret[i]>=25) and (rando<=3) then success=true;
+		        //if (p_heresy[i]+p_heresy_secret[i]>=50) and (rando<=10) then success=true;
+		        //if (p_heresy[i]+p_heresy_secret[i]>=70) and (rando<=25) then success=true;
+		        //if (p_heresy[i]+p_heresy_secret[i]>=90) and (rando<=40) then success=true;
+		        if (rando < score_to_beat) then success=true;
+		    }
 
-	        if (visited == 1) { //visited variable check whether the star has been visited or not 1 for true 0 for false
-	            if (p_type[i] == "Forge") {
-	                dispo[i] -= 10; // 10 disposition decreases for the respective planet
-	                obj_controller.disposition[3] -= 3; // 10 disposition decrease for the toaster Fetishest since they aren't that numerous
-	            } else if (planet_feature_bool(p_feature[i], P_features.Sororitas_Cathedral) or (p_type[i] == "Shrine")) {
-	                dispo[i] -= 4; // similarly 10 disposition decrease, note those nurses are a bit pissy and
-	                // and you can't easily gain their favor because you cannot ask them to "step down" from office.
-	                obj_controller.disposition[5] -= 5;
-	            } else {
-	                // the missus diplomacy 0 is when they cringe when you enter the office and cannot ask them for a date.
-	            }
-	        }
-	    }
+		    if (success) and (p_pdf[i] = 0) and (p_guardsmen[i] = 0) and (p_tau[i] = 0) and (p_orks[i] = 0) {
+		        p_owner[i] = 10;
+		        scr_alert("red", "owner", string(name) + " " + string(i) + " has fallen to heretics!", x, y);
 
-	    if (success) and (p_type[i] != "Space Hulk") {
+		        if (visited == 1) { //visited variable check whether the star has been visited or not 1 for true 0 for false
+		            if (p_type[i] == "Forge") {
+		                dispo[i] -= 10; // 10 disposition decreases for the respective planet
+		                obj_controller.disposition[3] -= 3; // 10 disposition decrease for the toaster Fetishest since they aren't that numerous
+		            } else if (planet_feature_bool(p_feature[i], P_features.Sororitas_Cathedral) or (p_type[i] == "Shrine")) {
+		                dispo[i] -= 4; // similarly 10 disposition decrease, note those nurses are a bit pissy and
+		                // and you can't easily gain their favor because you cannot ask them to "step down" from office.
+		                obj_controller.disposition[5] -= 5;
+		            } else {
+		                // the missus diplomacy 0 is when they cringe when you enter the office and cannot ask them for a date.
+		            }
+		        }
+		    }
+
+		    if (success) and (p_type[i] != "Space Hulk") {
+		        rando=floor(random(100))+1;
+		        // // // obj_controller.x=self.x;obj_controller.y=self.y;
+		        if (garrison_force) {
+		            rando -= total_garrison;
+		        }
+
+		        var tixt = "";
+
+		        // controls losing pdf due to heretic cults
+		        var traitor_mod = 0;
+
+		        if (rando <= 40) {
+		        	notixt = true;
+		            var garrison_mod = choose(0.05, 0.1, 0.15, 0.2);
+
+		            if (garrison_force) {
+		                garrison_mod -= 0.005 * total_garrison;
+		            }
+
+		            if (garrison_mod > 0) {
+		                var lost = floor(p_pdf[i] * garrison_mod);
+
+		                if (p_pdf[i] <= 500) {
+		                    lost = p_pdf[i];
+		                    p_traitors[i] = 1;
+		                }
+
+		                p_pdf[i] -= lost;
+
+		                if (p_traitors[i] = 0) {
+		                    if (p_pdf[i] > 0) {
+		                        tixt = $"{string(scr_display_number(lost))} PDF killed in a rebellion on {planet_string}.";
+		                    } else if (p_pdf[i] = 0) then
+		                        tixt = $"Heretic cults have appeared in {planet_string}.";
+
+		                    scr_alert("purple", "owner", tixt, x, y);
+		                    scr_event_log("purple", tixt);
+		                }
+		            } else {
+		                tixt = $"Marine garrison prevents rebellion on {planet_string}"
+		                scr_alert("green", "owner", tixt, x, y);
+		                scr_event_log("purple", tixt);
+		            }
+		            // Cult crushed; don't bother showing if there's already fighting going on over there
+		        } else if (rando >= 41) and (rando < 81) and (p_traitors[i] < 2) {
+		            if (garrison_force) {
+		                traitor_mod = choose(1, 2);
+		            } else {
+		                traitor_mod = 2;
+		            }
+
+		            p_traitors[i] = traitor_mod;
+		            tixt = $"Heretic cults have appeared in {planet_string}."
+		        } else if (rando >= 81) and (rando < 91) and (p_traitors[i] < 3) { // Minor uprising
+		            if (garrison_force) {
+		                traitor_mod = choose(2, 3);
+		            } else {
+		                traitor_mod = 3;
+		            }
+		            p_traitors[i] = traitor_mod;
+		            tixt = $"Heretic cults have spread around {planet_string}.";
+		        } // Major uprising
+
+		        // major and huge uprisings are impossible as long as a garrison of at least 10 marines is present
+		        if (rando >= 91) and (rando < 100) and (p_traitors[i] < 4) {
+		            notixt = true;
+		            p_traitors[i] = 4;
+
+		            if (obj_controller.faction_defeated[10] = 0) and (obj_controller.faction_gender[10] = 1) then
+		                p_traitors[i] = 5;
+
+		            scr_popup("Heretic Revolt", "A massive heretic uprising on " + string(name) + " " + scr_roman(i) + " threatens to plunge the star system into chaos.", "chaos_cultist", "");
+		            scr_alert("red", "owner", "Massive heretic uprising on " + string(name) + " " + scr_roman(i) + ".", x, y);
+		            scr_event_log("purple", "Massive heretic uprising on " + string(name) + " " + scr_roman(i) + ".");
+		        } // Huge uprising
+
+		        if (rando >= 100) and (p_traitors[i] < 5) {
+		            p_traitors[i] = 6;
+		            p_owner[i] = 10;
+		            array_push(p_feature[i], new new_planet_feature(P_features.Daemonic_Incursion));
+
+		            if (p_heresy[i] >= 80){
+		            	p_heresy[i] = 95;
+		            }else if (p_heresy[i] < 80) {
+		            	p_heresy[i] = 80;
+		            }
+
+		            tixt = "Daemonic incursion on " + string(name) + " " + string(i) + "!";
+		        } // Oh god what
+
+		        if (rando >= 41) and (!notixt) {
+		            scr_alert("red", "owner", tixt, x, y);
+		            scr_event_log("purple", tixt);
+		        }
+		        // if (p_traitors[i]>2){obj_controller.x=self.x;obj_controller.y=self.y;}
+		    } // End traitors cult
+
+		}
+		// Genestealer cults grow in number
+	    if (p_tyranids[i]>0) and (p_tyranids[i]<=3) and (p_type[i]!="Space Hulk"){
+	        var spread=0;
 	        rando=floor(random(100))+1;
-	        // // // obj_controller.x=self.x;obj_controller.y=self.y;
-	        if (garrison_force) {
-	            rando -= total_garrison;
-	        }
-
-	        var tixt = "";
-
-	        // controls losing pdf due to heretic cults
-	        var traitor_mod = 0;
-
-	        if (rando <= 40) {
-	        	notixt = true;
-	            var garrison_mod = choose(0.05, 0.1, 0.15, 0.2);
-
-	            if (garrison_force) {
-	                garrison_mod -= 0.005 * total_garrison;
-	            }
-
-	            if (garrison_mod > 0) {
-	                var lost = floor(p_pdf[i] * garrison_mod);
-
-	                if (p_pdf[i] <= 500) {
-	                    lost = p_pdf[i];
-	                    p_traitors[i] = 1;
-	                }
-
-	                p_pdf[i] -= lost;
-
-	                if (p_traitors[i] = 0) {
-	                    if (p_pdf[i] > 0) {
-	                        tixt = $"{string(scr_display_number(lost))} PDF killed in a rebellion on {planet_string}.";
-	                    } else if (p_pdf[i] = 0) then
-	                        tixt = $"Heretic cults have appeared in {planet_string}.";
-
-	                    scr_alert("purple", "owner", tixt, x, y);
-	                    scr_event_log("purple", tixt);
-	                }
-	            } else {
-	                tixt = $"Marine garrison prevents rebellion on {planet_string}"
-	                scr_alert("green", "owner", tixt, x, y);
-	                scr_event_log("purple", tixt);
-	            }
-	            // Cult crushed; don't bother showing if there's already fighting going on over there
-	        } else if (rando >= 41) and (rando < 81) and (p_traitors[i] < 2) {
-	            if (garrison_force) {
-	                traitor_mod = choose(1, 2);
-	            } else {
-	                traitor_mod = 2;
-	            }
-
-	            p_traitors[i] = traitor_mod;
-	            tixt = $"Heretic cults have appeared in {planet_string}."
-	        } else if (rando >= 81) and (rando < 91) and (p_traitors[i] < 3) { // Minor uprising
-	            if (garrison_force) {
-	                traitor_mod = choose(2, 3);
-	            } else {
-	                traitor_mod = 3;
-	            }
-	            p_traitors[i] = traitor_mod;
-	            tixt = $"Heretic cults have spread around {planet_string}.";
-	        } // Major uprising
-
-	        // major and huge uprisings are impossible as long as a garrison of at least 10 marines is present
-	        if (rando >= 91) and (rando < 100) and (p_traitors[i] < 4) {
-	            notixt = true;
-	            p_traitors[i] = 4;
-
-	            if (obj_controller.faction_defeated[10] = 0) and (obj_controller.faction_gender[10] = 1) then
-	                p_traitors[i] = 5;
-
-	            scr_popup("Heretic Revolt", "A massive heretic uprising on " + string(name) + " " + scr_roman(i) + " threatens to plunge the star system into chaos.", "chaos_cultist", "");
-	            scr_alert("red", "owner", "Massive heretic uprising on " + string(name) + " " + scr_roman(i) + ".", x, y);
-	            scr_event_log("purple", "Massive heretic uprising on " + string(name) + " " + scr_roman(i) + ".");
-	        } // Huge uprising
-
-	        if (rando >= 100) and (p_traitors[i] < 5) {
-	            p_traitors[i] = 6;
-	            p_owner[i] = 10;
-	            array_push(p_feature[i], new new_planet_feature(P_features.Daemonic_Incursion));
-
-	            if (p_heresy[i] >= 80){
-	            	p_heresy[i] = 95;
-	            }else if (p_heresy[i] < 80) {
-	            	p_heresy[i] = 80;
-	            }
-
-	            tixt = "Daemonic incursion on " + string(name) + " " + string(i) + "!";
-	        } // Oh god what
-
-	        if (rando >= 41) and (!notixt) {
-	            scr_alert("red", "owner", tixt, x, y);
-	            scr_event_log("purple", tixt);
-	        }
-	        // if (p_traitors[i]>2){obj_controller.x=self.x;obj_controller.y=self.y;}
-	    } // End traitors cult
-	} //
-
-
-	// Genestealer cults grow in number
-    if (p_tyranids[i]>0) and (p_tyranids[i]<=3) and (p_type[i]!="Space Hulk"){
-        var spread=0;
-        rando=floor(random(100))+1;
-      
-        if (rando<=15) then spread=1;
-      
-        if (p_type[i]="Lava") and (p_tyranids[i]=2) then spread=0;
-        if ((p_type[i]="Ice") or (p_type[i]="Desert")) and (p_tyranids[i]=3) then spread=0;
-      
-        if (spread=1) then p_tyranids[i]+=1;
-    }
+	      
+	        if (rando<=15) then spread=1;
+	      
+	        if (p_type[i]="Lava") and (p_tyranids[i]=2) then spread=0;
+	        if ((p_type[i]="Ice") or (p_type[i]="Desert")) and (p_tyranids[i]=3) then spread=0;
+	      
+	        if (spread=1) then p_tyranids[i]+=1;
+	    }
 
 // Spread influence on controlled sector
 	    if (p_heresy[i]<70) and (owner=10) and (p_type[i]!="Space Hulk") and (p_type[i]!="Dead") then p_heresy[i]+=2;
@@ -326,7 +325,6 @@ function scr_enemy_ai_b() {
 	    }
 	    // if (p_heresy[i]>0) and (owner != eFACTION.Chaos) then p_heresy[i]-=2;
 	}
-
 	// Tau rebellions
 	if (present_fleet[8]>=1) and (owner != eFACTION.Tau){
 	    var flit, ran1, ran2, tau_chance;
@@ -353,12 +351,11 @@ function scr_enemy_ai_b() {
 	    }
     
     
-		for (i=1;i<5;i++){
-			if (i>planets){break;}
+		for (i=1;i<=planets;i++){
 	        tau_chance=floor(random(100))+1;
         
 	        if (i<=planets) and (p_influence[i]>=70) and (p_owner[i]!=8) and (p_owner[i]!=10) and (p_owner[i]!=7) and (p_owner[i]!=9) and (p_type[i]!="Space Hulk"){
-	        	for (var s=1;s<=planets){
+	        	for (var s=1;s<=planets;s++){
 	        		 if (p_owner[s]=8) then tau_chance+=5;
 	        	}
 				
@@ -377,7 +374,7 @@ function scr_enemy_ai_b() {
 	                var targ=0,have=0,badd=1;
                 
 	                targ=planets;
-	                for (var s=1;s<=planets){
+	                for (var s=1;s<=planets;s++){
 	                	if (p_type[s]="Dead") then targ-=1;
 	                	if (p_owner[s]=8) then have+=1;
 	                }
@@ -414,6 +411,5 @@ function scr_enemy_ai_b() {
 	    }// End repeat
        
 	}
-
 
 }

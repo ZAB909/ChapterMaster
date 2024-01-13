@@ -113,7 +113,7 @@ function scr_apothecary_ship() {
         
             if (maybe=2){
             	if (unit.armour()!="Dreadnought") and (unit.hp()<unit.max_health()){
-	                 if (ship_apoth>0){
+	                if (ship_apoth>0){
 						unit.healing(true);
 						ship_apoth--;                           
 	                } else {
@@ -125,19 +125,26 @@ function scr_apothecary_ship() {
 	    }
     
 	    d=0;
-	    if (ship_tech>0) then repeat(300){// Last techmarines repair shit
-	        d++;normal_hp=true;maybe=0;
-	        if (string_count("Dread",obj_ini.armour[co][d])>0) and (obj_ini.hp[co][d]>0) and (obj_ini.hp[co][d]<100) and (obj_ini.lid[co][d]>0) then maybe=1;
-	        if (maybe=1){var c;
-	            c=0;repeat(capital_number){c++;if (obj_ini.lid[co][d]=capital_num[c]) then maybe=2;}
-	            c=0;repeat(frigate_number){c++;if (obj_ini.lid[co][d]=frigate_num[c]) then maybe=2;}
-	            c=0;repeat(escort_number){c++;if (obj_ini.lid[co][d]=escort_num[c]) then maybe=2;}
+	    while (ship_tech>0) and (d < company_size-1){// Last techmarines repair shit
+	    	d++
+	        normal_hp=true;
+	        maybe=0;
+	        unit = obj_ini.TTRPG[co][d];
+	        if (unit.armour=="Dreadnought") and (obj_ini.hp[co][d]>0) and (obj_ini.hp[co][d]<100) and (obj_ini.lid[co][d]>0) then maybe=1;
+	        if (maybe=1){
+	        	var c;
+	            c=0;
+	            repeat(capital_number){c++;if (obj_ini.lid[co][d]=capital_num[c]) then maybe=2;}
+	            c=0;
+	            repeat(frigate_number){c++;if (obj_ini.lid[co][d]=frigate_num[c]) then maybe=2;}
+	            c=0;
+	            repeat(escort_number){c++;if (obj_ini.lid[co][d]=escort_num[c]) then maybe=2;}
             
 	            if (obj_ini.race[co][d]=1) and (maybe=2){maybe=3;normal_hp=true;}
 	            if (maybe=3){
 	                if (ship_tech>0) and (normal_hp=true){
-	                    obj_ini.hp[co][d]+=repair;ship_tech-=1;
-	                    if (obj_ini.hp[co][d]>100) then obj_ini.hp[co][d]=100;
+	                    unit.healing(true);
+	                    ship_tech-=1;
 	                }
 	            }
 	        }

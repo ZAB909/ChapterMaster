@@ -540,157 +540,56 @@ if (menu==1 && managing>0){
         }
     }
     if (is_struct(temp[120])){
-        var ach=0,damage_res=1,melee_attack,ranged_attack,acy=0;
+        var ach=0,damage_res=1,armour_value=0;
         // Checks if the marine is not hidden
-        if (temp[120].base_group != 0){
-            var unit = temp[120];
-            melee_attack=unit.melee_attack();
-            ranged_attack = unit.ranged_attack();
+        var unit = temp[120];
+        if (!is_array(last_unit)){
+            last_unit=[0,0];
+        }
+        if (unit.base_group != "none") && (last_unit[1]!=unit.marine_number){
+            last_unit=[unit.company,unit.marine_number]
             marine_armour[0]=unit.armour();
             fix_right=0;
-            
+            equip_data = unit.unit_equipment_data();
             var cah=managing;
             if (cah>10) then cah=0;
             temp[100]="1";
             if (unit.race()!=1) then temp[100]=unit.race();
             
-            damage_res= unit.damage_resistance();
+            damage_res = unit.damage_resistance();
             
-            if (unit.gear()=="Rosarius") then damage_res+=0.33;
-            if (unit.gear()=="Iron Halo"){
-                damage_res+=0.33;
-                ach+=20;
-            }
-            if (unit.mobility_item()=="Jump Pack"){
-                damage_res+=0.1;
-            }
-            if (unit.mobility_item()=="Bike") then ach+=25;
-            if (unit.weapon_one()=="Boarding Shield"){
-                ach+=20;
-                acy+=4;
-            }
-            if (unit.weapon_two()=="Boarding Shield"){
-                ach+=20;
-                acy+=4;
-            }
-            if (unit.weapon_one()=="Storm Shield"){
-                ach+=30;
-                acy+=8;
-            }
-            if (unit.weapon_two()=="Storm Shield"){
-                ach+=30;
-                acy+=8;
-            }
-            if (unit.armour()=="MK3 Iron Armour") then ranged_attack-=0.1;
-            if (unit.armour()=="MK4 Maximus"){
-                ranged_attack+=0.05;
-                melee_attack+=0.05;
-            }
-            // heresy should be lower damage resistance, lowered ap for now so it's easier for players to digest
-            if (unit.armour()=="MK5 Heresy"){
-                melee_attack+=0.2;
-                ranged_attack-=0.05;
-            }
-            if (unit.armour()=="MK6 Corvus"){
-                ranged_attack+=0.1;
-            }
-            if (string_count("Artificer",unit.armour())>0){
-                melee_attack+=0.1;
-            }
-            if (string_count("Terminator",unit.armour())>0){
-                ranged_attack-=0.1;
-                melee_attack+=0.2;
-            }
-            if (unit.armour()=="Tartaros"){
-                ranged_attack-=0.05;
-                melee_attack+=0.2;
-            }
-
-            ui_specialist=0;
-            ui_coloring="";
+            var armour_tooltip = "";
+            if (is_struct(equip_data.armour_data)){
+                temp[103]=equip_data.armour_data.special_description_gen();
+            } else {temp[103]=""}
             // Sets up the description for the equipement of current marine
-            temp[101]=unit.name_role();
-            temp[102]=unit.armour();
-            temp[103]="";
-            if (string_count("&",temp[102])>0) then temp[102]=clean_tags(temp[102]);
-            tooltip="";
-            tooltip_weapon=0;
-            tooltip_stat1=0;
-            tooltip_stat2=0;
-            tooltip_stat3=0;
-            tooltip_stat4=0;
-            tooltip_other="";
-            tooltip=scr_weapon(unit.armour(),"",true,0,false,"","description");
-            // Sets AC for current marine equipement
-            if (acy==0){
-                if (tooltip_other=="") then temp[103]="("+string(tooltip_stat1)+"AC)";
-                if (tooltip_other!="") then temp[103]="("+string(tooltip_stat1)+"AC, "+string(tooltip_other)+")";
-            }
-            if (acy>0){
-                if (tooltip_other=="") then temp[103]="("+string(tooltip_stat1)+"+"+string(acy)+"AC)";
-                if (tooltip_other!="") then temp[103]="("+string(tooltip_stat1)+"+"+string(acy)+"AC, "+string(tooltip_other)+")";
-            }
+            //temp[103]="";
             // Gear
             temp[104]=unit.gear();
-            if (string_count("&",temp[104])>0) then temp[104]=clean_tags(temp[104]);
-            tooltip="";
-            tooltip_weapon=0;
-            tooltip_stat1=0;
-            tooltip_stat2=0;
-            tooltip_stat3=0;
-            tooltip_stat4=0;
-            tooltip_other="";
-            tooltip=scr_weapon(unit.gear(),"",true,0,false,"","description");
+            if (is_struct(equip_data.gear_data)){
+                temp[105]=equip_data.gear_data.special_description_gen();
+            } else {
+                temp[105]="";
+            }            
+            //if (string_count("&",temp[104])>0) then temp[104]=clean_tags(temp[104]);
             // Mobility Item
-            temp[105]="";
-            temp[105]="("+string(tooltip_other)+")";
             temp[106]=unit.mobility_item();
-            temp[107]="";
-            if (string_count("&",temp[106])>0) then temp[106]=clean_tags(temp[106]);
-            tooltip="";
-            tooltip_weapon=0;
-            tooltip_stat1=0;
-            tooltip_stat2=0;
-            tooltip_stat3=0;
-            tooltip_stat4=0;
-            tooltip_other="";
-            tooltip=scr_weapon(unit.mobility_item(),"",true,0,false,"","description");
-            temp[107]="("+string(tooltip_other)+")";
-            // Checks if Dread
-            var is_a_dread=false;
-            if (string_count("Dread",temp[102])>0) then is_a_dread=true;
-            // Weapon 1
-            temp[108]=unit.weapon_one();
-            temp[109]="";
-            if (string_count("&",temp[108])>0) then temp[108]=clean_tags(temp[108]);
-            tooltip="";
-            tooltip_weapon=0;
-            tooltip_stat1=0;
-            tooltip_stat2=0;
-            tooltip_stat3=0;
-            tooltip_stat4=0;
-            tooltip_other="";
-            if (is_a_dread==false) then tooltip=scr_weapon(unit.weapon_one(),unit.weapon_two(),true,0,false,"","description");
-            if (is_a_dread==true) then tooltip=scr_weapon(unit.weapon_one(),unit.weapon_two(),true,0,true,"","description");
-            temp[109]="("+string(tooltip_stat1)+"DAM, "+string(tooltip_other)+")";
-            if (tooltip_stat4==0) then temp[109]="("+string(tooltip_stat1)+"DAM, "+string(tooltip_other)+")";
-            if (tooltip_stat4>0) then temp[109]="("+string(tooltip_stat1)+"DAM, "+string(tooltip_stat4)+" ammo, "+string(tooltip_other)+")";
-            // Weapon 2
-            temp[110]=unit.weapon_two();
-            temp[111]="";
-            if (string_count("&",temp[110])>0) then temp[110]=clean_tags(temp[110]);
-            tooltip="";
-            tooltip_weapon=0;
-            tooltip_stat1=0;
-            tooltip_stat2=0;
-            tooltip_stat3=0;
-            tooltip_stat4=0;
-            tooltip_other="";
-            if (is_a_dread==false) then tooltip=scr_weapon(unit.weapon_two(),unit.weapon_one(),true,0,false,"","description");
-            if (is_a_dread==true) then tooltip=scr_weapon(unit.weapon_two(),unit.weapon_one(),true,0,true,"","description");
-            temp[111]="("+string(tooltip_stat1)+"DAM, "+string(tooltip_other)+")";
-            if (tooltip_stat4==0) then temp[111]="("+string(tooltip_stat1)+"DAM, "+string(tooltip_other)+")";
-            if (tooltip_stat4>0) then temp[111]="("+string(tooltip_stat1)+"DAM, "+string(tooltip_stat4)+" ammo, "+string(tooltip_other)+")";
+            if (is_struct(equip_data.mobility_data)){
+                temp[107]=equip_data.mobility_data.special_description_gen();
+            } else {
+                temp[107]="";
+            } 
+            if (is_struct(equip_data.weapon_one_data)){
+                temp[109]=equip_data.weapon_one_data.special_description_gen();
+            } else {
+                temp[109]="";
+            }
+            if (is_struct(equip_data.weapon_two_data)){
+                temp[111]=equip_data.weapon_two_data.special_description_gen();
+            } else {
+                temp[111]="";
+            }                                      
+            //if (string_count("&",temp[106])>0) then temp[106]=clean_tags(temp[106]);
             // Experience
             temp[113]=string(floor(unit.experience()));
             var cah=managing;
@@ -698,30 +597,29 @@ if (menu==1 && managing>0){
             // Bonuses
             temp[119]="";
             if (string_length(unit.specials())>0){
-                if (string_count("$",unit.specials())>0) then temp[119]="Born Leader Bonus";
-                if (string_count("@",unit.specials())>0){
-                    temp[119]="Champion Bonus";
-                    melee_attack=melee_attack*1.15;ranged_attack=ranged_attack*1.15;
-                }
-                if (string_count("0",unit.specials())>0){
-                    temp[119]="PSYKER ("+string_upper(string(obj_ini.psy_powers))+"): ";
-                    temp[119]+=string(string_count("|",unit.specials()));
-                    temp[119]+=" Powers known.";
-                }
+            //if (string_count("$",unit.specials())>0) then temp[119]="Born Leader Bonus";
+            //if (string_count("@",unit.specials())>0){
+                //temp[119]="Champion Bonus";
+                //melee_attack=melee_attack*1.15;ranged_attack=ranged_attack*1.15;
+            }
+            if (string_count("0",unit.specials())>0){
+                temp[119]="PSYKER ("+string_upper(string(obj_ini.psy_powers))+"): ";
+                temp[119]+=string(string_count("|",unit.specials()));
+                temp[119]+=" Powers known.";
             }
             // Corruption
             if (obj_controller.chaos_rating>0) and (temp[119]!="") then temp[119]+="#"+string(max(0,unit.corruption()))+"% Corruption.";
             if (obj_controller.chaos_rating>0) and (temp[119]="") then temp[119]=string(max(0,unit.corruption()))+"% Corruption.";
             // Melee Attack
-            temp[116]=$"{floor(melee_attack*100)}%";
+            temp[116]=unit.melee_attack();
             // Ranged Attack
-            temp[117]=$"{floor(ranged_attack*100)}%";
+            temp[117]=unit.ranged_attack();
             // Damage Resistance
-            temp[118]=string(min(75,round(damage_res*100)))+"%";
-        }
+            temp[118]=string(damage_res)+"%";
         /*if (man[sel]="vehicle"){
             // TODO
         }*/
+        }
     }    
 }
 

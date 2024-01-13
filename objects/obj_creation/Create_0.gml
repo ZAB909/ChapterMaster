@@ -155,7 +155,7 @@ chapter_id[8]="Salamanders";
 chapter_tooltip[8]="Followers of the Promethean Cult, the jet-black skinned Salamanders are forgemasters of legend. They are armed with the best wargear available and prefer flame based weaponry. Their only drawback is their low numbers and slow recruiting.";
 
 chapter_id[9]="Raven Guard";
-//chapter_tooltip[9]="Clinging to the shadows and riding the edge of lightning the Raven Guard strike out at the hated enemy with stealth and speed. Using lightning strikes, hit and run tactics, and guerrilla warfare, they are known for being there one second and gone the next.";
+chapter_tooltip[9]="Clinging to the shadows and riding the edge of lightning the Raven Guard strike out at the hated enemy with stealth and speed. Using lightning strikes, hit and run tactics, and guerrilla warfare, they are known for being there one second and gone the next.";
 
 chapter_id[10]="Black Templars";
 //chapter_tooltip[10]="Not adhering to the Codex Astartes, Black Templars are a Chapter on an Eternal Crusade with unique organization and high numbers. Masters of assault, they charge at the enemy with zeal unmatched. They hate psykers, and as such, have no Librarians.";
@@ -341,6 +341,7 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
     wep1[i,9]="Heavy Ranged";
     wep2[i,9]="Combat Knife";
     armour[i,9]="Power Armour";
+    mobi[i,9]="Heavy Weapons Pack";
 
     race[i,10]=1;
     role[i,10]="Assault Marine";

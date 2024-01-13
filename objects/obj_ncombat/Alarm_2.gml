@@ -1,5 +1,6 @@
 
-player_max=player_forces;enemy_max=enemy_forces;
+player_max=player_forces;
+enemy_max=enemy_forces;
 
 instance_activate_object(obj_enunit);
 

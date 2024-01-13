@@ -26,10 +26,10 @@ function scr_chapter_new(argument0) {
 	    role[i,9]="Devastator";wep1[i,9]="Heavy Ranged";wep2[i,9]="Combat Knife";armour[i,9]="Power Armour";
 	    role[i,10]="Assault Marine";wep1[i,10]="Chainsword";wep2[i,10]="Bolt Pistol";armour[i,10]="Power Armour";mobi[i,10]="Jump Pack";
 	    role[i,12]="Scout";wep1[i,12]="Bolter";wep2[i,12]="Combat Knife";armour[i,12]="Scout Armour";
-	    role[i,14]="Chaplain";wep1[i,14]="Power Sword";wep2[i,14]="Storm Bolter";armour[i,14]="Power Armour";gear[i,14]="Rosarius";
-	    role[i,15]="Apothecary";wep1[i,15]="Power Sword";wep2[i,15]="Storm Bolter";armour[i,15]="Power Armour";gear[i,15]="Narthecium";
-	    role[i,16]="Techmarine";wep1[i,16]="Power Axe";wep2[i,16]="Storm Bolter";armour[i,16]="Power Armour";gear[i,16]="Servo Arms";
-	    role[i,17]="Librarian";wep1[i,17]="Force Weapon";wep2[i,17]="Storm Bolter";armour[i,17]="Power Armour";gear[i,17]="Psychic Hood";
+	    role[i,14]="Chaplain";wep1[i,14]="Power Sword";wep2[i,14]="Bolter";armour[i,14]="Power Armour";gear[i,14]="Rosarius";
+	    role[i,15]="Apothecary";wep1[i,15]="Power Sword";wep2[i,15]="Bolter";armour[i,15]="Power Armour";gear[i,15]="Narthecium";
+	    role[i,16]="Techmarine";wep1[i,16]="Power Axe";wep2[i,16]="Bolter";armour[i,16]="Power Armour";gear[i,16]="Servo Arms";
+	    role[i,17]="Librarian";wep1[i,17]="Force Weapon";wep2[i,17]="Bolter";armour[i,17]="Power Armour";gear[i,17]="Psychic Hood";
 		role[i,18]="Sergeant";wep1[i,18]="Chainsword";wep2[i,18]="Storm Bolter";armour[i,18]="Power Armour";gear[i,18]="";
 		role[i,19]="Veteran Sergeant";wep1[i,19]="Chainsword";wep2[i,19]="Storm Bolter";armour[i,19]="Power Armour";gear[i,19]="";
 	}i=100;
@@ -62,7 +62,7 @@ function scr_chapter_new(argument0) {
 	    disposition[6]=50;// Astartes
 	    disposition[7]=0;// Reserved
 	    chapter_master_name="Azreal";chapter_master_specialty=2;
-	    chapter_master_melee=4;chapter_master_ranged=4;
+	    chapter_master_melee=5;chapter_master_ranged=4;
 		
 	    company_title[1]="Deathwing";
 	    company_title[2]="Ravenwing";
@@ -101,7 +101,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    disposition[2]=50;disposition[3]=50;disposition[4]=50;disposition[5]=50;
 	    disposition[6]=65;// Astartes
 	    disposition[7]=0;// Reserved
-	    chapter_master_name="Jubal Khan";chapter_master_melee=4;
+	    chapter_master_name="Jubal Khan";chapter_master_melee=5;
 	    chapter_master_ranged=3;chapter_master_specialty=1;
 	    company_title[1]="The Spearpoint Brotherhood";company_title[2]="The Firefist Brotherhood";company_title[3]="The Eagle Brotherhood";
 	    company_title[4]="The Tulwar Brotherhood";company_title[5]="The Stormwrath Brotherhood";company_title[6]="The Hawkeye Brotherhood";
@@ -164,7 +164,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	        disposition[2]=75;disposition[3]=60;disposition[4]=50;disposition[5]=60;
 	        disposition[6]=60;// Astartes
 	        disposition[7]=0;// Reserved
-	        chapter_master_name="Vorn Hagen";chapter_master_melee=3;
+	        chapter_master_name="Vorn Hagen";chapter_master_melee=4;
 	        chapter_master_ranged=7;chapter_master_specialty=1;
 
 	        company_title[1]="The Fists of Dorn";company_title[2]="The Scions of Redemption";company_title[3]="The Sentinels of Terra";
@@ -197,7 +197,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    disposition[2]=50;disposition[3]=40;disposition[4]=15;disposition[5]=15;
 	    disposition[6]=40;// Astartes
 	    disposition[7]=0;// Reserved
-	    chapter_master_name="Logan Grimnar";chapter_master_melee=5;
+	    chapter_master_name="Logan Grimnar";chapter_master_melee=6;
 	    chapter_master_ranged=1;chapter_master_specialty=2;
     
 	    company_title[1]="Champions of Fenris";company_title[2]="The Bloodmaws";company_title[3]="The Seawolves";
@@ -243,7 +243,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    disposition[2]=75;disposition[3]=60;disposition[4]=50;disposition[5]=60;
 	    disposition[6]=60;// Astartes
 	    disposition[7]=0;// Reserved
-	    chapter_master_name="Dante";chapter_master_melee=5;
+	    chapter_master_name="Dante";chapter_master_melee=6;
 	    chapter_master_ranged=2;chapter_master_specialty=2;
 	    company_title[1]="Archangels";company_title[2]="The Blooded";company_title[3]="Ironhelms";
 	    company_title[4]="Knights of Baal";company_title[5]="Daemonbanes";company_title[6]="Eternals";
@@ -276,7 +276,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    disposition[2]=30;disposition[3]=80;disposition[4]=35;disposition[5]=30;
 	    disposition[6]=50;// Astartes
 	    disposition[7]=0;// Reserved
-	    chapter_master_name="Kardan Stronos";chapter_master_melee=3;
+	    chapter_master_name="Kardan Stronos";chapter_master_melee=4;
 	    chapter_master_ranged=3;chapter_master_specialty=2;
     
 	    company_title[1]="Clan Avernii";company_title[2]="Clan Garrsak";company_title[3]="Clan Raukaan";
@@ -311,17 +311,51 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    disposition[2]=80;disposition[3]=65;disposition[4]=65;disposition[5]=60;
 	    disposition[6]=60;// Astartes
 	    disposition[7]=0;// Reserved
-	    chapter_master_name="Tu'Shan";chapter_master_melee=3;
+	    chapter_master_name="Tu'Shan";chapter_master_melee=4;
 	    chapter_master_ranged=2;chapter_master_specialty=2;
 		
 	    company_title[1]="The Firedrakes";company_title[2]="Defenders of Nocturne";company_title[3]="The Pyroclasts";
 		company_title[4]="The Branded";company_title[5]="The Drake Hunters";company_title[6]="The Flamehammers";
 		company_title[10]="Sons of Nocturne";
+	
+		    for(i=100;i<=102;i++){
+	        role[i,3]="Firedrake";wep1[i,3]="Power Sword";
+			role[i,19]="Firedrake Master";wep1[i,3]="Power Sword";
+			}
 	}
 
 
-
-
+	if (argument0="Raven Guard"){founding="N/A";points=150;
+		selected_chapter=9;chapter=argument0;icon=9;icon_name="rg";founding=0;fleet_type=1;strength=5;purity=8;stability=4;cooperation=5;
+	    adv[1]="Ambushers";adv[2]="Melee Enthusiasts";dis[1]="Splintered";
+	    homeworld="Dead";homeworld_name="Deliverance";homeworld_exists=1;recruiting_exists=1;
+	    homeworld_rule=1;aspirant_trial="Exposure";
+	    // Pauldron2: Left, Pauldron: Right
+	    color_to_main="Black";color_to_secondary="Black";color_to_trim="Silver";
+	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Dark Red";
+	    color_to_weapon="Black";col_special=0;trim=0;
+	    hchaplain="Cordae";fmaster="Dyloss";clibrarian="Taaloss";hapothecary="Vincente"
+	    recruiter="Korvydae";admiral="Aethon Shaan";
+	    battle_cry="Victorus aut Mortis";// monastery_name="Fortress of Hera";master_name=
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=8;
+	    mutations=2;mutations_selected=2;
+	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
+	    zygote=0;betchers=1;catalepsean=0;secretions=0;occulobe=0;mucranoid=1;
+	    // disposition[1]=0;// Prog
+	    disposition[2]=80;disposition[3]=50;disposition[4]=50;disposition[5]=50;
+	    disposition[6]=60;// Astartes
+	    disposition[7]=0;// Reserved
+	    chapter_master_name="Kayvaan Shrike";chapter_master_melee=2;
+	    chapter_master_ranged=1;chapter_master_specialty=1;
+		
+	    company_title[1]="The Blackwings";company_title[2]="The Shadowborne";company_title[3]="The Ghoststalkers";
+		company_title[4]="The Silent";company_title[5]="The Watchful";company_title[6]="The Darkened Blades";
+		company_title[7]="The Whisperclaws";company_title[8]="The Unseen";company_title[9]="The Dirgesingers";company_title[10]="The Subtle";
+		for(i=100;i<=102;i++){
+		role[i,5]="Shadow Captain";wep1[i,5]="Lightning Claw";
+		role[i,2]="Shadow Warden";mobi[i,2]="Jump Pack";
+		}
+	}
 	if (argument0="Blood Ravens"){
 		founding=10;points=100;
 	    selected_chapter=12;chapter=argument0;icon=12;icon_name="br";
@@ -345,7 +379,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    disposition[2]=40;disposition[3]=30;disposition[4]=45;disposition[5]=25;
 	    disposition[6]=35;// Astartes
 	    disposition[7]=0;// Reserved
-	    chapter_master_name="Gabriel Angelos";chapter_master_melee=3;
+	    chapter_master_name="Gabriel Angelos";chapter_master_melee=4;
 	    chapter_master_ranged=3;chapter_master_specialty=1;
 	}
 
@@ -398,7 +432,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    disposition[2]=15;disposition[3]=20;disposition[4]=10;disposition[5]=25;
 	    disposition[6]=50;// Astartes
 	    disposition[7]=0;// Reserved
-	    chapter_master_name="Sarpedon";chapter_master_melee=7;
+	    chapter_master_name="Sarpedon";chapter_master_melee=8;
 	    chapter_master_ranged=3;chapter_master_specialty=3;
 	}
 
@@ -427,7 +461,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    disposition[2]=15;disposition[3]=20;disposition[4]=10;disposition[5]=25;
 	    disposition[6]=50;// Astartes
 	    disposition[7]=0;// Reserved
-	    chapter_master_name="Malakim Phoros";chapter_master_melee=2;
+	    chapter_master_name="Malakim Phoros";chapter_master_melee=3;
 	    chapter_master_ranged=2;chapter_master_specialty=2;
 	}
 

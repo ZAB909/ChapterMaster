@@ -54,7 +54,7 @@ if (menu==12) and (cooldown<=0) and (penitorium>0){
 
                 var tek="";
                 if (obj_ini.race[c,e]==1){
-                    tek=obj_ini.wep1[c,e];
+                    tek=obj_ini.wep1[c][e];
                     if (tek!="") then scr_add_item(tek,1);
                     tek=obj_ini.wep2[c,e];
                     if (tek!="") then scr_add_item(tek,1);
@@ -191,7 +191,7 @@ if (menu==13) and (cooldown<=0) and (artifacts>0){
 
             if (menu_artifact==fest_display) then fest_display=0;
 
-            if (string_count("Daemon",obj_ini.artifact_tags[i])>0){
+            if (array_contains(obj_ini.artifact_tags[i],"Daemon")){
                 if (obj_ini.artifact_sid[i]>=500){
                     var demonSummonChance=irandom(100)+1;
 
@@ -217,7 +217,7 @@ if (menu==13) and (cooldown<=0) and (artifacts>0){
             }
 
             obj_ini.artifact[i]="";
-            obj_ini.artifact_tags[i]="";
+            obj_ini.artifact_tags[i]=[];
             obj_ini.artifact_identified[i]=0;
             obj_ini.artifact_condition[i]=100;
             obj_ini.artifact_loc[i]="";
@@ -226,10 +226,12 @@ if (menu==13) and (cooldown<=0) and (artifacts>0){
             cooldown=12;
             if (menu_artifact>artifacts) then menu_artifact=artifacts;
             for(var j=0; j<20; j++){
-                obj_ini.artifact[i]=obj_ini.artifact[i+1];obj_ini.artifact_tags[i]=obj_ini.artifact_tags[i+1];
+                obj_ini.artifact[i]=obj_ini.artifact[i+1];
+                obj_ini.artifact_tags[i]=obj_ini.artifact_tags[i+1];
                 obj_ini.artifact_identified[i]=obj_ini.artifact_identified[i+1];
                 obj_ini.artifact_condition[i]=obj_ini.artifact_condition[i+1];
-                obj_ini.artifact_loc[i]=obj_ini.artifact_loc[i+1];obj_ini.artifact_sid[i]=obj_ini.artifact_sid[i+1];
+                obj_ini.artifact_loc[i]=obj_ini.artifact_loc[i+1];
+                obj_ini.artifact_sid[i]=obj_ini.artifact_sid[i+1];
                 i+=1;
             }
         }
@@ -360,6 +362,7 @@ if (menu==15) and (cooldown<=0){
         }
     }
     // Change trial type
+
     if (mouse_y>=yy+518) and (mouse_y<=yy+542){
         var onceh=0;
         if (mouse_x>=xx+713) and (mouse_x<=xx+752){
@@ -504,6 +507,7 @@ if (menu==20) and (diplomacy==10.1){
             //grab a random librarian
             var lib = scr_random_marine("lib",0);
             if (lib!="none"){
+                var chapter_master = obj_ini.TTRPG[0][1];
                 var dead_lib = obj_ini.TTRPG[lib[0],lib[1]];
                 pop_up = instance_create(0,0,obj_popup);
                 pop_up.title = "Skull for the Skull Throne";
@@ -511,6 +515,7 @@ if (menu==20) and (diplomacy==10.1){
                 pop_up.type=98;
                 pop_up.image = "chaos";
                 scr_kill_unit(lib[0],lib[1]);
+                chapter_master.add_trait("blood_for_blood");
             } else {
                 diplomacy_pathway = "daemon_scorn";
             }
@@ -523,7 +528,15 @@ if (menu==20) and (diplomacy==10.1){
 			diplomacy_pathway = "sacrifice_champ";
             var champ = scr_random_marine(obj_ini.role[100,7],0);
             if (champ!="none"){
-                var dead_champ = obj_ini.TTRPG[champ[0],champ[1]];
+                var chapter_master = obj_ini.TTRPG[0][1];
+                 chapter_master.add_trait("blood_for_blood");
+                var dead_champ = obj_ini.TTRPG[champ[0]][champ[1]];
+                //TODO make this into a real dual with consequences
+                pop_up = instance_create(0,0,obj_popup);
+                pop_up.title = "Skull for the Skull Throne";
+                pop_up.text = $"You summon {dead_champ.name_role()} to your personal chambers. Darting from the shadows towards {dead_champ.name()} who is a cunning warrior and reacts with precision to your attack, however eventually you prevail and strike him down. With the flesh removed from his skull you place it upon a hastily erected shrine."
+                pop_up.type=98;
+                pop_up.image = "chaos";                
                // obj_duel = instance_create(0,0,obj_duel);
                // obj_duel.title = "Ambush Champion";
                // pop.type="duel";
@@ -537,13 +550,22 @@ if (menu==20) and (diplomacy==10.1){
         if (point_in_rectangle(mouse_x, mouse_y, option_selections[2].lh, option_selections[2].top, option_selections[2].rh, option_selections[2].base)){
 			cooldown=8000;
 			diplomacy_pathway = "sacrifice_squad";
-            var kill_squad;
+            var kill_squad, squad_found=false;
             for(var i=0;i<array_length(obj_ini.squads);i++){
                 kill_squad = obj_ini.squads[i];
-                if (kill_squad.type == "tactical_squad"){
+                if (kill_squad.type == "tactical_squad" && array_length(kill_squad.members)>4){
+                    var chapter_master = obj_ini.TTRPG[0][1];
+                    chapter_master.add_trait("blood_for_blood");                    
                     kill_squad.kill_members();
+                    with(obj_ini){
+                        scr_company_order(kill_squad.base_company);
+                    }
+                    squad_found=true
                     break;
                 }
+            }
+            if (!squad_found){
+                diplomacy_pathway = "daemon_scorn";
             }
 			scr_dialogue(diplomacy_pathway);
 			force_goodbye = 1;
@@ -1474,6 +1496,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 hide_banner=1;
                 with(obj_star_select){instance_destroy();}
                 with(obj_fleet_select){instance_destroy();}
+                view_squad=false;
             }
             if (menu==1) and (onceh==0){
                 menu=0;
@@ -1907,12 +1930,10 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 unload=0;
                 alarm[6]=7;
                 if (managing<=10){
-                    scr_company_view(managing);
-                    company_squads = find_company_squads(managing);
+                    company_data = new scr_company_struct(managing);
                 } else if (managing>10) then scr_special_view(managing){
                     scr_special_view(managing);
-                    company_squads=[];
-                    cur_squad=0;
+                    company_data={};
                 }
                 view_squad=false;               
             }
@@ -1944,23 +1965,22 @@ if (action_if_number(obj_saveload, 0, 0) &&
             if (onceh==0){
                 cooldown=8000;
                 onceh=1;
-                cur_squad=0;
                 if ((managing>1) and (managing<=11)){
                     scr_ui_refresh();
                     managing-=1;
                     scr_company_view(managing);
-                    company_squads = find_company_squads(managing);
+                    company_data = new scr_company_struct(managing);
                 }else if (managing>11){
                     scr_ui_refresh();
                     managing-=1;
                     scr_special_view(managing);
-                    company_squads =[];
+                    company_data={};
                     view_squad=false;
                 }else if (managing==1){
                     scr_ui_refresh();
                     managing=15;
                     scr_special_view(managing);
-                    company_squads =[];
+                    company_data={};
                     view_squad=false;
                 }
             }
@@ -1973,23 +1993,22 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 cooldown=8000;
                 onceh=1;
                 scr_ui_refresh();
-                cur_squad=0;
                 if (managing<10){
                     scr_ui_refresh();
                     managing+=1;
                     scr_company_view(managing);
-                    company_squads = find_company_squads(managing);
+                    company_data = new scr_company_struct(managing);
                 }else if (managing>=10) and (managing<15){
                     scr_ui_refresh();
                     managing+=1;
                     scr_special_view(managing);
-                    company_squads =[];
+                    company_data={};
                     view_squad=false;
                 }else if (managing==15){
                     scr_ui_refresh();
                     managing=1;
                     scr_company_view(managing);
-                    company_squads = find_company_squads(managing);
+                    company_data = new scr_company_struct(managing);
                 }
             }
         }
@@ -2005,7 +2024,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
         }
     }
     // Selecting individual marines
-    if (menu=1) and (managing>0) and (!view_squad)and (!unit_profile){
+    if (menu=1) and (managing>0) and (!view_squad && !unit_profile && !company_report){
         var company=managing;
         if (company>10){
             company=0;
@@ -2083,10 +2102,31 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 }
             }
             var onceh;
+            var select = false;
+            var skip=false;
             for(var i=0; i<man_max; i++){
+                select=false;
+                skip=false;
                 while (man[sel]=="hide" && sel<500){sel++;}
-                unit=obj_ini.TTRPG[company][ide[sel]];
-                if (unit.assignment!="none"){
+                if (man[sel]=="man"){
+                    unit=obj_ini.TTRPG[company][ide[sel]];
+                    if (unit.assignment()!="none" || array_contains(["Terra","Lost","Mechanicus Vessel"],ma_loc[sel])){
+                        skip=true;
+                    }
+                }
+                if (fest_repeats>0){// Prevent selecting marines that are in an event
+                    if (fest_planet==0) and (fest_sid>0) and (ma_lid[sel]==fest_sid){skip=true;}
+                    if (fest_planet==1) and (fest_wid>0) and (ma_wid[sel]==fest_wid) and (ma_loc[sel]==fest_star){skip=true;}
+                }
+
+                if (selecting_location!="")
+                and ((ma_loc[sel]!=selecting_location)
+                or (ma_wid[sel]!=selecting_planet))
+                or ((selecting_ship>0) and (ma_lid[sel]==0)){skip=true;}  
+
+                if (ma_god[sel]>=10){skip=true;}
+                                             
+                if (skip){
                     if (sel<500){
                         sel++;
                         continue;
@@ -2094,110 +2134,37 @@ if (action_if_number(obj_saveload, 0, 0) &&
                         break;
                     }
                 }
-                onceh=0;
                 eventing=false;
                 selection=false;
-                // Prevent selecting marines that are in an event
-                if (fest_repeats>0){
-                    if (fest_planet==0) and (fest_sid>0) and (ma_lid[sel]==fest_sid){eventing=true;}
-                    if (fest_planet==1) and (fest_wid>0) and (ma_wid[sel]==fest_wid) and (ma_loc[sel]==fest_star){eventing=true;}
-                }
-                if (selecting_location!="")
-                and ((ma_loc[sel]!=selecting_location)
-                or (ma_wid[sel]!=selecting_planet))
-                or ((selecting_ship>0) and (ma_lid[sel]==0)){sel++;continue;}
                 // Selects all men of type
-                if (!array_contains(["Command","man","vehicle"],sel_all)){
-                    if (man[sel]=="man") and (ma_role[sel]==sel_all)//TODO make unit selectable function
-                    and (!array_contains(["Terra","Lost","Mechanicus Vessel"],ma_loc[sel]))
-                    and (ma_god[sel]<10)
-                    and (eventing==false){
-                        if (man_sel[sel]==0) and (unit.assignment()=="none"){
-                            man_sel[sel]=1;
-                            man_size+=scr_unit_size(ma_armour[sel],ma_role[sel],true);
-                            onceh=1;
-                            selection=true;
-                        }else{
-                            man_sel[sel]=0;
-                            man_size-=scr_unit_size(ma_armour[sel],ma_role[sel],true);
-                            onceh=1;
-                        }
-                    }
-                }
-                // Selects all vehicles of type
-                if (sel_all=="vehicle"){
-                    if (man[sel]=="vehicle") and (ma_role[sel]==sel_all)and (!array_contains(["Terra","Lost","Mechanicus Vessel"],ma_loc[sel]))
-					and (ma_god[sel]<10)
-                    and (eventing==false){
-                        onceh=0;
-                        if (man_sel[sel]==0) and (onceh==0){
-                            man_sel[sel]=1;
-                            man_size+=scr_unit_size("",ma_role[sel],true);
-                            onceh=1;
-                            selection=true;
-                        }
-                        if (man_sel[sel]==1) and (onceh==0){
-                            man_sel[sel]=0;
-                            man_size-=scr_unit_size("",ma_role[sel],true);
-                            onceh=1;
-                        }
-                    }
-                }
-                // Selects all men
-                if (sel_all=="man"){
-                    if (man[sel]=="man")and (!array_contains(["Terra","Lost","Mechanicus Vessel"],ma_loc[sel])) and (ma_god[sel]<10) 
-                    and (eventing==false){
-                        onceh=0;
-                        if (man_sel[sel]==0) and (onceh==0) and (unit.assignment()=="none"){
-                            man_sel[sel]=1;
-                            man_size+=scr_unit_size(ma_armour[sel],ma_role[sel],true);
-                            onceh=1;
-                            selection=true;
-                        }
-                        if (man_sel[sel]==1) and (onceh==0){
-                            man_sel[sel]=0;
-                            man_size-=scr_unit_size(ma_armour[sel],ma_role[sel],true);
-                            onceh=1;
-                        }
-                    }
-                }
-                // Selects all vehicles
-                if (sel_all=="vehicle"){
-                    if (man[sel]=="vehicle")and (!array_contains(["Terra","Lost","Mechanicus Vessel"],ma_loc[sel])) and (ma_god[sel]<10) 
-                    and (eventing==false){
-                        onceh=0;
-                        if (man_sel[sel]==0) and (onceh==0){
-                            selection=true;
-                            man_sel[sel]=1;
-                            man_size+=scr_unit_size("",ma_role[sel],true);
-                            onceh=1;
-                        }
-                        if (man_sel[sel]==1) and (onceh==0){
-                            man_sel[sel]=0;
-                            man_size-=scr_unit_size("",ma_role[sel],true);
-                            onceh=1;
-                        }
-                    }
-                }
-                // Selecting command
-                if (sel_all=="Command") and (man[sel]=="man")and (!array_contains(["Terra","Lost","Mechanicus Vessel"],ma_loc[sel])) and (ma_god[sel]<10) 
-                and (eventing==false){
+                    
+                if (ma_role[sel]==sel_all){
+                    select=true
+                }else if (sel_all=="man" && man[sel]=="man"){
+                    select=true
+                }else if (sel_all=="vehicle" && man[sel]=="vehicle"){
+                    select=true
+                }else if (sel_all=="Command" && man[sel]=="man"){
                     var is_command=0;
                     if (managing>0) and (managing<=10){
-                        if (is_specialist(ma_role[sel], "command")) then is_command=1;
-                    }
-                    if (is_command==1){
-                        onceh=0;
-                        if (man_sel[sel]==0) and (onceh==0) and (unit.assignment()=="none"){
-                            man_sel[sel]=1;
-                            man_size+=scr_unit_size(ma_armour[sel],ma_role[sel],true);
-                            onceh=1;
-                            selection=true;
-                        }else{
-                            man_sel[sel]=0;
-                            man_size-=scr_unit_size(ma_armour[sel],ma_role[sel],true);
-                            onceh=1;
+                        if (unit.IsSpecialist("command")){
+                            select=true
+                        }else if (unit.squad!="none"){
+                            if (obj_ini.squads[unit.squad].type=="command_squad"){
+                                select=true
+                            }
                         }
+                    }
+                }
+                if (select){
+                    if (man_sel[sel]==0){
+                        man_sel[sel]=1;
+                        man_size+=scr_unit_size(ma_armour[sel],ma_role[sel],true);
+                        onceh=1;
+                        selection=true;
+                    }else{
+                        man_sel[sel]=0;
+                        man_size-=scr_unit_size(ma_armour[sel],ma_role[sel],true);
                     }
                 }
                 if (selection){
@@ -2369,35 +2336,60 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     var f=0,god=0,nuuum=0;
                     var o_wep1="",o_wep2="",o_armour="",o_gear="",o_mobi="";
                     var b_wep1=0,b_wep2=0,b_armour=0,b_gear=0,b_mobi=0;
-                    var vih=0;
+                    var vih=0, unit;
+                    var company = managing<=10 ? managing :10;
+                    var prev_role;
+
 
                     // Need to make sure that group selected is all the same type
-                    for(var f=1; f<man_max; f++){
+                    for(var f=0; f<man_max; f++){
                         // Set different vih depending on unit type
-                        if (man[f]=="man") and (man_sel[f]==1) and (ma_role[f]!=obj_ini.role[100][6]) 
-                        and (ma_role[f]!="Venerable "+string(obj_ini.role[100][6])) and (vih==0) then vih=1;
+                        if (man_sel[f]!=1) then continue;
+                        if (vih==0){
+                            if (man[f]=="man"){
+                                unit=obj_ini.TTRPG[company][ide[sel]];
+                                if (unit.armour()!="dreadnought"){
+                                    vih=1;
+                                } else {
+                                    vih=6;
+                                }
+                            } else if (man[f]=="vehicle"){
+                                if (ma_role[f]=="Land Raider") { vih=50;}
+                                else if (ma_role[f]=="Rhino") { vih=51;}
+                                else if (ma_role[f]=="Predator") {vih=52;}
+                                else if (ma_role[f]=="Land Speeder") { vih=53;}
+                                else if (ma_role[f]=="Whirlwind") {vih=54;}
+                                prev_role = ma_role[f]=="Whirlwind";
+                            }
+                        } else {
+                            if (vih==1 || vih==6){
+                                if (man[f]=="vehicle"){
+                                    veh=-1;
+                                    break;
+                                } else if (man[f]=="man"){
+                                    unit=obj_ini.TTRPG[company][ide[sel]];
+                                    if (unit.armour()=="dreadnought" && vih==1){
+                                        veh=-1;
+                                        break;
+                                    } else if (unit.armour()!="dreadnought" && vih==6){
+                                        veh=-1;
+                                        break;
+                                    }
+                                }
+                            } else if (vih>=50){
+                                if (man[f]=="man"){
+                                    veh=-1;
+                                    break;
+                                } else if(man[f]=="vehicle"){
+                                    if (prev_role != ma_role[f]){
+                                        veh=-1;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
 
-                        if (ma_role[f]==obj_ini.role[100][6]) and (man_sel[f]==1) and (vih==0) then vih=6;
-                        if (ma_role[f]=="Venerable "+string(obj_ini.role[100][6])) and (man_sel[f]==1) and (vih==0) then vih=6;
-                        if (ma_role[f]=="Land Raider") and (man_sel[f]==1) and (vih==0) then vih=50;
-                        if (ma_role[f]=="Rhino") and (man_sel[f]==1) and (vih==0) then vih=51;
-                        if (ma_role[f]=="Predator") and (man_sel[f]==1) and (vih==0) then vih=52;
-                        if (ma_role[f]=="Land Speeder") and (man_sel[f]==1) and (vih==0) then vih=53;
-                        if (ma_role[f]=="Whirlwind") and (man_sel[f]==1) and (vih==0) then vih=54;
-
-                        // Make output invalid if newly selected unit has a different vih than previous ones by setting vih to -1
-                        if (man[f]=="man") and (man_sel[f]==1) and (ma_role[f]!=obj_ini.role[100][6]) 
-                        and (ma_role[f]!="Venerable "+string(obj_ini.role[100][6])) and (man_sel[f]==1) and (vih!=1) and (vih!=0) then vih=-1;
-
-                        if (ma_role[f]==obj_ini.role[100][6]) and (man_sel[f]==1) and (vih!=6) and (vih!=0) then vih=-1;
-                        if (ma_role[f]=="Venerable "+string(obj_ini.role[100][6])) and (man_sel[f]==1) and (vih!=6) and (vih!=0) then vih=-1;
-                        if (ma_role[f]=="Land Raider") and (man_sel[f]==1) and (vih!=50) and (vih!=0) then vih=-1;
-                        if (ma_role[f]=="Rhino") and (man_sel[f]==1) and (vih!=51) and (vih!=0) then vih=-1;
-                        if (ma_role[f]=="Predator") and (man_sel[f]==1) and (vih!=52) and (vih!=0) then vih=-1;
-                        if (ma_role[f]=="Land Speeder") and (man_sel[f]==1) and (vih!=53) and (vih!=0) then vih=-1;
-                        if (ma_role[f]=="Whirlwind") and (man_sel[f]==1) and (vih!=54) and (vih!=0) then vih=-1;
-
-                        if (man_sel[f]==1) and (vih!=-1){
+                        if (vih!=-1){
                             nuuum+=1;
                             if (o_wep1=="") and (ma_wep1[f]!="") then o_wep1=ma_wep1[f];
                             if (o_wep2=="") and (ma_wep2[f]!="") then o_wep2=ma_wep2[f];
@@ -2498,7 +2490,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
 
                     var god=0,nuuum=0;
                     for(var f=1; f<=man_max; f++){
-                        if (ma_promote[f]>=1) and (man_sel[f]==1){
+                        if ((ma_promote[f]>=1 || is_specialist(ma_role[f], "rank_and_file")  || is_specialist(ma_role[f], "squad_leaders")) && man_sel[f]==1){
                             nuuum+=1;
                             if (pip.min_exp==0) then pip.min_exp=ma_exp[f];
                             pip.min_exp=min(ma_exp[f],pip.min_exp);
@@ -2548,14 +2540,13 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     if (man_sel[p]==1) and (man[p]=="man") and (bionics_after>0) and (obj_ini.bio[cah][ide[p]]<10) 
                     and (obj_ini.loc[cah][ide[p]]!="Terra") and (obj_ini.loc[cah][ide[p]]!="Mechanicus Vessel"){
                         if (string_count("Dread",ma_armour[p])=0){
-        					          obj_ini.TTRPG[cah, ide[p]].add_bionics();
-                                      bionics_after--;
+					          obj_ini.TTRPG[cah, ide[p]].add_bionics();
+                              bionics_after--;
                             if (ma_promote[p]==10) then ma_promote[p]=0;
                         }
                     }
                     if (bionics_before!=bionics_after){
                         click=1;
-                        scr_add_item("Bionics",bionics_after-bionics_before);
                     }
                 }
             }
@@ -2660,7 +2651,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     if (company>10){company=0}
                     for(var q=1; q<=500; q++){
                         // Load man to ship
-                        if (man[q]=="man"){
+                        if (man[q]=="man" && man_sel[q]==1){
                             unit = obj_ini.TTRPG[company][ide[q]];
                             unit.load_marine(sh_ide[sel]);
                             ma_loc[q]=sh_name[sel];

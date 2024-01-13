@@ -33,7 +33,7 @@ draw_set_color(c_gray);
 
 if (shop="warships"){
     if (construction_started>0){
-        var apa;apa=construction_started/30;draw_set_alpha(apa);
+        var apa=construction_started/30;draw_set_alpha(apa);
         draw_set_color(c_yellow);
         draw_set_halign(fa_center);
         draw_text_transformed(__view_get( e__VW.XView, 0 )+420,yy+370,string_hash_to_newline("CONSTRUCTION STARTED!#ETA: "+string(eta)+" months"),1.5,1.5,0);
@@ -98,26 +98,10 @@ if (tooltip_show!=0){
     draw_set_alpha(1);
     draw_set_font(fnt_40k_12);
     
-    var tlp="";
-    if (tooltip_weapon=1){
-        // tlp=string(tooltip)+"#  ATT:"+string(tooltip_stat1)+"|ARP:"+string(tooltip_stat2)+" ";
-        tlp=string(tooltip)+"#  DAM:"+string(tooltip_stat1)+"  ";
-        if (tooltip_stat4>0) then tlp+=" Ammo:"+string(tooltip_stat4);
-        tlp+="  "+string(tooltip_other);
-    }
-    if (tooltip_weapon=2){
-        tlp=string(tooltip);
-        if (string_length(tooltip_other)>0) then tlp+="#  "+string(tooltip_other)
-    }
-    if (tooltip_weapon=3){
-        tlp=string(tooltip)+"#  Armour:"+string(tooltip_stat1);
-        tlp+="  "+string(tooltip_other);
-    }
-    
-    tooltip_width=string_width_ext(string_hash_to_newline(tlp),-1,400)+4;
-    tooltip_height=string_height_ext(string_hash_to_newline(tlp),-1,400)+4;
+    tooltip_width=string_width_ext(string_hash_to_newline(tooltip),-1,400)+4;
+    tooltip_height=string_height_ext(string_hash_to_newline(tooltip),-1,400)+4;
     draw_rectangle(tooltip_x-2,tooltip_y,tooltip_x+tooltip_width,tooltip_y+tooltip_height,0);
     draw_set_color(c_gray);
     draw_rectangle(tooltip_x-2,tooltip_y,tooltip_x+tooltip_width,tooltip_y+tooltip_height,1);
-    draw_text_ext(tooltip_x+2,tooltip_y+2,string_hash_to_newline(tlp),-1,400);
+    draw_text_ext(tooltip_x+2,tooltip_y+2,string_hash_to_newline(tooltip),-1,400);
 }

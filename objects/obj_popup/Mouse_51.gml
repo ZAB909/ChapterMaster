@@ -91,7 +91,7 @@ if (instance_exists(obj_controller)){
         obj_p_fleet.alarm[6]=1;
         with(obj_fleet_select){instance_destroy();}
         obj_controller.popup=0;
-        if (obj_controller.zoomed=1){with(obj_controller){scr_zoom();}obj_controller.was_zoomed=0;}
+        if (obj_controller.zoomed=1){with(obj_controller){scr_zoom();}}
         
         type=98;title="Fleet Retreating";
         cooldown=15;obj_controller.menu=0;

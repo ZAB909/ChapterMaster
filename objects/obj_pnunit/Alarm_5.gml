@@ -33,12 +33,11 @@ if (obj_ncombat.defeat=0){
                 if (cur_exp>=20) and (cur_exp<40) then new_exp+=choose(4,6,8);
                 if (cur_exp<20) then new_exp+=10;
             }
-            
-            if (marine_type[i]="Lexicanum") or (marine_type[i]="Codiciery") or (marine_type[i]=obj_ini.role[100,17]) then scr_powers_new(marine_co[i],marine_id[i]);
             if (new_exp>0){
                 unit.add_exp(new_exp);
                 obj_ncombat.total_battle_exp_gain+=new_exp;
             }
+            if (unit.IsSpecialist("libs")) then unit.update_powers();
             // Need some kind of report here
         }
         
@@ -88,13 +87,15 @@ i=0;
     if (marine_dead[i]=0) and (marine_type[i]="Death Company"){
         unit.role()="Death Company";
     }
-    if (marine_dead[i]=0) and (unit.gene_seed_mutations.mucranoid==1) and (ally[i]=false){
-        var muck=floor(random(200))+1;
-        if (muck=50){    //slime is armour destroyed due to mucranoid
-            if (array_contains(global.power_armour,unit.armour())){
-                unit.update_armour("", false, false);
-                obj_ncombat.mucra[marine_co[i]]=1;
-                obj_ncombat.slime+=1;
+    if (unit.base_group=="astartes"){
+        if (marine_dead[i]=0) and (unit.gene_seed_mutations.mucranoid==1) and (ally[i]=false){
+            var muck=floor(random(200))+1;
+            if (muck=50){    //slime is armour destroyed due to mucranoid
+                if (array_contains(global.power_armour,unit.armour())){
+                    unit.update_armour("", false, false);
+                    obj_ncombat.mucra[marine_co[i]]=1;
+                    obj_ncombat.slime+=1;
+                }
             }
         }
     }
@@ -124,7 +125,7 @@ i=0;
     
     
         var comm=false;
-        if (is_specialist(unit.role(), "standard", true)){
+        if (unit.IsSpecialist("standard",true)){
             obj_ncombat.final_command_deaths+=1;
             var recent=true;
             if (is_specialist(unit.role, "trainee")){

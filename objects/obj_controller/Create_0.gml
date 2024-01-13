@@ -232,7 +232,7 @@ for(var i=100; i<103; i++){
     obj_controller.r_wep1[i,9]="Heavy Ranged";
     obj_controller.r_wep2[i,9]="Combat Knife";
     obj_controller.r_armour[i,9]="Power Armour";
-    obj_controller.r_mobi[i,9]="";
+    obj_controller.r_mobi[i,9]="Heavy Weapons Pack";
     obj_controller.r_gear[i,9]="";
     
     obj_controller.r_role[i,10]="Assault Marine";
@@ -405,13 +405,11 @@ tooltip_height=0;
 
 // ** For weapon display in management **
 unit_profile=false;
-unit_rollover=false;
 view_squad=false;
-exit_period=false;
-cur_squad = 0;
-company_squads = [];
-rollover_sequence=0;
+company_report=false;
+company_data = {};
 ttrim=0;
+last_unit=[0,0];
 ui_coloring=""; 
 ui_melee_penalty=0;
 ui_ranged_penalty=0;
@@ -671,7 +669,6 @@ trade_gene=0;
 trade_chip=0;
 trade_info=0;
 zui=0;
-was_zoomed=1;
 // Variables for management
 for(var t=0; i<200; t++){
     temp[t]="";
