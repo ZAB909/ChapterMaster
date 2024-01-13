@@ -1,4 +1,5 @@
 function NameGenerator() constructor {
+	// TODO after save rework is finished, check if these static can be converted to instance versions
     static LoadSimpleNames = function(file_name, fallback_value, json_names_property_name = "names") {
 
         if (json_names_property_name == noone) {
@@ -45,6 +46,7 @@ function NameGenerator() constructor {
 
     static star_names = LoadSimpleNames("star", "Star 1");
     static star_used_names = [];
+    static star_names_generic_counter = 0; // TODO once we migrate Star data to proper structs and jsons, this can probably be removed
 
     static space_marines_names = LoadSimpleNames("space_marine", "Space Marine 1");
     static space_marines_used_names = [];
@@ -71,13 +73,17 @@ function NameGenerator() constructor {
 
     // init
 
-    static SimpleNameGeneration = function(names, used_names, entity_name) {
+    static SimpleNameGeneration = function(names, used_names, entity_name, reset_on_using_up_all_names = true) {
         if (array_length(names) == 0) {
-            // reset arrays if all names are used up
-            debugl($"Used up all {entity_name} names, resetting name lists");
             var used_names_length = array_length(used_names);
-            array_copy(names, 0, used_names, 0, used_names_length);
-            array_delete(used_names, 0, used_names_length);
+            if (reset_on_using_up_all_names) {
+                debugl($"Used up all {entity_name} names, resetting name lists");         
+                array_copy(names, 0, used_names, 0, used_names_length);
+                array_delete(used_names, 0, used_names_length);
+            } else {
+                debugl($"Used up all {entity_name} names, generating generic name");
+                return $"{entity_name} {used_names_length + ++star_names_generic_counter}";
+            }
         }
 
         var name = array_pop(names);
@@ -128,12 +134,13 @@ function NameGenerator() constructor {
     }
 
     // Functions
+    // TODO rework these functions to be more generic, parameterized, e.g. generate_character_name(eFACTION.Imperial) etc.
     static generate_sector_name = function() {
         return SimpleNameGeneration(sector_names, sector_used_names, "Sector");
     }
 
     static generate_star_name = function() {
-        return SimpleNameGeneration(star_names, star_used_names, "Star");
+        return SimpleNameGeneration(star_names, star_used_names, "Star", false);
     }
 
     static generate_space_marine_name = function() {
