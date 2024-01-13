@@ -30,8 +30,6 @@ function scr_clean(argument0) {
 	if (hostile_men=0) and (veh>0){// show_message("A");
 	    var units_lost=0,going_up=0,you=1, unit;
     
-	    var p1="",p2="",p3="",p4="",p5="";
-    
 	    var important,u,hh,stahp;u=-1;hh=0;stahp=0;
 	    repeat(50){
 	    	u+=1;
@@ -105,13 +103,9 @@ function scr_clean(argument0) {
 
 
 	if ((hostile_men=1) or (hostile_men=5)) and (men+dreads>0){// show_message("B");
-	    var units_lost,going_up,you;
-	    units_lost=0;going_up=0;you=1;
+	    var units_lost=0,going_up=0,you=1;
     
-	    var p1,p2,p3,p4,p5;
-	    p1="";p2="";p3="";p4="";p5="";
-    
-	    var important,u,hh,stahp;u=-1;hh=0;stahp=0;
+	    var important,u,hh,stahp;u=-1;hh=0;
 	    repeat(50){u+=1;if (u<=15) then important[u]="";lost[u]="";lost_num[u]=0;}
     
     
@@ -120,7 +114,7 @@ function scr_clean(argument0) {
 	        repeat(700){// This gets a different mahreen if it is not valid
 	            unit = unit_struct[you];
 	            if (!is_struct(unit))then continue;
-	            if (unit.hp()<0){
+	            if (unit.hp()<=0){
 	                if (you=1) then going_up=1;
 	                if (going_up=0) and (you>0) you-=1;
 	                if (going_up=1) then you+=1;
@@ -128,7 +122,7 @@ function scr_clean(argument0) {
 	            }
 	        }
   
-	        if (stahp=0 && struct_exists(unit_struct[you],"base_group")){
+	        if (struct_exists(unit_struct[you],"base_group")){
 	        	unit=unit_struct[you];
 	            var damage_resistance=0,minus=0;
 	            minus=hostile_damage;
@@ -154,24 +148,24 @@ function scr_clean(argument0) {
 	            }
             
 	            if (minus<0) then minus=0.15;
-	            if (minus=0.15) and (hostile_weapon="Fleshborer") then minus=1.5;
+	            if (minus=0.15) and (hostile_weapon=="Fleshborer") then minus=1.5;
 	            if (hostile_weapon="Web Spinner"){
-	                var chunk,webr;webr=floor(random(100))+1;
-	                chunk=max(10,62-(marine_ac[you]*2));
+	                var webr=floor(random(100))+1;
+	                var chunk=max(10,62-(marine_ac[you]*2));
 	                minus=0;
 	                if (webr<=chunk) then minus=5000;
 	            }
-	            unit.unit.add_or_sub_health(-minus);
+	            unit.add_or_sub_health(-minus);
             
 	            if (unit.hp()<=0) and (marine_dead[you]!=1){
 	                var h=0,good=0,open=0;
-                    if (unit.role()=lost[hh]){
+                    if (unit.role()==lost[hh]){
                     	lost_num[hh]++;
                     	break;
                     } else {                
 		                for (var h=1;h<=50;h++){// Need to find the open slot
 		                    if (obj_ncombat.player_forces>6){
-		                        if (unit.role()=lost[h]){
+		                        if (unit.role()==lost[h]){
 		                        	lost_num[h]++;
 		                        	hh=h;
 		                        	break;
@@ -180,13 +174,13 @@ function scr_clean(argument0) {
 	                    
 		                    if (lost[h]=""){
 			                	lost_num[open]=1;
-			                	lost[open]=marine_type[you];	
+			                	lost[open]=unit.role();
 			                	hh=h;
 			                	break;                    	
 		                    }
 		                }
 	            	}
-	                units_lost+=1;// marine_type[you]="";
+	                units_lost++;// marine_type[you]="";
                 
 	                men-=1;
 	                if (unit.IsSpecialist("dreadnoughts")) then dreads-=1;
@@ -205,7 +199,7 @@ function scr_clean(argument0) {
 
 
 	if (men+veh<=0){
-	    var right;right=instance_nearest(1000,y,obj_pnunit);
+	    var right=instance_nearest(1000,y,obj_pnunit);
 	    if (right.id=self.id) then with(obj_pnunit){x+=10;}
 	    // 
 	    x=-5000;

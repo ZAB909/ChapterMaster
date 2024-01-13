@@ -5,8 +5,11 @@
 var i=0,unit;
 repeat(600){i+=1;
     unit = unit_struct[i];
-     if (!is_struct(unit))then continue;
-    if (marine_type[i]!="") and (marine_hp[i]<-3000) and (obj_ncombat.defeat=0){marine_dead[i]=0;marine_hp[i]+=5000;}// For incapitated
+    if (!is_struct(unit))then continue;
+    if (marine_type[i]!="") and (marine_hp[i]<-3000) and (obj_ncombat.defeat=0){
+        marine_dead[i]=0;
+        marine_hp[i]+=5000;
+    }// For incapitated
     
     if (ally[i]=false){
         if (obj_ncombat.dropping=1) and (obj_ncombat.defeat=1) and (marine_dead[i]<2) then marine_dead[i]=1;
@@ -27,7 +30,8 @@ repeat(600){i+=1;
         
         
         if (marine_dead[i]>0) and (marine_dead[i]<2) and (unit.hp()>-25) and (marine_type[i]!="") and ((obj_ncombat.dropping+obj_ncombat.defeat)!=2){
-            var rand1, survival;onceh=0;
+            var rand1, survival;
+            onceh=0;
             survival=40;
             if (obj_ncombat.membrane=1) then survival=20;
             rand1=floor(random(100))+1;

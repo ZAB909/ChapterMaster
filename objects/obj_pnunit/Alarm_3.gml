@@ -75,69 +75,6 @@ if (obj_ncombat.red_thirst>=2) and (obj_ncombat.battle_over=0){
 
 
 if (obj_ncombat.started>=1){
-    // Assault jump here
-    
-    // instance_deactivate_object(obj_cursor);
-    
-    /*
-    var jump1,jump2,jumps;jump1=0;jump2=0;jumps=0;
-    jump1=instance_nearest(x+20,y,obj_pnunit);
-    jump2=string(marine_mobi);
-    if (string_count("Jump Pack",jump2)>0){
-        if (collision_point(jump1.x+10,jump1.y,obj_enunit,0,1)) and (jump1.id!=self.id) and (jump1.men>0){
-            var jj,targ_manz;jj=0;targ_manz=jump1.men;
-            repeat(700){
-                jj+=1;
-                
-                if (marine_hp[jj]>0) and (marine_gear[jj]="Jump Pack"){
-                    targ_manz+=1;jumps+=1;men-=1;jump1.men+=1;
-                    
-                    jump1.marine_type[targ_manz]=marine_type[jj];
-                    jump1.marine_co[targ_manz]=marine_co[jj];
-                    jump1.marine_id[targ_manz]=marine_id[jj];
-                    jump1.marine_hp[targ_manz]=marine_hp[jj];
-                    jump1.marine_ac[targ_manz]=marine_ac[jj];
-                    jump1.marine_exp[targ_manz]=marine_exp[jj];
-                    jump1.marine_wep1[targ_manz]=marine_wep1[jj];
-                    jump1.marine_wep2[targ_manz]=marine_wep2[jj];
-                    jump1.marine_armour[targ_manz]=marine_armour[jj];
-                    jump1.marine_gear[targ_manz]=marine_gear[jj];
-                    jump1.marine_mobi[targ_manz]=marine_mobi[jj];
-                    jump1.marine_powers[targ_manz]=marine_powers[jj];
-                    
-                    marine_type[jj]="";
-                    marine_co[jj]=0;
-                    marine_id[jj]=0;
-                    marine_hp[jj]=0;
-                    marine_ac[jj]=0;
-                    marine_exp[jj]=0;
-                    marine_wep1[jj]="";
-                    marine_wep2[jj]="";
-                    marine_armour[jj]="";
-                    marine_gear[jj]="";
-                    marine_mobi[jj]="";
-                    marine_powers[jj]="";
-                }
-            }
-            
-            
-            if (jumps>0){
-                obj_ncombat.newline="Jump-Packs rev and scream as "+(string(jumps)+" Marines take to the air, jumping towards the front lines.");
-                obj_ncombat.newline_color="purple";obj_ncombat.timer_pause=2;with(obj_ncombat){scr_newtext();}
-            }
-            with(obj_pnunit){
-                if (alarm[0]>-1) then alarm[0]+=4;
-                if (alarm[1]>-1) then alarm[1]+=4;
-            }
-        }
-    }
-    // instance_activate_object(obj_cursor);
-    
-    if (men+veh+dreads<=0){jetpack_destroy=1;// instance_destroy();
-        x=-100;instance_deactivate_object(id);
-    }
-    
-    */
     
     // Should probably have the option under deployment to say 'Should Assault Marines enter the fray with vehicles?'   [ ]
 }
@@ -147,7 +84,7 @@ if (obj_ncombat.started>=1){
 
 if (instance_exists(obj_enunit)){
     if (collision_point(x+10,y,obj_enunit,0,1)) and (!collision_point(x-10,y,obj_pnunit,0,1)){
-        var neares;neares=instance_nearest(x+10,y,obj_enunit);
+        var neares=instance_nearest(x+10,y,obj_enunit);
         
         if (neares.men=0) and (neares.veh>0){
             var norun;

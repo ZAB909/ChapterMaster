@@ -580,7 +580,9 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	            if (buf>0){h=floor(random(men))+1;if (marine_type[h]!="") and (marine_attack[h]<2.5) and (marine_dead[h]=0){buf-=1;marine_attack[h]+=1.5;marine_defense[h]-=0.15;}}
 	        }
 	    }
-	    if (power_name="Regenerate"){unit.hp()+=choose(2,3,4)*5;if (unit.hp()>100) then unit.hp()=100;}
+	    if (power_name="Regenerate"){
+	    	unit.add_or_sub_health(choose(2,3,4)*5);
+	    	if (unit.hp()>unit.max_health()) then unit.update_health(unit.max_health())}
 
 	    if (power_name="Telekinetic Dome"){if (marine_dome[unit_id]<3) then marine_dome[unit_id]=3;}
 	    if (power_name="Spatial Distortion"){if (marine_spatial[unit_id]<3) then marine_spatial[unit_id]=3;}

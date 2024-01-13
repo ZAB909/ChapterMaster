@@ -9,9 +9,12 @@
 // show_message("pnunit alarm 6");
 
 var i=0,unit;
-repeat(600){i+=1;
+repeat(600){
+    i+=1;
     if (marine_dead[i]>0) and (marine_type[i]!="") and (ally[i]=false){
-        unit = unit_struct[g];
+        unit = unit_struct[i];
+        if (!is_struct(unit)) continue;
+        if (unit.name()!="") continue;
         man_size = unit.get_unit_size();
 
         if (obj_ini.wid[marine_co[i]][marine_id[i]]>0) then obj_ncombat.world_size+=man_size;

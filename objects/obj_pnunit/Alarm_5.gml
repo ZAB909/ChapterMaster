@@ -1,21 +1,4 @@
 
-// 
-
-
-
-
-
-/*
-apothecaries_alive=0;
-techmarines_alive=0;
-seed_saved=0;
-seed_max=0;
-units_saved=0;
-vehicles_saved=0;
-*/
-
-// show_message("pnunit alarm 5; lol casualties");
-
 var i=0,new_exp, cur_exp, unit;
 total_battle_exp_gain = 0;
 if (obj_ncombat.defeat=0){
@@ -46,14 +29,14 @@ if (obj_ncombat.defeat=0){
                 if (marine_type[i]=="Chapter Master"){
                     if (obj_ncombat.apothecaries_alive>0){
                         obj_ncombat.apothecaries_alive-=0.5;
-                        unit.add_or_sub_health(2);
+                        unit.update_health(2);
                         marine_dead[i]=0;
                         obj_ncombat.units_saved+=1;                
                     }
                 }else if (marine_type[i]!="Chapter Master") and (marine_type[i]!=""){
                     if (obj_ncombat.apothecaries_alive>0){
                         obj_ncombat.apothecaries_alive-=0.5;
-                        unit.add_or_sub_health(2);
+                        unit.update_health(2);
                         marine_dead[i]=0;
                         obj_ncombat.units_saved+=1;
                         // show_message(string(marine_type[i])+" is saved by an apothecary");
@@ -106,7 +89,8 @@ i=0;
         if (marine_dead[i]=0) and (obj_ini.gear[marine_co[i],marine_id[i]]="Plasma Bomb") and (obj_ncombat.defeat=0) and (string_count("mech",obj_ncombat.battle_special)=0){
             if (obj_ncombat.plasma_bomb=0) and (obj_ncombat.enemy=13) and (awake_tomb_world(obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id])==1){
                 if (((obj_ncombat.battle_object.p_necrons[obj_ncombat.battle_id]-2)<3) and (obj_ncombat.dropping!=0)) or ((obj_ncombat.battle_object.p_necrons[obj_ncombat.battle_id]-1)<3){
-                    obj_ncombat.plasma_bomb+=1;obj_ini.gear[marine_co[i],marine_id[i]]="";
+                    obj_ncombat.plasma_bomb+=1;
+                    obj_ini.gear[marine_co[i],marine_id[i]]="";
                 }
             }
         }
