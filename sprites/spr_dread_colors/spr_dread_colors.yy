@@ -3,9 +3,9 @@
   "resourceVersion": "1.0",
   "name": "spr_dread_colors",
   "bbox_bottom": 188,
-  "bbox_left": 2,
+  "bbox_left": 0,
   "bbox_right": 163,
-  "bbox_top": 39,
+  "bbox_top": 0,
   "bboxMode": 0,
   "collisionKind": 1,
   "collisionTolerance": 0,
@@ -30,8 +30,8 @@
   "nineSlice": null,
   "origin": 0,
   "parent": {
-    "name": "body_types",
-    "path": "folders/Sprites/New UI/Marine Viewer/body_types.yy",
+    "name": "ChapterMaster",
+    "path": "ChapterMaster.yyp",
   },
   "preMultiplyAlpha": false,
   "sequence": {

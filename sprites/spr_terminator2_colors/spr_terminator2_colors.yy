@@ -5,7 +5,7 @@
   "bbox_bottom": 231,
   "bbox_left": 0,
   "bbox_right": 166,
-  "bbox_top": 8,
+  "bbox_top": 0,
   "bboxMode": 0,
   "collisionKind": 1,
   "collisionTolerance": 0,
@@ -36,8 +36,8 @@
   "nineSlice": null,
   "origin": 0,
   "parent": {
-    "name": "body_types",
-    "path": "folders/Sprites/New UI/Marine Viewer/body_types.yy",
+    "name": "ChapterMaster",
+    "path": "ChapterMaster.yyp",
   },
   "preMultiplyAlpha": false,
   "sequence": {

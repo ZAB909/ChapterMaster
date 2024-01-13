@@ -38,8 +38,8 @@
   "nineSlice": null,
   "origin": 0,
   "parent": {
-    "name": "body_types",
-    "path": "folders/Sprites/New UI/Marine Viewer/body_types.yy",
+    "name": "ChapterMaster",
+    "path": "ChapterMaster.yyp",
   },
   "preMultiplyAlpha": false,
   "sequence": {
