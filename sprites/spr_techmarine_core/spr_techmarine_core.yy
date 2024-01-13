@@ -25,8 +25,8 @@
   "nineSlice": null,
   "origin": 0,
   "parent": {
-    "name": "ChapterMaster",
-    "path": "ChapterMaster.yyp",
+    "name": "specialist",
+    "path": "folders/Sprites/New UI/Marine Viewer/body_types/specialist.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

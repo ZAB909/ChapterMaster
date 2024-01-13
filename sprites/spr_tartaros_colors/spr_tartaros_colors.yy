@@ -3,9 +3,9 @@
   "resourceVersion": "1.0",
   "name": "spr_tartaros_colors",
   "bbox_bottom": 231,
-  "bbox_left": 0,
+  "bbox_left": 1,
   "bbox_right": 161,
-  "bbox_top": 0,
+  "bbox_top": 5,
   "bboxMode": 0,
   "collisionKind": 1,
   "collisionTolerance": 0,
@@ -34,8 +34,8 @@
   "nineSlice": null,
   "origin": 0,
   "parent": {
-    "name": "ChapterMaster",
-    "path": "ChapterMaster.yyp",
+    "name": "body_types",
+    "path": "folders/Sprites/New UI/Marine Viewer/body_types.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {
