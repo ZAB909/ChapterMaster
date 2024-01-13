@@ -635,7 +635,7 @@ function scr_random_event(execute_now) {
 			var star = stars[irandom(valid_stars-1)];
 			
 			var gender = choose(0,1);
-			var name=scr_imperial_name(gender);
+			var name=global.name_generator.generate_imperial_name(gender);
 			
 	        var eta = scr_mission_eta(star.x,star.y,1);
 	        eta=max(eta, 8);

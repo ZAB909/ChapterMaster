@@ -175,7 +175,7 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
     
 	    if (spawn_name="") or (spawn_name="imperial") then obj_ini.name[target_company][good]=global.name_generator.generate_space_marine_name();
 	    if (spawn_name!="") and (spawn_name!="imperial") then obj_ini.name[target_company][good]=spawn_name;
-	    if (man_role="Ranger") then obj_ini.name[target_company][good]=eldar_name_generator.generate_random_name(2);
+	    if (man_role="Ranger") then obj_ini.name[target_company][good]=global.name_generator.generate_eldar_name(2);
 	    if (man_role="Ork Sniper") or (man_role="Flash Git") then obj_ini.name[target_company][good]=global.name_generator.generate_ork_name();
 	    if (man_role="Sister of Battle") or (man_role="Sister Hospitaler") then obj_ini.name[target_company][good]=global.name_generator.generate_imperial_name(false);
     
