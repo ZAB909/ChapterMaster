@@ -1024,9 +1024,7 @@ faction_leader[eFACTION.Ork]=global.name_generator.generate_ork_name();
 faction_title[7]="Warboss";
 faction_status[eFACTION.Ork]="War";
 // Tau faction
-faction_leader[eFACTION.Tau]="Por'O ";
-// TODO put tau names into a script same as scr_eldar_name;
-faction_leader[eFACTION.Tau]+=choose("Ar","Cha","Doran","Eldi","Kais","Ko","Kunas","M'yen","Ro","Tsua'm","Ukos");
+faction_leader[eFACTION.Tau] = global.name_generator.generate_tau_leader_name();
 faction_title[8]="Diplomat";
 faction_status[eFACTION.Tau]="Antagonism";
 // Other factions unkown to player

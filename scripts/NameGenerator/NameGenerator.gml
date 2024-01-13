@@ -67,6 +67,8 @@ function NameGenerator() constructor {
 
     static hulk_name_composites = LoadCompositeNames("hulk", ["prefixes","suffixes"]);
 
+	static tau_name_composites = LoadCompositeNames("tau", ["prefixes","suffixes"]);
+
     // init
 
     static SimpleNameGeneration = function(names, used_names, entity_name) {
@@ -101,7 +103,10 @@ function NameGenerator() constructor {
     }
 
     static CompositeNameGeneration = function(composite_names, separate_components) {
-		if (is_array(composite_names.special) && array_length(composite_names.special) > 0) {
+		if (struct_exists(composite_names, "special") 
+		    && is_array(composite_names.special) 
+			&& array_length(composite_names.special) > 0) 
+		{		
 			var use_special_name = irandom(200);
 			if(use_special_name == 0){
 				return composite_names.special[irandom(array_length(composite_names.special) - 1)];
@@ -173,6 +178,10 @@ function NameGenerator() constructor {
     static generate_hulk_name = function() {
         return CompositeNameGeneration(hulk_name_composites, true);
     }
+
+	static generate_tau_leader_name = function(){
+		return CompositeNameGeneration(tau_name_composites, true);
+	}
 }
 
 // Init
