@@ -1228,8 +1228,8 @@ function scr_initialize_custom() {
 	switch (master_melee){
 		case 1:
 			chapter_master_equip={
-				"wep1":"Power Fist",
-				"wep2":"Power Fist"
+				"wep1":"Power Fist with Intergrated Bolters",
+				"wep2":"Power Fist with Intergrated Bolters"
 			};
 			break;
 		case 2:
@@ -1258,7 +1258,6 @@ function scr_initialize_custom() {
 	}
 	switch (master_ranged){
 		case 1:
-			wep2[0,1]="Integrated Bolters";
 			break;
 		case 2:
 			chapter_master_equip.wep2="Infernus Pistol";

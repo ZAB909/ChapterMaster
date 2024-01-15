@@ -1,61 +1,46 @@
 
-// 
-
-
-
-
-
-/*
-apothecaries_alive=0;
-techmarines_alive=0;
-seed_saved=0;
-seed_max=0;
-units_saved=0;
-vehicles_saved=0;
-*/
-
-// show_message("pnunit alarm 5; lol casualties");
-
 var i=0,new_exp, cur_exp, unit;
 total_battle_exp_gain = 0;
 if (obj_ncombat.defeat=0){
     for (i=1;i<array_length(marine_co);i++){
-        unit=obj_ini.TTRPG[marine_co[i]][marine_id[i]];
-        if (marine_dead[i]=0) and (obj_ncombat.player_max<obj_ncombat.enemy_max) and (ally[i]==false){
-            new_exp=0;
-            cur_exp=unit.experience();
-            if (cur_exp>=40) then new_exp+=choose(0,0,1);
-            if (cur_exp>=20) and (cur_exp<40) then new_exp+=choose(0,1);
-            if (cur_exp<20) then new_exp+=1;
-            
-            if (obj_ncombat.enemy=10) and (obj_ncombat.threat=7){
-                if (cur_exp>=40) then new_exp+=choose(2,3,4);
-                if (cur_exp>=20) and (cur_exp<40) then new_exp+=choose(4,6,8);
-                if (cur_exp<20) then new_exp+=10;
-            }
-            if (new_exp>0){
-                unit.add_exp(new_exp);
-                obj_ncombat.total_battle_exp_gain+=new_exp;
-            }
-            if (unit.IsSpecialist("libs")) then unit.update_powers();
-            // Need some kind of report here
-        }
-        
-        if (marine_type[i]!="") and (marine_dead[i]=1) and (ally[i]=false){
-            if (marine_type[i]=="Chapter Master"){
-                if (obj_ncombat.apothecaries_alive>0){
-                    obj_ncombat.apothecaries_alive-=0.5;
-                    unit.update_health(unit.hp()+2);
-                    marine_dead[i]=0;
-                    obj_ncombat.units_saved+=1;                
+        unit=unit_struct[i];
+        if (is_struct(unit)){
+            if (marine_dead[i]=0) and (obj_ncombat.player_max<obj_ncombat.enemy_max) and (ally[i]==false){
+                new_exp=0;
+                cur_exp=unit.experience();
+                if (cur_exp>=40) then new_exp+=choose(0,0,1);
+                if (cur_exp>=20) and (cur_exp<40) then new_exp+=choose(0,1);
+                if (cur_exp<20) then new_exp+=1;
+                
+                if (obj_ncombat.enemy=10) and (obj_ncombat.threat=7){
+                    if (cur_exp>=40) then new_exp+=choose(2,3,4);
+                    if (cur_exp>=20) and (cur_exp<40) then new_exp+=choose(4,6,8);
+                    if (cur_exp<20) then new_exp+=10;
                 }
-            }else if (marine_type[i]!="Chapter Master") and (marine_type[i]!=""){
-                if (obj_ncombat.apothecaries_alive>0){
-                    obj_ncombat.apothecaries_alive-=0.5;
-                    unit.update_health(unit.hp()+2);
-                    marine_dead[i]=0;
-                    obj_ncombat.units_saved+=1;
-                    // show_message(string(marine_type[i])+" is saved by an apothecary");
+                if (new_exp>0){
+                    unit.add_exp(new_exp);
+                    obj_ncombat.total_battle_exp_gain+=new_exp;
+                }
+                if (unit.IsSpecialist("libs")) then unit.update_powers();
+                // Need some kind of report here
+            }
+            
+            if (marine_type[i]!="") and (marine_dead[i]==1) and (ally[i]=false){
+                if (marine_type[i]=="Chapter Master"){
+                    if (obj_ncombat.apothecaries_alive>0){
+                        obj_ncombat.apothecaries_alive-=0.5;
+                        unit.update_health(irandom(20)-10);
+                        marine_dead[i]=0;
+                        obj_ncombat.units_saved+=1;                
+                    }
+                }else if (marine_type[i]!="Chapter Master") and (marine_type[i]!=""){
+                    if (obj_ncombat.apothecaries_alive>0){
+                        obj_ncombat.apothecaries_alive-=0.5;
+                        unit.update_health(irandom(20)-10);
+                        marine_dead[i]=0;
+                        obj_ncombat.units_saved+=1;
+                        // show_message(string(marine_type[i])+" is saved by an apothecary");
+                    }
                 }
             }
         }
@@ -104,7 +89,8 @@ i=0;
         if (marine_dead[i]=0) and (obj_ini.gear[marine_co[i],marine_id[i]]="Plasma Bomb") and (obj_ncombat.defeat=0) and (string_count("mech",obj_ncombat.battle_special)=0){
             if (obj_ncombat.plasma_bomb=0) and (obj_ncombat.enemy=13) and (awake_tomb_world(obj_ncombat.battle_object.p_feature[obj_ncombat.battle_id])==1){
                 if (((obj_ncombat.battle_object.p_necrons[obj_ncombat.battle_id]-2)<3) and (obj_ncombat.dropping!=0)) or ((obj_ncombat.battle_object.p_necrons[obj_ncombat.battle_id]-1)<3){
-                    obj_ncombat.plasma_bomb+=1;obj_ini.gear[marine_co[i],marine_id[i]]="";
+                    obj_ncombat.plasma_bomb+=1;
+                    obj_ini.gear[marine_co[i],marine_id[i]]="";
                 }
             }
         }
@@ -300,7 +286,11 @@ i=0;
                     repeat(50){
                         if (last=0){
                             o+=1;artif=false;
-                            if (obj_ncombat.post_equipment_lost[o]=marine_mobi[i]){last=1;obj_ncombat.post_equipments_lost[o]+=1;artif=true;}
+                            if (obj_ncombat.post_equipment_lost[o]=marine_mobi[i]){
+                                last=1;
+                                obj_ncombat.post_equipments_lost[o]+=1;
+                                artif=true;
+                            }
                             if (obj_ncombat.post_equipment_lost[o]="") and (last=0){last=o;obj_ncombat.post_equipment_lost[o]=marine_mobi[i];obj_ncombat.post_equipments_lost[o]=1;artif=true;}
                             if (artif=true) then obj_ncombat.post_equipment_lost[o]=clean_tags(obj_ncombat.post_equipment_lost[o]);
                             obj_ini.mobi[marine_co[i],marine_id[i]]="";

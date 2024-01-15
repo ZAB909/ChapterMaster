@@ -977,6 +977,7 @@
     {"id":{"name":"obj_all_fleet","path":"objects/obj_all_fleet/obj_all_fleet.yy",},},
     {"id":{"name":"obj_p_fleet","path":"objects/obj_p_fleet/obj_p_fleet.yy",},},
     {"id":{"name":"obj_en_fleet","path":"objects/obj_en_fleet/obj_en_fleet.yy",},},
+    {"id":{"name":"scr_perils_table","path":"scripts/scr_perils_table/scr_perils_table.yy",},},
     {"id":{"name":"obj_fleet_select","path":"objects/obj_fleet_select/obj_fleet_select.yy",},},
     {"id":{"name":"obj_star_select","path":"objects/obj_star_select/obj_star_select.yy",},},
     {"id":{"name":"obj_drop_select","path":"objects/obj_drop_select/obj_drop_select.yy",},},
