@@ -174,6 +174,7 @@ function scr_ui_manage() {
 			}
 			x5=x6;
 
+			//TODO Implement company report
 			/*var x6=x5+string_width(stat_tool_tip_text)+4;
 			var y6=y5+string_height(stat_tool_tip_text)+2;	    
 		    draw_unit_buttons([x5,y5,x6,y6], stat_tool_tip_text,[1,1],c_red);
@@ -691,29 +692,26 @@ function scr_ui_manage() {
 	        
 		        // ma_lid[i]=0;ma_wid[i]=0;
 	        
-		        if (ma_loc[sel]=="Mechanicus Vessel") then draw_sprite(spr_loc_icon,2,xx+427+8,yy+66);
-		        if (man[sel]=="man"){
-		            if (ma_loc[sel]!="Mechanicus Vessel"){
-						var berd=false, unit= obj_ini.TTRPG[managing][ide[sel]];
-						if (managing=<15 ){
-							berd=unit.is_boarder;
-						}
-	  
-		                if (ma_lid[sel]>0) and (ma_wid[sel]==0){
-		                    draw_sprite(
-		                        spr_loc_icon,
-		                        berd ? 2 : 1,
-		                        xx+427+8,
-		                        yy+66);
-		                }  else if (ma_wid[sel]>0){
-		                	draw_sprite(spr_loc_icon,0,xx+427+8,yy+66);
-		                }
-		            }
-		        }else if (man[sel]!="man"){
-		            if (ma_loc[sel]!="Mechanicus Vessel"){
+		        if (ma_loc[sel]=="Mechanicus Vessel"){
+		        	draw_sprite(spr_loc_icon,2,xx+427+8,yy+66);
+		        } else {
+			        if (man[sel]=="man"){
+			        		c = managing<=10 ? managing : 0;
+							var unit = obj_ini.TTRPG[c][ide[sel]];
+		  
+			                if (ma_lid[sel]>0) and (ma_wid[sel]==0){
+			                    draw_sprite(
+			                        spr_loc_icon,
+			                        unit.is_boarder ? 2 : 1,
+			                        xx+427+8,
+			                        yy+66);
+			                }  else if (ma_wid[sel]>0){
+			                	draw_sprite(spr_loc_icon,0,xx+427+8,yy+66);
+			                }
+			        }else{
 		                if (ma_lid[sel]==0) and (ma_wid[sel]>0) then draw_sprite(spr_loc_icon,0,xx+427+8,yy+66);
 		                if (ma_lid[sel]>0) and (ma_wid[sel]==0) then draw_sprite(spr_loc_icon,1,xx+427+8,yy+66);
-		            }
+			        }
 		        }
 		         //TODO handle recursively
 		        if (man[sel]=="man"){
