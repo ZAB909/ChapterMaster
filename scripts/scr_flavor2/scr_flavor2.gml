@@ -14,18 +14,6 @@ function scr_flavor2(lost_units_count, target_type) {
 	j4="your formation";
 	j5="your vehicles";
 
-
-
-	// show_message(enemy.dudes[1]);
-
-	/*if (enemy.dreads>0) and (enemy.men=0) and (enemy.veh=0){
-	    j1="your "+string(obj_ini.role[100][6])+"s";
-	    j2="your "+string(obj_ini.role[100][6])+"s";
-	    j3="your "+string(obj_ini.role[100][6])+"s";
-	    j5="your "+string(obj_ini.role[100][6])+"s";
-	}*/
-
-
 	var hr,hw,hs;
 	hr=0;hw="";hs=0;
 
@@ -252,12 +240,11 @@ function scr_flavor2(lost_units_count, target_type) {
 
 
 	var w=0;
-	var s,him;
+	var s,him, speshul,unit;
 	repeat(20){
 	    w+=1;
-    
 	    if (lost[w]!="") and (lost_num[w]>0){
-	        var speshul=0;
+	    	speshul=0
 	        if (is_specialist(lost[w],"heads")) then speshul=1;
 	        if (lost[w]="Chapter Master") then speshul=1;
 	        if (lost[w]="Venerable "+string(obj_ini.role[100][6])) then speshul=1;
@@ -284,7 +271,7 @@ function scr_flavor2(lost_units_count, target_type) {
 	            	obj_ncombat.dead_jims+=1;
 	                if (marine_type[him]=obj_ini.role[100][5]) then obj_ncombat.dead_jim[obj_ncombat.dead_jims]="A "+string(marine_type[him])+" has been critically injured!";
 	                if (marine_type[him]!=obj_ini.role[100][5]){
-	                    obj_ncombat.dead_jim[obj_ncombat.dead_jims]=string(marine_type[him])+" "+string(obj_ini.name[marine_co[him],marine_id[him]])+" has been critically injured!";
+	                    obj_ncombat.dead_jim[obj_ncombat.dead_jims]=$"{obj_ini.TTRPG[marine_co[him]][marine_id[him]].name_role()} has been critically injured!";
 	                    // show_message(string(obj_ncombat.dead_jim[obj_ncombat.dead_jims]));
 	                }
 	            }
@@ -294,7 +281,7 @@ function scr_flavor2(lost_units_count, target_type) {
 	}
 
 
-	var unce;unce=0;
+	var unce=0;
 
 
 	if (string_count(", ",m2)>1){

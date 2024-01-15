@@ -25,18 +25,18 @@ if (obj_ncombat.defeat=0){
                 // Need some kind of report here
             }
             
-            if (marine_type[i]!="") and (marine_dead[i]=1) and (ally[i]=false){
+            if (marine_type[i]!="") and (marine_dead[i]==1) and (ally[i]=false){
                 if (marine_type[i]=="Chapter Master"){
                     if (obj_ncombat.apothecaries_alive>0){
                         obj_ncombat.apothecaries_alive-=0.5;
-                        unit.update_health(2);
+                        unit.update_health(irandom(20)-10);
                         marine_dead[i]=0;
                         obj_ncombat.units_saved+=1;                
                     }
                 }else if (marine_type[i]!="Chapter Master") and (marine_type[i]!=""){
                     if (obj_ncombat.apothecaries_alive>0){
                         obj_ncombat.apothecaries_alive-=0.5;
-                        unit.update_health(2);
+                        unit.update_health(irandom(20)-10);
                         marine_dead[i]=0;
                         obj_ncombat.units_saved+=1;
                         // show_message(string(marine_type[i])+" is saved by an apothecary");
@@ -286,7 +286,11 @@ i=0;
                     repeat(50){
                         if (last=0){
                             o+=1;artif=false;
-                            if (obj_ncombat.post_equipment_lost[o]=marine_mobi[i]){last=1;obj_ncombat.post_equipments_lost[o]+=1;artif=true;}
+                            if (obj_ncombat.post_equipment_lost[o]=marine_mobi[i]){
+                                last=1;
+                                obj_ncombat.post_equipments_lost[o]+=1;
+                                artif=true;
+                            }
                             if (obj_ncombat.post_equipment_lost[o]="") and (last=0){last=o;obj_ncombat.post_equipment_lost[o]=marine_mobi[i];obj_ncombat.post_equipments_lost[o]=1;artif=true;}
                             if (artif=true) then obj_ncombat.post_equipment_lost[o]=clean_tags(obj_ncombat.post_equipment_lost[o]);
                             obj_ini.mobi[marine_co[i],marine_id[i]]="";

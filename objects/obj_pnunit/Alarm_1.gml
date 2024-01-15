@@ -161,10 +161,15 @@ for (g=1;g<array_length(marine_type);g++){
                 var primary_melee = unit.melee_damage_data[3];//collect unit melee data
                 for (weapon_stack_index=1;weapon_stack_index<array_length(wep);weapon_stack_index++){
                     if (wep[weapon_stack_index]==""||(wep[weapon_stack_index]==primary_melee.name && !head_role)){
+                        if (range[weapon_stack_index]>1.9) then continue//creates secondary weapon stack for close combat ranged weaponry use
+                        primary_melee.range=1;
                         add_data_to_stack(weapon_stack_index,primary_melee,unit.melee_damage_data[0]);
                         if (head_role){
                             wep_title[weapon_stack_index]=unit.role();
                             wep_solo[weapon_stack_index]=unit.name();
+                        }
+                        if (floor(primary_melee.range)<=1 && primary_melee.ammo == 0){
+                            ammo[weapon_stack_index]=-1; //no ammo limit
                         }
                         break;
                     }
@@ -177,7 +182,7 @@ for (g=1;g<array_length(marine_type);g++){
         if (veh_id[g]>0) and (veh_hp[g]>0) then veh_dead[g]=0;
         if (veh_hp[g]>0) then veh+=1;
 
-        var j,good,open;j=0;good=0;open=0;// Counts the number and types of marines within this object
+        var j=0,good=0,open=0;// Counts the number and types of marines within this object
         if (veh_dead[g]!=1) then repeat(40){j+=1;
             if (dudes[j]="") and (open=0){
                 open=j;

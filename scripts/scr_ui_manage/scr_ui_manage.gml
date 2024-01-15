@@ -393,7 +393,7 @@ function scr_ui_manage() {
 	    
 	    if (!obj_controller.view_squad){
 		    for(var i=0; i<repetitions;i++){
-
+		    	if (sel==500) then break;
 		    	while (man[sel]=="hide") and (sel<499){sel+=1;}
 
 				eventing=false;

@@ -474,7 +474,6 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 
 	// show_message("Peril of the Warp Chance: "+string(peril1)+"#Roll: "+string(peril2));
 	// peril2=1;peril3=88;
-
 	if (peril2<=peril1) and (heh=2){
 	    if (obj_ncombat.sorcery_seen=1) then obj_ncombat.sorcery_seen=0;
 
@@ -487,7 +486,7 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 
 
 	    flavour_text1=$"{unit.name_role()} suffers Perils of the Warp!  ";
-	    flavour_text2=scr_perils_table(peril3, unit, psy_discipline, power_name);
+	    flavour_text2=scr_perils_table(peril3, unit, psy_discipline, power_name,unit_id);
     
 	    if (unit.hp()<0){
 	        if (marine_dead[unit_id]=0) then marine_dead[unit_id]=1;

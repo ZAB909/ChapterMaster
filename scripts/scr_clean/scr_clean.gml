@@ -157,13 +157,12 @@ function scr_clean(argument0) {
 	            }
 	            unit.add_or_sub_health(-minus);
             
-	            if (unit.hp()<=0) and (marine_dead[you]!=1){
+	            if (unit.hp()<=0) and (marine_dead[you]<1){
 	                var h=0,good=0,open=0;
                     if (unit.role()==lost[hh]){
                     	lost_num[hh]++;
-                    	break;
                     } else {                
-		                for (var h=1;h<=50;h++){// Need to find the open slot
+		                for (h=1;h<=50;h++){// Need to find the open slot
 		                    if (obj_ncombat.player_forces>6){
 		                        if (unit.role()==lost[h]){
 		                        	lost_num[h]++;
@@ -173,8 +172,8 @@ function scr_clean(argument0) {
 		                    }
 	                    
 		                    if (lost[h]=""){
-			                	lost_num[open]=1;
-			                	lost[open]=unit.role();
+			                	lost_num[h]=1;
+			                	lost[h]=unit.role();
 			                	hh=h;
 			                	break;                    	
 		                    }
@@ -190,7 +189,6 @@ function scr_clean(argument0) {
 	            }
 	        }
 	    }
-    
 	    if (old_hs>0){
 	        hostile_shots=old_hs;
 	        scr_flavor2(units_lost,"");

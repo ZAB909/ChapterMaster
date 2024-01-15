@@ -14,13 +14,13 @@ repeat(600){
     if (marine_dead[i]>0) and (marine_type[i]!="") and (ally[i]=false){
         unit = unit_struct[i];
         if (!is_struct(unit)) continue;
-        if (unit.name()!="") continue;
+        if (unit.name()=="") continue;
         man_size = unit.get_unit_size();
 
         if (obj_ini.wid[marine_co[i]][marine_id[i]]>0) then obj_ncombat.world_size+=man_size;
         if (obj_ini.lid[marine_co[i]][marine_id[i]]>0) then obj_ini.ship_carrying[obj_ini.lid[marine_co[i],marine_id[i]]]-=man_size;
         //
-        scr_kill_unit(marine_co[i],marine_id[i]);
+        scr_kill_unit(unit.company,unit.marine_number);
     }
 
     // if (veh_type[i]="Predator") or (veh_type[i]="Land Raider") then show_message(string(veh_type[i])+" ("+string(veh_co[i])+"."+string(veh_id[i])+")#HP: "+string(veh_hp[i])+"#Dead: "+string(veh_dead[i])+"");
