@@ -73,7 +73,6 @@ function scr_load(argument0, argument1) {
 	    obj_controller.cheatyface=ini_read_real("Controller","cheatyface",0);
 	    obj_controller.x=ini_read_real("Controller","x",obj_controller.x);
 	    obj_controller.y=ini_read_real("Controller","y",obj_controller.y);
-	    obj_controller.was_zoomed=ini_read_real("Controller","was_zoomed",0);
 	    obj_controller.zoomed=ini_read_real("Controller","zoomed",0);
 	    obj_controller.chaos_rating=ini_read_real("Controller","chaos_rating",0);
 	    obj_controller.fleet_type=ini_read_string("Controller","fleet_type",""); //
@@ -777,7 +776,6 @@ function scr_load(argument0, argument1) {
                         }
                     }
                     obj_ini.hp[coh,mah]=ini_read_real("Mar","hp"+string(coh)+"."+string(mah),0);
-                    obj_ini.chaos[coh,mah]=ini_read_real("Mar","cha"+string(coh)+"."+string(mah),0);
                     obj_ini.experience[coh,mah]=ini_read_real("Mar","exp"+string(coh)+"."+string(mah),0);
                     obj_ini.age[coh,mah]=ini_read_real("Mar","ag"+string(coh)+"."+string(mah),0);
                     obj_ini.spe[coh,mah]=ini_read_string("Mar","spe"+string(coh)+"."+string(mah),"");

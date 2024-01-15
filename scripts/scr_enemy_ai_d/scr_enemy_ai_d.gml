@@ -370,7 +370,7 @@ function scr_enemy_ai_d() {
 	                var co,me;co=-1;me=0;
 	                repeat(obj_ini.companies+1){co+=1;me=0;
 	                    repeat(500){me+=1;
-	                        if (obj_ini.race[co,me]=1) and (obj_ini.role[co,me]!="") then obj_ini.chaos[co,me]+=choose(1,2,3,4,5,6)+choose(1,2,3,4,5,6)+choose(1,2,3,4,5,6);
+	                        if (obj_ini.race[co,me]=1) and (obj_ini.role[co,me]!="") then obj_ini.TTRPG[co][me].corruption+=choose(1,2,3,4,5,6)+choose(1,2,3,4,5,6)+choose(1,2,3,4,5,6);
 	                    }
 	                }
 	                tixt="Any Fallen that may have been on "+string(name)+" ";

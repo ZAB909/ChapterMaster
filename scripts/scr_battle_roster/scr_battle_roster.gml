@@ -154,7 +154,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                     }else if (unit.role() = deploying_unit.role[100, 3]) or (unit.role() = deploying_unit.role[100, 19]) {			//veterans and veteran sergeants
                         col = obj_controller.bat_veteran_column;
                         new_combat.veterans += 1;
-                    }else if (unit.role() = deploying_unit.role[100, 9]) {			//devestatiors
+                    }else if (unit.role() = deploying_unit.role[100, 9]) {			//devastators
                         col = obj_controller.bat_devastator_column;
                         new_combat.devastators += 1;
                     }else if(unit.role() = deploying_unit.role[100, 10]) {			//assualt marines
@@ -365,7 +365,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                                 break;
                              case "Whirlwind":
                                 col = 1;
-                                new_combat.whirlwinds += 1;;
+                                new_combat.whirlwinds += 1;
                                 break;                                    
                         }
 

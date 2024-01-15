@@ -525,7 +525,7 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
         var unit, squad_mover,moveable;
         var role_squad_equivilances = {};//this is the only way to set variables as keys in gml
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][8],"tactical_squad");
-        variable_struct_set(role_squad_equivilances,obj_ini.role[100][9],"devestator_squad");
+        variable_struct_set(role_squad_equivilances,obj_ini.role[100][9],"devastator_squad");
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][10],"assualt_squad");
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][12],"scout_squad");
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][3],"veteran_squad");
@@ -698,7 +698,6 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                         if (scout_check=0){
                             unit.update_armour(n_armour)
                             obj_controller.ma_armour[i]=n_armour;
-                            if (n_armour="Dreadnought") and (obj_ini.age[company][obj_controller.ide[i]]!=floor(obj_ini.age[company][obj_controller.ide[i]])) then obj_ini.age[company][obj_controller.ide[i]]=floor(obj_ini.age[company][obj_controller.ide[i]]);
                         }
                     }
 
@@ -1125,7 +1124,7 @@ if (mouse_x>=xx+408) and (mouse_y>=yy+393) and (mouse_x<xx+518) and (mouse_y<yy+
             if (target_comp>10) then target_comp=0;
 
             if (string_count("aemon",obj_ini.artifact_tags[obj_controller.menu_artifact])>0){
-                obj_ini.chaos[target_comp,obj_controller.ide[i]]+=choose(1,2,3,4,5,6)+choose(1,2,3,4,5,6);
+                obj_ini.TTRPG[target_comp][obj_controller.ide[i]].corruption+=choose(1,2,3,4,5,6)+choose(1,2,3,4,5,6);
                 if (string_count("dwarn|",obj_controller.useful_info)=0) and (obj_ini.role[target_comp,obj_controller.ide[i]]="Chapter Master"){
                     obj_controller.useful_info+="dwarn|";dwarn=true;
                 }
@@ -1141,10 +1140,6 @@ if (mouse_x>=xx+408) and (mouse_y>=yy+393) and (mouse_x<xx+518) and (mouse_y<yy+
                         scr_add_item(obj_ini.mobi[target_comp,obj_controller.ide[i]],1);
                         obj_ini.mobi[target_comp,obj_controller.ide[i]]="";
                         obj_controller.ma_mobi[i]="";
-                        if (obj_ini.artifact[obj_controller.menu_artifact]=="Dreadnought Armour"){
-                            if (obj_ini.age[target_comp,obj_controller.ide[i]]!=floor(obj_ini.age[target_comp,obj_controller.ide[i]])) then obj_ini.age[target_comp,obj_controller.ide[i]]=floor(obj_ini.age[target_comp,obj_controller.ide[i]]);
-                        }
-
                     }
                 }
                 obj_controller.ma_armour[i]="";obj_ini.armour[target_comp,obj_controller.ide[i]]="";

@@ -24,7 +24,13 @@ if (instance_exists(target)){
         }
     }
     if (action="unload") and (instance_exists(target)){
-        x=target.x;y=target.y;if (boarding=false){boarding=true;board_cooldown=60;action="waiting";}
+        x=target.x;
+        y=target.y;
+        if (boarding=false){
+            boarding=true;
+            board_cooldown=60;
+            action="waiting";
+        }
     }
     if (action="waiting") and (instance_exists(target)){x=target.x;y=target.y;}
     
@@ -83,8 +89,9 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                 // Bonuses
                 difficulty+=unit.experience()/20;
                 difficulty+=(1-(target.hp/target.maxhp))*33;
-                if (array_contains(["Chainfist","Meltagun","Lascutter"], unit.weapon_one)) then difficulty+=3;
-                if (array_contains(["Chainfist","Meltagun","Lascutter"], unit.weapon_two)) then difficulty+=3;
+                //TODO define tag for bording weapons
+                if (array_contains(["Chainfist","Meltagun","Lascutter"], unit.weapon_one())) then difficulty+=3;
+                if (array_contains(["Chainfist","Meltagun","Lascutter"], unit.weapon_two())) then difficulty+=3;
 
                 if (array_contains(obj_ini.adv, "Boarders")) then  difficulty+=7;
                 if (array_contains(obj_ini.adv, "Melee Enthusiasts")) then  difficulty+=3;
@@ -119,6 +126,7 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                         we1=string_replace(we1,"Master Crafted","");we2=string_replace(we2,"Master Crafted","");
                         
                         bridge_damage=3;
+                        //TODO tagging system to slove this
                         we="Eviscerator";if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,7);
                         we="Chainfist";if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,7);
                         we="Lascutter";if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,7);
@@ -132,7 +140,7 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                         target.bridge-=bridge_damage;
                     }
                     if ((target.hp<=0) or (target.bridge<=0)){
-                        var husk;husk=instance_create(target.x,target.y,obj_en_husk);
+                        var husk=instance_create(target.x,target.y,obj_en_husk);
                         
                         if (experience=0){experience=2;
                             if (target.owner = eFACTION.Ecclesiarchy) or (target.owner = eFACTION.Ork) or (target.owner = eFACTION.Eldar) or (target.owner = eFACTION.Necrons) then experience+=1;
@@ -171,47 +179,17 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                 
                 
                 if (roll1>difficulty){// FAILURE
-                    dr=0.7-((obj_ini.experience[co][i]*obj_ini.experience[co][i])/40000);
-                    if (obj_ini.gear[co][i]="Rosarius") then dr-=0.33;
-                    if (obj_ini.gear[co][i]="Iron Halo") then dr-=0.33;
-                    if (obj_ini.mobi[co][i]="Jump Pack") then dr-=0.1;
-                    if (dr<0.25) then dr=0.25;
                     
-                    ac=0;
-                    if (obj_ini.armour[co][i]="Scout Armour") then ac=8;
-                    if (obj_ini.armour[co][i]="MK3 Iron Armour") then ac=26;
-                    if (obj_ini.armour[co][i]="MK4 Maximus") then ac=19;
-                    if (obj_ini.armour[co][i]="MK5 Heresy") then ac=17;
-                    if (obj_ini.armour[co][i]="MK6 Corvus") then ac=15;
-                    if (obj_ini.armour[co][i]="MK7 Aquila") then ac=18;
-                    if (obj_ini.armour[co][i]="MK8 Errant") then ac=22;
-                    if (obj_ini.armour[co][i]="Power Armour") then ac=17;
-                    if (obj_ini.armour[co][i]="Artificer Armour") then ac=37;
-                    if (obj_ini.armour[co][i]="Terminator Armour") then ac=42;
-                    if (obj_ini.armour[co][i]="Tartaros") then ac=44;
-                    if (obj_ini.armour[co][i]="Dreadnought") then ac=50;
-                    if (obj_ini.armour[co][i]="Ork Armour") then ac=15;
-                    if (string_count("&",obj_ini.armour[co][i])>0){
-                        // Artifact armour
-                        if (string_count("Power",obj_ini.armour[co][i])>0) then ac=30;
-                        if (string_count("Artificer",obj_ini.armour[co][i])>0) then ac=37;
-                        if (string_count("Terminator",obj_ini.armour[co][i])>0) then ac=46;
-                        if (string_count("Dreadnought",obj_ini.armour[co][i])>0) then ac=44;
-                    }
-                    if (obj_ini.armour[co][i]!=""){// STC Bonuses
-                        if (obj_controller.stc_bonus[1]=5){if (ac>=40) then ac+=2;if (ac<40) then ac+=1;}
-                        if (obj_controller.stc_bonus[2]=3){if (ac>=40) then ac+=2;if (ac<40) then ac+=1;}
-                    }
-                    if (obj_ini.wep1[co][i]="Boarding Shield") then ac+=8;
-                    if (obj_ini.wep2[co][i]="Boarding Shield") then ac+=8;
-                    if (obj_ini.wep1[co][i]="Storm Shield") then ac+=16;
-                    if (obj_ini.wep2[co][i]="Storm Shield") then ac+=16;
+                    ac=unit.armour_calc()
+                    dr = unit.damage_resistance()/100
                     
                     roll2=floor(random(100))+1;
                     
+                    //TODO streamline enemy weapons
                     if (target.owner = eFACTION.Imperium) or (target.owner = eFACTION.Chaos) or (target.owner = eFACTION.Ecclesiarchy){
                         // Make worse for CSM
-                        wep="Lasgun";hits=1;
+                        wep="Lasgun";
+                        hits=1;
                         if (roll2<=90) then hits=2;
                         if (roll2<=75) then hits=3;
                         if (roll2<=50){wep="Bolt Pistol";hits=1;}
@@ -289,11 +267,14 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                     
                     // End, do the damage
                     if (arp=1) then hurt=max(0,attack*dr);
-                    if (arp=0) then hurt=max(0,(attack*dr)-ac);
+                    if (arp=0) then hurt=max(0,(attack-ac)*dr);
                     
-                    repeat(hits){obj_ini.hp[co][i]-=hurt;}
+                    repeat(hits){
+                        obj_ini.hp[co][i]-=hurt;
+                    }
                     
-                    if (obj_ini.hp[co][i]<=0){boarders_dead+=1;
+                    if (unit.hp()<=0){
+                        boarders_dead+=1;
                         if ((obj_ini.role[co][i]=obj_ini.role[100][15]) or (obj_ini.role[co][i]="Master of Sanctity")) and (obj_ini.gear[co][i]="Narthecium") then apothecary-=1;
                         if ((obj_ini.role[co][i]=obj_ini.role[100][15]) or (obj_ini.role[co][i]="Master of Sanctity")) and (obj_ini.gear[co][i]="Narthecium") then apothecary_had-=1;
                     }

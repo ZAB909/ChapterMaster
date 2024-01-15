@@ -84,12 +84,19 @@ repeat(100){i+=1;
 }
 
 
-var co,i,b;
+var co,i,b,unit;
 co=-1;i=0;b=0;
 repeat(11){co+=1;i=0;
     repeat(300){i+=1;
-        if (obj_ini.lid[co][i]=ship_id) and (obj_ini.age[co][i]!=floor(obj_ini.age[co][i])){
-            b+=1;board_co[b]=co;board_id[b]=i;board_location[b]=0;boarders+=1;
+        if (obj_ini.lid[co][i]=ship_id && obj_ini.name[co][i]!=""){
+            unit=obj_ini.TTRPG[co][i];
+            if (unit.is_boarder && unit.hp()>(unit.max_health()/10)){
+                b+=1;
+                board_co[b]=co;
+                board_id[b]=i;
+                board_location[b]=0;
+                boarders+=1;
+            }
             // Loc 0: on origin ship
             // Loc 1: in transit
             // Loc >1: (instance_id), on enemy vessel 

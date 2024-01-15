@@ -571,12 +571,12 @@ function scr_restart_variables(saved_game) {
 		maxpoints=100;
 		custom=0;
     
-	    hapothecary=scr_marine_name();
-	    hchaplain=scr_marine_name();
-	    clibrarian=scr_marine_name();
-	    fmaster=scr_marine_name();
-	    recruiter=scr_marine_name();
-	    admiral=scr_marine_name();
+	    hapothecary=global.name_generator.generate_space_marine_name();
+	    hchaplain=global.name_generator.generate_space_marine_name();
+	    clibrarian=global.name_generator.generate_space_marine_name();
+	    fmaster=global.name_generator.generate_space_marine_name();
+	    recruiter=global.name_generator.generate_space_marine_name();
+	    admiral=global.name_generator.generate_space_marine_name();
 
 		// First is for the correct slot, second is for default info
 		for(var i=100; i<103; i++){
