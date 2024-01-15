@@ -2552,23 +2552,13 @@ if (action_if_number(obj_saveload, 0, 0) &&
             }
                 // Set boarders
             if (scr_hit(xx+1018,yy+779,xx+1018+141,yy+801)==true) and (man_size>0) and (cooldown<=0){
-                var cah=managing;
+                var cah=managing, unit;
                 cooldown=8000;
                 if (cah>10) then cah=0;
                 for(var p=1; p<=500; p++){
                     if (man_sel[p]==1) and (man[p]=="man") and (obj_ini.lid[cah][ide[p]]>0) and (obj_ini.loc[cah][ide[p]]!="Mechanicus Vessel"){
-                        var onk=0;
-                        if (obj_ini.age[cah][ide[p]]==floor(obj_ini.age[cah][ide[p]])) and (onk==0){
-                            if (ma_role[p]!=obj_ini.role[100][6]) and (ma_role[p]!="Venerable "+string(obj_ini.role[100][6])) 
-                            and (string_count("Dread",ma_armour[p])==0){
-                                obj_ini.age[cah][ide[p]]+=0.01;
-                                onk=1;
-                            }
-                        }
-                        if (obj_ini.age[cah][ide[p]]!=floor(obj_ini.age[cah][ide[p]])) and (onk==0){
-                            obj_ini.age[cah][ide[p]]=floor(obj_ini.age[cah][ide[p]]);
-                            onk=1;
-                        }
+                        unit=obj_ini.TTRPG[cah][ide[p]];
+                        unit.is_boarder = !unit.is_boarder;
                     }
                 }
             }

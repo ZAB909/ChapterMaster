@@ -1217,6 +1217,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		return obj_ini.gear[company][marine_number];
 	};
 
+	is_boarder =false;
+
 	gear_quality="standard";
 	static update_gear = function(new_gear,from_armoury=true, to_armoury=true, quality="any"){
 		var change_gear = gear();
