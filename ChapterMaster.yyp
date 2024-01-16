@@ -548,6 +548,7 @@
     {"id":{"name":"spr_ship_hulk","path":"sprites/spr_ship_hulk/spr_ship_hulk.yy",},},
     {"id":{"name":"spr_fighta","path":"sprites/spr_fighta/spr_fighta.yy",},},
     {"id":{"name":"spr_ship_void","path":"sprites/spr_ship_void/spr_ship_void.yy",},},
+    {"id":{"name":"spr_mk7_colors","path":"sprites/spr_mk7_colors/spr_mk7_colors.yy",},},
     {"id":{"name":"spr_ship_shadow","path":"sprites/spr_ship_shadow/spr_ship_shadow.yy",},},
     {"id":{"name":"spr_ws_mk5_helm","path":"sprites/spr_ws_mk5_helm/spr_ws_mk5_helm.yy",},},
     {"id":{"name":"spr_ship_aconite","path":"sprites/spr_ship_aconite/spr_ship_aconite.yy",},},

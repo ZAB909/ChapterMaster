@@ -316,7 +316,7 @@ function scr_draw_unit_image(x_draw, y_draw){
 			}else if (armour()=="MK7 Aquila" || armour()=="Power Armour"){
 				if (brothers>-5) then brothers=0;
 				if (slow>0) then slow=13;
-				armour_sprite=spr_aquila_colors;
+				armour_sprite=spr_mk7_colors;
 				if (hood=-50) then hood=1;
 			}else if (armour()=="MK8 Errant"){
 				if (slow>0) then slow=13;
@@ -345,7 +345,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                 if (string_count("Power Armour",armour())>0){
 					if (slow>0) then slow=13;
 					if (brothers>-5) then brothers=0;
-					armour_sprite=spr_aquila_colors;
+					armour_sprite=spr_mk7_colors;
 					if (hood=-50) then hood=1;
 				}
                 if (string_count("Artifi",armour())>0){
@@ -487,7 +487,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                     helm_draw[0] = -5;
 
                 } else if (armour()=="MK7 Aquila" || show_arm="Power Armour"){
-                    specific_armour_sprite = spr_aquila_colors;
+                    specific_armour_sprite = spr_mk7_colors;
                     if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1){specific_helm = spr_da_mk7_helm;}
                     else if (global.chapter_name=="White Scars" || obj_ini.progenitor==2){specific_helm = spr_ws_mk7_helm;}
                     else if (global.chapter_name=="Space Wolves" || obj_ini.progenitor==3){specific_helm = spr_sw_mk7_helm;}
