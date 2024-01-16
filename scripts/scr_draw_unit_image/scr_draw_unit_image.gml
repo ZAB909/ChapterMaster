@@ -596,7 +596,11 @@ function scr_draw_unit_image(x_draw, y_draw){
                     if (base_sprite=1) then draw_sprite(spr_gear_apoth,1,xx+x_draw-4,yy+y_draw-2);
                     if (base_sprite!=1) and (base_sprite!=2) then draw_sprite(spr_gear_apoth,1,xx+x_draw,yy+y_draw);
                     if (gear() == "Narthecium"){
-                        draw_sprite(spr_narthecium_2,0,xx+x_draw+62,yy+y_draw+5);
+                        if (base_sprite==0) {
+                            draw_sprite(spr_narthecium_2,0,xx+x_draw+62,yy+y_draw+5);
+                        } else if (base_sprite>0 && base_sprite<5){
+                             draw_sprite(spr_narthecium_2,0,xx+x_draw+70,yy+y_draw+30);
+                        }
                     }
                 }
             
