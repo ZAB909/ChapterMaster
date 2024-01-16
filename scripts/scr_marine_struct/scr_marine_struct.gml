@@ -589,7 +589,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	marine_number = mar;			//marine number in company
 	squad = "none";
 	stat_point_exp_marker = 0;
-	static bionics = function(){return obj_ini.bio[company][marine_number];}// get marine bionics count	
+	bionics=0;
 	static experience =  function(){
 		return obj_ini.experience[company][marine_number];
 	}//get exp
@@ -1148,7 +1148,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			return "no bionics";
 		}
 		var new_bionic_pos, part, new_bionic = {quality :bionic_quality};
-		if (obj_ini.bio[company][marine_number] < 10){
+		if (bionics < 10){
 			if (has_trait("flesh_is_weak")){
 				add_or_sub_health(40);
 			} else {
@@ -1171,7 +1171,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				} else {
 					new_bionic_pos = bionic_possible[irandom(array_length(bionic_possible)-1)];
 				}
-				obj_ini.bio[company][marine_number]++;
+				bionics++;
 				alter_body(new_bionic_pos, "bionic",new_bionic)
 				if (array_contains(["left_leg", "right_leg"], new_bionic_pos)){
 					constitution += 2;

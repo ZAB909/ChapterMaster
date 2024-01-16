@@ -80,7 +80,7 @@ function scr_company_view(company) {
 	                ma_lid[v]=obj_ini.lid[company][v];
 	                ma_wid[v]=obj_ini.wid[company][v];
 	                ma_god[v]=obj_ini.god[company][v];
-	                ma_bio[v]=obj_ini.bio[company][v];
+	                ma_bio[v]=obj_ini.TTRPG[company][v].bionics;
 	                ma_mobi[v]=obj_ini.mobi[company][v];
 					display_unit[v] = unit;
 					if (unit_loc[0]==location_types.ship){

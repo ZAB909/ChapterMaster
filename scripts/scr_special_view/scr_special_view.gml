@@ -74,7 +74,6 @@ function scr_special_view(command_group) {
         last_man=b;
         ma_promote[b]=0;
         ma_god[b]=obj_ini.god[0][unit_num];
-        ma_bio[b]=obj_ini.bio[0][unit_num];
 	}
 
 	mans=0;

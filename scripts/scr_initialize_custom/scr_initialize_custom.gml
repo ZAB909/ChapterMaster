@@ -658,7 +658,6 @@ function scr_initialize_custom() {
 	    name[100,i]="";
 	    role[100,i]="";
 	    wep1[100,i]="";
-	    bio[100,i]=0;
 	    lid[100,i]=0;
 	    wid[100,i]=2;
 	    spe[100,i]="";
@@ -670,7 +669,6 @@ function scr_initialize_custom() {
 	    hp[100,i]=0;
 	    age[100,i]=((millenium*1000)+year)-10;
 	    god[100,i]=0;
-	    if (global.chapter_name="Iron Hands") then bio[100,i]=choose(3,4,5);
 	}initialized=500;
 	// Initialize special marines
 	for(i=0;i<=500;i++){
@@ -691,7 +689,6 @@ function scr_initialize_custom() {
 	    hp[0,i]=0;
 	    age[0,i]=((millenium*1000)+year)-10;
 	    god[0,i]=0;
-	    bio[0,i]=0;
 		TTRPG[0,i] = new TTRPG_stats("chapter", 0,i,"blank");
 	}
 	for(i=0;i<=100;i++){i+=1;

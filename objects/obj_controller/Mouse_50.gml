@@ -2537,10 +2537,10 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 bionics_before=scr_item_count("Bionics");
                 bionics_after=bionics_before;
                 if (bionics_before>0) then for(var p=1; p<=500; p++){
-                    if (man_sel[p]==1) and (man[p]=="man") and (bionics_after>0) and (obj_ini.bio[cah][ide[p]]<10) 
+                    if (man_sel[p]==1) and (man[p]=="man") and (bionics_after>0) and (obj_ini.TTRPG[cah][ide[p]].bionics<10) 
                     and (obj_ini.loc[cah][ide[p]]!="Terra") and (obj_ini.loc[cah][ide[p]]!="Mechanicus Vessel"){
                         if (string_count("Dread",ma_armour[p])=0){
-					          obj_ini.TTRPG[cah, ide[p]].add_bionics();
+					          obj_ini.TTRPG[cah][ide[p]].add_bionics();
                               bionics_after--;
                             if (ma_promote[p]==10) then ma_promote[p]=0;
                         }

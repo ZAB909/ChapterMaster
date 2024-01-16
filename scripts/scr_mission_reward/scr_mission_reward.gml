@@ -187,7 +187,7 @@ function scr_mission_reward(argument0, argument1, argument2) {
 	                repeat(300){i+=1;
 	                    if (obj_ini.race[com][i]=1) and (obj_ini.loc[com][i]=argument1.name) and (obj_ini.wid[com][i]=argument2){onceh+=1;
 	                        obj_ini.hp[com][i]=floor(random_range(2,80))+1;
-	                        obj_ini.bio[com][i]=min(obj_ini.bio[com][i]+choose(2,3,4),10);
+	                        repeat(choose(2,3,4)){obj_ini.TTRPG[com][i].add_bionics()}
 	                    }
 	                }
 	            }
@@ -202,7 +202,7 @@ function scr_mission_reward(argument0, argument1, argument2) {
 	                repeat(300){i+=1;
 	                    if (obj_ini.race[com][i]=1) and (obj_ini.loc[com][i]=argument1.name) and (obj_ini.wid[com][i]=argument2){onceh+=1;
 	                        obj_ini.hp[com][i]=floor(random_range(2,80))+1;
-	                        obj_ini.bio[com][i]=min(obj_ini.bio[com][i]+choose(2,3,4),10);
+	                        repeat(choose(2,3,4)){obj_ini.TTRPG[com][i].add_bionics()}
 	                    }
 	                }
 	            }

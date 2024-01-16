@@ -296,7 +296,7 @@ function scr_draw_unit_image(x_draw, y_draw){
 			}else if (armour()=="MK3 Iron Armour"){
 				if (slow>0) then slow=13;
 				if (brothers>-5) then brothers=3;
-				armour_sprite=spr_iron2_colors;
+				armour_sprite=spr_mk3_colors;
 				if (hood=-50) then hood=5;
 			}else if (armour()=="MK4 Maximus"){
 				if (slow>0) then slow=13;
@@ -444,13 +444,18 @@ function scr_draw_unit_image(x_draw, y_draw){
                     draw_sprite(armour_sprite,specialist_colours,xx+x_draw,yy+y_draw);
                     draw_sprite(spr_facial_colors,clothing_style,xx+x_draw,yy+y_draw);
                 }else if (armour()=="MK3 Iron Armour"){
-                    specific_armour_sprite = spr_iron2_colors;
+                    specific_armour_sprite = spr_mk3_colors;
                 } else if (armour()=="MK4 Maximus"){
                     specific_armour_sprite = spr_maximus_colors;
-                    if (global.chapter_name=="Ultramarines" && array_contains(["Company Champion",obj_ini.role[100][2],obj_ini.role[100][5]], role())){
-                        armour_draw=[spr_ultra_honor_guard,body.torso.armour_choice];
-                        armour_bypass=true;
-                    }                    
+                    if (array_contains(["Company Champion",obj_ini.role[100][2],obj_ini.role[100][5]], role())){
+                        if (global.chapter_name=="Ultramarines"){
+                            armour_draw=[spr_ultra_honor_guard,body.torso.armour_choice];
+                            armour_bypass=true;
+                        } else {
+                            armour_draw=[spr_generic_honor_guard,body.torso.armour_choice];
+                            armour_bypass=true;
+                        }
+                   }        
                 } else if (armour()=="MK5 Heresy"){
                     specific_armour_sprite = spr_heresy_colors;
                     if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1){specific_helm = spr_da_mk5_helm;}
@@ -682,11 +687,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                         switch(body_part){
                             case "left_eye":
                                  if (bionic.variant == 0){
-                                    if (armour() == "MK3 Iron Armour"){
-                                        draw_sprite(spr_bionics_eye,0,xx+x_draw-2+eye_move,yy+y_draw);
-                                    } else{
-                                        draw_sprite(spr_bionics_eye,0,xx+x_draw-4+eye_move,yy+y_draw-4);
-                                    }
+                                    draw_sprite(spr_bionics_eye,0,xx+x_draw-4+eye_move,yy+y_draw-4);
                                 } else if(bionic.variant == 1){
                                      draw_sprite(spr_bionic_eye_2,0,xx+x_draw+eye_move,yy+y_draw);
                                 }else if(bionic.variant == 2){
@@ -696,11 +697,8 @@ function scr_draw_unit_image(x_draw, y_draw){
                                 
                             case "right_eye":
                                 if (bionic.variant ==0){
-                                    if (armour() == "MK3 Iron Armour"){
-                                        draw_sprite(spr_bionics_eye,1,xx+x_draw-4+eye_move,yy+y_draw);
-                                    } else{
-                                        draw_sprite(spr_bionics_eye,1,xx+x_draw-4+eye_move,yy+y_draw-4);
-                                    }
+                                   
+                                    draw_sprite(spr_bionics_eye,1,xx+x_draw-4+eye_move,yy+y_draw-4);
                                 }else if(bionic.variant == 1){
                                      draw_sprite(spr_bionic_eye_2,1,xx+x_draw+eye_move,yy+y_draw);
                                 }else if(bionic.variant == 2){

@@ -557,8 +557,8 @@ if (tech_points>=360){
             obj_ini.wid[0][marine_position]=2;
             obj_ini.lid[0][marine_position]=0;
             // TODO Probably want to change this to take into account fleet type chapters- also increase the man_size of that area by +X
-            if (global.chapter_name!="Iron Hands") and (obj_ini.bio[0,marine_position]<4) then obj_ini.bio[0,marine_position]=choose(4,5,6);
-            if (global.chapter_name=="Iron Hands") and (obj_ini.bio[0,marine_position]<7) then obj_ini.bio[0,marine_position]=choose(7,8);
+            if (global.chapter_name!="Iron Hands") and (unit.bionics<4) then repeat(choose(4,5,6)){unit.add_bionics()}
+            if (global.chapter_name=="Iron Hands") and (unit.bionics<7) then repeat(choose(4,5,6)){unit.add_bionics()}
             // 135 ; probably also want to increase the p_player by 1 just because
             with(obj_ini){scr_company_order(0);}
         }

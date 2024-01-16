@@ -301,7 +301,7 @@ function scr_ui_manage() {
 
 			// Display information on the marine
 
-    		var_text = string_hash_to_newline(string("Bionics: {0}",selected_unit.bionics()))
+    		var_text = string_hash_to_newline(string("Bionics: {0}",selected_unit.bionics));
         	x1 = xx+1387;
         	y1 = yy+460;
         	x2 = x1+string_width(var_text);

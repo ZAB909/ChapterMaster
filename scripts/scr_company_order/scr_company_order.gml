@@ -12,7 +12,6 @@ function scr_company_order(company) {
 	    temp_name[co][i]="";
 	    temp_role[co][i]="";
 	    temp_lid[co][i]=0;
-	    temp_bio[co][i]=0;
 	    temp_wid[co][i]=0;
 	    temp_wep1[co][i]="";
 	    temp_wep2[co][i]="";
@@ -100,7 +99,6 @@ function scr_company_order(company) {
 	        temp_mobi[co][v]=mobi[co][unit_num];
 	        temp_spe[co][v]=spe[co][unit_num];
 	        temp_god[co][v]=god[co][unit_num];
-	        temp_bio[co][v]=bio[co][unit_num];
 	        temp_struct[co][v]=jsonify_marine_struct(co,unit_num);
 	}
 
@@ -291,7 +289,6 @@ function scr_company_order(company) {
 	        age[co][i]=temp_age[co][i];
 	        spe[co][i]=temp_spe[co][i];
 	        god[co][i]=temp_god[co][i];
-	        bio[co][i]=temp_bio[co][i];
 			TTRPG[co][i] = new TTRPG_stats("chapter", co, i, "blank");
 			// if stashed marine struct data load it into new structure
 			if (is_string(temp_struct[co][i])){
