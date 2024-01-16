@@ -27,12 +27,12 @@ function scr_mission_reward(argument0, argument1, argument2) {
 
 	                if (roll2<=50){obj_controller.command-=1;techs_lost+=1;
 	                    obj_ini.race[com][i]=0;obj_ini.loc[com][i]="";obj_ini.name[com][i]="";
-	                    obj_ini.role[com][i]="";obj_ini.lid[com][i]=0;obj_ini.wid[com][i]=0;
+	                    obj_ini.role[com][i]="";obj_ini.lid[com][i]=0;obj_ini.TTRPG[com][i].planet_location=0;
 	                    cleanup[com]=1;
 	                }
 	                if (roll2>50){
 	                    argument1.p_player[argument2]+=scr_unit_size(obj_ini.armour[com][i],obj_ini.role[com][i],true);
-	                    obj_ini.loc[com][i]=argument1.name;obj_ini.wid[com][i]=argument2;techs_alive+=1;
+	                    obj_ini.loc[com][i]=argument1.name;obj_ini.TTRPG[com][i].planet_location=argument2;techs_alive+=1;
 	                    repeat(3){obj_ini.experience[com][i]+=choose(1,2,3,4,5,6);}
 	                    if (roll2<80) then found_requisition+=floor(random_range(5,40))+1;
 	                }
@@ -154,7 +154,7 @@ function scr_mission_reward(argument0, argument1, argument2) {
 	        repeat(11){
 	            if (onceh<10){com+=1;i=0;
 	                repeat(300){i+=1;
-	                    if (obj_ini.race[com][i]=1) and (obj_ini.loc[com][i]=argument1.name) and (obj_ini.wid[com][i]=argument2){onceh+=1;
+	                    if (obj_ini.race[com][i]=1) and (obj_ini.loc[com][i]=argument1.name) and (obj_ini.TTRPG[com][i].planet_location=argument2){onceh+=1;
 	                        obj_controller.requisition+=150;
 
 	                        argument1.p_player[argument2]-=scr_unit_size(obj_ini.armour[com][i],obj_ini.role[com][i],true);
@@ -164,7 +164,7 @@ function scr_mission_reward(argument0, argument1, argument2) {
 	                        if (obj_ini.role[com][i]="Chapter Master"){obj_controller.alarm[7]=10;global.defeat=3;}
 
 	                        obj_ini.race[com][i]=0;obj_ini.loc[com][i]="";obj_ini.name[com][i]="";
-	                        obj_ini.role[com][i]="";obj_ini.lid[com][i]=0;obj_ini.wid[com][i]=0;
+	                        obj_ini.role[com][i]="";obj_ini.lid[com][i]=0;obj_ini.TTRPG[com][i].planet_location=0;
 
 	                        if (obj_ini.wep1[com][i]!="") then scr_add_item(obj_ini.wep1[com][i],1);
 	                        if (obj_ini.wep2[com][i]!="") then scr_add_item(obj_ini.wep2[com][i],1);
@@ -185,7 +185,7 @@ function scr_mission_reward(argument0, argument1, argument2) {
 	        repeat(11){
 	            if (onceh<10){com+=1;i=0;
 	                repeat(300){i+=1;
-	                    if (obj_ini.race[com][i]=1) and (obj_ini.loc[com][i]=argument1.name) and (obj_ini.wid[com][i]=argument2){onceh+=1;
+	                    if (obj_ini.race[com][i]=1) and (obj_ini.loc[com][i]=argument1.name) and (obj_ini.TTRPG[com][i].planet_location=argument2){onceh+=1;
 	                        obj_ini.hp[com][i]=floor(random_range(2,80))+1;
 	                        repeat(choose(2,3,4)){obj_ini.TTRPG[com][i].add_bionics()}
 	                    }
@@ -200,7 +200,7 @@ function scr_mission_reward(argument0, argument1, argument2) {
 	        repeat(11){
 	            if (onceh<10){com+=1;i=0;
 	                repeat(300){i+=1;
-	                    if (obj_ini.race[com][i]=1) and (obj_ini.loc[com][i]=argument1.name) and (obj_ini.wid[com][i]=argument2){onceh+=1;
+	                    if (obj_ini.race[com][i]=1) and (obj_ini.loc[com][i]=argument1.name) and (obj_ini.TTRPG[com][i].planet_location=argument2){onceh+=1;
 	                        obj_ini.hp[com][i]=floor(random_range(2,80))+1;
 	                        repeat(choose(2,3,4)){obj_ini.TTRPG[com][i].add_bionics()}
 	                    }

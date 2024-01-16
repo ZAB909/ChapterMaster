@@ -554,7 +554,7 @@ if (tech_points>=360){
                 scr_alert("red","recruitment","Not enough equipment: "+string(warn),0,0);
             }
             obj_ini.loc[0][marine_position]=obj_ini.home_name;
-            obj_ini.wid[0][marine_position]=2;
+            unit.planet_location=2;
             obj_ini.lid[0][marine_position]=0;
             // TODO Probably want to change this to take into account fleet type chapters- also increase the man_size of that area by +X
             if (global.chapter_name!="Iron Hands") and (unit.bionics<4) then repeat(choose(4,5,6)){unit.add_bionics()}
@@ -579,6 +579,7 @@ if (tech_points>=4) and (tech_aspirant==0){
             if (g1==0){if (obj_ini.role[0,h]=="") then g1=h;}
         }
         if (g1!=0){
+            unit=obj_ini.TTRPG[0][g1];
             tech_aspirant=1;
             command+=1;
             marines-=1;
@@ -590,24 +591,14 @@ if (tech_points>=4) and (tech_aspirant==0){
                 obj_ini.ship_carrying[obj_ini.lid[0][g1]]-=man_size;
             }
             obj_ini.loc[0][g1]="Terra";
-            obj_ini.wid[0][g1]=4;
+            unit.planet_location=4;
             obj_ini.lid[0][g1]=0;
             if (obj_ini.wep1[0][g1]!="Power Weapon") and (obj_ini.wep1[0][g1]!=""){
-                scr_add_item(obj_ini.wep1[0][g1],1);
-                obj_ini.wep1[0][g1]="";
+                unit.update_weapon_one("");
             }
-            if (obj_ini.wep2[0][g1]!=""){
-                scr_add_item(obj_ini.wep2[0][g1],1);
-                obj_ini.wep2[0][g1]="";
-            }
-            if (obj_ini.gear[0][g1]!=""){
-                scr_add_item(obj_ini.gear[0][g1],1);
-                obj_ini.gear[0][g1]="";
-            }
-            if (obj_ini.mobi[0][g1]!=""){
-                scr_add_item(obj_ini.mobi[0][g1],1);
-                obj_ini.mobi[0][g1]="";
-            }
+            unit.update_weapon_two("");
+            unit.update_gear("");
+            unit.update_mobility_item("");
             scr_alert("green","recruitment",string(obj_ini.role[100][16])+" Aspirant "+string(obj_ini.name[0][g1])+" journeys to Mars.",0,0);
             with(obj_ini){
                 scr_company_order(marine_company);

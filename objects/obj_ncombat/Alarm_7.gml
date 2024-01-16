@@ -65,12 +65,12 @@ if (string_count("cs_meeting",battle_special)>0){
             var i,co,ii,otm,good,master_present;ii=0;i=0;co=-1;good=0;master_present=0;
             var run,s,chaos_meeting;run=0;s=0;chaos_meeting=0;
             
-            chaos_meeting=obj_ini.wid[0][1];
+            chaos_meeting=obj_ini.TTRPG[0][1].planet_location;
             
             // show_message("meeting planet:"+string(chaos_meeting));
             repeat(11){co+=1;i=0;
                 repeat(200){i+=1;good=0;
-                    if (obj_ini.role[co][i]!="") and (obj_ini.loc[co][i]=name) and (obj_ini.wid[co][i]==floor(chaos_meeting)) then good+=1;
+                    if (obj_ini.role[co][i]!="") and (obj_ini.loc[co][i]=name) and (obj_ini.TTRPG[co][i].planet_location==floor(chaos_meeting)) then good+=1;
                     if (obj_ini.role[co][i]!=obj_ini.role[100][6]) and (obj_ini.role[co][i]!="Venerable "+string(obj_ini.role[100][6])) then good+=1;
                     if (string_count("Dread",obj_ini.armour[co][i])=0) or (obj_ini.role[co][i]="Chapter Master") then good+=1;
                     

@@ -85,13 +85,13 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                 //Normal and other battle cases checks go here
                 else if (okay >= 0) {
                     if (instance_exists(obj_temp4)) { //Exploring ruins ambush case
-                        if (deploying_unit.loc[company][v] == required_location) and(deploying_unit.wid[company][v] == _target_location) and(deploying_unit.hp[company][v] > 0) {
+                        if (deploying_unit.loc[company][v] == required_location) and(unit.planet_location == _target_location) and(deploying_unit.hp[company][v] > 0) {
                             okay = 1;
                         } else {
                             okay = 0;
                         }
                     } else if (!instance_exists(obj_drop_select)) { // Only when attacked, normal battle
-                        if (_is_planet) and(deploying_unit.loc[company][v] == required_location) and(deploying_unit.wid[company][v] == _target_location) and(deploying_unit.hp[company][v] > 0) and(deploying_unit.god[company][v] < 10) then okay = 1;
+                        if (_is_planet) and(deploying_unit.loc[company][v] == required_location) and(unit.planet_location == _target_location) and(deploying_unit.hp[company][v] > 0) and(deploying_unit.god[company][v] < 10) then okay = 1;
                         else if (!_is_planet) and(deploying_unit.lid[company][v] == _target_location) and(deploying_unit.hp[company][v] > 0) and(deploying_unit.god[company][v] < 10) then okay = 1;
 
                         if (instance_exists(obj_temp_meeting)) {
@@ -104,7 +104,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                         if (obj_drop_select.fighting[company][v] == 0) then okay = 0;
 
                         else if (obj_drop_select.attack == 1) {
-                            if (_is_planet) and(deploying_unit.loc[company][v] == required_location) and(deploying_unit.wid[company][v] == _target_location) and(deploying_unit.hp[company][v] > 0) and(deploying_unit.god[company][v] < 10) then okay = 1;
+                            if (_is_planet) and(deploying_unit.loc[company][v] == required_location) and(unit.planet_location == _target_location) and(deploying_unit.hp[company][v] > 0) and(deploying_unit.god[company][v] < 10) then okay = 1;
                             else if (!_is_planet) and(deploying_unit.lid[company][v] == _target_location) and(deploying_unit.hp[company][v] > 0) and(deploying_unit.god[company][v] < 10) then okay = 1;
                         } else if (obj_drop_select.attack != 1) {
                             //Related to defensive battles (¿?). Without the above check, it duplicates marines on offensive ones.
@@ -334,7 +334,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                         if (instance_exists(obj_drop_select)) {
                             world_name = obj_drop_select.p_target.name;
                         }
-                        if (deploying_unit.veh_race[company][v] != 0) and(deploying_unit.veh_loc[company][v] = world_name) and(deploying_unit.wid[company][v] = p_num) then vokay = 2;
+                        if (deploying_unit.veh_race[company][v] != 0) and(deploying_unit.veh_loc[company][v] = world_name) and(unit.planet_location = p_num) then vokay = 2;
                     }
                     if (!_is_planet) and(deploying_unit.veh_lid[company][v] = _target_location) and(deploying_unit.veh_hp[company][v] > 0) then vokay = 1;
 

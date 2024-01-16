@@ -67,7 +67,7 @@ function scr_special_view(command_group) {
         ma_health[b]=obj_ini.hp[0][unit_num];
         ma_exp[b]=obj_ini.experience[0][unit_num];
         ma_lid[b]=obj_ini.lid[0][unit_num];
-        ma_wid[b]=obj_ini.wid[0][unit_num];
+        ma_wid[b]=obj_ini.TTRPG[0][unit_num].planet_location;
 		display_unit[b] = obj_ini.TTRPG[0][unit_num];
         if (ma_lid[b]>0) then ma_loc[b]=obj_ini.ship[ma_lid[b]];
         ma_mobi[b]=obj_ini.mobi[0][unit_num];

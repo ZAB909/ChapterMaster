@@ -88,7 +88,6 @@ function scr_company_order(company) {
 	        temp_name[co][v]=name[co][unit_num];
 	        temp_role[co][v]=role[co][unit_num];
 	        temp_lid[co][v]=lid[co][unit_num];
-	        temp_wid[co][v]=wid[co][unit_num];
 	        temp_wep1[co][v]=wep1[co][unit_num];
 	        temp_wep2[co][v]=wep2[co][unit_num];
 	        temp_armour[co][v]=armour[co][unit_num];
@@ -278,7 +277,6 @@ function scr_company_order(company) {
 	        name[co][i]=temp_name[co][i];
 	        role[co][i]=temp_role[co][i];
 	        lid[co][i]=temp_lid[co][i];
-	        wid[co][i]=temp_wid[co][i];
 	        wep1[co][i]=temp_wep1[co][i];
 	        wep2[co][i]=temp_wep2[co][i];
 	        armour[co][i]=temp_armour[co][i];

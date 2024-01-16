@@ -55,7 +55,7 @@ function scr_destroy_planet(argument0) {
 	    cah+=1;ed=0;
 
 	    repeat(500){ed+=1;
-	        if (obj_ini.loc[cah,ed]=you.name) and (obj_ini.wid[cah,ed]=baid){
+	        if (obj_ini.loc[cah,ed]=you.name) and (obj_ini.TTRPG[cah,ed].planet_location=baid){
 	            if (obj_ini.role[cah,ed]="Chapter Master"){obj_controller.alarm[7]=15;if (global.defeat<=1) then global.defeat=1;}
             
 	            if (obj_ini.race[cah,ed]=1){var comm;comm=false;

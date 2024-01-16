@@ -18,9 +18,9 @@ if (refresh_raid!=0){
         remove=0;
         
         // just added the ship part
-        if (good=1) and ((obj_ini.lid[comp][i]>0) or ((attack=1) and (obj_ini.wid[comp][i]=obj_controller.selecting_planet) and (obj_ini.loc[comp][i]=p_target.name) and (remove_local!=0))){
+        if (good=1) and ((obj_ini.lid[comp][i]>0) or ((attack=1) and (obj_ini.TTRPG[comp][i].planet_location=obj_controller.selecting_planet) and (obj_ini.loc[comp][i]=p_target.name) and (remove_local!=0))){
             
-            if (attack=1) and (obj_ini.wid[comp][i]=obj_controller.selecting_planet) and (remove_local=1) then remove=1;
+            if (attack=1) and (obj_ini.TTRPG[comp][i].planet_location=obj_controller.selecting_planet) and (remove_local=1) then remove=1;
         
             // Fight wounded
             if (obj_ini.hp[comp][i]<=10) and (fighting[comp][i]=0) and (raid_wounded=1) and (via[obj_ini.lid[comp][i]]>0){
@@ -64,7 +64,6 @@ if (refresh_raid!=0){
                 if (obj_ini.role[comp][i]=obj_ini.role[100][16]) then techmarines+=1;
             }
             
-            // if (attack=1) and (obj_ini.wid[comp][i]=obj_controller.selecting_planet) and (obj_ini.loc[comp][i]=p_target.name) and (remove_local=1) then remove=1;
                         
             if (obj_ini.race[comp][i]=1) and ((fighting[comp][i]=1) or (remove=1)){// Case 1; check for marines that need to be removed
                 if (obj_ini.role[comp][i]="Standard Bearer") and ((raid_tact+raid_vet+raid_deva+raid_assa=0) or (remove=1)){

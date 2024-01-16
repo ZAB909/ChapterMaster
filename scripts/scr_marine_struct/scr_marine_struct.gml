@@ -575,7 +575,10 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 	}
 }
 function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
-	constitution=0; strength=0;luck=0;dexterity=0;wisdom=0;piety=0;charisma=0;technology=0;intelligence=0;weapon_skill=0;ballistic_skill=0;size = 0;
+	constitution=0; strength=0;luck=0;dexterity=0;wisdom=0;piety=0;charisma=0;technology=0;intelligence=0;weapon_skill=0;ballistic_skill=0;size = 0;planet_location=0;
+	if (!instance_exists(obj_controller) && class!="blank"){//game start unit planet location
+		planet_location=2;
+	}
 	religion="none";
 	psionic=0;
 	corruption=0;
@@ -1748,7 +1751,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 		static marine_location = function(){
 			var location_id,location_name;
-			var location_type = obj_ini.wid[company][marine_number];
+			var location_type = planet_location;
 			if ( location_type > 0){ //if marine is on planet
 				location_id = location_type; //planet_number marine is on
 				location_type = location_types.planet; //state marine is on planet
@@ -1794,7 +1797,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				  if (current_location[2] == "home" ){system = obj_ini.home_name;}
 				 //check if ship is in the same location as marine and has enough space;
 				 if (ship_location == system) and ((obj_ini.ship_carrying[ship] + size) <= obj_ini.ship_capacity[ship]){
-					 obj_ini.wid[company][marine_number] = 0; //mark marine as no longer on planet
+					 planet_location = 0; //mark marine as no longer on planet
 					 obj_ini.lid[company][marine_number] = ship; //id of ship marine is now loaded on
 					 obj_ini.ship_carrying[ship] += size; //update ship capacity
 					 var temp_self =self;
@@ -1821,7 +1824,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if (current_location[0]==location_types.ship){
 			if (!array_contains(["Warp", "Terra", "Mechanicus Vessel"],obj_ini.ship_location[current_location[1]]) && obj_ini.ship_location[current_location[1]]==system.name){
 				obj_ini.loc[company][marine_number]=obj_ini.ship_location[current_location[1]];
-				obj_ini.wid[company][marine_number]=planet_number;
+				planet_location=planet_number;
 				obj_ini.lid[company][marine_number]=0;
 				get_unit_size();
 				system.p_player[planet_number]+= size;
@@ -1830,13 +1833,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 	}
 	static set_planet = function(planet_number){
-		obj_ini.wid[company][marine_number]=planet_number;
+		planet_location=planet_number;
 	}
 
 	static is_at_location = function(location, planet, ship){
 		var is_at_loc = false;
 		if (planet>0){
-			if (obj_ini.loc[company][marine_number]==location && obj_ini.wid[company][marine_number]=planet){
+			if (obj_ini.loc[company][marine_number]==location && planet_location=planet){
 				is_at_loc=true;
 			}
 		} else if (ship>0){

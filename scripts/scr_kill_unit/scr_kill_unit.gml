@@ -8,7 +8,6 @@ function scr_kill_unit(company, unit_slot){
 	obj_ini.wep1[company,unit_slot]="";
 	obj_ini.lid[company,unit_slot]=0;
 	obj_ini.role[company,unit_slot]="";
-	obj_ini.wid[company,unit_slot]=0;
 	obj_ini.wep2[company,unit_slot]="";
 	obj_ini.armour[company,unit_slot]="";
 	obj_ini.gear[company,unit_slot]="";

@@ -17,7 +17,7 @@ repeat(600){
         if (unit.name()=="") continue;
         man_size = unit.get_unit_size();
 
-        if (obj_ini.wid[marine_co[i]][marine_id[i]]>0) then obj_ncombat.world_size+=man_size;
+        if (unit.planet_location>0) then obj_ncombat.world_size+=man_size;
         if (obj_ini.lid[marine_co[i]][marine_id[i]]>0) then obj_ini.ship_carrying[obj_ini.lid[marine_co[i],marine_id[i]]]-=man_size;
         //
         scr_kill_unit(unit.company,unit.marine_number);
