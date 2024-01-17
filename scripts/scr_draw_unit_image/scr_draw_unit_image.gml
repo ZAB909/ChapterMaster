@@ -679,15 +679,12 @@ function scr_draw_unit_image(x_draw, y_draw){
 			for (var part = 0; part<array_length(global.body_parts);part++){
 				if (struct_exists(body[$ global.body_parts[part]], "bionic")){
 					if (base_sprite<=0){
-                        if (armour() == "MK3 Iron Armour"){
-                           eye_move = 3;
-                        }
                         var body_part = global.body_parts[part];
                         var bionic = body[$ body_part][$"bionic"];
                         switch(body_part){
                             case "left_eye":
                                  if (bionic.variant == 0){
-                                    draw_sprite(spr_bionics_eye,0,xx+x_draw-4+eye_move,yy+y_draw-4);
+                                    draw_sprite(spr_bionics_eye,1,xx+x_draw-4+eye_move,yy+y_draw-4);
                                 } else if(bionic.variant == 1){
                                      draw_sprite(spr_bionic_eye_2,0,xx+x_draw+eye_move,yy+y_draw);
                                 }else if(bionic.variant == 2){
@@ -698,7 +695,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                             case "right_eye":
                                 if (bionic.variant ==0){
                                    
-                                    draw_sprite(spr_bionics_eye,1,xx+x_draw-4+eye_move,yy+y_draw-4);
+                                    draw_sprite(spr_bionics_eye,0,xx+x_draw-4+eye_move,yy+y_draw-4);
                                 }else if(bionic.variant == 1){
                                      draw_sprite(spr_bionic_eye_2,1,xx+x_draw+eye_move,yy+y_draw);
                                 }else if(bionic.variant == 2){

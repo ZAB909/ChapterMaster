@@ -43,7 +43,7 @@ function scr_ui_display_weapons(left_or_right, termi_tartaros, equiped_weapon) {
             } else if  (normal_ranged_names[i]=="Missile Launcher"){
                 if (string_count("Whileft_or_right", equiped_weapon) == 0){
                     set_as_normal_ranged(spr_weapon_missile, left_or_right);
-                    sprite_found = !sprite_found;
+                    sprite_found = true;
                     break;
                 }
             }
@@ -61,7 +61,7 @@ function scr_ui_display_weapons(left_or_right, termi_tartaros, equiped_weapon) {
         for (var i=0;i<array_length(heavy_ranged_names);i++){
             if (string_count(heavy_ranged_names[i], equiped_weapon) > 0){
                 set_as_ranged_twohand(heavy_ranged[$ heavy_ranged_names[i]],left_or_right)
-                sprite_found = !sprite_found;
+                sprite_found = true;
                 break;               
             }
         }
@@ -86,7 +86,7 @@ function scr_ui_display_weapons(left_or_right, termi_tartaros, equiped_weapon) {
         for (var i=0;i<array_length(melee_weapons_names);i++){
             if (string_count(melee_weapons_names[i], equiped_weapon) > 0){
                 set_as_melee_onehand(melee_weapons[$ melee_weapons_names[i]],left_or_right)
-                sprite_found = !sprite_found;
+                sprite_found = true;
                 break;               
             }                      
         }
@@ -94,9 +94,11 @@ function scr_ui_display_weapons(left_or_right, termi_tartaros, equiped_weapon) {
             if (string_count("Power Fist", equiped_weapon) > 0) and (string_count("DUB", equiped_weapon) == 0) {
                 set_as_melee_onehand_special(spr_weapon_powfist, left_or_right);
                 sprite_found = !sprite_found;
+                display_type="power_fist"
             }else if (string_count("Lightning Claw", equiped_weapon) > 0) and (string_count("DUB", equiped_weapon) == 0) {
                 set_as_melee_onehand_special(spr_weapon_lightning1, left_or_right);
                 sprite_found = !sprite_found;
+                display_type="lightning_claw"
             }            
          }
     }
