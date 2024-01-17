@@ -312,7 +312,7 @@ repeat(20){q+=1;
         if (force_present[q]=13){fork=necrons;tt1="Necrons ("+string(fork)+")";}
         
         if (fork=0) then tt2="";
-        if (fork=1) then tt2="Negligable";
+        if (fork=1) then tt2="Negligible";
         if (fork=2) then tt2="Minor";
         if (fork=3) then tt2="Moderate";
         if (fork=4) then tt2="High";
