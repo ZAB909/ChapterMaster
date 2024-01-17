@@ -443,6 +443,8 @@ function scr_draw_unit_image(x_draw, y_draw){
                     draw_sprite(spr_marine_base,5,xx+x_draw,yy+y_draw);// Kind of crops the 'skin tone' pixels below the scout ones
                     draw_sprite(armour_sprite,specialist_colours,xx+x_draw,yy+y_draw);
                     draw_sprite(spr_facial_colors,clothing_style,xx+x_draw,yy+y_draw);
+                    specific_armour_sprite=armour_sprite;
+                    armour_bypass=true;
                 }else if (armour()=="MK3 Iron Armour"){
                     specific_armour_sprite = spr_mk3_colors;
                 } else if (armour()=="MK4 Maximus"){
@@ -574,9 +576,11 @@ function scr_draw_unit_image(x_draw, y_draw){
                         if (ttrim==0 && specialist_colours<=1) then draw_sprite(specific_armour_sprite,4,xx+x_draw,yy+y_draw);
                         if (ttrim==0 && specialist_colours>=2) then draw_sprite(specific_armour_sprite,5,xx+x_draw,yy+y_draw);
                     } else{
-                        draw_sprite(armour_draw[0], armour_draw[1],xx+x_draw,yy+y_draw);
+                        if (array_length(armour_draw)){
+                             draw_sprite(armour_draw[0], armour_draw[1],xx+x_draw,yy+y_draw);
+                        }
                     }
-                }else if (armour_bypass){
+                }else if (armour_bypass && array_length(armour_draw)>1){
                     draw_sprite(armour_draw[0], armour_draw[1],xx+x_draw,yy+y_draw);
                 }
                 if (base_sprite=5){
@@ -688,7 +692,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                                 } else if(bionic.variant == 1){
                                      draw_sprite(spr_bionic_eye_2,0,xx+x_draw+eye_move,yy+y_draw);
                                 }else if(bionic.variant == 2){
-                                     draw_sprite(spr_bionic_eye_2,2,xx+x_draw+eye_move,yy+y_draw);
+                                     draw_sprite(spr_bionic_eye_2,3,xx+x_draw+eye_move,yy+y_draw);
                                 }
                                 break;
                                 
@@ -699,7 +703,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                                 }else if(bionic.variant == 1){
                                      draw_sprite(spr_bionic_eye_2,1,xx+x_draw+eye_move,yy+y_draw);
                                 }else if(bionic.variant == 2){
-                                     draw_sprite(spr_bionic_eye_2,3,xx+x_draw+eye_move,yy+y_draw);
+                                     draw_sprite(spr_bionic_eye_2,2,xx+x_draw+eye_move,yy+y_draw);
                                 }
                                 break;
 
@@ -761,6 +765,10 @@ function scr_draw_unit_image(x_draw, y_draw){
                 if (struct_exists(body[$ "torso"],"robes")){
                     draw_sprite(spr_marine_robes,body[$ "torso"][$ "robes"],xx+x_draw+robes_mod[0],yy+y_draw+robes_mod[1]);     
                }              
+            }
+            if (armour_sprite==spr_scout_colors2){
+                ui_ymod[1]+=7;
+                ui_ymod[2]+=7;
             }
             // Weapons for above arms
             if (ui_weapon[1]!=0) and (sprite_exists(ui_weapon[1])) and (ui_above[1]==true) and (fix_left<8){
