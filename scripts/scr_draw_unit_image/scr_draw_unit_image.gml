@@ -362,19 +362,22 @@ function scr_draw_unit_image(x_draw, y_draw){
 				}
                 if (string_count("Dread",armour())>0) then armour_sprite=spr_dread_colors;
             }
-        
+            if (base_sprite>0 && base_sprite<5){
+                ui_ymod[1]-=20;
+                ui_ymod[2]-=20;
+            }
             // Draw the fixed upper arms for Terminators and Tartaros
             if (base_sprite==1){
-                if (fix_left>0) then draw_sprite(spr_termi_wep_fix,0,xx+x_draw,yy+y_draw);
+                if (fix_left>0) then draw_sprite(spr_termi_wep_fix,0,xx+x_draw,yy+y_draw-20);
                 if (fix_right>0){
-                    if (specialist_colours<=1) then draw_sprite(spr_termi_wep_fix,2,xx+x_draw,yy+y_draw);
-                    if (specialist_colours>=2) then draw_sprite(spr_termi_wep_fix,3,xx+x_draw,yy+y_draw);
+                    if (specialist_colours<=1) then draw_sprite(spr_termi_wep_fix,2,xx+x_draw,yy+y_draw-20);
+                    if (specialist_colours>=2) then draw_sprite(spr_termi_wep_fix,3,xx+x_draw,yy+y_draw-20);
                 }
             }else if (base_sprite==2){
-                if (fix_left>0) then draw_sprite(spr_tartaros_wep_fix,0,xx+x_draw,yy+y_draw);
+                if (fix_left>0) then draw_sprite(spr_tartaros_wep_fix,0,xx+x_draw,yy+y_draw-20);
                 if (fix_right>0){
-                    if (specialist_colours<=1) then draw_sprite(spr_tartaros_wep_fix,2,xx+x_draw,yy+y_draw);
-                    if (specialist_colours>=2) then draw_sprite(spr_tartaros_wep_fix,3,xx+x_draw,yy+y_draw);
+                    if (specialist_colours<=1) then draw_sprite(spr_tartaros_wep_fix,2,xx+x_draw,yy+y_draw-20);
+                    if (specialist_colours>=2) then draw_sprite(spr_tartaros_wep_fix,3,xx+x_draw,yy+y_draw-20);
                 }
             }
         
@@ -680,52 +683,59 @@ function scr_draw_unit_image(x_draw, y_draw){
 			// bionics
 			
 			var eye_move = 0;
+            var eye_move_y=0;
+            if (base_sprite==1) then eye_move_y = -5;
 			for (var part = 0; part<array_length(global.body_parts);part++){
 				if (struct_exists(body[$ global.body_parts[part]], "bionic")){
-					if (base_sprite<=0){
+					if (base_sprite<=1){
                         var body_part = global.body_parts[part];
                         var bionic = body[$ body_part][$"bionic"];
                         switch(body_part){
                             case "left_eye":
                                  if (bionic.variant == 0){
-                                    draw_sprite(spr_bionics_eye,1,xx+x_draw-4+eye_move,yy+y_draw-4);
+                                    draw_sprite(spr_bionics_eye,1,xx+x_draw-4+eye_move,yy+y_draw-4+eye_move_y);
                                 } else if(bionic.variant == 1){
-                                     draw_sprite(spr_bionic_eye_2,0,xx+x_draw+eye_move,yy+y_draw);
+                                     draw_sprite(spr_bionic_eye_2,1,xx+x_draw+eye_move,yy+y_draw+eye_move_y);
                                 }else if(bionic.variant == 2){
-                                     draw_sprite(spr_bionic_eye_2,3,xx+x_draw+eye_move,yy+y_draw);
+                                     draw_sprite(spr_bionic_eye_2,2,xx+x_draw+eye_move,yy+y_draw+eye_move_y);
                                 }
                                 break;
                                 
                             case "right_eye":
                                 if (bionic.variant ==0){
                                    
-                                    draw_sprite(spr_bionics_eye,0,xx+x_draw-4+eye_move,yy+y_draw-4);
+                                    draw_sprite(spr_bionics_eye,0,xx+x_draw-4+eye_move,yy+y_draw-4+eye_move_y);
                                 }else if(bionic.variant == 1){
-                                     draw_sprite(spr_bionic_eye_2,1,xx+x_draw+eye_move,yy+y_draw);
+                                     draw_sprite(spr_bionic_eye_2,0,xx+x_draw+eye_move,yy+y_draw+eye_move_y);
                                 }else if(bionic.variant == 2){
-                                     draw_sprite(spr_bionic_eye_2,2,xx+x_draw+eye_move,yy+y_draw);
+                                     draw_sprite(spr_bionic_eye_2,4,xx+x_draw+eye_move,yy+y_draw+eye_move_y);
                                 }
                                 break;
 
                             case  "left_leg":
-                                var sprite_num=3;
-                                 if (specialist_colours>=2){
-                                    sprite_num=4;
-                                 }
-                                if(bionic.variant == 0){                             
-                                    draw_sprite(spr_bionics_leg_2,sprite_num,xx+x_draw+3,yy+y_draw)
-                                } else {
-                                    draw_sprite(spr_bionics_leg_3,sprite_num,xx+x_draw+1,yy+y_draw)
+                                if (base_sprite==0){
+                                    var sprite_num=3;
+                                     if (specialist_colours>=2){
+                                        sprite_num=4;
+                                     }
+                                    if(bionic.variant == 0){                             
+                                        draw_sprite(spr_bionics_leg_2,sprite_num,xx+x_draw+3,yy+y_draw)
+                                    } else {
+                                        draw_sprite(spr_bionics_leg_3,sprite_num,xx+x_draw+1,yy+y_draw)
+                                    }
                                 }
                                 break;
 
                             case "right_leg":
-                                if(bionic.variant == 0){  
-                                    draw_sprite(spr_bionics_leg_2,0,xx+x_draw-3,yy+y_draw)
-                                }else{
-                                    draw_sprite(spr_bionics_leg_3,0,xx+x_draw-1,yy+y_draw)
+                                 if (base_sprite==0){
+                                    if(bionic.variant == 0){  
+                                        draw_sprite(spr_bionics_leg_2,0,xx+x_draw-3,yy+y_draw)
+                                    }else{
+                                        draw_sprite(spr_bionics_leg_3,0,xx+x_draw-1,yy+y_draw)
+                                    }
                                 }
                                 break;
+
                         }
 					}
 				}
@@ -754,9 +764,6 @@ function scr_draw_unit_image(x_draw, y_draw){
                 if (array_contains(["MK7 Aquila","Power Armour","MK4 Maximus","Mk5 Heresy", "Mk3 Iron Armour"], armour())){
                     robes_mod[1]=-8;
                     robes_mod[2]=-1;
-                } else if (armour()=="MK6 Corvus"){
-                     robes_mod[0]=-1
-                     robes_mod[1]=-1
                 }
 
                if (struct_exists(body[$ "head"],"hood")){
@@ -769,9 +776,6 @@ function scr_draw_unit_image(x_draw, y_draw){
             if (armour_sprite==spr_scout_colors2){
                 ui_ymod[1]+=7;
                 ui_ymod[2]+=7;
-            } else if (base_sprite>0 && base_sprite<5){
-                ui_ymod[1]-=20;
-                ui_ymod[2]-=20;
             }
             // Weapons for above arms
             if (ui_weapon[1]!=0) and (sprite_exists(ui_weapon[1])) and (ui_above[1]==true) and (fix_left<8){
