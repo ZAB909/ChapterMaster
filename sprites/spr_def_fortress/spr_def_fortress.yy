@@ -57,7 +57,7 @@
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"23245670-12d5-4564-b1cd-3e211f4759ee","path":"sprites/spr_def_fortress/spr_def_fortress.yy",},},},"Disabled":false,"id":"539bfc66-9e13-47a9-bc6b-04eb863d414c","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
           ],},"modifiers":[],"spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
-    "visibleRange": {"x":0.0,"y":0.0,},
+    "visibleRange": null,
     "volume": 1.0,
     "xorigin": 98,
     "yorigin": 99,
