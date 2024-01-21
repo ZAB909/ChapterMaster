@@ -1429,15 +1429,20 @@ global.gear = {
         "tags":["teminator"],
     },
      "Ork Armour": {
+       "armour_value": {
+        "standard": 6,
+        "master_crafted": 10,
+        "artifact": 14
+      },
       "ranged_mod": {
-        "standard": 0,
-        "master_crafted": 5, // Augmented
-        "artifact": 10 // Augmented
+        "standard": -30,
+        "master_crafted": -20, // Augmented
+        "artifact": -10 // Augmented
       },
       "melee_mod": {
-        "standard": 0,
-        "master_crafted": 5, // Augmented
-        "artifact": 10 // Augmented
+        "standard": 50,
+        "master_crafted": 55, // Augmented
+        "artifact": 60 // Augmented
       },
       "description": "Mismatched basic armour used by ork forces"
     },
