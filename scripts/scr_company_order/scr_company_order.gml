@@ -95,7 +95,6 @@ function scr_company_order(company) {
 	        temp_armour[co][v]=armour[co][unit_num];
 	        temp_gear[co][v]=gear[co][unit_num];
 	        temp_hp[co][v]=hp[co][unit_num];
-	        temp_chaos[co][v]=chaos[co][unit_num];
 	        temp_experience[co][v]=experience[co][unit_num];
 	        temp_age[co][v]=age[co][unit_num];
 	        temp_mobi[co][v]=mobi[co][unit_num];
@@ -190,9 +189,11 @@ function scr_company_order(company) {
 
 	var squad_builder = [
 		["tactical_squad",role[100][8],5],
-		["devestator_squad",role[100][9],5],
-		["veteran_squad",role[100][3],5],
+		["devastator_squad",role[100][9],5],
+		["sternguard_veteran_squad",role[100][3],5],
+		["vanguard_veteran_squad",role[100][3],5],
 		["terminator_squad",role[100][4],4],
+		["terminator_assault_squad",role[100][4],4],
 		["assault_squad",role[100][10],5],
 		["scout_squad",role[100][12],5],
 	]
@@ -286,7 +287,6 @@ function scr_company_order(company) {
 	        gear[co][i]=temp_gear[co][i];
 	        mobi[co][i]=temp_mobi[co][i];
 	        hp[co][i]=temp_hp[co][i];
-	        chaos[co][i]=temp_chaos[co][i];
 	        experience[co][i]=temp_experience[co][i];
 	        age[co][i]=temp_age[co][i];
 	        spe[co][i]=temp_spe[co][i];

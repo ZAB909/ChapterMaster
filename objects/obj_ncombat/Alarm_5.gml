@@ -335,7 +335,9 @@ if (defeat=0) and (npowers=true){
         if (plasma_bomb>0){
             // scr_check_equip("Plasma Bomb",battle_loc,battle_id,1);
             // scr_check_equip("Plasma Bomb","","",1);
-            newline="Plasma Bomb used to seal the Necron Tomb.";newline_color="yellow";scr_newtext();
+            newline="Plasma Bomb used to seal the Necron Tomb.";
+            newline_color="yellow";
+            scr_newtext();
 			seal_tomb_world(battle_object.p_feature[battle_id])
         }
 
@@ -516,9 +518,9 @@ if (obj_ini.omophagea=1){
                         obj_controller.inquisitor[i]=obj_controller.inquisitor[i+1];
                     }
                     if (i=10){
-                        obj_controller.inquisitor_gender[i]=choose(1,1,1,1,2,2,2);
+                        obj_controller.inquisitor_gender[i]=choose(0,0,0,1,1,1,1); // 4:3 chance of male Inquisitor
                         obj_controller.inquisitor_type[i]=choose("Ordo Malleus","Ordo Xenos","Ordo Hereticus","Ordo Hereticus","Ordo Hereticus","Ordo Hereticus","Ordo Hereticus","Ordo Hereticus");
-                        obj_controller.inquisitor[i]=scr_imperial_name(obj_controller.inquisitor_gender[i]);// For 'random inquisitor wishes to inspect your fleet
+                        obj_controller.inquisitor[i]=global.name_generator.generate_imperial_name(obj_controller.inquisitor_gender[i]);// For 'random inquisitor wishes to inspect your fleet
                     }
                     i+=1;
                 }

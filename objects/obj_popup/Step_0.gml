@@ -232,10 +232,10 @@ if (title="Scheduled Event"){
                 repeat(700){ide+=1;
                     if (attend_corrupted[ide]=0) and (attend_id[ide]>0){
                         if (string_count("Chaos",obj_ini.artifact_tags[obj_controller.fest_display])>0){
-                            obj_ini.chaos[attend_co[ide],attend_id[ide]]+=choose(1,2,3,4);
+                            obj_ini.TTRPG[attend_co[ide],attend_id[ide]].corruption+=choose(1,2,3,4);
                         }
                         if (string_count("Daem",obj_ini.artifact_tags[obj_controller.fest_display])>0){
-                            obj_ini.chaos[attend_co[ide],attend_id[ide]]+=choose(6,7,8,9);
+                            obj_ini.TTRPG[attend_co[ide],attend_id[ide]].corruption+=choose(6,7,8,9);
                         }
                         attend_corrupted[ide]=1;
                     }
@@ -779,12 +779,7 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
         exit;    
     }
     if (title="He Built It"){
-        obj_ini.race[ma_co,ma_id]=0;obj_ini.loc[ma_co,ma_id]="";obj_ini.name[ma_co,ma_id]="";obj_ini.role[ma_co,ma_id]="";
-        obj_ini.wep1[ma_co,ma_id]="";obj_ini.lid[ma_co,ma_id]=0;obj_ini.wep2[ma_co,ma_id]="";obj_ini.armour[ma_co,ma_id]="";
-        obj_ini.gear[ma_co,ma_id]="";obj_ini.hp[ma_co,ma_id]=100;obj_ini.chaos[ma_co,ma_id]=0;obj_ini.experience[ma_co,ma_id]=0;
-        obj_ini.mobi[ma_co,ma_id]="";obj_ini.age[ma_co,ma_id]=0;
-        obj_ini.TTRPG[ma_co,ma_id]=new TTRPG_stats("chapter",ma_co,ma_id, "blank");
-;
+        scr_kill_unit(ma_co,ma_id);
         with(obj_ini){scr_company_order(0);}
     }
     

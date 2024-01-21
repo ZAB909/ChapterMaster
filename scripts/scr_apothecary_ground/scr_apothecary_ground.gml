@@ -53,22 +53,23 @@ function scr_apothecary_ground() {
 				if(planet_feature_bool(p_feature[run],P_features.Starship)==1) and (engineer_count>0){
 
 	                var starship = p_feature[run][search_planet_features(p_feature[run],P_features.Starship)[0]];
+	                var engineer_score_start = starship.engineer_score;
                 	if (starship.engineer_score<2000){
 	                	for (v=0;v<engineer_count;v++){
-	                		starship.engineer_score += engineers[v].technology;
-	                		scr_alert("green","owner",$"Ancient ship repairs {min((starship.engineer_score/2000)*100, 100)}% complete",x,y);
+	                		starship.engineer_score += (engineers[v].technology/2);
 	                	}
+	                	scr_alert("green","owner",$"Ancient ship repairs {min((starship.engineer_score/2000)*100, 100)}% complete",x,y);
                 	}
             
 	                var maxr=0,requisition_spend=0,target_spend=10000;
 
 	                maxr=floor(obj_controller.requisition/50);
-	                requisition_spend=min(maxr*50,engineers*50,target_spend-starship.funds_spent);
+	                requisition_spend=min(maxr*50,array_length(engineers)*50,target_spend-starship.funds_spent);
 	                obj_controller.requisition-=requisition_spend;
 	                starship.funds_spent+=requisition_spend;
                 
 	                if (requisition_spend>0) and (starship.funds_spent<target_spend){
-	                    scr_alert("green","owner",string(requisition_spend)+" Requision spent on Ancient Ship repairs in materials and outfitting",x,y);
+	                    scr_alert("green","owner",$"{requisition_spend} Requision spent on Ancient Ship repairs in materials and outfitting (outfitting {(starship.funds_spent/target_spend)*100}%)",x,y);
 	                }
 	                if (starship.funds_spent>=target_spend) and(starship.engineer_score>=2000){// u2=tar;
 	                    p_feature[run]="";

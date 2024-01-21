@@ -43,6 +43,7 @@ global.trait_list = {
 		ballistic_skill:[10,5, "max"],
 		display_name : "Champion",
 		flavour_text : "Through either natural talent, or obsessive training {0} is a master of arms",
+		effect:"increase melee carry"
 	},
 	"lightning_warriors":{
 		constitution: -6,
@@ -577,6 +578,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	constitution=0; strength=0;luck=0;dexterity=0;wisdom=0;piety=0;charisma=0;technology=0;intelligence=0;weapon_skill=0;ballistic_skill=0;size = 0;
 	religion="none";
 	psionic=0;
+	corruption=0;
 	religion_sub_cult = "none";
 	base_group = "none";
 	role_history = [];
@@ -732,7 +734,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
    		}
 	  	if (from_armoury && new_mobility_item!=""){
 	  		if (scr_item_count(new_mobility_item, quality)>0){
-	  			var exp_require=gear_weapon_data("weapon",new_armour,"exp",false,quality);
+				var exp_require = gear_weapon_data("weapon", new_mobility_item, "exp", false, quality);
 	  			if (exp_require>experience()){
 	  				return "exp_low";
 	  			} 	  				  			
@@ -793,7 +795,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	   		
 	  	if (from_armoury && new_armour!=""){
 	  		if (scr_item_count(new_armour,quality)>0){
-	  			var exp_require=gear_weapon_data("weapon",new_armour,"exp",false,quality);
+				var exp_require = gear_weapon_data("weapon", new_armour, "exp", false, quality);
 	  			if (exp_require>experience()){
 	  				return "exp_low";
 	  			} 	  			
@@ -820,11 +822,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	};	
 	static max_health =function(){
 		var max_h = 100 * (1+((constitution - 40)*0.025));
-		max_h+=gear_weapon_data("armour",armour(),"hp_mod",false,"standard");
-		max_h+=gear_weapon_data("gear",gear(),"hp_mod",false,"standard");
-		max_h+=gear_weapon_data("mobility",mobility_item(),"hp_mod",false,"standard");
-		max_h+=gear_weapon_data("weapon",weapon_one(),"hp_mod",false,"standard");
-		max_h+=gear_weapon_data("weapon",weapon_two(),"hp_mod",false,"standard");
+		max_h += gear_weapon_data("armour", armour(), "hp_mod");
+		max_h += gear_weapon_data("gear", gear(), "hp_mod");
+		max_h += gear_weapon_data("mobility", mobility_item(), "hp_mod");
+		max_h += gear_weapon_data("weapon", weapon_one(), "hp_mod");
+		max_h += gear_weapon_data("weapon", weapon_two(), "hp_mod");
 		return max_h;
 	};	
 	static increase_max_health = function(increase){
@@ -1140,7 +1142,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	};	//get race
 
 	static add_bionics = function(area="none", bionic_quality="standard", from_armoury=true){
-		if (from_armoury && scr_item_count(new_gear,bionic_quality)<1){
+		if (from_armoury && scr_item_count("Bionics",bionic_quality)<1){
 			return "no bionics";
 		}
 		var new_bionic_pos, part, new_bionic = {quality :bionic_quality};
@@ -1223,7 +1225,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	 	}
 	  	if (from_armoury) and (new_gear!=""){
 	  		if (scr_item_count(new_gear,quality)>0){
-	  			var exp_require=gear_weapon_data("gear",new_gear,"exp",false,quality);
+				var exp_require = gear_weapon_data("gear", new_gear, "exp", false, quality);
 	  			if (exp_require>experience()){
 	  				return "exp_low";
 	  			}
@@ -1303,7 +1305,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
     } 	
   	if (from_armoury) and (new_weapon!=""){
   		if (scr_item_count(new_weapon, quality)>0){
-  			var exp_require=gear_weapon_data("weapon",new_weapon,"exp",false,quality);
+			var exp_require = gear_weapon_data("weapon", new_weapon, "exp", false, quality);
   			if (exp_require>experience()){
   				return "exp_low";
   			}  			
@@ -1336,7 +1338,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	   	}     	
 	  	if (from_armoury) and (new_weapon!=""){
 	  		if (scr_item_count(new_weapon,quality)>0){
-	  			var exp_require=gear_weapon_data("weapon",new_weapon,"exp",false,quality);
+				var exp_require = gear_weapon_data("weapon", new_weapon, "exp", false, quality);
 	  			if (exp_require>experience()){
 	  				return "exp_low";
 	  			} 	  			
@@ -1356,13 +1358,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
     	return "complete";
 	};
 
-
-		static corruption = function(){ 
-			return obj_ini.chaos[company][marine_number];
-		};	   
-       static update_corruption = function(new_corruption){
-            obj_ini.chaos[company][marine_number] = new_corruption;
-	   };	
 		static specials = function(){ 
 			return obj_ini.spe[company][marine_number];
 		};	   
@@ -1373,19 +1368,19 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 		//get equipment data methods by deafult they garb all equipment data and return an equipment struct e.g new equipment_struct(item_data, core_type,quality="none")
 		static get_armour_data= function(type="all"){
-			return gear_weapon_data("armour",armour(),type,false,armour_quality);
+			return gear_weapon_data("armour", armour(), type, false, armour_quality);
 		}
 		static get_gear_data= function(type="all"){
-			return gear_weapon_data("gear",gear(),type,false,gear_quality);
+			return gear_weapon_data("gear", gear(), type, false, gear_quality);
 		}
 		static get_mobility_data= function(type="all"){
-			return gear_weapon_data("mobility",mobility_item(),type,false,mobility_item_quality);
+			return gear_weapon_data("mobility", mobility_item(), type, false, mobility_item_quality);
 		}
 		static get_weapon_one_data= function(type="all"){
-			return gear_weapon_data("weapon",weapon_one(),type,false,weapon_one_quality);
+			return gear_weapon_data("weapon", weapon_one(), type, false, weapon_one_quality);
 		}
 		static get_weapon_two_data= function(type="all"){
-			return gear_weapon_data("weapon",weapon_two(),type,false,weapon_two_quality);
+			return gear_weapon_data("weapon", weapon_two(), type, false, weapon_two_quality);
 		}								
 		static damage_resistance = function(){
 			damage_res = min(75,floor(((constitution*0.005) + (experience()/1000))*100));
@@ -1521,6 +1516,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			if (weapon_skill>=50){
 				melee_hands_limit+=0.25;
 				carry_string+="skill:+0.25#";
+			}
+			if (has_trait("champion")){
+				melee_hands_limit+=0.25;
+				carry_string+="Champion:+0.25#";
 			}
 			var armour_carry = get_armour_data("melee_hands")
 			if (armour_carry!=0){
@@ -1731,6 +1730,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				}
 			}
 			return string("{0} {1}", temp_role, name())
+		}
+
+		static full_title = function(){
+			return $"{name_role()} of the {scr_roman_numerals()[company-1]}co.";
 		}
 		
 		static load_marine = function(ship, star="none"){

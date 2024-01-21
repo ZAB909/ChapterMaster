@@ -432,8 +432,8 @@ function scr_powers(argument0, argument1, argument2, argument3) {
     
 	    if (tome_bad>0){
 	        var tome_roll;tome_roll=floor(random(100))+1;
-	        if (tome_roll<=10) and (tome_bad=1) then obj_ini.chaos[marine_co[argument3],marine_id[argument3]]+=choose(1,2);
-	        if (tome_roll<=20) and (tome_bad>1) then obj_ini.chaos[marine_co[argument3],marine_id[argument3]]+=choose(3,4,5);
+	        if (tome_roll<=10) and (tome_bad=1) then obj_ini.TTRPG[marine_co[argument3],marine_id[argument3]].corruption+=choose(1,2);
+	        if (tome_roll<=20) and (tome_bad>1) then obj_ini.TTRPG[marine_co[argument3],marine_id[argument3]].corruption+=choose(3,4,5);
 	    }
     
 	}
@@ -480,10 +480,10 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	    if (string_count("daemon",book_powers)>0) then peril1+=25;
 	    m1=string(marine_type[argument3])+" "+string(obj_ini.name[marine_co[argument3],marine_id[argument3]])+" suffers Perils of the Warp!  ";
     
-	    if (peril3>0) and (peril3<=15){marine_hp[argument3]-=choose(8,12,16,20);m2="He begins to gibber as psychic backlash overtakes him.";obj_ini.chaos[marine_co[argument3],marine_id[argument3]]+=choose(2,4,6,8);}
+	    if (peril3>0) and (peril3<=15){marine_hp[argument3]-=choose(8,12,16,20);m2="He begins to gibber as psychic backlash overtakes him.";obj_ini.TTRPG[marine_co[argument3],marine_id[argument3]].corruption+=choose(2,4,6,8);}
 	    if (peril3>15) and (peril3<=23){marine_hp[argument3]-=choose(30,35,40,45);m2="His mind is burned fiercly by the warp.";}
 	    if (peril3>23) and (peril3<=31){marine_hp[argument3]-=5000;m2="Psychic backlash knocks him out entirely, incapacitating the marine.";}
-	    if (peril3>31) and (peril3<=39){marine_casting[argument3]-=999;m2="His mind is seared by the warp, now unable to cast more powers this battle.";obj_ini.chaos[marine_co[argument3],marine_id[argument3]]+=choose(7,10,13,15);}
+	    if (peril3>31) and (peril3<=39){marine_casting[argument3]-=999;m2="His mind is seared by the warp, now unable to cast more powers this battle.";obj_ini.TTRPG[marine_co[argument3],marine_id[argument3]].corruption+=choose(7,10,13,15);}
 	    if (peril3>39) and (peril3<=47){marine_hp[argument3]-=choose(30,35,40,45);
 	        m2="The psychic blast he had prepared runs loose, striking himself!";
 	        if (school="biomancy"){m2="The psychic blast he had prepared runs loose, boiling his own blood!";}
@@ -492,10 +492,10 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	    }
 	    if (peril3>47) and (peril3<=55){
 	        m2="Capricious voices eminate from the surrounding area, whispering poisonous lies and horrible truths.";
-	        obj_ini.chaos[marine_co[argument3],marine_id[argument3]]+=choose(10,15,20);
+	        obj_ini.TTRPG[marine_co[argument3],marine_id[argument3]].corruption+=choose(10,15,20);
 	        repeat(6){
 	            var t;t=floor(random(men))+1;
-	            if (marine_type[t]!="") then obj_ini.chaos[marine_co[t],marine_id[t]]+=choose(6,9,12,15);
+	            if (marine_type[t]!="") then obj_ini.TTRPG[marine_co[t],marine_id[t]].corruption+=choose(6,9,12,15);
 	        }
 	    }
 	    if (peril3>55) and (peril3<=63){
@@ -509,10 +509,17 @@ function scr_powers(argument0, argument1, argument2, argument3) {
 	        if (exist=0){
 	            repeat(30){if (d3=0){d2+=1;if (d1.dudes[d2]=""){d3=d2;}}}
 	            d2=choose(3,4,5,6);
-	            d1.dudes[d3]=dem;d1.dudes_special[d3]="";d1.dudes_num[d3]=d2;
-	            d1.dudes_ac[d3]=15;d1.dudes_hp[d3]=150;d1.dudes_dr[d3]=0.7;
-	            d1.dudes_vehicle[d3]=0;d1.dudes_damage[d3]=0;d1.men+=d2;
-	            obj_ncombat.enemy_forces+=d2;obj_ncombat.enemy_max+=d2;
+	            d1.dudes[d3]=dem;
+	            d1.dudes_special[d3]="";
+	            d1.dudes_num[d3]=d2;
+	            d1.dudes_ac[d3]=15;
+	            d1.dudes_hp[d3]=150;
+	            d1.dudes_dr[d3]=0.7;
+	            d1.dudes_vehicle[d3]=0;
+	            d1.dudes_damage[d3]=0;
+	            d1.men+=d2;
+	            obj_ncombat.enemy_forces+=d2;
+	            obj_ncombat.enemy_max+=d2;
 	        }
 	    }
 	    if (peril3>63) and (peril3<=71){

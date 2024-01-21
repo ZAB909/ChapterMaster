@@ -138,7 +138,7 @@ function scr_dialogue(diplo_keyphrase) {
 	    var born=false;
 		for(var ii=1; i<=200; i++){if (obj_ini.role[0,ii]="Chapter Master") and (string_count("$",obj_ini.spe[0,ii])>0) then born=true;}
     
-	    if (obj_ini.chaos[0,3]>=50) and (born=true){
+	    if (obj_ini.TTRPG[0][3].corruption>=50) and (born=true){
 	        diplo_option[4]="Right now I need my Master of Sanctity at my side, trusting that his Chapter Master is doing what is best, what is necessary for the Chapter, during this dangerous moment. All will be made clear in time, I promise you brother. This is the right path.";
 	        diplo_goto[4]="cs_meeting_m3";
 	    }
@@ -200,7 +200,7 @@ function scr_dialogue(diplo_keyphrase) {
 	if (diplo_keyphrase=="cs_meeting45"){
 	    diplo_text="Do you take me as a fool, "+string(obj_ini.master_name)+"?  Even in the Eye there are whispers of your running to and fro at the Inquisition’s beck and call, like a dog playing fetch. You’re a well-trained, and maybe even a clever, dog. I’ve killed so many clever dogs in my time. How do I know this isn’t just a hopelessly doomed plot to try and kill me, hatched by your Inquisition masters still holding your leash?";
         
-	    diplo_option[1]="There are advantages to staying on the Inquisition’s good side, and I’m not one to ignore an advantage.";;
+	    diplo_option[1]="There are advantages to staying on the Inquisition’s good side, and I’m not one to ignore an advantage.";
 	    diplo_option[2]="Appeasing the Inquisition is no hard choice when your options are obey, or eventually be branded a heretic and be destroyed.";
 	    diplo_option[3]="Given enough time, everyone becomes a heretic in the eyes of the Inquisition. I will not wait for them to make their move against us.";
 	    diplo_option[4]="You have one thing right, "+string(obj_controller.faction_leader[eFACTION.Chaos])+". I am here to kill you. Open fire brothers, NOW!  [Battle Chaos forces]";
@@ -313,7 +313,9 @@ function scr_dialogue(diplo_keyphrase) {
 	    }
     
 	    var born=false;
-		for(var ii=1; ii<200; ii++){if (obj_ini.role[0,ii]=="Chapter Master") then obj_ini.chaos[0,ii]+=floor(random_range(30,50));}
+		for(var ii=1; ii<200; ii++){
+			if (obj_ini.role[0,ii]=="Chapter Master") then obj_ini.TTRPG[0][ii].corruption+=floor(random_range(30,50));
+		}
 	    obj_controller.chaos_rating+=1;
     
 	    // Casket, Chalice, Tome
@@ -412,11 +414,12 @@ function scr_dialogue(diplo_keyphrase) {
 	}
 	// ** Chaos Gods **
 	if (diplomacy == 10.1){
+		diplo_option=["","","","",""];
 		switch (diplo_keyphrase){
 			case "intro":
 				diplo_text = "[[The Emmissary to Chaos is writhing snake like creature, a vile creature even by the standards of it's foul bretheren it has no specific master instead preffering to work undividely. It's savage toungue flicks from between it's teeth with glazed aged ayes staring into your soul]]";
 				diplo_text += "###";
-				diplo_text += "Greetings Chapter Master, The gods have been watching you oh so very closely, they see you struggles, they hear your pain, they breathe your despair. The warp is the key too all things all you need do is ask and they will provide......For a cost of course even in the warp nothing comes withou cost";
+				diplo_text += "Greetings Chapter Master, The gods have been watching you oh so very closely, they see you struggles, they hear your pain, they breathe your despair. The warp is the key too all things all you need do is ask and they will provide......For a cost of course even in the warp nothing comes without cost";
 				diplo_option[1] = "I seek a favour from the Gods"; 
 				diplo_option[2]="Begone Filth i serve the true god FOR THE EMPROR"; 
 				diplo_option[3]="The gods may have respect when they earn it i'll be back cretin";
@@ -430,9 +433,9 @@ function scr_dialogue(diplo_keyphrase) {
 				break;
 			case "Khorne_path":
 				diplo_text ="AAAAH the path of the warrior perhaps it was a little hopefull of me to expect anymore, from the right angle i suppose you could almost pass form one of those stunted little red bretheren of mine. The lord of skulls is always eager to help in an endevour that might spill even a moreseful more, but pray what will you offer to the lord of skulls for such favour; he loathes those who emply sorcery but then, but he's known to value the martial mans skull most, i suppose it dosen't matter too much from where the blood flows so long as it flows."
-				diplo_option[1] ="Sacrifice Librarian"; 
+				diplo_option[1] = "Sacrifice Librarian"; 
 				diplo_option[2] = "Sacrifice Champion"; 
-				diplo_option[3] = "Sacfrice squad"; 
+				diplo_option[3] = "Sacrifice squad"; 
 				diplo_option[4] = "FLEE"
 			break;
 				case "daemon_scorn":
@@ -463,13 +466,13 @@ function scr_dialogue(diplo_keyphrase) {
 				diplo_text="one less spell caster how pleasing for the lord. Enjoy your gift.";
 			break;	
 			case "sacrifice_champ":
-				diplo_text="How much of a champion can a dead man really be>Enjoy your gift.";
+				diplo_text="How much of a champion can a dead man really be. Enjoy your gift.";
 			break;	
 			case "sacrifice_squad":
 				diplo_text="Sooo many good souls how sweet on my tounge. Enjoy your gift";
 			break;
 			case "Slaanesh_arti":
-				diplo_text="Fetch this for her and you dahll have her favour";
+				diplo_text="Fetch this for her and you shall have their favour";
 			break;
 			case "Nurgle_gift":
 				diplo_text="The father is a loving figure. Farewell may your men rot gently.";
@@ -1782,7 +1785,7 @@ function scr_dialogue(diplo_keyphrase) {
 	            if (rando==2) then diplo_text+="random2.";
 	            if (rando==3){
 					diplo_text+="rumors of her involvement at the massacre of ";
-					diplo_text+=scr_star_name();
+					diplo_text+=global.name_generator.generate_star_name();
 					diplo_text+=" "+choose("I.","II.","III.","IV.");
 				}
 	            diplo_text+="  Do not expect futher contact.]]";

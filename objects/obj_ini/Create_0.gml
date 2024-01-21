@@ -1,4 +1,7 @@
+// // Global singletons
+// global.NameGenerator = new NameGenerator();
 
+// // normal stuff
 use_custom_icon=0;
 icon=0;icon_name="";
 

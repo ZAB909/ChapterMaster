@@ -10,7 +10,6 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 
 	// That should be sufficient to add stuff in a highly modifiable fashion
 
-
 	var non_marine_roles = ["Skitarii","Techpriest","Ranger","Crusader","Sister of Battle","Sister Hospitaler", "Ork Sniper", "Flash Git"]
 	var i,good, wep1, wep2, gear, mobi, arm, e, missing;
 	i=0;e=0;good=0;wep1="";wep2="";gear="";mobi="";arm="";missing=0;
@@ -108,7 +107,6 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 	    obj_ini.wep1[target_company][good]="";
 	    obj_ini.wep2[target_company][good]="";
 	    obj_ini.armour[target_company][good]="";
-	    obj_ini.chaos[target_company][good]=corruption;
 	    obj_ini.experience[target_company][good]=spawn_exp;
 	    obj_ini.spe[target_company][good]="";
 	    obj_ini.god[target_company][good]=0;
@@ -175,11 +173,11 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 
 	    obj_ini.age[target_company][good]=((obj_controller.millenium*1000)+obj_controller.year);// Age here
     
-	    if (spawn_name="") or (spawn_name="imperial") then obj_ini.name[target_company][good]=scr_marine_name();
+	    if (spawn_name="") or (spawn_name="imperial") then obj_ini.name[target_company][good]=global.name_generator.generate_space_marine_name();
 	    if (spawn_name!="") and (spawn_name!="imperial") then obj_ini.name[target_company][good]=spawn_name;
-	    if (man_role="Ranger") then obj_ini.name[target_company][good]=scr_eldar_name(2);
-	    if (man_role="Ork Sniper") or (man_role="Flash Git") then obj_ini.name[target_company][good]=scr_ork_name();
-	    if (man_role="Sister of Battle") or (man_role="Sister Hospitaler") then obj_ini.name[target_company][good]=scr_imperial_name(2);
+	    if (man_role="Ranger") then obj_ini.name[target_company][good]=global.name_generator.generate_eldar_name(2);
+	    if (man_role="Ork Sniper") or (man_role="Flash Git") then obj_ini.name[target_company][good]=global.name_generator.generate_ork_name();
+	    if (man_role="Sister of Battle") or (man_role="Sister Hospitaler") then obj_ini.name[target_company][good]=global.name_generator.generate_imperial_name(false);
     
     
 	    // Weapons
@@ -269,6 +267,7 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
     
     if (!array_contains(non_marine_roles,man_role)){
 		obj_ini.TTRPG[target_company, good] = new TTRPG_stats("chapter", target_company, good);
+		obj_ini.TTRPG[target_company, good].corruption=corruption
 		marines+=1;
 		}    
 	    with(obj_ini){scr_company_order(target_company);}
