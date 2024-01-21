@@ -871,7 +871,10 @@ function scr_initialize_custom() {
 				[role[100][3] , {"max":5,"min":0, "role":$"Company Command {role[100,3]}"}],		//veterans
 				[role[100][16],{"max":1,"min":0,"role":$"Company {role[100,16]}"}],
 				[role[100][17],{"max":1,"min":0,"role":$"Company {role[100,17]}"}],
-				["type_data" , {"display_data":$"Command {squad_name}"}]
+				["type_data" , {
+					"display_data":$"Command {squad_name}",
+					"formation_options" : ["Command","terminator","veteran","assualt", "devastator", "scout", "tactical"],
+				}]
 			],
 			"terminator_squad": [
 				[role[100][19], {"max":1,"min":1, "role":$"{role[100,19]} Terminator"}],			//Veteran sergeant terminator
@@ -886,7 +889,10 @@ function scr_initialize_custom() {
 						],
 					} 
 				}}],
-				["type_data" , {"display_data":$"{role[100,4]} {squad_name}"}]
+				["type_data" , {
+					"display_data":$"{role[100,4]} {squad_name}",
+					"formation_options" : ["terminator","veteran","assualt", "devastator", "scout", "tactical"],
+				}]
 			],
 			"terminator_assault_squad": [
 				[role[100][19], {
@@ -903,7 +909,10 @@ function scr_initialize_custom() {
 					},
 				},
 				},	],
-				["type_data" , {"display_data":$"{role[100,4]} Assault {squad_name}"}]
+				["type_data" , {
+					"display_data":$"{role[100,4]} Assault {squad_name}",
+					"formation_options" : ["terminator","veteran","assualt", "devastator", "scout", "tactical"],
+				}]
 			],
 
 			"sternguard_veteran_squad": [
@@ -927,7 +936,10 @@ function scr_initialize_custom() {
 				}}],		//veterans
 
 				[role[100][19], {"max":1,"min":1}],
-				["type_data" , {"display_data":$"Sternguard {role[100,3]} {squad_name}"}]
+				["type_data" , {
+					"display_data":$"Sternguard {role[100,3]} {squad_name}",
+					"formation_options" : ["veteran","assualt", "devastator", "scout", "tactical"],
+				}]
 			],
 			
 			"vanguard_veteran_squad": [
@@ -960,7 +972,11 @@ function scr_initialize_custom() {
 					}
 				}
 				],
-				["type_data" , {"display_data":$"Vanguard {role[100,3]} {squad_name}"}]
+				["type_data" , {
+						"display_data":$"Vanguard {role[100,3]} {squad_name}",
+						"formation_options" : ["veteran","assualt", "devastator", "scout", "tactical"],
+					}
+				]
 			],
 			"devastator_squad": [
 					[role[100][9], 
@@ -975,7 +991,10 @@ function scr_initialize_custom() {
 					],			//veterans
 
 				[role[100][18], {"max":1,"min":1, "role":$"{role[100,9]} {role[100,18]}"}],//sergeant
-				["type_data" , {"display_data":$"{role[100,9]} {squad_name}"}]
+				["type_data" , {
+					"display_data":$"{role[100,9]} {squad_name}",
+					"formation_options" : ["devastator"],
+				}]
 			],				
 			"tactical_squad":[
 				[role[100][8], {"max":9,"min":4, "loadout":{//tactical marine
@@ -991,7 +1010,10 @@ function scr_initialize_custom() {
 				}}],		//tactical marine
 
 				[role[100][18], {"max":1,"min":1, "role":$"{role[100,8]} {role[100,18]}"}],		// sergeant
-				["type_data" , {"display_data":$"{role[100,8]} {squad_name}"}]
+				["type_data" , {
+					"display_data":$"{role[100,8]} {squad_name}",
+					"formation_options" : ["tactical","assualt", "devastator", "scout"],
+				}]
 			],
 			"assault_squad" : [
 				[role[100][10] , {
@@ -1014,7 +1036,10 @@ function scr_initialize_custom() {
 				}
 			],
 			[role[100][18], {"max":1,"min":1, "role":$"Assualt {role[100][18]}"}],		// sergeant
-			["type_data" , {"display_data":$"{role[100][10]} {squad_name}"}]
+			["type_data" , {
+				"display_data":$"{role[100][10]} {squad_name}",
+				"formation_options" : ["assualt"],
+			}]
 		],
 	    "scout_squad":[
 	        [
@@ -1052,7 +1077,11 @@ function scr_initialize_custom() {
 	           	 	"role":$"{role[100,12]} {role[100,18]}",
 	            }   
 	        ],
-	        ["type_data" , {"display_data":$"{role[100,12]} {squad_name}","class" : ["scout"]}],
+	        ["type_data" , {
+	        	"display_data":$"{role[100,12]} {squad_name}",
+	        	"class" : ["scout"],
+	        	"formation_options" : ["scout"],
+	        }],
 	    ],
 	    "scout_sniper_squad":[
 	        [
@@ -1093,7 +1122,11 @@ function scr_initialize_custom() {
 		        	"role":$"{role[100][12]} {role[100][18]}",
 		        }
 	        ],
-	       ["type_data" , {"display_data":$"{role[100][12]} Sniper {squad_name}","class" : ["scout"]}],
+	       ["type_data" , {
+	       	"display_data":$"{role[100][12]} Sniper {squad_name}",
+	       	"class" : ["scout"],
+	       	"formation_options" : ["scout"],
+	       }],
 	    ]	    			
 	};
 	if (global.chapter_name=="Salamanders") or (obj_ini.progenitor==8){ //salamanders squads

@@ -248,9 +248,40 @@ if (obj_controller.cooldown<=0) and (loading=1){
 	if (point_in_rectangle(mouse_x, mouse_y,xx+274,yy+426,xx+337,yy+451)){
         obj_controller.selecting_planet=0;
         obj_controller.cooldown=8000;
+        if (obj_controller.menu=1 && obj_controller.managing>0 && obj_controller.view_squad){
+            var company_data = obj_controller.company_data;
+            var squad_index = company_data.company_squads[company_data.cur_squad];
+            var current_squad=obj_ini.squads[squad_index];
+            if (obj_controller.selecting_planet>0){
+                var planet =obj_controller.selecting_planet;
+                for (var i=0;i<array_length(target.p_operatives[planet]);i++){
+                    operation = target.p_operatives[planet][i];
+                    if (operation.type=="squad" && operation.reference == squad_index){
+                        array_delete(target.p_operatives[planet], i, 1);
+                    }
+                } 
+            }          
+            current_squad.assignment="none";
+        }
         instance_destroy();
     }
-    
+    if (obj_controller.menu=1 && obj_controller.managing>0 && obj_controller.view_squad && obj_controller.selecting_planet>0){
+        var company_data = obj_controller.company_data;
+        var squad_index = company_data.company_squads[company_data.cur_squad];
+        var current_squad=obj_ini.squads[squad_index];
+        current_squad.set_location(loading_name,0,obj_controller.selecting_planet);
+        current_squad.assignment={
+            type:mission,
+            location:target.name,
+            ident:obj_controller.selecting_planet,
+        };
+        var operation_data = {
+            type:"squad", 
+            reference:squad_index,
+            job:mission,
+        };
+        array_push(target.p_operatives[obj_controller.selecting_planet],operation_data)
+    }     
     if (obj_controller.selecting_planet>0){
         obj_controller.cooldown=8000;
         obj_controller.unload=obj_controller.selecting_planet;
@@ -414,107 +445,6 @@ if (obj_controller.cooldown<=0) and (loading=1){
 
 
 attack=0;bombard=0;raid=0;purge=0;button1="";button2="";button3="";
-
-
-/*if (obj_controller.selecting_planet>0){
-    if (target.p_type[obj_controller.selecting_planet]="Dead") then exit;
-}*/
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-if (target.craftworld=1) or (target.space_hulk=1){
-    // 135 ;
-    obj_controller.selecting_planet=1;
-
-    if (instance_exists(obj_p_fleet)){
-        var targ_targ;targ_targ=instance_nearest(target.x+24,target.y-24,obj_p_fleet);
-        
-        if (instance_exists(targ_targ)){
-            if (targ_targ.action="") and (point_distance(target.x+24,target.y-24,targ_targ.x,targ_targ.y)<=40){
-                
-                // if (target.p_owner[obj_controller.selecting_planet]>5){
-                    if (button1!=""){button1="Raid";if (targ_targ.capital_number>0) or (targ_targ.frigate_number>0) then button2="Bombard";}
-                    if (button1=""){button2="Raid";if (targ_targ.capital_number>0) or (targ_targ.frigate_number>0) then button3="Bombard";}
-                // }
-            }
-        }
-    }
-}
-
-
-
-if (obj_controller.selecting_planet>0){
-    if (target.p_orks[obj_controller.selecting_planet]>0) or (target.p_tau[obj_controller.selecting_planet]>0) or (target.p_traitors[obj_controller.selecting_planet]>0){
-        if (target.p_player[obj_controller.selecting_planet]>0) then button1="Attack";
-    }
-    if (target.p_type[obj_controller.selecting_planet]="Dead") and ((target.present_fleet[1]>0) or (target.p_player[obj_controller.selecting_planet]>0)){
-        if (target.p_feature[obj_controller.selecting_planet]=""){var chock;chock=1;
-            if (target.p_orks[obj_controller.selecting_planet]>0) then chock=0;
-            if (target.p_chaos[obj_controller.selecting_planet]>0) then chock=0;
-            if (target.p_tyranids[obj_controller.selecting_planet]>0) then chock=0;
-            if (target.p_necrons[obj_controller.selecting_planet]>0) then chock=0;
-            if (target.p_tau[obj_controller.selecting_planet]>0) then chock=0;
-            if (target.p_demons[obj_controller.selecting_planet]>0) then chock=0;
-            if (chock=1) then button1="Build";
-        }
-    }
-}
-
-if (instance_exists(obj_p_fleet)){
-    var targ_targ;
-    targ_targ=instance_nearest(target.x+24,target.y-24,obj_p_fleet);
-    // 135 buttons
-    
-    if (targ_targ.owner  = eFACTION.Player) and (targ_targ.action="") and (point_distance(target.x+24,target.y-24,targ_targ.x,targ_targ.y)<=40){
-        if (obj_controller.selecting_planet>0){
-            
-            if (target.p_owner[obj_controller.selecting_planet]>=7) or (target.p_owner[obj_controller.selecting_planet]=10){
-                if (button1!=""){button1="Raid";if (targ_targ.capital_number>0) or (targ_targ.frigate_number>0) then button2="Bombard";}
-                if (button1=""){button2="Raid";if (targ_targ.capital_number>0) or (targ_targ.frigate_number>0) then button3="Bombard";}
-            }
-            /*if (target.p_owner[obj_controller.selecting_planet]=6) or (target.p_owner[obj_controller.selecting_planet]=8){
-                if (button1!=""){button1="Raid";if (targ_targ.capital_number>0) or (targ_targ.frigate_number>0) then button2="Bombard";}
-                if (button1=""){button2="Raid";if (targ_targ.capital_number>0) or (targ_targ.frigate_number>0) then button3="Bombard";}
-            }
-            
-            if (target.p_owner[obj_controller.selecting_planet]<=3) and (target.p_owner[obj_controller.selecting_planet]!=0){
-                button1="Raid";
-                
-                if (target.p_orks[obj_controller.selecting_planet]>0) and (target.p_player[obj_controller.selecting_planet]>0){button1="Attack";button2="Raid";button3="Purge";}
-                if (target.p_tau[obj_controller.selecting_planet]>0) and (target.p_player[obj_controller.selecting_planet]>0){button1="Attack";button2="Raid";button3="Purge";}
-                if (target.p_traitors[obj_controller.selecting_planet]>0) and (target.p_player[obj_controller.selecting_planet]>0){button1="Attack";button2="Raid";button3="Purge";}
-                if (target.p_tyranids[obj_controller.selecting_planet]>4) and (target.p_player[obj_controller.selecting_planet]>0){button1="Attack";button2="Raid";button3="Purge";}
-                if (target.p_tyranids[obj_controller.selecting_planet]>0) and (target.p_player[obj_controller.selecting_planet]>0){
-                    if (target.p_problem[obj_controller.selecting_planet,1]="tyranid_org"){button1="Attack";button2="Raid";button3="Purge";}
-                    if (target.p_problem[obj_controller.selecting_planet,2]="tyranid_org"){button1="Attack";button2="Raid";button3="Purge";}
-                    if (target.p_problem[obj_controller.selecting_planet,3]="tyranid_org"){button1="Attack";button2="Raid";button3="Purge";}
-                    if (target.p_problem[obj_controller.selecting_planet,4]="tyranid_org"){button1="Attack";button2="Raid";button3="Purge";}
-                }
-                
-            }
-        }
-    }
-}
-
-
-
-*/
-
-
-
-
-
 
 if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_fleet+ork_fleet+tau_fleet+heretic_fleet>0) and (obj_controller.cooldown<=0){
     var i,x3,y3;i=0;

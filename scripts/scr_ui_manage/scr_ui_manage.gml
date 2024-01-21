@@ -1000,7 +1000,7 @@ function scr_ui_manage() {
 				y5=yy+831;
 				x6=xx+1436;
 				y6=yy+805;
-				if (sel_promoting==1){
+				if (sel_promoting>0){
 					draw_unit_buttons([x5,y6, x6, y5],"Promote");
 				}else {
 					draw_unit_buttons([x5,y6, x6, y5],"Promote",[1.5,1.5],c_gray,fa_left, fnt_40k_14b, 0.5);
