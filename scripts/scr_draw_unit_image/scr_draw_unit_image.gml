@@ -623,10 +623,10 @@ function scr_draw_unit_image(x_draw, y_draw){
                         if (ttrim=1) then draw_sprite(spr_gear_hood2,0,xx+x_draw-2,yy+y_draw-11);
                         if (ttrim==0) then draw_sprite(spr_gear_hood2,1,xx+x_draw-2,yy+y_draw-11);
                     } else {
-                        if (obj_ini.main_color=obj_ini.secondary_color) then draw_sprite(spr_gear_hood1,hood,xx+x_draw,yy+y_draw);
-                        if (obj_ini.main_color!=obj_ini.secondary_color) then draw_sprite(spr_gear_hood3,hood,xx+x_draw,yy+y_draw);
-                    }
-                    draw_sprite(spr_psy_hood,2,xx+x_draw,yy+y_draw); 
+                        //if (obj_ini.main_color=obj_ini.secondary_color) then draw_sprite(spr_gear_hood1,hood,xx+x_draw,yy+y_draw);
+                        //if (obj_ini.main_color!=obj_ini.secondary_color) then draw_sprite(spr_gear_hood3,hood,xx+x_draw,yy+y_draw);
+                        draw_sprite(spr_psy_hood,2,xx+x_draw,yy+y_draw);
+                    } 
                 } else if (halo=1){ // Draw the Iron Halo
                     if (base_sprite<1) and (ui_specialist=14) and ((obj_ini.progenitor=5 || global.chapter_name="Blood Angels")){
                         draw_sprite(spr_gear_halo,0,xx+x_draw,yy+y_draw);
