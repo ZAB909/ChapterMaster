@@ -242,7 +242,10 @@ function scr_draw_unit_image(x_draw, y_draw){
                 ttrim=0;
                 specialist_colours=0;
             }
-        
+
+            shader_set_uniform_f(obj_controller.colour_to_find8, 46/255,49/255,146/255 );//body
+            var main_body_shade = shadow_creator(obj_controller.targetR1*255,obj_controller.targetG1*255,obj_controller.targetB1*255, 0.7);
+            shader_set_uniform_f(obj_controller.colour_to_set8, color_get_red(main_body_shade)/255,color_get_green(main_body_shade)/255,color_get_blue(main_body_shade)/255);//body         
 			// Marine draw sequence
             /*
             main
@@ -518,14 +521,14 @@ function scr_draw_unit_image(x_draw, y_draw){
                 if (base_sprite<= 0){
                     if (ui_specialist==5){
                         if (array_contains(traits, "tinkerer")){
-                            specific_armour_sprite="none";
+                            //specific_armour_sprite="none";
                             armour_draw=[spr_techmarine_core,0];
                             arm=0;
                             armour_bypass=true;
                         }
                     } else if (role()=="Chapter Master"){
                         if (global.chapter_name=="Blood Angels"){
-                            specific_armour_sprite="none";
+                            //specific_armour_sprite="none";
                             armour_draw=[spr_dante,0];
                             armour_bypass=true;
                         }
