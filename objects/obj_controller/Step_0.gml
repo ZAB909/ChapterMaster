@@ -692,13 +692,15 @@ if (unload>0){
     var b=selecting_ship,manaj=managing;
     
     if (manaj>10) then manaj=0;
-
+    var unit;
     for(var q=1; q<=500; q++){
         if (man[q]=="man") and (ma_loc[q]==selecting_location) and (ma_wid[q]<1)and (man_sel[q]!=0){
             if (b==0) then b=ma_lid[q];
+            unit=obj_ini.TTRPG[manaj][ide[q]];
+            if (unit.name()=="") then continue;
             obj_ini.loc[manaj][ide[q]]=obj_ini.ship_location[b];
             obj_ini.lid[manaj][ide[q]]=0;
-            obj_ini.wid[manaj][ide[q]]=unload;
+            unit.planet_location=unload;
             obj_ini.uid[manaj][ide[q]]=0;
             
             ma_loc[q]=obj_ini.ship_location[b];

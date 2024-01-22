@@ -174,6 +174,7 @@ function scr_ui_manage() {
 			}
 			x5=x6;
 
+			//TODO Implement company report
 			/*var x6=x5+string_width(stat_tool_tip_text)+4;
 			var y6=y5+string_height(stat_tool_tip_text)+2;	    
 		    draw_unit_buttons([x5,y5,x6,y6], stat_tool_tip_text,[1,1],c_red);
@@ -300,7 +301,7 @@ function scr_ui_manage() {
 
 			// Display information on the marine
 
-    		var_text = string_hash_to_newline(string("Bionics: {0}",selected_unit.bionics()))
+    		var_text = string_hash_to_newline(string("Bionics: {0}",selected_unit.bionics));
         	x1 = xx+1387;
         	y1 = yy+460;
         	x2 = x1+string_width(var_text);
@@ -393,7 +394,7 @@ function scr_ui_manage() {
 	    
 	    if (!obj_controller.view_squad){
 		    for(var i=0; i<repetitions;i++){
-
+		    	if (sel==500) then break;
 		    	while (man[sel]=="hide") and (sel<499){sel+=1;}
 
 				eventing=false;
@@ -434,7 +435,8 @@ function scr_ui_manage() {
 		            ar_ar=0;ar_we1=0;ar_we2=0;ar_ge=0;ar_mb=0;
 	            	//TODO handle recursively
 		            if (ma_armour[sel]!=""){
-						ma_ar=scr_wep_abbreviate(ma_armour[sel]);
+						ma_ar=gear_weapon_data("armour",ma_armour[sel],"abbreviation");
+						ma_ar=is_string(ma_ar) ? ma_ar : "";
 		                // if (string_count("*",ma_ar)>0){ar_ar=2;ma_ar=string_replace(ma_ar,"*","");}
 		                if (string_count("^",ma_armour[sel])>0){
 							ar_ar=1;
@@ -446,7 +448,8 @@ function scr_ui_manage() {
 						}
 		            }
 		            if (ma_gear[sel]!=""){
-						ma_ge=scr_wep_abbreviate(ma_gear[sel]);
+						ma_ge=gear_weapon_data("gear",ma_gear[sel],"abbreviation");
+						ma_ge=is_string(ma_ge) ? ma_ge : ""	;					
 		                if (string_count("^",ma_gear[sel])>0){
 							ar_ge=1;
 							ma_ge=string_replace(ma_ge,"^","");
@@ -457,7 +460,8 @@ function scr_ui_manage() {
 						}
 		            }
 		            if (ma_mobi[sel]!=""){
-						ma_mb=scr_wep_abbreviate(ma_mobi[sel]);
+						ma_mb=gear_weapon_data("mobility",ma_mobi[sel],"abbreviation");
+						ma_mb=is_string(ma_mb) ? ma_mb : ""	;			            	
 		                if (string_count("^",ma_mobi[sel])>0){
 							ar_mb=1;
 							ma_mb=string_replace(ma_mb,"^","");
@@ -468,7 +472,8 @@ function scr_ui_manage() {
 						}
 		            }
 		            if (ma_wep1[sel]!=""){
-						ma_we1=scr_wep_abbreviate(ma_wep1[sel]);
+						ma_we1=gear_weapon_data("weapon",ma_wep1[sel],"abbreviation");
+						ma_we1=is_string(ma_we1) ? ma_we1 : ""	;			            	
 		                if (string_count("^",ma_wep1[sel])>0){
 							ar_we1=1;
 							ma_we1=string_replace(ma_we1,"^","");
@@ -479,7 +484,8 @@ function scr_ui_manage() {
 						}
 		            }
 		            if (ma_wep2[sel]!=""){
-						ma_we2=scr_wep_abbreviate(ma_wep2[sel]);
+						ma_we2=gear_weapon_data("weapon",ma_wep2[sel],"abbreviation");
+						ma_we2=is_string(ma_we1) ? ma_we2 : "";	
 		                if (string_count("^",ma_wep2[sel])>0){
 							ar_we2=1;
 							ma_we2=string_replace(ma_we2,"^","");
@@ -691,23 +697,26 @@ function scr_ui_manage() {
 	        
 		        // ma_lid[i]=0;ma_wid[i]=0;
 	        
-		        if (ma_loc[sel]=="Mechanicus Vessel") then draw_sprite(spr_loc_icon,2,xx+427+8,yy+66);
-		        if (man[sel]=="man"){
-		            if (ma_loc[sel]!="Mechanicus Vessel"){
-						var berd=false;
-		                if (managing<11) and (obj_ini.age[managing,ide[sel]]!=floor(obj_ini.age[managing,ide[sel]])) then berd=true;
-		                if (managing>=11)and (obj_ini.age[0,ide[sel]]!=floor(obj_ini.age[0,ide[sel]])) then berd=true;
-	                
-		                if (ma_lid[sel]==0) and (ma_wid[sel]>0) then draw_sprite(spr_loc_icon,0,xx+427+8,yy+66);
-		                if (ma_lid[sel]>0) and (ma_wid[sel]==0) and (berd==false) then draw_sprite(spr_loc_icon,1,xx+427+8,yy+66);
-		                if (ma_lid[sel]>0) and (ma_wid[sel]==0) and (berd==true) then draw_sprite(spr_loc_icon,2,xx+427+8,yy+66);
-		            }
-		        }
-		        if (man[sel]!="man"){
-		            if (ma_loc[sel]!="Mechanicus Vessel"){
+		        if (ma_loc[sel]=="Mechanicus Vessel"){
+		        	draw_sprite(spr_loc_icon,2,xx+427+8,yy+66);
+		        } else {
+			        if (man[sel]=="man"){
+			        		c = managing<=10 ? managing : 0;
+							var unit = obj_ini.TTRPG[c][ide[sel]];
+		  
+			                if (ma_lid[sel]>0) and (ma_wid[sel]==0){
+			                    draw_sprite(
+			                        spr_loc_icon,
+			                        unit.is_boarder ? 2 : 1,
+			                        xx+427+8,
+			                        yy+66);
+			                }  else if (ma_wid[sel]>0){
+			                	draw_sprite(spr_loc_icon,0,xx+427+8,yy+66);
+			                }
+			        }else{
 		                if (ma_lid[sel]==0) and (ma_wid[sel]>0) then draw_sprite(spr_loc_icon,0,xx+427+8,yy+66);
 		                if (ma_lid[sel]>0) and (ma_wid[sel]==0) then draw_sprite(spr_loc_icon,1,xx+427+8,yy+66);
-		            }
+			        }
 		        }
 		         //TODO handle recursively
 		        if (man[sel]=="man"){

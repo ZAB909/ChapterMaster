@@ -12,8 +12,8 @@ function scr_master_loc() {
 	            if (co>10) then good=false;
 	            if (good=true){
 	                if (obj_ini.role[co][v]="Chapter Master"){
-	                    if (obj_ini.wid[co][v]>0) and (obj_ini.lid[co][v]<=0) then lick=string(obj_ini.loc[co][v])+"."+string(obj_ini.wid[co][v]);
-	                    if (obj_ini.wid[co][v]<=0) and (obj_ini.lid[co][v]>0) then lick=string(obj_ini.ship[obj_ini.lid[co][v]]);
+	                    if (obj_ini.TTRPG[co][v].planet_location>0) and (obj_ini.lid[co][v]<=0) then lick=string(obj_ini.loc[co][v])+"."+string(obj_ini.TTRPG[co][v].planet_location);
+	                    if (obj_ini.TTRPG[co][v].planet_location<=0) and (obj_ini.lid[co][v]>0) then lick=string(obj_ini.ship[obj_ini.lid[co][v]]);
 	                    if (lick!=""){return(lick);good=false;}
 	                }
 	            }

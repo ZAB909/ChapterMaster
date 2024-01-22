@@ -16,7 +16,7 @@ function scr_count_forces(_unit_location, _target_location, _is_planet, instance
 			{
 				if (obj_ini.race[company][i]==1)					&& 
 				   (obj_ini.loc[company][i]==_unit_location)		&& 
-				   (obj_ini.wid[company][i]==_target_location)
+				   (obj_ini.TTRPG[company][i].planet_location==_target_location)
 				{
 
 					info_mahreens++;

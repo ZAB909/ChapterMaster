@@ -575,7 +575,10 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 	}
 }
 function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
-	constitution=0; strength=0;luck=0;dexterity=0;wisdom=0;piety=0;charisma=0;technology=0;intelligence=0;weapon_skill=0;ballistic_skill=0;size = 0;
+	constitution=0; strength=0;luck=0;dexterity=0;wisdom=0;piety=0;charisma=0;technology=0;intelligence=0;weapon_skill=0;ballistic_skill=0;size = 0;planet_location=0;
+	if (!instance_exists(obj_controller) && class!="blank"){//game start unit planet location
+		planet_location=2;
+	}
 	religion="none";
 	psionic=0;
 	corruption=0;
@@ -589,7 +592,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	marine_number = mar;			//marine number in company
 	squad = "none";
 	stat_point_exp_marker = 0;
-	static bionics = function(){return obj_ini.bio[company][marine_number];}// get marine bionics count	
+	bionics=0;
 	static experience =  function(){
 		return obj_ini.experience[company][marine_number];
 	}//get exp
@@ -681,7 +684,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	static hp = function(){ 
 		return obj_ini.hp[company][marine_number]; //return current health
 	};
-
+	static add_or_sub_health = function(health_augment){
+		obj_ini.hp[company][marine_number]+=health_augment;
+	}
 	static healing = function(apoth){
 		var health_portion = 20;
 		var m_health = max_health();
@@ -1146,8 +1151,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			return "no bionics";
 		}
 		var new_bionic_pos, part, new_bionic = {quality :bionic_quality};
-		if (obj_ini.bio[company][marine_number] < 10){
-			update_health(hp()+30);
+		if (bionics < 10){
+			if (has_trait("flesh_is_weak")){
+				add_or_sub_health(40);
+			} else {
+				add_or_sub_health(30);
+			}
 			var bionic_possible = [];
 			for (var body_part = 0; body_part < array_length(global.body_parts);body_part++){
 				part = global.body_parts[body_part];
@@ -1165,7 +1174,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				} else {
 					new_bionic_pos = bionic_possible[irandom(array_length(bionic_possible)-1)];
 				}
-				obj_ini.bio[company][marine_number]++;
+				bionics++;
 				alter_body(new_bionic_pos, "bionic",new_bionic)
 				if (array_contains(["left_leg", "right_leg"], new_bionic_pos)){
 					constitution += 2;
@@ -1191,7 +1200,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				}else{ 
 					constitution++;
 				}
-				if (array_contains(traits, "flesh_is_weak")){
+				if (has_trait("flesh_is_weak")){
 					piety++;
 				}
 				if (from_armoury){
@@ -1216,6 +1225,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	static gear = function(){
 		return obj_ini.gear[company][marine_number];
 	};
+
+	is_boarder =false;
 
 	gear_quality="standard";
 	static update_gear = function(new_gear,from_armoury=true, to_armoury=true, quality="any"){
@@ -1414,13 +1425,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			if (gear_carry!=0){
 				ranged_hands_limit+=gear_carry;
 				var symbol = armour_carry>0 ? "+":"-"
-				carry_string+=$"gear:{symbol}{armour_carry}#";
+				carry_string+=$"gear:{symbol}{gear_carry}#";
 			}
 			var mobility_carry = get_mobility_data("ranged_hands");
 			if (mobility_carry!=0){
 				ranged_hands_limit+=mobility_carry;
 				var symbol = armour_carry>0 ? "+":"-"
-				carry_string+=$"gear:{symbol}{armour_carry}#";
+				carry_string+=$"{mobility_item()}:{symbol}{mobility_carry}#";
 			}							
 			return [ranged_carrying,ranged_hands_limit,carry_string]						
 		}
@@ -1429,6 +1440,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			encumbered_ranged=false;			
 			//base modifyer based on unit skill set
 			ranged_att = 100*(((ballistic_skill/50) + (dexterity/400)+ (experience()/500)));
+			var final_range_attack=0;
 			var explanation_string = $"base ranged:X{ranged_att/100}#"
 			//determine capavbility to weild bulky weapons
 			var carry_data =ranged_hands_limit();
@@ -1449,10 +1461,31 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}
 			var primary_weapon= new equipment_struct({},"");
 			var secondary_weapon= new equipment_struct({},"");
+			if (carry_data[0]>carry_data[1]){
+				encumbered_ranged=true;					
+				ranged_att*=0.6;
+				explanation_string+=$"encumbered penalty:X0.6#";
+			}			
 			if (weapon_slot==0){
 				//decide if any weapons are ranged
 				if (_wep1.range<=1.1 && _wep2.range<=1.1){
-					ranged_damage_data= [0,explanation_string,carry_data,primary_weapon, secondary_weapon];
+					if (array_length(_wep1.second_profiles) + array_length(_wep2.second_profiles) ==0){
+						ranged_damage_data = [final_range_attack,explanation_string,carry_data,primary_weapon, secondary_weapon];
+					} else {
+						var other_profiles = array_concat(_wep1.second_profiles,_wep2.second_profiles);
+						for (var sec = 0;sec<array_length(other_profiles);sec++){
+							var sec_profile = gear_weapon_data("weapon",other_profiles[sec],"all",false,weapon_one_quality);
+							if (is_struct(sec_profile)){
+								if (sec_profile.range>1.1 && sec_profile.attack>0){
+									final_range_attack+=(sec_profile.attack*(ranged_att/100));
+									explanation_string+=$"{sec_profile.name} +{sec_profile.attack}#";
+								}
+							}
+						}
+						if (array_length(_wep1.second_profiles)>0) then primary_weapon=gear_weapon_data("weapon",_wep1.second_profiles[0],"all",false,weapon_one_quality);
+						if (array_length(_wep2.second_profiles)>0) then primary_weapon=gear_weapon_data("weapon",_wep2.second_profiles[0],"all",false,weapon_two_quality);
+						ranged_damage_data = [final_range_attack,explanation_string,carry_data,primary_weapon, secondary_weapon];
+					}
 					return ranged_damage_data;
 				} else {
 					if (_wep1.range<=1.1){
@@ -1461,7 +1494,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 						primary_weapon=_wep1;
 					} else {
 						//if both weapons are ranged pick best
-						primary_weapon = _wep1.attack>_wep2.attack ? _wep1 : _wep2;
+						if (_wep1.attack>_wep2.attack){
+							primary_weapon=_wep1;
+							secondary_weapon=_wep2;
+						} else{
+							secondary_weapon=_wep1;
+							primary_weapon=_wep2;
+						}
 					}
 				}
 			} else {
@@ -1500,7 +1539,17 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				}
 			}
 			//return final ranged damage output
-			var final_range_attack = floor((ranged_att/100)* primary_weapon.attack);
+			final_range_attack = floor((ranged_att/100)* primary_weapon.attack);
+			if (!encumbered_ranged){
+				if (primary_weapon.has_tag("pistol") &&secondary_weapon.has_tag("pistol")){
+					final_range_attack+=floor((ranged_att/100)* secondary_weapon.attack);
+					explanation_string+=$"dual pistols:+{secondary_weapon.attack}#";			
+				} else if (secondary_weapon.attack>0){
+					var second_attack =floor((ranged_att/100)* secondary_weapon.attack)*0.5;
+					final_range_attack+=second_attack;
+					explanation_string+=$"secondary:+{second_attack}#";			
+				}
+			}
 			ranged_damage_data = [final_range_attack,explanation_string,carry_data,primary_weapon, secondary_weapon];
 			return ranged_damage_data;
 		};
@@ -1531,13 +1580,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			if (gear_carry!=0){
 				melee_hands_limit+=gear_carry;
 				var symbol = armour_carry>0 ? "+":"-"
-				carry_string+=$"gear:{symbol}{armour_carry}#";
+				carry_string+=$"gear:{symbol}{gear_carry}#";
 			}
 			var mobility_carry = get_mobility_data("melee_hands");
 			if (mobility_carry!=0){
 				melee_hands_limit+=mobility_carry;
 				var symbol = armour_carry>0 ? "+":"-"
-				carry_string+=$"gear:{symbol}{armour_carry}#";
+				carry_string+=$"{mobility_item()}:{symbol}{mobility_carry}#";
 			}						
 			return [melee_carrying,melee_hands_limit,carry_string]						
 		}		
@@ -1702,7 +1751,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 		static marine_location = function(){
 			var location_id,location_name;
-			var location_type = obj_ini.wid[company][marine_number];
+			var location_type = planet_location;
 			if ( location_type > 0){ //if marine is on planet
 				location_id = location_type; //planet_number marine is on
 				location_type = location_types.planet; //state marine is on planet
@@ -1748,7 +1797,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				  if (current_location[2] == "home" ){system = obj_ini.home_name;}
 				 //check if ship is in the same location as marine and has enough space;
 				 if (ship_location == system) and ((obj_ini.ship_carrying[ship] + size) <= obj_ini.ship_capacity[ship]){
-					 obj_ini.wid[company][marine_number] = 0; //mark marine as no longer on planet
+					 planet_location = 0; //mark marine as no longer on planet
 					 obj_ini.lid[company][marine_number] = ship; //id of ship marine is now loaded on
 					 obj_ini.ship_carrying[ship] += size; //update ship capacity
 					 var temp_self =self;
@@ -1775,7 +1824,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if (current_location[0]==location_types.ship){
 			if (!array_contains(["Warp", "Terra", "Mechanicus Vessel"],obj_ini.ship_location[current_location[1]]) && obj_ini.ship_location[current_location[1]]==system.name){
 				obj_ini.loc[company][marine_number]=obj_ini.ship_location[current_location[1]];
-				obj_ini.wid[company][marine_number]=planet_number;
+				planet_location=planet_number;
 				obj_ini.lid[company][marine_number]=0;
 				get_unit_size();
 				system.p_player[planet_number]+= size;
@@ -1784,13 +1833,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 	}
 	static set_planet = function(planet_number){
-		obj_ini.wid[company][marine_number]=planet_number;
+		planet_location=planet_number;
 	}
 
 	static is_at_location = function(location, planet, ship){
 		var is_at_loc = false;
 		if (planet>0){
-			if (obj_ini.loc[company][marine_number]==location && obj_ini.wid[company][marine_number]=planet){
+			if (obj_ini.loc[company][marine_number]==location && planet_location=planet){
 				is_at_loc=true;
 			}
 		} else if (ship>0){

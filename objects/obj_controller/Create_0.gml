@@ -251,14 +251,14 @@ for(var i=100; i<103; i++){
     
     obj_controller.r_role[i,14]="Chaplain";
     obj_controller.r_wep1[i,14]="Power Sword";
-    obj_controller.r_wep2[i,14]="Storm Bolter";
+    obj_controller.r_wep2[i,14]="Bolt Pistol";
     obj_controller.r_armour[i,14]="Power Armour";
     obj_controller.r_gear[i,14]="Rosarius";
     obj_controller.r_mobi[i,14]="";
     
     obj_controller.r_role[i,15]="Apothecary";
     obj_controller.r_wep1[i,15]="Power Sword";
-    obj_controller.r_wep2[i,15]="Storm Bolter";
+    obj_controller.r_wep2[i,15]="Bolt Pistol";
     obj_controller.r_armour[i,15]="Power Armour";
     obj_controller.r_gear[i,15]="Narthecium";
     obj_controller.r_mobi[i,15]="";

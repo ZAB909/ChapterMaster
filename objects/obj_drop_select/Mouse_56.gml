@@ -220,7 +220,7 @@ if (obj_controller.cooldown<=0) and (once_only=0){// Need to change max_ships to
                         if (veh_fighting[co][v]!=0) then obj_ncombat.veh_fighting[co][v]=1;
                     }
                     if (attack=1) and (ship_all[500]=1){
-                        if (obj_ini.loc[co][v]=p_target.name) and (obj_ini.wid[co][v]=obj_controller.selecting_planet) then obj_ncombat.fighting[co][v]=1;
+                        if (obj_ini.loc[co][v]=p_target.name) and (obj_ini.TTRPG[co][v].planet_location=obj_controller.selecting_planet) then obj_ncombat.fighting[co][v]=1;
                         if (v<=100){if (obj_ini.veh_loc[co][v]=p_target.name) and (obj_ini.veh_wid[co][v]=obj_controller.selecting_planet) then obj_ncombat.veh_fighting[co][v]=1;}
                     }
                 }

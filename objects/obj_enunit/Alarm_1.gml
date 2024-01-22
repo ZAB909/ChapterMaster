@@ -122,10 +122,6 @@ var dreaded;dreaded=false;
 repeat(700){g+=1;
     marine_casting[g]=0;
 
-    // if (marine_casting[g]>=0) then marine_casting[g]=0;
-    // if (marine_casting[g]<0) then marine_casting[g]+=1;
-    
-    // if ((marine_id[g]>0) or (ally[g]=true)) and (marine_hp[g]>0) then marine_dead[g]=0;
     if ((dudes[g]!="") and (dudes_num[g]>0)) and (dudes_hp[g]>0){
         // if (marine_hp[g]>0) then men+=1;
         

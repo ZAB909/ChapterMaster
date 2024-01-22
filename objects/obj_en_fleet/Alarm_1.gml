@@ -1275,10 +1275,8 @@ if (action=""){
                     if (ca<=10) and (ca>=0){
                         ia+=1;if (ia=400){ca+=1;ia=1;if (ca=11) then ca=-5;}
                         if (ca>=0) and (ca<11){
-                            // show_message("is loc "+string(ca)+":"+string(ia)+" ("+string(obj_ini.loc[ca,ia])+") equal to "+string(thata.name)+" ?");
-                            // show_message("is wid "+string(ca)+":"+string(ia)+" ("+string(obj_ini.wid[ca,ia])+") >0 ?");
                             
-                            if (string(obj_ini.loc[ca,ia])=thata.name) and (real(obj_ini.wid[ca,ia])>0){
+                            if (string(obj_ini.loc[ca,ia])=thata.name) and (real(obj_ini.TTRPG[ca][ia].planet_location)>0){
                                 if (obj_ini.role[ca,ia]="Ork Sniper") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}
                                 if (obj_ini.role[ca,ia]="Flash Git") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}
                                 if (obj_ini.role[ca,ia]="Ranger") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}

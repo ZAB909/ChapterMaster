@@ -1,7 +1,4 @@
-function scr_flavor2(argument0, argument1) {
-
-	// argument0: total_lost
-	// argument1: "wall" or ""
+function scr_flavor2(lost_units_count, target_type) {
 
 	// Generates flavor based on the damage and casualties from scr_shoot, only for the opponent
 
@@ -17,22 +14,10 @@ function scr_flavor2(argument0, argument1) {
 	j4="your formation";
 	j5="your vehicles";
 
-
-
-	// show_message(enemy.dudes[1]);
-
-	/*if (enemy.dreads>0) and (enemy.men=0) and (enemy.veh=0){
-	    j1="your "+string(obj_ini.role[100][6])+"s";
-	    j2="your "+string(obj_ini.role[100][6])+"s";
-	    j3="your "+string(obj_ini.role[100][6])+"s";
-	    j5="your "+string(obj_ini.role[100][6])+"s";
-	}*/
-
-
 	var hr,hw,hs;
 	hr=0;hw="";hs=0;
 
-	if (argument1!="wall"){
+	if (target_type!="wall"){
 	    hr=hostile_range;
 	    hw=hostile_weapon;
 	    hs=hostile_shots;
@@ -40,7 +25,7 @@ function scr_flavor2(argument0, argument1) {
 
 
 
-	if (argument1="wall") and (instance_exists(obj_nfort)){
+	if (target_type="wall") and (instance_exists(obj_nfort)){
 	    var hehh;
 	    hehh="the fortification";
     
@@ -61,20 +46,20 @@ function scr_flavor2(argument0, argument1) {
 
 	// show_message(string(hostile_weapon)+"|"+string(hw)+"#"+string(los)+"#"+string(los_num));
 
-	var flavor;flavor=0;
+	var flavor=0;
 
 
 	/*
-	if (argument0="Venom Claws"){atta=200;arp=0;rang=1;spli=0;if (obj_ini.preomnor=1){atta=240;}}
-	if (argument0="Web Spinner"){atta=40;arp=0;rang=2.1;spli=1;amm=1;}
-	if (argument0="Warpsword"){atta=300;arp=200;rang=1;spli=1;}
-	if (argument0="Iron Claw"){atta=300;arp=400;rang=1;spli=0;}
-	if (argument0="Maulerfiend Claws"){atta=300;arp=300;rang=1;spli=1;}
+	if (lost_units_count="Venom Claws"){atta=200;arp=0;rang=1;spli=0;if (obj_ini.preomnor=1){atta=240;}}
+	if (lost_units_count="Web Spinner"){atta=40;arp=0;rang=2.1;spli=1;amm=1;}
+	if (lost_units_count="Warpsword"){atta=300;arp=200;rang=1;spli=1;}
+	if (lost_units_count="Iron Claw"){atta=300;arp=400;rang=1;spli=0;}
+	if (lost_units_count="Maulerfiend Claws"){atta=300;arp=300;rang=1;spli=1;}
 
-	if (argument0="Eldritch Fire"){atta=80;arp=40;rang=5.1;}
-	if (argument0="Khorne Demon Melee"){atta=350;arp=400;rang=1;spli=1;}
-	if (argument0="Demon Melee"){atta=250;arp=300;rang=1;spli=1;}
-	if (argument0="Lash Whip"){atta=80;arp=0;rang=2;}
+	if (lost_units_count="Eldritch Fire"){atta=80;arp=40;rang=5.1;}
+	if (lost_units_count="Khorne Demon Melee"){atta=350;arp=400;rang=1;spli=1;}
+	if (lost_units_count="Demon Melee"){atta=250;arp=300;rang=1;spli=1;}
+	if (lost_units_count="Lash Whip"){atta=80;arp=0;rang=2;}
 	*/
 
 	if (hw="Daemonette Melee"){flavor=1;
@@ -233,7 +218,7 @@ function scr_flavor2(argument0, argument1) {
 	// m2="Blah blah blah";
 
 
-	if (argument1="wall"){
+	if (target_type="wall"){
 	    mes=m1+m2+m3;
 
 	    if (string_length(mes)>3){
@@ -254,17 +239,14 @@ function scr_flavor2(argument0, argument1) {
 	}
 
 
-	var w;w=0;var s,him;
+	var w=0;
+	var s,him, speshul,unit;
 	repeat(20){
 	    w+=1;
-    
 	    if (lost[w]!="") and (lost_num[w]>0){
-	        var speshul;speshul=0;
+	    	speshul=0
+	        if (is_specialist(lost[w],"heads")) then speshul=1;
 	        if (lost[w]="Chapter Master") then speshul=1;
-	        if (lost[w]="Chief "+string(obj_ini.role[100,17])) then speshul=1;
-	        if (lost[w]="Forge Master") then speshul=1;
-	        if (lost[w]="Master of Sanctity") then speshul=1;
-	        if (lost[w]="Master of the Apothecarion") then speshul=1;
 	        if (lost[w]="Venerable "+string(obj_ini.role[100][6])) then speshul=1;
 	        if (lost[w]=obj_ini.role[100][5]) then speshul=1;
         
@@ -272,7 +254,7 @@ function scr_flavor2(argument0, argument1) {
         
 	        // if (speshul=1) then show_message("Lost "+string(lost[w]));
         
-	        if (speshul=0){
+	        if (speshul==0){
 	            m2+=string(lost_num[w])+" "+string(lost[w]);
 	            if (lost_num[w]>1) then m2+="s";
 	            m2+=", ";
@@ -285,10 +267,11 @@ function scr_flavor2(argument0, argument1) {
 	                    him=s;// show_message(string(marine_type[s])+"=="+string(lost[w]));
 	                }
 	            }
-	            if (him!=0){obj_ncombat.dead_jims+=1;
+	            if (him!=0){
+	            	obj_ncombat.dead_jims+=1;
 	                if (marine_type[him]=obj_ini.role[100][5]) then obj_ncombat.dead_jim[obj_ncombat.dead_jims]="A "+string(marine_type[him])+" has been critically injured!";
 	                if (marine_type[him]!=obj_ini.role[100][5]){
-	                    obj_ncombat.dead_jim[obj_ncombat.dead_jims]=string(marine_type[him])+" "+string(obj_ini.name[marine_co[him],marine_id[him]])+" has been critically injured!";
+	                    obj_ncombat.dead_jim[obj_ncombat.dead_jims]=$"{obj_ini.TTRPG[marine_co[him]][marine_id[him]].name_role()} has been critically injured!";
 	                    // show_message(string(obj_ncombat.dead_jim[obj_ncombat.dead_jims]));
 	                }
 	            }
@@ -298,7 +281,7 @@ function scr_flavor2(argument0, argument1) {
 	}
 
 
-	var unce;unce=0;
+	var unce=0;
 
 
 	if (string_count(", ",m2)>1){
@@ -308,7 +291,7 @@ function scr_flavor2(argument0, argument1) {
 	    var lis,y1,y2;
 	    lis=string_rpos(", ",m2);
 	    m2=string_delete(m2,lis,3);// This clears the last ', ' and replaces it with the end statement
-	    if (argument0>1) then m2+=" have been lost.";
+	    if (lost_units_count>1) then m2+=" have been lost.";
     
 	    // show_message(m2);
     
@@ -327,20 +310,21 @@ function scr_flavor2(argument0, argument1) {
 
 	if (string_count(", ",m2)=1) and (unce=0) and (hostile_weapon!="Web Spinner"){
 	    var lis,y1,y2;lis=string_rpos(", ",m2);m2=string_delete(m2,lis,3);
-	    if (argument0>1) then m2+=" have been lost.";
-	    if (argument0=1) then m2+=" has been lost.";
+	    if (lost_units_count>1) then m2+=" have been lost.";
+	    if (lost_units_count=1) then m2+=" has been lost.";
 	}
 	if (string_count(", ",m2)=1) and (unce=0) and (hostile_weapon="Web Spinner"){
 	    var lis,y1,y2;lis=string_rpos(", ",m2);m2=string_delete(m2,lis,3);
-	    if (argument0>1) then m2+=" have been incapitated.";
-	    if (argument0=1) then m2+=" has been incapitated.";
+	    if (lost_units_count>1) then m2+=" have been incapitated.";
+	    if (lost_units_count=1) then m2+=" has been incapitated.";
 	}
 
 
 
 
 	i=0;
-	repeat(60){i+=1;
+	repeat(60){
+		i+=1;
 	    lost[i]="";
 	    lost_num[i]=0;
 	}
@@ -352,7 +336,7 @@ function scr_flavor2(argument0, argument1) {
 	if (string_length(mes)>3){
 	    obj_ncombat.messages+=1;
 	    obj_ncombat.message[obj_ncombat.messages]=mes;    
-	    obj_ncombat.message_sz[obj_ncombat.messages]=argument0+(0.5-(obj_ncombat.messages/100));
+	    obj_ncombat.message_sz[obj_ncombat.messages]=lost_units_count+(0.5-(obj_ncombat.messages/100));
 	    obj_ncombat.message_priority[obj_ncombat.messages]=0;
 	    obj_ncombat.alarm[3]=2;
 	}

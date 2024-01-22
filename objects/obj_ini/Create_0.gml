@@ -77,8 +77,20 @@ company=-1;
 repeat(11){
     company+=1;v=-1;// show_message("v company: "+string(company));
     repeat(205){v+=1;// show_message(string(company)+"."+string(v));
-        veh_race[company,v]=0;veh_loc[company,v]="";veh_name[company,v]="";veh_role[company,v]="";veh_wep1[company,v]="";veh_wep2[company,v]="";veh_wep3[company,v]="";
-        veh_upgrade[company,v]="";veh_acc[company,v]="";veh_hp[company,v]=100;veh_chaos[company,v]=0;veh_pilots[company,v]=0;veh_lid[company,i]=0;veh_wid[company,v]=2;
+        veh_race[company,v]=0;
+        veh_loc[company,v]="";
+        veh_name[company,v]="";
+        veh_role[company,v]="";
+        veh_wep1[company,v]="";
+        veh_wep2[company,v]="";
+        veh_wep3[company,v]="";
+        veh_upgrade[company,v]="";
+        veh_acc[company,v]="";
+        veh_hp[company,v]=100;
+        veh_chaos[company,v]=0;
+        veh_pilots[company,v]=0;
+        veh_lid[company,i]=0;
+        veh_wid[company,v]=2;
         veh_uid[company,v]=0;
     }
 }
