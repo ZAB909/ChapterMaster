@@ -268,3 +268,16 @@ function set_as_melee_onehand_special(sprite, left_or_right) {
     ui_spec[left_or_right] = true;
     display_type = "melee_onehand";
 }
+
+function dreadnought_sprite_components(component){
+    var components = {
+        "Assualt Cannon" : spr_dread_assault_cannon,
+        "Lascannon" : spr_dread_lascannon,
+        "Close Combat Weapon":spr_dread_claw,
+    };
+    if (struct_exists(components, component)){
+        return components[$ component]
+    } else {
+        return spr_weapon_blank;
+    }
+}

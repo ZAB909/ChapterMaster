@@ -589,9 +589,6 @@ function scr_draw_unit_image(x_draw, y_draw){
                 }else if (armour_bypass && array_length(armour_draw)>1){
                     draw_sprite(armour_draw[0], armour_draw[1],xx+x_draw,yy+y_draw);
                 }
-                if (base_sprite=5){
-                    draw_sprite(spr_dreadnought_chasis_colors,specialist_colours,xx+x_draw,yy+y_draw);
-                }
             
                 if (slow>=10) and (blandify=0) then draw_sprite(armour_sprite,slow,xx+x_draw,yy+y_draw);// Slow and Purposeful battle damage
                 if (brothers>=0) and (blandify=0) then draw_sprite(spr_gear_techb,brothers,xx+x_draw,yy+y_draw);// Tech-Brothers bling
@@ -833,8 +830,16 @@ function scr_draw_unit_image(x_draw, y_draw){
                 }
             }
             // if (braz=1) then draw_sprite(spr_pack_brazier,1,xx+x_draw,yy+y_draw);
-			
-            shader_reset();
+            if (base_sprite==5){
+                draw_sprite(spr_dreadnought_chasis_colors,specialist_colours,xx+x_draw,yy+y_draw);
+                var left_arm = dreadnought_sprite_components(weapon_two());
+                var colour_scheme  =  specialist_colours<=1 ? 0 : 1;
+                draw_sprite(left_arm,colour_scheme,xx+x_draw,yy+y_draw);
+                colour_scheme  += 2;
+                var right_arm = dreadnought_sprite_components(weapon_one());
+                draw_sprite(right_arm,colour_scheme,xx+x_draw,yy+y_draw);
+            } 			
+            shader_reset();           
         }else{
             draw_set_color(c_gray);
             draw_text(xx+x_draw,yy+y_draw,string_hash_to_newline("Color swap shader#did not compile"));
