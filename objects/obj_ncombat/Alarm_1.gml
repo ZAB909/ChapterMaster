@@ -19,6 +19,7 @@ d1="";d2="";d3="";d4="";d5="";d6="";d7="";d8="";
 temp=scouts+tacticals+veterans+devastators+assaults+librarians;
 temp+=techmarines+honors+dreadnoughts+terminators+captains;
 temp+=standard_bearers+champions+important_dudes+chaplains+apothecaries;
+temp+=sgts+vet_sgts
 
 show_debug_message("scouts: {0}", string(scouts))
 show_debug_message("tacticals: {0}", string(tacticals))
@@ -188,6 +189,14 @@ if (temp<200) and (librarians>0){
 if (temp<200) and (techmarines>0){
     if (techmarines=1) then p2+=string(techmarines)+" "+string(obj_ini.role[100][16])+", ";
     if (techmarines>1) then p2+=string(techmarines)+" "+string(obj_ini.role[100][16])+", ";
+}
+if (temp<200) and (sgts>0){
+    if (techmarines=1) then p2+=string(techmarines)+" "+string(obj_ini.role[100][18])+", ";
+    if (techmarines>1) then p2+=string(techmarines)+" "+string(obj_ini.role[100][18])+", ";
+}
+if (temp<200) and (vet_sgts>0){
+    if (techmarines=1) then p2+=string(techmarines)+" "+string(obj_ini.role[100][19])+", ";
+    if (techmarines>1) then p2+=string(techmarines)+" "+string(obj_ini.role[100][19])+", ";
 }
 
 

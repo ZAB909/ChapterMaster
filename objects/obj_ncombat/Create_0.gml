@@ -185,6 +185,8 @@ champions=0;
 important_dudes=0;
 chaplains=0;
 apothecaries=0;
+sgts=0;
+vet_sgts=0;
 
 rhinos=0;
 predators=0;

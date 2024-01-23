@@ -45,8 +45,8 @@ function role_groups(group){
 
 		case "squad_leaders":
 			role_list = [
-				obj_ini.role[100,18], //sergeant
-				obj_ini.role[100,19],  //vet sergeant
+				obj_ini.role[100][18], //sergeant
+				obj_ini.role[100][19],  //vet sergeant
 			]
 			break;
 		case "command":
@@ -152,8 +152,13 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 			break;
 		case "squad_leaders":
 			specialists = role_groups("squad_leaders");
+			break;
 		case "dreadnoughts":
-			specialists = role_groups("dreadnoughts");			
+			specialists = role_groups("dreadnoughts");	
+			break;
+		case "veterans":
+			specialists = role_groups("veterans");
+			break;
 	}
 
 	return array_contains(specialists,unit_role);
