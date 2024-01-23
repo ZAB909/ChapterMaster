@@ -1,7 +1,7 @@
 var _ui_green = #009500;
 var _text_color = #080000;
-var _window_w = window_get_width();
-var _window_h = window_get_height();
+var _surface_w = surface_get_width(application_surface);
+var _surface_h = surface_get_height(application_surface);
 var _padding_x = 16;
 var _padding_y = 8;
 var _text_draw_width;
@@ -26,7 +26,7 @@ draw_set_font(fnt_menu);
 
 // begin box
 if (start==0) {
-    var _begin_x = _window_w / 2;
+    var _begin_x = _surface_w / 2;
     var _begin_y = 56;
     var _begin_w_half = 128;
     var _begin_h_half = 16;
@@ -54,7 +54,7 @@ if (start==0) {
 if (room_speed != 90 && start == 5) {
     draw_set_alpha(1);
     var _ff_h = sprite_get_height(spr_fast_forward);
-    draw_sprite(spr_fast_forward, 0, 12, (_window_h / 2) - (_ff_h / 2));
+    draw_sprite(spr_fast_forward, 0, 12, (_surface_h / 2) - (_ff_h / 2));
 }
 
 // battle stat box
@@ -168,8 +168,8 @@ if (start == 7) {
     var _result_image_w = 409;
     var _result_image_h = 247;
 
-    var _result_center_x = (_window_w / 2);
-    var _result_center_y = (_window_h / 2) + (_result_image_h / 2) + _padding_y;
+    var _result_center_x = (_surface_w / 2);
+    var _result_center_y = (_surface_h / 2) + (_result_image_h / 2) + _padding_y;
 
     _bbox_x_from_center = ( _result_text_width / 2) + _padding_x;
     _bbox_y_from_center = (_result_text_height / 2) + _padding_y;
