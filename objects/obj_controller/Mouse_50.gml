@@ -534,7 +534,7 @@ if (menu==20) and (diplomacy==10.1){
                // obj_duel = instance_create(0,0,obj_duel);
                // obj_duel.title = "Ambush Champion";
                // pop.type="duel";
-                //scr_kill_unit(champ[0],champ[1]);
+                scr_kill_unit(champ[0],champ[1]);
             } else {
                 diplomacy_pathway = "daemon_scorn";
             }              

@@ -66,7 +66,9 @@ function calculate_research_points(){
     var research_points = 0;
     var techs = scr_role_count(obj_ini.role[100][16], "", "units");
     for (var i=0; i<array_length(techs); i++){
-        research_points += techs[i].technology-40;
+        if (techs[i].technology>30){
+            research_points += techs[i].technology-40;
+        }
     }
     return research_points;
 }
@@ -81,7 +83,7 @@ function research_end(){
     }else if (stc_research.research_focus=="ships"){
         research_area_limit = stc_ships;
     }    
-    if (stc_research[$ stc_research.research_focus]>10000*(research_area_limit+1)){
+    if (stc_research[$ stc_research.research_focus]>5000*(research_area_limit+1)){
        identify_stc(stc_research.research_focus);  
     }
 }
@@ -297,8 +299,10 @@ function scr_draw_armentarium(){
         }else if (stc_research.research_focus=="ships"){
             research_area_limit = stc_ships;
         }
-        var research_progress = ceil(((10000*(research_area_limit+1))-stc_research[$ stc_research.research_focus])/research_points);
+        var research_progress = ceil(((5000*(research_area_limit+1))-stc_research[$ stc_research.research_focus])/research_points);
 		static research_drop_down = false;
+        var research_eta_message = $"Based on current progress it will be {research_progress} months until next significant research step is complete";
+        draw_text_ext(xx + 336 + 16, y_offset+25, string_hash_to_newline(research_eta_message), -1, 536);        
 		var drop_down_results = drop_down_sandwich(
             stc_research.research_focus,
             xx + 336 + 16,
@@ -309,9 +313,6 @@ function scr_draw_armentarium(){
             ".");
         research_drop_down = drop_down_results[1];
         stc_research.research_focus = drop_down_results[0];
-        var research_eta_message = $"Based on current progress it will be {research_progress} months until next significant research step is complete";
-        draw_text_ext(xx + 336 + 16, y_offset+20, string_hash_to_newline(research_eta_message), -1, 536);
-
         var hi;
         draw_set_color(38144);
         hi = 0;
@@ -338,29 +339,25 @@ function scr_draw_armentarium(){
         draw_set_alpha(1);
         if (stc_wargear < 1) then draw_set_alpha(0.5);
         draw_text(xx + 372, yy + 549, string_hash_to_newline("1) 8% discount"));
-        var ta = "Random";
-        if (stc_bonus[1] = 1) then ta = "Enhanced Bolts";
-        if (stc_bonus[1] = 2) then ta = "Enhanced Chain Weapons";
-        if (stc_bonus[1] = 3) then ta = "Enhanced Flame Weapons";
-        if (stc_bonus[1] = 4) then ta = "Enhanced Missiles";
-        if (stc_bonus[1] = 5) then ta = "Enhanced Armour";
+
+        var stc_bonus_strings = [ "Random","Enhanced Bolts","Enhanced Chain Weapons","Enhanced Flame Weapons","Enhanced Missiles","Enhanced Armour"]
+        var bonus_string=stc_bonus_strings[stc_bonus[1]];
         draw_set_alpha(1);
 
         if (stc_wargear < 2) then draw_set_alpha(0.5);
-        draw_text(xx + 372, yy + 549 + 35, string_hash_to_newline("2) " + string(ta)));
+        draw_text(xx + 372, yy + 549 + 35, string_hash_to_newline("2) " + string(bonus_string)));
         draw_set_alpha(1);
 
         if (stc_wargear < 3) then draw_set_alpha(0.5);
         draw_text(xx + 372, yy + 549 + 70, string_hash_to_newline("3) 16% discount"));
 
-        ta = "Random";
-        if (stc_bonus[2] = 1) then ta = "Enhanced Fist Weapons";
-        if (stc_bonus[2] = 2) then ta = "Enhanced Plasma";
-        if (stc_bonus[2] = 3) then ta = "Enhanced Armour";
+        stc_bonus_strings = [ "Random","Enhanced Fist Weapons Bolts","Enhanced Plasma","Enhanced Armour"]
+        bonus_string=stc_bonus_strings[stc_bonus[2]];
+
         draw_set_alpha(1);
 
         if (stc_wargear < 4) then draw_set_alpha(0.5);
-        draw_text(xx + 372, yy + 549 + 105, string_hash_to_newline("4) " + string(ta)));
+        draw_text(xx + 372, yy + 549 + 105, string_hash_to_newline("4) " + string(bonus_string)));
         draw_set_alpha(1);
 
         if (stc_wargear < 5) then draw_set_alpha(0.5);
@@ -377,29 +374,29 @@ function scr_draw_armentarium(){
         if (stc_vehicles < 1) then draw_set_alpha(0.5);
         draw_text(xx + 552, yy + 549, string_hash_to_newline("1) 8% discount"));
 
-        ta = "Random";
-        if (stc_bonus[3] = 1) then ta = "Enhanced Hull";
-        if (stc_bonus[3] = 2) then ta = "Enhanced Accuracy";
-        if (stc_bonus[3] = 3) then ta = "New Weapons";
-        if (stc_bonus[3] = 4) then ta = "Survivability";
-        if (stc_bonus[3] = 5) then ta = "Enhanced Armour";
+        bonus_string = "Random";
+        if (stc_bonus[3] = 1) then bonus_string = "Enhanced Hull";
+        if (stc_bonus[3] = 2) then bonus_string = "Enhanced Accuracy";
+        if (stc_bonus[3] = 3) then bonus_string = "New Weapons";
+        if (stc_bonus[3] = 4) then bonus_string = "Survivability";
+        if (stc_bonus[3] = 5) then bonus_string = "Enhanced Armour";
         draw_set_alpha(1);
 
         if (stc_vehicles < 2) then draw_set_alpha(0.5);
-        draw_text(xx + 552, yy + 549 + 35, string_hash_to_newline("2) " + string(ta)));
+        draw_text(xx + 552, yy + 549 + 35, string_hash_to_newline("2) " + string(bonus_string)));
         draw_set_alpha(1);
 
         if (stc_vehicles < 3) then draw_set_alpha(0.5);
         draw_text(xx + 552, yy + 549 + 70, string_hash_to_newline("3) 16% discount"));
 
-        ta = "Random";
-        if (stc_bonus[4] = 1) then ta = "Enhanced Hull";
-        if (stc_bonus[4] = 2) then ta = "Enhanced Armour";
-        if (stc_bonus[4] = 3) then ta = "New Weapons";
+        bonus_string = "Random";
+        if (stc_bonus[4] = 1) then bonus_string = "Enhanced Hull";
+        if (stc_bonus[4] = 2) then bonus_string = "Enhanced Armour";
+        if (stc_bonus[4] = 3) then bonus_string = "New Weapons";
         draw_set_alpha(1);
 
         if (stc_vehicles < 4) then draw_set_alpha(0.5);
-        draw_text(xx + 552, yy + 549 + 105, string_hash_to_newline("4) " + string(ta)));
+        draw_text(xx + 552, yy + 549 + 105, string_hash_to_newline("4) " + string(bonus_string)));
         draw_set_alpha(1);
 
         if (stc_vehicles < 5) then draw_set_alpha(0.5);
@@ -415,29 +412,29 @@ function scr_draw_armentarium(){
         draw_set_alpha(1);
         if (stc_ships < 1) then draw_set_alpha(0.5);
         draw_text(xx + 732, yy + 549, string_hash_to_newline("1) 8% discount"));
-        ta = "Random";
-        if (stc_bonus[5] = 1) then ta = "Enhanced Hull";
-        if (stc_bonus[5] = 2) then ta = "Enhanced Accuracy";
-        if (stc_bonus[5] = 3) then ta = "Enhanced Turning";
-        if (stc_bonus[5] = 4) then ta = "Enhanced Boarding";
-        if (stc_bonus[5] = 5) then ta = "Enhanced Armour";
+        bonus_string = "Random";
+        if (stc_bonus[5] = 1) then bonus_string = "Enhanced Hull";
+        if (stc_bonus[5] = 2) then bonus_string = "Enhanced Accuracy";
+        if (stc_bonus[5] = 3) then bonus_string = "Enhanced Turning";
+        if (stc_bonus[5] = 4) then bonus_string = "Enhanced Boarding";
+        if (stc_bonus[5] = 5) then bonus_string = "Enhanced Armour";
         draw_set_alpha(1);
 
         if (stc_ships < 2) then draw_set_alpha(0.5);
-        draw_text(xx + 732, yy + 549 + 35, string_hash_to_newline("2) " + string(ta)));
+        draw_text(xx + 732, yy + 549 + 35, string_hash_to_newline("2) " + string(bonus_string)));
         draw_set_alpha(1);
 
         if (stc_ships < 3) then draw_set_alpha(0.5);
         draw_text(xx + 732, yy + 549 + 70, string_hash_to_newline("3) 16% discount"));
 
-        ta = "Random";
-        if (stc_bonus[6] = 1) then ta = "Enhanced Hull";
-        if (stc_bonus[6] = 2) then ta = "Enhanced Armour";
-        if (stc_bonus[6] = 3) then ta = "Enhanced Speed";
+        bonus_string = "Random";
+        if (stc_bonus[6] = 1) then bonus_string = "Enhanced Hull";
+        if (stc_bonus[6] = 2) then bonus_string = "Enhanced Armour";
+        if (stc_bonus[6] = 3) then bonus_string = "Enhanced Speed";
         draw_set_alpha(1);
 
         if (stc_ships < 4) then draw_set_alpha(0.5);
-        draw_text(xx + 732, yy + 549 + 105, string_hash_to_newline("4) " + string(ta)));
+        draw_text(xx + 732, yy + 549 + 105, string_hash_to_newline("4) " + string(bonus_string)));
         draw_set_alpha(1);
 
         if (stc_ships < 5) then draw_set_alpha(0.5);
