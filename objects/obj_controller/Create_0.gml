@@ -539,7 +539,14 @@ stc_bonus[1]=0;
 stc_bonus[2]=0;
 stc_bonus[3]=0;
 stc_bonus[4]=0;
-stc_bonus[5]=0;stc_bonus[6]=0;
+stc_bonus[5]=0;
+stc_bonus[6]=0;
+stc_research = {
+    wargear:0,
+    vehicles:0,
+    ships:0,
+    research_focus:"wargear",
+}
 // ** Resets the years **
 check_number=0;
 year_fraction=0;

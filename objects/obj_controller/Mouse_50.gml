@@ -270,27 +270,21 @@ if (menu==14) and (cooldown<=0){
 			stc_wargear <= min(stc_vehicles, stc_ships)) {
 					
 				stc_wargear_un--;
-                stc_wargear++;
-                if (stc_wargear==2) then stc_bonus[1]=choose(1,2,3,4,5);
-                if (stc_wargear==4) then stc_bonus[2]=choose(1,2,3);
+               identify_stc("wargear")
 			}
 			else if(stc_vehicles_un > 0 && 
 			stc_vehicles < MAX_STC_PER_SUBCATEGORY &&
 			stc_vehicles <= min(stc_wargear, stc_ships)) {
 					
 				stc_vehicles_un--;
-                stc_vehicles++;
-                if (stc_vehicles==2) then stc_bonus[3]=choose(1,2,3,4,5);
-                if (stc_vehicles==4) then stc_bonus[4]=choose(1,2,3);
+               identify_stc("vehicles")
 			}
 			else if(stc_ships_un > 0 && 
 			stc_ships < MAX_STC_PER_SUBCATEGORY &&
 			stc_ships <= min(stc_vehicles, stc_wargear)) {
 				
 				stc_ships_un--;
-                stc_ships++;
-                if (stc_ships==2) then stc_bonus[5]=choose(1,2,3,4,5);
-                if (stc_ships==4) then stc_bonus[6]=choose(1,2,3);
+                identify_stc("ships")
 			}
 			
             // Refresh the shop
@@ -1629,6 +1623,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 click=1;
                 temp[36]=scr_role_count(obj_ini.role[100][16],"");
                 temp[37]=temp[36]+scr_role_count(string(obj_ini.role[100][16])+" Aspirant","");
+                research_points = calculate_research_points();
             }
             if (menu==14) and (onceh==0){
                 menu=0;
@@ -1830,6 +1825,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                             instance_deactivate_object(id);
                         }
                     }
+                    research_end();
                     alarm[5]=6;
                     instance_create(0,0,obj_turn_end);
                     scr_turn_first();

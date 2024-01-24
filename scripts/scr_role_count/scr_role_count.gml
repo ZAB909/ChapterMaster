@@ -1,11 +1,8 @@
-function scr_role_count(argument0, argument1) {
-
-	// argument0 : role
-	// argument1: "" or "home" or "field" or star name+.+num
+function scr_role_count(target_role, search_location="", return_type="count") {
 
 	// Take a guess
 
-	var com, i, count, coom;
+	var com, i, count, coom, units=[], unit,match;
 
 	count=0;
 	i=0;
@@ -13,24 +10,31 @@ function scr_role_count(argument0, argument1) {
 	coom=-999;
 
 
-	if (argument1="0") then coom=0;
-	if (argument1="1") then coom=1;
-	if (argument1="2") then coom=2;
-	if (argument1="3") then coom=3;
-	if (argument1="4") then coom=4;
-	if (argument1="5") then coom=5;
-	if (argument1="6") then coom=6;
-	if (argument1="7") then coom=7;
-	if (argument1="8") then coom=8;
-	if (argument1="9") then coom=9;
-	if (argument1="10") then coom=10;
+	if (search_location="0") then coom=0;
+	if (search_location="1") then coom=1;
+	if (search_location="2") then coom=2;
+	if (search_location="3") then coom=3;
+	if (search_location="4") then coom=4;
+	if (search_location="5") then coom=5;
+	if (search_location="6") then coom=6;
+	if (search_location="7") then coom=7;
+	if (search_location="8") then coom=8;
+	if (search_location="9") then coom=9;
+	if (search_location="10") then coom=10;
 
 
 
 	if (coom>=0){
-	    i=0;com=coom;
-	    repeat(300){
-	        i+=1;if (obj_ini.role[com][i]=argument0) and (obj_ini.god[com][i]<10) then count+=1;
+	    com=coom;
+	    for (i=1;i<array_length(obj_ini.TTRPG[com]);i++){
+			unit=obj_ini.TTRPG[com][i];
+			if (unit.name()=="")then continue; 	
+	        if (obj_ini.role[com][i]=target_role) and (obj_ini.god[com][i]<10){
+	        	count+=1;
+	        	if (return_type=="units"){
+	        		array_push(units, obj_ini.TTRPG[com][i]);
+	        	}
+	        }
 	    }    
 	    com+=1;
 	}
@@ -38,17 +42,25 @@ function scr_role_count(argument0, argument1) {
 
 	if (coom<0) then repeat(11){
 	    i=0;
-	    repeat(300){
-	        i+=1;
-	        if (obj_ini.role[com][i]=argument0) and (argument1="") then count+=1;
-	        if (obj_ini.role[com][i]=argument0) and (obj_ini.loc[com][i]=obj_ini.home_name) and (argument1="home") then count+=1;
-	        if (obj_ini.role[com][i]=argument0) and (argument1="field") and ((obj_ini.loc[com][i]!=obj_ini.home_name) or (obj_ini.lid[com][i]>0)) then count+=1;
+	    for (i=1;i<array_length(obj_ini.TTRPG[com]);i++){
+			match=false;
+			unit=obj_ini.TTRPG[com][i];
+			if (unit.name()=="")then continue;
+	        if (obj_ini.role[com][i]=target_role) and (search_location="") then match=true;
+	        if (obj_ini.role[com][i]=target_role) and (obj_ini.loc[com][i]=obj_ini.home_name) and (search_location="home") then match=true;
+	        if (obj_ini.role[com][i]=target_role) and (search_location="field") and ((obj_ini.loc[com][i]!=obj_ini.home_name) or (obj_ini.lid[com][i]>0)) then match=true;
         
-	        if (argument1!="home") and (argument1!="field"){
-	            if (obj_ini.role[com][i]=argument0){
-	                var t1;t1=string(obj_ini.loc[com][i])+"|"+string(obj_ini.TTRPG[com][i].planet_location)+"|";
-	                if (argument1=t1) then count+=1;
+	        if (search_location!="home") and (search_location!="field"){
+	            if (obj_ini.role[com][i]=target_role){
+	                var t1=string(obj_ini.loc[com][i])+"|"+string(obj_ini.TTRPG[com][i].planet_location)+"|";
+	                if (search_location=t1) then match=true;
 	            }
+	        }
+	        if (match){
+	        	count++;
+	        	if (return_type=="units"){
+	        		array_push(units, unit);
+	        	}	        	
 	        }
 	    }    
 	    com+=1;
@@ -59,7 +71,9 @@ function scr_role_count(argument0, argument1) {
 
 
 
-
+	if (return_type=="units"){
+		return units;
+	}
 
 	return(count);
 

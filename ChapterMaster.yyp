@@ -323,6 +323,7 @@
     {"id":{"name":"spr_creation_check","path":"sprites/spr_creation_check/spr_creation_check.yy",},},
     {"id":{"name":"spr_creation_founding","path":"sprites/spr_creation_founding/spr_creation_founding.yy",},},
     {"id":{"name":"spr_creation_existing","path":"sprites/spr_creation_existing/spr_creation_existing.yy",},},
+    {"id":{"name":"scr_draw_armentarium","path":"scripts/scr_draw_armentarium/scr_draw_armentarium.yy",},},
     {"id":{"name":"spr_creation_other","path":"sprites/spr_creation_other/spr_creation_other.yy",},},
     {"id":{"name":"spr_creation_nosplash","path":"sprites/spr_creation_nosplash/spr_creation_nosplash.yy",},},
     {"id":{"name":"spr_rg_mk6_helm","path":"sprites/spr_rg_mk6_helm/spr_rg_mk6_helm.yy",},},

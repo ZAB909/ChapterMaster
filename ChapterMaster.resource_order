@@ -30,6 +30,7 @@
     {"name":"spr_creation_check","order":19,"path":"sprites/spr_creation_check/spr_creation_check.yy",},
     {"name":"spr_creation_founding","order":21,"path":"sprites/spr_creation_founding/spr_creation_founding.yy",},
     {"name":"spr_creation_existing","order":23,"path":"sprites/spr_creation_existing/spr_creation_existing.yy",},
+    {"name":"scr_draw_armentarium","order":4,"path":"scripts/scr_draw_armentarium/scr_draw_armentarium.yy",},
     {"name":"spr_creation_other","order":25,"path":"sprites/spr_creation_other/spr_creation_other.yy",},
     {"name":"spr_creation_nosplash","order":27,"path":"sprites/spr_creation_nosplash/spr_creation_nosplash.yy",},
     {"name":"spr_rg_mk6_helm","order":10,"path":"sprites/spr_rg_mk6_helm/spr_rg_mk6_helm.yy",},
