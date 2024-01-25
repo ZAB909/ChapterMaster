@@ -239,59 +239,6 @@ if (menu==13) and (cooldown<=0) and (artifacts>0){
 }
 // ** Armamentorium STC fragments **
 if (menu==14) and (cooldown<=0){
-    // Gift STC Fragment
-    if (point_in_rectangle(mouse_x, mouse_y, xx + 733, yy + 466, xx + 790, yy + 486) && cooldown <= 0) {
-        if (stc_wargear_un+stc_vehicles_un+stc_ships_un>0){
-            var chick=0;
-            if (known[eFACTION.Imperium]>1) and (faction_defeated[2]==0) then chick=1;
-            if (known[eFACTION.Mechanicus]>1) and (faction_defeated[3]==0) then chick=1;
-            if (known[eFACTION.Inquisition]>1) and (faction_defeated[4]==0) then chick=1;
-            if (known[eFACTION.Ecclesiarchy]>1) and (faction_defeated[5]==0) then chick=1;
-            if (known[eFACTION.Eldar]>1) and (faction_defeated[6]==0) then chick=1;
-            if (known[eFACTION.Tau]>1) and (faction_defeated[8]==0) then chick=1;
-            if (chick!=0){
-                var pop=instance_create(0,0,obj_popup);
-                pop.type=9.1;
-                cooldown=8000;
-            }
-        }
-    }
-    // Identify STC
-    if (mouse_x>xx+621) and (mouse_y>yy+466) and (mouse_x<xx+720) and (mouse_y<yy+486){
-        if (stc_wargear_un + stc_vehicles_un + stc_ships_un > 0){
-				
-            cooldown=8000;
-            audio_play_sound(snd_stc,-500,0)
-            audio_sound_gain(snd_stc,master_volume*effect_volume,0);
-
-
-			if(stc_wargear_un > 0 && 
-			stc_wargear < MAX_STC_PER_SUBCATEGORY &&
-			stc_wargear <= min(stc_vehicles, stc_ships)) {
-					
-				stc_wargear_un--;
-               identify_stc("wargear")
-			}
-			else if(stc_vehicles_un > 0 && 
-			stc_vehicles < MAX_STC_PER_SUBCATEGORY &&
-			stc_vehicles <= min(stc_wargear, stc_ships)) {
-					
-				stc_vehicles_un--;
-               identify_stc("vehicles")
-			}
-			else if(stc_ships_un > 0 && 
-			stc_ships < MAX_STC_PER_SUBCATEGORY &&
-			stc_ships <= min(stc_vehicles, stc_wargear)) {
-				
-				stc_ships_un--;
-                identify_stc("ships")
-			}
-			
-            // Refresh the shop
-            instance_create(1000,1000,obj_shop);
-        }
-        exit;
-    }
 }
 // ** Recruitement **
 if (menu==15) and (cooldown<=0){
@@ -1623,7 +1570,10 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 click=1;
                 temp[36]=scr_role_count(obj_ini.role[100][16],"");
                 temp[37]=temp[36]+scr_role_count(string(obj_ini.role[100][16])+" Aspirant","");
-                research_points = calculate_research_points();
+                var recalculate_points = calculate_research_points();
+                research_points = recalculate_points[0];
+                forge_points = recalculate_points[1];
+                in_forge=false
             }
             if (menu==14) and (onceh==0){
                 menu=0;

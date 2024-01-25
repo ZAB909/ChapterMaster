@@ -365,6 +365,20 @@ global.trait_list = {
 		constitution:[2,2,"max"],
 		flavour_text:"{0} is drawn to fighting and scraps often using little more than their fists",
 		effect:"bonus to fist type weaponry",
+	},
+	"tech_heretic":{
+		display_name:"Tech Heretic",
+		technology:[3,1,"max"],
+		intelligence:1,
+		flavour_text:"{0} Engages in study and beliefs considered heretical in the eyes of Mars and the Imperium",
+		//effect:"bonus to fist type weaponry",
+	},
+	"crafter":{
+		display_name:"Crafter",
+		technology:[6,1,"max"],
+		intelligence:1,
+		flavour_text:"{0} Is particularly skilled at building things, often making them to a superior quality as well",
+		effect:"provides more total forge points",
 	}	
 }
 global.base_stats = { //tempory stats subject to change by anyone that wishes to try their luck
@@ -605,6 +619,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if (base_group == "astartes"){
 			while (stat_point_exp_marker>=15){
 				var stat_gains = choose("weapon_skill", "ballistic_skill", "wisdom");
+				if (IsSpecialist("forge") && irandom(3)==0) then stat_gains = "technology";
 				self[$ stat_gains]++;
 				stat_point_exp_marker-=15;
 				if (struct_exists(instace_stat_point_gains, stat_gains)){
@@ -938,20 +953,20 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 						dist_rate=[0,0];
 					}
 				}
-				if (struct_exists(dist_modifiers, "chapter_name")){
-					if (global.chapter_name == dist_modifiers[$ "chapter_name"][0]){
-						dist_rate = dist_modifiers[$"chapter_name"][1]; 
-					}else if (is_state_required(dist_modifiers[$ "chapter_name"])){
-						dist_rate=[0,0];
-					}
-				}
 				if (struct_exists(dist_modifiers, "progenitor")){
 					if (obj_ini.progenitor == dist_modifiers[$ "progenitor"][0]){
 						dist_rate = dist_modifiers[$"progenitor"][1]; 
 					}else if (is_state_required(dist_modifiers[$ "progenitor"])){
 						dist_rate=[0,0];
 					}
-				}				
+				}
+				if (struct_exists(dist_modifiers, "chapter_name")){
+					if (global.chapter_name == dist_modifiers[$ "chapter_name"][0]){
+						dist_rate = dist_modifiers[$"chapter_name"][1]; 
+					}else if (is_state_required(dist_modifiers[$ "chapter_name"])){
+						dist_rate=[0,0];
+					}
+				}								
 				if (irandom(dist_rate[0])>dist_rate[1]){
 					add_trait(distribution_set[i][0]);
 				}
@@ -1046,6 +1061,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				["zealous_faith",[99,98],{"chapter_name":["Black Templars",[3,2]]}],
 				["flesh_is_weak",[1000,999],{"chapter_name":["Iron Hands",[10,9],"required"],"progenitor":[6,[10,9],"required"]}],
 				["tinkerer",[199,198],{"chapter_name":["Iron Hands",[49,47]]}],
+				["crafter",[299,298],{"advantage":["crafter",[199,198]]}],
 			];
 			distribute_traits(astartes_trait_dist);
 			alter_body("torso","black_carapace",true);
@@ -1866,6 +1882,14 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if (spawn_ex != 0){add_exp(spawn_ex)}  //update the marines exp with updated guass value
 
 	};
+
+	static forge_point_generation = function(){
+		if (!IsSpecialist("forge")) then return 0
+		var points = technology/10;
+		if (has_trait("crafter")) then points+=3;
+		return points;
+	}
+
 	static spawn_old_guard =function(){
 		var old_guard=irandom(100);
 		var age = (obj_ini.millenium*1000)+obj_ini.year;
@@ -2027,6 +2051,15 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			  }
 			  if (religion !="cult_mechanicus"){
 			  	religion_sub_cult = "none";
+			  }
+			  if (array_contains(obj_ini.adv, "Crafters")){
+			  	if (irandom(2)==0){
+			  		add_trait("crafter");
+			  	}
+			  } else if (obj_ini.progenitor==8 || obj_ini.progenitor==6){
+			  	if (irandom(4)==0){
+			  		add_trait("crafter");
+			  	}			  	
 			  }
 			  religion = "cult_mechanicus"	
 				break;

@@ -415,6 +415,7 @@ ui_melee_penalty=0;
 ui_ranged_penalty=0;
 
 // ** Sets default mouse vars **
+current_target=false;
 click=0;
 click2=0;
 mouse_left=0;
@@ -526,6 +527,8 @@ menu_adept=0;
 artifacts=0;
 identifiable=0;
 repair_ships=0;
+forge_points = 0;
+forge_queue=[];
 // ** STC values **
 stc_wargear=0;
 stc_vehicles=0;

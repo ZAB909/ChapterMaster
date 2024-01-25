@@ -4,7 +4,6 @@ function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,align
 	draw_set_halign(align);
 	var full_width;
 	var full_height;
-	draw_set_color(colour);
 	if (array_length(position)>2){
 		var full_width = position[2];
 		var full_height= position[3];
@@ -14,6 +13,9 @@ function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,align
 		var full_width = position[0]+text_width+8
 		var full_height = position[1]+text_height+4;
 	}
+	draw_set_color(c_black);
+	draw_rectangle(position[0],position[1], full_width,full_height,0)
+	draw_set_color(colour);
 	draw_text_transformed(position[0]+4,position[1]+2,string_hash_to_newline(text),size_mod[0],size_mod[1],0);
 	draw_rectangle(position[0],position[1], full_width,full_height,1)
 	draw_set_alpha(0.5*alpha_mult);
@@ -23,7 +25,6 @@ function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,align
 		draw_rectangle(position[0],position[1], full_width,full_height,0);
 	}
 	draw_set_alpha(1);
-
 }
 
 function scr_ui_manage() {
@@ -1059,6 +1060,11 @@ function scr_ui_manage() {
 		    		var stat_display = string_hash_to_newline($"DEX#{selected_unit.dexterity}");
 		    		var stat_size = tooltip_draw(stat_x,stat_y, stat_display,2);
 		    		var warp_box_size = tooltip_draw(stat_x,stat_y+string_height(stat_display)+6,$"Warp Level:{selected_unit.psionic}");
+		    		draw_set_color(c_red);
+		    		if (selected_unit.IsSpecialist("forge")){
+		    			tooltip_draw(stat_x,stat_y+string_height(stat_display)+6+warp_box_size[1],$"Forge Points:{selected_unit.forge_point_generation()}");
+		    		}
+		    		draw_set_color(0);
 
 
 		    		stat_tool_tip_text="Measure of how quick and nimble unit is as well as their base ability to manipulate and do tasks with their hands (improves ranged attack)";
@@ -1068,30 +1074,40 @@ function scr_ui_manage() {
 		    		//string interpolation not possible when declaring lists
 		    		stat_display_list = [
 		    			["STR#"+string(selected_unit.strength),
-		    			"How strong a unit is (can wield heavier equipment without detriment and is more deadly in close combat)"],
+		    			"How strong a unit is (can wield heavier equipment without detriment and is more deadly in close combat)",
+		    			c_teal],
 		    			["CON#"+string(selected_unit.constitution),
-		    			"Unit's general toughness and resistance to damage (increases health and damage resistance)"],
+		    			"Unit's general toughness and resistance to damage (increases health and damage resistance)",
+		    			c_red],
 		    			["INT#"+string(selected_unit.intelligence),
-		    			"measure of learnt knowledge and specialist skill aptitude"],
+		    			"measure of learnt knowledge and specialist skill aptitude",
+		    			c_blue],
 		    			["WIS#"+string(selected_unit.wisdom),
-		    			"units perception and street smarts"],
+		    			"units perception and street smarts including certain types of battlefield knowlage",
+		    			c_olive],
 		    			["FAI#"+string(selected_unit.piety),
-		    			"units faith in their given religion (or general aptitude towards faith)"],
+		    			"units faith in their given religion (or general aptitude towards faith)",
+		    			c_orange],
 		    			["WS#"+string(selected_unit.weapon_skill),
-		    			"general skill with close combat weaponry"],
+		    			"general skill with close combat weaponry",
+		    			c_yellow],
 		    			["BS#"+string(selected_unit.ballistic_skill),
-		    			"general skill with ballistic and ranged weaponry"],
+		    			"general skill with ballistic and ranged weaponry",
+		    			c_fuchsia],
 		    			["LU#"+string(selected_unit.luck),
-		    			"...luck..."],
+		    			"...luck...",
+		    			c_lime],
 		    			["TEC#"+string(selected_unit.technology),
-		    			"skill and understanding of technology and various technical thingies"],
+		    			"skill and understanding of technology and various technical thingies",
+		    			c_maroon],
 		    			["CHA#"+string(selected_unit.charisma),
-		    			"general likeability and ability to interact with people"],			    					    					    					    			
+		    			"general likeability and ability to interact with people",
+		    			c_purple],			    					    					    					    			
 		    		]
 		    		for (i=0; i<array_length(stat_display_list);i++){
 		    			stat_display=stat_display_list[i][0];
 		    			stat_tool_tip_text = stat_display_list[i][1];
-		    			stat_size = tooltip_draw(stat_x,stat_y, stat_display,2);
+		    			stat_size = tooltip_draw(stat_x,stat_y, stat_display,2,0,false,0,stat_display_list[i][2]);
 		    			array_push(stat_tool_tips,[stat_x, stat_y, stat_x+string_width(string_hash_to_newline(stat_display)), stat_y+string_height(string_hash_to_newline(stat_display)),stat_tool_tip_text]);
 		    			stat_x += stat_size[0];
 		    		}

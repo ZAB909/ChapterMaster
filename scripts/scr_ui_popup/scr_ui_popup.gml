@@ -1,4 +1,4 @@
-function tooltip_draw(base_x, base_y, tooltip, extra_x=0, extra_y=0, defined_width=false, line_gap=0){
+function tooltip_draw(base_x, base_y, tooltip, extra_x=0, extra_y=0, defined_width=false, line_gap=0, draw_color=c_gray){
 	var xx=__view_get( e__VW.XView, 0 )+0;
 	var yy=__view_get( e__VW.YView, 0 )+0;
 	var width,height;
@@ -14,7 +14,7 @@ function tooltip_draw(base_x, base_y, tooltip, extra_x=0, extra_y=0, defined_wid
 	height = string_height(string_hash_to_newline(tooltip))+extra_y;
 	draw_set_color(0);
 	draw_rectangle(base_x,base_y,width+base_x+6,height+base_y+6+base_2,0);
-	draw_set_color(c_gray);
+	draw_set_color(draw_color);
 	draw_rectangle(base_x,base_y,width+base_x+6,height+base_y+6+base_2,1);
 	draw_set_alpha(0.5);
 	draw_rectangle(base_x+1,base_y+1,width+base_x+5,height+base_y+5+base_2,1);

@@ -26,6 +26,7 @@ function drop_down(selection, draw_x, draw_y, options,open_marker){
 				open_marker = true;
 			}
 			if (open_marker){
+                current_target=true;
 				var roll_down_offset=4+string_height(selection);
 				for (var col = 0;col<array_length(options);col++){
 					if (options[col]==selection) then continue;
@@ -55,6 +56,7 @@ function drop_down(selection, draw_x, draw_y, options,open_marker){
 					)
 				){
 					open_marker = false;
+                    if (current_target) then current_target=false;
 				}
 			}
 		}
@@ -64,16 +66,20 @@ function drop_down(selection, draw_x, draw_y, options,open_marker){
 
 function calculate_research_points(){
     var research_points = 0;
-    var techs = scr_role_count(obj_ini.role[100][16], "", "units");
+    var forge_points = 0;
+    var techs = collect_role_group("forge");
     for (var i=0; i<array_length(techs); i++){
-        if (techs[i].technology>30){
+        if (techs[i].technology>40){
             research_points += techs[i].technology-40;
+            forge_points += techs[i].forge_point_generation();
         }
     }
-    return research_points;
+    return [research_points, floor(forge_points)];
 }
 function research_end(){
-    var research_points = calculate_research_points();
+    var tech_data = calculate_research_points();
+    var research_points = tech_data[0];
+    forge_points = tech_data[1];
     stc_research[$ stc_research.research_focus] += research_points;
     var research_area_limit;
     if (stc_research.research_focus=="vehicles"){
@@ -85,6 +91,25 @@ function research_end(){
     }    
     if (stc_research[$ stc_research.research_focus]>5000*(research_area_limit+1)){
        identify_stc(stc_research.research_focus);  
+    }
+
+    if (forge_points>0){
+        if (array_length(forge_queue)>0){
+            var forging_length = array_length(forge_queue);
+            for (var i=0;i<forging_length;i++){
+                if (forge_queue[i].forge_points<=forge_points){
+                    forge_points-=forge_queue[i].forge_points;
+                    scr_add_item(forge_queue[i].name, forge_queue[i].count);
+                    array_delete(forge_queue, i, 1);
+                    i--;
+                    forging_length--;
+                } else {
+                    forge_queue[i].forge_points -= forge_points;
+                    forge_points=0;
+                }
+                if (forge_points<=0) then break;
+            }
+        }
     }
 }
 
@@ -120,70 +145,75 @@ function scr_draw_armentarium(){
         " is advancing frenetically.",
         " is advancing as fast as possible."
     ];
-	    var xx = __view_get(e__VW.XView, 0) + 0;
-    	var yy = __view_get(e__VW.YView, 0) + 0;
-		draw_sprite(spr_rock_bg, 0, xx, yy);
+    var xx = __view_get(e__VW.XView, 0) + 0;
+	var yy = __view_get(e__VW.YView, 0) + 0;
+	draw_sprite(spr_rock_bg, 0, xx, yy);
 
-        draw_set_alpha(0.75);
-        draw_set_color(0);
-        draw_rectangle(xx + 326 + 16, yy + 66, xx + 887 + 16, yy + 818, 0);
-        draw_set_alpha(1);
+    draw_set_alpha(0.75);
+    draw_set_color(0);
+    draw_rectangle(xx + 326 + 16, yy + 66, xx + 887 + 16, yy + 818, 0);
+    draw_set_alpha(1);
+    draw_set_color(c_gray);
+    draw_rectangle(xx + 326 + 16, yy + 66, xx + 887 + 16, yy + 818, 1);
+    draw_line(xx + 326 + 16, yy + 426, xx + 887 + 16, yy + 426);
+
+    draw_set_alpha(0.75);
+    draw_set_color(0);
+    draw_rectangle(xx + 945, yy + 66, xx + 1580, yy + 818, 0);
+    draw_set_alpha(1);
+    draw_set_color(c_gray);
+    draw_rectangle(xx + 945, yy + 66, xx + 1580, yy + 818, 1);
+
+    if (menu_adept = 0) {
+        // draw_sprite(spr_advisors,4,xx+16,yy+43);
+        scr_image("advisor", 4, xx + 16, yy + 43, 310, 828);
+        draw_set_halign(fa_left);
         draw_set_color(c_gray);
-        draw_rectangle(xx + 326 + 16, yy + 66, xx + 887 + 16, yy + 818, 1);
-        draw_line(xx + 326 + 16, yy + 426, xx + 887 + 16, yy + 426);
-
-        draw_set_alpha(0.75);
-        draw_set_color(0);
-        draw_rectangle(xx + 945, yy + 66, xx + 1580, yy + 818, 0);
-        draw_set_alpha(1);
-        draw_set_color(c_gray);
-        draw_rectangle(xx + 945, yy + 66, xx + 1580, yy + 818, 1);
-
-        if (menu_adept = 0) {
-            // draw_sprite(spr_advisors,4,xx+16,yy+43);
-            scr_image("advisor", 4, xx + 16, yy + 43, 310, 828);
-            draw_set_halign(fa_left);
-            draw_set_color(c_gray);
-            draw_set_font(fnt_40k_30b);
-            draw_text_transformed(xx + 336 + 16, yy + 66, string_hash_to_newline("Armamentarium"), 1, 1, 0);
+        draw_set_font(fnt_40k_30b);
+        var header =  in_forge ? "Forge" : "Armamentarium";
+        draw_text_transformed(xx + 336 + 16 + 250, yy + 66, string_hash_to_newline(header), 1, 1, 0);
+        if (!in_forge){
             draw_set_font(fnt_40k_30b);
             draw_text_transformed(xx + 336 + 16, yy + 100, string_hash_to_newline("Forge Master " + string(obj_ini.name[0, 2])), 0.6, 0.6, 0);
         }
-        if (menu_adept = 1) {
-            // draw_sprite(spr_advisors,0,xx+16,yy+43);
-            scr_image("advisor", 0, xx + 16, yy + 43, 310, 828);
-            draw_set_halign(fa_left);
-            draw_set_color(c_gray);
-            draw_set_font(fnt_40k_30b);
-            draw_text_transformed(xx + 336 + 16, yy + 66, string_hash_to_newline("Armamentarium"), 1, 1, 0);
-            draw_set_font(fnt_40k_30b);
-            draw_text_transformed(xx + 336 + 16, yy + 100, string_hash_to_newline("Adept " + string(obj_controller.adept_name)), 0.6, 0.6, 0);
-        }
-
+    }
+    if (menu_adept = 1) {
+        // draw_sprite(spr_advisors,0,xx+16,yy+43);
+        scr_image("advisor", 0, xx + 16, yy + 43, 310, 828);
+        draw_set_halign(fa_left);
+        draw_set_color(c_gray);
         draw_set_font(fnt_40k_30b);
-        draw_set_color(c_gray);
+        draw_text_transformed(xx + 336 + 16, yy + 66, string_hash_to_newline("Armamentarium"), 1, 1, 0);
+        draw_set_font(fnt_40k_30b);
+        draw_text_transformed(xx + 336 + 16, yy + 100, string_hash_to_newline("Adept " + string(obj_controller.adept_name)), 0.6, 0.6, 0);
+    }
 
-        draw_rectangle(xx + 957, yy + 76, xx + 1062, yy + 104, 0);
-        draw_rectangle(xx + 1068, yy + 76, xx + 1150, yy + 104, 0);
-        draw_rectangle(xx + 1167, yy + 76, xx + 1255, yy + 104, 0);
-        draw_rectangle(xx + 1487, yy + 76, xx + 1545, yy + 104, 0);
+    draw_set_font(fnt_40k_30b);
+    draw_set_color(c_gray);
 
-        draw_set_color(c_black);
-        draw_text_transformed(xx + 960, yy + 76, string_hash_to_newline("Equipment"), 0.6, 0.6, 0);
-        draw_text_transformed(xx + 1070, yy + 76, string_hash_to_newline("Armour"), 0.6, 0.6, 0);
-        draw_text_transformed(xx + 1170, yy + 76, string_hash_to_newline("Vehicles"), 0.6, 0.6, 0);
-        draw_text_transformed(xx + 1490, yy + 76, string_hash_to_newline("Ships"), 0.6, 0.6, 0);
+    draw_rectangle(xx + 957, yy + 76, xx + 1062, yy + 104, 0);
+    draw_rectangle(xx + 1068, yy + 76, xx + 1150, yy + 104, 0);
+    draw_rectangle(xx + 1167, yy + 76, xx + 1255, yy + 104, 0);
+    draw_rectangle(xx + 1487, yy + 76, xx + 1545, yy + 104, 0);
 
-        draw_set_alpha(0.2);
-        if (mouse_y >= yy + 76) and(mouse_y < yy + 104) {
-            if (mouse_x >= xx + 957) and(mouse_x < xx + 1062) then draw_rectangle(xx + 957, yy + 76, xx + 1062, yy + 104, 0);
-            if (mouse_x >= xx + 1068) and(mouse_x < xx + 1136) then draw_rectangle(xx + 1068, yy + 76, xx + 1136, yy + 104, 0);
-            if (mouse_x >= xx + 1167) and(mouse_x < xx + 1255) then draw_rectangle(xx + 1167, yy + 76, xx + 1255, yy + 104, 0);
-            if (mouse_x >= xx + 1487) and(mouse_x < xx + 1545) then draw_rectangle(xx + 1487, yy + 76, xx + 1545, yy + 104, 0);
-        }
-        draw_set_alpha(1);
-        draw_set_color(c_gray);
+    draw_set_color(c_black);
+    draw_text_transformed(xx + 960, yy + 76, string_hash_to_newline("Equipment"), 0.6, 0.6, 0);
+    draw_text_transformed(xx + 1070, yy + 76, string_hash_to_newline("Armour"), 0.6, 0.6, 0);
+    draw_text_transformed(xx + 1170, yy + 76, string_hash_to_newline("Vehicles"), 0.6, 0.6, 0);
+    draw_text_transformed(xx + 1490, yy + 76, string_hash_to_newline("Ships"), 0.6, 0.6, 0);
 
+    draw_set_alpha(0.2);
+    if (mouse_y >= yy + 76) and(mouse_y < yy + 104) {
+        if (mouse_x >= xx + 957) and(mouse_x < xx + 1062) then draw_rectangle(xx + 957, yy + 76, xx + 1062, yy + 104, 0);
+        if (mouse_x >= xx + 1068) and(mouse_x < xx + 1136) then draw_rectangle(xx + 1068, yy + 76, xx + 1136, yy + 104, 0);
+        if (mouse_x >= xx + 1167) and(mouse_x < xx + 1255) then draw_rectangle(xx + 1167, yy + 76, xx + 1255, yy + 104, 0);
+        if (mouse_x >= xx + 1487) and(mouse_x < xx + 1545) then draw_rectangle(xx + 1487, yy + 76, xx + 1545, yy + 104, 0);
+    }
+    draw_set_alpha(1);
+    draw_set_color(c_gray);
+
+
+    if (!in_forge){
         draw_set_font(fnt_40k_30b);
         draw_set_halign(fa_center);
         draw_text_transformed(xx + 605, yy + 432, string_hash_to_newline("STC Fragments"), 0.75, 0.75, 0);
@@ -193,6 +223,7 @@ function scr_draw_armentarium(){
 
         draw_set_halign(fa_center);
 
+        // Identify STC
         if (stc_wargear_un + stc_vehicles_un + stc_ships_un = 0) then draw_set_alpha(0.5);
         draw_set_color(c_gray);
         draw_rectangle(xx + 621, yy + 466, xx + 720, yy + 486, 0);
@@ -202,6 +233,40 @@ function scr_draw_armentarium(){
             draw_set_color(0);
             draw_set_alpha(0.2);
             draw_rectangle(xx + 621, yy + 466, xx + 720, yy + 486, 0);
+            if (mouse_check_button_pressed(mb_left)){
+                if (stc_wargear_un + stc_vehicles_un + stc_ships_un > 0){
+                        
+                    cooldown=8000;
+                    audio_play_sound(snd_stc,-500,0)
+                    audio_sound_gain(snd_stc,master_volume*effect_volume,0);
+
+
+                    if(stc_wargear_un > 0 && 
+                    stc_wargear < MAX_STC_PER_SUBCATEGORY &&
+                    stc_wargear <= min(stc_vehicles, stc_ships)) {
+                            
+                        stc_wargear_un--;
+                       identify_stc("wargear")
+                    }
+                    else if(stc_vehicles_un > 0 && 
+                    stc_vehicles < MAX_STC_PER_SUBCATEGORY &&
+                    stc_vehicles <= min(stc_wargear, stc_ships)) {
+                            
+                        stc_vehicles_un--;
+                       identify_stc("vehicles")
+                    }
+                    else if(stc_ships_un > 0 && 
+                    stc_ships < MAX_STC_PER_SUBCATEGORY &&
+                    stc_ships <= min(stc_vehicles, stc_wargear)) {
+                        
+                        stc_ships_un--;
+                        identify_stc("ships")
+                    }
+                    
+                    // Refresh the shop
+                    instance_create(1000,1000,obj_shop);
+                }                
+            }
         }
         draw_set_alpha(1);
 
@@ -214,6 +279,22 @@ function scr_draw_armentarium(){
             draw_set_color(0);
             draw_set_alpha(0.2);
             draw_rectangle(xx + 733, yy + 466, xx + 790, yy + 486, 0);
+            if (mouse_check_button_pressed(mb_left)){
+                if (stc_wargear_un+stc_vehicles_un+stc_ships_un>0){
+                    var chick=0;
+                    if (known[eFACTION.Imperium]>1) and (faction_defeated[2]==0) then chick=1;
+                    if (known[eFACTION.Mechanicus]>1) and (faction_defeated[3]==0) then chick=1;
+                    if (known[eFACTION.Inquisition]>1) and (faction_defeated[4]==0) then chick=1;
+                    if (known[eFACTION.Ecclesiarchy]>1) and (faction_defeated[5]==0) then chick=1;
+                    if (known[eFACTION.Eldar]>1) and (faction_defeated[6]==0) then chick=1;
+                    if (known[eFACTION.Tau]>1) and (faction_defeated[8]==0) then chick=1;
+                    if (chick!=0){
+                        var pop=instance_create(0,0,obj_popup);
+                        pop.type=9.1;
+                        cooldown=8000;
+                    }
+                }
+            }
         }
         draw_set_alpha(1);
 
@@ -303,7 +384,24 @@ function scr_draw_armentarium(){
 		static research_drop_down = false;
         var research_eta_message = $"Based on current progress it will be {research_progress} months until next significant research step is complete";
         draw_text_ext(xx + 336 + 16, y_offset+25, string_hash_to_newline(research_eta_message), -1, 536);        
-		var drop_down_results = drop_down_sandwich(
+
+        var forge_buttons= [xx + 450 + 16, y_offset+40+string_height(research_eta_message), 0, 0]
+        draw_unit_buttons([forge_buttons[0], forge_buttons[1]],"Enter Forge",[2,2],c_red);
+        forge_buttons[2] = forge_buttons[0] + (string_width("Enter Forge")*2) + 8;
+        forge_buttons[3] = forge_buttons[1] + (string_height("Enter Forge")*2) + 5;
+        if (point_in_rectangle(
+            mouse_x,
+            mouse_y, 
+            forge_buttons[0], 
+            forge_buttons[1], 
+            forge_buttons[2],
+            forge_buttons[3]
+            ) && mouse_check_button_pressed(mb_left) && current_target==false
+        ){
+            in_forge=true;
+        }
+
+        var drop_down_results = drop_down_sandwich(
             stc_research.research_focus,
             xx + 336 + 16,
             y_offset,
@@ -312,7 +410,9 @@ function scr_draw_armentarium(){
             "research is currently focussed on", 
             ".");
         research_drop_down = drop_down_results[1];
-        stc_research.research_focus = drop_down_results[0];
+        stc_research.research_focus = drop_down_results[0]; 
+
+              
         var hi;
         draw_set_color(38144);
         hi = 0;
@@ -444,4 +544,109 @@ function scr_draw_armentarium(){
         if (stc_ships < 6) then draw_set_alpha(0.5);
         draw_text_ext(xx + 732, yy + 549 + 175, string_hash_to_newline("6) Warp Speed is increased and ships self-repair."), -1, 140);
         draw_set_alpha(1);
+    }else {
+        yy+=25;
+        draw_set_halign(fa_left);
+        draw_set_color(0);       
+        //draw_rectangle(xx + 359, yy + 66, xx + 886, yy + 818, 0);
+
+        var forge_buttons= [xx + 359, yy + 77, 0, 0]
+        draw_unit_buttons([forge_buttons[0] , forge_buttons[1]],"<-- Overview",[1,1],c_red);
+        forge_buttons[2] = forge_buttons[0] + (string_width("<-- Overview")) + 8;
+        forge_buttons[3] = forge_buttons[1] + (string_height("<-- Overview")) + 5;
+        if (point_in_rectangle(
+            mouse_x,
+            mouse_y, 
+            forge_buttons[0], 
+            forge_buttons[1], 
+            forge_buttons[2],
+            forge_buttons[3]
+            ) && mouse_check_button_pressed(mb_left)
+        ){
+            in_forge=false;
+        }        
+        draw_set_color(c_gray);
+        draw_rectangle(xx + 359, yy + 107, xx + 886, yy + 127, 0);
+        draw_set_alpha(1);
+        draw_set_font(fnt_40k_14);
+        draw_set_color(0);
+        draw_text(xx+359,yy+109,string_hash_to_newline("Name"));
+        draw_text(xx+500,yy+109,string_hash_to_newline("Number"));
+        draw_text(xx+600,yy+109,string_hash_to_newline("Forge Points"));
+        draw_text(xx+700,yy+109,string_hash_to_newline("Construction ETA"));        
+        draw_set_color(c_gray);
+        var item_gap = 127;
+        var total_eta=0;
+        static top_point=0;
+        for (var i=top_point; i<13; i++){
+            if (i+1>array_length(forge_queue)) then break;
+            draw_set_color(c_gray);
+            if point_in_rectangle(mouse_x, mouse_y, xx + 359,yy +item_gap, xx + 886, yy +item_gap+20){
+                draw_set_color(c_white);
+            }
+            draw_text(xx+359,yy + item_gap,string_hash_to_newline(forge_queue[i].name));
+            draw_text(xx+525,yy + item_gap,string_hash_to_newline(forge_queue[i].count));
+            if (forge_queue[i].ordered==obj_controller.turn){
+                if (forge_queue[i].count>1){
+                     draw_unit_buttons([xx+500 , yy + item_gap],"-",[0.75,0.75],c_red);
+                     if (point_in_rectangle(
+                        mouse_x,
+                        mouse_y, 
+                        xx+500, 
+                        yy + item_gap, 
+                        xx+500+3+(0.75*string_width("-")),
+                        yy + item_gap+3+(0.75*string_height("-")), 
+                        ) && mouse_check_button_pressed(mb_left)
+                    ){
+                        var unit_cost = forge_queue[i].forge_points/forge_queue[i].count;
+                        forge_queue[i].count--;
+                        forge_queue[i].forge_points-=unit_cost;
+                     }               
+                }
+                if (forge_queue[i].count<100){
+                    draw_unit_buttons([xx+545 , yy + item_gap],"+",[0.75,0.75],c_green);
+                     if (point_in_rectangle(
+                        mouse_x,
+                        mouse_y, 
+                        xx+545, 
+                        yy + item_gap, 
+                        xx+545+3+(0.75*string_width("+")),
+                        yy + item_gap+3+(0.75*string_height("+")) 
+                        ) && mouse_check_button_pressed(mb_left) && current_target==false
+                    ){
+                        var unit_cost = forge_queue[i].forge_points/forge_queue[i].count;
+                        forge_queue[i].count++;
+                        forge_queue[i].forge_points+=unit_cost;
+                     }                  
+                }
+            }
+            draw_text(xx+630,yy + item_gap,string_hash_to_newline(forge_queue[i].forge_points));
+            total_eta += ceil(forge_queue[i].forge_points/forge_points);
+            draw_text(xx+735,yy+ item_gap,string_hash_to_newline(total_eta) + " turns");        
+            forge_buttons= [xx+850, yy + item_gap, 0, 0]
+            draw_unit_buttons([forge_buttons[0] , forge_buttons[1]],"X",[0.75,0.75],c_red);
+            forge_buttons[2] = forge_buttons[0] + (string_width("X")) + 8;
+            forge_buttons[3] = forge_buttons[1] + (string_height("X")) + 5;            
+             if (point_in_rectangle(
+                mouse_x,
+                mouse_y, 
+                forge_buttons[0], 
+                forge_buttons[1], 
+                forge_buttons[2],
+                forge_buttons[3]
+                ) && mouse_check_button_pressed(mb_left)
+            ){
+                array_delete(forge_queue, i, 1);
+                exit;
+             }                     
+            item_gap +=20
+        }
+        draw_set_color(c_red);
+        //draw_line(xx + 326 + 16, yy + 426, xx + 887 + 16, yy + 426);
+        draw_text(xx+359, yy + 430,$"current forge points : {forge_points}");
+        draw_text(xx+359, yy + 450,$"total {obj_ini.role[100, 16]}'s : {temp[36]}");
+        draw_text(xx+359, yy + 470,"Chapter Forges : 0");
+        draw_text(xx+359, yy + 490,$"total {obj_ini.role[100, 16]}'s assigned to forges : 0")
+
+    }
 }

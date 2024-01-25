@@ -67,7 +67,14 @@ function role_groups(group){
 	        role_list = [
 				obj_ini.role[100][6],//dreadnought
 				string("Venerable {0}",obj_ini.role[100][6]),
-			]
+			];
+			break;
+		case "forge":
+	        role_list = [
+				obj_ini.role[100][16],//techmarine
+				"Forge Master",
+			];
+			break;	
 	}
 	return role_list;
 }
@@ -112,10 +119,7 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 			}
 			break;
 		case "forge":
-			specialists = [
-						obj_ini.role[100][16],//techmarine
-						"Forge Master", 
-			];
+			specialists = role_groups("forge");
 			if (include_trainee){
 				array_push(specialists,  string("{0} Aspirant",obj_ini.role[100][16]));
 			}			
@@ -162,4 +166,18 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 	}
 
 	return array_contains(specialists,unit_role);
+}
+
+function collect_role_group(group){
+	var units = [], unit, count=0;
+	for (var com=0;com<=10;com++){
+	    for (i=1;i<array_length(obj_ini.TTRPG[com]);i++){
+			unit=obj_ini.TTRPG[com][i];
+			if (unit.name()=="")then continue; 	
+	        if (unit.IsSpecialist(group)){
+	        	array_push(units, obj_ini.TTRPG[com][i]);
+	        }
+	    }    
+	}
+	return units;
 }
