@@ -737,9 +737,7 @@ function scr_load(argument0, argument1) {
                     obj_ini.loc[coh,mah]=ini_read_string("Mar","lo"+string(coh)+"."+string(mah),"");
                     obj_ini.name[coh,mah]=ini_read_string("Mar","num"+string(coh)+"."+string(mah),"");
                     obj_ini.role[coh,mah]=ini_read_string("Mar","rol"+string(coh)+"."+string(mah),"");// temp_name;
-                    obj_ini.lid[coh,mah]=ini_read_real("Mar","li"+string(coh)+"."+string(mah),0);
-                    obj_ini.bio[coh,mah]=ini_read_real("Mar","bio"+string(coh)+"."+string(mah),0);
-                    obj_ini.wid[coh,mah]=ini_read_real("Mar","wi"+string(coh)+"."+string(mah),0);								
+                    obj_ini.lid[coh,mah]=ini_read_real("Mar","li"+string(coh)+"."+string(mah),0);							
 
                     if (coh=0){
                         if (obj_ini.role[coh,mah]="Chapter Master"){

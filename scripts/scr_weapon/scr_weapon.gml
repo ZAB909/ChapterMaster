@@ -1619,7 +1619,7 @@ global.gear = {
         "tags":["vehicle","Upgrade"],              
     }                
 } , 
-  "equipment": {
+  "gear": {
     "Bionics": {
       "special_description": "Restores critcal health",
       "description": "Bionics may be given to wounded marines to quickly get them back into combat-ready status, replacing damaged flesh.",
@@ -1633,31 +1633,13 @@ global.gear = {
     "abbreviation": "Narth",
       "special_description": "Medical field kit",
       "description": "An advanced medical field kit, these allow Space Marines to heal or recover Gene-Seed from fallen marines.",
-      "damage_resistance_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-      },
-      "hp_mod": {
-        "standard": 30, // Adjusted
-        "master_crafted": 50, // Adjusted
-        "artifact": 50 // Adjusted
-      }
+        "melee_hands": -0.5,
+        "ranged_hands": -0.5,       
     },
     "Psychic Hood": {
     "abbreviation": "PsyHood",
       "special_description": "-50% chance of perils*",
       "description": "An arcane hood that protects Psykers from enemy psychic powers and enhances their control.",
-      "damage_resistance_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-      },
-      "hp_mod": {
-        "standard": 0,
-        "master_crafted": 0,
-        "artifact": 0
-      }
     },
     "Rosarius": {
         "abbreviation": "Rosa",
@@ -1702,10 +1684,14 @@ global.gear = {
     "abbreviation": "ServArm",
       "special_description": "Integrated flamer, repairs",
       "description": "A pair of powerful, mechanical arms. They include several tools that allow trained marines to repair vehicles rapidly.",
+        "melee_hands": 0.25,
+        "ranged_hands": 0.25,  
     },
     "Master Servo Arms": {
       "special_description": "Integrated flamer, repairs",
       "description": "This master servo harness includes additional mechanical arms and tools, allowing a greater capacity and rate of repairs.",
+        "melee_hands": 0.25,
+        "ranged_hands": 0.25,  
     },
     "Smoke Launchers": {
       "special_description": "",
@@ -1737,7 +1723,9 @@ global.gear = {
         "standard": 5,
         "master_crafted": 10,
         "artifact": 10
-      }
+      },
+        "melee_hands": -0.5,
+        "ranged_hands": -0.5,        
     },
 
     "Jump Pack": {
@@ -1912,7 +1900,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
 function gear_weapon_data(search_area="any",item,wanted_data="all", sub_class=false, quality="standard"){
     var item_data_set=false;
     var equip_area=false;
-    gear_areas =  ["equipment","armour","mobility"];
+    gear_areas =  ["gear","armour","mobility"];
     if (search_area=="any"){
         data_found=false;
         for (i=0;i<3;i++){

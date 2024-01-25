@@ -106,7 +106,7 @@ function scr_unit_detail_text(){
 		}
 		unit_data_string += "##"
 		if (is_astartes){
-			var bionic_count = bionics();
+			var bionic_count = bionics;
 			if (bionic_count ==0){
 				unit_data_string+= unit_name + " has no bodily augmentations besides his astartes gene seed and organs #"
 			}else if(bionic_count == 1 && array_length(body_augmentations.bionics[0])>0){

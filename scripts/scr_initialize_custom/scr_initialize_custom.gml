@@ -658,9 +658,7 @@ function scr_initialize_custom() {
 	    name[100,i]="";
 	    role[100,i]="";
 	    wep1[100,i]="";
-	    bio[100,i]=0;
 	    lid[100,i]=0;
-	    wid[100,i]=2;
 	    spe[100,i]="";
 	    wep2[100,i]="";
 	    armour[100,i]="";
@@ -670,7 +668,6 @@ function scr_initialize_custom() {
 	    hp[100,i]=0;
 	    age[100,i]=((millenium*1000)+year)-10;
 	    god[100,i]=0;
-	    if (global.chapter_name="Iron Hands") then bio[100,i]=choose(3,4,5);
 	}initialized=500;
 	// Initialize special marines
 	for(i=0;i<=500;i++){
@@ -681,7 +678,6 @@ function scr_initialize_custom() {
 	    wep1[0,i]="";
 	    bio[0,i]=0;
 	    lid[0,i]=0;
-	    wid[0,i]=2;
 	    spe[0,i]="";
 	    wep2[0,i]="";
 	    armour[0,i]="";
@@ -691,7 +687,6 @@ function scr_initialize_custom() {
 	    hp[0,i]=0;
 	    age[0,i]=((millenium*1000)+year)-10;
 	    god[0,i]=0;
-	    bio[0,i]=0;
 		TTRPG[0,i] = new TTRPG_stats("chapter", 0,i,"blank");
 	}
 	for(i=0;i<=100;i++){i+=1;
@@ -771,13 +766,13 @@ function scr_initialize_custom() {
 	    gear[i,12]="";
 	    role[i,14]="Chaplain";
 	    wep1[i,14]="Power Sword";
-	    wep2[i,14]="Storm Bolter";
+	    wep2[i,14]="Bolt Pistol";
 	    armour[i,14]="Power Armour";
 	    gear[i,14]="Rosarius";
 	    mobi[i,14]="";
 	    role[i,15]="Apothecary";
 	    wep1[i,15]="Power Sword";
-	    wep2[i,15]="Storm Bolter";
+	    wep2[i,15]="Bolt Pistol";
 	    armour[i,15]="Power Armour";
 	    gear[i,15]="Narthecium";
 	    mobi[i,15]="";
@@ -1705,7 +1700,6 @@ function scr_initialize_custom() {
 	    role[company,i]="";
 	    wep1[company,i]="";
 	    lid[company,i]=0;
-	    wid[company,i]=2;
 	    spe[company,i]="";
 	    wep2[company,i]="";
 	    armour[company,i]="";
@@ -1716,7 +1710,6 @@ function scr_initialize_custom() {
 	    hp[company,i]=100;
 	    age[company,i]=((millenium*1000)+year)-10;
 	    god[company,i]=0;
-	    bio[company,i]=0;
 		TTRPG[company,i]= new TTRPG_stats("chapter", company,i,"blank");
 	}initialized=200;// How many array variables have been prepared
 
@@ -1805,8 +1798,8 @@ function scr_initialize_custom() {
 	        race[company][k]=1;
 	        loc[company][k]=home_name;
 	        role[company][k]=role[100][15];
-	        wep1[company][k]=wep1[101,15]
-	  ;
+	        wep1[company][k]=wep1[101,15];
+	        
 	  name[company][k]=global.name_generator.generate_space_marine_name();
 	        wep2[company][k]=wep2[101,15];
 	        armour[company][k]="Terminator Armour";
@@ -1978,7 +1971,6 @@ function scr_initialize_custom() {
 	        role[company,i]="";
 	        wep1[company,i]="";
 	        lid[company,i]=0;
-	        wid[company,i]=2;
 	        spe[company,i]="";
 	        wep2[company,i]="";
 	        armour[company,i]="";
@@ -1989,7 +1981,6 @@ function scr_initialize_custom() {
 	        experience[company,i]=0;
 	        age[company,i]=((millenium*1000)+year)-10;
 	        god[company,i]=0;
-	        bio[company,i]=0;
 			TTRPG[company,i]= new TTRPG_stats("chapter", company,i, "blank");
 	    }
 
@@ -2465,8 +2456,18 @@ function scr_initialize_custom() {
 
 
 	        if (rhinoy>0) then repeat(rhinoy){v+=1;man_size+=10;
-	            veh_race[company,v]=1;veh_loc[company,v]=home_name;veh_role[company,v]="Rhino";veh_wep1[company,v]="Storm Bolter";veh_wep2[company,v]="HK Missile";veh_wep3[company,v]="";
-	            veh_upgrade[company,v]="";veh_acc[company,v]="Dozer Blades";veh_hp[company,v]=100;veh_chaos[company,v]=0;veh_pilots[company,v]=0;veh_lid[company,v]=0;veh_wid[company,v]=2;
+	            veh_race[company,v]=1;
+	            veh_loc[company,v]=home_name;
+	            veh_role[company,v]="Rhino";
+	            veh_wep1[company,v]="Storm Bolter";
+	            veh_wep2[company,v]="HK Missile";veh_wep3[company,v]="";
+	            veh_upgrade[company,v]="";
+	            veh_acc[company,v]="Dozer Blades";
+	            veh_hp[company,v]=100;
+	            veh_chaos[company,v]=0;
+	            veh_pilots[company,v]=0;
+	            veh_lid[company,v]=0;
+	            veh_wid[company,v]=2;
 	        }
 	        if (whirly>0) then repeat(whirly){v+=1;man_size+=10;
 	            veh_race[company,v]=1;

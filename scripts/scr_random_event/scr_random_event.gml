@@ -397,13 +397,13 @@ function scr_random_event(execute_now) {
 			
 			scr_popup("Can He Build marine?!?",text,"tech_build","");
 			evented = true;
-	        event[event_index]="strange_building|"+string(obj_ini.name[company][marine])+"|"+string(company)+"|"+string(marine)+"|"+string(crafted_object)+"|";
+	        event[event_index]="strange_building|"+unit.name()+"|"+string(company)+"|"+string(marine)+"|"+string(crafted_object)+"|";
 	        event_duration[event_index]=1;
         
-			var marine_is_planetside = obj_ini.wid[company][marine]>0
+			var marine_is_planetside = unit.planet_location>0
 	        if (marine_is_planetside && heritical_item) {
 	            obj_controller.temp[100]=obj_ini.loc[company][marine]; //Why the fuck are we doing that??
-	            obj_controller.temp[101]=obj_ini.wid[company][marine];
+	            obj_controller.temp[101]=unit.planet_location;
 	            with(obj_star){
 	                if (this.name = obj_ini.loc[company][marine]){
 						for(var i = 1; i <= planets; i++){

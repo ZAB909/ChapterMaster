@@ -56,7 +56,6 @@ function scr_dead_marines(run) {
 		            obj_ini.age[company,i]=0;
 		            obj_ini.spe[company,i]="";
 		            obj_ini.god[company,i]=0;
-		            obj_ini.bio[company,i]=0;
 		            obj_ini.TTRPG[company,i]=new TTRPG_stats("chapter",company,i, "blank");// obj_controller.marines-=1;
 		        }
 

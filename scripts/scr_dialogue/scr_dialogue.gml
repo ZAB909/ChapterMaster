@@ -342,7 +342,7 @@ function scr_dialogue(diplo_keyphrase) {
 	    if (instance_number(obj_temp4)==0){
 	        with(obj_star){
 	            if (string_count(name,scr_master_loc())>0){
-	                repeat(obj_ini.wid[0,1]){instance_create(x,y,obj_temp4);}
+	                repeat(obj_ini.TTRPG[0,1].planet_location){instance_create(x,y,obj_temp4);}
 	            }
 	        }
 	    }
