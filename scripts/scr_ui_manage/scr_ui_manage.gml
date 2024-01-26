@@ -1057,59 +1057,83 @@ function scr_ui_manage() {
 		    		draw_rectangle(xx+1004,yy+519,xx+1576,yy+957,0);
 		    		var stat_x = xx+1004;
 		    		var stat_y = yy+519;
-		    		var stat_display = string_hash_to_newline($"DEX#{selected_unit.dexterity}");
-		    		var stat_size = tooltip_draw(stat_x,stat_y, stat_display,2);
-		    		var warp_box_size = tooltip_draw(stat_x,stat_y+string_height(stat_display)+6,$"Warp Level:{selected_unit.psionic}");
+		    		var warp_box_size = tooltip_draw(stat_x,stat_y+56,$"Warp Level:{selected_unit.psionic}");
 		    		draw_set_color(c_red);
 		    		if (selected_unit.IsSpecialist("forge")){
-		    			tooltip_draw(stat_x,stat_y+string_height(stat_display)+6+warp_box_size[1],$"Forge Points:{selected_unit.forge_point_generation()}");
+		    			tooltip_draw(stat_x,stat_y+45+warp_box_size[1],$"Forge Points:{selected_unit.forge_point_generation()}");
 		    		}
 		    		draw_set_color(0);
 
 
-		    		stat_tool_tip_text="Measure of how quick and nimble unit is as well as their base ability to manipulate and do tasks with their hands (improves ranged attack)";
-		    		array_push(stat_tool_tips,[stat_x, stat_y, stat_x+string_width(stat_display), stat_y+string_height(stat_display),stat_tool_tip_text]);
-		    		stat_x += stat_size[0];
+		    		//stat_tool_tip_text="Measure of how quick and nimble unit is as well as their base ability to manipulate and do tasks with their hands (improves ranged attack)";
+		    		//array_push(stat_tool_tips,[stat_x, stat_y, stat_x+string_width(stat_display), stat_y+string_height(stat_display),stat_tool_tip_text]);
+		    		//stat_x += stat_size[0];
 
 		    		//string interpolation not possible when declaring lists
 		    		stat_display_list = [
-		    			["STR#"+string(selected_unit.strength),
+		    			[string(selected_unit.dexterity),
+		    			"Measure of how quick and nimble unit is as well as their base ability to manipulate and do tasks with their hands (improves ranged attack)",
+		    			#306535,
+		    			spr_dexterity_icon],		    		
+		    			[string(selected_unit.strength),
 		    			"How strong a unit is (can wield heavier equipment without detriment and is more deadly in close combat)",
-		    			c_teal],
-		    			["CON#"+string(selected_unit.constitution),
+		    			#1A3B3B,
+		    			spr_strength_icon],
+		    			[string(selected_unit.constitution),
 		    			"Unit's general toughness and resistance to damage (increases health and damage resistance)",
-		    			c_red],
-		    			["INT#"+string(selected_unit.intelligence),
+		    			#9B403E,
+		    			spr_constitution_icon],
+		    			[string(selected_unit.intelligence),
 		    			"measure of learnt knowledge and specialist skill aptitude",
-		    			c_blue],
-		    			["WIS#"+string(selected_unit.wisdom),
+		    			#2F3B6B,
+		    			spr_intelligence_icon],
+		    			[string(selected_unit.wisdom),
 		    			"units perception and street smarts including certain types of battlefield knowlage",
-		    			c_olive],
-		    			["FAI#"+string(selected_unit.piety),
+		    			#54540B,
+		    			spr_wisdom_icon],
+		    			[string(selected_unit.piety),
 		    			"units faith in their given religion (or general aptitude towards faith)",
-		    			c_orange],
-		    			["WS#"+string(selected_unit.weapon_skill),
+		    			#6A411C,
+		    			spr_faith_icon],
+		    			[string(selected_unit.weapon_skill),
 		    			"general skill with close combat weaponry",
-		    			c_yellow],
-		    			["BS#"+string(selected_unit.ballistic_skill),
+		    			#87753C,
+		    			spr_weapon_skill_icon],
+		    			[string(selected_unit.ballistic_skill),
 		    			"general skill with ballistic and ranged weaponry",
-		    			c_fuchsia],
-		    			["LU#"+string(selected_unit.luck),
+		    			#743D57,
+		    			spr_ballistic_skill_icon],
+		    			[string(selected_unit.luck),
 		    			"...luck...",
-		    			c_lime],
-		    			["TEC#"+string(selected_unit.technology),
+		    			#05451E,
+		    			spr_luck_icon],
+		    			[string(selected_unit.technology),
 		    			"skill and understanding of technology and various technical thingies",
-		    			c_maroon],
-		    			["CHA#"+string(selected_unit.charisma),
+		    			#4F0105,
+		    			spr_technology_icon],
+		    			[string(selected_unit.charisma),
 		    			"general likeability and ability to interact with people",
-		    			c_purple],			    					    					    					    			
+		    			#3A0339,
+		    			spr_charisma_icon],			    					    					    					    			
 		    		]
+		    		draw_set_color(c_gray);
+		    		draw_rectangle(stat_x,stat_y, stat_x + (36*array_length(stat_display_list)), stat_y+48+8, 0)
+		    		draw_set_color(c_black);
+		    		draw_rectangle(stat_x,stat_y, stat_x + (4*array_length(stat_display_list)), stat_y+48+4, 1)
+		    		stat_y+=4;
+		    		stat_x+=4;
 		    		for (i=0; i<array_length(stat_display_list);i++){
-		    			stat_display=stat_display_list[i][0];
-		    			stat_tool_tip_text = stat_display_list[i][1];
-		    			stat_size = tooltip_draw(stat_x,stat_y, stat_display,2,0,false,0,stat_display_list[i][2]);
-		    			array_push(stat_tool_tips,[stat_x, stat_y, stat_x+string_width(string_hash_to_newline(stat_display)), stat_y+string_height(string_hash_to_newline(stat_display)),stat_tool_tip_text]);
-		    			stat_x += stat_size[0];
+	    				draw_set_color(stat_display_list[i][2]);
+	    				//draw_set_color(c_black);
+	    				draw_rectangle(stat_x,stat_y,stat_x+32,stat_y+48, 0);
+	    				draw_set_color(c_black);
+	    				draw_rectangle(stat_x,stat_y,stat_x+32,stat_y+48, 1);
+	    				//draw_rectangle(stat_x-1,stat_y-1,stat_x+33,stat_y+49, 1);
+	    				draw_sprite_ext(stat_display_list[i][3],0, stat_x,stat_y, 0.5, 0.5, 0, c_white, 1);
+	    				draw_set_color(c_white);
+	    				draw_text(stat_x+12, stat_y+33,stat_display_list[i][0])
+	    				array_push(stat_tool_tips,[stat_x, stat_y, stat_x+32, stat_y+45,stat_display_list[i][1]]);
+	    				stat_x+=36;
 		    		}
 		    		draw_line(stat_x, yy+519, stat_x, yy+957);
 
