@@ -580,6 +580,7 @@
     {"id":{"name":"spr_ship_daemon","path":"sprites/spr_ship_daemon/spr_ship_daemon.yy",},},
     {"id":{"name":"spr_ship_carnage","path":"sprites/spr_ship_carnage/spr_ship_carnage.yy",},},
     {"id":{"name":"spr_ship_icono","path":"sprites/spr_ship_icono/spr_ship_icono.yy",},},
+    {"id":{"name":"obj_tester","path":"objects/obj_tester/obj_tester.yy",},},
     {"id":{"name":"sprite160","path":"sprites/sprite160/sprite160.yy",},},
     {"id":{"name":"sprite158","path":"sprites/sprite158/sprite158.yy",},},
     {"id":{"name":"spr_ship_dreadclaw","path":"sprites/spr_ship_dreadclaw/spr_ship_dreadclaw.yy",},},
