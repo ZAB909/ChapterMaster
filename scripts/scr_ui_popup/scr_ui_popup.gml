@@ -99,10 +99,12 @@ function scr_ui_popup() {
             
 	            draw_set_color(c_gray);draw_rectangle(xx+21,yy+38+(r*30),xx+600,yy+56+(r*30),0);
 	            if (scr_hit(xx+21,yy+38+(r*30),xx+600,yy+56+(r*30))=true){
-	                draw_set_color(c_black);draw_set_alpha(0.2);draw_rectangle(xx+21,yy+38+(r*30),xx+600,yy+56+(r*30),0);draw_set_alpha(1);
+	                draw_set_color(c_black);
+	                draw_set_alpha(0.2);
+	                draw_rectangle(xx+21,yy+38+(r*30),xx+600,yy+56+(r*30),0);draw_set_alpha(1);
                 
 	                if (obj_controller.mouse_left=1) and (obj_controller.cooldown<=0){
-	                    obj_controller.cooldown=8000;var tag;tag="";
+	                    obj_controller.cooldown=8000;var tag="";
 						switch (r) {
 						    case 1:
 						        tag = "BRB";
@@ -368,7 +370,6 @@ function scr_ui_popup() {
 	            draw_set_alpha(0.2);draw_rectangle(xx+300,yy+45,xx+400,yy+65,0);draw_set_alpha(1);
             
 	            if (obj_controller.cooldown<=0) and (obj_controller.mouse_left=1) and (obj_controller.requisition>=1000){
-	                array_push(planet_upgrades, new new_planet_feature(P_features.Secret_Base));
 					obj_temp_build.isnew=1;
 	                obj_controller.cooldown=8000;
 	                obj_controller.requisition-=1000;
@@ -791,6 +792,9 @@ function scr_ui_popup() {
 			    }
 			}
 		}
+	    if (point_in_rectangle(mouse_x, mouse_y, xx+3, yy+50, xx+67, yy+114)){
+	        tooltip_draw(xx+3,yy+114, obj_controller.forge_string);
+	    }		
 
 		if (scr_hit(xx+813,yy+10,xx+960,yy+38)) and (penitent==1) {
 		    var tx=0,ty=0,tool1="",tool2="",plu="",hei_bonus;

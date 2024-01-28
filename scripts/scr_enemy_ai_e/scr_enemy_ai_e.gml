@@ -893,26 +893,30 @@ function scr_enemy_ai_e() {
 
         // Work on upgrades
         if (array_length(p_upgrades[run]) > 0) {
-            var upgrade_type, tx, display_type;
-            for (var upgrade = 0; upgrade < array_length(p_upgrades[run]); upgrade++) {
-                if (struct_exists(p_upgrades[run][upgrade], "built")) {
-                    if (p_upgrades[run][upgrade].built == obj_controller.turn) {
-                        upgrade_type = p_upgrades[run][upgrade].f_type;
+            var upgrade_type, tx, display_type, upgrade;
+            for (var up = 0; up < array_length(p_upgrades[run]); up++) {
+                upgrade = p_upgrades[run][up];
+                if (struct_exists(upgrade, "built")) {
+                    upgrade_type = upgrade.f_type;
+                    if (upgrade.built == obj_controller.turn) {
                         if (upgrade_type == P_features.Arsenal) {
                             display_type = "Arsenal";
                             obj_controller.und_armouries++;
-                        }
-                        if (upgrade_type == P_features.Secret_Base) {
+                        }else if (upgrade_type == P_features.Secret_Base) {
                             display_type = "Lair";
                             obj_controller.und_lairs++;
-                        }
-                        if (upgrade_type == P_features.Gene_Vault) {
+                        }else if (upgrade_type == P_features.Gene_Vault) {
                             display_type = "Gene Vault";
                             obj_controller.und_gene_vaults++;
                         }
                         tx = $"Hidden {display_type} on {name} {scr_roman(run)} has been completed.";
                         scr_alert("green", "owner", string(tx), x, y);
                         scr_event_log("", string(tx));
+                    }
+                    if (upgrade.built<=obj_controller.turn && upgrade_type == P_features.Secret_Base){
+                        if (upgrade.forge > 0){
+                            obj_controller.player_forges++;
+                        }
                     }
                 }
             }

@@ -1055,13 +1055,9 @@ function scr_ui_manage() {
 		        	var stat_tool_tip_text = "";
 		        	draw_set_color(0);
 		    		draw_rectangle(xx+1004,yy+519,xx+1576,yy+957,0);
+		    		var left_edge = xx+1004;
 		    		var stat_x = xx+1004;
 		    		var stat_y = yy+519;
-		    		var warp_box_size = tooltip_draw(stat_x,stat_y+56,$"Warp Level:{selected_unit.psionic}");
-		    		draw_set_color(c_red);
-		    		if (selected_unit.IsSpecialist("forge")){
-		    			tooltip_draw(stat_x,stat_y+45+warp_box_size[1],$"Forge Points:{selected_unit.forge_point_generation()}");
-		    		}
 		    		draw_set_color(0);
 
 
@@ -1122,19 +1118,70 @@ function scr_ui_manage() {
 		    		draw_rectangle(stat_x,stat_y, stat_x + (4*array_length(stat_display_list)), stat_y+48+4, 1)
 		    		stat_y+=4;
 		    		stat_x+=4;
+		    		var viewing_stat,icon_colour;
 		    		for (i=0; i<array_length(stat_display_list);i++){
-	    				draw_set_color(stat_display_list[i][2]);
+		    			icon_colour = c_gray;
+		    			viewing_stat=false;
+		    			if (point_in_rectangle(mouse_x, mouse_y, stat_x,stat_y,stat_x+32,stat_y+48)){
+		    				viewing_stat=true;
+		    				icon_colour = c_white;
+		    			}
+		    			if (viewing_stat){
+	    					draw_set_color(stat_display_list[i][2]);
+	    				}else {
+	    					draw_set_color(c_black);
+	    				}
 	    				//draw_set_color(c_black);
 	    				draw_rectangle(stat_x,stat_y,stat_x+32,stat_y+48, 0);
 	    				draw_set_color(c_black);
 	    				draw_rectangle(stat_x,stat_y,stat_x+32,stat_y+48, 1);
 	    				//draw_rectangle(stat_x-1,stat_y-1,stat_x+33,stat_y+49, 1);
-	    				draw_sprite_ext(stat_display_list[i][3],0, stat_x,stat_y, 0.5, 0.5, 0, c_white, 1);
+	    				draw_sprite_ext(stat_display_list[i][3],0, stat_x,stat_y, 0.5, 0.5, 0, icon_colour, 1);
 	    				draw_set_color(c_white);
 	    				draw_text(stat_x+12, stat_y+33,stat_display_list[i][0])
 	    				array_push(stat_tool_tips,[stat_x, stat_y, stat_x+32, stat_y+45,stat_display_list[i][1]]);
 	    				stat_x+=36;
 		    		}
+
+		    		var stat_middle = left_edge+((stat_x -left_edge)/2);
+		    		var stats_base = stat_y+48+4;
+
+		    		draw_set_color(c_gray);
+		    		draw_rectangle(stat_middle-70,stats_base, stat_middle+67, stats_base+70, 0);
+		    		draw_set_color(c_black);
+		    		draw_rectangle(stat_middle-66,stats_base+1, stat_middle-1, stats_base+65, 1);
+		    		draw_rectangle(stat_middle-66,stats_base,stat_middle-1,stats_base+64, 0);
+		    		draw_sprite_ext(spr_warp_level_icon,2, stat_middle-66,stats_base, 1, 1, 0, c_white, 1);
+		    		draw_set_color(c_white);
+		    		draw_text(stat_middle-34-(string_width($"{selected_unit.psionic}")/2),stats_base+35-(string_height("0")/2), $"{selected_unit.psionic}")
+		    		array_push(stat_tool_tips,[stat_middle-66,stats_base, 0, stats_base+70,"Imperial psionic rating"]);
+
+		    		//draw_rectangle(stat_middle+1,stats_base+2,stat_middle+1,stats_base+34, 0);
+		    		var is_forge = selected_unit.IsSpecialist("forge");
+		    		draw_sprite_ext(
+		    			spr_forge_points_icon,
+		    			0, 
+		    			stat_middle+2,
+		    			stats_base, 
+		    			1, 
+		    			1, 
+		    			0,
+		    			is_forge? c_white: c_gray,
+		    			1); 
+
+		    		if (is_forge){
+		    			draw_text(stat_middle+34-(string_width($"{selected_unit.forge_point_generation()}")/2),stats_base+35-(string_height("0")/2), $"{selected_unit.forge_point_generation()}")
+		    			array_push(stat_tool_tips,[stat_middle+2,stats_base, stat_middle+66, stats_base+70,"Forge point production"]);
+		    		} else {
+		    			array_push(stat_tool_tips,[stat_middle+2,stats_base, stat_middle+66, stats_base+70,"unit does not produce forge points"]);
+		    		}	
+
+
+		    		//var warp_box_size = tooltip_draw(stat_x,stat_y+56,$"Warp Level:{selected_unit.psionic}");
+		    		//draw_set_color(c_red);
+		    		//if (selected_unit.IsSpecialist("forge")){
+		    		//	tooltip_draw(stat_x,stat_y+45+warp_box_size[1],$"Forge Points:{selected_unit.forge_point_generation()}");
+		    		//}		    		
 		    		draw_line(stat_x, yy+519, stat_x, yy+957);
 
 		    		draw_set_alpha(0)
@@ -1156,6 +1203,8 @@ function scr_ui_manage() {
 		       				tooltip_draw(stat_tool_tips[i][0], stat_tool_tips[i][3], stat_tool_tips[i][4],0,0,100,17);
 		       			}
 		       		}
+
+		       		draw_text(stat_middle-66, stats_base+75, $"loyalty : {selected_unit.loyalty}")
 		       		//tooltip_draw(stat_x, stat_y+string_height(stat_display),0,0,100,17);
 		        } 
 		        with (obj_controller){

@@ -528,7 +528,9 @@ artifacts=0;
 identifiable=0;
 repair_ships=0;
 forge_points = 0;
+forge_string="";
 forge_queue=[];
+player_forges = 0;
 // ** STC values **
 stc_wargear=0;
 stc_vehicles=0;

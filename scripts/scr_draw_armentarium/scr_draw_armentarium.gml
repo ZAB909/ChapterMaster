@@ -58,28 +58,104 @@ function drop_down(selection, draw_x, draw_y, options,open_marker){
 					open_marker = false;
                     if (current_target) then current_target=false;
 				}
-			}
+			} else {
+                current_target=false;
+            }
 		}
 	}
     return [selection,open_marker];
 }
 
 function calculate_research_points(){
-    var research_points = 0;
-    var forge_points = 0;
-    var techs = collect_role_group("forge");
-    for (var i=0; i<array_length(techs); i++){
-        if (techs[i].technology>40){
-            research_points += techs[i].technology-40;
-            forge_points += techs[i].forge_point_generation();
+    with (obj_controller){
+        research_points = 0;
+        forge_points = 0;
+        forge_string="";
+        var heretics = [], forge_master=-1, notice_heresy=false;
+        var tech_locations=[]
+        var techs = collect_role_group("forge");
+        for (var i=0; i<array_length(techs); i++){
+            if (techs[i].technology>40 && techs[i].hp() >0){
+                research_points += techs[i].technology-40;
+                forge_points += techs[i].forge_point_generation();
+                if (techs[i].has_trait("tech_heretic")){
+                    array_push(heretics, i);
+                }
+            }
+            tech_locations[i] = techs[i].marine_location();
+            if (techs[i].IsSpecialist("heads")){
+                forge_master=i;
+            }
         }
-    }
-    return [research_points, floor(forge_points)];
+        forge_string = $"Techmarines : {floor(forge_points)}#";
+        var forge_veh_maintenance={};
+        for (var comp=0;comp<=10;comp++){
+            for (var veh=0;veh<=100;veh++){
+                if (obj_ini.veh_role[comp][veh]=="Land Raider"){
+                    forge_veh_maintenance.land_raider = struct_exists(forge_veh_maintenance, "land_raider") ?forge_veh_maintenance.land_raider +1 : 1;
+                } else if (array_contains(["Rhino","Predator", "Whirlwind"],obj_ini.veh_role[comp][veh])){
+                    forge_veh_maintenance.small_vehicles = struct_exists(forge_veh_maintenance, "small_vehicles") ?forge_veh_maintenance.small_vehicles + 0.1 :0.1;
+                }
+            }
+        }
+        if (struct_exists(forge_veh_maintenance, "land_raider")){
+            forge_string += $"Land Raider Maintenance : -{forge_veh_maintenance.land_raider}#";
+            forge_points-=forge_veh_maintenance.land_raider;
+        }
+        if (struct_exists(forge_veh_maintenance, "small_vehicles")){
+            if (floor(forge_veh_maintenance.small_vehicles)>0){
+                forge_string += $"Small Vehicle Maintenance : -{floor(forge_veh_maintenance.small_vehicles)}#";
+                forge_points-=floor(forge_veh_maintenance.small_vehicles);
+            }
+        }
+        if (player_forges>0){
+            forge_points += 10*player_forges;
+            forge_string += $"Forges : {10*player_forges}#";
+        }
+        forge_points = floor(forge_points);
+        if (array_length(heretics)>0){
+            var heretic_location, same_location;
+            for (var heretic=0; heretic<array_length(heretics); heretic++){
+                heretic_location = tech_locations[heretic];
+                for (var i=0; i<array_length(techs); i++){
+                    same_location=false;
+                    heretic_location[2]=false;
+                    if (array_contains(heretics,i)) then continue;
+
+                    if (heretic_location[2] != "warp" && heretic_location[2] != "lost"){
+                        if (heretic_location[2] == tech_locations[i][2]) then same_location=true;
+                    } else {
+                        if (heretic_location[1] == tech_locations[i][1]) &&
+                            (heretic_location[0] == tech_locations[i][0]){
+                                same_location=true;
+                        }
+                    }
+                    if (same_location){
+                        if (irandom(techs[i].technology) < irandom(techs[heretic].technology)){
+                            if (irandom(techs[i].charisma) < irandom(techs[heretic].charisma)){
+                                techs[i].corruption += irandom(2);
+                                if (techs[i].corruption>45) then techs[i].add_trait("tech_heretic");
+                            }
+                        }
+                        if (i==forge_master){
+                            if (irandom(4)==1){
+                                notice_heresy=true;
+                                scr_event_log("purple",$"{techs[forge_master].name_role()} Has noticed signs of tech heresy amoung the techmarine ranks");
+                                //pip=instance_create(0,0,obj_popup);
+                            }
+                        }
+                    }
+                }
+                //add check to see if tech heretic is anywhere near mechanicus forge if so maybe do stuff??
+                /*if (heretic_location==location_types.planet){
+                    if 
+                }*/
+            }
+        }
+    }   
 }
 function research_end(){
-    var tech_data = calculate_research_points();
-    var research_points = tech_data[0];
-    forge_points = tech_data[1];
+    calculate_research_points();
     stc_research[$ stc_research.research_focus] += research_points;
     var research_area_limit;
     if (stc_research.research_focus=="vehicles"){
@@ -94,20 +170,21 @@ function research_end(){
     }
 
     if (forge_points>0){
-        if (array_length(forge_queue)>0){
+        var reduction_points = forge_points;
+        if (array_length(forge_queue)>0 && forge_points>0){
             var forging_length = array_length(forge_queue);
             for (var i=0;i<forging_length;i++){
-                if (forge_queue[i].forge_points<=forge_points){
-                    forge_points-=forge_queue[i].forge_points;
+                if (forge_queue[i].forge_points<=reduction_points){
+                    reduction_points-=forge_queue[i].forge_points;
                     scr_add_item(forge_queue[i].name, forge_queue[i].count);
                     array_delete(forge_queue, i, 1);
                     i--;
                     forging_length--;
                 } else {
-                    forge_queue[i].forge_points -= forge_points;
-                    forge_points=0;
+                    forge_queue[i].forge_points -= reduction_points;
+                    reduction_points=0;
                 }
-                if (forge_points<=0) then break;
+                if (reduction_points<=0) then break;
             }
         }
     }
@@ -642,11 +719,22 @@ function scr_draw_armentarium(){
             item_gap +=20
         }
         draw_set_color(c_red);
-        //draw_line(xx + 326 + 16, yy + 426, xx + 887 + 16, yy + 426);
-        draw_text(xx+359, yy + 430,$"current forge points : {forge_points}");
-        draw_text(xx+359, yy + 450,$"total {obj_ini.role[100, 16]}'s : {temp[36]}");
-        draw_text(xx+359, yy + 470,"Chapter Forges : 0");
-        draw_text(xx+359, yy + 490,$"total {obj_ini.role[100, 16]}'s assigned to forges : 0")
+        //draw_line(xx + 326 + 16, yy + 426, xx + 887 + 16, yy + 426);         
+        draw_sprite_ext(
+            spr_forge_points_icon,0, 
+            xx+359,
+            yy + 410,
+            1, 
+            1, 
+            0,
+            c_white,
+            1); 
+        draw_set_color(c_white);
+        draw_text_transformed(xx+359+38,yy + 442-(string_height("0")/2), $": {forge_points}",2,2,0);
+        draw_set_color(c_red); 
+        draw_text(xx+359, yy + 470,$"total {obj_ini.role[100, 16]}'s : {temp[36]}");
+        draw_text(xx+359, yy + 490,$"Chapter Forges : {obj_controller.player_forges}");
+        draw_text(xx+359, yy + 510,$"total {obj_ini.role[100, 16]}'s assigned to forges : 0")
 
     }
 }

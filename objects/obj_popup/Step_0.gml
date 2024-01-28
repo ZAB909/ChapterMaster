@@ -780,7 +780,7 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
     }
     if (title="He Built It"){
         scr_kill_unit(ma_co,ma_id);
-        with(obj_ini){scr_company_order(0);}
+        with(obj_ini){scr_company_order(ma_co);}
     }
     
     if (title="Necron Tomb Excursion"){
@@ -1348,6 +1348,11 @@ if (press=3) and (option3!=""){
     if (obj_controller.complex_event=false){
         if (number!=0) then obj_turn_end.alarm[1]=4;instance_destroy();
     }
+}
+
+
+if (title="Tech Heresy"){
+
 }
 
 /* */

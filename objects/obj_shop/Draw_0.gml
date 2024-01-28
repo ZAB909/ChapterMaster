@@ -56,8 +56,20 @@ for(var i=1; i<=39; i++){
             if (mc_stocked[i]=0) then draw_text(xx+1150,yy+y2,string_hash_to_newline(item_stocked[i]));// Stocked
             if (mc_stocked[i]>0) then draw_text(xx+1150,yy+y2,string_hash_to_newline(string(item_stocked[i])+"   mc: "+string(mc_stocked[i])));
             draw_set_alpha(1);
-            
-            draw_sprite_ext(spr_requisition,0,xx+1330,yy+y2+4,1,0.65,0,c_white,1);
+
+            if (obj_controller.in_forge){
+                draw_sprite_ext(
+                            spr_forge_points_icon,0, 
+                            xx+1330,
+                            yy+y2+3, 
+                            0.3, 
+                            0.3, 
+                            0,
+                            c_white,
+                            1); 
+            } else{
+                draw_sprite_ext(spr_requisition,0,xx+1330,yy+y2+4,1,0.65,0,c_white,1);
+            }            
 			draw_set_color(16291875)
             if (obj_controller.in_forge){
 				draw_set_color(c_red)
@@ -75,7 +87,9 @@ for(var i=1; i<=39; i++){
                 if (obj_controller.requisition< cost) then draw_set_alpha(0.25);
             }
 
-            draw_sprite(spr_build_tiny2,0,xx+1530,yy+y2+2);draw_set_alpha(1);
+            draw_sprite(spr_build_tiny2,0,xx+1530,yy+y2+2);
+
+            draw_set_alpha(1);
            if (obj_controller.in_forge){
             if (point_in_rectangle(mouse_x, mouse_y, xx+1520, yy+y2+2, xx+1580, yy+y2+18)&& mouse_check_button_pressed(mb_left) ){
                 if (array_length(obj_controller.forge_queue)<20){

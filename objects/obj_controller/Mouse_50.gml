@@ -1570,9 +1570,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 click=1;
                 temp[36]=scr_role_count(obj_ini.role[100][16],"");
                 temp[37]=temp[36]+scr_role_count(string(obj_ini.role[100][16])+" Aspirant","");
-                var recalculate_points = calculate_research_points();
-                research_points = recalculate_points[0];
-                forge_points = recalculate_points[1];
+                calculate_research_points();
                 in_forge=false
             }
             if (menu==14) and (onceh==0){
@@ -1733,7 +1731,6 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     audio_sound_gain(snd_end_turn,master_volume*effect_volume,0);
 
                     turn+=1;
-
                     with(obj_star){
                         for (var i=0;i<=21;i++){
                             present_fleet[i]=0;
@@ -1760,6 +1757,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     if (instance_exists(obj_en_fleet)){obj_en_fleet.alarm[1]=1;}
                     if (instance_exists(obj_crusade)){obj_crusade.alarm[0]=2;}
 
+                    player_forges=0;
                     requisition+=income;
                     scr_income();
                     gene_tithe-=1;

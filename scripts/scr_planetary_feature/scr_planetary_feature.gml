@@ -54,7 +54,8 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		}
 		built = obj_controller.turn +3;
 		forge = 0;
-		hippo=0;beastarium=0;
+		hippo=0;
+		beastarium=0;
 		torture=0;
 		narcotics=0;
 		relic=0;

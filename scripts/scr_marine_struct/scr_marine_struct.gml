@@ -594,6 +594,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		planet_location=2;
 	}
 	religion="none";
+	master_loyalty = 0;
 	psionic=0;
 	corruption=0;
 	religion_sub_cult = "none";
@@ -619,7 +620,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if (base_group == "astartes"){
 			while (stat_point_exp_marker>=15){
 				var stat_gains = choose("weapon_skill", "ballistic_skill", "wisdom");
-				if (IsSpecialist("forge") && irandom(3)==0) then stat_gains = "technology";
+				var special_stat = irandom(3);
+				if (IsSpecialist("forge") && special_stat==0) then stat_gains = "technology";
+				if (IsSpecialist("libs") && special_stat==0) then stat_gains = "intelligence";
+				if (IsSpecialist("chap") && special_stat==0) then stat_gains = "charisma";
+				if (IsSpecialist("apoth") && special_stat==0) then stat_gains = "intelligence";
+				if (role()=="Champion" && stat_gains!="weapon_skill" && special_stat==0) then stat_gains = "weapon_skill";
 				self[$ stat_gains]++;
 				stat_point_exp_marker-=15;
 				if (struct_exists(instace_stat_point_gains, stat_gains)){
@@ -1031,6 +1037,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	} 
 	switch base_group{
 		case "astartes":				//basic marine class //adds specific mechanics not releveant to most units
+			loyalty = 100;
 			var astartes_trait_dist = [
 				["very_hard_to_kill", [149,148]],
 				["scholar", [99,98]],
@@ -2036,12 +2043,18 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					add_bionics("right_arm","standard",false);
 					bionic_count = choose(6,6,7,7,7,8,9);
 					add_trait("flesh_is_weak");
+					var tech_heresy = irandom(19);
 				}else {
-			    bionic_count = irandom(5)+1;
+			    	bionic_count = irandom(5)+1;
 				  if (irandom(2) ==0){
 				    add_trait("flesh_is_weak");
 				  }
-			  }
+				  var tech_heresy = irandom(49);
+			  	}
+			  	if (tech_heresy==0){
+			  		add_trait("tech_heretic");
+			  		corruption+=5;
+			  	}
 				if (technology<35){
 					technology=35;
 				}
@@ -2064,7 +2077,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			  religion = "cult_mechanicus"	
 				break;
 			case  obj_ini.role[100][12]: //scouts
-				bionic_count = choose(0,0,0,0,0,0,0,0,0,0,0,1)
+				bionic_count = choose(0,0,0,0,0,0,0,0,0,0,0,1);
 				break;
 			case  obj_ini.role[100][14]:  //chaplain
 				update_armour(choose("MK5 Heresy","MK6 Corvus","MK7 Aquila", "MK4 Maximus","MK8 Errant"),false,false);
@@ -2178,3 +2191,18 @@ function jsonify_marine_struct(company, marine){
 		}
 		return json_stringify(new_marine);
 	}
+
+
+function pen_and_paper_sim() constructor{
+	static technology= function(unit1, unit2){
+		var stat1 = irandom(100);
+		var stat2 = irandom(100);
+		if (stat1 < unit1.technology){
+			if (stat2<unit2.technology){
+
+			}
+		}
+	}
+}
+
+global.character_tester = new pen_and_paper_sim();
