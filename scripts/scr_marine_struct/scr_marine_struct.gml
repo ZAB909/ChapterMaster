@@ -2194,15 +2194,57 @@ function jsonify_marine_struct(company, marine){
 
 
 function pen_and_paper_sim() constructor{
-	static technology= function(unit1, unit2){
-		var stat1 = irandom(100);
-		var stat2 = irandom(100);
-		if (stat1 < unit1.technology){
-			if (stat2<unit2.technology){
+	static oppposed_test = function(unit1, unit2, stat, modifiers={}){
+		var stat1 = irandom(99)+1;
+		var stat2 = irandom(99)+1;
+		var stat1_pass_margin, stat2_pass_margin, winner, pass_margin;
+		//unit 1 passes test 
+		if (stat1 < unit1[$ stat]]){
+			stat1_pass_margin =  unit1[$ stat] - stat1;
 
+			//unit 1 and unit 2 pass tests
+			if (stat2<unit2[$ stat]){
+				stat2_pass_margin =  unit2[$ stat] - stat2;
+
+				//unit 2 passes by bigger margin and thus wins
+				if (stat2_pass_margin > stat1_pass_margin){
+					winner = 2;
+					pass_margin = stat2_pass_margin-stat1_pass_margin;
+				} else {
+					winner = 1;
+					pass_margin = stat1_pass_margin-stat2_pass_margin;
+				}
+			} else {//only unit 1 passes test thus is winner
+				winner = 1;
+				pass_margin = unit1[$ stat] - stat1;
 			}
+		} else if (stat2<unit2[$ stat]){//only unit 2 passes test
+			winner = 2;
+			pass_margin = unit2[$ stat]-stat2;
+		} else {
+			winner = 0;
+			pass_margin = unit1[$ stat] - stat1;
 		}
+
+		return [winner, pass_margin];
+	}
+
+	static standard_test = function(unit, stat, difficulty_mod){
+		var passed =false;
+		var margin=0
+		var random_roll = irandom(99)+1;
+		if (random_roll+difficulty_mod<unit[$ stat]){
+			passed = true;
+			margin = unit[$ stat] - random_roll+difficulty_mod;
+		} else {
+			passed = false;
+			margin = unit[$ stat] - random_roll+difficulty_mod;
+		}
+
+		return [passed, margin];
 	}
 }
 
 global.character_tester = new pen_and_paper_sim();
+
+

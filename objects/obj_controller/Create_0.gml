@@ -1347,6 +1347,9 @@ if (global.chapter_name=="Soul Drinkers") then gene_seed=60;
 squads = true;
 game_start_squads()
 squads = false;
+
+// **sets up starting forge_points
+calculate_research_points()
 // ** Sets up the number of marines per company **
 marines=0;
 marines=obj_ini.specials+obj_ini.firsts+obj_ini.seconds+obj_ini.thirds+obj_ini.fourths+obj_ini.fifths;

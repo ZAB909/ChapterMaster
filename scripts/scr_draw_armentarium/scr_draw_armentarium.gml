@@ -98,6 +98,7 @@ function calculate_research_points(){
                 }
             }
         }
+
         if (struct_exists(forge_veh_maintenance, "land_raider")){
             forge_string += $"Land Raider Maintenance : -{forge_veh_maintenance.land_raider}#";
             forge_points-=forge_veh_maintenance.land_raider;
@@ -109,19 +110,26 @@ function calculate_research_points(){
             }
         }
         if (player_forges>0){
-            forge_points += 10*player_forges;
-            forge_string += $"Forges : {10*player_forges}#";
+            forge_points += 5*player_forges;
+            forge_string += $"Forges : {5*player_forges}#";
         }
         forge_points = floor(forge_points);
+        var tech_test, charisma_test, piety_test;
+
+        //in this instance tech heretics are techmarines with the "tech_heretic" trait
         if (array_length(heretics)>0){
             var heretic_location, same_location;
+            //iterate through tech heretics;
             for (var heretic=0; heretic<array_length(heretics); heretic++){
                 heretic_location = tech_locations[heretic];
+                //iterate through rest of techs
                 for (var i=0; i<array_length(techs); i++){
                     same_location=false;
                     heretic_location[2]=false;
+                    //if tech is also heretic skip
                     if (array_contains(heretics,i)) then continue;
 
+                    // find out if heretic is in same location as techmarine
                     if (heretic_location[2] != "warp" && heretic_location[2] != "lost"){
                         if (heretic_location[2] == tech_locations[i][2]) then same_location=true;
                     } else {
@@ -131,14 +139,34 @@ function calculate_research_points(){
                         }
                     }
                     if (same_location){
-                        if (irandom(techs[i].technology) < irandom(techs[heretic].technology)){
-                            if (irandom(techs[i].charisma) < irandom(techs[heretic].charisma)){
-                                techs[i].corruption += irandom(2);
-                                if (techs[i].corruption>45) then techs[i].add_trait("tech_heretic");
+                        //if so do a an opposed technology test of techmarine vs tech  heretic techmarine
+                        tech_test = global.character_tester.oppposed_test(techs[heretic],techs[i], "technology");
+
+
+                        if (tech_test[0]=1){
+                            // if heretic wins do an opposed charisma test
+                            charisma_test =  global.character_tester.oppposed_test(techs[heretic],techs[i], "charisma");                           
+                            if (charisma_test[0]==1){
+                                // if heretic win tech is corrupted
+                                //tech is corrupted by half the pass margin of the heretic
+                                //this means high charisma heretics will spread corruption more wuickly and more often
+                                techs[i].corruption += charisma_test[1]/2;
+
+                                // tech takes a piety test to see if tehy break faith with cult mechanicus and become tech heretic
+                                //piety test is augmented by by the techs corruption with the test becoming harder to pass the more
+                                // corrupted the tech is
+                                piety_test = global.character_tester.standard_test(techs[i], "piety", 20 - techs[i].corruption);
+
+                                // if tech fails piety test tech also becomes tech heretic
+                                if (piety_test[0] == false){
+                                    techs[i].add_trait("tech_heretic");
+                                }
                             }
                         }
                         if (i==forge_master){
-                            if (irandom(4)==1){
+                            // if tech is the forge master then forge master takes a wisdom in this case doubling as a perception test
+                            // if forge master passes tech heresy is noted and chapter master notified
+                            if (global.character_tester.standard_test(techs[i], "wisdom", -40)[0]){
                                 notice_heresy=true;
                                 scr_event_log("purple",$"{techs[forge_master].name_role()} Has noticed signs of tech heresy amoung the techmarine ranks");
                                 //pip=instance_create(0,0,obj_popup);
