@@ -1726,3 +1726,6 @@ if (income_controlled_planets>0){
         }
     }
 }
+
+//research and forge related actions
+research_end();

@@ -208,7 +208,10 @@ function scr_ui_popup() {
 			                tcost=cost;
 			                if (obj_controller.mouse_left==1) and (obj_controller.cooldown<=0) and (obj_controller.requisition>=tcost) and (alp!=0.33){
 			                    obj_controller.cooldown=8000;obj_controller.requisition-=tcost;
-			                    if (r=1){s_base.forge=1;}
+			                    if (r=1){
+			                    	s_base.forge=1;
+			                    	s_base.forge_data = new player_forge();
+			                    }
 			                    else if (r==2){s_base.hippo=1;}
 			                    else if (r==3){s_base.beastarium=1}
 			                    else if (r==4){s_base.torture=1}
@@ -353,7 +356,7 @@ function scr_ui_popup() {
 	     if (arsenal!=0) or (gene_vault!=0){
  			draw_text_ext(xx+21,yy+65,string_hash_to_newline(string(woob)),-1,595);
 	     }
-	    if (un_upgraded==0){
+	    if (un_upgraded==0 && obj_temp_build.isnew!=1){
 	        draw_set_font(fnt_40k_14b);
 	        if (s_base==0) then draw_text(xx+21,yy+45,string_hash_to_newline("Lair"));
 	        if (arsenal==0) then draw_text(xx+21,yy+110,string_hash_to_newline("Arsenal"));

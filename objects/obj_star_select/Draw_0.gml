@@ -77,7 +77,8 @@ repeat(4){
     if (target.planets>=pt) and (target.craftworld=0) and (target.space_hulk=0){
         if (target.p_type[pt]="Lava") then temp1=0;if (target.p_type[pt]="Desert") then temp1=2;
         if (target.p_type[pt]="Dead") then temp1=12;if (target.p_type[pt]="Hive") then temp1=4;
-        if (target.p_type[pt]="Temperate") or (target.p_type[pt]="Feudal") then temp1=8;if (target.p_type[pt]="Agri") then temp1=6;
+        if (target.p_type[pt]="Temperate") or (target.p_type[pt]="Feudal") then temp1=8;
+        if (target.p_type[pt]="Agri") then temp1=6;
         if (target.p_type[pt]="Death") then temp1=5;if (target.p_type[pt]="Ice") then temp1=10;
         if (target.p_type[pt]="Forge") then temp1=3;if (target.p_type[pt]="Daemon") then temp1=14;
         if (target.p_type[pt]="Shrine") then temp1=15;draw_sprite(spr_planets,temp1,xx+xxx,yy+287);
@@ -94,7 +95,7 @@ repeat(4){
 
 
 if (obj_controller.selecting_planet!=0){
-    var pp;pp=obj_controller.selecting_planet;
+    var pp=obj_controller.selecting_planet;
     var nm, temp1;temp1=0;nm=scr_roman(pp);
     draw_set_halign(fa_center);
     draw_set_font(fnt_40k_14);
@@ -139,19 +140,19 @@ if (obj_controller.selecting_planet!=0){
     
     if (target.p_type[pp]="Lava") and (target.p_population[pp]>0) then temp1=1;
     if (target.p_type[pp]="Lava") and (target.p_population[pp]=0) then temp1=0;
-    if (target.p_type[pp]="Desert") then temp1=2;
-    if (target.p_type[pp]="Dead") then temp1=10;
-    if (target.p_type[pp]="Hive") then temp1=4;
-    if (target.p_type[pp]="Temperate") then temp1=8;
-    if (target.p_type[pp]="Feudal") then temp1=7;
-    if (target.p_type[pp]="Agri") then temp1=6;
-    if (target.p_type[pp]="Death") then temp1=5;
-	if (target.p_type[pp]="Ice") then temp1=9;
-    if (target.p_type[pp]="Forge") then temp1=3;  
-    if (target.p_type[pp]="Daemon") then temp1=11;
-	if (target.p_type[pp]="Craftworld") then temp1=12;
-    if (target.p_type[pp]="Space Hulk") then temp1=14;
-    if (target.p_type[pp]="Shrine") then temp1=16;
+    if (target.p_type[pp]="Desert")  {temp1=2;}
+    else if (target.p_type[pp]="Dead")  {temp1=10;}
+    else if (target.p_type[pp]="Hive")  {temp1=4;}
+    else if (target.p_type[pp]="Temperate")  {temp1=8;}
+    else if (target.p_type[pp]="Feudal")  {temp1=7;}
+    else if (target.p_type[pp]="Agri")  {temp1=6;}
+    else if (target.p_type[pp]="Death")  {temp1=5;}
+	else if (target.p_type[pp]="Ice")  {temp1=9;}
+    else if (target.p_type[pp]="Forge")  {temp1=3;}  
+    else if (target.p_type[pp]="Daemon")  {temp1=11;}
+	else if (target.p_type[pp]="Craftworld")  {temp1=12;}
+    else if (target.p_type[pp]="Space Hulk")  {temp1=14;}
+    else if (target.p_type[pp]="Shrine")  {temp1=16;}
     
     // draw_sprite(spr_planet_splash,temp1,xx+349,yy+194);
     scr_image("planet",temp1,xx+349,yy+194,128,128);
@@ -179,7 +180,8 @@ if (obj_controller.selecting_planet!=0){
     
     if (target.space_hulk=0){
         if (improve=1){
-            draw_set_color(c_green);draw_rectangle(xx+481,yy+280,xx+716,yy+298,0);
+            draw_set_color(c_green);
+            draw_rectangle(xx+481,yy+280,xx+716,yy+298,0);
             draw_sprite(spr_requisition,0,xx+657,yy+283);
             
             
@@ -273,36 +275,51 @@ if (obj_controller.selecting_planet!=0){
     
     var fit,to_show,temp9;t=-1;to_show=0;temp9="";
     repeat(11){t+=1;fit[t]="";}
-	var planet_displays = "";
+	var planet_displays = [], i;
 	var feat_count;
 	var feat_count = array_length(target.p_feature[pp]);
+    var upgrade_count = array_length(target.p_upgrades[pp]);
 	if ( feat_count > 0){
-	for (var i =0; i <  feat_count ;i++){
-		if (target.p_feature[pp][i].planet_display != 0){
-			if (target.p_feature[pp][i].player_hidden == 1){planet_displays += "???? |"}else{
-				planet_displays += target.p_feature[pp][i].planet_display + "|";
-			}
-		}
-	}}
-    t=0;to_show=string_count("|",planet_displays);
-    if (to_show>0){
-        explode_script(planet_displays,"|");
-        t+=1;if (to_show>=t) then fit[t]=string_replace(string(explode[0]),"|","");if (string_count("WL",fit[t])>0) and (string_count(fit[t],obj_controller.useful_info)=0) then fit[t]="";
-        t+=1;if (to_show>=t) then fit[t]=string_replace(string(explode[1]),"|","");if (string_count("WL",fit[t])>0) and (string_count(fit[t],obj_controller.useful_info)=0) then fit[t]="";
-        t+=1;if (to_show>=t) then fit[t]=string_replace(string(explode[2]),"|","");if (string_count("WL",fit[t])>0) and (string_count(fit[t],obj_controller.useful_info)=0) then fit[t]="";
-        t+=1;if (to_show>=t) then fit[t]=string_replace(string(explode[3]),"|","");if (string_count("WL",fit[t])>0) and (string_count(fit[t],obj_controller.useful_info)=0) then fit[t]="";
-        t+=1;if (to_show>=t) then fit[t]=string_replace(string(explode[4]),"|","");if (string_count("WL",fit[t])>0) and (string_count(fit[t],obj_controller.useful_info)=0) then fit[t]="";
-        
-        t=0;
-        t+=1;if (fit[t]!="") then temp9+=string(fit[t])+"#";
-        t+=1;if (fit[t]!="") then temp9+=string(fit[t])+"#";
-        t+=1;if (fit[t]!="") then temp9+=string(fit[t])+"#";
-        t+=1;if (fit[t]!="") then temp9+=string(fit[t])+"#";
-        t+=1;if (fit[t]!="") then temp9+=string(fit[t])+"#";
+    	for (i =0; i <  feat_count ;i++){
+    		if (target.p_feature[pp][i].planet_display != 0){
+    			if (target.p_feature[pp][i].player_hidden == 1){
+                    array_push(planet_displays, ["????", ""] );
+                }else{
+                    array_push(planet_displays, [target.p_feature[pp][i].planet_display, target.p_feature[pp][i]]);
+    			}
+    		}
+    	}
     }
-    draw_text(xx+535,yy+346,string_hash_to_newline(string(temp9)));
-    
-    
+    if (upgrade_count>0){
+        for (i =0; i <  upgrade_count ;i++){
+            if (target.p_upgrades[pp][i].f_type == P_features.Secret_Base){
+                if (target.p_upgrades[pp][i].forge>0){
+                    array_push(planet_displays, ["Small Chapter Forge", target.p_upgrades[pp][i].forge_data]);
+                }
+            }
+        }
+    }
+
+    t=0;
+    var button_size, y_move=0, button_colour;
+    for (i=0; i< array_length(planet_displays); i++){
+        button_colour = c_green;
+        if (planet_displays[i][0] == "????") then button_colour = c_red;
+        button_size = draw_unit_buttons([xx+535,yy+346+y_move], planet_displays[i][0],[1,1], button_colour,fa_left, fnt_40k_14b, 1);
+        y_move += button_size[1] - button_size[3];
+        if (point_in_rectangle(mouse_x, mouse_y, button_size[0], button_size[1],button_size[2],button_size[3]) && (mouse_check_button_pressed(mb_left))){
+            if (planet_displays[i][0] != "????"){
+                feature = new feature_selected(planet_displays[i][1]);
+            } else {
+                feature = "";
+            }
+        }
+    }
+     if (feature!=""){
+        if (is_struct(feature)){
+            feature.draw_planet_features(xx+27+390,yy+165);        
+        }
+    }   
     if (obj_controller.selecting_planet>0){
         var pppp,pp;pppp=obj_controller.selecting_planet;pp=pppp;
         draw_set_color(c_black);

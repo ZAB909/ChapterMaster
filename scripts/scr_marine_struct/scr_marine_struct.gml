@@ -2194,17 +2194,19 @@ function jsonify_marine_struct(company, marine){
 
 
 function pen_and_paper_sim() constructor{
-	static oppposed_test = function(unit1, unit2, stat, modifiers={}){
+	static oppposed_test = function(unit1, unit2, stat,unit1_mod=0,unit2_mod=0,  modifiers={}){
 		var stat1 = irandom(99)+1;
+		var unit1_val = unit1[$ stat]+unit1_mod;
+		var unit2_val = unit1[$ stat]+unit2_mod;
 		var stat2 = irandom(99)+1;
 		var stat1_pass_margin, stat2_pass_margin, winner, pass_margin;
 		//unit 1 passes test 
-		if (stat1 < unit1[$ stat]]){
-			stat1_pass_margin =  unit1[$ stat] - stat1;
+		if (stat1 < unit1[$ stat]){
+			stat1_pass_margin = unit1_val- stat1;
 
 			//unit 1 and unit 2 pass tests
-			if (stat2<unit2[$ stat]){
-				stat2_pass_margin =  unit2[$ stat] - stat2;
+			if (stat2<unit2_val){
+				stat2_pass_margin =  unit2_val - stat2;
 
 				//unit 2 passes by bigger margin and thus wins
 				if (stat2_pass_margin > stat1_pass_margin){
@@ -2216,14 +2218,14 @@ function pen_and_paper_sim() constructor{
 				}
 			} else {//only unit 1 passes test thus is winner
 				winner = 1;
-				pass_margin = unit1[$ stat] - stat1;
+				pass_margin =unit1_val- stat1;
 			}
-		} else if (stat2<unit2[$ stat]){//only unit 2 passes test
+		} else if (stat2<unit2_val){//only unit 2 passes test
 			winner = 2;
-			pass_margin = unit2[$ stat]-stat2;
+			pass_margin = unit2_val-stat2;
 		} else {
 			winner = 0;
-			pass_margin = unit1[$ stat] - stat1;
+			pass_margin =unit1_val- stat1;
 		}
 
 		return [winner, pass_margin];

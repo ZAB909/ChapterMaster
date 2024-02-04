@@ -531,6 +531,43 @@ forge_points = 0;
 forge_string="";
 forge_queue=[];
 player_forges = 0;
+production_research = {
+    flame : [0,{}],
+    bolt : [1,{}],
+    plasma : [0,{}],
+    psi : [0,{}],
+    melta : [0,{}],
+    chasis : [0,{}],
+    chain :[0,{}],
+    power_fields:[1,{}],
+    las : [0,{}],
+    armour : [
+        0,{
+        stealth : [0,{}],
+        armour : [0,{}],
+		}
+    ]
+}
+
+production_research_pathways ={
+    flame : [["Promethium Tank Brazing"],{}],
+    bolt : [["Hardened Barrel Boring"],{}],
+    plasma : [[ "Plasma Coil Magnetization"],{}],
+    psi : [["Psionic Resonance Valves"],{}],
+    melta : [["Atomic Chamber Construction"],{}],
+    chasis : [[],{}],
+    chain :[["Adamantine Links"],{}],
+    power_fields:[["Power Field Cooling"],{}],
+    las : [["Light Condensement Chamber"],{}],
+    armour : 
+        [
+            [],
+            {
+                stealth : [["Advanced Servo Motors"],{}],
+                armour : [["Advanced Ceramite Bonding", "Enhanced Nerve Interfacing"],{}],
+            }
+        ]
+}
 // ** STC values **
 stc_wargear=0;
 stc_vehicles=0;

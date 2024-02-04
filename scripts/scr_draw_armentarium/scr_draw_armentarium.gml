@@ -143,9 +143,9 @@ function calculate_research_points(){
                         tech_test = global.character_tester.oppposed_test(techs[heretic],techs[i], "technology");
 
 
-                        if (tech_test[0]=1){
+                        if (tech_test[0]==1){
                             // if heretic wins do an opposed charisma test
-                            charisma_test =  global.character_tester.oppposed_test(techs[heretic],techs[i], "charisma");                           
+                            charisma_test =  global.character_tester.oppposed_test(techs[heretic],techs[i], "charisma", -20);                           
                             if (charisma_test[0]==1){
                                 // if heretic win tech is corrupted
                                 //tech is corrupted by half the pass margin of the heretic
@@ -155,7 +155,7 @@ function calculate_research_points(){
                                 // tech takes a piety test to see if tehy break faith with cult mechanicus and become tech heretic
                                 //piety test is augmented by by the techs corruption with the test becoming harder to pass the more
                                 // corrupted the tech is
-                                piety_test = global.character_tester.standard_test(techs[i], "piety", 20 - techs[i].corruption);
+                                piety_test = global.character_tester.standard_test(techs[i], "piety", 40 - techs[i].corruption);
 
                                 // if tech fails piety test tech also becomes tech heretic
                                 if (piety_test[0] == false){
@@ -204,7 +204,21 @@ function research_end(){
             for (var i=0;i<forging_length;i++){
                 if (forge_queue[i].forge_points<=reduction_points){
                     reduction_points-=forge_queue[i].forge_points;
-                    scr_add_item(forge_queue[i].name, forge_queue[i].count);
+                    if (is_string(forge_queue[i].name)){
+                        scr_add_item(forge_queue[i].name, forge_queue[i].count);
+                    } else if (is_array(forge_queue[i].name)){
+                        if (forge_queue[i].name[0]=="research"){h = 
+                            var tier_depth = array_length(forge_queue[i].name[2]);
+                            var tier_names=forge_queue[i].name[2];
+                            if (tier_depth==1){
+                                production_research[$ tier_names[0]][0]++;
+                            } else if (tier_depth==2){
+                                production_research[$ tier_names[0]][1][$ tier_names[1]][0]++;
+                            } else if (tier_depth == 3){
+                                production_research[$ tier_names[0]][1][$ tier_names[1]][1][$ tier_names[2]][0]++;
+                            }
+                        }
+                    }
                     array_delete(forge_queue, i, 1);
                     i--;
                     forging_length--;
@@ -299,20 +313,24 @@ function scr_draw_armentarium(){
     draw_rectangle(xx + 957, yy + 76, xx + 1062, yy + 104, 0);
     draw_rectangle(xx + 1068, yy + 76, xx + 1150, yy + 104, 0);
     draw_rectangle(xx + 1167, yy + 76, xx + 1255, yy + 104, 0);
-    draw_rectangle(xx + 1487, yy + 76, xx + 1545, yy + 104, 0);
+    draw_rectangle(xx + 1447, yy + 76, xx + 1545, yy + 104, 0);
 
     draw_set_color(c_black);
     draw_text_transformed(xx + 960, yy + 76, string_hash_to_newline("Equipment"), 0.6, 0.6, 0);
     draw_text_transformed(xx + 1070, yy + 76, string_hash_to_newline("Armour"), 0.6, 0.6, 0);
     draw_text_transformed(xx + 1170, yy + 76, string_hash_to_newline("Vehicles"), 0.6, 0.6, 0);
-    draw_text_transformed(xx + 1490, yy + 76, string_hash_to_newline("Ships"), 0.6, 0.6, 0);
+    if (in_forge){
+        draw_text_transformed(xx + 1450, yy + 76, string_hash_to_newline("Manufactoring"), 0.6, 0.6, 0);
+    } else{
+        draw_text_transformed(xx + 1450, yy + 76, string_hash_to_newline("Ships"), 0.6, 0.6, 0);
+    }
 
     draw_set_alpha(0.2);
     if (mouse_y >= yy + 76) and(mouse_y < yy + 104) {
         if (mouse_x >= xx + 957) and(mouse_x < xx + 1062) then draw_rectangle(xx + 957, yy + 76, xx + 1062, yy + 104, 0);
         if (mouse_x >= xx + 1068) and(mouse_x < xx + 1136) then draw_rectangle(xx + 1068, yy + 76, xx + 1136, yy + 104, 0);
         if (mouse_x >= xx + 1167) and(mouse_x < xx + 1255) then draw_rectangle(xx + 1167, yy + 76, xx + 1255, yy + 104, 0);
-        if (mouse_x >= xx + 1487) and(mouse_x < xx + 1545) then draw_rectangle(xx + 1487, yy + 76, xx + 1545, yy + 104, 0);
+        if (mouse_x >= xx + 1447) and(mouse_x < xx + 1545) then draw_rectangle(xx + 1487, yy + 76, xx + 1545, yy + 104, 0);
     }
     draw_set_alpha(1);
     draw_set_color(c_gray);
@@ -490,19 +508,10 @@ function scr_draw_armentarium(){
         var research_eta_message = $"Based on current progress it will be {research_progress} months until next significant research step is complete";
         draw_text_ext(xx + 336 + 16, y_offset+25, string_hash_to_newline(research_eta_message), -1, 536);        
 
+
+
         var forge_buttons= [xx + 450 + 16, y_offset+40+string_height(research_eta_message), 0, 0]
-        draw_unit_buttons([forge_buttons[0], forge_buttons[1]],"Enter Forge",[2,2],c_red);
-        forge_buttons[2] = forge_buttons[0] + (string_width("Enter Forge")*2) + 8;
-        forge_buttons[3] = forge_buttons[1] + (string_height("Enter Forge")*2) + 5;
-        if (point_in_rectangle(
-            mouse_x,
-            mouse_y, 
-            forge_buttons[0], 
-            forge_buttons[1], 
-            forge_buttons[2],
-            forge_buttons[3]
-            ) && mouse_check_button_pressed(mb_left) && current_target==false
-        ){
+        if (forge_button.draw_shutter(forge_buttons[0], forge_buttons[1], "Enter Forge", 0.5)){
             in_forge=true;
         }
 
@@ -689,40 +698,46 @@ function scr_draw_armentarium(){
             if point_in_rectangle(mouse_x, mouse_y, xx + 359,yy +item_gap, xx + 886, yy +item_gap+20){
                 draw_set_color(c_white);
             }
-            draw_text(xx+359,yy + item_gap,string_hash_to_newline(forge_queue[i].name));
-            draw_text(xx+525,yy + item_gap,string_hash_to_newline(forge_queue[i].count));
-            if (forge_queue[i].ordered==obj_controller.turn){
-                if (forge_queue[i].count>1){
-                     draw_unit_buttons([xx+500 , yy + item_gap],"-",[0.75,0.75],c_red);
-                     if (point_in_rectangle(
-                        mouse_x,
-                        mouse_y, 
-                        xx+500, 
-                        yy + item_gap, 
-                        xx+500+3+(0.75*string_width("-")),
-                        yy + item_gap+3+(0.75*string_height("-")), 
-                        ) && mouse_check_button_pressed(mb_left)
-                    ){
-                        var unit_cost = forge_queue[i].forge_points/forge_queue[i].count;
-                        forge_queue[i].count--;
-                        forge_queue[i].forge_points-=unit_cost;
-                     }               
+            if (is_string(forge_queue[i].name)){
+                draw_text(xx+359,yy + item_gap,string_hash_to_newline(forge_queue[i].name));
+                draw_text(xx+525,yy + item_gap,string_hash_to_newline(forge_queue[i].count));
+                if (forge_queue[i].ordered==obj_controller.turn){
+                    if (forge_queue[i].count>1){
+                         draw_unit_buttons([xx+500 , yy + item_gap],"-",[0.75,0.75],c_red);
+                         if (point_in_rectangle(
+                            mouse_x,
+                            mouse_y, 
+                            xx+500, 
+                            yy + item_gap, 
+                            xx+500+3+(0.75*string_width("-")),
+                            yy + item_gap+3+(0.75*string_height("-")), 
+                            ) && mouse_check_button_pressed(mb_left)
+                        ){
+                            var unit_cost = forge_queue[i].forge_points/forge_queue[i].count;
+                            forge_queue[i].count--;
+                            forge_queue[i].forge_points-=unit_cost;
+                         }               
+                    }
+                    if (forge_queue[i].count<100){
+                        draw_unit_buttons([xx+545 , yy + item_gap],"+",[0.75,0.75],c_green);
+                         if (point_in_rectangle(
+                            mouse_x,
+                            mouse_y, 
+                            xx+545, 
+                            yy + item_gap, 
+                            xx+545+3+(0.75*string_width("+")),
+                            yy + item_gap+3+(0.75*string_height("+")) 
+                            ) && mouse_check_button_pressed(mb_left) && current_target==false
+                        ){
+                            var unit_cost = forge_queue[i].forge_points/forge_queue[i].count;
+                            forge_queue[i].count++;
+                            forge_queue[i].forge_points+=unit_cost;
+                         }                  
+                    }
                 }
-                if (forge_queue[i].count<100){
-                    draw_unit_buttons([xx+545 , yy + item_gap],"+",[0.75,0.75],c_green);
-                     if (point_in_rectangle(
-                        mouse_x,
-                        mouse_y, 
-                        xx+545, 
-                        yy + item_gap, 
-                        xx+545+3+(0.75*string_width("+")),
-                        yy + item_gap+3+(0.75*string_height("+")) 
-                        ) && mouse_check_button_pressed(mb_left) && current_target==false
-                    ){
-                        var unit_cost = forge_queue[i].forge_points/forge_queue[i].count;
-                        forge_queue[i].count++;
-                        forge_queue[i].forge_points+=unit_cost;
-                     }                  
+            } else if (is_array(forge_queue[i].name)){
+                if (forge_queue[i].name[0]  == "research"){
+                    draw_text(xx+359,yy + item_gap,string_hash_to_newline(forge_queue[i].name[1]));
                 }
             }
             draw_text(xx+630,yy + item_gap,string_hash_to_newline(forge_queue[i].forge_points));

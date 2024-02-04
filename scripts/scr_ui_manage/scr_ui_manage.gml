@@ -25,6 +25,7 @@ function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,align
 		draw_rectangle(position[0],position[1], full_width,full_height,0);
 	}
 	draw_set_alpha(1);
+	return [position[0],position[1], full_width,full_height];
 }
 
 function scr_ui_manage() {

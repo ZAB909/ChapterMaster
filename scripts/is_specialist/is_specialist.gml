@@ -168,15 +168,21 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 	return array_contains(specialists,unit_role);
 }
 
-function collect_role_group(group){
-	var units = [], unit, count=0;
+function collect_role_group(group, location=""){
+	var units = [], unit, count=0, add=false;
 	for (var com=0;com<=10;com++){
 	    for (i=1;i<array_length(obj_ini.TTRPG[com]);i++){
+	    	add=false;
 			unit=obj_ini.TTRPG[com][i];
 			if (unit.name()=="")then continue; 	
 	        if (unit.IsSpecialist(group)){
-	        	array_push(units, obj_ini.TTRPG[com][i]);
+	        	if (location==""){
+	        		add=true;
+	       		} else if (obj_ini.loc[com][i] == location){
+	       			add=true;
+	       		}
 	        }
+	        if (add) then array_push(units, obj_ini.TTRPG[com][i]);
 	    }    
 	}
 	return units;

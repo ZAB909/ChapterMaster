@@ -49,9 +49,12 @@ for(var i=1; i<=39; i++){
         if (!obj_controller.in_forge && nobuy[i]=0) ||  (obj_controller.in_forge && forge_cost[i]>0){
             draw_set_color(c_gray);
             if (hover=i) then draw_set_color(c_white);
-            if (!keyboard_check(vk_shift)) or (shop="warships") then draw_text(xx+x2+x_mod[i],yy+y2,string_hash_to_newline(item[i]));// Name
-            if (keyboard_check(vk_shift)) and (shop!="warships") then draw_text(xx+x2+x_mod[i],yy+y2,string_hash_to_newline(string(item[i])+" x5"));// Name
-            
+            if (shop!="production"){
+                if (!keyboard_check(vk_shift)) or (shop="warships") then draw_text(xx+x2+x_mod[i],yy+y2,string_hash_to_newline(item[i]));// Name
+                if (keyboard_check(vk_shift)) and (shop!="warships") then draw_text(xx+x2+x_mod[i],yy+y2,string_hash_to_newline(string(item[i])+" x5"));// Name
+            } else {
+                draw_text(xx+x2+x_mod[i],yy+y2,string_hash_to_newline(item[i][1]));// Name
+            }
             if (item_stocked[i]=0) and ((mc_stocked[i]=0) or (shop!="equipment")) then draw_set_alpha(0.5);
             if (mc_stocked[i]=0) then draw_text(xx+1150,yy+y2,string_hash_to_newline(item_stocked[i]));// Stocked
             if (mc_stocked[i]>0) then draw_text(xx+1150,yy+y2,string_hash_to_newline(string(item_stocked[i])+"   mc: "+string(mc_stocked[i])));
@@ -76,11 +79,13 @@ for(var i=1; i<=39; i++){
 			}
 
             var cost = obj_controller.in_forge ? forge_cost[i] : item_cost[i]
-            
-            if (!keyboard_check(vk_shift)) and (obj_controller.requisition<item_cost[i]) then draw_set_color(255);
-            if (keyboard_check(vk_shift)) and (obj_controller.requisition<(item_cost[i]*5)) then draw_set_color(255);
-            
-            if (keyboard_check(vk_shift)) then cost*=5;
+             if (!obj_controller.in_forge){
+                if (!keyboard_check(vk_shift)) and (obj_controller.requisition<item_cost[i]) then draw_set_color(255);
+                if (keyboard_check(vk_shift)) and (obj_controller.requisition<(item_cost[i]*5)) then draw_set_color(255);
+            }
+            if (shop!="production"){
+                if (keyboard_check(vk_shift)) then cost*=5;
+            }
 
             draw_text(xx+1347,yy+y2,cost);// Requisition
             if (!obj_controller.in_forge ){
@@ -99,9 +104,11 @@ for(var i=1; i<=39; i++){
                         forge_points:forge_cost[i],
                         ordered:obj_controller.turn,
                     }
-                    if (keyboard_check(vk_shift)){
-                        new_queue_item.count = 5;
-                        new_queue_item.forge_points = 5 * forge_cost[i];
+                    if (shop!="production"){
+                        if (keyboard_check(vk_shift)){
+                            new_queue_item.count = 5;
+                            new_queue_item.forge_points = 5 * forge_cost[i];
+                        }
                     }
                     array_push(obj_controller.forge_queue, new_queue_item);
                 }               

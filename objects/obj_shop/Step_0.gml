@@ -23,8 +23,12 @@ repeat(39){
         tooltip_stat1=0;tooltip_stat2=0;tooltip_stat3=0;tooltip_stat4=0;tooltip_other="";wep_data="";
         marine_armour[0]="";
         equip_data=gear_weapon_data("any", item[i]);
-        if (is_struct(equip_data)){
-            tooltip=$"{equip_data.description}#{equip_data.special_description_gen()}";
+        if (tooltip_overide[i] == 0){
+            if (is_struct(equip_data)){
+                tooltip=$"{equip_data.description}#{equip_data.special_description_gen()}";
+            }
+        } else {
+            tooltip = tooltip_overide[i];
         }
         tooltip_x=mouse_x;
         tooltip_y=mouse_y+12;

@@ -23,12 +23,21 @@ enum P_features {
 			Victory_Shrine,
 			Arsenal,
 			Gene_Vault,
+			Forge
 	};
 	
 enum base_type{
 	Lair,
 }
-	// Function creates a new struct planet feature of a  specified type
+
+function player_forge() constructor{
+	constructions = [];
+	size = 1;
+	techs_working = 0;
+	f_type = P_features.Forge;
+}
+
+// Function creates a new struct planet feature of a  specified type
 function new_planet_feature(feature_type, other_data={}) constructor{
 	f_type = feature_type;
 	static reveal_to_player = function(){
@@ -43,6 +52,7 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		player_hidden = 1
 		planet_display = "Dormant Necron Tomb";
 		break;
+
 	case P_features.Secret_Base:
 		base_type = 0;
 		inquis_hidden =1;

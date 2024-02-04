@@ -1572,6 +1572,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 temp[37]=temp[36]+scr_role_count(string(obj_ini.role[100][16])+" Aspirant","");
                 calculate_research_points();
                 in_forge=false
+                forge_button = new shutter_button();
             }
             if (menu==14) and (onceh==0){
                 menu=0;
@@ -1773,7 +1774,6 @@ if (action_if_number(obj_saveload, 0, 0) &&
                             instance_deactivate_object(id);
                         }
                     }
-                    research_end();
                     alarm[5]=6;
                     instance_create(0,0,obj_turn_end);
                     scr_turn_first();
