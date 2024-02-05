@@ -20,8 +20,8 @@ function feature_selected(Feature) constructor{
 	    xx+=312
 	    var area_width = 390;
 	    var area_height = 294;
-	    draw_glow_dot(xx+150, yy+150);
-	    rack_and_pinion(xx+230, yy+170);
+	    //draw_glow_dot(xx+150, yy+150);
+	    //rack_and_pinion(xx+230, yy+170);
 	    var rectangle = [];
 		switch (feature.f_type){
 			case P_features.Forge:
@@ -32,10 +32,10 @@ function feature_selected(Feature) constructor{
 				if (feature.size==1){
 					worker_capacity = 2;
 				}
-				draw_text(xx+10, yy+50, $"Working Techs:{techs_working}/{worker_capacity}");
-				if (feature.techs_working<worker_capacity){
+				draw_text(xx+10, yy+50, $"Working Techs : {feature.techs_working}/{worker_capacity}");
+				if (feature.techs_working<worker_capacity && array_length(techs)>0){
 					if (point_and_click(draw_unit_buttons([xx+10, yy+60], "Assign To Forge",[1,1],c_red))){
-
+						group_selection(techs);
 					}
 				}
 				break
@@ -49,35 +49,68 @@ function feature_selected(Feature) constructor{
 	}
 }
 
-function rack_and_pinion() constructor{
+function rack_and_pinion(Type="forward") constructor{
 	reverse =false;
 	rack_y=0;
 	rotation = 360;
-	draw = function(x, y, freeze=false, Reverse=""){
-		if (!freeze){
-			if (Reverse != ""){
-				if (Reverse){
-					reverse=true;
-				} else {
-					reverse=false;
+	type=Type
+	if (type="forward"){
+		draw = function(x, y, freeze=false, Reverse=""){
+			x+=19;
+			if (!freeze){
+				if (Reverse != ""){
+					if (Reverse){
+						reverse=true;
+					} else {
+						reverse=false;
+					}
 				}
-			}
-			draw_sprite_ext(spr_cog_pinion, 0, x, y, 1, 1, rotation, c_white, 1)
-			if (!reverse){
-				rotation-=4;
+				draw_sprite_ext(spr_cog_pinion, 0, x, y, 1, 1, rotation, c_white, 1)
+				if (!reverse){
+					rotation-=4;
+				} else {
+					rotation+=4;
+				}
+				rack_y = (75.3982236862/360)*(360-rotation)
+				if (rack_y > 70){
+					reverse = true;
+				} else if (rack_y < 2){
+					reverse = false;
+				}
+				draw_sprite_ext(spr_rack, 0, x-13, y-rack_y, 1, 1, 0, c_white, 1)
 			} else {
-				rotation+=4;
-			}
-			rack_y = (75.3982236862/360)*(360-rotation)
-			if (rack_y > 70){
-				reverse = true;
-			} else if (rack_y < 2){
-				reverse = false;
-			}
-			draw_sprite_ext(spr_rack, 0, x, y-rack_y, 1, 1, 0, c_white, 1)
-		} else {
-			draw_sprite_ext(spr_cog_pinion, 0, x, y, 1, 1, rotation, c_white, 1)
-			draw_sprite_ext(spr_rack, 0, x, y-rack_y, 1, 1, 0, c_white, 1)
+				draw_sprite_ext(spr_cog_pinion, 0, x, y, 1, 1, rotation, c_white, 1)
+				draw_sprite_ext(spr_rack, 0, x-13, y-rack_y, 1, 1, 0, c_white, 1)
+			}		
+		}
+	} else if (type="backward"){
+		draw = function(x, y, freeze=false, Reverse=""){
+			x-=19;
+			if (!freeze){
+				if (Reverse != ""){
+					if (Reverse){
+						reverse=true;
+					} else {
+						reverse=false;
+					}
+				}
+				draw_sprite_ext(spr_cog_pinion, 0, x, y, 1, 1, rotation, c_white, 1)
+				if (!reverse){
+					rotation+=4;
+				} else {
+					rotation-=4;
+				}
+				rack_y = (75.3982236862/360)*(360-rotation)
+				if (rack_y > 70){
+					reverse = true;
+				} else if (rack_y < 2){
+					reverse = false;
+				}
+				draw_sprite_ext(spr_rack, 0, x+13, y+rack_y, -1, 1, 0, c_white, 1)
+			} else {
+				draw_sprite_ext(spr_cog_pinion, 0, x, y, 1, 1, rotation, c_white, 1)
+				draw_sprite_ext(spr_rack, 0, x+13, y+rack_y, -1, 1, 0, c_white, 1)
+			}		
 		}		
 	}
 }
@@ -109,9 +142,10 @@ function draw_glow_dot(x, y){
 function shutter_button() constructor{
 	time_open = 0;
 	click_timer = 0;
-	Width = 330;
+	Width = 315;
 	Height = 90;
 	right_rack = new rack_and_pinion();
+	left_rack = new rack_and_pinion("backward");
 	draw_shutter = function(xx,yy,text, scale=1){
 		var width = Width *scale;
 		var height = Height *scale;
@@ -121,8 +155,10 @@ function shutter_button() constructor{
 			if (time_open<20){
 				time_open++;
 				right_rack.draw(xx+width, yy, false, false);
+				left_rack.draw(xx, yy, false, false);
 			} else {
 				right_rack.draw(xx+width, yy, true);
+				left_rack.draw(xx, yy, true);
 			}
 			if (mouse_check_button_pressed(mb_left)||click_timer>0){
 				shutter_backdrop = 6;
@@ -131,26 +167,28 @@ function shutter_button() constructor{
 		} else if (time_open>0){
 			time_open--;
 			right_rack.draw(xx+width, yy, false, true);
+			left_rack.draw(xx, yy, false, true);
 		} else {
 			right_rack.draw(xx+width, yy, true);
+			left_rack.draw(xx, yy, true);
 		}
-		var text_draw = xx+(width/2)-(string_width(text)*3/2);
+		var text_draw = xx+(width/2)-(string_width(text)*(3*scale)/2);
 		if (time_open<2){
-			draw_sprite(spr_shutter_button, 0, xx, yy);
+			draw_sprite_ext(spr_shutter_button, 0, xx, yy, scale, scale, 0, c_white, 1)
 		} else if (time_open<8 && time_open>=2){
 			draw_sprite_ext(spr_shutter_button, shutter_backdrop, xx, yy, scale, scale, 0, c_white, 1)
 			draw_set_color(c_red);
-			draw_text_transformed(text_draw, yy+20, text, 3, 3, 0);
+			draw_text_transformed(text_draw, yy+(20*scale), text, 3*scale, 3*scale, 0);
 			draw_sprite_ext(spr_shutter_button, 1, xx, yy, scale, scale, 0, c_white, 1)
 		}else if  (time_open<13 && time_open>=8){
 			draw_sprite_ext(spr_shutter_button, shutter_backdrop, xx, yy, scale, scale, 0, c_white, 1)
 			draw_set_color(c_red);
-			draw_text_transformed(text_draw, yy+20, text, 3, 3, 0);
+			draw_text_transformed(text_draw, yy+(20*scale), text, 3*scale, 3*scale, 0);
 			draw_sprite_ext(spr_shutter_button, 2, xx, yy, scale, scale, 0, c_white, 1)
 		}else if  (time_open<18 && time_open>=13){
 			draw_sprite_ext(spr_shutter_button, shutter_backdrop, xx, yy, scale, scale, 0, c_white, 1)
 			draw_set_color(c_red);
-			draw_text_transformed(text_draw, yy+20, text, 3, 3, 0);
+			draw_text_transformed(text_draw, yy+(20*scale), text, 3*scale, 3*scale, 0);
 			draw_sprite_ext(spr_shutter_button, 3, xx, yy, scale, scale, 0, c_white, 1)
 		} else if (time_open>=18){
 			draw_sprite_ext(spr_shutter_button, shutter_backdrop, xx, yy, scale, scale, 0, c_white, 1)

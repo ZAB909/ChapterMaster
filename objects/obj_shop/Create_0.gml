@@ -232,7 +232,7 @@ if (shop = "equipment") {
     item[i] = "Combiflamer";
     item_stocked[i] = scr_item_count(item[i]);
     forge_cost[i] = 200;
-    if (research.flame[0]<1) then forge_cost[i] = 0;
+    if (research.bolt[0]<1) then forge_cost[i] = 0;
     item_cost[i] = 35;
     if (rene = 1) {
         nobuy[i] = 1;
@@ -243,7 +243,7 @@ if (shop = "equipment") {
     item_stocked[i] = scr_item_count(item[i]);
     item_cost[i] = 50;
     forge_cost[i] = 300;
-    if (research.flame[0]<2) then forge_cost[i] = 0;
+    if (research.bolt[0]<2) then forge_cost[i] = 0;
     if (rene = 1) {
         nobuy[i] = 1;
         item_cost[i] = 0;
@@ -945,7 +945,7 @@ if (shop == "production"){
         forge_cost[i] = 3000;
         tooltip_overide[i] = "Allows basic Plasma weapon Construction";
     }
-    if (research.bolt[0] = 1){
+    if (research.bolt[0] == 1){
         i++;
         item[i] = ["research",research_pathways.bolt[0][research.bolt[0]], ["bolt"]];
 		item_stocked[i] = 0;

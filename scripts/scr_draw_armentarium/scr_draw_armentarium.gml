@@ -66,7 +66,7 @@ function drop_down(selection, draw_x, draw_y, options,open_marker){
     return [selection,open_marker];
 }
 
-function calculate_research_points(){
+function calculate_research_points(turn_end=false){
     with (obj_controller){
         research_points = 0;
         forge_points = 0;
@@ -117,7 +117,7 @@ function calculate_research_points(){
         var tech_test, charisma_test, piety_test;
 
         //in this instance tech heretics are techmarines with the "tech_heretic" trait
-        if (array_length(heretics)>0){
+        if (array_length(heretics)>0 && turn_end){
             var heretic_location, same_location;
             //iterate through tech heretics;
             for (var heretic=0; heretic<array_length(heretics); heretic++){
@@ -183,7 +183,7 @@ function calculate_research_points(){
     }   
 }
 function research_end(){
-    calculate_research_points();
+    calculate_research_points(true);
     stc_research[$ stc_research.research_focus] += research_points;
     var research_area_limit;
     if (stc_research.research_focus=="vehicles"){
@@ -207,7 +207,7 @@ function research_end(){
                     if (is_string(forge_queue[i].name)){
                         scr_add_item(forge_queue[i].name, forge_queue[i].count);
                     } else if (is_array(forge_queue[i].name)){
-                        if (forge_queue[i].name[0]=="research"){h = 
+                        if (forge_queue[i].name[0]=="research"){
                             var tier_depth = array_length(forge_queue[i].name[2]);
                             var tier_names=forge_queue[i].name[2];
                             if (tier_depth==1){
@@ -511,7 +511,7 @@ function scr_draw_armentarium(){
 
 
         var forge_buttons= [xx + 450 + 16, y_offset+40+string_height(research_eta_message), 0, 0]
-        if (forge_button.draw_shutter(forge_buttons[0], forge_buttons[1], "Enter Forge", 0.5)){
+        if (forge_button.draw_shutter(forge_buttons[0]+60, forge_buttons[1], "Enter Forge", 0.5)){
             in_forge=true;
         }
 

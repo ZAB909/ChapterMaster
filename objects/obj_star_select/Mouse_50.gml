@@ -196,8 +196,10 @@ if (obj_controller.menu=0) and (obj_controller.zoomed=0) and (!instance_exists(o
 
     if (sta2>15){
         if (scr_hit(xx+27,yy+165,xx+27+320,yy+165+294)=false) then closes+=1;
-        if (obj_controller.selecting_planet>0){
+        if (obj_controller.selecting_planet>0 && feature == ""){
             if (scr_hit(xx+27+381,yy+165,xx+27+320+381,yy+165+294)=false) then closes+=1;
+        }else if (obj_controller.selecting_planet>0 && feature != ""){
+            if (scr_hit(xx+27+381,yy+165,xx+27+320+381+381,yy+165+294)=false) then closes+=1;
         }
         if ((closes=1) and (obj_controller.selecting_planet=0)) or (closes=2){cooldown=0;
             obj_controller.sel_system_x=0;

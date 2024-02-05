@@ -178,7 +178,7 @@ function collect_role_group(group, location=""){
 	        if (unit.IsSpecialist(group)){
 	        	if (location==""){
 	        		add=true;
-	       		} else if (obj_ini.loc[com][i] == location){
+	       		} else if (unit.is_at_location(location, 0, 0)){
 	       			add=true;
 	       		}
 	        }
@@ -186,4 +186,97 @@ function collect_role_group(group, location=""){
 	    }    
 	}
 	return units;
+}
+
+function group_selection(group){
+	var unit, s, unit_location;
+	with (obj_controller){
+            menu=1;
+            onceh=1;
+            cooldown=8000;
+            click=1;
+            popup=0;
+            selected=0;
+            hide_banner=1;
+            with(obj_star_select){instance_destroy();}
+            with(obj_fleet_select){instance_destroy();}
+            view_squad=false;
+            managing=0;		
+			zoomed=0;
+			menu=1;
+			managing=0;
+			diplomacy=0;
+            cooldown=8000;
+        // Resets selections for next turn
+            man_size=0;
+            selecting_location="";
+            selecting_types="";
+            selecting_ship=0;
+            selecting_planet=0;
+            sel_uid=0;
+            for (var i=0; i<501; i++){
+                man[i]="";
+                ide[i]=0;
+                display_unit[i]={};
+                man_sel[i]=0;
+                ma_lid[i]=0;
+                ma_wid[i]=0;
+                ma_uid[i]=0;
+                ma_race[i]=0;
+                ma_loc[i]="";
+                ma_name[i]="";
+                ma_role[i]="";
+                ma_wep1[i]="";
+                ma_wep2[i]="";
+                ma_armour[i]="";
+                ma_health[i]=100;
+                ma_chaos[i]=0;
+                ma_exp[i]=0;
+                ma_promote[i]=0;
+                sh_ide[i]=0;
+                sh_uid[i]=0;
+                sh_name[i]="";
+                sh_class[i]="";
+                sh_loc[i]="";
+                sh_hp[i]="";
+                sh_cargo[i]=0;
+                sh_cargo_max[i]="";
+                squad[i]=0;
+            }
+            alll=0;              
+            cooldown=10;
+            sel_loading=0;
+            unload=0;
+            alarm[6]=7;
+            company_data={};
+            view_squad=false;  	
+            for (var i = 0; i< array_length(group);i++){
+            	s = i+1;
+            	unit = group[i];
+            	unit_location = unit.marine_location();
+                man[s]="man";
+                ide[s]=unit.marine_number;
+                man_sel[s]=0;
+                ma_lid[s]=0;
+                if (unit.planet_location==0){
+                	ma_lid[s]=unit_location[1];
+                }
+                ma_wid[s]=unit.planet_location;
+                ma_uid[s]=0;
+                ma_race[s]=unit.race();
+                ma_loc[s]=unit_location[2];
+                ma_name[s]=unit.name();
+                ma_role[s]=unit.role();
+                ma_wep1[s]=unit.weapon_one();
+                ma_wep2[s]=unit.weapon_two();
+                ma_armour[s]=unit.armour();
+                ma_health[s]=unit.hp();
+                ma_chaos[s]=unit.corruption;
+                ma_exp[s]=unit.experience();
+                ma_promote[s]=0;
+                display_unit[i]=unit;          	
+            }
+        managing =-1;
+        man_current=1;
+	}
 }

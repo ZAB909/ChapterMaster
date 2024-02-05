@@ -34,7 +34,7 @@ function scr_ui_manage() {
 
 	// This is the draw script for showing the main management screen or individual company screens
 
-	if (menu==1) and (managing>0){
+	if (menu==1) and (managing>0 || managing <0){
 		var unit,i, tooltip_text,x1,x2,y1,y2, var_text;
 		var romanNumerals=scr_roman_numerals();	
 		var bionic_tooltip="",tooltip_drawing=[];
@@ -82,7 +82,7 @@ function scr_ui_manage() {
 	    draw_text(xx+800,yy+74,string_hash_to_newline(string(fx)+", "+string(global.chapter_name)));
 
 		
-	    if (managing<=10){
+	    if (managing<=10 && managing>0){
 	        var bar_wid=0,click_check, string_h;
 	        draw_set_alpha(0.25);
 	        if (obj_ini.company_title[managing]!="") then bar_wid=max(400,string_width(string_hash_to_newline(obj_ini.company_title[managing])));
@@ -437,7 +437,7 @@ function scr_ui_manage() {
 		            ar_ar=0;ar_we1=0;ar_we2=0;ar_ge=0;ar_mb=0;
 	            	//TODO handle recursively
 		            if (ma_armour[sel]!=""){
-						ma_ar=gear_weapon_data("armour",ma_armour[sel],"abbreviation");
+						ma_ar=gear_weapon_data("armour",unit.armour(),"abbreviation");
 						ma_ar=is_string(ma_ar) ? ma_ar : "";
 		                // if (string_count("*",ma_ar)>0){ar_ar=2;ma_ar=string_replace(ma_ar,"*","");}
 		                if (string_count("^",ma_armour[sel])>0){
@@ -704,7 +704,7 @@ function scr_ui_manage() {
 		        } else {
 			        if (man[sel]=="man"){
 			        		c = managing<=10 ? managing : 0;
-							var unit = obj_ini.TTRPG[c][ide[sel]];
+							var unit = display_unit[sel];
 		  
 			                if (ma_lid[sel]>0) and (ma_wid[sel]==0){
 			                    draw_sprite(

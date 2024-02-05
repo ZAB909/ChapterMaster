@@ -551,7 +551,7 @@ production_research = {
 
 production_research_pathways ={
     flame : [["Promethium Tank Brazing"],{}],
-    bolt : [["Hardened Barrel Boring"],{}],
+    bolt : [["Hardened Barrel Boring", "Projectile Propellant Purification"],{}],
     plasma : [[ "Plasma Coil Magnetization"],{}],
     psi : [["Psionic Resonance Valves"],{}],
     melta : [["Atomic Chamber Construction"],{}],
