@@ -52,7 +52,7 @@ function feature_selected(Feature) constructor{
 						});
 					}
 					if (feature.size<3){
-						var upgrade_cost = 2000 * feature_size;
+						var upgrade_cost = 2000 * feature.size;
 						if (point_and_click(draw_unit_buttons([xx+10, yy+95], $"Upgrade Forge ({upgrade_cost} req)",[1,1],c_red))){
 							feature.size++;
 						}
