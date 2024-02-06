@@ -595,6 +595,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	}
 	religion="none";
 	master_loyalty = 0;
+	job="none";
 	psionic=0;
 	corruption=0;
 	religion_sub_cult = "none";
@@ -1750,13 +1751,16 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 
 		static assignment = function(){
-			var job = "none"
 			if (squad != "none"){
 				if (obj_ini.squads[squad].assignment != "none"){
-					job = obj_ini.squads[squad].assignment.type;
+					return obj_ini.squads[squad].assignment.type;
 				}
 			}
-			return job;
+			if (job!= "none"){
+				return job.type;
+			} else {
+				return "none"
+			}
 		}
 
 		static remove_from_squad = function(){
@@ -1895,8 +1899,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	};
 
 	static forge_point_generation = function(){
-		if (!IsSpecialist("forge")) then return 0
+		if (!IsSpecialist("forge")) then return 0;
 		var points = technology/10;
+		if (job == "forge"){
+			points*=2;
+			points+=3;
+		}
 		if (has_trait("crafter")) then points+=3;
 		return points;
 	}

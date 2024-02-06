@@ -220,7 +220,9 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		break;
 	case P_features.Monastery:
 		planet_display="Fortress Monastary";
-		player_hidden = 0
+		player_hidden = 0;
+		forge=0;
+		name=global.name_generator.generate_imperial_ship_name();
 		break;
 	case P_features.Recruiting_World:
 		planet_display="Recruitment";
@@ -286,7 +288,7 @@ function delete_features(planet, del_feature){
 	var delete_Array = search_planet_features(planet, del_feature)
 	if (array_length(delete_Array) >0){
 		for (var d=0;d<array_length(delete_Array);d++){
-			array_delete(planet, delete_Array[d],delete_Array[d]+1)
+			array_delete(planet, delete_Array[d],1)
 		}
 	}
 }

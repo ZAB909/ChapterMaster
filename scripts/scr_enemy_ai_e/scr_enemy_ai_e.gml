@@ -861,7 +861,9 @@ function scr_enemy_ai_e() {
 
         // Work on fortifications
         if (p_owner[run] = 1) {
-            if (planet_feature_bool(p_feature[run], P_features.Monastery) == 1) {
+            var monestary = search_planet_features(p_feature[run], P_features.Monastery);
+            if (array_length(monestary) > 0) {
+                monestary = p_feature[run][monestary[0]];
                 var md, ms, ml, build_rate, build_rate2;
                 md = 225;
                 ms = 300;
@@ -887,6 +889,9 @@ function scr_enemy_ai_e() {
 
                 if ((obj_controller.turn / build_rate) = round(obj_controller.turn / build_rate)) and(p_lasers[run] > ml) then p_lasers[run] += 1;
                 if ((obj_controller.turn / build_rate2) = round(obj_controller.turn / build_rate2)) and(p_fortified[run] < 5) then p_fortified[run] += 1;
+                if (monestary.forge>0){
+                    obj_controller.player_forges += monestary.forge_data.size^2;
+                }
             }
         }
 
@@ -915,7 +920,7 @@ function scr_enemy_ai_e() {
                     }
                     if (upgrade.built<=obj_controller.turn && upgrade_type == P_features.Secret_Base){
                         if (upgrade.forge > 0){
-                            obj_controller.player_forges++;
+                            obj_controller.player_forges+=upgrade.forge_data.size^2;
                         }
                     }
                 }

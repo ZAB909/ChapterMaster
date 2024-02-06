@@ -10,7 +10,16 @@ function feature_selected(Feature) constructor{
 	feature = Feature;
 
 	if (feature.f_type == P_features.Forge){
+		var worker_caps= [2,4,8];
+		worker_capacity = worker_caps[feature.size-1];	
 		techs = collect_role_group("forge", obj_star_select.target.name);
+		feature.techs_working = 0;
+		for (var i=0;i<array_length(techs);i++){
+			if (techs[i].assignment()=="forge" && techs[i].job.planet == obj_controller.selecting_planet){
+				feature.techs_working++;
+				if (feature.techs_working==worker_capacity) then break;
+			}
+		}
 	}
 
 	draw_planet_features = function(xx,yy){
@@ -28,14 +37,25 @@ function feature_selected(Feature) constructor{
 				draw_text_transformed(xx+(390/2), yy +5, "Chapter Forge", 2, 2, 0);
 				draw_set_halign(fa_left);
 				draw_set_color(c_gray);
-				var worker_capacity=0;
-				if (feature.size==1){
-					worker_capacity = 2;
-				}
+
 				draw_text(xx+10, yy+50, $"Working Techs : {feature.techs_working}/{worker_capacity}");
 				if (feature.techs_working<worker_capacity && array_length(techs)>0){
-					if (point_and_click(draw_unit_buttons([xx+10, yy+60], "Assign To Forge",[1,1],c_red))){
-						group_selection(techs);
+					if (point_and_click(draw_unit_buttons([xx+10, yy+70], "Assign To Forge",[1,1],c_red))){
+						group_selection(techs,{
+							purpose:"Forge Assignment",
+							purpose_code : "forge_assignment",
+							number:worker_capacity-feature.techs_working,
+							system:obj_controller.selected.id,
+							feature:obj_star_select.feature,
+							planet : obj_controller.selecting_planet,
+							selections : []
+						});
+					}
+					if (feature.size<3){
+						var upgrade_cost = 2000 * feature_size;
+						if (point_and_click(draw_unit_buttons([xx+10, yy+95], $"Upgrade Forge ({upgrade_cost} req)",[1,1],c_red))){
+							feature.size++;
+						}
 					}
 				}
 				break
@@ -45,6 +65,15 @@ function feature_selected(Feature) constructor{
 				draw_set_color(c_gray);
 				draw_text_ext(xx+10, yy+40, "Unload Marines onto the planet to search for the artifact",-1,area_width-20);
 				break;
+			case P_features.Monastery:
+				draw_text_transformed(xx+(390/2), yy +5, feature.name, 2, 2, 0);
+				if (feature.forge==0 && obj_controller.requisition>=500){
+					if (point_and_click(draw_unit_buttons([xx+10, yy+70], "Build Forge (500 req)",[1,1],c_red))){
+						obj_controller.requisition-=500;
+						feature.forge=1;
+						feature.forge_data = new player_forge();
+					}
+				}
 		}
 	}
 }
@@ -146,10 +175,19 @@ function shutter_button() constructor{
 	Height = 90;
 	right_rack = new rack_and_pinion();
 	left_rack = new rack_and_pinion("backward");
-	draw_shutter = function(xx,yy,text, scale=1){
+	draw_shutter = function(xx,yy,text, scale=1, entered = ""){
+        draw_set_alpha(1);
+
+        draw_set_font(fnt_40k_12);
+        draw_set_halign(fa_left);
+        draw_set_color(c_gray);		
 		var width = Width *scale;
 		var height = Height *scale;
-		var entered = point_in_rectangle(mouse_x, mouse_y, xx, yy, xx+width, yy+height);
+		if (entered==""){
+			entered = point_in_rectangle(mouse_x, mouse_y, xx, yy, xx+width, yy+height);
+		} else {
+			entered=entered;
+		}
 		var shutter_backdrop = 5;
 		if (entered || click_timer>0){
 			if (time_open<20){
@@ -160,7 +198,7 @@ function shutter_button() constructor{
 				right_rack.draw(xx+width, yy, true);
 				left_rack.draw(xx, yy, true);
 			}
-			if (mouse_check_button_pressed(mb_left)||click_timer>0){
+			if ((mouse_check_button_pressed(mb_left) && point_in_rectangle(mouse_x, mouse_y, xx, yy, xx+width, yy+height))||click_timer>0 ){
 				shutter_backdrop = 6;
 				click_timer++;
 			}

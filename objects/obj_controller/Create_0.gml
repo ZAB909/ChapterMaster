@@ -531,6 +531,8 @@ forge_points = 0;
 forge_string="";
 forge_queue=[];
 player_forges = 0;
+selection_data=false;
+selections = [];
 production_research = {
     flame : [0,{}],
     bolt : [1,{}],

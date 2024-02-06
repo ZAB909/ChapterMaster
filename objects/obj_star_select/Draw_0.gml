@@ -279,6 +279,7 @@ if (obj_controller.selecting_planet!=0){
 	var feat_count;
 	var feat_count = array_length(target.p_feature[pp]);
     var upgrade_count = array_length(target.p_upgrades[pp]);
+    var size = ["", "Small", "", "Large"]
 	if ( feat_count > 0){
     	for (i =0; i <  feat_count ;i++){
     		if (target.p_feature[pp][i].planet_display != 0){
@@ -287,6 +288,13 @@ if (obj_controller.selecting_planet!=0){
                 }else{
                     array_push(planet_displays, [target.p_feature[pp][i].planet_display, target.p_feature[pp][i]]);
     			}
+                if (target.p_feature[pp][i].f_type == P_features.Monastery){
+                    if (target.p_feature[pp][i].forge>0){
+                        var forge = target.p_feature[pp][i].forge_data;
+                        var size_string= $"{size[forge.size]} Chapter Forge"
+                        array_push(planet_displays, [size_string, target.p_feature[pp][i].forge_data]);
+                    }
+                }                
     		}
     	}
     }
@@ -294,7 +302,9 @@ if (obj_controller.selecting_planet!=0){
         for (i =0; i <  upgrade_count ;i++){
             if (target.p_upgrades[pp][i].f_type == P_features.Secret_Base){
                 if (target.p_upgrades[pp][i].forge>0){
-                    array_push(planet_displays, ["Small Chapter Forge", target.p_upgrades[pp][i].forge_data]);
+                    var forge = target.p_feature[pp][i].forge_data;
+                    var size_string= $"{size[forge.size]} Chapter Forge"
+                    array_push(planet_displays, [size_string, target.p_upgrades[pp][i].forge_data]);
                 }
             }
         }

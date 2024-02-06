@@ -1302,7 +1302,7 @@ if (press=3) and (option3!=""){
             var plan;plan=instance_nearest(obj_temp4.x,obj_temp4.y,obj_star);
 			var planet_arti = search_planet_features(plan.p_feature[obj_temp4.num], P_features.Artifact)
 			if (array_length(planet_arti) >0){
-				array_delete(plan.p_feature[obj_temp4.num], planet_arti[0], planet_arti[0]+1)
+				array_delete(plan.p_feature[obj_temp4.num], planet_arti[0], 1)
 			}
             
             scr_return_ship(obj_temp4.loc,obj_temp4,obj_temp4.num);

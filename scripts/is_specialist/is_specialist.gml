@@ -188,8 +188,9 @@ function collect_role_group(group, location=""){
 	return units;
 }
 
-function group_selection(group){
+function group_selection(group, selection_data){
 	var unit, s, unit_location;
+	obj_controller.selection_data = selection_data;
 	with (obj_controller){
             menu=1;
             onceh=1;
@@ -198,8 +199,8 @@ function group_selection(group){
             popup=0;
             selected=0;
             hide_banner=1;
-            with(obj_star_select){instance_destroy();}
             with(obj_fleet_select){instance_destroy();}
+            with(obj_star_select){instance_destroy();}
             view_squad=false;
             managing=0;		
 			zoomed=0;
@@ -207,6 +208,8 @@ function group_selection(group){
 			managing=0;
 			diplomacy=0;
             cooldown=8000;
+            exit_button = new shutter_button();
+            proceed_button = new shutter_button();
         // Resets selections for next turn
             man_size=0;
             selecting_location="";
@@ -274,9 +277,11 @@ function group_selection(group){
                 ma_chaos[s]=unit.corruption;
                 ma_exp[s]=unit.experience();
                 ma_promote[s]=0;
-                display_unit[i]=unit;          	
+                display_unit[s]=unit;          	
             }
         managing =-1;
         man_current=1;
+        man_max = array_length(group);
+        man_see=38-4;
 	}
 }

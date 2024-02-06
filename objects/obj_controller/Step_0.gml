@@ -504,7 +504,7 @@ if (menu!=14) and (instance_exists(obj_shop)) then with(obj_shop){instance_destr
 
 if (instance_exists(obj_ingame_menu)) or (instance_exists(obj_saveload)) then exit;
 // Default view
-if (menu==1 && managing>0){
+if (menu==1 && (managing>0 || managing<0)){
     if (!view_squad){
         var c=0,fx="";
         var xx, yy, bb="";
@@ -551,8 +551,6 @@ if (menu==1 && managing>0){
             marine_armour[0]=unit.armour();
             fix_right=0;
             equip_data = unit.unit_equipment_data();
-            var cah=managing;
-            if (cah>10) then cah=0;
             temp[100]="1";
             if (unit.race()!=1) then temp[100]=unit.race();
             
@@ -592,8 +590,6 @@ if (menu==1 && managing>0){
             //if (string_count("&",temp[106])>0) then temp[106]=clean_tags(temp[106]);
             // Experience
             temp[113]=string(floor(unit.experience()));
-            var cah=managing;
-            if (cah>10) then cah=0;
             // Bonuses
             temp[119]="";
             if (string_length(unit.specials())>0){

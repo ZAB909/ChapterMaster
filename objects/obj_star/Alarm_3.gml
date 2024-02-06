@@ -29,3 +29,9 @@ with(obj_star_select){instance_destroy();}
 instance_create(x,y,obj_star_select);
 obj_star_select.owner=self.owner;
 obj_star_select.target=self.id;
+if (obj_controller.selection_data != false){
+    var data = obj_controller.selection_data;
+    obj_star_select.feature = data.feature;
+    obj_controller.selecting_planet = data.planet;
+    obj_controller.selection_data=false;
+}
