@@ -39,26 +39,25 @@ function feature_selected(Feature) constructor{
 				draw_set_color(c_gray);
 
 				draw_text(xx+10, yy+50, $"Working Techs : {feature.techs_working}/{worker_capacity}");
-				if (feature.techs_working<worker_capacity && array_length(techs)>0){
-					if (point_and_click(draw_unit_buttons([xx+10, yy+70], "Assign To Forge",[1,1],c_red))){
-						group_selection(techs,{
-							purpose:"Forge Assignment",
-							purpose_code : "forge_assignment",
-							number:worker_capacity-feature.techs_working,
-							system:obj_controller.selected.id,
-							feature:obj_star_select.feature,
-							planet : obj_controller.selecting_planet,
-							selections : []
-						});
-					}
-					if (feature.size<3){
-						var upgrade_cost = 2000 * feature.size;
-						if (point_and_click(draw_unit_buttons([xx+10, yy+95], $"Upgrade Forge ({upgrade_cost} req)",[1,1],c_red))){
-							feature.size++;
-						}
+				if (point_and_click(draw_unit_buttons([xx+10, yy+70], "Assign To Forge",[1,1],c_red))){
+					group_selection(techs,{
+						purpose:"Forge Assignment",
+						purpose_code : "forge_assignment",
+						number:worker_capacity-feature.techs_working,
+						system:obj_controller.selected.id,
+						feature:obj_star_select.feature,
+						planet : obj_controller.selecting_planet,
+						selections : []
+					});
+				}
+				if (feature.size<3){
+					var upgrade_cost = 2000 * feature.size;
+					if (point_and_click(draw_unit_buttons([xx+10, yy+95], $"Upgrade Forge ({upgrade_cost} req)",[1,1],c_red)) && obj_controller.requisition>=upgrade_cost){
+						obj_controller.requisition -=  upgrade_cost;
+						feature.size++;
 					}
 				}
-				break
+				break;
 			case P_features.Artifact:
 				draw_text_transformed(xx+(390/2), yy +5, "Unknown Artifact", 2, 2, 0);
 				draw_set_halign(fa_left);
@@ -143,28 +142,73 @@ function rack_and_pinion(Type="forward") constructor{
 		}		
 	}
 }
-
-function draw_glow_dot(x, y){
-	static flash = 0
-	static flash_size = 5;
-	for (var i=0; i<=flash_size;i++){
-		draw_set_alpha(1 - ((1/40)*i))
-		draw_circle(x, y, (i/2), 1);
+function speeding_dot(XX,YY, limit) constructor{
+	bottom_limit = limit;
+	stack = 0;
+	yy=YY;
+	xx=XX;
+	draw = function(){
+		if (bottom_limit+(48*0.7)<stack){
+			stack=0;
+		}
+		var top_cut = 36-stack>0 ? 36-stack :0;
+		var bottom_cut = bottom_limit<stack? 46-stack-bottom_limit:46;
+		draw_sprite_part_ext(spr_research_bar, 2, 0, top_cut, 200, bottom_cut, xx-105, yy+stack, 1, 0.7, c_white, 1);
+		stack+=3;
 	}
-	if (flash==0){
-		if (flash_size<40){
-			flash_size++;
+	current_y = function(){
+		return yy+stack;
+	}
+}
+function glow_dot() constructor{
+	flash = 0
+	flash_size = 5;
+	one_flash_finished = true;
+	draw = function(xx, yy){
+		draw_set_color(c_green);
+		for (var i=0; i<=flash_size;i++){
+			draw_set_alpha(1 - ((1/40)*i))
+			draw_circle(xx, yy, (i/3), 1);
+		}
+		if (flash==0){
+			if (flash_size<40){
+				flash_size++;
+			} else {
+				flash = 1;
+				flash_size--;
+			}
 		} else {
-			flash = 1;
-			flash_size--;
+			if (flash_size > 1){
+				flash_size--;
+			}else {
+				flash_size++;
+				flash = 0;
+			}
+		}		
+	}
+	draw_one_flash = function(xx, yy){
+		if (one_flash_finished) then exit;
+		draw_set_color(c_green);
+		for (var i=0; i<=flash_size;i++){
+			draw_set_alpha(1 - ((1/40)*i))
+			draw_circle(xx, yy, (i/3), 1);
 		}
-	} else {
-		if (flash_size > 10){
-			flash_size--;
-		}else {
-			flash_size++;
-			flash = 0;
-		}
+		if (flash==0){
+			if (flash_size<40){
+				flash_size++;
+			} else {
+				flash = 1;
+				flash_size--;
+			}
+		} else {
+			if (flash_size > 1){
+				flash_size--;
+			}else {
+				flash_size++;
+				flash = 0;
+				one_flash_finished = true;
+			}
+		}		
 	}
 }
 

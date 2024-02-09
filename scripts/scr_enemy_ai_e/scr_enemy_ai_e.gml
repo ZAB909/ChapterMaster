@@ -860,7 +860,7 @@ function scr_enemy_ai_e() {
 
 
         // Work on fortifications
-        if (p_owner[run] = 1) {
+        if (p_owner[run] == 1) {
             var monestary = search_planet_features(p_feature[run], P_features.Monastery);
             if (array_length(monestary) > 0) {
                 monestary = p_feature[run][monestary[0]];

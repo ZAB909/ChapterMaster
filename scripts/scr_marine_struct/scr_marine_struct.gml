@@ -1901,9 +1901,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	static forge_point_generation = function(){
 		if (!IsSpecialist("forge")) then return 0;
 		var points = technology/10;
-		if (job == "forge"){
-			points*=2;
-			points+=3;
+		if (job!="none"){
+			if (job.type == "forge"){
+				points*=2;
+				points+=3;
+			}
 		}
 		if (has_trait("crafter")) then points+=3;
 		return points;

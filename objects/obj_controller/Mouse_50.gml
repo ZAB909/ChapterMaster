@@ -1438,6 +1438,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 with(obj_star_select){instance_destroy();}
                 with(obj_fleet_select){instance_destroy();}
                 view_squad=false;
+                unit_text = true;
             }
             if (menu==1) and (onceh==0){
                 menu=0;
@@ -1564,17 +1565,8 @@ if (action_if_number(obj_saveload, 0, 0) &&
             hide_banner=1;
             if (scr_role_count("Forge Master","0")==0) then menu_adept=1;
             if (menu!=14) and (onceh==0){
-                menu=14;
-                onceh=1;
-                cooldown=8000;
-                click=1;
-                temp[36]=scr_role_count(obj_ini.role[100][16],"");
-                temp[37]=temp[36]+scr_role_count(string(obj_ini.role[100][16])+" Aspirant","");
-                calculate_research_points();
-                in_forge=false
-                forge_button = new shutter_button();
-            }
-            if (menu==14) and (onceh==0){
+                set_up_armentarium();
+            }else if (menu==14) and (onceh==0){
                 menu=0;
                 onceh=1;
                 cooldown=8000;
@@ -1846,7 +1838,6 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     man_sel[i]=0;
                     ma_lid[i]=0;
                     ma_wid[i]=0;
-                    ma_uid[i]=0;
                     ma_race[i]=0;
                     ma_loc[i]="";
                     ma_name[i]="";
@@ -2590,8 +2581,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                             unit.load_marine(sh_ide[sel]);
                             ma_loc[q]=sh_name[sel];
                             ma_lid[q]=sh_ide[sel];
-                            ma_wid[q]=0;
-                            ma_uid[q]=sh_uid[sel];                            
+                            ma_wid[q]=0;                       
                         }
                         // Load vehicle to ship
                         if (man[q]=="vehicle") and (ma_loc[q]==selecting_location) and (sh_loc[sel]==selecting_location){
@@ -2601,7 +2591,6 @@ if (action_if_number(obj_saveload, 0, 0) &&
                                 ma_loc[q]=sh_name[sel];
                                 ma_lid[q]=sh_ide[sel];
                                 ma_wid[q]=0;
-                                ma_uid[q]=sh_uid[sel];
                                 veh_loc[managing,q]=sh_name[sel];
 
                                 if (managing<=10){

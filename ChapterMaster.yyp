@@ -1015,6 +1015,7 @@
     {"id":{"name":"obj_event_log","path":"objects/obj_event_log/obj_event_log.yy",},},
     {"id":{"name":"obj_shop","path":"objects/obj_shop/obj_shop.yy",},},
     {"id":{"name":"spr_rack","path":"sprites/spr_rack/spr_rack.yy",},},
+    {"id":{"name":"spr_research_bar","path":"sprites/spr_research_bar/spr_research_bar.yy",},},
     {"id":{"name":"obj_crusade","path":"objects/obj_crusade/obj_crusade.yy",},},
     {"id":{"name":"obj_star","path":"objects/obj_star/obj_star.yy",},},
     {"id":{"name":"spr_rack_and_pinion","path":"sprites/spr_rack_and_pinion/spr_rack_and_pinion.yy",},},

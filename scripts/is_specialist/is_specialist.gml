@@ -210,6 +210,7 @@ function group_selection(group, selection_data){
             cooldown=8000;
             exit_button = new shutter_button();
             proceed_button = new shutter_button();
+            selection_data.start_count=0;
         // Resets selections for next turn
             man_size=0;
             selecting_location="";
@@ -224,7 +225,6 @@ function group_selection(group, selection_data){
                 man_sel[i]=0;
                 ma_lid[i]=0;
                 ma_wid[i]=0;
-                ma_uid[i]=0;
                 ma_race[i]=0;
                 ma_loc[i]="";
                 ma_name[i]="";
@@ -265,7 +265,6 @@ function group_selection(group, selection_data){
                 	ma_lid[s]=unit_location[1];
                 }
                 ma_wid[s]=unit.planet_location;
-                ma_uid[s]=0;
                 ma_race[s]=unit.race();
                 ma_loc[s]=unit_location[2];
                 ma_name[s]=unit.name();
@@ -277,7 +276,17 @@ function group_selection(group, selection_data){
                 ma_chaos[s]=unit.corruption;
                 ma_exp[s]=unit.experience();
                 ma_promote[s]=0;
-                display_unit[s]=unit;          	
+                display_unit[s]=unit;
+                if (selection_data.purpose_code=="forge_assignment"){
+                	if (unit.job != "none"){
+                		if (unit.job.type=="forge" && unit.job.planet== selection_data.planet){
+							man_sel[s]=1;
+							man_size++;
+							selection_data.start_count++;
+
+                		}                		
+                	}
+                }       	
             }
         managing =-1;
         man_current=1;

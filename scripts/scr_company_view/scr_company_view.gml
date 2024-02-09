@@ -53,7 +53,7 @@ function scr_company_view(company) {
 		bad=0;
 
 	    if (company>=0) and (company<=10){
-			unit = obj_ini.TTRPG[company,v]
+			unit = obj_ini.TTRPG[company][v];
 	        if (unit.name()!=""){
 				unit_loc = unit.marine_location() ;
 	            // if (obj_ini.god[company,v]>=10) then bad=1;
@@ -281,4 +281,87 @@ function scr_company_view(company) {
 	man_max=last_man+last_vehicle+2;
 	if (last_vehicle==0) and (last_man==0) then man_max=0;
 	man_see=38-4;
+}
+
+function filter_and_sort_company(type, specific){
+	var i ,j, limit;
+	function switchy(a, b){
+        var tempman = man[a];
+        var tempide =ide[a];
+        var tempsel =man_sel[a];
+        var templid =ma_lid[a];
+        var tempwid =ma_wid[a];
+        var temprace =ma_race[a];
+        var temploc =ma_loc[a];
+        var tempname =ma_name[a];
+        var temprole =ma_role[a];
+        var tempwep =ma_wep1[a];
+        var tempwep2 =ma_wep2[a];
+        var temparm =ma_armour[a];
+        var temphealth =ma_health[a];
+        var tempcha =ma_chaos[a];
+        var tempexp =ma_exp[a];
+        var tempprom =ma_promote[a];
+        var tempdis =display_unit[a];
+
+        man[a]=man[b];
+        ide[a]=ide[b];
+        man_sel[a]=man_sel[b];
+        ma_lid[a]=ma_lid[b];
+        ma_wid[a]= ma_wid[b];
+        ma_race[a]=ma_race[b];
+        ma_loc[a]=ma_loc[b];
+        ma_name[a]= ma_name[b];
+        ma_role[a]=ma_role[b];
+        ma_wep1[a]= ma_wep1[b];
+        ma_wep2[a]= ma_wep2[b];
+        ma_armour[a]=ma_armour[b];
+        ma_health[a]=ma_health[b];
+        ma_chaos[a]=ma_chaos[b];
+        ma_exp[a]=ma_exp[b];
+        ma_promote[a]=ma_promote[b];
+        display_unit[a] =display_unit[b];
+
+        man[b]=tempman;
+        ide[b]=tempide;
+        man_sel[b]=tempsel;
+        ma_lid[b]=templid;
+        ma_wid[b]= tempwid;
+        ma_race[b]=temprace;
+        ma_loc[b]= temploc;
+        ma_name[b]= tempname;
+        ma_role[b]=temprole;
+        ma_wep1[b]= tempwep;
+        ma_wep2[b]= tempwep2;
+        ma_armour[b]=temparm;
+        ma_health[b]=temphealth;
+        ma_chaos[b]=tempcha;
+        ma_exp[b]=tempexp;
+        ma_promote[b]=tempprom;
+        display_unit[b] =tempdis;             
+	}
+	if (type=="stat"){
+		var swapped;
+		for (i = 1; i<=499;i++){
+			//if (man[i] != "man") continue;
+			swapped=false;
+			limit = 499-i;
+			for (j=1; j<limit;j++){
+				if (man[j] != "man"){
+					if (man[j+1] == "man"){
+						switchy(j,j+1);
+						swapped=true;
+					}
+				} else {
+					if (man[j+1] == "man"){
+						if (display_unit[j][$specific]<display_unit[j+1][$specific]){
+							switchy(j,j+1);
+							swapped = true;
+						}
+					}
+				}
+			}
+			//if (swapped == false) then break;
+		}
+	}
 }

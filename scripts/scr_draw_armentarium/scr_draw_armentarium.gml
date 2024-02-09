@@ -9,6 +9,32 @@ function drop_down_sandwich(selection, draw_x, draw_y, options, open_marker,left
     return results;
 }
 
+function set_up_armentarium(){
+        static xx=__view_get( e__VW.XView, 0 );
+        static yy=__view_get( e__VW.YView, 0 );    
+        menu=14;
+        onceh=1;
+        cooldown=8000;
+        click=1;
+        temp[36]=scr_role_count(obj_ini.role[100][16],"");
+        temp[37]=temp[36]+scr_role_count(string(obj_ini.role[100][16])+" Aspirant","");
+        calculate_research_points();
+        in_forge=false
+        forge_button = new shutter_button();
+        stc_flashes = new glow_dot();
+        /*for (var i =0;i<3;i++){
+            for (var f =0;f<7;f++){
+                stc_flashes[i][f] = new glow_dot();
+               // stc_flashes[i][f].flash_size
+            }
+        }*/
+        speeding_bits = [
+            new speeding_dot(xx+359, yy+554,(210/6)*stc_wargear),
+            new speeding_dot(xx+539, yy+554,(210/6)*stc_vehicles),
+            new speeding_dot(xx+719, yy+554,(210/6)*stc_ships)
+        ]    
+}
+
 
 function drop_down(selection, draw_x, draw_y, options,open_marker){
 	if (selection!=""){
@@ -388,7 +414,8 @@ function scr_draw_armentarium(){
                     
                     // Refresh the shop
                     instance_create(1000,1000,obj_shop);
-                }                
+                    set_up_armentarium();           
+                } 
             }
         }
         draw_set_alpha(1);
@@ -525,24 +552,63 @@ function scr_draw_armentarium(){
             ".");
         research_drop_down = drop_down_results[1];
         stc_research.research_focus = drop_down_results[0]; 
-
               
         var hi;
         draw_set_color(38144);
         hi = 0;
-        if (stc_wargear > 0) then hi = (stc_wargear / 6) * 210;
-        draw_rectangle(xx + 351, yy + 539, xx + 368, yy + 539 + hi, 0);
-        hi = 0;
-        if (stc_vehicles > 0) then hi = (stc_vehicles / 6) * 210;
-        draw_rectangle(xx + 531, yy + 539, xx + 548, yy + 539 + hi, 0);
-        hi = 0;
-        if (stc_ships > 0) then hi = (stc_ships / 6) * 210;
-        draw_rectangle(xx + 711, yy + 539, xx + 728, yy + 539 + hi, 0);
+        var f, y_loc;
+        draw_sprite_ext(spr_research_bar, 0, xx+359, yy+554, 1, 0.7, 0, c_white, 1)
+        draw_sprite_ext(spr_research_bar, 0, xx+539, yy+554, 1, 0.7, 0, c_white, 1)
+       draw_sprite_ext(spr_research_bar, 0, xx+719, yy+554, 1, 0.7, 0, c_white, 1)
 
+
+        if (stc_wargear > 0) then speeding_bits[0].draw();
+        for (f =0;f<6;f++){
+            if (f>=stc_wargear){
+                draw_sprite_ext(spr_research_bar, 1, xx+359, yy+554+((210/6)*f), 1, 0.6, 0, c_white, 1)
+            }            
+               /* y_loc = yy+560+((210/6)*f);
+                if ((speeding_bits[0].current_y()-y_loc)<5 && (speeding_bits[0].current_y()-y_loc)>-5){
+                    stc_flashes[0][f].one_flash_finished=false;
+                }
+                stc_flashes[0][f].draw_one_flash(xx+359, y_loc);*/
+        } 
+        //draw_rectangle(xx + 351, yy + 539, xx + 368, yy + 539 + hi, 0);
+
+        if (stc_vehicles > 0) then speeding_bits[1].draw();
+          for (f =0;f<6;f++){
+            if (f>=stc_vehicles){
+                draw_sprite_ext(spr_research_bar, 1, xx+539, yy+554+((210/6)*f), 1, 0.6, 0, c_white, 1)
+            }
+            //stc_flashes[1][f].draw_one_flash(xx+539, yy+560+((210/6)*f));
+        }     
+        //draw_rectangle(xx + 531, yy + 539, xx + 548, yy + 539 + hi, 0);
+
+        if (stc_ships > 0) then speeding_bits[2].draw();
+       for (f =0;f<6;f++){
+            if (f>=stc_ships){
+                draw_sprite_ext(spr_research_bar, 1, xx+719, yy+554+((210/6)*f), 1, 0.6, 0, c_white, 1)
+            }        
+            //stc_flashes[2][f].draw_one_flash(xx+719,yy+ 560+((210/6)*f));
+        }  
+        switch(stc_research.research_focus){
+            case "wargear":
+                stc_flashes.draw(xx+359,yy+560+((210/6)*stc_wargear));
+                break;
+            case "vehicles":
+                stc_flashes.draw(xx+539,yy+560+((210/6)*stc_vehicles));
+                break;
+            case "ships":
+                stc_flashes.draw(xx+719,yy+560+((210/6)*stc_ships));
+                break;
+
+        }              
+       // draw_rectangle(xx + 711, yy + 539, xx + 728, yy + 539 + hi, 0);
+        draw_set_alpha(1);
         draw_set_color(c_gray);
-        draw_rectangle(xx + 351, yy + 539, xx + 368, yy + 749, 1);
-        draw_rectangle(xx + 531, yy + 539, xx + 548, yy + 749, 1);
-        draw_rectangle(xx + 711, yy + 539, xx + 728, yy + 749, 1);
+        //draw_rectangle(xx + 351, yy + 539, xx + 368, yy + 749, 1);
+        //draw_rectangle(xx + 531, yy + 539, xx + 548, yy + 749, 1);
+        //draw_rectangle(xx + 711, yy + 539, xx + 728, yy + 749, 1);
 
         draw_set_font(fnt_40k_14);
         draw_text(xx + 386, yy + 517, string_hash_to_newline("Wargear"));
@@ -554,12 +620,12 @@ function scr_draw_armentarium(){
         if (stc_wargear < 1) then draw_set_alpha(0.5);
         draw_text(xx + 372, yy + 549, string_hash_to_newline("1) 8% discount"));
 
-        var stc_bonus_strings = [ "Random","Enhanced Bolts","Enhanced Chain Weapons","Enhanced Flame Weapons","Enhanced Missiles","Enhanced Armour"]
+        var stc_bonus_strings = ["Random","Enhanced Bolts","Enhanced Chain Weapons","Enhanced Flame Weapons","Enhanced Missiles","Enhanced Armour"];
         var bonus_string=stc_bonus_strings[stc_bonus[1]];
         draw_set_alpha(1);
 
         if (stc_wargear < 2) then draw_set_alpha(0.5);
-        draw_text(xx + 372, yy + 549 + 35, string_hash_to_newline("2) " + string(bonus_string)));
+        draw_text_ext(xx + 372, yy + 549 + 35, string_hash_to_newline("2) " + string(bonus_string)),-1,150);
         draw_set_alpha(1);
 
         if (stc_wargear < 3) then draw_set_alpha(0.5);
@@ -571,7 +637,7 @@ function scr_draw_armentarium(){
         draw_set_alpha(1);
 
         if (stc_wargear < 4) then draw_set_alpha(0.5);
-        draw_text(xx + 372, yy + 549 + 105, string_hash_to_newline("4) " + string(bonus_string)));
+        draw_text_ext(xx + 372, yy + 549 + 105, string_hash_to_newline("4) " + string(bonus_string)), -1,150);
         draw_set_alpha(1);
 
         if (stc_wargear < 5) then draw_set_alpha(0.5);

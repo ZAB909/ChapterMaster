@@ -702,6 +702,7 @@
     {"name":"obj_event_log","order":57,"path":"objects/obj_event_log/obj_event_log.yy",},
     {"name":"obj_shop","order":59,"path":"objects/obj_shop/obj_shop.yy",},
     {"name":"spr_rack","order":2,"path":"sprites/spr_rack/spr_rack.yy",},
+    {"name":"spr_research_bar","order":4,"path":"sprites/spr_research_bar/spr_research_bar.yy",},
     {"name":"obj_crusade","order":61,"path":"objects/obj_crusade/obj_crusade.yy",},
     {"name":"obj_star","order":63,"path":"objects/obj_star/obj_star.yy",},
     {"name":"spr_rack_and_pinion","order":1,"path":"sprites/spr_rack_and_pinion/spr_rack_and_pinion.yy",},
