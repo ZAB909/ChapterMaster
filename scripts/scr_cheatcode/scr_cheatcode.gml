@@ -25,6 +25,12 @@ function scr_cheatcode(argument0) {
         if (cheatcode_string=="slaughtersong"){
             create_starship_event();
         }
+         if (cheatcode_string=="techuprising"){
+            var pip = instance_create(0,0,obj_popup);
+            pip.title = "Technical Differences!";
+            pip.text = "You Recive an Urgent Transmision A serious breakdown in culture has coccured causing believers in tech heresy to demand that they are given preseidence and assurance to continue their practises";
+            pip.image = "tech_uprising";
+         }
         if (string_count("event", cheatcode_string) >0) {
             if (string_count("crusade", cheatcode_string) >0) {
                 show_debug_message("crusading");

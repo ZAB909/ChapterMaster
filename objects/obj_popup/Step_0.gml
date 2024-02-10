@@ -19,8 +19,6 @@ if (type=9.1) and (obj_controller.stc_wargear_un+obj_controller.stc_vehicles_un+
     obj_controller.cooldown=10;instance_destroy();exit;
 }
 
-
-
 if (image="fuklaw") and (save>0){
     if (press=1){
         var del;del=obj_saveload.save[self.save];
@@ -29,7 +27,7 @@ if (image="fuklaw") and (save>0){
             if (file_exists("save"+string(del)+"log.ini")){file_delete("save"+string(del)+"log.ini");}
             if (file_exists("screen"+string(del)+".png")){file_delete("screen"+string(del)+".png");}
             with(obj_saveload){instance_destroy();}
-            var news;news=instance_create(0,0,obj_saveload);
+            var news=instance_create(0,0,obj_saveload);
             news.menu=woopwoopwoop;news.top=owner;news.alarm[4]=1;
             
             instance_destroy();
@@ -1286,20 +1284,20 @@ if (press=3) and (option3!=""){
         obj_controller.event[ev]="inquisitor_spared2";obj_controller.event_duration[ev]=floor(random_range(6,18))+1;
         
         exit;
-    }
-
-
-    if (image="artifact"){
+    }else if (image="artifact"){
         if (target_comp<9) and (target_comp!=7){// This returns the marines to the ship
             scr_return_ship(obj_temp4.loc,obj_temp4,obj_temp4.num);
             var man_size,ship_id,comp,plan,i;
             i=0;ship_id=0;man_size=0;comp=0;plan=0;
-            repeat(30){i+=1;if (obj_ini.ship[i]=obj_temp4.loc) then ship_id=i;}i=0;
+            repeat(30){
+                i+=1;
+                if (obj_ini.ship[i]=obj_temp4.loc) then ship_id=i;
+            }i=0;
         }
         
         if (target_comp!=3) and (target_comp!=4){
             // Here, have this gift
-            var plan;plan=instance_nearest(obj_temp4.x,obj_temp4.y,obj_star);
+            var plan=instance_nearest(obj_temp4.x,obj_temp4.y,obj_star);
 			var planet_arti = search_planet_features(plan.p_feature[obj_temp4.num], P_features.Artifact)
 			if (array_length(planet_arti) >0){
 				array_delete(plan.p_feature[obj_temp4.num], planet_arti[0], 1)
@@ -1351,8 +1349,10 @@ if (press=3) and (option3!=""){
 }
 
 
-if (title="Tech Heresy"){
-
+if (image="tech_uprising"){
+    option1="Do Nothing";
+    option2="Support the heretics";
+    option3="Support the Cult mechanicus faithfuls";
 }
 
 /* */

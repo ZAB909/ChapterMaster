@@ -92,6 +92,19 @@ function drop_down(selection, draw_x, draw_y, options,open_marker){
     return [selection,open_marker];
 }
 
+function same_locations(first_loc,second_loc){
+    var same_loc = false;
+    if (first_loc[2] != "warp" && first_loc[2] != "lost"){
+        if (first_loc[2] == second_loc[2]) then same_loc=true;
+    } else {
+        if (first_loc[1] == second_loc[1]) &&
+            (first_loc[0] == second_loc[0]){
+                same_loc=true;
+        }
+    }
+    return same_loc;
+}
+
 function calculate_research_points(turn_end=false){
     with (obj_controller){
         research_points = 0;
@@ -112,6 +125,9 @@ function calculate_research_points(turn_end=false){
             if (techs[i].IsSpecialist("heads")){
                 forge_master=i;
             }
+        }
+        if (forge_master>-1){
+            obj_controller.master_of_forge = techs[forge_master];
         }
         forge_string = $"Techmarines : {floor(forge_points)}#";
         var forge_veh_maintenance={};
@@ -141,58 +157,50 @@ function calculate_research_points(turn_end=false){
         }
         forge_points = floor(forge_points);
         var tech_test, charisma_test, piety_test;
-
         //in this instance tech heretics are techmarines with the "tech_heretic" trait
         if (array_length(heretics)>0 && turn_end){
-            var heretic_location, same_location;
+            var heretic_location, same_location, current_heretic, current_tech;
             //iterate through tech heretics;
             for (var heretic=0; heretic<array_length(heretics); heretic++){
-                heretic_location = tech_locations[heretic];
+                heretic_location = tech_locations[heretics[heretic]];
+                current_heretic = techs[heretics[heretic]];
                 //iterate through rest of techs
                 for (var i=0; i<array_length(techs); i++){
                     same_location=false;
-                    heretic_location[2]=false;
                     //if tech is also heretic skip
                     if (array_contains(heretics,i)) then continue;
+                    current_tech = techs[i];
 
                     // find out if heretic is in same location as techmarine
-                    if (heretic_location[2] != "warp" && heretic_location[2] != "lost"){
-                        if (heretic_location[2] == tech_locations[i][2]) then same_location=true;
-                    } else {
-                        if (heretic_location[1] == tech_locations[i][1]) &&
-                            (heretic_location[0] == tech_locations[i][0]){
-                                same_location=true;
-                        }
-                    }
-                    if (same_location){
+                    if (same_locations(heretic_location,tech_locations[i])){
                         //if so do a an opposed technology test of techmarine vs tech  heretic techmarine
-                        tech_test = global.character_tester.oppposed_test(techs[heretic],techs[i], "technology");
+                        tech_test = global.character_tester.oppposed_test(current_heretic,current_tech, "technology");
 
 
                         if (tech_test[0]==1){
                             // if heretic wins do an opposed charisma test
-                            charisma_test =  global.character_tester.oppposed_test(techs[heretic],techs[i], "charisma", -20);                           
+                            charisma_test =  global.character_tester.oppposed_test(current_heretic,current_tech, "charisma", -20);                           
                             if (charisma_test[0]==1){
                                 // if heretic win tech is corrupted
                                 //tech is corrupted by half the pass margin of the heretic
                                 //this means high charisma heretics will spread corruption more wuickly and more often
-                                techs[i].corruption += charisma_test[1]/2;
+                                current_tech.corruption += charisma_test[1]/2;
 
                                 // tech takes a piety test to see if tehy break faith with cult mechanicus and become tech heretic
                                 //piety test is augmented by by the techs corruption with the test becoming harder to pass the more
                                 // corrupted the tech is
-                                piety_test = global.character_tester.standard_test(techs[i], "piety", 40 - techs[i].corruption);
+                                piety_test = global.character_tester.standard_test(current_tech, "piety", +60 - current_tech.corruption);
 
                                 // if tech fails piety test tech also becomes tech heretic
                                 if (piety_test[0] == false){
-                                    techs[i].add_trait("tech_heretic");
+                                    current_tech.add_trait("tech_heretic");
                                 }
                             }
                         }
                         if (i==forge_master){
                             // if tech is the forge master then forge master takes a wisdom in this case doubling as a perception test
                             // if forge master passes tech heresy is noted and chapter master notified
-                            if (global.character_tester.standard_test(techs[i], "wisdom", -40)[0]){
+                            if (global.character_tester.standard_test(current_tech, "wisdom", - 40)[0]){
                                 notice_heresy=true;
                                 scr_event_log("purple",$"{techs[forge_master].name_role()} Has noticed signs of tech heresy amoung the techmarine ranks");
                                 //pip=instance_create(0,0,obj_popup);
@@ -204,6 +212,16 @@ function calculate_research_points(turn_end=false){
                 /*if (heretic_location==location_types.planet){
                     if 
                 }*/
+            }
+
+            if (array_length(heretics)/array_length(techs)>=0.35){
+                if (irandom(9)==0){
+                    /*var text_string = "You Recive an Urgent Transmision from";
+                    if (forge_master>-1){
+
+                    }*/
+                    scr_popup("Technical Differences!","You Recive an Urgent Transmision A serious breakdown in culture has coccured causing believers in tech heresy to demand that they are given preseidence and assurance to continue their practises","tech_uprising","");
+                }
             }
         }
     }   
@@ -363,9 +381,6 @@ function scr_draw_armentarium(){
 
 
     if (!in_forge){
-        draw_set_font(fnt_40k_30b);
-        draw_set_halign(fa_center);
-        draw_text_transformed(xx + 605, yy + 432, string_hash_to_newline("STC Fragments"), 0.75, 0.75, 0);
         draw_set_font(fnt_40k_14);
         draw_set_halign(fa_left);
         draw_text(xx + 384, yy + 468, string_hash_to_newline(string(stc_wargear_un + stc_vehicles_un + stc_ships_un) + " Unidentified Fragments"));
@@ -541,7 +556,12 @@ function scr_draw_armentarium(){
         if (forge_button.draw_shutter(forge_buttons[0]+60, forge_buttons[1], "Enter Forge", 0.5)){
             in_forge=true;
         }
-
+        draw_set_font(fnt_40k_30b);
+        draw_set_halign(fa_center);
+        draw_text_transformed(xx + 605, yy + 432, string_hash_to_newline("STC Fragments"), 0.75, 0.75, 0);
+         draw_set_font(fnt_40k_12);
+        draw_set_halign(fa_left);
+        draw_set_color(c_gray);       
         var drop_down_results = drop_down_sandwich(
             stc_research.research_focus,
             xx + 336 + 16,

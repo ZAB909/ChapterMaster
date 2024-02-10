@@ -710,6 +710,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		obj_ini.hp[company][marine_number]+=health_augment;
 	}
 	static healing = function(apoth){
+		if (hp()<=0) then exit;
 		var health_portion = 20;
 		var m_health = max_health();
 		var new_health;
@@ -737,7 +738,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	}
 	 static update_health = function(new_health){
 	    obj_ini.hp[company][marine_number] = new_health;
-	 };	
+	 };
+
+	 static hp_portion = function(){
+	 	return (hp()/max_health());
+	 }
 	static get_unit_size = function(){
 		var unit_role = role();
 		var arm = armour();
@@ -773,16 +778,19 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		} else {
 			quality= quality=="any"?"standard":quality;
 		}
+		var portion = hp_portion();
 		if (change_mob != "") and (to_armoury){
 			scr_add_item(change_mob,1,mobility_item_quality );
 		}
 		obj_ini.mobi[company][marine_number] = new_mobility_item;
 		mobility_item_quality=quality;
+		update_health(portion*max_health());
 		get_unit_size(); //every time mobility_item is changed see if the marines size has changed
 		return "complete";
 	};		
 
    armour_quality="standard";
+   
   static update_armour = function(new_armour, from_armoury=true, to_armoury=true, quality="any"){
 	  	var change_armour=armour();
 	  	var require_carpace=false;
@@ -837,6 +845,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if (change_armour != "") and (to_armoury){
 			scr_add_item(change_armour,1,armour_quality);
 		}
+		var portion = hp_portion();
 	    obj_ini.armour[company][marine_number] = new_armour;
 	    armour_quality=quality;
 	    if (armour()=="Dreadnought"){
@@ -844,6 +853,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	    	update_gear("");
 	    	update_mobility_item("");
 	    }
+	    update_health(portion*max_health());
 		get_unit_size(); //every time armour is changed see if the marines size has changed
 		return "complete";
 	};	
@@ -1272,11 +1282,14 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		} else {
 			quality = quality=="any"?"standard":quality;
 		}
+
+		var portion = hp_portion();
 		if (change_gear != "" && to_armoury){
 			scr_add_item(change_gear,1,gear_quality);
 		}  			
 		obj_ini.gear[company][marine_number] = new_gear;
 		gear_quality=quality
+		update_health(portion*max_health());
 		 return "complete";
 	}
 
@@ -2053,7 +2066,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				break;
 			case obj_ini.role[100][16]: //techmarines
 				update_armour(choose("MK8 Errant","MK6 Corvus","MK4 Maximus","MK3 Iron Armour"),false,false)
-				if ((global.chapter_name="Iron Hands") or (obj_ini.progenitor=6)){
+				if ((global.chapter_name="Iron Hands" || obj_ini.progenitor=6)){
 					add_bionics("right_arm","standard",false);
 					bionic_count = choose(6,6,7,7,7,8,9);
 					add_trait("flesh_is_weak");
@@ -2065,9 +2078,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				  }
 				  var tech_heresy = irandom(49);
 			  	}
+			  	if (array_contains(obj_ini.dis, "Tech-Heresy")){
+			  		var tech_heresy = irandom(10);
+			  		technology+=4;
+			  	}
 			  	if (tech_heresy==0){
 			  		add_trait("tech_heretic");
-			  		corruption+=5;
+			  		corruption+=30;
 			  	}
 				if (technology<35){
 					technology=35;
@@ -2084,6 +2101,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			  		add_trait("crafter");
 			  	}
 			  } else if (obj_ini.progenitor==8 || obj_ini.progenitor==6){
+			  	technology+=2;
 			  	if (irandom(4)==0){
 			  		add_trait("crafter");
 			  	}			  	
@@ -2211,11 +2229,11 @@ function pen_and_paper_sim() constructor{
 	static oppposed_test = function(unit1, unit2, stat,unit1_mod=0,unit2_mod=0,  modifiers={}){
 		var stat1 = irandom(99)+1;
 		var unit1_val = unit1[$ stat]+unit1_mod;
-		var unit2_val = unit1[$ stat]+unit2_mod;
+		var unit2_val = unit2[$ stat]+unit2_mod;
 		var stat2 = irandom(99)+1;
 		var stat1_pass_margin, stat2_pass_margin, winner, pass_margin;
 		//unit 1 passes test 
-		if (stat1 < unit1[$ stat]){
+		if (stat1 < unit1_val){
 			stat1_pass_margin = unit1_val- stat1;
 
 			//unit 1 and unit 2 pass tests
@@ -2249,12 +2267,12 @@ function pen_and_paper_sim() constructor{
 		var passed =false;
 		var margin=0
 		var random_roll = irandom(99)+1;
-		if (random_roll+difficulty_mod<unit[$ stat]){
+		if (random_roll<unit[$ stat]+difficulty_mod){
 			passed = true;
-			margin = unit[$ stat] - random_roll+difficulty_mod;
+			margin = unit[$ stat]+difficulty_mod - random_roll;
 		} else {
 			passed = false;
-			margin = unit[$ stat] - random_roll+difficulty_mod;
+			margin = unit[$ stat]+difficulty_mod - random_roll;
 		}
 
 		return [passed, margin];

@@ -2624,7 +2624,10 @@ function scr_initialize_custom() {
 	    scr_add_item("Power Weapon",12);
 	    scr_add_item("Rosarius",4);
 	}
-	if (string_count("Sieged",strin2)=0){scr_add_item("Dreadnought",6);scr_add_item("Close Combat Weapon",6);}
+	if (string_count("Sieged",strin2)=0){
+		scr_add_item("Dreadnought",6);
+		scr_add_item("Close Combat Weapon",6);
+	}
 
 	// man_size+=80;// bikes
 

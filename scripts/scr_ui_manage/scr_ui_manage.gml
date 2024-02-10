@@ -1281,6 +1281,7 @@ function scr_ui_manage() {
 		       		}
 
 		       		draw_text(stat_middle-66, stats_base+75, $"loyalty : {selected_unit.loyalty}")
+		       		draw_text(stat_middle-66, stats_base+110, $"corruption : {selected_unit.corruption}")
 		       		//tooltip_draw(stat_x, stat_y+string_height(stat_display),0,0,100,17);
 		        } 
 		        with (obj_controller){
