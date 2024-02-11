@@ -19,6 +19,7 @@ option1="";
 option2="";
 option3="";
 option4="";
+pathway="";
 amount=0;
 save=0;
 loc="";

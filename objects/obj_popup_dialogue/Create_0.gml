@@ -8,7 +8,7 @@ fin=false;
 too_high=0;
 left_mouse=0;
 cooldown=8;
-
+pathway = "";
 target="";
 target2="";
 

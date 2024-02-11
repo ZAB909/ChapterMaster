@@ -11,7 +11,10 @@ if keyboard_check_pressed(ord("3")) and (cooldown<=0) then press=3;
 if (press=1) and (option1="") then press=0;
 if (press=2) and (option2="") then press=0;
 if (press=3) and (option3="") then press=0;
-if (press!=0) and (cooldown>0){press=0;exit;}
+if (press!=0) and (cooldown>0){
+    press=0;
+    exit;
+}
 
 if (type!=6) and (master_crafted=1) then master_crafted=0;
 
@@ -584,10 +587,12 @@ if (image="ancient_ruins") and (option1!=""){
 			}			
             text+="  Unfortunantly, it's too late before your Battle Brothers discern the ruins are still inhabited.  Shapes begin to descend upon them from all directions, masked in the shadows.";
             
-            cooldown=15;woopwoopwoop=1;exit;
+            cooldown=15;
+            woopwoopwoop=1;
+            exit;
         }
         if (ruins_battle=0){
-            var obj;obj=obj_temp4.obj;
+            var obj=obj_temp4.obj;
             instance_activate_object(obj_star);
             scr_ruins_reward(obj,obj_temp4.num,obj_controller.current_planet_feature);
             instance_destroy();exit;
@@ -1059,7 +1064,8 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
             scr_quest(0,"ethereal_capture",4,estimate);
             obj_controller.useful_info+="Tau|";
             
-            if (demand=1){title="Inquisition Mission Demand";text="The Inquisition demands that your Chapter demonstrate its loyalty to the Imperium of Mankind and the Emperor.  You are to capture the Tau Ethereal somewhere within the "+string(you.name)+" system.";}
+            if (demand=1){title="Inquisition Mission Demand";
+            text="The Inquisition demands that your Chapter demonstrate its loyalty to the Imperium of Mankind and the Emperor.  You are to capture the Tau Ethereal somewhere within the "+string(you.name)+" system.";}
             if (you.p_problem[planet,1]="recon") then scr_event_log("","Inquisition Mission Accepted: The Inquisition wish for you to capture the Tau Ethereal somewhere within "+string(you.name)+".");
         }
         
@@ -1350,9 +1356,23 @@ if (press=3) and (option3!=""){
 
 
 if (image="tech_uprising"){
-    option1="Do Nothing";
-    option2="Support the heretics";
-    option3="Support the Cult mechanicus faithfuls";
+    if (pathway == ""){
+        option1="Do Nothing";
+        option2="Support the heretics";
+        option3="Support the Cult mechanicus faithfuls";
+        if (press==1){
+            pathway = "indecisive";
+        }
+        if (press==2){
+            pathway = "support_heresy";
+        }
+        if (press==3){
+            pathway = "support_cult_m";
+        }                  
+    }
+    if (pathway == "indecisive"){
+        var techs = collect_role_group("forge", location="");
+    }
 }
 
 /* */

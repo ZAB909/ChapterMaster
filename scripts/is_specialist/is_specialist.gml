@@ -73,6 +73,7 @@ function role_groups(group){
 	        role_list = [
 				obj_ini.role[100][16],//techmarine
 				"Forge Master",
+				"Techpriest"
 			];
 			break;	
 	}
@@ -176,6 +177,31 @@ function collect_role_group(group, location=""){
 			unit=obj_ini.TTRPG[com][i];
 			if (unit.name()=="")then continue; 	
 	        if (unit.IsSpecialist(group)){
+	        	if (location==""){
+	        		add=true;
+	       		} else if (unit.is_at_location(location, 0, 0)){
+	       			add=true;
+	       		}
+	        }
+	        if (add) then array_push(units, obj_ini.TTRPG[com][i]);
+	    }    
+	}
+	return units;
+}
+
+function collect_by_religeon(religion, sub_cult="", location=""){
+	var units = [], unit, count=0, add=false;
+	for (var com=0;com<=10;com++){
+	    for (i=1;i<array_length(obj_ini.TTRPG[com]);i++){
+	    	add=false;
+			unit=obj_ini.TTRPG[com][i];
+			if (unit.name()=="")then continue; 	
+	        if (unit.religion == religion){
+	        	if (sub_cult!=""){
+	        		if (unit.religion_sub_cult != "sub_cult"){
+	        			continue;
+	        		}
+	        	}
 	        	if (location==""){
 	        		add=true;
 	       		} else if (unit.is_at_location(location, 0, 0)){

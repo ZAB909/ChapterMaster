@@ -2263,7 +2263,7 @@ function pen_and_paper_sim() constructor{
 		return [winner, pass_margin];
 	}
 
-	static standard_test = function(unit, stat, difficulty_mod){
+	static standard_test = function(unit, stat, difficulty_mod=0){
 		var passed =false;
 		var margin=0
 		var random_roll = irandom(99)+1;
