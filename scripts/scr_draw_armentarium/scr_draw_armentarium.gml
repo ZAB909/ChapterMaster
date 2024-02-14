@@ -180,7 +180,7 @@ function calculate_research_points(turn_end=false){
 
                             if (tech_test[0]==1){
                                 // if heretic wins do an opposed charisma test
-                                charisma_test =  global.character_tester.oppposed_test(current_heretic,current_tech, "charisma", -20);                           
+                                charisma_test =  global.character_tester.oppposed_test(current_heretic,current_tech, "charisma", -15+current_tech.corruption);                           
                                 if (charisma_test[0]==1){
                                     // if heretic win tech is corrupted
                                     //tech is corrupted by half the pass margin of the heretic
@@ -190,14 +190,14 @@ function calculate_research_points(turn_end=false){
                                     // tech takes a piety test to see if tehy break faith with cult mechanicus and become tech heretic
                                     //piety test is augmented by by the techs corruption with the test becoming harder to pass the more
                                     // corrupted the tech is
-                                    piety_test = global.character_tester.standard_test(current_tech, "piety", +70 - current_tech.corruption);
+                                    piety_test = global.character_tester.standard_test(current_tech, "piety", +65 - current_tech.corruption);
 
                                     // if tech fails piety test tech also becomes tech heretic
                                     if (piety_test[0] == false){
                                         current_tech.add_trait("tech_heretic");
                                     }
                                 } else if (charisma_test[0]==2){
-                                    if (charisma_test[1] > 30 && notice_heresy=false){
+                                    if (charisma_test[1] > 25 && notice_heresy=false){
                                         scr_alert("purple","Tech Heresy",$"{current_tech.name_role()} contacts you concerned of Tech Heresy in the Armentarium");
                                         notice_heresy=true;
                                     }
@@ -231,8 +231,8 @@ function calculate_research_points(turn_end=false){
                     }
                 }
             }
-            possibility_of_heresy = 8;
-            if (array_contains(obj_ini.dis,"Tech-Heresy")) then possibility_of_heresy = 6;
+            possibility_of_heresy = 6;
+            if (array_contains(obj_ini.dis,"Tech-Heresy")) then possibility_of_heresy = 5;
             if (irandom(power(possibility_of_heresy,(array_length(heretics)+2))) == 0 && array_length(techs)>0){
                 var current_tech = techs[irandom(array_length(techs)-1)];
                if  (!global.character_tester.standard_test(current_tech, "piety")[0]){

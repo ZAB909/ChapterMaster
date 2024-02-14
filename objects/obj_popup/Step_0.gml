@@ -1453,63 +1453,102 @@ if (image=="new_forge_master"){
         }
     }
 }else if (image=="tech_uprising"){
+
     if (pathway == ""){
+        obj_controller.complex_event=true;
+        pathway="heretic_choice";
         option1="Do Nothing";
         option2="Support the heretics";
-        option3="Support the Cult mechanicus faithfuls";
-        if (press==1){
-            pathway = "indecisive";
+        option3="Support the Cult mechanicus faithfuls";               
+    } else  if (pathway == "heretic_choice"){
+        if (press>0){
+            pathway = "tech_aftermath";
         }
-        if (press==2){
-            pathway = "support_heresy";
-        }
-        if (press==3){
-            pathway = "support_cult_heretic";
-        }                  
     }
-    if (pathway == "indecisive"){
-        var tech,t,i, check_tech, location_techs, location_heretics, delete_positions, wisdom_data;
-        techs = collect_role_group("forge", location="");
+    if (pathway == "tech_aftermath"){
+        var tech,t,i, check_tech, location_techs, location_heretics, delete_positions, heretic_data=[0,0,0],loyal_data=[0,0,0];
+        techs = collect_role_group("forge");
         var tech_count = array_length(techs);
         for (i=0; i<tech_count;i++){
-            wisdom_data = ["none", 0];
+
             delete_positions=[];
             location_techs=[];
             location_heretics=[];
             tech = techs[i];
             if (tech.has_trait("tech_heretic")){
                 array_push(location_heretics, tech);
-                wisdom_data = ["heretic", 0,tech.wisdom ];
             } else {
                 array_push(location_techs, tech);
-                wisdom_data = ["tech", 0, tech.wisdom];
             }
             //loop techs to fins out which techs are in the same  location
             for (t=i+1;t<tech_count;t++){
                 check_tech = techs[t].marine_location();
-                if (same_location(tech.marine_locations(), check_tech)){
+                if (same_locations(tech.marine_location(), check_tech)){
+
                     if (techs[t].has_trait("tech_heretic")){
-                        if (techs[t].wisdom>wisdom_data[2]){
-                            wisdom_data = ["heretic", array_length(location_heretics),techs[t].wisdom ];
-                        }
                         array_push(location_heretics, techs[t]);
+                        heretic_data[0]+=techs[t].weapon_skill;
+                        heretic_data[1]+=techs[t].wisdom;
+                        heretic_data[2]+=techs[t].ballistic_skill;
                     } else {
-                        if (techs[t].wisdom>wisdom_data[2]){
-                            wisdom_data = ["tech", array_length(location_heretics),techs[t].wisdom ];
-                        }                        
                         array_push(location_techs, techs[t]);
+                        loyal_data[0]+=techs[t].weapon_skill;
+                        loyal_data[1]+=techs[t].wisdom;
+                        loyal_data[2]+=techs[t].ballistic_skill;
                     }
                     array_push(delete_positions, t);
                 }
             }
             if (array_length(location_heretics)>0 &&
                 array_length(location_techs)>0){
-                var initiative_set
-                if (wisdom_data[0]=="tech"){
-
+                var purge_target = "none";
+                if (press==1){
+                    var tal;
+                    var heretic_tally=0;
+                    var loyal_tally=0;
+                    for (tal=0;tal<3;tal++){
+                        if (heretic_data[tal]>loyal_data[0]){
+                            heretic_tally++;
+                        } else if (heretic_data[tal]<loyal_data[0]){
+                            loyal_tally++;
+                        }
+                    }
+                    if (heretic_tally>loyal_tally){
+                        purge_target =location_techs;
+                    } else if (loyal_tally<heretic_tally){
+                        purge_target =location_heretics;
+                    }
+                    if (purge_target=="none"){
+                        purge_target=choose(location_heretics,location_techs);
+                    }
+                } else if (press==2){
+                    purge_target=location_techs;
+                }else if (press==3){
+                    purge_target=location_heretics;
+                }
+                if (purge_target!="none"){
+                    for (tal=0;tal<array_length(purge_target);tal++){
+                        kill_and_recover(purge_target[tal].company,purge_target[tal].marine_number);
+                    }
+                }
+            }
+            if (array_length(delete_positions)>0){
+                for (t=0;t<array_length(delete_positions);t++){
+                    array_delete(techs, delete_positions[t],1);
+                    tech_count--;
                 }
             }
         }
+        if (press==1){
+            text="With neither faction receiving your favor it is not long until the BloodLetting begins. Within a month a brutal civil war engulfs the Tech ranks with losses suffered on both sides";
+        } else if (press==2){
+            text="With your full support the so called 'heretics' who have seen through the lies of the bureaucracy of Mars eliminate those who will not be swayed to see the truth.";
+        } else if(press==3){
+            text="The extremists and heretics that have been allowed to grow like a cancer in the Armentarium are rooted out and disposed of.";
+        }
+        reset_options();
+        press=0;
+        pathway="end_splash";
     }
 }
 if (pathway="end_splash"){

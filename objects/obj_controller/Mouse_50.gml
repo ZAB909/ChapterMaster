@@ -1754,6 +1754,11 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 hide_banner=0;
             }
             managing=0;
+            with(obj_ini){
+                for (var i=0;i<11;i++){
+                    scr_company_order(i);
+                }
+            }
         }
     }
     if (zoomed==0) and (menu==40) and (cooldown<=0){

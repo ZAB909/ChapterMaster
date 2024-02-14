@@ -218,19 +218,31 @@ if (loading=0){
     if (instance_exists(target)){
         if (target.planets>=1) and (obj_controller.cooldown<=0){
             dist=point_distance(xx+159,yy+287,mouse_x,mouse_y);   
-            if (dist<=16) then obj_controller.selecting_planet=1;
+            if (dist<=16){
+                obj_controller.selecting_planet=1;
+                feature="";
+            }
         }
         if (target.planets>=2) and (obj_controller.cooldown<=0){
             dist=point_distance(xx+200,yy+287,mouse_x,mouse_y);   
-            if (dist<=16) then obj_controller.selecting_planet=2; 
+           if (dist<=16){
+                obj_controller.selecting_planet=2;
+                feature="";
+            }
         }
         if (target.planets>=3) and (obj_controller.cooldown<=0){
             dist=point_distance(xx+241,yy+287,mouse_x,mouse_y);   
-            if (dist<=16) then obj_controller.selecting_planet=3; 
+            if (dist<=16){
+                obj_controller.selecting_planet=3;
+                feature="";
+            }
         }
         if (target.planets>=4) and (obj_controller.cooldown<=0){
             dist=point_distance(xx+282,yy+287,mouse_x,mouse_y);   
-            if (dist<=16) then obj_controller.selecting_planet=4; 
+           if (dist<=16){
+                obj_controller.selecting_planet=4;
+                feature="";
+            }
         }
     }
 
