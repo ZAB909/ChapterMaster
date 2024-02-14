@@ -945,10 +945,10 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
         with(obj_star){if (name=obj_controller.temp[200]) then instance_create(x,y,obj_temp5);}
         you=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);onceh=0;
         
-        if (you.p_problem[planet,1]="") and (onceh=0){you.p_problem[planet,1]="recon";you.p_timer[planet,1]=estimate;onceh=1;if (demand=1){title="Inquisition Mission Demand";text="The Inquisition demands that your Chapter demonstrate its loyalty to the Imperium of Mankind and the Emperor.  You are to land Astartes on "+string(you.name)+" "+scr_roman(1)+" to investigate the planet within "+string(estimate)+" months.";}}
-        if (you.p_problem[planet,2]="") and (onceh=0){you.p_problem[planet,2]="recon";you.p_timer[planet,2]=estimate;onceh=1;if (demand=1){title="Inquisition Mission Demand";text="The Inquisition demands that your Chapter demonstrate its loyalty to the Imperium of Mankind and the Emperor.  You are to land Astartes on "+string(you.name)+" "+scr_roman(2)+" to investigate the planet within "+string(estimate)+" months.";}}
-        if (you.p_problem[planet,3]="") and (onceh=0){you.p_problem[planet,3]="recon";you.p_timer[planet,3]=estimate;onceh=1;if (demand=1){title="Inquisition Mission Demand";text="The Inquisition demands that your Chapter demonstrate its loyalty to the Imperium of Mankind and the Emperor.  You are to land Astartes on "+string(you.name)+" "+scr_roman(3)+" to investigate the planet within "+string(estimate)+" months.";}}
-        if (you.p_problem[planet,4]="") and (onceh=0){you.p_problem[planet,4]="recon";you.p_timer[planet,4]=estimate;onceh=1;if (demand=1){title="Inquisition Mission Demand";text="The Inquisition demands that your Chapter demonstrate its loyalty to the Imperium of Mankind and the Emperor.  You are to land Astartes on "+string(you.name)+" "+scr_roman(4)+" to investigate the planet within "+string(estimate)+" months.";}}
+        if (you.p_problem[planet][1]="") and (onceh=0){you.p_problem[planet,1]="recon";you.p_timer[planet,1]=estimate;onceh=1;if (demand=1){title="Inquisition Mission Demand";text="The Inquisition demands that your Chapter demonstrate its loyalty to the Imperium of Mankind and the Emperor.  You are to land Astartes on "+string(you.name)+" "+scr_roman(1)+" to investigate the planet within "+string(estimate)+" months.";}}
+        if (you.p_problem[planet][2]="") and (onceh=0){you.p_problem[planet,2]="recon";you.p_timer[planet,2]=estimate;onceh=1;if (demand=1){title="Inquisition Mission Demand";text="The Inquisition demands that your Chapter demonstrate its loyalty to the Imperium of Mankind and the Emperor.  You are to land Astartes on "+string(you.name)+" "+scr_roman(2)+" to investigate the planet within "+string(estimate)+" months.";}}
+        if (you.p_problem[planet][3]="") and (onceh=0){you.p_problem[planet,3]="recon";you.p_timer[planet,3]=estimate;onceh=1;if (demand=1){title="Inquisition Mission Demand";text="The Inquisition demands that your Chapter demonstrate its loyalty to the Imperium of Mankind and the Emperor.  You are to land Astartes on "+string(you.name)+" "+scr_roman(3)+" to investigate the planet within "+string(estimate)+" months.";}}
+        if (you.p_problem[planet][4]="") and (onceh=0){you.p_problem[planet,4]="recon";you.p_timer[planet,4]=estimate;onceh=1;if (demand=1){title="Inquisition Mission Demand";text="The Inquisition demands that your Chapter demonstrate its loyalty to the Imperium of Mankind and the Emperor.  You are to land Astartes on "+string(you.name)+" "+scr_roman(4)+" to investigate the planet within "+string(estimate)+" months.";}}
         if (onceh!=0){var bob;bob=instance_create(you.x+16,you.y-24,obj_star_event);bob.image_alpha=1;bob.image_speed=1;}
         
         scr_event_log("","Inquisition Mission Accepted: The Inquisition wish for Astartes to land on and investigate "+string(you.name)+" "+scr_roman(planet)+" within "+string(estimate)+" months.");
@@ -1337,7 +1337,8 @@ if (press=3) and (option3!=""){
             Tau: if daemonic all their worlds get big corruption boosts?*/
             
             with(obj_temp4){instance_destroy();}
-            instance_destroy();exit;
+            instance_destroy();
+            exit;
         }
         
         if (target_comp=3) or (target_comp=4){// Not worth it, mang
@@ -1353,9 +1354,105 @@ if (press=3) and (option3!=""){
         if (number!=0) then obj_turn_end.alarm[1]=4;instance_destroy();
     }
 }
-
-
-if (image="tech_uprising"){
+if (image=="new_forge_master"){
+    if (pathway==""){
+        obj_controller.complex_event=true;
+        techs = collect_role_group("forge");
+        charisma_pick=0;
+        experience_pick=0;
+        talent_pick=0;
+        for (i=1;i<array_length(techs);i++){
+            if (techs[charisma_pick].charisma < techs[i].charisma){
+                charisma_pick=i;
+            }
+            if (techs[experience_pick].experience() < techs[i].experience()){
+                experience_pick=i;
+            }
+            if (techs[talent_pick].technology < techs[i].technology){
+                talent_pick=i;
+            }                
+        }
+        pathway="selection_options"
+        option1="Popular Pick";
+        option2="Talent Pick";
+        option3="Experience Pick";        
+    }else if (pathway=="selection_options"){
+        if (press>0){
+            var cur_tech;
+            var skill_lack=0;
+            var exp_lack=0;
+            var dislike=0;
+            var popularity_lack=0
+            var pick="none";
+            var charisma_test = 0;
+            if (press>0 && press<4){
+                if (press==1){
+                    pick = techs[charisma_pick];
+                } else if (press==2){
+                    pick = techs[talent_pick];
+                } else if (press==3){
+                    pick = techs[experience_pick];
+                }
+                for (i=0;i<array_length(techs);i++){
+                    if (i=charisma_pick) then continue;
+                    cur_tech = techs[i];
+                    charisma_test = global.character_tester.oppposed_test(pick,cur_tech, "charisma", 10);
+                    if (charisma_test[0]!=1){
+                        if (pick.technology<cur_tech.technology){
+                            skill_lack++;
+                            cur_tech.loyalty-=cur_tech.technology-pick.technology;
+                        }
+                         if (pick.experience()<cur_tech.experience()){
+                            exp_lack++;
+                            cur_tech.loyalty-=floor((cur_tech.experience()-pick.experience())/200);
+                        }
+                        if (charisma_test[0]==2){
+                            dislike++;
+                            cur_tech.loyalty-=charisma_test[1];
+                        }
+                    }
+                }
+            }
+            if (pick!="none"){
+                pick.update_role("Forge Master");
+                var likability;
+                if (dislike<=5)  then likability = "He is generally well liked";
+                if (dislike>5)  then likability = "He is not generally well liked";
+                if (dislike>10)  then likability = "He mostly disliked";
+                if (dislike==0)  then likability = "He is like by all of his tech brothers";
+                text = $"{pick.name()} is selected as the new {pick.role()} {likability}."
+                if (skill_lack>0 &&  skill_lack<6){
+                    text+="There are some questions about his ability.";
+                } else if (skill_lack>6){
+                    text+="Many Question his Technical Talents.";
+                }
+                if (exp_lack>0 &&  exp_lack<6){
+                    text+="A few have raised questions over his experience.";
+                } else if (exp_lack>=6){
+                    text+="There have been Many concerns over his experience.";
+                }
+                if (popularity_lack>1 &&  popularity_lack<6){
+                    text+="He is not unanimously liked.";
+                } else if (popularity_lack>=6){
+                    text+="He is disliked by many.";
+                }
+                var lacks =  skill_lack+exp_lack+popularity_lack;       
+                if (lacks<((array_length(techs)-1)/10)){
+                    text+="Your choice Is almost unanimously respected";
+                } else if (lacks<((array_length(techs)-1)/4)){
+                    text+="While a few may have preferred another there are no serious concerns";
+                } else if (lacks<((array_length(techs)-1)/2)){
+                    text+="Your supporters are more than our detractors but many are unhappy";
+                }else if (lacks<((array_length(techs)-1)*0.65)){
+                    text+="Most are unhappy with the decision but your word is final";
+                }
+                reset_options();
+                press=0
+                pathway="end_splash";
+            }
+        }
+    }
+}else if (image=="tech_uprising"){
     if (pathway == ""){
         option1="Do Nothing";
         option2="Support the heretics";
@@ -1367,13 +1464,64 @@ if (image="tech_uprising"){
             pathway = "support_heresy";
         }
         if (press==3){
-            pathway = "support_cult_m";
+            pathway = "support_cult_heretic";
         }                  
     }
     if (pathway == "indecisive"){
-        var techs = collect_role_group("forge", location="");
+        var tech,t,i, check_tech, location_techs, location_heretics, delete_positions, wisdom_data;
+        techs = collect_role_group("forge", location="");
+        var tech_count = array_length(techs);
+        for (i=0; i<tech_count;i++){
+            wisdom_data = ["none", 0];
+            delete_positions=[];
+            location_techs=[];
+            location_heretics=[];
+            tech = techs[i];
+            if (tech.has_trait("tech_heretic")){
+                array_push(location_heretics, tech);
+                wisdom_data = ["heretic", 0,tech.wisdom ];
+            } else {
+                array_push(location_techs, tech);
+                wisdom_data = ["tech", 0, tech.wisdom];
+            }
+            //loop techs to fins out which techs are in the same  location
+            for (t=i+1;t<tech_count;t++){
+                check_tech = techs[t].marine_location();
+                if (same_location(tech.marine_locations(), check_tech)){
+                    if (techs[t].has_trait("tech_heretic")){
+                        if (techs[t].wisdom>wisdom_data[2]){
+                            wisdom_data = ["heretic", array_length(location_heretics),techs[t].wisdom ];
+                        }
+                        array_push(location_heretics, techs[t]);
+                    } else {
+                        if (techs[t].wisdom>wisdom_data[2]){
+                            wisdom_data = ["tech", array_length(location_heretics),techs[t].wisdom ];
+                        }                        
+                        array_push(location_techs, techs[t]);
+                    }
+                    array_push(delete_positions, t);
+                }
+            }
+            if (array_length(location_heretics)>0 &&
+                array_length(location_techs)>0){
+                var initiative_set
+                if (wisdom_data[0]=="tech"){
+
+                }
+            }
+        }
     }
 }
-
+if (pathway="end_splash"){
+    option1="Continue";
+   if (press == 1){
+    obj_controller.complex_event=false;
+    if (instance_exists(obj_turn_end)){
+        if (number!=0) then obj_turn_end.alarm[1]=4;
+        instance_destroy();
+    }
+    instance_destroy();
+   }
+}
 /* */
 /*  */

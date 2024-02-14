@@ -1648,6 +1648,7 @@ function scr_initialize_custom() {
 	    gear[company][k]=gear[101,15];
 	    
 	    experience[company][k]=100;
+	    spawn_unit = TTRPG[company][k];
 		spawn_unit.spawn_old_guard();
 		spawn_unit.spawn_exp();
 	}

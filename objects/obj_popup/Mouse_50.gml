@@ -30,10 +30,10 @@ if (type=98){
 
 
 
-if (option1="") and (type<5){
+if (option1=="") and (type<5){
     obj_controller.cooldown=10;
-    if (instance_exists(obj_turn_end)) and (obj_controller.complex_event=false){if (number!=0) then obj_turn_end.alarm[1]=4;}
-    instance_destroy();exit;
+    if (instance_exists(obj_turn_end)) and (obj_controller.complex_event==false){if (number!=0) then obj_turn_end.alarm[1]=4;}
+    instance_destroy();
 }
 
 if (type>4) and (type!=9) and (cooldown<=0){
@@ -41,7 +41,8 @@ if (type>4) and (type!=9) and (cooldown<=0){
 
     if (mouse_x>=xx+1006) and (mouse_y>=yy+499) and (mouse_x<=xx+1116) and (mouse_y<yy+519){
         obj_controller.cooldown=10;
-        instance_destroy();exit;
+        instance_destroy();
+        exit;
     }
 }
 
@@ -477,7 +478,7 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
         var role_squad_equivilances = {};//this is the only way to set variables as keys in gml
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][8],"tactical_squad");
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][9],"devastator_squad");
-        variable_struct_set(role_squad_equivilances,obj_ini.role[100][10],"assualt_squad");
+        variable_struct_set(role_squad_equivilances,obj_ini.role[100][10],"assault_squad");
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][12],"scout_squad");
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][3],"sternguard_veteran_squad");
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][4],"terminator_squad");

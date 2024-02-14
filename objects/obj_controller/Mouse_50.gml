@@ -47,40 +47,14 @@ if (menu==12) and (cooldown<=0) and (penitorium>0){
             if (mouse_x>=xx+1433) and (mouse_x<xx+1497){
                 cooldown=20;
                 var c=penit_co[qp],e=penit_id[qp];
-                if (obj_ini.race[c,e]=1){
-                    if (obj_ini.age[c,e]<=((millenium*1000)+year)-10) and (obj_ini.zygote==0) and (string_count("Doom",obj_ini.strin2)==0) then gene_seed+=1;
-                    if (obj_ini.age[c,e]<=((millenium*1000)+year)-5) and (string_count("Doom",obj_ini.strin2)==0) then gene_seed+=1;
-                }
 
-                var tek="";
-                if (obj_ini.race[c,e]==1){
-                    tek=obj_ini.wep1[c][e];
-                    if (tek!="") then scr_add_item(tek,1);
-                    tek=obj_ini.wep2[c,e];
-                    if (tek!="") then scr_add_item(tek,1);
-                    tek=obj_ini.armour[c,e];
-                    if (tek!="") then scr_add_item(tek,1);
-                    tek=obj_ini.mobi[c,e];
-                    if (tek!="") then scr_add_item(tek,1);
-                    tek=obj_ini.gear[c,e];
-                    if (tek!="") then scr_add_item(tek,1);
-                }
-
-                tek="";
-                if (obj_ini.race[c,e]=1){
-                    if(is_specialist(obj_ini.role[c,e])){
-                        command-=1;
-                    } else{
-                        marines-=1;
-                    }
-                }
                 if (obj_ini.role[c,e]="Chapter Master"){
                     tek="c";
                     alarm[7]=5;
                     global.defeat=3;
                 }
                 // TODO Needs to be based on role
-                scr_kill_unit(c,e);
+                kill_and_recover(c,e);
                 diplo_char=c;
                 with(obj_ini){scr_company_order(obj_controller.diplo_char);}
                 re=1;
@@ -455,7 +429,7 @@ if (menu==20) and (diplomacy==10.1){
                 pop_up.text = $"You summon {dead_lib.name_role()} to your personal chambers. Darting from the shadows you deftly strike his head from his shoulders. With the flesh removed from his skull you place the skull upon a hastily erected shrine."
                 pop_up.type=98;
                 pop_up.image = "chaos";
-                scr_kill_unit(lib[0],lib[1]);
+                kill_and_recover(lib[0],lib[1]);
                 chapter_master.add_trait("blood_for_blood");
             } else {
                 diplomacy_pathway = "daemon_scorn";
@@ -481,7 +455,7 @@ if (menu==20) and (diplomacy==10.1){
                // obj_duel = instance_create(0,0,obj_duel);
                // obj_duel.title = "Ambush Champion";
                // pop.type="duel";
-                scr_kill_unit(champ[0],champ[1]);
+                kill_and_recover(champ[0],champ[1]);
             } else {
                 diplomacy_pathway = "daemon_scorn";
             }              

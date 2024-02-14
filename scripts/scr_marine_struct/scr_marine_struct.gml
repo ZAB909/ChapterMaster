@@ -267,12 +267,12 @@ global.trait_list = {
 		flavour_text:"{0} is a brutal character solving problems often with intimidation or violence",
 	},
 	"charismatic":{
-		charisma:[5,3,"max"],
+		charisma:[10,3,"max"],
 		display_name:"Charismatic",
 		flavour_text:"{0} is liked by most without even trying",
 	},
 	"recluse":{
-		charisma:[-2,2,"min"],
+		charisma:[-3,2,"min"],
 		dexterity:1,
 		wisdom:1,
 		display_name:"Reclusive",
@@ -472,19 +472,19 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			base_group : "skitarii",
 	},
 	"tech_priest":{
-			strength:16,
-			constitution:30,
-			dexterity:35,
+			strength:[12,1],
+			constitution:[30,1],
+			dexterity:[20,1],
 			weapon_skill : [15,5],
 			ballistic_skill : [15,5],				
-			intelligence:50,
-			wisdom:20,
-			charisma :8,
+			intelligence:[30,3],
+			wisdom:[20,3],
+			charisma :[8,1],
 			religion : "cult_mechanicus",
 			title : "Tech Priest",
-			piety : 30,
+			piety : [45,3],
 			luck :6,
-			technology :50,
+			technology :[55,3],
 			skills: {weapons:{"power_weapon":2,}},	
 			start_gear:{"armour":"dragon_scales", "wep1":"power_weapon"},
 			base_group : "tech_priest",
@@ -627,6 +627,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				if (IsSpecialist("chap") && special_stat==0) then stat_gains = "charisma";
 				if (IsSpecialist("apoth") && special_stat==0) then stat_gains = "intelligence";
 				if (role()=="Champion" && stat_gains!="weapon_skill" && special_stat==0) then stat_gains = "weapon_skill";
+				if (job!="none"){
+					if (job.type == "forge"){
+						stat_gains="technology";
+					}
+				}				
 				self[$ stat_gains]++;
 				stat_point_exp_marker-=15;
 				if (struct_exists(instace_stat_point_gains, stat_gains)){
@@ -1045,7 +1050,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}
 		}
 		return false;
-	} 
+	}
+	loyalty = 0;
 	switch base_group{
 		case "astartes":				//basic marine class //adds specific mechanics not releveant to most units
 			loyalty = 100;
@@ -1172,8 +1178,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				}
 			}
 			break;
-		/*case "skitarii":
-			break;*/	
+		case "tech_priest":
+			loyalty = obj_controller.disposition[eFACTION.Mechanicus]-10;
+			religeon = "cult_mechanicus";
+			bionics = (irandom(5)+4);
+			add_trait("flesh_is_weak");
+			psionic = irandom(4);
+			break;	
 	};
 
 	static race = function(){
@@ -1442,8 +1453,15 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 		static ranged_hands_limit = function(){
 			var ranged_hands_limit = 2;
+			if (base_group == "astartes"){
+				ranged_hands_limit = 2
+			} else if base_group == "tech_priest" {
+				ranged_hands_limit = 1+(technology/100);;
+			}else if base_group == "human" {
+				melee_hands_limit = 1;
+			}	
 			var ranged_carrying=0
-			var carry_string="base:2#";
+			var carry_string=$"base:{ranged_hands_limit}#";
 			if (strength>=50){
 				ranged_hands_limit+=0.5;
 				carry_string+="strength:+0.5#";
@@ -1593,6 +1611,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 		static melee_hands_limit = function(){
 			var melee_hands_limit = 2;
+			if (base_group == "astartes"){
+				melee_hands_limit = 2
+			} else if base_group == "tech_priest" {
+				melee_hands_limit = 1+(technology/100);
+			}else if base_group == "human" {
+				melee_hands_limit = 1;
+			}				
 			var melee_carrying=0
 			var carry_string="base:2#";
 			if (strength>=50){
@@ -1911,13 +1936,16 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 	};
 
-	static forge_point_generation = function(){
+	static forge_point_generation = function(turn_end=false){
 		if (!IsSpecialist("forge")) then return 0;
 		var points = technology/10;
 		if (job!="none"){
 			if (job.type == "forge"){
 				points*=2;
 				points+=3;
+				if (turn_end){
+					add_exp(0.25);
+				}
 			}
 		}
 		if (has_trait("crafter")) then points+=3;
@@ -2107,6 +2135,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			  	}			  	
 			  }
 			  religion = "cult_mechanicus"	
+			  add_exp(irandom(50));
 				break;
 			case  obj_ini.role[100][12]: //scouts
 				bionic_count = choose(0,0,0,0,0,0,0,0,0,0,0,1);
@@ -2120,6 +2149,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				if(irandom(1) ==0){
 					add_trait("zealous_faith")
 				}
+				add_exp(irandom(50));
 				break;
 			case "Codiciery":
 				update_armour(choose("MK5 Heresy","MK6 Corvus","MK7 Aquila", "MK4 Maximus","MK8 Errant"),false,false);
@@ -2190,7 +2220,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}
 		}
 	}
-	
+	static stat_display = scr_draw_unit_stat_data;
 	static draw_unit_image = scr_draw_unit_image;
 	static display_wepaons = scr_ui_display_weapons;
 	static unit_profile_text = scr_unit_detail_text;

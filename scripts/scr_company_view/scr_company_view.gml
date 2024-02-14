@@ -342,26 +342,28 @@ function filter_and_sort_company(type, specific){
 	}
 	if (type=="stat"){
 		var swapped;
-		for (i = 1; i<=499;i++){
-			//if (man[i] != "man") continue;
-			swapped=false;
-			limit = 499-i;
-			for (j=1; j<limit;j++){
-				if (man[j] != "man"){
-					if (man[j+1] == "man"){
-						switchy(j,j+1);
-						swapped=true;
-					}
-				} else {
-					if (man[j+1] == "man"){
-						if (display_unit[j][$specific]<display_unit[j+1][$specific]){
+		with (obj_controller){
+			for (i = 1; i<=499;i++){
+				//if (man[i] != "man") continue;
+				swapped=false;
+				limit = 499-i;
+				for (j=1; j<limit;j++){
+					if (man[j] != "man"){
+						if (man[j+1] == "man"){
 							switchy(j,j+1);
-							swapped = true;
+							swapped=true;
+						}
+					} else {
+						if (man[j+1] == "man"){
+							if (display_unit[j][$specific]<display_unit[j+1][$specific]){
+								switchy(j,j+1);
+								swapped = true;
+							}
 						}
 					}
 				}
+				//if (swapped == false) then break;
 			}
-			//if (swapped == false) then break;
 		}
 	}
 }

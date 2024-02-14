@@ -19,6 +19,13 @@ tooltip_x = 0;
 tooltip_y = 0;
 tooltip_width = 0;
 tooltip_height = 0;
+forge_master = scr_role_count("Forge Master", "", "units");
+if (array_length(forge_master)>0){
+    forge_master=forge_master[0];
+} else {
+    forge_master="none";
+}
+mechanicus_modifier = (((obj_controller.disposition[eFACTION.Mechanicus]-50)/200)*-1)+1
 var research = obj_controller.production_research;
 shop = "equipment";
 /*if (obj_controller.menu=55) then shop="equipment";
@@ -351,9 +358,12 @@ if (shop = "equipment") {
     }
 
     i = 0;
+
     repeat(39) {
         i += 1;
-        if (item[i] != "") then mc_stocked[i] = scr_item_count("Master Crafted " + string(item[i]));
+        if (item[i] != ""){
+            mc_stocked[i] = scr_item_count("Master Crafted " + string(item[i]));
+        }
     }
 }
 if (shop = "equipment2") {
@@ -547,7 +557,7 @@ if (shop = "vehicles") {
     i += 1;
     item[i] = "Rhino";
     item_stocked[i] = scr_vehicle_count(item[i], "");
-    forge_cost[i] = 1000;
+    forge_cost[i] = 4000;
     item_cost[i] = 120;
     if (rene = 1) {
         nobuy[i] = 1;
@@ -556,7 +566,7 @@ if (shop = "vehicles") {
     i += 1;
     item[i] = "Predator";
     item_stocked[i] = scr_vehicle_count(item[i], "");
-    forge_cost[i] = 1000;
+    forge_cost[i] = 4000;
     item_cost[i] = 240;
     if (rene = 1) {
         nobuy[i] = 1;
@@ -1015,9 +1025,28 @@ if (rene = 1) {
     i = 0;
     repeat(31) {
         i += 1;
-        item_cost[i] = item_cost[i] * 2;
+        item_cost[i] *= 2;
     }
+} 
+if (forge_master!="none"){
+    forge_master_modifier = 2500/((forge_master.charisma+10)*forge_master.technology);
+    if (forge_master.has_trait("flesh_is_weak") && forge_master_modifier>0.75){
+        forge_master_modifier-=1;
+    };
+} else {
+    forge_master_modifier=1.7;
 }
+
+ i = 0;
+  repeat(array_length(item_cost)-2){
+    i += 1;
+    item_cost[i] *= 2;
+    if (rene != 1){
+		item_cost[i]*=mechanicus_modifier;
+	}
+	item_cost[i] *= forge_master_modifier;
+    item_cost[i] = ceil(item_cost[i]);
+}  
 
 
 /* */

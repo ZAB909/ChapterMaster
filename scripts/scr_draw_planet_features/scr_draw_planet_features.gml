@@ -55,6 +55,7 @@ function feature_selected(Feature) constructor{
 					if (point_and_click(draw_unit_buttons([xx+10, yy+95], $"Upgrade Forge ({upgrade_cost} req)",[1,1],c_red)) && obj_controller.requisition>=upgrade_cost){
 						obj_controller.requisition -=  upgrade_cost;
 						feature.size++;
+						worker_capacity*=2;
 					}
 				}
 				break;
@@ -73,6 +74,7 @@ function feature_selected(Feature) constructor{
 						feature.forge_data = new player_forge();
 					}
 				}
+				break;
 		}
 	}
 }

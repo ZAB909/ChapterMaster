@@ -224,6 +224,7 @@
     {"name":"spr_ship_th","order":9,"path":"sprites/spr_ship_th/spr_ship_th.yy",},
     {"name":"spr_assault_ram","order":11,"path":"sprites/spr_assault_ram/spr_assault_ram.yy",},
     {"name":"scr_garrison","order":44,"path":"scripts/scr_garrison/scr_garrison.yy",},
+    {"name":"scr_draw_unit_stat_data","order":75,"path":"scripts/scr_draw_unit_stat_data/scr_draw_unit_stat_data.yy",},
     {"name":"spr_ship_glad","order":13,"path":"sprites/spr_ship_glad/spr_ship_glad.yy",},
     {"name":"spr_ship_hunt","order":15,"path":"sprites/spr_ship_hunt/spr_ship_hunt.yy",},
     {"name":"spr_luck_icon","order":9,"path":"sprites/spr_luck_icon/spr_luck_icon.yy",},

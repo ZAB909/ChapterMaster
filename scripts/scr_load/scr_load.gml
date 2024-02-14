@@ -232,6 +232,19 @@ function scr_load(argument0, argument1) {
 	    obj_controller.recruits=ini_read_real("Controller","recruits",0);
 	    obj_controller.recruit_last=ini_read_real("Controller","recruit_last",0);
 
+	    var Production_research=ini_read_string("Controller","production_research",0);
+	    if (Production_research!=0){
+	    	obj_controller.production_research = json_parse(base64_decode(Production_research));
+	    }
+	    var Forge_queue=ini_read_string("Controller","forge_queue",0);
+	    if (Forge_queue!=0){
+	    	obj_controller.forge_queue = json_parse(base64_decode(Forge_queue));
+	    }
+	    var Stc_research=ini_read_string("Controller","stc_research",0);
+	    if (Stc_research!=0){
+	    	obj_controller.stc_research = json_parse(base64_decode(Stc_research));
+	    }
+
 	    var g;g=-1;repeat(30){g+=1;
 	        obj_controller.command_set[g]=ini_read_real("Controller","command"+string(g),0);
 	    }
@@ -452,6 +465,10 @@ function scr_load(argument0, argument1) {
 	                new_star.p_lasers[g]=ini_read_real("Star","sr"+string(i)+"p_lasers"+string(g),0);
 	                new_star.p_silo[g]=ini_read_real("Star","sr"+string(i)+"p_silo"+string(g),0);
 	                new_star.p_defenses[g]=ini_read_real("Star","sr"+string(i)+"p_defenses"+string(g),0);
+	                new_star.p_operatives[g]=ini_read_string("Star","sr"+string(i)+"operatives"+string(g),0);
+	                if (new_star.p_operatives[g]!=0){
+	                	new_star.p_operatives[g] = json_parse(base64_decode(new_star.p_operatives[g]))
+	                }
 					new_star.p_upgrades[g] = [];
 					var  p_upgrades = ini_read_string("Star","sr"+string(i)+"upg"+string(g),"");
 					if (p_upgrades != ""){
@@ -586,6 +603,10 @@ function scr_load(argument0, argument1) {
 	    obj_ini.high_apothecary_name=ini_read_string("Ini","high2_name","Error");
 	    obj_ini.forge_master_name=ini_read_string("Ini","forgey_name","Error");
 	    obj_ini.lord_admiral_name=ini_read_string("Ini","lord_name","Error");
+	    obj_ini.previous_forge_masters=ini_read_string("Ini","previous_forge_masters",[]);
+	    if (!is_array(obj_ini.previous_forge_masters)){
+	    	obj_ini.previous_forge_masters=json_parse(base64_decode(obj_ini.previous_forge_masters));
+	    }
 	    //
 	    obj_ini.chaplain_ranged=ini_read_string("Ini","chaplain_ranged","Error");
 	    obj_ini.chaplain_melee=ini_read_string("Ini","chaplain_melee","Error");

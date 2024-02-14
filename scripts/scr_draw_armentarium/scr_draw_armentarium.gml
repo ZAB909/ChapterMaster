@@ -116,7 +116,7 @@ function calculate_research_points(turn_end=false){
         for (var i=0; i<array_length(techs); i++){
             if (techs[i].technology>40 && techs[i].hp() >0){
                 research_points += techs[i].technology-40;
-                forge_points += techs[i].forge_point_generation();
+                forge_points += techs[i].forge_point_generation(true);
                 if (techs[i].has_trait("tech_heretic")){
                     array_push(heretics, i);
                 }
@@ -190,14 +190,14 @@ function calculate_research_points(turn_end=false){
                                     // tech takes a piety test to see if tehy break faith with cult mechanicus and become tech heretic
                                     //piety test is augmented by by the techs corruption with the test becoming harder to pass the more
                                     // corrupted the tech is
-                                    piety_test = global.character_tester.standard_test(current_tech, "piety", +60 - current_tech.corruption);
+                                    piety_test = global.character_tester.standard_test(current_tech, "piety", +70 - current_tech.corruption);
 
                                     // if tech fails piety test tech also becomes tech heretic
                                     if (piety_test[0] == false){
                                         current_tech.add_trait("tech_heretic");
                                     }
                                 } else if (charisma_test[0]==2){
-                                    if (charisma_test[1] > 34 && notice_heresy=false){
+                                    if (charisma_test[1] > 30 && notice_heresy=false){
                                         scr_alert("purple","Tech Heresy",$"{current_tech.name_role()} contacts you concerned of Tech Heresy in the Armentarium");
                                         notice_heresy=true;
                                     }
@@ -206,9 +206,10 @@ function calculate_research_points(turn_end=false){
                             if (i==forge_master){
                                 // if tech is the forge master then forge master takes a wisdom in this case doubling as a perception test
                                 // if forge master passes tech heresy is noted and chapter master notified
-                                if (global.character_tester.standard_test(current_tech, "wisdom", - 40)[0]){
+                                if (global.character_tester.standard_test(current_tech, "wisdom", - 40)[0] && !notice_heresy){
                                     notice_heresy=true;
-                                    scr_event_log("purple",$"{techs[forge_master].name_role()} Has noticed signs of tech heresy amoung the techmarine ranks");
+                                    scr_event_log("purple",$"{techs[forge_master].name_role()} Has noticed signs of tech heresy amoung the Armentarium ranks");
+                                    scr_alert("purple","Tech Heresy",$"{techs[forge_master].name_role()} Has noticed signs of tech heresy amoung the Armentarium ranks");
                                     //pip=instance_create(0,0,obj_popup);
                                 }
                             }
@@ -232,11 +233,15 @@ function calculate_research_points(turn_end=false){
             }
             possibility_of_heresy = 8;
             if (array_contains(obj_ini.dis,"Tech-Heresy")) then possibility_of_heresy = 6;
-            if (irandom(possibility_of_heresy^(array_length(heretics)+2)) == 0 && array_length(techs)>0){
+            if (irandom(power(possibility_of_heresy,(array_length(heretics)+2))) == 0 && array_length(techs)>0){
                 var current_tech = techs[irandom(array_length(techs)-1)];
                if  (!global.character_tester.standard_test(current_tech, "piety")[0]){
                    current_tech.add_trait("tech_heretic");
                }
+            }
+            if (forge_master==-1){
+                var last_master = obj_ini.previous_forge_masters[array_length(obj_ini.previous_forge_masters)-1];
+                scr_popup("New Forge Master",$"The Demise of Forge Master {last_master} means a replacement must be chosen. Several Options have already been put forward to you but it is ultimatly your decision.","new_forge_master","");
             }
         }
     }   
@@ -525,11 +530,11 @@ function scr_draw_armentarium(){
         }
         if (training_techmarine = 5) {
             blurp += recruitment_pace[training_techmarine];
-            eta = floor((359 - tech_points) / 8) + 1;
+            eta = floor((359 - tech_points) / 10) + 1;
         }
         if (training_techmarine = 6) {
             blurp += recruitment_pace[training_techmarine];
-            eta = floor((359 - tech_points) / 16) + 1;
+            eta = floor((359 - tech_points) / 14) + 1;
         }
 
         if (tech_aspirant > 0) and(training_techmarine > 0) and(menu_adept = 1) {
@@ -858,7 +863,6 @@ function scr_draw_armentarium(){
                 ) && mouse_check_button_pressed(mb_left)
             ){
                 array_delete(forge_queue, i, 1);
-                exit;
              }                     
             item_gap +=20
         }

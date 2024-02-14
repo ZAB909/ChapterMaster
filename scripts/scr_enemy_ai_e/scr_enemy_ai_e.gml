@@ -856,44 +856,42 @@ function scr_enemy_ai_e() {
                     // End aspirant!=0
                 } // End pop>50
             } // End recruiting possible
-        } // End p_feature!=""
+            //fortress monestary
+            if (p_owner[run] == 1) {
+                var monestary = search_planet_features(p_feature[run], P_features.Monastery);
+                if (array_length(monestary) > 0) {
+                    monestary = p_feature[run][monestary[0]];
+                    var md, ms, ml, build_rate, build_rate2;
+                    md = 225;
+                    ms = 300;
+                    ml = 32;
+                    build_rate = 4;
+                    build_rate2 = 6;
 
+                    if (string_count("Siege Masters", obj_ini.strin) > 0) {
+                        md = 300;
+                        ms = 400;
+                        ml = 48;
+                        build_rate2 = 5;
+                    }
+                    if (string_count("Crafters", obj_ini.strin) > 0) or(string_count("Crafters", obj_ini.strin) > 0) {
+                        build_rate = 3;
+                        if (choose(0, 1) = 1) {
+                            if (p_silo[run] < ms) then p_silo[run] += 1;
+                            if (p_defenses[run] < md) then p_defenses[run] += 1;
+                        }
+                    }
+                    if (p_silo[run] < ms) then p_silo[run] += 1;
+                    if (p_defenses[run] < md) then p_defenses[run] += 1;
 
-        // Work on fortifications
-        if (p_owner[run] == 1) {
-            var monestary = search_planet_features(p_feature[run], P_features.Monastery);
-            if (array_length(monestary) > 0) {
-                monestary = p_feature[run][monestary[0]];
-                var md, ms, ml, build_rate, build_rate2;
-                md = 225;
-                ms = 300;
-                ml = 32;
-                build_rate = 4;
-                build_rate2 = 6;
-
-                if (string_count("Siege Masters", obj_ini.strin) > 0) {
-                    md = 300;
-                    ms = 400;
-                    ml = 48;
-                    build_rate2 = 5;
-                }
-                if (string_count("Crafters", obj_ini.strin) > 0) or(string_count("Crafters", obj_ini.strin) > 0) {
-                    build_rate = 3;
-                    if (choose(0, 1) = 1) {
-                        if (p_silo[run] < ms) then p_silo[run] += 1;
-                        if (p_defenses[run] < md) then p_defenses[run] += 1;
+                    if ((obj_controller.turn / build_rate) = round(obj_controller.turn / build_rate)) and(p_lasers[run] > ml) then p_lasers[run] += 1;
+                    if ((obj_controller.turn / build_rate2) = round(obj_controller.turn / build_rate2)) and(p_fortified[run] < 5) then p_fortified[run] += 1;
+                    if (monestary.forge>0){
+                        obj_controller.player_forges += sqr(monestary.forge_data.size);
                     }
                 }
-                if (p_silo[run] < ms) then p_silo[run] += 1;
-                if (p_defenses[run] < md) then p_defenses[run] += 1;
-
-                if ((obj_controller.turn / build_rate) = round(obj_controller.turn / build_rate)) and(p_lasers[run] > ml) then p_lasers[run] += 1;
-                if ((obj_controller.turn / build_rate2) = round(obj_controller.turn / build_rate2)) and(p_fortified[run] < 5) then p_fortified[run] += 1;
-                if (monestary.forge>0){
-                    obj_controller.player_forges += monestary.forge_data.size^2;
-                }
-            }
-        }
+            }            
+        } // End p_feature!=""
 
 
         // Work on upgrades
@@ -920,7 +918,7 @@ function scr_enemy_ai_e() {
                     }
                     if (upgrade.built<=obj_controller.turn && upgrade_type == P_features.Secret_Base){
                         if (upgrade.forge > 0){
-                            obj_controller.player_forges+=upgrade.forge_data.size^2;
+                            obj_controller.player_forges+=sqr(upgrade.forge_data.size);
                         }
                     }
                 }

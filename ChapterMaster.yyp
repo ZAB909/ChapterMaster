@@ -526,6 +526,7 @@
     {"id":{"name":"spr_assault_ram","path":"sprites/spr_assault_ram/spr_assault_ram.yy",},},
     {"id":{"name":"spr_technology_icon","path":"sprites/spr_technology_icon/spr_technology_icon.yy",},},
     {"id":{"name":"scr_garrison","path":"scripts/scr_garrison/scr_garrison.yy",},},
+    {"id":{"name":"scr_draw_unit_stat_data","path":"scripts/scr_draw_unit_stat_data/scr_draw_unit_stat_data.yy",},},
     {"id":{"name":"spr_ship_glad","path":"sprites/spr_ship_glad/spr_ship_glad.yy",},},
     {"id":{"name":"spr_ship_hunt","path":"sprites/spr_ship_hunt/spr_ship_hunt.yy",},},
     {"id":{"name":"spr_luck_icon","path":"sprites/spr_luck_icon/spr_luck_icon.yy",},},

@@ -368,6 +368,7 @@ function scr_save(save_slot,save_id) {
 						}
 					}
 	                ini_write_string("Star","sr"+string(i)+"feat"+string(g),base64_encode(json_stringify(save_features)));
+	                ini_write_string("Star","sr"+string(i)+"operatives"+string(g),base64_encode(json_stringify(instance_array[i].p_operatives[g])));
 	                ini_write_real("Star","sr"+string(i)+"own"+string(g),instance_array[i].p_owner[g]);
 	                ini_write_real("Star","sr"+string(i)+"fir"+string(g),instance_array[i].p_first[g]);
 	                ini_write_real("Star","sr"+string(i)+"popul"+string(g),instance_array[i].p_population[g]);
@@ -574,6 +575,10 @@ function scr_save(save_slot,save_id) {
 	    ini_write_real("Controller","trimmed",obj_controller.trim);
 	    ini_write_real("Controller","skin_color",obj_ini.skin_color);
 
+	    ini_write_string("Controller","production_research",base64_encode(json_stringify(obj_controller.production_research)));
+	    ini_write_string("Controller","forge_queue",base64_encode(json_stringify(obj_controller.forge_queue)));
+	    ini_write_string("Controller","stc_research",base64_encode(json_stringify(obj_controller.stc_research)));
+
 	    ini_write_string("Ini","adept_name",obj_controller.adept_name);
 	    ini_write_string("Ini","recruiter_name",obj_controller.recruiter_name);
 	    // ini_write_string("Ini","progenitor",obj_controller.progenitor);
@@ -638,6 +643,7 @@ function scr_save(save_slot,save_id) {
 	    ini_write_string("Ini","high2_name",obj_ini.high_apothecary_name);
 	    ini_write_string("Ini","forgey_name",obj_ini.forge_master_name);
 	    ini_write_string("Ini","lord_name",obj_ini.lord_admiral_name);
+	    ini_write_string("Ini","previous_forge_masters",base64_encode(json_stringify(obj_ini.previous_forge_masters)));
 	    //
 	    var g;g=0;
 	    repeat(150){g+=1;
@@ -845,7 +851,6 @@ function scr_save(save_slot,save_id) {
 	                ini_write_string("Mar","num"+string(coh)+"."+string(mah),obj_ini.name[coh,mah]);
 	                ini_write_string("Mar","rol"+string(coh)+"."+string(mah),obj_ini.role[coh,mah]);
 	                ini_write_real("Mar","li"+string(coh)+"."+string(mah),obj_ini.lid[coh,mah]);
-	                ini_write_real("Mar","bio"+string(coh)+"."+string(mah),obj_ini.bio[coh,mah]);
 
 	                ini_write_string("Mar","w1"+string(coh)+"."+string(mah),obj_ini.wep1[coh,mah]);
 	                ini_write_string("Mar","w2"+string(coh)+"."+string(mah),obj_ini.wep2[coh,mah]);

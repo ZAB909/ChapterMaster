@@ -252,18 +252,40 @@ if ((zm=0) and (type<=4)) or (type=98){
 
 
         if (option1 != "") and(mouse_x >= x1) and(mouse_y >= y1 + 21) and(mouse_x <= x1 + 30 + string_width_ext(string_hash_to_newline("1. " + string(option1)), -1, widd)) and(mouse_y < y1 + 39) {
+            option1enter=true;
             draw_sprite(spr_popup_select, 0, x1 + 8.5, y1 + 21);
             if (mouse_check_button(mb_left)) then press = 1;
+        } else {
+            option1enter=false;
         }
         if (option2 != "") and(mouse_x >= x1) and(mouse_y >= y1 + 21 + sz) and(mouse_x <= x1 + 30 + string_width_ext(string_hash_to_newline("2. " + string(option2)), -1, widd)) and(mouse_y < y1 + 39 + sz) {
+            option2enter=true;
             draw_sprite(spr_popup_select, 0, x1 + 8.5, y1 + 21 + sz);
             if (mouse_check_button(mb_left)) then press = 2;
+        }else {
+            option2enter=false;
         }
         if (option3 != "") and(mouse_x >= x1) and(mouse_y >= y1 + 21 + sz2) and(mouse_x <= x1 + 30 + string_width_ext(string_hash_to_newline("3. " + string(option3)), -1, widd)) and(mouse_y < y1 + 39 + sz2) {
+            option3enter=true;
             draw_sprite(spr_popup_select, 0, x1 + 8.5, y1 + 21 + sz2);
             if (mouse_check_button(mb_left)) then press = 3;
+        }else {
+            option3enter=false;
         }
-
+        if (image=="new_forge_master"){
+             if (pathway="selection_options"){
+                if (option1enter){
+                    techs[charisma_pick].draw_unit_image(1190,210);
+                    techs[charisma_pick].stat_display();
+                } else if (option2enter){
+                    techs[talent_pick].draw_unit_image(1190,210);
+                    techs[talent_pick].stat_display();            
+                }else if (option3enter){
+                    techs[experience_pick].draw_unit_image(1190,210);
+                    techs[experience_pick].stat_display();            
+                }
+            }
+        }
         if (t8 < (oy + sprite_height)) {
             y_scale = (t8 / (oy + sprite_height));
         }

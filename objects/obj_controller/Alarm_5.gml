@@ -181,7 +181,7 @@ with(obj_star){
 // ** Training **
 // * Apothecary *
 
-var training_points_values = [ 0, 0.8, 0.9, 1, 1.5, 2, 4 ]
+var training_points_values = [ 0, 0.8, 0.9, 1, 1.5, 2, 4 ];
 apothecary_points += training_points_values[training_apothecary]
 
 novice_type = string("{0} Aspirant",obj_ini.role[100][15])
@@ -487,7 +487,7 @@ if (psyker_points>=round(goal/2)) and (psyker_aspirant==0){
 }
 recruit_count=0;
 
-
+var training_points_values = [ 0, 1,2,4,6,10,14];
 tech_points += training_points_values[training_techmarine];
 
 if (training_techmarine>0) then recruit_count=scr_role_count(string("{0} Aspirant",obj_ini.role[100][16]),"");
@@ -896,6 +896,7 @@ for(var c=0; c<11; c++){
             penit_co[p]=c;
             penit_id[p]=e;
             penitorium+=1;
+            unit.loyalty--;
             if (unit.corruption<90) and (unit.corruption>0){
                 var heresy_old=0,heresy_new=0;
                 heresy_old=round((unit.corruption*unit.corruption)/50)-0.5;
