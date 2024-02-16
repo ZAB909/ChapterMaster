@@ -652,14 +652,17 @@ function scr_save(save_slot,save_id) {
 	            ini_write_string("Ini","equipment_type"+string(g),obj_ini.equipment_type[g]);
 	            ini_write_real("Ini","equipment_number"+string(g),obj_ini.equipment_number[g]);
 	            ini_write_real("Ini","equipment_condition"+string(g),obj_ini.equipment_condition[g]);
+	            ini_write_string("Ini","equipment_quality"+string(g),base64_encode(json_stringify(obj_ini.equipment_quality[g])));
 	        }
 	        if (obj_ini.artifact[g]!=""){
 	            ini_write_string("Ini","artifact"+string(g),obj_ini.artifact[g]);
-	            ini_write_string("Ini","artifact_tags"+string(g),obj_ini.artifact_tags[g]);
+	            ini_write_string("Ini","artifact_tags"+string(g),base64_encode(json_stringify(obj_ini.artifact_tags[g])));
 	            ini_write_real("Ini","artifact_ident"+string(g),obj_ini.artifact_identified[g]);
 	            ini_write_real("Ini","artifact_condition"+string(g),obj_ini.artifact_condition[g]);
+	            ini_write_real("Ini","artifact_equipped"+string(g),obj_ini.artifact_equipped[g]);
 	            ini_write_string("Ini","artifact_loc"+string(g),obj_ini.artifact_loc[g]);
 	            ini_write_real("Ini","artifact_sid"+string(g),obj_ini.artifact_sid[g]);
+	            ini_write_string("Ini","artifact_quality"+string(g),obj_ini.artifact_sid[g]);
 	        }
 	    }
 	    //

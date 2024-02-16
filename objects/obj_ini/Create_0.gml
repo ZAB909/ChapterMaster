@@ -34,6 +34,7 @@ repeat(200){i+=1;
     equipment_condition[i]=100;
     equipment_quality[i]=[];
     artifact[i]="";
+    artifact_equipped[i]=false;
     artifact_tags[i]=[];
     artifact_identified[i]=0;
     artifact_condition[i]=100;

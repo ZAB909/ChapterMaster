@@ -136,7 +136,7 @@ if (menu==13) and (cooldown<=0) and (artifacts>0){
             if (obj_ini.artifact[menu_artifact]=="Casket") then hue=0;
             if (obj_ini.artifact[menu_artifact]=="Chalice") then hue=0;
             if (obj_ini.artifact[menu_artifact]=="Robot") then hue=0;
-            if (hue==1){
+            if (hue==1 && obj_ini.artifact_equipped[menu_artifact]==false){
                 var pop=instance_create(0,0,obj_popup);
                 pop.type=8;
                 cooldown=8;

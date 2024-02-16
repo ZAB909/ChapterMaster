@@ -966,7 +966,8 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
             obj_controller.menu=20;
             obj_controller.diplomacy=giveto;
             obj_controller.force_goodbye=-1;
-            var the;the="";if (giveto!=7) and (giveto!=10) then the="the ";
+            var the="";
+            if (giveto!=7) and (giveto!=10) then the="the ";
             scr_event_log("","Artifact gifted to "+string(the)+string(obj_controller.faction[giveto])+".");
 
             if (inq_hide!=2) then with(obj_controller){
@@ -982,7 +983,8 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
                 if (giveto=4) and (inq_hide=2) then obj_controller.disposition[4]+=2;
                 if (giveto=5) and (string_count(old_tags,"Daemon")=0){
                     obj_controller.disposition[5]+=4;
-                    var o;o=0;repeat(4){if (o<=4){o+=1;if (obj_ini.adv[o]="Reverent Guardians") then o=500;}}if (o>100) then obj_controller.disposition[5]+=2;
+                    var o=0
+                    if (array_contains(obj_ini.adv, "Reverent Guardians")) then obj_controller.disposition[5]+=2;
                 }
                 if (giveto=6) then obj_controller.disposition[6]+=3;
                 if (giveto=8) then obj_controller.disposition[8]+=4;
@@ -1028,156 +1030,11 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
 
 
 
-
-
-
-
-
-
-
 xx=__view_get( e__VW.XView, 0 )+951;yy=__view_get( e__VW.YView, 0 )+398;
 if (mouse_x>=xx+121) and (mouse_y>=yy+393) and (mouse_x<xx+231) and (mouse_y<yy+414){
     if (type=8) and (cooldown<=0){
         obj_controller.cooldown=8000;
         instance_destroy();exit;
-    }
-}
-if (mouse_x>=xx+408) and (mouse_y>=yy+393) and (mouse_x<xx+518) and (mouse_y<yy+414){
-    if (type=8) and (cooldown<=0) and (all_good=1){
-        cooldown=100;obj_controller.cooldown=8000;
-
-        var i,this,dwarn;i=0;this=0;dwarn=false;
-        repeat(obj_controller.man_max){
-            i+=1;if (this=0) and (obj_controller.man_sel[i]=1) then this=i;
-        }
-        i=this;
-
-        if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1){
-            var replace;replace="";
-
-            if (target_role=1) then replace="weapon1";
-            if (target_role=2) then replace="weapon2";
-            if (target_role>3){
-                if (obj_ini.artifact[obj_controller.menu_artifact]="Power Armour") then replace="armour";
-                if (obj_ini.artifact[obj_controller.menu_artifact]="Terminator Armour") then replace="armour";
-                if (obj_ini.artifact[obj_controller.menu_artifact]="Artificer Armour") then replace="armour";
-                if (obj_ini.artifact[obj_controller.menu_artifact]="Dreadnought Armour") or (obj_ini.artifact[obj_controller.menu_artifact]="Dreadnought") then replace="armour";
-
-                if (obj_ini.artifact[obj_controller.menu_artifact]="Rosarius") then replace="gear";
-                if (obj_ini.artifact[obj_controller.menu_artifact]="Bionics") then replace="gear";
-                if (obj_ini.artifact[obj_controller.menu_artifact]="Psychic Hood") then replace="gear";
-                if (obj_ini.artifact[obj_controller.menu_artifact]="Servo Arms") then replace="gear";
-
-                if (obj_ini.artifact[obj_controller.menu_artifact]="Jump Pack") then replace="mobility";
-                if (obj_ini.artifact[obj_controller.menu_artifact]="Bike") then replace="mobility";
-            }
-            if (replace="armour") and (obj_controller.ma_race[i]>5){cooldown=8;obj_controller.cooldown=8;exit;}
-
-            if (target_comp>10) then target_comp=0;
-
-            if (string_count("aemon",obj_ini.artifact_tags[obj_controller.menu_artifact])>0){
-                obj_ini.TTRPG[target_comp][obj_controller.ide[i]].corruption+=choose(1,2,3,4,5,6)+choose(1,2,3,4,5,6);
-                if (string_count("dwarn|",obj_controller.useful_info)=0) and (obj_ini.role[target_comp,obj_controller.ide[i]]="Chapter Master"){
-                    obj_controller.useful_info+="dwarn|";dwarn=true;
-                }
-            }
-
-            if (replace="armour"){
-                if (obj_controller.ma_armour[i]!="") and (obj_controller.ma_armour[i]!="None") then scr_add_item(obj_ini.armour[target_comp,obj_controller.ide[i]],1);
-
-                if (obj_controller.menu_artifact=obj_controller.fest_display) then obj_controller.fest_display=0;
-
-                if (obj_ini.artifact[obj_controller.menu_artifact]="Terminator Armour") or (obj_ini.artifact[obj_controller.menu_artifact]="Dreadnought Armour"){
-                    if (obj_ini.mobi[target_comp,obj_controller.ide[i]]!=""){// NOPE
-                        scr_add_item(obj_ini.mobi[target_comp,obj_controller.ide[i]],1);
-                        obj_ini.mobi[target_comp,obj_controller.ide[i]]="";
-                        obj_controller.ma_mobi[i]="";
-                    }
-                }
-                obj_controller.ma_armour[i]="";obj_ini.armour[target_comp,obj_controller.ide[i]]="";
-                obj_controller.ma_armour[i]=obj_ini.artifact[obj_controller.menu_artifact]+string("&")+obj_ini.artifact_tags[obj_controller.menu_artifact];
-                obj_ini.armour[target_comp,obj_controller.ide[i]]=obj_ini.artifact[obj_controller.menu_artifact]+string("&")+obj_ini.artifact_tags[obj_controller.menu_artifact];
-
-                // NOPE
-                if (obj_ini.wep1[target_comp,obj_controller.ide[i]]="Assault Cannon") or (obj_ini.wep2[target_comp,obj_controller.ide[i]]="Assault Cannon"){
-                    var bgn,bed=0;
-                    bgn=obj_ini.armour[target_comp,obj_controller.ide[i]];
-                    if (string_count("Termi",bgn)=0) then bed+=2;
-                    if (bed=2){
-                        if (obj_ini.wep1[target_comp,obj_controller.ide[i]]="Assault Cannon"){
-                            scr_add_item(obj_ini.wep1[target_comp,obj_controller.ide[i]],1);obj_ini.wep1[target_comp,obj_controller.ide[i]]="";
-                        }
-                        if (obj_ini.wep2[target_comp,obj_controller.ide[i]]="Assault Cannon"){
-                            scr_add_item(obj_ini.wep2[target_comp,obj_controller.ide[i]],1);obj_ini.wep2[target_comp,obj_controller.ide[i]]="";
-                        }
-                    }
-                }
-
-
-            }
-            if (replace="gear"){
-                if (obj_controller.ma_gear[i]!="") and (obj_controller.ma_gear[i]!="None") then scr_add_item(obj_ini.gear[target_comp,obj_controller.ide[i]],1);
-                obj_controller.ma_gear[i]="";obj_ini.gear[target_comp,obj_controller.ide[i]]="";
-                obj_controller.ma_gear[i]=obj_ini.artifact[obj_controller.menu_artifact]+string("&")+obj_ini.artifact_tags[obj_controller.menu_artifact];
-                obj_ini.gear[target_comp,obj_controller.ide[i]]=obj_ini.artifact[obj_controller.menu_artifact]+string("&")+obj_ini.artifact_tags[obj_controller.menu_artifact];
-            }
-            if (replace="mobility"){
-                if (obj_controller.ma_mobi[i]!="") and (obj_controller.ma_mobi[i]!="None") then scr_add_item(obj_ini.mobi[target_comp,obj_controller.ide[i]],1);
-                obj_controller.ma_mobi[i]="";obj_ini.mobi[target_comp,obj_controller.ide[i]]="";
-                obj_controller.ma_mobi[i]=obj_ini.artifact[obj_controller.menu_artifact]+string("&")+obj_ini.artifact_tags[obj_controller.menu_artifact];
-                obj_ini.mobi[target_comp,obj_controller.ide[i]]=obj_ini.artifact[obj_controller.menu_artifact]+string("&")+obj_ini.artifact_tags[obj_controller.menu_artifact];
-            }
-            if (replace="weapon1"){
-                if (obj_controller.ma_wep1[i]!="") and (obj_controller.ma_wep1[i]!="None") then scr_add_item(obj_ini.wep1[target_comp,obj_controller.ide[i]],1);
-                obj_controller.ma_wep1[i]="";obj_ini.wep1[target_comp,obj_controller.ide[i]]="";
-                obj_controller.ma_wep1[i]=obj_ini.artifact[obj_controller.menu_artifact]+string("&")+obj_ini.artifact_tags[obj_controller.menu_artifact];
-                obj_ini.wep1[target_comp,obj_controller.ide[i]]=obj_ini.artifact[obj_controller.menu_artifact]+string("&")+obj_ini.artifact_tags[obj_controller.menu_artifact];
-            }
-            if (replace="weapon2"){
-                if (obj_controller.ma_wep2[i]!="") and (obj_controller.ma_wep2[i]!="None") then scr_add_item(obj_ini.wep2[target_comp,obj_controller.ide[i]],1);
-                obj_controller.ma_wep2[i]="";
-                obj_ini.wep2[target_comp,obj_controller.ide[i]]="";
-                obj_controller.ma_wep2[i]=obj_ini.artifact[obj_controller.menu_artifact]+string("&")+obj_ini.artifact_tags[obj_controller.menu_artifact];
-                obj_ini.wep2[target_comp,obj_controller.ide[i]]=obj_ini.artifact[obj_controller.menu_artifact]+string("&")+obj_ini.artifact_tags[obj_controller.menu_artifact];
-            }
-
-
-            obj_ini.artifact[obj_controller.menu_artifact]="";
-            obj_ini.artifact_tags[obj_controller.menu_artifact]="";
-            obj_ini.artifact_identified[obj_controller.menu_artifact]=0;
-            obj_ini.artifact_condition[obj_controller.menu_artifact]=100;
-            obj_ini.artifact_loc[obj_controller.menu_artifact]="";
-            obj_ini.artifact_sid[obj_controller.menu_artifact]=0;
-            obj_controller.artifacts-=1;cooldown=12;
-
-            var g;g=obj_controller.menu_artifact;
-            repeat(20){
-                if (obj_ini.artifact[g]="") and (obj_ini.artifact[g+1]!=""){
-                    obj_ini.artifact[g]=obj_ini.artifact[g+1];obj_ini.artifact_tags[g]=obj_ini.artifact_tags[g+1];
-                    obj_ini.artifact_identified[g]=obj_ini.artifact_identified[g+1];
-                    obj_ini.artifact_condition[g]=obj_ini.artifact_condition[g+1];
-                    obj_ini.artifact_loc[g]=obj_ini.artifact_loc[g+1];obj_ini.artifact_sid[g]=obj_ini.artifact_sid[g+1];
-                    //
-                    obj_ini.artifact[g+1]="";obj_ini.artifact_tags[g+1]="";
-                    obj_ini.artifact_identified[g+1]=0;obj_ini.artifact_condition[g+1]=100;
-                    obj_ini.artifact_loc[g+1]="";obj_ini.artifact_sid[g+1]=0;
-                }
-                g+=1;
-            }
-            obj_controller.cooldown=10;
-
-            if (obj_controller.menu_artifact>obj_controller.artifacts) then obj_controller.menu_artifact=obj_controller.artifacts;
-
-            if (dwarn=true){
-                var pip;pip=instance_create(0,0,obj_popup);
-                pip.title="Daemon Artifacts";
-                pip.text="Some artifacts, like the one you now wield, are a blasphemous union of the Materium's matter and the Immaterium's spirit, containing the essence of a bound daemon.  While they may offer great power, and enhanced perception, they are known to whisper poisonous lies to the wielder.  The path to damnation begins with good intentions, and many times artifacts such as these have been the cause.";
-                pip.image="";pip.cooldown=8;obj_controller.cooldown=8;
-            }
-
-
-            instance_destroy();exit;
-        }
     }
 }
 
@@ -1230,7 +1087,11 @@ if (type=8) and (cooldown<=0){
             if (mouse_x>=xx+29) and (mouse_y>=yy+150) and (mouse_x<xx+569) and (mouse_y<yy+175.4){
                 var onceh;onceh=0;stop=0;
                 if (obj_controller.man_sel[sel]=0) and (onceh=0){cooldown=8000;units=1;
-                    if (stop=0){onceh=1;obj_controller.man_sel[sel]=1;stop=sel;}
+                    if (stop=0){
+                        onceh=1;
+                        obj_controller.man_sel[sel]=1;
+                        stop=sel;
+                    }
                 }
                 if (obj_controller.man_sel[sel]=1) and (onceh=0){
                     onceh=1;units=0;obj_controller.man_sel[sel]=0;cooldown=8000;
