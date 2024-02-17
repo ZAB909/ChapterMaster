@@ -1,14 +1,17 @@
-function scr_add_artifact(artifact_type, artifact_tags, is_identified, artifact_location, ship_id) {
-
+function find_last_artifact(){
 	var i=0,last_artifact=0;
 	repeat(100){
 		if (last_artifact=0){
 			i+=1;
-			if (obj_ini.artifact[i]="") then last_artifact=i;
+			if (obj_ini.artifact[i]=="") then last_artifact=i;
 		}
 	}
+	return last_artifact;
+}
 
+function scr_add_artifact(artifact_type, artifact_tags, is_identified, artifact_location, ship_id) {
 
+	last_artifact = find_last_artifact();
 
 	var good=true, new_tags;
 	var rand1=floor(random(100))+1;
@@ -196,6 +199,7 @@ function arti_struct(Index)constructor{
             variable_struct_set(self, names[i], variable_struct_get(data, names[i]))
         }
 	}
-	custom_data = "";
-	name = "";				
+	custom_data = {};
+	name = "";
+	custom_description="";		
 }

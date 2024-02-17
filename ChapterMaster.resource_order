@@ -49,6 +49,7 @@
     {"name":"spr_marine_base","order":9,"path":"sprites/spr_marine_base/spr_marine_base.yy",},
     {"name":"spr_clothing_colors","order":3,"path":"sprites/spr_clothing_colors/spr_clothing_colors.yy",},
     {"name":"spr_facial_colors","order":3,"path":"sprites/spr_facial_colors/spr_facial_colors.yy",},
+    {"name":"scr_librarium","order":76,"path":"scripts/scr_librarium/scr_librarium.yy",},
     {"name":"spr_chaplain_skull_helm","order":28,"path":"sprites/spr_chaplain_skull_helm/spr_chaplain_skull_helm.yy",},
     {"name":"spr_artificer_colors","order":1,"path":"sprites/spr_artificer_colors/spr_artificer_colors.yy",},
     {"name":"spr_beakie_colors","order":2,"path":"sprites/spr_beakie_colors/spr_beakie_colors.yy",},

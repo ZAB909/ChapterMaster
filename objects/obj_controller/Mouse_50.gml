@@ -128,94 +128,12 @@ if (menu==13) and (cooldown<=0) and (artifacts>0){
             audio_sound_gain(snd_identify,master_volume*effect_volume,0);
         }
     }
-    if (obj_ini.artifact_identified[menu_artifact]==0){
-        // Equip
-        if (mouse_x>=xx+354) and (mouse_y>=yy+789) and (mouse_x<xx+448) and (mouse_y<yy+804) and (cooldown<=0){
-            var hue=1;
-            if (obj_ini.artifact[menu_artifact]=="Statue") then hue=0;
-            if (obj_ini.artifact[menu_artifact]=="Casket") then hue=0;
-            if (obj_ini.artifact[menu_artifact]=="Chalice") then hue=0;
-            if (obj_ini.artifact[menu_artifact]=="Robot") then hue=0;
-            if (hue==1 && obj_ini.artifact_equipped[menu_artifact]==false){
-                var pop=instance_create(0,0,obj_popup);
-                pop.type=8;
-                cooldown=8;
-            }
-        }
-        // Gift
-        if (mouse_x>=xx+512) and (mouse_y>=yy+789) and (mouse_x<xx+740) and (mouse_y<yy+804) and (cooldown<=0){
-            var chick=0;
-            if (known[eFACTION.Imperium]>1) and (faction_defeated[2]==0) then chick=1;
-            if (known[eFACTION.Mechanicus]>1) and (faction_defeated[3]==0) then chick=1;
-            if (known[eFACTION.Inquisition]>1) and (faction_defeated[4]==0) then chick=1;
-            if (known[eFACTION.Ecclesiarchy]>1) and (faction_defeated[5]==0) then chick=1;
-            if (known[eFACTION.Eldar]>1) and (faction_defeated[6]==0) then chick=1;
-            if (known[eFACTION.Tau]>1) and (faction_defeated[8]==0) then chick=1;
-            if (chick!=0){
-                var pop=instance_create(0,0,obj_popup);
-                pop.type=9;
-                cooldown=8;
-            }
-        }
-        // Destroy
-        if (point_in_rectangle(mouse_x, mouse_y, xx + 780, yy + 789, xx + 894, yy + 804) && cooldown <= 0) {
-            var fun=irandom(100)+1;
-            // Below here cleans up the artifacts
-            var i=menu_artifact;
-
-            if (menu_artifact==fest_display) then fest_display=0;
-
-            if (array_contains(obj_ini.artifact_tags[i],"Daemon")){
-                if (obj_ini.artifact_sid[i]>=500){
-                    var demonSummonChance=irandom(100)+1;
-
-                    if (demonSummonChance<=60) and (obj_ini.ship_carrying[obj_ini.artifact_sid[i]-500]>0){
-                        instance_create(0,0,obj_ncombat);
-                        obj_ncombat.battle_special="ship_demon";
-                        obj_ncombat.formation_set=1;
-                        obj_ncombat.enemy=10;
-                        obj_ncombat.battle_id=obj_ini.artifact_sid[i]-500;
-                        scr_ship_battle(obj_ini.artifact_sid[i]-500,999);
-                    }
-                }
-            }
-            for(var e=1; e<=500; e++){
-                if (obj_ini.artifact_tags[i]==obj_controller.recent_keyword[e]){
-                    obj_controller.recent_keyword[e]="";
-                    obj_controller.recent_type[e]="";
-                    obj_controller.recent_turn[e]=0;
-                    obj_controller.recent_number[e]=0;
-                    scr_recent("artifact_destroyed",obj_controller.recent_keyword,2);
-                    scr_recent("","",0);
-                }
-            }
-
-            obj_ini.artifact[i]="";
-            obj_ini.artifact_tags[i]=[];
-            obj_ini.artifact_identified[i]=0;
-            obj_ini.artifact_condition[i]=100;
-            obj_ini.artifact_loc[i]="";
-            obj_ini.artifact_sid[i]=0;
-            artifacts-=1;
-            cooldown=12;
-            if (menu_artifact>artifacts) then menu_artifact=artifacts;
-            for(var j=0; j<20; j++){
-                obj_ini.artifact[i]=obj_ini.artifact[i+1];
-                obj_ini.artifact_tags[i]=obj_ini.artifact_tags[i+1];
-                obj_ini.artifact_identified[i]=obj_ini.artifact_identified[i+1];
-                obj_ini.artifact_condition[i]=obj_ini.artifact_condition[i+1];
-                obj_ini.artifact_loc[i]=obj_ini.artifact_loc[i+1];
-                obj_ini.artifact_sid[i]=obj_ini.artifact_sid[i+1];
-                i+=1;
-            }
-        }
-    }
 }
 // ** Armamentorium STC fragments **
-if (menu==14) and (cooldown<=0){
+else if (menu==14) and (cooldown<=0){
 }
 // ** Recruitement **
-if (menu==15) and (cooldown<=0){
+else if (menu==15) and (cooldown<=0){
     if (mouse_x>=xx+748) and (mouse_x<xx+772){
         if (mouse_y>=yy+355) and (mouse_y<yy+373) and (recruiting<5) and (gene_seed>0) and (obj_ini.doomed==0) and (string_count("|",recruiting_worlds)>0) and (penitent==0){
             cooldown=8000;
@@ -1524,6 +1442,19 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 temp[36]=scr_role_count(obj_ini.role[100][17],"");
                 temp[37]=scr_role_count("Codiciery","");
                 temp[38]=scr_role_count("Lexicanum","");
+                artifact_equip = new shutter_button();
+                artifact_gift = new shutter_button();
+                artifact_destroy = new shutter_button();
+                artifacts=0;
+                unused_artifacts = 0;
+                for (i=1;i<30;i++){
+                    if (obj_ini.artifact[i] != ""){
+                        artifacts++;
+                        if (!obj_ini.artifact_equipped[i]){
+                            unused_artifacts++;
+                        }
+                    }
+                }
             }
             if (menu==13) and (onceh==0){
                 menu=0;

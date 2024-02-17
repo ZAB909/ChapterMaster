@@ -1310,21 +1310,22 @@ function scr_initialize_custom() {
 	chapter_master_equip.armour="Artificer Armour";
 
 	//TODO will refactor how traits are distributed to chapter masters along with a refactor of chapter data
+	last_artifact = find_last_artifact();
 	switch(global.chapter_name) {
 		case "Dark Angels":
-			wep2[0,1]="Plasma Gun&UBL|";
+			chapter_master_equip.wep1="Plasma Gun";
 			chapter_master.add_trait("old_guard");
 			chapter_master.add_trait("melee_enthusiast");	
 			break;
 		case "Blood Angels":
-			wep1[0,1]="Master Crafted Power Axe";
+			chapter_master_equip.wep1="Master Crafted Power Axe";
 			chapter_master.add_trait("ancient");	
 			chapter_master.add_trait("old_guard");
 			chapter_master.add_trait("melee_enthusiast");			
 			break;
 		case "Iron Hands":
-			wep1[0,1]="Power Axe&ADA|";
-			wep2[0,1]="Storm Shield";
+			chapter_master_equip.wep1="Power Axe|";
+			chapter_master_equip.wep2="Storm Shield";
 			chapter_master.add_trait("flesh_is_weak");
 			chapter_master.add_trait("zealous_faith");
 			chapter_master.add_trait("tinkerer");
@@ -1343,15 +1344,30 @@ function scr_initialize_custom() {
 			for (i=0;i<4;i++){
 				chapter_master.add_bionics("none", "standard",false);
 			}
-			chapter_master_equip.armour="Terminator Armour";
 			chapter_master.add_trait("still_standing");
 			chapter_master.add_trait("tyrannic_vet");
+
+			obj_ini.artifact_struct[last_artifact].name = "Gauntlets of Ultramar";
+			obj_ini.artifact[last_artifact] = "Power Fist";
+			obj_ini.artifact_identified[last_artifact] = 0;
+			chapter_master_equip.wep1=last_artifact;
+
+			last_artifact++;
+
+			chapter_master_equip.armour = last_artifact;
+			artifact_struct[last_artifact].name = "Armour of Antilochus";
+			obj_ini.artifact_identified[last_artifact] = 0;
+			obj_ini.artifact[last_artifact] = "Terminator Armour";
 			break;
 		case "Space Wolves":
 			chapter_master_equip.armour="Terminator Armour";
 			chapter_master.add_trait("ancient");
 			chapter_master.add_trait("melee_enthusiast");
-			chapter_master.add_trait("feet_floor");			
+			chapter_master.add_trait("feet_floor");
+			obj_ini.artifact_struct[last_artifact].name = "Axe of Morkai";
+			obj_ini.artifact[last_artifact] = "Executioner Power Axe";
+			obj_ini.artifact_identified[last_artifact] = 0;
+			chapter_master_equip.wep1=last_artifact;					
 			break;
 		case "Black Templars":
 			chapter_master.add_trait("melee_enthusiast");
