@@ -140,12 +140,13 @@ function scr_add_artifact(artifact_type, artifact_tags, is_identified, artifact_
 
 	// show_message(string(obj_ini.artifact_tags[last_artifact]));
 
-	obj_ini.artifact_identified[last_artifact]=is_identified;
-	obj_ini.artifact_condition[last_artifact]=100;
-	obj_ini.artifact_loc[last_artifact]=artifact_location;
-	obj_ini.artifact_sid[last_artifact]=ship_id;
-	obj_ini.artifact_quality[last_artifact]="artifact";
-	obj_ini.artifact_struct = new arti_struct(last_artifact);
+	obj_ini.artifact_identified[last_artifact] = is_identified;
+	obj_ini.artifact_condition[last_artifact] = 100;
+	obj_ini.artifact_loc[last_artifact] = artifact_location;
+	obj_ini.artifact_sid[last_artifact] = ship_id;
+	obj_ini.artifact_quality[last_artifact] = "artifact";
+	obj_ini.artifact_equipped[last_artifact]=  false;
+	obj_ini.artifact_struct[last_artifact] = new arti_struct(last_artifact);
 
 	obj_controller.artifacts+=1;
 
@@ -158,26 +159,43 @@ function artifact_has_tag(index, wanted_tag){
 	return array_contains(obj_ini.artifact_tags[index], wanted_tag);
 }
 //TODO make a proper artifact struct
-/*function arti_struct(index)constructor{
-
-	static artifact_type = function(){
+function arti_struct(Index)constructor{
+	index = Index
+	static type = function(){
 		return obj_ini.artifact[index];
 	}
-	static artifact_condition = function(){
+	static condition = function(){
 		return obj_ini.artifact_condition[index];
 	}
-	static artifact_loc = function(){
+	static loc = function(){
 		return obj_ini.artifact_loc[index];
 	}
-	static artifact_sid = function(){
+	static sid = function(){
 		return obj_ini.artifact_sid[index];
 	}
-	static artifact_quality = function(){
+	static quality = function(){
 		return obj_ini.artifact_quality[index];
 	}
-	static artifact_tags = function(){
+	static tags = function(){
 		return obj_ini.artifact_tags[index];
 	}
+	static equipped = function(){
+		return obj_ini.artifact_equipped[index];
+	}
 
-	artifact_name = "";				
-}*/
+	static identified = function(){
+		return obj_ini.artifact_identified[index];
+	}
+
+	static has_tag = function(wanted_tag){
+		return array_contains(tags(), wanted_tag);
+	}
+	static load_json_data = function(data){
+		 var names = variable_struct_get_names(data);
+		 for (var i = 0; i < array_length(names); i++) {
+            variable_struct_set(self, names[i], variable_struct_get(data, names[i]))
+        }
+	}
+	custom_data = "";
+	name = "";				
+}

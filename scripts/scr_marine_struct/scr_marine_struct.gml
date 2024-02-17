@@ -799,8 +799,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		obj_ini.mobi[company][marine_number] = new_mobility_item;
 	 	if (arti){
 	    	obj_ini.artifact_equipped[new_mobility_item] = true;
-	    }			
-		mobility_item_quality=quality;
+	    	mobility_item_quality = obj_ini.artifact_quality[new_mobility_item];
+	    } else {
+	    	mobility_item_quality=quality;
+	    }		
 		update_health(portion*max_health());
 		get_unit_size(); //every time mobility_item is changed see if the marines size has changed
 		return "complete";
@@ -871,8 +873,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	    obj_ini.armour[company][marine_number] = new_armour;
 	    if (arti){
 	    	obj_ini.artifact_equipped[armour(true)] = true;
+	    	armour_quality = obj_ini.artifact_quality[armour(true)];
+	    } else {
+	    	armour_quality=quality;
 	    }
-	    armour_quality=quality;
 	    if (armour()=="Dreadnought"){
 	    	obj_ini.age[company][marine_number]=floor(age());
 	    	update_gear("");
@@ -1328,8 +1332,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		obj_ini.gear[company][marine_number] = new_gear;
 	 	if (arti){
 	    	obj_ini.artifact_equipped[new_gear] = true;
-	    }		
-		gear_quality=quality
+	    	gear_quality = obj_ini.artifact_quality[new_gear];
+	    } else {
+	    	gear_quality=quality;
+	    }	
 		update_health(portion*max_health());
 		 return "complete";
 	}
@@ -1345,22 +1351,38 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	};
 
 	static equipments_qual_string = function(slot){
+		var artifact;
+		var quality
 		switch (slot){
 			case "wep1":
-				return quality_string_conversion(weapon_one_quality)+weapon_one();
+				artifact = weapon_one(true);
+				quality = weapon_one_quality;
 				break;
 			case "wep2":
-				return quality_string_conversion(weapon_two_quality)+weapon_two();
+				artifact = weapon_two(true);
+				quality = weapon_two_quality;
 				break;				
 			case "armour":
-				return quality_string_conversion(armour_quality)+armour();
+				artifact = armour(true);
+				quality = armour_quality;
 				break;				
 			case "gear":
-				return quality_string_conversion(gear_quality)+gear();
+				artifact = gear(true);
+				quality = gear_quality;
 				break;
 			case "mobi":
-				return quality_string_conversion(mobility_item_quality)+mobility_item();
+				artifact = weapon_one(true);
+				quality =mobility_item_quality;
 				break;				
+		}
+		if (is_string(artifact)){
+			return $"{quality_string_conversion(quality)} {artifact}";
+		} else {
+			if (obj_ini.artifact_struct[artifact].name==""){
+				return  $"{quality_string_conversion(quality)} {obj_ini.artifact[artifact]}";
+			} else {
+				return obj_ini.artifact_struct[artifact].name;
+			}
 		}
 	}
 
@@ -1421,8 +1443,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
      obj_ini.wep1[company][marine_number] = new_weapon;
  	if (arti){
     	obj_ini.artifact_equipped[new_weapon] = true;
+    	weapon_one_quality = obj_ini.artifact_quality[new_weapon];
+    } else {
+    	weapon_one_quality=quality;
     }
-     weapon_one_quality=quality;
      return "complete";
 	};
 
@@ -1463,8 +1487,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
     	obj_ini.wep2[company][marine_number] = new_weapon;
 	 	if (arti){
 	    	obj_ini.artifact_equipped[new_weapon] = true;
-	    }    	
-    	weapon_two_quality=quality;
+	    	weapon_two_quality = obj_ini.artifact_quality[new_weapon];
+	    } else {
+	    	weapon_two_quality=quality;
+	    }
     	return "complete";
 	};
 

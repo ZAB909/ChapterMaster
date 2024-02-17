@@ -629,15 +629,17 @@ function scr_load(argument0, argument1) {
 	        obj_ini.equipment_type[g]=ini_read_string("Ini","equipment_type"+string(g),"");
 	        obj_ini.equipment_number[g]=ini_read_real("Ini","equipment_number"+string(g),0);
 	        obj_ini.equipment_condition[g]=ini_read_real("Ini","equipment_condition"+string(g),0);
-	        obj_ini.equipment_quality[g]=ini_read_real("Ini","equipment_quality"+string(g),[]);
-	        if (is_string(obj_ini.equipment_quality[g])){
+	        obj_ini.equipment_quality[g]=ini_read_string("Ini","equipment_quality"+string(g),"");
+	        if (obj_ini.equipment_quality[g]!=""){
 	        	obj_ini.equipment_quality[g] = json_parse(base64_decode(obj_ini.equipment_quality[g]));
+	        } else {
+	        	obj_ini.equipment_quality[g]=[];
 	        }
 
 	        if (g<=20){
 	        	obj_ini.artifact[g]=ini_read_string("Ini","artifact"+string(g),"");
 	            obj_ini.artifact_tags[g]=ini_read_string("Ini","artifact_tags"+string(g),"");
-		        if (is_string(obj_ini.artifact_tags[g])){
+		        if (obj_ini.artifact_tags[g] != ""){
 		        	obj_ini.artifact_tags[g] = json_parse(base64_decode(obj_ini.artifact_tags[g]));
 		        }
 	            obj_ini.artifact_identified[g]=ini_read_real("Ini","artifact_ident"+string(g),0);
@@ -645,7 +647,12 @@ function scr_load(argument0, argument1) {
 	            obj_ini.artifact_loc[g]=ini_read_string("Ini","artifact_loc"+string(g),"");
 	            obj_ini.artifact_sid[g]=ini_read_real("Ini","artifact_sid"+string(g),0);
 	            obj_ini.artifact_equipped[g]=ini_read_real("Ini","artifact_equipped"+string(g),0);
-	            ini_writ_ini.artifact_quality[g]=ini_read_string("Ini","artifact_quality"+string(g),"");
+	            obj_ini.artifact_quality[g]=ini_read_string("Ini","artifact_quality"+string(g),"artifact");
+	            obj_ini.artifact_struct[g] = new arti_struct(g);
+	            var temp_data = ini_read_string("Ini","artifact_struct"+string(g),"");
+	            if (temp_data!=""){
+    	            obj_ini.artifact_struct[g].load_json_data(json_parse(base64_decode(temp_data)));
+    	        }
 	        }
 	    }
 	    //

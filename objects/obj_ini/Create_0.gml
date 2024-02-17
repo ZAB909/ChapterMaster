@@ -38,11 +38,11 @@ repeat(200){i+=1;
     artifact_tags[i]=[];
     artifact_identified[i]=0;
     artifact_condition[i]=100;
-    artifact_quality[i]=[];
-    other_artifact_data = {};
+    artifact_quality[i]="artifact";
     artifact_loc[i]="";
     artifact_sid[i]=0;// Over 500 : ship
-    // Weapon           Unidentified            
+    // Weapon           Unidentified
+    artifact_struct[i] =  new arti_struct(i);    
 }
 
 var i=-1,v=0;
