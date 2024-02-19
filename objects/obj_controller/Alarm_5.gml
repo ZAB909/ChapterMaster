@@ -1047,10 +1047,10 @@ if ((turn>=10) or (obj_ini.fleet_type==eFACTION.Mechanicus)) and (faction_defeat
                     if (!instance_exists(obj_temp2)){
                         rund=round(random(you.planets));
 						if (rund>0) and(rund<5){
-							if	(you.p_owner[rund]==eFACTION.Ork) and (you.p_pdf[rund]+you.p_guardsmen[rund]==0) and (you.p_orks[rund]>=2) then array_push( you.p_feature[rund], new new_planet_feature(P_features.Warlord7));
+							if	(you.p_owner[rund]==eFACTION.Ork) and (you.p_pdf[rund]+you.p_guardsmen[rund]==0) and (you.p_orks[rund]>=2) then array_push( you.p_feature[rund], new new_planet_feature(P_features.OrkWarboss));
 						}
                         if (you.p_orks[rund]<4) then you.p_orks[rund]=4;
-                        if (planet_feature_bool(you.p_feature[rund], P_features.Warlord7)==1) then instance_create(x,y,obj_temp2);
+                        if (planet_feature_bool(you.p_feature[rund], P_features.OrkWarboss)==1) then instance_create(x,y,obj_temp2);
                     }
                 }
             }

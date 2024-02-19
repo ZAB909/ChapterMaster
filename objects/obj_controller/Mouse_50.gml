@@ -89,45 +89,6 @@ if (menu==12) and (cooldown<=0) and (penitorium>0){
 }
 // ** Lirarium Artifcts identify **
 if (menu==13) and (cooldown<=0) and (artifacts>0){
-    if (mouse_y>=yy+437) and (mouse_y<=yy+461){
-        // Previous
-        if (mouse_x>=xx+512) and (mouse_x<xx+550){
-            if (menu_artifact>1) and (cooldown<=0){
-                menu_artifact-=1;
-                cooldown=8000;
-                identifiable=0;
-            }
-            if (menu_artifact==1) and (cooldown<=0){
-                menu_artifact=artifacts;
-                cooldown=8000;
-                identifiable=0;
-            }
-        }
-        // Next
-        if (mouse_x>=xx+690) and (mouse_x<xx+732){
-            if (menu_artifact<artifacts) and (cooldown<=0){
-                menu_artifact+=1;
-                cooldown=8000;
-                identifiable=0;
-            }
-            if (menu_artifact==artifacts) and (cooldown<=0){
-                menu_artifact=1;
-                cooldown=8000;
-                identifiable=0;
-            }
-        }
-    }
-    // Identify now
-    if (mouse_x>=xx+531) and (mouse_y>=yy+715) and (mouse_x<xx+709) and (mouse_y<yy+733){
-        if (identifiable==1) and (obj_ini.artifact_identified[menu_artifact]>0) and (requisition>=150){
-            obj_ini.artifact_identified[menu_artifact]=0;
-            requisition-=150;
-            cooldown=8000;
-            identifiable=0;
-            audio_play_sound(snd_identify,-500,0);
-            audio_sound_gain(snd_identify,master_volume*effect_volume,0);
-        }
-    }
 }
 // ** Armamentorium STC fragments **
 else if (menu==14) and (cooldown<=0){
@@ -1445,6 +1406,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 artifact_equip = new shutter_button();
                 artifact_gift = new shutter_button();
                 artifact_destroy = new shutter_button();
+                artifact_namer = new text_bar_area(xx + 622, yy + 460, 350);
                 artifacts=0;
                 unused_artifacts = 0;
                 for (i=1;i<30;i++){

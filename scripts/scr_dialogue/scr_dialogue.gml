@@ -2159,7 +2159,7 @@ function scr_dialogue(diplo_keyphrase) {
 	                	with(obj_temp5){instance_destroy();}
 						with(obj_star){
 							for(var i=1; i<=4; i++){
-								if (planet_feature_bool(p_feature[1], P_features.Warlord7)==1) then instance_create(x,y,obj_temp5);
+								if (planet_feature_bool(p_feature[1], P_features.OrkWarboss)==1) then instance_create(x,y,obj_temp5);
 							}
 						}
 						if (instance_exists(obj_temp5)){
@@ -2167,7 +2167,7 @@ function scr_dialogue(diplo_keyphrase) {
 							you=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
 							nuum=you.name;
 							for(var i=1; i<=4; i++){
-								if (planet_feature_bool(you.p_feature[1], P_features.Warlord7)==1) then plan=i;
+								if (planet_feature_bool(you.p_feature[1], P_features.OrkWarboss)==1) then plan=i;
 							}
 							if (you.p_orks[plan]<6) then you.p_orks[plan]=6;
 							diplo_text="The greenskin horde is led by a massive Ork, one who calls himself "+string(faction_leader[eFACTION.Ork])+".  If this warboss were to perish the rest might be dealt with in a more languorous fashion.  He is located on "+string(nuum);

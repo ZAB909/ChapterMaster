@@ -8,7 +8,7 @@ enum P_features {
 			Recruiting_World, 
 			Monastery,
 			Warlord6,
-			Warlord7,
+			OrkWarboss,
 			Warlord10,
 			Special_Force,
 			World_Eaters,
@@ -208,7 +208,7 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		player_hidden = 1;
 		planet_display = "Artifact";
 		break;
-	case P_features.Warlord7:
+	case P_features.OrkWarboss:
 		player_hidden = 1;
 		planet_display= "Ork Warboss";
 		Warboss = "alive"
@@ -400,7 +400,7 @@ function scr_planetary_feature(planet_num) {
 			        scr_alert("green","feature",lop,x,y);
 			        scr_event_log("",lop);
 					break;
-				case P_features.Warlord7:
+				case P_features.OrkWarboss:
 				    var lop="Ork Warboss discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
 				    scr_alert("red","feature",lop,x,y);
 				    scr_event_log("red",lop);

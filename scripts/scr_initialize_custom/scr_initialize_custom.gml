@@ -1930,7 +1930,8 @@ function scr_initialize_custom() {
 		race[company][k]=1;
 		loc[company][k]=home_name;
 		role[company][k]="Venerable "+string(role[100][6]);
-		wep1[company][k]=wep1[101,6];man_size+=8;
+		wep1[company][k]=wep1[101,6];
+		man_size+=8;
 		wep2[company][k]=wep2[101,6];
 		armour[company][k]="Dreadnought";
 		
