@@ -94,7 +94,10 @@ function scr_add_item(item_name, number_of_items, quality="any") {
 	    } else if (open_slot){
 	        obj_ini.equipment[last_open]=item_name;
 	        obj_ini.equipment_number[last_open]=number_of_items;
-	        obj_ini.equipment_condition[last_open]=100
+	        obj_ini.equipment_condition[last_open]=100;
+	        if (quality == "any"){
+	        	quality = "standard";
+	        }
 	        for (var q=0;q<number_of_items;q++){
 	        	obj_ini.equipment_quality[last_open][q]=quality;
 	        }

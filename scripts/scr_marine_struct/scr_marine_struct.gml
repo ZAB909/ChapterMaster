@@ -1215,11 +1215,15 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		return obj_ini.race[company][marine_number];
 	};	//get race
 
-	static add_bionics = function(area="none", bionic_quality="standard", from_armoury=true){
+	static add_bionics = function(area="none", bionic_quality="any", from_armoury=true){
 		if (from_armoury && scr_item_count("Bionics",bionic_quality)<1){
 			return "no bionics";
-		}
-		var new_bionic_pos, part, new_bionic = {quality :bionic_quality};
+		}else if (from_armoury){
+			remove_quality = scr_add_item("Bionics",-1, bionic_quality);
+		} else {
+			remove_quality=choose("standard","standard","standard","standard","standard", "master_crafted","artifact");
+		}	
+		var new_bionic_pos, part, new_bionic = {quality :scr_add_item};
 		if (bionics < 10){
 			if (has_trait("flesh_is_weak")){
 				add_or_sub_health(40);
@@ -1271,9 +1275,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				}
 				if (has_trait("flesh_is_weak")){
 					piety++;
-				}
-				if (from_armoury){
-					scr_add_item("Bionics",-1);
 				}
 			}
 			if (hp()>max_health()){update_health(max_health())}

@@ -414,14 +414,17 @@ function scr_load(argument0, argument1) {
 	    // Stars
 	    var i;i=-1;
 	    repeat(stars){i+=1;
-	        var new_star;new_star=instance_create(0,0,obj_star);
+	        var new_star;
+	        new_star=instance_create(
+	        	ini_read_real("Star","sr"+string(i)+"x",0),
+	        	ini_read_real("Star","sr"+string(i)+"y",0),
+	        	obj_star
+	        );
 
 	        new_star.name=ini_read_string("Star","sr"+string(i)+"name","");
 	        new_star.star=ini_read_string("Star","sr"+string(i)+"star","");
 	        new_star.planets=ini_read_real("Star","sr"+string(i)+"planets",0);
 	        new_star.owner=ini_read_real("Star","sr"+string(i)+"owner",0);
-	        new_star.x=ini_read_real("Star","sr"+string(i)+"x",0);
-	        new_star.y=ini_read_real("Star","sr"+string(i)+"y",0);
 	        new_star.x2=ini_read_real("Star","sr"+string(i)+"x2",0);
 	        new_star.y2=ini_read_real("Star","sr"+string(i)+"y2",0);
 	        new_star.old_x=ini_read_real("Star","sr"+string(i)+"ox",0);
@@ -434,7 +437,7 @@ function scr_load(argument0, argument1) {
 	        new_star.space_hulk=ini_read_real("Star","sr"+string(i)+"spacehulk",0);
 	        if (new_star.space_hulk=1) then new_star.sprite_index=spr_star_hulk;
 
-	        var g;g=0;
+	        var g=0;
 	        repeat(4){g+=1;
 	            if (new_star.planets>=g){
 	                new_star.planet[g]=ini_read_real("Star","sr"+string(i)+"plan"+string(g),0);
@@ -1003,6 +1006,9 @@ function scr_load(argument0, argument1) {
 	    with(obj_controller){
 	        scr_colors_initialize();
 	        scr_shader_initialize();
+	    }
+	    with (obj_star){
+	    	star_ui_name_node();
 	    }
 
 	    var tempa,tempa2,q,good;tempa="";tempa2=0;q=0;good=0;
