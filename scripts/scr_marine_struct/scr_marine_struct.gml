@@ -1391,7 +1391,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
   weapon_one_quality = "standard";
   static update_weapon_one = function(new_weapon,from_armoury=true, to_armoury=true,quality="any"){
   	var arti = !is_string(new_weapon);
-  	show_debug_message("{0}, {1} wep_one .1",arti, new_weapon);
   	var change_wep = weapon_one();
   	var weapon_list = [];
     if (new_weapon == "Heavy Ranged"){
