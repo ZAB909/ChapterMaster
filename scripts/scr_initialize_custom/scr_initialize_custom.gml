@@ -1311,6 +1311,7 @@ function scr_initialize_custom() {
 
 	//TODO will refactor how traits are distributed to chapter masters along with a refactor of chapter data
 	last_artifact = find_last_artifact();
+	var arti;
 	switch(global.chapter_name) {
 		case "Dark Angels":
 			chapter_master_equip.wep1="Plasma Gun";
@@ -1346,16 +1347,20 @@ function scr_initialize_custom() {
 			}
 			chapter_master.add_trait("still_standing");
 			chapter_master.add_trait("tyrannic_vet");
-
-			obj_ini.artifact_struct[last_artifact].name = "Gauntlets of Ultramar";
+			arti = obj_ini.artifact_struct[last_artifact];
+			arti.name = "Gauntlets of Ultramar";
 			obj_ini.artifact[last_artifact] = "Power Fist";
 			obj_ini.artifact_identified[last_artifact] = 0;
+			arti.bearer = [0,1];
 			chapter_master_equip.wep1=last_artifact;
 
 			last_artifact++;
 
 			chapter_master_equip.armour = last_artifact;
-			artifact_struct[last_artifact].name = "Armour of Antilochus";
+			arti = obj_ini.artifact_struct[last_artifact];
+			arti.name = "Armour of Antilochus";
+			arti.custom_description="a masterwork suit of the standard Indomitus pattern Terminator Armour"
+			arti.bearer = [0,1];
 			obj_ini.artifact_identified[last_artifact] = 0;
 			obj_ini.artifact[last_artifact] = "Terminator Armour";
 			break;
@@ -1364,8 +1369,11 @@ function scr_initialize_custom() {
 			chapter_master.add_trait("ancient");
 			chapter_master.add_trait("melee_enthusiast");
 			chapter_master.add_trait("feet_floor");
-			obj_ini.artifact_struct[last_artifact].name = "Axe of Morkai";
+			arti = obj_ini.artifact_struct[last_artifact];
+			arti.name = "Axe of Morkai";
+			arti.custom_description = "Once a Khornate axe of great power it was reforged in the image of the death wolf Morkai";
 			obj_ini.artifact[last_artifact] = "Executioner Power Axe";
+			arti.bearer = [0,1];
 			obj_ini.artifact_identified[last_artifact] = 0;
 			chapter_master_equip.wep1=last_artifact;					
 			break;

@@ -58,7 +58,7 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		inquis_hidden =1;
 		planet_display = "Hidden Secret Base";
 		player_hidden = 0;
-		style = "UTL"
+		style = "UTL";
 		if (struct_exists(other_data, "style")){
 			style = other_data[$ "style"];
 		}
@@ -216,6 +216,7 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 			f_type = P_features.Victory_Shrine
 			planet_display= $"{obj_controller.faction_leader[eFACTION.Ork]} Death Place";
 			Warboss = "dead";
+			parade = false;
 		}
 		break;
 	case P_features.Monastery:

@@ -27,8 +27,14 @@ if (scr_hit(x,y,x+width,y+height)=true) and (obj_controller.dropdown_open=0){
     if (option_selected>0){
         if (option[option_selected]!=""){
             tooltip=option[option_selected];
-            if (target="event_display") and (option[option_selected]!="None"){tooltip=option[option_selected];tooltip2=scr_arti_descr(option_id[option_selected]);}
-            if (target="event_display") and (option[option_selected]="None"){tooltip="Display";tooltip2="There is no Artifact set to be displayed at the event.";}
+            if (target="event_display") and (option[option_selected]!="None"){
+                tooltip=option[option_selected];
+                tooltip2=obj_ini.artifact_struct[option_id[option_selected]].description();
+            }
+            if (target="event_display") and (option[option_selected]="None"){
+                tooltip="Display";
+                tooltip2="There is no Artifact set to be displayed at the event.";
+            }
         }
     }
 }
@@ -57,7 +63,7 @@ if (opened=1){
                 draw_rectangle(x,y5,x+width,y5+hi,0);
                 
                 tooltip=option[ii];
-                if (target="event_display") and (option[ii]!="None"){tooltip=option[ii];tooltip2=scr_arti_descr(option_id[ii]);}
+                if (target="event_display") and (option[ii]!="None"){tooltip=option[ii];tooltip2=obj_ini.artifact_struct[option_id[ii]].description();}
                 if (target="event_display") and (option[ii]="None"){tooltip="Display";tooltip2="There is no Artifact set to be displayed at the event.";}
                 
                 if (obj_controller.mouse_left=1) and (obj_controller.cooldown<=0){

@@ -201,5 +201,7 @@ function arti_struct(Index)constructor{
 	}
 	custom_data = {};
 	name = "";
-	custom_description="";		
+	custom_description="";	
+
+	static description = scr_arti_descr;
 }

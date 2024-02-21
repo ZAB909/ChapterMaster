@@ -800,6 +800,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	 	if (arti){
 	    	obj_ini.artifact_equipped[new_mobility_item] = true;
 	    	mobility_item_quality = obj_ini.artifact_quality[new_mobility_item];
+	    	var arti = obj_ini.artifact_struct[new_mobility_item];
+			arti.bearer=[company,marine_number]; 	
 	    } else {
 	    	mobility_item_quality=quality;
 	    }		
@@ -872,8 +874,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		var portion = hp_portion();
 	    obj_ini.armour[company][marine_number] = new_armour;
 	    if (arti){
-	    	obj_ini.artifact_equipped[armour(true)] = true;
-	    	armour_quality = obj_ini.artifact_quality[armour(true)];
+	    	obj_ini.artifact_equipped[new_armour] = true;
+	    	armour_quality = obj_ini.artifact_quality[new_armour];
+			var arti = obj_ini.artifact_struct[new_armour];
+			arti.bearer=[company,marine_number]; 		    	
 	    } else {
 	    	armour_quality=quality;
 	    }
@@ -1334,6 +1338,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	 	if (arti){
 	    	obj_ini.artifact_equipped[new_gear] = true;
 	    	gear_quality = obj_ini.artifact_quality[new_gear];
+			var arti = obj_ini.artifact_struct[new_gear];
+			arti.bearer=[company,marine_number]; 	    	
 	    } else {
 	    	gear_quality=quality;
 	    }	
@@ -1443,6 +1449,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
      obj_ini.wep1[company][marine_number] = new_weapon;
  	if (arti){
     	obj_ini.artifact_equipped[new_weapon] = true;
+		var arti = obj_ini.artifact_struct[new_weapon];
+		arti.bearer=[company,marine_number];    	
     	weapon_one_quality = obj_ini.artifact_quality[new_weapon];
     } else {
     	weapon_one_quality=quality;
@@ -1488,6 +1496,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	 	if (arti){
 	    	obj_ini.artifact_equipped[new_weapon] = true;
 	    	weapon_two_quality = obj_ini.artifact_quality[new_weapon];
+			var arti = obj_ini.artifact_struct[new_weapon];
+			arti.bearer=[company,marine_number]; 	    	
 	    } else {
 	    	weapon_two_quality=quality;
 	    }
@@ -2317,20 +2327,69 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			};
 		return equip_data;
 	}
-}
-function jsonify_marine_struct(company, marine){
-		var copy_marine_struct = obj_ini.TTRPG[company, marine]; //grab marine structure
-		var new_marine = {};
-		var copy_part;
-		var names = variable_struct_get_names(copy_marine_struct); // get all keys within structure
-		for (var name = 0; name < array_length(names); name++) { //loop through keys to find which ones are methods as they can't be saved as a json string
-			if (!is_method(copy_marine_struct[$ names[name]])){
-				copy_part = DeepCloneStruct(copy_marine_struct[$ names[name]])
-				variable_struct_set(new_marine, names[name],copy_part); //if key value is not a method add to copy structure
+	static equipped_artifacts=function(){
+		artis = [
+			weapon_one(true),
+			weapon_two(true),
+			gear(true),
+			armour(true),
+			mobility_item(true),
+		];
+		var arti_length = array_length(artis);
+		for (var i=0;i<arti_length;i++){
+			if (is_string(artis[i])){
+				array_delete(artis,i,1);
+				i--;
+				arti_length--;
 			}
 		}
-		return json_stringify(new_marine);
+		return artis;
 	}
+
+	static movement_after_math = function(end_company=company, end_slot=marine_number){
+		if (squad != "none"){
+			var squad_data = obj_ini.squads[squad];
+			var squad_member;
+
+			for (var r=0;r<array_length(squad_data.members);r++){
+				squad_member = squad_data.members[r];
+				if (squad_member[0] == company && squad_member[1] == marine_number){
+					if (squad_data.base_company != end_company){	
+						array_delete(squad_data.members,r,1);
+						squad = "none";
+					// if unit will no longer be same company as squad remove unit from squad
+					} else {
+						squad_data.members[r]=[end_company,end_slot];
+					}
+				}
+				
+			}
+		}
+
+		var arti,artifact_list =  equipped_artifacts();
+		for (var i=0; i<array_length(artifact_list);i++){
+			arti = obj_ini.artifact_struct[artifact_list[i]];
+			arti.bearer = [end_company,end_slot];
+		}
+	}
+}
+function jsonify_marine_struct(company, marine){
+	var copy_marine_struct = obj_ini.TTRPG[company, marine]; //grab marine structure
+	var new_marine = {};
+	var copy_part;
+	var names = variable_struct_get_names(copy_marine_struct); // get all keys within structure
+	for (var name = 0; name < array_length(names); name++) { //loop through keys to find which ones are methods as they can't be saved as a json string
+		if (!is_method(copy_marine_struct[$ names[name]])){
+			copy_part = DeepCloneStruct(copy_marine_struct[$ names[name]])
+			variable_struct_set(new_marine, names[name],copy_part); //if key value is not a method add to copy structure
+		}
+	}
+	return json_stringify(new_marine);
+}
+
+function fetch_unit(unit){
+	return obj_ini.TTRPG[unit[0]][unit[1]];
+}
 
 
 function pen_and_paper_sim() constructor{

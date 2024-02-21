@@ -921,7 +921,7 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
         if (giveto>0) and (type=9){
 
 
-            var e;e=0;
+            var e=0;
             repeat(50){e+=1;
                 if (obj_controller.fest_display=obj_controller.menu_artifact) then obj_controller.fest_display=0;
 
@@ -946,20 +946,8 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
             obj_controller.artifacts-=1;
             cooldown=7000;
 
-            var g;g=obj_controller.menu_artifact;
-            repeat(20){
-                if (obj_ini.artifact[g]="") and (obj_ini.artifact[g+1]!=""){
-                    obj_ini.artifact[g]=obj_ini.artifact[g+1];obj_ini.artifact_tags[g]=obj_ini.artifact_tags[g+1];
-                    obj_ini.artifact_identified[g]=obj_ini.artifact_identified[g+1];
-                    obj_ini.artifact_condition[g]=obj_ini.artifact_condition[g+1];
-                    obj_ini.artifact_loc[g]=obj_ini.artifact_loc[g+1];obj_ini.artifact_sid[g]=obj_ini.artifact_sid[g+1];
-                    //
-                    obj_ini.artifact[g+1]="";obj_ini.artifact_tags[g+1]="";
-                    obj_ini.artifact_identified[g+1]=0;obj_ini.artifact_condition[g+1]=100;
-                    obj_ini.artifact_loc[g+1]="";obj_ini.artifact_sid[g+1]=0;
-                }
-                g+=1;
-            }
+            var g=obj_controller.menu_artifact;
+
             obj_controller.cooldown=10;
             if (obj_controller.menu_artifact>obj_controller.artifacts) then obj_controller.menu_artifact=obj_controller.artifacts;
 

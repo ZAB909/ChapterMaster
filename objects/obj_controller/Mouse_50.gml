@@ -310,6 +310,7 @@ if (menu==20) and (diplomacy==10.1){
                 pop_up.image = "chaos";
                 kill_and_recover(lib[0],lib[1]);
                 chapter_master.add_trait("blood_for_blood");
+                chapter_master.corruption+=20;
             } else {
                 diplomacy_pathway = "daemon_scorn";
             }
@@ -324,6 +325,7 @@ if (menu==20) and (diplomacy==10.1){
             if (champ!="none"){
                 var chapter_master = obj_ini.TTRPG[0][1];
                  chapter_master.add_trait("blood_for_blood");
+                 chapter_master.corruption+=20;
                 var dead_champ = obj_ini.TTRPG[champ[0]][champ[1]];
                 //TODO make this into a real dual with consequences
                 pop_up = instance_create(0,0,obj_popup);
@@ -349,7 +351,8 @@ if (menu==20) and (diplomacy==10.1){
                 kill_squad = obj_ini.squads[i];
                 if (kill_squad.type == "tactical_squad" && array_length(kill_squad.members)>4){
                     var chapter_master = obj_ini.TTRPG[0][1];
-                    chapter_master.add_trait("blood_for_blood");                    
+                    chapter_master.add_trait("blood_for_blood");   
+                    chapter_master.corruption+=20;                 
                     kill_squad.kill_members();
                     with(obj_ini){
                         scr_company_order(kill_squad.base_company);

@@ -451,7 +451,7 @@ function scr_dialogue(diplo_keyphrase) {
 			case "Slaanesh_path":
 				diplo_text ="Riches. Joy. Pleasure.ha you remind me of that fool Midas. Who's Midas? Oh never you mind. She who thirsts has a fondness for little play things. Seek out a relic of importnace to her and you'll find yourself rewarded."
 				diplo_option[1] ="Where is this relic?"; 
-				diplo_option[2] = "As i thought the  gods would have me chase my own tail than give me what i want"; 
+				diplo_option[2] = "As i thought the  gods would rather have me chase my own tail than give me what i want"; 
 				diplo_option[3] = ""; 
 				diplo_option[4] = "";
 			break;	

@@ -6,20 +6,7 @@ function scr_move_unit_info(start_company,end_company, start_slot, end_slot, eva
 			//this makes sure coherency of the unit's squad and the squads logging of the unit location are kept up to date
 		var unit = obj_ini.TTRPG[start_company, start_slot];
 		if (eval_squad){
-			if (unit.squad != "none"){
-				var squad = obj_ini.squads[unit.squad];
-				var squad_member;
-				if (squad.base_company != end_company){		
-					for (var r=0;r<array_length(squad.members);r++){
-						squad_member = squad.members[r];
-						if (squad_member[0] == start_company) and (squad_member[1] == start_slot){
-							array_delete(squad.members,r,1);
-							// if unit will no longer be same company as squad remove unit from squad
-						}
-					}
-				}
-				unit.squad = "none";
-			}
+			unit.movement_after_math(end_company,end_slot);
 		}
 		obj_ini.spe[end_company][end_slot]=obj_ini.spe[start_company][start_slot];	
 		obj_ini.race[end_company][end_slot]=obj_ini.race[start_company][start_slot];

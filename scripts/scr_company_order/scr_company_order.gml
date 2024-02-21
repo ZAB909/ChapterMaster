@@ -290,9 +290,11 @@ function scr_company_order(company) {
 			TTRPG[co][i] = new TTRPG_stats("chapter", co, i, "blank");
 			// if stashed marine struct data load it into new structure
 			if (is_string(temp_struct[co][i])){
-				TTRPG[co][i].load_json_data(json_parse(temp_struct[co][i]));
-				TTRPG[co][i].company = co;
-				TTRPG[co][i].marine_number = i;
+				unit = TTRPG[co][i];
+				unit.load_json_data(json_parse(temp_struct[co][i]))
+				unit.company = co;
+				unit.marine_number = i;
+				unit.movement_after_math();
 			}
 	}
 /*	i=0;repeat(300){i+=1;

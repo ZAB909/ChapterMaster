@@ -477,7 +477,7 @@ if (psyker_points>=round(goal/2)) and (psyker_aspirant==0){
                 scr_add_item(obj_ini.mobi[0][g1],1);
                 obj_ini.mobi[0][g1]="";
             }
-            scr_alert("green","recruitment",obj_ini.TTRPG[0][g1].name_role()+" begins training.",0,0);
+            scr_alert("green","recruitment",unit.name_role()+" begins training.",0,0);
             with(obj_ini){
                 scr_company_order(marine_company);
                 scr_company_order(0);
@@ -507,49 +507,24 @@ if (tech_points>=360){
             unit.update_role(obj_ini.role[100][16]);
             unit.add_exp(30);
             
-            eq1=1;
-            eq2=1;
-            eq3=1;
             t=0;
             r=0;
-            if (unit.weapon_one()!=obj_ini.wep1[100,16]){
-                for (t=1; t<=50; t++){
-                    if (obj_ini.equipment[t]==obj_ini.wep1[100,16]) and (obj_ini.equipment_number[t]>=1) and (r==0) then r=t;
-                }
-                if (r!=0){
-                    if (obj_ini.wep1[0,marine_position]!="") then scr_add_item(obj_ini.wep1[0,marine_position],1);
-                    scr_add_item(obj_ini.wep1[100,16],-1);
-                    obj_ini.wep1[0,marine_position]=obj_ini.wep1[100,16];
-                }
-                if (r==0) then eq1=0;
+            warn="";
+            if (unit.update_weapon_one(obj_ini.wep1[100,16]) == "no_items"){
+                warn += $", {obj_ini.wep1[100,16]}"
             }
-            if (obj_ini.wep2[0,marine_position]!=obj_ini.wep2[100,16]){
-                r=0;
-                for (t=1; t<=50; t++){
-                    if (obj_ini.equipment[t]==obj_ini.wep2[100,16]) and (obj_ini.equipment_number[t]>=1) and (r==0) then r=t;
-                }
-                if (r!=0){
-                    if (obj_ini.wep2[0,marine_position]!="") then scr_add_item(obj_ini.wep2[0,marine_position],1);
-                    scr_add_item(obj_ini.wep2[100,16],-1);
-                    obj_ini.wep2[0,marine_position]=obj_ini.wep2[100,16];
-                }
-                if (r==0) then eq2=0;
+            if (unit.update_weapon_two(obj_ini.wep2[100,16]) == "no_items"){
+                warn += $", {obj_ini.wep2[100,16]}"
             }
-            if (obj_ini.gear[0,marine_position]!=obj_ini.gear[100,16]){
-                if (obj_ini.gear[0,marine_position]!="") then scr_add_item(obj_ini.gear[0,marine_position],1);
-                obj_ini.gear[0,marine_position]="Servo Arms";
+            if (unit.update_gear(obj_ini.gear[100,16]) == "no_items"){
+                warn += $", {obj_ini.gear[100,16]}"
             }
+
             unit.religion="cult_mechanicus";
             unit.add_trait("mars_trained");
             scr_alert("green","recruitment",string(obj_ini.name[0,marine_position])+" returns from Mars, a "+string(obj_ini.role[100][16])+".",0,0);
             
-            if (eq1+eq2!=2){
-                warn="";
-                w5=0;
-                if (eq1==0) then warn+=string(obj_ini.wep1[100,16])+", ";
-                if (eq2==0) then warn+=string(obj_ini.wep2[100,16])+", ";
-                
-                w5=string_length(warn)-1;warn=string_delete(warn,w5,2);
+            if (warn!=""){
                 warn+=".";
                 scr_alert("red","recruitment","Not enough equipment: "+string(warn),0,0);
             }
@@ -557,7 +532,7 @@ if (tech_points>=360){
             unit.planet_location=2;
             obj_ini.lid[0][marine_position]=0;
             // TODO Probably want to change this to take into account fleet type chapters- also increase the man_size of that area by +X
-            if (global.chapter_name!="Iron Hands") and (unit.bionics<4) then repeat(choose(4,5,6)){unit.add_bionics()}
+            if (global.chapter_name!="Iron Hands") and (unit.bionics<4) then repeat(choose(1,2,3)){unit.add_bionics()}
             if (global.chapter_name=="Iron Hands") and (unit.bionics<7) then repeat(choose(4,5,6)){unit.add_bionics()}
             // 135 ; probably also want to increase the p_player by 1 just because
             with(obj_ini){scr_company_order(0);}
@@ -680,11 +655,11 @@ if (turn=240) and (global.chapter_name="Lamenters"){
 }
 */
 // ** Battlefield Loot **
-if (obj_ini.adv[1]="Scavengers") or (obj_ini.adv[2]="Scavengers") or (obj_ini.adv[3]="Scavengers") or (obj_ini.adv[4]="Scavengers"){
+if (array_contains(obj_ini.adv,"Scavengers")){
     var lroll1,lroll2,loot="";
     lroll1=floor(random(100))+1;
     lroll2=floor(random(100))+1;
-    if (obj_ini.dis[1]="Shitty Luck") or (obj_ini.dis[2]="Shitty Luck") or (obj_ini.dis[3]="Shitty Luck") or (obj_ini.dis[4]="Shitty Luck"){
+    if (array_contains(obj_ini.dis,"Shitty Luck")){
         lroll1+=2;
         lroll2+=25;
     }
@@ -1119,8 +1094,7 @@ if (disposition[eFACTION.Tau]>=60) then scr_loyalty("Xeno Associate","+");
 var loyalty_counter=0;
 loyalty_counter=scr_role_count(obj_ini.role[100][15],"");
 if (loyalty_counter==0) then scr_loyalty("Lack of Apothecary","+");
-loyalty_counter=scr_role_count(obj_ini.role[100][16],"");
-if (loyalty_counter==0) then scr_loyalty("Upset Machine Spirits","+");
+
 loyalty_counter=scr_role_count(obj_ini.role[100][14],"");
 if (loyalty_counter==0) then scr_loyalty("Undevout","+");
 // TODO in another PR rework how Non-Codex Size is determined, perhaps the inquisition needs to pass some checks or do an investigation event 
@@ -1245,20 +1219,16 @@ if (inspec==true) and (faction_status[eFACTION.Inquisition]!="War") and (obj_ini
         if (roll<=60){
             new_defense_fleet.trade_goods="Inqis1";
             mess+=string(obj_controller.inquisitor[1]);
-        }
-        if (roll<=70) and (roll>60){
+        }else if (roll<=70) and (roll>60){
             new_defense_fleet.trade_goods="Inqis2";
             mess+=string(obj_controller.inquisitor[2]);
-        }
-        if (roll<=80) and (roll>70){
+        }else if (roll<=80) and (roll>70){
             new_defense_fleet.trade_goods="Inqis3";
             mess+=string(obj_controller.inquisitor[3]);
-        }
-        if (roll<=90) and (roll>80){
+        }else if (roll<=90) and (roll>80){
             new_defense_fleet.trade_goods="Inqis4";
             mess+=string(obj_controller.inquisitor[4]);
-        }
-        if (roll<=100) and (roll>90){
+        }else if (roll<=100) and (roll>90){
             new_defense_fleet.trade_goods="Inqis5";
             mess+=string(obj_controller.inquisitor[5]);
         }

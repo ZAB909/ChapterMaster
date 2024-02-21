@@ -177,11 +177,8 @@ function scr_librarium(){
             }
             if (obj_ini.artifact_identified[menu_artifact] = 0) {
                 draw_set_color(881503);
-                if (obj_ini.artifact_struct[menu_artifact].custom_description == ""){
-                	artif_descr = scr_arti_descr(menu_artifact);
-                } else {
-                	artif_descr = obj_ini.artifact_struct[menu_artifact].custom_description;
-                }
+
+                artif_descr = obj_ini.artifact_struct[menu_artifact].description();
                 tooltip = "";
                 tooltip_weapon = 0;
                 tooltip_stat1 = 0;

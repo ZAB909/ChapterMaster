@@ -18,12 +18,12 @@ function scr_add_stc_fragment() {
 	    if (wik=2) and (obj_controller.stc_vehicles_un+obj_controller.stc_vehicles=MAX_STC_PER_SUBCATEGORY) then wik=3;
 	    if (wik=3) and (obj_controller.stc_ships_un+obj_controller.stc_ships=MAX_STC_PER_SUBCATEGORY) then wik=1;
     
-	    if (wik=1) and (onk<=0){
-	    	obj_controller.stc_wargear_un+=1;onk=1;
-	    }else if (wik=2) and (onk<=0){
-	    	obj_controller.stc_vehicles_un+=1;onk=1;
-	    }else if (wik=3) and (onk<=0){
-	    	obj_controller.stc_ships_un+=1;onk=1;
+	    if (wik=1){
+	    	obj_controller.stc_wargear_un+=1;
+	    }else if (wik=2){
+	    	obj_controller.stc_vehicles_un+=1;
+	    }else if (wik=3){
+	    	obj_controller.stc_ships_un+=1;
 	    }
     
 	    if (onk!=1) then onk=-1;

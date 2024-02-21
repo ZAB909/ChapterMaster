@@ -16,7 +16,7 @@ function scr_trade(argument0) {
 
 
 
-	var i;i=0;
+	var i=0;
 	repeat(4){i+=1;
 	    if (trade_give[i]="Requisition") and (trade_mnum[i]>0) then my_worth+=trade_mnum[i];
     
@@ -189,26 +189,7 @@ function scr_trade(argument0) {
 	    // show_message("A: "+string(liscensing));
     
 	    i=0;var goods;goods="";
-	    /*repeat(4){i+=1;
-	        if (trade_give[i]="Requisition") then requisition-=trade_mnum[i];
-	        if (trade_give[i]="Gene-Seed") and (trade_mnum[i]>0) then gene_seed-=trade_mnum[i];
-	        if (trade_give[i]="Info Chip") and (trade_mnum[i]>0) then info_chips-=trade_mnum[i];
-	        if (trade_give[i]="STC Fragment") and (trade_mnum[i]>0){
-	            var remov,p;remov=0;p=0;
-	            repeat(100){
-	                if (remov=0){p=choose(1,2,3);
-	                    if (p=1) and (stc_wargear_un>0){stc_wargear_un-=1;remov=1;}
-	                    if (p=2) and (stc_vehicles_un>0){stc_vehicles_un-=1;remov=1;}
-	                    if (p=3) and (stc_ships_un>0){stc_ships_un-=1;remov=1;}
-	                }
-	            }
-	        }
-	        if (trade_take[i]!="") then goods+=string(trade_take[i])+"!"+string(trade_tnum[i])+"!|";
-	    }*/
-    
-    
-    
-	    // show_message("B: "+string(liscensing));
+	   
     
     
 	    // Temporary work around
@@ -299,8 +280,8 @@ function scr_trade(argument0) {
             
 	            if ((!instance_exists(obj_temp2)) and (!instance_exists(obj_temp4))) or (instance_number(obj_p_fleet)=1) and ((obj_p_fleet.x<=0) or (obj_p_fleet.x>room_width) or (obj_p_fleet.y<=0) or (obj_p_fleet.y>room_height)){
 	                with(obj_star){
-	                    if (x<-7000) and (y<-7000){x+=10000;y+=10000;}
-	                    if (x<-7000) and (y<-7000){x+=10000;y+=10000;}
+	                    if (x<-3500) and (y<-3500){x+=10000;y+=10000;}
+	                    if (x<-3500) and (y<-3500){x+=10000;y+=10000;}
 	                }
 	                trading=0;scr_dialogue("trade_error_1");
                 
@@ -344,8 +325,8 @@ function scr_trade(argument0) {
         
 	        if (!instance_exists(obj_temp3)){
 	            with(obj_star){
-	                if (x<-7000) and (y<-7000){x+=10000;y+=10000;}
-	                if (x<-7000) and (y<-7000){x+=10000;y+=10000;}
+	                if (x<-3500) and (y<-3500){x+=10000;y+=10000;}
+	                if (x<-3500) and (y<-3500){x+=10000;y+=10000;}
 	            }
 	            trading=0;scr_dialogue("trade_error_2");
             
@@ -530,8 +511,8 @@ function scr_trade(argument0) {
 
 
 	with(obj_star){
-	    if (x<-7000) and (y<-7000){x+=10000;y+=10000;}
-	    if (x<-7000) and (y<-7000){x+=10000;y+=10000;}
+	    if (x<-3500) and (y<-3500){x+=10000;y+=10000;}
+	    if (x<-3500) and (y<-3500){x+=10000;y+=10000;}
 	}
 
 	instance_activate_all();

@@ -29,12 +29,11 @@ function set_up_armentarium(){
             }
         }*/
         speeding_bits = [
-            new speeding_dot(xx+359, yy+554,(210/6)*stc_wargear),
-            new speeding_dot(xx+539, yy+554,(210/6)*stc_vehicles),
-            new speeding_dot(xx+719, yy+554,(210/6)*stc_ships)
+            new speeding_dot(0, 0,(210/6)*stc_wargear),
+            new speeding_dot(0, 0,(210/6)*stc_vehicles),
+            new speeding_dot(0, 0,(210/6)*stc_ships)
         ]    
 }
-
 
 function drop_down(selection, draw_x, draw_y, options,open_marker){
 	if (selection!=""){
@@ -159,6 +158,7 @@ function calculate_research_points(turn_end=false){
         var tech_test, charisma_test, piety_test;
         //in this instance tech heretics are techmarines with the "tech_heretic" trait
         if (turn_end){
+            if (array_length(techs)==0) then scr_loyalty("Upset Machine Spirits","+");
             if (array_length(heretics)>0){
                 var heretic_location, same_location, current_heretic, current_tech;
                 //iterate through tech heretics;
@@ -239,9 +239,14 @@ function calculate_research_points(turn_end=false){
                    current_tech.add_trait("tech_heretic");
                }
             }
-            if (forge_master==-1){
-                var last_master = obj_ini.previous_forge_masters[array_length(obj_ini.previous_forge_masters)-1];
-                scr_popup("New Forge Master",$"The Demise of Forge Master {last_master} means a replacement must be chosen. Several Options have already been put forward to you but it is ultimatly your decision.","new_forge_master","");
+            if (forge_master==-1){ 
+                var tech_count = scr_role_count(obj_ini.role[100][16]);
+                if (tech_count>1){
+                    var last_master = obj_ini.previous_forge_masters[array_length(obj_ini.previous_forge_masters)-1];
+                    scr_popup("New Forge Master",$"The Demise of Forge Master {last_master} means a replacement must be chosen. Several Options have already been put forward to you but it is ultimatly your decision.","new_forge_master","");
+                } else if (tech_count==1){
+                    scr_role_count(obj_ini.role[100][16],"","units")[0].update_role("Forge Master");
+                }
             }
         }
     }   
@@ -425,26 +430,23 @@ function scr_draw_armentarium(){
                     audio_sound_gain(snd_stc,master_volume*effect_volume,0);
 
 
-                    if(stc_wargear_un > 0 && 
-                    stc_wargear < MAX_STC_PER_SUBCATEGORY &&
-                    stc_wargear <= min(stc_vehicles, stc_ships)) {
+                    if (stc_wargear_un > 0 && 
+                    stc_wargear < MAX_STC_PER_SUBCATEGORY) {
                             
                         stc_wargear_un--;
-                       identify_stc("wargear")
+                       identify_stc("wargear");
                     }
-                    else if(stc_vehicles_un > 0 && 
-                    stc_vehicles < MAX_STC_PER_SUBCATEGORY &&
-                    stc_vehicles <= min(stc_wargear, stc_ships)) {
+                    else if (stc_vehicles_un > 0 && 
+                    stc_vehicles < MAX_STC_PER_SUBCATEGORY) {
                             
                         stc_vehicles_un--;
-                       identify_stc("vehicles")
+                       identify_stc("vehicles");
                     }
                     else if(stc_ships_un > 0 && 
-                    stc_ships < MAX_STC_PER_SUBCATEGORY &&
-                    stc_ships <= min(stc_vehicles, stc_wargear)) {
+                    stc_ships < MAX_STC_PER_SUBCATEGORY) {
                         
                         stc_ships_un--;
-                        identify_stc("ships")
+                        identify_stc("ships");
                     }
                     
                     // Refresh the shop
@@ -601,8 +603,7 @@ function scr_draw_armentarium(){
         draw_sprite_ext(spr_research_bar, 0, xx+539, yy+554, 1, 0.7, 0, c_white, 1)
        draw_sprite_ext(spr_research_bar, 0, xx+719, yy+554, 1, 0.7, 0, c_white, 1)
 
-
-        if (stc_wargear > 0) then speeding_bits[0].draw();
+        if (stc_wargear > 0) then speeding_bits[0].draw(xx+359, yy+554);
         for (f =0;f<6;f++){
             if (f>=stc_wargear){
                 draw_sprite_ext(spr_research_bar, 1, xx+359, yy+554+((210/6)*f), 1, 0.6, 0, c_white, 1)
@@ -615,7 +616,7 @@ function scr_draw_armentarium(){
         } 
         //draw_rectangle(xx + 351, yy + 539, xx + 368, yy + 539 + hi, 0);
 
-        if (stc_vehicles > 0) then speeding_bits[1].draw();
+        if (stc_vehicles > 0) then speeding_bits[1].draw(xx+539, yy+554);
           for (f =0;f<6;f++){
             if (f>=stc_vehicles){
                 draw_sprite_ext(spr_research_bar, 1, xx+539, yy+554+((210/6)*f), 1, 0.6, 0, c_white, 1)
@@ -624,7 +625,7 @@ function scr_draw_armentarium(){
         }     
         //draw_rectangle(xx + 531, yy + 539, xx + 548, yy + 539 + hi, 0);
 
-        if (stc_ships > 0) then speeding_bits[2].draw();
+        if (stc_ships > 0) then speeding_bits[2].draw(xx+719, yy+554);
        for (f =0;f<6;f++){
             if (f>=stc_ships){
                 draw_sprite_ext(spr_research_bar, 1, xx+719, yy+554+((210/6)*f), 1, 0.6, 0, c_white, 1)

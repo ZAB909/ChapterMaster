@@ -269,12 +269,14 @@ if (image="inquisition") and (loc="contraband"){
         var e,ca,ia;e=0;ca=0;ia=0;
         repeat(obj_controller.artifacts){e+=1;
             if (string_count("aemon",obj_ini.artifact_tags[e])>0) or (string_count("haos",obj_ini.artifact_tags[e])>0){
-                obj_ini.artifact[e]="";obj_ini.artifact_tags[e]="";obj_ini.artifact_identified[e]=0;obj_ini.artifact_condition[e]=100;
-                obj_ini.artifact_loc[e]="";obj_ini.artifact_sid[e]=0;obj_controller.artifacts-=1;
+                obj_ini.artifact[e]="";
+                obj_ini.artifact_tags[e]="";
+                obj_ini.artifact_identified[e]=0;
+                obj_ini.artifact_condition[e]=100;
+                obj_ini.artifact_loc[e]="";
+                obj_ini.artifact_sid[e]=0;
+                obj_controller.artifacts-=1;
                 if (obj_controller.menu_artifact>obj_controller.artifacts) then obj_controller.menu_artifact=obj_controller.artifacts;
-                obj_ini.artifact[e]=obj_ini.artifact[e+1];obj_ini.artifact_tags[e]=obj_ini.artifact_tags[e+1];
-                obj_ini.artifact_identified[e]=obj_ini.artifact_identified[e+1];obj_ini.artifact_condition[e]=obj_ini.artifact_condition[e+1];
-                obj_ini.artifact_loc[e]=obj_ini.artifact_loc[e+1];obj_ini.artifact_sid[e]=obj_ini.artifact_sid[e+1];
             }
         }
         
