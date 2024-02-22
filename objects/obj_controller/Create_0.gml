@@ -384,11 +384,28 @@ h_turn=0;
 y_slide=0;
 new_banner_x=0;
 hide_banner=0;
-// 
+// ui stuff
+var xx=__view_get( e__VW.XView, 0 );
+var yy=__view_get( e__VW.YView, 0 );
+menu_buttons = {
+    "chapter_manage":new main_menu_button(spr_ui_but_1, spr_ui_hov_1),
+    "chapter_settings":new main_menu_button(spr_ui_but_1, spr_ui_hov_1),
+    "apoth":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
+    "reclu":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
+    "lib":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
+    "arm":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
+    "recruit":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
+    "fleet":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
+    "diplo":new main_menu_button(spr_ui_but_2, spr_ui_hov_2),
+    "event":new main_menu_button(spr_ui_but_2, spr_ui_hov_2),
+    "end_turn":new main_menu_button(spr_ui_but_2, spr_ui_hov_2),
+
+}
 new_button_highlight="";
 // new_button_highlighting=0;
 new_buttons_hide=0;
 new_buttons_frame=0;
+
 
 // ** Sets tooltips **
 tooltip="";

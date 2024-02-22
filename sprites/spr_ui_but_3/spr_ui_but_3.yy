@@ -105,7 +105,7 @@
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"d9e46016-1374-4d24-9c62-4d58e3fa875c","path":"sprites/spr_ui_but_3/spr_ui_but_3.yy",},},},"Disabled":false,"id":"d6651953-2d6f-4025-9383-a3b639dafe8f","IsCreationKey":false,"Key":24.0,"Length":1.0,"Stretch":false,},
           ],},"modifiers":[],"spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
-    "visibleRange": {"x":0.0,"y":0.0,},
+    "visibleRange": null,
     "volume": 1.0,
     "xorigin": 0,
     "yorigin": 0,

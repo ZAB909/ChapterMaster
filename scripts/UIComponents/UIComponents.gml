@@ -390,3 +390,54 @@ function star_ui_name_node(){
 			.finalize()
 		.finalize()	
 }
+
+function main_menu_button(sprite=spr_ui_but_1, sprite_hover=spr_ui_hov_1, xx=0, yy=0) constructor{
+	mouse_enter=0;
+	base_sprite = sprite;
+	hover_sprite = sprite_hover;
+	ossilate = 24;
+	ossilate_down = true;
+	hover_alpha=0;
+	XX=xx;
+	YY=yy;
+	static draw = function(xx=XX,yy=YY,text="", x_scale=1, y_scale=1, width=108, height=42){
+		height *=y_scale
+		width *=x_scale;
+		if (point_in_rectangle(mouse_x, mouse_y,xx, yy, xx+width, yy+height)){
+			if (ossilate>0) then ossilate-=1;
+			if (ossilate<0) then ossilate=0;
+			if (hover_alpha<1) then hover_alpha+=0.42
+			draw_set_blend_mode(bm_add);
+			draw_set_alpha(hover_alpha);
+			draw_sprite(hover_sprite,0,xx,yy);
+			draw_set_blend_mode(bm_normal);
+			ossilate_down = true;
+		} else {
+			if (ossilate_down){
+				if (ossilate<24)then ossilate+=0.5;
+				if (ossilate==24) then ossilate_down=false;
+			} else {
+				if (ossilate>5) then ossilate-=0.5;
+				if(ossilate==5) then ossilate_down=true;
+			}
+			if (hover_alpha>0){
+				hover_alpha-=0.04
+				draw_set_blend_mode(bm_add);
+				draw_set_alpha(hover_alpha);
+				draw_sprite(hover_sprite,0,xx,yy);
+				draw_set_blend_mode(bm_normal);
+			}
+		}
+		draw_set_alpha(1);
+		draw_sprite(base_sprite,floor(ossilate),xx,yy);
+		draw_set_color(c_white);
+	    draw_set_halign(fa_center);
+	    draw_set_font(fnt_cul_14);
+	    draw_text_ext(xx+(width/2),yy+4, text, 18*y_scale, width-(15*x_scale))
+	}
+}
+
+
+
+
+
