@@ -15,25 +15,6 @@ if (mouse_x>=xx+1262) and (mouse_y>=yy+82) and (mouse_x<=xx+1417) and (mouse_y<y
     obj_controller.new_vehicles=target_comp;
 }
 
-var shop_area="";
-if (mouse_y>=yy+76) and (mouse_y<yy+104) and (obj_controller.cooldown<=0){
-    if (mouse_x>=xx+957) and (mouse_x<xx+1062) then shop_area="equipment";
-    if (mouse_x>=xx+1068) and (mouse_x<xx+1136) then shop_area="equipment2";
-    if (mouse_x>=xx+1167) and (mouse_x<xx+1255) then shop_area="vehicles";
-     if (mouse_x>=xx+1447) and (mouse_x<xx+1545){
-        if (obj_controller.in_forge){
-            shop_area="production";
-        }else {
-            shop_area="warships";
-        }
-    }
-    if (shop_area!=""){
-        obj_controller.cooldown=8000;
-        shop=shop_area
-        instance_create(50,50,obj_shop);
-    }
-}
-
 draw_rectangle(xx+957,yy+76,xx+1062,yy+104,0);
 draw_rectangle(xx+1068,yy+76,xx+1150,yy+104,0);
 draw_rectangle(xx+1167,yy+76,xx+1255,yy+104,0);

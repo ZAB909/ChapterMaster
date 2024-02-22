@@ -32,7 +32,7 @@ function set_up_armentarium(){
             new speeding_dot(0, 0,(210/6)*stc_wargear),
             new speeding_dot(0, 0,(210/6)*stc_vehicles),
             new speeding_dot(0, 0,(210/6)*stc_ships)
-        ]    
+        ]        
 }
 
 function drop_down(selection, draw_x, draw_y, options,open_marker){
@@ -377,22 +377,7 @@ function scr_draw_armentarium(){
     }
 
     draw_set_font(fnt_40k_30b);
-    draw_set_color(c_gray);
-
-    draw_rectangle(xx + 957, yy + 76, xx + 1062, yy + 104, 0);
-    draw_rectangle(xx + 1068, yy + 76, xx + 1150, yy + 104, 0);
-    draw_rectangle(xx + 1167, yy + 76, xx + 1255, yy + 104, 0);
-    draw_rectangle(xx + 1447, yy + 76, xx + 1545, yy + 104, 0);
-
     draw_set_color(c_black);
-    draw_text_transformed(xx + 960, yy + 76, string_hash_to_newline("Equipment"), 0.6, 0.6, 0);
-    draw_text_transformed(xx + 1070, yy + 76, string_hash_to_newline("Armour"), 0.6, 0.6, 0);
-    draw_text_transformed(xx + 1170, yy + 76, string_hash_to_newline("Vehicles"), 0.6, 0.6, 0);
-    if (in_forge){
-        draw_text_transformed(xx + 1450, yy + 76, string_hash_to_newline("Manufactoring"), 0.6, 0.6, 0);
-    } else{
-        draw_text_transformed(xx + 1450, yy + 76, string_hash_to_newline("Ships"), 0.6, 0.6, 0);
-    }
 
     draw_set_alpha(0.2);
     if (mouse_y >= yy + 76) and(mouse_y < yy + 104) {
