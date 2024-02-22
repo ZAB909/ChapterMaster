@@ -1413,6 +1413,11 @@ global.gear = {
     },
      "Ork Armour": {
      "abbreviation": "OrkArm", 
+      "armour_value": {
+        "standard": 7,
+        "master_crafted": 8,
+        "artifact": 9
+      },     
       "ranged_mod": {
         "standard": 0,
         "master_crafted": 5, // Augmented
@@ -1427,6 +1432,11 @@ global.gear = {
     },
     "Scout Armour": {
     "abbreviation": "scout",
+      "armour_value": {
+        "standard": 11,
+        "master_crafted": 12,
+        "artifact": 14
+      },    
       "ranged_mod": {
         "standard": 15,
         "master_crafted": 20, // Augmented
@@ -1588,6 +1598,15 @@ global.gear = {
             "artifact": 9 // Augmented
         },                   
     },
+    "Dragon Scales":{
+        "abbreviation": "DraArm",
+        "description": "advanced armour used by tech priests it is  remarkably lightweight for the protection it affords and is often greatly modified by it's wearer",
+         "armour_value": {
+            "standard": 12,
+            "master_crafted": 14, // Augmented
+            "artifact": 16 // Augmented
+        },                   
+    },    
     "Armoured Ceramite":{
         "abbreviation": "ArmCeri",
         "description": "Supplemental ceramite armour packages provide protection far beyond stock configurations",
@@ -1599,7 +1618,7 @@ global.gear = {
         "tags":["vehicle","armour"],              
     },
     "Heavy Armour":{
-        "abbreviation": "ArmCeri",
+        "abbreviation": "Hvy Arm",
         "description": "Simple but effective, extra armour plates can be attached to most vehicles to provide extra protection.",
          "armour_value": {
             "standard": 10,
@@ -1609,7 +1628,7 @@ global.gear = {
         "tags":["vehicle","armour"],              
     },
     "Artificer Hull":{
-        "abbreviation": "ArmCeri",
+        "abbreviation": "ArtiHull",
         "description": "Replacing numerous structural members and armour plates with thrice-blessed replacements, the vehicle’s hull is upgraded to be a rare work of mechanical art.",
          "armour_value": {
             "standard": 10,

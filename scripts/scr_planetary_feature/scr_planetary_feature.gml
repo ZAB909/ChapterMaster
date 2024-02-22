@@ -23,12 +23,21 @@ enum P_features {
 			Victory_Shrine,
 			Arsenal,
 			Gene_Vault,
+			Forge
 	};
 	
 enum base_type{
 	Lair,
 }
-	// Function creates a new struct planet feature of a  specified type
+
+function player_forge() constructor{
+	constructions = [];
+	size = 1;
+	techs_working = 0;
+	f_type = P_features.Forge;
+}
+
+// Function creates a new struct planet feature of a  specified type
 function new_planet_feature(feature_type, other_data={}) constructor{
 	f_type = feature_type;
 	static reveal_to_player = function(){
@@ -43,6 +52,7 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		player_hidden = 1
 		planet_display = "Dormant Necron Tomb";
 		break;
+
 	case P_features.Secret_Base:
 		base_type = 0;
 		inquis_hidden =1;
@@ -54,7 +64,8 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		}
 		built = obj_controller.turn +3;
 		forge = 0;
-		hippo=0;beastarium=0;
+		hippo=0;
+		beastarium=0;
 		torture=0;
 		narcotics=0;
 		relic=0;
@@ -209,7 +220,9 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		break;
 	case P_features.Monastery:
 		planet_display="Fortress Monastary";
-		player_hidden = 0
+		player_hidden = 0;
+		forge=0;
+		name=global.name_generator.generate_imperial_ship_name();
 		break;
 	case P_features.Recruiting_World:
 		planet_display="Recruitment";
@@ -275,7 +288,7 @@ function delete_features(planet, del_feature){
 	var delete_Array = search_planet_features(planet, del_feature)
 	if (array_length(delete_Array) >0){
 		for (var d=0;d<array_length(delete_Array);d++){
-			array_delete(planet, delete_Array[d],delete_Array[d]+1)
+			array_delete(planet, delete_Array[d],1)
 		}
 	}
 }

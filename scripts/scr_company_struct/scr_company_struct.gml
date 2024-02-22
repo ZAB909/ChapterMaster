@@ -16,8 +16,7 @@ function scr_company_struct(comp) constructor{
 	unit_rollover=false;
 	rollover_sequence=0;
 	selected_unit=obj_controller.temp[120];
-
-	
+	drop_down_open=false;
 
 	static draw_squad_view = function(){
 		var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0;
@@ -100,7 +99,7 @@ function scr_company_struct(comp) constructor{
 					draw_unit_buttons([xx+bound_width[0]+5, yy+bound_height[0]+150], tooltip_text,[1,1],c_red);
 					if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text), yy+bound_height[0]+150+string_height(tooltip_text))){
 						tooltip_text = "having squads assigned to Guard Duty will increase relations with a planet over time, it will also bolster planet defence forces in case of attack, and reduce corruption growth";
-						tooltip_draw(xx+bound_width[0]+5,yy+bound_height[0]+150+string_height(tooltip_text), tooltip_text,0,0,150,17);
+						tooltip_draw(xx+bound_width[0]+5,yy+bound_height[0]+150 + string_height(tooltip_text), tooltip_text,0,0,150,17);
 						if (mouse_check_button_pressed(mb_left)){
 							send_on_mission=true;
 							mission_type="garrison";
@@ -111,7 +110,7 @@ function scr_company_struct(comp) constructor{
 						draw_unit_buttons([xx+bound_width[0]+5 + button_row_offset, yy+bound_height[0]+150], tooltip_text,[1,1],c_red);
 						if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5+ button_row_offset, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text)+ button_row_offset, yy+bound_height[0]+150+string_height(tooltip_text))){
 							tooltip_text = "sabotage missions can reduce enemy growth while avoiding direct enemy contact however they are not without risk";
-							tooltip_draw(xx+bound_width[0]+5+ button_row_offset,yy+bound_height[0]+150+string_height(tooltip_text), tooltip_text,0,0,150,17);
+							tooltip_draw(xx+bound_width[0]+5+ button_row_offset,yy+bound_height[0]+150 + string_height(tooltip_text), tooltip_text,0,0,150,17);
 							if (mouse_check_button_pressed(mb_left)){
 								send_on_mission=true;
 								mission_type="sabotage";
@@ -135,6 +134,7 @@ function scr_company_struct(comp) constructor{
 						}
 					}								
 				}
+				bound_height[0] += 180;
 			} else {
 				if (is_struct(current_squad.assignment)){
 					draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+125, $"assignment : {current_squad.assignment.type}",1,1,0);
@@ -160,6 +160,59 @@ function scr_company_struct(comp) constructor{
 							}
 						}
 						current_squad.assignment = "none";
+					}
+				}
+				bound_height[0] += 180;
+			}
+			//TODO compartmentalise drop down option logic
+			if (current_squad.formation_place!=""){
+				var deploy_text = "Squad will deploy in the";
+				draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0], deploy_text,1,1,0);
+				draw_unit_buttons([xx+bound_width[0]+5 + string_width(deploy_text), yy+bound_height[0]],current_squad.formation_place,[1,1],c_green);
+				draw_set_color(c_red);
+				draw_text_transformed(xx+bound_width[0]+5+ string_width(deploy_text) + string_width(current_squad.formation_place)+9, yy+bound_height[0], "column",1,1,0);
+				if (array_length(current_squad.formation_options)>1){
+					if (point_in_rectangle(
+						mouse_x,
+						mouse_y,
+						xx+bound_width[0]+5+ string_width(deploy_text), 
+						yy+bound_height[0], 
+						xx+bound_width[0]+13+ string_width(deploy_text) +string_width(current_squad.formation_place), 
+						yy+bound_height[0]+4+string_height(current_squad.formation_place)
+					)){
+						drop_down_open = true;
+					}
+					if (drop_down_open){
+						var roll_down_offset=4+string_height(current_squad.formation_place);
+						for (var col = 0;col<array_length(current_squad.formation_options);col++){
+							if (current_squad.formation_options[col]==current_squad.formation_place) then continue;
+							draw_unit_buttons([xx+bound_width[0]+5 + string_width(deploy_text), yy+bound_height[0]+roll_down_offset],current_squad.formation_options[col],[1,1],c_red);
+							if (mouse_check_button_pressed(mb_left) && 
+								point_in_rectangle(
+										mouse_x,
+										mouse_y,
+										xx+bound_width[0]+5+string_width(deploy_text), 
+										yy+bound_height[0]+roll_down_offset, 
+										xx+bound_width[0]+13+ string_width(deploy_text) +string_width(current_squad.formation_options[col]), 
+										yy+bound_height[0]+roll_down_offset+string_height(current_squad.formation_options[col])+4									
+									)){
+								current_squad.formation_place = current_squad.formation_options[col];
+								drop_down_open = false;
+							}
+							roll_down_offset += string_height(current_squad.formation_options[col])+4;
+
+						}
+						if (!point_in_rectangle(
+								mouse_x,
+								mouse_y,
+								xx+bound_width[0]+5+string_width(deploy_text),
+								yy+bound_height[0],
+								xx+bound_width[0]+13+ string_width(deploy_text) +string_width(current_squad.formation_place),
+								yy+bound_height[0]+roll_down_offset,
+							)
+						){
+							drop_down_open = false;
+						}
 					}
 				}
 			}

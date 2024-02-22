@@ -110,6 +110,7 @@ year=0;
 millenium=0;
 company_spawn_buffs = [];
 role_spawn_buffs ={};
+previous_forge_masters = [];
 
 /* if (global.load=0){
     if (obj_creation.custom>0) then scr_initialize_custom();

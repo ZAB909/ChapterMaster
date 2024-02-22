@@ -45,8 +45,8 @@ function role_groups(group){
 
 		case "squad_leaders":
 			role_list = [
-				obj_ini.role[100,18], //sergeant
-				obj_ini.role[100,19],  //vet sergeant
+				obj_ini.role[100][18], //sergeant
+				obj_ini.role[100][19],  //vet sergeant
 			]
 			break;
 		case "command":
@@ -67,7 +67,15 @@ function role_groups(group){
 	        role_list = [
 				obj_ini.role[100][6],//dreadnought
 				string("Venerable {0}",obj_ini.role[100][6]),
-			]
+			];
+			break;
+		case "forge":
+	        role_list = [
+				obj_ini.role[100][16],//techmarine
+				"Forge Master",
+				"Techpriest"
+			];
+			break;	
 	}
 	return role_list;
 }
@@ -112,10 +120,7 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 			}
 			break;
 		case "forge":
-			specialists = [
-						obj_ini.role[100][16],//techmarine
-						"Forge Master", 
-			];
+			specialists = role_groups("forge");
 			if (include_trainee){
 				array_push(specialists,  string("{0} Aspirant",obj_ini.role[100][16]));
 			}			
@@ -152,9 +157,166 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 			break;
 		case "squad_leaders":
 			specialists = role_groups("squad_leaders");
+			break;
 		case "dreadnoughts":
-			specialists = role_groups("dreadnoughts");			
+			specialists = role_groups("dreadnoughts");	
+			break;
+		case "veterans":
+			specialists = role_groups("veterans");
+			break;
 	}
 
 	return array_contains(specialists,unit_role);
+}
+
+function collect_role_group(group, location=""){
+	var units = [], unit, count=0, add=false;
+	for (var com=0;com<=10;com++){
+	    for (i=1;i<array_length(obj_ini.TTRPG[com]);i++){
+	    	add=false;
+			unit=obj_ini.TTRPG[com][i];
+			if (unit.name()=="")then continue; 	
+	        if (unit.IsSpecialist(group)){
+	        	if (location==""){
+	        		add=true;
+	       		} else if (unit.is_at_location(location, 0, 0)){
+	       			add=true;
+	       		}
+	        }
+	        if (add) then array_push(units, obj_ini.TTRPG[com][i]);
+	    }    
+	}
+	return units;
+}
+
+function collect_by_religeon(religion, sub_cult="", location=""){
+	var units = [], unit, count=0, add=false;
+	for (var com=0;com<=10;com++){
+	    for (i=1;i<array_length(obj_ini.TTRPG[com]);i++){
+	    	add=false;
+			unit=obj_ini.TTRPG[com][i];
+			if (unit.name()=="")then continue; 	
+	        if (unit.religion == religion){
+	        	if (sub_cult!=""){
+	        		if (unit.religion_sub_cult != "sub_cult"){
+	        			continue;
+	        		}
+	        	}
+	        	if (location==""){
+	        		add=true;
+	       		} else if (unit.is_at_location(location, 0, 0)){
+	       			add=true;
+	       		}
+	        }
+	        if (add) then array_push(units, obj_ini.TTRPG[com][i]);
+	    }    
+	}
+	return units;
+}
+
+function group_selection(group, selection_data){
+	var unit, s, unit_location;
+	obj_controller.selection_data = selection_data;
+	with (obj_controller){
+            menu=1;
+            onceh=1;
+            cooldown=8000;
+            click=1;
+            popup=0;
+            selected=0;
+            hide_banner=1;
+            with(obj_fleet_select){instance_destroy();}
+            with(obj_star_select){instance_destroy();}
+            view_squad=false;
+            managing=0;		
+			zoomed=0;
+			menu=1;
+			managing=0;
+			diplomacy=0;
+            cooldown=8000;
+            exit_button = new shutter_button();
+            proceed_button = new shutter_button();
+            selection_data.start_count=0;
+        // Resets selections for next turn
+            man_size=0;
+            selecting_location="";
+            selecting_types="";
+            selecting_ship=0;
+            selecting_planet=0;
+            sel_uid=0;
+            for (var i=0; i<501; i++){
+                man[i]="";
+                ide[i]=0;
+                display_unit[i]={};
+                man_sel[i]=0;
+                ma_lid[i]=0;
+                ma_wid[i]=0;
+                ma_race[i]=0;
+                ma_loc[i]="";
+                ma_name[i]="";
+                ma_role[i]="";
+                ma_wep1[i]="";
+                ma_wep2[i]="";
+                ma_armour[i]="";
+                ma_health[i]=100;
+                ma_chaos[i]=0;
+                ma_exp[i]=0;
+                ma_promote[i]=0;
+                sh_ide[i]=0;
+                sh_uid[i]=0;
+                sh_name[i]="";
+                sh_class[i]="";
+                sh_loc[i]="";
+                sh_hp[i]="";
+                sh_cargo[i]=0;
+                sh_cargo_max[i]="";
+                squad[i]=0;
+            }
+            alll=0;              
+            cooldown=10;
+            sel_loading=0;
+            unload=0;
+            alarm[6]=7;
+            company_data={};
+            view_squad=false;  	
+            for (var i = 0; i< array_length(group);i++){
+            	s = i+1;
+            	unit = group[i];
+            	unit_location = unit.marine_location();
+                man[s]="man";
+                ide[s]=unit.marine_number;
+                man_sel[s]=0;
+                ma_lid[s]=0;
+                if (unit.planet_location==0){
+                	ma_lid[s]=unit_location[1];
+                }
+                ma_wid[s]=unit.planet_location;
+                ma_race[s]=unit.race();
+                ma_loc[s]=unit_location[2];
+                ma_name[s]=unit.name();
+                ma_role[s]=unit.role();
+                ma_wep1[s]=unit.weapon_one();
+                ma_wep2[s]=unit.weapon_two();
+                ma_armour[s]=unit.armour();
+                ma_health[s]=unit.hp();
+                ma_chaos[s]=unit.corruption;
+                ma_exp[s]=unit.experience();
+                ma_promote[s]=0;
+                display_unit[s]=unit;
+                if (selection_data.purpose_code=="forge_assignment"){
+                	if (unit.job != "none"){
+                		if (unit.job.type=="forge" && unit.job.planet== selection_data.planet){
+							man_sel[s]=1;
+							man_size++;
+							selection_data.start_count++;
+
+                		}                		
+                	}
+                }       	
+            }
+        managing =-1;
+        man_current=1;
+        man_max = array_length(group);
+        man_see=38-4;
+	}
 }

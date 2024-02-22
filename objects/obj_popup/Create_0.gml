@@ -19,6 +19,12 @@ option1="";
 option2="";
 option3="";
 option4="";
+pathway="";
+option1enter=false;
+option2enter=false;
+option3enter=false;
+option4enter=false;
+
 amount=0;
 save=0;
 loc="";
@@ -69,6 +75,12 @@ company_promote_data = [
 ]
 for (var i=0;i<=10;i++){i+=1;role_name[i]="";role_exp[i]=0;}
 
+reset_options = function(){
+     option1="";
+    option2="";
+    option3="";
+    option4="";   
+}
 
 get_unit_promotion_options = function(){
     var spec=0;

@@ -24,10 +24,10 @@ draw_rectangle(xx+962,yy+107,xx+1579,yy+127,0);
 draw_set_color(0);
 draw_text(xx+962,yy+109,string_hash_to_newline("Name"));
 draw_text(xx+1150,yy+109,string_hash_to_newline("Stocked"));
-draw_text(xx+1330,yy+109,string_hash_to_newline("Requisition"));
+var buy_type = obj_controller.in_forge ?  "Forge Requirement" : "Requisition";
 draw_text(xx+962.5,yy+109.5,string_hash_to_newline("Name"));
 draw_text(xx+1150.5,yy+109.5,string_hash_to_newline("Stocked"));
-draw_text(xx+1330.5,yy+109.5,string_hash_to_newline("Requisition"));
+draw_text(xx+1330.5,yy+109.5,string_hash_to_newline(buy_type));
 draw_set_color(c_gray);
 
 
@@ -43,54 +43,87 @@ if (shop="warships"){
     }
 }
 
-/*if (shop="vehicles"){
-    var lol;
-    lol=" ";if (target_comp=1) then lol="x";draw_text(xx+224,yy+377,"1st ["+string(lol)+"]");
-    lol=" ";if (target_comp=2) then lol="x";draw_text(xx+301,yy+377,"2nd ["+string(lol)+"]");
-    lol=" ";if (target_comp=3) then lol="x";draw_text(xx+378,yy+377,"3rd ["+string(lol)+"]");
-    lol=" ";if (target_comp=4) then lol="x";draw_text(xx+455,yy+377,"4th ["+string(lol)+"]");
-    lol=" ";if (target_comp=5) then lol="x";draw_text(xx+532,yy+377,"5th ["+string(lol)+"]");
-    
-    lol=" ";if (target_comp=6) then lol="x";draw_text(xx+224,yy+389,"6st ["+string(lol)+"]");
-    lol=" ";if (target_comp=7) then lol="x";draw_text(xx+301,yy+389,"7nd ["+string(lol)+"]");
-    lol=" ";if (target_comp=8) then lol="x";draw_text(xx+378,yy+389,"8rd ["+string(lol)+"]");
-    lol=" ";if (target_comp=9) then lol="x";draw_text(xx+455,yy+389,"9th ["+string(lol)+"]");
-    lol=" ";if (target_comp=10) then lol="x";draw_text(xx+532,yy+389,"10th ["+string(lol)+"]");
-}*/
-
 for(var i=1; i<=39; i++){
     y2+=20;
-    if (item[i]!="") and (nobuy[i]=0){
-        draw_set_color(c_gray);
-        if (hover=i) then draw_set_color(c_white);
-        if (!keyboard_check(vk_shift)) or (shop="warships") then draw_text(xx+x2+x_mod[i],yy+y2,string_hash_to_newline(item[i]));// Name
-        if (keyboard_check(vk_shift)) and (shop!="warships") then draw_text(xx+x2+x_mod[i],yy+y2,string_hash_to_newline(string(item[i])+" x5"));// Name
-        
-        if (item_stocked[i]=0) and ((mc_stocked[i]=0) or (shop!="equipment")) then draw_set_alpha(0.5);
-        if (mc_stocked[i]=0) then draw_text(xx+1150,yy+y2,string_hash_to_newline(item_stocked[i]));// Stocked
-        if (mc_stocked[i]>0) then draw_text(xx+1150,yy+y2,string_hash_to_newline(string(item_stocked[i])+"   mc: "+string(mc_stocked[i])));
-        draw_set_alpha(1);
-        
-        draw_sprite_ext(spr_requisition,0,xx+1330,yy+y2+4,1,0.65,0,c_white,1);
-        draw_set_color(16291875);
-        
-        if (!keyboard_check(vk_shift)) and (obj_controller.requisition<item_cost[i]) then draw_set_color(255);
-        if (keyboard_check(vk_shift)) and (obj_controller.requisition<(item_cost[i]*5)) then draw_set_color(255);
-        if (!keyboard_check(vk_shift)) then draw_text(xx+1347,yy+y2,string_hash_to_newline(item_cost[i]));// Requisition
-        if (keyboard_check(vk_shift)) then draw_text(xx+1347,yy+y2,string_hash_to_newline(item_cost[i]*5));// Requisition
+    if (item[i]!=""){
+        if (!obj_controller.in_forge && nobuy[i]=0) ||  (obj_controller.in_forge && forge_cost[i]>0){
+            draw_set_color(c_gray);
+            if (hover=i) then draw_set_color(c_white);
+            if (shop!="production"){
+                if (!keyboard_check(vk_shift)) or (shop="warships") then draw_text(xx+x2+x_mod[i],yy+y2,string_hash_to_newline(item[i]));// Name
+                if (keyboard_check(vk_shift)) and (shop!="warships") then draw_text(xx+x2+x_mod[i],yy+y2,string_hash_to_newline(string(item[i])+" x5"));// Name
+            } else {
+                draw_text(xx+x2+x_mod[i],yy+y2,string_hash_to_newline(item[i][1]));// Name
+            }
+            if (item_stocked[i]=0) and ((mc_stocked[i]=0) or (shop!="equipment")) then draw_set_alpha(0.5);
+            if (mc_stocked[i]=0) then draw_text(xx+1150,yy+y2,string_hash_to_newline(item_stocked[i]));// Stocked
+            if (mc_stocked[i]>0) then draw_text(xx+1150,yy+y2,string_hash_to_newline(string(item_stocked[i])+"   mc: "+string(mc_stocked[i])));
+            draw_set_alpha(1);
 
-        if (!keyboard_check(vk_shift)) and (obj_controller.requisition<item_cost[i]) then draw_set_alpha(0.25);
-        if (keyboard_check(vk_shift)) and (obj_controller.requisition<(item_cost[i]*5)) then draw_set_alpha(0.25);
-        draw_sprite(spr_build_tiny2,0,xx+1530,yy+y2+2);draw_set_alpha(1);
+            if (obj_controller.in_forge){
+                draw_sprite_ext(
+                            spr_forge_points_icon,0, 
+                            xx+1330,
+                            yy+y2+3, 
+                            0.3, 
+                            0.3, 
+                            0,
+                            c_white,
+                            1); 
+            } else{
+                draw_sprite_ext(spr_requisition,0,xx+1330,yy+y2+4,1,0.65,0,c_white,1);
+            }            
+			draw_set_color(16291875)
+            if (obj_controller.in_forge){
+				draw_set_color(#7B3F00)
+			}
+
+            var cost = obj_controller.in_forge ? forge_cost[i] : item_cost[i]
+             if (!obj_controller.in_forge){
+                if (!keyboard_check(vk_shift)) and (obj_controller.requisition<item_cost[i]) then draw_set_color(255);
+                if (keyboard_check(vk_shift)) and (obj_controller.requisition<(item_cost[i]*5)) then draw_set_color(255);
+            }
+            if (shop!="production"){
+                if (keyboard_check(vk_shift)) then cost*=5;
+            }
+
+            draw_text(xx+1347,yy+y2,cost);// Requisition
+            if (!obj_controller.in_forge ){
+                if (obj_controller.requisition< cost) then draw_set_alpha(0.25);
+            }
+
+            draw_sprite(spr_build_tiny2,0,xx+1530,yy+y2+2);
+
+            draw_set_alpha(1);
+           if (obj_controller.in_forge){
+            if (point_in_rectangle(mouse_x, mouse_y, xx+1520, yy+y2+2, xx+1580, yy+y2+18)&& mouse_check_button_pressed(mb_left) ){
+                if (array_length(obj_controller.forge_queue)<20){
+                    var new_queue_item = {
+                        name:item[i],
+                        count:1,
+                        forge_points:forge_cost[i],
+                        ordered:obj_controller.turn,
+                    }
+                    if (shop!="production"){
+                        if (keyboard_check(vk_shift)){
+                            new_queue_item.count = 5;
+                            new_queue_item.forge_points = 5 * forge_cost[i];
+                        }
+                    }
+                    array_push(obj_controller.forge_queue, new_queue_item);
+                }               
+            }
+           }
+        }
+        if (!obj_controller.in_forge && nobuy[i]=1) ||  (obj_controller.in_forge && forge_cost[i]=0){
+            draw_set_alpha(1);
+            draw_set_color(881503);
+            draw_text(xx+x2+x_mod[i],yy+y2,string_hash_to_newline(item[i]));// Name
+            if (item_stocked[i]=0) then draw_set_alpha(0.5);
+            draw_text(xx+1150,yy+y2,string_hash_to_newline(item_stocked[i]));// Stocked
+            draw_set_alpha(1);
+        }
     }
-    if (item[i]!="") and (nobuy[i]=1){
-        draw_set_alpha(1);
-        draw_set_color(881503);
-        draw_text(xx+x2+x_mod[i],yy+y2,string_hash_to_newline(item[i]));// Name
-        if (item_stocked[i]=0) then draw_set_alpha(0.5);
-        draw_text(xx+1150,yy+y2,string_hash_to_newline(item_stocked[i]));// Stocked
-        draw_set_alpha(1);
-    }  
 }
 
 if (tooltip_show!=0){

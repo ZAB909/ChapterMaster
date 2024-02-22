@@ -4,7 +4,6 @@ function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,align
 	draw_set_halign(align);
 	var full_width;
 	var full_height;
-	draw_set_color(colour);
 	if (array_length(position)>2){
 		var full_width = position[2];
 		var full_height= position[3];
@@ -14,6 +13,9 @@ function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,align
 		var full_width = position[0]+text_width+8
 		var full_height = position[1]+text_height+4;
 	}
+	draw_set_color(c_black);
+	draw_rectangle(position[0],position[1], full_width,full_height,0)
+	draw_set_color(colour);
 	draw_text_transformed(position[0]+4,position[1]+2,string_hash_to_newline(text),size_mod[0],size_mod[1],0);
 	draw_rectangle(position[0],position[1], full_width,full_height,1)
 	draw_set_alpha(0.5*alpha_mult);
@@ -23,7 +25,7 @@ function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,align
 		draw_rectangle(position[0],position[1], full_width,full_height,0);
 	}
 	draw_set_alpha(1);
-
+	return [position[0],position[1], full_width,full_height];
 }
 
 function scr_ui_manage() {
@@ -32,7 +34,7 @@ function scr_ui_manage() {
 
 	// This is the draw script for showing the main management screen or individual company screens
 
-	if (menu==1) and (managing>0){
+	if (menu==1) and (managing>0 || managing <0){
 		var unit,i, tooltip_text,x1,x2,y1,y2, var_text;
 		var romanNumerals=scr_roman_numerals();	
 		var bionic_tooltip="",tooltip_drawing=[];
@@ -50,37 +52,38 @@ function scr_ui_manage() {
 		// Var declarations
 	    var c=0,fx="",skin=obj_ini.skin_color;
 		
-		
-	    if (managing>20){
-	    	c=managing-10;
-	    }else if (managing >= 1) and (managing <=10) {
-			fx= romanNumerals[managing - 1] + " Company";
-			c=managing;
-		} else {
-			switch(managing){
-				case 11:
-					fx="Headquarters"
-					break;
-				case 12:
-					fx="Apothecarion";
-					break;
-				case 13:
-					fx="Librarium";
-					break;
-				case 14:
-					fx="Reclusium";
-					break;
-				case 15:
-					fx="Armamentarium";
-					break;
+		if (managing>0){
+		    if (managing>20){
+		    	c=managing-10;
+		    }else if (managing >= 1) and (managing <=10) {
+				fx= romanNumerals[managing - 1] + " Company";
+				c=managing;
+			} else if (managing>10) {
+				switch(managing){
+					case 11:
+						fx="Headquarters"
+						break;
+					case 12:
+						fx="Apothecarion";
+						break;
+					case 13:
+						fx="Librarium";
+						break;
+					case 14:
+						fx="Reclusium";
+						break;
+					case 15:
+						fx="Armamentarium";
+						break;
+				}
 			}
-		}
-
 		// Draw the company followed by chapters name
-	    draw_text(xx+800,yy+74,string_hash_to_newline(string(fx)+", "+string(global.chapter_name)));
-
+	    	draw_text(xx+800,yy+74,string_hash_to_newline(string(fx)+", "+string(global.chapter_name)));			
+		} else if (managing<0){
+			draw_text(xx+800,yy+74,selection_data.purpose);			
+		}
 		
-	    if (managing<=10){
+	    if (managing<=10 && managing>0){
 	        var bar_wid=0,click_check, string_h;
 	        draw_set_alpha(0.25);
 	        if (obj_ini.company_title[managing]!="") then bar_wid=max(400,string_width(string_hash_to_newline(obj_ini.company_title[managing])));
@@ -110,12 +113,65 @@ function scr_ui_manage() {
 	    }
     
 	    // var we;we=string_width(string(global.chapter_name)+" "+string(fx))/2;
-    
-		// Draw arrows
-	    draw_sprite_ext(spr_arrow,0,xx+25,yy+70,2,2,0,c_white,1);// Back
-	    draw_sprite_ext(spr_arrow,0,xx+429,yy+70,2,2,0,c_white,1);// Left
-	    draw_sprite_ext(spr_arrow,1,xx+1110,yy+70,2,2,0,c_white,1);// Right
-    
+    	
+    	if (managing>0){
+			// Draw arrows
+		    draw_sprite_ext(spr_arrow,0,xx+25,yy+70,2,2,0,c_white,1);// Back
+		    draw_sprite_ext(spr_arrow,0,xx+429,yy+70,2,2,0,c_white,1);// Left
+		    draw_sprite_ext(spr_arrow,1,xx+1110,yy+70,2,2,0,c_white,1);// Right
+	    } else {
+			if (exit_button.draw_shutter(xx+400,yy+70, "Exit", 0.5, true)){
+				menu=0;
+                onceh=1;
+                cooldown=8000;
+                click=1;
+                hide_banner=0;
+               	selection_data.system.alarm[3]=4;
+			}
+			if ((man_size==0 || man_size>selection_data.number) && selection_data.start_count==0){
+				proceed_button.draw_shutter(xx+1110,yy+70, "Proceed", 0.5, false);
+			} else {
+				if (proceed_button.draw_shutter(xx+1110,yy+70, "Proceed", 0.5, true)){
+					menu=0;
+	                onceh=1;
+	                cooldown=8000;
+	                click=1;
+	                hide_banner=0;
+	                selections = [];
+	                var forge = selection_data.feature.feature;
+	                for (var i=1; i<500;i++){
+	                	if (ma_name[i]== "") then continue;
+	                	if (man_sel[i]>0){
+	                		switch(selection_data.purpose_code){
+	                			case "forge_assignment":
+	                			forge.techs_working++;
+	                			unit = display_unit[i];
+	                			unit.unload(selection_data.planet, selection_data.system);
+	                			unit.job = {type:"forge", planet:selection_data.planet, location:selection_data.system.name};
+	                			break;
+	                		}
+	                	} else {
+	                		unit = display_unit[i];
+	                		var job = unit.job;
+	                		if (job!="none"){
+		                		if (job.type=="forge" && job.planet== selection_data.planet){
+									unit.job = "none";
+									forge.techs_working--;
+		                		}
+		                	}
+	                	}
+	                }
+	                switch(selection_data.purpose_code){
+	                	case "forge_assignment":
+	                		calculate_research_points();
+	                		break;
+
+	                }
+	                selection_data.system.alarm[3]=4;
+					exit;				
+				}
+			}
+	    }
 	    draw_set_color(0);
 	    draw_rectangle(xx+1005,yy+142,xx+1576,yy+957,0);
 				// swap between squad view and normal view
@@ -416,8 +472,8 @@ function scr_ui_manage() {
 						temp2 = obj_ini.ship[unit_location[1]]
 					};
 					assignment=unit.assignment();
-					if (assignment=="garrison"){
-						temp2+= "(garrison)";
+					if (assignment!="none"){
+						temp2+= $"({assignment})";
 					}else if (fest_planet==0) and (fest_sid>0) and (fest_repeats>0) and (ma_lid[sel]==fest_sid){
 						temp2="=Event=";
 						eventing=true;
@@ -435,7 +491,7 @@ function scr_ui_manage() {
 		            ar_ar=0;ar_we1=0;ar_we2=0;ar_ge=0;ar_mb=0;
 	            	//TODO handle recursively
 		            if (ma_armour[sel]!=""){
-						ma_ar=gear_weapon_data("armour",ma_armour[sel],"abbreviation");
+						ma_ar=gear_weapon_data("armour",unit.armour(),"abbreviation");
 						ma_ar=is_string(ma_ar) ? ma_ar : "";
 		                // if (string_count("*",ma_ar)>0){ar_ar=2;ma_ar=string_replace(ma_ar,"*","");}
 		                if (string_count("^",ma_armour[sel])>0){
@@ -702,7 +758,7 @@ function scr_ui_manage() {
 		        } else {
 			        if (man[sel]=="man"){
 			        		c = managing<=10 ? managing : 0;
-							var unit = obj_ini.TTRPG[c][ide[sel]];
+							var unit = display_unit[sel];
 		  
 			                if (ma_lid[sel]>0) and (ma_wid[sel]==0){
 			                    draw_sprite(
@@ -1000,7 +1056,7 @@ function scr_ui_manage() {
 				y5=yy+831;
 				x6=xx+1436;
 				y6=yy+805;
-				if (sel_promoting==1){
+				if (sel_promoting>0){
 					draw_unit_buttons([x5,y6, x6, y5],"Promote");
 				}else {
 					draw_unit_buttons([x5,y6, x6, y5],"Promote",[1.5,1.5],c_gray,fa_left, fnt_40k_14b, 0.5);
@@ -1046,76 +1102,11 @@ function scr_ui_manage() {
 			}
 		}		
 		if instance_exists(cn)and (is_struct(cn.temp[120])){
-			if (cn.temp[120].name()!="") and (cn.temp[120].race()=="1"){
+			if (cn.temp[120].name()!="") and (cn.temp[120].race()!=0){
 				draw_set_alpha(1);
 				var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0
-		        if ((point_in_rectangle(mouse_x, mouse_y, xx+1208, yy+168, xx+1374, yy+409) || obj_controller.unit_profile) and (!instance_exists(obj_temp3)) and(!instance_exists(obj_popup))){
-		        	var stat_tool_tips = [];
-		        	var stat_tool_tip_text = "";
-		        	draw_set_color(0);
-		    		draw_rectangle(xx+1004,yy+519,xx+1576,yy+957,0);
-		    		var stat_x = xx+1004;
-		    		var stat_y = yy+519;
-		    		var stat_display = string_hash_to_newline($"DEX#{selected_unit.dexterity}");
-		    		var stat_size = tooltip_draw(stat_x,stat_y, stat_display,2);
-		    		var warp_box_size = tooltip_draw(stat_x,stat_y+string_height(stat_display)+6,$"Warp Level:{selected_unit.psionic}");
-
-
-		    		stat_tool_tip_text="Measure of how quick and nimble unit is as well as their base ability to manipulate and do tasks with their hands (improves ranged attack)";
-		    		array_push(stat_tool_tips,[stat_x, stat_y, stat_x+string_width(stat_display), stat_y+string_height(stat_display),stat_tool_tip_text]);
-		    		stat_x += stat_size[0];
-
-		    		//string interpolation not possible when declaring lists
-		    		stat_display_list = [
-		    			["STR#"+string(selected_unit.strength),
-		    			"How strong a unit is (can wield heavier equipment without detriment and is more deadly in close combat)"],
-		    			["CON#"+string(selected_unit.constitution),
-		    			"Unit's general toughness and resistance to damage (increases health and damage resistance)"],
-		    			["INT#"+string(selected_unit.intelligence),
-		    			"measure of learnt knowledge and specialist skill aptitude"],
-		    			["WIS#"+string(selected_unit.wisdom),
-		    			"units perception and street smarts"],
-		    			["FAI#"+string(selected_unit.piety),
-		    			"units faith in their given religion (or general aptitude towards faith)"],
-		    			["WS#"+string(selected_unit.weapon_skill),
-		    			"general skill with close combat weaponry"],
-		    			["BS#"+string(selected_unit.ballistic_skill),
-		    			"general skill with ballistic and ranged weaponry"],
-		    			["LU#"+string(selected_unit.luck),
-		    			"...luck..."],
-		    			["TEC#"+string(selected_unit.technology),
-		    			"skill and understanding of technology and various technical thingies"],
-		    			["CHA#"+string(selected_unit.charisma),
-		    			"general likeability and ability to interact with people"],			    					    					    					    			
-		    		]
-		    		for (i=0; i<array_length(stat_display_list);i++){
-		    			stat_display=stat_display_list[i][0];
-		    			stat_tool_tip_text = stat_display_list[i][1];
-		    			stat_size = tooltip_draw(stat_x,stat_y, stat_display,2);
-		    			array_push(stat_tool_tips,[stat_x, stat_y, stat_x+string_width(string_hash_to_newline(stat_display)), stat_y+string_height(string_hash_to_newline(stat_display)),stat_tool_tip_text]);
-		    			stat_x += stat_size[0];
-		    		}
-		    		draw_line(stat_x, yy+519, stat_x, yy+957);
-
-		    		draw_set_alpha(0)
-		    		draw_set_color(c_gray);
-			  
-		       		tooltip_text = "Traits##";
-		       		for (i=0;i<array_length(selected_unit.traits);i++){
-		       			tooltip_text += global.trait_list[$ selected_unit.traits[i]].display_name;
-		       			tooltip_text +="#";
-		       		}
-		       		tooltip_text = string_hash_to_newline(tooltip_text);
-		       		tooltip_draw(stat_x+2,stat_y, tooltip_text);
-		       		if (!obj_controller.view_squad){
-		       			var unit_data_string = selected_unit.unit_profile_text();
-		       			tooltip_draw(xx+25,yy+144, string_hash_to_newline(unit_data_string), 3, 0, 970, 17);
-		       		}
-		       		for (i=0;i<array_length(stat_tool_tips);i++){
-		       			if (point_in_rectangle(mouse_x, mouse_y, stat_tool_tips[i][0], stat_tool_tips[i][1], stat_tool_tips[i][2], stat_tool_tips[i][3])){
-		       				tooltip_draw(stat_tool_tips[i][0], stat_tool_tips[i][3], stat_tool_tips[i][4],0,0,100,17);
-		       			}
-		       		}
+		        if ((point_in_rectangle(mouse_x, mouse_y, xx+1208, yy+168, xx+1374, yy+409) || obj_controller.unit_profile || managing<0) and (!instance_exists(obj_temp3)) and(!instance_exists(obj_popup))){
+		        	selected_unit.stat_display(true);
 		       		//tooltip_draw(stat_x, stat_y+string_height(stat_display),0,0,100,17);
 		        } 
 		        with (obj_controller){

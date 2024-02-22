@@ -255,13 +255,19 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 	assignment="none";
 	class =[];
 	type_data={};
+	formation_place=""
+	formation_options=[];
 	//nickname = scr_squad_names();
 	static add_type_data = function(data){
 		type_data=data;
 		display_name = type_data[$ "display_data"];
 		if (struct_exists(type_data, "class")){
-			class = type_data[$ "class"]
+			class = type_data.class;
 		}
+		if (struct_exists(type_data, "formation_options")){
+			formation_options = type_data.formation_options;
+			formation_place = formation_options[0];
+		}		
 	}
 	static change_type = function(new_type){
 		type=new_type;
@@ -306,6 +312,10 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 			scr_kill_unit(members[i][0],members[i][1]);
 		}
 		members = [];
+	}
+
+	static cancel_assignment = function() {
+
 	}
 
 	/*checks the status of squad so it can be either restocked or 

@@ -1,4 +1,4 @@
-function tooltip_draw(base_x, base_y, tooltip, extra_x=0, extra_y=0, defined_width=false, line_gap=0){
+function tooltip_draw(base_x, base_y, tooltip, extra_x=0, extra_y=0, defined_width=false, line_gap=0, draw_color=c_gray){
 	var xx=__view_get( e__VW.XView, 0 )+0;
 	var yy=__view_get( e__VW.YView, 0 )+0;
 	var width,height;
@@ -14,7 +14,7 @@ function tooltip_draw(base_x, base_y, tooltip, extra_x=0, extra_y=0, defined_wid
 	height = string_height(string_hash_to_newline(tooltip))+extra_y;
 	draw_set_color(0);
 	draw_rectangle(base_x,base_y,width+base_x+6,height+base_y+6+base_2,0);
-	draw_set_color(c_gray);
+	draw_set_color(draw_color);
 	draw_rectangle(base_x,base_y,width+base_x+6,height+base_y+6+base_2,1);
 	draw_set_alpha(0.5);
 	draw_rectangle(base_x+1,base_y+1,width+base_x+5,height+base_y+5+base_2,1);
@@ -99,10 +99,12 @@ function scr_ui_popup() {
             
 	            draw_set_color(c_gray);draw_rectangle(xx+21,yy+38+(r*30),xx+600,yy+56+(r*30),0);
 	            if (scr_hit(xx+21,yy+38+(r*30),xx+600,yy+56+(r*30))=true){
-	                draw_set_color(c_black);draw_set_alpha(0.2);draw_rectangle(xx+21,yy+38+(r*30),xx+600,yy+56+(r*30),0);draw_set_alpha(1);
+	                draw_set_color(c_black);
+	                draw_set_alpha(0.2);
+	                draw_rectangle(xx+21,yy+38+(r*30),xx+600,yy+56+(r*30),0);draw_set_alpha(1);
                 
 	                if (obj_controller.mouse_left=1) and (obj_controller.cooldown<=0){
-	                    obj_controller.cooldown=8000;var tag;tag="";
+	                    obj_controller.cooldown=8000;var tag="";
 						switch (r) {
 						    case 1:
 						        tag = "BRB";
@@ -206,7 +208,10 @@ function scr_ui_popup() {
 			                tcost=cost;
 			                if (obj_controller.mouse_left==1) and (obj_controller.cooldown<=0) and (obj_controller.requisition>=tcost) and (alp!=0.33){
 			                    obj_controller.cooldown=8000;obj_controller.requisition-=tcost;
-			                    if (r=1){s_base.forge=1;}
+			                    if (r=1){
+			                    	s_base.forge=1;
+			                    	s_base.forge_data = new player_forge();
+			                    }
 			                    else if (r==2){s_base.hippo=1;}
 			                    else if (r==3){s_base.beastarium=1}
 			                    else if (r==4){s_base.torture=1}
@@ -351,7 +356,7 @@ function scr_ui_popup() {
 	     if (arsenal!=0) or (gene_vault!=0){
  			draw_text_ext(xx+21,yy+65,string_hash_to_newline(string(woob)),-1,595);
 	     }
-	    if (un_upgraded==0){
+	    if (un_upgraded==0 && obj_temp_build.isnew!=1){
 	        draw_set_font(fnt_40k_14b);
 	        if (s_base==0) then draw_text(xx+21,yy+45,string_hash_to_newline("Lair"));
 	        if (arsenal==0) then draw_text(xx+21,yy+110,string_hash_to_newline("Arsenal"));
@@ -368,7 +373,6 @@ function scr_ui_popup() {
 	            draw_set_alpha(0.2);draw_rectangle(xx+300,yy+45,xx+400,yy+65,0);draw_set_alpha(1);
             
 	            if (obj_controller.cooldown<=0) and (obj_controller.mouse_left=1) and (obj_controller.requisition>=1000){
-	                array_push(planet_upgrades, new new_planet_feature(P_features.Secret_Base));
 					obj_temp_build.isnew=1;
 	                obj_controller.cooldown=8000;
 	                obj_controller.requisition-=1000;
@@ -791,6 +795,9 @@ function scr_ui_popup() {
 			    }
 			}
 		}
+	    if (point_in_rectangle(mouse_x, mouse_y, xx+3, yy+50, xx+67, yy+114)){
+	        tooltip_draw(xx+3,yy+114, obj_controller.forge_string);
+	    }		
 
 		if (scr_hit(xx+813,yy+10,xx+960,yy+38)) and (penitent==1) {
 		    var tx=0,ty=0,tool1="",tool2="",plu="",hei_bonus;

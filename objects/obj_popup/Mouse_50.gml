@@ -30,10 +30,10 @@ if (type=98){
 
 
 
-if (option1="") and (type<5){
+if (option1=="") and (type<5){
     obj_controller.cooldown=10;
-    if (instance_exists(obj_turn_end)) and (obj_controller.complex_event=false){if (number!=0) then obj_turn_end.alarm[1]=4;}
-    instance_destroy();exit;
+    if (instance_exists(obj_turn_end)) and (obj_controller.complex_event==false){if (number!=0) then obj_turn_end.alarm[1]=4;}
+    instance_destroy();
 }
 
 if (type>4) and (type!=9) and (cooldown<=0){
@@ -41,7 +41,8 @@ if (type>4) and (type!=9) and (cooldown<=0){
 
     if (mouse_x>=xx+1006) and (mouse_y>=yy+499) and (mouse_x<=xx+1116) and (mouse_y<yy+519){
         obj_controller.cooldown=10;
-        instance_destroy();exit;
+        instance_destroy();
+        exit;
     }
 }
 
@@ -87,55 +88,6 @@ if (type=5) and (cooldown<=0){
             }
         }
     }
-    /*if (before!=target_comp) and (type=5){
-        var i,cap,bear,spec,champ;i=0;cap=0;bear=0;spec=0;champ=0;
-
-        var i;i=-1;
-        repeat(10){i+=1;role_name[i]="";role_exp[i]=0;}
-        req_armour="";req_armour_num=0;
-        req_gear="";req_gear_num=0;
-        req_mobi="";req_mobi_num=0;
-        req_wep1="";req_wep1_num=0;
-        req_wep2="";req_wep2_num=0;
-
-        if (unit_role=obj_ini.role[100][16]){role_name[1]=obj_ini.role[100][16];role_exp[1]=5;spec=1;}
-        if (unit_role=obj_ini.role[100][15]){role_name[1]=obj_ini.role[100][15];role_exp[1]=5;spec=1;}
-        if (unit_role=obj_ini.role[100][6]){role_name[1]="Venerable "+string(obj_ini.role[100][6]);role_exp[1]=400;spec=0;}
-
-
-        if (unit_role=obj_ini.role[100][14]) and (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands"){role_name[1]=obj_ini.role[100][14];role_exp[1]=5;spec=1;}
-        if (unit_role=="Lexicanum"){
-            role_name[1]=obj_ini.role[100,17];role_exp[1]=125;spec=1;
-            role_name[2]="Codiciery";role_exp[2]=80;
-        }
-        if (unit_role=="Codiciery") and (target_comp=0){
-            role_name[1]=obj_ini.role[100,17];role_exp[1]=125;spec=1;
-        }
-
-        var huj=1;
-        if (unit_role=obj_ini.role[100][5]){
-            huj-=scr_role_count(obj_ini.role[100][5],string(target_comp));
-            huj-=scr_role_count("Company Champion",string(target_comp));
-        }
-        if (huj=1) and (target_comp!=0){i+=1;role_name[i]="DoNotChange";}
-
-        target_role=0;all_good=0;
-
-
-        if (obj_controller.command_set[2]=1){var w=0;
-            repeat(10){w+=1;if (role_name[w]!="") and (role_exp[w]>5) then role_exp[w]=5;}
-        }
-
-        /* More elaborate checking here; the EXP should be the minimum for that company.
-        If any of the units are captain, dread, special, etc. then it should be greyed out.
-
-    }*/
-
-
-
-   /* if (before2!=target_role) and (type=5){
-    
-    }*/
 }
 
 /* */
@@ -526,9 +478,9 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
         var role_squad_equivilances = {};//this is the only way to set variables as keys in gml
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][8],"tactical_squad");
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][9],"devastator_squad");
-        variable_struct_set(role_squad_equivilances,obj_ini.role[100][10],"assualt_squad");
+        variable_struct_set(role_squad_equivilances,obj_ini.role[100][10],"assault_squad");
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][12],"scout_squad");
-        variable_struct_set(role_squad_equivilances,obj_ini.role[100][3],"veteran_squad");
+        variable_struct_set(role_squad_equivilances,obj_ini.role[100][3],"sternguard_veteran_squad");
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][4],"terminator_squad");
 
         for(i=0;i<=obj_controller.man_max;i++){
@@ -562,7 +514,7 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
                                 }
                                 mem_unit=obj_ini.TTRPG[target_comp][mahreens];
                                 mem_unit.squad = move_squad; 
-                                if (!is_specialist(mem_unit.role(), "squad_leaders")){
+                                if (!mem_unit.IsSpecialist("squad_leaders")){
                                     mem_unit.update_role(role_name[target_role]);
                                     mem_unit.alter_equipment({
                                         "wep1":req_wep1,

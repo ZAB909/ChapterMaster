@@ -30,10 +30,10 @@ function scr_apothecary_ground() {
 		           			apoth+=((unit.technology/2)+(unit.wisdom/2)+unit.intelligence)/8;//general display of how talented healer the apoth is
 		           		}
 	                
-		                else if (unit.role()==obj_ini.role[100,16]) and (obj_ini.hp[company][v]>=10) and (obj_ini.loc[company][v]=name) and ((obj_ini.gear[company][v]="Servo Arms") or (obj_ini.gear[company][v]="Master Servo Arms")){
+		                else if (unit.role()==obj_ini.role[100][16]) and (obj_ini.hp[company][v]>=10) and (obj_ini.loc[company][v]=name) and ((obj_ini.gear[company][v]="Servo Arms") or (obj_ini.gear[company][v]="Master Servo Arms")){
 		                	tick+=2;
 		                	array_push(engineers,unit)
-		                }else if (unit.role()=="Techpriest") and (obj_ini.hp[company][v]>=10) and (obj_ini.loc[company][v]=name){
+		                }else if (unit.role()=="Techpriest") and (obj_ini.hp[company][v]>=10) and (obj_ini.loc[company][v]==name){
 		                	tick+=2;
 		                	array_push(engineers,unit)
 		                }

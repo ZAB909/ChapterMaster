@@ -47,40 +47,14 @@ if (menu==12) and (cooldown<=0) and (penitorium>0){
             if (mouse_x>=xx+1433) and (mouse_x<xx+1497){
                 cooldown=20;
                 var c=penit_co[qp],e=penit_id[qp];
-                if (obj_ini.race[c,e]=1){
-                    if (obj_ini.age[c,e]<=((millenium*1000)+year)-10) and (obj_ini.zygote==0) and (string_count("Doom",obj_ini.strin2)==0) then gene_seed+=1;
-                    if (obj_ini.age[c,e]<=((millenium*1000)+year)-5) and (string_count("Doom",obj_ini.strin2)==0) then gene_seed+=1;
-                }
 
-                var tek="";
-                if (obj_ini.race[c,e]==1){
-                    tek=obj_ini.wep1[c][e];
-                    if (tek!="") then scr_add_item(tek,1);
-                    tek=obj_ini.wep2[c,e];
-                    if (tek!="") then scr_add_item(tek,1);
-                    tek=obj_ini.armour[c,e];
-                    if (tek!="") then scr_add_item(tek,1);
-                    tek=obj_ini.mobi[c,e];
-                    if (tek!="") then scr_add_item(tek,1);
-                    tek=obj_ini.gear[c,e];
-                    if (tek!="") then scr_add_item(tek,1);
-                }
-
-                tek="";
-                if (obj_ini.race[c,e]=1){
-                    if(is_specialist(obj_ini.role[c,e])){
-                        command-=1;
-                    } else{
-                        marines-=1;
-                    }
-                }
                 if (obj_ini.role[c,e]="Chapter Master"){
                     tek="c";
                     alarm[7]=5;
                     global.defeat=3;
                 }
                 // TODO Needs to be based on role
-                scr_kill_unit(c,e);
+                kill_and_recover(c,e);
                 diplo_char=c;
                 with(obj_ini){scr_company_order(obj_controller.diplo_char);}
                 re=1;
@@ -239,65 +213,6 @@ if (menu==13) and (cooldown<=0) and (artifacts>0){
 }
 // ** Armamentorium STC fragments **
 if (menu==14) and (cooldown<=0){
-    // Gift STC Fragment
-    if (point_in_rectangle(mouse_x, mouse_y, xx + 733, yy + 466, xx + 790, yy + 486) && cooldown <= 0) {
-        if (stc_wargear_un+stc_vehicles_un+stc_ships_un>0){
-            var chick=0;
-            if (known[eFACTION.Imperium]>1) and (faction_defeated[2]==0) then chick=1;
-            if (known[eFACTION.Mechanicus]>1) and (faction_defeated[3]==0) then chick=1;
-            if (known[eFACTION.Inquisition]>1) and (faction_defeated[4]==0) then chick=1;
-            if (known[eFACTION.Ecclesiarchy]>1) and (faction_defeated[5]==0) then chick=1;
-            if (known[eFACTION.Eldar]>1) and (faction_defeated[6]==0) then chick=1;
-            if (known[eFACTION.Tau]>1) and (faction_defeated[8]==0) then chick=1;
-            if (chick!=0){
-                var pop=instance_create(0,0,obj_popup);
-                pop.type=9.1;
-                cooldown=8000;
-            }
-        }
-    }
-    // Identify STC
-    if (mouse_x>xx+621) and (mouse_y>yy+466) and (mouse_x<xx+720) and (mouse_y<yy+486){
-        if (stc_wargear_un + stc_vehicles_un + stc_ships_un > 0){
-				
-            cooldown=8000;
-            audio_play_sound(snd_stc,-500,0)
-            audio_sound_gain(snd_stc,master_volume*effect_volume,0);
-
-
-			if(stc_wargear_un > 0 && 
-			stc_wargear < MAX_STC_PER_SUBCATEGORY &&
-			stc_wargear <= min(stc_vehicles, stc_ships)) {
-					
-				stc_wargear_un--;
-                stc_wargear++;
-                if (stc_wargear==2) then stc_bonus[1]=choose(1,2,3,4,5);
-                if (stc_wargear==4) then stc_bonus[2]=choose(1,2,3);
-			}
-			else if(stc_vehicles_un > 0 && 
-			stc_vehicles < MAX_STC_PER_SUBCATEGORY &&
-			stc_vehicles <= min(stc_wargear, stc_ships)) {
-					
-				stc_vehicles_un--;
-                stc_vehicles++;
-                if (stc_vehicles==2) then stc_bonus[3]=choose(1,2,3,4,5);
-                if (stc_vehicles==4) then stc_bonus[4]=choose(1,2,3);
-			}
-			else if(stc_ships_un > 0 && 
-			stc_ships < MAX_STC_PER_SUBCATEGORY &&
-			stc_ships <= min(stc_vehicles, stc_wargear)) {
-				
-				stc_ships_un--;
-                stc_ships++;
-                if (stc_ships==2) then stc_bonus[5]=choose(1,2,3,4,5);
-                if (stc_ships==4) then stc_bonus[6]=choose(1,2,3);
-			}
-			
-            // Refresh the shop
-            instance_create(1000,1000,obj_shop);
-        }
-        exit;
-    }
 }
 // ** Recruitement **
 if (menu==15) and (cooldown<=0){
@@ -514,7 +429,7 @@ if (menu==20) and (diplomacy==10.1){
                 pop_up.text = $"You summon {dead_lib.name_role()} to your personal chambers. Darting from the shadows you deftly strike his head from his shoulders. With the flesh removed from his skull you place the skull upon a hastily erected shrine."
                 pop_up.type=98;
                 pop_up.image = "chaos";
-                scr_kill_unit(lib[0],lib[1]);
+                kill_and_recover(lib[0],lib[1]);
                 chapter_master.add_trait("blood_for_blood");
             } else {
                 diplomacy_pathway = "daemon_scorn";
@@ -540,7 +455,7 @@ if (menu==20) and (diplomacy==10.1){
                // obj_duel = instance_create(0,0,obj_duel);
                // obj_duel.title = "Ambush Champion";
                // pop.type="duel";
-                //scr_kill_unit(champ[0],champ[1]);
+                kill_and_recover(champ[0],champ[1]);
             } else {
                 diplomacy_pathway = "daemon_scorn";
             }              
@@ -1497,6 +1412,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 with(obj_star_select){instance_destroy();}
                 with(obj_fleet_select){instance_destroy();}
                 view_squad=false;
+                unit_text = true;
             }
             if (menu==1) and (onceh==0){
                 menu=0;
@@ -1623,14 +1539,8 @@ if (action_if_number(obj_saveload, 0, 0) &&
             hide_banner=1;
             if (scr_role_count("Forge Master","0")==0) then menu_adept=1;
             if (menu!=14) and (onceh==0){
-                menu=14;
-                onceh=1;
-                cooldown=8000;
-                click=1;
-                temp[36]=scr_role_count(obj_ini.role[100][16],"");
-                temp[37]=temp[36]+scr_role_count(string(obj_ini.role[100][16])+" Aspirant","");
-            }
-            if (menu==14) and (onceh==0){
+                set_up_armentarium();
+            }else if (menu==14) and (onceh==0){
                 menu=0;
                 onceh=1;
                 cooldown=8000;
@@ -1788,7 +1698,6 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     audio_sound_gain(snd_end_turn,master_volume*effect_volume,0);
 
                     turn+=1;
-
                     with(obj_star){
                         for (var i=0;i<=21;i++){
                             present_fleet[i]=0;
@@ -1815,6 +1724,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     if (instance_exists(obj_en_fleet)){obj_en_fleet.alarm[1]=1;}
                     if (instance_exists(obj_crusade)){obj_crusade.alarm[0]=2;}
 
+                    player_forges=0;
                     requisition+=income;
                     scr_income();
                     gene_tithe-=1;
@@ -1844,6 +1754,11 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 hide_banner=0;
             }
             managing=0;
+            with(obj_ini){
+                for (var i=0;i<11;i++){
+                    scr_company_order(i);
+                }
+            }
         }
     }
     if (zoomed==0) and (menu==40) and (cooldown<=0){
@@ -1902,7 +1817,6 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     man_sel[i]=0;
                     ma_lid[i]=0;
                     ma_wid[i]=0;
-                    ma_uid[i]=0;
                     ma_race[i]=0;
                     ma_loc[i]="";
                     ma_name[i]="";
@@ -2024,7 +1938,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
         }
     }
     // Selecting individual marines
-    if (menu=1) and (managing>0) and (!view_squad && !unit_profile && !company_report){
+    if (menu=1) and (managing>0) || (managing<0) and (!view_squad && !unit_profile && !company_report){
         var company=managing;
         if (company>10){
             company=0;
@@ -2646,8 +2560,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                             unit.load_marine(sh_ide[sel]);
                             ma_loc[q]=sh_name[sel];
                             ma_lid[q]=sh_ide[sel];
-                            ma_wid[q]=0;
-                            ma_uid[q]=sh_uid[sel];                            
+                            ma_wid[q]=0;                       
                         }
                         // Load vehicle to ship
                         if (man[q]=="vehicle") and (ma_loc[q]==selecting_location) and (sh_loc[sel]==selecting_location){
@@ -2657,7 +2570,6 @@ if (action_if_number(obj_saveload, 0, 0) &&
                                 ma_loc[q]=sh_name[sel];
                                 ma_lid[q]=sh_ide[sel];
                                 ma_wid[q]=0;
-                                ma_uid[q]=sh_uid[sel];
                                 veh_loc[managing,q]=sh_name[sel];
 
                                 if (managing<=10){

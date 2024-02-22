@@ -415,6 +415,7 @@ ui_melee_penalty=0;
 ui_ranged_penalty=0;
 
 // ** Sets default mouse vars **
+current_target=false;
 click=0;
 click2=0;
 mouse_left=0;
@@ -526,6 +527,49 @@ menu_adept=0;
 artifacts=0;
 identifiable=0;
 repair_ships=0;
+forge_points = 0;
+forge_string="";
+forge_queue=[];
+player_forges = 0;
+selection_data=false;
+selections = [];
+production_research = {
+    flame : [0,{}],
+    bolt : [1,{}],
+    plasma : [0,{}],
+    psi : [0,{}],
+    melta : [0,{}],
+    chasis : [0,{}],
+    chain :[0,{}],
+    power_fields:[1,{}],
+    las : [0,{}],
+    armour : [
+        0,{
+        stealth : [0,{}],
+        armour : [0,{}],
+		}
+    ]
+}
+
+production_research_pathways ={
+    flame : [["Promethium Tank Brazing"],{}],
+    bolt : [["Hardened Barrel Boring", "Projectile Propellant Purification"],{}],
+    plasma : [[ "Plasma Coil Magnetization"],{}],
+    psi : [["Psionic Resonance Valves"],{}],
+    melta : [["Atomic Chamber Construction"],{}],
+    chasis : [[],{}],
+    chain :[["Adamantine Links"],{}],
+    power_fields:[["Power Field Cooling"],{}],
+    las : [["Light Condensement Chamber"],{}],
+    armour : 
+        [
+            [],
+            {
+                stealth : [["Advanced Servo Motors"],{}],
+                armour : [["Advanced Ceramite Bonding", "Enhanced Nerve Interfacing"],{}],
+            }
+        ]
+}
 // ** STC values **
 stc_wargear=0;
 stc_vehicles=0;
@@ -539,7 +583,14 @@ stc_bonus[1]=0;
 stc_bonus[2]=0;
 stc_bonus[3]=0;
 stc_bonus[4]=0;
-stc_bonus[5]=0;stc_bonus[6]=0;
+stc_bonus[5]=0;
+stc_bonus[6]=0;
+stc_research = {
+    wargear:0,
+    vehicles:0,
+    ships:0,
+    research_focus:"wargear",
+}
 // ** Resets the years **
 check_number=0;
 year_fraction=0;
@@ -1335,6 +1386,9 @@ if (global.chapter_name=="Soul Drinkers") then gene_seed=60;
 squads = true;
 game_start_squads()
 squads = false;
+
+// **sets up starting forge_points
+calculate_research_points()
 // ** Sets up the number of marines per company **
 marines=0;
 marines=obj_ini.specials+obj_ini.firsts+obj_ini.seconds+obj_ini.thirds+obj_ini.fourths+obj_ini.fifths;
