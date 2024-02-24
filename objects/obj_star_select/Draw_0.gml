@@ -302,7 +302,7 @@ if (obj_controller.selecting_planet!=0){
         for (i =0; i <  upgrade_count ;i++){
             if (target.p_upgrades[pp][i].f_type == P_features.Secret_Base){
                 if (target.p_upgrades[pp][i].forge>0){
-                    var forge = target.p_feature[pp][i].forge_data;
+                    var forge = target.p_upgrades[pp][i].forge_data;
                     var size_string= $"{size[forge.size]} Chapter Forge"
                     array_push(planet_displays, [size_string, target.p_upgrades[pp][i].forge_data]);
                 }
