@@ -71,7 +71,7 @@ function scr_add_item(item_name, number_of_items, quality="any") {
 		    			} else {return "standard"}
 		    		}else {
 		    			var quality_item_found=false;
-		    			for (var q=0;q>array_length(obj_ini.equipment_quality[match_slot]);q++){
+		    			for (var q=0;q<array_length(obj_ini.equipment_quality[match_slot]);q++){
 		    				if (obj_ini.equipment_quality[match_slot][q]==quality){
 		    					array_delete(obj_ini.equipment_quality[match_slot], q, 1);
 		    					quality_item_found=true;

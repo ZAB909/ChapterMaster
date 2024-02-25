@@ -57,8 +57,10 @@ function scr_add_artifact(artifact_type, artifact_tags, is_identified, artifact_
 	}
 
 	if (t1="Armour") and (t2=""){
-	    if (rand2<=70){t2="Power Armour";}
-	    else if (rand2<=80){t2="Terminator Armour";}
+	    if (rand2<=70){
+	    	t2=global.power_armour[irandom(array_length(global.power_armour)-1)]
+	    };
+	    else if (rand2<=80){t2=choose("Terminator Armour","Tartaros","Cataphractii Pattern Terminator",);}
 	    else if (rand2<=90){t2="Dreadnought Armour";}
 	    else if (rand2<=100){t2="Artificer Armour";}
 	}

@@ -857,6 +857,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	  				return "exp_low";
 	  			} 	  			
 		   		quality=scr_add_item(new_armour,-1,quality);
+		   		if (quality == "no_item") then return "no_items";
 		   		quality = quality!=undefined? quality:"standard";
 		    } else {
 				return "no_items";
@@ -1318,6 +1319,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	  				return "exp_low";
 	  			}
 		   		quality=scr_add_item(new_gear,-1, quality);
+		   		if (quality == "no_item") then return "no_items";
 		   		quality = quality!=undefined? quality:"standard";
 		    } else {
 		    	return "no_items";
@@ -1431,6 +1433,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
   				return "exp_low";
   			}  			
 	   		quality=scr_add_item(new_weapon,-1,quality);
+	   		if (quality == "no_item") then return "no_items";
 	   		quality = quality!=undefined? quality:"standard";
 	    } else {
 	    	return "no_items";
@@ -1478,6 +1481,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	  				return "exp_low";
 	  			} 	  			
 		   		quality=scr_add_item(new_weapon,-1,quality);
+		   		if (quality == "no_item") then return "no_items";
 		   		quality = quality!=undefined? quality:"standard";
 		    } else {
 		    	return "no_items";
@@ -2026,9 +2030,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 	static forge_point_generation = function(turn_end=false){
 		if (!IsSpecialist("forge")) then return 0;
+		var reasons = {}
 		var points = technology/10;
+		reasons.base = points;
 		if (job!="none"){
 			if (job.type == "forge"){
+				reasons.at_forge = (points+3);
 				points*=2;
 				points+=3;
 				if (turn_end){
@@ -2036,8 +2043,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				}
 			}
 		}
-		if (has_trait("crafter")) then points+=3;
-		return points;
+		if (has_trait("crafter")){
+			points+=3;
+			reasons.crafter = 3;
+		}
+		return [points,reasons];
 	}
 
 	static spawn_old_guard =function(){

@@ -109,13 +109,17 @@ function calculate_research_points(turn_end=false){
         research_points = 0;
         forge_points = 0;
         forge_string="";
-        var heretics = [], forge_master=-1, notice_heresy=false;
+        var heretics = [], forge_master=-1, notice_heresy=false, forge_point_gen=[], crafters=0, at_forge=0, gen_data={};
         var tech_locations=[]
         var techs = collect_role_group("forge");
         for (var i=0; i<array_length(techs); i++){
             if (techs[i].technology>40 && techs[i].hp() >0){
                 research_points += techs[i].technology-40;
-                forge_points += techs[i].forge_point_generation(true);
+                forge_point_gen=techs[i].forge_point_generation(true);
+                gen_data = forge_point_gen[1];
+                if (struct_exists(gen_data,"crafter")) then crafters++;
+                if (struct_exists(gen_data,"at_forge")) then at_forge++;
+                forge_points += forge_point_gen[0];
                 if (techs[i].has_trait("tech_heretic")){
                     array_push(heretics, i);
                 }
@@ -248,6 +252,59 @@ function calculate_research_points(turn_end=false){
                     scr_role_count(obj_ini.role[100][16],"","units")[0].update_role("Forge Master");
                 }
             }
+
+            if (forge_points>0){
+                var master_craft_count, normal_count, quality_string;
+                var reduction_points = forge_points;
+                if (array_length(forge_queue)>0 && forge_points>0){
+                    var forging_length = array_length(forge_queue);
+                    for (var i=0;i<forging_length;i++){
+                        if (forge_queue[i].forge_points<=reduction_points){
+                            reduction_points-=forge_queue[i].forge_points;
+                            if (is_string(forge_queue[i].name)){
+                                master_craft_count=0;
+                                quality_string="";
+                                normal_count=0;
+                                for (var s=0;s<forge_queue[i].count;s++){
+                                    if (irandom(99-crafters-at_forge)==0){
+                                        master_craft_count++;
+                                    } else {
+                                        normal_count++;
+                                    }
+                                }
+                                scr_add_item(forge_queue[i].name, normal_count);
+                                if (master_craft_count>0){
+                                    scr_add_item(forge_queue[i].name, master_craft_count,"master_crafted");
+                                    var numerical_string = master_craft_count==1?"was":"were";
+                                    quality_string=$"X{master_craft_count} {numerical_string} Completed to a Master Crafted standard";
+                                }else {
+                                    quality_string=$"all were completed to a standard STC compliant quality";
+                                }
+                                scr_popup("Forge Completed",$"{forge_queue[i].name} X{forge_queue[i].count} construction finished {quality_string}","","");                        
+                            } else if (is_array(forge_queue[i].name)){
+                                if (forge_queue[i].name[0]=="research"){
+                                    var tier_depth = array_length(forge_queue[i].name[2]);
+                                    var tier_names=forge_queue[i].name[2];
+                                    if (tier_depth==1){
+                                        production_research[$ tier_names[0]][0]++;
+                                    } else if (tier_depth==2){
+                                        production_research[$ tier_names[0]][1][$ tier_names[1]][0]++;
+                                    } else if (tier_depth == 3){
+                                        production_research[$ tier_names[0]][1][$ tier_names[1]][1][$ tier_names[2]][0]++;
+                                    }
+                                }
+                            }
+                            array_delete(forge_queue, i, 1);
+                            i--;
+                            forging_length--;
+                        } else {
+                            forge_queue[i].forge_points -= reduction_points;
+                            reduction_points=0;
+                        }
+                        if (reduction_points<=0) then break;
+                    }
+                }
+            }            
         }
     }   
 }
@@ -264,40 +321,6 @@ function research_end(){
     }    
     if (stc_research[$ stc_research.research_focus]>5000*(research_area_limit+1)){
        identify_stc(stc_research.research_focus);  
-    }
-
-    if (forge_points>0){
-        var reduction_points = forge_points;
-        if (array_length(forge_queue)>0 && forge_points>0){
-            var forging_length = array_length(forge_queue);
-            for (var i=0;i<forging_length;i++){
-                if (forge_queue[i].forge_points<=reduction_points){
-                    reduction_points-=forge_queue[i].forge_points;
-                    if (is_string(forge_queue[i].name)){
-                        scr_add_item(forge_queue[i].name, forge_queue[i].count);
-                    } else if (is_array(forge_queue[i].name)){
-                        if (forge_queue[i].name[0]=="research"){
-                            var tier_depth = array_length(forge_queue[i].name[2]);
-                            var tier_names=forge_queue[i].name[2];
-                            if (tier_depth==1){
-                                production_research[$ tier_names[0]][0]++;
-                            } else if (tier_depth==2){
-                                production_research[$ tier_names[0]][1][$ tier_names[1]][0]++;
-                            } else if (tier_depth == 3){
-                                production_research[$ tier_names[0]][1][$ tier_names[1]][1][$ tier_names[2]][0]++;
-                            }
-                        }
-                    }
-                    array_delete(forge_queue, i, 1);
-                    i--;
-                    forging_length--;
-                } else {
-                    forge_queue[i].forge_points -= reduction_points;
-                    reduction_points=0;
-                }
-                if (reduction_points<=0) then break;
-            }
-        }
     }
 }
 

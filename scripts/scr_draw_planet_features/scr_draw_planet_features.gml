@@ -90,7 +90,7 @@ function feature_selected(Feature) constructor{
 			case P_features.STC_Fragment:
 				generic=true;
 				title = "STC Fragment";
-				body = $"Unload a {obj_ini.role[100][16]} and whatever entourage you deem necessary to recover STC Fragment";
+				body = $"Unload a {obj_ini.role[100][16]} and whatever entourage you deem necessary to recover the STC Fragment";
 				break;	
 			case P_features.Victory_Shrine:
 				draw_text_transformed(xx+(390/2), yy +5, "Victory Shrine", 2, 2, 0);

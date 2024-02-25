@@ -1090,7 +1090,9 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
             obj_controller.cooldown=10;
             obj_controller.diplomacy=target_comp;
             obj_controller.trading_artifact=1;
-            with(obj_controller){scr_dialogue("artifact");}
+            with(obj_controller){
+                scr_dialogue("artifact");
+            }
             instance_destroy();
         }
         if (target_comp=7) or (target_comp>=9){
