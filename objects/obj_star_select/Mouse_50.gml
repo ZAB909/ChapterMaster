@@ -41,23 +41,6 @@ if (instance_exists(obj_fleet_select)){
 if (obj_controller.selecting_planet>0) and (obj_controller.cooldown<=0){
     var current_button="";
     
-    /*if (obj_controller.recruiting_worlds_bought>0) and (target.p_owner[obj_controller.selecting_planet]<=5) and (obj_controller.faction_status[target.p_owner[obj_controller.selecting_planet]]!="War"){
-        if (mouse_x>=xx+348) and (mouse_y>=yy+601) and (mouse_x<xx+348+246) and (mouse_y<yy+627) and (string_count("Recr",target.p_feature[obj_controller.selecting_planet])=0){
-            obj_controller.cooldown=8000;
-            obj_controller.recruiting_worlds_bought-=1;
-            target.p_feature[obj_controller.selecting_planet]+="Recruiting World|";
-            
-            if (obj_controller.selecting_planet=1) then obj_controller.recruiting_worlds+=string(target.name)+" I|";
-            if (obj_controller.selecting_planet=2) then obj_controller.recruiting_worlds+=string(target.name)+" II|";
-            if (obj_controller.selecting_planet=3) then obj_controller.recruiting_worlds+=string(target.name)+" III|";
-            if (obj_controller.selecting_planet=4) then obj_controller.recruiting_worlds+=string(target.name)+" IV|";
-            
-            obj_controller.income_recruiting=(obj_controller.recruiting*-2)*string_count("|",obj_controller.recruiting_worlds);
-            
-            // 135 ; popup?
-        }
-    }*/
-    
     if (button1!="") and (debug=0){
         if (mouse_x>=xx+348) and (mouse_y>=yy+461) and (mouse_x<xx+348+246) and (mouse_y<yy+461+26){
             current_button=button1;obj_controller.cooldown=8000;
@@ -220,6 +203,7 @@ if (loading=0){
             dist=point_distance(xx+159,yy+287,mouse_x,mouse_y);   
             if (dist<=16){
                 obj_controller.selecting_planet=1;
+                garrison = new garrison_force(target.p_operatives[obj_controller.selecting_planet]);
                 feature="";
             }
         }
@@ -228,6 +212,7 @@ if (loading=0){
            if (dist<=16){
                 obj_controller.selecting_planet=2;
                 feature="";
+                garrison = new garrison_force(target.p_operatives[obj_controller.selecting_planet]);
             }
         }
         if (target.planets>=3) and (obj_controller.cooldown<=0){
@@ -235,6 +220,7 @@ if (loading=0){
             if (dist<=16){
                 obj_controller.selecting_planet=3;
                 feature="";
+                garrison = new garrison_force(target.p_operatives[obj_controller.selecting_planet]);
             }
         }
         if (target.planets>=4) and (obj_controller.cooldown<=0){
@@ -242,6 +228,7 @@ if (loading=0){
            if (dist<=16){
                 obj_controller.selecting_planet=4;
                 feature="";
+                garrison = tarnew garrison_force(target.p_operatives[obj_controller.selecting_planet]);
             }
         }
     }

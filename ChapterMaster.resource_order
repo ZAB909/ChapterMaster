@@ -607,6 +607,7 @@
     {"name":"spr_dante","order":2,"path":"sprites/spr_dante/spr_dante.yy",},
     {"name":"spr_um_mk5_helm","order":25,"path":"sprites/spr_um_mk5_helm/spr_um_mk5_helm.yy",},
     {"name":"fnt_large","order":3,"path":"fonts/fnt_large/fnt_large.yy",},
+    {"name":"spr_data_slate","order":30,"path":"sprites/spr_data_slate/spr_data_slate.yy",},
     {"name":"fnt_fancy","order":5,"path":"fonts/fnt_fancy/fnt_fancy.yy",},
     {"name":"fnt_menu","order":7,"path":"fonts/fnt_menu/fnt_menu.yy",},
     {"name":"fnt_info","order":9,"path":"fonts/fnt_info/fnt_info.yy",},

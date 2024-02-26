@@ -339,4 +339,40 @@ function shutter_button() constructor{
 	}
 }
 
+function data_slate() constructor{
+	static_line=1;
+	title="";
+	sub_title="";
+	body_text = "";
+	static draw = function(xx,yy, scale_x=1, scale_y=1){
+		var width = 860*scale_x;
+		draw_sprite_ext(spr_data_slate,1, xx,yy, 1, 1, 0, c_white, 1);
+	    if (static_line<=10) then draw_set_alpha(static_line/10);
+	    if (static_line>10) then draw_set_alpha(1-((static_line-10)/10));		
+		draw_set_color(5998382);
+		var line_move = yy+(70*scale_y)+((36*scale_y)*static_line);
+		draw_line(xx+(30*scale_x),line_move,xx+(820*scale_x),line_move);
+		draw_set_alpha(1);
+		if (irandom(75)=0 && static_line>1){static_line--;}
+		else{
+			static_line+=0.1;
+		}
+		if (static_line>20) then static_line=1;
+		draw_set_color(c_gray);
+		draw_set_halign(fa_center);
+		var draw_height = 	5;
+		if (title!=""){
+			draw_text_transformed(xx+(0.5*width), yy+(50*scale_y), title, 3*scale_x, 3*scale_y, 0);
+			draw_height += (string_height(title)*3)*scale_y;
+		}
+		if (sub_title!=""){
+			draw_text_transformed(xx+(0.5*width), yy+(50*scale_y)+draw_height, sub_title, 2*scale_x, 2*scale_y, 0);
+			draw_height+=(25*scale_y) +(string_height(sub_title)*2)*scale_y;
+		}
+		if (body_text!=""){
+			draw_text_ext(xx+(0.5*width), yy+(50*scale_y)+draw_height, string_hash_to_newline(body_text), -1, width-60);
+		}
+	}
+}
+
 

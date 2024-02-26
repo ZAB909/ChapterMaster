@@ -683,15 +683,17 @@ function scr_enemy_ai_a() {
 	        	var pdf_random = choose(1,2,3,4,5,6);
 	            rand2=(pdf_random*pdf_score);
 	            if (rand1>rand2){
-	                if (ork_score<=3 && p_pdf[run]>30000){
+	            	var active_garrison = pdf_with_player && garrison.total_garrison>0;
+	                if (ork_score>=4) and (p_pdf[run]<=30000) {p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.55+pdf_loss_reduction)));}
+	                else if (ork_score>=4) and (p_pdf[run]<30000){ p_pdf[run]=active_garrison?p_pdf[run]*0.4:0;}
+	                else if (ork_score>=3) and (p_pdf[run]<10000){ p_pdf[run]=active_garrison?p_pdf[run]*0.4:0;}
+	                else if (ork_score<=3 && p_pdf[run]>30000){
 	                	p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.7+pdf_loss_reduction)));
-	                }else if (ork_score>=4) and (p_pdf[run]<=30000) {p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.55+pdf_loss_reduction)));}
-	                else if (ork_score>=4) and (p_pdf[run]<30000){ p_pdf[run]=0;}
-	                else if (ork_score>=3) and (p_pdf[run]<10000){ p_pdf[run]=0;}
+	                }
 	                else if (ork_score>=2) and (p_pdf[run]<2000){ p_pdf[run]=0;}
 	                else if (ork_score>=1) and (p_pdf[run]<200){ p_pdf[run]=0;}
 
-	                if (pdf_with_player && garrison.total_garrison>0){
+	                if (active_garrison){
 	                	var tixt = $"Chapter Forces led by {garrison.garrison_leader.name_role()} on {name} {scr_roman_numerals()[run-1]} were unable to secure PDF victory chapter support requested";
 	                	scr_alert("red","owner",tixt,x,y);
 	                	//garrison.determine_battle(false,rand2-rand1, eFACTION.Ork);

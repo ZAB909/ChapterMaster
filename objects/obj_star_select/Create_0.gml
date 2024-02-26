@@ -17,6 +17,9 @@ chaos=0;
 torpedo=scr_item_count("Cyclonic Torpedo");
 
 feature="";
+garrison="";
+garrison_data_slate = new data_slate();
+garrison_data_slate.title = "Garrison Report"
 
 button1="";
 button2="";

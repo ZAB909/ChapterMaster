@@ -70,7 +70,7 @@ i=0;
  for (i=1;i<array_length(marine_co);i++){
     unit=obj_ini.TTRPG[marine_co[i]][marine_id[i]];
     if (marine_dead[i]=0) and (marine_type[i]="Death Company"){
-        unit.role()="Death Company";
+        unit.update_role("Death Company");
     }
     if (unit.base_group=="astartes"){
         if (marine_dead[i]=0) and (unit.gene_seed_mutations.mucranoid==1) and (ally[i]=false){
@@ -136,7 +136,7 @@ i=0;
         }
         
         if  (obj_ini.race[marine_co[i],marine_id[i]]=1){
-            var age;age=obj_ini.age[marine_co[i],marine_id[i]];
+            var age=obj_ini.age[marine_co[i],marine_id[i]];
             if (age<=((obj_controller.millenium*1000)+obj_controller.year)-10) and (obj_ini.zygote=0) then obj_ncombat.seed_max+=1;
             if (age<=((obj_controller.millenium*1000)+obj_controller.year)-5) then obj_ncombat.seed_max+=1;
         }
@@ -175,12 +175,12 @@ i=0;
             if (obj_ini.race[marine_co[i],marine_id[i]]!=1) then dece=9999;
             
             // if (wah=1){show_message(obj_ini.armour[marine_co[i],marine_id[i]]);}
-            
-            if (wah=1) and (obj_ini.armour[marine_co[i],marine_id[i]]!=""){
+            arti=!is_string(unit.armour(true));
+            if (wah=1) and (unit.armour()!=""){
                 if (marine_armour[i]="Terminator Armour") or (marine_armour[i]="Tartaros") then eqp_chance+=30;
                 if (string_count("&",marine_armour[i])>0){eqp_chance=90;artif=true;}
                 if (dece>eqp_chance){
-                    var last,o;last=0;o=0;
+                    var last=0;o=0;
                     repeat(50){
                         if (last=0){
                             o+=1;artif=false;
@@ -277,7 +277,10 @@ i=0;
                 if (dece<=eqp_chance) then scr_add_item(marine_gear[i],1);
             }
             if (wah=5) and (obj_ini.mobi[marine_co[i],marine_id[i]]!=""){
-                if (string_count("&",marine_mobi[i])>0){eqp_chance=90;artif=true;}
+                if (string_count("&",marine_mobi[i])>0){
+                    eqp_chance=90;
+                    artif=true;
+                }
                 if (marine_dead[i]=2) or (destroy=2) then dece=9999;
                 if (obj_ini.race[marine_co[i],marine_id[i]]!=1) then dece=9999;
                 

@@ -36,9 +36,12 @@ if (target.craftworld=0) and (target.space_hulk=0){
 
 if (target.craftworld=0) and (target.space_hulk=0){
     if (target.owner  = eFACTION.Player) or (target.owner = eFACTION.Ecclesiarchy) then draw_set_color(c_white);if (target.owner = eFACTION.Imperium) then draw_set_color(c_gray);
-    if (target.owner = eFACTION.Mechanicus) then draw_set_color(c_red);if (target.owner = eFACTION.Ork) then draw_set_color(38144);
-    if (target.owner = eFACTION.Tau) then draw_set_color(117758);if (target.owner = eFACTION.Tyranids) then draw_set_color(7492269);
-    if (target.owner = eFACTION.Chaos) then draw_set_color(c_purple);if (target.owner = eFACTION.Necrons) then draw_set_color(65408);
+    if (target.owner = eFACTION.Mechanicus) then draw_set_color(c_red);
+    if (target.owner = eFACTION.Ork) then draw_set_color(38144);
+    if (target.owner = eFACTION.Tau) then draw_set_color(117758);
+    if (target.owner = eFACTION.Tyranids) then draw_set_color(7492269);
+    if (target.owner = eFACTION.Chaos) then draw_set_color(c_purple);
+    if (target.owner = eFACTION.Necrons) then draw_set_color(65408);
     draw_text_transformed(xx+184,yy+180,string_hash_to_newline(string(target.name)+" System"),1,1,0);
 }
 
@@ -329,7 +332,16 @@ if (obj_controller.selecting_planet!=0){
         if (is_struct(feature)){
             feature.draw_planet_features(xx+27+390,yy+165);        
         }
-    }   
+    }else if (garrison!=""){
+        if (garrison.garrison_force){
+            if (!garrison.garrison_leader){
+                garrison.find_leader()
+                garrison_data_slate.sub_title = $"Garrison Leader {garrison.garrison_leader.name_role()}"
+                garrison_data_slate.body_text = garrison.garrison_report();
+            }
+            garrison_data_slate.draw(xx+730, yy);
+        }
+    }
     if (obj_controller.selecting_planet>0){
         var pppp,pp;pppp=obj_controller.selecting_planet;pp=pppp;
         draw_set_color(c_black);
