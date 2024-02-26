@@ -828,6 +828,7 @@
     {"id":{"name":"scr_move_unit_info","path":"scripts/scr_move_unit_info/scr_move_unit_info.yy",},},
     {"id":{"name":"scr_en_weapon","path":"scripts/scr_en_weapon/scr_en_weapon.yy",},},
     {"id":{"name":"scr_special_weapon","path":"scripts/scr_special_weapon/scr_special_weapon.yy",},},
+    {"id":{"name":"scr_dungeon","path":"scripts/scr_dungeon/scr_dungeon.yy",},},
     {"id":{"name":"spr_narthecium_2","path":"sprites/spr_narthecium_2/spr_narthecium_2.yy",},},
     {"id":{"name":"scr_vehicle_weapon","path":"scripts/scr_vehicle_weapon/scr_vehicle_weapon.yy",},},
     {"id":{"name":"scr_wep_abbreviate","path":"scripts/scr_wep_abbreviate/scr_wep_abbreviate.yy",},},
