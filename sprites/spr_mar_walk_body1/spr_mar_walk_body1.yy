@@ -89,7 +89,7 @@
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"b9fc0b41-f1ab-489a-88ea-11a8bf17698a","path":"sprites/spr_mar_walk_body1/spr_mar_walk_body1.yy",},},},"Disabled":false,"id":"a302f0b2-b45a-46cc-93ed-04b24e2a1c90","IsCreationKey":false,"Key":16.0,"Length":1.0,"Stretch":false,},
           ],},"modifiers":[],"spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
-    "visibleRange": {"x":0.0,"y":0.0,},
+    "visibleRange": null,
     "volume": 1.0,
     "xorigin": 10,
     "yorigin": 36,

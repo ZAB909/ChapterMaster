@@ -1,6 +1,6 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-function scr_draw_unit_stat_data(manage=false){
+function scr_draw_unit_stat_data(manage=false,draw_cords = [1004,519]){
 	var xx=__view_get( e__VW.XView, 0 )+0;
 	var yy=__view_get( e__VW.YView, 0 )+0;
 	var stat_tool_tips = [];

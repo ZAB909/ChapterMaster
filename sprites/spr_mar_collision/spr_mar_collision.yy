@@ -89,7 +89,7 @@
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"8045ea39-103b-4f28-ac8f-8c4e6826fbb7","path":"sprites/spr_mar_collision/spr_mar_collision.yy",},},},"Disabled":false,"id":"00599ad0-601a-4cb3-9583-e321154407ec","IsCreationKey":false,"Key":16.0,"Length":1.0,"Stretch":false,},
           ],},"modifiers":[],"spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
-    "visibleRange": {"x":0.0,"y":0.0,},
+    "visibleRange": null,
     "volume": 1.0,
     "xorigin": 0,
     "yorigin": 0,

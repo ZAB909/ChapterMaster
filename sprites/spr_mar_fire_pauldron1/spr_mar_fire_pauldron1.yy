@@ -63,7 +63,7 @@
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"15ca85c2-a667-484b-ad43-0519cbbe3ad6","path":"sprites/spr_mar_fire_pauldron1/spr_mar_fire_pauldron1.yy",},},},"Disabled":false,"id":"b8188cdf-b45d-4742-8d5b-2d124a5dc1ce","IsCreationKey":false,"Key":3.0,"Length":1.0,"Stretch":false,},
           ],},"modifiers":[],"spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
-    "visibleRange": {"x":0.0,"y":0.0,},
+    "visibleRange": null,
     "volume": 1.0,
     "xorigin": 10,
     "yorigin": 36,

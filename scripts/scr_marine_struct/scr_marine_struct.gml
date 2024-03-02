@@ -2723,6 +2723,97 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			};
 		return equip_data;
 	}
+
+	static set_unit_shader = function(){
+		shader_set(sReplaceColor);
+        shader_set_uniform_f(obj_controller.colour_to_find1, obj_controller.sourceR1,obj_controller.sourceG1,obj_controller.sourceB1 );//body  
+        shader_set_uniform_f(obj_controller.colour_to_set1, obj_controller.targetR1,obj_controller.targetG1,obj_controller.targetB1 );
+        shader_set_uniform_f(obj_controller.colour_to_find2, obj_controller.sourceR2,obj_controller.sourceG2,obj_controller.sourceB2 );//helm   
+        shader_set_uniform_f(obj_controller.colour_to_set2, obj_controller.targetR2,obj_controller.targetG2,obj_controller.targetB2 );
+        shader_set_uniform_f(obj_controller.colour_to_find3, obj_controller.sourceR3,obj_controller.sourceG3,obj_controller.sourceB3 );       
+        shader_set_uniform_f(obj_controller.colour_to_set3, obj_controller.targetR3,obj_controller.targetG3,obj_controller.targetB3 );
+        shader_set_uniform_f(obj_controller.colour_to_find4, obj_controller.sourceR4,obj_controller.sourceG4,obj_controller.sourceB4 );   //lens   
+        shader_set_uniform_f(obj_controller.colour_to_set4, obj_controller.targetR4,obj_controller.targetG4,obj_controller.targetB4 );
+        shader_set_uniform_f(obj_controller.colour_to_find5, obj_controller.sourceR5,obj_controller.sourceG5,obj_controller.sourceB5 );
+        shader_set_uniform_f(obj_controller.colour_to_set5, obj_controller.targetR5,obj_controller.targetG5,obj_controller.targetB5 );
+        shader_set_uniform_f(obj_controller.colour_to_find6, obj_controller.sourceR6,obj_controller.sourceG6,obj_controller.sourceB6 );
+        shader_set_uniform_f(obj_controller.colour_to_set6, obj_controller.targetR6,obj_controller.targetG6,obj_controller.targetB6 );
+        shader_set_uniform_f(obj_controller.colour_to_find7, obj_controller.sourceR7,obj_controller.sourceG7,obj_controller.sourceB7 );
+        shader_set_uniform_f(obj_controller.colour_to_set7, obj_controller.targetR7,obj_controller.targetG7,obj_controller.targetB7 );
+        // Special specialist stuff here
+        ttrim=obj_controller.trim;
+		specialist_colours=obj_ini.col_special;
+        if (global.chapter_name=="Dark Angels" && company=1){
+            if (role()==obj_ini.role[100][4])then ui_coloring="bone";
+            if (company==1){
+                if (string_count("Terminator",armour())>0 || armour()=="Tartaros"){
+                    if (array_contains([obj_ini.role[100][5],obj_ini.role[100][7],obj_ini.role[100][19],"Standard Bearer"],role())){
+                        ui_coloring="bone";
+                    }
+                }
+            }
+        }else if ((role()==obj_ini.role[100,2] || role()=="Chapter Master")) and (global.chapter_name=="Blood Angels") then ui_coloring="gold";           		
+		// Chaplain
+        if (IsSpecialist("chap",true)) || (IsSpecialist("apoth",true) && global.chapter_name=="Space Wolves"){
+            shader_set_uniform_f(obj_controller.colour_to_set1, 30/255,30/255,30/255);
+            shader_set_uniform_f(obj_controller.colour_to_set2, 30/255,30/255,30/255);
+            // ttrim=0;
+            specialist_colours=0;
+        }
+		
+		// Apothecary
+        else if (IsSpecialist("apoth",true) and (global.chapter_name!="Space Wolves")){
+            shader_set_uniform_f(obj_controller.colour_to_set1, 255/255,255/255,255/255);
+            shader_set_uniform_f(obj_controller.colour_to_set2, 255/255,255/255,255/255);
+            ttrim=0;
+            specialist_colours=0;
+        }
+		
+		// Techmarine
+        else if (IsSpecialist("forge",true)){
+            shader_set_uniform_f(obj_controller.colour_to_set1, 150/255,0/255,0/255);
+            shader_set_uniform_f(obj_controller.colour_to_set2, 150/255,0/255,0/255);
+            // pauldron
+            shader_set_uniform_f(obj_controller.colour_to_set4, 0/255,70/255,0/255);
+            shader_set_uniform_f(obj_controller.colour_to_set5, 200/255,200/255,200/255);
+            ttrim=1;specialist_colours=0;
+        }
+		
+		// Death Company
+        else if (role()=="Death Company"){
+            shader_set_uniform_f(obj_controller.colour_to_set1, 30/255,30/255,30/255);
+            shader_set_uniform_f(obj_controller.colour_to_set2, 30/255,30/255,30/255);
+            shader_set_uniform_f(obj_controller.colour_to_set3, 30/255,30/255,30/255);
+            shader_set_uniform_f(obj_controller.colour_to_set4, 124/255,0/255,0/255);// Lens
+            shader_set_uniform_f(obj_controller.colour_to_set5, 30/255,30/255,30/255);
+            shader_set_uniform_f(obj_controller.colour_to_set6, 30/255,30/255,30/255);
+            shader_set_uniform_f(obj_controller.colour_to_set7, 124/255,0/255,0/255);// Weapon
+            ttrim=0;
+            specialist_colours=0;
+            
+        }
+		// Deathwing
+        if (ui_coloring="bone"){
+            shader_set_uniform_f(obj_controller.colour_to_set1, 229/255,200/255,123/255);
+            shader_set_uniform_f(obj_controller.colour_to_set2, 229/255,200/255,123/255);
+            shader_set_uniform_f(obj_controller.colour_to_set3, 229/255,200/255,123/255);
+            shader_set_uniform_f(obj_controller.colour_to_set5, 229/255,200/255,123/255);
+            shader_set_uniform_f(obj_controller.colour_to_set6, 229/255,200/255,123/255);
+            ttrim=0;
+            specialist_colours=0;
+        }
+		
+		// Blood Angels
+        else if (ui_coloring="gold"){
+            shader_set_uniform_f(obj_controller.colour_to_set1, 166/255,129/255,0/255);
+            shader_set_uniform_f(obj_controller.colour_to_set2, 166/255,129/255,0/255);
+            shader_set_uniform_f(obj_controller.colour_to_set3, 166/255,129/255,0/255);
+            shader_set_uniform_f(obj_controller.colour_to_set5, 166/255,129/255,0/255);
+            shader_set_uniform_f(obj_controller.colour_to_set6, 166/255,129/255,0/255);
+            ttrim=0;
+            specialist_colours=0;
+        }		
+	}
 	static equipped_artifacts=function(){
 		artis = [
 			weapon_one(true),

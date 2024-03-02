@@ -180,7 +180,7 @@ function scr_draw_unit_image(_background=false){
         var arm_bypass = false;
         var armour_draw =[];        
         ui_coloring=""; 
-		var specialist_colours=obj_ini.col_special; 
+		specialist_colours=obj_ini.col_special; 
         var specific_armour_sprite = "none";
         var unit_is_sniper = false;
         if (role()=="Chapter Master"){ui_specialist=111;}

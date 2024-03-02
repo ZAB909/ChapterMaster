@@ -28,6 +28,17 @@ function scr_cheatcode(argument0) {
                 forge_queue_logic();
             }
         }
+        if (cheatcode_string=="dungeon"){
+            obj_controller.dungeon =  new dungeon_struct();
+            squad=obj_ini.squads[5];
+            for (var i =0;i<array_length(squad.members);i++){
+                array_push(obj_controller.dungeon.members, {
+                    struct:obj_ini.TTRPG[squad.members[i][0]][squad.members[i][1]],
+                    actions : 3,
+                    action_able :true
+                });
+            }
+        }
         if (cheatcode_string=="slaughtersong"){
             create_starship_event();
         }
