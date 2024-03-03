@@ -370,7 +370,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    color_to_main="Sanguine";color_to_secondary="Sanguine";color_to_trim="Black";
 	    color_to_pauldron2="Bone";color_to_pauldron="Bone";color_to_lens="Green";
 	    color_to_weapon="Black";col_special=0;trim=1;
-	    battle_cry="Knowledge is power, guard it well";
+	    battle_cry=choose("None shall find us wanting.","Knowledge is power, guard it well");
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
 	    mutations=0;mutations_selected=0;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
@@ -412,7 +412,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 }
 	
 	if (argument0="Soul Drinkers"){founding="N/A";points=200;
-	    selected_chapter=16;chapter=argument0;icon=14;icon_name="lam";founding=5;
+	    selected_chapter=16;chapter=argument0;icon=14;icon_name="sd";founding= 4;
 	    fleet_type=2;strength=2;purity=10;stability=2;cooperation=2;
 	    adv[1]="Melee Enthusiasts";adv[2]="Kings of Space";adv[3]="Boarders";adv[4]="Daemon Binders";dis[1]="Suspicious";
 	    homeworld="Dead";homeworld_name="Entymion";
@@ -437,6 +437,37 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	}
 
 
+
+if (argument0="Minotaurs"){founding=10;points=450;
+	    selected_chapter=16;chapter=argument0;icon=11;icon_name="min";founding=10;
+	    fleet_type=2;strength=5;purity=10;stability=10;cooperation=2;
+	    adv[1]="Paragon";adv[2]="Siege Masters";adv[3]="Boarders";adv[4]="Enemy: Fallen";dis[1]="Suspicious";
+	    homeworld_exists=0;recruiting_exists=1;
+	    recruiting_world="Death";recruiting_name=global.name_generator.generate_star_name();
+	    homeworld_rule=0;aspirant_trial="Challenge";
+	    // Pauldron2: Left, Pauldron: Right
+	    color_to_main="Brown";color_to_secondary="Brown";color_to_trim="Red";
+	    color_to_pauldron2="Red";color_to_pauldron="Brown";color_to_lens="Red";
+	    color_to_weapon="Brown";col_special=0;trim=1;
+		hchaplain="Ivanus Enkomi"; 
+		fmaster="Spartacus";clibrarian="Plato";hapothecary="Asclepius"
+	    recruiter="Artemis";admiral="Themistocles";
+	    battle_cry="...";
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
+	    mutations=0;mutations_selected=0;
+	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
+	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
+	    disposition[1]=0;// Prog
+	    disposition[2]=100;//Imperium
+		disposition[3]=50;//Admech
+		disposition[4]=60;//Inquisition
+		disposition[5]=25;//Ecclesiarchy
+	    disposition[6]=30;// Astartes
+	    disposition[7]=0;// Reserved
+	    chapter_master_name="Asterion Moloc";chapter_master_melee=5;
+	    chapter_master_ranged=7;chapter_master_specialty=2;
+		flagship_name= "Fidelitas Omicron";
+	}
 
 
 
@@ -463,6 +494,36 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    disposition[7]=0;// Reserved
 	    chapter_master_name="Malakim Phoros";chapter_master_melee=3;
 	    chapter_master_ranged=2;chapter_master_specialty=2;
+	}
+	
+	
+	if (argument0="Black Templars"){founding=4;points=350;
+	    selected_chapter=14;chapter=argument0;icon=10;icon_name="bt";founding=4;
+	    fleet_type=2;strength=10;purity=10;stability=9;cooperation=6;
+	    adv[1]="Melee Enthusiasts";adv[2]="Kings of Space";adv[3]="Reverent Guardians";dis[1]="Psyker Intolerant";dis[2]="Suspicious";
+	    homeworld_exists=0;recruiting_exists=1;
+	    recruiting_name=global.name_generator.generate_star_name();
+		aspirant_trial="Apprenticeship";
+	    // Pauldron2: Left, Pauldron: Right
+	    color_to_main="Black";color_to_secondary="Black";color_to_trim="Black";
+	    color_to_pauldron2="White";color_to_pauldron="White";color_to_lens="Dark Red";
+	    color_to_weapon="Black";col_special=0;trim=1;
+	    battle_cry="No Pity! No Remorse! No Fear";
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
+	    mutations=2;mutations_selected=0;
+	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=1;
+	    zygote=0;betchers=1;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
+		hchaplain="Grimaldus";
+	   disposition[1]=50;// Prog
+	    disposition[2]=60;//Imperium
+		disposition[3]=40;//Admech
+		disposition[4]=30;//Inquisition
+		disposition[5]=80;//Ecclesiarchy
+	    disposition[6]=35;// Astartes
+	    disposition[7]=0;// Reserved
+	    chapter_master_name="Helbrecht";chapter_master_melee=5;
+	    chapter_master_ranged=2;chapter_master_specialty=2;
+		flagship_name= "Eternal Crusader";
 	}
 
 
@@ -505,10 +566,233 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
     
 	    stage=6;
 	}
-
-
-
-
+	//generates custom chapter if it exists
+	if (argument0=chapter21){
+		points=100;
+	    selected_chapter=21;chapter=argument0;icon=icon21;icon_name=icon_name21;founding=founding21;
+	    fleet_type=fleet_type21;
+		strength=strength21;
+		purity=purity21;stability=stability21;cooperation=cooperation21;
+	    homeworld=homeworld_name;recruiting_world=recruiting_world21;recruiting_name=recruiting_name21;
+	    homeworld_exists=homeworld_rule21;recruiting_exists=recruiting_exists21;homeworld_rule=homeworld_rule21;aspirant_trial=aspirant_trial21;
+	    // Pauldron2: Left, Pauldron: Right
+	    color_to_main=color_to_main21;
+		color_to_secondary=color_to_secondary21;color_to_trim=color_to_trim21;
+	    color_to_pauldron2=color_to_pauldron2_21;color_to_paulrdon=color_to_pauldron21;color_to_lens=color_to_lens21;
+	    color_to_weapon=color_to_weapon21;col_special=col_special21;trim=trim21;
+	    hapothecary=hapothecary21;
+	    hchaplain=hchaplain21;
+	    clibrarian=clibrarian21;
+	    fmaster=fmaster21;
+	    admiral=admiral21
+		recruiter=recruiter21
+	    battle_cry=battle_cry_21
+		load_to_ships=[2,0,0];
+		
+	for (var i=1;i<=20;i++){
+    role[100][i] = role_21[i];
+	wep1[100][i]=wep1_21[i]
+	wep2[100][i]=wep2_21[i]
+	armour[100][i]=armour_21[i]
+	gear[100][i]=gear_21[i]
+	mobi[100][i]=mobi_21[i]
+}
+	
+	/*for(var i=100;i<=116;i++){
+		
+	//Honor Guard
+	race[i,2]=1;
+    role[i,2]=role_21[i];
+    wep1[i,2]=wep1_21[i];
+    wep2[i,2]=wep2_21[i];
+    armour[i,2]=armour_21[i];
+	gear[i,2]=gear_21[i]
+	mobi[i,2]=mobi_21[i];
+	
+	//Veteran
+	race[i,3]=1;
+    role[i,3]=role_21[i];
+    wep1[i,3]=wep1_21[i];
+    wep2[i,3]=wep2_21[i];
+    armour[i,3]=armour_21[i];
+	gear[i,3]=gear_21[i]
+	mobi[i,3]=mobi_21[i];
+	
+	//Terminator
+	race[i,4]=1;
+    role[i,4]=role_21[i];
+    wep1[i,4]=wep1_21[i];
+    wep2[i,4]=wep2_21[i];
+    armour[i,4]=armour_21[i];
+	gear[i,4]=gear_21[i]
+	mobi[i,4]=mobi_21[i];
+	
+	//Captain
+	race[i,5]=1;
+    role[i,5]=role_21[i];
+    wep1[i,5]=wep1_21[i];
+    wep2[i,5]=wep2_21[i];
+    armour[i,5]=armour_21[i];
+	gear[i,5]=gear_21[i]
+	mobi[i,5]=mobi_21[i];
+	
+	//Dreadnought
+	race[i,6]=1;
+    role[i,6]=role_21[i];
+    wep1[i,6]=wep1_21[i];
+    wep2[i,6]=wep2_21[i];
+    armour[i,6]=armour_21[i];
+	gear[i,6]=gear_21[i];
+	mobi[i,6]=mobi_21[i];
+	
+	//Compmny Champion
+	race[i,7]=1;
+    role[i,7]=role_21[i];
+    wep1[i,7]=wep1_21[i];
+    wep2[i,7]=wep2_21[i];
+    armour[i,7]=armour_21[i];
+	gear[i,7]=gear_21[i];
+	mobi[i,7]=mobi_21[i];
+	
+	//Tactical
+	race[i,8]=1;
+    role[i,8]=role_21[i];
+    wep1[i,8]=wep1_21[i];
+    wep2[i,8]=wep2_21[i];
+    armour[i,8]=armour_21[i];
+	gear[i,8]=gear_21[i];
+	mobi[i,8]=mobi_21[i];
+	
+	//Devastator
+	race[i,9]=1;
+    role[i,9]=role_21[i];
+    wep1[i,9]=wep1_21[i];
+    wep2[i,9]=wep2_21[i];
+    armour[i,9]=armour_21[i];
+	gear[i,9]=gear_21[i]
+	mobi[i,9]=mobi_21[i];
+	
+	//Assault
+	race[i,10]=1;
+    role[i,10]=role_21[i];
+    wep1[i,10]=wep1_21[i];
+    wep2[i,10]=wep2_21[i];
+    armour[i,10]=armour_21[i];
+	gear[i,10]=gear_21[i];
+	mobi[i,10]=mobi_21[i];
+	
+	//Scout
+	race[i,12]=1;
+    role[i,12]=role_21[i];
+    wep1[i,12]=wep1_21[i];
+    wep2[i,12]=wep2_21[i];
+    armour[i,12]=armour_21[i];
+	gear[i,12]=gear_21[i];
+	mobi[i,12]=mobi_21[i];
+	
+	//Chaplain
+	race[i,14]=1;
+    role[i,14]=role_21[i];
+    wep1[i,14]=wep1_21[i];
+    wep2[i,14]=wep2_21[i];
+    armour[i,14]=armour_21[i];
+	gear[i,14]=gear_21[i];
+	mobi[i,14]=mobi_21[i];
+	
+	//Apothecary
+	race[i,15]=1;
+    role[i,15]=role_21[i];
+    wep1[i,15]=wep1_21[i];
+    wep2[i,15]=wep2_21[i];
+    armour[i,15]=armour_21[i];
+	gear[i,15]=gear_21[i];
+	mobi[i,15]=mobi_21[i];
+	
+	//Techmarine
+	race[i,16]=1;
+    role[i,16]=role_21[i];
+    wep1[i,16]=wep1_21[i];
+    wep2[i,16]=wep2_21[i];
+    armour[i,16]=armour_21[i];
+	gear[i,16]=gear_21[i];
+	mobi[i,16]=mobi_21[i];
+	
+	//Librarian
+	race[i,17]=1;
+    role[i,17]=role_21[i];
+    wep1[i,17]=wep1_21[i];
+    wep2[i,17]=wep2_21[i];
+    armour[i,17]=armour_21[i];
+	gear[i,17]=gear_21[i];
+	mobi[i,17]=mobi_21[i];
+	
+	//Seargeant
+	race[i,18]=1;
+    role[i,18]=role_21[i];
+    wep1[i,18]=wep1_21[i];
+    wep2[i,18]=wep2_21[i];
+    armour[i,18]=armour_21[i];
+	gear[i,18]=gear_21[i];
+	mobi[i,18]=mobi_21[i];
+	
+	//Veteran Seargeant
+	race[i,19]=1;
+    role[i,19]=role_21[i];
+    wep1[i,19]=wep1_21[i];
+    wep2[i,19]=wep2_21[i];
+    armour[i,19]=armour_21[i];
+	gear[i,19]=gear_21[i];
+	mobi[i,19]=mobi_21[i];
+	
+    
+	    }*/
+		
+		//monastery_name=monastery_name21;
+		//master_name=master_name21
+	    equal_specialists=equal_specialists21
+    
+	    load_to_ships=[2,0,0];
+	    // load_to_ships=0;
+    
+	    successors=successors;
+	    mutations=mutations21;
+		mutations_selected=mutations_selected21;
+		
+	    preomnor=preomnor21;
+		voice=voice21;
+		doomed=doomed21;
+		lyman=lyman21;
+		omophagea=omophagea21;
+		ossmodula=ossmodula21;
+		membrane=membrane21;
+	    zygote=zygote21;
+		betchers=betchers21;
+		catalepsean=catalepsean21;
+		secretions=secretions;
+		occulobe=occulobe;
+		mucranoid=mucranoid21;
+	    disposition[1]=disposition21[1];// Prog
+	    disposition[2]=disposition21[2];
+		disposition[3]=disposition21[3];
+		disposition[4]=disposition21[4];
+		disposition[5]=disposition21[5];
+	    disposition[6]=disposition21[6];// Astartes
+	    disposition[7]=disposition21[7];// Reserved
+	    chapter_master_name=chapter_master_name21;
+		chapter_master_melee=chapter_master_melee21;
+	    chapter_master_ranged=chapter_master_ranged21;
+		chapter_master_specialty=chapter_master_specialty21;
+    
+	    adv[1]=adv21[1]
+	    adv[2]=adv21[2]
+	    adv[3]=adv21[3]
+	    adv[4]=adv21[4]
+		
+		dis[1]=dis21[1]
+	    dis[2]=dis21[2]
+	    dis[3]=dis21[3]
+	    dis[4]=dis21[4]
+	}
 
 	/*
 	if (h=1) then it="Power Fists";
