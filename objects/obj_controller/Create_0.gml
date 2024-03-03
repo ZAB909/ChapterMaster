@@ -90,6 +90,7 @@ last_weapons_tab=1;
 complex_event=false;
 current_eventing="";
 chaos_rating=0;
+chapter_made = 0;
 obj_cuicons.alarm[1]=1; // Clean up custom icons
 
 diplomacy_pathway = "";
