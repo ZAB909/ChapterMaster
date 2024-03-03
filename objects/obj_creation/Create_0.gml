@@ -128,6 +128,7 @@ chapter_master_ranged=1;
 chapter_master_specialty=2;
 
 
+
 var i;i=-1;
 repeat(60){i+=1;chapter_id[i]="";chapter_tooltip[i]="Error: The tooltip is missing.";company_title[i]="";}
 chapter_id[1]="Dark Angels";
@@ -158,10 +159,10 @@ chapter_id[9]="Raven Guard";
 chapter_tooltip[9]="Clinging to the shadows and riding the edge of lightning the Raven Guard strike out at the hated enemy with stealth and speed. Using lightning strikes, hit and run tactics, and guerrilla warfare, they are known for being there one second and gone the next.";
 
 chapter_id[10]="Black Templars";
-//chapter_tooltip[10]="Not adhering to the Codex Astartes, Black Templars are a Chapter on an Eternal Crusade with unique organization and high numbers. Masters of assault, they charge at the enemy with zeal unmatched. They hate psykers, and as such, have no Librarians.";
+chapter_tooltip[10]="Not adhering to the Codex Astartes, Black Templars are a Chapter on an Eternal Crusade with unique organization and high numbers. Masters of assault, they charge at the enemy with zeal unmatched. They hate psykers, and as such, have no Librarians.";
 
 chapter_id[11]="Minotaurs";
-//chapter_tooltip[11]="Bronze-clad Astartes of unknown Founding, the Minotaurs prefer to channel their righteous fury in a massive storm of fire, with tanks and artillery. They could be considered the Inquisition’s attack dog, since they often attack fellow chapters suspected of heresy.";
+chapter_tooltip[11]="Bronze-clad Astartes of unknown Founding, the Minotaurs prefer to channel their righteous fury in a massive storm of fire, with tanks and artillery. They could be considered the Inquisition’s attack dog, since they often attack fellow chapters suspected of heresy.";
 
 chapter_id[12]="Blood Ravens";
 chapter_tooltip[12]="Of unknown origins and Founding, the origins of the Blood Ravens are shrouded in mystery and are believed to be tied to a dark truth. This elusive Chapter is drawn to the pursuit of knowledge and ancient lore and produces an unusually high number of Librarians.";
@@ -190,6 +191,345 @@ chapter_id[19]="Star Krakens";
 
 chapter_id[20]="Conservators";
 //chapter_tooltip[20]="Hailing from the Asharn Marches and having established their homeworld on the planet Dekara, these proud sons of Dorn suffer from an extreme lack of supplies, Ork raids, and more. Though under strength and lacking equipment, they managed to forge an interstellar kingdom loyal to both Emperor and Imperium.";
+
+chapter_id[21]= "Custom";
+chapter_tooltip[21]="Your Chapter";
+
+//Stores info for custom chapter
+
+
+
+
+chaptersave  = "chaptersave#1.ini"
+
+chapter21 ="Custom";
+if(file_exists("chaptersave#1.ini")=true){
+	chapter_made=1;
+}
+else if (file_exists("chaptersave#1.ini")=false){
+	chapter_made=0;
+}
+
+
+
+
+if((file_exists("chaptersave#1.ini")=true) and (chapter_made=1)){
+	ini_open("chaptersave#1.ini")
+	chapter_id[21]= ini_read_string("Save","chapter_id","Custom");
+	chapter21 = ini_read_string("Save","chapter_name",chapter);
+	icon21= ini_read_real("Save","icon#",icon);
+	   icon_name21= ini_read_string("Save","icon_name","custom");
+	   strength21 = ini_read_real("Save","strength",strength);
+	    purity21 = ini_read_real("Save","purity",purity);
+	   stability21= ini_read_real("Save","stability",stability);
+		cooperation21=ini_read_real("Save","cooperation",cooperation);
+		founding21 = ini_read_real("Save","founding",1);
+		
+		fleet_type21=ini_read_real("Save","fleet_type",1);
+		homeworld21 = ini_read_string("Save","homeworld",homeworld);
+		homeworld_name21 = ini_read_string("Save","homeworld_name",homeworld_name);
+		 recruiting_world21= ini_read_string("Save","recruiting",recruiting);
+		recruiting_name21 = ini_read_string("Save","recruiting_name",recruiting_name);
+		homeworld_exists21 = ini_read_real("Save","home_worldexists",homeworld_exists);
+		recruiting_exists21= ini_read_real("Save","recruiting_exists",recruiting_exists);
+		homeworld_rule21= ini_read_real("Save","home_world_rule",homeworld_rule);
+		aspirant_trial21=ini_read_string("Save","aspirant_trial",aspirant_trial);
+		
+		color_to_main21= ini_read_string("Controller","main_color","Red");
+	    color_to_secondary21= ini_read_string("Controller","secondary_color","Red");
+	    color_to_trim21 = ini_read_string("Controller","trim_color","Red");
+	   color_to_pauldron2_21 = ini_read_string("Controller","pauldron2_color","Red");
+	    color_to_pauldron21 = ini_read_string("Controller","pauldron_color","Red")
+	   color_to_lens21 = ini_read_string("Controller","lens_color","Lime");
+	   color_to_weapon21 = ini_read_string("Controller","weapon_color","Red");
+	   col_special21 = ini_read_real("Controller","col_special",col_special);
+	   trim21 = ini_read_real("Controller","trimmed",trim);
+	   equal_specialists21 = ini_read_real("Controller","equal_specialists",1);
+		
+	
+	
+	
+		preomnor21= ini_read_real("Creation","preomnor",preomnor);
+	    voice21 = ini_read_real("Creation","voice",voice);
+	    doomed21 = ini_read_real("Creation","doomed",doomed);
+	    lyman21 = ini_read_real("Creation","lyman",lyman);
+	    omophagea21 = ini_read_real("Creation","omophagea",omophagea);
+	    ossmodula21 = ini_read_real("Creation","ossmodula",ossmodula);
+	    membrane21 = ini_read_real("Creation","membrane",membrane);
+	    zygote21 = ini_read_real("Creation","zygote",zygote);
+	    betchers21= ini_read_real("Creation","betchers",betchers);
+	    catalepsean21 = ini_read_real("Creation","catalepsean",catalepsean);
+	    secretions21= ini_read_real("Creation","secretions",secretions);
+	    occulobe21 = ini_read_real("Creation","occulobe",occulobe);
+	    mucranoid21=ini_read_real("Creation","mucranoid",mucranoid)
+		battle_cry_21 = ini_read_string("Creation","battle_cry","For The Emperor");
+		
+		recruiter21= ini_read_string("Creation","recruiter_name",recruiter);
+		mutations21= ini_read_string("Creation","mutation",mutations);
+		mutations_selected21=ini_read_real("Creation","mutations_selected",2);
+	    successors21= ini_read_real("Creation","successors",successors);
+	    disposition21[1]= ini_read_real("Creation","progenitor_disposition",disposition[1]);
+	    disposition21[2]=ini_read_real("Creation","imperium_disposition",disposition[2]);
+	    disposition21[3]=ini_read_real("Creation","admech_disposition",disposition[3]);
+		disposition21[6]=ini_read_real("Creation","astartes_disposition",disposition[6]);
+		disposition21[4]=ini_read_real("Creation","inquisition_disposition",disposition[4]);
+		disposition21[5]=ini_read_real("Creation","ecclesiarchy_disposition",disposition[5]);
+		disposition21[7]=ini_read_real("Creation","reserved_disposition",disposition[7]);
+		
+		
+		
+	    clibrarian21= ini_read_string("Creation","chief_name",clibrarian);
+	    hchaplain21 = ini_read_string("Creation","high_name",hchaplain);
+	    hapothecary21=ini_read_string("Creation","high2_name",hapothecary);
+	    fmaster21= ini_read_string("Creation","forgey_name",fmaster);
+	    admiral21=ini_read_string("Creation","lord_name",admiral);
+		chapter_master_name21 = ini_read_string("Creation","master_name",chapter_master_name);
+		chapter_master_melee21 = ini_read_real("Creation","chapter_master_melee",chapter_master_melee);
+		chapter_master_ranged21= ini_read_string("Creation","master_ranged",chapter_master_ranged);
+		chapter_master_specialty21=ini_read_string("Creation","master_specialty",chapter_master_specialty);
+		adv21=[1,2,3,4]
+		dis21=[1,2,3,4]
+		for(var i =1;i<=4;i++){
+			
+			adv21[i]=ini_read_string("Creation","adv21"+string(i),"")
+			dis21[i]=ini_read_string("Creation","dis21"+string(i),"")
+		}
+		
+		for(var i=0;i<=22;i++){
+    role_21[i]= ini_read_string("Save","role_21"+string(i),"Tactical");
+	wep1_21[i]= ini_read_string("Save","wep1_21"+string(i),"Chainsword");
+	wep2_21[i]=ini_read_string("Save","wep2_21"+string(i),"Bolter")
+	armour_21[i]= ini_read_string("Save","armour_21"+string(i),"Power Armor");
+	 gear_21[i]= ini_read_string("Save","gear_21"+string(i),"");
+	mobi_21[i]= ini_read_string("Save","mobi_21"+string(i),"");
+}
+stage = 6;
+ini_close();
+}
+
+
+else if (file_exists("chaptersave#1.ini")=false){
+ adv21 = [1,2,3,4]
+ dis21 =[1,2,3,4]
+ disposition21 = [1,2,3,4,5,6,7]
+ founding21=4;
+ 
+ icon21=4;
+icon_name21="if";
+ fleet_type21=1;
+strength21=2;
+ purity21=5;
+ stability21=5;
+ cooperation21=2;
+ homeworld21=1
+ homeworld_name21="World"
+ recruiting_world21=homeworld_name21
+recruiting_name21=homeworld_name21
+homeworld_exists21=1;
+recruiting_exists21=1;
+homeworld_rule21=2;
+ aspirant_trial21=2;
+role_21= []
+race_21=[]
+wep1_21=[]
+wep2_21=[]
+armour_21=[]
+gear_21=[]
+mobi_21=[];
+
+// Pauldron2: Left, Pauldron: Right
+color_to_main21="Red"
+color_to_secondary21="";
+color_to_trim21="Red";
+color_to_pauldron21="Red"; 
+		 color_to_pauldron2_21="Red";
+		 color_to_lens21="Red";
+	     color_to_weapon21="Red";
+		 col_special21="Red";
+		 trim21=1;
+	     hapothecary21="Doc";
+	     hchaplain21="Warg";
+	     clibrarian21="Witch";
+	     fmaster21="Smith";
+	     admiral21="Sailor";
+		 recruiter21="Sarge";
+	     battle_cry_21="WAAAGH";
+		 monastery_name21="Okay";
+		 master_name21="SHH";
+	     equal_specialists21=1;
+    
+	     load_to_ships=[2,0,0];
+	    // load_to_ships=0;
+    
+	     successors21=4;
+	     mutations21=2;
+		 mutations_selected21=2;
+	     preomnor21=0;
+		 voice21=0;
+		 doomed21=0;
+		 lyman21=0;
+		 omophagea21=0;
+		 ossmodula21=0;
+		 membrane21=1;
+	     zygote21=0;
+		 betchers21=1;
+		 catalepsean21=0;
+		 secretions21=0;
+		 occulobe21=0;
+		 mucranoid21=0;
+	    disposition21[1]=20;// Prog
+	    disposition21[2]=20;
+		disposition21[3]=20;
+		disposition21[4]=20;
+		disposition21[5]=20;
+	    disposition21[6]=20;// Astartes
+	    disposition21[7]=20;// Reserved
+	     chapter_master_name21="Git smacka";
+		 chapter_master_melee21=1;
+	     chapter_master_ranged21=1;
+		 chapter_master_specialty21=1;
+    
+	    adv21[1]="Ambushers";
+	    adv21[2]="Boarders";
+	    adv21[3]="Crafters";
+	    adv21[4]="Enemy; Orks";
+		
+		 dis21[1]="Suspicious";
+	    dis21[2]="Tolerant";
+	     dis21[3]="Blood Debt";
+	     dis21[4]="Sieged";
+		i=100
+	repeat(3){i+=1;// First is for the correct slot, second is for default
+	race_21[i,2]=1;
+    role_21[i,2]="Honor Guard";
+    wep1_21[i,2]="Power Sword";
+    wep2_21[i,2]="Bolter";
+    armour_21[i,2]="Power Armour";
+	gear_21[i,2]=""
+	mobi_21[i,2]="";
+	
+    race_21[i,3]=1;
+    role_21[i,3]="Veteran";
+    wep1_21[i,3]="Chainsword";
+    wep2_21[i,3]="Bolter";
+    armour_21[i,3]="Power Armour";
+	gear_21[i,3]=""
+	mobi_21[i,3]="";
+	
+    race_21[i,4]=1;
+    role_21[i,4]="Terminator";
+    wep1_21[i,4]="Power Fist";
+    wep2_21[i,4]="Storm Bolter";
+    armour_21[i,4]="Terminator Armour";
+	gear_21[i,4]=""
+	mobi_21[i,4]="";
+	
+    race_21[i,5]=1;
+    role_21[i,5]="Captain";
+    wep1_21[i,5]="Power Fist";
+    wep2_21[i,5]="Bolt Pistol";
+    armour_21[i,5]="Power Armour";
+	gear_21[i,5]="Iron Halo";
+	mobi_21[i,15]="";
+	
+	
+    race_21[i,6]=1;
+    role_21[i,6]="Dreadnought";
+    wep1_21[i,6]="Close Combat Weapon";
+    wep2_21[i,6]="Lascannon";
+    armour_21[i,6]="Dreadnought";
+	gear_21[i,6]=""
+	mobi_21[i,6]="";
+	
+    race_21[i,7]=1;
+    role_21[i,7]="Company Champion";
+    wep1_21[i,7]="Power Sword";
+    wep2_21[i,7]="Storm Shield";
+    armour_21[i,7]="Power Armour";
+	gear_21[i,7]=""
+	mobi_21[i,7]="";
+
+    race_21[i,8]=1;
+    role_21[i,8]="Tactical Marine";
+    wep1_21[i,8]="Bolter";
+    wep2_21[i,8]="Chainsword";
+    armour_21[i,8]="Power Armour";
+	gear_21[i,8]=""
+	mobi_21[i,8]="";
+
+    race_21[i,9]=1;
+    role_21[i,9]="Devastator";
+    wep1_21[i,9]="Heavy Ranged";
+    wep2_21[i,9]="Combat Knife";
+    armour_21[i,9]="Power Armour";
+	gear_21[i,9]=""
+    mobi_21[i,9]="Heavy Weapons Pack";
+
+    race_21[i,10]=1;
+    role_21[i,10]="Assault Marine";
+    wep1_21[i,10]="Chainsword";
+    wep2_21[i,10]="Bolt Pistol";
+    armour_21[i,10]="Power Armour";
+	gear_21[i,10]=""
+    mobi_21[i,10]="Jump Pack";
+
+    race_21[i,12]=1;
+    role_21[i,12]="Scout";
+    wep1_21[i,12]="Sniper Rifle";
+    wep2_21[i,12]="Combat Knife";
+    armour_21[i,12]="Scout Armour";
+	gear_21[i,12]=""
+	mobi_21[i,12]="";
+
+
+    race_21[i,14]=1;
+    role_21[i,14]="Chaplain";
+    wep1_21[i,14]="Power Sword";
+    wep2_21[i,14]="Bolt Pistol";
+    armour_21[i,14]="Power Armour";
+    gear_21[i,14]="Rosarius";
+
+    race_21[i,15]=1;
+    role_21[i,15]="Apothecary";
+    wep1_21[i,15]="Power Sword";
+    wep2_21[i,15]="Bolt Pistol";
+    armour_21[i,15]="Power Armour";
+    gear_21[i,15]="Narthecium";
+
+    race_21[i,16]=1;
+    role_21[i,16]="Techmarine";
+    wep1_21[i,16]="Power Axe";
+    wep2_21[i,16]="Storm Bolter";
+    armour_21[i,16]="Power Armour";
+    gear_21[i,16]="Servo Arms";
+
+    race_21[i,17]=1;
+    role_21[i,17]="Librarian";
+    wep1_21[i,17]="Force Weapon";
+    wep2_21[i,17]="Storm Bolter";
+    armour_21[i,17]="Power Armour";
+    gear_21[i,17]="Psychic Hood";
+
+	race_21[i,18]=1;
+    role_21[i,18]="Sergeant";
+    wep1_21[i,18]="Chainsword";
+    wep2_21[i,18]="Combiflamer";
+    armour_21[i,18]="Power Armour";
+    mobi_21[i,18]="";
+    gear_21[i,18]="";
+
+    race_21[i,19]=1;
+    role_21[i,19]="Veteran Sergeant";
+    wep1_21[i,19]="Chainsword";
+    wep2_21[i,19]="Combiflamer";
+    armour_21[i,19]="Power Armour";
+    mobi_21[i,19]="";
+    gear_21[i,19]="";
+	}
+	stage = 6;
+}
+
+
 
 i=-1;
 repeat(61){i+=1;advantage[i]="";advantage_tooltip[i]="";disadvantage[i]="";dis_tooltip[i]="";}
@@ -406,8 +746,8 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
 if (global.restart>0){
     fade_in=-1;
     slate1=-1;
-    slate=21;
-    slate3=21;
+    slate=22;
+    slate3=22;
     slate4=50;
     
     change_slide=0;
@@ -423,8 +763,8 @@ if (global.restart>0){
 if (skip=true){
     fade_in=-1;
     slate1=-1;
-    slate=21;
-    slate3=21;
+    slate=22;
+    slate3=22;
     slate4=50;
     global.version="500";
     
@@ -526,3 +866,4 @@ targetB7 = col_b[weapon_color]/255;
 /* */
 action_set_alarm(30, 1);
 /*  */
+	
