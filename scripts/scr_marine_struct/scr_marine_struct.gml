@@ -2793,26 +2793,28 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
             
         }
 		// Deathwing
-        if (ui_coloring="bone"){
-            shader_set_uniform_f(obj_controller.colour_to_set1, 229/255,200/255,123/255);
-            shader_set_uniform_f(obj_controller.colour_to_set2, 229/255,200/255,123/255);
-            shader_set_uniform_f(obj_controller.colour_to_set3, 229/255,200/255,123/255);
-            shader_set_uniform_f(obj_controller.colour_to_set5, 229/255,200/255,123/255);
-            shader_set_uniform_f(obj_controller.colour_to_set6, 229/255,200/255,123/255);
-            ttrim=0;
-            specialist_colours=0;
-        }
-		
-		// Blood Angels
-        else if (ui_coloring="gold"){
-            shader_set_uniform_f(obj_controller.colour_to_set1, 166/255,129/255,0/255);
-            shader_set_uniform_f(obj_controller.colour_to_set2, 166/255,129/255,0/255);
-            shader_set_uniform_f(obj_controller.colour_to_set3, 166/255,129/255,0/255);
-            shader_set_uniform_f(obj_controller.colour_to_set5, 166/255,129/255,0/255);
-            shader_set_uniform_f(obj_controller.colour_to_set6, 166/255,129/255,0/255);
-            ttrim=0;
-            specialist_colours=0;
-        }		
+		if (struct_exists(self,"ui_coloring")){
+	        if (ui_coloring="bone"){
+	            shader_set_uniform_f(obj_controller.colour_to_set1, 229/255,200/255,123/255);
+	            shader_set_uniform_f(obj_controller.colour_to_set2, 229/255,200/255,123/255);
+	            shader_set_uniform_f(obj_controller.colour_to_set3, 229/255,200/255,123/255);
+	            shader_set_uniform_f(obj_controller.colour_to_set5, 229/255,200/255,123/255);
+	            shader_set_uniform_f(obj_controller.colour_to_set6, 229/255,200/255,123/255);
+	            ttrim=0;
+	            specialist_colours=0;
+	        }
+			
+			// Blood Angels
+	        else if (ui_coloring="gold"){
+	            shader_set_uniform_f(obj_controller.colour_to_set1, 166/255,129/255,0/255);
+	            shader_set_uniform_f(obj_controller.colour_to_set2, 166/255,129/255,0/255);
+	            shader_set_uniform_f(obj_controller.colour_to_set3, 166/255,129/255,0/255);
+	            shader_set_uniform_f(obj_controller.colour_to_set5, 166/255,129/255,0/255);
+	            shader_set_uniform_f(obj_controller.colour_to_set6, 166/255,129/255,0/255);
+	            ttrim=0;
+	            specialist_colours=0;
+	        }
+	    }	
 	}
 	static equipped_artifacts=function(){
 		artis = [

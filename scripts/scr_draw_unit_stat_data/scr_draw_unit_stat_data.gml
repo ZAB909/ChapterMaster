@@ -1,6 +1,6 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-function scr_draw_unit_stat_data(manage=false,draw_cords = [1004,519]){
+function scr_draw_unit_stat_data(manage=false,draw_cords = [1004,519], ){
 	var xx=__view_get( e__VW.XView, 0 )+0;
 	var yy=__view_get( e__VW.YView, 0 )+0;
 	var stat_tool_tips = [];
@@ -287,4 +287,97 @@ function scr_draw_unit_stat_data(manage=false,draw_cords = [1004,519]){
 				tooltip_draw(trait_tool_tips[i][4], 300);
 			}
 		}
+}
+enum eStats{
+	dexterity,
+	strength,
+	constitution,
+	intelligence,
+	wisdom,
+	piety,
+	weapon_skill,
+	ballistic_skill,
+	luck,
+	technology,
+	charisma
+}
+function stat_type_data(){
+	return [
+		[
+		"Measure of how quick and nimble unit is as well as their base ability to manipulate and do tasks with their hands (improves ranged attack)",
+		#306535,
+		spr_dexterity_icon,
+		"dexterity"],	
+
+		[
+		"How strong a unit is (can wield heavier equipment without detriment and is more deadly in close combat)",
+		#1A3B3B,
+		spr_strength_icon,
+		"strength"],
+
+		[
+		"Unit's general toughness and resistance to damage (increases health and damage resistance)",
+		#9B403E,
+		spr_constitution_icon,
+		"constitution"],
+
+		[
+		"measure of learnt knowledge and specialist skill aptitude",
+		#2F3B6B,
+		spr_intelligence_icon,
+		"intelligence"],
+
+		[
+		"units perception and street smarts including certain types of battlefield knowlage",
+		#54540B,
+		spr_wisdom_icon,
+		"wisdom"],
+
+		[
+		"units faith in their given religion (or general aptitude towards faith)",
+		#6A411C,
+		spr_faith_icon,
+		"piety"],
+
+		[
+		"general skill with close combat weaponry",
+		#87753C,
+		spr_weapon_skill_icon,
+		"weapon_skill"],
+
+		[
+		"general skill with ballistic and ranged weaponry",
+		#743D57,
+		spr_ballistic_skill_icon,
+		"ballistic_skill"],
+
+		[
+		"...luck...",
+		#05451E,
+		spr_luck_icon,
+		"luck"],
+
+		[
+		"skill and understanding of technology and various technical thingies",
+		#4F0105,
+		spr_technology_icon,
+		"technology"],
+
+		[
+		"general likeability and ability to interact with people",
+		#3A0339,
+		spr_charisma_icon,
+		"charisma"],			    					    					    					    			
+	];
+}
+function draw_stat_icons(icon, xx,yy,scale=0.5,colour=true, rotation=0, alpha_draw = 1, number="none"){
+	var stat_display_list = stat_type_data();
+	var stat_data = stat_display_list[icon];
+	if (!colour){
+		stat_data[1]=c_white;
+	}
+	draw_sprite_ext(stat_data[2], 0, xx, yy, scale, scale, rotation, stat_data[1], alpha_draw);
+	if (!is_string(number)){
+		draw_text(xx+(24*scale), yy+(66*scale),number);
+	}
 }

@@ -148,7 +148,7 @@ function scr_draw_unit_image(_background=false){
     draw_clear_alpha(c_black, 0);//RESET surface
     draw_set_font(fnt_40k_14b);
     draw_set_color(c_gray);
-	var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0, bb="", img=0;
+    var bb="", img=0;
     var blandify = obj_controller.blandify;
     var draw_sequence = [];
     if (name_role()!="") and (base_group=="astartes"){
