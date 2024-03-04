@@ -431,20 +431,20 @@ function scr_ui_manage() {
     		var_text = string_hash_to_newline($"Health: {round(selected_unit.hp())}/{round(selected_unit.max_health())}")
         	tooltip_text = string_hash_to_newline(string("CON : {0}", selected_unit.constitution));
         	x1 = xx+1015;
-        	y1 = yy+420;
+        	y1 = yy+400;
         	x2 = x1+string_width(var_text);
         	y2 = y1+string_height(var_text);
 	        draw_set_color(c_gray);
 	        draw_text(x1,y1,var_text);
 	        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 
 
-	        if (cn.temp[113]!="") then draw_text(xx+1015,yy+442,string_hash_to_newline("Experience: "+string(cn.temp[113])));
+	        if (cn.temp[113]!="") then draw_text(xx+1015,yy+422,string_hash_to_newline("Experience: "+string(cn.temp[113])));
 
 	        if (cn.temp[116]!=""){
 	        	carry_data = cn.temp[116][2];
 	        	var carry_string = $"Melee Cap: {carry_data[0]}/{carry_data[1]}"
 	        	x1 = xx+1015;
-	        	y1 = yy+464;
+	        	y1 = yy+444;
 	        	x2 = x1+string_width(carry_string);
 	        	y2 = y1+string_height(carry_string);
 	        	draw_text(x1,y1,string_hash_to_newline(carry_string));
@@ -455,7 +455,7 @@ function scr_ui_manage() {
 	        	carry_data = cn.temp[117][2];
 	        	var carry_string = $"Ranged Cap: {carry_data[0]}/{carry_data[1]}"
 	        	x1 = xx+1015;
-	        	y1 = yy+486;
+	        	y1 = yy+466;
 	        	x2 = x1+string_width(carry_string);
 	        	y2 = y1+string_height(carry_string);
 	        	draw_text(x1,y1,string_hash_to_newline(carry_string));
@@ -474,9 +474,9 @@ function scr_ui_manage() {
 		        draw_text(x1,y1,var_text);
 		        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
 	    	}
-        
+
 	        draw_set_font(fnt_40k_14i);
-	        if (cn.temp[119]!="") then draw_text(xx+1020,yy+468,string_hash_to_newline(string(cn.temp[119])));
+	        if (cn.temp[119]!="") then draw_text(xx+1015,yy+488,string_hash_to_newline(string(cn.temp[119])));
 	    }
     
 	    draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
