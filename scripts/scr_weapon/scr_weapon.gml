@@ -873,7 +873,7 @@ global.weapons={
         "tags":["bolt"]
     },
     "Power Fist with Intergrated Bolters": {
-       "abbreviation": "PwrFistIntBolt",       
+       "abbreviation": "PwrFstIntBlt",       
         "attack": {
             "standard": 450,
             "master_crafted": 500,
