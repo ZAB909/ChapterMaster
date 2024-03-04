@@ -428,7 +428,7 @@ function scr_ui_manage() {
 	    	}
 
 
-    		var_text = string_hash_to_newline($"Health: {selected_unit.hp()}/{selected_unit.max_health()}")
+    		var_text = string_hash_to_newline($"Health: {round(selected_unit.hp())}/{round(selected_unit.max_health())}")
         	tooltip_text = string_hash_to_newline(string("CON : {0}", selected_unit.constitution));
         	x1 = xx+1015;
         	y1 = yy+420;
@@ -535,7 +535,7 @@ function scr_ui_manage() {
 					}
 		            if (ma_god[sel]>=10) then temp2="=Penitorium=";
 	                   
-		            temp3=string((unit.hp()/unit.max_health())*100)+"% HP";
+		            temp3=string(round((unit.hp()/unit.max_health())*100))+"% HP";
 	            
 		            temp4=string(ma_exp[sel])+" exp";
 	            
