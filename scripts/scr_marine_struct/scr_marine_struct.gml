@@ -43,7 +43,7 @@ global.trait_list = {
 		ballistic_skill:[10,5, "max"],
 		display_name : "Champion",
 		flavour_text : "Through either natural talent, or obsessive training {0} is a master of arms",
-		effect:"increase melee carry"
+		effect:"increase Melee Cap"
 	},
 	"lightning_warriors":{
 		constitution: -6,

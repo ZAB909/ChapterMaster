@@ -442,7 +442,7 @@ function scr_ui_manage() {
 
 	        if (cn.temp[116]!=""){
 	        	carry_data = cn.temp[116][2];
-	        	var carry_string = $"melee carry: {carry_data[0]}/{carry_data[1]}"
+	        	var carry_string = $"Melee Cap: {carry_data[0]}/{carry_data[1]}"
 	        	x1 = xx+1015;
 	        	y1 = yy+464;
 	        	x2 = x1+string_width(carry_string);
@@ -453,7 +453,7 @@ function scr_ui_manage() {
 	        }
 	        if (cn.temp[117]!=""){
 	        	carry_data = cn.temp[117][2];
-	        	var carry_string = $"ranged carry: {carry_data[0]}/{carry_data[1]}"
+	        	var carry_string = $"Ranged Cap: {carry_data[0]}/{carry_data[1]}"
 	        	x1 = xx+1015;
 	        	y1 = yy+486;
 	        	x2 = x1+string_width(carry_string);
