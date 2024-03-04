@@ -1786,7 +1786,7 @@ global.gear = {
     },
     "Heavy Weapons Pack": {
     "abbreviation": "HvyPack",
-      "description": "A Heavy power pack commonly used by devastators in conjunction with a heavy ranged weapon.",
+      "description": "A heavy ammunition backpack commonly used by devastators in conjunction with a heavy ranged weapon.",
       "ranged_mod": {
         "standard": 5,
         "master_crafted": 10,
