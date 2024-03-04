@@ -1125,31 +1125,31 @@ function scr_ui_advisors() {
         draw_set_font(fnt_40k_14);
 
         if (recruit_trial = "Blood Duel") {
-            blurp3 = "-10-30% More recruits#-2-4 Years shorter training time#-10% Chance to burn gene-seed per speed";
+            blurp3 = "- 2-4 years of training.#- 10-30% More recruits.#- 10% Chance to burn gene-seed per recruiting speed.";
             blurp2 = "THE BLOOD DUEL?  HAT DO I EVEN NEED TO EXPLAIN, CHAPTER MASTER?  ASPIRANTS ENTER.  NEOPHYTES LEAVE.  Those worthy of serving the Emperor are rewarded justly and those merely pretending at glory are lost in the BLOOD AND THUNDER of the dome.  Do not be alarmed at the carnage.  The Apothecarium has become quite adept at rebuilding those fit to serve.  The others are given to the " + string(obj_ini.role[100, 16]) + "s.  The mind is a terrible thing to waste and the Emperor does hate waste.  Not every man is useful as an Astartes but every man is useful.";
         }
         if (recruit_trial = "Hunting the Hunter") {
-            blurp3 = "-Planet Bonus': Desert, Ice, Death#-Up to 15 bonus XP on Neophytes";
+            blurp3 = "- 6 years of training.#- 7-20 starting XP on Desert, Ice and Death planets";
             blurp2 = "To be an Astartes is to be a hunter of xenos, of traitors, of heretics, and of all those that dare defy the Emperor.  What better way to test the worthiness of Aspirants than to have to them hunt the most dangerous predator to be found on their planet?  Such a task requires a combination of wits and cunning, in addition to raw martial skill.  When they have received the blessed geneseed and become full battle brothers, they will hunt across the stars with bolter and chainsword. For now, let them hunt with nothing more than a spear and their wits.";
         }
         if (recruit_trial = "Survival of the Fittest") {
-            blurp3 = "-Planet Bonus': Desert, Ice, Death, Lava#-(+10-30% recruits)#-Planet Bonus: Feudal (+20-50% recruits)";
+            blurp3 = "- 6 years of training.#- 10-30% more recruits on Desert, Ice, Death and Lava planets.#- 20-50% more recruits on Feudal planets.";
             blurp2 = "To become one of the Imperium’s finest warriors, the Space Marines, is the greatest glory that any human can aspire to. And is glory not worth fighting, bleeding or even dying for? It must be, for whole worlds of ice, ash and sand have buried generations of sons in pursuit of this glory and never once called the price too dear.  To ensure the necessary bloodshed, lies, paranoia and psychosis-inducing drugs have been introduced to " + string(obj_ini.recruiting_name) + ".  This trial will seperate the weak from the strong and the chaff from the wheat.";
         }
         if (recruit_trial = "Exposure") {
-            blurp3 = "-Planet Bonus':3- Desert, Ice, Forge, Lava, Death#-1-3 Years shorter training time";
+            blurp3 = "- 3-5 years of training on Desert, Ice, Forge, Lava and Death planets.#- 6 years of training on all other planets.";
             blurp2 = "Few worlds of the Imperium are free from the adversity of pollution or toxic waste.  Still others are bequeathed with flows of lava and choking atmosphere.  The glory of rising to astartes is only granted to those that can tackle and overcome these dangerous environments.  Aspirants are placed upon the most hellish of planet in the sector, and then expected to traverse the continent with only himself to rely upon.  Those who face the impossible without faltering and survive past the point they should have perished are recovered by " + string(obj_ini.role[100, 15]) + "s, judged worthy of becoming a Neophyte.";
         }
         if (recruit_trial = "Knowledge of Self") {
-            blurp3 = "-Planet Bonus: Temperate (up to 10 bonus xp)#-1.5-3 Years longer training#-Up to bonus 25 XP on Neophytes.";
+            blurp3 = "- 7.5-9 years of training.#- 15-25 starting XP.#- Additional 5-10 starting XP on Temperate planets.";
             blurp2 = "An Aspirant’s spiritual and mental capability is every bit as important as his physical characteristics.  It is wise to impose Trials not upon their body, but on the mind.  Either through psychic powers, chemical agents, or endurance trials, the Aspirant’s willpower is tested.  Those unworthy do not survive the stress and trauma placed upon their hearts- only those whose minds are proven to be unbreakable are welcomed into our ranks.";
         }
         if (recruit_trial = "Challenge") {
-            blurp3 = "-Standard generic choice #-Heroic Neophytes gain bonus 10-20 XP";
+            blurp3 = "- 5.5-6.5 years of training.#- 20% chance to gain 10-20 starting XP.";
             blurp2 = "What better gauge of an Aspirant than in a duel with our astartes?  Our brother, unarmed and unarmoured, will face against the armed challenger until one cannot continue.  It is impossible for the Aspirant to actually succeed these trials, but demonstrates how far they can possibly go, and allow us to judge him accordingly.  As with most trials the Aspirant’s life is in their own hands.  He who has failed the duel- yet proven himself worthy- is rescued from the jaws of death by " + string(obj_ini.role[100, 15]) + " and allowed to progress to the rank of Neophyte.";
         }
         if (recruit_trial = "Apprenticeship") {
-            blurp3 = "-Planet Bonus: Lava (+10-50% recruits)#-4-5 Years longer training time#-Almost able for immediate promotion";
+            blurp3 = "- 10-11 years of training.#- 34-43 starting XP.#- 30-50% more recruits on Lava planets.";
             blurp2 = "What better way to cultivate astartes than to raise them from youth?  The capable children of " + string(obj_ini.recruiting_name) + " are apprenticed to our battle brothers.  Beneath their steady guidance the Aspirants spend several years learning the art of the smith.  The most able are judged by our Chapter’s " + string(obj_ini.role[100, 15]) + "s and " + string(obj_ini.role[100, 14]) + " to deem if they are compatible with gene-seed implantation.  If so, the Aspirant’s trial culminates in hunting and slaying a massive beast.  Only the brightest and bravest are added to our ranks.";
         }
 
