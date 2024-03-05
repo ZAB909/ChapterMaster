@@ -826,7 +826,7 @@ global.weapons={
         "tags":["heavy_ranged","dreadnought"]
     },
     "Lascannon": {
-       "abbreviation": "Lascann",           
+       "abbreviation": "Lscnn",           
         "attack": {
             "standard": 200,
             "master_crafted": 220,
@@ -842,7 +842,7 @@ global.weapons={
          "tags":["heavy_ranged"]
     },
     "Conversion Beam Projector": {
-        "abbreviation": "CBP",            
+        "abbreviation": "CnvBmPrj",            
         "attack": {
             "standard": 500,
             "master_crafted": 550,
