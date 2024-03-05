@@ -197,12 +197,10 @@ function dungeon_struct() constructor{
 					if (point_in_rectangle(mouse_x, mouse_y, unit_draw[0], unit_draw[1]+21, unit_draw[0]+166,unit_draw[1]+271)){										
 						selected_unit=i;
 						//unit_data_slate.individual_view_sequence++;
-						if (mouse_check_button(mb_left)){
+						if (mouse_check_button(mb_left) && unit_data_slate.individual_display ==-1){
 							unit_data_slate.individual_display = i;
 							unit_data_slate.individual_view_sequence = 0;
-						}
-						if (dungeon.solution>-1 && mem.action_able){
-							if (mouse_check_button(mb_left)){
+							if (dungeon.solution>-1 && mem.action_able){
 								action_unit = i;
 							}
 						}
@@ -232,7 +230,7 @@ function dungeon_struct() constructor{
 					if (dungeon.solution>-1){
 						if(!members[i].action_able){
 							draw_set_alpha(0.7)
-							draw_rectangle(unit_draw[0], unit_draw[1]+21, unit_draw[0]+166,unit_draw[1]+250, 0);
+							draw_rectangle(unit_draw[0], unit_draw[1]+21, unit_draw[0]+166,unit_draw[1]+271, 0);
 						}
 					}
 					draw_set_alpha(1)	
@@ -294,6 +292,7 @@ function dungeon_struct() constructor{
 			}else {
 				unit = members[unit_data_slate.individual_display].struct;
 				mem =  members[unit_data_slate.individual_display];
+				draw_set_color(c_gray);
 				unit.draw_unit_image(mem.current_draw_loc[0], mem.current_draw_loc[1], 38144,xx,yy);
 				mem.dungeon_data_panel(mem.current_draw_loc[0]+xx+(166), mem.current_draw_loc[1]+yy+(135));
 		        draw_set_color(c_gray);
@@ -317,7 +316,18 @@ function dungeon_struct() constructor{
 		var yy =map_data_slate.YY;
 		if (enter_sequence_completed || dungeon.solution>-1){		
 			if (!is_string(selected_unit)){
-				members[selected_unit].struct.stat_display(true, [xx+20, yy+10]);
+				//members[selected_unit].struct.stat_display(true, [xx+20, yy+10]);
+				var mem = members[selected_unit];
+				var unit = mem.struct;
+				draw_set_color(c_red);
+				draw_set_halign(fa_center);
+				draw_text_transformed(xx+(map_data_slate.width/2), yy+40, "Relevant Data", 2, 2, 0);
+				var ob = dungeon.current_obstacle.base_data;
+				var stat_data = stat_type_data();
+				for (var t=0; t<array_length(ob.tests);t++){
+					if 
+				}
+
 			}
 		} else {
 			var cur_fig;
@@ -367,7 +377,7 @@ function dungeon_struct() constructor{
 						ob.solutions[i].valid=true; 
 					}
 				}
-				if (dungeon.solution=-1){
+				if (dungeon.solution==-1){
 					var solution_coords;
 					for (var i=0;i<array_length(ob.solutions);i++){
 						if (ob.solutions[i].valid){
@@ -396,6 +406,17 @@ function dungeon_struct() constructor{
 				} else {
 					var solution = ob.solutions[dungeon.solution];
 					draw_text_ext(xx+(decision_data_slate.width/2), yy+70, $"Who will attempt to {solution.description}", -1, decision_data_slate.width-50);
+					if(point_and_click(draw_unit_buttons([xx+(decision_data_slate.width/2)-(string_width("Cancel")*1.5), yy+300],"Cancel",[1.5,1.5],c_red))){
+						dungeon.solution=-1;
+					}					
+					if (unit_data_slate.individual_display>-1){
+						if (members[unit_data_slate.individual_display].action_able){
+							var confirm_coords = draw_unit_buttons([xx+(decision_data_slate.width/2)-(string_width("Confirm Unit")*1.5), yy+150],"Confirm Unit",[1.5,1.5],c_green);
+							if(point_and_click(confirm_coords)){
+								attempt_solution();
+							}
+						}
+					}
 				}
 			}
 		}
@@ -414,14 +435,15 @@ global.obstacles = {
 	solutions : [
 		{
 			name :"bypass",
-			tests :{
-				technology : {
+			tests :[
+				{
+					attribute :eStats.technology,
 					base : 50,
 					modfiers : {
 						equipment : [["servo harness", 10]]
 					}
 				}
-			},
+			],
 			description : "attempt to bypass the door at the control panel",
 			stat_icon : eStats.technology
 		},
@@ -431,13 +453,14 @@ global.obstacles = {
 				class:"psyker", 
 				skill:"divination",
 			},
-			tests :{
-				"intelligence" : {
+			tests :[
+				{
+					attribute :eStats.intelligence,
 					base : 40,
 					modfiers : {
 					}
 				}
-			},
+			],
 			description : "attempt to divine the door code",
 			stat_icon : eStats.intelligence
 		},
@@ -454,7 +477,7 @@ global.obstacles = {
 					base : 10,
 				},*/
 				{
-					attribute : "ballistic_skill",
+					attribute :eStats.ballistic_skill,
 					base : 40,
 					modifiers : {
 						weapon : {
@@ -475,7 +498,7 @@ global.obstacles = {
 					base : 10,
 				},*/
 				{
-					attribute : "wisdom",
+					attribute : eStats.wisdom,
 					base : -40,					
 				}				
 			],
