@@ -1408,7 +1408,7 @@ global.gear = {
       "melee_hands":2,
       "ranged_hands":2,      
       "description": "Even more advanced than the Indomitus Terminator Armour, this upgraded armour offers greater mobility at no cost to protection.",
-      "tags":["teminator"],
+      "tags":["terminator"],
     },
     "Cataphractii Pattern Terminator":{
         "abbreviation": "Catph", 
@@ -1430,7 +1430,7 @@ global.gear = {
       "melee_hands":2,
       "ranged_hands":2,      
       "description": "Among the first issued to the Space Marine Legions, it is functionally distinct from other patterns, bearing additional plating and shield generators installed within the shoulder pads",
-        "tags":["teminator"],
+        "tags":["terminator"],
     },
      "Ork Armour": {
      "abbreviation": "OrkArm", 
