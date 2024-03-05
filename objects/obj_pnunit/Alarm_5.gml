@@ -68,6 +68,7 @@ if (obj_ncombat.defeat=0){
 i=0;
 
  for (i=1;i<array_length(marine_co);i++){
+    if (marine_id[i]==0) then continue;
     unit=obj_ini.TTRPG[marine_co[i]][marine_id[i]];
     if (marine_dead[i]=0) and (marine_type[i]="Death Company"){
         unit.role()="Death Company";
