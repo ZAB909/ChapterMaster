@@ -1821,58 +1821,82 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
             self[$names[i]]=defaults[i];
         }
     }
-    spe_desc = special_description;
-    static special_description_gen = function(){
-        spe_desc+=" "
-        if (attack!=0){
-            spe_desc+=$"DAM {attack},#"
-        }
-        if (ranged_mod!=0){
-            spe_desc += $"Ranged {ranged_mod}%,#"
-        }
-        if (melee_mod!=0){
-            spe_desc += $"Melee {melee_mod}%,#"
+    static item_tooltip_desc_gen = function(){
+        item_desc_tooltip = ""
+        if (armour_value!=0){
+            if struct_exists(global.gear[$ "armour"],name){
+                item_desc_tooltip += $"Armour: {armour_value}#"
+            }
+            else{
+                item_desc_tooltip += $"Armour: {format_number_with_sign(armour_value)}#"
+            }
         }
         if (hp_mod!=0){
-            spe_desc += $"HP {hp_mod}%,#"
+            item_desc_tooltip += $"Health Bns: {format_number_with_sign(hp_mod)}%#"
         }
         if (damage_resistance_mod!=0){
-            spe_desc += $"Damage Res {damage_resistance_mod}%,#"
+            item_desc_tooltip += $"Damage Res: {format_number_with_sign(damage_resistance_mod)}%#"
         }
-        if (armour_value!=0){
-            spe_desc += $"AC {armour_value},#"
+        if (attack!=0){
+            item_desc_tooltip += $"Damage: {attack}#"
+        }
+        if (ranged_mod!=0){
+            item_desc_tooltip += $"Ranged Bns: {format_number_with_sign(ranged_mod)}%#"
+        }
+        if (melee_mod!=0){
+            item_desc_tooltip += $"Melee Bns: {format_number_with_sign(melee_mod)}%#"
         }
         if (ammo!=0){
-            spe_desc += $"Ammo {ammo},#"
+            item_desc_tooltip += $"Ammo: {ammo}#"
         }
         if (range>1.1){
-            spe_desc += $"Range {range},#"
+            item_desc_tooltip += $"Range: {range}#"
+        }
+        if (melee_hands != 0) {
+            if struct_exists(global.weapons,name){
+                item_desc_tooltip += $"Melee Enc: {melee_hands}#"
+            }
+            else{
+                item_desc_tooltip += $"Melee Cap: {format_number_with_sign(melee_hands)}#"
+            }
+        }
+        if (ranged_hands != 0) {
+            if struct_exists(global.weapons,name){
+                item_desc_tooltip += $"Ranged Enc: {ranged_hands}#"
+            }
+            else{
+                item_desc_tooltip += $"Ranged Cap: {format_number_with_sign(ranged_hands)}#"
+            }
         }
         if (arp>0){
-            spe_desc += $"Armour piercing,#"
+            item_desc_tooltip += $"Armour Piercing#"
         } else if (arp<0){
-            spe_desc += $"Low Penetration,#"
+            item_desc_tooltip += $"Low Penetration#"
         }
         if (spli!=0){
             if (range>1.1){
-                spe_desc += $"Ranged, Rapid Fire,#"
+                item_desc_tooltip += $"Ranged, Rapid Fire#"
             } else {
-                spe_desc += $"Melee, Splash,#"
+                item_desc_tooltip += $"Melee, Splash#"
             }
-        } 
-        if (melee_hands!=0){
-            spe_desc += $"melee carry {-1*melee_hands},#"
         }
-        if (ranged_hands!=0){
-            spe_desc += $"ranged carry {-1*ranged_hands},#"
+        if (special_description!=""){
+            item_desc_tooltip += $"{special_description}#"
         }
         if (req_exp>0){
-            spe_desc += $"requires {req_exp} exp,#"
+            item_desc_tooltip += $"Requires {req_exp} XP#"
         }
         if (array_length(tags)>0){
-            spe_desc += $"[{string(tags)}],#"
-        }  
-        return  spe_desc
+            var tagString = ""
+            for (var i = 0; i < array_length(tags); i++) {
+                tagString += tags[i]
+                if (i < array_length(tags) - 1) {
+                    tagString += ", "
+                }
+            }
+            item_desc_tooltip += $"#Keywords:#[{tagString}]#"
+        }
+        return  item_desc_tooltip
     }
     static has_tag =  function(tag){
         return array_contains(tags, tag);
@@ -2010,6 +2034,10 @@ function quality_string_conversion(quality){
     if (struct_exists(qaulity_conversions, quality)){
         return qaulity_conversions[$ quality]
     } else {return "";}
+}
+
+function format_number_with_sign(number){
+    return number > 0 ? "+" + string(number) : string(number);
 }
 
 /*
