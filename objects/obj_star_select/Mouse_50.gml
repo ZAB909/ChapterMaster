@@ -198,8 +198,8 @@ if (obj_controller.menu=0) and (obj_controller.zoomed=0) and (!instance_exists(o
 
 
 if (loading=0){
-    if (instance_exists(target)){
-        if (target.planets>=1) and (obj_controller.cooldown<=0){
+    if (instance_exists(target) and (obj_controller.cooldown<=0)){
+        if (target.planets>=1){
             dist=point_distance(xx+159,yy+287,mouse_x,mouse_y);   
             if (dist<=16){
                 obj_controller.selecting_planet=1;
@@ -207,7 +207,7 @@ if (loading=0){
                 feature="";
             }
         }
-        if (target.planets>=2) and (obj_controller.cooldown<=0){
+        if (target.planets>=2){
             dist=point_distance(xx+200,yy+287,mouse_x,mouse_y);   
            if (dist<=16){
                 obj_controller.selecting_planet=2;
@@ -215,7 +215,7 @@ if (loading=0){
                 garrison = new garrison_force(target.p_operatives[obj_controller.selecting_planet]);
             }
         }
-        if (target.planets>=3) and (obj_controller.cooldown<=0){
+        if (target.planets>=3){
             dist=point_distance(xx+241,yy+287,mouse_x,mouse_y);   
             if (dist<=16){
                 obj_controller.selecting_planet=3;
@@ -223,12 +223,12 @@ if (loading=0){
                 garrison = new garrison_force(target.p_operatives[obj_controller.selecting_planet]);
             }
         }
-        if (target.planets>=4) and (obj_controller.cooldown<=0){
+        if (target.planets>=4){
             dist=point_distance(xx+282,yy+287,mouse_x,mouse_y);   
            if (dist<=16){
                 obj_controller.selecting_planet=4;
                 feature="";
-                garrison = tarnew garrison_force(target.p_operatives[obj_controller.selecting_planet]);
+                garrison = new garrison_force(target.p_operatives[obj_controller.selecting_planet]);
             }
         }
     }
