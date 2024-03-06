@@ -30,9 +30,10 @@ repeat(39){
         } else {
             tooltip = tooltip_overide[i];
         }
-        tooltip_x=mouse_x;
-        tooltip_y=mouse_y+12;
+        tooltip_x=mouse_x+24;
+        tooltip_y=mouse_y;
         tooltip_show=1;
+        // TODO handle all tooltips through the tooltip_draw function;
     }
     
     if (item[i]!="") /*and (nobuy[i]=0)*/ and (mouse_x>=xx+x2) and (mouse_y>=yy+y2+1) and (xx+1579) and (mouse_y<yy+y2+19){

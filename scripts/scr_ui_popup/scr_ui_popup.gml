@@ -12,6 +12,8 @@ function tooltip_draw(base_x, base_y, tooltip, extra_x=0, extra_y=0, defined_wid
 		base_2=string_height_ext(string_hash_to_newline(string(tooltip)), line_gap, defined_width);
 	}
 	height = string_height(string_hash_to_newline(tooltip))+extra_y;
+	base_x = clamp(base_x, xx, xx + __view_get( e__VW.WView, 0 ) - width - 12);
+	base_y = clamp(base_y, yy, yy + __view_get( e__VW.HView, 0 ) - height - 12);
 	draw_set_color(0);
 	draw_rectangle(base_x,base_y,width+base_x+6,height+base_y+6+base_2,0);
 	draw_set_color(draw_color);
