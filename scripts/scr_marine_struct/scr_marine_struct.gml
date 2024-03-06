@@ -1380,7 +1380,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				quality = gear_quality;
 				break;
 			case "mobi":
-				artifact = weapon_one(true);
+				artifact = mobility_item(true);
 				quality =mobility_item_quality;
 				break;				
 		}
