@@ -344,9 +344,18 @@ function data_slate() constructor{
 	title="";
 	sub_title="";
 	body_text = "";
+	inside_method = "";
+	XX=0
+	YY=0
 	static draw = function(xx,yy, scale_x=1, scale_y=1){
-		var width = 860*scale_x;
-		draw_sprite_ext(spr_data_slate,1, xx,yy, 1, 1, 0, c_white, 1);
+		XX=xx;
+		YY=yy;
+		width = 860*scale_x;
+		height = 850*scale_y;
+		draw_sprite_ext(spr_data_slate,1, xx,yy, scale_x, scale_y, 0, c_white, 1);
+		if (is_method(inside_method)){
+			inside_method();
+		}
 	    if (static_line<=10) then draw_set_alpha(static_line/10);
 	    if (static_line>10) then draw_set_alpha(1-((static_line-10)/10));		
 		draw_set_color(5998382);
@@ -374,5 +383,3 @@ function data_slate() constructor{
 		}
 	}
 }
-
-

@@ -38,11 +38,13 @@ draw_set_halign(fa_left);
 
 if (owner  = eFACTION.Player) and (instance_nearest(x,y,obj_p_fleet).action=""){
     var free,z;free=1;z=obj_fleet_select;
-    if (mouse_x>=__view_get( e__VW.XView, 0 )+z.void_x) and (mouse_y>=__view_get( e__VW.YView, 0 )+z.void_y) 
-    and (mouse_x<__view_get( e__VW.XView, 0 )+z.void_x+z.void_wid) and (mouse_y<__view_get( e__VW.YView, 0 )+z.void_y+z.void_hei) and (obj_controller.fleet_minimized=0) then free=0;
+    var xx = __view_get( e__VW.XView, 0 );
+    var yy = __view_get( e__VW.YView, 0 );
+    if (mouse_x>=xx+z.void_x) and (mouse_y>=yy+z.void_y) 
+    and (mouse_x<xx+z.void_x+z.void_wid) and (mouse_y<yy+z.void_y+z.void_hei) and (obj_controller.fleet_minimized=0) then free=0;
     
-    if (mouse_x>=__view_get( e__VW.XView, 0 )+z.void_x) and (mouse_y>=__view_get( e__VW.YView, 0 )+z.void_y) 
-    and (mouse_x<__view_get( e__VW.XView, 0 )+z.void_x+z.void_wid) and (mouse_y<__view_get( e__VW.YView, 0 )+137) and (obj_controller.fleet_minimized=1) then free=0;
+    if (mouse_x>=xx+z.void_x) and (mouse_y>=yy+z.void_y) 
+    and (mouse_x<xx+z.void_x+z.void_wid) and (mouse_y<yy+137) and (obj_controller.fleet_minimized=1) then free=0;
     
     if (free=1){
         var sys, sys_dist, mine, connected;

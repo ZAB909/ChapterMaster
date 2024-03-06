@@ -447,19 +447,21 @@ function scr_ui_popup() {
 
 	if (popup>0) and (selected!=0) and (zoomed=0) and (sel_system_x+sel_system_y=0) and (diplomacy<=0) and (instance_exists(obj_fleet_select)){
 	    var zm=1,tit="",mnz=0;
-    
-	    if (fleet_minimized=0){
-	        draw_set_color(c_black);
-	        draw_rectangle(__view_get( e__VW.XView, 0 )+44,__view_get( e__VW.YView, 0 )+110,__view_get( e__VW.XView, 0 )+267,__view_get( e__VW.YView, 0 )+110+obj_fleet_select.void_hei,0);
-	        draw_set_color(c_gray);
-	        draw_rectangle(__view_get( e__VW.XView, 0 )+44,__view_get( e__VW.YView, 0 )+110,__view_get( e__VW.XView, 0 )+267,__view_get( e__VW.YView, 0 )+110+obj_fleet_select.void_hei,1);
-	    }
+
+	    //if (fleet_minimized=0){
+	    //    draw_set_color(c_black);
+	    //    draw_rectangle(__view_get( e__VW.XView, 0 )+44,__view_get( e__VW.YView, 0 )+110,__view_get( e__VW.XView, 0 )+267,__view_get( e__VW.YView, 0 )+110+obj_fleet_select.void_hei,0);
+	    //    draw_set_color(c_gray);
+	    //    draw_rectangle(__view_get( e__VW.XView, 0 )+44,__view_get( e__VW.YView, 0 )+110,__view_get( e__VW.XView, 0 )+267,__view_get( e__VW.YView, 0 )+110+obj_fleet_select.void_hei,1);
+	    //}
 	    if (fleet_minimized=1){
 	    	mnz=1;
 	        draw_set_color(c_black);
-	        draw_rectangle(__view_get( e__VW.XView, 0 )+44,__view_get( e__VW.YView, 0 )+110,__view_get( e__VW.XView, 0 )+267,__view_get( e__VW.YView, 0 )+137,0);
+	        draw_rectangle(xx+44,yy+110,xx+267,yy+137,0);
 	        draw_set_color(c_gray);
-	        draw_rectangle(__view_get( e__VW.XView, 0 )+44,__view_get( e__VW.YView, 0 )+110,__view_get( e__VW.XView, 0 )+267,__view_get( e__VW.YView, 0 )+137,1);
+	        draw_rectangle(xx+44,yy+110,xx+267,yy+137,1);
+	    } else {
+	    	obj_fleet_select.selection_window.draw(xx+44, yy+110, 0.25, 0.75);
 	    }
 	    draw_set_font(fnt_40k_14);
     
