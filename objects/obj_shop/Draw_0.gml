@@ -147,7 +147,7 @@ for(var i=1; i<=39; i++){
 if (tooltip_show!=0){
     draw_set_color(0);
     draw_set_alpha(1);
-    draw_set_font(fnt_40k_12);
+    draw_set_font(fnt_40k_14);
     
     tooltip_width=string_width_ext(string_hash_to_newline(tooltip),-1,400)+4;
     tooltip_height=string_height_ext(string_hash_to_newline(tooltip),-1,400)+4;
