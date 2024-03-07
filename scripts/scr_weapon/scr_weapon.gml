@@ -1387,7 +1387,7 @@ global.gear = {
       "tags":["power_armour"],
     },
     "Artificer Armour": {
-        "abbreviation": "ArtArm", 
+        "abbreviation": "Artfcr", 
       "armour_value": {
         "standard": 30,
         "master_crafted": 34,
@@ -1407,7 +1407,7 @@ global.gear = {
       "tags":["power_armour"],
     },
     "Terminator Armour": {
-         "abbreviation": "Termntr", 
+         "abbreviation": "Indmts", 
       "armour_value": {
         "standard": 42,
         "master_crafted": 46,
@@ -1430,7 +1430,7 @@ global.gear = {
       "req_exp":90,
     },
     "Dreadnought": {
-         "abbreviation": "Dread", 
+         "abbreviation": "Drdnght", 
       "armour_value": {
         "standard": 50,
         "master_crafted": 55,
@@ -1451,7 +1451,7 @@ global.gear = {
       "description": "A massive war-machine that can be piloted by an honored Space Marine, who otherwise would have fallen in combat."
     },
     "Tartaros": {
-        "abbreviation": "Tartr", 
+        "abbreviation": "Tartrs", 
       "armour_value": {
         "standard": 42,
         "master_crafted": 46,
@@ -1474,7 +1474,7 @@ global.gear = {
       "req_exp":90,
     },
     "Cataphractii Pattern Terminator":{
-        "abbreviation": "Catph", 
+        "abbreviation": "Catphr", 
       "armour_value": {
         "standard": 42,
         "master_crafted": 46,
@@ -1516,7 +1516,7 @@ global.gear = {
       "description": "Mismatched basic armour used by ork forces"
     },
     "Scout Armour": {
-    "abbreviation": "Scout",
+    "abbreviation": "SctArm",
       "armour_value": {
         "standard": 11,
         "master_crafted": 12,
