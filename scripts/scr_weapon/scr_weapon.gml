@@ -1664,7 +1664,7 @@ global.gear = {
 } , 
   "gear": {
     "Bionics": {
-      "special_description": "Restores critcal health",
+      "special_description": "Restores critical health",
       "description": "Bionics may be given to wounded marines to quickly get them back into combat-ready status, replacing damaged flesh.",
       "hp_mod": {
         "standard": 30, // Adjusted
@@ -1725,14 +1725,14 @@ global.gear = {
     },
     "Servo Arms": {
     "abbreviation": "SrvArms",
-      "special_description": "Integrated flamer, repairs",
+      "special_description": "Integrated Flamer, Repairs Vehicles",
       "description": "A pair of powerful, mechanical arms. They include several tools that allow trained marines to repair vehicles rapidly.",
         "melee_hands": 0.25,
         "ranged_hands": 0.25,  
     },
     "Master Servo Arms": {
     "abbreviation": "MsSrvArms",
-      "special_description": "Integrated flamer, repairs",
+      "special_description": "Integrated Flamer, Repairs Vehicles",
       "description": "This master servo harness includes additional mechanical arms and tools, allowing a greater capacity and rate of repairs.",
         "melee_hands": 0.25,
         "ranged_hands": 0.25,  
@@ -1756,7 +1756,7 @@ global.gear = {
   "mobility":{
    "Bike": {
     "abbreviation": "Bike",
-      "special_description": "",
+      "special_description": "Integrated Twin Linked-Bolters",
       "description": "A robust bike that can propel a marine at very high speeds. Boasts highly responsive controls and Twin Linked Bolters.",
       "hp_mod": {
         "standard": 25,
@@ -1774,7 +1774,7 @@ global.gear = {
 
     "Jump Pack": {
     "abbreviation": "JmpPck",
-      "special_description": "Jump Pack",
+      "special_description": "",
       "description": "A back-mounted device containing turbines or jets powerful enough to lift even a user in Power Armour.",
       "hp_mod": {
         "standard": 5,
