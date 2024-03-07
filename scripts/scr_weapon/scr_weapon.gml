@@ -1736,7 +1736,7 @@ global.gear = {
     },    
     "Narthecium": {
     "abbreviation": "Nrthcm",
-      "special_description": "Medical field kit",
+      "special_description": "Heals Allies",
       "description": "An advanced medical field kit, these allow Space Marines to heal or recover Gene-Seed from fallen marines.",
         "melee_hands": -0.5,
         "ranged_hands": -0.5,       
