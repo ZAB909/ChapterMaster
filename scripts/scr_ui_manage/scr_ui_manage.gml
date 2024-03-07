@@ -319,10 +319,10 @@ function scr_ui_manage() {
         	
         	var armour = selected_unit.armour();
 	        if (armour!=""){
-	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("armour") + "#AC" + string(selected_unit.get_armour_data("armour_value")));
+	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("armour"));
 	        	tooltip_text = cn.temp[103];
 	        	x1 = xx+1015;
-	        	y1 = yy+215;
+	        	y1 = yy+216;
 	        	x2 = x1+string_width_ext(var_text, -1,187);
 	        	y2 = y1+string_height_ext(var_text, -1,187);	 
 	        	draw_text_ext(x1,y1,var_text,-1,187);
@@ -334,7 +334,7 @@ function scr_ui_manage() {
 	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("gear"));
 	        	tooltip_text = cn.temp[105];
 	        	x1 = xx+1015;
-	        	y1 = yy+280;
+	        	y1 = yy+260;
 	        	x2 = x1+string_width_ext(var_text, -1,187);
 	        	y2 = y1+string_height_ext(var_text, -1,187);	 
 	        	draw_text_ext(x1,y1,var_text,-1,187);
@@ -346,7 +346,7 @@ function scr_ui_manage() {
 	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("mobi"));
 	        	tooltip_text = cn.temp[107];
 	        	x1 = xx+1015;
-	        	y1 = yy+345;
+	        	y1 = yy+304;
 	        	x2 = x1+string_width_ext(var_text, -1,187);
 	        	y2 = y1+string_height_ext(var_text, -1,187);	  
 	        	draw_text_ext(x1,y1,var_text,-1,187);
@@ -354,10 +354,10 @@ function scr_ui_manage() {
 	        }
         	var wep1= selected_unit.weapon_one();
         	if (wep1!=""){
-	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("wep1")+ "#DAM" + string(selected_unit.get_weapon_one_data("attack")));
+	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("wep1"));
 	        	tooltip_text = cn.temp[109];
 	        	x1 = xx+1387;
-	        	y1 = yy+215;
+	        	y1 = yy+216;
 	        	x2 = x1+string_width_ext(var_text, -1,187);
 	        	y2 = y1+string_height_ext(var_text, -1,187);	 	 
 	        	draw_text_ext(x1,y1,var_text,-1,187);
@@ -366,10 +366,10 @@ function scr_ui_manage() {
         	
         	var wep2 = selected_unit.weapon_two();
         	if (wep2!=""){
-	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("wep2")+ "#DAM" + string(selected_unit.get_weapon_two_data("attack")));
+	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("wep2"));
 	        	tooltip_text = cn.temp[111];
 	        	x1 = xx+1387;
-	        	y1 = yy+315;
+	        	y1 = yy+290;
 	        	x2 = x1+string_width_ext(var_text, -1,187);
 	        	y2 = y1+string_height_ext(var_text, -1,187);	 
 	        	draw_text_ext(x1,y1,var_text,-1,187); 
@@ -378,9 +378,9 @@ function scr_ui_manage() {
 
         	if (is_array(cn.temp[117])){
         		var_text = string_hash_to_newline(string("Melee Attack: {0}",cn.temp[116][0]))
-	        	tooltip_text = string_hash_to_newline(string("WS : {0}#STR : {1}#{2}", selected_unit.weapon_skill, selected_unit.strength,cn.temp[116][1]));
+	        	tooltip_text = string_hash_to_newline(string("Weapon: {0}#WS: {1}#STR: {2}#{3}", selected_unit.get_weapon_one_data("attack"), selected_unit.weapon_skill, selected_unit.strength,cn.temp[116][1]));
 	        	x1 = xx+1387;
-	        	y1 = yy+405;
+	        	y1 = yy+378;
 	        	x2 = x1+string_width(var_text);
 	        	y2 = y1+string_height(var_text);
 		        draw_set_color(c_gray);
@@ -396,7 +396,7 @@ function scr_ui_manage() {
         		var_text = string_hash_to_newline(string("Ranged Attack: {0}",cn.temp[117][0]))
 	        	tooltip_text = string_hash_to_newline(string("BS : {0}#DEX : {1}#{2}", selected_unit.ballistic_skill, selected_unit.dexterity,cn.temp[117][1]));
 	        	x1 = xx+1387;
-	        	y1 = yy+435;
+	        	y1 = yy+400;
 	        	x2 = x1+string_width(var_text);
 	        	y2 = y1+string_height(var_text);
 		        draw_set_color(c_gray);
@@ -410,8 +410,8 @@ function scr_ui_manage() {
 			// Display information on the marine
 
     		var_text = string_hash_to_newline(string("Bionics: {0}",selected_unit.bionics));
-        	x1 = xx+1387;
-        	y1 = yy+460;
+        	x1 = xx+1015;
+        	y1 = yy+444;
         	x2 = x1+string_width(var_text);
         	y2 = y1+string_height(var_text);
 	        draw_set_color(c_gray);
@@ -427,9 +427,39 @@ function scr_ui_manage() {
 	    		array_push(tooltip_drawing, ["No bionic Augmentations", [x1,y1,x2,y2]]);
 	    	}
 
-
-    		var_text = string_hash_to_newline($"Health: {round(selected_unit.hp())}/{round(selected_unit.max_health())}")
-        	tooltip_text = string_hash_to_newline(string("CON : {0}", selected_unit.constitution));
+        var_text = string_hash_to_newline($"Armour Rating: {selected_unit.armour_calc()}")
+          var tooltip_text = "";
+          var equipment_types = ["armour", "weapon_one", "weapon_two", "mobility", "gear"];
+          for (var i = 0; i < array_length(equipment_types); i++) {
+            var equipment_type = equipment_types[i];
+            var ac = 0;
+            var name = "";
+            switch(equipment_type) {
+                case "armour":
+                    ac = selected_unit.get_armour_data("armour_value");
+                    name = selected_unit.get_armour_data("name");
+                    break;
+                case "weapon_one":
+                    ac = selected_unit.get_weapon_one_data("armour_value");
+                    name = selected_unit.get_weapon_one_data("name");
+                    break;
+                case "weapon_two":
+                    ac = selected_unit.get_weapon_two_data("armour_value");
+                    name = selected_unit.get_weapon_two_data("name");
+                    break;
+                case "mobility":
+                    ac = selected_unit.get_mobility_data("armour_value");
+                    name = selected_unit.get_mobility_data("name");
+                    break;
+                case "gear":
+                    ac = selected_unit.get_gear_data("armour_value");
+                    name = selected_unit.get_gear_data("name");
+                    break;
+            }
+            if (ac != 0) {
+                tooltip_text += string_hash_to_newline($"{name}: {ac}#");
+            }
+          }
         	x1 = xx+1015;
         	y1 = yy+400;
         	x2 = x1+string_width(var_text);
@@ -438,12 +468,22 @@ function scr_ui_manage() {
 	        draw_text(x1,y1,var_text);
 	        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 
 
-	        if (cn.temp[113]!="") then draw_text(xx+1015,yy+422,string_hash_to_newline("Experience: "+string(cn.temp[113])));
+    		var_text = string_hash_to_newline($"Health: {round(selected_unit.hp())}/{round(selected_unit.max_health())}")
+        	tooltip_text = string_hash_to_newline(string("CON : {0}", selected_unit.constitution));
+        	x1 = xx+1015;
+        	y1 = yy+422;
+        	x2 = x1+string_width(var_text);
+        	y2 = y1+string_height(var_text);
+	        draw_set_color(c_gray);
+	        draw_text(x1,y1,var_text);
+	        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 
+
+	        if (cn.temp[113]!="") then draw_text(xx+1015,yy+466,string_hash_to_newline("Experience: "+string(cn.temp[113])));
 
 	        if (cn.temp[116]!=""){
 	        	carry_data = cn.temp[116][2];
 	        	var carry_string = $"Melee Cap: {carry_data[0]}/{carry_data[1]}"
-	        	x1 = xx+1015;
+	        	x1 = xx+1387;
 	        	y1 = yy+444;
 	        	x2 = x1+string_width(carry_string);
 	        	y2 = y1+string_height(carry_string);
@@ -454,7 +494,7 @@ function scr_ui_manage() {
 	        if (cn.temp[117]!=""){
 	        	carry_data = cn.temp[117][2];
 	        	var carry_string = $"Ranged Cap: {carry_data[0]}/{carry_data[1]}"
-	        	x1 = xx+1015;
+	        	x1 = xx+1387;
 	        	y1 = yy+466;
 	        	x2 = x1+string_width(carry_string);
 	        	y2 = y1+string_height(carry_string);
@@ -466,8 +506,8 @@ function scr_ui_manage() {
         	if (cn.temp[118]!=""){
         		var_text = string_hash_to_newline(string("Damage Resistance: {0}",cn.temp[118]))
 	        	tooltip_text = string_hash_to_newline(string("CON : {0}", selected_unit.constitution));
-	        	x1 = xx+1387;
-	        	y1 = yy+492;
+	        	x1 = xx+1015;
+	        	y1 = yy+378;
 	        	x2 = x1+string_width(var_text);
 	        	y2 = y1+string_height(var_text);
 		        draw_set_color(c_gray);
@@ -475,7 +515,6 @@ function scr_ui_manage() {
 		        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
 	    	}
 
-	        draw_set_font(fnt_40k_14i);
 	        if (cn.temp[119]!="") then draw_text(xx+1015,yy+488,string_hash_to_newline(string(cn.temp[119])));
 	    }
     
