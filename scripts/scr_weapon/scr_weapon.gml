@@ -980,6 +980,7 @@ global.weapons={
             "artifact": 480
         },
         "description": "The Whirlwind Missile Launcher is a vehicle-mounted artillery weapon that launches a barrage of powerful missiles at the enemy.",
+        "abbreviation": "WhrlMssl", 
         "melee_hands": 0,
         "ranged_hands": 0,
         "ammo": 6,
@@ -987,6 +988,10 @@ global.weapons={
         "spli": 1,
         "arp": 1
     },
+    "HK Missile": {
+        "abbreviation": "HKMssl", 
+        "description": "",
+    },  
     "Twin Linked Heavy Bolter Mount": {
         "attack": {
             "standard": 240,
