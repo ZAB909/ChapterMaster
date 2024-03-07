@@ -1654,7 +1654,7 @@ global.gear = {
     "description": "The newest and most advanced of the standard mark power armours as such production has not yet reached maximum capacity creating a supply shortage.",
     "tags":["power_armour"],
     },
-    "MK10 Indomitus": {
+    "MK10 Tacticus": {
         "abbreviation": "MK10",
       "armour_value": {
         "standard": 24,
@@ -1671,7 +1671,7 @@ global.gear = {
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
       },
-      "description": "The MK10 Indomitus is the most advanced pattern of power armour available to the Space Marines, featuring advanced materials and systems.",
+      "description": "The MK10 Tacticus is the most advanced pattern of power armour available to the Space Marines, featuring advanced materials and systems.",
       "tags":["power_armour"],
     }, 
     "Skitarii Armour":{
