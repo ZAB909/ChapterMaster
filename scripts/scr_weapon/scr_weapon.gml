@@ -1832,7 +1832,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
             }
         }
         if (hp_mod!=0){
-            item_desc_tooltip += $"Health Bns: {format_number_with_sign(hp_mod)}%#"
+            item_desc_tooltip += $"Health Mod: {format_number_with_sign(hp_mod)}%#"
         }
         if (damage_resistance_mod!=0){
             item_desc_tooltip += $"Damage Res: {format_number_with_sign(damage_resistance_mod)}%#"
@@ -1841,10 +1841,10 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
             item_desc_tooltip += $"Damage: {attack}#"
         }
         if (ranged_mod!=0){
-            item_desc_tooltip += $"Ranged Bns: {format_number_with_sign(ranged_mod)}%#"
+            item_desc_tooltip += $"Ranged Mod: {format_number_with_sign(ranged_mod)}%#"
         }
         if (melee_mod!=0){
-            item_desc_tooltip += $"Melee Bns: {format_number_with_sign(melee_mod)}%#"
+            item_desc_tooltip += $"Melee Mod: {format_number_with_sign(melee_mod)}%#"
         }
         if (ammo!=0){
             item_desc_tooltip += $"Ammo: {ammo}#"
@@ -1854,7 +1854,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
         }
         if (melee_hands != 0) {
             if struct_exists(global.weapons,name){
-                item_desc_tooltip += $"Melee Enc: {melee_hands}#"
+                item_desc_tooltip += $"Melee Burden: {melee_hands}#"
             }
             else{
                 item_desc_tooltip += $"Melee Cap: {format_number_with_sign(melee_hands)}#"
@@ -1862,7 +1862,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
         }
         if (ranged_hands != 0) {
             if struct_exists(global.weapons,name){
-                item_desc_tooltip += $"Ranged Enc: {ranged_hands}#"
+                item_desc_tooltip += $"Ranged Burden: {ranged_hands}#"
             }
             else{
                 item_desc_tooltip += $"Ranged Cap: {format_number_with_sign(ranged_hands)}#"
