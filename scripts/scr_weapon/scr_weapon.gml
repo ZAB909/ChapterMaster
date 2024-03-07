@@ -1365,7 +1365,7 @@ global.gear = {
       "melee_hands":2,
       "ranged_hands":2,
       "description": "The toughest and most powerful armour designed by humanity. Only the most veteran of Astartes are allowed to wear these.",
-       "tags":["terminator"],
+      "req_exp":90,
     },
     "Dreadnought": {
          "abbreviation": "Dread", 
@@ -1409,6 +1409,7 @@ global.gear = {
       "ranged_hands":2,      
       "description": "Even more advanced than the Indomitus Terminator Armour, this upgraded armour offers greater mobility at no cost to protection.",
       "tags":["terminator"],
+      "req_exp":90,
     },
     "Cataphractii Pattern Terminator":{
         "abbreviation": "Catph", 
@@ -1430,7 +1431,7 @@ global.gear = {
       "melee_hands":2,
       "ranged_hands":2,      
       "description": "Among the first issued to the Space Marine Legions, it is functionally distinct from other patterns, bearing additional plating and shield generators installed within the shoulder pads",
-        "tags":["terminator"],
+      "req_exp":90,
     },
      "Ork Armour": {
      "abbreviation": "OrkArm", 
