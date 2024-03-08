@@ -382,4 +382,26 @@ function data_slate() constructor{
 			draw_text_ext(xx+(0.5*width), yy+(50*scale_y)+draw_height, string_hash_to_newline(body_text), -1, width-60);
 		}
 	}
+	static draw_cut = function(xx,yy, scale_x=1, scale_y=1, middle_percent=0){
+		XX=xx;
+		YY=yy;
+		draw_sprite_part_ext(spr_data_slate,1, 0, 0, 850, 69, XX, YY, scale_x, scale_y, c_white, 1);
+		draw_sprite_part_ext(spr_data_slate,1, 0, 69, 850, 683*(middle_percent/100), XX, YY+(69*scale_y), scale_x, scale_y, c_white, 1);
+		draw_sprite_part_ext(spr_data_slate,1, 0, 752, 850, 98, XX, YY+(69+683*((middle_percent/100)))*scale_y, scale_x, scale_y, c_white, 1);
+		width = 860*scale_x;
+		height = (69+(683*(middle_percent/100))+98 )*scale_y;
+		if (is_method(inside_method)){
+			inside_method();
+		}		
+	}
 }
+
+
+
+
+
+
+
+
+
+

@@ -1236,7 +1236,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
     }
     // Fleet panel minimize
     if (zoomed==0) and (cooldown<=0) and (diplomacy==0){
-        if (popup==1) or (popup==2){
+       /* if (popup==1) or (popup==2){
             if (mouse_x>=__view_get( e__VW.XView, 0 )+18+obj_fleet_select.void_wid) and (mouse_y>=__view_get( e__VW.YView, 0 )+116)
             and (mouse_x<__view_get( e__VW.XView, 0 )+36+obj_fleet_select.void_wid) and (mouse_y<__view_get( e__VW.YView, 0 )+134) and (cooldown<=0){
                 if (fleet_minimized==0) and (cooldown<=0){
@@ -1250,7 +1250,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     click=1;
                 }
             }
-        }
+        }*/
         // Save and exit
         if (mouse_y>=yy+0) and (mouse_y<yy+26){
             var sv;
