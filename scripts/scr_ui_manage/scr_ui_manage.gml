@@ -1034,7 +1034,7 @@ function scr_ui_manage() {
 			    //draws hover overs for specialist potential
 			    for (var i=0;i<array_length(tooltip_set);i++){
 			    	if (point_in_rectangle(mouse_x, mouse_y, tooltip_set[i][1][0],tooltip_set[i][1][1],tooltip_set[i][1][2],tooltip_set[i][1][3])){
-			    		tooltip_draw(mouse_x, mouse_y, tooltip_set[i][0])
+			    		tooltip_draw(tooltip_set[i][0])
 			    	}
 			    }
 		    
@@ -1134,7 +1134,7 @@ function scr_ui_manage() {
 			tip = tooltip_drawing[i];
 			coords=tip[1];
 			if (point_in_rectangle(mouse_x, mouse_y, coords[0],coords[1],coords[2],coords[3])){
-		        	tooltip_draw(coords[0],coords[3]+4, tip[0]);
+		        	tooltip_draw(tip[0],coords[0],coords[3]+4);
 			}
 		}		
 	}
