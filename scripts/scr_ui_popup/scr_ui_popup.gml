@@ -1,24 +1,35 @@
-#macro VIEW_OFFSET 36
-#macro TOOLTIP_OFFSET 24
+#macro DEFAULT_VIEW_OFFSET 36
+#macro DEFAULT_TOOLTIP_X_OFFSET 24
+#macro DEFAULT_LINE_GAP 24
+#macro DEFAULT_TOOLTIP_WIDTH 300
 
-function tooltip_draw(tooltip, rect_x=mouse_x+TOOLTIP_OFFSET, rect_y=mouse_y, extra_x=0, extra_y=0, max_width=300, line_gap=24, draw_color=c_gray){
+function tooltip_draw(tooltip, rect_x=mouse_x+DEFAULT_TOOLTIP_X_OFFSET, rect_y=mouse_y, extra_x=0, extra_y=0, max_width=DEFAULT_TOOLTIP_WIDTH, line_gap=DEFAULT_LINE_GAP, draw_color=c_gray){
 	var xx = __view_get(e__VW.XView, 0);
 	var yy = __view_get(e__VW.YView, 0);
 	tooltip = string_hash_to_newline(string(tooltip));
 	var width = min(string_width(tooltip) + extra_x, max_width);
 	var height = string_height_ext(tooltip, line_gap, width) + extra_y;
-	rect_x = clamp(rect_x, xx, xx + __view_get(e__VW.WView, 0) - width - VIEW_OFFSET);
-	rect_y = clamp(rect_y, yy, yy + __view_get(e__VW.HView, 0) - height - VIEW_OFFSET);
-	draw_set_color(0);
-	draw_rectangle(rect_x, rect_y, width + rect_x + 6, height + rect_y + 6, 0);
-	draw_set_color(draw_color);
-	draw_rectangle(rect_x, rect_y, width + rect_x + 6, height + rect_y + 6, 1);
-	draw_set_alpha(0.5);
-	draw_rectangle(rect_x + 1, rect_y + 1, width + rect_x + 5, height + rect_y + 5, 1);
-	draw_set_alpha(1);
-	draw_text_ext(rect_x + 2.5, rect_y + 2.5, tooltip, line_gap, width);
+	rect_x = clamp(rect_x, xx, xx + __view_get(e__VW.WView, 0) - width - DEFAULT_VIEW_OFFSET);
+	rect_y = clamp(rect_y, yy, yy + __view_get(e__VW.HView, 0) - height - DEFAULT_VIEW_OFFSET);
+	draw_rectangle_with_color_and_alpha(rect_x, rect_y, width + rect_x + 6, height + rect_y + 6, 0, 0, 1)
+	draw_rectangle_with_color_and_alpha(rect_x, rect_y, width + rect_x + 6, height + rect_y + 6, 1, draw_color, 1)
+	draw_rectangle_with_color_and_alpha(rect_x + 1, rect_y + 1, width + rect_x + 5, height + rect_y + 5, 1, draw_color, 0.5)
+	draw_text_ext_with_color_and_alpha(rect_x + 2.5, rect_y + 2.5, tooltip, line_gap, width, draw_color, 1)
 	return [width + 6, height + 6]
 }
+
+function draw_rectangle_with_color_and_alpha(x, y, width, height, outline, color, alpha){
+	draw_set_color(color);
+	draw_set_alpha(alpha);
+	draw_rectangle(x, y, width, height, outline);
+}
+
+function draw_text_ext_with_color_and_alpha(x, y, string, sep, w, color, alpha){
+	draw_set_color(color);
+	draw_set_alpha(alpha);
+	draw_text_ext(x, y, string, sep, w);
+}
+
 function scr_ui_popup() {
 	// 48,48      over like 256, down to 480-128
 
