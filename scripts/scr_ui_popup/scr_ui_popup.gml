@@ -1,10 +1,10 @@
 function tooltip_draw(tooltip, max_width=300, rect_x=mouse_x+DEFAULT_TOOLTIP_MOUSE_X_OFFSET, rect_y=mouse_y, text_color=c_gray, font=fnt_40k_14){
+	draw_set_font(font);
+	draw_set_alpha(1)
 	var text_padding_x = 4;
 	var text_padding_y = 4;
 	var xx = __view_get(e__VW.XView, 0);
 	var yy = __view_get(e__VW.YView, 0);
-	draw_set_font(font);
-	draw_set_alpha(1)
 	tooltip = string_hash_to_newline(string(tooltip));
 	var string_w = min(string_width(tooltip), max_width);
 	var string_h = string_height_ext(tooltip, DEFAULT_LINE_GAP, string_w);
@@ -15,7 +15,6 @@ function tooltip_draw(tooltip, max_width=300, rect_x=mouse_x+DEFAULT_TOOLTIP_MOU
 	draw_rectangle_colour(rect_x, rect_y, rect_w + rect_x, rect_h + rect_y, c_black, c_black, c_black, c_black, 0);
 	draw_rectangle_colour(rect_x, rect_y, rect_w + rect_x, rect_h + rect_y, c_gray, c_gray, c_gray, c_gray, 1);
 	draw_text_ext_colour(rect_x + text_padding_x, rect_y + text_padding_y, tooltip, DEFAULT_LINE_GAP, string_w, text_color, text_color, text_color, text_color, 1);
-	// draw_set_alpha(1);
 }
 
 // function draw_rectangle_colour_alpha(x, y, x2, y2, outline, color, alpha){

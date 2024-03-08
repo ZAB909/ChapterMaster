@@ -143,7 +143,6 @@ for(var i=1; i<=39; i++){
     }
 }
 
-// TODO handle all tooltips through the tooltip_draw function;
 if (tooltip_show!=0){
     tooltip_draw(tooltip, 400)
 }
