@@ -325,7 +325,7 @@ function dungeon_struct() constructor{
 				var ob = dungeon.current_obstacle.base_data;
 				var stat_data = stat_type_data();
 				for (var t=0; t<array_length(ob.tests);t++){
-					if 
+					//if 
 				}
 
 			}
