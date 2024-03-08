@@ -30,7 +30,6 @@ __b__ = action_if_number(obj_popup, 0, 0);
 			        that2=instance_create(0,0,obj_popup);
 			        that2.type=99;
 			        obj_controller.force_scroll=1;
-			        obj_controller.fleet_minimized=1
 			    }
     
 			    if (mouse_x>=xxx+272) and (mouse_y>=yyy+354) and (mouse_x<xxx+399) and (mouse_y<yyy+389){// Fight fight fight, space

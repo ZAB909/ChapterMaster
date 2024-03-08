@@ -8,15 +8,9 @@ function scr_void_click() {
 	if ((obj_controller.zoomed=0) and (mouse_y>__view_get( e__VW.YView, 0 )+830)) or (obj_controller.menu!=0) then good=false;
 
 
-	if (instance_exists(obj_fleet_select)){
-	    var free,z;free=1;z=obj_fleet_select;
-	    if (mouse_x>=__view_get( e__VW.XView, 0 )+z.void_x) and (mouse_y>=__view_get( e__VW.YView, 0 )+z.void_y) 
-	    and (mouse_x<__view_get( e__VW.XView, 0 )+z.void_x+z.void_wid) and (mouse_y<__view_get( e__VW.YView, 0 )+z.void_y+z.void_hei) and (obj_controller.fleet_minimized=0) then free=0;
-    
-	    if (mouse_x>=__view_get( e__VW.XView, 0 )+z.void_x) and (mouse_y>=__view_get( e__VW.YView, 0 )+z.void_y) 
-	    and (mouse_x<__view_get( e__VW.XView, 0 )+z.void_x+z.void_wid) and (mouse_y<__view_get( e__VW.YView, 0 )+137) and (obj_controller.fleet_minimized=1) then free=0;
-	    if (free=0) then good=false;
-	}
+    if (instance_exists(obj_fleet_select)){
+         if (obj_fleet_select.currently_entered) then good=false;
+    }
 
 
 	if (instance_exists(obj_star_select)){

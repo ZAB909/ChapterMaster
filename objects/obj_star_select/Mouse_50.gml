@@ -25,16 +25,10 @@ dist=999;close=false;
 
 if (debug!=0) then exit;
 
-
-if (instance_exists(obj_fleet_select)){
-    var free,z;free=1;z=obj_fleet_select;
-    if (mouse_x>=__view_get( e__VW.XView, 0 )+z.void_x) and (mouse_y>=__view_get( e__VW.YView, 0 )+z.void_y) 
-    and (mouse_x<__view_get( e__VW.XView, 0 )+z.void_x+z.void_wid) and (mouse_y<__view_get( e__VW.YView, 0 )+z.void_y+z.void_hei) and (obj_controller.fleet_minimized=0) then free=0;
-    
-    if (mouse_x>=__view_get( e__VW.XView, 0 )+z.void_x) and (mouse_y>=__view_get( e__VW.YView, 0 )+z.void_y) 
-    and (mouse_x<__view_get( e__VW.XView, 0 )+z.void_x+z.void_wid) and (mouse_y<__view_get( e__VW.YView, 0 )+137) and (obj_controller.fleet_minimized=1) then free=0;
-    if (free=0) then exit;
-}
+    //TODO centralise this logic
+    if (instance_exists(obj_fleet_select)){
+         if (obj_fleet_select.currently_entered) then exit;
+    }
 
 
 
