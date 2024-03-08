@@ -166,16 +166,17 @@ function scr_draw_unit_stat_data(manage=false){
 			tooltip_text +="#";
 		}
 		tooltip_text = string_hash_to_newline(tooltip_text);
-		tooltip_draw(tooltip_text, stat_x+2,stat_y);
+		tooltip_draw(tooltip_text, undefined, stat_x+2,stat_y);
 		if (!obj_controller.view_squad && obj_controller.managing >0 && obj_controller.unit_text){
 			var unit_data_string = unit_profile_text();
-			tooltip_draw(string_hash_to_newline(unit_data_string), xx+25,yy+144, 3, 0, 970, 17);
+			tooltip_draw(unit_data_string, 970, xx+25,yy+144);
 		}
 		draw_text(stat_middle-66, stats_base+75, $"loyalty : {loyalty}")
 		draw_text(stat_middle-66, stats_base+110, $"corruption : {corruption}")		
 		for (i=0;i<array_length(stat_tool_tips);i++){
 			if (point_in_rectangle(mouse_x, mouse_y, stat_tool_tips[i][0], stat_tool_tips[i][1], stat_tool_tips[i][2], stat_tool_tips[i][3])){
-				tooltip_draw(stat_tool_tips[i][4], stat_tool_tips[i][0], stat_tool_tips[i][3],0,0,100,17);
+				tooltip_draw(stat_tool_tips[i][4], 100, stat_tool_tips[i][0], stat_tool_tips[i][3]);
 			}
 		}
+		draw_set_alpha(1)
 }

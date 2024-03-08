@@ -99,7 +99,7 @@ function scr_company_struct(comp) constructor{
 					draw_unit_buttons([xx+bound_width[0]+5, yy+bound_height[0]+150], tooltip_text,[1,1],c_red);
 					if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text), yy+bound_height[0]+150+string_height(tooltip_text))){
 						tooltip_text = "having squads assigned to Guard Duty will increase relations with a planet over time, it will also bolster planet defence forces in case of attack, and reduce corruption growth";
-						tooltip_draw(tooltip_text,xx+bound_width[0]+5,yy+bound_height[0]+150 + string_height(tooltip_text),0,0,150,17);
+						tooltip_draw(tooltip_text, 150, xx+bound_width[0]+5, yy+bound_height[0]+150 + string_height(tooltip_text));
 						if (mouse_check_button_pressed(mb_left)){
 							send_on_mission=true;
 							mission_type="garrison";
@@ -110,7 +110,7 @@ function scr_company_struct(comp) constructor{
 						draw_unit_buttons([xx+bound_width[0]+5 + button_row_offset, yy+bound_height[0]+150], tooltip_text,[1,1],c_red);
 						if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5+ button_row_offset, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text)+ button_row_offset, yy+bound_height[0]+150+string_height(tooltip_text))){
 							tooltip_text = "sabotage missions can reduce enemy growth while avoiding direct enemy contact however they are not without risk";
-							tooltip_draw(tooltip_text, xx+bound_width[0]+5+ button_row_offset,yy+bound_height[0]+150 + string_height(tooltip_text),0,0,150,17);
+							tooltip_draw(tooltip_text, 150, xx+bound_width[0]+5+ button_row_offset, yy+bound_height[0]+150 + string_height(tooltip_text));
 							if (mouse_check_button_pressed(mb_left)){
 								send_on_mission=true;
 								mission_type="sabotage";

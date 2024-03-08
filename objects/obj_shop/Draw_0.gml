@@ -145,18 +145,7 @@ for(var i=1; i<=39; i++){
 
 // TODO handle all tooltips through the tooltip_draw function;
 if (tooltip_show!=0){
-    draw_set_color(0);
-    draw_set_alpha(1);
-    draw_set_font(fnt_40k_14);
-    
-    tooltip_width=string_width_ext(string_hash_to_newline(tooltip),-1,400)+4;
-    tooltip_height=string_height_ext(string_hash_to_newline(tooltip),-1,400)+4;
-    tooltip_x = clamp(tooltip_x, xx, xx + __view_get( e__VW.WView, 0 ) - tooltip_width - 12);
-    tooltip_y = clamp(tooltip_y, yy, yy + __view_get( e__VW.HView, 0 ) - tooltip_height - 12);
-    draw_rectangle(tooltip_x-2,tooltip_y,tooltip_x+tooltip_width,tooltip_y+tooltip_height,0);
-    draw_set_color(c_gray);
-    draw_rectangle(tooltip_x-2,tooltip_y,tooltip_x+tooltip_width,tooltip_y+tooltip_height,1);
-    draw_text_ext(tooltip_x+2,tooltip_y+2,string_hash_to_newline(tooltip),-1,400);
+    tooltip_draw(tooltip, 400)
 }
 
 if (shop_area!=""){
