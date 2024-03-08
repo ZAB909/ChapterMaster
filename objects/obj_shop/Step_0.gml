@@ -25,7 +25,7 @@ repeat(39){
         equip_data=gear_weapon_data("any", item[i]);
         if (tooltip_overide[i] == 0){
             if (is_struct(equip_data)){
-                tooltip=$"{equip_data.description}##{equip_data.item_tooltip_desc_gen()}";
+                tooltip=$"{equip_data.item_tooltip_desc_gen()}";
             }
         } else {
             tooltip = tooltip_overide[i];
