@@ -1248,7 +1248,7 @@ global.weapons={
             "master_crafted": 130,
             "artifact": 160
         },
-        "description": "a standard bolter with a single shot flamer attached for tactical use",
+        "description": "A standard bolter with a single shot flamer attached for tactical use",
         "melee_hands": 1,
         "ranged_hands": 1.5,
         "ammo": 15,
@@ -1866,7 +1866,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                     break;
                 case "armour_value":
                     if (armour_value!=0){
-                        if item_type = "weapon"{
+                        if item_type = "armour"{
                             item_desc_tooltip += $"Armour: {armour_value}#"
                         }
                         else{
