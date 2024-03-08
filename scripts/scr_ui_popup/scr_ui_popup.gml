@@ -1,14 +1,14 @@
 #macro VIEW_OFFSET 36
 #macro TOOLTIP_OFFSET 24
 
-function tooltip_draw(tooltip, base_x=mouse_x+TOOLTIP_OFFSET, base_y=mouse_y, extra_x=0, extra_y=0, max_width=300, line_gap=24, draw_color=c_gray){
+function tooltip_draw(tooltip, rect_x=mouse_x+TOOLTIP_OFFSET, rect_y=mouse_y, extra_x=0, extra_y=0, max_width=300, line_gap=24, draw_color=c_gray){
 	var xx = __view_get(e__VW.XView, 0);
 	var yy = __view_get(e__VW.YView, 0);
 	tooltip = string_hash_to_newline(string(tooltip));
 	var width = min(string_width(tooltip) + extra_x, max_width);
 	var height = string_height_ext(tooltip, line_gap, width) + extra_y;
-	var rect_x = clamp(base_x, xx, xx + __view_get(e__VW.WView, 0) - width - VIEW_OFFSET);
-	var rect_y = clamp(base_y, yy, yy + __view_get(e__VW.HView, 0) - height - VIEW_OFFSET);
+	rect_x = clamp(rect_x, xx, xx + __view_get(e__VW.WView, 0) - width - VIEW_OFFSET);
+	rect_y = clamp(rect_y, yy, yy + __view_get(e__VW.HView, 0) - height - VIEW_OFFSET);
 	draw_set_color(0);
 	draw_rectangle(rect_x, rect_y, width + rect_x + 6, height + rect_y + 6, 0);
 	draw_set_color(draw_color);
