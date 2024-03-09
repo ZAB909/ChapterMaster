@@ -112,7 +112,7 @@ function scr_draw_unit_stat_data(manage=false){
 				unit_text = false;
 			}
 		}
-		array_push(stat_tool_tips,[stat_x, stat_y, stat_x+32, stat_y+45,stat_display_list[i][1]]);
+		array_push(stat_tool_tips,[stat_x, stat_y, stat_x+32, stat_y+50,stat_display_list[i][1]]);
 		stat_x+=36;
 	}
 
@@ -175,7 +175,7 @@ function scr_draw_unit_stat_data(manage=false){
 		draw_text(stat_middle-66, stats_base+110, $"corruption : {corruption}")		
 		for (i=0;i<array_length(stat_tool_tips);i++){
 			if (point_in_rectangle(mouse_x, mouse_y, stat_tool_tips[i][0], stat_tool_tips[i][1], stat_tool_tips[i][2], stat_tool_tips[i][3])){
-				tooltip_draw(stat_tool_tips[i][4], 100, stat_tool_tips[i][0], stat_tool_tips[i][3]);
+				tooltip_draw(stat_tool_tips[i][4], 200, stat_tool_tips[i][0], stat_tool_tips[i][3]);
 			}
 		}
 		draw_set_alpha(1)
