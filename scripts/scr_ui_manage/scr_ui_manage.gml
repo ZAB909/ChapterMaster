@@ -673,7 +673,6 @@ function scr_ui_manage() {
 				    		draw_set_color(c_fuchsia);
 				    	}
 			    	} else{
-			    		unit_specialism_option=true;
 			    		if (array_contains(["Lexicanum", "Codiciery",obj_ini.role[100,17], string("Chief {0}",obj_ini.role[100,17])], unit.role())){
 			    			draw_set_color(c_blue);
 			    		} else if(array_contains(["Forge Master",obj_ini.role[100][16]],unit.role())){
