@@ -226,6 +226,7 @@ function scr_ui_manage() {
 	    }
 	    draw_set_color(0);
 	    draw_rectangle(xx+1005,yy+142,xx+1576,yy+957,0);
+			draw_rectangle_color(xx+1005,yy+142,xx+1576,yy+957,c_gray, c_gray, c_gray, c_gray, 1);
 				// swap between squad view and normal view
 	    draw_set_color(c_gray);
 	    draw_line(xx+1005,yy+519,xx+1576,yy+519);
