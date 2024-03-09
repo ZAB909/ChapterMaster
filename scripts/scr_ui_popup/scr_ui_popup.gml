@@ -10,8 +10,8 @@ function tooltip_draw(tooltip, max_width=300, rect_x=mouse_x+DEFAULT_TOOLTIP_MOU
 	var string_h = string_height_ext(tooltip, DEFAULT_LINE_GAP, string_w);
 	var rect_w = string_w + text_padding_x + 4;
 	var rect_h = string_h + text_padding_y;
-	rect_x = clamp(rect_x, xx, xx + __view_get(e__VW.WView, 0) - rect_w - DEFAULT_TOOLTIP_VIEW_OFFSET);
-	rect_y = clamp(rect_y, yy, yy + __view_get(e__VW.HView, 0) - rect_h - DEFAULT_TOOLTIP_VIEW_OFFSET);
+	rect_x = clamp(rect_x, xx + DEFAULT_TOOLTIP_VIEW_OFFSET, xx + __view_get(e__VW.WView, 0) - rect_w - DEFAULT_TOOLTIP_VIEW_OFFSET);
+	rect_y = clamp(rect_y, yy + DEFAULT_TOOLTIP_VIEW_OFFSET, yy + __view_get(e__VW.HView, 0) - rect_h - DEFAULT_TOOLTIP_VIEW_OFFSET);
 	draw_rectangle_colour(rect_x, rect_y, rect_w + rect_x, rect_h + rect_y, c_black, c_black, c_black, c_black, 0);
 	draw_rectangle_colour(rect_x, rect_y, rect_w + rect_x, rect_h + rect_y, c_gray, c_gray, c_gray, c_gray, 1);
 	draw_text_ext_colour(rect_x + text_padding_x, rect_y + text_padding_y, tooltip, DEFAULT_LINE_GAP, string_w, text_color, text_color, text_color, text_color, 1);
@@ -709,7 +709,7 @@ function scr_ui_popup() {
 	        }		    
 	    
 		    if (tool1!=""){
-		    	tooltip_draw(tool1, xx+10, yy+42);
+		    	tooltip_draw(tool1);
 		    }
 		}
 
@@ -734,7 +734,7 @@ function scr_ui_popup() {
 		    if (tool1="") then tool1="Loyalty";
 	    
 		    if (tool1!=""){
-		        tooltip_draw(tool1, xx+150, yy+42);
+		        tooltip_draw(tool1);
 		    }
 		}
 
@@ -743,7 +743,7 @@ function scr_ui_popup() {
 		    var tx=0,ty=0,tool1="",tool2="",plu="";
 		    tool1="Gene-Seed";
 		    if (tool1!=""){
-		        tooltip_draw(tool1, xx+249, yy+42);
+		        tooltip_draw(tool1);
 		    }
 		}
 
@@ -752,7 +752,7 @@ function scr_ui_popup() {
 		    tool1="Astartes#(Normal/Command)";
 		    tool2="Astartes";
 		    if (tool1!=""){
-		        tooltip_draw(tool1, xx+373, yy+42);
+		        tooltip_draw(tool1);
 		    }
 		}
 		if (menu == 0) and (diplomacy<=0){
@@ -761,12 +761,12 @@ function scr_ui_popup() {
 			    tool1=$"Turn :{obj_controller.turn}";
 			    tool2="Astartes";
 			    if (tool1!=""){
-			    	tooltip_draw(tool1, xx+1480, yy+265);
+			    	tooltip_draw(tool1);
 			    }
 			}
 		}
 	    if (point_in_rectangle(mouse_x, mouse_y, xx+3, yy+50, xx+67, yy+114)){
-	        tooltip_draw(obj_controller.forge_string, xx+3,yy+114);
+	        tooltip_draw(obj_controller.forge_string);
 	    }		
 
 		if (scr_hit(xx+813,yy+10,xx+960,yy+38)) and (penitent==1) {
@@ -794,7 +794,7 @@ function scr_ui_popup() {
 		    }
 	    
 		    if (tool1!=""){
-		        tooltip_draw(tool1, xx+813, yy+42)
+		        tooltip_draw(tool1)
 		    }
 		}
 
