@@ -464,8 +464,39 @@ function scr_ui_manage() {
 	        }	        
         		 
         	if (cn.temp[118]!=""){
+						tooltip_text = "";
+						for (var i = 0; i < array_length(equipment_types); i++){
+							var equipment_type = equipment_types[i];
+							var dr = 0;
+							var name = "";
+							switch(equipment_type) {
+									case "armour":
+											dr = selected_unit.get_armour_data("damage_resistance_mod");
+											name = selected_unit.get_armour_data("name");
+											break;
+									case "weapon_one":
+											dr = selected_unit.get_weapon_one_data("damage_resistance_mod");
+											name = selected_unit.get_weapon_one_data("name");
+											break;
+									case "weapon_two":
+											dr = selected_unit.get_weapon_two_data("damage_resistance_mod");
+											name = selected_unit.get_weapon_two_data("name");
+											break;
+									case "mobility":
+											dr = selected_unit.get_mobility_data("damage_resistance_mod");
+											name = selected_unit.get_mobility_data("name");
+											break;
+									case "gear":
+											dr = selected_unit.get_gear_data("damage_resistance_mod");
+											name = selected_unit.get_gear_data("name");
+											break;
+							}
+							if (dr != 0) {
+									tooltip_text += string_hash_to_newline($"{name}: {dr}%#");
+							}
+						}
         		var_text = string_hash_to_newline(string("Damage Resistance: {0}",cn.temp[118]))
-	        	tooltip_text = string_hash_to_newline(string("CON : {0}", selected_unit.constitution));
+	        	tooltip_text += string_hash_to_newline(string("CON: {0}x0.5#EXP: {1}x0.1", selected_unit.constitution, cn.temp[113]));
 	        	x1 = xx+1387;
 	        	y1 = yy+492;
 	        	x2 = x1+string_width(var_text);
