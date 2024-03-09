@@ -57,16 +57,16 @@ function scr_company_struct(comp) constructor{
 			var bound_height = [144,957];
 			draw_set_halign(fa_left);
 			var arrow="<--";
-			draw_unit_buttons([xx+bound_width[0], yy+bound_height[0]+6], arrow,[1.5,1.5],c_red);
-			if (point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0],yy+bound_height[0]+6,xx+bound_width[0]+string_width(arrow)+4, yy+bound_height[0]+14+string_height(arrow)) && array_length(company_squads) > 0 && mouse_check_button_pressed(mb_left)){
+			var button = draw_unit_buttons([xx+bound_width[0], yy+bound_height[0]+6], arrow,[1.5,1.5],c_red);
+			if (point_in_rectangle(mouse_x, mouse_y,button[0],button[1],button[2], button[3]) && array_length(company_squads) > 0 && mouse_check_button_pressed(mb_left)){
 				cur_squad = (cur_squad-1<0) ? 0 : cur_squad-1;
 				member = obj_ini.squads[company_squads[cur_squad]].members[0];
 				obj_controller.temp[120] = obj_ini.TTRPG[member[0]][member[1]];
 			}
 			arrow="-->";
 			draw_set_halign(fa_right);
-			draw_unit_buttons([xx+bound_width[1]-44,yy+bound_height[0]+6], arrow,[1.5,1.5],c_red);
-			if (point_in_rectangle(mouse_x, mouse_y,xx+bound_width[1]-44,yy+bound_height[0]+6,xx+bound_width[1]+string_width(arrow)-36, yy+bound_height[0]+14+string_height(arrow)) && array_length(company_squads) > 0 && mouse_check_button_pressed(mb_left)){
+			button = draw_unit_buttons([xx+bound_width[1]-44,yy+bound_height[0]+6], arrow,[1.5,1.5],c_red);
+			if (point_in_rectangle(mouse_x, mouse_y,button[0],button[1],button[2], button[3]) && array_length(company_squads) > 0 && mouse_check_button_pressed(mb_left)){
 				cur_squad = cur_squad+1>=array_length(company_squads) ? 0 : cur_squad+1;
 				member = obj_ini.squads[company_squads[cur_squad]].members[0];
 				obj_controller.temp[120] = obj_ini.TTRPG[member[0]][member[1]];
@@ -167,6 +167,7 @@ function scr_company_struct(comp) constructor{
 			//TODO compartmentalise drop down option logic
 			if (current_squad.formation_place!=""){
 				var deploy_text = "Squad will deploy in the";
+				draw_set_font(fnt_40k_14b)
 				draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0], deploy_text,1,1,0);
 				draw_unit_buttons([xx+bound_width[0]+5 + string_width(deploy_text), yy+bound_height[0]],current_squad.formation_place,[1,1],c_green);
 				draw_set_color(c_red);
