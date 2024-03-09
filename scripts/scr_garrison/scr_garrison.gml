@@ -1,6 +1,27 @@
+function disposition_description_chart(dispo){
+	if (dispo<10){
+		return "Very Hostile";
+	} else if (dispo<30){
+		return "Hostile";
+	}else if (dispo<50){
+		return "Uneasy";
+	}else if (dispo<60){
+		return "Neutral";
+	}else if (dispo<70){
+		return "Friendly";
+	}else if (dispo<80){
+		return "Very Freindly";
+	}else if (dispo<90){
+		return "Excellent";
+	}else if (dispo<100){
+		return "Unquestionable";
+	}
+}
+
 function garrison_force(planet_operatives)constructor{
 	garrison_squads=[];
 	total_garrison = 0;
+	garrison_leader=false;
 	garrison_force=false;
 	 for (var ops=0;ops<array_length(planet_operatives);ops++){
       	if(planet_operatives[ops].type=="squad"){
@@ -57,6 +78,23 @@ function garrison_force(planet_operatives)constructor{
 				unit = obj_ini.TTRPG[squad.members[mem][0]][squad.members[mem][1]];
 			}
 		}
+	}
+
+	static garrison_report = function(){
+		var system = obj_star_select.target;
+		var planet = obj_controller.selecting_planet;
+		var report_string = "Hail My lord.##";
+		report_string+=$"Report for garrison on {system.name} {scr_roman_numerals()[planet-1]} is as follows#";
+		if ((array_length(garrison_squads)) > 1){
+			report_string+= $"The garrison is comprised of {array_length(garrison_squads)} squads,"
+		} else {report_string+="The garrison is comprised of a single squad,"}
+
+		report_string+= $" with a total man count of {total_garrison}.#"
+
+		var disposition = disposition_description_chart(system.dispo[planet]);
+
+		report_string+=$"Our Relationship with the Rulers of the planet is {disposition}";
+		return report_string;
 	}
 
 	/* this is probably going to become infinatly complex with many different functions and far more complex inputs

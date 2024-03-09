@@ -165,9 +165,9 @@ if (obj_controller.cooldown<=0) and (once_only=0){// Need to change max_ships to
                 if (p_owner[4]=7) then instance_create(x,y,obj_temp1);
             }
 			var _planet = battle_object.p_feature[obj_ncombat.battle_id]
-            if (instance_number(obj_temp1)=1) or ( planet_feature_bool(_planet,P_features.Warlord7)==1){
+            if (instance_number(obj_temp1)=1) or ( planet_feature_bool(_planet,P_features.OrkWarboss)==1){
 				obj_ncombat.leader=1;
-				obj_ncombat.Warlord = _planet[search_planet_features(_planet,P_features.Warlord7)[0]]
+				obj_ncombat.Warlord = _planet[search_planet_features(_planet,P_features.OrkWarboss)[0]]
 			}
             with(obj_temp1){instance_destroy();}
         }

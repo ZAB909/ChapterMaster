@@ -49,13 +49,6 @@ function scr_quest(argument0, argument1, argument2, argument3) {
 	            obj_ini.artifact_condition[that]=0;obj_ini.artifact_loc[that]="";obj_ini.artifact_sid[that]=0;
 	            obj_controller.artifacts-=1;
 	            i=that;
-	            repeat(10){
-	                obj_ini.artifact[i]=obj_ini.artifact[i+1];obj_ini.artifact_tags[i]=obj_ini.artifact_tags[i+1];
-	                obj_ini.artifact_identified[i]=obj_ini.artifact_identified[i+1];
-	                obj_ini.artifact_condition[i]=obj_ini.artifact_condition[i+1];
-	                obj_ini.artifact_loc[i]=obj_ini.artifact_loc[i+1];obj_ini.artifact_sid[i]=obj_ini.artifact_sid[i+1];
-	                i+=1;
-	            }
 	            if (obj_controller.demanding=0) then obj_controller.disposition[4]+=1;
 	            if (obj_controller.demanding=1) then obj_controller.disposition[4]+=choose(0,0,1);
 	            scr_popup("Inquisition Mission Completed","The Inquisition has asked for the return of the Artifact, and your Chapter was able to hand it over without complications.  The mission has been accomplished.","inquisition","");

@@ -28,6 +28,57 @@ function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,align
 	return [position[0],position[1], full_width,full_height];
 }
 
+function text_bar_area(XX,YY,Max_width = 400) constructor{
+	allow_input=false;
+	xx=XX;
+	yy=YY
+	max_width = Max_width;
+	cooloff=0
+    // Draw BG
+    static draw = function(string_area){
+    	if (cooloff>0) then cooloff--;
+    	if (allow_input){
+    		string_area=keyboard_string;
+    	}
+	    draw_set_alpha(1);
+	    //draw_sprite(spr_rock_bg,0,xx,yy);
+	    draw_set_font(fnt_40k_30b);
+	    draw_set_halign(fa_center);
+	    draw_set_color(c_gray);// 38144	
+		var bar_wid=max_width,click_check, string_h;
+	    draw_set_alpha(0.25);
+	    if (string_area!=""){
+	    	bar_wid=max(max_width,string_width(string_hash_to_newline(string_area)));
+	    }
+		string_h = string_height("LOL");
+		var rect = [xx-(bar_wid/2),yy,xx+(bar_wid/2),yy-8+string_h]
+	    draw_rectangle(rect[0],rect[1],rect[2],rect[3],1);
+	    click_check = point_and_click(rect);
+	    obj_cursor.image_index=0;
+	    if (cooloff==0){
+		    if (allow_input && mouse_check_button(mb_left) && !click_check){
+	    	    allow_input=false;
+	    	    cooloff=5;
+	    	}else if (!allow_input && click_check){
+		        obj_cursor.image_index=2;
+		        allow_input=true;
+	        	keyboard_string = string_area;
+	        	cooloff=5;
+		    }
+		}
+
+	    draw_set_alpha(1);
+
+    	draw_set_font(fnt_fancy);
+        if (!allow_input) then draw_text(xx,yy+2,string_hash_to_newline("''"+string(string_area)+"'' "));
+        if (allow_input){
+        	obj_cursor.image_index=2;
+        	draw_text(xx,yy+2,string_hash_to_newline("''"+string(string_area)+"|''"))
+        };
+		return string_area;
+	}
+}
+
 function scr_ui_manage() {
 
 	if (combat!=0) then exit;
@@ -106,7 +157,8 @@ function scr_ui_manage() {
 	        }
 	        draw_set_alpha(1);
         
-	        if (obj_ini.company_title[managing]!="") or (text_bar>0){draw_set_font(fnt_fancy);
+	        if (obj_ini.company_title[managing]!="") or (text_bar>0){
+	        	draw_set_font(fnt_fancy);
 	            if (text_bar=0) or (text_bar>31) then draw_text(xx+800,yy+110,string_hash_to_newline("''"+string(obj_ini.company_title[managing])+"'' "));
 	            if (text_bar>0) and (text_bar<=31) then draw_text(xx+800,yy+110,string_hash_to_newline("''"+string(obj_ini.company_title[managing])+"|''"));
 	        }
@@ -493,63 +545,22 @@ function scr_ui_manage() {
 		            if (ma_armour[sel]!=""){
 						ma_ar=gear_weapon_data("armour",unit.armour(),"abbreviation");
 						ma_ar=is_string(ma_ar) ? ma_ar : "";
-		                // if (string_count("*",ma_ar)>0){ar_ar=2;ma_ar=string_replace(ma_ar,"*","");}
-		                if (string_count("^",ma_armour[sel])>0){
-							ar_ar=1;
-							ma_ar=string_replace(ma_ar,"^","");
-						}
-		                if (string_count("&",ma_armour[sel])>0){
-							ar_ar=2;
-							ma_ar="Artifact";
-						}
 		            }
 		            if (ma_gear[sel]!=""){
-						ma_ge=gear_weapon_data("gear",ma_gear[sel],"abbreviation");
+						ma_ge=gear_weapon_data("gear",unit.gear(),"abbreviation");
 						ma_ge=is_string(ma_ge) ? ma_ge : ""	;					
-		                if (string_count("^",ma_gear[sel])>0){
-							ar_ge=1;
-							ma_ge=string_replace(ma_ge,"^","");
-						}
-		                if (string_count("&",ma_gear[sel])>0){
-							ar_ge=2;
-							ma_ge="Artifact";
-						}
 		            }
 		            if (ma_mobi[sel]!=""){
-						ma_mb=gear_weapon_data("mobility",ma_mobi[sel],"abbreviation");
+						ma_mb=gear_weapon_data("mobility",unit.mobility_item(),"abbreviation");
 						ma_mb=is_string(ma_mb) ? ma_mb : ""	;			            	
-		                if (string_count("^",ma_mobi[sel])>0){
-							ar_mb=1;
-							ma_mb=string_replace(ma_mb,"^","");
-						}
-		                if (string_count("&",ma_mobi[sel])>0){
-							ar_mb=2;
-							ma_mb="Artifact";
-						}
 		            }
 		            if (ma_wep1[sel]!=""){
-						ma_we1=gear_weapon_data("weapon",ma_wep1[sel],"abbreviation");
-						ma_we1=is_string(ma_we1) ? ma_we1 : ""	;			            	
-		                if (string_count("^",ma_wep1[sel])>0){
-							ar_we1=1;
-							ma_we1=string_replace(ma_we1,"^","");
-						}
-		                if (string_count("&",ma_wep1[sel])>0){
-							ar_we1=2;
-							ma_we1="Artifact";
-						}
+						ma_we1=gear_weapon_data("weapon",unit.weapon_one(),"abbreviation");
+						ma_we1=is_string(ma_we1) ? ma_we1 : "";			            	
 		            }
 		            if (ma_wep2[sel]!=""){
-						ma_we2=gear_weapon_data("weapon",ma_wep2[sel],"abbreviation");
+						ma_we2=gear_weapon_data("weapon",unit.weapon_two(),"abbreviation");
 						ma_we2=is_string(ma_we1) ? ma_we2 : "";	
-		                if (string_count("^",ma_wep2[sel])>0){
-							ar_we2=1;
-							ma_we2=string_replace(ma_we2,"^","");
-						}
-		                if (string_count("&",ma_wep2[sel])>0){
-							ar_we2=2;
-							ma_we2="Artifact";
-						}
 		            }
 		        }else if (man[sel]=="vehicle"){
 		            // temp1="v "+string(managing)+"."+string(ide[sel]);
@@ -700,21 +711,18 @@ function scr_ui_manage() {
 		            draw_rectangle(xx+25,yy+64,xx+25+8,yy+85,0);
 		            draw_set_color(c_gray);
 		            draw_rectangle(xx+25,yy+64,xx+25+8,yy+85,1);
-		        }
-		        if (sqi=="mid"){
+		        }else if (sqi=="mid"){
 		            draw_rectangle(xx+25,yy+64,xx+25+8,yy+85,0);
 		            draw_set_color(c_gray);
 		            draw_line(xx+25,yy+64,xx+25,yy+85);
 		            draw_line(xx+25+8,yy+64,xx+25+8,yy+85);
-		        }
-		        if (sqi=="top"){
+		        }else if (sqi=="top"){
 		            draw_rectangle(xx+25,yy+64,xx+25+8,yy+85,0);
 		            draw_set_color(c_gray);
 		            draw_line(xx+25,yy+64,xx+25+28,yy+64);
 		            draw_line(xx+25,yy+64,xx+25,yy+85);
 		            draw_line(xx+25+8,yy+64,xx+25+8,yy+85);
-		        }
-		        if (sqi=="bot"){
+		        }else if (sqi=="bot"){
 		            draw_rectangle(xx+25,yy+64,xx+25+8,yy+85,0);
 		            draw_set_color(c_gray);
 		            draw_line(xx+25,yy+85,xx+25+28,yy+85);

@@ -41,7 +41,14 @@ speed_bonus=1;
 
 var i;i=-1;
 repeat(6){i+=1;
-    weapon[i]="";weapon_facing[i]="";weapon_cooldown[i]=0;weapon_hp[i]=0;weapon_dam[i]=0;weapon_ammo[i]=999;weapon_range[i]=0;weapon_minrange[i]=0;
+    weapon[i]="";
+    weapon_facing[i]="";
+    weapon_cooldown[i]=0;
+    weapon_hp[i]=0;
+    weapon_dam[i]=0;
+    weapon_ammo[i]=999;
+    weapon_range[i]=0;
+    weapon_minrange[i]=0;
 }
 
 action_set_alarm(1, 0);

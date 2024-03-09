@@ -4,19 +4,26 @@
 
 
 if (beg!=0)/* and (instance_exists(obj_fleet_controller))*/{
-    if (combat_end>-1) and (instance_number(obj_en_ship)=0){combat_end-=1;victory=true;}
+    if (combat_end>-1) and (instance_number(obj_en_ship)=0){
+        combat_end-=1;
+        victory=true;
+    }
     if (combat_end>-1) and ((capital+frigate+escort)<=0) then combat_end-=1;
     if (combat_end>-1){
         if (instance_exists(obj_p_ship)){
-            var wooo;
-            wooo=instance_nearest(room_width/2,room_height/2,obj_p_ship);
-            if (point_distance(wooo.x,wooo.y,room_width/2,room_height/2)>2000){combat_end-=1;debugl("Fleet Combat Ended- Loss - Enemy:"+string(enemy[1]));}
+            var wooo=instance_nearest(room_width/2,room_height/2,obj_p_ship);
+            if (point_distance(wooo.x,wooo.y,room_width/2,room_height/2)>4000){
+                combat_end-=1;
+                debugl("Fleet Combat Ended- Loss - Enemy:"+string(enemy[1]));
+            }
         }
     }
     
     if (combat_end<=-1) and (start=5) and (instance_exists(obj_p_ship)){
-        start=6;obj_p_ship.alarm[3]=1;
-        alarm[0]=10;debugl("Fleet Combat Ended- Victory - Enemy:"+string(enemy[1]));
+        start=6;
+        obj_p_ship.alarm[3]=1;
+        alarm[0]=10;
+        debugl("Fleet Combat Ended- Victory - Enemy:"+string(enemy[1]));
     }
     
     if (combat_end>-1) and (instance_number(obj_en_ship)=0) then combat_end-=1;
@@ -41,23 +48,6 @@ if (start=5){
         }
     }
 }
-
-
-/*
-if (instance_number(obj_en_ship)=0) and (start<6){
-    stage=6;
-    alarm[0]=10;
-}
-
-if (instance_number(obj_p_ship)=0) and (start<6){
-    capital=0;
-    frigate=0;
-    escort=0;
-    
-    stage=6;
-    alarm[0]=10;
-}
-*/
 
 
 /* */

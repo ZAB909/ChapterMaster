@@ -648,8 +648,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 		return instace_stat_point_gains;
 	}
-	static armour = function(){ 
-		return obj_ini.armour[company][marine_number];
+	static armour = function(raw=false){
+		var wep = obj_ini.armour[company][marine_number];
+		if (is_string(wep) || raw) then return wep;
+		return obj_ini.artifact[wep];		
 	};
 	static role = function(){
 		return obj_ini.role[company][marine_number];
@@ -705,8 +707,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}	
 	};
 
-	static mobility_item = function(){ 
-		return obj_ini.mobi[company][marine_number];
+	static mobility_item = function(raw=false){ 
+		var wep = obj_ini.mobi[company][marine_number];
+		if (is_string(wep) || raw) then return wep;
+		return obj_ini.artifact[wep];
 	};	
 	static hp = function(){ 
 		return obj_ini.hp[company][marine_number]; //return current health
@@ -765,11 +769,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	};
 	mobility_item_quality = "standard";
    static update_mobility_item = function(new_mobility_item, from_armoury = true, to_armoury=true, quality="any"){
+   		var arti = !is_string(new_mobility_item);
    		var change_mob=mobility_item()
    		if (change_mob == new_mobility_item){
    			return "no change";
    		}
-	  	if (from_armoury && new_mobility_item!=""){
+	  	if (from_armoury && new_mobility_item!="" && !arti){
 	  		if (scr_item_count(new_mobility_item, quality)>0){
 				var exp_require = gear_weapon_data("weapon", new_mobility_item, "exp", false, quality);
 	  			if (exp_require>experience()){
@@ -785,10 +790,21 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 		var portion = hp_portion();
 		if (change_mob != "") and (to_armoury){
-			scr_add_item(change_mob,1,mobility_item_quality );
+			if (!is_string(mobility_item(true))){
+				obj_ini.artifact_equipped[mobility_item(true)]=false;
+			} else {
+				scr_add_item(change_mob,1,mobility_item_quality );
+			}
 		}
 		obj_ini.mobi[company][marine_number] = new_mobility_item;
-		mobility_item_quality=quality;
+	 	if (arti){
+	    	obj_ini.artifact_equipped[new_mobility_item] = true;
+	    	mobility_item_quality = obj_ini.artifact_quality[new_mobility_item];
+	    	var arti = obj_ini.artifact_struct[new_mobility_item];
+			arti.bearer=[company,marine_number]; 	
+	    } else {
+	    	mobility_item_quality=quality;
+	    }		
 		update_health(portion*max_health());
 		get_unit_size(); //every time mobility_item is changed see if the marines size has changed
 		return "complete";
@@ -797,6 +813,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
    armour_quality="standard";
    
   static update_armour = function(new_armour, from_armoury=true, to_armoury=true, quality="any"){
+  		var arti = !is_string(new_armour);
 	  	var change_armour=armour();
 	  	var require_carpace=false;
 	  	var armour_list=[];
@@ -833,26 +850,38 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
             } 
         }		
 	   		
-	  	if (from_armoury && new_armour!=""){
+	  	if (from_armoury && new_armour!="" && !arti){
 	  		if (scr_item_count(new_armour,quality)>0){
 				var exp_require = gear_weapon_data("weapon", new_armour, "exp", false, quality);
 	  			if (exp_require>experience()){
 	  				return "exp_low";
 	  			} 	  			
 		   		quality=scr_add_item(new_armour,-1,quality);
+		   		if (quality == "no_item") then return "no_items";
 		   		quality = quality!=undefined? quality:"standard";
 		    } else {
 				return "no_items";
 		    }
 		} else {
-			quality= quality=="any"?"standard":quality;
+			quality = quality=="any" ? "standard" : quality;
 		}
 		if (change_armour != "") and (to_armoury){
-			scr_add_item(change_armour,1,armour_quality);
+			if (!is_string(armour(true))){
+				obj_ini.artifact_equipped[armour(true)]=false;
+			} else {	
+				scr_add_item(change_armour,1,armour_quality);
+			}
 		}
 		var portion = hp_portion();
 	    obj_ini.armour[company][marine_number] = new_armour;
-	    armour_quality=quality;
+	    if (arti){
+	    	obj_ini.artifact_equipped[new_armour] = true;
+	    	armour_quality = obj_ini.artifact_quality[new_armour];
+			var arti = obj_ini.artifact_struct[new_armour];
+			arti.bearer=[company,marine_number]; 		    	
+	    } else {
+	    	armour_quality=quality;
+	    }
 	    if (armour()=="Dreadnought"){
 	    	obj_ini.age[company][marine_number]=floor(age());
 	    	update_gear("");
@@ -1191,11 +1220,15 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		return obj_ini.race[company][marine_number];
 	};	//get race
 
-	static add_bionics = function(area="none", bionic_quality="standard", from_armoury=true){
+	static add_bionics = function(area="none", bionic_quality="any", from_armoury=true){
 		if (from_armoury && scr_item_count("Bionics",bionic_quality)<1){
 			return "no bionics";
-		}
-		var new_bionic_pos, part, new_bionic = {quality :bionic_quality};
+		}else if (from_armoury){
+			remove_quality = scr_add_item("Bionics",-1, bionic_quality);
+		} else {
+			remove_quality=choose("standard","standard","standard","standard","standard", "master_crafted","artifact");
+		}	
+		var new_bionic_pos, part, new_bionic = {quality :scr_add_item};
 		if (bionics < 10){
 			if (has_trait("flesh_is_weak")){
 				add_or_sub_health(40);
@@ -1248,9 +1281,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				if (has_trait("flesh_is_weak")){
 					piety++;
 				}
-				if (from_armoury){
-					scr_add_item("Bionics",-1);
-				}
 			}
 			if (hp()>max_health()){update_health(max_health())}
 		}
@@ -1267,25 +1297,29 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		return obj_ini.name[company][marine_number];
 	};// get marine name
 
-	static gear = function(){
-		return obj_ini.gear[company][marine_number];
+	static gear = function(raw=false){
+		var wep = obj_ini.gear[company][marine_number];
+		if (is_string(wep) || raw) then return wep;
+		return obj_ini.artifact[wep];		
 	};
 
 	is_boarder =false;
 
 	gear_quality="standard";
 	static update_gear = function(new_gear,from_armoury=true, to_armoury=true, quality="any"){
+		var arti = !is_string(new_gear);
 		var change_gear = gear();
 		if (change_gear == new_gear){
 	 		return "no change";
 	 	}
-	  	if (from_armoury) and (new_gear!=""){
+	  	if (from_armoury) and (new_gear!="") and (!arti){
 	  		if (scr_item_count(new_gear,quality)>0){
 				var exp_require = gear_weapon_data("gear", new_gear, "exp", false, quality);
 	  			if (exp_require>experience()){
 	  				return "exp_low";
 	  			}
 		   		quality=scr_add_item(new_gear,-1, quality);
+		   		if (quality == "no_item") then return "no_items";
 		   		quality = quality!=undefined? quality:"standard";
 		    } else {
 		    	return "no_items";
@@ -1296,10 +1330,21 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 		var portion = hp_portion();
 		if (change_gear != "" && to_armoury){
-			scr_add_item(change_gear,1,gear_quality);
+			if (!is_string(gear(true))){
+				obj_ini.artifact_equipped[gear(true)]=false;
+			} else {			
+				scr_add_item(change_gear,1,gear_quality);
+			}
 		}  			
 		obj_ini.gear[company][marine_number] = new_gear;
-		gear_quality=quality
+	 	if (arti){
+	    	obj_ini.artifact_equipped[new_gear] = true;
+	    	gear_quality = obj_ini.artifact_quality[new_gear];
+			var arti = obj_ini.artifact_struct[new_gear];
+			arti.bearer=[company,marine_number]; 	    	
+	    } else {
+	    	gear_quality=quality;
+	    }	
 		update_health(portion*max_health());
 		 return "complete";
 	}
@@ -1308,33 +1353,52 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		update_health(max_health()); //set marine health to max
 	}
 	   
-	static weapon_one = function(){ 
-		return obj_ini.wep1[company][marine_number];
+	static weapon_one = function(raw=false){
+		var wep = obj_ini.wep1[company][marine_number];
+		if (is_string(wep) || raw) then return wep;
+		return obj_ini.artifact[wep];
 	};
 
 	static equipments_qual_string = function(slot){
+		var artifact;
+		var quality
 		switch (slot){
 			case "wep1":
-				return quality_string_conversion(weapon_one_quality)+weapon_one();
+				artifact = weapon_one(true);
+				quality = weapon_one_quality;
 				break;
 			case "wep2":
-				return quality_string_conversion(weapon_two_quality)+weapon_two();
+				artifact = weapon_two(true);
+				quality = weapon_two_quality;
 				break;				
 			case "armour":
-				return quality_string_conversion(armour_quality)+armour();
+				artifact = armour(true);
+				quality = armour_quality;
 				break;				
 			case "gear":
-				return quality_string_conversion(gear_quality)+gear();
+				artifact = gear(true);
+				quality = gear_quality;
 				break;
 			case "mobi":
-				return quality_string_conversion(mobility_item_quality)+mobility_item();
+				artifact = mobility_item(true);
+				quality =mobility_item_quality;
 				break;				
+		}
+		if (is_string(artifact)){
+			return $"{quality_string_conversion(quality)} {artifact}";
+		} else {
+			if (obj_ini.artifact_struct[artifact].name==""){
+				return  $"{quality_string_conversion(quality)} {obj_ini.artifact[artifact]}";
+			} else {
+				return obj_ini.artifact_struct[artifact].name;
+			}
 		}
 	}
 
 	weapon_one_data={quality:"standard"};
   weapon_one_quality = "standard";
   static update_weapon_one = function(new_weapon,from_armoury=true, to_armoury=true,quality="any"){
+  	var arti = !is_string(new_weapon);
   	var change_wep = weapon_one();
   	var weapon_list = [];
     if (new_weapon == "Heavy Ranged"){
@@ -1362,13 +1426,14 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
         	return "no_items";
         } 
     } 	
-  	if (from_armoury) and (new_weapon!=""){
+  	if (from_armoury && new_weapon!="" && !arti){
   		if (scr_item_count(new_weapon, quality)>0){
 			var exp_require = gear_weapon_data("weapon", new_weapon, "exp", false, quality);
   			if (exp_require>experience()){
   				return "exp_low";
   			}  			
 	   		quality=scr_add_item(new_weapon,-1,quality);
+	   		if (quality == "no_item") then return "no_items";
 	   		quality = quality!=undefined? quality:"standard";
 	    } else {
 	    	return "no_items";
@@ -1378,30 +1443,45 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	}
 
 	if (change_wep != "") and (to_armoury){
-		scr_add_item(change_wep,1, weapon_one_quality);
+		if (!is_string(weapon_one(true))){
+			obj_ini.artifact_equipped[weapon_one(true)]=false;
+		} else {			
+			scr_add_item(change_wep,1, weapon_one_quality);
+		}
 	}       	
      obj_ini.wep1[company][marine_number] = new_weapon;
-     weapon_one_quality=quality;
+ 	if (arti){
+    	obj_ini.artifact_equipped[new_weapon] = true;
+		var arti = obj_ini.artifact_struct[new_weapon];
+		arti.bearer=[company,marine_number];    	
+    	weapon_one_quality = obj_ini.artifact_quality[new_weapon];
+    } else {
+    	weapon_one_quality=quality;
+    }
      return "complete";
 	};
 
-	static weapon_two = function(){
-		return obj_ini.wep2[company][marine_number];
+	static weapon_two = function(raw=false){
+		var wep = obj_ini.wep2[company][marine_number];
+		if (is_string(wep) || raw) then return wep;
+		return obj_ini.artifact[wep];
 	};
 
 	weapon_two_quality="standard";
   	static update_weapon_two = function(new_weapon,from_armoury=true, to_armoury=true, quality="any"){
+  		var arti = !is_string(new_weapon);
 	   	var change_wep = weapon_two();
 	  	if (change_wep == new_weapon){
 	   		return "no change";
 	   	}     	
-	  	if (from_armoury) and (new_weapon!=""){
+	  	if (from_armoury) and (new_weapon!="") && (!arti){
 	  		if (scr_item_count(new_weapon,quality)>0){
 				var exp_require = gear_weapon_data("weapon", new_weapon, "exp", false, quality);
 	  			if (exp_require>experience()){
 	  				return "exp_low";
 	  			} 	  			
 		   		quality=scr_add_item(new_weapon,-1,quality);
+		   		if (quality == "no_item") then return "no_items";
 		   		quality = quality!=undefined? quality:"standard";
 		    } else {
 		    	return "no_items";
@@ -1410,10 +1490,21 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			quality= quality=="any"?"standard":quality;
 		}
 		if (change_wep != "") and (to_armoury){
-			scr_add_item(change_wep,1, weapon_two_quality);
+			if (!is_string(weapon_two(true))){
+				obj_ini.artifact_equipped[weapon_two(true)]=false;
+			}else {
+				scr_add_item(change_wep,1, weapon_two_quality);
+			}		
 		}      	
     	obj_ini.wep2[company][marine_number] = new_weapon;
-    	weapon_two_quality=quality;
+	 	if (arti){
+	    	obj_ini.artifact_equipped[new_weapon] = true;
+	    	weapon_two_quality = obj_ini.artifact_quality[new_weapon];
+			var arti = obj_ini.artifact_struct[new_weapon];
+			arti.bearer=[company,marine_number]; 	    	
+	    } else {
+	    	weapon_two_quality=quality;
+	    }
     	return "complete";
 	};
 
@@ -1898,6 +1989,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 	}
 	static set_planet = function(planet_number){
+		obj_ini.lid = 0;
 		planet_location=planet_number;
 	}
 
@@ -1938,9 +2030,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 	static forge_point_generation = function(turn_end=false){
 		if (!IsSpecialist("forge")) then return 0;
+		var reasons = {}
 		var points = technology/10;
+		reasons.base = points;
 		if (job!="none"){
 			if (job.type == "forge"){
+				reasons.at_forge = (points+3);
 				points*=2;
 				points+=3;
 				if (turn_end){
@@ -1948,8 +2043,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				}
 			}
 		}
-		if (has_trait("crafter")) then points+=3;
-		return points;
+		if (has_trait("crafter")){
+			points+=3;
+			reasons.crafter = 3;
+		}
+		return [points,reasons];
 	}
 
 	static spawn_old_guard =function(){
@@ -2239,20 +2337,69 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			};
 		return equip_data;
 	}
-}
-function jsonify_marine_struct(company, marine){
-		var copy_marine_struct = obj_ini.TTRPG[company, marine]; //grab marine structure
-		var new_marine = {};
-		var copy_part;
-		var names = variable_struct_get_names(copy_marine_struct); // get all keys within structure
-		for (var name = 0; name < array_length(names); name++) { //loop through keys to find which ones are methods as they can't be saved as a json string
-			if (!is_method(copy_marine_struct[$ names[name]])){
-				copy_part = DeepCloneStruct(copy_marine_struct[$ names[name]])
-				variable_struct_set(new_marine, names[name],copy_part); //if key value is not a method add to copy structure
+	static equipped_artifacts=function(){
+		artis = [
+			weapon_one(true),
+			weapon_two(true),
+			gear(true),
+			armour(true),
+			mobility_item(true),
+		];
+		var arti_length = array_length(artis);
+		for (var i=0;i<arti_length;i++){
+			if (is_string(artis[i])){
+				array_delete(artis,i,1);
+				i--;
+				arti_length--;
 			}
 		}
-		return json_stringify(new_marine);
+		return artis;
 	}
+
+	static movement_after_math = function(end_company=company, end_slot=marine_number){
+		if (squad != "none"){
+			var squad_data = obj_ini.squads[squad];
+			var squad_member;
+
+			for (var r=0;r<array_length(squad_data.members);r++){
+				squad_member = squad_data.members[r];
+				if (squad_member[0] == company && squad_member[1] == marine_number){
+					if (squad_data.base_company != end_company){	
+						array_delete(squad_data.members,r,1);
+						squad = "none";
+					// if unit will no longer be same company as squad remove unit from squad
+					} else {
+						squad_data.members[r]=[end_company,end_slot];
+					}
+				}
+				
+			}
+		}
+
+		var arti,artifact_list =  equipped_artifacts();
+		for (var i=0; i<array_length(artifact_list);i++){
+			arti = obj_ini.artifact_struct[artifact_list[i]];
+			arti.bearer = [end_company,end_slot];
+		}
+	}
+}
+function jsonify_marine_struct(company, marine){
+	var copy_marine_struct = obj_ini.TTRPG[company, marine]; //grab marine structure
+	var new_marine = {};
+	var copy_part;
+	var names = variable_struct_get_names(copy_marine_struct); // get all keys within structure
+	for (var name = 0; name < array_length(names); name++) { //loop through keys to find which ones are methods as they can't be saved as a json string
+		if (!is_method(copy_marine_struct[$ names[name]])){
+			copy_part = DeepCloneStruct(copy_marine_struct[$ names[name]])
+			variable_struct_set(new_marine, names[name],copy_part); //if key value is not a method add to copy structure
+		}
+	}
+	return json_stringify(new_marine);
+}
+
+function fetch_unit(unit){
+	return obj_ini.TTRPG[unit[0]][unit[1]];
+}
 
 
 function pen_and_paper_sim() constructor{

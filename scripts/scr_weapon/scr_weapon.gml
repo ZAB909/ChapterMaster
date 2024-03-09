@@ -382,8 +382,29 @@ global.weapons={
         "arp": 1,
         "tags":["power", "axe", "dual"],
     },
+    "Executioner Power Axe": {
+       "abbreviation": "ExPoAxe",       
+        "attack": {
+            "standard": 300,
+            "master_crafted": 350,
+            "artifact": 400
+        },
+        "melee_mod": {
+            "standard": 10,
+            "master_crafted": 15,
+            "artifact": 20
+        },
+        "description": "A heavy two-handed power axe named after the Executioner chapter.",
+        "melee_hands": 2.5,
+        "ranged_hands": 2,
+        "ammo": 0,
+        "range": 1,
+        "spli": 1,
+        "arp": 1,
+        "tags":["power", "axe"],
+    },    
     "Power Fist": {
-       "abbreviation": "PoAxe",       
+       "abbreviation": "PoFist",       
         "attack": {
             "standard": 450,
             "master_crafted": 500,
@@ -881,7 +902,7 @@ global.weapons={
             "artifact": 510
         },
         "description": "While not quite as strong as two Power Fists, these artifacts allow the use of an additional, third weapon.",
-        "melee_hands": 2,
+        "melee_hands": 3,
         "ranged_hands": 0,
         "ammo": 0,
         "range": 1,

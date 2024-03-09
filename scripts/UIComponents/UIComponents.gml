@@ -327,3 +327,122 @@ function UINodeDebugComponent(owner, name ="") : UIComponent(owner, name) constr
 		return "UINodeDebugComponent"	
 	}
 }
+
+function star_ui_name_node(){
+	var star_base_ui_elem = new UIElement(sprite_width, sprite_height + 32, eUI_ALIGN_X.x_left, eUI_ALIGN_Y.y_top)
+	ui_node = new UINode(star_base_ui_elem, x - sprite_xoffset, y - sprite_yoffset)
+
+
+
+	var system_name_element = new UIElement(string_width(name) + 60, 32, eUI_ALIGN_X.x_center, eUI_ALIGN_Y.y_bottom)
+	var left_align_element = new UIElement(18, 18, eUI_ALIGN_X.x_left, eUI_ALIGN_Y.y_center)
+	var right_align_element = new UIElement(18,18, eUI_ALIGN_X.x_right, eUI_ALIGN_Y.y_center)
+
+	ui_node.add_element(system_name_element, 0, 0, 0, 0)
+		.add_component(UISpriteRendererComponent)
+			.set_sprite(spr_p_name_bg)
+			.set_callback(function(context) {
+				if (owner != eFACTION.Player ){
+					context.set_color_solid(global.star_name_colors[owner])
+				} else {
+					var main_color = make_color_rgb(obj_controller.targetR1 *255, obj_controller.targetG1 * 255, obj_controller.targetB1 * 255)
+					var pauldron_color = make_color_rgb(obj_controller.targetR3 *255, obj_controller.targetG3 *255, obj_controller.targetB3 *255)
+					context.set_vertical_gradient(main_color, pauldron_color)
+				}
+			})
+		.finalize()
+		.add_component(UITextRendererComponent)
+			.set_color_solid(c_white)
+			.set_callback(function(context) {
+				context.text = name
+				
+				var new_w = string_width(name) + 60
+				context.set_halign(fa_center)
+				context.set_valign(fa_middle)
+				context.owner.resize(new_w, 32)
+				if (owner == eFACTION.Player){
+					var trim_color = make_color_rgb(obj_controller.targetR5 *255, obj_controller.targetG5 *255, obj_controller.targetB5 *255)
+					context.set_color_solid(trim_color)
+				}
+			})
+		.finalize()
+		.add_element(left_align_element, 0, 0, 0, 0)
+			.add_component(UISpriteRendererComponent)
+				.set_sprite(spr_planets)
+				.set_image_index(9)
+				.set_image_speed(0)
+				.set_callback(function(context) {
+					context.is_canceled = !system_player_ground_forces	
+				})
+			.finalize()
+		.finalize()
+		.add_element(right_align_element, 0, 0, 0, 0)
+			.add_component(UISpriteRendererComponent)
+				.set_callback(function(context) {
+					if (owner == eFACTION.Player) {
+						context.set_sprite(obj_img.creation[1])
+						context.set_image_index(obj_ini.icon)
+					} else {
+						context.set_sprite(obj_img.force[owner])
+					}
+				})
+				.set_image_speed(0)
+			.finalize()
+		.finalize()	
+}
+
+function main_menu_button(sprite=spr_ui_but_1, sprite_hover=spr_ui_hov_1, xx=0, yy=0) constructor{
+	mouse_enter=0;
+	base_sprite = sprite;
+	hover_sprite = sprite_hover;
+	ossilate = 24;
+	ossilate_down = true;
+	hover_alpha=0;
+	XX=xx;
+	YY=yy;
+	static draw = function(xx=XX,yy=YY,text="", x_scale=1, y_scale=1, width=108, height=42){
+		var clicked=false;
+		height *=y_scale
+		width *=x_scale;
+		if (point_in_rectangle(mouse_x, mouse_y,xx, yy, xx+width, yy+height)){
+			if (ossilate>0) then ossilate-=1;
+			if (ossilate<0) then ossilate=0;
+			if (hover_alpha<1) then hover_alpha+=0.42
+			draw_set_blend_mode(bm_add);
+			draw_set_alpha(hover_alpha);
+			draw_sprite(hover_sprite,0,xx,yy);
+			draw_set_blend_mode(bm_normal);
+			ossilate_down = true;
+			 if (mouse_check_button(mb_left)){
+			 	clicked=true;
+			 }
+		} else {
+			if (ossilate_down){
+				if (ossilate<24)then ossilate+=0.2;
+				if (ossilate==24) then ossilate_down=false;
+			} else {
+				if (ossilate>8) then ossilate-=0.2;
+				if(ossilate==8) then ossilate_down=true;
+			}
+			if (hover_alpha>0){
+				hover_alpha-=0.04
+				draw_set_blend_mode(bm_add);
+				draw_set_alpha(hover_alpha);
+				draw_sprite(hover_sprite,0,xx,yy);
+				draw_set_blend_mode(bm_normal);
+			}
+		}
+		draw_set_alpha(1);
+		draw_sprite(base_sprite,floor(ossilate),xx,yy);
+		draw_set_color(c_white);
+	    draw_set_halign(fa_center);
+	    draw_set_font(fnt_cul_14);
+	    draw_text_ext(xx+(width/2),yy+4, text, 18*y_scale, width-(15*x_scale))
+	    return clicked;
+	}
+}
+
+
+
+
+

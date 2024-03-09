@@ -346,7 +346,7 @@ function scr_save(save_slot,save_id) {
 	        ini_write_real("Star","sr"+string(i)+"craftworld",instance_array[i].craftworld);
 	        ini_write_real("Star","sr"+string(i)+"spacehulk",instance_array[i].space_hulk);
 
-	        var g;g=0;
+	        var g=0;
 	        repeat(4){g+=1;
 	            if (instance_array[i].planets>=g){
 	                ini_write_real("Star","sr"+string(i)+"plan"+string(g),instance_array[i].planet[g]);
@@ -652,14 +652,26 @@ function scr_save(save_slot,save_id) {
 	            ini_write_string("Ini","equipment_type"+string(g),obj_ini.equipment_type[g]);
 	            ini_write_real("Ini","equipment_number"+string(g),obj_ini.equipment_number[g]);
 	            ini_write_real("Ini","equipment_condition"+string(g),obj_ini.equipment_condition[g]);
+	            ini_write_string("Ini","equipment_quality"+string(g),base64_encode(json_stringify(obj_ini.equipment_quality[g])));
 	        }
 	        if (obj_ini.artifact[g]!=""){
 	            ini_write_string("Ini","artifact"+string(g),obj_ini.artifact[g]);
-	            ini_write_string("Ini","artifact_tags"+string(g),obj_ini.artifact_tags[g]);
+	            ini_write_string("Ini","artifact_tags"+string(g),base64_encode(json_stringify(obj_ini.artifact_tags[g])));
 	            ini_write_real("Ini","artifact_ident"+string(g),obj_ini.artifact_identified[g]);
 	            ini_write_real("Ini","artifact_condition"+string(g),obj_ini.artifact_condition[g]);
+	            ini_write_real("Ini","artifact_equipped"+string(g),obj_ini.artifact_equipped[g]);
 	            ini_write_string("Ini","artifact_loc"+string(g),obj_ini.artifact_loc[g]);
 	            ini_write_real("Ini","artifact_sid"+string(g),obj_ini.artifact_sid[g]);
+	            ini_write_string("Ini","artifact_quality"+string(g),obj_ini.artifact_sid[g]);
+				var copy_artifact = obj_ini.artifact_struct[g];
+				var new_artifact = {};
+				var names = variable_struct_get_names(copy_feature);
+				for (var name = 0; name < array_length(names); name++) {
+				  if (!is_method(copy_artifact[$ names[name]])){
+					  variable_struct_set(new_artifact, names[name],copy_artifact[$ names[name]]);
+				  }
+				}
+                ini_write_string("Ini","artifact_struct"+string(g),base64_encode(json_stringify(copy_artifact)));	            
 	        }
 	    }
 	    //

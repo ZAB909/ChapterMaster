@@ -78,6 +78,13 @@ if (obj_controller.faction_status[eFACTION.Imperium] = "War") {
     }
 }
 
+tab_buttons = {
+    "equipment":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
+    "armour":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
+    "vehicles":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
+    "ships":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
+}  
+
 if (shop = "equipment") {
     i = 0;
     i += 1;

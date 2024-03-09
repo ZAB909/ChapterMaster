@@ -36,20 +36,18 @@ if (zoomed==0) and (zui==0){
     // Buttons here
     draw_sprite(spr_ui_but_4,0,xx+1374,yy+8);
     draw_sprite(spr_ui_but_4,0,xx+1484,yy+8);
-    
-    draw_sprite(spr_ui_but_1,new_buttons_frame,xx+34,yy+838+y_slide);
-    draw_sprite(spr_ui_but_1,new_buttons_frame,xx+179,yy+838+y_slide);
-    
-    draw_sprite(spr_ui_but_3,new_buttons_frame,xx+357,yy+838+y_slide);
-    draw_sprite(spr_ui_but_3,new_buttons_frame,xx+473,yy+838+y_slide);
-    draw_sprite(spr_ui_but_3,new_buttons_frame,xx+590,yy+838+y_slide);
-    draw_sprite(spr_ui_but_3,new_buttons_frame,xx+706,yy+838+y_slide);
-    draw_sprite(spr_ui_but_3,new_buttons_frame,xx+822,yy+838+y_slide);
-    draw_sprite(spr_ui_but_3,new_buttons_frame,xx+938,yy+838+y_slide);
-    
-    draw_sprite(spr_ui_but_1,new_buttons_frame,xx+1130,yy+838+y_slide);
-    draw_sprite(spr_ui_but_1,new_buttons_frame,xx+1275,yy+838+y_slide);
-    draw_sprite(spr_ui_but_2,new_buttons_frame,xx+1420,yy+838+y_slide);
+
+    menu_buttons.chapter_manage.draw(xx+34,yy+838+y_slide, "Chapter Management",1,1,145)
+    menu_buttons.chapter_settings.draw(xx+179,yy+838+y_slide, "Chapter Settings",1,1,145)
+    menu_buttons.apoth.draw(xx+357,yy+838+y_slide, "Apothecarium")
+    menu_buttons.reclu.draw(xx+473,yy+838+y_slide, "Reclusium")
+    menu_buttons.lib.draw(xx+590,yy+838+y_slide, "Librarium")
+    menu_buttons.arm.draw(xx+706,yy+838+y_slide, "Armamentarium")
+    menu_buttons.recruit.draw(xx+822,yy+838+y_slide, "Recruitment")
+    menu_buttons.fleet.draw(xx+938,yy+838+y_slide, "Fleet")
+    menu_buttons .diplo.draw(xx+1130,yy+838+y_slide, "Diplomacy",1,1,145)
+    menu_buttons .event.draw(xx+1275,yy+838+y_slide, "Event Log",1,1,145)
+    menu_buttons .end_turn.draw(xx+1420,yy+838+y_slide, "End Turn",1,1,145);
     
     // Highlight here
     draw_set_blend_mode(bm_add);
@@ -57,28 +55,6 @@ if (zoomed==0) and (zui==0){
     if (h_options>0) then draw_sprite(spr_ui_hov_4,0,xx+1374,yy+8+y_slide);
     draw_set_alpha(h_menu*2);
     if (h_menu>0) then draw_sprite(spr_ui_hov_4,0,xx+1484,yy+8+y_slide);
-    draw_set_alpha(h_manage*2);
-    if (h_manage>0) then draw_sprite(spr_ui_hov_1,0,xx+34,yy+838+y_slide);
-    draw_set_alpha(h_settings*2);
-    if (h_settings>0) then draw_sprite(spr_ui_hov_1,0,xx+179,yy+838+y_slide);
-    draw_set_alpha(h_diplomacy*2);
-    if (h_diplomacy>0) then draw_sprite(spr_ui_hov_1,0,xx+1130,yy+838+y_slide);
-    draw_set_alpha(h_log*2);
-    if (h_log>0) then draw_sprite(spr_ui_hov_1,0,xx+1275,yy+838+y_slide);
-    draw_set_alpha(h_turn*2);
-    if (h_turn>0) then draw_sprite(spr_ui_hov_2,0,xx+1420,yy+838+y_slide);
-    draw_set_alpha(h_apothecarium*2);
-    if (h_apothecarium>0) then draw_sprite(spr_ui_hov_3,0,xx+357,yy+838+y_slide);
-    draw_set_alpha(h_reclusium*2);
-    if (h_reclusium>0) then draw_sprite(spr_ui_hov_3,0,xx+473,yy+838+y_slide);
-    draw_set_alpha(h_librarium*2);
-    if (h_librarium>0) then draw_sprite(spr_ui_hov_3,0,xx+590,yy+838+y_slide);
-    draw_set_alpha(h_armoury*2);
-    if (h_armoury>0) then draw_sprite(spr_ui_hov_3,0,xx+706,yy+838+y_slide);
-    draw_set_alpha(h_recruitment*2);
-    if (h_recruitment>0) then draw_sprite(spr_ui_hov_3,0,xx+822,yy+838+y_slide);
-    draw_set_alpha(h_fleet*2);
-    if (h_fleet>0) then draw_sprite(spr_ui_hov_3,0,xx+938,yy+838+y_slide);
     draw_set_blend_mode(bm_normal);
     draw_set_alpha(1);
     
@@ -92,19 +68,6 @@ if (zoomed==0) and (zui==0){
     
     if (y_slide>0) then draw_set_alpha((100-(y_slide*2))/100);
     
-    draw_text(xx+1488,yy+843+y_slide,string_hash_to_newline("End Turn"));
-    draw_set_font(fnt_cul_14);
-    draw_text(xx+416,yy+847+y_slide,string_hash_to_newline("Apothecarium"));
-    draw_text(xx+530,yy+847+y_slide,string_hash_to_newline("Reclusium"));
-    draw_text(xx+647,yy+847+y_slide,string_hash_to_newline("Librarium"));
-    draw_text(xx+764,yy+847+y_slide,string_hash_to_newline("Armamentarium"));
-    draw_text(xx+878,yy+847+y_slide,string_hash_to_newline("Recruitment"));
-    draw_text(xx+994,yy+847+y_slide,string_hash_to_newline("Fleet"));
-    draw_text(xx+1198,yy+847+y_slide,string_hash_to_newline("Diplomacy"));
-    draw_text(xx+1344,yy+847+y_slide,string_hash_to_newline("Event Log"));
-    draw_text_ext(xx+102,yy+838+y_slide,string_hash_to_newline("Chapter#Management"),18,999);
-    draw_text_ext(xx+250,yy+838+y_slide,string_hash_to_newline("Chapter#Settings"),18,999);
-
     //forge points number
     draw_text_transformed(xx+36-2,yy + 82-4, string(forge_points), 1.7, 1.7, 0);
     

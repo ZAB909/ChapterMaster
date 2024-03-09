@@ -7,20 +7,7 @@ if __b__
 {
 if (owner  = eFACTION.Player) and (instance_nearest(x,y,obj_p_fleet).action=""){
 
-
-
-
-
-    if (instance_exists(obj_fleet_select)){
-        var free,z;free=1;z=obj_fleet_select;
-        if (mouse_x>=__view_get( e__VW.XView, 0 )+z.void_x) and (mouse_y>=__view_get( e__VW.YView, 0 )+z.void_y) 
-        and (mouse_x<__view_get( e__VW.XView, 0 )+z.void_x+z.void_wid) and (mouse_y<__view_get( e__VW.YView, 0 )+z.void_y+z.void_hei) and (obj_controller.fleet_minimized=0) then free=0;
-        
-        if (mouse_x>=__view_get( e__VW.XView, 0 )+z.void_x) and (mouse_y>=__view_get( e__VW.YView, 0 )+z.void_y) 
-        and (mouse_x<__view_get( e__VW.XView, 0 )+z.void_x+z.void_wid) and (mouse_y<__view_get( e__VW.YView, 0 )+137) and (obj_controller.fleet_minimized=1) then free=0;
-        if (free=0) then exit;
-    }
-
+    if (currently_entered) then exit;
     
     var sys, sys_dist, mine, connected, fleet, cont;
     sys_dist=9999;connected=0;cont=0;
@@ -234,48 +221,7 @@ if (owner  = eFACTION.Player) and (instance_nearest(x,y,obj_p_fleet).action=""){
         }
         
     }
-    
-    
-    /*
-    
-owner=0;
-capital_number=0;
-frigate_number=0;
-escort_number=0;
-selected=0;
-
-capital[0]=0;capital_num[0]=0;capital_sel[0]=1;
-capital[1]=0;capital_num[1]=0;capital_sel[1]=1;
-capital[2]=0;capital_num[2]=0;capital_sel[2]=1;
-capital[3]=0;capital_num[3]=0;capital_sel[3]=1;
-capital[4]=0;capital_num[4]=0;capital_sel[4]=1;
-capital[5]=0;capital_num[5]=0;capital_sel[5]=1;
-capital[6]=0;capital_num[6]=0;capital_sel[6]=1;
-capital[7]=0;capital_num[7]=0;capital_sel[7]=1;
-capital[8]=0;capital_num[8]=0;capital_sel[8]=1;
-
-var i;i=-1;
-repeat(31){i+=1;
-    frigate[i]=0;frigate_num[i]=0;frigate_sel[i]=1;
-}
-
-var i;i=-1;
-repeat(31){i+=1;
-    escort[i]=0;escort_num[i]=0;escort_sel[i]=1;
-}
-
-image_speed=0;
-
-
-action="";
-action_x=0;
-action_y=0;
-action_spd=64;
-action_eta=0;
-connected=0;*/
-    
-    
-    
+     
     
 }
 

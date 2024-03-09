@@ -414,14 +414,17 @@ function scr_load(argument0, argument1) {
 	    // Stars
 	    var i;i=-1;
 	    repeat(stars){i+=1;
-	        var new_star;new_star=instance_create(0,0,obj_star);
+	        var new_star;
+	        new_star=instance_create(
+	        	ini_read_real("Star","sr"+string(i)+"x",0),
+	        	ini_read_real("Star","sr"+string(i)+"y",0),
+	        	obj_star
+	        );
 
 	        new_star.name=ini_read_string("Star","sr"+string(i)+"name","");
 	        new_star.star=ini_read_string("Star","sr"+string(i)+"star","");
 	        new_star.planets=ini_read_real("Star","sr"+string(i)+"planets",0);
 	        new_star.owner=ini_read_real("Star","sr"+string(i)+"owner",0);
-	        new_star.x=ini_read_real("Star","sr"+string(i)+"x",0);
-	        new_star.y=ini_read_real("Star","sr"+string(i)+"y",0);
 	        new_star.x2=ini_read_real("Star","sr"+string(i)+"x2",0);
 	        new_star.y2=ini_read_real("Star","sr"+string(i)+"y2",0);
 	        new_star.old_x=ini_read_real("Star","sr"+string(i)+"ox",0);
@@ -434,7 +437,7 @@ function scr_load(argument0, argument1) {
 	        new_star.space_hulk=ini_read_real("Star","sr"+string(i)+"spacehulk",0);
 	        if (new_star.space_hulk=1) then new_star.sprite_index=spr_star_hulk;
 
-	        var g;g=0;
+	        var g=0;
 	        repeat(4){g+=1;
 	            if (new_star.planets>=g){
 	                new_star.planet[g]=ini_read_real("Star","sr"+string(i)+"plan"+string(g),0);
@@ -629,14 +632,30 @@ function scr_load(argument0, argument1) {
 	        obj_ini.equipment_type[g]=ini_read_string("Ini","equipment_type"+string(g),"");
 	        obj_ini.equipment_number[g]=ini_read_real("Ini","equipment_number"+string(g),0);
 	        obj_ini.equipment_condition[g]=ini_read_real("Ini","equipment_condition"+string(g),0);
+	        obj_ini.equipment_quality[g]=ini_read_string("Ini","equipment_quality"+string(g),"");
+	        if (obj_ini.equipment_quality[g]!=""){
+	        	obj_ini.equipment_quality[g] = json_parse(base64_decode(obj_ini.equipment_quality[g]));
+	        } else {
+	        	obj_ini.equipment_quality[g]=[];
+	        }
 
 	        if (g<=20){
-	            obj_ini.artifact[g]=ini_read_string("Ini","artifact"+string(g),"");
+	        	obj_ini.artifact[g]=ini_read_string("Ini","artifact"+string(g),"");
 	            obj_ini.artifact_tags[g]=ini_read_string("Ini","artifact_tags"+string(g),"");
+		        if (obj_ini.artifact_tags[g] != ""){
+		        	obj_ini.artifact_tags[g] = json_parse(base64_decode(obj_ini.artifact_tags[g]));
+		        }
 	            obj_ini.artifact_identified[g]=ini_read_real("Ini","artifact_ident"+string(g),0);
 	            obj_ini.artifact_condition[g]=ini_read_real("Ini","artifact_condition"+string(g),0);
 	            obj_ini.artifact_loc[g]=ini_read_string("Ini","artifact_loc"+string(g),"");
 	            obj_ini.artifact_sid[g]=ini_read_real("Ini","artifact_sid"+string(g),0);
+	            obj_ini.artifact_equipped[g]=ini_read_real("Ini","artifact_equipped"+string(g),0);
+	            obj_ini.artifact_quality[g]=ini_read_string("Ini","artifact_quality"+string(g),"artifact");
+	            obj_ini.artifact_struct[g] = new arti_struct(g);
+	            var temp_data = ini_read_string("Ini","artifact_struct"+string(g),"");
+	            if (temp_data!=""){
+    	            obj_ini.artifact_struct[g].load_json_data(json_parse(base64_decode(temp_data)));
+    	        }
 	        }
 	    }
 	    //
@@ -987,6 +1006,9 @@ function scr_load(argument0, argument1) {
 	    with(obj_controller){
 	        scr_colors_initialize();
 	        scr_shader_initialize();
+	    }
+	    with (obj_star){
+	    	star_ui_name_node();
 	    }
 
 	    var tempa,tempa2,q,good;tempa="";tempa2=0;q=0;good=0;

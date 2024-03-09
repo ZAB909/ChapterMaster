@@ -222,8 +222,7 @@ if (enemy=5) and (obj_controller.faction_status[eFACTION.Ecclesiarchy]!="War"){
         obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=5;obj_controller.audien_topic[obj_controller.audiences]="declare_war";
         if (obj_controller.known[eFACTION.Inquisition]>1){obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=4;obj_controller.audien_topic[obj_controller.audiences]="declare_war";}
         obj_controller.audiences+=1;obj_controller.audien[obj_controller.audiences]=2;obj_controller.audien_topic[obj_controller.audiences]="declare_war";
-    }
-    if (instance_exists(obj_turn_end)){
+    }else{
         obj_turn_end.audiences+=1;obj_turn_end.audien[obj_turn_end.audiences]=5;obj_turn_end.audien_topic[obj_turn_end.audiences]="declare_war";
         if (obj_turn_end.known[eFACTION.Inquisition]>1){obj_turn_end.audiences+=1;obj_turn_end.audien[obj_turn_end.audiences]=4;obj_turn_end.audien_topic[obj_turn_end.audiences]="declare_war";}
         obj_turn_end.audiences+=1;obj_turn_end.audien[obj_turn_end.audiences]=2;obj_turn_end.audien_topic[obj_turn_end.audiences]="declare_war";
@@ -627,27 +626,25 @@ if (battle_special="space_hulk") and (defeat=0) and (hulk_treasure>0){
         pop.image="space_hulk_done";
         pop.title="Space Hulk: Resources";
         pop.text="Your battle brothers have located several luxury goods and coginators within the Space Hulk.  They are salvaged and returned to the ship, granting "+string(reqi)+" Requisition.";
-    }
-    if (hulk_treasure=2){// Artifact
+    }else if (hulk_treasure=2){// Artifact
         scr_add_artifact("random","random",4,loc,shi+500);
         var i,last_artifact;i=0;last_artifact=0;
-        repeat(100){if (last_artifact=0){i+=1;if (obj_ini.artifact[i]="") then last_artifact=i-1;}}
+        repeat(100){
+        if (last_artifact=0){i+=1;if (obj_ini.artifact[i]="") then last_artifact=i-1;}}
         var pop;pop=instance_create(0,0,obj_popup);
         pop.image="space_hulk_done";
         pop.title="Space Hulk: Artifact";
         pop.text="An Artifact has been retrieved from the Space Hulk and stowed upon "+string(loc)+".  It appears to be a "+string(obj_ini.artifact[last_artifact])+" but should be brought home and identified posthaste.";
         scr_event_log("","Artifact recovered from the Space Hulk.");
-    }
-    if (hulk_treasure=3){// STC
+    }else if (hulk_treasure=3){// STC
         scr_add_stc_fragment();// STC here
         var pop;pop=instance_create(0,0,obj_popup);
         pop.image="space_hulk_done";
         pop.title="Space Hulk: STC Fragment";
         pop.text="An STC Fragment has been retrieved from the Space Hulk and safely stowed away.  It is ready to be decrypted or gifted at your convenience.";
         scr_event_log("","STC Fragment recovered from the Space Hulk.");
-    }
-    if (hulk_treasure=4){// Termie Armour
-        var termi;termi=choose(2,2,2,3);
+    }else if (hulk_treasure=4){// Termie Armour
+        var termi=choose(2,2,2,3);
         scr_add_item("Terminator Armour",termi);
         var pop;pop=instance_create(0,0,obj_popup);
         pop.image="space_hulk_done";

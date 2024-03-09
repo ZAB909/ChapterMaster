@@ -403,9 +403,9 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
         if (planet_feature_bool(_planet,P_features.Warlord6) == 1) and (obj_ncombat.enemy=6) and (obj_controller.faction_defeated[6]=0) then obj_ncombat.leader=1;
         if (obj_ncombat.enemy=7) and (obj_controller.faction_defeated[7]<=0){
 
-            if ( planet_feature_bool(_planet,P_features.Warlord7)==1){
+            if ( planet_feature_bool(_planet,P_features.OrkWarboss)==1){
 				obj_ncombat.leader=1;
-				obj_ncombat.Warlord = _planet[search_planet_features(_planet,P_features.Warlord7)[0]]
+				obj_ncombat.Warlord = _planet[search_planet_features(_planet,P_features.OrkWarboss)[0]]
 			}
 		}
 

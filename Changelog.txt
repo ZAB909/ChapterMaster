@@ -1,3 +1,103 @@
+
+
+-----------------
+Version 0.9000
+
+Added:
+
+- companies now require command squads, which are automatically created (this also means that building a company from scratch will also automatically setup squads)
+- moving all units of a squad will also move the squad
+- squads are now automatically restocked with new recruits as needed
+- added new squad types: assault terminators, vanguard, sternguard veterans, scouts and scout snipers
+- new Squad UI
+- Raven Guard chapter
+- squads can now be ordered to garrison
+- squads can now be specifically ordered to certain formation positions
+- promoting scouts to marines and vice versa adds/removes Black Carapace (except Space Wolves) 
+- ending a battle shows a total of earned exp
+- a lot of new sprites: terminators, bionic leggs, ultra honor guard, and others
+- basic modding: most names are now moddable. Simply go to <game_folder>\datafiles\main\names, and open the .json file that you want to modify
+	- currently this allows modding of names for: Sector, Stars, Space Marines, Imperials (including Inquisitors), Orks, Eldar, Tau, Chaos, Imperial & Marine Ships, Ork Ships, Space Hulks
+- new cheat "eventcrusade" to launch the crusade event (check event log to see the rally point for the crusade)
+- crusading marines will now get their heroic deeds logged, including tracking of new traits for maines
+- new equipment: Heavy Weapons Pack
+- new choices for Chaos Emissary's Khorne path (which includes a brand new trait for marines)
+
+- tehcmarines now undergoes stc research very slowly and passively
+- New Rescource : Forge Points
+	- All techmarines now yield a tech score each turn
+	- items can be queued at the forge for manufactoring by techmarines
+	- manufactoring research to determine what items can be built with forge points (sperate from the stc system)
+
+- techmarines can now become tech heretics and start to corrupt other tech based units
+- tech uprising schisms can occur if the player has too many tehcmarines with differing views
+- new forge master selection system
+
+- ability to filter units by stats by clicking on stat icons in the company manage screens
+
+- enhanced feature view on planets
+	- planet features now provide clues as to what a player should do
+	- contruction of forges on fortress monestaries and secret bases
+	- assignment of techmarines to forges to increase forge point yield
+	- techmarines assigned to the forge slowly increase their tech scores
+
+Changed:
+
+- sector map UI rework
+- marine traits now effect which weapons they are suited to in a few instances (gain bonus's from use)
+- stcs will no longer allow the buying of new items only the construction of new items in the forge
+- final price of buying goods determined by the qualities of forge master (charisma and tech skills)
+- cost of buying items increased to account for the ability to manufacture
+- a lot of under the hood changes
+	- refactored weapons and equipment, started migrating weapons and gear to json
+	- better squad loading algorithm
+	- better squad role search algorithms
+	- multiple faction changes and tweaks
+	- started organizing companies into structs, to simplify code
+	- zoom functionality refactor
+	- crusade code refactor
+	- laid down groundwork for future corruption rework
+	- [PENDING] multiple GMS2 erors fixed
+- sharpshooter squad got a new loadout, to make it standout more
+- multiple tweaks for existing chapters
+- identifying STC will now prioritize the category with the least amount of identified STCs 
+- scouts now have slight lower stats
+- every 15exp points now add a random stat point to one of the following (weapon skill, ballistic skill, wisdom (or a specialist area for specialists))
+- crusades should be a bit safer for marines
+- all heavy_ranged weapons now have 2.25 ranged carry
+- boarders now properly use the new weapon profiles
+- boarders now don't use decimilisation in the marines age to determine if they are a boarder or not
+- new ui designs
+- many other changes
+
+Fixed:
+
+- fixed fleet select screen so player can now select or deselect all of a fleet
+- slaughtersong event should now work correctly
+- Blood Trial will no longer waste gene-seed if recruitment is halted
+- bombing worlds should work properly again
+- combat should no longer happen if no troops are present
+- CTD caused by troop counter going over the vehicles index
+- CTD caused by accessing a non-existent veh-ranged variable
+- blocked overspending STC fragments, if a category has already been fully researched (caveat: the button is still clickable, but it won't waste fragments anymore)
+- apothecaries should now properly heal units on ground at turn end
+- game freeze on end turn should now be fixed
+- star names should never get duplicated anymore
+- loading selected marines should now only load the selected marines, instead of all of them
+- removed duplicate Assault Cannot entry in the Armamentarium
+- CTD related to enemy fleets missing targets
+- CTD caused by a planetary feature error
+- some instances of gear being improperly displayed in equip view
+- CTD when adding bionics
+- CTD during crusade fleet check
+- necron tombs should now properly display their name after being sealed or awakened
+- death company dreadnoughts should now be able to equip dreadnought armour properly
+- CTD after cancelling a squad mission
+- CTD caused by chaos emissary interactions
+- [PENDING] selecting marines as boarders should now be more stable
+- many other fixes
+
+
 Version 0.8.1.1
 
 This version is purely fixing bugs, especially ones that crashed to desktop

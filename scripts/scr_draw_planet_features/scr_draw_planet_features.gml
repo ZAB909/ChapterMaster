@@ -29,6 +29,8 @@ function feature_selected(Feature) constructor{
 	    xx+=312
 	    var area_width = 390;
 	    var area_height = 294;
+	    var generic = false;
+	    var title="", body="";
 	    //draw_glow_dot(xx+150, yy+150);
 	    //rack_and_pinion(xx+230, yy+170);
 	    var rectangle = [];
@@ -40,6 +42,8 @@ function feature_selected(Feature) constructor{
 
 				draw_text(xx+10, yy+50, $"Working Techs : {feature.techs_working}/{worker_capacity}");
 				if (point_and_click(draw_unit_buttons([xx+10, yy+70], "Assign To Forge",[1,1],c_red))){
+					obj_controller.unit_profile = false;
+					obj_controller.view_squad = false;
 					group_selection(techs,{
 						purpose:"Forge Assignment",
 						purpose_code : "forge_assignment",
@@ -59,22 +63,67 @@ function feature_selected(Feature) constructor{
 					}
 				}
 				break;
-			case P_features.Artifact:
-				draw_text_transformed(xx+(390/2), yy +5, "Unknown Artifact", 2, 2, 0);
-				draw_set_halign(fa_left);
-				draw_set_color(c_gray);
-				draw_text_ext(xx+10, yy+40, "Unload Marines onto the planet to search for the artifact",-1,area_width-20);
+			case P_features.Necron_Tomb:
+
+				generic=true;
+				if (feature.awake==0 && feature.sealed==0){
+					title = "Dormant Necron Tomb";
+					body = "Scans indicate a Necron TOmb lies hidden under the surface of the planet, all signs indicate the tombis dormant as we must hope it remains";
+				} else if (feature.sealed==1){
+					title = "Sealed Necron Tomb";
+					body = "Exterminatus and standard imperial armenants are no proof against the Necron Scourge with any luck those sealed within this tomb will remain there";
+				} else if (feature.awake==1){
+					title = "Awake Tomb";
+					body = "The Cursed ranks of living metal spew forth from the Necron tomb below"
+				}
 				break;
-			case P_features.Monastery:
-				draw_text_transformed(xx+(390/2), yy +5, feature.name, 2, 2, 0);
-				if (feature.forge==0 && obj_controller.requisition>=500){
-					if (point_and_click(draw_unit_buttons([xx+10, yy+70], "Build Forge (500 req)",[1,1],c_red))){
+			case P_features.Artifact:
+				generic=true;
+				title = "Unknown Artifact";
+				body = "Unload Marines onto the planet to search for the artifact";
+				break;	
+			case P_features.Ancient_Ruins:
+				generic=true;
+				title = "Ancinet Ruins";
+				body = "Unload Marines onto the planet to explore the ruins";
+				break;
+			case P_features.STC_Fragment:
+				generic=true;
+				title = "STC Fragment";
+				body = $"Unload a {obj_ini.role[100][16]} and whatever entourage you deem necessary to recover the STC Fragment";
+				break;	
+			case P_features.Victory_Shrine:
+				draw_text_transformed(xx+(390/2), yy +5, "Victory Shrine", 2, 2, 0);
+				draw_set_halign(fa_left);
+				draw_set_color(c_gray);				
+				/*if (!feature.parade){
+					if (point_and_click(draw_unit_buttons([xx+10, yy+70], "Parade (500 req)",[1,1],c_red))){
 						obj_controller.requisition-=500;
 						feature.forge=1;
 						feature.forge_data = new player_forge();
 					}
+				}*/
+				break;																	
+			case P_features.Monastery:
+				draw_text_transformed(xx+(390/2), yy +5, feature.name, 2, 2, 0);
+				if (feature.forge==0){
+					if (obj_controller.requisition>=500){
+						if (point_and_click(draw_unit_buttons([xx+10, yy+70], "Build Forge (500 req)",[1,1],c_red))){
+							obj_controller.requisition-=500;
+							feature.forge=1;
+							feature.forge_data = new player_forge();
+						}
+					} else {
+						draw_unit_buttons([xx+10, yy+70], "Build Forge (500 req)",[1,1],c_gray);
+					}
 				}
 				break;
+		}
+		if (generic){
+			draw_text_transformed(xx+(390/2), yy +5, title, 2, 2, 0);
+			draw_set_halign(fa_left);
+			draw_set_color(c_gray);
+			draw_text_ext(xx+10, yy+40,body,-1,area_width-20);
 		}
 	}
 }
@@ -147,9 +196,9 @@ function rack_and_pinion(Type="forward") constructor{
 function speeding_dot(XX,YY, limit) constructor{
 	bottom_limit = limit;
 	stack = 0;
-	yy=YY;
-	xx=XX;
-	draw = function(){
+	yyy=YY;
+	xxx=XX;
+	draw = function(xx,yy){
 		if (bottom_limit+(48*0.7)<stack){
 			stack=0;
 		}
@@ -289,5 +338,70 @@ function shutter_button() constructor{
 		}
 	}
 }
+
+function data_slate() constructor{
+	static_line=1;
+	title="";
+	sub_title="";
+	body_text = "";
+	inside_method = "";
+	XX=0
+	YY=0
+	static draw = function(xx,yy, scale_x=1, scale_y=1){
+		XX=xx;
+		YY=yy;
+		width = 860*scale_x;
+		height = 850*scale_y;
+		draw_sprite_ext(spr_data_slate,1, xx,yy, scale_x, scale_y, 0, c_white, 1);
+		if (is_method(inside_method)){
+			inside_method();
+		}
+	    if (static_line<=10) then draw_set_alpha(static_line/10);
+	    if (static_line>10) then draw_set_alpha(1-((static_line-10)/10));		
+		draw_set_color(5998382);
+		var line_move = yy+(70*scale_y)+((36*scale_y)*static_line);
+		draw_line(xx+(30*scale_x),line_move,xx+(820*scale_x),line_move);
+		draw_set_alpha(1);
+		if (irandom(75)=0 && static_line>1){static_line--;}
+		else{
+			static_line+=0.1;
+		}
+		if (static_line>20) then static_line=1;
+		draw_set_color(c_gray);
+		draw_set_halign(fa_center);
+		var draw_height = 	5;
+		if (title!=""){
+			draw_text_transformed(xx+(0.5*width), yy+(50*scale_y), title, 3*scale_x, 3*scale_y, 0);
+			draw_height += (string_height(title)*3)*scale_y;
+		}
+		if (sub_title!=""){
+			draw_text_transformed(xx+(0.5*width), yy+(50*scale_y)+draw_height, sub_title, 2*scale_x, 2*scale_y, 0);
+			draw_height+=(25*scale_y) +(string_height(sub_title)*2)*scale_y;
+		}
+		if (body_text!=""){
+			draw_text_ext(xx+(0.5*width), yy+(50*scale_y)+draw_height, string_hash_to_newline(body_text), -1, width-60);
+		}
+	}
+	static draw_cut = function(xx,yy, scale_x=1, scale_y=1, middle_percent=0){
+		XX=xx;
+		YY=yy;
+		draw_sprite_part_ext(spr_data_slate,1, 0, 0, 850, 69, XX, YY, scale_x, scale_y, c_white, 1);
+		draw_sprite_part_ext(spr_data_slate,1, 0, 69, 850, 683*(middle_percent/100), XX, YY+(69*scale_y), scale_x, scale_y, c_white, 1);
+		draw_sprite_part_ext(spr_data_slate,1, 0, 752, 850, 98, XX, YY+(69+683*((middle_percent/100)))*scale_y, scale_x, scale_y, c_white, 1);
+		width = 860*scale_x;
+		height = (69+(683*(middle_percent/100))+98 )*scale_y;
+		if (is_method(inside_method)){
+			inside_method();
+		}		
+	}
+}
+
+
+
+
+
+
+
+
 
 
