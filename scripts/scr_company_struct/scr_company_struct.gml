@@ -87,19 +87,19 @@ function scr_company_struct(comp) constructor{
 				draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+50, leader_text,1,1,0);
 			}
 			var squad_loc = current_squad.squad_loci();
-			draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+75, $"squad life members : {current_squad.life_members}",1,1,0);
-			draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+100, $"squad location : {squad_loc.text}",1,1,0);
+			draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+75, $"Squad Members : {current_squad.life_members}",1,1,0);
+			draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+100, $"Squad Location : {squad_loc.text}",1,1,0);
 			var send_on_mission=false, mission_type;
 			if (current_squad.assignment == "none"){
 				var button_row_offset = 0;
-				draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+125, $"squad has no current assigments",1,1,0);
+				draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+125, $"Squad has no current assigments",1,1,0);
 				tooltip_text="Guard Duty";
 				if (squad_loc.same_system) and (squad_loc.system!="Warp"){
 					button_row_offset+=string_width(tooltip_text)+6;
 					draw_unit_buttons([xx+bound_width[0]+5, yy+bound_height[0]+150], tooltip_text,[1,1],c_red);
 					if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text), yy+bound_height[0]+150+string_height(tooltip_text))){
-						tooltip_text = "having squads assigned to Guard Duty will increase relations with a planet over time, it will also bolster planet defence forces in case of attack, and reduce corruption growth";
-						tooltip_draw(tooltip_text, 150, xx+bound_width[0]+5, yy+bound_height[0]+150 + string_height(tooltip_text));
+						tooltip_text = "Having squads assigned to Guard Duty will increase relations with a planet over time, it will also bolster planet defence forces in case of attack, and reduce corruption growth.";
+						tooltip_draw(tooltip_text, 150, xx+bound_width[0]+5, yy+bound_height[0]+300);
 						if (mouse_check_button_pressed(mb_left)){
 							send_on_mission=true;
 							mission_type="garrison";
@@ -109,7 +109,7 @@ function scr_company_struct(comp) constructor{
 						tooltip_text="Sabotage";
 						draw_unit_buttons([xx+bound_width[0]+5 + button_row_offset, yy+bound_height[0]+150], tooltip_text,[1,1],c_red);
 						if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5+ button_row_offset, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text)+ button_row_offset, yy+bound_height[0]+150+string_height(tooltip_text))){
-							tooltip_text = "sabotage missions can reduce enemy growth while avoiding direct enemy contact however they are not without risk";
+							tooltip_text = "Sabotage missions can reduce enemy growth while avoiding direct enemy contact however they are not without risk.";
 							tooltip_draw(tooltip_text, 150, xx+bound_width[0]+5+ button_row_offset, yy+bound_height[0]+150 + string_height(tooltip_text));
 							if (mouse_check_button_pressed(mb_left)){
 								send_on_mission=true;
@@ -137,9 +137,9 @@ function scr_company_struct(comp) constructor{
 				bound_height[0] += 180;
 			} else {
 				if (is_struct(current_squad.assignment)){
-					draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+125, $"assignment : {current_squad.assignment.type}",1,1,0);
+					draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+125, $"Assignment : {current_squad.assignment.type}",1,1,0);
 				}
-				var tooltip_text =  "cancel assignment"
+				var tooltip_text =  "Cancel Assignment"
 				draw_unit_buttons([xx+bound_width[0]+5, yy+bound_height[0]+150],tooltip_text,[1,1],c_red);
 				if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text), yy+bound_height[0]+150+string_height(tooltip_text))){
 					var cancel_system=noone;
