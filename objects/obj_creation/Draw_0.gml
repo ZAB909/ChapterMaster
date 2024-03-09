@@ -997,23 +997,23 @@ if (slide=3){
     }
     
     
-    draw_text_transformed(800,480,string_hash_to_newline("Aspirant Trial"),0.6,0.6,0);
-    draw_text_transformed(830,512,string_hash_to_newline(string(aspirant_trial)),0.5,0.5,0);
+    draw_text_transformed(750,480,string_hash_to_newline("Aspirant Trial"),0.6,0.6,0);
+    draw_text_transformed(780,512,string_hash_to_newline(string(aspirant_trial)),0.5,0.5,0);
     
     var asp_info;asp_info="";
-    if (aspirant_trial="Blood Duel") then asp_info="-10-30% More recruits#-2-4 Years shorter training time#-10% Chance to burn gene-seed per speed";
-    if (aspirant_trial="Hunting the Hunter") then asp_info="-Planet Bonus': Desert, Ice, Death#-Up to 15 bonus XP on Neophytes";
-    if (aspirant_trial="Survival of the Fittest") then asp_info="-Planet Bonus': Desert, Ice, Death, Lava#-(+10-30% recruits)#-Planet Bonus: Feudal (+20-50% recruits)";
-    if (aspirant_trial="Exposure") then asp_info="-Planet Bonus':#- Desert, Ice, Forge, Lava, Death#-1-3 Years shorter training time";
-    if (aspirant_trial="Knowledge of Self") then asp_info="-Planet Bonus: Temperate (up to 10 bonus xp)#-1.5-3 Years longer training#-Up to bonus 25 XP on Neophytes.";
-    if (aspirant_trial="Challenge") then asp_info="-Standard generic choice #-Heroic Neophytes gain bonus 10-20 XP";
-    if (aspirant_trial="Apprenticeship") then asp_info="-Planet Bonus: Lava (+10-50% recruits)#-4-5 Years longer training time#-Almost able for immediate promotion";
-    draw_text_ext_transformed(850,544,string_hash_to_newline(string(asp_info)),64,999,0.5,0.5,0);
+    if (aspirant_trial="Blood Duel") then asp_info="- 2-4 years of training.#- 10-30% more recruits.#- 10% chance to burn gene-seed per recruiting speed.";
+    if (aspirant_trial="Hunting the Hunter") then asp_info="- 6 years of training.#- 7-20 starting XP on Desert, Ice and Death planets";
+    if (aspirant_trial="Survival of the Fittest") then asp_info="- 6 years of training.#- 10-30% more recruits on Desert, Ice, Death and Lava planets.#- 20-50% more recruits on Feudal planets.";
+    if (aspirant_trial="Exposure") then asp_info="- 3-5 years of training on Desert, Ice, Forge, Lava and Death planets.#- 6 years of training on all other planets.";
+    if (aspirant_trial="Knowledge of Self") then asp_info="- 7.5-9 years of training.#- 15-25 starting XP.#- Additional 5-10 starting XP on Temperate planets.";
+    if (aspirant_trial="Challenge") then asp_info="- 5.5-6.5 years of training.#- 20% chance to gain 10-20 starting XP.";
+    if (aspirant_trial="Apprenticeship") then asp_info="- 10-11 years of training.#- 34-43 starting XP.#- 30-50% more recruits on Lava planets.";
+    draw_text_ext_transformed(700,544,string_hash_to_newline(string(asp_info)),64,950,0.5,0.5,0);
      
-    if (scr_hit(800,480,1000,510)=true){tooltip="Aspirant Trial";tooltip2="A special challenge is needed for Aspirants to be judged worthy of becoming Astartes.  After completing the Trial they then become a Neophyte, beginning implantation and training.";}
+    if (scr_hit(750,480,950,510)=true){tooltip="Aspirant Trial";tooltip2="A special challenge is needed for Aspirants to be judged worthy of becoming Astartes.  After completing the Trial they then become a Neophyte, beginning implantation and training.";}
     
-    if (custom>1) then draw_sprite_stretched(spr_creation_arrow,0,750,502,32,32);
-    if (scr_hit(750,502,750+32,502+32)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
+    if (custom>1) then draw_sprite_stretched(spr_creation_arrow,0,700,502,32,32);
+    if (scr_hit(700,502,700+32,502+32)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
         var onceh;onceh=0;cooldown=8000;
         if (aspirant_trial="Apprenticeship") and (onceh=0){aspirant_trial="Challenge";onceh=1;}
         if (aspirant_trial="Challenge") and (onceh=0){aspirant_trial="Knowledge of Self";onceh=1;}
@@ -1024,8 +1024,8 @@ if (slide=3){
         if (aspirant_trial="Blood Duel") and (onceh=0){aspirant_trial="Apprenticeship";onceh=1;}
     }
     
-    if (custom>1) then draw_sprite_stretched(spr_creation_arrow,1,788,502,32,32);
-    if (scr_hit(788,502,788+32,502+32)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
+    if (custom>1) then draw_sprite_stretched(spr_creation_arrow,1,738,502,32,32);
+    if (scr_hit(738,502,738+32,502+32)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
         var onceh;onceh=0;cooldown=8000;
         if (aspirant_trial="Blood Duel") and (onceh=0){aspirant_trial="Hunting the Hunter";onceh=1;}
         if (aspirant_trial="Hunting the Hunter") and (onceh=0){aspirant_trial="Survival of the Fittest";onceh=1;}
