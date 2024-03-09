@@ -906,21 +906,8 @@ function scr_ui_settings() {
 	        }
 	    }
     
-			// TODO handle all tooltips through the tooltip_draw function;
-	    if (tool1!=""){
-	        draw_set_alpha(1);
-	        draw_set_font(fnt_40k_14);
-			draw_set_halign(fa_left);
-			draw_set_color(0);
-					var tooltip_x = clamp(mouse_x, xx, xx + __view_get( e__VW.WView, 0 ) - string_width_ext(tool2,-1,500) - 48);
-					var tooltip_y = clamp(mouse_y, yy, yy + __view_get( e__VW.HView, 0 ) - string_height_ext(tool2,-1,500) - 48);
-	        draw_rectangle(tooltip_x+18,tooltip_y+20,tooltip_x+string_width_ext(tool2,-1,500)+24,tooltip_y+44+string_height_ext(tool2,-1,500),0);
-	        draw_set_color(c_gray);
-	        draw_rectangle(tooltip_x+18,tooltip_y+20,tooltip_x+string_width_ext(tool2,-1,500)+24,tooltip_y+44+string_height_ext(tool2,-1,500),1);
-	        draw_set_font(fnt_40k_14b);
-			draw_text(tooltip_x+22,tooltip_y+22,string(tool1));
-	        draw_set_font(fnt_40k_14);
-			draw_text_ext(tooltip_x+22,tooltip_y+42,string(tool2),-1,500);
-	    }
+		if (tool1!=""){
+			tooltip_draw_w_header(tool1, tool2,,,,, fnt_40k_14b, fnt_40k_14);
+		}
 	}
 }
