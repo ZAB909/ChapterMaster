@@ -1419,6 +1419,7 @@ if (image=="new_forge_master"){
             }
             if (pick!="none"){
                 pick.update_role("Forge Master");
+
                 var likability;
                 if (dislike<=5)  then likability = "He is generally well liked";
                 if (dislike>5)  then likability = "He is not generally well liked";
@@ -1453,6 +1454,12 @@ if (image=="new_forge_master"){
                 reset_options();
                 press=0
                 pathway="end_splash";
+                if (pick.company>0){
+                    for (var i=1;i<500;i++){
+                        if (obj_ini.name[0][i]=="") then break;
+                    }
+                    scr_move_unit_info(pick.company,0, pick.marine_number, i);
+                }
             }
         }
     }
