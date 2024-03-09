@@ -695,6 +695,7 @@
     {"id":{"name":"snd_redownload","path":"sounds/snd_redownload/snd_redownload.yy",},},
     {"id":{"name":"snd_click","path":"sounds/snd_click/snd_click.yy",},},
     {"id":{"name":"snd_click_small","path":"sounds/snd_click_small/snd_click_small.yy",},},
+    {"id":{"name":"scr_save_chapter","path":"scripts/scr_save_chapter/scr_save_chapter.yy",},},
     {"id":{"name":"snd_end_turn","path":"sounds/snd_end_turn/snd_end_turn.yy",},},
     {"id":{"name":"spr_terminator3_colors","path":"sprites/spr_terminator3_colors/spr_terminator3_colors.yy",},},
     {"id":{"name":"spr_if_mk6_helm","path":"sprites/spr_if_mk6_helm/spr_if_mk6_helm.yy",},},
