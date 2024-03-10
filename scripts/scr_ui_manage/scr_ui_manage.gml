@@ -627,62 +627,27 @@ function scr_ui_manage() {
 		            ar_mb=0;
 		            //TODO handle recursively
 					if (ma_armour[sel]!=""){
-						ma_ar=scr_wep_abbreviate(ma_armour[sel]);// vehicle weapon 3
-						if (string_count("^",ma_armour[sel])>0){
-							ar_ar=1;
-							ma_ar=string_replace(ma_ar,"^","");
-						}
-						if (string_count("&",ma_armour[sel])>0){
-							ar_ar=2;
-							ma_ar="Artifact";
-						}
+						ma_ar=gear_weapon_data("weapon",ma_armour[sel],"abbreviation");
+						ma_ar=is_string(ma_ar) ? ma_ar : "";
 					}
 					if (ma_gear[sel]!=""){
-						ma_ge=scr_wep_abbreviate(ma_gear[sel]);// vehicle upgrade
-						if (string_count("^",ma_gear[sel])>0){
-							ar_ge=1;
-							ma_ge=string_replace(ma_ge,"^","");
-						}
-						if (string_count("&",ma_gear[sel])>0){
-							ar_ge=2;
-							ma_ge="Artifact";
-						}
+						ma_ge=gear_weapon_data("armour",ma_gear[sel],"abbreviation");
+						ma_ge=is_string(ma_ge) ? ma_ge : ""	;		
 					}
 					if (ma_mobi[sel]!=""){
-						ma_mb=scr_wep_abbreviate(ma_mobi[sel]);// vehicle accessory
-						if (string_count("^",ma_mobi[sel])>0){
-							ar_mb=1;
-							ma_mb=string_replace(ma_mb,"^","");
-						}
-						if (string_count("&",ma_mobi[sel])>0){
-							ar_mb=2;
-							ma_mb="Artifact";
-						}
-					}
+						ma_mb=gear_weapon_data("gear",ma_mobi[sel],"abbreviation");
+						ma_mb=is_string(ma_mb) ? ma_mb : ""	;			            	
+		            }
 					if (ma_wep1[sel]!=""){
-						ma_we1=scr_wep_abbreviate(ma_wep1[sel]);//vehicle weapon 1
-						if (string_count("^",ma_wep1[sel])>0){
-							ar_we1=1;
-							ma_we1=string_replace(ma_we1,"^","");
-						}
-						if (string_count("&",ma_wep1[sel])>0){
-							ar_we1=2;
-							ma_we1="Artifact";
-						}
+						ma_we1=gear_weapon_data("weapon",ma_wep1[sel],"abbreviation");
+						ma_we1=is_string(ma_we1) ? ma_we1 : "";			            	
 					}
 					if (ma_wep2[sel]!=""){
-						ma_we2=scr_wep_abbreviate(ma_wep2[sel]);//vehicle weapon 2
-						if (string_count("^",ma_wep2[sel])>0){
-							ar_we2=1;
-							ma_we2=string_replace(ma_we2,"^","");
-						}
-						if (string_count("&",ma_wep2[sel])>0){
-							ar_we2=2;
-							ma_we2="Artifact";
-						}
+						ma_we2=gear_weapon_data("weapon",ma_wep2[sel],"abbreviation");
+						ma_we2=is_string(ma_we1) ? ma_we2 : "";	
+						// temp5=string(ma_wep1[sel])+", "+string(ma_wep2[sel])+" + "+string(ma_gear[sel]);
+		      }
 					}
-		            // temp5=string(ma_wep1[sel])+", "+string(ma_wep2[sel])+" + "+string(ma_gear[sel]);
-		        }
 
 		        if (man_sel[sel]==0) then draw_set_color(c_black);
 		        if (man_sel[sel]!=0) then draw_set_color(6052956);// was gray
