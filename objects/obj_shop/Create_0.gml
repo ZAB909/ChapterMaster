@@ -84,7 +84,7 @@ tab_buttons = {
     "vehicles":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
     "ships":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
 }  
-
+var require_tool_tip = "requires: #"
 if (shop = "equipment") {
     i = 0;
     i += 1;
@@ -102,7 +102,9 @@ if (shop = "equipment") {
     item[i] = "Eviscerator";
     if (research.chain[0]>0){
         forge_cost[i] = 150;
-    }      
+    } else {
+        tooltip_overide[i] = $"{require_tool_tip} {research_pathways.chain[0][0]}"
+    }   
     item_stocked[i] = scr_item_count(item[i]);
     nobuy[i] = 1;
     i += 1;
@@ -369,7 +371,7 @@ if (shop = "equipment") {
     repeat(39) {
         i += 1;
         if (item[i] != ""){
-            mc_stocked[i] = scr_item_count("Master Crafted " + string(item[i]));
+            mc_stocked[i] = scr_item_count(item[i], "master_crafted");
         }
     }
 }
@@ -384,19 +386,23 @@ if (shop = "equipment2") {
         item_cost[i] = 0;
     }
     i += 1;
+    var mk_4_able = false;
+    var mk_4_tool_tip = ""
     item[i] = "MK4 Maximus";
     item_stocked[i] = scr_item_count("MK4 Maximus");
     if (obj_controller.in_forge){
         if (research.armour[1].stealth[0] >0 && research.armour[1].armour[0] >1){
             forge_cost[i] = 2000;
+            mk_4_able=true;
         } else {
-            tooltip_overide[i] = "requires : ";
+            tooltip_overide[i] = "requires : #";
             if (research.armour[1].stealth[0] < 1){
                 tooltip_overide[i] += $"     {research_pathways.armour[1].stealth[0][0]}#";
                 for (var r = research.armour[1].armour[0]; r < 2;r++){
                     tooltip_overide[i] += $"     {research_pathways.armour[1].armour[0][r]}#";
                 }
-            } 
+            }
+            mk_4_tool_tip = tooltip_overide[i];
         }
 
     }
@@ -421,15 +427,36 @@ if (shop = "equipment2") {
         nobuy[i] = 1;
         item_cost[i] = 0;
     }
+    if (obj_controller.in_forge){
+        if (research.armour[1].stealth[0] > 0){
+            forge_cost[i] = 1400;
+        } else {
+            tooltip_overide[i] = "requires : #";
+            if (research.armour[1].stealth[0] < 1){
+                tooltip_overide[i] += $"     {research_pathways.armour[1].stealth[0][0]}#";
+            }
+        }
+    }
+
     i += 1;
     item[i] = "MK7 Aquila";
     item_stocked[i] = scr_item_count("MK7 Aquila");
-    forge_cost[i] = 1000;
     item_cost[i] = 20;
     if (rene = 1) {
         nobuy[i] = 1;
         item_cost[i] = 0;
     }
+    if (obj_controller.in_forge){
+        if (research.armour[0] > 0){
+            forge_cost[i] = 1000;
+        } else {
+            tooltip_overide[i] = "requires : #";
+            if (research.armour[0] < 1){
+                tooltip_overide[i] += $"     {research_pathways.armour[0][0]}#";
+            }
+        }
+    }
+
     i += 1;
     item[i] = "MK8 Errant";
     item_stocked[i] = scr_item_count("MK8 Errant");
@@ -438,6 +465,17 @@ if (shop = "equipment2") {
         nobuy[i] = 1;
         item_cost[i] = 0;
     }
+    if (obj_controller.in_forge){
+        if (research.armour[0] > 1){
+            forge_cost[i] = 1000;
+        } else {
+            tooltip_overide[i] = "requires : #";
+            if (research.armour[0] < 2 && mk_4_able){
+                tooltip_overide[i] = mk_4_tool_tip;
+                tooltip_overide[i] += $"     {research_pathways.armour[0][2].stealth[0][0]}#";
+            }
+        }
+    }    
     i += 1;
     item[i] = "Scout Armour";
     item_stocked[i] = scr_item_count(item[i]);
@@ -458,6 +496,9 @@ if (shop = "equipment2") {
     if (obj_controller.stc_wargear >= 6) {
         if (research.armour[1].stealth[0] >0 && research.armour[1].armour[0] >1){
             forge_cost[i] = 4000;
+        } else {
+            tooltip_overide[i] = mk_4_tool_tip;
+            tooltip_overide[i]+= "#STC wargear component 6";
         }
     } // if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i += 1;
@@ -555,6 +596,14 @@ if (shop = "equipment2") {
     item[i] = "Exterminatus";
     item_stocked[i] = scr_item_count(item[i]);
     item_cost[i] = 2500;
+
+    i=0;
+    repeat(39) {
+        i += 1;
+        if (item[i] != ""){
+            mc_stocked[i] = scr_item_count(item[i], "master_crafted");
+        }
+    }    
 
 }
 
@@ -715,9 +764,22 @@ if (shop = "vehicles") {
     item[i] = "Dreadnought";
     item_stocked[i] = scr_item_count(item[i]);
     nobuy[i] = 1; // if (rene=1){nobuy[i]=1;item_cost[i]=0;}
-    if (obj_controller.stc_wargear >= 6) {
-        if (research.armour[1].stealth[0] >0 && research.armour[1].armour[0] >1){
-            forge_cost[i] = 5000;
+    if (obj_controller.in_forge){
+        if (obj_controller.stc_wargear >= 6) {
+            if (research.armour[1].stealth[0] >0 && research.armour[1].armour[0] >1){
+                forge_cost[i] = 5000;
+            } else {
+                tooltip_overide[i] = require_tool_tip;
+                if (research.armour[1].stealth[0] < 1){
+                    tooltip_overide[i] += $"     {research_pathways.armour[1].stealth[0][0]}#";
+                    for (var r = research.armour[1].armour[0]; r < 2;r++){
+                        tooltip_overide[i] += $"     {research_pathways.armour[1].armour[0][r]}#";
+                    }
+                }
+            }
+        } else {
+            tooltip_overide[i] = require_tool_tip;
+            tooltip_overide[i] += "#STC wargear component : 6";
         }
     }
     i += 1;
@@ -733,7 +795,9 @@ if (shop = "vehicles") {
     x_mod[i] = 9;
     item[i] = "Force Weapon";
     item_stocked[i] = scr_item_count(item[i]);
-    if (research.psi[0]>0) then forge_cost[i] = 500;
+    if (obj_controller.in_forge){
+        if (research.psi[0]>0) then forge_cost[i] = 500;
+    }
     item_cost[i] = 80;
     if (rene = 1) {
         nobuy[i] = 1;
@@ -950,7 +1014,7 @@ if (shop == "production"){
     }    
      if (research.chain[0] == 0){
         i++;
-        item[i] = ["research", research_pathways.chain[0][research.chain[0]], ["flame"]];
+        item[i] = ["research", research_pathways.chain[0][research.chain[0]], ["chain"]];
         item_stocked[i] = 0;
         forge_cost[i] = 3000;
         tooltip_overide[i] = "Allows construction of advanced chain weaponry";
@@ -983,26 +1047,40 @@ if (shop == "production"){
         forge_cost[i] = 3000;
         tooltip_overide[i] = "Allows basic Melta weaponry construction";
     }
-    if (research.armour[1].stealth[0] == 0){
+    if (research.armour[0]>0){
+        if (research.armour[1].stealth[0] == 0){
+            i++;
+            item[i] = ["research","Advanced Servo Motors", ["armour", "stealth"]];
+            item_stocked[i] = 0;
+            forge_cost[i] = 3000;
+            tooltip_overide[i] = "Allows Mk6 construction#Required for {research_pathways.armour[1].armour[0]} ";
+        }
+        if (research.armour[1].armour[0] == 0){
+            i++;
+            item[i] = ["research","Advanced Ceramite Bonding", ["armour", "armour"]];
+            item_stocked[i] = 0;
+            forge_cost[i] = 3000;
+            tooltip_overide[i] = "Allows Mk3 construction";
+        }
+        if (research.armour[1].stealth[0] >0 && research.armour[1].armour[0] >0){
+            i++;
+            item[i] =  ["research","Enhanced Nerve Interfacing", ["armour", "armour"]];
+            item_stocked[i] = 0;
+            forge_cost[i] = 3000;
+            tooltip_overide[i] = "Allows Mk4 construction";
+        }
+    } else if (research.armour[0]==0){
         i++;
-        item[i] = ["research","Advanced Servo Motors", ["armour", "stealth"]];
+        item[i] = ["research",research_pathways.armour[0][0], ["armour"]];
         item_stocked[i] = 0;
         forge_cost[i] = 3000;
-        tooltip_overide[i] = "Allows Mk6 construction";
-    }
-    if (research.armour[1].armour[0] == 0){
+        tooltip_overide[i] = "Allows Mk6 construction#Required for MK8 construction#Required for Terminator Armour Construction";        
+    } else if  (research.armour[0]==1){
         i++;
-        item[i] = ["research","Advanced Ceramite Bonding", ["armour", "armour"]];
+        item[i] = ["research",research_pathways.armour[0][1], ["armour"]];
         item_stocked[i] = 0;
         forge_cost[i] = 3000;
-        tooltip_overide[i] = "Allows Mk3 construction";
-    }
-    if (research.armour[1].stealth[0] >0 && research.armour[1].armour[0] >0){
-        i++;
-        item[i] =  ["research","Enhanced Nerve Interfacing", ["armour", "armour"]];
-        item_stocked[i] = 0;
-        forge_cost[i] = 3000;
-        tooltip_overide[i] = "Allows Mk4 construction";
+        tooltip_overide[i] = "Required for MK8 construction";               
     }
 
 }
@@ -1034,7 +1112,8 @@ if (rene = 1) {
         i += 1;
         item_cost[i] *= 2;
     }
-} 
+}
+forge_master_modifier=0;
 if (forge_master!="none"){
     forge_master_modifier = 2500/((forge_master.charisma+10)*forge_master.technology);
     if (forge_master.has_trait("flesh_is_weak") && forge_master_modifier>0.75){
@@ -1047,7 +1126,9 @@ if (forge_master!="none"){
  i = 0;
   repeat(array_length(item_cost)-2){
     i += 1;
-    item_cost[i] *= 2;
+    if (shop != "warships"){
+        item_cost[i] *= 2;
+    }
     if (rene != 1){
 		item_cost[i]*=mechanicus_modifier;
 	}

@@ -306,28 +306,27 @@ function shutter_button() constructor{
 			left_rack.draw(xx, yy, true);
 		}
 		var text_draw = xx+(width/2)-(string_width(text)*(3*scale)/2);
+		var main_sprite = 0;
 		if (time_open<2){
-			draw_sprite_ext(spr_shutter_button, 0, xx, yy, scale, scale, 0, c_white, 1)
+			draw_sprite_ext(spr_shutter_button, main_sprite, xx, yy, scale, scale, 0, c_white, 1)
 		} else if (time_open<8 && time_open>=2){
-			draw_sprite_ext(spr_shutter_button, shutter_backdrop, xx, yy, scale, scale, 0, c_white, 1)
-			draw_set_color(c_red);
-			draw_text_transformed(text_draw, yy+(20*scale), text, 3*scale, 3*scale, 0);
-			draw_sprite_ext(spr_shutter_button, 1, xx, yy, scale, scale, 0, c_white, 1)
+			main_sprite=1;
 		}else if  (time_open<13 && time_open>=8){
-			draw_sprite_ext(spr_shutter_button, shutter_backdrop, xx, yy, scale, scale, 0, c_white, 1)
-			draw_set_color(c_red);
-			draw_text_transformed(text_draw, yy+(20*scale), text, 3*scale, 3*scale, 0);
-			draw_sprite_ext(spr_shutter_button, 2, xx, yy, scale, scale, 0, c_white, 1)
+			main_sprite=2;
 		}else if  (time_open<18 && time_open>=13){
-			draw_sprite_ext(spr_shutter_button, shutter_backdrop, xx, yy, scale, scale, 0, c_white, 1)
-			draw_set_color(c_red);
-			draw_text_transformed(text_draw, yy+(20*scale), text, 3*scale, 3*scale, 0);
-			draw_sprite_ext(spr_shutter_button, 3, xx, yy, scale, scale, 0, c_white, 1)
+			main_sprite=3;
 		} else if (time_open>=18){
+			main_sprite=4;
+		}
+		if (time_open>=2){
 			draw_sprite_ext(spr_shutter_button, shutter_backdrop, xx, yy, scale, scale, 0, c_white, 1)
 			draw_set_color(c_red);
-			draw_text_transformed(text_draw, yy+(20*scale), text, 3*scale, 3*scale, 0);
-			draw_sprite_ext(spr_shutter_button, 4, xx, yy, scale, scale, 0, c_white, 1)
+			if (click_timer>0){
+				draw_text_transformed(text_draw, yy+(24*scale), text, 3*scale, 3*scale, 0);
+			} else {
+				draw_text_transformed(text_draw, yy+(20*scale), text, 3*scale, 3*scale, 0);
+			}
+			draw_sprite_ext(spr_shutter_button, main_sprite, xx, yy, scale, scale, 0, c_white, 1)			
 		}
 		draw_set_color(c_grey);
 		if (click_timer>7){

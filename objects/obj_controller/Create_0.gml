@@ -562,9 +562,10 @@ production_research = {
     power_fields:[1,{}],
     las : [0,{}],
     armour : [
-        0,{
-        stealth : [0,{}],
-        armour : [0,{}],
+        0,
+        {
+            stealth : [0,{}],
+            armour : [0,{}],
 		}
     ]
 }
@@ -581,7 +582,7 @@ production_research_pathways ={
     las : [["Light Condensement Chamber"],{}],
     armour : 
         [
-            [],
+            ["Ceramite Casting Chambers", "Lightened Ceramite Compound"],
             {
                 stealth : [["Advanced Servo Motors"],{}],
                 armour : [["Advanced Ceramite Bonding", "Enhanced Nerve Interfacing"],{}],
