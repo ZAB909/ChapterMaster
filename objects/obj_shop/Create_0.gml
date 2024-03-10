@@ -9,16 +9,11 @@ target_comp = obj_controller.new_vehicles;
 
 tooltip_show = 0;
 tooltip = "";
-tooltip_weapon = 0;
 tooltip_stat1 = 0;
 tooltip_stat2 = 0;
 tooltip_stat3 = 0;
 tooltip_stat4 = 0;
 tooltip_other = "";
-tooltip_x = 0;
-tooltip_y = 0;
-tooltip_width = 0;
-tooltip_height = 0;
 forge_master = scr_role_count("Forge Master", "", "units");
 if (array_length(forge_master)>0){
     forge_master=forge_master[0];

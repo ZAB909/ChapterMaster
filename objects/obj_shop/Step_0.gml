@@ -30,8 +30,6 @@ repeat(39){
         } else {
             tooltip = tooltip_overide[i];
         }
-        tooltip_x=mouse_x+24;
-        tooltip_y=mouse_y;
         tooltip_show=1;
     }
     
