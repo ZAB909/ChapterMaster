@@ -11,17 +11,18 @@ function tooltip_draw(tooltip, max_width=300, rect_x=mouse_x+24, rect_y=mouse_y+
 	var rect_h = text_h + text_padding_y;
 	static xx = __view_get(e__VW.XView, 0);
 	static yy = __view_get(e__VW.YView, 0);
+	// Ensure the tooltip stays within the view
 	rect_x = clamp(rect_x, xx + DEFAULT_TOOLTIP_VIEW_OFFSET, xx + __view_get(e__VW.WView, 0) - rect_w - DEFAULT_TOOLTIP_VIEW_OFFSET);
 	rect_y = clamp(rect_y, yy + DEFAULT_TOOLTIP_VIEW_OFFSET, yy + __view_get(e__VW.HView, 0) - rect_h - DEFAULT_TOOLTIP_VIEW_OFFSET);
+	// Draw the tooltip rectangle with an outline
 	draw_rectangle_colour(rect_x, rect_y, rect_w + rect_x, rect_h + rect_y, c_black, c_black, c_black, c_black, 0);
 	draw_rectangle_colour(rect_x, rect_y, rect_w + rect_x, rect_h + rect_y, c_gray, c_gray, c_gray, c_gray, 1);
+	// Draw the tooltip text
 	draw_text_ext_colour(rect_x + text_padding_x, rect_y + text_padding_y, tooltip, DEFAULT_LINE_GAP, text_w, text_color, text_color, text_color, text_color, 1);
 }
 
 function tooltip_draw_w_header(header, tooltip, max_width=300, rect_x=mouse_x+24, rect_y=mouse_y+24, text_color=c_gray, header_font=fnt_40k_14b, tooltip_font=fnt_40k_14){
-	// Set alignment to left
 	draw_set_halign(fa_left);
-	// Set alpha to fully opaque
 	draw_set_alpha(1);
 	// Convert hash to newline in strings
 	header = string_hash_to_newline(string(header));
@@ -45,7 +46,7 @@ function tooltip_draw_w_header(header, tooltip, max_width=300, rect_x=mouse_x+24
 	// Clamp tooltip position to view
 	rect_x = clamp(rect_x, xx + DEFAULT_TOOLTIP_VIEW_OFFSET, xx + __view_get(e__VW.WView, 0) - rect_w - DEFAULT_TOOLTIP_VIEW_OFFSET);
 	rect_y = clamp(rect_y, yy + DEFAULT_TOOLTIP_VIEW_OFFSET, yy + __view_get(e__VW.HView, 0) - rect_h - DEFAULT_TOOLTIP_VIEW_OFFSET);
-	// Draw tooltip background rectangle
+	// Draw the tooltip rectangle with an outline
 	draw_rectangle_colour(rect_x, rect_y, rect_w + rect_x, rect_h + rect_y, c_black, c_black, c_black, c_black, 0);
 	draw_rectangle_colour(rect_x + 1, rect_y + 1, rect_w + rect_x - 1, rect_h + rect_y - 1, c_gray, c_gray, c_gray, c_gray, 1);
 	// Draw header text
@@ -53,7 +54,7 @@ function tooltip_draw_w_header(header, tooltip, max_width=300, rect_x=mouse_x+24
 	draw_text_ext_colour(rect_x + text_padding_x, rect_y + text_padding_y, header, DEFAULT_LINE_GAP, header_w, text_color, text_color, text_color, text_color, 1);
 	// Draw tooltip text below the header
 	draw_set_font(tooltip_font);
-	var tooltip_text_y = rect_y + header_h + text_padding_y * 2; // Position the tooltip text below the header
+	var tooltip_text_y = rect_y + header_h + text_padding_y * 2;
 	draw_text_ext_colour(rect_x + text_padding_x, tooltip_text_y, tooltip, DEFAULT_LINE_GAP, text_w, text_color, text_color, text_color, text_color, 1);
 }
 
