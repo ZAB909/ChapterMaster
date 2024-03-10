@@ -171,8 +171,8 @@ function scr_draw_unit_stat_data(manage=false){
 			var unit_data_string = unit_profile_text();
 			tooltip_draw(unit_data_string, 970, xx+25,yy+144);
 		}
-		draw_text(stat_middle-66, stats_base+75, $"Loyalty : {loyalty}")
-		draw_text(stat_middle-66, stats_base+110, $"Corruption : {corruption}")		
+		draw_text(stat_middle-66, stats_base+75, $"Loyalty : {loyalty}");
+		draw_text(stat_middle-66, stats_base+110, $"Corruption : {corruption}");	
 		for (i=0;i<array_length(stat_tool_tips);i++){
 			if (point_in_rectangle(mouse_x, mouse_y, stat_tool_tips[i][0], stat_tool_tips[i][1], stat_tool_tips[i][2], stat_tool_tips[i][3])){
 				tooltip_draw(stat_tool_tips[i][4], 200, stat_tool_tips[i][0], stat_tool_tips[i][3],,,stat_tool_tips[i][5]);
