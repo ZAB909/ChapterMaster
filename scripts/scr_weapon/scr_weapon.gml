@@ -1861,10 +1861,10 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
             }
         } 
         if (melee_hands!=0){
-            spe_desc += $"melee carry {-1*melee_hands},#"
+            spe_desc += $"Melee Cap {-1*melee_hands},#"
         }
         if (ranged_hands!=0){
-            spe_desc += $"ranged carry {-1*ranged_hands},#"
+            spe_desc += $"Ranged Cap {-1*ranged_hands},#"
         }
         if (req_exp>0){
             spe_desc += $"requires {req_exp} exp,#"
