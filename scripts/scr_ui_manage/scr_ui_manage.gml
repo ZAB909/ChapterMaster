@@ -378,7 +378,7 @@ function scr_ui_manage() {
         	}
 
         	if (is_array(cn.temp[117])){
-        		var_text = string_hash_to_newline(string("Melee Attack: {0}",cn.temp[116][0]))
+        		var_text = string_hash_to_newline(string("Melee Attack: {0}",round(cn.temp[116][0])))
 	        	tooltip_text = string_hash_to_newline(string("Weapon: {0}#WS: {1}#STR: {2}#{3}", selected_unit.get_weapon_one_data("attack"), selected_unit.weapon_skill, selected_unit.strength,cn.temp[116][1]));
 	        	x1 = xx+1387;
 	        	y1 = yy+378;
@@ -394,7 +394,7 @@ function scr_ui_manage() {
 	    	}
 
         	if (is_array(cn.temp[117])){
-        		var_text = string_hash_to_newline(string("Ranged Attack: {0}",cn.temp[117][0]))
+        		var_text = string_hash_to_newline(string("Ranged Attack: {0}",round(cn.temp[117][0])))
 	        	tooltip_text = string_hash_to_newline(string("BS : {0}#DEX : {1}#{2}", selected_unit.ballistic_skill, selected_unit.dexterity,cn.temp[117][1]));
 	        	x1 = xx+1387;
 	        	y1 = yy+400;
