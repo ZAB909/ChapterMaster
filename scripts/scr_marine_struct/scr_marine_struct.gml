@@ -1587,7 +1587,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			//base modifyer based on unit skill set
 			ranged_att = 100*(((ballistic_skill/50) + (dexterity/400)+ (experience()/500)));
 			var final_range_attack=0;
-			var explanation_string = $"base ranged:X{ranged_att/100}#"
+			var explanation_string = $"Base Ranged: x{ranged_att/100}#  BS: x{ballistic_skill/50}#  DEX: x{dexterity/400}#  EXP: x{experience()/500}#";
 			//determine capavbility to weild bulky weapons
 			var carry_data =ranged_hands_limit();
 
@@ -1686,6 +1686,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}
 			//return final ranged damage output
 			final_range_attack = floor((ranged_att/100)* primary_weapon.attack);
+			explanation_string += $"{primary_weapon.name}: {primary_weapon.attack}"
 			if (!encumbered_ranged){
 				if (primary_weapon.has_tag("pistol") &&secondary_weapon.has_tag("pistol")){
 					final_range_attack+=floor((ranged_att/100)* secondary_weapon.attack);

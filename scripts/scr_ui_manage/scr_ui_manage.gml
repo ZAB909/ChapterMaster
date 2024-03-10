@@ -378,7 +378,7 @@ function scr_ui_manage() {
 
         	if (is_array(cn.temp[117])){
         		var_text = string_hash_to_newline(string("Melee Attack: {0}",cn.temp[116][0]))
-	        	tooltip_text = string_hash_to_newline(string("WS : {0}#STR : {1}#{2}", selected_unit.weapon_skill, selected_unit.strength,cn.temp[116][1]));
+	        	tooltip_text = string_hash_to_newline(string(cn.temp[116][1]));
 	        	x1 = xx+1387;
 	        	y1 = yy+405;
 	        	x2 = x1+string_width(var_text);
@@ -394,7 +394,7 @@ function scr_ui_manage() {
 
         	if (is_array(cn.temp[117])){
         		var_text = string_hash_to_newline(string("Ranged Attack: {0}",cn.temp[117][0]))
-	        	tooltip_text = string_hash_to_newline(string("BS : {0}#DEX : {1}#{2}", selected_unit.ballistic_skill, selected_unit.dexterity,cn.temp[117][1]));
+	        	tooltip_text = string_hash_to_newline(string(cn.temp[117][1]));
 	        	x1 = xx+1387;
 	        	y1 = yy+435;
 	        	x2 = x1+string_width(var_text);
@@ -496,9 +496,9 @@ function scr_ui_manage() {
 							}
 						}
         		var_text = string_hash_to_newline(string("Damage Resistance: {0}",cn.temp[118]))
-	        	tooltip_text += string_hash_to_newline(string("CON: {0}x0.5#EXP: {1}x0.1", selected_unit.constitution, cn.temp[113]));
-	        	x1 = xx+1387;
-	        	y1 = yy+492;
+	        	tooltip_text += string_hash_to_newline(string("CON: {0}%#EXP: {1}%", round(selected_unit.constitution/2), round(cn.temp[113]/10)));
+	        	x1 = xx+1015;
+	        	y1 = yy+378;
 	        	x2 = x1+string_width(var_text);
 	        	y2 = y1+string_height(var_text);
 		        draw_set_color(c_gray);
