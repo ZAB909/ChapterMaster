@@ -427,9 +427,49 @@ function scr_ui_manage() {
 	    		array_push(tooltip_drawing, ["No bionic Augmentations", [x1,y1,x2,y2]]);
 	    	}
 
+        var_text = string_hash_to_newline($"Armour Rating: {selected_unit.armour_calc()}")
+          var tooltip_text = "";
+          var equipment_types = ["armour", "weapon_one", "weapon_two", "mobility", "gear"];
+          for (var i = 0; i < array_length(equipment_types); i++) {
+            var equipment_type = equipment_types[i];
+            var ac = 0;
+            var name = "";
+            switch(equipment_type) {
+                case "armour":
+                    ac = selected_unit.get_armour_data("armour_value");
+                    name = selected_unit.get_armour_data("name");
+                    break;
+                case "weapon_one":
+                    ac = selected_unit.get_weapon_one_data("armour_value");
+                    name = selected_unit.get_weapon_one_data("name");
+                    break;
+                case "weapon_two":
+                    ac = selected_unit.get_weapon_two_data("armour_value");
+                    name = selected_unit.get_weapon_two_data("name");
+                    break;
+                case "mobility":
+                    ac = selected_unit.get_mobility_data("armour_value");
+                    name = selected_unit.get_mobility_data("name");
+                    break;
+                case "gear":
+                    ac = selected_unit.get_gear_data("armour_value");
+                    name = selected_unit.get_gear_data("name");
+                    break;
+            }
+            if (ac != 0) {
+                tooltip_text += string_hash_to_newline($"{name}: {ac}#");
+            }
+          }
+        	x1 = xx+1015;
+        	y1 = yy+400;
+        	x2 = x1+string_width(var_text);
+        	y2 = y1+string_height(var_text);
+	        draw_set_color(c_gray);
+	        draw_text(x1,y1,var_text);
+	        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 
 
-    		var_text = string_hash_to_newline($"Health: {selected_unit.hp()}/{selected_unit.max_health()}")
-        	tooltip_text = string_hash_to_newline(string("CON : {0}", selected_unit.constitution));
+    		var_text = string_hash_to_newline($"Health: {round(selected_unit.hp())}/{round(selected_unit.max_health())}")
+        	tooltip_text = string_hash_to_newline(string("CON : {0}", 100 * (1+((selected_unit.constitution - 40)*0.025))));
         	x1 = xx+1015;
         	y1 = yy+420;
         	x2 = x1+string_width(var_text);
