@@ -907,7 +907,7 @@ function scr_ui_settings() {
 	    }
     
 		if (tool1!=""){
-			tooltip_draw_w_header(tool1, tool2,,,,, fnt_40k_14b, fnt_40k_14);
+			tooltip_draw(tool2,,,,,,tool1);
 		}
 	}
 }
