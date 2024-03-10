@@ -442,7 +442,7 @@ global.weapons={
         "tags":["power","dual","fist"],
     },
     "Dreadnought Lightning Claw": {
-    "abbreviation": "DrdLghtClaw",             
+    "abbreviation": "LghtClaw",             
         "attack": {
             "standard": 300,
             "master_crafted": 400,
@@ -506,7 +506,7 @@ global.weapons={
         "tags":["arcane"],
     },
     "Relic Blade": {
-      "abbreviation": "RlcBlade",               
+      "abbreviation": "RlcBld",               
         "attack": {
             "standard": 700,
             "master_crafted": 850,
@@ -607,7 +607,7 @@ global.weapons={
         "tags":["bolt"]
     },
     "Heavy Flamer": {
-        "abbreviation": "HvyFlmer",              
+        "abbreviation": "HvyFlmr",              
         "attack": {
             "standard": 500,
             "master_crafted": 550,
@@ -623,7 +623,7 @@ global.weapons={
         "tags":["flame","heavy_ranged"]
     },
     "CCW Heavy Flamer": {
-        "abbreviation": "CCWHvyFlmer",               
+        "abbreviation": "CCWHvyFlmr",               
         "attack": {
             "standard": 250,
             "master_crafted": 275,
@@ -639,7 +639,7 @@ global.weapons={
         "tags":["dreadnought","flame"]
     },
     "Dreadnought Power Claw":{
-      "abbreviation": "DrdPwrClaw",              
+      "abbreviation": "PwrClaw",              
         "attack": {
             "standard": 400,
             "master_crafted": 600,
@@ -1135,7 +1135,7 @@ global.weapons={
             "artifact": 660
         },
         "description": "A much larger and bulkier flamer. Few armies carry them on hand, instead choosing to mount them to vehicles.",
-        "abbreviation": "TwnHvyFlmers", 
+        "abbreviation": "TwnHvyFlmrs", 
         "melee_hands": 0,
         "ranged_hands": 0,
         "ammo": 12,
@@ -1195,7 +1195,7 @@ global.weapons={
         "description": "",
     },  
     "Heavy Flamer Sponsons": {
-        "abbreviation": "HvyFlmers", 
+        "abbreviation": "HvyFlmrs", 
         "description": "",
     },  
     "Volkite Culverin Sponsons": {
@@ -1203,7 +1203,7 @@ global.weapons={
         "description": "",
     },  
     "Autocannon Turret": {
-        "abbreviation": "AutoCanTrt", 
+        "abbreviation": "Autocnn", 
         "attack": {
             "standard": 130,
             "master_crafted": 528,
@@ -1219,7 +1219,7 @@ global.weapons={
         "tags":["vehicle", "turrent"]
     },     
     "Storm Bolter": {
-        "abbreviation": "StrmBolt", 
+        "abbreviation": "StrmBltr", 
         "attack": {
             "standard": 80,
             "master_crafted": 88,
@@ -1235,7 +1235,7 @@ global.weapons={
         "tags":["bolt"]
     },
     "Flamer": {
-        "abbreviation": "Flmer", 
+        "abbreviation": "Flmr", 
         "attack": {
             "standard": 350,
             "master_crafted": 385,
@@ -1262,7 +1262,7 @@ global.weapons={
             "artifact": 240
         },
         "description": "",
-        "abbreviation": "UndrFlmer", 
+        "abbreviation": "UndrFlmr", 
         "melee_hands": 0,
         "ranged_hands": 0,
         "ammo": 4,
@@ -1272,7 +1272,7 @@ global.weapons={
         "tags":["flame"]
     },
     "Combiflamer": {
-        "abbreviation": "CmbFlmer", 
+        "abbreviation": "CmbFlmr", 
         "attack": {
             "standard": 100,
             "master_crafted": 130,
@@ -1325,7 +1325,7 @@ global.weapons={
             "master_crafted": 300,
             "artifact": 350
         },
-        "abbreviation": "TwnLscnnTrrt", 
+        "abbreviation": "TwnLscnn", 
         "description": "A Predator-compatible turret mounting a pair of anti-armour lascannons.",
         "range": 1,
         "spli": 0,
