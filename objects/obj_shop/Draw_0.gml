@@ -41,10 +41,13 @@ if (obj_controller.in_forge){
 }
 draw_set_halign(fa_left);
 draw_text(xx+962,yy+109,string_hash_to_newline("Name"));
-draw_text(xx+1150,yy+109,string_hash_to_newline("Stocked"));
 var buy_type = obj_controller.in_forge ?  "Forge Requirement" : "Requisition";
 draw_text(xx+962.5,yy+109.5,string_hash_to_newline("Name"));
-draw_text(xx+1150.5,yy+109.5,string_hash_to_newline("Stocked"));
+if (shop_area!="production"){
+    draw_text(xx+1150,yy+109,string_hash_to_newline("Stocked"));
+    draw_text(xx+1150.5,yy+109.5,string_hash_to_newline("Stocked"));
+    draw_text(xx+1150+10+string_width("Stocked"),yy+109.5,string_hash_to_newline("MC"));
+}
 draw_text(xx+1330.5,yy+109.5,string_hash_to_newline(buy_type));
 draw_set_color(c_gray);
 
