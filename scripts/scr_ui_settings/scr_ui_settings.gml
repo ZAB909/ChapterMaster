@@ -907,7 +907,7 @@ function scr_ui_settings() {
 	    }
     
 		if (tool1!=""){
-			tooltip_draw(tool2,,,,,,tool1);
+			tooltip_draw(tool2,,,,,tool1);
 		}
 	}
 }

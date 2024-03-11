@@ -1,4 +1,4 @@
-function tooltip_draw(tooltip="", max_width=300, rect_x=mouse_x+24, rect_y=mouse_y+24, text_color=c_gray, font=fnt_40k_14, header="", header_font=fnt_40k_14b){
+function tooltip_draw(tooltip="", max_width=300, coords=[mouse_x+24,mouse_y+24], text_color=c_gray, font=fnt_40k_14, header="", header_font=fnt_40k_14b){
 	draw_set_halign(fa_left);
 	draw_set_alpha(1)
 	// Calculate padding and rectangle size
@@ -27,9 +27,9 @@ function tooltip_draw(tooltip="", max_width=300, rect_x=mouse_x+24, rect_y=mouse
 	// Get view coordinates
 	static xx = __view_get(e__VW.XView, 0);
 	static yy = __view_get(e__VW.YView, 0);
-	// Clamp tooltip position to view
-	rect_x = clamp(rect_x, xx + DEFAULT_TOOLTIP_VIEW_OFFSET, xx + __view_get(e__VW.WView, 0) - rect_w - DEFAULT_TOOLTIP_VIEW_OFFSET);
-	rect_y = clamp(rect_y, yy + DEFAULT_TOOLTIP_VIEW_OFFSET, yy + __view_get(e__VW.HView, 0) - rect_h - DEFAULT_TOOLTIP_VIEW_OFFSET);
+	// Define tooltip position and clamp it to view
+	var rect_x = clamp(coords[0], xx + DEFAULT_TOOLTIP_VIEW_OFFSET, xx + __view_get(e__VW.WView, 0) - rect_w - DEFAULT_TOOLTIP_VIEW_OFFSET);
+	var rect_y = clamp(coords[1], yy + DEFAULT_TOOLTIP_VIEW_OFFSET, yy + __view_get(e__VW.HView, 0) - rect_h - DEFAULT_TOOLTIP_VIEW_OFFSET);
 	// Draw the tooltip rectangle with an outline
 	draw_rectangle_colour(rect_x, rect_y, rect_w + rect_x, rect_h + rect_y, c_black, c_black, c_black, c_black, 0);
 	draw_rectangle_colour(rect_x + 1, rect_y + 1, rect_w + rect_x - 1, rect_h + rect_y - 1, c_gray, c_gray, c_gray, c_gray, 1);
