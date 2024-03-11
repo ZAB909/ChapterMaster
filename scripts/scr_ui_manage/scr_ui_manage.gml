@@ -482,7 +482,7 @@ function scr_ui_manage() {
 	        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 
 
     		var_text = string_hash_to_newline($"Health: {round(selected_unit.hp())}/{round(selected_unit.max_health())}")
-        	tooltip_text = string_hash_to_newline(string("CON : {0}", 100 * (1+((selected_unit.constitution - 40)*0.025))));
+        	tooltip_text = string_hash_to_newline(string("CON : {0}", round(100*(1+((selected_unit.constitution-40)*0.025)))));
         	x1 = xx+1015;
         	y1 = yy+420;
         	x2 = x1+string_width(var_text);
