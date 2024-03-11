@@ -17,67 +17,67 @@ function scr_draw_unit_stat_data(manage=false){
 		"Measure of how quick and nimble unit is as well as their base ability to manipulate and do tasks with their hands (improves ranged attack).",
 		#306535,
 		spr_dexterity_icon,
-		"Dexterity"],	
+		"Dexterity", "DEX"],	
 
 		[string(strength),
 		"How strong a unit is (can wield heavier equipment without detriment and is more deadly in close combat).",
 		#1A3B3B,
 		spr_strength_icon,
-		"Strength"],
+		"Strength", "STR"],
 
 		[string(constitution),
 		"Unit's general toughness and resistance to damage (increases health and damage resistance).",
 		#9B403E,
 		spr_constitution_icon,
-		"Constitution"],
+		"Constitution", "CON"],
 
 		[string(intelligence),
 		"Measure of learnt knowledge and specialist skill aptitude.",
 		#2F3B6B,
 		spr_intelligence_icon,
-		"Intelligence"],
+		"Intelligence", "INT"],
 
 		[string(wisdom),
 		"Unit's perception and street smarts including certain types of battlefield knowledge.",
 		#54540B,
 		spr_wisdom_icon,
-		"Wisdom"],
+		"Wisdom", "WIS"],
 
 		[string(piety),
 		"Unit's faith in their given religion (or general aptitude towards faith).",
 		#6A411C,
 		spr_faith_icon,
-		"Piety"],
+		"Piety", "PIT"],
 
 		[string(weapon_skill),
 		"General skill with close combat weaponry.",
 		#87753C,
 		spr_weapon_skill_icon,
-		"Weapon Skill"],
+		"Weapon Skill", "WS"],
 
 		[string(ballistic_skill),
 		"General skill with ballistic and ranged weaponry.",
 		#743D57,
 		spr_ballistic_skill_icon,
-		"Ballistic Skill"],
+		"Ballistic Skill", "BS"],
 
 		[string(luck),
 		"...Luck...",
 		#05451E,
 		spr_luck_icon,
-		"Luck"],
+		"Luck", "LCK"],
 
 		[string(technology),
 		"Skill and understanding of technology and various technical thingies.",
 		#4F0105,
 		spr_technology_icon,
-		"Technology"],
+		"Technology", "TEC"],
 
 		[string(charisma),
 		"General likeability and ability to interact with people.",
 		#3A0339,
 		spr_charisma_icon,
-		"Charisma"],			    					    					    					    			
+		"Charisma", "CHA"],			    					    					    					    			
 	]
 	draw_set_color(c_gray);
 	draw_rectangle(stat_x,stat_y, stat_x + (36*array_length(stat_display_list)), stat_y+48+8, 0)
@@ -112,7 +112,7 @@ function scr_draw_unit_stat_data(manage=false){
 				unit_text = false;
 			}
 		}
-		array_push(stat_tool_tips,[stat_x, stat_y, stat_x+32, stat_y+50,stat_display_list[i][1], stat_display_list[i][4]]);
+		array_push(stat_tool_tips,[stat_x, stat_y, stat_x+32, stat_y+50,stat_display_list[i][1], $"{stat_display_list[i][4]} ({stat_display_list[i][5]})"]);
 		stat_x+=36;
 	}
 
