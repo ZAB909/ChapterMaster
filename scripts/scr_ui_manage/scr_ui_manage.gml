@@ -418,13 +418,26 @@ function scr_ui_manage() {
 	        draw_text(x1,y1,var_text);
 	        for (var part = 0; part<array_length(global.body_parts);part++){
 				if (struct_exists(selected_unit.body[$ global.body_parts[part]], "bionic")){
-					bionic_tooltip += $"bionic {global.body_parts_display[part]}#";
+					bionic_tooltip += $"Bionic {global.body_parts_display[part]}#";
+					if array_contains(["Left Leg", "Right Leg"], global.body_parts_display[part]){
+						bionic_tooltip += $"  CON: +2#  STR: +1#  DEX: -2#";
+					}else if array_contains(["Left Eye", "Right Eye"], global.body_parts_display[part]){
+						bionic_tooltip += $"  CON: +1#  WIS: +1#  DEX: +1#";
+					}else if array_contains(["Left Arm", "Right Arm"], global.body_parts_display[part]){
+						bionic_tooltip += $"  CON: +2#  STR: +2#  WS: -1#";
+					}else if global.body_parts_display[part] == "Torso"{
+						bionic_tooltip += $"  CON: +4#  STR: +1#  DEX: -1#";				
+					}else if global.body_parts_display[part] == "Throat"{
+						bionic_tooltip += $"  CHA: -1#";
+					}else{ 
+						bionic_tooltip += $"  CON: +1#";		
+					}
 				}
 			}
 	        if (bionic_tooltip !=""){
 	        	array_push(tooltip_drawing, [bionic_tooltip, [x1,y1,x2,y2]]);
 	    	} else{
-	    		array_push(tooltip_drawing, ["No bionic Augmentations", [x1,y1,x2,y2]]);
+	    		array_push(tooltip_drawing, ["No Bionic Augmentations", [x1,y1,x2,y2]]);
 	    	}
 
         var_text = string_hash_to_newline($"Armour Rating: {selected_unit.armour_calc()}")
