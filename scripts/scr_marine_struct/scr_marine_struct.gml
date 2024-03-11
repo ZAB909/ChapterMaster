@@ -1742,7 +1742,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		static melee_attack = function(weapon_slot=0){
 			encumbered_melee=false;
 			melee_att = 100*(((weapon_skill/100) * (strength/20)) + (experience()/1000)+0.1);
-			var explanation_string = $"base melee:X{melee_att/100}#";
+			var explanation_string = $"Stat Mod: x{melee_att/100}#  Base: 0.10#  WSxSTR: x{(weapon_skill/100)*(strength/20)}#  EXP: x{experience()/1000}#";
 
 			melee_carrying = melee_hands_limit();
 
