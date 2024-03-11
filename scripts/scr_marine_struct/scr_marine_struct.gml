@@ -1552,32 +1552,29 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				melee_hands_limit = 1;
 			}	
 			var ranged_carrying=0
-			var carry_string=$"base:{ranged_hands_limit}#";
+			var carry_string=$"Base: {ranged_hands_limit}#";
 			if (strength>=50){
 				ranged_hands_limit+=0.5;
-				carry_string+="Strength: +0.5#";
+				carry_string+="STR: +0.5#";
 			}
 			if (ballistic_skill>=50){
 				ranged_hands_limit+=0.25;
-				carry_string+="Skill: +0.25#";
+				carry_string+="BS: +0.25#";
 			}			
 			var armour_carry = get_armour_data("ranged_hands");
 			if (armour_carry!=0){
 				ranged_hands_limit+=armour_carry;
-				var symbol = armour_carry>0 ? "+":"-"
-				carry_string+=$"Armour: {symbol}{armour_carry}#";
+				carry_string+=$"{armour()}: {format_number_with_sign(armour_carry)}#";
 			}
 			var gear_carry = get_gear_data("ranged_hands");
 			if (gear_carry!=0){
 				ranged_hands_limit+=gear_carry;
-				var symbol = armour_carry>0 ? "+":"-"
-				carry_string+=$"Gear: {symbol}{gear_carry}#";
+				carry_string+=$"{gear()}: {format_number_with_sign(gear_carry)}#";
 			}
 			var mobility_carry = get_mobility_data("ranged_hands");
 			if (mobility_carry!=0){
 				ranged_hands_limit+=mobility_carry;
-				var symbol = armour_carry>0 ? "+":"-"
-				carry_string+=$"{mobility_item()}: {symbol}{mobility_carry}#";
+				carry_string+=$"{mobility_item()}: {format_number_with_sign(mobility_carry)}#";
 			}							
 			return [ranged_carrying,ranged_hands_limit,carry_string]						
 		}
@@ -1709,11 +1706,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			var carry_string="Base: 2#";
 			if (strength>=50){
 				melee_hands_limit+=0.25;
-				carry_string+="Strength: +0.25#";
+				carry_string+="STR: +0.25#";
 			}
 			if (weapon_skill>=50){
 				melee_hands_limit+=0.25;
-				carry_string+="Skill: +0.25#";
+				carry_string+="WS: +0.25#";
 			}
 			if (has_trait("champion")){
 				melee_hands_limit+=0.25;
@@ -1722,20 +1719,17 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			var armour_carry = get_armour_data("melee_hands")
 			if (armour_carry!=0){
 				melee_hands_limit+=armour_carry;
-				var symbol = armour_carry>0 ? "+":"-";
-				carry_string+=$"Armour: {symbol}{armour_carry}#";
+				carry_string+=$"{armour()}: {format_number_with_sign(armour_carry)}#";
 			}
 			var gear_carry = get_gear_data("melee_hands");
 			if (gear_carry!=0){
 				melee_hands_limit+=gear_carry;
-				var symbol = armour_carry>0 ? "+":"-"
-				carry_string+=$"Gear: {symbol}{gear_carry}#";
+				carry_string+=$"{gear()}: {format_number_with_sign(gear_carry)}#";
 			}
 			var mobility_carry = get_mobility_data("melee_hands");
 			if (mobility_carry!=0){
 				melee_hands_limit+=mobility_carry;
-				var symbol = armour_carry>0 ? "+":"-"
-				carry_string+=$"{mobility_item()}: {symbol}{mobility_carry}#";
+				carry_string+=$"{mobility_item()}: {format_number_with_sign(mobility_carry)}#";
 			}						
 			return [melee_carrying,melee_hands_limit,carry_string]						
 		}		
