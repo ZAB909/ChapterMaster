@@ -294,10 +294,10 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
             repeat(boarders){
                 o+=1;
                 co=origin.board_co[o];
-                unit = obj_ini.TTRPG[co][o];
+                i=origin.board_id[o];               
+                unit = obj_ini.TTRPG[co][i];
                 unit_exp=unit.experience()                
                 exp_roll=irandom(150+unit_exp)+1;
-                i=origin.board_id[o];
                 if (exp_roll>=unit_exp){
                     if (unit_exp<50){new_exp=experience
                     }else if (unit_exp>=50 && unit_exp<100){

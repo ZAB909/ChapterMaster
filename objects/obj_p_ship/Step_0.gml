@@ -263,34 +263,7 @@ if (instance_exists(obj_en_ship)) and (boarders>0) and (board_cooldown<=0) and (
         
         if (te!=0) and (instance_exists(te)){
             if (point_distance(x,y,te.x,te.y)<=428){
-                var first,o;
-                first=0;o=0;
-                
-                repeat(500){o+=1;
-                    if (first=0) and (board_id[o]!=0) and (board_location[o]=0) then first=o;
-                }
-                
-                board_cooldown=45;
-                
-                var bear;bear=instance_create(x,y,obj_p_assra);
-                o=first;
-                
-                repeat(20){
-                    if (board_id[o]!=0) and (board_location[o]=0){
-                        board_raft[o]=bear;board_location[o]=-1;boarders-=1;bear.boarders+=1;
-                        if (obj_ini.role[board_co[o],board_id[o]]=obj_ini.role[100][15]) or (obj_ini.role[board_co[o],board_id[o]]="Master of Sanctity"){
-                            if (obj_ini.gear[board_co[o],board_id[o]]="Narthecium") and (obj_ini.hp[board_co[o],board_id[o]]>=10) then bear.apothecary+=1;
-                        }
-                    }
-                    o+=1;
-                }
-                
-                bear.apothecary_had=bear.apothecary;
-                bear.target=te;bear.direction=direction;
-                bear.origin=self.id;bear.speed=4;
-                bear.firstest=first;
-                
-                if (boarders<=0) then obj_cursor.board=0;
+                create_boarding_craft(target);
             }
         }
         
