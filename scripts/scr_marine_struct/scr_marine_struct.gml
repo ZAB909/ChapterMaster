@@ -1978,7 +1978,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 	}
 	static set_planet = function(planet_number){
-		obj_ini.lid = 0;
 		planet_location=planet_number;
 	}
 
