@@ -226,6 +226,7 @@ function scr_ui_manage() {
 	    }
 	    draw_set_color(0);
 	    draw_rectangle(xx+1005,yy+142,xx+1576,yy+957,0);
+			draw_rectangle_color(xx+1005,yy+142,xx+1576,yy+957,c_gray, c_gray, c_gray, c_gray, 1);
 				// swap between squad view and normal view
 	    draw_set_color(c_gray);
 	    draw_line(xx+1005,yy+519,xx+1576,yy+519);
@@ -319,10 +320,10 @@ function scr_ui_manage() {
         	
         	var armour = selected_unit.armour();
 	        if (armour!=""){
-	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("armour") + "#AC" + string(selected_unit.get_armour_data("armour_value")));
+	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("armour"));
 	        	tooltip_text = cn.temp[103];
 	        	x1 = xx+1015;
-	        	y1 = yy+215;
+	        	y1 = yy+216;
 	        	x2 = x1+string_width_ext(var_text, -1,187);
 	        	y2 = y1+string_height_ext(var_text, -1,187);	 
 	        	draw_text_ext(x1,y1,var_text,-1,187);
@@ -334,7 +335,7 @@ function scr_ui_manage() {
 	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("gear"));
 	        	tooltip_text = cn.temp[105];
 	        	x1 = xx+1015;
-	        	y1 = yy+280;
+	        	y1 = yy+260;
 	        	x2 = x1+string_width_ext(var_text, -1,187);
 	        	y2 = y1+string_height_ext(var_text, -1,187);	 
 	        	draw_text_ext(x1,y1,var_text,-1,187);
@@ -346,7 +347,7 @@ function scr_ui_manage() {
 	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("mobi"));
 	        	tooltip_text = cn.temp[107];
 	        	x1 = xx+1015;
-	        	y1 = yy+345;
+	        	y1 = yy+304;
 	        	x2 = x1+string_width_ext(var_text, -1,187);
 	        	y2 = y1+string_height_ext(var_text, -1,187);	  
 	        	draw_text_ext(x1,y1,var_text,-1,187);
@@ -354,10 +355,10 @@ function scr_ui_manage() {
 	        }
         	var wep1= selected_unit.weapon_one();
         	if (wep1!=""){
-	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("wep1")+ "#DAM" + string(selected_unit.get_weapon_one_data("attack")));
+	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("wep1"));
 	        	tooltip_text = cn.temp[109];
 	        	x1 = xx+1387;
-	        	y1 = yy+215;
+	        	y1 = yy+216;
 	        	x2 = x1+string_width_ext(var_text, -1,187);
 	        	y2 = y1+string_height_ext(var_text, -1,187);	 	 
 	        	draw_text_ext(x1,y1,var_text,-1,187);
@@ -366,10 +367,10 @@ function scr_ui_manage() {
         	
         	var wep2 = selected_unit.weapon_two();
         	if (wep2!=""){
-	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("wep2")+ "#DAM" + string(selected_unit.get_weapon_two_data("attack")));
+	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("wep2"));
 	        	tooltip_text = cn.temp[111];
 	        	x1 = xx+1387;
-	        	y1 = yy+315;
+	        	y1 = yy+290;
 	        	x2 = x1+string_width_ext(var_text, -1,187);
 	        	y2 = y1+string_height_ext(var_text, -1,187);	 
 	        	draw_text_ext(x1,y1,var_text,-1,187); 
@@ -377,10 +378,10 @@ function scr_ui_manage() {
         	}
 
         	if (is_array(cn.temp[117])){
-        		var_text = string_hash_to_newline(string("Melee Attack: {0}",cn.temp[116][0]))
+        		var_text = string_hash_to_newline(string("Melee Attack: {0}",round(cn.temp[116][0])))
 	        	tooltip_text = string_hash_to_newline(string(cn.temp[116][1]));
 	        	x1 = xx+1387;
-	        	y1 = yy+405;
+	        	y1 = yy+378;
 	        	x2 = x1+string_width(var_text);
 	        	y2 = y1+string_height(var_text);
 		        draw_set_color(c_gray);
@@ -393,10 +394,10 @@ function scr_ui_manage() {
 	    	}
 
         	if (is_array(cn.temp[117])){
-        		var_text = string_hash_to_newline(string("Ranged Attack: {0}",cn.temp[117][0]))
+        		var_text = string_hash_to_newline(string("Ranged Attack: {0}",round(cn.temp[117][0])))
 	        	tooltip_text = string_hash_to_newline(string(cn.temp[117][1]));
 	        	x1 = xx+1387;
-	        	y1 = yy+435;
+	        	y1 = yy+400;
 	        	x2 = x1+string_width(var_text);
 	        	y2 = y1+string_height(var_text);
 		        draw_set_color(c_gray);
@@ -410,8 +411,8 @@ function scr_ui_manage() {
 			// Display information on the marine
 
     		var_text = string_hash_to_newline(string("Bionics: {0}",selected_unit.bionics));
-        	x1 = xx+1387;
-        	y1 = yy+460;
+        	x1 = xx+1015;
+        	y1 = yy+444;
         	x2 = x1+string_width(var_text);
         	y2 = y1+string_height(var_text);
 	        draw_set_color(c_gray);
@@ -484,20 +485,20 @@ function scr_ui_manage() {
     		var_text = string_hash_to_newline($"Health: {round(selected_unit.hp())}/{round(selected_unit.max_health())}")
         	tooltip_text = string_hash_to_newline(string("CON : {0}", round(100*(1+((selected_unit.constitution-40)*0.025)))));
         	x1 = xx+1015;
-        	y1 = yy+420;
+        	y1 = yy+422;
         	x2 = x1+string_width(var_text);
         	y2 = y1+string_height(var_text);
 	        draw_set_color(c_gray);
 	        draw_text(x1,y1,var_text);
 	        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 
 
-	        if (cn.temp[113]!="") then draw_text(xx+1015,yy+442,string_hash_to_newline("Experience: "+string(cn.temp[113])));
+	        if (cn.temp[113]!="") then draw_text(xx+1015,yy+466,string_hash_to_newline("Experience: "+string(cn.temp[113])));
 
 	        if (cn.temp[116]!=""){
 	        	carry_data = cn.temp[116][2];
-	        	var carry_string = $"melee carry: {carry_data[0]}/{carry_data[1]}"
-	        	x1 = xx+1015;
-	        	y1 = yy+464;
+	        	var carry_string = $"Melee Cap: {carry_data[0]}/{carry_data[1]}"
+	        	x1 = xx+1387;
+	        	y1 = yy+444;
 	        	x2 = x1+string_width(carry_string);
 	        	y2 = y1+string_height(carry_string);
 	        	draw_text(x1,y1,string_hash_to_newline(carry_string));
@@ -506,9 +507,9 @@ function scr_ui_manage() {
 	        }
 	        if (cn.temp[117]!=""){
 	        	carry_data = cn.temp[117][2];
-	        	var carry_string = $"ranged carry: {carry_data[0]}/{carry_data[1]}"
-	        	x1 = xx+1015;
-	        	y1 = yy+486;
+	        	var carry_string = $"Ranged Cap: {carry_data[0]}/{carry_data[1]}"
+	        	x1 = xx+1387;
+	        	y1 = yy+466;
 	        	x2 = x1+string_width(carry_string);
 	        	y2 = y1+string_height(carry_string);
 	        	draw_text(x1,y1,string_hash_to_newline(carry_string));
@@ -558,9 +559,8 @@ function scr_ui_manage() {
 		        draw_text(x1,y1,var_text);
 		        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
 	    	}
-        
-	        draw_set_font(fnt_40k_14i);
-	        if (cn.temp[119]!="") then draw_text(xx+1020,yy+468,string_hash_to_newline(string(cn.temp[119])));
+
+	        if (cn.temp[119]!="") then draw_text(xx+1015,yy+488,string_hash_to_newline(string(cn.temp[119])));
 	    }
     
 	    draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
@@ -619,7 +619,7 @@ function scr_ui_manage() {
 					}
 		            if (ma_god[sel]>=10) then temp2="=Penitorium=";
 	                   
-		            temp3=string((unit.hp()/unit.max_health())*100)+"% HP";
+		            temp3=string(round((unit.hp()/unit.max_health())*100))+"% HP";
 	            
 		            temp4=string(ma_exp[sel])+" exp";
 	            
@@ -671,62 +671,27 @@ function scr_ui_manage() {
 		            ar_mb=0;
 		            //TODO handle recursively
 					if (ma_armour[sel]!=""){
-						ma_ar=scr_wep_abbreviate(ma_armour[sel]);// vehicle weapon 3
-						if (string_count("^",ma_armour[sel])>0){
-							ar_ar=1;
-							ma_ar=string_replace(ma_ar,"^","");
-						}
-						if (string_count("&",ma_armour[sel])>0){
-							ar_ar=2;
-							ma_ar="Artifact";
-						}
+						ma_ar=gear_weapon_data("weapon",ma_armour[sel],"abbreviation");
+						ma_ar=is_string(ma_ar) ? ma_ar : "";
 					}
 					if (ma_gear[sel]!=""){
-						ma_ge=scr_wep_abbreviate(ma_gear[sel]);// vehicle upgrade
-						if (string_count("^",ma_gear[sel])>0){
-							ar_ge=1;
-							ma_ge=string_replace(ma_ge,"^","");
-						}
-						if (string_count("&",ma_gear[sel])>0){
-							ar_ge=2;
-							ma_ge="Artifact";
-						}
+						ma_ge=gear_weapon_data("armour",ma_gear[sel],"abbreviation");
+						ma_ge=is_string(ma_ge) ? ma_ge : ""	;		
 					}
 					if (ma_mobi[sel]!=""){
-						ma_mb=scr_wep_abbreviate(ma_mobi[sel]);// vehicle accessory
-						if (string_count("^",ma_mobi[sel])>0){
-							ar_mb=1;
-							ma_mb=string_replace(ma_mb,"^","");
-						}
-						if (string_count("&",ma_mobi[sel])>0){
-							ar_mb=2;
-							ma_mb="Artifact";
-						}
-					}
+						ma_mb=gear_weapon_data("gear",ma_mobi[sel],"abbreviation");
+						ma_mb=is_string(ma_mb) ? ma_mb : ""	;			            	
+		            }
 					if (ma_wep1[sel]!=""){
-						ma_we1=scr_wep_abbreviate(ma_wep1[sel]);//vehicle weapon 1
-						if (string_count("^",ma_wep1[sel])>0){
-							ar_we1=1;
-							ma_we1=string_replace(ma_we1,"^","");
-						}
-						if (string_count("&",ma_wep1[sel])>0){
-							ar_we1=2;
-							ma_we1="Artifact";
-						}
+						ma_we1=gear_weapon_data("weapon",ma_wep1[sel],"abbreviation");
+						ma_we1=is_string(ma_we1) ? ma_we1 : "";			            	
 					}
 					if (ma_wep2[sel]!=""){
-						ma_we2=scr_wep_abbreviate(ma_wep2[sel]);//vehicle weapon 2
-						if (string_count("^",ma_wep2[sel])>0){
-							ar_we2=1;
-							ma_we2=string_replace(ma_we2,"^","");
-						}
-						if (string_count("&",ma_wep2[sel])>0){
-							ar_we2=2;
-							ma_we2="Artifact";
-						}
+						ma_we2=gear_weapon_data("weapon",ma_wep2[sel],"abbreviation");
+						ma_we2=is_string(ma_we1) ? ma_we2 : "";	
+						// temp5=string(ma_wep1[sel])+", "+string(ma_wep2[sel])+" + "+string(ma_gear[sel]);
+		      }
 					}
-		            // temp5=string(ma_wep1[sel])+", "+string(ma_wep2[sel])+" + "+string(ma_gear[sel]);
-		        }
 
 		        if (man_sel[sel]==0) then draw_set_color(c_black);
 		        if (man_sel[sel]!=0) then draw_set_color(6052956);// was gray

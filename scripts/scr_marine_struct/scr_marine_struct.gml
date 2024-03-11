@@ -43,7 +43,7 @@ global.trait_list = {
 		ballistic_skill:[10,5, "max"],
 		display_name : "Champion",
 		flavour_text : "Through either natural talent, or obsessive training {0} is a master of arms",
-		effect:"increase melee carry"
+		effect:"increase Melee Cap"
 	},
 	"lightning_warriors":{
 		constitution: -6,
@@ -1385,10 +1385,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				break;				
 		}
 		if (is_string(artifact)){
-			return $"{quality_string_conversion(quality)} {artifact}";
+			return $"{quality_string_conversion(quality) }{artifact}";
 		} else {
 			if (obj_ini.artifact_struct[artifact].name==""){
-				return  $"{quality_string_conversion(quality)} {obj_ini.artifact[artifact]}";
+				return  $"{quality_string_conversion(quality) }{obj_ini.artifact[artifact]}";
 			} else {
 				return obj_ini.artifact_struct[artifact].name;
 			}

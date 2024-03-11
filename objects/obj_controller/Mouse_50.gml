@@ -1834,7 +1834,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
         }
     }
     // Selecting individual marines
-    if (menu=1) and (managing>0) || (managing<0) and (!view_squad && !unit_profile && !company_report){
+    if (menu=1) and (managing>0) || (managing<0) and (!view_squad || !unit_profile || !company_report){
         var company=managing;
         if (company>10){
             company=0;
