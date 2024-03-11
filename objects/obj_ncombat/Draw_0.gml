@@ -47,7 +47,8 @@ repeat(45){l+=1;
     if (lines_color[l]="blue"){
         var yep;yep=false;
         if (obj_ini.adv[1]="Daemon Binders") or (obj_ini.adv[2]="Daemon Binders") or (obj_ini.adv[3]="Daemon Binders") or (obj_ini.adv[4]="Daemon Binders") then yep=true;
-        if (yep=false) then draw_set_color(16711680);
+       // if (yep=false) then draw_set_color(16711680); 
+        if (yep=false) then draw_set_color(16646566); // making non daemon binders have the same colour, to see the text easier
         if (yep=true) then draw_set_color(16646566);
     }
     draw_text(x+6,y-10+(l*18),string_hash_to_newline(string(lines[l])));

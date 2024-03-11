@@ -11,7 +11,7 @@ instance_activate_all();
 
 var field=""
 
-field=choose("orks","tyranids","both"); 
+field="both"//("orks","tyranids","both"); 
 if (global.chapter_name="Lamenters") then field="both"; 
 if (is_test_map=true) then field="orks"; 
 
@@ -597,8 +597,8 @@ if (did==1){
     
     var ed2,n,i,orkz=choose(4,5,6)+5;
     if (field=="orks") then orkz+=20;
-    if (field=="both") then orkz+=3;
-    if (obj_ini.fleet_type==3) then orkz+=2;
+    if (field=="both") then orkz+=15;
+   /*if (obj_ini.fleet_type==3) then orkz+=2;*/
     if (is_test_map==true) then orkz=4;
 
     for(var j=0; j<orkz; j++){

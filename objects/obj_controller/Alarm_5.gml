@@ -983,7 +983,7 @@ if (penitent==1) and (blood_debt==0){
     }
 }
 // ** Ork WAAAAGH **
-if ((turn>=10) or (obj_ini.fleet_type==eFACTION.Mechanicus)) and (faction_defeated[eFACTION.Ork]==0){
+if ((turn>=irandom(200)+100) or (obj_ini.fleet_type==eFACTION.Mechanicus)) and (faction_defeated[eFACTION.Ork]==0){
     var waaagh=floor(random(100))+1;
     with(obj_star){
         if (owner==eFACTION.Ork) then instance_create(x,y,obj_temp2);
