@@ -1,6 +1,8 @@
 
 
+//read
 // 850,860
+
 
 var xx,yy;
 xx=375;yy=10;
@@ -40,6 +42,7 @@ if (slate4>0){
         draw_text_transformed(440,133,string_hash_to_newline("Founding Chapters"),0.75,0.75,0);
         draw_text_transformed(440,363,string_hash_to_newline("Existing Chapters"),0.75,0.75,0);
         draw_text_transformed(440,593,string_hash_to_newline("Other"),0.75,0.75,0);
+		draw_text_transformed(440,463,string_hash_to_newline("Custom Chapters"),0.75,0.75,0);
         
         var x2,y2,i,new_hover,tool;
         x2=441;y2=167;i=1;new_hover=highlight;tool=0;
@@ -85,6 +88,44 @@ if (slate4>0){
             i+=1;x2+=53;
         }
         
+		x2=441;y2=497;i=21;new_hover=highlight;
+		
+  repeat(1){
+            draw_sprite(spr_creation_icon,0,x2,497);
+            // draw_sprite_stretched(spr_icon,i,x2,397,48,48);
+			if(file_exists("chaptersave#1.ini")){
+			ini_open("chaptersave#1.ini")
+			icon21=ini_read_real("Save","icon",1);
+			ini_close();
+			}
+			else{ icon21=1
+			}
+            scr_image("creation",icon21,x2,497,48,48);
+            
+            if (mouse_x>=x2) and (mouse_y>=497) and (mouse_x<x2+48) and (mouse_y<497+48) and (slate4>=30){
+				
+                if (old_highlight!=highlight) and (highlight!=i) and (goto_slide!=2){old_highlight=highlight;highlighting=1;}
+                if (goto_slide!=2){highlight=i;tool=1;}
+                draw_set_alpha(0.1);draw_set_color(c_white);
+                draw_rectangle(x2,497,x2+48,497+48,0);
+                draw_set_alpha(slate4/30);
+                if (mouse_left>=1) and (cooldown<=0) and (change_slide<=0){
+					if(chapter_made=1){
+					
+					cooldown=8000;chapter = chapter_id[21];
+					change_slide=1;goto_slide=2;
+					scr_chapter_new(chapter21)};
+					
+					if (chapter_made = 0 ){
+						cooldown=8000;
+						change_slide=1;goto_slide=2;
+						custom=2;scr_chapter_random(0);}
+                   
+                }
+            }
+            i+=1;x2+=53;
+  }
+		
         x2=441;y2=627;i=17;new_hover=highlight;
         repeat(4){
         
@@ -997,23 +1038,23 @@ if (slide=3){
     }
     
     
-    draw_text_transformed(800,480,string_hash_to_newline("Aspirant Trial"),0.6,0.6,0);
-    draw_text_transformed(830,512,string_hash_to_newline(string(aspirant_trial)),0.5,0.5,0);
+    draw_text_transformed(750,480,string_hash_to_newline("Aspirant Trial"),0.6,0.6,0);
+    draw_text_transformed(780,512,string_hash_to_newline(string(aspirant_trial)),0.5,0.5,0);
     
     var asp_info;asp_info="";
-    if (aspirant_trial="Blood Duel") then asp_info="-10-30% More recruits#-2-4 Years shorter training time#-10% Chance to burn gene-seed per speed";
-    if (aspirant_trial="Hunting the Hunter") then asp_info="-Planet Bonus': Desert, Ice, Death#-Up to 15 bonus XP on Neophytes";
-    if (aspirant_trial="Survival of the Fittest") then asp_info="-Planet Bonus': Desert, Ice, Death, Lava#-(+10-30% recruits)#-Planet Bonus: Feudal (+20-50% recruits)";
-    if (aspirant_trial="Exposure") then asp_info="-Planet Bonus':#- Desert, Ice, Forge, Lava, Death#-1-3 Years shorter training time";
-    if (aspirant_trial="Knowledge of Self") then asp_info="-Planet Bonus: Temperate (up to 10 bonus xp)#-1.5-3 Years longer training#-Up to bonus 25 XP on Neophytes.";
-    if (aspirant_trial="Challenge") then asp_info="-Standard generic choice #-Heroic Neophytes gain bonus 10-20 XP";
-    if (aspirant_trial="Apprenticeship") then asp_info="-Planet Bonus: Lava (+10-50% recruits)#-4-5 Years longer training time#-Almost able for immediate promotion";
-    draw_text_ext_transformed(850,544,string_hash_to_newline(string(asp_info)),64,999,0.5,0.5,0);
+    if (aspirant_trial="Blood Duel") then asp_info="- 2-4 years of training.#- 10-30% more recruits.#- 10% chance to burn gene-seed per recruiting speed.";
+    if (aspirant_trial="Hunting the Hunter") then asp_info="- 6 years of training.#- 7-20 starting XP on Desert, Ice and Death planets";
+    if (aspirant_trial="Survival of the Fittest") then asp_info="- 6 years of training.#- 10-30% more recruits on Desert, Ice, Death and Lava planets.#- 20-50% more recruits on Feudal planets.";
+    if (aspirant_trial="Exposure") then asp_info="- 3-5 years of training on Desert, Ice, Forge, Lava and Death planets.#- 6 years of training on all other planets.";
+    if (aspirant_trial="Knowledge of Self") then asp_info="- 7.5-9 years of training.#- 15-25 starting XP.#- Additional 5-10 starting XP on Temperate planets.";
+    if (aspirant_trial="Challenge") then asp_info="- 5.5-6.5 years of training.#- 20% chance to gain 10-20 starting XP.";
+    if (aspirant_trial="Apprenticeship") then asp_info="- 10-11 years of training.#- 34-43 starting XP.#- 30-50% more recruits on Lava planets.";
+    draw_text_ext_transformed(700,544,string_hash_to_newline(string(asp_info)),64,950,0.5,0.5,0);
      
-    if (scr_hit(800,480,1000,510)=true){tooltip="Aspirant Trial";tooltip2="A special challenge is needed for Aspirants to be judged worthy of becoming Astartes.  After completing the Trial they then become a Neophyte, beginning implantation and training.";}
+    if (scr_hit(750,480,950,510)=true){tooltip="Aspirant Trial";tooltip2="A special challenge is needed for Aspirants to be judged worthy of becoming Astartes.  After completing the Trial they then become a Neophyte, beginning implantation and training.";}
     
-    if (custom>1) then draw_sprite_stretched(spr_creation_arrow,0,750,502,32,32);
-    if (scr_hit(750,502,750+32,502+32)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
+    if (custom>1) then draw_sprite_stretched(spr_creation_arrow,0,700,502,32,32);
+    if (scr_hit(700,502,700+32,502+32)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
         var onceh;onceh=0;cooldown=8000;
         if (aspirant_trial="Apprenticeship") and (onceh=0){aspirant_trial="Challenge";onceh=1;}
         if (aspirant_trial="Challenge") and (onceh=0){aspirant_trial="Knowledge of Self";onceh=1;}
@@ -1024,8 +1065,8 @@ if (slide=3){
         if (aspirant_trial="Blood Duel") and (onceh=0){aspirant_trial="Apprenticeship";onceh=1;}
     }
     
-    if (custom>1) then draw_sprite_stretched(spr_creation_arrow,1,788,502,32,32);
-    if (scr_hit(788,502,788+32,502+32)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
+    if (custom>1) then draw_sprite_stretched(spr_creation_arrow,1,738,502,32,32);
+    if (scr_hit(738,502,738+32,502+32)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
         var onceh;onceh=0;cooldown=8000;
         if (aspirant_trial="Blood Duel") and (onceh=0){aspirant_trial="Hunting the Hunter";onceh=1;}
         if (aspirant_trial="Hunting the Hunter") and (onceh=0){aspirant_trial="Survival of the Fittest";onceh=1;}
@@ -1688,13 +1729,13 @@ if (slide=6){
     
     tooltip="";tooltip2="";
     obj_cursor.image_index=0;
+	
     
-    draw_text(800,80,string_hash_to_newline(string(chapter)));
-
     
     draw_set_color(38144);draw_set_halign(fa_left);
-    draw_text_transformed(580,118,string_hash_to_newline("Chapter Master Name: "),0.6,0.6,0);draw_set_font(fnt_40k_14b);
+    draw_text_transformed(580,118,string_hash_to_newline("Chapter Master Name: "),0.9,0.9,0);draw_set_font(fnt_40k_14b);
     
+	
     if (text_selected!="cm") or (custom=0) then draw_text_ext(580,144,string_hash_to_newline(string(chapter_master_name)),-1,580);
     if (custom>0) and (restarted=0){
         if (text_selected="cm") and (text_bar>30) then draw_text(580,144,string_hash_to_newline(string(chapter_master_name)));
@@ -1802,10 +1843,36 @@ if (slide=6){
         }
         
         x6+=240;draw_set_alpha(1);
+		
     }
     
     
-    
+    //adds "Save Chapter" button if custom chapter
+
+    if(custom>0){
+	
+	draw_rectangle(1000,135,1180,170,1)
+	draw_text_transformed(1090,135,string("Save Chapter"),0.6,0.6,0);draw_set_font(fnt_40k_14b);
+	if (scr_hit(1000,135,1180,170)=true) {
+		tooltip2="Click to save your chapter";
+		tooltip= "Do you want to save your chapter?"
+	
+		if (mouse_left>=1){
+			savechapter();
+			
+			
+			tooltip2="Chapter Saved!";
+		tooltip= "Do you want to save your chapter?"}
+		}
+		
+               
+		
+					
+					
+		
+	
+	}
+	
     
 }
 

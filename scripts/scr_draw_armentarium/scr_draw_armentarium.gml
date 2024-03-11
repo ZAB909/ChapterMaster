@@ -29,12 +29,11 @@ function set_up_armentarium(){
             }
         }*/
         speeding_bits = [
-            new speeding_dot(xx+359, yy+554,(210/6)*stc_wargear),
-            new speeding_dot(xx+539, yy+554,(210/6)*stc_vehicles),
-            new speeding_dot(xx+719, yy+554,(210/6)*stc_ships)
-        ]    
+            new speeding_dot(0, 0,(210/6)*stc_wargear),
+            new speeding_dot(0, 0,(210/6)*stc_vehicles),
+            new speeding_dot(0, 0,(210/6)*stc_ships)
+        ]        
 }
-
 
 function drop_down(selection, draw_x, draw_y, options,open_marker){
 	if (selection!=""){
@@ -110,13 +109,17 @@ function calculate_research_points(turn_end=false){
         research_points = 0;
         forge_points = 0;
         forge_string="";
-        var heretics = [], forge_master=-1, notice_heresy=false;
+        var heretics = [], forge_master=-1, notice_heresy=false, forge_point_gen=[], crafters=0, at_forge=0, gen_data={};
         var tech_locations=[]
         var techs = collect_role_group("forge");
         for (var i=0; i<array_length(techs); i++){
             if (techs[i].technology>40 && techs[i].hp() >0){
                 research_points += techs[i].technology-40;
-                forge_points += techs[i].forge_point_generation(true);
+                forge_point_gen=techs[i].forge_point_generation(true);
+                gen_data = forge_point_gen[1];
+                if (struct_exists(gen_data,"crafter")) then crafters++;
+                if (struct_exists(gen_data,"at_forge")) then at_forge++;
+                forge_points += forge_point_gen[0];
                 if (techs[i].has_trait("tech_heretic")){
                     array_push(heretics, i);
                 }
@@ -159,6 +162,7 @@ function calculate_research_points(turn_end=false){
         var tech_test, charisma_test, piety_test;
         //in this instance tech heretics are techmarines with the "tech_heretic" trait
         if (turn_end){
+            if (array_length(techs)==0) then scr_loyalty("Upset Machine Spirits","+");
             if (array_length(heretics)>0){
                 var heretic_location, same_location, current_heretic, current_tech;
                 //iterate through tech heretics;
@@ -239,10 +243,68 @@ function calculate_research_points(turn_end=false){
                    current_tech.add_trait("tech_heretic");
                }
             }
-            if (forge_master==-1){
-                var last_master = obj_ini.previous_forge_masters[array_length(obj_ini.previous_forge_masters)-1];
-                scr_popup("New Forge Master",$"The Demise of Forge Master {last_master} means a replacement must be chosen. Several Options have already been put forward to you but it is ultimatly your decision.","new_forge_master","");
+            if (forge_master==-1){ 
+                var tech_count = scr_role_count(obj_ini.role[100][16]);
+                if (tech_count>1){
+                    var last_master = obj_ini.previous_forge_masters[array_length(obj_ini.previous_forge_masters)-1];
+                    scr_popup("New Forge Master",$"The Demise of Forge Master {last_master} means a replacement must be chosen. Several Options have already been put forward to you but it is ultimatly your decision.","new_forge_master","");
+                } else if (tech_count==1){
+                    scr_role_count(obj_ini.role[100][16],"","units")[0].update_role("Forge Master");
+                }
             }
+
+            if (forge_points>0){
+                var master_craft_count, normal_count, quality_string;
+                var reduction_points = forge_points;
+                if (array_length(forge_queue)>0 && forge_points>0){
+                    var forging_length = array_length(forge_queue);
+                    for (var i=0;i<forging_length;i++){
+                        if (forge_queue[i].forge_points<=reduction_points){
+                            reduction_points-=forge_queue[i].forge_points;
+                            if (is_string(forge_queue[i].name)){
+                                master_craft_count=0;
+                                quality_string="";
+                                normal_count=0;
+                                for (var s=0;s<forge_queue[i].count;s++){
+                                    if (irandom(99-crafters-at_forge)==0){
+                                        master_craft_count++;
+                                    } else {
+                                        normal_count++;
+                                    }
+                                }
+                                scr_add_item(forge_queue[i].name, normal_count);
+                                if (master_craft_count>0){
+                                    scr_add_item(forge_queue[i].name, master_craft_count,"master_crafted");
+                                    var numerical_string = master_craft_count==1?"was":"were";
+                                    quality_string=$"X{master_craft_count} {numerical_string} Completed to a Master Crafted standard";
+                                }else {
+                                    quality_string=$"all were completed to a standard STC compliant quality";
+                                }
+                                scr_popup("Forge Completed",$"{forge_queue[i].name} X{forge_queue[i].count} construction finished {quality_string}","","");                        
+                            } else if (is_array(forge_queue[i].name)){
+                                if (forge_queue[i].name[0]=="research"){
+                                    var tier_depth = array_length(forge_queue[i].name[2]);
+                                    var tier_names=forge_queue[i].name[2];
+                                    if (tier_depth==1){
+                                        production_research[$ tier_names[0]][0]++;
+                                    } else if (tier_depth==2){
+                                        production_research[$ tier_names[0]][1][$ tier_names[1]][0]++;
+                                    } else if (tier_depth == 3){
+                                        production_research[$ tier_names[0]][1][$ tier_names[1]][1][$ tier_names[2]][0]++;
+                                    }
+                                }
+                            }
+                            array_delete(forge_queue, i, 1);
+                            i--;
+                            forging_length--;
+                        } else {
+                            forge_queue[i].forge_points -= reduction_points;
+                            reduction_points=0;
+                        }
+                        if (reduction_points<=0) then break;
+                    }
+                }
+            }            
         }
     }   
 }
@@ -259,40 +321,6 @@ function research_end(){
     }    
     if (stc_research[$ stc_research.research_focus]>5000*(research_area_limit+1)){
        identify_stc(stc_research.research_focus);  
-    }
-
-    if (forge_points>0){
-        var reduction_points = forge_points;
-        if (array_length(forge_queue)>0 && forge_points>0){
-            var forging_length = array_length(forge_queue);
-            for (var i=0;i<forging_length;i++){
-                if (forge_queue[i].forge_points<=reduction_points){
-                    reduction_points-=forge_queue[i].forge_points;
-                    if (is_string(forge_queue[i].name)){
-                        scr_add_item(forge_queue[i].name, forge_queue[i].count);
-                    } else if (is_array(forge_queue[i].name)){
-                        if (forge_queue[i].name[0]=="research"){
-                            var tier_depth = array_length(forge_queue[i].name[2]);
-                            var tier_names=forge_queue[i].name[2];
-                            if (tier_depth==1){
-                                production_research[$ tier_names[0]][0]++;
-                            } else if (tier_depth==2){
-                                production_research[$ tier_names[0]][1][$ tier_names[1]][0]++;
-                            } else if (tier_depth == 3){
-                                production_research[$ tier_names[0]][1][$ tier_names[1]][1][$ tier_names[2]][0]++;
-                            }
-                        }
-                    }
-                    array_delete(forge_queue, i, 1);
-                    i--;
-                    forging_length--;
-                } else {
-                    forge_queue[i].forge_points -= reduction_points;
-                    reduction_points=0;
-                }
-                if (reduction_points<=0) then break;
-            }
-        }
     }
 }
 
@@ -372,22 +400,7 @@ function scr_draw_armentarium(){
     }
 
     draw_set_font(fnt_40k_30b);
-    draw_set_color(c_gray);
-
-    draw_rectangle(xx + 957, yy + 76, xx + 1062, yy + 104, 0);
-    draw_rectangle(xx + 1068, yy + 76, xx + 1150, yy + 104, 0);
-    draw_rectangle(xx + 1167, yy + 76, xx + 1255, yy + 104, 0);
-    draw_rectangle(xx + 1447, yy + 76, xx + 1545, yy + 104, 0);
-
     draw_set_color(c_black);
-    draw_text_transformed(xx + 960, yy + 76, string_hash_to_newline("Equipment"), 0.6, 0.6, 0);
-    draw_text_transformed(xx + 1070, yy + 76, string_hash_to_newline("Armour"), 0.6, 0.6, 0);
-    draw_text_transformed(xx + 1170, yy + 76, string_hash_to_newline("Vehicles"), 0.6, 0.6, 0);
-    if (in_forge){
-        draw_text_transformed(xx + 1450, yy + 76, string_hash_to_newline("Manufactoring"), 0.6, 0.6, 0);
-    } else{
-        draw_text_transformed(xx + 1450, yy + 76, string_hash_to_newline("Ships"), 0.6, 0.6, 0);
-    }
 
     draw_set_alpha(0.2);
     if (mouse_y >= yy + 76) and(mouse_y < yy + 104) {
@@ -425,26 +438,23 @@ function scr_draw_armentarium(){
                     audio_sound_gain(snd_stc,master_volume*effect_volume,0);
 
 
-                    if(stc_wargear_un > 0 && 
-                    stc_wargear < MAX_STC_PER_SUBCATEGORY &&
-                    stc_wargear <= min(stc_vehicles, stc_ships)) {
+                    if (stc_wargear_un > 0 && 
+                    stc_wargear < MAX_STC_PER_SUBCATEGORY) {
                             
                         stc_wargear_un--;
-                       identify_stc("wargear")
+                       identify_stc("wargear");
                     }
-                    else if(stc_vehicles_un > 0 && 
-                    stc_vehicles < MAX_STC_PER_SUBCATEGORY &&
-                    stc_vehicles <= min(stc_wargear, stc_ships)) {
+                    else if (stc_vehicles_un > 0 && 
+                    stc_vehicles < MAX_STC_PER_SUBCATEGORY) {
                             
                         stc_vehicles_un--;
-                       identify_stc("vehicles")
+                       identify_stc("vehicles");
                     }
                     else if(stc_ships_un > 0 && 
-                    stc_ships < MAX_STC_PER_SUBCATEGORY &&
-                    stc_ships <= min(stc_vehicles, stc_wargear)) {
+                    stc_ships < MAX_STC_PER_SUBCATEGORY) {
                         
                         stc_ships_un--;
-                        identify_stc("ships")
+                        identify_stc("ships");
                     }
                     
                     // Refresh the shop
@@ -601,8 +611,7 @@ function scr_draw_armentarium(){
         draw_sprite_ext(spr_research_bar, 0, xx+539, yy+554, 1, 0.7, 0, c_white, 1)
        draw_sprite_ext(spr_research_bar, 0, xx+719, yy+554, 1, 0.7, 0, c_white, 1)
 
-
-        if (stc_wargear > 0) then speeding_bits[0].draw();
+        if (stc_wargear > 0) then speeding_bits[0].draw(xx+359, yy+554);
         for (f =0;f<6;f++){
             if (f>=stc_wargear){
                 draw_sprite_ext(spr_research_bar, 1, xx+359, yy+554+((210/6)*f), 1, 0.6, 0, c_white, 1)
@@ -615,7 +624,7 @@ function scr_draw_armentarium(){
         } 
         //draw_rectangle(xx + 351, yy + 539, xx + 368, yy + 539 + hi, 0);
 
-        if (stc_vehicles > 0) then speeding_bits[1].draw();
+        if (stc_vehicles > 0) then speeding_bits[1].draw(xx+539, yy+554);
           for (f =0;f<6;f++){
             if (f>=stc_vehicles){
                 draw_sprite_ext(spr_research_bar, 1, xx+539, yy+554+((210/6)*f), 1, 0.6, 0, c_white, 1)
@@ -624,7 +633,7 @@ function scr_draw_armentarium(){
         }     
         //draw_rectangle(xx + 531, yy + 539, xx + 548, yy + 539 + hi, 0);
 
-        if (stc_ships > 0) then speeding_bits[2].draw();
+        if (stc_ships > 0) then speeding_bits[2].draw(xx+719, yy+554);
        for (f =0;f<6;f++){
             if (f>=stc_ships){
                 draw_sprite_ext(spr_research_bar, 1, xx+719, yy+554+((210/6)*f), 1, 0.6, 0, c_white, 1)

@@ -162,10 +162,12 @@ function scr_enemy_ai_c() {
 	                }
 	            }
 	            if (instance_exists(obj_temp2)){
-	            	array_push(p_feature[i], new new_planet_feature(P_features.Warlord7));
+	            	array_push(p_feature[i], new new_planet_feature(P_features.OrkWarboss));
 	            	p_orks[i]=6;
 	            }
-	            with(obj_temp2){instance_destroy();}
+	            with(obj_temp2){
+	            	instance_destroy();
+	            }
             
 	            if (p_orks[i]>6) then p_orks[i]=6;
 	            with(boat){instance_destroy();}

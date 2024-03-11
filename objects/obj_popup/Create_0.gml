@@ -62,6 +62,7 @@ new_target=0;
 if (instance_exists(obj_controller)){obj_controller.cooldown=9999;}
 number=0;
 company_promote_data = [
+//index 0 = draw x, 1=drawy, 2 = ep requirement for company
     [1030,230,150],//1st company
     [1140,230,120],
     [1250,230,110],

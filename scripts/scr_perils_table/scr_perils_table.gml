@@ -1,5 +1,5 @@
 
-function scr_perils_table(peril_roll, unit, psy_discipline, power_name, unit_id){
+function scr_perils_table(peril_roll, unit, psy_discipline, power_name, unit_id, book_powers){
 	 var combat_perils = [
 		[15, function(peril_roll, unit, psy_discipline, power_name, unit_id){
 				unit.add_or_sub_health(choose(-8,-12,1-6,-20));

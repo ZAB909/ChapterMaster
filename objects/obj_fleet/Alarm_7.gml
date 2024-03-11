@@ -156,11 +156,6 @@ if (killer>0){
     // excommunicatus traitorus
 }
 
-
-// if (yeehaw1.capital_number+yeehaw1.frigate_number+yeehaw1.escort_number<=0) then with(yeehaw1){instance_destroy();}
-// if (yeehaw2.capital_number+yeehaw2.frigate_number+yeehaw2.escort_number<=0) or (victory=true) then with(yeehaw2){instance_destroy();}
-
-// instance_deactivate_object(obj_turn_end);
 instance_activate_all();
 
 if (instance_exists(obj_p_assra)){obj_p_assra.alarm[0]=1;}

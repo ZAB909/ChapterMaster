@@ -10,7 +10,7 @@
   "option_windows_description_info": "Become the 40,000th warhammer",
   "option_windows_disable_sandbox": false,
   "option_windows_display_cursor": false,
-  "option_windows_display_name": "Chapter Master Adeptus Dominus 0.8.1.1",
+  "option_windows_display_name": "Chapter Master Adeptus Dominus 0.9.0.0",
   "option_windows_enable_steam": false,
   "option_windows_executable_name": "${project_name}",
   "option_windows_icon": "icons/icon.ico",

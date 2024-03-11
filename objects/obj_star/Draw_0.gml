@@ -96,6 +96,7 @@ if obj_controller.zoomed || rectangle_in_rectangle(ui_node.gui_x, ui_node.gui_y,
 } else {
 	ui_node.deactivate();
 }
-
-ui_node.render(x,y)
+if (ui_node!=noone &&  global.load==0){
+    ui_node.render(x,y);
+}
 draw_set_valign(fa_top)

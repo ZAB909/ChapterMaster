@@ -1,5 +1,7 @@
-
-var orb;orb=orbiting;
+function array_sum(_prev, _curr, _index) {
+    return _prev + _curr
+}
+var orb=orbiting;
 
 if (round(owner)!=eFACTION.Imperium) and (navy=1) then owner= noone;
 
@@ -381,7 +383,7 @@ if (spid != noone) {
     }
 }
 
-if navy {
+if (navy) {
 	if trade_goods != "player_hold" {
 
 
@@ -396,13 +398,13 @@ if navy {
 			
 			//slightly more verbose than the last way, but reduces reliance on fixed array sizes
 	        var tar = array_reduce(orbiting.p_guardsmen, function(prev, curr, idx) {
-				return curr > 0 ? idx : prev
+				return curr > 0 ? idx : prev;
 			},0)
 			
 	        if (tar == 0) {// Guard all dead
 	            trade_goods="recr";action="";
 	        } else { //this was always a dead path previously since tar could never be bigger than i, now it will
-	            if (orbiting.p_owner[tar]=eFACTION.Player) and (orbiting.p_player[tar]=0) and (planet_feature_bool(orbiting.p_feature[tar],P_features.Monastery )==0){
+	            if (orbiting.p_owner[tar]=eFACTION.Player) and (orbiting.p_player[tar]=0) and (planet_feature_bool(orbiting.p_feature[tar],P_features.Monastery)==0){
 	                if (orbiting.p_first[tar] != eFACTION.Player) {
 						orbiting.p_owner[tar] = orbiting.p_first[tar];
 					} else {
@@ -462,13 +464,13 @@ if navy {
 
 	// Bombard the shit out of the player homeworld
 	if (obj_controller.faction_status[eFACTION.Imperium]="War") and (action="") and (trade_goods="") and (guardsmen_unloaded=0) and (instance_exists(orbiting)){
+        var bombard=false;
 	    if (orbiting!=noone){
-			var orbiting_guardsmen = array_reduce(orbiting.p_guardsman, function(prev, curr) {
-				return prev + curr
-			})
-			var player_forces = array_reduce(orbiting.p_player, function(prev, curr) {
-				return prev + curr;
-			})
+            if (orbiting.object_index==obj_star) then bombard=true;
+        }
+        if (bombard){
+			var orbiting_guardsmen = array_reduce(orbiting.p_guardsmen, array_sum,1);
+			var player_forces = array_reduce(orbiting.p_player,  array_sum,1);
 
 	        if (orbiting_guardsmen == 0) or (player_forces > 0) {
 				
@@ -570,9 +572,7 @@ if navy {
 
 	if (obj_controller.faction_status[eFACTION.Imperium]="War") and (action="") and (trade_goods="") and (guardsmen_unloaded=0) {
 	    var hold = false;
-		var player_owns_planet = array_reduce(orbiting.p_owner, function(prev, curr) {
-			return prev or curr == eFACTION.Player
-		}, false)
+		var player_owns_planet = array_reduce(orbiting.p_owner, array_sum,1, false);
 	    if (instance_exists(orbiting)){
 	        hold = player_owns_planet or (orbiting.present_fleet[eFACTION.Player] > 0)
 	    }

@@ -71,7 +71,7 @@ function scr_add_item(item_name, number_of_items, quality="any") {
 		    			} else {return "standard"}
 		    		}else {
 		    			var quality_item_found=false;
-		    			for (var q=0;q>array_length(obj_ini.equipment_quality[match_slot]);q++){
+		    			for (var q=0;q<array_length(obj_ini.equipment_quality[match_slot]);q++){
 		    				if (obj_ini.equipment_quality[match_slot][q]==quality){
 		    					array_delete(obj_ini.equipment_quality[match_slot], q, 1);
 		    					quality_item_found=true;
@@ -94,7 +94,10 @@ function scr_add_item(item_name, number_of_items, quality="any") {
 	    } else if (open_slot){
 	        obj_ini.equipment[last_open]=item_name;
 	        obj_ini.equipment_number[last_open]=number_of_items;
-	        obj_ini.equipment_condition[last_open]=100
+	        obj_ini.equipment_condition[last_open]=100;
+	        if (quality == "any"){
+	        	quality = "standard";
+	        }
 	        for (var q=0;q<number_of_items;q++){
 	        	obj_ini.equipment_quality[last_open][q]=quality;
 	        }

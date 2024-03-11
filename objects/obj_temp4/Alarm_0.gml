@@ -97,10 +97,19 @@ if (num>0){// Hmmmmmmm
         }
         
         pop.option1="Request audience with the "
-        if (own=1){pop.option1+="Planetary Governor";pop.option3="Gift the Artifact to the Sector Commander.";}
-        if (own=2){pop.option1+="Planetary Governor";pop.option3="Gift the Artifact to the Sector Commander.";}
-        if (own=3){pop.option1+="Mechanicus";pop.option3="Let it be.  The Mechanicus' wrath is not lightly provoked.";}
-        if (own=4){pop.option1+="Inquisition";pop.option3="Let it be.  The Inquisition's wrath is not lightly provoked.";}
+        if (own=1){
+            pop.option1+="Planetary Governor";
+            pop.option3="Gift the Artifact to the Sector Commander.";
+        }
+        if (own=2){
+            pop.option1+="Planetary Governor";
+            pop.option3="Gift the Artifact to the Sector Commander.";}
+        if (own=3){
+            pop.option1+="Mechanicus";
+            pop.option3="Let it be.  The Mechanicus' wrath is not lightly provoked.";}
+        if (own=4){
+            pop.option1+="Inquisition";
+            pop.option3="Let it be.  The Inquisition's wrath is not lightly provoked.";}
         if (own=5){pop.option1+="Ecclesiarchy";pop.option3="Gift the Artifact to the Ecclesiarchy.";}
         if (own=6){pop.option1+="Eldar";pop.option3="Gift the Artifact to the Eldar.";}
         if (own=8){pop.option1+="Tau";pop.option3="Gift the Artifact to the Tau Empire.";}

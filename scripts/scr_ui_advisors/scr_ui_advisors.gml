@@ -935,208 +935,14 @@ function scr_ui_advisors() {
     }
 
     // ** Librarium **
-    if (menu = 13) {
-        draw_sprite(spr_rock_bg, 0, xx, yy);
-
-        draw_set_alpha(0.75);
-        draw_set_color(0);
-        draw_rectangle(xx + 326 + 16, yy + 66, xx + 887 + 16, yy + 818, 0);
-        draw_set_alpha(1);
-        draw_set_color(c_gray);
-        draw_rectangle(xx + 326 + 16, yy + 66, xx + 887 + 16, yy + 818, 1);
-        draw_line(xx + 326 + 16, yy + 426, xx + 887 + 16, yy + 426);
-        draw_set_alpha(0.75);
-        draw_set_color(0);
-        draw_rectangle(xx + 945, yy + 66, xx + 1580, yy + 818, 0);
-        draw_set_alpha(1);
-        draw_set_color(c_gray);
-        draw_rectangle(xx + 945, yy + 66, xx + 1580, yy + 818, 1);
-
-        if (menu_adept = 0) {
-            // draw_sprite(spr_advisors,3,xx+16,yy+43);
-            scr_image("advisor", 3, xx + 16, yy + 43, 310, 828);
-            if (global.chapter_name = "Space Wolves") then scr_image("advisor", 10, xx + 16, yy + 43, 310, 828);
-            // draw_sprite(spr_advisors,10,xx+16,yy+43);
-            draw_set_halign(fa_left);
-            draw_set_color(c_gray);
-            draw_set_font(fnt_40k_30b);
-            draw_text_transformed(xx + 336 + 16, yy + 66, string_hash_to_newline("Librarium"), 1, 1, 0);
-            draw_text_transformed(xx + 336 + 16, yy + 100, string_hash_to_newline("Chief " + string(obj_ini.role[100, 17]) + " " + string(obj_ini.name[0, 5])), 0.6, 0.6, 0);
-            draw_set_font(fnt_40k_14);
-        }
-        if (menu_adept = 1) {
-            // draw_sprite(spr_advisors,0,xx+16,yy+43);
-            scr_image("advisor", 0, xx + 16, yy + 43, 310, 828);
-            draw_set_halign(fa_left);
-            draw_set_color(c_gray);
-            draw_set_font(fnt_large);
-            draw_text_transformed(xx + 336 + 16, yy + 66, string_hash_to_newline("Librarium"), 1, 1, 0);
-            draw_text_transformed(xx + 336 + 16, yy + 100, string_hash_to_newline("Adept " + string(obj_controller.adept_name)), 0.6, 0.6, 0);
-            draw_set_font(fnt_40k_14);
-        }
-
-        var tip2 = "";
-
-        // Set pace of recruitment based on training psyker value
-        if (training_psyker >= 0 && training_psyker <= 6) then blurp += recruitment_pace[training_psyker];
-
-        var artif = "",
-            artif_descr = "",
-            tp = 0;
-
-        if (artifacts = 0) then artif = "no unused artifacts.";
-        if (artifacts = 1) then artif = "one unused artifact.";
-        if (artifacts > 1) then artif = string(artifacts) + " unused artifacts.";
-
-        // Greetings message
-        if (menu_adept = 0) then draw_text_ext(xx + 336 + 16, yy + 130, string_hash_to_newline("Chapter Master " + string(obj_ini.name[0, 1]) + ", greetings.#I assume you've come for the report?  The Chapter currently possesses " + string(temp[36]) + " Epistolaries, " + string(temp[37]) + " Codiceries, and " + string(temp[38]) + " Lexicanum.  We are working to identify additional warp-sensitive brothers before they cause harm, and the training is " + string(blurp) + ".##We could likely speed up the identification and application of appropriate training, but we would need more resources...I don't suppose we can spare some?##Our Chapter has " + string(artif)), -1, 536);
-        if (menu_adept = 1) then draw_text_ext(xx + 336 + 16, yy + 130, string_hash_to_newline("Your Chapter contains " + string(temp[36]) + " " + string(obj_ini.role[100, 17]) + "s, " + string(temp[37]) + " Codiceries, and " + string(temp[38]) + " Lexicanum.##Training of more " + string(obj_ini.role[100, 17]) + "s is " + string(blurp) + ".##Your chapter has " + string(artif)), -1, 536);
-
-        draw_set_color(881503);
-        draw_set_halign(fa_center);
-
-        if (artifacts > 0) {
-            draw_text(xx + 622, yy + 440, string_hash_to_newline("[Artifact " + string(menu_artifact) + " of " + string(artifacts) + "]"));
-            draw_sprite(spr_arrow, 0, xx + 515, yy + 433);
-            draw_sprite(spr_arrow, 1, xx + 695, yy + 433);
-
-            draw_set_color(c_black);
-            draw_rectangle(xx + 482, yy + 466, xx + 762, yy + 620, 0);
-            draw_set_color(c_gray);
-            draw_rectangle(xx + 482, yy + 466, xx + 762, yy + 620, 1);
-        }
-        if (artifacts = 0) then draw_text(xx + 622, yy + 440, string_hash_to_newline("[No Artifacts]"));
-
-        identifiable = 0;
-        if (obj_ini.artifact_loc[menu_artifact] = obj_ini.home_name) then identifiable = 1;
-        if (obj_ini.artifact_sid[menu_artifact] >= 500) {
-            if (obj_ini.ship_location[obj_ini.artifact_sid[menu_artifact] - 500] = obj_ini.home_name) then identifiable = 1;
-        }
-
-        if (instance_exists(obj_p_fleet)) {
-            with(obj_p_fleet) {
-                var good = 0;
-                for (var i = 1; i <= 20; i++) {
-                    if (i <= 9) {
-                        if (capital_num[i] = obj_ini.artifact_sid[other.menu_artifact] - 500) then good = 1;
-                    }
-                    if (frigate_num[i] = obj_ini.artifact_sid[other.menu_artifact] - 500) then good = 1;
-                    if (escort_num[i] = obj_ini.artifact_sid[other.menu_artifact] - 500) then good = 1;
-                }
-                if (good = 1) and(capital_number > 0) then good = 2;
-                if (good = 2) then obj_controller.identifiable = 1;
-            }
-        }
-        if (obj_ini.artifact[menu_artifact] != "") {
-            if (obj_ini.artifact_sid[menu_artifact] >= 500) {
-                for (var i = 1; i <= 30; i++) {
-                    if (obj_ini.ship[i] = obj_ini.artifact_loc[menu_artifact]) then tp = i;
-                }
-            }
-            if (obj_ini.artifact_identified[menu_artifact] > 0) and(identifiable = 0) {
-                draw_set_color(881503);
-                if (obj_ini.artifact_sid[menu_artifact] >= 500) then artif_descr = "This artifact is an unidentified " + string(obj_ini.artifact[menu_artifact]) + ".#It is stored on the ship ‘" + string(obj_ini.ship[tp]) + "’.#To be identified it must be brought to a fleet with a Battle Barge or your Homeworld.";
-                if (obj_ini.artifact_sid[menu_artifact] < 500) then artif_descr = "This artifact is an unidentified " + string(obj_ini.artifact[menu_artifact]) + ".#It is stored on " + string(obj_ini.artifact_loc[menu_artifact]) + " " + string(obj_ini.artifact_sid[menu_artifact]) + ".#To be identified it must be brought to a fleet with a Battle Barge or your Homeworld.";
-            }
-            if (obj_ini.artifact_identified[menu_artifact] > 0) and(identifiable = 1) {
-                draw_set_color(881503);
-                if (obj_ini.artifact_sid[menu_artifact] >= 500) then artif_descr = "This artifact is an unidentified " + string(obj_ini.artifact[menu_artifact]) + ".#It is stored on the ship ‘" + string(obj_ini.ship[tp]) + "’.#It will be identified in " + string(obj_ini.artifact_identified[menu_artifact]) + " turns.  You may alternatively spend 150 Requisition to";
-                if (obj_ini.artifact_sid[menu_artifact] < 500) then artif_descr = "This artifact is an unidentified " + string(obj_ini.artifact[menu_artifact]) + ".#It is stored on " + string(obj_ini.artifact_loc[menu_artifact]) + " " + string(obj_ini.artifact_sid[menu_artifact]) + ".#It will be identified in " + string(obj_ini.artifact_identified[menu_artifact]) + " turns.  You may alternatively spend 150 Requisition to";
-
-                draw_set_color(c_gray);
-                draw_rectangle(xx + 532, yy + 715, xx + 709, yy + 733, 0);
-                draw_set_color(c_black);
-                draw_text(xx + 622, yy + 715, string_hash_to_newline("IDENTIFY NOW"));
-                if (mouse_x >= xx + 532) and(mouse_y >= yy + 715) and(mouse_x < xx + 709) and(mouse_y < yy + 733) {
-                    draw_set_alpha(0.2);
-                    draw_rectangle(xx + 532, yy + 715, xx + 709, yy + 733, 0);
-                    draw_set_alpha(1);
-                }
-
-            }
-            if (obj_ini.artifact_identified[menu_artifact] = 0) {
-                draw_set_color(881503);
-                artif_descr = scr_arti_descr(menu_artifact);
-                tooltip = "";
-                tooltip_weapon = 0;
-                tooltip_stat1 = 0;
-                tooltip_stat2 = 0;
-                tooltip_stat3 = 0;
-                tooltip_stat4 = 0;
-                tooltip_other = "";
-                scr_weapon(string(obj_ini.artifact[menu_artifact]) + "&" + string(obj_ini.artifact_tags[menu_artifact]), "", true, 0, false, "", "description");
-
-                var hue = 1;
-                if (obj_ini.artifact[menu_artifact] = "Statue") then hue = 0;
-                if (obj_ini.artifact[menu_artifact] = "Casket") then hue = 0;
-                if (obj_ini.artifact[menu_artifact] = "Chalice") then hue = 0;
-                if (obj_ini.artifact[menu_artifact] = "Robot") then hue = 0;
-
-                if (hue = 1) {
-                    draw_set_color(c_gray);
-                    draw_rectangle(xx + 354, yy + 789, xx + 448, yy + 804, 0);
-                    draw_set_color(c_black);
-                    draw_text(xx + 401, yy + 789, string_hash_to_newline("EQUIP"));
-                    if (mouse_x >= xx + 354) and(mouse_y >= yy + 789) and(mouse_x < xx + 448) and(mouse_y < yy + 804) {
-                        draw_set_alpha(0.2);
-                        draw_rectangle(xx + 354, yy + 789, xx + 448, yy + 804, 0);
-                        draw_set_alpha(1);
-                    }
-                }
-
-                draw_set_color(c_gray);
-                draw_rectangle(xx + 512, yy + 789, xx + 740, yy + 804, 0);
-                draw_set_color(c_black);
-                draw_text(xx + 626, yy + 789, string_hash_to_newline("GIFT TO FACTION"));
-                if (mouse_x >= xx + 512) and(mouse_y >= yy + 789) and(mouse_x < xx + 740) and(mouse_y < yy + 804) {
-                    draw_set_alpha(0.2);
-                    draw_rectangle(xx + 512, yy + 789, xx + 740, yy + 804, 0);
-                    draw_set_alpha(1);
-                }
-
-                draw_set_color(c_gray);
-                draw_rectangle(xx + 780, yy + 789, xx + 894, yy + 804, 0);
-                draw_set_color(c_black);
-                draw_text(xx + 837, yy + 789, string_hash_to_newline("DESTROY"));
-                if (mouse_x >= xx + 780) and(mouse_y >= yy + 789) and(mouse_x < xx + 894) and(mouse_y < yy + 804) {
-                    draw_set_alpha(0.2);
-                    draw_rectangle(xx + 780, yy + 789, xx + 894, yy + 804, 0);
-                    draw_set_alpha(1);
-                }
-
-                if (menu_artifact_type = 1) { // Weapon
-                    // tip2=string(tooltip_stat1)+" Attack, "+string(tooltip_stat2)+" Armour Penetration#";
-                    tip2 = string(tooltip_stat1) + " Damage#";
-                    if (tooltip_stat4 > 0) then tip2 += string(tooltip_stat4) + " Ammunition#";
-                    // tip2+=string_replace(string(tooltip_other),",","#");
-                    tip2 += string(tooltip_other);
-                }
-                if (menu_artifact_type = 2) { // Armour
-                    if (tooltip_other = "") then tip2 = string(tooltip_stat1) + " Armour Class";
-                    if (tooltip_other != "") then tip2 = string(tooltip_stat1) + " Armour Class#" + string(tooltip_other);
-                }
-                if (menu_artifact_type = 3) { // Gear
-                    tip2 = tooltip_other;
-                }
-            }
-
-            draw_set_font(fnt_40k_14);
-            draw_set_color(c_gray);
-            draw_text_ext(xx + 622, yy + 628, string_hash_to_newline(string(artif_descr)), -1, 430);
-            var spack;
-            spack = string_height_ext(string_hash_to_newline(string(artif_descr)), -1, 430);
-            draw_set_font(fnt_40k_14b);
-            draw_set_color(c_gray);
-            draw_text_ext(xx + 622, yy + 648 + spack, string_hash_to_newline(string(tip2)), -1, 430);
-
-            // identifiable=0;
-        }
+    if (menu == 13) {
+       scr_librarium();
     }
 
     // ** Armamentarium **
-    if (menu = 14) {
+    else if (menu == 14) {
         scr_draw_armentarium();
-    }else  if (menu = 15) {// **recruiting**
+    }else  if (menu == 15) {// **recruiting**
 
         draw_sprite(spr_rock_bg, 0, xx, yy);
         draw_set_alpha(0.75);
@@ -1319,31 +1125,31 @@ function scr_ui_advisors() {
         draw_set_font(fnt_40k_14);
 
         if (recruit_trial = "Blood Duel") {
-            blurp3 = "-10-30% More recruits#-2-4 Years shorter training time#-10% Chance to burn gene-seed per speed";
+            blurp3 = "- 2-4 years of training.#- 10-30% More recruits.#- 10% Chance to burn gene-seed per recruiting speed.";
             blurp2 = "THE BLOOD DUEL?  HAT DO I EVEN NEED TO EXPLAIN, CHAPTER MASTER?  ASPIRANTS ENTER.  NEOPHYTES LEAVE.  Those worthy of serving the Emperor are rewarded justly and those merely pretending at glory are lost in the BLOOD AND THUNDER of the dome.  Do not be alarmed at the carnage.  The Apothecarium has become quite adept at rebuilding those fit to serve.  The others are given to the " + string(obj_ini.role[100, 16]) + "s.  The mind is a terrible thing to waste and the Emperor does hate waste.  Not every man is useful as an Astartes but every man is useful.";
         }
         if (recruit_trial = "Hunting the Hunter") {
-            blurp3 = "-Planet Bonus': Desert, Ice, Death#-Up to 15 bonus XP on Neophytes";
+            blurp3 = "- 6 years of training.#- 7-20 starting XP on Desert, Ice and Death planets";
             blurp2 = "To be an Astartes is to be a hunter of xenos, of traitors, of heretics, and of all those that dare defy the Emperor.  What better way to test the worthiness of Aspirants than to have to them hunt the most dangerous predator to be found on their planet?  Such a task requires a combination of wits and cunning, in addition to raw martial skill.  When they have received the blessed geneseed and become full battle brothers, they will hunt across the stars with bolter and chainsword. For now, let them hunt with nothing more than a spear and their wits.";
         }
         if (recruit_trial = "Survival of the Fittest") {
-            blurp3 = "-Planet Bonus': Desert, Ice, Death, Lava#-(+10-30% recruits)#-Planet Bonus: Feudal (+20-50% recruits)";
+            blurp3 = "- 6 years of training.#- 10-30% more recruits on Desert, Ice, Death and Lava planets.#- 20-50% more recruits on Feudal planets.";
             blurp2 = "To become one of the Imperium’s finest warriors, the Space Marines, is the greatest glory that any human can aspire to. And is glory not worth fighting, bleeding or even dying for? It must be, for whole worlds of ice, ash and sand have buried generations of sons in pursuit of this glory and never once called the price too dear.  To ensure the necessary bloodshed, lies, paranoia and psychosis-inducing drugs have been introduced to " + string(obj_ini.recruiting_name) + ".  This trial will seperate the weak from the strong and the chaff from the wheat.";
         }
         if (recruit_trial = "Exposure") {
-            blurp3 = "-Planet Bonus':3- Desert, Ice, Forge, Lava, Death#-1-3 Years shorter training time";
+            blurp3 = "- 3-5 years of training on Desert, Ice, Forge, Lava and Death planets.#- 6 years of training on all other planets.";
             blurp2 = "Few worlds of the Imperium are free from the adversity of pollution or toxic waste.  Still others are bequeathed with flows of lava and choking atmosphere.  The glory of rising to astartes is only granted to those that can tackle and overcome these dangerous environments.  Aspirants are placed upon the most hellish of planet in the sector, and then expected to traverse the continent with only himself to rely upon.  Those who face the impossible without faltering and survive past the point they should have perished are recovered by " + string(obj_ini.role[100, 15]) + "s, judged worthy of becoming a Neophyte.";
         }
         if (recruit_trial = "Knowledge of Self") {
-            blurp3 = "-Planet Bonus: Temperate (up to 10 bonus xp)#-1.5-3 Years longer training#-Up to bonus 25 XP on Neophytes.";
+            blurp3 = "- 7.5-9 years of training.#- 15-25 starting XP.#- Additional 5-10 starting XP on Temperate planets.";
             blurp2 = "An Aspirant’s spiritual and mental capability is every bit as important as his physical characteristics.  It is wise to impose Trials not upon their body, but on the mind.  Either through psychic powers, chemical agents, or endurance trials, the Aspirant’s willpower is tested.  Those unworthy do not survive the stress and trauma placed upon their hearts- only those whose minds are proven to be unbreakable are welcomed into our ranks.";
         }
         if (recruit_trial = "Challenge") {
-            blurp3 = "-Standard generic choice #-Heroic Neophytes gain bonus 10-20 XP";
+            blurp3 = "- 5.5-6.5 years of training.#- 20% chance to gain 10-20 starting XP.";
             blurp2 = "What better gauge of an Aspirant than in a duel with our astartes?  Our brother, unarmed and unarmoured, will face against the armed challenger until one cannot continue.  It is impossible for the Aspirant to actually succeed these trials, but demonstrates how far they can possibly go, and allow us to judge him accordingly.  As with most trials the Aspirant’s life is in their own hands.  He who has failed the duel- yet proven himself worthy- is rescued from the jaws of death by " + string(obj_ini.role[100, 15]) + " and allowed to progress to the rank of Neophyte.";
         }
         if (recruit_trial = "Apprenticeship") {
-            blurp3 = "-Planet Bonus: Lava (+10-50% recruits)#-4-5 Years longer training time#-Almost able for immediate promotion";
+            blurp3 = "- 10-11 years of training.#- 34-43 starting XP.#- 30-50% more recruits on Lava planets.";
             blurp2 = "What better way to cultivate astartes than to raise them from youth?  The capable children of " + string(obj_ini.recruiting_name) + " are apprenticed to our battle brothers.  Beneath their steady guidance the Aspirants spend several years learning the art of the smith.  The most able are judged by our Chapter’s " + string(obj_ini.role[100, 15]) + "s and " + string(obj_ini.role[100, 14]) + " to deem if they are compatible with gene-seed implantation.  If so, the Aspirant’s trial culminates in hunting and slaying a massive beast.  Only the brightest and bravest are added to our ranks.";
         }
 

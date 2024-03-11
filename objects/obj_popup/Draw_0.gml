@@ -32,7 +32,7 @@ if (type=99){
     
     var ch,inq_hide;ch="";inq_hide=0;
     if (type=9){
-        if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display], "inq")){
+        if (array_contains(obj_ini.artifact_tags[obj_controller.menu_artifact], "inq")){
             var i=0;
             repeat(10){i+=1;
                 if (obj_controller.quest[i]="artifact_loan") then inq_hide=1;
@@ -504,6 +504,76 @@ if (type=8) and (instance_exists(obj_controller)){
     if (all_good=1){
         draw_text(x2+464,y2+397,string_hash_to_newline("Equip!"));
         draw_text(x2+464.5,y2+397.5,string_hash_to_newline("Equip!"));
+        if point_and_click([x2+430, y2+393,x2+518,y2+414]){
+            obj_controller.cooldown=8000;
+
+            var i=0,this=0,dwarn=false,unit;
+            var arti_index = obj_controller.menu_artifact;
+            var arti = obj_ini.artifact_struct[arti_index];
+            var arti_base = arti.type();
+            repeat(obj_controller.man_max){
+                i+=1;
+                if (this=0) and (obj_controller.man_sel[i]=1) then this=i;
+            }
+            i=this;
+
+            if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1){
+                var replace="";
+
+                if (target_role=1) then replace="weapon1";
+                if (target_role=2) then replace="weapon2";
+                if (target_role>3){
+                    if (gear_weapon_data("armour", arti_base)!=false){
+                        replace="armour";
+                    } else if (gear_weapon_data("gear", arti_base)!=false){
+                        replace="gear";
+                    } else if (gear_weapon_data("mobility", arti_base)!=false){
+                        replace="mobility";
+                    }
+                }
+                if (replace="armour") and (obj_controller.ma_race[i]>5){cooldown=8;obj_controller.cooldown=8;exit;}
+
+                if (target_comp>10) then target_comp=0;
+                unit=obj_ini.TTRPG[target_comp][obj_controller.ide[i]];
+                if (arti.has_tag("Daemonic") || arti.has_tag("Chaos")){
+                    unit.corruption+=irandom(10+2);
+                    if (unit.role()=="Chapter Master"){
+                        dwarn=true;
+                    }
+                }
+
+                if (replace="armour"){
+                    unit.update_armour(arti_index);
+                }else if (replace="gear"){
+                    unit.update_gear(arti_index);
+                }
+                if (replace="mobility"){
+                    unit.update_mobility_item(arti_index);
+                }
+                if (replace="weapon1"){
+                    show_debug_message("wep_one")
+                    unit.update_weapon_one(arti_index);
+                }
+                if (replace="weapon2"){
+                    unit.update_weapon_two(arti_index);
+                }
+                var g=arti_index;
+                obj_controller.cooldown=10;
+
+                //if (obj_controller.menu_artifact>obj_controller.artifacts) then obj_controller.menu_artifact=obj_controller.artifacts;
+                if (dwarn=true){
+                    var pip=instance_create(0,0,obj_popup);
+                    pip.title="Daemon Artifacts";
+                    pip.text="Some artifacts, like the one you now wield, are a blasphemous union of the Materium's matter and the Immaterium's spirit, containing the essence of a bound daemon.  While they may offer great power, and enhanced perception, they are known to whisper poisonous lies to the wielder.  The path to damnation begins with good intentions, and many times artifacts such as these have been the cause.";
+                    pip.image="";
+                    pip.cooldown=8;
+                    obj_controller.cooldown=8;
+                }
+
+
+                instance_destroy();exit;
+            }
+        }        
     }
     if (all_good!=1){
         draw_set_alpha(0.25);

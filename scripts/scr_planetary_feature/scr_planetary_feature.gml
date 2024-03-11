@@ -8,7 +8,7 @@ enum P_features {
 			Recruiting_World, 
 			Monastery,
 			Warlord6,
-			Warlord7,
+			OrkWarboss,
 			Warlord10,
 			Special_Force,
 			World_Eaters,
@@ -58,7 +58,7 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		inquis_hidden =1;
 		planet_display = "Hidden Secret Base";
 		player_hidden = 0;
-		style = "UTL"
+		style = "UTL";
 		if (struct_exists(other_data, "style")){
 			style = other_data[$ "style"];
 		}
@@ -97,9 +97,9 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		engineer_score = 0;
 	break;	
 	case P_features.Ancient_Ruins:
-		var ruin_data = choose(["tiny", 5], ["small", 15], ["medium", 55], ["large",110], ["sprawling", 0])
-		ruins_size =  ruin_data[0]
-		man_size_limit = ruin_data[1]
+		var ruin_data = choose(["tiny", 5], ["small", 15], ["medium", 55], ["large",110], ["sprawling", 0]);
+		ruins_size =  ruin_data[0];
+		man_size_limit = ruin_data[1];
 		recoverable_gene_seed = 0;
 		recoverables=[];
 		failed_exploration = 0;
@@ -208,7 +208,7 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		player_hidden = 1;
 		planet_display = "Artifact";
 		break;
-	case P_features.Warlord7:
+	case P_features.OrkWarboss:
 		player_hidden = 1;
 		planet_display= "Ork Warboss";
 		Warboss = "alive"
@@ -216,6 +216,7 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 			f_type = P_features.Victory_Shrine
 			planet_display= $"{obj_controller.faction_leader[eFACTION.Ork]} Death Place";
 			Warboss = "dead";
+			parade = false;
 		}
 		break;
 	case P_features.Monastery:
@@ -400,7 +401,7 @@ function scr_planetary_feature(planet_num) {
 			        scr_alert("green","feature",lop,x,y);
 			        scr_event_log("",lop);
 					break;
-				case P_features.Warlord7:
+				case P_features.OrkWarboss:
 				    var lop="Ork Warboss discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
 				    scr_alert("red","feature",lop,x,y);
 				    scr_event_log("red",lop);

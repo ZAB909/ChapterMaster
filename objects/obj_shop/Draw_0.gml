@@ -15,18 +15,39 @@ var te="";
 // TODO refactor target_comp and how companies are counted in general
 if (target_comp<=10) then te=romanNumerals[target_comp-1];
 if (mouse_x>=xx+1262) and (mouse_y>=yy+82) and (mouse_x<=xx+1417) and (mouse_y<yy+103) then draw_set_alpha(0.8);
-draw_text(xx+1262,yy+82,string_hash_to_newline("Target: "+string(te)+" Company"));
-
+draw_text(xx+1295,yy+82,string_hash_to_newline("Target: "+string(te)+" Company"));
 
 draw_set_alpha(1);
 draw_set_font(fnt_40k_14);
-draw_rectangle(xx+962,yy+107,xx+1579,yy+127,0);
 draw_set_color(0);
+var shop_area="";
+if(tab_buttons.equipment.draw(xx+960,yy+64, "Equipment")){
+    shop_area="equipment";
+}
+if (tab_buttons.armour.draw(xx+1075,yy+64, "Armour")){
+    shop_area="equipment2";
+}
+if (tab_buttons.vehicles.draw(xx+1190,yy+64, "Vehicles")){
+    shop_area="vehicles";
+}
+if (obj_controller.in_forge){
+    if (tab_buttons.ships.draw(xx+1460,yy+64, "Manufactoring")){
+        shop_area="production";
+    }
+}else{
+    if (tab_buttons.ships.draw(xx+1460,yy+64, "Ships")){
+        shop_area="warships";
+    }
+}
+draw_set_halign(fa_left);
 draw_text(xx+962,yy+109,string_hash_to_newline("Name"));
-draw_text(xx+1150,yy+109,string_hash_to_newline("Stocked"));
 var buy_type = obj_controller.in_forge ?  "Forge Requirement" : "Requisition";
 draw_text(xx+962.5,yy+109.5,string_hash_to_newline("Name"));
-draw_text(xx+1150.5,yy+109.5,string_hash_to_newline("Stocked"));
+if (shop_area!="production"){
+    draw_text(xx+1150,yy+109,string_hash_to_newline("Stocked"));
+    draw_text(xx+1150.5,yy+109.5,string_hash_to_newline("Stocked"));
+    draw_text(xx+1150+10+string_width("Stocked"),yy+109.5,string_hash_to_newline("MC"));
+}
 draw_text(xx+1330.5,yy+109.5,string_hash_to_newline(buy_type));
 draw_set_color(c_gray);
 
@@ -137,4 +158,10 @@ if (tooltip_show!=0){
     draw_set_color(c_gray);
     draw_rectangle(tooltip_x-2,tooltip_y,tooltip_x+tooltip_width,tooltip_y+tooltip_height,1);
     draw_text_ext(tooltip_x+2,tooltip_y+2,string_hash_to_newline(tooltip),-1,400);
+}
+
+if (shop_area!=""){
+    obj_controller.cooldown=8000;
+    shop=shop_area
+    instance_create(50,50,obj_shop);
 }
