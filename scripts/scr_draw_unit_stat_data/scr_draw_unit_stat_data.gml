@@ -143,7 +143,7 @@ function scr_draw_unit_stat_data(manage=false){
 		1); 
 
 	if (is_forge){
-		draw_text(stat_middle+34-(string_width($"{Forge_point_generation()[0]}")/2),stats_base+35-(string_height("0")/2), $"{Forge_point_generation()[0]}")
+		draw_text(stat_middle+34-(string_width($"{forge_point_generation()[0]}")/2),stats_base+35-(string_height("0")/2), $"{forge_point_generation()[0]}")
 		array_push(stat_tool_tips,[stat_middle+2,stats_base, stat_middle+66, stats_base+70, "Forge point production", "Forge Points"]);
 	} else {
 		array_push(stat_tool_tips,[stat_middle+2,stats_base, stat_middle+66, stats_base+70,"Unit does not produce forge points", "Forge Points"]);
