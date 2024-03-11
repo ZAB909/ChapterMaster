@@ -1,30 +1,47 @@
-function tooltip_draw(base_x, base_y, tooltip, extra_x=0, extra_y=0, defined_width=false, line_gap=0, draw_color=c_gray){
-	var xx=__view_get( e__VW.XView, 0 )+0;
-	var yy=__view_get( e__VW.YView, 0 )+0;
-	var width,height;
-	if (defined_width != false){
-		width =defined_width+extra_x;
-	} else{
-		width = string_width(string_hash_to_newline(tooltip)) + extra_x;
+function tooltip_draw(tooltip="", max_width=300, coords=[mouse_x+24,mouse_y+24], text_color=c_gray, font=fnt_40k_14, header="", header_font=fnt_40k_14b){
+	draw_set_halign(fa_left);
+	draw_set_alpha(1)
+	// Calculate padding and rectangle size
+	static text_padding_x = 4;
+	static text_padding_y = 4;
+	// Convert hash to newline in strings
+	header = string_hash_to_newline(string(header));
+	tooltip = string_hash_to_newline(string(tooltip));
+	// Set the font for the tooltip text and calculate its size
+	draw_set_font(font);
+	var text_w = min(string_width(tooltip), max_width);
+	var text_h = string_height_ext(tooltip, DEFAULT_LINE_GAP, text_w);
+	// Calculate rectangle size
+	var rect_w = text_w + text_padding_x * 2;
+	var rect_h = text_h + text_padding_y * 2;
+	// If a header is provided, calculate its size and adjust the rectangle size
+	if (header != "") {
+		// Set the font for the header and calculate its size
+		draw_set_font(header_font);
+		var header_w = min(string_width(header), max_width);
+		var header_h = string_height_ext(header, DEFAULT_LINE_GAP, header_w);
+		// Adjust rectangle size
+		rect_w = max(header_w, text_w) + text_padding_x * 2;
+		rect_h += header_h + text_padding_y;
 	}
-	base_2 =0;
-	if (defined_width){
-		base_2=string_height_ext(string_hash_to_newline(string(tooltip)), line_gap, defined_width);
+	// Get view coordinates
+	static xx = __view_get(e__VW.XView, 0);
+	static yy = __view_get(e__VW.YView, 0);
+	// Define tooltip position and clamp it to view
+	var rect_x = clamp(coords[0], xx + DEFAULT_TOOLTIP_VIEW_OFFSET, xx + __view_get(e__VW.WView, 0) - rect_w - DEFAULT_TOOLTIP_VIEW_OFFSET);
+	var rect_y = clamp(coords[1], yy + DEFAULT_TOOLTIP_VIEW_OFFSET, yy + __view_get(e__VW.HView, 0) - rect_h - DEFAULT_TOOLTIP_VIEW_OFFSET);
+	// Draw the tooltip rectangle with an outline
+	draw_rectangle_colour(rect_x, rect_y, rect_w + rect_x, rect_h + rect_y, c_black, c_black, c_black, c_black, 0);
+	draw_rectangle_colour(rect_x + 1, rect_y + 1, rect_w + rect_x - 1, rect_h + rect_y - 1, c_gray, c_gray, c_gray, c_gray, 1);
+	// Draw header text if it exists
+	if (header != "") {
+		draw_set_font(header_font);
+		draw_text_ext_colour(rect_x + text_padding_x, rect_y + text_padding_y, header, DEFAULT_LINE_GAP, header_w, text_color, text_color, text_color, text_color, 1);
+		rect_y += header_h + text_padding_y; // Adjust y-coordinate for tooltip text
 	}
-	height = string_height(string_hash_to_newline(tooltip))+extra_y;
-	draw_set_color(0);
-	draw_rectangle(base_x,base_y,width+base_x+6,height+base_y+6+base_2,0);
-	draw_set_color(draw_color);
-	draw_rectangle(base_x,base_y,width+base_x+6,height+base_y+6+base_2,1);
-	draw_set_alpha(0.5);
-	draw_rectangle(base_x+1,base_y+1,width+base_x+5,height+base_y+5+base_2,1);
-    draw_set_alpha(1);
-    if (defined_width == false){
-    	draw_text(base_x+2.5,base_y+2.5,string_hash_to_newline(string(tooltip)));
-    } else{
-    	draw_text_ext(base_x+2.5,base_y+2.5, string_hash_to_newline(string(tooltip)), line_gap, defined_width);
-    }
-    return [width+6,height+6+base_2]
+	// Draw tooltip text
+	draw_set_font(font);
+	draw_text_ext_colour(rect_x + text_padding_x, rect_y + text_padding_y, tooltip, DEFAULT_LINE_GAP, text_w, text_color, text_color, text_color, text_color, 1);
 }
 
 function scr_ui_popup() {
@@ -714,7 +731,7 @@ function scr_ui_popup() {
 	        }		    
 	    
 		    if (tool1!=""){
-		    	tooltip_draw(xx+10, yy+42, tool1);
+		    	tooltip_draw(tool1);
 		    }
 		}
 
@@ -739,7 +756,7 @@ function scr_ui_popup() {
 		    if (tool1="") then tool1="Loyalty";
 	    
 		    if (tool1!=""){
-		        tooltip_draw(xx+150, yy+42, tool1);
+		        tooltip_draw(tool1);
 		    }
 		}
 
@@ -748,7 +765,7 @@ function scr_ui_popup() {
 		    var tx=0,ty=0,tool1="",tool2="",plu="";
 		    tool1="Gene-Seed";
 		    if (tool1!=""){
-		        tooltip_draw(xx+249, yy+42, tool1);
+		        tooltip_draw(tool1);
 		    }
 		}
 
@@ -757,7 +774,7 @@ function scr_ui_popup() {
 		    tool1="Astartes#(Normal/Command)";
 		    tool2="Astartes";
 		    if (tool1!=""){
-		        tooltip_draw(xx+373, yy+42, tool1);
+		        tooltip_draw(tool1);
 		    }
 		}
 		if (menu == 0) and (diplomacy<=0){
@@ -766,12 +783,12 @@ function scr_ui_popup() {
 			    tool1=$"Turn :{obj_controller.turn}";
 			    tool2="Astartes";
 			    if (tool1!=""){
-			    	tooltip_draw(xx+1480, yy+265, tool1);
+			    	tooltip_draw(tool1);
 			    }
 			}
 		}
 	    if (point_in_rectangle(mouse_x, mouse_y, xx+3, yy+50, xx+67, yy+114)){
-	        tooltip_draw(xx+3,yy+114, obj_controller.forge_string);
+	        tooltip_draw(obj_controller.forge_string);
 	    }		
 
 		if (scr_hit(xx+813,yy+10,xx+960,yy+38)) and (penitent==1) {
@@ -799,7 +816,7 @@ function scr_ui_popup() {
 		    }
 	    
 		    if (tool1!=""){
-		        tooltip_draw(xx+813, yy+42, tool1)
+		        tooltip_draw(tool1)
 		    }
 		}
 

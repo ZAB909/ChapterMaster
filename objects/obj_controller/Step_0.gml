@@ -558,14 +558,14 @@ if (menu==1 && (managing>0 || managing<0)){
             
             var armour_tooltip = "";
             if (is_struct(equip_data.armour_data)){
-                temp[103]=equip_data.armour_data.special_description_gen();
+                temp[103]=equip_data.armour_data.item_tooltip_desc_gen();
             } else {temp[103]=""}
             // Sets up the description for the equipement of current marine
             //temp[103]="";
             // Gear
             temp[104]=unit.gear();
             if (is_struct(equip_data.gear_data)){
-                temp[105]=equip_data.gear_data.special_description_gen();
+                temp[105]=equip_data.gear_data.item_tooltip_desc_gen();
             } else {
                 temp[105]="";
             }            
@@ -573,17 +573,17 @@ if (menu==1 && (managing>0 || managing<0)){
             // Mobility Item
             temp[106]=unit.mobility_item();
             if (is_struct(equip_data.mobility_data)){
-                temp[107]=equip_data.mobility_data.special_description_gen();
+                temp[107]=equip_data.mobility_data.item_tooltip_desc_gen();
             } else {
                 temp[107]="";
             } 
             if (is_struct(equip_data.weapon_one_data)){
-                temp[109]=equip_data.weapon_one_data.special_description_gen();
+                temp[109]=equip_data.weapon_one_data.item_tooltip_desc_gen();
             } else {
                 temp[109]="";
             }
             if (is_struct(equip_data.weapon_two_data)){
-                temp[111]=equip_data.weapon_two_data.special_description_gen();
+                temp[111]=equip_data.weapon_two_data.item_tooltip_desc_gen();
             } else {
                 temp[111]="";
             }                                      
