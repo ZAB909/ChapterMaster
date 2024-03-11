@@ -1898,22 +1898,24 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
     static item_tooltip_desc_gen = function(){
         item_desc_tooltip = ""
         var stat_order;
-        var item_type
-        if struct_exists(global.gear[$ "armour"],name){
-            item_type = "armour"
-        }
-        else if struct_exists(global.gear[$ "mobility"],name){
-            item_type = "mobility"
-        }
-        else if struct_exists(global.gear[$ "gear"],name){
-            item_type = "gear"
-        }
-        else if struct_exists(global.weapons,name){
-            item_type = "weapon"
-        }
-        else{
-            item_desc_tooltip = "Error: Item not found!"
-            return item_desc_tooltip
+        var item_type = type;
+        if (type==""){
+            if struct_exists(global.gear[$ "armour"],name){
+                item_type = "armour"
+            }
+            else if struct_exists(global.gear[$ "mobility"],name){
+                item_type = "mobility"
+            }
+            else if struct_exists(global.gear[$ "gear"],name){
+                item_type = "gear"
+            }
+            else if struct_exists(global.weapons,name){
+                item_type = "weapon"
+            }
+            else{
+                item_desc_tooltip = "Error: Item not found!"
+                return item_desc_tooltip
+            }
         }
         switch (item_type) {
             case "armour":
@@ -2127,6 +2129,7 @@ function gear_weapon_data(search_area="any",item,wanted_data="all", sub_class=fa
             equip_area=global.weapons;
             if (struct_exists(equip_area,item)){
                 item_data_set=equip_area[$item];
+                search_area="weapon";
             }
         }
     } else {
