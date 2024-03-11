@@ -41,14 +41,13 @@ if (obj_controller.in_forge){
 }
 draw_set_halign(fa_left);
 draw_text(xx+962,yy+109,string_hash_to_newline("Name"));
-var buy_type = obj_controller.in_forge ?  "Forge Requirement" : "Requisition";
 draw_text(xx+962.5,yy+109.5,string_hash_to_newline("Name"));
 if (shop_area!="production"){
-    draw_text(xx+1150,yy+109,string_hash_to_newline("Stocked"));
-    draw_text(xx+1150.5,yy+109.5,string_hash_to_newline("Stocked"));
-    draw_text(xx+1150+10+string_width("Stocked"),yy+109.5,string_hash_to_newline("MC"));
+    draw_text(xx+1350,yy+109,string_hash_to_newline("Stocked"));
+    draw_text(xx+1350.5,yy+109.5,string_hash_to_newline("Stocked"));
+    draw_text(xx+1350+10+string_width("Stocked"),yy+109.5,string_hash_to_newline("MC"));
 }
-draw_text(xx+1330.5,yy+109.5,string_hash_to_newline(buy_type));
+draw_text(xx+1430.5,yy+109.5,string_hash_to_newline("Cost"));
 draw_set_color(c_gray);
 
 
@@ -77,14 +76,14 @@ for(var i=1; i<=39; i++){
                 draw_text(xx+x2+x_mod[i],yy+y2,string_hash_to_newline(item[i][1]));// Name
             }
             if (item_stocked[i]=0) and ((mc_stocked[i]=0) or (shop!="equipment")) then draw_set_alpha(0.5);
-            if (mc_stocked[i]=0) then draw_text(xx+1150,yy+y2,string_hash_to_newline(item_stocked[i]));// Stocked
-            if (mc_stocked[i]>0) then draw_text(xx+1150,yy+y2,string_hash_to_newline(string(item_stocked[i])+"   mc: "+string(mc_stocked[i])));
+            if (mc_stocked[i]=0) then draw_text(xx+1350,yy+y2,string_hash_to_newline(item_stocked[i]));// Stocked
+            if (mc_stocked[i]>0) then draw_text(xx+1350,yy+y2,string_hash_to_newline(string(item_stocked[i])+"   mc: "+string(mc_stocked[i])));
             draw_set_alpha(1);
 
             if (obj_controller.in_forge){
                 draw_sprite_ext(
                             spr_forge_points_icon,0, 
-                            xx+1330,
+                            xx+1430,
                             yy+y2+3, 
                             0.3, 
                             0.3, 
@@ -92,7 +91,7 @@ for(var i=1; i<=39; i++){
                             c_white,
                             1); 
             } else{
-                draw_sprite_ext(spr_requisition,0,xx+1330,yy+y2+4,1,0.65,0,c_white,1);
+                draw_sprite_ext(spr_requisition,0,xx+1430,yy+y2+4,1,0.65,0,c_white,1);
             }            
 			draw_set_color(16291875)
             if (obj_controller.in_forge){
@@ -108,7 +107,7 @@ for(var i=1; i<=39; i++){
                 if (keyboard_check(vk_shift)) then cost*=5;
             }
 
-            draw_text(xx+1347,yy+y2,cost);// Requisition
+            draw_text(xx+1447,yy+y2,cost);// Requisition
             if (!obj_controller.in_forge ){
                 if (obj_controller.requisition< cost) then draw_set_alpha(0.25);
             }
@@ -141,23 +140,14 @@ for(var i=1; i<=39; i++){
             draw_set_color(881503);
             draw_text(xx+x2+x_mod[i],yy+y2,string_hash_to_newline(item[i]));// Name
             if (item_stocked[i]=0) then draw_set_alpha(0.5);
-            draw_text(xx+1150,yy+y2,string_hash_to_newline(item_stocked[i]));// Stocked
+            draw_text(xx+1350,yy+y2,string_hash_to_newline(item_stocked[i]));// Stocked
             draw_set_alpha(1);
         }
     }
 }
 
 if (tooltip_show!=0){
-    draw_set_color(0);
-    draw_set_alpha(1);
-    draw_set_font(fnt_40k_12);
-    
-    tooltip_width=string_width_ext(string_hash_to_newline(tooltip),-1,400)+4;
-    tooltip_height=string_height_ext(string_hash_to_newline(tooltip),-1,400)+4;
-    draw_rectangle(tooltip_x-2,tooltip_y,tooltip_x+tooltip_width,tooltip_y+tooltip_height,0);
-    draw_set_color(c_gray);
-    draw_rectangle(tooltip_x-2,tooltip_y,tooltip_x+tooltip_width,tooltip_y+tooltip_height,1);
-    draw_text_ext(tooltip_x+2,tooltip_y+2,string_hash_to_newline(tooltip),-1,400);
+    tooltip_draw(tooltip, 400)
 }
 
 if (shop_area!=""){

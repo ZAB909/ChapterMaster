@@ -379,7 +379,7 @@ function scr_ui_manage() {
 
         	if (is_array(cn.temp[117])){
         		var_text = string_hash_to_newline(string("Melee Attack: {0}",round(cn.temp[116][0])))
-	        	tooltip_text = string_hash_to_newline(string("Weapon: {0}#WS: {1}#STR: {2}#{3}", selected_unit.get_weapon_one_data("attack"), selected_unit.weapon_skill, selected_unit.strength,cn.temp[116][1]));
+	        	tooltip_text = string_hash_to_newline(string(cn.temp[116][1]));
 	        	x1 = xx+1387;
 	        	y1 = yy+378;
 	        	x2 = x1+string_width(var_text);
@@ -395,7 +395,7 @@ function scr_ui_manage() {
 
         	if (is_array(cn.temp[117])){
         		var_text = string_hash_to_newline(string("Ranged Attack: {0}",round(cn.temp[117][0])))
-	        	tooltip_text = string_hash_to_newline(string("BS : {0}#DEX : {1}#{2}", selected_unit.ballistic_skill, selected_unit.dexterity,cn.temp[117][1]));
+	        	tooltip_text = string_hash_to_newline(string(cn.temp[117][1]));
 	        	x1 = xx+1387;
 	        	y1 = yy+400;
 	        	x2 = x1+string_width(var_text);
@@ -419,13 +419,26 @@ function scr_ui_manage() {
 	        draw_text(x1,y1,var_text);
 	        for (var part = 0; part<array_length(global.body_parts);part++){
 				if (struct_exists(selected_unit.body[$ global.body_parts[part]], "bionic")){
-					bionic_tooltip += $"bionic {global.body_parts_display[part]}#";
+					bionic_tooltip += $"Bionic {global.body_parts_display[part]}#";
+					if array_contains(["Left Leg", "Right Leg"], global.body_parts_display[part]){
+						bionic_tooltip += $"  CON: +2#  STR: +1#  DEX: -2#";
+					}else if array_contains(["Left Eye", "Right Eye"], global.body_parts_display[part]){
+						bionic_tooltip += $"  CON: +1#  WIS: +1#  DEX: +1#";
+					}else if array_contains(["Left Arm", "Right Arm"], global.body_parts_display[part]){
+						bionic_tooltip += $"  CON: +2#  STR: +2#  WS: -1#";
+					}else if global.body_parts_display[part] == "Torso"{
+						bionic_tooltip += $"  CON: +4#  STR: +1#  DEX: -1#";				
+					}else if global.body_parts_display[part] == "Throat"{
+						bionic_tooltip += $"  CHA: -1#";
+					}else{ 
+						bionic_tooltip += $"  CON: +1#";		
+					}
 				}
 			}
 	        if (bionic_tooltip !=""){
 	        	array_push(tooltip_drawing, [bionic_tooltip, [x1,y1,x2,y2]]);
 	    	} else{
-	    		array_push(tooltip_drawing, ["No bionic Augmentations", [x1,y1,x2,y2]]);
+	    		array_push(tooltip_drawing, ["No Bionic Augmentations", [x1,y1,x2,y2]]);
 	    	}
 
         var_text = string_hash_to_newline($"Armour Rating: {selected_unit.armour_calc()}")
@@ -470,7 +483,7 @@ function scr_ui_manage() {
 	        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 
 
     		var_text = string_hash_to_newline($"Health: {round(selected_unit.hp())}/{round(selected_unit.max_health())}")
-        	tooltip_text = string_hash_to_newline(string("CON : {0}", selected_unit.constitution));
+        	tooltip_text = string_hash_to_newline(string("CON : {0}", round(100*(1+((selected_unit.constitution-40)*0.025)))));
         	x1 = xx+1015;
         	y1 = yy+422;
         	x2 = x1+string_width(var_text);
@@ -505,8 +518,39 @@ function scr_ui_manage() {
 	        }	        
         		 
         	if (cn.temp[118]!=""){
+						tooltip_text = "";
+						for (var i = 0; i < array_length(equipment_types); i++){
+							var equipment_type = equipment_types[i];
+							var dr = 0;
+							var name = "";
+							switch(equipment_type) {
+									case "armour":
+											dr = selected_unit.get_armour_data("damage_resistance_mod");
+											name = selected_unit.get_armour_data("name");
+											break;
+									case "weapon_one":
+											dr = selected_unit.get_weapon_one_data("damage_resistance_mod");
+											name = selected_unit.get_weapon_one_data("name");
+											break;
+									case "weapon_two":
+											dr = selected_unit.get_weapon_two_data("damage_resistance_mod");
+											name = selected_unit.get_weapon_two_data("name");
+											break;
+									case "mobility":
+											dr = selected_unit.get_mobility_data("damage_resistance_mod");
+											name = selected_unit.get_mobility_data("name");
+											break;
+									case "gear":
+											dr = selected_unit.get_gear_data("damage_resistance_mod");
+											name = selected_unit.get_gear_data("name");
+											break;
+							}
+							if (dr != 0) {
+									tooltip_text += string_hash_to_newline($"{name}: {dr}%#");
+							}
+						}
         		var_text = string_hash_to_newline(string("Damage Resistance: {0}",cn.temp[118]))
-	        	tooltip_text = string_hash_to_newline(string("CON : {0}", selected_unit.constitution));
+	        	tooltip_text += string_hash_to_newline(string("CON: {0}%#EXP: {1}%", round(selected_unit.constitution/2), round(cn.temp[113]/10)));
 	        	x1 = xx+1015;
 	        	y1 = yy+378;
 	        	x2 = x1+string_width(var_text);
@@ -678,7 +722,6 @@ function scr_ui_manage() {
 				    		draw_set_color(c_fuchsia);
 				    	}
 			    	} else{
-			    		unit_specialism_option=true;
 			    		if (array_contains(["Lexicanum", "Codiciery",obj_ini.role[100,17], string("Chief {0}",obj_ini.role[100,17])], unit.role())){
 			    			draw_set_color(c_blue);
 			    		} else if(array_contains(["Forge Master",obj_ini.role[100][16]],unit.role())){
@@ -1039,7 +1082,7 @@ function scr_ui_manage() {
 			    //draws hover overs for specialist potential
 			    for (var i=0;i<array_length(tooltip_set);i++){
 			    	if (point_in_rectangle(mouse_x, mouse_y, tooltip_set[i][1][0],tooltip_set[i][1][1],tooltip_set[i][1][2],tooltip_set[i][1][3])){
-			    		tooltip_draw(mouse_x, mouse_y, tooltip_set[i][0])
+			    		tooltip_draw(tooltip_set[i][0])
 			    	}
 			    }
 		    
@@ -1139,7 +1182,7 @@ function scr_ui_manage() {
 			tip = tooltip_drawing[i];
 			coords=tip[1];
 			if (point_in_rectangle(mouse_x, mouse_y, coords[0],coords[1],coords[2],coords[3])){
-		        	tooltip_draw(coords[0],coords[3]+4, tip[0]);
+		        	tooltip_draw(tip[0], undefined, [coords[0],coords[3]+4]);
 			}
 		}		
 	}

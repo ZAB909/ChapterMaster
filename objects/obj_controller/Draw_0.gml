@@ -69,7 +69,7 @@ if (zoomed==0) and (zui==0){
     if (y_slide>0) then draw_set_alpha((100-(y_slide*2))/100);
     
     //forge points number
-    draw_text_transformed(xx+36-2,yy + 82-4, string(forge_points), 1.7, 1.7, 0);
+    draw_text_transformed(xx+36,yy + 82, string(forge_points), 1.0, 1.0, 0);
     
     draw_set_alpha(1);
     draw_sprite(spr_new_banner,0,xx+1439+new_banner_x,yy+62);

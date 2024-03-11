@@ -1552,32 +1552,29 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				melee_hands_limit = 1;
 			}	
 			var ranged_carrying=0
-			var carry_string=$"base:{ranged_hands_limit}#";
+			var carry_string=$"Base: {ranged_hands_limit}#";
 			if (strength>=50){
 				ranged_hands_limit+=0.5;
-				carry_string+="strength:+0.5#";
+				carry_string+="STR: +0.5#";
 			}
 			if (ballistic_skill>=50){
 				ranged_hands_limit+=0.25;
-				carry_string+="skill:+0.25#";
+				carry_string+="BS: +0.25#";
 			}			
 			var armour_carry = get_armour_data("ranged_hands");
 			if (armour_carry!=0){
 				ranged_hands_limit+=armour_carry;
-				var symbol = armour_carry>0 ? "+":"-"
-				carry_string+=$"armour:{symbol}{armour_carry}#";
+				carry_string+=$"{armour()}: {format_number_with_sign(armour_carry)}#";
 			}
 			var gear_carry = get_gear_data("ranged_hands");
 			if (gear_carry!=0){
 				ranged_hands_limit+=gear_carry;
-				var symbol = armour_carry>0 ? "+":"-"
-				carry_string+=$"gear:{symbol}{gear_carry}#";
+				carry_string+=$"{gear()}: {format_number_with_sign(gear_carry)}#";
 			}
 			var mobility_carry = get_mobility_data("ranged_hands");
 			if (mobility_carry!=0){
 				ranged_hands_limit+=mobility_carry;
-				var symbol = armour_carry>0 ? "+":"-"
-				carry_string+=$"{mobility_item()}:{symbol}{mobility_carry}#";
+				carry_string+=$"{mobility_item()}: {format_number_with_sign(mobility_carry)}#";
 			}							
 			return [ranged_carrying,ranged_hands_limit,carry_string]						
 		}
@@ -1587,7 +1584,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			//base modifyer based on unit skill set
 			ranged_att = 100*(((ballistic_skill/50) + (dexterity/400)+ (experience()/500)));
 			var final_range_attack=0;
-			var explanation_string = $"base ranged:X{ranged_att/100}#"
+			var explanation_string = $"Stat Mod: x{ranged_att/100}#  BS: x{ballistic_skill/50}#  DEX: x{dexterity/400}#  EXP: x{experience()/500}#";
 			//determine capavbility to weild bulky weapons
 			var carry_data =ranged_hands_limit();
 
@@ -1610,7 +1607,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			if (carry_data[0]>carry_data[1]){
 				encumbered_ranged=true;					
 				ranged_att*=0.6;
-				explanation_string+=$"encumbered penalty:X0.6#";
+				explanation_string+=$"Encumbered:X0.6#";
 			}			
 			if (weapon_slot==0){
 				//decide if any weapons are ranged
@@ -1665,11 +1662,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					}
 				}
 			}
-			if (carry_data[0]>carry_data[1]){
-				encumbered_ranged=true;					
-				ranged_att*=0.6;
-				explanation_string+=$"encumbered penalty:X0.6#";
-			}
 			if (!encumbered_ranged){
 			 	var total_gear_mod=0;							
 				total_gear_mod+=get_armour_data("ranged_mod");
@@ -1678,7 +1670,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				total_gear_mod+=_wep1.ranged_mod;
 				total_gear_mod+=_wep2.ranged_mod;
 				ranged_att+=total_gear_mod;
-				explanation_string+=$"gear mod:X{(total_gear_mod/100)+1}#";			
+				explanation_string+=$"Gear Mod: x{(total_gear_mod/100)+1}#";			
 				if (has_trait("feet_floor") && mobility_item()!=""){
 					ranged_att*=0.9;
 					explanation_string+=$"{global.trait_list.feet_floor.display_name}:X0.9#";
@@ -1686,14 +1678,15 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}
 			//return final ranged damage output
 			final_range_attack = floor((ranged_att/100)* primary_weapon.attack);
+			explanation_string = $"{primary_weapon.name}: {primary_weapon.attack}#" + explanation_string
 			if (!encumbered_ranged){
 				if (primary_weapon.has_tag("pistol") &&secondary_weapon.has_tag("pistol")){
 					final_range_attack+=floor((ranged_att/100)* secondary_weapon.attack);
-					explanation_string+=$"dual pistols:+{secondary_weapon.attack}#";			
+					explanation_string+=$"Dual Pistols: +{secondary_weapon.attack}#";			
 				} else if (secondary_weapon.attack>0){
 					var second_attack =floor((ranged_att/100)* secondary_weapon.attack)*0.5;
 					final_range_attack+=second_attack;
-					explanation_string+=$"secondary:+{second_attack}#";			
+					explanation_string+=$"Secondary: +{second_attack}#";			
 				}
 			}
 			ranged_damage_data = [final_range_attack,explanation_string,carry_data,primary_weapon, secondary_weapon];
@@ -1710,43 +1703,40 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				melee_hands_limit = 1;
 			}				
 			var melee_carrying=0
-			var carry_string="base:2#";
+			var carry_string="Base: 2#";
 			if (strength>=50){
 				melee_hands_limit+=0.25;
-				carry_string+="strength:+0.25#";
+				carry_string+="STR: +0.25#";
 			}
 			if (weapon_skill>=50){
 				melee_hands_limit+=0.25;
-				carry_string+="skill:+0.25#";
+				carry_string+="WS: +0.25#";
 			}
 			if (has_trait("champion")){
 				melee_hands_limit+=0.25;
-				carry_string+="Champion:+0.25#";
+				carry_string+="Champion: +0.25#";
 			}
 			var armour_carry = get_armour_data("melee_hands")
 			if (armour_carry!=0){
 				melee_hands_limit+=armour_carry;
-				var symbol = armour_carry>0 ? "+":"-";
-				carry_string+=$"armour:{symbol}{armour_carry}#";
+				carry_string+=$"{armour()}: {format_number_with_sign(armour_carry)}#";
 			}
 			var gear_carry = get_gear_data("melee_hands");
 			if (gear_carry!=0){
 				melee_hands_limit+=gear_carry;
-				var symbol = armour_carry>0 ? "+":"-"
-				carry_string+=$"gear:{symbol}{gear_carry}#";
+				carry_string+=$"{gear()}: {format_number_with_sign(gear_carry)}#";
 			}
 			var mobility_carry = get_mobility_data("melee_hands");
 			if (mobility_carry!=0){
 				melee_hands_limit+=mobility_carry;
-				var symbol = armour_carry>0 ? "+":"-"
-				carry_string+=$"{mobility_item()}:{symbol}{mobility_carry}#";
+				carry_string+=$"{mobility_item()}: {format_number_with_sign(mobility_carry)}#";
 			}						
 			return [melee_carrying,melee_hands_limit,carry_string]						
 		}		
 		static melee_attack = function(weapon_slot=0){
 			encumbered_melee=false;
 			melee_att = 100*(((weapon_skill/100) * (strength/20)) + (experience()/1000)+0.1);
-			var explanation_string = $"base melee:X{melee_att/100}#";
+			var explanation_string = $"Stat Mod: x{melee_att/100}#  Base: 0.10#  WSxSTR: x{(weapon_skill/100)*(strength/20)}#  EXP: x{experience()/1000}#";
 
 			melee_carrying = melee_hands_limit();
 
@@ -1784,9 +1774,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 							primary_weapon=highest;
 							melee_att*=0.5;
 							if (primary_weapon.has_tag("flame")){
-								explanation_string+=$"primary is flame:X0.5#"
+								explanation_string+=$"Primary is Flame: x0.5#"
 							} else if primary_weapon.has_tag("pistol"){
-								explanation_string+=$"primary is pistol:X0.5#"
+								explanation_string+=$"Primary is Pistol: x0.5#"
 							}
 							secondary_weapon=lowest;
 						}
@@ -1799,12 +1789,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					primary_weapon=_wep2;
 				}
 			};
-
+			explanation_string = $"{primary_weapon.name}: {primary_weapon.attack}#" + explanation_string
 			melee_carrying[0] =_wep1.melee_hands+_wep2.melee_hands;
 			if (melee_carrying[0]>melee_carrying[1]){
 				encumbered_melee=true;	
 				melee_att*=0.6;
-				explanation_string+=$"encumbered penalty:X0.6#"
+				explanation_string+=$"Encumbered: x0.6#"
 			}
 			if (!encumbered_melee){
 			 	var total_gear_mod=0;							
@@ -1814,40 +1804,39 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				total_gear_mod+=_wep1.melee_mod;
 				total_gear_mod+=_wep2.melee_mod;
 				melee_att+=total_gear_mod;
-				explanation_string+=$"gear mod:X{(total_gear_mod/100)+1}#";
+				explanation_string+=$"Gear Mod: x{(total_gear_mod/100)+1}#";
 				//TODO make trait data like this more structured to be able to be moddable
 				if (has_trait("feet_floor") && mobility_item()!=""){
 					melee_att*=0.9;
-					explanation_string+=$"{global.trait_list.feet_floor.display_name}:X0.9#";
+					explanation_string+=$"{global.trait_list.feet_floor.display_name}: x0.9#";
 				}
 				if (primary_weapon.has_tag("fist") && has_trait("brawler")){
 					melee_att*=1.1;
-					explanation_string+=$"{global.trait_list.brawler.display_name}:X1.1#";
+					explanation_string+=$"{global.trait_list.brawler.display_name}: x1.1#";
 				}
-
 			}
 			var final_attack =  floor((melee_att/100)*primary_weapon.attack);
 			if (secondary_weapon!="none" && !encumbered_melee){
-				var side_arm_data="standard X0.5";
+				var side_arm_data="Standard: x0.5";
 				var secondary_modifier = 0.5;
 				if (primary_weapon.has_tag("dual") && secondary_weapon.has_tag("dual")){
 					secondary_modifier=1
-					side_arm_data="dual X1";
+					side_arm_data="Dual: x1";
 				} else if (secondary_weapon.has_tag("pistol")){
 					if (melee_carrying[0]+0.8>=melee_carrying[1]){
 						secondary_modifier=0;
 					}else {
 						secondary_modifier = 0.6;
-						side_arm_data="pistol X0.8";
+						side_arm_data="Pistol: x0.8";
 					}
 				} else if (secondary_weapon.has_tag("flame")){
 					secondary_modifier = 0.3;
-					side_arm_data="flame X0.3";
+					side_arm_data="Flame: x0.3";
 				}
 				var side_arm = floor(secondary_modifier*((melee_att/100)*secondary_weapon.attack));
 				if (side_arm>0){
 					final_attack+=side_arm;
-					explanation_string+=$"side arm:+{side_arm}({side_arm_data})#";
+					explanation_string+=$"Side Arm: +{side_arm}({side_arm_data})#";
 				}
 			}
 			melee_damage_data=[final_attack,explanation_string,melee_carrying,primary_weapon, secondary_weapon];
