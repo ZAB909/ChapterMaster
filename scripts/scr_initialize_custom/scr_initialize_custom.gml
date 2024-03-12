@@ -1349,6 +1349,7 @@ function scr_initialize_custom() {
 			chapter_master.add_trait("tyrannic_vet");
 			arti = obj_ini.artifact_struct[last_artifact];
 			arti.name = "Gauntlets of Ultramar";
+			arti.custom_description="Two mighty Power Fists with incorporated Bolters that were reclaimed from a fallen Chaos champion, slain during the Gamalia Reclusiam Massacre by the Primarch of the Ultramarines, Roboute Guilliman himself."
 			obj_ini.artifact[last_artifact] = "Power Fist";
 			obj_ini.artifact_identified[last_artifact] = 0;
 			arti.bearer = [0,1];
