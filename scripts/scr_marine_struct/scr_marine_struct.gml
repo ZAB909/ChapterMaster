@@ -2016,6 +2016,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 	};
 
+	static edit_corruption = function (edit){
+		corruption = edit > 0 ?min(100, corruption+edit) : max(0, corruption+edit);
+	}
+
 	static forge_point_generation = function(turn_end=false){
 		if (!IsSpecialist("forge")) then return 0;
 		var reasons = {}
@@ -2034,6 +2038,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if (has_trait("crafter")){
 			points+=3;
 			reasons.crafter = 3;
+		}
+		if (role()=="Forge Master"){
+			points+=5;
+			reasons.master = 5;
 		}
 		return [points,reasons];
 	}
@@ -2180,7 +2188,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				break;
 			case obj_ini.role[100][16]: //techmarines
 				update_armour(choose("MK8 Errant","MK6 Corvus","MK4 Maximus","MK3 Iron Armour"),false,false)
-				if ((global.chapter_name="Iron Hands" || obj_ini.progenitor=6)){
+				if ((global.chapter_name=="Iron Hands" || obj_ini.progenitor=6 || array_contains(obj_ini.dis, "Tech-Heresy"))){
 					add_bionics("right_arm","standard",false);
 					bionic_count = choose(6,6,7,7,7,8,9);
 					add_trait("flesh_is_weak");
@@ -2198,7 +2206,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			  	}
 			  	if (tech_heresy==0){
 			  		add_trait("tech_heretic");
-			  		corruption+=30;
+			  		edit_corruption(30);
 			  	}
 				if (technology<35){
 					technology=35;

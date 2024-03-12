@@ -137,7 +137,7 @@ function calculate_research_points(turn_end=false){
         for (var comp=0;comp<=10;comp++){
             for (var veh=0;veh<=100;veh++){
                 if (obj_ini.veh_role[comp][veh]=="Land Raider"){
-                    forge_veh_maintenance.land_raider = struct_exists(forge_veh_maintenance, "land_raider") ?forge_veh_maintenance.land_raider +1 : 1;
+                    forge_veh_maintenance.land_raider = struct_exists(forge_veh_maintenance, "land_raider") ?forge_veh_maintenance.land_raider + 1 : 1;
                 } else if (array_contains(["Rhino","Predator", "Whirlwind"],obj_ini.veh_role[comp][veh])){
                     forge_veh_maintenance.small_vehicles = struct_exists(forge_veh_maintenance, "small_vehicles") ?forge_veh_maintenance.small_vehicles + 0.1 :0.1;
                 }
@@ -159,7 +159,7 @@ function calculate_research_points(turn_end=false){
             forge_string += $"Forges : {5*player_forges}#";
         }
         forge_points = floor(forge_points);
-        var tech_test, charisma_test, piety_test;
+        var tech_test, charisma_test, piety_test, met_non_heretic;
         //in this instance tech heretics are techmarines with the "tech_heretic" trait
         if (turn_end){
             if (array_length(techs)==0) then scr_loyalty("Upset Machine Spirits","+");
@@ -170,6 +170,7 @@ function calculate_research_points(turn_end=false){
                     heretic_location = tech_locations[heretics[heretic]];
                     current_heretic = techs[heretics[heretic]];
                     //iterate through rest of techs
+                    met_non_heretic = false;
                     for (var i=0; i<array_length(techs); i++){
                         same_location=false;
                         //if tech is also heretic skip
@@ -178,6 +179,7 @@ function calculate_research_points(turn_end=false){
 
                         // find out if heretic is in same location as techmarine
                         if (same_locations(heretic_location,tech_locations[i])){
+                            met_non_heretic=true;
                             //if so do a an opposed technology test of techmarine vs tech  heretic techmarine
                             tech_test = global.character_tester.oppposed_test(current_heretic,current_tech, "technology");
 
@@ -189,19 +191,21 @@ function calculate_research_points(turn_end=false){
                                     // if heretic win tech is corrupted
                                     //tech is corrupted by half the pass margin of the heretic
                                     //this means high charisma heretics will spread corruption more quickly and more often
-                                    current_tech.corruption += charisma_test[1];
+                                    if (current_heretic.corruption>current_tech.corruption){
+                                        current_tech.edit_corruption(min(4,charisma_test[1]));
+                                    }
 
                                     // tech takes a piety test to see if tehy break faith with cult mechanicus and become tech heretic
                                     //piety test is augmented by by the techs corruption with the test becoming harder to pass the more
                                     // corrupted the tech is
-                                    piety_test = global.character_tester.standard_test(current_tech, "piety", +65 - current_tech.corruption);
+                                    piety_test = global.character_tester.standard_test(current_tech, "piety", +75 - current_tech.corruption);
 
                                     // if tech fails piety test tech also becomes tech heretic
-                                    if (piety_test[0] == false){
+                                    if (piety_test[0] == false && choose(true,false)){
                                         current_tech.add_trait("tech_heretic");
                                     }
                                 } else if (charisma_test[0]==2){
-                                    if (charisma_test[1] > 25 && notice_heresy=false){
+                                    if (charisma_test[1] > 40 && notice_heresy=false){
                                         scr_alert("purple","Tech Heresy",$"{current_tech.name_role()} contacts you concerned of Tech Heresy in the Armentarium");
                                         notice_heresy=true;
                                     }
@@ -219,28 +223,35 @@ function calculate_research_points(turn_end=false){
                             }
                         }
                     }
+                    if (!met_non_heretic){
+                        if (irandom(4)==0){
+                            current_heretic.edit_corruption(1);
+                        }
+                    }
                     //add check to see if tech heretic is anywhere near mechanicus forge if so maybe do stuff??
                     /*if (heretic_location==location_types.planet){
                         if 
                     }*/
                 }
-
-                if (array_length(heretics)/array_length(techs)>=0.35){
-                    if (irandom(9)==0){
-                        /*var text_string = "You Recive an Urgent Transmision from";
-                        if (forge_master>-1){
-
-                        }*/
-                        scr_popup("Technical Differences!","You Recive an Urgent Transmision A serious breakdown in culture has coccured causing believers in tech heresy to demand that they are given preseidence and assurance to continue their practises","tech_uprising","");
+                if (array_length(techs)>array_length(heretics)){
+                    if (array_length(heretics)/array_length(techs)>=0.35){
+                        if (irandom(9)==0){
+                            /*var text_string = "You Recive an Urgent Transmision from";
+                            if (forge_master>-1){
+    
+                            }*/
+                            scr_popup("Technical Differences!","You Recive an Urgent Transmision A serious breakdown in culture has coccured causing believers in tech heresy to demand that they are given preseidence and assurance to continue their practises","tech_uprising","");
+                        }
                     }
                 }
             }
-            possibility_of_heresy = 6;
-            if (array_contains(obj_ini.dis,"Tech-Heresy")) then possibility_of_heresy = 5;
+            possibility_of_heresy = 8;
+            if (array_contains(obj_ini.dis,"Tech-Heresy")) then possibility_of_heresy = 6;
             if (irandom(power(possibility_of_heresy,(array_length(heretics)+2))) == 0 && array_length(techs)>0){
                 var current_tech = techs[irandom(array_length(techs)-1)];
                if  (!global.character_tester.standard_test(current_tech, "piety")[0]){
                    current_tech.add_trait("tech_heretic");
+                   current_tech.edit_corruption(20+irandom(15));
                }
             }
             if (forge_master==-1){ 
