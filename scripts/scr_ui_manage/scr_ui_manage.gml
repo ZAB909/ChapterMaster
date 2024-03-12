@@ -484,7 +484,37 @@ function scr_ui_manage() {
 	        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 
 
     		var_text = string_hash_to_newline($"Health: {round(selected_unit.hp())}/{round(selected_unit.max_health())}")
-        	tooltip_text = string_hash_to_newline(string("CON : {0}", round(100*(1+((selected_unit.constitution-40)*0.025)))));
+        	tooltip_text = string_hash_to_newline(string("CON: {0}#", round(100*(1+((selected_unit.constitution-40)*0.025)))));
+            for (var i = 0; i < array_length(equipment_types); i++) {
+                var equipment_type = equipment_types[i];
+                var hp_mod = 0;
+                var name = "";
+                switch(equipment_type) {
+                    case "armour":
+                        hp_mod = selected_unit.get_armour_data("hp_mod");
+                        name = selected_unit.get_armour_data("name");
+                        break;
+                    case "weapon_one":
+                        hp_mod = selected_unit.get_weapon_one_data("hp_mod");
+                        name = selected_unit.get_weapon_one_data("name");
+                        break;
+                    case "weapon_two":
+                        hp_mod = selected_unit.get_weapon_two_data("hp_mod");
+                        name = selected_unit.get_weapon_two_data("name");
+                        break;
+                    case "mobility":
+                        hp_mod = selected_unit.get_mobility_data("hp_mod");
+                        name = selected_unit.get_mobility_data("name");
+                        break;
+                    case "gear":
+                        hp_mod = selected_unit.get_gear_data("hp_mod");
+                        name = selected_unit.get_gear_data("name");
+                        break;
+                }
+                if (hp_mod != 0) {
+                    tooltip_text += string_hash_to_newline($"{name}: {hp_mod}#");
+                }
+            }
         	x1 = xx+1015;
         	y1 = yy+422;
         	x2 = x1+string_width(var_text);
