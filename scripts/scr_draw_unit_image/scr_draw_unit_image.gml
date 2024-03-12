@@ -459,6 +459,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                         if (global.chapter_name=="Ultramarines"){
                             armour_draw=[spr_ultra_honor_guard,body.torso.armour_choice];
                             armour_bypass=true;
+                            draw_sprite(spr_ultra_honor_guard,2,xx+x_draw,yy+y_draw);
                         } else {
                             armour_draw=[spr_generic_honor_guard,body.torso.armour_choice];
                             armour_bypass=true;
