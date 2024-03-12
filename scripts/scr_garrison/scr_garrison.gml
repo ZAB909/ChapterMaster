@@ -90,10 +90,13 @@ function garrison_force(planet_operatives)constructor{
 		} else {report_string+="The garrison is comprised of a single squad,"}
 
 		report_string+= $" with a total man count of {total_garrison}.#"
+		if (system.dispo[planet]>-1){
+			var disposition = disposition_description_chart(system.dispo[planet]);
+			report_string+=$"Our Relationship with the Rulers of the planet is {disposition}";
+		} else if( dispo<-1000){
+			report_string+=$"Rule of the planet is going well";
+		}
 
-		var disposition = disposition_description_chart(system.dispo[planet]);
-
-		report_string+=$"Our Relationship with the Rulers of the planet is {disposition}";
 		return report_string;
 	}
 

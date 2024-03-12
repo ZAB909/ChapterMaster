@@ -1449,7 +1449,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			scr_add_item(change_wep,1, weapon_one_quality);
 		}
 	}       	
-     obj_ini.wep1[company][marine_number] = new_weapon;
+    obj_ini.wep1[company][marine_number] = new_weapon;
  	if (arti){
     	obj_ini.artifact_equipped[new_weapon] = true;
 		var arti = obj_ini.artifact_struct[new_weapon];
