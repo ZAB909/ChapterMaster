@@ -180,7 +180,6 @@ function scr_librarium(){
 
                 artif_descr = obj_ini.artifact_struct[menu_artifact].description();
                 tooltip = "";
-                tooltip_weapon = 0;
                 tooltip_stat1 = 0;
                 tooltip_stat2 = 0;
                 tooltip_stat3 = 0;

@@ -14,70 +14,70 @@ function scr_draw_unit_stat_data(manage=false){
 
 	stat_display_list = [
 		[string(dexterity),
-		"Measure of how quick and nimble unit is as well as their base ability to manipulate and do tasks with their hands (improves ranged attack)",
+		"Measure of how quick and nimble unit is as well as their base ability to manipulate and do tasks with their hands (improves ranged attack).",
 		#306535,
 		spr_dexterity_icon,
-		"dexterity"],	
+		"Dexterity", "DEX"],	
 
 		[string(strength),
-		"How strong a unit is (can wield heavier equipment without detriment and is more deadly in close combat)",
+		"How strong a unit is (can wield heavier equipment without detriment and is more deadly in close combat).",
 		#1A3B3B,
 		spr_strength_icon,
-		"strength"],
+		"Strength", "STR"],
 
 		[string(constitution),
-		"Unit's general toughness and resistance to damage (increases health and damage resistance)",
+		"Unit's general toughness and resistance to damage (increases health and damage resistance).",
 		#9B403E,
 		spr_constitution_icon,
-		"constitution"],
+		"Constitution", "CON"],
 
 		[string(intelligence),
-		"measure of learnt knowledge and specialist skill aptitude",
+		"Measure of learnt knowledge and specialist skill aptitude.",
 		#2F3B6B,
 		spr_intelligence_icon,
-		"intelligence"],
+		"Intelligence", "INT"],
 
 		[string(wisdom),
-		"units perception and street smarts including certain types of battlefield knowlage",
+		"Unit's perception and street smarts including certain types of battlefield knowledge.",
 		#54540B,
 		spr_wisdom_icon,
-		"wisdom"],
+		"Wisdom", "WIS"],
 
 		[string(piety),
-		"units faith in their given religion (or general aptitude towards faith)",
+		"Unit's faith in their given religion (or general aptitude towards faith).",
 		#6A411C,
 		spr_faith_icon,
-		"piety"],
+		"Piety", "PIT"],
 
 		[string(weapon_skill),
-		"general skill with close combat weaponry",
+		"General skill with close combat weaponry.",
 		#87753C,
 		spr_weapon_skill_icon,
-		"weapon_skill"],
+		"Weapon Skill", "WS"],
 
 		[string(ballistic_skill),
-		"general skill with ballistic and ranged weaponry",
+		"General skill with ballistic and ranged weaponry.",
 		#743D57,
 		spr_ballistic_skill_icon,
-		"ballistic_skill"],
+		"Ballistic Skill", "BS"],
 
 		[string(luck),
-		"...luck...",
+		"...Luck...",
 		#05451E,
 		spr_luck_icon,
-		"luck"],
+		"Luck", "LCK"],
 
 		[string(technology),
-		"skill and understanding of technology and various technical thingies",
+		"Skill and understanding of technology and various technical thingies.",
 		#4F0105,
 		spr_technology_icon,
-		"technology"],
+		"Technology", "TEC"],
 
 		[string(charisma),
-		"general likeability and ability to interact with people",
+		"General likeability and ability to interact with people.",
 		#3A0339,
 		spr_charisma_icon,
-		"charisma"],			    					    					    					    			
+		"Charisma", "CHA"],			    					    					    					    			
 	]
 	draw_set_color(c_gray);
 	draw_rectangle(stat_x,stat_y, stat_x + (36*array_length(stat_display_list)), stat_y+48+8, 0)
@@ -112,7 +112,7 @@ function scr_draw_unit_stat_data(manage=false){
 				unit_text = false;
 			}
 		}
-		array_push(stat_tool_tips,[stat_x, stat_y, stat_x+32, stat_y+45,stat_display_list[i][1]]);
+		array_push(stat_tool_tips,[stat_x, stat_y, stat_x+32, stat_y+50,stat_display_list[i][1], $"{stat_display_list[i][4]} ({stat_display_list[i][5]})"]);
 		stat_x+=36;
 	}
 
@@ -127,7 +127,7 @@ function scr_draw_unit_stat_data(manage=false){
 	draw_sprite_ext(spr_warp_level_icon,2, stat_middle-66,stats_base, 1, 1, 0, c_white, 1);
 	draw_set_color(c_white);
 	draw_text(stat_middle-34-(string_width($"{psionic}")/2),stats_base+35-(string_height("0")/2), $"{psionic}")
-	array_push(stat_tool_tips,[stat_middle-66,stats_base, 0, stats_base+70,"Imperial psionic rating"]);
+	array_push(stat_tool_tips,[stat_middle-70,stats_base+1, stat_middle-1, stats_base+70, "Imperial psionic rating", "Psy"]);
 
 	//draw_rectangle(stat_middle+1,stats_base+2,stat_middle+1,stats_base+34, 0);
 	var is_forge = IsSpecialist("forge");
@@ -144,9 +144,9 @@ function scr_draw_unit_stat_data(manage=false){
 
 	if (is_forge){
 		draw_text(stat_middle+34-(string_width($"{forge_point_generation()[0]}")/2),stats_base+35-(string_height("0")/2), $"{forge_point_generation()[0]}")
-		array_push(stat_tool_tips,[stat_middle+2,stats_base, stat_middle+66, stats_base+70,"Forge point production"]);
+		array_push(stat_tool_tips,[stat_middle+2,stats_base, stat_middle+66, stats_base+70, "Forge point production", "Forge Points"]);
 	} else {
-		array_push(stat_tool_tips,[stat_middle+2,stats_base, stat_middle+66, stats_base+70,"unit does not produce forge points"]);
+		array_push(stat_tool_tips,[stat_middle+2,stats_base, stat_middle+66, stats_base+70,"Unit does not produce forge points", "Forge Points"]);
 	}	
 
 
@@ -166,16 +166,17 @@ function scr_draw_unit_stat_data(manage=false){
 			tooltip_text +="#";
 		}
 		tooltip_text = string_hash_to_newline(tooltip_text);
-		tooltip_draw(stat_x+2,stat_y, tooltip_text);
+		tooltip_draw(tooltip_text, undefined, [stat_x+2,stat_y]);
 		if (!obj_controller.view_squad && obj_controller.managing >0 && obj_controller.unit_text){
 			var unit_data_string = unit_profile_text();
-			tooltip_draw(xx+25,yy+144, string_hash_to_newline(unit_data_string), 3, 0, 970, 17);
+			tooltip_draw(unit_data_string, 970, [xx+25,yy+144]);
 		}
-		draw_text(stat_middle-66, stats_base+75, $"loyalty : {loyalty}")
-		draw_text(stat_middle-66, stats_base+110, $"corruption : {corruption}")		
+		draw_text(stat_middle-66, stats_base+75, $"Loyalty : {loyalty}");
+		draw_text(stat_middle-66, stats_base+110, $"Corruption : {corruption}");	
 		for (i=0;i<array_length(stat_tool_tips);i++){
 			if (point_in_rectangle(mouse_x, mouse_y, stat_tool_tips[i][0], stat_tool_tips[i][1], stat_tool_tips[i][2], stat_tool_tips[i][3])){
-				tooltip_draw(stat_tool_tips[i][0], stat_tool_tips[i][3], stat_tool_tips[i][4],0,0,100,17);
+				tooltip_draw(stat_tool_tips[i][4], 200, [stat_tool_tips[i][0], stat_tool_tips[i][3]],,,stat_tool_tips[i][5]);
 			}
 		}
+		draw_set_alpha(1)
 }

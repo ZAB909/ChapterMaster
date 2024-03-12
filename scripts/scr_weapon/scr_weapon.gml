@@ -1278,7 +1278,7 @@ global.weapons={
             "master_crafted": 130,
             "artifact": 160
         },
-        "description": "a standard bolter with a single shot flamer attached for tactical use",
+        "description": "A standard bolter with a single shot flamer attached for tactical use",
         "melee_hands": 1,
         "ranged_hands": 1.5,
         "ammo": 15,
@@ -1894,59 +1894,159 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
             self[$names[i]]=defaults[i];
         }
     }
-    spe_desc = special_description;
-    static special_description_gen = function(){
-        spe_desc+=" "
-        if (attack!=0){
-            spe_desc+=$"DAM {attack},#"
-        }
-        if (ranged_mod!=0){
-            spe_desc += $"Ranged {ranged_mod}%,#"
-        }
-        if (melee_mod!=0){
-            spe_desc += $"Melee {melee_mod}%,#"
-        }
-        if (hp_mod!=0){
-            spe_desc += $"HP {hp_mod}%,#"
-        }
-        if (damage_resistance_mod!=0){
-            spe_desc += $"Damage Res {damage_resistance_mod}%,#"
-        }
-        if (armour_value!=0){
-            spe_desc += $"AC {armour_value},#"
-        }
-        if (ammo!=0){
-            spe_desc += $"Ammo {ammo},#"
-        }
-        if (range>1.1){
-            spe_desc += $"Range {range},#"
-        }
-        if (arp>0){
-            spe_desc += $"Armour piercing,#"
-        } else if (arp<0){
-            spe_desc += $"Low Penetration,#"
-        }
-        if (spli!=0){
-            if (range>1.1){
-                spe_desc += $"Ranged, Rapid Fire,#"
-            } else {
-                spe_desc += $"Melee, Splash,#"
+
+    static item_tooltip_desc_gen = function(){
+        item_desc_tooltip = ""
+        var stat_order;
+        var item_type = type;
+        if (type==""){
+            if struct_exists(global.gear[$ "armour"],name){
+                item_type = "armour"
             }
-        } 
-        if (melee_hands!=0){
-            spe_desc += $"Melee Cap {-1*melee_hands},#"
+            else if struct_exists(global.gear[$ "mobility"],name){
+                item_type = "mobility"
+            }
+            else if struct_exists(global.gear[$ "gear"],name){
+                item_type = "gear"
+            }
+            else if struct_exists(global.weapons,name){
+                item_type = "weapon"
+            }
+            else{
+                item_desc_tooltip = "Error: Item not found!"
+                return item_desc_tooltip
+            }
         }
-        if (ranged_hands!=0){
-            spe_desc += $"Ranged Cap {-1*ranged_hands},#"
+        switch (item_type) {
+            case "armour":
+                stat_order = ["description", "armour_value", "damage_resistance_mod", "hp_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "special_description", "req_exp", "tags"];
+                break;
+            case "mobility":
+                stat_order = ["description", "special_description", "armour_value", "hp_mod", "damage_resistance_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "req_exp", "tags"];
+                break;
+            case "gear":
+                stat_order = ["description", "special_description", "armour_value", "hp_mod", "damage_resistance_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "req_exp", "tags"];
+                break;
+            case "weapon":
+                stat_order = ["description", "attack", "ranged_mod", "melee_mod", "ammo", "range", "armour_value", "hp_mod", "damage_resistance_mod", "melee_hands", "ranged_hands", "arp", "spli", "special_description", "req_exp", "tags"];
+                break;
+            }
+        for (var i = 0; i < array_length(stat_order); i++) {
+            var stat = stat_order[i];
+            switch (stat) {
+                case "description":
+                    if (description!=""){
+                        item_desc_tooltip += $"{description}##"
+                    }
+                    break;
+                case "armour_value":
+                    if (armour_value!=0){
+                        if item_type = "armour"{
+                            item_desc_tooltip += $"Armour: {armour_value}#"
+                        }
+                        else{
+                            item_desc_tooltip += $"Armour: {format_number_with_sign(armour_value)}#"
+                        }
+                    }
+                    break;
+                case "hp_mod":
+                    if (hp_mod!=0){
+                        item_desc_tooltip += $"Health Mod: {format_number_with_sign(hp_mod)}%#"
+                    }
+                    break;
+                case "damage_resistance_mod":
+                    if (damage_resistance_mod!=0){
+                        item_desc_tooltip += $"Damage Res: {format_number_with_sign(damage_resistance_mod)}%#"
+                    }
+                    break;
+                case "attack":
+                    if (attack!=0){
+                        item_desc_tooltip += $"Damage: {attack}#"
+                    }
+                    break;
+                case "ranged_mod":
+                    if (ranged_mod!=0){
+                        item_desc_tooltip += $"Ranged Mod: {format_number_with_sign(ranged_mod)}%#"
+                    }
+                    break;
+                case "melee_mod":
+                    if (melee_mod!=0){
+                        item_desc_tooltip += $"Melee Mod: {format_number_with_sign(melee_mod)}%#"
+                    }
+                    break;
+                case "ammo":
+                    if (ammo!=0){
+                        item_desc_tooltip += $"Ammo: {ammo}#"
+                    }
+                    break;
+                case "range":
+                    if (range>1.1){
+                        item_desc_tooltip += $"Range: {range}#"
+                    }
+                    break;
+                case "melee_hands":
+                    if (melee_hands != 0) {
+                        if item_type = "weapon"{
+                            item_desc_tooltip += $"Melee Burden: {melee_hands}#"
+                        }
+                        else{
+                            item_desc_tooltip += $"Melee Cap: {format_number_with_sign(melee_hands)}#"
+                        }
+                    }
+                    break;
+                case "ranged_hands":
+                    if (ranged_hands != 0) {
+                        if item_type = "weapon"{
+                            item_desc_tooltip += $"Ranged Burden: {ranged_hands}#"
+                        }
+                        else{
+                            item_desc_tooltip += $"Ranged Cap: {format_number_with_sign(ranged_hands)}#"
+                        }
+                    }
+                    break;
+                case "arp":
+                    if (arp>0){
+                        item_desc_tooltip += $"Armour Piercing#"
+                    } else if (arp<0){
+                        item_desc_tooltip += $"Low Penetration#"
+                    }
+                    break;
+                case "spli":
+                    if (spli!=0){
+                        if (range>1.1){
+                            item_desc_tooltip += $"Ranged, Rapid Fire#"
+                        } else {
+                            item_desc_tooltip += $"Melee, Splash#"
+                        }
+                    }
+                    break;
+                case "special_description":
+                    if (special_description!=""){
+                        item_desc_tooltip += $"{special_description}#"
+                    }
+                    break;
+                case "req_exp":
+                    if (req_exp>0){
+                        item_desc_tooltip += $"Requires {req_exp} XP#"
+                    }
+                    break;
+                case "tags":
+                    if (array_length(tags)>0){
+                        var tagString = ""
+                        for (var j = 0; j < array_length(tags); j++) {
+                            tagString += tags[j]
+                            if (j < array_length(tags) - 1) {
+                                tagString += ", "
+                            }
+                        }
+                        item_desc_tooltip += $"#Keywords:#{tagString}#"
+                    }
+                    break;
+            }
         }
-        if (req_exp>0){
-            spe_desc += $"requires {req_exp} exp,#"
-        }
-        if (array_length(tags)>0){
-            spe_desc += $"[{string(tags)}],#"
-        }  
-        return  spe_desc
+        return item_desc_tooltip
     }
+
     static has_tag =  function(tag){
         return array_contains(tags, tag);
     }
@@ -2029,6 +2129,7 @@ function gear_weapon_data(search_area="any",item,wanted_data="all", sub_class=fa
             equip_area=global.weapons;
             if (struct_exists(equip_area,item)){
                 item_data_set=equip_area[$item];
+                search_area="weapon";
             }
         }
     } else {
@@ -2083,6 +2184,10 @@ function quality_string_conversion(quality){
     if (struct_exists(qaulity_conversions, quality)){
         return qaulity_conversions[$ quality]
     } else {return "";}
+}
+
+function format_number_with_sign(number){
+    return number > 0 ? "+" + string(number) : string(number);
 }
 
 /*

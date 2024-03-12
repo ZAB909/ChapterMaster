@@ -410,16 +410,11 @@ new_buttons_frame=0;
 
 // ** Sets tooltips **
 tooltip="";
-tooltip_weapon=0;
 tooltip_stat1=0;
 tooltip_stat2=0;
 tooltip_stat3=0;
 tooltip_stat4=0;
 tooltip_other="";
-tooltip_x=0;
-tooltip_y=0;
-tooltip_width=0;
-tooltip_height=0;
 
 // ** For weapon display in management **
 unit_profile=false;
