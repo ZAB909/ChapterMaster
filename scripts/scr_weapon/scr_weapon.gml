@@ -1912,8 +1912,9 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
     }
 
     static item_tooltip_desc_gen = function(){
-        item_desc_tooltip = ""
+        item_desc_tooltip = "";
         var stat_order;
+        var special_properties = [];
         var item_type = type;
         if (type==""){
             if struct_exists(global.gear[$ "armour"],name){
@@ -1935,16 +1936,16 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
         }
         switch (item_type) {
             case "armour":
-                stat_order = ["description", "armour_value", "damage_resistance_mod", "hp_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "special_description", "req_exp", "tags"];
+                stat_order = ["description", "special_description", "armour_value", "damage_resistance_mod", "hp_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
                 break;
             case "mobility":
-                stat_order = ["description", "special_description", "armour_value", "hp_mod", "damage_resistance_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "req_exp", "tags"];
+                stat_order = ["description", "special_description", "armour_value", "hp_mod", "damage_resistance_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
                 break;
             case "gear":
-                stat_order = ["description", "special_description", "armour_value", "hp_mod", "damage_resistance_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "req_exp", "tags"];
+                stat_order = ["description", "special_description", "armour_value", "hp_mod", "damage_resistance_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
                 break;
             case "weapon":
-                stat_order = ["description", "attack", "ranged_mod", "melee_mod", "ammo", "range", "armour_value", "hp_mod", "damage_resistance_mod", "melee_hands", "ranged_hands", "arp", "spli", "special_description", "req_exp", "tags"];
+                stat_order = ["description", "special_description", "attack", "ranged_mod", "melee_mod", "ammo", "range", "armour_value", "hp_mod", "damage_resistance_mod", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
                 break;
             }
         for (var i = 0; i < array_length(stat_order); i++) {
@@ -2020,20 +2021,24 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                         }
                     }
                     break;
-                case "arp":
+                case "special_properties":
                     if (arp>0){
-                        item_desc_tooltip += $"Armour Piercing#"
+                        array_push(special_properties, "Armour Piercing")
                     } else if (arp<0){
-                        item_desc_tooltip += $"Low Penetration#"
+                        array_push(special_properties, "Low Penetration")
                     }
-                    break;
-                case "spli":
                     if (spli!=0){
-                        if (range>1.1){
-                            item_desc_tooltip += $"Ranged, Rapid Fire#"
-                        } else {
-                            item_desc_tooltip += $"Melee, Splash#"
+                        array_push(special_properties, "Area of Effect")
+                    }
+                    if (array_length(special_properties)>0){
+                        var special_properties_string = ""
+                        for (var j = 0; j < array_length(special_properties); j++) {
+                            special_properties_string += special_properties[j]
+                            if (j < array_length(special_properties) - 1) {
+                                special_properties_string += ", "
+                            }
                         }
+                        item_desc_tooltip += $"#Properties:#{special_properties_string}#"
                     }
                     break;
                 case "special_description":
@@ -2043,7 +2048,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                     break;
                 case "req_exp":
                     if (req_exp>0){
-                        item_desc_tooltip += $"Requires {req_exp} XP#"
+                        item_desc_tooltip += $"#Requires {req_exp} EXP#"
                     }
                     break;
                 case "tags":
