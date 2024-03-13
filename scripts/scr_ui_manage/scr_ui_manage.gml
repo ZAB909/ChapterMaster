@@ -180,7 +180,7 @@ function scr_ui_manage() {
                 hide_banner=0;
                	selection_data.system.alarm[3]=4;
 			}
-			if ((man_size==0 || man_size>selection_data.number) && selection_data.start_count==0){
+			if ((man_size==0 || man_size>selection_data.number)){
 				proceed_button.draw_shutter(xx+1110,yy+70, "Proceed", 0.5, false);
 			} else {
 				if (proceed_button.draw_shutter(xx+1110,yy+70, "Proceed", 0.5, true)){
@@ -191,22 +191,23 @@ function scr_ui_manage() {
 	                hide_banner=0;
 	                selections = [];
 	                var forge = selection_data.feature.feature;
+	                forge.techs_working = 0;
 	                for (var i=1; i<500;i++){
 	                	if (ma_name[i]== "") then continue;
 	                	if (man_sel[i]>0){
 	                		switch(selection_data.purpose_code){
 	                			case "forge_assignment":
-	                			forge.techs_working++;
-	                			unit = display_unit[i];
-	                			unit.unload(selection_data.planet, selection_data.system);
-	                			unit.job = {type:"forge", planet:selection_data.planet, location:selection_data.system.name};
-	                			break;
+		                			forge.techs_working++;
+		                			unit = display_unit[i];
+		                			unit.unload(selection_data.planet, selection_data.system);
+		                			unit.job = {type:"forge", planet:selection_data.planet, location:selection_data.system.name};
+	                				break;
 	                		}
 	                	} else {
 	                		unit = display_unit[i];
 	                		var job = unit.job;
 	                		if (job!="none"){
-		                		if (job.type=="forge" && job.planet== selection_data.planet){
+		                		if (job.type=="forge" && job.planet == selection_data.planet){
 									unit.job = "none";
 									forge.techs_working--;
 		                		}

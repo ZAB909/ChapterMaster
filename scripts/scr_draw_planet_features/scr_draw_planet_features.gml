@@ -47,7 +47,7 @@ function feature_selected(Feature) constructor{
 					group_selection(techs,{
 						purpose:"Forge Assignment",
 						purpose_code : "forge_assignment",
-						number:worker_capacity-feature.techs_working,
+						number:worker_capacity,
 						system:obj_controller.selected.id,
 						feature:obj_star_select.feature,
 						planet : obj_controller.selecting_planet,

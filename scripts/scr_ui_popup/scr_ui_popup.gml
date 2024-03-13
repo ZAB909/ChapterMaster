@@ -787,7 +787,7 @@ function scr_ui_popup() {
 			    }
 			}
 		}
-	    if (point_in_rectangle(mouse_x, mouse_y, xx+3, yy+50, xx+67, yy+114)){
+	    if (point_in_rectangle(mouse_x, mouse_y, xx+478, yy+3, xx+478+64, yy+67)){
 	        tooltip_draw(obj_controller.forge_string);
 	    }		
 

@@ -23,15 +23,15 @@ var yy =__view_get( e__VW.YView, 0 );
 // Main UI
 if (zoomed==0) and (zui==0){
     draw_sprite(spr_new_ui,0,xx+0,yy+0);
-        draw_sprite_ext(
-            spr_forge_points_icon,0, 
-            xx+4,
-            yy + 50,
-            1, 
-            1, 
-            0,
-            c_white,
-            1); 
+    draw_sprite_ext(
+        spr_forge_points_icon,0, 
+        xx+478,
+        yy + 3,
+        1, 
+        1, 
+        0,
+        c_white,
+        1); 
     draw_set_color(c_white);
     // Buttons here
     draw_sprite(spr_ui_but_4,0,xx+1374,yy+8);
@@ -69,7 +69,7 @@ if (zoomed==0) and (zui==0){
     if (y_slide>0) then draw_set_alpha((100-(y_slide*2))/100);
     
     //forge points number
-    draw_text_transformed(xx+36,yy + 82, string(forge_points), 1.0, 1.0, 0);
+    draw_text_transformed(xx+510,yy + 35, string(forge_points), 1.0, 1.0, 0);
     
     draw_set_alpha(1);
     draw_sprite(spr_new_banner,0,xx+1439+new_banner_x,yy+62);

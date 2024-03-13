@@ -20,11 +20,11 @@ if (!instance_exists(target)) or (target=-50){
 }
 //if (!instance_exists(target)) then exit;
 
+if (instance_exists(obj_en_ship)){
+    if (!instance_exists(target) and (instance_nearest(x,y,obj_en_ship).x>500)) then target=instance_nearest(x,y,obj_en_ship);
 
-//if (!instance_exists(target)) and (instance_exists(obj_en_ship)) and (instance_nearest(x,y,obj_en_ship).x>500) then target=instance_nearest(x,y,obj_en_ship);
-
-//if (!instance_exists(target)) and (instance_exists(obj_en_ship)) then target=instance_nearest(x,y,obj_en_ship);
-
+    if (!instance_exists(target)) then target=instance_nearest(x,y,obj_en_ship);
+}
 
 if (hp<=0) and (x>-5000){
     // obj_fleet.fighting[self.ship_id]=-5;
@@ -67,7 +67,7 @@ if (hp<=0) and (x>-5000){
     }
     x=-7000;y=room_height/2;
 }
-if (hp>0) and (instance_exists(obj_en_ship)){
+if (hp>0) and (instance_exists(target)){
     if (cooldown[1]>0) then cooldown[1]-=1;
     if (cooldown[2]>0) then cooldown[2]-=1;
     if (cooldown[3]>0) then cooldown[3]-=1;
