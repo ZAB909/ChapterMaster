@@ -20,14 +20,14 @@ function scr_librarium(){
         draw_rectangle(xx + 326 + 16, yy + 66, xx + 887 + 16, yy + 818, 0);
         draw_set_alpha(1);
         draw_set_color(c_gray);
-        draw_rectangle(xx + 326 + 16, yy + 66, xx + 887 + 16, yy + 818, 1);
+        draw_rectangle(xx + 326 + 16, yy + 66, xx + 887 + 16, yy + 818, 1); // Center librarium box
         draw_line(xx + 326 + 16, yy + 426, xx + 887 + 16, yy + 426);
         draw_set_alpha(0.75);
         draw_set_color(0);
         draw_rectangle(xx + 945, yy + 66, xx + 1580, yy + 818, 0);
         draw_set_alpha(1);
         draw_set_color(c_gray);
-        draw_rectangle(xx + 945, yy + 66, xx + 1580, yy + 818, 1);
+        draw_rectangle(xx + 945, yy + 66, xx + 1580, yy + 818, 1); // Right librarium box
 
         if (menu_adept = 0) {
             // draw_sprite(spr_advisors,3,xx+16,yy+43);
@@ -122,11 +122,11 @@ function scr_librarium(){
             obj_ini.artifact_struct[menu_artifact].name = artifact_namer.draw(artifact_name); 
             draw_sprite(spr_arrow, 0, xx + 403, yy + 433);
             draw_sprite(spr_arrow, 1, xx + 795, yy + 433);
-
-            draw_set_color(c_black);
-            draw_rectangle(xx + 482, yy + 500, xx + 762, yy + 665, 0);
+            // Artifact description box
+            draw_set_color(c_black); 
+            draw_rectangle(xx + 402, yy + 500, xx + 842, yy + 685, 0);
             draw_set_color(c_gray);
-            draw_rectangle(xx + 482, yy + 500, xx + 762, yy + 665, 1);
+            draw_rectangle(xx + 402, yy + 500, xx + 842, yy + 685, 1); 
 
         }
         if (artifacts == 0){
@@ -297,15 +297,14 @@ function scr_librarium(){
             	artifact_equip.draw_shutter(xx + 385, yy + 740, "EQUIP", 0.3, false);
             	artifact_gift.draw_shutter(xx + 575, yy + 740, "GIFT", 0.3, false);
             }
-	        draw_set_color(881503);
 	        draw_set_halign(fa_center);
             draw_set_font(fnt_40k_14);
             draw_set_color(c_gray);
-            draw_text_ext(xx + 622, yy + 628, string_hash_to_newline(string(artif_descr)), -1, 430);
-            var spack = string_height_ext(string_hash_to_newline(string(artif_descr)), -1, 430);
+            draw_text_ext(xx + 622, yy + 504, string_hash_to_newline(string(artif_descr)), -1, 436);
             draw_set_font(fnt_40k_14b);
             draw_set_color(c_gray);
-            draw_text_ext(xx + 622, yy + 648 + spack, string_hash_to_newline(string(tip2)), -1, 430);
+            var spack = string_height_ext(string_hash_to_newline(string(artif_descr)) + 4, -1, 436);
+            draw_text_ext(xx + 622, yy + 504 + spack, string_hash_to_newline(string(tip2)), -1, 436);
 
             // identifiable=0;
         }
