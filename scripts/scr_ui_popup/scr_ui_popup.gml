@@ -25,8 +25,8 @@ function tooltip_draw(tooltip="", max_width=300, coords=[mouse_x+24,mouse_y+24],
 		rect_h += header_h + text_padding_y;
 	}
 	// Get view coordinates
-	static xx = __view_get(e__VW.XView, 0);
-	static yy = __view_get(e__VW.YView, 0);
+	var xx = __view_get(e__VW.XView, 0);
+	var yy = __view_get(e__VW.YView, 0);
 	// Define tooltip position and clamp it to view
 	var rect_x = clamp(coords[0], xx + DEFAULT_TOOLTIP_VIEW_OFFSET, xx + __view_get(e__VW.WView, 0) - rect_w - DEFAULT_TOOLTIP_VIEW_OFFSET);
 	var rect_y = clamp(coords[1], yy + DEFAULT_TOOLTIP_VIEW_OFFSET, yy + __view_get(e__VW.HView, 0) - rect_h - DEFAULT_TOOLTIP_VIEW_OFFSET);
