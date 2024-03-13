@@ -292,7 +292,7 @@ global.weapons={
         "tags":["power", "spear"],
     },
     "Chainfist": {
-     "abbreviation": "ChFist",
+     "abbreviation": "ChFst",
         "attack": {
             "standard": 300,
             "master_crafted": 325,
@@ -307,7 +307,7 @@ global.weapons={
         "tags":["power", "chain", "fist", "siege"],
     },
     "Lascutter": {
-       "abbreviation": "Lascttr",
+       "abbreviation": "Lasct",
         "attack": {
             "standard": 100,
             "master_crafted": 150,
@@ -405,7 +405,7 @@ global.weapons={
         "tags":["power", "axe"],
     },    
     "Power Fist": {
-       "abbreviation": "PwrFist",       
+       "abbreviation": "PwrFst",       
         "attack": {
             "standard": 450,
             "master_crafted": 500,
@@ -426,7 +426,7 @@ global.weapons={
         "tags":["power","fist"],
     },
     "Lightning Claw": {
-    "abbreviation": "LghtClaw",             
+    "abbreviation": "LghtClw",             
         "attack": {
             "standard": 130,
             "master_crafted": 160,
@@ -442,7 +442,7 @@ global.weapons={
         "tags":["power","dual","fist"],
     },
     "Dreadnought Lightning Claw": {
-    "abbreviation": "LghtClaw",             
+    "abbreviation": "LghtClw",             
         "attack": {
             "standard": 300,
             "master_crafted": 400,
@@ -639,7 +639,7 @@ global.weapons={
         "tags":["dreadnought","flame"]
     },
     "Dreadnought Power Claw":{
-      "abbreviation": "PwrClaw",              
+      "abbreviation": "PwrClw",              
         "attack": {
             "standard": 400,
             "master_crafted": 600,
@@ -1121,7 +1121,7 @@ global.weapons={
             "artifact": 486
         },
         "description": "Hurricane Bolters are large hex-mount bolter arrays that are able to deliver a withering hail of anti-infantry fire at short ranges.",
-        "abbreviation": "HrrcnBltrs", 
+        "abbreviation": "HrcBltrs", 
         "melee_hands": 0,
         "ranged_hands": 0,
         "ammo": 20,
@@ -1136,7 +1136,7 @@ global.weapons={
             "artifact": 720
         },
         "description": "A huge vehicle-mounted flamethrower, the heat produced by this terrifying weapon can crack even armoured ceramite.",
-        "abbreviation": "FlmstrmCnns", 
+        "abbreviation": "FlmstCnns", 
         "melee_hands": 0,
         "ranged_hands": 0,
         "ammo": 6,
@@ -1355,7 +1355,7 @@ global.weapons={
         "description": "",
     },  
     "Flamestorm Cannon Turret": {
-        "abbreviation": "FlmstrmCnn", 
+        "abbreviation": "FlmstCnn", 
         "description": "",
     },  
     "Magna-Melta Turret": {
@@ -1441,7 +1441,7 @@ global.gear = {
       },
       "melee_hands":2,
       "ranged_hands":2,
-      "description": "The toughest and most powerful armour designed by humanity. Only the most veteran of Astartes are allowed to wear these.",
+      "description": "Terminator Armour is the toughest and most powerful armour designed by humanity, available only to the veterans of the Space Marine Chapters. This Indomitus Pattern is the most widespread and versatile pattern as of M41.",
       "tags":["terminator"],
       "req_exp":90,
     },
@@ -1485,7 +1485,7 @@ global.gear = {
       },
       "melee_hands":2,
       "ranged_hands":2,      
-      "description": "Even more advanced than the Indomitus Terminator Armour, this upgraded armour offers greater mobility at no cost to protection.",
+      "description": "This pattern is possibly considered the most advanced form of Terminator Armour, providing greater mobility for the wearer compared to the Indomitus with no loss in durability. In the M41 considered to be incredibly rare.",
       "tags":["terminator"],
       "req_exp":90,
     },
@@ -1508,7 +1508,7 @@ global.gear = {
     },
       "melee_hands":2,
       "ranged_hands":2,      
-      "description": "Among the first issued to the Space Marine Legions, it is functionally distinct from other patterns, bearing additional plating and shield generators installed within the shoulder pads",
+      "description": "Among the first issued to the Space Marine Legions. Having additional plating and shield generators installed within the shoulder pads resulted in severe straining of the suit's exoskeleton and reduced the wearer's maneuverability, leading to its decline among some legions.",
       "tags":["terminator"],
       "req_exp":90,
     },
