@@ -1349,7 +1349,7 @@ function scr_initialize_custom() {
 			chapter_master.add_trait("tyrannic_vet");
 			arti = obj_ini.artifact_struct[last_artifact];
 			arti.name = "Gauntlets of Ultramar";
-			arti.custom_description="Two mighty Power Fists with incorporated Bolters that were reclaimed from a fallen Chaos champion, slain during the Gamalia Reclusiam Massacre by the Primarch of the Ultramarines, Roboute Guilliman himself."
+			arti.custom_description="Two mighty Power Fists with incorporated Bolters that were reclaimed from a fallen Chaos champion, slain during the Gamalia Reclusiam Massacre by the Primarch of the Ultramarines, Roboute Guilliman himself"
 			obj_ini.artifact[last_artifact] = "Power Fist";
 			obj_ini.artifact_identified[last_artifact] = 0;
 			arti.bearer = [0,1];
@@ -1360,7 +1360,7 @@ function scr_initialize_custom() {
 			chapter_master_equip.armour = last_artifact;
 			arti = obj_ini.artifact_struct[last_artifact];
 			arti.name = "Armour of Antilochus";
-			arti.custom_description="a masterwork suit of the standard Indomitus pattern Terminator Armour"
+			arti.custom_description="A masterwork suit of the standard Indomitus pattern Terminator Armour. It incorporates a Teleport Homer, allowing Terminator squads of the veteran First Company to deploy next to their Chapter Master's side."
 			arti.bearer = [0,1];
 			obj_ini.artifact_identified[last_artifact] = 0;
 			obj_ini.artifact[last_artifact] = "Terminator Armour";
