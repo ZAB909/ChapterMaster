@@ -197,6 +197,16 @@ function scr_initialize_custom() {
 			      battle_barges++;
 			
 			}
+			if (global.chapter_name="Black Templars") 
+			{
+			      flagship_name="Eternal Crusader";
+			
+			}
+			if (global.chapter_name="Minotaurs") 
+			{
+			      flagship_name="Daedelos Krata";
+			
+			}
 		}
 	    if (obj_creation.fleet_type=3){
 	        if (global.chapter_name="Lamenters"){
@@ -1326,7 +1336,6 @@ function scr_initialize_custom() {
 			break;
 		case "Iron Hands":
 			chapter_master_equip.wep1="Power Axe|";
-			chapter_master_equip.wep2="Storm Shield";
 			chapter_master.add_trait("flesh_is_weak");
 			chapter_master.add_trait("zealous_faith");
 			chapter_master.add_trait("tinkerer");
@@ -1380,11 +1389,26 @@ function scr_initialize_custom() {
 		case "Black Templars":
 			chapter_master.add_trait("melee_enthusiast");
 			chapter_master.add_trait("zealous_faith");
-			chapter_master.add_trait("old_guard");	
+			chapter_master.add_trait("old_guard");
+			arti = obj_ini.artifact_struct[last_artifact];
+			arti.name = "Sword of the High Marshalls";
+			arti.custom_description = "A relic blade forged from the shards of Rogal Dorn's shattered sword passed down by the High Marshalls as a sign of office";
+			obj_ini.artifact[last_artifact] = "Relic Blade";
+			arti.bearer = [0,1];
+			obj_ini.artifact_identified[last_artifact] = 0;
+			chapter_master_equip.wep1=last_artifact;
 			break;
 		case "Minotaurs":
 			chapter_master.add_trait("very_hard_to_kill");
-			chapter_master.add_trait("seasoned");	
+			chapter_master.add_trait("seasoned");
+			chapter_master_equip.armour="Tartaros";
+			arti = obj_ini.artifact_struct[last_artifact];
+			arti.name = "The Black Spear";
+			arti.custom_description = "An ancient artefact that is steeped in blood and said to have once been used by the Legio Custodes.";
+			obj_ini.artifact[last_artifact] = "Power Spear";
+			arti.bearer = [0,1];
+			obj_ini.artifact_identified[last_artifact] = 0;
+			chapter_master_equip.wep1=last_artifact;
 		case "Lamenters":
 			chapter_master.add_trait("shitty_luck");
 			chapter_master.add_trait("old_guard");	
@@ -2625,7 +2649,6 @@ function scr_initialize_custom() {
 	scr_add_item(wep1[101,12],20);
 	scr_add_item(wep2[101,12],20);
 	if (global.chapter_name="Iron Hands") then scr_add_item("Bionics",200);
-
 
 	if (string_count("Sieged",strin2)>0){
 	    scr_add_item("Narthecium",4);
