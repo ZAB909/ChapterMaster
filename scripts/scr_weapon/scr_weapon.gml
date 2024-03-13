@@ -762,6 +762,22 @@ global.weapons={
         "arp": 1,
         "tags":["plasma"]
     },
+    "Plasma Cannon": {
+        "abbreviation": "PlsmCan",
+        "attack": {
+            "standard": 500,
+            "master_crafted": 600,
+            "artifact": 750
+        },
+        "description": "A Heavy Duty versino of the volatile Plasma Gun.",
+        "melee_hands": 1,
+        "ranged_hands": 3,
+        "ammo": 16,
+        "range": 14,
+        "spli": 1,
+        "arp": 1,
+        "tags":["plasma", "heavy_weapon", "Dreadnought"]
+    },
     "Sniper Rifle": {
         "abbreviation": "SnprRfl",        
         "attack": {

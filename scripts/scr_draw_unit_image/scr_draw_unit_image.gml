@@ -817,16 +817,16 @@ function scr_draw_unit_image(x_draw, y_draw){
         
             // Draw the fixed upper hands for Terminators or Tartaros
             if (base_sprite==1){
-                if (fix_left>0) and (fix_left!=2) and (fix_left!=4) and (fix_left<8) then draw_sprite(spr_termi_wep_fix,4,xx+x_draw,yy+y_draw+ui_ymod[1]);
+                if (fix_left>0) and (fix_left!=2) and (fix_left!=4) and (fix_left<8) then draw_sprite(spr_termi_wep_fix,4,xx+x_draw,yy+y_draw+ui_ymod[1]-20);
                 if (fix_right>0) and (fix_right!=2) and (fix_right!=4) and (fix_right<8){
-                    if (specialist_colours<=1) then draw_sprite(spr_termi_wep_fix,6,xx+x_draw,yy+y_draw+ui_ymod[1]);
-                    if (specialist_colours>=2) then draw_sprite(spr_termi_wep_fix,7,xx+x_draw,yy+y_draw+ui_ymod[1]);
+                    if (specialist_colours<=1) then draw_sprite(spr_termi_wep_fix,6,xx+x_draw,yy+y_draw+ui_ymod[1]-20);
+                    if (specialist_colours>=2) then draw_sprite(spr_termi_wep_fix,7,xx+x_draw,yy+y_draw+ui_ymod[1]-20);
                 }
             }else if (base_sprite==2){
-                if (fix_left>0) and (fix_left!=2) and (fix_left!=4) and (fix_left<8) then draw_sprite(spr_tartaros_wep_fix,4,xx+x_draw,yy+y_draw+ui_ymod[2]);
+                if (fix_left>0) and (fix_left!=2) and (fix_left!=4) and (fix_left<8) then draw_sprite(spr_tartaros_wep_fix,4,xx+x_draw,yy+y_draw+ui_ymod[2]-20);
                 if (fix_right>0) and (fix_right!=2) and (fix_right!=4) and (fix_right<8){
-                    if (specialist_colours<=1) then draw_sprite(spr_tartaros_wep_fix,6,xx+x_draw,yy+y_draw+ui_ymod[2]);
-                    if (specialist_colours>=2) then draw_sprite(spr_tartaros_wep_fix,7,xx+x_draw,yy+y_draw+ui_ymod[2]);
+                    if (specialist_colours<=1) then draw_sprite(spr_tartaros_wep_fix,6,xx+x_draw,yy+y_draw+ui_ymod[2]-20);
+                    if (specialist_colours>=2) then draw_sprite(spr_tartaros_wep_fix,7,xx+x_draw,yy+y_draw+ui_ymod[2]-20);
                 }
             }
             // if (braz=1) then draw_sprite(spr_pack_brazier,1,xx+x_draw,yy+y_draw);

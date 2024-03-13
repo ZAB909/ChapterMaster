@@ -1560,18 +1560,19 @@ for(var i=1; i<=99; i++){
                     tixt+="some form of divine inspiration has seemed to have taken hold of him.  An artifact "+string(obj_ini.artifact[k])+" has been crafted.";
                 }
                 if (item=="baby"){
-                    unit.corruption+=choose(8,12,16,20);
+                    unit.edit_corruption(choose(8,12,16,20))
                     tixt+="some form of horrendous statue.  A weird amalgram of limbs and tentacles, the sheer atrocity of it is made worse by the tiny, baby-like form, the once natural shape of a human child twisted nearly beyond recognition.";
                 }
                 if (item=="robot"){
-                    unit.corruption+=choose(2,4,6,8,10);
+                    unit.edit_corruption(choose(2,4,6,8,10));
                     tixt+="some form of small, box-like robot.  It seems to teeter around haphazardly, nearly falling over with each step.  "+string(marine_name)+" maintains that it has no AI, though the other "+string(obj_ini.role[100][16])+" express skepticism.";
                 }
                 if (item=="demon"){
-                    unit.corruption+=choose(8,12,16,20);
+                    unit.edit_corruption(choose(8,12,16,20));
                     tixt+="some form of horrendous statue.  What was meant to be some sort of angel, or primarch, instead has a mishappen face that is hardly human in nature.  Between the fetid, ragged feathers and empty sockets it is truly blasphemous.";
                 }
                 if (item=="fusion"){
+                    //TODO if tech heretic chosen don't kill the dude
                     // unit.corruption+=choose(70);
                     tixt+="some kind of ill-mannered ascension.  One of your battle-brothers enters the armamentarium to find "+string(marine_name)+" fused to a vehicle, his flesh twisted and submerged into the frame.  Mechendrites and weapons fire upon the marine without warning, a windy scream eminating from the abomination.  It takes several battle-brothers to take out what was once a "+string(obj_ini.role[100][16])+".";
 

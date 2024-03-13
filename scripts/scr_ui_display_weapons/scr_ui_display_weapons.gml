@@ -274,6 +274,10 @@ function dreadnought_sprite_components(component){
         "Assualt Cannon" : spr_dread_assault_cannon,
         "Lascannon" : spr_dread_lascannon,
         "Close Combat Weapon":spr_dread_claw,
+        "Twin Linked Heavy Bolter":spr_dread_heavy_bolter,
+        "Plasma Cannon" : spr_dread_plasma_cannon,
+        "Autocannon" : spr_dread_autocannon,
+        "Missile Launcher" :spr_dread_missile
     };
     if (struct_exists(components, component)){
         return components[$ component]

@@ -72,18 +72,29 @@ function scr_librarium(){
         draw_set_color(881503);
         draw_set_halign(fa_center);
         if (artifacts > 0) {
-            draw_text(xx + 622, yy + 440, string_hash_to_newline("[Artifact " + string(menu_artifact) + " of " + string(artifacts) + "]"));
+            var usey =0;
+            for (i=0;i<30;i++){
+                if (obj_ini.artifact[i]!="") then usey++;
+                if (i==menu_artifact) then break;
+            }
+            draw_text(xx + 622, yy + 440, string_hash_to_newline("[Artifact " + string(usey) + " of " + string(artifacts) + "]"));
             var arrow = [xx+400,yy+437,xx+445,yy+461]
             if (point_and_click(arrow)){
                 artifact_namer.allow_input=false;
             	identifiable=0;
                 artifact_equip = new shutter_button();
                 artifact_gift = new shutter_button();
-                artifact_destroy = new shutter_button();            	
-            	if (menu_artifact>1){
-            		menu_artifact-=1;
-            	} else {
-            		menu_artifact=artifacts;
+                artifact_destroy = new shutter_button();  
+                if  (menu_artifact>=1){     	
+                	while (menu_artifact>=1){
+                		menu_artifact--;
+                        if (obj_ini.artifact[menu_artifact] != "") then break;
+                	}
+                }
+                if (menu_artifact==0){
+                    for (var i=29;i>0;i--){
+                        if (obj_ini.artifact[i] != "") then menu_artifact=i;
+                    }                    
             	}
             }
             arrow = [xx+790,yy+437,xx+832,yy+461]
@@ -93,11 +104,18 @@ function scr_librarium(){
                 artifact_equip = new shutter_button();
                 artifact_gift = new shutter_button();
                 artifact_destroy = new shutter_button();           	
-            	if (menu_artifact<artifacts){
-            		menu_artifact++;
-            	} else {
-            		menu_artifact=1;
-            	}    	
+                if (menu_artifact<30){
+                    while(menu_artifact<30){
+                        menu_artifact++;
+                        if (obj_ini.artifact[menu_artifact] != "") then break;
+                    }
+                }
+
+                if (menu_artifact==30){
+                    for (var i=1;i<30;i++){
+                         if (obj_ini.artifact[i] != "") then menu_artifact=i;
+                    }
+                }
             }
 
             var artifact_name = obj_ini.artifact_struct[menu_artifact].name;
@@ -119,7 +137,7 @@ function scr_librarium(){
         draw_set_halign(fa_center);
 
         identifiable = 0;
-        if (obj_ini.artifact_loc[menu_artifact] = obj_ini.home_name) then identifiable = 1;
+        if (obj_ini.artifact_loc[menu_artifact] == obj_ini.home_name) then identifiable = 1;
         if (obj_ini.artifact_sid[menu_artifact] >= 500) {
             if (obj_ini.ship_location[obj_ini.artifact_sid[menu_artifact] - 500] = obj_ini.home_name) then identifiable = 1;
         }
@@ -180,7 +198,6 @@ function scr_librarium(){
 
                 artif_descr = obj_ini.artifact_struct[menu_artifact].description();
                 tooltip = "";
-                tooltip_weapon = 0;
                 tooltip_stat1 = 0;
                 tooltip_stat2 = 0;
                 tooltip_stat3 = 0;

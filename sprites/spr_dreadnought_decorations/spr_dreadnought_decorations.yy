@@ -25,7 +25,7 @@
     {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"d095b7d1-2c05-4161-9770-6744f1afc0df","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": null,
-  "origin": 0,
+  "origin": 9,
   "parent": {
     "name": "dreadnought",
     "path": "folders/Sprites/New UI/Marine Viewer/dreadnought.yy",
@@ -63,7 +63,7 @@
     ],
     "visibleRange": null,
     "volume": 1.0,
-    "xorigin": 0,
+    "xorigin": 24,
     "yorigin": 0,
   },
   "swatchColours": null,
