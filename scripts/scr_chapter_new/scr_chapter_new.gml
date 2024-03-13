@@ -450,8 +450,8 @@ if (argument0="Minotaurs"){founding=10;points=450;
 	    color_to_pauldron2="Red";color_to_pauldron="Brown";color_to_lens="Red";
 	    color_to_weapon="Brown";col_special=0;trim=1;
 		hchaplain="Ivanus Enkomi"; 
-		fmaster="Spartacus";clibrarian="Plato";hapothecary="Asclepius"
-	    recruiter="Artemis";admiral="Themistocles";
+		fmaster="Varro Crag";clibrarian="Lykos Gorgon";hapothecary="Raze Korthos"
+	    recruiter="Axion Eurytos";admiral="Thoul Brontes";
 	    battle_cry="...";
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
 	    mutations=0;mutations_selected=0;
@@ -505,15 +505,16 @@ if (argument0="Minotaurs"){founding=10;points=450;
 	    recruiting_name=global.name_generator.generate_star_name();
 		aspirant_trial="Apprenticeship";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Black";color_to_secondary="Black";color_to_trim="Black";
+	    color_to_main="Black";color_to_secondary="Black";color_to_trim="Silver";
 	    color_to_pauldron2="White";color_to_pauldron="White";color_to_lens="Dark Red";
-	    color_to_weapon="Black";col_special=0;trim=1;
+	    color_to_weapon="Black";col_special=0;trim=0;
 	    battle_cry="No Pity! No Remorse! No Fear";
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
 	    mutations=2;mutations_selected=0;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=1;
 	    zygote=0;betchers=1;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
-		hchaplain="Grimaldus";
+		hchaplain="Grimaldus"; fmaster="Jurisian"; recruiter="Emrik";
+		admiral="Stenheir";hapothecary="Colber";
 	   disposition[1]=50;// Prog
 	    disposition[2]=60;//Imperium
 		disposition[3]=40;//Admech
@@ -524,6 +525,8 @@ if (argument0="Minotaurs"){founding=10;points=450;
 	    chapter_master_name="Helbrecht";chapter_master_melee=5;
 	    chapter_master_ranged=2;chapter_master_specialty=2;
 		flagship_name= "Eternal Crusader";
+		role[i,5]="Marshall";wep1[i,5]="Power Sword";
+		role[i,3]="Sword Brother";
 	}
 
 
