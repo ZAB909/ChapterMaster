@@ -2059,7 +2059,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                     }
                     break;
                 case "spli":
-                    if (spli>1){
+                    if (spli>0){
                         item_desc_tooltip += $"Attack Rate: {spli}#"
                     }
                     else{
