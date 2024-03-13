@@ -1388,7 +1388,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			return $"{quality_string_conversion(quality) }{artifact}";
 		} else {
 			if (obj_ini.artifact_struct[artifact].name==""){
-				return  $"{quality_string_conversion(quality) }{obj_ini.artifact[artifact]}";
+				return  $"{quality_string_conversion(quality)}{obj_ini.artifact[artifact]}";
 			} else {
 				return obj_ini.artifact_struct[artifact].name;
 			}
