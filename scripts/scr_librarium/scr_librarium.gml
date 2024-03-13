@@ -303,8 +303,8 @@ function scr_librarium(){
             draw_text_ext(xx + 622, yy + 504, string_hash_to_newline(string(artif_descr)), -1, 436);
             draw_set_font(fnt_40k_14b);
             draw_set_color(c_gray);
-            var spack = string_height_ext(string_hash_to_newline(string(artif_descr)) + 4, -1, 436);
-            draw_text_ext(xx + 622, yy + 504 + spack, string_hash_to_newline(string(tip2)), -1, 436);
+            var spack = string_height_ext(string_hash_to_newline(string(artif_descr)), -1, 436);
+            draw_text_ext(xx + 622, yy + 508 + spack, string_hash_to_newline(string(tip2)), -1, 436);
 
             // identifiable=0;
         }
