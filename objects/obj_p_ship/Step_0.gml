@@ -18,20 +18,32 @@ if (!instance_exists(target)) or (target=-50){
     target=instance_nearest(x,y,obj_en_ship);
     instance_activate_object(obj_en_ship);
 }
-if (!instance_exists(target)) then exit;
+//if (!instance_exists(target)) then exit;
 
 
-// if (!instance_exists(target)) and (instance_exists(obj_en_ship)) and (instance_nearest(x,y,obj_en_ship).x>500) then target=instance_nearest(x,y,obj_en_ship);
+//if (!instance_exists(target)) and (instance_exists(obj_en_ship)) and (instance_nearest(x,y,obj_en_ship).x>500) then target=instance_nearest(x,y,obj_en_ship);
 
-// if (!instance_exists(target)) and (instance_exists(obj_en_ship)) then target=instance_nearest(x,y,obj_en_ship);
+//if (!instance_exists(target)) and (instance_exists(obj_en_ship)) then target=instance_nearest(x,y,obj_en_ship);
 
 
 if (hp<=0) and (x>-5000){
     // obj_fleet.fighting[self.ship_id]=-5;
-    if (class="Battle Barge") or (class="Slaughtersong"){obj_fleet.capital-=1;obj_fleet.capital_lost+=1;}
-    if (class="Strike Cruiser"){obj_fleet.frigate-=1;obj_fleet.frigate_lost+=1;}
-    if (class="Hunter"){obj_fleet.escort-=1;obj_fleet.escort_lost+=1;}
-    if (class="Gladius"){obj_fleet.escort-=1;obj_fleet.escort_lost+=1;}
+    if (class="Battle Barge") or (class="Slaughtersong"){
+        obj_fleet.capital-=1;
+        obj_fleet.capital_lost+=1;
+    }
+    if (class="Strike Cruiser"){
+        obj_fleet.frigate-=1;
+        obj_fleet.frigate_lost+=1;
+    }
+    if (class="Hunter"){
+        obj_fleet.escort-=1;
+        obj_fleet.escort_lost+=1;
+    }
+    if (class="Gladius"){
+        obj_fleet.escort-=1;
+        obj_fleet.escort_lost+=1;
+    }
     // obj_ini.ship_hp[self.ship_id]=-100;
     
     obj_fleet.ship_lost[ship_id]=1;// show_message("obj_fleet.ship_lost["+string(ship_id)+"] = 1");
@@ -137,7 +149,10 @@ if (hp>0) and (instance_exists(obj_en_ship)){
         }
         
         if (dist>20) and (speed<(obj_fleet.ship_speed[self.ship_id]/10)) then speed+=speed_up;
-        if (dist<=20) and (speed>0){paction="";action="attack";}
+        if (dist<=20) and (speed>0){
+            paction="";
+            action="attack";
+        }
     }
     
     
@@ -154,8 +169,12 @@ if (hp>0) and (instance_exists(obj_en_ship)){
         if (instance_exists(targe)) then dist=point_distance(x,y,targe.x,targe.y);
         
         if (dist>64) and (dist<300){
-            bull=instance_create(x,y,obj_p_round);bull.direction=point_direction(x,y,targe.x,targe.y);
-            bull.speed=20;bull.dam=3;bull.image_xscale=0.5;bull.image_yscale=0.5;turret_cool=floor(60/turrets);
+            bull=instance_create(x,y,obj_p_round);
+            bull.direction=point_direction(x,y,targe.x,targe.y);
+            bull.speed=20;bull.dam=3;
+            bull.image_xscale=0.5;
+            bull.image_yscale=0.5;
+            turret_cool=floor(60/turrets);
             bull.direction+=choose(random(3),1*-(random(3)));
         }
     }
@@ -169,76 +188,98 @@ if (hp>0) and (instance_exists(obj_en_ship)){
     front=0;right=0;left=0;rear=0;
     
     targe=instance_nearest(xx,yy,obj_en_ship);
-    rdir=point_direction(x,y,target.x,target.y);
-    if (rdir>45) and (rdir<=135) and (targe!=target){target_r=targe;right=1;}
-    if (rdir>225) and (rdir<=315) and (targe!=target) and (targe!=target_r){target_l=targe;left=1;}    
-    if (collision_line(x,y,x+lengthdir_x(2000,direction),y+lengthdir_y(2000,direction),obj_en_ship,0,1)) then front=1;
-    
-    
-    var f, facing, ammo, range, wep, dam, gg;f=0;facing="";ammo=0;range=0;wep="";dam=0;
-    gg=0;
-    
-    repeat(weapons){
-        gg+=1;
-    
-        // if (cooldown[gg]>0) then cooldown[gg]-=1;
-    
-        ok=0;f+=1;facing="";ammo=0;range=0;wep="";
-    
-        
-        if (cooldown[gg]<=0) and (weapon[gg]!="") and (weapon_ammo[gg]>0) then ok=1;
-        if (ok=1){facing=weapon_facing[gg];ammo=weapon_ammo[gg];range=weapon_range[gg];}
-        
-        targe=target;
-        if (facing="right") then targe=target_r;
-        if (facing="left") then targe=target_l;    
-        if ((facing="front") or (facing="most")) and (front=1) then ok=2;
-        if (facing="right") or (facing="most") and (right=1) then ok=2;
-        if (facing="left") or (facing="most") and (left=1) then ok=2;
-        if (facing="special") then ok=2;
-        if (!instance_exists(targe)) then exit;
+    if (instance_exists(targe)){
+        rdir=point_direction(x,y,target.x,target.y);
+        if (rdir>45) and (rdir<=135) and (targe!=target){target_r=targe;right=1;}
+        if (rdir>225) and (rdir<=315) and (targe!=target) and (targe!=target_r){target_l=targe;left=1;}    
+        if (collision_line(x,y,x+lengthdir_x(2000,direction),y+lengthdir_y(2000,direction),obj_en_ship,0,1)) then front=1;
         
         
-        dist=point_distance(x,y,targe.x,targe.y);
+        var f=0,facing="",ammo=0,range=0,wep="",dam=0,gg=0;
         
+        repeat(weapons){
+            gg+=1;
         
-        if (ok=2) and (dist<(range+(max(sprite_get_width(sprite_index),sprite_get_height(sprite_index))))){
-            if (ammo>0) and (ammo<500) then ammo-=1;
-            weapon_ammo[gg]=ammo;cooldown[gg]=weapon_cooldown[gg];wep=weapon[gg];dam=weapon_dam[gg];
+            // if (cooldown[gg]>0) then cooldown[gg]-=1;
+        
+            ok=0;f+=1;facing="";ammo=0;range=0;wep="";
+        
             
-            // if (f=3) and (ship_id=2) then show_message("ammo: "+string(ammo)+" | range: "+string(range));
-            
-            if (ammo<0) then ok=0;
-            ok=3;
-            
-            if (string_count("orpedo",wep)=0) and (string_count("hawk",wep)=0) and (ok=3){
-                bull=instance_create(x+lengthdir_x(32,direction),y+lengthdir_y(32,direction),obj_p_round);
-                bull.speed=20;bull.dam=dam;
-                if (targe=target) then bull.direction=point_direction(x+lengthdir_x(32,direction),y+lengthdir_y(32,direction),target.x,target.y);
-                if (facing!="front"){bull.direction=point_direction(x+lengthdir_x(32,direction),y+lengthdir_y(32,direction),target.x,target.y);}
-                if (string_count("ova",wep)=1){bull.image_xscale=2;bull.image_yscale=2;}
-                if (wep="Lance Battery"){bull.sprite_index=spr_ground_las;bull.image_xscale=2;bull.image_yscale=2;}
-                if (wep="Plasma Cannon"){bull.sprite_index=spr_ground_plasma;bull.image_xscale=3;bull.image_yscale=3;}
+            if (cooldown[gg]<=0) and (weapon[gg]!="") and (weapon_ammo[gg]>0) then ok=1;
+            if (ok=1){
+                facing=weapon_facing[gg];
+                ammo=weapon_ammo[gg];
+                range=weapon_range[gg];
             }
-            if (string_count("orpedo",wep)=1) and (ok=3){
+            
+            targe=target;
+            if (facing="right") then targe=target_r;
+            if (facing="left") then targe=target_l;    
+            if ((facing="front") or (facing="most")) and (front=1) then ok=2;
+            if (facing="right") or (facing="most") and (right=1) then ok=2;
+            if (facing="left") or (facing="most") and (left=1) then ok=2;
+            if (facing="special") then ok=2;
+            if (instance_exists(targe)){
+            
                 
-                if (sprite_index=spr_ship_bb){
-                    bull=instance_create(x,y+lengthdir_y(-30,direction+90),obj_p_round);
-                    bull.speed=10;bull.direction=direction;bull.sprite_index=spr_torpedo;bull.dam=dam;
+                dist=point_distance(x,y,targe.x,targe.y);
+                
+                
+                if (ok=2) and (dist<(range+(max(sprite_get_width(sprite_index),sprite_get_height(sprite_index))))){
+                    //if (ammo>0) and (ammo<500) then ammo-=1;
+                    weapon_ammo[gg]=ammo;
+                    cooldown[gg]=weapon_cooldown[gg];
+                    wep=weapon[gg];
+                    dam=weapon_dam[gg];
+                    
+                    // if (f=3) and (ship_id=2) then show_message("ammo: "+string(ammo)+" | range: "+string(range));
+                    
+                    if (ammo<0) then ok=0;
+                    ok=3;
+                    
+                    if (string_count("orpedo",wep)=0) and (string_count("hawk",wep)=0) and (ok=3){
+                        bull=instance_create(x+lengthdir_x(32,direction),y+lengthdir_y(32,direction),obj_p_round);
+                        bull.speed=20;bull.dam=dam;
+                        if (targe=target) then bull.direction=point_direction(x+lengthdir_x(32,direction),y+lengthdir_y(32,direction),target.x,target.y);
+                        if (facing!="front"){bull.direction=point_direction(x+lengthdir_x(32,direction),y+lengthdir_y(32,direction),target.x,target.y);}
+                        if (string_count("ova",wep)=1){bull.image_xscale=2;bull.image_yscale=2;}
+                        if (wep="Lance Battery"){
+                            bull.sprite_index=spr_ground_las;
+                            bull.image_xscale=2;
+                            bull.image_yscale=2;
+                        }
+                        if (wep="Plasma Cannon"){
+                            bull.sprite_index=spr_ground_plasma;
+                            bull.image_xscale=3;bull.image_yscale=3;
+                        }
+                    }
+                    if (string_count("orpedo",wep)=1) and (ok=3){
+                        
+                        if (sprite_index=spr_ship_bb){
+                            bull=instance_create(x,y+lengthdir_y(-30,direction+90),obj_p_round);
+                            bull.speed=10;bull.direction=direction;bull.sprite_index=spr_torpedo;bull.dam=dam;
+                        }
+                        
+                        bull=instance_create(x,y+lengthdir_y(-10,direction+90),obj_p_round);
+                        bull.speed=10;
+                        bull.direction=direction;bull.sprite_index=spr_torpedo;
+                        bull.dam=dam;
+                        bull=instance_create(x,y+lengthdir_y(10,direction+90),obj_p_round);
+                        bull.speed=10;
+                        bull.direction=direction;bull.sprite_index=spr_torpedo;
+                        bull.dam=dam;
+                        
+                        if (sprite_index=spr_ship_bb){
+                            bull=instance_create(x,y+lengthdir_y(30,direction+90),obj_p_round);
+                            bull.speed=10;
+                            bull.direction=direction;bull.sprite_index=spr_torpedo;bull.dam=dam;
+                        }
+                    }
+                    if (string_count("hawk",wep)=1) and (ok=3){
+                        bull=instance_create(x,y+lengthdir_y(-30,direction+90),obj_p_th);
+                        bull.direction=self.direction;
+                    }
                 }
-                
-                bull=instance_create(x,y+lengthdir_y(-10,direction+90),obj_p_round);
-                bull.speed=10;bull.direction=direction;bull.sprite_index=spr_torpedo;bull.dam=dam;
-                bull=instance_create(x,y+lengthdir_y(10,direction+90),obj_p_round);
-                bull.speed=10;bull.direction=direction;bull.sprite_index=spr_torpedo;bull.dam=dam;
-                
-                if (sprite_index=spr_ship_bb){
-                    bull=instance_create(x,y+lengthdir_y(30,direction+90),obj_p_round);
-                    bull.speed=10;bull.direction=direction;bull.sprite_index=spr_torpedo;bull.dam=dam;
-                }
-            }
-            if (string_count("hawk",wep)=1) and (ok=3){
-                bull=instance_create(x,y+lengthdir_y(-30,direction+90),obj_p_th);bull.direction=self.direction;
             }
         }
     }
@@ -254,16 +295,17 @@ if (hp>0) and (instance_exists(obj_en_ship)){
 
 /* */
 
-
+show_debug_message("{0}, {1}, {2},{3},{4}",boarders,board_cooldown,board_capital,board_frigate, instance_exists(obj_en_ship));
 if (instance_exists(obj_en_ship)) and (boarders>0) and (board_cooldown<=0) and ((board_capital=true) or (board_frigate=true)){
-    var eh,te;eh=0;te=0;
+    show_debug_message("{0}",boarders)
+    var eh=0,te=0;
     repeat(2){eh+=1;te=0;
         if (eh=1) and (board_capital=true){if (instance_exists(obj_en_capital)) then te=instance_nearest(x,y,obj_en_capital);}
         if (eh=2) and (board_frigate=true){if (instance_exists(obj_en_cruiser)) then te=instance_nearest(x,y,obj_en_cruiser);}
-        
+        show_debug_message("{0}",te)
         if (te!=0) and (instance_exists(te)){
             if (point_distance(x,y,te.x,te.y)<=428){
-                create_boarding_craft(target);
+                create_boarding_craft(te);
             }
         }
         

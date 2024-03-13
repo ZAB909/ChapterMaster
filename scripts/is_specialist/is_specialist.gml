@@ -136,7 +136,7 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 			break;
 		case "apoth":
 			specialists = [
-						obj_ini.role[100][15],//techmarine
+						obj_ini.role[100][15],
 						"Master of the Apothecarion",
 			];
 			if (include_trainee){
