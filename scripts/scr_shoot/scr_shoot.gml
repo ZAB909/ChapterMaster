@@ -71,10 +71,10 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
     
     
     
-    
+			var attack_count_mod = splash[weapon_index_position];
 	    if (damage_type="status") and (stop=0) and (shots_fired>0){
 	        var total_damage,hit_number;total_damage=0;hit_number=shots_fired;
-	        if (splash[weapon_index_position]=1) and (melee_or_ranged!="wall"){shots_fired=shots_fired*3;}
+	        if (attack_count_mod>1) and (melee_or_ranged!="wall") then shots_fired*=attack_count_mod;
 	        if (hit_number>0) and (melee_or_ranged!="wall") and (instance_exists(target_object)){
 	            target_object.hostile_shots=hit_number;
 	            if (wep_owner[weapon_index_position]="assorted") then target_object.hostile_shooters=999;
@@ -84,7 +84,7 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
 	            target_object.hostile_men=1;
 	            // target_object.hostile_men=0;
 	            target_object.hostile_range=range[weapon_index_position];
-	            target_object.hostile_splash=splash[weapon_index_position];
+	            target_object.hostile_splash=attack_count_mod;
 	            with(target_object){scr_clean(999);}
 	        }
 	    }
@@ -102,7 +102,7 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
 	        	total_damage=floor((doom*total_damage));
 	        	hit_number=floor(hit_number*doom);
 	        }
-	        if (splash[weapon_index_position]=1) and (melee_or_ranged!="wall"){shots_fired=shots_fired*3;}
+	        if (attack_count_mod>1) and (melee_or_ranged!="wall"){shots_fired*=attack_count_mod;}
         
 	        if (hit_number>0) and (melee_or_ranged!="wall") and (instance_exists(target_object)){
 	            target_object.hostile_shots=hit_number;
@@ -113,8 +113,8 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
 	            // target_object.hostile_men=0;
 	            target_object.hostile_men=1;
 	            target_object.hostile_range=range[weapon_index_position];
-	            target_object.hostile_splash=splash[weapon_index_position];
-	            if (target_object.hostile_splash=1) then target_object.hostile_damage+=10;
+	            target_object.hostile_splash=attack_count_mod;
+	            if (target_object.hostile_splash>1) then target_object.hostile_damage+=attack_count_mod*3;
             
 	            with(target_object){scr_clean(999);}
 	        }
@@ -133,7 +133,7 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
 	        hit_number=shots_fired;
         
 	        if (doom!=0) and (shots_fired>1){total_damage=floor((doom*total_damage));hit_number=floor(hit_number*doom);}
-	        if (splash[weapon_index_position]=1) and (melee_or_ranged!="wall"){shots_fired=shots_fired*3;}
+	        if (attack_count_mod>1) and (melee_or_ranged!="wall"){shots_fired*=attack_count_mod;}
         
         
 	        if (total_damage=0) then total_damage=shots_fired*doom;
@@ -151,8 +151,8 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
 	            // if (damage_type="dread") then target_object.hostile_men=1;
             
 	            target_object.hostile_range=range[weapon_index_position];
-	            target_object.hostile_splash=splash[weapon_index_position];
-	            if (target_object.hostile_splash=1) then target_object.hostile_damage+=10;
+	            target_object.hostile_splash=attack_count_mod;
+	            if (target_object.hostile_splash=1) then target_object.hostile_damage+=attack_count_mod*3;
             
             
 	            with(target_object){scr_clean(999);}
@@ -233,10 +233,10 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
 	            if (weapon_index_position>0){
 	                total_damage=(att[weapon_index_position]/wep_num[weapon_index_position])*target_object.dudes_dr[targeh];
 	                ap=apa[weapon_index_position];
-	                spla=splash[weapon_index_position];
+	                spla=spli[weapon_index_position];
 	            }// Average damage
 	            if (weapon_index_position<-40){
-	                wii="";spla=1;
+	                wii="";spla=3;
                 
 	                if (weapon_index_position=-51){
 	                	wii="Heavy Bolter Emplacement";
@@ -265,8 +265,8 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
 	            c=hit_number*shots_fired;// New damage
             
 	            var casualties,ponies,onceh;onceh=0;ponies=0;
-	            if (spla=0) then casualties=min(floor(c/target_object.dudes_hp[targeh]),shots_fired);
-	            if (spla!=0) then casualties=floor(c/target_object.dudes_hp[targeh]);
+	            if (spla<=1) then casualties=min(floor(c/target_object.dudes_hp[targeh]),shots_fired);
+	            if (spla>1) then casualties=floor(c/target_object.dudes_hp[targeh]);
             
 	            ponies=target_object.dudes_num[targeh];
 	            if (target_object.dudes_num[targeh]=1) and ((target_object.dudes_hp[targeh]-c)<=0){casualties=1;}
@@ -360,8 +360,8 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
 	                        c2=b2*shots_remaining;// New damage
                         
 	                        var casualties2,ponies2,onceh2;onceh2=0;ponies2=0;
-	                        if (spla=0) then casualties2=min(floor(c2/target_object.dudes_hp[godd]),shots_remaining);
-	                        if (spla!=0) then casualties2=floor(c2/target_object.dudes_hp[godd]);
+	                        if (spla<=1) then casualties2=min(floor(c2/target_object.dudes_hp[godd]),shots_remaining);
+	                        if (spla>1) then casualties2=floor(c2/target_object.dudes_hp[godd]);
                         
 	                        ponies2=target_object.dudes_num[godd];
 	                        if (target_object.dudes_num[godd]=1) and ((target_object.dudes_hp[godd]-c2)<=0){casualties2=1;}
