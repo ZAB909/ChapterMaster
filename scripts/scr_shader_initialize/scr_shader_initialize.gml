@@ -11,6 +11,9 @@ function scr_shader_initialize() {
 	targetG1 = col_g[main_color]/255;
 	targetB1 = col_b[main_color]/255;
 
+	colour_to_find8 = shader_get_uniform(sReplaceColor, "f_Colour8");
+	colour_to_set8 = shader_get_uniform(sReplaceColor, "f_Replace8");
+
 	colour_to_find2 = shader_get_uniform(sReplaceColor, "f_Colour2");
 	colour_to_set2 = shader_get_uniform(sReplaceColor, "f_Replace2");
 	sourceR2 = 255/255;

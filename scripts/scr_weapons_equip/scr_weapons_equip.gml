@@ -12,7 +12,7 @@ function scr_weapons_equip() {
 	if (instance_exists(obj_controller)) and (instance_exists(obj_popup)) and (!instance_exists(obj_mass_equip)){
 	    tc=target_comp;
 	    tb=tab;
-	    dude=vehicle_equipment; // This is for equipping the selected marines in management
+	    dude=obj_popup.vehicle_equipment; // This is for equipping the selected marines in management
 
 	}
 	if (instance_exists(obj_creation)){

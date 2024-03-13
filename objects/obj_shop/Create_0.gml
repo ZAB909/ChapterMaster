@@ -330,6 +330,16 @@ if (shop = "equipment") {
         item_cost[i] = 0;
     }
     i += 1;
+    item[i] = "Plasma Cannon";
+    forge_cost[i] = 600;
+    if (research.plasma[0]<1) then forge_cost[i] = 0;
+    item_stocked[i] = scr_item_count(item[i]);
+    item_cost[i] = 300;
+    if (rene = 1) {
+        nobuy[i] = 1;
+        item_cost[i] = 0;
+    }    
+    i += 1;
     x_mod[i] = 9;
     item[i] = "Archeotech Laspistol";
     item_stocked[i] = scr_item_count(item[i]);

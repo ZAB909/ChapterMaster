@@ -242,7 +242,10 @@ function scr_draw_unit_image(x_draw, y_draw){
                 ttrim=0;
                 specialist_colours=0;
             }
-        
+
+            shader_set_uniform_f(obj_controller.colour_to_find8, 46/255,49/255,146/255 );//body
+            var main_body_shade = shadow_creator(obj_controller.targetR1*255,obj_controller.targetG1*255,obj_controller.targetB1*255, 0.7);
+            shader_set_uniform_f(obj_controller.colour_to_set8, color_get_red(main_body_shade)/255,color_get_green(main_body_shade)/255,color_get_blue(main_body_shade)/255);//body         
 			// Marine draw sequence
             /*
             main
@@ -518,14 +521,14 @@ function scr_draw_unit_image(x_draw, y_draw){
                 if (base_sprite<= 0){
                     if (ui_specialist==5){
                         if (array_contains(traits, "tinkerer")){
-                            specific_armour_sprite="none";
+                            //specific_armour_sprite="none";
                             armour_draw=[spr_techmarine_core,0];
                             arm=0;
                             armour_bypass=true;
                         }
                     } else if (role()=="Chapter Master"){
                         if (global.chapter_name=="Blood Angels"){
-                            specific_armour_sprite="none";
+                            //specific_armour_sprite="none";
                             armour_draw=[spr_dante,0];
                             armour_bypass=true;
                         }
@@ -585,9 +588,6 @@ function scr_draw_unit_image(x_draw, y_draw){
                     }
                 }else if (armour_bypass && array_length(armour_draw)>1){
                     draw_sprite(armour_draw[0], armour_draw[1],xx+x_draw,yy+y_draw);
-                }
-                if (base_sprite=5){
-                    draw_sprite(spr_dreadnought_chasis_colors,specialist_colours,xx+x_draw,yy+y_draw);
                 }
             
                 if (slow>=10) and (blandify=0) then draw_sprite(armour_sprite,slow,xx+x_draw,yy+y_draw);// Slow and Purposeful battle damage
@@ -817,21 +817,29 @@ function scr_draw_unit_image(x_draw, y_draw){
         
             // Draw the fixed upper hands for Terminators or Tartaros
             if (base_sprite==1){
-                if (fix_left>0) and (fix_left!=2) and (fix_left!=4) and (fix_left<8) then draw_sprite(spr_termi_wep_fix,4,xx+x_draw,yy+y_draw+ui_ymod[1]);
+                if (fix_left>0) and (fix_left!=2) and (fix_left!=4) and (fix_left<8) then draw_sprite(spr_termi_wep_fix,4,xx+x_draw,yy+y_draw+ui_ymod[1]-20);
                 if (fix_right>0) and (fix_right!=2) and (fix_right!=4) and (fix_right<8){
-                    if (specialist_colours<=1) then draw_sprite(spr_termi_wep_fix,6,xx+x_draw,yy+y_draw+ui_ymod[1]);
-                    if (specialist_colours>=2) then draw_sprite(spr_termi_wep_fix,7,xx+x_draw,yy+y_draw+ui_ymod[1]);
+                    if (specialist_colours<=1) then draw_sprite(spr_termi_wep_fix,6,xx+x_draw,yy+y_draw+ui_ymod[1]-20);
+                    if (specialist_colours>=2) then draw_sprite(spr_termi_wep_fix,7,xx+x_draw,yy+y_draw+ui_ymod[1]-20);
                 }
             }else if (base_sprite==2){
-                if (fix_left>0) and (fix_left!=2) and (fix_left!=4) and (fix_left<8) then draw_sprite(spr_tartaros_wep_fix,4,xx+x_draw,yy+y_draw+ui_ymod[2]);
+                if (fix_left>0) and (fix_left!=2) and (fix_left!=4) and (fix_left<8) then draw_sprite(spr_tartaros_wep_fix,4,xx+x_draw,yy+y_draw+ui_ymod[2]-20);
                 if (fix_right>0) and (fix_right!=2) and (fix_right!=4) and (fix_right<8){
-                    if (specialist_colours<=1) then draw_sprite(spr_tartaros_wep_fix,6,xx+x_draw,yy+y_draw+ui_ymod[2]);
-                    if (specialist_colours>=2) then draw_sprite(spr_tartaros_wep_fix,7,xx+x_draw,yy+y_draw+ui_ymod[2]);
+                    if (specialist_colours<=1) then draw_sprite(spr_tartaros_wep_fix,6,xx+x_draw,yy+y_draw+ui_ymod[2]-20);
+                    if (specialist_colours>=2) then draw_sprite(spr_tartaros_wep_fix,7,xx+x_draw,yy+y_draw+ui_ymod[2]-20);
                 }
             }
             // if (braz=1) then draw_sprite(spr_pack_brazier,1,xx+x_draw,yy+y_draw);
-			
-            shader_reset();
+            if (base_sprite==5){
+                draw_sprite(spr_dreadnought_chasis_colors,specialist_colours,xx+x_draw,yy+y_draw);
+                var left_arm = dreadnought_sprite_components(weapon_two());
+                var colour_scheme  =  specialist_colours<=1 ? 0 : 1;
+                draw_sprite(left_arm,colour_scheme,xx+x_draw,yy+y_draw);
+                colour_scheme  += 2;
+                var right_arm = dreadnought_sprite_components(weapon_one());
+                draw_sprite(right_arm,colour_scheme,xx+x_draw,yy+y_draw);
+            } 			
+            shader_reset();           
         }else{
             draw_set_color(c_gray);
             draw_text(xx+x_draw,yy+y_draw,string_hash_to_newline("Color swap shader#did not compile"));

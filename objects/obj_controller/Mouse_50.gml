@@ -2151,16 +2151,17 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     var vih=0, unit;
                     var company = managing<=10 ? managing :10;
                     var prev_role;
-
+                    var allow = true;
 
                     // Need to make sure that group selected is all the same type
                     for(var f=0; f<man_max; f++){
+                        show_debug_message("{0}",vih);
                         // Set different vih depending on unit type
                         if (man_sel[f]!=1) then continue;
                         if (vih==0){
                             if (man[f]=="man"){
-                                unit=obj_ini.TTRPG[company][ide[sel]];
-                                if (unit.armour()!="dreadnought"){
+                                unit=obj_ini.TTRPG[company][ide[f]];
+                                if (unit.armour()!="Dreadnought"){
                                     vih=1;
                                 } else {
                                     vih=6;
@@ -2176,32 +2177,32 @@ if (action_if_number(obj_saveload, 0, 0) &&
                         } else {
                             if (vih==1 || vih==6){
                                 if (man[f]=="vehicle"){
-                                    veh=-1;
+                                    allow=false;
                                     break;
                                 } else if (man[f]=="man"){
-                                    unit=obj_ini.TTRPG[company][ide[sel]];
-                                    if (unit.armour()=="dreadnought" && vih==1){
-                                        veh=-1;
+                                    unit=obj_ini.TTRPG[company][ide[f]];
+                                    if (unit.armour()=="Dreadnought" && vih==1){
+                                        allow=false;
                                         break;
-                                    } else if (unit.armour()!="dreadnought" && vih==6){
-                                        veh=-1;
+                                    } else if (unit.armour()!="Dreadnought" && vih==6){
+                                        allow=false;
                                         break;
                                     }
                                 }
                             } else if (vih>=50){
                                 if (man[f]=="man"){
-                                    veh=-1;
+                                    allow=false;
                                     break;
                                 } else if(man[f]=="vehicle"){
                                     if (prev_role != ma_role[f]){
-                                        veh=-1;
+                                        allow=false;
                                         break;
                                     }
                                 }
                             }
                         }
 
-                        if (vih!=-1){
+                        if (vih>0){
                             nuuum+=1;
                             if (o_wep1=="") and (ma_wep1[f]!="") then o_wep1=ma_wep1[f];
                             if (o_wep2=="") and (ma_wep2[f]!="") then o_wep2=ma_wep2[f];
@@ -2229,7 +2230,8 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     if (b_gear==nuuum) then o_gear="";
                     if (b_mobi==nuuum) then o_mobi="";
 
-                    if (vih>0) and (man_size>0){
+                    if (vih>0 && man_size>0 && allow){
+show_debug_message("{0}",vih);
                         var pip=instance_create(0,0,obj_popup);
                         pip.type=6;
                         pip.o_wep1=o_wep1;
