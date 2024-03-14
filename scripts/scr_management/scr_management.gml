@@ -377,7 +377,7 @@ function scr_management(argument0) {
 	            if (obj_ini.role[company,i]=obj_ini.role[100][10]) then num[12]+=1;
 	            if (obj_ini.role[company,i]=obj_ini.role[100][9]) then num[13]+=1;
 	            if (obj_ini.role[company,i]=obj_ini.role[100][12]) then num[14]+=1;
-	            if (obj_ini.role[company,i]=obj_ini.role[100][6]) then num[15]+=1;
+	            if (obj_ini.role[company,i]="Venerable "+string(obj_ini.role[100][6])) then num[15]+=1;
 	            if (obj_ini.role[company,i]=obj_ini.role[100][6]) then num[16]+=1;
 	            // Vehicles
 				if (i<=100){
