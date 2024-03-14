@@ -769,7 +769,7 @@ function scr_ui_popup() {
 		    }
 		}
 		// Current Astartes tooltip
-		if (scr_hit(xx+478, yy+3, xx+552, yy+67)){
+		if (scr_hit(xx+478, yy+3, xx+552, yy+38)){
 		    var tx=0,ty=0,tool1="",tool2="",plu="";
 		    tool1="Astartes#(Normal/Command)";
 		    tool2="Astartes";
