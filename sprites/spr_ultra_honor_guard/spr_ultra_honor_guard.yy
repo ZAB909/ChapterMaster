@@ -15,6 +15,7 @@
   "frames": [
     {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"e09221f9-f4e2-44bb-b03b-6a8f8f7708bc",},
     {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"33147591-8278-4d8f-a7de-51b5f9438f54",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"31277cab-fa77-4e74-846f-b54e81ea2cc4",},
   ],
   "gridX": 0,
   "gridY": 0,
@@ -57,6 +58,7 @@
       {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"1.0","Keyframes":[
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"e09221f9-f4e2-44bb-b03b-6a8f8f7708bc","path":"sprites/spr_ultra_honor_guard/spr_ultra_honor_guard.yy",},},},"Disabled":false,"id":"571652a4-d5d1-4c52-bf8b-1175cb58820a","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"33147591-8278-4d8f-a7de-51b5f9438f54","path":"sprites/spr_ultra_honor_guard/spr_ultra_honor_guard.yy",},},},"Disabled":false,"id":"3b14e5bc-8db6-4c9b-b35d-23409c86e579","IsCreationKey":false,"Key":1.0,"Length":1.0,"Stretch":false,},
+            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"31277cab-fa77-4e74-846f-b54e81ea2cc4","path":"sprites/spr_ultra_honor_guard/spr_ultra_honor_guard.yy",},},},"Disabled":false,"id":"14a75fdd-4a04-42b9-84d7-ee9ad93c8717","IsCreationKey":false,"Key":2.0,"Length":1.0,"Stretch":false,},
           ],},"modifiers":[],"spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange": null,
