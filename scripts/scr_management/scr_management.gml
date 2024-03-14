@@ -337,7 +337,7 @@ function scr_management(argument0) {
 			}
         
 			// Indexing the names to nam array
-	        nam[1]=obj_ini.role[100][5];
+	        nam[1]=obj_ini.name[company][1];
 	        nam[2]=obj_ini.role[100][14];
 	        nam[3]=obj_ini.role[100][15];
 	        nam[4]=obj_ini.role[100,17];
@@ -351,7 +351,7 @@ function scr_management(argument0) {
 	        nam[12]=obj_ini.role[100][10];
 	        nam[13]=obj_ini.role[100][9];
 	        nam[14]=obj_ini.role[100][12];
-	        nam[15]="Venerable "+string(obj_ini.role[100][6]);
+	        nam[15]=obj_ini.role[100][6];
 	        nam[16]=obj_ini.role[100][6];
 	        nam[17]="Land Raider";
 	        nam[18]="Predator";
@@ -377,7 +377,7 @@ function scr_management(argument0) {
 	            if (obj_ini.role[company,i]=obj_ini.role[100][10]) then num[12]+=1;
 	            if (obj_ini.role[company,i]=obj_ini.role[100][9]) then num[13]+=1;
 	            if (obj_ini.role[company,i]=obj_ini.role[100][12]) then num[14]+=1;
-	            if (obj_ini.role[company,i]="Venerable "+string(obj_ini.role[100][6])) then num[15]+=1;
+	            if (obj_ini.role[company,i]=obj_ini.role[100][6]) then num[15]+=1;
 	            if (obj_ini.role[company,i]=obj_ini.role[100][6]) then num[16]+=1;
 	            // Vehicles
 				if (i<=100){
@@ -392,11 +392,15 @@ function scr_management(argument0) {
 	        with(obj_managment_panel){if (manage!=obj_controller.temp[71]) then instance_deactivate_object(id);}
 			
 	        q=0;
-			for (var d=1;d<=21;d++) {
-				if (num[d] > 0) {
-					q += 1;
-					obj_managment_panel.line[q] = string(num[d]) + "x " + string(nam[d]);
-				}
+				for (var d = 1; d <= 21; d++) {
+					if (num[d] > 0) {
+							q += 1;
+							if (d == 1) {
+									obj_managment_panel.line[q] = string(nam[d]); obj_managment_panel.italic[q]=1;
+							} else {
+									obj_managment_panel.line[q] = string(num[d]) + "x " + string(nam[d]);
+							}
+					}
 			}
 			
 	        instance_activate_object(obj_managment_panel);
