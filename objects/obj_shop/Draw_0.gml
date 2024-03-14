@@ -95,7 +95,7 @@ for(var i=1; i<=39; i++){
             }            
 			draw_set_color(16291875)
             if (obj_controller.in_forge){
-				draw_set_color(#7B3F00)
+				draw_set_color(#af5a00)
 			}
 
             var cost = obj_controller.in_forge ? forge_cost[i] : item_cost[i]
