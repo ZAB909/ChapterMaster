@@ -2,12 +2,12 @@ function scr_management(argument0) {
 
 	// argument0        1: overview         10+: that chapter -10
 	// Creates the company blocks in the main management screen and assigns text to them
-
+	var roles  = obj_ini.role[100];
 
 	// Variable creation
 	var num=0, nam="", company=50, q=0;	
 	var romanNumerals=scr_roman_numerals();
-	var chapter_name = global.chapter_name{
+	var chapter_name = global.chapter_name;
 
 	if (argument0=1){
 	    with(obj_managment_panel){instance_destroy();}
@@ -100,7 +100,7 @@ function scr_management(argument0) {
 	    if (num[2]=0) then nam[2]="Strategic Staff";// reserved for co-master alien or something
 		
 	    if (num[2]>0) {
-			nam[2]=string(num)+"x "+string(obj_ini.role[100][2]);
+			nam[2]=string(num)+"x "+string(roles[2]);
 			nam[3]="Strategic Staff";
 			num[3]=1;
 		}
@@ -113,8 +113,8 @@ function scr_management(argument0) {
 	    obj_managment_panel.italic[1]=1;
 		instance_activate_object(obj_managment_panel);
     
-	    // ll=0;ll2=0;repeat(200){ll2+=1;if (obj_ini.role[company,ll2]=obj_ini.role[100][2]) then ll+=1;}
-	    // if (ll>0) then temp[3]=string(ll)+"x "+string(obj_ini.role[100][2]);
+	    // ll=0;ll2=0;repeat(200){ll2+=1;if (obj_ini.role[company,ll2]=roles[2]) then ll+=1;}
+	    // if (ll>0) then temp[3]=string(ll)+"x "+string(roles[2]);
     
 	
     
@@ -126,10 +126,10 @@ function scr_management(argument0) {
 			num[i] = 0;
 			nam[i] = "";
 		}
-	    nam[2]=obj_ini.role[100][15];
+	    nam[2]=roles[15];
 		
 		// Ranks
-		nam[3]=string(obj_ini.role[100][15])+" Aspirant";// nam[4]="Sister Hospitaler";
+		nam[3]=string(roles[15])+" Aspirant";// nam[4]="Sister Hospitaler";
 		
 	    for (var i = 1; i <= 200; i++) {
 			if (obj_ini.role[0, i] == "Master of the Apothecarion") {
@@ -170,10 +170,10 @@ function scr_management(argument0) {
 			nam[i] = "";
 		}
 		
-	    nam[2]=obj_ini.role[100][14];
+	    nam[2]=roles[14];
 		
 		// Ranks
-		nam[3]=string(obj_ini.role[100][14])+" Aspirant";
+		nam[3]=string(roles[14])+" Aspirant";
 		
 	    for (var i = 1; i <= 200; i++) {
 			if (obj_ini.role[0, i] == "Master of Sanctity") {
@@ -222,10 +222,10 @@ function scr_management(argument0) {
 			nam[i] = "";
 		}
 		
-	    nam[2]=obj_ini.role[100][16];
+	    nam[2]=roles[16];
 		
 		// Ranks
-		nam[3]=string(obj_ini.role[100][16])+" Aspirant";
+		nam[3]=string(roles[16])+" Aspirant";
 		nam[4]="Techpriest";
 		
 	    for (var i = 1; i <= 200; i++) {
@@ -327,7 +327,6 @@ function scr_management(argument0) {
 	    instance_activate_object(obj_managment_panel);
 	    
 		// ** Marines and vehicles per company and HQ by ranks **
-		
 	    for (company=1;company<=obj_ini.companies;company++){
 	        q=0;
 			obj_controller.temp[71]=company;
@@ -339,45 +338,51 @@ function scr_management(argument0) {
         
 			// Indexing the names to nam array
 	        nam[1]=obj_ini.name[company][1];
-	        nam[2]=obj_ini.role[100][14];
-	        nam[3]=obj_ini.role[100][15];
+	        nam[2]=roles[14];
+	        nam[3]=roles[15];
 	        nam[4]=obj_ini.role[100,17];
 	        nam[5]="Codiciery";
 	        nam[6]="Lexicanum";
 	        nam[7]="Standard Bearer";
-	        nam[8]=obj_ini.role[100][4];
+	        nam[8]=roles[4];
 	        nam[9]="Techmarine";
-	        nam[10]=obj_ini.role[100][3];
-	        nam[11]=obj_ini.role[100][8];
-	        nam[12]=obj_ini.role[100][10];
-	        nam[13]=obj_ini.role[100][9];
-	        nam[14]=obj_ini.role[100][12];
-	        nam[15]=obj_ini.role[100][6];
-	        nam[16]=obj_ini.role[100][6];
+	        nam[10]=roles[3];
+	        nam[11]=roles[8];
+	        nam[12]=roles[10];
+	        nam[13]=roles[9];
+	        nam[14]=roles[12];
+	        nam[15]=roles[6];
+	        nam[16]=roles[6];
 	        nam[17]="Land Raider";
 	        nam[18]="Predator";
 	        nam[19]="Rhino";
 	        nam[20]="Land Speeder";
 	        nam[21]="Whirlwind";
-        
-	        for (var i=1;i<=300;i++) {
-	            if (obj_ini.role[company,i]=obj_ini.role[100][5]) then num[1]+=1;
-	            if (obj_ini.role[company,i]=obj_ini.role[100][14]) then num[2]+=1;
+	        nam[22] = roles[18];
+	        nam[23] = roles[19];
+        	var unit;
+	        for (var i=1;i<500;i++) {
+	        	if (obj_ini.name[company][i] == "") then continue;
+	        	unit = fetch_unit([company,i]);
+	            if (unit.role()=roles[5]) then num[1]+=1;
+	            if (unit.role()=roles[14]) then num[2]+=1;
 				// Space Wolves exception
-					    if (chapter_name!="Space Wolves" && obj_ini.role[company,i]=obj_ini.role[100][15]) then num[3]+=1;
-	            if (obj_ini.role[company,i]=obj_ini.role[100,17]) then num[4]+=1;
-	            if (obj_ini.role[company,i]="Codiciery") then num[5]+=1;
-	            if (obj_ini.role[company,i]="Lexicanum") then num[6]+=1;
-	            if (obj_ini.role[company,i]="Standard Bearer") then num[7]+=1;
-	            if (obj_ini.role[company,i]=obj_ini.role[100][4]) then num[8]+=1;
-	            if (obj_ini.role[company,i]="Techmarine") then num[9]+=1;
-	            if (obj_ini.role[company,i]=obj_ini.role[100][3]) then num[10]+=1;
-	            if (obj_ini.role[company,i]=obj_ini.role[100][8]) then num[11]+=1;
-	            if (obj_ini.role[company,i]=obj_ini.role[100][10]) then num[12]+=1;
-	            if (obj_ini.role[company,i]=obj_ini.role[100][9]) then num[13]+=1;
-	            if (obj_ini.role[company,i]=obj_ini.role[100][12]) then num[14]+=1;
-	            if (obj_ini.role[company,i]="Venerable "+string(obj_ini.role[100][6])) then num[15]+=1;
-	            if (obj_ini.role[company,i]=obj_ini.role[100][6]) then num[16]+=1;
+					    if (chapter_name!="Space Wolves" && unit.role()=roles[15]) then num[3]+=1;
+	            if (unit.role()=obj_ini.role[100,17]) then num[4]+=1;
+	            if (unit.role()="Codiciery") then num[5]+=1;
+	            if (unit.role()="Lexicanum") then num[6]+=1;
+	            if (unit.role()="Standard Bearer") then num[7]+=1;
+	            if (unit.role()=roles[4]) then num[8]+=1;
+	            if (unit.role()="Techmarine") then num[9]+=1;
+	            if (unit.role()=roles[3]) then num[10]+=1;
+	            if (unit.role()=roles[8]) then num[11]+=1;
+	            if (unit.role()=roles[10]) then num[12]+=1;
+	            if (unit.role()=roles[9]) then num[13]+=1;
+	            if (unit.role()=roles[12]) then num[14]+=1;
+	            if (unit.role()="Venerable "+string(roles[6])) then num[15]+=1;
+	            if (unit.role()=roles[6]) then num[16]+=1;
+	            if (unit.role()=roles[18]) then num[22]+=1;
+	            if (unit.role()=roles[19]) then num[23]+=1;
 	            // Vehicles
 				if (i<=100){
 	                if (obj_ini.veh_role[company,i]="Land Raider") then num[17]+=1;
@@ -388,7 +393,9 @@ function scr_management(argument0) {
 	            }
 	        }
 			
-	        with(obj_managment_panel){if (manage!=obj_controller.temp[71]) then instance_deactivate_object(id);}
+	        with(obj_managment_panel){
+	        	if (manage!=obj_controller.temp[71]) then instance_deactivate_object(id);
+	        }
 			
 	        q=0;
 				for (var d = 1; d <= 21; d++) {
@@ -405,5 +412,4 @@ function scr_management(argument0) {
 	        instance_activate_object(obj_managment_panel);
 	    }
 	}
-	exit;
 }

@@ -2,7 +2,7 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "spr_mk5_colors",
-  "bbox_bottom": 220,
+  "bbox_bottom": 218,
   "bbox_left": 0,
   "bbox_right": 155,
   "bbox_top": 0,
