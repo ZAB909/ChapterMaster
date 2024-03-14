@@ -1936,7 +1936,6 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
             }
         for (var i = 0; i < array_length(stat_order); i++) {
             var stat = stat_order[i];
-            var special_properties_array = [];
             switch (stat) {
                 case "description":
                     if (description!=""){
@@ -2009,15 +2008,28 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                     }
                     break;
                 case "special_properties":
-                    if array_length(special_properties)>0{
+                    var special_properties_array = [];
+                    if (array_length(special_properties)>0){
                         for (var k = 0; k < array_length(special_properties); k++) {
                             array_push(special_properties_array, special_properties[k]);
                         }
                     }
                     if (arp>0){
                         array_push(special_properties_array, "Armour Piercing")
-                    } else if (arp<0){
+                    } 
+                    else if (arp<0){
                         array_push(special_properties_array, "Low Penetration")
+                    }
+                    if (array_length(second_profiles)>0){
+                        for (var h = 0; h < array_length(second_profiles); h++) {
+                            if (string_pos("Integrated", second_profiles[h]) == 0) {
+                                var integrated_member = "Integrated " + second_profiles[h];
+                                array_push(special_properties_array, integrated_member);
+                            }
+                            else{
+                                array_push(special_properties_array, second_profiles[h]);
+                            }
+                        }
                     }
                     if (array_length(special_properties_array)>0){
                         var special_properties_string = ""
