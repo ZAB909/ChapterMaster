@@ -305,12 +305,21 @@ function scr_ui_manage() {
 	    
 		    draw_set_color(c_gray);	    	
 	    	selected_unit.draw_unit_image(1190,210);
+
+					// Borders
+					draw_set_color(c_gray);
+					draw_rectangle(xx+1190,yy+210,xx+1190+166,yy+210+271,1); 
 	        // Crop anything sticking out of the display
 	        draw_set_color(0);
-	        draw_rectangle(xx+1178,yy+168,xx+1190,yy+450,0);// Left
-	        draw_rectangle(xx+1356,yy+168,xx+1404,yy+450,0);// Right
-	        //draw_rectangle(xx+1198,yy+168,xx+1384,yy+158,0);// Top
-        
+					// Top rectangle
+					draw_rectangle(xx+1190-20+2, yy+210-20-2, xx+1190+166+20+2, yy+210-2, false);
+					// Bottom rectangle
+					draw_rectangle(xx+1190-20+2, yy+210+271+2, xx+1190+166+20+2, yy+210+271+20+2, false);
+					// Left rectangle
+					draw_rectangle(xx+1190-20-2, yy+210+2, xx+1190-2, yy+210+271+2, false);
+					// Right rectangle
+					draw_rectangle(xx+1190+166+2, yy+210+2, xx+1190+166+20+2, yy+210+271+2, false);
+
 	        draw_set_color(c_gray);
 	        draw_set_halign(fa_center);
 	        //draw_rectangle(xx+1218,yy+210,xx+1374,yy+491,1);
