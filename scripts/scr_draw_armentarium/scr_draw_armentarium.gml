@@ -108,7 +108,7 @@ function calculate_research_points(turn_end=false){
     with (obj_controller){
         research_points = 0;
         forge_points = 0;
-        forge_string="";
+        forge_string = $"Forge Production Rate#";
         var heretics = [], forge_master=-1, notice_heresy=false, forge_point_gen=[], crafters=0, at_forge=0, gen_data={};
         var tech_locations=[]
         var techs = collect_role_group("forge");
@@ -132,7 +132,7 @@ function calculate_research_points(turn_end=false){
         if (forge_master>-1){
             obj_controller.master_of_forge = techs[forge_master];
         }
-        forge_string = $"Techmarines : {floor(forge_points)}#";
+        forge_string += $"Techmarines: +{floor(forge_points)}#";
         var forge_veh_maintenance={};
         for (var comp=0;comp<=10;comp++){
             for (var veh=0;veh<=100;veh++){
@@ -145,18 +145,18 @@ function calculate_research_points(turn_end=false){
         }
 
         if (struct_exists(forge_veh_maintenance, "land_raider")){
-            forge_string += $"Land Raider Maintenance : -{forge_veh_maintenance.land_raider}#";
+            forge_string += $"Land Raider Maintenance: -{forge_veh_maintenance.land_raider}#";
             forge_points-=forge_veh_maintenance.land_raider;
         }
         if (struct_exists(forge_veh_maintenance, "small_vehicles")){
             if (floor(forge_veh_maintenance.small_vehicles)>0){
-                forge_string += $"Small Vehicle Maintenance : -{floor(forge_veh_maintenance.small_vehicles)}#";
+                forge_string += $"Small Vehicle Maintenance: -{floor(forge_veh_maintenance.small_vehicles)}#";
                 forge_points-=floor(forge_veh_maintenance.small_vehicles);
             }
         }
         if (player_forges>0){
             forge_points += 5*player_forges;
-            forge_string += $"Forges : {5*player_forges}#";
+            forge_string += $"Forges: +{5*player_forges}#";
         }
         forge_points = floor(forge_points);
         var tech_test, charisma_test, piety_test, met_non_heretic;

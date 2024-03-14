@@ -680,7 +680,9 @@ function scr_ui_popup() {
 	if (zoomed == 0){
 		// Requisition income tooltip
 		if (scr_hit(xx+5,yy+10,xx+137,yy+38)){
-		    var tx=0,ty=0,tool1="",tool2="",plu="";
+		    var tx=0,ty=0,plu="";
+				tool1="Requisition Points#";
+				tool2=tool1;
 	   		if (income_base>0) then plu="+";
 	        tool1+=string("Base Income: {0}{1}", plu, income_base);
 	        tool2+="Base Income: ";
