@@ -678,7 +678,7 @@ function scr_ui_popup() {
 	var xx=__view_get( e__VW.XView, 0 )+0;
 	var yy=__view_get( e__VW.YView, 0 )+0;
 	if (zoomed == 0){
-
+		// Requisition income tooltip
 		if (scr_hit(xx+5,yy+10,xx+137,yy+38)){
 		    var tx=0,ty=0,tool1="",tool2="",plu="";
 	   		if (income_base>0) then plu="+";
@@ -735,8 +735,8 @@ function scr_ui_popup() {
 		    }
 		}
 
-
-		if (scr_hit(xx+153,yy+10,xx+221,yy+38)){
+		// Current Loyalty tooltip
+		if (scr_hit(xx+247,yy+10,xx+328,yy+38)){
 		    var  tx=0,ty=0,tool1="",tool2="",plu="";
 
 		    var d,lines;d=0;lines=0;
@@ -760,16 +760,16 @@ function scr_ui_popup() {
 		    }
 		}
 
-
-		if (scr_hit(xx+247,yy+10,xx+338,yy+38)){
+		// Stored Gene-Seed tooltip
+		if (scr_hit(xx+373,yy+10,xx+443,yy+38)){
 		    var tx=0,ty=0,tool1="",tool2="",plu="";
 		    tool1="Gene-Seed";
 		    if (tool1!=""){
 		        tooltip_draw(tool1);
 		    }
 		}
-
-		if (scr_hit(xx+373,yy+10,xx+463,yy+38)){
+		// Current Astartes tooltip
+		if (scr_hit(xx+478, yy+3, xx+552, yy+67)){
 		    var tx=0,ty=0,tool1="",tool2="",plu="";
 		    tool1="Astartes#(Normal/Command)";
 		    tool2="Astartes";
@@ -777,6 +777,7 @@ function scr_ui_popup() {
 		        tooltip_draw(tool1);
 		    }
 		}
+		// Turn tooltip
 		if (menu == 0) and (diplomacy<=0){
 			if (scr_hit(xx+1435,yy+40,xx+1580,yy+267)){
 			    var tx=0,ty=0,tool1="",tool2="",plu="";
@@ -787,11 +788,13 @@ function scr_ui_popup() {
 			    }
 			}
 		}
-	    if (point_in_rectangle(mouse_x, mouse_y, xx+478, yy+3, xx+478+64, yy+67)){
+			// Forge Points income tooltip
+	    if (scr_hit(xx+153,yy+10,xx+241,yy+38)){
 	        tooltip_draw(obj_controller.forge_string);
 	    }		
 
-		if (scr_hit(xx+813,yy+10,xx+960,yy+38)) and (penitent==1) {
+		// Penitence/Blood Debt tooltip
+		if (scr_hit(xx+923,yy+10,xx+1060,yy+38)) and (penitent==1) {
 		    var tx=0,ty=0,tool1="",tool2="",plu="",hei_bonus;
 	    
 		    var endb=0,endb2="";
@@ -802,7 +805,7 @@ function scr_ui_popup() {
 		        tool1+="#Blood Debt: "+string(penitent_max);tool2+="#Blood Debt: ";
 		        tool1+="#Decay Rate: "+string(endb);tool2+="#Decay Rate: ";
 	        
-		        tool1+="##Attacking enemies, Raiding enemies, and losing Astartes will lower your Chapter's Blood Debt.  Over #time it decays.  Bombarding enemies will prevent decay.";
+		        tool1+="##Attacking enemies, Raiding enemies, and losing Astartes will lower your Chapter's Blood Debt.  Over time it decays.  Bombarding enemies will prevent decay.";
 		        hei_bonus=-20;
 		    }
 		    if (obj_controller.blood_debt=0){
@@ -811,7 +814,7 @@ function scr_ui_popup() {
 		        // tool1+="#Each Turn: +1";tool2+="#Each Turn: ";
 		        // tool1+="#  ";tool2+="#  ";
 	        
-		        tool1+="##Penitence will be gained slowly over time.  After the timer runs out your Chapter will no longer be#considered Penitent.";
+		        tool1+="##Penitence will be gained slowly over time.  After the timer runs out your Chapter will no longer be considered Penitent.";
 		        hei_bonus=23;
 		    }
 	    
