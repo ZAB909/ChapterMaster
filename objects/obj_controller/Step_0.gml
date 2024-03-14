@@ -529,7 +529,7 @@ if (menu==1 && (managing>0 || managing<0)){
                 or (temp[114]="refresh")) then force_tool=1;
             }
             
-            if (((mouse_x>=xx+25 && mouse_y>=yy+64 && mouse_x<xx+974 && mouse_y<yy+85) || force_tool==1)){
+            if (((mouse_x>=xx+25 && mouse_y>=yy+64 && mouse_x<xx+974 && mouse_y<yy+85) || force_tool==1) && is_struct(unit)){
                 temp[120] = unit; // unit_struct
             }
             draw_set_color(38144);
