@@ -4,7 +4,7 @@
   "name": "spr_weapon_standard",
   "bbox_bottom": 271,
   "bbox_left": 0,
-  "bbox_right": 143,
+  "bbox_right": 165,
   "bbox_top": 0,
   "bboxMode": 0,
   "collisionKind": 1,
@@ -26,7 +26,7 @@
     {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"dc146659-4c1b-4da4-b058-782429c4308d","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": null,
-  "origin": 0,
+  "origin": 9,
   "parent": {
     "name": "weapons",
     "path": "folders/Sprites/New UI/Gear/weapons.yy",
@@ -76,5 +76,5 @@
   },
   "type": 0,
   "VTile": false,
-  "width": 166,
+  "width": 167,
 }
