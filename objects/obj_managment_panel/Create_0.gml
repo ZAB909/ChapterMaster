@@ -12,4 +12,4 @@ y1=y;
 line[0]="";italic[0]=0;
 var i;i=0;repeat(30){i+=1;line[i]="";italic[i]=0;}
 
-
+slate_panel =  new data_slate();

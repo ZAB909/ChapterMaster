@@ -353,13 +353,13 @@ function scr_management(argument0) {
 	        nam[14]=roles[12];
 	        nam[15]=roles[6];
 	        nam[16]=roles[6];
-	        nam[17]="Land Raider";
-	        nam[18]="Predator";
-	        nam[19]="Rhino";
-	        nam[20]="Land Speeder";
-	        nam[21]="Whirlwind";
-	        nam[22] = roles[18];
-	        nam[23] = roles[19];
+	        nam[17] = roles[18];
+	        nam[18] = roles[19];	        
+	        nam[19]="Land Raider";
+	        nam[20]="Predator";
+	        nam[21]="Rhino";
+	        nam[22]="Land Speeder";
+	        nam[23]="Whirlwind";
         	var unit;
 	        for (var i=1;i<500;i++) {
 	        	if (obj_ini.name[company][i] == "") then continue;
@@ -381,15 +381,15 @@ function scr_management(argument0) {
 	            if (unit.role()=roles[12]) then num[14]+=1;
 	            if (unit.role()="Venerable "+string(roles[6])) then num[15]+=1;
 	            if (unit.role()=roles[6]) then num[16]+=1;
-	            if (unit.role()=roles[18]) then num[22]+=1;
-	            if (unit.role()=roles[19]) then num[23]+=1;
+	            if (unit.role()=roles[18]) then num[17]+=1;
+	            if (unit.role()=roles[19]) then num[18]+=1;
 	            // Vehicles
 				if (i<=100){
-	                if (obj_ini.veh_role[company,i]="Land Raider") then num[17]+=1;
-	                if (obj_ini.veh_role[company,i]="Predator") then num[18]+=1;
-	                if (obj_ini.veh_role[company,i]="Rhino") then num[19]+=1;
-	                if (obj_ini.veh_role[company,i]="Land Speeder") then num[20]+=1;
-	                if (obj_ini.veh_role[company,i]="Whirlwind") then num[21]+=1;
+	                if (obj_ini.veh_role[company,i]="Land Raider") then num[19]+=1;
+	                if (obj_ini.veh_role[company,i]="Predator") then num[20]+=1;
+	                if (obj_ini.veh_role[company,i]="Rhino") then num[21]+=1;
+	                if (obj_ini.veh_role[company,i]="Land Speeder") then num[22]+=1;
+	                if (obj_ini.veh_role[company,i]="Whirlwind") then num[23]+=1;
 	            }
 	        }
 			
@@ -398,7 +398,7 @@ function scr_management(argument0) {
 	        }
 			
 	        q=0;
-				for (var d = 1; d <= 21; d++) {
+				for (var d = 1; d <= 23; d++) {
 					if (num[d] > 0) {
 							q += 1;
 							if (d == 1) {
