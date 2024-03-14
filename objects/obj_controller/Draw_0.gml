@@ -137,11 +137,11 @@ if (zoomed==0) and (zui==0){
     draw_set_color(16291875);
     draw_text(xx+36,yy+16,string_hash_to_newline(string(floor(requisition))+string(inc)));
     draw_text(xx+36.5,yy+16.5,string_hash_to_newline(string(floor(requisition))+string(inc)));
-    // Draws forge points number
-    draw_sprite_ext(spr_forge_points_icon, 0, xx+158, yy+15, 0.3, 0.3, 0, c_white, 1)
+    // Draws forge points
+    draw_sprite_ext(spr_forge_points_icon, 0, xx+160, yy+15, 0.3, 0.3, 0, c_white, 1)
     draw_set_color(#af5a00)
-    draw_text(xx+178,yy+16, string(forge_points));
-    draw_text(xx+178.5,yy+16.5, string(forge_points));
+    draw_text(xx+180,yy+16, string(forge_points));
+    draw_text(xx+180.5,yy+16.5, string(forge_points));
     // Draws the current loyalty
     draw_sprite(spr_new_resource,1,xx+267,yy+17);
     draw_set_color(1164001);
@@ -152,7 +152,7 @@ if (zoomed==0) and (zui==0){
     draw_set_color(c_red);
     draw_text(xx+370,yy+16,string_hash_to_newline(string(gene_seed)));
     draw_text(xx+370.5,yy+16.5,string_hash_to_newline(string(gene_seed)));
-    // Draws the current marines on your command
+    // Draws the current marines in your command
     draw_sprite(spr_new_resource,3,xx+475-10,yy+17);
     draw_set_color(16291875);
     draw_text(xx+495-10,yy+16,string_hash_to_newline(string(marines)+"/"+string(command)));
