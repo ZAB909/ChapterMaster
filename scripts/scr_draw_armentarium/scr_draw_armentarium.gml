@@ -393,7 +393,7 @@ function scr_draw_armentarium(){
         draw_set_color(c_gray);
         draw_set_font(fnt_40k_30b);
         var header =  in_forge ? "Forge" : "Armamentarium";
-        draw_text_transformed(xx + 336 + 16 + 250, yy + 66, string_hash_to_newline(header), 1, 1, 0);
+        draw_text_transformed(xx + 336 + 16, yy + 66, string_hash_to_newline(header), 1, 1, 0);
         if (!in_forge){
             draw_set_font(fnt_40k_30b);
             draw_text_transformed(xx + 336 + 16, yy + 100, string_hash_to_newline("Forge Master " + string(obj_ini.name[0, 2])), 0.6, 0.6, 0);
