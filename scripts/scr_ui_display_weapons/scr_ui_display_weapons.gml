@@ -23,6 +23,7 @@ function scr_ui_display_weapons(left_or_right, termi_tartaros, equiped_weapon) {
         "Meltagun":spr_weapon_melta,
         "Stalker Pattern Bolter":spr_weapon_stalker,
         "Combiflamer":spr_weapon_comflamer,
+        "Sniper Rifle":spr_weapon_sniper,
     }
 
     var sprite_found =false;
@@ -55,7 +56,6 @@ function scr_ui_display_weapons(left_or_right, termi_tartaros, equiped_weapon) {
             "Lascannon":spr_weapon_lasca,
             "Multi-Melta":spr_weapon_mmelta,
             "Assault Cannon":spr_weapon_assca,
-            "Sniper Rifle":spr_weapon_sniper,
         }
         var heavy_ranged_names=struct_get_names(heavy_ranged);
         for (var i=0;i<array_length(heavy_ranged_names);i++){
