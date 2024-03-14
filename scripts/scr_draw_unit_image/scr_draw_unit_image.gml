@@ -32,6 +32,7 @@ function scr_draw_unit_image(x_draw, y_draw){
         ui_coloring=""; 
 		var specialist_colours=obj_ini.col_special; 
         var specific_armour_sprite = "none";
+        var unit_is_sniper = false;
         if (role()=="Chapter Master") then ui_specialist=111;
         // Honor Guard
         else if (role()==obj_ini.role[100,2]) then ui_specialist=14;
@@ -293,6 +294,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                 if (squad!="none"){
                     if (obj_ini.squads[squad].type=="scout_sniper_squad" || weapon_one()=="Sniper Rifle" || weapon_two()=="Sniper Rifle"){
                         armour_sprite=spr_scout_colors;
+                        unit_is_sniper = true;
                     }
                 }
 				if (hood=-50) then hood=0;
@@ -451,6 +453,9 @@ function scr_draw_unit_image(x_draw, y_draw){
                     draw_sprite(spr_facial_colors,clothing_style,xx+x_draw,yy+y_draw);
                     specific_armour_sprite=armour_sprite;
                     armour_bypass=true;
+                    if (unit_is_sniper = true){
+                        draw_sprite(spr_scout_colors,11,xx+x_draw,yy+y_draw);// Scout Sniper Cloak
+                    }
                 }else if (armour()=="MK3 Iron Armour"){
                     specific_armour_sprite = spr_mk3_colors;
                 } else if (armour()=="MK4 Maximus"){
