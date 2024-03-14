@@ -252,7 +252,7 @@ function scr_ui_manage() {
 			var y6=y5+string_height("Toggle Squad View")+2;
 			draw_unit_buttons([x5,y5, x6, y6], stat_tool_tip_text,[1,1],c_red);
 			if (managing>0 && managing<11){
-				array_push(tooltip_drawing, ["click or press S to toggle, squad view", [x5,y5,x6,y6]]);
+				array_push(tooltip_drawing, ["Click or press S to toggle, squad view", [x5,y5,x6,y6]]);
 				if ((point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left)) || (keyboard_check_pressed(ord("S")) && !text_bar)){
 					obj_controller.view_squad = !obj_controller.view_squad;
 					if (stat_tool_tip_text=="Toggle Squad View"){
@@ -274,7 +274,7 @@ function scr_ui_manage() {
 			var x6=x5+string_width(stat_tool_tip_text)+4;
 			var y6=y5+string_height(stat_tool_tip_text)+2;	    
 		    draw_unit_buttons([x5,y5,x6,y6], stat_tool_tip_text,[1,1],c_red);
-		    array_push(tooltip_drawing, ["click or press P to show unit data", [x5,y5,x6,y6]]);
+		    array_push(tooltip_drawing, ["Click or press P to show unit data", [x5,y5,x6,y6]]);
 			if (((keyboard_check_pressed(ord("P"))&& !text_bar)|| (point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left))) && !instance_exists(obj_temp3) && !instance_exists(obj_popup)){
 				if (view_squad){
 					view_squad =false;
@@ -484,7 +484,37 @@ function scr_ui_manage() {
 	        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 
 
     		var_text = string_hash_to_newline($"Health: {round(selected_unit.hp())}/{round(selected_unit.max_health())}")
-        	tooltip_text = string_hash_to_newline(string("CON : {0}", round(100*(1+((selected_unit.constitution-40)*0.025)))));
+        	tooltip_text = string_hash_to_newline(string("CON: {0}#", round(100*(1+((selected_unit.constitution-40)*0.025)))));
+            for (var i = 0; i < array_length(equipment_types); i++) {
+                var equipment_type = equipment_types[i];
+                var hp_mod = 0;
+                var name = "";
+                switch(equipment_type) {
+                    case "armour":
+                        hp_mod = selected_unit.get_armour_data("hp_mod");
+                        name = selected_unit.get_armour_data("name");
+                        break;
+                    case "weapon_one":
+                        hp_mod = selected_unit.get_weapon_one_data("hp_mod");
+                        name = selected_unit.get_weapon_one_data("name");
+                        break;
+                    case "weapon_two":
+                        hp_mod = selected_unit.get_weapon_two_data("hp_mod");
+                        name = selected_unit.get_weapon_two_data("name");
+                        break;
+                    case "mobility":
+                        hp_mod = selected_unit.get_mobility_data("hp_mod");
+                        name = selected_unit.get_mobility_data("name");
+                        break;
+                    case "gear":
+                        hp_mod = selected_unit.get_gear_data("hp_mod");
+                        name = selected_unit.get_gear_data("name");
+                        break;
+                }
+                if (hp_mod != 0) {
+                    tooltip_text += string_hash_to_newline($"{name}: {hp_mod}#");
+                }
+            }
         	x1 = xx+1015;
         	y1 = yy+422;
         	x2 = x1+string_width(var_text);
@@ -551,7 +581,7 @@ function scr_ui_manage() {
 							}
 						}
         		var_text = string_hash_to_newline(string("Damage Resistance: {0}",cn.temp[118]))
-	        	tooltip_text += string_hash_to_newline(string("CON: {0}%#EXP: {1}%", round(selected_unit.constitution/2), round(cn.temp[113]/10)));
+	        	tooltip_text += string_hash_to_newline(string("CON: {0}%#EXP: {1}%", round(selected_unit.constitution/2), round(selected_unit.experience()/10)));
 	        	x1 = xx+1015;
 	        	y1 = yy+378;
 	        	x2 = x1+string_width(var_text);

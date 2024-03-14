@@ -108,7 +108,7 @@ function calculate_research_points(turn_end=false){
     with (obj_controller){
         research_points = 0;
         forge_points = 0;
-        forge_string="";
+        forge_string = $"Forge Production Rate#";
         var heretics = [], forge_master=-1, notice_heresy=false, forge_point_gen=[], crafters=0, at_forge=0, gen_data={};
         var tech_locations=[]
         var techs = collect_role_group("forge");
@@ -132,7 +132,7 @@ function calculate_research_points(turn_end=false){
         if (forge_master>-1){
             obj_controller.master_of_forge = techs[forge_master];
         }
-        forge_string = $"Techmarines : {floor(forge_points)}#";
+        forge_string += $"Techmarines: +{floor(forge_points)}#";
         var forge_veh_maintenance={};
         for (var comp=0;comp<=10;comp++){
             for (var veh=0;veh<=100;veh++){
@@ -145,18 +145,18 @@ function calculate_research_points(turn_end=false){
         }
 
         if (struct_exists(forge_veh_maintenance, "land_raider")){
-            forge_string += $"Land Raider Maintenance : -{forge_veh_maintenance.land_raider}#";
+            forge_string += $"Land Raider Maintenance: -{forge_veh_maintenance.land_raider}#";
             forge_points-=forge_veh_maintenance.land_raider;
         }
         if (struct_exists(forge_veh_maintenance, "small_vehicles")){
             if (floor(forge_veh_maintenance.small_vehicles)>0){
-                forge_string += $"Small Vehicle Maintenance : -{floor(forge_veh_maintenance.small_vehicles)}#";
+                forge_string += $"Small Vehicle Maintenance: -{floor(forge_veh_maintenance.small_vehicles)}#";
                 forge_points-=floor(forge_veh_maintenance.small_vehicles);
             }
         }
         if (player_forges>0){
             forge_points += 5*player_forges;
-            forge_string += $"Forges : {5*player_forges}#";
+            forge_string += $"Forges: +{5*player_forges}#";
         }
         forge_points = floor(forge_points);
         var tech_test, charisma_test, piety_test, met_non_heretic;
@@ -393,7 +393,7 @@ function scr_draw_armentarium(){
         draw_set_color(c_gray);
         draw_set_font(fnt_40k_30b);
         var header =  in_forge ? "Forge" : "Armamentarium";
-        draw_text_transformed(xx + 336 + 16 + 250, yy + 66, string_hash_to_newline(header), 1, 1, 0);
+        draw_text_transformed(xx + 336 + 16, yy + 66, string_hash_to_newline(header), 1, 1, 0);
         if (!in_forge){
             draw_set_font(fnt_40k_30b);
             draw_text_transformed(xx + 336 + 16, yy + 100, string_hash_to_newline("Forge Master " + string(obj_ini.name[0, 2])), 0.6, 0.6, 0);
@@ -886,23 +886,15 @@ function scr_draw_armentarium(){
              }                     
             item_gap +=20
         }
-        draw_set_color(c_red);
+        // draw_set_color(c_red);
         //draw_line(xx + 326 + 16, yy + 426, xx + 887 + 16, yy + 426);         
-        draw_sprite_ext(
-            spr_forge_points_icon,0, 
-            xx+359,
-            yy + 410,
-            1, 
-            1, 
-            0,
-            c_white,
-            1); 
-        draw_set_color(c_white);
-        draw_text_transformed(xx+359+38,yy + 442-(string_height("0")/2), $": {forge_points}",2,2,0);
-        draw_set_color(c_red); 
-        draw_text(xx+359, yy + 470,$"total {obj_ini.role[100, 16]}'s : {temp[36]}");
-        draw_text(xx+359, yy + 490,$"Chapter Forges : {obj_controller.player_forges}");
-        draw_text(xx+359, yy + 510,$"total {obj_ini.role[100, 16]}'s assigned to forges : 0")
-
+        draw_set_color(#af5a00);
+        draw_set_font(fnt_40k_14b)
+        var forge_text = $"Forge point production per turn: {forge_points}#";
+        // draw_sprite_ext(spr_forge_points_icon,0,xx+359+string_width(forge_text), yy+410,0.3,0.3,0,c_white,1);
+        forge_text += $"Chapter total {obj_ini.role[100, 16]}s: {temp[36]}#";
+        forge_text += $"Planetary Forges in operation: {obj_controller.player_forges}#";
+        // forge_text += $"A total of {obj_ini.role[100, 16]}s assigned to Forges: {var}#";
+        draw_text_ext(xx+359, yy+410, string_hash_to_newline(forge_text),-1,670);
     }
 }

@@ -208,7 +208,7 @@ global.weapons={
     },
     "Company Standard": {
        "abbreviation": "CmpStnd",
-      "special_description": "Boosts morale",
+      "special_properties": ["Morale Boost"],
       "description": "A banner that represents the honor of a particular company and will bolster the morale abilities of nearby Space Marines.",
         "attack": {
             "standard": 45,
@@ -266,7 +266,7 @@ global.weapons={
         "range": 1,
         "spli": 1,
         "arp": 1,
-        "special_description": "Parry",
+        "special_properties": ["Parry"],
         "tags":["power", "sword"],
     },
     "Power Spear": {
@@ -288,11 +288,11 @@ global.weapons={
         "range": 1,
         "spli": 0,
         "arp": 1,
-        "special_description": "Parry",
+        "special_properties": ["Parry"],
         "tags":["power", "spear"],
     },
     "Chainfist": {
-     "abbreviation": "ChFist",
+     "abbreviation": "ChFst",
         "attack": {
             "standard": 300,
             "master_crafted": 325,
@@ -307,7 +307,7 @@ global.weapons={
         "tags":["power", "chain", "fist", "siege"],
     },
     "Lascutter": {
-       "abbreviation": "Lascttr",
+       "abbreviation": "Lasct",
         "attack": {
             "standard": 100,
             "master_crafted": 150,
@@ -338,7 +338,7 @@ global.weapons={
         "range": 1,
         "spli": 1,
         "arp": 1,
-        "special_description": "Parry",
+        "special_properties": ["Parry"],
         "tags":["power", "sword","elder","xenos"],
     },
     "Power Weapon": {
@@ -405,7 +405,7 @@ global.weapons={
         "tags":["power", "axe"],
     },    
     "Power Fist": {
-       "abbreviation": "PwrFist",       
+       "abbreviation": "PwrFst",       
         "attack": {
             "standard": 450,
             "master_crafted": 500,
@@ -426,7 +426,7 @@ global.weapons={
         "tags":["power","fist"],
     },
     "Lightning Claw": {
-    "abbreviation": "LghtClaw",             
+    "abbreviation": "LghtClw",             
         "attack": {
             "standard": 130,
             "master_crafted": 160,
@@ -442,7 +442,7 @@ global.weapons={
         "tags":["power","dual","fist"],
     },
     "Dreadnought Lightning Claw": {
-    "abbreviation": "LghtClaw",             
+    "abbreviation": "LghtClw",             
         "attack": {
             "standard": 300,
             "master_crafted": 400,
@@ -639,7 +639,7 @@ global.weapons={
         "tags":["dreadnought","flame"]
     },
     "Dreadnought Power Claw":{
-      "abbreviation": "PwrClaw",              
+      "abbreviation": "PwrClw",              
         "attack": {
             "standard": 400,
             "master_crafted": 600,
@@ -1121,7 +1121,7 @@ global.weapons={
             "artifact": 486
         },
         "description": "Hurricane Bolters are large hex-mount bolter arrays that are able to deliver a withering hail of anti-infantry fire at short ranges.",
-        "abbreviation": "HrrcnBltrs", 
+        "abbreviation": "HrcBltrs", 
         "melee_hands": 0,
         "ranged_hands": 0,
         "ammo": 20,
@@ -1136,7 +1136,7 @@ global.weapons={
             "artifact": 720
         },
         "description": "A huge vehicle-mounted flamethrower, the heat produced by this terrifying weapon can crack even armoured ceramite.",
-        "abbreviation": "FlmstrmCnns", 
+        "abbreviation": "FlmstCnns", 
         "melee_hands": 0,
         "ranged_hands": 0,
         "ammo": 6,
@@ -1355,7 +1355,7 @@ global.weapons={
         "description": "",
     },  
     "Flamestorm Cannon Turret": {
-        "abbreviation": "FlmstrmCnn", 
+        "abbreviation": "FlmstCnn", 
         "description": "",
     },  
     "Magna-Melta Turret": {
@@ -1441,7 +1441,7 @@ global.gear = {
       },
       "melee_hands":2,
       "ranged_hands":2,
-      "description": "The toughest and most powerful armour designed by humanity. Only the most veteran of Astartes are allowed to wear these.",
+      "description": "Terminator Armour is the toughest and most powerful armour designed by humanity, available only to the veterans of the Space Marine Chapters. This Indomitus Pattern is the most widespread and versatile pattern as of M41.",
       "tags":["terminator"],
       "req_exp":90,
     },
@@ -1485,7 +1485,7 @@ global.gear = {
       },
       "melee_hands":2,
       "ranged_hands":2,      
-      "description": "Even more advanced than the Indomitus Terminator Armour, this upgraded armour offers greater mobility at no cost to protection.",
+      "description": "This pattern is possibly considered the most advanced form of Terminator Armour, providing greater mobility for the wearer compared to the Indomitus with no loss in durability. In the M41 considered to be incredibly rare.",
       "tags":["terminator"],
       "req_exp":90,
     },
@@ -1508,7 +1508,7 @@ global.gear = {
     },
       "melee_hands":2,
       "ranged_hands":2,      
-      "description": "Among the first issued to the Space Marine Legions, it is functionally distinct from other patterns, bearing additional plating and shield generators installed within the shoulder pads",
+      "description": "Among the first issued to the Space Marine Legions. Having additional plating and shield generators installed within the shoulder pads resulted in severe straining of the suit's exoskeleton and reduced the wearer's maneuverability, leading to its decline among some legions.",
       "tags":["terminator"],
       "req_exp":90,
     },
@@ -1742,8 +1742,7 @@ global.gear = {
   "gear": {
     "Bionics": {
         "abbreviation": "Bncs",
-      "special_description": "Restores critical health",
-      "description": "Bionics may be given to wounded marines to quickly get them back into combat-ready status, replacing damaged flesh.",
+      "description": "Bionics may be given to wounded marines to quickly get them back into combat-ready status, replacing damaged flesh.#Restores critical health.",
       "hp_mod": {
         "standard": 30, // Adjusted
         "master_crafted": 50, // Adjusted
@@ -1752,19 +1751,18 @@ global.gear = {
     },    
     "Narthecium": {
     "abbreviation": "Nrthcm",
-      "special_description": "Heals Allies",
+      "special_properties": ["Medkit"],
       "description": "An advanced medical field kit, these allow Space Marines to heal or recover Gene-Seed from fallen marines.",
         "melee_hands": -0.5,
         "ranged_hands": -0.5,       
     },
     "Psychic Hood": {
     "abbreviation": "PsyHd",
-      "special_description": "-50% chance of perils*",
+      "special_properties": ["Perils Protection 50"],
       "description": "An arcane hood that protects Psykers from enemy psychic powers and enhances their control.",
     },
     "Rosarius": {
         "abbreviation": "Rsrius",
-      "special_description": "",
       "description": "Also called the 'Soul's Armour', this amulet has a built-in, powerful shield generator. They are an icon of the Imperial Creed.",
       "damage_resistance_mod": {
         "standard": 15, // Adjusted
@@ -1779,7 +1777,6 @@ global.gear = {
     },
     "Iron Halo": {
         "abbreviation": "IrnHalo",
-      "special_description": "",
       "description": "An ancient artifact, these powerful conversion field generators are granted to high ranking battle brothers or heroes. Bearers are often looked to for guidance.",
       "damage_resistance_mod": {
         "standard": 10, // Adjusted
@@ -1794,42 +1791,39 @@ global.gear = {
     },
     "Plasma Bomb": {
     "abbreviation": "PlBomb",
-      "special_description": "Destroys destructibles",
+      "special_properties": ["Structure Destroyer"],
       "description": "A special plasma charge, this bomb can be used to seal underground caves or destroy enemy structures.",
     },
     "Exterminatus": {
         "abbreviation": "Extrmnts",
-      "special_description": "Destroys planets",
+      "special_properties": ["Planet Destroyer"],
       "description": "A weapon of the Emperor, and His divine judgment, this weapon can be placed upon a planet to obliterate it entirely.",
     },
     "Servo Arms": {
     "abbreviation": "SrvArms",
-      "special_description": "Integrated Flamer, Repairs Vehicles",
+      "special_properties": ["Integrated Flamer, Repairs Vehicles"],
       "description": "A pair of powerful, mechanical arms. They include several tools that allow trained marines to repair vehicles rapidly.",
         "melee_hands": 0.25,
         "ranged_hands": 0.25,  
     },
     "Master Servo Arms": {
     "abbreviation": "MsSrvArms",
-      "special_description": "Integrated Flamer, Repairs Vehicles",
+      "special_properties": ["Integrated Flamer, Repairs Vehicles"],
       "description": "This master servo harness includes additional mechanical arms and tools, allowing a greater capacity and rate of repairs.",
         "melee_hands": 0.25,
         "ranged_hands": 0.25,  
     },
     "Smoke Launchers": {
-      "special_description": "",
       "description": "Useful for providing concealment in open terrain, these launchers project wide-spectrum concealing smoke to prevent accurate targeting of the vehicle. ",
       "abbreviation": "SmkLnchrs",
       "tags":["smoke","conceal"]
     },
     "Dozer Blades": {
-      "special_description": "",
       "description": "An attachment for the front of vehicles, useful for clearing difficult terrain and can be used as an improvised weapon. ",
       "abbreviation": "DzrBlds",
       "tags":[]
     },
     "Searchlight": {
-      "special_description": "",
       "description": "A simple solution for fighting in dark environments, searchlights serve to illuminate enemies for easier targeting. ",
       "abbreviation": "SrchLght",
       "tags":[]
@@ -1842,7 +1836,7 @@ global.gear = {
   "mobility":{
    "Bike": {
     "abbreviation": "Bike",
-      "special_description": "Integrated Twin Linked-Bolters",
+      "special_properties": ["Integrated Twin Linked-Bolters"],
       "description": "A robust bike that can propel a marine at very high speeds. Boasts highly responsive controls and Twin Linked Bolters.",
       "hp_mod": {
         "standard": 25,
@@ -1860,7 +1854,6 @@ global.gear = {
 
     "Jump Pack": {
     "abbreviation": "JmpPck",
-      "special_description": "",
       "description": "A back-mounted device containing turbines or jets powerful enough to lift even a user in Power Armour.",
       "hp_mod": {
         "standard": 5,
@@ -1891,8 +1884,8 @@ global.gear = {
 
 function equipment_struct(item_data, core_type,quality="none") constructor{ 
     //This could be done with 2d arrays [[],[]]
-    var names = ["hp_mod", "description","damage_resistance_mod", "ranged_mod", "melee_mod","armour_value" ,"attack","melee_hands","ranged_hands","ammo","range","spli","arp","special_description","abbreviation","tags","name","second_profiles","req_exp"];
-    var defaults = [0,"",0,0,0,0,0,0,0,0,0,0,0,"","",[],"",[],0];
+    var names = ["hp_mod", "description","damage_resistance_mod", "ranged_mod", "melee_mod","armour_value" ,"attack","melee_hands","ranged_hands","ammo","range","spli","arp","special_description", "special_properties", "abbreviation","tags","name","second_profiles","req_exp"];
+    var defaults = [0,"",0,0,0,0,0,0,0,0,0,0,0,"",[],"",[],"",[],0];
     type = core_type;
     for (var i=0;i<array_length(names);i++){
         if (struct_exists(item_data,names[i])){
@@ -1912,7 +1905,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
     }
 
     static item_tooltip_desc_gen = function(){
-        item_desc_tooltip = ""
+        item_desc_tooltip = "";
         var stat_order;
         var item_type = type;
         if (type==""){
@@ -1934,21 +1927,16 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
             }
         }
         switch (item_type) {
-            case "armour":
-                stat_order = ["description", "armour_value", "damage_resistance_mod", "hp_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "special_description", "req_exp", "tags"];
-                break;
-            case "mobility":
-                stat_order = ["description", "special_description", "armour_value", "hp_mod", "damage_resistance_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "req_exp", "tags"];
-                break;
-            case "gear":
-                stat_order = ["description", "special_description", "armour_value", "hp_mod", "damage_resistance_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "req_exp", "tags"];
+            default:
+                stat_order = ["description", "special_description", "armour_value", "damage_resistance_mod", "hp_mod", "ranged_mod", "melee_mod", "attack", "ammo", "range", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
                 break;
             case "weapon":
-                stat_order = ["description", "attack", "ranged_mod", "melee_mod", "ammo", "range", "armour_value", "hp_mod", "damage_resistance_mod", "melee_hands", "ranged_hands", "arp", "spli", "special_description", "req_exp", "tags"];
+                stat_order = ["description", "special_description", "attack", "ranged_mod", "melee_mod", "ammo", "range", "armour_value", "hp_mod", "damage_resistance_mod", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
                 break;
             }
         for (var i = 0; i < array_length(stat_order); i++) {
             var stat = stat_order[i];
+            var special_properties_array = [];
             switch (stat) {
                 case "description":
                     if (description!=""){
@@ -2020,30 +2008,36 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                         }
                     }
                     break;
-                case "arp":
-                    if (arp>0){
-                        item_desc_tooltip += $"Armour Piercing#"
-                    } else if (arp<0){
-                        item_desc_tooltip += $"Low Penetration#"
-                    }
-                    break;
-                case "spli":
-                    if (spli!=0){
-                        if (range>1.1){
-                            item_desc_tooltip += $"Ranged, Rapid Fire#"
-                        } else {
-                            item_desc_tooltip += $"Melee, Splash#"
+                case "special_properties":
+                    if array_length(special_properties)>0{
+                        for (var k = 0; k < array_length(special_properties); k++) {
+                            array_push(special_properties_array, special_properties[k]);
                         }
+                    }
+                    if (arp>0){
+                        array_push(special_properties_array, "Armour Piercing")
+                    } else if (arp<0){
+                        array_push(special_properties_array, "Low Penetration")
+                    }
+                    if (array_length(special_properties_array)>0){
+                        var special_properties_string = ""
+                        for (var j = 0; j < array_length(special_properties_array); j++) {
+                            special_properties_string += special_properties_array[j]
+                            if (j < array_length(special_properties_array) - 1) {
+                                special_properties_string += ", "
+                            }
+                        }
+                        item_desc_tooltip += $"#Properties:#{special_properties_string}#"
                     }
                     break;
                 case "special_description":
                     if (special_description!=""){
-                        item_desc_tooltip += $"{special_description}#"
+                        item_desc_tooltip += $"#{special_description}#"
                     }
                     break;
                 case "req_exp":
                     if (req_exp>0){
-                        item_desc_tooltip += $"Requires {req_exp} XP#"
+                        item_desc_tooltip += $"#Requires {req_exp} EXP#"
                     }
                     break;
                 case "tags":
