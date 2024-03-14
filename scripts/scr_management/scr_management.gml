@@ -7,6 +7,7 @@ function scr_management(argument0) {
 	// Variable creation
 	var num=0, nam="", company=50, q=0;	
 	var romanNumerals=scr_roman_numerals();
+	var chapter_name = global.chapter_name{
 
 	if (argument0=1){
 	    with(obj_managment_panel){instance_destroy();}
@@ -197,7 +198,7 @@ function scr_management(argument0) {
 	    // if (global.chapter_name!="Space Wolves")
 		
 		// Specific Iron Hands chapter logic
-	    if (global.chapter_name!="Iron Hands"){
+	    if (chapter_name!="Iron Hands"){
 	        if (num[2]>0){
 				q+=1;
 				obj_managment_panel.line[q]=string(num[2])+"x "+string(nam[2]);
@@ -363,9 +364,7 @@ function scr_management(argument0) {
 	            if (obj_ini.role[company,i]=obj_ini.role[100][5]) then num[1]+=1;
 	            if (obj_ini.role[company,i]=obj_ini.role[100][14]) then num[2]+=1;
 				// Space Wolves exception
-	            if (global.chapter_name!="Space Wolves"){
-					if (obj_ini.role[company,i]=obj_ini.role[100][15]) then num[3]+=1;
-				}
+					    if (chapter_name!="Space Wolves" && obj_ini.role[company,i]=obj_ini.role[100][15]) then num[3]+=1;
 	            if (obj_ini.role[company,i]=obj_ini.role[100,17]) then num[4]+=1;
 	            if (obj_ini.role[company,i]="Codiciery") then num[5]+=1;
 	            if (obj_ini.role[company,i]="Lexicanum") then num[6]+=1;
