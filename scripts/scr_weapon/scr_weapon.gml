@@ -208,7 +208,7 @@ global.weapons={
     },
     "Company Standard": {
        "abbreviation": "CmpStnd",
-      "special_description": "Boosts morale",
+      "special_properties": ["Morale Boost"],
       "description": "A banner that represents the honor of a particular company and will bolster the morale abilities of nearby Space Marines.",
         "attack": {
             "standard": 45,
@@ -266,7 +266,7 @@ global.weapons={
         "range": 1,
         "spli": 1,
         "arp": 1,
-        "special_description": "Parry",
+        "special_properties": ["Parry"],
         "tags":["power", "sword"],
     },
     "Power Spear": {
@@ -288,7 +288,7 @@ global.weapons={
         "range": 1,
         "spli": 0,
         "arp": 1,
-        "special_description": "Parry",
+        "special_properties": ["Parry"],
         "tags":["power", "spear"],
     },
     "Chainfist": {
@@ -338,7 +338,7 @@ global.weapons={
         "range": 1,
         "spli": 1,
         "arp": 1,
-        "special_description": "Parry",
+        "special_properties": ["Parry"],
         "tags":["power", "sword","elder","xenos"],
     },
     "Power Weapon": {
@@ -1742,8 +1742,7 @@ global.gear = {
   "gear": {
     "Bionics": {
         "abbreviation": "Bncs",
-      "special_description": "Restores critical health",
-      "description": "Bionics may be given to wounded marines to quickly get them back into combat-ready status, replacing damaged flesh.",
+      "description": "Bionics may be given to wounded marines to quickly get them back into combat-ready status, replacing damaged flesh.#Restores critical health.",
       "hp_mod": {
         "standard": 30, // Adjusted
         "master_crafted": 50, // Adjusted
@@ -1752,19 +1751,18 @@ global.gear = {
     },    
     "Narthecium": {
     "abbreviation": "Nrthcm",
-      "special_description": "Heals Allies",
+      "special_properties": ["Medkit"],
       "description": "An advanced medical field kit, these allow Space Marines to heal or recover Gene-Seed from fallen marines.",
         "melee_hands": -0.5,
         "ranged_hands": -0.5,       
     },
     "Psychic Hood": {
     "abbreviation": "PsyHd",
-      "special_description": "-50% chance of perils*",
+      "special_properties": ["Perils Protection 50"],
       "description": "An arcane hood that protects Psykers from enemy psychic powers and enhances their control.",
     },
     "Rosarius": {
         "abbreviation": "Rsrius",
-      "special_description": "",
       "description": "Also called the 'Soul's Armour', this amulet has a built-in, powerful shield generator. They are an icon of the Imperial Creed.",
       "damage_resistance_mod": {
         "standard": 15, // Adjusted
@@ -1779,7 +1777,6 @@ global.gear = {
     },
     "Iron Halo": {
         "abbreviation": "IrnHalo",
-      "special_description": "",
       "description": "An ancient artifact, these powerful conversion field generators are granted to high ranking battle brothers or heroes. Bearers are often looked to for guidance.",
       "damage_resistance_mod": {
         "standard": 10, // Adjusted
@@ -1794,42 +1791,39 @@ global.gear = {
     },
     "Plasma Bomb": {
     "abbreviation": "PlBomb",
-      "special_description": "Destroys destructibles",
+      "special_properties": ["Structure Destroyer"],
       "description": "A special plasma charge, this bomb can be used to seal underground caves or destroy enemy structures.",
     },
     "Exterminatus": {
         "abbreviation": "Extrmnts",
-      "special_description": "Destroys planets",
+      "special_properties": ["Planet Destroyer"],
       "description": "A weapon of the Emperor, and His divine judgment, this weapon can be placed upon a planet to obliterate it entirely.",
     },
     "Servo Arms": {
     "abbreviation": "SrvArms",
-      "special_description": "Integrated Flamer, Repairs Vehicles",
+      "special_properties": ["Integrated Flamer, Repairs Vehicles"],
       "description": "A pair of powerful, mechanical arms. They include several tools that allow trained marines to repair vehicles rapidly.",
         "melee_hands": 0.25,
         "ranged_hands": 0.25,  
     },
     "Master Servo Arms": {
     "abbreviation": "MsSrvArms",
-      "special_description": "Integrated Flamer, Repairs Vehicles",
+      "special_properties": ["Integrated Flamer, Repairs Vehicles"],
       "description": "This master servo harness includes additional mechanical arms and tools, allowing a greater capacity and rate of repairs.",
         "melee_hands": 0.25,
         "ranged_hands": 0.25,  
     },
     "Smoke Launchers": {
-      "special_description": "",
       "description": "Useful for providing concealment in open terrain, these launchers project wide-spectrum concealing smoke to prevent accurate targeting of the vehicle. ",
       "abbreviation": "SmkLnchrs",
       "tags":["smoke","conceal"]
     },
     "Dozer Blades": {
-      "special_description": "",
       "description": "An attachment for the front of vehicles, useful for clearing difficult terrain and can be used as an improvised weapon. ",
       "abbreviation": "DzrBlds",
       "tags":[]
     },
     "Searchlight": {
-      "special_description": "",
       "description": "A simple solution for fighting in dark environments, searchlights serve to illuminate enemies for easier targeting. ",
       "abbreviation": "SrchLght",
       "tags":[]
@@ -1842,7 +1836,7 @@ global.gear = {
   "mobility":{
    "Bike": {
     "abbreviation": "Bike",
-      "special_description": "Integrated Twin Linked-Bolters",
+      "special_properties": ["Integrated Twin Linked-Bolters"],
       "description": "A robust bike that can propel a marine at very high speeds. Boasts highly responsive controls and Twin Linked Bolters.",
       "hp_mod": {
         "standard": 25,
@@ -1860,7 +1854,6 @@ global.gear = {
 
     "Jump Pack": {
     "abbreviation": "JmpPck",
-      "special_description": "",
       "description": "A back-mounted device containing turbines or jets powerful enough to lift even a user in Power Armour.",
       "hp_mod": {
         "standard": 5,
@@ -1891,8 +1884,8 @@ global.gear = {
 
 function equipment_struct(item_data, core_type,quality="none") constructor{ 
     //This could be done with 2d arrays [[],[]]
-    var names = ["hp_mod", "description","damage_resistance_mod", "ranged_mod", "melee_mod","armour_value" ,"attack","melee_hands","ranged_hands","ammo","range","spli","arp","special_description","abbreviation","tags","name","second_profiles","req_exp"];
-    var defaults = [0,"",0,0,0,0,0,0,0,0,0,0,0,"","",[],"",[],0];
+    var names = ["hp_mod", "description","damage_resistance_mod", "ranged_mod", "melee_mod","armour_value" ,"attack","melee_hands","ranged_hands","ammo","range","spli","arp","special_description", "special_properties", "abbreviation","tags","name","second_profiles","req_exp"];
+    var defaults = [0,"",0,0,0,0,0,0,0,0,0,0,0,"",[],"",[],"",[],0];
     type = core_type;
     for (var i=0;i<array_length(names);i++){
         if (struct_exists(item_data,names[i])){
@@ -1914,7 +1907,6 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
     static item_tooltip_desc_gen = function(){
         item_desc_tooltip = "";
         var stat_order;
-        var special_properties = [];
         var item_type = type;
         if (type==""){
             if struct_exists(global.gear[$ "armour"],name){
@@ -1935,14 +1927,8 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
             }
         }
         switch (item_type) {
-            case "armour":
-                stat_order = ["description", "special_description", "armour_value", "damage_resistance_mod", "hp_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
-                break;
-            case "mobility":
-                stat_order = ["description", "special_description", "armour_value", "hp_mod", "damage_resistance_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
-                break;
-            case "gear":
-                stat_order = ["description", "special_description", "armour_value", "hp_mod", "damage_resistance_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
+            default:
+                stat_order = ["description", "special_description", "armour_value", "damage_resistance_mod", "hp_mod", "ranged_mod", "melee_mod", "attack", "ammo", "range", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
                 break;
             case "weapon":
                 stat_order = ["description", "special_description", "attack", "ranged_mod", "melee_mod", "ammo", "range", "armour_value", "hp_mod", "damage_resistance_mod", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
@@ -1950,6 +1936,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
             }
         for (var i = 0; i < array_length(stat_order); i++) {
             var stat = stat_order[i];
+            var special_properties_array = [];
             switch (stat) {
                 case "description":
                     if (description!=""){
@@ -2022,19 +2009,21 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                     }
                     break;
                 case "special_properties":
+                    if array_length(special_properties)>0{
+                        for (var k = 0; k < array_length(special_properties); k++) {
+                            array_push(special_properties_array, special_properties[k]);
+                        }
+                    }
                     if (arp>0){
-                        array_push(special_properties, "Armour Piercing")
+                        array_push(special_properties_array, "Armour Piercing")
                     } else if (arp<0){
-                        array_push(special_properties, "Low Penetration")
+                        array_push(special_properties_array, "Low Penetration")
                     }
-                    if (spli!=0){
-                        array_push(special_properties, "Area of Effect")
-                    }
-                    if (array_length(special_properties)>0){
+                    if (array_length(special_properties_array)>0){
                         var special_properties_string = ""
-                        for (var j = 0; j < array_length(special_properties); j++) {
-                            special_properties_string += special_properties[j]
-                            if (j < array_length(special_properties) - 1) {
+                        for (var j = 0; j < array_length(special_properties_array); j++) {
+                            special_properties_string += special_properties_array[j]
+                            if (j < array_length(special_properties_array) - 1) {
                                 special_properties_string += ", "
                             }
                         }
@@ -2043,7 +2032,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                     break;
                 case "special_description":
                     if (special_description!=""){
-                        item_desc_tooltip += $"{special_description}#"
+                        item_desc_tooltip += $"#{special_description}#"
                     }
                     break;
                 case "req_exp":
