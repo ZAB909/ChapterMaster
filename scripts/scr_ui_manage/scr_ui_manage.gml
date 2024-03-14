@@ -252,7 +252,7 @@ function scr_ui_manage() {
 			var y6=y5+string_height("Toggle Squad View")+2;
 			draw_unit_buttons([x5,y5, x6, y6], stat_tool_tip_text,[1,1],c_red);
 			if (managing>0 && managing<11){
-				array_push(tooltip_drawing, ["click or press S to toggle, squad view", [x5,y5,x6,y6]]);
+				array_push(tooltip_drawing, ["Click or press S to toggle, squad view", [x5,y5,x6,y6]]);
 				if ((point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left)) || (keyboard_check_pressed(ord("S")) && !text_bar)){
 					obj_controller.view_squad = !obj_controller.view_squad;
 					if (stat_tool_tip_text=="Toggle Squad View"){
@@ -274,7 +274,7 @@ function scr_ui_manage() {
 			var x6=x5+string_width(stat_tool_tip_text)+4;
 			var y6=y5+string_height(stat_tool_tip_text)+2;	    
 		    draw_unit_buttons([x5,y5,x6,y6], stat_tool_tip_text,[1,1],c_red);
-		    array_push(tooltip_drawing, ["click or press P to show unit data", [x5,y5,x6,y6]]);
+		    array_push(tooltip_drawing, ["Click or press P to show unit data", [x5,y5,x6,y6]]);
 			if (((keyboard_check_pressed(ord("P"))&& !text_bar)|| (point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left))) && !instance_exists(obj_temp3) && !instance_exists(obj_popup)){
 				if (view_squad){
 					view_squad =false;
