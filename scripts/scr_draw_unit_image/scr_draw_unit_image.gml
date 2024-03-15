@@ -130,16 +130,20 @@ function scr_draw_unit_image(x_draw, y_draw){
             Dreadnought
         }
 
-        if (show_arm="Terminator Armour"){
-			ui_back=false;
-            current_armor = ArmorType.Terminator;
-		}else if (show_arm="Tartaros"){
-			ui_back=false;
-            current_armor = ArmorType.Tartaros;
-		}else if (show_arm="Dreadnought"){
-			ui_back=false;
-            current_armor = ArmorType.Dreadnought;
-		}
+        switch(show_arm){
+            case "Terminator Armour":
+                ui_back=false;
+                current_armor = ArmorType.Terminator;
+                break;
+            case "Tartaros":
+                ui_back=false;
+                current_armor = ArmorType.Tartaros;
+                break;
+            case "Dreadnought":
+                ui_back=false;
+                current_armor = ArmorType.Dreadnought;
+                break;
+            }
 		
         if (current_armor!=ArmorType.Normal) then ui_back=false;
         
@@ -397,7 +401,7 @@ function scr_draw_unit_image(x_draw, y_draw){
             // Draw the lights
             if (ui_specialist=3) and (armour()!=""){
                 if (current_armor==ArmorType.Terminator) then draw_sprite(spr_gear_apoth,0,xx+x_draw,yy+y_draw-22); // for terminators
-                else draw_sprite(spr_gear_apoth,0,xx+x_draw,yy+y_draw); // for normal power armor
+                else draw_sprite(spr_gear_apoth,0,xx+x_draw,yy+y_draw-6); // for normal power armor
                 if (gear() == "Narthecium"){
                     ui_weapon[2]=0;
                 }
