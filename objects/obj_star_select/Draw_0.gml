@@ -330,7 +330,7 @@ if (obj_controller.selecting_planet!=0){
     }
      if (feature!=""){
         if (is_struct(feature)){
-            feature.draw_planet_features(xx+27+390,yy+165);        
+            feature.draw_planet_features(xx+720,yy+165);        
         }
     }else if (garrison!=""){
         if (garrison.garrison_force){
@@ -339,7 +339,7 @@ if (obj_controller.selecting_planet!=0){
                 garrison_data_slate.sub_title = $"Garrison Leader {garrison.garrison_leader.name_role()}"
                 garrison_data_slate.body_text = garrison.garrison_report();
             }
-            garrison_data_slate.draw(xx+730, yy);
+            garrison_data_slate.draw(xx+730, yy+80, 0.6, 0.6);
         }
     }
     if (obj_controller.selecting_planet>0){

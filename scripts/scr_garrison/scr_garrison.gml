@@ -93,7 +93,7 @@ function garrison_force(planet_operatives)constructor{
 		if (system.dispo[planet]>-1){
 			var disposition = disposition_description_chart(system.dispo[planet]);
 			report_string+=$"Our Relationship with the Rulers of the planet is {disposition}";
-		} else if( dispo<-1000){
+		} else if(system.dispo[planet]<-1000){
 			report_string+=$"Rule of the planet is going well";
 		}
 

@@ -8,6 +8,7 @@ function point_and_click(rect){
 
 function feature_selected(Feature) constructor{
 	feature = Feature;
+	main_slate = new mk_two_data_slate();
 
 	if (feature.f_type == P_features.Forge){
 		var worker_caps= [2,4,8];
@@ -25,10 +26,10 @@ function feature_selected(Feature) constructor{
 	draw_planet_features = function(xx,yy){
 	    draw_set_halign(fa_center);
 	    draw_set_font(fnt_40k_14);
-	    draw_sprite(spr_planet_screen,0,xx,yy); 
-	    xx+=312
-	    var area_width = 390;
-	    var area_height = 294;
+	    //draw_sprite(spr_planet_screen,0,xx,yy); 
+	    main_slate.draw(xx,yy, 1.4,1.4);
+	    var area_width = main_slate.width;
+	    var area_height = main_slate.height;
 	    var generic = false;
 	    var title="", body="";
 	    //draw_glow_dot(xx+150, yy+150);
@@ -36,7 +37,7 @@ function feature_selected(Feature) constructor{
 	    var rectangle = [];
 		switch (feature.f_type){
 			case P_features.Forge:
-				draw_text_transformed(xx+(390/2), yy +5, "Chapter Forge", 2, 2, 0);
+				draw_text_transformed(xx+(area_width/2), yy +10, "Chapter Forge", 2, 2, 0);
 				draw_set_halign(fa_left);
 				draw_set_color(c_gray);
 
@@ -93,7 +94,7 @@ function feature_selected(Feature) constructor{
 				body = $"Unload a {obj_ini.role[100][16]} and whatever entourage you deem necessary to recover the STC Fragment";
 				break;	
 			case P_features.Victory_Shrine:
-				draw_text_transformed(xx+(390/2), yy +5, "Victory Shrine", 2, 2, 0);
+				draw_text_transformed(xx+(area_width/2), yy +10, "Victory Shrine", 2, 2, 0);
 				draw_set_halign(fa_left);
 				draw_set_color(c_gray);				
 				/*if (!feature.parade){
@@ -105,26 +106,59 @@ function feature_selected(Feature) constructor{
 				}*/
 				break;																	
 			case P_features.Monastery:
-				draw_text_transformed(xx+(390/2), yy +5, feature.name, 2, 2, 0);
+				draw_text_transformed(xx+(area_width/2), yy +10, feature.name, 2, 2, 0);
 				if (feature.forge==0){
-					if (obj_controller.requisition>=500){
-						if (point_and_click(draw_unit_buttons([xx+10, yy+70], "Build Forge (500 req)",[1,1],c_red))){
-							obj_controller.requisition-=500;
-							feature.forge=1;
-							feature.forge_data = new player_forge();
-						}
-					} else {
-						draw_unit_buttons([xx+10, yy+70], "Build Forge (500 req)",[1,1],c_gray);
-					}
+					draw_text_transformed(xx+80, yy +50, "Forge", 1, 1, 0);
+					if (draw_building_builder(xx+40, yy+70,500,spr_forge_holo)){
+						obj_controller.requisition-=500;
+						feature.forge=1;
+						feature.forge_data = new player_forge();
+					};
 				}
 				break;
 		}
 		if (generic){
-			draw_text_transformed(xx+(390/2), yy +5, title, 2, 2, 0);
+			draw_text_transformed(xx+(area_width/2), yy +5, title, 2, 2, 0);
 			draw_set_halign(fa_left);
 			draw_set_color(c_gray);
 			draw_text_ext(xx+10, yy+40,body,-1,area_width-20);
 		}
+	}
+}
+
+function draw_building_builder(xx, yy, req_require, building_sprite){
+	var clicked =false;
+	draw_sprite_ext(building_sprite, 0, xx, yy, 0.5, 0.5, 0, c_white, 1);
+	var image_bottom = yy+50;
+	var image_middle = xx-15;
+	if (obj_controller.requisition>=req_require){
+		if (scr_hit(image_middle+30, image_bottom+28, image_middle+78, image_bottom+44)){
+			draw_sprite_ext(spr_slate_2, 5, image_middle-10, image_bottom, 1, 1, 0, c_white, 1);
+			if (mouse_check_button(mb_left)){
+				clicked=true;								
+			}
+		} else {
+			draw_sprite_ext(spr_slate_2, 3, image_middle-10, image_bottom, 1, 1, 0, c_white, 1);
+		}
+	} else {
+		draw_sprite_ext(spr_slate_2, 7, image_middle-10, image_bottom, 1, 1, 0, c_white, 1);
+	}
+	draw_sprite_ext(spr_requisition,0,image_middle+65,image_bottom+30,1,1,0,c_white,1);
+	draw_set_halign(fa_left);
+	draw_text(image_middle+32, image_bottom+30, req_require);
+	return clicked;
+}
+
+function mk_two_data_slate()constructor{
+	height=0;
+	width=0;
+	static draw = function(xx,yy,x_scale, y_scale){
+		height = 250*y_scale;
+		width=365*x_scale;
+		draw_sprite_ext(spr_slate_2, 1, xx, yy, x_scale, y_scale, 0, c_white, 1);
+		draw_sprite_ext(spr_slate_2, 0, xx, yy, x_scale, y_scale, 0, c_white, 1)
+		draw_sprite_ext(spr_slate_2, 2, xx, yy, x_scale, y_scale, 0, c_white, 1)
+		//draw_sprite_ext(spr_slate_2, 0, xx, yy, 1, 1, 0, c_white, 1)
 	}
 }
 
