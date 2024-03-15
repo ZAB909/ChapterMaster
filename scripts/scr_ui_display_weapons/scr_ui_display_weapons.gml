@@ -23,7 +23,6 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
         "Meltagun":spr_weapon_melta,
         "Stalker Pattern Bolter":spr_weapon_stalker,
         "Combiflamer":spr_weapon_comflamer,
-        "Sniper Rifle":spr_weapon_sniper,
     }
 
     var sprite_found =false;
@@ -102,7 +101,19 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             }            
          }
     }
-
+    if (!sprite_found){
+        var special_ranged ={
+            "Sniper Rifle":spr_weapon_sniper,
+        }
+        var special_ranged_names=struct_get_names(special_ranged);
+        for (var i=0;i<array_length(special_ranged_names);i++){
+            if (string_count(special_ranged_names[i], equiped_weapon) > 0){
+                set_as_special_ranged(special_ranged[$ special_ranged_names[i]],left_or_right)
+                sprite_found = true;
+                break;               
+            }
+        }
+    }
 
     // Fix sprite for termi/tartar
     if (current_armor == ArmorType.Terminator || current_armor == ArmorType.Tartaros) {
@@ -253,6 +264,13 @@ function set_as_ranged_twohand(sprite, left_or_right) {
     ui_twoh[left_or_right] = true;
 }
 
+function set_as_special_ranged(sprite, left_or_right) {
+    ui_weapon[left_or_right] = sprite;
+    ui_arm[left_or_right] = false;
+    ui_above[left_or_right] = true;
+    ui_spec[left_or_right] = true;
+    display_type = "special_ranged";
+}
 function set_as_melee_onehand(sprite, left_or_right) {
     ui_weapon[left_or_right] = sprite;
     ui_arm[left_or_right] = false;
