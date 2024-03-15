@@ -476,8 +476,10 @@ if (shop = "equipment2") {
         } else {
             tooltip_overide[i] = "requires : #";
             if (research.armour[0] < 2 && mk_4_able){
+                tooltip_overide[i] += $"     {research_pathways.armour[0][1]}#";
+            } else {
                 tooltip_overide[i] = mk_4_tool_tip;
-                tooltip_overide[i] += $"     {research_pathways.armour[0][2].stealth[0][0]}#";
+                tooltip_overide[i] += $"#     {research_pathways.armour[0][1]}#";
             }
         }
     }    
