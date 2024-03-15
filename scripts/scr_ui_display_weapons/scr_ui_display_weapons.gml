@@ -1,5 +1,5 @@
 // Displays weapon based on the armour type to change the art to match the armour type
-function scr_ui_display_weapons(left_or_right, termi_tartaros, equiped_weapon) {
+function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
 
     clear = false;
     ui_xmod[left_or_right] = 0;
@@ -105,27 +105,27 @@ function scr_ui_display_weapons(left_or_right, termi_tartaros, equiped_weapon) {
 
 
     // Fix sprite for termi/tartar
-    if (termi_tartaros >= 1) {
+    if (current_armor == ArmorType.Terminator || current_armor == ArmorType.Tartaros) {
         if (left_or_right == 1) and(ui_arm[1] == false) and (fix_left == 0) then fix_left = 1;
         if (left_or_right == 2) and(ui_arm[2] == false) and (fix_right == 0) then fix_right = 1;
     }
 
     if (display_type == "normal_ranged") {
-        if (termi_tartaros == 1) {
+        if (current_armor == ArmorType.Terminator) {
             ui_xmod[left_or_right] = -22;
             ui_ymod[left_or_right] = 11;
         }
-        if (termi_tartaros == 2) {
+        if (current_armor == ArmorType.Tartaros) {
             ui_xmod[left_or_right] = -14;
             ui_ymod[left_or_right] = 13;
         }
     }
     if (display_type == "melee_onehand") {
-        if (termi_tartaros == 1) {
+        if (current_armor == ArmorType.Terminator) {
             ui_xmod[left_or_right] = -21;
             ui_ymod[left_or_right] = 18;
         }
-        if (termi_tartaros == 2) {
+        if (current_armor == ArmorType.Tartaros) {
             ui_xmod[left_or_right] = -18;
             ui_ymod[left_or_right] = 18;
         }
@@ -133,32 +133,32 @@ function scr_ui_display_weapons(left_or_right, termi_tartaros, equiped_weapon) {
 
     // Fix graphics for tremi/tartaros weapons
     if (display_type == "power_fist") {
-        if (termi_tartaros > 0) {
+        if (current_armor != ArmorType.Normal) {
             ui_arm[left_or_right] = false;
             ui_above[left_or_right] = true;
         }
-        if (termi_tartaros == 1) and(left_or_right == 1) {
+        if (current_armor == ArmorType.Terminator) and(left_or_right == 1) {
             ui_xmod[left_or_right] = -3;
             ui_ymod[left_or_right] = 10;
             fix_left = 8;
             ui_weapon[left_or_right] = spr_weapon_powfist3;
             clear = true;
         }
-        if (termi_tartaros == 1) and(left_or_right == 2) {
+        if (current_armor == ArmorType.Terminator) and(left_or_right == 2) {
             ui_xmod[left_or_right] = 2;
             ui_ymod[left_or_right] = 10;
             fix_right = 8;
             ui_weapon[left_or_right] = spr_weapon_powfist3;
             clear = true;
         }
-        if (termi_tartaros == 2) and(left_or_right == 1) {
+        if (current_armor == ArmorType.Tartaros) and(left_or_right == 1) {
             ui_xmod[left_or_right] = 0;
             ui_ymod[left_or_right] = 10;
             fix_left = 8;
             ui_weapon[left_or_right] = spr_weapon_powfist3;
             clear = true;
         }
-        if (termi_tartaros == 2) and(left_or_right == 2) {
+        if (current_armor == ArmorType.Tartaros) and(left_or_right == 2) {
             ui_xmod[left_or_right] = -1;
             ui_ymod[left_or_right] = 10;
             fix_right = 8;
@@ -167,38 +167,38 @@ function scr_ui_display_weapons(left_or_right, termi_tartaros, equiped_weapon) {
         }
     }
     if (display_type == "lightning_claw") {
-        if (termi_tartaros == 0) and(left_or_right == 1) {
+        if (current_armor == ArmorType.Normal) and(left_or_right == 1) {
             ui_xmod[left_or_right] += 11;
         }
-        if (termi_tartaros == 0) and(left_or_right == 2) {
+        if (current_armor == ArmorType.Normal) and(left_or_right == 2) {
             ui_xmod[left_or_right] -= 8;
         }
-        if (termi_tartaros > 0) {
+        if (current_armor != ArmorType.Normal) {
             ui_arm[left_or_right] = false;
             ui_above[left_or_right] = true;
         }
-        if (termi_tartaros == 1) and(left_or_right == 1) {
+        if (current_armor == ArmorType.Terminator) and(left_or_right == 1) {
             ui_xmod[left_or_right] = -3;
             ui_ymod[left_or_right] = 10;
             fix_left = 8.1;
             ui_weapon[left_or_right] = spr_weapon_lightning2;
             clear = true;
         }
-        if (termi_tartaros == 1) and(left_or_right == 2) {
+        if (current_armor == ArmorType.Terminator) and(left_or_right == 2) {
             ui_xmod[left_or_right] = 2;
             ui_ymod[left_or_right] = 10;
             fix_right = 8.1;
             ui_weapon[left_or_right] = spr_weapon_lightning2;
             clear = true;
         }
-        if (termi_tartaros == 2) and(left_or_right == 1) {
+        if (current_armor == ArmorType.Tartaros) and(left_or_right == 1) {
             ui_xmod[left_or_right] = 0;
             ui_ymod[left_or_right] = 10;
             fix_left = 8.1;
             ui_weapon[left_or_right] = spr_weapon_lightning2;
             clear = true;
         }
-        if (termi_tartaros == 2) and(left_or_right == 2) {
+        if (current_armor == ArmorType.Tartaros) and(left_or_right == 2) {
             ui_xmod[left_or_right] = -1;
             ui_ymod[left_or_right] = 10;
             fix_right = 8.1;
@@ -220,7 +220,7 @@ function scr_ui_display_weapons(left_or_right, termi_tartaros, equiped_weapon) {
     }
     // Flip for offhand
     if (left_or_right == 2)
-        /*and (termi_tartaros=0)*/
+        /*and (current_armor=0)*/
         and(ui_xmod[left_or_right] < 0)
     	and(display_type != "power_fist")
     	and(display_type != "lightning_claw")
