@@ -388,7 +388,8 @@ function scr_draw_unit_image(x_draw, y_draw){
         
             // Draw the lights
             if (ui_specialist=3) and (armour()!=""){
-                draw_sprite(spr_gear_apoth,0,xx+x_draw,yy+y_draw);
+                if (base_sprite=1) then draw_sprite(spr_gear_apoth,0,xx+x_draw,yy+y_draw-22); // for terminators
+                else draw_sprite(spr_gear_apoth,0,xx+x_draw,yy+y_draw); // for normal power armor
                 if (gear() == "Narthecium"){
                     ui_weapon[2]=0;
                 }
@@ -611,7 +612,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                 // Apothecary Lens
                 if (ui_specialist=3){
                     if (base_sprite=2) then draw_sprite(spr_gear_apoth,1,xx+x_draw-2,yy+y_draw-3);// was y_draw-4 with old tartar
-                    if (base_sprite=1) then draw_sprite(spr_gear_apoth,1,xx+x_draw-4,yy+y_draw-2);
+                    if (base_sprite=1) then draw_sprite(spr_gear_apoth,1,xx+x_draw,yy+y_draw-6);
                     if (base_sprite!=1) and (base_sprite!=2) then draw_sprite(spr_gear_apoth,1,xx+x_draw,yy+y_draw);
                     if (gear() == "Narthecium"){
                         if (base_sprite==0) {
@@ -688,9 +689,12 @@ function scr_draw_unit_image(x_draw, y_draw){
             }		
 			// bionics
 			
-			var eye_move = 0;
-            var eye_move_y=0;
-            if (base_sprite==1) then eye_move_y = -5;
+			var eye_move_x = 0;
+            var eye_move_y=-2;
+            // Move eye bionics on terminator armor
+            if (base_sprite==1 && !skull>0 && !ui_specialist=1) then eye_move_y = -5;
+            // Move eye bionics on chaplain terminator armor
+            else eye_move_y = 2;
 			for (var part = 0; part<array_length(global.body_parts);part++){
 				if (struct_exists(body[$ global.body_parts[part]], "bionic")){
 					if (base_sprite<=1){
@@ -699,22 +703,22 @@ function scr_draw_unit_image(x_draw, y_draw){
                         switch(body_part){
                             case "left_eye":
                                  if (bionic.variant == 0){
-                                    draw_sprite(spr_bionics_eye,1,xx+x_draw-4+eye_move,yy+y_draw-4+eye_move_y);
+                                    draw_sprite(spr_bionics_eye,1,xx+x_draw-4+eye_move_x,yy+y_draw-4+eye_move_y);
                                 } else if(bionic.variant == 1){
-                                     draw_sprite(spr_bionic_eye_2,1,xx+x_draw+eye_move,yy+y_draw+eye_move_y);
+                                     draw_sprite(spr_bionic_eye_2,1,xx+x_draw+eye_move_x,yy+y_draw+eye_move_y);
                                 }else if(bionic.variant == 2){
-                                     draw_sprite(spr_bionic_eye_2,2,xx+x_draw+eye_move,yy+y_draw+eye_move_y);
+                                     draw_sprite(spr_bionic_eye_2,2,xx+x_draw+eye_move_x,yy+y_draw+eye_move_y);
                                 }
                                 break;
                                 
                             case "right_eye":
                                 if (bionic.variant ==0){
                                    
-                                    draw_sprite(spr_bionics_eye,0,xx+x_draw-4+eye_move,yy+y_draw-4+eye_move_y);
+                                    draw_sprite(spr_bionics_eye,0,xx+x_draw-4+eye_move_x,yy+y_draw-4+eye_move_y);
                                 }else if(bionic.variant == 1){
-                                     draw_sprite(spr_bionic_eye_2,0,xx+x_draw+eye_move,yy+y_draw+eye_move_y);
+                                     draw_sprite(spr_bionic_eye_2,0,xx+x_draw+eye_move_x,yy+y_draw+eye_move_y);
                                 }else if(bionic.variant == 2){
-                                     draw_sprite(spr_bionic_eye_2,4,xx+x_draw+eye_move,yy+y_draw+eye_move_y);
+                                     draw_sprite(spr_bionic_eye_2,4,xx+x_draw+eye_move_x,yy+y_draw+eye_move_y);
                                 }
                                 break;
 
@@ -773,7 +777,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                 }
 
                if (struct_exists(body[$ "head"],"hood")){
-                    draw_sprite(spr_marine_cloth_hood,0,xx+x_draw+robes_mod[0],yy+y_draw+robes_mod[1]);     
+                    draw_sprite(spr_marine_cloth_hood,0,xx+x_draw+robes_mod[0]-2,yy+y_draw+robes_mod[1]-6);     
                }
                 if (struct_exists(body[$ "torso"],"robes")){
                     draw_sprite(spr_marine_robes,body[$ "torso"][$ "robes"],xx+x_draw+robes_mod[0],yy+y_draw+robes_mod[1]);     
