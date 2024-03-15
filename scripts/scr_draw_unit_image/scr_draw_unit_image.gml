@@ -687,14 +687,22 @@ function scr_draw_unit_image(x_draw, y_draw){
                     }                    
                 }            
             }		
-			// bionics
-			
+
+			// Bionics
 			var eye_move_x = 0;
-            var eye_move_y=-2;
-            // Move eye bionics on terminator armor
-            if (base_sprite==1 && !skull>0 && !ui_specialist=1) then eye_move_y = -5;
-            // Move eye bionics on chaplain terminator armor
-            else eye_move_y = 2;
+            var eye_move_y = 0;
+            var eye_spacer = 0;
+            if (base_sprite == 1) {
+                // Adjust eye bionics on chaplain terminator armor
+                if (skull > 0 && ui_specialist == 1) {
+                    eye_move_y = 2;
+                    eye_spacer = -2;
+                // Adjust eye bionics on terminator armor
+                } else {
+                    eye_move_y = -7;
+                }
+            }
+            // Draw bionics
 			for (var part = 0; part<array_length(global.body_parts);part++){
 				if (struct_exists(body[$ global.body_parts[part]], "bionic")){
 					if (base_sprite<=1){
@@ -703,18 +711,17 @@ function scr_draw_unit_image(x_draw, y_draw){
                         switch(body_part){
                             case "left_eye":
                                  if (bionic.variant == 0){
-                                    draw_sprite(spr_bionics_eye,1,xx+x_draw-4+eye_move_x,yy+y_draw-4+eye_move_y);
+                                    draw_sprite(spr_bionics_eye,1,xx+x_draw+eye_move_x+eye_spacer,yy+y_draw+eye_move_y);
                                 } else if(bionic.variant == 1){
-                                     draw_sprite(spr_bionic_eye_2,1,xx+x_draw+eye_move_x,yy+y_draw+eye_move_y);
+                                     draw_sprite(spr_bionic_eye_2,1,xx+x_draw+eye_move_x+eye_spacer,yy+y_draw+eye_move_y);
                                 }else if(bionic.variant == 2){
-                                     draw_sprite(spr_bionic_eye_2,2,xx+x_draw+eye_move_x,yy+y_draw+eye_move_y);
+                                     draw_sprite(spr_bionic_eye_2,2,xx+x_draw+eye_move_x+eye_spacer,yy+y_draw+eye_move_y);
                                 }
                                 break;
                                 
                             case "right_eye":
                                 if (bionic.variant ==0){
-                                   
-                                    draw_sprite(spr_bionics_eye,0,xx+x_draw-4+eye_move_x,yy+y_draw-4+eye_move_y);
+                                    draw_sprite(spr_bionics_eye,0,xx+x_draw+eye_move_x,yy+y_draw+eye_move_y);
                                 }else if(bionic.variant == 1){
                                      draw_sprite(spr_bionic_eye_2,0,xx+x_draw+eye_move_x,yy+y_draw+eye_move_y);
                                 }else if(bionic.variant == 2){
@@ -729,9 +736,9 @@ function scr_draw_unit_image(x_draw, y_draw){
                                         sprite_num=4;
                                      }
                                     if(bionic.variant == 0){                             
-                                        draw_sprite(spr_bionics_leg_2,sprite_num,xx+x_draw+3,yy+y_draw)
+                                        draw_sprite(spr_bionics_leg_2,sprite_num,xx+x_draw,yy+y_draw)
                                     } else {
-                                        draw_sprite(spr_bionics_leg_3,sprite_num,xx+x_draw+1,yy+y_draw)
+                                        draw_sprite(spr_bionics_leg_3,sprite_num,xx+x_draw,yy+y_draw)
                                     }
                                 }
                                 break;
@@ -739,9 +746,9 @@ function scr_draw_unit_image(x_draw, y_draw){
                             case "right_leg":
                                  if (base_sprite==0){
                                     if(bionic.variant == 0){  
-                                        draw_sprite(spr_bionics_leg_2,0,xx+x_draw-3,yy+y_draw)
+                                        draw_sprite(spr_bionics_leg_2,0,xx+x_draw,yy+y_draw)
                                     }else{
-                                        draw_sprite(spr_bionics_leg_3,0,xx+x_draw-1,yy+y_draw)
+                                        draw_sprite(spr_bionics_leg_3,0,xx+x_draw,yy+y_draw)
                                     }
                                 }
                                 break;
