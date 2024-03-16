@@ -129,6 +129,17 @@ if (shop = "equipment") {
         nobuy[i] = 1;
         item_cost[i] = 0;
     }
+	    i += 1;
+    item[i] = "Crozius Arcanum";
+    item_stocked[i] = scr_item_count(item[i]);
+    item_cost[i] = 75;
+    if (research.power_fields[0]>1){
+        forge_cost[i] = 150;
+    }
+    if (rene = 1) {
+        nobuy[i] = 1;
+        item_cost[i] = 0;
+    }
     i += 1;
     item[i] = "Power Fist";
     item_stocked[i] = scr_item_count(item[i]);
@@ -163,12 +174,23 @@ if (shop = "equipment") {
         item_cost[i] = 0;
     }
     i += 1;
-    item[i] = "Force Weapon";
+    item[i] = "Force Staff";
     item_stocked[i] = scr_item_count(item[i]);
     if (research.psi[0]>0){
         forge_cost[i] = 500;
     }
     item_cost[i] = 65;
+    if (rene = 1) {
+        nobuy[i] = 1;
+        item_cost[i] = 0;
+    }
+	i += 1;
+    item[i] = "Force Sword";
+    item_stocked[i] = scr_item_count(item[i]);
+    if (research.psi[0]>0){
+        forge_cost[i] = 450;
+    }
+    item_cost[i] = 50;
     if (rene = 1) {
         nobuy[i] = 1;
         item_cost[i] = 0;
@@ -788,7 +810,7 @@ if (shop = "vehicles") {
     }
     i += 1;
     x_mod[i] = 9;
-    item[i] = "Force Weapon";
+    item[i] = "Force Staff";
     item_stocked[i] = scr_item_count(item[i]);
     if (obj_controller.in_forge){
         if (research.psi[0]>0) then forge_cost[i] = 500;
@@ -998,7 +1020,7 @@ if (shop == "production"){
         item[i] = ["research", research_pathways.psi[0][research.psi[0]], ["flame"]];
         item_stocked[i] = 0;
         forge_cost[i] = 3000;
-        tooltip_overide[i] = "Allows Force weapon construction";
+        tooltip_overide[i] = "Allows Force Weapon construction";
     }
     if (research.psi[0] == 0){
         i++;

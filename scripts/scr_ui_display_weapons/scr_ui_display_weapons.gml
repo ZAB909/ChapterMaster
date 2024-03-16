@@ -78,8 +78,10 @@ function scr_ui_display_weapons(left_or_right, termi_tartaros, equiped_weapon) {
             "Thunder Hammer":spr_weapon_thhammer,
             "Relic Blade":spr_weapon_relbla,
             "Power Axe":spr_weapon_powaxe,
+			"Crozius Arcanum":spr_weapon_powaxe,
             "Chainaxe":spr_weapon_chaxe,
-            "Force Weapon":spr_weapon_force,
+            "Force Staff":spr_weapon_frcstaff,
+			"Force Sword":spr_weapon_powswo,
         }
         var melee_weapons_names=struct_get_names(melee_weapons);
         var wep_

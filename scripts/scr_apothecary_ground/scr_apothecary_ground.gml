@@ -69,7 +69,7 @@ function scr_apothecary_ground() {
 	                starship.funds_spent+=requisition_spend;
                 
 	                if (requisition_spend>0) and (starship.funds_spent<target_spend){
-	                    scr_alert("green","owner",$"{requisition_spend} Requision spent on Ancient Ship repairs in materials and outfitting (outfitting {(starship.funds_spent/target_spend)*100}%)",x,y);
+	                    scr_alert("green","owner",$"{requisition_spend}{" Requision spent on Ancient Ship repairs in materials and outfitting (outfitting "(starship.funds_spent/target_spend)*100}%)",x,y);
 	                }
 	                if (starship.funds_spent>=target_spend) and(starship.engineer_score>=2000){// u2=tar;
 	                    p_feature[run]="";

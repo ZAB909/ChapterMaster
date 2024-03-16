@@ -783,7 +783,7 @@ function scr_initialize_custom() {
 	    gear[i,16]="Servo Arms";
 	    mobi[i,16]="";
 	    role[i,17]="Librarian";
-	    wep1[i,17]="Force Weapon";
+	    wep1[i,17]="Force Staff";
 	    wep2[i,17]="Storm Bolter";
 	    armour[i,17]="Power Armour";
 	    gear[i,17]="Psychic Hood";
@@ -1281,7 +1281,7 @@ function scr_initialize_custom() {
 			chapter_master_equip.wep1="Eviscerator";
 			break;
 		case 8:
-			chapter_master_equip.wep1="Force Weapon";
+			chapter_master_equip.wep1="Force Staff";
 			break;	
 	}
 	switch (master_ranged){
@@ -2632,7 +2632,7 @@ function scr_initialize_custom() {
 	    scr_add_item(wep1[101,15],4);
 	    scr_add_item(wep2[101,15],4);
 	    scr_add_item("Psychic Hood",4);
-	    scr_add_item("Force Weapon",4);
+	    scr_add_item("Force Staff",4);
 	    scr_add_item("Plasma Pistol",4);
 
 	    o=0;chapter_option=0;repeat(4){o+=1;

@@ -505,6 +505,27 @@ global.weapons={
         "arp": 0,
         "tags":["arcane"],
     },
+	 "Crozius Arcanum": {
+       "abbreviation": "Crzus",       
+        "attack": {
+            "standard": 220,
+            "master_crafted": 250,
+            "artifact": 300
+        },
+        "melee_mod": {
+            "standard": 1,
+            "master_crafted": 1,
+            "artifact": 1
+        },
+        "description": "The Crozius Arcanum serves as both a sacred staff of office and a close combat weapon for Space Marine Chaplains.",
+        "melee_hands": 1,
+        "ranged_hands": 0,
+        "ammo": 0,
+        "range": 1,
+        "spli": 0,
+        "arp": 1,
+        "tags":["power", "mace", "chap"],
+    },
     "Relic Blade": {
       "abbreviation": "RlcBld",               
         "attack": {
@@ -1304,21 +1325,43 @@ global.weapons={
         "arp": -1,
         "tags":["flame"]
     },
-    "Force Weapon": {
+    "Force Staff": {
         "attack": {
-            "standard": 50,
-            "master_crafted": 100,
-            "artifact": 150
+            "standard": 200,
+            "master_crafted": 240,
+            "artifact": 290
         },
-        "abbreviation": "FrcWpn", 
+        "abbreviation": "FrcStf", 
         "description": "An advanced, psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.",
         "melee_hands": 1,
-        "ranged_hands": 1,
+        "ranged_hands": 2,
         "range": 1,
         "spli": 0,
         "arp": 0,
-        "tags":["psi"]
+        "tags":["psi", "psirng"]
     },
+	    "Force Sword": {
+         "abbreviation": "FrcSwrd",
+        "attack": {
+            "standard": 200,
+            "master_crafted": 240,
+            "artifact": 290
+        },
+        "melee_mod": {
+            "standard": 1.1,
+            "master_crafted": 1.1,
+            "artifact": 1.1
+        },
+        "description": "A type of psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.",
+        "melee_hands": 1,
+        "ranged_hands": 0,
+        "ammo": 0,
+        "range": 1,
+        "spli": 1,
+        "arp": 1,
+        "special_description": "Parry",
+        "tags":["psi", "sword"],
+	},
      "Twin Linked Lascannon Turret": {
         "attack": {
             "standard": 250,

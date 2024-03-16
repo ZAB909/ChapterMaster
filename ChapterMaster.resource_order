@@ -110,7 +110,7 @@
     {"name":"spr_weapon_powmaul","order":29,"path":"sprites/spr_weapon_powmaul/spr_weapon_powmaul.yy",},
     {"name":"spr_weapon_lightning1","order":17,"path":"sprites/spr_weapon_lightning1/spr_weapon_lightning1.yy",},
     {"name":"spr_weapon_lightning2","order":18,"path":"sprites/spr_weapon_lightning2/spr_weapon_lightning2.yy",},
-    {"name":"spr_weapon_force","order":12,"path":"sprites/spr_weapon_force/spr_weapon_force.yy",},
+    {"name":"spr_weapon_frcstaff","order":12,"path":"sprites/spr_weapon_frcstaff/spr_weapon_frcstaff.yy",},
     {"name":"spr_weapon_inferno","order":14,"path":"sprites/spr_weapon_inferno/spr_weapon_inferno.yy",},
     {"name":"spr_weapon_relbla","order":32,"path":"sprites/spr_weapon_relbla/spr_weapon_relbla.yy",},
     {"name":"spr_weapon_storm","order":37,"path":"sprites/spr_weapon_storm/spr_weapon_storm.yy",},

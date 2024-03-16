@@ -407,7 +407,7 @@
     {"id":{"name":"spr_weapon_powmaul","path":"sprites/spr_weapon_powmaul/spr_weapon_powmaul.yy",},},
     {"id":{"name":"spr_weapon_lightning1","path":"sprites/spr_weapon_lightning1/spr_weapon_lightning1.yy",},},
     {"id":{"name":"spr_weapon_lightning2","path":"sprites/spr_weapon_lightning2/spr_weapon_lightning2.yy",},},
-    {"id":{"name":"spr_weapon_force","path":"sprites/spr_weapon_force/spr_weapon_force.yy",},},
+    {"id":{"name":"spr_weapon_frcstaff","path":"sprites/spr_weapon_frcstaff/spr_weapon_frcstaff.yy",},},
     {"id":{"name":"spr_weapon_inferno","path":"sprites/spr_weapon_inferno/spr_weapon_inferno.yy",},},
     {"id":{"name":"spr_weapon_relbla","path":"sprites/spr_weapon_relbla/spr_weapon_relbla.yy",},},
     {"id":{"name":"spr_weapon_storm","path":"sprites/spr_weapon_storm/spr_weapon_storm.yy",},},

@@ -1,7 +1,7 @@
 {
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
-  "name": "spr_weapon_force",
+  "name": "spr_weapon_frcstaff",
   "bbox_bottom": 229,
   "bbox_left": 14,
   "bbox_right": 156,
@@ -35,7 +35,7 @@
   "sequence": {
     "resourceType": "GMSequence",
     "resourceVersion": "1.4",
-    "name": "",
+    "name": "spr_weapon_frcstaff",
     "autoRecord": true,
     "backdropHeight": 1080,
     "backdropImageOpacity": 0.5,
@@ -57,10 +57,10 @@
     "timeUnits": 1,
     "tracks": [
       {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"1.0","Keyframes":[
-            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"1699bcf1-366a-4055-8f5e-ab1e3db405c4","path":"sprites/spr_weapon_force/spr_weapon_force.yy",},},},"Disabled":false,"id":"0600b97b-c323-4eb0-a446-0c5794a71e7a","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
-            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"4b4ecd5d-fed3-410e-916c-2f3da94cdfe9","path":"sprites/spr_weapon_force/spr_weapon_force.yy",},},},"Disabled":false,"id":"b0060bb4-fd0f-4145-98f8-a6ea9624621f","IsCreationKey":false,"Key":1.0,"Length":1.0,"Stretch":false,},
-            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"e3578cc2-4f15-4a67-88fb-9c8c27a36d95","path":"sprites/spr_weapon_force/spr_weapon_force.yy",},},},"Disabled":false,"id":"a8a73890-0512-42bd-a35f-fb2c15bef4eb","IsCreationKey":false,"Key":2.0,"Length":1.0,"Stretch":false,},
-            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"cfb0c984-8edd-4db1-bdf1-45d67da885cc","path":"sprites/spr_weapon_force/spr_weapon_force.yy",},},},"Disabled":false,"id":"cb3c2a46-b274-4b8f-910a-415717c9c79c","IsCreationKey":false,"Key":3.0,"Length":1.0,"Stretch":false,},
+            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"1699bcf1-366a-4055-8f5e-ab1e3db405c4","path":"sprites/spr_weapon_frcstaff/spr_weapon_frcstaff.yy",},},},"Disabled":false,"id":"0600b97b-c323-4eb0-a446-0c5794a71e7a","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
+            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"4b4ecd5d-fed3-410e-916c-2f3da94cdfe9","path":"sprites/spr_weapon_frcstaff/spr_weapon_frcstaff.yy",},},},"Disabled":false,"id":"b0060bb4-fd0f-4145-98f8-a6ea9624621f","IsCreationKey":false,"Key":1.0,"Length":1.0,"Stretch":false,},
+            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"e3578cc2-4f15-4a67-88fb-9c8c27a36d95","path":"sprites/spr_weapon_frcstaff/spr_weapon_frcstaff.yy",},},},"Disabled":false,"id":"a8a73890-0512-42bd-a35f-fb2c15bef4eb","IsCreationKey":false,"Key":2.0,"Length":1.0,"Stretch":false,},
+            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"cfb0c984-8edd-4db1-bdf1-45d67da885cc","path":"sprites/spr_weapon_frcstaff/spr_weapon_frcstaff.yy",},},},"Disabled":false,"id":"cb3c2a46-b274-4b8f-910a-415717c9c79c","IsCreationKey":false,"Key":3.0,"Length":1.0,"Stretch":false,},
           ],},"modifiers":[],"spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange": null,
