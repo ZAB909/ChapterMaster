@@ -1126,7 +1126,7 @@ forge_master_modifier=0;
 if (forge_master!="none"){
     forge_master_modifier = 2500/((forge_master.charisma+10)*forge_master.technology);
     if (forge_master.has_trait("flesh_is_weak") && forge_master_modifier>0.75){
-        forge_master_modifier-=1;
+        forge_master_modifier-=0.1;
     };
 } else {
     forge_master_modifier=1.7;
