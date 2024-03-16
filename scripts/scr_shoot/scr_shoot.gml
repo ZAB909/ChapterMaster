@@ -227,16 +227,15 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
 	        if (weapon_index_position<-40) and (stop=0) then that_works=true;
         
 	        if (that_works=true){
-	            var total_damage,hit_number,c,eac,ap,spla,wii;
-	            total_damage=0;hit_number=0;c=0;eac=0;ap=0;spla=0;wii="";
+	            var total_damage,hit_number,c,eac,ap,wii;
+	            total_damage=0;hit_number=0;c=0;eac=0;ap=0;attack_count_mod=0;wii="";
             
 	            if (weapon_index_position>0){
 	                total_damage=(att[weapon_index_position]/wep_num[weapon_index_position])*target_object.dudes_dr[targeh];
 	                ap=apa[weapon_index_position];
-	                spla=splash[weapon_index_position];
 	            }// Average damage
 	            if (weapon_index_position<-40){
-	                wii="";spla=3;
+	                wii="";attack_count_mod=3;
                 
 	                if (weapon_index_position=-51){
 	                	wii="Heavy Bolter Emplacement";
@@ -265,8 +264,8 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
 	            c=hit_number*shots_fired;// New damage
             
 	            var casualties,ponies,onceh;onceh=0;ponies=0;
-	            if (spla<=1) then casualties=min(floor(c/target_object.dudes_hp[targeh]),shots_fired);
-	            if (spla>1) then casualties=floor(c/target_object.dudes_hp[targeh]);
+	            if (attack_count_mod<=1) then casualties=min(floor(c/target_object.dudes_hp[targeh]),shots_fired);
+	            if (attack_count_mod>1) then casualties=floor(c/target_object.dudes_hp[targeh]);
             
 	            ponies=target_object.dudes_num[targeh];
 	            if (target_object.dudes_num[targeh]=1) and ((target_object.dudes_hp[targeh]-c)<=0){casualties=1;}
@@ -360,9 +359,9 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
 	                        c2=b2*shots_remaining;// New damage
                         
 	                        var casualties2,ponies2,onceh2;onceh2=0;ponies2=0;
-	                        if (spla<=1) then casualties2=min(floor(c2/target_object.dudes_hp[godd]),shots_remaining);
-	                        if (spla>1) then casualties2=floor(c2/target_object.dudes_hp[godd]);
-                        
+	                        if (attack_count_mod<=1) then casualties2=min(floor(c2/target_object.dudes_hp[godd]),shots_remaining);
+							
+	                        if (attack_count_mod>1) then casualties2=floor(c2/target_object.dudes_hp[godd]);
 	                        ponies2=target_object.dudes_num[godd];
 	                        if (target_object.dudes_num[godd]=1) and ((target_object.dudes_hp[godd]-c2)<=0){casualties2=1;}
 	                        if (target_object.dudes_num[godd]<casualties2) then casualties2=target_object.dudes_num[godd];
