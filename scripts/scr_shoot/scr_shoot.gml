@@ -233,7 +233,7 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
 	            if (weapon_index_position>0){
 	                total_damage=(att[weapon_index_position]/wep_num[weapon_index_position])*target_object.dudes_dr[targeh];
 	                ap=apa[weapon_index_position];
-	                spla=spli[weapon_index_position];
+	                spla=splash[weapon_index_position];
 	            }// Average damage
 	            if (weapon_index_position<-40){
 	                wii="";spla=3;
