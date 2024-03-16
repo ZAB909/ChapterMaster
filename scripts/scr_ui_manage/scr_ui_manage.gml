@@ -581,7 +581,7 @@ function scr_ui_manage() {
 							}
 						}
         		var_text = string_hash_to_newline(string("Damage Resistance: {0}",cn.temp[118]))
-	        	tooltip_text += string_hash_to_newline(string("CON: {0}%#EXP: {1}%", round(selected_unit.constitution/2), round(selected_unit.experience()/10)));
+	        	tooltip_text += string_hash_to_newline(string("CON: {0}%#XP: {1}%", round(selected_unit.constitution/2), round(selected_unit.experience()/10)));
 	        	x1 = xx+1015;
 	        	y1 = yy+378;
 	        	x2 = x1+string_width(var_text);
@@ -605,7 +605,8 @@ function scr_ui_manage() {
 	        
 	    yy+=77;
 		
-	    var unit_specialism_option=false, spec_tip="", tooltip_set=[];
+	    var unit_specialism_option=false, spec_tip="";
+		var potential_tooltip=[], health_tooltip=[], promotion_tooltip=[];
 		var repetitions=min(man_max,man_see);
 
 		//tooltip text to tell you if a unit is eligible for special roles
@@ -652,7 +653,7 @@ function scr_ui_manage() {
 	                   
 		            temp3=string(round((unit.hp()/unit.max_health())*100))+"% HP";
 	            
-		            temp4=string(ma_exp[sel])+" exp";
+		            temp4=string(ma_exp[sel])+" XP";
 	            
 		            ma_ar="";ma_we1="";ma_we2="";ma_ge="";ma_mb="";ttt=0;
 		            ar_ar=0;ar_we1=0;ar_we2=0;ar_ge=0;ar_mb=0;
@@ -730,48 +731,28 @@ function scr_ui_manage() {
 
 		        unit_specialism_option=false;
 		        spec_tip = "";
+				draw_set_color(c_gray);
+				draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);
 		        if (man[sel]="man"){
-		        	draw_set_color(c_gray);
 		        	if (!is_specialist(unit.role())){
 				        if (unit.technology>=35){
 				        	 //if unit has techmarine potential
-				        	draw_set_color(c_orange);
 				        	unit_specialism_option=true;
 				        	spec_tip = spec_tips[0];
 				        //if unit has librarian potential
 				    	} else if (unit.psionic>7){
 				    		spec_tip = spec_tips[3];
 				    		unit_specialism_option=true;
-				    		draw_set_color(c_aqua);
 				    	}else if (unit.piety>=35) and (unit.charisma>=30){  //if unit has chaplain potential
 				    		spec_tip = spec_tips[2];
 				    		unit_specialism_option=true;
-				    		draw_set_color(c_olive);
 				    	}else if (unit.technology>=30) and (unit.intelligence>=45){ //if unit has apothecary potential
 				    		spec_tip = spec_tips[1];
 				    		unit_specialism_option=true;
-				    		draw_set_color(c_fuchsia);
 				    	}
-			    	} else{
-			    		if (array_contains(["Lexicanum", "Codiciery",obj_ini.role[100,17], string("Chief {0}",obj_ini.role[100,17])], unit.role())){
-			    			draw_set_color(c_blue);
-			    		} else if(array_contains(["Forge Master",obj_ini.role[100][16]],unit.role())){
-			    			draw_set_color(c_maroon);
-			    		} else if(array_contains([obj_ini.role[100][15],"Master of the Apothecarion"],unit.role())){
-			    			draw_set_color(c_red);
-			    		} else if(array_contains([obj_ini.role[100][14],"Master of Sanctity"],unit.role())){
-			    			draw_set_color(c_teal);
-			    		}
 			    	}
-		    	} else {
-		    		draw_set_color(c_gray);
 		    	}
-		    	if (unit_specialism_option){
-		    		array_push(tooltip_set, [spec_tip, [xx+25,yy+64,xx+974,yy+85]]);
-		    		draw_rectangle(xx+25+2,yy+64+2,xx+974-2,yy+85-2,1);
-		    	} else{
-					draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);
-		    	}
+		    	if (unit_specialism_option) then array_push(potential_tooltip, [spec_tip, [xx+25,yy+64,xx+250,yy+85]]);
 
 		        // Squads
 		        var sqi="";
@@ -819,11 +800,48 @@ function scr_ui_manage() {
 				}
 	        
 		        if (temp1!="Chapter Master "+string(obj_ini.master_name)){
-		            if (man[sel]=="man") and (ma_promote[sel]>0) then draw_set_color(c_yellow);
-		            if (man[sel]=="man") and (ma_promote[sel]>=10) then draw_set_color(c_red);
-		            draw_text_transformed(xx+27+8,yy+66,string_hash_to_newline(string(temp1)),name_xr,1,0);
-		            draw_text_transformed(xx+28+8,yy+67,string_hash_to_newline(string(temp1)),name_xr,1,0);
-		            draw_set_color(c_gray);
+					// Define text positions and values
+					var hpText = [xx+240+8, yy+66, string_hash_to_newline(string(temp3))]; // HP
+					var xpText = [xx+330+8, yy+66, string_hash_to_newline(string(temp4))]; // XP
+					// Define colors
+					var hpColor = c_gray;
+					var xpColor = c_gray;
+					// Check conditions and set colors
+					if (man[sel] == "man"){
+						if (ma_promote[sel] >= 10){
+							hpColor = c_red;
+							array_push(health_tooltip, ["Critical Health State! Bionic augmentation is required!", [xx+270, yy+64, xx+295, yy+85]]);
+						}else if (ma_promote[sel] > 0){
+							xpColor = c_yellow;
+							array_push(promotion_tooltip, ["Promotion Possible", [xx+335, yy+64, xx+385, yy+85]]);
+						}
+						// Draw texts with the defined colors
+						draw_set_color(hpColor);
+						draw_text(hpText[0], hpText[1], hpText[2]);
+						draw_set_color(xpColor);
+						draw_text(xpText[0], xpText[1], xpText[2]);
+					}else{
+						draw_set_color(hpColor);
+						draw_text(hpText[0], hpText[1], hpText[2]);
+					}
+					if (unit_specialism_option){
+						if (unit.technology>=35){	//if unit has techmarine potential
+							specialismColor = c_red;
+						} else if (unit.psionic>7){	//if unit has librarian potential
+							specialismColor = c_aqua;
+						}else if (unit.piety>=35 && unit.charisma>=30){	//if unit has chaplain potential
+							specialismColor = c_yellow;
+						}else if (unit.technology>=30 && unit.intelligence>=45){	//if unit has apothecary potential
+							specialismColor = c_white;
+						}
+						draw_set_color(specialismColor);
+						draw_text_transformed(xx+27+8,yy+66,string_hash_to_newline(string(temp1)),name_xr,1,0);
+						draw_text_transformed(xx+27.5+8,yy+66.5,string_hash_to_newline(string(temp1)),name_xr,1,0);
+					}
+					else{
+						draw_text_transformed(xx+27+8,yy+66,string_hash_to_newline(string(temp1)),name_xr,1,0);
+						draw_text_transformed(xx+27.5+8,yy+66.5,string_hash_to_newline(string(temp1)),name_xr,1,0);
+					   }
 		        }else if (temp1=="Chapter Master "+string(obj_ini.master_name)){
 		            draw_text_transformed(xx+27+16+8,yy+66,string_hash_to_newline(string(temp1)),name_xr,1,0);
 		            draw_text_transformed(xx+28+16+8,yy+67,string_hash_to_newline(string(temp1)),name_xr,1,0);
@@ -832,8 +850,6 @@ function scr_ui_manage() {
 		        draw_set_alpha(1);
 	        
 		        draw_set_color(c_gray);
-		        draw_text_transformed(xx+240+8,yy+66,string_hash_to_newline(string(temp3)),1,1,0);// HP
-		        draw_text_transformed(xx+330+8,yy+66,string_hash_to_newline(string(temp4)),1,1,0);// EXP
 		        if (temp2=="Mechanicus Vessel") or (temp2=="Terra IV") or (temp2=="=Penitorium=") or (assignment!="none") then draw_set_alpha(0.5);
 		        draw_text_transformed(xx+430+8,yy+66,string_hash_to_newline(string(temp2)),1,1,0);// LOC
 		        draw_set_alpha(1);
@@ -1110,13 +1126,19 @@ function scr_ui_manage() {
 			            }
 			        }
 			    }
-			    //draws hover overs for specialist potential
-			    for (var i=0;i<array_length(tooltip_set);i++){
-			    	if (point_in_rectangle(mouse_x, mouse_y, tooltip_set[i][1][0],tooltip_set[i][1][1],tooltip_set[i][1][2],tooltip_set[i][1][3])){
-			    		tooltip_draw(tooltip_set[i][0])
-			    	}
-			    }
-		    
+			    //draws hover over tooltips
+				function gen_tooltip(tooltip_array) {
+					for (var i = 0; i < array_length(tooltip_array); i++) {
+						var tooltip = tooltip_array[i];
+						if (point_in_rectangle(mouse_x, mouse_y, tooltip[1][0], tooltip[1][1], tooltip[1][2], tooltip[1][3])) {
+							tooltip_draw(tooltip[0]);
+						}
+					}
+				}
+				gen_tooltip(potential_tooltip);
+				gen_tooltip(promotion_tooltip);
+				gen_tooltip(health_tooltip);
+
 			    yy-=8;
 
 		    	draw_unit_buttons([xx+1281,yy+608],"Select All");
