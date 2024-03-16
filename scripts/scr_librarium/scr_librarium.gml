@@ -71,6 +71,7 @@ function scr_librarium(){
 
         draw_set_color(881503);
         draw_set_halign(fa_center);
+        identifiable = 0;
         if (artifacts > 0) {
             var usey =0;
             for (i=0;i<30;i++){
@@ -127,185 +128,185 @@ function scr_librarium(){
             draw_rectangle(xx + 402, yy + 500, xx + 842, yy + 685, 0);
             draw_set_color(c_gray);
             draw_rectangle(xx + 402, yy + 500, xx + 842, yy + 685, 1); 
+            if (obj_ini.artifact_loc[menu_artifact] == obj_ini.home_name) then identifiable = 1;
+            if (obj_ini.artifact_sid[menu_artifact] >= 500) {
+                if (obj_ini.ship_location[obj_ini.artifact_sid[menu_artifact] - 500] = obj_ini.home_name) then identifiable = 1;
+            }            
+            if (obj_ini.artifact[menu_artifact] != "") {
+                if (obj_ini.artifact_sid[menu_artifact] >= 500) {
+                    for (var i = 1; i <= 30; i++) {
+                        if (obj_ini.ship[i] = obj_ini.artifact_loc[menu_artifact]) then tp = i;
+                    }
+                }
+                if (obj_ini.artifact_identified[menu_artifact] > 0) and(identifiable = 0) {
+                    draw_set_color(881503);
+                    if (obj_ini.artifact_sid[menu_artifact] >= 500) then artif_descr = "This artifact is an unidentified " + string(obj_ini.artifact[menu_artifact]) + ".#It is stored on the ship ‘" + string(obj_ini.ship[tp]) + "’.#To be identified it must be brought to a fleet with a Battle Barge or your Homeworld.";
+                    if (obj_ini.artifact_sid[menu_artifact] < 500) then artif_descr = "This artifact is an unidentified " + string(obj_ini.artifact[menu_artifact]) + ".#It is stored on " + string(obj_ini.artifact_loc[menu_artifact]) + " " + string(obj_ini.artifact_sid[menu_artifact]) + ".#To be identified it must be brought to a fleet with a Battle Barge or your Homeworld.";
+                }
+                if (obj_ini.artifact_identified[menu_artifact] > 0) and(identifiable = 1) {
+                    draw_set_color(881503);
+                    if (obj_ini.artifact_sid[menu_artifact] >= 500) then artif_descr = "This artifact is an unidentified " + string(obj_ini.artifact[menu_artifact]) + ".#It is stored on the ship ‘" + string(obj_ini.ship[tp]) + "’.#It will be identified in " + string(obj_ini.artifact_identified[menu_artifact]) + " turns.  You may alternatively spend 150 Requisition to";
+                    if (obj_ini.artifact_sid[menu_artifact] < 500) then artif_descr = "This artifact is an unidentified " + string(obj_ini.artifact[menu_artifact]) + ".#It is stored on " + string(obj_ini.artifact_loc[menu_artifact]) + " " + string(obj_ini.artifact_sid[menu_artifact]) + ".#It will be identified in " + string(obj_ini.artifact_identified[menu_artifact]) + " turns.  You may alternatively spend 150 Requisition to";
 
-        }
-        if (artifacts == 0){
+                    draw_set_color(c_gray);
+                    draw_rectangle(xx + 532, yy + 715, xx + 709, yy + 733, 0);
+                    draw_set_color(c_black);
+                    draw_text(xx + 622, yy + 715, string_hash_to_newline("IDENTIFY NOW"));
+                    if (mouse_x >= xx + 532) and(mouse_y >= yy + 715) and(mouse_x < xx + 709) and(mouse_y < yy + 733) {
+                        draw_set_alpha(0.2);
+                        draw_rectangle(xx + 532, yy + 715, xx + 709, yy + 733, 0);
+                        draw_set_alpha(1);
+                        if (mouse_check_button(mb_left)){
+                            if (requisition>=150){
+                                obj_ini.artifact_identified[menu_artifact]=0;
+                                requisition-=150;
+                                cooldown=8000;
+                                identifiable=0;
+                                audio_play_sound(snd_identify,-500,0);
+                                audio_sound_gain(snd_identify,master_volume*effect_volume,0);
+                            }                       
+                        }
+                    }
+
+                }
+                if (obj_ini.artifact_identified[menu_artifact] = 0) {
+                    draw_set_color(881503);
+
+                    artif_descr = obj_ini.artifact_struct[menu_artifact].description();
+                    tooltip = "";
+                    tooltip_stat1 = 0;
+                    tooltip_stat2 = 0;
+                    tooltip_stat3 = 0;
+                    tooltip_stat4 = 0;
+                    tooltip_other = "";
+                    var arti_data = gear_weapon_data("any",obj_ini.artifact[menu_artifact], "all", false, obj_ini.artifact_quality[menu_artifact]);
+
+                    var hue = 1;
+                    if (obj_ini.artifact[menu_artifact] = "Statue") then hue = 0;
+                    if (obj_ini.artifact[menu_artifact] = "Casket") then hue = 0;
+                    if (obj_ini.artifact[menu_artifact] = "Chalice") then hue = 0;
+                    if (obj_ini.artifact[menu_artifact] = "Robot") then hue = 0;
+                    if (obj_ini.artifact_equipped[menu_artifact]==true) then hue = 0;
+
+                    if (hue = 1) {
+                        if(artifact_equip.draw_shutter(xx + 385, yy + 740, "EQUIP", 0.3, true)){
+                            var pop=instance_create(0,0,obj_popup);
+                            pop.type=8;
+                            cooldown=8;
+                        }
+                    } else {
+                        artifact_equip.draw_shutter(xx + 385, yy + 740, "EQUIP", 0.3, false);
+                    }
+                    if (artifact_gift.draw_shutter(xx + 575, yy + 740, "GIFT", 0.3, true)){
+                        var chick=0;
+                        if (known[eFACTION.Imperium]>1) and (faction_defeated[2]==0) then chick=1;
+                        if (known[eFACTION.Mechanicus]>1) and (faction_defeated[3]==0) then chick=1;
+                        if (known[eFACTION.Inquisition]>1) and (faction_defeated[4]==0) then chick=1;
+                        if (known[eFACTION.Ecclesiarchy]>1) and (faction_defeated[5]==0) then chick=1;
+                        if (known[eFACTION.Eldar]>1) and (faction_defeated[6]==0) then chick=1;
+                        if (known[eFACTION.Tau]>1) and (faction_defeated[8]==0) then chick=1;
+                        if (chick!=0){
+                            var pop=instance_create(0,0,obj_popup);
+                            pop.type=9;
+                            cooldown=8;
+                        }                   
+                    }
+                    if (artifact_destroy.draw_shutter(xx + 765, yy + 740, "DESTROY", 0.3, true)){
+                        var fun=irandom(100)+1;
+                        // Below here cleans up the artifacts
+                        var i=menu_artifact;
+
+                        if (menu_artifact==fest_display) then fest_display=0;
+
+                        if (array_contains(obj_ini.artifact_tags[i],"Daemon")){
+                            if (obj_ini.artifact_sid[i]>=500){
+                                var demonSummonChance=irandom(100)+1;
+
+                                if (demonSummonChance<=60) and (obj_ini.ship_carrying[obj_ini.artifact_sid[i]-500]>0){
+                                    instance_create(0,0,obj_ncombat);
+                                    obj_ncombat.battle_special="ship_demon";
+                                    obj_ncombat.formation_set=1;
+                                    obj_ncombat.enemy=10;
+                                    obj_ncombat.battle_id=obj_ini.artifact_sid[i]-500;
+                                    scr_ship_battle(obj_ini.artifact_sid[i]-500,999);
+                                }
+                            }
+                        }
+                        for(var e=1; e<=500; e++){
+                            if (obj_ini.artifact_tags[i]==obj_controller.recent_keyword[e]){
+                                obj_controller.recent_keyword[e]="";
+                                obj_controller.recent_type[e]="";
+                                obj_controller.recent_turn[e]=0;
+                                obj_controller.recent_number[e]=0;
+                                scr_recent("artifact_destroyed",obj_controller.recent_keyword,2);
+                                scr_recent("","",0);
+                            }
+                        }
+
+                        obj_ini.artifact[i]="";
+                        obj_ini.artifact_tags[i]=[];
+                        obj_ini.artifact_identified[i]=0;
+                        obj_ini.artifact_condition[i]=100;
+                        obj_ini.artifact_loc[i]="";
+                        obj_ini.artifact_sid[i]=0;
+                        artifacts-=1;
+                        cooldown=12;
+                        if (menu_artifact>artifacts) then menu_artifact=artifacts;              
+                    }
+
+                    if (menu_artifact_type = 1) { // Weapon
+                        // tip2=string(tooltip_stat1)+" Attack, "+string(tooltip_stat2)+" Armour Penetration#";
+                        tip2 = string(tooltip_stat1) + " Damage#";
+                        if (tooltip_stat4 > 0) then tip2 += string(tooltip_stat4) + " Ammunition#";
+                        // tip2+=string_replace(string(tooltip_other),",","#");
+                        tip2 += string(tooltip_other);
+                    }
+                    if (menu_artifact_type = 2) { // Armour
+                        if (tooltip_other = "") then tip2 = string(tooltip_stat1) + " Armour Class";
+                        if (tooltip_other != "") then tip2 = string(tooltip_stat1) + " Armour Class#" + string(tooltip_other);
+                    }
+                    if (menu_artifact_type = 3) { // Gear
+                        tip2 = tooltip_other;
+                    }
+                } else {
+                    artifact_destroy.draw_shutter(xx + 765, yy + 740, "DESTROY", 0.3, false);
+                    artifact_equip.draw_shutter(xx + 385, yy + 740, "EQUIP", 0.3, false);
+                    artifact_gift.draw_shutter(xx + 575, yy + 740, "GIFT", 0.3, false);
+                }
+                draw_set_halign(fa_center);
+                draw_set_font(fnt_40k_14);
+                draw_set_color(c_gray);
+                draw_text_ext(xx + 622, yy + 504, string_hash_to_newline(string(artif_descr)), -1, 436);
+                draw_set_font(fnt_40k_14b);
+                draw_set_color(c_gray);
+                var spack = string_height_ext(string_hash_to_newline(string(artif_descr)), -1, 436);
+                draw_text_ext(xx + 622, yy + 508 + spack, string_hash_to_newline(string(tip2)), -1, 436);
+
+                // identifiable=0;
+            }
+        }else if (artifacts == 0){
             draw_text(xx + 622, yy + 440, string_hash_to_newline("[No Artifacts]"))
-        } else {
+            artifact_destroy.draw_shutter(xx + 765, yy + 740, "DESTROY", 0.3, false);
+            artifact_equip.draw_shutter(xx + 385, yy + 740, "EQUIP", 0.3, false);
+            artifact_gift.draw_shutter(xx + 575, yy + 740, "GIFT", 0.3, false);           
         }
         draw_set_color(881503);
         draw_set_halign(fa_center);
 
-        identifiable = 0;
-        if (obj_ini.artifact_loc[menu_artifact] == obj_ini.home_name) then identifiable = 1;
-        if (obj_ini.artifact_sid[menu_artifact] >= 500) {
-            if (obj_ini.ship_location[obj_ini.artifact_sid[menu_artifact] - 500] = obj_ini.home_name) then identifiable = 1;
-        }
-
         if (instance_exists(obj_p_fleet)) {
             with(obj_p_fleet) {
                 var good = 0;
-                for (var i = 1; i <= 20; i++) {
-                    if (i <= 9) {
-                        if (capital_num[i] = obj_ini.artifact_sid[other.menu_artifact] - 500) then good = 1;
+                if (obj_controller.artifacts>0){
+                    for (var i = 1; i <= 20; i++) {
+                        if (i <= 9) {
+                            if (capital_num[i] = obj_ini.artifact_sid[obj_controller.menu_artifact] - 500) then good = 1;
+                        }
+                        if (frigate_num[i] = obj_ini.artifact_sid[obj_controller.menu_artifact] - 500) then good = 1;
+                        if (escort_num[i] = obj_ini.artifact_sid[obj_controller.menu_artifact] - 500) then good = 1;
                     }
-                    if (frigate_num[i] = obj_ini.artifact_sid[other.menu_artifact] - 500) then good = 1;
-                    if (escort_num[i] = obj_ini.artifact_sid[other.menu_artifact] - 500) then good = 1;
                 }
                 if (good = 1) and(capital_number > 0) then good = 2;
                 if (good = 2) then obj_controller.identifiable = 1;
             }
-        }
-        if (obj_ini.artifact[menu_artifact] != "") {
-            if (obj_ini.artifact_sid[menu_artifact] >= 500) {
-                for (var i = 1; i <= 30; i++) {
-                    if (obj_ini.ship[i] = obj_ini.artifact_loc[menu_artifact]) then tp = i;
-                }
-            }
-            if (obj_ini.artifact_identified[menu_artifact] > 0) and(identifiable = 0) {
-                draw_set_color(881503);
-                if (obj_ini.artifact_sid[menu_artifact] >= 500) then artif_descr = "This artifact is an unidentified " + string(obj_ini.artifact[menu_artifact]) + ".#It is stored on the ship ‘" + string(obj_ini.ship[tp]) + "’.#To be identified it must be brought to a fleet with a Battle Barge or your Homeworld.";
-                if (obj_ini.artifact_sid[menu_artifact] < 500) then artif_descr = "This artifact is an unidentified " + string(obj_ini.artifact[menu_artifact]) + ".#It is stored on " + string(obj_ini.artifact_loc[menu_artifact]) + " " + string(obj_ini.artifact_sid[menu_artifact]) + ".#To be identified it must be brought to a fleet with a Battle Barge or your Homeworld.";
-            }
-            if (obj_ini.artifact_identified[menu_artifact] > 0) and(identifiable = 1) {
-                draw_set_color(881503);
-                if (obj_ini.artifact_sid[menu_artifact] >= 500) then artif_descr = "This artifact is an unidentified " + string(obj_ini.artifact[menu_artifact]) + ".#It is stored on the ship ‘" + string(obj_ini.ship[tp]) + "’.#It will be identified in " + string(obj_ini.artifact_identified[menu_artifact]) + " turns.  You may alternatively spend 150 Requisition to";
-                if (obj_ini.artifact_sid[menu_artifact] < 500) then artif_descr = "This artifact is an unidentified " + string(obj_ini.artifact[menu_artifact]) + ".#It is stored on " + string(obj_ini.artifact_loc[menu_artifact]) + " " + string(obj_ini.artifact_sid[menu_artifact]) + ".#It will be identified in " + string(obj_ini.artifact_identified[menu_artifact]) + " turns.  You may alternatively spend 150 Requisition to";
-
-                draw_set_color(c_gray);
-                draw_rectangle(xx + 532, yy + 715, xx + 709, yy + 733, 0);
-                draw_set_color(c_black);
-                draw_text(xx + 622, yy + 715, string_hash_to_newline("IDENTIFY NOW"));
-                if (mouse_x >= xx + 532) and(mouse_y >= yy + 715) and(mouse_x < xx + 709) and(mouse_y < yy + 733) {
-                    draw_set_alpha(0.2);
-                    draw_rectangle(xx + 532, yy + 715, xx + 709, yy + 733, 0);
-                    draw_set_alpha(1);
-                    if (mouse_check_button(mb_left)){
-				        if (requisition>=150){
-				            obj_ini.artifact_identified[menu_artifact]=0;
-				            requisition-=150;
-				            cooldown=8000;
-				            identifiable=0;
-				            audio_play_sound(snd_identify,-500,0);
-				            audio_sound_gain(snd_identify,master_volume*effect_volume,0);
-				        }                    	
-                    }
-                }
-
-            }
-            if (obj_ini.artifact_identified[menu_artifact] = 0) {
-                draw_set_color(881503);
-
-                artif_descr = obj_ini.artifact_struct[menu_artifact].description();
-                tooltip = "";
-                tooltip_stat1 = 0;
-                tooltip_stat2 = 0;
-                tooltip_stat3 = 0;
-                tooltip_stat4 = 0;
-                tooltip_other = "";
-                var arti_data = gear_weapon_data("any",obj_ini.artifact[menu_artifact], "all", false, obj_ini.artifact_quality[menu_artifact]);
-
-                var hue = 1;
-                if (obj_ini.artifact[menu_artifact] = "Statue") then hue = 0;
-                if (obj_ini.artifact[menu_artifact] = "Casket") then hue = 0;
-                if (obj_ini.artifact[menu_artifact] = "Chalice") then hue = 0;
-                if (obj_ini.artifact[menu_artifact] = "Robot") then hue = 0;
-                if (obj_ini.artifact_equipped[menu_artifact]==true) then hue = 0;
-
-                if (hue = 1) {
-                	if(artifact_equip.draw_shutter(xx + 385, yy + 740, "EQUIP", 0.3, true)){
-		                var pop=instance_create(0,0,obj_popup);
-		                pop.type=8;
-		                cooldown=8;
-                	}
-                } else {
-                	artifact_equip.draw_shutter(xx + 385, yy + 740, "EQUIP", 0.3, false);
-                }
-                if (artifact_gift.draw_shutter(xx + 575, yy + 740, "GIFT", 0.3, true)){
-		            var chick=0;
-		            if (known[eFACTION.Imperium]>1) and (faction_defeated[2]==0) then chick=1;
-		            if (known[eFACTION.Mechanicus]>1) and (faction_defeated[3]==0) then chick=1;
-		            if (known[eFACTION.Inquisition]>1) and (faction_defeated[4]==0) then chick=1;
-		            if (known[eFACTION.Ecclesiarchy]>1) and (faction_defeated[5]==0) then chick=1;
-		            if (known[eFACTION.Eldar]>1) and (faction_defeated[6]==0) then chick=1;
-		            if (known[eFACTION.Tau]>1) and (faction_defeated[8]==0) then chick=1;
-		            if (chick!=0){
-		                var pop=instance_create(0,0,obj_popup);
-		                pop.type=9;
-		                cooldown=8;
-		            }                	
-                }
-                if (artifact_destroy.draw_shutter(xx + 765, yy + 740, "DESTROY", 0.3, true)){
-					var fun=irandom(100)+1;
-		            // Below here cleans up the artifacts
-		            var i=menu_artifact;
-
-		            if (menu_artifact==fest_display) then fest_display=0;
-
-		            if (array_contains(obj_ini.artifact_tags[i],"Daemon")){
-		                if (obj_ini.artifact_sid[i]>=500){
-		                    var demonSummonChance=irandom(100)+1;
-
-		                    if (demonSummonChance<=60) and (obj_ini.ship_carrying[obj_ini.artifact_sid[i]-500]>0){
-		                        instance_create(0,0,obj_ncombat);
-		                        obj_ncombat.battle_special="ship_demon";
-		                        obj_ncombat.formation_set=1;
-		                        obj_ncombat.enemy=10;
-		                        obj_ncombat.battle_id=obj_ini.artifact_sid[i]-500;
-		                        scr_ship_battle(obj_ini.artifact_sid[i]-500,999);
-		                    }
-		                }
-		            }
-		            for(var e=1; e<=500; e++){
-		                if (obj_ini.artifact_tags[i]==obj_controller.recent_keyword[e]){
-		                    obj_controller.recent_keyword[e]="";
-		                    obj_controller.recent_type[e]="";
-		                    obj_controller.recent_turn[e]=0;
-		                    obj_controller.recent_number[e]=0;
-		                    scr_recent("artifact_destroyed",obj_controller.recent_keyword,2);
-		                    scr_recent("","",0);
-		                }
-		            }
-
-		            obj_ini.artifact[i]="";
-		            obj_ini.artifact_tags[i]=[];
-		            obj_ini.artifact_identified[i]=0;
-		            obj_ini.artifact_condition[i]=100;
-		            obj_ini.artifact_loc[i]="";
-		            obj_ini.artifact_sid[i]=0;
-		            artifacts-=1;
-		            cooldown=12;
-		            if (menu_artifact>artifacts) then menu_artifact=artifacts;             	
-                }
-
-                if (menu_artifact_type = 1) { // Weapon
-                    // tip2=string(tooltip_stat1)+" Attack, "+string(tooltip_stat2)+" Armour Penetration#";
-                    tip2 = string(tooltip_stat1) + " Damage#";
-                    if (tooltip_stat4 > 0) then tip2 += string(tooltip_stat4) + " Ammunition#";
-                    // tip2+=string_replace(string(tooltip_other),",","#");
-                    tip2 += string(tooltip_other);
-                }
-                if (menu_artifact_type = 2) { // Armour
-                    if (tooltip_other = "") then tip2 = string(tooltip_stat1) + " Armour Class";
-                    if (tooltip_other != "") then tip2 = string(tooltip_stat1) + " Armour Class#" + string(tooltip_other);
-                }
-                if (menu_artifact_type = 3) { // Gear
-                    tip2 = tooltip_other;
-                }
-            } else {
-            	artifact_destroy.draw_shutter(xx + 765, yy + 740, "DESTROY", 0.3, false);
-            	artifact_equip.draw_shutter(xx + 385, yy + 740, "EQUIP", 0.3, false);
-            	artifact_gift.draw_shutter(xx + 575, yy + 740, "GIFT", 0.3, false);
-            }
-	        draw_set_halign(fa_center);
-            draw_set_font(fnt_40k_14);
-            draw_set_color(c_gray);
-            draw_text_ext(xx + 622, yy + 504, string_hash_to_newline(string(artif_descr)), -1, 436);
-            draw_set_font(fnt_40k_14b);
-            draw_set_color(c_gray);
-            var spack = string_height_ext(string_hash_to_newline(string(artif_descr)), -1, 436);
-            draw_text_ext(xx + 622, yy + 508 + spack, string_hash_to_newline(string(tip2)), -1, 436);
-
-            // identifiable=0;
         }
 }
