@@ -378,14 +378,7 @@ function scr_draw_armentarium(){
     draw_set_color(c_gray);
     draw_rectangle(xx + 326 + 16, yy + 66, xx + 887 + 16, yy + 818, 1);
     draw_line(xx + 326 + 16, yy + 426, xx + 887 + 16, yy + 426);
-
-    draw_set_alpha(0.75);
-    draw_set_color(0);
-    draw_rectangle(xx + 945, yy + 66, xx + 1580, yy + 818, 0);
-    draw_set_alpha(1);
-    draw_set_color(c_gray);
-    draw_rectangle(xx + 945, yy + 66, xx + 1580, yy + 818, 1);
-
+    
     if (menu_adept = 0) {
         // draw_sprite(spr_advisors,4,xx+16,yy+43);
         scr_image("advisor", 4, xx + 16, yy + 43, 310, 828);

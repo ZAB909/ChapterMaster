@@ -7,6 +7,8 @@ construction_started = 0;
 eta = 0;
 target_comp = obj_controller.new_vehicles;
 
+slate_panel =  new data_slate();
+scroll_point=0;
 tooltip_show = 0;
 tooltip = "";
 tooltip_stat1 = 0;
@@ -14,6 +16,7 @@ tooltip_stat2 = 0;
 tooltip_stat3 = 0;
 tooltip_stat4 = 0;
 tooltip_other = "";
+last_item = "";
 forge_master = scr_role_count("Forge Master", "", "units");
 if (array_length(forge_master)>0){
     forge_master=forge_master[0];
@@ -43,7 +46,7 @@ var research_pathways = obj_controller.production_research_pathways;
 var i, rene;
 i = -1;
 rene = 0;
-repeat(40) {
+repeat(80) {
     i += 1;
     item[i] = "";
     x_mod[i] = 0;
