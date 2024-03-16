@@ -160,3 +160,113 @@ function scr_apothecary_ground() {
 
 
 }
+
+/*apothecary_simple(){
+	var company, v, unit, mar_loc, array_slot, is_healer, is_tech, key_val,veh_location;
+	var tech_spread = {};
+	var apoth_spread = {};
+	var unit_spread = {};
+    for(company=0;company<11;company++){
+    	for (v=1;v<500;v++){
+    		key_val = "";
+    		if (obj_ini.name[company][v]=="") then continue;
+    		unit = fetch_unit([company, v]);
+    		mar_loc = unit.marine_location();
+	                
+		    is_tech = (unit.IsSpecialist("forge") && unit.hp()>=10);
+		    is_healer = (((unit.IsSpecialist("apoth",true) && unit.gear()=="Narthecium") || (unit.role()=="Sister Hospitaler")) && unit.hp()>=10);
+		  	if (mar_loc[2]!="warp"){
+  	    		if (mar_loc[0]=location_types.planet){
+  	    			array_slot = mar_loc[1];
+  	    		} else if (mar_loc[0] ==location_types.ship){
+  	    			array_slot=0;
+  	    		}
+  	    		key_val = mar_loc[2];
+  	    	} else if (mar_loc[0] == location_types.ship){
+  	    		if instance_exists(obj_p_fleet){
+  	    			with (obj_p_fleet){
+  	    				if (array_contains(capital_number, mar_loc[1]) ||
+  	    					array_contains(frigate_number, mar_loc[1])||
+  	    					array_contains(escort_number, mar_loc[1])
+  	    				){
+  	    					key_val=string(id);
+  	    					array_slot=0;
+  	    					break;
+  	    				}
+  	    			}
+  	    		}
+  	    	}
+  	    	if (key_val!=""){
+				if (! struct_exists(unit_spread, key_val)){
+					unit_spread[$key_val] = [[],[],[],[],[]];
+					tech_spread[$key_val]  = [[],[],[],[],[]];
+					apoth_spread[$key_val]  = [[],[],[],[],[]];
+				}
+				array_push(unit_spread[$key_val][array_slot] ,unit);
+				if (is_tech){
+					array_push(tech_spread[$key_val][array_slot] ,unit);
+				}
+				if (is_healer)	{
+					array_push(is_healer[$key_val][array_slot] ,unit);
+				}		
+			}
+			key_val="";
+            if (v<array_length(obj_ini.veh_race[company])){
+            	if (obj_ini.veh_wid[company][v]>0){
+            		array_slot = obj_ini.veh_wid[company][v];
+					if (! struct_exists(unit_spread, mar_loc[2])){
+						unit_spread[$ obj_ini.veh_loc[company][v]] = [[],[],[],[],[]];
+						tech_spread[$ obj_ini.veh_loc[company][v]]  = [[],[],[],[],[]];
+						apoth_spread[$ obj_ini.veh_loc[company][v]]  = [[],[],[],[],[]];
+					}
+					array_push(unit_spread[$ obj_ini.veh_loc[company][v]][array_slot],[company,v]);        		
+            	} else if(obj_ini.veh_lid[co][d]>0){
+            		veh_location = obj_ini.veh_lid[co][d];
+	  	    		if instance_exists(obj_p_fleet){
+	  	    			with (obj_p_fleet){
+	  	    				if (array_contains(capital_number, veh_location) ||
+	  	    					array_contains(frigate_number, veh_location)||
+	  	    					array_contains(escort_number, veh_location)
+	  	    				){
+	  	    					key_val=string(id);
+	  	    					array_slot=0;
+	  	    					break;
+	  	    				}
+	  	    			}
+	  	    		}
+	  	    		if (key_val!=""){
+						if (! struct_exists(unit_spread, key_val)){
+							unit_spread[$key_val] = [[],[],[],[],[]];
+							tech_spread[$key_val]  = [[],[],[],[],[]];
+							apoth_spread[$key_val]  = [[],[],[],[],[]];
+						}
+						array_push(unit_spread[$key_val][array_slot] ,[company,v]);	  	    		
+	            	}
+	            }
+            }			
+	    }
+	}
+	var total_systems = [];
+	var locations = struct_get_names(unit_spread);
+	with (obj_star){
+		if (array_contains(locations, name)){
+			array_push(total_systems, self);
+		}
+	}
+	var cur_units, cur_apoths, cur_techs;
+	var p, i;
+	for (i=0;i<array_length(locations);i++){
+		for (p=0;p<5;p++){
+			if (array_length(unit_spread[$locations[i]][p]) == 0) then continue;
+			cur_units = unit_spread[$locations[i]][p];
+			cur_apoths = apoth_spread[$locations[i]][p];
+			cur_techs = tech_spread[$locations[i]][p];
+		}
+	}
+}
+*/
+
+
+
+
+
