@@ -6,21 +6,21 @@ yy=__view_get( e__VW.YView, 0 )+0;
 tooltip_show=0;
 x2=962;y2=117;
 slate_panel.inside_method = function(){
-    var x2=962;y2=117;
+    var x2=962;y2=157;
     var xx=__view_get( e__VW.XView, 0 )+0;
     var yy=__view_get( e__VW.YView, 0 )+0;
     draw_set_halign(fa_left);
-    draw_text(xx+962,yy+119,string_hash_to_newline("Name"));
-    draw_text(xx+962.5,yy+119.5,string_hash_to_newline("Name"));
+    draw_text(xx+962,yy+159,string_hash_to_newline("Name"));
+    draw_text(xx+962.5,yy+159.5,string_hash_to_newline("Name"));
     if (shop!="production"){
-        draw_text(xx+1280,yy+119,string_hash_to_newline("Stocked"));
-        draw_text(xx+1280.5,yy+119.5,string_hash_to_newline("Stocked"));
+        draw_text(xx+1280,yy+159,string_hash_to_newline("Stocked"));
+        draw_text(xx+1280.5,yy+159.5,string_hash_to_newline("Stocked"));
         if (shop="equipment" or shop="equipment2"){
-        draw_text(xx+1280+10+string_width("Stocked"),yy+119.5,string_hash_to_newline("MC"));
-        draw_text(xx+1280+10.5+string_width("Stocked"),yy+119.5,string_hash_to_newline("MC"));
+        draw_text(xx+1280+10+string_width("Stocked"),yy+159.5,string_hash_to_newline("MC"));
+        draw_text(xx+1280+10.5+string_width("Stocked"),yy+159.5,string_hash_to_newline("MC"));
         }
     }
-    draw_text(xx+1430.5,yy+119.5,string_hash_to_newline("Cost"));
+    draw_text(xx+1430.5,yy+159.5,string_hash_to_newline("Cost"));
     draw_set_color(c_gray);
 
 
@@ -35,10 +35,12 @@ slate_panel.inside_method = function(){
             draw_set_alpha(1);
         }
     }
-    var i=scroll_point;
-    var viable=0;
-    var final =0;
-    while (i<79 && viable<=29){
+    var i=(scroll_point*28);
+    var viable=1;
+    var final =1;
+    var entered;
+    while (i<79 && viable<=28){
+        entered=false;
         i++;
         y2+=20;
         if (item[i]!=""){
@@ -46,7 +48,13 @@ slate_panel.inside_method = function(){
             final=i;
             if (!obj_controller.in_forge && nobuy[i]=0) ||  (obj_controller.in_forge && forge_cost[i]>0){
                 draw_set_color(c_gray);
-                if (hover=i) then draw_set_color(c_white);
+                if (point_in_rectangle(mouse_x, mouse_y, xx+962, yy+y2+2, xx+1580, yy+y2+18)){
+                    draw_set_color(c_gray);
+                    entered = true;
+                    draw_rectangle(xx+960, yy+y2+1, xx+1582, yy+y2+18, 0);
+                    draw_set_color(c_white);
+                }
+
                 if (shop!="production"){
                     if (!keyboard_check(vk_shift)) or (shop="warships") then draw_text(xx+x2+x_mod[i],yy+y2,string_hash_to_newline(item[i]));// Name
                     if (keyboard_check(vk_shift)) and (shop!="warships") then draw_text(xx+x2+x_mod[i],yy+y2,string_hash_to_newline(string(item[i])+" x5"));// Name
@@ -135,16 +143,20 @@ slate_panel.inside_method = function(){
                     }
                     tooltip_show=1;
                 }
-            }
-            
-            if (item[i]!="") /*and (nobuy[i]=0)*/ and (mouse_x>=xx+x2) and (mouse_y>=yy+y2+1) and (xx+1579) and (mouse_y<yy+y2+19){
-                hover=i;
-            }             
+            }            
 
         }
     }
     //draw_set_color(c_red);
-    if (viable>0){}
+    pages_required = ceil(legitimate_items/28);
+    for (i=0;i<pages_required;i++){
+        if (scroll_point==i){
+            (draw_unit_buttons([xx+1040+(25*i), yy+740], i+1,[1,1],c_green));
+        }
+        else if (point_and_click(draw_unit_buttons([xx+1040+(25*i), yy+740], i+1,[1,1],c_red))){
+            scroll_point=i;
+        }
+    }
 }
 draw_set_color(c_white);
 slate_panel.draw(xx+920, yy+95, 690/850, 0.85);
