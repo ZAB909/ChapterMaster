@@ -791,12 +791,12 @@ function scr_draw_unit_image(x_draw, y_draw){
             if (current_armor==ArmorType.Normal){
                 var robes_mod=[0,0];
                 if (array_contains(["MK7 Aquila","Power Armour","MK4 Maximus","Mk5 Heresy", "Mk3 Iron Armour"], armour())){
-                    robes_mod[1]=-8;
-                    robes_mod[2]=-1;
+                    robes_mod[1]=0;
+                    robes_mod[2]=0;
                 }
 
                if (struct_exists(body[$ "head"],"hood")){
-                    draw_sprite(spr_marine_cloth_hood,0,xx+x_draw+robes_mod[0]-2,yy+y_draw+robes_mod[1]-6);     
+                    draw_sprite(spr_marine_cloth_hood,0,xx+x_draw+robes_mod[0],yy+y_draw+robes_mod[1]);     
                }
                 if (struct_exists(body[$ "torso"],"robes")){
                     draw_sprite(spr_marine_robes,body[$ "torso"][$ "robes"],xx+x_draw+robes_mod[0],yy+y_draw+robes_mod[1]);     
