@@ -73,7 +73,7 @@ function scr_ui_display_weapons(left_or_right, termi_tartaros, equiped_weapon) {
             "Combat Knife":spr_weapon_knife,
             "Power Sword":spr_weapon_powswo,
             "Eldar Power Sword":spr_weapon_eldsword,
-            "Power Spear":equiped_weapon,
+            "Power Spear":spr_weapon_powspear,
             "Eviscerator":spr_weapon_evisc,
             "Thunder Hammer":spr_weapon_thhammer,
             "Relic Blade":spr_weapon_relbla,

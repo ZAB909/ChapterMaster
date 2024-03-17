@@ -1402,13 +1402,13 @@ function scr_initialize_custom() {
 			chapter_master.add_trait("very_hard_to_kill");
 			chapter_master.add_trait("seasoned");
 			chapter_master_equip.armour="Tartaros";
-			/*arti = obj_ini.artifact_struct[last_artifact];
+			arti = obj_ini.artifact_struct[last_artifact];
 			arti.name = "The Black Spear";
 			arti.custom_description = "An ancient artefact that is steeped in blood and said to have once been used by the Legio Custodes.";
 			obj_ini.artifact[last_artifact] = "Power Spear";
 			arti.bearer = [0,1];
 			obj_ini.artifact_identified[last_artifact] = 0;
-			chapter_master_equip.wep1=last_artifact;*/
+			chapter_master_equip.wep1=last_artifact;
 		case "Lamenters":
 			chapter_master.add_trait("shitty_luck");
 			chapter_master.add_trait("old_guard");	
@@ -2661,7 +2661,6 @@ function scr_initialize_custom() {
 			obj_ini.artifact[last_artifact] = "Artificer Armor";
 			obj_ini.artifact_identified[last_artifact] = 0;
 			*/
-
 
 	if (string_count("Sieged",strin2)>0){
 	    scr_add_item("Narthecium",4);
