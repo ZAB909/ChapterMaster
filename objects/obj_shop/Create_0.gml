@@ -1008,14 +1008,14 @@ if (shop == "production"){
     }
     if (research.psi[0] == 0){
         i++;
-        item[i] = ["research", research_pathways.psi[0][research.psi[0]], ["flame"]];
+        item[i] = ["research", research_pathways.psi[0][research.psi[0]], ["psi"]];
         item_stocked[i] = 0;
         forge_cost[i] = 3000;
         tooltip_overide[i] = "Allows Force weapon construction";
     }
-    if (research.psi[0] == 0){
+    if (research.las[0] == 0){
         i++;
-        item[i] = ["research", research_pathways.las[0][research.psi[0]], ["flame"]];
+        item[i] = ["research", research_pathways.las[0][research.las[0]], ["las"]];
         item_stocked[i] = 0;
         forge_cost[i] = 3000;
         tooltip_overide[i] = "Allows Construction of advanced Las Weaponry";
