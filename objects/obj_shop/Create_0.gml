@@ -976,7 +976,7 @@ if (shop = "equipment") or(shop = "equipment2") {
     var mc = 0;
     repeat(i) {
         mc++;
-        if (item_cost[mc] > 1) then forge_cost[mc] = round(forge_cost[mc] * disc);
+        if (forge_cost[mc] > 1) then forge_cost[mc] = round(forge_cost[mc] * disc);
     }
 }
 if (shop = "vehicles") {
@@ -985,14 +985,14 @@ if (shop = "vehicles") {
     if (obj_controller.stc_vehicles >= 1) then disc = 0.92;
     if (obj_controller.stc_vehicles >= 3) then disc = 0.86;
     if (obj_controller.stc_vehicles >= 5) then disc = 0.75;
-    i = 0;
+   var mc = 0;
     repeat(31) {
-        i += 1;
+        mc += 1;
         var ahuh;
         ahuh = 1;
-        if (i >= 7) and(i <= 12) then ahuh = 0;
+        if (mc >= 7) and(mc <= 12) then ahuh = 0;
         if (ahuh = 1) {
-            if (item_cost[i] > 1) then item_cost[i] = round(forge_cost[i] * disc);
+            if (forge_cost[mc] > 1) then forge_cost[mc] = round(forge_cost[mc] * disc);
         }
     }
 }
