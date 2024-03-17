@@ -101,25 +101,58 @@ slate_panel.inside_method = function(){
                 draw_sprite(spr_build_tiny2,0,xx+1530,yy+y2+2);
 
                 draw_set_alpha(1);
-               if (obj_controller.in_forge){
-                if (point_in_rectangle(mouse_x, mouse_y, xx+1520, yy+y2+2, xx+1580, yy+y2+18)&& mouse_check_button_pressed(mb_left) ){
-                    if (array_length(obj_controller.forge_queue)<20){
-                        var new_queue_item = {
-                            name:item[i],
-                            count:1,
-                            forge_points:forge_cost[i],
-                            ordered:obj_controller.turn,
-                        }
-                        if (shop!="production"){
-                            if (keyboard_check(vk_shift)){
-                                new_queue_item.count = 5;
-                                new_queue_item.forge_points = 5 * forge_cost[i];
+                var clicked =(point_in_rectangle(mouse_x, mouse_y, xx+1520, yy+y2+2, xx+1580, yy+y2+18)&& mouse_check_button_pressed(mb_left));
+                if (obj_controller.in_forge){
+                    if (clicked){
+                        if (array_length(obj_controller.forge_queue)<20){
+                            var new_queue_item = {
+                                name:item[i],
+                                count:1,
+                                forge_points:forge_cost[i],
+                                ordered:obj_controller.turn,
                             }
+                            if (shop!="production"){
+                                if (keyboard_check(vk_shift)){
+                                    new_queue_item.count = 5;
+                                    new_queue_item.forge_points = 5 * forge_cost[i];
+                                }
+                            }
+                            array_push(obj_controller.forge_queue, new_queue_item);
+                        }               
+                    }
+               }else if (nobuy[i]=0) && clicked && (!obj_controller.in_forge){
+                    cost=item_cost[i];
+                    if (keyboard_check(vk_shift)) and (shop!="warships") then cost=item_cost[i]*5;
+                    if (obj_controller.requisition>=cost) and (shop!="warships"){
+                        if (item[i]!="Rhino") and (item[i]!="Predator") and (item[i]!="Land Raider") and (item[i]!="Whirlwind") and (item[i]!="Land Speeder"){
+                            if (keyboard_check(vk_shift)){scr_add_item(item[i],5);item_stocked[i]+=5;click2=1;}
+                            if (!keyboard_check(vk_shift)){scr_add_item(item[i],1);item_stocked[i]+=1;click2=1;}
                         }
-                        array_push(obj_controller.forge_queue, new_queue_item);
-                    }               
-                }
-               }
+                        if (item[i]="Rhino") or (item[i]="Predator") or (item[i]="Land Raider") or (item[i]="Whirlwind") or (item[i]="Land Speeder"){
+                            if (keyboard_check(vk_shift)){repeat(5){scr_add_vehicle(item[i],target_comp,"standard","standard","standard","standard","standard");}item_stocked[i]+=5;click2=1;}
+                            if (!keyboard_check(vk_shift)){scr_add_vehicle(item[i],target_comp,"standard","standard","standard","standard","standard");item_stocked[i]+=1;click2=1;}
+                        }
+                        with(obj_ini){scr_vehicle_order(obj_shop.target_comp);}
+                        obj_controller.requisition-=cost;
+                    }
+
+                    if (obj_controller.requisition>=cost) and (shop="warships"){
+                        var v=0,ev=0;
+                        repeat(99){v+=1;if (ev=0) and (obj_controller.event[v]="") then ev=v;}
+                        obj_controller.event[ev]="new_"+string(item[i]);
+
+                        if (item[i]="Battle Barge") then obj_controller.event_duration[ev]=12;
+                        if (item[i]="Strike Cruiser") then obj_controller.event_duration[ev]=4;
+                        if (item[i]="Gladius") then obj_controller.event_duration[ev]=1;
+                        if (item[i]="Hunter") then obj_controller.event_duration[ev]=1;
+                        obj_controller.event_duration[ev]+=choose(0,0,1);
+                        eta=obj_controller.event_duration[ev];
+
+                        construction_started=120;obj_controller.requisition-=cost;
+                    }
+
+                    obj_controller.cooldown=8000;
+                }               
             }
             if (!obj_controller.in_forge && nobuy[i]=1) ||  (obj_controller.in_forge && forge_cost[i]=0){
                 draw_set_alpha(1);

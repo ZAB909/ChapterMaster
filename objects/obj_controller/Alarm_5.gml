@@ -1605,7 +1605,6 @@ for(var i=1; i<=10; i++){
 if (known[eFACTION.Eldar]>=2) and (faction_gender[6]==2) and (floor(turn/10)==(turn/10)) then turns_ignored[6]+=floor(random_range(0,6));
 
 with(obj_temp4){instance_destroy();}
-if (instance_exists(obj_p_fleet)) then with(obj_p_fleet){scr_apothecary_ship();}
 scr_random_event(true);
 
 // ** Random events here **
@@ -1701,3 +1700,4 @@ if (income_controlled_planets>0){
 
 //research and forge related actions
 research_end();
+apothecary_simple();
