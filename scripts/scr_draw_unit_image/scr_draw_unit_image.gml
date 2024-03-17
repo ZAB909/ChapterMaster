@@ -788,19 +788,25 @@ function scr_draw_unit_image(x_draw, y_draw){
                 draw_sprite(spr_honor_helm,helm_ii,xx+x_draw-2,yy+y_draw-11);     
 
 			}
-            if (current_armor==ArmorType.Normal){
-                var robes_mod=[0,0];
-                if (array_contains(["MK7 Aquila","Power Armour","MK4 Maximus","Mk5 Heresy", "Mk3 Iron Armour"], armour())){
-                    robes_mod[1]=0;
-                    robes_mod[2]=0;
+            // Drawing Robes
+            if (current_armor == ArmorType.Normal) {
+                var robe_offset_x = 0;
+                var robe_offset_y = 0;
+                var hood_offset_x = 0;
+                var hood_offset_y = 0;
+                if (array_contains(["Scout Armour"], armour())) {
+                    robe_offset_x = 1;
+                    robe_offset_y = 10;
+                    hood_offset_x = 1;
+                    hood_offset_y = 10;
                 }
-
-               if (struct_exists(body[$ "head"],"hood")){
-                    draw_sprite(spr_marine_cloth_hood,0,xx+x_draw+robes_mod[0],yy+y_draw+robes_mod[1]);     
-               }
-                if (struct_exists(body[$ "torso"],"robes")){
-                    draw_sprite(spr_marine_robes,body[$ "torso"][$ "robes"],xx+x_draw+robes_mod[0],yy+y_draw+robes_mod[1]);     
-               }              
+                if (struct_exists(body[$ "head"],"hood")) {
+                    draw_sprite(spr_marine_cloth_hood,0,xx+x_draw+hood_offset_x,yy+y_draw+hood_offset_y);     
+                }
+                if (struct_exists(body[$ "torso"],"robes")) {
+                    draw_sprite(spr_marine_robes,body[$ "torso"][$ "robes"],xx+x_draw+robe_offset_x,yy+y_draw+robe_offset_y);     
+                }              
+            }
             }
             if (armour_sprite==spr_scout_colors2){
                 ui_ymod[1]+=7;
