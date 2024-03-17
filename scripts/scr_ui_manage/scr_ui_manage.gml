@@ -752,7 +752,7 @@ function scr_ui_manage() {
 				    	}
 			    	}
 		    	}
-		    	if (unit_specialism_option) then array_push(potential_tooltip, [spec_tip, [xx+35.5,yy+64,xx+211.5,yy+85]]);
+		    	if (unit_specialism_option) then array_push(potential_tooltip, [spec_tip, [xx+232,yy+64,xx+246,yy+85]]);
 
 		        // Squads
 		        var sqi="";
@@ -799,14 +799,12 @@ function scr_ui_manage() {
 					if ((string_width(string_hash_to_newline(temp1))*name_xr)>184-8) then name_xr-=0.05;
 				}
 
-				// Define text positions and values
 				var hpText = [xx+240+8, yy+66, string_hash_to_newline(string(temp3))]; // HP
 				var xpText = [xx+330+8, yy+66, string_hash_to_newline(string(temp4))]; // XP
-				// Define colors
 				var hpColor = c_gray;
 				var xpColor = c_gray;
-				var specialismColor = c_gray;
-				// Check conditions and set colors
+				var specialismColors = [];
+				// Draw XP value and set up health color
 				if (man[sel] == "man"){
 					if (ma_promote[sel] >= 10){
 						hpColor = c_red;
@@ -815,30 +813,31 @@ function scr_ui_manage() {
 						xpColor = c_yellow;
 						array_push(promotion_tooltip, ["Promotion Possible", [xx+335, yy+64, xx+385, yy+85]]);
 					}
-					draw_set_color(xpColor);
-					draw_text(xpText[0], xpText[1], xpText[2]);
+					draw_text_color(xpText[0], xpText[1], xpText[2], xpColor, xpColor, xpColor, xpColor, 1);
 				}
-				// Draw texts with the defined colors
-				draw_set_color(hpColor);
-				draw_text(hpText[0], hpText[1], hpText[2]);
+				// Draw the health value with the defined colors
+				draw_text_color(hpText[0], hpText[1], hpText[2], hpColor, hpColor, hpColor, hpColor, 1);
+
+				// Handle potential indication
 				if (unit_specialism_option){
 					if (unit.technology>=35){	//if unit has techmarine potential
-						specialismColor = c_red;
+						specialismColors = [c_dkgray, c_red];
 					} else if (unit.psionic>7){	//if unit has librarian potential
-						specialismColor = c_aqua;
+						specialismColors = [c_white, c_aqua];
 					}else if (unit.piety>=35 && unit.charisma>=30){	//if unit has chaplain potential
-						specialismColor = c_yellow;
+						specialismColors = [c_black, c_yellow];
 					}else if (unit.technology>=30 && unit.intelligence>=45){	//if unit has apothecary potential
-						specialismColor = c_white;
+						specialismColors = [c_red, c_white];
 					}
+					draw_circle_colour(xx+238, yy+73, 6, specialismColors[0],specialismColors[1], 0);
 				}
-				// Draw specialism text
-				draw_set_color(specialismColor);
+
+				// Draw the name
+		        draw_set_color(c_gray);
 				draw_text_transformed(xx+27+8,yy+66,string_hash_to_newline(string(temp1)),name_xr,1,0);
 				draw_text_transformed(xx+27.5+8,yy+66.5,string_hash_to_newline(string(temp1)),name_xr,1,0);
 
-		        draw_set_alpha(1);
-		        draw_set_color(c_gray);
+				// Draw current location
 				if (temp2=="Mechanicus Vessel") or (temp2=="Terra IV") or (temp2=="=Penitorium=") or (assignment!="none") then draw_set_alpha(0.5);
 				var truncatedLocation = truncate_string_width(string(temp2), 130); // Truncate the location string to 100 pixels
 				draw_text(xx+430+8,yy+66,truncatedLocation);// LOC
