@@ -35,6 +35,11 @@ function feature_selected(Feature) constructor{
 	    //draw_glow_dot(xx+150, yy+150);
 	    //rack_and_pinion(xx+230, yy+170);
 	    var rectangle = [];
+	    draw_set_color(c_red);
+	    if point_and_click(draw_unit_buttons([xx+10, yy+20], "<---",[1,1],c_red)){
+	    	return "exit";
+	    };
+	    draw_set_halign(fa_center);
 		switch (feature.f_type){
 			case P_features.Forge:
 				draw_text_transformed(xx+(area_width/2), yy +10, "Chapter Forge", 2, 2, 0);
@@ -123,6 +128,7 @@ function feature_selected(Feature) constructor{
 			draw_set_color(c_gray);
 			draw_text_ext(xx+10, yy+40,body,-1,area_width-20);
 		}
+		return "done";
 	}
 }
 
@@ -152,12 +158,16 @@ function draw_building_builder(xx, yy, req_require, building_sprite){
 function mk_two_data_slate()constructor{
 	height=0;
 	width=0;
+	XX=0;
+	YY=0;
 	static draw = function(xx,yy,x_scale, y_scale){
+		XX=xx;
+		YY=yy;
 		height = 250*y_scale;
 		width=365*x_scale;
 		draw_sprite_ext(spr_slate_2, 1, xx, yy, x_scale, y_scale, 0, c_white, 1);
-		draw_sprite_ext(spr_slate_2, 0, xx, yy, x_scale, y_scale, 0, c_white, 1)
-		draw_sprite_ext(spr_slate_2, 2, xx, yy, x_scale, y_scale, 0, c_white, 1)
+		draw_sprite_ext(spr_slate_2, 0, xx, yy, x_scale, y_scale, 0, c_white, 1);
+		draw_sprite_ext(spr_slate_2, 2, xx, yy, x_scale, y_scale, 0, c_white, 1);
 		//draw_sprite_ext(spr_slate_2, 0, xx, yy, 1, 1, 0, c_white, 1)
 	}
 }
@@ -302,16 +312,23 @@ function shutter_button() constructor{
 	click_timer = 0;
 	Width = 315;
 	Height = 90;
+	XX=0;
+	YY=0;
+	width=0;
+	height=0;
 	right_rack = new rack_and_pinion();
 	left_rack = new rack_and_pinion("backward");
 	draw_shutter = function(xx,yy,text, scale=1, entered = ""){
+		XX=xx;
+		YY=yy;
         draw_set_alpha(1);
 
         draw_set_font(fnt_40k_12);
         draw_set_halign(fa_left);
         draw_set_color(c_gray);		
-		var width = Width *scale;
-		var height = Height *scale;
+		width = Width *scale;
+		height = Height *scale;
+		if (text=="") then entered = false;
 		if (entered==""){
 			entered = point_in_rectangle(mouse_x, mouse_y, xx, yy, xx+width, yy+height);
 		} else {
@@ -378,8 +395,10 @@ function data_slate() constructor{
 	sub_title="";
 	body_text = "";
 	inside_method = "";
-	XX=0
-	YY=0
+	XX=0;
+	YY=0;
+	width=0;
+	height=0;
 	static draw = function(xx,yy, scale_x=1, scale_y=1){
 		XX=xx;
 		YY=yy;
