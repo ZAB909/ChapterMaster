@@ -1,9 +1,9 @@
-function tooltip_draw(tooltip="", max_width=300, coords=[mouse_x+24,mouse_y+24], text_color=c_gray, font=fnt_40k_14, header="", header_font=fnt_40k_14b){
+function tooltip_draw(tooltip="", max_width=300, coords=[mouse_x+20,mouse_y+20], text_color=c_gray, font=fnt_40k_14, header="", header_font=fnt_40k_14b){
 	draw_set_halign(fa_left);
 	draw_set_alpha(1)
 	// Calculate padding and rectangle size
-	static text_padding_x = 4;
-	static text_padding_y = 4;
+	static text_padding_x = 6;
+	static text_padding_y = 6;
 	// Convert hash to newline in strings
 	header = string_hash_to_newline(string(header));
 	tooltip = string_hash_to_newline(string(tooltip));
@@ -27,9 +27,17 @@ function tooltip_draw(tooltip="", max_width=300, coords=[mouse_x+24,mouse_y+24],
 	// Get view coordinates
 	var xx = __view_get(e__VW.XView, 0);
 	var yy = __view_get(e__VW.YView, 0);
-	// Define tooltip position and clamp it to view
-	var rect_x = clamp(coords[0], xx + DEFAULT_TOOLTIP_VIEW_OFFSET, xx + __view_get(e__VW.WView, 0) - rect_w - DEFAULT_TOOLTIP_VIEW_OFFSET);
-	var rect_y = clamp(coords[1], yy + DEFAULT_TOOLTIP_VIEW_OFFSET, yy + __view_get(e__VW.HView, 0) - rect_h - DEFAULT_TOOLTIP_VIEW_OFFSET);
+	// Define tooltip position
+	var rect_x = coords[0];
+	var rect_y = coords[1];
+	// Check if the tooltip goes over the right part of the screen and flip left if so
+	if (rect_x + rect_w > xx + __view_get(e__VW.WView, 0)) {
+		rect_x = coords[0] - rect_w - 40;
+	}
+	// Check if the tooltip goes over the bottom part of the screen and flip up if so
+	if (rect_y + rect_h > yy + __view_get(e__VW.HView, 0)) {
+		rect_y = coords[1] - rect_h - 40;
+	}
 	// Draw the tooltip rectangle with an outline
 	draw_rectangle_colour(rect_x, rect_y, rect_w + rect_x, rect_h + rect_y, c_black, c_black, c_black, c_black, 0);
 	draw_rectangle_colour(rect_x + 1, rect_y + 1, rect_w + rect_x - 1, rect_h + rect_y - 1, c_gray, c_gray, c_gray, c_gray, 1);
