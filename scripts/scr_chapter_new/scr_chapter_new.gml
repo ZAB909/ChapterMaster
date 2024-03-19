@@ -181,15 +181,16 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	if (argument0="Space Wolves"){founding="N/A";points=150;
 	    selected_chapter=3;chapter=argument0;icon=3;icon_name="sw";founding=0;fleet_type=1;strength=10;purity=8;stability=5;cooperation=4;
 	    adv[1]="Melee Enthusiasts";dis[1]="Black Rage";dis[2]="Suspicious";
-	    homeworld="Ice";homeworld_name="Fenris";recruiting_world="Death";recruiting_name="Parmenio";
+	    homeworld="Ice";homeworld_name="Fenris";
 	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=2;aspirant_trial="Exposure";discipline="rune Magick";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Fenrisian Grey";color_to_secondary="Fenrisian Grey";color_to_trim="Gold";
 	    color_to_pauldron="Gold";color_to_pauldron2="Gold";color_to_lens="Dark Red";
 	    color_to_weapon="Blue";col_special=0;trim=0;
-	    hapothecary="Ranek Icewalker";hchaplain="Ulrik the Slayer";clibrarian="Njal Stormcaller";fmaster="Krom Dragongaz";admiral="Engir Krakendoom";
-	    battle_cry="For Russ and the Allfather";// monastery_name="Fortress of Hera";master_name=
-	    equal_specialists=0;load_to_ships=[2,0,0];successors=1;
+	    hapothecary="Ulstvan Morkaison";hchaplain="Ulrik the Slayer";clibrarian="Njal Stormcaller";fmaster="Krom Dragongaze";
+		admiral="Gunnar Red Moon";recruiter="Sven Bloodhowl";
+	    battle_cry="For Russ and the Allfather";// monastery_name="The Fang";master_name=
+	    equal_specialists=1;load_to_ships=[2,0,0];successors=1;
 	    mutations=0;mutations_selected=0;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
 	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -357,10 +358,10 @@ if (argument0="White Scars"){founding="N/A";points=150;
 		}
 	}
 	
-		if (argument0="Black Templars"){founding=4;points=350;
+		if (argument0="Black Templars"){founding=4;points=200;
 	    selected_chapter=10;chapter=argument0;icon=10;icon_name="bt";founding=4;
-	    fleet_type=2;strength=10;purity=10;stability=9;cooperation=6;
-	    adv[1]="Melee Enthusiasts";adv[2]="Kings of Space";adv[3]="Reverent Guardians";dis[1]="Psyker Intolerant";dis[2]="Suspicious";
+	    fleet_type=3;strength=5;purity=7;stability=10;cooperation=5;
+	    adv[1]="Melee Enthusiasts";adv[2]="Kings of Space";adv[3]="Reverent Guardians";adv[4]="Brothers, All";dis[1]="Psyker Intolerant";dis[2]="Suspicious";
 	    homeworld_exists=0;recruiting_exists=1;
 	    recruiting_name=global.name_generator.generate_star_name();
 		aspirant_trial="Apprenticeship";
@@ -369,8 +370,8 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    color_to_pauldron2="White";color_to_pauldron="White";color_to_lens="Dark Red";
 	    color_to_weapon="Black";col_special=0;trim=0;
 	    battle_cry="No Pity! No Remorse! No Fear";
-	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
-	    mutations=2;mutations_selected=0;
+	    equal_specialists=1;load_to_ships=[2,0,0];successors=0;
+	    mutations=2;mutations_selected=2;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=1;
 	    zygote=0;betchers=1;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
 		hchaplain="Grimaldus"; fmaster="Jurisian"; recruiter="Emrik";
@@ -425,7 +426,8 @@ if (argument0="Minotaurs"){founding=10;points=450;
 	    selected_chapter=12;chapter=argument0;icon=12;icon_name="br";
 	    fleet_type=2;strength=5;purity=10;stability=6;cooperation=7;
 	    adv[1]="Scavengers";adv[2]="Psyker Abundance";dis[1]="Suspicious";
-	    // hapothecary="Ranek Icewalker";hchaplain="Mikelus";clibrarian="Njal Stormcaller";fmaster="Krom Dragongaz";admiral="Engir Krakendoom";
+	    hapothecary="Galan";hchaplain="Apollo Diomedes";clibrarian="Jonah Orion";
+		fmaster="Martellus";admiral="Aramus";recruiter="Cyrus";
 	    homeworld="Dead";homeworld_name="Aurelia";flagship_name="Omnis Arcanum";
 	    homeworld_exists=0;recruiting_exists=1;
 	    recruiting_world="Death";recruiting_name="Trontiux";
@@ -455,7 +457,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 		color_to_main="Blue";color_to_secondary="Blue";color_to_trim="White";color_to_pauldron="Blue"
 		color_to_pauldron2="Blue";color_to_lens="Red";color_to_weapon="Black"
 		hapothecary="Curien Droga";hchaplain="Marqol Tomasi";clibrarian="Eustace Mendoza";fmaster="Javier Adon";admiral="Alessio Cortez"
-                recruiter="Ishmael Icario"
+        recruiter="Ishmael Icario"
 		battle_cry="There is only the Emperor!  He is our shield and our protector!";
 	        equal_specialists=0;load_to_ships=[2,0,0];successors=0;
 	        mutations=2;mutations_selected=2;
