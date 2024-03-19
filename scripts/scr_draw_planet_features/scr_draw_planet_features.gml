@@ -36,7 +36,7 @@ function feature_selected(Feature) constructor{
 	    //rack_and_pinion(xx+230, yy+170);
 	    var rectangle = [];
 	    draw_set_color(c_red);
-	    if point_and_click(draw_unit_buttons([xx+10, yy+20], "<---",[1,1],c_red)){
+	    if (point_and_click(draw_unit_buttons([xx+12, yy+20], "<---",[1,1],c_red))){
 	    	return "exit";
 	    };
 	    draw_set_halign(fa_center);

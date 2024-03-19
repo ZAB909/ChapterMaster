@@ -30,42 +30,6 @@ if (debug!=0) then exit;
          if (obj_fleet_select.currently_entered) then exit;
     }
 
-
-if (obj_controller.menu=0) and (obj_controller.zoomed=0) and (!instance_exists(obj_bomb_select)) and (!instance_exists(obj_drop_select)) and (obj_controller.cooldown<=0){
-    var closes,sta1,sta2;closes=0;sta1=0;sta2=0;
-    sta1=instance_nearest(mouse_x,mouse_y,obj_star);
-    sta2=point_distance(mouse_x,mouse_y,sta1.x,sta1.y);
-
-    if (sta2>15){
-        if (scr_hit(xx+27,yy+165,xx+27+320,yy+165+294)=false) then closes+=1;
-        if (obj_controller.selecting_planet>0 && feature == ""){
-            if (scr_hit(xx+27+381,yy+165,xx+27+320+381,yy+165+294)=false) then closes+=1;
-        }else if (obj_controller.selecting_planet>0 && feature != ""){
-            if (scr_hit(xx+27+381,yy+165,xx+27+320+381+381,yy+165+294)=false) then closes+=1;
-        }
-        var shutter_button;
-        var shutters = [shutter_1, shutter_2, shutter_3, shutter_4];
-        for (var i=0; i<4;i++){
-            shutter_button = shutters[i];
-            if (scr_hit(shutter_button.XX,shutter_button.YY,shutter_button.XX+shutter_button.width,shutter_button.YY+shutter_button.height)){
-                closes=0;
-                break;
-            }
-        }
-        if ((closes=1) and (obj_controller.selecting_planet=0)) or (closes=2){
-            cooldown=0;
-            obj_controller.sel_system_x=0;
-			obj_controller.sel_system_y=0;
-            obj_controller.selecting_planet=0;
-			obj_controller.popup=0;
-            obj_controller.cooldown=0;
-			instance_destroy();
-        }
-    }
-}
-
-
-
 if (loading=0){
     if (instance_exists(target) and (obj_controller.cooldown<=0)){
         if (target.planets>=1){
