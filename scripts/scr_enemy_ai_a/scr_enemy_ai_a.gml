@@ -259,40 +259,20 @@ function scr_enemy_ai_a() {
 	        // Eldar don't get into pitched battles so nyuck nyuck nyuck
 	    }
     	var pdf_with_player=false;
-    	var pdf_loss_reduction=p_defenses[run]*0.001;//redues man loss from battle loss if higher defences
+    	var pdf_loss_reduction=p_fortified[run]*0.001;//redues man loss from battle loss if higher defences
     	if (p_owner[run]!=8) && (p_owner[run]=1 ||obj_controller.faction_status[2]!="War") && (garrison_force){
     		pdf_with_player = true;
         	pdf_loss_reduction+=garrison.total_garrison*0.0005;
     	}
 	    if (((p_guardsmen[run]=0) or ((guard_score<=0.5))) or (p_owner[run]==8)) or ((p_guardsmen[run]>0) and (obj_controller.faction_status[2]="War")) and (p_pdf[run]>0) and (stop!=1){
 	    	var pdf_mod;
-	    	var defence_mult = p_defenses[run]*0.1;
+	    	var defence_mult = p_fortified[run]*0.1;
+
 	    	if (pdf_with_player){//if player supports give garrison bonus
-		    	var garrison_mult = garrison.total_garrison*(0.008+(0.001*p_defenses[run]))
-		    	garrison.find_leader();
-		    	defence_mult+=garrison_mult
-		    	defence_mult*=(garrison.garrison_leader.wisdom)/40;//modified by how good a commander the garrison leader is
-		    	//makes pdf more effective if planet has defences or marines present
+		    	pdf_score=determine_pdf_defence(p_pdf[run],garrison,p_fortified[run])[0];
+	    	} else{
+	    		pdf_score=determine_pdf_defence(p_pdf[run],,p_fortified[run])[0];
 	    	}
-	    	pdf_mod=p_pdf[run]
-	        if (pdf_mod >= 50000000){
-			    pdf_score = 6;
-			} else if (pdf_mod < 50000000 && pdf_mod >= 15000000) {
-			    pdf_score = 5;
-			} else if (pdf_mod < 15000000 && pdf_mod >= 6000000) {
-			    pdf_score = 4;
-			} else if (pdf_mod< 6000000 && pdf_mod >= 1000000) {
-			    pdf_score = 3;
-			} else if (pdf_mod < 1000000 && pdf_mod >= 100000) {
-			    pdf_score = 2;
-			} else if (pdf_mod < 100000 && pdf_mod >= 2000) {
-			    pdf_score = 1;
-			} else if (pdf_mod < 2000) {
-			    pdf_score = 0.5;
-			} else if (pdf_mod < 500) {
-			    pdf_score = 0.1;
-			}
-			pdf_score*=(1+defence_mult);
 	        // 
 	        // if (p_eldar[run]>0) and (p_owner[run]!=6) then pdf_attack="eldar";
 	        if (p_tyranids[run]>=4) then pdf_attack="tyranids";
@@ -702,7 +682,7 @@ function scr_enemy_ai_a() {
 	                	//garrisons.pdf_support_outcome(ork_score,rand2-rand1,"orks", pdf_score/defence_mult);
 	                }
 	            } else {
-	            	if (pdf_with_player && (pdf_random*(pdf_score/(1+defence_mult)))<rand1){
+	            	if (pdf_with_player){
 	            		var tixt = $"Chapter Forces led by {garrison.garrison_leader.name_role()} on {name} {scr_roman_numerals()[run-1]} secure PDF victory";
 	            		scr_alert("green","owner",tixt,x,y);
 	            	}
