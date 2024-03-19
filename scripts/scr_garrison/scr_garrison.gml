@@ -93,7 +93,7 @@ function garrison_force(planet_operatives)constructor{
 		if (system.dispo[planet]>-1){
 			var disposition = disposition_description_chart(system.dispo[planet]);
 			report_string+=$"Our Relationship with the Rulers of the planet is {disposition}";
-		} else if( dispo<-1000){
+		} else if(system.dispo[planet]<-1000){
 			report_string+=$"Rule of the planet is going well";
 		}
 
@@ -164,3 +164,51 @@ function garrison_force(planet_operatives)constructor{
 		}
 	}
 }
+
+
+function determine_pdf_defence(pdf, garrison="none", planet_forti=0){
+	var explanations = "";
+	var defence_mult = planet_forti*0.1;
+	var pdf_score=0;
+	explanations += $"Planet Defences:X{defence_mult+1}#"
+	if (garrison!="none"){//if player supports give garrison bonus
+    	var garrison_mult = garrison.total_garrison*(0.008+(0.001*planet_forti))
+    	explanations += $"Garrison Bonus:X{garrison_mult+1}#";
+    	if (!garrison.garrison_leader){
+	    	garrison.find_leader();
+	    }
+    	defence_mult+=garrison_mult;
+    	var leader_bonus = garrison.garrison_leader.wisdom/40;
+    	defence_mult*=leader_bonus;//modified by how good a commander the garrison leader is
+    	explanations += $"     Garrison Leader Bonus:X{leader_bonus}#"
+    	//makes pdf more effective if planet has defences or marines present
+	}
+
+    if (pdf >= 50000000){
+	    pdf_score = 6;
+	} else if (pdf < 50000000 && pdf >= 15000000) {
+	    pdf_score = 5;
+	} else if (pdf < 15000000 && pdf >= 6000000) {
+	    pdf_score = 4;
+	} else if (pdf< 6000000 && pdf >= 1000000) {
+	    pdf_score = 3;
+	} else if (pdf < 1000000 && pdf >= 100000) {
+	    pdf_score = 2;
+	} else if (pdf < 100000 && pdf >= 2000) {
+	    pdf_score = 1;
+	} else if (pdf < 2000) {
+	    pdf_score = 0.5;
+	} else if (pdf < 500) {
+	    pdf_score = 0.1;
+	}
+	explanations += $"PDF Defence: {pdf_score}#"
+	pdf_score*=(1+defence_mult);
+	return [pdf_score, explanations];
+}
+
+
+
+
+
+
+
