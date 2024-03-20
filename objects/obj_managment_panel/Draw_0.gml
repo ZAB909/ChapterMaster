@@ -67,6 +67,10 @@ slate_panel.inside_method = function(){
             draw_sprite_ext(spr_tech_area_pad, 0, x2+(wid/2)-((0.3*180)/2),y2-30,0.3,0.3,0,c_white,1)
         } else if (title=="APOTHECARIUM"){
             draw_sprite_ext(spr_apoth_area_pad, 0, x2+(wid/2)-((0.3*180)/2),y2-30,0.3,0.3,0,c_white,1)
+        } else if (title=="RECLUSIUM"){
+            draw_sprite_ext(spr_chap_area_pad, 0, x2+(wid/2)-((0.3*180)/2),y2-30,0.3,0.3,0,c_white,1)
+        } else if (title=="LIBRARIUM"){
+            draw_sprite_ext(spr_lib_area_pad, 0, x2+(wid/2)-((0.3*180)/2),y2-30,0.3,0.3,0,c_white,1)
         }else {      
             
             var icon_sprite,icc;icon_sprite=spr_icon;icc=obj_ini.icon;
