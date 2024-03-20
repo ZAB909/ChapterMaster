@@ -37,17 +37,27 @@ if (mouse_check_button(mb_left)){
                 main_data_slate.XX,
                 yy+165+294)
             ) then closes+=1;
-            if (obj_controller.selecting_planet>0 && feature != ""){
+            if (obj_controller.selecting_planet>0){
                 if (!scr_hit(
-                    main_data_slate.XX+main_data_slate.width-4,
+                    main_data_slate.XX-4,
                     yy+165,
-                    main_data_slate.XX+main_data_slate.width-4 + feature.main_slate.width,
-                    yy+165 + feature.main_slate.height,
+                    main_data_slate.XX+main_data_slate.width,
+                    yy+165 + main_data_slate.height,
                 )){
                     if (garrison==""){
                         closes+=1;
                     } else if (!garrison.garrison_force){
                         closes+=1;
+                    }
+                    if (feature!=""){
+                        if (scr_hit(
+                            feature.main_slate.XX,
+                            feature.main_slate.yy,
+                            feature.main_slate.XX+width,
+                            feature.main_slate.yy+height
+                            )){
+                            closes--;
+                        }
                     }
                     
                 }
