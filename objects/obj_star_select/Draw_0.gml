@@ -29,37 +29,40 @@ if (mouse_check_button(mb_left)){
         var closes=0,sta1=0,sta2=0;
         sta1=instance_nearest(mouse_x,mouse_y,obj_star);
         sta2=point_distance(mouse_x,mouse_y,sta1.x,sta1.y);
-
+        closes=true;
         if (sta2>15){
-            if (!scr_hit(
+            if (scr_hit(
                 xx+27,
                 yy+165,
-                main_data_slate.XX,
+                xx+300,
                 yy+165+294)
-            ) then closes+=1;
-            if (obj_controller.selecting_planet>0){
-                if (!scr_hit(
+            ){
+                closes=false
+            }else if (obj_controller.selecting_planet>0){
+                if (scr_hit(
                     main_data_slate.XX-4,
                     yy+165,
                     main_data_slate.XX+main_data_slate.width,
                     yy+165 + main_data_slate.height,
                 )){
+                    closes=false
                     if (garrison==""){
-                        closes+=1;
+                        closes=false
                     } else if (!garrison.garrison_force){
-                        closes+=1;
-                    }
-                    if (feature!=""){
-                        if (scr_hit(
-                            feature.main_slate.XX,
-                            feature.main_slate.yy,
-                            feature.main_slate.XX+width,
-                            feature.main_slate.yy+height
-                            )){
-                            closes--;
-                        }
+                        closes=false
                     }
                     
+                }
+
+                if (feature!=""){
+                    if (scr_hit(
+                        feature.main_slate.XX,
+                        feature.main_slate.YY,
+                        feature.main_slate.XX+feature.main_slate.width,
+                        feature.main_slate.YY+feature.main_slate.height
+                        )){
+                        closes=false;
+                    }
                 }
             }
             var shutter_button;
@@ -67,11 +70,11 @@ if (mouse_check_button(mb_left)){
             for (var i=0; i<4;i++){
                 shutter_button = shutters[i];
                 if (scr_hit(shutter_button.XX,shutter_button.YY,shutter_button.XX+shutter_button.width,shutter_button.YY+shutter_button.height)){
-                    closes=0;
+                    closes=false;
                     break;
                 }
             }
-            if ((closes=1) and (obj_controller.selecting_planet==0)) or (closes=2){
+            if (closes){
                 cooldown=0;
                 obj_controller.sel_system_x=0;
                 obj_controller.sel_system_y=0;
