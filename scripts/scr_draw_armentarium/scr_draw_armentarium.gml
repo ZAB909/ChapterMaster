@@ -3,7 +3,7 @@
 function drop_down_sandwich(selection, draw_x, draw_y, options, open_marker,left_text,right_text){
 	draw_text_transformed(draw_x, draw_y, left_text,1,1,0);
 	draw_x += string_width(left_text)+5;
-	var results = drop_down(selection, draw_x, draw_y, options,open_marker);
+	var results = drop_down(selection, draw_x, draw_y-2, options,open_marker);
     draw_set_color(c_gray);
 	draw_text_transformed(draw_x+9+ string_width(selection), draw_y, right_text,1,1,0);
     return results;
@@ -602,7 +602,7 @@ function scr_draw_armentarium(){
             y_offset,
             ["vehicles","wargear", "ships"],
             research_drop_down,
-            "research is currently focussed on", 
+            "Research is currently focussed on", 
             ".");
         research_drop_down = drop_down_results[1];
         stc_research.research_focus = drop_down_results[0]; 
@@ -808,7 +808,7 @@ function scr_draw_armentarium(){
         draw_text(xx+600,yy+109,string_hash_to_newline("Forge Points"));
         draw_text(xx+700,yy+109,string_hash_to_newline("Construction ETA"));        
         draw_set_color(c_gray);
-        var item_gap = 127;
+        var item_gap = 130;
         var total_eta=0;
         static top_point=0;
         for (var i=top_point; i<13; i++){
