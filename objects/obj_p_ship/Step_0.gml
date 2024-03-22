@@ -294,8 +294,6 @@ if (hp>0) and (instance_exists(target)){
 
 
 /* */
-
-show_debug_message("{0}, {1}, {2},{3},{4}",boarders,board_cooldown,board_capital,board_frigate, instance_exists(obj_en_ship));
 if (instance_exists(obj_en_ship)) and (boarders>0) and (board_cooldown<=0) and ((board_capital=true) or (board_frigate=true)){
     show_debug_message("{0}",boarders)
     var eh=0,te=0;

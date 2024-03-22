@@ -811,7 +811,7 @@ function scr_ui_manage() {
 						array_push(health_tooltip, ["Critical Health State! Bionic augmentation is required!", [xx+250, yy+64, xx+300, yy+85]]);
 					}else if (ma_promote[sel] > 0){
 						xpColor = c_yellow;
-						array_push(promotion_tooltip, ["Promotion Possible", [xx+335, yy+64, xx+385, yy+85]]);
+						array_push(promotion_tooltip, ["Promotion Recommended", [xx+335, yy+64, xx+385, yy+85]]);
 					}
 					draw_text_color(xpText[0], xpText[1], xpText[2], xpColor, xpColor, xpColor, xpColor, 1);
 				}

@@ -1,6 +1,6 @@
 
 function scr_enemy_ai_a() {
-
+	system_garrison = [];
 	// guardsmen hop from planet to planet
 	if (p_guardsmen[1]+p_guardsmen[2]+p_guardsmen[3]+p_guardsmen[4]>0) and (present_fleet[2]>0){
 	    var o=0,mx=0,cr=0,tr=0;
@@ -113,12 +113,13 @@ function scr_enemy_ai_a() {
 
 	var run=0, stop;
 	var rand=0;
-    var garrison_force=false, garrisons=[], total_garrison=0;
+    var garrison_force=false, total_garrison=0;
 	for (run =1;run<5;run++){
 		garrison_force=false;
 		if (run>planets){break;}
 	     garrison = new garrison_force(p_operatives[run]);
 	     garrison_force = garrison.garrison_force;
+	     array_push(system_garrison, garrison);
 
 		stop=0;
 	    if (p_eldar[run]<0) then p_eldar[run]=0;
@@ -216,7 +217,12 @@ function scr_enemy_ai_a() {
 	        if (p_tyranids[run]>=5) then tyranids_score=7;
 	    }
     
-    
+     	var pdf_with_player=false;
+    	var pdf_loss_reduction=p_fortified[run]*0.001;//redues man loss from battle loss if higher defences
+    	if (p_owner[run]!=8) && (p_owner[run]=1 ||obj_controller.faction_status[2]!="War") && (garrison_force){
+    		pdf_with_player = true;
+        	pdf_loss_reduction+=garrison.viable_garrison*0.0005;
+    	}   
     
 	    if (p_guardsmen[run]>0) and (stop!=1){
 	       if (p_guardsmen[run] < 500) {
@@ -258,12 +264,6 @@ function scr_enemy_ai_a() {
 	        // Tend to prioritize traitors > Orks > Tau
 	        // Eldar don't get into pitched battles so nyuck nyuck nyuck
 	    }
-    	var pdf_with_player=false;
-    	var pdf_loss_reduction=p_fortified[run]*0.001;//redues man loss from battle loss if higher defences
-    	if (p_owner[run]!=8) && (p_owner[run]=1 ||obj_controller.faction_status[2]!="War") && (garrison_force){
-    		pdf_with_player = true;
-        	pdf_loss_reduction+=garrison.total_garrison*0.0005;
-    	}
 	    if (((p_guardsmen[run]=0) or ((guard_score<=0.5))) or (p_owner[run]==8)) or ((p_guardsmen[run]>0) and (obj_controller.faction_status[2]="War")) and (p_pdf[run]>0) and (stop!=1){
 	    	var pdf_mod;
 	    	var defence_mult = p_fortified[run]*0.1;
@@ -662,12 +662,12 @@ function scr_enemy_ai_a() {
 	        }else if (ork_attack="pdf"){
 	        	var pdf_random = choose(1,2,3,4,5,6);
 	            rand2=(pdf_random*pdf_score);
+	            var active_garrison = pdf_with_player && garrison.viable_garrison>0;
 	            if (rand1>rand2){
-	            	var active_garrison = pdf_with_player && garrison.total_garrison>0;
-	                if (ork_score>=4) and (p_pdf[run]<=30000) {p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.55+pdf_loss_reduction)));}
-	                else if (ork_score>=4) and (p_pdf[run]<30000){ p_pdf[run]=active_garrison?p_pdf[run]*0.4:0;}
+	                if (ork_score>=4) and (p_pdf[run]>=30000) {p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.55+pdf_loss_reduction)));}
+	                else if (ork_score>=4 && p_pdf[run]<30000 && p_pdf[run]>=10000){ p_pdf[run]=active_garrison?p_pdf[run]*0.4:0;}
 	                else if (ork_score>=3) and (p_pdf[run]<10000){ p_pdf[run]=active_garrison?p_pdf[run]*0.4:0;}
-	                else if (ork_score<=3 && p_pdf[run]>30000){
+	                else if (ork_score<3 && p_pdf[run]>30000){
 	                	p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.7+pdf_loss_reduction)));
 	                }
 	                else if (ork_score>=2) and (p_pdf[run]<2000){ p_pdf[run]=0;}
@@ -675,15 +675,19 @@ function scr_enemy_ai_a() {
 
 	                if (active_garrison){
 	                	var tixt = $"Chapter Forces led by {garrison.garrison_leader.name_role()} on {name} {scr_roman_numerals()[run-1]} were unable to secure PDF victory chapter support requested";
+	                	if (garrison.garrison_sustain_damages("loose")>0){
+	                		tixt += $". {garrison.garrison_sustain_damages()} Marines Lost";
+	                	}
 	                	scr_alert("red","owner",tixt,x,y);
 	                	//garrison.determine_battle(false,rand2-rand1, eFACTION.Ork);
 	                }
-	                for (var i=0;i<array_length(garrisons);i++){
-	                	//garrisons.pdf_support_outcome(ork_score,rand2-rand1,"orks", pdf_score/defence_mult);
-	                }
 	            } else {
-	            	if (pdf_with_player){
+	            	if (active_garrison){
+	            		garrison.garrison_sustain_damages();
 	            		var tixt = $"Chapter Forces led by {garrison.garrison_leader.name_role()} on {name} {scr_roman_numerals()[run-1]} secure PDF victory";
+	                	if (garrison.garrison_sustain_damages("win")>0){
+	                		tixt += $". {garrison.garrison_sustain_damages()} Marines Lost";
+	                	}	            		
 	            		scr_alert("green","owner",tixt,x,y);
 	            	}
 	            }

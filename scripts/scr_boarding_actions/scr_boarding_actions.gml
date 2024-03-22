@@ -1,5 +1,4 @@
 function create_boarding_craft(target_ship){
-    show_debug_message("start_boarding")
     var first=0,o=1;
     
     repeat(500){

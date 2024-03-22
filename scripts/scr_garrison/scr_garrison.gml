@@ -10,7 +10,7 @@ function disposition_description_chart(dispo){
 	}else if (dispo<70){
 		return "Friendly";
 	}else if (dispo<80){
-		return "Very Freindly";
+		return "Very Friendly";
 	}else if (dispo<90){
 		return "Excellent";
 	}else if (dispo<100){
@@ -23,19 +23,70 @@ function garrison_force(planet_operatives)constructor{
 	total_garrison = 0;
 	garrison_leader=false;
 	garrison_force=false;
+	members = [];
+	viable_garrison = 0;
+	var operative, unit, member;
 	 for (var ops=0;ops<array_length(planet_operatives);ops++){
       	if(planet_operatives[ops].type=="squad"){
       		if (planet_operatives[ops].job == "garrison"){//marine garrison on planet
       			if (array_length(obj_ini.squads[planet_operatives[ops].reference].members)>0){
-	      			array_push(garrison_squads, obj_ini.squads[planet_operatives[ops].reference])
-	      			total_garrison += array_length(obj_ini.squads[planet_operatives[ops].reference].members);
+      				operative = obj_ini.squads[planet_operatives[ops].reference];
+	      			array_push(garrison_squads, operative)
+	      			total_garrison += array_length(operative.members);
 	      			garrison_force=true;
+	      			for (var i = 0; i<array_length(operative.members);i++){
+	      				member = operative.members[i];
+	      				unit = fetch_unit([member[0], member[1]]);
+	      				if (!is_struct(unit)) then continue;
+	      				if (unit.name() =="") then continue;
+	      				array_push(members, unit);
+	      				if (unit.hp()>0) then  viable_garrison++;
+	      			}
 	      		} else {
 	      			array_delete(planet_operatives, ops,1);
+	      			ops--;
 	      		}
       		}
       	}		 	
-	 }
+	 } 
+
+	static garrison_sustain_damages = function(win_or_loss){
+		var unit;
+		var member_count = array_length(members);
+		var members_lost = 0;
+		for (var i=0;i<member_count;i++){
+			unit = members[i];
+			if (unit.hp()>0){
+				if (win_or_loss=="win"){
+					if (irandom(1)==0){
+						unit.add_or_sub_health(-40);
+					}
+					if (unit.hp()<0){
+						if (unit.calculate_death()){
+							kill_and_recover(unit.company, unit.marine_number);
+							members_lost++;
+							array_delete(members, i, 1);
+							i--;
+							member_count--;
+						}
+					}
+				}
+				else if (win_or_loss=="loose"){
+					unit.add_or_sub_health(-50);
+					if (unit.hp()<0){
+						if (unit.calculate_death()){
+							kill_and_recover(unit.company, unit.marine_number);
+							array_delete(members, i, 1);
+							i--;
+							members--;
+							members_lost++;
+						}
+					}				
+				}
+			}
+		}
+		return members_lost;
+	}
 
 	static find_leader = function(){//find leader of garrison by finding most senior squad leader
 		garrison_leader="none";
@@ -92,12 +143,32 @@ function garrison_force(planet_operatives)constructor{
 		report_string+= $" with a total man count of {total_garrison}.#"
 		if (system.dispo[planet]>-1){
 			var disposition = disposition_description_chart(system.dispo[planet]);
-			report_string+=$"Our Relationship with the Rulers of the planet is {disposition}";
+			report_string+=$"Our Relationship with the Rulers of the planet is {disposition}#";
 		} else if(system.dispo[planet]<-1000){
 			report_string+=$"Rule of the planet is going well";
 		}
 
 		return report_string;
+	}
+
+	static garrison_disposition_change = function(star, planet){
+		dispo_change = 0;
+		if (array_contains(obj_controller.imperial_factions, star.p_owner[planet])){
+			dispo_change = 0;
+			planet_disposition = star.dispo[planet];
+			test_disposition = obj_controller.disposition[star.p_owner[planet]];
+			changer_mod = (test_disposition/50);
+			if (garrison_leader.charisma*changer_mod>planet_disposition){
+				dispo_change=0.3;
+			} else if (garrison_leader.charisma*changer_mod==planet_disposition){
+				dispo_change=0;
+			} else if (garrison_leader.charisma*changer_mod<planet_disposition-25){
+				dispo_change=-0.3;
+			}
+		} else {
+			dispo_change = "none";
+		}
+		return dispo_change;
 	}
 
 	/* this is probably going to become infinatly complex with many different functions and far more complex inputs
@@ -172,7 +243,7 @@ function determine_pdf_defence(pdf, garrison="none", planet_forti=0){
 	var pdf_score=0;
 	explanations += $"Planet Defences:X{defence_mult+1}#"
 	if (garrison!="none"){//if player supports give garrison bonus
-    	var garrison_mult = garrison.total_garrison*(0.008+(0.001*planet_forti))
+    	var garrison_mult = garrison.viable_garrison*(0.008+(0.001*planet_forti))
     	explanations += $"Garrison Bonus:X{garrison_mult+1}#";
     	if (!garrison.garrison_leader){
 	    	garrison.find_leader();

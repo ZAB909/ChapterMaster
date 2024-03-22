@@ -551,7 +551,6 @@ if (type=8) and (instance_exists(obj_controller)){
                     unit.update_mobility_item(arti_index);
                 }
                 if (replace="weapon1"){
-                    show_debug_message("wep_one")
                     unit.update_weapon_one(arti_index);
                 }
                 if (replace="weapon2"){

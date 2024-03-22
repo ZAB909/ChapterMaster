@@ -2,8 +2,8 @@ function tooltip_draw(tooltip="", max_width=300, coords=[mouse_x+20,mouse_y+20],
 	draw_set_halign(fa_left);
 	draw_set_alpha(1)
 	// Calculate padding and rectangle size
-	static text_padding_x = 9;
-	static text_padding_y = 9;
+	static text_padding_x = 11;
+	static text_padding_y = 14;
 	// Convert hash to newline in strings
 	header = string_hash_to_newline(string(header));
 	tooltip = string_hash_to_newline(string(tooltip));
@@ -39,13 +39,12 @@ function tooltip_draw(tooltip="", max_width=300, coords=[mouse_x+20,mouse_y+20],
 		rect_y = coords[1] - rect_h - 40;
 	}
 	// Draw the tooltip rectangle with an outline
-	static slate_height = 245;
-	static slate_width=365;
+	static slate_height = 133;
+	static slate_width=255;
 	var x_scale = (rect_w/slate_width);
 	var y_scale = (rect_h/slate_height);
-	draw_sprite_ext(spr_slate_2, 1, rect_x, rect_y, x_scale, y_scale, 0, c_white, 1);
-	draw_sprite_ext(spr_slate_2, 0, rect_x, rect_y, x_scale, y_scale, 0, c_white, 1);
-	draw_sprite_ext(spr_slate_2, 2, rect_x, rect_y, x_scale, y_scale, 0, c_white, 1);	
+	draw_sprite_ext(spr_tooltip1, 0, rect_x, rect_y, x_scale, y_scale, 0, c_white, 1);
+	draw_sprite_ext(spr_tooltip1, 1, rect_x, rect_y, x_scale, y_scale, 0, c_white, 1);
 	//draw_rectangle_colour(rect_x, rect_y, rect_w + rect_x, rect_h + rect_y, c_black, c_black, c_black, c_black, 0);
 	//draw_rectangle_colour(rect_x + 1, rect_y + 1, rect_w + rect_x - 1, rect_h + rect_y - 1, c_gray, c_gray, c_gray, c_gray, 1);
 	// Draw header text if it exists

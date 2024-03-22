@@ -18,6 +18,7 @@
     {"name":"dreadnought","order":55,"path":"folders/Sprites/New UI/Marine Viewer/dreadnought.yy",},
     {"name":"gear","order":56,"path":"folders/Sprites/New UI/Marine Viewer/gear.yy",},
     {"name":"helms","order":52,"path":"folders/Sprites/New UI/Marine Viewer/helms.yy",},
+    {"name":"tooltips","order":75,"path":"folders/Sprites/New UI/tooltips.yy",},
   ],
   "ResourceOrderSettings": [
     {"name":"spr_credits_bg","order":1,"path":"sprites/spr_credits_bg/spr_credits_bg.yy",},

@@ -9,6 +9,11 @@ function point_and_click(rect){
 function feature_selected(Feature) constructor{
 	feature = Feature;
 	main_slate = new mk_two_data_slate();
+	exit_sequence = false;
+	entrance_sequence=true;
+	remove=false;
+	exit_count = 0;
+	enter_count=18;
 
 	if (feature.f_type == P_features.Forge){
 		var worker_caps= [2,4,8];
@@ -26,8 +31,20 @@ function feature_selected(Feature) constructor{
 	draw_planet_features = function(xx,yy){
 	    draw_set_halign(fa_center);
 	    draw_set_font(fnt_40k_14);
-	    //draw_sprite(spr_planet_screen,0,xx,yy); 
-	    main_slate.draw(xx,yy, 1.4,1.4);
+	    //draw_sprite(spr_planet_screen,0,xx,yy);
+	    if (exit_sequence){
+	    	xx-=(25*exit_count);
+	    	main_slate.draw(xx,yy, 1.38,1.38);
+	    	exit_count++;
+	    	if (xx-25<=obj_star_select.main_data_slate.XX) then remove=true;
+	    } else if (entrance_sequence){
+	    	enter_count--;
+	    	xx-=(25*enter_count);
+	    	if (enter_count==1) then entrance_sequence = false;
+	    	main_slate.draw(xx,yy, 1.38,1.38);
+	    }else {
+	    	main_slate.draw(xx,yy, 1.4,1.4);
+	    }
 	    var area_width = main_slate.width;
 	    var area_height = main_slate.height;
 	    var generic = false;
@@ -35,9 +52,9 @@ function feature_selected(Feature) constructor{
 	    //draw_glow_dot(xx+150, yy+150);
 	    //rack_and_pinion(xx+230, yy+170);
 	    var rectangle = [];
-	    draw_set_color(c_red);
+	    draw_set_color(c_green);
 	    if (point_and_click(draw_unit_buttons([xx+12, yy+20], "<---",[1,1],c_red))){
-	    	return "exit";
+	    	exit_sequence=true;
 	    };
 	    draw_set_halign(fa_center);
 		switch (feature.f_type){

@@ -267,7 +267,7 @@ global.trait_list = {
 		flavour_text:"{0} is a brutal character solving problems often with intimidation or violence",
 	},
 	"charismatic":{
-		charisma:[10,3,"max"],
+		charisma:[10,4,"max"],
 		display_name:"Charismatic",
 		flavour_text:"{0} is liked by most without even trying",
 	},
@@ -378,7 +378,7 @@ global.trait_list = {
 		technology:[6,1,"max"],
 		intelligence:1,
 		flavour_text:"{0} Is particularly skilled at building things, often making them to a superior quality as well",
-		effect:"provides more total forge points",
+		effect:"provides more total forge points especially when assigned to a forge",
 	}	
 }
 global.base_stats = { //tempory stats subject to change by anyone that wishes to try their luck
@@ -391,7 +391,7 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			ballistic_skill : [50,5, "max"],			
 			intelligence:[44,3],
 			wisdom:[44,3],
-			charisma :[35,3],
+			charisma :[40,3],
 			religion : "imperial_cult",
 			piety : [30,3],
 			luck :10,
@@ -407,7 +407,7 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			dexterity:[40,3],
 			intelligence:[40,3],
 			wisdom:[40,3],
-			charisma :[30,3],
+			charisma :[30,5],
 			religion : "imperial_cult",
 			piety : [30,3],
 			luck :10,
@@ -425,7 +425,7 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			dexterity:[36,3],
 			intelligence:[38,3],
 			wisdom:[35,3],
-			charisma :[28,3],
+			charisma :[30,5],
 			religion : "imperial_cult",
 			piety : [28,3],
 			luck :10,
@@ -930,7 +930,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 							stat_mod = min(stat_mod, edit_stat[0]);
 						}
 					}
-				} else{stat_mod = edit_stat}
+				} else {
+					stat_mod = edit_stat
+				}
 				if (stats[stat_iter] == "constitution"){
 					balance_value = (hp()/max_health());
 				}
@@ -1220,6 +1222,22 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		return obj_ini.race[company][marine_number];
 	};	//get race
 
+	static calculate_death = function(death_threshold = 25, death_random=50,apothecary=true, death_type="normal"){
+		dies = false;
+		death_random += luck;
+		death_threshold+=luck;
+		if (death_type=="normal"){
+			death_threshold += (constitution/10);
+			if (has_trait("very_hard_to_kill")){
+				death_threshold += 3; 
+			}
+		}
+		var chance = irandom(death_random);
+		if (death_random>death_threshold){
+			dies = true;
+		}
+		return false; 
+	}
 	static add_bionics = function(area="none", bionic_quality="any", from_armoury=true){
 		if (from_armoury && scr_item_count("Bionics",bionic_quality)<1){
 			return "no bionics";
@@ -2024,18 +2042,23 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		if (!IsSpecialist("forge")) then return 0;
 		var reasons = {}
 		var points = technology/10;
+		crafter = has_trait("crafter");
 		reasons.base = points;
 		if (job!="none"){
 			if (job.type == "forge"){
 				reasons.at_forge = (points+3);
-				points*=2;
+				if (crafter){
+					points*=3;
+				} else {
+					points*=2;
+				}
 				points+=3;
 				if (turn_end){
 					add_exp(0.25);
 				}
 			}
 		}
-		if (has_trait("crafter")){
+		if (crafter){
 			points+=3;
 			reasons.crafter = 3;
 		}

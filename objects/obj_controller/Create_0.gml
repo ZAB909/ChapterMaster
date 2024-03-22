@@ -988,6 +988,12 @@ enum eFACTION {
 	Heretics,
 	Necrons = 13
 }
+imperial_factions = [
+    eFACTION.Imperium,
+    eFACTION.Mechanicus,
+    eFACTION.Inquisition,
+    eFACTION.Ecclesiarchy,
+]
 faction[0]="";
 disposition[0]=0;
 faction[eFACTION.Player]="Player";

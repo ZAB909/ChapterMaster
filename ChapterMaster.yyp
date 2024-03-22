@@ -80,6 +80,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"UI","folderPath":"folders/Sprites/UI.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Tile Sets","folderPath":"folders/Tile Sets.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Timelines","folderPath":"folders/Timelines.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"tooltips","folderPath":"folders/Sprites/New UI/tooltips.yy",},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"custom_icons_help.txt","CopyToMask":153157610357391598,"filePath":"datafiles/icons",},
@@ -661,6 +662,7 @@
     {"id":{"name":"spr_fleet_mechanicus","path":"sprites/spr_fleet_mechanicus/spr_fleet_mechanicus.yy",},},
     {"id":{"name":"spr_mm_glow","path":"sprites/spr_mm_glow/spr_mm_glow.yy",},},
     {"id":{"name":"spr_fleet_inquisition","path":"sprites/spr_fleet_inquisition/spr_fleet_inquisition.yy",},},
+    {"id":{"name":"spr_tooltip1","path":"sprites/spr_tooltip1/spr_tooltip1.yy",},},
     {"id":{"name":"spr_fleet_chaos","path":"sprites/spr_fleet_chaos/spr_fleet_chaos.yy",},},
     {"id":{"name":"spr_fleet_ork","path":"sprites/spr_fleet_ork/spr_fleet_ork.yy",},},
     {"id":{"name":"spr_fleet_necron","path":"sprites/spr_fleet_necron/spr_fleet_necron.yy",},},

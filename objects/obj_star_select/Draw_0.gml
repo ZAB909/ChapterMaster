@@ -529,28 +529,36 @@ if (obj_controller.selecting_planet!=0){
     var slate_draw_scale = 420/850;
     if (feature!=""){
         if (is_struct(feature)){
-            if (feature.draw_planet_features(xx+344+main_data_slate.width-4,yy+165)=="exit"){
+            feature.draw_planet_features(xx+344+main_data_slate.width-4,yy+165)
+            if (feature.remove){
                 feature="";
-            } 
+            }
         }
     }else if (garrison!=""){
         if (garrison.garrison_force){
+            draw_set_font(fnt_40k_14);
             if (!garrison.garrison_leader){
                 garrison.find_leader()
+                garrison.garrison_disposition_change(target, obj_controller.selecting_planet);
                 garrison_data_slate.sub_title = $"Garrison Leader {garrison.garrison_leader.name_role()}"
                 garrison_data_slate.body_text = garrison.garrison_report();
             }
             garrison_data_slate.inside_method=function(){
+                draw_set_color(c_gray);
                 var xx = garrison_data_slate.XX;
                 var yy = garrison_data_slate.YY;
                 var cur_planet = obj_controller.selecting_planet;
                 var half_way =  garrison_data_slate.height/2;
                 draw_set_halign(fa_left);
-                draw_line(xx+5, yy+half_way, xx+garrison_data_slate.width-5, yy+half_way);
-                var defence_date  = determine_pdf_defence(target.p_pdf[cur_planet], garrison,target.p_fortified[cur_planet]);
-                draw_text(xx+20, yy+half_way, $"Planetary Defence : {defence_date[0]}");
-                if (scr_hit(xx+20, yy+half_way+10, xx+20+100, yy+half_way+10+20)){
-                    tooltip_draw(defence_date[1], 400);
+                draw_line(xx+10, yy+half_way, xx+garrison_data_slate.width-10, yy+half_way);
+                var defence_data  = determine_pdf_defence(target.p_pdf[cur_planet], garrison,target.p_fortified[cur_planet]);
+                var defence_string = $"Planetary Defence : {defence_data[0]}";
+                draw_text(xx+20, yy+half_way, defence_string);
+                if (scr_hit(xx+20, yy+half_way+10, xx+20+string_width(defence_string), yy+half_way+10+20)){
+                    tooltip_draw(defence_data[1], 400);
+                }
+                if (garrison.dispo_change!="none"){
+                    draw_text(xx+20, yy+half_way+30, $"Garrison Disposition Effect : {garrison.dispo_change}");
                 }
             }
             garrison_data_slate.draw(xx+344+main_data_slate.width-4, yy+160, 0.6, 0.6);

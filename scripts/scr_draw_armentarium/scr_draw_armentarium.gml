@@ -139,7 +139,7 @@ function calculate_research_points(turn_end=false){
                 if (obj_ini.veh_role[comp][veh]=="Land Raider"){
                     forge_veh_maintenance.land_raider = struct_exists(forge_veh_maintenance, "land_raider") ?forge_veh_maintenance.land_raider + 1 : 1;
                 } else if (array_contains(["Rhino","Predator", "Whirlwind"],obj_ini.veh_role[comp][veh])){
-                    forge_veh_maintenance.small_vehicles = struct_exists(forge_veh_maintenance, "small_vehicles") ?forge_veh_maintenance.small_vehicles + 0.1 :0.1;
+                    forge_veh_maintenance.small_vehicles = struct_exists(forge_veh_maintenance, "small_vehicles") ?forge_veh_maintenance.small_vehicles + 0.2 :0.2;
                 }
             }
         }

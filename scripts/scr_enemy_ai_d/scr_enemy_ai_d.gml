@@ -460,7 +460,8 @@ function scr_enemy_ai_d() {
 	        // vision=0;
 	        g=50;i=50;
 	    }}*/
-	    if (g<5) and (i<5){if (p_problem[g,h]="Hive Fleet") and (p_timer[g,h]=3){
+	    if (g<5) and (i<5){
+	    	if (p_problem[g,h]="Hive Fleet") and (p_timer[g,h]=3){
 	        var woop;
 	        woop=0;woop=scr_role_count("Chief "+string(obj_ini.role[100,17]),"");
         
@@ -620,6 +621,19 @@ function scr_enemy_ai_d() {
 	}
 
 	// Local problems will go here
-
+	var planet;
+	for (var i=0;i<planets;i++){
+		planet=i+1;
+		if (garrison.garrison_disposition_change(target, obj_controller.selecting_planet)){
+			if (i < array_length(system_garrison)){
+				var garrison = system_garrison[i];
+				if (garrison.garrison_force){
+					if (garrison.garrison_disposition_change(self,planet)!="none"){
+						disp[planet]+=garrison.dispo_change;
+					}
+				}
+			}
+		}
+	}
 
 }
