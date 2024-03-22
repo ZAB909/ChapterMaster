@@ -696,6 +696,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		} else if (new_role==obj_ini.role[100][2]){
 			scr_recent("honor_promote",name(),company);
 		} else if (new_role==obj_ini.role[100][6]){
+			//TODO deprecate and use tagging system
             var dread_weapons =["Close Combat Weapon","Force Weapon","Lascannon","Assault Cannon","Missile Launcher","Heavy Bolter"];
 
             if (!array_contains(dread_weapons,weapon_one())){
@@ -2446,14 +2447,14 @@ function pen_and_paper_sim() constructor{
 				}
 			} else {//only unit 1 passes test thus is winner
 				winner = 1;
-				pass_margin =unit1_val- stat1;
+				pass_margin = unit1_val- stat1;
 			}
 		} else if (stat2<unit2_val){//only unit 2 passes test
 			winner = 2;
 			pass_margin = unit2_val-stat2;
 		} else {
 			winner = 0;
-			pass_margin =unit1_val- stat1;
+			pass_margin = unit1_val- stat1;
 		}
 
 		return [winner, pass_margin];

@@ -117,7 +117,7 @@ function scr_enemy_ai_a() {
 	for (run =1;run<5;run++){
 		garrison_force=false;
 		if (run>planets){break;}
-	     garrison = new garrison_force(p_operatives[run]);
+	     garrison = new garrison_force(p_operatives[run], true);
 	     garrison_force = garrison.garrison_force;
 	     array_push(system_garrison, garrison);
 

@@ -18,12 +18,13 @@ function disposition_description_chart(dispo){
 	}
 }
 
-function garrison_force(planet_operatives)constructor{
+function garrison_force(planet_operatives, turn_end=false)constructor{
 	garrison_squads=[];
 	total_garrison = 0;
 	garrison_leader=false;
 	garrison_force=false;
 	members = [];
+	time_on_planet = 0;
 	viable_garrison = 0;
 	var operative, unit, member;
 	 for (var ops=0;ops<array_length(planet_operatives);ops++){
@@ -41,6 +42,10 @@ function garrison_force(planet_operatives)constructor{
 	      				if (unit.name() =="") then continue;
 	      				array_push(members, unit);
 	      				if (unit.hp()>0) then  viable_garrison++;
+	      			}
+	      			if (turn_end) then planet_operatives[ops].task_time++;
+	      			if (planet_operatives[ops].task_time>time_on_planet){
+	      				time_on_planet=planet_operatives[ops].task_time;
 	      			}
 	      		} else {
 	      			array_delete(planet_operatives, ops,1);
@@ -151,20 +156,35 @@ function garrison_force(planet_operatives)constructor{
 		return report_string;
 	}
 
-	static garrison_disposition_change = function(star, planet){
+	static garrison_disposition_change = function(star, planet, up_or_down = false){
 		dispo_change = 0;
 		if (array_contains(obj_controller.imperial_factions, star.p_owner[planet])){
-			dispo_change = 0;
 			planet_disposition = star.dispo[planet];
-			test_disposition = obj_controller.disposition[star.p_owner[planet]];
-			changer_mod = (test_disposition/50);
-			if (garrison_leader.charisma*changer_mod>planet_disposition){
-				dispo_change=0.3;
-			} else if (garrison_leader.charisma*changer_mod==planet_disposition){
-				dispo_change=0;
-			} else if (garrison_leader.charisma*changer_mod<planet_disposition-25){
-				dispo_change=-0.3;
+
+			var disposition_modifier =planet_disposition<=50 ? (planet_disposition/10) :((planet_disposition-50)/10)%5;
+
+			disposition_modifier = planet_disposition/10
+			time_modifier = time_on_planet/2.5;
+			if (time_modifier>10) then time_modifier = 10;
+			var final_modifier =5 + total_garrison/10 - disposition_modifier + time_modifier;
+			if (up_or_down){
+				dispo_change =  garrison_leader.charisma+final_modifier;
+				if (dispo_change<50 && planet_disposition<obj_controller.disposition[star.p_owner[planet]]){
+					dispo_change = 50;
+				}
+			} else {
+				var charisma_test = global.character_tester.standard_test(garrison_leader, "charisma", final_modifier);
+				if (!charisma_test[0]){
+					if (planet_disposition<obj_controller.disposition[star.p_owner[planet]]){
+						dispo_change=charisma_test[1]/10;
+					} else {
+						dispo_change=0;
+					}
+				} else {
+					dispo_change=charisma_test[1]/10;
+				}
 			}
+
 		} else {
 			dispo_change = "none";
 		}

@@ -539,7 +539,7 @@ if (obj_controller.selecting_planet!=0){
             draw_set_font(fnt_40k_14);
             if (!garrison.garrison_leader){
                 garrison.find_leader()
-                garrison.garrison_disposition_change(target, obj_controller.selecting_planet);
+                garrison.garrison_disposition_change(target, obj_controller.selecting_planet, true);
                 garrison_data_slate.sub_title = $"Garrison Leader {garrison.garrison_leader.name_role()}"
                 garrison_data_slate.body_text = garrison.garrison_report();
             }
@@ -558,7 +558,13 @@ if (obj_controller.selecting_planet!=0){
                     tooltip_draw(defence_data[1], 400);
                 }
                 if (garrison.dispo_change!="none"){
-                    draw_text(xx+20, yy+half_way+30, $"Garrison Disposition Effect : {garrison.dispo_change}");
+                    if (garrison.dispo_change>55){
+                        draw_text(xx+20, yy+half_way+30, $"Garrison Disposition Effect : Positive");
+                    } else if (garrison.dispo_change>44){
+                        draw_text(xx+20, yy+half_way+30, $"Garrison Disposition Effect : Neutral");
+                    } else{ 
+                        draw_text(xx+20, yy+half_way+30, $"Garrison Disposition Effect : Negative");
+                    }
                 }
             }
             garrison_data_slate.draw(xx+344+main_data_slate.width-4, yy+160, 0.6, 0.6);

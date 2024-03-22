@@ -117,6 +117,7 @@ if (obj_controller.cooldown<=0) and (loading=1){
             type:"squad", 
             reference:squad_index,
             job:mission,
+            task_time : 0
         };
         array_push(target.p_operatives[obj_controller.selecting_planet],operation_data)
     }     

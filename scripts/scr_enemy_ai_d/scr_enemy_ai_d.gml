@@ -628,7 +628,7 @@ function scr_enemy_ai_d() {
 			var garrison = system_garrison[i];
 			if (garrison.garrison_force){
 				if (garrison.garrison_disposition_change(self,planet)!="none"){
-					disp[planet]+=garrison.dispo_change;
+					dispo[planet]+=garrison.dispo_change;
 				}
 			}
 		}
