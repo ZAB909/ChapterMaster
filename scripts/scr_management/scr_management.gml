@@ -361,7 +361,7 @@ function scr_management(argument0) {
 	        nam[4]=roles[17];
 	        nam[5]="Codiciery";
 	        nam[6]="Lexicanum";
-	        nam[7]="Company Ancient";
+	        nam[7]="Standard Bearer";
 	        nam[8]=roles[4];
 	        nam[9]="Techmarine";
 	        nam[10]=roles[18];
