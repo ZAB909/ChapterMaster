@@ -624,16 +624,13 @@ function scr_enemy_ai_d() {
 	var planet;
 	for (var i=0;i<planets;i++){
 		planet=i+1;
-		if (garrison.garrison_disposition_change(target, obj_controller.selecting_planet)){
-			if (i < array_length(system_garrison)){
-				var garrison = system_garrison[i];
-				if (garrison.garrison_force){
-					if (garrison.garrison_disposition_change(self,planet)!="none"){
-						disp[planet]+=garrison.dispo_change;
-					}
+		if (i < array_length(system_garrison)){
+			var garrison = system_garrison[i];
+			if (garrison.garrison_force){
+				if (garrison.garrison_disposition_change(self,planet)!="none"){
+					disp[planet]+=garrison.dispo_change;
 				}
 			}
 		}
 	}
-
 }

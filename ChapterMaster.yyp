@@ -71,6 +71,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"helms","folderPath":"folders/Sprites/New UI/Marine Viewer/helms.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Menu and Load","folderPath":"folders/Sprites/New UI/Menu and Load.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Purge","folderPath":"folders/Sprites/New UI/Purge.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"tooltips","folderPath":"folders/Sprites/New UI/tooltips.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Primary","folderPath":"folders/Sprites/Primary.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Ships","folderPath":"folders/Sprites/Ships.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Chaos","folderPath":"folders/Sprites/Ships/Chaos.yy",},
@@ -80,7 +81,6 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"UI","folderPath":"folders/Sprites/UI.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Tile Sets","folderPath":"folders/Tile Sets.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Timelines","folderPath":"folders/Timelines.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"tooltips","folderPath":"folders/Sprites/New UI/tooltips.yy",},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"custom_icons_help.txt","CopyToMask":153157610357391598,"filePath":"datafiles/icons",},
