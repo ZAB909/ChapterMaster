@@ -357,7 +357,7 @@ function scr_management(argument0) {
 			// nam[1] = role_names[Role.CAPTAIN];
 			nam[2] = role_names[Role.CHAPLAIN];
 			nam[3] = role_names[Role.APOTHECARY];
-			nam[4] = role_names[Role.TERMINATOR];
+			nam[4] = role_names[Role.LIBRARIAN];
 			nam[5] = "Codiciery";
 			nam[6] = "Lexicanum";
 			nam[7] = "Company Ancient";
