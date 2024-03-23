@@ -29,7 +29,7 @@ function scr_chapter_new(argument0) {
 	    role[i,14]="Chaplain";wep1[i,14]="Power Sword";wep2[i,14]="Bolt Pistol";armour[i,14]="Power Armour";gear[i,14]="Rosarius";
 	    role[i,15]="Apothecary";wep1[i,15]="Power Sword";wep2[i,15]="Bolt Pistol";armour[i,15]="Power Armour";gear[i,15]="Narthecium";
 	    role[i,16]="Techmarine";wep1[i,16]="Power Axe";wep2[i,16]="Storm Bolter";armour[i,16]="Power Armour";gear[i,16]="Servo Arms";
-	    role[i,17]="Librarian";wep1[i,17]="Force Staff";wep2[i,17]="Storm Bolter";armour[i,17]="Power Armour";gear[i,17]="Psychic Hood";
+	    role[i,17]="Librarian";wep1[i,17]="Force Staff";wep2[i,17]="Bolt Pistol";armour[i,17]="Power Armour";gear[i,17]="Psychic Hood";
 		role[i,18]="Sergeant";wep1[i,18]="Chainsword";wep2[i,18]="Storm Bolter";armour[i,18]="Power Armour";gear[i,18]="";
 		role[i,19]="Veteran Sergeant";wep1[i,19]="Chainsword";wep2[i,19]="Storm Bolter";armour[i,19]="Power Armour";gear[i,19]="";
 	}i=100;

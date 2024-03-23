@@ -179,7 +179,7 @@ if (shop = "equipment") {
     if (research.psi[0]>0){
         forge_cost[i] = 500;
     }
-    item_cost[i] = 65;
+    item_cost[i] = 70;
     if (rene = 1) {
         nobuy[i] = 1;
         item_cost[i] = 0;
@@ -188,9 +188,20 @@ if (shop = "equipment") {
     item[i] = "Force Sword";
     item_stocked[i] = scr_item_count(item[i]);
     if (research.psi[0]>0){
+        forge_cost[i] = 400;
+    }
+    item_cost[i] = 55;
+    if (rene = 1) {
+        nobuy[i] = 1;
+        item_cost[i] = 0;
+    }
+	i += 1;
+    item[i] = "Force Axe";
+    item_stocked[i] = scr_item_count(item[i]);
+    if (research.psi[0]>0){
         forge_cost[i] = 450;
     }
-    item_cost[i] = 50;
+    item_cost[i] = 60;
     if (rene = 1) {
         nobuy[i] = 1;
         item_cost[i] = 0;

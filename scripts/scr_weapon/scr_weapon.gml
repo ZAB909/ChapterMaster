@@ -1327,31 +1327,38 @@ global.weapons={
     },
     "Force Staff": {
         "attack": {
-            "standard": 200,
+            "standard": 180,
             "master_crafted": 240,
             "artifact": 290
         },
+		/*"psy_melee_mod": {
+            "standard": 1.5,
+            "master_crafted": 1.8,
+            "artifact": 2
+        },*/
         "abbreviation": "FrcStf", 
         "description": "An advanced, psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.",
         "melee_hands": 1,
-        "ranged_hands": 2,
+        "ranged_hands": 1,
         "range": 1,
         "spli": 0,
-        "arp": 0,
-        "tags":["psi", "psirng"]
+        "arp": 1,
+		"special_description": "Spell Damage +100%",
+        "tags":["psy",]
     },
 	    "Force Sword": {
          "abbreviation": "FrcSwrd",
         "attack": {
-            "standard": 200,
-            "master_crafted": 240,
-            "artifact": 290
+            "standard": 150,
+            "master_crafted": 250,
+            "artifact": 300
         },
-        "melee_mod": {
-            "standard": 1.1,
-            "master_crafted": 1.1,
-            "artifact": 1.1
-        },
+        /*"psy_melee_mod": {
+            "standard": 1.75,
+            "master_crafted": 2,
+            "artifact": 2.5
+        },*/
+
         "description": "A type of psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.",
         "melee_hands": 1,
         "ranged_hands": 0,
@@ -1359,8 +1366,30 @@ global.weapons={
         "range": 1,
         "spli": 1,
         "arp": 1,
-        "special_description": "Parry",
-        "tags":["psi", "sword"],
+        "special_description": "Parry, Spell damage +50%",
+        "tags":["psy", "sword"],
+	},
+	"Force Axe": {
+         "abbreviation": "FrcAxe",
+        "attack": {
+            "standard": 200,
+            "master_crafted": 250,
+            "artifact": 300
+        },
+        /*"psy_melee_mod": {
+            "standard": 1.75,
+            "master_crafted": 2,
+            "artifact": 2.5
+        },*/
+        "description": "A type of psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.",
+        "melee_hands": 1,
+        "ranged_hands": 0,
+        "ammo": 0,
+        "range": 1,
+        "spli": 1,
+        "arp": 1,
+		"special_description":  "Able to be dual-wielded, Spell damage +50%",
+        "tags":["psy", "axe", "dual"],
 	},
      "Twin Linked Lascannon Turret": {
         "attack": {
@@ -1962,16 +1991,16 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
         }
         switch (item_type) {
             case "armour":
-                stat_order = ["description", "armour_value", "damage_resistance_mod", "hp_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "special_description", "req_exp", "tags"];
+                stat_order = ["description", "armour_value", "damage_resistance_mod", "hp_mod", "attack", "ranged_mod", "melee_mod",/*"psy_melee_mod",*/ "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "special_description", "req_exp", "tags"];
                 break;
             case "mobility":
-                stat_order = ["description", "special_description", "armour_value", "hp_mod", "damage_resistance_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "req_exp", "tags"];
+                stat_order = ["description", "special_description", "armour_value", "hp_mod", "damage_resistance_mod", "attack", "ranged_mod", "melee_mod",/*"psy_melee_mod",*/ "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "req_exp", "tags"];
                 break;
             case "gear":
-                stat_order = ["description", "special_description", "armour_value", "hp_mod", "damage_resistance_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "req_exp", "tags"];
+                stat_order = ["description", "special_description", "armour_value", "hp_mod", "damage_resistance_mod", "attack", "ranged_mod", "melee_mod",/*"psy_melee_mod",*/ "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "req_exp", "tags"];
                 break;
             case "weapon":
-                stat_order = ["description", "attack", "ranged_mod", "melee_mod", "ammo", "range", "armour_value", "hp_mod", "damage_resistance_mod", "melee_hands", "ranged_hands", "arp", "spli", "special_description", "req_exp", "tags"];
+                stat_order = ["description", "attack", "ranged_mod", "melee_mod",/*"psy_melee_mod",*/ "ammo", "range", "armour_value", "hp_mod", "damage_resistance_mod", "melee_hands", "ranged_hands", "arp", "spli", "special_description", "req_exp", "tags"];
                 break;
             }
         for (var i = 0; i < array_length(stat_order); i++) {
@@ -2017,6 +2046,11 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                         item_desc_tooltip += $"Melee Mod: {format_number_with_sign(melee_mod)}%#"
                     }
                     break;
+				/*case "psy_melee_mod":
+                    if (psy_melee_mod!=0){
+                        item_desc_tooltip += $"Melee Mod: {format_number_with_sign(psy_melee_mod)}%#"
+                    }
+                    break;*/
                 case "ammo":
                     if (ammo!=0){
                         item_desc_tooltip += $"Ammo: {ammo}#"

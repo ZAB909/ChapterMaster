@@ -82,6 +82,7 @@ function scr_ui_display_weapons(left_or_right, termi_tartaros, equiped_weapon) {
             "Chainaxe":spr_weapon_chaxe,
             "Force Staff":spr_weapon_frcstaff,
 			"Force Sword":spr_weapon_powswo,
+			"Force Axe":spr_weapon_powaxe,
         }
         var melee_weapons_names=struct_get_names(melee_weapons);
         var wep_
