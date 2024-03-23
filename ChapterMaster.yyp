@@ -922,6 +922,7 @@
     {"id":{"name":"__view_set_internal","path":"scripts/__view_set_internal/__view_set_internal.yy",},},
     {"id":{"name":"__init_view","path":"scripts/__init_view/__init_view.yy",},},
     {"id":{"name":"__init_global","path":"scripts/__init_global/__init_global.yy",},},
+    {"id":{"name":"scr_string_plural","path":"scripts/scr_string_plural/scr_string_plural.yy",},},
     {"id":{"name":"__global_object_depths","path":"scripts/__global_object_depths/__global_object_depths.yy",},},
     {"id":{"name":"sReplaceColor","path":"shaders/sReplaceColor/sReplaceColor.yy",},},
     {"id":{"name":"fnt_cul_14","path":"fonts/fnt_cul_14/fnt_cul_14.yy",},},
