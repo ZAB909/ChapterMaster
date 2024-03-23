@@ -766,7 +766,7 @@ function scr_initialize_custom() {
 	    armour[i,8]="Power Armour";
 	    mobi[i,8]="";
 	    gear[i,8]="";
-	    role[i,9]="Devastator";
+	    role[i,9]="Devastator Marine";
 	    wep1[i,9]="Heavy Ranged";
 	    wep2[i,9]="Combat Knife";
 	    armour[i,9]="Power Armour";
