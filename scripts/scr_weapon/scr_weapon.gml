@@ -1328,15 +1328,15 @@ global.weapons={
     "Force Staff": {
         "attack": {
             "standard": 180,
-            "master_crafted": 240,
-            "artifact": 290
+            "master_crafted": 200,
+            "artifact": 240
         },
-		/*"psy_melee_mod": {
-            "standard": 1.5,
-            "master_crafted": 1.8,
-            "artifact": 2
-        },*/
-        "abbreviation": "FrcStf", 
+		"melee_mod": {
+            "standard": 1,
+            "master_crafted": 1,
+            "artifact": 1
+        },
+        "abbreviation": "FrcStff", 
         "description": "An advanced, psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.",
         "melee_hands": 1,
         "ranged_hands": 1,
@@ -1350,15 +1350,14 @@ global.weapons={
          "abbreviation": "FrcSwrd",
         "attack": {
             "standard": 150,
-            "master_crafted": 250,
-            "artifact": 300
+            "master_crafted": 150,
+            "artifact": 200
         },
-        /*"psy_melee_mod": {
-            "standard": 1.75,
-            "master_crafted": 2,
-            "artifact": 2.5
-        },*/
-
+        "melee_mod": {
+            "standard": 1,
+            "master_crafted": 1,
+            "artifact": 1
+        },
         "description": "A type of psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.",
         "melee_hands": 1,
         "ranged_hands": 0,
@@ -1366,21 +1365,21 @@ global.weapons={
         "range": 1,
         "spli": 1,
         "arp": 1,
-        "special_description": "Parry, Spell damage +50%",
+        "special_description": "Parry, Spell damage +25%",
         "tags":["psy", "sword"],
 	},
 	"Force Axe": {
          "abbreviation": "FrcAxe",
         "attack": {
-            "standard": 200,
-            "master_crafted": 250,
-            "artifact": 300
+            "standard": 180,
+            "master_crafted": 180,
+            "artifact": 225
         },
-        /*"psy_melee_mod": {
-            "standard": 1.75,
-            "master_crafted": 2,
-            "artifact": 2.5
-        },*/
+        "melee_mod": {
+            "standard": 1,
+            "master_crafted": 1,
+            "artifact": 1
+        },
         "description": "A type of psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.",
         "melee_hands": 1,
         "ranged_hands": 0,
@@ -1388,7 +1387,7 @@ global.weapons={
         "range": 1,
         "spli": 1,
         "arp": 1,
-		"special_description":  "Able to be dual-wielded, Spell damage +50%",
+		"special_description":  "Able to be dual-wielded, Spell damage +25%",
         "tags":["psy", "axe", "dual"],
 	},
      "Twin Linked Lascannon Turret": {
