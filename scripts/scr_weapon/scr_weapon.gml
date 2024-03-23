@@ -1433,6 +1433,24 @@ global.weapons={
         "abbreviation": "VlkSkr", 
         "description": "",
     },
+	
+	if obj_ini.role==[17] {
+		switch ""{
+			case "Force Sword" or "Force Axe":
+		"melee mod"= 
+			"standard"+.5
+			"master_crafted"+.5
+			"artifact"+1
+		break;
+			case "Force Staff":
+		"melee mod"= 
+			"standard"+.5
+			"master_crafted"+.8
+			"artifact"+1
+		break;
+		}
+			
+			
 }
 
 global.gear = {
@@ -1948,7 +1966,6 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
     //This could be done with 2d arrays [[],[]]
     var names = ["hp_mod", "description","damage_resistance_mod", "ranged_mod", "melee_mod","armour_value" ,"attack","melee_hands","ranged_hands","ammo","range","spli","arp","special_description","abbreviation","tags","name","second_profiles","req_exp"];
     var defaults = [0,"",0,0,0,0,0,0,0,0,0,0,0,"","",[],"",[],0];
-	var unit=obj_ini.TTRPG[co][i];
     type = core_type;
     for (var i=0;i<array_length(names);i++){
         if (struct_exists(item_data,names[i])){
@@ -2003,8 +2020,6 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                 stat_order = ["description", "attack", "ranged_mod", "melee_mod", "ammo", "range", "armour_value", "hp_mod", "damage_resistance_mod", "melee_hands", "ranged_hands", "arp", "spli", "special_description", "req_exp", "tags"];
                 break;
             }
-		 if (unit.has_trait(warp_touched)){
-			case "Force Sword":
 			
         for (var i = 0; i < array_length(stat_order); i++) {
             var stat = stat_order[i];
