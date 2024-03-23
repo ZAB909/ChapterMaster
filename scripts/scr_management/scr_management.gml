@@ -360,7 +360,7 @@ function scr_management(argument0) {
 			nam[4] = role_names[Role.TERMINATOR];
 			nam[5] = "Codiciery";
 			nam[6] = "Lexicanum";
-			nam[7] = "Standard Bearer";
+			nam[7] = "Company Ancient";
 			nam[8] = (role_names[Role.COMPANY_CHAMPION] == "Company Champion") ? "Champion" : role_names[Role.COMPANY_CHAMPION];
 			nam[9] = role_names[Role.TERMINATOR];
 			nam[10] = role_names[Role.TECHMARINE];
