@@ -1948,6 +1948,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
     //This could be done with 2d arrays [[],[]]
     var names = ["hp_mod", "description","damage_resistance_mod", "ranged_mod", "melee_mod","armour_value" ,"attack","melee_hands","ranged_hands","ammo","range","spli","arp","special_description","abbreviation","tags","name","second_profiles","req_exp"];
     var defaults = [0,"",0,0,0,0,0,0,0,0,0,0,0,"","",[],"",[],0];
+	var unit=obj_ini.TTRPG[co][i];
     type = core_type;
     for (var i=0;i<array_length(names);i++){
         if (struct_exists(item_data,names[i])){
@@ -1990,18 +1991,21 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
         }
         switch (item_type) {
             case "armour":
-                stat_order = ["description", "armour_value", "damage_resistance_mod", "hp_mod", "attack", "ranged_mod", "melee_mod",/*"psy_melee_mod",*/ "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "special_description", "req_exp", "tags"];
+                stat_order = ["description", "armour_value", "damage_resistance_mod", "hp_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "special_description", "req_exp", "tags"];
                 break;
             case "mobility":
-                stat_order = ["description", "special_description", "armour_value", "hp_mod", "damage_resistance_mod", "attack", "ranged_mod", "melee_mod",/*"psy_melee_mod",*/ "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "req_exp", "tags"];
+                stat_order = ["description", "special_description", "armour_value", "hp_mod", "damage_resistance_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "req_exp", "tags"];
                 break;
             case "gear":
-                stat_order = ["description", "special_description", "armour_value", "hp_mod", "damage_resistance_mod", "attack", "ranged_mod", "melee_mod",/*"psy_melee_mod",*/ "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "req_exp", "tags"];
+                stat_order = ["description", "special_description", "armour_value", "hp_mod", "damage_resistance_mod", "attack", "ranged_mod", "melee_mod", "ammo", "range", "melee_hands", "ranged_hands", "arp", "spli", "req_exp", "tags"];
                 break;
             case "weapon":
-                stat_order = ["description", "attack", "ranged_mod", "melee_mod",/*"psy_melee_mod",*/ "ammo", "range", "armour_value", "hp_mod", "damage_resistance_mod", "melee_hands", "ranged_hands", "arp", "spli", "special_description", "req_exp", "tags"];
+                stat_order = ["description", "attack", "ranged_mod", "melee_mod", "ammo", "range", "armour_value", "hp_mod", "damage_resistance_mod", "melee_hands", "ranged_hands", "arp", "spli", "special_description", "req_exp", "tags"];
                 break;
             }
+		 if (unit.has_trait(warp_touched)){
+			case "Force Sword":
+			
         for (var i = 0; i < array_length(stat_order); i++) {
             var stat = stat_order[i];
             switch (stat) {
@@ -2045,11 +2049,6 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                         item_desc_tooltip += $"Melee Mod: {format_number_with_sign(melee_mod)}%#"
                     }
                     break;
-				/*case "psy_melee_mod":
-                    if (psy_melee_mod!=0){
-                        item_desc_tooltip += $"Melee Mod: {format_number_with_sign(psy_melee_mod)}%#"
-                    }
-                    break;*/
                 case "ammo":
                     if (ammo!=0){
                         item_desc_tooltip += $"Ammo: {ammo}#"
