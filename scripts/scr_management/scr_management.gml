@@ -2,12 +2,13 @@ function scr_management(argument0) {
 
 	// argument0        1: overview         10+: that chapter -10
 	// Creates the company blocks in the main management screen and assigns text to them
-	var role_names  = obj_ini.role[100];
 
 	// Variable creation
 	var num=0, nam="", company=50, q=0;	
 	var romanNumerals=scr_roman_numerals();
 	var chapter_name = global.chapter_name;
+	var role_names  = obj_ini.role[100];
+	var unit;
 
 	if (argument0=1){
 	    with(obj_managment_panel){instance_destroy();}
@@ -99,11 +100,12 @@ function scr_management(argument0) {
 	    nam[2]=role_names[Role.HONOR_GUARD];
 
 	    for (var i = 1; i <= 200; i++) {
-			if (obj_ini.role[0, i] == "Chapter Master") {
+			unit = fetch_unit([0,i]);
+			if (unit.role() == "Chapter Master") {
 				num[1] += 1;
-				if (nam[1] == "") then nam[1] = obj_ini.name[0, i];
+				if (nam[1] == "") then nam[1] = unit.name();
 			}
-			if (obj_ini.role[0, i] == role_names[Role.HONOR_GUARD]) then num[2] += 1;
+			if (unit.role() == role_names[Role.HONOR_GUARD]) then num[2] += 1;
 		}
 		
 
@@ -150,15 +152,16 @@ function scr_management(argument0) {
 		nam[3]=string(role_names[Role.APOTHECARY])+" Aspirant";// nam[4]="Sister Hospitaler";
 		
 	    for (var i = 1; i <= 200; i++) {
-			if (obj_ini.role[0, i] == "Master of the Apothecarion") {
+			unit = fetch_unit([0,i]);
+			if (unit.role() == "Master of the Apothecarion") {
 				num[1] += 1;
-				if (nam[1] == "") then nam[1] = obj_ini.name[0, i];
+				if (nam[1] == "") then nam[1] = unit.name();
 			}
     
-			if (obj_ini.role[0, i] == role_names[Role.APOTHECARY]) then num[2] += 1;
+			if (unit.role() == role_names[Role.APOTHECARY]) then num[2] += 1;
     
-			if (obj_ini.role[0, i] == string(role_names[Role.APOTHECARY]) + " Aspirant") then num[3] += 1;
-			// if (obj_ini.role[0, i] == "Sister Hospitaler") then num[4] += 1;
+			if (unit.role() == string(role_names[Role.APOTHECARY]) + " Aspirant") then num[3] += 1;
+			// if (unit.role() == "Sister Hospitaler") then num[4] += 1;
 		}
 		
 	    with(obj_managment_panel){if (manage!=obj_controller.temp[71]) then instance_deactivate_object(id);}
@@ -194,14 +197,15 @@ function scr_management(argument0) {
 		nam[3]=string(role_names[Role.CHAPLAIN])+" Aspirant";
 		
 	    for (var i = 1; i <= 200; i++) {
-			if (obj_ini.role[0, i] == "Master of Sanctity") {
+			unit = fetch_unit([0,i]);
+			if (unit.role() == "Master of Sanctity") {
 				num[1] += 1;
-				if (nam[1] == "") then nam[1] = obj_ini.name[0, i];
+				if (nam[1] == "") then nam[1] = unit.name();
 			}
     
-			if (obj_ini.role[0, i] == role_names[Role.CHAPLAIN]) then num[2] += 1;
+			if (unit.role() == role_names[Role.CHAPLAIN]) then num[2] += 1;
     
-			if (obj_ini.role[0, i] == string(role_names[Role.CHAPLAIN]) + " Aspirant") then num[3] += 1;
+			if (unit.role() == string(role_names[Role.CHAPLAIN]) + " Aspirant") then num[3] += 1;
 		}
 		
 	    with(obj_managment_panel){if (manage!=obj_controller.temp[71]) then instance_deactivate_object(id);}
@@ -247,16 +251,17 @@ function scr_management(argument0) {
 		nam[4]="Techpriest";
 		
 	    for (var i = 1; i <= 200; i++) {
-			if (obj_ini.role[0, i] == "Forge Master") {
+			unit = fetch_unit([0,i]);
+			if (unit.role() == "Forge Master") {
 				num[1] += 1;
-				if (nam[1] == "") then nam[1] = obj_ini.name[0, i];
+				if (nam[1] == "") then nam[1] = unit.name();
 			}
     
-			if (obj_ini.role[0, i] == role_names[Role.TECHMARINE]) then num[2] += 1;
+			if (unit.role() == role_names[Role.TECHMARINE]) then num[2] += 1;
     
-			if (obj_ini.role[0, i] == string(role_names[Role.TECHMARINE]) + " Aspirant") then num[3] += 1;
+			if (unit.role() == string(role_names[Role.TECHMARINE]) + " Aspirant") then num[3] += 1;
     
-			if (obj_ini.role[0, i] == "Techpriest") then num[4] += 1;
+			if (unit.role() == "Techpriest") then num[4] += 1;
 		}
 		
 	    with(obj_managment_panel){if (manage!=obj_controller.temp[71]) then instance_deactivate_object(id);}
@@ -301,18 +306,19 @@ function scr_management(argument0) {
 		nam[5]=string(role_names[Role.LIBRARIAN])+" Aspirant";
 		
 	    for (var i = 1; i <= 200; i++) {
-			if (obj_ini.role[0, i] == "Chief " + string(role_names[Role.LIBRARIAN])) {
+			unit = fetch_unit([0,i]);
+			if (unit.role() == "Chief " + string(role_names[Role.LIBRARIAN])) {
 				num[1] += 1;
-				if (nam[1] == "") then nam[1] = obj_ini.name[0, i];
+				if (nam[1] == "") then nam[1] = unit.name();
 			}
     
-			if (obj_ini.role[0, i] == role_names[Role.LIBRARIAN]) then num[2] += 1;
+			if (unit.role() == role_names[Role.LIBRARIAN]) then num[2] += 1;
     
-			if (obj_ini.role[0, i] == "Codiciery") then num[3] += 1;
+			if (unit.role() == "Codiciery") then num[3] += 1;
     
-			if (obj_ini.role[0, i] == "Lexicanum") then num[4] += 1;
+			if (unit.role() == "Lexicanum") then num[4] += 1;
     
-			if (obj_ini.role[0, i] == string(role_names[Role.APOTHECARY]) + " Aspirant") then num[5] += 1;
+			if (unit.role() == string(role_names[Role.APOTHECARY]) + " Aspirant") then num[5] += 1;
 		}
 		
 	    with(obj_managment_panel){if (manage!=obj_controller.temp[71]) then instance_deactivate_object(id);}
@@ -378,7 +384,6 @@ function scr_management(argument0) {
 			nam[22] = "Rhino";
 			nam[23] = "Land Speeder";
 			nam[24] = "Whirlwind";
-        	var unit;
 	        for (var i=1;i<500;i++) {
 	        	if (obj_ini.name[company][i] == "") then continue;
 	        	unit = fetch_unit([company,i]);
