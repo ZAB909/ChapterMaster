@@ -613,7 +613,7 @@ function scr_ui_manage() {
 		var spec_tips = [string("{0} Potential",obj_ini.role[100][16]),		
 						string("{0} Potential",obj_ini.role[100][15]),
 						string("{0} Potential",obj_ini.role[100][14]),
-						"Librarium Potential"];
+						string("{0} Potential",obj_ini.role[100][17])];
 		var assignment ="none"
 	    
 	    if (!obj_controller.view_squad){

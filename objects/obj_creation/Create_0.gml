@@ -458,7 +458,7 @@ color_to_pauldron21="Red";
 	mobi_21[i,8]="";
 
     race_21[i,9]=1;
-    role_21[i,9]="Devastator";
+    role_21[i,9]="Devastator Marine";
     wep1_21[i,9]="Heavy Ranged";
     wep2_21[i,9]="Combat Knife";
     armour_21[i,9]="Power Armour";
@@ -677,7 +677,7 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
     armour[i,8]="Power Armour";
 
     race[i,9]=1;
-    role[i,9]="Devastator";
+    role[i,9]="Devastator Marine";
     wep1[i,9]="Heavy Ranged";
     wep2[i,9]="Combat Knife";
     armour[i,9]="Power Armour";

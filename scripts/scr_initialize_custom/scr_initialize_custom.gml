@@ -703,6 +703,26 @@ function scr_initialize_custom() {
 	    gear[102,i]="";
 	    mobi[102,i]="";//hirelings??
 	}
+
+	enum Role {
+		HONOR_GUARD = 2,
+		VETERAN = 3,
+		TERMINATOR = 4,
+		CAPTAIN = 5,
+		DREADNOUGHT = 6,
+		COMPANY_CHAMPION = 7,
+		TACTICAL = 8,
+		DEVASTATOR = 9,
+		ASSAULT = 10,
+		SCOUT = 12,
+		CHAPLAIN = 14,
+		APOTHECARY = 15,
+		TECHMARINE = 16,
+		LIBRARIAN = 17,
+		SERGEANT = 18,
+		VETERAN_SERGEANT = 19
+	}
+
 	for(i=100;i<103;i++){ // gear 
 	    role[i,2]="Honor Guard";
 	    wep1[i,2]="Power Sword";
@@ -746,7 +766,7 @@ function scr_initialize_custom() {
 	    armour[i,8]="Power Armour";
 	    mobi[i,8]="";
 	    gear[i,8]="";
-	    role[i,9]="Devastator";
+	    role[i,9]="Devastator Marine";
 	    wep1[i,9]="Heavy Ranged";
 	    wep2[i,9]="Combat Knife";
 	    armour[i,9]="Power Armour";

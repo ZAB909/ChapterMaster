@@ -29,7 +29,7 @@ function scr_chapter(argument0) {
 	    advantage2=0;adv2="";advantage3=0;adv3="";disadvantage1=5;dis1="Never Forgive";disadvantage2=0;dis2="";disadvantage3=0;dis3="";
 	    battle_cry="Repent!  For tomorow you may die";monastery_name="The Rock";master_name="Azreal";
 	    main_color="Dark Green";secondary_color="None";lens_color="Red";weapon_color="Black";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
-	    veteran_name="Veteran";devastator_name="Devastator";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
+	    veteran_name="Veteran";devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
 	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=3;master_ranged=999;forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";
 	    home_type="Dead";recruiting_type="Death";recruiting_name="Kimmeria";home_name="The Rock";lord_admiral_name=global.name_generator.generate_space_marine_name();
@@ -49,7 +49,7 @@ function scr_chapter(argument0) {
 	    advantage2=0;adv2="";advantage3=0;adv3="";disadvantage1=5;dis1="Never Forgive";disadvantage2=0;dis2="";disadvantage3=0;dis3="";
 	    battle_cry="Repent!  For tomorow you may die";monastery_name="Bananajam";master_name="Azreal";
 	    main_color="Dark Green";secondary_color="None";lens_color="Red";weapon_color="Black";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
-	    veteran_name="Veteran";devastator_name="Devastator";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
+	    veteran_name="Veteran";devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
 	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=3;master_ranged=999;forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";
 	    home_type="Dead";recruiting_type="Death";recruiting_name="Kimmeria";home_name="The Rock";lord_admiral_name=global.name_generator.generate_space_marine_name();
@@ -109,7 +109,7 @@ function scr_chapter(argument0) {
 	    battle_cry="Primarch-Progenitor, to your glory and the glory of him on earth";master_name="Vorn Hagen";monastery_name="";
 	    main_color="Yellow";secondary_color="Yellow";
 	    lens_color="Red";weapon_color="Black";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
-	    veteran_name="Veteran";devastator_name="Devastator";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
+	    veteran_name="Veteran";devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
 	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=2;master_ranged=1;forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";   
     
@@ -131,7 +131,7 @@ function scr_chapter(argument0) {
 	    monastery_name="Phalanx";master_name="Vorn Hagen";
 	    main_color="Gold";secondary_color="Red";lens_color="Red";weapon_color="Black";
 	    initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";veteran_name="Veteran";
-	    devastator_name="Devastator";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
+	    devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
 	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";
 	    captain_name="Captain";master_melee=1;master_ranged=1;
 	    forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";
@@ -158,7 +158,7 @@ function scr_chapter(argument0) {
 	    advantage2=0;adv2="";advantage3=0;adv3="";disadvantage1=1;dis1="Black Rage";disadvantage2=0;dis2="";disadvantage3=0;dis3="";
 	    battle_cry="For the Emperor and Sanguinius! Death! DEATH";monastery_name="Fortress of Baal";master_name="Dante";
 	    main_color="Red";secondary_color="Red";lens_color="Green";weapon_color="Black";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
-	    veteran_name="Veteran";devastator_name="Devastator";assault_name="Assault Marine";apothecary_name="Sanguinary Priest";librarian_name="Librarian";
+	    veteran_name="Veteran";devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Sanguinary Priest";librarian_name="Librarian";
 	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Sanguinary Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=3;master_ranged=2;forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";
 	    home_type="Desert";recruiting_type="Desert";recruiting_name="Baal";home_name="Baal";lord_admiral_name="Bellerophon";
@@ -190,7 +190,7 @@ function scr_chapter(argument0) {
 	    advantage2=17;adv2="Slow and Purposeful";advantage3=0;adv3="";disadvantage1=10;dis1="Splintered";disadvantage2=11;dis2="Suspicious";disadvantage3=0;dis3="";
 	    battle_cry="The flesh is weak";monastery_name="Medusa";master_name="Kardan Stronos";
 	    main_color="Black";secondary_color="None";lens_color="Dark Red";weapon_color="Silver";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
-	    veteran_name="Veteran";devastator_name="Devastator";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
+	    veteran_name="Veteran";devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
 	    tech_name="Iron Father";chaplain_name="Iron Father";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=3;master_ranged=999;forbidden_unit1="Chaplain";forbidden_unit2="";forbidden_unit3="";
 	    home_type="Lava";recruiting_type="Lava";recruiting_name="Medusa";home_name="Medusa";lord_admiral_name=global.name_generator.generate_space_marine_name();
@@ -223,7 +223,7 @@ function scr_chapter(argument0) {
 	    advantage2=0;adv2="";advantage3=0;adv3="";disadvantage1=0;dis1="";disadvantage2=0;dis2="";disadvantage3=0;dis3="";
 	    battle_cry="Courage and honor";monastery_name="Fortress of Hera";master_name="Marneus Calgar";
 	    main_color="Blue";secondary_color="Gold";lens_color="Red";weapon_color="Black";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
-	    veteran_name="Veteran";devastator_name="Devastator";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
+	    veteran_name="Veteran";devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
 	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=1;master_ranged=1;forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";
 	    home_type="Temperate";recruiting_type="Death";recruiting_name="Parmenio";home_name="Macragge";lord_admiral_name="Lazlo Tiberius";
@@ -251,7 +251,7 @@ function scr_chapter(argument0) {
 	    advantage2=17;adv2="Slow and Purposeful";advantage3=0;adv3="";disadvantage1=0;dis1="";disadvantage2=0;dis2="";disadvantage3=0;dis3="";
 	    battle_cry="Into the fires of battle, unto the anvil of war!";monastery_name="Prometheus";master_name="Tu'Shan";
 	    main_color="Green";secondary_color="Black";lens_color="Yellow";weapon_color="Black";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
-	    veteran_name="Veteran";devastator_name="Devastator";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
+	    veteran_name="Veteran";devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
 	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Pyre Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=2;master_ranged=3;forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";
 	    home_type="Lava";recruiting_type="Lava";recruiting_name="Nocturne";home_name="Nocturne";lord_admiral_name=global.name_generator.generate_space_marine_name();
@@ -275,7 +275,7 @@ function scr_chapter(argument0) {
 	    battle_cry="Into the fires of battle, unto the anvil of war";master_name="Tu'Shan";monastery_name="";
 	    main_color="Green";secondary_color="Black";
 	    lens_color="Yellow";weapon_color="Black";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
-	    veteran_name="Veteran";devastator_name="Devastator";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
+	    veteran_name="Veteran";devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
 	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=2;master_ranged=3;forbidden_unit1="Land Speeder";forbidden_unit2="Bike";forbidden_unit3="";
     
@@ -290,7 +290,7 @@ function scr_chapter(argument0) {
 	    battle_cry="For those we cherish, we die in Glory";master_name="Malakim Phoros";monastery_name="";
 	    main_color="Yellow";secondary_color="None";
 	    lens_color="Dark Red";weapon_color="Black";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
-	    veteran_name="Veteran";devastator_name="Devastator";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
+	    veteran_name="Veteran";devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
 	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=3;master_ranged=2;forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";
     
@@ -305,7 +305,7 @@ function scr_chapter(argument0) {
 	    advantage2=0;adv2="";advantage3=0;adv3="";disadvantage1=8;dis1="Shitty Luck";disadvantage2=9;dis2="Sieged";disadvantage3=11;dis3="Suspicious";
 	    battle_cry="For those we cherish, we die in Glory";monastery_name="Lacrima Vex";master_name="Malakim Phoros";
 	    main_color="Yellow";secondary_color="None";lens_color="Dark Red";weapon_color="Black";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
-	    veteran_name="Veteran";devastator_name="Devastator";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
+	    veteran_name="Veteran";devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
 	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=3;master_ranged=2;forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";
 	    home_type="random";recruiting_type="Temperate";recruiting_name="random";home_name="random";lord_admiral_name=global.name_generator.generate_space_marine_name();
@@ -328,9 +328,9 @@ function scr_chapter(argument0) {
 	    advantage2=0;adv2="";advantage3=0;adv3="";disadvantage1=1;dis1="Black Rage";disadvantage2=0;dis2="";disadvantage3=0;dis3="";
 	    typing_slot=0;battle_cry="ALWAYS ANGRY ALL THE TIME";main_color="Yellow";secondary_color="Red";monastery_name="";
 	    lens_color="Red";weapon_color="Red";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";veteran_name="Cock Knockers";
-	    devastator_name="Devastator";assault_name="Angrier Marine";apothecary_name="Apothecary";librarian_name="Master of Mindfuckery";
+	    devastator_name="Devastator Marine";assault_name="Angrier Marine";apothecary_name="Apothecary";librarian_name="Master of Mindfuckery";
 	    tech_name="Techmarine";chaplain_name="Holy Pugilist";role[100][2]="Honor Guard";dreadnought_name="Belligerent Engine";captain_name="Captain";
-	    master_name="Temperus Maximus";master_melee=1;master_ranged=1;forbidden_unit1="Devastator";forbidden_unit2="Apothecary";forbidden_unit3="";
+	    master_name="Temperus Maximus";master_melee=1;master_ranged=1;forbidden_unit1="Devastator Marine";forbidden_unit2="Apothecary";forbidden_unit3="";
     
 	    home_name="Angrymar";
 	}*/
