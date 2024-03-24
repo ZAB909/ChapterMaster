@@ -86,7 +86,7 @@ function scr_draw_unit_image(x_draw, y_draw){
             hood=-50;
         }else if (unit_gear="Iron Halo"){
             halo=1;
-        }else if (unit_gear="Servo Arms" || _unit_gear="Master Servo Arms"){
+        }else if (unit_gear="Servo Arms" || unit_gear="Master Servo Arms"){
             var mas;
             // mas=string_count("Master",gear());
             if (unit_gear="Servo Arms") then mas=0;
