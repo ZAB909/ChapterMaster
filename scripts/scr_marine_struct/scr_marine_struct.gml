@@ -1787,13 +1787,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				} else if (weapon_slot==2){
 					primary_weapon=_wep2;
 				}
+			};
 			if (unit.is_specialist("lib")){
 			if (_wep1.has_tag("psi") ||_wep2.has_tag("psi")){
 				melee_att = 100*(((weapon_skill/100) * (psionic/10) * (intelligence/10)) + (experience()/1000)+0.1);
 				explanation_string = $"Stat Mod: x{melee_att/100}#  Base: 0.10#  WSxPSIxINT: x{(weapon_skill/100)*(psionic/10)*(intelligence/10)}#  EXP: x{experience()/1000}#";
 				}		
 		}
-			};
 			explanation_string = $"{primary_weapon.name}: {primary_weapon.attack}#" + explanation_string
 			melee_carrying[0] =_wep1.melee_hands+_wep2.melee_hands;
 			if (melee_carrying[0]>melee_carrying[1]){
