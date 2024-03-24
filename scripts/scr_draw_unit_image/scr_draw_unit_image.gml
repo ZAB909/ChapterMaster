@@ -256,11 +256,11 @@ function scr_draw_unit_image(x_draw, y_draw){
 			
 			// Blood Angels
             else if (ui_coloring="gold"){
-                shader_set_uniform_f(obj_controller.colour_to_set1, 166/255,129/255,0/255);
-                shader_set_uniform_f(obj_controller.colour_to_set2, 166/255,129/255,0/255);
-                shader_set_uniform_f(obj_controller.colour_to_set3, 166/255,129/255,0/255);
-                shader_set_uniform_f(obj_controller.colour_to_set5, 166/255,129/255,0/255);
-                shader_set_uniform_f(obj_controller.colour_to_set6, 166/255,129/255,0/255);
+                shader_set_uniform_f(obj_controller.colour_to_set1, 237/255,150/255,0/255);
+                shader_set_uniform_f(obj_controller.colour_to_set2, 237/255,150/255,0/255);
+                shader_set_uniform_f(obj_controller.colour_to_set3, 237/255,150/255,0/255);
+                shader_set_uniform_f(obj_controller.colour_to_set5, 237/255,150/255,0/255);
+                shader_set_uniform_f(obj_controller.colour_to_set6, 237/255,150/255,0/255);
                 ttrim=0;
                 specialist_colours=0;
             }
