@@ -1327,7 +1327,7 @@ global.weapons={
     },
     "Force Staff": {
         "attack": {
-            "standard": 180,
+            "standard": 150,
             "master_crafted": 200,
             "artifact": 240
         },
@@ -1349,14 +1349,14 @@ global.weapons={
 	    "Force Sword": {
          "abbreviation": "FrcSwrd",
         "attack": {
-            "standard": 150,
+            "standard": 180,
             "master_crafted": 150,
             "artifact": 200
         },
         "melee_mod": {
-            "standard": 1,
-            "master_crafted": 1,
-            "artifact": 1
+            "standard": 1.3,
+            "master_crafted": 1.5,
+            "artifact": 2
         },
         "description": "A type of psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.",
         "melee_hands": 1,
@@ -1371,14 +1371,14 @@ global.weapons={
 	"Force Axe": {
          "abbreviation": "FrcAxe",
         "attack": {
-            "standard": 180,
+            "standard": 190,
             "master_crafted": 180,
             "artifact": 225
         },
         "melee_mod": {
-            "standard": 1,
-            "master_crafted": 1,
-            "artifact": 1
+            "standard": 1.3,
+            "master_crafted": 1.5,
+            "artifact": 2
         },
         "description": "A type of psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.",
         "melee_hands": 1,
@@ -1433,24 +1433,7 @@ global.weapons={
         "abbreviation": "VlkSkr", 
         "description": "",
     },
-	
-	if obj_ini.role==[17] {
-		switch ""{
-			case "Force Sword" or "Force Axe":
-		"melee mod"= 
-			"standard"+.5
-			"master_crafted"+.5
-			"artifact"+1
-		break;
-			case "Force Staff":
-		"melee mod"= 
-			"standard"+.5
-			"master_crafted"+.8
-			"artifact"+1
-		break;
-		}
-			
-			
+				
 }
 
 global.gear = {

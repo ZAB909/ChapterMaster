@@ -1739,7 +1739,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			var explanation_string = $"Stat Mod: x{melee_att/100}#  Base: 0.10#  WSxSTR: x{(weapon_skill/100)*(strength/20)}#  EXP: x{experience()/1000}#";
 
 			melee_carrying = melee_hands_limit();
-
 			var _wep1 = get_weapon_one_data();
 			var _wep2 = get_weapon_two_data();
 			if (!is_struct(_wep1)) then _wep1 = new equipment_struct({},"");
@@ -1788,6 +1787,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				} else if (weapon_slot==2){
 					primary_weapon=_wep2;
 				}
+			if (unit.is_specialist("lib")){
+			if (_wep1.has_tag("psi") ||_wep2.has_tag("psi")){
+				melee_att = 100*(((weapon_skill/100) * (psionic/10) * (intelligence/10)) + (experience()/1000)+0.1);
+				explanation_string = $"Stat Mod: x{melee_att/100}#  Base: 0.10#  WSxPSIxINT: x{(weapon_skill/100)*(psionic/10)*(intelligence/10)}#  EXP: x{experience()/1000}#";
+				}		
+		}
 			};
 			explanation_string = $"{primary_weapon.name}: {primary_weapon.attack}#" + explanation_string
 			melee_carrying[0] =_wep1.melee_hands+_wep2.melee_hands;

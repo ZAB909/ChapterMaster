@@ -16,6 +16,8 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	var psy_discipline="";
 	var power_name="";
 	var target_type="";
+	var weapon_one = unit.get_weapon_one_data()
+	var weapon_two = unit.get_weapon_two_data()
 	enemy5=enemy_target;
 	onc=power_count;
 	using=power_set;
@@ -412,7 +414,7 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	//     flavour_text2="- a hole between real and warp space is torn open with deadly effect.  ";
 	// }
 
-if (unit.weapon_one()=="Force Sword" or "Force Axe"||unit.weapon_two()=="Force Sword" or "Force Axe"){
+if (weapon_one.has_tag("psi") || weapon_two.has_tag("psi")){
 	if (p_att>0) then p_att=round(p_att)*1.25;
 	if (p_rang>0) then p_rang=round(p_rang)*1.25;
 	}
@@ -433,12 +435,6 @@ if (unit.weapon_one()=="Force Sword" or "Force Axe"||unit.weapon_two()=="Force S
 	        if (p_rang>0) then p_rang=round(p_rang)*1.25;
 	    }
 	}
-	/*if weapons="Force Sword" or "Force Axe" and (p_type=="attack"){
-		if (p_att>0) then p_att=round(p_att)*1.5;
-	}
-	if weapons="Force Staff" and (p_type=="attack"){
-		if (p_att>0) then p_att=round(p_att)*2;
-	}*/
 
 
 	flavour_text1=$"{unit.name_role()} casts '{power_name}'"
