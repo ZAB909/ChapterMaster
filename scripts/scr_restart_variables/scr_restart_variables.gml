@@ -205,7 +205,7 @@ function scr_restart_variables(saved_game) {
 	        obj_restart_vars.r_race[i,17]=1;
 	        obj_restart_vars.r_role[i,17]="Librarian";
 			obj_restart_vars.r_wep1[i,17]="Force Staff";
-			obj_restart_vars.r_wep2[i,17]="Storm Bolter";
+			obj_restart_vars.r_wep2[i,17]="Bolt Pistol";
 	        obj_restart_vars.r_armour[i,17]="Power Armour";
 			obj_restart_vars.r_gear[i,17]="Psychic Hood";
 			obj_restart_vars.r_mobi[i,17]="";
@@ -431,7 +431,7 @@ function scr_restart_variables(saved_game) {
 	        obj_controller.r_race[i,17]=1;
 	        obj_controller.r_role[i,17]="Librarian";
 			obj_controller.r_wep1[i,17]="Force Staff";
-			obj_controller.r_wep2[i,17]="Storm Bolter";
+			obj_controller.r_wep2[i,17]="Bolt Pistol";
 	        obj_controller.r_armour[i,17]="Power Armour";
 			obj_controller.r_gear[i,17]="Psychic Hood";
 			obj_controller.r_mobi[i,17]="";
@@ -674,7 +674,7 @@ function scr_restart_variables(saved_game) {
 			race[i,17]=1;
 			role[i,17]="Librarian";
 			wep1[i,17]="Force Staff";
-			wep2[i,17]="Storm Bolter";
+			wep2[i,17]="Bolt Pistol";
 			armour[i,17]="Power Armour";
 			gear[i,17]="Psychic Hood";
 			
