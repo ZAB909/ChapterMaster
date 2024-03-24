@@ -488,6 +488,9 @@ function scr_ui_manage() {
                 tooltip_text += string_hash_to_newline($"{name}: {ac}#");
             }
           }
+			if (obj_controller.stc_bonus[1] == 5 || obj_controller.stc_bonus[2] == 3){
+                tooltip_text += string_hash_to_newline($"STC Bonus: x1.05#");
+			}
         	x1 = xx+1015;
         	y1 = yy+400;
         	x2 = x1+string_width(var_text);
