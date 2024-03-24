@@ -1,4 +1,23 @@
 
+enum Role {
+	HONOR_GUARD = 2,
+	VETERAN = 3,
+	TERMINATOR = 4,
+	CAPTAIN = 5,
+	DREADNOUGHT = 6,
+	COMPANY_CHAMPION = 7,
+	TACTICAL = 8,
+	DEVASTATOR = 9,
+	ASSAULT = 10,
+	SCOUT = 12,
+	CHAPLAIN = 14,
+	APOTHECARY = 15,
+	TECHMARINE = 16,
+	LIBRARIAN = 17,
+	SERGEANT = 18,
+	VETERAN_SERGEANT = 19
+}
+
 function scr_initialize_custom() {
 
 	progenitor=obj_creation.founding;
@@ -702,25 +721,6 @@ function scr_initialize_custom() {
 	    armour[102,i]="";
 	    gear[102,i]="";
 	    mobi[102,i]="";//hirelings??
-	}
-
-	enum Role {
-		HONOR_GUARD = 2,
-		VETERAN = 3,
-		TERMINATOR = 4,
-		CAPTAIN = 5,
-		DREADNOUGHT = 6,
-		COMPANY_CHAMPION = 7,
-		TACTICAL = 8,
-		DEVASTATOR = 9,
-		ASSAULT = 10,
-		SCOUT = 12,
-		CHAPLAIN = 14,
-		APOTHECARY = 15,
-		TECHMARINE = 16,
-		LIBRARIAN = 17,
-		SERGEANT = 18,
-		VETERAN_SERGEANT = 19
 	}
 
 	for(i=100;i<103;i++){ // gear 
