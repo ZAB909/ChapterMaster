@@ -58,7 +58,7 @@ add_data_to_stack = function(stack_index, weapon, unit_damage=false){
     apa[stack_index]=weapon.arp;
     range[stack_index]=weapon.range;
     wep_num[stack_index]++;
-    splash[stack_index]=weapon.spli;;
+    splash[stack_index]=weapon.spli;
     wep[stack_index]=weapon.name;
     if (obj_ncombat.started=0) then ammo[stack_index]=weapon.ammo;
 

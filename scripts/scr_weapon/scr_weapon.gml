@@ -2129,9 +2129,9 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                                 array_push(special_properties_array, second_profiles[h]);
                             }
                         }
-                        item_desc_tooltip += $"#Properties:#{special_properties_string}#"
+                        //item_desc_tooltip += $"#Properties:#{special_properties_string}#"
                     }
-                    if (array_length(special_properties_array)>0){
+                    /*if (array_length(special_properties_array)>0){
                         var special_properties_string = ""
                         for (var j = 0; j < array_length(special_properties_array); j++) {
                             special_properties_string += special_properties_array[j]
@@ -2140,7 +2140,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                             }
                         }
                         item_desc_tooltip += $"#Properties:#{special_properties_string}#"
-                    }
+                    }*/
                     break;
                 case "special_description":
                     if (special_description!=""){
