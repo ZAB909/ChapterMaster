@@ -50,11 +50,10 @@ slate_panel.inside_method = function(){
             if (italic[1]=1) then draw_set_font(fnt_40k_14i);
             draw_set_color(#50a076);
             // Draw the glow by repeatedly drawing the text with a slight offset and reduced alpha
-            var alpha = 0.05; // Adjust the alpha for the desired intensity of the glow
             for (var i = -3; i <= 3; i++) {
                 for (var j = -3; j <= 3; j++) {
                     if (i != 0 || j != 0) { // Avoid drawing the main text here
-                        draw_set_alpha(alpha);
+                        draw_set_alpha(0.05); // Adjust the alpha for the desired intensity of the glow
                         draw_text(x2+(wid/2)+i,y2+102+j,string_hash_to_newline(line[1]));
                     }
                 }
