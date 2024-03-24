@@ -48,7 +48,7 @@ function scr_ui_formation_bars() {
                 init_combat_bars(bar, ii, ui_formations_data, 6, 3, "Tactical");
             }
             else if (ii == 8) and(bat_deva_for[_formatting] == bar) {
-                init_combat_bars(bar, ii, ui_formations_data, 3, 2, "Devastator Marine");
+                init_combat_bars(bar, ii, ui_formations_data, 3, 2, "Devastator");
             }
             else if (ii == 9) and(bat_assa_for[_formatting] == bar) {
                 init_combat_bars(bar, ii, ui_formations_data, 3, 5, "Assault");
