@@ -51,7 +51,8 @@ function scr_clean(argument0) {
         
 	        if (stahp=0){
 	            var minus;
-	            minus=hostile_damage;shotted-=1;
+	            minus=hostile_damage;
+	            shotted-=1;
 	            minus-=veh_ac[you];if (minus<0) then minus=0.25;
 	            if (enemy=13) and (minus<1) then minus=1;
 	            veh_hp[you]-=minus;
