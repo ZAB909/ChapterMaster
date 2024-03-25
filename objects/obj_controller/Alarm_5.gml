@@ -180,229 +180,153 @@ with(obj_star){
 
 // ** Training **
 // * Apothecary *
-
+recruit_count=0;
 var training_points_values = [ 0, 0.8, 0.9, 1, 1.5, 2, 4 ];
 apothecary_points += training_points_values[training_apothecary]
 
 novice_type = string("{0} Aspirant",obj_ini.role[100][15])
-if (training_apothecary>0) then recruit_count=scr_role_count(novice_type,"");
-if (apothecary_points>=4) and (apothecary_aspirant!=0) and (recruit_count=0){
-    apothecary_points=0;
-    apothecary_aspirant=0;
-}
+if (training_apothecary>0){
+    recruit_count=scr_role_count(novice_type,"");
 
-if (apothecary_points>=48){
-    if (recruit_count>0){
-        random_marine=scr_random_marine(novice_type,0);
-        // show_message(marine_position);
-        // show_message(obj_ini.role[0,marine_position]);
-        if (random_marine != "none"){
-            marine_position=random_marine[1];
-            apothecary_points-=48;
-            unit = obj_ini.TTRPG[0][marine_position];
-            scr_alert("green","recruitment",unit.name_role()+" has finished training.",0,0);
-            unit.update_role(obj_ini.role[100][15]);
-            unit.add_exp(10);
-            apothecary_aspirant=0;            
-
-            eq1=1;
-            eq2=1;
-            eq3=1;
-            t=0;
-            r=0;
-
-            if (unit.weapon_one()!=obj_ini.wep1[100,15]){
-                for (t=1; t<=50; t++){
-                    if (obj_ini.equipment[t]=obj_ini.wep1[100,15]) and (obj_ini.equipment_number[t]>=1) and (r=0) then r=t;
-                }
-                if (r!=0){
-                    unit.update_weapon_one(obj_ini.wep1[100][15]);
-                }
-                if (r==0) then eq1=0;
-            }
-            if (obj_ini.wep2[0,marine_position]!=obj_ini.wep2[100,15]){
-                r=0;
-                for (t=1; t<=50; t++){
-                    if (obj_ini.equipment[t]=obj_ini.wep2[100,15]) and (obj_ini.equipment_number[t]>=1) and (r=0) then r=t;
-                }
-                if (r!=0){
-                     unit.update_weapon_two(obj_ini.wep2[100][15]);
-                }
-                if (r==0) then eq2=0;
-            }
-            if (obj_ini.gear[0,marine_position]!=obj_ini.gear[100,15]){
-                r=0;
-                for (t=1; t<=50; t++){
-                    if (obj_ini.equipment[t]=obj_ini.gear[100,15]) and (obj_ini.equipment_number[t]>=1) and (r=0) then r=t;
-                }
-                if (r!=0){
-                    unit.update_gear(obj_ini.gear[100][15]);
-                }
-                if (r==0) then eq3=0;
-            }
-            if (eq1+eq2+eq3!=3){
-                warn="";
-                w5=0;
-                if (eq1==0) then warn+=string(obj_ini.wep1[100][15])+", ";
-                if (eq2==0) then warn+=string(obj_ini.wep2[100][15])+", ";
-                if (eq3==0) then warn+=string(obj_ini.gear[100][15])+", ";
-                
-                w5=string_length(warn)-1;
-                warn=string_delete(warn,w5,2);
-                warn+=".";
-                scr_alert("red","recruitment","Not enough equipment: "+string(warn),0,0);
-            }
-            with(obj_ini){scr_company_order(0);}
-        }
-
-    }
-}
-recruit_count=0;
-if (apothecary_points>=4) and (apothecary_aspirant==0){
-    random_marine=scr_random_marine([obj_ini.role[100][8],obj_ini.role[100][18],obj_ini.role[100][10],obj_ini.role[100][9]],60,{"stat":[["technology", 30, "more"],["intelligence", 45, "more"]]});
-
-    if (random_marine != "none"){
-        marine_position=random_marine[1];
-        marine_company=random_marine[0];
-        g1=0;
-        g2=0;
-        // This gets the last open slot for company 0
-        for(var h=1; h<=300; h++){
-            if (g1==0){
-                if (obj_ini.role[0,h]="") then g1=h;
-            }
-        }
-        if (g1!=0){
-            apothecary_aspirant=1;
-            command+=1;
-            marines-=1;
-            scr_move_unit_info(marine_company,0, marine_position, g1)
-            obj_ini.role[0][g1]=novice_type;
-            if (obj_ini.gear[0][g1]!=""){
-                scr_add_item(obj_ini.gear[0][g1],1);
-                obj_ini.gear[0][g1]="";
-            }
-            if (obj_ini.mobi[0][g1]!=""){scr_add_item(obj_ini.mobi[0][g1],1);obj_ini.mobi[0][g1]="";}
-            with(obj_ini){
-                scr_company_order(marine_company);
-                scr_company_order(0);
-            }
-        }                  
-    } else {
-        scr_alert("red","recruitment","No marines available for apothecary traning",0,0);
-    }
-}
-// * Chaplain training *
-// TODO add functionality for Space Wolves and Iron Hands
-if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands"){
-	chaplain_points += training_points_values[training_chaplain];
-
-    novice_type = string("{0} Aspirant",obj_ini.role[100][14]);
-    if (training_chaplain>0) then recruit_count=scr_role_count(novice_type,"");
-    if (chaplain_points>=4) and (chaplain_aspirant!=0) and (recruit_count==0){
-        chaplain_points=0;
-        chaplain_aspirant=0;
-    }
-    if (chaplain_points>=48){
+    if (apothecary_points>=48){
         if (recruit_count>0){
             random_marine=scr_random_marine(novice_type,0);
+            // show_message(marine_position);
+            // show_message(obj_ini.role[0,marine_position]);
             if (random_marine != "none"){
-                marine_position = random_marine[1];
-                unit = obj_ini.TTRPG[0,marine_position];
+                marine_position=random_marine[1];
+                marine_company=random_marine[0];
+                apothecary_points-=48;
+                unit = fetch_unit(random_marine);
                 scr_alert("green","recruitment",unit.name_role()+" has finished training.",0,0);
-                chaplain_points-=48;
-                unit.update_role(obj_ini.role[100][14]);
+                unit.update_role(obj_ini.role[100][15]);
                 unit.add_exp(10);
-                chaplain_aspirant=0;
-                eq1=1;
-                eq2=1;
-                eq3=1;
-                t=0;
-                r=0;
-                if (obj_ini.wep1[0,marine_position]!=obj_ini.wep1[100,14]){
-                    for (t=1; t<=50; t++){
-                        if (obj_ini.equipment[t]==obj_ini.wep1[100,14]) and (obj_ini.equipment_number[t]>=1) and (r==0) then r=t;
-                    }
-                    if (r!=0){
-                        if (obj_ini.wep1[0,marine_position]!="") then scr_add_item(obj_ini.wep1[0,marine_position],1);
-                        scr_add_item(obj_ini.wep1[100,14],-1);
-                        obj_ini.wep1[0,marine_position]=obj_ini.wep1[100,14];
-                    }
-                    if (r==0) then eq1=0;
+
+                warn="";
+                if (unit.update_weapon_one(obj_ini.wep1[100,15]) == "no_items"){
+                    warn += $", {obj_ini.wep1[100,15]}"
                 }
-                if (obj_ini.wep2[0,marine_position]!=obj_ini.wep2[100,14]){
-                    r=0;
-                    for (t=1; t<=50; t++){
-                        if (obj_ini.equipment[t]=obj_ini.wep2[100,14]) and (obj_ini.equipment_number[t]>=1) and (r==0) then r=t;
-                    }
-                    if (r!=0){
-                        if (obj_ini.wep2[0,marine_position]!="") then scr_add_item(obj_ini.wep2[0,marine_position],1);
-                        scr_add_item(obj_ini.wep2[100,14],-1);
-                        obj_ini.wep2[0,marine_position]=obj_ini.wep2[100,14];
-                    }
-                    if (r==0) then eq2=0;
+                if (unit.update_weapon_two(obj_ini.wep2[100,15]) == "no_items"){
+                    warn += $", {obj_ini.wep2[100,15]}"
                 }
-                if (obj_ini.gear[0,marine_position]!=obj_ini.gear[100,14]){
-                    r=0;
-                    for (t=1; t<=50; t++){
-                        if (obj_ini.equipment[t]=obj_ini.gear[100,14]) and (obj_ini.equipment_number[t]>=1) and (r==0) then r=t;
-                    }
-                    if (r!=0){
-                        if (obj_ini.gear[0,marine_position]!="") then scr_add_item(obj_ini.gear[0,marine_position],1);
-                        scr_add_item(obj_ini.gear[100,14],-1);
-                        obj_ini.gear[0,marine_position]=obj_ini.gear[100,14];
-                    }
-                    if (r==0) then eq3=0;
+                if (unit.update_gear(obj_ini.gear[100,15]) == "no_items"){
+                    warn += $", {obj_ini.gear[100,15]}"
                 }
-                if (eq1+eq2+eq3!=3){
-                    warn="";
-                    w5=0;
-                    if (eq1==0) then warn+=string(obj_ini.wep1[100,14])+", ";
-                    if (eq2==0) then warn+=string(obj_ini.wep2[100,14])+", ";
-                    if (eq3==0) then warn+=string(obj_ini.gear[100,14])+", ";
-                    
-                    w5=string_length(warn)-1;
-                    warn=string_delete(warn,w5,2);
+               
+                if (warn!=""){
                     warn+=".";
                     scr_alert("red","recruitment","Not enough equipment: "+string(warn),0,0);
                 }
-                with(obj_ini){scr_company_order(0);}                
+                
+                with(obj_ini){scr_company_order(0);}
             }
+        } else {
+            apothecary_points=0;
         }
-    }
-    if (chaplain_points>=4) and (chaplain_aspirant==0){    
-        marine_company=0;
-        random_marine=scr_random_marine([obj_ini.role[100][8],obj_ini.role[100][18],obj_ini.role[100][10],obj_ini.role[100][9]],60,{"stat":[["piety", 35, "more"],["charisma", 30, "more"]]});
+    }else if (apothecary_points>=4) and (recruit_count==0){
+        random_marine=scr_random_marine([obj_ini.role[100][8],obj_ini.role[100][18],obj_ini.role[100][10],obj_ini.role[100][9]],60,{"stat":[["technology", 30, "more"],["intelligence", 45, "more"]]});
+
         if (random_marine != "none"){
-            marine_position = random_marine[1];
-            marine_company = random_marine[0];
+            marine_position=random_marine[1];
+            marine_company=random_marine[0];
             g1=0;
+            g2=0;
             // This gets the last open slot for company 0
-            for(var h=1; h<=300; h++){
+            for(var h=1; h<500; h++){
                 if (g1==0){
-                    if (obj_ini.role[0,h]="") and (obj_ini.name[0,h]="")then g1=h;
+                    if (obj_ini.role[0,h]==""){
+                        g1=h;
+                        break;
+                    }
                 }
             }
             if (g1!=0){
-                chaplain_aspirant=1;
-                command+=1;
-                marines-=1;
-                scr_move_unit_info(marine_company,0, marine_position, g1);
-                obj_ini.role[0][g1]=novice_type;
-                if (obj_ini.gear[0][g1]!=""){
-                    scr_add_item(obj_ini.gear[0][g1],1);
-                    obj_ini.gear[0][g1]="";
-                }
-                if (obj_ini.mobi[0][g1]!=""){
-                    scr_add_item(obj_ini.mobi[0][g1],1);
-                    obj_ini.mobi[0][g1]="";
-                }
-                scr_alert("green","recruitment",novice_type+string(obj_ini.name[0][g1])+" begins training.",0,0);
+                scr_move_unit_info(marine_company,0, marine_position, g1)
+                unit = fetch_unit([0,g1]);
+                unit.update_role(novice_type);
+                unit.update_gear("");
+                unit.update_mobility_item("");
+                scr_alert("green","recruitment",unit.name_role()+" begins training.",0,0);
                 with(obj_ini){
                     scr_company_order(marine_company);
                     scr_company_order(0);
                 }
-            }                      
+            }                  
+        } else {
+            scr_alert("red","recruitment","No marines available for apothecary traning",0,0);
+        }
+    }
+}
+// * Chaplain training *
+// TODO add functionality for Space Wolves and Iron Hands
+recruit_count=0;
+if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands"){
+	chaplain_points += training_points_values[training_chaplain];
+    novice_type = string("{0} Aspirant",obj_ini.role[100][14]);
+
+    if (training_chaplain>0){
+        recruit_count=scr_role_count(novice_type,"");
+        if (chaplain_points>=48){
+            if (recruit_count>0){
+                random_marine=scr_random_marine(novice_type,0);
+                if (random_marine != "none"){
+                    marine_position = random_marine[1];
+                    unit = fetch_unit(random_marine);
+                    scr_alert("green","recruitment",unit.name_role()+" has finished training.",0,0);
+                    chaplain_points-=48;
+                    unit.update_role(obj_ini.role[100][14]);
+                    unit.add_exp(10);
+                    chaplain_aspirant=0;
+                    warn="";
+                    if (unit.update_weapon_one(obj_ini.wep1[100,14]) == "no_items"){
+                        warn += $", {obj_ini.wep1[100,14]}"
+                    }
+                    if (unit.update_weapon_two(obj_ini.wep2[100,14]) == "no_items"){
+                        warn += $", {obj_ini.wep2[100,14]}"
+                    }
+                    if (unit.update_gear(obj_ini.gear[100,14]) == "no_items"){
+                        warn += $", {obj_ini.gear[100,14]}"
+                    }
+                   
+                    if (warn!=""){
+                        warn+=".";
+                        scr_alert("red","recruitment","Not enough equipment: "+string(warn),0,0);
+                    }
+                    with(obj_ini){scr_company_order(0);}                
+                }
+            } else{
+                chaplain_points=0;
+            }
+        }else if (chaplain_points>=4) and (recruit_count==0){    
+            marine_company=0;
+            random_marine=scr_random_marine([obj_ini.role[100][8],obj_ini.role[100][18],obj_ini.role[100][10],obj_ini.role[100][9]],60,{"stat":[["piety", 35, "more"],["charisma", 30, "more"]]});
+            if (random_marine != "none"){
+                marine_position = random_marine[1];
+                marine_company = random_marine[0];
+                g1=0;
+                // This gets the last open slot for company 0
+                for(var h=1; h<=300; h++){
+                    if (g1==0){
+                        if (obj_ini.role[0,h]="") and (obj_ini.name[0,h]=""){
+                            g1=h;
+                            break;
+                        }
+                    }
+                }
+                if (g1!=0){
+                    chaplain_aspirant=1;
+                    scr_move_unit_info(marine_company,0, marine_position, g1);
+                    unit = fetch_unit([0,g1]);
+                    unit.update_role(novice_type)
+                    unit.update_gear("");
+                    unit.update_mobility_item("");
+                    scr_alert("green","recruitment",unit.name_role()+" begins training.",0,0);
+                    with(obj_ini){
+                        scr_company_order(marine_company);
+                        scr_company_order(0);
+                    }
+                }                      
+            }
         }
     }
 }
@@ -411,178 +335,169 @@ recruit_count=0;
 
 psyker_points += training_points_values[training_psyker];
 
-var goal=48,yep=0;
+var goal=60,yep=0;
 novice_type = string("{0} Aspirant",obj_ini.role[100,17]);
 for(var o=1; o<=4; o++){
     if (obj_ini.adv[o]=="Psyker Abundance"){
-        goal=30;
+        goal=40;
         yep=1;
     }
 }
 
-if (training_psyker>0) then recruit_count=scr_role_count(novice_type,"0");
-if (psyker_points>=round(goal/2)) and (psyker_aspirant!=0) and (recruit_count==0){
-    psyker_points=0;
-    psyker_aspirant=0;
-}
-if (psyker_points>=goal){
-    if (recruit_count>0){
-        marine_position=0;
-        random_marine=scr_random_marine(novice_type,0,{"stat":[["psionic", 8, "more"]]});
-        if (random_marine != "none"){
-            marine_position = random_marine[1];
-            psyker_points-=48;
-            psyker_aspirant=0;
-            unit = obj_ini.TTRPG[0,marine_position];
-            scr_alert("green","recruitment",unit.name_role()+" has finished training.",0,0);
-            unit.update_role("Lexicanum")
-            with(obj_ini){scr_company_order(0);}
-        }
-    }
-}
-if (psyker_points>=round(goal/2)) and (psyker_aspirant==0){
-    marine_position=0;
-    marine_company=0;
+if (training_psyker>0){
+    recruit_count=scr_role_count(novice_type,"0");
+    if (psyker_points>=goal){
+        if (recruit_count>0){
+            marine_position=0;
+            random_marine=scr_random_marine(novice_type,0,{"stat":[["psionic", 8, "more"]]});
+            if (random_marine != "none"){
 
-    random_marine=scr_random_marine([obj_ini.role[100][8], obj_ini.role[100][18], obj_ini.role[100][9], obj_ini.role[100][10]],30, {"stat":[["psionic", 8, "more"]]});
-    if (random_marine == "none"){
-        training_psyker=0;
-        scr_alert("red","recruitment","No remaining warp sensitive marines for training",0,0);
-    }else if (random_marine != "none"){
-        marine_position=random_marine[1];
-        marine_company=random_marine[0];
-        unit = obj_ini.TTRPG[marine_company,marine_position];
-        // This gets the last open slot for company 0
-        for(var h=1; h<=300; h++){
-            if (g1==0){
-                if (obj_ini.role[0,h]=="") then g1=h;
+                unit = fetch_unit(random_marine)
+                psyker_points-=48;
+                psyker_aspirant=0;
+
+                scr_alert("green","recruitment",unit.name_role()+" has finished training.",0,0);
+                unit.update_role("Lexicanum");
+                with(obj_ini){scr_company_order(0);}
             }
+        }else {
+            psyker_points=0;
         }
-        if (marine_company=0){
-            command+=1;
-            marines-=1;
-			scr_move_unit_info(marine_company,0, marine_position, g1);
+    } else if (psyker_points>=4) and (recruit_count==0){
+
+        random_marine=scr_random_marine([obj_ini.role[100][8], obj_ini.role[100][18], obj_ini.role[100][9], obj_ini.role[100][10]],30, {"stat":[["psionic", 8, "more"]]});
+        if (random_marine == "none"){
+            training_psyker=0;
+            scr_alert("red","recruitment","No remaining warp sensitive marines for training",0,0);
+        }else if (random_marine != "none"){
+            // This gets the last open slot for company 0
+            for(var h=1; h<=300; h++){
+                if (g1==0){
+                    if (obj_ini.role[0,h]==""){
+                        g1=h;
+                        break;
+                    }
+                }
+            }
+			scr_move_unit_info(random_marine[0],0, random_marine[1], g1);
+            unit = fetch_unit([0,g1]);
             unit.update_role(novice_type)
             unit.update_powers();
             psyker_aspirant=1;
             
             if (string_count("Abund",obj_ini.strin)>0) then obj_ini.experience[0][g1]+=floor(random(5))+3;
-            
-            obj_ini.mobi[0][g1]=obj_ini.mobi[marine_company,marine_position];
-            if (obj_ini.gear[0][g1]!=""){
-                scr_add_item(obj_ini.gear[0][g1],1);
-                obj_ini.gear[0][g1]="";
-            }
-            if (obj_ini.mobi[0][g1]!=""){
-                scr_add_item(obj_ini.mobi[0][g1],1);
-                obj_ini.mobi[0][g1]="";
-            }
+
+            unit.update_gear("");
+            unit.update_mobility_item("");
             scr_alert("green","recruitment",unit.name_role()+" begins training.",0,0);
             with(obj_ini){
-                scr_company_order(marine_company);
+                scr_company_order(random_marine[0]);
                 scr_company_order(0);
-            }
-        }    
+            }  
+        }
     }
 }
 recruit_count=0;
 
 var training_points_values = [ 0, 1,2,4,6,10,14];
 tech_points += training_points_values[training_techmarine];
+novice_type = string("{0} Aspirant",obj_ini.role[100][16]);
+if (training_techmarine>0){
+    recruit_count=scr_role_count(novice_type,"");
 
-if (training_techmarine>0) then recruit_count=scr_role_count(string("{0} Aspirant",obj_ini.role[100][16]),"");
-if (tech_points>=4) and (tech_aspirant!=0) and (recruit_count==0){
-    tech_points=0;
-    tech_aspirant=0;
-}
-if (tech_points>=360){
-    if (recruit_count>0){
+    if (tech_points>=360){
+        if (recruit_count>0){
+            marine_position=0;
+            random_marine=scr_random_marine(novice_type,0);
+            if (random_marine != "none"){
+                unit = fetch_unit(random_marine)
+                tech_points-=360;
+
+                unit.update_role(obj_ini.role[100][16]);
+                unit.add_exp(30);
+                
+                t=0;
+                r=0;
+                unit.religion="cult_mechanicus";
+                unit.add_trait("mars_trained");
+                scr_alert("green","recruitment",unit.name()+" returns from Mars, a "+unit.role()+".",0,0);
+
+                 warn="";
+                if (unit.update_weapon_one(obj_ini.wep1[100,16]) == "no_items"){
+                    warn += $", {obj_ini.wep1[100,16]}"
+                }
+                if (unit.update_weapon_two(obj_ini.wep2[100,16]) == "no_items"){
+                    warn += $", {obj_ini.wep2[100,16]}"
+                }
+                if (unit.update_gear(obj_ini.gear[100,16]) == "no_items"){
+                    warn += $", {obj_ini.gear[100,16]}"
+                }
+               
+                if (warn!=""){
+                    warn+=".";
+                    scr_alert("red","recruitment","Not enough equipment: "+string(warn),0,0);
+                }
+                obj_ini.loc[0][marine_position]=obj_ini.home_name;
+                unit.planet_location=2;
+                obj_ini.lid[0][marine_position]=0;
+                // TODO Probably want to change this to take into account fleet type chapters- also increase the man_size of that area by +X
+                if (global.chapter_name!="Iron Hands") and (unit.bionics<4) then repeat(choose(1,2,3)){unit.add_bionics()}
+                if (global.chapter_name=="Iron Hands") and (unit.bionics<7) then repeat(choose(4,5,6)){unit.add_bionics()}
+                // 135 ; probably also want to increase the p_player by 1 just because
+                with(obj_ini){scr_company_order(0);}
+            }
+        } else {
+            tech_points=0;
+        }
+    }else if (tech_points>=4) and (recruit_count==0){    
         marine_position=0;
-        random_marine=scr_random_marine(string("{0} Aspirant",obj_ini.role[100][16]),0);
+        marine_company=0;
+        var search_conditions = {"stat":[["technology", 35, "more"]]};
+        random_marine=scr_random_marine([obj_ini.role[100][8],obj_ini.role[100][18],obj_ini.role[100][10],obj_ini.role[100][9]],30,search_conditions);
         if (random_marine != "none"){
             marine_position = random_marine[1];
-            unit = obj_ini.TTRPG[0,marine_position];
-            tech_points-=360;
-            tech_aspirant=0;
-            unit.update_role(obj_ini.role[100][16]);
-            unit.add_exp(30);
-            
-            t=0;
-            r=0;
-            warn="";
-            if (unit.update_weapon_one(obj_ini.wep1[100,16]) == "no_items"){
-                warn += $", {obj_ini.wep1[100,16]}"
-            }
-            if (unit.update_weapon_two(obj_ini.wep2[100,16]) == "no_items"){
-                warn += $", {obj_ini.wep2[100,16]}"
-            }
-            if (unit.update_gear(obj_ini.gear[100,16]) == "no_items"){
-                warn += $", {obj_ini.gear[100,16]}"
-            }
+            marine_company = random_marine[0];
+            g1=0;
+            g2=0;
+            // This gets the last open slot for company 0
+            for(var h=1; h<=300; h++){
+                if (g1==0){
+                    if (obj_ini.role[0,h]==""){
 
-            unit.religion="cult_mechanicus";
-            unit.add_trait("mars_trained");
-            scr_alert("green","recruitment",string(obj_ini.name[0,marine_position])+" returns from Mars, a "+string(obj_ini.role[100][16])+".",0,0);
-            
-            if (warn!=""){
-                warn+=".";
-                scr_alert("red","recruitment","Not enough equipment: "+string(warn),0,0);
+                         g1=h;
+                        break;
+                    }
+                }
             }
-            obj_ini.loc[0][marine_position]=obj_ini.home_name;
-            unit.planet_location=2;
-            obj_ini.lid[0][marine_position]=0;
-            // TODO Probably want to change this to take into account fleet type chapters- also increase the man_size of that area by +X
-            if (global.chapter_name!="Iron Hands") and (unit.bionics<4) then repeat(choose(1,2,3)){unit.add_bionics()}
-            if (global.chapter_name=="Iron Hands") and (unit.bionics<7) then repeat(choose(4,5,6)){unit.add_bionics()}
-            // 135 ; probably also want to increase the p_player by 1 just because
-            with(obj_ini){scr_company_order(0);}
+            if (g1!=0){
+                scr_move_unit_info(marine_company,0, marine_position, g1);
+                unit=fetch_unit([0,g1]);
+                unit.update_role(novice_type);
+
+                // Remove from ship
+                if (obj_ini.lid[0][g1]>0){
+                    var man_size=scr_unit_size(obj_ini.armour[0][g1],obj_ini.role[0][g1],true);
+                    obj_ini.ship_carrying[obj_ini.lid[0][g1]]-=man_size;
+                }
+                obj_ini.loc[0][g1]="Terra";
+                unit.planet_location=4;
+                obj_ini.lid[0][g1]=0;
+                if (unit.weapon_one()!="Power Weapon"){
+                    unit.update_weapon_one("");
+                }
+                unit.update_weapon_two("");
+                unit.update_gear("");
+                unit.update_mobility_item("");
+                scr_alert("green","recruitment",$"{unit.name_role()} journeys to Mars.",0,0);
+                with(obj_ini){
+                    scr_company_order(marine_company);
+                    scr_company_order(0);
+                }
+            }    
+        } else{
+            training_techmarine = 0;
+            scr_alert("red",string("recruitment","No marines with sufficient technology aptitude for {0} training",obj_ini.role[100][16]),0,0);
         }
-    }
-}
-if (tech_points>=4) and (tech_aspirant==0){    
-    marine_position=0;
-    marine_company=0;
-    var search_conditions = {"stat":[["technology", 35, "more"]]}
-    random_marine=scr_random_marine([obj_ini.role[100][8],obj_ini.role[100][18],obj_ini.role[100][10],obj_ini.role[100][9]],30,search_conditions);
-    if (random_marine != "none"){
-        marine_position = random_marine[1];
-        marine_company = random_marine[0];
-        g1=0;
-        g2=0;
-        // This gets the last open slot for company 0
-        for(var h=1; h<=300; h++){
-            if (g1==0){if (obj_ini.role[0,h]=="") then g1=h;}
-        }
-        if (g1!=0){
-            unit=obj_ini.TTRPG[0][g1];
-            tech_aspirant=1;
-            command+=1;
-            marines-=1;
-            scr_move_unit_info(marine_company,0, marine_position, g1);
-            obj_ini.role[0][g1]=obj_ini.role[100][16]+" Aspirant";
-            // Remove from ship
-            if (obj_ini.lid[0][g1]>0){
-                var man_size=scr_unit_size(obj_ini.armour[0][g1],obj_ini.role[0][g1],true);
-                obj_ini.ship_carrying[obj_ini.lid[0][g1]]-=man_size;
-            }
-            obj_ini.loc[0][g1]="Terra";
-            unit.planet_location=4;
-            obj_ini.lid[0][g1]=0;
-            if (obj_ini.wep1[0][g1]!="Power Weapon") and (obj_ini.wep1[0][g1]!=""){
-                unit.update_weapon_one("");
-            }
-            unit.update_weapon_two("");
-            unit.update_gear("");
-            unit.update_mobility_item("");
-            scr_alert("green","recruitment",string(obj_ini.role[100][16])+" Aspirant "+string(obj_ini.name[0][g1])+" journeys to Mars.",0,0);
-            with(obj_ini){
-                scr_company_order(marine_company);
-                scr_company_order(0);
-            }
-        }    
-    } else{
-        training_techmarine = 0;
-        scr_alert("red",string("recruitment","No marines with sufficient technology aptitude for {0} training",obj_ini.role[100][16]),0,0);
     }
 }
 recruit_count=0;

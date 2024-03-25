@@ -4,12 +4,22 @@ function apothecary_simple(){
 	var tech_spread = {};
 	var apoth_spread = {};
 	var unit_spread = {};
+ 	obj_controller.command=0;
+ 	obj_controller.marines=0;
+    marines-=1;
     for(company=0;company<11;company++){
     	for (v=1;v<500;v++){
     		key_val = "";
     		if (obj_ini.name[company][v]=="") then continue;
     		unit = fetch_unit([company, v]);
     		mar_loc = unit.marine_location();
+    		if (unit.base_group=="astartes"){
+	    		if (unit.IsSpecialist()){
+	    			obj_controller.command++;
+	    		} else {
+	    			obj_controller.marines++;
+	    		}
+	    	}
 	                
 		    is_tech = (unit.IsSpecialist("forge") && unit.hp()>=10);
 		    is_healer = (((unit.IsSpecialist("apoth",true) && unit.gear()=="Narthecium") || (unit.role()=="Sister Hospitaler")) && unit.hp()>=10);
