@@ -180,7 +180,7 @@ if (shop = "equipment") {
     item[i] = "Chainfist";
     item_stocked[i] = scr_item_count(item[i]);
     item_cost[i] = 75;
-    if (research.power_fields[0]>1){
+    if (research.power_fields[0]>1 && research.chain[0]>0){
         forge_cost[i] = 150;
     }
     if (rene = 1) {
@@ -435,6 +435,17 @@ if (shop = "equipment2") {
         nobuy[i] = 1;
         item_cost[i] = 0;
     }
+     if (obj_controller.in_forge){
+        if (research.armour[1].armour[0]>2){
+            forge_cost[i] = 2000;
+        } else {
+            tooltip_overide[i] = "requires : #";
+            for (var r = research.armour[1].armour[0]; r < 3;r++){
+                tooltip_overide[i] += $"     {research_pathways.armour[1].armour[0][r]}#";
+            }
+        }            
+    }
+
     i += 1;
     var mk_4_able = false;
     var mk_4_tool_tip = ""
@@ -1085,7 +1096,7 @@ if (shop == "production"){
         forge_cost[i] = 3000;
         tooltip_overide[i] = "Allows Advanced Bolt weapon Construction";
     }
-    if (research.power_fields[0] == 0){
+    if (research.power_fields[0] < 3){
         i++;
         item[i] = ["research",research_pathways.power_fields[0][research.power_fields[0]], ["power_fields"]];
         item_stocked[i] = 0;
@@ -1112,9 +1123,22 @@ if (shop == "production"){
             item[i] = ["research","Advanced Ceramite Bonding", ["armour", "armour"]];
             item_stocked[i] = 0;
             forge_cost[i] = 3000;
-            tooltip_overide[i] = "Allows Mk3 construction";
+            tooltip_overide[i] = "Required for Mk3 construction#Required for MK8 construction#Required for Terminator Armour Construction";
+        } else if (research.armour[1].armour[0] == 2){
+            i++;
+            item[i] = ["research","Ceremite Void Hardening", ["armour", "armour"]];
+            item_stocked[i] = 0;
+            forge_cost[i] = 3000;
+            tooltip_overide[i] = "Required for Mk3 construction#";
         }
-        if (research.armour[1].stealth[0] >0 && research.armour[1].armour[0] >0){
+        if  (research.armour[0]==1){
+            i++;
+            item[i] = ["research",research_pathways.armour[0][1], ["armour"]];
+            item_stocked[i] = 0;
+            forge_cost[i] = 3000;
+            tooltip_overide[i] = "Required for MK8 construction";               
+        }        
+        if (research.armour[1].stealth[0] >0 && research.armour[1].armour[0] ==1){
             i++;
             item[i] =  ["research","Enhanced Nerve Interfacing", ["armour", "armour"]];
             item_stocked[i] = 0;
@@ -1127,13 +1151,7 @@ if (shop == "production"){
         item_stocked[i] = 0;
         forge_cost[i] = 3000;
         tooltip_overide[i] = "Allows Mk7 construction#Required for MK8 construction#Required for Terminator Armour Construction";        
-    } else if  (research.armour[0]==1){
-        i++;
-        item[i] = ["research",research_pathways.armour[0][1], ["armour"]];
-        item_stocked[i] = 0;
-        forge_cost[i] = 3000;
-        tooltip_overide[i] = "Required for MK8 construction";               
-    }
+    } 
 
 }
 legitimate_items = i;

@@ -573,11 +573,11 @@ production_research_pathways ={
     melta : [["Atomic Chamber Construction"],{}],
     chasis : [[],{}],
     chain :[["Adamantine Links"],{}],
-    power_fields:[["Power Field Cooling"],{}],
+    power_fields:[["Power Field Cooling", "Mono-molecular Edge Sheathing"],{}],
     las : [["Light Condensement Chamber"],{}],
     armour : 
         [
-            ["Ceramite Casting Chambers", "Lightened Ceramite Compound"],
+            ["Ceramite Casting Chambers", "Lightened Ceramite Compound","Ceremite Void Hardening"],
             {
                 stealth : [["Advanced Servo Motors"],{}],
                 armour : [["Advanced Ceramite Bonding", "Enhanced Nerve Interfacing"],{}],

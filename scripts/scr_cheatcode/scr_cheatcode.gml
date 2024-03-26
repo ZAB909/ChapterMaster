@@ -22,6 +22,12 @@ function scr_cheatcode(argument0) {
         cheatcode_m_digits = (cheatcode_digits * -1)
 
     if (cheatcode_digits == "") {
+        if (cheatcode_string=="finishforge"){
+            with (obj_controller){
+                forge_points = 1000000;
+                forge_queue_logic();
+            }
+        }
         if (cheatcode_string=="slaughtersong"){
             create_starship_event();
         }

@@ -2020,12 +2020,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				is_at_loc=true;
 			}
 		} else if (ship==0 && planet==0){
-			if (obj_ini.loc[company][marine_number]==location){
-				is_at_loc=true;
-			} else if (obj_ini.lid[company][marine_number]>0){
+			if (obj_ini.lid[company][marine_number]>0){
 				if (obj_ini.ship_location[obj_ini.lid[company][marine_number]]==location){
 					is_at_loc=true;
 				}
+			} else if  (obj_ini.loc[company][marine_number]==location){
+				is_at_loc=true;
 			}
 		}
 		return is_at_loc;
