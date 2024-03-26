@@ -807,7 +807,6 @@ function scr_draw_unit_image(x_draw, y_draw){
                     draw_sprite(spr_marine_robes,body[$ "torso"][$ "robes"],xx+x_draw+robe_offset_x,yy+y_draw+robe_offset_y);     
                 }              
             }
-            }
             if (armour_sprite==spr_scout_colors2){
                 ui_ymod[1]+=7;
                 ui_ymod[2]+=7;
