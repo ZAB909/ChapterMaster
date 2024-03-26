@@ -1096,7 +1096,7 @@ if (shop == "production"){
         forge_cost[i] = 3000;
         tooltip_overide[i] = "Allows Advanced Bolt weapon Construction";
     }
-    if (research.power_fields[0] < 3){
+    if (research.power_fields[0] < 2){
         i++;
         item[i] = ["research",research_pathways.power_fields[0][research.power_fields[0]], ["power_fields"]];
         item_stocked[i] = 0;

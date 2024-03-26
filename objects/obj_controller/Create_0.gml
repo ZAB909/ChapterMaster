@@ -577,14 +577,14 @@ production_research_pathways ={
     las : [["Light Condensement Chamber"],{}],
     armour : 
         [
-            ["Ceramite Casting Chambers", "Lightened Ceramite Compound","Ceremite Void Hardening"],
+            ["Ceramite Casting Chambers", "Enhanced Nerve Interfacing"],
             {
                 stealth : [["Advanced Servo Motors"],{}],
-                armour : [["Advanced Ceramite Bonding", "Enhanced Nerve Interfacing"],{}],
+                armour : [["Advanced Ceramite Bonding", "Lightened Ceramite Compound","Ceremite Void Hardening"],{}],
             }
         ]
 }
-// ** STC values **
+// ** STC values **, 
 stc_wargear=0;
 stc_vehicles=0;
 stc_ships=0;
