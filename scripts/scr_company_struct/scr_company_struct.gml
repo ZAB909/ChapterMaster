@@ -17,6 +17,13 @@ function scr_company_struct(comp) constructor{
 	rollover_sequence=0;
 	selected_unit=obj_controller.temp[120];
 	drop_down_open=false;
+	captian = "none";
+	if (company>0 && company<11){
+		var cap = scr_role_count(obj_ini.role[100][Role.CAPTAIN], company, "unit");
+		if (array_length(cap)>0){
+			captian = cap[0];
+		}
+	}
 
 	static draw_squad_view = function(){
 		var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0;
