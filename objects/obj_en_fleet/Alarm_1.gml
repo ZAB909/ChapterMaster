@@ -8,7 +8,7 @@ if (round(owner)!=eFACTION.Imperium) and (navy=1) then owner= noone;
 if ((trade_goods="BLOODBLOODBLOOD") or (trade_goods="BLOODBLOODBLOODBLOOD")) and (owner=eFACTION.Chaos) {
     if (orb!=0) and (instance_exists(orb)) and (action=""){
         if (orb.present_fleet[1]+orb.present_fleet[2]+orb.present_fleet[3]+orb.present_fleet[6]+orb.present_fleet[7]+orb.present_fleet[9]+orb.present_fleet[13]=0){
-            var ii,good,part,contin;ii=0;good=0;part=0;contin=0;
+            var ii=0,good=0,part=0,contin=0;
             
             // No forces already landed
             repeat(orb.planets){
@@ -24,11 +24,15 @@ if ((trade_goods="BLOODBLOODBLOOD") or (trade_goods="BLOODBLOODBLOODBLOOD")) and
                 }
             }
             // Next planet; rembark the chaos forces
-            if (contin=99){ii=0;
-                repeat(orb.planets){ii+=1;
+            if (contin=99){
+                ii=0;
+                repeat(orb.planets){
+                    ii+=1;
                     if (planet_feature_bool(orb.p_feature[ii], P_features.World_Eaters)==1){
-                        orb.p_chaos[ii]=0;orb.p_traitors[ii]=max(4,orb.p_traitors[ii]+1);
-						delete_features(orb.p_feature[ii], P_features.World_Eaters);contin=100;
+                        orb.p_chaos[ii]=0;
+                        orb.p_traitors[ii]=max(4,orb.p_traitors[ii]+1);
+						delete_features(orb.p_feature[ii], P_features.World_Eaters);
+                        contin=100;
                         
                         if (ii>1){delete_features(orb.p_feature[ii-1], P_features.World_Eaters);contin=100;}
                     }

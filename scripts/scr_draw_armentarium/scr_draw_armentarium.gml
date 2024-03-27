@@ -108,7 +108,7 @@ function calculate_research_points(turn_end=false){
     with (obj_controller){
         research_points = 0;
         forge_points = 0;
-        master_craft_chance = 0;
+        master_craft_chance = 99;
         forge_string = $"Forge Production Rate#";
         var heretics = [], forge_master=-1, notice_heresy=false, forge_point_gen=[], crafters=0, at_forge=0, gen_data={};
         var tech_locations=[]
@@ -119,7 +119,10 @@ function calculate_research_points(turn_end=false){
                 forge_point_gen=techs[i].forge_point_generation(true);
                 gen_data = forge_point_gen[1];
                 if (struct_exists(gen_data,"crafter")) then crafters++;
-                if (struct_exists(gen_data,"at_forge")) then at_forge++;
+                if (struct_exists(gen_data,"at_forge")){
+                    at_forge++;
+                    master_craft_chance -= (techs[i].experience()/50)
+                }
                 forge_points += forge_point_gen[0];
                 if (techs[i].has_trait("tech_heretic")){
                     array_push(heretics, i);
@@ -264,7 +267,6 @@ function calculate_research_points(turn_end=false){
                     scr_role_count(obj_ini.role[100][16],"","units")[0].update_role("Forge Master");
                 }
             }
-            master_craft_chance = (99-crafters-at_forge);
             forge_queue_logic();       
         }
     }   
@@ -892,6 +894,7 @@ function scr_draw_armentarium(){
         // draw_sprite_ext(spr_forge_points_icon,0,xx+359+string_width(forge_text), yy+410,0.3,0.3,0,c_white,1);
         forge_text += $"Chapter total {obj_ini.role[100, 16]}s: {temp[36]}#";
         forge_text += $"Planetary Forges in operation: {obj_controller.player_forges}#";
+        forge_text += $"Master Craft Forge Chance: {1-((master_craft_chance+1)/100)}#    Assign techmarines to forges to increase Master Craft Chance";
         // forge_text += $"A total of {obj_ini.role[100, 16]}s assigned to Forges: {var}#";
         draw_text_ext(xx+359, yy+410, string_hash_to_newline(forge_text),-1,670);
     }
