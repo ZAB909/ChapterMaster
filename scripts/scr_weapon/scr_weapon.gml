@@ -272,7 +272,7 @@ global.weapons={
     "Power Spear": {
          "abbreviation": "PwrSpear",
         "attack": {
-            "standard": 200,
+            "standard": 220,
             "master_crafted": 250,
             "artifact": 300
         },
@@ -283,7 +283,7 @@ global.weapons={
         },
         "description": "This power weapon requires great skill to wield. When active, the blade becomes sheathed in a lethal haze of disruptive energy.",
         "melee_hands": 2,
-        "ranged_hands": 0,
+        "ranged_hands": 1,
         "ammo": 0,
         "range": 1,
         "spli": 0,

@@ -129,6 +129,17 @@ if (shop = "equipment") {
         nobuy[i] = 1;
         item_cost[i] = 0;
     }
+		    i += 1;
+    item[i] = "Power Spear";
+    item_stocked[i] = scr_item_count(item[i]);
+    item_cost[i] = 40;
+    if (research.power_fields[0]>1){
+        forge_cost[i] = 100;
+    }
+    if (rene = 1) {
+        nobuy[i] = 1;
+        item_cost[i] = 0;
+    }
 	    i += 1;
     item[i] = "Crozius Arcanum";
     item_stocked[i] = scr_item_count(item[i]);
