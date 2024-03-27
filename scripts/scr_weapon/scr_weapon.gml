@@ -272,7 +272,7 @@ global.weapons={
     "Power Spear": {
          "abbreviation": "PwrSpear",
         "attack": {
-            "standard": 200,
+            "standard": 220,
             "master_crafted": 250,
             "artifact": 300
         },
@@ -283,7 +283,7 @@ global.weapons={
         },
         "description": "This power weapon requires great skill to wield. When active, the blade becomes sheathed in a lethal haze of disruptive energy.",
         "melee_hands": 2,
-        "ranged_hands": 0,
+        "ranged_hands": 1,
         "ammo": 0,
         "range": 1,
         "spli": 0,
@@ -504,6 +504,27 @@ global.weapons={
         "spli": 0,
         "arp": 0,
         "tags":["arcane"],
+    },
+	 "Crozius Arcanum": {
+       "abbreviation": "Crzus",       
+        "attack": {
+            "standard": 220,
+            "master_crafted": 250,
+            "artifact": 300
+        },
+        "melee_mod": {
+            "standard": 1,
+            "master_crafted": 1,
+            "artifact": 1
+        },
+        "description": "The Crozius Arcanum serves as both a sacred staff of office and a close combat weapon for Space Marine Chaplains.",
+        "melee_hands": 1,
+        "ranged_hands": 0,
+        "ammo": 0,
+        "range": 1,
+        "spli": 0,
+        "arp": 1,
+        "tags":["power", "mace", "chap"],
     },
     "Relic Blade": {
       "abbreviation": "RlcBld",               
@@ -1320,21 +1341,71 @@ global.weapons={
         "arp": -1,
         "tags":["flame"]
     },
-    "Force Weapon": {
+    "Force Staff": {
         "attack": {
-            "standard": 50,
-            "master_crafted": 100,
-            "artifact": 150
+            "standard": 150,
+            "master_crafted": 200,
+            "artifact": 240
         },
-        "abbreviation": "FrcWpn", 
+		"melee_mod": {
+            "standard": 1,
+            "master_crafted": 1,
+            "artifact": 1
+        },
+        "abbreviation": "FrcStff", 
         "description": "An advanced, psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.",
         "melee_hands": 1,
         "ranged_hands": 1,
         "range": 1,
         "spli": 0,
-        "arp": 0,
-        "tags":["psi"]
+        "arp": 1,
+		"special_description": "Spell Damage +100%",
+        "tags":["psy",]
     },
+	    "Force Sword": {
+         "abbreviation": "FrcSwrd",
+        "attack": {
+            "standard": 180,
+            "master_crafted": 150,
+            "artifact": 200
+        },
+        "melee_mod": {
+            "standard": 1.3,
+            "master_crafted": 1.5,
+            "artifact": 2
+        },
+        "description": "A type of psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.",
+        "melee_hands": 1,
+        "ranged_hands": 0,
+        "ammo": 0,
+        "range": 1,
+        "spli": 1,
+        "arp": 1,
+        "special_description": "Parry, Spell damage +25%",
+        "tags":["psy", "sword"],
+	},
+	"Force Axe": {
+         "abbreviation": "FrcAxe",
+        "attack": {
+            "standard": 190,
+            "master_crafted": 180,
+            "artifact": 225
+        },
+        "melee_mod": {
+            "standard": 1.3,
+            "master_crafted": 1.5,
+            "artifact": 2
+        },
+        "description": "A type of psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.",
+        "melee_hands": 1,
+        "ranged_hands": 0,
+        "ammo": 0,
+        "range": 1,
+        "spli": 1,
+        "arp": 1,
+		"special_description":  "Able to be dual-wielded, Spell damage +25%",
+        "tags":["psy", "axe", "dual"],
+	},
      "Twin Linked Lascannon Turret": {
         "attack": {
             "standard": 250,
@@ -1378,6 +1449,7 @@ global.weapons={
         "abbreviation": "VlkSkr", 
         "description": "",
     },
+				
 }
 
 global.gear = {
@@ -1934,6 +2006,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                 stat_order = ["description", "special_description", "attack", "ranged_mod", "melee_mod", "ammo", "range", "armour_value", "hp_mod", "damage_resistance_mod", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
                 break;
             }
+			
         for (var i = 0; i < array_length(stat_order); i++) {
             var stat = stat_order[i];
             switch (stat) {

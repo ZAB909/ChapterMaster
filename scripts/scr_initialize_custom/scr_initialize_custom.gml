@@ -813,7 +813,7 @@ function scr_initialize_custom() {
 	    gear[i,16]="Servo Arms";
 	    mobi[i,16]="";
 	    role[i,17]="Librarian";
-	    wep1[i,17]="Force Weapon";
+	    wep1[i,17]="Force Staff";
 	    wep2[i,17]="Storm Bolter";
 	    armour[i,17]="Power Armour";
 	    gear[i,17]="Psychic Hood";
@@ -1311,7 +1311,7 @@ function scr_initialize_custom() {
 			chapter_master_equip.wep1="Eviscerator";
 			break;
 		case 8:
-			chapter_master_equip.wep1="Force Weapon";
+			chapter_master_equip.wep1="Force Staff";
 			break;	
 	}
 	switch (master_ranged){
@@ -2220,7 +2220,7 @@ function scr_initialize_custom() {
 	        spawn_unit.spawn_old_guard();
 	        
 
-	        if (company=8) then mobi[company][k]="Jump Pack";
+	        if (company=8) and (obj_creation.equal_specialists=0) then mobi[company][k]="Jump Pack";
 	        if (mobi[101,5]!="") then mobi[company][k]=mobi[101,5];
 	        gear[company][k]=gear[101,5];
 
@@ -2242,7 +2242,7 @@ function scr_initialize_custom() {
 	                if (company<=2) then armour[company][k]=choose("MK8 Errant","MK6 Corvus");
 	                gear[company][k]=gear[101,14];
 	                
-	                if (company=8) then mobi[company][k]="Jump Pack";
+	                if (company=8) and (obj_creation.equal_specialists=0) then mobi[company][k]="Jump Pack";
 	                if (mobi[101,14]!="") then mobi[company][k]=mobi[101,14];
 					spawn_unit = TTRPG[company][k]
 					spawn_unit.spawn_exp();
@@ -2263,7 +2263,7 @@ function scr_initialize_custom() {
 	        spawn_unit.spawn_old_guard();
 	        gear[company][k]=gear[101,15];
 	        
-	        if (company=8) then mobi[company][k]="Jump Pack";
+	        if (company=8) and (obj_creation.equal_specialists=0) then mobi[company][k]="Jump Pack";
 	        if (mobi[101,15]!="") then mobi[company][k]=mobi[101,15];
 
 	        if (global.chapter_name="Space Wolves"){
@@ -2279,7 +2279,7 @@ function scr_initialize_custom() {
 	            if (company<=2) then armour[company][k]=choose("MK8 Errant","MK6 Corvus");
 	            gear[company][k]=gear[101,15];
 	            
-	            if (company=8) then mobi[company][k]="Jump Pack";
+	            if (company=8) and (obj_creation.equal_specialists=0) then mobi[company][k]="Jump Pack";
 	            if (mobi[101,15]!="") then mobi[company][k]=mobi[101,15];
 				spawn_unit = TTRPG[company][k]
 				spawn_unit.spawn_exp();
@@ -2314,7 +2314,7 @@ function scr_initialize_custom() {
 	        wep2[company][k]="Company Standard";
 	        armour[company][k]="MK5 Heresy";
 	        
-	        if (company=8) then mobi[company][k]="Jump Pack";
+	        if (company=8) and (obj_creation.equal_specialists=0) then mobi[company][k]="Jump Pack";
 	        spawn_unit = TTRPG[company][k];
 			spawn_unit.spawn_exp();
 	        spawn_unit.spawn_old_guard();      
@@ -2329,6 +2329,7 @@ function scr_initialize_custom() {
 	        wep2[company][k]=wep2[100,7];
 	        armour[company][k]="MK4 Maximus";
 	        
+			if (company=8) and (obj_creation.equal_specialists=0) then mobi[company][k]="Jump Pack";
 			spawn_unit = TTRPG[company][k];
 			spawn_unit.add_trait("champion");
 			spawn_unit.spawn_exp();
@@ -2707,7 +2708,7 @@ function scr_initialize_custom() {
 	    scr_add_item(wep1[101,15],4);
 	    scr_add_item(wep2[101,15],4);
 	    scr_add_item("Psychic Hood",4);
-	    scr_add_item("Force Weapon",4);
+	    scr_add_item("Force Staff",4);
 	    scr_add_item("Plasma Pistol",4);
 
 	    o=0;chapter_option=0;repeat(4){o+=1;

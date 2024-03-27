@@ -272,7 +272,7 @@ for(var i=100; i<103; i++){
     obj_controller.r_mobi[i,16]="";
     
     obj_controller.r_role[i,17]="Librarian";
-    obj_controller.r_wep1[i,17]="Force Weapon";
+    obj_controller.r_wep1[i,17]="Force Staff";
     obj_controller.r_wep2[i,17]="Storm Bolter";
     obj_controller.r_armour[i,17]="Power Armour";
     obj_controller.r_gear[i,17]="Psychic Hood";

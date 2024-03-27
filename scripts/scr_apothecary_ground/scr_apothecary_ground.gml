@@ -255,5 +255,3 @@ function apothecary_simple(){
 
 
 
-
-

@@ -176,11 +176,11 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	    if (number_of_shots=1) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+".";
 	    if (number_of_shots>1) then p1=string(number_of_shots)+" Eviscerators rev and howl, hacking at the "+string(duhs)+" ranks.";
 	}
-	if (wepp="Force Weapon") and (solod=false){flavored=1;
+	if (wepp="Force Staff") and (solod=false){flavored=1;
 	    if (number_of_shots=1) then p1="A "+string(duhs)+" is blasted by a "+string(wepp)+".";
 	    if (number_of_shots>1) then p1=string(number_of_shots)+" "+string(wepp)+" crackle and swing into the "+string(duhs)+" ranks.";
 	}
-	if (wepp="Inactive Force Weapon") and (solod=false){flavored=1;
+	if (wepp="Inactive Force Staff") and (solod=false){flavored=1;
 	    if (number_of_shots=1) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+".";
 	    if (number_of_shots>1) then p1=string(number_of_shots)+" "+string(wepp)+" are swung into the "+string(duhs)+" ranks.";
 	}
@@ -193,7 +193,7 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	        if (number_of_shots>1) then p1=string(number_of_shots)+" "+string(wepp)+"s crackle and spark, striking at the "+string(duhs)+" ranks.";
 	    }
 	}
-	if ((string_count("Power",wepp)>0) or (wepp="Force Weapon") or (wepp="Inactive Force Weapon") or (wepp="Lightning Claw")) and (solod=true){flavored=1;
+	if ((string_count("Power",wepp)>0) or (wepp="Force Staff") or (wepp="Inactive Force Staff") or (wepp="Lightning Claw")) and (solod=true){flavored=1;
 	    if (target.dudes_num[targeh]>1) then p1=string(full_name)+" swings his "+string(wepp)+".";
 	}
 
@@ -420,13 +420,13 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	    if (number_of_shots>1) and (casulties=0) then p1=string(number_of_shots)+" Eviscerators rev and howl, hacking at the "+string(duhs)+" ranks.";
 	    if (number_of_shots>1) and (casulties>0) then p1=string(number_of_shots)+" Eviscerators rev and howl, hacking at the "+string(duhs)+" ranks.  "+string(casulties)+" are cut down.";
 	}
-	if (wepp="Force Weapon") and (solod=false){flavored=1;
+	if (wepp="Force Staff") and (solod=false){flavored=1;
 	    if (number_of_shots=1) and (casulties=0) then p1="A "+string(duhs)+" is blasted by a "+string(wepp)+" but survives.";
 	    if (number_of_shots=1) and (casulties=1) then p1="A "+string(duhs)+" is incinerated by a "+string(wepp)+".";
 	    if (number_of_shots>1) and (casulties=0) then p1=string(number_of_shots)+" "+string(wepp)+" crackle and swing into the "+string(duhs)+" ranks.";
 	    if (number_of_shots>1) and (casulties>0) then p1=string(number_of_shots)+" "+string(wepp)+" crackle and swing into the "+string(duhs)+" ranks.  "+string(casulties)+" are smashed.";
 	}
-	if (wepp="Inactive Force Weapon") and (solod=false){flavored=1;
+	if (wepp="Inactive Force Staff") and (solod=false){flavored=1;
 	    if (number_of_shots=1) and (casulties=0) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+" but survives.";
 	    if (number_of_shots=1) and (casulties=1) then p1="A "+string(duhs)+" is smashed by a "+string(wepp)+".";
 	    if (number_of_shots>1) and (casulties=0) then p1=string(number_of_shots)+" "+string(wepp)+" are swung into the "+string(duhs)+" ranks.";
@@ -445,7 +445,7 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	        if (number_of_shots>1) and (casulties>0) then p1=string(number_of_shots)+" "+string(wepp)+"s crackle and spark, hewing through the "+string(duhs)+" ranks.  "+string(casulties)+" are cut down.";
 	    }
 	}
-	if ((string_count("Power",wepp)>0) or (wepp="Force Weapon") or (wepp="Inactive Force Weapon") or (wepp="Lightning Claw")) and (solod=true){flavored=1;
+	if ((string_count("Power",wepp)>0) or (wepp="Force Staff") or (wepp="Inactive Force Staff") or (wepp="Lightning Claw")) and (solod=true){flavored=1;
 	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=string(full_name)+" swings his "+string(wepp)+" into the "+string(duhs)+" ranks.";
 	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=string(full_name)+" swings his "+string(wepp)+" into the "+string(duhs)+" ranks and kills "+string(casulties)+".";
 	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=string(full_name)+" swings his "+string(wepp)+" into a "+string(duhs)+" but fails to kill it.";
@@ -813,13 +813,13 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	    if (number_of_shots>1) and (casulties=0) then p1=string(number_of_shots)+" Eviscerators rev and howl, hacking at the "+string(duhs)+" ranks.";
 	    if (number_of_shots>1) and (casulties>0) then p1=string(number_of_shots)+" Eviscerators rev and howl, hacking at the "+string(duhs)+" ranks.  "+string(casulties)+" are cut down.";
 	}
-	if (wepp="Force Weapon") and (solod=false){flavored=1;
+	if (wepp="Force Staff") and (solod=false){flavored=1;
 	    if (number_of_shots=1) and (casulties=0) then p1="A "+string(duhs)+" is blasted by a "+string(wepp)+" but survives.";
 	    if (number_of_shots=1) and (casulties=1) then p1="A "+string(duhs)+" is incinerated by a "+string(wepp)+".";
 	    if (number_of_shots>1) and (casulties=0) then p1=string(number_of_shots)+" "+string(wepp)+" crackle and swing into the "+string(duhs)+" ranks.";
 	    if (number_of_shots>1) and (casulties>0) then p1=string(number_of_shots)+" "+string(wepp)+" crackle and swing into the "+string(duhs)+" ranks.  "+string(casulties)+" are smashed.";
 	}
-	if (wepp="Inactive Force Weapon") and (solod=false){flavored=1;
+	if (wepp="Inactive Force Staff") and (solod=false){flavored=1;
 	    if (number_of_shots=1) and (casulties=0) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+" but survives.";
 	    if (number_of_shots=1) and (casulties=1) then p1="A "+string(duhs)+" is smashed by a "+string(wepp)+".";
 	    if (number_of_shots>1) and (casulties=0) then p1=string(number_of_shots)+" "+string(wepp)+" are swung into the "+string(duhs)+" ranks.";
@@ -838,7 +838,7 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	        if (number_of_shots>1) and (casulties>0) then p1=string(number_of_shots)+" "+string(wepp)+"s crackle and spark, hewing through the "+string(duhs)+" ranks.  "+string(casulties)+" are cut down.";
 	    }
 	}
-	if ((string_count("Power",wepp)>0) or (wepp="Force Weapon") or (wepp="Inactive Force Weapon") or (wepp="Lightning Claw")) and (solod=true){flavored=1;
+	if ((string_count("Power",wepp)>0) or (wepp="Force Staff") or (wepp="Inactive Force Staff") or (wepp="Lightning Claw")) and (solod=true){flavored=1;
 	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=string(full_name)+" swings his "+string(wepp)+" into the "+string(duhs)+" ranks.";
 	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=string(full_name)+" swings his "+string(wepp)+" into the "+string(duhs)+" ranks and kills "+string(casulties)+".";
 	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=string(full_name)+" swings his "+string(wepp)+" into a "+string(duhs)+" but fails to kill it.";
