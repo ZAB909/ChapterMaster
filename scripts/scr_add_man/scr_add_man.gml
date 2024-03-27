@@ -197,68 +197,80 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 		unit= new TTRPG_stats("chapter", target_company, good);
 		unit.corruption=corruption
 		marines+=1;
-		} 
+	} 
 		obj_ini.TTRPG[target_company][good] = unit;
- 	if ((home_spot="home") or (home_spot="default")) and (obj_ini.fleet_type=1){
+	var spawn_location_chosen = false;
+ 	if ((home_spot="home") or (home_spot="default")) and (obj_ini.fleet_type==1){
 	        var bst=0;
-	        bst=instance_nearest(x,y,obj_star);
-        
-	        obj_ini.loc[target_company][good]=obj_ini.home_name;
-	        for (i=1;i<=bst.planets;i++){
-	        	if (bst.p_owner[i]==1) then unit.planet_location = i;
+	        with (obj_star){
+	        	if (obj_star.name==obj_ini.home_name){
+	        		bst=instance_nearest(x,y,obj_star);
+	        	}
 	        }
+        	if (bst!=0){
+		        for (i=1;i<=bst.planets;i++){
+		        	if (bst.eFACTION.Player[i]==1){
+		        		unit.planet_location = i;
+		        		obj_ini.loc[target_company][good]=obj_ini.home_name;
+		        		spawn_location_chosen=true;
+		        	}
+		        }
+        	}
 	    }
-    
-	    if (string_count("ship",home_spot)>0) or ((obj_ini.fleet_type!=1) and (home_spot="default")){
-	        var wop,loaded;loaded=0;
-        
-	        instance_activate_object(obj_p_fleet);
-	        wop=instance_nearest(x,y,obj_p_fleet);
-        
-	        if (wop.capital_number>0) and (loaded=0){
-	            var i,f;i=0;f=0;
-	            repeat(wop.capital_number){
-	                i+=1;
-	                if (loaded=0){
-	                    f=wop.capital_num[i];
-	                    if (obj_ini.ship_capacity[f]>obj_ini.ship_carrying[f]){
-	                        obj_ini.ship_carrying[f]+=1;obj_ini.lid[target_company][good]=f;loaded=1;
-	                        unit.planet_location=0;
-	                        obj_ini.loc[target_company][good]=obj_ini.ship_location[f];
-	                    }
-	                }
-	            }
-	        }
-	        if (wop.frigate_number>0) and (loaded=0){
-	            var i,f;i=0;f=0;
-	            repeat(wop.frigate_number){
-	                i+=1;
-	                if (loaded=0){
-	                    f=wop.frigate_num[i];
-	                    if (obj_ini.ship_capacity[f]>obj_ini.ship_carrying[f]){
-	                        obj_ini.ship_carrying[f]+=1;obj_ini.lid[target_company][good]=f;loaded=1;
-	                        unit.planet_location=0;
-	                        obj_ini.loc[target_company][good]=obj_ini.ship_location[f];
-	                    }
-	                }
-	            }
-	        }
-	        if (wop.escort_number>0) and (loaded=0){
-	            var i,f;i=0;f=0;
-	            repeat(wop.escort_number){
-	                i+=1;
-	                if (loaded=0){
-	                    f=wop.escort_num[i];
-	                    if (obj_ini.ship_capacity[f]>obj_ini.ship_carrying[f]){
-	                        obj_ini.ship_carrying[f]+=1;
-	                        obj_ini.lid[target_company][good]=f;loaded=1;
-	                        unit.planet_location=0;
-	                        obj_ini.loc[target_company][good]=obj_ini.ship_location[f];
-	                    }
-	                }
-	            }
-	        }
-	    }		
+    	if (!spawn_location_chosen){
+		    if (string_count("ship",home_spot)>0 || (obj_ini.fleet_type!=1) and (home_spot="default")){
+		        var wop,loaded=0;
+	        
+		        instance_activate_object(obj_p_fleet);
+		        wop=instance_nearest(x,y,obj_p_fleet);
+	        
+		        if (wop.capital_number>0) and (loaded=0){
+		            var i=0,f=0;
+		            repeat(wop.capital_number){
+		                i+=1;
+		                if (loaded=0){
+		                    f=wop.capital_num[i];
+		                    if (obj_ini.ship_capacity[f]>obj_ini.ship_carrying[f]){
+		                        obj_ini.ship_carrying[f]+=1;
+		                        obj_ini.lid[target_company][good]=f;
+		                        loaded=1;
+		                        unit.planet_location=0;
+		                        obj_ini.loc[target_company][good]=obj_ini.ship_location[f];
+		                    }
+		                }
+		            }
+		        }
+		        if (wop.frigate_number>0) and (loaded=0){
+		            var i,f;i=0;f=0;
+		            repeat(wop.frigate_number){
+		                i+=1;
+		                if (loaded=0){
+		                    f=wop.frigate_num[i];
+		                    if (obj_ini.ship_capacity[f]>obj_ini.ship_carrying[f]){
+		                        obj_ini.ship_carrying[f]+=1;obj_ini.lid[target_company][good]=f;loaded=1;
+		                        unit.planet_location=0;
+		                        obj_ini.loc[target_company][good]=obj_ini.ship_location[f];
+		                    }
+		                }
+		            }
+		        }
+		        if (wop.escort_number>0) and (loaded=0){
+		            var i,f;i=0;f=0;
+		            repeat(wop.escort_number){
+		                i+=1;
+		                if (loaded=0){
+		                    f=wop.escort_num[i];
+		                    if (obj_ini.ship_capacity[f]>obj_ini.ship_carrying[f]){
+		                        obj_ini.ship_carrying[f]+=1;
+		                        obj_ini.lid[target_company][good]=f;loaded=1;
+		                        unit.planet_location=0;
+		                        obj_ini.loc[target_company][good]=obj_ini.ship_location[f];
+		                    }
+		                }
+		            }
+		        }
+		    }	
+		}	
 	    with(obj_ini){scr_company_order(target_company);}
 	}
 

@@ -23,7 +23,7 @@ function scr_chapter_new(argument0) {
 	    role[i,5]="Captain";wep1[i,5]="Power Fist";wep2[i,5]="Bolt Pistol";armour[i,5]="Power Armour";
 	    role[i,6]="Dreadnought";wep1[i,6]="Close Combat Weapon";wep2[i,6]="Lascannon";armour[i,6]="Dreadnought";
 	    role[i,8]="Tactical Marine";wep1[i,8]="Bolter";wep2[i,8]="Chainsword";armour[i,8]="Power Armour";
-	    role[i,9]="Devastator";wep1[i,9]="Heavy Ranged";wep2[i,9]="Combat Knife";armour[i,9]="Power Armour";
+	    role[i,9]="Devastator Marine";wep1[i,9]="Heavy Ranged";wep2[i,9]="Combat Knife";armour[i,9]="Power Armour";
 	    role[i,10]="Assault Marine";wep1[i,10]="Chainsword";wep2[i,10]="Bolt Pistol";armour[i,10]="Power Armour";mobi[i,10]="Jump Pack";
 	    role[i,12]="Scout";wep1[i,12]="Bolter";wep2[i,12]="Combat Knife";armour[i,12]="Scout Armour";
 	    role[i,14]="Chaplain";wep1[i,14]="Power Sword";wep2[i,14]="Bolt Pistol";armour[i,14]="Power Armour";gear[i,14]="Rosarius";
@@ -181,15 +181,16 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	if (argument0="Space Wolves"){founding="N/A";points=150;
 	    selected_chapter=3;chapter=argument0;icon=3;icon_name="sw";founding=0;fleet_type=1;strength=10;purity=8;stability=5;cooperation=4;
 	    adv[1]="Melee Enthusiasts";dis[1]="Black Rage";dis[2]="Suspicious";
-	    homeworld="Ice";homeworld_name="Fenris";recruiting_world="Death";recruiting_name="Parmenio";
+	    homeworld="Ice";homeworld_name="Fenris";
 	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=2;aspirant_trial="Exposure";discipline="rune Magick";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Fenrisian Grey";color_to_secondary="Fenrisian Grey";color_to_trim="Gold";
 	    color_to_pauldron="Gold";color_to_pauldron2="Gold";color_to_lens="Dark Red";
 	    color_to_weapon="Blue";col_special=0;trim=0;
-	    hapothecary="Ranek Icewalker";hchaplain="Ulrik the Slayer";clibrarian="Njal Stormcaller";fmaster="Krom Dragongaz";admiral="Engir Krakendoom";
-	    battle_cry="For Russ and the Allfather";// monastery_name="Fortress of Hera";master_name=
-	    equal_specialists=0;load_to_ships=[2,0,0];successors=1;
+	    hapothecary="Ulstvan Morkaison";hchaplain="Ulrik the Slayer";clibrarian="Njal Stormcaller";fmaster="Krom Dragongaze";
+		admiral="Gunnar Red Moon";recruiter="Sven Bloodhowl";
+	    battle_cry="For Russ and the Allfather";// monastery_name="The Fang";master_name=
+	    equal_specialists=1;load_to_ships=[2,0,0];successors=1;
 	    mutations=0;mutations_selected=0;
 	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
 	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -356,12 +357,77 @@ if (argument0="White Scars"){founding="N/A";points=150;
 		role[i,2]="Shadow Warden";mobi[i,2]="Jump Pack";
 		}
 	}
+	
+		if (argument0="Black Templars"){founding=4;points=200;
+	    selected_chapter=10;chapter=argument0;icon=10;icon_name="bt";founding=4;
+	    fleet_type=3;strength=5;purity=7;stability=10;cooperation=5;
+	    adv[1]="Melee Enthusiasts";adv[2]="Kings of Space";adv[3]="Reverent Guardians";adv[4]="Brothers, All";dis[1]="Psyker Intolerant";dis[2]="Suspicious";
+	    homeworld_exists=0;recruiting_exists=1;
+	    recruiting_name=global.name_generator.generate_star_name();
+		aspirant_trial="Apprenticeship";
+	    // Pauldron2: Left, Pauldron: Right
+	    color_to_main="Black";color_to_secondary="Black";color_to_trim="Silver";
+	    color_to_pauldron2="White";color_to_pauldron="White";color_to_lens="Dark Red";
+	    color_to_weapon="Black";col_special=0;trim=0;
+	    battle_cry="No Pity! No Remorse! No Fear";
+	    equal_specialists=1;load_to_ships=[2,0,0];successors=0;
+	    mutations=2;mutations_selected=2;
+	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=1;
+	    zygote=0;betchers=1;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
+		hchaplain="Grimaldus"; fmaster="Jurisian"; recruiter="Emrik";
+		admiral="Stenheir";hapothecary="Colber";
+	   disposition[1]=50;// Prog
+	    disposition[2]=60;//Imperium
+		disposition[3]=40;//Admech
+		disposition[4]=30;//Inquisition
+		disposition[5]=80;//Ecclesiarchy
+	    disposition[6]=35;// Astartes
+	    disposition[7]=0;// Reserved
+	    chapter_master_name="Helbrecht";chapter_master_melee=5;
+	    chapter_master_ranged=2;chapter_master_specialty=2;
+		role[i,5]="Marshall";wep1[i,5]="Power Sword";
+		role[i,3]="Sword Brother";
+	}
+	
+if (argument0="Minotaurs"){founding=10;points=450;
+	    selected_chapter=11;chapter=argument0;icon=11;icon_name="min";founding=10;
+	    fleet_type=2;strength=5;purity=10;stability=10;cooperation=2;
+	    adv[1]="Paragon";adv[2]="Siege Masters";adv[3]="Boarders";adv[4]="Enemy: Fallen";dis[1]="Suspicious";
+	    homeworld_exists=0;recruiting_exists=1;
+	    recruiting_world="Death";recruiting_name=global.name_generator.generate_star_name();
+	    homeworld_rule=0;aspirant_trial="Challenge";
+	    // Pauldron2: Left, Pauldron: Right
+	    color_to_main="Copper";color_to_secondary="Copper";color_to_trim="Copper";
+	    color_to_pauldron2="Red";color_to_pauldron="Copper";color_to_lens="Red";
+	    color_to_weapon="Brown";col_special=0;trim=1;
+		hchaplain="Ivanus Enkomi"; 
+		fmaster="Varro Crag";clibrarian="Lykos Gorgon";hapothecary="Raze Korthos"
+	    recruiter="Axion Eurytos";admiral="Thoul Brontes";
+	    battle_cry="...";
+	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
+	    mutations=0;mutations_selected=0;
+	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
+	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
+	    disposition[1]=0;// Prog
+	    disposition[2]=100;//Imperium
+		disposition[3]=50;//Admech
+		disposition[4]=60;//Inquisition
+		disposition[5]=25;//Ecclesiarchy
+	    disposition[6]=30;// Astartes
+	    disposition[7]=0;// Reserved
+	    chapter_master_name="Asterion Moloc";chapter_master_melee=5;
+	    chapter_master_ranged=7;chapter_master_specialty=2;
+	}
+
+	
+	
 	if (argument0="Blood Ravens"){
 		founding=10;points=100;
 	    selected_chapter=12;chapter=argument0;icon=12;icon_name="br";
 	    fleet_type=2;strength=5;purity=10;stability=6;cooperation=7;
 	    adv[1]="Scavengers";adv[2]="Psyker Abundance";dis[1]="Suspicious";
-	    // hapothecary="Ranek Icewalker";hchaplain="Mikelus";clibrarian="Njal Stormcaller";fmaster="Krom Dragongaz";admiral="Engir Krakendoom";
+	    hapothecary="Galan";hchaplain="Apollo Diomedes";clibrarian="Jonah Orion";
+		fmaster="Martellus";admiral="Aramus";recruiter="Cyrus";
 	    homeworld="Dead";homeworld_name="Aurelia";flagship_name="Omnis Arcanum";
 	    homeworld_exists=0;recruiting_exists=1;
 	    recruiting_world="Death";recruiting_name="Trontiux";
@@ -391,7 +457,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 		color_to_main="Blue";color_to_secondary="Blue";color_to_trim="White";color_to_pauldron="Blue"
 		color_to_pauldron2="Blue";color_to_lens="Red";color_to_weapon="Black"
 		hapothecary="Curien Droga";hchaplain="Marqol Tomasi";clibrarian="Eustace Mendoza";fmaster="Javier Adon";admiral="Alessio Cortez"
-                recruiter="Ishmael Icario"
+        recruiter="Ishmael Icario"
 		battle_cry="There is only the Emperor!  He is our shield and our protector!";
 	        equal_specialists=0;load_to_ships=[2,0,0];successors=0;
 	        mutations=2;mutations_selected=2;
@@ -438,39 +504,6 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 
 
 
-if (argument0="Minotaurs"){founding=10;points=450;
-	    selected_chapter=16;chapter=argument0;icon=11;icon_name="min";founding=10;
-	    fleet_type=2;strength=5;purity=10;stability=10;cooperation=2;
-	    adv[1]="Paragon";adv[2]="Siege Masters";adv[3]="Boarders";adv[4]="Enemy: Fallen";dis[1]="Suspicious";
-	    homeworld_exists=0;recruiting_exists=1;
-	    recruiting_world="Death";recruiting_name=global.name_generator.generate_star_name();
-	    homeworld_rule=0;aspirant_trial="Challenge";
-	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Brown";color_to_secondary="Brown";color_to_trim="Red";
-	    color_to_pauldron2="Red";color_to_pauldron="Brown";color_to_lens="Red";
-	    color_to_weapon="Brown";col_special=0;trim=1;
-		hchaplain="Ivanus Enkomi"; 
-		fmaster="Spartacus";clibrarian="Plato";hapothecary="Asclepius"
-	    recruiter="Artemis";admiral="Themistocles";
-	    battle_cry="...";
-	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
-	    mutations=0;mutations_selected=0;
-	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
-	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
-	    disposition[1]=0;// Prog
-	    disposition[2]=100;//Imperium
-		disposition[3]=50;//Admech
-		disposition[4]=60;//Inquisition
-		disposition[5]=25;//Ecclesiarchy
-	    disposition[6]=30;// Astartes
-	    disposition[7]=0;// Reserved
-	    chapter_master_name="Asterion Moloc";chapter_master_melee=5;
-	    chapter_master_ranged=7;chapter_master_specialty=2;
-		flagship_name= "Fidelitas Omicron";
-	}
-
-
-
 	if (argument0="Lamenters"){founding=5;points=100;
 	    selected_chapter=14;chapter=argument0;icon=14;icon_name="lam";founding=5;
 	    fleet_type=3;strength=1;purity=10;stability=9;cooperation=10;
@@ -497,34 +530,7 @@ if (argument0="Minotaurs"){founding=10;points=450;
 	}
 	
 	
-	if (argument0="Black Templars"){founding=4;points=350;
-	    selected_chapter=14;chapter=argument0;icon=10;icon_name="bt";founding=4;
-	    fleet_type=2;strength=10;purity=10;stability=9;cooperation=6;
-	    adv[1]="Melee Enthusiasts";adv[2]="Kings of Space";adv[3]="Reverent Guardians";dis[1]="Psyker Intolerant";dis[2]="Suspicious";
-	    homeworld_exists=0;recruiting_exists=1;
-	    recruiting_name=global.name_generator.generate_star_name();
-		aspirant_trial="Apprenticeship";
-	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Black";color_to_secondary="Black";color_to_trim="Black";
-	    color_to_pauldron2="White";color_to_pauldron="White";color_to_lens="Dark Red";
-	    color_to_weapon="Black";col_special=0;trim=1;
-	    battle_cry="No Pity! No Remorse! No Fear";
-	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
-	    mutations=2;mutations_selected=0;
-	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=1;
-	    zygote=0;betchers=1;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
-		hchaplain="Grimaldus";
-	   disposition[1]=50;// Prog
-	    disposition[2]=60;//Imperium
-		disposition[3]=40;//Admech
-		disposition[4]=30;//Inquisition
-		disposition[5]=80;//Ecclesiarchy
-	    disposition[6]=35;// Astartes
-	    disposition[7]=0;// Reserved
-	    chapter_master_name="Helbrecht";chapter_master_melee=5;
-	    chapter_master_ranged=2;chapter_master_specialty=2;
-		flagship_name= "Eternal Crusader";
-	}
+
 
 
 

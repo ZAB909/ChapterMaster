@@ -20,12 +20,20 @@ feature="";
 garrison="";
 garrison_data_slate = new data_slate();
 garrison_data_slate.title = "Garrison Report"
+main_data_slate = new data_slate();
 
+buttons_selected = false;
 button1="";
 button2="";
 button3="";
 button4="";
 button5="";
+        
+shutter_1 = new shutter_button();
+shutter_2 = new shutter_button();
+shutter_3 = new shutter_button();
+shutter_4 = new shutter_button();
+shutter_5 = new shutter_button();
 attack=0;
 raid=0;
 bombard=0;

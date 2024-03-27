@@ -229,7 +229,7 @@ for(var i=100; i<103; i++){
     obj_controller.r_mobi[i,8]="";
     obj_controller.r_gear[i,8]="";
     
-    obj_controller.r_role[i,9]="Devastator";
+    obj_controller.r_role[i,9]="Devastator Marine";
     obj_controller.r_wep1[i,9]="Heavy Ranged";
     obj_controller.r_wep2[i,9]="Combat Knife";
     obj_controller.r_armour[i,9]="Power Armour";
@@ -988,6 +988,12 @@ enum eFACTION {
 	Heretics,
 	Necrons = 13
 }
+imperial_factions = [
+    eFACTION.Imperium,
+    eFACTION.Mechanicus,
+    eFACTION.Inquisition,
+    eFACTION.Ecclesiarchy,
+]
 faction[0]="";
 disposition[0]=0;
 faction[eFACTION.Player]="Player";

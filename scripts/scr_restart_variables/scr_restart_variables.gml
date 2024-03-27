@@ -148,7 +148,7 @@ function scr_restart_variables(saved_game) {
 			obj_restart_vars.r_gear[i,8]="";
         
 	        obj_restart_vars.r_race[i,9]=1;
-	        obj_restart_vars.r_role[i,9]="Devastator";
+	        obj_restart_vars.r_role[i,9]="Devastator Marine";
 			obj_restart_vars.r_wep1[i,9]="Heavy Ranged";
 			obj_restart_vars.r_wep2[i,9]="Combat Knife";
 	        obj_restart_vars.r_armour[i,9]="Power Armour";
@@ -378,7 +378,7 @@ function scr_restart_variables(saved_game) {
 			obj_controller.r_gear[i,8]="";
         
 	        obj_controller.r_race[i,9]=1;
-	        obj_controller.r_role[i,9]="Devastator";
+	        obj_controller.r_role[i,9]="Devastator Marine";
 			obj_controller.r_wep1[i,9]="Heavy Ranged";
 			obj_controller.r_wep2[i,9]="Combat Knife";
 	        obj_controller.r_armour[i,9]="Power Armour";
@@ -618,7 +618,7 @@ function scr_restart_variables(saved_game) {
 			armour[i,8]="Power Armour";
 	        
 			race[i,9]=1;
-			role[i,9]="Devastator";
+			role[i,9]="Devastator Marine";
 			wep1[i,9]="Heavy Ranged";
 			wep2[i,9]="Combat Knife";
 			armour[i,9]="Power Armour";

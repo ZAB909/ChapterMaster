@@ -7,6 +7,8 @@ construction_started = 0;
 eta = 0;
 target_comp = obj_controller.new_vehicles;
 
+slate_panel =  new data_slate();
+scroll_point=0;
 tooltip_show = 0;
 tooltip = "";
 tooltip_stat1 = 0;
@@ -14,6 +16,7 @@ tooltip_stat2 = 0;
 tooltip_stat3 = 0;
 tooltip_stat4 = 0;
 tooltip_other = "";
+last_item = "";
 forge_master = scr_role_count("Forge Master", "", "units");
 if (array_length(forge_master)>0){
     forge_master=forge_master[0];
@@ -43,7 +46,7 @@ var research_pathways = obj_controller.production_research_pathways;
 var i, rene;
 i = -1;
 rene = 0;
-repeat(40) {
+repeat(80) {
     i += 1;
     item[i] = "";
     x_mod[i] = 0;
@@ -374,6 +377,16 @@ if (shop = "equipment") {
         item_cost[i] = 0;
     }
     i += 1;
+    item[i] = "Plasma Cannon";
+    forge_cost[i] = 600;
+    if (research.plasma[0]<1) then forge_cost[i] = 0;
+    item_stocked[i] = scr_item_count(item[i]);
+    item_cost[i] = 300;
+    if (rene = 1) {
+        nobuy[i] = 1;
+        item_cost[i] = 0;
+    }    
+    i += 1;
     x_mod[i] = 9;
     item[i] = "Archeotech Laspistol";
     item_stocked[i] = scr_item_count(item[i]);
@@ -404,13 +417,11 @@ if (shop = "equipment") {
         nobuy[i] = 1;
         item_cost[i] = 0;
     }
-
-    i = 0;
-
-    repeat(39) {
-        i += 1;
-        if (item[i] != ""){
-            mc_stocked[i] = scr_item_count(item[i], "master_crafted");
+    var mc = 0;
+    repeat(i) {
+        mc++;
+        if (item[mc] != ""){
+            mc_stocked[mc] = scr_item_count(item[mc], "master_crafted");
         }
     }
 }
@@ -510,8 +521,10 @@ if (shop = "equipment2") {
         } else {
             tooltip_overide[i] = "requires : #";
             if (research.armour[0] < 2 && mk_4_able){
+                tooltip_overide[i] += $"     {research_pathways.armour[0][1]}#";
+            } else {
                 tooltip_overide[i] = mk_4_tool_tip;
-                tooltip_overide[i] += $"     {research_pathways.armour[0][2].stealth[0][0]}#";
+                tooltip_overide[i] += $"#     {research_pathways.armour[0][1]}#";
             }
         }
     }    
@@ -636,11 +649,11 @@ if (shop = "equipment2") {
     item_stocked[i] = scr_item_count(item[i]);
     item_cost[i] = 2500;
 
-    i=0;
-    repeat(39) {
-        i += 1;
-        if (item[i] != ""){
-            mc_stocked[i] = scr_item_count(item[i], "master_crafted");
+    mc=0;
+    repeat(i) {
+        mc += 1;
+        if (item[mc] != ""){
+            mc_stocked[i] = scr_item_count(item[mc], "master_crafted");
         }
     }    
 
@@ -994,7 +1007,7 @@ with(obj_p_fleet) {
     }
 }
 with(obj_star) {
-    if ((p_owner[1] = 1) or(p_owner[2] = 1) or(p_owner[3] = 1) or(p_owner[4] = 1)) and(trader > 0) then obj_shop.discount = 1;
+    if (array_contains(p_owner, 1)) and(trader > 0) then obj_shop.discount = 1;
 }
 
 
@@ -1004,10 +1017,10 @@ if (shop = "equipment") or(shop = "equipment2") {
     if (obj_controller.stc_wargear >= 1) then disc = 0.92;
     if (obj_controller.stc_wargear >= 3) then disc = 0.86;
     if (obj_controller.stc_wargear >= 5) then disc = 0.75;
-    i = 0;
-    repeat(31) {
-        i += 1;
-        if (item_cost[i] > 1) then item_cost[i] = round(item_cost[i] * disc);
+    var mc = 0;
+    repeat(i) {
+        mc++;
+        if (forge_cost[mc] > 1) then forge_cost[mc] = round(forge_cost[mc] * disc);
     }
 }
 if (shop = "vehicles") {
@@ -1016,14 +1029,14 @@ if (shop = "vehicles") {
     if (obj_controller.stc_vehicles >= 1) then disc = 0.92;
     if (obj_controller.stc_vehicles >= 3) then disc = 0.86;
     if (obj_controller.stc_vehicles >= 5) then disc = 0.75;
-    i = 0;
+   var mc = 0;
     repeat(31) {
-        i += 1;
+        mc += 1;
         var ahuh;
         ahuh = 1;
-        if (i >= 7) and(i <= 12) then ahuh = 0;
+        if (mc >= 7) and(mc <= 12) then ahuh = 0;
         if (ahuh = 1) {
-            if (item_cost[i] > 1) then item_cost[i] = round(item_cost[i] * disc);
+            if (forge_cost[mc] > 1) then forge_cost[mc] = round(forge_cost[mc] * disc);
         }
     }
 }
@@ -1039,14 +1052,14 @@ if (shop == "production"){
     }
     if (research.psi[0] == 0){
         i++;
-        item[i] = ["research", research_pathways.psi[0][research.psi[0]], ["flame"]];
+        item[i] = ["research", research_pathways.psi[0][research.psi[0]], ["psi"]];
         item_stocked[i] = 0;
         forge_cost[i] = 3000;
         tooltip_overide[i] = "Allows Force Weapon construction";
     }
-    if (research.psi[0] == 0){
+    if (research.las[0] == 0){
         i++;
-        item[i] = ["research", research_pathways.las[0][research.psi[0]], ["flame"]];
+        item[i] = ["research", research_pathways.las[0][research.las[0]], ["las"]];
         item_stocked[i] = 0;
         forge_cost[i] = 3000;
         tooltip_overide[i] = "Allows Construction of advanced Las Weaponry";
@@ -1113,7 +1126,7 @@ if (shop == "production"){
         item[i] = ["research",research_pathways.armour[0][0], ["armour"]];
         item_stocked[i] = 0;
         forge_cost[i] = 3000;
-        tooltip_overide[i] = "Allows Mk6 construction#Required for MK8 construction#Required for Terminator Armour Construction";        
+        tooltip_overide[i] = "Allows Mk7 construction#Required for MK8 construction#Required for Terminator Armour Construction";        
     } else if  (research.armour[0]==1){
         i++;
         item[i] = ["research",research_pathways.armour[0][1], ["armour"]];
@@ -1123,6 +1136,7 @@ if (shop == "production"){
     }
 
 }
+legitimate_items = i;
 if (shop = "warships") {
     var disc;
     disc = 1;
@@ -1156,7 +1170,7 @@ forge_master_modifier=0;
 if (forge_master!="none"){
     forge_master_modifier = 2500/((forge_master.charisma+10)*forge_master.technology);
     if (forge_master.has_trait("flesh_is_weak") && forge_master_modifier>0.75){
-        forge_master_modifier-=1;
+        forge_master_modifier-=0.1;
     };
 } else {
     forge_master_modifier=1.7;
@@ -1173,7 +1187,7 @@ if (forge_master!="none"){
 	}
 	item_cost[i] *= forge_master_modifier;
     item_cost[i] = ceil(item_cost[i]);
-}  
+}
 
 
 /* */

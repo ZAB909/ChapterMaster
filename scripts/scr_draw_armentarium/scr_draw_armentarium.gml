@@ -3,7 +3,7 @@
 function drop_down_sandwich(selection, draw_x, draw_y, options, open_marker,left_text,right_text){
 	draw_text_transformed(draw_x, draw_y, left_text,1,1,0);
 	draw_x += string_width(left_text)+5;
-	var results = drop_down(selection, draw_x, draw_y, options,open_marker);
+	var results = drop_down(selection, draw_x, draw_y-2, options,open_marker);
     draw_set_color(c_gray);
 	draw_text_transformed(draw_x+9+ string_width(selection), draw_y, right_text,1,1,0);
     return results;
@@ -108,7 +108,7 @@ function calculate_research_points(turn_end=false){
     with (obj_controller){
         research_points = 0;
         forge_points = 0;
-        forge_string="";
+        forge_string = $"Forge Production Rate#";
         var heretics = [], forge_master=-1, notice_heresy=false, forge_point_gen=[], crafters=0, at_forge=0, gen_data={};
         var tech_locations=[]
         var techs = collect_role_group("forge");
@@ -132,34 +132,34 @@ function calculate_research_points(turn_end=false){
         if (forge_master>-1){
             obj_controller.master_of_forge = techs[forge_master];
         }
-        forge_string = $"Techmarines : {floor(forge_points)}#";
+        forge_string += $"Techmarines: +{floor(forge_points)}#";
         var forge_veh_maintenance={};
         for (var comp=0;comp<=10;comp++){
             for (var veh=0;veh<=100;veh++){
                 if (obj_ini.veh_role[comp][veh]=="Land Raider"){
-                    forge_veh_maintenance.land_raider = struct_exists(forge_veh_maintenance, "land_raider") ?forge_veh_maintenance.land_raider +1 : 1;
+                    forge_veh_maintenance.land_raider = struct_exists(forge_veh_maintenance, "land_raider") ?forge_veh_maintenance.land_raider + 1 : 1;
                 } else if (array_contains(["Rhino","Predator", "Whirlwind"],obj_ini.veh_role[comp][veh])){
-                    forge_veh_maintenance.small_vehicles = struct_exists(forge_veh_maintenance, "small_vehicles") ?forge_veh_maintenance.small_vehicles + 0.1 :0.1;
+                    forge_veh_maintenance.small_vehicles = struct_exists(forge_veh_maintenance, "small_vehicles") ?forge_veh_maintenance.small_vehicles + 0.2 :0.2;
                 }
             }
         }
 
         if (struct_exists(forge_veh_maintenance, "land_raider")){
-            forge_string += $"Land Raider Maintenance : -{forge_veh_maintenance.land_raider}#";
+            forge_string += $"Land Raider Maintenance: -{forge_veh_maintenance.land_raider}#";
             forge_points-=forge_veh_maintenance.land_raider;
         }
         if (struct_exists(forge_veh_maintenance, "small_vehicles")){
             if (floor(forge_veh_maintenance.small_vehicles)>0){
-                forge_string += $"Small Vehicle Maintenance : -{floor(forge_veh_maintenance.small_vehicles)}#";
+                forge_string += $"Small Vehicle Maintenance: -{floor(forge_veh_maintenance.small_vehicles)}#";
                 forge_points-=floor(forge_veh_maintenance.small_vehicles);
             }
         }
         if (player_forges>0){
             forge_points += 5*player_forges;
-            forge_string += $"Forges : {5*player_forges}#";
+            forge_string += $"Forges: +{5*player_forges}#";
         }
         forge_points = floor(forge_points);
-        var tech_test, charisma_test, piety_test;
+        var tech_test, charisma_test, piety_test, met_non_heretic;
         //in this instance tech heretics are techmarines with the "tech_heretic" trait
         if (turn_end){
             if (array_length(techs)==0) then scr_loyalty("Upset Machine Spirits","+");
@@ -170,6 +170,7 @@ function calculate_research_points(turn_end=false){
                     heretic_location = tech_locations[heretics[heretic]];
                     current_heretic = techs[heretics[heretic]];
                     //iterate through rest of techs
+                    met_non_heretic = false;
                     for (var i=0; i<array_length(techs); i++){
                         same_location=false;
                         //if tech is also heretic skip
@@ -178,6 +179,7 @@ function calculate_research_points(turn_end=false){
 
                         // find out if heretic is in same location as techmarine
                         if (same_locations(heretic_location,tech_locations[i])){
+                            met_non_heretic=true;
                             //if so do a an opposed technology test of techmarine vs tech  heretic techmarine
                             tech_test = global.character_tester.oppposed_test(current_heretic,current_tech, "technology");
 
@@ -189,19 +191,21 @@ function calculate_research_points(turn_end=false){
                                     // if heretic win tech is corrupted
                                     //tech is corrupted by half the pass margin of the heretic
                                     //this means high charisma heretics will spread corruption more quickly and more often
-                                    current_tech.corruption += charisma_test[1];
+                                    if (current_heretic.corruption>current_tech.corruption){
+                                        current_tech.edit_corruption(min(4,charisma_test[1]));
+                                    }
 
                                     // tech takes a piety test to see if tehy break faith with cult mechanicus and become tech heretic
                                     //piety test is augmented by by the techs corruption with the test becoming harder to pass the more
                                     // corrupted the tech is
-                                    piety_test = global.character_tester.standard_test(current_tech, "piety", +65 - current_tech.corruption);
+                                    piety_test = global.character_tester.standard_test(current_tech, "piety", +75 - current_tech.corruption);
 
                                     // if tech fails piety test tech also becomes tech heretic
-                                    if (piety_test[0] == false){
+                                    if (piety_test[0] == false && choose(true,false)){
                                         current_tech.add_trait("tech_heretic");
                                     }
                                 } else if (charisma_test[0]==2){
-                                    if (charisma_test[1] > 25 && notice_heresy=false){
+                                    if (charisma_test[1] > 40 && notice_heresy=false){
                                         scr_alert("purple","Tech Heresy",$"{current_tech.name_role()} contacts you concerned of Tech Heresy in the Armentarium");
                                         notice_heresy=true;
                                     }
@@ -219,28 +223,35 @@ function calculate_research_points(turn_end=false){
                             }
                         }
                     }
+                    if (!met_non_heretic){
+                        if (irandom(4)==0){
+                            current_heretic.edit_corruption(1);
+                        }
+                    }
                     //add check to see if tech heretic is anywhere near mechanicus forge if so maybe do stuff??
                     /*if (heretic_location==location_types.planet){
                         if 
                     }*/
                 }
-
-                if (array_length(heretics)/array_length(techs)>=0.35){
-                    if (irandom(9)==0){
-                        /*var text_string = "You Recive an Urgent Transmision from";
-                        if (forge_master>-1){
-
-                        }*/
-                        scr_popup("Technical Differences!","You Recive an Urgent Transmision A serious breakdown in culture has coccured causing believers in tech heresy to demand that they are given preseidence and assurance to continue their practises","tech_uprising","");
+                if (array_length(techs)>array_length(heretics)){
+                    if (array_length(heretics)/array_length(techs)>=0.35){
+                        if (irandom(9)==0){
+                            /*var text_string = "You Recive an Urgent Transmision from";
+                            if (forge_master>-1){
+    
+                            }*/
+                            scr_popup("Technical Differences!","You Recive an Urgent Transmision A serious breakdown in culture has coccured causing believers in tech heresy to demand that they are given preseidence and assurance to continue their practises","tech_uprising","");
+                        }
                     }
                 }
             }
-            possibility_of_heresy = 6;
-            if (array_contains(obj_ini.dis,"Tech-Heresy")) then possibility_of_heresy = 5;
+            possibility_of_heresy = 8;
+            if (array_contains(obj_ini.dis,"Tech-Heresy")) then possibility_of_heresy = 6;
             if (irandom(power(possibility_of_heresy,(array_length(heretics)+2))) == 0 && array_length(techs)>0){
                 var current_tech = techs[irandom(array_length(techs)-1)];
                if  (!global.character_tester.standard_test(current_tech, "piety")[0]){
                    current_tech.add_trait("tech_heretic");
+                   current_tech.edit_corruption(20+irandom(15));
                }
             }
             if (forge_master==-1){ 
@@ -367,14 +378,7 @@ function scr_draw_armentarium(){
     draw_set_color(c_gray);
     draw_rectangle(xx + 326 + 16, yy + 66, xx + 887 + 16, yy + 818, 1);
     draw_line(xx + 326 + 16, yy + 426, xx + 887 + 16, yy + 426);
-
-    draw_set_alpha(0.75);
-    draw_set_color(0);
-    draw_rectangle(xx + 945, yy + 66, xx + 1580, yy + 818, 0);
-    draw_set_alpha(1);
-    draw_set_color(c_gray);
-    draw_rectangle(xx + 945, yy + 66, xx + 1580, yy + 818, 1);
-
+    
     if (menu_adept = 0) {
         // draw_sprite(spr_advisors,4,xx+16,yy+43);
         scr_image("advisor", 4, xx + 16, yy + 43, 310, 828);
@@ -382,7 +386,7 @@ function scr_draw_armentarium(){
         draw_set_color(c_gray);
         draw_set_font(fnt_40k_30b);
         var header =  in_forge ? "Forge" : "Armamentarium";
-        draw_text_transformed(xx + 336 + 16 + 250, yy + 66, string_hash_to_newline(header), 1, 1, 0);
+        draw_text_transformed(xx + 336 + 16, yy + 66, string_hash_to_newline(header), 1, 1, 0);
         if (!in_forge){
             draw_set_font(fnt_40k_30b);
             draw_text_transformed(xx + 336 + 16, yy + 100, string_hash_to_newline("Forge Master " + string(obj_ini.name[0, 2])), 0.6, 0.6, 0);
@@ -598,7 +602,7 @@ function scr_draw_armentarium(){
             y_offset,
             ["vehicles","wargear", "ships"],
             research_drop_down,
-            "research is currently focussed on", 
+            "Research is currently focussed on", 
             ".");
         research_drop_down = drop_down_results[1];
         stc_research.research_focus = drop_down_results[0]; 
@@ -804,7 +808,7 @@ function scr_draw_armentarium(){
         draw_text(xx+600,yy+109,string_hash_to_newline("Forge Points"));
         draw_text(xx+700,yy+109,string_hash_to_newline("Construction ETA"));        
         draw_set_color(c_gray);
-        var item_gap = 127;
+        var item_gap = 130;
         var total_eta=0;
         static top_point=0;
         for (var i=top_point; i<13; i++){
@@ -875,23 +879,15 @@ function scr_draw_armentarium(){
              }                     
             item_gap +=20
         }
-        draw_set_color(c_red);
+        // draw_set_color(c_red);
         //draw_line(xx + 326 + 16, yy + 426, xx + 887 + 16, yy + 426);         
-        draw_sprite_ext(
-            spr_forge_points_icon,0, 
-            xx+359,
-            yy + 410,
-            1, 
-            1, 
-            0,
-            c_white,
-            1); 
-        draw_set_color(c_white);
-        draw_text_transformed(xx+359+38,yy + 442-(string_height("0")/2), $": {forge_points}",2,2,0);
-        draw_set_color(c_red); 
-        draw_text(xx+359, yy + 470,$"total {obj_ini.role[100, 16]}'s : {temp[36]}");
-        draw_text(xx+359, yy + 490,$"Chapter Forges : {obj_controller.player_forges}");
-        draw_text(xx+359, yy + 510,$"total {obj_ini.role[100, 16]}'s assigned to forges : 0")
-
+        draw_set_color(#af5a00);
+        draw_set_font(fnt_40k_14b)
+        var forge_text = $"Forge point production per turn: {forge_points}#";
+        // draw_sprite_ext(spr_forge_points_icon,0,xx+359+string_width(forge_text), yy+410,0.3,0.3,0,c_white,1);
+        forge_text += $"Chapter total {obj_ini.role[100, 16]}s: {temp[36]}#";
+        forge_text += $"Planetary Forges in operation: {obj_controller.player_forges}#";
+        // forge_text += $"A total of {obj_ini.role[100, 16]}s assigned to Forges: {var}#";
+        draw_text_ext(xx+359, yy+410, string_hash_to_newline(forge_text),-1,670);
     }
 }

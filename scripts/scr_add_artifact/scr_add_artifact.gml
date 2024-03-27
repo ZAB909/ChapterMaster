@@ -201,9 +201,47 @@ function arti_struct(Index)constructor{
             variable_struct_set(self, names[i], variable_struct_get(data, names[i]))
         }
 	}
+
+	static determine_base_type = function(){
+		var item_type = "";
+	    if struct_exists(global.gear[$ "armour"],type()){
+            item_type = "armour";
+        }
+        else if struct_exists(global.gear[$ "mobility"],type()){
+            item_type = "mobility";
+        }
+        else if struct_exists(global.gear[$ "gear"],type()){
+            item_type = "gear";
+        }
+        else if struct_exists(global.weapons,type()){
+            item_type = "weapon";
+        }
+        return (item_type);
+	};
+
+	static unequip_from_unit = function(){
+		if (equipped() && is_array(bearer)){
+			var b_type = determine_base_type();
+			var unit = fetch_unit(bearer);
+			if (b_type=="weapon"){
+				if (unit.weapon_one(true) == index){
+					unit.update_weapon_one("", false, false);
+				} else if (unit.weapon_two(true) == index){
+					unit.update_weapon_two("", false, false);
+				} 
+			} else if (b_type=="gear"){
+				unit.update_gear("", false, false);
+			} else if (b_type=="armour"){
+				unit.update_armour("", false, false);
+			} else if (b_type=="mobility"){
+				unit.update_mobility_item("", false, false);
+			}
+		}
+	}
 	custom_data = {};
 	name = "";
-	custom_description="";	
+	custom_description="";
+	bearer=false;
 
 	static description = scr_arti_descr;
 }

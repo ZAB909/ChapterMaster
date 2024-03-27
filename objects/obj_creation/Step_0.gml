@@ -198,6 +198,9 @@ if (custom==2){
     if (chapter=="Blood Ravens") then name_bad=1;
     if (chapter=="Doom Benefactors") then name_bad=1;
 	if (chapter=="Crimson Fists") then name_bad=1;
+	if (chapter=="Minotaurs") then name_bad=1;
+	if (chapter=="Black Templars") then name_bad=1;
+	if (chapter=="Soul Drinkers") then name_bad=1;
 }
 var good=0;
 if (color_to_main!=""){
