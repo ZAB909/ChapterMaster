@@ -64,19 +64,17 @@ function scr_draw_unit_image(x_draw, y_draw){
         if ((ui_specialist==14 || role()=="Chapter Master")) and (global.chapter_name=="Blood Angels") then ui_coloring="gold";
         // Sets up the description for the equipement of current marine            
     
-        var armor_type=ArmorType.Normal,armour_sprite=spr_weapon_blank,show1,show2;
+        var armor_type=ArmorType.Normal,armour_sprite=spr_weapon_blank;
         var back_type=BackType.None,hood=0,skull=0,arm=0,halo=0,braz=0,slow=0,brothers=-5,body_part;
 
-        var unit_skin=obj_ini.skin_color;
-    
-        var unit_wep1,unit_wep2,unit_armor,unit_gear,unit_back;
-		
-        unit_wep1=string_replace(weapon_one(),"Arti. ","");
-        unit_wep2=string_replace(weapon_two(),"Arti. ","");
-        unit_armor=string_replace(armour(),"Arti. ","");
-        unit_gear=string_replace(gear(),"Arti. ","");
-        unit_back=string_replace(mobility_item(),"Arti. ","");
-    
+        var skin_color=obj_ini.skin_color;
+
+        var unit_wep1=string_replace(weapon_one(),"Arti. ","");
+        var unit_wep2=string_replace(weapon_two(),"Arti. ","");
+        var unit_armor=string_replace(armour(),"Arti. ","");
+        var unit_gear=string_replace(gear(),"Arti. ","");
+        var unit_back=string_replace(mobility_item(),"Arti. ","");
+
         if (ui_specialist=7 || ui_specialist=1 || ui_specialist=111){
             if (array_contains(obj_ini.adv, "Reverent Guardians")){
                 braz=1
@@ -437,11 +435,11 @@ function scr_draw_unit_image(x_draw, y_draw){
             }
         
             if (armor_type==ArmorType.None){            
-                if (ui_specialist==111 && global.chapter_name=="Doom Benefactors") then unit_skin=6;
+                if (ui_specialist==111 && global.chapter_name=="Doom Benefactors") then skin_color=6;
             
-                draw_sprite(spr_marine_base,unit_skin,xx+x_draw,yy+y_draw);
+                draw_sprite(spr_marine_base,skin_color,xx+x_draw,yy+y_draw);
             
-                if (unit_skin!=6) then draw_sprite(spr_clothing_colors,clothing_style,xx+x_draw,yy+y_draw);
+                if (skin_color!=6) then draw_sprite(spr_clothing_colors,clothing_style,xx+x_draw,yy+y_draw);
             } else {
                 if (braz=1) and (blandify=0){
                     if (armor_type==ArmorType.Normal) then draw_sprite(spr_pack_brazier,0,xx+x_draw,yy+y_draw);
@@ -469,8 +467,8 @@ function scr_draw_unit_image(x_draw, y_draw){
                 var specific_helm = false;
                 var helm_draw=[0,0];
                 if (armour()=="Scout Armour"){
-                    draw_sprite(spr_marine_base,unit_skin,xx+x_draw,yy+y_draw);
-                    draw_sprite(spr_marine_base,5,xx+x_draw,yy+y_draw);// Kind of crops the '_unit_skin tone' pixels below the scout ones
+                    draw_sprite(spr_marine_base,skin_color,xx+x_draw,yy+y_draw);
+                    draw_sprite(spr_marine_base,5,xx+x_draw,yy+y_draw);// Kind of crops the '_skin_color tone' pixels below the scout ones
                     draw_sprite(armour_sprite,specialist_colours,xx+x_draw,yy+y_draw);
                     draw_sprite(spr_facial_colors,clothing_style,xx+x_draw,yy+y_draw);
                     specific_armour_sprite=armour_sprite;
