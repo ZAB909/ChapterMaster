@@ -1552,12 +1552,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			return gear_weapon_data("weapon", weapon_two(), type, false, weapon_two_quality);
 		}								
 		static damage_resistance = function(){
-			damage_res = min(75,floor(((constitution*0.005) + (experience()/1000))*100));
+			damage_res = 0;
 			damage_res+=get_armour_data("damage_resistance_mod");
 			damage_res+=get_gear_data("damage_resistance_mod");
 			damage_res+=get_mobility_data("damage_resistance_mod");
 			damage_res+=get_weapon_one_data("damage_resistance_mod");
-			damage_res+=get_weapon_two_data("damage_resistance_mod");
+			damage_res+=get_weapon_two_data("damage_resistance_mod");			
+			damage_res = min(75, damage_res+floor(((constitution*0.005) + (experience()/1000))*100));
 			return damage_res;
 		};
 
