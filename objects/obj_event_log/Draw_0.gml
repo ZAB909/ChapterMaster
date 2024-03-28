@@ -3,7 +3,7 @@ __b__ = action_if_variable(help, 0, 0);
 if __b__
 {
 
-var bad;bad=1;
+var bad=1;
 if (instance_exists(obj_controller)){
     if (obj_controller.menu=17){
         bad=0;
@@ -11,12 +11,16 @@ if (instance_exists(obj_controller)){
 }
 
 if (bad=0){
-    var xx,yy,ent;
-    xx=__view_get( e__VW.XView, 0 )+0;
-    yy=__view_get( e__VW.YView, 0 )+0;
+    var ent;
+    var xx=__view_get( e__VW.XView, 0 )+0;
+    var yy=__view_get( e__VW.YView, 0 )+0;
     
-    draw_set_alpha(1);draw_set_color(0);draw_rectangle(xx,yy,xx+1600,yy+900,0);
-    draw_set_alpha(0.5);draw_sprite(spr_rock_bg,0,xx,yy);draw_set_alpha(1);
+    draw_set_alpha(1);
+    draw_set_color(0);
+    draw_rectangle(xx,yy,xx+1600,yy+900,0);
+    draw_set_alpha(0.5);
+    draw_sprite(spr_rock_bg,0,xx,yy);
+    draw_set_alpha(1);
     
     draw_set_color(c_gray);// 38144
     draw_set_font(fnt_40k_30b);
@@ -24,22 +28,40 @@ if (bad=0){
     draw_text(xx+800,yy+74,string_hash_to_newline(string(global.chapter_name)+" Event Log"));
     draw_set_halign(fa_left);
     
-    var t,p;ent=0;
-    t=0;repeat(500){t+=1;if (event_text[t]!="") then ent+=1;}
+    var t=0,p=-1, cur_event;
+    var ent = array_length(event);
     
-    t=top-1;p=-1;
-    draw_set_font(fnt_40k_14);draw_set_alpha(0.8);
-    repeat(25){t+=1;p+=1;
-        if (event_text[t]!=""){// 1554
-            draw_set_color(38144);
-            if (event_color[t]="red") then draw_set_color(c_red);
-            if (event_color[t]="purple") then draw_set_color(c_purple);
-            
-            draw_text_ext(xx+25,yy+120+(p*26),string_hash_to_newline(string(event_date[t])+" (Turn "+string(event_turn[t])+") - "+string(event_text[t])),-1,1554);
+    draw_set_color(38144);
+    if (ent == 0){
+        draw_text(xx+25,yy+120,string_hash_to_newline("No entries logged."));
+    } else {
+        t=top-2;p=-1;
+        draw_set_font(fnt_40k_14);draw_set_alpha(0.8);
+        repeat(25){
+            t++;
+            p++;
+            if (t>=ent) then break;
+            cur_event = event[t];
+            if (cur_event.text!=""){// 1554
+                draw_set_color(38144);
+                if (cur_event.colour="red") draw_set_color(c_red);
+                if (cur_event.colour="purple") then draw_set_color(c_purple);
+                
+                draw_text_ext(xx+25,yy+120+(p*26), $"{cur_event.date}  (Turn {cur_event.turn}) - {cur_event.text}",-1,1554);
+                if (cur_event.event_target!="none"){
+                   if (point_and_click(draw_unit_buttons([xx+1400,yy+120+(p*26)], "view",[1,1], c_green,fa_left, fnt_40k_14b, 1))){
+                        var view_star = star_by_name(cur_event.event_target);
+                        if (view_star!="none"){
+                            obj_controller.menu=0;
+                            obj_controller.hide_banner=0;
+                            obj_controller.x = view_star.x;
+                            obj_controller.y =view_star.y;
+                        }                    
+                   }
+                }
+            }
         }
     }
-    draw_set_color(38144);
-    if (event_text[1]="") and (event_text[2]="") and (event_text[3]="") then draw_text(xx+25,yy+120,string_hash_to_newline("No entries logged."));
     
     var x1,y1,x2,y2,scrolly,chunk_size,my,y5;
     x1=xx+1557;y1=yy+117;

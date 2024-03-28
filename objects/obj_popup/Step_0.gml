@@ -322,7 +322,7 @@ if (title="Planetary Governor Assassinated") and (option1!="") and (cooldown<=0)
         new_target.dispo[planet]=min(obj_ini.imperium_disposition,obj_controller.disposition[2])+choose(-1,-2,-3,-4,0,1,2,3,4);
         if (randa<=3) then new_target.dispo[planet]=min(new_target.dispo[planet],choose(1,2,3,4,5,6)*3);
         if (randa>=95) then new_target.dispo[planet]=max(new_target.dispo[planet],60+choose(1,2,3,4,5,6)*3);
-        scr_event_log("","Planetary Governor of "+string(new_target.name)+" "+scr_roman(planet)+" assassinated.  The next in line takes over.");
+        scr_event_log("","Planetary Governor of "+string(new_target.name)+" "+scr_roman(planet)+" assassinated.  The next in line takes over.", new_target.name);
         text="The next in line for rule of "+string(new_target.name)+" "+scr_roman(planet)+" has taken over their rightful position of Planetary Governor.";
         option1="";option2="";option3="";
         with(obj_temp4){instance_destroy();}
@@ -441,7 +441,7 @@ if (image="mechanicus") and (title="Mechanicus Mission") or (title="Mechanicus M
                     if (that2>0){
                         tempy.p_problem[that,that2]="mech_tomb1";
                         text="The Adeptus Mechanicus await your forces at "+string(tempy.name)+" "+scr_roman(that)+".  They are expecting at least two squads of Astartes and have placed the testing on hold until their arrival.  You have 16 months to arrive.";
-                        scr_event_log("","Mechanicus Mission Accepted: At least two squads of marines are expected at "+string(tempy.name)+" "+scr_roman(that)+" within 16 months."); 
+                        scr_event_log("","Mechanicus Mission Accepted: At least two squads of marines are expected at "+string(tempy.name)+" "+scr_roman(that)+" within 16 months.", tempy.name); 
                         instance_create(tempy.x+16,tempy.y-24,obj_star_event);
                         tempy.p_timer[that,that2]=17;
                         title="Mechanicus Mission Accepted";
@@ -466,17 +466,17 @@ if (image="mechanicus") and (title="Mechanicus Mission") or (title="Mechanicus M
                         if (string_count("raider",mission)>0){
                             tempy.p_problem[that,that2]="mech_raider!0!";
                             text="The Adeptus Mechanicus await your forces at "+string(tempy.name)+" "+scr_roman(that)+".  They are expecting six "+string(obj_ini.role[100][16])+"s and a Land Raider.";
-                            scr_event_log("","Mechanicus Mission Accepted: Six of your "+string(obj_ini.role[100][16])+"s and a Land Raider are to be stationed at "+string(tempy.name)+" "+scr_roman(that)+" for 24 months."); 
+                            scr_event_log("","Mechanicus Mission Accepted: Six of your "+string(obj_ini.role[100][16])+"s and a Land Raider are to be stationed at "+string(tempy.name)+" "+scr_roman(that)+" for 24 months.", tempy.name); 
                         }
                         if (string_count("bionics",mission)>0){
                             tempy.p_problem[that,that2]="mech_bionics!0!";
                             text="The Adeptus Mechanicus await your forces at "+string(tempy.name)+" "+scr_roman(that)+".  They are expecting ten Astartes with bionics.";
-                            scr_event_log("","Mechanicus Mission Accepted: Ten Astartes with bionics are to be stationed at "+string(tempy.name)+" "+scr_roman(that)+" for 24 months for testing purposes."); 
+                            scr_event_log("","Mechanicus Mission Accepted: Ten Astartes with bionics are to be stationed at "+string(tempy.name)+" "+scr_roman(that)+" for 24 months for testing purposes.", tempy.name); 
                         }
                         if (string_count("mars",mission)>0){
                             tempy.p_problem[that,that2]="mech_mars";
                             text="The Adeptus Mechanicus await your "+string(obj_ini.role[100][16])+"s at "+string(tempy.name)+" "+scr_roman(that)+".  They are willing to hold on the voyage for up to 12 months.";
-                            scr_event_log("","Mechanicus Mission Accepted: "+string(obj_ini.role[100][16])+"s are expected at "+string(tempy.name)+" "+scr_roman(that)+" within 12 months, for the voyage to Mars."); 
+                            scr_event_log("","Mechanicus Mission Accepted: "+string(obj_ini.role[100][16])+"s are expected at "+string(tempy.name)+" "+scr_roman(that)+" within 12 months, for the voyage to Mars.", tempy.name); 
                         }
                         instance_create(tempy.x+16,tempy.y-24,obj_star_event);
                         tempy.p_timer[that,that2]=49;if (string_count("mars",mission)>0) then tempy.p_timer[that,that2]=13;
@@ -854,15 +854,18 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
 					you.p_problem[self.planet,1]="";you.p_timer[self.planet,1]=0;
 				}
                 if (you.p_problem[self.planet,2]="bomb"){ppp=2;
-					you.p_feature[self.planet][search_planet_features(you.p_feature[self.planet], P_features.Necron_Tomb)[0]].sealed = 1;you.p_problem[self.planet,2]="";you.p_timer[self.planet,2]=0;}
+					you.p_feature[self.planet][search_planet_features(you.p_feature[self.planet], P_features.Necron_Tomb)[0]].sealed = 1;
+                    you.p_problem[self.planet,2]="";you.p_timer[self.planet,2]=0;}
                 if (you.p_problem[self.planet,3]="bomb"){ppp=3;
-					you.p_feature[self.planet][search_planet_features(you.p_feature[self.planet], P_features.Necron_Tomb)[0]].sealed = 1;you.p_problem[self.planet,3]="";you.p_timer[self.planet,3]=0;}
+					you.p_feature[self.planet][search_planet_features(you.p_feature[self.planet], P_features.Necron_Tomb)[0]].sealed = 1;
+                    you.p_problem[self.planet,3]="";you.p_timer[self.planet,3]=0;}
                 if (you.p_problem[self.planet,4]="bomb"){ppp=4;
-					you.p_feature[self.planet][search_planet_features(you.p_feature[self.planet], P_features.Necron_Tomb)[0]].sealed = 1;you.p_problem[self.planet,4]="";you.p_timer[self.planet,4]=0;}
+					you.p_feature[self.planet][search_planet_features(you.p_feature[self.planet], P_features.Necron_Tomb)[0]].sealed = 1;
+                    you.p_problem[self.planet,4]="";you.p_timer[self.planet,4]=0;}
                 with(obj_temp5){instance_destroy();}with(obj_temp8){instance_destroy();}
                 instance_activate_object(obj_star);
                 
-                scr_event_log("","Inquisition Mission Completed: Your Astartes have sealed the Necron Tomb on "+string(you.name)+" "+string(scr_roman(ppp))+".");
+                scr_event_log("","Inquisition Mission Completed: Your Astartes have sealed the Necron Tomb on "+string(you.name)+" "+string(scr_roman(ppp))+".", you.name);
                 scr_gov_disp(you.name,ppp,choose(1,2,3,4,5));
                 var have_bomb;have_bomb=scr_check_equip("Plasma Bomb",self.loc,self.planet,1);
                 exit;
@@ -944,7 +947,7 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
         if (you.p_problem[planet][4]="") and (onceh=0){you.p_problem[planet,4]="recon";you.p_timer[planet,4]=estimate;onceh=1;if (demand=1){title="Inquisition Mission Demand";text="The Inquisition demands that your Chapter demonstrate its loyalty to the Imperium of Mankind and the Emperor.  You are to land Astartes on "+string(you.name)+" "+scr_roman(4)+" to investigate the planet within "+string(estimate)+" months.";}}
         if (onceh!=0){var bob;bob=instance_create(you.x+16,you.y-24,obj_star_event);bob.image_alpha=1;bob.image_speed=1;}
         
-        scr_event_log("","Inquisition Mission Accepted: The Inquisition wish for Astartes to land on and investigate "+string(you.name)+" "+scr_roman(planet)+" within "+string(estimate)+" months.");
+        scr_event_log("","Inquisition Mission Accepted: The Inquisition wish for Astartes to land on and investigate "+string(you.name)+" "+scr_roman(planet)+" within "+string(estimate)+" months.", you.name);
     }
     if (mission!="") and (title="Inquisition Mission"){
         with(obj_temp5){instance_destroy();}
@@ -955,7 +958,7 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
             you=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
             var s;s=0;repeat(4){s+=1;if (you.p_problem[planet,s]="") and (onceh=0){you.p_problem[planet,s]="purge";you.p_timer[planet,s]=estimate;onceh=s;}}
             if (onceh!=0){var bob;bob=instance_create(you.x+16,you.y-24,obj_star_event);bob.image_alpha=1;bob.image_speed=1;bob.color="green";}
-            scr_event_log("","Inquisition Mission Accepted: The nobles of "+string(you.name)+" "+string(scr_roman(planet))+" must be selectively purged within "+string(estimate)+" months.");
+            scr_event_log("","Inquisition Mission Accepted: The nobles of "+string(you.name)+" "+string(scr_roman(planet))+" must be selectively purged within "+string(estimate)+" months.", you.name);
             if (demand=1){title="Inquisition Mission Demand";text="The Inquisition demands that your Chapter demonstrate its loyalty to the Imperium of Mankind and the Emperor.  You are to selectively purge the Nobles on "+string(you.name)+" "+scr_roman(onceh)+" within "+string(estimate)+" months.";}
         }
         
@@ -963,7 +966,7 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
             you=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
             var s;s=0;repeat(4){s+=1;if (you.p_problem[planet,s]="") and (onceh=0){you.p_problem[planet,s]="cleanse";you.p_timer[planet,s]=estimate;onceh=s;}}
             if (onceh!=0){var bob;bob=instance_create(you.x+16,you.y-24,obj_star_event);bob.image_alpha=1;bob.image_speed=1;bob.color="green";}
-            scr_event_log("","Inquisition Mission Accepted: The mutants beneath "+string(you.name)+" "+string(scr_roman(planet))+" must be cleansed by fire within "+string(estimate)+" months.");
+            scr_event_log("","Inquisition Mission Accepted: The mutants beneath "+string(you.name)+" "+string(scr_roman(planet))+" must be cleansed by fire within "+string(estimate)+" months.",you.name);
             if (demand=1){title="Inquisition Mission Demand";text="The Inquisition demands that your Chapter demonstrate its loyalty to the Imperium of Mankind and the Emperor.  You are to cleanse by fire the mutants in Hive "+string(you.name)+" "+scr_roman(onceh)+" within "+string(estimate)+" months.";}
         }
         
@@ -971,7 +974,7 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
             you=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
             var s;s=0;repeat(4){s+=1;if (you.p_problem[planet,s]="") and (onceh=0){you.p_problem[planet,s]="inquisitor"+string(planet);you.p_timer[planet,s]=estimate;onceh=s;}}
             if (onceh!=0){var bob;bob=instance_create(you.x+16,you.y-24,obj_star_event);bob.image_alpha=1;bob.image_speed=1;bob.color="green";}
-            scr_event_log("","Inquisition Mission Accepted: A radical Inquisitor enroute to "+string(you.name)+" must be removed.  Estimated arrival in "+string(estimate)+" months.");
+            scr_event_log("","Inquisition Mission Accepted: A radical Inquisitor enroute to "+string(you.name)+" must be removed.  Estimated arrival in "+string(estimate)+" months.",you.name);
             if (demand=1){title="Inquisition Mission Demand";text="The Inquisition demands that your Chapter demonstrate its loyalty to the Imperium of Mankind and the Emperor.  A radical inquisitor is enroute to "+string(you.name)+", expected within "+string(estimate)+" months.  They are to be silenced and removed.";}
         }
         
@@ -979,7 +982,7 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
             you=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
             var s;s=0;repeat(4){s+=1;if (you.p_problem[planet,s]="") and (onceh=0){you.p_problem[planet,s]="spyrer";you.p_timer[planet,s]=estimate;onceh=s;}}
             if (onceh!=0){var bob;bob=instance_create(you.x+16,you.y-24,obj_star_event);bob.image_alpha=1;bob.image_speed=1;bob.color="green";}
-            scr_event_log("","Inquisition Mission Accepted: The Spyrer on "+string(you.name)+" "+string(scr_roman(planet))+" must be killed within "+string(estimate)+" months.");
+            scr_event_log("","Inquisition Mission Accepted: The Spyrer on "+string(you.name)+" "+string(scr_roman(planet))+" must be killed within "+string(estimate)+" months.", you.name,you.name);
             if (demand=1){title="Inquisition Mission Demand";text="The Inquisition demands that your Chapter demonstrate its loyalty to the Imperium of Mankind and the Emperor.  An out of control Spyrer on Hive "+string(you.name)+" "+scr_roman(onceh)+" must be removed within "+string(estimate)+" months.";}
         }
         
@@ -1020,7 +1023,7 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
             var s;s=0;repeat(4){s+=1;if (you.p_problem[planet,s]="") and (onceh=0){you.p_problem[planet,s]="bomb";you.p_timer[planet,s]=estimate;onceh=s;}}
             if (onceh!=0){var bob;bob=instance_create(you.x+16,you.y-24,obj_star_event);bob.image_alpha=1;bob.image_speed=1;bob.color="green";}
             
-            scr_event_log("","Inquisition Mission Accepted: You have been given a Bomb to seal the Necron Tomb on "+string(you.name)+" "+scr_roman(planet)+".");
+            scr_event_log("","Inquisition Mission Accepted: You have been given a Bomb to seal the Necron Tomb on "+string(you.name)+" "+scr_roman(planet)+".", you.name);
             
             image="necron_cave";title="New Equipment";fancy_title=0;text_center=0;
             text="You have been provided with 1x Plasma Bomb in order to complete the mission.";
@@ -1042,7 +1045,7 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
             if (demand=1){title="Inquisition Mission Demand";text="The Inquisition demands that your Chapter demonstrate its loyalty to the Imperium of Mankind and the Emperor.  You are to capture a Gaunt organism and return it, unharmed- 4x Webbers have been provided for this purpose.";}
             
             option1="";option2="";option3="";scr_add_item("Webber",4);obj_controller.cooldown=10;
-            scr_event_log("","Inquisition Mission Accepted: The Inquisition wishes for the capture of a Gaunt.  "+string(you.name)+" "+string(scr_roman(planet))+" is advisable.");            
+            scr_event_log("","Inquisition Mission Accepted: The Inquisition wishes for the capture of a Gaunt.  "+string(you.name)+" "+string(scr_roman(planet))+" is advisable.", you.name);            
             obj_controller.useful_info+="Tyr|";
             if (demand=1) then demand=0;
             exit;
@@ -1059,7 +1062,7 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
             
             if (demand=1){title="Inquisition Mission Demand";
             text="The Inquisition demands that your Chapter demonstrate its loyalty to the Imperium of Mankind and the Emperor.  You are to capture the Tau Ethereal somewhere within the "+string(you.name)+" system.";}
-            if (you.p_problem[planet,1]="recon") then scr_event_log("","Inquisition Mission Accepted: The Inquisition wish for you to capture the Tau Ethereal somewhere within "+string(you.name)+".");
+            if (you.p_problem[planet,1]="recon") then scr_event_log("","Inquisition Mission Accepted: The Inquisition wish for you to capture the Tau Ethereal somewhere within "+string(you.name)+".", you.name);
         }
         
         with(obj_temp5){instance_destroy();}

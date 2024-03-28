@@ -1177,22 +1177,18 @@ for(var i=1; i<=99; i++){
             if (event[i]=="game_over_man") then obj_controller.alarm[8]=1;
             // Removes planetary governor installed by the chapter
             if (string_count("remove_serf",event[i])>0){
-                var ta,tb,tc,pp;
                 explode_script(event[i],"|");
-                ta=string(explode[0]);
-                tb=string(explode[1]);
-                tc=real(explode[2]);
-                obj_controller.temp[1007]=string(tb);
-                with(obj_temp5){instance_destroy();}
-                with(obj_star){if (name==obj_controller.temp[1007]) then instance_create(x,y,obj_temp5);}
-                if (instance_exists(obj_temp5)){
-                    pp=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
-                    pp.dispo[tc]=-10;// Resets
-                    var twix="Inquisition executes Chapter Serf in control of "+string(tb)+" "+string(tc)+" and installs a new Planetary Governor.";
-                    if (pp.p_owner[tc]=eFACTION.Player) then pp.p_owner[tc]=pp.p_first[tc];
-                    scr_alert("","",string(twix),0,0);scr_event_log("",string(twix));
+                var ta=string(explode[0]);
+                var star_name=string(explode[1]);
+                var planet=real(explode[2]);
+                var event_star = star_by_name(star_name);
+                if (event_star!="none"){
+                    event_star.dispo[planet]=-10;// Resets
+                    var twix=$"Inquisition executes Chapter Serf in control of {star_name} {planet} and installs a new Planetary Governor.";
+                    if (event_star.p_owner[planet]=eFACTION.Player) then event_star.p_owner[planet]=pp.p_first[planet];
+                    scr_alert("","",twix,0,0);
+                    scr_event_log("",twix, star_name);
                 }
-                with(obj_temp5){instance_destroy();}
             }
             // Changes relation to good
             if (event[i]=="enemy_imperium"){
@@ -1226,7 +1222,7 @@ for(var i=1; i<=99; i++){
 				var xx=0,yy=0,flee=0,dirr=0;
                 var star_id = scr_random_find(1,true,"","");
 				if(star_id != undefined){
-                    scr_event_log("purple","Chaos Fleets exit the warp near the "+string(star_id.name)+" system.");
+                    scr_event_log("purple","Chaos Fleets exit the warp near the "+string(star_id.name)+" system.", star_id.name);
                     for(var j=0; j<4; j++){
                         dirr+=irandom_range(50,100);
                         xx=star_id.x+lengthdir_x(72,dirr);

@@ -37,7 +37,7 @@ function scr_ruins_reward(star_system, planet, _ruins) {
 	if (yar=0) and (flea.escort_num[1]!=0){yar=1;sihd=flea.escort_num[1];}
 	instance_activate_object(obj_p_fleet);
 
-	scr_event_log("","The Ancient Ruins on "+string(star_system.name)+" "+scr_roman(planet)+" has been explored.");
+	scr_event_log("","The Ancient Ruins on "+string(star_system.name)+" "+scr_roman(planet)+" has been explored.", star_system.name);
 
 	// loot="artifact";
 
@@ -146,7 +146,7 @@ function scr_ruins_reward(star_system, planet, _ruins) {
 	    pop.image="ruins_ship";pop.title="Ancient Ruins: Starship";
 	    pop.text="The ground beneath one of your battle brothers crumbles, and he falls a great height.  The other marines go down in pursuit- within a great chamber they find the remains of an ancient starship.  Though derelict, it is possible to land "+string(obj_ini.role[100][16])+"s onto the planet to repair the ship.  10,000 Requisition will be needed to make it operational.";
 		obj_controller.current_planet_feature.find_starship();
-	    scr_event_log("","Ancient Starship discovered on "+string(star_system.name)+" "+scr_roman(planet)+".");
+	    scr_event_log("","Ancient Starship discovered on "+string(star_system.name)+" "+scr_roman(planet)+".", star_system.name);
 	}
 
 

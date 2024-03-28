@@ -44,11 +44,14 @@ function scr_enemy_ai_d() {
 	        if (p_necrons[i]>=minimum){enemy1="Necron";enemies+=1;}
 	        if (p_tyranids[i]>=minimum) and (vision>0) and (p_tyranids[i]>3){enemy1="Tyranid";enemies+=1;}
         
-	        if (enemies=1){p_halp[i]=1;tx="The Planetary Governor of "+string(name)+" "+scr_roman(i)+" requests help against "+string(enemy1)+" forces!";
-	            scr_alert("green","halp",string(tx),x,y);scr_event_log("",string(tx));
+	        if (enemies=1){
+	        	p_halp[i]=1;tx="The Planetary Governor of "+string(name)+" "+scr_roman(i)+" requests help against "+string(enemy1)+" forces!";
+	            scr_alert("green","halp",string(tx),x,y);
+	            scr_event_log("",string(tx), name);
 	        }
 	        if (enemies>1){p_halp[i]=1;tx="The Planetary Governor of "+string(name)+" "+scr_roman(i)+" requests help against numerous enemy forces!";
-	            scr_alert("green","halp",string(tx),x,y);scr_event_log("",string(tx));
+	            scr_alert("green","halp",string(tx),x,y);
+	            scr_event_log("",string(tx), name);
 	        }
 	    }
     
