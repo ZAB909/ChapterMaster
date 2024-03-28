@@ -23,6 +23,8 @@ function scr_colors_initialize() {
 	i+=1;col[i]="Gold";col_r[i]=255;col_g[i]=216;col_b[i]=0;
 	i+=1;col[i]="Copper";col_r[i]=166;col_g[i]=129;col_b[i]=0;// 15
 	i+=1;col[i]="Lime";col_r[i]=0;col_g[i]=190;col_b[i]=0;
+	i+=1;col[i]="Warpstone Glow";col_r[i]=15;col_g[i]=108;col_b[i]=41;
+	i+=1;col[i]="Caliban Green";col_r[i]=0;col_g[i]=59;col_b[i]=20;
 	i+=1;col[i]="Green";col_r[i]=0;col_g[i]=160;col_b[i]=0;
 	i+=1;col[i]="Dark Green";col_r[i]=0;col_g[i]=70;col_b[i]=0;
 	i+=1;col[i]="Cyan";col_r[i]=0;col_g[i]=228;col_b[i]=255;
