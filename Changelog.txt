@@ -70,6 +70,7 @@ added:
 	- having a garrison present allows player to see the relevant defence score of the local pdf
 	- having a garrison present modifies dispostition with the planet based on teh squad leaders charisma (further modifiers to be expanded upon)
 	- power spears added to shop
+	- The crozius now added to game (awaiting sprite asset)
 -----------------
 Version 0.9000
 
