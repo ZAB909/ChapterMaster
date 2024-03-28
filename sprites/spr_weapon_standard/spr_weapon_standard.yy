@@ -4,7 +4,7 @@
   "name": "spr_weapon_standard",
   "bbox_bottom": 271,
   "bbox_left": 0,
-  "bbox_right": 165,
+  "bbox_right": 162,
   "bbox_top": 0,
   "bboxMode": 0,
   "collisionKind": 1,

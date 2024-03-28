@@ -174,7 +174,7 @@ function collect_role_group(group, location=""){
 	for (var com=0;com<=10;com++){
 	    for (i=1;i<array_length(obj_ini.TTRPG[com]);i++){
 	    	add=false;
-			unit=obj_ini.TTRPG[com][i];
+			unit=fetch_unit([com,i]);
 			if (unit.name()=="")then continue; 	
 	        if (unit.IsSpecialist(group)){
 	        	if (location==""){

@@ -108,6 +108,7 @@ function calculate_research_points(turn_end=false){
     with (obj_controller){
         research_points = 0;
         forge_points = 0;
+        master_craft_chance = 99;
         forge_string = $"Forge Production Rate#";
         var heretics = [], forge_master=-1, notice_heresy=false, forge_point_gen=[], crafters=0, at_forge=0, gen_data={};
         var tech_locations=[]
@@ -118,7 +119,10 @@ function calculate_research_points(turn_end=false){
                 forge_point_gen=techs[i].forge_point_generation(true);
                 gen_data = forge_point_gen[1];
                 if (struct_exists(gen_data,"crafter")) then crafters++;
-                if (struct_exists(gen_data,"at_forge")) then at_forge++;
+                if (struct_exists(gen_data,"at_forge")){
+                    at_forge++;
+                    master_craft_chance -= (techs[i].experience()/50)
+                }
                 forge_points += forge_point_gen[0];
                 if (techs[i].has_trait("tech_heretic")){
                     array_push(heretics, i);
@@ -263,61 +267,64 @@ function calculate_research_points(turn_end=false){
                     scr_role_count(obj_ini.role[100][16],"","units")[0].update_role("Forge Master");
                 }
             }
-
-            if (forge_points>0){
-                var master_craft_count, normal_count, quality_string;
-                var reduction_points = forge_points;
-                if (array_length(forge_queue)>0 && forge_points>0){
-                    var forging_length = array_length(forge_queue);
-                    for (var i=0;i<forging_length;i++){
-                        if (forge_queue[i].forge_points<=reduction_points){
-                            reduction_points-=forge_queue[i].forge_points;
-                            if (is_string(forge_queue[i].name)){
-                                master_craft_count=0;
-                                quality_string="";
-                                normal_count=0;
-                                for (var s=0;s<forge_queue[i].count;s++){
-                                    if (irandom(99-crafters-at_forge)==0){
-                                        master_craft_count++;
-                                    } else {
-                                        normal_count++;
-                                    }
-                                }
-                                scr_add_item(forge_queue[i].name, normal_count);
-                                if (master_craft_count>0){
-                                    scr_add_item(forge_queue[i].name, master_craft_count,"master_crafted");
-                                    var numerical_string = master_craft_count==1?"was":"were";
-                                    quality_string=$"X{master_craft_count} {numerical_string} Completed to a Master Crafted standard";
-                                }else {
-                                    quality_string=$"all were completed to a standard STC compliant quality";
-                                }
-                                scr_popup("Forge Completed",$"{forge_queue[i].name} X{forge_queue[i].count} construction finished {quality_string}","","");                        
-                            } else if (is_array(forge_queue[i].name)){
-                                if (forge_queue[i].name[0]=="research"){
-                                    var tier_depth = array_length(forge_queue[i].name[2]);
-                                    var tier_names=forge_queue[i].name[2];
-                                    if (tier_depth==1){
-                                        production_research[$ tier_names[0]][0]++;
-                                    } else if (tier_depth==2){
-                                        production_research[$ tier_names[0]][1][$ tier_names[1]][0]++;
-                                    } else if (tier_depth == 3){
-                                        production_research[$ tier_names[0]][1][$ tier_names[1]][1][$ tier_names[2]][0]++;
-                                    }
-                                }
-                            }
-                            array_delete(forge_queue, i, 1);
-                            i--;
-                            forging_length--;
-                        } else {
-                            forge_queue[i].forge_points -= reduction_points;
-                            reduction_points=0;
-                        }
-                        if (reduction_points<=0) then break;
-                    }
-                }
-            }            
+            forge_queue_logic();       
         }
     }   
+}
+
+function forge_queue_logic(){
+    if (forge_points>0){
+        var master_craft_count, normal_count, quality_string;
+        var reduction_points = forge_points;
+        if (array_length(forge_queue)>0 && forge_points>0){
+            var forging_length = array_length(forge_queue);
+            for (var i=0;i<forging_length;i++){
+                if (forge_queue[i].forge_points<=reduction_points){
+                    reduction_points-=forge_queue[i].forge_points;
+                    if (is_string(forge_queue[i].name)){
+                        master_craft_count=0;
+                        quality_string="";
+                        normal_count=0;
+                        for (var s=0;s<forge_queue[i].count;s++){
+                            if (irandom(master_craft_chance)==0){
+                                master_craft_count++;
+                            } else {
+                                normal_count++;
+                            }
+                        }
+                        scr_add_item(forge_queue[i].name, normal_count);
+                        if (master_craft_count>0){
+                            scr_add_item(forge_queue[i].name, master_craft_count,"master_crafted");
+                            var numerical_string = master_craft_count==1?"was":"were";
+                            quality_string=$"X{master_craft_count} {numerical_string} Completed to a Master Crafted standard";
+                        }else {
+                            quality_string=$"all were completed to a standard STC compliant quality";
+                        }
+                        scr_popup("Forge Completed",$"{forge_queue[i].name} X{forge_queue[i].count} construction finished {quality_string}","","");                        
+                    } else if (is_array(forge_queue[i].name)){
+                        if (forge_queue[i].name[0]=="research"){
+                            var tier_depth = array_length(forge_queue[i].name[2]);
+                            var tier_names=forge_queue[i].name[2];
+                            if (tier_depth==1){
+                                production_research[$ tier_names[0]][0]++;
+                            } else if (tier_depth==2){
+                                production_research[$ tier_names[0]][1][$ tier_names[1]][0]++;
+                            } else if (tier_depth == 3){
+                                production_research[$ tier_names[0]][1][$ tier_names[1]][1][$ tier_names[2]][0]++;
+                            }
+                        }
+                    }
+                    array_delete(forge_queue, i, 1);
+                    i--;
+                    forging_length--;
+                } else {
+                    forge_queue[i].forge_points -= reduction_points;
+                    reduction_points=0;
+                }
+                if (reduction_points<=0) then break;
+            }
+        }
+    } 
 }
 function research_end(){
     calculate_research_points(true);
@@ -887,6 +894,7 @@ function scr_draw_armentarium(){
         // draw_sprite_ext(spr_forge_points_icon,0,xx+359+string_width(forge_text), yy+410,0.3,0.3,0,c_white,1);
         forge_text += $"Chapter total {obj_ini.role[100, 16]}s: {temp[36]}#";
         forge_text += $"Planetary Forges in operation: {obj_controller.player_forges}#";
+        forge_text += $"Master Craft Forge Chance: {1-((master_craft_chance+1)/100)}#    Assign techmarines to forges to increase Master Craft Chance";
         // forge_text += $"A total of {obj_ini.role[100, 16]}s assigned to Forges: {var}#";
         draw_text_ext(xx+359, yy+410, string_hash_to_newline(forge_text),-1,670);
     }
