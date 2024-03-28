@@ -880,14 +880,19 @@ function scr_load(argument0, argument1) {
 	        obj_ini.squad_types = json_parse(base64_decode(ini_read_string("Mar","squad_types","")));
 
 	    }
-
+	    instance_create(-100,-100,obj_event_log);
+	    obj_event_log.event = json_parse(base64_decode(ini_read_string("Event","log","")));
+	    if (obj_event_log.event == ""){
+	    	obj_event_log.event = [];
+	    }
 
 	    ini_close();
 	}
 
 
 
-	if (argument0=4) or (argument0=0){debugl("Loading slot "+string(argument1)+" part 4");// PLAYER FLEET OBJECTS
+	if (argument0=4) or (argument0=0){
+		debugl("Loading slot "+string(argument1)+" part 4");// PLAYER FLEET OBJECTS
 	    ini_open("tsave.ini");
 
 	    var num,i,fla;
@@ -1119,13 +1124,7 @@ function scr_load(argument0, argument1) {
 	            obj_controller.r_gear[i,o]=ini_read_string("Res","r_gear"+string(i)+"."+string(o),"");
 	         }
 	    }// 100 is defaults, 101 is the allowable starting equipment
-
 	    ini_close();
-
-
-
-
-
 
 	    with(obj_en_fleet){
 	        if (owner = eFACTION.Imperium) and (string_count("colon",trade_goods)=0) then sprite_index=spr_fleet_imperial;
@@ -1141,42 +1140,6 @@ function scr_load(argument0, argument1) {
 	        if (owner = eFACTION.Tyranids) then sprite_index=spr_fleet_tyranid;
 	        if (owner = eFACTION.Chaos) then sprite_index=spr_fleet_chaos;
 	        image_speed=0;
-	    }
-
-
-
-	    if (file_exists("save"+string(argument1)+"log.ini")){
-	        // ini_open("save"+string(argument1)+"log.ini");
-	        ini_open("tsave.ini");
-
-	        var g,bobby,bobby2,stars;bobby="";bobby2="";g=0;
-	        stars=ini_read_real("Save","stars",0);
-	        bobby+=string(stars)+"|";
-	        bobby+=string(global.chapter_name)+"|";
-	        bobby+=string(obj_ini.sector_name)+"|";
-	        bobby+=string(obj_controller.turn)+"|";
-	        g=ini_read_real("Save","sod",0);
-	        ini_close();file_delete("tsave.ini");
-	        bobby+=string(g)+"|";
-
-	        ini_open("save"+string(argument1)+"log.ini");
-	        bobby2=string(ini_read_real("Main","data1",random(500)))+"|";
-	        bobby2+=ini_read_string("Main","data2","error")+"|";
-	        bobby2+=ini_read_string("Main","data3","error")+"|";
-	        bobby2+=string(ini_read_real("Main","data4",random(500)))+"|";
-	        bobby2+=string(ini_read_real("Main","data5",random(500)))+"|";
-
-	        // show_message(string(bobby)+" - "+string(bobby2));
-	        // window_set_fullscreen(true);
-
-	        if (bobby=bobby2) then obj_controller.good_log=1;
-	        instance_create(-100,-100,obj_event_log);
-
-	        with(obj_all_fleet){
-	            alarm[11]=10;
-	        }
-
-	        ini_close();
 	    }
 
 	    obj_saveload.alarm[1]=30;

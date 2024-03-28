@@ -713,7 +713,7 @@ function scr_enemy_ai_a() {
 					    } // diso[run] is the disposition of the planet. where run refer to the planet that is currently running the code.
 					    if (badd = 2) and(p_tyranids[run] = 0) and(p_necrons[run] = 0) and(p_sisters[run] = 0) {
 					        scr_popup("System Lost", "The " + string(name) + " system has been ovewhelmed by Orks!", "orks", "");
-					        scr_event_log("red", "System " + string(name) + " has been overwhelmed by Orkz.");
+					        scr_event_log("red", "System " + string(name) + " has been overwhelmed by Orkz.", name);
 					        // owner=7;p_owner[1]=7;p_owner[2]=7;p_owner[3]=7;p_owner[4]=7;
 					    }
 					}
@@ -926,7 +926,7 @@ function scr_enemy_ai_a() {
 					
 	                if (badd=2) and (p_tyranids[run]<5) and (p_orks[run]=0) and (p_traitors[run]=0){
 	                    scr_popup("System Lost","The "+string(name)+" system has been ovewhelmed by Necrons!","necron_army","");
-	                    scr_event_log("red","System "+string(name)+" has been overwhelmed by Necrons.");
+	                    scr_event_log("red","System "+string(name)+" has been overwhelmed by Necrons.", name);
 	                }
 	            }
             
@@ -956,7 +956,7 @@ function scr_enemy_ai_a() {
 	    // 135;
 	    p_time_since_saved[run] = 0;
 	    if (p_owner[run] = 7) and(p_player[run] + p_raided[run] > 0) and(p_orks[run] = 0) and(p_tyranids[run] < 4) and(p_chaos[run] = 0) and(p_traitors[run] = 0) and(p_necrons[run] = 0) and(p_tau[run] = 0) {
-	        scr_event_log("", "Orks cleansed from " + string(name) + " " + scr_roman(run));
+	        scr_event_log("", "Orks cleansed from " + string(name) + " " + scr_roman(run), name);
 	        if (p_first[run] = 1) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
 	            p_owner[run] = 1;
 	            scr_alert("green", "owner", "Orks cleansed from " + string(name) + " " + scr_roman(run) + ".", x, y);
@@ -980,7 +980,7 @@ function scr_enemy_ai_a() {
 	        if (dispo[run] = 101) then p_owner[run] = 1;
 	    }
 	    if (p_owner[run] = 8) and(p_player[run] + p_raided[run] > 0) and(p_orks[run] = 0) and(p_tyranids[run] < 4) and(p_chaos[run] = 0) and(p_traitors[run] = 0) and(p_necrons[run] = 0) and(p_tau[run] = 0) and(p_pdf[run] = 0) {
-	        scr_event_log("", "Tau cleansed from " + string(name) + " " + scr_roman(run));
+	        scr_event_log("", "Tau cleansed from " + string(name) + " " + scr_roman(run), name);
 	        if (p_first[run] = 1) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
 	            p_owner[run] = 1;
 	            scr_alert("green", "owner", "Tau cleansed from " + string(name) + " " + scr_roman(run) + ".", x, y);
@@ -1004,7 +1004,7 @@ function scr_enemy_ai_a() {
 	        if (dispo[run] = 101) then p_owner[run] = 1;
 	    }
 	    if (p_owner[run] = 10) and(p_player[run] + p_raided[run] > 0) and(p_orks[run] = 0) and(p_tyranids[run] < 4) and(p_chaos[run] = 0) and(p_traitors[run] = 0) and(p_necrons[run] = 0) and(p_tau[run] = 0) {
-	        scr_event_log("", "Chaos cleansed from " + string(name) + " " + scr_roman(run));
+	        scr_event_log("", "Chaos cleansed from " + string(name) + " " + scr_roman(run), name);
 	        if (p_first[run] = 1) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
 	            p_owner[run] = 1;
 	            scr_alert("green", "owner", "Chaos cleansed from " + string(name) + " " + scr_roman(run) + ".", x, y);
@@ -1029,7 +1029,7 @@ function scr_enemy_ai_a() {
 	    }
 	    if (p_owner[run] = 13) and(p_player[run] + p_raided[run] > 0) and(p_orks[run] = 0) and(p_tyranids[run] < 4) and(p_chaos[run] = 0) and(p_traitors[run] = 0) and(p_necrons[run] = 0) and(p_tau[run] = 0) {
 	        if (awake_tomb_world(p_feature[run]) != 1) {
-	            scr_event_log("", "Necrons cleansed from " + string(name) + " " + scr_roman(run));
+	            scr_event_log("", "Necrons cleansed from " + string(name) + " " + scr_roman(run), name);
 	            if (p_first[run] = 1) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
 	                p_owner[run] = 1;
 	                scr_alert("green", "owner", "Necrons cleansed from " + string(name) + " " + scr_roman(run) + ".", x, y);

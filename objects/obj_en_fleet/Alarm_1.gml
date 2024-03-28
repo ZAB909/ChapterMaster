@@ -931,7 +931,8 @@ if (navy) {
 	    repeat(4){o+=1;
 	        if (orbiting.p_guardsmen[o]>0) then bad-=1;
 	    }
-	    if (bad=1){guardsmen_unloaded=0;guardsmen_ratio=0;trade_goods="";}
+	    if (bad=1){guardsmen_unloaded=0;guardsmen_ratio=0;trade_goods="";
+        }
 	}
 
 
@@ -1267,10 +1268,10 @@ if (action=""){
             
             
             // INVESTIGATE DEAD HERE 137 ; INVESTIGATE DEAD HERE 137 ; INVESTIGATE DEAD HERE 137 ; INVESTIGATE DEAD HERE 137 ; 
-            var thata,t,type,cha,dem,tem1,tem1_base,perc,popup;
+            var cur_star,t,type,cha,dem,tem1,tem1_base,perc,popup;
             t=0;type=0;cha=0;dem=0;tem1=0;popup=0;perc=0;tem1_base=0;
             
-            thata=instance_nearest(x,y,obj_star);
+            cur_star=instance_nearest(x,y,obj_star);
             
             if (string_count("investigate",trade_goods)>0){
                 // Check for xenos or demon-equip items on those planets
@@ -1280,7 +1281,7 @@ if (action=""){
                         ia+=1;if (ia=400){ca+=1;ia=1;if (ca=11) then ca=-5;}
                         if (ca>=0) and (ca<11){
                             
-                            if (string(obj_ini.loc[ca,ia])=thata.name) and (real(obj_ini.TTRPG[ca][ia].planet_location)>0){
+                            if (string(obj_ini.loc[ca,ia])=cur_star.name) and (real(obj_ini.TTRPG[ca][ia].planet_location)>0){
                                 if (obj_ini.role[ca,ia]="Ork Sniper") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}
                                 if (obj_ini.role[ca,ia]="Flash Git") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}
                                 if (obj_ini.role[ca,ia]="Ranger") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}
@@ -1294,10 +1295,10 @@ if (action=""){
                     }
                 }
                 repeat(4){t+=1;tem1=tem1_base;// Repeat to check each of the planets
-                    if (thata.p_type[t]="Dead") and (array_length(thata.p_upgrades[t])>0){
-						var base_search = search_planet_features(thata.p_upgrades[t], P_features.Secret_Base); 
+                    if (cur_star.p_type[t]="Dead") and (array_length(cur_star.p_upgrades[t])>0){
+						var base_search = search_planet_features(cur_star.p_upgrades[t], P_features.Secret_Base); 
                         if (array_length(base_search) >0){
-							var player_base = thata.p_upgrades[t][base_search[0]]
+							var player_base = cur_star.p_upgrades[t][base_search[0]]
                             if (player_base.vox>0) then tem1+=2;
                             if (player_base.torture>0) then tem1+=1;
                             if (player_base.narcotics>0) then tem1+=3;
@@ -1313,15 +1314,15 @@ if (action=""){
 							 	player_base.inquis_hidden = 0;							
                        		}
 						}
-						var arsenal_search = search_planet_features(thata.p_upgrades[t], P_features.Arsenal)
+						var arsenal_search = search_planet_features(cur_star.p_upgrades[t], P_features.Arsenal)
 						var arsenal;
 
                         if (array_length(arsenal_search) > 0 ){
                         	e=0;
-                        	arsenal = thata.p_upgrades[t][arsenal_search[0]];
+                        	arsenal = cur_star.p_upgrades[t][arsenal_search[0]];
                         	arsenal.inquis_hidden = 0;
                             for (e=0;e<array_length(obj_ini.artifact_tags[e]);e++){
-                                if (obj_ini.artifact[e]!="") and (obj_ini.artifact_loc[e]=thata.name) and (obj_controller.und_armouries<=1){
+                                if (obj_ini.artifact[e]!="") and (obj_ini.artifact_loc[e]=cur_star.name) and (obj_controller.und_armouries<=1){
                                     if (array_contains(obj_ini.artifact_tags[e],"Chaos")) then cha+=1;
                                     if (array_contains(obj_ini.artifact_tags[e],"Daemon")) then dem+=1;
                                 }
@@ -1344,10 +1345,10 @@ if (action=""){
                                 if (obj_controller.penitent=0) and (moo=false) then scr_audience(4,"loyalty_zero",0,"",0,0);
                             }
                         }
- 						var vault = search_planet_features(thata.p_upgrades[t], P_features.Arsenal)
+ 						var vault = search_planet_features(cur_star.p_upgrades[t], P_features.Arsenal)
 						var gene_vault;                       
                         if (array_length(vault) > 0 ){
-                        	gene_vault = thata.p_upgrades[t][arsenal_search[0]];
+                        	gene_vault = cur_star.p_upgrades[t][arsenal_search[0]];
                         	gene_vault.inquis_hidden = 0;
                             obj_controller.inqis_flag_gene+=1;
                             obj_controller.loyalty-=10;obj_controller.loyalty_hidden-=10;
@@ -1364,22 +1365,41 @@ if (action=""){
                         // Popup4: Aresenal with Chaos/Demonic Discovered
                         // Popup5: First Gene-Seed warning
                         // Popup6: Second Gene-Seed warning
-                        
-                        if (popup=1) then scr_event_log("","Inquisitor "+string(obj_controller.inquisitor[whom])+" discovers your Secret Lair on "+string(thata.name)+" "+scr_roman(t)+".");
-                        if (popup=2) or (popup=0.2) then scr_event_log("red","Inquisitor "+string(obj_controller.inquisitor[whom])+" discovers your Secret Lair on "+string(thata.name)+" "+scr_roman(t)+".");
-                        if (popup=3) or (popup=0.3) then scr_event_log("","Inquisitor "+string(obj_controller.inquisitor[whom])+" discovers your Secret Arsenal on "+string(thata.name)+" "+scr_roman(t)+".");
-                        if (popup=4) or (popup=0.4) then scr_event_log("red","Inquisitor "+string(obj_controller.inquisitor[whom])+" discovers your Secret Arsenal on "+string(thata.name)+" "+scr_roman(t)+".");
-                        if (popup>=5) or (popup=0.6) then scr_event_log("","Inquisitor "+string(obj_controller.inquisitor[whom])+" discovers your Secret Gene-Vault on "+string(thata.name)+" "+scr_roman(t)+".");
+                        var inquis_string = "Inquisitor {obj_controller.inquisitor[whom]}";
+                        var star_planet = $"{cur_star.name}{scr_roman(t)}";
+
+                        if (popup=1) then scr_event_log("",inquis_string+" discovers your Secret Lair on "+star_planet+".");
+                        if (popup=2) or (popup=0.2) then scr_event_log("red",inquis_string+" discovers your Secret Lair on "+star_planet+".", cur_star);
+                        if (popup=3) or (popup=0.3) then scr_event_log("",inquis_string+" discovers your Secret Arsenal on "+star_planet+".", cur_star);
+                        if (popup=4) or (popup=0.4) then scr_event_log("red",inquis_string+" discovers your Secret Arsenal on "+star_planet+".", cur_star);
+                        if (popup>=5) or (popup=0.6) then scr_event_log("",inquis_string+" discovers your Secret Gene-Vault on "+star_planet+".", cur_star);
                         
                         var pop_tit,pop_txt,pop_spe;
                         pop_tit="";pop_txt="";pop_spe="";
-                        
-                        if (popup=1){pop_tit="Inquisition Discovers Lair";pop_txt="Inquisitor "+string(obj_controller.inquisitor[whom])+" has discovered your Secret Lair on "+string(thata.name)+" "+scr_roman(t)+".  A quick inspection revealed that there was no contraband or heresy, though the Inquisition does not appreciate your secrecy at all.";}
-                        if (popup=2){pop_tit="Inquisition Discovers Lair";pop_txt="Inquisitor "+string(obj_controller.inquisitor[whom])+" has discovered your Secret Lair on "+string(thata.name)+" "+scr_roman(t)+".  A quick inspection turned up heresy, most foul, and it has all been reported to the Inquisition.  They are seething, as a whole, and relations are damaged.";}
-                        if (popup=3){pop_tit="Inquisition Discovers Arsenal";pop_txt="Inquisitor "+string(obj_controller.inquisitor[whom])+" has discovered your Secret Arsenal on "+string(thata.name)+" "+scr_roman(t)+".  A quick inspection revealed that there was no contraband or heresy, though the Inquisition does not appreciate your secrecy at all.";}
-                        if (popup=4){pop_tit="Inquisition Discovers Arsenal";pop_txt="Inquisitor "+string(obj_controller.inquisitor[whom])+" has discovered your Secret Arsenal on "+string(thata.name)+" "+scr_roman(t)+".  A quick inspection turned up heresy, most foul, and it has all been reported to the Inquisition.  Relations have been heavily damaged.";}
-                        if (popup=5){pop_tit="Inquisition Discovers Arsenal";pop_txt="Inquisitor "+string(obj_controller.inquisitor[whom])+" has discovered your Secret Gene-Vault on "+string(thata.name)+" "+scr_roman(t)+" and reported it.  The Inquisition does NOT appreciate your secrecy, nor the fact that you were able to mass produce Gene-Seed unknowest to the Imperium.  Relations are damaged.";}
-                        if (popup=6){pop_tit="Inquisition Discovers Arsenal";pop_txt="Inquisitor "+string(obj_controller.inquisitor[whom])+" has discovered your Secret Gene-Vault on "+string(thata.name)+" "+scr_roman(t)+" and reported it.  You were warned once already to not sneak about with Gene-Seed stores and Test-Slave incubators.  Do not let it happen again or your Chapter will be branded heretics.";}
+                        if (popup=1){
+                            pop_tit="Inquisition Discovers Lair";
+                            pop_txt=inquis_string+" has discovered your Secret Lair on "+star_planet+".  A quick inspection revealed that there was no contraband or heresy, though the Inquisition does not appreciate your secrecy at all.";
+                        }
+                        else if (popup=2){
+                            pop_tit="Inquisition Discovers Lair";
+                            pop_txt=inquis_string+" has discovered your Secret Lair on "+star_planet+".  A quick inspection turned up heresy, most foul, and it has all been reported to the Inquisition.  They are seething, as a whole, and relations are damaged.";
+                        }
+                        else if (popup=3){
+                            pop_tit="Inquisition Discovers Arsenal";
+                            pop_txt=inquis_string+" has discovered your Secret Arsenal on "+star_planet+".  A quick inspection revealed that there was no contraband or heresy, though the Inquisition does not appreciate your secrecy at all.";
+                        }
+                        else if (popup=4){
+                            pop_tit="Inquisition Discovers Arsenal";
+                            pop_txt=inquis_string+" has discovered your Secret Arsenal on "+star_planet+".  A quick inspection turned up heresy, most foul, and it has all been reported to the Inquisition.  Relations have been heavily damaged.";
+                        }
+                        else if (popup=5){
+                            pop_tit="Inquisition Discovers Arsenal";
+                            pop_txt=inquis_string+" has discovered your Secret Gene-Vault on "+star_planet+" and reported it.  The Inquisition does NOT appreciate your secrecy, nor the fact that you were able to mass produce Gene-Seed unknowest to the Imperium.  Relations are damaged.";
+                        }
+                        else if (popup=6){
+                            pop_tit="Inquisition Discovers Arsenal";
+                            pop_txt=inquis_string+" has discovered your Secret Gene-Vault on "+star_planet+" and reported it.  You were warned once already to not sneak about with Gene-Seed stores and Test-Slave incubators.  Do not let it happen again or your Chapter will be branded heretics.";
+                        }
                         
                         if ((dem*10)+(cha*3)>=10){
                             pop_txt+="The Inquisitor responsible for the inspection also demands that you hand over all heretical materials and Artifacts.";
@@ -1398,16 +1418,17 @@ if (action=""){
             
             
             if (obj_ini.fleet_type=1) and (string_count("investigate",trade_goods)=0){
-                scr_event_log("","Inquisitor finishes inspection of "+string(instance_nearest(x,y,obj_star).name)+".");
+                var cur_star = instance_nearest(x,y,obj_star);
+                scr_event_log("","Inquisitor finishes inspection of "+string(cur_star.name)+".", cur_star.name);
                 scr_loyalty("blarg","inspect_world");// This updates the loyalties
-                if (whom=0) then scr_alert("green","duhuhuhu","Inquisitor Ship finishes inspection of "+string(instance_nearest(x,y,obj_star).name)+".",x,y);
-                if (whom>0) then scr_alert("green","duhuhuhu","Inquisitor "+string(obj_controller.inquisitor[whom])+" finishes inspection of "+string(instance_nearest(x,y,obj_star).name)+".",x,y);
+                if (whom=0) then scr_alert("green","duhuhuhu","Inquisitor Ship finishes inspection of "+string(cur_star.name)+".",x,y);
+                if (whom>0) then scr_alert("green","duhuhuhu",inquis_string+" finishes inspection of "+string(cur_star.name)+".",x,y);
             }
             if (obj_ini.fleet_type!=1) and (string_count("investigate",trade_goods)=0){
                 scr_event_log("","Inquisitor finishes inspection of your fleet.");
                 scr_loyalty("blarg","inspect_fleet");// This updates the loyalties
                 if (whom=0) then scr_alert("green","duhuhuhu","Inquisitor Ship finishes inspection of your fleet.",x,y);
-                if (whom>0) then scr_alert("green","duhuhuhu","Inquisitor "+string(obj_controller.inquisitor[whom])+" finishes inspecting your fleet.",x,y);
+                if (whom>0) then scr_alert("green","duhuhuhu",inquis_string+" finishes inspecting your fleet.",x,y);
                 target=noone;
             }
             
@@ -1434,12 +1455,12 @@ if (action=""){
                     
                     obj_controller.inqis_flag_gene+=1;
                     if (obj_controller.inqis_flag_gene=1){
-                        if (hur=1) then obj_turn_end.popup_text[obj_turn_end.popups]="Inquisitor "+string(obj_controller.inquisitor[whom])+" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Your Chapter has plenty enough Gene-Seed to restore itself to full strength and the Incubators on top of that are excessive.  Both have been reported, and you are ordered to remove the Test-Slave Incubators.  Relations with the Inquisition are also more strained than before.";
-                        if (hur=2) then obj_turn_end.popup_text[obj_turn_end.popups]="Inquisitor "+string(obj_controller.inquisitor[whom])+" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Your Chapter is already at full strength and the Incubators on top of that are excessive.  The Incubators have been reported, and you are ordered to remove them immediately.  Relations with the Inquisition are also slightly more strained than before.";
+                        if (hur=1) then obj_turn_end.popup_text[obj_turn_end.popups]=inquis_string+" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Your Chapter has plenty enough Gene-Seed to restore itself to full strength and the Incubators on top of that are excessive.  Both have been reported, and you are ordered to remove the Test-Slave Incubators.  Relations with the Inquisition are also more strained than before.";
+                        if (hur=2) then obj_turn_end.popup_text[obj_turn_end.popups]=inquis_string+" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Your Chapter is already at full strength and the Incubators on top of that are excessive.  The Incubators have been reported, and you are ordered to remove them immediately.  Relations with the Inquisition are also slightly more strained than before.";
                     }
                     if (obj_controller.inqis_flag_gene=2){
-                        if (hur=1) then obj_turn_end.popup_text[obj_turn_end.popups]="Inquisitor "+string(obj_controller.inquisitor[whom])+" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Both the stores and incubators have been reported, and you are AGAIN ordered to remove the Test-Slave Incubators.  The Inquisitor says this is your final warning.";
-                        if (hur=2) then obj_turn_end.popup_text[obj_turn_end.popups]="Inquisitor "+string(obj_controller.inquisitor[whom])+" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Your Chapter is already at full strength and the Incubators are unneeded.  The Incubators have been reported, AGAIN, and you are to remove them.  The Inquisitor says this is your final warning.";
+                        if (hur=1) then obj_turn_end.popup_text[obj_turn_end.popups]=inquis_string+" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Both the stores and incubators have been reported, and you are AGAIN ordered to remove the Test-Slave Incubators.  The Inquisitor says this is your final warning.";
+                        if (hur=2) then obj_turn_end.popup_text[obj_turn_end.popups]=inquis_string+" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Your Chapter is already at full strength and the Incubators are unneeded.  The Incubators have been reported, AGAIN, and you are to remove them.  The Inquisitor says this is your final warning.";
                     }
                     if (obj_controller.inqis_flag_gene=3){
                         if (obj_controller.faction_status[eFACTION.Inquisition]!="War") then obj_controller.alarm[8]=1;

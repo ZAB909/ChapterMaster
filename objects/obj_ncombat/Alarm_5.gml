@@ -575,7 +575,7 @@ if (obj_ini.fleet_type!=1) and (defeat==1) and (dropping==0){
 	    if (obj_controller.und_gene_vaults=0) then newline="Your Fortress Monastery has been raided.  "+string(obj_controller.gene_seed)+" Gene-Seed has been destroyed or stolen.";
 	    if (obj_controller.und_gene_vaults>0) then newline="Your Fortress Monastery has been raided.  "+string(floor(obj_controller.gene_seed/10))+" Gene-Seed has been destroyed or stolen.";
 
-	    scr_event_log("red",string(newline));
+	    scr_event_log("red",string(newline), battle_object.name);
 	    instance_activate_object(obj_event_log);
 	    newline_color="red";scr_newtext();
 

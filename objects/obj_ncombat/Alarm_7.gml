@@ -424,33 +424,25 @@ if ((string_count("spyrer",battle_special)>0))/* and (string_count("demon",battl
     // show_message(obj_turn_end.current_battle);
     // show_message(obj_turn_end.battle_world[obj_turn_end.current_battle]);
     // title / text / image / speshul
-    var spyrer;spyrer=0;
-    /*if (obj_turn_end.battle_object[obj_turn_end.current_battle].p_problem[obj_turn_end.battle_world[obj_turn_end.current_battle],1]="spyrer") then spyrer=1;
-    if (obj_turn_end.battle_object[obj_turn_end.current_battle].p_problem[obj_turn_end.battle_world[obj_turn_end.current_battle],2]="spyrer") then spyrer=2;
-    if (obj_turn_end.battle_object[obj_turn_end.current_battle].p_problem[obj_turn_end.battle_world[obj_turn_end.current_battle],3]="spyrer") then spyrer=3;
-    if (obj_turn_end.battle_object[obj_turn_end.current_battle].p_problem[obj_turn_end.battle_world[obj_turn_end.current_battle],4]="spyrer") then spyrer=4;*/
-    if (obj_turn_end.battle_world[obj_turn_end.current_battle]=1) then spyrer=1;
-    if (obj_turn_end.battle_world[obj_turn_end.current_battle]=2) then spyrer=2;
-    if (obj_turn_end.battle_world[obj_turn_end.current_battle]=3) then spyrer=3;
-    if (obj_turn_end.battle_world[obj_turn_end.current_battle]=4) then spyrer=4;
+    var cur_star = obj_turn_end.battle_object[obj_turn_end.current_battle];
+    var planet = obj_turn_end.battle_world[obj_turn_end.current_battle]
+    var planet_string = scr_roman_numerals()[planet-1];
+    for (var i=1;i<array_length(cur_star.p_problem[planet]); i++){
+        if (cur_star.p_problem[planet][i]=="spyrer"){
+            cur_star.p_problem[planet][i]="";
+            cur_star.p_timer[planet][i]=-1;
+        }
+    }
     
-    obj_turn_end.battle_object[obj_turn_end.current_battle].p_problem[obj_turn_end.battle_world[obj_turn_end.current_battle],spyrer]="";
-    obj_turn_end.battle_object[obj_turn_end.current_battle].p_timer[obj_turn_end.battle_world[obj_turn_end.current_battle],spyrer]=-1;
-    
-    var tixt;tixt="The Spyrer on "+string(obj_turn_end.battle_object[obj_turn_end.current_battle].name);
-    if (spyrer=1) then tixt+=" I";if (spyrer=2) then tixt+=" II";
-    if (spyrer=3) then tixt+=" III";if (spyrer=4) then tixt+=" IV";
-    tixt+=" has been removed.  The citizens and craftsman may sleep more soundly, the Inquisition likely pleased.";
+    var tixt=$"The Spyrer on {cur_star.name} {planet_string} has been removed.  The citizens and craftsman may sleep more soundly, the Inquisition likely pleased."
+
     scr_popup("Inquisition Mission Completed",tixt,"spyrer","");
     
-    if (obj_controller.demanding=0) then obj_controller.disposition[4]+=1;
+    if (obj_controller.demanding=0) then obj_controller.disposition[4]+=2;
     if (obj_controller.demanding=1) then obj_controller.disposition[4]+=choose(0,0,1);
-    
-    if (spyrer=1) then scr_event_log("","Inquisition Mission Completed: The Spyrer on "+string(obj_turn_end.battle_object[obj_turn_end.current_battle].name)+" I has been removed.");
-    if (spyrer=2) then scr_event_log("","Inquisition Mission Completed: The Spyrer on "+string(obj_turn_end.battle_object[obj_turn_end.current_battle].name)+" II has been removed.");
-    if (spyrer=3) then scr_event_log("","Inquisition Mission Completed: The Spyrer on "+string(obj_turn_end.battle_object[obj_turn_end.current_battle].name)+" III has been removed.");
-    if (spyrer=4) then scr_event_log("","Inquisition Mission Completed: The Spyrer on "+string(obj_turn_end.battle_object[obj_turn_end.current_battle].name)+" IV has been removed.");
-    scr_gov_disp(obj_turn_end.battle_object[obj_turn_end.current_battle].name,spyrer,choose(1,2,3,4));
+
+    scr_event_log("","Inquisition Mission Completed: The Spyrer on {cur_star.name} {planet} has been removed.", cur_star.name);
+    scr_gov_disp(cur_star.name,planet,choose(1,2,3,4));
     
     instance_deactivate_object(obj_star);
 }

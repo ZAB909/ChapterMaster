@@ -188,7 +188,7 @@ function launch_crusade(){
 			var star_alert = instance_create(star_id.x+16,star_id.y-24,obj_star_event);
 			star_alert.image_alpha=1;
 			star_alert.image_speed=1;
-			scr_event_log("","A Crusade is called; our forces are expected at "+string(star_id.name)+" in 36 months.");
+			scr_event_log("","A Crusade is called; our forces are expected at "+string(star_id.name)+" in 36 months.", star_id.name);
 			return true;	
 		}
 	}
