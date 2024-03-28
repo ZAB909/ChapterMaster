@@ -22,6 +22,7 @@ Fixed:
 	- power spears causing an error
 	- stops duplicating by having no limit to forge assignment
 	- Fix champions deselecting working properly but not returning back if you select them on the drop screen.
+	- correct artifact saving
 
 
 changed:
