@@ -500,7 +500,7 @@ function scr_enemy_ai_c() {
 
 
 	// Tyranids here
-	var i;i=0;
+	var i=0;
 	repeat(4){i+=1;
 	    if (p_tyranids[i]>=5) and (planets>=i) and (p_player[i]+p_orks[i]+p_guardsmen[i]+p_pdf[i]+p_chaos[i]=0){
 	        var ship;ship=instance_nearest(x,y+32,obj_en_fleet);
@@ -522,7 +522,9 @@ function scr_enemy_ai_c() {
 	                // if image_alpha = 0.33 then send the ship somewhere new
                 
 	            }
-	            if (planet_feature_bool(p_feature[i], P_features.Capillary_Towers)==1) and (p_type[i]!="Dead"){p_population[i]=floor(p_population[i]*0.3);}
+	            if (planet_feature_bool(p_feature[i], P_features.Capillary_Towers)==1) and (p_type[i]!="Dead"){
+	            	p_population[i]=floor(p_population[i]*0.3);
+	            }
 	            if (planet_feature_bool(p_feature[i], P_features.Capillary_Towers)==1) and (p_type[i]!="Dead"){
 	                p_feature[i]=[];
 					array_push(p_feature[i], new new_planet_feature(P_features.Capillary_Towers), new new_planet_feature(P_features.Reclamation_pools));

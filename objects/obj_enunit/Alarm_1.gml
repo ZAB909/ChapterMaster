@@ -638,7 +638,7 @@ repeat(20){j+=1;
     if (dudes[j]="Fallen"){scr_en_weapon("Bolt Pistol",true,dudes_num[j],dudes[j],j);scr_en_weapon("Power Weapon",true,dudes_num[j],dudes[j],j);dudes_ac[j]=20;dudes_hp[j]=120;men+=dudes_num[j];dudes_dr[j]=0.5;}
     
     if (dudes[j]="Chaos Lord"){scr_en_weapon("Plasma Pistol",true,dudes_num[j],dudes[j],j);scr_en_weapon("Power Weapon",true,dudes_num[j],dudes[j],j);dudes_ac[j]=30;dudes_hp[j]=150;men+=dudes_num[j];}
-    if (dudes[j]="Chaos Sorcerer"){scr_en_weapon("Plasma Pistol",true,dudes_num[j],dudes[j],j);scr_en_weapon("Force Weapon",true,dudes_num[j],dudes[j],j);dudes_ac[j]=17;dudes_hp[j]=100;men+=dudes_num[j];}
+    if (dudes[j]="Chaos Sorcerer"){scr_en_weapon("Plasma Pistol",true,dudes_num[j],dudes[j],j);scr_en_weapon("Force Staff",true,dudes_num[j],dudes[j],j);dudes_ac[j]=17;dudes_hp[j]=100;men+=dudes_num[j];}
     if (dudes[j]="Warpsmith"){
     scr_en_weapon("Chainfist",true,dudes_num[j],dudes[j],j);
     scr_en_weapon("Meltagun",true,dudes_num[j],dudes[j],j);
@@ -679,7 +679,7 @@ repeat(20){j+=1;
     if (dudes[j]="Plague Marine"){scr_en_weapon("Bolter",true,dudes_num[j],dudes[j],j);scr_en_weapon("Poison Chainsword",true,dudes_num[j],dudes[j],j);dudes_ac[j]=20;dudes_hp[j]=150;men+=dudes_num[j];}
     if (dudes[j]="Noise Marine"){scr_en_weapon("Sonic Blaster",true,dudes_num[j],dudes[j],j);scr_en_weapon("Melee1",true,dudes_num[j],dudes[j],j);dudes_ac[j]=20;dudes_hp[j]=100;men+=dudes_num[j];}
     if (dudes[j]="Rubric Marine"){scr_en_weapon("Rubric Bolter",true,dudes_num[j],dudes[j],j);scr_en_weapon("Melee1",true,dudes_num[j],dudes[j],j);dudes_ac[j]=30;dudes_hp[j]=125;men+=dudes_num[j];}
-    if (dudes[j]="Rubric Sorcerer"){scr_en_weapon("Witchfire",true,dudes_num[j],dudes[j],j);scr_en_weapon("Force Weapon",true,dudes_num[j],dudes[j],j);dudes_ac[j]=30;dudes_hp[j]=150;men+=dudes_num[j];}
+    if (dudes[j]="Rubric Sorcerer"){scr_en_weapon("Witchfire",true,dudes_num[j],dudes[j],j);scr_en_weapon("Force Staff",true,dudes_num[j],dudes[j],j);dudes_ac[j]=30;dudes_hp[j]=150;men+=dudes_num[j];}
       
     if (dudes[j]="Cultist"){scr_en_weapon("Autogun",true,dudes_num[j],dudes[j],j);scr_en_weapon("melee0.5",true,dudes_num[j],dudes[j],j);dudes_ac[j]=0;dudes_hp[j]=30;men+=dudes_num[j];}
     

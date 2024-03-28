@@ -9,34 +9,6 @@ yy=__view_get( e__VW.YView, 0 )+0;
 
 if (construction_started>0) then construction_started-=1;
 
-x2=962;
-y2=107;
-tooltip_show=0;
-
-
-if (instance_exists(obj_ingame_menu)) then exit;
-var equip_data;
-repeat(39){
-    i+=1;y2+=20;
-    
-    if (item[i]!="") and (mouse_x>=xx+962) and (mouse_y>=yy+y2) and (mouse_x<xx+1100) and (mouse_y<yy+y2+19) and (shop!="warships"){
-        tooltip_stat1=0;tooltip_stat2=0;tooltip_stat3=0;tooltip_stat4=0;tooltip_other="";wep_data="";
-        marine_armour[0]="";
-        equip_data=gear_weapon_data("any", item[i]);
-        if (tooltip_overide[i] == 0){
-            if (is_struct(equip_data)){
-                tooltip=$"{equip_data.item_tooltip_desc_gen()}";
-            }
-        } else {
-            tooltip = tooltip_overide[i];
-        }
-        tooltip_show=1;
-    }
-    
-    if (item[i]!="") /*and (nobuy[i]=0)*/ and (mouse_x>=xx+x2) and (mouse_y>=yy+y2+1) and (xx+1579) and (mouse_y<yy+y2+19){
-        hover=i;
-    }  
-}
 
 /* */
 /*  */

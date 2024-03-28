@@ -18,7 +18,7 @@ function scr_vehicle_weapon(argument0, argument1) {
 
 	var melee;melee=0;
 	if (weep="Close Combat Weapon") then melee=1;if (weep="Chainaxe")then melee=1;
-	if (weep="Combat Knife")then melee=1;if (weep="Force Weapon")then melee=1;
+	if (weep="Combat Knife")then melee=1;if (weep="Force Staff")then melee=1;
 	if (weep="Thunder Hammer")then melee=1;if (weep="Power Sword")then melee=1;
 	if (weep="Power Weapon")then melee=1;if (weep="Power Axe")then melee=1;
 	if (weep="Power Fist")then melee=1;if (weep="Power Fists")then melee=1;
@@ -76,7 +76,7 @@ function scr_vehicle_weapon(argument0, argument1) {
 	if (weep="Chainsword"){with(bull){instance_destroy();}target[argument1].hp-=dym;}
 	if (weep="Chainaxe"){with(bull){instance_destroy();}target[argument1].hp-=dym;}
 	if (weep="Combat Knife"){with(bull){instance_destroy();}target[argument1].hp-=dym;}
-	if (weep="Force Weapon"){with(bull){instance_destroy();}target[argument1].hp-=dym;}
+	if (weep="Force Staff"){with(bull){instance_destroy();}target[argument1].hp-=dym;}
 	if (weep="Thunder Hammer"){with(bull){instance_destroy();}target[argument1].hp-=dym;}
 
 	if (weep="Power Sword"){with(bull){instance_destroy();}target[argument1].hp-=dym;}

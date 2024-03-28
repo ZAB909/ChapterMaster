@@ -163,7 +163,7 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
 	    if (argument0="Plasma Pistol"){atta=70;arp=1;rang=3.1;}
 	    if (argument0="Power Weapon"){atta=120;arp=0;rang=1;}
 	    if (argument0="Power Sword"){atta=120;arp=0;rang=1;}
-	    if (argument0="Force Weapon"){atta=400;arp=1;rang=1;}
+	    if (argument0="Force Staff"){atta=400;arp=1;rang=1;}
 	    if (argument0="Chainfist"){atta=300;arp=1;rang=1;spli=1;}
 	    if (argument0="Meltagun"){atta=200;arp=1;rang=2;amm=4;}
 	    if (argument0="Flamer"){atta=160;arp=0;rang=2.1;amm=4;spli=1;}

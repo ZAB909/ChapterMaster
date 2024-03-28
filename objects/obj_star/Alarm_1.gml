@@ -194,7 +194,7 @@ frigate=0;
 escort=0;
 // Create Tau Fleet
 if (owner == eFACTION.Tau){
-    for (var i = 1; i <= 4; i++) {
+    for (var i = 1; i <= planets; i++) {
         if (p_type[i] == "Desert") {
             system_fleet += 5;
         }
@@ -271,7 +271,7 @@ if (owner == eFACTION.Tau){
 }
 // Create Nids
 if (owner == eFACTION.Tyranids){
-    for (var i = 1; i <= 4; i++) {
+    for (var i = 1; i <= planets; i++) {
         if (p_population[i] > 0) {
             p_tyranids[i] = 1;
             
@@ -281,6 +281,8 @@ if (owner == eFACTION.Tyranids){
                     p_tyranids[i] = choose(4,5,5);
                     break;
             }
+            array_push(p_feature[i], new new_planet_feature(P_features.Gene_Stealer_Cult));
+
         }
         p_owner[i] = 2;
     }

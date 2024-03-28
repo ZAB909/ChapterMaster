@@ -1,9 +1,9 @@
-function tooltip_draw(tooltip="", max_width=300, coords=[mouse_x+24,mouse_y+24], text_color=c_gray, font=fnt_40k_14, header="", header_font=fnt_40k_14b){
+function tooltip_draw(tooltip="", max_width=300, coords=[mouse_x+20,mouse_y+20], text_color=c_gray, font=fnt_40k_14, header="", header_font=fnt_40k_14b){
 	draw_set_halign(fa_left);
 	draw_set_alpha(1)
 	// Calculate padding and rectangle size
-	static text_padding_x = 4;
-	static text_padding_y = 4;
+	static text_padding_x = 11;
+	static text_padding_y = 14;
 	// Convert hash to newline in strings
 	header = string_hash_to_newline(string(header));
 	tooltip = string_hash_to_newline(string(tooltip));
@@ -25,14 +25,28 @@ function tooltip_draw(tooltip="", max_width=300, coords=[mouse_x+24,mouse_y+24],
 		rect_h += header_h + text_padding_y;
 	}
 	// Get view coordinates
-	static xx = __view_get(e__VW.XView, 0);
-	static yy = __view_get(e__VW.YView, 0);
-	// Define tooltip position and clamp it to view
-	var rect_x = clamp(coords[0], xx + DEFAULT_TOOLTIP_VIEW_OFFSET, xx + __view_get(e__VW.WView, 0) - rect_w - DEFAULT_TOOLTIP_VIEW_OFFSET);
-	var rect_y = clamp(coords[1], yy + DEFAULT_TOOLTIP_VIEW_OFFSET, yy + __view_get(e__VW.HView, 0) - rect_h - DEFAULT_TOOLTIP_VIEW_OFFSET);
+	var xx = __view_get(e__VW.XView, 0);
+	var yy = __view_get(e__VW.YView, 0);
+	// Define tooltip position
+	var rect_x = coords[0];
+	var rect_y = coords[1];
+	// Check if the tooltip goes over the right part of the screen and flip left if so
+	if (rect_x + rect_w > xx + __view_get(e__VW.WView, 0)) {
+		rect_x = coords[0] - rect_w - 40;
+	}
+	// Check if the tooltip goes over the bottom part of the screen and flip up if so
+	if (rect_y + rect_h > yy + __view_get(e__VW.HView, 0)) {
+		rect_y = coords[1] - rect_h - 40;
+	}
 	// Draw the tooltip rectangle with an outline
-	draw_rectangle_colour(rect_x, rect_y, rect_w + rect_x, rect_h + rect_y, c_black, c_black, c_black, c_black, 0);
-	draw_rectangle_colour(rect_x + 1, rect_y + 1, rect_w + rect_x - 1, rect_h + rect_y - 1, c_gray, c_gray, c_gray, c_gray, 1);
+	static slate_height = 133;
+	static slate_width=255;
+	var x_scale = (rect_w/slate_width);
+	var y_scale = (rect_h/slate_height);
+	draw_sprite_ext(spr_tooltip1, 0, rect_x, rect_y, x_scale, y_scale, 0, c_white, 1);
+	draw_sprite_ext(spr_tooltip1, 1, rect_x, rect_y, x_scale, y_scale, 0, c_white, 1);
+	//draw_rectangle_colour(rect_x, rect_y, rect_w + rect_x, rect_h + rect_y, c_black, c_black, c_black, c_black, 0);
+	//draw_rectangle_colour(rect_x + 1, rect_y + 1, rect_w + rect_x - 1, rect_h + rect_y - 1, c_gray, c_gray, c_gray, c_gray, 1);
 	// Draw header text if it exists
 	if (header != "") {
 		draw_set_font(header_font);
@@ -678,9 +692,11 @@ function scr_ui_popup() {
 	var xx=__view_get( e__VW.XView, 0 )+0;
 	var yy=__view_get( e__VW.YView, 0 )+0;
 	if (zoomed == 0){
-
+		// Requisition income tooltip
 		if (scr_hit(xx+5,yy+10,xx+137,yy+38)){
-		    var tx=0,ty=0,tool1="",tool2="",plu="";
+		    var tx=0,ty=0,plu="";
+				tool1="Requisition Points#";
+				tool2=tool1;
 	   		if (income_base>0) then plu="+";
 	        tool1+=string("Base Income: {0}{1}", plu, income_base);
 	        tool2+="Base Income: ";
@@ -735,8 +751,8 @@ function scr_ui_popup() {
 		    }
 		}
 
-
-		if (scr_hit(xx+153,yy+10,xx+221,yy+38)){
+		// Current Loyalty tooltip
+		if (scr_hit(xx+247,yy+10,xx+328,yy+38)){
 		    var  tx=0,ty=0,tool1="",tool2="",plu="";
 
 		    var d,lines;d=0;lines=0;
@@ -760,16 +776,16 @@ function scr_ui_popup() {
 		    }
 		}
 
-
-		if (scr_hit(xx+247,yy+10,xx+338,yy+38)){
+		// Stored Gene-Seed tooltip
+		if (scr_hit(xx+373,yy+10,xx+443,yy+38)){
 		    var tx=0,ty=0,tool1="",tool2="",plu="";
 		    tool1="Gene-Seed";
 		    if (tool1!=""){
 		        tooltip_draw(tool1);
 		    }
 		}
-
-		if (scr_hit(xx+373,yy+10,xx+463,yy+38)){
+		// Current Astartes tooltip
+		if (scr_hit(xx+478, yy+3, xx+552, yy+38)){
 		    var tx=0,ty=0,tool1="",tool2="",plu="";
 		    tool1="Astartes#(Normal/Command)";
 		    tool2="Astartes";
@@ -777,6 +793,7 @@ function scr_ui_popup() {
 		        tooltip_draw(tool1);
 		    }
 		}
+		// Turn tooltip
 		if (menu == 0) and (diplomacy<=0){
 			if (scr_hit(xx+1435,yy+40,xx+1580,yy+267)){
 			    var tx=0,ty=0,tool1="",tool2="",plu="";
@@ -787,11 +804,13 @@ function scr_ui_popup() {
 			    }
 			}
 		}
-	    if (point_in_rectangle(mouse_x, mouse_y, xx+3, yy+50, xx+67, yy+114)){
+			// Forge Points income tooltip
+	    if (scr_hit(xx+153,yy+10,xx+241,yy+38)){
 	        tooltip_draw(obj_controller.forge_string);
 	    }		
 
-		if (scr_hit(xx+813,yy+10,xx+960,yy+38)) and (penitent==1) {
+		// Penitence/Blood Debt tooltip
+		if (scr_hit(xx+923,yy+10,xx+1060,yy+38)) and (penitent==1) {
 		    var tx=0,ty=0,tool1="",tool2="",plu="",hei_bonus;
 	    
 		    var endb=0,endb2="";
@@ -802,7 +821,7 @@ function scr_ui_popup() {
 		        tool1+="#Blood Debt: "+string(penitent_max);tool2+="#Blood Debt: ";
 		        tool1+="#Decay Rate: "+string(endb);tool2+="#Decay Rate: ";
 	        
-		        tool1+="##Attacking enemies, Raiding enemies, and losing Astartes will lower your Chapter's Blood Debt.  Over #time it decays.  Bombarding enemies will prevent decay.";
+		        tool1+="##Attacking enemies, Raiding enemies, and losing Astartes will lower your Chapter's Blood Debt.  Over time it decays.  Bombarding enemies will prevent decay.";
 		        hei_bonus=-20;
 		    }
 		    if (obj_controller.blood_debt=0){
@@ -811,7 +830,7 @@ function scr_ui_popup() {
 		        // tool1+="#Each Turn: +1";tool2+="#Each Turn: ";
 		        // tool1+="#  ";tool2+="#  ";
 	        
-		        tool1+="##Penitence will be gained slowly over time.  After the timer runs out your Chapter will no longer be#considered Penitent.";
+		        tool1+="##Penitence will be gained slowly over time.  After the timer runs out your Chapter will no longer be considered Penitent.";
 		        hei_bonus=23;
 		    }
 	    

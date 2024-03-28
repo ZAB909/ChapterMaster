@@ -34,4 +34,7 @@ if (obj_controller.selection_data != false){
     obj_star_select.feature = data.feature;
     obj_controller.selecting_planet = data.planet;
     obj_controller.selection_data=false;
+    if (obj_controller.selecting_planet >0 && obj_controller.selecting_planet<5){
+    obj_star_select.garrison = new garrison_force(p_operatives[obj_controller.selecting_planet]);       
+    }
 }

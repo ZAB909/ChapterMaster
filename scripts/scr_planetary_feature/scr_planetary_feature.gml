@@ -23,7 +23,9 @@ enum P_features {
 			Victory_Shrine,
 			Arsenal,
 			Gene_Vault,
-			Forge
+			Forge,
+			Gene_Stealer_Cult
+
 	};
 	
 enum base_type{
@@ -46,6 +48,12 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		}
 	}
 	switch(f_type){
+		case P_features.Gene_Stealer_Cult:
+		PDF_control = 0;
+		sealed = 0;
+		player_hidden = 1;
+		planet_display = "Genestealer Cult";
+		break;
 		case P_features.Necron_Tomb:
 		awake = 0;
 		sealed = 0;

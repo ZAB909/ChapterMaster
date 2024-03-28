@@ -56,8 +56,7 @@ if (defeat=1){
     if (ruins_battle=11) then pop.text+="Now that they have been discovered, scans indicate the chaos space marines are leaving the structures, intent on doing damage.  ";
     if (ruins_battle=12) then pop.text+="Scans indicate the foul daemons are leaving the structures en masse, intent on doing damage.  "
     if (ruins_battle=6) then pop.text+="Now that they have been discovered, the Eldar seem to have vanished without a trace.  Scans reveal nothing.";
-	_ruins.forces_defeated()
-	show_debug_message("{0}, {1}",post_equipment_lost, post_equipments_lost )
+	_ruins.forces_defeated();
 	if (post_equipment_lost[1]!=""){
 	    var i;i=0;
 	    repeat(50){i+=1;

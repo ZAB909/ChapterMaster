@@ -16,6 +16,8 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	var psy_discipline="";
 	var power_name="";
 	var target_type="";
+	var weapon_one = unit.get_weapon_one_data()
+	var weapon_two = unit.get_weapon_two_data()
 	enemy5=enemy_target;
 	onc=power_count;
 	using=power_set;
@@ -307,7 +309,7 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	}
 	if (power_name="Vortex of Doom"){p_type="attack";p_rang=5;p_tar=3;p_spli=1;p_att=800;p_arp=1;p_duration=0;
 	    flavour_text2="- a hole between real and warp space is torn open with deadly effect.  ";
-	    if (binders=true) then flavour_text2="- a hole bewteen real and worp space is torn, unleashing a myriad of sorcerous energies.  ";
+	    if (binders=true) then flavour_text2="- a hole bewteen realspace and the warp is torn, unleashing a myriad of sorcerous energies.  ";
 	    if (binders=true) and (obj_ncombat.sorcery_seen<2) and (obj_ncombat.present_inquisitor=1) then obj_ncombat.sorcery_seen=1;
 	}
 
@@ -412,6 +414,15 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	//     flavour_text2="- a hole between real and warp space is torn open with deadly effect.  ";
 	// }
 
+if (weapon_one.has_tag("psy") || weapon_two.has_tag("psy")){
+	if (p_att>0) then p_att=round(p_att)*1.25;
+	if (p_rang>0) then p_rang=round(p_rang)*1.25;
+	}
+	if (unit.weapon_one()=="Force Staff"||unit.weapon_two()=="Force Staff"){
+	if (p_att>0) then p_att=round(p_att)*2;
+	if (p_rang>0) then p_rang=round(p_rang)*1.5;
+	}
+
 	if (binders==true) and (p_type=="attack"){
 	    if (p_att>0) then p_att=round(p_att)*1.15;
 	    // if (p_arp>0) then p_arp=round(p_arp)*1.15;
@@ -424,7 +435,6 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	        if (p_rang>0) then p_rang=round(p_rang)*1.25;
 	    }
 	}
-
 
 
 	flavour_text1=$"{unit.name_role()} casts '{power_name}'"

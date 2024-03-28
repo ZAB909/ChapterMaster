@@ -180,7 +180,7 @@ function scr_ui_manage() {
                 hide_banner=0;
                	selection_data.system.alarm[3]=4;
 			}
-			if ((man_size==0 || man_size>selection_data.number) && selection_data.start_count==0){
+			if ((man_size==0 || man_size>selection_data.number)){
 				proceed_button.draw_shutter(xx+1110,yy+70, "Proceed", 0.5, false);
 			} else {
 				if (proceed_button.draw_shutter(xx+1110,yy+70, "Proceed", 0.5, true)){
@@ -191,22 +191,23 @@ function scr_ui_manage() {
 	                hide_banner=0;
 	                selections = [];
 	                var forge = selection_data.feature.feature;
+	                forge.techs_working = 0;
 	                for (var i=1; i<500;i++){
 	                	if (ma_name[i]== "") then continue;
 	                	if (man_sel[i]>0){
 	                		switch(selection_data.purpose_code){
 	                			case "forge_assignment":
-	                			forge.techs_working++;
-	                			unit = display_unit[i];
-	                			unit.unload(selection_data.planet, selection_data.system);
-	                			unit.job = {type:"forge", planet:selection_data.planet, location:selection_data.system.name};
-	                			break;
+		                			forge.techs_working++;
+		                			unit = display_unit[i];
+		                			unit.unload(selection_data.planet, selection_data.system);
+		                			unit.job = {type:"forge", planet:selection_data.planet, location:selection_data.system.name};
+	                				break;
 	                		}
 	                	} else {
 	                		unit = display_unit[i];
 	                		var job = unit.job;
 	                		if (job!="none"){
-		                		if (job.type=="forge" && job.planet== selection_data.planet){
+		                		if (job.type=="forge" && job.planet == selection_data.planet){
 									unit.job = "none";
 									forge.techs_working--;
 		                		}
@@ -251,8 +252,8 @@ function scr_ui_manage() {
 			var y6=y5+string_height("Toggle Squad View")+2;
 			draw_unit_buttons([x5,y5, x6, y6], stat_tool_tip_text,[1,1],c_red);
 			if (managing>0 && managing<11){
-				array_push(tooltip_drawing, ["click or press S to toggle, squad view", [x5,y5,x6,y6]]);
-				if ((point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left)) || keyboard_check_pressed(ord("S"))){
+				array_push(tooltip_drawing, ["Click or press S to toggle, squad view", [x5,y5,x6,y6]]);
+				if ((point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left)) || (keyboard_check_pressed(ord("S")) && !text_bar)){
 					obj_controller.view_squad = !obj_controller.view_squad;
 					if (stat_tool_tip_text=="Toggle Squad View"){
 						obj_controller.company_data = new scr_company_struct(obj_controller.managing);
@@ -273,8 +274,8 @@ function scr_ui_manage() {
 			var x6=x5+string_width(stat_tool_tip_text)+4;
 			var y6=y5+string_height(stat_tool_tip_text)+2;	    
 		    draw_unit_buttons([x5,y5,x6,y6], stat_tool_tip_text,[1,1],c_red);
-		    array_push(tooltip_drawing, ["click or press P to show unit data", [x5,y5,x6,y6]]);
-			if ((keyboard_check_pressed(ord("P"))|| (point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left))) && !instance_exists(obj_temp3) && !instance_exists(obj_popup)){
+		    array_push(tooltip_drawing, ["Click or press P to show unit data", [x5,y5,x6,y6]]);
+			if (((keyboard_check_pressed(ord("P"))&& !text_bar)|| (point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left))) && !instance_exists(obj_temp3) && !instance_exists(obj_popup)){
 				if (view_squad){
 					view_squad =false;
 				}else {
@@ -304,12 +305,21 @@ function scr_ui_manage() {
 	    
 		    draw_set_color(c_gray);	    	
 	    	selected_unit.draw_unit_image(1190,210);
+
+					// Borders
+					draw_set_color(c_gray);
+					draw_rectangle(xx+1190,yy+210,xx+1190+166,yy+210+271,1); 
 	        // Crop anything sticking out of the display
 	        draw_set_color(0);
-	        draw_rectangle(xx+1178,yy+168,xx+1190,yy+450,0);// Left
-	        draw_rectangle(xx+1356,yy+168,xx+1404,yy+450,0);// Right
-	        //draw_rectangle(xx+1198,yy+168,xx+1384,yy+158,0);// Top
-        
+					// Top rectangle
+					draw_rectangle(xx+1190-20+2, yy+210-20-2, xx+1190+166+20+2, yy+210-2, false);
+					// Bottom rectangle
+					draw_rectangle(xx+1190-20+2, yy+210+271+2, xx+1190+166+20+2, yy+210+271+20+2, false);
+					// Left rectangle
+					draw_rectangle(xx+1190-20-2, yy+210+2, xx+1190-2, yy+210+271+2, false);
+					// Right rectangle
+					draw_rectangle(xx+1190+166+2, yy+210+2, xx+1190+166+20+2, yy+210+271+2, false);
+
 	        draw_set_color(c_gray);
 	        draw_set_halign(fa_center);
 	        //draw_rectangle(xx+1218,yy+210,xx+1374,yy+491,1);
@@ -483,7 +493,37 @@ function scr_ui_manage() {
 	        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 
 
     		var_text = string_hash_to_newline($"Health: {round(selected_unit.hp())}/{round(selected_unit.max_health())}")
-        	tooltip_text = string_hash_to_newline(string("CON : {0}", round(100*(1+((selected_unit.constitution-40)*0.025)))));
+        	tooltip_text = string_hash_to_newline(string("CON: {0}#", round(100*(1+((selected_unit.constitution-40)*0.025)))));
+            for (var i = 0; i < array_length(equipment_types); i++) {
+                var equipment_type = equipment_types[i];
+                var hp_mod = 0;
+                var name = "";
+                switch(equipment_type) {
+                    case "armour":
+                        hp_mod = selected_unit.get_armour_data("hp_mod");
+                        name = selected_unit.get_armour_data("name");
+                        break;
+                    case "weapon_one":
+                        hp_mod = selected_unit.get_weapon_one_data("hp_mod");
+                        name = selected_unit.get_weapon_one_data("name");
+                        break;
+                    case "weapon_two":
+                        hp_mod = selected_unit.get_weapon_two_data("hp_mod");
+                        name = selected_unit.get_weapon_two_data("name");
+                        break;
+                    case "mobility":
+                        hp_mod = selected_unit.get_mobility_data("hp_mod");
+                        name = selected_unit.get_mobility_data("name");
+                        break;
+                    case "gear":
+                        hp_mod = selected_unit.get_gear_data("hp_mod");
+                        name = selected_unit.get_gear_data("name");
+                        break;
+                }
+                if (hp_mod != 0) {
+                    tooltip_text += string_hash_to_newline($"{name}: {hp_mod}#");
+                }
+            }
         	x1 = xx+1015;
         	y1 = yy+422;
         	x2 = x1+string_width(var_text);
@@ -550,7 +590,7 @@ function scr_ui_manage() {
 							}
 						}
         		var_text = string_hash_to_newline(string("Damage Resistance: {0}",cn.temp[118]))
-	        	tooltip_text += string_hash_to_newline(string("CON: {0}%#EXP: {1}%", round(selected_unit.constitution/2), round(cn.temp[113]/10)));
+	        	tooltip_text += string_hash_to_newline(string("CON: {0}%#XP: {1}%", round(selected_unit.constitution/2), round(selected_unit.experience()/10)));
 	        	x1 = xx+1015;
 	        	y1 = yy+378;
 	        	x2 = x1+string_width(var_text);
@@ -574,14 +614,15 @@ function scr_ui_manage() {
 	        
 	    yy+=77;
 		
-	    var unit_specialism_option=false, spec_tip="", tooltip_set=[];
+	    var unit_specialism_option=false, spec_tip="";
+		var potential_tooltip=[], health_tooltip=[], promotion_tooltip=[];
 		var repetitions=min(man_max,man_see);
 
 		//tooltip text to tell you if a unit is eligible for special roles
 		var spec_tips = [string("{0} Potential",obj_ini.role[100][16]),		
-						string("{0} potential",obj_ini.role[100][15]),
-						string("{0} potential",obj_ini.role[100][14]),
-						"Librarium potential"];
+						string("{0} Potential",obj_ini.role[100][15]),
+						string("{0} Potential",obj_ini.role[100][14]),
+						string("{0} Potential",obj_ini.role[100][17])];
 		var assignment ="none"
 	    
 	    if (!obj_controller.view_squad){
@@ -621,7 +662,7 @@ function scr_ui_manage() {
 	                   
 		            temp3=string(round((unit.hp()/unit.max_health())*100))+"% HP";
 	            
-		            temp4=string(ma_exp[sel])+" exp";
+		            temp4=string(ma_exp[sel])+" XP";
 	            
 		            ma_ar="";ma_we1="";ma_we2="";ma_ge="";ma_mb="";ttt=0;
 		            ar_ar=0;ar_we1=0;ar_we2=0;ar_ge=0;ar_mb=0;
@@ -699,48 +740,28 @@ function scr_ui_manage() {
 
 		        unit_specialism_option=false;
 		        spec_tip = "";
+				draw_set_color(c_gray);
+				draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);
 		        if (man[sel]="man"){
-		        	draw_set_color(c_gray);
 		        	if (!is_specialist(unit.role())){
 				        if (unit.technology>=35){
 				        	 //if unit has techmarine potential
-				        	draw_set_color(c_orange);
 				        	unit_specialism_option=true;
 				        	spec_tip = spec_tips[0];
 				        //if unit has librarian potential
 				    	} else if (unit.psionic>7){
 				    		spec_tip = spec_tips[3];
 				    		unit_specialism_option=true;
-				    		draw_set_color(c_aqua);
 				    	}else if (unit.piety>=35) and (unit.charisma>=30){  //if unit has chaplain potential
 				    		spec_tip = spec_tips[2];
 				    		unit_specialism_option=true;
-				    		draw_set_color(c_olive);
 				    	}else if (unit.technology>=30) and (unit.intelligence>=45){ //if unit has apothecary potential
 				    		spec_tip = spec_tips[1];
 				    		unit_specialism_option=true;
-				    		draw_set_color(c_fuchsia);
 				    	}
-			    	} else{
-			    		if (array_contains(["Lexicanum", "Codiciery",obj_ini.role[100,17], string("Chief {0}",obj_ini.role[100,17])], unit.role())){
-			    			draw_set_color(c_blue);
-			    		} else if(array_contains(["Forge Master",obj_ini.role[100][16]],unit.role())){
-			    			draw_set_color(c_maroon);
-			    		} else if(array_contains([obj_ini.role[100][15],"Master of the Apothecarion"],unit.role())){
-			    			draw_set_color(c_red);
-			    		} else if(array_contains([obj_ini.role[100][14],"Master of Sanctity"],unit.role())){
-			    			draw_set_color(c_teal);
-			    		}
 			    	}
-		    	} else {
-		    		draw_set_color(c_gray);
 		    	}
-		    	if (unit_specialism_option){
-		    		array_push(tooltip_set, [spec_tip, [xx+25,yy+64,xx+974,yy+85]]);
-		    		draw_rectangle(xx+25+2,yy+64+2,xx+974-2,yy+85-2,1);
-		    	} else{
-					draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);
-		    	}
+		    	if (unit_specialism_option) then array_push(potential_tooltip, [spec_tip, [xx+232,yy+64,xx+246,yy+85]]);
 
 		        // Squads
 		        var sqi="";
@@ -786,25 +807,49 @@ function scr_ui_manage() {
 				for (var k = 0; k<10; k++){
 					if ((string_width(string_hash_to_newline(temp1))*name_xr)>184-8) then name_xr-=0.05;
 				}
-	        
-		        if (temp1!="Chapter Master "+string(obj_ini.master_name)){
-		            if (man[sel]=="man") and (ma_promote[sel]>0) then draw_set_color(c_yellow);
-		            if (man[sel]=="man") and (ma_promote[sel]>=10) then draw_set_color(c_red);
-		            draw_text_transformed(xx+27+8,yy+66,string_hash_to_newline(string(temp1)),name_xr,1,0);
-		            draw_text_transformed(xx+28+8,yy+67,string_hash_to_newline(string(temp1)),name_xr,1,0);
-		            draw_set_color(c_gray);
-		        }else if (temp1=="Chapter Master "+string(obj_ini.master_name)){
-		            draw_text_transformed(xx+27+16+8,yy+66,string_hash_to_newline(string(temp1)),name_xr,1,0);
-		            draw_text_transformed(xx+28+16+8,yy+67,string_hash_to_newline(string(temp1)),name_xr,1,0);
-		            draw_sprite(spr_inspect_small,0,xx+27+8,yy+68);
-		        }
-		        draw_set_alpha(1);
-	        
+
+				var hpText = [xx+240+8, yy+66, string_hash_to_newline(string(temp3))]; // HP
+				var xpText = [xx+330+8, yy+66, string_hash_to_newline(string(temp4))]; // XP
+				var hpColor = c_gray;
+				var xpColor = c_gray;
+				var specialismColors = [];
+				// Draw XP value and set up health color
+				if (man[sel] == "man"){
+					if (ma_promote[sel] >= 10){
+						hpColor = c_red;
+						array_push(health_tooltip, ["Critical Health State! Bionic augmentation is required!", [xx+250, yy+64, xx+300, yy+85]]);
+					}else if (ma_promote[sel] > 0){
+						xpColor = c_yellow;
+						array_push(promotion_tooltip, ["Promotion Recommended", [xx+335, yy+64, xx+385, yy+85]]);
+					}
+					draw_text_color(xpText[0], xpText[1], xpText[2], xpColor, xpColor, xpColor, xpColor, 1);
+				}
+				// Draw the health value with the defined colors
+				draw_text_color(hpText[0], hpText[1], hpText[2], hpColor, hpColor, hpColor, hpColor, 1);
+
+				// Handle potential indication
+				if (unit_specialism_option){
+					if (unit.technology>=35){	//if unit has techmarine potential
+						specialismColors = [c_dkgray, c_red];
+					} else if (unit.psionic>7){	//if unit has librarian potential
+						specialismColors = [c_white, c_aqua];
+					}else if (unit.piety>=35 && unit.charisma>=30){	//if unit has chaplain potential
+						specialismColors = [c_black, c_yellow];
+					}else if (unit.technology>=30 && unit.intelligence>=45){	//if unit has apothecary potential
+						specialismColors = [c_red, c_white];
+					}
+					draw_circle_colour(xx+238, yy+73, 6, specialismColors[0],specialismColors[1], 0);
+				}
+
+				// Draw the name
 		        draw_set_color(c_gray);
-		        draw_text_transformed(xx+240+8,yy+66,string_hash_to_newline(string(temp3)),1,1,0);// HP
-		        draw_text_transformed(xx+330+8,yy+66,string_hash_to_newline(string(temp4)),1,1,0);// EXP
-		        if (temp2=="Mechanicus Vessel") or (temp2=="Terra IV") or (temp2=="=Penitorium=") or (assignment!="none") then draw_set_alpha(0.5);
-		        draw_text_transformed(xx+430+8,yy+66,string_hash_to_newline(string(temp2)),1,1,0);// LOC
+				draw_text_transformed(xx+27+8,yy+66,string_hash_to_newline(string(temp1)),name_xr,1,0);
+				draw_text_transformed(xx+27.5+8,yy+66.5,string_hash_to_newline(string(temp1)),name_xr,1,0);
+
+				// Draw current location
+				if (temp2=="Mechanicus Vessel") or (temp2=="Terra IV") or (temp2=="=Penitorium=") or (assignment!="none") then draw_set_alpha(0.5);
+				var truncatedLocation = truncate_string_width(string(temp2), 130); // Truncate the location string to 100 pixels
+				draw_text(xx+430+8,yy+66,truncatedLocation);// LOC
 		        draw_set_alpha(1);
 	        
 		        // ma_lid[i]=0;ma_wid[i]=0;
@@ -1079,13 +1124,19 @@ function scr_ui_manage() {
 			            }
 			        }
 			    }
-			    //draws hover overs for specialist potential
-			    for (var i=0;i<array_length(tooltip_set);i++){
-			    	if (point_in_rectangle(mouse_x, mouse_y, tooltip_set[i][1][0],tooltip_set[i][1][1],tooltip_set[i][1][2],tooltip_set[i][1][3])){
-			    		tooltip_draw(tooltip_set[i][0])
-			    	}
-			    }
-		    
+			    //draws hover over tooltips
+				function gen_tooltip(tooltip_array) {
+					for (var i = 0; i < array_length(tooltip_array); i++) {
+						var tooltip = tooltip_array[i];
+						if (point_in_rectangle(mouse_x, mouse_y, tooltip[1][0], tooltip[1][1], tooltip[1][2], tooltip[1][3])) {
+							tooltip_draw(tooltip[0]);
+						}
+					}
+				}
+				gen_tooltip(potential_tooltip);
+				gen_tooltip(promotion_tooltip);
+				gen_tooltip(health_tooltip);
+
 			    yy-=8;
 
 		    	draw_unit_buttons([xx+1281,yy+608],"Select All");

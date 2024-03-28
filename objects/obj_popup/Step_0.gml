@@ -653,7 +653,7 @@ if (image="stc"){
         }
         if (press=3) then exit;
     }
-    if (ma_co>0) and (ma_id>0){
+    else if (ma_co>0) and (ma_id>0){
         if (press=1){
             obj_temp4.alarm[5]=1;
             obj_controller.cooldown=10;
@@ -675,7 +675,7 @@ if (image="stc"){
             instance_destroy();
         }
     }
-    if (ma_co=0) and (ma_id>0) and (target_comp!=3){
+    else if (ma_co=0) and (ma_id>0) and (target_comp!=3){
         if (press=1){
             scr_return_ship(obj_temp4.loc,obj_temp4,obj_temp4.num);
             var man_size,ship_id,comp,plan,i;
@@ -721,17 +721,8 @@ if (type=6){// Equipment
 }
 
 if (type=8){
-    if (obj_ini.artifact[obj_controller.menu_artifact]="Power Armour") then target_role=5;
-    if (obj_ini.artifact[obj_controller.menu_artifact]="Terminator Armour") then target_role=5;
-    if (obj_ini.artifact[obj_controller.menu_artifact]="Artificer Armour") then target_role=5;
-    if (obj_ini.artifact[obj_controller.menu_artifact]="Dreadnought") then target_role=5;
-    if (obj_ini.artifact[obj_controller.menu_artifact]="Dreadnought Armour") then target_role=5;
-    if (obj_ini.artifact[obj_controller.menu_artifact]="Rosarius") then target_role=5;
-    if (obj_ini.artifact[obj_controller.menu_artifact]="Bionics") then target_role=5;
-    if (obj_ini.artifact[obj_controller.menu_artifact]="Psychic Hood") then target_role=5;
-    if (obj_ini.artifact[obj_controller.menu_artifact]="Jump Pack") then target_role=5;
-    if (obj_ini.artifact[obj_controller.menu_artifact]="Servo Arms") then target_role=5;
-    
+    var arti = obj_ini.artifact_struct[obj_controller.menu_artifact];
+    if (array_contains(["mobility","gear", "armour"],arti.determine_base_type())) then target_role=5; 
     all_good=0;
     if (target_role>0) and (target_comp!=-1) and (units=1) then all_good=1;
 }

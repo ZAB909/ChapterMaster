@@ -30,8 +30,8 @@ if (type=99){
     draw_set_halign(fa_center);
     draw_set_color(c_gray);
     
-    var ch,inq_hide;ch="";inq_hide=0;
-    if (type=9){
+    var ch="",inq_hide=0;
+    if (type==9){
         if (array_contains(obj_ini.artifact_tags[obj_controller.menu_artifact], "inq")){
             var i=0;
             repeat(10){i+=1;
@@ -80,7 +80,7 @@ if (type=99){
     draw_text(xx+740,yy+326,string_hash_to_newline("[Cancel]"));
 }
 
-var zm;zm=0;
+var zm=0;
 if (instance_exists(obj_controller)) then zm=obj_controller.zoomed;
 if ((zm=0) and (type<=4)) or (type=98){
     
@@ -551,7 +551,6 @@ if (type=8) and (instance_exists(obj_controller)){
                     unit.update_mobility_item(arti_index);
                 }
                 if (replace="weapon1"){
-                    show_debug_message("wep_one")
                     unit.update_weapon_one(arti_index);
                 }
                 if (replace="weapon2"){

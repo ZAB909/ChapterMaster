@@ -665,13 +665,13 @@ function scr_save(save_slot,save_id) {
 	            ini_write_string("Ini","artifact_quality"+string(g),obj_ini.artifact_sid[g]);
 				var copy_artifact = obj_ini.artifact_struct[g];
 				var new_artifact = {};
-				var names = variable_struct_get_names(copy_feature);
+				var names = variable_struct_get_names(copy_artifact);
 				for (var name = 0; name < array_length(names); name++) {
 				  if (!is_method(copy_artifact[$ names[name]])){
 					  variable_struct_set(new_artifact, names[name],copy_artifact[$ names[name]]);
 				  }
 				}
-                ini_write_string("Ini","artifact_struct"+string(g),base64_encode(json_stringify(copy_artifact)));	            
+                ini_write_string("Ini","artifact_struct"+string(g),base64_encode(json_stringify(new_artifact)));	            
 	        }
 	    }
 	    //

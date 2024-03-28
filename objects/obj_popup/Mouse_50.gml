@@ -919,11 +919,11 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
         }
 
         if (giveto>0) and (type=9){
-
+            var arti_index = obj_controller.menu_artifact;
 
             var e=0;
             repeat(50){e+=1;
-                if (obj_controller.fest_display=obj_controller.menu_artifact) then obj_controller.fest_display=0;
+                if (obj_controller.fest_display=arti_index) then obj_controller.fest_display=0;
 
                 /*if (obj_ini.artifact_tags[obj_controller.menu_artifact]=obj_controller.recent_keyword[e]){
                     obj_controller.recent_keyword[e]="";obj_controller.recent_type[e]="";
@@ -936,17 +936,20 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
 
 
 
-            old_tags=obj_ini.artifact_tags[obj_controller.menu_artifact];
-            obj_ini.artifact[obj_controller.menu_artifact]="";
-            obj_ini.artifact_tags[obj_controller.menu_artifact]="";
-            obj_ini.artifact_identified[obj_controller.menu_artifact]=0;
-            obj_ini.artifact_condition[obj_controller.menu_artifact]=100;
-            obj_ini.artifact_loc[obj_controller.menu_artifact]="";
-            obj_ini.artifact_sid[obj_controller.menu_artifact]=0;
+            old_tags=obj_ini.artifact_tags[arti_index];
+            obj_ini.artifact[arti_index]="";
+            obj_ini.artifact_tags[arti_index]="";
+            obj_ini.artifact_identified[arti_index]=0;
+            obj_ini.artifact_condition[arti_index]=100;
+            obj_ini.artifact_loc[arti_index]="";
+            obj_ini.artifact_sid[arti_index]=0;
+            var arti = obj_ini.artifact_struct[arti_index];
+            arti.unequip_from_unit();
+            obj_ini.artifact_struct[arti_index] = new arti_struct(arti_index);
+            obj_ini.artifact_equipped[arti_index] = false;
+
             obj_controller.artifacts-=1;
             cooldown=7000;
-
-            var g=obj_controller.menu_artifact;
 
             obj_controller.cooldown=10;
             if (obj_controller.menu_artifact>obj_controller.artifacts) then obj_controller.menu_artifact=obj_controller.artifacts;
@@ -957,10 +960,11 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
             var the="";
             if (giveto!=7) and (giveto!=10) then the="the ";
             scr_event_log("","Artifact gifted to "+string(the)+string(obj_controller.faction[giveto])+".");
-
+            var is_daemon = array_contains(old_tags,"Daemon");
+            var is_chaos = array_contains(old_tags,"Chaos");
             if (inq_hide!=2) then with(obj_controller){
-                if (string_count("Daemon",obj_popup.old_tags)=0) or ((diplomacy!=4) and (diplomacy!=5) and (diplomacy!=2)) then scr_dialogue("artifact_thanks");
-                if (string_count("Daemon",obj_popup.old_tags)>0) and ((diplomacy=4) or (diplomacy=5) or (diplomacy=2)) then scr_dialogue("artifact_daemon");
+                if (!is_daemon) or ((diplomacy!=4) and (diplomacy!=5) and (diplomacy!=2)) then scr_dialogue("artifact_thanks");
+                if (is_daemon) and ((diplomacy=4) or (diplomacy=5) or (diplomacy=2)) then scr_dialogue("artifact_daemon");
             }
             if (inq_hide=2) and (obj_controller.diplomacy=4) then with(obj_controller){scr_dialogue("artifact_returned");}
 
@@ -969,7 +973,7 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
                 if (giveto=3) then obj_controller.disposition[3]+=4;
                 if (giveto=4) and (inq_hide!=2) then obj_controller.disposition[4]+=4;
                 if (giveto=4) and (inq_hide=2) then obj_controller.disposition[4]+=2;
-                if (giveto=5) and (string_count(old_tags,"Daemon")=0){
+                if (giveto=5) and (!is_daemon){
                     obj_controller.disposition[5]+=4;
                     var o=0
                     if (array_contains(obj_ini.adv, "Reverent Guardians")) then obj_controller.disposition[5]+=2;
@@ -981,7 +985,7 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
             // Need to modify ^^^^ based on if it is chaos or daemonic
 
             if (giveto=2){
-                if (string_count("Daemon",old_tags)>0){
+                if (is_daemon){
                     var v,ev;v=0;ev=0;repeat(99){v+=1;if (ev=0) and (obj_controller.event[v]="") then ev=v;}
                     obj_controller.event[ev]="imperium_daemon";obj_controller.event_duration[ev]=1;
                     with(obj_star){
@@ -991,7 +995,7 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
                         if (p_owner[4]=2) then p_heresy[4]+=choose(30,40,50,60);
                     }
                 }
-                if (string_count("Chaos",old_tags)>0){
+                if (is_chaos){
                     with(obj_star){
                         if (p_owner[1]=2) and (p_heresy[1]>0) then p_heresy[1]+=10;
                         if (p_owner[2]=2) and (p_heresy[2]>0) then p_heresy[2]+=10;
@@ -1001,7 +1005,7 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
                 }
             }
             if (giveto=8){
-                if (string_count("Daemon",old_tags)>0){
+                if (is_daemon){
                     with(obj_star){
                         if (p_owner[1]=8) then p_heresy[1]+=40;
                         if (p_owner[2]=8) then p_heresy[2]+=40;

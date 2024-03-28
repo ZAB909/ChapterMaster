@@ -83,7 +83,7 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
             difficulty=50;
             ac=0;
             dr=1;
-            unit=obj_ini.TTRPG[co][i]
+            unit=fetch_unit([co,i]);
             if (unit.hp()>0){
                 
                 // Bonuses
@@ -100,8 +100,9 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                 // Penalties
                 if (unit.weapon_one()=="")then difficulty-=10;
                 if (unit.weapon_two()=="")then difficulty-=10;
-
-                if (unit.gene_seed_mutations.occulobe==1) then difficulty-=5;
+                if (unit.base_group == "astartes"){
+                    if (unit.gene_seed_mutations.occulobe==1) then difficulty-=5;
+                }
                 if (target.owner = eFACTION.Imperium) or ((target.owner = eFACTION.Chaos) and (obj_fleet.csm_exp=0)) then difficulty-=0;// Cultists/Pirates/Humans
                 if (target.owner  = eFACTION.Player) or (target.owner = eFACTION.Ecclesiarchy) or (target.owner = eFACTION.Ork) or (target.owner = eFACTION.Eldar) or (target.owner = eFACTION.Necrons) then difficulty-=10;
                 if (target.owner = eFACTION.Chaos) and (obj_fleet.csm_exp=1) then difficulty-=20;//       Veteran marines
@@ -115,26 +116,42 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                         var to_bomb;to_bomb=false;
                         if (plasma_bomb=true) and (obj_ini.gear[co][i]="Plasma Bomb") then to_bomb=true;
                         if (choose(1,2,3,4,5)<4) then to_bomb=false;
-                        if (to_bomb=false){target.hp-=7;damaged_ship=max(1,damaged_ship);}
-                        if (to_bomb=true){target.hp-=200;damaged_ship=2;obj_ini.gear[co][i]="";}
+                        if (to_bomb=false){
+                            target.hp-=7;
+                            damaged_ship=max(1,damaged_ship);
+                        } else if(to_bomb){
+                            target.hp-=200;
+                            damaged_ship=2;
+                            obj_ini.gear[co][i]="";
+                        }
                     }
                     if (steal=true) and (damage=false){// Stealing
-                        var bridge_damage;bridge_damage=0;
+                        var bridge_damage=0;
                         damaged_ship=max(1,damaged_ship);
                         
-                        var we,whi,we1,we2;we="";we1=obj_ini.wep1[co][i];we2=obj_ini.wep2[co][i];whi=0;
-                        we1=string_replace(we1,"Master Crafted","");we2=string_replace(we2,"Master Crafted","");
+                        var we,whi,we1,we2;we="";
+						we1=unit.weapon_one();
+						we2=unit.weapon_two();
+						whi=0;
                         
                         bridge_damage=3;
                         //TODO tagging system to slove this
-                        we="Eviscerator";if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,7);
-                        we="Chainfist";if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,7);
-                        we="Lascutter";if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,7);
-                        we="Meltagun";if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,7);
-                        we="Power Fist";if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,6);
-                        we="Thunder Hammer";if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,6);
-                        we="Plasma Gun";if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,5);
-                        we="Relic Blade";if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,4);
+                        we="Eviscerator";
+                        if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,7);
+                        we="Chainfist";
+                        if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,7);
+                        we="Lascutter";
+                        if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,7);
+                        we="Meltagun";
+                        if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,7);
+                        we="Power Fist";
+                        if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,6);
+                        we="Thunder Hammer";
+                        if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,6);
+                        we="Plasma Gun";
+                        if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,5);
+                        we="Relic Blade";
+                        if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,4);
                         if (string_pos("&",string(obj_ini.wep1[co][i])+string(obj_ini.wep2[co][i]))>0) then bridge_damage=9;
                         
                         target.bridge-=bridge_damage;
@@ -275,8 +292,10 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                     
                     if (unit.hp()<=0){
                         boarders_dead+=1;
-                        if ((obj_ini.role[co][i]=obj_ini.role[100][15]) or (obj_ini.role[co][i]="Master of Sanctity")) and (obj_ini.gear[co][i]="Narthecium") then apothecary-=1;
-                        if ((obj_ini.role[co][i]=obj_ini.role[100][15]) or (obj_ini.role[co][i]="Master of Sanctity")) and (obj_ini.gear[co][i]="Narthecium") then apothecary_had-=1;
+                        if (unit.IsSpecialist("apoth") && unit.gear()=="Narthecium"){
+                            apothecary-=1;
+                            apothecary_had-=1;
+                        }
                     }
                     
                     // show_message(string(obj_ini.role[co][i])+" "+string(obj_ini.role[co][i])+" hit by "+string(hits)+"x "+string(wep)+", "+string(obj_ini.hp[co][i])+" HP remaining");
@@ -313,7 +332,7 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
         
         
         if (damaged_ship=1) and (instance_exists(target)){
-            var explo;explo=instance_create(target.x,target.y,obj_explosion);
+            var explo=instance_create(target.x,target.y,obj_explosion);
             explo.image_xscale=0.5;explo.image_yscale=0.5;
             explo.x+=random_range(target.sprite_width*0.25,target.sprite_width*-0.25);
             explo.y+=random_range(target.sprite_width*0.25,target.sprite_width*-0.25);

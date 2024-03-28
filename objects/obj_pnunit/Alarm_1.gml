@@ -78,7 +78,7 @@ add_data_to_stack = function(stack_index, weapon, unit_damage=false){
     }
 }
 var mobi_item;
-for (g=1;g<array_length(marine_type);g++){
+for (g=1;g<array_length(unit_struct);g++){
     unit = unit_struct[g];
     if (is_struct(unit)){
         if (marine_casting[g]>=0) then marine_casting[g]=0;

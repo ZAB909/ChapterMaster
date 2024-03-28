@@ -9,8 +9,8 @@ if (engage=true){
         var i=0;
         if (role_number[co]>0){
 			for(i=1; i<=500; i++){
-                if (obj_ini.role[co][i]=obj_ini.role[100,role]){
-                	unit = obj_ini.TTRPG[co][i];
+                if (obj_ini.role[co][i]==obj_ini.role[100,role]){
+                	unit = fetch_unit([co,i]);
                     // ** Start Armour **
                     var yes=false,done="";
 					var unit_armour=unit.get_armour_data();
@@ -21,44 +21,44 @@ if (engage=true){
 							yes=unit_armour.has_tag("terminator");
 						} else if (req_armour==unit_armour.name)then yes=true;
 					}
-                    if (string_count("&",obj_ini.armour[co][i])>0) then yes=true;
+                    if (!is_string(unit.armour(true))) then yes=true;
                     if (yes=false){
                         complete=unit.update_armour(req_armour);
                         if (complete!="complete" && req_armour=="Power Armour"){
                         	unit.update_armour("Terminator Armour");
                         }
+                        unit_armour=unit.get_armour_data();
                     }
                     // ** End armour **
                     
                     // ** Start Weapons **
-                    if (obj_ini.wep1[co][i]!=req_wep1) or (obj_ini.wep2[co][i]!=req_wep2){
-                        var stop_one=false,stop_two=false;
-                        //TODO streamline this with tags
-                        if (string_count("&",obj_ini.wep1[co][i])>0) then stop_one=true;
-                        if (string_count("&",obj_ini.wep2[co][i])>0) then stop_two=true;
-                        if (req_wep1="Assault Cannon") and (obj_ini.armour[co][i]!="Terminator Armour") and (obj_ini.armour[co][i]!="Tartaros") and (obj_ini.armour[co][i]!="Dreadnought") then stop_one=true;
-                        if (req_wep2="Assault Cannon") and (obj_ini.armour[co][i]!="Terminator Armour") and (obj_ini.armour[co][i]!="Tartaros") and (obj_ini.armour[co][i]!="Dreadnought") then stop_two=true;
-                        
-                        if (obj_ini.wep1[co][i]!="") and (stop_one=false){
-							scr_add_item(obj_ini.wep1[co][i],1);
-							obj_ini.wep1[co][i]="";
-						}
-                        if (obj_ini.wep2[co][i]!="") and (stop_two=false){
-							scr_add_item(obj_ini.wep2[co][i],1);
-							obj_ini.wep2[co][i]="";
-						}
-                        if (obj_ini.wep1[co][i]="") and (stop_one=false){
-							scr_add_item(req_wep1,-1);
-							obj_ini.wep1[co][i]=req_wep1;
-						}
-                        if (obj_ini.wep2[co][i]="") and (stop_two=false){
-							scr_add_item(req_wep2,-1);
-							obj_ini.wep2[co][i]=req_wep2;
-						}
+                    if (unit.weapon_one()!=req_wep1){
+                    	if (is_string(unit.weapon_one(true))){
+                    		if (req_wep1=="Assault Cannon"){
+                    			if (unit_armour.has_tag("terminator")){
+                    				unit.update_weapon_one(req_wep1);
+                    			}
+                    		} else {
+                    			unit.update_weapon_one(req_wep1);
+                    		}
+                    	}
                     }
-                    
+                    if (unit.weapon_two()!=req_wep2){
+                    	if (is_string(unit.weapon_one(true))){
+                    		if (req_wep1=="Assault Cannon"){
+                    			if (unit_armour.has_tag("terminator")){
+                    				unit.update_weapon_two(req_wep2);
+                    			}
+                    		} else {
+                    			unit.update_weapon_two(req_wep2);
+                    		}
+                    	}
+                    }     
                     // ** Start Gear **
-                    unit.update_gear(req_gear);
+                     if (is_string(unit.gear(true))){
+						unit.update_gear(req_gear);
+                     }
+               
                     
                     // ** Start Mobility Items **
                     if (unit.mobility_item()!=req_mobi) and (string_count("&",obj_ini.mobi[co][i])=0){

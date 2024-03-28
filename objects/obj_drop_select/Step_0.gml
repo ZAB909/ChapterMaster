@@ -130,6 +130,7 @@ if (refresh_raid!=0){
                 if (obj_ini.role[comp][i]=obj_ini.role[100][2]) and (raid_vet=1){fighting[comp][i]=1;honor+=1;}
                 if (obj_ini.role[comp][i]=obj_ini.role[100][4]) and (raid_term=1){fighting[comp][i]=1;terminators+=1;}
                 if (obj_ini.role[comp][i]=obj_ini.role[100][5]) and (raid_vet=1){fighting[comp][i]=1;capts+=1;}
+                if (obj_ini.role[comp][i]="Company Champion") and (raid_vet=1){fighting[comp][i]=1;champions+=1;}
                 
                 if (obj_ini.role[comp][i]="Chapter Master") and (raid_spec=1){fighting[comp][i]=1;master=1;}
                 if (obj_ini.role[comp][i]="Master of Sanctity") and (raid_spec=1){fighting[comp][i]=1;chaplains+=1}

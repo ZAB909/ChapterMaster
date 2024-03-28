@@ -149,7 +149,7 @@ function scr_image(argument0, argument1, argument2, argument3, argument4, argume
 	            sprite_delete(menu[i]);menu_exists[i]=-1;menu[i]=0;
 	        }
 	        if (argument0="loading") and (loading_exists[i]>0) and (sprite_exists(loading[i])){
-	            sprite_delete(loading[i]);loading_exists[i]=-1;loading[i]=0;show_message("baleeted loading:"+string(i));
+	            sprite_delete(loading[i]);loading_exists[i]=-1;loading[i]=0;
 	        }
 	        if (argument0="postbattle") and (postbattle_exists[i]>0) and (sprite_exists(postbattle[i])){
 	            sprite_delete(postbattle[i]);postbattle_exists[i]=-1;postbattle[i]=0;
@@ -284,7 +284,6 @@ function scr_image(argument0, argument1, argument2, argument3, argument4, argume
 	            if (argument0="loading"){
 	                if (file_exists(working_directory + "\\images\\loading\\loading"+string(i)+".png")){
 	                    loading[i-1]=sprite_add(working_directory + "\\images\\loading\\loading"+string(i)+".png",1,false,false,0,0);loading_exists[i-1]=1;w+=1;
-	                    show_message("loading"+string(i)+".png located, added to loading:"+string(i-1));
 	                }
 	                if (w>0) then loading_good=true; 
 	            }

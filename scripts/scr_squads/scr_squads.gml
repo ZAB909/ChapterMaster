@@ -275,7 +275,7 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 	}
 	// for creating a new sergeant from existing squad members
 	static new_sergeant = function(veteran=false){
-		var exp_unit;
+		var exp_unit="";
 		var unit;
 		var highest_exp = 0;
 		var member_length = array_length(members);

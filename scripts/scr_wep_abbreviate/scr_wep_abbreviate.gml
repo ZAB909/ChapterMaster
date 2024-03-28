@@ -51,7 +51,7 @@ function scr_wep_abbreviate(argument0) {
 	if (we="Lightning Claw") then we2="LiClaw";
 	if (we="Chainfist") then we2="ChFist";
 	if (we="Lascutter") then we2="LCutter";
-	if (we="Force Weapon") then we2="FoWeap";
+	if (we="Force Staff") then we2="FoWeap";
 	if (we="Thunder Hammer") then we2="Hammer";
 
 	if (we="Bolt Pistol") then we2="BoltPist";

@@ -193,7 +193,7 @@ function scr_arti_descr() {
 	if (p3!="") then final_description+="  "+string(p3);
 	if (p4!="") then final_description+="  "+string(p4);
 
-	if (equipped()){
+	if (equipped() && is_array(bearer)){
 		var unit = fetch_unit(bearer);
 		final_description += $". It is currently in the possession of {unit.name_role()}."
 	}

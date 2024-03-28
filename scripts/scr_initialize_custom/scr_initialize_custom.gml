@@ -1,4 +1,23 @@
 
+enum Role {
+	HONOR_GUARD = 2,
+	VETERAN = 3,
+	TERMINATOR = 4,
+	CAPTAIN = 5,
+	DREADNOUGHT = 6,
+	COMPANY_CHAMPION = 7,
+	TACTICAL = 8,
+	DEVASTATOR = 9,
+	ASSAULT = 10,
+	SCOUT = 12,
+	CHAPLAIN = 14,
+	APOTHECARY = 15,
+	TECHMARINE = 16,
+	LIBRARIAN = 17,
+	SERGEANT = 18,
+	VETERAN_SERGEANT = 19
+}
+
 function scr_initialize_custom() {
 
 	progenitor=obj_creation.founding;
@@ -195,6 +214,16 @@ function scr_initialize_custom() {
 			{
 			      flagship_name="Invincible Reason";
 			      battle_barges++;
+			
+			}
+			if (global.chapter_name="Black Templars") 
+			{
+			      flagship_name="Eternal Crusader";
+			
+			}
+			if (global.chapter_name="Minotaurs") 
+			{
+			      flagship_name="Daedelos Krata";
 			
 			}
 		}
@@ -703,6 +732,7 @@ function scr_initialize_custom() {
 	    gear[102,i]="";
 	    mobi[102,i]="";//hirelings??
 	}
+
 	for(i=100;i<103;i++){ // gear 
 	    role[i,2]="Honor Guard";
 	    wep1[i,2]="Power Sword";
@@ -746,7 +776,7 @@ function scr_initialize_custom() {
 	    armour[i,8]="Power Armour";
 	    mobi[i,8]="";
 	    gear[i,8]="";
-	    role[i,9]="Devastator";
+	    role[i,9]="Devastator Marine";
 	    wep1[i,9]="Heavy Ranged";
 	    wep2[i,9]="Combat Knife";
 	    armour[i,9]="Power Armour";
@@ -783,7 +813,7 @@ function scr_initialize_custom() {
 	    gear[i,16]="Servo Arms";
 	    mobi[i,16]="";
 	    role[i,17]="Librarian";
-	    wep1[i,17]="Force Weapon";
+	    wep1[i,17]="Force Staff";
 	    wep2[i,17]="Storm Bolter";
 	    armour[i,17]="Power Armour";
 	    gear[i,17]="Psychic Hood";
@@ -1281,7 +1311,7 @@ function scr_initialize_custom() {
 			chapter_master_equip.wep1="Eviscerator";
 			break;
 		case 8:
-			chapter_master_equip.wep1="Force Weapon";
+			chapter_master_equip.wep1="Force Staff";
 			break;	
 	}
 	switch (master_ranged){
@@ -1314,19 +1344,30 @@ function scr_initialize_custom() {
 	var arti;
 	switch(global.chapter_name) {
 		case "Dark Angels":
-			chapter_master_equip.wep1="Plasma Gun";
 			chapter_master.add_trait("old_guard");
-			chapter_master.add_trait("melee_enthusiast");	
+			chapter_master.add_trait("melee_enthusiast");
+			arti = obj_ini.artifact_struct[last_artifact];
+			arti.name = "Sword of Secrets";
+			arti.custom_description = "A master-crafted Power Sword of formidable potency created soon after the disappearance of Lion El'Jonson. It is the mightiest of the Heavenfall Blades,";
+			obj_ini.artifact[last_artifact] = "Power Sword";
+			arti.bearer = [0,1];
+			obj_ini.artifact_identified[last_artifact] = 0;
+			chapter_master_equip.wep1=last_artifact;
 			break;
 		case "Blood Angels":
-			chapter_master_equip.wep1="Master Crafted Power Axe";
 			chapter_master.add_trait("ancient");	
 			chapter_master.add_trait("old_guard");
-			chapter_master.add_trait("melee_enthusiast");			
+			chapter_master.add_trait("melee_enthusiast");
+			arti = obj_ini.artifact_struct[last_artifact];
+			arti.name = "Axe Mortalis";
+			arti.custom_description = "An immensely powerful Power Axe, the Axe Mortalis, forged in the days immediately after the end of the Horus Heresy.";
+			obj_ini.artifact[last_artifact] = "Power Axe";
+			arti.bearer = [0,1];
+			obj_ini.artifact_identified[last_artifact] = 0;
+			chapter_master_equip.wep1=last_artifact;
 			break;
 		case "Iron Hands":
 			chapter_master_equip.wep1="Power Axe|";
-			chapter_master_equip.wep2="Storm Shield";
 			chapter_master.add_trait("flesh_is_weak");
 			chapter_master.add_trait("zealous_faith");
 			chapter_master.add_trait("tinkerer");
@@ -1349,6 +1390,7 @@ function scr_initialize_custom() {
 			chapter_master.add_trait("tyrannic_vet");
 			arti = obj_ini.artifact_struct[last_artifact];
 			arti.name = "Gauntlets of Ultramar";
+			arti.custom_description="Two mighty Power Fists with incorporated Bolters that were reclaimed from a fallen Chaos champion, slain during the Gamalia Reclusiam Massacre by the Primarch of the Ultramarines, Roboute Guilliman himself";
 			obj_ini.artifact[last_artifact] = "Power Fist";
 			obj_ini.artifact_identified[last_artifact] = 0;
 			arti.bearer = [0,1];
@@ -1359,7 +1401,7 @@ function scr_initialize_custom() {
 			chapter_master_equip.armour = last_artifact;
 			arti = obj_ini.artifact_struct[last_artifact];
 			arti.name = "Armour of Antilochus";
-			arti.custom_description="a masterwork suit of the standard Indomitus pattern Terminator Armour"
+			arti.custom_description="A masterwork suit of the standard Indomitus pattern Terminator Armour. It incorporates a Teleport Homer, allowing Terminator squads of the veteran First Company to deploy next to their Chapter Master's side.";
 			arti.bearer = [0,1];
 			obj_ini.artifact_identified[last_artifact] = 0;
 			obj_ini.artifact[last_artifact] = "Terminator Armour";
@@ -1380,18 +1422,40 @@ function scr_initialize_custom() {
 		case "Black Templars":
 			chapter_master.add_trait("melee_enthusiast");
 			chapter_master.add_trait("zealous_faith");
-			chapter_master.add_trait("old_guard");	
+			chapter_master.add_trait("old_guard");
+			arti = obj_ini.artifact_struct[last_artifact];
+			arti.name = "Sword of the High Marshalls";
+			arti.custom_description = "A relic blade forged from the shards of Rogal Dorn's shattered sword passed down by the High Marshalls as a sign of office";
+			obj_ini.artifact[last_artifact] = "Relic Blade";
+			arti.bearer = [0,1];
+			obj_ini.artifact_identified[last_artifact] = 0;
+			chapter_master_equip.wep1=last_artifact;
 			break;
 		case "Minotaurs":
 			chapter_master.add_trait("very_hard_to_kill");
-			chapter_master.add_trait("seasoned");	
+			chapter_master.add_trait("seasoned");
+			chapter_master_equip.armour="Tartaros";
+			arti = obj_ini.artifact_struct[last_artifact];
+			arti.name = "The Black Spear";
+			arti.custom_description = "An ancient artefact that is steeped in blood and said to have once been used by the Legio Custodes.";
+			obj_ini.artifact[last_artifact] = "Power Spear";
+			arti.bearer = [0,1];
+			obj_ini.artifact_identified[last_artifact] = 0;
+			chapter_master_equip.wep1=last_artifact;
 		case "Lamenters":
 			chapter_master.add_trait("shitty_luck");
 			chapter_master.add_trait("old_guard");	
 		case "Salamanders":	
 			chapter_master.add_trait("old_guard");
 			chapter_master.add_trait("tinkerer");
-			chapter_master.add_trait("slow_and_purposeful");	
+			chapter_master.add_trait("slow_and_purposeful");
+			arti = obj_ini.artifact_struct[last_artifact];
+			arti.name = "Stormbearer";
+			arti.custom_description = "A masterwork Thunder Hammer, Stormbearer is thought to be made from the same material as that used to create Thunderhead, the Thunder Hammer of Vulkan.";
+			obj_ini.artifact[last_artifact] = "Thunder Hammer";
+			arti.bearer = [0,1];
+			obj_ini.artifact_identified[last_artifact] = 0;
+			chapter_master_equip.wep1=last_artifact;
 			break;
 		case "Raven Guard":
 		mobi[0,1]="Jump Pack&SIL|";
@@ -2156,7 +2220,7 @@ function scr_initialize_custom() {
 	        spawn_unit.spawn_old_guard();
 	        
 
-	        if (company=8) then mobi[company][k]="Jump Pack";
+	        if (company=8) and (obj_creation.equal_specialists=0) then mobi[company][k]="Jump Pack";
 	        if (mobi[101,5]!="") then mobi[company][k]=mobi[101,5];
 	        gear[company][k]=gear[101,5];
 
@@ -2178,7 +2242,7 @@ function scr_initialize_custom() {
 	                if (company<=2) then armour[company][k]=choose("MK8 Errant","MK6 Corvus");
 	                gear[company][k]=gear[101,14];
 	                
-	                if (company=8) then mobi[company][k]="Jump Pack";
+	                if (company=8) and (obj_creation.equal_specialists=0) then mobi[company][k]="Jump Pack";
 	                if (mobi[101,14]!="") then mobi[company][k]=mobi[101,14];
 					spawn_unit = TTRPG[company][k]
 					spawn_unit.spawn_exp();
@@ -2199,7 +2263,7 @@ function scr_initialize_custom() {
 	        spawn_unit.spawn_old_guard();
 	        gear[company][k]=gear[101,15];
 	        
-	        if (company=8) then mobi[company][k]="Jump Pack";
+	        if (company=8) and (obj_creation.equal_specialists=0) then mobi[company][k]="Jump Pack";
 	        if (mobi[101,15]!="") then mobi[company][k]=mobi[101,15];
 
 	        if (global.chapter_name="Space Wolves"){
@@ -2215,7 +2279,7 @@ function scr_initialize_custom() {
 	            if (company<=2) then armour[company][k]=choose("MK8 Errant","MK6 Corvus");
 	            gear[company][k]=gear[101,15];
 	            
-	            if (company=8) then mobi[company][k]="Jump Pack";
+	            if (company=8) and (obj_creation.equal_specialists=0) then mobi[company][k]="Jump Pack";
 	            if (mobi[101,15]!="") then mobi[company][k]=mobi[101,15];
 				spawn_unit = TTRPG[company][k]
 				spawn_unit.spawn_exp();
@@ -2250,7 +2314,7 @@ function scr_initialize_custom() {
 	        wep2[company][k]="Company Standard";
 	        armour[company][k]="MK5 Heresy";
 	        
-	        if (company=8) then mobi[company][k]="Jump Pack";
+	        if (company=8) and (obj_creation.equal_specialists=0) then mobi[company][k]="Jump Pack";
 	        spawn_unit = TTRPG[company][k];
 			spawn_unit.spawn_exp();
 	        spawn_unit.spawn_old_guard();      
@@ -2265,6 +2329,7 @@ function scr_initialize_custom() {
 	        wep2[company][k]=wep2[100,7];
 	        armour[company][k]="MK4 Maximus";
 	        
+			if (company=8) and (obj_creation.equal_specialists=0) then mobi[company][k]="Jump Pack";
 			spawn_unit = TTRPG[company][k];
 			spawn_unit.add_trait("champion");
 			spawn_unit.spawn_exp();
@@ -2625,14 +2690,25 @@ function scr_initialize_custom() {
 	scr_add_item(wep1[101,12],20);
 	scr_add_item(wep2[101,12],20);
 	if (global.chapter_name="Iron Hands") then scr_add_item("Bionics",200);
-
+	/*if (global.chapter_name="Black Templars") then 
+			arti = obj_ini.artifact_struct[last_artifact];
+			arti.name = "The Black Sword";
+			arti.custom_description = "An all black two handed Power Sword bestowed upon the Chapter's father Sigismund by the Emperor ";
+			obj_ini.artifact[last_artifact] = "Power Sword";
+			obj_ini.artifact_identified[last_artifact] = 0;
+			arti = obj_ini.artifact_struct[last_artifact];
+			arti.name = "The Armor of Faith";
+			arti.custom_description = "A Masterfully crafted suit of artificer armor bestowed upon the Emperor's Champion";
+			obj_ini.artifact[last_artifact] = "Artificer Armor";
+			obj_ini.artifact_identified[last_artifact] = 0;
+			*/
 
 	if (string_count("Sieged",strin2)>0){
 	    scr_add_item("Narthecium",4);
 	    scr_add_item(wep1[101,15],4);
 	    scr_add_item(wep2[101,15],4);
 	    scr_add_item("Psychic Hood",4);
-	    scr_add_item("Force Weapon",4);
+	    scr_add_item("Force Staff",4);
 	    scr_add_item("Plasma Pistol",4);
 
 	    o=0;chapter_option=0;repeat(4){o+=1;
