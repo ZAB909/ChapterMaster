@@ -13,6 +13,8 @@ if (beg!=0)/* and (instance_exists(obj_fleet_controller))*/{
         if (instance_exists(obj_p_ship)){
             var wooo=instance_nearest(room_width/2,room_height/2,obj_p_ship);
             if (point_distance(wooo.x,wooo.y,room_width/2,room_height/2)>4000){
+                                        //^have this be the same as roomSettings Height and Width or fleets will auto end!
+
                 combat_end-=1;
                 debugl("Fleet Combat Ended- Loss - Enemy:"+string(enemy[1]));
             }
