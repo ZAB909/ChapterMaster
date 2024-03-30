@@ -700,7 +700,7 @@ function scr_enemy_ai_e() {
                     // if a planet type has less than half it's max pop, you get 20% less spacey marines
                     if (_planet_population <= halfpop) {
                         recruit_chance += 1.2;
-                        scr_alert("red", "owner", "The populations you attain aspirants from are less populant than required, chances of recruiting aspirants is 20% lower", 0, 0);
+                       // scr_alert("red", "owner", "The populations you attain aspirants from are less populant than required, chances of recruiting aspirants is 20% lower", 0, 0);
                     }
 
                     // This is the area has trial types that don't care about planet type 
