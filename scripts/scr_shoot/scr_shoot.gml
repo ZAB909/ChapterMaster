@@ -7,11 +7,7 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
 	// melee_or_ranged: melee or ranged
 
 	// This massive clusterfuck of a script uses the newly determined weapon and target data to attack and assign damage
-
-
-
-
-	var j;j=0;
+	var j=0;
 	repeat(100){j+=1;
 	    obj_ncombat.dead_ene[j]="";
 	    obj_ncombat.dead_ene_n[j]=0;

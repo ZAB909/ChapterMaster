@@ -12,7 +12,7 @@ function scr_weapons_equip() {
 	if (instance_exists(obj_controller)) and (instance_exists(obj_popup)) and (!instance_exists(obj_mass_equip)){
 	    tc=target_comp;
 	    tb=tab;
-	    dude=vehicle_equipment; // This is for equipping the selected marines in management
+	    dude=obj_popup.vehicle_equipment; // This is for equipping the selected marines in management
 
 	}
 	if (instance_exists(obj_creation)){
@@ -116,7 +116,7 @@ function scr_weapons_equip() {
 				i+=1;item_name[i]="Power Fist";
 				i+=1;item_name[i]="Chainfist";
 				i+=1;item_name[i]="Lightning Claw";
-				i+=1;item_name[i]="Force Weapon";
+				i+=1;item_name[i]="Force Staff";
 				i+=1;item_name[i]="Thunder Hammer";
 				i+=1;item_name[i]="Boarding Shield";
 				i+=1;item_name[i]="Storm Shield";

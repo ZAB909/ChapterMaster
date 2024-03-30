@@ -5,6 +5,7 @@ uniform vec3 f_Colour4;
 uniform vec3 f_Colour5;
 uniform vec3 f_Colour6;
 uniform vec3 f_Colour7;
+uniform vec3 f_Colour8;
 
 uniform vec3 f_Replace1;
 uniform vec3 f_Replace2;
@@ -13,6 +14,7 @@ uniform vec3 f_Replace4;
 uniform vec3 f_Replace5;
 uniform vec3 f_Replace6;
 uniform vec3 f_Replace7;
+uniform vec3 f_Replace8;
 
 varying vec2 v_vTexcoord;
 varying vec4 v_vColour;
@@ -54,6 +56,9 @@ void main()
     {
         col.rgb = f_Replace7.rgb;
     }
-    
+    if( col.rgb == f_Colour8.rgb )
+    {
+        col.rgb = f_Replace8.rgb;
+    }    
     gl_FragColor = v_vColour * col;
 }

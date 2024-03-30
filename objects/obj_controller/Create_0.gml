@@ -229,7 +229,7 @@ for(var i=100; i<103; i++){
     obj_controller.r_mobi[i,8]="";
     obj_controller.r_gear[i,8]="";
     
-    obj_controller.r_role[i,9]="Devastator";
+    obj_controller.r_role[i,9]="Devastator Marine";
     obj_controller.r_wep1[i,9]="Heavy Ranged";
     obj_controller.r_wep2[i,9]="Combat Knife";
     obj_controller.r_armour[i,9]="Power Armour";
@@ -272,7 +272,7 @@ for(var i=100; i<103; i++){
     obj_controller.r_mobi[i,16]="";
     
     obj_controller.r_role[i,17]="Librarian";
-    obj_controller.r_wep1[i,17]="Force Weapon";
+    obj_controller.r_wep1[i,17]="Force Staff";
     obj_controller.r_wep2[i,17]="Storm Bolter";
     obj_controller.r_armour[i,17]="Power Armour";
     obj_controller.r_gear[i,17]="Psychic Hood";
@@ -573,18 +573,18 @@ production_research_pathways ={
     melta : [["Atomic Chamber Construction"],{}],
     chasis : [[],{}],
     chain :[["Adamantine Links"],{}],
-    power_fields:[["Power Field Cooling"],{}],
+    power_fields:[["Power Field Cooling", "Mono-molecular Edge Sheathing"],{}],
     las : [["Light Condensement Chamber"],{}],
     armour : 
         [
-            ["Ceramite Casting Chambers", "Lightened Ceramite Compound"],
+            ["Ceramite Casting Chambers", "Enhanced Nerve Interfacing"],
             {
                 stealth : [["Advanced Servo Motors"],{}],
-                armour : [["Advanced Ceramite Bonding", "Enhanced Nerve Interfacing"],{}],
+                armour : [["Advanced Ceramite Bonding", "Lightened Ceramite Compound","Ceremite Void Hardening"],{}],
             }
         ]
 }
-// ** STC values **
+// ** STC values **, 
 stc_wargear=0;
 stc_vehicles=0;
 stc_ships=0;
@@ -988,6 +988,12 @@ enum eFACTION {
 	Heretics,
 	Necrons = 13
 }
+imperial_factions = [
+    eFACTION.Imperium,
+    eFACTION.Mechanicus,
+    eFACTION.Inquisition,
+    eFACTION.Ecclesiarchy,
+]
 faction[0]="";
 disposition[0]=0;
 faction[eFACTION.Player]="Player";

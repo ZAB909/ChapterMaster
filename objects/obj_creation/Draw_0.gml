@@ -1770,7 +1770,7 @@ if (slide=6){
         if (h=5) then it="Master Crafted Power Sword";
         if (h=6) then it="Master Crafted Power Axe";
         if (h=7) then it="Master Crafted Eviscerator";
-        if (h=8) then it="Master Crafted Force Weapon";
+        if (h=8) then it="Master Crafted Force Staff";
         
         yar=0;if (chapter_master_melee=h) then yar=1;draw_sprite(spr_creation_check,yar,x6,y6);yar=0;
         if (scr_hit(x6,y6,x6+32,y6+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>0) and (restarted=0) and (!instance_exists(obj_creation_popup)){

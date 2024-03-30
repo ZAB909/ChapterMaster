@@ -72,6 +72,15 @@ function scr_get_stars() {
 	return stars;
 }
 
+function star_by_name(search_name){
+	with(obj_star){
+		if (name = search_name){
+			return self;
+		}
+	}
+	return "none";
+}
+
 
 //function scr_get_player_fleets() {
 //	var player_fleets = [];

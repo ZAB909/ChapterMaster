@@ -1,22 +1,24 @@
 function create_boarding_craft(target_ship){
-    var first=0,o=0;
+    var first=0,o=1;
     
-    repeat(500){o+=1;
+    repeat(500){
+        o+=1;
         if (first=0) and (board_id[o]!=0) and (board_location[o]=0) then first=o;
     }
     
     board_cooldown=45;
     
     var bear=instance_create(x,y,obj_p_assra);
+    bear.apothecary=0;
     o=first;
     
-    while(o<500 && o<start+20){
+    while(o<500 && o<first+20){
         if (board_id[o]!=0) and (board_location[o]=0){
             board_raft[o]=bear;
             board_location[o]=-1;
             boarders-=1;
             bear.boarders+=1;
-            unit = obj_ini.role[board_co[o]][board_id[o]];
+            unit = fetch_unit([board_co[o] , board_id[o]]);
             if (unit.IsSpecialist("apoth")){
                 if (unit.gear()=="Narthecium") and (unit.hp()>=10) then bear.apothecary+=1;
             }

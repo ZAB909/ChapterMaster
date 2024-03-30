@@ -627,8 +627,9 @@ if (menu=0) and (purge>=2){
     
     
     // Disposition here
-    var succession,yyy,pp;succession=0;yyy=0;pp=obj_controller.selecting_planet
-    repeat(4){yyy+=1;if (p_target.p_problem[pp,yyy]="succession") then succession=1;}
+    var succession=0,pp=obj_controller.selecting_planet
+
+    if (array_contains(p_target.p_problem[pp], "succession")) then succession=1;
     
     if ((p_target.dispo[pp]>=0) and (p_target.p_owner[pp]<=5) and (p_target.p_population[pp]>0)) and (succession=0){
         var wack;wack=0;
@@ -644,7 +645,7 @@ if (menu=0) and (purge>=2){
         if (p_target.dispo[pp]>=0) and (p_target.p_first[pp]<=5) and (p_target.p_owner[pp]<=5) and (p_target.p_population[pp]>0) then draw_text(x2+231,y2+54,string_hash_to_newline("Disposition: "+string(min(100,p_target.dispo[pp]))+"/100"));
         if (p_target.dispo[pp]>-30) and (p_target.dispo[pp]<0) and (p_target.p_owner[pp]<=5) and (p_target.p_population[pp]>0) then draw_text(x2+231,y2+54,string_hash_to_newline("Disposition: ???/100"));
         if ((p_target.dispo[pp]>=0) and (p_target.p_first[pp]<=5) and (p_target.p_owner[pp]>5)) or (p_target.p_population[pp]<=0) then draw_text(x2+231,y2+54,string_hash_to_newline("-------------"));
-        if (p_target.dispo[pp]<=-3000) then draw_text(x2+231,y2+54,string_hash_to_newline("Disposition: N/A"));
+        if (p_target.dispo[pp]<=-3000) then draw_text(x2+231,y2+54,"Chapter Rule");
     }
     if (succession=1) then draw_text(x2+231,y2+54,string_hash_to_newline("War of Succession"));
     

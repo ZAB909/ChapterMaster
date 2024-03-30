@@ -136,7 +136,7 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 			break;
 		case "apoth":
 			specialists = [
-						obj_ini.role[100][15],//techmarine
+						obj_ini.role[100][15],
 						"Master of the Apothecarion",
 			];
 			if (include_trainee){
@@ -174,7 +174,7 @@ function collect_role_group(group, location=""){
 	for (var com=0;com<=10;com++){
 	    for (i=1;i<array_length(obj_ini.TTRPG[com]);i++){
 	    	add=false;
-			unit=obj_ini.TTRPG[com][i];
+			unit=fetch_unit([com,i]);
 			if (unit.name()=="")then continue; 	
 	        if (unit.IsSpecialist(group)){
 	        	if (location==""){

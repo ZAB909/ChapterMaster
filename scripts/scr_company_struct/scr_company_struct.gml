@@ -17,6 +17,13 @@ function scr_company_struct(comp) constructor{
 	rollover_sequence=0;
 	selected_unit=obj_controller.temp[120];
 	drop_down_open=false;
+	captian = "none";
+	if (company>0 && company<11){
+		var cap = scr_role_count(obj_ini.role[100][Role.CAPTAIN], company, "unit");
+		if (array_length(cap)>0){
+			captian = cap[0];
+		}
+	}
 
 	static draw_squad_view = function(){
 		var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0;
@@ -137,13 +144,12 @@ function scr_company_struct(comp) constructor{
 				bound_height[0] += 180;
 			} else {
 				if (is_struct(current_squad.assignment)){
-					draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+125, $"Assignment : {current_squad.assignment.type}",1,1,0);
-				}
-				var tooltip_text =  "Cancel Assignment"
-				draw_unit_buttons([xx+bound_width[0]+5, yy+bound_height[0]+150],tooltip_text,[1,1],c_red);
-				if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text), yy+bound_height[0]+150+string_height(tooltip_text))){
-					var cancel_system=noone;
-					if (mouse_check_button_pressed(mb_left)){
+					var cur_assignment = current_squad.assignment
+					draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+125, $"Assignment : {cur_assignment.type}",1,1,0);
+					var tooltip_text =  "Cancel Assignment"
+					var cancel_but = draw_unit_buttons([xx+bound_width[0]+5, yy+bound_height[0]+150],tooltip_text,[1,1],c_red);
+					if(point_and_click(cancel_but)){
+						var cancel_system=noone;
 						with (obj_star){
 							if (name == squad_loc.system){
 								cancel_system=self;
@@ -161,8 +167,25 @@ function scr_company_struct(comp) constructor{
 						}
 						current_squad.assignment = "none";
 					}
+					bound_height[0] += 180;
+					if (cur_assignment.type == "garrison"){
+						var garrison_but = draw_unit_buttons([cancel_but[2]+10, cancel_but[1]],"View Garrison",[1,1],c_red);
+						if (point_and_click(garrison_but)){
+							var garrrison_star =  star_by_name(cur_assignment.location);
+							if (garrrison_star!="none"){
+								obj_controller.menu=0;
+				                obj_controller.hide_banner=0;
+				                obj_controller.x = garrrison_star.x;
+				                obj_controller.y =garrrison_star.y;
+				                obj_controller.selection_data =  {
+				                	planet:cur_assignment.ident,
+				                	feature:"",
+				                }
+				                garrrison_star.alarm[3] = 4;
+				            }
+						}
+					}
 				}
-				bound_height[0] += 180;
 			}
 			//TODO compartmentalise drop down option logic
 			if (current_squad.formation_place!=""){

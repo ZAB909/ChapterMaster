@@ -9,17 +9,21 @@ function scr_role_count(target_role, search_location="", return_type="count") {
 	com=0;
 	coom=-999;
 
-	if (search_location="0") then coom=0;
-	if (search_location="1") then coom=1;
-	if (search_location="2") then coom=2;
-	if (search_location="3") then coom=3;
-	if (search_location="4") then coom=4;
-	if (search_location="5") then coom=5;
-	if (search_location="6") then coom=6;
-	if (search_location="7") then coom=7;
-	if (search_location="8") then coom=8;
-	if (search_location="9") then coom=9;
-	if (search_location="10") then coom=10;
+	if (is_string(search_location)){
+		if (search_location="0")  {coom=0;}
+		else if (search_location="1")  {coom=1;}
+		else if (search_location="2")  {coom=2;}
+		else if (search_location="3")  {coom=3;}
+		else if (search_location="4")  {coom=4;}
+		else if (search_location="5")  {coom=5;}
+		else if (search_location="6")  {coom=6;}
+		else if (search_location="7")  {coom=7;}
+		else if (search_location="8") { coom=8;}
+		else if (search_location="9")  {coom=9;}
+		else if (search_location="10")  {coom=10;}
+	} else {
+		coom = search_location;
+	}
 
 
 

@@ -458,7 +458,7 @@ color_to_pauldron21="Red";
 	mobi_21[i,8]="";
 
     race_21[i,9]=1;
-    role_21[i,9]="Devastator";
+    role_21[i,9]="Devastator Marine";
     wep1_21[i,9]="Heavy Ranged";
     wep2_21[i,9]="Combat Knife";
     armour_21[i,9]="Power Armour";
@@ -505,7 +505,7 @@ color_to_pauldron21="Red";
 
     race_21[i,17]=1;
     role_21[i,17]="Librarian";
-    wep1_21[i,17]="Force Weapon";
+    wep1_21[i,17]="Force Staff";
     wep2_21[i,17]="Storm Bolter";
     armour_21[i,17]="Power Armour";
     gear_21[i,17]="Psychic Hood";
@@ -677,7 +677,7 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
     armour[i,8]="Power Armour";
 
     race[i,9]=1;
-    role[i,9]="Devastator";
+    role[i,9]="Devastator Marine";
     wep1[i,9]="Heavy Ranged";
     wep2[i,9]="Combat Knife";
     armour[i,9]="Power Armour";
@@ -719,7 +719,7 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
 
     race[i,17]=1;
     role[i,17]="Librarian";
-    wep1[i,17]="Force Weapon";
+    wep1[i,17]="Force Staff";
     wep2[i,17]="Storm Bolter";
     armour[i,17]="Power Armour";
     gear[i,17]="Psychic Hood";
@@ -862,7 +862,8 @@ sourceB7 = 255/255;
 targetR7 = col_r[weapon_color]/255;
 targetG7 = col_g[weapon_color]/255;
 targetB7 = col_b[weapon_color]/255;
-
+colour_to_find8 = shader_get_uniform(sReplaceColor, "f_Colour8");
+colour_to_set8 = shader_get_uniform(sReplaceColor, "f_Replace8");
 /* */
 action_set_alarm(30, 1);
 /*  */

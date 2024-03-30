@@ -1,5 +1,77 @@
+-----------------
+Version 0.9100
+Fixed:
+	- boarding and ship ammo limits fixed
+	- bulk stcs being added upon collection of one fixed
+	- perils of the warp crash resolved
+	- location id sometimes causing crash due to array being deleted
+	- stops the rapidly spiraling tech heresy numbers
+	- specific armour type artifacts now equipping properly
+	- potential crash when gifting chaos artifacts fixed
+	- fixes being able to assign to forge when marines not in location
+	- recruit spawning no longer spawning scouts in impossible locations fixed
+	- stops duplicating forge score from assigning to forge
+	- stops the tech heresy schism occuring when no loyal techs left
+	- hand full of other bug fixes from the bug reports
+	- completely rebuild ship and ground healing scripts so that all healing functions correctly
+	- stop crash from purchasing one of the manufactoring researches in the forge
+	- fixed command/ noraml marine logger so it's always accurate (sometime this means turn 1 changes the numbers this will be sorted later)
+	- reduced crashes from moving vehicles
+	- occaisonal crash when trying to promote sgts in squads with no members left
+	- orks no longer capable of defeating pdf on some planets fixed
+	- power spears causing an error
+	- stops duplicating by having no limit to forge assignment
+	- Fix champions deselecting working properly but not returning back if you select them on the drop screen.
+	- correct artifact saving
 
 
+changed:
+	- gives forgemaster a built in forge point boost
+	- reduces tech heretic spawn numbers
+	- makes tech heresy more slow burn
+	- tech corruption is capped so a tech cannot make another tech more corrupt than he is himself again stopping run away numbers
+	- total corruption capped to 100 as originally intended
+	- moves forge resource marker to the center top of screen so announcements are visible
+	- brings mass equip inline with new artifact system	
+	- intergrate forge points into main rescource bar (etty)
+	- lots more ui tweaks by etty
+	- more tooltip improvements (etty)
+	- new textures for rack and pinion button
+	- chapter management screen overhaul
+	- additions of sgts and vet sgts to chapter manage screen lists
+	- stop spill over on the shop screen
+	- add pages and generally overhaul shop ui
+	- balancing of previous garrison numbers
+	- minor revamp of planet screen
+	- tetures for rack and pinion forge button
+	- crafters trait on marines now improves the forge point output of a marine when assigned to a forge much more
+	- minotaurs and black templar chapters better fleshed out including custom artifacts
+	- all sprites now properly aligned
+	- tooltips majorly improved so that players get a better understanding of backend damage calculations
+	- tooltips get a dataslate like ui skin
+	- improved trial descriptions
+	- the display of special properties of weapons improved
+	- Rework how possible promotion and critical health are displayed. Promotions recolor XP value, critical health recolors HP value.
+	- Added tooltips to these values, when there is an active interaction.	
+	- Rework how potential is displayed
+
+added:
+	- new dreadnought sprites to represent more weapons
+	- new backpack sprites
+	- bionics will now automatically be applied if marine health is below 0 and bionics are in stock and there is an apothecary and the techmarine present
+	- cheat to finish forge queue instantly "finishforge"
+	- cheat to spawn slaughtersong ship "slaughtersong" (location will appear in event log)
+	- cheat to start tech uprising prematurely "techuprising"
+	- cheat to launch crusade event "crusade" (location will appear in event log)
+	- cheat to instantly awaken a necron tomb "tomb"
+	- A new script to replace characters that get beyond a set string width with "...".
+	- new force weapon selection (force axe force sword and force staff) each weapon gives a different bonus to phychic attacks or are more focussed to melee force work
+	- new modifier  to calculate force weapons attack based of psionic rating, intelligence and expereince
+	- improved garrison screen 
+	- having a garrison present allows player to see the relevant defence score of the local pdf
+	- having a garrison present modifies dispostition with the planet based on teh squad leaders charisma (further modifiers to be expanded upon)
+	- power spears added to shop
+	- The crozius now added to game (awaiting sprite asset)
 -----------------
 Version 0.9000
 

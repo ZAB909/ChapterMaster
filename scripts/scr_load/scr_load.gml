@@ -1,5 +1,8 @@
 function scr_load(argument0, argument1) {
-	
+	var int_strings = [];
+	for (var i=0;i<=20;i++){
+		array_push(int_strings, $"{i}");
+	}
 	function load_marine_struct(company, marine){
 			var marStruct = ini_read_string("Mar","Struct"+string(company)+"."+string(marine),"");
 			if (marStruct != ""){
@@ -8,7 +11,7 @@ function scr_load(argument0, argument1) {
 				obj_ini.TTRPG[company, marine].load_json_data(marStruct);
 			} else {obj_ini.TTRPG[company, marine] = new TTRPG_stats("chapter", company, marine,"blank");}		
 	};
-	var rang,i,g,stars,pfleets,efleets;
+	var rang,i,g,stars,pfleets,efleets,unit;
 	rang=0;i=0;g=0;stars=0;pfleets=0;efleets=0;
 
 
@@ -644,6 +647,8 @@ function scr_load(argument0, argument1) {
 	            obj_ini.artifact_tags[g]=ini_read_string("Ini","artifact_tags"+string(g),"");
 		        if (obj_ini.artifact_tags[g] != ""){
 		        	obj_ini.artifact_tags[g] = json_parse(base64_decode(obj_ini.artifact_tags[g]));
+		        } else {
+		        	obj_ini.artifact_tags[g] = [];
 		        }
 	            obj_ini.artifact_identified[g]=ini_read_real("Ini","artifact_ident"+string(g),0);
 	            obj_ini.artifact_condition[g]=ini_read_real("Ini","artifact_condition"+string(g),0);
@@ -819,6 +824,22 @@ function scr_load(argument0, argument1) {
                     obj_ini.spe[coh,mah]=ini_read_string("Mar","spe"+string(coh)+"."+string(mah),"");
                     obj_ini.god[coh,mah]=ini_read_real("Mar","god"+string(coh)+"."+string(mah),0);
                     load_marine_struct(coh,mah);
+                    unit = obj_ini.TTRPG[coh,mah];
+                    if (array_contains(int_strings, unit.weapon_one())){
+                    	obj_ini.wep1[coh,mah] = real(obj_ini.wep1[coh,mah]);
+                    }
+                    if (array_contains(int_strings, unit.weapon_two())){
+                    	obj_ini.wep2[coh,mah] = real(obj_ini.wep2[coh,mah]);
+                    }
+                    if (array_contains(int_strings, unit.gear())){
+                    	obj_ini.gear[coh,mah] = real(obj_ini.gear[coh,mah]);
+                    }
+                    if (array_contains(int_strings, unit.mobility_item())){
+                    	obj_ini.mobi[coh,mah] = real(obj_ini.mobi[coh,mah]);
+                    }
+                    if (array_contains(int_strings, unit.armour())){
+                    	obj_ini.armour[coh,mah] = real(obj_ini.armour[coh,mah]);
+                    }                                                                               
 	            }
 	        }
 
