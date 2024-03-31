@@ -1331,7 +1331,7 @@ if (global.load>0){
     exit;
 }
 
-var xx,yy,me,dist,go,plan;
+var xx,yy,me,dist,go,planet;
 global.custom=1;
 
 // ** Sets up base training level and trainees at game start **
@@ -1359,16 +1359,16 @@ if (instance_exists(obj_ini)){
 // 11: apothecary       12: chaplain        13: librarium       14: armamentarium
 // ** Sets the star for the chapter ? **
 instance_create(irandom(room_width-400),irandom(room_height-400),obj_star);
-plan=floor(random(5))+19;
-plan=30*1.5;
-plan=70;
-if (is_test_map=true) then plan=20;
+planet=floor(random(5))+19;
+planet=30*1.5;
+planet=100;
+if (is_test_map=true) then planet=20;
 
 
 mask_index = spr_star
-while(instance_number(obj_star)<plan) {
-    xx = irandom(room_width-400)
-    yy = irandom(room_height-400)
+while(instance_number(obj_star)<planet) {
+    xx = irandom(room_width-200) // dictates how far away from the edge stars spawn
+    yy = irandom(room_height-200)
 	
 	if !place_meeting(xx, yy, obj_star) {
 		instance_create(xx,yy,obj_star);
@@ -1383,7 +1383,7 @@ if (obj_ini.fleet_type==3) then fleet_type="Crusade";
 star_names="";
 // ** Sets up the number of enemy factions to appear **
 tau=1; 
-tyranids=0;
+tyranids=1;
 ork=1;
 eldar=1;
 // if tau = 1 then tau spawn. also does eldar 
@@ -1398,7 +1398,7 @@ loyalty=100;
 loyalty_hidden=100;// Updated when inquisitors do an inspection
 // ** Sets up gene seed **
 gene_seed=20;
-if (string_count("Sieged",obj_ini.strin2)>0) then gene_seed=floor(random_range(300,500));
+if (string_count("Sieged",obj_ini.strin2)>0) then gene_seed=floor(random_range(250,400));
 if (global.chapter_name=="Lamenters") then gene_seed=30;
 if (global.chapter_name=="Soul Drinkers") then gene_seed=60;
 

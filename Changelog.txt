@@ -1,5 +1,5 @@
 -----------------
-Version 0.9100
+Version 0.9.0.1
 Fixed:
 	- boarding and ship ammo limits fixed
 	- bulk stcs being added upon collection of one fixed
@@ -26,6 +26,9 @@ Fixed:
 
 
 changed:
+	- increased camera move speed 
+	- made ork waagh spawn 100-300 turns in, instead of almost instantly
+	- increased starting planets to 100 (from 70)
 	- gives forgemaster a built in forge point boost
 	- reduces tech heretic spawn numbers
 	- makes tech heresy more slow burn

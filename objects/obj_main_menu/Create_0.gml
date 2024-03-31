@@ -1,7 +1,7 @@
 
 if (instance_number(obj_cuicons)=0){global.custom_icons=4;instance_create(0,0,obj_cuicons);}
 
-global.version="0.8.2.0";
+global.version="0.9.0.1";
 global.game_seed=0;
 global.cheat_req=false;
 global.cheat_gene=false;
@@ -17,7 +17,7 @@ window_old="fullscreen";
 global.restart=0;
 global.debug=0;
 last_legal=0;
-legal_text="This game is an unofficial nonprofit parody.  It is in no way sponsored or approved by Games Workshop Limited. The content is for the exclusive use of the player and should not be sold, rented, or used for any commercial enterprise in any way, shape or form. We make no claim to any characters, names, logos, situations that are trademarked, copyrighted or otherwise protected by federal, state or other intellectual property law. This work is produced solely for the personal, uncompensated enjoyment of Warhammer 40,000 fans. No money is being made and no copyright or trademark infringement is intended.";
+legal_text="This game is an unofficial nonprofit parody. It is in no way sponsored or approved by Games Workshop Limited. The content is for the exclusive use of the player and should not be sold, rented, or used for any commercial enterprise in any way, shape or form. We make no claim to any characters, names, logos, situations that are trademarked, copyrighted or otherwise protected by federal, state or other intellectual property law. This work is produced solely for the personal, uncompensated enjoyment of Warhammer 40,000 fans. No money is being made and no copyright or trademark infringement is intended.";
 smoke=0;
 crap=0;
 menu=0;
