@@ -254,9 +254,21 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
         if (mouse_y>=yy+318) and (mouse_y<yy+330) and (mouse_x>=xx+1190) and (mouse_x<xx+1216) and (tab!=1){change_tab=1;tab=1;obj_controller.last_weapons_tab=1;cooldown=8000;}
         if (mouse_y>=yy+318) and (mouse_y<yy+330) and (mouse_x>=xx+1263) and (mouse_x<xx+1289) and (tab!=2){change_tab=1;tab=2;obj_controller.last_weapons_tab=2;cooldown=8000;}
         if (mouse_y>=yy+318) and (mouse_y<yy+330) and (mouse_x>=xx+1409) and (mouse_x<xx+1435) and (target_comp<3){
-            var onceh;onceh=0;cooldown=8000;
-            if (onceh=0) and (master_crafted=0){master_crafted=1;obj_controller.popup_master_crafted=1;onceh=1;scr_weapons_equip();}
-            if (onceh=0) and (master_crafted=1){master_crafted=0;obj_controller.popup_master_crafted=0;onceh=1;scr_weapons_equip();}
+            var onceh=0;cooldown=8000;
+             if (onceh=0){
+                 if (master_crafted=0){
+                    master_crafted=1;
+                    obj_controller.popup_master_crafted=1;
+                    onceh=1;
+                    scr_weapons_equip();
+                }
+                else if (master_crafted=1){
+                    master_crafted=0;
+                    obj_controller.popup_master_crafted=0;
+                    onceh=1;
+                    scr_weapons_equip();
+                }
+             }
         }
     }
 
@@ -401,7 +413,10 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
         have_armour_num+=scr_item_count(n_armour);
 
         if (have_armour_num>=req_armour_num) or (n_armour="(None") then n_good3=1;
-        if (have_armour_num<req_armour_num){n_good3=0;warning="Not enough "+string(n_armour)+"; "+string(units-have_armour_num)+" more are required.";}
+        if (have_armour_num<req_armour_num){
+            n_good3=0;
+            warning=$"Not enough {n_armour} : {units-have_armour_num} more are required.";
+        }
 
         var g,exp_check;g=0;exp_check=0;
         if (n_armour="Terminator Armour") or (n_armour="Tartaros") then repeat(obj_controller.man_max){
@@ -410,7 +425,8 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
         }
         if (exp_check=1){n_good3=0;warning="A unit must have 90+ EXP to use Terminator armour.";}
         if (string_count("Dread",o_armour)>0) and (string_count("Dread",n_armour)=0){
-            n_good4=0;warning="Marines may not exit Dreadnoughts.";
+            n_good4=0;
+            warning="Marines may not exit Dreadnoughts.";
         }
 
     }
@@ -580,7 +596,7 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
                 ma_name[i]="";
                 ma_role[i]="";
                 ma_wep1[i]="";
-                display_unit[i]={};
+                display_unit[i]="";
                 ma_wep2[i]="";
                 ma_armour[i]="";
                 ma_health[i]=100;
@@ -641,36 +657,33 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                 var check=0,scout_check=0;
                 unit = obj_controller.display_unit[i];
 
-                if (n_armour=obj_controller.ma_armour[i]) then check=1;
-                if (check=0) and (n_armour!=obj_controller.ma_armour[i]) and (n_armour!="Assortment")and ((vehicle_equipment=1) or (vehicle_equipment=6)){ //normal infantry or dread armour
-                    if (string_count("Dread",obj_ini.armour[company][obj_controller.ide[i]])=0){
-                        /* if (obj_controller.ma_role[i]=obj_ini.role[100][12]){
-                            if (n_armour!="") and (n_armour!="Power Armour") and (n_armour!="Scout Armour") then scout_check=1;
-                        }*/
-                        if (scout_check=0){
-                            unit.update_armour(n_armour)
-                            obj_controller.ma_armour[i]=n_armour;
-                        }
-                    }
+                if (is_struct(unit)){
+                    unit.update_armour(n_armour);
+                    unit.update_mobility_item(n_mobi);
+                    unit.update_weapon_one(n_wep1);
+                    unit.update_weapon_two(n_wep2);
+                    unit.update_gear(n_gear);
+                    continue;
+                }
 
-                    // NOPE
-                    if ((n_armour="Terminator Armour") or (n_armour="Tartaros")) and (unit.mobility_item()!=""){
-                        unit.update_mobility_item("");
-                        obj_controller.ma_mobi[i]="";
-                    }
-                    if (obj_ini.wep1[company][obj_controller.ide[i]]="Assault Cannon") or (obj_ini.wep2[company][obj_controller.ide[i]]="Assault Cannon"){
-                        var bed=0,bgn=obj_ini.armour[company][obj_controller.ide[i]];
-                        if (bgn!="Terminator Armour") and (bgn!="Tartaros") then bed+=1;
-                        if (string_count("Termi",bgn)=0) then bed+=1;
-                        if (bed=2){
-                            if (obj_ini.wep1[company][obj_controller.ide[i]]=="Assault Cannon"){
-                                scr_add_item(obj_ini.wep1[company][obj_controller.ide[i]],1);
-                                obj_ini.wep1[company][obj_controller.ide[i]]="";
-                            }
-                            if (obj_ini.wep2[company][obj_controller.ide[i]]=="Assault Cannon"){
-                                scr_add_item(obj_ini.wep2[company][obj_controller.ide[i]],1);
-                                obj_ini.wep2[company][obj_controller.ide[i]]="";
-                            }
+                // NOPE
+                if ((n_armour="Terminator Armour") or (n_armour="Tartaros")) and (unit.mobility_item()!=""){
+                    unit.update_mobility_item("");
+                    obj_controller.ma_mobi[i]="";
+                }
+
+                if (obj_ini.wep1[company][obj_controller.ide[i]]="Assault Cannon") or (obj_ini.wep2[company][obj_controller.ide[i]]="Assault Cannon"){
+                    var bed=0,bgn=obj_ini.armour[company][obj_controller.ide[i]];
+                    if (bgn!="Terminator Armour") and (bgn!="Tartaros") then bed+=1;
+                    if (string_count("Termi",bgn)=0) then bed+=1;
+                    if (bed=2){
+                        if (obj_ini.wep1[company][obj_controller.ide[i]]=="Assault Cannon"){
+                            scr_add_item(obj_ini.wep1[company][obj_controller.ide[i]],1);
+                            obj_ini.wep1[company][obj_controller.ide[i]]="";
+                        }
+                        if (obj_ini.wep2[company][obj_controller.ide[i]]=="Assault Cannon"){
+                            scr_add_item(obj_ini.wep2[company][obj_controller.ide[i]],1);
+                            obj_ini.wep2[company][obj_controller.ide[i]]="";
                         }
                     }
                 }

@@ -59,7 +59,7 @@ function apothecary_simple(){
 				}		
 			}
 			key_val="";
-            if (v<array_length(obj_ini.veh_race[company])){
+            if (v<array_length(obj_ini.veh_hp[company])){
             	if(obj_ini.veh_lid[company][v]>0){
             		veh_location = obj_ini.veh_lid[company][v];
             		if (obj_ini.ship_location[veh_location] == "warp"){
@@ -132,13 +132,15 @@ function apothecary_simple(){
 				points_spent = 0;
 				unit = cur_units[a];
 				if (is_array(unit) && total_tech_points>0){
-					veh_health = obj_ini.veh_hp[unit[0]][unit[1]];
-					while(points_spent<10 && veh_health<100 && total_tech_points>0){
-						points_spent++;
-						veh_health++;
-						total_tech_points--;
+					if (array_length(unit)>1){
+						veh_health = obj_ini.veh_hp[unit[0]][unit[1]];
+						while (points_spent<10 && veh_health<100 && total_tech_points>0){
+							points_spent++;
+							veh_health++;
+							total_tech_points--;
+						}
+						obj_ini.veh_hp[unit[0]][unit[1]] = veh_health;
 					}
-					obj_ini.veh_hp[unit[0]][unit[1]] = veh_health;
 				} else if (is_struct(unit)){
 					if  (unit.hp() < unit.max_health()){
 						if (unit.armour() != "Dreadnought"){

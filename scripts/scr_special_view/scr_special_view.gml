@@ -44,7 +44,7 @@ function scr_special_view(command_group) {
 	    sh_cargo[i]=0;
 	    sh_cargo_max[i]="";
 	    squad[i]=0;
-	    display_unit[i] = {};
+	    display_unit[i] = "";
 
 	    if (i<=50){
 	    	penit_co[i]=0;
