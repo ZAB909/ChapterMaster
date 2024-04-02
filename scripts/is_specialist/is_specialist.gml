@@ -247,7 +247,7 @@ function group_selection(group, selection_data){
             for (var i=0; i<501; i++){
                 man[i]="";
                 ide[i]=0;
-                display_unit[i]={};
+                display_unit[i]="";
                 man_sel[i]=0;
                 ma_lid[i]=0;
                 ma_wid[i]=0;

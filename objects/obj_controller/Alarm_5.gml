@@ -407,7 +407,6 @@ if (training_techmarine>0){
 
     if (tech_points>=360){
         if (recruit_count>0){
-            marine_position=0;
             random_marine=scr_random_marine(novice_type,0);
             if (random_marine != "none"){
                 unit = fetch_unit(random_marine)
@@ -437,9 +436,8 @@ if (training_techmarine>0){
                     warn+=".";
                     scr_alert("red","recruitment","Not enough equipment: "+string(warn),0,0);
                 }
-                obj_ini.loc[0][marine_position]=obj_ini.home_name;
-                unit.planet_location=2;
-                obj_ini.lid[0][marine_position]=0;
+
+                unit.allocate_unit_to_fresh_spawn("default");
                 // TODO Probably want to change this to take into account fleet type chapters- also increase the man_size of that area by +X
                 if (global.chapter_name!="Iron Hands") and (unit.bionics<4) then repeat(choose(1,2,3)){unit.add_bionics()}
                 if (global.chapter_name=="Iron Hands") and (unit.bionics<7) then repeat(choose(4,5,6)){unit.add_bionics()}
@@ -463,8 +461,7 @@ if (training_techmarine>0){
             for(var h=1; h<=300; h++){
                 if (g1==0){
                     if (obj_ini.role[0,h]==""){
-
-                         g1=h;
+                        g1=h;
                         break;
                     }
                 }
