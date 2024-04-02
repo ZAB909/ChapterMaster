@@ -413,14 +413,26 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	// if (power_name="Vortex of Doom"){p_type="attack";p_rang=5;p_tar=3;p_spli=1;p_att=800;p_arp=800;p_duration=0;
 	//     flavour_text2="- a hole between real and warp space is torn open with deadly effect.  ";
 	// }
-
-if (weapon_one.has_tag("psy") || weapon_two.has_tag("psy")){
-	if (p_att>0) then p_att=round(p_att)*1.25;
-	if (p_rang>0) then p_rang=round(p_rang)*1.25;
+	var has_force_weapon=false;
+	if (is_struct(weapon_one)){
+		if weapon_one.has_tag("psy"){
+			has_force_weapon=true;
+		}
 	}
-	if (unit.weapon_one()=="Force Staff"||unit.weapon_two()=="Force Staff"){
-	if (p_att>0) then p_att=round(p_att)*2;
-	if (p_rang>0) then p_rang=round(p_rang)*1.5;
+
+	if (is_struct(weapon_two)){
+		if weapon_two.has_tag("psy"){
+			has_force_weapon=true;
+		}
+	}
+
+	if (has_force_weapon){
+		if (p_att>0) then p_att=round(p_att)*1.25;
+		if (p_rang>0) then p_rang=round(p_rang)*1.25;
+		if (unit.weapon_one()=="Force Staff" || unit.weapon_two()=="Force Staff"){
+			if (p_att>0) then p_att=round(p_att)*2;
+			if (p_rang>0) then p_rang=round(p_rang)*1.5;
+		}		
 	}
 
 	if (binders==true) and (p_type=="attack"){
