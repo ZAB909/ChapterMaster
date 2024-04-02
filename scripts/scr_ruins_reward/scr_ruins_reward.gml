@@ -126,7 +126,8 @@ function scr_ruins_reward(star_system, planet, _ruins) {
 	    pop.estimate=gene;
 	}
 	if (loot="bunker"){// Bunker
-	    var gene,pop;gene=floor(random_range(20,40))+1;pop=instance_create(0,0,obj_popup);
+	    var gene,pop;gene=floor(random_range(20,40))+1;
+	    pop=instance_create(0,0,obj_popup);
 	    pop.image="ruins_bunker";pop.title="Ancient Ruins: Bunker Network";
 	    pop.text="Your battle brothers have found several entrances into an ancient bunker network.  Its location has been handed over to the PDF.  The planet's defense rating has increased to ";
 	    pop.text+=string(min(star_system.p_fortified[planet]+1,5))+".  ";
@@ -134,18 +135,21 @@ function scr_ruins_reward(star_system, planet, _ruins) {
 	    if (star_system.p_fortified[planet]>=5) then pop.text+="("+string(star_system.p_fortified[planet])+"+0)";
 	    star_system.p_fortified[planet]=min(star_system.p_fortified[planet]+1,5);
 	}
-	if (loot="fortress"){// Fortress
-	    var gene,pop;gene=floor(random_range(20,40))+1;pop=instance_create(0,0,obj_popup);
-	    pop.image="ruins_fort";pop.title="Ancient Ruins: Fortress";
+	else if (loot="fortress"){// Fortress
+	    var gene,pop;gene=floor(random_range(20,40))+1;
+	    pop=instance_create(0,0,obj_popup);
+	    pop.image="ruins_fort";
+	    pop.title="Ancient Ruins: Fortress";
 	    pop.text="Praise the Emperor! We have found a massive, ancient fortress in needs of repairs. The gun batteries are rusted, and the walls are covered in moss with huge hole in it. Such a pity that such a majestic building is now a pale shadow of its former glory.  It is possible to repair the structure.  What is thy will?";
 	    pop.option1="Repair the fortress to boost defenses.  (1000 Req)";
 	    pop.option2="Salvage raw materials from the fortress.";
 	}
-	if (loot="starship"){// Starship
-	    var pop;pop=instance_create(0,0,obj_popup);
-	    pop.image="ruins_ship";pop.title="Ancient Ruins: Starship";
+	else if (loot="starship"){// Starship
+	    var pop=instance_create(0,0,obj_popup);
+	    pop.image="ruins_ship";
+	    pop.title="Ancient Ruins: Starship";
 	    pop.text="The ground beneath one of your battle brothers crumbles, and he falls a great height.  The other marines go down in pursuit- within a great chamber they find the remains of an ancient starship.  Though derelict, it is possible to land "+string(obj_ini.role[100][16])+"s onto the planet to repair the ship.  10,000 Requisition will be needed to make it operational.";
-		obj_controller.current_planet_feature.find_starship();
+		_ruins.find_starship();
 	    scr_event_log("","Ancient Starship discovered on "+string(star_system.name)+" "+scr_roman(planet)+".", star_system.name);
 	}
 

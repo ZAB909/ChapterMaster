@@ -509,44 +509,46 @@ if (obj_ini.fleet_type!=1){
     with(obj_temp5){instance_destroy();}
 }
 
-var recruits_finished=0,tot=0,recruit_first="";
-// ** Assign recruits to X Company **
-for(var i=1; i<=300; i++){
-    if (recruit_name[i]!="") then tot+=1;
-    if (recruit_name[i]!="") and (recruit_distance[i]<=0) then recruit_training[i]-=1;
-}
-for(var i=1; i<=300; i++){
-    if (recruit_name[i]!="") and (recruit_training[i]<=0){
+var recruits_finished=0,recruit_first="";
+var total_recruit_length = array_length(recruit_name);
+var new_arrays = 0;
+var total_recruits = 0;
+for(var i=0; i<total_recruit_length; i++){
+    if (recruit_name[i]=="") then continue;
+    if  (recruit_distance[i]<=0) then recruit_training[i]-=1;
+    if (recruit_training[i]<=0){
         scr_add_man(obj_ini.role[100][12],10,"Scout Armour",obj_ini.role[100][12],"",recruit_exp[i],recruit_name[i],recruit_corruption[i],false,"default","");
         if (recruit_first=="") then recruit_first=recruit_name[i];
         recruits_finished+=1;
         recruit_name[i]="";
         recruit_training[i]=-50;
+        array_delete(recruit_name,1,i);
+        array_delete(recruit_corruption,1,i);
+        array_delete(recruit_distance,1,i);
+        array_delete(recruit_training,1,i);
+        array_delete(recruit_exp,1,i);
+        i--;
+        total_recruit_length--;
+        new_arrays++;
+    } else {
+        total_recruits++;
     }
 }
-// Correct recruits name and empties the array
-// TODO could be implemented better
-for(var i=1; i<=299; i++){
-    if (recruit_name[i]=="") and (recruit_name[i+1]!=""){
-        recruit_name[i]=recruit_name[i+1];
-        recruit_corruption[i]=recruit_corruption[i+1];
-        recruit_distance[i]=recruit_distance[i+1];
-        recruit_training[i]=recruit_training[i+1];
-        recruit_exp[i]=recruit_exp[i+1];
-        
-        recruit_name[i+1]="";
-        recruit_corruption[i+1]=0;
-        recruit_distance[i+1]=0;
-        recruit_training[i+1]=0;
-        recruit_exp[i+1]=0;
-    }
+for (i=0;i<new_arrays;i++){
+    array_push(recruit_name,"");
+    array_push(recruit_corruption,0);
+    array_push(recruit_distance,0);
+    array_push(recruit_training,0);
+    array_push(recruit_exp,0);
+}
+if (recruits_finished==1){
+    scr_alert("green","recruitment",$"{obj_ini.role[100][12]} {recruit_first} has joined X Company.",0,0);
+}else if  (recruits_finished>1){
+    scr_alert("green","recruitment",$"{recruits_finished}x {obj_ini.role[100][12]} have joined X Company.",0,0);
 }
 
-if (recruits_finished==1) then scr_alert("green","recruitment",string(obj_ini.role[100][12])+" "+string(recruit_first)+" has joined X Company.",0,0);
-if (recruits_finished>1) then scr_alert("green","recruitment",string(recruits_finished)+"x "+string(obj_ini.role[100][12])+" have joined X Company.",0,0);
 
-
-recruits=tot;
+recruits=total_recruits;
 
 // ** Gene-seed Test-Slaves **
 for(var i=1; i<=120; i++){

@@ -256,15 +256,16 @@ function scr_load(argument0, argument1) {
 
 
 	    ini_read_real("Controller","blandify",0);
-	    var g;g=-1;repeat(obj_controller.recruits){g+=1;
+	    var g=-1;
+	    repeat(obj_controller.recruits+1){
+	    	g++;
 	        obj_controller.recruit_name[g]=ini_read_string("Recruit","rcr"+string(g),"Error");
-	        // ini_write_string("Recruit","rcr"+string(g),obj_controller.recruit_name[g]);
 	        obj_controller.recruit_corruption[g]=ini_read_real("Recruit","rcr_cr"+string(g),0);
 	        obj_controller.recruit_distance[g]=ini_read_real("Recruit","rcr_ds"+string(g),0);
 	        obj_controller.recruit_training[g]=ini_read_real("Recruit","rcr_tr"+string(g),0);
 	        obj_controller.recruit_exp[g]=ini_read_real("Recruit","rcr_ex"+string(g),0);
 	    }
-	    var g;g=-1;repeat(30){g+=1;
+	    var g=-1;repeat(30){g+=1;
 	        obj_controller.loyal[g]=ini_read_string("Controller","lyl"+string(g),"Error");
 	        obj_controller.loyal_num[g]=ini_read_real("Controller","lyl_nm"+string(g),0);
 	        obj_controller.loyal_tm[g]=ini_read_real("Controller","lyl_tm"+string(g),0);

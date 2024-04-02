@@ -1975,6 +1975,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
             self[$names[i]]=defaults[i];
         }
     }
+    variable_struct_set(self, "quality", quality=="none"?"standard":quality);
 
     static item_tooltip_desc_gen = function(){
         item_desc_tooltip = "";

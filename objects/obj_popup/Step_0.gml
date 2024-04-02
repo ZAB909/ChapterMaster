@@ -229,7 +229,7 @@ if (title="Scheduled Event"){
             if (obj_controller.fest_planet=1) then scr_event_dudes(1,1,obj_controller.fest_star,obj_controller.fest_wid);
             
             with(obj_event){
-                var ide;ide=0;
+                var ide=0;
                 repeat(700){ide+=1;
                     if (attend_corrupted[ide]=0) and (attend_id[ide]>0){
                         if (string_count("Chaos",obj_ini.artifact_tags[obj_controller.fest_display])>0){
@@ -976,15 +976,31 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
         obj_controller.temp[200]=string(loc);
         var you, onceh;you=0;onceh=0;
         
-        if (mission="purge"){with(obj_star){if (name=obj_controller.temp[200]) then instance_create(x,y,obj_temp5);}
-            you=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
-            var s;s=0;repeat(4){s+=1;if (you.p_problem[planet,s]="") and (onceh=0){you.p_problem[planet,s]="purge";you.p_timer[planet,s]=estimate;onceh=s;}}
-            if (onceh!=0){var bob;bob=instance_create(you.x+16,you.y-24,obj_star_event);bob.image_alpha=1;bob.image_speed=1;bob.color="green";}
-            scr_event_log("","Inquisition Mission Accepted: The nobles of "+string(you.name)+" "+string(scr_roman(planet))+" must be selectively purged within "+string(estimate)+" months.", you.name);
-            if (demand=1){title="Inquisition Mission Demand";text="The Inquisition demands that your Chapter demonstrate its loyalty to the Imperium of Mankind and the Emperor.  You are to selectively purge the Nobles on "+string(you.name)+" "+scr_roman(onceh)+" within "+string(estimate)+" months.";}
+        if (mission="purge"){
+            var target_star = star_by_name(obj_controller.temp[200]);
+            var target_chosen = false;
+
+            if (target_star!="none"){
+                for (s=1;s<=target_star.planets;s++){
+                    if (target_star.p_problem[planet][s]=""){
+                        target_star.p_problem[planet][s]="purge";
+                        target_star.p_timer[planet][s]=estimate;
+                        target_chosen = true;
+                        var bob=instance_create(target_star.x+16,target_star.y-24,obj_star_event);
+                        bob.image_alpha=1;
+                        bob.image_speed=1;
+                        bob.color="green";
+                        scr_event_log("",$"Inquisition Mission Accepted: The nobles of {target_star.name} {scr_roman(planet)} must be selectively purged within {estimate} months.", target_star.name);
+                        if (demand=1){
+                            title="Inquisition Mission Demand";
+                            text="The Inquisition demands that your Chapter demonstrate its loyalty to the Imperium of Mankind and the Emperor.  You are to selectively purge the Nobles on "+string(target_star.name)+" "+scr_roman(onceh)+" within "+string(estimate)+" months.";
+                        }
+                        break                 
+                    }
+                }
+            }
         }
-        
-        if (mission="cleanse"){with(obj_star){if (name=obj_controller.temp[200]) then instance_create(x,y,obj_temp5);}
+        else if (mission="cleanse"){with(obj_star){if (name=obj_controller.temp[200]) then instance_create(x,y,obj_temp5);}
             you=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
             var s;s=0;repeat(4){s+=1;if (you.p_problem[planet,s]="") and (onceh=0){you.p_problem[planet,s]="cleanse";you.p_timer[planet,s]=estimate;onceh=s;}}
             if (onceh!=0){var bob;bob=instance_create(you.x+16,you.y-24,obj_star_event);bob.image_alpha=1;bob.image_speed=1;bob.color="green";}
