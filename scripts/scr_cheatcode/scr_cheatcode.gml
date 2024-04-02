@@ -31,6 +31,18 @@ function scr_cheatcode(argument0) {
         if (cheatcode_string=="slaughtersong"){
             create_starship_event();
         }
+        if (cheatcode_string=="newapoth"){
+            obj_controller.apothecary_points = 50;
+        }
+        if (cheatcode_string=="newpsyk"){
+            obj_controller.psyker_points = 70;
+        }        
+         if (cheatcode_string=="newtech"){
+            obj_controller.tech_points = 400;
+        }
+        if (cheatcode_string=="newchap"){
+            createobj_controller.chaplain_points = 50;
+        }                      
         if (cheatcode_string=="artifact"){
             scr_add_artifact("random","",0,obj_ini.ship[1],501);
         }
