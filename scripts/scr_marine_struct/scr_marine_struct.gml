@@ -1992,6 +1992,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				 }
 			 }
 		};
+
 	static unload = function(planet_number, system){
 		var current_location = marine_location();
 		if (current_location[0]==location_types.ship){
@@ -2003,11 +2004,46 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				system.p_player[planet_number]+= size;
 				obj_ini.ship_carrying[current_location[1]] -= size;
 			}
+		} else {
+			obj_ini.lid[company][marine_number]=0;
+			obj_ini.loc[company][marine_number]=system.name;
+			planet_location=planet_number;
+			system.p_player[planet_number]+= size;
 		}
 	}
-	static set_planet = function(planet_number){
-		planet_location=planet_number;
+
+	static allocate_unit_to_fresh_spawn = function(type="default"){
+		var homestar = "none";
+		var spawn_location_chosen = false;
+	 	if ((type="home") or (type="default")) and (obj_ini.fleet_type==1){
+	        var homestar =  star_by_name(obj_ini.home_name);
+	    } else if (type !="ship"){
+	    	var homestar =  star_by_name(type);	    	
+	    }
+	   /* if (!spawn_location_chosen){
+
+	    }*/
+    	if (homestar!="none"){
+	        for (i=1;i<=homestar.planets;i++){
+	        	if (homestar.p_owner[i]==eFACTION.Player||
+	        		(obj_controller.faction_status[eFACTION.Imperium]!="War" && 
+	        		array_contains(obj_controller.imperial_factions, homestar.p_owner[i]))){
+	        		planet_location = i;
+	        		obj_ini.loc[company][marine_number]=obj_ini.home_name;
+	        		spawn_location_chosen=true;
+	        	}
+	        }
+    	}	    
+		if (!spawn_location_chosen){
+			var player_fleet = get_largest_player_fleet();
+			if (player_fleet != "none"){
+				get_unit_size();
+				load_unit_to_fleet(player_fleet,self);
+				spawn_location_chosen=true;
+			}
+		}			
 	}
+
 
 	static is_at_location = function(location, planet, ship){
 		var is_at_loc = false;
