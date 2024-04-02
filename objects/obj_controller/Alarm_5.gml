@@ -1575,27 +1575,9 @@ if (fest_scheduled>0) and (fest_repeats>0){
 
 // ** Income **
 if (income_controlled_planets>0){
-    with(obj_turn_end){
-        for(var a=89; a>=0; a--){
-            if (alert[a]!=0){
-                alert[a+1]=alert[a];
-                alert_type[a+1]=alert_type[a];
-                alert_text[a+1]=alert_text[a];
-                alert_char[a+1]=alert_char[a];
-                alert_text[a+1]=alert_color[a];
-            }
-        }
-    }
-    obj_turn_end.alert[1]=1;
-    obj_turn_end.alert_type[1]="";
-    obj_turn_end.alert_char[1]=0;
-    obj_turn_end.alert_text[1]="";
-    obj_turn_end.alert_color[1]="yellow";
-    obj_turn_end.alerts+=1;
 
-    if (income_controlled_planets==1) then obj_turn_end.alert_text[1]="-"+string(income_tribute)+" Requisition granted by tithes from 1 planet.";
-    if (income_controlled_planets>1) then obj_turn_end.alert_text[1]="-"+string(income_tribute)+" Requisition granted by tithes from "+string(income_controlled_planets)+" planets.";
-
+    var tithe_string = income_controlled_planets==1? $"-{income_tribute} Requisition granted by tithes from 1 planet.":"-{income_tribute} Requisition granted by tithes from {income_controlled_planets} planets.";
+    scr_alert("yellow", "planet_tithe", tithe_string);
     instance_activate_object(obj_p_fleet);
 
     with(obj_star){
