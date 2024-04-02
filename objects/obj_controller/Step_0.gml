@@ -160,8 +160,10 @@ if (obj_controller.disposition[4]<=20) or (obj_controller.loyalty<=33) and (dema
 if (obj_controller.disposition[4]>20) and (obj_controller.loyalty>33) and (demanding==1) then demanding=0;
 // Main menu movement
 if ((menu==0) and (formating==0)) or (instance_exists(obj_fleet)){
-    var spd=2,keyb=""; // player move speed on campaign map
+    var spd=24,keyb=""; // player move speed on campaign map
+
     if ((!instance_exists(obj_ingame_menu)) and (!instance_exists(obj_ncombat))) or (instance_exists(obj_fleet)){
+        if keyboard_check(vk_shift){spd+=20;} // shift down, increase speed
         if ((keyboard_check(vk_left)) or (mouse_x<=__view_get( e__VW.XView, 0 )+2) or (keyboard_check(ord("A")))) and (x>800) then x-=spd;
         if ((keyboard_check(vk_right)) or (mouse_x>=__view_get( e__VW.XView, 0 )+1598) or (keyboard_check(ord("D")))) and (x<(room_width-800)) then x+=spd;
         if ((keyboard_check(vk_up)) or (mouse_y<=__view_get( e__VW.YView, 0 )+2) or (keyboard_check(ord("W")))) and (y>450) then y-=spd;
