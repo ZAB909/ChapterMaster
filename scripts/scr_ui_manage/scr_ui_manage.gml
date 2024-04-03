@@ -1327,5 +1327,8 @@ function scr_ui_manage() {
 	    // draw_text_transformed(xx+488,yy+426,"Selection Size: "+string(man_size),0.4,0.4,0);
 	    scr_scrollbar(974,172,1005,790,34,ship_max,ship_current);
 	}
+	if (menu==0){
+		location_viewer.draw();
+	}
 
 }

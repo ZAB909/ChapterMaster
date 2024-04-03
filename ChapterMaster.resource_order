@@ -397,6 +397,7 @@
     {"name":"snd_postbattle","order":15,"path":"sounds/snd_postbattle/snd_postbattle.yy",},
     {"name":"snd_defeat","order":17,"path":"sounds/snd_defeat/snd_defeat.yy",},
     {"name":"snd_buzz","order":3,"path":"sounds/snd_buzz/snd_buzz.yy",},
+    {"name":"scr_unit_quick_find_pane","order":77,"path":"scripts/scr_unit_quick_find_pane/scr_unit_quick_find_pane.yy",},
     {"name":"snd_redownload","order":5,"path":"sounds/snd_redownload/snd_redownload.yy",},
     {"name":"snd_click","order":7,"path":"sounds/snd_click/snd_click.yy",},
     {"name":"snd_click_small","order":9,"path":"sounds/snd_click_small/snd_click_small.yy",},

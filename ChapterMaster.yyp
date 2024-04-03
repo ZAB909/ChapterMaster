@@ -703,6 +703,7 @@
     {"id":{"name":"snd_postbattle","path":"sounds/snd_postbattle/snd_postbattle.yy",},},
     {"id":{"name":"snd_defeat","path":"sounds/snd_defeat/snd_defeat.yy",},},
     {"id":{"name":"snd_buzz","path":"sounds/snd_buzz/snd_buzz.yy",},},
+    {"id":{"name":"scr_unit_quick_find_pane","path":"scripts/scr_unit_quick_find_pane/scr_unit_quick_find_pane.yy",},},
     {"id":{"name":"snd_redownload","path":"sounds/snd_redownload/snd_redownload.yy",},},
     {"id":{"name":"snd_click","path":"sounds/snd_click/snd_click.yy",},},
     {"id":{"name":"snd_click_small","path":"sounds/snd_click_small/snd_click_small.yy",},},

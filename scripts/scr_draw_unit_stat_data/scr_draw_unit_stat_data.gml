@@ -17,67 +17,76 @@ function scr_draw_unit_stat_data(manage=false){
 		"Measure of how quick and nimble unit is as well as their base ability to manipulate and do tasks with their hands (improves ranged attack).",
 		#306535,
 		spr_dexterity_icon,
-		"Dexterity", "DEX"],	
+		"Dexterity",
+		"DEX",
+		"dexterity"],	
 
 		[string(strength),
 		"How strong a unit is (can wield heavier equipment without detriment and is more deadly in close combat).",
 		#1A3B3B,
 		spr_strength_icon,
-		"Strength", "STR"],
+		"Strength",
+		"STR",
+		"strength"],
 
 		[string(constitution),
 		"Unit's general toughness and resistance to damage (increases health and damage resistance).",
 		#9B403E,
 		spr_constitution_icon,
-		"Constitution", "CON"],
+		"Constitution", "CON",
+		"constitution"],
 
 		[string(intelligence),
 		"Measure of learnt knowledge and specialist skill aptitude.",
 		#2F3B6B,
 		spr_intelligence_icon,
-		"Intelligence", "INT"],
+		"Intelligence", "INT","intelligence"],
 
 		[string(wisdom),
 		"Unit's perception and street smarts including certain types of battlefield knowledge.",
 		#54540B,
 		spr_wisdom_icon,
-		"Wisdom", "WIS"],
+		"Wisdom", "WIS", "wisdom"],
 
 		[string(piety),
 		"Unit's faith in their given religion (or general aptitude towards faith).",
 		#6A411C,
 		spr_faith_icon,
-		"Piety", "PIT"],
+		"Piety", "PIT", "piety"],
 
 		[string(weapon_skill),
 		"General skill with close combat weaponry.",
 		#87753C,
 		spr_weapon_skill_icon,
-		"Weapon Skill", "WS"],
+		"Weapon Skill", "WS", "weapon_skill"],
 
 		[string(ballistic_skill),
 		"General skill with ballistic and ranged weaponry.",
 		#743D57,
 		spr_ballistic_skill_icon,
-		"Ballistic Skill", "BS"],
+		"Ballistic Skill",
+		"BS", "ballistic_skill"],
 
 		[string(luck),
 		"...Luck...",
 		#05451E,
 		spr_luck_icon,
-		"Luck", "LCK"],
+		"Luck",
+		"LCK", "luck"],
 
 		[string(technology),
 		"Skill and understanding of technology and various technical thingies.",
 		#4F0105,
 		spr_technology_icon,
-		"Technology", "TEC"],
+		"Technology",
+		"TEC", "technology"],
 
 		[string(charisma),
 		"General likeability and ability to interact with people.",
 		#3A0339,
 		spr_charisma_icon,
-		"Charisma", "CHA"],			    					    					    					    			
+		"Charisma",
+		"CHA", "charisma"],			    					    					    					    			
 	]
 	draw_set_color(c_gray);
 	draw_rectangle(stat_x,stat_y, stat_x + (36*array_length(stat_display_list)), stat_y+48+8, 0)
@@ -108,11 +117,11 @@ function scr_draw_unit_stat_data(manage=false){
 		draw_text(stat_x+12, stat_y+33,stat_display_list[i][0])
 		if (manage){
 			if point_and_click([stat_x, stat_y, stat_x+32, stat_y+45]){
-				filter_and_sort_company("stat", stat_display_list[i][4]);
+				filter_and_sort_company("stat", stat_display_list[i][6]);
 				unit_text = false;
 			}
 		}
-		array_push(stat_tool_tips,[stat_x, stat_y, stat_x+32, stat_y+50,stat_display_list[i][1], $"{stat_display_list[i][4]} ({stat_display_list[i][5]})"]);
+		array_push(stat_tool_tips,[stat_x, stat_y, stat_x+32, stat_y+50,stat_display_list[i][1] + $"Click to order by highest {stat_display_list[i][4]}", $"{stat_display_list[i][4]} ({stat_display_list[i][5]})"]);
 		stat_x+=36;
 	}
 

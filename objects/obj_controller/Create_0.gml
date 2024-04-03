@@ -1409,6 +1409,10 @@ squads = false;
 
 // **sets up starting forge_points
 calculate_research_points()
+
+//** sets up marine_by_location view
+location_viewer = new scr_unit_quick_find_pane();
+
 // ** Sets up the number of marines per company **
 marines=0;
 marines=obj_ini.specials+obj_ini.firsts+obj_ini.seconds+obj_ini.thirds+obj_ini.fourths+obj_ini.fifths;
