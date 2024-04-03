@@ -1302,6 +1302,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 cooldown=8000;
                 click=1;
                 hide_banner=0;
+                location_viewer.update_garrison_log();
             }
             managing=0;
         }
@@ -1389,6 +1390,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 onceh=1;
                 cooldown=8000;
                 click=1;
+                location_viewer.update_garrison_log();
             }
             managing=0;
         }
@@ -1428,6 +1430,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 onceh=1;
                 cooldown=8000;
                 click=1;
+                location_viewer.update_garrison_log();
             }
             managing=0;
         }
@@ -1468,6 +1471,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 onceh=1;
                 cooldown=8000;
                 click=1;
+                location_viewer.update_garrison_log();
             }
             managing=0;
         }
@@ -1556,6 +1560,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 cooldown=8000;
                 click=1;
                 hide_banner=0;
+                location_viewer.update_garrison_log();
             }
             managing=0;
         }
@@ -1657,6 +1662,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     scr_company_order(i);
                 }
             }
+            location_viewer.update_garrison_log();
         }
     }
     if (zoomed==0) and (menu==40) and (cooldown<=0){
