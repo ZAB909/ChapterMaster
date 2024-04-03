@@ -407,7 +407,6 @@ if (training_techmarine>0){
 
     if (tech_points>=360){
         if (recruit_count>0){
-            marine_position=0;
             random_marine=scr_random_marine(novice_type,0);
             if (random_marine != "none"){
                 unit = fetch_unit(random_marine)
@@ -437,9 +436,8 @@ if (training_techmarine>0){
                     warn+=".";
                     scr_alert("red","recruitment","Not enough equipment: "+string(warn),0,0);
                 }
-                obj_ini.loc[0][marine_position]=obj_ini.home_name;
-                unit.planet_location=2;
-                obj_ini.lid[0][marine_position]=0;
+
+                unit.allocate_unit_to_fresh_spawn("default");
                 // TODO Probably want to change this to take into account fleet type chapters- also increase the man_size of that area by +X
                 if (global.chapter_name!="Iron Hands") and (unit.bionics<4) then repeat(choose(1,2,3)){unit.add_bionics()}
                 if (global.chapter_name=="Iron Hands") and (unit.bionics<7) then repeat(choose(4,5,6)){unit.add_bionics()}
@@ -463,8 +461,7 @@ if (training_techmarine>0){
             for(var h=1; h<=300; h++){
                 if (g1==0){
                     if (obj_ini.role[0,h]==""){
-
-                         g1=h;
+                        g1=h;
                         break;
                     }
                 }
@@ -512,44 +509,46 @@ if (obj_ini.fleet_type!=1){
     with(obj_temp5){instance_destroy();}
 }
 
-var recruits_finished=0,tot=0,recruit_first="";
-// ** Assign recruits to X Company **
-for(var i=1; i<=300; i++){
-    if (recruit_name[i]!="") then tot+=1;
-    if (recruit_name[i]!="") and (recruit_distance[i]<=0) then recruit_training[i]-=1;
-}
-for(var i=1; i<=300; i++){
-    if (recruit_name[i]!="") and (recruit_training[i]<=0){
+var recruits_finished=0,recruit_first="";
+var total_recruit_length = array_length(recruit_name);
+var new_arrays = 0;
+var total_recruits = 0;
+for(var i=0; i<total_recruit_length; i++){
+    if (recruit_name[i]=="") then continue;
+    if  (recruit_distance[i]<=0) then recruit_training[i]-=1;
+    if (recruit_training[i]<=0){
         scr_add_man(obj_ini.role[100][12],10,"Scout Armour",obj_ini.role[100][12],"",recruit_exp[i],recruit_name[i],recruit_corruption[i],false,"default","");
         if (recruit_first=="") then recruit_first=recruit_name[i];
         recruits_finished+=1;
         recruit_name[i]="";
         recruit_training[i]=-50;
+        array_delete(recruit_name,1,i);
+        array_delete(recruit_corruption,1,i);
+        array_delete(recruit_distance,1,i);
+        array_delete(recruit_training,1,i);
+        array_delete(recruit_exp,1,i);
+        i--;
+        total_recruit_length--;
+        new_arrays++;
+    } else {
+        total_recruits++;
     }
 }
-// Correct recruits name and empties the array
-// TODO could be implemented better
-for(var i=1; i<=299; i++){
-    if (recruit_name[i]=="") and (recruit_name[i+1]!=""){
-        recruit_name[i]=recruit_name[i+1];
-        recruit_corruption[i]=recruit_corruption[i+1];
-        recruit_distance[i]=recruit_distance[i+1];
-        recruit_training[i]=recruit_training[i+1];
-        recruit_exp[i]=recruit_exp[i+1];
-        
-        recruit_name[i+1]="";
-        recruit_corruption[i+1]=0;
-        recruit_distance[i+1]=0;
-        recruit_training[i+1]=0;
-        recruit_exp[i+1]=0;
-    }
+for (i=0;i<new_arrays;i++){
+    array_push(recruit_name,"");
+    array_push(recruit_corruption,0);
+    array_push(recruit_distance,0);
+    array_push(recruit_training,0);
+    array_push(recruit_exp,0);
+}
+if (recruits_finished==1){
+    scr_alert("green","recruitment",$"{obj_ini.role[100][12]} {recruit_first} has joined X Company.",0,0);
+}else if  (recruits_finished>1){
+    scr_alert("green","recruitment",$"{recruits_finished}x {obj_ini.role[100][12]} have joined X Company.",0,0);
 }
 
-if (recruits_finished==1) then scr_alert("green","recruitment",string(obj_ini.role[100][12])+" "+string(recruit_first)+" has joined X Company.",0,0);
-if (recruits_finished>1) then scr_alert("green","recruitment",string(recruits_finished)+"x "+string(obj_ini.role[100][12])+" have joined X Company.",0,0);
 
-
-recruits=tot;
+recruits=total_recruits;
 
 // ** Gene-seed Test-Slaves **
 for(var i=1; i<=120; i++){
@@ -1177,22 +1176,18 @@ for(var i=1; i<=99; i++){
             if (event[i]=="game_over_man") then obj_controller.alarm[8]=1;
             // Removes planetary governor installed by the chapter
             if (string_count("remove_serf",event[i])>0){
-                var ta,tb,tc,pp;
                 explode_script(event[i],"|");
-                ta=string(explode[0]);
-                tb=string(explode[1]);
-                tc=real(explode[2]);
-                obj_controller.temp[1007]=string(tb);
-                with(obj_temp5){instance_destroy();}
-                with(obj_star){if (name==obj_controller.temp[1007]) then instance_create(x,y,obj_temp5);}
-                if (instance_exists(obj_temp5)){
-                    pp=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);
-                    pp.dispo[tc]=-10;// Resets
-                    var twix="Inquisition executes Chapter Serf in control of "+string(tb)+" "+string(tc)+" and installs a new Planetary Governor.";
-                    if (pp.p_owner[tc]=eFACTION.Player) then pp.p_owner[tc]=pp.p_first[tc];
-                    scr_alert("","",string(twix),0,0);scr_event_log("",string(twix));
+                var ta=string(explode[0]);
+                var star_name=string(explode[1]);
+                var planet=real(explode[2]);
+                var event_star = star_by_name(star_name);
+                if (event_star!="none"){
+                    event_star.dispo[planet]=-10;// Resets
+                    var twix=$"Inquisition executes Chapter Serf in control of {star_name} {planet} and installs a new Planetary Governor.";
+                    if (event_star.p_owner[planet]=eFACTION.Player) then event_star.p_owner[planet]=pp.p_first[planet];
+                    scr_alert("","",twix,0,0);
+                    scr_event_log("",twix, star_name);
                 }
-                with(obj_temp5){instance_destroy();}
             }
             // Changes relation to good
             if (event[i]=="enemy_imperium"){
@@ -1226,7 +1221,7 @@ for(var i=1; i<=99; i++){
 				var xx=0,yy=0,flee=0,dirr=0;
                 var star_id = scr_random_find(1,true,"","");
 				if(star_id != undefined){
-                    scr_event_log("purple","Chaos Fleets exit the warp near the "+string(star_id.name)+" system.");
+                    scr_event_log("purple","Chaos Fleets exit the warp near the "+string(star_id.name)+" system.", star_id.name);
                     for(var j=0; j<4; j++){
                         dirr+=irandom_range(50,100);
                         xx=star_id.x+lengthdir_x(72,dirr);
@@ -1582,27 +1577,9 @@ if (fest_scheduled>0) and (fest_repeats>0){
 
 // ** Income **
 if (income_controlled_planets>0){
-    with(obj_turn_end){
-        for(var a=89; a>=0; a--){
-            if (alert[a]!=0){
-                alert[a+1]=alert[a];
-                alert_type[a+1]=alert_type[a];
-                alert_text[a+1]=alert_text[a];
-                alert_char[a+1]=alert_char[a];
-                alert_text[a+1]=alert_color[a];
-            }
-        }
-    }
-    obj_turn_end.alert[1]=1;
-    obj_turn_end.alert_type[1]="";
-    obj_turn_end.alert_char[1]=0;
-    obj_turn_end.alert_text[1]="";
-    obj_turn_end.alert_color[1]="yellow";
-    obj_turn_end.alerts+=1;
 
-    if (income_controlled_planets==1) then obj_turn_end.alert_text[1]="-"+string(income_tribute)+" Requisition granted by tithes from 1 planet.";
-    if (income_controlled_planets>1) then obj_turn_end.alert_text[1]="-"+string(income_tribute)+" Requisition granted by tithes from "+string(income_controlled_planets)+" planets.";
-
+    var tithe_string = income_controlled_planets==1? $"-{income_tribute} Requisition granted by tithes from 1 planet.":"-{income_tribute} Requisition granted by tithes from {income_controlled_planets} planets.";
+    scr_alert("yellow", "planet_tithe", tithe_string);
     instance_activate_object(obj_p_fleet);
 
     with(obj_star){

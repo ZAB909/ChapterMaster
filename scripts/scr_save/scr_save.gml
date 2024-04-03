@@ -214,29 +214,29 @@ function scr_save(save_slot,save_id) {
 	    ini_write_real("Controller","recruits",obj_controller.recruits);
 	    ini_write_real("Controller","recruit_last",obj_controller.recruit_last);
 	    //
-	    var g;g=-1;repeat(30){g+=1;
+	    var g=-1;repeat(30){g+=1;
 	        ini_write_real("Controller","command"+string(g),obj_controller.command_set[g]);
 	    }
 	    ini_write_real("Controller","blandify",obj_controller.blandify);
-	    var g;g=-1;repeat(201){g+=1;
+	    g=-1;repeat(201){g+=1;
 	        ini_write_string("Recruit","rcr"+string(g),obj_controller.recruit_name[g]);
 	        ini_write_real("Recruit","rcr_cr"+string(g),obj_controller.recruit_corruption[g]);
 	        ini_write_real("Recruit","rcr_ds"+string(g),obj_controller.recruit_distance[g]);
 	        ini_write_real("Recruit","rcr_tr"+string(g),obj_controller.recruit_training[g]);
 	        ini_write_real("Recruit","rcr_ex"+string(g),obj_controller.recruit_exp[g]);
 	    }
-	    var g;g=-1;repeat(30){g+=1;
+	    g=-1;repeat(30){g+=1;
 	        ini_write_string("Controller","lyl"+string(g),obj_controller.loyal[g]);
 	        ini_write_real("Controller","lyl_nm"+string(g),obj_controller.loyal_num[g]);
 	        ini_write_real("Controller","lyl_tm"+string(g),obj_controller.loyal_time[g]);
 	    }
-	    var g;g=-1;repeat(11){g+=1;
+	    g=-1;repeat(11){g+=1;
 	        ini_write_string("Controller","inq"+string(g),obj_controller.inquisitor[g]);
 	        ini_write_real("Controller","inq_ge"+string(g),obj_controller.inquisitor_gender[g]);
 	        ini_write_string("Controller","inq_ty"+string(g),obj_controller.inquisitor_type[g]);
 	    }
 	    //
-	    var g;g=-1;repeat(14){g+=1;
+	    g=-1;repeat(14){g+=1;
 	        ini_write_string("Factions","fac"+string(g),obj_controller.faction[g]);
 	        ini_write_real("Factions","dis"+string(g),obj_controller.disposition[g]);
 	        ini_write_real("Factions","dis_max"+string(g),obj_controller.disposition_max[g]);
@@ -919,7 +919,8 @@ function scr_save(save_slot,save_id) {
 
 	if (save_slot=5) or (save_slot=0){
 	    ini_open("save"+string(save_id)+".ini");
-
+	    instance_activate_object(obj_event_log);
+	    ini_write_string("Event", "log", base64_encode(json_stringify(obj_event_log.event)));
 	    obj_saveload.hide=1;
 	    obj_controller.invis=true;
 	    obj_saveload.alarm[2]=2;
@@ -942,30 +943,6 @@ function scr_save(save_slot,save_id) {
 	    ini_write_string(string(save_id),"date",svd);
 	    ini_write_real(string(save_id),"time",obj_controller.play_time);
 	    ini_write_real(string(save_id),"seed",global.game_seed);
-	    ini_close();
-
-		// TODO temporary disabled. Will be reenabled during ironman/autosave feature task
-	    //file_encrypt("save"+string(save_id)+".ini","p");
-
-	    // This saves the log in an unencrypted file
-	    instance_activate_object(obj_event_log);
-	    file_delete("save"+string(save_id)+"log.ini");
-	    ini_open("save"+string(save_id)+"log.ini");
-	    var t;t=0;
-	    ini_write_real("Main","data1",instance_number(obj_star));
-	    ini_write_string("Main","data2",global.chapter_name);
-	    ini_write_string("Main","data3",obj_ini.sector_name);
-	    ini_write_real("Main","data4",obj_controller.turn);
-	    ini_write_real("Main","data5",random_get_seed());
-
-	    repeat(600){t+=1;
-	        if (obj_event_log.event_text[t]!=""){
-	            ini_write_string("Log","a."+string(t),obj_event_log.event_text[t]);
-	            ini_write_string("Log","b."+string(t),obj_event_log.event_date[t]);
-	            ini_write_real("Log","c."+string(t),obj_event_log.event_turn[t]);
-	            ini_write_string("Log","d."+string(t),obj_event_log.event_color[t]);
-	        }
-	    }
 	    ini_close();
 
 	    obj_saveload.save[save_id]=1;

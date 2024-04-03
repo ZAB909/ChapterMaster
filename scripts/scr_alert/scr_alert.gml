@@ -19,25 +19,7 @@ function scr_alert(colour, alert_type, alert_text, xx=00, yy=00) {
 	        obj_turn_end.alert[obj_turn_end.alerts]=1;
 	    }
 	}
-	// }
 
-	/*
-	if (instance_exists(obj_star_event)){
-	    var blah, new_obj;
-	    blah=0;
-	    blah=instance_nearest(x,y,obj_star_event);
-    
-	    if (point_distance(x,y,blah.x,blah.y)>40){
-	        new_obj=instance_create(x+32,y-48,obj_star_event);
-	        new_obj.col=colour;
-	    }
-	}
-	if (!instance_exists(obj_star_event)){
-	    var new_obj;
-	    new_obj=instance_create(x+16,y-24,obj_star_event);
-	    new_obj.col=colour;
-	}
-	*/
 
 	if (yy>0) or (yy<-10000){
 	    var new_obj

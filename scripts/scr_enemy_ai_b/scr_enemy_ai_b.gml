@@ -29,7 +29,7 @@ function scr_enemy_ai_b() {
 	        if (p_orks[i]>0) and (p_orks[i]<5) and (ork_growth<=15){
 	        	if(sabotage_force){
 	        		if (irandom(3)<2){
-	        			 scr_event_log("green", $"sabotage force on {planet_string} disrupts ork forces");
+	        			 scr_event_log("green", $"sabotage force on {planet_string} disrupts ork forces", name);
 	        		}else {
 	        			p_orks[i]+=1;
 	        		}
@@ -61,7 +61,7 @@ function scr_enemy_ai_b() {
 	        }
 	        if (sabotage_force && irandom(2)<2){
 	        	p_necrons[i]--;
-	        	scr_event_log("green", $"sabotage force on {planet_string} disrupts necron forces");
+	        	scr_event_log("green", $"sabotage force on {planet_string} disrupts necron forces", name);
 	        }
         
 	        if (has_awake_tomb){// Necron fleets, woooo
@@ -237,12 +237,12 @@ function scr_enemy_ai_b() {
 		                        tixt = $"Heretic cults have appeared in {planet_string}.";
 
 		                    scr_alert("purple", "owner", tixt, x, y);
-		                    scr_event_log("purple", tixt);
+		                    scr_event_log("purple", tixt, name);
 		                }
 		            } else {
 		                tixt = $"Marine garrison prevents rebellion on {planet_string}"
 		                scr_alert("green", "owner", tixt, x, y);
-		                scr_event_log("purple", tixt);
+		                scr_event_log("purple", tixt, name);
 		            }
 		            // Cult crushed; don't bother showing if there's already fighting going on over there
 		        } else if (rando >= 41) and (rando < 81) and (p_traitors[i] < 2) {
@@ -274,7 +274,7 @@ function scr_enemy_ai_b() {
 
 		            scr_popup("Heretic Revolt", "A massive heretic uprising on " + string(name) + " " + scr_roman(i) + " threatens to plunge the star system into chaos.", "chaos_cultist", "");
 		            scr_alert("red", "owner", "Massive heretic uprising on " + string(name) + " " + scr_roman(i) + ".", x, y);
-		            scr_event_log("purple", "Massive heretic uprising on " + string(name) + " " + scr_roman(i) + ".");
+		            scr_event_log("purple", "Massive heretic uprising on " + string(name) + " " + scr_roman(i) + ".", name);
 		        } // Huge uprising
 
 		        if (rando >= 100) and (p_traitors[i] < 5) {
@@ -293,7 +293,7 @@ function scr_enemy_ai_b() {
 
 		        if (rando >= 41) and (!notixt) {
 		            scr_alert("red", "owner", tixt, x, y);
-		            scr_event_log("purple", tixt);
+		            scr_event_log("purple", tixt, name);
 		        }
 		        // if (p_traitors[i]>2){obj_controller.x=self.x;obj_controller.y=self.y;}
 		    } // End traitors cult
@@ -397,7 +397,7 @@ function scr_enemy_ai_b() {
 
 	                if (badd=2){
 	                    scr_popup("System Lost","The "+string(name)+" system has been taken by the Tau Empire!","tau","");owner = eFACTION.Tau;
-	                    scr_event_log("red","System "+string(name)+" has been taken by the Tau Empire.");
+	                    scr_event_log("red","System "+string(name)+" has been taken by the Tau Empire.", name);
 	                }
                 
 	                if (p_pdf[i]!=0) then p_pdf[i]=round(p_pdf[i]*0.75);

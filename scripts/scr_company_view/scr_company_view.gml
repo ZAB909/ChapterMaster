@@ -88,7 +88,7 @@ function scr_company_view(company) {
 					}					
 	                // Select All Infantry Setup
 	                var go=0,op=0;
-					 if (man[v]=="man") and (!is_specialist(ma_role[v])){
+					 if (man[v]=="man") and (!unit.IsSpecialist()){
 	                    for (var j=0; j<20;j++) {
 							if (sel_uni[j] == "") && (op == 0) then op = j;
 							if (sel_uni[j] == ma_role[v]) then go = 1;

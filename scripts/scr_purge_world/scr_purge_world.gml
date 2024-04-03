@@ -81,13 +81,18 @@ function scr_purge_world(star, planet, action_type, action_score) {
 
 
 	if (action_type=2){// Burn baby burn
-	    var i;i=0;
-	    repeat(4){i+=1;
-	        if (star.p_problem[planet,i]="cleanse") and (isquest=0){isquest=1;thequest="cleanse";questnum=i;}
+	    var i=0;
+	    repeat(star.planets){i+=1;
+	        if (star.p_problem[planet,i]="cleanse") and (isquest=0){
+	        	isquest=1;
+		        thequest="cleanse";
+		        questnum=i;
+		    }
 	    }
 	    if (isquest=1){
 	        if (thequest="cleanse") and (action_score>=20){
-	            star.p_problem[planet,questnum]="";star.p_timer[questnum]=-1;
+	            star.p_problem[planet][questnum]="";
+	            star.p_timer[planet][questnum]=-1;
             
 	            if (obj_controller.demanding=0) then obj_controller.disposition[4]+=1;
 	            if (obj_controller.demanding=1) then obj_controller.disposition[4]+=choose(0,0,1);
@@ -132,13 +137,18 @@ function scr_purge_world(star, planet, action_type, action_score) {
 
 
 	if (action_type=3){// Blam!
-	    var i;i=0;
-	    repeat(4){i+=1;
-	        if (star.p_problem[planet,i]="purge") and (isquest=0){isquest=1;thequest="purge";questnum=i;}
+	    var i=0;
+	    repeat(star.planets){i+=1;
+	        if (star.p_problem[planet][i]="purge") and (isquest=0){
+	        	isquest=1;
+	        	thequest="purge";
+	        	questnum=i;
+	        }
 	    }
 	    if (isquest=1){
 	        if (thequest="purge") and (action_score>=10){
-	            star.p_problem[planet,questnum]="";star.p_timer[questnum]=-1;
+	            star.p_problem[planet][questnum]="";
+	            star.p_timer[questnum]=-1;
             
             
 	            if (obj_controller.demanding=0) then obj_controller.disposition[4]+=1;
@@ -149,8 +159,8 @@ function scr_purge_world(star, planet, action_type, action_score) {
 	            scr_gov_disp(star.name,planet,choose(1,2,3));
 	        }
 	    }
-	    if (isquest=0){
-	        txt1="Your marines move across "+string(star.name)+" "+string(planet)+", rooting out sources of corruption.  Heretics are dragged from their lairs and executed in the streets.";
+	    else if (isquest=0){
+	        txt1=$"Your marines move across {star.name} {scr_roman(planet)}, rooting out sources of corruption.  Heretics are dragged from their lairs and executed in the streets.";
     
 	        if (star.p_large[planet]=0) then max_kill=action_score*30;// Population if normal
 	        if (star.p_large[planet]=1) then max_kill=0;// Population if large
