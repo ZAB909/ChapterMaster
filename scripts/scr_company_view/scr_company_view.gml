@@ -165,6 +165,7 @@ function scr_company_view(company) {
 	man_max=last_man+last_vehicle+2;
 	if (last_vehicle==0) and (last_man==0) then man_max=0;
 	man_see=38-4;
+	other_manage_data();
 }
 
 function other_manage_data(){
@@ -270,7 +271,7 @@ function other_manage_data(){
 	    if (ma_role[v]=obj_ini.role[100][16]) then ma_promote[v]=1;
 
 	    if (unit.IsSpecialist("rank_and_file")){
-	    	var promotion_limit = company_promotion_limits[company-1]
+	    	var promotion_limit = company_promotion_limits[unit.company-1]
 			if (unit.experience()>=promotion_limit && promotion_limit>0){
 	    		ma_promote[v]=1;
 	    	}

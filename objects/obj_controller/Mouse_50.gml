@@ -2111,7 +2111,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
         xx=xx+0;
         yy=__view_get( e__VW.YView, 0 )+0;
 
-        if (!unit_profile){
+        if (!unit_profile && !view_squad){
             if (mouse_x>=xx+1018) and (mouse_y>yy+805) and (mouse_x<xx+1018+141) and (mouse_y<yy+831){
                 // Load to ship
                 if (man_size>0) and (sel_loading==0) and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel"){
@@ -2375,7 +2375,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
         }
     }
         // Selecting a ship to load
-    if (menu==30) and (managing>0){
+    if (menu==30) and (managing>0 || managing=-1){
         xx=xx+0;
         yy=yy+0;
 
@@ -2402,39 +2402,32 @@ if (action_if_number(obj_saveload, 0, 0) &&
                      }           
                     var onceh=0;
                     stop=0;
-                    var company=managing;
-                    if (company>10){company=0}
                     for(var q=1; q<=500; q++){
                         // Load man to ship
-                        if (man[q]=="man" && man_sel[q]==1){
-                            unit = obj_ini.TTRPG[company][ide[q]];
-                            unit.load_marine(sh_ide[sel]);
-                            ma_loc[q]=sh_name[sel];
-                            ma_lid[q]=sh_ide[sel];
-                            ma_wid[q]=0;                       
-                        }
-                        // Load vehicle to ship
-                        if (man[q]=="vehicle") and (ma_loc[q]==selecting_location) and (sh_loc[sel]==selecting_location){
-                            vehic_size =scr_unit_size("",ma_role[q],true);
-                            if ((sh_cargo[sel]+vehic_size)<=sh_cargo_max[sel]) and (man_sel[q]!=0){
-                                wombat=sel;
+                        if (man_sel[q]==1){
+                            if (is_struct(display_unit[q])){
+                                unit = display_unit[q];
+                                unit.load_marine(sh_ide[sel]);
                                 ma_loc[q]=sh_name[sel];
                                 ma_lid[q]=sh_ide[sel];
-                                ma_wid[q]=0;
-                                veh_loc[managing,q]=sh_name[sel];
-
-                                if (managing<=10){
-                                    obj_ini.veh_lid[managing][ide[q]]=sh_ide[sel];
-                                    obj_ini.veh_wid[managing][ide[q]]=0;
-                                    obj_ini.veh_uid[managing][ide[q]]=sel_uid;
+                                ma_wid[q]=0;                       
+                            }
+                            // Load vehicle to ship
+                            else if (is_array(display_unit[q]) ) and (ma_loc[q]==selecting_location) and (sh_loc[sel]==selecting_location){
+                                var vehicle =display_unit[q];
+                                vehic_size =scr_unit_size("",ma_role[q],true);
+                                if ((sh_cargo[sel]+vehic_size)<=sh_cargo_max[sel]) and (man_sel[q]!=0){
+                                    wombat=sel;
+                                    ma_loc[q]=sh_name[sel];
+                                    ma_lid[q]=sh_ide[sel];
+                                    ma_wid[q]=0;
+                                    veh_loc[vehicle[0]][vehicle[1]]=sh_name[sel];
+                                    obj_ini.veh_lid[vehicle[0]][vehicle[1]]=sh_ide[sel];
+                                    obj_ini.veh_wid[vehicle[0]][vehicle[1]]=0;
+                                    obj_ini.veh_uid[vehicle[0]][vehicle[1]]=sel_uid;
+                                   obj_ini.ship_carrying[sh_ide[sel]]+=vehic_size;
+                                   load_from_star.p_player[selecting_planet]-=vehic_size;
                                 }
-                                if (managing>10){
-                                    obj_ini.veh_lid[0][ide[q]]=sh_ide[sel];
-                                    obj_ini.veh_wid[0][ide[q]]=0;
-                                    obj_ini.veh_uid[0][ide[q]]=sel_uid;
-                                }
-                               obj_ini.ship_carrying[sh_ide[sel]]+=vehic_size;
-                               load_from_star.p_player[selecting_planet]-=vehic_size;
                             }
                         }
                     }

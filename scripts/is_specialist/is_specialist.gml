@@ -314,7 +314,7 @@ function group_selection(group, selection_data){
                 	}
                 }       	
             }
-        other_manage_data()
+        other_manage_data();
         managing =-1;
         last_vehicle=0
         last_man=s;
