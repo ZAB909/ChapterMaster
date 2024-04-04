@@ -558,7 +558,6 @@ if (menu==1 && (managing>0 || managing<0)){
             
             damage_res = unit.damage_resistance();
             
-            var armour_tooltip = "";
             if (is_struct(equip_data.armour_data)){
                 temp[103]=equip_data.armour_data.item_tooltip_desc_gen();
             } else {temp[103]=""}
@@ -602,8 +601,9 @@ if (menu==1 && (managing>0 || managing<0)){
             }
             if (string_count("0",unit.specials())>0){
                 temp[119]="PSYKER ("+string_upper(string(obj_ini.psy_powers))+"): ";
-                temp[119]+=string(string_count("|",unit.specials()));
-                temp[119]+=" Powers known.";
+                var _power_count = string_count("|",unit.specials());
+                temp[119]+=string(_power_count);
+                temp[119]+=(_power_count = 1) ? " Power known." : " Powers known.";
             }
             // Corruption
             if (obj_controller.chaos_rating>0) and (temp[119]!="") then temp[119]+="#"+string(max(0,unit.corruption()))+"% Corruption.";
