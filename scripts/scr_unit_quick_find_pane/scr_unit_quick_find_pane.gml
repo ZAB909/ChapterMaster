@@ -5,7 +5,7 @@ function scr_unit_quick_find_pane() constructor{
 	tab_buttons = {
 	    "fleets":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
 	    "garrisons":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
-	    "vehicles":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
+	    "hider":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
 	    "troops":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
 	}
 
@@ -34,6 +34,7 @@ function scr_unit_quick_find_pane() constructor{
 	    	}
 	    }		
 	}
+	hover_item="none";
 	travel_target = [];
 	travel_time = 0;
 	travel_increments = [];
@@ -41,6 +42,9 @@ function scr_unit_quick_find_pane() constructor{
 	start_fleet = 0;
 	start_system = 0;
 	garrison_log = {};
+	hide_sequence=0;
+	current_hover=-1;
+	hover_count=0;
 	main_panel.inside_method = function(){
 		var xx = main_panel.XX;
 		var yy = main_panel.YY;
@@ -86,13 +90,32 @@ function scr_unit_quick_find_pane() constructor{
 		    draw_text(xx+240, yy+50, "Healers");
 		    draw_text(xx+310, yy+50, "Techies");
 		    var i = start_system;
+		    var registered_hover=false;
 		    var system_names = struct_get_names(garrison_log);
+			var hover_entered=false;
+			if (hover_item!="none"){
+				var loc=hover_item.location;
+				hover_entered = scr_hit(loc[0],loc[1],loc[2],loc[3]);
+			}		    
 		    while(i<array_length(system_names) && (yy+90+(20*i)+12 +20)<main_panel.YY+yy+main_panel.height){
 		    	system_data = garrison_log[$system_names[i]];
 				if (scr_hit(xx+10, yy+90+(20*i),xx+main_panel.width,yy+90+(20*i)+18)){
-					draw_set_color(c_gray);
-					draw_rectangle(xx+10+20, yy+90+(20*i)-2,xx+main_panel.width-20,yy+90+(20*i)+18, 0)
-					draw_set_color(c_white);
+					if (!hover_entered){
+						draw_set_color(c_gray);
+						draw_rectangle(xx+10+20, yy+90+(20*i)-2,xx+main_panel.width-20,yy+90+(20*i)+18, 0);
+						draw_set_color(c_white);
+						if (current_hover>-1 && current_hover!=i){
+							registered_hover=false;
+						} else {
+							current_hover=i;
+							registered_hover=true;
+							hover_count++;
+						}
+					} else {
+						if (hover_item.root_item == i){
+							draw_rectangle(xx+10+20, yy+90+(20*i)-2,xx+main_panel.width-20,yy+90+(20*i)+18, 0);
+						}
+					}
 				}
 			    draw_text(xx+80, yy+90+(20*i), system_names[i]);
 			    draw_text(xx+160, yy+90+(20*i), system_data.units);
@@ -106,20 +129,36 @@ function scr_unit_quick_find_pane() constructor{
 			    	travel_increments = [(travel_target[0]-obj_controller.x)/15,(travel_target[1]-obj_controller.y)/15];
 			    	travel_time = 0;
 			    }
+			    if (registered_hover){
+    			    if (hover_count==10){
+    			    	hover_item = new hover_box();
+    			    	hover_item.relative_x = (mouse_x-xx+(10-10));
+    			    	hover_item.relative_y = (mouse_y-(yy+90+(20*i)));
+    			    	hover_item.root_item=i;
+    			    }
+    			}
 			    i++;
-			}			
+			}		
+			if (!registered_hover && !hover_entered){
+				current_hover=-1;
+				hover_count=0;
+				hover_item="none";
+			}
+			if (hover_item!="none"){
+		    	if point_and_click(hover_item.draw(xx+10, yy+90+(20*hover_item.root_item), "Manage")){}
+		    }			
 		}
 		if (array_length(travel_target)==2){
 			if (obj_controller.x!=travel_target[0] || obj_controller.y!=travel_target[1]){
-				obj_controller.x+=travel_increments[0];
-				obj_controller.y+=travel_increments[1];
+				obj_controller.x += travel_increments[0];
+				obj_controller.y += travel_increments[1];
 				travel_time++;
 			} else {
 				travel_target=[];		
 			}
 			if (travel_time==15){
-				obj_controller.x=travel_target[0];
-				obj_controller.y=travel_target[1];
+				obj_controller.x = travel_target[0];
+				obj_controller.y = travel_target[1];
 				travel_target=[];			
 			}
 		}
@@ -129,21 +168,52 @@ function scr_unit_quick_find_pane() constructor{
 			if (!instance_exists(obj_fleet_select) && !instance_exists(obj_star_select)){
 				var xx=__view_get( e__VW.XView, 0 )+0;
 				var yy=__view_get( e__VW.YView, 0 )+0;
-				main_panel.draw(xx, yy+110, 0.46, 0.8);
-				if(tab_buttons.fleets.draw(xx,yy+79, "Fleets")){
-				    view_area="fleets";
+				var x_draw=xx;
+				if (hide_sequence=30) then hide_sequence=0;
+				if ((hide_sequence>0 && hide_sequence<15) || (hide_sequence>15 && hide_sequence<30)){
+					if (hide_sequence>15){
+						x_draw=(xx-main_panel.width) +((main_panel.width/15)*(hide_sequence-15));
+					} else {
+						x_draw=xx-((main_panel.width/15)*hide_sequence);
+					}
+					hide_sequence++;
 				}
-				if (tab_buttons.garrisons.draw(xx+115,yy+79, "Planet Troops")){
-				    view_area="garrisons";
-				    update_garrison_log();
+				if (hide_sequence>15 || hide_sequence<15){
+					main_panel.draw(x_draw, yy+110, 0.46, 0.8);
+					if(tab_buttons.fleets.draw(x_draw,yy+79, "Fleets")){
+					    view_area="fleets";
+					}
+					if (tab_buttons.garrisons.draw(x_draw+115,yy+79, "Planet Troops")){
+					    view_area="garrisons";
+					    update_garrison_log();
+					}
+					if (x_draw+230<xx){
+						tab_buttons.hider.draw(xx,yy+79, "Show")
+					} else {
+						if (tab_buttons.hider.draw(x_draw+230,yy+79, "Hide")){
+						    hide_sequence++;
+						}					
+					}					
+				} else if (hide_sequence==15){
+					if (tab_buttons.hider.draw(xx,yy+79, "Show")){
+					    hide_sequence++;
+					}
 				}
-				/*if (tab_buttons.vehicles.draw(xx+230,yy+79, "Vehicles")){
-				    view_area="vehicles";
-				}
-				if (tab_buttons.troops.draw(xx+345,yy+79, "Troops")){
+				/*if (tab_buttons.troops.draw(xx+345,yy+79, "Troops")){
 				    view_area="troops";
 				}*/							
 			}
 		}
+	}
+}
+
+function  hover_box() constructor{
+	root_item = "none";
+	relative_x=0;
+	relative_y=0;
+	location = [0,0,0,0];
+	static draw = function(xx, yy, button_text){
+		location = draw_unit_buttons([xx+relative_x, yy+relative_y], button_text,[1,1], c_green,fa_left, fnt_40k_14b, 1);
+		return location;
 	}
 }
