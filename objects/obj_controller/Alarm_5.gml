@@ -438,7 +438,7 @@ if (training_techmarine>0){
                 }
 
                 unit.allocate_unit_to_fresh_spawn("default");
-                // TODO Probably want to change this to take into account fleet type chapters- also increase the man_size of that area by +X
+ 
                 if (global.chapter_name!="Iron Hands") and (unit.bionics<4) then repeat(choose(1,2,3)){unit.add_bionics()}
                 if (global.chapter_name=="Iron Hands") and (unit.bionics<7) then repeat(choose(4,5,6)){unit.add_bionics()}
                 // 135 ; probably also want to increase the p_player by 1 just because
