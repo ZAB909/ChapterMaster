@@ -157,6 +157,10 @@ if (zoomed==0) and (zui==0){
     draw_set_color(16291875);
     draw_text(xx+495-10,yy+16,string_hash_to_newline(string(marines)+"/"+string(command)));
     draw_text(xx+495.5-10,yy+16.5,string_hash_to_newline(string(marines)+"/"+string(command)));
+
+    if (menu==0){
+        location_viewer.draw();
+    }
 }
 
 draw_set_font(fnt_40k_14b);

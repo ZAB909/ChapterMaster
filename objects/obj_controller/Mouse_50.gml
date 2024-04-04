@@ -1587,6 +1587,9 @@ if (action_if_number(obj_saveload, 0, 0) &&
         // End Turn
         if (mouse_x>=xx+1420) and (mouse_y>=yy+837) and (mouse_x<xx+1562) and (mouse_y<yy+877){
             if (menu==0) and (cooldown<=0){
+                if (location_viewer.hide_sequence==0){
+                    location_viewer.hide_sequence++;
+                }
                 cooldown=8;
                 menu=0;
 

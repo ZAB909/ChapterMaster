@@ -115,7 +115,7 @@ function scr_company_view(company) {
 	        }
 
 	        if (bad==0){
-				v+=1;
+				v++;
 	            var step=false;
 	            if (i>1){
 					if (ide[v-1]==i){
@@ -127,6 +127,7 @@ function scr_company_view(company) {
 	                man[v]="vehicle";
 					ide[v]=i;
 					last_vehicle+=1;
+					display_unit[v] = [company,i];
 	                ma_loc[v]=obj_ini.veh_loc[company][i];
 					ma_role[v]=obj_ini.veh_role[company][i];
 					ma_wep1[v]=obj_ini.veh_wep1[company][i];
@@ -139,7 +140,10 @@ function scr_company_view(company) {
 					ma_wid[v]=obj_ini.veh_wid[company][i];
 	                if (ma_lid[v]>0){
 	                    ma_loc[v]=obj_ini.ship[ma_lid[v]];
-	                    if (obj_ini.ship_location[ma_lid[v]]=="Lost") then ma_loc[v]="Lost";
+	                    if (obj_ini.ship_location[ma_lid[v]]=="Lost"){
+	                    	ma_loc[v]="Lost";
+	                    	man[v]="hide";
+	                    }
 	                }
 	                // Select All Vehicle Setup
 	                var go=0,op=0;
