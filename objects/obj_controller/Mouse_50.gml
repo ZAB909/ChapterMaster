@@ -2165,8 +2165,8 @@ if (action_if_number(obj_saveload, 0, 0) &&
                         // Set different vih depending on unit type
                         if (man_sel[f]!=1) then continue;
                         if (vih==0){
-                            if (man[f]=="man"){
-                                unit=obj_ini.TTRPG[company][ide[f]];
+                            if (man[f]=="man" && is_struct(display_unit[f])){
+                                unit=display_unit[f];
                                 if (unit.armour()!="Dreadnought"){
                                     vih=1;
                                 } else {
@@ -2185,8 +2185,8 @@ if (action_if_number(obj_saveload, 0, 0) &&
                                 if (man[f]=="vehicle"){
                                     allow=false;
                                     break;
-                                } else if (man[f]=="man"){
-                                    unit=obj_ini.TTRPG[company][ide[f]];
+                                } else if (man[f]=="man" && is_struct(display_unit[f])){
+                                    unit=display_unit[f];
                                     if (unit.armour()=="Dreadnought" && vih==1){
                                         allow=false;
                                         break;
@@ -2237,7 +2237,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     if (b_mobi==nuuum) then o_mobi="";
 
                     if (vih>0 && man_size>0 && allow){
-show_debug_message("{0}",vih);
+
                         var pip=instance_create(0,0,obj_popup);
                         pip.type=6;
                         pip.o_wep1=o_wep1;
@@ -2322,64 +2322,6 @@ show_debug_message("{0}",vih);
                     }
                     if (nuuum>1) then pip.unit_role="Marines";
                     pip.units=nuuum;
-                }
-            }
-                // Jail
-            if (mouse_x>=xx+1438) and (mouse_y>=yy+803) and (mouse_x<xx+1578) and (mouse_y<yy+831) and (man_size>0){
-                for(var f=1; f<=man_max; f++){
-                    if (man[f]=="man") and (man_sel[f]==1) and (ma_loc[f]!="Terra") and (ma_loc[f]!="Mechanicus Vessel"){
-                        if (ma_god[f]<10) and (managing<=10){
-                            ma_god[f]+=10;
-                            obj_ini.god[managing,ide[f]]+=10;
-                        }
-                        if (ma_god[f]<10) and (managing>10) and (managing<20){
-                            ma_god[f]+=10;
-                            obj_ini.god[0,ide[f]]+=10;
-                        }
-                    }
-                }
-                alll=0;
-                if (managing<=10) then scr_company_view(managing);
-                if (managing>20) then scr_company_view(managing);
-                if (managing>10) and (managing<=20) then scr_special_view(managing);
-                cooldown=8000;
-                sel_loading=0;
-                unload=0;
-                alarm[6]=7;
-            }
-
-            // Add bionics to marine(s)
-            if (scr_hit(xx+1300+141,yy+779,xx+1436+141,yy+801)==true) and (man_size>0) and (cooldown<=0){
-                var bionics_before,bionics_after,cah;
-                cooldown=8000;
-                cah=managing;
-                if (cah>10) then cah=0;
-                bionics_before=scr_item_count("Bionics");
-                bionics_after=bionics_before;
-                if (bionics_before>0) then for(var p=1; p<=500; p++){
-                    if (man_sel[p]==1) and (man[p]=="man") and (bionics_after>0) and (obj_ini.TTRPG[cah][ide[p]].bionics<10) 
-                    and (obj_ini.loc[cah][ide[p]]!="Terra") and (obj_ini.loc[cah][ide[p]]!="Mechanicus Vessel"){
-                        if (string_count("Dread",ma_armour[p])=0){
-					          obj_ini.TTRPG[cah][ide[p]].add_bionics();
-                              bionics_after--;
-                            if (ma_promote[p]==10) then ma_promote[p]=0;
-                        }
-                    }
-                    if (bionics_before!=bionics_after){
-                        click=1;
-                    }
-                }
-            }
-                // Set boarders
-            if (scr_hit(xx+1018,yy+779,xx+1018+141,yy+801)==true) and (man_size>0) and (cooldown<=0){
-                var cah=managing, unit;
-                cooldown=8000;
-                if (cah>10) then cah=0;
-                for(var p=1; p<=500; p++){
-                    if (man_sel[p]==1) and (man[p]=="man") and (obj_ini.lid[cah][ide[p]]>0) and (obj_ini.loc[cah][ide[p]]!="Mechanicus Vessel"){
-                        unit=obj_ini.TTRPG[cah][ide[p]];
-                        unit.is_boarder = !unit.is_boarder;
-                    }
                 }
             }
                 // Transfer

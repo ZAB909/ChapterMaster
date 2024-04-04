@@ -1,7 +1,7 @@
 // Manages ship and unit selection depending on menus
 var __b__ = action_if_number(obj_popup, 0, 0);
 if (__b__){
-    if (menu==1) and (managing>0) and (man_max>0){
+    if (menu==1) and (managing>0 || managing=-1) and (man_max>0){
         if (man_current>1) then man_current-=1;
         if (man_current>1) then man_current-=1;
     }

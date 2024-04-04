@@ -40,7 +40,7 @@ function scr_scrollbar(argument0, argument1, argument2, argument3, argument4, ar
 
 	    if (!instance_exists(obj_controller)) and (instance_exists(obj_creation)){
         
-	        var checka;checka=0;
+	        var checka=0;
 	        if (obj_creation.mouse_left=0) and (obj_creation.scrollbar_engaged=1) then obj_creation.scrollbar_engaged=0;
 	        if (obj_creation.mouse_left=1) and (mouse_x>=xx+argument0) and (mouse_y>=yy+argument1) and (mouse_x<xx+argument2) and (mouse_y<yy+argument3) then obj_creation.scrollbar_engaged=1;
         
@@ -97,7 +97,7 @@ function scr_scrollbar(argument0, argument1, argument2, argument3, argument4, ar
 	        if (obj_controller.mouse_left=1) and (mouse_x>=xx+argument0) and (mouse_y>=yy+argument1) and (mouse_x<xx+argument2) and (mouse_y<yy+argument3) then obj_controller.scrollbar_engaged=1;
         
         
-	        if (obj_controller.managing>0) and (obj_controller.menu!=30) and (obj_controller.man_max-obj_controller.man_see>0){checka=1;}
+	        if (obj_controller.managing>0 || obj_controller.managing=-1) and (obj_controller.menu!=30) and (obj_controller.man_max-obj_controller.man_see>0){checka=1;}
 	        if (instance_exists(obj_popup)){if (obj_popup.type=8) and (obj_popup.target_comp>=0){if (obj_controller.man_max-obj_controller.man_see>0){checka=1;}}}
         
         
@@ -135,7 +135,10 @@ function scr_scrollbar(argument0, argument1, argument2, argument3, argument4, ar
 	        }
     
     
-	        if (argument5<argument4){siz3=0;siz2=siz1;}
+	        if (argument5<argument4){
+	        	siz3=0;
+	        	siz2=siz1;
+	        }
     
 	        draw_rectangle(xx+argument0,yy+argument1+siz3,xx+argument2,yy+argument1+siz3+siz2,0);
     

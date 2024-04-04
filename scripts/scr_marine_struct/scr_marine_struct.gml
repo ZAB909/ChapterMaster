@@ -883,8 +883,14 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	    } else {
 	    	armour_quality=quality;
 	    }
+	    var new_arm_data = get_armour_data();
+	    if (is_struct(new_arm_data)){
+	    	if (new_arm_data.has_tag("terminator")){
+	    		update_mobility_item("");
+	    	}
+	    }
 	    if (armour()=="Dreadnought"){
-	    	obj_ini.age[company][marine_number]=floor(age());
+	    	is_boarder = false;
 	    	update_gear("");
 	    	update_mobility_item("");
 	    }
@@ -1416,6 +1422,32 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 	weapon_one_data={quality:"standard"};
   weapon_one_quality = "standard";
+
+	static weapon_viable = function(new_weapon,quality){
+		viable = true;
+		qual_string = quality;
+		if (scr_item_count(new_weapon, quality)>0){
+			var exp_require = gear_weapon_data("weapon", new_weapon, "exp", false, quality);
+				if (exp_require>experience()){
+					viable = false;
+					qual_string = "exp_low";
+				}  			
+	   		quality=scr_add_item(new_weapon,-1,quality);
+	   		if (quality == "no_item") then return "no_items";
+	   		qual_string = quality!=undefined? quality:"standard";
+	    } else {
+	    	viable = false;
+	    	qual_string = "no_items";
+	    }
+	    if (new_weapon=="Company Standard"){
+	    	if (unit.role()!="Standard Bearer"){
+	    		viable = false;
+	    		qual_string = "wrong_role";
+	    	}
+	    }
+	    return [viable, qual_string];	
+	}
+
   static update_weapon_one = function(new_weapon,from_armoury=true, to_armoury=true,quality="any"){
   	var arti = !is_string(new_weapon);
   	var change_wep = weapon_one();
@@ -1446,17 +1478,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
         } 
     } 	
   	if (from_armoury && new_weapon!="" && !arti){
-  		if (scr_item_count(new_weapon, quality)>0){
-			var exp_require = gear_weapon_data("weapon", new_weapon, "exp", false, quality);
-  			if (exp_require>experience()){
-  				return "exp_low";
-  			}  			
-	   		quality=scr_add_item(new_weapon,-1,quality);
-	   		if (quality == "no_item") then return "no_items";
-	   		quality = quality!=undefined? quality:"standard";
-	    } else {
-	    	return "no_items";
-	    }
+  		var viability = weapon_viable(new_weapon,quality);
+  		if (viability[0]){
+  			quality = viability[1];
+  		} else {
+  			return viability[1];
+  		}
 	}else {
 		quality= quality=="any"?"standard":quality;
 	}
@@ -1494,17 +1521,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	   		return "no change";
 	   	}     	
 	  	if (from_armoury) and (new_weapon!="") && (!arti){
-	  		if (scr_item_count(new_weapon,quality)>0){
-				var exp_require = gear_weapon_data("weapon", new_weapon, "exp", false, quality);
-	  			if (exp_require>experience()){
-	  				return "exp_low";
-	  			} 	  			
-		   		quality=scr_add_item(new_weapon,-1,quality);
-		   		if (quality == "no_item") then return "no_items";
-		   		quality = quality!=undefined? quality:"standard";
-		    } else {
-		    	return "no_items";
-		    }
+	  		var viability = weapon_viable(new_weapon,quality);
+	  		if (viability[0]){
+	  			quality = viability[1];
+	  		} else {
+	  			return viability[1];
+	  		}
 		} else {
 			quality= quality=="any"?"standard":quality;
 		}

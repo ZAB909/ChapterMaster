@@ -55,7 +55,7 @@ function scr_company_view(company) {
 	    if (company>=0) and (company<=10){
 			unit = obj_ini.TTRPG[company][v];
 	        if (unit.name()!=""){
-				unit_loc = unit.marine_location() ;
+				unit_loc = unit.marine_location();
 	            // if (obj_ini.god[company,v]>=10) then bad=1;
 				if (unit_loc[0] == location_types.ship){
 				   	if (obj_ini.ship_location[unit_loc[1]]="Lost") then bad=1;
@@ -83,136 +83,16 @@ function scr_company_view(company) {
 	                ma_bio[v]=obj_ini.TTRPG[company][v].bionics;
 	                ma_mobi[v]=obj_ini.mobi[company][v];
 					display_unit[v] = unit;
-					if (unit_loc[0]==location_types.ship){
-						if (unit_loc[2]=="Lost")then ma_loc[v]="Lost";
-					}					
-	                // Select All Infantry Setup
-	                var go=0,op=0;
+				    var go=0,op=0;
 					 if (man[v]=="man") and (!unit.IsSpecialist()){
-	                    for (var j=0; j<20;j++) {
+				        for (var j=0; j<20;j++) {
 							if (sel_uni[j] == "") && (op == 0) then op = j;
 							if (sel_uni[j] == ma_role[v]) then go = 1;
 							ds_list_add(role_list, ma_role[v]);
 						}
-	                    if (go==0) then sel_uni[op]=ma_role[v];
-	                }
-	                go=0;
-					op=0;
-					
-	                if (man[v]="vehicle"){
-	                    for (var j=0; j<20;j++) {
-	                        if (sel_veh[j]="") and (op=0) then op=j;
-	                        if (sel_veh[j]=ma_role[v]) then go=1;
-	                    }
-	                    if (go=0) then sel_veh[op]=ma_role[v];
-	                }
-	                // Squad setup
-	                // 137 ;
-	                // Should have this be only ran for MAN, somehow run it a second time for VEHICLE
-	                if (squads>0){
-	                	var n=1;
-						if (is_specialist(squad_type)) or (squad_type=ma_role[v]) then n=0;
-	                    // if units are not in a squad
-	                    if (unit.squad == "none"){
+				        if (go==0) then sel_uni[op]=ma_role[v];
+				    }
 
-
-	                    	if (is_specialist(squad_type,"heads")) then  n=1;
-    	                    if (squad_type==obj_ini.role[100][6]) and (squad_type!=ma_role[v]) and (squad_type!="Venerable "+string(ma_role[v])) then n=2;
-    	                    if (squad_type==obj_ini.role[100][6]) and (ma_role[v]=obj_ini.role[100][6]) then n=0;
-    	                    if (squad_type==obj_ini.role[100][6]) and (ma_role[v]="Venerable "+string(obj_ini.role[100][6])) then n=0;
-    	                    if (squad_type="Venerable "+string(obj_ini.role[100][6])) and (ma_role[v]=obj_ini.role[100][6]) then n=0;
-
-	         			
-	         				//if units are on different ships but the ships are in the same location group them together
-	         				//else split units up in selection area
-		         			if (squad_loc[0]==location_types.ship){
-		                    	if (unit_loc[0]==squad_loc[0]) and (unit_loc[2]==squad_loc[2]){
-		                    		n=0;
-		                    	}else n=1;
-		                	} else if (unit_loc[0]!=squad_loc[0]) or(unit_loc[1]!=squad_loc[1]) or(unit_loc[2]!=squad_loc[2]) then n=1;
-
-		                    if (squad_members+1>10) then n=1;
-
-		                    switch (n){
-		                    	case 0:
-		                    		squad_members+=1;
-		                    		squad_type=ma_role[v];
-		                    		squad[v]=squads;
-		                    		break;
-		                    	case 1:
-		                    		squads+=1;
-		                    		squad_members=1;
-		                    		squad_type=ma_role[v];
-		                    		squad[v]=squads;
-		                    		squad_loc=unit_loc;
-		                    		break;
-		                    	case 2:
-		                    		squad[v]=0;
-		                    		break
-		                    }    	                    
-    						//if units are in a squad
-	                   	} else{
-	                   		///if units are on different ships but the ships are in the same location group them together
-	                   		if (squad_type == unit.squad) and (unit_loc[0]==squad_loc[0]) and (unit_loc[2]==squad_loc[2]) and ((squad_loc[0] == location_types.ship) or (unit_loc[1]==squad_loc[1]) ){
-	                   			squad_members+=1;
-	                   			squad[v]=squads;
-	                   		} else {
-	                   			squads+=1;
-	                   			squad_members=1;
-	                   			squad_type = unit.squad;
-	                   			squad[v]=squads;
-	                   			squad_loc=unit_loc;
-	                   		}
-	                   	}
-	                }
-	                if (squads=0){
-	                    squads+=1;
-	                    squad_members=1;
-	                    if (unit.squad == "none"){
-	                    	squad_type=ma_role[v];
-	                    } else {
-	                    	squad_type = unit.squad;
-	                    }
-	                    squad[v]=squads;
-	                    squad_loc=unit_loc;
-	                }
-	                //requirements to be promoted through companies index 0 = command comapny requirement
-	                var company_promotion_limits = [0,150,120,110,100,80,70,60,50,40,0];
-	                // Right here is where the promotion check will go
-	                // If EXP is enough for that company then ma_promote[i]=1
-	                if (ma_role[v]==obj_ini.role[100][3]) or (ma_role[v]==obj_ini.role[100][4]){
-	                    if (company==1) and (ma_exp[v]>=300) then ma_promote[v]=1;
-	                    if (ma_health[v]<=10) then ma_promote[v]=10;
-	                }
-	                if (ma_role[v]=obj_ini.role[100][6]) and (ma_exp[v]>=400) then ma_promote[v]=1;
-	                if (ma_role[v]=obj_ini.role[100][15]) or (ma_role[v]=obj_ini.role[100][14]) then ma_promote[v]=1;
-	                if (ma_role[v]=obj_ini.role[100][16]) then ma_promote[v]=1;
-
-	                if (unit.IsSpecialist("rank_and_file")){
-	                	var promotion_limit = company_promotion_limits[company-1]
-						if (unit.experience()>=promotion_limit && promotion_limit>0){
-	                		ma_promote[v]=1;
-	                	}
-	                	if (ma_health[v]<=10) then ma_promote[v]=10;	                	
-	                } else if  (ma_role[v]=obj_ini.role[100][5]){
-	                	var promotion_limit = company_promotion_limits[company-1]
-	                	if (unit.experience()>=promotion_limit+25 && promotion_limit>0){
-
-	                	}
-	                }
-
-	                // Need something to verify there is no standard bearer in the previous company
-	                /*if (ma_role[v]="Standard Bearer"){
-	                    if (company=10) and (ma_exp[v]>=25) then ma_promote[v]=1;
-	                    if (company=9) and (ma_exp[v]>=30) then ma_promote[v]=1;
-	                    if (company=8) and (ma_exp[v]>=35) then ma_promote[v]=1;
-	                    if (company=7) and (ma_exp[v]>=40) then ma_promote[v]=1;
-	                    if (company=6) and (ma_exp[v]>=45) then ma_promote[v]=1;
-	                    if (company=5) and (ma_exp[v]>=55) then ma_promote[v]=1;
-	                    if (company=4) and (ma_exp[v]>=65) then ma_promote[v]=1;
-	                    if (company=3) and (ma_exp[v]>=75) then ma_promote[v]=1;
-	                }*/
-	                if (obj_controller.command_set[2]==1) and (ma_promote[v]==0) then ma_promote[v]=1;
 	            }
 	        } else {
 	        	man[v]="hide";
@@ -281,6 +161,136 @@ function scr_company_view(company) {
 	man_max=last_man+last_vehicle+2;
 	if (last_vehicle==0) and (last_man==0) then man_max=0;
 	man_see=38-4;
+}
+
+function other_manage_data(){
+	var v, mans, bad, squads, squad_type, squad_loc, squad_members, unit, unit_loc,;
+	v=0;
+	mans=0;
+	bad=0;
+	squads=0;
+	squad_type="";
+	squad_loc=0;
+	squad_members=0;
+	var unit;
+	for (var v = 0; v < array_length(display_unit); v++){
+		if (!is_struct(display_unit[v])) then continue;
+		unit = display_unit[v];
+		unit_loc = unit.marine_location();
+		if (unit_loc[0]==location_types.ship){
+			if (unit_loc[2]=="Lost") then ma_loc[v]="Lost";
+		}					
+	    // Select All Infantry Setup
+	    go=0;
+		op=0;
+	    // Squad setup
+	    // 137 ;
+	    // Should have this be only ran for MAN, somehow run it a second time for VEHICLE
+	    if (squads>0){
+	    	var n=1;
+			if (is_specialist(squad_type)) or (squad_type=ma_role[v]) then n=0;
+	        // if units are not in a squad
+	        if (unit.squad == "none"){
+
+
+	        	if (is_specialist(squad_type,"heads")) then  n=1;
+	            if (squad_type==obj_ini.role[100][6]) and (squad_type!=ma_role[v]) and (squad_type!="Venerable "+string(ma_role[v])) then n=2;
+	            if (squad_type==obj_ini.role[100][6]) and (ma_role[v]=obj_ini.role[100][6]) then n=0;
+	            if (squad_type==obj_ini.role[100][6]) and (ma_role[v]="Venerable "+string(obj_ini.role[100][6])) then n=0;
+	            if (squad_type="Venerable "+string(obj_ini.role[100][6])) and (ma_role[v]=obj_ini.role[100][6]) then n=0;
+
+				
+					//if units are on different ships but the ships are in the same location group them together
+					//else split units up in selection area
+	 			if (squad_loc[0]==location_types.ship){
+	            	if (unit_loc[0]==squad_loc[0]) and (unit_loc[2]==squad_loc[2]){
+	            		n=0;
+	            	}else n=1;
+	        	} else if (unit_loc[0]!=squad_loc[0]) or(unit_loc[1]!=squad_loc[1]) or(unit_loc[2]!=squad_loc[2]) then n=1;
+
+	            if (squad_members+1>10) then n=1;
+
+	            switch (n){
+	            	case 0:
+	            		squad_members+=1;
+	            		squad_type=ma_role[v];
+	            		squad[v]=squads;
+	            		break;
+	            	case 1:
+	            		squads+=1;
+	            		squad_members=1;
+	            		squad_type=ma_role[v];
+	            		squad[v]=squads;
+	            		squad_loc=unit_loc;
+	            		break;
+	            	case 2:
+	            		squad[v]=0;
+	            		break
+	            }    	                    
+				//if units are in a squad
+	       	} else{
+	       		///if units are on different ships but the ships are in the same location group them together
+	       		if (squad_type == unit.squad) and (unit_loc[0]==squad_loc[0]) and (unit_loc[2]==squad_loc[2]) and ((squad_loc[0] == location_types.ship) or (unit_loc[1]==squad_loc[1]) ){
+	       			squad_members+=1;
+	       			squad[v]=squads;
+	       		} else {
+	       			squads+=1;
+	       			squad_members=1;
+	       			squad_type = unit.squad;
+	       			squad[v]=squads;
+	       			squad_loc=unit_loc;
+	       		}
+	       	}
+	    }
+	    if (squads=0){
+	        squads+=1;
+	        squad_members=1;
+	        if (unit.squad == "none"){
+	        	squad_type=ma_role[v];
+	        } else {
+	        	squad_type = unit.squad;
+	        }
+	        squad[v]=squads;
+	        squad_loc=unit_loc;
+	    }
+	    //requirements to be promoted through companies index 0 = command comapny requirement
+	    var company_promotion_limits = [0,150,120,110,100,80,70,60,50,40,0];
+	    // Right here is where the promotion check will go
+	    // If EXP is enough for that company then ma_promote[i]=1
+	    if (ma_role[v]==obj_ini.role[100][3]) or (ma_role[v]==obj_ini.role[100][4]){
+	        if (company==1) and (ma_exp[v]>=300) then ma_promote[v]=1;
+	        if (ma_health[v]<=10) then ma_promote[v]=10;
+	    }
+	    if (ma_role[v]=obj_ini.role[100][6]) and (ma_exp[v]>=400) then ma_promote[v]=1;
+	    if (ma_role[v]=obj_ini.role[100][15]) or (ma_role[v]=obj_ini.role[100][14]) then ma_promote[v]=1;
+	    if (ma_role[v]=obj_ini.role[100][16]) then ma_promote[v]=1;
+
+	    if (unit.IsSpecialist("rank_and_file")){
+	    	var promotion_limit = company_promotion_limits[company-1]
+			if (unit.experience()>=promotion_limit && promotion_limit>0){
+	    		ma_promote[v]=1;
+	    	}
+	    	if (ma_health[v]<=10) then ma_promote[v]=10;	                	
+	    } else if  (ma_role[v]=obj_ini.role[100][5]){
+	    	var promotion_limit = company_promotion_limits[company-1]
+	    	if (unit.experience()>=promotion_limit+25 && promotion_limit>0){
+
+	    	}
+	    }
+
+	    // Need something to verify there is no standard bearer in the previous company
+	    /*if (ma_role[v]="Standard Bearer"){
+	        if (company=10) and (ma_exp[v]>=25) then ma_promote[v]=1;
+	        if (company=9) and (ma_exp[v]>=30) then ma_promote[v]=1;
+	        if (company=8) and (ma_exp[v]>=35) then ma_promote[v]=1;
+	        if (company=7) and (ma_exp[v]>=40) then ma_promote[v]=1;
+	        if (company=6) and (ma_exp[v]>=45) then ma_promote[v]=1;
+	        if (company=5) and (ma_exp[v]>=55) then ma_promote[v]=1;
+	        if (company=4) and (ma_exp[v]>=65) then ma_promote[v]=1;
+	        if (company=3) and (ma_exp[v]>=75) then ma_promote[v]=1;
+	    }*/
+	    if (obj_controller.command_set[2]==1) and (ma_promote[v]==0) then ma_promote[v]=1;
+	}
 }
 
 function filter_and_sort_company(type, specific){

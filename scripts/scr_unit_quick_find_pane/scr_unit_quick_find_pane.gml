@@ -17,12 +17,18 @@ function scr_unit_quick_find_pane() constructor{
 	    	for (var u=1;u<array_length(obj_ini.TTRPG[co]);u++){
 	    		unit = fetch_unit([co, u]);
 	    		if (unit.name() == "") then continue;
-	    		unit_location = unit.marine_location();	 
+	    		unit_location = unit.marine_location();
 	    		if (unit_location[0]==location_types.planet){
 	    			if (!struct_exists(garrison_log, unit_location[2])){
-	    				garrison_log[$ unit_location[2]] = {units:1,vehicles:0, garrison:false, healers:0, techies:0}
+	    				garrison_log[$ unit_location[2]] = {
+	    					units:[unit],
+	    					vehicles:0, 
+	    					garrison:false, 
+	    					healers:0, 
+	    					techies:0
+	    				}
 	    			} else {
-	    				garrison_log[$ unit_location[2]].units++;
+	    				array_push(garrison_log[$ unit_location[2]].units, unit);
 	    			}
 	    			group = garrison_log[$ unit_location[2]];
 	    			if (unit.IsSpecialist("apoth")){
@@ -93,12 +99,14 @@ function scr_unit_quick_find_pane() constructor{
 		    var registered_hover=false;
 		    var system_names = struct_get_names(garrison_log);
 			var hover_entered=false;
+			var any_hover = false;
 			if (hover_item!="none"){
 				var loc=hover_item.location;
 				hover_entered = scr_hit(loc[0],loc[1],loc[2],loc[3]);
 			}		    
 		    while(i<array_length(system_names) && (yy+90+(20*i)+12 +20)<main_panel.YY+yy+main_panel.height){
 		    	system_data = garrison_log[$system_names[i]];
+		    	registered_hover=false;
 				if (scr_hit(xx+10, yy+90+(20*i),xx+main_panel.width,yy+90+(20*i)+18)){
 					if (!hover_entered){
 						draw_set_color(c_gray);
@@ -118,18 +126,21 @@ function scr_unit_quick_find_pane() constructor{
 					}
 				}
 			    draw_text(xx+80, yy+90+(20*i), system_names[i]);
-			    draw_text(xx+160, yy+90+(20*i), system_data.units);
+			    draw_text(xx+160, yy+90+(20*i), array_length(system_data.units));
 			    draw_text(xx+240, yy+90+(20*i), system_data.healers);
 			    draw_text(xx+310, yy+90+(20*i), system_data.techies);
 
-			    if (point_and_click([xx+10, yy+90+(20*i)-2,xx+main_panel.width,yy+90+(20*i)+18])){
-			    	var star = star_by_name(system_names[i]);
-			    	if (star!="none")
-			    	travel_target = [star.x, star.y];
-			    	travel_increments = [(travel_target[0]-obj_controller.x)/15,(travel_target[1]-obj_controller.y)/15];
-			    	travel_time = 0;
-			    }
+			    if (!hover_entered){
+    			    if (point_and_click([xx+10, yy+90+(20*i)-2,xx+main_panel.width,yy+90+(20*i)+18])){
+    			    	var star = star_by_name(system_names[i]);
+    			    	if (star!="none")
+    			    	travel_target = [star.x, star.y];
+    			    	travel_increments = [(travel_target[0]-obj_controller.x)/15,(travel_target[1]-obj_controller.y)/15];
+    			    	travel_time = 0;
+    			    }
+    			}
 			    if (registered_hover){
+			    	any_hover=true;
     			    if (hover_count==10){
     			    	hover_item = new hover_box();
     			    	hover_item.relative_x = (mouse_x-xx+(10-10));
@@ -139,13 +150,22 @@ function scr_unit_quick_find_pane() constructor{
     			}
 			    i++;
 			}		
-			if (!registered_hover && !hover_entered){
+			if (!any_hover && !hover_entered){
 				current_hover=-1;
 				hover_count=0;
 				hover_item="none";
-			}
-			if (hover_item!="none"){
-		    	if point_and_click(hover_item.draw(xx+10, yy+90+(20*hover_item.root_item), "Manage")){}
+			}else if (hover_item!="none"){
+		    	if point_and_click(hover_item.draw(xx+10, yy+90+(20*hover_item.root_item), "Manage")){
+					group_selection(garrison_log[$system_names[hover_item.root_item]].units,{
+						purpose:"Management",
+						purpose_code : "manage",
+						number:0,
+						system:star_by_name(system_names[hover_item.root_item]).id,
+						feature:"none",
+						planet : 0,
+						selections : []
+					});
+		    	}
 		    }			
 		}
 		if (array_length(travel_target)==2){
@@ -169,6 +189,7 @@ function scr_unit_quick_find_pane() constructor{
 				var xx=__view_get( e__VW.XView, 0 )+0;
 				var yy=__view_get( e__VW.YView, 0 )+0;
 				var x_draw=xx;
+				var lower_draw = yy+main_panel.height+110;
 				if (hide_sequence=30) then hide_sequence=0;
 				if ((hide_sequence>0 && hide_sequence<15) || (hide_sequence>15 && hide_sequence<30)){
 					if (hide_sequence>15){
@@ -179,7 +200,7 @@ function scr_unit_quick_find_pane() constructor{
 					hide_sequence++;
 				}
 				if (hide_sequence>15 || hide_sequence<15){
-					main_panel.draw(x_draw, yy+110, 0.46, 0.8);
+					main_panel.draw(x_draw, yy+110, 0.46, 0.75);
 					if(tab_buttons.fleets.draw(x_draw,yy+79, "Fleets")){
 					    view_area="fleets";
 					}
@@ -187,15 +208,15 @@ function scr_unit_quick_find_pane() constructor{
 					    view_area="garrisons";
 					    update_garrison_log();
 					}
-					if (x_draw+230<xx){
-						tab_buttons.hider.draw(xx,yy+79, "Show")
+					if (x_draw+280<xx){
+						tab_buttons.hider.draw(xx,lower_draw, "Show")
 					} else {
-						if (tab_buttons.hider.draw(x_draw+230,yy+79, "Hide")){
+						if (tab_buttons.hider.draw(x_draw+280,lower_draw, "Hide")){
 						    hide_sequence++;
 						}					
 					}					
 				} else if (hide_sequence==15){
-					if (tab_buttons.hider.draw(xx,yy+79, "Show")){
+					if (tab_buttons.hider.draw(xx,lower_draw, "Show")){
 					    hide_sequence++;
 					}
 				}
