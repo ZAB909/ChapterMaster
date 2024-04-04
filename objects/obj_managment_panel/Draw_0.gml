@@ -46,24 +46,10 @@ slate_panel.inside_method = function(){
         draw_set_font(fnt_cul_14);
         draw_text(x2+(wid/2),y2+79,string_hash_to_newline(title));
         if (line[1]!=""){
-            draw_set_font(fnt_40k_14);
             if (italic[1]=1) then draw_set_font(fnt_40k_14i);
-            draw_set_color(#50a076);
-            // Draw the glow by repeatedly drawing the text with a slight offset and reduced alpha
-            for (var i = -3; i <= 3; i++) {
-                for (var j = -3; j <= 3; j++) {
-                    if (i != 0 || j != 0) { // Avoid drawing the main text here
-                        draw_set_alpha(0.05); // Adjust the alpha for the desired intensity of the glow
-                        draw_text(x2+(wid/2)+i,y2+102+j,string_hash_to_newline(line[1]));
-                    }
-                }
-            }
-            // Reset alpha and draw the main text
-            draw_set_alpha(1);
-            draw_set_color(c_white);
-            draw_text(x2+(wid/2),y2+102,string_hash_to_newline(line[1]));
+            else draw_set_font(fnt_40k_14);
+            draw_text_glow(x2+(wid/2), y2+102, string_hash_to_newline(line[1]), c_white, #50a076);
             draw_set_font(fnt_40k_12);
-            draw_set_color(c_gray);
         }
         var l=1;
         repeat(10){l+=1;
