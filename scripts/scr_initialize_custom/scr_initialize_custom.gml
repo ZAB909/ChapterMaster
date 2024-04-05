@@ -2069,7 +2069,7 @@ function scr_initialize_custom() {
 	        hp[company,i]=100;
 	        chaos[company,i]=0;
 	        experience[company,i]=0;
-	        age[company,i]=((millenium*1000)+year)-10;
+	        age[company,i]=((millenium*1000)+year)-21-irandom(6);
 	        god[company,i]=0;
 			TTRPG[company,i]= new TTRPG_stats("chapter", company,i, "blank");
 	    }

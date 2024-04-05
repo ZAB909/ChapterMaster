@@ -5,6 +5,7 @@ function scr_unit_detail_text(){
 	var is_astartes = false;
 	var unit_name = name();
 	var body_augmentations = {mutations:[], bionics:[[],[]]}
+	var body_bionics = get_body_data("bionic");
 	if(base_group == "astartes"){
 		is_astartes = true;
 	}	
@@ -35,11 +36,13 @@ function scr_unit_detail_text(){
 			} else if (wisdom < 45){
 				unit_data_string+= "He is considered a good tactician.";
 			}
-			if (ballistic_skill+weapon_skill>80){
-				unit_data_string+= "He is respected by those under his command for his skill at arms.";
-			} else if (ballistic_skill+weapon_skill>100){
+
+
+			if (ballistic_skill+weapon_skill>100){
 				unit_data_string+= "He is revered by those under his command and many look to him fo inspiration.";
-			} else if(ballistic_skill+weapon_skill<70){
+			}else if (ballistic_skill+weapon_skill>80){
+				unit_data_string+= "He is respected by those under his command for his skill at arms.";
+			}else if(ballistic_skill+weapon_skill<70){
 				unit_data_string+= "His men tend to find his skills as a warrior lacking considereing his position";
 			}
 			else if (wisdom >= 45){
@@ -106,11 +109,12 @@ function scr_unit_detail_text(){
 		}
 		unit_data_string += "##"
 		if (is_astartes){
+			var bionic_positions = struct_get_names(body_bionics);
 			var bionic_count = bionics;
 			if (bionic_count ==0){
 				unit_data_string+= unit_name + " has no bodily augmentations besides his astartes gene seed and organs #"
-			}else if(bionic_count == 1 && array_length(body_augmentations.bionics[0])>0){
-				unit_data_string+= unit_name + string(" Has a bionic {0}#", global.body_parts_display[body_augmentations.bionics[0][0]])
+			}else if(bionic_count == 1 && array_length(bionic_positions)>0){
+				unit_data_string+= unit_name + string(" Has a bionic {0}#", bionic_positions[0]);
 			}else if((bionic_count >1) and (bionic_count <=4)){
 				unit_data_string+= unit_name + " Has some bionic replacements #"
 			}else if((bionic_count >=5) and (bionic_count <8)){
@@ -118,8 +122,8 @@ function scr_unit_detail_text(){
 			}else if (bionic_count >8){
 				unit_data_string+= unit_name + " Is mostly machine having replaced most of his flesh with bionic replacements."
 			}
-			if (array_contains(body_augmentations.bionics[1], "throat")){
-				unit_data_string+="People tend to find the sound from his augmetic throat unnerving"
+			if (array_contains(bionic_positions, "throat")){
+				unit_data_string+="People tend to find the sound from his augmetic throat unnerving";
 			}
 
 			unit_data_string+="#";
