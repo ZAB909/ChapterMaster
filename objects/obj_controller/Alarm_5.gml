@@ -1578,7 +1578,7 @@ if (fest_scheduled>0) and (fest_repeats>0){
 // ** Income **
 if (income_controlled_planets>0){
 
-    var tithe_string = income_controlled_planets==1? $"-{income_tribute} Requisition granted by tithes from 1 planet.":"-{income_tribute} Requisition granted by tithes from {income_controlled_planets} planets.";
+    var tithe_string = income_controlled_planets==1? $"-{income_tribute} Requisition granted by tithes from 1 planet.": $"-{income_tribute} Requisition granted by tithes from {income_controlled_planets} planets.";
     scr_alert("yellow", "planet_tithe", tithe_string);
     instance_activate_object(obj_p_fleet);
 

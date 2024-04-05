@@ -1075,20 +1075,29 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				return "invalid body area";
 			}
 		} else {
+			var item_key_map = {};
 			var body_part_area_keys
 			for (var i=0;i<array_length(global.body_parts);i++){//search all body parts
-				body_area = body[$ global.body_parts]
-				body_part_area_keys=struct_get_names(body_area)
+				body_area = body[$ global.body_parts[i]]
+				body_part_area_keys=struct_get_names(body_area);
 				for (var b=0;b<array_length(body_part_area_keys);b++){
 					if (body_part_area_keys[b]==body_item_key){
-						return body_area[$ body_item_key];
+						item_key_map[$ global.body_parts[i]] = body_area[$ body_item_key]
 					}
 				}
 				
 			}
+			return item_key_map;
 		}
 		return false;
 	}
+	/*ey so i got this concept where basically take away luck, ballistic_skill and weapon_skill 
+	there are 8 other stats each of which will have more attached aspects and game play elements 
+	they effect as time goes on, so that means between the 8 other stats if you had a choice of two 
+	there are 64 (or 56 if you exclude double counts) variations of a choice of two, this means each 
+	chapter could have two "values" maybe in terms of recruitment maybe in terms of just general chapter stuff. 
+	that could be chosen to give boostes to the other stats
+	so as an example salamanders could have the chapter values as  */
 	loyalty = 0;
 	switch base_group{
 		case "astartes":				//basic marine class //adds specific mechanics not releveant to most units
@@ -1245,6 +1254,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 		return false; 
 	}
+
 	static add_bionics = function(area="none", bionic_quality="any", from_armoury=true){
 		if (from_armoury && scr_item_count("Bionics",bionic_quality)<1){
 			return "no bionics";
@@ -1311,7 +1321,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 	};
 	static age = function(){
-		return obj_ini.age[company][marine_number];
+		var real_age = ((obj_controller.millenium*1000)+obj_controller.year)-obj_ini.age[company][marine_number];
+		return real_age;
 	};// age
 
 	static update_age = function(new_val){
@@ -2139,7 +2150,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 	static spawn_old_guard =function(){
 		var old_guard=irandom(100);
-		var age = (obj_ini.millenium*1000)+obj_ini.year;
+		var age = (obj_ini.millenium*1000)+obj_ini.year-4 - (company * 3);
+		repeat(10-company){
+			age -= (irandom(30));
+		}
 		var bionic_count = choose(0,0,0,0,1,2,3);
 		if (global.chapter_name=="Iron Hands"){
 			bionic_count = choose(2,3,4,5);
@@ -2148,14 +2162,14 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			case obj_ini.role[100][5]:  //captain
 				if(old_guard>=75){
 					update_armour("MK3 Iron Armour",false,false);
-					update_age(age - gauss(400, 200))
+					age -= gauss(400, 200);
 					add_trait("old_guard");
 					add_exp(50);
 					bionic_count = choose(0,0,1,2,3)
 				} // 25% of iron within
 				else{
 					update_armour(choose("MK5 Heresy","MK6 Corvus","MK7 Aquila", "MK4 Maximus","MK8 Errant"),false,false);
-					update_age(age - gauss(400, 25));
+					age -= gauss(400, 25);
 					add_trait("seasoned");
 					add_exp(25);
 				}
@@ -2166,37 +2180,37 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				}else{
 					update_armour(choose("MK5 Heresy","MK6 Corvus","MK7 Aquila", "MK4 Maximus","MK8 Errant"),false,false);
 				}
-				update_age(age - gauss(400, 250));
+				age -= gauss(400, 250);
 				if (intelligence<40){
 					intelligence=40;
 				}
 				break;
 			case "Standard Bearer":
 				 update_armour("MK5 Heresy",false,false);
-				 update_age(age - gauss(400, 250));
+				 age -= gauss(400, 250);
 				break;
 			case  obj_ini.role[100][8]:		//tacticals
 				if (old_guard=99){
 						update_armour("MK3 Iron Armour",false,false)
-						update_age(age - gauss(600, 150));
+						age -= gauss(600, 150);
 						add_trait("ancient");
 						add_exp(choose(100,75,50));	
 					} // 1%
 					else if (old_guard>=97 and old_guard<=99){
 						update_armour("MK4 Maximus",false,false)
-						update_age(age - gauss(500, 100));
+						age -= gauss(500, 100);
 						add_trait("old_guard");	
 						add_exp(choose(75,50));
 					} //3%
 					else if (old_guard>=91 and old_guard<=96){
 						update_armour("MK5 Heresy",false,false);
-						update_age(age - gauss(300, 100));
+						age -= gauss(300, 100);
 						add_trait("seasoned");
 						add_exp(choose(25,50));
 					} // 6%
 					else if (old_guard>=79 and old_guard<=90){
 						update_armour("MK6 Corvus",false,false);
-						update_age(age - gauss(250, 25));
+						age -= gauss(250, 25);
 						add_exp(choose(10,25));
 					} // 12%
 					else if (company<=2){
@@ -2209,42 +2223,42 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				// melee is risky af anyway so let's reward players who go assault marine heavy at game start
 				if (old_guard>=99 and old_guard<=97){
 					update_armour("MK8 Errant",false,false);
-					update_age(age - gauss(150, 30));
+					age -= gauss(150, 30);
 					add_exp(25);
 				} // 3% 
 				else if (old_guard>=91 and old_guard<=96){
 					update_armour("MK3 Iron Armour",false,false);
-					update_age(age - gauss(600, 100));
+					age -= gauss(600, 100);
 					add_trait(choose("ancient","old_guard"),false,false);
 					add_exp(choose(10, 30, 50));
 				} // 6% 
 				else if (old_guard>=80 and old_guard<=90){
 					update_armour("MK4 Maximus",false,false);
-					update_age(age - gauss(300, 75));
+					age -= gauss(300, 75);
 					add_trait("old_guard")
 					add_exp(25);
 				} // 12%
 				else if (old_guard>=57 and old_guard<=79){
 					update_armour("MK5 Heresy",false,false);
-					update_age(age - gauss(240, 40));
+					age -= gauss(240, 40);
 					add_trait("seasoned")
 					add_exp(choose(10,25));
 				} // 24%
 				else{
 					update_armour("MK7 Aquila",false,false);
-					update_age(age - gauss(150, 30));
+					age -= gauss(150, 30);
 				};
 				break;	
 			case  obj_ini.role[100][9]: 		//devastators	
 				if ((old_guard>=99) and (old_guard<=97)){
 					update_armour("MK4 Maximus",false,false);
-					update_age(age - gauss(300, 100));
+					age -= gauss(300, 100);
 					add_trait(choose("ancient","old_guard"));
 					add_exp(choose(25, 50));
 				} // 3% for maximus
 				else if (old_guard>=78 and old_guard<=96){
 					update_armour("MK6 Corvus",false,false);
-					update_age(age - gauss(200, 50));
+					age -= gauss(200, 50);
 					add_trait("seasoned");
 					add_exp(25);
 				} // 20% chance for devos to have ranged armor, wouldn't want much else
@@ -2256,17 +2270,17 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			case  obj_ini.role[100][3]: //veterans
 				if ((old_guard>=80)and (old_guard>=95)){
 					update_armour(choose("MK4 Maximus","MK8 Errant"),false,false);
-					update_age(age - gauss(150, 30));
+					age -= gauss(150, 30);
 					add_trait(choose("old_guard"));
 					add_exp(choose(50, 75));					
 				} else if (old_guard>95){
 					update_armour(choose("MK4 Maximus","MK3 Iron Armour"),false,false);
-					update_age(age - gauss(300, 100));
+					age -= gauss(300, 100);
 					add_trait(choose("old_guard"));
 					add_exp(choose(125, 100));
 				} else if (old_guard<35){
 					update_armour(choose("MK4 Maximus","MK3 Iron Armour"),false,false);
-					update_age(age - gauss(150, 30));
+					age -= gauss(150, 30);
 					add_trait(choose("old_guard"));
 					add_exp(choose(25, 50));					
 				}
@@ -2327,7 +2341,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				break;
 			case  obj_ini.role[100][14]:  //chaplain
 				update_armour(choose("MK5 Heresy","MK6 Corvus","MK7 Aquila", "MK4 Maximus","MK8 Errant"),false,false);
-				update_age(age - gauss(400, 250));
+				age -= gauss(400, 250);
 				if (piety<35){
 					piety=35;
 				}
@@ -2338,16 +2352,16 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				break;
 			case "Codiciery":
 				update_armour(choose("MK5 Heresy","MK6 Corvus","MK7 Aquila", "MK4 Maximus","MK8 Errant"),false,false);
-				update_age(age - gauss(150, 20));
+				age -= gauss(150, 20);
 				break;
 			case "Lexicanum":
 				update_armour(choose("MK5 Heresy","MK6 Corvus","MK7 Aquila", "MK4 Maximus","MK8 Errant"),false,false);
-				update_age(age - gauss(200, 30));
+				age -= gauss(200, 30);
 				add_trait("seasoned");
 				break;
 			case obj_ini.role[100,17]:
 				update_armour(choose("MK5 Heresy","MK6 Corvus","MK7 Aquila", "MK4 Maximus","MK8 Errant"),false,false);
-				update_age(age - gauss(400, 250));
+				age -= gauss(400, 250);
 				add_trait("seasoned");
 				break;		
 		}
@@ -2381,7 +2395,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 		if (irandom(3)==0){
 			body[$ "right_leg"][$ "purity_seal"] = [irandom(1),irandom(1),irandom(1),];
-		}			
+		}	
+
+		update_age(floor(age));	
 	}
 	static alter_equipment = function(update_equipment, from_armoury=true, to_armoury=true, quality="any"){
 		var equip_areas = struct_get_names(update_equipment);
