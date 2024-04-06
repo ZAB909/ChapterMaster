@@ -581,6 +581,7 @@
     {"id":{"name":"spr_ship_emissary","path":"sprites/spr_ship_emissary/spr_ship_emissary.yy",},},
     {"id":{"name":"spr_ship_warden","path":"sprites/spr_ship_warden/spr_ship_warden.yy",},},
     {"id":{"name":"spr_ballistic_skill_icon","path":"sprites/spr_ballistic_skill_icon/spr_ballistic_skill_icon.yy",},},
+    {"id":{"name":"scr_tooltip_draw","path":"scripts/scr_tooltip_draw/scr_tooltip_draw.yy",},},
     {"id":{"name":"spr_ship_castellan","path":"sprites/spr_ship_castellan/spr_ship_castellan.yy",},},
     {"id":{"name":"spr_manta","path":"sprites/spr_manta/spr_manta.yy",},},
     {"id":{"name":"spr_ship_leviathan","path":"sprites/spr_ship_leviathan/spr_ship_leviathan.yy",},},

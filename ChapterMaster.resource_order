@@ -721,6 +721,7 @@
     {"name":"obj_en_fleet","order":41,"path":"objects/obj_en_fleet/obj_en_fleet.yy",},
     {"name":"scr_perils_table","order":45,"path":"scripts/scr_perils_table/scr_perils_table.yy",},
     {"name":"obj_fleet_select","order":43,"path":"objects/obj_fleet_select/obj_fleet_select.yy",},
+    {"name":"spr_data_slate_back","order":33,"path":"sprites/spr_data_slate_back/spr_data_slate_back.yy",},
     {"name":"obj_star_select","order":45,"path":"objects/obj_star_select/obj_star_select.yy",},
     {"name":"obj_drop_select","order":47,"path":"objects/obj_drop_select/obj_drop_select.yy",},
     {"name":"obj_bomb_select","order":49,"path":"objects/obj_bomb_select/obj_bomb_select.yy",},
