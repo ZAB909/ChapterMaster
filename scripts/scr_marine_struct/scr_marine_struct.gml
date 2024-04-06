@@ -1429,7 +1429,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				break;				
 		}
 		if (is_string(artifact)){
-			return $"{quality_string_conversion(quality) }{artifact}";
+			return $"{quality_string_conversion(quality)}{artifact}";
 		} else {
 			if (obj_ini.artifact_struct[artifact].name==""){
 				return  $"{quality_string_conversion(quality)}{obj_ini.artifact[artifact]}";
@@ -1797,7 +1797,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		static melee_attack = function(weapon_slot=0){
 			encumbered_melee=false;
 			melee_att = 100*(((weapon_skill/100) * (strength/20)) + (experience()/1000)+0.1);
-			var explanation_string = $"Stat Mod: x{melee_att/100}#  Base: 0.10#  WSxSTR: x{(weapon_skill/100)*(strength/20)}#  EXP: x{experience()/1000}#";
+			var explanation_string = string_concat("#Stats: ", format_number_with_sign(round(((melee_att/100)-1)*100)), "%#");
+			explanation_string += "  Base: +10%#";
+			explanation_string += string_concat("  WSxSTR: ", format_number_with_sign(round((((weapon_skill/100)*(strength/20))-1)*100)), "%#");
+			explanation_string += string_concat("  EXP: ", format_number_with_sign(round((experience()/1000)*100)), "%#");
 
 			melee_carrying = melee_hands_limit();
 			var _wep1 = get_weapon_one_data();
@@ -1834,9 +1837,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 							primary_weapon=highest;
 							melee_att*=0.5;
 							if (primary_weapon.has_tag("flame")){
-								explanation_string+=$"Primary is Flame: x0.5#"
+								explanation_string+=$"Primary is Flame: +50%#"
 							} else if primary_weapon.has_tag("pistol"){
-								explanation_string+=$"Primary is Pistol: x0.5#"
+								explanation_string+=$"Primary is Pistol: +50%#"
 							}
 							secondary_weapon=lowest;
 						}
@@ -1873,7 +1876,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				total_gear_mod+=_wep1.melee_mod;
 				total_gear_mod+=_wep2.melee_mod;
 				melee_att+=total_gear_mod;
-				explanation_string+=$"Gear Mod: x{(total_gear_mod/100)+1}#";
+				explanation_string+=$"#Gear Mod: {(total_gear_mod/100)*100}%#";
 				//TODO make trait data like this more structured to be able to be moddable
 				if (has_trait("feet_floor") && mobility_item()!=""){
 					melee_att*=0.9;

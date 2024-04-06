@@ -743,6 +743,7 @@
     {"name":"Creation","order":3,"path":"rooms/Creation/Creation.yy",},
     {"name":"Game","order":5,"path":"rooms/Game/Game.yy",},
     {"name":"Tutorial","order":7,"path":"rooms/Tutorial/Tutorial.yy",},
+    {"name":"spr_data_slate_border","order":34,"path":"sprites/spr_data_slate_border/spr_data_slate_border.yy",},
     {"name":"Defeat","order":9,"path":"rooms/Defeat/Defeat.yy",},
     {"name":"combat_testing","order":11,"path":"rooms/combat_testing/combat_testing.yy",},
     {"name":"testing_half","order":13,"path":"rooms/testing_half/testing_half.yy",},
