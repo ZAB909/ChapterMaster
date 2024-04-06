@@ -50,9 +50,8 @@ function scr_management(argument0) {
     
 		// Creates the first 10 companies using roman numerals
 	    for (var i = 1; i <= 10; i++) {
-			t = string(romanNumerals[i - 1]);
-			t += " COMPANY";
-    
+			t = string_upper(scr_convert_company_to_string(i));
+
 			var pane = instance_create(xx, yy, obj_managment_panel);
 			pane.company = i;
 			pane.manage = i;
@@ -70,8 +69,7 @@ function scr_management(argument0) {
 			t="";
         
 	        for (var i = 11; i <= obj_ini.companies; i++) {
-				t = string(i) + "th ";
-				t += "COMPANY";
+				t = scr_convert_company_to_string(i);
         
 				var pane = instance_create(xx, yy, obj_managment_panel);
 				pane.company = i;
@@ -430,11 +428,13 @@ function scr_management(argument0) {
 					if (num[d] > 0) {
 							q += 1;
 							if (d == 1) {
-								obj_managment_panel.line[q] = string(nam[d]); obj_managment_panel.italic[q]=1; obj_managment_panel.bold[q]=1;
+								obj_managment_panel.line[q] = string(nam[d]);
+								obj_managment_panel.italic[q] = 1;
+								obj_managment_panel.bold[q] = 1;
 							} else if (num[d] > 1){
-								obj_managment_panel.line[q] = string(num[d]) + "x " + string_plural(nam[d]);
+								obj_managment_panel.line[q] = string(num[d]) + " " + string_plural(nam[d]);
 							} else{
-								obj_managment_panel.line[q] = string(num[d]) + "x " + string(nam[d]);
+								obj_managment_panel.line[q] = string(nam[d]);
 							}
 					}
 			}

@@ -13,10 +13,12 @@ function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,align
 		var full_width = position[0]+text_width+8
 		var full_height = position[1]+text_height+4;
 	}
-	draw_set_color(c_black);
-	draw_rectangle(position[0],position[1], full_width,full_height,0)
+	// draw_set_color(c_black);
+	// draw_rectangle(position[0],position[1], full_width,full_height,0)
 	draw_set_color(colour);
-	draw_text_transformed(position[0]+4,position[1]+2,string_hash_to_newline(text),size_mod[0],size_mod[1],0);
+	draw_set_halign(fa_center);
+	draw_set_valign(fa_middle);
+	draw_text_transformed((position[0] + full_width)/2, (position[1] + full_height)/2,string_hash_to_newline(text),size_mod[0],size_mod[1],0);
 	draw_rectangle(position[0],position[1], full_width,full_height,1)
 	draw_set_alpha(0.5*alpha_mult);
 	draw_rectangle(position[0]+1,position[1]+1, full_width-1,full_height-1,1)
@@ -25,6 +27,8 @@ function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,align
 		draw_rectangle(position[0],position[1], full_width,full_height,0);
 	}
 	draw_set_alpha(1);
+	draw_set_halign(fa_left);
+	draw_set_valign(fa_top);
 	return [position[0],position[1], full_width,full_height];
 }
 
@@ -86,9 +90,9 @@ function scr_ui_manage() {
 	// This is the draw script for showing the main management screen or individual company screens
 
 	if (menu==1) and (managing>0 || managing <0){
-		var unit,i, tooltip_text,x1,x2,y1,y2, var_text;
+		var unit,i,x1,x2,y1,y2, var_text;
 		var romanNumerals=scr_roman_numerals();	
-		var bionic_tooltip="",tooltip_drawing=[];
+		var tooltip_text="",bionic_tooltip="",tooltip_drawing=[];
 		
 
 	    var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0, bb="", img=0;
@@ -179,87 +183,118 @@ function scr_ui_manage() {
                 click=1;
                 hide_banner=0;
                 if (instance_exists(selection_data.system)){
-               		selection_data.system.alarm[3]=4;
-                }
-			}
-			if (selection_data.purpose_code!="manage"){
-				if ((man_size==0 || man_size>selection_data.number)){
-					proceed_button.draw_shutter(xx+1110,yy+70, "Proceed", 0.5, false);
-				} else {
-					if (proceed_button.draw_shutter(xx+1110,yy+70, "Proceed", 0.5, true)){
-						menu=0;
-		                onceh=1;
-		                cooldown=10;
-		                click=1;
-		                hide_banner=0;
-		                selections = [];
-		                var forge = selection_data.feature.feature;
-		                forge.techs_working = 0;
-		                for (var i=1; i<500;i++){
-		                	if (ma_name[i]== "") then continue;
-		                	if (man_sel[i]>0){
-		                		switch(selection_data.purpose_code){
-		                			case "forge_assignment":
-			                			forge.techs_working++;
-			                			unit = display_unit[i];
-			                			unit.unload(selection_data.planet, selection_data.system);
-			                			unit.job = {type:"forge", planet:selection_data.planet, location:selection_data.system.name};
-		                				break;
-		                		}
-		                	} else {
-		                		unit = display_unit[i];
-		                		var job = unit.job;
-		                		if (job!="none"){
-			                		if (job.type=="forge" && job.planet == selection_data.planet){
-										unit.job = "none";
-										forge.techs_working--;
-			                		}
-			                	}
-		                	}
-		                }
-		                switch(selection_data.purpose_code){
-		                	case "forge_assignment":
-		                		calculate_research_points();
-		                		break;
-	
-		                }
-		                selection_data.system.alarm[3]=4;
-						exit;				
-					}
+					selection_data.system.alarm[3]=4;
+			 }
+		 }
+		 if (selection_data.purpose_code!="manage"){
+			 if ((man_size==0 || man_size>selection_data.number)){
+				 proceed_button.draw_shutter(xx+1110,yy+70, "Proceed", 0.5, false);
+			 } else {
+				 if (proceed_button.draw_shutter(xx+1110,yy+70, "Proceed", 0.5, true)){
+					 menu=0;
+					 onceh=1;
+					 cooldown=10;
+					 click=1;
+					 hide_banner=0;
+					 selections = [];
+					 var forge = selection_data.feature.feature;
+					 forge.techs_working = 0;
+					 for (var i=1; i<500;i++){
+						 if (ma_name[i]== "") then continue;
+						 if (man_sel[i]>0){
+							 switch(selection_data.purpose_code){
+								 case "forge_assignment":
+									 forge.techs_working++;
+									 unit = display_unit[i];
+									 unit.unload(selection_data.planet, selection_data.system);
+									 unit.job = {type:"forge", planet:selection_data.planet, location:selection_data.system.name};
+									 break;
+							 }
+						 } else {
+							 unit = display_unit[i];
+							 var job = unit.job;
+							 if (job!="none"){
+								 if (job.type=="forge" && job.planet == selection_data.planet){
+									 unit.job = "none";
+									 forge.techs_working--;
+								 }
+							 }
+						 }
+					 }
+					 switch(selection_data.purpose_code){
+						 case "forge_assignment":
+							 calculate_research_points();
+							 break;
+ 
+					 }
+					 selection_data.system.alarm[3]=4;
+					 exit;				
+				 }		
 				}
 			}
 	    }
-	    draw_set_color(0);
-	    draw_rectangle(xx+1005,yy+142,xx+1576,yy+957,0);
-			draw_rectangle_color(xx+1005,yy+142,xx+1576,yy+957,c_gray, c_gray, c_gray, c_gray, 1);
-				// swap between squad view and normal view
+		var right_ui_block = {
+			x1: xx + 1008,
+			y1: yy + 141,
+			w: 568,
+			h: 681,
+		};
+		right_ui_block.x2 = right_ui_block.x1 + right_ui_block.w;
+		right_ui_block.y2 = right_ui_block.y1 + right_ui_block.h;
+
+		var actions_block = {
+			x1: right_ui_block.x1,
+			y1: yy + 520,
+			w: 569,
+			h: 302,
+		};
+		actions_block.x2 = actions_block.x1 + actions_block.w;
+		actions_block.y2 = actions_block.y1 + actions_block.h;
+
+		draw_sprite_stretched(spr_data_slate_back, 0, actions_block.x1, actions_block.y1, actions_block.w, actions_block.h);
+		draw_rectangle_color_simple(actions_block.x1, actions_block.y1, actions_block.x2, actions_block.y2, 1, c_gray);
+		draw_rectangle_color_simple(actions_block.x1 + 1, actions_block.y1 + 1, actions_block.x2 - 1, actions_block.y2 - 1, 1, c_black);
+		draw_rectangle_color_simple(actions_block.x1 + 2, actions_block.y1 + 2, actions_block.x2 - 2, actions_block.y2 - 2, 1, c_gray);
+
+		var unit_view_block = {
+			x1: right_ui_block.x1,
+			y1: yy + 140,
+			w: 571,
+			h: 380,
+		};
+		unit_view_block.x2 = unit_view_block.x1 + unit_view_block.w;
+		unit_view_block.y2 = unit_view_block.y1 + unit_view_block.h;
+
+		draw_set_color(c_white);
+		draw_sprite_stretched(spr_data_slate_back, 0, xx+1007-1, yy+140, 572, 378);
+		draw_sprite_stretched(spr_data_slate_border, 0, xx+1007-1, yy+140, 572, 378);
+		// draw_rectangle_color_simple(xx+1007, yy+140, xx+1579, yy+519, 0, c_white, 0.05);
+		draw_rectangle_color_simple(xx+1007, yy+140, xx+1579, yy+519, 0, 5998382, 0.05);
+		// Swap between squad view and normal view
 	    draw_set_color(c_gray);
-	    draw_line(xx+1005,yy+519,xx+1576,yy+519);
-    
+	    // draw_line(xx+1005,yy+519,xx+1576,yy+519);
 	    draw_set_font(fnt_40k_14b);
-    
 	    var cn=obj_controller;
-		
 	    if (instance_exists(cn)) and (is_struct(temp[120])){
 	    	var selected_unit = temp[120];				//unit struct
 	    	///tooltip_text stacks hover over type tooltips into an array and draws them last so as not to create drawing order issues
 		    draw_set_color(c_red);
 		    var stat_tool_tip_text;
 		    if (!obj_controller.view_squad && !obj_controller.company_report){
-			    stat_tool_tip_text = "Toggle Squad View";
+			    stat_tool_tip_text = "Squad View";
 			} else {
-				stat_tool_tip_text = "Standard View"; 
+				stat_tool_tip_text = "Company View"; 
 			}
-		    var x5=xx+1005;//this should be relational with the unit area tab
-			var y5=yy+142;
-			var x6=x5+string_width("Toggle Squad View")+4;
-			var y6=y5+string_height("Toggle Squad View")+2;
-			draw_unit_buttons([x5,y5, x6, y6], stat_tool_tip_text,[1,1],c_red);
+		    var x5=right_ui_block.x1+15;//this should be relational with the unit area tab
+			var y5=right_ui_block.y1+8;
+			var x6=x5+string_width("Company View")+8;
+			var y6=y5+string_height(stat_tool_tip_text)+4;
+			draw_unit_buttons([x5, y5, x6, y6], stat_tool_tip_text,[1,1],#50a076);
 			if (managing>0 && managing<11){
-				array_push(tooltip_drawing, ["Click or press S to toggle, squad view", [x5,y5,x6,y6]]);
+				array_push(tooltip_drawing, ["Click here or press S to toggle Squad View.", [x5,y5,x6,y6]]);
 				if ((point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left)) || (keyboard_check_pressed(ord("S")) && !text_bar)){
 					obj_controller.view_squad = !obj_controller.view_squad;
-					if (stat_tool_tip_text=="Toggle Squad View"){
+					if (stat_tool_tip_text=="Squad View"){
 						obj_controller.company_data = new scr_company_struct(obj_controller.managing);
 						obj_controller.unit_profile = true;
 					} else {
@@ -269,16 +304,19 @@ function scr_ui_manage() {
 			} else{
 				draw_set_alpha(0.5);
 				draw_set_color(c_black);
-				draw_rectangle(x5,y5,x6,y6,0);
+				draw_rectangle(x5, y5, x6, y6, 0);
 				draw_set_alpha(1);
 			}
 
-		    stat_tool_tip_text="Unit Profile"
-		    x5=x6;
-			var x6=x5+string_width(stat_tool_tip_text)+4;
-			var y6=y5+string_height(stat_tool_tip_text)+2;	    
-		    draw_unit_buttons([x5,y5,x6,y6], stat_tool_tip_text,[1,1],c_red);
-		    array_push(tooltip_drawing, ["Click or press P to show unit data", [x5,y5,x6,y6]]);
+		    if (!obj_controller.unit_profile || obj_controller.view_squad){
+			    stat_tool_tip_text = "Show Profile";
+			} else {
+				stat_tool_tip_text = "Hide Profile"; 
+			}
+		    x5=x6+4;
+			x6=x5+string_width("Show Profile")+8;
+		    draw_unit_buttons([x5, y5, x6, y6], stat_tool_tip_text,[1,1],#50a076);
+		    array_push(tooltip_drawing, ["Click here or press P to show unit profile.", [x5,y5,x6,y6]]);
 			if (((keyboard_check_pressed(ord("P"))&& !text_bar)|| (point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left))) && !instance_exists(obj_temp3) && !instance_exists(obj_popup)){
 				if (view_squad){
 					view_squad =false;
@@ -286,7 +324,7 @@ function scr_ui_manage() {
 					obj_controller.unit_profile = !obj_controller.unit_profile;
 				}
 			}
-			x5=x6;
+			x5=x6+4;
 			if (managing<0 && selection_data.purpose_code!="manage") then unit_profile=true;
 			//TODO Implement company report
 			/*var x6=x5+string_width(stat_tool_tip_text)+4;
@@ -306,148 +344,112 @@ function scr_ui_manage() {
 				draw_set_alpha(1);
 			}
 			*/			    
-	    
-		    draw_set_color(c_gray);	    	
-	    	selected_unit.draw_unit_image(1190,210);
 
-					// Borders
-					draw_set_color(c_gray);
-					draw_rectangle(xx+1190,yy+210,xx+1190+166,yy+210+271,1); 
-	        // Crop anything sticking out of the display
-	        draw_set_color(0);
-					// Top rectangle
-					draw_rectangle(xx+1190-20+2, yy+210-20-2, xx+1190+166+20+2, yy+210-2, false);
-					// Bottom rectangle
-					draw_rectangle(xx+1190-20+2, yy+210+271+2, xx+1190+166+20+2, yy+210+271+20+2, false);
-					// Left rectangle
-					draw_rectangle(xx+1190-20-2, yy+210+2, xx+1190-2, yy+210+271+2, false);
-					// Right rectangle
-					draw_rectangle(xx+1190+166+2, yy+210+2, xx+1190+166+20+2, yy+210+271+2, false);
+			// Draw unit image
+			draw_set_color(c_white);	    	
+			selected_unit.draw_unit_image(1208,210);
 
-	        draw_set_color(c_gray);
-	        draw_set_halign(fa_center);
-	        //draw_rectangle(xx+1218,yy+210,xx+1374,yy+491,1);
-	        draw_text_transformed(xx+1290,yy+177,string_hash_to_newline(selected_unit.name_role()),1.5,1.5,0);
-        
-	        draw_set_font(fnt_40k_14);
-	        draw_set_halign(fa_left);
-        	
+			// Animated scanline
+			draw_set_color(5998382);
+			var step_millisecond = current_time / 1000;
+			var anim_length = 10; // anim cycle length in seconds
+			var anim = (step_millisecond % anim_length) / anim_length * 20; // anim will cycle from 0 to 20 over the duration specified by anim_length
+			if (anim <= 10) then draw_set_alpha(anim / 10);
+			else draw_set_alpha(2 - (anim / 10));
+			line_move = yy+140+4 + (368 * ((anim % 20) / 20));
+			if (irandom(100) <= 5){line_move-=4};
+			draw_line(xx+1007+18, line_move, xx+1576-23, line_move);
+			draw_set_alpha(1);
+
+			// Unit window entries start
+			var line_color = #50a076;
+			draw_set_color(line_color);
+
+			// Draw unit name and role
+			draw_set_halign(fa_center);
+			draw_set_font(fnt_40k_30b);
+			draw_text_transformed_outline(xx+1290,yy+177,string_hash_to_newline(selected_unit.name_role()),0.7,0.7,0);
+
+			// Draw unit info
+			draw_set_font(fnt_40k_14);
+			// Left side of the screen
+			draw_set_halign(fa_left);
+			var x_left = xx+1030;
+
+			// Equipment
         	var armour = selected_unit.armour();
 	        if (armour!=""){
-	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("armour"));
-	        	tooltip_text = cn.temp[103];
-	        	x1 = xx+1015;
+				var_text= string_hash_to_newline(armour);
+	        	tooltip_text += cn.temp[103];
+	        	x1 = x_left;
 	        	y1 = yy+216;
 	        	x2 = x1+string_width_ext(var_text, -1,187);
-	        	y2 = y1+string_height_ext(var_text, -1,187);	 
-	        	draw_text_ext(x1,y1,var_text,-1,187);
-	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);      	
+	        	y2 = y1+string_height_ext(var_text, -1,187);
+				draw_set_alpha(1);
+	        	draw_text_ext_outline(x1,y1,var_text,-1,187, 0, quality_color(selected_unit.armour_quality));
+	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 
 	        } 
 
 	        var gear = selected_unit.gear();
 	        if (selected_unit.gear()!=""){
-	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("gear"));
+				var_text= string_hash_to_newline(gear);
 	        	tooltip_text = cn.temp[105];
-	        	x1 = xx+1015;
+	        	x1 = x_left;
 	        	y1 = yy+260;
 	        	x2 = x1+string_width_ext(var_text, -1,187);
 	        	y2 = y1+string_height_ext(var_text, -1,187);	 
-	        	draw_text_ext(x1,y1,var_text,-1,187);
-	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);  	        	        	
+	        	draw_text_ext_outline(x1,y1,var_text,-1,187, 0, quality_color(selected_unit.gear_quality));
+	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
 	        }
 
 	        var mobi = selected_unit.mobility_item();
 	        if (mobi!=""){
-	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("mobi"));
+				var_text= string_hash_to_newline(mobi);
 	        	tooltip_text = cn.temp[107];
-	        	x1 = xx+1015;
+	        	x1 = x_left;
 	        	y1 = yy+304;
 	        	x2 = x1+string_width_ext(var_text, -1,187);
 	        	y2 = y1+string_height_ext(var_text, -1,187);	  
-	        	draw_text_ext(x1,y1,var_text,-1,187);
-	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 	        	        	
+	        	draw_text_ext_outline(x1,y1,var_text,-1,187, 0, quality_color(selected_unit.mobility_item_quality));
+	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
 	        }
-        	var wep1= selected_unit.weapon_one();
-        	if (wep1!=""){
-	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("wep1"));
-	        	tooltip_text = cn.temp[109];
-	        	x1 = xx+1387;
-	        	y1 = yy+216;
-	        	x2 = x1+string_width_ext(var_text, -1,187);
-	        	y2 = y1+string_height_ext(var_text, -1,187);	 	 
-	        	draw_text_ext(x1,y1,var_text,-1,187);
-	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 	         		       		
-        	}
-        	
-        	var wep2 = selected_unit.weapon_two();
-        	if (wep2!=""){
-	        	var_text= string_hash_to_newline(selected_unit.equipments_qual_string("wep2"));
-	        	tooltip_text = cn.temp[111];
-	        	x1 = xx+1387;
-	        	y1 = yy+290;
-	        	x2 = x1+string_width_ext(var_text, -1,187);
-	        	y2 = y1+string_height_ext(var_text, -1,187);	 
-	        	draw_text_ext(x1,y1,var_text,-1,187); 
-	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 	         		      		
-        	}
 
-        	if (is_array(cn.temp[117])){
-        		var_text = string_hash_to_newline(string("Melee Attack: {0}",round(cn.temp[116][0])))
-	        	tooltip_text = string_hash_to_newline(string(cn.temp[116][1]));
-	        	x1 = xx+1387;
-	        	y1 = yy+378;
-	        	x2 = x1+string_width(var_text);
-	        	y2 = y1+string_height(var_text);
-		        draw_set_color(c_gray);
-		        if (selected_unit.encumbered_melee){
-		        	draw_set_color(c_red);
-		        	//tooltip_text+="#encumbered"
-		        }
-		        draw_text(x1,y1,var_text);
-		        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
-	    	}
-
-        	if (is_array(cn.temp[117])){
-        		var_text = string_hash_to_newline(string("Ranged Attack: {0}",round(cn.temp[117][0])))
-	        	tooltip_text = string_hash_to_newline(string(cn.temp[117][1]));
-	        	x1 = xx+1387;
-	        	y1 = yy+400;
-	        	x2 = x1+string_width(var_text);
-	        	y2 = y1+string_height(var_text);
-		        draw_set_color(c_gray);
-		        if (selected_unit.encumbered_ranged){
-		        	draw_set_color(c_red);
-		        }
-		        draw_text(x1,y1,var_text);
-		        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
-	    	}
-
-			// Display information on the marine
-
+			// Stats
     		var_text = string_hash_to_newline(string("Bionics: {0}",selected_unit.bionics));
-        	x1 = xx+1015;
+        	x1 = x_left;
         	y1 = yy+444;
         	x2 = x1+string_width(var_text);
         	y2 = y1+string_height(var_text);
-	        draw_set_color(c_gray);
-	        draw_text(x1,y1,var_text);
+	        draw_text_outline(x1,y1,var_text);
 	        for (var part = 0; part<array_length(global.body_parts);part++){
 				if (struct_exists(selected_unit.body[$ global.body_parts[part]], "bionic")){
-					bionic_tooltip += $"Bionic {global.body_parts_display[part]}#";
-					if array_contains(["Left Leg", "Right Leg"], global.body_parts_display[part]){
-						bionic_tooltip += $"  CON: +2#  STR: +1#  DEX: -2#";
-					}else if array_contains(["Left Eye", "Right Eye"], global.body_parts_display[part]){
-						bionic_tooltip += $"  CON: +1#  WIS: +1#  DEX: +1#";
-					}else if array_contains(["Left Arm", "Right Arm"], global.body_parts_display[part]){
-						bionic_tooltip += $"  CON: +2#  STR: +2#  WS: -1#";
-					}else if global.body_parts_display[part] == "Torso"{
-						bionic_tooltip += $"  CON: +4#  STR: +1#  DEX: -1#";				
-					}else if global.body_parts_display[part] == "Throat"{
-						bionic_tooltip += $"  CHA: -1#";
-					}else{ 
-						bionic_tooltip += $"  CON: +1#";		
+					var part_display = global.body_parts_display[part];
+					bionic_tooltip += $"Bionic {part_display}#";
+					switch (part_display) {
+						case "Left Leg":
+						case "Right Leg":
+							bionic_tooltip += $"CON: +2 STR: +1 DEX: -2#";
+							break;
+						case "Left Eye":
+						case "Right Eye":
+							bionic_tooltip += $"CON: +1 WIS: +1 DEX: +1#";
+							break;
+						case "Left Arm":
+						case "Right Arm":
+							bionic_tooltip += $"CON: +2 STR: +2 WS: -1#";
+							break;
+						case "Torso":
+							bionic_tooltip += $"CON: +4 STR: +1 DEX: -1#";
+							break;
+						case "Throat":
+							bionic_tooltip += $"CHA: -1#";
+							break;
+						case "Jaw":
+						case "Head":
+							bionic_tooltip += $"CON: +1#";
+							break;
 					}
-				}
+				}				
 			}
 	        if (bionic_tooltip !=""){
 	        	array_push(tooltip_drawing, [bionic_tooltip, [x1,y1,x2,y2]]);
@@ -491,12 +493,11 @@ function scr_ui_manage() {
 			if (obj_controller.stc_bonus[1] == 5 || obj_controller.stc_bonus[2] == 3){
                 tooltip_text += string_hash_to_newline($"STC Bonus: x1.05#");
 			}
-        	x1 = xx+1015;
+        	x1 = x_left;
         	y1 = yy+400;
         	x2 = x1+string_width(var_text);
         	y2 = y1+string_height(var_text);
-	        draw_set_color(c_gray);
-	        draw_text(x1,y1,var_text);
+	        draw_text_outline(x1,y1,var_text);
 	        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 
 
     		var_text = string_hash_to_newline($"Health: {round(selected_unit.hp())}/{round(selected_unit.max_health())}")
@@ -528,41 +529,19 @@ function scr_ui_manage() {
                         break;
                 }
                 if (hp_mod != 0) {
-                    tooltip_text += string_hash_to_newline($"{name}: {hp_mod}#");
+                    tooltip_text += string_hash_to_newline($"{name}: {format_number_with_sign(hp_mod)}%#");
                 }
             }
-        	x1 = xx+1015;
+        	x1 = x_left;
         	y1 = yy+422;
         	x2 = x1+string_width(var_text);
         	y2 = y1+string_height(var_text);
-	        draw_set_color(c_gray);
-	        draw_text(x1,y1,var_text);
+	        draw_text_outline(x1,y1,var_text);
 	        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 
 
-	        if (cn.temp[113]!="") then draw_text(xx+1015,yy+466,string_hash_to_newline("Experience: "+string(cn.temp[113])));
+	        if (cn.temp[113]!="") then draw_text_outline(x_left,yy+466,string_hash_to_newline("Experience: "+string(cn.temp[113])));
 
-	        if (cn.temp[116]!=""){
-	        	carry_data = cn.temp[116][2];
-	        	var carry_string = $"Melee Cap: {carry_data[0]}/{carry_data[1]}"
-	        	x1 = xx+1387;
-	        	y1 = yy+444;
-	        	x2 = x1+string_width(carry_string);
-	        	y2 = y1+string_height(carry_string);
-	        	draw_text(x1,y1,string_hash_to_newline(carry_string));
-	        	tooltip_text = string_hash_to_newline(carry_data[2]);
-	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
-	        }
-	        if (cn.temp[117]!=""){
-	        	carry_data = cn.temp[117][2];
-	        	var carry_string = $"Ranged Cap: {carry_data[0]}/{carry_data[1]}"
-	        	x1 = xx+1387;
-	        	y1 = yy+466;
-	        	x2 = x1+string_width(carry_string);
-	        	y2 = y1+string_height(carry_string);
-	        	draw_text(x1,y1,string_hash_to_newline(carry_string));
-	        	tooltip_text = string_hash_to_newline(carry_data[2]);
-	        	array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
-	        }	        
+       
         		 
         	if (cn.temp[118]!=""){
 						tooltip_text = "";
@@ -598,21 +577,104 @@ function scr_ui_manage() {
 						}
         		var_text = string_hash_to_newline(string("Damage Resistance: {0}",cn.temp[118]))
 	        	tooltip_text += string_hash_to_newline(string("CON: {0}%#XP: {1}%", round(selected_unit.constitution/2), round(selected_unit.experience()/10)));
-	        	x1 = xx+1015;
+	        	x1 = x_left;
 	        	y1 = yy+378;
 	        	x2 = x1+string_width(var_text);
 	        	y2 = y1+string_height(var_text);
-		        draw_set_color(c_gray);
-		        draw_text(x1,y1,var_text);
+		        draw_text_outline(x1,y1,var_text);
 		        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]);
 	    	}
 
-	        if (cn.temp[119]!="") then draw_text(xx+1015,yy+488,string_hash_to_newline(string(cn.temp[119])));
-	    }
-    
-	    draw_set_font(fnt_40k_14);
-	    draw_set_halign(fa_left);
-		
+	        if (cn.temp[119]!="") then draw_text_outline(x_left,yy+488,cn.temp[119]);
+
+		// Right side of the screen
+		draw_set_halign(fa_right);
+		var x_right = xx+1576-24;
+
+		// Equipment
+		var wep1= selected_unit.weapon_one();
+		if (wep1!=""){
+			var_text= string_hash_to_newline(wep1);
+			tooltip_text = cn.temp[109];
+			x1 = x_right;
+			y1 = yy+216;
+			x2 = x1-string_width_ext(var_text, -1,187);
+			y2 = y1+string_height_ext(var_text, -1,187);	 	 
+			draw_text_ext_outline(x1,y1,var_text,-1,187, 0, quality_color(selected_unit.weapon_one_quality));
+			array_push(tooltip_drawing, [tooltip_text, [x2,y1,x1,y2]]);
+		}
+	
+		var wep2 = selected_unit.weapon_two();
+		if (wep2!=""){
+			var_text= string_hash_to_newline(wep2);
+			tooltip_text = cn.temp[111];
+			x1 = x_right;
+			y1 = yy+260;
+			x2 = x1-string_width_ext(var_text, -1,187);
+			y2 = y1+string_height_ext(var_text, -1,187);	 
+			draw_text_ext_outline(x1,y1,var_text,-1,187, 0, quality_color(selected_unit.weapon_two_quality)); 
+			array_push(tooltip_drawing, [tooltip_text, [x2,y1,x1,y2]]);
+		}
+
+		// Stats
+		if (is_array(cn.temp[117])){
+			var_text = string_hash_to_newline(string("Melee Attack: {0}",round(cn.temp[116][0])))
+			tooltip_text = string_hash_to_newline(string(cn.temp[116][1]));
+			x1 = x_right;
+			y1 = yy+378;
+			x2 = x1-string_width(var_text);
+			y2 = y1+string_height(var_text);
+			if (selected_unit.encumbered_melee){
+				draw_set_color(c_red);
+				//tooltip_text+="#encumbered"
+			}
+			draw_text_outline(x1,y1,var_text);
+			draw_set_color(line_color);
+			array_push(tooltip_drawing, [tooltip_text, [x2,y1,x1,y2]]);
+		}
+
+		if (is_array(cn.temp[117])){
+			var_text = string_hash_to_newline(string("Ranged Attack: {0}",round(cn.temp[117][0])))
+			tooltip_text = string_hash_to_newline(string(cn.temp[117][1]));
+			x1 = x_right;
+			y1 = yy+400;
+			x2 = x1-string_width(var_text);
+			y2 = y1+string_height(var_text);
+			if (selected_unit.encumbered_ranged){
+				draw_set_color(c_red);
+			}
+			draw_text_outline(x1,y1,var_text);
+			array_push(tooltip_drawing, [tooltip_text, [x2,y1,x1,y2]]);
+			draw_set_color(line_color);
+		}
+
+		if (cn.temp[116]!=""){
+			carry_data = cn.temp[116][2];
+			var carry_string = $"Melee Burden: {carry_data[0]}/{carry_data[1]}"
+			x1 = x_right;
+			y1 = yy+444;
+			x2 = x1-string_width(carry_string);
+			y2 = y1+string_height(carry_string);
+			draw_text_outline(x1,y1,string_hash_to_newline(carry_string));
+			tooltip_text = string_hash_to_newline(carry_data[2]);
+			array_push(tooltip_drawing, [tooltip_text, [x2,y1,x1,y2]]);
+		}
+
+		if (cn.temp[117]!=""){
+			carry_data = cn.temp[117][2];
+			var carry_string = $"Ranged Burden: {carry_data[0]}/{carry_data[1]}"
+			x1 = x_right;
+			y1 = yy+466;
+			x2 = x1-string_width(carry_string);
+			y2 = y1+string_height(carry_string);
+			draw_text_outline(x1,y1,string_hash_to_newline(carry_string));
+			tooltip_text = string_hash_to_newline(carry_data[2]);
+			array_push(tooltip_drawing, [tooltip_text, [x2,y1,x1,y2]]);
+		}
+	}	
+
+	    draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
+
 	    // Back
 	    var top=man_current,sel=top,temp1="",temp2="",temp3="",temp4="",temp5="";
     
@@ -646,6 +708,7 @@ function scr_ui_manage() {
 					if (unit.name()=="" || unit.base_group=="none"){continue;}
 					var unit_location = unit.marine_location();
 		            temp1=unit.name_role();
+					var unit_specialist = is_specialist(unit.role());
 		            unit_specialism_option=false;
 		            // temp1=string(managing)+"."+string(ide[sel]);
 		            temp2=string(ma_loc[sel]);
@@ -751,7 +814,7 @@ function scr_ui_manage() {
 				draw_set_color(c_gray);
 				draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);
 		        if (man[sel]="man"){
-		        	if (!is_specialist(unit.role())){
+		        	if (!unit_specialist){
 				        if (unit.technology>=35){
 				        	 //if unit has techmarine potential
 				        	unit_specialism_option=true;
@@ -826,7 +889,7 @@ function scr_ui_manage() {
 					if (ma_promote[sel] >= 10){
 						hpColor = c_red;
 						array_push(health_tooltip, ["Critical Health State! Bionic augmentation is required!", [xx+250, yy+64, xx+300, yy+85]]);
-					}else if (ma_promote[sel] > 0){
+					}else if (ma_promote[sel] > 0 && !unit_specialist){
 						xpColor = c_yellow;
 						array_push(promotion_tooltip, ["Promotion Recommended", [xx+335, yy+64, xx+385, yy+85]]);
 					}
@@ -856,7 +919,7 @@ function scr_ui_manage() {
 
 				// Draw current location
 				if (temp2=="Mechanicus Vessel") or (temp2=="Terra IV") or (temp2=="=Penitorium=") or (assignment!="none") then draw_set_alpha(0.5);
-				var truncatedLocation = truncate_string_width(string(temp2), 130); // Truncate the location string to 100 pixels
+				var truncatedLocation = string_truncate(string(temp2), 130); // Truncate the location string to 100 pixels
 				draw_text(xx+430+8,yy+66,truncatedLocation);// LOC
 		        draw_set_alpha(1);
 	        
@@ -989,149 +1052,149 @@ function scr_ui_manage() {
 		    draw_set_halign(fa_center);
 		    */
 			
-			// How much space the selected unit takes
-		    draw_set_color(c_gray);
-		    draw_set_font(fnt_40k_14b);
-			draw_text_transformed(xx+1010,yy+528,$"Selection: {man_size} space",1.5,1.5,0);
-		    draw_set_font(fnt_40k_14);
-			draw_text_ext(xx+1010,yy+552,selecting_dudes,-1,560);
-
-			// Options for the selected unit
-		    draw_set_font(fnt_40k_14b);
-			draw_text_transformed(xx+1010,yy+610,"Options:",1.5,1.5,0);
-		    draw_set_font(fnt_40k_14);
-
 		    yy+=8;
 		     //TODO handle recursively
 		    if (!obj_controller.unit_profile){
 
-			    if (sel_uni[1] != "") {
-				    draw_text(xx + 1010, yy + 636, string_hash_to_newline("All Infantry"));
-				    draw_rectangle(xx + 1010, yy + 634, xx + 1010 + string_width(string_hash_to_newline("All Infantry")), yy + 634 + string_height(string_hash_to_newline("All Infantry")), 1);
-				    if (mouse_check_button_pressed(mb_left) && cooldown <= 0) {
-				        if (mouse_x >= xx + 1010 && mouse_y >= yy + 634 && mouse_x < xx + 1010 + string_width(string_hash_to_newline("All Infantry")) && mouse_y < yy + 634 + string_height(string_hash_to_newline("All Infantry"))) {
-				            cooldown = 8;
-				            sel_all = "man";
-				        }
-				    }
-				    var y_offset,x_offset;
-				    var x1,x2,y1,y2;
-				    for (var i = 1; i <= 8; i++) {
-				        if (sel_uni[i] != "") {
-				        	if (i<=4){
-					            y_offset = 26 * (i - 1);
-					        	x_offset=0;
-				        	}
-				            if (i>4){
-				            	y_offset = 26 * (i - 5);
-				            	x_offset=144;
-				            }
-				            x1=xx + 1016 +x_offset;
-				            x2=x1+ string_width(string_hash_to_newline(sel_uni[i]));
-				            y1=yy + 662 + y_offset;
-				            y2=y1+string_height(string_hash_to_newline(sel_uni[i]))
-				            draw_text(x1, y1, string_hash_to_newline(sel_uni[i]));
-				            draw_rectangle(x1, y1, x2, y2, 1);
+			    // if (sel_uni[1] != "") {
+				// 	// How much space the selected unit takes
+				// 	draw_set_color(c_gray);
+				// 	draw_set_font(fnt_40k_30b);
+				// 	draw_text_transformed(actions_block.x1 + 4, actions_block.y1 + 4,$"Selection: {man_size} space",0.5,0.5,0);
+				// 	draw_set_font(fnt_40k_14);
+				// 	draw_text_ext(actions_block.x1 + 4, actions_block.y1 + 24,selecting_dudes,-1,550);
 
-				            if (mouse_check_button_pressed(mb_left) && cooldown <= 0) {
-				            	if (point_in_rectangle(mouse_x, mouse_y,x1, y1, x2, y2)){
-				                    cooldown = 8;
-				                    sel_all = sel_uni[i];
-				                }
-				            }
-				        }
-				    }
-				}
-			    if (sel_veh[1]!=""){
-			        draw_text(xx+1010+288,yy+636,string_hash_to_newline("All Vehicles"));
-			        draw_rectangle(xx+1010+288,yy+634,xx+1010+288+string_width(string_hash_to_newline("All Vehicles")),yy+634+string_height(string_hash_to_newline("All Vehicles")),1);
-			        if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			            if (mouse_x>=xx+1010+288) and (mouse_y>=yy+634) and (mouse_x<xx+1010+288+string_width(string_hash_to_newline("All Vehicles"))) and (mouse_y<yy+634+string_height(string_hash_to_newline("All Vehicles"))){
-							cooldown=8;
-							sel_all="vehicle";
-						}
-			        }
-			        if (sel_veh[1]!=""){
-			            draw_text(xx+1016+288,yy+662,string_hash_to_newline(sel_veh[1]));
-						draw_rectangle(xx+1015+288,yy+661,xx+1016+288+string_width(string_hash_to_newline(sel_veh[1])),yy+661+string_height(string_hash_to_newline(sel_veh[1])),1);
-			            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			                if (mouse_x>=xx+1015+288) and (mouse_y>=yy+661) and (mouse_x<xx+1016+288+string_width(string_hash_to_newline(sel_veh[1]))) and (mouse_y<yy+661+string_height(string_hash_to_newline(sel_veh[1]))){
-								cooldown=8;
-								sel_all=sel_veh[1];
-							}
-			            }
-			        }
-			        if (sel_veh[2]!=""){
-			            draw_text(xx+1016+288,yy+684,string_hash_to_newline(sel_veh[2]));
-						draw_rectangle(xx+1015+288,yy+683,xx+1016+288+string_width(string_hash_to_newline(sel_veh[2])),yy+683+string_height(string_hash_to_newline(sel_veh[2])),1);
-			            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			                if (mouse_x>=xx+1015+288) and (mouse_y>=yy+683) and (mouse_x<xx+1016+288+string_width(string_hash_to_newline(sel_veh[2]))) and (mouse_y<yy+683+string_height(string_hash_to_newline(sel_veh[2]))){
-								cooldown=8;
-								sel_all=sel_veh[2];
-							}
-			            }
-			        }
-			        if (sel_veh[3]!=""){
-			            draw_text(xx+1016+288,yy+706,string_hash_to_newline(sel_veh[3]));
-						draw_rectangle(xx+1015+288,yy+705,xx+1016+288+string_width(string_hash_to_newline(sel_veh[3])),yy+705+string_height(string_hash_to_newline(sel_veh[3])),1);
-			            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			                if (mouse_x>=xx+1015+288) and (mouse_y>=yy+705) and (mouse_x<xx+1016+288+string_width(string_hash_to_newline(sel_veh[3]))) and (mouse_y<yy+705+string_height(string_hash_to_newline(sel_veh[3]))){
-								cooldown=8;
-								sel_all=sel_veh[3];
-							}
-			            }
-			        }
-			        if (sel_veh[4]!=""){
-			            draw_text(xx+1016+288,yy+728,string_hash_to_newline(sel_veh[4]));
-						draw_rectangle(xx+1015+288,yy+727,xx+1016+288+string_width(string_hash_to_newline(sel_veh[4])),yy+727+string_height(string_hash_to_newline(sel_veh[4])),1);
-			            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			                if (mouse_x>=xx+1015+288) and (mouse_y>=yy+728) and (mouse_x<xx+1016+288+string_width(string_hash_to_newline(sel_veh[4]))) and (mouse_y<yy+727+string_height(string_hash_to_newline(sel_veh[4]))){
-								cooldown=8;
-								sel_all=sel_veh[4];
-							}
-			            }
-			        }
-			        if (sel_veh[5]!=""){
-			            draw_text(xx+1160+432,yy+662,string_hash_to_newline(sel_veh[5]));
-						draw_rectangle(xx+1015+432,yy+661,xx+1160+432+string_width(string_hash_to_newline(sel_veh[5])),yy+661+string_height(string_hash_to_newline(sel_veh[5])),1);
-			            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			                if (mouse_x>=xx+1160+432) and (mouse_y>=yy+661) and (mouse_x<xx+1160+432+string_width(string_hash_to_newline(sel_veh[5]))) and (mouse_y<yy+661+string_height(string_hash_to_newline(sel_veh[5]))){
-								cooldown=8;
-								sel_all=sel_veh[5];
-							}
-			            }
-			        }
-			        if (sel_veh[6]!=""){
-			            draw_text(xx+1160+432,yy+684,string_hash_to_newline(sel_veh[6]));
-						draw_rectangle(xx+1015+432,yy+683,xx+1160+432+string_width(string_hash_to_newline(sel_veh[6])),yy+683+string_height(string_hash_to_newline(sel_veh[6])),1);
-			            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			                if (mouse_x>=xx+1160+432) and (mouse_y>=yy+683) and (mouse_x<xx+1160+432+string_width(string_hash_to_newline(sel_veh[6]))) and (mouse_y<yy+683+string_height(string_hash_to_newline(sel_veh[6]))){
-								cooldown=8;
-								sel_all=sel_veh[6];
-							}
-			            }
-			        }
-			        if (sel_veh[7]!=""){
-			            draw_text(xx+1160+432,yy+706,string_hash_to_newline(sel_veh[7]));
-						draw_rectangle(xx+1015+432,yy+705,xx+1160+432+string_width(string_hash_to_newline(sel_veh[7])),yy+705+string_height(string_hash_to_newline(sel_veh[7])),1);
-			            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			                if (mouse_x>=xx+1160+432) and (mouse_y>=yy+706) and (mouse_x<xx+1160+432+string_width(string_hash_to_newline(sel_veh[7]))) and (mouse_y<yy+705+string_height(string_hash_to_newline(sel_veh[7]))){
-								cooldown=8;
-								sel_all=sel_veh[7];
-							}
-			            }
-			        }
-			        if (sel_veh[8]!=""){
-			            draw_text(xx+1160+432,yy+728,string_hash_to_newline(sel_veh[8]));
-						draw_rectangle(xx+1015+432,yy+727,xx+1160+432+string_width(string_hash_to_newline(sel_veh[8])),yy+727+string_height(string_hash_to_newline(sel_veh[8])),1);
-			            if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			                if (mouse_x>=xx+1160+432) and (mouse_y>=yy+728) and (mouse_x<xx+1160+432+string_width(string_hash_to_newline(sel_veh[8]))) and (mouse_y<yy+727+string_height(string_hash_to_newline(sel_veh[8]))){
-								cooldown=8;
-								sel_all=sel_veh[8];
-							}
-			            }
-			        }
-			    }
+				// 	// Options for the selected unit
+				// 	draw_set_font(fnt_40k_30b);
+				// 	draw_text_transformed(actions_block.x1 + 4, actions_block.x1 + 64,"Options:",0.5,0.5,0);
+
+				// 	draw_set_font(fnt_40k_14);
+				//     draw_text(xx + 1010, yy + 636, string_hash_to_newline("All Infantry"));
+				//     draw_rectangle(xx + 1010, yy + 634, xx + 1010 + string_width(string_hash_to_newline("All Infantry")), yy + 634 + string_height(string_hash_to_newline("All Infantry")), 1);
+				//     if (mouse_check_button_pressed(mb_left) && cooldown <= 0) {
+				//         if (mouse_x >= xx + 1010 && mouse_y >= yy + 634 && mouse_x < xx + 1010 + string_width(string_hash_to_newline("All Infantry")) && mouse_y < yy + 634 + string_height(string_hash_to_newline("All Infantry"))) {
+				//             cooldown = 8;
+				//             sel_all = "man";
+				//         }
+				//     }
+				//     var y_offset,x_offset;
+				//     var x1,x2,y1,y2;
+				//     for (var i = 1; i <= 8; i++) {
+				//         if (sel_uni[i] != "") {
+				//         	if (i<=4){
+				// 	            y_offset = 26 * (i - 1);
+				// 	        	x_offset=0;
+				//         	}
+				//             if (i>4){
+				//             	y_offset = 26 * (i - 5);
+				//             	x_offset=144;
+				//             }
+				//             x1=xx + 1016 +x_offset;
+				//             x2=x1+ string_width(string_hash_to_newline(sel_uni[i]));
+				//             y1=yy + 662 + y_offset;
+				//             y2=y1+string_height(string_hash_to_newline(sel_uni[i]))
+				//             draw_text(x1, y1, string_hash_to_newline(sel_uni[i]));
+				//             draw_rectangle(x1, y1, x2, y2, 1);
+
+				//             if (mouse_check_button_pressed(mb_left) && cooldown <= 0) {
+				//             	if (point_in_rectangle(mouse_x, mouse_y,x1, y1, x2, y2)){
+				//                     cooldown = 8;
+				//                     sel_all = sel_uni[i];
+				//                 }
+				//             }
+				//         }
+				//     }
+				// }
+			    // if (sel_veh[1]!=""){
+			    //     draw_text(xx+1010+288,yy+636,string_hash_to_newline("All Vehicles"));
+			    //     draw_rectangle(xx+1010+288,yy+634,xx+1010+288+string_width(string_hash_to_newline("All Vehicles")),yy+634+string_height(string_hash_to_newline("All Vehicles")),1);
+			    //     if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+			    //         if (mouse_x>=xx+1010+288) and (mouse_y>=yy+634) and (mouse_x<xx+1010+288+string_width(string_hash_to_newline("All Vehicles"))) and (mouse_y<yy+634+string_height(string_hash_to_newline("All Vehicles"))){
+				// 			cooldown=8;
+				// 			sel_all="vehicle";
+				// 		}
+			    //     }
+			    //     if (sel_veh[1]!=""){
+			    //         draw_text(xx+1016+288,yy+662,string_hash_to_newline(sel_veh[1]));
+				// 		draw_rectangle(xx+1028+288,yy+661,xx+1016+288+string_width(string_hash_to_newline(sel_veh[1])),yy+661+string_height(string_hash_to_newline(sel_veh[1])),1);
+			    //         if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+			    //             if (mouse_x>=xx+1028+288) and (mouse_y>=yy+661) and (mouse_x<xx+1016+288+string_width(string_hash_to_newline(sel_veh[1]))) and (mouse_y<yy+661+string_height(string_hash_to_newline(sel_veh[1]))){
+				// 				cooldown=8;
+				// 				sel_all=sel_veh[1];
+				// 			}
+			    //         }
+			    //     }
+			    //     if (sel_veh[2]!=""){
+			    //         draw_text(xx+1016+288,yy+684,string_hash_to_newline(sel_veh[2]));
+				// 		draw_rectangle(xx+1028+288,yy+683,xx+1016+288+string_width(string_hash_to_newline(sel_veh[2])),yy+683+string_height(string_hash_to_newline(sel_veh[2])),1);
+			    //         if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+			    //             if (mouse_x>=xx+1028+288) and (mouse_y>=yy+683) and (mouse_x<xx+1016+288+string_width(string_hash_to_newline(sel_veh[2]))) and (mouse_y<yy+683+string_height(string_hash_to_newline(sel_veh[2]))){
+				// 				cooldown=8;
+				// 				sel_all=sel_veh[2];
+				// 			}
+			    //         }
+			    //     }
+			    //     if (sel_veh[3]!=""){
+			    //         draw_text(xx+1016+288,yy+706,string_hash_to_newline(sel_veh[3]));
+				// 		draw_rectangle(xx+1028+288,yy+705,xx+1016+288+string_width(string_hash_to_newline(sel_veh[3])),yy+705+string_height(string_hash_to_newline(sel_veh[3])),1);
+			    //         if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+			    //             if (mouse_x>=xx+1028+288) and (mouse_y>=yy+705) and (mouse_x<xx+1016+288+string_width(string_hash_to_newline(sel_veh[3]))) and (mouse_y<yy+705+string_height(string_hash_to_newline(sel_veh[3]))){
+				// 				cooldown=8;
+				// 				sel_all=sel_veh[3];
+				// 			}
+			    //         }
+			    //     }
+			    //     if (sel_veh[4]!=""){
+			    //         draw_text(xx+1016+288,yy+728,string_hash_to_newline(sel_veh[4]));
+				// 		draw_rectangle(xx+1028+288,yy+727,xx+1016+288+string_width(string_hash_to_newline(sel_veh[4])),yy+727+string_height(string_hash_to_newline(sel_veh[4])),1);
+			    //         if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+			    //             if (mouse_x>=xx+1028+288) and (mouse_y>=yy+728) and (mouse_x<xx+1016+288+string_width(string_hash_to_newline(sel_veh[4]))) and (mouse_y<yy+727+string_height(string_hash_to_newline(sel_veh[4]))){
+				// 				cooldown=8;
+				// 				sel_all=sel_veh[4];
+				// 			}
+			    //         }
+			    //     }
+			    //     if (sel_veh[5]!=""){
+			    //         draw_text(xx+1160+432,yy+662,string_hash_to_newline(sel_veh[5]));
+				// 		draw_rectangle(xx+1028+432,yy+661,xx+1160+432+string_width(string_hash_to_newline(sel_veh[5])),yy+661+string_height(string_hash_to_newline(sel_veh[5])),1);
+			    //         if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+			    //             if (mouse_x>=xx+1160+432) and (mouse_y>=yy+661) and (mouse_x<xx+1160+432+string_width(string_hash_to_newline(sel_veh[5]))) and (mouse_y<yy+661+string_height(string_hash_to_newline(sel_veh[5]))){
+				// 				cooldown=8;
+				// 				sel_all=sel_veh[5];
+				// 			}
+			    //         }
+			    //     }
+			    //     if (sel_veh[6]!=""){
+			    //         draw_text(xx+1160+432,yy+684,string_hash_to_newline(sel_veh[6]));
+				// 		draw_rectangle(xx+1028+432,yy+683,xx+1160+432+string_width(string_hash_to_newline(sel_veh[6])),yy+683+string_height(string_hash_to_newline(sel_veh[6])),1);
+			    //         if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+			    //             if (mouse_x>=xx+1160+432) and (mouse_y>=yy+683) and (mouse_x<xx+1160+432+string_width(string_hash_to_newline(sel_veh[6]))) and (mouse_y<yy+683+string_height(string_hash_to_newline(sel_veh[6]))){
+				// 				cooldown=8;
+				// 				sel_all=sel_veh[6];
+				// 			}
+			    //         }
+			    //     }
+			    //     if (sel_veh[7]!=""){
+			    //         draw_text(xx+1160+432,yy+706,string_hash_to_newline(sel_veh[7]));
+				// 		draw_rectangle(xx+1028+432,yy+705,xx+1160+432+string_width(string_hash_to_newline(sel_veh[7])),yy+705+string_height(string_hash_to_newline(sel_veh[7])),1);
+			    //         if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+			    //             if (mouse_x>=xx+1160+432) and (mouse_y>=yy+706) and (mouse_x<xx+1160+432+string_width(string_hash_to_newline(sel_veh[7]))) and (mouse_y<yy+705+string_height(string_hash_to_newline(sel_veh[7]))){
+				// 				cooldown=8;
+				// 				sel_all=sel_veh[7];
+				// 			}
+			    //         }
+			    //     }
+			    //     if (sel_veh[8]!=""){
+			    //         draw_text(xx+1160+432,yy+728,string_hash_to_newline(sel_veh[8]));
+				// 		draw_rectangle(xx+1028+432,yy+727,xx+1160+432+string_width(string_hash_to_newline(sel_veh[8])),yy+727+string_height(string_hash_to_newline(sel_veh[8])),1);
+			    //         if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
+			    //             if (mouse_x>=xx+1160+432) and (mouse_y>=yy+728) and (mouse_x<xx+1160+432+string_width(string_hash_to_newline(sel_veh[8]))) and (mouse_y<yy+727+string_height(string_hash_to_newline(sel_veh[8]))){
+				// 				cooldown=8;
+				// 				sel_all=sel_veh[8];
+				// 			}
+			    //         }
+			    //     }
+			    // }
 			    //draws hover over tooltips
 				function gen_tooltip(tooltip_array) {
 					for (var i = 0; i < array_length(tooltip_array); i++) {
@@ -1145,50 +1208,54 @@ function scr_ui_manage() {
 				gen_tooltip(promotion_tooltip);
 				gen_tooltip(health_tooltip);
 
-			    yy-=8;
-
-		    	draw_unit_buttons([xx+1281,yy+608],"Select All");
-				
-				// Update screen coordinates
-			    var x5=xx+1018, y5=yy+831, x6=xx+1018+141, y6=yy+805;
+				// Draw interaction and selection buttons
+				yy-=8;
+				draw_set_font(fnt_40k_14b);
+				var button = {
+					x1: right_ui_block.x1+24,
+					y1: right_ui_block.y2-6-25,
+					w: 100,
+					h: 30,
+					h_gap: 4,
+					v_gap: 4,
+					label: "",
+					alpha: 1,
+					color: #50a076,
+				}
+				button.x2 = button.x1 + button.w;
+				button.y2 = button.y1 + button.h;
 				
 				// Load/Unload to ship button
 				if (sel_loading=0){
-					draw_unit_buttons([x5,y6, x6, y5],"Load");
+					button.label = "Load";
 				} else if (sel_loading!=0){
-					draw_unit_buttons([x5,y6, x6,y5],"Unload");
+					button.label = "Unload";
 				}
+				button.alpha = 1;
+				draw_unit_buttons([button.x1, button.y1, button.x2, button.y2], button.label, [1,1],button.color,,,button.alpha);
+				button.x1 += button.w + button.h_gap;
+				button.x2 += button.w + button.h_gap;
 
-				// Re equip button
-			    x5=xx+1018+141;
-				y5=yy+831;
-				x6=xx+1297;
-				y6=yy+805;
-				draw_unit_buttons([x5,y6, x6, y5],"Re-equip");
-		    
-				// Promote button
-			    x5=xx+1297;
-				y5=yy+831;
-				x6=xx+1436;
-				y6=yy+805;
-				if (sel_promoting>0){
-					draw_unit_buttons([x5,y6, x6, y5],"Promote");
-				}else {
-					draw_unit_buttons([x5,y6, x6, y5],"Promote",[1.5,1.5],c_gray,fa_left, fnt_40k_14b, 0.5);
-				}
+				// // Re equip button
+				button.label = "Re-equip";
+				button.alpha = 1;
+				draw_unit_buttons([button.x1, button.y1, button.x2, button.y2], button.label, [1,1],button.color,,,button.alpha);
+				button.x1 += button.w + button.h_gap;
+				button.x2 += button.w + button.h_gap;
 
+				// // Promote button
+				button.label = "Promote";
+				button.alpha = sel_promoting > 0 ? 1 : 0.5;
+				draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha);
+				button.x1 += button.w + button.h_gap;
+				button.x2 += button.w + button.h_gap;
 
-				// Transfer to another company button
-				y5=yy+831-26;
-				x6=xx+1436;
-				y6=yy+805-26;
-			    draw_unit_buttons([x5,y6, x6, y5],"Transfer");				
-				
-				// Put in jail button
-			    x5=xx+1297+141;
-				y5=yy+831;
-				x6=xx+1436+141;
-				y6=yy+805;
+				// // Put in jail button
+				button.label = "Jail";
+				button.alpha = 1;
+				draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha);
+				button.x1 += button.w + button.h_gap;
+				button.x2 += button.w + button.h_gap;
 				if point_and_click(draw_unit_buttons([x5,y6, x6, y5],"Jail")){
 	                for(var f=1; f<=man_max; f++){
 	                    if (man[f]=="man") and (man_sel[f]==1) and (ma_loc[f]!="Terra") and (ma_loc[f]!="Mechanicus Vessel"){
@@ -1209,20 +1276,15 @@ function scr_ui_manage() {
                     unload=0;
                     alarm[6]=7;	                					
 				}
-				
-				// Reset changes button
-			    x5=xx+1018+141;
-				y5=yy+831-26;
-				x6=xx+1297;
-				y6=yy+805-26;
-			    draw_unit_buttons([x5,y6, x6, y5],"Reset");
-		    
-				// Add bionics button
-			    draw_set_color(38144);
-			    x5=xx+1300+141;
-				y5=yy+827-26;
-				x6=xx+1436+141;
-				y6=yy+805-26;
+
+				// // Add bionics button
+				button.label = "Add Bionics";
+				button.alpha = 1;
+				draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha);
+				button.y1 -= button.h + button.v_gap;
+				button.y2 -= button.h + button.v_gap;
+				button.x1 -= (button.w + button.h_gap) * 4;
+				button.x2 -= (button.w + button.h_gap) * 4;
 				if (point_and_click(draw_unit_buttons([x5,y6, x6, y5], "Add Bionics",[1,1],38144))&&  man_size>0){
 	                bionics_before=scr_item_count("Bionics");
 	                bionics_after=bionics_before;
@@ -1243,12 +1305,13 @@ function scr_ui_manage() {
     	                }
     	            }
 				}
-				
-				// Designate as boarder unit
-			    x5=xx+1018;
-				y5=yy+827-26;
-				x6=xx+1018+141;
-				y6=yy+805-26;
+
+				// // Designate as boarder unit
+				button.label = "Set Boarder";
+				button.alpha = 1;
+				draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha);
+				button.x1 += (button.w + button.h_gap);
+				button.x2 += (button.w + button.h_gap);
 				if point_and_click(draw_unit_buttons([x5,y6, x6, y5], "Set Boarder",[1,1],c_red)){
 					if ((man_size>0)){
 		                for(var p=1; p<=500; p++){
@@ -1264,15 +1327,34 @@ function scr_ui_manage() {
 		                }						
 					}
 				}
-		    
-			    scr_scrollbar(974,172,1005,790,34,man_max,man_current);
+
+				// // Reset changes button
+				button.label = "Reset";
+				button.alpha = 1;
+				draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha);
+				button.x1 += button.w + button.h_gap;
+				button.x2 += button.w + button.h_gap;
+
+				// // Transfer to another company button
+				button.label = "Transfer";
+				button.alpha = 1;
+				draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha);
+				button.x1 += button.w + button.h_gap;
+				button.x2 += button.w + button.h_gap;
+
+				// // Select all units button
+				// button.label = "Select All";
+				// button.alpha = 1;
+				// draw_unit_buttons([button.x1, button.y1, button.x2, button.y2], button.label, [1,1],,,,button.alpha);
 			}
+			draw_set_color(c_green);
+			scr_scrollbar(974,172,1005,790,34,man_max,man_current);
 		}		
 		if instance_exists(cn)and (is_struct(cn.temp[120])){
 			if (cn.temp[120].name()!="") and (cn.temp[120].race()!=0){
 				draw_set_alpha(1);
 				var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0
-		        if ((point_in_rectangle(mouse_x, mouse_y, xx+1208, yy+168, xx+1374, yy+409) || obj_controller.unit_profile) and (!instance_exists(obj_temp3)) and(!instance_exists(obj_popup))){
+		        if ((point_in_rectangle(mouse_x, mouse_y, xx+1208, yy+210, xx+1374, yy+210+272) || obj_controller.unit_profile) and (!instance_exists(obj_temp3)) and(!instance_exists(obj_popup))){
 		        	selected_unit.stat_display(true);
 		       		//tooltip_draw(stat_x, stat_y+string_height(stat_display),0,0,100,17);
 		        } 
@@ -1293,7 +1375,7 @@ function scr_ui_manage() {
 			tip = tooltip_drawing[i];
 			coords=tip[1];
 			if (point_in_rectangle(mouse_x, mouse_y, coords[0],coords[1],coords[2],coords[3])){
-		        	tooltip_draw(tip[0], undefined, [coords[0],coords[3]+4]);
+		        	tooltip_draw(tip[0], 350);
 			}
 		}		
 	}

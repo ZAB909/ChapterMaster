@@ -2076,7 +2076,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                             item_desc_tooltip += $"Melee Burden: {melee_hands}#"
                         }
                         else{
-                            item_desc_tooltip += $"Melee Cap: {format_number_with_sign(melee_hands)}#"
+                            item_desc_tooltip += $"Melee Burden Cap: {format_number_with_sign(melee_hands)}#"
                         }
                     }
                     break;
@@ -2086,7 +2086,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                             item_desc_tooltip += $"Ranged Burden: {ranged_hands}#"
                         }
                         else{
-                            item_desc_tooltip += $"Ranged Cap: {format_number_with_sign(ranged_hands)}#"
+                            item_desc_tooltip += $"Ranged Burden Cap: {format_number_with_sign(ranged_hands)}#"
                         }
                     }
                     break;

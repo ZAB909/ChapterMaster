@@ -43,7 +43,7 @@ global.trait_list = {
 		ballistic_skill:[10,5, "max"],
 		display_name : "Champion",
 		flavour_text : "Through either natural talent, or obsessive training {0} is a master of arms",
-		effect:"increase Melee Cap"
+		effect:"increase Melee Burden Cap"
 	},
 	"lightning_warriors":{
 		constitution: -6,
@@ -63,13 +63,13 @@ global.trait_list = {
 	"melee_enthusiast":{
 		weapon_skill : 5,
 		strength : 3,		
-		flavour_text : "nothing can keep {0} from the fury of close up battle",	
+		flavour_text : "Nothing can keep {0} from the fury of close up battle",	
 		display_name : "Melee Enthusiast",
 
 	},
 	"shitty_luck":{
 		luck:-4,
-		flavour_text : "for all their talent {0} is dogged by poor luck",
+		flavour_text : "For all their talent {0} is dogged by poor luck",
 		display_name : "Shitty Luck",
 	},
 	"very_hard_to_kill":{
@@ -94,7 +94,7 @@ global.trait_list = {
 	},
 	"warp_touched":{
 		intelligence:4,
-		flavour_text : " {0} Has interacted with the warp in away that has forever marked them",
+		flavour_text : "{0} has interacted with the warp in away that has forever marked them",
 		display_name : "Warp Touched",		
 	},
 	"lucky":{
