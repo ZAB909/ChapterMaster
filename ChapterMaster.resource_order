@@ -577,6 +577,7 @@
     {"name":"scr_bomb_world","order":45,"path":"scripts/scr_bomb_world/scr_bomb_world.yy",},
     {"name":"spr_ws_mk7_helm","order":17,"path":"sprites/spr_ws_mk7_helm/spr_ws_mk7_helm.yy",},
     {"name":"scr_loyalty","order":47,"path":"scripts/scr_loyalty/scr_loyalty.yy",},
+    {"name":"spr_weapon_crozarc","order":39,"path":"sprites/spr_weapon_crozarc/spr_weapon_crozarc.yy",},
     {"name":"scr_check_equip","order":49,"path":"scripts/scr_check_equip/scr_check_equip.yy",},
     {"name":"scr_add_corruption","order":51,"path":"scripts/scr_add_corruption/scr_add_corruption.yy",},
     {"name":"scr_add_item","order":53,"path":"scripts/scr_add_item/scr_add_item.yy",},

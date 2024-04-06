@@ -893,6 +893,7 @@
     {"id":{"name":"scr_bomb_world","path":"scripts/scr_bomb_world/scr_bomb_world.yy",},},
     {"id":{"name":"spr_ws_mk7_helm","path":"sprites/spr_ws_mk7_helm/spr_ws_mk7_helm.yy",},},
     {"id":{"name":"scr_loyalty","path":"scripts/scr_loyalty/scr_loyalty.yy",},},
+    {"id":{"name":"spr_weapon_crozarc","path":"sprites/spr_weapon_crozarc/spr_weapon_crozarc.yy",},},
     {"id":{"name":"scr_check_equip","path":"scripts/scr_check_equip/scr_check_equip.yy",},},
     {"id":{"name":"scr_add_corruption","path":"scripts/scr_add_corruption/scr_add_corruption.yy",},},
     {"id":{"name":"scr_add_item","path":"scripts/scr_add_item/scr_add_item.yy",},},

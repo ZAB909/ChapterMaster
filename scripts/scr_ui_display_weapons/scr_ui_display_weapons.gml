@@ -77,7 +77,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             "Thunder Hammer":spr_weapon_thhammer,
             "Relic Blade":spr_weapon_relbla,
             "Power Axe":spr_weapon_powaxe,
-			"Crozius Arcanum":spr_weapon_powaxe,
+			"Crozius Arcanum":spr_weapon_crozarc,
             "Chainaxe":spr_weapon_chaxe,
             "Force Staff":spr_weapon_frcstaff,
 			"Force Sword":spr_weapon_powswo,
