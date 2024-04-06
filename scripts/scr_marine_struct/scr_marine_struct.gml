@@ -503,6 +503,8 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			piety : 10,
 			technology :8,
 			luck :5,
+			weapon_skill : 35,
+			ballistic_skill : 40,			
 			skills: {weapons:{"ranger_long_rifle":1,}},	
 			start_gear:{"armour":"skitarii_armour", "wep1":"hellgun", "wep2":"shuriken_pistol"},
 			base_group : "skitarii",
@@ -519,6 +521,8 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			piety : 10,
 			technology :3,
 			luck :4,
+			weapon_skill : 20,
+			ballistic_skill : 14,			
 			skills: {},	
 			start_gear:{"armour":"Power Armour", "wep1":"Power Sword", "wep2":"Storm Shield"},
 			base_group : "human",
@@ -535,6 +539,8 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			piety : 20,
 			technology :3,
 			luck :4,
+			weapon_skill : 25,
+			ballistic_skill : 20,			
 			skills: {},	
 			start_gear:{"armour":"Power Armour", "wep1":"Power Sword", "wep2":"Storm Shield"},
 			base_group : "human",
@@ -551,6 +557,8 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			piety : 20,
 			technology :3,
 			luck :4,
+			weapon_skill : 25,
+			ballistic_skill : 20,
 			skills: {},	
 			start_gear:{"armour":"Power Armour", "wep1":"Power Sword", "wep2":"Storm Shield"},
 			base_group : "human",
@@ -1602,7 +1610,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			} else if base_group == "tech_priest" {
 				ranged_hands_limit = 1+(technology/100);;
 			}else if base_group == "human" {
-				melee_hands_limit = 1;
+				ranged_hands_limit = 1;
 			}	
 			var ranged_carrying=0
 			var carry_string=$"Base: {ranged_hands_limit}#";

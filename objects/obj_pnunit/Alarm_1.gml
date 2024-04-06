@@ -232,19 +232,18 @@ if (dudes_num[1]=0) and (obj_ncombat.started=0){
 }
 
 
-if (men+veh=1) and (obj_ncombat.player_forces=1){
-    if (men=1) and (veh=0){
-        var i=0,h=0;
-        repeat(500){
-            unit = unit_struct[g];
-             if (!is_struct(unit))then continue;
-            if (h=0){
-                i+=1;
-                if (unit.hp()>0) and (marine_dead[i]=0){
-                    h=unit.hp();
-                    obj_ncombat.display_p1=h;
-                    obj_ncombat.display_p1n=string(marine_type[i])+" "+string(obj_ini.name[marine_co[i],marine_id[i]]);
-                }
+if (men==1) and (veh==0)and (obj_ncombat.player_forces=1){
+    var i=0,h=0;
+    repeat(500){
+        if (h=0){             
+            i+=1;
+            unit = unit_struct[i];
+            if (!is_struct(unit))then continue;                   
+            if (unit.hp()>0) and (marine_dead[i]=0){
+                h=unit.hp();
+                obj_ncombat.display_p1=h;
+                obj_ncombat.display_p1n=unit.name_role();
+                break;
             }
         }
     }

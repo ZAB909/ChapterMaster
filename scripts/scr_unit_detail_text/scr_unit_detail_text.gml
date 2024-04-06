@@ -114,7 +114,11 @@ function scr_unit_detail_text(){
 			if (bionic_count ==0){
 				unit_data_string+= unit_name + " has no bodily augmentations besides his astartes gene seed and organs #"
 			}else if(bionic_count == 1 && array_length(bionic_positions)>0){
-				unit_data_string+= unit_name + string(" Has a bionic {0}#", bionic_positions[0]);
+				for (var i=0;i<array_length(global.body_parts);i++){
+					if (bionic_positions[0]==global.body_parts[i]){
+						unit_data_string+= $"{unit_name} Has a bionic {global.body_parts_display[i]}";
+					}
+				}
 			}else if((bionic_count >1) and (bionic_count <=4)){
 				unit_data_string+= unit_name + " Has some bionic replacements #"
 			}else if((bionic_count >=5) and (bionic_count <8)){

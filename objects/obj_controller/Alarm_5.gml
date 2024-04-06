@@ -510,36 +510,28 @@ if (obj_ini.fleet_type!=1){
 }
 
 var recruits_finished=0,recruit_first="";
-var total_recruit_length = array_length(recruit_name);
-var new_arrays = 0;
+
 var total_recruits = 0;
-for(var i=0; i<total_recruit_length; i++){
-    if (recruit_name[i]=="") then continue;
+var i=0;
+while (i<array_length(recruit_name)){
+    if (recruit_name[i]==""){
+        i++; 
+        continue;
+    };
     if  (recruit_distance[i]<=0) then recruit_training[i]-=1;
     if (recruit_training[i]<=0){
         scr_add_man(obj_ini.role[100][12],10,"Scout Armour",obj_ini.role[100][12],"",recruit_exp[i],recruit_name[i],recruit_corruption[i],false,"default","");
         if (recruit_first=="") then recruit_first=recruit_name[i];
         recruits_finished+=1;
-        recruit_name[i]="";
         recruit_training[i]=-50;
-        array_delete(recruit_name,1,i);
-        array_delete(recruit_corruption,1,i);
-        array_delete(recruit_distance,1,i);
-        array_delete(recruit_training,1,i);
-        array_delete(recruit_exp,1,i);
-        i--;
-        total_recruit_length--;
-        new_arrays++;
+        array_delete(recruit_name,i,1);
+        array_delete(recruit_corruption,i,1);
+        array_delete(recruit_distance,i,1);
+        array_delete(recruit_training,i,1);
+        array_delete(recruit_exp,i,1);
     } else {
         total_recruits++;
     }
-}
-for (i=0;i<new_arrays;i++){
-    array_push(recruit_name,"");
-    array_push(recruit_corruption,0);
-    array_push(recruit_distance,0);
-    array_push(recruit_training,0);
-    array_push(recruit_exp,0);
 }
 if (recruits_finished==1){
     scr_alert("green","recruitment",$"{obj_ini.role[100][12]} {recruit_first} has joined X Company.",0,0);

@@ -1812,6 +1812,10 @@ global.gear = {
     }                
 } , 
   "gear": {
+    "Sororitas Medkit":{
+        "abbreviation": "SorMed",
+        "description": "A multi-purpose medkit designed to deal with basic battlefield ailments until further medical assistance can be saught.",
+    },
     "Bionics": {
         "abbreviation": "Bncs",
       "description": "Bionics may be given to wounded marines to quickly get them back into combat-ready status, replacing damaged flesh.#Restores critical health.",
