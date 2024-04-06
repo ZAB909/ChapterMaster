@@ -862,7 +862,6 @@ function scr_save(save_slot,save_id) {
 	                ini_write_string("Mar","lo"+string(coh)+"."+string(mah),obj_ini.loc[coh,mah]);
 	                ini_write_string("Mar","num"+string(coh)+"."+string(mah),obj_ini.name[coh,mah]);
 	                ini_write_string("Mar","rol"+string(coh)+"."+string(mah),obj_ini.role[coh,mah]);
-	                ini_write_real("Mar","li"+string(coh)+"."+string(mah),obj_ini.lid[coh,mah]);
 
 	                ini_write_string("Mar","w1"+string(coh)+"."+string(mah),obj_ini.wep1[coh,mah]);
 	                ini_write_string("Mar","w2"+string(coh)+"."+string(mah),obj_ini.wep2[coh,mah]);

@@ -13,9 +13,6 @@ function scr_dead_marines(run) {
 	    obj_controller.marines=0;
 	    obj_controller.command=0;
 	}
-
-
-
 	i=0;
 	var unit, squad;
 	if (run == 1){
@@ -23,44 +20,29 @@ function scr_dead_marines(run) {
 			comp_length = array_length(obj_ini.name[company]);
 			clean = true;
 			for (i=1;i<comp_length;i++){
-				if (obj_ini.name[company,i]!="") and ((ship_lost[obj_ini.lid[company,i]]>0) or (obj_ini.ship_hp[obj_ini.lid[company,i]]<=0)) and (obj_ini.lid[company,i]>0){
-		            fallen+=1;
-		            clean = false;
+				if (obj_ini.name[company][i]!=""){
+		            unit = fetch_unit([company, i]);
+		            if (unit.ship_location>0){
+						if ((ship_lost[unit.ship_location]>0) or (obj_ini.ship_hp[unit.ship_location]<=0)){
+				            fallen+=1;
+				            clean = false;
 
-		            /*if (is_specialist(obj_ini.role[company,i])=true){
-		                // obj_controller.marines+=1;
-		                obj_controller.command-=1;
-		            }*/
-
-		            if (obj_ini.role[company,i]="Chapter Master"){
-		            	obj_controller.alarm[7]=1;
-		            	if (global.defeat<=1) then global.defeat=1;
-		            }
-		            if (obj_ini.wep1[company,i]="Company Standard") then scr_loyalty("Lost Standard","+");
-		            if (obj_ini.wep2[company,i]="Company Standard") then scr_loyalty("Lost Standard","+");
-		            unit = obj_ini.TTRPG[company,i];
-		            unit.remove_from_squad();
-
-		            obj_ini.race[company,i]=0;
-		            obj_ini.loc[company,i]="";
-		            obj_ini.name[company,i]="";
-		            obj_ini.role[company,i]="";
-		            obj_ini.wep1[company,i]="";
-		            obj_ini.lid[company,i]=0;
-		            obj_ini.wep2[company,i]="";
-		            obj_ini.armour[company,i]="";
-		            obj_ini.gear[company,i]="";
-		            obj_ini.hp[company,i]=100;
-		            obj_ini.experience[company,i]=0;
-		            obj_ini.mobi[company,i]="";
-		            obj_ini.age[company,i]=0;
-		            obj_ini.spe[company,i]="";
-		            obj_ini.god[company,i]=0;
-		            obj_ini.TTRPG[company,i]=new TTRPG_stats("chapter",company,i, "blank");// obj_controller.marines-=1;
+				            if (obj_ini.role[company,i]="Chapter Master"){
+				            	obj_controller.alarm[7]=1;
+				            	if (global.defeat<=1) then global.defeat=1;
+				            }
+				            if (obj_ini.wep1[company,i]="Company Standard") then scr_loyalty("Lost Standard","+");
+				            if (obj_ini.wep2[company,i]="Company Standard") then scr_loyalty("Lost Standard","+");
+				            unit.remove_from_squad();
+				            scr_kill_unit(company, i);
+			        	}
+		        	}
 		        }
 
 		        if (obj_ini.name[company,i]!="") and (obj_ini.role[company,i]!="") and (obj_ini.race[company,i]=1){
-		            if (is_specialist(obj_ini.role[company,i])=false) then obj_controller.marines+=1
+		            if (is_specialist(obj_ini.role[company][i])=false){
+		            	obj_controller.marines+=1
+		            }
 		            else obj_controller.command+=1;
 		        }
 

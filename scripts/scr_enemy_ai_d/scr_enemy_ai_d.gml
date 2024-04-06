@@ -199,23 +199,24 @@ function scr_enemy_ai_d() {
 	                if (p_timer[i,wob]=0){
                 
 	                    if (string_count("mech_mars",p_problem[i,wob])>0){
-	                        var techs_taken,com,ide,ship_planet;
+	                        var techs_taken,com,ide,ship_planet, unit;
 	                        techs_taken=0;com=-1;ide=0;ship_planet="";
                         
 	                        repeat(11){com+=1;ide=0;
 	                            repeat(300){ide+=1;
 	                                if (obj_ini.role[com][ide]=obj_ini.role[100][16]){
+	                                	unit = fetch_unit([com,ide])
 	                                    // Case 1: on planet
-	                                    if (obj_ini.loc[com][ide]=name) and (obj_ini.TTRPG[com][ide].planet_location=i){
+	                                    if (obj_ini.loc[com][ide]=name) and (unit.planet_location=i){
 	                                        p_player[i]-=scr_unit_size(obj_ini.armour[com][ide],obj_ini.role[com][ide],true);
-	                                        obj_ini.loc[com][ide]="Mechanicus Vessel";obj_ini.TTRPG[com][ide].planet_location=0;obj_ini.lid[com][ide]=0;
+	                                        obj_ini.loc[com][ide]="Mechanicus Vessel";unit.planet_location=0;unit.ship_location=0;
 	                                        techs_taken+=1;
 	                                    }
-	                                    if (obj_ini.lid[com][ide]>0){
-	                                        ship_planet=obj_ini.ship_location[obj_ini.lid[com][ide]];
+	                                    if (unit.ship_location>0){
+	                                        ship_planet=obj_ini.ship_location[unit.ship_location];
 	                                        if (ship_planet=name){
-	                                            obj_ini.ship_carrying[obj_ini.lid[com][ide]]-=scr_unit_size(obj_ini.armour[com][ide],obj_ini.role[com][ide],true);
-	                                            obj_ini.loc[com][ide]="Mechanicus Vessel";obj_ini.TTRPG[com][ide].planet_location=0;obj_ini.lid[com][ide]=0;
+	                                            obj_ini.ship_carrying[unit.ship_location]-=scr_unit_size(obj_ini.armour[com][ide],obj_ini.role[com][ide],true);
+	                                            obj_ini.loc[com][ide]="Mechanicus Vessel";unit.planet_location=0;unit.ship_location=0;
 	                                            techs_taken+=1;
 	                                        }
 	                                    }

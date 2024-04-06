@@ -24,7 +24,6 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 
 	if (good!=0){
 	    obj_ini.race[target_company][good]=1;
-	    obj_ini.lid[target_company][good]=0;
 	    obj_ini.role[target_company][good]=man_role;
 	    obj_ini.wep1[target_company][good]="";
 	    obj_ini.wep2[target_company][good]="";

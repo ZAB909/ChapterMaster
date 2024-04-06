@@ -37,9 +37,10 @@ function scr_crusade() {
 	for (co=0;co<=10;co++){
 	    for (i=0;i<=500;i++){
         	good=0;dead=false;
-        	if (obj_ini.name[co][i]=="" || obj_ini.lid==0) then continue;
-        
-            if (array_contains(total_ship_id,obj_ini.lid[co][i])){
+        	if (obj_ini.name[co][i]=="") then continue;
+        		unit=fetch_unit([co, i]);
+        		if (unit.ship_location==0) then continue;
+            if (array_contains(total_ship_id,unit.ship_location)){
             	unit=obj_ini.TTRPG[co][i];
                 death_determination=floor(random(100))+1;
                 //specialist trait greatly reduces death risk
@@ -76,7 +77,7 @@ function scr_crusade() {
 	           	}
                 if (dead){               	
                     var man_size=0;
-                    obj_ini.ship_carrying[obj_ini.lid[co][i]]-=unit.get_unit_size();
+                    obj_ini.ship_carrying[unit.ship_location]-=unit.get_unit_size();
                 	if (unit.IsSpecialist("standard",true)){
                 		obj_controller.command--;
                 	} else {

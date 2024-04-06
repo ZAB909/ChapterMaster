@@ -472,13 +472,13 @@ if (training_techmarine>0){
                 unit.update_role(novice_type);
 
                 // Remove from ship
-                if (obj_ini.lid[0][g1]>0){
+                if (unit.ship_location>0){
                     var man_size=scr_unit_size(obj_ini.armour[0][g1],obj_ini.role[0][g1],true);
-                    obj_ini.ship_carrying[obj_ini.lid[0][g1]]-=man_size;
+                    obj_ini.ship_carrying[unit.ship_location]-=man_size;
                 }
                 obj_ini.loc[0][g1]="Terra";
                 unit.planet_location=4;
-                obj_ini.lid[0][g1]=0;
+                unit.ship_location=0;
                 if (unit.weapon_one()!="Power Weapon"){
                     unit.update_weapon_one("");
                 }

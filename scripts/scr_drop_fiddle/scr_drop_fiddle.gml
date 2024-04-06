@@ -15,7 +15,7 @@ function scr_drop_fiddle(argument0, argument1, argument2, argument3) {
 
 	if (argument0>0) and (argument1=true){// Adding marines to the drop roster
 	    ship_all[argument2]=1;
-    
+    	var unit;
 	    repeat(3500){
 	        if (good=1){para=true;
 	            i+=1;if (i>300){i=1;comp+=1;}
@@ -30,7 +30,8 @@ function scr_drop_fiddle(argument0, argument1, argument2, argument3) {
 	            if (obj_ini.veh_role[comp][i]="Land Raider") then raiders+=1;
 	        }
 	        if (good=1){
-	            if (obj_ini.race[comp][i]!=0) and (obj_ini.lid[comp][i]=argument0) /*and (string_count("Aspirant",obj_ini.role[comp][i])=0)*/ and (obj_ini.god[comp][i]<10) and ((string_count("Bike",obj_ini.mobi[comp][i])=0) or (vehy=1)) and (para=true){// Man
+	        	unit = fetch_unit([comp,i]);
+	            if (obj_ini.race[comp][i]!=0) and (unit.ship_location=argument0) /*and (string_count("Aspirant",obj_ini.role[comp][i])=0)*/ and (obj_ini.god[comp][i]<10) and ((string_count("Bike",obj_ini.mobi[comp][i])=0) or (vehy=1)) and (para=true){// Man
 	                ship_use[argument2]+=1;fighting[comp][i]=1;
                 
 	                if (obj_ini.role[comp][i]="Chapter Master"){master=1;ship_use[argument2]+=1;}
@@ -40,17 +41,17 @@ function scr_drop_fiddle(argument0, argument1, argument2, argument3) {
 	                if (obj_ini.role[comp][i]=obj_ini.role[100][5]) then capts+=1;
 	                if (obj_ini.role[comp][i]="Master of Sanctity") then chaplains+=1;
 	                if (obj_ini.role[comp][i]=obj_ini.role[100][14]) and (global.chapter_name!="Space Wolves") then chaplains+=1;
-                
-	                if (obj_ini.role[comp][i]="Chief "+string(obj_ini.role[100,17])) then psykers+=1;
-	                if (obj_ini.role[comp][i]=obj_ini.role[100,17]) then psykers+=1;
-	                if (obj_ini.role[comp][i]="Codiciery") then psykers+=1;
-	                if (obj_ini.role[comp][i]="Lexicanum") then psykers+=1;
-                
-	                if (obj_ini.role[comp][i]="Master of the Apothecarion") then apothecaries+=1;
-	                if (obj_ini.role[comp][i]=obj_ini.role[100][15]) then apothecaries+=1;
-                
-	                if (obj_ini.role[comp][i]="Forge Master") then techmarines+=1;
-	                if (obj_ini.role[comp][i]=obj_ini.role[100][16]) then techmarines+=1;
+                	
+                	if (unit.IsSpecialist("libs")) then psykers++;
+                	if (unit.IsSpecialist("apoth")){
+                		if ((global.chapter_name!="Space Wolves")){
+                			chaplains++;
+                		}
+
+                		apothecaries++;
+                	}
+                	if (unit.IsSpecialist("forge")) then techmarines++;
+                	if (unit.IsSpecialist("chap")) then chaplains++;
                 
 	                if (obj_ini.role[comp][i]="Death Company") and (string_count("Dreadnought",obj_ini.armour[comp][i])=0) then mahreens+=1;
 	                if (obj_ini.role[comp][i]=obj_ini.role[100][4]) then terminators+=1;
@@ -91,7 +92,8 @@ function scr_drop_fiddle(argument0, argument1, argument2, argument3) {
 	            if (obj_ini.veh_role[comp][i]="Land Raider") then raiders-=1;
 	        }
 	        if (good=1){
-	            if (obj_ini.race[comp][i]!=0) and (obj_ini.lid[comp][i]=argument0) and (string_count("Aspirant",obj_ini.role[comp][i])=0) and (obj_ini.god[comp][i]<10) and ((string_count("Bike",obj_ini.mobi[comp][i])=0) or (vehy=1)){// Man
+	        	unit = fetch_unit([comp,i]);
+	            if (obj_ini.race[comp][i]!=0) and (unit.ship_location=argument0) and (string_count("Aspirant",obj_ini.role[comp][i])=0) and (obj_ini.god[comp][i]<10) and ((string_count("Bike",obj_ini.mobi[comp][i])=0) or (vehy=1)){// Man
 	                ship_use[argument2]-=1;fighting[comp][i]=0;
                             
 	                if (obj_ini.role[comp][i]="Chapter Master"){master=0;ship_use[argument2]-=1;}

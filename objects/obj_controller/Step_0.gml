@@ -698,7 +698,7 @@ if (unload>0){
             if (!is_struct(unit)) then continue;
             if (unit.name()=="") then continue;
             obj_ini.loc[manaj][ide[q]]=obj_ini.ship_location[b];
-            obj_ini.lid[manaj][ide[q]]=0;
+            unit.ship_location=0;
             unit.planet_location=unload;
             obj_ini.uid[manaj][ide[q]]=0;
             

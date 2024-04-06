@@ -21,6 +21,7 @@ function scr_return_ship(ship_name, object, planet_number) {
 	comp=obj_controller.managing;
 	if (obj_controller.managing>10) then comp=0;
 	obj_controller.return_size=0;
+	var unit;
 
 
 
@@ -35,9 +36,10 @@ function scr_return_ship(ship_name, object, planet_number) {
     
     
 	    if (object.man_sel[i]>0){
-	        if (object.man[i]="man"){
-	            obj_ini.lid[comp][object.ide[i]]=object.man_sel[i];
-	            obj_ini.TTRPG[comp][object.ide[i]].planet_location=0;
+	        if (object.man[i]=="man"){
+	        	unit = obj_ini.TTRPG[comp][object.ide[i]];
+	            unit.ship_location=object.man_sel[i];
+	            unit.planet_location=0;
 	        }
 	        // if (comp!=0) then show_message(comp);
 	        // show_message(string(i)+"] ide:"+string(object.ide[i])+" = "+string(obj_ini.role[comp][object.ide[i]]));

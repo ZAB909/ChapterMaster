@@ -415,7 +415,7 @@ function scr_random_event(execute_now) {
 	            }
 	        }
 	        else if (!marine_is_planetside and heritical_item){
-	            obj_controller.temp[101]=obj_ini.lid[company][marine];
+	            obj_controller.temp[101]=unit.ship_location;
             
 	            with(obj_p_fleet){ // TO DO: fix this
 					var u;
@@ -1443,10 +1443,12 @@ function scr_random_event(execute_now) {
 				fleet.escort_number-=1;
 				break;
 		}
-
+		var unit;
 		for(var company = 0; company <= 10; company++){
 			for(var marine = 1; marine <= 300; marine++){
-				if(obj_ini.lid[company][marine] == chosen_ship) {
+				if (obj_ini.name[company][marine] == "") then continue;
+				unit = fetch_unit([company, marine]);
+				if(unit.ship_location == chosen_ship) {
 					obj_ini.loc[company, marine] = "Lost";
 				}
 			}

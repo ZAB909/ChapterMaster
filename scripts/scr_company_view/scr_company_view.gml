@@ -77,10 +77,10 @@ function scr_company_view(company) {
 	                ma_gear[v]=obj_ini.gear[company][v];
 	                ma_health[v]=obj_ini.hp[company][v];
 	                ma_exp[v]=obj_ini.experience[company][v];
-	                ma_lid[v]=obj_ini.lid[company][v];
+	                ma_lid[v]=unit.ship_location;
 	                ma_wid[v]=unit.planet_location;
 	                ma_god[v]=obj_ini.god[company][v];
-	                ma_bio[v]=obj_ini.TTRPG[company][v].bionics;
+	                ma_bio[v]=unit.bionics;
 	                ma_mobi[v]=obj_ini.mobi[company][v];
 					display_unit[v] = unit;
 				    var go=0,op=0;
@@ -98,7 +98,7 @@ function scr_company_view(company) {
 	        	man[v]="hide";
 	        	continue;
 	        }
-	        if (obj_ini.name[company][v+1]=="")and (last_man==0) and (obj_ini.ship_location[obj_ini.lid[company,v]]!="Lost"){last_man=v;break;}
+	        if (obj_ini.name[company][v+1]=="")and (last_man==0) and (obj_ini.ship_location[unit.ship_location]!="Lost"){last_man=v;break;}
 	    }
 	}
 

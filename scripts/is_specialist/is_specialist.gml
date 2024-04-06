@@ -280,7 +280,7 @@ function group_selection(group, selection_data){
             company_data={};
             view_squad=false;  	
             for (var i = 0; i< array_length(group);i++){
-            	s = i+1;
+            	s = i;
             	unit = group[i];
             	unit_location = unit.marine_location();
                 man[s]="man";

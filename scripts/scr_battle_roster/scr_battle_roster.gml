@@ -93,7 +93,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                         }
                     } else if (!instance_exists(obj_drop_select)) { // Only when attacked, normal battle
                         if (_is_planet) and(deploying_unit.loc[company][v] == required_location) and(unit.planet_location == _target_location) and(deploying_unit.hp[company][v] > 0) and(deploying_unit.god[company][v] < 10) then okay = 1;
-                        else if (!_is_planet) and(deploying_unit.lid[company][v] == _target_location) and(deploying_unit.hp[company][v] > 0) and(deploying_unit.god[company][v] < 10) then okay = 1;
+                        else if (!_is_planet) and(unit.ship_location == _target_location) and(deploying_unit.hp[company][v] > 0) and(deploying_unit.god[company][v] < 10) then okay = 1;
 
                         if (instance_exists(obj_temp_meeting)) {
                             meeting = true;
@@ -106,10 +106,10 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
 
                         else if (obj_drop_select.attack == 1) {
                             if (_is_planet) and(deploying_unit.loc[company][v] == required_location) and(unit.planet_location == _target_location) and(deploying_unit.hp[company][v] > 0) and(deploying_unit.god[company][v] < 10) then okay = 1;
-                            else if (!_is_planet) and(deploying_unit.lid[company][v] == _target_location) and(deploying_unit.hp[company][v] > 0) and(deploying_unit.god[company][v] < 10) then okay = 1;
+                            else if (!_is_planet) and(unit.ship_location == _target_location) and(deploying_unit.hp[company][v] > 0) and(deploying_unit.god[company][v] < 10) then okay = 1;
                         } else if (obj_drop_select.attack != 1) {
                             //Related to defensive battles (¿?). Without the above check, it duplicates marines on offensive ones.
-                            if (obj_drop_select.fighting[company][v] == 1) and(deploying_unit.lid[company][v] == _target_location) then okay = 1;
+                            if (obj_drop_select.fighting[company][v] == 1) and(unit.ship_location == _target_location) then okay = 1;
                         }
                     }
                 }

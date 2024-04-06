@@ -601,6 +601,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	if (!instance_exists(obj_controller) && class!="blank"){//game start unit planet location
 		planet_location=2;
 	}
+	ship_location=0;
 	religion="none";
 	master_loyalty = 0;
 	job="none";
@@ -1978,7 +1979,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				location_name = obj_ini.loc[company][marine_number]; //system marine is in
 			} else {
 				location_type =  location_types.ship; //marine is on ship
-				location_id = obj_ini.lid[company][marine_number]; //ship array position
+				location_id = ship_location; //ship array position
 				location_name = obj_ini.ship_location[location_id]; //location of ship
 			}
 			return [location_type,location_id ,location_name];
@@ -2006,32 +2007,30 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			 get_unit_size(); // make sure marines size given it's current equipment is correct
 			 var current_location = marine_location();
 			 var system = current_location[2];
-			 var ship_location= obj_ini.ship_location[ship];
+			 var target_ship_location= obj_ini.ship_location[ship];
 			 if (assignment()!="none") then return "on assignment";
-			 if (ship_location == "home" ){ship_location = obj_ini.home_name;}
+			 if (target_ship_location == "home" ){target_ship_location = obj_ini.home_name;}
 			
 			 if (current_location[0] == location_types.planet){//if marine is on a planet
 				  if (current_location[2] == "home" ){system = obj_ini.home_name;}
 				 //check if ship is in the same location as marine and has enough space;
-				 if (ship_location == system) and ((obj_ini.ship_carrying[ship] + size) <= obj_ini.ship_capacity[ship]){
+				 if (target_ship_location == system) and ((obj_ini.ship_carrying[ship] + size) <= obj_ini.ship_capacity[ship]){
 					 planet_location = 0; //mark marine as no longer on planet
-					 obj_ini.lid[company][marine_number] = ship; //id of ship marine is now loaded on
+					 ship_location = ship; //id of ship marine is now loaded on
 					 obj_ini.ship_carrying[ship] += size; //update ship capacity
-					 var temp_self =self;
-					 if (star=="none"){
-	 					 with (obj_star){
-	 					 		if (name==system){
-	 					 			if (p_player[current_location[1]]>0) then p_player[current_location[1]]-=temp_self.size;
-	 					 			break;
-	 					 		}
-	 					 }
+
+					if (star=="none"){
+					 	star = star_by_name(system);
+	 				}
+	 				if (star!="none"){
+	 					if (star.p_player[current_location[1]]>0) then star.p_player[current_location[1]]-=size;
 	 				}
 				 }
 			 } else if (current_location[0] == location_types.ship){ //with this addition marines can now be moved between ships freely as long as they are in the same system
 				 var off_loading_ship = current_location[1];
 				 if ( (obj_ini.ship_location[ship] == obj_ini.ship_location[off_loading_ship]) and ((obj_ini.ship_carrying[ship] + size) <= obj_ini.ship_capacity[ship])){
 					 obj_ini.ship_carrying[off_loading_ship] -= size; // remove from previous ship capacity
-					 obj_ini.lid[company][marine_number] = ship;             // change marine location to new ship
+					 ship_location = ship;             // change marine location to new ship
 					  obj_ini.ship_carrying[ship] += size;            //add marine capacity to new ship
 				 }
 			 }
@@ -2043,13 +2042,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			if (!array_contains(["Warp", "Terra", "Mechanicus Vessel"],obj_ini.ship_location[current_location[1]]) && obj_ini.ship_location[current_location[1]]==system.name){
 				obj_ini.loc[company][marine_number]=obj_ini.ship_location[current_location[1]];
 				planet_location=planet_number;
-				obj_ini.lid[company][marine_number]=0;
+				ship_location=0;
 				get_unit_size();
 				system.p_player[planet_number]+= size;
 				obj_ini.ship_carrying[current_location[1]] -= size;
 			}
 		} else {
-			obj_ini.lid[company][marine_number]=0;
+			ship_location=0;
 			obj_ini.loc[company][marine_number]=system.name;
 			planet_location=planet_number;
 			system.p_player[planet_number]+= size;
@@ -2096,12 +2095,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				is_at_loc=true;
 			}
 		} else if (ship>0){
-			if (obj_ini.lid[company][marine_number]==ship){
+			if (ship_location==ship){
 				is_at_loc=true;
 			}
 		} else if (ship==0 && planet==0){
-			if (obj_ini.lid[company][marine_number]>0){
-				if (obj_ini.ship_location[obj_ini.lid[company][marine_number]]==location){
+			if (ship_location>0){
+				if (obj_ini.ship_location[ship_location]==location){
 					is_at_loc=true;
 				}
 			} else if  (obj_ini.loc[company][marine_number]==location){

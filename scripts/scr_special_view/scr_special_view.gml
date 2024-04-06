@@ -55,6 +55,7 @@ function scr_special_view(command_group) {
 
 	function special_mar_data_fill(unit_num, b){
         man[b]="man";
+        unit = obj_ini.TTRPG[0][unit_num];
         ide[b]=unit_num;
         ma_race[b]=obj_ini.race[0][unit_num];
         ma_loc[b]=obj_ini.loc[0][unit_num];
@@ -66,9 +67,9 @@ function scr_special_view(command_group) {
         ma_gear[b]=obj_ini.gear[0][unit_num];
         ma_health[b]=obj_ini.hp[0][unit_num];
         ma_exp[b]=obj_ini.experience[0][unit_num];
-        ma_lid[b]=obj_ini.lid[0][unit_num];
-        ma_wid[b]=obj_ini.TTRPG[0][unit_num].planet_location;
-		display_unit[b] = obj_ini.TTRPG[0][unit_num];
+        ma_lid[b]=unit.ship_location;
+        ma_wid[b]=unit.planet_location;
+		display_unit[b] = unit;
         if (ma_lid[b]>0) then ma_loc[b]=obj_ini.ship[ma_lid[b]];
         ma_mobi[b]=obj_ini.mobi[0][unit_num];
         last_man=b;
@@ -90,8 +91,8 @@ function scr_special_view(command_group) {
 		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++){
 			bad=0;
 			if (obj_ini.name[0][v]== ""){continue;}
-			if (obj_ini.lid[0][v]>0){
-			   	var ham=obj_ini.lid[0][v];
+			if (obj_ini.TTRPG[0][v].ship_location>0){
+			   	var ham=obj_ini.TTRPG[0][v].ship_location;
 			   	if (obj_ini.ship_location[ham]="Lost") then continue;
 			}
 
@@ -110,8 +111,8 @@ function scr_special_view(command_group) {
 	if (command_group==12) or (command_group==0){// Apothecarion
 		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++){
 			bad=0;
-		    if (obj_ini.lid[company,v]>0){
-		        var ham=obj_ini.lid[0][v];
+		    if (obj_ini.TTRPG[company,v].ship_location>0){
+		        var ham=obj_ini.TTRPG[0][v].ship_location;
 		        if (obj_ini.ship_location[ham]=="Lost") then continue
 		    }
 		    var apoth_roles = ["Master of the Apothecarion", obj_ini.role[100][15], string("{0} Aspirant",obj_ini.role[100][15])]
@@ -127,8 +128,8 @@ function scr_special_view(command_group) {
 	v=0;
 	if (command_group==13) or (command_group==0){// Librarium
 		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++){
-		    if (obj_ini.lid[company,v]>0){
-		        var ham=obj_ini.lid[0][v];
+		    if (obj_ini.TTRPG[company,v].ship_location>0){
+		        var ham=obj_ini.TTRPG[0][v].ship_location;
 		        if (obj_ini.ship_location[ham]=="Lost") then continue;
 		    }
 		    //find if mlib specialist or trainee
@@ -146,8 +147,8 @@ function scr_special_view(command_group) {
 	if (command_group==14) or (command_group==0){// Reclusium
 		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++){
 		    bad=0;
-		    if (obj_ini.lid[company,v]>0){
-		        var ham=obj_ini.lid[0][v];
+		    if (obj_ini.TTRPG[company,v].ship_location>0){
+		        var ham=obj_ini.TTRPG[0][v].ship_location;
 		        if (obj_ini.ship_location[ham]=="Lost") then bad=1;
 		    }
 		    if (bad==0){
@@ -171,8 +172,8 @@ function scr_special_view(command_group) {
 	if (command_group==15) or (command_group==0){// Armamentarium
 		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++){
 		    bad=0;
-		    if (obj_ini.lid[company,v]>0){
-		        var ham=obj_ini.lid[0][v];
+		    if (obj_ini.TTRPG[company,v].ship_location>0){
+		        var ham=obj_ini.TTRPG[0][v].ship_location;
 		        if (obj_ini.ship_location[ham]=="Lost") then bad=1;
 		    }
 		    if ((obj_ini.role[0][v] == "Forge Master") or (obj_ini.role[0][v]=obj_ini.role[100][16]) 
@@ -199,6 +200,7 @@ function scr_special_view(command_group) {
 	        man[b]="vehicle";
 	        ide[b]=i;
 	        last_vehicle+=1;
+	        display_unit[v] = [company,i];
 	        ma_loc[v]=obj_ini.veh_loc[company,i];
 	        ma_role[v]=obj_ini.veh_role[company,i];
 	        ma_wep1[v]=obj_ini.veh_wep1[company,i];

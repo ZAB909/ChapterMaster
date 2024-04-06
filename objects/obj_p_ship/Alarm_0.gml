@@ -78,19 +78,13 @@ if (obj_controller.stc_bonus[5]=5){armour_front=round(armour_front*1.1);armour_o
 if (obj_controller.stc_bonus[6]=2){armour_front=round(armour_front*1.1);armour_other=round(armour_other*1.1);}
 
 
-var i;i=0;
-repeat(100){i+=1;
-    if (obj_ini.role[0][i]="Chapter Master") and (obj_ini.lid[0][i]=ship_id){
-        master_present=1;
-        obj_fleet.control=1;
-    }
-}
+var i=0, unit, b=0;
 
-var co=-1,i=0,b=0;
 for (var co=0;co<=10;co++){
     for (i=1;i<500;i++){
-        if (obj_ini.lid[co][i]==ship_id && obj_ini.name[co][i]!=""){
-            unit=fetch_unit([co,i]);
+        if (obj_ini.name[co][i]=="") then continue;
+        unit=fetch_unit([co,i]);
+        if (unit.ship_location==ship_id){
             if (unit.is_boarder && unit.hp()>(unit.max_health()/10)){
                 b+=1;
                 board_co[b]=co;
@@ -101,6 +95,12 @@ for (var co=0;co<=10;co++){
             // Loc 0: on origin ship
             // Loc 1: in transit
             // Loc >1: (instance_id), on enemy vessel 
+            if (co==0 && master_present==0 && i<100){
+                if (unit.role()=="Chapter Master") and (unit.ship_location==ship_id){
+                    master_present=1;
+                    obj_fleet.control=1;
+                }            
+            }            
         }
     }
 }

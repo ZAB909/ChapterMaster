@@ -238,3 +238,23 @@ function  hover_box() constructor{
 		return location;
 	}
 }
+
+function exit_adhoc_manage(){
+	menu=0;
+    onceh=1;
+    cooldown=10;
+    click=1;
+    hide_banner=0;
+    if (instance_exists(selection_data.system)){
+   		selection_data.system.alarm[3]=4;
+    }		
+};
+ function update_garrison_manage(){
+	location_viewer.update_garrison_log();
+	if (struct_exists(location_viewer.garrison_log, selection_data.system.name)){
+		var sys_name = selection_data.system.name;
+		group_selection(location_viewer.garrison_log[$sys_name].units,selection_data);
+	} else {
+		exit_adhoc_manage();		
+	} 	
+}

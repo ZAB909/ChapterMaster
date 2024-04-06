@@ -687,7 +687,6 @@ function scr_initialize_custom() {
 	    name[100,i]="";
 	    role[100,i]="";
 	    wep1[100,i]="";
-	    lid[100,i]=0;
 	    spe[100,i]="";
 	    wep2[100,i]="";
 	    armour[100,i]="";
@@ -706,7 +705,6 @@ function scr_initialize_custom() {
 	    role[0,i]="";
 	    wep1[0,i]="";
 	    bio[0,i]=0;
-	    lid[0,i]=0;
 	    spe[0,i]="";
 	    wep2[0,i]="";
 	    armour[0,i]="";
@@ -1788,7 +1786,6 @@ function scr_initialize_custom() {
 	    name[company,i]="";
 	    role[company,i]="";
 	    wep1[company,i]="";
-	    lid[company,i]=0;
 	    spe[company,i]="";
 	    wep2[company,i]="";
 	    armour[company,i]="";
@@ -2060,7 +2057,6 @@ function scr_initialize_custom() {
 	        name[company,i]="";
 	        role[company,i]="";
 	        wep1[company,i]="";
-	        lid[company,i]=0;
 	        spe[company,i]="";
 	        wep2[company,i]="";
 	        armour[company,i]="";

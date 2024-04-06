@@ -32,10 +32,10 @@ function scr_event_dudes(do_action, is_planet, system_name, location_id) {
 	        if (obj_ini.name[coh][ide] == "") then continue;
 	        unit=obj_ini.TTRPG[coh][ide];
         
-	        if (is_planet=0) and (obj_ini.lid[coh,ide]=location_id){
+	        if (is_planet=0) and (unit.ship_location=location_id){
 	            if (obj_ini.race[coh,ide]=1) or (obj_ini.race[coh,ide]=5) then adding=true;
 	        }
-	        if (is_planet=1) and (obj_ini.loc[coh,ide]=system_name) and (unit.planet_location==location_id){
+	        else if (is_planet=1) and (obj_ini.loc[coh,ide]=system_name) and (unit.planet_location==location_id){
 	            if (obj_ini.race[coh,ide]=1) or (obj_ini.race[coh,ide]=5) then adding=true;
 	        }
         

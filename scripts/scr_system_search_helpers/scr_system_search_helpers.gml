@@ -131,7 +131,7 @@ function load_unit_to_fleet(fleet, unit){
 		  	obj_ini.ship_carrying[ship_ident]+=unit.size;
 		  	unit.planet_location=0;
 		  	obj_ini.loc[unit.company][unit.marine_number]=obj_ini.ship_location[ship_ident];
-		  	obj_ini.lid[unit.company][unit.marine_number]=ship_ident;
+		  	unit.ship_location=ship_ident;
 		  	loaded=true;
 		  	break
 		  }
