@@ -1,5 +1,5 @@
 slate_panel.inside_method = function(){
-    draw_set_color(c_gray);
+    draw_set_color(#50a076);
     var x2,y2,wid,hei,cus,draw_func;
     x2=__view_get( e__VW.XView, 0 )+x1;
     y2=__view_get( e__VW.YView, 0 )+y1;
@@ -21,7 +21,6 @@ slate_panel.inside_method = function(){
         draw_sprite_stretched(spr_master_title,0,x2,y2-2,wid+2,4);
         if (mouse_x>=x2) and (mouse_y>=y2) and (mouse_x<x2+wid) and (mouse_y<y2+hei){
             draw_set_alpha(0.25);
-            draw_set_color(c_gray);
             draw_rectangle(x2,y2,x2+wid,y2+hei,0);
             draw_set_alpha(1);
         }
@@ -61,7 +60,6 @@ slate_panel.inside_method = function(){
         draw_sprite_stretched(spr_company_title,company,x2+40,y2-2,wid-80,4);
         if (mouse_x>=x2) and (mouse_y>=y2) and (mouse_x<x2+wid) and (mouse_y<y2+hei){
             draw_set_alpha(0.25);
-            draw_set_color(c_gray);
             draw_rectangle(x2,y2,x2+wid,y2+hei,0);
             draw_set_alpha(1);
         }
@@ -110,7 +108,6 @@ slate_panel.inside_method = function(){
         draw_sprite_stretched(spr_master_title,0,x2,y2-2,wid+2,4);
         if (mouse_x>=x2) and (mouse_y>=y2) and (mouse_x<x2+wid) and (mouse_y<y2+hei){
             draw_set_alpha(0.25);
-            draw_set_color(c_gray);
             draw_rectangle(x2,y2,x2+wid,y2+hei,0);
             draw_set_alpha(1);
         }
@@ -124,12 +121,13 @@ slate_panel.inside_method = function(){
             draw_set_font(fnt_40k_12);
         }
         var l;l=1;
-        draw_set_color(c_gray);
         repeat(24){l+=1;
-            if (line[l]!="") then draw_text(x2+(wid/2),y2+43+((l-1)*18),string_hash_to_newline(line[l]));
+            if (line[l]!=""){
+                draw_text(x2+(wid/2),y2+43+((l-1)*18),string_truncate(line[l], 134));
+            }
         }
     }
-
+    draw_set_color(c_white);
 }
 
 var x2=__view_get( e__VW.XView, 0 )+x1;
