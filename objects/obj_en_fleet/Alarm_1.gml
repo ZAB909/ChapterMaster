@@ -828,10 +828,13 @@ if (navy) {
 
 	    // Quene a visit to a forge world
 	    if (action="") and (trade_goods="") and (instance_exists(orbiting)){
-	        with(obj_temp_inq){instance_destroy();}
+	        with(obj_temp_inq){
+                instance_destroy();
+            }
 	        with(obj_star){
-	            var cont,p;cont=0;p=0;
-	            repeat(4){p+=1;
+	            var cont=0,p=0;
+	            repeat(planets){
+                    p+=1;
 	                if (p_type[p]="Forge"){
 	                    if (p_orks[o]+p_chaos[o]+p_tyranids[o]+p_necrons[o]+p_tau[o]+p_traitors[o]=0){
 	                        if (present_fleet[7]+present_fleet[8]+present_fleet[9]+present_fleet[10]+present_fleet[13]=0){
@@ -843,8 +846,11 @@ if (navy) {
 	            if (cont!=0) then instance_create(x,y,obj_temp_inq);
 	        }
 	        if (instance_exists(obj_temp_inq)){
-	            var go_there;go_there=instance_nearest(x,y,obj_temp_inq);
-	            action_x=go_there.x;action_y=go_there.y;alarm[4]=1;trade_goods="goto_forge";// show_message("D");
+	            var go_there=instance_nearest(x,y,obj_temp_inq);
+	            action_x=go_there.x;
+                action_y=go_there.y;
+                alarm[4]=1;
+                trade_goods="goto_forge";// show_message("D");
 	            with(obj_temp_inq){instance_destroy();}exit;
 	        }
 	    }
@@ -860,11 +866,17 @@ if (navy) {
 	                var o,bombard,deaths,hurss,scare,onceh,wob,kill;
 	                o=0;bombard=0;deaths=0;hurss=0;onceh=0;wob=0;kill=0;
                 
-	                repeat(4){o+=1;
+	                repeat(orbiting.planets){
+                        o+=1;
 	                    if (orbiting.p_type[o]!="Daemon"){
-	                        if (orbiting.p_population[o]=0) and (orbiting.p_tyranids[o]>0) and (onceh=0){bombard=o;onceh=1;}
+	                        if (orbiting.p_population[o]=0) and (orbiting.p_tyranids[o]>0) and (onceh=0){
+                                bombard=o;
+                                onceh=1;
+                            }
 	                        if (orbiting.p_population[o]=0) and (orbiting.p_orks[o]>0) and (orbiting.p_owner[o]=7) and (onceh=0){bombard=o;onceh=1;}
-	                        if (orbiting.p_owner[o]=8) and (orbiting.p_tau[o]+orbiting.p_pdf[o]>0) and (onceh=0){bombard=o;onceh=1;}
+	                        if (orbiting.p_owner[o]=8) and (orbiting.p_tau[o]+orbiting.p_pdf[o]>0) and (onceh=0){
+                                bombard=o;onceh=1;
+                            }
 	                        if (orbiting.p_owner[o]=10) and ((orbiting.p_chaos[o]+orbiting.p_traitors[o]+orbiting.p_pdf[o]>0) or (orbiting.p_heresy[o]>=50)){bombard=o;onceh=1;}
 	                    }
 	                }
@@ -925,20 +937,24 @@ if (navy) {
 
 
 	// If the guardsmen all die then move on
-	var o;o=0;
+	var o=0;
 	if (guardsmen_unloaded=1) and (instance_exists(orbiting)){
 	    var o,bad;o=0;bad=1;
-	    repeat(4){o+=1;
+	    repeat(orbiting.planets){
+            o+=1;
 	        if (orbiting.p_guardsmen[o]>0) then bad-=1;
 	    }
-	    if (bad=1){guardsmen_unloaded=0;guardsmen_ratio=0;trade_goods="";
+	    if (bad=1){
+            guardsmen_unloaded=0;
+            guardsmen_ratio=0;
+            trade_goods="";
         }
 	}
 
 
 	// Go to recruiting grounds
 	if ((guardsmen_unloaded=0) and (guardsmen_ratio<0.5) and ((trade_goods=""))) or (trade_goods="recr"){// determine what sort of planet is needed
-	    var guard_wanted,planet_needed;guard_wanted=0;planet_needed=0;guard_wanted=maxi-curr;
+	    var guard_wanted=maxi-curr,planet_needed=0;
 	    if (guard_wanted<=50000) then planet_needed=1;// Pretty much any
 	    if (guard_wanted>50000) then planet_needed=2;// Feudal and up
 	    if (guard_wanted>200000) then planet_needed=3;// Temperate and up
@@ -1086,10 +1102,12 @@ if (navy) {
     
 	    with(obj_temp7){instance_destroy();}
     
-	    var plah;plah=false;
+	    var plah=false;
 	    if (obj_controller.faction_status[eFACTION.Imperium]="War"){
 	        if (orbiting.present_fleet[1]>0) then plah=true;
-	        var r;r=0;repeat(4){r+=1;
+	        var r=0;
+            repeat(orbiting.planets){
+                r+=1;
 	            if (orbiting.p_owner[r]=1) then plah=true;
 	            if (planet_feature_bool(orbiting.p_feature[r], P_features.Monastery)==1) then plah=true;
 	        }
@@ -1139,7 +1157,9 @@ if (navy) {
 	                if (y<-5000) then y+=10000;
 	            }
             
-	            action_x=next.x;action_y=next.y;alarm[4]=1;// show_message("G");
+	            action_x=next.x;
+                action_y=next.y;
+                alarm[4]=1;// show_message("G");
 	        }
 	    }
 	}
@@ -1258,14 +1278,15 @@ if (action=""){
             
             if (spid.p_owner[2]=1) and (spid.p_heresy[2]>=60) then scr_loyalty("Heretic Homeworld","+");
             
-            var whom;whom=-1;
+            var whom=-1;
             if (string_count("Inqis",trade_goods)=0) then whom=0;
             if (string_count("Inqis1",trade_goods)=1) then whom=1;
             if (string_count("Inqis2",trade_goods)=1) then whom=2;
             if (string_count("Inqis3",trade_goods)=1) then whom=3;
             if (string_count("Inqis4",trade_goods)=1) then whom=4;
             if (string_count("Inqis5",trade_goods)=1) then whom=5;
-            
+
+            var inquis_string = $"Inquisitor {obj_controller.inquisitor[whom]}";
             
             // INVESTIGATE DEAD HERE 137 ; INVESTIGATE DEAD HERE 137 ; INVESTIGATE DEAD HERE 137 ; INVESTIGATE DEAD HERE 137 ; 
             var cur_star,t,type,cha,dem,tem1,tem1_base,perc,popup;
@@ -1275,10 +1296,13 @@ if (action=""){
             
             if (string_count("investigate",trade_goods)>0){
                 // Check for xenos or demon-equip items on those planets
-                var e,ia,ca;e=0;ia=-1;ca=0;
+                //TODO update this to check weapon or artifact tags
+                var e=0,ia=-1,ca=0;
                 repeat(4400){
                     if (ca<=10) and (ca>=0){
-                        ia+=1;if (ia=400){ca+=1;ia=1;if (ca=11) then ca=-5;}
+                        ia+=1;
+                        if (ia=400){ca+=1;ia=1;
+                        if (ca=11) then ca=-5;}
                         if (ca>=0) and (ca<11){
                             
                             if (string(obj_ini.loc[ca,ia])=cur_star.name) and (real(obj_ini.TTRPG[ca][ia].planet_location)>0){
@@ -1294,7 +1318,9 @@ if (action=""){
                         }
                     }
                 }
-                repeat(4){t+=1;tem1=tem1_base;// Repeat to check each of the planets
+                repeat(cur_star.planets){
+                    t+=1;
+                    tem1=tem1_base;// Repeat to check each of the planets
                     if (cur_star.p_type[t]="Dead") and (array_length(cur_star.p_upgrades[t])>0){
 						var base_search = search_planet_features(cur_star.p_upgrades[t], P_features.Secret_Base); 
                         if (array_length(base_search) >0){
@@ -1332,17 +1358,30 @@ if (action=""){
                             obj_controller.disposition[4]-=max(round((obj_controller.disposition[4]/4)*perc),round(10*perc));
                             obj_controller.disposition[5]-=max(round((obj_controller.disposition[5]/4)*perc),round(10*perc));
                             
-                            popup=3;if ((dem*10)+(cha*3)>=10) then popup=4;
-          
-                            if ((obj_controller.disposition[4]<0) or (obj_controller.loyalty<=0)) and (obj_controller.faction_status[eFACTION.Inquisition]!="War") and (popup=3){popup=0.3;
-                                var moo;moo=false;
-                                if (obj_controller.penitent=1) and (moo=false){obj_controller.alarm[8]=1;moo=true;}
-                                if (obj_controller.penitent=0) and (moo=false) then scr_audience(4,"loyalty_zero",0,"",0,0);
-                            }
-                            if ((obj_controller.disposition[4]<0) or (obj_controller.loyalty<=0)) and (obj_controller.faction_status[eFACTION.Inquisition]!="War") and (popup=4){popup=0.4;
-                                var moo;moo=false;
-                                if (obj_controller.penitent=1) and (moo=false){obj_controller.alarm[8]=1;moo=true;}
-                                if (obj_controller.penitent=0) and (moo=false) then scr_audience(4,"loyalty_zero",0,"",0,0);
+                            popup=3;
+                            if ((dem*10)+(cha*3)>=10) then popup=4;
+
+                            var start_inquisition_war = ((obj_controller.disposition[4]<0 || obj_controller.loyalty<=0) && obj_controller.faction_status[eFACTION.Inquisition]!="War")
+                            
+                            if (start_inquisition_war){
+                                if (popup==3){
+                                    popup=0.3;
+                                    var moo=false;
+                                    if (!moo){
+                                        if (obj_controller.penitent=1) {
+                                            obj_controller.alarm[8]=1;
+                                            moo=true;
+                                        }else if (obj_controller.penitent=0){
+                                            scr_audience(4,"loyalty_zero",0,"",0,0);
+                                        }
+                                    }
+                                }
+                                else if (popup==4){
+                                    popup=0.4;
+                                    var moo=false;
+                                    if (obj_controller.penitent=1) and (moo=false){obj_controller.alarm[8]=1;moo=true;}
+                                    if (obj_controller.penitent=0) and (moo=false) then scr_audience(4,"loyalty_zero",0,"",0,0);
+                                }
                             }
                         }
  						var vault = search_planet_features(cur_star.p_upgrades[t], P_features.Arsenal)
@@ -1365,40 +1404,39 @@ if (action=""){
                         // Popup4: Aresenal with Chaos/Demonic Discovered
                         // Popup5: First Gene-Seed warning
                         // Popup6: Second Gene-Seed warning
-                        var inquis_string = "Inquisitor {obj_controller.inquisitor[whom]}";
                         var star_planet = $"{cur_star.name}{scr_roman(t)}";
 
-                        if (popup=1) then scr_event_log("",inquis_string+" discovers your Secret Lair on "+star_planet+".");
-                        if (popup=2) or (popup=0.2) then scr_event_log("red",inquis_string+" discovers your Secret Lair on "+star_planet+".", cur_star);
-                        if (popup=3) or (popup=0.3) then scr_event_log("",inquis_string+" discovers your Secret Arsenal on "+star_planet+".", cur_star);
-                        if (popup=4) or (popup=0.4) then scr_event_log("red",inquis_string+" discovers your Secret Arsenal on "+star_planet+".", cur_star);
-                        if (popup>=5) or (popup=0.6) then scr_event_log("",inquis_string+" discovers your Secret Gene-Vault on "+star_planet+".", cur_star);
+                        if (popup=1){scr_event_log("",$"{inquis_string} discovers your Secret Lair on {star_planet}.");}
+                        else if (popup=2) or (popup=0.2) {scr_event_log("red",$"{inquis_string} discovers your Secret Lair on {star_planet}.", cur_star);}
+                        else if (popup=3) or (popup=0.3) {scr_event_log("",$"{inquis_string} discovers your Secret Arsenal on {star_planet}.", cur_star);}
+                        else if (popup=4) or (popup=0.4) {scr_event_log("red",$"{inquis_string} discovers your Secret Arsenal on {star_planet}.", cur_star);}
+                        else if (popup>=5) or (popup=0.6) {scr_event_log("",$"{inquis_string} discovers your Secret Gene-Vault on {star_planet}.", cur_star);}
                         
                         var pop_tit,pop_txt,pop_spe;
                         pop_tit="";pop_txt="";pop_spe="";
                         if (popup=1){
                             pop_tit="Inquisition Discovers Lair";
-                            pop_txt=inquis_string+" has discovered your Secret Lair on "+star_planet+".  A quick inspection revealed that there was no contraband or heresy, though the Inquisition does not appreciate your secrecy at all.";
+                            pop_txt=$"{inquis_string} has discovered your Secret Lair on {star_planet}.  A quick inspection revealed that there was no contraband or heresy, though the Inquisition does not appreciate your secrecy at all.";
                         }
                         else if (popup=2){
                             pop_tit="Inquisition Discovers Lair";
-                            pop_txt=inquis_string+" has discovered your Secret Lair on "+star_planet+".  A quick inspection turned up heresy, most foul, and it has all been reported to the Inquisition.  They are seething, as a whole, and relations are damaged.";
+                            pop_txt=$"{inquis_string} has discovered your Secret Lair on {star_planet}.  A quick inspection turned up heresy, most foul, and it has all been reported to the Inquisition.  They are seething, as a whole, and relations are damaged.";
                         }
                         else if (popup=3){
                             pop_tit="Inquisition Discovers Arsenal";
-                            pop_txt=inquis_string+" has discovered your Secret Arsenal on "+star_planet+".  A quick inspection revealed that there was no contraband or heresy, though the Inquisition does not appreciate your secrecy at all.";
+                            pop_txt=$"{inquis_string} has discovered your Secret Arsenal on {star_planet}.  A quick inspection revealed that there was no contraband or heresy, though the Inquisition does not appreciate your secrecy at all.";
                         }
                         else if (popup=4){
                             pop_tit="Inquisition Discovers Arsenal";
-                            pop_txt=inquis_string+" has discovered your Secret Arsenal on "+star_planet+".  A quick inspection turned up heresy, most foul, and it has all been reported to the Inquisition.  Relations have been heavily damaged.";
+                            pop_txt=$"{inquis_string} has discovered your Secret Arsenal on {star_planet}.  A quick inspection turned up heresy, most foul, and it has all been reported to the Inquisition.  Relations have been heavily damaged.";
                         }
                         else if (popup=5){
                             pop_tit="Inquisition Discovers Arsenal";
-                            pop_txt=inquis_string+" has discovered your Secret Gene-Vault on "+star_planet+" and reported it.  The Inquisition does NOT appreciate your secrecy, nor the fact that you were able to mass produce Gene-Seed unknowest to the Imperium.  Relations are damaged.";
+                            pop_txt=$"{inquis_string} has discovered your Secret Gene-Vault on {star_planet} and reported it.  The Inquisition does NOT appreciate your secrecy, nor the fact that you were able to mass produce Gene-Seed unknowest to the Imperium.  Relations are damaged.";
                         }
                         else if (popup=6){
                             pop_tit="Inquisition Discovers Arsenal";
-                            pop_txt=inquis_string+" has discovered your Secret Gene-Vault on "+star_planet+" and reported it.  You were warned once already to not sneak about with Gene-Seed stores and Test-Slave incubators.  Do not let it happen again or your Chapter will be branded heretics.";
+                            pop_txt=$"{inquis_string} has discovered your Secret Gene-Vault on {star_planet} and reported it.  You were warned once already to not sneak about with Gene-Seed stores and Test-Slave incubators.  Do not let it happen again or your Chapter will be branded heretics.";
                         }
                         
                         if ((dem*10)+(cha*3)>=10){

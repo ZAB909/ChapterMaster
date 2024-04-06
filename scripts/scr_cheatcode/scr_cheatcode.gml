@@ -46,6 +46,9 @@ function scr_cheatcode(argument0) {
         if (cheatcode_string=="artifact"){
             scr_add_artifact("random","",0,obj_ini.ship[1],501);
         }
+        if (cheatcode_string=="sisterhospitaler"){
+            scr_add_man("Sister Hospitaler",0,"","","","","",0,true,"default","");
+        }
          if (cheatcode_string=="techuprising"){
             var pip = instance_create(0,0,obj_popup);
             pip.title = "Technical Differences!";
