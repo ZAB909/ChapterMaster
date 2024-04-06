@@ -2005,10 +2005,10 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
         }
         switch (item_type) {
             default:
-                stat_order = ["description", "special_description", "armour_value", "damage_resistance_mod", "hp_mod", "ranged_mod", "melee_mod", "attack", "ammo", "range", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
+                stat_order = ["description", "special_description", "quality", "armour_value", "damage_resistance_mod", "hp_mod", "ranged_mod", "melee_mod", "attack", "ammo", "range", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
                 break;
             case "weapon":
-                stat_order = ["description", "special_description", "attack", "ranged_mod", "melee_mod", "ammo", "range", "armour_value", "hp_mod", "damage_resistance_mod", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
+                stat_order = ["description", "special_description", "quality", "attack", "ranged_mod", "melee_mod", "ammo", "range", "armour_value", "hp_mod", "damage_resistance_mod", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
                 break;
             }
 			
@@ -2018,6 +2018,11 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                 case "description":
                     if (description!=""){
                         item_desc_tooltip += $"{description}##"
+                    }
+                    break;
+                case "quality":
+                    if (quality!=""){
+                        item_desc_tooltip += $"Quality: {quality_string_conversion(quality)}##"
                     }
                     break;
                 case "armour_value":
@@ -2274,16 +2279,36 @@ function gear_weapon_data(search_area="any",item,wanted_data="all", sub_class=fa
 }
 
 function quality_string_conversion(quality){
-    if (quality=="standard") then return "";
-    var qaulity_conversions = {
-        master_crafted:"Master Crafted ",
-        artificer:"Articifer ",
-        artifact:"Artifact ",
-        exemplary:"Exemplary "
+    var quality_conversions = {
+        standard:"Normal",
+        master_crafted:"Master Crafted",
+        artificer:"Articifer",
+        artifact:"Artifact",
+        exemplary:"Exemplary"
     }
-    if (struct_exists(qaulity_conversions, quality)){
-        return qaulity_conversions[$ quality]
+    if (struct_exists(quality_conversions, quality)){
+        return quality_conversions[$ quality]
     } else {return "";}
+}
+
+function quality_color(_item_quality){
+    switch(_item_quality){
+        case "standard":
+            return(draw_get_color())
+            break;
+        case "master_crafted":
+            return(c_orange);
+            break;
+        case "artificer":
+            return(c_red);
+            break;
+        case "artifact":
+            return(c_aqua);
+            break;
+        case "exemplary":
+            return(c_olive);
+            break;
+    }
 }
 
 function format_number_with_sign(number){
