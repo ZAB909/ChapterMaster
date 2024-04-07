@@ -258,3 +258,244 @@ function exit_adhoc_manage(){
 		exit_adhoc_manage();		
 	} 	
 }
+
+
+
+function transfer_selection(){
+	if (instance_number(obj_popup)==0){
+        var pip=instance_create(0,0,obj_popup);
+        pip.type=5.1;
+        pip.company=managing;
+
+        var god=0,nuuum=0,nuuum2=0,checky=0,check_number=0;
+        for(var f=1; f<=man_max; f++){
+            if (god==1) then break;
+            if (god==0) and (man_sel[f]==1) and (man[f]=="man"){
+                god=1;
+                pip.unit_role=ma_role[f];
+            }
+            if (god==0) and (man_sel[f]==1) and (man[f]=="vehicle"){
+                god=1;
+                pip.unit_role=ma_role[f];
+            }
+            if (man_sel[f]==1){
+                if (man[f]=="man"){
+                    nuuum+=1;
+                    checky=1;
+                    if (ma_role[f]==obj_ini.role[100][7]) then checky=0;
+                    if (ma_role[f]==obj_ini.role[100][14]) then checky=0;
+                    if (ma_role[f]==obj_ini.role[100][15]) then checky=0;
+                    if (ma_role[f]==obj_ini.role[100][16]) then checky=0;
+                    if (ma_role[f]==obj_ini.role[100][17]) then checky=0;
+                    if (checky==1) then check_number+=1;
+                }
+                if (man[f]=="vehicle") then nuuum2+=1;
+            }
+        }
+        if (nuuum>1) then pip.unit_role="Marines";
+        if (nuuum2>1) then pip.unit_role="Vehicles";
+        if (nuuum>0) and (nuuum2>0) then pip.unit_role="Units";
+        pip.units=nuuum+nuuum2;
+        if (nuuum>0) and (check_number>0){
+            if (command_set[1]==0){
+                cooldown=8000;
+                with(pip){instance_destroy();}
+            }
+        }
+    }
+}
+
+function toggle_selection_borders(){
+    for(var p=0; p<=500; p++){
+        if (man_sel[p]==1) and (man[p]=="man"){
+        	if (is_struct(display_unit[p])){
+                var unit=display_unit[p];
+                var mar_id = unit.marine_number;
+                if (unit.ship_location>0) and (obj_ini.loc[unit.company][mar_id]!="Mechanicus Vessel"){
+                	unit.is_boarder = !unit.is_boarder;
+                }
+            }
+        }
+    }	
+}
+
+function add_bionics_selection(){
+    var bionics_before=scr_item_count("Bionics");
+    if (bionics_before>0){
+    	for(var p=0; p<=500; p++){
+    		if (man_sel[p]!=0 && is_struct(display_unit[p])){ 
+    			var unit = display_unit[p];
+    			var comp = unit.company;
+    			var mar_id = unit.marine_number;
+                if (obj_ini.loc[comp][mar_id]!="Terra") and (obj_ini.loc[comp][mar_id]!="Mechanicus Vessel"){
+                    if (string_count("Dread",ma_armour[p])=0){
+			        	unit.add_bionics();
+                        if (ma_promote[p]==10) then ma_promote[p]=0;
+                    }
+                }
+            }
+        }
+    }	
+}
+
+function jail_selection(){
+    for(var f=0; f<=man_max; f++){
+        if (man[f]=="man") and (man_sel[f]==1) and (ma_loc[f]!="Terra") and (ma_loc[f]!="Mechanicus Vessel"){
+            if (is_struct(display_unit[f])){
+                unit = display_unit[f];
+                obj_ini.god[unit.company][unit.marine_number]+=10;
+                ma_god[f]+=10;
+            }
+        }
+    }
+    if (managing>0){
+        alll=0;
+        if (managing<=10) then scr_company_view(managing);
+        if (managing>20) then scr_company_view(managing);
+        if (managing>10) and (managing<=20) then scr_special_view(managing);
+    }
+    sel_loading=0;
+    unload=0;
+    alarm[6]=7;		
+}
+
+function promote_selection(){
+	if (instance_number(obj_popup)==0){
+	    var f=0,god=0,nuuum=0;
+	    var o_wep1="",o_wep2="",o_armour="",o_gear="",o_mobi="";
+	    var b_wep1=0,b_wep2=0,b_armour=0,b_gear=0,b_mobi=0;
+	    var vih=0, unit;
+	    var company = managing<=10 ? managing :10;
+	    var prev_role;
+	    var allow = true;
+
+	    // Need to make sure that group selected is all the same type
+	    for(var f=0; f<man_max; f++){
+	        show_debug_message("{0}",vih);
+	        // Set different vih depending on unit type
+	        if (man_sel[f]!=1) then continue;
+	        if (vih==0){
+	            if (man[f]=="man" && is_struct(display_unit[f])){
+	                unit=display_unit[f];
+	                if (unit.armour()!="Dreadnought"){
+	                    vih=1;
+	                } else {
+	                    vih=6;
+	                }
+	            } else if (man[f]=="vehicle"){
+	                if (ma_role[f]=="Land Raider") { vih=50;}
+	                else if (ma_role[f]=="Rhino") { vih=51;}
+	                else if (ma_role[f]=="Predator") {vih=52;}
+	                else if (ma_role[f]=="Land Speeder") { vih=53;}
+	                else if (ma_role[f]=="Whirlwind") {vih=54;}
+	                prev_role = ma_role[f]=="Whirlwind";
+	            }
+	        } else {
+	            if (vih==1 || vih==6){
+	                if (man[f]=="vehicle"){
+	                    allow=false;
+	                    break;
+	                } else if (man[f]=="man" && is_struct(display_unit[f])){
+	                    unit=display_unit[f];
+	                    if (unit.armour()=="Dreadnought" && vih==1){
+	                        allow=false;
+	                        break;
+	                    } else if (unit.armour()!="Dreadnought" && vih==6){
+	                        allow=false;
+	                        break;
+	                    }
+	                }
+	            } else if (vih>=50){
+	                if (man[f]=="man"){
+	                    allow=false;
+	                    break;
+	                } else if(man[f]=="vehicle"){
+	                    if (prev_role != ma_role[f]){
+	                        allow=false;
+	                        break;
+	                    }
+	                }
+	            }
+	        }
+
+	        if (vih>0){
+	            nuuum+=1;
+	            if (o_wep1=="") and (ma_wep1[f]!="") then o_wep1=ma_wep1[f];
+	            if (o_wep2=="") and (ma_wep2[f]!="") then o_wep2=ma_wep2[f];
+	            if (o_armour=="") and (ma_armour[f]!="") then o_armour=ma_armour[f];
+	            if (o_gear=="") and (ma_gear[f]!="") then o_gear=ma_gear[f];
+	            if (o_mobi=="") and (ma_mobi[f]!="") then o_mobi=ma_mobi[f];
+
+	            if (ma_wep1[f]=="") then b_wep1+=1;
+	            if (ma_wep2[f]=="") then b_wep2+=1;
+	            if (ma_armour[f]=="") then b_armour+=1;
+	            if (ma_gear[f]=="") then b_gear+=1;
+	            if (ma_mobi[f]=="") then b_mobi+=1;
+
+	            if ((o_wep1!="") and (ma_wep1[f]!=o_wep1)) or (b_wep1==1) then o_wep1="Assortment";
+	            if ((o_wep2!="") and (ma_wep2[f]!=o_wep2)) or (b_wep2==1) then o_wep2="Assortment";
+	            if ((o_armour!="") and (ma_armour[f]!=o_armour)) or (b_armour==1) then o_armour="Assortment";
+	            if ((o_gear!="") and (ma_gear[f]!=o_gear)) or (b_gear==1) then o_gear="Assortment";
+	            if ((o_mobi!="") and (ma_mobi[f]!=o_mobi)) or (b_mobi==1) then o_mobi="Assortment";
+	        }
+	    }
+
+	    if (b_wep1==nuuum) then o_wep1="";
+	    if (b_wep2==nuuum) then o_wep2="";
+	    if (b_armour==nuuum) then o_armour="";
+	    if (b_gear==nuuum) then o_gear="";
+	    if (b_mobi==nuuum) then o_mobi="";
+
+	    if (vih>0 && man_size>0 && allow){
+
+	        var pip=instance_create(0,0,obj_popup);
+	        pip.type=6;
+	        pip.o_wep1=o_wep1;
+	        pip.o_wep2=o_wep2;
+	        pip.o_armour=o_armour;
+	        pip.o_gear=o_gear;
+	        pip.n_wep1=o_wep1;
+	        pip.n_wep2=o_wep2;
+	        pip.n_armour=o_armour;
+	        pip.n_gear=o_gear;
+	        pip.o_mobi=o_mobi;
+	        pip.n_mobi=o_mobi;
+	        pip.company=managing;
+	        pip.units=nuuum;
+
+	        //Forwards vih selection to the vehicle_equipment variable used in mouse_50 obj_popup and weapons_equip script
+	        pip.vehicle_equipment=vih;
+	    }
+	}		
+}
+
+function load_selection(){
+    if (man_size>0) and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel"){
+        scr_company_load(selecting_location);
+        menu=30;
+        top=1;
+    }	
+}
+
+function unload_selection(){
+    if (man_size>0) and (sel_loading>=1) and (!instance_exists(obj_star_select)) 
+    and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel") and (selecting_location!="Warp"){
+        cooldown=8000;
+        var boba=0;
+        var unload_star = star_by_name(obj_ini.ship_location[obj_controller.selecting_ship]);
+        if (unload_star != "none"){
+            if (unload_star.space_hulk!=1){
+                boba=instance_create(unload_star.x,unload_star.y,obj_star_select);
+                boba.loading=1;
+                // selecting location is the ship right now; get it's orbit location
+                boba.loading_name=obj_ini.ship_location[selecting_ship];
+                boba.depth=self.depth-50;
+                // sel_uid=obj_ini.ship_uid[selecting_ship];
+                scr_company_load(obj_ini.ship_location[selecting_ship]);
+            }
+        }
+    }	
+}
+
+
+
