@@ -106,6 +106,7 @@ function scr_ui_manage() {
     
 		// Var declarations
 	    var c=0,fx="",skin=obj_ini.skin_color;
+		static stats_displayed = false;
 		
 		if (managing>0){
 		    if (managing>20){
@@ -1041,7 +1042,7 @@ function scr_ui_manage() {
 			
 		    yy+=8;
 		     //TODO handle recursively
-		    if (!obj_controller.unit_profile){
+		    if (!obj_controller.unit_profile) && (!stats_displayed){
 			    //draws hover over tooltips
 				function gen_tooltip(tooltip_array) {
 					for (var i = 0; i < array_length(tooltip_array); i++) {
@@ -1294,8 +1295,11 @@ function scr_ui_manage() {
 				draw_set_alpha(1);
 				var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0
 		        if ((point_in_rectangle(mouse_x, mouse_y, xx+1208, yy+210, xx+1374, yy+210+272) || obj_controller.unit_profile) and (!instance_exists(obj_temp3)) and(!instance_exists(obj_popup))){
+					stats_displayed = true;
 		        	selected_unit.stat_display(true);
 		       		//tooltip_draw(stat_x, stat_y+string_height(stat_display),0,0,100,17);
+		        } else {
+					stats_displayed = false;
 		        } 
 		        with (obj_controller){
     		        if (view_squad && !instance_exists(obj_temp3) && !instance_exists(obj_popup)){
