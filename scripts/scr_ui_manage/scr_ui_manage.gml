@@ -1074,7 +1074,9 @@ function scr_ui_manage() {
 				
 				// Load/Unload to ship button
 				if (sel_loading=0){
-					if point_and_click(draw_unit_buttons([x5,y6, x6, y5],"Load")){
+					button.label = "Load";
+					button.alpha = 1;
+					if (point_and_click(draw_unit_buttons([button.x1, button.y1, button.x2, button.y2], button.label, [1,1],button.color,,,button.alpha))){
 		                if (man_size>0) and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel"){
 		                    scr_company_load(selecting_location);
 		                    menu=30;
