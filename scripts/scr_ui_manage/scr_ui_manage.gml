@@ -1098,8 +1098,9 @@ function scr_ui_manage() {
 
 				button.alpha = equip_possible? 1 : 0.5;
 				if (point_and_click(draw_unit_buttons([button.x1, button.y1, button.x2, button.y2], button.label, [1,1],button.color,,,button.alpha)) && equip_possible){
-					promote_selection();
+					equip_selection();
 				}
+				
 				button.x1 += button.w + button.h_gap;
 				button.x2 += button.w + button.h_gap;
 
@@ -1144,7 +1145,8 @@ function scr_ui_manage() {
 				if (point_and_click(draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha))){
                 	jail_selection();		
 				}
-
+				button.x1 += button.w + button.h_gap;
+				button.x2 += button.w + button.h_gap;
 				// // Add bionics button
 				button.label = "Add Bionics";
 				button.alpha = 1;
@@ -1162,13 +1164,18 @@ function scr_ui_manage() {
 				var boarder_possible = sel_loading!=0  && man_size>0;
 				button.alpha = boarder_possible ? 1 : 0.5;
 				if (point_and_click(draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha)) && boarder_possible){
-					toggle_selection_borders()
+					if (boarder_possible) then toggle_selection_borders();
 				}
-
+				button.x1 += button.w + button.h_gap;
+				button.x2 += button.w + button.h_gap;
 				// // Reset changes button
 				button.label = "Reset";
-				button.alpha = 1;
-				draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha);
+				var reset_possible = !array_contains(invalid_locations, selecting_location) && 
+								man_size>0;
+				button.alpha = reset_possible? 1 : 0.5;
+				if (point_and_click(draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha))){
+					if (reset_possible) then reset_selection_equipment();
+				}
 				button.x1 += button.w + button.h_gap;
 				button.x2 += button.w + button.h_gap;
 
@@ -1183,14 +1190,103 @@ function scr_ui_manage() {
 					button.alpha = 0.6;
 					draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha);
 				}
-				button.x1 += button.w + button.h_gap;
-				button.x2 += button.w + button.h_gap;
 
 				// // Select all units button
 				// button.label = "Select All";
 				// button.alpha = 1;
 				// draw_unit_buttons([button.x1, button.y1, button.x2, button.y2], button.label, [1,1],,,,button.alpha);
+				if (sel_uni[1] != "") {
+					// How much space the selected unit takes
+					draw_set_font(fnt_40k_30b);
+					draw_text_transformed(actions_block.x1 + 26, actions_block.y1 + 6,$"Selection: {man_size} space",0.5,0.5,0);
+					// List of selected units
+					draw_set_font(fnt_40k_14);
+					draw_text_ext(actions_block.x1 + 26, actions_block.y1 + 30,selecting_dudes,-1,550);
+					// Options for the selected unit
+					// draw_set_font(fnt_40k_30b);
+					// draw_text_transformed(actions_block.x1 + 4, actions_block.x1 + 64,"Options:",0.5,0.5,0);
+
+					// Select all units button
+					button.x1 -= (button.w + button.h_gap) * 2;
+					button.x2 -= (button.w + button.h_gap) * 2;
+					button.y1 -= (button.h + button.v_gap) * 4.15;
+					button.y2 -= (button.h + button.v_gap) * 4.15;
+					button.label = "Select All";
+					button.alpha = 1;
+					if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)){
+						cooldown=8;
+						if (alll==0){
+							scr_load_all(true);
+							selecting_types="%!@";
+						} else if (alll==1){
+							scr_load_all(false);
+							selecting_types="";
+						}
+					}
+
+					// Select all infantry button
+					button.y1 += button.h + button.v_gap + 4;
+					button.h /= 1.4;
+					button.y2 = button.y1 + button.h;
+					var inf_button_pos = [button.x1, button.y1, button.x2, button.y2];
+					button.label = "All Infantry";
+					button.alpha = 1;
+					if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) {
+						sel_all = "man";
+					}
+
+					// Select types of infantry buttons
+					for (var i = 1; i <= 8; i++) {
+						if (sel_uni[i] != "") {
+							button.x1 += button.w + button.h_gap;
+							button.x2 += button.w + button.h_gap;
+							if i == 5{
+								button.x1 -= (button.w + button.h_gap) * 5;
+								button.x2 -= (button.w + button.h_gap) * 5;
+								button.y1 += button.h + button.v_gap;
+								button.y2 += button.h + button.v_gap;
+							}
+							button.label = string_truncate(sel_uni[i], 100);
+							button.alpha = 1;
+							if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) {
+								sel_all = sel_uni[i];
+							}
+						}
+					}
+				}
+
+					// Select all vehicles button
+				if (sel_veh[1]!=""){
+					button.x1 = inf_button_pos[0];
+					button.x2 = inf_button_pos[2];
+					button.y1 = inf_button_pos[1] + (button.h + button.v_gap) * 2 + 4;
+					button.y2 = button.y1 + button.h;
+					button.label = "All Vehicles";
+					button.alpha = 1;
+					if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) {
+						sel_all="vehicle";
+					}
+
+					for (var i = 1; i <= 8; i++) {
+						if (sel_veh[i] != "") {
+							button.x1 += button.w + button.h_gap;
+							button.x2 += button.w + button.h_gap;
+							if i == 5{
+								button.x1 -= (button.w + button.h_gap) * 5;
+								button.x2 -= (button.w + button.h_gap) * 5;
+								button.y1 += button.h + button.v_gap;
+								button.y2 += button.h + button.v_gap;
+							}
+							button.label = string_truncate(sel_veh[i], 100);
+							button.alpha = 1;
+							if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) {
+								sel_all = sel_veh[i];
+							}
+						}
+					}
+				}
 			}
+
 			draw_set_color(#3f7e5d);
 			scr_scrollbar(974,172,1005,790,34,man_max,man_current);
 		}	

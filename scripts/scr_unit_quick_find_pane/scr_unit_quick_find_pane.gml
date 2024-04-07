@@ -359,7 +359,7 @@ function jail_selection(){
     alarm[6]=7;		
 }
 
-function promote_selection(){
+function equip_selection(){
 	if (instance_number(obj_popup)==0){
 	    var f=0,god=0,nuuum=0;
 	    var o_wep1="",o_wep2="",o_armour="",o_gear="",o_mobi="";
@@ -371,7 +371,7 @@ function promote_selection(){
 
 	    // Need to make sure that group selected is all the same type
 	    for(var f=0; f<man_max; f++){
-	        show_debug_message("{0}",vih);
+
 	        // Set different vih depending on unit type
 	        if (man_sel[f]!=1) then continue;
 	        if (vih==0){
@@ -495,6 +495,41 @@ function unload_selection(){
             }
         }
     }	
+}
+
+function reset_selection_equipment(){
+    var god=0,nuuum=0;
+    o_wep1="";
+    o_wep2="";
+    o_armour="";
+    o_gear="";
+    o_mobi="";
+    b_wep1=0;
+    b_wep2=0;
+    b_armour=0;
+    b_gear=0;
+    b_mobi=0;
+
+    for(var f=1; f<=man_max; f++){
+        // If come across a man, set vih to 1
+        if (man[f]="man") and (man_sel[f]=1) then nuuum+=1;
+    }
+
+    var pip=instance_create(0,0,obj_popup);
+    pip.type=6;
+    pip.o_wep1="Assortment";
+    pip.o_wep2="Assortment";
+    pip.o_armour="Assortment";
+    pip.o_gear="Assortment";
+    pip.o_mobi="Assortment";
+    pip.n_wep1="Assortment";
+    pip.n_wep2="Assortment";
+    pip.n_armour="Assortment";
+    pip.n_gear="Assortment";
+    pip.n_mobi="Assortment";
+    pip.company=managing;
+    pip.units=nuuum;
+    pip.alarm[1]=1;
 }
 
 
