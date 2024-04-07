@@ -1092,214 +1092,31 @@ function scr_ui_manage() {
 					button.label = "Unload";
 				}
 				button.alpha = 1;
-				if (point_and_click(draw_unit_buttons([button.x1, button.y1, button.x2, button.y2], button.label, [1, 1], button.color, , , button.alpha))) {
-					// Load to ship
-					if (man_size>0) and (sel_loading==0) and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel"){
-						scr_company_load(selecting_location);
-						menu=30;
-						cooldown=8000;
-						top=1;
-						exit;
-					}
-					// Unload - ask for planet confirmation
-					if (man_size>0) and (sel_loading>=1) and (!instance_exists(obj_star_select)) 
-					and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel") and (selecting_location!="Warp"){
-						cooldown=8000;
-						var boba=0;
-	
-						with(obj_temp3){instance_destroy();}
-						with(obj_star){
-							if (name==obj_ini.ship_location[obj_controller.selecting_ship]) then instance_create(x,y,obj_temp3);
-						}
-	
-						if (instance_exists(obj_temp3)){
-							boba=instance_nearest(x,y,obj_star);
-							if (boba.space_hulk==1) and (boba.name==obj_ini.ship_location[obj_controller.selecting_ship]) then with(obj_temp3){instance_destroy();}
-						}
-	
-						if (instance_exists(obj_temp3)){
-							boba=instance_create(obj_temp3.x,obj_temp3.y,obj_star_select);
-							boba.loading=1;
-							// selecting location is the ship right now; get it's orbit location
-							boba.loading_name=obj_ini.ship_location[selecting_ship];
-							boba.depth=self.depth-50;
-							// sel_uid=obj_ini.ship_uid[selecting_ship];
-							scr_company_load(obj_ini.ship_location[selecting_ship]);
-						}
-						with(obj_temp3){instance_destroy();}
-					}
-				}
-
-
-				// // Re-equip button
+				draw_unit_buttons([button.x1, button.y1, button.x2, button.y2], button.label, [1,1],button.color,,,button.alpha);
 				button.x1 += button.w + button.h_gap;
 				button.x2 += button.w + button.h_gap;
+
+				// // Re equip button
 				button.label = "Re-equip";
 				button.alpha = 1;
-				if (point_and_click(draw_unit_buttons([button.x1, button.y1, button.x2, button.y2], button.label, [1, 1], button.color, , , button.alpha))) {
-					if (selecting_location != "Terra") && (selecting_location != "Mechanicus Vessel") && (otha == 0) {
-						if (man_size > 0) && (instance_number(obj_popup) == 0) {
-							var f = 0,
-								god = 0,
-								nuuum = 0;
-							var o_wep1 = "",
-								o_wep2 = "",
-								o_armour = "",
-								o_gear = "",
-								o_mobi = "";
-							var b_wep1 = 0,
-								b_wep2 = 0,
-								b_armour = 0,
-								b_gear = 0,
-								b_mobi = 0;
-							var vih = 0,
-								unit;
-							var company = managing <= 10 ? managing : 10;
-							var prev_role;
-							var allow = true;
-							// Need to make sure that group selected is all the same type
-							for (var f = 0; f < man_max; f++) {
-								show_debug_message("{0}", vih);
-								// Set different vih depending on unit type
-								if (man_sel[f] != 1) then
-								continue;
-								if (vih == 0) {
-									if (man[f] == "man" && is_struct(display_unit[f])) {
-										unit = display_unit[f];
-										if (unit.armour() != "Dreadnought") {
-											vih = 1;
-										} else {
-											vih = 6;
-										}
-									} else if (man[f] == "vehicle") {
-										if (ma_role[f] == "Land Raider") {
-											vih = 50;
-										} else if (ma_role[f] == "Rhino") {
-											vih = 51;
-										} else if (ma_role[f] == "Predator") {
-											vih = 52;
-										} else if (ma_role[f] == "Land Speeder") {
-											vih = 53;
-										} else if (ma_role[f] == "Whirlwind") {
-											vih = 54;
-										}
-										prev_role = ma_role[f] == "Whirlwind";
-									}
-								} else {
-									if (vih == 1 || vih == 6) {
-										if (man[f] == "vehicle") {
-											allow = false;
-											break;
-										} else if (man[f] == "man" && is_struct(display_unit[f])) {
-											unit = display_unit[f];
-											if (unit.armour() == "Dreadnought" && vih == 1) {
-												allow = false;
-												break;
-											} else if (unit.armour() != "Dreadnought" && vih == 6) {
-												allow = false;
-												break;
-											}
-										}
-									} else if (vih >= 50) {
-										if (man[f] == "man") {
-											allow = false;
-											break;
-										} else if (man[f] == "vehicle") {
-											if (prev_role != ma_role[f]) {
-												allow = false;
-												break;
-											}
-										}
-									}
-								}
-								if (vih > 0) {
-									nuuum += 1;
-									if (o_wep1 == "") && (ma_wep1[f] != "") then o_wep1 = ma_wep1[f];
-									if (o_wep2 == "") && (ma_wep2[f] != "") then o_wep2 = ma_wep2[f];
-									if (o_armour == "") && (ma_armour[f] != "") then o_armour = ma_armour[f];
-									if (o_gear == "") && (ma_gear[f] != "") then o_gear = ma_gear[f];
-									if (o_mobi == "") && (ma_mobi[f] != "") then o_mobi = ma_mobi[f];
-									if (ma_wep1[f] == "") then b_wep1 += 1;
-									if (ma_wep2[f] == "") then b_wep2 += 1;
-									if (ma_armour[f] == "") then b_armour += 1;
-									if (ma_gear[f] == "") then b_gear += 1;
-									if (ma_mobi[f] == "") then b_mobi += 1;
-									if ((o_wep1 != "") && (ma_wep1[f] != o_wep1)) or(b_wep1 == 1) then o_wep1 = "Assortment";
-									if ((o_wep2 != "") && (ma_wep2[f] != o_wep2)) or(b_wep2 == 1) then o_wep2 = "Assortment";
-									if ((o_armour != "") && (ma_armour[f] != o_armour)) or(b_armour == 1) then o_armour = "Assortment";
-									if ((o_gear != "") && (ma_gear[f] != o_gear)) or(b_gear == 1) then o_gear = "Assortment";
-									if ((o_mobi != "") && (ma_mobi[f] != o_mobi)) or(b_mobi == 1) then o_mobi = "Assortment";
-								}
-							}
-							if (b_wep1 == nuuum) then o_wep1 = "";
-							if (b_wep2 == nuuum) then o_wep2 = "";
-							if (b_armour == nuuum) then o_armour = "";
-							if (b_gear == nuuum) then o_gear = "";
-							if (b_mobi == nuuum) then o_mobi = "";
-							if (vih > 0 && man_size > 0 && allow) {
-								var pip = instance_create(0, 0, obj_popup);
-								pip.type = 6;
-								pip.o_wep1 = o_wep1;
-								pip.o_wep2 = o_wep2;
-								pip.o_armour = o_armour;
-								pip.o_gear = o_gear;
-								pip.n_wep1 = o_wep1;
-								pip.n_wep2 = o_wep2;
-								pip.n_armour = o_armour;
-								pip.n_gear = o_gear;
-								pip.o_mobi = o_mobi;
-								pip.n_mobi = o_mobi;
-								pip.company = managing;
-								pip.units = nuuum;
-								//Forwards vih selection to the vehicle_equipment variable used in mouse_50 obj_popup and weapons_equip script
-								pip.vehicle_equipment = vih;
-								if (o_wep1 != "") && (string_count("&", o_wep1) > 0) then pip.a_wep1 = clean_tags(o_wep1);
-								if (o_wep2 != "") && (string_count("&", o_wep2) > 0) then pip.a_wep2 = clean_tags(o_wep2);
-								if (o_armour != "") && (string_count("&", o_armour) > 0) then pip.a_armour = clean_tags(o_armour);
-								if (o_gear != "") && (string_count("&", o_gear) > 0) then pip.a_gear = clean_tags(o_gear);
-								if (o_mobi != "") && (string_count("&", o_mobi) > 0) then pip.a_mobi = clean_tags(o_mobi);
-							}
-						}
-					}
-				}
+				draw_unit_buttons([button.x1, button.y1, button.x2, button.y2], button.label, [1,1],button.color,,,button.alpha);
+				button.x1 += button.w + button.h_gap;
+				button.x2 += button.w + button.h_gap;
 
 				// // Promote button
-				button.x1 += button.w + button.h_gap;
-				button.x2 += button.w + button.h_gap;
 				button.label = "Promote";
 				button.alpha = sel_promoting > 0 ? 1 : 0.5;
-				if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)){
-					if (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel") and (man_size>0){
-						if (sel_promoting==1) and (instance_number(obj_popup)==0){
-							var pip=instance_create(0,0,obj_popup);
-							pip.type=5;
-							pip.company=managing;
-		
-							var god=0,nuuum=0;
-							for(var f=1; f<=man_max; f++){
-								if ((ma_promote[f]>=1 || is_specialist(ma_role[f], "rank_and_file")  || is_specialist(ma_role[f], "squad_leaders")) && man_sel[f]==1){
-									nuuum+=1;
-									if (pip.min_exp==0) then pip.min_exp=ma_exp[f];
-									pip.min_exp=min(ma_exp[f],pip.min_exp);
-								}
-								if (god==0) and (ma_promote[f]>=1) and (man_sel[f]==1){
-									god=1;
-									pip.unit_role=ma_role[f];
-								}
-							}
-							if (nuuum>1) then pip.unit_role="Marines";
-							pip.units=nuuum;
-						}
-					}
-				}
-
-				// // Put in jail button
+				draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha);
 				button.x1 += button.w + button.h_gap;
 				button.x2 += button.w + button.h_gap;
+
+				// // Put in jail button
 				button.label = "Jail";
 				button.alpha = 1;
-				if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)){
-					show_debug_message("clicked");
+				draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha);
+				button.x1 += button.w + button.h_gap;
+				button.x2 += button.w + button.h_gap;
+				if point_and_click(draw_unit_buttons([x5,y6, x6, y5],"Jail")){
 	                for(var f=1; f<=man_max; f++){
 	                    if (man[f]=="man") and (man_sel[f]==1) and (ma_loc[f]!="Terra") and (ma_loc[f]!="Mechanicus Vessel"){
 	                        if (is_struct(display_unit[f])){
@@ -1321,11 +1138,14 @@ function scr_ui_manage() {
 				}
 
 				// // Add bionics button
-				button.x1 += button.w + button.h_gap;
-				button.x2 += button.w + button.h_gap;
 				button.label = "Add Bionics";
 				button.alpha = 1;
-				if (point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha))){
+				draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha);
+				button.y1 -= button.h + button.v_gap;
+				button.y2 -= button.h + button.v_gap;
+				button.x1 -= (button.w + button.h_gap) * 4;
+				button.x2 -= (button.w + button.h_gap) * 4;
+				if (point_and_click(draw_unit_buttons([x5,y6, x6, y5], "Add Bionics",[1,1],38144))&&  man_size>0){
 	                bionics_before=scr_item_count("Bionics");
 	                bionics_after=bionics_before;
 	                if (bionics_before>0){
@@ -1347,13 +1167,12 @@ function scr_ui_manage() {
 				}
 
 				// // Designate as boarder unit
-				button.y1 -= button.h + button.v_gap;
-				button.y2 -= button.h + button.v_gap;
-				button.x1 -= (button.w + button.h_gap) * 4;
-				button.x2 -= (button.w + button.h_gap) * 4;
 				button.label = "Set Boarder";
 				button.alpha = 1;
-				if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)){
+				draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha);
+				button.x1 += (button.w + button.h_gap);
+				button.x2 += (button.w + button.h_gap);
+				if point_and_click(draw_unit_buttons([x5,y6, x6, y5], "Set Boarder",[1,1],c_red)){
 					if ((man_size>0)){
 		                for(var p=1; p<=500; p++){
 		                    if (man_sel[p]==1) and (man[p]=="man"){
@@ -1370,191 +1189,24 @@ function scr_ui_manage() {
 				}
 
 				// // Reset changes button
-				button.x1 += (button.w + button.h_gap);
-				button.x2 += (button.w + button.h_gap);
 				button.label = "Reset";
 				button.alpha = 1;
-				if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)){
-					if (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel") and (man_size>0){
-						var god=0,nuuum=0;
-						o_wep1="";
-						o_wep2="";
-						o_armour="";
-						o_gear="";
-						o_mobi="";
-						b_wep1=0;
-						b_wep2=0;
-						b_armour=0;
-						b_gear=0;
-						b_mobi=0;
-		
-						for(var f=1; f<=man_max; f++){
-							// If come across a man, set vih to 1
-							if (man[f]="man") and (man_sel[f]=1) then nuuum+=1;
-						}
-		
-						var pip=instance_create(0,0,obj_popup);
-						pip.type=6;
-						pip.o_wep1="Assortment";
-						pip.o_wep2="Assortment";
-						pip.o_armour="Assortment";
-						pip.o_gear="Assortment";
-						pip.o_mobi="Assortment";
-						pip.n_wep1="Assortment";
-						pip.n_wep2="Assortment";
-						pip.n_armour="Assortment";
-						pip.n_gear="Assortment";
-						pip.n_mobi="Assortment";
-						pip.company=managing;
-						pip.units=nuuum;
-						pip.alarm[1]=1;
-					}
-				}
-
-				// // Transfer to another company button
+				draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha);
 				button.x1 += button.w + button.h_gap;
 				button.x2 += button.w + button.h_gap;
+
+				// // Transfer to another company button
 				button.label = "Transfer";
 				button.alpha = 1;
-				if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)){
-					if (selecting_location!="Mechanicus Vessel") and (man_size>0){
-						if (instance_number(obj_popup)==0){
-							var pip=instance_create(0,0,obj_popup);
-							pip.type=5.1;
-							pip.company=managing;
-							var god=0,nuuum=0,nuuum2=0,checky=0,check_number=0;
-							for(var f=1; f<=man_max; f++){
-								if (god==1) then break;
-								if (god==0) and (man_sel[f]==1) and (man[f]=="man"){
-									god=1;
-									pip.unit_role=ma_role[f];
-								}
-								if (god==0) and (man_sel[f]==1) and (man[f]=="vehicle"){
-									god=1;
-									pip.unit_role=ma_role[f];
-								}
-								if (man_sel[f]==1){
-									if (man[f]=="man"){
-										nuuum+=1;
-										checky=1;
-										if (ma_role[f]==obj_ini.role[100][7]) then checky=0;
-										if (ma_role[f]==obj_ini.role[100][14]) then checky=0;
-										if (ma_role[f]==obj_ini.role[100][15]) then checky=0;
-										if (ma_role[f]==obj_ini.role[100][16]) then checky=0;
-										if (ma_role[f]==obj_ini.role[100][17]) then checky=0;
-										if (checky==1) then check_number+=1;
-									}
-									if (man[f]=="vehicle") then nuuum2+=1;
-								}
-							}
-							if (nuuum>1) then pip.unit_role="Marines";
-							if (nuuum2>1) then pip.unit_role="Vehicles";
-							if (nuuum>0) and (nuuum2>0) then pip.unit_role="Units";
-							pip.units=nuuum+nuuum2;
-							if (nuuum>0) and (check_number>0){
-								if (command_set[1]==0){
-									cooldown=8000;
-									with(pip){instance_destroy();}
-								}
-							}
-						}
-					}
-				}
+				draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha);
+				button.x1 += button.w + button.h_gap;
+				button.x2 += button.w + button.h_gap;
 
-			// Selection buttons and related text
-			if (sel_uni[1] != "") {
-				// How much space the selected unit takes
-				draw_set_font(fnt_40k_30b);
-				draw_text_transformed(actions_block.x1 + 26, actions_block.y1 + 6,$"Selection: {man_size} space",0.5,0.5,0);
-				// List of selected units
-				draw_set_font(fnt_40k_14);
-				draw_text_ext(actions_block.x1 + 26, actions_block.y1 + 30,selecting_dudes,-1,550);
-				// Options for the selected unit
-				// draw_set_font(fnt_40k_30b);
-				// draw_text_transformed(actions_block.x1 + 4, actions_block.x1 + 64,"Options:",0.5,0.5,0);
-
-				// Select all units button
-				button.x1 -= (button.w + button.h_gap) * 2;
-				button.x2 -= (button.w + button.h_gap) * 2;
-				button.y1 -= (button.h + button.v_gap) * 4.15;
-				button.y2 -= (button.h + button.v_gap) * 4.15;
-				button.label = "Select All";
-				button.alpha = 1;
-				if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)){
-					cooldown=8;
-					if (alll==0){
-						scr_load_all(true);
-						selecting_types="%!@";
-					} else if (alll==1){
-						scr_load_all(false);
-						selecting_types="";
-					}
-				}
-
-				// Select all infantry button
-				button.y1 += button.h + button.v_gap + 4;
-				button.h /= 1.4;
-				button.y2 = button.y1 + button.h;
-				var inf_button_pos = [button.x1, button.y1, button.x2, button.y2];
-				button.label = "All Infantry";
-				button.alpha = 1;
-				if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) {
-					sel_all = "man";
-				}
-
-				// Select types of infantry buttons
-				for (var i = 1; i <= 8; i++) {
-					if (sel_uni[i] != "") {
-						button.x1 += button.w + button.h_gap;
-						button.x2 += button.w + button.h_gap;
-						if i == 5{
-							button.x1 -= (button.w + button.h_gap) * 5;
-							button.x2 -= (button.w + button.h_gap) * 5;
-							button.y1 += button.h + button.v_gap;
-							button.y2 += button.h + button.v_gap;
-						}
-						button.label = string_truncate(sel_uni[i], 100);
-						button.alpha = 1;
-						if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) {
-							sel_all = sel_uni[i];
-						}
-					}
-				}
+				// // Select all units button
+				// button.label = "Select All";
+				// button.alpha = 1;
+				// draw_unit_buttons([button.x1, button.y1, button.x2, button.y2], button.label, [1,1],,,,button.alpha);
 			}
-
-			// Select all vehicles button
-			if (sel_veh[1]!=""){
-				button.x1 = inf_button_pos[0];
-				button.x2 = inf_button_pos[2];
-				button.y1 = inf_button_pos[1] + (button.h + button.v_gap) * 2 + 4;
-				button.y2 = button.y1 + button.h;
-				button.label = "All Vehicles";
-				button.alpha = 1;
-				if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) {
-					sel_all="vehicle";
-				}
-
-				for (var i = 1; i <= 8; i++) {
-					if (sel_veh[i] != "") {
-						button.x1 += button.w + button.h_gap;
-						button.x2 += button.w + button.h_gap;
-						if i == 5{
-							button.x1 -= (button.w + button.h_gap) * 5;
-							button.x2 -= (button.w + button.h_gap) * 5;
-							button.y1 += button.h + button.v_gap;
-							button.y2 += button.h + button.v_gap;
-						}
-						button.label = string_truncate(sel_veh[i], 100);
-						button.alpha = 1;
-						if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) {
-							sel_all = sel_veh[i];
-						}
-					}
-				}
-			}
-
-			}
-			// Draw scroll bar
 			draw_set_color(#3f7e5d);
 			scr_scrollbar(974,172,1005,790,34,man_max,man_current);
 		}		
@@ -1562,7 +1214,7 @@ function scr_ui_manage() {
 			if (cn.temp[120].name()!="") and (cn.temp[120].race()!=0){
 				draw_set_alpha(1);
 				var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0
-		        if ((point_in_rectangle(mouse_x, mouse_y, xx+1208, yy+210, xx+1374, yy+210+272) || obj_controller.unit_profile) and (!instance_exists(obj_temp3)) && (!instance_exists(obj_popup))){
+		        if ((point_in_rectangle(mouse_x, mouse_y, xx+1208, yy+210, xx+1374, yy+210+272) || obj_controller.unit_profile) and (!instance_exists(obj_temp3)) and(!instance_exists(obj_popup))){
 		        	selected_unit.stat_display(true);
 		       		//tooltip_draw(stat_x, stat_y+string_height(stat_display),0,0,100,17);
 		        } 
