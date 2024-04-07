@@ -1114,26 +1114,7 @@ function scr_ui_manage() {
 				button.alpha = promote_possible? 1 : 0.5;
 				if (point_and_click(draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha))){
 					if (promote_possible){
-		                if (sel_promoting==1) and (instance_number(obj_popup)==0){
-		                    var pip=instance_create(0,0,obj_popup);
-		                    pip.type=5;
-		                    pip.company=managing;
-
-		                    var god=0,nuuum=0;
-		                    for(var f=1; f<=man_max; f++){
-		                        if ((ma_promote[f]>=1 || is_specialist(ma_role[f], "rank_and_file")  || is_specialist(ma_role[f], "squad_leaders")) && man_sel[f]==1){
-		                            nuuum+=1;
-		                            if (pip.min_exp==0) then pip.min_exp=ma_exp[f];
-		                            pip.min_exp=min(ma_exp[f],pip.min_exp);
-		                        }
-		                        if (god==0) and (ma_promote[f]>=1) and (man_sel[f]==1){
-		                            god=1;
-		                            pip.unit_role=ma_role[f];
-		                        }
-		                    }
-		                    if (nuuum>1) then pip.unit_role="Marines";
-		                    pip.units=nuuum;
-		                }						
+		                promote_selection();
 					}
 				}
 				button.x1 += button.w + button.h_gap;
