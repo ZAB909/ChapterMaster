@@ -1086,8 +1086,7 @@ function scr_ui_manage() {
 			             unload_selection();   // Unload - ask for planet confirmation					
 					}				
 				}
-				button.alpha = 1;
-				draw_unit_buttons([button.x1, button.y1, button.x2, button.y2], button.label, [1,1],button.color,,,button.alpha);
+
 				button.x1 += button.w + button.h_gap;
 				button.x2 += button.w + button.h_gap;
 
@@ -1112,9 +1111,28 @@ function scr_ui_manage() {
 
 
 				button.alpha = promote_possible? 1 : 0.5;
-				if (point_and_click(draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha))){
+				if (point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha))){
 					if (promote_possible){
-		                promote_selection();
+		                if (sel_promoting==1) and (instance_number(obj_popup)==0){
+		                    var pip=instance_create(0,0,obj_popup);
+		                    pip.type=5;
+		                    pip.company=managing;
+
+		                    var god=0,nuuum=0;
+		                    for(var f=1; f<=man_max; f++){
+		                        if ((ma_promote[f]>=1 || is_specialist(ma_role[f], "rank_and_file")  || is_specialist(ma_role[f], "squad_leaders")) && man_sel[f]==1){
+		                            nuuum+=1;
+		                            if (pip.min_exp==0) then pip.min_exp=ma_exp[f];
+		                            pip.min_exp=min(ma_exp[f],pip.min_exp);
+		                        }
+		                        if (god==0) and (ma_promote[f]>=1) and (man_sel[f]==1){
+		                            god=1;
+		                            pip.unit_role=ma_role[f];
+		                        }
+		                    }
+		                    if (nuuum>1) then pip.unit_role="Marines";
+		                    pip.units=nuuum;
+		                }						
 					}
 				}
 				button.x1 += button.w + button.h_gap;
@@ -1123,7 +1141,7 @@ function scr_ui_manage() {
 				// // Put in jail button
 				button.label = "Jail";
 				button.alpha = 1;
-				if (point_and_click(draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha))){
+				if (point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha))){
                 	jail_selection();		
 				}
 				button.x1 += button.w + button.h_gap;
@@ -1131,7 +1149,7 @@ function scr_ui_manage() {
 				// // Add bionics button
 				button.label = "Add Bionics";
 				button.alpha = 1;
-				if (point_and_click(draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha))){
+				if (point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha))){
 					add_bionics_selection();
 				}
 
@@ -1144,7 +1162,7 @@ function scr_ui_manage() {
 				button.label = "Set Boarder";
 				var boarder_possible = sel_loading!=0  && man_size>0;
 				button.alpha = boarder_possible ? 1 : 0.5;
-				if (point_and_click(draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha)) && boarder_possible){
+				if (point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) && boarder_possible){
 					if (boarder_possible) then toggle_selection_borders();
 				}
 				button.x1 += button.w + button.h_gap;
@@ -1154,7 +1172,7 @@ function scr_ui_manage() {
 				var reset_possible = !array_contains(invalid_locations, selecting_location) && 
 								man_size>0;
 				button.alpha = reset_possible? 1 : 0.5;
-				if (point_and_click(draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha))){
+				if (point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha))){
 					if (reset_possible) then reset_selection_equipment();
 				}
 				button.x1 += button.w + button.h_gap;
@@ -1164,12 +1182,12 @@ function scr_ui_manage() {
 				button.label = "Transfer";
 				if (!array_contains(invalid_locations, selecting_location) && man_size>0){
 					button.alpha = 1;
-					if (point_and_click(draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha))){
+					if (point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha))){
 						transfer_selection();
 					}
 				} else {
 					button.alpha = 0.6;
-					draw_unit_buttons([button.x1,button.y2, button.x2, button.y1],button.label,[1,1],button.color,,,button.alpha);
+					draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha);
 				}
 
 				// // Select all units button
