@@ -5,22 +5,29 @@ function scr_unit_detail_text(){
 	var is_astartes = false;
 	var is_superior = array_contains([obj_ini.role[100][18], obj_ini.role[100][19]], role());
 	var unit_name = name();
+	var unit_role = role();
 	var body_augmentations = {mutations:[], bionics:[[],[]]}
 	var body_bionics = get_body_data("bionic");
 	if(base_group == "astartes"){
 		is_astartes = true;
 	}
 
-	// Squad text
-	if (squad != "none"){
-		var chapter_role = ""
-		chapter_role += is_superior ? $"{unit_name}, sergeant of the" : $"{unit_name}, member of the";
-		if (company > 0){
+	// Chapter Role text
+	var chapter_role = ""
+	if (company > 0){
+		if (squad != "none"){
+			chapter_role += is_superior ? $"{unit_name}, sergeant of the " : $"{unit_name}, member of the ";
 			chapter_role += scr_convert_company_to_string(company, true, true);
-		} //else{chapter_role = "Command"}
-		chapter_role += string(" {0} {1}.", squad, obj_ini.squads[squad].display_name);
-		unit_data_string += chapter_role
+			chapter_role += string(" {0} {1}.", squad, obj_ini.squads[squad].display_name);
+		} else {
+			chapter_role += $"{unit_name}, {unit_role} from the ";
+			chapter_role += scr_convert_company_to_string(company, false, true) + ".";
+		}
+	} else {
+		chapter_role += $"{unit_name}, {unit_role}.";
 	}
+	unit_data_string += chapter_role;
+
 
 		// Age and ascension date
 		unit_data_string += "#"
@@ -38,13 +45,13 @@ function scr_unit_detail_text(){
 				unit_data_string += $", in particular a sub cult known as {religion_sub_cult}"
 			}
 			if ((piety > 25)and (piety <40)){
-				unit_data_string += " and is a close follower of the faith."
+				unit_data_string += ", he is firmly committed to the faith."
 			}else if(piety <= 25){
-				unit_data_string += " however does not put much stock in religion."
+				unit_data_string += ", however, he is not putting much value in religion."
 			}else if(piety >= 40){
-				unit_data_string += " and is zealous in his worship."
+				unit_data_string += ", he is fervently devoted in his worship."
 			}else if(piety >= 50){
-				unit_data_string += " and is fanatical in his worship."
+				unit_data_string += ", he exhibits an unshakeable fanaticism in his worship."
 			}
 			unit_data_string+="#";
 		}
@@ -102,11 +109,11 @@ function scr_unit_detail_text(){
 			var bionic_positions = struct_get_names(body_bionics);
 			var bionic_count = bionics;
 			if (bionic_count == 0){
-				unit_data_string+= "Has no bodily augmentations besides his astartes gene seed and organs.";
+				unit_data_string+= "Has no bodily augmentations besides his astartes gene-seed and organs.";
 			}else if(bionic_count == 1 && array_length(bionic_positions)>0){
 				for (var i=0;i<array_length(global.body_parts);i++){
 					if (bionic_positions[0]==global.body_parts[i]){
-						unit_data_string+= $"{unit_name} Has a bionic {global.body_parts_display[i]}";
+						unit_data_string+= $"Has a bionic {global.body_parts_display[i]}.";
 					}
 				}
 			}else if((bionic_count >1) and (bionic_count <=4)){
@@ -116,20 +123,10 @@ function scr_unit_detail_text(){
 			}else if (bionic_count >8){
 				unit_data_string+= "Is mostly a machine, having replaced most of his flesh with bionic replacements.";
 			}
-			if (array_contains(bionic_positions, "throat")){
-				unit_data_string+=" People tend to find the sound from his augmented throat unnerving.";
-			}
-			// Black carapace text
-			var has_carapace;
-			if (struct_exists(body[$ "torso"], "black_carapace")){
-				if (body[$ "torso"][$"black_carapace"]){
-					has_carapace=true;
-				}else{
-					has_carapace=false;
-					unit_data_string+="#";
-					unit_data_string+="Doesn't have black carapace installed and therefore can't use power armour to its maximum potential.";
-				}
-			}
+			// Not sure why you need this line only for the throat.
+			// if (array_contains(bionic_positions, "throat")){
+			// 	unit_data_string+=" People tend to find the sound from his augmented throat unnerving.";
+			// }
 			// Gene-seed text
 			unit_data_string+="#";
 			var mutation_names = struct_get_names(gene_seed_mutations);
@@ -138,60 +135,63 @@ function scr_unit_detail_text(){
 			for (var mute =0; mute <array_length(mutation_names); mute++){
 				if (gene_seed_mutations[$ mutation_names[mute]] == 1){
 					mutation_count += 1;
-					mutation_string += " ";
 					switch(mutation_names[mute]){
 						case "preomnor":
-							mutation_string += "He lacks the detoxifying gland called the Preomnor- he is more susceptible to poisons and toxins.";
+							mutation_string += "Lacks the detoxifying gland called the Preomnor - he is more susceptible to poisons and toxins.";
 							break;
 						case "lyman":
-							mutation_string += "He lacks a working Lyman's ear, And therefore struggles with deep strikes and certain other actions.";
+							mutation_string += "Lacks a working Lyman's ear, and therefore struggles with deep strikes and certain other actions.";
 							break;
 						case "omophagea":
-							mutation_string += "He suffers from a faulty Omophagea.";
+							mutation_string += "Suffers from a faulty Omophagea.";
 							break;
 						case "ossmodula":
-							mutation_string += "He suffers from a faulty Ossmodula, and takes longer to heal from injuries.";
+							mutation_string += "Suffers from a faulty Ossmodula, and takes longer to heal from injuries.";
 							break;
 						case "zygote":
 							mutation_string +="One of his Zygotes is faulty or missing.";
 							break;
 						case "betchers":
-							mutation_string +="He is missing his Betchers Gland and therefore cannot spit acid.";
+							mutation_string +="Missing his Betchers Gland and therefore cannot spit acid.";
 							break;
 						case "catalepsean":
-							mutation_string +="He has a faulty Catalepsean Node reducing his awareness when tired.";
+							mutation_string +="Has a faulty Catalepsean Node reducing his awareness when tired.";
 							break;
 						case "occulobe":
-							mutation_string += "He suffers from a faulty occulobe limiting his eyesight enhancements.";
+							mutation_string += "Suffers from a faulty occulobe limiting his eyesight enhancements.";
 							break;
 						case "mucranoid":
-							mutation_string += "He suffers from a faulty mucranoid reducing his resistance to extreme heat and cold.";
+							mutation_string += "Suffers from a faulty mucranoid reducing his resistance to extreme heat and cold.";
 							break;
 						case "membrane":
-							mutation_string += "He cannot properly activate his Sus-an Membrane, this limits his ability to survive mortal wounds.";
+							mutation_string += "Cannot properly activate his Sus-an Membrane, this limits his ability to survive mortal wounds.";
 							break;
 						case "voice":
-							mutation_string += "The marine implantation process caused his voice to warp and now produces a sound that the average member of the Imperium finds unnerving to hear.";
+							mutation_string += "Gene-seed implantation process damaged his vocal cords, causing many to find the sound of his voice to be rather unnerving.";
 					}
-					mutation_string += " ";
+					mutation_string += "#";
 				}
 			}
-		unit_data_string += "His gene-seed ";
 		if (mutation_count == 0){
-			unit_data_string+= "is pure and has no mutations."
-		}else if(mutation_count == 1){
-			unit_data_string+= "suffered a mutation.";
-		}else if((mutation_count >1) and (mutation_count <=4)){
-			unit_data_string+= "suffered some mutations."
-		}else if((mutation_count >=5) and (mutation_count <8)){
-			unit_data_string+= "mutated considerably."
-		}else if (mutation_count >8){
-			unit_data_string+= "accumulated a lot of mutations and is hardly recognizable."
+			unit_data_string += "His gene-seed is pure and has no mutations.#"
+			unit_data_string += "#";
+		} else {
+			unit_data_string += mutation_string;
 		}
-		unit_data_string += mutation_string;
-		unit_data_string+="##";
+		// Black carapace text
+		var has_carapace;
+		if (struct_exists(body[$ "torso"], "black_carapace")){
+			if (body[$ "torso"][$"black_carapace"]){
+				has_carapace=true;
+			}else{
+				has_carapace=false;
+				unit_data_string+="#";
+				unit_data_string+="Doesn't have black carapace installed and therefore can't use power armour to its maximum potential.";
+			}
+		}
 
 		// Sergeant text
+		unit_data_string += "#";
 		if (is_superior){
 			var charisma_string = "";
 			var wisdom_string = "";
@@ -252,7 +252,7 @@ function scr_unit_detail_text(){
 	if (array_length(traits) > 0){
 		unit_data_string+="##"
 		for (var i=0;i<array_length(traits);i++){
-			unit_data_string += string(global.trait_list[$ traits[i]].flavour_text + ". ", unit_name);
+			unit_data_string += string(global.trait_list[$ traits[i]].flavour_text + ".#", unit_name);
 			if (struct_exists(global.trait_list[$ traits[i]], "effect")){
 				unit_data_string += $" ({global.trait_list[$ traits[i]].effect})";
 			}
