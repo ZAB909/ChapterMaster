@@ -1074,18 +1074,24 @@ function scr_ui_manage() {
 				button.y2 = button.y1 + button.h;
 				
 				// Load/Unload to ship button
-				if (sel_loading==0){
-					button.label = "Load";
+				button.label = "Load";
+				var load_unload_possible = man_size>0;
+				
+				if load_unload_possible{
 					button.alpha = 1;
-					if (point_and_click(draw_unit_buttons([button.x1, button.y1, button.x2, button.y2], button.label, [1,1],button.color,,,button.alpha))){
-		                load_selection();						
+					if (sel_loading==0){
+						if (point_and_click(draw_unit_buttons([button.x1, button.y1, button.x2, button.y2], button.label, [1,1],button.color,,,button.alpha))){
+							load_selection();						
+						}
+					} else if (sel_loading!=0){
+						button.label = "Unload";
+						if (point_and_click(draw_unit_buttons([button.x1, button.y1, button.x2, button.y2], button.label, [1,1],button.color,,,button.alpha))){
+							 unload_selection();   // Unload - ask for planet confirmation					
+						}				
 					}
-				} else if (sel_loading!=0){
-					button.label = "Unload";
-					button.alpha = 1;
-					if (point_and_click(draw_unit_buttons([button.x1, button.y1, button.x2, button.y2], button.label, [1,1],button.color,,,button.alpha))){
-			             unload_selection();   // Unload - ask for planet confirmation					
-					}				
+				} else {
+					button.alpha = 0.5;
+					draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha);
 				}
 
 				button.x1 += button.w + button.h_gap;
@@ -1106,11 +1112,7 @@ function scr_ui_manage() {
 
 				// // Promote button
 				button.label = "Promote";
-				var promote_possible = sel_promoting > 0 && 
-								!array_contains(invalid_locations, selecting_location) && 
-								man_size>0;
-
-
+				var promote_possible = sel_promoting > 0 && !array_contains(invalid_locations, selecting_location) && man_size>0;
 				button.alpha = promote_possible? 1 : 0.5;
 				if (point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha))){
 					if (promote_possible){
@@ -1141,17 +1143,19 @@ function scr_ui_manage() {
 
 				// // Put in jail button
 				button.label = "Jail";
-				button.alpha = 1;
+				var jail_possible = man_size>0;
+				button.alpha =  jail_possible ? 1 : 0.5;
 				if (point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha))){
-                	jail_selection();		
+					if (jail_possible) then jail_selection();
 				}
 				button.x1 += button.w + button.h_gap;
 				button.x2 += button.w + button.h_gap;
 				// // Add bionics button
 				button.label = "Add Bionics";
-				button.alpha = 1;
+				var bionics_possible = man_size>0;
+				button.alpha = bionics_possible ? 1 : 0.5;
 				if (point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha))){
-					add_bionics_selection();
+					if (bionics_possible) then add_bionics_selection();
 				}
 
 				button.y1 -= button.h + button.v_gap;
@@ -1168,33 +1172,36 @@ function scr_ui_manage() {
 				}
 				button.x1 += button.w + button.h_gap;
 				button.x2 += button.w + button.h_gap;
+
 				// // Reset changes button
 				button.label = "Reset";
-				var reset_possible = !array_contains(invalid_locations, selecting_location) && 
-								man_size>0;
-				button.alpha = reset_possible? 1 : 0.5;
-				if (point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha))){
-					if (reset_possible) then reset_selection_equipment();
+				var reset_possible = !array_contains(invalid_locations, selecting_location) && man_size>0;
+				if reset_possible{
+					button.alpha = 1;
+					if (point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha))){
+						reset_selection_equipment();
+					}
+				} else {
+					button.alpha = 0.5;
+					draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha);
 				}
+
 				button.x1 += button.w + button.h_gap;
 				button.x2 += button.w + button.h_gap;
 
 				// // Transfer to another company button
 				button.label = "Transfer";
-				if (!array_contains(invalid_locations, selecting_location) && man_size>0){
+				var transfer_possible = !array_contains(invalid_locations, selecting_location) && man_size>0;
+				if transfer_possible{
 					button.alpha = 1;
 					if (point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha))){
 						transfer_selection();
 					}
 				} else {
-					button.alpha = 0.6;
+					button.alpha = 0.5;
 					draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha);
 				}
 
-				// // Select all units button
-				// button.label = "Select All";
-				// button.alpha = 1;
-				// draw_unit_buttons([button.x1, button.y1, button.x2, button.y2], button.label, [1,1],,,,button.alpha);
 				if (sel_uni[1] != "") {
 					// How much space the selected unit takes
 					draw_set_font(fnt_40k_30b);
@@ -1300,7 +1307,7 @@ function scr_ui_manage() {
 		       		//tooltip_draw(stat_x, stat_y+string_height(stat_display),0,0,100,17);
 		        } else {
 					stats_displayed = false;
-		        } 
+				}
 		        with (obj_controller){
     		        if (view_squad && !instance_exists(obj_temp3) && !instance_exists(obj_popup)){
     		        	if (managing>10){
