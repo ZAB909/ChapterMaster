@@ -1144,7 +1144,7 @@ function scr_ui_manage() {
 	                bionics_before=scr_item_count("Bionics");
 	                bionics_after=bionics_before;
 	                if (bionics_before>0){
-	                	for(var p=1; p<=500; p++){
+	                	for(var p=0; p<=500; p++){
 	                		if (man_sel[p]==0 && is_struct(display_unit[p])){ 
 	                			var unit = display_unit[p];
 	                			var comp = unit.company;
