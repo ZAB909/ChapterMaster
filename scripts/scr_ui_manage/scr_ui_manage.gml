@@ -1055,146 +1055,6 @@ function scr_ui_manage() {
 		    yy+=8;
 		     //TODO handle recursively
 		    if (!obj_controller.unit_profile){
-
-			    // if (sel_uni[1] != "") {
-				// 	// How much space the selected unit takes
-				// 	draw_set_color(c_gray);
-				// 	draw_set_font(fnt_40k_30b);
-				// 	draw_text_transformed(actions_block.x1 + 4, actions_block.y1 + 4,$"Selection: {man_size} space",0.5,0.5,0);
-				// 	draw_set_font(fnt_40k_14);
-				// 	draw_text_ext(actions_block.x1 + 4, actions_block.y1 + 24,selecting_dudes,-1,550);
-
-				// 	// Options for the selected unit
-				// 	draw_set_font(fnt_40k_30b);
-				// 	draw_text_transformed(actions_block.x1 + 4, actions_block.x1 + 64,"Options:",0.5,0.5,0);
-
-				// 	draw_set_font(fnt_40k_14);
-				//     draw_text(xx + 1010, yy + 636, string_hash_to_newline("All Infantry"));
-				//     draw_rectangle(xx + 1010, yy + 634, xx + 1010 + string_width(string_hash_to_newline("All Infantry")), yy + 634 + string_height(string_hash_to_newline("All Infantry")), 1);
-				//     if (mouse_check_button_pressed(mb_left) && cooldown <= 0) {
-				//         if (mouse_x >= xx + 1010 && mouse_y >= yy + 634 && mouse_x < xx + 1010 + string_width(string_hash_to_newline("All Infantry")) && mouse_y < yy + 634 + string_height(string_hash_to_newline("All Infantry"))) {
-				//             cooldown = 8;
-				//             sel_all = "man";
-				//         }
-				//     }
-				//     var y_offset,x_offset;
-				//     var x1,x2,y1,y2;
-				//     for (var i = 1; i <= 8; i++) {
-				//         if (sel_uni[i] != "") {
-				//         	if (i<=4){
-				// 	            y_offset = 26 * (i - 1);
-				// 	        	x_offset=0;
-				//         	}
-				//             if (i>4){
-				//             	y_offset = 26 * (i - 5);
-				//             	x_offset=144;
-				//             }
-				//             x1=xx + 1016 +x_offset;
-				//             x2=x1+ string_width(string_hash_to_newline(sel_uni[i]));
-				//             y1=yy + 662 + y_offset;
-				//             y2=y1+string_height(string_hash_to_newline(sel_uni[i]))
-				//             draw_text(x1, y1, string_hash_to_newline(sel_uni[i]));
-				//             draw_rectangle(x1, y1, x2, y2, 1);
-
-				//             if (mouse_check_button_pressed(mb_left) && cooldown <= 0) {
-				//             	if (point_in_rectangle(mouse_x, mouse_y,x1, y1, x2, y2)){
-				//                     cooldown = 8;
-				//                     sel_all = sel_uni[i];
-				//                 }
-				//             }
-				//         }
-				//     }
-				// }
-			    // if (sel_veh[1]!=""){
-			    //     draw_text(xx+1010+288,yy+636,string_hash_to_newline("All Vehicles"));
-			    //     draw_rectangle(xx+1010+288,yy+634,xx+1010+288+string_width(string_hash_to_newline("All Vehicles")),yy+634+string_height(string_hash_to_newline("All Vehicles")),1);
-			    //     if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			    //         if (mouse_x>=xx+1010+288) and (mouse_y>=yy+634) and (mouse_x<xx+1010+288+string_width(string_hash_to_newline("All Vehicles"))) and (mouse_y<yy+634+string_height(string_hash_to_newline("All Vehicles"))){
-				// 			cooldown=8;
-				// 			sel_all="vehicle";
-				// 		}
-			    //     }
-			    //     if (sel_veh[1]!=""){
-			    //         draw_text(xx+1016+288,yy+662,string_hash_to_newline(sel_veh[1]));
-				// 		draw_rectangle(xx+1028+288,yy+661,xx+1016+288+string_width(string_hash_to_newline(sel_veh[1])),yy+661+string_height(string_hash_to_newline(sel_veh[1])),1);
-			    //         if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			    //             if (mouse_x>=xx+1028+288) and (mouse_y>=yy+661) and (mouse_x<xx+1016+288+string_width(string_hash_to_newline(sel_veh[1]))) and (mouse_y<yy+661+string_height(string_hash_to_newline(sel_veh[1]))){
-				// 				cooldown=8;
-				// 				sel_all=sel_veh[1];
-				// 			}
-			    //         }
-			    //     }
-			    //     if (sel_veh[2]!=""){
-			    //         draw_text(xx+1016+288,yy+684,string_hash_to_newline(sel_veh[2]));
-				// 		draw_rectangle(xx+1028+288,yy+683,xx+1016+288+string_width(string_hash_to_newline(sel_veh[2])),yy+683+string_height(string_hash_to_newline(sel_veh[2])),1);
-			    //         if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			    //             if (mouse_x>=xx+1028+288) and (mouse_y>=yy+683) and (mouse_x<xx+1016+288+string_width(string_hash_to_newline(sel_veh[2]))) and (mouse_y<yy+683+string_height(string_hash_to_newline(sel_veh[2]))){
-				// 				cooldown=8;
-				// 				sel_all=sel_veh[2];
-				// 			}
-			    //         }
-			    //     }
-			    //     if (sel_veh[3]!=""){
-			    //         draw_text(xx+1016+288,yy+706,string_hash_to_newline(sel_veh[3]));
-				// 		draw_rectangle(xx+1028+288,yy+705,xx+1016+288+string_width(string_hash_to_newline(sel_veh[3])),yy+705+string_height(string_hash_to_newline(sel_veh[3])),1);
-			    //         if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			    //             if (mouse_x>=xx+1028+288) and (mouse_y>=yy+705) and (mouse_x<xx+1016+288+string_width(string_hash_to_newline(sel_veh[3]))) and (mouse_y<yy+705+string_height(string_hash_to_newline(sel_veh[3]))){
-				// 				cooldown=8;
-				// 				sel_all=sel_veh[3];
-				// 			}
-			    //         }
-			    //     }
-			    //     if (sel_veh[4]!=""){
-			    //         draw_text(xx+1016+288,yy+728,string_hash_to_newline(sel_veh[4]));
-				// 		draw_rectangle(xx+1028+288,yy+727,xx+1016+288+string_width(string_hash_to_newline(sel_veh[4])),yy+727+string_height(string_hash_to_newline(sel_veh[4])),1);
-			    //         if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			    //             if (mouse_x>=xx+1028+288) and (mouse_y>=yy+728) and (mouse_x<xx+1016+288+string_width(string_hash_to_newline(sel_veh[4]))) and (mouse_y<yy+727+string_height(string_hash_to_newline(sel_veh[4]))){
-				// 				cooldown=8;
-				// 				sel_all=sel_veh[4];
-				// 			}
-			    //         }
-			    //     }
-			    //     if (sel_veh[5]!=""){
-			    //         draw_text(xx+1160+432,yy+662,string_hash_to_newline(sel_veh[5]));
-				// 		draw_rectangle(xx+1028+432,yy+661,xx+1160+432+string_width(string_hash_to_newline(sel_veh[5])),yy+661+string_height(string_hash_to_newline(sel_veh[5])),1);
-			    //         if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			    //             if (mouse_x>=xx+1160+432) and (mouse_y>=yy+661) and (mouse_x<xx+1160+432+string_width(string_hash_to_newline(sel_veh[5]))) and (mouse_y<yy+661+string_height(string_hash_to_newline(sel_veh[5]))){
-				// 				cooldown=8;
-				// 				sel_all=sel_veh[5];
-				// 			}
-			    //         }
-			    //     }
-			    //     if (sel_veh[6]!=""){
-			    //         draw_text(xx+1160+432,yy+684,string_hash_to_newline(sel_veh[6]));
-				// 		draw_rectangle(xx+1028+432,yy+683,xx+1160+432+string_width(string_hash_to_newline(sel_veh[6])),yy+683+string_height(string_hash_to_newline(sel_veh[6])),1);
-			    //         if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			    //             if (mouse_x>=xx+1160+432) and (mouse_y>=yy+683) and (mouse_x<xx+1160+432+string_width(string_hash_to_newline(sel_veh[6]))) and (mouse_y<yy+683+string_height(string_hash_to_newline(sel_veh[6]))){
-				// 				cooldown=8;
-				// 				sel_all=sel_veh[6];
-				// 			}
-			    //         }
-			    //     }
-			    //     if (sel_veh[7]!=""){
-			    //         draw_text(xx+1160+432,yy+706,string_hash_to_newline(sel_veh[7]));
-				// 		draw_rectangle(xx+1028+432,yy+705,xx+1160+432+string_width(string_hash_to_newline(sel_veh[7])),yy+705+string_height(string_hash_to_newline(sel_veh[7])),1);
-			    //         if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			    //             if (mouse_x>=xx+1160+432) and (mouse_y>=yy+706) and (mouse_x<xx+1160+432+string_width(string_hash_to_newline(sel_veh[7]))) and (mouse_y<yy+705+string_height(string_hash_to_newline(sel_veh[7]))){
-				// 				cooldown=8;
-				// 				sel_all=sel_veh[7];
-				// 			}
-			    //         }
-			    //     }
-			    //     if (sel_veh[8]!=""){
-			    //         draw_text(xx+1160+432,yy+728,string_hash_to_newline(sel_veh[8]));
-				// 		draw_rectangle(xx+1028+432,yy+727,xx+1160+432+string_width(string_hash_to_newline(sel_veh[8])),yy+727+string_height(string_hash_to_newline(sel_veh[8])),1);
-			    //         if (mouse_check_button_pressed(mb_left)) and (cooldown<=0){
-			    //             if (mouse_x>=xx+1160+432) and (mouse_y>=yy+728) and (mouse_x<xx+1160+432+string_width(string_hash_to_newline(sel_veh[8]))) and (mouse_y<yy+727+string_height(string_hash_to_newline(sel_veh[8]))){
-				// 				cooldown=8;
-				// 				sel_all=sel_veh[8];
-				// 			}
-			    //         }
-			    //     }
-			    // }
 			    //draws hover over tooltips
 				function gen_tooltip(tooltip_array) {
 					for (var i = 0; i < array_length(tooltip_array); i++) {
@@ -1212,8 +1072,8 @@ function scr_ui_manage() {
 				yy-=8;
 				draw_set_font(fnt_40k_14b);
 				var button = {
-					x1: right_ui_block.x1+24,
-					y1: right_ui_block.y2-6-25,
+					x1: right_ui_block.x1+26,
+					y1: right_ui_block.y2-6-30,
 					w: 100,
 					h: 30,
 					h_gap: 4,
@@ -1271,7 +1131,7 @@ function scr_ui_manage() {
 				}
 
 
-				// // Re equip button
+				// // Re-equip button
 				button.x1 += button.w + button.h_gap;
 				button.x2 += button.w + button.h_gap;
 				button.label = "Re-equip";
@@ -1562,7 +1422,6 @@ function scr_ui_manage() {
 							var pip=instance_create(0,0,obj_popup);
 							pip.type=5.1;
 							pip.company=managing;
-
 							var god=0,nuuum=0,nuuum2=0,checky=0,check_number=0;
 							for(var f=1; f<=man_max; f++){
 								if (god==1) then break;
@@ -1602,23 +1461,98 @@ function scr_ui_manage() {
 					}
 				}
 
-			// Select all units button
-			button.x1 -= (button.w + button.h_gap) * 3;
-			button.x2 -= (button.w + button.h_gap) * 3;
-			button.y1 -= (button.h + button.v_gap) * 1.5;
-			button.y2 -= (button.h + button.v_gap) * 1.5;
-			button.label = "Select All";
-			button.alpha = 1;
-			if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)){
-				cooldown=8;
-				if (alll==0){
-					scr_load_all(true);
-					selecting_types="%!@";
-				} else if (alll==1){
-					scr_load_all(false);
-					selecting_types="";
+			// Selection buttons and related text
+			if (sel_uni[1] != "") {
+				// How much space the selected unit takes
+				draw_set_font(fnt_40k_30b);
+				draw_text_transformed(actions_block.x1 + 26, actions_block.y1 + 6,$"Selection: {man_size} space",0.5,0.5,0);
+				// List of selected units
+				draw_set_font(fnt_40k_14);
+				draw_text_ext(actions_block.x1 + 26, actions_block.y1 + 30,selecting_dudes,-1,550);
+				// Options for the selected unit
+				// draw_set_font(fnt_40k_30b);
+				// draw_text_transformed(actions_block.x1 + 4, actions_block.x1 + 64,"Options:",0.5,0.5,0);
+
+				// Select all units button
+				button.x1 -= (button.w + button.h_gap) * 2;
+				button.x2 -= (button.w + button.h_gap) * 2;
+				button.y1 -= (button.h + button.v_gap) * 4.15;
+				button.y2 -= (button.h + button.v_gap) * 4.15;
+				button.label = "Select All";
+				button.alpha = 1;
+				if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)){
+					cooldown=8;
+					if (alll==0){
+						scr_load_all(true);
+						selecting_types="%!@";
+					} else if (alll==1){
+						scr_load_all(false);
+						selecting_types="";
+					}
+				}
+
+				// Select all infantry button
+				button.y1 += button.h + button.v_gap + 4;
+				button.h /= 1.4;
+				button.y2 = button.y1 + button.h;
+				var inf_button_pos = [button.x1, button.y1, button.x2, button.y2];
+				button.label = "All Infantry";
+				button.alpha = 1;
+				if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) {
+					sel_all = "man";
+				}
+
+				// Select types of infantry buttons
+				for (var i = 1; i <= 8; i++) {
+					if (sel_uni[i] != "") {
+						button.x1 += button.w + button.h_gap;
+						button.x2 += button.w + button.h_gap;
+						if i == 5{
+							button.x1 -= (button.w + button.h_gap) * 5;
+							button.x2 -= (button.w + button.h_gap) * 5;
+							button.y1 += button.h + button.v_gap;
+							button.y2 += button.h + button.v_gap;
+						}
+						button.label = string_truncate(sel_uni[i], 100);
+						button.alpha = 1;
+						if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) {
+							sel_all = sel_uni[i];
+						}
+					}
 				}
 			}
+
+			// Select all vehicles button
+			if (sel_veh[1]!=""){
+				button.x1 = inf_button_pos[0];
+				button.x2 = inf_button_pos[2];
+				button.y1 = inf_button_pos[1] + (button.h + button.v_gap) * 2 + 4;
+				button.y2 = button.y1 + button.h;
+				button.label = "All Vehicles";
+				button.alpha = 1;
+				if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) {
+					sel_all="vehicle";
+				}
+
+				for (var i = 1; i <= 8; i++) {
+					if (sel_veh[i] != "") {
+						button.x1 += button.w + button.h_gap;
+						button.x2 += button.w + button.h_gap;
+						if i == 5{
+							button.x1 -= (button.w + button.h_gap) * 5;
+							button.x2 -= (button.w + button.h_gap) * 5;
+							button.y1 += button.h + button.v_gap;
+							button.y2 += button.h + button.v_gap;
+						}
+						button.label = string_truncate(sel_veh[i], 100);
+						button.alpha = 1;
+						if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) {
+							sel_all = sel_veh[i];
+						}
+					}
+				}
+			}
+
 			}
 			// Draw scroll bar
 			draw_set_color(#3f7e5d);
