@@ -2127,19 +2127,29 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		corruption = edit > 0 ?min(100, corruption+edit) : max(0, corruption+edit);
 	}
 
+	static in_jail(){
+		return (obj_ini.god[company,v]>=10);
+	}
+
 	static forge_point_generation = function(turn_end=false){
-		if (!IsSpecialist("forge")) then return 0;
+		var trained_person = IsSpecialist("forge");
+		var crafter = has_trait("crafter");
+		if (!(trained_person || crafter)) then return 0;
 		var reasons = {}
-		var points = technology/10;
-		crafter = has_trait("crafter");
-		reasons.base = points;
+		var points = 0;
+		if (trained_person){
+			var points = technology/10;
+			reasons.trained = points;
+		}
 		if (job!="none"){
 			if (job.type == "forge"){
-				reasons.at_forge = (points+3);
+				
 				if (crafter){
 					points*=3;
+					reasons.at_forge = "X3(crafter bonus)";
 				} else {
 					points*=2;
+					reasons.at_forge = "X2";
 				}
 				points+=3;
 				if (turn_end){
@@ -2408,6 +2418,28 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}	
 
 		update_age(floor(age));	
+	}
+
+	static set_default_equipment= function(from_armoury=true, to_armoury=true, quality="any"){
+		var role_match=-1;
+		for (var i=0; i<24;i++){
+			if (obj_ini.role[100][i] == role()){
+				role_match=i;
+				break;
+			}
+		}
+		if (role_match!=-1){
+			alter_equipment({
+				"wep1":obj_ini.wep1[100][role_match],
+				"wep2":obj_ini.wep2[100][role_match],
+				"mobi":obj_ini.mobi[100][role_match],
+				"armour":obj_ini.armour[100][role_match],
+				"gear":obj_ini.gear[100][role_match]
+			}, 
+			from_armoury,
+			to_armoury,
+			quality);
+		}
 	}
 	static alter_equipment = function(update_equipment, from_armoury=true, to_armoury=true, quality="any"){
 		var equip_areas = struct_get_names(update_equipment);

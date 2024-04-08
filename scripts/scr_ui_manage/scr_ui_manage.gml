@@ -690,7 +690,7 @@ function scr_ui_manage() {
 
 				eventing=false;
 	        
-		        if (man[sel]=="man"){
+		        if (man[sel]=="man"&&is_struct(display_unit[sel])){
 
 					unit = display_unit[sel];
 					if (unit.name()=="" || unit.base_group=="none"){continue;}
@@ -746,7 +746,7 @@ function scr_ui_manage() {
 						ma_we2=gear_weapon_data("weapon",unit.weapon_two(),"abbreviation");
 						ma_we2=is_string(ma_we1) ? ma_we2 : "";	
 		            }
-		        }else if (man[sel]=="vehicle"){
+		        }else if (man[sel]=="vehicle" && is_array(display_unit[sel])){
 		            // temp1="v "+string(managing)+"."+string(ide[sel]);
 		            temp1=string(ma_role[sel]);
 		            temp2=string(ma_loc[sel]);

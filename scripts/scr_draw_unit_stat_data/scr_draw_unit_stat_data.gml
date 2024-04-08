@@ -53,19 +53,19 @@ function scr_draw_unit_stat_data(manage=false){
 		"constitution"],
 
 		[string(intelligence),
-		"Measure of learnt knowledge and specialist skill aptitude.",
+		"Measure of learnt knowledge and specialist skill aptitude.##Influences esoteric knowledge and use of force weapons",
 		#2F3B6B,
 		spr_intelligence_icon,
 		"Intelligence", "INT","intelligence"],
 
 		[string(wisdom),
-		"Unit's perception and street smarts including certain types of battlefield knowledge.",
+		"Unit's perception and street smarts including certain types of battlefield knowledge.##Influences tactical decisions and garrison effects",
 		#54540B,
 		spr_wisdom_icon,
 		"Wisdom", "WIS", "wisdom"],
 
 		[string(piety),
-		"Unit's faith in their given religion or general aptitude towards faith.",
+		"Unit's faith in their given religion or general aptitude towards faith.##Influences resistance to corruption",
 		#6A411C,
 		spr_faith_icon,
 		"Piety", "PTY", "piety"],
@@ -91,14 +91,14 @@ function scr_draw_unit_stat_data(manage=false){
 		"LCK", "luck"],
 
 		[string(technology),
-		"Skill and understanding of technology and various technical thingies.",
+		"Skill and understanding of technology and various technical thingies.##Influences Forge point output",
 		#4F0105,
 		spr_technology_icon,
 		"Technology",
 		"TEC", "technology"],
 
 		[string(charisma),
-		"General likeability and ability to interact with people.",
+		"General likeability and ability to interact with people.##Influences disposition increases and decreases#Influences ability to spread corruption",
 		#3A0339,
 		spr_charisma_icon,
 		"Charisma",
@@ -136,7 +136,7 @@ function scr_draw_unit_stat_data(manage=false){
 				unit_text = false;
 			}
 		}
-		array_push(stat_tool_tips,[attribute_box.x1, attribute_box.y1, attribute_box.x2, attribute_box.y2,stat_display_list[i][1] + $"Click to order by highest {stat_display_list[i][4]}", $"{stat_display_list[i][4]} ({stat_display_list[i][5]})"]);
+		array_push(stat_tool_tips,[attribute_box.x1, attribute_box.y1, attribute_box.x2, attribute_box.y2,stat_display_list[i][1] + $"#Click to order by highest {stat_display_list[i][4]}", $"{stat_display_list[i][4]} ({stat_display_list[i][5]})"]);
 		attribute_box.x1+=36;
 		attribute_box.x2+=36;
 	}
@@ -227,11 +227,24 @@ function scr_draw_unit_stat_data(manage=false){
 		data_entry.tooltip = "The Imperium measures and records the psionic activity and power level of psychic individuals through a rating system called The Assignment. Comprised of a twenty-four point scale, The Assignment simplifies the comparison of psykers to aid Imperial authorities in recognizing possible threats.";
 		array_push(data_lines, data_entry);
 		
-		var is_forge = IsSpecialist("forge");
-		if (is_forge){
+		var forge_gen = forge_point_generation();
+		if (forge_gen!=0){
 			data_entry = {};
-			data_entry.text = $"Forge Production: {forge_point_generation()[0]}\n";
-			data_entry.tooltip = "This is a description for Forge Production";
+			data_entry.tooltip="";
+			var gen_reasons = forge_gen[1];
+			data_entry.text = $"Forge Production: {forge_gen[0]}\n";
+			if (struct_exists(gen_reasons, "master")){
+				data_entry.tooltip+=$"#Forge Master :{gen_reasons.master}";
+			}
+			if (struct_exists(gen_reasons, "crafter")){
+				data_entry.tooltip+=$"#Crafter Trait :{gen_reasons.crafter}";
+			}
+			if (struct_exists(gen_reasons, "trained")){
+				data_entry.tooltip+=$"#Trained Technician :{gen_reasons.trained}";
+				if (struct_exists(gen_reasons, "at_forge")){
+					data_entry.tooltip+=$"#     Assignment Forge :{gen_reasons.at_forge}";
+				}				
+			}						;
 			array_push(data_lines, data_entry);
 		}
 		

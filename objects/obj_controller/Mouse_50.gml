@@ -1930,7 +1930,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 skip=false;
                 while (man[sel]=="hide" && sel<500){sel++;}
                 if (man[sel]=="man"){
-                    unit=obj_ini.TTRPG[company][ide[sel]];
+                    unit=display_unit[sel];
                     if (unit.assignment()!="none" || array_contains(["Terra","Lost","Mechanicus Vessel"],ma_loc[sel])){
                         skip=true;
                     }

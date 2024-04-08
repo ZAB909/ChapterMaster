@@ -114,6 +114,7 @@ function calculate_research_points(turn_end=false){
         var tech_locations=[]
         var techs = collect_role_group("forge");
         for (var i=0; i<array_length(techs); i++){
+            if (techs[i].in_jail()) then continue;
             if (techs[i].technology>40 && techs[i].hp() >0){
                 research_points += techs[i].technology-40;
                 forge_point_gen=techs[i].forge_point_generation(true);
@@ -173,6 +174,7 @@ function calculate_research_points(turn_end=false){
                 for (var heretic=0; heretic<array_length(heretics); heretic++){
                     heretic_location = tech_locations[heretics[heretic]];
                     current_heretic = techs[heretics[heretic]];
+                    if (current_heretic[i].in_jail()) then continue;
                     //iterate through rest of techs
                     met_non_heretic = false;
                     for (var i=0; i<array_length(techs); i++){
