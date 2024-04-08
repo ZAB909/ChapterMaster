@@ -17,7 +17,7 @@ Fixed:
 	- reordering managemnt screen marines by stats so that player can see best marine with a given stat
 	- various sprite adjustments to fix alignment
 	- armour equip issues
-	- general stability improvements to managemetn screens
+	- general stability improvements to management screens
 
 Changed:
 	- Overhaul of managing so that it is not directly linked to companies
@@ -30,12 +30,13 @@ Changed:
 	- Siege Masters triat doubles marine effectiveness at garrisoning
 	- garrison leader bonus for garrisoning doubled increased by 50%
 	- psker abundance and psker intolerant respectivly increase and decrease psionic spawn levels
+	- jailing heretics now stops them corrupting even if in the same location as other marines
 added:
 	- crozius sprite
 	- fleet viewer to quickly see fleets and zoom to fleet locations
 	- quick view event log locations by pressing view button
 	- quick view garrisons with new troop logger
-	- manage marines by plaet location instead of being locked to company manage screens
+	- manage marines by planet location instead of being locked to company manage screens
 
 
 -----------------

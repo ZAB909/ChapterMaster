@@ -717,7 +717,7 @@ function scr_ui_manage() {
 						temp2="=Event=";
 						eventing=true;
 					}
-		            if (ma_god[sel]>=10) then temp2="=Penitorium=";
+		            if (unit.is_jail()) then temp2="=Penitorium=";
 	                   
 		            temp3=string(round((unit.hp()/unit.max_health())*100))+"% HP";
 	            
