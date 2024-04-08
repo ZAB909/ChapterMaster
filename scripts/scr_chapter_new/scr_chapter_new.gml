@@ -232,7 +232,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=3;aspirant_trial="Blood Duel";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Red";color_to_secondary="Red";color_to_trim="Black";
-	    color_to_pauldron="Red";color_to_pauldron2="Red";color_to_lens="Dark Green";
+	    color_to_pauldron="Red";color_to_pauldron2="Red";color_to_lens="Green";
 	    color_to_weapon="Black";col_special=0;trim=0;
 	    hchaplain="Astorash the Grim";clibrarian="Mephiston";fmaster="Incarael";
 	    battle_cry="For the Emperor and Sanguinius! Death! DEATH";// monastery_name="Fortress of Hera";master_name=
