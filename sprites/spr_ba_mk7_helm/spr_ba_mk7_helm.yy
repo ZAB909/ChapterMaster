@@ -2,7 +2,7 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "spr_ba_mk7_helm",
-  "bbox_bottom": 82,
+  "bbox_bottom": 83,
   "bbox_left": 5,
   "bbox_right": 136,
   "bbox_top": 32,

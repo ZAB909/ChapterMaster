@@ -524,7 +524,7 @@ global.weapons={
         "range": 1,
         "spli": 0,
         "arp": 1,
-        "tags":["power", "mace", "chap"],
+        "tags":["power", "mace", "pious"],
     },
     "Relic Blade": {
       "abbreviation": "RlcBld",               
