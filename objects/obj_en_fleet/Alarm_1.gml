@@ -288,19 +288,21 @@ if ((trade_goods="BLOODBLOODBLOOD") or (trade_goods="BLOODBLOODBLOODBLOOD")) and
     }
 }
 
-var spid = noone;
-if (instance_exists(orbiting)){
-	spid=orbiting;
-	spid.present_fleet[owner]+=1;
-} else {
-	spid = instance_nearest(x,y,obj_star);
-	spid.present_fleet[owner]+=1;
-	orbiting=spid;
+var orbiting_found=instance_exists(orbiting);
+if (orbiting_found){
+    orbiting_found = variable_instance_exists(orbiting, "present_fleet");
+    if (orbiting_found){
+        orbiting.present_fleet[owner]+=1;
+    }
+} 
+if (!orbiting_found) {
+	orbiting = instance_nearest(x,y,obj_star);
+	orbiting.present_fleet[owner]++;
 }
 
-if (spid != noone) {
+if (orbiting != noone) {
     if (instance_exists(obj_crusade)) 
-	and (spid.owner <= eFACTION.Ecclesiarchy) 
+	and (orbiting.owner <= eFACTION.Ecclesiarchy) 
 	and (owner = eFACTION.Imperium) 
 	and (navy=1) 
 	and (trade_goods="") 
@@ -357,17 +359,17 @@ if (spid != noone) {
             action_x=ns.x;
 			action_y=ns.y;
 			alarm[4]=1;
-            spid.present_fleet[owner]-=1;
-            home_x=spid.x;
-            home_y=spid.y;
+            orbiting.present_fleet[owner]-=1;
+            home_x=orbiting.x;
+            home_y=orbiting.y;
 			
             var i;
 			i=0;
             repeat(4){
 				i+=1;
-                if (spid.p_owner[i]=eFACTION.Imperium) and (spid.p_guardsmen[i]>500) {
-					guardsmen +=round(spid.p_guardsmen[i]/2);
-					spid.p_guardsmen[i]=round(spid.p_guardsmen[i]/2);}
+                if (orbiting.p_owner[i]=eFACTION.Imperium) and (orbiting.p_guardsmen[i]>500) {
+					guardsmen +=round(orbiting.p_guardsmen[i]/2);
+					orbiting.p_guardsmen[i]=round(orbiting.p_guardsmen[i]/2);}
             }
 
             alarm[5]=2;
@@ -1169,22 +1171,22 @@ if (navy) {
 	}
 }
 
-var spid, dir;spid=0;dir=0;
+var  dir;dir=0;
 var ret;ret=0;
 
 
 if (action=""){
-    if (instance_exists(orbiting)){spid=orbiting;}// spid.present_fleet[owner]+=1;
-    else{spid=instance_nearest(x,y,obj_star);orbiting=spid;}
+    if (instance_exists(orbiting)){orbiting=orbiting;}// orbiting.present_fleet[owner]+=1;
+    else{orbiting=instance_nearest(x,y,obj_star);orbiting=orbiting;}
     var max_dis;max_dis=400;
     
-    if (instance_exists(spid)){
-        if (spid.owner=eFACTION.Player) and (obj_controller.faction_status[eFACTION.Imperium]="War") and (owner=eFACTION.Imperium){
+    if (instance_exists(orbiting)){
+        if (orbiting.owner=eFACTION.Player) and (obj_controller.faction_status[eFACTION.Imperium]="War") and (owner=eFACTION.Imperium){
             var i;i=0;
             repeat(4){i+=1;
-                if (spid.p_owner[i]=1) then spid.p_pdf[i]-=capital_number*50000;
-                if (spid.p_owner[i]=1) then spid.p_pdf[i]-=frigate_number*10000;
-                if (spid.p_pdf[i]<0) then spid.p_pdf[i]=0;
+                if (orbiting.p_owner[i]=1) then orbiting.p_pdf[i]-=capital_number*50000;
+                if (orbiting.p_owner[i]=1) then orbiting.p_pdf[i]-=frigate_number*10000;
+                if (orbiting.p_pdf[i]<0) then orbiting.p_pdf[i]=0;
             }
         }
     }
@@ -1192,7 +1194,7 @@ if (action=""){
     // 1355;
     
     
-    if (instance_exists(obj_crusade)) and (owner=eFACTION.Ork) and (spid.owner=eFACTION.Ork){// Ork crusade AI
+    if (instance_exists(obj_crusade)) and (owner=eFACTION.Ork) and (orbiting.owner=eFACTION.Ork){// Ork crusade AI
         var max_dis;
         max_dis=400;
     
@@ -1208,7 +1210,7 @@ if (action=""){
         var ns;ns=instance_nearest(x,y,obj_star);
         if (ns.owner != eFACTION.Ork) and (point_distance(x,y,ns.x,ns.y)<=max_dis) and (point_distance(x,y,ns.x,ns.y)>40) and (instance_exists(obj_crusade)) and (image_index>3){
             action_x=ns.x;action_y=ns.y;alarm[4]=1;
-            home_x=spid.x;home_y=spid.y;
+            home_x=orbiting.x;home_y=orbiting.y;
             exit;
         }
         
@@ -1271,12 +1273,12 @@ if (action=""){
     
     
     if (owner=eFACTION.Inquisition){
-        if ((spid.owner  = eFACTION.Player) or (obj_ini.fleet_type!=1)) and (trade_goods!="cancel_inspection"){
+        if ((orbiting.owner  = eFACTION.Player) or (obj_ini.fleet_type!=1)) and (trade_goods!="cancel_inspection"){
             if (obj_controller.disposition[6]>=60) then scr_loyalty("Xeno Associate","+");
             if (obj_controller.disposition[7]>=60) then scr_loyalty("Xeno Associate","+");
             if (obj_controller.disposition[8]>=60) then scr_loyalty("Xeno Associate","+");
             
-            if (spid.p_owner[2]=1) and (spid.p_heresy[2]>=60) then scr_loyalty("Heretic Homeworld","+");
+            if (orbiting.p_owner[2]=1) and (orbiting.p_heresy[2]>=60) then scr_loyalty("Heretic Homeworld","+");
             
             var whom=-1;
             if (string_count("Inqis",trade_goods)=0) then whom=0;
@@ -1511,15 +1513,15 @@ if (action=""){
             if (obj_controller.known[eFACTION.Inquisition]=1){obj_controller.known[eFACTION.Inquisition]=3;}
             if (obj_controller.known[eFACTION.Inquisition]=2){obj_controller.known[eFACTION.Inquisition]=4;}
             
-            instance_deactivate_object(spid);
+            instance_deactivate_object(orbiting);
             repeat(choose(1,2)){
-                spid=instance_nearest(x,y,obj_star);
-                instance_deactivate_object(spid);
+                orbiting=instance_nearest(x,y,obj_star);
+                instance_deactivate_object(orbiting);
             }
             
             repeat(5){
-                spid=instance_nearest(x,y,obj_star);
-                if (spid.owner=eFACTION.Eldar) then instance_deactivate_object(spid);
+                orbiting=instance_nearest(x,y,obj_star);
+                if (orbiting.owner=eFACTION.Eldar) then instance_deactivate_object(orbiting);
             }
             // 135;
             if (obj_controller.loyalty_hidden<=0){// obj_controller.alarm[7]=1;global.defeat=2;
@@ -1528,9 +1530,9 @@ if (action=""){
                 if (obj_controller.penitent=0) and (moo=false) then scr_audience(4,"loyalty_zero",0,"",0,0);
             }
             
-            spid=instance_nearest(x,y,obj_star);
-            action_x=spid.x;
-            action_y=spid.y;
+            orbiting=instance_nearest(x,y,obj_star);
+            action_x=orbiting.x;
+            action_y=orbiting.y;
             alarm[4]=1;
             instance_activate_object(obj_star);
             trade_goods="|DELETE|";
@@ -1578,10 +1580,10 @@ if (action=""){
         
         if (capital_number>0){
             var onceh;onceh=0;
-            if (spid.p_type[4]!="Dead") and (spid.planets=4){spid.p_tyranids[4]=5;onceh+=1;}
-            if (spid.p_type[3]!="Dead") and (spid.planets>=3) and (onceh<capital_number){spid.p_tyranids[3]=5;onceh+=1;}
-            if (spid.p_type[2]!="Dead") and (spid.planets>=2) and (onceh<capital_number){spid.p_tyranids[2]=5;onceh+=1;}
-            if (spid.p_type[1]!="Dead") and (spid.planets>=1) and (onceh<capital_number){spid.p_tyranids[1]=5;onceh+=1;}
+            if (orbiting.p_type[4]!="Dead") and (orbiting.planets=4){orbiting.p_tyranids[4]=5;onceh+=1;}
+            if (orbiting.p_type[3]!="Dead") and (orbiting.planets>=3) and (onceh<capital_number){orbiting.p_tyranids[3]=5;onceh+=1;}
+            if (orbiting.p_type[2]!="Dead") and (orbiting.planets>=2) and (onceh<capital_number){orbiting.p_tyranids[2]=5;onceh+=1;}
+            if (orbiting.p_type[1]!="Dead") and (orbiting.planets>=1) and (onceh<capital_number){orbiting.p_tyranids[1]=5;onceh+=1;}
         }
         
         
@@ -1590,11 +1592,11 @@ if (action=""){
         var n;
         n=0;
         
-        if (spid.planets=0) then n=1;
-        if (spid.planets=1) and (spid.p_type[1]="Dead") then n=1;
-        if (spid.planets=2) and (spid.p_type[1]="Dead") and (spid.p_type[2]="Dead") then n=1;
-        if (spid.planets=3) and (spid.p_type[1]="Dead") and (spid.p_type[2]="Dead") and (spid.p_type[3]="Dead") then n=1;
-        if (spid.planets=4) and (spid.p_type[1]="Dead") and (spid.p_type[2]="Dead") and (spid.p_type[3]="Dead") and (spid.p_type[4]="Dead") then n=1;
+        if (orbiting.planets=0) then n=1;
+        if (orbiting.planets=1) and (orbiting.p_type[1]="Dead") then n=1;
+        if (orbiting.planets=2) and (orbiting.p_type[1]="Dead") and (orbiting.p_type[2]="Dead") then n=1;
+        if (orbiting.planets=3) and (orbiting.p_type[1]="Dead") and (orbiting.p_type[2]="Dead") and (orbiting.p_type[3]="Dead") then n=1;
+        if (orbiting.planets=4) and (orbiting.p_type[1]="Dead") and (orbiting.p_type[2]="Dead") and (orbiting.p_type[3]="Dead") and (orbiting.p_type[4]="Dead") then n=1;
         
         if (n=1){
             var xx,yy,good, plin, plin2;
@@ -1602,7 +1604,7 @@ if (action=""){
             
             if (capital_number>5) then n=5;
             
-            instance_deactivate_object(spid);
+            instance_deactivate_object(orbiting);
             
             repeat(100){
                 if (good!=5){
@@ -1657,11 +1659,11 @@ if (action=""){
         }
     }
     
-    if (owner=eFACTION.Ork) and (action="") and (instance_exists(spid)){// Should fix orks converging on useless planets
+    if (owner=eFACTION.Ork) and (action="") and (instance_exists(orbiting)){// Should fix orks converging on useless planets
         var maxp,bad,i,hides,hide;maxp=0;bad=0;i=0;hides=1;hide=0;
         
-        if (spid.planets<=0) or ((spid.planets=1) and (spid.p_type[1]="Dead")) then bad=1;
-        if (spid.planets=2) and (spid.p_type[1]="Dead") and (spid.p_type[2]="Dead") then bad=1;
+        if (orbiting.planets<=0) or ((orbiting.planets=1) and (orbiting.p_type[1]="Dead")) then bad=1;
+        if (orbiting.planets=2) and (orbiting.p_type[1]="Dead") and (orbiting.p_type[2]="Dead") then bad=1;
         
         if (bad=1){
             hides+=choose(0,1,2,3);
@@ -1682,14 +1684,14 @@ if (action=""){
             exit;
         }
         
-        /*i=0;repeat(4){i+=1;if (spid.p_type[i]!="") then maxp+=1;}
+        /*i=0;repeat(4){i+=1;if (orbiting.p_type[i]!="") then maxp+=1;}
         i=0;repeat(4){i+=1;
-            if (spid.p_player[i]+spid.p_traitors[i]+spid.p_chaos[i]+spid.p_tyranids[i]+spid.p_tau[i]+spid.p_necrons[i]=0) 
-             or (spid.p_type[i]="Dead") 
-              or (spid.p_owner[i]=7) then bad+=1;
+            if (orbiting.p_player[i]+orbiting.p_traitors[i]+orbiting.p_chaos[i]+orbiting.p_tyranids[i]+orbiting.p_tau[i]+orbiting.p_necrons[i]=0) 
+             or (orbiting.p_type[i]="Dead") 
+              or (orbiting.p_owner[i]=7) then bad+=1;
         }
         if (bad>=maxp){
-            with(spid){y+=20000;}
+            with(orbiting){y+=20000;}
             with(obj_star){if ((planets=1) and (p_type[1]="Dead")) or (owner = eFACTION.Ork) then y+=20000;}
             var nex;nex=instance_nearest(x,y,obj_star);
             action_x=nex.x;action_y=nex.y;alarm[4]=1;
@@ -1738,13 +1740,13 @@ if (action="move") and (action_eta<5000){
     if (instance_nearest(action_x,action_y,obj_star).storm>0) then exit;
     if (action_x+action_y=0) then exit;
     
-    var spid,dos;dos=0;spid=0;
+    var dos;dos=0;
     dos=point_distance(x,y,action_x,action_y);
-    spid=dos/action_eta;
+    orbiting=dos/action_eta;
     dir=point_direction(x,y,action_x,action_y);
     
-    x=x+lengthdir_x(spid,dir);
-    y=y+lengthdir_y(spid,dir);
+    x=x+lengthdir_x(orbiting,dir);
+    y=y+lengthdir_y(orbiting,dir);
     
     action_eta-=1;
     
@@ -1995,18 +1997,18 @@ if (action="move") and (action_eta<5000){
             if (steh.owner  = eFACTION.Player) and (trade_goods="cancel_inspection"){
                 instance_deactivate_object(steh);
                 repeat(choose(1,2)){
-                    spid=instance_nearest(x,y,obj_star);
-                    instance_deactivate_object(spid);
+                    orbiting=instance_nearest(x,y,obj_star);
+                    instance_deactivate_object(orbiting);
                 }
                 
                 repeat(5){
-                    spid=instance_nearest(x,y,obj_star);
-                    if (spid.owner = eFACTION.Eldar) then instance_deactivate_object(spid);
+                    orbiting=instance_nearest(x,y,obj_star);
+                    if (orbiting.owner = eFACTION.Eldar) then instance_deactivate_object(orbiting);
                 }
                 
-                spid=instance_nearest(x,y,obj_star);
-                action_x=spid.x;
-                action_y=spid.y;
+                orbiting=instance_nearest(x,y,obj_star);
+                action_x=orbiting.x;
+                action_y=orbiting.y;
                 alarm[4]=1;
                 instance_activate_object(obj_star);
                 trade_goods+="|DELETE|";

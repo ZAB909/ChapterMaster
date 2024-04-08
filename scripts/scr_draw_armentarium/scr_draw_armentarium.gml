@@ -174,7 +174,7 @@ function calculate_research_points(turn_end=false){
                 for (var heretic=0; heretic<array_length(heretics); heretic++){
                     heretic_location = tech_locations[heretics[heretic]];
                     current_heretic = techs[heretics[heretic]];
-                    if (current_heretic[i].in_jail()) then continue;
+                    if (current_heretic.in_jail()) then continue;
                     //iterate through rest of techs
                     met_non_heretic = false;
                     for (var i=0; i<array_length(techs); i++){
