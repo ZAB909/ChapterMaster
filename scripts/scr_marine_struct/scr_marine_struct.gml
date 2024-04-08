@@ -1207,6 +1207,16 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					}
 				}
 			}
+			if (array_contains(obj_ini.adv, "Psyker Abundance")){
+				if (psionic<16) then psionic++;
+				if (psionic<10) then psionic++;
+			}
+			if (array_contains(obj_ini.dis, "Psyker Intolerant")){
+				if (irandom(4)==0){
+					psionic = max(psionic-5, 0);
+				}
+			}
+
 			if (global.chapter_name=="Black Templars"){
 				if (irandom(14)==0){
 					body[$"torso"].robes =1;
@@ -2127,8 +2137,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		corruption = edit > 0 ?min(100, corruption+edit) : max(0, corruption+edit);
 	}
 
-	static in_jail(){
-		return (obj_ini.god[company,v]>=10);
+	static in_jail = function(){
+		return (obj_ini.god[company,marine_number]>=10);
 	}
 
 	static forge_point_generation = function(turn_end=false){

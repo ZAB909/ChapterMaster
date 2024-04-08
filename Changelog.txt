@@ -27,7 +27,9 @@ Changed:
 		- better ui to be more informative
 		- colours to represent item quality
 	- tooltips improved both visually and in terms of content
-
+	- Siege Masters triat doubles marine effectiveness at garrisoning
+	- garrison leader bonus for garrisoning doubled increased by 50%
+	- psker abundance and psker intolerant respectivly increase and decrease psionic spawn levels
 added:
 	- crozius sprite
 	- fleet viewer to quickly see fleets and zoom to fleet locations
