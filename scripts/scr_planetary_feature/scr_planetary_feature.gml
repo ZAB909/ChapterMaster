@@ -294,7 +294,7 @@ function planet_feature_bool(planet, search_feature){
 
 //deletes all occurances of del_feature on planet
 function delete_features(planet, del_feature){
-	var delete_Array = search_planet_features(planet, del_feature)
+	var delete_Array = search_planet_features(planet, del_feature);
 	if (array_length(delete_Array) >0){
 		for (var d=0;d<array_length(delete_Array);d++){
 			array_delete(planet, delete_Array[d],1)

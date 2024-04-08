@@ -440,6 +440,12 @@ function scr_load(argument0, argument1) {
 	        new_star.craftworld=ini_read_real("Star","sr"+string(i)+"craftworld",0);
 	        new_star.space_hulk=ini_read_real("Star","sr"+string(i)+"spacehulk",0);
 	        if (new_star.space_hulk=1) then new_star.sprite_index=spr_star_hulk;
+	        new_star.present_fleet=ini_read_string("Star","sr"+string(i)+"present_fleets","");
+	        if (new_star.present_fleet!=""){
+	        	new_star.present_fleet = json_parse(base64_decode(new_star.present_fleet));
+	        } else {
+	        	new_star.present_fleet = array_create(30, 0);
+	        }
 
 	        var g=0;
 	        repeat(4){g+=1;

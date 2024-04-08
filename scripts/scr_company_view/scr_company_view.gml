@@ -263,12 +263,12 @@ function other_manage_data(){
 	    // Right here is where the promotion check will go
 	    // If EXP is enough for that company then ma_promote[i]=1
 	    if (ma_role[v]==obj_ini.role[100][3]) or (ma_role[v]==obj_ini.role[100][4]){
-	        if (company==1) and (ma_exp[v]>=300) then ma_promote[v]=1;
+	        if (unit.company==1) and (ma_exp[v]>=300) then ma_promote[v]=1;
 	        if (ma_health[v]<=10) then ma_promote[v]=10;
 	    }
-	    if (ma_role[v]=obj_ini.role[100][6]) and (ma_exp[v]>=400) then ma_promote[v]=1;
-	    if (ma_role[v]=obj_ini.role[100][15]) or (ma_role[v]=obj_ini.role[100][14]) then ma_promote[v]=1;
-	    if (ma_role[v]=obj_ini.role[100][16]) then ma_promote[v]=1;
+	    if (unit.role()=obj_ini.role[100][6]) and (ma_exp[v]>=400) then ma_promote[v]=1;
+	    if (unit.role()=obj_ini.role[100][15]) or (ma_role[v]=obj_ini.role[100][14]) then ma_promote[v]=1;
+	    if (unit.role()=obj_ini.role[100][16]) then ma_promote[v]=1;
 
 	    if (unit.IsSpecialist("rank_and_file")){
 	    	var promotion_limit = company_promotion_limits[unit.company-1]
@@ -277,7 +277,7 @@ function other_manage_data(){
 	    	}
 	    	if (ma_health[v]<=10) then ma_promote[v]=10;	                	
 	    } else if  (ma_role[v]=obj_ini.role[100][5]){
-	    	var promotion_limit = company_promotion_limits[company-1]
+	    	var promotion_limit = company_promotion_limits[unit.company-1]
 	    	if (unit.experience()>=promotion_limit+25 && promotion_limit>0){
 
 	    	}

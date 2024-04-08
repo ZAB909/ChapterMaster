@@ -6,7 +6,8 @@ function scr_ship_occupants(target_ship_id) {
 	repeat(200){i+=1;oc[i]="";ocn[i]=0;}
 
 	i=0;
-	repeat(obj_ini.companies+1){i=0;co+=1;
+	for (co=0; co<= 10;co++){
+		i=0;
 	    repeat(500){i+=1;
 	        if (obj_ini.role[co][i]!=""){
 	        	unit = fetch_unit([co,i]);
@@ -14,17 +15,25 @@ function scr_ship_occupants(target_ship_id) {
 	            good=0;g=0;
 	            repeat(100){g+=1;
 	                if (good=0){
-	                    if (oc[g]==unit.role()){good=1;ocn[g]+=1;}
+	                    if (oc[g]==unit.role()){
+	                    	good=1;
+	                    	ocn[g]+=1;
+	                    	break;
+	                    }
 	                }
 	            }
 	            if (good=0){
-	                ty+=1;oc[ty]=unit.role;ocn[ty]=1;good=1;
+	                ty+=1;
+	                oc[ty]=unit.role();
+	                ocn[ty]=1;
+	                good=1;
 	            }
 	        }
 	    }
 	}
 	i=0;co=-1;
-	repeat(obj_ini.companies+1){i=0;co+=1;
+	for (co=0; co<= 10;co++){
+		i=0;
 	    repeat(100){i+=1;
 	        if (obj_ini.veh_role[co][i]!="") and (obj_ini.veh_lid[co][i]=target_ship_id){
 	            good=0;g=0;

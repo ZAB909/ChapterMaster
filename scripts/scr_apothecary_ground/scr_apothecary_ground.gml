@@ -198,7 +198,7 @@ function apothecary_simple(){
 		                    
 			                    var flit=instance_create(x+24,y-24,obj_p_fleet);
 			                    var s=0,ship_names="",new_name="",last_ship=0;
-			                    for(s=0;i<=40;i++){
+			                    for(s=0;s<=40;s++){
 			                        if (last_ship=0) and (obj_ini.ship[s]="") then last_ship=s;
 			                    };
 		                    

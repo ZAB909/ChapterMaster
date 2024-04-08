@@ -955,106 +955,55 @@ function scr_enemy_ai_a() {
     
 	    // 135;
 	    p_time_since_saved[run] = 0;
-	    if (p_owner[run] = 7) and(p_player[run] + p_raided[run] > 0) and(p_orks[run] = 0) and(p_tyranids[run] < 4) and(p_chaos[run] = 0) and(p_traitors[run] = 0) and(p_necrons[run] = 0) and(p_tau[run] = 0) {
-	        scr_event_log("", "Orks cleansed from " + string(name) + " " + scr_roman(run), name);
-	        if (p_first[run] = 1) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
-	            p_owner[run] = 1;
-	            scr_alert("green", "owner", "Orks cleansed from " + string(name) + " " + scr_roman(run) + ".", x, y);
-	            dispo[run] += 10;
-	            p_time_since_saved[run] = obj_controller.turn;
-	            obj_controller.disposition[5] += 5;
-	        } // 10 Disposition increase for returning control to the governor Planet disposition
-	        if (p_first[run] = 2) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
-	            p_owner[run] = 2;
-	            scr_alert("green", "owner", "Orks cleansed from " + string(name) + " " + scr_roman(run) + ".  Control returned to the governor.", x, y);
-	            dispo[run] += 10;
-	            p_time_since_saved[run] = obj_controller.turn;
-	        } // 10 Disposition increase for returning control to the governor Planet disposition
-	        if (p_first[run] = 3) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
-	            p_owner[run] = 3;
-	            scr_alert("green", "owner", "Orks cleansed from " + string(name) + " " + scr_roman(run) + ".  Control returned to Mechanicus.", x, y);
-	            obj_controller.disposition[3] += 10;
-	            dispo[run] += 10;
-	            p_time_since_saved[run] = obj_controller.turn;
-	        } // 10 Disposition increase for returning control to the governor Planet disposition
-	        if (dispo[run] = 101) then p_owner[run] = 1;
+	    var planet_saved =  ((p_player[run] + p_raided[run]) > 0 && p_orks[run] = 0 && p_tyranids[run] < 4 && p_chaos[run] = 0 && p_traitors[run] = 0 && p_necrons[run] = 0 && p_tau[run] = 0);
+
+	    if (planet_saved){
+	    	var who_cleansed="";
+	    	var who_return="";
+	    	var make_alert = false;
+	    	var planet_string = $"{name} {scr_roman(run)}";
+			if (p_owner[run] = 7) {
+				who_cleansed="Orks"
+				make_alert=true;
+			}else if (p_owner[run] = 8 && p_pdf[run] = 0) {
+				who_cleansed="Tau"
+				make_alert=true;				
+			}else if (p_owner[run] = 13) {
+				who_cleansed="Necrons"
+				make_alert=true;				
+			}else if (p_owner[run] = 10) {
+				who_cleansed="Chaos"
+				make_alert=true;				
+			} else if (planet_feature_bool(p_feature[run], P_features.Gene_Stealer_Cult) && p_tyranids[run] <= 0){
+				who_cleansed="Gene Stealer Cult"
+				make_alert=true;
+				delete_features(p_feature[run], P_features.Gene_Stealer_Cult)
+			}
+			 if (make_alert){
+				 if (p_first[run] = 1){
+				 	p_owner[run] = eFACTION.Player;
+				 	who_return = "your";
+				 } else if (p_first[run] = 3 || p_type[run]=="Forge"){
+				 	who_return="mechanicus";
+				 	obj_controller.disposition[3] += 10;
+				 	p_owner[run] = eFACTION.Mechanicus
+				 }else  if (p_type[run]!="Dead"){
+				 	who_return="the governor";
+				 	if (who_cleansed=="tau"){
+				 		who_return="a more suitable governer"
+				 	}
+				 	p_owner[run] = eFACTION.Imperium;
+				 }			 	
+			 	dispo[run] += 10;
+			 	scr_event_log("", $"{who_cleansed} cleansed from {planet_string}", name);
+			 	scr_alert("green", "owner", $"{who_cleansed} cleansed from {planet_string}. Control returned to {who_return}", x, y);
+			 	if (dispo[run] >= 101) then p_owner[run] = 1;
+			 }
+   	
 	    }
-	    if (p_owner[run] = 8) and(p_player[run] + p_raided[run] > 0) and(p_orks[run] = 0) and(p_tyranids[run] < 4) and(p_chaos[run] = 0) and(p_traitors[run] = 0) and(p_necrons[run] = 0) and(p_tau[run] = 0) and(p_pdf[run] = 0) {
-	        scr_event_log("", "Tau cleansed from " + string(name) + " " + scr_roman(run), name);
-	        if (p_first[run] = 1) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
-	            p_owner[run] = 1;
-	            scr_alert("green", "owner", "Tau cleansed from " + string(name) + " " + scr_roman(run) + ".", x, y);
-	            dispo[run] += 10;
-	            p_time_since_saved[run] = obj_controller.turn;
-	            obj_controller.disposition[5] += 5;
-	        } // 10 Disposition increase for returning control to the governor Planet disposition
-	        if (p_first[run] = 2) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
-	            p_owner[run] = 2;
-	            scr_alert("green", "owner", "Tau cleansed from " + string(name) + " " + scr_roman(run) + ".  Control given to new governor.", x, y);
-	            dispo[run] += 10;
-	            p_time_since_saved[run] = obj_controller.turn
-	        } // 10 Disposition increase for returning control to the governor Planet disposition
-	        if (p_first[run] = 3) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
-	            p_owner[run] = 3;
-	            scr_alert("green", "owner", "Tau cleansed from " + string(name) + " " + scr_roman(run) + ".  Control returned to Mechanicus.", x, y);
-	            obj_controller.disposition[3] += 10;
-	            dispo[run] += 10;
-	            p_time_since_saved[run] = obj_controller.turn
-	        } // 10 Disposition increase for returning control to the governor Planet disposition
-	        if (dispo[run] = 101) then p_owner[run] = 1;
-	    }
-	    if (p_owner[run] = 10) and(p_player[run] + p_raided[run] > 0) and(p_orks[run] = 0) and(p_tyranids[run] < 4) and(p_chaos[run] = 0) and(p_traitors[run] = 0) and(p_necrons[run] = 0) and(p_tau[run] = 0) {
-	        scr_event_log("", "Chaos cleansed from " + string(name) + " " + scr_roman(run), name);
-	        if (p_first[run] = 1) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
-	            p_owner[run] = 1;
-	            scr_alert("green", "owner", "Chaos cleansed from " + string(name) + " " + scr_roman(run) + ".", x, y);
-	            dispo[run] += 10;
-	            p_time_since_saved[run] = obj_controller.turn;
-	            obj_controller.disposition[5] += 5;
-	        } // 10 Disposition increase for returning control to the governor Planet disposition
-	        if (p_first[run] = 2) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
-	            p_owner[run] = 2;
-	            scr_alert("green", "owner", "Chaos cleansed from " + string(name) + " " + scr_roman(run) + ".  Control returned to the governor.", x, y);
-	            dispo[run] += 10;
-	            p_time_since_saved[run] = obj_controller.turn
-	        } // 10 Disposition increase for returning control to the governor Planet disposition
-	        if (p_first[run] = 3) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
-	            p_owner[run] = 3;
-	            scr_alert("green", "owner", "Chaos cleansed from " + string(name) + " " + scr_roman(run) + ".  Control returned to Mechanicus.", x, y);
-	            obj_controller.disposition[3] += 10;
-	            dispo[run] += 10;
-	            p_time_since_saved[run] = obj_controller.turn
-	        } // 10 Disposition increase for returning control to the governor Planet disposition
-	        if (dispo[run] = 101) then p_owner[run] = 1;
-	    }
-	    if (p_owner[run] = 13) and(p_player[run] + p_raided[run] > 0) and(p_orks[run] = 0) and(p_tyranids[run] < 4) and(p_chaos[run] = 0) and(p_traitors[run] = 0) and(p_necrons[run] = 0) and(p_tau[run] = 0) {
-	        if (awake_tomb_world(p_feature[run]) != 1) {
-	            scr_event_log("", "Necrons cleansed from " + string(name) + " " + scr_roman(run), name);
-	            if (p_first[run] = 1) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
-	                p_owner[run] = 1;
-	                scr_alert("green", "owner", "Necrons cleansed from " + string(name) + " " + scr_roman(run) + ".", x, y);
-	                dispo[run] += 10;
-	                p_time_since_save[run] = obj_controller.turn;
-	                obj_controller.disposition[5] += 5;
-	            } // 10 Disposition increase for returning control to the governor Planet disposition
-	            if (p_first[run] = 2) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
-	                p_owner[run] = 2;
-	                scr_alert("green", "owner", "Necrons cleansed from " + string(name) + " " + scr_roman(run) + ".  Control returned to the governor.", x, y);
-	                dispo[run] += 10;
-	                p_time_since_saved[run] = obj_controller.turn
-	            } // 10 Disposition increase for returning control to the governor Planet disposition
-	            if (p_first[run] = 3) and((obj_controller.turn - p_time_since_saved[run]) >= 5) {
-	                p_owner[run] = 3;
-	                scr_alert("green", "owner", "Necrons cleansed from " + string(name) + " " + scr_roman(run) + ".  Control returned to Mechanicus.", x, y);
-	                obj_controller.disposition[3] += 10;
-	                dispo[run] += 10;
-	                p_time_since_saved[run] = obj_controller.turn
-	            } // 10 Disposition increase for returning control to the governor Planet disposition
-	            if (dispo[run] = 101) then p_owner[run] = 1;
-	        }
-	    }
+	    
 	    if (p_raided[run] > 0) then p_raided[run] = 0;
-	    } // end repeat here
+	} // end repeat here
 
 
 	    // quene player battles here
