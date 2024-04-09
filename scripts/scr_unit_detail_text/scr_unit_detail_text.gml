@@ -30,7 +30,7 @@ function scr_unit_detail_text(){
 
 
 		// Age and ascension date
-		unit_data_string += "#"
+		unit_data_string += "\n"
 		if (base_group == "astartes"){
 			var ascension_date = marine_ascension;
 			if ascension_date = "pre_game" then ascension_date = "when the chapter was created";
@@ -38,7 +38,7 @@ function scr_unit_detail_text(){
 		}
 
 		// Religion text
-		unit_data_string +="##";
+		unit_data_string +="\n\n";
 		if (religion != "none"){
 			unit_data_string += string("Follower of the {0}",global.religions[$ religion][$ "name"])
 			if (religion_sub_cult != "none"){
@@ -53,7 +53,7 @@ function scr_unit_detail_text(){
 			}else if(piety >= 50){
 				unit_data_string += ", he exhibits an unshakeable fanaticism in his worship."
 			}
-			unit_data_string+="#";
+			unit_data_string+="\n";
 		}
 
 		// Psyker text
@@ -67,7 +67,7 @@ function scr_unit_detail_text(){
 			unit_data_string += "and therefore is considered to be a low level psyker with conscious levels of psionic talent.";
 			if (is_astartes){
 				if (!is_lib){
-					unit_data_string += "#";
+					unit_data_string += "\n";
 					unit_data_string += "He would be eligible for a role in the Librarium however is unlikely to ever exceed the role of Lexicanum.";
 				}
 			}
@@ -75,7 +75,7 @@ function scr_unit_detail_text(){
 			unit_data_string += "and has a very high level of mental psychic activity, making them a potent psyker, their presence in the warp is obvious to the daemons of the immaterium.";
 			if (is_astartes){
 				if (!is_lib){
-					unit_data_string += "#";
+					unit_data_string += "\n";
 					unit_data_string += " He would be eligible for a role in the Librarium capable of wielding his power to good effect.";
 				}
 			}
@@ -83,17 +83,17 @@ function scr_unit_detail_text(){
 			unit_data_string += ", occurring in approximately one-per-billion human births, they are a very potent psyker.";
 			if (is_astartes){
 				if (!is_lib){
-					unit_data_string += "#";
+					unit_data_string += "\n";
 					unit_data_string += " He would be eligible for a role in the Librarium And should be enrolled at once in order to train his abilities and stop his untrained mind causing damage to the chapter.";
 				} else {
-					unit_data_string += "#";
+					unit_data_string += "\n";
 					unit_data_string += " His rare talent is of great benefit to the chapter and could one day be a candidate for Chief of the librariam.";
 				}
 			}		       				       			
 		} else if(psionic<15){
 			unit_data_string += ", exceedingly rare and dangerous but unfathomably powerful.";
 			if (is_astartes){
-				unit_data_string += "#"
+				unit_data_string += "\n"
 				unit_data_string += " Their talents are both a great boon and huge risk to the chapter.";
 				if (!is_lib){
 					unit_data_string += " He must brought into the guided sphere of the librarium immediately or else dealt with by other methods for the good of the chapter.";
@@ -104,7 +104,7 @@ function scr_unit_detail_text(){
 		}
 
 		// Bionics text
-		unit_data_string += "##"
+		unit_data_string += "\n\n"
 		if (is_astartes){
 			var bionic_positions = struct_get_names(body_bionics);
 			var bionic_count = bionics;
@@ -128,7 +128,7 @@ function scr_unit_detail_text(){
 			// 	unit_data_string+=" People tend to find the sound from his augmented throat unnerving.";
 			// }
 			// Gene-seed text
-			unit_data_string+="#";
+			unit_data_string+="\n";
 			var mutation_names = struct_get_names(gene_seed_mutations);
 			var mutation_count = 0;
 			var mutation_string = "";
@@ -169,12 +169,11 @@ function scr_unit_detail_text(){
 						case "voice":
 							mutation_string += "Gene-seed implantation process damaged his vocal cords, causing many to find the sound of his voice to be rather unnerving.";
 					}
-					mutation_string += "#";
+					mutation_string += "\n";
 				}
 			}
 		if (mutation_count == 0){
-			unit_data_string += "His gene-seed is pure and has no mutations.#"
-			unit_data_string += "#";
+			unit_data_string += "His gene-seed is pure and has no mutations.\n"
 		} else {
 			unit_data_string += mutation_string;
 		}
@@ -185,14 +184,13 @@ function scr_unit_detail_text(){
 				has_carapace=true;
 			}else{
 				has_carapace=false;
-				unit_data_string+="#";
-				unit_data_string+="Doesn't have black carapace installed and therefore can't use power armour to its maximum potential.";
+				unit_data_string+="Doesn't have black carapace installed and therefore can't use power armour to its maximum potential.\n";
 			}
 		}
 
 		// Sergeant text
-		unit_data_string += "#";
 		if (is_superior){
+			unit_data_string += "\n";
 			var charisma_string = "";
 			var wisdom_string = "";
 			unit_data_string += "Marines under his command ";
@@ -205,6 +203,7 @@ function scr_unit_detail_text(){
 				charisma_string += "are neutral towards him"
 			}
 			// Wisdom text
+			var separator = (charisma <= 25 && wisdom <= 35) || (charisma >= 35 && wisdom > 35) ? " and " : " yet ";
 			if (wisdom <= 30){
 				wisdom_string += "are generally dissatisfied with his tactical decisions.";
 			} else if (wisdom <= 35){
@@ -214,48 +213,47 @@ function scr_unit_detail_text(){
 			} else {
 				wisdom_string += "acknowledge that his military mind has saved them many times.";
 			}
-			var separator = (charisma <= 25 && wisdom <= 35) || (charisma >= 35 && wisdom > 35) ? " and " : " yet ";
 			unit_data_string+= string_join(separator, charisma_string, wisdom_string);
 			// Combat skills text
 			var combat_skill_sum = ballistic_skill + weapon_skill;
 			if (combat_skill_sum >= 100){
-				unit_data_string += " They are in awe of his combat skills, seeing him as a paragon of martial prowess.";
+				unit_data_string += "\nThey are in awe of his combat skills, seeing him as a paragon of martial prowess.";
 			} else if (combat_skill_sum >= 80){
-				unit_data_string += " They regard him with respect, his battle prowess a testament to his leadership.";
+				unit_data_string += "\nThey regard him with respect, his battle prowess a testament to his leadership.";
 			} else{
-				unit_data_string += " They harbor doubts about his combat abilities, having skills seemingly inadequate for his rank.";
+				unit_data_string += "\nThey harbor doubts about his combat abilities, having skills seemingly inadequate for his rank.";
 			}
-			unit_data_string+="#";
 		}
-
 		// Strength text
 		if (strength >= 50){
-			unit_data_string+= "His strength greatly exceeds that of the standard astartes allowing him to wield weapons that normally require two hands in one."
+			unit_data_string+= "\nHis strength greatly exceeds that of the standard astartes allowing him to wield weapons that normally require two hands in one."
 		} 
 		// Technology text
 		if(!array_contains(traits, "mars_trained")){
 			if (technology >= 35){
-				unit_data_string +="Displays a talent with technology that might make him suited to a role within the armentarium.";
+				unit_data_string +="\nDisplays a talent with technology that might make him suited to a role within the armentarium.";
+			} else if (technology <= 25){
+				unit_data_string +="\nIs a technological luddite capable of little more than cleaning his own bolter.";
 			} else{
-				unit_data_string +="Is a technological luddite capable of little more than cleaning his own bolter.";
+				unit_data_string +="\nHas a decent understanding of technology, capable of performing routine maintenance on standard issue equipment.";
 			}
 		} else{
 			if(technology >= 45){
-				unit_data_string +="Is a technological prodigy able to understand and build most anything that takes his interest.";
+				unit_data_string +="\nIs a technological prodigy able to understand and build most anything that takes his interest.";
 			} else{
-				unit_data_string +="Is capable enough with technical skills to carry out basic tasks in the field.";
+				unit_data_string +="\nIs capable enough with technical skills to carry out basic tasks in the field.";
 			}
 		}
 	}
 
 	// Traits text
 	if (array_length(traits) > 0){
-		unit_data_string+="##"
+		unit_data_string+="\n\n"
 		for (var i=0;i<array_length(traits);i++){
-			unit_data_string += string(global.trait_list[$ traits[i]].flavour_text + ".#", unit_name);
-			if (struct_exists(global.trait_list[$ traits[i]], "effect")){
-				unit_data_string += $" ({global.trait_list[$ traits[i]].effect})";
-			}
+			unit_data_string += string(global.trait_list[$ traits[i]].flavour_text + ".\n", unit_name);
+			// if (struct_exists(global.trait_list[$ traits[i]], "effect")){
+			// 	unit_data_string += $" ({global.trait_list[$ traits[i]].effect})";
+			// }
 		}
 	}
 	return unit_data_string

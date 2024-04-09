@@ -42,40 +42,40 @@ global.trait_list = {
 		weapon_skill : [10,5,"max"],      
 		ballistic_skill:[10,5, "max"],
 		display_name : "Champion",
-		flavour_text : "Through either natural talent, or obsessive training {0} is a master of arms",
+		flavour_text : "Because of either natural talent, or obsessive training they are a master of arms",
 		effect:"increase Melee Burden Cap"
 	},
 	"lightning_warriors":{
 		constitution: -6,
 		dexterity :6,
 		weapon_skill : 5,
-		flavour_text : "{0} is a master of speed covering distances quickly to enter the fray",
+		flavour_text : "A master of speed covering distances quickly to enter the fray",
 		display_name : "Lightning Warrior",
 	},
 	"slow_and_purposeful":{
 		constitution:6,
 		dexterity : -6,
 		strength : 2,
-		flavour_text : "{0} is implacable, advancing in combat with methodical reason",
+		flavour_text : "Implacable, advancing in combat with methodical reason",
 		display_name : "Slow and Purposeful",
 
 	},
 	"melee_enthusiast":{
 		weapon_skill : 5,
 		strength : 3,		
-		flavour_text : "Nothing can keep {0} from the fury of close up battle",	
+		flavour_text : "Nothing can keep them from the fury of melee combat",	
 		display_name : "Melee Enthusiast",
 
 	},
 	"shitty_luck":{
 		luck:-4,
-		flavour_text : "For all their talent {0} is dogged by poor luck",
+		flavour_text : "For all their talent they are dogged by poor luck",
 		display_name : "Shitty Luck",
 	},
 	"very_hard_to_kill":{
 		constitution:15,
 		luck:2,
-		flavour_text : "{0} is possed of a toughness and luck unsurpassed by most",
+		flavour_text : "Posses toughness and luck unsurpassed by most",
 		display_name : "Very Hard To Kill",
 		
 	},
@@ -88,18 +88,18 @@ global.trait_list = {
 		charisma:6,
 		weapon_skill:10,
 		ballistic_skill:10,
-		flavour_text : "{0} walks in the footsteps of the primarchs of old",
+		flavour_text : "Walks in the footsteps of the Primarchs of old",
 		display_name : "Paragon",
 
 	},
 	"warp_touched":{
 		intelligence:4,
-		flavour_text : "{0} has interacted with the warp in away that has forever marked them",
+		flavour_text : "Interacted with the warp in a way that has forever marked them",
 		display_name : "Warp Touched",		
 	},
 	"lucky":{
 		luck : 4,
-		flavour_text : "Is inexplicably lucky",
+		flavour_text : "Inexplicably lucky",
 		display_name : "Lucky"
 	},
 	"old_guard":{
@@ -108,7 +108,7 @@ global.trait_list = {
 		strength :1,
 		weapon_skill : [2, 2, "max"],
 		ballistic_skill :[2, 2, "max"],
-		flavour_text : "{0} has seen many a young warrior rise and die before him but he remains",
+		flavour_text : "Seen many young warriors rise and die before them but they themselves still remain",
 		display_name : "Old Guard"
 	},
 	"seasoned":{
@@ -117,7 +117,7 @@ global.trait_list = {
 		strength :1,
 		weapon_skill : 1,
 		ballistic_skill :1,
-		flavour_text : "{0} is a seasoned warrior having fought for many years",
+		flavour_text : "A seasoned warrior, having fought for many years",
 		display_name : "Seasoned",		
 	},
 	"ancient":{
@@ -127,13 +127,13 @@ global.trait_list = {
 		weapon_skill : 3,
 		ballistic_skill :4,
 		wisdom : 5,
-		flavour_text : "{0} is truly Ancient. While his body may ache his, skills and wisdom are to be respected",
+		flavour_text : "Truly Ancient. While their body may ache - skills and wisdom are to be respected",
 		display_name : "Ancient",		
 	},
 	"tinkerer":{
 		technology:[5,2,"max"],
 		display_name:"Tinkerer",
-		flavour_text:"{0} has a knack for tinkering around with various technological devices and apparatuses often augmenting and improving his own equipment",
+		flavour_text:"They have a knack for tinkering around with various technological devices and apparatuses, often augmenting and improving their own equipment",
 	},
 	"lead_example":{
 		weapon_skill:[2,1,"max"],
@@ -146,7 +146,7 @@ global.trait_list = {
 		wisdom:1,
 		charisma:3,
 		display_name:"Lead by Example",
-		flavour_text :"In his many years of service, {0} has rissen through the ranks and has always lead by example and from the front, he has the respect of all of his brothers",
+		flavour_text :"In their many years of service, they have risen through the ranks and have always led by example from the front. They have earned the respect of all their brothers",
 	},
 	"still_standing":{
 		weapon_skill:[6,2,"max"],
@@ -157,8 +157,7 @@ global.trait_list = {
 		wisdom:[3,3,1],
 		charisma:1,
 		display_name:"Still Standing",
-		flavour_text :"{0} survived inmessurable odds, either through killing a warboss, killing a nid queen, or other incredible deed, while all his brothers were injured",
-
+		flavour_text :"Survived the unthinkable. Whether it was slaying a Warboss, vanquishing a Norn-Queen, or accomplishing another incredible feat, they stood last while their comrades fell",
 	},
 	"lone_survivor":{
 		weapon_skill:[8,2,"max"],
@@ -171,7 +170,7 @@ global.trait_list = {
 		intelligence:[3,3,"max"],
 		charisma:[-3, 1, "min"],
 		display_name:"Lone Survivor",
-		flavour_text :"{0} survived a battle where all his deployed brothers died. He is more reclusive, but gained immeasurable combat capabilities and is harder to kill.",
+		flavour_text :"Survived a battle where all their comrades died. They became more reclusive, but gained immeasurable combat capabilities and are harder to kill.",
 	},
 	"beast_slayer":{
 		weapon_skill:[3,2,"max"],
@@ -182,21 +181,21 @@ global.trait_list = {
 		wisdom:3,
 		charisma:1,
 		display_name:"Lone Survivor",
-		flavour_text :"{0} has defeated a huge beast in single combat, this proves his toughness and his great ability to overcome powerful enemies of the imperium",
+		flavour_text :"Defeated a huge beast in single combat, this proves their toughness and their great ability to overcome powerful enemies of the imperium",
 
 	},	
 	"mars_trained":{
 		technology:[10,5,"max"],
 		intelligence:[5,5,"max"],
 		display_name:"Trained On Mars",
-		flavour_text:"{0} Has had the best instruction in the imperium on technology from the Tech Priests of Mars"
+		flavour_text:"Had the best instruction in the imperium on technology from the Tech Priests of Mars"
 	},
 	"flesh_is_weak":{
 		technology:[2,1,"max"],
 		constitution:[1,1,"max"],
 		piety:[3,1,"max"],
 		display_name:"Weakness of Flesh",
-		flavour_text:"{0} tries to cast aside all perceived weaknesses of the flesh",
+		flavour_text:"Perceive living flesh as a weakness and try to cast it aside whatever possible",
 		effect:"faith boosts from bionic replacements"
 	},
 	"zealous_faith":{
@@ -206,13 +205,13 @@ global.trait_list = {
 		intelligence:-2,
 		piety:[5,2,"max"],
 		display_name:"Zealous Faith",
-		flavour_text:"{0} puts great emphasis on his faith, able to draw strength from it in crisis"
+		flavour_text:"Put great emphasis on their faith, able to draw strength from it in crisis"
 	},
 	"feet_floor":{
 		wisdom:1,
 		dexterity:-2,
 		display_name:"Feet On the Ground",
-		flavour_text:"{0} prefers to keep both feet on the ground",
+		flavour_text:"Prefer to keep both feet on the ground",
 		effect:"reduction in combat effectiveness when using Bikes or Jump Packs"
 	},
 	"tyrannic_vet":{
@@ -222,7 +221,7 @@ global.trait_list = {
 		ballistic_skill:1,
 		constitution:1,
 		display_name:"Tyrannic War Veteran",
-		flavour_text:"{0} Is a veteran of the many wars against the the Tyranid swarms",
+		flavour_text:"A veteran of the many wars against the the Tyranid swarms",
 		effect:"Increased lethality against tyranids"
 	},
 	"blood_for_blood":{
@@ -230,7 +229,7 @@ global.trait_list = {
 		weapon_skill:1,
 		piety:2,
 		display_name:"Blood For the Blood God",
-		flavour_text:"{0} Has spilled blood in the name of the blood god",
+		flavour_text:"Spilled blood in the name of the blood god",
 		effect:"Has the attention of Khorne"
 	},
 	"blunt":{
@@ -240,13 +239,13 @@ global.trait_list = {
 		intelligence:-4,
 		weapon_skill:1,
 		display_name:"Blunt",
-		flavour_text:"{0} tends towards simplistic approaches to achieve goals",
+		flavour_text:"Tend towards simplistic approaches to achieve goals",
 	},
 	"skeptic":{
 		piety:[-6,4,"min"],
 		wisdom:1,
 		display_name:"Skeptic",
-		flavour_text:"{0} has a skeptical outlook and puts little thought in trivial matters like religion and faith",
+		flavour_text:"Have a skeptical outlook and put little thought in trivial matters like religion and faith",
 	},
 	"scholar":{
 		intelligence:[4,2,"max"],
@@ -254,7 +253,7 @@ global.trait_list = {
 		technology:2,
 		stength:-1,
 		display_name:"Scholar",
-		flavour_text:"{0} has an keen mind and enjoys to read and train it where possible",
+		flavour_text:"Have a keen mind and enjoy reading and training it whenever possible",
 	},
 	"brute":{
 		strength:[4,2,"max"],
@@ -264,42 +263,42 @@ global.trait_list = {
 		intelligence:-5,
 		charisma:-2,
 		display_name:"Brute",
-		flavour_text:"{0} is a brutal character solving problems often with intimidation or violence",
+		flavour_text:"A brutal character, often solving problems with intimidation or violence",
 	},
 	"charismatic":{
 		charisma:[10,4,"max"],
 		display_name:"Charismatic",
-		flavour_text:"{0} is liked by most without even trying",
+		flavour_text:"Liked by most without even trying",
 	},
 	"recluse":{
 		charisma:[-3,2,"min"],
 		dexterity:1,
 		wisdom:1,
 		display_name:"Reclusive",
-		flavour_text:"{0} is generally withdrawn and reclusive avoiding social engagements were possible",
+		flavour_text:"Generally withdrawn and reclusive, avoiding social engagements where possible",
 	}	,
 	"nimble":{
 		display_name:"Nimble",
-		flavour_text:"{0} is natrually nible and light on their feet",
+		flavour_text:"Naturally nimble and light on their feet",
 		dexterity:[4,3,"max"],
 		weapon_skill:1,
 		constitution:-3,
 	},
 	"jaded":{
 		display_name:"Jaded",
-		flavour_text:"{0}'s past has led to a deep distrust and cynicla outlook on most parts of their life",
+		flavour_text:"Their past has led them to form a deep distrust and cynical outlook on most parts of their life",
 		charisma:-2,
 		wisdom:-1,
 	},
 	"observant":{
 		display_name:"Observant",
-		flavour_text:"{0} tends to notics things that most don't",
+		flavour_text:"Tend to notice things that most don't",
 		wisdom:[5,2,"max"],
 		dexterity:2
 	},
 	"perfectionist":{
 		display_name:"Perfectionist",
-		flavour_text:"{0} Is obsessive with doing things correctly",
+		flavour_text:"Obsessed with doing things correctly",
 		wisdom:[2,2,"max"],
 		weapon_skill:[2,2,"max"],
 		ballistic_skill:[2,2,"max"],
@@ -311,8 +310,8 @@ global.trait_list = {
 		weapon_skill:[2,2,"max"],
 		ballistic_skill:[2,2,"max"],
 		charisma:2,
-		flavour_text:"{0} Has a natural sense of protection and will guard those under his protection unto death",
-		effect:"Is a better guardian or body guard",
+		flavour_text:"Born with a guardian's heart, they vow to shield their charges, defending them unto death",
+		effect:"Are a better guardian or bodyguard",
 	},
 	"cunning":{
 		display_name:"Cunning",
@@ -321,17 +320,17 @@ global.trait_list = {
 		dexterity:[2,2,"max"],
 		charisma:2,
 		wisdom:1,
-		flavour_text:"{0} is possessed of a fine cunning",
+		flavour_text:"Possessed of a fine cunning",
 	},
 	"strong":{
 		display_name:"Strong",
 		strength:[6,2,"max"],
-		flavour_text:"{0} Is very strong",
+		flavour_text:"Endowed with strength from birth",
 	},	
 	"slow":{
 		display_name:"slow",
 		dexterity:[-3,3,"min"],
-		flavour_text:"{0} is many things but fast ain't one of em",
+		flavour_text:"Have many talents but being fast ain't one of them",
 	},			
 	"deathworld":{
 		display_name:"Deathworld Born",
@@ -341,7 +340,7 @@ global.trait_list = {
 		weapon_skill:[2,2,"max"],
 		ballistic_skill:[2,-2,"min"],
 		wisdom:[2,2,"max"],
-		flavour_text:"{0} started life on a deathworld while this has greatly improved their strength and survival their abilities and skills in technology and other useful 41st millenium skills is reduced",
+		flavour_text:"Started life on a deathworld. While this has greatly improved their strength and survival abilities, their skills in technology and other advanced fields are reduced",
 		intelligence:-3,
 		technology:[-3,2,"min"],
 		piety:[3,1],
@@ -349,35 +348,35 @@ global.trait_list = {
 	"technophobe":{
 		display_name:"Technophobe",
 		technology:[-7,2,"min"],
-		flavour_text:"{0} Has a deep mistrust and loathing of technology",
+		flavour_text:"Have a deep mistrust and loathing of technology",
 	},
 	"fast_learner":{
 		display_name:"Quick Learner",
 		wisdom:[2,2,"max"],
 		intelligence:[2,2,"max"],
 		technology:[2,2,"max"],
-		flavour_text:"{0} is a fast learner picking up new skills with ease",
+		flavour_text:"Fast learner, picking up new skills with ease",
 		effect:"learns new skills more easily",
 	},
 	"brawler":{
 		display_name:"Brawler",
 		strength:[2,2,"max"],
 		constitution:[2,2,"max"],
-		flavour_text:"{0} is drawn to fighting and scraps often using little more than their fists",
+		flavour_text:"Compelled towards the thrill of combat, they revel in the raw, primal dance of battle, often relying on nothing more than the crushing power of their fists",
 		effect:"bonus to fist type weaponry",
 	},
 	"tech_heretic":{
 		display_name:"Tech Heretic",
 		technology:[3,1,"max"],
 		intelligence:1,
-		flavour_text:"{0} Engages in study and beliefs considered heretical in the eyes of Mars and the Imperium",
+		flavour_text:"Engage in study and beliefs considered heretical in the eyes of Mars and the Imperium",
 		//effect:"bonus to fist type weaponry",
 	},
 	"crafter":{
 		display_name:"Crafter",
 		technology:[6,1,"max"],
 		intelligence:1,
-		flavour_text:"{0} Is particularly skilled at building things, often making them to a superior quality as well",
+		flavour_text:"Particularly skilled at building and making things, often improving their quality along the way",
 		effect:"provides more total forge points especially when assigned to a forge",
 	},	
 	"natural_leader":{
