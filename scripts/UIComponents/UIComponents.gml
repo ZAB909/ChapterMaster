@@ -400,8 +400,9 @@ function main_menu_button(sprite=spr_ui_but_1, sprite_hover=spr_ui_hov_1, xx=0, 
 	hover_alpha=0;
 	XX=xx;
 	YY=yy;
+	clicked=false;
 	static draw = function(xx=XX,yy=YY,text="", x_scale=1, y_scale=1, width=108, height=42){
-		var clicked=false;
+		clicked=false;
 		height *=y_scale
 		width *=x_scale;
 		if (point_in_rectangle(mouse_x, mouse_y,xx, yy, xx+width, yy+height)){
@@ -413,7 +414,7 @@ function main_menu_button(sprite=spr_ui_but_1, sprite_hover=spr_ui_hov_1, xx=0, 
 			draw_sprite(hover_sprite,0,xx,yy);
 			draw_set_blend_mode(bm_normal);
 			ossilate_down = true;
-			 if (mouse_check_button(mb_left)){
+			 if (mouse_check_button_pressed(mb_left)){
 			 	clicked=true;
 			 }
 		} else {

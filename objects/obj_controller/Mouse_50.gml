@@ -1281,7 +1281,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             }
         }
         // Management
-        if (mouse_x>=xx+36) and (mouse_y>=yy+837) and (mouse_x<xx+176) and (mouse_y<yy+877){
+        if (menu_buttons.chapter_manage.clicked){
             if (menu!=1)and (onceh==0){
                 scr_management(1);
                 menu=1;
@@ -1307,7 +1307,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             managing=0;
         }
         // Settings
-        if (mouse_x>=xx+179) and (mouse_y>=yy+837) and (mouse_x<xx+321) and (mouse_y<yy+877){
+        if (menu_buttons.chapter_settings.clicked){
             onceh=0;
             if (menu!=21) and (onceh==0){
                 onceh=1;
@@ -1339,7 +1339,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             }
         }
         // Apothecarium
-        if (mouse_x>=xx+358) and (mouse_y>=yy+838) and (mouse_x<xx+471) and (mouse_y<yy+879){
+        if (menu_buttons.apoth.clicked){
             menu_adept=0;
             hide_banner=1;
             if (scr_role_count("Master of the Apothecarion","0")==0) then menu_adept=1;
@@ -1359,7 +1359,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             managing=0;
         }
         // Reclusium
-        if (mouse_x>=xx+474) and (mouse_y>=yy+838) and (mouse_x<xx+587) and (mouse_y<yy+879){
+        if (menu_buttons.reclu.clicked){
             menu_adept=0;
             hide_banner=1;
             if (scr_role_count("Master of Sanctity","0")==0) then menu_adept=1;
@@ -1395,7 +1395,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             managing=0;
         }
         // Librarium
-        if (mouse_x>=xx+591) and (mouse_y>=yy+838) and (mouse_x<xx+704) and (mouse_y<yy+879){
+        if (menu_buttons.lib.clicked){
             menu_adept=0;
             hide_banner=1;
             if (scr_role_count("Chief "+string(obj_ini.role[100][17]),"0")==0) then menu_adept=1;
@@ -1435,7 +1435,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             managing=0;
         }
         // Armamentarium
-        if (mouse_x>=xx+707) and (mouse_y>=yy+838) and (mouse_x<xx+820) and (mouse_y<yy+879){
+        if (menu_buttons.arm.clicked){
             menu_adept=0;
             hide_banner=1;
             if (scr_role_count("Forge Master","0")==0) then menu_adept=1;
@@ -1450,7 +1450,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             managing=0;
         }
         // Recruiting
-        if (mouse_x>=xx+805) and (mouse_y>=yy+838) and (mouse_x<xx+918) and (mouse_y<yy+879){
+        if (menu_buttons.recruit.clicked){
             var geh=0,good=0;
             for(geh=1; geh<=50; geh++){
                 geh+=1;
@@ -1476,7 +1476,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             managing=0;
         }
         // Master of the Fleet
-        if (mouse_x>=xx+939) and (mouse_y>=yy+838) and (mouse_x<xx+1052) and (mouse_y<yy+879){
+        if (menu_buttons.fleet.clicked){
             menu_adept=0;
             hide_banner=1;
             var geh=0,good=0;
@@ -1546,7 +1546,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             managing=0;
         }
         // Diplomacy
-        if (mouse_x>=xx+1131) and (mouse_y>=yy+838) and (mouse_x<xx+1273) and (mouse_y<yy+879){
+        if (menu_buttons.diplo.clicked){
             if (menu!=20) and (onceh==0){
                 menu=20;
                 onceh=1;
@@ -1565,7 +1565,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             managing=0;
         }
         // Event Log
-        if (scr_hit(xx+1275,yy+838,xx+1417,yy+879)=true){
+        if (menu_buttons.event.clicked){
             if (menu!=17) and (onceh==0){
                 menu=17;
                 onceh=1;
@@ -1585,7 +1585,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             managing=0;
         }
         // End Turn
-        if (mouse_x>=xx+1420) and (mouse_y>=yy+837) and (mouse_x<xx+1562) and (mouse_y<yy+877){
+        if (menu_buttons.end_turn.clicked){
             if (menu==0) and (cooldown<=0){
                 if (location_viewer.hide_sequence==0){
                     location_viewer.hide_sequence++;
@@ -1867,241 +1867,14 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     selecting_types="";
                 }
             } 
-            // This clicks on the squad_sel button
-            yy+=77;
-            sel=top;
-            for(var i=0; i<min(man_max,man_see); i++){
-                while (man[sel]=="hide") and (sel<500){sel++;}
-                if point_in_rectangle(mouse_x,mouse_y,xx+25,yy+64,xx+25+8,yy+85){
-                    if (squad_sel==0) and (squad[sel]!=0){
-                        squad_sel=squad[sel];
-                        cooldown=8;
-                    }
-                }
-                yy+=21;
-                sel++;
-                if (sel==501) then break
-            }
 
         }
         // This is the 'select all of type' buttons
         sel=0;
         yy=__view_get( e__VW.YView, 0 )+77;
-        if (sel_all!=""){
-            // repeat(min(man_max,man_see)){
-            var selection =false;
-            for(var i=0; i<man_max; i++){
-                while (man[i]=="hide")and (i<500){i++;}
-                if (man_sel[i]==1){
-                    selecting_location=ma_loc[sel];
-                    selecting_ship=ma_lid[sel];
-                    selecting_planet=ma_wid[sel];
-                    selection=true;
-                    break;
-                }
-            }                
-            if (!selection){
-                if (sel_all!="Command") and (sel_all!="man") and (sel_all!="vehicle"){
-                     scr_load_decide_loc("unit role",sel_all,false);
-                     scr_load_decide_loc("unit role",sel_all,true);
-                } else {
-                    switch(sel_all){
-                        case "man":
-                            scr_load_decide_loc("man","man",false);
-                            break;
-                        case "vehicle":
-                            scr_load_decide_loc("vehicle","man",true);
-                            break;
-                        case "Command":
-                            scr_load_decide_loc("Command","man",false);
-                            break;                                                
-                    }
-                }
-            }
-            var onceh;
-            var select = false;
-            var skip=false;
-            for(var i=0; i<man_max; i++){
-                select=false;
-                skip=false;
-                while (man[sel]=="hide" && sel<500){sel++;}
-                if (man[sel]=="man"){
-                    unit=display_unit[sel];
-                    if (unit.assignment()!="none" || array_contains(["Terra","Lost","Mechanicus Vessel"],ma_loc[sel])){
-                        skip=true;
-                    }
-                }
-                if (fest_repeats>0){// Prevent selecting marines that are in an event
-                    if (fest_planet==0) and (fest_sid>0) and (ma_lid[sel]==fest_sid){skip=true;}
-                    if (fest_planet==1) and (fest_wid>0) and (ma_wid[sel]==fest_wid) and (ma_loc[sel]==fest_star){skip=true;}
-                }
-
-                if (selecting_location!="")
-                and ((ma_loc[sel]!=selecting_location)
-                or (ma_wid[sel]!=selecting_planet))
-                or ((selecting_ship>0) and (ma_lid[sel]==0)){skip=true;}  
-
-                if (ma_god[sel]>=10){skip=true;}
-                                             
-                if (skip){
-                    if (sel<500){
-                        sel++;
-                        continue;
-                    } else{
-                        break;
-                    }
-                }
-                eventing=false;
-                selection=false;
-                // Selects all men of type
-                    
-                if (ma_role[sel]==sel_all){
-                    select=true
-                }else if (sel_all=="man" && man[sel]=="man"){
-                    select=true
-                }else if (sel_all=="vehicle" && man[sel]=="vehicle"){
-                    select=true
-                }else if (sel_all=="Command" && man[sel]=="man"){
-                    var is_command=0;
-                    if (managing>0) and (managing<=10){
-                        if (unit.IsSpecialist("command")){
-                            select=true
-                        }else if (unit.squad!="none"){
-                            if (obj_ini.squads[unit.squad].type=="command_squad"){
-                                select=true
-                            }
-                        }
-                    }
-                }
-                if (select){
-                    if (man_sel[sel]==0){
-                        man_sel[sel]=1;
-                        man_size+=scr_unit_size(ma_armour[sel],ma_role[sel],true);
-                        onceh=1;
-                        selection=true;
-                    }else{
-                        man_sel[sel]=0;
-                        man_size-=scr_unit_size(ma_armour[sel],ma_role[sel],true);
-                    }
-                }
-                if (selection){
-                    if (selecting_location==""){
-                        selecting_location=ma_loc[sel];
-                        selecting_ship=ma_lid[sel];
-                        selecting_planet=ma_wid[sel];
-                        if (ma_wid[sel]==0) and (ma_lid[sel]>0){
-                            sel_loading=1;
-                            //selecting_location=obj_ini.ship_location[ma_lid[sel]];
-                        }
-                    }
-                }
-                yy+=20;
-                sel++;
-                if (sel==500) then break;
-            }
-            sel_all="";
-        }
         sel=top;
         yy=__view_get( e__VW.YView, 0 )+77;
         var unit;
-        for(var i=0; i<min(man_max,man_see); i++){
-            while (man[sel]=="hide") and (sel<500){sel++;}
-            eventing=false;
-
-            // This is the actual individual click right here
-            if (point_in_rectangle(mouse_x,mouse_y,xx+25+8,yy+64,xx+974,yy+85) and (cooldown<=0)) 
-            or ((squad[sel]=squad_sel) and (squad_sel!=0)){
-                var onceh=0,dib=0;
-                stop=0;
-
-                eventing=false;
-                // Prevent selecting marines that are in an event
-                if (fest_repeats>0){
-                    if (fest_planet==0) and (fest_sid>0) and (ma_lid[sel]==fest_sid){eventing=true;}
-                    if (fest_planet==1) and (fest_wid>0) and (ma_wid[sel]==fest_wid) and (ma_loc[sel]==fest_star){eventing=true;}
-                }
-                // Register double click
-                if (ma_god[sel]<10) and (ma_loc[sel]!="Terra") and (ma_loc[sel]!="Mechanicus Vessel") and (ma_loc[sel]!="Lost") and (eventing==false){
-                    if (double_click>5) and (sel==double_was) then dib=1;
-                }
-
-                if ((man_sel[sel]==0) and (onceh==0) and (ma_god[sel]<10) and (ma_loc[sel]!="Terra") 
-                and (ma_loc[sel]!="Mechanicus Vessel") and (ma_loc[sel]!="Lost") and (eventing==false)) or (dib==1){
-                    if (selecting_location=="") and ((man[sel]=="man") or (man[sel]=="vehicle")){
-                        selecting_location=ma_loc[sel];
-                        selecting_ship=ma_lid[sel];
-                        selecting_planet=ma_wid[sel];// sel_uid=ma_uid[sel];
-                        if (ma_loc[sel]!=selecting_location) and (selecting_planet!=ma_wid[sel])then stop=1;
-                    }
-
-                    if (selecting_location!="")
-                        and (
-                            (man[sel]=="man") 
-                            or (man[sel]=="vehicle")
-                        )
-                        and (ma_loc[sel]!=selecting_location)
-                        and (selecting_planet!=ma_wid[sel])then stop=1;
-
-                    if ((man[sel]=="man") or (man[sel]=="vehicle")) and (ma_lid[sel]!=sel_loading) and (sel_loading!=0) then stop=1;
-
-                    // Continue with double click
-                    if (dib==1) and (stop!=1){
-                        for(var bi=0; bi<=499; bi++){
-                            if (man_sel[bi]==0) and (ma_god[bi]<10) and (ma_loc[bi]!="Terra") 
-                            and (ma_loc[bi]!="Mechanicus Vessel") and (ma_loc[bi]!="Lost"){
-                                if (ma_loc[bi]==selecting_location) and (selecting_planet==ma_wid[bi]) and (ma_role[bi]==ma_role[double_was]) and (bi!=double_was) and (man[sel]=="vehicle"){
-                                    man_sel[bi]=1;
-
-                                    if (man[bi]=="man") then man_size+=scr_unit_size(ma_armour[bi],ma_role[bi],true);
-                                    if (man[bi]=="vehicle") then man_size+=scr_unit_size("",ma_role[bi],true);
-                                }
-                            }
-                        }
-                        double_was=0;
-                        cooldown=8;
-                        click2=1;
-                        stop=1;
-                        exit;
-                    }
-                    cooldown=8;
-                    click2=1;
-                    double_click+=12;
-                    double_was=sel;
-
-                    if (stop!=1){
-                        onceh=1;
-                        man_sel[sel]=1;
-                        if (string_count("%!@",selecting_types)==0){
-                            if (man[sel]=="man") then selecting_types+=string(ma_role[sel]);
-                            if (man[sel]=="vehicle") then selecting_types+=string(ma_role[sel]);
-                        }
-                        // Check for location here
-                        if (man[sel]=="man") and (ma_lid[sel]>0) then sel_loading=ma_lid[sel];
-                        if (man[sel]=="vehicle") and (ma_lid[sel]>0) then sel_loading=ma_lid[sel];
-
-                        if (man[sel]=="man") then man_size+=scr_unit_size(ma_armour[sel],ma_role[sel],true);
-                        if (man[sel]=="vehicle") then man_size+=scr_unit_size("",ma_role[sel],true);
-                    }
-                }
-                if (man_sel[sel]==1) and (onceh==0){
-                    onceh=1;
-                    man_sel[sel]=0;
-                    cooldown=8;
-                    click2=1;
-                    if (string_count("%!@",selecting_types)==0){
-                        if (man[sel]=="man") and (string_count(ma_role[sel],selecting_types)>0) then selecting_types=string_replace(selecting_types,ma_role[sel],"");
-                        if (man[sel]=="vehicle") and (string_count(ma_role[sel],selecting_types)>0) then selecting_types=string_replace(selecting_types,ma_role[sel],"");
-                    }
-                    if (man[sel]=="man") then man_size-=scr_unit_size(ma_armour[sel],ma_role[sel],true);
-                    if (man[sel]=="vehicle") then man_size-=scr_unit_size("",ma_role[sel],true);
-                    if (man_size==0) then sel_loading=0;
-                }
-            }
-            yy+=20;
-            sel++;
-            if (sel>=500) then break;
-        }
-        if (sel_all!="") then sel_all="";
         // End selecting
 
         xx=xx+0;

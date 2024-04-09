@@ -84,12 +84,27 @@ function text_bar_area(XX,YY,Max_width = 400) constructor{
 }
 
 function scr_ui_manage() {
-
 	if (combat!=0) then exit;
-
 	// This is the draw script for showing the main management screen or individual company screens
 
 	if (menu==1) and (managing>0 || managing <0){
+		if (!mouse_check_button(mb_left)){
+			drag_square=[];
+			rectangle_action = -1;
+		}		
+		if (squad_sel_count>0){
+			squad_sel_count--;
+		}
+		if (squad_sel_count==0){
+			squad_sel=-1;
+			squad_sel_action=-1;
+		}
+		if (man_size<1){
+	        selecting_location="";
+	        selecting_ship=0;
+	        selecting_planet=0;
+	        man_size=0;
+		}	
 		var unit,i,x1,x2,y1,y2, var_text;
 		var romanNumerals=scr_roman_numerals();	
 		var tooltip_text="",bionic_tooltip="",tooltip_drawing=[];
@@ -685,343 +700,68 @@ function scr_ui_manage() {
 	    yy+=77;
 		
 	    var unit_specialism_option=false, spec_tip="";
-		var potential_tooltip=[], health_tooltip=[], promotion_tooltip=[];
+	    //TODO store these in global tooltip storage
+		potential_tooltip=[];
+		health_tooltip=[];
+		promotion_tooltip=[];
 		var repetitions=min(man_max,man_see);
 
 		//tooltip text to tell you if a unit is eligible for special roles
-		var spec_tips = [string("{0} Potential",obj_ini.role[100][16]),		
-						string("{0} Potential",obj_ini.role[100][15]),
-						string("{0} Potential",obj_ini.role[100][14]),
-						string("{0} Potential",obj_ini.role[100][17])];
-		var assignment ="none"
 	    
 	    if (!obj_controller.view_squad){
+	        /*if (sel_all!=""){             
+	            if (selecting_location==""){
+	                if (sel_all!="Command") and (sel_all!="man") and (sel_all!="vehicle"){
+	                	//TODO fix this shitty function so it actually calculates right
+	                     scr_load_decide_loc("unit role",sel_all,false);
+	                     scr_load_decide_loc("unit role",sel_all,true);
+	                } else {
+	                    switch(sel_all){
+	                        case "man":
+	                            scr_load_decide_loc("man","man",false);
+	                            break;
+	                        case "vehicle":
+	                            scr_load_decide_loc("vehicle","man",true);
+	                            break;
+	                        case "Command":
+	                            scr_load_decide_loc("Command","man",false);
+	                            break;                                                
+	                    }
+	                }
+	            }
+	        }*/	    	
 		    for(var i=0; i<repetitions;i++){
 		    	if (sel==500) then break;
 		    	while (man[sel]=="hide") and (sel<499){sel+=1;}
-
-				eventing=false;
-	        
-		        if (man[sel]=="man" && is_struct(display_unit[sel])){
-
-					unit = display_unit[sel];
-					if (unit.name()=="" || unit.base_group=="none"){
-						sel++;
-						continue;
-					}
-					var unit_location = unit.marine_location();
-		            temp1=unit.name_role();
-					var unit_specialist = is_specialist(unit.role());
-		            unit_specialism_option=false;
-		            // temp1=string(managing)+"."+string(ide[sel]);
-		            temp2=string(ma_loc[sel]);
-		            if (unit_location[0]==location_types.planet){
-						temp2 = unit_location[2];
-						//get roman numeral for system planet
-						temp2 += romanNumerals[unit_location[1]-1];
-		            } else if(unit_location[0]==location_types.ship){
-						temp2 = obj_ini.ship[unit_location[1]]
-					};
-					assignment=unit.assignment();
-					if (assignment!="none"){
-						temp2+= $"({assignment})";
-					}else if (fest_planet==0) and (fest_sid>0) and (fest_repeats>0) and (ma_lid[sel]==fest_sid){
-						temp2="=Event=";
-						eventing=true;
-					}else if (fest_planet==1) and (fest_wid>0) and (fest_repeats>0) and (ma_wid[sel]==fest_wid) and (ma_loc[sel]==fest_star){
-						temp2="=Event=";
-						eventing=true;
-					}
-		            if (unit.in_jail()) then temp2="=Penitorium=";
-	                   
-		            temp3=string(round((unit.hp()/unit.max_health())*100))+"% HP";
-	            
-		            temp4=string(ma_exp[sel])+" XP";
-	            
-		            ma_ar="";ma_we1="";ma_we2="";ma_ge="";ma_mb="";ttt=0;
-		            ar_ar=0;ar_we1=0;ar_we2=0;ar_ge=0;ar_mb=0;
-	            	//TODO handle recursively
-		            if (ma_armour[sel]!=""){
-						ma_ar=gear_weapon_data("armour",unit.armour(),"abbreviation");
-						ma_ar=is_string(ma_ar) ? ma_ar : "";
-		            }
-		            if (ma_gear[sel]!=""){
-						ma_ge=gear_weapon_data("gear",unit.gear(),"abbreviation");
-						ma_ge=is_string(ma_ge) ? ma_ge : ""	;					
-		            }
-		            if (ma_mobi[sel]!=""){
-						ma_mb=gear_weapon_data("mobility",unit.mobility_item(),"abbreviation");
-						ma_mb=is_string(ma_mb) ? ma_mb : ""	;			            	
-		            }
-		            if (ma_wep1[sel]!=""){
-						ma_we1=gear_weapon_data("weapon",unit.weapon_one(),"abbreviation");
-						ma_we1=is_string(ma_we1) ? ma_we1 : "";			            	
-		            }
-		            if (ma_wep2[sel]!=""){
-						ma_we2=gear_weapon_data("weapon",unit.weapon_two(),"abbreviation");
-						ma_we2=is_string(ma_we1) ? ma_we2 : "";	
-		            }
-		        }else if (man[sel]=="vehicle" && is_array(display_unit[sel])){
-		            // temp1="v "+string(managing)+"."+string(ide[sel]);
-		            temp1=string(ma_role[sel]);
-		            temp2=string(ma_loc[sel]);
-	            
-		            if (ma_wid[sel]!=0){
-		            	//numeral for vehicle planet
-		            	temp2 += romanNumerals[ma_wid[sel]-1];
-		            }
-		            temp3=string(round(ma_health[sel]))+"% HP";temp4="";
-		            // Need abbreviations here
-
-		            ma_ar="";
-		            ma_we1="";
-		            ma_we2="";
-		            ma_ge="";
-		            ma_mb="";
-		            ttt=0;
-		            ar_ar=0;
-		            ar_we1=0;
-		            ar_we2=0;
-		            ar_ge=0;
-		            ar_mb=0;
-		            //TODO handle recursively
-					if (ma_armour[sel]!=""){
-						ma_ar=gear_weapon_data("weapon",ma_armour[sel],"abbreviation");
-						ma_ar=is_string(ma_ar) ? ma_ar : "";
-					}
-					if (ma_gear[sel]!=""){
-						ma_ge=gear_weapon_data("armour",ma_gear[sel],"abbreviation");
-						ma_ge=is_string(ma_ge) ? ma_ge : ""	;		
-					}
-					if (ma_mobi[sel]!=""){
-						ma_mb=gear_weapon_data("gear",ma_mobi[sel],"abbreviation");
-						ma_mb=is_string(ma_mb) ? ma_mb : ""	;			            	
-		            }
-					if (ma_wep1[sel]!=""){
-						ma_we1=gear_weapon_data("weapon",ma_wep1[sel],"abbreviation");
-						ma_we1=is_string(ma_we1) ? ma_we1 : "";			            	
-					}
-					if (ma_wep2[sel]!=""){
-						ma_we2=gear_weapon_data("weapon",ma_wep2[sel],"abbreviation");
-						ma_we2=is_string(ma_we1) ? ma_we2 : "";	
-						// temp5=string(ma_wep1[sel])+", "+string(ma_wep2[sel])+" + "+string(ma_gear[sel]);
-		      		}
-				}
-
-		        if (man_sel[sel]==0) then draw_set_color(c_black);
-		        if (man_sel[sel]!=0) then draw_set_color(6052956);// was gray
-		        draw_rectangle(xx+25,yy+64,xx+974,yy+85,0);
-
-		        unit_specialism_option=false;
-		        spec_tip = "";
-				draw_set_color(c_gray);
-				draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);
-		        if (man[sel]="man"  && is_struct(display_unit[sel])){
-		        	if (!unit_specialist){
-				        if (unit.technology>=35){
-				        	 //if unit has techmarine potential
-				        	unit_specialism_option=true;
-				        	spec_tip = spec_tips[0];
-				        //if unit has librarian potential
-				    	} else if (unit.psionic>7){
-				    		spec_tip = spec_tips[3];
-				    		unit_specialism_option=true;
-				    	}else if (unit.piety>=35) and (unit.charisma>=30){  //if unit has chaplain potential
-				    		spec_tip = spec_tips[2];
-				    		unit_specialism_option=true;
-				    	}else if (unit.technology>=30) and (unit.intelligence>=45){ //if unit has apothecary potential
-				    		spec_tip = spec_tips[1];
-				    		unit_specialism_option=true;
-				    	}
-			    	}
+		    	if (scr_draw_management_unit(sel, yy, xx) == "continue"){
+		    		sel++
+		    		i--;
+		    		continue;
 		    	}
-		    	if (unit_specialism_option) then array_push(potential_tooltip, [spec_tip, [xx+232,yy+64,xx+246,yy+85]]);
+		    	if (i==0){
+		    		if (point_in_rectangle(mouse_x, mouse_y,xx+25+8,yy+64,xx+974,yy+85)){
+		    			man_current = man_current >0 ?man_current-1:0;
+		    		}
+		    	} else if (i==repetitions-1){
+		    		if (point_in_rectangle(mouse_x, mouse_y,xx+25+8,yy+64,xx+974,yy+85)){
+		    			man_current = man_current<man_max-man_see ? man_current+1 : man_current=(man_max-man_see);
+		    			man_current++;
+		    		}
+		    	}
 
-		        // Squads
-		        var sqi="";
-		        draw_set_color(c_black);
-		        var squad_colours=[c_teal,c_red,c_green,c_orange,c_aqua,c_fuchsia,c_green,c_blue,c_fuchsia,c_maroon]
-		        var squad_modulo = squad[sel]%10;
-		        draw_set_color(squad_colours[squad_modulo])
-	        
-		        if (sel>0 && sel<500){
-		            if (squad[sel]==squad[sel+1]) and (squad[sel]!=squad[sel-1]){sqi="top"}
-		            else if (squad[sel]==squad[sel+1]) and (squad[sel]==squad[sel-1]){sqi="mid"}
-		            else if (squad[sel]!=squad[sel+1]) and (squad[sel]==squad[sel-1]) then sqi="bot";
-		        }
-		        //TODO handle recursively with an array
-		        if (sqi==""){
-		            draw_rectangle(xx+25,yy+64,xx+25+8,yy+85,0);
-		            draw_set_color(c_gray);
-		            draw_rectangle(xx+25,yy+64,xx+25+8,yy+85,1);
-		        }else if (sqi=="mid"){
-		            draw_rectangle(xx+25,yy+64,xx+25+8,yy+85,0);
-		            draw_set_color(c_gray);
-		            draw_line(xx+25,yy+64,xx+25,yy+85);
-		            draw_line(xx+25+8,yy+64,xx+25+8,yy+85);
-		        }else if (sqi=="top"){
-		            draw_rectangle(xx+25,yy+64,xx+25+8,yy+85,0);
-		            draw_set_color(c_gray);
-		            draw_line(xx+25,yy+64,xx+25+28,yy+64);
-		            draw_line(xx+25,yy+64,xx+25,yy+85);
-		            draw_line(xx+25+8,yy+64,xx+25+8,yy+85);
-		        }else if (sqi=="bot"){
-		            draw_rectangle(xx+25,yy+64,xx+25+8,yy+85,0);
-		            draw_set_color(c_gray);
-		            draw_line(xx+25,yy+85,xx+25+28,yy+85);
-		            draw_line(xx+25,yy+64,xx+25,yy+85);
-		            draw_line(xx+25+8,yy+64,xx+25+8,yy+85);
-		        }
-		        // was 885
-		        // 974
-				
-		        if (man[sel]="man") and (ma_ar="") then draw_set_alpha(0.5);
-		        var name_xr=1;
-				
-				for (var k = 0; k<10; k++){
-					if ((string_width(string_hash_to_newline(temp1))*name_xr)>184-8) then name_xr-=0.05;
-				}
-
-				var hpText = [xx+240+8, yy+66, string_hash_to_newline(string(temp3))]; // HP
-				var xpText = [xx+330+8, yy+66, string_hash_to_newline(string(temp4))]; // XP
-				var hpColor = c_gray;
-				var xpColor = c_gray;
-				var specialismColors = [];
-				// Draw XP value and set up health color
-				if (man[sel] == "man"){
-					if (ma_promote[sel] >= 10){
-						hpColor = c_red;
-						array_push(health_tooltip, ["Critical Health State! Bionic augmentation is required!", [xx+250, yy+64, xx+300, yy+85]]);
-					}else if (ma_promote[sel] > 0 && !unit_specialist){
-						xpColor = c_yellow;
-						array_push(promotion_tooltip, ["Promotion Recommended", [xx+335, yy+64, xx+385, yy+85]]);
-					}
-					draw_text_color(xpText[0], xpText[1], xpText[2], xpColor, xpColor, xpColor, xpColor, 1);
-				}
-				// Draw the health value with the defined colors
-				draw_text_color(hpText[0], hpText[1], hpText[2], hpColor, hpColor, hpColor, hpColor, 1);
-
-				// Handle potential indication
-				if (unit_specialism_option){
-					if (unit.technology>=35){	//if unit has techmarine potential
-						specialismColors = [c_dkgray, c_red];
-					} else if (unit.psionic>7){	//if unit has librarian potential
-						specialismColors = [c_white, c_aqua];
-					}else if (unit.piety>=35 && unit.charisma>=30){	//if unit has chaplain potential
-						specialismColors = [c_black, c_yellow];
-					}else if (unit.technology>=30 && unit.intelligence>=45){	//if unit has apothecary potential
-						specialismColors = [c_red, c_white];
-					}
-					draw_circle_colour(xx+238, yy+73, 6, specialismColors[0],specialismColors[1], 0);
-				}
-
-				// Draw the name
-		        draw_set_color(c_gray);
-				draw_text_transformed(xx+27+8,yy+66,string_hash_to_newline(string(temp1)),name_xr,1,0);
-				draw_text_transformed(xx+27.5+8,yy+66.5,string_hash_to_newline(string(temp1)),name_xr,1,0);
-
-				// Draw current location
-				if (temp2=="Mechanicus Vessel") or (temp2=="Terra IV") or (temp2=="=Penitorium=") or (assignment!="none") then draw_set_alpha(0.5);
-				var truncatedLocation = string_truncate(string(temp2), 130); // Truncate the location string to 100 pixels
-				draw_text(xx+430+8,yy+66,truncatedLocation);// LOC
-		        draw_set_alpha(1);
-	        
-		        // ma_lid[i]=0;ma_wid[i]=0;
-	        
-		        if (ma_loc[sel]=="Mechanicus Vessel"){
-		        	draw_sprite(spr_loc_icon,2,xx+427+8,yy+66);
-		        } else {
-			        if (man[sel]=="man"){
-			        		c = managing<=10 ? managing : 0;
-							var unit = display_unit[sel];
-		  
-			                if (ma_lid[sel]>0) and (ma_wid[sel]==0){
-			                    draw_sprite(
-			                        spr_loc_icon,
-			                        unit.is_boarder ? 2 : 1,
-			                        xx+427+8,
-			                        yy+66);
-			                }  else if (ma_wid[sel]>0){
-			                	draw_sprite(spr_loc_icon,0,xx+427+8,yy+66);
-			                }
-			        }else{
-		                if (ma_lid[sel]==0) and (ma_wid[sel]>0) then draw_sprite(spr_loc_icon,0,xx+427+8,yy+66);
-		                if (ma_lid[sel]>0) and (ma_wid[sel]==0) then draw_sprite(spr_loc_icon,1,xx+427+8,yy+66);
-			        }
-		        }
-		         //TODO handle recursively
-		        if (man[sel]=="man"){
-					var xoffset=0;
-		            draw_set_color(c_gray);
-		            if (ar_ar==1) then draw_set_color(c_gray);
-		            if (ar_ar==2) then draw_set_color(881503);
-		            draw_text(xx+573,yy+66,string_hash_to_newline(string(ma_ar)));
-					
-
-		            xoffset+=string_width(string_hash_to_newline(ma_ar))+15;
-		            draw_set_color(c_gray);
-		            if (ar_mb==1) then draw_set_color(c_gray);
-		            if (ar_mb==2) then draw_set_color(881503);
-		            draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_mb)));
-
-		            xoffset+=string_width(string_hash_to_newline(ma_mb))+15;
-		            draw_set_color(c_gray);
-		            if (ar_ge==1) then draw_set_color(c_gray);
-		            if (ar_ge==2) then draw_set_color(881503);
-		            draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_ge)));
-
-		            xoffset+=string_width(string_hash_to_newline(ma_ge))+15;
-		            draw_set_color(c_gray);
-		            if (ar_we1==1) then draw_set_color(c_gray);
-		            if (ar_we1==2) then draw_set_color(881503);
-		            draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_we1)));
-
-		            xoffset+=string_width(string_hash_to_newline(ma_we1))+15;
-		            draw_set_color(c_gray);
-		            if (ar_we2==1) then draw_set_color(c_gray);
-		            if (ar_we2==2) then draw_set_color(881503);
-		            draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_we2)));
-		        }
-		        if (man[sel]!="man"){
-					var xoffset=0;
-					//Vehicle Upgrade
-					draw_set_color(c_gray);
-					if (ar_ge==1) then draw_set_color(c_gray);
-					if (ar_ge==2) then draw_set_color(881503);
-					draw_text(xx+573,yy+66,string_hash_to_newline(string(ma_ge)));
-				
-					//Vehicle accessory
-					xoffset+=string_width(string_hash_to_newline(ma_ge))+15;
-					draw_set_color(c_gray);
-					if (ar_mb==1) then draw_set_color(c_gray);
-					if (ar_mb==2) then draw_set_color(881503);
-					draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_mb)));
-				
-					//Vehicle wep 1
-					xoffset+=string_width(string_hash_to_newline(ma_mb))+15;
-					draw_set_color(c_gray);
-					if (ar_we1==1) then draw_set_color(c_gray);
-					if (ar_we1==2) then draw_set_color(881503);
-					draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_we1)));
-				
-					//Vehicle wep 2
-					xoffset+=string_width(string_hash_to_newline(ma_we1))+15;
-					draw_set_color(c_gray);
-					if (ar_we2==1) then draw_set_color(c_gray);
-					if (ar_we2==2) then draw_set_color(881503);
-					draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_we2)));
-				
-					//Vehicle wep 3
-					xoffset+=string_width(string_hash_to_newline(ma_we2))+15;
-					draw_set_color(c_gray);
-					if (ar_ar==1) then draw_set_color(c_gray);
-					if (ar_ar==2) then draw_set_color(881503);
-					draw_text(xx+573+xoffset,yy+66,string_hash_to_newline(string(ma_ar)));
-		        }
 		        yy+=20;
 		        sel+=1;
 		        if (man[sel] == ""){break;}
 		    }
+		    if (sel_all!="" || squad_sel_count>0){
+		    	for(var i=0; i<top;i++){
+		    		scr_draw_management_unit(i, yy, xx, false);
+		    	}
+		    	for(var i=sel; i<500;i++){
+		    		scr_draw_management_unit(i, yy, xx, false);
+		    	}		    	
+		    }
+		    sel_all = "";
 
 		    draw_set_color(c_black);
 		    xx=__view_get( e__VW.XView, 0 )+0;yy=__view_get( e__VW.YView, 0 )+0;
@@ -1058,6 +798,7 @@ function scr_ui_manage() {
 		    yy+=8;
 		     //TODO handle recursively
 		    if (!obj_controller.unit_profile) && (!stats_displayed){
+		    	sel_loading=selecting_ship;
 			    //draws hover over tooltips
 				function gen_tooltip(tooltip_array) {
 					for (var i = 0; i < array_length(tooltip_array); i++) {

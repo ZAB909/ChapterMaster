@@ -548,6 +548,7 @@
     {"name":"scr_max_marine","order":37,"path":"scripts/scr_max_marine/scr_max_marine.yy",},
     {"name":"scr_random_marine","order":39,"path":"scripts/scr_random_marine/scr_random_marine.yy",},
     {"name":"scr_roman","order":1,"path":"scripts/scr_roman/scr_roman.yy",},
+    {"name":"scr_draw_management_unit","order":1,"path":"scripts/scr_draw_management_unit/scr_draw_management_unit.yy",},
     {"name":"scr_gov_disp","order":3,"path":"scripts/scr_gov_disp/scr_gov_disp.yy",},
     {"name":"scr_trade","order":5,"path":"scripts/scr_trade/scr_trade.yy",},
     {"name":"scr_trade_add","order":7,"path":"scripts/scr_trade_add/scr_trade_add.yy",},

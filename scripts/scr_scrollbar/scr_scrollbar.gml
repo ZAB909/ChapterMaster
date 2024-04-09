@@ -82,13 +82,13 @@ function scr_scrollbar(argument0, argument1, argument2, argument3, argument4, ar
         
         
 	        if (obj_controller.managing>0 || obj_controller.managing=-1) and (obj_controller.menu!=30) and (obj_controller.man_max-obj_controller.man_see>-1){checka=1;}
-	        if (instance_exists(obj_popup)){if (obj_popup.type=8) and (obj_popup.target_comp>=0){if (obj_controller.man_max-obj_controller.man_see>0){checka=1;}}}
+	        if (instance_exists(obj_popup)){if (obj_popup.type=8) and (obj_popup.target_comp>=0){if (obj_controller.man_max-obj_controller.man_see>-1){checka=1;}}}
         
         
 	        if (obj_controller.scrollbar_engaged=1) and (checka>0){
 	            var click_y,center,ratio,ss,tmv,cp;
 	            ratio=0;ss=0;tmv=0;cp=0;
-            
+
 	            click_y=window_mouse_get_y();
             
 	            center=click_y-(siz2/2);
@@ -104,7 +104,7 @@ function scr_scrollbar(argument0, argument1, argument2, argument3, argument4, ar
 	            if (checka=1){
 	                obj_controller.man_current=floor((obj_controller.man_max)*ratio);
                 
-	                if (obj_controller.man_current>(obj_controller.man_max-obj_controller.man_see-1)) then obj_controller.man_current=(obj_controller.man_max-obj_controller.man_see-1);
+	                if (obj_controller.man_current>(obj_controller.man_max-obj_controller.man_see)) then obj_controller.man_current=(obj_controller.man_max-obj_controller.man_see);
                 
 	                if (obj_controller.man_current<0) then obj_controller.man_current=0;
 	            }

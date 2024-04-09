@@ -68,7 +68,6 @@ function scr_company_view(company) {
 	                man[v]="man";
 	                ide[v]=v;
 	                ma_race[v]=obj_ini.race[company][v];
-	                ma_loc[v]=obj_ini.loc[company][v];
 	                ma_name[v]=obj_ini.name[company][v];
 	                ma_role[v]=obj_ini.role[company][v];
 	                ma_wep1[v]=obj_ini.wep1[company][v];
@@ -78,6 +77,11 @@ function scr_company_view(company) {
 	                ma_health[v]=obj_ini.hp[company][v];
 	                ma_exp[v]=obj_ini.experience[company][v];
 	                ma_lid[v]=unit.ship_location;
+	                if (ma_lid[v]>0){
+	                	ma_loc[v] = obj_ini.ship_location[ma_lid[v]];
+	                } else {
+	                	ma_loc[v]=obj_ini.loc[company][v];
+	                }
 	                ma_wid[v]=unit.planet_location;
 	                ma_god[v]=obj_ini.god[company][v];
 	                ma_bio[v]=unit.bionics;

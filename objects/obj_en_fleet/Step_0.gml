@@ -6,6 +6,8 @@ if (action!="") and (orbiting!=0){
         if (variable_instance_exists(orbiting, "present_fleet")){
                 orbiting.present_fleet[owner]-=1;
         } else {
+            orbiting = instance_nearest(x, y , obj_star);
+            orbiting.present_fleet[owner]-=1;
             orbiting=0;
         }
     }

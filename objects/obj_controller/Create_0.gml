@@ -461,11 +461,16 @@ ship_max=0;
 ship_see=0;
 man_sel[0]=0;
 man_size=0;
+squad_sel_action=-1;
+squad_sel_count=0;
+squad_sel=-1
 selecting_location="";
 selecting_types="";
 selecting_dudes="";
 sel_all="";
 sel_promoting=0;
+drag_square=[];
+rectangle_action = -1;
 sel_loading=0;
 sel_uid=0;
 
