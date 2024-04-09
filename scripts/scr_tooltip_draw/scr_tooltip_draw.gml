@@ -1,4 +1,6 @@
 function tooltip_draw(_tooltip="", _width=350, _coords=[mouse_x+20,mouse_y+20], _text_color=#50a076, _font=fnt_40k_14, _header="", _header_font=fnt_40k_14b, _force_width=false){
+	var _curr_font = draw_get_font();
+	var _curr_color = draw_get_color();
 	draw_set_halign(fa_left);
 	draw_set_alpha(1)
 	// Calculate padding and rectangle size
@@ -62,4 +64,6 @@ function tooltip_draw(_tooltip="", _width=350, _coords=[mouse_x+20,mouse_y+20], 
 	// Draw tooltip text
 	draw_set_font(_font);
 	draw_text_ext_colour(_rect_x + _text_padding_x, _rect_y + _text_padding_y, _tooltip, DEFAULT_LINE_GAP, _text_w, _text_color, _text_color, _text_color, _text_color, 1);
+	draw_set_font(_curr_font);
+	draw_set_color(_curr_color);
 }
