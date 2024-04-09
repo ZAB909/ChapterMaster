@@ -14,7 +14,7 @@ function scr_unit_quick_find_pane() constructor{
 		var u, unit, unit_location, group;
 	    garrison_log = {};
 	    for (var co=0;co<11;co++){
-	    	for (var u=1;u<array_length(obj_ini.TTRPG[co]);u++){
+	    	for (var u=0;u<array_length(obj_ini.TTRPG[co]);u++){
 	    		unit = fetch_unit([co, u]);
 	    		if (unit.name() == "") then continue;
 	    		unit_location = unit.marine_location();

@@ -295,7 +295,7 @@ function scr_special_view(command_group) {
 
 	}
 
-	man_current=1;
+	man_current=0;
 	man_max=last_man+last_vehicle;
 	man_see=38-4;
 	if (man_max>=man_see) then man_max+=2;

@@ -702,10 +702,13 @@ function scr_ui_manage() {
 
 				eventing=false;
 	        
-		        if (man[sel]=="man"&&is_struct(display_unit[sel])){
+		        if (man[sel]=="man" && is_struct(display_unit[sel])){
 
 					unit = display_unit[sel];
-					if (unit.name()=="" || unit.base_group=="none"){continue;}
+					if (unit.name()=="" || unit.base_group=="none"){
+						sel++;
+						continue;
+					}
 					var unit_location = unit.marine_location();
 		            temp1=unit.name_role();
 					var unit_specialist = is_specialist(unit.role());
@@ -802,8 +805,8 @@ function scr_ui_manage() {
 						ma_we2=gear_weapon_data("weapon",ma_wep2[sel],"abbreviation");
 						ma_we2=is_string(ma_we1) ? ma_we2 : "";	
 						// temp5=string(ma_wep1[sel])+", "+string(ma_wep2[sel])+" + "+string(ma_gear[sel]);
-		      }
-					}
+		      		}
+				}
 
 		        if (man_sel[sel]==0) then draw_set_color(c_black);
 		        if (man_sel[sel]!=0) then draw_set_color(6052956);// was gray
@@ -813,7 +816,7 @@ function scr_ui_manage() {
 		        spec_tip = "";
 				draw_set_color(c_gray);
 				draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);
-		        if (man[sel]="man"){
+		        if (man[sel]="man"  && is_struct(display_unit[sel])){
 		        	if (!unit_specialist){
 				        if (unit.technology>=35){
 				        	 //if unit has techmarine potential
@@ -1134,7 +1137,7 @@ function scr_ui_manage() {
 		                    pip.company=managing;
 
 		                    var god=0,nuuum=0;
-		                    for(var f=1; f<=man_max; f++){
+		                    for(var f=0; f<=man_max; f++){
 		                        if ((ma_promote[f]>=1 || is_specialist(ma_role[f], "rank_and_file")  || is_specialist(ma_role[f], "squad_leaders")) && man_sel[f]==1){
 		                            nuuum+=1;
 		                            if (pip.min_exp==0) then pip.min_exp=ma_exp[f];
@@ -1393,7 +1396,7 @@ function scr_ui_manage() {
 	    draw_sprite_ext(spr_arrow,0,xx+25,yy+70,2,2,0,c_white,1);
 	    if (point_and_click([xx+25, yy+70, xx+70, yy+140])){
             man_size=0;
-            man_current=1;
+            man_current=0;
             menu=1;
 	    }
     
@@ -1460,7 +1463,7 @@ function scr_ui_manage() {
 	                        }
 	                    }
 	                    man_size=0;
-	                    man_current=1;
+	                    man_current=0;
 	                    menu=1;
 	                    cooldown=8;
 	                    for(var k=0; k<=array_length(display_unit); k++){man_sel[k]=0;}        			

@@ -352,7 +352,7 @@ function group_selection(group, selection_data){
         last_man=s;
         other_manage_data();
         managing =-1;
-        man_current=1;
+        man_current=0;
         man_max=last_man+last_vehicle+2;
         man_see=38-4;
 	}

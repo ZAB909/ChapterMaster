@@ -161,7 +161,7 @@ function scr_company_view(company) {
 	}
 	ds_list_destroy(role_list);
 
-	man_current=1;
+	man_current=0;
 	man_max=last_man+last_vehicle+2;
 	if (last_vehicle==0) and (last_man==0) then man_max=0;
 	man_see=38-4;

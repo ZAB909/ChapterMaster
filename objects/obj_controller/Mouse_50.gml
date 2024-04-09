@@ -1535,7 +1535,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     temp[42]=string(d);
                 }
                 man_max=m;
-                man_current=1;
+                man_current=0;
             }
             if (menu==16) and (onceh==0){
                 menu=0;
@@ -1846,10 +1846,6 @@ if (action_if_number(obj_saveload, 0, 0) &&
     }
     // Selecting individual marines
     if (menu=1) and (managing>0) || (managing<0) and (!view_squad || !company_report){
-        var company=managing;
-        if (company>10){
-            company=0;
-        }
         var unit;                 
         var eventing=false, bb="";
         xx=__view_get( e__VW.XView, 0 )+0;
@@ -1889,7 +1885,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
 
         }
         // This is the 'select all of type' buttons
-        sel=1;
+        sel=0;
         yy=__view_get( e__VW.YView, 0 )+77;
         if (sel_all!=""){
             // repeat(min(man_max,man_see)){
@@ -2050,7 +2046,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
 
                     // Continue with double click
                     if (dib==1) and (stop!=1){
-                        for(var bi=1; bi<=499; bi++){
+                        for(var bi=0; bi<=499; bi++){
                             if (man_sel[bi]==0) and (ma_god[bi]<10) and (ma_loc[bi]!="Terra") 
                             and (ma_loc[bi]!="Mechanicus Vessel") and (ma_loc[bi]!="Lost"){
                                 if (ma_loc[bi]==selecting_location) and (selecting_planet==ma_wid[bi]) and (ma_role[bi]==ma_role[double_was]) and (bi!=double_was) and (man[sel]=="vehicle"){

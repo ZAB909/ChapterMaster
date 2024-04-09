@@ -59,22 +59,6 @@ function scr_scrollbar(argument0, argument1, argument2, argument3, argument4, ar
             
 	            ratio=(center-argument1)/(argument3-argument1);
             
-	            // draw_set_font(fnt_large);draw_set_color(c_red);draw_text(view_xview[0]+320,view_yview[0]+240,ratio);
-	            // draw_set_color(38144);
-            
-	            /*if (checka=1){
-	                obj_controller.man_current=floor((obj_controller.man_max)*ratio);
-                
-                
-	                // man_current+man_see+1)<man_max) then man_current+=1;
-                
-	                // if (obj_controller.man_current+obj_controller.man_see+1>obj_controller.man_max) then obj_controller.man_current=obj_controller.man_current+obj_controller.man_see+1;
-                
-	                if (obj_controller.man_current>(obj_controller.man_max-obj_controller.man_see-1)) then obj_controller.man_current=(obj_controller.man_max-obj_controller.man_see-1);
-                
-	                if (obj_controller.man_current<1) then obj_controller.man_current=1;
-	            }*/
-            
 	            draw_rectangle(xx+argument0,yy+center,xx+argument2,yy+center+siz2,0);
 	            exit;
 	        }
@@ -92,12 +76,12 @@ function scr_scrollbar(argument0, argument1, argument2, argument3, argument4, ar
 
 	    if (instance_exists(obj_controller)){
         
-	        var checka;checka=0;
+	        var checka=0;
 	        if (obj_controller.mouse_left=0) and (obj_controller.scrollbar_engaged=1) then obj_controller.scrollbar_engaged=0;
 	        if (obj_controller.mouse_left=1) and (mouse_x>=xx+argument0) and (mouse_y>=yy+argument1) and (mouse_x<xx+argument2) and (mouse_y<yy+argument3) then obj_controller.scrollbar_engaged=1;
         
         
-	        if (obj_controller.managing>0 || obj_controller.managing=-1) and (obj_controller.menu!=30) and (obj_controller.man_max-obj_controller.man_see>0){checka=1;}
+	        if (obj_controller.managing>0 || obj_controller.managing=-1) and (obj_controller.menu!=30) and (obj_controller.man_max-obj_controller.man_see>-1){checka=1;}
 	        if (instance_exists(obj_popup)){if (obj_popup.type=8) and (obj_popup.target_comp>=0){if (obj_controller.man_max-obj_controller.man_see>0){checka=1;}}}
         
         
@@ -120,14 +104,9 @@ function scr_scrollbar(argument0, argument1, argument2, argument3, argument4, ar
 	            if (checka=1){
 	                obj_controller.man_current=floor((obj_controller.man_max)*ratio);
                 
-                
-	                // man_current+man_see+1)<man_max) then man_current+=1;
-                
-	                // if (obj_controller.man_current+obj_controller.man_see+1>obj_controller.man_max) then obj_controller.man_current=obj_controller.man_current+obj_controller.man_see+1;
-                
 	                if (obj_controller.man_current>(obj_controller.man_max-obj_controller.man_see-1)) then obj_controller.man_current=(obj_controller.man_max-obj_controller.man_see-1);
                 
-	                if (obj_controller.man_current<1) then obj_controller.man_current=1;
+	                if (obj_controller.man_current<0) then obj_controller.man_current=0;
 	            }
             
 	            draw_rectangle(xx+argument0,yy+center,xx+argument2,yy+center+siz2,0);
