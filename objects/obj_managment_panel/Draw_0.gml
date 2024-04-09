@@ -43,16 +43,16 @@ slate_panel.inside_method = function(){
         }
         
         draw_set_font(fnt_cul_14);
-        draw_text(x2+(wid/2),y2+79,string_hash_to_newline(title));
+        draw_text(x2+(wid/2),y2+89,string_hash_to_newline(title));
         if (line[1]!=""){
             if (italic[1]=1) then draw_set_font(fnt_40k_14i);
             else draw_set_font(fnt_40k_14);
-            draw_text_glow(x2+(wid/2), y2+102, string_hash_to_newline(line[1]), c_white, #50a076);
+            draw_text_glow(x2+(wid/2), y2+112, string_hash_to_newline(line[1]), c_white, #50a076);
             draw_set_font(fnt_40k_12);
         }
         var l=1;
         repeat(10){l+=1;
-            if (line[l]!="") then draw_text(x2+(wid/2),y2+102+((l-1)*20),string_hash_to_newline(line[l]));
+            if (line[l]!="") then draw_text(x2+(wid/2),y2+112+((l-1)*20),string_hash_to_newline(line[l]));
         }
     }
 
