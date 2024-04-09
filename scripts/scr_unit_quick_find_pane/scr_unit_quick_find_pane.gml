@@ -78,7 +78,7 @@ function scr_unit_quick_find_pane() constructor{
 			var cur_fleet;
 			draw_set_color(c_white);
 			draw_set_halign(fa_center);
-		    draw_text(xx+80, yy+50, "capitals");
+		    draw_text(xx+80, yy+50, "Capitals");
 		    draw_text(xx+160, yy+50, "Frigates");
 		    draw_text(xx+240, yy+50, "Escorts");
 		    draw_text(xx+310, yy+50, "Location");
