@@ -337,6 +337,18 @@ function scr_ui_manage() {
 			draw_set_color(c_white);	    	
 			selected_unit.draw_unit_image(1208,210);
 
+			if (view_squad &&  company_data!={}){
+				if (company_data.cur_squad!=0){
+					var cur_squad = company_data.grab_current_squad();
+					var sgt_possible = cur_squad.type!="command_squad" && !selected_unit.IsSpecialist("squad_leaders");
+					if (selected_unit != cur_squad.squad_leader){
+						if (point_and_click(draw_unit_buttons([xx+1208+260,yy+210], "Make Sgt", [1,1],#50a076,,,sgt_possible?1:0.5)) && sgt_possible){
+
+						}
+					}
+				}
+			}
+
 			// Animated scanline
 			draw_set_color(5998382);
 			var step_millisecond = current_time / 1000;

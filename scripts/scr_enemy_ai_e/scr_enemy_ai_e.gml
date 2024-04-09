@@ -2,6 +2,12 @@ function scr_enemy_ai_e() {
 
     // Guess I'll handle all of the ship combat in here
     // This needs to keep on running in each sector until only one faction's fleet remains
+    var imperium_enemies = present_fleet[7] + present_fleet[8] + present_fleet[9] + present_fleet[10] + present_fleet[13];
+
+    var standard_xenos_enemies = present_fleet[2] + present_fleet[7] + present_fleet[8] + present_fleet[10] + present_fleet[13];
+
+    var imperium_fleets = present_fleet[2]+present_fleet[3];
+
 
     var have_fleets, battle, battle2, strength, attack;
     have_fleets = 0;
@@ -33,45 +39,50 @@ function scr_enemy_ai_e() {
         if (present_fleet[8] > 0) and(obj_controller.faction_status[8] = "War") then battle = 1;
         if (present_fleet[9] > 0) then battle = 1;
         if (present_fleet[10] > 0) and(obj_controller.faction_status[10] = "War") {
+            
             var special_stop, run, s;
             special_stop = false;
             run = 0;
             s = 0;
-            repeat(4) {
+            repeat(planets) {
                 run += 1;
                 s = 0;
-                repeat(4) {
-                    s += 1;
-                    if (p_problem[run, s] = "meeting") or(p_problem[run, s] = "meeting_trap") then special_stop = true;
+                var problems = p_problem[run];
+                if (array_contains(problems, "meeting") || array_contains(problems, "meeting_trap")){
+                    special_stop = true;
+                    break;
                 }
             }
             if (special_stop = false) then battle = 1;
         }
         if (present_fleet[13] > 0) then battle = 1;
     }
-    if (present_fleet[2] > 0) and(battle2 = 0) {
-        if (present_fleet[7] + present_fleet[8] + present_fleet[9] + present_fleet[10] + present_fleet[13] > 0) then battle2 = 2;
-    }
-    if (present_fleet[3] > 0) and(battle2 = 0) {
-        if (present_fleet[7] + present_fleet[8] + present_fleet[9] + present_fleet[10] + present_fleet[13] > 0) then battle2 = 3;
-    }
-    if (present_fleet[6] > 0) and(battle2 = 0) {
-        if (present_fleet[2] + present_fleet[7] + present_fleet[8] + present_fleet[9] + present_fleet[10] + present_fleet[13] > 0) then battle2 = 6;
-    }
-    if (present_fleet[7] > 0) and(battle2 = 0) {
-        if (present_fleet[2] + present_fleet[8] + present_fleet[9] + present_fleet[10] + present_fleet[13] > 0) then battle2 = 7;
-    }
-    if (present_fleet[8] > 0) and(battle2 = 0) {
-        if (present_fleet[2] + present_fleet[7] + present_fleet[9] + present_fleet[10] + present_fleet[13] > 0) then battle2 = 8;
-    }
-    if (present_fleet[9] > 0) and(battle2 = 0) {
-        if (present_fleet[2] + present_fleet[7] + present_fleet[8] + present_fleet[10] + present_fleet[13] > 0) then battle2 = 9;
-    }
-    if (present_fleet[10] > 0) and(battle2 = 0) {
-        if (present_fleet[2] + present_fleet[7] + present_fleet[9] + present_fleet[13] > 0) then battle2 = 10;
-    }
-    if (present_fleet[13] > 0) and(battle2 = 0) {
-        if (present_fleet[2] + present_fleet[7] + present_fleet[8] + present_fleet[9] + present_fleet[10] > 0) then battle2 = 13;
+
+    if (battle2 == 0){
+        if (present_fleet[2] > 0){
+            if (imperium_enemies > 0) then battle2 = 2;
+        }
+        else if (present_fleet[3] > 0){
+            if (imperium_enemies > 0) then battle2 = 3;
+        }
+        else if (present_fleet[6] > 0){
+            if (standard_xenos_enemies > 0) then battle2 = 6;
+        }
+        else if (present_fleet[7] > 0){
+            if (standard_xenos_enemies > 0) then battle2 = 7;
+        }
+        else if (present_fleet[8] > 0){
+            if (standard_xenos_enemies > 0) then battle2 = 8;
+        }
+        else if (present_fleet[9] > 0){
+            if (standard_xenos_enemies > 0) then battle2 = 9;
+        }
+        else if (present_fleet[10] > 0){
+            if (standard_xenos_enemies > 0) then battle2 = 10;
+        }
+        else if (present_fleet[13] > 0){
+            if (standard_xenos_enemies > 0) then battle2 = 13;
+        }
     }
 
 
@@ -136,7 +147,7 @@ function scr_enemy_ai_e() {
         repeat(5) {
             rond += 1;
             still_battling = false;
-            if (strength[2] + strength[3] > 0) and(strength[6] + strength[7] + strength[8] + strength[9] + strength[10] + strength[13] > 0) then still_battling = true;
+            if (strength[2] + strength[3] > 0) and force_count(strength[6] + strength[7] + strength[8] + strength[9] + strength[10] + strength[13] > 0) then still_battling = true;
             if (strength[6] > 0) and(strength[2] + strength[7] + strength[8] + strength[9] + strength[10] + strength[13] > 0) then still_battling = true;
             if (strength[7] > 0) and(strength[2] + strength[6] + strength[8] + strength[9] + strength[10] + strength[13] > 0) then still_battling = true;
             if (strength[8] > 0) and(strength[2] + strength[6] + strength[7] + strength[9] + strength[10] + strength[13] > 0) then still_battling = true;

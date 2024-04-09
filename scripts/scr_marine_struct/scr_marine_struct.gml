@@ -379,7 +379,14 @@ global.trait_list = {
 		intelligence:1,
 		flavour_text:"{0} Is particularly skilled at building things, often making them to a superior quality as well",
 		effect:"provides more total forge points especially when assigned to a forge",
-	}	
+	},	
+	"natural_leader":{
+		display_name:"Natural Leader",
+		flavour_text:"Excels in all areas of command be that rallying his men, planning logistics or drawing up plans for engagements",
+		wisdom : [4, 2, "max"],
+		charisma : [4, 2, "max"],
+		effect:"Bonus when commanding",		
+	}
 }
 global.base_stats = { //tempory stats subject to change by anyone that wishes to try their luck
 	"chapter_master":{
@@ -1135,6 +1142,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				["warp_touched",[299,298]],
 				["shitty_luck",[99,98],{"disadvantage":["Shitty Luck",[3,2]]}],
 				["lucky",[99,98]],
+				["natural_leader",[199,198]],
 				["slow_and_purposeful",[99,98],{"advantage":["Slow and Purposeful",[3,1]]}],
 				["melee_enthusiast",[99,98],{"advantage":["Melee Enthusiasts",[3,1]]}],
 				["lightning_warriors",[99,98],{"advantage":["Lightning Warriors",[3,1]]}],
@@ -2393,7 +2401,28 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				update_armour(choose("MK5 Heresy","MK6 Corvus","MK7 Aquila", "MK4 Maximus","MK8 Errant"),false,false);
 				age -= gauss(400, 250);
 				add_trait("seasoned");
-				break;		
+				break;	
+			case obj_ini.role[100][Role.CAPTAIN]:
+				charisma += (irandom(10));
+				wisdom += (irandom(10));
+				piety += (irandom(10));
+				if (irandom(1)==0){
+					add_trait("natural_leader");
+				}
+				if (array_contains(obj_ini.adv, "Melee Enthusiasts")){
+					weapon_skill += irandom(5);
+					if (irandom(1)==0){
+						add_trait("melee_enthusiast");
+					}
+				}
+				if (array_contains(obj_ini.adv, "Slow and Purposeful")){
+					constitution += irandom(5);
+					if (irandom(1)==0){
+						add_trait("slow_and_purposeful");
+					}
+				}
+				break;
+
 		}
 		if (irandom(75)>74){
 			add_trait("tyrannic_vet");

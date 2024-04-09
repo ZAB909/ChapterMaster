@@ -38,6 +38,25 @@ function scr_unit_quick_find_pane() constructor{
 	    			}
 	    		}   	
 	    	}
+	    	for (var u=1;u<100;u++){
+	    		if (obj_ini.veh_race[co][u]==0) then continue;
+	    		if (obj_ini.veh_wid[co][u]>0){
+	    			unit_location = obj_ini.veh_loc[co][u];
+	    			unit = [co, u];
+	    			if (!struct_exists(garrison_log, unit_location)){
+	    				garrison_log[$ unit_location] = {
+	    					units:[unit],
+	    					vehicles:1, 
+	    					garrison:false, 
+	    					healers:0, 
+	    					techies:0
+	    				}
+	    			} else {
+	    				array_push(garrison_log[$ unit_location].units, unit);
+	    				garrison_log[$ unit_location].vehicles++;
+	    			}
+	    		}
+	    	}
 	    }		
 	}
 	hover_item="none";

@@ -24,6 +24,9 @@ function scr_company_struct(comp) constructor{
 			captian = cap[0];
 		}
 	}
+	static grab_current_squad = function(){
+		return obj_ini.squads[company_squads[cur_squad]];
+	}
 
 	static draw_squad_view = function(){
 		var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0;
@@ -67,7 +70,7 @@ function scr_company_struct(comp) constructor{
 			var button = draw_unit_buttons([xx+bound_width[0], yy+bound_height[0]+6], arrow,[1.5,1.5],c_red);
 			if (point_in_rectangle(mouse_x, mouse_y,button[0],button[1],button[2], button[3]) && array_length(company_squads) > 0 && mouse_check_button_pressed(mb_left)){
 				cur_squad = (cur_squad-1<0) ? 0 : cur_squad-1;
-				member = obj_ini.squads[company_squads[cur_squad]].members[0];
+				member = grab_current_squad().members[0];
 				obj_controller.temp[120] = obj_ini.TTRPG[member[0]][member[1]];
 			}
 			arrow="-->";
@@ -75,7 +78,7 @@ function scr_company_struct(comp) constructor{
 			button = draw_unit_buttons([xx+bound_width[1]-44,yy+bound_height[0]+6], arrow,[1.5,1.5],c_red);
 			if (point_in_rectangle(mouse_x, mouse_y,button[0],button[1],button[2], button[3]) && array_length(company_squads) > 0 && mouse_check_button_pressed(mb_left)){
 				cur_squad = cur_squad+1>=array_length(company_squads) ? 0 : cur_squad+1;
-				member = obj_ini.squads[company_squads[cur_squad]].members[0];
+				member = grab_current_squad().members[0];
 				obj_controller.temp[120] = obj_ini.TTRPG[member[0]][member[1]];
 			}						
 			draw_set_color(c_gray);

@@ -278,9 +278,17 @@ function group_selection(group, selection_data){
             unload=0;
             alarm[6]=7;
             company_data={};
-            view_squad=false;  	
+            view_squad=false; 
+            var vehicles = [];
+            var s=-1; 	
             for (var i = 0; i< array_length(group);i++){
-            	s = i;
+            	if (!is_struct(group[i])){
+            		if (is_array(group[i])){
+            			array_push(vehicles, group[i]);
+            		}
+            		continue;
+            	}
+            	s++;
             	unit = group[i];
             	unit_location = unit.marine_location();
                 man[s]="man";
@@ -314,10 +322,36 @@ function group_selection(group, selection_data){
                 	}
                 }       	
             }
+            var last_vehicle=0;
+        if (array_length(vehicles)>0){
+        	for (var g=s+1;g<s+1+array_length(vehicles);g++){
+        		unit = vehicles[g-s-1];
+                man[g]="vehicle";
+				ide[g]=g;
+				last_vehicle+=1;
+				display_unit[g] = unit;
+                ma_loc[g]=obj_ini.veh_loc[unit[0]][unit[1]];
+				ma_role[g]=obj_ini.veh_role[unit[0]][unit[1]];
+				ma_wep1[g]=obj_ini.veh_wep1[unit[0]][unit[1]];
+                ma_wep2[g]=obj_ini.veh_wep2[unit[0]][unit[1]];
+				ma_armour[g]=obj_ini.veh_wep3[unit[0]][unit[1]];
+				ma_gear[g]=obj_ini.veh_upgrade[unit[0]][unit[1]];
+				ma_mobi[g]=obj_ini.veh_acc[unit[0]][unit[1]];
+				ma_health[g]=obj_ini.veh_hp[unit[0]][unit[1]];
+                ma_lid[g]=obj_ini.veh_lid[unit[0]][unit[1]];
+				ma_wid[g]=obj_ini.veh_wid[unit[0]][unit[1]];
+                if (ma_lid[g]>0){
+                    ma_loc[g]=obj_ini.ship[ma_lid[g]];
+                    if (obj_ini.ship_location[ma_lid[g]]=="Lost"){
+                    	ma_loc[g]="Lost";
+                    	man[g]="hide";
+                    }
+                }        		
+        	}
+        }
+        last_man=s;
         other_manage_data();
         managing =-1;
-        last_vehicle=0
-        last_man=s;
         man_current=1;
         man_max=last_man+last_vehicle+2;
         man_see=38-4;

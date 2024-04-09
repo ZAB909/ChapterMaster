@@ -254,6 +254,7 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 	nickname="";
 	assignment="none";
 	class =[];
+	squad_leader="";
 	type_data={};
 	formation_place=""
 	formation_options=[];

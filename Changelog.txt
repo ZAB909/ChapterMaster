@@ -37,6 +37,9 @@ added:
 	- quick view event log locations by pressing view button
 	- quick view garrisons with new troop logger
 	- manage marines by planet location instead of being locked to company manage screens
+	- stat boosts and new traits for spawn captains
+	- ability to demote/promote sgts with a loyalty hit to the demoted sgt
+	- genestealer cults acctually exist hidden from player view so mechanic can now be expanded upon
 
 
 -----------------
