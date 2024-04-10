@@ -748,7 +748,7 @@ function scr_ui_manage() {
 	            }
 	        }*/	    	
 		    for(var i=0; i<repetitions;i++){
-		    	if (managing>0 && managing<=10){
+		    	if (managing>0 && managing<=10 && i=0){
 		    		if (company_data.captain == "none"){
 		    			draw_set_color(c_black);
 		    			draw_rectangle(xx+25,yy+64,xx+974,yy+85,0);
@@ -762,6 +762,7 @@ function scr_ui_manage() {
 						if (point_and_click([xx+25,yy+64,xx+974,yy+85])){
 
 						}
+						yy+=20;
 						continue;
 		    		}
 		    	}

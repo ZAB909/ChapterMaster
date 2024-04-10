@@ -29,10 +29,10 @@ function scr_role_count(target_role, search_location="", return_type="count") {
 
 	if (coom>=0){
 	    com=coom;
-	    for (i=1;i<array_length(obj_ini.TTRPG[com]);i++){
+	    for (i=0;i<array_length(obj_ini.TTRPG[com]);i++){
 			unit=obj_ini.TTRPG[com][i];
 			if (unit.name()=="")then continue; 	
-	        if (unit.role()=target_role) and (obj_ini.god[com][i]<10){
+	        if (unit.role()==target_role) && (obj_ini.god[com][i]<10){
 	        	count+=1;
 	        	if (return_type=="units"){
 	        		array_push(units, obj_ini.TTRPG[com][i]);
