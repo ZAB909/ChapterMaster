@@ -521,26 +521,6 @@ if (menu==1 && (managing>0 || managing<0)){
         sel=top;
         var unit = "";
         yy+=77;
-        for(var r=0; r<(min(array_length(display_unit),man_see)); r++){
-            if (sel>=array_length(display_unit)) then break;
-            force_tool=0;
-            if (man[sel]=="man" && is_struct(display_unit[sel])){
-                unit = display_unit[sel];
-                if (temp[101] == $"{unit.role()} {unit.name}")
-                and ((temp[102]!=unit.armour()) or (temp[104]!=unit.gear()) or (temp[106]=unit.mobility_item()) 
-                or (temp[108]!=unit.weapon_one()) or (temp[110]!=unit.weapon_one())
-                or (temp[114]="refresh")) then force_tool=1;
-            }
-            
-            if (((mouse_x>=xx+25 && mouse_y>=yy+64 && mouse_x<xx+974 && mouse_y<yy+85) || force_tool==1) && is_struct(unit)){
-                temp[120] = unit; // unit_struct
-            }
-            draw_set_color(38144);
-            draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);
-            
-            yy+=20;
-            sel+=1;
-        }
     }
     if (is_struct(temp[120])){
         var ach=0,damage_res=1,armour_value=0;

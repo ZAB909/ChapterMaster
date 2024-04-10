@@ -424,4 +424,17 @@ function scr_draw_management_unit(selected, yy=0, xx=0, draw=true){
             }
         }    	
     }
+    if (is_man){
+        force_tool=0;
+        if (temp[101] == $"{unit.role()} {unit.name}")
+        and ((temp[102]!=unit.armour()) or (temp[104]!=unit.gear()) or (temp[106]=unit.mobility_item()) 
+        or (temp[108]!=unit.weapon_one()) or (temp[110]!=unit.weapon_one())
+        or (temp[114]="refresh")) then force_tool=1;
+        
+        if (((mouse_x>=xx+25 && mouse_y>=yy+64 && mouse_x<xx+974 && mouse_y<yy+85) || force_tool==1) && is_struct(unit)){
+            temp[120] = unit; // unit_struct
+	        draw_set_color(38144);
+	        draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);               
+        } 	
+    }
 }
