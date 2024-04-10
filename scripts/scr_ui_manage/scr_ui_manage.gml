@@ -841,6 +841,7 @@ function scr_ui_manage() {
 				// Draw interaction and selection buttons
 				yy-=8;
 				draw_set_font(fnt_40k_14b);
+				draw_set_color(#50a076);
 				var button = {
 					x1: right_ui_block.x1+26,
 					y1: right_ui_block.y2-6-30,
@@ -1016,17 +1017,18 @@ function scr_ui_manage() {
 					// Select all infantry button
 					button.y1 += button.h + button.v_gap + 4;
 					button.h /= 1.4;
-					button.w = 126;
+					button.w = 128;
 					button.x2 = button.x1 + button.w;
 					button.y2 = button.y1 + button.h;
 					var inf_button_pos = [button.x1, button.y1, button.x2, button.y2];
 					button.label = "All Infantry";
 					button.alpha = 1;
-					if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) {
+					button.font = fnt_40k_12;
+					draw_set_font(fnt_40k_12);
+					if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,button.font,button.alpha)) {
 						sel_all = "man";
 					}
-
-					// Select types of infantry buttons
+					// Select infantry type buttons
 					for (var i = 1; i <= 8; i++) {
 						if (sel_uni[i] != "") {
 							button.x1 += button.w + button.h_gap;
@@ -1037,16 +1039,16 @@ function scr_ui_manage() {
 								button.y1 += button.h + button.v_gap;
 								button.y2 += button.h + button.v_gap;
 							}
-							button.label = string_truncate(sel_uni[i], 130);
+							button.label = string_truncate(sel_uni[i], 126);
 							button.alpha = 1;
-							if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) {
+							if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,button.font,button.alpha)) {
 								sel_all = sel_uni[i];
 							}
 						}
 					}
 				}
 
-					// Select all vehicles button
+				// Select all vehicles button
 				if (sel_veh[1]!=""){
 					button.x1 = inf_button_pos[0];
 					button.x2 = inf_button_pos[2];
@@ -1054,10 +1056,10 @@ function scr_ui_manage() {
 					button.y2 = button.y1 + button.h;
 					button.label = "All Vehicles";
 					button.alpha = 1;
-					if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) {
+					if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,button.font,button.alpha)) {
 						sel_all="vehicle";
 					}
-
+					// Select vehicle type buttons
 					for (var i = 1; i <= 8; i++) {
 						if (sel_veh[i] != "") {
 							button.x1 += button.w + button.h_gap;
@@ -1068,9 +1070,9 @@ function scr_ui_manage() {
 								button.y1 += button.h + button.v_gap;
 								button.y2 += button.h + button.v_gap;
 							}
-							button.label = string_truncate(sel_veh[i], 130);
+							button.label = string_truncate(sel_veh[i], 126);
 							button.alpha = 1;
-							if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) {
+							if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,button.font,button.alpha)) {
 								sel_all = sel_veh[i];
 							}
 						}
