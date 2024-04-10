@@ -68,7 +68,11 @@ function add_vehicle_to_manage_arrays(unit){
 		array_push(ma_lid,obj_ini.veh_lid[unit[0]][unit[1]]);
 		array_push(ma_wid,obj_ini.veh_wid[unit[0]][unit[1]]);
 		array_push(ma_race,obj_ini.veh_race[unit[0]][unit[1]]);
-		array_push(ma_loc,obj_ini.veh_loc[unit[0]][unit[1]]);
+		if (obj_ini.veh_lid[unit[0]][unit[1]]>0){
+			array_push(ma_loc,obj_ini.ship_location[obj_ini.veh_lid[unit[0]][unit[1]]]);
+		} else {
+			array_push(ma_loc,obj_ini.veh_loc[unit[0]][unit[1]]);
+		}
 		array_push(ma_name ,"");
 		array_push(ma_role,obj_ini.veh_role[unit[0]][unit[1]]);
 		array_push(ma_wep1,obj_ini.veh_wep1[unit[0]][unit[1]]);
@@ -376,7 +380,7 @@ function filter_and_sort_company(type, specific){
 				//if (man[i] != "man") continue;
 				swapped=false;
 				limit = array_length(display_unit)-i;
-				for (j=1; j<limit;j++){
+				for (j=0; j<limit-1;j++){
 					if (man[j] != "man"){
 						if (man[j+1] == "man"){
 							switchy(j,j+1);

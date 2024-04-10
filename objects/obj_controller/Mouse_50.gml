@@ -1708,7 +1708,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
         xx+=16;
         for (var i=0;i<array_length(click_positions_company);i++){
             var pos = click_positions_company[i]
-            if (point_in_rectangle(mouse_x, mouse_y, pos[0], pos[1], pos[2], pos[3])){
+            if (point_and_click(pos)){
                 managing = i+1;
                 cooldown=8000;
             // Resets selections for next turn
@@ -1718,44 +1718,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 selecting_ship=0;
                 selecting_planet=0;
                 sel_uid=0;
-                for(var i=0; i<501; i++){
-                    man[i]="";
-                    ide[i]=0;
-                    man_sel[i]=0;
-                    ma_lid[i]=0;
-                    ma_wid[i]=0;
-                    ma_race[i]=0;
-                    ma_loc[i]="";
-                    ma_name[i]="";
-                    ma_role[i]="";
-                    ma_wep1[i]="";
-                    ma_wep2[i]="";
-                    ma_armour[i]="";
-                    ma_health[i]=100;
-                    ma_chaos[i]=0;
-                    ma_exp[i]=0;
-                    ma_promote[i]=0;
-                    sh_ide[i]=0;
-                    sh_uid[i]=0;
-                    sh_name[i]="";
-                    sh_class[i]="";
-                    sh_loc[i]="";
-                    sh_hp[i]="";
-                    sh_cargo[i]=0;
-                    sh_cargo_max[i]="";
-                    squad[i]=0;
-                }
-                alll=0;              
-                cooldown=10;
-                sel_loading=0;
-                unload=0;
-                alarm[6]=7;
-                if (managing<=10){
-                    company_data = new scr_company_struct(managing);
-                } else if (managing>10) then scr_special_view(managing){
-                    scr_special_view(managing);
-                    company_data={};
-                }
+                update_general_manage_view();
                 view_squad=false;               
             }
         }

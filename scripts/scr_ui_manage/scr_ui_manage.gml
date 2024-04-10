@@ -367,13 +367,15 @@ function scr_ui_manage() {
 			draw_set_color(c_white);	    	
 			selected_unit.draw_unit_image(1208,210);
 
+
+			//TODO implement tooltip explaining potential loyalty hit of demoting a sgt
 			if (view_squad &&  company_data!={}){
 				if (company_data.cur_squad!=0){
 					var cur_squad = company_data.grab_current_squad();
 					var sgt_possible = cur_squad.type!="command_squad" && !selected_unit.IsSpecialist("squad_leaders");
 					if (selected_unit != cur_squad.squad_leader){
 						if (point_and_click(draw_unit_buttons([xx+1208+50,yy+210+260], "Make Sgt", [1,1],#50a076,,,sgt_possible?1:0.5)) && sgt_possible){
-							cur_squad.change_sgt([selected_unit.company, selected_unit.marine_number]);
+							cur_squad.change_sgt(selected_unit);
 						}
 					}
 				}
@@ -746,6 +748,23 @@ function scr_ui_manage() {
 	            }
 	        }*/	    	
 		    for(var i=0; i<repetitions;i++){
+		    	if (managing>0 && managing<=10){
+		    		if (company_data.captain == "none"){
+		    			draw_set_color(c_black);
+		    			draw_rectangle(xx+25,yy+64,xx+974,yy+85,0);
+						draw_set_color(c_gray);
+						draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);	
+						draw_set_halign(fa_center); 
+						draw_set_color(c_yellow);
+						draw_text(xx+500,yy+66,"New Captain Required")
+						draw_set_halign(fa_left);
+						draw_set_color(c_gray);
+						if (point_and_click([xx+25,yy+64,xx+974,yy+85])){
+
+						}
+						continue;
+		    		}
+		    	}
 		    	if (sel>=array_length(display_unit)) then break;
 		    	while (man[sel]=="hide") and (sel<array_length(display_unit)-1){sel+=1;}
 		    	if (scr_draw_management_unit(sel, yy, xx) == "continue"){
@@ -962,7 +981,7 @@ function scr_ui_manage() {
 				// // Transfer to another company button
 				button.label = "Transfer";
 				var transfer_possible = !array_contains(invalid_locations, selecting_location) && man_size>0;
-				if transfer_possible{
+				if (transfer_possible){
 					button.alpha = 1;
 					if (point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha))){
 						transfer_selection();
@@ -972,6 +991,19 @@ function scr_ui_manage() {
 					draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha);
 				}
 
+				button.x1 += button.w + button.h_gap;
+				button.x2 += button.w + button.h_gap;
+				button.label = "Move Ship";
+				var moveship_possible = !array_contains(invalid_locations, selecting_location) && man_size>0 && selecting_ship>0;	
+				if (moveship_possible){
+					button.alpha = 1;
+					if (point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha))){
+						load_selection();
+					}
+				} else {
+					button.alpha = 0.5;
+					draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha);
+				}
 				if (sel_uni[1] != "") {
 					// How much space the selected unit takes
 					draw_set_font(fnt_40k_30b);
@@ -984,8 +1016,8 @@ function scr_ui_manage() {
 					// draw_text_transformed(actions_block.x1 + 4, actions_block.x1 + 64,"Options:",0.5,0.5,0);
 
 					// Select all units button
-					button.x1 -= (button.w + button.h_gap) * 2;
-					button.x2 -= (button.w + button.h_gap) * 2;
+					button.x1 -= (button.w + button.h_gap) * 3;
+					button.x2 -= (button.w + button.h_gap) * 3;
 					button.y1 -= (button.h + button.v_gap) * 4.15;
 					button.y2 -= (button.h + button.v_gap) * 4.15;
 					button.label = "Select All";
@@ -1212,7 +1244,11 @@ function scr_ui_manage() {
 	                                    obj_ini.veh_wid[vehicle[0]][vehicle[1]]=0;
 	                                    obj_ini.veh_uid[vehicle[0]][vehicle[1]]=sh_uid[sel];
 	                                   obj_ini.ship_carrying[sh_ide[sel]]+=vehic_size;
-	                                   load_from_star.p_player[selecting_planet]-=vehic_size;
+	                                   if (selecting_ship==0){
+	                                   		load_from_star.p_player[selecting_planet]-=vehic_size;
+	                                   } else {
+	                                   	 obj_ini.ship_carrying[selecting_ship] -= vehic_size;
+	                                   }
 	                                }
 	                            }
 	                        }

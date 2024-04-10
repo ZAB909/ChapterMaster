@@ -19,10 +19,7 @@ if (obj_controller.cooldown<=0){
                     sh_ide[i]=0;sh_uid[i]=0;sh_name[i]="";sh_class[i]="";sh_loc[i]="";sh_hp[i]="";sh_cargo[i]=0;sh_cargo_max[i]="";
                 }
                 alll=0;
-                if (managing<=10) then scr_company_view(managing);
-                if (managing>20) then scr_company_view(managing);
-                if (managing>10) and (managing<=20) then scr_special_view(managing);
-                cooldown=10;sel_loading=0;unload=0;alarm[6]=7;
+               update_general_manage_view();
             }
         }
         with(obj_managment_panel){instance_destroy();}

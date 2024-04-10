@@ -618,9 +618,7 @@ if (image="ancient_ruins") and (option1!=""){
                 sh_cargo_max[i]="";
             }
             alll=0;
-            if (managing<=10) and (managing!=0) then scr_company_view(managing);
-            if (managing>10) or (managing=0) then scr_special_view(managing);
-            cooldown=10;sel_loading=0;unload=0;alarm[6]=7;
+            update_general_manage_view();
         }
         with(obj_temp4){instance_destroy();}
         instance_destroy();exit;

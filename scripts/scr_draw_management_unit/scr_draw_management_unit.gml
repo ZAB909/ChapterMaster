@@ -20,7 +20,7 @@ function scr_draw_management_unit(selected, yy=0, xx=0, draw=true){
 		if (unit.name()=="" || unit.base_group=="none"){
 			return "continue";
 		}
-
+		var unit_specialist = is_specialist(unit.role());
 		var unit_location_string="";
 		if (unit.in_jail()){
 			jailed=true;
@@ -28,7 +28,6 @@ function scr_draw_management_unit(selected, yy=0, xx=0, draw=true){
 		} else {
 			var unit_location = unit.marine_location();
 	        string_role=unit.name_role();
-			var unit_specialist = is_specialist(unit.role());
 	        unit_specialism_option=false;
 	        //TODO make static to handle
 	        unit_location_string=string(ma_loc[selected]);
@@ -89,6 +88,8 @@ function scr_draw_management_unit(selected, yy=0, xx=0, draw=true){
         if (ma_wid[selected]!=0){
         	//numeral for vehicle planet
         	unit_location_string += scr_roman(ma_wid[selected]);
+        } else if (ma_lid[selected]>0){
+        	unit_location_string = obj_ini.ship[ma_lid[selected]]
         }
         health_string=string(round(ma_health[selected]))+"% HP";
         exp_string="";

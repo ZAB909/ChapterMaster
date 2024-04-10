@@ -513,14 +513,20 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 		return leader;
 	}
 
-	
+
 	static change_sgt = function(new_sgt){
 		sgt = determine_leader();
 		var remove_sgt;
 		if (sgt!="none"){
 			remove_sgt = fetch_unit(sgt);
-			if (sgt.IsSpecialist("squad_leaders")){
-
+			if (remove_sgt.IsSpecialist("squad_leaders")){
+				var replace_role = remove_sgt.role();
+				remove_sgt.update_role(new_sgt.role());
+				//TODO centralise loyalty changes for role changes in the update_role method
+				remove_sgt.loyalty-=10;
+				//TODO make update loyalty method to avoid manual 100 limit checks
+				new_sgt.update_role(replace_role);
+				new_sgt.loyalty = min(100, new_sgt.loyalty+10);
 			}
 		}
 	}

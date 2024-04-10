@@ -124,7 +124,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
 
         // The MAHREENS and TARGET/FROM seems to check out
         var unit, move_squad, move_members, moveable, squad;
-        for (w=0;w<array_length(display_unit);w++){
+        for (w=0;w<array_length(obj_controller.display_unit);w++){
             if (obj_controller.man_sel[w]==1){
                 if (obj_controller.man[w]=="man"&&is_struct(obj_controller.display_unit[w])){
                     moveable=true;
@@ -134,7 +134,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
                         squad = obj_ini.squads[move_squad];
                         move_members = squad.members;
                         for (var mem = 0;mem<array_length(move_members);mem++){//check all members have been selected and are in the same company
-                            if (w+mem<array_length(display_unit)){
+                            if (w+mem<array_length(obj_controller.display_unit)){
                                 if (!is_struct(obj_controller.display_unit[w+mem])) then continue;
                                 if (obj_controller.man_sel[w+mem]!=1 || obj_controller.display_unit[w+mem].squad != move_squad){
                                     moveable = false;
@@ -237,14 +237,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
                     sh_cargo_max[w]="";
                 }
                 alll=0;
-                if (obj_controller.managing>0){
-                    if (managing<=10) and (managing!=0) then scr_company_view(managing);
-                    if (managing>10) or (managing=0) then scr_special_view(managing);                
-                    cooldown=10;
-                    sel_loading=0;
-                    unload=0;
-                    alarm[6]=30;
-                }
+                update_general_manage_view();
             }
         }
 
@@ -518,7 +511,7 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][3],"sternguard_veteran_squad");
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][4],"terminator_squad");
 
-        for(i=-1;i<array_length(display_unit);i++){
+        for(i=-1;i<array_length(obj_controller.display_unit);i++){
             if (obj_controller.man[i]=="man") and (obj_controller.man_sel[i]==1) and (obj_controller.ma_exp[i]>=min_exp){
                 moveable=true;
                 unit = obj_controller.display_unit[i];
@@ -527,7 +520,7 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
                     squad = obj_ini.squads[move_squad];
                     move_members = squad.members;
                     for (var mem = 0;mem<array_length(move_members);mem++){//check all members have been selected and are in the same company
-                        if (i+mem<array_length(display_unit)){
+                        if (i+mem<array_length(obj_controller.display_unit)){
                             if (!is_struct(obj_controller.display_unit[i+mem])) then continue;
                             if (obj_controller.man_sel[i+mem]!=1 || obj_controller.display_unit[i+mem].squad != move_squad){
                                 moveable = false;
@@ -607,9 +600,7 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
             selecting_ship=0;
             reset_manage_arrays();
             alll=0;
-            if (managing<=10) and (managing!=0) then scr_company_view(managing);
-            if (managing>10) or (managing=0) then scr_special_view(managing);
-            cooldown=10;sel_loading=0;unload=0;alarm[6]=30;
+            update_general_manage_view();
         }
 
         with(obj_managment_panel){instance_destroy();}
@@ -646,7 +637,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
         if (n_mobi="(None)") then n_mobi="";
 
 
-        for (var i=1;i<array_length(display_unit);i++){
+        for (var i=0;i<array_length(obj_controller.display_unit);i++){
 
             var endcount=0;
 

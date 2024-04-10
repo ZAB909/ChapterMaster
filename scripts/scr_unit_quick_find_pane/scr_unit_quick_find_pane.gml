@@ -11,6 +11,9 @@ function scr_unit_quick_find_pane() constructor{
 
 	view_area = "fleets";
 	update_garrison_log = function(){
+		for (var i = 0;i<=200; i++){
+			obj_ini.ship_carrying[i]=0
+		};
 		var u, unit, unit_location, group;
 	    garrison_log = {};
 	    for (var co=0;co<11;co++){
@@ -36,7 +39,9 @@ function scr_unit_quick_find_pane() constructor{
 	    			} else if (unit.IsSpecialist("forge")){
 						group.techies++;
 	    			}
-	    		}   	
+	    		} else if (unit_location[0]==location_types.ship){
+	    			obj_ini.ship_carrying[unit.ship_location]+=unit.get_unit_size();
+	    		}
 	    	}
 	    	for (var u=1;u<100;u++){
 	    		if (obj_ini.veh_race[co][u]==0) then continue;
@@ -55,6 +60,8 @@ function scr_unit_quick_find_pane() constructor{
 	    				array_push(garrison_log[$ unit_location].units, unit);
 	    				garrison_log[$ unit_location].vehicles++;
 	    			}
+	    		} else if (obj_ini.veh_lid[co][u]>0){
+	    			obj_ini.ship_carrying[obj_ini.veh_lid[co][u]]+=scr_unit_size("",obj_ini.veh_role[co][u],true);
 	    		}
 	    	}
 	    }		
@@ -273,11 +280,31 @@ function exit_adhoc_manage(){
 	if (struct_exists(location_viewer.garrison_log, selection_data.system.name)){
 		var sys_name = selection_data.system.name;
 		group_selection(location_viewer.garrison_log[$sys_name].units,selection_data);
+		company_data={};
 	} else {
 		exit_adhoc_manage();		
 	} 	
 }
 
+
+function update_general_manage_view(){
+    if (obj_controller.managing>0){
+        if (managing<=10) and (managing!=0){
+        	scr_company_view(managing);
+        	company_data = new scr_company_struct(managing);
+        }
+        if (managing>10) or (managing=0){
+			scr_special_view(managing);
+			company_data={};
+        }            
+        cooldown=10;
+        sel_loading=0;
+        unload=0;
+        alarm[6]=30;
+    } else if (obj_controller.managing==-1){
+        update_garrison_manage();
+    }	
+}
 
 
 function transfer_selection(){
@@ -364,14 +391,15 @@ function jail_selection(){
                 unit = display_unit[f];
                 obj_ini.god[unit.company][unit.marine_number]+=10;
                 ma_god[f]+=10;
+                man_sel[f]=0;
             }
         }
     }
     if (managing>0){
         alll=0;
-        if (managing<=10) then scr_company_view(managing);
-        if (managing>20) then scr_company_view(managing);
-        if (managing>10) and (managing<=20) then scr_special_view(managing);
+        update_general_manage_view();
+    } else if (managing==-1){
+    	update_garrison_manage()
     }
     sel_loading=0;
     unload=0;
