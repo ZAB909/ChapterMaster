@@ -4,7 +4,8 @@ function scr_draw_unit_stat_data(manage=false){
 	var xx=__view_get( e__VW.XView, 0 )+0;
 	var yy=__view_get( e__VW.YView, 0 )+0;
 	var stat_tool_tips = [];
-	var stat_tool_tip_text = "";
+	var trait_tool_tips = [];
+	var unit_name = name();
 
 	var data_block = {
 		x1: xx + 1008,
@@ -214,12 +215,12 @@ function scr_draw_unit_stat_data(manage=false){
 		var data_lines = [];
 		var data_entry = {};
 		data_entry.text = $"Loyalty: {loyalty}\n";
-		data_entry.tooltip = "This is a description for Loyalty";
+		data_entry.tooltip = "Loyalty represents the unwavering devotion to one's Chapter, their Primarch, and the Emperor himself. It is a measure of their ability to resist the temptations of Chaos, the influence of xenos artifacts, and the machinations of the Warp.";
 		array_push(data_lines, data_entry);
 		
 		data_entry = {};
 		data_entry.text = $"Corruption: {corruption}\n";
-		data_entry.tooltip = "This is a description for Corruption";
+		data_entry.tooltip = "Corruption reflects exposure to the malevolent forces of the Warp. High Corruption may indicate that the person is teetering on the brink of damnation, while a low score suggests relative purity.";
 		array_push(data_lines, data_entry);
 		
 		data_entry = {};
@@ -253,23 +254,37 @@ function scr_draw_unit_stat_data(manage=false){
 			array_push(stat_tool_tips, [data_block.x1+16, attribute_box.y2+16+(i*24), data_block.x1+16+string_width(data_lines[i].text), attribute_box.y2+16+(i*24)+string_height(data_lines[i].text), data_lines[i].tooltip, ""]);
 		}
 
-		var traits_text = "";
-		if array_length(traits) != 0{
-			for (i=0;i<array_length(traits);i++){
-				traits_text += global.trait_list[$ traits[i]].display_name;
-				traits_text +="\n";
+		var x1 = data_block.x2-16;
+		if array_length(traits) != 0 {
+			for (i=0; i<array_length(traits); i++) {
+				var trait_name = global.trait_list[$ traits[i]].display_name;
+				var trait_description = string(global.trait_list[$ traits[i]].flavour_text, unit_name);
+				var trait_effect = "";
+				if (struct_exists(global.trait_list[$ traits[i]], "effect")){
+					trait_effect = string(global.trait_list[$ traits[i]].effect + "." + "##");
+				}
+				var y1 = attribute_box.y2+16 + (i*24);
+				draw_set_halign(fa_right);
+				draw_text(x1, y1, trait_name);
+				draw_set_halign(fa_left);
+				var x2 = x1 - string_width(trait_name);
+				var y2 = y1 + string_height(trait_name);
+				array_push(trait_tool_tips, [x1, y1, x2, y2, trait_description + trait_effect]);
 			}
+		} else {
+			draw_set_halign(fa_right);
+			draw_text(data_block.x2-16, attribute_box.y2+16, "No Traits");
+			draw_set_halign(fa_left);
 		}
-		else{
-			traits_text = "No Traits\n"
-		}
-		draw_set_halign(fa_right);
-		draw_text(data_block.x2-16, attribute_box.y2+16, traits_text);
-		draw_set_halign(fa_left);
 
 		for (i=0;i<array_length(stat_tool_tips);i++){
 			if (point_in_rectangle(mouse_x, mouse_y, stat_tool_tips[i][0], stat_tool_tips[i][1], stat_tool_tips[i][2], stat_tool_tips[i][3])){
 				tooltip_draw(stat_tool_tips[i][4], 300, [stat_tool_tips[i][0], stat_tool_tips[i][3]],,,stat_tool_tips[i][5]);
+			}
+		}
+		for (i=0;i<array_length(trait_tool_tips);i++){
+			if (point_in_rectangle(mouse_x, mouse_y, trait_tool_tips[i][2], trait_tool_tips[i][1], trait_tool_tips[i][0], trait_tool_tips[i][3])){
+				tooltip_draw(trait_tool_tips[i][4], 300);
 			}
 		}
 }

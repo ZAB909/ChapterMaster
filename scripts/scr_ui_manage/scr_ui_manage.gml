@@ -1,7 +1,16 @@
-function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,align=fa_left, font=fnt_40k_14b, alpha_mult=1){
-	draw_set_alpha(1*alpha_mult);
+function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,_halign=fa_center, font=fnt_40k_14b, alpha_mult=1){
+	// Store current state of all global vars
+	var cur_alpha = draw_get_alpha();
+	var cur_font = draw_get_font();
+	var cur_color = draw_get_color();
+	var cur_halign = draw_get_halign();
+	var cur_valign = draw_get_valign();
+
 	draw_set_font(font);
-	draw_set_halign(align);
+	draw_set_halign(_halign);
+	draw_set_color(colour);
+	draw_set_valign(fa_middle);
+
 	var full_width;
 	var full_height;
 	if (array_length(position)>2){
@@ -13,11 +22,9 @@ function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,align
 		var full_width = position[0]+text_width+8
 		var full_height = position[1]+text_height+4;
 	}
+	draw_set_alpha(1*alpha_mult);
 	// draw_set_color(c_black);
-	// draw_rectangle(position[0],position[1], full_width,full_height,0)
-	draw_set_color(colour);
-	draw_set_halign(fa_center);
-	draw_set_valign(fa_middle);
+	// draw_rectangle(position[0],position[1], full_width,full_height,0);
 	draw_text_transformed((position[0] + full_width)/2, (position[1] + full_height)/2,string_hash_to_newline(text),size_mod[0],size_mod[1],0);
 	draw_rectangle(position[0],position[1], full_width,full_height,1)
 	draw_set_alpha(0.5*alpha_mult);
@@ -26,9 +33,14 @@ function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,align
 	if (point_in_rectangle(mouse_x,mouse_y, position[0],position[1], full_width,full_height)){
 		draw_rectangle(position[0],position[1], full_width,full_height,0);
 	}
-	draw_set_alpha(1);
-	draw_set_halign(fa_left);
-	draw_set_valign(fa_top);
+
+	// Reset all global vars to their previous state
+	draw_set_alpha(cur_alpha);
+	draw_set_font(cur_font);
+	draw_set_color(cur_color);
+	draw_set_halign(cur_halign);
+	draw_set_valign(cur_valign);
+
 	return [position[0],position[1], full_width,full_height];
 }
 
@@ -849,10 +861,11 @@ function scr_ui_manage() {
 				// Draw interaction and selection buttons
 				yy-=8;
 				draw_set_font(fnt_40k_14b);
+				draw_set_color(#50a076);
 				var button = {
 					x1: right_ui_block.x1+26,
 					y1: right_ui_block.y2-6-30,
-					w: 100,
+					w: 102,
 					h: 30,
 					h_gap: 4,
 					v_gap: 4,
@@ -1037,35 +1050,38 @@ function scr_ui_manage() {
 					// Select all infantry button
 					button.y1 += button.h + button.v_gap + 4;
 					button.h /= 1.4;
+					button.w = 128;
+					button.x2 = button.x1 + button.w;
 					button.y2 = button.y1 + button.h;
 					var inf_button_pos = [button.x1, button.y1, button.x2, button.y2];
 					button.label = "All Infantry";
 					button.alpha = 1;
-					if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) {
+					button.font = fnt_40k_12;
+					draw_set_font(fnt_40k_12);
+					if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,button.font,button.alpha)) {
 						sel_all = "man";
 					}
-
-					// Select types of infantry buttons
+					// Select infantry type buttons
 					for (var i = 1; i <= 8; i++) {
 						if (sel_uni[i] != "") {
 							button.x1 += button.w + button.h_gap;
 							button.x2 += button.w + button.h_gap;
-							if i == 5{
-								button.x1 -= (button.w + button.h_gap) * 5;
-								button.x2 -= (button.w + button.h_gap) * 5;
+							if i == 4{
+								button.x1 -= (button.w + button.h_gap) * 4;
+								button.x2 -= (button.w + button.h_gap) * 4;
 								button.y1 += button.h + button.v_gap;
 								button.y2 += button.h + button.v_gap;
 							}
-							button.label = string_truncate(sel_uni[i], 100);
+							button.label = string_truncate(sel_uni[i], 126);
 							button.alpha = 1;
-							if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) {
+							if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,button.font,button.alpha)) {
 								sel_all = sel_uni[i];
 							}
 						}
 					}
 				}
 
-					// Select all vehicles button
+				// Select all vehicles button
 				if (sel_veh[1]!=""){
 					button.x1 = inf_button_pos[0];
 					button.x2 = inf_button_pos[2];
@@ -1073,23 +1089,23 @@ function scr_ui_manage() {
 					button.y2 = button.y1 + button.h;
 					button.label = "All Vehicles";
 					button.alpha = 1;
-					if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) {
+					if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,button.font,button.alpha)) {
 						sel_all="vehicle";
 					}
-
+					// Select vehicle type buttons
 					for (var i = 1; i <= 8; i++) {
 						if (sel_veh[i] != "") {
 							button.x1 += button.w + button.h_gap;
 							button.x2 += button.w + button.h_gap;
-							if i == 5{
-								button.x1 -= (button.w + button.h_gap) * 5;
-								button.x2 -= (button.w + button.h_gap) * 5;
+							if i == 4{
+								button.x1 -= (button.w + button.h_gap) * 4;
+								button.x2 -= (button.w + button.h_gap) * 4;
 								button.y1 += button.h + button.v_gap;
 								button.y2 += button.h + button.v_gap;
 							}
-							button.label = string_truncate(sel_veh[i], 100);
+							button.label = string_truncate(sel_veh[i], 126);
 							button.alpha = 1;
-							if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,,button.alpha)) {
+							if point_and_click(draw_unit_buttons([button.x1,button.y1, button.x2, button.y2],button.label,[1,1],button.color,,button.font,button.alpha)) {
 								sel_all = sel_veh[i];
 							}
 						}
