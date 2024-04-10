@@ -7,24 +7,8 @@ function scr_ui_refresh() {
     selecting_ship = 0;
     sel_uid = 0;
 
+    reset_manage_arrays();
     for (var i = 0; i < 501; i++) {
-        man[i] = "";
-        ide[i] = 0;
-        man_sel[i] = 0;
-        ma_lid[i] = 0;
-        ma_wid[i] = 0;
-        ma_bio[i] = 0;
-        ma_race[i] = 0;
-        ma_loc[i] = "";
-        ma_name[i] = "";
-        ma_role[i] = "";
-        ma_wep1[i] = "";
-        ma_wep2[i] = "";
-        ma_armour[i] = "";
-        ma_health[i] = 100;
-        ma_chaos[i] = 0;
-        ma_exp[i] = 0;
-        ma_promote[i] = 0;
         sh_ide[i] = 0;
         sh_uid[i] = 0;
         sh_name[i] = "";

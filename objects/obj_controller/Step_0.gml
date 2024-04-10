@@ -521,9 +521,10 @@ if (menu==1 && (managing>0 || managing<0)){
         sel=top;
         var unit = "";
         yy+=77;
-        for(var r=0; r<(min(man_max,man_see)); r++){
+        for(var r=0; r<(min(array_length(display_unit),man_see)); r++){
+            if (sel>=array_length(display_unit)) then break;
             force_tool=0;
-            if (man[sel]=="man"){
+            if (man[sel]=="man" && is_struct(display_unit[sel])){
                 unit = display_unit[sel];
                 if (temp[101] == $"{unit.role()} {unit.name}")
                 and ((temp[102]!=unit.armour()) or (temp[104]!=unit.gear()) or (temp[106]=unit.mobility_item()) 
@@ -691,7 +692,7 @@ if (unload>0){
     
     if (manaj>10) then manaj=0;
     var unit;
-    for(var q=1; q<=500; q++){
+    for(var q=1; q<array_length(display_unit); q++){
         if (man[q]=="man") and (ma_loc[q]==selecting_location) and (ma_wid[q]<1)and (man_sel[q]!=0){
             if (b==0) then b=ma_lid[q];
             unit=display_unit[q];
@@ -719,7 +720,7 @@ if (unload>0){
         }
     }
     selecting_location="";
-    for(var i=0; i<500; i++){
+    for(var i=0; i<array_length(display_unit); i++){
         man_sel[i]=0;
     }
     obj_ini.ship_carrying[b]-=man_size;

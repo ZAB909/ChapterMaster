@@ -5,7 +5,7 @@ function scr_load_all(select_units) {
 	if (select_units){
 		man_size=0;
 		// This sets the maximum size of marines in a company to 200 size
-		for(var i=1; i<=500; i++){
+		for(var i=0; i<array_length(display_unit); i++){
 			unit=display_unit[i];
 			if (is_struct(unit)){
 		        if (man[i]=="man") and (ma_loc[i]==selecting_location) and (ma_wid[i]==selecting_planet) and (ma_god[i]<10){
@@ -18,7 +18,7 @@ function scr_load_all(select_units) {
 		    	        //if (i<=200){
                 if (man[i]=="vehicle") and (ma_loc[i]==selecting_location) and (ma_wid[i]==selecting_planet){
     				man_sel[i]=1;
-    	        	if (selecting_location==""){
+	    	        if (selecting_location==""){
                         selecting_location=ma_loc[i];
                         selecting_ship=ma_lid[i];
                         selecting_planet=ma_wid[i];
@@ -33,7 +33,7 @@ function scr_load_all(select_units) {
 	if (!select_units){
 	    alll=0;
 		man_size=0;
-	    for(var i=1; i<=500; i++){
+	    for(var i=0; i<array_length(display_unit); i++){
             if (selecting_location!="")
             and ((ma_loc[i]!=selecting_location)
             or (ma_wid[i]!=selecting_planet)) then continue;

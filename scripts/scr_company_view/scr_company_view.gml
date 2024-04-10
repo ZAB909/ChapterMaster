@@ -1,3 +1,90 @@
+function reset_manage_arrays(){
+	with (obj_controller){
+		display_unit=[];
+	    man=[];
+		ide=[];
+		man_sel=[];
+		ma_lid=[];
+		ma_wid=[];
+		ma_bio=[];
+	    ma_race=[];
+		ma_loc=[];
+		ma_name=[];
+		ma_role=[];
+		ma_gear=[];
+		ma_mobi=[];
+		ma_wep1=[];
+	    ma_wep2=[];
+		ma_armour=[];
+		ma_health=[];
+		ma_chaos=[];
+		ma_exp=[];
+		ma_promote=[];
+		ma_god=[];
+        for (var i=0;i<=500;i++){
+            sh_ide[i]=0;
+            sh_name[i]="";
+            sh_class[i]="";
+            sh_loc[i]="";
+            sh_hp[i]="";
+            sh_cargo[i]=0;
+            sh_cargo_max[i]="";        	
+        }	
+	}
+}
+
+function add_man_to_manage_arrays(unit){
+	with (obj_controller){
+       	var unit_location = unit.marine_location();
+        array_push(man,"man");
+        array_push(ide,unit.marine_number);
+        array_push(man_sel,0);
+        array_push(ma_lid,unit.ship_location);
+        array_push(ma_wid,unit.planet_location);
+        array_push(ma_race ,unit.race());
+        array_push(ma_loc,unit_location[2]);
+        array_push(ma_name ,unit.name());
+        array_push(ma_role,unit.role());
+        array_push(ma_wep1,unit.weapon_one());
+        array_push(ma_wep2,unit.weapon_two());
+        array_push(ma_armour,unit.armour());
+        array_push(ma_gear,unit.gear());
+        array_push(ma_health,unit.hp());
+        array_push(ma_mobi,unit.mobility_item());
+        array_push(ma_chaos,unit.corruption);
+        array_push(ma_exp,unit.experience());
+        array_push(ma_promote,0);
+        array_push(display_unit,unit);
+        array_push(ma_god,0);
+	}
+}
+
+function add_vehicle_to_manage_arrays(unit){
+	with (obj_controller){
+		array_push(display_unit,unit);
+		array_push(man,"vehicle");
+		array_push(ide,unit[1]);
+		array_push(man_sel,0);
+		array_push(ma_lid,obj_ini.veh_lid[unit[0]][unit[1]]);
+		array_push(ma_wid,obj_ini.veh_wid[unit[0]][unit[1]]);
+		array_push(ma_race,obj_ini.veh_race[unit[0]][unit[1]]);
+		array_push(ma_loc,obj_ini.veh_loc[unit[0]][unit[1]]);
+		array_push(ma_name ,"");
+		array_push(ma_role,obj_ini.veh_role[unit[0]][unit[1]]);
+		array_push(ma_wep1,obj_ini.veh_wep1[unit[0]][unit[1]]);
+		array_push(ma_wep2,obj_ini.veh_wep2[unit[0]][unit[1]]);
+		array_push(ma_armour,obj_ini.veh_wep3[unit[0]][unit[1]]);
+		array_push(ma_gear,obj_ini.veh_upgrade[unit[0]][unit[1]]);
+		array_push(ma_health,obj_ini.veh_hp[unit[0]][unit[1]]);
+		array_push(ma_mobi,obj_ini.veh_acc[unit[0]][unit[1]]);
+		array_push(ma_chaos,0);
+		array_push(ma_exp,0);
+		array_push(ma_promote,0);
+		 array_push(ma_god,0);
+	}
+}
+
+
 function scr_company_view(company) {
 	var v, mans, bad, squads, squad_type, squad_loc, squad_members, unit, unit_loc, last_man, last_vehicle;
 	v=0;
@@ -13,31 +100,7 @@ function scr_company_view(company) {
 	// v: check number
 	// mans: number of mans that a hit has gotten
 	// Calculates the temporary variables to be displayed as marines in the individual company screens
-
-	for (var i=0;i<array_length(obj_ini.TTRPG[company]);i++){
-		display_unit[i]=0;
-	    man[i]="";
-		ide[i]=0;
-		man_sel[i]=0;
-		ma_lid[i]=0;
-		ma_wid[i]=0;
-		ma_bio[i]=0;
-	    ma_race[i]=0;
-		ma_loc[i]="";
-		ma_name[i]="";
-		ma_role[i]="";
-		ma_gear[i]="";
-		ma_mobi[i]="";
-		ma_wep1[i]="";
-	    ma_wep2[i]="";
-		ma_armour[i]="";
-		ma_health[i]=0;
-		ma_chaos[i]=0;
-		ma_exp[i]=0;
-		ma_promote[i]=0;
-		ma_god[i]=0;
-	}
-
+	reset_manage_arrays();
 	for (var i = 0; i < 20; i++){
 		sel_uni[i]="";
 		sel_veh[i]="";
@@ -61,47 +124,24 @@ function scr_company_view(company) {
 				   	if (obj_ini.ship_location[unit_loc[1]]="Lost") then bad=1;
 				}	            
 	            if (bad==1){
-					man[v]="hide";
 					continue;
 				}else{
 	                mans+=1;
-	                man[v]="man";
-	                ide[v]=v;
-	                ma_race[v]=obj_ini.race[company][v];
-	                ma_name[v]=obj_ini.name[company][v];
-	                ma_role[v]=obj_ini.role[company][v];
-	                ma_wep1[v]=obj_ini.wep1[company][v];
-	                ma_wep2[v]=obj_ini.wep2[company][v];
-	                ma_armour[v]=obj_ini.armour[company][v];
-	                ma_gear[v]=obj_ini.gear[company][v];
-	                ma_health[v]=obj_ini.hp[company][v];
-	                ma_exp[v]=obj_ini.experience[company][v];
-	                ma_lid[v]=unit.ship_location;
-	                if (ma_lid[v]>0){
-	                	ma_loc[v] = obj_ini.ship_location[ma_lid[v]];
-	                } else {
-	                	ma_loc[v]=obj_ini.loc[company][v];
-	                }
-	                ma_wid[v]=unit.planet_location;
-	                ma_god[v]=obj_ini.god[company][v];
-	                ma_bio[v]=unit.bionics;
-	                ma_mobi[v]=obj_ini.mobi[company][v];
-					display_unit[v] = unit;
+	                add_man_to_manage_arrays(unit)
 				    var go=0,op=0;
-					 if (man[v]=="man") and (!unit.IsSpecialist()){
+					 if (!unit.IsSpecialist()){
 				        for (var j=0; j<20;j++) {
-							if (sel_uni[j] == "") && (op == 0) then op = j;
-							if (sel_uni[j] == ma_role[v]) then go = 1;
-							ds_list_add(role_list, ma_role[v]);
+							if (sel_uni[j] == "") && (op == 0){
+								op = j;
+								break;
+							}
+							if (sel_uni[j] == unit.role()) then go = 1;
 						}
-				        if (go==0) then sel_uni[op]=ma_role[v];
+				        if (go==0) then sel_uni[op]=unit.role();
 				    }
 
 	            }
-	        } else {
-	        	man[v]="hide";
-	        	continue;
-	        }
+	        } 
 	        if (obj_ini.name[company][v+1]=="")and (last_man==0) and (obj_ini.ship_location[unit.ship_location]!="Lost"){last_man=v;break;}
 	    }
 	}
@@ -121,53 +161,23 @@ function scr_company_view(company) {
 	        if (bad==0){
 				v++;
 	            var step=false;
-	            if (i>1){
-					if (ide[v-1]==i){
-						step=true;
-						v-=1;
-					}
-				}
 	            if (step==false){
-	                man[v]="vehicle";
-					ide[v]=i;
-					last_vehicle+=1;
-					display_unit[v] = [company,i];
-	                ma_loc[v]=obj_ini.veh_loc[company][i];
-					ma_role[v]=obj_ini.veh_role[company][i];
-					ma_wep1[v]=obj_ini.veh_wep1[company][i];
-	                ma_wep2[v]=obj_ini.veh_wep2[company][i];
-					ma_armour[v]=obj_ini.veh_wep3[company][i];
-					ma_gear[v]=obj_ini.veh_upgrade[company][i];
-					ma_mobi[v]=obj_ini.veh_acc[company][i];
-					ma_health[v]=obj_ini.veh_hp[company][i];
-	                ma_lid[v]=obj_ini.veh_lid[company][i];
-					ma_wid[v]=obj_ini.veh_wid[company][i];
-	                if (ma_lid[v]>0){
-	                    ma_loc[v]=obj_ini.ship[ma_lid[v]];
-	                    if (obj_ini.ship_location[ma_lid[v]]=="Lost"){
-	                    	ma_loc[v]="Lost";
-	                    	man[v]="hide";
-	                    }
-	                }
+	            	last_vehicle+=1;
+	                add_vehicle_to_manage_arrays([company, i]);
 	                // Select All Vehicle Setup
 	                var go=0,op=0;
-	                if (man[v]=="vehicle"){
-	                    for (var p=0;p<20;p++){
-	                        if (sel_veh[p]=="") and (op==0) then op=p;
-	                        if (sel_veh[p]==ma_role[v]) then go=1;
-							ds_list_add(role_list, ma_role[v]);
-	                    }
-	                    if (go==0) then sel_veh[op]=ma_role[v];
-	                }
+                    for (var p=0;p<20;p++){
+                        if (sel_veh[p]=="") and (op==0) then op=p;
+                        if (sel_veh[p]==obj_ini.veh_role[company][i]) then go=1;
+                    }
+                    if (go==0) then sel_veh[op]=obj_ini.veh_role[company][i];
 	            }
 	        }
 	    }
 	}
-	ds_list_destroy(role_list);
 
 	man_current=0;
-	man_max=last_man+last_vehicle+2;
-	if (last_vehicle==0) and (last_man==0) then man_max=0;
+	man_max=array_length(display_unit)+2;
 	man_see=38-4;
 	other_manage_data();
 }
@@ -362,10 +372,10 @@ function filter_and_sort_company(type, specific){
 	if (type=="stat"){
 		var swapped;
 		with (obj_controller){
-			for (i = 1; i<=499;i++){
+			for (i = 0; i<array_length(display_unit);i++){
 				//if (man[i] != "man") continue;
 				swapped=false;
-				limit = 499-i;
+				limit = array_length(display_unit)-i;
 				for (j=1; j<limit;j++){
 					if (man[j] != "man"){
 						if (man[j+1] == "man"){

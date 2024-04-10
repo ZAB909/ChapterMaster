@@ -3,6 +3,7 @@ function scr_draw_management_unit(selected, yy=0, xx=0, draw=true){
 	var assignment ="none";
 	var unit;
 	var string_role="";
+	var health_string="";
 	var eventing=false;
 	jailed = false;
 	var impossible = (!is_struct(display_unit[selected]) && !is_array(display_unit[selected]));
@@ -50,7 +51,7 @@ function scr_draw_management_unit(selected, yy=0, xx=0, draw=true){
 			}
 		}
         if (draw)  { 
-            var health_string=$"{round((unit.hp()/unit.max_health())*100)}% HP";
+            health_string=$"{round((unit.hp()/unit.max_health())*100)}% HP";
         
             var exp_string= $"{ma_exp[selected]} XP";
         
@@ -89,7 +90,8 @@ function scr_draw_management_unit(selected, yy=0, xx=0, draw=true){
         	//numeral for vehicle planet
         	unit_location_string += scr_roman(ma_wid[selected]);
         }
-        health_string=string(round(ma_health[selected]))+"% HP";exp_string="";
+        health_string=string(round(ma_health[selected]))+"% HP";
+        exp_string="";
         // Need abbreviations here
 
         ma_ar="";
@@ -127,7 +129,7 @@ function scr_draw_management_unit(selected, yy=0, xx=0, draw=true){
   		}
 	}
 
-	if (draw){
+	if (draw && !impossible){
 	    if (man_sel[selected]==0) then draw_set_color(c_black);
 	    if (man_sel[selected]!=0) then draw_set_color(6052956);// was gray
 	    draw_rectangle(xx+25,yy+64,xx+974,yy+85,0);
@@ -164,7 +166,7 @@ function scr_draw_management_unit(selected, yy=0, xx=0, draw=true){
 	    var squad_modulo = squad[selected]%10;
 	    draw_set_color(squad_colours[squad_modulo])
 	
-	    if (selected>0 && selected<500){
+	    if (selected>0 && selected<array_length(display_unit)){
 	        if (squad[selected]==squad[selected+1]) and (squad[selected]!=squad[selected-1]){sqi="top"}
 	        else if (squad[selected]==squad[selected+1]) and (squad[selected]==squad[selected-1]){sqi="mid"}
 	        else if (squad[selected]!=squad[selected+1]) and (squad[selected]==squad[selected-1]) then sqi="bot";
@@ -375,7 +377,7 @@ function scr_draw_management_unit(selected, yy=0, xx=0, draw=true){
 	    	}
     	}
     	if (sel_all!="") {
-    		if (sel_all=="vehicle" || sel_all=="man" || sel_all == "command"){
+    		if (sel_all=="vehicle" || sel_all=="man" || sel_all == "Command"){
 	    		if (sel_all=="vehicle" && !is_man){
 	    			man_sel[selected] = !man_sel[selected];
 	    			changed = true;

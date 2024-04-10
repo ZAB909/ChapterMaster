@@ -287,7 +287,7 @@ function transfer_selection(){
         pip.company=managing;
 
         var god=0,nuuum=0,nuuum2=0,checky=0,check_number=0;
-        for(var f=1; f<=man_max; f++){
+        for(var f=1; f<array_length(display_unit); f++){
             if (god==1) then break;
             if (god==0) and (man_sel[f]==1) and (man[f]=="man"){
                 god=1;
@@ -325,7 +325,7 @@ function transfer_selection(){
 }
 
 function toggle_selection_borders(){
-    for(var p=0; p<=500; p++){
+    for(var p=0; p<array_length(display_unit); p++){
         if (man_sel[p]==1) and (man[p]=="man"){
         	if (is_struct(display_unit[p])){
                 var unit=display_unit[p];
@@ -341,7 +341,7 @@ function toggle_selection_borders(){
 function add_bionics_selection(){
     var bionics_before=scr_item_count("Bionics");
     if (bionics_before>0){
-    	for(var p=0; p<=500; p++){
+    	for(var p=0; p<array_length(display_unit); p++){
     		if (man_sel[p]!=0 && is_struct(display_unit[p])){ 
     			var unit = display_unit[p];
     			var comp = unit.company;
@@ -358,7 +358,7 @@ function add_bionics_selection(){
 }
 
 function jail_selection(){
-    for(var f=0; f<=man_max; f++){
+    for(var f=0; f<array_length(display_unit); f++){
         if (man[f]=="man") and (man_sel[f]==1) and (ma_loc[f]!="Terra") and (ma_loc[f]!="Mechanicus Vessel"){
             if (is_struct(display_unit[f])){
                 unit = display_unit[f];
@@ -389,7 +389,7 @@ function equip_selection(){
 	    var allow = true;
 
 	    // Need to make sure that group selected is all the same type
-	    for(var f=0; f<man_max; f++){
+	    for(var f=0; f<array_length(display_unit); f++){
 
 	        // Set different vih depending on unit type
 	        if (man_sel[f]!=1) then continue;
@@ -518,7 +518,7 @@ function unload_selection(){
 
 function reset_selection_equipment(){
 	var unit;
-    for(var f=0; f<=man_max; f++){
+    for(var f=0; f<array_length(display_unit); f++){
         // If come across a man, set vih to 1
         if (man[f]="man") and (man_sel[f]=1){
         	if (is_struct(display_unit[f])){
@@ -536,7 +536,7 @@ function promote_selection(){
         pip.company=managing;
 
         var god=0,nuuum=0;
-        for(var f=1; f<=man_max; f++){
+        for(var f=1; f<array_length(display_unit); f++){
             if ((ma_promote[f]>=1 || is_specialist(ma_role[f], "rank_and_file")  || is_specialist(ma_role[f], "squad_leaders")) && man_sel[f]==1){
                 nuuum+=1;
                 if (pip.min_exp==0) then pip.min_exp=ma_exp[f];

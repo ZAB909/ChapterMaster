@@ -133,7 +133,7 @@ function scr_draw_unit_stat_data(manage=false){
 		if (manage){
 			if point_and_click([attribute_box.x1, attribute_box.y1, attribute_box.x2, attribute_box.y1+45]){
 				filter_and_sort_company("stat", stat_display_list[i][6]);
-				unit_text = false;
+				obj_controller.unit_bio = false;
 			}
 		}
 		array_push(stat_tool_tips,[attribute_box.x1, attribute_box.y1, attribute_box.x2, attribute_box.y2,stat_display_list[i][1] + $"#Click to order by highest {stat_display_list[i][4]}", $"{stat_display_list[i][4]} ({stat_display_list[i][5]})"]);
@@ -206,7 +206,7 @@ function scr_draw_unit_stat_data(manage=false){
 	draw_set_valign(fa_top);
 	draw_set_color(#50a076);
 
-		if (!obj_controller.view_squad && obj_controller.managing >0 && obj_controller.unit_text){
+		if (!obj_controller.view_squad && obj_controller.managing >0 && obj_controller.unit_bio){
 			var unit_data_string = unit_profile_text();
 			tooltip_draw(unit_data_string, 925, [xx+23,yy+141],,,,,true);
 		}

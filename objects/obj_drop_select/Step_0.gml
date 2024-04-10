@@ -42,7 +42,7 @@ if (refresh_raid!=0){
                     else if (unit.role()=obj_ini.role[100][4]) { terminators+=1;}
                     else if (unit.role()=obj_ini.role[100][5]) { capts+=1;}
                     
-                    else if (unit.IsSpecialist("chaps") and (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands")){
+                    else if (unit.IsSpecialist("chap") and (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands")){
                         chaplains++;
                     }else if (unit.IsSpecialist("apoth")){
                         apothecaries++;

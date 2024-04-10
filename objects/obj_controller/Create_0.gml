@@ -418,6 +418,7 @@ tooltip_other="";
 
 // ** For weapon display in management **
 unit_profile=false;
+unit_bio=false;
 view_squad=false;
 company_report=false;
 company_data = {};

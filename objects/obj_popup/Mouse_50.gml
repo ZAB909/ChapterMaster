@@ -124,7 +124,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
 
         // The MAHREENS and TARGET/FROM seems to check out
         var unit, move_squad, move_members, moveable, squad;
-        for (w=0;w<500;w++){
+        for (w=0;w<array_length(display_unit);w++){
             if (obj_controller.man_sel[w]==1){
                 if (obj_controller.man[w]=="man"&&is_struct(obj_controller.display_unit[w])){
                     moveable=true;
@@ -134,7 +134,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
                         squad = obj_ini.squads[move_squad];
                         move_members = squad.members;
                         for (var mem = 0;mem<array_length(move_members);mem++){//check all members have been selected and are in the same company
-                            if (w+mem<500){
+                            if (w+mem<array_length(display_unit)){
                                 if (!is_struct(obj_controller.display_unit[w+mem])) then continue;
                                 if (obj_controller.man_sel[w+mem]!=1 || obj_controller.display_unit[w+mem].squad != move_squad){
                                     moveable = false;
@@ -225,26 +225,9 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
             var i=-1;man_size=0;selecting_location="";selecting_types="";selecting_ship=0;
             
             if (obj_controller.managing>0){
+                reset_manage_arrays();
                 repeat(501){w+=1;
-                    man[w]="";
-                    ide[w]=0;
-                    man_sel[w]=0;
-                    ma_lid[w]=0;
-                    ma_wid[w]=0;
-                    ma_god[w]=0;
-                    ma_bio[w]=0;
-                    ma_race[w]=0;
-                    ma_loc[w]="";
-                    ma_name[w]="";
-                    ma_role[w]="";
-                    ma_wep1[w]="";
-                    display_unit[w]="";
-                    ma_wep2[w]="";
-                    ma_armour[w]="";
-                    ma_health[w]=100;
-                    ma_chaos[w]=0;
-                    ma_exp[w]=0;
-                    ma_promote[w]=0;
+                    
                     sh_ide[w]=0;
                     sh_name[w]="";
                     sh_class[w]="";
@@ -321,7 +304,7 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
         }
 
         if ((befi!=target_comp) and (vehicle_equipment!=-1)) or (change_tab=1){
-            var i;i=0;repeat(40){i+=1;item_name[i]="";}
+            var i;i=-1;repeat(40){i+=1;item_name[i]="";}
 
             scr_weapons_equip();
 
@@ -396,8 +379,8 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
 
     if (target_comp=1) and (n_wep1!="Assortment") and (n_wep1!="(None)"){// Check numbers
         req_wep1_num=units;have_wep1_num=0;
-        var i;i=0;
-        repeat(obj_controller.man_max){i+=1;
+        var i;i=-1;
+        repeat(array_length(obj_controller.display_unit)){i+=1;
             if (vehicle_equipment!=-1) and (obj_controller.ma_wep1[i]=n_wep1) then have_wep1_num+=1;
         }
         // req_wep1_num+=scr_item_count(n_wep1);
@@ -408,7 +391,7 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
         if (have_wep1_num<req_wep1_num){n_good1=0;warning="Not enough "+string(n_wep1)+"; "+string(req_wep1_num-have_wep1_num)+" more are required.";}
         if (n_wep1="Thunder Hammer"){
             var g,exp_check;g=0;exp_check=0;
-            repeat(obj_controller.man_max){
+            repeat(array_length(obj_controller.display_unit)){
                 g+=1;if (obj_controller.man_sel[g]=1) and (obj_controller.ma_exp[g]<140) then exp_check=1;
             }
             if (exp_check=1){n_good1=0;warning="A unit must have 140+ EXP to use a Thunder Hammer.";}
@@ -418,8 +401,8 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
     }
     if (target_comp=2) and (n_wep2!="Assortment") and (n_wep2!="(None)"){// Check numbers
         req_wep2_num=units;have_wep2_num=0;
-        var i;i=0;
-        repeat(obj_controller.man_max){i+=1;
+        var i;i=-1;
+        repeat(array_length(obj_controller.display_unit)){i+=1;
             if (vehicle_equipment!=-1) and (obj_controller.ma_wep2[i]=n_wep2) then have_wep2_num+=1;
         }
         // req_wep2_num+=scr_item_count(n_wep2);
@@ -430,7 +413,7 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
         if (have_wep2_num<req_wep2_num){n_good2=0;warning="Not enough "+string(n_wep2)+"; "+string(req_wep2_num-have_wep2_num)+" more are required.";}
         if (n_wep2="Thunder Hammer"){
             var g=0,exp_check=0;
-            repeat(obj_controller.man_max){
+            repeat(array_length(obj_controller.display_unit)){
                 g+=1;if (obj_controller.man_sel[g]=1) and (obj_controller.ma_exp[g]<140) then exp_check=1;
             }
             if (exp_check=1){n_good2=0;warning="A unit must have 140+ EXP to use a Thunder Hammer.";}
@@ -442,8 +425,8 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
     }
     if (target_comp=3) and (n_armour!="Assortment") and (n_armour!="(None)"){// Check numbers
         req_armour_num=units;have_armour_num=0;
-        var i;i=0;
-        repeat(obj_controller.man_max){i+=1;
+        var i;i=-1;
+        repeat(array_length(obj_controller.display_unit)){i+=1;
             if (vehicle_equipment!=-1) and (obj_controller.man_sel[i]=1) and (obj_controller.ma_armour[i]=n_armour) then have_armour_num+=1;
         }
         have_armour_num+=scr_item_count(n_armour);
@@ -455,7 +438,7 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
         }
 
         var g,exp_check;g=0;exp_check=0;
-        if (n_armour="Terminator Armour") or (n_armour="Tartaros") then repeat(obj_controller.man_max){
+        if (n_armour="Terminator Armour") or (n_armour="Tartaros") then repeat(array_length(obj_controller.display_unit)){
             g+=1;
             if (obj_controller.man_sel[g]=1) and (obj_controller.ma_exp[g]<90) then exp_check=1;
         }
@@ -468,8 +451,8 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
     }
     if (target_comp=4) and (n_gear!="Assortment") and (n_gear!="(None)"){// Check numbers
         req_gear_num=units;have_gear_num=0;
-        var i;i=0;
-        repeat(obj_controller.man_max){i+=1;
+        var i;i=-1;
+        repeat(array_length(obj_controller.display_unit)){i+=1;
             if (vehicle_equipment!=-1) and (obj_controller.man_sel[i]=1) and (obj_controller.ma_gear[i]=n_gear) then have_gear_num+=1;
         }
         have_gear_num+=scr_item_count(n_gear);
@@ -483,8 +466,8 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
     }
     if (target_comp=5) and (n_mobi!="Assortment") and (n_mobi!="(None)"){// Check numbers
         req_mobi_num=units;have_mobi_num=0;
-        var i;i=0;
-        repeat(obj_controller.man_max){i+=1;
+        var i;i=-1;
+        repeat(array_length(obj_controller.display_unit)){i+=1;
             if (vehicle_equipment!=-1) and (obj_controller.man_sel[i]=1) and (obj_controller.ma_mobi[i]=n_mobi) then have_mobi_num+=1;
         }
         have_mobi_num+=scr_item_count(n_mobi);
@@ -512,14 +495,14 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
     if (type=5) and (cooldown<=0) and (all_good=1) and (target_comp>=0) and (role_name[target_role]!=""){
         cooldown=999;obj_controller.cooldown=8000;
 
-        var mahreens=0;i=0;
+        var mahreens=0;i=-1;
 
         if (target_comp>10) then target_comp=0;
         manag=obj_controller.managing;
         if (manag>10) then manag=0;
         var company=manag;
 
-        for(i=0;i<501;i++){
+        for(i=-1;i<501;i++){
             if (obj_ini.name[target_comp][i]=="" and obj_ini.name[target_comp][i+1]=="") {
                 mahreens=i;
                 break;
@@ -535,7 +518,7 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][3],"sternguard_veteran_squad");
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][4],"terminator_squad");
 
-        for(i=0;i<=obj_controller.man_max;i++){
+        for(i=-1;i<array_length(display_unit);i++){
             if (obj_controller.man[i]=="man") and (obj_controller.man_sel[i]==1) and (obj_controller.ma_exp[i]>=min_exp){
                 moveable=true;
                 unit = obj_controller.display_unit[i];
@@ -544,7 +527,7 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
                     squad = obj_ini.squads[move_squad];
                     move_members = squad.members;
                     for (var mem = 0;mem<array_length(move_members);mem++){//check all members have been selected and are in the same company
-                        if (i+mem<500){
+                        if (i+mem<array_length(display_unit)){
                             if (!is_struct(obj_controller.display_unit[i+mem])) then continue;
                             if (obj_controller.man_sel[i+mem]!=1 || obj_controller.display_unit[i+mem].squad != move_squad){
                                 moveable = false;
@@ -622,33 +605,7 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
             var man_size=0;selecting_location="";
             selecting_types="";
             selecting_ship=0;
-            for (var i=0;i<=500;i++){
-                man[i]="";
-                ide[i]=0;
-                man_sel[i]=0;
-                ma_lid[i]=0;
-                ma_wid[i]=0;
-                ma_god[i]=0;
-                ma_race[i]=0;
-                ma_loc[i]="";
-                ma_name[i]="";
-                ma_role[i]="";
-                ma_wep1[i]="";
-                display_unit[i]="";
-                ma_wep2[i]="";
-                ma_armour[i]="";
-                ma_health[i]=100;
-                ma_chaos[i]=0;
-                ma_exp[i]=0;
-                ma_promote[i]=0;
-                sh_ide[i]=0;
-                sh_name[i]="";
-                sh_class[i]="";
-                sh_loc[i]="";
-                sh_hp[i]="";
-                sh_cargo[i]=0;
-                sh_cargo_max[i]="";
-            }
+            reset_manage_arrays();
             alll=0;
             if (managing<=10) and (managing!=0) then scr_company_view(managing);
             if (managing>10) or (managing=0) then scr_special_view(managing);
@@ -689,7 +646,7 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
         if (n_mobi="(None)") then n_mobi="";
 
 
-        for (var i=1;i<=obj_controller.man_max;i++){
+        for (var i=1;i<array_length(display_unit);i++){
 
             var endcount=0;
 
@@ -798,17 +755,6 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                         }
                         // End mobility and accessory
 
-                        /*
-                        if (obj_controller.ma_wep1[i]="(None)") then obj_controller.ma_wep1[i]="";
-                        if (obj_controller.ma_wep2[i]="(None)") then obj_controller.ma_wep2[i]="";
-                        if (obj_controller.ma_armour[i]="(None)") then obj_controller.ma_armour[i]="";
-                        if (obj_controller.ma_gear[i]="(None)") then obj_controller.ma_gear[i]="";
-                        if (obj_controller.ma_mobi[i]="(None)") then obj_controller.ma_mobi[i]="";
-                        if (obj_ini.wep1[company][obj_controller.ide[i]]="(None)") then obj_ini.wep1[company][obj_controller.ide[i]]="";
-                        if (obj_ini.wep2[company][obj_controller.ide[i]]="(None)") then obj_ini.wep2[company][obj_controller.ide[i]]="";
-                        if (obj_ini.armour[company][obj_controller.ide[i]]="(None)") then obj_ini.armour[company][obj_controller.ide[i]]="";
-                        if (obj_ini.gear[company][obj_controller.ide[i]]="(None)") then obj_ini.gear[company][obj_controller.ide[i]]="";
-                        */
                     }
                 }
 
@@ -838,7 +784,7 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
         inq_hide=0;
         if (type=9){
             if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display], "inq")){
-                var i=0;
+                var i=-1;
                 repeat(10){
                     i+=1;
                     if (obj_controller.quest[i]="artifact_loan") then inq_hide=1;
@@ -1064,10 +1010,10 @@ if (type=8) and (cooldown<=0){
             if (obj_popup.target_comp>0) then scr_company_view(obj_popup.target_comp);
             if (obj_popup.target_comp=0) then scr_special_view(0);
         }
-        var i;i=0;
-        repeat(obj_controller.man_max){i+=1;
+        var i;i=-1;
+        repeat(array_length(obj_controller.display_unit)){i+=1;
             obj_controller.man_sel[i]=0;
-        }i=0;
+        }i=-1;
     }
 
 
@@ -1076,7 +1022,7 @@ if (type=8) and (cooldown<=0){
         var top,sel,temp1,temp2,temp3,temp4,temp5;temp1="";temp2="";temp3="";temp4="";temp5="";
         top=obj_controller.man_current;var stop;stop=0;sel=top;
 
-        repeat(min(obj_controller.man_max,23)){
+        repeat(min(array_length(obj_controller.display_unit),23)){
             if (mouse_x>=xx+29) and (mouse_y>=yy+150) and (mouse_x<xx+569) and (mouse_y<yy+175.4){
                 var onceh;onceh=0;stop=0;
                 if (obj_controller.man_sel[sel]=0) and (onceh=0){cooldown=8000;units=1;
@@ -1093,8 +1039,8 @@ if (type=8) and (cooldown<=0){
             yy+=25.4;sel+=1;
         }
 
-        if (stop!=0){var i;i=0;
-            repeat(obj_controller.man_max){i+=1;
+        if (stop!=0){var i;i=-1;
+            repeat(array_length(obj_controller.display_unit)){i+=1;
                 if (i!=stop) then obj_controller.man_sel[i]=0;
             }
         }

@@ -203,7 +203,7 @@ function scr_ui_manage() {
 		                selections = [];
 		                var forge = selection_data.feature.feature;
 		                forge.techs_working = 0;
-		                for (var i=0; i<500;i++){
+		                for (var i=0; i<array_length(display_unit);i++){
 		                	if (ma_name[i]== "") then continue;
 		                	if (man_sel[i]>0){
 		                		switch(selection_data.purpose_code){
@@ -310,8 +310,9 @@ function scr_ui_manage() {
 				draw_rectangle(x5, y5, x6, y6, 0);
 				draw_set_alpha(1);
 			}
-
-		    if (!obj_controller.unit_profile || obj_controller.view_squad){
+			var button_coords;
+			var no_other_instances =  !instance_exists(obj_temp3) && !instance_exists(obj_popup);
+		    if (!unit_profile || view_squad){
 			    stat_tool_tip_text = "Show Profile";
 			} else {
 				stat_tool_tip_text = "Hide Profile"; 
@@ -320,14 +321,28 @@ function scr_ui_manage() {
 			x6=x5+string_width("Show Profile")+8;
 		    draw_unit_buttons([x5, y5, x6, y6], stat_tool_tip_text,[1,1],#50a076);
 		    array_push(tooltip_drawing, ["Click here or press P to show unit profile.", [x5,y5,x6,y6]]);
-			if (((keyboard_check_pressed(ord("P"))&& !text_bar)|| (point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left))) && !instance_exists(obj_temp3) && !instance_exists(obj_popup)){
+		    button_coords = draw_unit_buttons([x5, y5, x6, y6], stat_tool_tip_text,[1,1],#50a076)
+			if (((keyboard_check_pressed(ord("P"))&& !text_bar)|| (point_and_click(button_coords))) && no_other_instances){
 				if (view_squad){
-					view_squad =false;
+					view_squad = false;
 				}else {
-					obj_controller.unit_profile = !obj_controller.unit_profile;
+					unit_profile = !unit_profile;
 				}
 			}
-			x5=x6+4;
+		    x5=x6+4;
+
+		    if (!unit_profile){
+		    	unit_bio = false;
+		    }
+			stat_tool_tip_text="Unit Bio"
+			x6=x5+string_width("stat_tool_tip_text")+8;
+			button_coords = draw_unit_buttons([x5, y5, x6, y6], stat_tool_tip_text,[1,1],#50a076,,,unit_profile ? 1:0.5);
+		    array_push(tooltip_drawing, ["Click here or press B to Toggle unit Biography.", button_coords]);
+			if (((keyboard_check_pressed(ord("B"))&& !text_bar)|| (point_and_click(button_coords))) && no_other_instances && unit_profile){
+				unit_bio = !unit_bio;
+			}
+
+
 			if (managing<0 && selection_data.purpose_code!="manage") then unit_profile=true;
 			//TODO Implement company report
 			/*var x6=x5+string_width(stat_tool_tip_text)+4;
@@ -357,8 +372,8 @@ function scr_ui_manage() {
 					var cur_squad = company_data.grab_current_squad();
 					var sgt_possible = cur_squad.type!="command_squad" && !selected_unit.IsSpecialist("squad_leaders");
 					if (selected_unit != cur_squad.squad_leader){
-						if (point_and_click(draw_unit_buttons([xx+1208+260,yy+210], "Make Sgt", [1,1],#50a076,,,sgt_possible?1:0.5)) && sgt_possible){
-
+						if (point_and_click(draw_unit_buttons([xx+1208+50,yy+210+260], "Make Sgt", [1,1],#50a076,,,sgt_possible?1:0.5)) && sgt_possible){
+							cur_squad.change_sgt([selected_unit.company, selected_unit.marine_number]);
 						}
 					}
 				}
@@ -731,8 +746,8 @@ function scr_ui_manage() {
 	            }
 	        }*/	    	
 		    for(var i=0; i<repetitions;i++){
-		    	if (sel==500) then break;
-		    	while (man[sel]=="hide") and (sel<499){sel+=1;}
+		    	if (sel>=array_length(display_unit)) then break;
+		    	while (man[sel]=="hide") and (sel<array_length(display_unit)-1){sel+=1;}
 		    	if (scr_draw_management_unit(sel, yy, xx) == "continue"){
 		    		sel++
 		    		i--;
@@ -751,13 +766,12 @@ function scr_ui_manage() {
 
 		        yy+=20;
 		        sel+=1;
-		        if (man[sel] == ""){break;}
 		    }
 		    if (sel_all!="" || squad_sel_count>0){
 		    	for(var i=0; i<top;i++){
 		    		scr_draw_management_unit(i, yy, xx, false);
 		    	}
-		    	for(var i=sel; i<500;i++){
+		    	for(var i=sel; i<array_length(display_unit);i++){
 		    		scr_draw_management_unit(i, yy, xx, false);
 		    	}		    	
 		    }
@@ -878,7 +892,7 @@ function scr_ui_manage() {
 		                    pip.company=managing;
 
 		                    var god=0,nuuum=0;
-		                    for(var f=0; f<=man_max; f++){
+		                    for(var f=0; f<array_length(display_unit); f++){
 		                        if ((ma_promote[f]>=1 || is_specialist(ma_role[f], "rank_and_file")  || is_specialist(ma_role[f], "squad_leaders")) && man_sel[f]==1){
 		                            nuuum+=1;
 		                            if (pip.min_exp==0) then pip.min_exp=ma_exp[f];
