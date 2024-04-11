@@ -260,7 +260,7 @@ function  hover_box() constructor{
 	relative_y=0;
 	location = [0,0,0,0];
 	static draw = function(xx, yy, button_text){
-		location = draw_unit_buttons([xx+relative_x, yy+relative_y], button_text,[1,1], c_green,fa_left, fnt_40k_14b, 1);
+		location = draw_unit_buttons([xx+relative_x, yy+relative_y], button_text,[1,1], c_green,, fnt_40k_14b, 1);
 		return location;
 	}
 }

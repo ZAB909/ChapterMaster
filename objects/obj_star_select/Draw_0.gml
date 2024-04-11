@@ -489,7 +489,7 @@ if (obj_controller.selecting_planet!=0){
         for (i=0; i< array_length(planet_displays); i++){
             button_colour = c_green;
             if (planet_displays[i][0] == "????") then button_colour = c_red;
-            button_size = draw_unit_buttons([xx+535,yy+346+y_move], planet_displays[i][0],[1,1], button_colour,fa_left, fnt_40k_14b, 1);
+            button_size = draw_unit_buttons([xx+535,yy+346+y_move], planet_displays[i][0],[1,1], button_colour,, fnt_40k_14b, 1);
             y_move += button_size[3]-button_size[1];
             if (point_in_rectangle(mouse_x, mouse_y, button_size[0], button_size[1],button_size[2],button_size[3]) && (mouse_check_button_pressed(mb_left))){
                 if (planet_displays[i][0] != "????"){
