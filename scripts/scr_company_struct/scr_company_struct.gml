@@ -131,7 +131,6 @@ function scr_company_struct(comp) constructor{
 				if (send_on_mission){
 					with (obj_star){
 						if (name == squad_loc.system){
-							obj_controller.cooldown=8000;
 							var unload_squad=instance_create(x,y,obj_star_select);
 							unload_squad.target=self;
 							unload_squad.loading=1;
