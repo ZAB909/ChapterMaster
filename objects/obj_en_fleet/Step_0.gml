@@ -9,7 +9,7 @@ if (action!="") and (orbiting!=0){
         } else {
             orbiting = instance_nearest(x, y , obj_star);
             var cur_owner_fleet = orbiting.present_fleet[owner];
-            orbiting.present_fleet[owner] = cur_owner_fleet> 0? cur_owner_fleet-=1 : cur_owner_fleet=0;
+            orbiting.present_fleet[owner] = cur_owner_fleet> 0? cur_owner_fleet=cur_owner_fleet-1 : cur_owner_fleet=0;
             orbiting=0;
         }
     }
