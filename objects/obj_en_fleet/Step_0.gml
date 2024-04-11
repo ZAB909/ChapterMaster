@@ -5,9 +5,11 @@ if (action!="") and (orbiting!=0){
     if (instance_exists(orbiting)){
         if (variable_instance_exists(orbiting, "present_fleet")){
                 orbiting.present_fleet[owner]-=1;
+                orbiting=0;
         } else {
             orbiting = instance_nearest(x, y , obj_star);
-            orbiting.present_fleet[owner]-=1;
+            var cur_owner_fleet = orbiting.present_fleet[owner];
+            orbiting.present_fleet[owner] = cur_owner_fleet> 0? cur_owner_fleet-=1 : cur_owner_fleet=0;
             orbiting=0;
         }
     }

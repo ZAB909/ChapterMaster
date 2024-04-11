@@ -1,5 +1,6 @@
 function role_groups(group){
 	var role_list = [];
+	var roles = obj_ini.role[100];
 	switch (group){
 		case "lib":
 			role_list = [
@@ -75,7 +76,18 @@ function role_groups(group){
 				"Forge Master",
 				"Techpriest"
 			];
-			break;	
+			break;
+		case "captain_candidates":
+			role_list = [
+				roles[Role.SERGEANT], //sergeant
+				roles[Role.VETERAN_SERGEANT],
+				roles[Role.COMPANY_CHAMPION],				
+				roles[Role.CAPTAIN],								
+				roles[Role.TERMINATOR],				
+				roles[Role.VETERAN],
+				 "Standard Bearer",			
+			];
+			break;
 	}
 	return role_list;
 }
@@ -164,6 +176,9 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 		case "veterans":
 			specialists = role_groups("veterans");
 			break;
+		case "captain_candidates":
+			specialists = role_groups("captain_candidates");
+			break;			
 	}
 
 	return array_contains(specialists,unit_role);
@@ -172,7 +187,7 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 function collect_role_group(group, location=""){
 	var units = [], unit, count=0, add=false;
 	for (var com=0;com<=10;com++){
-	    for (i=1;i<array_length(obj_ini.TTRPG[com]);i++){
+	    for (i=0;i<array_length(obj_ini.TTRPG[com]);i++){
 	    	add=false;
 			unit=fetch_unit([com,i]);
 			if (unit.name()=="")then continue; 	
@@ -251,7 +266,8 @@ function group_selection(group, selection_data){
             unload=0;
             alarm[6]=7;
             company_data={};
-            view_squad=false; 
+            view_squad=false;
+            managing =-1; 
             var vehicles = [];
             for (var i = 0; i< array_length(group);i++){
             	if (!is_struct(group[i])){
@@ -282,7 +298,6 @@ function group_selection(group, selection_data){
         	}
         }
         other_manage_data();
-        managing =-1;
         man_current=0;
         man_max=array_length(display_unit)+2;
         man_see=38-4;

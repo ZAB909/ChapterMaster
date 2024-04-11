@@ -620,7 +620,7 @@ if (instance_number(obj_temp_inq)<target_navy_number) {
 					]
 				
 					var enemy_fleet_count = array_reduce(enemy_fleets, function(prev, curr) {
-						return present_fleet[prev] + present_fleet[curr]
+						return prev + present_fleet[curr]
 					})
 		            if (enemy_fleet_count == 0){
 		                good=true;

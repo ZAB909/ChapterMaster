@@ -435,6 +435,9 @@ function scr_draw_management_unit(selected, yy=0, xx=0, draw=true){
             temp[120] = unit; // unit_struct
 	        draw_set_color(38144);
 	        draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);               
-        } 	
+        }
+        if (man_sel[selected]){
+        	man_count++;
+        }
     }
 }

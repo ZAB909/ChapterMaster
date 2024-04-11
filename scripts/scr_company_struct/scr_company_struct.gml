@@ -19,9 +19,15 @@ function scr_company_struct(comp) constructor{
 	drop_down_open=false;
 	captain = "none";
 	if (company>0 && company<11){
-		var cap = scr_role_count(obj_ini.role[100][Role.CAPTAIN], company, "unit");
-		if (array_length(cap)>0){
-			captain = cap[0];
+		var unit;
+		var company_units = obj_controller.display_unit;
+		for (var i=0;i<array_length(company_units);i++){
+			if (is_struct(company_units[i])){
+				unit = company_units[i];
+				if (unit.role() == obj_ini.role[100][Role.CAPTAIN]){
+					captain = unit;
+				}
+			}
 		}
 	}
 	static grab_current_squad = function(){

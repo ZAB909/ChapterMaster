@@ -462,6 +462,7 @@ ship_max=0;
 ship_see=0;
 man_sel[0]=0;
 man_size=0;
+man_count = 0;
 squad_sel_action=-1;
 squad_sel_count=0;
 squad_sel=-1

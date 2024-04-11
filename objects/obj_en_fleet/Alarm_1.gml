@@ -288,16 +288,18 @@ if ((trade_goods="BLOODBLOODBLOOD") or (trade_goods="BLOODBLOODBLOODBLOOD")) and
     }
 }
 
-var orbiting_found=instance_exists(orbiting);
-if (orbiting_found){
-    orbiting_found = variable_instance_exists(orbiting, "present_fleet");
+if (orbiting != 0 && action==""){
+    var orbiting_found=instance_exists(orbiting);
     if (orbiting_found){
-        orbiting.present_fleet[owner]+=1;
+        orbiting_found = variable_instance_exists(orbiting, "present_fleet");
+        if (orbiting_found){
+            orbiting.present_fleet[owner]+=1;
+        }
+    } 
+    if (!orbiting_found) {
+    	orbiting = instance_nearest(x,y,obj_star);
+    	orbiting.present_fleet[owner]++;
     }
-} 
-if (!orbiting_found) {
-	orbiting = instance_nearest(x,y,obj_star);
-	orbiting.present_fleet[owner]++;
 }
 
 if (orbiting != noone) {
