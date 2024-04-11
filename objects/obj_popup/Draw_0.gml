@@ -507,11 +507,11 @@ if (type=8) and (instance_exists(obj_controller)){
         if point_and_click([x2+430, y2+393,x2+518,y2+414]){
             obj_controller.cooldown=8000;
 
-            var i=0,this=0,dwarn=false,unit;
+            var i=-1,this=0,dwarn=false,unit;
             var arti_index = obj_controller.menu_artifact;
             var arti = obj_ini.artifact_struct[arti_index];
             var arti_base = arti.type();
-            repeat(obj_controller.man_max){
+            repeat(obj_controller.man_max-2){
                 i+=1;
                 if (this=0) and (obj_controller.man_sel[i]=1) then this=i;
             }
