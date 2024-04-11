@@ -668,31 +668,34 @@ if (menu==0) and (repair_ships>0) and (instance_number(obj_turn_end)==0) and (in
 // Unloads units from a ship
 if (unload>0){
     cooldown=8;
-    var b=selecting_ship,manaj=managing;
+    var b=selecting_ship;
     
-    if (manaj>10) then manaj=0;
-    var unit;
-    for(var q=1; q<array_length(display_unit); q++){
+    var unit,company, unit_id;
+    for(var q=0; q<array_length(display_unit); q++){
         if (man[q]=="man") and (ma_loc[q]==selecting_location) and (ma_wid[q]<1)and (man_sel[q]!=0){
             if (b==0) then b=ma_lid[q];
             unit=display_unit[q];
             if (!is_struct(unit)) then continue;
             if (unit.name()=="") then continue;
-            obj_ini.loc[manaj][ide[q]]=obj_ini.ship_location[b];
+            unit_id = unit.marine_number;
+            company = unit.company;
+            obj_ini.loc[company][unit_id]=obj_ini.ship_location[b];
             unit.ship_location=0;
             unit.planet_location=unload;
-            obj_ini.uid[manaj][ide[q]]=0;
+            obj_ini.uid[company][unit_id]=0;
             
             ma_loc[q]=obj_ini.ship_location[b];
             ma_lid[q]=0;
             ma_wid[q]=unload;
         }
-        if (man[q]=="vehicle") and (ma_loc[q]==selecting_location)  and (ma_wid[q]<1) and(man_sel[q]!=0){
+        else if (man[q]=="vehicle") and (ma_loc[q]==selecting_location)  and (ma_wid[q]<1) and(man_sel[q]!=0){
             if (b==0) then b=ma_lid[q];
-            obj_ini.veh_loc[manaj][ide[q]]=obj_ini.ship_location[b];
-            obj_ini.veh_lid[manaj][ide[q]]=0;
-            obj_ini.veh_wid[manaj][ide[q]]=unload;
-            obj_ini.veh_uid[manaj][ide[q]]=0;
+            var unit_id = display_unit[q][1];
+            var company = display_unit[q][0]
+            obj_ini.veh_loc[company][unit_id]=obj_ini.ship_location[b];
+            obj_ini.veh_lid[company][unit_id]=0;
+            obj_ini.veh_wid[company][unit_id]=unload;
+            obj_ini.veh_uid[company][unit_id]=0;
             
             ma_loc[q]=obj_ini.ship_location[b];
             ma_lid[q]=0;

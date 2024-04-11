@@ -797,7 +797,7 @@ global.weapons={
         "range": 14,
         "spli": 1,
         "arp": 1,
-        "tags":["plasma", "heavy_weapon", "Dreadnought"]
+        "tags":["plasma", "heavy_weapon", "dreadnought"]
     },
     "Sniper Rifle": {
         "abbreviation": "SnprRfl",        

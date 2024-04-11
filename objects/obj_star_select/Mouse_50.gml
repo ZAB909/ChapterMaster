@@ -133,11 +133,9 @@ if (obj_controller.cooldown<=0) and (loading=1){
         // 135 ; SPECIAL PLANET CRAP HERE
         
         // Recon Stuff
-        var recon;recon=0;
-        if (target.p_problem[obj_controller.selecting_planet,1]="recon") then recon=1;
-        if (target.p_problem[obj_controller.selecting_planet,2]="recon") then recon=1;
-        if (target.p_problem[obj_controller.selecting_planet,3]=="recon") then recon=1;
-        if (target.p_problem[obj_controller.selecting_planet,4]=="recon") then recon=1;
+        var recon=0;
+        if (array_contains(target.p_problem[obj_controller.selecting_planet], "recon")) then recon=1;
+
         if (recon==1){
             var arti=instance_create(target.x,target.y,obj_temp7);// Unloading / artifact crap
             arti.num=obj_controller.selecting_planet;
@@ -148,41 +146,30 @@ if (obj_controller.cooldown<=0) and (loading=1){
             // Right here should pass the man_sel variables
             // var i;i=-1;repeat(150){i+=1;arti.man_sel[i]=obj_controller.man_sel[i];}
             var i=-1;
-            repeat(150){i+=1;
-                arti.man_sel[i]=0;arti.ide[i]=0;arti.man[i]="";
-                if (obj_controller.man_sel[i]!=0){
-                    arti.man_sel[i]=obj_controller.ma_lid[i];
-                    arti.ide[i]=obj_controller.ide[i];
-                    arti.man[i]=obj_controller.man[i];
-                }
+            with (arti){
+                setup_planet_mission_group()
             }
         }
         
         // Artifact Grab
         if (planet_feature_bool(target.p_feature[obj_controller.selecting_planet], P_features.Artifact) == 1) and (recon=0){
 	
-            var arti;arti=instance_create(target.x,target.y,obj_temp4);// Unloading / artifact crap
-            arti.num=obj_controller.selecting_planet;arti.alarm[0]=1;
+            var arti=instance_create(target.x,target.y,obj_temp4);// Unloading / artifact crap
+            arti.num=obj_controller.selecting_planet;
+            arti.alarm[0]=1;
             arti.loc=obj_controller.selecting_location;
             arti.managing=obj_controller.managing;
-            // Right here should pass the man_sel variables
-            // var i;i=-1;repeat(150){i+=1;arti.man_sel[i]=obj_controller.man_sel[i];}
-            var i;i=-1;
-            repeat(150){i+=1;
-                arti.man_sel[i]=0;arti.ide[i]=0;arti.man[i]="";
-                if (obj_controller.man_sel[i]!=0){
-                    arti.man_sel[i]=obj_controller.ma_lid[i];
-                    arti.ide[i]=obj_controller.ide[i];
-                    arti.man[i]=obj_controller.man[i];
-                }
+
+            with (arti){
+                setup_planet_mission_group()
             }
         }
         
         // STC Grab
         if (planet_feature_bool(target.p_feature[obj_controller.selecting_planet], P_features.STC_Fragment) == 1) and (recon=0){
             var i,tch,mch;i=0;tch=0;mch=0;
-            repeat(300){i+=1;
-                if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1){
+            for (var i=0;i<array_length(obj_controller.display_unit);i++){
+                if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]==1){
                     if (obj_controller.ma_role[i]=obj_ini.role[100][16]) or ((obj_controller.ma_role[i]="Forge Master")){
                         tch+=1;
                     }
@@ -193,20 +180,16 @@ if (obj_controller.cooldown<=0) and (loading=1){
             }
             if (tch+mch>0){
                 var arti;arti=instance_create(target.x,target.y,obj_temp4);// Unloading / artifact crap
-                arti.num=obj_controller.selecting_planet;arti.alarm[0]=1;
+                arti.num=obj_controller.selecting_planet;
+                arti.alarm[0]=1;
                 arti.loc=obj_controller.selecting_location;
                 arti.managing=obj_controller.managing;
-                arti.tch=tch;arti.mch=mch;
+                arti.tch=tch;
+                arti.mch=mch;
                 // Right here should pass the man_sel variables
                 // var i;i=-1;repeat(150){i+=1;arti.man_sel[i]=obj_controller.man_sel[i];}
-                var i;i=-1;
-                repeat(150){i+=1;
-                    arti.man_sel[i]=0;arti.ide[i]=0;arti.man[i]="";
-                    if (obj_controller.man_sel[i]!=0){
-                        arti.man_sel[i]=obj_controller.ma_lid[i];
-                        arti.ide[i]=obj_controller.ide[i];
-                        arti.man[i]=obj_controller.man[i];
-                    }
+                with (arti){
+                    setup_planet_mission_group();
                 }
             }
         }
@@ -226,47 +209,45 @@ if (obj_controller.cooldown<=0) and (loading=1){
 				obj_controller.current_planet_feature =_explore_ruins;
 				obj_controller.current_planet_feature.star = target;
 				obj_controller.current_planet_feature.planet = obj_controller.selecting_planet;
-            var pip,arti;pip=instance_create(0,0,obj_popup);pip.title="Ancient Ruins";
-			var ruins_size =obj_controller.current_planet_feature.ruins_size
-            
-            var nu;nu=string(target.name);
-            if (obj_controller.selecting_planet=1) then nu+=" I";if (obj_controller.selecting_planet=2) then nu+=" II";
-            if (obj_controller.selecting_planet=3) then nu+=" III";if (obj_controller.selecting_planet=4) then nu+=" IV";
-			 if(_explore_ruins.failed_exploration ==1){ pip.text="The accursed ruins on "+string(nu)+"where your brothers fell still holds many secrets including the remains of your brothers honour demands you avenge them."}else{
-				 pip.text="Located upon "+string(nu)+$" is a {ruins_size} expanse of ancient ruins, dating back to times long since forgotten.  Locals are superstitious about the place- as a result the ruins are hardly explored.  What they might contain, and any potential threats, are unknown.";
-				switch (ruins_size){
-					case "tiny":pip.text += "It's tiny nature means no more than five marines can operate in cohesion without being seperated";
-					break;
-					case "small":pip.text += "As a result of it's narrow corridors and tight spaces a squad of any more than 15 would struggle to operate effectivly";
-					break;
-					case "medium":pip.text += "Half a standard company (55) could easily operate effectivly in the many wide spaces and caverns";
-					break;
-					case "large":pip.text += "A whole company (110) would not be confined in the huge spaces that such a ruin contain";
-					break;
-					case "sprawling":pip.text += "The ruins is of an unprecidented size whole legions of old would not feel uncomfortable in such a space"
-					break;
-				}
-				pip.text += ". What is thy will?"
-			}
-            pip.option1="Explore the ruins.";pip.option2="Do nothing.";pip.option3="Return your marines to the ship.";pip.image="ancient_ruins";
-            
-            arti=instance_create(target.x,target.y,obj_temp4);
-            arti.num=obj_controller.selecting_planet;arti.alarm[0]=1;
-            arti.loc=obj_controller.selecting_location;
-            arti.battle_loc=target.name;
-            arti.manag=obj_controller.managing;
-            arti.obj=target;
-            var i;i=-1;
-            repeat(150){i+=1;
-                arti.man_sel[i]=0;arti.ide[i]=0;arti.man[i]="";
-                if (obj_controller.man_sel[i]!=0){
-                    arti.man_sel[i]=obj_controller.ma_lid[i];
-                    arti.ide[i]=obj_controller.ide[i];
-                    arti.man[i]=obj_controller.man[i];
+                var arti;
+                var pip=instance_create(0,0,obj_popup);
+                pip.title="Ancient Ruins";
+    			var ruins_size =obj_controller.current_planet_feature.ruins_size
+                
+                var nu=string(target.name);
+                if (obj_controller.selecting_planet=1) then nu+=" I";if (obj_controller.selecting_planet=2) then nu+=" II";
+                if (obj_controller.selecting_planet=3) then nu+=" III";if (obj_controller.selecting_planet=4) then nu+=" IV";
+    			 if(_explore_ruins.failed_exploration ==1){ pip.text="The accursed ruins on "+string(nu)+"where your brothers fell still holds many secrets including the remains of your brothers honour demands you avenge them."}else{
+    				 pip.text="Located upon "+string(nu)+$" is a {ruins_size} expanse of ancient ruins, dating back to times long since forgotten.  Locals are superstitious about the place- as a result the ruins are hardly explored.  What they might contain, and any potential threats, are unknown.";
+    				switch (ruins_size){
+    					case "tiny":pip.text += "It's tiny nature means no more than five marines can operate in cohesion without being seperated";
+    					break;
+    					case "small":pip.text += "As a result of it's narrow corridors and tight spaces a squad of any more than 15 would struggle to operate effectivly";
+    					break;
+    					case "medium":pip.text += "Half a standard company (55) could easily operate effectivly in the many wide spaces and caverns";
+    					break;
+    					case "large":pip.text += "A whole company (110) would not be confined in the huge spaces that such a ruin contain";
+    					break;
+    					case "sprawling":pip.text += "The ruins is of an unprecidented size whole legions of old would not feel uncomfortable in such a space"
+    					break;
+    				}
+    				pip.text += ". What is thy will?"
+    			}
+                pip.option1="Explore the ruins.";pip.option2="Do nothing.";pip.option3="Return your marines to the ship.";pip.image="ancient_ruins";
+                
+                arti=instance_create(target.x,target.y,obj_temp4);
+                arti.num=obj_controller.selecting_planet;arti.alarm[0]=1;
+                arti.loc=obj_controller.selecting_location;
+                arti.battle_loc=target.name;
+                arti.manag=obj_controller.managing;
+                arti.obj=target;
+
+                with (arti){
+                    setup_planet_mission_group();
                 }
-            }
-            arti.ship_id=obj_controller.ma_lid[1];
-			obj_controller.current_planet_feature.battle = arti;
+
+                arti.ship_id=obj_controller.ma_lid[1];
+    			obj_controller.current_planet_feature.battle = arti;
 			}
         }
         

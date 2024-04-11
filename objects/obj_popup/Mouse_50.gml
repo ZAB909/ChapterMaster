@@ -616,17 +616,6 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
 
 if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<yy+520){// Equipment
 
-    var w=0;
-    var company = obj_controller.managing<=10 ? obj_controller.managing :0;
-    if (company>10) then company=0;
-    if (obj_controller.managing>-1){
-        for(var w=0;w<500;w++){ // Gets the number of marines in the selected company
-            if (obj_ini.name[company,w]=="") and (obj_ini.name[company,w+1]==""){
-                infantrycount=w;
-                break;
-            }
-        }
-    }
     if (type=6) and (cooldown<=0) and (n_good1+n_good2+n_good3+n_good4+n_good5=5){
         cooldown=999;obj_controller.cooldown=8;
 
@@ -655,23 +644,17 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                 } else if (is_array(unit)){
 
                     // NOPE
-                    if (managing>-1){
                         if (check=0) and (n_armour!=obj_controller.ma_armour[i]) and (n_armour!="Assortment") and (vehicle_equipment!=1) and (vehicle_equipment!=6){ //vehicle wep3
                             if (obj_controller.ma_armour[i]!="") then scr_add_item(obj_controller.ma_armour[i],1);
                             obj_controller.ma_armour[i]="";
-                            obj_ini.veh_wep3[company,i-infantrycount+1]="";
+                            obj_ini.veh_wep3[unit[0],unit[1]]="";
 
                             if (n_armour!="(None") and (n_armour!=""){
                                 obj_controller.ma_armour[i]=n_armour;
-                                obj_ini.veh_wep3[company,i-infantrycount+1]=n_armour;
+                                obj_ini.veh_wep3[unit[0],unit[1]]=n_armour;
                                 if (n_armour!="") then scr_add_item(n_armour,-1);
                             }
                         }
-                        // End swap armour and wep3
-
-
-                        // if (n_wep1=n_wep2) and (
-
                         check=0;
                         if (n_wep1=obj_controller.ma_wep1[i]) or (n_wep1="Assortment") then check=1;
 
@@ -680,12 +663,12 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                                 if (obj_controller.ma_wep1[i]!="") and (obj_controller.ma_wep1[i]!=n_wep1){
                                     scr_add_item(obj_controller.ma_wep1[i],1);
                                     obj_controller.ma_wep1[i]="";
-                                    obj_ini.veh_wep1[company,i-infantrycount+1]="";
+                                    obj_ini.veh_wep1[unit[0],unit[1]]="";
                                 }
                                 if (n_wep1!=""){
                                     scr_add_item(n_wep1,-1);
                                     obj_controller.ma_wep1[i]=n_wep1;
-                                    obj_ini.veh_wep1[company,i-infantrycount+1]=n_wep1;
+                                    obj_ini.veh_wep1[unit[0],unit[1]]=n_wep1;
                                 }
                             }
                         }
@@ -699,54 +682,41 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
                             if (obj_controller.ma_wep2[i]!="") and (obj_controller.ma_wep2[i]!=n_wep2){
                                 scr_add_item(obj_controller.ma_wep2[i],1);
                                 obj_controller.ma_wep2[i]="";
-                                obj_ini.veh_wep2[company,i-infantrycount+1]="";
+                                obj_ini.veh_wep2[unit[0],unit[1]]="";
                             }
                             if (n_wep2!=""){
                                 scr_add_item(n_wep2,-1);
                                 obj_controller.ma_wep2[i]=n_wep2;
-                                obj_ini.veh_wep2[company,i-infantrycount+1]=n_wep2;
+                                obj_ini.veh_wep2[unit[0],unit[1]]=n_wep2;
                             }
                         }
                         // End swap weapon2
 
                         check=0;
-                        if (n_gear!=obj_controller.ma_gear[i]) and (n_gear!="Assortment") and ((vehicle_equipment=1) or (vehicle_equipment=6)){ //normal infantry or dread wargear item
-                            unit.update_gear(n_gear)
-                            obj_controller.ma_gear[i]=n_gear;
-                        }
-                        if (n_gear==obj_controller.ma_gear[i]) then check=1;
 
                         if (check=0) and (n_gear!=obj_controller.ma_gear[i]) and (n_gear!="Assortment") and (vehicle_equipment!=1) and (vehicle_equipment!=6){ //vehicle upgrade item
                             if (obj_controller.ma_gear[i]!="") then scr_add_item(obj_controller.ma_gear[i],1);
                             obj_controller.ma_gear[i]="";
-                            obj_ini.veh_upgrade[company,i-infantrycount+1]="";
+                            obj_ini.veh_upgrade[unit[0],unit[1]]="";
                             if (n_gear!="(None)") and (n_gear!=""){
                                 obj_controller.ma_gear[i]=n_gear;
-                                obj_ini.veh_upgrade[company,i-infantrycount+1]=n_gear;
+                                obj_ini.veh_upgrade[unit[0],unit[1]]=n_gear;
                             }
                             if (n_gear!="") then scr_add_item(n_gear,-1);
                         }
                         // End gear and upgrade
 
                         check=0;
-                        if (n_mobi=obj_controller.ma_mobi[i]) then check=1;
-                        if (check=0) and (n_mobi!=obj_controller.ma_mobi[i]) and (n_mobi!="Assortment") and ((vehicle_equipment=1) or (vehicle_equipment=6)){ //normal infantry or dread mobility item
-                            if (string_count("Terminator",obj_ini.armour[company][obj_controller.ide[i]])=0) and (obj_ini.armour[company][obj_controller.ide[i]]!="Tartaros"){
-                                unit.update_mobility_item(n_mobi);
-                                obj_controller.ma_mobi[i]=n_mobi;
-                            }
-                        }
                         if (check=0) and (n_mobi!=obj_controller.ma_mobi[i]) and (n_mobi!="Assortment") and (vehicle_equipment!=1) and (vehicle_equipment!=6){ //vehicle accessory item
                             if (obj_controller.ma_mobi[i]!="") then scr_add_item(obj_controller.ma_mobi[i],1);
                             obj_controller.ma_mobi[i]="";
-                            obj_ini.veh_acc[company,i-infantrycount+1]="";
+                            obj_ini.veh_acc[unit[0],unit[1]]="";
                             obj_controller.ma_mobi[i]=n_mobi;
-                            obj_ini.veh_acc[company,i-infantrycount+1]=n_mobi;
+                            obj_ini.veh_acc[unit[0],unit[1]]=n_mobi;
                             if (n_mobi!="") then scr_add_item(n_mobi,-1);
                         }
                         // End mobility and accessory
 
-                    }
                 }
 
             }// End that [i]

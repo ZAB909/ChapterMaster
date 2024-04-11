@@ -580,4 +580,20 @@ function promote_selection(){
     }	
 }
 
+//to be run in obj_star_select
+function setup_planet_mission_group(){
+	man_sel=[];
+	display_unit=[];
+	man = [];
+	return_place = [];
+	for (var i=0;i<array_length(obj_controller.display_unit);i++){
+		if (obj_controller.man_sel[i]){
+			array_push(man_sel, obj_controller.man_sel[i]);
+			array_push(display_unit, obj_controller.display_unit[i]);
+			array_push(man, obj_controller.man[i]);
+			array_push(return_place, obj_controller.ma_lid[i]);
+		}
+	}
+}
+
 

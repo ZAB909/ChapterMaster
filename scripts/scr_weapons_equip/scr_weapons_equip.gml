@@ -130,7 +130,7 @@ function scr_weapons_equip() {
 			item_name[1]="(None)";
 			item_name[2]="(any)";
 			var valid=3;
-			if (!instance_exists(obj_creation)) and (!instance_exists(obj_controller)){
+			if (!instance_exists(obj_creation)){
 				for (i=1;i<array_length(obj_ini.equipment);i++){
 					if (obj_popup.master_crafted==1){
 						if (!array_contains(obj_ini.equipment_quality[i],"master_crafted")){
@@ -150,7 +150,7 @@ function scr_weapons_equip() {
 
 	if (tc<3) and (tb=2) and (dude=6){
 		var i=0; // Dreadnought Melee
-		if (!instance_exists(obj_creation)) and (!instance_exists(obj_controller)){
+		if (!instance_exists(obj_creation)){
 			item_name[1]="(None)";
 			item_name[2]="(any)";
 			var valid=3;		
