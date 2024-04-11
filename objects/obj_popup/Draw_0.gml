@@ -507,17 +507,17 @@ if (type=8) and (instance_exists(obj_controller)){
         if point_and_click([x2+430, y2+393,x2+518,y2+414]){
             obj_controller.cooldown=8000;
 
-            var i=-1,this=0,dwarn=false,unit;
+            var i=0,this=0,dwarn=false,unit;
             var arti_index = obj_controller.menu_artifact;
             var arti = obj_ini.artifact_struct[arti_index];
             var arti_base = arti.type();
-            repeat(array_length(obj_controller.display_unit)){
+            repeat(obj_controller.man_max){
                 i+=1;
                 if (this=0) and (obj_controller.man_sel[i]=1) then this=i;
             }
             i=this;
 
-            if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1){
+            if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]){
                 var replace="";
 
                 if (target_role=1) then replace="weapon1";
@@ -534,7 +534,7 @@ if (type=8) and (instance_exists(obj_controller)){
                 if (replace="armour") and (obj_controller.ma_race[i]>5){cooldown=8;obj_controller.cooldown=8;exit;}
 
                 if (target_comp>10) then target_comp=0;
-                unit=display_unit[i];
+                unit=obj_ini.TTRPG[target_comp][obj_controller.ide[i]];
                 if (arti.has_tag("Daemonic") || arti.has_tag("Chaos")){
                     unit.corruption+=irandom(10+2);
                     if (unit.role()=="Chapter Master"){
