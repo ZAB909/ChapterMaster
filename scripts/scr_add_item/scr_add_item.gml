@@ -55,6 +55,10 @@ function scr_add_item(item_name, number_of_items, quality="any") {
 
 	    if (matched){
 	    	var start_count = obj_ini.equipment_number[match_slot];
+	    	if (start_count<0){
+	    		start_count=0;
+	    		obj_ini.equipment_number[match_slot]=0;
+	    	}
 	    	obj_ini.equipment_number[match_slot]+=number_of_items;
 	    	if (number_of_items>0){
 	    		if (quality=="any") then quality="standard"
@@ -62,6 +66,7 @@ function scr_add_item(item_name, number_of_items, quality="any") {
 		    		obj_ini.equipment_quality[match_slot][q]=quality;
 		    	}
 		    } else if (number_of_items<0){
+		    	if (start_count==0) then return "no_item";
 		    	var end_count = obj_ini.equipment_number[match_slot];
 		    	if (end_count<0) then end_count=0;
 		    	if (number_of_items==-1){
@@ -88,6 +93,7 @@ function scr_add_item(item_name, number_of_items, quality="any") {
 		    	} else{
 			    	for (var q=start_count-1;q>end_count;q--){
 			    		array_delete(obj_ini.equipment_quality[match_slot], q, 1);
+			    		if (q==0) then break;
 			    	}
 		    	}
 		    }

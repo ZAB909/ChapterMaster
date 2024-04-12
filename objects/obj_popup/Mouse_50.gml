@@ -495,7 +495,7 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
         if (manag>10) then manag=0;
         var company=manag;
 
-        for(i=-1;i<501;i++){
+        for(i=0;i<498;i++){
             if (obj_ini.name[target_comp][i]=="" and obj_ini.name[target_comp][i+1]=="") {
                 mahreens=i;
                 break;
@@ -511,7 +511,7 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][3],"sternguard_veteran_squad");
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][4],"terminator_squad");
 
-        for(i=-1;i<array_length(obj_controller.display_unit);i++){
+        for(i=0;i<array_length(obj_controller.display_unit);i++){
             if (obj_controller.man[i]=="man") and (obj_controller.man_sel[i]==1) and (obj_controller.ma_exp[i]>=min_exp){
                 moveable=true;
                 unit = obj_controller.display_unit[i];
