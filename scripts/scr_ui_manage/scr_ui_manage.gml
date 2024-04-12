@@ -457,7 +457,7 @@ function scr_ui_manage() {
 			// Equipment
         	var armour = selected_unit.armour();
 	        if (armour!=""){
-				var_text= string_hash_to_newline(armour);
+				var_text= string_hash_to_newline(selected_unit.equipments_qual_string("armour", true));
 	        	tooltip_text += cn.temp[103];
 	        	x1 = x_left;
 	        	y1 = yy+216;
@@ -470,7 +470,7 @@ function scr_ui_manage() {
 
 	        var gear = selected_unit.gear();
 	        if (selected_unit.gear()!=""){
-				var_text= string_hash_to_newline(gear);
+				var_text= string_hash_to_newline(selected_unit.equipments_qual_string("gear", true));
 	        	tooltip_text = cn.temp[105];
 	        	x1 = x_left;
 	        	y1 = yy+260;
@@ -482,7 +482,7 @@ function scr_ui_manage() {
 
 	        var mobi = selected_unit.mobility_item();
 	        if (mobi!=""){
-				var_text= string_hash_to_newline(mobi);
+				var_text= string_hash_to_newline(selected_unit.equipments_qual_string("mobi", true));
 	        	tooltip_text = cn.temp[107];
 	        	x1 = x_left;
 	        	y1 = yy+304;
@@ -672,7 +672,7 @@ function scr_ui_manage() {
 		// Equipment
 		var wep1= selected_unit.weapon_one();
 		if (wep1!=""){
-			var_text= string_hash_to_newline(wep1);
+			var_text= string_hash_to_newline(selected_unit.equipments_qual_string("wep1", true));
 			tooltip_text = cn.temp[109];
 			x1 = x_right;
 			y1 = yy+216;
@@ -684,7 +684,7 @@ function scr_ui_manage() {
 	
 		var wep2 = selected_unit.weapon_two();
 		if (wep2!=""){
-			var_text= string_hash_to_newline(wep2);
+			var_text= string_hash_to_newline(selected_unit.equipments_qual_string("wep2", true));
 			tooltip_text = cn.temp[111];
 			x1 = x_right;
 			y1 = yy+260;

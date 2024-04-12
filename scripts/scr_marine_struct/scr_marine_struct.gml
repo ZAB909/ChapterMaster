@@ -1421,39 +1421,43 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		return obj_ini.artifact[wep];
 	};
 
-	static equipments_qual_string = function(slot){
-		var artifact;
-		var quality
+	static equipments_qual_string = function(slot, art_only=false){
+		var item;
+		var quality;
 		switch (slot){
 			case "wep1":
-				artifact = weapon_one(true);
+				item = weapon_one(true);
 				quality = weapon_one_quality;
 				break;
 			case "wep2":
-				artifact = weapon_two(true);
+				item = weapon_two(true);
 				quality = weapon_two_quality;
 				break;				
 			case "armour":
-				artifact = armour(true);
+				item = armour(true);
 				quality = armour_quality;
 				break;				
 			case "gear":
-				artifact = gear(true);
+				item = gear(true);
 				quality = gear_quality;
 				break;
 			case "mobi":
-				artifact = mobility_item(true);
+				item = mobility_item(true);
 				quality =mobility_item_quality;
 				break;				
 		}
-		if (is_string(artifact)){
-			return $"{quality_string_conversion(quality)}{artifact}";
-		} else {
-			if (obj_ini.artifact_struct[artifact].name==""){
-				return  $"{quality_string_conversion(quality)}{obj_ini.artifact[artifact]}";
+
+		var is_artifact = !is_string(item);
+		if (!is_artifact && art_only == false){
+			return $"{quality_string_conversion(quality)}{item}";
+		} else if is_artifact {
+			if (obj_ini.artifact_struct[item].name==""){
+				return  $"{quality_string_conversion(quality)}{obj_ini.item[item]}";
 			} else {
-				return obj_ini.artifact_struct[artifact].name;
+				return obj_ini.artifact_struct[item].name;
 			}
+		} else {
+			return $"{item}";
 		}
 	}
 
