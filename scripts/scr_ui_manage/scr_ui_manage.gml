@@ -329,7 +329,9 @@ function scr_ui_manage() {
 	    	var selected_unit = temp[120];				//unit struct
 	    	///tooltip_text stacks hover over type tooltips into an array and draws them last so as not to create drawing order issues
 		    draw_set_color(c_red);
+			var no_other_instances =  !instance_exists(obj_temp3) && !instance_exists(obj_popup);
 		    var stat_tool_tip_text;
+			var button_coords;
 		    if (!obj_controller.view_squad && !obj_controller.company_report){
 			    stat_tool_tip_text = "Squad View";
 			} else {
@@ -338,8 +340,8 @@ function scr_ui_manage() {
 		    var x5=right_ui_block.x1+15;//this should be relational with the unit area tab
 			var y5=right_ui_block.y1+8;
 			var x6=x5+string_width("Company View")+8;
-			var y6=y5+string_height(stat_tool_tip_text)+4;
-			draw_unit_buttons([x5, y5, x6, y6], stat_tool_tip_text,[1,1],#50a076);
+			var y6=y5+string_height("Company View")+2;
+			button_coords = draw_unit_buttons([x5, y5, x6, y6], stat_tool_tip_text,[1,1],#50a076);
 			if (managing>0 && managing<11){
 				array_push(tooltip_drawing, ["Click here or press S to toggle Squad View.", [x5,y5,x6,y6]]);
 				if ((point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left)) || (keyboard_check_pressed(ord("S")) && !text_bar)){
@@ -357,37 +359,35 @@ function scr_ui_manage() {
 				draw_rectangle(x5, y5, x6, y6, 0);
 				draw_set_alpha(1);
 			}
-			var button_coords;
-			var no_other_instances =  !instance_exists(obj_temp3) && !instance_exists(obj_popup);
-		    if (!unit_profile || view_squad){
-			    stat_tool_tip_text = "Show Profile";
-			} else {
-				stat_tool_tip_text = "Hide Profile"; 
-			}
-		    x5=x6+4;
-			x6=x5+string_width("Show Profile")+8;
-		    draw_unit_buttons([x5, y5, x6, y6], stat_tool_tip_text,[1,1],#50a076);
-		    array_push(tooltip_drawing, ["Click here or press P to show unit profile.", [x5,y5,x6,y6]]);
-		    button_coords = draw_unit_buttons([x5, y5, x6, y6], stat_tool_tip_text,[1,1],#50a076)
-			if (((keyboard_check_pressed(ord("P"))&& !text_bar)|| (point_and_click(button_coords))) && no_other_instances){
-				if (view_squad){
-					view_squad = false;
-				}else {
+			if (!view_squad){
+				if (!unit_profile){
+					stat_tool_tip_text = "Show Profile";
+				} else {
+					stat_tool_tip_text = "Hide Profile"; 
+				}
+				x5=x6+4;
+				x6=x5+string_width("Show Profile")+8;
+				array_push(tooltip_drawing, ["Click here or press P to show unit profile.", [x5,y5,x6,y6]]);
+				button_coords = draw_unit_buttons([x5, y5, x6, y6], stat_tool_tip_text,[1,1],#50a076)
+				if (((keyboard_check_pressed(ord("P"))&& !text_bar)|| (point_and_click(button_coords))) && no_other_instances){
 					unit_profile = !unit_profile;
 				}
+				x5=x6+4;
 			}
-		    x5=x6+4;
-
-		    if (!unit_profile){
-		    	unit_bio = false;
+		
+		    if (unit_profile && !view_squad){
+				if (!unit_bio){
+					stat_tool_tip_text = "Show Bio"
+				} else {
+					stat_tool_tip_text = "Hide Bio"; 
+				}
+				x6=x5+string_width("Hide Bio")+8;
+				button_coords = draw_unit_buttons([x5, y5, x6, y6], stat_tool_tip_text,[1,1],#50a076);
+				array_push(tooltip_drawing, ["Click here or press B to Toggle Unit Biography.", button_coords]);
+				if (((keyboard_check_pressed(ord("B"))&& !text_bar)|| (point_and_click(button_coords))) && no_other_instances){
+					unit_bio = !unit_bio;
+				}
 		    }
-			stat_tool_tip_text="Unit Bio"
-			x6=x5+string_width("stat_tool_tip_text")+8;
-			button_coords = draw_unit_buttons([x5, y5, x6, y6], stat_tool_tip_text,[1,1],#50a076,,,unit_profile ? 1:0.5);
-		    array_push(tooltip_drawing, ["Click here or press B to Toggle unit Biography.", button_coords]);
-			if (((keyboard_check_pressed(ord("B"))&& !text_bar)|| (point_and_click(button_coords))) && no_other_instances && unit_profile){
-				unit_bio = !unit_bio;
-			}
 
 
 			if (managing<0 && selection_data.purpose_code!="manage") then unit_profile=true;
