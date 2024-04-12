@@ -427,6 +427,6 @@ function create_starship_event(){
 	}else {
 		var planet=irandom(star.planets-1)+1;
 		array_push(star.p_feature[planet], new new_planet_feature(P_features.Starship))
-		scr_event_log("","Ancient Starship discovered on "+string(star.name)+" "+scr_roman(planet)+".");
+		scr_event_log("","Ancient Starship discovered on "+string(star.name)+" "+scr_roman(planet)+".", star.name);
 	}
 }

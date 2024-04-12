@@ -196,9 +196,9 @@ function apothecary_simple(){
 		                    
 			                    var locy=$"{name} {scr_roman_numerals()[p-1]}";
 		                    
-			                    var flit=instance_create(x+24,y-24,obj_p_fleet);
+			                    var flit=instance_create(cur_system.x+24,cur_system.y-24,obj_p_fleet);
 			                    var s=0,ship_names="",new_name="",last_ship=0;
-			                    for(s=0;s<=40;s++){
+			                    for(s=1;s<=40;s++){
 			                        if (last_ship=0) and (obj_ini.ship[s]="") then last_ship=s;
 			                    };
 		                    
@@ -243,8 +243,9 @@ function apothecary_simple(){
 			                    flit.capital_number=1;
 			                    flit.capital_num[1]=last_ship;
 			                    flit.capital_uid[1]=obj_ini.ship_uid[last_ship];
+			                    flit.oribiting = cur_system.id;
 		                    
-			                    scr_popup($"Ancient Ship Restored","The ancient ship within the ruins of {locy} has been fully repaired.  It determined to be a Slaughtersong vessel and is bristling with golden age weaponry and armour.  Your {string(obj_ini.role[100][16])}s are excited; the Slaughtersong is ready for it's maiden voyage, at your command.","","");                
+			                    scr_popup($"Ancient Ship Restored",$"The ancient ship within the ruins of {locy} has been fully repaired.  It is determined to be a Slaughtersong vessel and is bristling with golden age weaponry and armour.  Your {string(obj_ini.role[100][16])}s are excited; the Slaughtersong is ready for it's maiden voyage, at your command.","","");                
 			                }
 			            }
 			        }
