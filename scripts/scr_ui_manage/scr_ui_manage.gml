@@ -830,11 +830,11 @@ function scr_ui_manage() {
 		    		continue;
 		    	}
 		    	if (i==0){
-		    		if (point_in_rectangle(mouse_x, mouse_y,xx+25+8,yy+64,xx+974,yy+85)){
+		    		if (point_in_rectangle(mouse_x, mouse_y,xx+25+8,yy+64,xx+974,yy+85) && mouse_check_button(mb_left)){
 		    			man_current = man_current >0 ?man_current-1:0;
 		    		}
 		    	} else if (i==repetitions-1){
-		    		if (point_in_rectangle(mouse_x, mouse_y,xx+25+8,yy+64,xx+974,yy+85)){
+		    		if (point_in_rectangle(mouse_x, mouse_y,xx+25+8,yy+64,xx+974,yy+85) && mouse_check_button(mb_left)){
 		    			man_current = man_current<man_max-man_see ? man_current+1 : man_current=(man_max-man_see);
 		    			man_current++;
 		    		}
