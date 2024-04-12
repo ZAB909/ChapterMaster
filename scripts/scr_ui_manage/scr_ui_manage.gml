@@ -11,27 +11,27 @@ function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,_hali
 	draw_set_color(colour);
 	draw_set_valign(fa_middle);
 
-	var full_width;
-	var full_height;
+	var x2;
+	var y2;
 	if (array_length(position)>2){
-		var full_width = position[2];
-		var full_height= position[3];
+		var x2 = position[2];
+		var y2 = position[3];
 	} else {
 		var text_width = string_width(string_hash_to_newline(text))*size_mod[0];
 		var text_height =string_height(string_hash_to_newline(text))*size_mod[1];
-		var full_width = position[0]+text_width+8
-		var full_height = position[1]+text_height+4;
+		var x2 = position[0]+text_width+8
+		var y2 = position[1]+text_height+6;
 	}
 	draw_set_alpha(1*alpha_mult);
 	// draw_set_color(c_black);
 	// draw_rectangle(position[0],position[1], full_width,full_height,0);
-	draw_text_transformed((position[0] + full_width)/2, (position[1] + full_height)/2,string_hash_to_newline(text),size_mod[0],size_mod[1],0);
-	draw_rectangle(position[0],position[1], full_width,full_height,1)
+	draw_text_transformed((position[0] + x2)/2, (position[1] + y2)/2,string_hash_to_newline(text),size_mod[0],size_mod[1],0);
+	draw_rectangle(position[0],position[1], x2,y2,1)
 	draw_set_alpha(0.5*alpha_mult);
-	draw_rectangle(position[0]+1,position[1]+1, full_width-1,full_height-1,1)
+	draw_rectangle(position[0]+1,position[1]+1, x2-1,y2-1,1)
 	draw_set_alpha(0.25*alpha_mult);
-	if (point_in_rectangle(mouse_x,mouse_y, position[0],position[1], full_width,full_height)){
-		draw_rectangle(position[0],position[1], full_width,full_height,0);
+	if (point_in_rectangle(mouse_x,mouse_y, position[0],position[1], x2,y2)){
+		draw_rectangle(position[0],position[1], x2,y2,0);
 	}
 
 	// Reset all global vars to their previous state
@@ -41,7 +41,8 @@ function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,_hali
 	draw_set_halign(cur_halign);
 	draw_set_valign(cur_valign);
 
-	return [position[0],position[1], full_width,full_height];
+	return [position[0],position[1], x2,y2];
+}
 }
 
 function text_bar_area(XX,YY,Max_width = 400) constructor{
@@ -328,7 +329,9 @@ function scr_ui_manage() {
 	    	var selected_unit = temp[120];				//unit struct
 	    	///tooltip_text stacks hover over type tooltips into an array and draws them last so as not to create drawing order issues
 		    draw_set_color(c_red);
+			var no_other_instances =  !instance_exists(obj_temp3) && !instance_exists(obj_popup);
 		    var stat_tool_tip_text;
+			var button_coords;
 		    if (!obj_controller.view_squad && !obj_controller.company_report){
 			    stat_tool_tip_text = "Squad View";
 			} else {
@@ -337,8 +340,8 @@ function scr_ui_manage() {
 		    var x5=right_ui_block.x1+15;//this should be relational with the unit area tab
 			var y5=right_ui_block.y1+8;
 			var x6=x5+string_width("Company View")+8;
-			var y6=y5+string_height(stat_tool_tip_text)+4;
-			draw_unit_buttons([x5, y5, x6, y6], stat_tool_tip_text,[1,1],#50a076);
+			var y6=y5+string_height("Company View")+2;
+			button_coords = draw_unit_buttons([x5, y5, x6, y6], stat_tool_tip_text,[1,1],#50a076);
 			if (managing>0 && managing<11){
 				array_push(tooltip_drawing, ["Click here or press S to toggle Squad View.", [x5,y5,x6,y6]]);
 				if ((point_in_rectangle(mouse_x, mouse_y,x5,y5,x6,y6) && mouse_check_button_pressed(mb_left)) || (keyboard_check_pressed(ord("S")) && !text_bar)){
@@ -356,37 +359,35 @@ function scr_ui_manage() {
 				draw_rectangle(x5, y5, x6, y6, 0);
 				draw_set_alpha(1);
 			}
-			var button_coords;
-			var no_other_instances =  !instance_exists(obj_temp3) && !instance_exists(obj_popup);
-		    if (!unit_profile || view_squad){
-			    stat_tool_tip_text = "Show Profile";
-			} else {
-				stat_tool_tip_text = "Hide Profile"; 
-			}
-		    x5=x6+4;
-			x6=x5+string_width("Show Profile")+8;
-		    draw_unit_buttons([x5, y5, x6, y6], stat_tool_tip_text,[1,1],#50a076);
-		    array_push(tooltip_drawing, ["Click here or press P to show unit profile.", [x5,y5,x6,y6]]);
-		    button_coords = draw_unit_buttons([x5, y5, x6, y6], stat_tool_tip_text,[1,1],#50a076)
-			if (((keyboard_check_pressed(ord("P"))&& !text_bar)|| (point_and_click(button_coords))) && no_other_instances){
-				if (view_squad){
-					view_squad = false;
-				}else {
+			if (!view_squad){
+				if (!unit_profile){
+					stat_tool_tip_text = "Show Profile";
+				} else {
+					stat_tool_tip_text = "Hide Profile"; 
+				}
+				x5=x6+4;
+				x6=x5+string_width("Show Profile")+8;
+				array_push(tooltip_drawing, ["Click here or press P to show unit profile.", [x5,y5,x6,y6]]);
+				button_coords = draw_unit_buttons([x5, y5, x6, y6], stat_tool_tip_text,[1,1],#50a076)
+				if (((keyboard_check_pressed(ord("P"))&& !text_bar)|| (point_and_click(button_coords))) && no_other_instances){
 					unit_profile = !unit_profile;
 				}
+				x5=x6+4;
 			}
-		    x5=x6+4;
-
-		    if (!unit_profile){
-		    	unit_bio = false;
+		
+		    if (unit_profile && !view_squad){
+				if (!unit_bio){
+					stat_tool_tip_text = "Show Bio"
+				} else {
+					stat_tool_tip_text = "Hide Bio"; 
+				}
+				x6=x5+string_width("Hide Bio")+8;
+				button_coords = draw_unit_buttons([x5, y5, x6, y6], stat_tool_tip_text,[1,1],#50a076);
+				array_push(tooltip_drawing, ["Click here or press B to Toggle Unit Biography.", button_coords]);
+				if (((keyboard_check_pressed(ord("B"))&& !text_bar)|| (point_and_click(button_coords))) && no_other_instances){
+					unit_bio = !unit_bio;
+				}
 		    }
-			stat_tool_tip_text="Unit Bio"
-			x6=x5+string_width("stat_tool_tip_text")+8;
-			button_coords = draw_unit_buttons([x5, y5, x6, y6], stat_tool_tip_text,[1,1],#50a076,,,unit_profile ? 1:0.5);
-		    array_push(tooltip_drawing, ["Click here or press B to Toggle unit Biography.", button_coords]);
-			if (((keyboard_check_pressed(ord("B"))&& !text_bar)|| (point_and_click(button_coords))) && no_other_instances && unit_profile){
-				unit_bio = !unit_bio;
-			}
 
 
 			if (managing<0 && selection_data.purpose_code!="manage") then unit_profile=true;
@@ -427,18 +428,6 @@ function scr_ui_manage() {
 				}
 			}
 
-			// Animated scanline
-			draw_set_color(5998382);
-			var step_millisecond = current_time / 1000;
-			var anim_length = 10; // anim cycle length in seconds
-			var anim = (step_millisecond % anim_length) / anim_length * 20; // anim will cycle from 0 to 20 over the duration specified by anim_length
-			if (anim <= 10) then draw_set_alpha(anim / 10);
-			else draw_set_alpha(2 - (anim / 10));
-			line_move = yy+140+4 + (368 * ((anim % 20) / 20));
-			if (irandom(100) <= 5){line_move-=4};
-			draw_line(xx+1007+18, line_move, xx+1576-23, line_move);
-			draw_set_alpha(1);
-
 			// Unit window entries start
 			var line_color = #50a076;
 			draw_set_color(line_color);
@@ -457,7 +446,7 @@ function scr_ui_manage() {
 			// Equipment
         	var armour = selected_unit.armour();
 	        if (armour!=""){
-				var_text= string_hash_to_newline(armour);
+				var_text= string_hash_to_newline(selected_unit.equipments_qual_string("armour", true));
 	        	tooltip_text += cn.temp[103];
 	        	x1 = x_left;
 	        	y1 = yy+216;
@@ -470,7 +459,7 @@ function scr_ui_manage() {
 
 	        var gear = selected_unit.gear();
 	        if (selected_unit.gear()!=""){
-				var_text= string_hash_to_newline(gear);
+				var_text= string_hash_to_newline(selected_unit.equipments_qual_string("gear", true));
 	        	tooltip_text = cn.temp[105];
 	        	x1 = x_left;
 	        	y1 = yy+260;
@@ -482,7 +471,7 @@ function scr_ui_manage() {
 
 	        var mobi = selected_unit.mobility_item();
 	        if (mobi!=""){
-				var_text= string_hash_to_newline(mobi);
+				var_text= string_hash_to_newline(selected_unit.equipments_qual_string("mobi", true));
 	        	tooltip_text = cn.temp[107];
 	        	x1 = x_left;
 	        	y1 = yy+304;
@@ -672,7 +661,7 @@ function scr_ui_manage() {
 		// Equipment
 		var wep1= selected_unit.weapon_one();
 		if (wep1!=""){
-			var_text= string_hash_to_newline(wep1);
+			var_text= string_hash_to_newline(selected_unit.equipments_qual_string("wep1", true));
 			tooltip_text = cn.temp[109];
 			x1 = x_right;
 			y1 = yy+216;
@@ -684,7 +673,7 @@ function scr_ui_manage() {
 	
 		var wep2 = selected_unit.weapon_two();
 		if (wep2!=""){
-			var_text= string_hash_to_newline(wep2);
+			var_text= string_hash_to_newline(selected_unit.equipments_qual_string("wep2", true));
 			tooltip_text = cn.temp[111];
 			x1 = x_right;
 			y1 = yy+260;
@@ -703,7 +692,7 @@ function scr_ui_manage() {
 			x2 = x1-string_width(var_text);
 			y2 = y1+string_height(var_text);
 			if (selected_unit.encumbered_melee){
-				draw_set_color(c_red);
+				draw_set_color(#bf4040);
 				//tooltip_text+="#encumbered"
 			}
 			draw_text_outline(x1,y1,var_text);
@@ -719,7 +708,7 @@ function scr_ui_manage() {
 			x2 = x1-string_width(var_text);
 			y2 = y1+string_height(var_text);
 			if (selected_unit.encumbered_ranged){
-				draw_set_color(c_red);
+				draw_set_color(#bf4040);
 			}
 			draw_text_outline(x1,y1,var_text);
 			array_push(tooltip_drawing, [tooltip_text, [x2,y1,x1,y2]]);
@@ -733,9 +722,13 @@ function scr_ui_manage() {
 			y1 = yy+444;
 			x2 = x1-string_width(carry_string);
 			y2 = y1+string_height(carry_string);
+			if (selected_unit.encumbered_melee){
+				draw_set_color(#bf4040);
+			}
 			draw_text_outline(x1,y1,string_hash_to_newline(carry_string));
 			tooltip_text = string_hash_to_newline(carry_data[2]);
 			array_push(tooltip_drawing, [tooltip_text, [x2,y1,x1,y2]]);
+			draw_set_color(line_color);
 		}
 
 		if (cn.temp[117]!=""){
@@ -745,10 +738,16 @@ function scr_ui_manage() {
 			y1 = yy+466;
 			x2 = x1-string_width(carry_string);
 			y2 = y1+string_height(carry_string);
+			if (selected_unit.encumbered_melee){
+				draw_set_color(#bf4040);
+			}
 			draw_text_outline(x1,y1,string_hash_to_newline(carry_string));
 			tooltip_text = string_hash_to_newline(carry_data[2]);
 			array_push(tooltip_drawing, [tooltip_text, [x2,y1,x1,y2]]);
+			draw_set_color(line_color);
 		}
+		// Animated scanline
+		draw_animated_scanline(xx+1007+18, yy+140+4, 530, 368);
 	}	
 
 	    draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
@@ -831,11 +830,11 @@ function scr_ui_manage() {
 		    		continue;
 		    	}
 		    	if (i==0){
-		    		if (point_in_rectangle(mouse_x, mouse_y,xx+25+8,yy+64,xx+974,yy+85)){
+		    		if (point_in_rectangle(mouse_x, mouse_y,xx+25+8,yy+64,xx+974,yy+85) && mouse_check_button(mb_left)){
 		    			man_current = man_current >0 ?man_current-1:0;
 		    		}
 		    	} else if (i==repetitions-1){
-		    		if (point_in_rectangle(mouse_x, mouse_y,xx+25+8,yy+64,xx+974,yy+85)){
+		    		if (point_in_rectangle(mouse_x, mouse_y,xx+25+8,yy+64,xx+974,yy+85) && mouse_check_button(mb_left)){
 		    			man_current = man_current<man_max-man_see ? man_current+1 : man_current=(man_max-man_see);
 		    			man_current++;
 		    		}

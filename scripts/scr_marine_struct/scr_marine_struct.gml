@@ -1421,39 +1421,43 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		return obj_ini.artifact[wep];
 	};
 
-	static equipments_qual_string = function(slot){
-		var artifact;
-		var quality
+	static equipments_qual_string = function(slot, art_only=false){
+		var item;
+		var quality;
 		switch (slot){
 			case "wep1":
-				artifact = weapon_one(true);
+				item = weapon_one(true);
 				quality = weapon_one_quality;
 				break;
 			case "wep2":
-				artifact = weapon_two(true);
+				item = weapon_two(true);
 				quality = weapon_two_quality;
 				break;				
 			case "armour":
-				artifact = armour(true);
+				item = armour(true);
 				quality = armour_quality;
 				break;				
 			case "gear":
-				artifact = gear(true);
+				item = gear(true);
 				quality = gear_quality;
 				break;
 			case "mobi":
-				artifact = mobility_item(true);
+				item = mobility_item(true);
 				quality =mobility_item_quality;
 				break;				
 		}
-		if (is_string(artifact)){
-			return $"{quality_string_conversion(quality)}{artifact}";
-		} else {
-			if (obj_ini.artifact_struct[artifact].name==""){
-				return  $"{quality_string_conversion(quality)}{obj_ini.artifact[artifact]}";
+
+		var is_artifact = !is_string(item);
+		if (!is_artifact && art_only == false){
+			return $"{quality_string_conversion(quality)}{item}";
+		} else if is_artifact {
+			if (obj_ini.artifact_struct[item].name==""){
+				return  $"{quality_string_conversion(quality)}{obj_ini.item[item]}";
 			} else {
-				return obj_ini.artifact_struct[artifact].name;
+				return obj_ini.artifact_struct[item].name;
 			}
+		} else {
+			return $"{item}";
 		}
 	}
 
@@ -1622,7 +1626,25 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		};
 
 		static ranged_hands_limit = function(){
+			var _wep1 = get_weapon_one_data();
+			var _wep2 = get_weapon_two_data();
+			var ranged_carrying = 0;
+			var carry_string = "";
 			var ranged_hands_limit = 2;
+
+			if is_struct(_wep1) || is_struct(_wep2){
+				carry_string += $"    =Current=#"
+				if is_struct(_wep1){
+					ranged_carrying += _wep1.ranged_hands;
+					carry_string += $"{_wep1.name}: {_wep1.ranged_hands}#";
+				}
+				if is_struct(_wep2){
+					ranged_carrying += _wep2.ranged_hands;
+					carry_string += $"{_wep2.name}: {_wep2.ranged_hands}#";
+				}
+			}
+
+			carry_string += $"    =Maximum=#"
 			if (base_group == "astartes"){
 				ranged_hands_limit = 2
 			} else if base_group == "tech_priest" {
@@ -1630,8 +1652,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}else if base_group == "human" {
 				ranged_hands_limit = 1;
 			}	
-			var ranged_carrying=0
-			var carry_string=$"Base: {ranged_hands_limit}#";
+			carry_string+=$"Base: {ranged_hands_limit}#";
 			if (strength>=50){
 				ranged_hands_limit+=0.5;
 				carry_string+="STR: +0.5#";
@@ -1773,7 +1794,25 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		};
 
 		static melee_hands_limit = function(){
+			var _wep1 = get_weapon_one_data();
+			var _wep2 = get_weapon_two_data();
+			var melee_carrying = 0;
+			var carry_string = "";
 			var melee_hands_limit = 2;
+
+			if is_struct(_wep1) || is_struct(_wep2){
+				carry_string += $"    =Current=#"
+				if is_struct(_wep1){
+					melee_carrying += _wep1.melee_hands;
+					carry_string += $"{_wep1.name}: {_wep1.melee_hands}#";
+				}
+				if is_struct(_wep2){
+					melee_carrying += _wep1.melee_hands;
+					carry_string += $"{_wep2.name}: {_wep2.melee_hands}#";
+				}
+			}
+
+			carry_string += $"    =Maximum=#"
 			if (base_group == "astartes"){
 				melee_hands_limit = 2
 			} else if base_group == "tech_priest" {
@@ -1781,8 +1820,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}else if base_group == "human" {
 				melee_hands_limit = 1;
 			}				
-			var melee_carrying=0
-			var carry_string="Base: 2#";
+			carry_string+="Base: 2#";
 			if (strength>=50){
 				melee_hands_limit+=0.25;
 				carry_string+="STR: +0.25#";
@@ -2163,10 +2201,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				
 				if (crafter){
 					points*=3;
-					reasons.at_forge = "X3(crafter bonus)";
+					reasons.at_forge = "x3 (Crafter)";
 				} else {
 					points*=2;
-					reasons.at_forge = "X2";
+					reasons.at_forge = "x2";
 				}
 				points+=3;
 				if (turn_end){

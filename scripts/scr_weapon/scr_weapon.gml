@@ -2297,16 +2297,16 @@ function quality_color(_item_quality){
             return(draw_get_color())
             break;
         case "master_crafted":
-            return(c_orange);
+            return(#bf9340);
             break;
         case "artificer":
-            return(c_red);
+            return(#bf4040);
             break;
         case "artifact":
-            return(c_aqua);
+            return(#40bfbf);
             break;
         case "exemplary":
-            return(c_olive);
+            return(#80bf40);
             break;
     }
 }

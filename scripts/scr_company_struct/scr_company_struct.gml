@@ -112,7 +112,7 @@ function scr_company_struct(comp) constructor{
 				tooltip_text="Guard Duty";
 				if (squad_loc.same_system) and (squad_loc.system!="Warp"){
 					button_row_offset+=string_width(tooltip_text)+6;
-					draw_unit_buttons([xx+bound_width[0]+5, yy+bound_height[0]+150], tooltip_text,[1,1],c_red);
+					button = draw_unit_buttons([xx+bound_width[0]+5, yy+bound_height[0]+150], tooltip_text,[1,1],c_red);
 					if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text), yy+bound_height[0]+150+string_height(tooltip_text))){
 						tooltip_text = "Having squads assigned to Guard Duty will increase relations with a planet over time, it will also bolster planet defence forces in case of attack, and reduce corruption growth.";
 						tooltip_draw(tooltip_text, 150, [xx+bound_width[0]+5, yy+bound_height[0]+200]);
@@ -123,7 +123,7 @@ function scr_company_struct(comp) constructor{
 					}
 					if (array_contains(current_squad.class, "scout")){
 						tooltip_text="Sabotage";
-						draw_unit_buttons([xx+bound_width[0]+5 + button_row_offset, yy+bound_height[0]+150], tooltip_text,[1,1],c_red);
+						button = draw_unit_buttons([button[2] + 4, yy+bound_height[0]+150], tooltip_text,[1,1],c_red);
 						if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5+ button_row_offset, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text)+ button_row_offset, yy+bound_height[0]+150+string_height(tooltip_text))){
 							tooltip_text = "Sabotage missions can reduce enemy growth while avoiding direct enemy contact however they are not without risk.";
 							tooltip_draw(tooltip_text, 150, [xx+bound_width[0]+5+button_row_offset, yy+bound_height[0]+200]);
@@ -200,33 +200,34 @@ function scr_company_struct(comp) constructor{
 				var deploy_text = "Squad will deploy in the";
 				draw_set_font(fnt_40k_14b)
 				draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0], deploy_text,1,1,0);
-				draw_unit_buttons([xx+bound_width[0]+5 + string_width(deploy_text), yy+bound_height[0]],current_squad.formation_place,[1,1],c_green);
+				button = draw_unit_buttons([xx+bound_width[0]+5 + string_width(deploy_text), yy+bound_height[0]-2],current_squad.formation_place,[1,1],c_green);
 				draw_set_color(c_red);
 				draw_text_transformed(xx+bound_width[0]+5+ string_width(deploy_text) + string_width(current_squad.formation_place)+9, yy+bound_height[0], "column",1,1,0);
+				draw_set_color(c_gray);
 				if (array_length(current_squad.formation_options)>1){
 					if (point_in_rectangle(
 						mouse_x,
 						mouse_y,
-						xx+bound_width[0]+5+ string_width(deploy_text), 
-						yy+bound_height[0], 
-						xx+bound_width[0]+13+ string_width(deploy_text) +string_width(current_squad.formation_place), 
-						yy+bound_height[0]+4+string_height(current_squad.formation_place)
+						button [0], 
+						button[1], 
+						button[2], 
+						button[3]
 					)){
 						drop_down_open = true;
 					}
 					if (drop_down_open){
-						var roll_down_offset=4+string_height(current_squad.formation_place);
+						var roll_down_offset=8+string_height(current_squad.formation_place);
 						for (var col = 0;col<array_length(current_squad.formation_options);col++){
 							if (current_squad.formation_options[col]==current_squad.formation_place) then continue;
-							draw_unit_buttons([xx+bound_width[0]+5 + string_width(deploy_text), yy+bound_height[0]+roll_down_offset],current_squad.formation_options[col],[1,1],c_red);
+							button = draw_unit_buttons([button[0], button[3] + 2],current_squad.formation_options[col],[1,1],c_red);
 							if (mouse_check_button_pressed(mb_left) && 
 								point_in_rectangle(
 										mouse_x,
 										mouse_y,
-										xx+bound_width[0]+5+string_width(deploy_text), 
-										yy+bound_height[0]+roll_down_offset, 
-										xx+bound_width[0]+13+ string_width(deploy_text) +string_width(current_squad.formation_options[col]), 
-										yy+bound_height[0]+roll_down_offset+string_height(current_squad.formation_options[col])+4									
+										button [0], 
+										button[1], 
+										button[2], 
+										button[3]									
 									)){
 								current_squad.formation_place = current_squad.formation_options[col];
 								drop_down_open = false;
