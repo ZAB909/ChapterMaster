@@ -234,18 +234,18 @@ function scr_draw_unit_stat_data(manage=false){
 			data_entry.tooltip="";
 			var gen_reasons = forge_gen[1];
 			data_entry.text = $"Forge Production: {forge_gen[0]}\n";
+			if (struct_exists(gen_reasons, "trained")){
+				data_entry.tooltip+=$"Trained On Mars (TEC/10): {gen_reasons.trained}\n";
+				if (struct_exists(gen_reasons, "at_forge")){
+					data_entry.tooltip+=$"{gen_reasons.at_forge}(at Forge)\n";
+				}
+			}
 			if (struct_exists(gen_reasons, "master")){
-				data_entry.tooltip+=$"#Forge Master :{gen_reasons.master}";
+				data_entry.tooltip+=$"Forge Master: +{gen_reasons.master}\n";
 			}
 			if (struct_exists(gen_reasons, "crafter")){
-				data_entry.tooltip+=$"#Crafter Trait :{gen_reasons.crafter}";
+				data_entry.tooltip+=$"Crafter: +{gen_reasons.crafter}\n";
 			}
-			if (struct_exists(gen_reasons, "trained")){
-				data_entry.tooltip+=$"#Trained Technician :{gen_reasons.trained}";
-				if (struct_exists(gen_reasons, "at_forge")){
-					data_entry.tooltip+=$"#     Assignment Forge :{gen_reasons.at_forge}";
-				}				
-			}						;
 			array_push(data_lines, data_entry);
 		}
 		

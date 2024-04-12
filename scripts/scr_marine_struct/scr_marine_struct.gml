@@ -2163,10 +2163,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				
 				if (crafter){
 					points*=3;
-					reasons.at_forge = "X3(crafter bonus)";
+					reasons.at_forge = "x3 (Crafter)";
 				} else {
 					points*=2;
-					reasons.at_forge = "X2";
+					reasons.at_forge = "x2";
 				}
 				points+=3;
 				if (turn_end){
