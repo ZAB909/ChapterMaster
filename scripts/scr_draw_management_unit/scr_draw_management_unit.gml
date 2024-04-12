@@ -131,13 +131,23 @@ function scr_draw_management_unit(selected, yy=0, xx=0, draw=true){
 	}
 
 	if (draw && !impossible){
-	    if (man_sel[selected]==0) then draw_set_color(c_black);
-	    if (man_sel[selected]!=0) then draw_set_color(6052956);// was gray
-	    draw_rectangle(xx+25,yy+64,xx+974,yy+85,0);
-	
+		draw_set_alpha(1);
+	    draw_set_color(c_black);
+		draw_rectangle(xx+25,yy+64,xx+974,yy+85,0);
+		draw_set_color(c_white);
+		if ((mouse_x>=xx+25 && mouse_y>=yy+64 && mouse_x<xx+974 && mouse_y<yy+85)){
+			draw_set_alpha(0.3);
+			draw_rectangle(xx+25,yy+64,xx+974,yy+85,0);
+        }
+		if (man_sel[selected] == 1){
+			draw_set_alpha(0.2);
+			draw_rectangle(xx+25,yy+64,xx+974,yy+85,0);
+		}
+
 	    unit_specialism_option=false;
 	    spec_tip = "";
 		draw_set_color(c_gray);
+		draw_set_alpha(1);
 		draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);
 	    if (man[selected]="man"  && is_struct(display_unit[selected])){
 	    	if (!unit_specialist){
@@ -433,8 +443,6 @@ function scr_draw_management_unit(selected, yy=0, xx=0, draw=true){
         
         if (((mouse_x>=xx+25 && mouse_y>=yy+64 && mouse_x<xx+974 && mouse_y<yy+85) || force_tool==1) && is_struct(unit)){
             temp[120] = unit; // unit_struct
-	        draw_set_color(38144);
-	        draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);               
         }
         if (man_sel[selected]){
         	man_count++;
