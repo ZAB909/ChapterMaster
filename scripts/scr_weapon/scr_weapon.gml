@@ -1073,7 +1073,8 @@ global.weapons={
         "ammo": 5,
         "range": 12,
         "spli": 1,
-        "arp": 0
+        "arp": 0,
+        "tags":["vehicle","pintle"]
     },
     "Reaper Autocannon Mount": {
         "attack": {
@@ -1088,7 +1089,8 @@ global.weapons={
         "ammo": 25,
         "range": 15,
         "spli": 1,
-        "arp": 0
+        "arp": 0,
+        "tags":["vehicle","pintle"]
     },
     "Quad Linked Heavy Bolter Sponsons": {
         "attack": {
@@ -1103,7 +1105,8 @@ global.weapons={
         "ammo": 10,
         "range": 16,
         "spli": 1,
-        "arp": 1
+        "arp": 1,
+        "tags":["bolt", "vehicle","sponson"]
     },
     "Twin Linked Lascannon Sponsons": {
         "attack": {
@@ -1118,7 +1121,8 @@ global.weapons={
         "ammo": 5,
         "range": 20,
         "spli": 1,
-        "arp": 1
+        "arp": 1,
+        "tags":["las", "vehicle","sponson", "twin_linked"]
     },
     "Lascannon Sponsons": {
         "attack": {
@@ -1133,7 +1137,8 @@ global.weapons={
         "ammo": 5,
         "range": 20,
         "spli": 1,
-        "arp": 1
+        "arp": 1,
+        "tags":["las", "vehicle","sponson"]
     },    
     "Hurricane Bolter Sponsons": {
         "attack": {
@@ -1148,7 +1153,8 @@ global.weapons={
         "ammo": 20,
         "range": 12,
         "spli": 1,
-        "arp": 0
+        "arp": 0,
+        "tags":["bolt", "vehicle","sponson"]
     },
     "Flamestorm Cannon Sponsons": {
         "attack": {
@@ -1163,7 +1169,8 @@ global.weapons={
         "ammo": 6,
         "range": 3,
         "spli": 1,
-        "arp": 1
+        "arp": 1,
+        "tags":["flame", "vehicle","sponson"]
     },
     "Twin Linked Heavy Flamer Sponsons": {
         "attack": {
@@ -1892,21 +1899,22 @@ global.gear = {
     "Smoke Launchers": {
       "description": "Useful for providing concealment in open terrain, these launchers project wide-spectrum concealing smoke to prevent accurate targeting of the vehicle. ",
       "abbreviation": "SmkLnchrs",
-      "tags":["smoke","conceal"]
+      "tags":["smoke","conceal", "vehicle"]
     },
     "Dozer Blades": {
       "description": "An attachment for the front of vehicles, useful for clearing difficult terrain and can be used as an improvised weapon. ",
       "abbreviation": "DzrBlds",
-      "tags":[]
+       "tags":["vehicle"],              
     },
     "Searchlight": {
       "description": "A simple solution for fighting in dark environments, searchlights serve to illuminate enemies for easier targeting. ",
       "abbreviation": "SrchLght",
-      "tags":[]
+       "tags":["vehicle"],              
     },
     "Frag Assault Launchers": {
         "abbreviation": "FrgAssLnchrs", 
         "description": "",
+         "tags":["vehicle"],              
     },             
   },
   "mobility":{

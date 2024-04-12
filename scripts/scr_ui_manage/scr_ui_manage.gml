@@ -43,7 +43,6 @@ function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,_hali
 
 	return [position[0],position[1], x2,y2];
 }
-}
 
 function text_bar_area(XX,YY,Max_width = 400) constructor{
 	allow_input=false;

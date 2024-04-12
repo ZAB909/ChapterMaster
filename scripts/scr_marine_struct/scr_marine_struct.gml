@@ -1450,9 +1450,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		var is_artifact = !is_string(item);
 		if (!is_artifact && art_only == false){
 			return $"{quality_string_conversion(quality)}{item}";
-		} else if is_artifact {
+		} else if (is_artifact) {
 			if (obj_ini.artifact_struct[item].name==""){
-				return  $"{quality_string_conversion(quality)}{obj_ini.item[item]}";
+				return  $"{quality_string_conversion(quality)}{obj_ini.artifact[item]}";
 			} else {
 				return obj_ini.artifact_struct[item].name;
 			}
@@ -1799,13 +1799,17 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			var melee_carrying = 0;
 			var carry_string = "";
 			var melee_hands_limit = 2;
+			if (is_struct(_wep1) ||is_struct(_wep2)){
+				carry_string += $"    =Current=#";
+			}
 
-			if is_struct(_wep1) || is_struct(_wep2){
-				carry_string += $"    =Current=#"
+			if is_struct(_wep1){
 				if is_struct(_wep1){
 					melee_carrying += _wep1.melee_hands;
 					carry_string += $"{_wep1.name}: {_wep1.melee_hands}#";
 				}
+			}
+			is_struct(_wep2){
 				if is_struct(_wep2){
 					melee_carrying += _wep1.melee_hands;
 					carry_string += $"{_wep2.name}: {_wep2.melee_hands}#";
@@ -1975,6 +1979,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		static hammer_of_wrath =  function(){
 			var wrath =  new equipment_struct({},"");
 			wrath.attack=(strength*2) +(0.5*weapon_skill);
+			wrath.name = "hammer_of_wrath";
+			wrath.range = 1;
 			return wrath;
 		}
 

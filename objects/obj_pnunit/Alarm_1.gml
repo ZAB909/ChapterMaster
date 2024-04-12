@@ -209,7 +209,7 @@ for (g=1;g<array_length(unit_struct);g++){
                     if (is_struct(weapon)){
                         for (j=1;j<=40;j++){
                             if (wep[j]==""||wep[j]==weapon.name){
-                                add_data_to_stack(open,weapon)
+                                add_data_to_stack(j,weapon)
                                 break;                             
                             }
                         }
