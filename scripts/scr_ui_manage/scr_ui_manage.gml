@@ -11,27 +11,27 @@ function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,_hali
 	draw_set_color(colour);
 	draw_set_valign(fa_middle);
 
-	var full_width;
-	var full_height;
+	var x2;
+	var y2;
 	if (array_length(position)>2){
-		var full_width = position[2];
-		var full_height= position[3];
+		var x2 = position[2];
+		var y2 = position[3];
 	} else {
 		var text_width = string_width(string_hash_to_newline(text))*size_mod[0];
 		var text_height =string_height(string_hash_to_newline(text))*size_mod[1];
-		var full_width = position[0]+text_width+8
-		var full_height = position[1]+text_height+4;
+		var x2 = position[0]+text_width+8
+		var y2 = position[1]+text_height+6;
 	}
 	draw_set_alpha(1*alpha_mult);
 	// draw_set_color(c_black);
 	// draw_rectangle(position[0],position[1], full_width,full_height,0);
-	draw_text_transformed((position[0] + full_width)/2, (position[1] + full_height)/2,string_hash_to_newline(text),size_mod[0],size_mod[1],0);
-	draw_rectangle(position[0],position[1], full_width,full_height,1)
+	draw_text_transformed((position[0] + x2)/2, (position[1] + y2)/2,string_hash_to_newline(text),size_mod[0],size_mod[1],0);
+	draw_rectangle(position[0],position[1], x2,y2,1)
 	draw_set_alpha(0.5*alpha_mult);
-	draw_rectangle(position[0]+1,position[1]+1, full_width-1,full_height-1,1)
+	draw_rectangle(position[0]+1,position[1]+1, x2-1,y2-1,1)
 	draw_set_alpha(0.25*alpha_mult);
-	if (point_in_rectangle(mouse_x,mouse_y, position[0],position[1], full_width,full_height)){
-		draw_rectangle(position[0],position[1], full_width,full_height,0);
+	if (point_in_rectangle(mouse_x,mouse_y, position[0],position[1], x2,y2)){
+		draw_rectangle(position[0],position[1], x2,y2,0);
 	}
 
 	// Reset all global vars to their previous state
@@ -41,7 +41,8 @@ function draw_unit_buttons(position, text,size_mod=[1.5,1.5],colour=c_gray,_hali
 	draw_set_halign(cur_halign);
 	draw_set_valign(cur_valign);
 
-	return [position[0],position[1], full_width,full_height];
+	return [position[0],position[1], x2,y2];
+}
 }
 
 function text_bar_area(XX,YY,Max_width = 400) constructor{
