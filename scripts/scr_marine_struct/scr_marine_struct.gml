@@ -1626,7 +1626,25 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		};
 
 		static ranged_hands_limit = function(){
+			var _wep1 = get_weapon_one_data();
+			var _wep2 = get_weapon_two_data();
+			var ranged_carrying = 0;
+			var carry_string = "";
 			var ranged_hands_limit = 2;
+
+			if is_struct(_wep1) || is_struct(_wep2){
+				carry_string += $"    =Current=#"
+				if is_struct(_wep1){
+					ranged_carrying += _wep1.ranged_hands;
+					carry_string += $"{_wep1.name}: {_wep1.ranged_hands}#";
+				}
+				if is_struct(_wep2){
+					ranged_carrying += _wep2.ranged_hands;
+					carry_string += $"{_wep2.name}: {_wep2.ranged_hands}#";
+				}
+			}
+
+			carry_string += $"    =Maximum=#"
 			if (base_group == "astartes"){
 				ranged_hands_limit = 2
 			} else if base_group == "tech_priest" {
@@ -1634,8 +1652,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}else if base_group == "human" {
 				ranged_hands_limit = 1;
 			}	
-			var ranged_carrying=0
-			var carry_string=$"Base: {ranged_hands_limit}#";
+			carry_string+=$"Base: {ranged_hands_limit}#";
 			if (strength>=50){
 				ranged_hands_limit+=0.5;
 				carry_string+="STR: +0.5#";
@@ -1777,7 +1794,25 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		};
 
 		static melee_hands_limit = function(){
+			var _wep1 = get_weapon_one_data();
+			var _wep2 = get_weapon_two_data();
+			var melee_carrying = 0;
+			var carry_string = "";
 			var melee_hands_limit = 2;
+
+			if is_struct(_wep1) || is_struct(_wep2){
+				carry_string += $"    =Current=#"
+				if is_struct(_wep1){
+					melee_carrying += _wep1.melee_hands;
+					carry_string += $"{_wep1.name}: {_wep1.melee_hands}#";
+				}
+				if is_struct(_wep2){
+					melee_carrying += _wep1.melee_hands;
+					carry_string += $"{_wep2.name}: {_wep2.melee_hands}#";
+				}
+			}
+
+			carry_string += $"    =Maximum=#"
 			if (base_group == "astartes"){
 				melee_hands_limit = 2
 			} else if base_group == "tech_priest" {
@@ -1785,8 +1820,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}else if base_group == "human" {
 				melee_hands_limit = 1;
 			}				
-			var melee_carrying=0
-			var carry_string="Base: 2#";
+			carry_string+="Base: 2#";
 			if (strength>=50){
 				melee_hands_limit+=0.25;
 				carry_string+="STR: +0.25#";
