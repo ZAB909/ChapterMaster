@@ -692,7 +692,7 @@ function scr_ui_manage() {
 			x2 = x1-string_width(var_text);
 			y2 = y1+string_height(var_text);
 			if (selected_unit.encumbered_melee){
-				draw_set_color(c_red);
+				draw_set_color(#bf4040);
 				//tooltip_text+="#encumbered"
 			}
 			draw_text_outline(x1,y1,var_text);
@@ -708,7 +708,7 @@ function scr_ui_manage() {
 			x2 = x1-string_width(var_text);
 			y2 = y1+string_height(var_text);
 			if (selected_unit.encumbered_ranged){
-				draw_set_color(c_red);
+				draw_set_color(#bf4040);
 			}
 			draw_text_outline(x1,y1,var_text);
 			array_push(tooltip_drawing, [tooltip_text, [x2,y1,x1,y2]]);
@@ -722,9 +722,13 @@ function scr_ui_manage() {
 			y1 = yy+444;
 			x2 = x1-string_width(carry_string);
 			y2 = y1+string_height(carry_string);
+			if (selected_unit.encumbered_melee){
+				draw_set_color(#bf4040);
+			}
 			draw_text_outline(x1,y1,string_hash_to_newline(carry_string));
 			tooltip_text = string_hash_to_newline(carry_data[2]);
 			array_push(tooltip_drawing, [tooltip_text, [x2,y1,x1,y2]]);
+			draw_set_color(line_color);
 		}
 
 		if (cn.temp[117]!=""){
@@ -734,9 +738,13 @@ function scr_ui_manage() {
 			y1 = yy+466;
 			x2 = x1-string_width(carry_string);
 			y2 = y1+string_height(carry_string);
+			if (selected_unit.encumbered_melee){
+				draw_set_color(#bf4040);
+			}
 			draw_text_outline(x1,y1,string_hash_to_newline(carry_string));
 			tooltip_text = string_hash_to_newline(carry_data[2]);
 			array_push(tooltip_drawing, [tooltip_text, [x2,y1,x1,y2]]);
+			draw_set_color(line_color);
 		}
 		// Animated scanline
 		draw_animated_scanline(xx+1007+18, yy+140+4, 530, 368);
