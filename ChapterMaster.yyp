@@ -906,6 +906,7 @@
     {"id":{"name":"scr_add_item","path":"scripts/scr_add_item/scr_add_item.yy",},},
     {"id":{"name":"scr_add_man","path":"scripts/scr_add_man/scr_add_man.yy",},},
     {"id":{"name":"scr_add_vehicle","path":"scripts/scr_add_vehicle/scr_add_vehicle.yy",},},
+    {"id":{"name":"scr_animated_scanline","path":"scripts/scr_animated_scanline/scr_animated_scanline.yy",},},
     {"id":{"name":"scr_add_artifact","path":"scripts/scr_add_artifact/scr_add_artifact.yy",},},
     {"id":{"name":"scr_add_stc_fragment","path":"scripts/scr_add_stc_fragment/scr_add_stc_fragment.yy",},},
     {"id":{"name":"action_another_room","path":"scripts/action_another_room/action_another_room.yy",},},

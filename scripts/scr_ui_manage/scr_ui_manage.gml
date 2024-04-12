@@ -428,18 +428,6 @@ function scr_ui_manage() {
 				}
 			}
 
-			// Animated scanline
-			draw_set_color(5998382);
-			var step_millisecond = current_time / 1000;
-			var anim_length = 10; // anim cycle length in seconds
-			var anim = (step_millisecond % anim_length) / anim_length * 20; // anim will cycle from 0 to 20 over the duration specified by anim_length
-			if (anim <= 10) then draw_set_alpha(anim / 10);
-			else draw_set_alpha(2 - (anim / 10));
-			line_move = yy+140+4 + (368 * ((anim % 20) / 20));
-			if (irandom(100) <= 5){line_move-=4};
-			draw_line(xx+1007+18, line_move, xx+1576-23, line_move);
-			draw_set_alpha(1);
-
 			// Unit window entries start
 			var line_color = #50a076;
 			draw_set_color(line_color);
@@ -750,6 +738,8 @@ function scr_ui_manage() {
 			tooltip_text = string_hash_to_newline(carry_data[2]);
 			array_push(tooltip_drawing, [tooltip_text, [x2,y1,x1,y2]]);
 		}
+		// Animated scanline
+		draw_animated_scanline(xx+1007+18, yy+140+4, 530, 368);
 	}	
 
 	    draw_set_font(fnt_40k_14);draw_set_halign(fa_left);
