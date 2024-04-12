@@ -738,7 +738,7 @@ function scr_ui_manage() {
 			y1 = yy+466;
 			x2 = x1-string_width(carry_string);
 			y2 = y1+string_height(carry_string);
-			if (selected_unit.encumbered_melee){
+			if (selected_unit.encumbered_ranged){
 				draw_set_color(#bf4040);
 			}
 			draw_text_outline(x1,y1,string_hash_to_newline(carry_string));
