@@ -537,22 +537,27 @@ function scr_draw_unit_image(x_draw, y_draw){
                     if (ui_specialist==5){
                         if (array_contains(traits, "tinkerer")){
                             //specific_armour_sprite="none";
-                            armour_draw=[spr_techmarine_core,0];
-                            arm=0;
-                            armour_bypass=true;
+                            armour_sprite =spr_techmarine_core;
+                            specific_armour_sprite = spr_techmarine_core;
                         }
-                    } else if (role()=="Chapter Master"){
-                        if (global.chapter_name=="Blood Angels"){
+                    }  if (global.chapter_name=="Blood Angels"){
+                        if (role()=="Chapter Master"){
                             //specific_armour_sprite="none";
                             armour_draw=[spr_dante,0];
                             armour_bypass=true;
+                        } else if (role()==obj_ini.role[100][2] && mobility_item()=="Jump Pack" && armour()!="MK3 Iron Armour"){
+                            armour_bypass=false;
+                            armour_draw=[];
+                            armour_sprite =spr_sanguin_guard;
+                            specific_armour_sprite = spr_sanguin_guard;                            
                         }
                     }
                 }                
                 if (arm>0){
-                    if (arm<10){
+                    draw_sprite(spr_servo_arms,0,xx+x_draw,yy+y_draw);
+                    /*if (arm<10){
                         draw_sprite(spr_pack_arm,arm,xx+x_draw,yy+y_draw)
-                    } else if (arm>=10) then draw_sprite(spr_pack_arms,arm-10,xx+x_draw,yy+y_draw);                    
+                    } else if (arm>=10) then draw_sprite(spr_pack_arms,arm-10,xx+x_draw,yy+y_draw);  */                  
                 }                 
                 if (specific_armour_sprite != "none"){
                     // This draws the arms
@@ -593,6 +598,11 @@ function scr_draw_unit_image(x_draw, y_draw){
                         }
                     }                    
                     draw_sprite(armour_sprite,specialist_colours,xx+x_draw,yy+y_draw);
+                    if (armour()=="MK7 Aquila"){
+                        if (body.torso.variation%2 == 1){
+                            draw_sprite(mk7_chest_variants,0,xx+x_draw,yy+y_draw);
+                        }
+                    }
                     if (!armour_bypass){                
                         if (ttrim==0 && specialist_colours<=1) then draw_sprite(specific_armour_sprite,4,xx+x_draw,yy+y_draw);
                         if (ttrim==0 && specialist_colours>=2) then draw_sprite(specific_armour_sprite,5,xx+x_draw,yy+y_draw);
