@@ -599,7 +599,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                     }                    
                     draw_sprite(armour_sprite,specialist_colours,xx+x_draw,yy+y_draw);
                     if (armour()=="MK7 Aquila"){
-                        if (if_struct_exists(body.torso, "variation")){
+                        if (struct_exists(body.torso, "variation")){
                             if (body.torso.variation%2 == 1){
                                 draw_sprite(mk7_chest_variants,0,xx+x_draw,yy+y_draw);
                             }
