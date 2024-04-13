@@ -96,7 +96,7 @@ for (g=1;g<array_length(unit_struct);g++){
             //if (marine_mobi[g]="Bike") then scr_special_weapon("Twin Linked Bolters",g,true);
 
 
-            if (unit.mobility_item!="Bike") and (unit.mobility_item!=""){
+            if (unit.mobility_item()!="Bike") and (unit.mobility_item()!=""){
                mobi_item=unit.get_mobility_data();
                if (is_struct(mobi_item)){
                 if( mobi_item.has_tag("jump")){
