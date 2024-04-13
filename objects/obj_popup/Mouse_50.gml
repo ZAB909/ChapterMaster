@@ -385,7 +385,7 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
         //TODO standardise exp check
         if (n_wep1="Thunder Hammer"){
             var g,exp_check;g=0;exp_check=0;
-            for (var g=0;g<array_length(obj_controller.display_unit){
+            for (var g=0;g<array_length(obj_controller.display_unit);g++){
                 if (obj_controller.man_sel[g]=1) and (display_unit[g].experience()<140){
                     exp_check=1;
                     n_good1=0;
