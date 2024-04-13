@@ -96,13 +96,14 @@ for (g=1;g<array_length(unit_struct);g++){
             //if (marine_mobi[g]="Bike") then scr_special_weapon("Twin Linked Bolters",g,true);
 
 
-            if (marine_mobi[g]!="Bike") and (marine_mobi[g]!=""){
+            if (unit.mobility_item!="Bike") and (unit.mobility_item!=""){
                mobi_item=unit.get_mobility_data();
                if (is_struct(mobi_item)){
                 if( mobi_item.has_tag("jump")){
                     for (var stack_index=1;stack_index<array_length(wep);stack_index++){
                         if (wep[stack_index]==""||(wep[stack_index]=="hammer_of_wrath" && !head_role)){
                             add_data_to_stack(stack_index,unit.hammer_of_wrath());
+                            ammo[stack_index] = -1;
                             if (head_role){
                                 wep_title[stack_index]=unit.role();
                                 wep_solo[stack_index]=unit.name();
@@ -209,7 +210,7 @@ for (g=1;g<array_length(unit_struct);g++){
                     if (is_struct(weapon)){
                         for (j=1;j<=40;j++){
                             if (wep[j]==""||wep[j]==weapon.name){
-                                add_data_to_stack(j,weapon)
+                                add_data_to_stack(j,weapon);
                                 break;                             
                             }
                         }

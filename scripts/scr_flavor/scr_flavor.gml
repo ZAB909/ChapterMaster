@@ -23,7 +23,8 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 
 	if (number_of_attacking_weapons>0){
 	    if (wep_solo[number_of_attacking_weapons]!=""){
-	        solod=true;full_name=wep_solo[number_of_attacking_weapons];
+	        solod=true;
+	        full_name=wep_solo[number_of_attacking_weapons];
 	        if (wep_title[number_of_attacking_weapons]!=""){
 	            full_name=wep_title[number_of_attacking_weapons]+" "+wep_solo[number_of_attacking_weapons];
 	        }
@@ -148,7 +149,7 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	    if (target.dudes_num[targeh]>1) then p1=string(number_of_shots)+" "+string(wepp)+" spray ooze on the "+string(duhs)+" ranks.";
 	}
 
-	if (wepp="melee") or (wepp="Melee") and (solod=false){flavored=1;var ra;ra=choose(1,2,3,4);
+	if (wepp=="fists") or (wepp=="fists") and (solod=false){flavored=1;var ra;ra=choose(1,2,3,4);
 	    // This needs to be worked out
 	    if (casulties=0) then p2="MELEE";
 	    if (casulties>0){
