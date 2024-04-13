@@ -179,7 +179,8 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
 	}
 
 
-	if (instance_exists(target_object)) and (owner  = eFACTION.Player){
+	if (instance_exists(target_object)) and (owner  == eFACTION.Player){
+		show_debug_message("{0}, {1}, {2}, {3}, {4}", wep_num[weapon_index_position], wep[weapon_index_position], splash[weapon_index_position], range[weapon_index_position], att[weapon_index_position])
 	    var shots_fired,stop,damage_type;
     
 	    if (weapon_index_position>0){
@@ -198,21 +199,21 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
     
 	    damage_type="";stop=0;
     
-    	while (target_type<array_Length(target_object.dudes_hp)){
+    	while (target_type<array_length(target_object.dudes_hp)){
     		if (target_object.dudes_hp[target_type]==0){
-    			target_type+=1; 
+    			target_type++; 
+    			stop=1;
     		} else {
+    			stop=0;
     			break;
     		}
     	}
-
-	    if (target_object.dudes_hp[target_type]=0) then stop=1;
    
 	    if (weapon_index_position>0){
 	        if (ammo[weapon_index_position]=0) then stop=1;
 	        if (ammo[weapon_index_position]>0) then ammo[weapon_index_position]-=1;
 	    }
-	    if (wep[weapon_index_position]="Missile Silo") then obj_ncombat.player_silos-=min(obj_ncombat.player_silos,30);
+	    if (wep[weapon_index_position]=="Missile Silo") then obj_ncombat.player_silos-=min(obj_ncombat.player_silos,30);
 
     
 	    if (damage_data!="highest") then damage_type=damage_data;
@@ -236,11 +237,11 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
 	        if (weapon_index_position<-40) and (stop=0) then that_works=true;
         
 	        if (that_works=true){
-	            var damage_per_weapon=0,hit_number=0,c=0,target_armour_value=0,ap=0,wii="";
+	            var damage_per_weapon=0,c=0,target_armour_value=0,ap=0,wii="";
 	            attack_count_mod=0;
             
 	            if (weapon_index_position>0){
-	                damage_per_weapon=(aggregate_damage/wep_num[weapon_index_position])*target_object.dudes_dr[target_type];
+	                damage_per_weapon=(aggregate_damage/wep_num[weapon_index_position]);
 	                ap=armour_pierce;
 	            }// Average damage
 	            if (weapon_index_position<-40){
@@ -250,12 +251,12 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
 	                if (weapon_index_position=-51){
 	                	wii="Heavy Bolter Emplacement";
 	                	at=160;
-	                	ap=0;
+	                	armour_pierce=0;
 	                }
 	                if (weapon_index_position=-52){
 	                	wii="Missile Launcher Emplacement";
 	                	at=200;
-	                	ap=1;
+	                	armour_pierce=1;
 	                }
 	                if (weapon_index_position=-53){
 	                	wii="Missile Silo";
@@ -266,24 +267,33 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
             
 	            target_armour_value=target_object.dudes_ac[target_type];
 
-	            if (target_object.dudes_vehicle[target_type]=0){
-	                if (ap=1) then target_armour_value=0;
-	                if (ap=-1) then target_armour_value=target_armour_value*6;
-	            }else if (target_object.dudes_vehicle[target_type]=1){
-	                if (ap=0) then target_armour_value=target_armour_value*6;
-	                if (ap=-1) then target_armour_value=damage_per_weapon;
+	            if (target_object.dudes_vehicle[target_type]){
+	                if (armour_pierce=0) then target_armour_value=target_armour_value*6;
+	                if (armour_pierce=-1) then target_armour_value=damage_per_weapon;
+	            } else {
+	                if (armour_pierce=1) then target_armour_value=0;
+	                if (armour_pierce=-1) then target_armour_value=target_armour_value*6;
 	            }
-	            hit_number=damage_per_weapon-target_armour_value;
-	            if (hit_number<=0) then hit_number=0;// Average after armour
-            
-	            c=hit_number*shots_fired;// New damage
+
+            	attack_count_mod = splash[weapon_index_position]<1 ? 1 : splash[weapon_index_position];
+
+	            final_hit_damage_value=damage_per_weapon-(target_armour_value*attack_count_mod); //damage armour reduction
+
+	            final_hit_damage_value*=target_object.dudes_dr[target_type];//damage_resistance mod
+
+	            if (final_hit_damage_value<=0) then final_hit_damage_value=0;// Average after armour
+
+
+	            c=shots_fired*final_hit_damage_value;// New damage
             
 	            var casualties,onceh=0,ponies=0;
-	            if (attack_count_mod<=1) then casualties=min(floor(c/target_object.dudes_hp[target_type]),shots_fired);
-	            if (attack_count_mod>1) then casualties=floor(c/target_object.dudes_hp[target_type]);
+
+	            casualties=min(floor(c/target_object.dudes_hp[target_type]),shots_fired*attack_count_mod);
             
 	            ponies=target_object.dudes_num[target_type];
-	            if (target_object.dudes_num[target_type]=1) and ((target_object.dudes_hp[target_type]-c)<=0){casualties=1;}
+	            if (target_object.dudes_num[target_type]=1) and ((target_object.dudes_hp[target_type]-c)<=0){
+	            	casualties=1;
+	            }
             
             
             
@@ -293,18 +303,10 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
 	                overkill=casualties-target_object.dudes_num[target_type];
 	                damage_remaining=c-(overkill*target_object.dudes_hp[target_type]);
                 
-	                var proportional_shots;
-	                proportional_shots=round(damage_remaining/damage_per_weapon);
-	                shots_remaining=proportional_shots;
-                
-	                // show_message("killed "+string(casualties)+"x "+string(target_object.dudes[target_type]));
-	                // show_message("did "+string(c)+" damage with "+string(shots_fired)+" shots fired, have "+string(damage_remaining)+" damage remaining (about "+string(shots_remaining)+" shots)");
+	                shots_remaining=round(damage_remaining/damage_per_weapon);
 	            }
             
-            
-            
-            
-            
+
 	            if (target_object.dudes_num[target_type]-casualties<0) then casualties=ponies;
 	            if (casualties<0) then casualties=0;
             
@@ -326,13 +328,10 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
 	                    obj_ncombat.dead_ene[openz]=string(target_object.dudes[target_type]);
 	                    obj_ncombat.dead_ene_n[openz]=casualties;
 	                }
-                
-	                // if (casualties=1) then obj_ncombat.dead_ene[obj_ncombat.dead_enemies]="1 "+string(target_object.dudes[target_type]);
-	                // if (casualties>1) then obj_ncombat.dead_ene[obj_ncombat.dead_enemies]=string(casualties)+" "+string(target_object.dudes[target_type]);
 	            }
             
             
-	            var k;k=0;
+	            var k=0;
 	            if (damage_remaining>0) and (shots_remaining>0) then repeat(10){
 	                if (damage_remaining>0) and (shots_remaining>0){
 	                    var godd;godd=0;

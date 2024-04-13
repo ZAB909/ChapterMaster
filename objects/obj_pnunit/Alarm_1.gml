@@ -54,6 +54,8 @@ var dreaded=false, unit;
 add_data_to_stack = function(stack_index, weapon, unit_damage=false){
     if (!unit_damage==false){
         att[stack_index]+=unit_damage;
+    } else {
+        att[stack_index]+=weapon.attack;
     }
     apa[stack_index]=weapon.arp;
     range[stack_index]=weapon.range;

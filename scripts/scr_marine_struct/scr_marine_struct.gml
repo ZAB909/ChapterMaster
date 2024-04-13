@@ -1981,7 +1981,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			wrath.attack=(strength*2) +(0.5*weapon_skill);
 			wrath.name = "hammer_of_wrath";
 			wrath.range = 1;
-			ammo[stack_index] = -1;
+			wrath.ammo = -1;
 			return wrath;
 		}
 
