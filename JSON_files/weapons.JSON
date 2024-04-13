@@ -161,7 +161,7 @@
     "ranged_hands": 0,
     "ammo": 0,
     "range": 1,
-    "spli": 1,
+    "spli": 3,
     "arp": 0
 },
 "Chainsword": {
@@ -195,7 +195,7 @@
     "ranged_hands": 0,
     "ammo": 0,
     "range": 1,
-    "spli": 1,
+    "spli": 3,
     "arp": 0
 },
 "Chainaxe": {
@@ -229,7 +229,7 @@
     "ranged_hands": 0,
     "ammo": 0,
     "range": 1,
-    "spli": 1,
+    "spli": 3,
     "arp": 0
 },
 "Eviscerator": {
@@ -263,7 +263,7 @@
     "ranged_hands": 0,
     "ammo": 0,
     "range": 1,
-    "spli": 1,
+    "spli": 3,
     "arp": 1
 },
 "Power Sword": {
@@ -297,7 +297,7 @@
     "ranged_hands": 0,
     "ammo": 0,
     "range": 1,
-    "spli": 1,
+    "spli": 3,
     "arp": 1,
     "special_description": "Parry"
 },
@@ -367,7 +367,7 @@
     "ranged_hands": 0,
     "ammo": 0,
     "range": 1,
-    "spli": 1,
+    "spli": 3,
     "arp": 1,
     "special_description": "Parry"
 },
@@ -402,7 +402,7 @@
     "ranged_hands": 0,
     "ammo": 0,
     "range": 1,
-    "spli": 1,
+    "spli": 3,
     "arp": 1,
     "special_description": "Parry"
 },
@@ -437,7 +437,7 @@
     "ranged_hands": 0,
     "ammo": 0,
     "range": 1,
-    "spli": 1,
+    "spli": 3,
     "arp": 1
 },
 "Power Axe": {
@@ -505,7 +505,7 @@
     "ranged_hands": 1,
     "ammo": 0,
     "range": 1,
-    "spli": 1,
+    "spli": 3,
     "arp": 1
 },
 "Lightning Claw": {
@@ -539,7 +539,7 @@
     "ranged_hands": 1,
     "ammo": 0,
     "range": 1,
-    "spli": 1,
+    "spli": 3,
     "arp": 1
 },
 "Dreadnought Lightning Claw": {
@@ -573,7 +573,7 @@
     "ranged_hands": 0,
     "ammo": 0,
     "range": 1,
-    "spli": 1,
+    "spli": 3,
     "arp": 0
 },
 "Thunder Hammer": {
@@ -607,7 +607,7 @@
     "ranged_hands": 1,
     "ammo": 0,
     "range": 1,
-    "spli": 1,
+    "spli": 3,
     "arp": 1
 },
 "Tome":{
@@ -675,7 +675,7 @@
     "ranged_hands": 0,
     "ammo": 0,
     "range": 1,
-    "spli": 1,
+    "spli": 3,
     "arp": 1
 },
 "Master Crafted Thunder Hammer": {
@@ -709,7 +709,7 @@
     "ranged_hands": 0,
     "ammo": 0,
     "range": 1,
-    "spli": 1,
+    "spli": 3,
     "arp": 1
 },
 "Bolt Pistol": {
@@ -811,7 +811,7 @@
     "ranged_hands": 2,
     "ammo": 0,
     "range": 10,
-    "spli": 1,
+    "spli": 3,
     "arp": 0
 },
 // ... (Other weapons)
@@ -846,7 +846,7 @@
     "ranged_hands": 2,
     "ammo": 8,
     "range": 10,
-    "spli": 1,
+    "spli": 3,
     "arp": 0
 },
 "Stalker Pattern Bolter": {
@@ -914,7 +914,7 @@
     "ranged_hands": 2,
     "ammo": 16,
     "range": 12,
-    "spli": 1,
+    "spli": 3,
     "arp": 0
 },
 "Heavy Flamer": {
@@ -948,7 +948,7 @@
     "ranged_hands": 2,
     "ammo": 8,
     "range": 2,
-    "spli": 1,
+    "spli": 3,
     "arp": -1
 },
 "CCW Heavy Flamer": {
@@ -982,7 +982,7 @@
     "ranged_hands": 0,
     "ammo": 6,
     "range": 2.1,
-    "spli": 1,
+    "spli": 3,
     "arp": -1
 },
 "Inferno Cannon": {
@@ -1016,7 +1016,7 @@
     "ranged_hands": 2,
     "ammo": 0,
     "range": 3.1,
-    "spli": 1,
+    "spli": 3,
     "arp": -1
 },
 "Meltagun": {
@@ -1118,7 +1118,7 @@
     "ranged_hands": 2,
     "ammo": 8,
     "range": 4.1,
-    "spli": 1,
+    "spli": 3,
     "arp": 1
 },
 "Plasma Pistol": {
@@ -1254,7 +1254,7 @@
     "ranged_hands": 2,
     "ammo": 16,
     "range": 12,
-    "spli": 1,
+    "spli": 3,
     "arp": 1
 },
 "Master Crafted Plasma Gun": {
@@ -1288,7 +1288,7 @@
     "ranged_hands": 2,
     "ammo": 16,
     "range": 14,
-    "spli": 1,
+    "spli": 3,
     "arp": 1
 },
 "Sniper Rifle": {
@@ -1322,7 +1322,7 @@
     "ranged_hands": 2,
     "ammo": 20,
     "range": 18,
-    "spli": 1,
+    "spli": 3,
     "arp": 0
 },
 "Assault Cannon": {
@@ -1356,7 +1356,7 @@
     "ranged_hands": 2,
     "ammo": 5,
     "range": 12,
-    "spli": 1,
+    "spli": 3,
     "arp": 0
 },
 "Autocannon": {
@@ -1390,7 +1390,7 @@
     "ranged_hands": 2,
     "ammo": 25,
     "range": 18,
-    "spli": 1,
+    "spli": 3,
     "arp": 0
 },
 "Missile Launcher": {
@@ -1424,7 +1424,7 @@
     "ranged_hands": 2,
     "ammo": 6,
     "range": 24,
-    "spli": 1,
+    "spli": 3,
     "arp": 0
 },
 "Lascannon": {
@@ -1492,7 +1492,7 @@
     "ranged_hands": 1,
     "ammo": 1,
     "range": 20,
-    "spli": 1,
+    "spli": 3,
     "arp": 1
 },
 "Integrated Bolters": {
@@ -1526,7 +1526,7 @@
     "ranged_hands": 0,
     "ammo": 20,
     "range": 8.1,
-    "spli": 1,
+    "spli": 3,
     "arp": 1
 },
 "Power Fists": {
@@ -1560,7 +1560,7 @@
     "ranged_hands": 0,
     "ammo": 0,
     "range": 1,
-    "spli": 1,
+    "spli": 3,
     "arp": 0
 },
 "Twin Linked Heavy Bolter": {
@@ -1594,7 +1594,7 @@
     "ranged_hands": 0,
     "ammo": 20,
     "range": 16,
-    "spli": 1,
+    "spli": 3,
     "arp": 1
 },
 "Twin Linked Lascannon": {
@@ -1696,7 +1696,7 @@
     "ranged_hands": 0,
     "ammo": 10,
     "range": 16,
-    "spli": 1,
+    "spli": 3,
     "arp": 1
 },
 "Whirlwind Missiles": {
@@ -1730,7 +1730,7 @@
     "ranged_hands": 0,
     "ammo": 6,
     "range": 20,
-    "spli": 1,
+    "spli": 3,
     "arp": 1
 },
 "Twin Linked Heavy Bolter Mount": {
@@ -1764,7 +1764,7 @@
     "ranged_hands": 0,
     "ammo": 20,
     "range": 16,
-    "spli": 1,
+    "spli": 3,
     "arp": 0
 },
 "Twin Linked Lascannon Mount": {
@@ -1798,7 +1798,7 @@
     "ranged_hands": 0,
     "ammo": 10,
     "range": 20,
-    "spli": 1,
+    "spli": 3,
     "arp": 1
 },
 "Twin Linked Assault Cannon Mount": {
@@ -1832,7 +1832,7 @@
     "ranged_hands": 0,
     "ammo": 5,
     "range": 12,
-    "spli": 1,
+    "spli": 3,
     "arp": 0
 },
 "Reaper Autocannon Mount": {
@@ -1866,7 +1866,7 @@
     "ranged_hands": 0,
     "ammo": 25,
     "range": 15,
-    "spli": 1,
+    "spli": 3,
     "arp": 0
 },
 "Quad Linked Heavy Bolter Sponsons": {
@@ -1900,7 +1900,7 @@
     "ranged_hands": 0,
     "ammo": 10,
     "range": 16,
-    "spli": 1,
+    "spli": 3,
     "arp": 1
 },
 "Twin Linked Lascannon Sponsons": {
@@ -1934,7 +1934,7 @@
     "ranged_hands": 0,
     "ammo": 5,
     "range": 20,
-    "spli": 1,
+    "spli": 3,
     "arp": 1
 },
 "Hurricane Bolter Sponsons": {
@@ -1968,7 +1968,7 @@
     "ranged_hands": 0,
     "ammo": 20,
     "range": 12,
-    "spli": 1,
+    "spli": 3,
     "arp": 0
 },
 "Flamestorm Cannon Sponsons": {
@@ -2002,7 +2002,7 @@
     "ranged_hands": 0,
     "ammo": 6,
     "range": 3,
-    "spli": 1,
+    "spli": 3,
     "arp": 1
 },
 "Twin Linked Heavy Flamer Sponsons": {
@@ -2036,7 +2036,7 @@
     "ranged_hands": 0,
     "ammo": 12,
     "range": 2.1,
-    "spli": 1,
+    "spli": 3,
     "arp": -1
 },
 "Twin Linked Multi-Melta Sponsons": {
@@ -2070,7 +2070,7 @@
     "ranged_hands": 0,
     "ammo": 6,
     "range": 4.1,
-    "spli": 1,
+    "spli": 3,
     "arp": 1
 },
 "Twin Linked Volkite Culverin Sponsons": {
@@ -2104,7 +2104,7 @@
     "ranged_hands": 0,
     "ammo": 25,
     "range": 18,
-    "spli": 1,
+    "spli": 3,
     "arp": 0
 },
 "Storm Bolter": {
@@ -2138,7 +2138,7 @@
     "ranged_hands": 0,
     "ammo": 10,
     "range": 10,
-    "spli": 1,
+    "spli": 3,
     "arp": 0
 },
 "Flamer": {
@@ -2172,7 +2172,7 @@
     "ranged_hands": 0,
     "ammo": 4,
     "range": 2.1,
-    "spli": 1,
+    "spli": 3,
     "arp": -1
 },
 "Underslung Flamer": {
@@ -2206,7 +2206,7 @@
     "ranged_hands": 0,
     "ammo": 4,
     "range": 2.1,
-    "spli": 1,
+    "spli": 3,
     "arp": 0
 },
 "Incinerator": {
@@ -2240,7 +2240,7 @@
     "ranged_hands": 0,
     "ammo": 4,
     "range": 2.1,
-    "spli": 1,
+    "spli": 3,
     "arp": -1
 }
 
