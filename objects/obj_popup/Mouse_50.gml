@@ -389,7 +389,8 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
                 if (obj_controller.man_sel[g]=1) and (display_unit[g].experience()<140){
                     exp_check=1;
                     n_good1=0;
-                    warning="A unit must have 140+ EXP to use a Thunder Hammer."
+                    warning="A unit must have 140+ EXP to use a Thunder Hammer."];
+                    break;
                 }
             }
         }
