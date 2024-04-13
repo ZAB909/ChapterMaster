@@ -382,12 +382,16 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
 
         if (have_wep1_num>=req_wep1_num) or (n_wep1="(None") then n_good1=1;
         if (have_wep1_num<req_wep1_num){n_good1=0;warning="Not enough "+string(n_wep1)+"; "+string(req_wep1_num-have_wep1_num)+" more are required.";}
+        //TODO standardise exp check
         if (n_wep1="Thunder Hammer"){
             var g,exp_check;g=0;exp_check=0;
-            repeat(array_length(obj_controller.display_unit)){
-                g+=1;if (obj_controller.man_sel[g]=1) and (obj_controller.ma_exp[g]<140) then exp_check=1;
+            for (var g=0;g<array_length(obj_controller.display_unit)){
+                if (obj_controller.man_sel[g]=1) and (display_unit[g].experience()<140){
+                    exp_check=1;
+                    n_good1=0;
+                    warning="A unit must have 140+ EXP to use a Thunder Hammer."
+                }
             }
-            if (exp_check=1){n_good1=0;warning="A unit must have 140+ EXP to use a Thunder Hammer.";}
         }
         if (string_count("Terminator",n_armour)=0) and (string_count("Dreadnought",n_armour)=0) and (string_count("Tartaros",n_armour)=0) and (n_wep1="Assault Cannon"){n_good1=0;warning="Cannot use Assault Cannons without Terminator/Dreadnought Armour.";}
         if (string_count("Dreadnought",n_armour)=0) and (n_wep1="Close Combat Weapon"){n_good1=0;warning="Only "+string(obj_ini.role[100][6])+" can use Close Combat Weapons.";}
@@ -404,8 +408,9 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
 
         if (have_wep2_num>=req_wep2_num) or (n_wep2="(None") then n_good2=1;
         if (have_wep2_num<req_wep2_num){n_good2=0;warning="Not enough "+string(n_wep2)+"; "+string(req_wep2_num-have_wep2_num)+" more are required.";}
+        //TODO standardise exp check
         if (n_wep2="Thunder Hammer"){
-            var g=0,exp_check=0;
+            var g=-1,exp_check=0;
             repeat(array_length(obj_controller.display_unit)){
                 g+=1;if (obj_controller.man_sel[g]=1) and (obj_controller.ma_exp[g]<140) then exp_check=1;
             }
