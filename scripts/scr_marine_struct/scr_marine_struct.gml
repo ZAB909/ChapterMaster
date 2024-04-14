@@ -1652,34 +1652,34 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 			carry_string += $"#"
 			carry_string += $"      =Maximum=#"
-			carry_string += $"  =Stats=#"
+			carry_string += $"      =Stats=#"
 			if base_group == "tech_priest" {
 				var tec_bonus = technology/180;
 				ranged_hands_limit += tec_bonus;
 				carry_string += $"Technology: +{string_format(tec_bonus, 0, 2)}#";
 			}
 			if (strength != 0) {
-				var str_bonus = strength / 42;
+				var str_bonus = strength / 46;
 				ranged_hands_limit += str_bonus;
 				carry_string += "Strength: +" + string_format(str_bonus, 0, 2) + "#";
 			}
 			if (constitution != 0) {
-				var con_bonus = constitution / 84;
+				var con_bonus = constitution / 92;
 				ranged_hands_limit += con_bonus;
 				carry_string += "Constitution: +" + string_format(con_bonus, 0, 2) + "#";
 			}
 			if (dexterity != 0) {
-				var dex_bonus = dexterity / 168;
+				var dex_bonus = dexterity / 184;
 				ranged_hands_limit += dex_bonus;
 				carry_string += "Dexterity: +" + string_format(dex_bonus, 0, 2) + "#";
 			}
 			if (ballistic_skill != 0) {
-				var bs_bonus = ballistic_skill / 168;
+				var bs_bonus = ballistic_skill / 184;
 				ranged_hands_limit += bs_bonus;
 				carry_string += "Ballistic Skill: +" + string_format(bs_bonus, 0, 2) + "#";
 			}			
 
-			carry_string += $"  =Gear=#"
+			carry_string += $"      =Gear=#"
 			var armour_carry = get_armour_data("ranged_hands");
 			if (armour_carry != 0) {
 				ranged_hands_limit += armour_carry;
@@ -1716,7 +1716,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			//default to fists
 			if (!is_struct(_wep1)) then _wep1 = new equipment_struct({},"");
 			if (!is_struct(_wep2)) then _wep2 = new equipment_struct({},"");
-			carry_data[0] = _wep1.ranged_hands+_wep2.ranged_hands;
 			if (allegiance==global.chapter_name){
 				_wep1.owner_data("chapter");
 				_wep2.owner_data("chapter");
@@ -1820,42 +1819,53 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			var carry_string = "";
 
 			if is_struct(_wep1) || is_struct(_wep2){
-				carry_string += $"    =Current=#";
+				carry_string += $"      =Current="
 				if is_struct(_wep1){
-					melee_carrying += _wep1.melee_hands;
-					carry_string += $"{_wep1.name}: {_wep1.melee_hands}#";
+					if _wep1.melee_hands != 0{
+						carry_string += $"#"
+						melee_carrying += _wep1.melee_hands;
+						carry_string += $"{_wep1.name}: {_wep1.melee_hands}";
+					}
 				}
-			}
-			is_struct(_wep2){
 				if is_struct(_wep2){
-					melee_carrying += _wep1.melee_hands;
-					carry_string += $"{_wep2.name}: {_wep2.melee_hands}#";
+					if _wep2.melee_hands != 0{
+						carry_string += $"#"
+						melee_carrying += _wep2.melee_hands;
+						carry_string += $"{_wep2.name}: {_wep2.melee_hands}";
+					}
 				}
 			}
 
-			carry_string += $"    =Maximum=#";
+			carry_string += $"#"
+			carry_string += $"      =Maximum=#"
+			carry_string += $"      =Stats=#"
 			if base_group == "tech_priest" {
-				var tec_bonus = technology/100;
-				melee_hands_limit = tec_bonus;
-				carry_string+=$"Technology: +{string_format(tec_bonus, 0, 2)}#";
+				var tec_bonus = technology/180;
+				melee_hands_limit += tec_bonus;
+				carry_string += $"Technology: +{string_format(tec_bonus, 0, 2)}#";
 			}
-
-			var str_bonus = strength / 30;
-			if (str_bonus != 0) {
+			if (strength != 0) {
+				var str_bonus = strength / 46;
 				melee_hands_limit += str_bonus;
 				carry_string += "Strength: +" + string_format(str_bonus, 0, 2) + "#";
 			}
-			var dex_bonus = dexterity / 100;
-			if (dex_bonus != 0) {
+			if (constitution != 0) {
+				var con_bonus = constitution / 92;
+				melee_hands_limit += con_bonus;
+				carry_string += "Constitution: +" + string_format(con_bonus, 0, 2) + "#";
+			}
+			if (dexterity != 0) {
+				var dex_bonus = dexterity / 184;
 				melee_hands_limit += dex_bonus;
 				carry_string += "Dexterity: +" + string_format(dex_bonus, 0, 2) + "#";
 			}
-			var ws_bonus = weapon_skill / 100;
-			if (ws_bonus != 0) {
+			if (weapon_skill != 0) {
+				var ws_bonus = weapon_skill / 184;
 				melee_hands_limit += ws_bonus;
 				carry_string += "Weapon Skill: +" + string_format(ws_bonus, 0, 2) + "#";
-			}
+			}			
 
+			carry_string += $"      =Gear=#"
 			var armour_carry = get_armour_data("melee_hands");
 			if (armour_carry != 0) {
 				melee_hands_limit += armour_carry;
@@ -1893,7 +1903,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			explanation_string += string_concat("  WSxSTR: ", format_number_with_sign(round((((weapon_skill/100)*(strength/20))-1)*100)), "%#");
 			explanation_string += string_concat("  EXP: ", format_number_with_sign(round((experience()/1000)*100)), "%#");
 
-			melee_carrying = melee_hands_limit();
+			carry_data = melee_hands_limit();
 			var _wep1 = get_weapon_one_data();
 			var _wep2 = get_weapon_two_data();
 			if (!is_struct(_wep1)) then _wep1 = new equipment_struct({},"");
@@ -1953,8 +1963,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			};
 			explanation_string = basic_wep_string + explanation_string
 
-			melee_carrying[0] =_wep1.melee_hands+_wep2.melee_hands;
-			if (melee_carrying[0]>melee_carrying[1]){
+			if (carry_data[0]>carry_data[1]){
 				encumbered_melee=true;	
 				melee_att*=0.6;
 				explanation_string+=$"Encumbered: x0.6#"
@@ -1986,7 +1995,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					secondary_modifier=1
 					side_arm_data="Dual: x1";
 				} else if (secondary_weapon.has_tag("pistol")){
-					if (melee_carrying[0]+0.8>=melee_carrying[1]){
+					if (carry_data[0]+0.8>=carry_data[1]){
 						secondary_modifier=0;
 					}else {
 						secondary_modifier = 0.6;
@@ -2002,7 +2011,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					explanation_string+=$"Side Arm: +{side_arm}({side_arm_data})#";
 				}
 			}
-			melee_damage_data=[final_attack,explanation_string,melee_carrying,primary_weapon, secondary_weapon];
+			melee_damage_data=[final_attack,explanation_string,carry_data,primary_weapon, secondary_weapon];
 			return melee_damage_data;
 		};
 

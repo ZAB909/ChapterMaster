@@ -1479,8 +1479,8 @@ global.gear = {
         "master_crafted": 5,
         "artifact": 10
       },
-      "melee_hands":0.1,
-      "ranged_hands":0.1,
+      "melee_hands":0.3,
+      "ranged_hands":0.3,
       "description": "A suit of Adeptus Astartes power armour. The Mark can no longer be determined- it appears to be a combination of several types.",
       "tags":["power_armour"],
     },
@@ -1501,8 +1501,8 @@ global.gear = {
         "master_crafted": 15,
         "artifact": 20
       },
-      "melee_hands":0.1,
-      "ranged_hands":0.1,
+      "melee_hands":0.3,
+      "ranged_hands":0.3,
       "description": "Heavily modified by the chapter artificers, and decorated without compare, this ancient Power Armour is beyond priceless.",
       "tags":["power_armour"],
     },
@@ -1523,8 +1523,8 @@ global.gear = {
         "master_crafted": 25,
         "artifact": 30
       },
-      "melee_hands":0.2,
-      "ranged_hands":0.2,
+      "melee_hands":0.6,
+      "ranged_hands":0.6,
       "description": "Terminator Armour is the toughest and most powerful armour designed by humanity, available only to the veterans of the Space Marine Chapters. This Indomitus Pattern is the most widespread and versatile pattern as of M41.",
       "tags":["terminator"],
       "req_exp":90,
@@ -1567,8 +1567,8 @@ global.gear = {
         "master_crafted": 25,
         "artifact": 30
       },
-      "melee_hands":0.2,
-      "ranged_hands":0.2,      
+      "melee_hands":0.6,
+      "ranged_hands":0.6,      
       "description": "This pattern is possibly considered the most advanced form of Terminator Armour, providing greater mobility for the wearer compared to the Indomitus with no loss in durability. In the M41 considered to be incredibly rare.",
       "tags":["terminator"],
       "req_exp":90,
@@ -1590,8 +1590,8 @@ global.gear = {
         "master_crafted": 25,
         "artifact": 30,
     },
-      "melee_hands":0.2,
-      "ranged_hands":0.2,      
+      "melee_hands":0.6,
+      "ranged_hands":0.6,      
       "description": "Among the first issued to the Space Marine Legions. Having additional plating and shield generators installed within the shoulder pads resulted in severe straining of the suit's exoskeleton and reduced the wearer's maneuverability, leading to its decline among some legions.",
       "tags":["terminator"],
       "req_exp":90,
@@ -1651,8 +1651,8 @@ global.gear = {
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
       },
-      "melee_hands":0.1,
-      "ranged_hands":0.1,
+      "melee_hands":0.3,
+      "ranged_hands":0.3,
       "description": "An ancient set of Armorum Ferrum. Has thicker armour plating but the added weight slows down the wearer.",
        "tags":["power_armour"],
     },
@@ -1673,8 +1673,8 @@ global.gear = {
         "master_crafted": 10, // Augmented
         "artifact": 15 // Augmented
       },
-      "melee_hands":0.1,
-      "ranged_hands":0.1,
+      "melee_hands":0.3,
+      "ranged_hands":0.3,
       "description": "Armour dating to the end of the Great Crusade. Often considered the ultimate Space Marine armour. The components are no longer reproducible.",
       "tags":["power_armour"],
     },
@@ -1695,8 +1695,8 @@ global.gear = {
         "master_crafted": 0,
         "artifact": 0
       },
-      "melee_hands":0.1,
-      "ranged_hands":0.1,
+      "melee_hands":0.3,
+      "ranged_hands":0.3,
       "description": "A hastily assembled Power armour during the Horus Heresy to act as a stopgap. Excels at melee, alongside some downsides.",
       "tags":["power_armour"],
     },
@@ -1717,8 +1717,8 @@ global.gear = {
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
       },
-      "melee_hands":0.1,
-      "ranged_hands":0.1,
+      "melee_hands":0.3,
+      "ranged_hands":0.3,
       "description": "Relatively old beakie armour, sleek as can be. Boosted olfactory and auditory sensors increase the ranged accuracy of the wearer. Making it more fragile.",
       "tags":["power_armour"],
     },
@@ -1739,8 +1739,8 @@ global.gear = {
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
       },
-      "melee_hands":0.1,
-      "ranged_hands":0.1,
+      "melee_hands":0.3,
+      "ranged_hands":0.3,
       "description": "The staple power armour of the adeptus astartes and the only power armour still widely manufactured.",
       "tags":["power_armour"],
     },
@@ -1761,8 +1761,8 @@ global.gear = {
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
       },
-      "melee_hands":0.1,
-      "ranged_hands":0.1,
+      "melee_hands":0.3,
+      "ranged_hands":0.3,
     "description": "The newest and most advanced of the standard mark power armours as such production has not yet reached maximum capacity creating a supply shortage.",
     "tags":["power_armour"],
     },
@@ -1783,8 +1783,8 @@ global.gear = {
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
       },
-      "melee_hands":0.1,
-      "ranged_hands":0.1,
+      "melee_hands":0.3,
+      "ranged_hands":0.3,
       "description": "The MK10 Tacticus is the most advanced pattern of power armour available to the Space Marines, featuring advanced materials and systems.",
       "tags":["power_armour"],
     }, 
