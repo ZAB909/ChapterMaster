@@ -453,12 +453,12 @@ function scr_enemy_ai_e() {
     beetle = 0;
     chaos_meeting = 0;
 
-    repeat(4) {
+    repeat(planets) {
         run += 1;
         force = 1;
         var forces_list = [];
         var force_count = 0;
-        if (p_player[run] > 0) {
+        if (p_player[run] > 0 && struct_exists(obj_controller.location_viewer.garrison_log, name)){
             forces_list = scr_count_forces(name, run, true, true)
             force_count = forces_list[0] + forces_list[1];
         }

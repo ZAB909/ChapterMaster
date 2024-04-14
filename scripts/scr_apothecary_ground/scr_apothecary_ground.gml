@@ -135,7 +135,7 @@ function apothecary_simple(){
 				unit = cur_units[a];
 				if (is_array(unit) && total_tech_points>0){
 					if (array_length(unit)>1){
-						while (points_spent<10 && veh_health<100 && total_tech_points>0){
+						while (points_spent<10 && obj_ini.veh_hp[unit[0]][unit[1]]<100 && total_tech_points>0){
 							points_spent++;
 							obj_ini.veh_hp[unit[0]][unit[1]]++;
 							total_tech_points--;
