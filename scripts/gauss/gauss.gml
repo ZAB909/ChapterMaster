@@ -11,3 +11,8 @@ function gauss(base, sd){
     w = sqrt(-2 * ln(w) / w);
     return base + sd * x1 * w;
 }
+
+function generate_power_law(bonus, exponent=1){
+    var randBonus = bonus * (1 - power(random(1), 1 / (1 + exponent)));
+    return randBonus;
+}

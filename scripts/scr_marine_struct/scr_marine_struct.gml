@@ -406,7 +406,7 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 	},
 	"marine":{
 			title : "Adeptus Astartes",
-			strength:[40,4],
+			strength:[40,10],
 			constitution:[40,3],
 			weapon_skill : [40,5],
 			ballistic_skill : [40,5],
@@ -424,7 +424,7 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 	},
 	"scout":{
 			title : "Adeptus Astartes",
-			strength:[36,4],
+			strength:[36,10],
 			constitution:[36,3],
 			weapon_skill : [30,2,"max"],
 			ballistic_skill : [30,2,"max"],
@@ -1060,7 +1060,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 			if (is_array(variable_struct_get(self, stats[stat_iter]))){
 				edit_stat = variable_struct_get(self, stats[stat_iter]);
-				stat_mod =  floor(gauss(edit_stat[0], edit_stat[1]));
+				stat_mod =  edit_stat[0] + round(generate_power_law(edit_stat[1], 3));
 
 				variable_struct_set(self, stats[stat_iter],  stat_mod);			
 			}
