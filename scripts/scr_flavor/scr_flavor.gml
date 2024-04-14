@@ -178,12 +178,12 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	    if (number_of_shots>1) then p1=$"{number_of_shots} Eviscerators rev and howl, hacking at the {target_name} ranks (X{casulties} casulties).";
 	}
 	if (wepp="Force Staff") and (solod=false){flavored=1;
-	    if (number_of_shots=1) then p1="A "+string(duhs)+" is blasted by a "+string(wepp)+".";
-	    if (number_of_shots>1) then p1=string(number_of_shots)+" "+string(wepp)+" crackle and swing into the "+string(duhs)+" ranks (X{casulties} casulties).";
+	    if (number_of_shots=1) then p1=$"A {target_name} is blasted by a {wepp}.";
+	    if (number_of_shots>1) then p1=$"{number_of_shots} {wepp} crackle and swing into the {target_name} ranks (X{casulties} casulties).";
 	}
 	if (wepp="Inactive Force Staff") and (solod=false){flavored=1;
-	    if (number_of_shots=1) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+".";
-	    if (number_of_shots>1) then p1=string(number_of_shots)+" "+string(wepp)+" are swung into the "+string(duhs)+" ranks (X{casulties} casulties).";
+	    if (number_of_shots=1) then p1=$"A {target_name} is struck by a {wepp}.";
+	    if (number_of_shots>1) then p1=$"{number_of_shots} {wepp} are swung into the {target_name} ranks (X{casulties} casulties).";
 	}
 	if ((string_count("Power",wepp)>0) or (wepp="Lightning Claw")) and (solod=false){flavored=1;
 	    if (target.dudes_num[targeh]=1){
@@ -195,7 +195,7 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	    }
 	}
 	if ((string_count("Power",wepp)>0) or (wepp="Force Staff") or (wepp="Inactive Force Staff") or (wepp="Lightning Claw")) and (solod=true){flavored=1;
-	    if (target.dudes_num[targeh]>1) then p1=string(full_name)+" swings his "+string(wepp)+".";
+	    if (target.dudes_num[targeh]>1) then p1=$"{full_name} swings his {wepp}.";
 	}
 
 
@@ -423,16 +423,16 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	    if (number_of_shots>1) and (casulties>0) then p1=$"{number_of_shots} Eviscerators rev and howl, hacking at the {target_name} ranks (X{casulties} casulties).  {casulties} are cut down.";
 	}
 	if (wepp="Force Staff") and (solod=false){flavored=1;
-	    if (number_of_shots=1) and (casulties=0) then p1="A "+string(duhs)+" is blasted by a "+string(wepp)+" but survives.";
-	    if (number_of_shots=1) and (casulties=1) then p1="A "+string(duhs)+" is incinerated by a "+string(wepp)+".";
-	    if (number_of_shots>1) and (casulties=0) then p1=string(number_of_shots)+" "+string(wepp)+" crackle and swing into the "+string(duhs)+" ranks (X{casulties} casulties).";
-	    if (number_of_shots>1) and (casulties>0) then p1=string(number_of_shots)+" "+string(wepp)+" crackle and swing into the "+string(duhs)+" ranks (X{casulties} casulties).  "+string(casulties)+" are smashed.";
+	    if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is blasted by a {wepp} but survives.";
+	    if (number_of_shots=1) and (casulties=1) then p1=$"A {target_name} is incinerated by a {wepp}.";
+	    if (number_of_shots>1) and (casulties=0) then p1=$"{number_of_shots} {wepp} crackle and swing into the {target_name} ranks (X{casulties} casulties).";
+	    if (number_of_shots>1) and (casulties>0) then p1=$"{number_of_shots} {wepp} crackle and swing into the {target_name} ranks (X{casulties} casulties).  "+string(casulties)+" are smashed.";
 	}
 	if (wepp="Inactive Force Staff") and (solod=false){flavored=1;
-	    if (number_of_shots=1) and (casulties=0) then p1="A "+string(duhs)+" is struck by a "+string(wepp)+" but survives.";
-	    if (number_of_shots=1) and (casulties=1) then p1="A "+string(duhs)+" is smashed by a "+string(wepp)+".";
-	    if (number_of_shots>1) and (casulties=0) then p1=string(number_of_shots)+" "+string(wepp)+" are swung into the "+string(duhs)+" ranks (X{casulties} casulties).";
-	    if (number_of_shots>1) and (casulties>0) then p1=string(number_of_shots)+" "+string(wepp)+" are swung into the "+string(duhs)+" ranks (X{casulties} casulties).  "+string(casulties)+" are smashed.";
+	    if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is struck by a {wepp} but survives.";
+	    if (number_of_shots=1) and (casulties=1) then p1=$"A {target_name} is smashed by a {wepp}.";
+	    if (number_of_shots>1) and (casulties=0) then p1=$"{number_of_shots} {wepp} are swung into the {target_name} ranks (X{casulties} casulties).";
+	    if (number_of_shots>1) and (casulties>0) then p1=$"{number_of_shots} {wepp} are swung into the {target_name} ranks (X{casulties} casulties).  "+string(casulties)+" are smashed.";
 	}
 	if ((string_count("Power",wepp)>0) or (wepp="Lightning Claw")) and (solod=false){flavored=1;
 	    if (target.dudes_num[targeh]=1){
@@ -448,10 +448,10 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	    }
 	}
 	if ((string_count("Power",wepp)>0) or (wepp="Force Staff") or (wepp="Inactive Force Staff") or (wepp="Lightning Claw")) and (solod=true){flavored=1;
-	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=string(full_name)+" swings his "+string(wepp)+" into the "+string(duhs)+" ranks (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=string(full_name)+" swings his "+string(wepp)+" into the "+string(duhs)+" ranks (X{casulties} casulties) and kills "+string(casulties)+".";
-	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=string(full_name)+" swings his "+string(wepp)+" into a "+string(duhs)+" but fails to kill it.";
-	    if (target.dudes_num[targeh]=1) and (casulties>0) then p1=string(full_name)+" swings his "+string(wepp)+" into a "+string(duhs)+", killing it.";
+	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=string(full_name)+" swings his {wepp} into the {target_name} ranks (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=string(full_name)+" swings his {wepp} into the {target_name} ranks (X{casulties} casulties) and kills "+string(casulties)+".";
+	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=string(full_name)+" swings his {wepp} into a {target_name} but fails to kill it.";
+	    if (target.dudes_num[targeh]=1) and (casulties>0) then p1=string(full_name)+" swings his {wepp} into a {target_name}, killing it.";
 	}
 
 
