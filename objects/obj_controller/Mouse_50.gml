@@ -1294,7 +1294,6 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 with(obj_star_select){instance_destroy();}
                 with(obj_fleet_select){instance_destroy();}
                 view_squad=false;
-                unit_bio = true;
             }
             if (menu==1) and (onceh==0){
                 menu=0;
