@@ -19,7 +19,7 @@ function scr_management(argument0) {
 	    pane.company=0;
 		pane.manage=11;
 		pane.header=3;
-		pane.title="CHAPTER COMMAND";
+		pane.title="HEADQUARTERS";
     
 	    pane=instance_create(475,180-48,obj_managment_panel);
 	    pane.company=0;
