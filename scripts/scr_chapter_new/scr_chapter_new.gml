@@ -51,7 +51,8 @@ function scr_chapter_new(argument0) {
 	    color_to_pauldron="Dark Green";color_to_pauldron2="Dark Green";color_to_lens="Dark Red";
 	    color_to_weapon="Black";col_special=0;trim=0;
 	    hchaplain="Sapphon";clibrarian="Ezekial";fmaster="Sepharon";hapothecary="Razaek";
-		admiral="Korahael";recruiter="Ranaeus";
+		honorcapt="Belial";watchmaster="Sammael";arsenalmaster="Astoran";admiral="Korahael";marchmaster="Balthazar";
+		ritesmaster="Araphil";victualler="Ezekiah";lordexec="Molochi";relmaster="Xerophus";recruiter="Ranaeus";
 	    battle_cry="Repent!  For tomorow you may die";
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=9;
 	    mutations=0;mutations_selected=0;
@@ -91,7 +92,9 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    color_to_pauldron="White";color_to_pauldron2="White";color_to_lens="Red";
 	    color_to_weapon="Black";col_special=0;
 	    hapothecary="Ogholei";hchaplain="Jaghorin";clibrarian="Saghai";fmaster="Khamkar";
-		admiral="Joghaten";recruiter="Jodagha";
+		honorcapt="Jurga";watchmaster="Khajog";arsenalmaster="Kor'sarro";admiral="Joghaten";
+		marchmaster="Suboden";ritesmaster="Seglei";victualler="Dorghai";lordexec="Vorgha";relmaster="Khadajei";
+		recruiter="Jodagha";
 	    battle_cry="For the Emperor and the Khan!";// monastery_name="Quan Zhou";master_name=
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=12;
 	    mutations=0;mutations_selected=0;
@@ -126,7 +129,10 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    color_to_main="Ultramarine";color_to_secondary="Ultramarine";color_to_trim="Gold";
 	    color_to_pauldron="Ultramarine";color_to_pauldron2="Ultramarine";color_to_lens="Red";
 	    color_to_weapon="Red";col_special=0;
-	    hapothecary="Corpus Helix";hchaplain="Ortan Cassius";clibrarian="Varro Tigurius";fmaster="Fennias Maxim";admiral="Lazlo Tiberius";
+	    hapothecary="Corpus Helix";hchaplain="Ortan Cassius";clibrarian="Varro Tigurius";fmaster="Fennias Maxim";
+		honorcapt="Severus Agemman";watchmaster="Cato Sicarius";arsenalmaster="Mikael Fabian";admiral="Uriel Ventris";
+		marchmaster="Caito Galenus";ritesmaster="Maximus Epathus";victualler="Gerad Ixion";lordexec="Numitor";relmaster="Sinon";
+		recruiter="Antilochus";
 	    battle_cry="Courage and honor";// monastery_name="Fortress of Hera";master_name=
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=27;
 	    mutations=0;mutations_selected=0;
@@ -302,7 +308,9 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    color_to_main="Green";color_to_secondary="Green";color_to_trim="Copper";
 	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Dark Red";
 	    color_to_weapon="Black";col_special=0;trim=0;
-	    fmaster="Argos";clibrarian="Velcona";hapothecary="Harath Shen";recruiter="Sol Ba'ken";admiral="Dac'tyr";hchaplain="Elysius";
+	    fmaster="Argos";clibrarian="Velcona";hapothecary="Harath Shen";hchaplain="Elysius";
+		watchmaster="Pellas Mir'San";arsenalmaster="Adrax Agatone" admiral="Dac'tyr";
+		marchmaster="Mulcebor";ritesmaster="Ur'zan Draakgard";recruiter="Sol Ba'ken";
 	    battle_cry="Into the fires of battle!  Unto the anvil of war";// monastery_name="Fortress of Hera";master_name=
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=2;
 	    mutations=1;mutations_selected=1;
