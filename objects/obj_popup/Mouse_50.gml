@@ -384,7 +384,7 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
         if (have_wep1_num<req_wep1_num){n_good1=0;warning="Not enough "+string(n_wep1)+"; "+string(req_wep1_num-have_wep1_num)+" more are required.";}
         //TODO standardise exp check
         if (n_wep1="Thunder Hammer"){
-            var g,exp_check;g=0;exp_check=0;
+            var g,exp_check;g=-1;exp_check=0;
             for (var g=0;g<array_length(obj_controller.display_unit);g++){
                 if (obj_controller.man_sel[g]=1) and (display_unit[g].experience()<140){
                     exp_check=1;
@@ -436,7 +436,7 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
             warning=$"Not enough {n_armour} : {units-have_armour_num} more are required.";
         }
 
-        var g,exp_check;g=0;exp_check=0;
+        var g,exp_check;g=-1;exp_check=0;
         if (n_armour="Terminator Armour") or (n_armour="Tartaros") then repeat(array_length(obj_controller.display_unit)){
             g+=1;
             if (obj_controller.man_sel[g]=1) and (obj_controller.ma_exp[g]<90) then exp_check=1;
