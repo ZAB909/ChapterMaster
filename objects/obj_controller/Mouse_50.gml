@@ -1680,48 +1680,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             cooldown=8000;
         }
     }
-    // Main management screen
-    if (zoomed==0) and (menu==1) and (managing==0) and (cooldown<=0) and (diplomacy==0){
-        managing=0;
-        unit_profile=false;
-        view_squad=false;
-        xx=xx+0;
-        yy=yy+0;
-        var click_positions_company=[
-            [xx+40,yy+224,xx+152,yy+256+64],// 1st
-            [xx+152,yy+224,xx+264,yy+256+64],// 2nd
-            [xx+264,yy+224,xx+376,yy+256+64],// 3rd
-            [xx+376,yy+224,xx+488,yy+256+64],// 4th
-            [xx+488,yy+224,xx+600,yy+256+64],// 5th
-            [xx+40,yy+224,xx+152,yy+256+64],// 6th
-            [xx+152,yy+224,xx+264,yy+256+64],// 7th
-            [xx+264,yy+224,xx+376,yy+256+64],// 8th
-            [xx+376,yy+224,xx+488,yy+256+64],// 9th
-            [xx+488,yy+224,xx+600,yy+256+64],// 10th
-            [xx+248,yy+64,xx+392,yy+80+64],// HQ
-            [xx+136,yy+64,xx+248,yy+80+64], // Apoth
-            [xx+392,yy+64,xx+504,yy+80+144],// Librar
-            [xx+136,yy+144,xx+248,yy+160+64],// Reclus
-            [xx+248,yy+144,xx+392,yy+160+64],// Armoury
-        ]
-        xx+=16;
-        for (var i=0;i<array_length(click_positions_company);i++){
-            var pos = click_positions_company[i]
-            if (point_and_click(pos)){
-                managing = i+1;
-                cooldown=8000;
-            // Resets selections for next turn
-                man_size=0;
-                selecting_location="";
-                selecting_types="";
-                selecting_ship=0;
-                selecting_planet=0;
-                sel_uid=0;
-                update_general_manage_view();
-                view_squad=false;               
-            }
-        }
-    }
+
     if (zoomed==0) and (menu==1) and (managing>0) and (cooldown<=0){
         var onceh=0;
         xx=xx+0;
