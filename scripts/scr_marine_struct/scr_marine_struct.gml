@@ -1628,55 +1628,74 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		static ranged_hands_limit = function(){
 			var _wep1 = get_weapon_one_data();
 			var _wep2 = get_weapon_two_data();
+			var ranged_hands_limit = 0;
 			var ranged_carrying = 0;
 			var carry_string = "";
-			var ranged_hands_limit = 2;
 
 			if is_struct(_wep1) || is_struct(_wep2){
-				carry_string += $"    =Current=#"
+				carry_string += $"      =Current="
 				if is_struct(_wep1){
-					ranged_carrying += _wep1.ranged_hands;
-					carry_string += $"{_wep1.name}: {_wep1.ranged_hands}#";
+					if _wep1.ranged_hands != 0{
+						carry_string += $"#"
+						ranged_carrying += _wep1.ranged_hands;
+						carry_string += $"{_wep1.name}: {_wep1.ranged_hands}";
+					}
 				}
 				if is_struct(_wep2){
-					ranged_carrying += _wep2.ranged_hands;
-					carry_string += $"{_wep2.name}: {_wep2.ranged_hands}#";
+					if _wep2.ranged_hands != 0{
+						carry_string += $"#"
+						ranged_carrying += _wep2.ranged_hands;
+						carry_string += $"{_wep2.name}: {_wep2.ranged_hands}";
+					}
 				}
 			}
 
-			carry_string += $"    =Maximum=#"
-			if (base_group == "astartes"){
-				ranged_hands_limit = 2
-			} else if base_group == "tech_priest" {
-				ranged_hands_limit = 1+(technology/100);;
-			}else if base_group == "human" {
-				ranged_hands_limit = 1;
-			}	
-			carry_string+=$"Base: {ranged_hands_limit}#";
-			if (strength>=50){
-				ranged_hands_limit+=0.5;
-				carry_string+="STR: +0.5#";
+			carry_string += $"#"
+			carry_string += $"      =Maximum=#"
+			carry_string += $"  =Stats=#"
+			if base_group == "tech_priest" {
+				var tec_bonus = technology/180;
+				ranged_hands_limit += tec_bonus;
+				carry_string += $"Technology: +{string_format(tec_bonus, 0, 2)}#";
 			}
-			if (ballistic_skill>=50){
-				ranged_hands_limit+=0.25;
-				carry_string+="BS: +0.25#";
+			if (strength != 0) {
+				var str_bonus = strength / 42;
+				ranged_hands_limit += str_bonus;
+				carry_string += "Strength: +" + string_format(str_bonus, 0, 2) + "#";
+			}
+			if (constitution != 0) {
+				var con_bonus = constitution / 84;
+				ranged_hands_limit += con_bonus;
+				carry_string += "Constitution: +" + string_format(con_bonus, 0, 2) + "#";
+			}
+			if (dexterity != 0) {
+				var dex_bonus = dexterity / 168;
+				ranged_hands_limit += dex_bonus;
+				carry_string += "Dexterity: +" + string_format(dex_bonus, 0, 2) + "#";
+			}
+			if (ballistic_skill != 0) {
+				var bs_bonus = ballistic_skill / 168;
+				ranged_hands_limit += bs_bonus;
+				carry_string += "Ballistic Skill: +" + string_format(bs_bonus, 0, 2) + "#";
 			}			
+
+			carry_string += $"  =Gear=#"
 			var armour_carry = get_armour_data("ranged_hands");
-			if (armour_carry!=0){
-				ranged_hands_limit+=armour_carry;
-				carry_string+=$"{armour()}: {format_number_with_sign(armour_carry)}#";
+			if (armour_carry != 0) {
+				ranged_hands_limit += armour_carry;
+				carry_string += $"{armour()}: {format_number_with_sign(armour_carry)}#";
 			}
 			var gear_carry = get_gear_data("ranged_hands");
-			if (gear_carry!=0){
-				ranged_hands_limit+=gear_carry;
-				carry_string+=$"{gear()}: {format_number_with_sign(gear_carry)}#";
+			if (gear_carry != 0) {
+				ranged_hands_limit += gear_carry;
+				carry_string += $"{gear()}: {format_number_with_sign(gear_carry)}#";
 			}
 			var mobility_carry = get_mobility_data("ranged_hands");
-			if (mobility_carry!=0){
-				ranged_hands_limit+=mobility_carry;
-				carry_string+=$"{mobility_item()}: {format_number_with_sign(mobility_carry)}#";
+			if (mobility_carry != 0) {
+				ranged_hands_limit += mobility_carry;
+				carry_string += $"{mobility_item()}: {format_number_with_sign(mobility_carry)}#";
 			}							
-			return [ranged_carrying,ranged_hands_limit,carry_string]						
+			return [ranged_carrying, ranged_hands_limit, carry_string];
 		}
 
 		static ranged_attack = function(weapon_slot=0){
@@ -1796,14 +1815,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		static melee_hands_limit = function(){
 			var _wep1 = get_weapon_one_data();
 			var _wep2 = get_weapon_two_data();
+			var melee_hands_limit = 0;
 			var melee_carrying = 0;
 			var carry_string = "";
-			var melee_hands_limit = 2;
-			if (is_struct(_wep1) ||is_struct(_wep2)){
-				carry_string += $"    =Current=#";
-			}
 
-			if is_struct(_wep1){
+			if is_struct(_wep1) || is_struct(_wep2){
+				carry_string += $"    =Current=#";
 				if is_struct(_wep1){
 					melee_carrying += _wep1.melee_hands;
 					carry_string += $"{_wep1.name}: {_wep1.melee_hands}#";
@@ -1816,44 +1833,58 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				}
 			}
 
-			carry_string += $"    =Maximum=#"
-			if (base_group == "astartes"){
-				melee_hands_limit = 2
-			} else if base_group == "tech_priest" {
-				melee_hands_limit = 1+(technology/100);
-			}else if base_group == "human" {
-				melee_hands_limit = 1;
-			}				
-			carry_string+="Base: 2#";
-			if (strength>=50){
-				melee_hands_limit+=0.25;
-				carry_string+="STR: +0.25#";
+			carry_string += $"    =Maximum=#";
+			if base_group == "tech_priest" {
+				var tec_bonus = technology/100;
+				melee_hands_limit = tec_bonus;
+				carry_string+=$"Technology: +{string_format(tec_bonus, 0, 2)}#";
 			}
-			if (weapon_skill>=50){
-				melee_hands_limit+=0.25;
-				carry_string+="WS: +0.25#";
+
+			var str_bonus = strength / 30;
+			if (str_bonus != 0) {
+				melee_hands_limit += str_bonus;
+				carry_string += "Strength: +" + string_format(str_bonus, 0, 2) + "#";
 			}
-			if (has_trait("champion")){
-				melee_hands_limit+=0.25;
-				carry_string+="Champion: +0.25#";
+			var dex_bonus = dexterity / 100;
+			if (dex_bonus != 0) {
+				melee_hands_limit += dex_bonus;
+				carry_string += "Dexterity: +" + string_format(dex_bonus, 0, 2) + "#";
 			}
-			var armour_carry = get_armour_data("melee_hands")
-			if (armour_carry!=0){
-				melee_hands_limit+=armour_carry;
-				carry_string+=$"{armour()}: {format_number_with_sign(armour_carry)}#";
+			var ws_bonus = weapon_skill / 100;
+			if (ws_bonus != 0) {
+				melee_hands_limit += ws_bonus;
+				carry_string += "Weapon Skill: +" + string_format(ws_bonus, 0, 2) + "#";
+			}
+
+			var armour_carry = get_armour_data("melee_hands");
+			if (armour_carry != 0) {
+				melee_hands_limit += armour_carry;
+				carry_string += $"{armour()}: {format_number_with_sign(armour_carry)}#";
 			}
 			var gear_carry = get_gear_data("melee_hands");
-			if (gear_carry!=0){
-				melee_hands_limit+=gear_carry;
-				carry_string+=$"{gear()}: {format_number_with_sign(gear_carry)}#";
+			if (gear_carry != 0) {
+				melee_hands_limit += gear_carry;
+				carry_string += $"{gear()}: {format_number_with_sign(gear_carry)}#";
 			}
 			var mobility_carry = get_mobility_data("melee_hands");
-			if (mobility_carry!=0){
-				melee_hands_limit+=mobility_carry;
-				carry_string+=$"{mobility_item()}: {format_number_with_sign(mobility_carry)}#";
+			if (mobility_carry != 0) {
+				melee_hands_limit += mobility_carry;
+				carry_string += $"{mobility_item()}: {format_number_with_sign(mobility_carry)}#";
 			}						
-			return [melee_carrying,melee_hands_limit,carry_string]						
+			var total_trait_bonus = 0;
+			var traits_w_bonuses = "";
+			if (has_trait("champion")) {
+				var champion_bonus = 0.25;
+				total_trait_bonus += champion_bonus;
+				traits_w_bonuses += string_concat("  Champion: +", champion_bonus, "#");
+			}
+			if (total_trait_bonus != 0){
+				melee_hands_limit += total_trait_bonus;
+				carry_string += string_concat("Traits: +", total_trait_bonus, "#", traits_w_bonuses);
+			}
+			return [melee_carrying, melee_hands_limit, carry_string];
 		}		
+
 		static melee_attack = function(weapon_slot=0){
 			encumbered_melee=false;
 			melee_att = 100*(((weapon_skill/100) * (strength/20)) + (experience()/1000)+0.1);
