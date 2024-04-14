@@ -6,7 +6,7 @@ if (obj_controller.cooldown<=0){
     
     if (header=3){wid=177;hei=200;}
     if (header=2){wid=175;hei=200;}
-    if (header=1){wid=122+16;hei=240;}
+    if (header=1){wid=150;hei=320;}
     
     if (mouse_x>=x2) and (mouse_y>=y2) and (mouse_x<x2+wid) and (mouse_y<y2+hei){
         obj_controller.cooldown=8000;obj_controller.managing=manage;
