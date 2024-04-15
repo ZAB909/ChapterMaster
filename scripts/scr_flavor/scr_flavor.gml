@@ -229,7 +229,7 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 
 
 
-	var led;led=0;
+	var led=0;
 	if (wep[number_of_attacking_weapons]=="hammer_of_wrath") then led=2.1;
 	if (obj_ncombat.enemy<=10){
 	    if (target_name=obj_controller.faction_leader[obj_ncombat.enemy]){// Cleaning up the message for the enemy leader

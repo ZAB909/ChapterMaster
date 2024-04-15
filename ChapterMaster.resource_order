@@ -59,6 +59,7 @@
     {"name":"spr_errant_colors","order":5,"path":"sprites/spr_errant_colors/spr_errant_colors.yy",},
     {"name":"spr_da_mk7_helm","order":12,"path":"sprites/spr_da_mk7_helm/spr_da_mk7_helm.yy",},
     {"name":"spr_iron_colors","order":7,"path":"sprites/spr_iron_colors/spr_iron_colors.yy",},
+    {"name":"Shader2","order":2,"path":"shaders/Shader2/Shader2.yy",},
     {"name":"spr_iron2_colors","order":8,"path":"sprites/spr_iron2_colors/spr_iron2_colors.yy",},
     {"name":"spr_maximus_colors","order":10,"path":"sprites/spr_maximus_colors/spr_maximus_colors.yy",},
     {"name":"spr_noarmour_colors","order":11,"path":"sprites/spr_noarmour_colors/spr_noarmour_colors.yy",},
