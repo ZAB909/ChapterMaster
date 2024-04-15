@@ -177,7 +177,7 @@ global.weapons={
             "artifact": 70
         },
         "description": "A standard Chainsword. It is popular among Assault Marines due to the raw power, even with multiple opponents.",
-        "weight": 1,
+        "weight": 10,
         "ammo": 0,
         "range": 1,
         "spli": 4,
@@ -618,7 +618,7 @@ global.weapons={
             "artifact": 60
         },
         "description": "A standard Bolter, a 2-handed firearm that launches bolts of explosive material. It's a versatile and iconic weapon of Space Marines.",
-        "weight": 2,
+        "weight": 18,
         "ammo": 16,
         "range": 12,
         "spli": 3,
@@ -633,8 +633,7 @@ global.weapons={
             "artifact": 600
         },
         "description": "A much larger and bulkier flamer. Few armies carry them on hand, instead choosing to mount them to vehicles.",
-        "melee_hands": 1,
-        "ranged_hands": 2.25,
+        "weight": 65,
         "ammo": 8,
         "range": 2,
         "spli": 5,
@@ -725,8 +724,7 @@ global.weapons={
             "artifact": 600
         },
         "description": "Though bearing longer range than the Meltagun, this weapon's great size usually restricts it to vehicles.",
-        "melee_hands": 1,
-        "ranged_hands": 2.25,
+        "weight": 72,
         "ammo": 8,
         "range": 4.1,
         "spli": 1,
@@ -821,8 +819,7 @@ global.weapons={
             "artifact": 288
         },
         "description": "A heavy, rotary auto-cannon frequently used by Dreadnoughts and Terminators. Has an incredible rate of fire.",
-        "melee_hands": 2.1,
-        "ranged_hands": 2.25,
+        "weight": 80,
         "ammo": 5,
         "range": 12,
         "spli": 20,
@@ -853,8 +850,7 @@ global.weapons={
             "artifact": 300
         },
         "description": "This heavy weapon is capable of firing either armor-piercing or fragmentation rockets. Has a low ammunition count.",
-        "melee_hands": 1,
-        "ranged_hands": 2.25,
+        "weight": 35,
         "ammo": 6,
         "range": 24,
         "spli": 3,
@@ -869,8 +865,7 @@ global.weapons={
             "artifact": 900
         },
         "description": "A formidable laser weapon, this lascannon can pierce most vehicle or power armor from a tremendous range.",
-        "melee_hands": 1,
-        "ranged_hands": 2.25,
+        "weight": 75,
         "ammo": 8,
         "range": 24,
         "spli": 1,
@@ -1001,8 +996,7 @@ global.weapons={
             "artifact": 384
         },
         "description": "The Heavy Bolter is a heavy weapon that fires larger and more powerful bolt shells compared to the standard Bolter.",
-        "melee_hands": 1,
-        "ranged_hands": 2.25,
+        "weight": 68,
         "ammo": 10,
         "range": 16,
         "spli": 6,
@@ -1520,7 +1514,7 @@ global.gear = {
         "master_crafted": 25,
         "artifact": 30
       },
-      "weight":1,
+      "weight":20,
       "description": "Terminator Armour is the toughest and most powerful armour designed by humanity, available only to the veterans of the Space Marine Chapters. This Indomitus Pattern is the most widespread and versatile pattern as of M41.",
       "tags":["terminator"],
       "req_exp":90,

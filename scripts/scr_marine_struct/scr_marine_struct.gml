@@ -1653,12 +1653,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			weight_text += $"#"
 			weight_text += $"      =Maximum=#"
 			if (strength != 0) {
-				var str_bonus = strength / 20;
+				var str_bonus = strength * 1.2;
 				weight_limit += str_bonus;
 				weight_text += "Strength: +" + string_format(str_bonus, 0, 2) + "#";
 			}
 			if (constitution != 0) {
-				var con_bonus = constitution / 40;
+				var con_bonus = constitution * 0.6;
 				weight_limit += con_bonus;
 				weight_text += "Constitution: +" + string_format(con_bonus, 0, 2) + "#";
 			}		
@@ -1809,7 +1809,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			// 	explanation_string+=$"Dual Pistols: +{secondary_weapon.attack}#";			
 			// }
 
-			var one_h_limit = carry_data[1] / 2;
+			var one_h_limit = carry_data[1] / 6;
 			var second_attack = secondary_weapon.attack;
 			if (second_attack > 0) {
 				second_attack = round(second_attack * range_attack_mod);
@@ -1861,9 +1861,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			if (weapon_slot==0){
 				//if player has not ranged weapons
 				if (((_wep1.range>1.1 ||_wep1.range==0) && (_wep2.range>1.1||_wep2.range==0)) && (!_wep1.has_tags(["pistol","flame"]) && !_wep2.has_tags(["pistol","flame"]))){
-					primary_weapon=new equipment_struct({},"");//create blank weapon struct
-					primary_weapon.attack=strength/3;//calculate damage from player fists
-					primary_weapon.name="fists";
+					primary_weapon=new equipment_struct({},""); //create blank weapon struct
+					primary_weapon.attack=strength/2; //calculate damage from player fists
+					primary_weapon.name="Fists";
 				} else {
 					if (_wep1.range>1.1 && !_wep1.has_tags(["pistol","flame"])){
 						primary_weapon=_wep2;
