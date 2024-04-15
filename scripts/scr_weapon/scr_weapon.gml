@@ -65,8 +65,7 @@ global.weapons={
         "master_crafted": 10,
         "artifact": 12
     } ,
-    "melee_hands": 0.9,
-    "ranged_hands":1,
+    "weight":10,
     "tags":["shield"],
     "hp_mod":{
       "standard": 30,
@@ -146,8 +145,7 @@ global.weapons={
             "artifact": 35
         },
         "description": "More of a sword than a knife proper, this tough and thick blade becomes a deadly weapon in the hand of an Astartes.",
-        "melee_hands": 0,
-        "ranged_hands": 0,
+        "weight":2,
         "ammo": 0,
         "range": 1,
         "spli": 1,
@@ -416,8 +414,7 @@ global.weapons={
             "artifact": 1
         },
         "description": "A large, metal gauntlet surrounded by an energy field. Though large and slow, it dishes out tremendous damage.",
-        "melee_hands": 1.1,
-        "ranged_hands": 1,
+        "weight":25,
         "ammo": 0,
         "range": 1,
         "spli": 2,
@@ -474,8 +471,7 @@ global.weapons={
             "artifact": 1.3
         },
         "description": "This weapon unleashes a massive, disruptive field on impact. Only experienced marines can use Thunder Hammers.",
-        "melee_hands": 2.25,
-        "ranged_hands": 2,
+        "weight":18,
         "ammo": 0,
         "range": 1,
         "spli": 10,
@@ -554,9 +550,8 @@ global.weapons={
             "artifact": 40
         },
         "description": "A smaller, more compact version of the venerable Boltgun. Standard Godwyn pattern.",
-        "melee_hands": 0,
-        "ranged_hands": 1,
-        "ammo": 18,
+        "weight": 6,
+        "ammo": 8,
         "range": 3.1,
         "spli": 1,
         "arp": 0,
@@ -708,8 +703,7 @@ global.weapons={
             "artifact": 300
         },
         "description": "A relatively quiet weapon, this gun vaporizes flesh and armor alike. Due to heat dissipation, it has only a short range.",
-        "melee_hands": 1,
-        "ranged_hands": 2,
+        "weight":14,
         "ammo": 4,
         "range": 2.1,
         "spli": 1,
@@ -771,8 +765,7 @@ global.weapons={
             "artifact": 300
         },
         "description": "A 2-handed firearm that launches bolts of plasma. They are considered both sacred and dangerous, occasionally overheating.",
-        "melee_hands": 0,
-        "ranged_hands": 2,
+        "weight":27,
         "ammo": 16,
         "range": 12,
         "spli": 3,
@@ -1262,8 +1255,7 @@ global.weapons={
             "artifact": 96
         },
         "description": "Compact, and double-barreled, this bolt weapon is inaccurate but grants an enormous amount of firepower.",
-        "melee_hands": 1.1,
-        "ranged_hands": 1.1,
+        "weight":26,
         "ammo": 10,
         "range": 10,
         "spli": 6,
@@ -1283,8 +1275,7 @@ global.weapons={
             "artifact": 0
         },
         "description": "Blackened at the tip, this weapon unleashes a torrent of burning promethium - all the better to cleanse sin and impurity with.",
-        "melee_hands": 1,
-        "ranged_hands": 1,
+        "weight":15,
         "ammo": 4,
         "range": 2.1,
         "spli": 3,
@@ -1314,9 +1305,8 @@ global.weapons={
             "master_crafted": 130,
             "artifact": 160
         },
-        "description": "A standard bolter with a single shot flamer attached for tactical use",
-        "melee_hands": 1,
-        "ranged_hands": 1.5,
+        "description": "A standard bolter with a single shot flamer attached for tactical use.",
+        "weight":25,
         "ammo": 15,
         "range": 10,
         "spli": 3,
@@ -1471,7 +1461,7 @@ global.gear = {
         "master_crafted": 5,
         "artifact": 10
       },
-      "weight":0.3,
+      "max_weight":20,
       "description": "A suit of Adeptus Astartes power armour. The Mark can no longer be determined- it appears to be a combination of several types.",
       "tags":["power_armour"],
     },
@@ -1492,8 +1482,7 @@ global.gear = {
         "master_crafted": 15,
         "artifact": 20
       },
-      "melee_hands":0.3,
-      "ranged_hands":0.3,
+      "max_weight":20,
       "description": "Heavily modified by the chapter artificers, and decorated without compare, this ancient Power Armour is beyond priceless.",
       "tags":["power_armour"],
     },
@@ -1514,7 +1503,7 @@ global.gear = {
         "master_crafted": 25,
         "artifact": 30
       },
-      "weight":20,
+      "max_weight":30,
       "description": "Terminator Armour is the toughest and most powerful armour designed by humanity, available only to the veterans of the Space Marine Chapters. This Indomitus Pattern is the most widespread and versatile pattern as of M41.",
       "tags":["terminator"],
       "req_exp":90,
@@ -1641,8 +1630,7 @@ global.gear = {
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
       },
-      "melee_hands":0.3,
-      "ranged_hands":0.3,
+      "max_weight":20,
       "description": "An ancient set of Armorum Ferrum. Has thicker armour plating but the added weight slows down the wearer.",
        "tags":["power_armour"],
     },
@@ -1663,8 +1651,7 @@ global.gear = {
         "master_crafted": 10, // Augmented
         "artifact": 15 // Augmented
       },
-      "melee_hands":0.3,
-      "ranged_hands":0.3,
+      "max_weight":20,
       "description": "Armour dating to the end of the Great Crusade. Often considered the ultimate Space Marine armour. The components are no longer reproducible.",
       "tags":["power_armour"],
     },
@@ -1685,8 +1672,7 @@ global.gear = {
         "master_crafted": 0,
         "artifact": 0
       },
-      "melee_hands":0.3,
-      "ranged_hands":0.3,
+      "max_weight":20,
       "description": "A hastily assembled Power armour during the Horus Heresy to act as a stopgap. Excels at melee, alongside some downsides.",
       "tags":["power_armour"],
     },
@@ -1707,8 +1693,7 @@ global.gear = {
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
       },
-      "melee_hands":0.3,
-      "ranged_hands":0.3,
+      "max_weight":20,
       "description": "Relatively old beakie armour, sleek as can be. Boosted olfactory and auditory sensors increase the ranged accuracy of the wearer. Making it more fragile.",
       "tags":["power_armour"],
     },
@@ -1729,8 +1714,7 @@ global.gear = {
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
       },
-      "melee_hands":0.3,
-      "ranged_hands":0.3,
+      "max_weight":20,
       "description": "The staple power armour of the adeptus astartes and the only power armour still widely manufactured.",
       "tags":["power_armour"],
     },
@@ -1751,8 +1735,7 @@ global.gear = {
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
       },
-      "melee_hands":0.3,
-      "ranged_hands":0.3,
+      "max_weight":20,
     "description": "The newest and most advanced of the standard mark power armours as such production has not yet reached maximum capacity creating a supply shortage.",
     "tags":["power_armour"],
     },
@@ -1773,8 +1756,7 @@ global.gear = {
         "master_crafted": 5, // Augmented
         "artifact": 10 // Augmented
       },
-      "melee_hands":0.3,
-      "ranged_hands":0.3,
+      "max_weight":20,
       "description": "The MK10 Tacticus is the most advanced pattern of power armour available to the Space Marines, featuring advanced materials and systems.",
       "tags":["power_armour"],
     }, 
@@ -1959,6 +1941,7 @@ global.gear = {
         "artifact": 10
       },
       "tags":["jump"],
+      "weight": 50,
     },
     "Heavy Weapons Pack": {
     "abbreviation": "HvyWpPck",
@@ -1968,8 +1951,7 @@ global.gear = {
         "master_crafted": 10,
         "artifact": 15
       },
-    "melee_hands": -1,
-    "ranged_hands": 1,      
+      "weight": 40,   
     }
     // Add more mobility items as needed...
   }
@@ -1977,8 +1959,8 @@ global.gear = {
 
 function equipment_struct(item_data, core_type,quality="none") constructor{ 
     //This could be done with 2d arrays [[],[]]
-    var names = ["hp_mod", "description","damage_resistance_mod", "ranged_mod", "melee_mod","armour_value" ,"attack","weight","ammo","range","spli","arp","special_description", "special_properties", "abbreviation","tags","name","second_profiles","req_exp"];
-    var defaults = [0,"",0,0,0,0,0,0,0,0,0,0,"",[],"",[],"",[],0];
+    var names = ["hp_mod", "description","damage_resistance_mod", "ranged_mod", "melee_mod","armour_value" ,"attack","weight","max_weight","ammo","range","spli","arp","special_description", "special_properties", "abbreviation","tags","name","second_profiles","req_exp"];
+    var defaults = [0,"",0,0,0,0,0,0,0,0,0,0,0,"",[],"",[],"",[],0];
     type = core_type;
     for (var i=0;i<array_length(names);i++){
         if (struct_exists(item_data,names[i])){
@@ -2022,10 +2004,10 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
         }
         switch (item_type) {
             default:
-                stat_order = ["description", "special_description", "quality", "armour_value", "damage_resistance_mod", "hp_mod", "ranged_mod", "melee_mod", "attack", "ammo", "range", "weight", "special_properties", "req_exp", "tags"];
+                stat_order = ["description", "special_description", "quality", "armour_value", "damage_resistance_mod", "hp_mod", "ranged_mod", "melee_mod", "attack", "ammo", "range", "weight","max_weight", "special_properties", "req_exp", "tags"];
                 break;
             case "weapon":
-                stat_order = ["description", "special_description", "quality", "attack", "ranged_mod", "melee_mod", "ammo", "range", "armour_value", "hp_mod", "damage_resistance_mod", "weight", "special_properties", "req_exp", "tags"];
+                stat_order = ["description", "special_description", "quality", "attack", "ranged_mod", "melee_mod", "ammo", "range", "armour_value", "hp_mod", "damage_resistance_mod", "weight","max_weight", "special_properties", "req_exp", "tags"];
                 break;
             }
 			
@@ -2097,12 +2079,12 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                     break;
                 case "weight":
                     if (weight != 0) {
-                        if item_type = "weapon"{
-                            item_desc_tooltip += $"Weight: {weight}#"
-                        }
-                        else{
-                            item_desc_tooltip += $"Max Weight: {string_sign(weight)}#"
-                        }
+                        item_desc_tooltip += $"Weight: {weight}#"
+                    }
+                    break;
+                case "max_weight":
+                    if (max_weight != 0) {
+                        item_desc_tooltip += $"Max Weight: {string_sign(max_weight)}#"
                     }
                     break;
                 case "special_properties":

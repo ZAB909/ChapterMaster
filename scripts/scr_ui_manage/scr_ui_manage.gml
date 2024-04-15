@@ -716,7 +716,7 @@ function scr_ui_manage() {
 
 		if (cn.temp[117]!=""){
 			carry_data = cn.temp[117][2];
-			var carry_string = $"Weight Limit: {carry_data[0]}/{carry_data[1]}"
+			var carry_string = $"Carrying: {carry_data[0]}/{carry_data[1]}";
 			x1 = x_right;
 			y1 = yy+466;
 			x2 = x1-string_width(carry_string);

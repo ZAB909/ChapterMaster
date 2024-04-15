@@ -1636,45 +1636,58 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				weight_text += $"      =Current="
 				if is_struct(_wep1){
 					if _wep1.weight != 0{
-						weight_text += $"#"
 						weight_current += _wep1.weight;
-						weight_text += $"{_wep1.name}: {_wep1.weight}";
+						weight_text += $"#{_wep1.name}: {_wep1.weight}";
 					}
 				}
 				if is_struct(_wep2){
 					if _wep2.weight != 0{
-						weight_text += $"#"
 						weight_current += _wep2.weight;
-						weight_text += $"{_wep2.name}: {_wep2.weight}";
+						weight_text += $"#{_wep2.name}: {_wep2.weight}";
 					}
 				}
+			}
+			var armour_weight = get_armour_data("weight");
+			if armour_weight != 0{
+				weight_current += armour_carry;
+				weight_text += $"#{armour()}: {string_sign(armour_weight)}#";
+			}
+			var gear_weight = get_gear_data("weight");
+			if armour_weight != 0{
+				weight_current += gear_weight;
+				weight_text += $"#{gear()}: {string_sign(gear_weight)}#";
+			}
+			var mobility_weight = get_mobility_data("weight");
+			if mobility_weight != 0{
+				weight_current += mobility_weight;
+				weight_text += $"#{mobility_item()}: {string_sign(mobility_weight)}#";
 			}
 
 			weight_text += $"#"
 			weight_text += $"      =Maximum=#"
 			if (strength != 0) {
-				var str_bonus = strength * 1.2;
+				var str_bonus = strength * 2;
 				weight_limit += str_bonus;
 				weight_text += "Strength: +" + string_format(str_bonus, 0, 2) + "#";
 			}
 			if (constitution != 0) {
-				var con_bonus = constitution * 0.6;
+				var con_bonus = constitution * 0.5;
 				weight_limit += con_bonus;
 				weight_text += "Constitution: +" + string_format(con_bonus, 0, 2) + "#";
 			}		
 
 			weight_text += $"      -Gear-#"
-			var armour_carry = get_armour_data("weight");
+			var armour_carry = get_armour_data("max_weight");
 			if (armour_carry != 0) {
 				weight_limit += armour_carry;
 				weight_text += $"{armour()}: {string_sign(armour_carry)}#";
 			}
-			var gear_carry = get_gear_data("weight");
+			var gear_carry = get_gear_data("max_weight");
 			if (gear_carry != 0) {
 				weight_limit += gear_carry;
 				weight_text += $"{gear()}: {string_sign(gear_carry)}#";
 			}
-			var mobility_carry = get_mobility_data("weight");
+			var mobility_carry = get_mobility_data("max_weight");
 			if (mobility_carry != 0) {
 				weight_limit += mobility_carry;
 				weight_text += $"{mobility_item()}: {string_sign(mobility_carry)}#";
@@ -1809,7 +1822,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			// 	explanation_string+=$"Dual Pistols: +{secondary_weapon.attack}#";			
 			// }
 
-			var one_h_limit = carry_data[1] / 6;
+			var one_h_limit = carry_data[1] / 16;
 			var second_attack = secondary_weapon.attack;
 			if (second_attack > 0) {
 				second_attack = round(second_attack * range_attack_mod);
