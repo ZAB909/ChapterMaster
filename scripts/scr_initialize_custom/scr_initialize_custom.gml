@@ -1351,8 +1351,8 @@ function scr_initialize_custom() {
 				[role[100][7], {"max":1,"min":1}],		//company_champion
 				[role[100][15], {"max":1,"min":0, "role":$"Company {role[100,15]}"}],		//Apothecary
 				[role[100][14], {"max":1,"min":0, "role":$"Company {role[100,14]}"}],		//chaplain
-				["Standard Bearer" , {"max":1,"min":1,"role":"Chapter Ancient"}],//standard bearer
-				[role[100][3] , {"max":5,"min":0, "role":$"Company Command {role[100,3]}"}],		//veterans
+				["Standard Bearer" , {"max":1,"min":1,"role":"Company Ancient"}],//standard bearer
+				[role[100][3] , {"max":5,"min":0, "role":$"Company {role[100,3]}"}],		//veterans
 				[role[100][16],{"max":1,"min":0,"role":$"Company {role[100,16]}"}],
 				[role[100][17],{"max":1,"min":0,"role":$"Company {role[100,17]}"}],
 				["type_data" , {
@@ -1361,7 +1361,7 @@ function scr_initialize_custom() {
 				}]
 			],
 			"terminator_squad": [
-				[role[100][19], {"max":1,"min":1, "role":$"{role[100,19]} Terminator"}],			//Veteran sergeant terminator
+				[role[100][19], {"max":1,"min":1, "role":$"{role[100][4]} {role[100,18]}"}],			//Veteran sergeant terminator
 				[role[100][4], {"max":9,"min":3,"loadout":{//terminator
 					"required":{
 						"wep1":[wep1[100,4],4],
@@ -1382,7 +1382,7 @@ function scr_initialize_custom() {
 				[role[100][19], {
 				      "max":1,
 				      "min":1, 
-				      "role":$"{role[100,19]} Assault {role[100][4]}"
+				      "role":$"Assault {role[100][4]} {role[100,18]}"
 				 }],			//Veteran sergeant terminator
 				[role[100][4], {"max":9,"min":3,
 				"role":$"Assault {role[100][4]}" ,
@@ -1419,7 +1419,9 @@ function scr_initialize_custom() {
 					} 
 				}}],		//veterans
 
-				[role[100][19], {"max":1,"min":1}],
+				[role[100][19], {"max":1,"min":1,
+				"role":$"Sternguard {role[100,18]}",
+				}],
 				["type_data" , {
 					"display_data":$"Sternguard {role[100,3]} {squad_name}",
 					"formation_options" : ["veteran","assualt", "devastator", "scout", "tactical"],
@@ -1447,7 +1449,9 @@ function scr_initialize_custom() {
 					} 
 				}}],		//veterans
 
-				[role[100][19], {"max":1,"min":1, "loadout":{
+				[role[100][19], {"max":1,"min":1,
+						"role":$"Vanguard {role[100,18]}",
+						"loadout":{
 						"required":{
 							"wep1":["Power Sword",1],
 							"wep2":["Plasma Pistol",1],
