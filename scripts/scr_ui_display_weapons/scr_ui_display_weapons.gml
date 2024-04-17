@@ -93,15 +93,21 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             }                      
         }
          if (!sprite_found){
-            if (string_count("Power Fist", equiped_weapon) > 0) and (string_count("DUB", equiped_weapon) == 0) {
-                set_as_melee_onehand_special(spr_weapon_powfist, left_or_right);
-                sprite_found = !sprite_found;
-                display_type="power_fist"
-            }else if (string_count("Lightning Claw", equiped_weapon) > 0) and (string_count("DUB", equiped_weapon) == 0) {
-                set_as_melee_onehand_special(spr_weapon_lightning1, left_or_right);
-                sprite_found = !sprite_found;
-                display_type="lightning_claw"
-            }            
+            if (string_count("DUB", equiped_weapon) == 0){
+                if (string_count("Power Fist", equiped_weapon) > 0) {
+                    set_as_melee_onehand_special(spr_weapon_powfist, left_or_right);
+                    sprite_found = !sprite_found;
+                    display_type="power_fist"
+                }if (string_count("Chainfist", equiped_weapon) > 0) {
+                    set_as_melee_onehand_special(spr_weapon_powfist, left_or_right);
+                    sprite_found = !sprite_found;
+                    display_type="power_fist"
+                }else if (string_count("Lightning Claw", equiped_weapon) > 0) {
+                    set_as_melee_onehand_special(spr_weapon_lightning1, left_or_right);
+                    sprite_found = !sprite_found;
+                    display_type="lightning_claw"
+                }   
+            }
          }
     }
     if (!sprite_found){
