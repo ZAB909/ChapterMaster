@@ -1489,19 +1489,19 @@ global.gear = {
     "Terminator Armour": {
          "abbreviation": "Indmts", 
       "armour_value": {
-        "standard": 42,
-        "master_crafted": 46,
-        "artifact": 50
+        "standard": 40,
+        "master_crafted": 44,
+        "artifact": 48
       },
       "ranged_mod": {
+        "standard": 5,
+        "master_crafted": 10,
+        "artifact": 15
+      },
+      "melee_mod": {
         "standard": -10,
         "master_crafted": -5,
         "artifact": 0
-      },
-      "melee_mod": {
-        "standard": 20,
-        "master_crafted": 25,
-        "artifact": 30
       },
       "max_weight":30,
       "description": "Terminator Armour is the toughest and most powerful armour designed by humanity, available only to the veterans of the Space Marine Chapters. This Indomitus Pattern is the most widespread and versatile pattern as of M41.",
@@ -1532,22 +1532,21 @@ global.gear = {
     "Tartaros": {
         "abbreviation": "Tartrs", 
       "armour_value": {
-        "standard": 42,
-        "master_crafted": 46,
-        "artifact": 50
+        "standard": 40,
+        "master_crafted": 44,
+        "artifact": 48
       },
       "ranged_mod": {
-        "standard": 0,
-        "master_crafted": 5, // Augmented
-        "artifact": 10 // Augmented
+        "standard": 5,
+        "master_crafted": 10,
+        "artifact": 15
       },
       "melee_mod": {
-        "standard": 20,
-        "master_crafted": 25,
-        "artifact": 30
+        "standard": -5,
+        "master_crafted": 0,
+        "artifact": 0
       },
-      "melee_hands":0.6,
-      "ranged_hands":0.6,      
+      "max_weight":30,   
       "description": "This pattern is possibly considered the most advanced form of Terminator Armour, providing greater mobility for the wearer compared to the Indomitus with no loss in durability. In the M41 considered to be incredibly rare.",
       "tags":["terminator"],
       "req_exp":90,
@@ -1560,17 +1559,16 @@ global.gear = {
         "artifact": 50
       },
       "ranged_mod": {
-        "standard": 0,
-        "master_crafted": 5, // Augmented
-        "artifact": 10 // Augmented
+        "standard": 5,
+        "master_crafted": 10,
+        "artifact": 15
       },
       "melee_mod": {
-        "standard": 20,
-        "master_crafted": 25,
-        "artifact": 30,
+        "standard": -15,
+        "master_crafted": -10,
+        "artifact": -5,
     },
-      "melee_hands":0.6,
-      "ranged_hands":0.6,      
+      "max_weight":30,     
       "description": "Among the first issued to the Space Marine Legions. Having additional plating and shield generators installed within the shoulder pads resulted in severe straining of the suit's exoskeleton and reduced the wearer's maneuverability, leading to its decline among some legions.",
       "tags":["terminator"],
       "req_exp":90,
