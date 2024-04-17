@@ -1526,7 +1526,14 @@ function scr_initialize_custom() {
 			}],
 			[roles.champion, {
 				"max": 1,
-				"min": 1
+				"min": 1,
+				"loadout": {
+					"required": {
+						"wep1": ["Power Sword", 1],
+						"wep2": ["Bolt Pistol", 1],
+						"gear": ["Combat Shield", 1]
+					},
+				}
 			}],
 			[roles.apothecary, {
 				"max": 1,
@@ -1541,7 +1548,20 @@ function scr_initialize_custom() {
 			[roles.ancient, {
 				"max": 1,
 				"min": 1,
-				"role": $"Company {roles.ancient}"
+				"role": $"Company {roles.ancient}",
+				"loadout": {
+					"required": {
+						"wep1": ["", 0],
+						"wep2": ["Company Standard", 1],
+					},
+					"option": {
+						"wep1": [
+							[
+								["Chainsword", "Power Sword", "Power Axe", "Lightning Claw", "Power Fist", "Thunder Hammer", "Bolt Pistol", "Plasma Pistol"], 1
+							],
+						],
+					},
+				}
 			}],
 			[roles.veteran, {
 				"max": 5,
