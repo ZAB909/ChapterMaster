@@ -58,13 +58,13 @@ function scr_drop_fiddle(argument0, argument1, argument2, argument3) {
 	                if ((obj_ini.role[comp][i]=obj_ini.role[100][6]) or (obj_ini.role[comp][i]="Venerable "+string(obj_ini.role[100][6])) or (string_count("Dreadnought",obj_ini.armour[comp][i])=1)) and (assassinate=false) then dreads+=1;
                 
 	                if (string_count("Bike",obj_ini.mobi[comp][i])=0){
-	                    if (obj_ini.role[comp][i]="Standard Bearer") then mahreens+=1;
+	                    if (obj_ini.role[comp][i]=obj_ini.role[100][11]) then mahreens+=1;
 	                    if (obj_ini.role[comp][i]=obj_ini.role[100][12]) then mahreens+=1;
 	                    if (obj_ini.role[comp][i]=obj_ini.role[100][8]) or (obj_ini.role[comp][i]=obj_ini.role[100][10]) or (obj_ini.role[comp][i]=obj_ini.role[100][9]) then mahreens+=1;
 	                    if (obj_ini.role[comp][i]=obj_ini.role[100][3]) then veterans+=1;
 	                }
 	                if (string_count("Bike",obj_ini.mobi[comp][i])>0) and (vehy=1){
-	                    if (obj_ini.role[comp][i]="Standard Bearer") then bikes+=1;
+	                    if (obj_ini.role[comp][i]=obj_ini.role[100][11]) then bikes+=1;
 	                    if (obj_ini.role[comp][i]=obj_ini.role[100][12]) then bikes+=1;
 	                    if (obj_ini.role[comp][i]=obj_ini.role[100][8]) or (obj_ini.role[comp][i]=obj_ini.role[100][10]) or (obj_ini.role[comp][i]=obj_ini.role[100][9]) then bikes+=1;
 	                    if (obj_ini.role[comp][i]=obj_ini.role[100][3]) then bikes+=1;
@@ -120,13 +120,13 @@ function scr_drop_fiddle(argument0, argument1, argument2, argument3) {
 	                if ((obj_ini.role[comp][i]=obj_ini.role[100][6]) or (obj_ini.role[comp][i]="Venerable "+string(obj_ini.role[100][6])) or (string_count("Dreadnought",obj_ini.armour[comp][i])=1)) and (assassinate=false) then dreads-=1;
                 
 	                if (string_count("Bike",obj_ini.mobi[comp][i])=0){
-	                    if (obj_ini.role[comp][i]="Standard Bearer") then mahreens-=1;
+	                    if (obj_ini.role[comp][i]=obj_ini.role[100][11]) then mahreens-=1;
 	                    if (obj_ini.role[comp][i]=obj_ini.role[100][12]) then mahreens-=1;
 	                    if (obj_ini.role[comp][i]=obj_ini.role[100][8]) or (obj_ini.role[comp][i]=obj_ini.role[100][10]) or (obj_ini.role[comp][i]=obj_ini.role[100][9]) then mahreens-=1;
 	                    if (obj_ini.role[comp][i]=obj_ini.role[100][3]) then veterans-=1;
 	                }
 	                if (string_count("Bike",obj_ini.mobi[comp][i])>0) and (vehy=1){
-	                    if (obj_ini.role[comp][i]="Standard Bearer") then bikes-=1;
+	                    if (obj_ini.role[comp][i]=obj_ini.role[100][11]) then bikes-=1;
 	                    if (obj_ini.role[comp][i]=obj_ini.role[100][12]) then bikes-=1;
 	                    if (obj_ini.role[comp][i]=obj_ini.role[100][8]) or (obj_ini.role[comp][i]=obj_ini.role[100][10]) or (obj_ini.role[comp][i]=obj_ini.role[100][9]) then bikes-=1;
 	                    if (obj_ini.role[comp][i]=obj_ini.role[100][3]) then bikes-=1;

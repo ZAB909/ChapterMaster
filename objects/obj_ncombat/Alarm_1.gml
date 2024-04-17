@@ -217,7 +217,7 @@ p2+=".";
 
 
 
-if (standard_bearers>1) and (dropping=0) then p5="  The Battle Standard Bearers hold your Chapter heraldry high and proud.";
+if (standard_bearers>1) and (dropping=0) then p5="  Chapter Ancients hold your Chapter heraldry high and proud.";
 
 
 

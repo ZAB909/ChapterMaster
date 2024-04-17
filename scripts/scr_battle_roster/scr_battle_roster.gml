@@ -212,12 +212,12 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                         if (company = 10) then col = obj_controller.bat_scout_column;
                     }
 
-                    if (unit.role() = deploying_unit.role[100, 5]) or(unit.role() = "Standard Bearer") or(unit.role() = deploying_unit.role[100, 7]) {
+                    if (unit.role() = deploying_unit.role[100, 5]) or(unit.role() = deploying_unit.role[100][11]) or(unit.role() = deploying_unit.role[100, 7]) {
                         if (unit.role() = deploying_unit.role[100, 5]) {
                             new_combat.captains++;
                             if (new_combat.big_mofo > 5) then new_combat.big_mofo = 5;
                         }
-                        if (unit.role() = "Standard Bearer") then new_combat.standard_bearers++;
+                        if (unit.role() = deploying_unit.role[100][11]) then new_combat.standard_bearers++;
                         if (unit.role() = deploying_unit.role[100, 7]) then new_combat.champions++;
 
                         //if (company = 1) {

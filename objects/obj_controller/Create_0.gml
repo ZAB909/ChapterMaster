@@ -244,6 +244,13 @@ for(var i=100; i<103; i++){
     obj_controller.r_mobi[i,10]="Jump Pack";
     obj_controller.r_gear[i,10]="";
     
+    obj_controller.r_role[i,11]="Ancient";
+    obj_controller.r_wep1[i,11]="Company Standard";
+    obj_controller.r_wep2[i,11]="Bolt Pistol";
+    obj_controller.r_armour[i,11]="Power Armour";
+    obj_controller.r_mobi[i,11]="";
+    obj_controller.r_gear[i,11]="";
+
     obj_controller.r_role[i,12]="Scout";
     obj_controller.r_wep1[i,12]="Sniper Rifle";
     obj_controller.r_wep2[i,12]="Combat Knife";
@@ -1518,7 +1525,7 @@ for(var company=0; company<10; company++){
         if (obj_ini.role[com,mm]==obj_ini.role[100][14]) then chap+=1;
         if (obj_ini.role[com,mm]==obj_ini.role[100][15]) then apoth+=1;
         if (obj_ini.role[com,mm]==obj_ini.role[100][16]) then techa+=1;
-        if (obj_ini.role[com,mm]=="Standard Bearer") then standard+=1;
+        if (obj_ini.role[com,mm]==obj_ini.role[100][11]) then standard+=1;
         if (obj_ini.role[com,mm]==obj_ini.role[100][8]) then tact+=1;
         if (obj_ini.role[com,mm]==obj_ini.role[100][10]) then assa+=1;
         if (obj_ini.role[com,mm]==obj_ini.role[100][9]) then deva+=1;
@@ -1557,7 +1564,7 @@ for(var company=0; company<10; company++){
     if (techa==1) then temp[njm]+=", "+string(techa)+" "+string(obj_ini.role[100][16]);
     if (techa>1) then temp[njm]+=", "+string(techa)+" "+string(obj_ini.role[100][16])+"s";
     
-    if (standard==1) then temp[njm]+=", 1 Standard Bearer, 1 Company Champion, ";
+    if (standard==1) then temp[njm]+=", "+string(standard)+" "+string(obj_ini.role[100][11])+"s";
     if (termi>0) then temp[njm]+=", "+string(termi)+" "+string(obj_ini.role[100][4])+"s";
     if (veter>0) then temp[njm]+=", "+string(veter)+" "+string(obj_ini.role[100][3])+"s";
     if (tact>0) then temp[njm]+=", "+string(tact)+" "+string(obj_ini.role[100][8])+"s";

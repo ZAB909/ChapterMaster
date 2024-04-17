@@ -364,7 +364,7 @@ function scr_management(argument0) {
 			nam[4] = role_names[Role.LIBRARIAN];
 			nam[5] = "Codiciery";
 			nam[6] = "Lexicanum";
-			nam[7] = "Company Ancient";
+			nam[7] = "Company" + role_names[Role.ANCIENT];
 			nam[8] = (role_names[Role.COMPANY_CHAMPION] == "Company Champion") ? "Champion" : role_names[Role.COMPANY_CHAMPION];
 			nam[9] = role_names[Role.TERMINATOR];
 			nam[10] = role_names[Role.TECHMARINE];
@@ -395,7 +395,7 @@ function scr_management(argument0) {
 	            if (unit.role() == role_names[Role.LIBRARIAN]) then num[4]++;
 	            if (unit.role() == "Codiciery") then num[5]++;
 	            if (unit.role() == "Lexicanum") then num[6]++;
-	            if (unit.role() == "Standard Bearer") then num[7]++;
+	            if (unit.role() == role_names[Role.ANCIENT]) then num[7]++;
 	            if (unit.role() == role_names[Role.COMPANY_CHAMPION]) then num[8]++;
 				if (unit.role() == role_names[Role.TERMINATOR]) then num[9]++;
 				if (unit.role() == role_names[Role.TECHMARINE]) then num[10]++;

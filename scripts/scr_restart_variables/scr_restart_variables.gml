@@ -163,6 +163,13 @@ function scr_restart_variables(saved_game) {
 			obj_restart_vars.r_mobi[i,10]="Jump Pack";
 			obj_restart_vars.r_gear[i,10]="";
         
+			obj_restart_vars.r_role[i,11]="Ancient";
+			obj_restart_vars.r_wep1[i,11]="Company Standard";
+			obj_restart_vars.r_wep2[i,11]="Bolt Pistol";
+			obj_restart_vars.r_armour[i,11]="Power Armour";
+			obj_restart_vars.r_mobi[i,11]="";
+			obj_restart_vars.r_gear[i,11]="";
+
 	        obj_restart_vars.r_race[i,12]=1;
 	        obj_restart_vars.r_role[i,12]="Scout";
 			obj_restart_vars.r_wep1[i,12]="Sniper Rifle";
@@ -631,6 +638,12 @@ function scr_restart_variables(saved_game) {
 			armour[i,10]="Power Armour";
 			mobi[i,10]="Jump Pack";
 	        
+			race[i,11]=1;
+			role[i,11]="Ancient";
+			wep1[i,11]="Company Standard";
+			wep2[i,11]="Bolt Pistol";
+			armour[i,11]="Power Armour";
+
 			race[i,12]=1;
 			role[i,12]="Scout";
 			wep1[i,12]="Sniper Rifle";

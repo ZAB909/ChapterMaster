@@ -117,9 +117,9 @@ get_unit_promotion_options = function(){
                 role_name[i]=obj_ini.role[100][5];
                 role_exp[i]=170;//all captains are equalish
             }
-            if (scr_role_count("Standard Bearer","1")==0){
+            if (scr_role_count(obj_ini.role[100][11],"1")==0){
                 i+=1;
-                role_name[i]="Standard Bearer";
+                role_name[i]=obj_ini.role[100][11];
                 role_exp[i]=company_promote_data[target_comp-1][2]+10;
             }
             if (scr_role_count(obj_ini.role[100][7],"1")==0){
@@ -225,7 +225,7 @@ calculate_equipment_needs =  function (){
             req_wep2_num=0;
             req_mobi="";
             req_mobi_num=0;
-        } else if (rall="Standard Bearer"){
+        } else if (rall=obj_ini.role[100][11]){
             req_armour="Power Armour";
             req_armour_num=units;
             req_wep2="Company Standard";
