@@ -66,9 +66,9 @@ function scr_ship_battle(target_ship_id, cooridor_width) {
 	                        if (co=10) then col=obj_controller.bat_scout_column;
 	                    }
                     
-	                    if (unit.role()=obj_ini.role[100][5]) or (unit.role()="Standard Bearer") or (obj_ncombat.role[cooh,va]=obj_ini.role[100][7]){
+	                    if (unit.role()=obj_ini.role[100][5]) or (unit.role()=obj_ini.role[100][11]) or (obj_ncombat.role[cooh,va]=obj_ini.role[100][7]){
 	                        if (unit.role()=obj_ini.role[100][5]){obj_ncombat.captains+=1;if (obj_ncombat.big_mofo>5) then obj_ncombat.big_mofo=5;}
-	                        if (unit.role()="Standard Bearer") then obj_ncombat.standard_bearers+=1;
+	                        if (unit.role()=obj_ini.role[100][11]) then obj_ncombat.standard_bearers+=1;
 							if (unit.role()==obj_ini.role[100][7]) then obj_ncombat.champions+=1;
                         
 	                        if (co=1){

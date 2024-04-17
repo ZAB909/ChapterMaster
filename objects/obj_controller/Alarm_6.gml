@@ -31,7 +31,7 @@ if (menu==1) and (managing>0){
                 if (unit.role()==obj_ini.role[100][17]) then lib+=1;
                 if (unit.role()==obj_ini.role[100][16]) then tech+=1;
                 if (unit.role()==obj_ini.role[100][6]) or (ma_role[f]=="Venerable "+string(obj_ini.role[100][6])) then drea+=1;
-                if (unit.role()=="Standard Bearer") then bear+=1;
+                if (unit.role()==obj_ini.role[100][11]) then bear+=1;
                 if (unit.role()==obj_ini.role[100][8]) then tct+=1;
                 if (unit.role()==obj_ini.role[100][10]) then assa+=1;
                 if (unit.role()==obj_ini.role[100][9]) then dev+=1;
@@ -92,7 +92,7 @@ if (menu==1) and (managing>0){
         selecting_dudes+=", ";
     }
     if (bear>0){
-        selecting_dudes+=string(bear)+" Standard Bearer";
+        selecting_dudes+=string(bear)+" "+string(obj_ini.role[100][11]);
         if (bear>1) then selecting_dudes+="s";
         selecting_dudes+=", ";
     }

@@ -4,7 +4,7 @@
 	role[100][14]:{"armour":[["MK3 Iron Armour",25]],
 	role[100][15]:{"armour":[["MK3 Iron Armour", 10]]}, //apothecary
 	role[100][16]:{"armour":},
-	"Standard Bearer":{"armour":[["MK3 Iron Armour", 3]]},
+	obj_ini.role[100][11]:{"armour":[["MK3 Iron Armour", 3]]},
 	role[100][7]:{"armour":[]},  //company champion
 	role[100][8]:{"armour":[["MK8 Errant", 3],["MK3 Iron Armour", 3],["MK4 Maximus", 3],["MK5 Heresy", 3]]},     //tacticals
 	role[100][10]:{"armour":},		
@@ -1510,7 +1510,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	    	qual_string = "no_items";
 	    }
 	    if (new_weapon=="Company Standard"){
-	    	if (unit.role()!="Standard Bearer"){
+	    	if (unit.role()!=obj_ini.role[100][11]){
 	    		viable = false;
 	    		qual_string = "wrong_role";
 	    	}
@@ -2290,7 +2290,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					intelligence=40;
 				}
 				break;
-			case "Standard Bearer":
+			case obj_ini.role[100][11]:
 				 update_armour("MK5 Heresy",false,false);
 				 age -= gauss(400, 250);
 				break;

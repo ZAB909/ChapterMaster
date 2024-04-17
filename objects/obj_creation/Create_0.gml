@@ -473,6 +473,14 @@ color_to_pauldron21="Red";
 	gear_21[i,10]=""
     mobi_21[i,10]="Jump Pack";
 
+    race_21[i,11]=1;
+    role_21[i,11]="Ancient";
+    wep1_21[i,11]="Company Standard";
+    wep2_21[i,11]="Bolt Pistol";
+    armour_21[i,11]="Power Armour";
+	gear_21[i,11]=""
+	mobi_21[i,11]="";
+
     race_21[i,12]=1;
     role_21[i,12]="Scout";
     wep1_21[i,12]="Sniper Rifle";
@@ -480,7 +488,6 @@ color_to_pauldron21="Red";
     armour_21[i,12]="Scout Armour";
 	gear_21[i,12]=""
 	mobi_21[i,12]="";
-
 
     race_21[i,14]=1;
     role_21[i,14]="Chaplain";
@@ -713,6 +720,12 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
     wep2[i,10]="Bolt Pistol";
     armour[i,10]="Power Armour";
     mobi[i,10]="Jump Pack";
+
+    race[i,11]=1;
+    role[i,11]="Ancient";
+    wep1[i,11]="Company Standard";
+    wep2[i,11]="Bolt Pistol";
+    armour[i,11]="Power Armour";
 
     race[i,12]=1;
     role[i,12]="Scout";

@@ -9,6 +9,7 @@ enum Role {
 	TACTICAL = 8,
 	DEVASTATOR = 9,
 	ASSAULT = 10,
+	ANCIENT = 11,
 	SCOUT = 12,
 	CHAPLAIN = 14,
 	APOTHECARY = 15,
@@ -915,7 +916,7 @@ function scr_initialize_custom() {
 		gear[i, 10] = "";
 		role[i, 11] = "Ancient";
 		wep1[i, 11] = "Company Standard";
-		wep2[i, 11] = "Power Sword";
+		wep2[i, 11] = "Bolt Pistol";
 		armour[i, 11] = "Power Armour";
 		mobi[i, 11] = "";
 		gear[i, 11] = "";
@@ -973,17 +974,18 @@ function scr_initialize_custom() {
 	}
 	var roles = {
 		honor_guard: role[100][2],
-		veteran1: role[100][3],
-		terminator1: role[100][4],
+		veteran: role[100][3],
+		terminator: role[100][4],
 		captain: role[100][5],
 		dreadnought: role[100][6],
 		champion: role[100][7],
 		tactical: role[100][8],
-		devastator1: role[100][9],
-		assault1: role[100][10],
+		devastator: role[100][9],
+		assault: role[100][10],
+		ancient: role[100][11],
 		scout: role[100][12],
 		chaplain: role[100][14],
-		apothecary1: role[100][15],
+		apothecary: role[100][15],
 		techmarine: role[100][16],
 		librarian: role[100][17],
 		sergeant: role[100][18],
@@ -1004,16 +1006,16 @@ function scr_initialize_custom() {
 	]
 	role_spawn_buffs = {}
 	variable_struct_set(role_spawn_buffs, roles.captain, [70, 40]);
-	variable_struct_set(role_spawn_buffs, roles.terminator1, [30, 10]);
-	variable_struct_set(role_spawn_buffs, roles.veteran1, [10, 5]);
+	variable_struct_set(role_spawn_buffs, roles.terminator, [30, 10]);
+	variable_struct_set(role_spawn_buffs, roles.veteran, [10, 5]);
 	variable_struct_set(role_spawn_buffs, roles.chaplain, [60, 30]);
-	variable_struct_set(role_spawn_buffs, roles.apothecary1, [95, 20]);
+	variable_struct_set(role_spawn_buffs, roles.apothecary, [95, 20]);
 	variable_struct_set(role_spawn_buffs, roles.techmarine, [95, 20]);
-	variable_struct_set(role_spawn_buffs, "Standard Bearer", [30, 30]);
+	variable_struct_set(role_spawn_buffs, roles.ancient, [30, 30]);
 	variable_struct_set(role_spawn_buffs, roles.champion, [40, 5]);
 	variable_struct_set(role_spawn_buffs, roles.tactical, [3, 5]);
-	variable_struct_set(role_spawn_buffs, roles.assault1, 0);
-	variable_struct_set(role_spawn_buffs, roles.devastator1, 0);
+	variable_struct_set(role_spawn_buffs, roles.assault, 0);
+	variable_struct_set(role_spawn_buffs, roles.devastator, 0);
 	variable_struct_set(role_spawn_buffs, roles.scout, 0);
 
 
@@ -1054,35 +1056,35 @@ function scr_initialize_custom() {
 				"max": 1,
 				"min": 1
 			}], //company_champion
-			[roles.apothecary1, {
+			[roles.apothecary, {
 				"max": 1,
 				"min": 0,
-				"role": $"Company {role[100,15]}"
+				"role": $"Company {roles.apothecary}"
 			}], //Apothecary
 			[roles.chaplain, {
 				"max": 1,
 				"min": 0,
-				"role": $"Company {role[100,14]}"
+				"role": $"Company {roles.chaplain}"
 			}], //chaplain
-			["Standard Bearer", {
+			[roles.ancient, {
 				"max": 1,
 				"min": 1,
-				"role": "Company Ancient"
+				"role": $"Company {roles.ancient}"
 			}], //standard bearer
-			[roles.veteran1, {
+			[roles.veteran, {
 				"max": 5,
 				"min": 0,
-				"role": $"Company {role[100,3]}"
+				"role": $"Company {roles.veteran}"
 			}], //veterans
 			[roles.techmarine, {
 				"max": 1,
 				"min": 0,
-				"role": $"Company {role[100,16]}"
+				"role": $"Company {roles.techmarine}"
 			}],
 			[roles.librarian, {
 				"max": 1,
 				"min": 0,
-				"role": $"Company {role[100,17]}"
+				"role": $"Company {roles.librarian}"
 			}],
 			["type_data", {
 				"display_data": $"Command {squad_name}",
@@ -1095,10 +1097,10 @@ function scr_initialize_custom() {
 			[roles.veteran_sergeant, {
 				"max": 1,
 				"min": 1,
-				"role": $"{roles.terminator1} {role[100,18]}"
+				"role": $"{roles.terminator} {roles.sergeant}"
 			}],
 			// Terminator Sergeant
-			[roles.terminator1, {
+			[roles.terminator, {
 				"max": 9,
 				"min": 3,
 				"loadout": {
@@ -1116,7 +1118,7 @@ function scr_initialize_custom() {
 				}
 			}],
 			["type_data", {
-				"display_data": $"{role[100,4]} {squad_name}",
+				"display_data": $"{roles.terminator} {squad_name}",
 				"formation_options": ["terminator", "veteran", "assualt", "devastator", "scout", "tactical"],
 			}]
 		],
@@ -1126,13 +1128,13 @@ function scr_initialize_custom() {
 			[roles.veteran_sergeant, {
 				"max": 1,
 				"min": 1,
-				"role": $"Assault {roles.terminator1} {role[100,18]}"
+				"role": $"Assault {roles.terminator} {roles.sergeant}"
 			}],
 			// AssaultTerminator Sergeant
-			[roles.terminator1, {
+			[roles.terminator, {
 				"max": 9,
 				"min": 3,
-				"role": $"Assault {roles.terminator1}",
+				"role": $"Assault {roles.terminator}",
 				"loadout": { //terminator
 					"required": {
 						"wep1": ["Thunder Hammer", "max"],
@@ -1141,16 +1143,16 @@ function scr_initialize_custom() {
 				},
 			}, ],
 			["type_data", {
-				"display_data": $"{role[100,4]} Assault {squad_name}",
+				"display_data": $"{roles.terminator} Assault {squad_name}",
 				"formation_options": ["terminator", "veteran", "assualt", "devastator", "scout", "tactical"],
 			}]
 		],
 
 		"sternguard_veteran_squad": [
-			[roles.veteran1, {
+			[roles.veteran, {
 				"max": 9,
 				"min": 4,
-				"role": $"Sternguard {roles.veteran1}",
+				"role": $"Sternguard {roles.veteran}",
 				"loadout": { //tactical marine
 					"required": {
 						"wep1": [wep1[100, 3], 4],
@@ -1177,19 +1179,19 @@ function scr_initialize_custom() {
 			[roles.veteran_sergeant, {
 				"max": 1,
 				"min": 1,
-				"role": $"Sternguard {role[100,18]}",
+				"role": $"Sternguard {roles.sergeant}",
 			}],
 			["type_data", {
-				"display_data": $"Sternguard {role[100,3]} {squad_name}",
+				"display_data": $"Sternguard {roles.veteran} {squad_name}",
 				"formation_options": ["veteran", "assualt", "devastator", "scout", "tactical"],
 			}]
 		],
 
 		"vanguard_veteran_squad": [
-			[roles.veteran1, {
+			[roles.veteran, {
 				"max": 9,
 				"min": 4,
-				"role": $"Vanguard {roles.veteran1}",
+				"role": $"Vanguard {roles.veteran}",
 				"loadout": { //tactical marine
 					"required": {
 						"wep1": [wep1[100, 3], 4],
@@ -1219,7 +1221,7 @@ function scr_initialize_custom() {
 			[roles.veteran_sergeant, {
 				"max": 1,
 				"min": 1,
-				"role": $"Vanguard {role[100,18]}",
+				"role": $"Vanguard {roles.sergeant}",
 				"loadout": {
 					"required": {
 						"wep1": ["Power Sword", 1],
@@ -1229,13 +1231,13 @@ function scr_initialize_custom() {
 				}
 			}],
 			["type_data", {
-				"display_data": $"Vanguard {role[100,3]} {squad_name}",
+				"display_data": $"Vanguard {roles.veteran} {squad_name}",
 				"formation_options": ["veteran", "assualt", "devastator", "scout", "tactical"],
 			}]
 		],
 
 		"devastator_squad": [
-			[roles.devastator1,
+			[roles.devastator,
 				{
 					"max": 9,
 					"min": 4,
@@ -1250,10 +1252,10 @@ function scr_initialize_custom() {
 			[roles.sergeant, {
 				"max": 1,
 				"min": 1,
-				"role": $"{role[100,9]} {role[100,18]}"
+				"role": $"{roles.devastator} {roles.sergeant}"
 			}], //sergeant
 			["type_data", {
-				"display_data": $"{role[100,9]} {squad_name}",
+				"display_data": $"{roles.devastator} {squad_name}",
 				"formation_options": ["devastator"],
 			}]
 		],
@@ -1282,16 +1284,16 @@ function scr_initialize_custom() {
 			[roles.sergeant, {
 				"max": 1,
 				"min": 1,
-				"role": $"{role[100,8]} {role[100,18]}"
+				"role": $"{roles.tactical} {roles.sergeant}"
 			}], // sergeant
 			["type_data", {
-				"display_data": $"{role[100,8]} {squad_name}",
+				"display_data": $"{roles.tactical} {squad_name}",
 				"formation_options": ["tactical", "assualt", "devastator", "scout"],
 			}]
 		],
 
 		"assault_squad": [
-			[roles.assault1, {
+			[roles.assault, {
 				"max": 9,
 				"min": 4,
 				"loadout": {
@@ -1319,7 +1321,7 @@ function scr_initialize_custom() {
 				"role": $"Assualt {roles.sergeant}"
 			}], // sergeant
 			["type_data", {
-				"display_data": $"{roles.assault1} {squad_name}",
+				"display_data": $"{roles.assault} {squad_name}",
 				"formation_options": ["assualt"],
 			}]
 		],
@@ -1372,11 +1374,11 @@ function scr_initialize_custom() {
 							]
 						}
 					},
-					"role": $"{role[100,12]} {role[100,18]}",
+					"role": $"{roles.scout} {roles.sergeant}",
 				}
 			],
 			["type_data", {
-				"display_data": $"{role[100,12]} {squad_name}",
+				"display_data": $"{roles.scout} {squad_name}",
 				"class": ["scout"],
 				"formation_options": ["scout"],
 			}],
@@ -1438,7 +1440,7 @@ function scr_initialize_custom() {
 	};
 	if (global.chapter_name == "Salamanders") or(obj_ini.progenitor == 8) { //salamanders squads
 		variable_struct_set(st, "assault_squad", [
-			[roles.assault1, {
+			[roles.assault, {
 				"max": 9,
 				"min": 4,
 				"loadout": { //assault_marine
@@ -1482,10 +1484,10 @@ function scr_initialize_custom() {
 						]
 					}
 				},
-				"role": $"{role[100,10]} {role[100,18]}"
+				"role": $"{roles.assault} {roles.sergeant}"
 			}],
 			["type_data", {
-				"display_data": $"{role[100,10]} {squad_name}"
+				"display_data": $"{roles.assault} {squad_name}"
 			}]
 		])
 	}
@@ -1516,7 +1518,7 @@ function scr_initialize_custom() {
 						]
 					}
 				},
-				"role": $"{role[100,8]} Biker"
+				"role": $"{roles.tactical} Biker"
 			}],
 			[roles.sergeant, {
 				"max": 1,
@@ -1538,10 +1540,10 @@ function scr_initialize_custom() {
 						]
 					}
 				},
-				"role": $"{role[100,8]} Bike {role[100,18]}"
+				"role": $"{roles.tactical} Bike {roles.sergeant}"
 			}, ],
 			["type_data", {
-				"display_data": $"{role[100,8]} Bike {squad_name}"
+				"display_data": $"{roles.tactical} Bike {squad_name}"
 			}]
 		])
 		variable_struct_set(st, "tactical_squad", [
@@ -1583,7 +1585,7 @@ function scr_initialize_custom() {
 				"role": $"{roles.tactical} {roles.sergeant}"
 			}], // sergeant
 			["type_data", {
-				"display_data": $"{role[100,8]} {squad_name}"
+				"display_data": $"{roles.tactical} {squad_name}"
 			}]
 		])
 	}
@@ -2139,7 +2141,7 @@ function scr_initialize_custom() {
 		TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
 		race[company][k] = 1;
 		loc[company][k] = home_name;
-		role[company][k] = roles.apothecary1;
+		role[company][k] = roles.apothecary;
 		wep1[company][k] = wep1[101, 15];
 		name[company][k] = global.name_generator.generate_space_marine_name();
 		wep2[company][k] = wep2[101, 15];
@@ -2286,7 +2288,7 @@ function scr_initialize_custom() {
 		race[company][k] = 1;
 		TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
 		loc[company][k] = home_name;
-		role[company][k] = roles.apothecary1;
+		role[company][k] = roles.apothecary;
 		wep1[company][k] = wep1[101, 15];
 		name[company][k] = global.name_generator.generate_space_marine_name();
 		wep2[company][k] = wep2[101, 15];
@@ -2307,7 +2309,7 @@ function scr_initialize_custom() {
 			TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
 			race[company][k] = 1;
 			loc[company][k] = home_name;
-			role[company][k] = roles.apothecary1;
+			role[company][k] = roles.apothecary;
 			wep1[company][k] = wep1[101, 15];
 
 			name[company][k] = global.name_generator.generate_space_marine_name();
@@ -2343,21 +2345,19 @@ function scr_initialize_custom() {
 		}
 
 		k += 1; // Standard bearer
+		man_size += 1;
 		race[company][k] = 1;
 		TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
 		loc[company][k] = home_name;
-		role[company][k] = "Standard Bearer";
-		wep1[company][k] = "Company Standard";
+		role[company][k] = roles.ancient;
 		name[company][k] = global.name_generator.generate_space_marine_name();
-		wep2[company][k] = "Power Fist";
-		armour[company][k] = "Terminator Armour";
+		wep1[company][k] = "Company Standard";
+		wep2[company][k] = "Storm Bolter";
 		spawn_unit = TTRPG[company][k]
 		spawn_unit.spawn_old_guard();
 		spawn_unit.spawn_exp();
-
+		armour[company][k] = "Terminator Armour";
 		if (string_count("Crafter", strin) > 0) then armour[company][k] = "Tartaros";
-		if (terminator <= 0) then armour[company][k] = "MK6 Corvus";
-		if (armour[company][k] = "Terminator") or(armour[company][k] = "Tartaros") then man_size += 1;
 
 		k += 1;
 		man_size += 1;
@@ -2387,7 +2387,7 @@ function scr_initialize_custom() {
 		race[company][k] = 1;
 		TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
 		loc[company][k] = home_name;
-		role[company][k] = roles.terminator1;
+		role[company][k] = roles.terminator;
 		wep1[company][k] = wep1[101, 4];
 		name[company][k] = global.name_generator.generate_space_marine_name();
 		wep2[company][k] = wep2[101, 4];
@@ -2404,7 +2404,7 @@ function scr_initialize_custom() {
 		TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
 		race[company][k] = 1;
 		loc[company][k] = home_name;
-		role[company][k] = roles.veteran1;
+		role[company][k] = roles.veteran;
 		wep1[company][k] = wep1[101, 3];
 		name[company][k] = global.name_generator.generate_space_marine_name();
 		wep2[company][k] = wep2[101, 3];
@@ -2778,7 +2778,7 @@ function scr_initialize_custom() {
 			race[company][k] = 1;
 			loc[company][k] = home_name;
 			TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
-			role[company][k] = roles.apothecary1;
+			role[company][k] = roles.apothecary;
 			wep1[company][k] = wep1[101, 15];
 			name[company][k] = global.name_generator.generate_space_marine_name();
 			wep2[company][k] = wep2[101, 15];
@@ -2796,7 +2796,7 @@ function scr_initialize_custom() {
 				race[company][k] = 1;
 				TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
 				loc[company][k] = home_name;
-				role[company][k] = roles.apothecary1;
+				role[company][k] = roles.apothecary;
 				wep1[company][k] = wep1[101, 15];
 				name[company][k] = global.name_generator.generate_space_marine_name();
 				wep2[company][k] = wep2[101, 15];
@@ -2833,7 +2833,7 @@ function scr_initialize_custom() {
 			race[company][k] = 1;
 			loc[company][k] = home_name;
 			TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
-			role[company][k] = "Standard Bearer";
+			role[company][k] = roles.ancient;
 			wep1[company][k] = "Chainsword";
 			name[company][k] = global.name_generator.generate_space_marine_name();
 			wep2[company][k] = "Company Standard";
@@ -2891,7 +2891,7 @@ function scr_initialize_custom() {
 
 						race[company][k] = 1;
 						loc[company][k] = home_name;
-						role[company][k] = roles.assault1;
+						role[company][k] = roles.assault;
 						wep1[company][k] = wep1[101, 10];
 						name[company][k] = global.name_generator.generate_space_marine_name();
 						mobi[company][k] = "Jump Pack";
@@ -2909,7 +2909,7 @@ function scr_initialize_custom() {
 
 						race[company][k] = 1;
 						loc[company][k] = home_name;
-						role[company][k] = roles.devastator1;
+						role[company][k] = roles.devastator;
 						wep2[company][k] = wep2[101][9];
 						mobi[company][k] = mobi[100][9];
 						name[company][k] = global.name_generator.generate_space_marine_name();
@@ -2970,7 +2970,7 @@ function scr_initialize_custom() {
 					TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
 					race[company][k] = 1;
 					loc[company][k] = home_name;
-					role[company][k] = roles.assault1;
+					role[company][k] = roles.assault;
 					wep1[company][k] = wep1[101, 10];
 					wep2[company][k] = wep2[101, 10];
 					name[company][k] = global.name_generator.generate_space_marine_name();
@@ -2989,7 +2989,7 @@ function scr_initialize_custom() {
 
 					race[company][k] = 1;
 					loc[company][k] = home_name;
-					role[company][k] = roles.devastator1;
+					role[company][k] = roles.devastator;
 					name[company][k] = global.name_generator.generate_space_marine_name();
 					wep2[company][k] = wep2[101, 9];
 
@@ -3026,7 +3026,7 @@ function scr_initialize_custom() {
 
 					race[company][k] = 1;
 					loc[company][k] = home_name;
-					role[company][k] = roles.assault1;
+					role[company][k] = roles.assault;
 					wep1[company][k] = wep1[101, 10];
 					wep2[company][k] = wep2[101, 10];
 					name[company][k] = global.name_generator.generate_space_marine_name();
@@ -3043,7 +3043,7 @@ function scr_initialize_custom() {
 
 					race[company][k] = 1;
 					loc[company][k] = home_name;
-					role[company][k] = roles.devastator1;
+					role[company][k] = roles.devastator;
 					name[company][k] = global.name_generator.generate_space_marine_name();
 					wep2[company][k] = wep2[101, 9];
 
