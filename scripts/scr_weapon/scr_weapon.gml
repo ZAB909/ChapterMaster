@@ -1938,7 +1938,28 @@ global.gear = {
         "abbreviation": "FrgAssLnchrs", 
         "description": "",
          "tags":["vehicle"],              
-    },             
+    },
+    "Combat Shield": {
+        "description":"A lighter, more maneuverable version of a Storm Shield. Due to its flexibility, Combat Shields leave other hand of a Space Marine free to use other hand-to-hand weaponry.",
+        "abbreviation": "CmbtShld",
+        "attack": {
+          "standard": 2,
+          "master_crafted": 4,
+          "artifact": 6
+        },
+        "armour_value": {
+            "standard": 4,
+            "master_crafted": 6,
+            "artifact": 8
+        } ,
+        "weight":3,
+        "tags":["shield"],
+        "hp_mod":{
+          "standard": 10,
+          "master_crafted": 15,
+          "artifact": 20
+        },
+      },  
   },
   "mobility":{
    "Bike": {
