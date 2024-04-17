@@ -482,7 +482,7 @@ global.weapons={
         "spli": 10,
         "arp": 1,
         "tags":["power", "hammer", "siege"],
-        "req_exp":90,
+        "req_exp":140,
     },
     "Tome":{
         "abbreviation": "Tome",                

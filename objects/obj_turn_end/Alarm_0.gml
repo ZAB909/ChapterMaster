@@ -108,8 +108,9 @@ if (battles>0) and (current_battle<=battles){
             
             // pull enemy ships here
             
-            var e;e=1;
-            repeat(10){e+=1;if (e=11) then e=13;
+            var e=1;
+            repeat(10){
+                e+=1;if (e=11) then e=13;
                 if (ii.present_fleet[e]>0){
                     obj_controller.temp[1070]=ii.id;
                     obj_controller.temp[1071]=e;

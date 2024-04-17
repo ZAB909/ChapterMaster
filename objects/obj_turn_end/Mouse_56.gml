@@ -40,12 +40,6 @@ __b__ = action_if_number(obj_popup, 0, 0);
         
 			        combating=1;
         
-			        // instance_deactivate_all(true);
-			        // instance_activate_object(obj_controller);
-			        // instance_activate_object(obj_ini);
-			        // instance_activate_object(battle_object[current_battle]);
-			        // instance_activate_object(battle_pobject[current_battle]);
-        
 			        instance_create(0,0,obj_fleet);
 			        // 
 			        obj_fleet.enemy[1]=enemy_fleet[1];
@@ -59,7 +53,7 @@ __b__ = action_if_number(obj_popup, 0, 0);
 			        // And then plug in the allies after then with their status set to positive
         
         
-			        var g,ee;g=1;ee=1;
+			        var g=1;ee=1;
 			        repeat(5){g+=1;
 			            if (enemy_fleet[g]!=0){ee+=1;
 			                obj_fleet.enemy[ee]=enemy_fleet[g];
@@ -70,9 +64,10 @@ __b__ = action_if_number(obj_popup, 0, 0);
 			                obj_fleet.en_escort[ee]=eesc[g];
 			            }
 			        }
-			        var g,ee;g=0;
+			        var g=0;
 			        repeat(6){g+=1;
-			            if (allied_fleet[g]!=0){ee+=1;
+			            if (allied_fleet[g]!=0){
+			            	ee+=1;
 			                obj_fleet.enemy[ee]=allied_fleet[g];
 			                obj_fleet.enemy_status[ee]=1;
                 
@@ -86,14 +81,14 @@ __b__ = action_if_number(obj_popup, 0, 0);
 			        if (battle_special[current_battle]="BLOOD") then obj_fleet.csm_exp=2;
         
 			        instance_activate_all();
-			        var stahr;stahr=instance_nearest(battle_pobject[current_battle].x,battle_pobject[current_battle].y,obj_star);
+			        var stahr=instance_nearest(battle_pobject[current_battle].x,battle_pobject[current_battle].y,obj_star);
 			        obj_fleet.star_name=stahr.name;
 		
-					for (p_num =1; p_num<5;p_num++){
+					for (var p_num = 1; p_num<5;p_num++){
 						//if(planet_feature_bool(stahr.p_feature[p_num], P_features.Monastery)==1)thenobj_fleet.player_lasers=stahr.p_lasers[p_num]; 
 					}
         
-			        var i;i=0;
+			        var i=0;
 			        repeat(40){
 			            i+=1;if (battle_pobject[current_battle].capital[i]!="") then obj_fleet.fighting[battle_pobject[current_battle].capital_num[i]]=1;
 			        }

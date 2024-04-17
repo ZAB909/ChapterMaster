@@ -367,39 +367,43 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
 
 
     // if (n_wep1=n_wep2){if (o_wep1=n_wep1) and (o_wep2!=n_wep2) then have_wep2_num-=1;if (o_wep2=n_wep2) and (o_wep1!=n_wep1) then have_wep1_num-=1;}
+    var weapon_one_data = gear_weapon_data("weapon",n_wep1);
+    var weapon_two_data = gear_weapon_data("weapon",n_wep2);
+    var armour_data = gear_weapon_data("armour",n_armour);
 
 
-
-    if (target_comp=1) and (n_wep1!="Assortment") and (n_wep1!="(None)"){// Check numbers
+    if (target_comp=1) and (is_struct(weapon_one_data)){// Check numbers
         req_wep1_num=units;have_wep1_num=0;
-        var i;i=-1;
+        var i=-1;
         repeat(array_length(obj_controller.display_unit)){i+=1;
             if (vehicle_equipment!=-1) and (obj_controller.ma_wep1[i]=n_wep1) then have_wep1_num+=1;
         }
         // req_wep1_num+=scr_item_count(n_wep1);
         have_wep1_num+=scr_item_count(n_wep1);
         // req_wep1_num=units;
-
         if (have_wep1_num>=req_wep1_num) or (n_wep1="(None") then n_good1=1;
         if (have_wep1_num<req_wep1_num){n_good1=0;warning="Not enough "+string(n_wep1)+"; "+string(req_wep1_num-have_wep1_num)+" more are required.";}
-        //TODO standardise exp check
-        if (n_wep1="Thunder Hammer"){
+
+        //TODO wrap this up in a function
+        if (weapon_one_data.req_exp>0){
             var g,exp_check;g=-1;exp_check=0;
             for (var g=0;g<array_length(obj_controller.display_unit);g++){
-                if (obj_controller.man_sel[g]=1) and (display_unit[g].experience()<140){
-                    exp_check=1;
-                    n_good1=0;
-                    warning="A unit must have 140+ EXP to use a Thunder Hammer.";
-                    break;
+                if (obj_controller.man_sel[g]=1 && is_struct(obj_controller.display_unit[g])){  
+                    if (obj_controller.display_unit[g].experience()<weapon_one_data.req_exp){
+                        exp_check=1;
+                        n_good1=0;
+                        warning=$"A unit must have {weapon_one_data.req_exp}+ EXP to use a {weapon_one_data.name}.";
+                        break;
+                    }
                 }
-            }
+            }            
         }
         if (string_count("Terminator",n_armour)=0) and (string_count("Dreadnought",n_armour)=0) and (string_count("Tartaros",n_armour)=0) and (n_wep1="Assault Cannon"){n_good1=0;warning="Cannot use Assault Cannons without Terminator/Dreadnought Armour.";}
         if (string_count("Dreadnought",n_armour)=0) and (n_wep1="Close Combat Weapon"){n_good1=0;warning="Only "+string(obj_ini.role[100][6])+" can use Close Combat Weapons.";}
     }
-    if (target_comp=2) and (n_wep2!="Assortment") and (n_wep2!="(None)"){// Check numbers
+     if (target_comp=1) and (is_struct(weapon_two_data)){// Check numbers
         req_wep2_num=units;have_wep2_num=0;
-        var i;i=-1;
+        var i=-1;
         repeat(array_length(obj_controller.display_unit)){i+=1;
             if (vehicle_equipment!=-1) and (obj_controller.ma_wep2[i]=n_wep2) then have_wep2_num+=1;
         }
@@ -408,22 +412,31 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
         // req_wep2_num=units;
 
         if (have_wep2_num>=req_wep2_num) or (n_wep2="(None") then n_good2=1;
-        if (have_wep2_num<req_wep2_num){n_good2=0;warning="Not enough "+string(n_wep2)+"; "+string(req_wep2_num-have_wep2_num)+" more are required.";}
+        if (have_wep2_num<req_wep2_num){
+            n_good2=0;warning=$"Not enough {n_wep2}; {req_wep2_num-have_wep2_num} more are required.";
+        }
         //TODO standardise exp check
-        if (n_wep2="Thunder Hammer"){
-            var g=-1,exp_check=0;
-            repeat(array_length(obj_controller.display_unit)){
-                g+=1;if (obj_controller.man_sel[g]=1) and (obj_controller.ma_exp[g]<140) then exp_check=1;
-            }
-            if (exp_check=1){n_good2=0;warning="A unit must have 140+ EXP to use a Thunder Hammer.";}
+        if (weapon_two_data.req_exp>0){
+            var g,exp_check;g=-1;exp_check=0;
+            for (var g=0;g<array_length(obj_controller.display_unit);g++){
+                if (obj_controller.man_sel[g]=1 && is_struct(obj_controller.display_unit[g])){  
+                    if (obj_controller.display_unit[g].experience()<weapon_two_data.req_exp){
+                        exp_check=1;
+                        n_good1=0;
+                        warning=$"A unit must have {weapon_two_data.req_exp}+ EXP to use a {weapon_two_data.name}.";
+                        break;
+                    }
+                }
+            }            
         }
         if (string_count("Terminator",n_armour)=0) and (string_count("Dreadnought",n_armour)=0) and (string_count("Tartaros",n_armour)=0) and (n_wep2="Assault Cannon"){n_good2=0;warning="Cannot use Assault Cannons without Terminator/Dreadnought Armour.";}
         if (string_count("Dreadnought",n_armour)=0) and (n_wep2="Close Combat Weapon"){n_good2=0;warning="Only "+string(obj_ini.role[100][6])+" can use Close Combat Weapons.";}
         if ((string_count("Terminator",n_armour)>0) or (string_count("Tartaros",n_armour)>0) or (string_count("Dreadnought",n_armour)>0)) and (n_mobi!="") then n_good2=0;
         if ((string_count("Terminator",o_armour)>0) or (string_count("Tartaros",o_armour)>0) or (string_count("Dreadnought",o_armour)>0)) and (n_mobi!="") then n_good2=0;
     }
-    if (target_comp=3) and (n_armour!="Assortment") and (n_armour!="(None)"){// Check numbers
-        req_armour_num=units;have_armour_num=0;
+    if (target_comp=3) and (is_struct(armour_data)){// Check numbers
+        req_armour_num=units;
+        have_armour_num=0;
         var i;i=-1;
         repeat(array_length(obj_controller.display_unit)){i+=1;
             if (vehicle_equipment!=-1) and (obj_controller.man_sel[i]=1) and (obj_controller.ma_armour[i]=n_armour) then have_armour_num+=1;
@@ -437,11 +450,22 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
         }
 
         var g,exp_check;g=-1;exp_check=0;
-        if (n_armour="Terminator Armour") or (n_armour="Tartaros") then repeat(array_length(obj_controller.display_unit)){
-            g+=1;
-            if (obj_controller.man_sel[g]=1) and (obj_controller.ma_exp[g]<90) then exp_check=1;
+        if (armour_data.has_tag("terminator")){
+            if (armour_data.req_exp>0){
+                var g,exp_check;g=-1;exp_check=0;
+                for (var g=0;g<array_length(obj_controller.display_unit);g++){
+                    if (obj_controller.man_sel[g]=1 && is_struct(obj_controller.display_unit[g])){  
+                        if (obj_controller.display_unit[g].experience()<armour_data.req_exp){
+                            exp_check=1;
+                            n_good1=0;
+                            warning=$"A unit must have {armour_data.req_exp}+ EXP to use a {armour_data.name}.";
+                            break;
+                        }
+                    }
+                }            
+            }
         }
-        if (exp_check=1){n_good3=0;warning="A unit must have 90+ EXP to use Terminator armour.";}
+
         if (string_count("Dread",o_armour)>0) and (string_count("Dread",n_armour)=0){
             n_good4=0;
             warning="Marines may not exit Dreadnoughts.";
@@ -460,7 +484,8 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
         if (have_gear_num<req_gear_num){n_good4=0;warning="Not enough "+string(n_gear)+"; "+string(units-req_gear_num)+" more are required.";}
 
         if (n_gear!="(None)") and (n_gear!="") and (string_count("Dreadnought",n_armour)>0){
-            n_good4=0;warning="Dreadnoughts may not use infantry equipment.";
+            n_good4=0;
+            warning="Dreadnoughts may not use infantry equipment.";
         }
     }
     if (target_comp=5) and (n_mobi!="Assortment") and (n_mobi!="(None)"){// Check numbers
@@ -478,7 +503,8 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
             n_good5=0;warning="Terminators cannot use Mobility gear.";
         }
         if (n_mobi!="(None)") and (n_mobi!="") and (n_armour="Dreadnought"){
-            n_good5=0;warning=string(obj_ini.role[100][6])+"s may not use mobility gear.";
+            n_good5=0;
+            warning=string(obj_ini.role[100][6])+"s may not use mobility gear.";
         }
 
     }

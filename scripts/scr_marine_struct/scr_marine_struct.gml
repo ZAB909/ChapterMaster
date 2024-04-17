@@ -1061,8 +1061,17 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			if (is_array(variable_struct_get(self, stats[stat_iter]))){
 				edit_stat = variable_struct_get(self, stats[stat_iter]);
 				stat_mod =  floor(gauss(edit_stat[0], edit_stat[1]));
-
-				variable_struct_set(self, stats[stat_iter],  stat_mod);			
+				if (array_length(edit_stat)>2){
+					if (edit_stat[2] == "max"){
+						variable_struct_set(self, stats[stat_iter],  max(stat_mod, edit_stat[0]));
+					} else if (edit_stat[2] == "min"){
+						variable_struct_set(self, stats[stat_iter],  min(stat_mod, edit_stat[0]));
+					} else {
+						variable_struct_set(self, stats[stat_iter],  stat_mod);
+					}
+				} else {
+					variable_struct_set(self, stats[stat_iter],  stat_mod);
+				}
 			}
 		}
 	};
