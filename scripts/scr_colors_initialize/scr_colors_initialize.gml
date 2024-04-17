@@ -11,7 +11,7 @@ function scr_colors_initialize() {
 	i+=1;col[i]="Fenrisian Grey";col_r[i]=144;col_g[i]=155;col_b[i]=183;
 	// i+=1;col[i]="Grey";col_r[i]=150;col_g[i]=150;col_b[i]=150;
 	i+=1;col[i]="Codex Grey";col_r[i]=112;col_g[i]=117;col_b[i]=110;
-	i+=1;col[i]="Dark Grey";col_r[i]=40;col_g[i]=40;col_b[i]=40;// 5
+	i+=1;col[i]="Dark Grey";col_r[i]=50;col_g[i]=50;col_b[i]=50;// 5
 	i+=1;col[i]="Black";col_r[i]=30;col_g[i]=30;col_b[i]=30;
 	i+=1;col[i]="Red";col_r[i]=200;col_g[i]=0;col_b[i]=0;
 	i+=1;col[i]="Sanguine";col_r[i]=150;col_g[i]=0;col_b[i]=0;
