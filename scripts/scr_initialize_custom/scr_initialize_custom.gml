@@ -916,7 +916,7 @@ function scr_initialize_custom() {
 		gear[i, 10] = "";
 		role[i, 11] = "Ancient";
 		wep1[i, 11] = "Company Standard";
-		wep2[i, 11] = "Bolt Pistol";
+		wep2[i, 11] = "Power Sword";
 		armour[i, 11] = "Power Armour";
 		mobi[i, 11] = "";
 		gear[i, 11] = "";
@@ -1447,8 +1447,8 @@ function scr_initialize_custom() {
 					"min": 4,
 					"loadout": {
 						"required": {
-							"wep1": [wep1[100][12], 4],
-							"wep2": [wep2[100][12], 4]
+							"wep1": [wep1[100][12], 7],
+							"wep2": [wep2[100][12], 9]
 						},
 						"option": {
 							"wep1": [
@@ -1459,11 +1459,6 @@ function scr_initialize_custom() {
 									["Missile Launcher", "Heavy Bolter"], 1
 								]
 							],
-							"wep2": [
-								[
-									["Chainsword", "Combat Knife"], 5
-								],
-							]
 						}
 					}
 				}],
@@ -2928,7 +2923,7 @@ function scr_initialize_custom() {
 			loc[company][k] = home_name;
 			TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
 			role[company][k] = roles.ancient;
-			wep1[company][k] = "Chainsword";
+			wep1[company][k] = "Power Sword";
 			name[company][k] = global.name_generator.generate_space_marine_name();
 			wep2[company][k] = "Company Standard";
 			armour[company][k] = "MK5 Heresy";
