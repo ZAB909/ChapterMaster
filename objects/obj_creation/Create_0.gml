@@ -497,7 +497,7 @@ color_to_pauldron21="Red";
     race_21[i,11]=1;
     role_21[i,11]="Ancient";
     wep1_21[i,11]="Company Standard";
-    wep2_21[i,11]="Bolt Pistol";
+    wep2_21[i,11]="Power Sword";
     armour_21[i,11]="Power Armour";
 	gear_21[i,11]=""
 	mobi_21[i,11]="";
@@ -745,7 +745,7 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
     race[i,11]=1;
     role[i,11]="Ancient";
     wep1[i,11]="Company Standard";
-    wep2[i,11]="Bolt Pistol";
+    wep2[i,11]="Power Sword";
     armour[i,11]="Power Armour";
 
     race[i,12]=1;
