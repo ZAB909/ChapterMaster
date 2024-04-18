@@ -1,4 +1,4 @@
-
+show_debug_message("alarm1");
 
 // if (csm_exp!=0) then show_message(string(csm_exp));
 
@@ -289,7 +289,7 @@ repeat(100){i+=1;
 
 alarm[2]=1;
 
-
+show_debug_message("alarm1");
 
 /* */
 /*  */
