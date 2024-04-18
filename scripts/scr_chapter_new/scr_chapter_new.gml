@@ -233,7 +233,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Red";color_to_secondary="Red";color_to_trim="Dark Grey";
 	    color_to_pauldron="Red";color_to_pauldron2="Red";color_to_lens="Green";
-	    color_to_weapon="Dark Grey";col_special=0;trim=0;
+	    color_to_weapon="Black";col_special=0;trim=0;
 	    hchaplain="Astorash the Grim";clibrarian="Mephiston";fmaster="Incarael";
 	    battle_cry="For the Emperor and Sanguinius! Death! DEATH";// monastery_name="Fortress of Hera";master_name=
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=3;
