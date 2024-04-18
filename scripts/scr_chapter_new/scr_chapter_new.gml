@@ -151,8 +151,8 @@ if (argument0="White Scars"){founding="N/A";points=150;
 		adv[1]="Bolter Drilling";adv[2]="Siege Masters";
 		homeworld="Ice";homeworld_name="Inwit";recruiting_world="Hive";recruiting_name="Necromunda";
 		homeworld_exists=1;recruiting_exists=1;homeworld_rule=2;aspirant_trial="Survival of the Fittest";
-		color_to_main="Gold";color_to_secondary="Gold";color_to_trim="Red";color_to_pauldron="Gold"
-		color_to_pauldron2="Gold";color_to_lens="Red";color_to_weapon="Black"
+		color_to_main="Gold";color_to_secondary="Gold";color_to_trim="Dark Red";color_to_pauldron="Gold"
+		color_to_pauldron2="Gold";color_to_lens="Green";color_to_weapon="Black"
 		hapothecary="Dyserna";hchaplain="Guaron";clibrarian="Vidos Harn";fmaster="Atornus Geis";admiral="Kyne Phasn"
                 recruiter="Taelos"
 		battle_cry="Primarch-Progenitor, to your glory and the glory of him on earth!";
@@ -513,9 +513,9 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    recruiting_world="Death";recruiting_name=global.name_generator.generate_star_name();
 	    homeworld_rule=0;aspirant_trial="Challenge";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Gold";color_to_secondary="Gold";color_to_trim="Gold";
-	    color_to_pauldron2="White";color_to_pauldron="Gold";color_to_lens="Dark Red";
-	    color_to_weapon="Black";col_special=0;trim=1;
+	    color_to_main="Yellow";color_to_secondary="Yellow";color_to_trim="Gold";
+	    color_to_pauldron2="Yellow";color_to_pauldron="Yellow";color_to_lens="Red";
+	    color_to_weapon="Black";col_special=0;trim=0;
 	    battle_cry="For those we cherish, we die in Glory";
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
 	    mutations=0;mutations_selected=0;
