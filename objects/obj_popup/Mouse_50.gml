@@ -668,10 +668,15 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
 
                 if (is_struct(unit)){
                     unit.update_armour(n_armour);
+                     obj_controller.ma_armour[i] = unit.armour();
                     unit.update_mobility_item(n_mobi);
+                    obj_controller.ma_mobi[i] = unit.mobility_item();
                     unit.update_weapon_one(n_wep1);
+                    obj_controller.ma_wep1[i] = unit.update_weapon_one();
                     unit.update_weapon_two(n_wep2);
+                    obj_controller.ma_wep2[i] = unit.update_weapon_two();
                     unit.update_gear(n_gear);
+                    obj_controller.ma_gear[i] = unit.gear();
                     continue;
                 } else if (is_array(unit)){
 
