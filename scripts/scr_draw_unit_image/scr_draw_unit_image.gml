@@ -212,7 +212,7 @@ function scr_draw_unit_image(x_draw, y_draw){
             else if (ui_specialist=3) and (global.chapter_name!="Space Wolves"){
                 shader_set_uniform_f(obj_controller.colour_to_set1, 255/255,255/255,255/255);
                 shader_set_uniform_f(obj_controller.colour_to_set2, 255/255,255/255,255/255);
-                shader_set_uniform_f(obj_controller.colour_to_set4, 0/255,160/255,0/255);
+                shader_set_uniform_f(obj_controller.colour_to_set4, 200/255,0/255,0/255);
                 shader_set_uniform_f(obj_controller.colour_to_set6, 255/255,255/255,255/255);
                 ttrim=0;
                 specialist_colours=0;
