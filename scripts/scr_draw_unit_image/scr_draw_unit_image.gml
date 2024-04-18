@@ -216,10 +216,10 @@ function scr_draw_unit_image(x_draw, y_draw){
 			
 			// Techmarine
             else if (ui_specialist=5){
-                shader_set_uniform_f(obj_controller.colour_to_set1, 150/255,0/255,0/255);
-                shader_set_uniform_f(obj_controller.colour_to_set2, 150/255,0/255,0/255);
+                shader_set_uniform_f(obj_controller.colour_to_set1, 200/255,0/255,0/255);
+                shader_set_uniform_f(obj_controller.colour_to_set2, 200/255,0/255,0/255);
                 // pauldron
-                shader_set_uniform_f(obj_controller.colour_to_set4, 0/255,70/255,0/255);
+                shader_set_uniform_f(obj_controller.colour_to_set4, 0/255,160/255,0/255);
                 shader_set_uniform_f(obj_controller.colour_to_set5, 200/255,200/255,200/255);
                 ttrim=1;specialist_colours=0;
             }
