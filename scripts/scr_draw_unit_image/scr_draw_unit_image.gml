@@ -618,34 +618,53 @@ function scr_draw_unit_image(x_draw, y_draw){
                     }                    
                 } else if (show_arm="Artificer Armour"){
                     specific_armour_sprite = spr_artificer_colors;
+                    if (array_contains(["Company Champion",obj_ini.role[100][2],obj_ini.role[100][5]], role())){
+                        if (global.chapter_name=="Ultramarines"){
+                            armour_draw=[spr_ultra_honor_guard,body.torso.armour_choice];
+                            armour_bypass=true;
+                            draw_sprite(spr_ultra_honor_guard,2,xx+x_draw,yy+y_draw);
+                        } else {
+                            armour_draw=[spr_generic_honor_guard,body.torso.armour_choice];
+                            armour_bypass=true;
+                        }
+                    } 
+                    if (global.chapter_name=="Blood Angels"){
+                        if (role()=="Chapter Master"){
+                            armour_bypass=true;
+                            armour_draw=[];
+                            armour_sprite = spr_dante;
+                        } else if (role()==obj_ini.role[100][2]){
+                            armour_bypass=true;
+                            armour_draw=[];
+                            armour_sprite =spr_sanguin_guard;
+                        }
+                    }
                 } else if (armor_type==ArmorType.Tartaros){
                     specific_armour_sprite = spr_tartaros2_colors;
                 } else if (armor_type==ArmorType.Indomitus){
                     specific_armour_sprite = spr_terminator3_colors;
                 }
 
-                if (armor_type==ArmorType.Normal){
+                if (armor_type==ArmorType.Normal && armour_bypass=false){
                     if (ui_specialist==5){
                         if (array_contains(traits, "tinkerer")){
                             //specific_armour_sprite="none";
                             armour_sprite =spr_techmarine_core;
                             specific_armour_sprite = spr_techmarine_core;
                         }
-                    }  if (global.chapter_name=="Blood Angels"){
-                        if (role()=="Chapter Master"){
-                            //specific_armour_sprite="none";
-                            armour_bypass=false;
-                            armour_draw=[];
-                            armour_sprite = spr_dante;
-                            specific_armour_sprite = spr_dante;  
-                        } else if (role()==obj_ini.role[100][2] && mobility_item()=="Jump Pack" && armour()!="MK3 Iron Armour"){
-                            armour_bypass=false;
-                            armour_draw=[];
-                            armour_sprite =spr_sanguin_guard;
-                            specific_armour_sprite = spr_sanguin_guard;                            
+                    }
+                    if (role() == obj_ini.role[100][2]){
+                        if (global.chapter_name=="Ultramarines"){
+                            armour_draw=[spr_ultra_honor_guard,body.torso.armour_choice];
+                            armour_bypass=true;
+                            draw_sprite(spr_ultra_honor_guard,2,xx+x_draw,yy+y_draw);
+                        } else {
+                            armour_draw=[spr_generic_honor_guard,body.torso.armour_choice];
+                            armour_bypass=true;
                         }
                     }
-                }                
+                }
+
                 if (arm>0){
                     draw_sprite(spr_servo_arms,0,xx+x_draw,yy+y_draw);
                     /*if (arm<10){
@@ -978,7 +997,7 @@ function scr_draw_unit_image(x_draw, y_draw){
             draw_text(xx+x_draw,yy+y_draw,string_hash_to_newline("Color swap shader#did not compile"));
         }
         // if (race()!="1"){draw_set_color(38144);draw_rectangle(xx+x_draw,yy+y_draw,xx+x_draw+166,yy+y_draw+231,0);}
-
+    }
 
     draw_set_alpha(1);
 
