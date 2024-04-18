@@ -33,9 +33,9 @@ function scr_draw_unit_image(x_draw, y_draw){
 		var specialist_colours=obj_ini.col_special; 
         var specific_armour_sprite = "none";
         var unit_is_sniper = false;
-        if (role()=="Chapter Master") then ui_specialist=111;
+        if (role()=="Chapter Master"){ui_specialist=111;}
         // Honor Guard
-        else if (role()==obj_ini.role[100,2]) then ui_specialist=14;
+        else if (role()==obj_ini.role[100,2]){ui_specialist=14;}
         // Chaplain
         else if (is_specialist(role(),"chap",true)){ui_specialist=1;}
         // Apothecary
@@ -43,12 +43,9 @@ function scr_draw_unit_image(x_draw, y_draw){
         // Techmarine
         else if (is_specialist(role(),"forge",true)){  ui_specialist=5;}
         // Librarian
-        else if (is_specialist(role(),"lib",true)){
-            ui_specialist=7;
-        }
-
+        else if (is_specialist(role(),"libs",true)){ui_specialist=7;}
         // Death Company
-        else if (role()=="Death Company") then ui_specialist=15;
+        else if (role()=="Death Company"){ui_specialist=15;}
         // Dark Angels bone color
         if (global.chapter_name=="Dark Angels" && company=1){
             if (role()==obj_ini.role[100][4])then ui_coloring="bone";
@@ -174,19 +171,19 @@ function scr_draw_unit_image(x_draw, y_draw){
                 y_draw+=40;   
         if(shader_is_compiled(sReplaceColor)){
             shader_set(sReplaceColor);
-            shader_set_uniform_f(obj_controller.colour_to_find1, obj_controller.sourceR1,obj_controller.sourceG1,obj_controller.sourceB1 );//body  
+            shader_set_uniform_f(obj_controller.colour_to_find1, obj_controller.sourceR1,obj_controller.sourceG1,obj_controller.sourceB1 ); //body / blue-origin  
             shader_set_uniform_f(obj_controller.colour_to_set1, obj_controller.targetR1,obj_controller.targetG1,obj_controller.targetB1 );
-            shader_set_uniform_f(obj_controller.colour_to_find2, obj_controller.sourceR2,obj_controller.sourceG2,obj_controller.sourceB2 );//helm   
+            shader_set_uniform_f(obj_controller.colour_to_find2, obj_controller.sourceR2,obj_controller.sourceG2,obj_controller.sourceB2 ); //helmet / red-origin
             shader_set_uniform_f(obj_controller.colour_to_set2, obj_controller.targetR2,obj_controller.targetG2,obj_controller.targetB2 );
-            shader_set_uniform_f(obj_controller.colour_to_find3, obj_controller.sourceR3,obj_controller.sourceG3,obj_controller.sourceB3 );       
+            shader_set_uniform_f(obj_controller.colour_to_find3, obj_controller.sourceR3,obj_controller.sourceG3,obj_controller.sourceB3 ); //left pauldron / yellow-origin
             shader_set_uniform_f(obj_controller.colour_to_set3, obj_controller.targetR3,obj_controller.targetG3,obj_controller.targetB3 );
-            shader_set_uniform_f(obj_controller.colour_to_find4, obj_controller.sourceR4,obj_controller.sourceG4,obj_controller.sourceB4 );   //lens   
+            shader_set_uniform_f(obj_controller.colour_to_find4, obj_controller.sourceR4,obj_controller.sourceG4,obj_controller.sourceB4 ); //lens / green-origin
             shader_set_uniform_f(obj_controller.colour_to_set4, obj_controller.targetR4,obj_controller.targetG4,obj_controller.targetB4 );
-            shader_set_uniform_f(obj_controller.colour_to_find5, obj_controller.sourceR5,obj_controller.sourceG5,obj_controller.sourceB5 );
+            shader_set_uniform_f(obj_controller.colour_to_find5, obj_controller.sourceR5,obj_controller.sourceG5,obj_controller.sourceB5 ); // trim / pink-origin
             shader_set_uniform_f(obj_controller.colour_to_set5, obj_controller.targetR5,obj_controller.targetG5,obj_controller.targetB5 );
-            shader_set_uniform_f(obj_controller.colour_to_find6, obj_controller.sourceR6,obj_controller.sourceG6,obj_controller.sourceB6 );
+            shader_set_uniform_f(obj_controller.colour_to_find6, obj_controller.sourceR6,obj_controller.sourceG6,obj_controller.sourceB6 ); //right pauldron / white-origin
             shader_set_uniform_f(obj_controller.colour_to_set6, obj_controller.targetR6,obj_controller.targetG6,obj_controller.targetB6 );
-            shader_set_uniform_f(obj_controller.colour_to_find7, obj_controller.sourceR7,obj_controller.sourceG7,obj_controller.sourceB7 );
+            shader_set_uniform_f(obj_controller.colour_to_find7, obj_controller.sourceR7,obj_controller.sourceG7,obj_controller.sourceB7 ); //weapon / cyan-origin
             shader_set_uniform_f(obj_controller.colour_to_set7, obj_controller.targetR7,obj_controller.targetG7,obj_controller.targetB7 );
             // Special specialist stuff here
             /*
@@ -225,6 +222,16 @@ function scr_draw_unit_image(x_draw, y_draw){
                 shader_set_uniform_f(obj_controller.colour_to_set4, 0/255,70/255,0/255);
                 shader_set_uniform_f(obj_controller.colour_to_set5, 200/255,200/255,200/255);
                 ttrim=1;specialist_colours=0;
+            }
+
+			// Librarian
+            else if (ui_specialist=7){
+                shader_set_uniform_f(obj_controller.colour_to_set1, 21/255,92/255,165/255);
+                shader_set_uniform_f(obj_controller.colour_to_set2, 21/255,92/255,165/255);
+                shader_set_uniform_f(obj_controller.colour_to_set4, 0/255,160/255,0/255);
+                shader_set_uniform_f(obj_controller.colour_to_set6, 21/255,92/255,165/255);
+                ttrim=0;
+                specialist_colours=0;
             }
 			
 			// Death Company
