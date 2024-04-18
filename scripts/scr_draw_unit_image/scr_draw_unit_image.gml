@@ -221,7 +221,9 @@ function scr_draw_unit_image(x_draw, y_draw){
             if (ui_specialist=1 || (ui_specialist=3) and (global.chapter_name="Space Wolves")){
                 shader_set_uniform_f(obj_controller.colour_to_set1, 30/255,30/255,30/255);
                 shader_set_uniform_f(obj_controller.colour_to_set2, 30/255,30/255,30/255);
-                // ttrim=0;
+                shader_set_uniform_f(obj_controller.colour_to_set5, 255/255,194/255,0/255);
+                shader_set_uniform_f(obj_controller.colour_to_set6, 30/255,30/255,30/255);
+                ttrim=1;
                 specialist_colours=0;
             }
 			
@@ -229,6 +231,8 @@ function scr_draw_unit_image(x_draw, y_draw){
             else if (ui_specialist=3) and (global.chapter_name!="Space Wolves"){
                 shader_set_uniform_f(obj_controller.colour_to_set1, 255/255,255/255,255/255);
                 shader_set_uniform_f(obj_controller.colour_to_set2, 255/255,255/255,255/255);
+                shader_set_uniform_f(obj_controller.colour_to_set4, 0/255,160/255,0/255);
+                shader_set_uniform_f(obj_controller.colour_to_set6, 255/255,255/255,255/255);
                 ttrim=0;
                 specialist_colours=0;
             }
@@ -237,19 +241,20 @@ function scr_draw_unit_image(x_draw, y_draw){
             else if (ui_specialist=5){
                 shader_set_uniform_f(obj_controller.colour_to_set1, 200/255,0/255,0/255);
                 shader_set_uniform_f(obj_controller.colour_to_set2, 200/255,0/255,0/255);
-                // pauldron
                 shader_set_uniform_f(obj_controller.colour_to_set4, 0/255,160/255,0/255);
                 shader_set_uniform_f(obj_controller.colour_to_set5, 200/255,200/255,200/255);
-                ttrim=1;specialist_colours=0;
+                ttrim=1;
+                specialist_colours=0;
             }
 
 			// Librarian
             else if (ui_specialist=7){
                 shader_set_uniform_f(obj_controller.colour_to_set1, 21/255,92/255,165/255);
                 shader_set_uniform_f(obj_controller.colour_to_set2, 21/255,92/255,165/255);
-                shader_set_uniform_f(obj_controller.colour_to_set4, 0/255,160/255,0/255);
+                shader_set_uniform_f(obj_controller.colour_to_set4, 0/255,228/255,255/255);
+                shader_set_uniform_f(obj_controller.colour_to_set5, 255/255,194/255,0/255);
                 shader_set_uniform_f(obj_controller.colour_to_set6, 21/255,92/255,165/255);
-                ttrim=0;
+                ttrim=1;
                 specialist_colours=0;
             }
 			
@@ -272,7 +277,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                 shader_set_uniform_f(obj_controller.colour_to_set1, 229/255,200/255,123/255);
                 shader_set_uniform_f(obj_controller.colour_to_set2, 229/255,200/255,123/255);
                 shader_set_uniform_f(obj_controller.colour_to_set3, 229/255,200/255,123/255);
-                shader_set_uniform_f(obj_controller.colour_to_set5, 229/255,200/255,123/255);
+                shader_set_uniform_f(obj_controller.colour_to_set5, 0/255,59/255,20/255);
                 shader_set_uniform_f(obj_controller.colour_to_set6, 229/255,200/255,123/255);
                 ttrim=0;
                 specialist_colours=0;
@@ -280,11 +285,11 @@ function scr_draw_unit_image(x_draw, y_draw){
 			
 			// Blood Angels
             else if (ui_coloring="gold"){
-                shader_set_uniform_f(obj_controller.colour_to_set1, 237/255,150/255,0/255);
-                shader_set_uniform_f(obj_controller.colour_to_set2, 237/255,150/255,0/255);
-                shader_set_uniform_f(obj_controller.colour_to_set3, 237/255,150/255,0/255);
-                shader_set_uniform_f(obj_controller.colour_to_set5, 237/255,150/255,0/255);
-                shader_set_uniform_f(obj_controller.colour_to_set6, 237/255,150/255,0/255);
+                shader_set_uniform_f(obj_controller.colour_to_set1, 255/255,162/255,0/255);
+                shader_set_uniform_f(obj_controller.colour_to_set2, 255/255,162/255,0/255);
+                shader_set_uniform_f(obj_controller.colour_to_set3, 255/255,162/255,0/255);
+                shader_set_uniform_f(obj_controller.colour_to_set5, 255/255,162/255,0/255);
+                shader_set_uniform_f(obj_controller.colour_to_set6, 255/255,162/255,0/255);
                 ttrim=0;
                 specialist_colours=0;
             }
