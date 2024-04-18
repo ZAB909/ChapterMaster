@@ -631,12 +631,12 @@ function scr_draw_unit_image(x_draw, y_draw){
                     if (global.chapter_name=="Blood Angels"){
                         if (role()=="Chapter Master"){
                             armour_bypass=true;
-                            armour_draw=[];
-                            armour_sprite = spr_dante;
+                            armour_draw=[spr_dante,0];
+                            draw_sprite(spr_dante,1,xx+x_draw,yy+y_draw);
                         } else if (role()==obj_ini.role[100][2]){
                             armour_bypass=true;
-                            armour_draw=[];
-                            armour_sprite =spr_sanguin_guard;
+                            armour_draw=[spr_sanguin_guard,0];
+                            draw_sprite(spr_sanguin_guard,1,xx+x_draw,yy+y_draw);
                         }
                     }
                 } else if (armor_type==ArmorType.Tartaros){
@@ -709,15 +709,15 @@ function scr_draw_unit_image(x_draw, y_draw){
                             }   
                         }
                     }                    
-                    draw_sprite(armour_sprite,specialist_colours,xx+x_draw,yy+y_draw);
-                    if (armour()=="MK7 Aquila"){
-                        if (struct_exists(body.torso, "variation")){
-                            if (body.torso.variation%2 == 1){
-                                draw_sprite(mk7_chest_variants,0,xx+x_draw,yy+y_draw);
+                    if (!armour_bypass){
+                        draw_sprite(armour_sprite,specialist_colours,xx+x_draw,yy+y_draw);
+                        if (armour()=="MK7 Aquila"){
+                            if (struct_exists(body.torso, "variation")){
+                                if (body.torso.variation%2 == 1){
+                                    draw_sprite(mk7_chest_variants,0,xx+x_draw,yy+y_draw);
+                                }
                             }
-                        }
-                    }
-                    if (!armour_bypass){                
+                        }    
                         if (ttrim==0 && specialist_colours<=1) then draw_sprite(specific_armour_sprite,4,xx+x_draw,yy+y_draw);
                         if (ttrim==0 && specialist_colours>=2) then draw_sprite(specific_armour_sprite,5,xx+x_draw,yy+y_draw);
                     } else{
