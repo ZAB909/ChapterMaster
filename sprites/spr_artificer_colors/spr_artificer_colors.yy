@@ -2,7 +2,7 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "spr_artificer_colors",
-  "bbox_bottom": 260,
+  "bbox_bottom": 259,
   "bbox_left": 0,
   "bbox_right": 155,
   "bbox_top": 39,
@@ -33,7 +33,7 @@
   "height": 272,
   "HTile": false,
   "layers": [
-    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"a32bab92-cfaa-4623-b2e1-8cc8f78a9d6d","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"b9d7a367-d523-40ae-902d-4a7c9f6a3b97","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": null,
   "origin": 9,
