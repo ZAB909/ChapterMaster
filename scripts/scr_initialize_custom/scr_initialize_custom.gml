@@ -1763,8 +1763,8 @@ function scr_initialize_custom() {
 // wep1 power sword // wep2 storm bolter default
 		wep1[company][k]=wep1[101,2];
 
-	    wep2[company][k]=wep2[101,2];
-	    armour[company][k]="MK4 Maximus";
+		wep2[company][k] = wep2[101, 2];
+		armour[company][k] = "Artificer Armour";
 
 	    
 	    unit.add_exp(210+irandom(30));
