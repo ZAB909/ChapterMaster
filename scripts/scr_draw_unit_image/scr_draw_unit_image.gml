@@ -554,8 +554,10 @@ function scr_draw_unit_image(x_draw, y_draw){
                     }  if (global.chapter_name=="Blood Angels"){
                         if (role()=="Chapter Master"){
                             //specific_armour_sprite="none";
-                            armour_draw=[spr_dante,0];
-                            armour_bypass=true;
+                            armour_bypass=false;
+                            armour_draw=[];
+                            armour_sprite = spr_dante;
+                            specific_armour_sprite = spr_dante;  
                         } else if (role()==obj_ini.role[100][2] && mobility_item()=="Jump Pack" && armour()!="MK3 Iron Armour"){
                             armour_bypass=false;
                             armour_draw=[];
@@ -790,11 +792,9 @@ function scr_draw_unit_image(x_draw, y_draw){
 			}
         
             // Honor Guard Helm
-            if (hood==0) and (armor_type==ArmorType.Normal) and (armour()!="") and (role()==obj_ini.role[100][2]) && (global.chapter_name!="Ultramarines"){
+            if (hood==0) and (armor_type==ArmorType.Normal) and (armour()!="") and (role()==obj_ini.role[100][2]) && (global.chapter_name!="Ultramarines") && (global.chapter_name!="Blood Angels"){
                 var helm_ii,o,yep;
             	helm_ii=0;
-                if (obj_ini.progenitor=5 || global.chapter_name="Blood Angels") then helm_ii=5;
-
 				yep=0;
                 if (array_contains(obj_ini.adv,"Tech-Brothers")){
                     helm_ii=2;
