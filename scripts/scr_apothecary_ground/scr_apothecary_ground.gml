@@ -59,41 +59,43 @@ function apothecary_simple(){
 				}		
 			}
 			key_val="";
-            if (v<array_length(obj_ini.veh_hp[company])){
-            	if(obj_ini.veh_lid[company][v]>0){
-            		veh_location = obj_ini.veh_lid[company][v];
-            		if (obj_ini.ship_location[veh_location] == "warp"){
-		  	    		if instance_exists(obj_p_fleet){
-		  	    			with (obj_p_fleet){
-		  	    				if (array_contains(capital_num, veh_location) ||
-		  	    					array_contains(frigate_num, veh_location)||
-		  	    					array_contains(escort_num, veh_location)
-		  	    				){
-		  	    					key_val=string(id);
-		  	    					array_slot=0;
-		  	    					break;
-		  	    				}
-		  	    			}
-		  	    		}
-		  	    	} else if (obj_ini.ship_location[veh_location] != ""){
-		  	    		array_slot=0;
-		  	    		key_val=obj_ini.ship_location[veh_location];
-		  	    	}
-	            }            	
-            	if (obj_ini.veh_wid[company][v]>0){
-            		key_val = obj_ini.veh_loc[company][v];
-            		if (key_val!=""){
-	            		array_slot = obj_ini.veh_wid[company][v];
-					}     		
-            	}
-  	    		if (key_val!=""){
-					if (! struct_exists(unit_spread, key_val)){
-						unit_spread[$key_val] = [[],[],[],[],[]];
-						tech_spread[$key_val]  = [[],[],[],[],[]];
-						apoth_spread[$key_val]  = [[],[],[],[],[]];
-					}
-					array_push(unit_spread[$key_val][array_slot] ,[company,v]);	  	    		
-            	}            	
+            if (v<array_length(obj_ini.veh_hp[company]) && company>0){
+            	if (obj_ini.veh_race[company][v]!=0){
+            		if(obj_ini.veh_lid[company][v]>0){
+	            		veh_location = obj_ini.veh_lid[company][v];
+	            		if (obj_ini.ship_location[veh_location] == "warp"){
+			  	    		if instance_exists(obj_p_fleet){
+			  	    			with (obj_p_fleet){
+			  	    				if (array_contains(capital_num, veh_location) ||
+			  	    					array_contains(frigate_num, veh_location)||
+			  	    					array_contains(escort_num, veh_location)
+			  	    				){
+			  	    					key_val=string(id);
+			  	    					array_slot=0;
+			  	    					break;
+			  	    				}
+			  	    			}
+			  	    		}
+			  	    	} else if (obj_ini.ship_location[veh_location] != ""){
+			  	    		array_slot=0;
+			  	    		key_val=obj_ini.ship_location[veh_location];
+			  	    	}
+		            }            	
+	            	if (obj_ini.veh_wid[company][v]>0){
+	            		key_val = obj_ini.veh_loc[company][v];
+	            		if (key_val!=""){
+		            		array_slot = obj_ini.veh_wid[company][v];
+						}     		
+	            	}
+	  	    		if (key_val!=""){
+						if (! struct_exists(unit_spread, key_val)){
+							unit_spread[$key_val] = [[],[],[],[],[]];
+							tech_spread[$key_val]  = [[],[],[],[],[]];
+							apoth_spread[$key_val]  = [[],[],[],[],[]];
+						}
+						array_push(unit_spread[$key_val][array_slot] ,[company,v]);	  	    		
+	            	}
+	            }           	
             }			
 	    }
 	}
@@ -133,13 +135,11 @@ function apothecary_simple(){
 				unit = cur_units[a];
 				if (is_array(unit) && total_tech_points>0){
 					if (array_length(unit)>1){
-						veh_health = obj_ini.veh_hp[unit[0]][unit[1]];
-						while (points_spent<10 && veh_health<100 && total_tech_points>0){
+						while (points_spent<10 && obj_ini.veh_hp[unit[0]][unit[1]]<100 && total_tech_points>0){
 							points_spent++;
-							veh_health++;
+							obj_ini.veh_hp[unit[0]][unit[1]]++;
 							total_tech_points--;
 						}
-						obj_ini.veh_hp[unit[0]][unit[1]] = veh_health;
 					}
 				} else if (is_struct(unit)){
 					if  (unit.hp() < unit.max_health()){
@@ -196,9 +196,9 @@ function apothecary_simple(){
 		                    
 			                    var locy=$"{name} {scr_roman_numerals()[p-1]}";
 		                    
-			                    var flit=instance_create(x+24,y-24,obj_p_fleet);
+			                    var flit=instance_create(cur_system.x+24,cur_system.y-24,obj_p_fleet);
 			                    var s=0,ship_names="",new_name="",last_ship=0;
-			                    for(s=0;i<=40;i++){
+			                    for(s=1;s<=40;s++){
 			                        if (last_ship=0) and (obj_ini.ship[s]="") then last_ship=s;
 			                    };
 		                    
@@ -243,8 +243,9 @@ function apothecary_simple(){
 			                    flit.capital_number=1;
 			                    flit.capital_num[1]=last_ship;
 			                    flit.capital_uid[1]=obj_ini.ship_uid[last_ship];
+			                    flit.oribiting = cur_system.id;
 		                    
-			                    scr_popup($"Ancient Ship Restored","The ancient ship within the ruins of {locy} has been fully repaired.  It determined to be a Slaughtersong vessel and is bristling with golden age weaponry and armour.  Your {string(obj_ini.role[100][16])}s are excited; the Slaughtersong is ready for it's maiden voyage, at your command.","","");                
+			                    scr_popup($"Ancient Ship Restored",$"The ancient ship within the ruins of {locy} has been fully repaired.  It is determined to be a Slaughtersong vessel and is bristling with golden age weaponry and armour.  Your {string(obj_ini.role[100][16])}s are excited; the Slaughtersong is ready for it's maiden voyage, at your command.","","");                
 			                }
 			            }
 			        }

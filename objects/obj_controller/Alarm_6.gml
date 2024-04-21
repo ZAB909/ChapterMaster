@@ -10,7 +10,7 @@ if (menu==1) and (managing>0){
     
     var manz=0,vanz=0,stahp=0;
     sel_promoting=1;
-    for(var f=1; f<=man_max; f++){
+    for(var f=1; f<array_length(display_unit); f++){
         // cooldown=8;
         if (man_sel[f]==1){
             if (man[f]=="man"){

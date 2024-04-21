@@ -1,12 +1,9 @@
-function scr_ship_battle(argument0, argument1) {
+function scr_ship_battle(target_ship_id, cooridor_width) {
 
 	// determine occupants
 	// determine who is fighting
 	// set maximum attacks due to hallway?
 	// set battle special
-
-	// argument0: ship_id
-	// argument1: corridor width
 
 	// if (argument2=true){
 	    var co, v,stop,okay,sofar,unit;
@@ -23,8 +20,10 @@ function scr_ship_battle(argument0, argument1) {
             
             
 	            if (stop=0){
-	                if (obj_ini.lid[co][v]=argument0) and (obj_ini.hp[co][v]>0) then okay=1;
-	                if (obj_ini.lid[co][v]=argument1) and (argument1=argument1) and (obj_ini.hp[co][v]>0) then okay=1;
+	            	if (obj_ini.name[co][v] == "") then continue;
+	            	unit=obj_ini.TTRPG[co][v];
+	                if (unit.ship_location=target_ship_id) and (obj_ini.hp[co][v]>0) then okay=1;
+	                if (unit.ship_location=cooridor_width) and (cooridor_width=cooridor_width) and (obj_ini.hp[co][v]>0) then okay=1;
                 
 	                if (string_count("spyrer",obj_ncombat.battle_special)>0) and ((obj_ini.role[co][v]=obj_ini.role[100][6]) or (unit.role()="Venerable "+string(obj_ini.role[100][6]))){
 	                    okay=0;
@@ -39,7 +38,6 @@ function scr_ship_battle(argument0, argument1) {
 	                if (okay=1){
 	                    obj_ncombat.fighting[co][v]=1;
 	                    sofar+=1;
-	                    unit=obj_ini.TTRPG[co][v];
                     
 	                    var col=0,targ=0;
                     

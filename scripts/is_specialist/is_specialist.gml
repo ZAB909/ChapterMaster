@@ -1,5 +1,6 @@
 function role_groups(group){
 	var role_list = [];
+	var roles = obj_ini.role[100];
 	switch (group){
 		case "lib":
 			role_list = [
@@ -75,7 +76,18 @@ function role_groups(group){
 				"Forge Master",
 				"Techpriest"
 			];
-			break;	
+			break;
+		case "captain_candidates":
+			role_list = [
+				roles[Role.SERGEANT], //sergeant
+				roles[Role.VETERAN_SERGEANT],
+				roles[Role.COMPANY_CHAMPION],				
+				roles[Role.CAPTAIN],								
+				roles[Role.TERMINATOR],				
+				roles[Role.VETERAN],
+				 "Standard Bearer",			
+			];
+			break;
 	}
 	return role_list;
 }
@@ -164,6 +176,9 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 		case "veterans":
 			specialists = role_groups("veterans");
 			break;
+		case "captain_candidates":
+			specialists = role_groups("captain_candidates");
+			break;			
 	}
 
 	return array_contains(specialists,unit_role);
@@ -172,7 +187,7 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 function collect_role_group(group, location=""){
 	var units = [], unit, count=0, add=false;
 	for (var com=0;com<=10;com++){
-	    for (i=1;i<array_length(obj_ini.TTRPG[com]);i++){
+	    for (i=0;i<array_length(obj_ini.TTRPG[com]);i++){
 	    	add=false;
 			unit=fetch_unit([com,i]);
 			if (unit.name()=="")then continue; 	
@@ -244,69 +259,30 @@ function group_selection(group, selection_data){
             selecting_ship=0;
             selecting_planet=0;
             sel_uid=0;
-            for (var i=0; i<501; i++){
-                man[i]="";
-                ide[i]=0;
-                display_unit[i]="";
-                man_sel[i]=0;
-                ma_lid[i]=0;
-                ma_wid[i]=0;
-                ma_race[i]=0;
-                ma_loc[i]="";
-                ma_name[i]="";
-                ma_role[i]="";
-                ma_wep1[i]="";
-                ma_wep2[i]="";
-                ma_armour[i]="";
-                ma_health[i]=100;
-                ma_chaos[i]=0;
-                ma_exp[i]=0;
-                ma_promote[i]=0;
-                sh_ide[i]=0;
-                sh_uid[i]=0;
-                sh_name[i]="";
-                sh_class[i]="";
-                sh_loc[i]="";
-                sh_hp[i]="";
-                sh_cargo[i]=0;
-                sh_cargo_max[i]="";
-                squad[i]=0;
-            }
+            reset_manage_arrays();
             alll=0;              
             cooldown=10;
             sel_loading=0;
             unload=0;
             alarm[6]=7;
             company_data={};
-            view_squad=false;  	
+            view_squad=false;
+            managing =-1; 
+            var vehicles = [];
             for (var i = 0; i< array_length(group);i++){
-            	s = i+1;
+            	if (!is_struct(group[i])){
+            		if (is_array(group[i])){
+            			array_push(vehicles, group[i]);
+            		}
+            		continue;
+            	}
             	unit = group[i];
-            	unit_location = unit.marine_location();
-                man[s]="man";
-                ide[s]=unit.marine_number;
-                man_sel[s]=0;
-                ma_lid[s]=0;
-                if (unit.planet_location==0){
-                	ma_lid[s]=unit_location[1];
-                }
-                ma_wid[s]=unit.planet_location;
-                ma_race[s]=unit.race();
-                ma_loc[s]=unit_location[2];
-                ma_name[s]=unit.name();
-                ma_role[s]=unit.role();
-                ma_wep1[s]=unit.weapon_one();
-                ma_wep2[s]=unit.weapon_two();
-                ma_armour[s]=unit.armour();
-                ma_health[s]=unit.hp();
-                ma_chaos[s]=unit.corruption;
-                ma_exp[s]=unit.experience();
-                ma_promote[s]=0;
-                display_unit[s]=unit;
+            	add_man_to_manage_arrays(unit);
+
                 if (selection_data.purpose_code=="forge_assignment"){
                 	if (unit.job != "none"){
                 		if (unit.job.type=="forge" && unit.job.planet== selection_data.planet){
-							man_sel[s]=1;
+							man_sel[array_length(display_unit)-1]=1;
 							man_size++;
 							selection_data.start_count++;
 
@@ -314,9 +290,16 @@ function group_selection(group, selection_data){
                 	}
                 }       	
             }
-        managing =-1;
-        man_current=1;
-        man_max = array_length(group);
+            var last_vehicle=0;
+        if (array_length(vehicles)>0){
+        	for (var veh=0;veh<array_length(vehicles);veh++){
+        		unit = vehicles[veh];
+        		add_vehicle_to_manage_arrays(unit)       		
+        	}
+        }
+        other_manage_data();
+        man_current=0;
+        man_max=array_length(display_unit)+2;
         man_see=38-4;
 	}
 }

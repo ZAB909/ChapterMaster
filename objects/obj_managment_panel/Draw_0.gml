@@ -1,5 +1,5 @@
 slate_panel.inside_method = function(){
-    draw_set_color(c_gray);
+    draw_set_color(#50a076);
     var x2,y2,wid,hei,cus,draw_func;
     x2=__view_get( e__VW.XView, 0 )+x1;
     y2=__view_get( e__VW.YView, 0 )+y1;
@@ -21,7 +21,6 @@ slate_panel.inside_method = function(){
         draw_sprite_stretched(spr_master_title,0,x2,y2-2,wid+2,4);
         if (mouse_x>=x2) and (mouse_y>=y2) and (mouse_x<x2+wid) and (mouse_y<y2+hei){
             draw_set_alpha(0.25);
-            draw_set_color(c_gray);
             draw_rectangle(x2,y2,x2+wid,y2+hei,0);
             draw_set_alpha(1);
         }
@@ -44,30 +43,16 @@ slate_panel.inside_method = function(){
         }
         
         draw_set_font(fnt_cul_14);
-        draw_text(x2+(wid/2),y2+79,string_hash_to_newline(title));
+        draw_text(x2+(wid/2),y2+89,string_hash_to_newline(title));
         if (line[1]!=""){
-            draw_set_font(fnt_40k_14);
             if (italic[1]=1) then draw_set_font(fnt_40k_14i);
-            draw_set_color(#50a076);
-            // Draw the glow by repeatedly drawing the text with a slight offset and reduced alpha
-            for (var i = -3; i <= 3; i++) {
-                for (var j = -3; j <= 3; j++) {
-                    if (i != 0 || j != 0) { // Avoid drawing the main text here
-                        draw_set_alpha(0.05); // Adjust the alpha for the desired intensity of the glow
-                        draw_text(x2+(wid/2)+i,y2+102+j,string_hash_to_newline(line[1]));
-                    }
-                }
-            }
-            // Reset alpha and draw the main text
-            draw_set_alpha(1);
-            draw_set_color(c_white);
-            draw_text(x2+(wid/2),y2+102,string_hash_to_newline(line[1]));
+            else draw_set_font(fnt_40k_14);
+            draw_text_glow(x2+(wid/2), y2+112, string_hash_to_newline(line[1]), c_white, #50a076);
             draw_set_font(fnt_40k_12);
-            draw_set_color(c_gray);
         }
         var l=1;
         repeat(10){l+=1;
-            if (line[l]!="") then draw_text(x2+(wid/2),y2+102+((l-1)*20),string_hash_to_newline(line[l]));
+            if (line[l]!="") then draw_text(x2+(wid/2),y2+112+((l-1)*20),string_hash_to_newline(line[l]));
         }
     }
 
@@ -75,7 +60,6 @@ slate_panel.inside_method = function(){
         draw_sprite_stretched(spr_company_title,company,x2+40,y2-2,wid-80,4);
         if (mouse_x>=x2) and (mouse_y>=y2) and (mouse_x<x2+wid) and (mouse_y<y2+hei){
             draw_set_alpha(0.25);
-            draw_set_color(c_gray);
             draw_rectangle(x2,y2,x2+wid,y2+hei,0);
             draw_set_alpha(1);
         }
@@ -124,7 +108,6 @@ slate_panel.inside_method = function(){
         draw_sprite_stretched(spr_master_title,0,x2,y2-2,wid+2,4);
         if (mouse_x>=x2) and (mouse_y>=y2) and (mouse_x<x2+wid) and (mouse_y<y2+hei){
             draw_set_alpha(0.25);
-            draw_set_color(c_gray);
             draw_rectangle(x2,y2,x2+wid,y2+hei,0);
             draw_set_alpha(1);
         }
@@ -138,12 +121,13 @@ slate_panel.inside_method = function(){
             draw_set_font(fnt_40k_12);
         }
         var l;l=1;
-        draw_set_color(c_gray);
         repeat(24){l+=1;
-            if (line[l]!="") then draw_text(x2+(wid/2),y2+43+((l-1)*18),string_hash_to_newline(line[l]));
+            if (line[l]!=""){
+                draw_text(x2+(wid/2),y2+43+((l-1)*18),string_truncate(line[l], 134));
+            }
         }
     }
-
+    draw_set_color(c_white);
 }
 
 var x2=__view_get( e__VW.XView, 0 )+x1;

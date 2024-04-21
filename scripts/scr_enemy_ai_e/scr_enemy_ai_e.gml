@@ -2,6 +2,12 @@ function scr_enemy_ai_e() {
 
     // Guess I'll handle all of the ship combat in here
     // This needs to keep on running in each sector until only one faction's fleet remains
+    var imperium_enemies = present_fleet[7] + present_fleet[8] + present_fleet[9] + present_fleet[10] + present_fleet[13];
+
+    var standard_xenos_enemies = present_fleet[2] + present_fleet[7] + present_fleet[8] + present_fleet[10] + present_fleet[13];
+
+    var imperium_fleets = present_fleet[2]+present_fleet[3];
+
 
     var have_fleets, battle, battle2, strength, attack;
     have_fleets = 0;
@@ -33,45 +39,50 @@ function scr_enemy_ai_e() {
         if (present_fleet[8] > 0) and(obj_controller.faction_status[8] = "War") then battle = 1;
         if (present_fleet[9] > 0) then battle = 1;
         if (present_fleet[10] > 0) and(obj_controller.faction_status[10] = "War") {
+            
             var special_stop, run, s;
             special_stop = false;
             run = 0;
             s = 0;
-            repeat(4) {
+            repeat(planets) {
                 run += 1;
                 s = 0;
-                repeat(4) {
-                    s += 1;
-                    if (p_problem[run, s] = "meeting") or(p_problem[run, s] = "meeting_trap") then special_stop = true;
+                var problems = p_problem[run];
+                if (array_contains(problems, "meeting") || array_contains(problems, "meeting_trap")){
+                    special_stop = true;
+                    break;
                 }
             }
             if (special_stop = false) then battle = 1;
         }
         if (present_fleet[13] > 0) then battle = 1;
     }
-    if (present_fleet[2] > 0) and(battle2 = 0) {
-        if (present_fleet[7] + present_fleet[8] + present_fleet[9] + present_fleet[10] + present_fleet[13] > 0) then battle2 = 2;
-    }
-    if (present_fleet[3] > 0) and(battle2 = 0) {
-        if (present_fleet[7] + present_fleet[8] + present_fleet[9] + present_fleet[10] + present_fleet[13] > 0) then battle2 = 3;
-    }
-    if (present_fleet[6] > 0) and(battle2 = 0) {
-        if (present_fleet[2] + present_fleet[7] + present_fleet[8] + present_fleet[9] + present_fleet[10] + present_fleet[13] > 0) then battle2 = 6;
-    }
-    if (present_fleet[7] > 0) and(battle2 = 0) {
-        if (present_fleet[2] + present_fleet[8] + present_fleet[9] + present_fleet[10] + present_fleet[13] > 0) then battle2 = 7;
-    }
-    if (present_fleet[8] > 0) and(battle2 = 0) {
-        if (present_fleet[2] + present_fleet[7] + present_fleet[9] + present_fleet[10] + present_fleet[13] > 0) then battle2 = 8;
-    }
-    if (present_fleet[9] > 0) and(battle2 = 0) {
-        if (present_fleet[2] + present_fleet[7] + present_fleet[8] + present_fleet[10] + present_fleet[13] > 0) then battle2 = 9;
-    }
-    if (present_fleet[10] > 0) and(battle2 = 0) {
-        if (present_fleet[2] + present_fleet[7] + present_fleet[9] + present_fleet[13] > 0) then battle2 = 10;
-    }
-    if (present_fleet[13] > 0) and(battle2 = 0) {
-        if (present_fleet[2] + present_fleet[7] + present_fleet[8] + present_fleet[9] + present_fleet[10] > 0) then battle2 = 13;
+
+    if (battle2 == 0){
+        if (present_fleet[2] > 0){
+            if (imperium_enemies > 0) then battle2 = 2;
+        }
+        else if (present_fleet[3] > 0){
+            if (imperium_enemies > 0) then battle2 = 3;
+        }
+        else if (present_fleet[6] > 0){
+            if (standard_xenos_enemies > 0) then battle2 = 6;
+        }
+        else if (present_fleet[7] > 0){
+            if (standard_xenos_enemies > 0) then battle2 = 7;
+        }
+        else if (present_fleet[8] > 0){
+            if (standard_xenos_enemies > 0) then battle2 = 8;
+        }
+        else if (present_fleet[9] > 0){
+            if (standard_xenos_enemies > 0) then battle2 = 9;
+        }
+        else if (present_fleet[10] > 0){
+            if (standard_xenos_enemies > 0) then battle2 = 10;
+        }
+        else if (present_fleet[13] > 0){
+            if (standard_xenos_enemies > 0) then battle2 = 13;
+        }
     }
 
 
@@ -136,7 +147,7 @@ function scr_enemy_ai_e() {
         repeat(5) {
             rond += 1;
             still_battling = false;
-            if (strength[2] + strength[3] > 0) and(strength[6] + strength[7] + strength[8] + strength[9] + strength[10] + strength[13] > 0) then still_battling = true;
+            if (strength[2] + strength[3] > 0) and (strength[6] + strength[7] + strength[8] + strength[9] + strength[10] + strength[13] > 0) then still_battling = true;
             if (strength[6] > 0) and(strength[2] + strength[7] + strength[8] + strength[9] + strength[10] + strength[13] > 0) then still_battling = true;
             if (strength[7] > 0) and(strength[2] + strength[6] + strength[8] + strength[9] + strength[10] + strength[13] > 0) then still_battling = true;
             if (strength[8] > 0) and(strength[2] + strength[6] + strength[7] + strength[9] + strength[10] + strength[13] > 0) then still_battling = true;
@@ -442,12 +453,12 @@ function scr_enemy_ai_e() {
     beetle = 0;
     chaos_meeting = 0;
 
-    repeat(4) {
+    repeat(planets) {
         run += 1;
         force = 1;
         var forces_list = [];
         var force_count = 0;
-        if (p_player[run] > 0) {
+        if (p_player[run] > 0 && struct_exists(obj_controller.location_viewer.garrison_log, name)){
             forces_list = scr_count_forces(name, run, true, true)
             force_count = forces_list[0] + forces_list[1];
         }
@@ -650,51 +661,36 @@ function scr_enemy_ai_e() {
 
                     var recruit_chance = 999;
                     var aspirant = 0;
-                    var corr = 10;
+                    var new_recruit_corruption = 10;
                     var months_to_neo = 72;
                     var dista = 0;
                     var onceh = 0;
-
-                    if (obj_controller.recruiting = 1) then recruit_chance = floor(random(250)) + 1; // fast, frantic, slow, ect
-                    if (obj_controller.recruiting = 2) then recruit_chance = floor(random(200)) + 1; // the lower recruit_chance is, the more baby astartes
-                    if (obj_controller.recruiting = 3) then recruit_chance = floor(random(150)) + 1;
-                    if (obj_controller.recruiting = 4) then recruit_chance = floor(random(125)) + 1;
-                    if (obj_controller.recruiting = 5) then recruit_chance = floor(random(100)) + 1;
+                    var recruit_chance_array = [0, 250, 200, 150, 125, 100];
+                    if (obj_controller.recruiting>0){
+                        recruit_chance = irandom(recruit_chance_array[obj_controller.recruiting]) + 1;
+                    }
 
                     // 135; recruiting
-                    // corr isn't really relevant as corruption in marines doesn't matter
+                    // new_recruit_corruption isn't really relevant as corruption in marines doesn't matter
                     // by default it takes 72 turns (6 years) to train
 
-
-                    if (p_type[run] = "Hive") and(recruit_chance <= 40) {
-                        aspirant = 1;
+                    var planet_type_recruit_chance = {
+                        "hive" : 40,
+                        "Temperate" : 20,
+                        "Feudal" : 20,
+                        "Forge" : 15,
+                        "Shrine" : 15,
+                        "Desert" : 15,
+                        "Ice" : 15,
+                        "Agri" : 10,
+                        "Death" : 10,
+                        "Lava" : 7,
                     }
-                    if (p_type[run] = "Temperate") and(recruit_chance <= 20) {
-                        aspirant = 1;
-                    }
-                    if (p_type[run] = "Feudal") and(recruit_chance <= 20) {
-                        aspirant = 1;
-                    }
-                    if (p_type[run] = "Forge") and(recruit_chance <= 15) {
-                        aspirant = 1;
-                    }
-                    if (p_type[run] = "Shrine") and(recruit_chance <= 15) {
-                        aspirant = 1;
-                    }
-                    if (p_type[run] = "Desert") and(recruit_chance <= 15) {
-                        aspirant = 1;
-                    }
-                    if (p_type[run] = "Ice") and(recruit_chance <= 15) {
-                        aspirant = 1;
-                    }
-                    if (p_type[run] = "Agri") and(recruit_chance <= 10) {
-                        aspirant = 1;
-                    } // there's no reason to use agri's
-                    if (p_type[run] = "Death") and(recruit_chance <= 10) {
-                        aspirant = 1;
-                    }
-                    if (p_type[run] = "Lava") and(recruit_chance <= 7) {
-                        aspirant = 1;
+                    var planet_type = p_type[run];
+                    if (struct_exists(planet_type_recruit_chance, planet_type)){
+                        if (recruit_chance <= planet_type_recruit_chance[$ planet_type]){
+                            aspirant = 1;
+                        }
                     }
 
                     // if a planet type has less than half it's max pop, you get 20% less spacey marines
@@ -708,7 +704,7 @@ function scr_enemy_ai_e() {
 
                     if (obj_controller.recruit_trial = "Blood Duel") { // blood duel is most numerous, but not great with gene seed
                         months_to_neo -= choose(24, 24, 36, 36, 36, 48);
-                        corr += choose(10, 15, 20);
+                        new_recruit_corruption += choose(10, 15, 20);
                         recruit_chance -= choose(0.7, 0.7, 0.8, 0.8, 0, 8, 0.9);
 
                         if (obj_controller.recruiting > 0) {
@@ -722,23 +718,20 @@ function scr_enemy_ai_e() {
                             }
                         }
                     }
-
-                    if (obj_controller.recruit_trial = "Challenge") {
-                        corr += choose(1, 2, 3)
+                    else if (obj_controller.recruit_trial = "Challenge") {
+                        new_recruit_corruption += choose(1, 2, 3)
                         months_to_neo -= choose(-6, 0, 6);
                     }
-
-                    if (obj_controller.recruit_trial = "Exposure") {
-                        corr += choose(1, 2, 3)
+                    else if (obj_controller.recruit_trial = "Exposure") {
+                        new_recruit_corruption += choose(1, 2, 3)
                     }
-
-                    if (obj_controller.recruit_trial = "Knowledge of Self") { // less time heavy than apprenticeship. Good on temperates (ppl are educated there idk)
+                    else if (obj_controller.recruit_trial = "Knowledge of Self") { // less time heavy than apprenticeship. Good on temperates (ppl are educated there idk)
                         months_to_neo += choose(18, 24, 24, 24, 36, 36);
-                        corr -= choose(4, 6, 8)
+                        new_recruit_corruption -= choose(4, 6, 8)
                     }
-                    if (obj_controller.recruit_trial = "Apprenticeship") { // the "I don't need any more astartes but have money to spend" one
+                    else if (obj_controller.recruit_trial = "Apprenticeship") { // the "I don't need any more astartes but have money to spend" one
                         months_to_neo += choose(48, 60);
-                        corr -= 10;
+                        new_recruit_corruption -= 10;
                     }
 
                     // xp gain for the recruit is here
@@ -749,37 +742,27 @@ function scr_enemy_ai_e() {
                         new_recruit = 0;
 
                         // gets the next empty recruit space on the array
-                        repeat(300) {
-                            i += 1;
-                            if (new_recruit = 0) {
-                                if (obj_controller.recruit_name[i] = "") {
-                                    new_recruit = i;
-                                }
-                            }
-                        }
-
-                        obj_controller.recruit_name[new_recruit] = global.name_generator.generate_space_marine_name();
-                        obj_controller.recruit_exp[new_recruit] += irandom(5);
+                        var new_recruit_exp = irandom(5);
 
                         // gives planet buffs
 
                         if (p_type[run] = "Death") {
-                            obj_controller.recruit_exp[new_recruit] += 6;
+                            new_recruit_exp += 6;
                         }
                         if (p_type[run] = "Ice") {
-                            obj_controller.recruit_exp[new_recruit] += 3;
+                            new_recruit_exp += 3;
                         }
                         if (p_type[run] = "Desert") {
-                            obj_controller.recruit_exp[new_recruit] += 3;
+                            new_recruit_exp += 3;
                         }
                         if (p_type[run] = "Lava") {
-                            obj_controller.recruit_exp[new_recruit] += 9;
+                            new_recruit_exp += 9;
                         }
 
 
                         if (obj_controller.recruit_trial = "Hunting the Hunter") {
                             if (p_type[run] = "Desert") or(p_type[run] = "Ice") or(p_type[run] == "Death") {
-                                obj_controller.recruit_exp[new_recruit] += irandom(13) + 7;
+                                new_recruit_exp += irandom(13) + 7;
                             }
                         }
 
@@ -798,7 +781,7 @@ function scr_enemy_ai_e() {
                             }
                         }
                         if (obj_controller.recruit_trial = "Challenge") {
-                            obj_controller.recruit_exp[new_recruit] += choose(0, 0, 0, 0, 0, 0, 0, 0, 10, 20);
+                            new_recruit_exp += choose(0, 0, 0, 0, 0, 0, 0, 0, 10, 20);
                             scr_alert("green", "owner", "A worthy aspirant has risen to the rank of Neophyte, doing quite well against the challenger Astartes.", 0, 0);
                         }
 
@@ -807,51 +790,27 @@ function scr_enemy_ai_e() {
                             if (p_type[run] = "Lava") {
                                 recruit_chance -= choose(0.5, 0.6, 0.6, 0.7, 0.7);
                             } // nocturne gaming
-                            obj_controller.recruit_exp[new_recruit] += irandom(5) + 34;
+                            new_recruit_exp += irandom(5) + 34;
                         }
 
                         if (obj_controller.recruit_trial = "Knowledge of Self") {
-                            if (p_type[run] = "Temperate") then obj_controller.recruit_exp[new_recruit] += irandom(5) + 5; // this is the only one that gives bonus for temperates
-                            obj_controller.recruit_exp[new_recruit] += irandom(10) + 15;
+                            if (p_type[run] = "Temperate") then new_recruit_exp += irandom(5) + 5; // this is the only one that gives bonus for temperates
+                            new_recruit_exp += irandom(10) + 15;
                         }
 
-                        onceh = 0;
+                        if (new_recruit_exp >= 40) then new_recruit_exp = 38;// we don't want immediate battle bros
 
-                        obj_controller.recruit_corruption[new_recruit] = corr;
-                        obj_controller.recruit_distance[new_recruit] = 0;
-                        obj_controller.recruit_training[new_recruit] = months_to_neo;
-                        obj_controller.gene_seed -= 1;
-                        if (obj_controller.recruit_exp[new_recruit] >= 40) then obj_controller.recruit_exp[new_recruit] = 38; // we don't want immediate battle bros
-
-                        var i = 0;
-
-                        /*repeat(5) {
-                            i = 0;
-                            repeat(300) {
-                                i += 1;
-                                if (obj_controller.recruit_training[i] < obj_controller.recruit_training[i - 1]) and(obj_controller.recruit_name[i] != "") {
-                                    // Get old
-                                    obj_controller.recruit_name[500] = obj_controller.recruit_name[i - 1];
-                                    obj_controller.recruit_exp[500] = obj_controller.recruit_exp[i - 1];
-                                    obj_controller.recruit_corruption[500] = obj_controller.recruit_corruption[i - 1];
-                                    obj_controller.recruit_distance[500] = obj_controller.recruit_distance[i - 1];
-                                    obj_controller.recruit_training[500] = obj_controller.recruit_training[i - 1];
-                                    // Plug in new
-                                    obj_controller.recruit_name[i - 1] = obj_controller.recruit_name[i];
-                                    obj_controller.recruit_exp[i - 1] = obj_controller.recruit_exp[i];
-                                    obj_controller.recruit_corruption[i - 1] = obj_controller.recruit_corruption[i];
-                                    obj_controller.recruit_distance[i - 1] = obj_controller.recruit_distance[i];
-                                    obj_controller.recruit_training[i - 1] = obj_controller.recruit_training[i];
-                                    // Plug in old
-                                    obj_controller.recruit_name[i] = obj_controller.recruit_name[500];
-                                    obj_controller.recruit_exp[i] = obj_controller.recruit_exp[500];
-                                    obj_controller.recruit_corruption[i] = obj_controller.recruit_corruption[500];
-                                    obj_controller.recruit_distance[i] = obj_controller.recruit_distance[500];
-                                    obj_controller.recruit_training[i] = obj_controller.recruit_training[500];
-                                }
+                        for (var i=0;i<array_length(obj_controller.recruit_training);i++) {
+                            if (obj_controller.recruit_training[i]<1 || months_to_neo<obj_controller.recruit_training[i]){
+                                obj_controller.gene_seed -= 1;
+                                array_insert(obj_controller.recruit_corruption, i, new_recruit_corruption);
+                                array_insert(obj_controller.recruit_distance , i, 0);
+                                array_insert(obj_controller.recruit_training, i, new_recruit_exp);
+                                array_insert(obj_controller.recruit_exp, i, months_to_neo); 
+                                array_insert(obj_controller.recruit_name, i, global.name_generator.generate_space_marine_name());                                                                                           
+                                break;
                             }
-                        }*/
-                        // End sorting
+                        }
                     }
                     // End aspirant!=0
                 } // End pop>50

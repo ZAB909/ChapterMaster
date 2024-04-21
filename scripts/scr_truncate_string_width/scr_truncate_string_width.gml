@@ -1,21 +1,21 @@
-/// @function truncate_string_width(str, max_width)
+/// @function string_truncate
 /// @description Truncates a string to fit within a specified pixel width, appending "..." if the string was truncated.
-/// @param {string} str The string to be truncated.
-/// @param {int} max_width The maximum allowable pixel width for the string.
+/// @param {string} _text The string to be truncated.
+/// @param {int} _max_width The maximum allowable pixel width for the string.
 /// @returns {string} Original or truncated string.
-function truncate_string_width(str, max_width) {
-    var ellipsis = "...";
-    var ellipsis_width = string_width(ellipsis);
-    var str_width = string_width(str);
-    if (str_width > max_width) {
-        var i = string_length(str);
-        while (str_width + ellipsis_width > max_width && i > 0) {
+function string_truncate(_text, _max_width) {
+    var _ellipsis = "...";
+    var _ellipsis_width = string_width(_ellipsis);
+    var _text_width = string_width(_text);
+    if (_text_width > _max_width) {
+        var i = string_length(_text);
+        while (_text_width + _ellipsis_width > _max_width && i > 0) {
             i--;
-            str = string_delete(str, i+1, 1);
-            str_width = string_width(str);
+            _text = string_delete(_text, i+1, 1);
+            _text_width = string_width(_text + _ellipsis);
         }
-        return str + ellipsis;
+        return _text + _ellipsis;
     } else {
-        return str;
+        return _text;
     }
 }

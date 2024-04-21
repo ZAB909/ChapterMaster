@@ -324,7 +324,8 @@ function scr_save(save_slot,save_id) {
 	    ini_open("save"+string(save_id)+".ini");
 	    // Stars
 
-	    var num;num=instance_number(obj_star);instance_array=0;
+	    var num=instance_number(obj_star);
+	    instance_array=0;
 	    for (i=0; i<num; i+=1){
 	        instance_array[i] = instance_find(obj_star,i);
 	        // save crap here
@@ -345,6 +346,7 @@ function scr_save(save_slot,save_id) {
 	        ini_write_real("Star","sr"+string(i)+"trader",instance_array[i].trader);
 	        ini_write_real("Star","sr"+string(i)+"craftworld",instance_array[i].craftworld);
 	        ini_write_real("Star","sr"+string(i)+"spacehulk",instance_array[i].space_hulk);
+	        ini_write_string("Star","sr"+string(i)+"present_fleets",base64_encode(json_stringify(instance_array[i].present_fleet)));
 
 	        var g=0;
 	        repeat(4){g+=1;
@@ -862,7 +864,6 @@ function scr_save(save_slot,save_id) {
 	                ini_write_string("Mar","lo"+string(coh)+"."+string(mah),obj_ini.loc[coh,mah]);
 	                ini_write_string("Mar","num"+string(coh)+"."+string(mah),obj_ini.name[coh,mah]);
 	                ini_write_string("Mar","rol"+string(coh)+"."+string(mah),obj_ini.role[coh,mah]);
-	                ini_write_real("Mar","li"+string(coh)+"."+string(mah),obj_ini.lid[coh,mah]);
 
 	                ini_write_string("Mar","w1"+string(coh)+"."+string(mah),obj_ini.wep1[coh,mah]);
 	                ini_write_string("Mar","w2"+string(coh)+"."+string(mah),obj_ini.wep2[coh,mah]);

@@ -288,19 +288,23 @@ if ((trade_goods="BLOODBLOODBLOOD") or (trade_goods="BLOODBLOODBLOODBLOOD")) and
     }
 }
 
-var spid = noone;
-if (instance_exists(orbiting)){
-	spid=orbiting;
-	spid.present_fleet[owner]+=1;
-} else {
-	spid = instance_nearest(x,y,obj_star);
-	spid.present_fleet[owner]+=1;
-	orbiting=spid;
+if (orbiting != 0 && action==""){
+    var orbiting_found=instance_exists(orbiting);
+    if (orbiting_found){
+        orbiting_found = variable_instance_exists(orbiting, "present_fleet");
+        if (orbiting_found){
+            orbiting.present_fleet[owner]+=1;
+        }
+    } 
+    if (!orbiting_found) {
+    	orbiting = instance_nearest(x,y,obj_star);
+    	orbiting.present_fleet[owner]++;
+    }
 }
 
-if (spid != noone) {
+if (orbiting != noone) {
     if (instance_exists(obj_crusade)) 
-	and (spid.owner <= eFACTION.Ecclesiarchy) 
+	and (orbiting.owner <= eFACTION.Ecclesiarchy) 
 	and (owner = eFACTION.Imperium) 
 	and (navy=1) 
 	and (trade_goods="") 
@@ -357,17 +361,17 @@ if (spid != noone) {
             action_x=ns.x;
 			action_y=ns.y;
 			alarm[4]=1;
-            spid.present_fleet[owner]-=1;
-            home_x=spid.x;
-            home_y=spid.y;
+            orbiting.present_fleet[owner]-=1;
+            home_x=orbiting.x;
+            home_y=orbiting.y;
 			
             var i;
 			i=0;
             repeat(4){
 				i+=1;
-                if (spid.p_owner[i]=eFACTION.Imperium) and (spid.p_guardsmen[i]>500) {
-					guardsmen +=round(spid.p_guardsmen[i]/2);
-					spid.p_guardsmen[i]=round(spid.p_guardsmen[i]/2);}
+                if (orbiting.p_owner[i]=eFACTION.Imperium) and (orbiting.p_guardsmen[i]>500) {
+					guardsmen +=round(orbiting.p_guardsmen[i]/2);
+					orbiting.p_guardsmen[i]=round(orbiting.p_guardsmen[i]/2);}
             }
 
             alarm[5]=2;
@@ -828,10 +832,13 @@ if (navy) {
 
 	    // Quene a visit to a forge world
 	    if (action="") and (trade_goods="") and (instance_exists(orbiting)){
-	        with(obj_temp_inq){instance_destroy();}
+	        with(obj_temp_inq){
+                instance_destroy();
+            }
 	        with(obj_star){
-	            var cont,p;cont=0;p=0;
-	            repeat(4){p+=1;
+	            var cont=0,p=0;
+	            repeat(planets){
+                    p+=1;
 	                if (p_type[p]="Forge"){
 	                    if (p_orks[o]+p_chaos[o]+p_tyranids[o]+p_necrons[o]+p_tau[o]+p_traitors[o]=0){
 	                        if (present_fleet[7]+present_fleet[8]+present_fleet[9]+present_fleet[10]+present_fleet[13]=0){
@@ -843,8 +850,11 @@ if (navy) {
 	            if (cont!=0) then instance_create(x,y,obj_temp_inq);
 	        }
 	        if (instance_exists(obj_temp_inq)){
-	            var go_there;go_there=instance_nearest(x,y,obj_temp_inq);
-	            action_x=go_there.x;action_y=go_there.y;alarm[4]=1;trade_goods="goto_forge";// show_message("D");
+	            var go_there=instance_nearest(x,y,obj_temp_inq);
+	            action_x=go_there.x;
+                action_y=go_there.y;
+                alarm[4]=1;
+                trade_goods="goto_forge";// show_message("D");
 	            with(obj_temp_inq){instance_destroy();}exit;
 	        }
 	    }
@@ -860,11 +870,17 @@ if (navy) {
 	                var o,bombard,deaths,hurss,scare,onceh,wob,kill;
 	                o=0;bombard=0;deaths=0;hurss=0;onceh=0;wob=0;kill=0;
                 
-	                repeat(4){o+=1;
+	                repeat(orbiting.planets){
+                        o+=1;
 	                    if (orbiting.p_type[o]!="Daemon"){
-	                        if (orbiting.p_population[o]=0) and (orbiting.p_tyranids[o]>0) and (onceh=0){bombard=o;onceh=1;}
+	                        if (orbiting.p_population[o]=0) and (orbiting.p_tyranids[o]>0) and (onceh=0){
+                                bombard=o;
+                                onceh=1;
+                            }
 	                        if (orbiting.p_population[o]=0) and (orbiting.p_orks[o]>0) and (orbiting.p_owner[o]=7) and (onceh=0){bombard=o;onceh=1;}
-	                        if (orbiting.p_owner[o]=8) and (orbiting.p_tau[o]+orbiting.p_pdf[o]>0) and (onceh=0){bombard=o;onceh=1;}
+	                        if (orbiting.p_owner[o]=8) and (orbiting.p_tau[o]+orbiting.p_pdf[o]>0) and (onceh=0){
+                                bombard=o;onceh=1;
+                            }
 	                        if (orbiting.p_owner[o]=10) and ((orbiting.p_chaos[o]+orbiting.p_traitors[o]+orbiting.p_pdf[o]>0) or (orbiting.p_heresy[o]>=50)){bombard=o;onceh=1;}
 	                    }
 	                }
@@ -925,20 +941,24 @@ if (navy) {
 
 
 	// If the guardsmen all die then move on
-	var o;o=0;
+	var o=0;
 	if (guardsmen_unloaded=1) and (instance_exists(orbiting)){
 	    var o,bad;o=0;bad=1;
-	    repeat(4){o+=1;
+	    repeat(orbiting.planets){
+            o+=1;
 	        if (orbiting.p_guardsmen[o]>0) then bad-=1;
 	    }
-	    if (bad=1){guardsmen_unloaded=0;guardsmen_ratio=0;trade_goods="";
+	    if (bad=1){
+            guardsmen_unloaded=0;
+            guardsmen_ratio=0;
+            trade_goods="";
         }
 	}
 
 
 	// Go to recruiting grounds
 	if ((guardsmen_unloaded=0) and (guardsmen_ratio<0.5) and ((trade_goods=""))) or (trade_goods="recr"){// determine what sort of planet is needed
-	    var guard_wanted,planet_needed;guard_wanted=0;planet_needed=0;guard_wanted=maxi-curr;
+	    var guard_wanted=maxi-curr,planet_needed=0;
 	    if (guard_wanted<=50000) then planet_needed=1;// Pretty much any
 	    if (guard_wanted>50000) then planet_needed=2;// Feudal and up
 	    if (guard_wanted>200000) then planet_needed=3;// Temperate and up
@@ -1086,10 +1106,12 @@ if (navy) {
     
 	    with(obj_temp7){instance_destroy();}
     
-	    var plah;plah=false;
+	    var plah=false;
 	    if (obj_controller.faction_status[eFACTION.Imperium]="War"){
 	        if (orbiting.present_fleet[1]>0) then plah=true;
-	        var r;r=0;repeat(4){r+=1;
+	        var r=0;
+            repeat(orbiting.planets){
+                r+=1;
 	            if (orbiting.p_owner[r]=1) then plah=true;
 	            if (planet_feature_bool(orbiting.p_feature[r], P_features.Monastery)==1) then plah=true;
 	        }
@@ -1139,7 +1161,9 @@ if (navy) {
 	                if (y<-5000) then y+=10000;
 	            }
             
-	            action_x=next.x;action_y=next.y;alarm[4]=1;// show_message("G");
+	            action_x=next.x;
+                action_y=next.y;
+                alarm[4]=1;// show_message("G");
 	        }
 	    }
 	}
@@ -1149,22 +1173,22 @@ if (navy) {
 	}
 }
 
-var spid, dir;spid=0;dir=0;
+var  dir;dir=0;
 var ret;ret=0;
 
 
 if (action=""){
-    if (instance_exists(orbiting)){spid=orbiting;}// spid.present_fleet[owner]+=1;
-    else{spid=instance_nearest(x,y,obj_star);orbiting=spid;}
+    if (instance_exists(orbiting)){orbiting=orbiting;}// orbiting.present_fleet[owner]+=1;
+    else{orbiting=instance_nearest(x,y,obj_star);orbiting=orbiting;}
     var max_dis;max_dis=400;
     
-    if (instance_exists(spid)){
-        if (spid.owner=eFACTION.Player) and (obj_controller.faction_status[eFACTION.Imperium]="War") and (owner=eFACTION.Imperium){
+    if (instance_exists(orbiting)){
+        if (orbiting.owner=eFACTION.Player) and (obj_controller.faction_status[eFACTION.Imperium]="War") and (owner=eFACTION.Imperium){
             var i;i=0;
             repeat(4){i+=1;
-                if (spid.p_owner[i]=1) then spid.p_pdf[i]-=capital_number*50000;
-                if (spid.p_owner[i]=1) then spid.p_pdf[i]-=frigate_number*10000;
-                if (spid.p_pdf[i]<0) then spid.p_pdf[i]=0;
+                if (orbiting.p_owner[i]=1) then orbiting.p_pdf[i]-=capital_number*50000;
+                if (orbiting.p_owner[i]=1) then orbiting.p_pdf[i]-=frigate_number*10000;
+                if (orbiting.p_pdf[i]<0) then orbiting.p_pdf[i]=0;
             }
         }
     }
@@ -1172,7 +1196,7 @@ if (action=""){
     // 1355;
     
     
-    if (instance_exists(obj_crusade)) and (owner=eFACTION.Ork) and (spid.owner=eFACTION.Ork){// Ork crusade AI
+    if (instance_exists(obj_crusade)) and (owner=eFACTION.Ork) and (orbiting.owner=eFACTION.Ork){// Ork crusade AI
         var max_dis;
         max_dis=400;
     
@@ -1188,7 +1212,7 @@ if (action=""){
         var ns;ns=instance_nearest(x,y,obj_star);
         if (ns.owner != eFACTION.Ork) and (point_distance(x,y,ns.x,ns.y)<=max_dis) and (point_distance(x,y,ns.x,ns.y)>40) and (instance_exists(obj_crusade)) and (image_index>3){
             action_x=ns.x;action_y=ns.y;alarm[4]=1;
-            home_x=spid.x;home_y=spid.y;
+            home_x=orbiting.x;home_y=orbiting.y;
             exit;
         }
         
@@ -1251,21 +1275,22 @@ if (action=""){
     
     
     if (owner=eFACTION.Inquisition){
-        if ((spid.owner  = eFACTION.Player) or (obj_ini.fleet_type!=1)) and (trade_goods!="cancel_inspection"){
+        if ((orbiting.owner  = eFACTION.Player) or (obj_ini.fleet_type!=1)) and (trade_goods!="cancel_inspection"){
             if (obj_controller.disposition[6]>=60) then scr_loyalty("Xeno Associate","+");
             if (obj_controller.disposition[7]>=60) then scr_loyalty("Xeno Associate","+");
             if (obj_controller.disposition[8]>=60) then scr_loyalty("Xeno Associate","+");
             
-            if (spid.p_owner[2]=1) and (spid.p_heresy[2]>=60) then scr_loyalty("Heretic Homeworld","+");
+            if (orbiting.p_owner[2]=1) and (orbiting.p_heresy[2]>=60) then scr_loyalty("Heretic Homeworld","+");
             
-            var whom;whom=-1;
+            var whom=-1;
             if (string_count("Inqis",trade_goods)=0) then whom=0;
             if (string_count("Inqis1",trade_goods)=1) then whom=1;
             if (string_count("Inqis2",trade_goods)=1) then whom=2;
             if (string_count("Inqis3",trade_goods)=1) then whom=3;
             if (string_count("Inqis4",trade_goods)=1) then whom=4;
             if (string_count("Inqis5",trade_goods)=1) then whom=5;
-            
+
+            var inquis_string = $"Inquisitor {obj_controller.inquisitor[whom]}";
             
             // INVESTIGATE DEAD HERE 137 ; INVESTIGATE DEAD HERE 137 ; INVESTIGATE DEAD HERE 137 ; INVESTIGATE DEAD HERE 137 ; 
             var cur_star,t,type,cha,dem,tem1,tem1_base,perc,popup;
@@ -1275,10 +1300,13 @@ if (action=""){
             
             if (string_count("investigate",trade_goods)>0){
                 // Check for xenos or demon-equip items on those planets
-                var e,ia,ca;e=0;ia=-1;ca=0;
+                //TODO update this to check weapon or artifact tags
+                var e=0,ia=-1,ca=0;
                 repeat(4400){
                     if (ca<=10) and (ca>=0){
-                        ia+=1;if (ia=400){ca+=1;ia=1;if (ca=11) then ca=-5;}
+                        ia+=1;
+                        if (ia=400){ca+=1;ia=1;
+                        if (ca=11) then ca=-5;}
                         if (ca>=0) and (ca<11){
                             
                             if (string(obj_ini.loc[ca,ia])=cur_star.name) and (real(obj_ini.TTRPG[ca][ia].planet_location)>0){
@@ -1294,7 +1322,9 @@ if (action=""){
                         }
                     }
                 }
-                repeat(4){t+=1;tem1=tem1_base;// Repeat to check each of the planets
+                repeat(cur_star.planets){
+                    t+=1;
+                    tem1=tem1_base;// Repeat to check each of the planets
                     if (cur_star.p_type[t]="Dead") and (array_length(cur_star.p_upgrades[t])>0){
 						var base_search = search_planet_features(cur_star.p_upgrades[t], P_features.Secret_Base); 
                         if (array_length(base_search) >0){
@@ -1332,17 +1362,30 @@ if (action=""){
                             obj_controller.disposition[4]-=max(round((obj_controller.disposition[4]/4)*perc),round(10*perc));
                             obj_controller.disposition[5]-=max(round((obj_controller.disposition[5]/4)*perc),round(10*perc));
                             
-                            popup=3;if ((dem*10)+(cha*3)>=10) then popup=4;
-          
-                            if ((obj_controller.disposition[4]<0) or (obj_controller.loyalty<=0)) and (obj_controller.faction_status[eFACTION.Inquisition]!="War") and (popup=3){popup=0.3;
-                                var moo;moo=false;
-                                if (obj_controller.penitent=1) and (moo=false){obj_controller.alarm[8]=1;moo=true;}
-                                if (obj_controller.penitent=0) and (moo=false) then scr_audience(4,"loyalty_zero",0,"",0,0);
-                            }
-                            if ((obj_controller.disposition[4]<0) or (obj_controller.loyalty<=0)) and (obj_controller.faction_status[eFACTION.Inquisition]!="War") and (popup=4){popup=0.4;
-                                var moo;moo=false;
-                                if (obj_controller.penitent=1) and (moo=false){obj_controller.alarm[8]=1;moo=true;}
-                                if (obj_controller.penitent=0) and (moo=false) then scr_audience(4,"loyalty_zero",0,"",0,0);
+                            popup=3;
+                            if ((dem*10)+(cha*3)>=10) then popup=4;
+
+                            var start_inquisition_war = ((obj_controller.disposition[4]<0 || obj_controller.loyalty<=0) && obj_controller.faction_status[eFACTION.Inquisition]!="War")
+                            
+                            if (start_inquisition_war){
+                                if (popup==3){
+                                    popup=0.3;
+                                    var moo=false;
+                                    if (!moo){
+                                        if (obj_controller.penitent=1) {
+                                            obj_controller.alarm[8]=1;
+                                            moo=true;
+                                        }else if (obj_controller.penitent=0){
+                                            scr_audience(4,"loyalty_zero",0,"",0,0);
+                                        }
+                                    }
+                                }
+                                else if (popup==4){
+                                    popup=0.4;
+                                    var moo=false;
+                                    if (obj_controller.penitent=1) and (moo=false){obj_controller.alarm[8]=1;moo=true;}
+                                    if (obj_controller.penitent=0) and (moo=false) then scr_audience(4,"loyalty_zero",0,"",0,0);
+                                }
                             }
                         }
  						var vault = search_planet_features(cur_star.p_upgrades[t], P_features.Arsenal)
@@ -1365,40 +1408,39 @@ if (action=""){
                         // Popup4: Aresenal with Chaos/Demonic Discovered
                         // Popup5: First Gene-Seed warning
                         // Popup6: Second Gene-Seed warning
-                        var inquis_string = "Inquisitor {obj_controller.inquisitor[whom]}";
                         var star_planet = $"{cur_star.name}{scr_roman(t)}";
 
-                        if (popup=1) then scr_event_log("",inquis_string+" discovers your Secret Lair on "+star_planet+".");
-                        if (popup=2) or (popup=0.2) then scr_event_log("red",inquis_string+" discovers your Secret Lair on "+star_planet+".", cur_star);
-                        if (popup=3) or (popup=0.3) then scr_event_log("",inquis_string+" discovers your Secret Arsenal on "+star_planet+".", cur_star);
-                        if (popup=4) or (popup=0.4) then scr_event_log("red",inquis_string+" discovers your Secret Arsenal on "+star_planet+".", cur_star);
-                        if (popup>=5) or (popup=0.6) then scr_event_log("",inquis_string+" discovers your Secret Gene-Vault on "+star_planet+".", cur_star);
+                        if (popup=1){scr_event_log("",$"{inquis_string} discovers your Secret Lair on {star_planet}.");}
+                        else if (popup=2) or (popup=0.2) {scr_event_log("red",$"{inquis_string} discovers your Secret Lair on {star_planet}.", cur_star);}
+                        else if (popup=3) or (popup=0.3) {scr_event_log("",$"{inquis_string} discovers your Secret Arsenal on {star_planet}.", cur_star);}
+                        else if (popup=4) or (popup=0.4) {scr_event_log("red",$"{inquis_string} discovers your Secret Arsenal on {star_planet}.", cur_star);}
+                        else if (popup>=5) or (popup=0.6) {scr_event_log("",$"{inquis_string} discovers your Secret Gene-Vault on {star_planet}.", cur_star);}
                         
                         var pop_tit,pop_txt,pop_spe;
                         pop_tit="";pop_txt="";pop_spe="";
                         if (popup=1){
                             pop_tit="Inquisition Discovers Lair";
-                            pop_txt=inquis_string+" has discovered your Secret Lair on "+star_planet+".  A quick inspection revealed that there was no contraband or heresy, though the Inquisition does not appreciate your secrecy at all.";
+                            pop_txt=$"{inquis_string} has discovered your Secret Lair on {star_planet}.  A quick inspection revealed that there was no contraband or heresy, though the Inquisition does not appreciate your secrecy at all.";
                         }
                         else if (popup=2){
                             pop_tit="Inquisition Discovers Lair";
-                            pop_txt=inquis_string+" has discovered your Secret Lair on "+star_planet+".  A quick inspection turned up heresy, most foul, and it has all been reported to the Inquisition.  They are seething, as a whole, and relations are damaged.";
+                            pop_txt=$"{inquis_string} has discovered your Secret Lair on {star_planet}.  A quick inspection turned up heresy, most foul, and it has all been reported to the Inquisition.  They are seething, as a whole, and relations are damaged.";
                         }
                         else if (popup=3){
                             pop_tit="Inquisition Discovers Arsenal";
-                            pop_txt=inquis_string+" has discovered your Secret Arsenal on "+star_planet+".  A quick inspection revealed that there was no contraband or heresy, though the Inquisition does not appreciate your secrecy at all.";
+                            pop_txt=$"{inquis_string} has discovered your Secret Arsenal on {star_planet}.  A quick inspection revealed that there was no contraband or heresy, though the Inquisition does not appreciate your secrecy at all.";
                         }
                         else if (popup=4){
                             pop_tit="Inquisition Discovers Arsenal";
-                            pop_txt=inquis_string+" has discovered your Secret Arsenal on "+star_planet+".  A quick inspection turned up heresy, most foul, and it has all been reported to the Inquisition.  Relations have been heavily damaged.";
+                            pop_txt=$"{inquis_string} has discovered your Secret Arsenal on {star_planet}.  A quick inspection turned up heresy, most foul, and it has all been reported to the Inquisition.  Relations have been heavily damaged.";
                         }
                         else if (popup=5){
                             pop_tit="Inquisition Discovers Arsenal";
-                            pop_txt=inquis_string+" has discovered your Secret Gene-Vault on "+star_planet+" and reported it.  The Inquisition does NOT appreciate your secrecy, nor the fact that you were able to mass produce Gene-Seed unknowest to the Imperium.  Relations are damaged.";
+                            pop_txt=$"{inquis_string} has discovered your Secret Gene-Vault on {star_planet} and reported it.  The Inquisition does NOT appreciate your secrecy, nor the fact that you were able to mass produce Gene-Seed unknowest to the Imperium.  Relations are damaged.";
                         }
                         else if (popup=6){
                             pop_tit="Inquisition Discovers Arsenal";
-                            pop_txt=inquis_string+" has discovered your Secret Gene-Vault on "+star_planet+" and reported it.  You were warned once already to not sneak about with Gene-Seed stores and Test-Slave incubators.  Do not let it happen again or your Chapter will be branded heretics.";
+                            pop_txt=$"{inquis_string} has discovered your Secret Gene-Vault on {star_planet} and reported it.  You were warned once already to not sneak about with Gene-Seed stores and Test-Slave incubators.  Do not let it happen again or your Chapter will be branded heretics.";
                         }
                         
                         if ((dem*10)+(cha*3)>=10){
@@ -1473,15 +1515,15 @@ if (action=""){
             if (obj_controller.known[eFACTION.Inquisition]=1){obj_controller.known[eFACTION.Inquisition]=3;}
             if (obj_controller.known[eFACTION.Inquisition]=2){obj_controller.known[eFACTION.Inquisition]=4;}
             
-            instance_deactivate_object(spid);
+            instance_deactivate_object(orbiting);
             repeat(choose(1,2)){
-                spid=instance_nearest(x,y,obj_star);
-                instance_deactivate_object(spid);
+                orbiting=instance_nearest(x,y,obj_star);
+                instance_deactivate_object(orbiting);
             }
             
             repeat(5){
-                spid=instance_nearest(x,y,obj_star);
-                if (spid.owner=eFACTION.Eldar) then instance_deactivate_object(spid);
+                orbiting=instance_nearest(x,y,obj_star);
+                if (orbiting.owner=eFACTION.Eldar) then instance_deactivate_object(orbiting);
             }
             // 135;
             if (obj_controller.loyalty_hidden<=0){// obj_controller.alarm[7]=1;global.defeat=2;
@@ -1490,9 +1532,9 @@ if (action=""){
                 if (obj_controller.penitent=0) and (moo=false) then scr_audience(4,"loyalty_zero",0,"",0,0);
             }
             
-            spid=instance_nearest(x,y,obj_star);
-            action_x=spid.x;
-            action_y=spid.y;
+            orbiting=instance_nearest(x,y,obj_star);
+            action_x=orbiting.x;
+            action_y=orbiting.y;
             alarm[4]=1;
             instance_activate_object(obj_star);
             trade_goods="|DELETE|";
@@ -1540,10 +1582,10 @@ if (action=""){
         
         if (capital_number>0){
             var onceh;onceh=0;
-            if (spid.p_type[4]!="Dead") and (spid.planets=4){spid.p_tyranids[4]=5;onceh+=1;}
-            if (spid.p_type[3]!="Dead") and (spid.planets>=3) and (onceh<capital_number){spid.p_tyranids[3]=5;onceh+=1;}
-            if (spid.p_type[2]!="Dead") and (spid.planets>=2) and (onceh<capital_number){spid.p_tyranids[2]=5;onceh+=1;}
-            if (spid.p_type[1]!="Dead") and (spid.planets>=1) and (onceh<capital_number){spid.p_tyranids[1]=5;onceh+=1;}
+            if (orbiting.p_type[4]!="Dead") and (orbiting.planets=4){orbiting.p_tyranids[4]=5;onceh+=1;}
+            if (orbiting.p_type[3]!="Dead") and (orbiting.planets>=3) and (onceh<capital_number){orbiting.p_tyranids[3]=5;onceh+=1;}
+            if (orbiting.p_type[2]!="Dead") and (orbiting.planets>=2) and (onceh<capital_number){orbiting.p_tyranids[2]=5;onceh+=1;}
+            if (orbiting.p_type[1]!="Dead") and (orbiting.planets>=1) and (onceh<capital_number){orbiting.p_tyranids[1]=5;onceh+=1;}
         }
         
         
@@ -1552,11 +1594,11 @@ if (action=""){
         var n;
         n=0;
         
-        if (spid.planets=0) then n=1;
-        if (spid.planets=1) and (spid.p_type[1]="Dead") then n=1;
-        if (spid.planets=2) and (spid.p_type[1]="Dead") and (spid.p_type[2]="Dead") then n=1;
-        if (spid.planets=3) and (spid.p_type[1]="Dead") and (spid.p_type[2]="Dead") and (spid.p_type[3]="Dead") then n=1;
-        if (spid.planets=4) and (spid.p_type[1]="Dead") and (spid.p_type[2]="Dead") and (spid.p_type[3]="Dead") and (spid.p_type[4]="Dead") then n=1;
+        if (orbiting.planets=0) then n=1;
+        if (orbiting.planets=1) and (orbiting.p_type[1]="Dead") then n=1;
+        if (orbiting.planets=2) and (orbiting.p_type[1]="Dead") and (orbiting.p_type[2]="Dead") then n=1;
+        if (orbiting.planets=3) and (orbiting.p_type[1]="Dead") and (orbiting.p_type[2]="Dead") and (orbiting.p_type[3]="Dead") then n=1;
+        if (orbiting.planets=4) and (orbiting.p_type[1]="Dead") and (orbiting.p_type[2]="Dead") and (orbiting.p_type[3]="Dead") and (orbiting.p_type[4]="Dead") then n=1;
         
         if (n=1){
             var xx,yy,good, plin, plin2;
@@ -1564,7 +1606,7 @@ if (action=""){
             
             if (capital_number>5) then n=5;
             
-            instance_deactivate_object(spid);
+            instance_deactivate_object(orbiting);
             
             repeat(100){
                 if (good!=5){
@@ -1619,11 +1661,11 @@ if (action=""){
         }
     }
     
-    if (owner=eFACTION.Ork) and (action="") and (instance_exists(spid)){// Should fix orks converging on useless planets
+    if (owner=eFACTION.Ork) and (action="") and (instance_exists(orbiting)){// Should fix orks converging on useless planets
         var maxp,bad,i,hides,hide;maxp=0;bad=0;i=0;hides=1;hide=0;
         
-        if (spid.planets<=0) or ((spid.planets=1) and (spid.p_type[1]="Dead")) then bad=1;
-        if (spid.planets=2) and (spid.p_type[1]="Dead") and (spid.p_type[2]="Dead") then bad=1;
+        if (orbiting.planets<=0) or ((orbiting.planets=1) and (orbiting.p_type[1]="Dead")) then bad=1;
+        if (orbiting.planets=2) and (orbiting.p_type[1]="Dead") and (orbiting.p_type[2]="Dead") then bad=1;
         
         if (bad=1){
             hides+=choose(0,1,2,3);
@@ -1644,14 +1686,14 @@ if (action=""){
             exit;
         }
         
-        /*i=0;repeat(4){i+=1;if (spid.p_type[i]!="") then maxp+=1;}
+        /*i=0;repeat(4){i+=1;if (orbiting.p_type[i]!="") then maxp+=1;}
         i=0;repeat(4){i+=1;
-            if (spid.p_player[i]+spid.p_traitors[i]+spid.p_chaos[i]+spid.p_tyranids[i]+spid.p_tau[i]+spid.p_necrons[i]=0) 
-             or (spid.p_type[i]="Dead") 
-              or (spid.p_owner[i]=7) then bad+=1;
+            if (orbiting.p_player[i]+orbiting.p_traitors[i]+orbiting.p_chaos[i]+orbiting.p_tyranids[i]+orbiting.p_tau[i]+orbiting.p_necrons[i]=0) 
+             or (orbiting.p_type[i]="Dead") 
+              or (orbiting.p_owner[i]=7) then bad+=1;
         }
         if (bad>=maxp){
-            with(spid){y+=20000;}
+            with(orbiting){y+=20000;}
             with(obj_star){if ((planets=1) and (p_type[1]="Dead")) or (owner = eFACTION.Ork) then y+=20000;}
             var nex;nex=instance_nearest(x,y,obj_star);
             action_x=nex.x;action_y=nex.y;alarm[4]=1;
@@ -1700,13 +1742,13 @@ if (action="move") and (action_eta<5000){
     if (instance_nearest(action_x,action_y,obj_star).storm>0) then exit;
     if (action_x+action_y=0) then exit;
     
-    var spid,dos;dos=0;spid=0;
+    var dos;dos=0;
     dos=point_distance(x,y,action_x,action_y);
-    spid=dos/action_eta;
+    orbiting=dos/action_eta;
     dir=point_direction(x,y,action_x,action_y);
     
-    x=x+lengthdir_x(spid,dir);
-    y=y+lengthdir_y(spid,dir);
+    x=x+lengthdir_x(orbiting,dir);
+    y=y+lengthdir_y(orbiting,dir);
     
     action_eta-=1;
     
@@ -1957,18 +1999,18 @@ if (action="move") and (action_eta<5000){
             if (steh.owner  = eFACTION.Player) and (trade_goods="cancel_inspection"){
                 instance_deactivate_object(steh);
                 repeat(choose(1,2)){
-                    spid=instance_nearest(x,y,obj_star);
-                    instance_deactivate_object(spid);
+                    orbiting=instance_nearest(x,y,obj_star);
+                    instance_deactivate_object(orbiting);
                 }
                 
                 repeat(5){
-                    spid=instance_nearest(x,y,obj_star);
-                    if (spid.owner = eFACTION.Eldar) then instance_deactivate_object(spid);
+                    orbiting=instance_nearest(x,y,obj_star);
+                    if (orbiting.owner = eFACTION.Eldar) then instance_deactivate_object(orbiting);
                 }
                 
-                spid=instance_nearest(x,y,obj_star);
-                action_x=spid.x;
-                action_y=spid.y;
+                orbiting=instance_nearest(x,y,obj_star);
+                action_x=orbiting.x;
+                action_y=orbiting.y;
                 alarm[4]=1;
                 instance_activate_object(obj_star);
                 trade_goods+="|DELETE|";

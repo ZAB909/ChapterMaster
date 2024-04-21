@@ -253,8 +253,8 @@ calculate_equipment_needs =  function (){
 
         var unit_armour;
         var unit_wep_one;
-        repeat(obj_controller.man_max){
-            i+=1;
+        for (var i=0; i<array_length(obj_controller.display_unit);i++){
+
             unit_armour = gear_weapon_data("armour", obj_controller.ma_armour[i]);
             unit_wep_one = gear_weapon_data("weapon", obj_controller.ma_wep1[i]);
             if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]=1) and (obj_controller.ma_promote[i]=1) and (obj_controller.ma_exp[i]>=min_exp){

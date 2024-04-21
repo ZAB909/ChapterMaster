@@ -1,6 +1,6 @@
-/// @function draw_text_bold(x, y, string)
-/// @description Draws text two times with x+0.5 and y+0.5 offset on the second time.
-function draw_text_bold(x, y, string){
-    draw_text(x, y, string);
-    draw_text(x+0.5, y+0.5, string);
+/// @function draw_text_bold
+/// @description This function will draw text in a similar way to draw_text(), only now the text will be drawn twice with a slight offset, to make it look thicker.
+function draw_text_bold(_x, _y, _text){
+    draw_text(_x, _y, _text);
+    draw_text(_x+0.5, _y+0.5, _text);
 }

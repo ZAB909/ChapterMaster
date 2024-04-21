@@ -257,21 +257,26 @@ function garrison_force(planet_operatives, turn_end=false)constructor{
 }
 
 
-function determine_pdf_defence(pdf, garrison="none", planet_forti=0){
+function determine_pdf_defence(pdf, garrison="none", planet_forti=0, enemy=0){
 	var explanations = "";
 	var defence_mult = planet_forti*0.1;
 	var pdf_score=0;
 	explanations += $"Planet Defences:X{defence_mult+1}#"
 	if (garrison!="none"){//if player supports give garrison bonus
     	var garrison_mult = garrison.viable_garrison*(0.008+(0.001*planet_forti))
+    	var siege_masters =array_contains(obj_ini.adv, "Siege Masters");
+    	if (siege_masters) then garrison_mult*=2;
     	explanations += $"Garrison Bonus:X{garrison_mult+1}#";
+    	if (siege_masters){
+    		explanations += $"     Siege Masters:X2#";
+    	}
     	if (!garrison.garrison_leader){
 	    	garrison.find_leader();
 	    }
     	defence_mult+=garrison_mult;
-    	var leader_bonus = garrison.garrison_leader.wisdom/40;
+    	var leader_bonus = garrison.garrison_leader.wisdom/30;
     	defence_mult*=leader_bonus;//modified by how good a commander the garrison leader is
-    	explanations += $"     Garrison Leader Bonus:X{leader_bonus}#"
+    	explanations += $"     Garrison Leader Bonus:X{leader_bonus}(WIS/30)#"
     	//makes pdf more effective if planet has defences or marines present
 	}
 

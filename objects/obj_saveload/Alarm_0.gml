@@ -30,6 +30,7 @@ if (load_part=6){
     with(obj_controller){
         scr_load(5,global.load);
         calculate_research_points();
+        location_viewer = new scr_unit_quick_find_pane();
     }
     trickle=50;
     

@@ -24,6 +24,7 @@ function scr_weapons_equip() {
 	    tb=tab;tc=tab;
 	    dude=obj_controller.settings;
 	}
+	var standard_equip = (instance_exists(obj_controller)) and (!instance_exists(obj_mass_equip)) and (instance_exists(obj_popup));
 
 	if (dude<50) and (dude!=6) then dude=1
 
@@ -37,7 +38,7 @@ function scr_weapons_equip() {
 	var equip_data;
 	if (tc<3) and (dude=1){
 		if(tb=1){
-			if (!instance_exists(obj_creation)&& !instance_exists(obj_mass_equip)){ // Infantry Ranged
+			if (standard_equip){ // Infantry Ranged
 				item_name[1]="(None)";
 				item_name[2]="(any)";
 				var valid=3;
@@ -49,7 +50,7 @@ function scr_weapons_equip() {
 					}				
 					equip_data = gear_weapon_data("weapon", obj_ini.equipment[i]);
 					if (is_struct(equip_data) && obj_ini.equipment_number[i]>0){
-						if (equip_data.range>1.1){
+						if (equip_data.range>1.1 && !equip_data.has_tag("vehicle")){
 							item_name[valid]=equip_data.name;
 							valid++;
 						}
@@ -83,7 +84,7 @@ function scr_weapons_equip() {
 					i+=1;item_name[i]="Webber";				
 			}
 		}else if (tb=2){
-			if (!instance_exists(obj_creation)&& !instance_exists(obj_mass_equip)){
+			if (standard_equip){
 				item_name[1]="(None)";
 				item_name[2]="(any)";
 				var valid=3;				
@@ -95,7 +96,7 @@ function scr_weapons_equip() {
 					}				
 					equip_data = gear_weapon_data("weapon", obj_ini.equipment[i]);
 					if (is_struct(equip_data) && obj_ini.equipment_number[i]>0){
-						if (equip_data.range<=1.1){
+						if (equip_data.range<=1.1  && !equip_data.has_tag("vehicle")){
 							item_name[valid]=equip_data.name;
 							valid++;
 						}
@@ -126,11 +127,12 @@ function scr_weapons_equip() {
 		}
 	}
 
-	if (tc<3) and (tb=1) and (dude=6){var i=0; // Dreadnought Ranged
+	if (tc<3) and (tb=1) and (dude=6){
+		var i=0; // Dreadnought Ranged
 			item_name[1]="(None)";
 			item_name[2]="(any)";
 			var valid=3;
-			if (!instance_exists(obj_creation)) and (!instance_exists(obj_controller)){
+			if (standard_equip){
 				for (i=1;i<array_length(obj_ini.equipment);i++){
 					if (obj_popup.master_crafted==1){
 						if (!array_contains(obj_ini.equipment_quality[i],"master_crafted")){
@@ -150,7 +152,7 @@ function scr_weapons_equip() {
 
 	if (tc<3) and (tb=2) and (dude=6){
 		var i=0; // Dreadnought Melee
-		if (!instance_exists(obj_creation)) and (!instance_exists(obj_controller)){
+		if (standard_equip){
 			item_name[1]="(None)";
 			item_name[2]="(any)";
 			var valid=3;		
@@ -338,7 +340,7 @@ function scr_weapons_equip() {
 			var valid=3;		
 			for (i=1;i<array_length(obj_ini.equipment);i++){
 				equip_data=gear_weapon_data("gear", obj_ini.equipment[i]);
-				if (is_struct(equip_data) && obj_ini.equipment_number[i]>0){
+				if (is_struct(equip_data) && obj_ini.equipment_number[i]>0  && !equip_data.has_tag("vehicle")){
 					item_name[valid]=equip_data.name;
 					valid++;
 				}
@@ -362,7 +364,7 @@ function scr_weapons_equip() {
 			var valid=3;		
 			for (i=1;i<array_length(obj_ini.equipment);i++){
 				equip_data=gear_weapon_data("mobility", obj_ini.equipment[i]);
-				if (is_struct(equip_data) && obj_ini.equipment_number[i]>0){
+				if (is_struct(equip_data) && obj_ini.equipment_number[i]>0  && !equip_data.has_tag("vehicle")){
 					item_name[valid]=equip_data.name;
 					valid++;
 				}

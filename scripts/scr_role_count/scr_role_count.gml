@@ -29,10 +29,10 @@ function scr_role_count(target_role, search_location="", return_type="count") {
 
 	if (coom>=0){
 	    com=coom;
-	    for (i=1;i<array_length(obj_ini.TTRPG[com]);i++){
+	    for (i=0;i<array_length(obj_ini.TTRPG[com]);i++){
 			unit=obj_ini.TTRPG[com][i];
 			if (unit.name()=="")then continue; 	
-	        if (unit.role()=target_role) and (obj_ini.god[com][i]<10){
+	        if (unit.role()==target_role) && (obj_ini.god[com][i]<10){
 	        	count+=1;
 	        	if (return_type=="units"){
 	        		array_push(units, obj_ini.TTRPG[com][i]);
@@ -51,11 +51,11 @@ function scr_role_count(target_role, search_location="", return_type="count") {
 			if (unit.name()=="")then continue;
 	        if (unit.role()=target_role) and (search_location="") then match=true;
 	        if (unit.role()=target_role) and (obj_ini.loc[com][i]=obj_ini.home_name) and (search_location="home") then match=true;
-	        if (unit.role()=target_role) and (search_location="field") and ((obj_ini.loc[com][i]!=obj_ini.home_name) or (obj_ini.lid[com][i]>0)) then match=true;
+	        if (unit.role()=target_role) and (search_location="field") and ((obj_ini.loc[com][i]!=obj_ini.home_name) or (unit.ship_location>0)) then match=true;
         
 	        if (search_location!="home") and (search_location!="field"){
-	            if (obj_ini.role[com][i]=target_role){
-	                var t1=string(obj_ini.loc[com][i])+"|"+string(obj_ini.TTRPG[com][i].planet_location)+"|";
+	            if (unit.role()=target_role){
+	                var t1=string(obj_ini.loc[com][i])+"|"+string(unit.planet_location)+"|";
 	                if (search_location=t1) then match=true;
 	            }
 	        }

@@ -160,8 +160,10 @@ if (obj_controller.disposition[4]<=20) or (obj_controller.loyalty<=33) and (dema
 if (obj_controller.disposition[4]>20) and (obj_controller.loyalty>33) and (demanding==1) then demanding=0;
 // Main menu movement
 if ((menu==0) and (formating==0)) or (instance_exists(obj_fleet)){
-    var spd=24,keyb=""; // player move speed on campaign map
-
+    var spd=12,keyb=""; // player move speed on campaign map
+    if (keyboard_check(vk_shift)){
+        spd*=2;
+    }
     if ((!instance_exists(obj_ingame_menu)) and (!instance_exists(obj_ncombat))) or (instance_exists(obj_fleet)){
         if keyboard_check(vk_shift){spd+=20;} // shift down, increase speed
         if ((keyboard_check(vk_left)) or (mouse_x<=__view_get( e__VW.XView, 0 )+2) or (keyboard_check(ord("A")))) and (x>800) then x-=spd;
@@ -521,25 +523,6 @@ if (menu==1 && (managing>0 || managing<0)){
         sel=top;
         var unit = "";
         yy+=77;
-        for(var r=0; r<(min(man_max,man_see)); r++){
-            force_tool=0;
-            if (man[sel]=="man"){
-                unit = display_unit[sel];
-                if (temp[101] == $"{unit.role()} {unit.name}")
-                and ((temp[102]!=unit.armour()) or (temp[104]!=unit.gear()) or (temp[106]=unit.mobility_item()) 
-                or (temp[108]!=unit.weapon_one()) or (temp[110]!=unit.weapon_one())
-                or (temp[114]="refresh")) then force_tool=1;
-            }
-            
-            if (((mouse_x>=xx+25 && mouse_y>=yy+64 && mouse_x<xx+974 && mouse_y<yy+85) || force_tool==1) && is_struct(unit)){
-                temp[120] = unit; // unit_struct
-            }
-            draw_set_color(38144);
-            draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);
-            
-            yy+=20;
-            sel+=1;
-        }
     }
     if (is_struct(temp[120])){
         var ach=0,damage_res=1,armour_value=0;
@@ -558,7 +541,6 @@ if (menu==1 && (managing>0 || managing<0)){
             
             damage_res = unit.damage_resistance();
             
-            var armour_tooltip = "";
             if (is_struct(equip_data.armour_data)){
                 temp[103]=equip_data.armour_data.item_tooltip_desc_gen();
             } else {temp[103]=""}
@@ -602,8 +584,9 @@ if (menu==1 && (managing>0 || managing<0)){
             }
             if (string_count("0",unit.specials())>0){
                 temp[119]="PSYKER ("+string_upper(string(obj_ini.psy_powers))+"): ";
-                temp[119]+=string(string_count("|",unit.specials()));
-                temp[119]+=" Powers known.";
+                var _power_count = string_count("|",unit.specials());
+                temp[119]+=string(_power_count);
+                temp[119]+=(_power_count = 1) ? " Power known." : " Powers known.";
             }
             // Corruption
             if (obj_controller.chaos_rating>0) and (temp[119]!="") then temp[119]+="#"+string(max(0,unit.corruption()))+"% Corruption.";
@@ -687,31 +670,34 @@ if (menu==0) and (repair_ships>0) and (instance_number(obj_turn_end)==0) and (in
 // Unloads units from a ship
 if (unload>0){
     cooldown=8;
-    var b=selecting_ship,manaj=managing;
+    var b=selecting_ship;
     
-    if (manaj>10) then manaj=0;
-    var unit;
-    for(var q=1; q<=500; q++){
+    var unit,company, unit_id;
+    for(var q=0; q<array_length(display_unit); q++){
         if (man[q]=="man") and (ma_loc[q]==selecting_location) and (ma_wid[q]<1)and (man_sel[q]!=0){
             if (b==0) then b=ma_lid[q];
             unit=display_unit[q];
             if (!is_struct(unit)) then continue;
             if (unit.name()=="") then continue;
-            obj_ini.loc[manaj][ide[q]]=obj_ini.ship_location[b];
-            obj_ini.lid[manaj][ide[q]]=0;
+            unit_id = unit.marine_number;
+            company = unit.company;
+            obj_ini.loc[company][unit_id]=obj_ini.ship_location[b];
+            unit.ship_location=0;
             unit.planet_location=unload;
-            obj_ini.uid[manaj][ide[q]]=0;
+            obj_ini.uid[company][unit_id]=0;
             
             ma_loc[q]=obj_ini.ship_location[b];
             ma_lid[q]=0;
             ma_wid[q]=unload;
         }
-        if (man[q]=="vehicle") and (ma_loc[q]==selecting_location)  and (ma_wid[q]<1) and(man_sel[q]!=0){
+        else if (man[q]=="vehicle") and (ma_loc[q]==selecting_location)  and (ma_wid[q]<1) and(man_sel[q]!=0){
             if (b==0) then b=ma_lid[q];
-            obj_ini.veh_loc[manaj][ide[q]]=obj_ini.ship_location[b];
-            obj_ini.veh_lid[manaj][ide[q]]=0;
-            obj_ini.veh_wid[manaj][ide[q]]=unload;
-            obj_ini.veh_uid[manaj][ide[q]]=0;
+            var unit_id = display_unit[q][1];
+            var company = display_unit[q][0]
+            obj_ini.veh_loc[company][unit_id]=obj_ini.ship_location[b];
+            obj_ini.veh_lid[company][unit_id]=0;
+            obj_ini.veh_wid[company][unit_id]=unload;
+            obj_ini.veh_uid[company][unit_id]=0;
             
             ma_loc[q]=obj_ini.ship_location[b];
             ma_lid[q]=0;
@@ -719,7 +705,7 @@ if (unload>0){
         }
     }
     selecting_location="";
-    for(var i=0; i<500; i++){
+    for(var i=0; i<array_length(display_unit); i++){
         man_sel[i]=0;
     }
     obj_ini.ship_carrying[b]-=man_size;

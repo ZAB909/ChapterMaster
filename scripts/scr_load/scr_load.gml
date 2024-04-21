@@ -440,6 +440,12 @@ function scr_load(argument0, argument1) {
 	        new_star.craftworld=ini_read_real("Star","sr"+string(i)+"craftworld",0);
 	        new_star.space_hulk=ini_read_real("Star","sr"+string(i)+"spacehulk",0);
 	        if (new_star.space_hulk=1) then new_star.sprite_index=spr_star_hulk;
+	        new_star.present_fleet=ini_read_string("Star","sr"+string(i)+"present_fleets","");
+	        if (new_star.present_fleet!=""){
+	        	new_star.present_fleet = json_parse(base64_decode(new_star.present_fleet));
+	        } else {
+	        	new_star.present_fleet = array_create(30, 0);
+	        }
 
 	        var g=0;
 	        repeat(4){g+=1;
@@ -782,8 +788,7 @@ function scr_load(argument0, argument1) {
                     obj_ini.race[coh,mah]=ini_read_real("Mar","co"+string(coh)+"."+string(mah),0);
                     obj_ini.loc[coh,mah]=ini_read_string("Mar","lo"+string(coh)+"."+string(mah),"");
                     obj_ini.name[coh,mah]=ini_read_string("Mar","num"+string(coh)+"."+string(mah),"");
-                    obj_ini.role[coh,mah]=ini_read_string("Mar","rol"+string(coh)+"."+string(mah),"");// temp_name;
-                    obj_ini.lid[coh,mah]=ini_read_real("Mar","li"+string(coh)+"."+string(mah),0);							
+                    obj_ini.role[coh,mah]=ini_read_string("Mar","rol"+string(coh)+"."+string(mah),"");// temp_name;					
 
                     if (coh=0){
                         if (obj_ini.role[coh,mah]="Chapter Master"){

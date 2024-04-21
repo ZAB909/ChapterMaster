@@ -1,3 +1,47 @@
+-----------------------
+
+Version  0.9.0.3
+
+Fixed:
+	- Certain Hirelings crashing the game when viewed
+	- STC armour bonus' not displaying
+	- item quality not always displaying
+	- forge worlds not returning to mechanicus if spawned with non mechanicus control
+	- more fixes to unit spawning
+		- techmarines shouls always return from mars
+		- scouts should always spawn in a logical and accessible location
+	- slaughter song now completable without crash
+	- inquisition purging now no longer breaks saves
+	- all loading screen images fixed
+	- tithe alerts now no longer break the rest of
+	- reordering managemnt screen marines by stats so that player can see best marine with a given stat
+	- various sprite adjustments to fix alignment
+	- armour equip issues
+	- general stability improvements to management screens
+
+Changed:
+	- Overhaul of managing so that it is not directly linked to companies
+	- removal of lid variable in favour of unit.ship_location
+	- Complete overhaul of unit view in the manage area to be more cohesive
+		- new colour pallete
+		- better ui to be more informative
+		- colours to represent item quality
+	- tooltips improved both visually and in terms of content
+	- Siege Masters triat doubles marine effectiveness at garrisoning
+	- garrison leader bonus for garrisoning doubled increased by 50%
+	- psker abundance and psker intolerant respectivly increase and decrease psionic spawn levels
+	- jailing heretics now stops them corrupting even if in the same location as other marines
+added:
+	- crozius sprite
+	- fleet viewer to quickly see fleets and zoom to fleet locations
+	- quick view event log locations by pressing view button
+	- quick view garrisons with new troop logger
+	- manage marines by planet location instead of being locked to company manage screens
+	- stat boosts and new traits for spawn captains
+	- ability to demote/promote sgts with a loyalty hit to the demoted sgt
+	- genestealer cults acctually exist hidden from player view so mechanic can now be expanded upon
+
+
 -----------------
 Version 0.9.0.1
 Fixed:

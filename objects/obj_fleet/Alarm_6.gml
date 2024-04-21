@@ -45,11 +45,15 @@ if (total_enemies>0){
 }
 
 if (total_allies>0){
-    t=0;y1=0;y2=0;tt=0;fug=0;
-    t=1;y2=room_height/total_allies/2;tt=0;
-    repeat(5){fug+=1;
+    y1=0;fug=0;
+    t=1;
+    y2=room_height/total_allies/2;
+    tt=0;
+    repeat(5){
+        fug+=1;
         if (enemy_status[fug]>0){
-            tt+=1;y1=(t*y2);
+            tt+=1;
+            y1=(t*y2);
             
             spawner=instance_create(200,y1,obj_fleet_spawner);
             

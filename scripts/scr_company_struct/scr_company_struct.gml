@@ -17,12 +17,21 @@ function scr_company_struct(comp) constructor{
 	rollover_sequence=0;
 	selected_unit=obj_controller.temp[120];
 	drop_down_open=false;
-	captian = "none";
+	captain = "none";
 	if (company>0 && company<11){
-		var cap = scr_role_count(obj_ini.role[100][Role.CAPTAIN], company, "unit");
-		if (array_length(cap)>0){
-			captian = cap[0];
+		var unit;
+		var company_units = obj_controller.display_unit;
+		for (var i=0;i<array_length(company_units);i++){
+			if (is_struct(company_units[i])){
+				unit = company_units[i];
+				if (unit.role() == obj_ini.role[100][Role.CAPTAIN]){
+					captain = unit;
+				}
+			}
 		}
+	}
+	static grab_current_squad = function(){
+		return obj_ini.squads[company_squads[cur_squad]];
 	}
 
 	static draw_squad_view = function(){
@@ -67,7 +76,7 @@ function scr_company_struct(comp) constructor{
 			var button = draw_unit_buttons([xx+bound_width[0], yy+bound_height[0]+6], arrow,[1.5,1.5],c_red);
 			if (point_in_rectangle(mouse_x, mouse_y,button[0],button[1],button[2], button[3]) && array_length(company_squads) > 0 && mouse_check_button_pressed(mb_left)){
 				cur_squad = (cur_squad-1<0) ? 0 : cur_squad-1;
-				member = obj_ini.squads[company_squads[cur_squad]].members[0];
+				member = grab_current_squad().members[0];
 				obj_controller.temp[120] = obj_ini.TTRPG[member[0]][member[1]];
 			}
 			arrow="-->";
@@ -75,7 +84,7 @@ function scr_company_struct(comp) constructor{
 			button = draw_unit_buttons([xx+bound_width[1]-44,yy+bound_height[0]+6], arrow,[1.5,1.5],c_red);
 			if (point_in_rectangle(mouse_x, mouse_y,button[0],button[1],button[2], button[3]) && array_length(company_squads) > 0 && mouse_check_button_pressed(mb_left)){
 				cur_squad = cur_squad+1>=array_length(company_squads) ? 0 : cur_squad+1;
-				member = obj_ini.squads[company_squads[cur_squad]].members[0];
+				member = grab_current_squad().members[0];
 				obj_controller.temp[120] = obj_ini.TTRPG[member[0]][member[1]];
 			}						
 			draw_set_color(c_gray);
@@ -103,7 +112,7 @@ function scr_company_struct(comp) constructor{
 				tooltip_text="Guard Duty";
 				if (squad_loc.same_system) and (squad_loc.system!="Warp"){
 					button_row_offset+=string_width(tooltip_text)+6;
-					draw_unit_buttons([xx+bound_width[0]+5, yy+bound_height[0]+150], tooltip_text,[1,1],c_red);
+					button = draw_unit_buttons([xx+bound_width[0]+5, yy+bound_height[0]+150], tooltip_text,[1,1],c_red);
 					if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text), yy+bound_height[0]+150+string_height(tooltip_text))){
 						tooltip_text = "Having squads assigned to Guard Duty will increase relations with a planet over time, it will also bolster planet defence forces in case of attack, and reduce corruption growth.";
 						tooltip_draw(tooltip_text, 150, [xx+bound_width[0]+5, yy+bound_height[0]+200]);
@@ -114,7 +123,7 @@ function scr_company_struct(comp) constructor{
 					}
 					if (array_contains(current_squad.class, "scout")){
 						tooltip_text="Sabotage";
-						draw_unit_buttons([xx+bound_width[0]+5 + button_row_offset, yy+bound_height[0]+150], tooltip_text,[1,1],c_red);
+						button = draw_unit_buttons([button[2] + 4, yy+bound_height[0]+150], tooltip_text,[1,1],c_red);
 						if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5+ button_row_offset, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text)+ button_row_offset, yy+bound_height[0]+150+string_height(tooltip_text))){
 							tooltip_text = "Sabotage missions can reduce enemy growth while avoiding direct enemy contact however they are not without risk.";
 							tooltip_draw(tooltip_text, 150, [xx+bound_width[0]+5+button_row_offset, yy+bound_height[0]+200]);
@@ -128,7 +137,6 @@ function scr_company_struct(comp) constructor{
 				if (send_on_mission){
 					with (obj_star){
 						if (name == squad_loc.system){
-							obj_controller.cooldown=8000;
 							var unload_squad=instance_create(x,y,obj_star_select);
 							unload_squad.target=self;
 							unload_squad.loading=1;
@@ -192,33 +200,34 @@ function scr_company_struct(comp) constructor{
 				var deploy_text = "Squad will deploy in the";
 				draw_set_font(fnt_40k_14b)
 				draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0], deploy_text,1,1,0);
-				draw_unit_buttons([xx+bound_width[0]+5 + string_width(deploy_text), yy+bound_height[0]],current_squad.formation_place,[1,1],c_green);
+				button = draw_unit_buttons([xx+bound_width[0]+5 + string_width(deploy_text), yy+bound_height[0]-2],current_squad.formation_place,[1,1],c_green);
 				draw_set_color(c_red);
 				draw_text_transformed(xx+bound_width[0]+5+ string_width(deploy_text) + string_width(current_squad.formation_place)+9, yy+bound_height[0], "column",1,1,0);
+				draw_set_color(c_gray);
 				if (array_length(current_squad.formation_options)>1){
 					if (point_in_rectangle(
 						mouse_x,
 						mouse_y,
-						xx+bound_width[0]+5+ string_width(deploy_text), 
-						yy+bound_height[0], 
-						xx+bound_width[0]+13+ string_width(deploy_text) +string_width(current_squad.formation_place), 
-						yy+bound_height[0]+4+string_height(current_squad.formation_place)
+						button [0], 
+						button[1], 
+						button[2], 
+						button[3]
 					)){
 						drop_down_open = true;
 					}
 					if (drop_down_open){
-						var roll_down_offset=4+string_height(current_squad.formation_place);
+						var roll_down_offset=8+string_height(current_squad.formation_place);
 						for (var col = 0;col<array_length(current_squad.formation_options);col++){
 							if (current_squad.formation_options[col]==current_squad.formation_place) then continue;
-							draw_unit_buttons([xx+bound_width[0]+5 + string_width(deploy_text), yy+bound_height[0]+roll_down_offset],current_squad.formation_options[col],[1,1],c_red);
+							button = draw_unit_buttons([button[0], button[3] + 2],current_squad.formation_options[col],[1,1],c_red);
 							if (mouse_check_button_pressed(mb_left) && 
 								point_in_rectangle(
 										mouse_x,
 										mouse_y,
-										xx+bound_width[0]+5+string_width(deploy_text), 
-										yy+bound_height[0]+roll_down_offset, 
-										xx+bound_width[0]+13+ string_width(deploy_text) +string_width(current_squad.formation_options[col]), 
-										yy+bound_height[0]+roll_down_offset+string_height(current_squad.formation_options[col])+4									
+										button [0], 
+										button[1], 
+										button[2], 
+										button[3]									
 									)){
 								current_squad.formation_place = current_squad.formation_options[col];
 								drop_down_open = false;

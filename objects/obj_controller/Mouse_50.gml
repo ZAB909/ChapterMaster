@@ -1281,7 +1281,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             }
         }
         // Management
-        if (mouse_x>=xx+36) and (mouse_y>=yy+837) and (mouse_x<xx+176) and (mouse_y<yy+877){
+        if (menu_buttons.chapter_manage.clicked){
             if (menu!=1)and (onceh==0){
                 scr_management(1);
                 menu=1;
@@ -1294,7 +1294,6 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 with(obj_star_select){instance_destroy();}
                 with(obj_fleet_select){instance_destroy();}
                 view_squad=false;
-                unit_text = true;
             }
             if (menu==1) and (onceh==0){
                 menu=0;
@@ -1302,11 +1301,12 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 cooldown=8000;
                 click=1;
                 hide_banner=0;
+                location_viewer.update_garrison_log();
             }
             managing=0;
         }
         // Settings
-        if (mouse_x>=xx+179) and (mouse_y>=yy+837) and (mouse_x<xx+321) and (mouse_y<yy+877){
+        if (menu_buttons.chapter_settings.clicked){
             onceh=0;
             if (menu!=21) and (onceh==0){
                 onceh=1;
@@ -1338,7 +1338,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             }
         }
         // Apothecarium
-        if (mouse_x>=xx+358) and (mouse_y>=yy+838) and (mouse_x<xx+471) and (mouse_y<yy+879){
+        if (menu_buttons.apoth.clicked){
             menu_adept=0;
             hide_banner=1;
             if (scr_role_count("Master of the Apothecarion","0")==0) then menu_adept=1;
@@ -1358,7 +1358,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             managing=0;
         }
         // Reclusium
-        if (mouse_x>=xx+474) and (mouse_y>=yy+838) and (mouse_x<xx+587) and (mouse_y<yy+879){
+        if (menu_buttons.reclu.clicked){
             menu_adept=0;
             hide_banner=1;
             if (scr_role_count("Master of Sanctity","0")==0) then menu_adept=1;
@@ -1389,11 +1389,12 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 onceh=1;
                 cooldown=8000;
                 click=1;
+                location_viewer.update_garrison_log();
             }
             managing=0;
         }
         // Librarium
-        if (mouse_x>=xx+591) and (mouse_y>=yy+838) and (mouse_x<xx+704) and (mouse_y<yy+879){
+        if (menu_buttons.lib.clicked){
             menu_adept=0;
             hide_banner=1;
             if (scr_role_count("Chief "+string(obj_ini.role[100][17]),"0")==0) then menu_adept=1;
@@ -1428,11 +1429,12 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 onceh=1;
                 cooldown=8000;
                 click=1;
+                location_viewer.update_garrison_log();
             }
             managing=0;
         }
         // Armamentarium
-        if (mouse_x>=xx+707) and (mouse_y>=yy+838) and (mouse_x<xx+820) and (mouse_y<yy+879){
+        if (menu_buttons.arm.clicked){
             menu_adept=0;
             hide_banner=1;
             if (scr_role_count("Forge Master","0")==0) then menu_adept=1;
@@ -1447,7 +1449,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             managing=0;
         }
         // Recruiting
-        if (mouse_x>=xx+805) and (mouse_y>=yy+838) and (mouse_x<xx+918) and (mouse_y<yy+879){
+        if (menu_buttons.recruit.clicked){
             var geh=0,good=0;
             for(geh=1; geh<=50; geh++){
                 geh+=1;
@@ -1468,11 +1470,12 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 onceh=1;
                 cooldown=8000;
                 click=1;
+                location_viewer.update_garrison_log();
             }
             managing=0;
         }
         // Master of the Fleet
-        if (mouse_x>=xx+939) and (mouse_y>=yy+838) and (mouse_x<xx+1052) and (mouse_y<yy+879){
+        if (menu_buttons.fleet.clicked){
             menu_adept=0;
             hide_banner=1;
             var geh=0,good=0;
@@ -1531,7 +1534,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     temp[42]=string(d);
                 }
                 man_max=m;
-                man_current=1;
+                man_current=0;
             }
             if (menu==16) and (onceh==0){
                 menu=0;
@@ -1542,7 +1545,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             managing=0;
         }
         // Diplomacy
-        if (mouse_x>=xx+1131) and (mouse_y>=yy+838) and (mouse_x<xx+1273) and (mouse_y<yy+879){
+        if (menu_buttons.diplo.clicked){
             if (menu!=20) and (onceh==0){
                 menu=20;
                 onceh=1;
@@ -1556,11 +1559,12 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 cooldown=8000;
                 click=1;
                 hide_banner=0;
+                location_viewer.update_garrison_log();
             }
             managing=0;
         }
         // Event Log
-        if (scr_hit(xx+1275,yy+838,xx+1417,yy+879)=true){
+        if (menu_buttons.event.clicked){
             if (menu!=17) and (onceh==0){
                 menu=17;
                 onceh=1;
@@ -1580,8 +1584,11 @@ if (action_if_number(obj_saveload, 0, 0) &&
             managing=0;
         }
         // End Turn
-        if (mouse_x>=xx+1420) and (mouse_y>=yy+837) and (mouse_x<xx+1562) and (mouse_y<yy+877){
+        if (menu_buttons.end_turn.clicked){
             if (menu==0) and (cooldown<=0){
+                if (location_viewer.hide_sequence==0){
+                    location_viewer.hide_sequence++;
+                }
                 cooldown=8;
                 menu=0;
 
@@ -1652,11 +1659,12 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 hide_banner=0;
             }
             managing=0;
-            with(obj_ini){
+            /*with(obj_ini){
                 for (var i=0;i<11;i++){
                     scr_company_order(i);
                 }
-            }
+            }*/
+            location_viewer.update_garrison_log();
         }
     }
     if (zoomed==0) and (menu==40) and (cooldown<=0){
@@ -1672,85 +1680,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
             cooldown=8000;
         }
     }
-    // Main management screen
-    if (zoomed==0) and (menu==1) and (managing==0) and (cooldown<=0) and (diplomacy==0){
-        managing=0;
-        unit_profile=false;
-        view_squad=false;
-        xx=xx+0;
-        yy=yy+0;
-        var click_positions_company=[
-            [xx+40,yy+224,xx+152,yy+256+64],// 1st
-            [xx+152,yy+224,xx+264,yy+256+64],// 2nd
-            [xx+264,yy+224,xx+376,yy+256+64],// 3rd
-            [xx+376,yy+224,xx+488,yy+256+64],// 4th
-            [xx+488,yy+224,xx+600,yy+256+64],// 5th
-            [xx+40,yy+224,xx+152,yy+256+64],// 6th
-            [xx+152,yy+224,xx+264,yy+256+64],// 7th
-            [xx+264,yy+224,xx+376,yy+256+64],// 8th
-            [xx+376,yy+224,xx+488,yy+256+64],// 9th
-            [xx+488,yy+224,xx+600,yy+256+64],// 10th
-            [xx+248,yy+64,xx+392,yy+80+64],// HQ
-            [xx+136,yy+64,xx+248,yy+80+64], // Apoth
-            [xx+392,yy+64,xx+504,yy+80+144],// Librar
-            [xx+136,yy+144,xx+248,yy+160+64],// Reclus
-            [xx+248,yy+144,xx+392,yy+160+64],// Armoury
-        ]
-        xx+=16;
-        for (var i=0;i<array_length(click_positions_company);i++){
-            var pos = click_positions_company[i]
-            if (point_in_rectangle(mouse_x, mouse_y, pos[0], pos[1], pos[2], pos[3])){
-                managing = i+1;
-                cooldown=8000;
-            // Resets selections for next turn
-                man_size=0;
-                selecting_location="";
-                selecting_types="";
-                selecting_ship=0;
-                selecting_planet=0;
-                sel_uid=0;
-                for(var i=0; i<501; i++){
-                    man[i]="";
-                    ide[i]=0;
-                    man_sel[i]=0;
-                    ma_lid[i]=0;
-                    ma_wid[i]=0;
-                    ma_race[i]=0;
-                    ma_loc[i]="";
-                    ma_name[i]="";
-                    ma_role[i]="";
-                    ma_wep1[i]="";
-                    ma_wep2[i]="";
-                    ma_armour[i]="";
-                    ma_health[i]=100;
-                    ma_chaos[i]=0;
-                    ma_exp[i]=0;
-                    ma_promote[i]=0;
-                    sh_ide[i]=0;
-                    sh_uid[i]=0;
-                    sh_name[i]="";
-                    sh_class[i]="";
-                    sh_loc[i]="";
-                    sh_hp[i]="";
-                    sh_cargo[i]=0;
-                    sh_cargo_max[i]="";
-                    squad[i]=0;
-                }
-                alll=0;              
-                cooldown=10;
-                sel_loading=0;
-                unload=0;
-                alarm[6]=7;
-                if (managing<=10){
-                    company_data = new scr_company_struct(managing);
-                } else if (managing>10) then scr_special_view(managing){
-                    scr_special_view(managing);
-                    company_data={};
-                }
-                view_squad=false;               
-            }
-        }
-    }
+
     if (zoomed==0) and (menu==1) and (managing>0) and (cooldown<=0){
         var onceh=0;
         xx=xx+0;
@@ -1826,7 +1756,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
         }
     }
     // This is the back button at LOADING TO SHIPS
-    if (zoomed==0) and (menu==30) and (managing>0) and (cooldown<=0){
+    if (zoomed==0) and (menu==30) and (managing>0||managing==-1) and (cooldown<=0){
         xx=xx+0;
         yy=yy+0;
 
@@ -1837,10 +1767,6 @@ if (action_if_number(obj_saveload, 0, 0) &&
     }
     // Selecting individual marines
     if (menu=1) and (managing>0) || (managing<0) and (!view_squad || !company_report){
-        var company=managing;
-        if (company>10){
-            company=0;
-        }
         var unit;                 
         var eventing=false, bb="";
         xx=__view_get( e__VW.XView, 0 )+0;
@@ -1862,646 +1788,18 @@ if (action_if_number(obj_saveload, 0, 0) &&
                     selecting_types="";
                 }
             } 
-            // This clicks on the squad_sel button
-            yy+=77;
-            sel=top;
-            for(var i=0; i<min(man_max,man_see); i++){
-                while (man[sel]=="hide") and (sel<500){sel++;}
-                if point_in_rectangle(mouse_x,mouse_y,xx+25,yy+64,xx+25+8,yy+85){
-                    if (squad_sel==0) and (squad[sel]!=0){
-                        squad_sel=squad[sel];
-                        cooldown=8;
-                    }
-                }
-                yy+=21;
-                sel++;
-                if (sel==501) then break
-            }
 
         }
         // This is the 'select all of type' buttons
-        sel=1;
+        sel=0;
         yy=__view_get( e__VW.YView, 0 )+77;
-        if (sel_all!=""){
-            // repeat(min(man_max,man_see)){
-            var selection =false;
-            for(var i=0; i<man_max; i++){
-                while (man[i]=="hide")and (i<500){i++;}
-                if (man_sel[i]==1){
-                    selecting_location=ma_loc[sel];
-                    selecting_ship=ma_lid[sel];
-                    selecting_planet=ma_wid[sel];
-                    selection=true;
-                    break;
-                }
-            }                
-            if (!selection){
-                if (sel_all!="Command") and (sel_all!="man") and (sel_all!="vehicle"){
-                     scr_load_decide_loc("unit role",sel_all,false);
-                     scr_load_decide_loc("unit role",sel_all,true);
-                } else {
-                    switch(sel_all){
-                        case "man":
-                            scr_load_decide_loc("man","man",false);
-                            break;
-                        case "vehicle":
-                            scr_load_decide_loc("vehicle","man",true);
-                            break;
-                        case "Command":
-                            scr_load_decide_loc("Command","man",false);
-                            break;                                                
-                    }
-                }
-            }
-            var onceh;
-            var select = false;
-            var skip=false;
-            for(var i=0; i<man_max; i++){
-                select=false;
-                skip=false;
-                while (man[sel]=="hide" && sel<500){sel++;}
-                if (man[sel]=="man"){
-                    unit=obj_ini.TTRPG[company][ide[sel]];
-                    if (unit.assignment()!="none" || array_contains(["Terra","Lost","Mechanicus Vessel"],ma_loc[sel])){
-                        skip=true;
-                    }
-                }
-                if (fest_repeats>0){// Prevent selecting marines that are in an event
-                    if (fest_planet==0) and (fest_sid>0) and (ma_lid[sel]==fest_sid){skip=true;}
-                    if (fest_planet==1) and (fest_wid>0) and (ma_wid[sel]==fest_wid) and (ma_loc[sel]==fest_star){skip=true;}
-                }
-
-                if (selecting_location!="")
-                and ((ma_loc[sel]!=selecting_location)
-                or (ma_wid[sel]!=selecting_planet))
-                or ((selecting_ship>0) and (ma_lid[sel]==0)){skip=true;}  
-
-                if (ma_god[sel]>=10){skip=true;}
-                                             
-                if (skip){
-                    if (sel<500){
-                        sel++;
-                        continue;
-                    } else{
-                        break;
-                    }
-                }
-                eventing=false;
-                selection=false;
-                // Selects all men of type
-                    
-                if (ma_role[sel]==sel_all){
-                    select=true
-                }else if (sel_all=="man" && man[sel]=="man"){
-                    select=true
-                }else if (sel_all=="vehicle" && man[sel]=="vehicle"){
-                    select=true
-                }else if (sel_all=="Command" && man[sel]=="man"){
-                    var is_command=0;
-                    if (managing>0) and (managing<=10){
-                        if (unit.IsSpecialist("command")){
-                            select=true
-                        }else if (unit.squad!="none"){
-                            if (obj_ini.squads[unit.squad].type=="command_squad"){
-                                select=true
-                            }
-                        }
-                    }
-                }
-                if (select){
-                    if (man_sel[sel]==0){
-                        man_sel[sel]=1;
-                        man_size+=scr_unit_size(ma_armour[sel],ma_role[sel],true);
-                        onceh=1;
-                        selection=true;
-                    }else{
-                        man_sel[sel]=0;
-                        man_size-=scr_unit_size(ma_armour[sel],ma_role[sel],true);
-                    }
-                }
-                if (selection){
-                    if (selecting_location==""){
-                        selecting_location=ma_loc[sel];
-                        selecting_ship=ma_lid[sel];
-                        selecting_planet=ma_wid[sel];
-                        if (ma_wid[sel]==0) and (ma_lid[sel]>0){
-                            sel_loading=1;
-                            //selecting_location=obj_ini.ship_location[ma_lid[sel]];
-                        }
-                    }
-                }
-                yy+=20;
-                sel++;
-                if (sel==500) then break;
-            }
-            sel_all="";
-        }
         sel=top;
         yy=__view_get( e__VW.YView, 0 )+77;
         var unit;
-        for(var i=0; i<min(man_max,man_see); i++){
-            while (man[sel]=="hide") and (sel<500){sel++;}
-            eventing=false;
-
-            // This is the actual individual click right here
-            if (point_in_rectangle(mouse_x,mouse_y,xx+25+8,yy+64,xx+974,yy+85) and (cooldown<=0)) 
-            or ((squad[sel]=squad_sel) and (squad_sel!=0)){
-                var onceh=0,dib=0;
-                stop=0;
-
-                eventing=false;
-                // Prevent selecting marines that are in an event
-                if (fest_repeats>0){
-                    if (fest_planet==0) and (fest_sid>0) and (ma_lid[sel]==fest_sid){eventing=true;}
-                    if (fest_planet==1) and (fest_wid>0) and (ma_wid[sel]==fest_wid) and (ma_loc[sel]==fest_star){eventing=true;}
-                }
-                // Register double click
-                if (ma_god[sel]<10) and (ma_loc[sel]!="Terra") and (ma_loc[sel]!="Mechanicus Vessel") and (ma_loc[sel]!="Lost") and (eventing==false){
-                    if (double_click>5) and (sel==double_was) then dib=1;
-                }
-
-                if ((man_sel[sel]==0) and (onceh==0) and (ma_god[sel]<10) and (ma_loc[sel]!="Terra") 
-                and (ma_loc[sel]!="Mechanicus Vessel") and (ma_loc[sel]!="Lost") and (eventing==false)) or (dib==1){
-                    if (selecting_location=="") and ((man[sel]=="man") or (man[sel]=="vehicle")){
-                        selecting_location=ma_loc[sel];
-                        selecting_ship=ma_lid[sel];
-                        selecting_planet=ma_wid[sel];// sel_uid=ma_uid[sel];
-                        if (ma_loc[sel]!=selecting_location) and (selecting_planet!=ma_wid[sel])then stop=1;
-                    }
-
-                    if (selecting_location!="")
-                        and (
-                            (man[sel]=="man") 
-                            or (man[sel]=="vehicle")
-                        )
-                        and (ma_loc[sel]!=selecting_location)
-                        and (selecting_planet!=ma_wid[sel])then stop=1;
-
-                    if ((man[sel]=="man") or (man[sel]=="vehicle")) and (ma_lid[sel]!=sel_loading) and (sel_loading!=0) then stop=1;
-
-                    // Continue with double click
-                    if (dib==1) and (stop!=1){
-                        for(var bi=1; bi<=499; bi++){
-                            if (man_sel[bi]==0) and (ma_god[bi]<10) and (ma_loc[bi]!="Terra") 
-                            and (ma_loc[bi]!="Mechanicus Vessel") and (ma_loc[bi]!="Lost"){
-                                if (ma_loc[bi]==selecting_location) and (selecting_planet==ma_wid[bi]) and (ma_role[bi]==ma_role[double_was]) and (bi!=double_was) and (man[sel]=="vehicle"){
-                                    man_sel[bi]=1;
-
-                                    if (man[bi]=="man") then man_size+=scr_unit_size(ma_armour[bi],ma_role[bi],true);
-                                    if (man[bi]=="vehicle") then man_size+=scr_unit_size("",ma_role[bi],true);
-                                }
-                            }
-                        }
-                        double_was=0;
-                        cooldown=8;
-                        click2=1;
-                        stop=1;
-                        exit;
-                    }
-                    cooldown=8;
-                    click2=1;
-                    double_click+=12;
-                    double_was=sel;
-
-                    if (stop!=1){
-                        onceh=1;
-                        man_sel[sel]=1;
-                        if (string_count("%!@",selecting_types)==0){
-                            if (man[sel]=="man") then selecting_types+=string(ma_role[sel]);
-                            if (man[sel]=="vehicle") then selecting_types+=string(ma_role[sel]);
-                        }
-                        // Check for location here
-                        if (man[sel]=="man") and (ma_lid[sel]>0) then sel_loading=ma_lid[sel];
-                        if (man[sel]=="vehicle") and (ma_lid[sel]>0) then sel_loading=ma_lid[sel];
-
-                        if (man[sel]=="man") then man_size+=scr_unit_size(ma_armour[sel],ma_role[sel],true);
-                        if (man[sel]=="vehicle") then man_size+=scr_unit_size("",ma_role[sel],true);
-                    }
-                }
-                if (man_sel[sel]==1) and (onceh==0){
-                    onceh=1;
-                    man_sel[sel]=0;
-                    cooldown=8;
-                    click2=1;
-                    if (string_count("%!@",selecting_types)==0){
-                        if (man[sel]=="man") and (string_count(ma_role[sel],selecting_types)>0) then selecting_types=string_replace(selecting_types,ma_role[sel],"");
-                        if (man[sel]=="vehicle") and (string_count(ma_role[sel],selecting_types)>0) then selecting_types=string_replace(selecting_types,ma_role[sel],"");
-                    }
-                    if (man[sel]=="man") then man_size-=scr_unit_size(ma_armour[sel],ma_role[sel],true);
-                    if (man[sel]=="vehicle") then man_size-=scr_unit_size("",ma_role[sel],true);
-                    if (man_size==0) then sel_loading=0;
-                }
-            }
-            yy+=20;
-            sel++;
-            if (sel>=500) then break;
-        }
-        if (sel_all!="") then sel_all="";
         // End selecting
 
         xx=xx+0;
         yy=__view_get( e__VW.YView, 0 )+0;
-
-        if (!unit_profile){
-            if (mouse_x>=xx+1018) and (mouse_y>yy+805) and (mouse_x<xx+1018+141) and (mouse_y<yy+831){
-                // Load to ship
-                if (man_size>0) and (sel_loading==0) and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel"){
-                    scr_company_load(selecting_location);
-                    menu=30;
-                    cooldown=8000;
-                    top=1;
-                    exit;
-                }
-                // Unload - ask for planet confirmation
-                if (man_size>0) and (sel_loading>=1) and (!instance_exists(obj_star_select)) 
-                and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel") and (selecting_location!="Warp"){
-                    cooldown=8000;
-                    var boba=0;
-
-                    with(obj_temp3){instance_destroy();}
-                    with(obj_star){
-                        if (name==obj_ini.ship_location[obj_controller.selecting_ship]) then instance_create(x,y,obj_temp3);
-                    }
-
-                    if (instance_exists(obj_temp3)){
-                        boba=instance_nearest(x,y,obj_star);
-                        if (boba.space_hulk==1) and (boba.name==obj_ini.ship_location[obj_controller.selecting_ship]) then with(obj_temp3){instance_destroy();}
-                    }
-
-                    if (instance_exists(obj_temp3)){
-                        boba=instance_create(obj_temp3.x,obj_temp3.y,obj_star_select);
-                        boba.loading=1;
-                        // selecting location is the ship right now; get it's orbit location
-                        boba.loading_name=obj_ini.ship_location[selecting_ship];
-                        boba.depth=self.depth-50;
-                        // sel_uid=obj_ini.ship_uid[selecting_ship];
-                        scr_company_load(obj_ini.ship_location[selecting_ship]);
-                    }
-                    with(obj_temp3){instance_destroy();}
-                }
-            }
-                // Other buttons go here
-                // Change equipment
-            if (mouse_x>=xx+1018+141) and (mouse_y>yy+805) and (mouse_x<xx+1297) and (mouse_y<yy+831) 
-            and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel") and (otha==0){
-                if (man_size>0) and (instance_number(obj_popup)==0){
-                    var f=0,god=0,nuuum=0;
-                    var o_wep1="",o_wep2="",o_armour="",o_gear="",o_mobi="";
-                    var b_wep1=0,b_wep2=0,b_armour=0,b_gear=0,b_mobi=0;
-                    var vih=0, unit;
-                    var company = managing<=10 ? managing :10;
-                    var prev_role;
-                    var allow = true;
-
-                    // Need to make sure that group selected is all the same type
-                    for(var f=0; f<man_max; f++){
-                        show_debug_message("{0}",vih);
-                        // Set different vih depending on unit type
-                        if (man_sel[f]!=1) then continue;
-                        if (vih==0){
-                            if (man[f]=="man"){
-                                unit=obj_ini.TTRPG[company][ide[f]];
-                                if (unit.armour()!="Dreadnought"){
-                                    vih=1;
-                                } else {
-                                    vih=6;
-                                }
-                            } else if (man[f]=="vehicle"){
-                                if (ma_role[f]=="Land Raider") { vih=50;}
-                                else if (ma_role[f]=="Rhino") { vih=51;}
-                                else if (ma_role[f]=="Predator") {vih=52;}
-                                else if (ma_role[f]=="Land Speeder") { vih=53;}
-                                else if (ma_role[f]=="Whirlwind") {vih=54;}
-                                prev_role = ma_role[f]=="Whirlwind";
-                            }
-                        } else {
-                            if (vih==1 || vih==6){
-                                if (man[f]=="vehicle"){
-                                    allow=false;
-                                    break;
-                                } else if (man[f]=="man"){
-                                    unit=obj_ini.TTRPG[company][ide[f]];
-                                    if (unit.armour()=="Dreadnought" && vih==1){
-                                        allow=false;
-                                        break;
-                                    } else if (unit.armour()!="Dreadnought" && vih==6){
-                                        allow=false;
-                                        break;
-                                    }
-                                }
-                            } else if (vih>=50){
-                                if (man[f]=="man"){
-                                    allow=false;
-                                    break;
-                                } else if(man[f]=="vehicle"){
-                                    if (prev_role != ma_role[f]){
-                                        allow=false;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-
-                        if (vih>0){
-                            nuuum+=1;
-                            if (o_wep1=="") and (ma_wep1[f]!="") then o_wep1=ma_wep1[f];
-                            if (o_wep2=="") and (ma_wep2[f]!="") then o_wep2=ma_wep2[f];
-                            if (o_armour=="") and (ma_armour[f]!="") then o_armour=ma_armour[f];
-                            if (o_gear=="") and (ma_gear[f]!="") then o_gear=ma_gear[f];
-                            if (o_mobi=="") and (ma_mobi[f]!="") then o_mobi=ma_mobi[f];
-
-                            if (ma_wep1[f]=="") then b_wep1+=1;
-                            if (ma_wep2[f]=="") then b_wep2+=1;
-                            if (ma_armour[f]=="") then b_armour+=1;
-                            if (ma_gear[f]=="") then b_gear+=1;
-                            if (ma_mobi[f]=="") then b_mobi+=1;
-
-                            if ((o_wep1!="") and (ma_wep1[f]!=o_wep1)) or (b_wep1==1) then o_wep1="Assortment";
-                            if ((o_wep2!="") and (ma_wep2[f]!=o_wep2)) or (b_wep2==1) then o_wep2="Assortment";
-                            if ((o_armour!="") and (ma_armour[f]!=o_armour)) or (b_armour==1) then o_armour="Assortment";
-                            if ((o_gear!="") and (ma_gear[f]!=o_gear)) or (b_gear==1) then o_gear="Assortment";
-                            if ((o_mobi!="") and (ma_mobi[f]!=o_mobi)) or (b_mobi==1) then o_mobi="Assortment";
-                        }
-                    }
-
-                    if (b_wep1==nuuum) then o_wep1="";
-                    if (b_wep2==nuuum) then o_wep2="";
-                    if (b_armour==nuuum) then o_armour="";
-                    if (b_gear==nuuum) then o_gear="";
-                    if (b_mobi==nuuum) then o_mobi="";
-
-                    if (vih>0 && man_size>0 && allow){
-show_debug_message("{0}",vih);
-                        var pip=instance_create(0,0,obj_popup);
-                        pip.type=6;
-                        pip.o_wep1=o_wep1;
-                        pip.o_wep2=o_wep2;
-                        pip.o_armour=o_armour;
-                        pip.o_gear=o_gear;
-                        pip.n_wep1=o_wep1;
-                        pip.n_wep2=o_wep2;
-                        pip.n_armour=o_armour;
-                        pip.n_gear=o_gear;
-                        pip.o_mobi=o_mobi;
-                        pip.n_mobi=o_mobi;
-                        pip.company=managing;
-                        pip.units=nuuum;
-
-                        //Forwards vih selection to the vehicle_equipment variable used in mouse_50 obj_popup and weapons_equip script
-                        pip.vehicle_equipment=vih;
-
-                        if (o_wep1!="") and (string_count("&",o_wep1)>0) then pip.a_wep1=clean_tags(o_wep1);
-                        if (o_wep2!="") and (string_count("&",o_wep2)>0) then pip.a_wep2=clean_tags(o_wep2);
-                        if (o_armour!="") and (string_count("&",o_armour)>0) then pip.a_armour=clean_tags(o_armour);
-                        if (o_gear!="") and (string_count("&",o_gear)>0) then pip.a_gear=clean_tags(o_gear);
-                        if (o_mobi!="") and (string_count("&",o_mobi)>0) then pip.a_mobi=clean_tags(o_mobi);
-                    }
-                }
-            }
-                // Reset equipment
-            if (mouse_x>=xx+1018+141) and (mouse_y>yy+805-26) and (mouse_x<xx+1297) and (mouse_y<yy+831-26) 
-            and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel") and (man_size>0){
-                var god=0,nuuum=0;
-                o_wep1="";
-                o_wep2="";
-                o_armour="";
-                o_gear="";
-                o_mobi="";
-                b_wep1=0;
-                b_wep2=0;
-                b_armour=0;
-                b_gear=0;
-                b_mobi=0;
-
-                for(var f=1; f<=man_max; f++){
-                    // If come across a man, set vih to 1
-                    if (man[f]="man") and (man_sel[f]=1) then nuuum+=1;
-                }
-
-                var pip=instance_create(0,0,obj_popup);
-                pip.type=6;
-                pip.o_wep1="Assortment";
-                pip.o_wep2="Assortment";
-                pip.o_armour="Assortment";
-                pip.o_gear="Assortment";
-                pip.o_mobi="Assortment";
-                pip.n_wep1="Assortment";
-                pip.n_wep2="Assortment";
-                pip.n_armour="Assortment";
-                pip.n_gear="Assortment";
-                pip.n_mobi="Assortment";
-                pip.company=managing;
-                pip.units=nuuum;
-                pip.alarm[1]=1;
-            }
-                // Promote
-            if (mouse_x>=xx+1297) and (mouse_y>yy+805) and (mouse_x<xx+1436) and (mouse_y<yy+831) 
-            and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel") and (man_size>0){
-                if (sel_promoting==1) and (instance_number(obj_popup)==0){
-                    var pip=instance_create(0,0,obj_popup);
-                    pip.type=5;
-                    pip.company=managing;
-
-                    var god=0,nuuum=0;
-                    for(var f=1; f<=man_max; f++){
-                        if ((ma_promote[f]>=1 || is_specialist(ma_role[f], "rank_and_file")  || is_specialist(ma_role[f], "squad_leaders")) && man_sel[f]==1){
-                            nuuum+=1;
-                            if (pip.min_exp==0) then pip.min_exp=ma_exp[f];
-                            pip.min_exp=min(ma_exp[f],pip.min_exp);
-                        }
-                        if (god==0) and (ma_promote[f]>=1) and (man_sel[f]==1){
-                            god=1;
-                            pip.unit_role=ma_role[f];
-                        }
-                    }
-                    if (nuuum>1) then pip.unit_role="Marines";
-                    pip.units=nuuum;
-                }
-            }
-                // Jail
-            if (mouse_x>=xx+1438) and (mouse_y>=yy+803) and (mouse_x<xx+1578) and (mouse_y<yy+831) and (man_size>0){
-                for(var f=1; f<=man_max; f++){
-                    if (man[f]=="man") and (man_sel[f]==1) and (ma_loc[f]!="Terra") and (ma_loc[f]!="Mechanicus Vessel"){
-                        if (ma_god[f]<10) and (managing<=10){
-                            ma_god[f]+=10;
-                            obj_ini.god[managing,ide[f]]+=10;
-                        }
-                        if (ma_god[f]<10) and (managing>10) and (managing<20){
-                            ma_god[f]+=10;
-                            obj_ini.god[0,ide[f]]+=10;
-                        }
-                    }
-                }
-                alll=0;
-                if (managing<=10) then scr_company_view(managing);
-                if (managing>20) then scr_company_view(managing);
-                if (managing>10) and (managing<=20) then scr_special_view(managing);
-                cooldown=8000;
-                sel_loading=0;
-                unload=0;
-                alarm[6]=7;
-            }
-
-            // Add bionics to marine(s)
-            if (scr_hit(xx+1300+141,yy+779,xx+1436+141,yy+801)==true) and (man_size>0) and (cooldown<=0){
-                var bionics_before,bionics_after,cah;
-                cooldown=8000;
-                cah=managing;
-                if (cah>10) then cah=0;
-                bionics_before=scr_item_count("Bionics");
-                bionics_after=bionics_before;
-                if (bionics_before>0) then for(var p=1; p<=500; p++){
-                    if (man_sel[p]==1) and (man[p]=="man") and (bionics_after>0) and (obj_ini.TTRPG[cah][ide[p]].bionics<10) 
-                    and (obj_ini.loc[cah][ide[p]]!="Terra") and (obj_ini.loc[cah][ide[p]]!="Mechanicus Vessel"){
-                        if (string_count("Dread",ma_armour[p])=0){
-					          obj_ini.TTRPG[cah][ide[p]].add_bionics();
-                              bionics_after--;
-                            if (ma_promote[p]==10) then ma_promote[p]=0;
-                        }
-                    }
-                    if (bionics_before!=bionics_after){
-                        click=1;
-                    }
-                }
-            }
-                // Set boarders
-            if (scr_hit(xx+1018,yy+779,xx+1018+141,yy+801)==true) and (man_size>0) and (cooldown<=0){
-                var cah=managing, unit;
-                cooldown=8000;
-                if (cah>10) then cah=0;
-                for(var p=1; p<=500; p++){
-                    if (man_sel[p]==1) and (man[p]=="man") and (obj_ini.lid[cah][ide[p]]>0) and (obj_ini.loc[cah][ide[p]]!="Mechanicus Vessel"){
-                        unit=obj_ini.TTRPG[cah][ide[p]];
-                        unit.is_boarder = !unit.is_boarder;
-                    }
-                }
-            }
-                // Transfer
-            if point_in_rectangle(mouse_x,mouse_y,xx+1297, yy+777, xx+1436, yy+804) and (selecting_location!="Terra") 
-            and (selecting_location!="Mechanicus Vessel") and (man_size>0){
-                if (instance_number(obj_popup)==0){
-                    var pip=instance_create(0,0,obj_popup);
-                    pip.type=5.1;
-                    pip.company=managing;
-
-                    var god=0,nuuum=0,nuuum2=0,checky=0,check_number=0;
-                    for(var f=1; f<=man_max; f++){
-                        if (god==1) then break;
-                        if (god==0) and (man_sel[f]==1) and (man[f]=="man"){
-                            god=1;
-                            pip.unit_role=ma_role[f];
-                        }
-                        if (god==0) and (man_sel[f]==1) and (man[f]=="vehicle"){
-                            god=1;
-                            pip.unit_role=ma_role[f];
-                        }
-                        if (man_sel[f]==1){
-                            if (man[f]=="man"){
-                                nuuum+=1;
-                                checky=1;
-                                if (ma_role[f]==obj_ini.role[100][7]) then checky=0;
-                                if (ma_role[f]==obj_ini.role[100][14]) then checky=0;
-                                if (ma_role[f]==obj_ini.role[100][15]) then checky=0;
-                                if (ma_role[f]==obj_ini.role[100][16]) then checky=0;
-                                if (ma_role[f]==obj_ini.role[100][17]) then checky=0;
-                                if (checky==1) then check_number+=1;
-                            }
-                            if (man[f]=="vehicle") then nuuum2+=1;
-                        }
-                    }
-                    if (nuuum>1) then pip.unit_role="Marines";
-                    if (nuuum2>1) then pip.unit_role="Vehicles";
-                    if (nuuum>0) and (nuuum2>0) then pip.unit_role="Units";
-                    pip.units=nuuum+nuuum2;
-                    if (nuuum>0) and (check_number>0){
-                        if (command_set[1]==0){
-                            cooldown=8000;
-                            with(pip){instance_destroy();}
-                        }
-                    }
-                }
-            }
-        }
-    }
-        // Selecting a ship to load
-    if (menu==30) and (managing>0){
-        xx=xx+0;
-        yy=yy+0;
-
-        var top,sel,temp1="",temp2="",temp3="",temp4="",temp5="",stop=0;
-        top=ship_current;
-        sel=top;
-
-        var wombat=0;
-        sel_uid=sh_uid[sel];
-
-        yy=yy+77;
-
-        if (cooldown<=0){
-            var unit, vehic_size;
-            for (var i=0; i<(min(ship_max,ship_see)); i++){
-                if (mouse_x>=xx+25+8) and (mouse_y>=yy+64) and (mouse_x<xx+974) and (mouse_y<yy+85) and (cooldown<=0) 
-                and (((sh_cargo[sel]+man_size)<=sh_cargo_max[sel])){
-                    var load_from_star;
-                    var sel_loc = selecting_location;
-                     with (obj_star){
-                        if (name==sel_loc){
-                            load_from_star=self;
-                        }
-                     }           
-                    var onceh=0;
-                    stop=0;
-                    var company=managing;
-                    if (company>10){company=0}
-                    for(var q=1; q<=500; q++){
-                        // Load man to ship
-                        if (man[q]=="man" && man_sel[q]==1){
-                            unit = obj_ini.TTRPG[company][ide[q]];
-                            unit.load_marine(sh_ide[sel]);
-                            ma_loc[q]=sh_name[sel];
-                            ma_lid[q]=sh_ide[sel];
-                            ma_wid[q]=0;                       
-                        }
-                        // Load vehicle to ship
-                        if (man[q]=="vehicle") and (ma_loc[q]==selecting_location) and (sh_loc[sel]==selecting_location){
-                            vehic_size =scr_unit_size("",ma_role[q],true);
-                            if ((sh_cargo[sel]+vehic_size)<=sh_cargo_max[sel]) and (man_sel[q]!=0){
-                                wombat=sel;
-                                ma_loc[q]=sh_name[sel];
-                                ma_lid[q]=sh_ide[sel];
-                                ma_wid[q]=0;
-                                veh_loc[managing,q]=sh_name[sel];
-
-                                if (managing<=10){
-                                    obj_ini.veh_lid[managing][ide[q]]=sh_ide[sel];
-                                    obj_ini.veh_wid[managing][ide[q]]=0;
-                                    obj_ini.veh_uid[managing][ide[q]]=sel_uid;
-                                }
-                                if (managing>10){
-                                    obj_ini.veh_lid[0][ide[q]]=sh_ide[sel];
-                                    obj_ini.veh_wid[0][ide[q]]=0;
-                                    obj_ini.veh_uid[0][ide[q]]=sel_uid;
-                                }
-                               obj_ini.ship_carrying[sh_ide[sel]]+=vehic_size;
-                               load_from_star.p_player[selecting_planet]-=vehic_size;
-                            }
-                        }
-                    }
-
-                    man_size=0;
-                    man_current=1;
-                    menu=1;
-                    cooldown=8;
-                    for(var k=1; k<=500; k++){man_sel[k]=0;}
-
-                }
-                yy+=20;
-                sel+=1;
-            }
-        }
-        // End selecting
-        xx=xx+0;
-        yy=yy+0;
     }
     if (menu==50) and (managing>0) and (cooldown<=0){
         if (mouse_x>=xx+217) and (mouse_y>=yy+28) and (mouse_x<xx+250) and (mouse_y<yy+59){

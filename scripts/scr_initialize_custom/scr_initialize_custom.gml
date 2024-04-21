@@ -445,8 +445,8 @@ function scr_initialize_custom() {
 	var second=100,third=100,fourth=100,fifth=100,sixth=100,seventh=100,eighth=100,ninth=100,tenth=100;
 	var assault=20,siege=0,temp1=0, intolerant=0;
 	var k, i, v;k=0;i=0;v=0;
-	var techs=20,epistolary=4,apothecary=6,codiciery=6,lexicanum=10,terminator=10,veteran=89;
-	devastator=20;
+	var techs=20,epistolary=4,apothecary=6,codiciery=6,lexicanum=10,terminator=10,veteran=89,devastator=20;
+	
 
 	whirlwind=4;
 
@@ -687,7 +687,6 @@ function scr_initialize_custom() {
 	    name[100,i]="";
 	    role[100,i]="";
 	    wep1[100,i]="";
-	    lid[100,i]=0;
 	    spe[100,i]="";
 	    wep2[100,i]="";
 	    armour[100,i]="";
@@ -706,7 +705,6 @@ function scr_initialize_custom() {
 	    role[0,i]="";
 	    wep1[0,i]="";
 	    bio[0,i]=0;
-	    lid[0,i]=0;
 	    spe[0,i]="";
 	    wep2[0,i]="";
 	    armour[0,i]="";
@@ -1788,7 +1786,6 @@ function scr_initialize_custom() {
 	    name[company,i]="";
 	    role[company,i]="";
 	    wep1[company,i]="";
-	    lid[company,i]=0;
 	    spe[company,i]="";
 	    wep2[company,i]="";
 	    armour[company,i]="";
@@ -2060,7 +2057,6 @@ function scr_initialize_custom() {
 	        name[company,i]="";
 	        role[company,i]="";
 	        wep1[company,i]="";
-	        lid[company,i]=0;
 	        spe[company,i]="";
 	        wep2[company,i]="";
 	        armour[company,i]="";
@@ -2069,7 +2065,7 @@ function scr_initialize_custom() {
 	        hp[company,i]=100;
 	        chaos[company,i]=0;
 	        experience[company,i]=0;
-	        age[company,i]=((millenium*1000)+year)-10;
+	        age[company,i]=((millenium*1000)+year)-21-irandom(6);
 	        god[company,i]=0;
 			TTRPG[company,i]= new TTRPG_stats("chapter", company,i, "blank");
 	    }

@@ -51,6 +51,7 @@ for (var i=1;i<array_length(marine_id);i++){
 if (instance_exists(obj_enunit)){
     for (var i=1;i<array_length(wep);i++){
          if (wep[i]=="") then continue;
+        weapon_data = gear_weapon_data("weapon", wep[i])
         once_only=0;
         enemy=instance_nearest(0,y,obj_enunit);
         enemy2=enemy;
@@ -64,11 +65,20 @@ if (instance_exists(obj_enunit)){
         }
 
         
-        if (range[i]>=dist) and (ammo[i]!=0||range[i]==1){
+        if (range[i]>=dist) and (ammo[i]!=0 || range[i]==1){
             if (range[i]!=1) and (engaged=0) then range_shoot="ranged";
             if ((range[i]!=floor(range[i]) || floor(range[i])=1) && engaged=1) then range_shoot="melee";
-        }        
+        }
         
+        if (range_shoot=="" && engaged=1){
+            if (is_struct(weapon_data)){
+                if (weapon_data.has_tag("flame")){
+                    att[i]/=2;
+                    range[i] = 1;
+                    range_shoot="melee";
+                }
+            }
+        }
         
         if (range_shoot="ranged") and (range[i]>=dist){// Weapon meets preliminary checks
             var ap=0;
@@ -116,7 +126,7 @@ if (instance_exists(obj_enunit)){
                     scr_shoot(i,enemy,good,"medi","ranged");
                 
                     if (good=0) and (instance_number(obj_enunit)>1){// First target does not have vehicles, cycle through objects to find one that has vehicles
-                        var x2;x2=enemy.x;
+                        var x2=enemy.x;
                         repeat(instance_number(obj_enunit)-1){
                             if (good=0){
                                 x2+=10;enemy2=instance_nearest(x2,y,obj_enunit);
@@ -158,10 +168,7 @@ if (instance_exists(obj_enunit)){
                     }
                 }
             }
-        }// end ranged
-        
-        
-        if  (range_shoot="melee") and ((range[i]=1) or (range[i]!=floor(range[i]))){// Weapon meets preliminary checks 
+        }else if  (range_shoot="melee") and ((range[i]=1) or (range[i]!=floor(range[i]))){// Weapon meets preliminary checks 
             var ap=0;
             if (apa[i]==1) then ap=1;// Determines if it is AP or not
             
@@ -181,7 +188,7 @@ if (instance_exists(obj_enunit)){
             }
             
             if (enemy.veh=0) and (enemy.medi>0) and (once_only=0){// Check for vehicles
-                var g,good,enemy2;g=0;good=0;
+                var enemy2,g=0,good=0;
                 
                 if (enemy.medi>0){
                     good=scr_target(enemy,"medi");// First target has vehicles, blow it to hell

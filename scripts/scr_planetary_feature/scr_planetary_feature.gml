@@ -294,7 +294,7 @@ function planet_feature_bool(planet, search_feature){
 
 //deletes all occurances of del_feature on planet
 function delete_features(planet, del_feature){
-	var delete_Array = search_planet_features(planet, del_feature)
+	var delete_Array = search_planet_features(planet, del_feature);
 	if (array_length(delete_Array) >0){
 		for (var d=0;d<array_length(delete_Array);d++){
 			array_delete(planet, delete_Array[d],1)
@@ -427,6 +427,6 @@ function create_starship_event(){
 	}else {
 		var planet=irandom(star.planets-1)+1;
 		array_push(star.p_feature[planet], new new_planet_feature(P_features.Starship))
-		scr_event_log("","Ancient Starship discovered on "+string(star.name)+" "+scr_roman(planet)+".");
+		scr_event_log("","Ancient Starship discovered on "+string(star.name)+" "+scr_roman(planet)+".", star.name);
 	}
 }

@@ -182,23 +182,36 @@ function scr_loyalty(argument0, argument1) {
 	                }
 	            }
 	            i=0;geh=0;good=0;
-            
+            	var unit;
 	            if (that.hurssy>0) then hurr+=that.hurssy;
             
 	            if (t>0) then repeat(4400){
 	                if (ca<=10) and (ca>=0){
 	                    ia+=1;if (ia=400){ca+=1;ia=1;if (ca=11) then ca=-5;}
 	                    if (ca>=0) and (ca<11){var geh;geh=0;
-	                        i=0;repeat(40){i+=1;if (obj_ini.lid[ca,ia]=valid[i]) and (valid[i]>0) then geh=1;}
+	                        i=0;
+	                        repeat(40){
+	                        	i+=1;
+	                        	unit = fetch_unit([ca,ia]);
+	                        	if (unit.name()=="") then continue;
+	                        	if (unit.ship_location=valid[i]) and (valid[i]>0) then geh=1;
+	                        }
 	                        if (geh=1){
-	                            if (obj_ini.role[ca,ia]="Ork Sniper") and (obj_ini.race[ca,ia]!=1){hurr+=1;sniper+=1;}
-	                            if (obj_ini.role[ca,ia]="Flash Git") and (obj_ini.race[ca,ia]!=1){hurr+=1;git+=1;}
-	                            if (obj_ini.role[ca,ia]="Ranger") and (obj_ini.race[ca,ia]!=1){hurr+=1;finder+=1;}
-	                            if (string_count("Daemon",obj_ini.wep1[ca,ia])>0){hurr+=8;demonic+=1;}
-	                            if (string_count("Daemon",obj_ini.wep2[ca,ia])>0){hurr+=8;demonic+=1;}
-	                            if (string_count("Daemon",obj_ini.armour[ca,ia])>0){hurr+=8;demonic+=1;}
-	                            if (string_count("Daemon",obj_ini.mobi[ca,ia])>0){hurr+=8;demonic+=1;}
-	                            if (string_count("Daemon",obj_ini.gear[ca,ia])>0){hurr+=8;demonic+=1;}
+	                        	unit = fetch_unit([ca,ia]);
+	                        	if (unit.name()=="") then continue;
+	                        	if (unit.base_group=="ork"){
+	                        		hurr+=1
+		                            if (unit.role()="Ork Sniper")then sniper++;
+		                            if (unit.role()="Flash Git")then gitt++
+		                        }else if (unit.role()="Ranger") and (obj_ini.race[ca,ia]!=1){hurr+=1;finder+=1;}
+		                    	var artis = unit.equipped_artifacts();
+		                    	for (var art=0;art<array_length(artis);art++){
+		                    		artifact = obj_ini.artifact_struct[artis[art]];
+		                    		if (artifact.has_tag("daemonic") || artifact.has_tag("chaos")){
+		                    			hurr+=8;
+		                    			demonic+=1;
+		                    		}
+		                    	}
 	                        }
 	                    }
 	                }

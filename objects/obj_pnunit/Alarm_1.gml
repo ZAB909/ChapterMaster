@@ -54,11 +54,13 @@ var dreaded=false, unit;
 add_data_to_stack = function(stack_index, weapon, unit_damage=false){
     if (!unit_damage==false){
         att[stack_index]+=unit_damage;
+    } else {
+        att[stack_index]+=weapon.attack;
     }
     apa[stack_index]=weapon.arp;
     range[stack_index]=weapon.range;
     wep_num[stack_index]++;
-    splash[stack_index]=weapon.spli;;
+    splash[stack_index]=weapon.spli;
     wep[stack_index]=weapon.name;
     if (obj_ncombat.started=0) then ammo[stack_index]=weapon.ammo;
 
@@ -96,13 +98,14 @@ for (g=1;g<array_length(unit_struct);g++){
             //if (marine_mobi[g]="Bike") then scr_special_weapon("Twin Linked Bolters",g,true);
 
 
-            if (marine_mobi[g]!="Bike") and (marine_mobi[g]!=""){
+            if (unit.mobility_item()!="Bike") and (unit.mobility_item()!=""){
                mobi_item=unit.get_mobility_data();
                if (is_struct(mobi_item)){
                 if( mobi_item.has_tag("jump")){
                     for (var stack_index=1;stack_index<array_length(wep);stack_index++){
                         if (wep[stack_index]==""||(wep[stack_index]=="hammer_of_wrath" && !head_role)){
                             add_data_to_stack(stack_index,unit.hammer_of_wrath());
+                            ammo[stack_index] = -1;
                             if (head_role){
                                 wep_title[stack_index]=unit.role();
                                 wep_solo[stack_index]=unit.name();
@@ -209,7 +212,7 @@ for (g=1;g<array_length(unit_struct);g++){
                     if (is_struct(weapon)){
                         for (j=1;j<=40;j++){
                             if (wep[j]==""||wep[j]==weapon.name){
-                                add_data_to_stack(open,weapon)
+                                add_data_to_stack(j,weapon);
                                 break;                             
                             }
                         }
@@ -232,19 +235,18 @@ if (dudes_num[1]=0) and (obj_ncombat.started=0){
 }
 
 
-if (men+veh=1) and (obj_ncombat.player_forces=1){
-    if (men=1) and (veh=0){
-        var i=0,h=0;
-        repeat(500){
-            unit = unit_struct[g];
-             if (!is_struct(unit))then continue;
-            if (h=0){
-                i+=1;
-                if (unit.hp()>0) and (marine_dead[i]=0){
-                    h=unit.hp();
-                    obj_ncombat.display_p1=h;
-                    obj_ncombat.display_p1n=string(marine_type[i])+" "+string(obj_ini.name[marine_co[i],marine_id[i]]);
-                }
+if (men==1) and (veh==0)and (obj_ncombat.player_forces=1){
+    var i=0,h=0;
+    repeat(500){
+        if (h=0){             
+            i+=1;
+            unit = unit_struct[i];
+            if (!is_struct(unit))then continue;                   
+            if (unit.hp()>0) and (marine_dead[i]=0){
+                h=unit.hp();
+                obj_ncombat.display_p1=h;
+                obj_ncombat.display_p1n=unit.name_role();
+                break;
             }
         }
     }

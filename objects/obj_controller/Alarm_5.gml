@@ -438,7 +438,7 @@ if (training_techmarine>0){
                 }
 
                 unit.allocate_unit_to_fresh_spawn("default");
-                // TODO Probably want to change this to take into account fleet type chapters- also increase the man_size of that area by +X
+ 
                 if (global.chapter_name!="Iron Hands") and (unit.bionics<4) then repeat(choose(1,2,3)){unit.add_bionics()}
                 if (global.chapter_name=="Iron Hands") and (unit.bionics<7) then repeat(choose(4,5,6)){unit.add_bionics()}
                 // 135 ; probably also want to increase the p_player by 1 just because
@@ -472,13 +472,13 @@ if (training_techmarine>0){
                 unit.update_role(novice_type);
 
                 // Remove from ship
-                if (obj_ini.lid[0][g1]>0){
+                if (unit.ship_location>0){
                     var man_size=scr_unit_size(obj_ini.armour[0][g1],obj_ini.role[0][g1],true);
-                    obj_ini.ship_carrying[obj_ini.lid[0][g1]]-=man_size;
+                    obj_ini.ship_carrying[unit.ship_location]-=man_size;
                 }
                 obj_ini.loc[0][g1]="Terra";
                 unit.planet_location=4;
-                obj_ini.lid[0][g1]=0;
+                unit.ship_location=0;
                 if (unit.weapon_one()!="Power Weapon"){
                     unit.update_weapon_one("");
                 }
@@ -510,36 +510,28 @@ if (obj_ini.fleet_type!=1){
 }
 
 var recruits_finished=0,recruit_first="";
-var total_recruit_length = array_length(recruit_name);
-var new_arrays = 0;
+
 var total_recruits = 0;
-for(var i=0; i<total_recruit_length; i++){
-    if (recruit_name[i]=="") then continue;
+var i=0;
+while (i<array_length(recruit_name)){
+    if (recruit_name[i]==""){
+        i++; 
+        continue;
+    };
     if  (recruit_distance[i]<=0) then recruit_training[i]-=1;
     if (recruit_training[i]<=0){
         scr_add_man(obj_ini.role[100][12],10,"Scout Armour",obj_ini.role[100][12],"",recruit_exp[i],recruit_name[i],recruit_corruption[i],false,"default","");
         if (recruit_first=="") then recruit_first=recruit_name[i];
         recruits_finished+=1;
-        recruit_name[i]="";
         recruit_training[i]=-50;
-        array_delete(recruit_name,1,i);
-        array_delete(recruit_corruption,1,i);
-        array_delete(recruit_distance,1,i);
-        array_delete(recruit_training,1,i);
-        array_delete(recruit_exp,1,i);
-        i--;
-        total_recruit_length--;
-        new_arrays++;
+        array_delete(recruit_name,i,1);
+        array_delete(recruit_corruption,i,1);
+        array_delete(recruit_distance,i,1);
+        array_delete(recruit_training,i,1);
+        array_delete(recruit_exp,i,1);
     } else {
         total_recruits++;
     }
-}
-for (i=0;i<new_arrays;i++){
-    array_push(recruit_name,"");
-    array_push(recruit_corruption,0);
-    array_push(recruit_distance,0);
-    array_push(recruit_training,0);
-    array_push(recruit_exp,0);
 }
 if (recruits_finished==1){
     scr_alert("green","recruitment",$"{obj_ini.role[100][12]} {recruit_first} has joined X Company.",0,0);
@@ -628,7 +620,7 @@ if (instance_number(obj_temp_inq)<target_navy_number) {
 					]
 				
 					var enemy_fleet_count = array_reduce(enemy_fleets, function(prev, curr) {
-						return present_fleet[prev] + present_fleet[curr]
+						return prev + present_fleet[curr]
 					})
 		            if (enemy_fleet_count == 0){
 		                good=true;
@@ -1578,7 +1570,7 @@ if (fest_scheduled>0) and (fest_repeats>0){
 // ** Income **
 if (income_controlled_planets>0){
 
-    var tithe_string = income_controlled_planets==1? $"-{income_tribute} Requisition granted by tithes from 1 planet.":"-{income_tribute} Requisition granted by tithes from {income_controlled_planets} planets.";
+    var tithe_string = income_controlled_planets==1? $"-{income_tribute} Requisition granted by tithes from 1 planet.": $"-{income_tribute} Requisition granted by tithes from {income_controlled_planets} planets.";
     scr_alert("yellow", "planet_tithe", tithe_string);
     instance_activate_object(obj_p_fleet);
 

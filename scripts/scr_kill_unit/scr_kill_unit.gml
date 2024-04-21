@@ -9,7 +9,6 @@ function scr_kill_unit(company, unit_slot){
 	obj_ini.loc[company][unit_slot]="";
 	obj_ini.name[company][unit_slot]="";
 	obj_ini.wep1[company][unit_slot]="";
-	obj_ini.lid[company][unit_slot]=0;
 	obj_ini.role[company][unit_slot]="";
 	obj_ini.wep2[company][unit_slot]="";
 	obj_ini.armour[company][unit_slot]="";
@@ -34,12 +33,12 @@ function kill_and_recover(company, unit_slot, equipment=true, gene_seed_collect=
 			"gear":"",
 		};
 		unit.alter_equipment(strip,false, true);
-	}
+	} 
 	if (gene_seed_collect && unit.base_group=="astartes"){
-        if (unit.age()<=((obj_controller.millenium*1000)+obj_controller.year)-10) and (obj_ini.zygote==0) and (string_count("Doom",obj_ini.strin2)==0) then obj_controller.gene_seed+=1;
-        if (unit.age()<=((obj_controller.millenium*1000)+obj_controller.year)-5) and (string_count("Doom",obj_ini.strin2)==0) then obj_controller.gene_seed+=1;		
+        if (unit.age() > 30) and (obj_ini.zygote==0) and (string_count("Doom",obj_ini.strin2)==0) then obj_controller.gene_seed+=1;
+        if (unit.age() > 50) and (string_count("Doom",obj_ini.strin2)==0) then obj_controller.gene_seed+=1;		
 	}
-    if (obj_ini.race[company][unit_slot]=1){
+    if (obj_ini.race[company][unit_slot]==1){
         if(is_specialist(obj_ini.role[company][unit_slot])){
             obj_controller.command-=1;
         } else{
