@@ -63,3 +63,6 @@ if (instance_exists(bib)){
 instance_activate_object(obj_en_fleet);
 
 alarm[1]=1;
+
+bomb_window = {};
+ship_buttons = [];

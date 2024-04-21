@@ -8,8 +8,9 @@ if (__b__){
 
     with(obj_star_select){instance_deactivate_object(id);}
 
-    var why=0,onceh=0;
+    var why=0,onceh=0, ship=0;
     if (obj_controller.cooldown<=0) then {
+        var shipIndex = 0; // Add this line to keep track of the current ship index
         for (var i = 1; i <= 9; i += 4) {
             for (var j = 0; j < 4; j++) {
                 if (obj_ini.ship[i + j] != "") {
@@ -19,7 +20,7 @@ if (__b__){
                     var rightX = xx + j * 117 + 161;
                     var bottomY = yy + 122 + why;
 
-                    if point_in_rectangle(mouse_x, mouse_y, leftX, topY, rightX, bottomY){
+                    if point_in_rectangle(mouse_x, mouse_y, ship_buttons[shipIndex][0], ship_buttons[shipIndex][1], ship_buttons[shipIndex][2], ship_buttons[shipIndex][3]){
                         if (onceh == 0) {
                             onceh = 1;
                             obj_controller.cooldown = 8;
@@ -27,6 +28,7 @@ if (__b__){
                             ships_selected += (ship_all[i + j] == 1) ? 1 : -1;
                         }
                     }
+                    shipIndex++; // Increment the ship index after each iteration
                 }
             }
             why += 18;
@@ -164,12 +166,12 @@ if (__b__){
     }
 
     if (obj_controller.cooldown<=0){
-        if (mouse_x>=xx+456) and (mouse_y>=yy+378) and (mouse_x<xx+519) and (mouse_y<yy+403){
+        if point_in_rectangle(mouse_x, mouse_y, cancel_button[0], cancel_button[1], cancel_button[2], cancel_button[3]) || !point_in_rectangle(mouse_x, mouse_y, bomb_window.x1, bomb_window.y1, bomb_window.x2, bomb_window.y2){
             obj_controller.cooldown=8;
             with(obj_bomb_select){instance_destroy();}
             instance_destroy();
         }
-        if (mouse_x>=xx+76) and (mouse_y>=yy+82) and (mouse_x<xx+102) and (mouse_y<yy+95){
+        if point_in_rectangle(mouse_x, mouse_y, sel_all_button[0], sel_all_button[1], sel_all_button[2], sel_all_button[3]){
             onceh=0;
             if (all_sel=0) and (onceh=0){
                 for(var i=1; i<=30; i++){
@@ -196,7 +198,7 @@ if (__b__){
     
     // TODO Need to change max_ships to something more meaningful to make sure that SOMETHING is dropping
     if (obj_controller.cooldown<=0){
-        if (ships_selected>0) and (mouse_x>=xx+310) and (mouse_y>=yy+378) and (mouse_x<xx+444) and (mouse_y<yy+403){
+        if (ships_selected>0) and point_in_rectangle(mouse_x, mouse_y, bombard_button[0], bombard_button[1], bombard_button[2], bombard_button[3]){
             obj_controller.cooldown=30;
             
             var str=0;
