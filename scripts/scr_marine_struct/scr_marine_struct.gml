@@ -1630,14 +1630,18 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			var carry_string = "";
 			var ranged_hands_limit = 2;
 
-			if (weapon_one() != "" || weapon_two() != ""){
-				carry_string += $"    =Carrying=#";
-				var wep_one_carry = get_weapon_one_data("ranged_hands");
-				var wep_two_carry = get_weapon_two_data("ranged_hands");
+			var wep_one_carry = get_weapon_one_data("ranged_hands");
+			if (wep_one_carry != 0){
 				ranged_carrying += wep_one_carry;
 				carry_string += $"{weapon_one()}: {wep_one_carry}#";
+			}
+			var wep_two_carry = get_weapon_two_data("ranged_hands");
+			if (wep_two_carry != 0){
 				ranged_carrying += wep_two_carry;
 				carry_string += $"{weapon_two()}: {wep_two_carry}#";
+			}
+			if ranged_carrying != 0{
+				carry_string = $"    =Carrying=#" + carry_string;
 			}
 
 			carry_string += $"    =Maximum=#"
@@ -1693,7 +1697,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			//default to fists
 			if (!is_struct(_wep1)) then _wep1 = new equipment_struct({},"");
 			if (!is_struct(_wep2)) then _wep2 = new equipment_struct({},"");
-			carry_data[0] = _wep1.ranged_hands+_wep2.ranged_hands;
 			if (allegiance==global.chapter_name){
 				_wep1.owner_data("chapter");
 				_wep2.owner_data("chapter");
@@ -1794,14 +1797,18 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			var carry_string = "";
 			var melee_hands_limit = 2;
 
-			if (weapon_one() != "" || weapon_two() != ""){
-				carry_string += $"    =Carrying=#";
-				var wep_one_carry = get_weapon_one_data("melee_hands");
-				var wep_two_carry = get_weapon_two_data("melee_hands");
+			var wep_one_carry = get_weapon_one_data("melee_hands");
+			if (wep_one_carry != 0){
 				melee_carrying += wep_one_carry;
 				carry_string += $"{weapon_one()}: {wep_one_carry}#";
+			}
+			var wep_two_carry = get_weapon_two_data("melee_hands");
+			if (wep_two_carry != 0){
 				melee_carrying += wep_two_carry;
 				carry_string += $"{weapon_two()}: {wep_two_carry}#";
+			}
+			if melee_carrying != 0{
+				carry_string = $"    =Carrying=#" + carry_string;
 			}
 
 			carry_string += $"    =Maximum=#"
@@ -1910,7 +1917,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			};
 			explanation_string = basic_wep_string + explanation_string
 
-			melee_carrying[0] =_wep1.melee_hands+_wep2.melee_hands;
 			if (melee_carrying[0]>melee_carrying[1]){
 				encumbered_melee=true;	
 				melee_att*=0.6;
