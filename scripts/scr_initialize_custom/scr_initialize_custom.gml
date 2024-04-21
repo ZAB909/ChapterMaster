@@ -2268,7 +2268,9 @@ function scr_initialize_custom() {
 			obj_ini.artifact[last_artifact] = "Power Axe";
 			arti.bearer = [0, 1];
 			obj_ini.artifact_identified[last_artifact] = 0;
-			chapter_master_equip.wep1 = last_artifact;
+			chapter_master_equip.wep1=last_artifact;
+			chapter_master_equip.gear="Iron Halo";
+			chapter_master_equip.mobi="Jump Pack";
 			break;
 		case "Iron Hands":
 			chapter_master_equip.wep1="Power Axe";
