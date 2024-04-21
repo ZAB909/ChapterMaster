@@ -3,7 +3,7 @@
   "resourceVersion": "1.0",
   "name": "spr_dante",
   "bbox_bottom": 271,
-  "bbox_left": 0,
+  "bbox_left": 8,
   "bbox_right": 159,
   "bbox_top": 45,
   "bboxMode": 0,
@@ -21,8 +21,7 @@
   "height": 272,
   "HTile": false,
   "layers": [
-    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"3528030b-d297-4ef9-84cb-8aa97f9a9130","blendMode":0,"displayName":"pasteLayer","isLocked":false,"opacity":100.0,"visible":true,},
-    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"07067573-1974-49f9-af68-e5b3a4dabf07","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"0c2b57a6-a589-46ae-8418-26b25b2fd802","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": null,
   "origin": 9,
