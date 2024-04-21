@@ -1179,7 +1179,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					}
 				}
 			}
-			if (gene_seed_mutations[$ "voice"] == 0){
+			if (gene_seed_mutations[$ "voice"] == 1){
 				charisma-=2;
 			}
 			if (instance_exists(obj_controller)){
