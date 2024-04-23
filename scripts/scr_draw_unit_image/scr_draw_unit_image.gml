@@ -652,22 +652,24 @@ function scr_draw_unit_image(x_draw, y_draw){
                     specific_armour_sprite = spr_terminator3_colors;
                 }
 
-                if (armor_type==ArmorType.Normal && armour_bypass=false){
-                    if (ui_specialist==5){
+                if (armor_type==ArmorType.Normal){
+                    if (ui_specialist==5 && armour_bypass==false){
                         if (array_contains(traits, "tinkerer")){
                             //specific_armour_sprite="none";
                             armour_sprite =spr_techmarine_core;
                             specific_armour_sprite = spr_techmarine_core;
                         }
                     }
+                    if (arm>0){
+                        draw_sprite(spr_servo_arms,0,xx+x_draw,yy+y_draw);
+                        /*if (arm<10){
+                            draw_sprite(spr_pack_arm,arm,xx+x_draw,yy+y_draw)
+                        } else if (arm>=10) then draw_sprite(spr_pack_arms,arm-10,xx+x_draw,yy+y_draw);  */                  
+                    }
+                    if (halo==1){ // Draw the Iron Halo
+                        draw_sprite(spr_gear_halo,0,xx+x_draw,yy+y_draw);
+                    }
                 }
-
-                if (arm>0){
-                    draw_sprite(spr_servo_arms,0,xx+x_draw,yy+y_draw);
-                    /*if (arm<10){
-                        draw_sprite(spr_pack_arm,arm,xx+x_draw,yy+y_draw)
-                    } else if (arm>=10) then draw_sprite(spr_pack_arms,arm-10,xx+x_draw,yy+y_draw);  */                  
-                }          
 
                 // Draw arms
                 if (armor_type != ArmorType.Dreadnought){
@@ -765,10 +767,6 @@ function scr_draw_unit_image(x_draw, y_draw){
                         //if (obj_ini.main_color!=obj_ini.secondary_color) then draw_sprite(spr_gear_hood3,hood,xx+x_draw,yy+y_draw);
                         draw_sprite(spr_psy_hood,2,xx+x_draw,yy+y_draw);
                     } 
-                } else if (halo=1){ // Draw the Iron Halo
-                    if (armor_type==ArmorType.Normal) and (ui_specialist=14) and ((obj_ini.progenitor=5 || global.chapter_name="Blood Angels")){
-                        draw_sprite(spr_gear_halo,0,xx+x_draw,yy+y_draw);
-                    }
                 }
 
                 //Chaplain head and Terminator version
