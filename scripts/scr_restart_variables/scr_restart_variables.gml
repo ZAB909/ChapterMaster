@@ -121,7 +121,7 @@ function scr_restart_variables(saved_game) {
 			obj_restart_vars.r_wep2[i,5]="Bolt Pistol";
 	        obj_restart_vars.r_armour[i,5]="Power Armour";
 			obj_restart_vars.r_mobi[i,5]="";
-			obj_restart_vars.r_gear[i,5]="";
+			obj_restart_vars.r_gear[i,5]="Iron Halo";
         
 	        obj_restart_vars.r_race[i,6]=1;
 	        obj_restart_vars.r_role[i,6]="Dreadnought";
@@ -604,6 +604,7 @@ function scr_restart_variables(saved_game) {
 			wep1[i,5]="Power Fist";
 			wep2[i,5]="Bolt Pistol";
 			armour[i,5]="Power Armour";
+			gear[i,5]="Iron Halo";
 	        
 			race[i,6]=1;
 			role[i,6]="Dreadnought";

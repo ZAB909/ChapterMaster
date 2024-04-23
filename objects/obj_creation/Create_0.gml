@@ -680,8 +680,8 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
     wep1[i,5]="Power Fist";
     wep2[i,5]="Bolt Pistol";
     armour[i,5]="Power Armour";
+    gear[i,5]="Iron Halo";
 
-    gear[i,5]="";
     race[i,6]=1;
     role[i,6]="Dreadnought";
     wep1[i,6]="Close Combat Weapon";
