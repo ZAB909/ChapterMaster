@@ -206,7 +206,7 @@ for(var i=100; i<103; i++){
     obj_controller.r_wep2[i,5]="Bolt Pistol";
     obj_controller.r_armour[i,5]="Power Armour";
     obj_controller.r_mobi[i,5]="";
-    obj_controller.r_gear[i,5]="";
+    obj_controller.r_gear[i,5]="Iron Halo";
     
     obj_controller.r_role[i,6]="Dreadnought";
     obj_controller.r_wep1[i,6]="Close Combat Weapon";
