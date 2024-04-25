@@ -180,7 +180,7 @@ function scr_shoot(weapon_index_position, target_object, target_type, damage_dat
 
 
 	if (instance_exists(target_object)) and (owner  == eFACTION.Player){
-		show_debug_message("{0}, {1}, {2}, {3}, {4}", wep_num[weapon_index_position], wep[weapon_index_position], splash[weapon_index_position], range[weapon_index_position], att[weapon_index_position])
+		// show_debug_message("{0}, {1}, {2}, {3}, {4}", wep_num[weapon_index_position], wep[weapon_index_position], splash[weapon_index_position], range[weapon_index_position], att[weapon_index_position])
 	    var shots_fired,stop,damage_type;
     
 	    if (weapon_index_position>0){

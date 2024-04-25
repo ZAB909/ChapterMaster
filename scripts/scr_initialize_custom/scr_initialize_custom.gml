@@ -896,7 +896,7 @@ function scr_initialize_custom() {
 				[role[100][17],{"max":1,"min":0,"role":$"Company {role[100,17]}"}],
 				["type_data" , {
 					"display_data":$"Command {squad_name}",
-					"formation_options" : ["Command","terminator","veteran","assualt", "devastator", "scout", "tactical"],
+					"formation_options" : ["command","terminator","veteran","assualt", "devastator", "scout", "tactical"],
 				}]
 			],
 			"terminator_squad": [
