@@ -80,10 +80,10 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	    }
 	}
 	if (string_count("Bolt",wepp)>0) and (solod=true){flavored=1;
-	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=string(full_name)+" fires his {wepp} into the {target_name} ranks (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=string(full_name)+" fires his {wepp} into the {target_name} ranks (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=string(full_name)+" fires his {wepp} into a {target_name} but fails to kill it.";
-	    if (target.dudes_num[targeh]=1) and (casulties>0) then p1=string(full_name)+" fires his {wepp} into a {target_name}.";
+	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=string(full_name)+$" fires his {wepp} into the {target_name} ranks (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=string(full_name)+$" fires his {wepp} into the {target_name} ranks (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=string(full_name)+$" fires his {wepp} into a {target_name} but fails to kill it.";
+	    if (target.dudes_num[targeh]=1) and (casulties>0) then p1=string(full_name)+$" fires his {wepp} into a {target_name}.";
 	}
 
 
@@ -100,8 +100,8 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	        if (target.dudes_num[targeh]=1) and (casulties=1) then p1+="a {target_name} takes one of the charges.";
 	    }
 	    if (solod=true){
-	        if (target.dudes_num[targeh]=1) then p1=string(full_name)+" activates his Jump Pack and launches up into the air, and then crashes down into a {target_name}- ";
-	        if (target.dudes_num[targeh]>1) then p1=string(full_name)+" activates his Jump Pack and launches up into the air, and then crashes down into the {target_name} ranks (X{casulties} casulties)- ";
+	        if (target.dudes_num[targeh]=1) then p1=string(full_name)+$" activates his Jump Pack and launches up into the air, and then crashes down into a {target_name}- ";
+	        if (target.dudes_num[targeh]>1) then p1=string(full_name)+$" activates his Jump Pack and launches up into the air, and then crashes down into the {target_name} ranks (X{casulties} casulties)- ";
 	        if (target.dudes_num[targeh]=1) and (casulties=0) then p1+="it survives the attack.";
 	        if (target.dudes_num[targeh]>1) and (casulties=0) then p1+="all survive the attack.";
 	    }
@@ -311,14 +311,14 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	        if (number_of_shots>=20) and (number_of_shots<100) then p1=$"Several squads of Astartes take to the sky, their Jump Packs roaring and shooting flames.  Once at a suitable height they crash back down amongst the enemy- ";
 	        if (number_of_shots>=100) then p1=$"A literal wave of Astartes take to the sky, their Jump Packs roaring like one massive, angry beast.  Almost simultaneously they all crash back down, smashing their enemey- ";
         
-	        if (target.dudes_num[targeh]>1) and (casulties=0) then p1+=" they smash into the {target_name} ranks (X{casulties} casulties) but fail to kill any.";
-	        if (target.dudes_num[targeh]>1) and (casulties>0) then p1+=" they smash into the {target_name} ranks (X{casulties} casulties) and pulverize {casulties}.";
-	        if (target.dudes_num[targeh]=1) and (casulties=0) then p1+="a {target_name} survives the attack.";
-	        if (target.dudes_num[targeh]=1) and (casulties=1) then p1+="a {target_name} takes one of the charges and dies.";
+	        if (target.dudes_num[targeh]>1) and (casulties=0) then p1+=$" they smash into the {target_name} ranks (X{casulties} casulties) but fail to kill any.";
+	        if (target.dudes_num[targeh]>1) and (casulties>0) then p1+=$" they smash into the {target_name} ranks (X{casulties} casulties) and pulverize {casulties}.";
+	        if (target.dudes_num[targeh]=1) and (casulties=0) then p1+=$"a {target_name} survives the attack.";
+	        if (target.dudes_num[targeh]=1) and (casulties=1) then p1+=$"a {target_name} takes one of the charges and dies.";
 	    }
 	    if (solod=true){
-	        if (target.dudes_num[targeh]=1) then p1=string(full_name)+" activates his Jump Pack and launches up into the air, and then crashes down into a {target_name}- ";
-	        if (target.dudes_num[targeh]>1) then p1=string(full_name)+" activates his Jump Pack and launches up into the air, and then crashes down into the {target_name} ranks (X{casulties} casulties)- ";
+	        if (target.dudes_num[targeh]=1) then p1=string(full_name)+$" activates his Jump Pack and launches up into the air, and then crashes down into a {target_name}- ";
+	        if (target.dudes_num[targeh]>1) then p1=string(full_name)+$" activates his Jump Pack and launches up into the air, and then crashes down into the {target_name} ranks (X{casulties} casulties)- ";
     
 	        if (target.dudes_num[targeh]=1) and (casulties=0) then p1+="it survives the attack.";
 	        if (target.dudes_num[targeh]=1) and (casulties=1) then p1+="it is crumpled to the ground, dead instantly.";
@@ -335,10 +335,10 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {wepp} shoot bolts of energy into the {target_name}, cleansing {casulties}.";
 	}
 	else if (wepp=="Assault Cannon") and (solod=false){flavored=1;
-	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {wepp}s hum and rotate, belching out bullets and flame alike.  Explosions clap across the armour of the {target_name}.  (X{casulties} casulties)";
+	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {wepp}s hum and rotate, belching out bullets and flame alike. Explosions clap across the armour of the {target_name}.  (X{casulties} casulties)";
 	    if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {wepp}s hum and rotate, belching out bullets and flame alike. A {target_name} is ripped apart by the rounds (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {wepp}s hum and rotate, belching out bullets and flame alike .  The {target_name}s are rocked but unharmed (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {wepp}s hum and rotate, belching out bullets and flame alike.  {casulties} {target_name} are purged (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {wepp}s hum and rotate, belching out bullets and flame alike. The {target_name}s are rocked but unharmed (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {wepp}s hum and rotate, belching out bullets and flame alike. {casulties} {target_name} are purged (X{casulties} casulties).";
 	}
 	else if (string_count("Flamer",wepp)>0) and (solod=false){flavored=1;
 	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {wepp} bathe the {target_name} in holy promethium (X{casulties} casulties).";
@@ -390,7 +390,7 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	    // This needs to be worked out
 	    if (casulties=0) then p2="MELEE";
 	    if (casulties>0){
-	        p1=casulties+" {target_name} ";
+	        p1=casulties+$" {target_name} ";
 	        if (ra=1) then p2="are struck down with gun-barrels and combat knifes.";
 	        if (ra=2) then p2="are killed by your marines in hand-to-hand combat.";
 	        if (ra=3) then p2="are smashed aside by your marines.";
@@ -413,8 +413,8 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	if (wepp="Sarissa") and (solod=false){flavored=1;
 	    if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is struck by a Battle Sister's {wepp} but survives.";
 	    if (number_of_shots=1) and (casulties=1) then p1=$"A {target_name} is struck down by a Battle Sister's {wepp}.";
-	    if (number_of_shots>1) and (casulties=0) then p1=$"A Battle Sister "+choose("howls out","roars")+" and hacks at the {target_name} ranks (X{casulties} casulties) with her Sarissa.";
-	    if (number_of_shots>1) and (casulties>0) then p1=$"{number_of_shots} Battle Sisters "+choose("howl out","roar")+" as they hack away at the {target_name} ranks (X{casulties} casulties) with their Sarissas.  {casulties} are cut down.";
+	    if (number_of_shots>1) and (casulties=0) then p1=$"A Battle Sister "+choose("howls out","roars")+$" and hacks at the {target_name} ranks (X{casulties} casulties) with her Sarissa.";
+	    if (number_of_shots>1) and (casulties>0) then p1=$"{number_of_shots} Battle Sisters "+choose("howl out","roar")+$" as they hack away at the {target_name} ranks (X{casulties} casulties) with their Sarissas.  {casulties} are cut down.";
 	}
 	if (wepp="Eviscerator") and (solod=false){flavored=1;
 	    if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is struck by a {wepp} but survives.";
@@ -456,7 +456,7 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 
 
 	if (flavored=0) and (solod=false){p1=$"{number_of_shots} {wepp} {target_name}X {casulties} casulties)";}
-	if (flavored=0) and (solod=true){p1=$"("+string(full_name)+".{wepp}) {target_name} {casulties}|";}
+	if (flavored=0) and (solod=true){p1=$"("+string(full_name)+$".{wepp}) {target_name} {casulties}|";}
 
 	// if (string_length(p1+p2+p3)<8) then show_message(wepp+" is not displaying anything");
 
