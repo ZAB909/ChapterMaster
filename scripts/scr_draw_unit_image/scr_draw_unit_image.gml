@@ -1,3 +1,12 @@
+enum ShaderType {
+    Body,
+    Helmet,
+    LeftPauldron,
+    Lens,
+    Trim,
+    RightPauldron,
+    Weapon
+}
 
 function scr_draw_unit_image(x_draw, y_draw){
     draw_set_font(fnt_40k_14b);
@@ -200,80 +209,107 @@ function scr_draw_unit_image(x_draw, y_draw){
             ttrim=obj_controller.trim;
 			specialist_colours=obj_ini.col_special;
 			
+            function set_shader_color(shaderType, colorIndex) {
+                var findShader, setShader;
+                switch (shaderType) {
+                    case ShaderType.Body:
+                        setShader = obj_controller.colour_to_set1;
+                        break;
+                    case ShaderType.Helmet:
+                        setShader = obj_controller.colour_to_set2;
+                        break;
+                    case ShaderType.LeftPauldron:
+                        setShader = obj_controller.colour_to_set3;
+                        break;
+                    case ShaderType.Lens:
+                        setShader = obj_controller.colour_to_set4;
+                        break;
+                    case ShaderType.Trim:
+                        setShader = obj_controller.colour_to_set5;
+                        break;
+                    case ShaderType.RightPauldron:
+                        setShader = obj_controller.colour_to_set6;
+                        break;
+                    case ShaderType.Weapon:
+                        setShader = obj_controller.colour_to_set7;
+                        break;
+                }
+                shader_set_uniform_f(setShader, obj_controller.col_r[colorIndex]/255, obj_controller.col_g[colorIndex]/255, obj_controller.col_b[colorIndex]/255);
+            }
+			
 			// Chaplain
             if (ui_specialist=1 || (ui_specialist=3) and (global.chapter_name="Space Wolves")){
-                shader_set_uniform_f(obj_controller.colour_to_set1, 30/255,30/255,30/255);
-                shader_set_uniform_f(obj_controller.colour_to_set2, 30/255,30/255,30/255);
-                shader_set_uniform_f(obj_controller.colour_to_set5, 255/255,194/255,0/255);
-                shader_set_uniform_f(obj_controller.colour_to_set6, 30/255,30/255,30/255);
+                set_shader_color(ShaderType.Body, Colors.Black);
+                set_shader_color(ShaderType.Helmet, Colors.Black);
+                set_shader_color(ShaderType.Lens, Colors.Red);
+                set_shader_color(ShaderType.RightPauldron, Colors.Black);
                 ttrim=1;
                 specialist_colours=0;
             }
 			
 			// Apothecary
             else if (ui_specialist=3) and (global.chapter_name!="Space Wolves"){
-                shader_set_uniform_f(obj_controller.colour_to_set1, 255/255,255/255,255/255);
-                shader_set_uniform_f(obj_controller.colour_to_set2, 255/255,255/255,255/255);
-                shader_set_uniform_f(obj_controller.colour_to_set4, 200/255,0/255,0/255);
-                shader_set_uniform_f(obj_controller.colour_to_set6, 255/255,255/255,255/255);
+                set_shader_color(ShaderType.Body, Colors.White);
+                set_shader_color(ShaderType.Helmet, Colors.White);
+                set_shader_color(ShaderType.Lens, Colors.Red);
+                set_shader_color(ShaderType.RightPauldron, Colors.White);
                 ttrim=0;
                 specialist_colours=0;
             }
 			
 			// Techmarine
             else if (ui_specialist=5){
-                shader_set_uniform_f(obj_controller.colour_to_set1, 200/255,0/255,0/255);
-                shader_set_uniform_f(obj_controller.colour_to_set2, 200/255,0/255,0/255);
-                shader_set_uniform_f(obj_controller.colour_to_set4, 0/255,160/255,0/255);
-                shader_set_uniform_f(obj_controller.colour_to_set5, 200/255,200/255,200/255);
-                shader_set_uniform_f(obj_controller.colour_to_set6, 200/255,0/255,0/255);
+                set_shader_color(ShaderType.Body, Colors.Red);
+                set_shader_color(ShaderType.Helmet, Colors.Red);
+                set_shader_color(ShaderType.Lens, Colors.Green);
+                set_shader_color(ShaderType.Trim, Colors.Silver);
+                set_shader_color(ShaderType.RightPauldron, Colors.Red);
                 ttrim=1;
                 specialist_colours=0;
             }
 
 			// Librarian
             else if (ui_specialist=7){
-                shader_set_uniform_f(obj_controller.colour_to_set1, 21/255,92/255,165/255);
-                shader_set_uniform_f(obj_controller.colour_to_set2, 21/255,92/255,165/255);
-                shader_set_uniform_f(obj_controller.colour_to_set4, 0/255,228/255,255/255);
-                shader_set_uniform_f(obj_controller.colour_to_set5, 255/255,194/255,0/255);
-                shader_set_uniform_f(obj_controller.colour_to_set6, 21/255,92/255,165/255);
+                set_shader_color(ShaderType.Body, Colors.Blue);
+                set_shader_color(ShaderType.Helmet, Colors.Blue);
+                set_shader_color(ShaderType.Lens, Colors.Cyan);
+                set_shader_color(ShaderType.Trim, Colors.Gold);
+                set_shader_color(ShaderType.RightPauldron, Colors.Blue);
                 ttrim=1;
                 specialist_colours=0;
             }
 			
 			// Death Company
             else if (ui_specialist=15){
-                shader_set_uniform_f(obj_controller.colour_to_set1, 30/255,30/255,30/255);
-                shader_set_uniform_f(obj_controller.colour_to_set2, 30/255,30/255,30/255);
-                shader_set_uniform_f(obj_controller.colour_to_set3, 30/255,30/255,30/255);
-                shader_set_uniform_f(obj_controller.colour_to_set4, 124/255,0/255,0/255);// Lens
-                shader_set_uniform_f(obj_controller.colour_to_set5, 30/255,30/255,30/255);
-                shader_set_uniform_f(obj_controller.colour_to_set6, 30/255,30/255,30/255);
-                shader_set_uniform_f(obj_controller.colour_to_set7, 124/255,0/255,0/255);// Weapon
+                set_shader_color(ShaderType.Body, Colors.Black);
+                set_shader_color(ShaderType.Helmet, Colors.Black);
+                set_shader_color(ShaderType.LeftPauldron, Colors.Black);
+                set_shader_color(ShaderType.Lens, Colors.Red);
+                set_shader_color(ShaderType.Trim, Colors.Black);
+                set_shader_color(ShaderType.RightPauldron, Colors.Black);
+                set_shader_color(ShaderType.Weapon, Colors.Dark_Red);
                 ttrim=0;
                 specialist_colours=0;
-                
             }
 			
 			// Deathwing
             if (ui_coloring="bone"){
-                shader_set_uniform_f(obj_controller.colour_to_set1, 229/255,200/255,123/255);
-                shader_set_uniform_f(obj_controller.colour_to_set2, 229/255,200/255,123/255);
-                shader_set_uniform_f(obj_controller.colour_to_set3, 229/255,200/255,123/255);
-                shader_set_uniform_f(obj_controller.colour_to_set5, 0/255,59/255,20/255);
-                shader_set_uniform_f(obj_controller.colour_to_set6, 229/255,200/255,123/255);
+                set_shader_color(ShaderType.Body, Colors.Bone);
+                set_shader_color(ShaderType.Helmet, Colors.Bone);
+                set_shader_color(ShaderType.LeftPauldron, Colors.Bone);
+                set_shader_color(ShaderType.Trim, Colors.Dark_Green);
+                set_shader_color(ShaderType.RightPauldron, Colors.Bone);
                 ttrim=0;
                 specialist_colours=0;
             }
 			
 			// Blood Angels
             else if (ui_coloring="gold"){
-                shader_set_uniform_f(obj_controller.colour_to_set1, 255/255,162/255,0/255);
-                shader_set_uniform_f(obj_controller.colour_to_set2, 255/255,162/255,0/255);
-                shader_set_uniform_f(obj_controller.colour_to_set3, 255/255,162/255,0/255);
-                shader_set_uniform_f(obj_controller.colour_to_set5, 255/255,162/255,0/255);
-                shader_set_uniform_f(obj_controller.colour_to_set6, 255/255,162/255,0/255);
+                set_shader_color(ShaderType.Body, Colors.Gold);
+                set_shader_color(ShaderType.Helmet, Colors.Gold);
+                set_shader_color(ShaderType.LeftPauldron, Colors.Gold);
+                set_shader_color(ShaderType.Trim, Colors.Gold);
+                set_shader_color(ShaderType.RightPauldron, Colors.Gold);
                 ttrim=0;
                 specialist_colours=0;
             }
