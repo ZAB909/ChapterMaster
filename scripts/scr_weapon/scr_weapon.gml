@@ -197,7 +197,7 @@ global.weapons={
             "master_crafted": 10,
             "artifact": 15
         },
-        "description": "Able to be dual-wielded. A weapon most frequently seen in the hands of Chaos, this Chainaxe uses motorized chainsaw teeth to maim and tear.",
+        "description": "A weapon most frequently seen in the hands of Traitor Astartes, this Chainaxe uses motorized chainsaw teeth to maim and tear. Astartes often duel-wield them to increase frequency of attacks.",
         "melee_hands": 1,
         "ranged_hands": 0,
         "ammo": 0,
