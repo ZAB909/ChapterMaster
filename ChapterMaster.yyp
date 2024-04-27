@@ -862,6 +862,7 @@
     {"id":{"name":"scr_apothecary_ship","path":"scripts/scr_apothecary_ship/scr_apothecary_ship.yy",},},
     {"id":{"name":"scr_apothecary_ground","path":"scripts/scr_apothecary_ground/scr_apothecary_ground.yy",},},
     {"id":{"name":"scr_mission_eta","path":"scripts/scr_mission_eta/scr_mission_eta.yy",},},
+    {"id":{"name":"scr_fleet_functions","path":"scripts/scr_fleet_functions/scr_fleet_functions.yy",},},
     {"id":{"name":"NameGenerator","path":"scripts/NameGenerator/NameGenerator.yy",},},
     {"id":{"name":"scr_random_event","path":"scripts/scr_random_event/scr_random_event.yy",},},
     {"id":{"name":"scr_random_find","path":"scripts/scr_random_find/scr_random_find.yy",},},

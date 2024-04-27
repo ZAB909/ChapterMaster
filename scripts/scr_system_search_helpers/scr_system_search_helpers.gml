@@ -81,63 +81,21 @@ function star_by_name(search_name){
 	return "none";
 }
 
-
-function get_largest_player_fleet(){
-
-	var chosen_fleet = "none";
-	if instance_exists(obj_p_fleet){
-		with(obj_p_fleet){
-			if (chosen_fleet=="none"){
-				chosen_fleet=self;
-				continue;
-			}
-			if (!(capital_number==0 && chosen_fleet.capital_number==0)){
-				if (capital_number>chosen_fleet.capital_number){
-					chosen_fleet = self;
-				}
-			} else if (!(frigate_number==0 && chosen_fleet.frigate_number==0)) {
-				if (frigate_number>chosen_fleet.frigate_number){
-					chosen_fleet = self;
-				}
-			}else if (!(escort_number==0 && chosen_fleet.escort_number==0)) {
-				if (escort_number>chosen_fleet.escort_number){
-					chosen_fleet = self;
-				}
-			}
-		}
-	}
-	return chosen_fleet;
+function distance_removed_star(origional_x,origional_y, star_offset = choose(2,3)){
+	var from = instance_nearest(origional_x,origional_y,obj_star);
+    for(var i=0; i<star_offset; i++){
+        from=instance_nearest(origional_x,origional_y,obj_star)
+        with(from){
+        	instance_deactivate_object(id);
+        };
+    }
+    from=instance_nearest(origional_x,origional_y,obj_star);
+    instance_activate_object(obj_star);
+    return from;     
 }
 
-function load_unit_to_fleet(fleet, unit){
-	var loaded = false;
-	var all_ships = [];
-	var i, ship_ident;
-	with (fleet){
-		for (i=1; i<=capital_number;i++){
-			array_push(all_ships, capital_num[i]);
-		}
-		for (i=1; i<=frigate_number;i++){
-			array_push(all_ships, frigate_num[i]);
-		}
-		for (i=1; i<=escort_number;i++){
-			array_push(all_ships, escort_num[i]);
-		}				
-	}
 
-	for (i=0;i<array_length(all_ships);i++){
-		ship_ident = all_ships[i];
-		  if (obj_ini.ship_capacity[ship_ident]>obj_ini.ship_carrying[ship_ident]){
-		  	obj_ini.ship_carrying[ship_ident]+=unit.size;
-		  	unit.planet_location=0;
-		  	obj_ini.loc[unit.company][unit.marine_number]=obj_ini.ship_location[ship_ident];
-		  	unit.ship_location=ship_ident;
-		  	loaded=true;
-		  	break
-		  }
-	}
-	return loaded;
-}	
+
 //function scr_get_player_fleets() {
 //	var player_fleets = [];
 //	with(obj_p_fleet){

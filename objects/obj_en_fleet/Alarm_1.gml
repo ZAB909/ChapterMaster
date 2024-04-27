@@ -1177,7 +1177,7 @@ var  dir;dir=0;
 var ret;ret=0;
 
 
-if (action=""){
+if (action==""){
     if (instance_exists(orbiting)){orbiting=orbiting;}// orbiting.present_fleet[owner]+=1;
     else{orbiting=instance_nearest(x,y,obj_star);orbiting=orbiting;}
     var max_dis;max_dis=400;
@@ -1275,7 +1275,13 @@ if (action=""){
     
     
     if (owner=eFACTION.Inquisition){
-        if ((orbiting.owner  = eFACTION.Player) or (obj_ini.fleet_type!=1)) and (trade_goods!="cancel_inspection"){
+        var valid = true;
+        if (instance_exists(target)){
+            if (instance_nearest(target.x,target.y, obj_star).id != instance_nearest(x,y, obj_star).id){
+                valid=false;
+            }
+        }
+        if( ((orbiting.owner  = eFACTION.Player) or (obj_ini.fleet_type!=1)) and (trade_goods!="cancel_inspection") && valid){
             if (obj_controller.disposition[6]>=60) then scr_loyalty("Xeno Associate","+");
             if (obj_controller.disposition[7]>=60) then scr_loyalty("Xeno Associate","+");
             if (obj_controller.disposition[8]>=60) then scr_loyalty("Xeno Associate","+");
@@ -1283,12 +1289,7 @@ if (action=""){
             if (orbiting.p_owner[2]=1) and (orbiting.p_heresy[2]>=60) then scr_loyalty("Heretic Homeworld","+");
             
             var whom=-1;
-            if (string_count("Inqis",trade_goods)=0) then whom=0;
-            if (string_count("Inqis1",trade_goods)=1) then whom=1;
-            if (string_count("Inqis2",trade_goods)=1) then whom=2;
-            if (string_count("Inqis3",trade_goods)=1) then whom=3;
-            if (string_count("Inqis4",trade_goods)=1) then whom=4;
-            if (string_count("Inqis5",trade_goods)=1) then whom=5;
+            whom = inquisitor;
 
             var inquis_string = $"Inquisitor {obj_controller.inquisitor[whom]}";
             
@@ -1528,7 +1529,10 @@ if (action=""){
             // 135;
             if (obj_controller.loyalty_hidden<=0){// obj_controller.alarm[7]=1;global.defeat=2;
                 var moo;moo=false;
-                if (obj_controller.penitent=1) and (moo=false){obj_controller.alarm[8]=1;moo=true;}
+                if (obj_controller.penitent=1) and (moo=false){
+                    obj_controller.alarm[8]=1;
+                    moo=true;
+                }
                 if (obj_controller.penitent=0) and (moo=false) then scr_audience(4,"loyalty_zero",0,"",0,0);
             }
             
@@ -1742,7 +1746,7 @@ if (action="move") and (action_eta<5000){
     if (instance_nearest(action_x,action_y,obj_star).storm>0) then exit;
     if (action_x+action_y=0) then exit;
     
-    var dos;dos=0;
+    var dos=0;
     dos=point_distance(x,y,action_x,action_y);
     orbiting=dos/action_eta;
     dir=point_direction(x,y,action_x,action_y);
@@ -1756,22 +1760,17 @@ if (action="move") and (action_eta<5000){
         
     }*/
     
-    if (action_eta=2) and (owner=eFACTION.Inquisition) {
+    if (action_eta==2) and (owner=eFACTION.Inquisition) {
         if (instance_nearest(action_x,action_y,obj_star).owner  = eFACTION.Player) and (string_count("eet",trade_goods)=0) and (string_count("_her",trade_goods)=0){
-            if (string_count("Inqis",trade_goods)=0) then scr_alert("green","duhuhuhu","Inquisitor Ship approaches "+string(instance_nearest(action_x,action_y,obj_star).name)+".",x,y);
-            if (string_count("Inqis1",trade_goods)=1) then scr_alert("green","duhuhuhu","Inquisitor "+string(obj_controller.inquisitor[1])+" approaches "+string(instance_nearest(action_x,action_y,obj_star).name)+".",x,y);
-            if (string_count("Inqis2",trade_goods)=2) then scr_alert("green","duhuhuhu","Inquisitor "+string(obj_controller.inquisitor[2])+" approaches "+string(instance_nearest(action_x,action_y,obj_star).name)+".",x,y);
-            if (string_count("Inqis3",trade_goods)=3) then scr_alert("green","duhuhuhu","Inquisitor "+string(obj_controller.inquisitor[3])+" approaches "+string(instance_nearest(action_x,action_y,obj_star).name)+".",x,y);
-            if (string_count("Inqis4",trade_goods)=4) then scr_alert("green","duhuhuhu","Inquisitor "+string(obj_controller.inquisitor[4])+" approaches "+string(instance_nearest(action_x,action_y,obj_star).name)+".",x,y);
-            if (string_count("Inqis5",trade_goods)=5) then scr_alert("green","duhuhuhu","Inquisitor "+string(obj_controller.inquisitor[5])+" approaches "+string(instance_nearest(action_x,action_y,obj_star).name)+".",x,y);
-            
-            
-        
-            // scr_alert("green","duhuhuhu","Inquisitor Ship approaches "+string(instance_nearest(action_x,action_y,obj_star).name)+".",x,y);
+            var approach_system = instance_nearest(action_x,action_y,obj_star).name;
+            if (inquisitor==0){
+                scr_alert("green","duhuhuhu",$"Inquisitor Ship approaches {approach_system}.",x,y);
+            } else {
+                scr_alert("green","duhuhuhu",$"Inquisitor {obj_controller.inquisitor[inquisitor]} approaches {approach_system}.",x,y);
+            }
+
         }
-    }
-    
-    if (action_eta=0) {
+    }else if (action_eta==0) {
         var steh, sta, steh_dist, old_x, old_y;
         steh=instance_nearest(action_x,action_y,obj_star);
         sta=instance_nearest(action_x,action_y,obj_star);
@@ -1870,7 +1869,7 @@ if (action="move") and (action_eta<5000){
         
         
         
-        if (navy=0){
+        if (navy==0){
             var cancel;
 			cancel=false;
             if (string_count("Inqis",trade_goods)>0) then cancel=true;
@@ -2060,8 +2059,10 @@ if (action="move") and (action_eta<5000){
         
         action="";
         if (owner= eFACTION.Imperium){x=action_x;y=action_y-24;if (navy=1) then x=action_x+24;}
-        if (owner= eFACTION.Mechanicus){x=action_x;y=action_y-32;}
-        if (owner= eFACTION.Inquisition){x=action_x;y=action_y-32;
+        else if (owner= eFACTION.Mechanicus){x=action_x;y=action_y-32;}
+        else if (owner= eFACTION.Inquisition){
+            x=action_x;
+            y=action_y-32;
             if (string_count("DELETE",trade_goods)>0) then instance_destroy();
             if (obj_controller.known[eFACTION.Inquisition]=0) then obj_controller.known[eFACTION.Inquisition]=1;
         }
@@ -2097,129 +2098,74 @@ if (action="move") and (action_eta<5000){
         
         
         // 135 ; fleet chase
-        if (string_count("Inqis",trade_goods)>0) and (string_count("eet",trade_goods)>0) and (string_count("_her",trade_goods)=0) {
-            var acty,good;acty="";good=0;
+        if (string_count("Inqis",trade_goods)>0) and (string_count("fleet",trade_goods)>0) and (string_count("_her",trade_goods)=0) {
+            var good=0,acty="";
 			
 			if (!instance_exists(target)){// Reaquire target
-                with(obj_temp4){instance_destroy();}
-                with(obj_temp5){instance_destroy();}
-                
-                if (instance_exists(obj_p_fleet)){
-                    with(obj_p_fleet){
-                        if (capital_number>0){instance_create(x,y,obj_temp5);}
-                        if (frigate_number>0) then instance_create(x,y,obj_temp4);
-                    }
-                
-                    var obj,x4,y4,from,flit;
-                    if (instance_exists(obj_p_ship)) then obj=instance_nearest(x,y,obj_p_ship);
-                    if (instance_exists(obj_temp4)) then obj=instance_nearest(x,y,obj_temp4);
-                    if (instance_exists(obj_temp5)) then obj=instance_nearest(x,y,obj_temp5);
-                    
-                    x4=obj.x;y4=obj.y;
-                    
-                    with(obj_star){if (owner = eFACTION.Eldar) then instance_deactivate_object(id);}
-                    
-                    
-                    repeat(choose(2,3)){
-                        from=instance_nearest(x4,y4,obj_star);with(from){instance_deactivate_object(id);};
-                    }
-                    from=instance_nearest(x4,y4,obj_star);
-                    instance_activate_object(obj_star);
-                    
-                    target=instance_nearest(x4,y4,obj_p_fleet);
-                    target_x=0;
-                    target_y=0;
-                    
-                    with(obj_temp4){instance_destroy();}
-                    with(obj_temp5){instance_destroy();}
-				}
-                instance_activate_object(obj_star);
+                var target_player_fleet = get_largest_player_fleet();
+                if (target_player_fleet != "none"){
+                    if (target_player_fleet.action == ""){
+                        set_fleet_target(target_player_fleet.x,target_player_fleet.y, target_player_fleet);
+                    } else {
+                        set_fleet_target(target_player_fleet.action_x,target_player_fleet.action_y, target_player_fleet);         
+                    }                        
+                }
 			}
-			if (target>0) and (instance_exists(target)) {
+			if (instance_exists(target)) {
+
+	            var at_star=instance_nearest(target.x,target.y,obj_star).id;
+	            var target_at_star=instance_nearest(x,y,obj_star).id;
+	            if (target.action!="") then at_star=555;
             
-	            var meh,teh;
-	            meh=instance_nearest(target.x,target.y,obj_star).id;
-	            teh=instance_nearest(x,y,obj_star).id;
-	            if (target.action!="") then meh=555;
-            
-	            if (meh!=teh){trade_goods+="!";acty="chase";scr_loyalty("Avoiding Inspections","+");}
+	            if (at_star!=target_at_star){
+                    trade_goods+="!";
+                    acty="chase";
+                    scr_loyalty("Avoiding Inspections","+");
+                }
             
 	            // if (string_count("!",trade_goods)>=3) then demand stop fleet
             
-            
+                
+                //Inquisitor is pissed as hell
 	            if (string_count("!",trade_goods)=5){
 	                obj_controller.alarm[8]=10;
-	                instance_destroy();exit;
+	                instance_destroy();
+                    exit;
 	            }
             
             
 	            if (acty="chase"){
 	                instance_activate_object(obj_star);
-	                var goal_x,goal_y,tonk;tonk=0;
+	                var goal_x,goal_y,target_meet=0;
                 
-	                if (target.action!=""){goal_x=target.action_x;goal_y=target.action_y;tonk=instance_nearest(goal_x,goal_y,obj_star);}
-	                if (target.action=""){
-	                    var wop;wop=instance_nearest(target.x,target.y,obj_star);
-	                    tonk=wop;goal_x=wop.x;goal_y=wop.y;
-	                }
-                
-	                with(obj_temp3){instance_destroy();}
-	                with(obj_temp4){instance_destroy();}
-                
-                
-                
-	                // This is the goal destination
-	                instance_create(goal_x,goal_y,obj_temp3);
-	                obj_temp3.x2=instance_nearest(goal_x,goal_y,obj_star).x2;
-	                obj_temp3.y2=instance_nearest(goal_x,goal_y,obj_star).y2;
-                
-	                if (!instance_exists(obj_temp4)){// Just book it after them
-	                    good=1;
-	                }
-                
-	                if (good=1){
-	                    action_x=tonk.x;
-	                    action_y=tonk.y;
-	                    action="";
-	                    alarm[4]=1;
-	                }
-                
-                
-                
+	                chase_fleet_target_set();
+                    target_meet=instance_nearest(action_x,action_y,obj_star);
 	                if (string_count("!",trade_goods)=4) and (instance_exists(obj_turn_end)){
                 
 	                // color / type / text /x/y
                 
-	                    scr_alert("blank","blank","blank",tonk.x,tonk.y);
+	                    scr_alert("blank","blank","blank",target_meet.x,target_meet.y);
                     
 	                    var massa,iq;iq=0;
 	                    massa="Inquisitor ";
-                    
-	                    if (string_count("Inqis1",trade_goods)=1) then iq=1;
-	                    if (string_count("Inqis2",trade_goods)=1) then iq=2;
-	                    if (string_count("Inqis3",trade_goods)=1) then iq=3;
-	                    if (string_count("Inqis4",trade_goods)=1) then iq=4;
-	                    if (string_count("Inqis5",trade_goods)=1) then iq=5;
+                        if (inquisitor>0){
+                            iq=inquisitor
+                        }
                     
 	                    massa+=string(obj_controller.inquisitor[iq]);
                     
-	                    if (target.action="") then massa+=" DEMANDS that you keep your fleet at "+string(tonk.name)+" until ";
-	                    if (target.action!="") then massa+=" DEMANDS that you station your fleet at "+string(tonk.name)+" until ";
+	                    if (target.action="") then massa+=$" DEMANDS that you keep your fleet at {target_meet.name} until ";
+	                    if (target.action!="") then massa+=$" DEMANDS that you station your fleet at {target_meet.name} until ";
                 
 	                    scr_event_log("red",string(massa)+" they may inspect it.");
-                    
-	                    if (obj_controller.inquisitor_gender[iq]=1) then massa+="he is able to complete the inspection.  Further avoidance will be met with harsh action.";
-	                    if (obj_controller.inquisitor_gender[iq]=2) then massa+="she is able to complete the inspection.  Further avoidance will be met with harsh action.";
-                    
-                    
+                        var gender = obj_controller.inquisitor_gender[iq]==1?"he":"she"
+	                    if (obj_controller.inquisitor_gender[iq]=1) then massa+=$"{gender} is able to complete the inspection.  Further avoidance will be met with harsh action.";
+
 	                    scr_popup("Fleet Inspection",massa,"inquisition","");
                 
 	                // scr_poup("
 	                }
                 
-                
-	                with(obj_temp3){instance_destroy();}
-	                with(obj_temp4){instance_destroy();}
 	                exit;
 				}
             }

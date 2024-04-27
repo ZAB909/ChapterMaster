@@ -1,12 +1,37 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
+
+function mission_name_key(mission){
+	mission_key = {
+		"meeting_trap" : "Chaos Lord Meeting",
+		"meeting" : "Chaos Lord Meeting",
+		"succession" : "War of succession",
+		"spyrer" : "Kill Spyrer for Inquisitor",
+		"mech_raider" : "Provide Land Raider to Mechanicus",
+		"mech_bionics" : "Provide Bionic Augmented marines to study",
+		"mech_mars" : "Send Techmarines to mars",
+		"mech_tomb": "Explore Mechanicus Tomb",
+		"fallen" : "Find Chapter Fallen",
+		"recon" : "Recon Mission for Inquisitor",
+		"cleanse" : "Cleanse Planet for Inquisitor",
+		"tyranid_org" : "Capture Tyranid for Inquisitor",
+		"recon" : "Recon Mission for Inquisitor",
+		"bomb" : "Bombard World for inquisitor",
+		"great_crusade": "Answer Crusade Muster Call",
+	}
+	if (struct_exists(mission_key, mission)){
+		return mission_key[$ mission];
+	} else{
+		return "none"
+	}  
+}
 function scr_unit_quick_find_pane() constructor{
 	main_panel = new data_slate();
 	tab_buttons = {
 	    "fleets":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
 	    "garrisons":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
 	    "hider":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
-	    "troops":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
+	    "missions":new main_menu_button(spr_ui_but_3, spr_ui_hov_3),
 	}
 
 	view_area = "fleets";
@@ -64,7 +89,35 @@ function scr_unit_quick_find_pane() constructor{
 	    			obj_ini.ship_carrying[obj_ini.veh_lid[co][u]]+=scr_unit_size("",obj_ini.veh_role[co][u],true);
 	    		}
 	    	}
-	    }		
+	    }
+	    update_mission_log();	
+	}
+
+	update_mission_log = function(){
+		mission_log=[];
+		var temp_log=[];
+		var p, i, problems;
+		with(obj_star){
+			for (i=1;i<=planets;i++){
+				problems = p_problem[i];
+				for (p = 0;p<array_length(problems);p++){
+					if (problems[p] != ""){
+						var mission_explain =  mission_name_key(problems[p]);
+						if (mission_explain!="none"){
+							array_push(temp_log,
+								{
+									system : name,
+									mission : mission_explain,
+									time : p_timer[i][p],
+									planet : i
+								}
+							)
+						}
+					}
+				}
+			}
+		}
+		mission_log =temp_log;
 	}
 	hover_item="none";
 	travel_target = [];
@@ -74,6 +127,7 @@ function scr_unit_quick_find_pane() constructor{
 	start_fleet = 0;
 	start_system = 0;
 	garrison_log = {};
+	mission_log = [];
 	hide_sequence=0;
 	current_hover=-1;
 	hover_count=0;
@@ -193,6 +247,33 @@ function scr_unit_quick_find_pane() constructor{
 					});
 		    	}
 		    }			
+		} else if (view_area == "missions"){
+			draw_set_color(c_white);
+			draw_set_halign(fa_center);
+		    draw_text(xx+80, yy+50, "Location");
+		    draw_text(xx+160, yy+50, "Mission");
+		    draw_text(xx+310, yy+50, "Time Remaining");
+		    var i = 0;
+		    while(i<array_length(mission_log) && (yy+90+(20*i)+12 +20)<main_panel.YY+yy+main_panel.height)		
+			{
+				mission = mission_log[i]
+				if (scr_hit(xx+10, yy+90+(20*i),xx+main_panel.width,yy+90+(20*i)+18)){
+					draw_set_color(c_gray);
+					draw_rectangle(xx+10+20, yy+90+(20*i)-2,xx+main_panel.width-20,yy+90+(20*i)+18, 0)
+					draw_set_color(c_white);
+				}
+			    draw_text(xx+80, yy+90+(20*i), $"{mission.system} {scr_roman_numerals()[mission.planet-1]}" );
+			    draw_text(xx+160, yy+90+(20*i), mission.mission);
+			    draw_text(xx+310, yy+90+(20*i), mission.time);
+			    if (point_and_click([xx+10, yy+90+(20*i)-2,xx+main_panel.width,yy+90+(20*i)+18])){
+			    	var star = star_by_name(mission.system);
+			    	if (star!="none")
+			    	travel_target = [star.x, star.y];
+			    	travel_increments = [(travel_target[0]-obj_controller.x)/15,(travel_target[1]-obj_controller.y)/15];
+			    	travel_time = 0;
+			    }
+			    i++;
+			}			
 		}
 		if (array_length(travel_target)==2){
 			if (obj_controller.x!=travel_target[0] || obj_controller.y!=travel_target[1]){
@@ -230,10 +311,14 @@ function scr_unit_quick_find_pane() constructor{
 					if(tab_buttons.fleets.draw(x_draw,yy+79, "Fleets")){
 					    view_area="fleets";
 					}
-					if (tab_buttons.garrisons.draw(x_draw+115,yy+79, "Planet Troops")){
+					if (tab_buttons.garrisons.draw(x_draw+115,yy+79, "System Troops")){
 					    view_area="garrisons";
 					    update_garrison_log();
 					}
+					if (tab_buttons.missions.draw(x_draw+230,yy+79, "Missions")){
+					    view_area="missions";
+					    update_garrison_log();
+					}					
 					if (x_draw+280<xx){
 						tab_buttons.hider.draw(xx,lower_draw, "Show")
 					} else {
