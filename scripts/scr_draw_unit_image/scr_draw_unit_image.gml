@@ -270,11 +270,11 @@ function scr_draw_unit_image(x_draw, y_draw){
 
 			// Librarian
             else if (ui_specialist=7){
-                set_shader_color(ShaderType.Body, Colors.Blue);
-                set_shader_color(ShaderType.Helmet, Colors.Blue);
+                set_shader_color(ShaderType.Body, Colors.Ultramarine);
+                set_shader_color(ShaderType.Helmet, Colors.Ultramarine);
                 set_shader_color(ShaderType.Lens, Colors.Cyan);
                 set_shader_color(ShaderType.Trim, Colors.Gold);
-                set_shader_color(ShaderType.RightPauldron, Colors.Blue);
+                set_shader_color(ShaderType.RightPauldron, Colors.Ultramarine);
                 ttrim=1;
                 specialist_colours=0;
             }
