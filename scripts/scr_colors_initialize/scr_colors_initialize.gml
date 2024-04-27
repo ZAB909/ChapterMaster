@@ -70,5 +70,5 @@ function scr_colors_initialize() {
         col_g[i] = colors_array[i][2];
         col_b[i] = colors_array[i][3];
     }
-	colors = i;
+	global.colors_count = array_length(colors_array);
 }
