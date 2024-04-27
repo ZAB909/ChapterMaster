@@ -840,10 +840,8 @@ function scr_ui_diplomacy() {
     
     
 	}
-	if (diplomacy==10.1){
-		//scr_dialogue(diplomacy_pathway);
-		basic_diplomacy_screen();
-	}
+	//scr_dialogue(diplomacy_pathway);
+	basic_diplomacy_screen();
 
 }
 
