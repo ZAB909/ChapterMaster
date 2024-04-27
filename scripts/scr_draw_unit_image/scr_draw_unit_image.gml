@@ -925,7 +925,16 @@ function scr_draw_unit_image(x_draw, y_draw){
                 }
             }
 
-            // Honor Guard Helm
+            // Draw Custom Helmets
+            if (armor_type==ArmorType.Normal){
+                if (role() == "Company Champion") {
+                    draw_sprite(spr_honor_helm,3,xx+x_draw,yy+y_draw);
+                }
+                if (role() == "Captain") {
+                    draw_sprite(spr_honor_helm,6,xx+x_draw,yy+y_draw);
+                }
+            }
+
             if (hood==0) and (armor_type==ArmorType.Normal) and (armour()!="") and (role()==obj_ini.role[100][2]) && (global.chapter_name!="Ultramarines") && (global.chapter_name!="Blood Angels"){
                 var helm_ii,o,yep;
                 helm_ii=0;
