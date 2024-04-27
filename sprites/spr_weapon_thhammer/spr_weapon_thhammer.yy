@@ -4,7 +4,7 @@
   "name": "spr_weapon_thhammer",
   "bbox_bottom": 230,
   "bbox_left": 0,
-  "bbox_right": 162,
+  "bbox_right": 160,
   "bbox_top": 0,
   "bboxMode": 0,
   "collisionKind": 1,
@@ -23,7 +23,8 @@
   "height": 231,
   "HTile": false,
   "layers": [
-    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"c3a99859-82ae-4ce6-8b20-5477880c422a","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"3cf98c11-0410-433f-a610-7d2e987d041e","blendMode":0,"displayName":"pasteLayer","isLocked":false,"opacity":100.0,"visible":true,},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"208d5144-28b7-439c-9422-4310a33bc66e","blendMode":0,"displayName":"pasteLayer","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": null,
   "origin": 0,
