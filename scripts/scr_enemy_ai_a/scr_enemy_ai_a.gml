@@ -90,19 +90,11 @@ function scr_enemy_ai_a() {
             	}
             	if (launch_point_found){
 		            flee=instance_create(launch_planet.x,launch_planet.y-24,obj_en_fleet);
-		            flee.owner=4;
-		            flee.frigate_number=1;
+		            with (flee){
+		            	base_inquis_fleet();
+		            }
 		            flee.action_x=x;
 		            flee.action_y=y;
-		            flee.sprite_index=spr_fleet_inquisition;
-		            flee.image_index=0;
-	            
-		            var roll=floor(random(100))+1;
-		            if (roll<=60) then flee.trade_goods="Inqis1";
-		            if (roll<=70) and (roll>60) then flee.trade_goods="Inqis2";
-		            if (roll<=80) and (roll>70) then flee.trade_goods="Inqis3";
-		            if (roll<=90) and (roll>80) then flee.trade_goods="Inqis4";
-		            if (roll<=100) and (roll>90) then flee.trade_goods="Inqis5";
 		            flee.trade_goods+="|investigate_dead|";
 		            flee.alarm[4]=1;
             	}

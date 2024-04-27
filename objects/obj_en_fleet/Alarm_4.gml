@@ -65,7 +65,10 @@ if (action=""){
         if (trade_goods!="") and (owner != eFACTION.Tyranids) and (owner != eFACTION.Chaos) and (string_count("Inqis",trade_goods)=0) and (string_count("merge",trade_goods)=0)and (string_count("_her",trade_goods)=0) and (trade_goods!="cancel_inspection") and (trade_goods!="return"){
             if (target!=0) and (instance_exists(target)){
                 if (target.action!=""){
-                    if (target_dist>sys_dist){action_x=target.action_x;action_y=target.action_y;sys=instance_nearest(action_x,action_y,obj_star);}
+                    if (target_dist>sys_dist){
+                        action_x=target.action_x;
+                        action_y=target.action_y;
+                        sys=instance_nearest(action_x,action_y,obj_star);}
                 }
             }
         }        
