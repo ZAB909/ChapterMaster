@@ -535,11 +535,13 @@ if (obj_ini.omophagea=1){
 
                 var msg,msg2,i,remove;msg="";msg2="";i=0;remove=0;
                 // if (string_count("Inqis",inquisitor_ship.trade_goods)>0) then show_message("B");
-                if (string_count("Inqis1",inquisitor_ship.trade_goods)=1){newline="Inquisitor "+string(obj_controller.inquisitor[1])+" has been eaten!";msg="Inquisitor "+string(obj_controller.inquisitor[1]);remove=1;scr_event_log("red","Your Astartes consume "+string(msg)+".");}
-                if (string_count("Inqis2",inquisitor_ship.trade_goods)=1){newline="Inquisitor "+string(obj_controller.inquisitor[2])+" has been eaten!";msg="Inquisitor "+string(obj_controller.inquisitor[2]);remove=2;scr_event_log("red","Your Astartes consume "+string(msg)+".");}
-                if (string_count("Inqis3",inquisitor_ship.trade_goods)=1){newline="Inquisitor "+string(obj_controller.inquisitor[3])+" has been eaten!";msg="Inquisitor "+string(obj_controller.inquisitor[3]);remove=3;scr_event_log("red","Your Astartes consume "+string(msg)+".");}
-                if (string_count("Inqis4",inquisitor_ship.trade_goods)=1){newline="Inquisitor "+string(obj_controller.inquisitor[4])+" has been eaten!";msg="Inquisitor "+string(obj_controller.inquisitor[4]);remove=4;scr_event_log("red","Your Astartes consume "+string(msg)+".");}
-                if (string_count("Inqis5",inquisitor_ship.trade_goods)=1){newline="Inquisitor "+string(obj_controller.inquisitor[5])+" has been eaten!";msg="Inquisitor "+string(obj_controller.inquisitor[5]);remove=5;scr_event_log("red","Your Astartes consume "+string(msg)+".");}
+                if (inquisitor_ship.inquisitor>0){
+                    var inquis_name = obj_controller.inquisitor[inquisitor_ship.inquisitor];
+                    newline=$"Inquisitor {inquis_name} has been eaten!";
+                    msg=$"Inquisitor {inquis_name}"
+                    remove=obj_controller.inquisitor[inquisitor_ship.inquisitor];
+                    scr_event_log("red",$"Your Astartes consume {msg}.");
+                }
                 newline_color="red";scr_newtext();
                 if (obj_controller.inquisitor_type[remove]="Ordo Hereticus") then scr_loyalty("Inquisitor Killer","+");
 

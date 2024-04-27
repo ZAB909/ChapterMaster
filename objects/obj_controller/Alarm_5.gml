@@ -1007,18 +1007,17 @@ if (loyalty_counter==0) then scr_loyalty("Undevout","+");
 // which you could eventually interrupt (kill the team) and cover it up?
 if (marines>=1050) then scr_loyalty("Non-Codex Size","+");
 
-var laas=0;
-if (obj_ini.fleet_type=1) then laas=last_world_inspection;
-if (obj_ini.fleet_type!=1) then laas=last_fleet_inspection;
+var last_inquisitor_inspection=0;
+if (obj_ini.fleet_type=1) then last_inquisitor_inspection=last_world_inspection;
+if (obj_ini.fleet_type!=1) then last_inquisitor_inspection=last_fleet_inspection;
 
 var inspec=false;
-if (loyalty>=85) and ((laas+59)<turn) then inspec=true;
-if (loyalty>=70) and (loyalty<85) and ((laas+47)<turn) then inspec=true;
-if (loyalty>=50) and (loyalty<70) and ((laas+35)<turn) then inspec=true;
-if (loyalty<50) and ((laas+11+choose(1,2,3,4))<turn) then inspec=true;
+if (loyalty>=85) and ((last_inquisitor_inspection+59)<turn) then inspec=true;
+if (loyalty>=70) and (loyalty<85) and ((last_inquisitor_inspection+47)<turn) then inspec=true;
+if (loyalty>=50) and (loyalty<70) and ((last_inquisitor_inspection+35)<turn) then inspec=true;
+if (loyalty<50) and ((last_inquisitor_inspection+11+choose(1,2,3,4))<turn) then inspec=true;
 
 if (obj_ini.fleet_type!=1){
-    with(obj_p_fleet){if (capital_number<=0) then instance_deactivate_object(id);}
     if (instance_number(obj_p_fleet)==1) and (obj_ini.fleet_type!=1){// Might be crusading, right?
         if (obj_p_fleet.x<0) or (obj_p_fleet.x>room_width) or (obj_p_fleet.y<0) or (obj_p_fleet.y>room_height) then inspec=false;
     }
@@ -1026,132 +1025,13 @@ if (obj_ini.fleet_type!=1){
 }
 instance_activate_object(obj_p_fleet);
 
-with(obj_fleet){if (owner==eFACTION.Inquisition) then instance_create(x,y,obj_temp6);}
-// TODO maybe have the inquisitor or his team as an actual entity that goes around and can die, which gives the player time to fix stuff 
-// either kill the inquisitor or he dies in combat
+//setup inquisitor inspections
+var inquisitor_fleet_count = 0;
+with(obj_fleet){if (owner==eFACTION.Inquisition) then inquisitor_fleet_count++}
 
-// Sets up an inquisitor ship to do an inspection on the HomeWorld
-if (inspec==true) and (faction_status[eFACTION.Inquisition]!="War") and (obj_ini.fleet_type==1) and (instance_number(obj_temp6)==0){
-    // If player does not own their homeworld than do a fleet inspection instead
-    with(obj_star){if (owner==eFACTION.Player) then instance_create(x,y,obj_temp3);}
-
-    if (instance_number(obj_temp3)==1){
-        var xy,yx,tar,new_defense_fleet;
-        xy=obj_temp3.x;
-        yx=obj_temp3.y;
-
-        for(var i=0; i<choose(2,3); i++){
-            tar=instance_nearest(obj_temp3.x,obj_temp3.y,obj_star);
-            instance_deactivate_object(tar);
-        }
-        for(var i=0; i<5; i++){
-            tar=instance_nearest(obj_temp3.x,obj_temp3.y,obj_star);
-            if (tar.owner=eFACTION.Eldar) then instance_deactivate_object(tar);
-        }
-
-        tar=instance_nearest(obj_temp3.x,obj_temp3.y,obj_star);
-        new_defense_fleet=instance_create(tar.x,tar.y-24,obj_en_fleet);
-        new_defense_fleet.owner=eFACTION.Inquisition;
-        new_defense_fleet.frigate_number=1;
-        new_defense_fleet.action_x=xy;
-        new_defense_fleet.action_y=yx;
-        new_defense_fleet.sprite_index=spr_fleet_inquisition;
-        new_defense_fleet.image_index=0;
-
-        roll=floor(random(100))+1;
-
-        if (roll<=60) then new_defense_fleet.trade_goods="Inqis1";
-        if (roll<=70) and (roll>60) then new_defense_fleet.trade_goods="Inqis2";
-        if (roll<=80) and (roll>70) then new_defense_fleet.trade_goods="Inqis3";
-        if (roll<=90) and (roll>80) then new_defense_fleet.trade_goods="Inqis4";
-        if (roll<=100) and (roll>90) then new_defense_fleet.trade_goods="Inqis5";
-
-        new_defense_fleet.alarm[4]=1;
-
-        instance_activate_object(obj_star);
-        with(obj_temp3){instance_destroy();}
-        last_world_inspection=turn;
-    }
-}
-
-// Find planet near homeworld to have an inquisitor ship pop from
-if (inspec==true) and (faction_status[eFACTION.Inquisition]!="War") and (obj_ini.fleet_type!=1) and (instance_number(obj_temp6)==0){
-    // If player does not own their homeworld than do a fleet inspection instead
-
-    with(obj_temp4){instance_destroy();}
-    with(obj_temp5){instance_destroy();}
-
-    if (instance_exists(obj_p_fleet)){
-        with(obj_p_fleet){
-            if (capital_number>0) and (action==""){instance_create(x,y,obj_temp5);}
-            if (capital_number>0) and (action!=""){instance_create(action_x,action_y,obj_temp5);}
-            if (frigate_number>0) and (action=="") then instance_create(x,y,obj_temp4);
-            if (frigate_number>0) and (action!="") then instance_create(action_x,action_y,obj_temp4);
-        }
-
-        var obj,x4,y4,from,target,new_defense_fleet;
-        if (instance_exists(obj_p_ship)) then obj=instance_nearest(random(room_width),random(room_height),obj_p_ship);
-        if (instance_exists(obj_temp4)) then obj=instance_nearest(random(room_width),random(room_height),obj_temp4);
-        if (instance_exists(obj_temp5)) then obj=instance_nearest(random(room_width),random(room_height),obj_temp5);
-
-        x4=obj.x;
-        y4=obj.y;
-
-        with(obj_star){if (owner==eFACTION.Eldar) then instance_deactivate_object(id);}
-
-        for(var i=0; i<choose(2,3); i++){
-            from=instance_nearest(x4,y4,obj_star);
-            with(from){instance_deactivate_object(id);};
-        }
-        from=instance_nearest(x4,y4,obj_star);
-        instance_activate_object(obj_star);
-
-        new_defense_fleet=instance_create(from.x,from.y-24,obj_en_fleet);
-        new_defense_fleet.owner= eFACTION.Inquisition;
-        new_defense_fleet.frigate_number=1;
-
-        new_defense_fleet.target=instance_nearest(x4,y4,obj_p_fleet);
-        new_defense_fleet.action_x=instance_nearest(x4,y4,obj_star).x;
-        new_defense_fleet.action_y=instance_nearest(x4,y4,obj_star).y;
-        if (new_defense_fleet.target.action!="") then new_defense_fleet.action_eta=new_defense_fleet.target.action_eta;
-        // show_message(string(new_defense_fleet.action_eta));
-
-        new_defense_fleet.sprite_index=spr_fleet_inquisition;
-        new_defense_fleet.image_index=0;
-
-        var mess="Inquisitor ";
-        roll=irandom(100)+1;
-
-        if (roll<=60){
-            new_defense_fleet.trade_goods="Inqis1";
-            mess+=string(obj_controller.inquisitor[1]);
-        }else if (roll<=70) and (roll>60){
-            new_defense_fleet.trade_goods="Inqis2";
-            mess+=string(obj_controller.inquisitor[2]);
-        }else if (roll<=80) and (roll>70){
-            new_defense_fleet.trade_goods="Inqis3";
-            mess+=string(obj_controller.inquisitor[3]);
-        }else if (roll<=90) and (roll>80){
-            new_defense_fleet.trade_goods="Inqis4";
-            mess+=string(obj_controller.inquisitor[4]);
-        }else if (roll<=100) and (roll>90){
-            new_defense_fleet.trade_goods="Inqis5";
-            mess+=string(obj_controller.inquisitor[5]);
-        }
-        new_defense_fleet.trade_goods+="_fleet";
-
-        obj=instance_nearest(x4,y4,obj_star);
-
-        mess+=" wishes to inspect your fleet at "+string(obj.name);
-        scr_alert("green","inspect",mess,obj.x,obj.y);
-        if (instance_exists(obj_turn_end)) then obj_turn_end.alerts+=1;
-
-        new_defense_fleet.alarm[4]=1;
-
-        with(obj_temp4){instance_destroy();}
-        with(obj_temp5){instance_destroy();}
-        last_fleet_inspection=turn;
-    }
+inspec = (inspec && faction_status[eFACTION.Inquisition]!="War" &&inquisitor_fleet_count==0);
+if (inspec)  {
+    new_inquisitor_inspection();
 }
 
 with(obj_temp6){instance_destroy();}
@@ -1204,9 +1084,10 @@ for(var i=1; i<=99; i++){
             }
             // Sector commander losses its mind
             if (event[i]=="imperium_daemon"){
-                scr_alert("red","lol","Sector Commander "+string(faction_leader[eFACTION.Imperium])+" has gone insane.",0,0);
+                var alert_string = $"Sector Commander {faction_leader[eFACTION.Imperium]} has gone insane."
+                scr_alert("red","lol",alert_string,0,0);
                 faction_defeated[eFACTION.Imperium]=1;
-                scr_event_log("red","Sector Commander "+string(faction_leader[eFACTION.Imperium])+" has gone insane.");
+                scr_event_log("red",alert_string);
             }
             // Starts chaos invasion
 		    if (event[i]=="chaos_invasion"){ 

@@ -546,6 +546,7 @@
     {"name":"scr_apothecary_ship","order":27,"path":"scripts/scr_apothecary_ship/scr_apothecary_ship.yy",},
     {"name":"scr_apothecary_ground","order":29,"path":"scripts/scr_apothecary_ground/scr_apothecary_ground.yy",},
     {"name":"scr_mission_eta","order":31,"path":"scripts/scr_mission_eta/scr_mission_eta.yy",},
+    {"name":"scr_fleet_functions","order":78,"path":"scripts/scr_fleet_functions/scr_fleet_functions.yy",},
     {"name":"scr_random_event","order":33,"path":"scripts/scr_random_event/scr_random_event.yy",},
     {"name":"scr_random_find","order":35,"path":"scripts/scr_random_find/scr_random_find.yy",},
     {"name":"scr_max_marine","order":37,"path":"scripts/scr_max_marine/scr_max_marine.yy",},

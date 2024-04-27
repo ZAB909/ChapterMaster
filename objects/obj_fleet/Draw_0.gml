@@ -1,4 +1,4 @@
-
+    show_debug_message("draw_start");
     draw_set_color(38144);draw_set_alpha(0.5);
     if (left_down!=0) then draw_rectangle(sel_x1,sel_y1,mouse_x,mouse_y,1);
     draw_set_alpha(1);
@@ -164,7 +164,7 @@ if (start=7){
     
     
 
-}
+} show_debug_message("draw_end");
 
 /* */
 /*  */
