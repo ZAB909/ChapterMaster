@@ -261,6 +261,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                 set_shader_color(ShaderType.Body, Colors.Black);
                 set_shader_color(ShaderType.Helmet, Colors.Black);
                 set_shader_color(ShaderType.Lens, Colors.Red);
+                set_shader_color(ShaderType.Trim, Colors.Gold);
                 set_shader_color(ShaderType.RightPauldron, Colors.Black);
                 ttrim=1;
                 specialist_colours=0;
