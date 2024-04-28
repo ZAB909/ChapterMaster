@@ -203,7 +203,7 @@
     {"name":"spr_icon_change","order":33,"path":"sprites/spr_icon_change/spr_icon_change.yy",},
     {"name":"spr_bar","order":35,"path":"sprites/spr_bar/spr_bar.yy",},
     {"name":"spr_disposition","order":37,"path":"sprites/spr_disposition/spr_disposition.yy",},
-    {"name":"spr_laurel_helm","order":30,"path":"sprites/spr_laurel_helm/spr_laurel_helm.yy",},
+    {"name":"spr_laurel","order":12,"path":"sprites/spr_laurel/spr_laurel.yy",},
     {"name":"spr_disposition_small","order":39,"path":"sprites/spr_disposition_small/spr_disposition_small.yy",},
     {"name":"spr_planets","order":41,"path":"sprites/spr_planets/spr_planets.yy",},
     {"name":"sprite134","order":43,"path":"sprites/sprite134/sprite134.yy",},

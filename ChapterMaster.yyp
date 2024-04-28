@@ -507,7 +507,7 @@
     {"id":{"name":"spr_icon_change","path":"sprites/spr_icon_change/spr_icon_change.yy",},},
     {"id":{"name":"spr_bar","path":"sprites/spr_bar/spr_bar.yy",},},
     {"id":{"name":"spr_disposition","path":"sprites/spr_disposition/spr_disposition.yy",},},
-    {"id":{"name":"spr_laurel_helm","path":"sprites/spr_laurel_helm/spr_laurel_helm.yy",},},
+    {"id":{"name":"spr_laurel","path":"sprites/spr_laurel/spr_laurel.yy",},},
     {"id":{"name":"spr_disposition_small","path":"sprites/spr_disposition_small/spr_disposition_small.yy",},},
     {"id":{"name":"spr_planets","path":"sprites/spr_planets/spr_planets.yy",},},
     {"id":{"name":"sprite134","path":"sprites/sprite134/sprite134.yy",},},
