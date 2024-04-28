@@ -205,7 +205,7 @@ if (custom==2){
 var good=0;
 if (color_to_main!=""){
     good=0;
-    for(var q=0; q<colors; q++){
+    for(var q=0; q<global.colors_count; q++){
         if (color_to_main=col[q]) and (good=0){
             good=q;
             color_to_main="";
@@ -215,7 +215,7 @@ if (color_to_main!=""){
 }
 if (color_to_secondary!=""){
     good=0;
-    for(var q=0; q<colors; q++){
+    for(var q=0; q<global.colors_count; q++){
         if (color_to_secondary=col[q]) and (good=0){
             good=q;
             color_to_secondary="";
@@ -225,7 +225,7 @@ if (color_to_secondary!=""){
 }
 if (color_to_trim!=""){
     good=0;
-    for(var q=0; q<colors; q++){
+    for(var q=0; q<global.colors_count; q++){
         if (color_to_trim=col[q]) and (good=0){
             good=q;
             color_to_trim="";
@@ -235,7 +235,7 @@ if (color_to_trim!=""){
 }
 if (color_to_pauldron!=""){
     good=0;
-    for(var q=0; q<colors; q++){
+    for(var q=0; q<global.colors_count; q++){
         if (color_to_pauldron=col[q]) and (good=0){
             good=q;
             color_to_pauldron="";
@@ -245,7 +245,7 @@ if (color_to_pauldron!=""){
 }
 if (color_to_pauldron2!=""){
     good=0;
-    for(var q=0; q<colors; q++){
+    for(var q=0; q<global.colors_count; q++){
         if (color_to_pauldron2=col[q]) and (good=0){
             good=q;
             color_to_pauldron2="";
@@ -255,7 +255,7 @@ if (color_to_pauldron2!=""){
 }
 if (color_to_lens!=""){
     good=0;
-    for(var q=0; q<colors; q++){
+    for(var q=0; q<global.colors_count; q++){
         if (color_to_lens=col[q]) and (good=0){
             good=q;
             color_to_lens="";
@@ -265,7 +265,7 @@ if (color_to_lens!=""){
 }
 if (color_to_weapon!=""){
     good=0;
-    for(var q=0; q<colors; q++){
+    for(var q=0; q<global.colors_count; q++){
         if (color_to_weapon=col[q]) and (good=0){
             good=q;
             color_to_weapon="";
