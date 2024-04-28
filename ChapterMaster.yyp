@@ -727,6 +727,7 @@
     {"id":{"name":"path3","path":"paths/path3/path3.yy",},},
     {"id":{"name":"pth_speeder","path":"paths/pth_speeder/pth_speeder.yy",},},
     {"id":{"name":"pth_speeder2","path":"paths/pth_speeder2/pth_speeder2.yy",},},
+    {"id":{"name":"spr_special_helm","path":"sprites/spr_special_helm/spr_special_helm.yy",},},
     {"id":{"name":"macros","path":"scripts/macros/macros.yy",},},
     {"id":{"name":"spr_weapon_skill_icon","path":"sprites/spr_weapon_skill_icon/spr_weapon_skill_icon.yy",},},
     {"id":{"name":"scr_music","path":"scripts/scr_music/scr_music.yy",},},

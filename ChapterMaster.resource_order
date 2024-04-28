@@ -417,6 +417,7 @@
     {"name":"path3","order":3,"path":"paths/path3/path3.yy",},
     {"name":"pth_speeder","order":5,"path":"paths/pth_speeder/pth_speeder.yy",},
     {"name":"pth_speeder2","order":7,"path":"paths/pth_speeder2/pth_speeder2.yy",},
+    {"name":"spr_special_helm","order":29,"path":"sprites/spr_special_helm/spr_special_helm.yy",},
     {"name":"macros","order":1,"path":"scripts/macros/macros.yy",},
     {"name":"spr_weapon_skill_icon","order":4,"path":"sprites/spr_weapon_skill_icon/spr_weapon_skill_icon.yy",},
     {"name":"scr_music","order":1,"path":"scripts/scr_music/scr_music.yy",},
