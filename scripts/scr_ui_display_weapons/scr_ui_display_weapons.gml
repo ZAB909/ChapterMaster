@@ -28,7 +28,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
     var sprite_found =false;
     var normal_ranged_names = struct_get_names(normal_ranged);
     for (var i=0;i<array_length(normal_ranged_names);i++){
-        if (string_count(normal_ranged_names[i], equiped_weapon) > 0){
+        if (normal_ranged_names[i] == equiped_weapon){
             if (normal_ranged_names[i]!="Bolter") && (normal_ranged_names[i]!="Missile Launcher"){
                 set_as_normal_ranged(normal_ranged[$ normal_ranged_names[i]],left_or_right)
                 sprite_found = !sprite_found;
@@ -55,6 +55,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             "Lascannon":spr_weapon_lasca,
             "Multi-Melta":spr_weapon_mmelta,
             "Assault Cannon":spr_weapon_assca,
+            "Heavy Flamer":spr_weapon_hflamer,
         }
         var heavy_ranged_names=struct_get_names(heavy_ranged);
         for (var i=0;i<array_length(heavy_ranged_names);i++){

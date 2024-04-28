@@ -769,6 +769,7 @@
     {"id":{"name":"file_encrypt","path":"scripts/file_encrypt/file_encrypt.yy",},},
     {"id":{"name":"file_decrypt","path":"scripts/file_decrypt/file_decrypt.yy",},},
     {"id":{"name":"spr_charisma_icon","path":"sprites/spr_charisma_icon/spr_charisma_icon.yy",},},
+    {"id":{"name":"spr_weapon_hflamer","path":"sprites/spr_weapon_hflamer/spr_weapon_hflamer.yy",},},
     {"id":{"name":"spr_mk8_colors","path":"sprites/spr_mk8_colors/spr_mk8_colors.yy",},},
     {"id":{"name":"scr_destroy_planet","path":"scripts/scr_destroy_planet/scr_destroy_planet.yy",},},
     {"id":{"name":"scr_crusade","path":"scripts/scr_crusade/scr_crusade.yy",},},
