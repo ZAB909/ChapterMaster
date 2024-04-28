@@ -928,10 +928,10 @@ function scr_draw_unit_image(x_draw, y_draw){
             // Draw Custom Helmets
             if (armor_type==ArmorType.Normal){
                 if (role() == "Company Champion") {
-                    draw_sprite(spr_honor_helm,3,xx+x_draw,yy+y_draw);
+                    draw_sprite(spr_special_helm,0,xx+x_draw,yy+y_draw);
                 }
                 if (role() == "Captain") {
-                    draw_sprite(spr_honor_helm,6,xx+x_draw,yy+y_draw);
+                    draw_sprite(spr_laurel_helm,0,xx+x_draw,yy+y_draw);
                 }
             }
 
