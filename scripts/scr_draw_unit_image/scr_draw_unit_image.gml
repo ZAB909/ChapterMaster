@@ -480,9 +480,6 @@ function scr_draw_unit_image(x_draw, y_draw){
             if (ui_specialist=3) and (armour()!=""){
                 if (armor_type==ArmorType.Indomitus) then draw_sprite(spr_gear_apoth,0,xx+x_draw,yy+y_draw-22); // for terminators
                 else draw_sprite(spr_gear_apoth,0,xx+x_draw,yy+y_draw-6); // for normal power armor
-                if (gear() == "Narthecium"){
-                    ui_weapon[2]=0;
-                }
             }
             
             // Weapons for below arms
@@ -786,9 +783,9 @@ function scr_draw_unit_image(x_draw, y_draw){
                     if (armor_type!=ArmorType.Indomitus) and (armor_type!=ArmorType.Tartaros) then draw_sprite(spr_gear_apoth,1,xx+x_draw,yy+y_draw);
                     if (gear() == "Narthecium"){
                         if (armor_type==ArmorType.Normal) {
-                            draw_sprite(spr_narthecium_2,0,xx+x_draw+62,yy+y_draw+5);
+                            draw_sprite(spr_narthecium_2,0,xx+x_draw+66,yy+y_draw+5);
                         } else if (armor_type!=ArmorType.Normal && armor_type!=ArmorType.Dreadnought){
-                            draw_sprite(spr_narthecium_2,0,xx+x_draw+70,yy+y_draw+30);
+                            draw_sprite(spr_narthecium_2,0,xx+x_draw+92,yy+y_draw+5);
                         }
                     }
                 }
