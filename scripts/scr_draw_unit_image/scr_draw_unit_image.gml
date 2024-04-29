@@ -438,10 +438,6 @@ function scr_draw_unit_image(x_draw, y_draw){
 				}
                 if (string_count("Dread",armour())>0) then armour_sprite=spr_dread_colors;
             }
-            if (armor_type!=ArmorType.Normal && armor_type!=ArmorType.Dreadnought){
-                ui_ymod[1]-=20;
-                ui_ymod[2]-=20;
-            }
             // Draw the fixed upper arms for Terminators and Tartaros
             if (armor_type==ArmorType.Indomitus){
                 if (fix_left>0) then draw_sprite(spr_termi_wep_fix,0,xx+x_draw,yy+y_draw-20);
@@ -916,20 +912,6 @@ function scr_draw_unit_image(x_draw, y_draw){
                     if (specialist_colours>=2) then draw_sprite(ui_weapon[2],3,xx+x_draw+ui_xmod[2],yy+y_draw+ui_ymod[2]);                    
                 }
             }
-        
-            // New powerfists for termi/tartaros
-            if (ui_weapon[1]!=0){
-                if  (fix_left==8){
-                	draw_sprite(spr_weapon_powfist3,0,xx+x_draw+ui_xmod[1],yy+y_draw+ui_ymod[1])
-                } else if(fix_left==8.1){
-                	draw_sprite(spr_weapon_lightning2,0,xx+x_draw+ui_xmod[1],yy+y_draw+ui_ymod[1]);
-                }
-                if (fix_right==8){
-                	draw_sprite(spr_weapon_powfist3,1,xx+x_draw+ui_xmod[2],yy+y_draw+ui_ymod[2]);
-                } else if(fix_right==8.1){
-                	draw_sprite(spr_weapon_lightning2,1,xx+x_draw+ui_xmod[2],yy+y_draw+ui_ymod[2]);
-                }
-        	}
         
             // Draw the fixed upper hands for Terminators or Tartaros
             if (armor_type==ArmorType.Indomitus){
