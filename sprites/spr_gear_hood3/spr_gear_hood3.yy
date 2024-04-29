@@ -35,7 +35,7 @@
   "origin": 0,
   "parent": {
     "name": "decorations",
-    "path": "folders/Sprites/New UI/Marine Viewer/decorations.yy",
+    "path": "folders/Sprites/Marine Viewer/decorations.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

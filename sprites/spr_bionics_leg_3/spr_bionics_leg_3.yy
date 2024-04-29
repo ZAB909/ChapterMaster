@@ -29,7 +29,7 @@
   "origin": 0,
   "parent": {
     "name": "bionics",
-    "path": "folders/Sprites/New UI/Gear/bionics.yy",
+    "path": "folders/Sprites/Marine Viewer/bionics.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

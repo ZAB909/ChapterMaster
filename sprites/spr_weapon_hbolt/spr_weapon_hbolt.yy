@@ -2,10 +2,10 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "spr_weapon_hbolt",
-  "bbox_bottom": 133,
-  "bbox_left": 21,
-  "bbox_right": 155,
-  "bbox_top": 62,
+  "bbox_bottom": 137,
+  "bbox_left": 27,
+  "bbox_right": 161,
+  "bbox_top": 66,
   "bboxMode": 0,
   "collisionKind": 1,
   "collisionTolerance": 0,
@@ -29,7 +29,7 @@
   "origin": 0,
   "parent": {
     "name": "weapons",
-    "path": "folders/Sprites/New UI/Gear/weapons.yy",
+    "path": "folders/Sprites/Marine Viewer/weapons.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

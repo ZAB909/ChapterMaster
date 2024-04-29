@@ -27,7 +27,7 @@
   "origin": 9,
   "parent": {
     "name": "weapons_terminator",
-    "path": "folders/Sprites/New UI/Gear/weapons_terminator.yy",
+    "path": "folders/Sprites/Marine Viewer/weapons_terminator.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {
