@@ -25,6 +25,9 @@ void main()
     vec3 robes_colour_base = vec3(201.0/255.0, 178.0/255.0, 147.0/255.0);
     vec3 robes_highlight = vec3(230.0/255.0, 203.0/255.0, 168.0/255.0);
     vec3 robes_darkness = vec3(189.0/255.0, 167.0/255.0, 138.0/255.0);
+    vec3 robes_colour_base_2 = vec3(168.0/255.0, 150.0/255.0, 124.0/255.0);
+    vec3 robes_highlight_2 = vec3(186.0/255.0, 165.0/255.0, 135.0/255.0);
+    vec3 robes_darkness_2 = vec3(148.0/255.0, 132.0/255.0, 108.0/255.0);    
     vec4 col = texture2D( gm_BaseTexture, v_vTexcoord );
     if( col.rgb == f_Colour1.rgb )
     {
@@ -64,15 +67,15 @@ void main()
     {
         col.rgb = f_Replace8.rgb;
     } 
-    if( col.rgb == robes_colour_base.rgb )
+    if( col.rgb == robes_colour_base.rgb || col.rgb == robes_colour_base_2.rgb )
     {
         col.rgb = robes_colour_replace.rgb;
     }
-    if (col.rgb == robes_highlight.rgb){
+    if (col.rgb == robes_highlight.rgb || col.rgb == robes_highlight_2.rgb){
         col.rgb = vec3(robes_colour_replace.r*1.25, robes_colour_replace.g*1.25, robes_colour_replace.b*1.25).rgb;
         //col.rgb = mix(robes_highlight.rgb, robes_colour_replace.rgb, 0.25);
     }
-    if (col.rgb == robes_darkness.rgb){
+    if (col.rgb == robes_darkness.rgb || col.rgb == robes_darkness_2.rgb){
         //col.rgb = vec3(col.r*0.8, col.g*0.8, col.b*0.8).rgb;
         //col.rgb = robes_colour_replace.rgb;
         //col.rgb = mix(robes_darkness.rbg, robes_colour_replace.rgb, 0.25);
