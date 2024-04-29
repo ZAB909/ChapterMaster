@@ -1158,6 +1158,7 @@ if (slide=4){
         shader_set_uniform_f(colour_to_set6, targetR6,targetG6,targetB6 );
         shader_set_uniform_f(colour_to_find7, sourceR7,sourceG7,sourceB7 );
         shader_set_uniform_f(colour_to_set7, targetR7,targetG7,targetB7 );
+        shader_set_uniform_f(colour_to_set7, targetR7,targetG7,targetB7 );
         
         //Rejoice!
         

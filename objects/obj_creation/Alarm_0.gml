@@ -65,3 +65,13 @@ targetG7 = col_g[weapon_color]/255;
 targetB7 = col_b[weapon_color]/255;
 colour_to_find8 = shader_get_uniform(sReplaceColor, "f_Colour8");
 colour_to_set8 = shader_get_uniform(sReplaceColor, "f_Replace8");
+
+
+cloth_base_colour = shader_get_uniform(sReplaceColor, "f_Colour8");
+cloth_replace_colour = shader_get_uniform(sReplaceColor, "f_Replace8");
+cloth_base = 0/255;
+cloth_base = 255/255;
+cloth_base = 255/255;
+cloth_replace = col_r[weapon_color]/255;
+cloth_replace = col_g[weapon_color]/255;
+cloth_replace = col_b[weapon_color]/255;
