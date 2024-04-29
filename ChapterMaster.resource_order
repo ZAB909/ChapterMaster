@@ -52,7 +52,7 @@
     {"name":"spr_creation_nosplash","order":27,"path":"sprites/spr_creation_nosplash/spr_creation_nosplash.yy",},
     {"name":"spr_rg_mk6_helm","order":10,"path":"sprites/spr_rg_mk6_helm/spr_rg_mk6_helm.yy",},
     {"name":"spr_creation_slate","order":29,"path":"sprites/spr_creation_slate/spr_creation_slate.yy",},
-    {"name":"spr_gear_halo","order":6,"path":"sprites/spr_gear_halo/spr_gear_halo.yy",},
+    {"name":"spr_gear_halo","order":2,"path":"sprites/spr_gear_halo/spr_gear_halo.yy",},
     {"name":"spr_gear_hood1","order":7,"path":"sprites/spr_gear_hood1/spr_gear_hood1.yy",},
     {"name":"spr_gear_hood3","order":9,"path":"sprites/spr_gear_hood3/spr_gear_hood3.yy",},
     {"name":"spr_gear_hood2","order":8,"path":"sprites/spr_gear_hood2/spr_gear_hood2.yy",},
