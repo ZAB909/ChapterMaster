@@ -177,6 +177,8 @@ function scr_draw_unit_image(x_draw, y_draw){
             shader_set_uniform_f(obj_controller.colour_to_set6, obj_controller.targetR6,obj_controller.targetG6,obj_controller.targetB6 );
             shader_set_uniform_f(obj_controller.colour_to_find7, obj_controller.sourceR7,obj_controller.sourceG7,obj_controller.sourceB7 );
             shader_set_uniform_f(obj_controller.colour_to_set7, obj_controller.targetR7,obj_controller.targetG7,obj_controller.targetB7 );
+            shader_get_uniform(sReplaceColor, "f_Colour8");
+            shader_set_uniform_f(shader_get_uniform(sReplaceColor, "robes_colour_replace"), obj_controller.targetR3,obj_controller.targetG3,obj_controller.targetB3 );
             // Special specialist stuff here
             /*
             ui_specialist=0;

@@ -1075,7 +1075,23 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}
 		}
 	};
-	body = {"left_leg":{}, "right_leg":{}, "torso":{armour_choice:irandom(1), variation:irandom(10)}, "left_arm":{}, "right_arm":{}, "left_eye":{}, "right_eye":{},"throat":{}, "jaw":{},"head":{variation:irandom(10)}}; //body parts list can be extended as much as people want
+	body = {
+		"left_leg":{}, 
+		"right_leg":{}, 
+		"torso":{
+			cloth:{
+				variation:irandom(10);
+			}
+			armour_choice:irandom(1),
+			variation:irandom(10);
+		}, 
+		"left_arm":{},
+		"right_arm":{}, 
+		"left_eye":{}, 
+		"right_eye":{},
+		"throat":{}, 
+		"jaw":{},
+		"head":{variation:irandom(10)}}; //body parts list can be extended as much as people want
 
 	static alter_body = function(body_slot, body_item_key, new_body_data, overwrite=true){//overwrite means it will replace any existing data
 		if (struct_exists(body, body_slot)){
