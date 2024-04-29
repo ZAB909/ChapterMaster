@@ -33,13 +33,13 @@
   "height": 262,
   "HTile": false,
   "layers": [
-    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"8e416e9e-9b25-48c9-bc09-58c133ab7367","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"35a6dfac-2852-40d7-acb3-0c4a56344283","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": null,
   "origin": 9,
   "parent": {
     "name": "specialist",
-    "path": "folders/Sprites/New UI/Marine Viewer/body_types/specialist.yy",
+    "path": "folders/Sprites/Marine Viewer/body_types/specialist.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

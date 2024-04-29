@@ -2,10 +2,10 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "spr_artificer_colors",
-  "bbox_bottom": 259,
+  "bbox_bottom": 260,
   "bbox_left": 0,
   "bbox_right": 155,
-  "bbox_top": 38,
+  "bbox_top": 39,
   "bboxMode": 0,
   "collisionKind": 1,
   "collisionTolerance": 0,
@@ -33,13 +33,13 @@
   "height": 272,
   "HTile": false,
   "layers": [
-    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"11b971e6-3349-42b8-a4b8-5d3a4ba4a482","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"a32bab92-cfaa-4623-b2e1-8cc8f78a9d6d","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": null,
   "origin": 9,
   "parent": {
     "name": "body_types",
-    "path": "folders/Sprites/New UI/Marine Viewer/body_types.yy",
+    "path": "folders/Sprites/Marine Viewer/body_types.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

@@ -38,7 +38,7 @@
   "origin": 0,
   "parent": {
     "name": "body_types",
-    "path": "folders/Sprites/New UI/Marine Viewer/body_types.yy",
+    "path": "folders/Sprites/Marine Viewer/body_types.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

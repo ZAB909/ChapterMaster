@@ -25,8 +25,8 @@
   "nineSlice": null,
   "origin": 0,
   "parent": {
-    "name": "Gear",
-    "path": "folders/Sprites/New UI/Gear.yy",
+    "name": "gear",
+    "path": "folders/Sprites/Marine Viewer/gear.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {
