@@ -403,6 +403,7 @@
     {"name":"snd_legal","order":5,"path":"sounds/snd_legal/snd_legal.yy",},
     {"name":"spr_forge_holo","order":32,"path":"sprites/spr_forge_holo/spr_forge_holo.yy",},
     {"name":"snd_prologue","order":7,"path":"sounds/snd_prologue/snd_prologue.yy",},
+    {"name":"spr_weapon_chainfist","order":3,"path":"sprites/spr_weapon_chainfist/spr_weapon_chainfist.yy",},
     {"name":"snd_royal","order":9,"path":"sounds/snd_royal/snd_royal.yy",},
     {"name":"snd_vode","order":11,"path":"sounds/snd_vode/snd_vode.yy",},
     {"name":"snd_battle","order":13,"path":"sounds/snd_battle/snd_battle.yy",},

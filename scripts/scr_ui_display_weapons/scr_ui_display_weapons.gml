@@ -35,7 +35,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
         var terminator_melee = {
             "Power Fist":spr_weapon_powfist3,
             "Lightning Claw":spr_weapon_lightning2,
-            "Chainfist":spr_weapon_powfist3,
+            "Chainfist":spr_weapon_chainfist,
         }
         var terminator_melee_names=struct_get_names(terminator_melee);
         for (var i=0;i<array_length(terminator_melee_names);i++){

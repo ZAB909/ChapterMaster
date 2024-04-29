@@ -712,6 +712,7 @@
     {"id":{"name":"snd_legal","path":"sounds/snd_legal/snd_legal.yy",},},
     {"id":{"name":"spr_forge_holo","path":"sprites/spr_forge_holo/spr_forge_holo.yy",},},
     {"id":{"name":"snd_prologue","path":"sounds/snd_prologue/snd_prologue.yy",},},
+    {"id":{"name":"spr_weapon_chainfist","path":"sprites/spr_weapon_chainfist/spr_weapon_chainfist.yy",},},
     {"id":{"name":"snd_royal","path":"sounds/snd_royal/snd_royal.yy",},},
     {"id":{"name":"snd_vode","path":"sounds/snd_vode/snd_vode.yy",},},
     {"id":{"name":"snd_battle","path":"sounds/snd_battle/snd_battle.yy",},},
