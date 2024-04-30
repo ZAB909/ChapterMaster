@@ -525,6 +525,10 @@ function scr_draw_unit_image(x_draw, y_draw){
                                 if array_contains(["MK5 Heresy", "MK6 Corvus","MK7 Aquila", "MK8 Errant", "Artificer Armour"], armour()){
                                     draw_sprite(spr_da_backpack,0,xx+x_draw,yy+y_draw);
                                 }
+                            } else{
+                                if (specialist_colours==0) then draw_sprite(armour_sprite,10,xx+x_draw,yy+y_draw);
+                                if (specialist_colours==1) then draw_sprite(armour_sprite,11,xx+x_draw,yy+y_draw);
+                                if (specialist_colours>=2) then draw_sprite(armour_sprite,12,xx+x_draw,yy+y_draw);
                             }
                         }
                     }else{
