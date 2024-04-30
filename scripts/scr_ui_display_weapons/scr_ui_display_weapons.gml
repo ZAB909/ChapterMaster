@@ -15,7 +15,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
     if (left_or_right == 2) then fix_right = 0;
 
     // Handle terminator ranged sprites
-    if (!sprite_found && (current_armor == ArmorType.Indomitus || current_armor == ArmorType.Tartaros)){
+    if (!sprite_found && (current_armor == ArmourType.Indomitus || current_armor == ArmourType.Tartaros)){
         var terminator_ranged = {
             "Assault Cannon":spr_weapon_assca,
             "Heavy Flamer":spr_weapon_hflamer_term,
@@ -31,7 +31,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
     }
 
     // Handle terminator melee sprites
-    if (!sprite_found && (current_armor == ArmorType.Indomitus || current_armor == ArmorType.Tartaros)){
+    if (!sprite_found && (current_armor == ArmourType.Indomitus || current_armor == ArmourType.Tartaros)){
         var terminator_melee = {
             "Power Fist":spr_weapon_powfist3,
             "Lightning Claw":spr_weapon_lightning2,
@@ -156,29 +156,29 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
     }
 
     // Fix sprite for termi/tartar
-    if (current_armor == ArmorType.Indomitus || current_armor == ArmorType.Tartaros) {
+    if (current_armor == ArmourType.Indomitus || current_armor == ArmourType.Tartaros) {
         if (left_or_right == 1) and (ui_arm[1] == false) and (fix_left == 0) then fix_left = 1;
         if (left_or_right == 2) and (ui_arm[2] == false) and (fix_right == 0) then fix_right = 1;
     }
 
-    if (current_armor != ArmorType.Normal && display_type != "terminator_ranged" && display_type != "terminator_melee"){
+    if (current_armor != ArmourType.Normal && display_type != "terminator_ranged" && display_type != "terminator_melee"){
         ui_ymod[left_or_right] -= 20;
         if (display_type == "normal_ranged") {
-            if (current_armor == ArmorType.Indomitus) {
+            if (current_armor == ArmourType.Indomitus) {
                 ui_xmod[left_or_right] -= 22;
                 ui_ymod[left_or_right] += 11;
             }
-            if (current_armor == ArmorType.Tartaros) {
+            if (current_armor == ArmourType.Tartaros) {
                 ui_xmod[left_or_right] -= 14;
                 ui_ymod[left_or_right] += 13;
             }
         }
         if (display_type == "melee_onehand") {
-            if (current_armor == ArmorType.Indomitus) {
+            if (current_armor == ArmourType.Indomitus) {
                 ui_xmod[left_or_right] -= 21;
                 ui_ymod[left_or_right] += 18;
             }
-            if (current_armor == ArmorType.Tartaros) {
+            if (current_armor == ArmourType.Tartaros) {
                 ui_xmod[left_or_right] -= 18;
                 ui_ymod[left_or_right] += 18;
             }
@@ -187,32 +187,32 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
 
     // Fix graphics for tremi/tartaros weapons
     // if (display_type == "power_fist") {
-    //     if (current_armor != ArmorType.Normal) {
+    //     if (current_armor != ArmourType.Normal) {
     //         ui_arm[left_or_right] = false;
     //         ui_above[left_or_right] = true;
     //     }
-        // if (current_armor == ArmorType.Indomitus) and(left_or_right == 1) {
+        // if (current_armor == ArmourType.Indomitus) and(left_or_right == 1) {
         //     ui_xmod[left_or_right] = -3;
         //     ui_ymod[left_or_right] = 10;
         //     fix_left = 8;
         //     ui_weapon[left_or_right] = spr_weapon_powfist3;
         //     clear = true;
         // }
-        // if (current_armor == ArmorType.Indomitus) and(left_or_right == 2) {
+        // if (current_armor == ArmourType.Indomitus) and(left_or_right == 2) {
         //     ui_xmod[left_or_right] = 2;
         //     ui_ymod[left_or_right] = 10;
         //     fix_right = 8;
         //     ui_weapon[left_or_right] = spr_weapon_powfist3;
         //     clear = true;
         // }
-        // if (current_armor == ArmorType.Tartaros) and(left_or_right == 1) {
+        // if (current_armor == ArmourType.Tartaros) and(left_or_right == 1) {
         //     ui_xmod[left_or_right] = 0;
         //     ui_ymod[left_or_right] = 10;
         //     fix_left = 8;
         //     ui_weapon[left_or_right] = spr_weapon_powfist3;
         //     clear = true;
         // }
-        // if (current_armor == ArmorType.Tartaros) and(left_or_right == 2) {
+        // if (current_armor == ArmourType.Tartaros) and(left_or_right == 2) {
         //     ui_xmod[left_or_right] = -1;
         //     ui_ymod[left_or_right] = 10;
         //     fix_right = 8;
@@ -221,38 +221,38 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
         // }
     // }
     if (display_type == "lightning_claw") {
-        if (current_armor == ArmorType.Normal) and(left_or_right == 1) {
+        if (current_armor == ArmourType.Normal) and(left_or_right == 1) {
             ui_xmod[left_or_right] += 11;
         }
-        if (current_armor == ArmorType.Normal) and(left_or_right == 2) {
+        if (current_armor == ArmourType.Normal) and(left_or_right == 2) {
             ui_xmod[left_or_right] -= 8;
         }
-        // if (current_armor != ArmorType.Normal) {
+        // if (current_armor != ArmourType.Normal) {
         //     ui_arm[left_or_right] = false;
         //     ui_above[left_or_right] = true;
         // }
-        // if (current_armor == ArmorType.Indomitus) and(left_or_right == 1) {
+        // if (current_armor == ArmourType.Indomitus) and(left_or_right == 1) {
         //     ui_xmod[left_or_right] = -3;
         //     ui_ymod[left_or_right] = 10;
         //     fix_left = 8.1;
         //     ui_weapon[left_or_right] = spr_weapon_lightning2;
         //     clear = true;
         // }
-        // if (current_armor == ArmorType.Indomitus) and(left_or_right == 2) {
+        // if (current_armor == ArmourType.Indomitus) and(left_or_right == 2) {
         //     ui_xmod[left_or_right] = 2;
         //     ui_ymod[left_or_right] = 10;
         //     fix_right = 8.1;
         //     ui_weapon[left_or_right] = spr_weapon_lightning2;
         //     clear = true;
         // }
-        // if (current_armor == ArmorType.Tartaros) and(left_or_right == 1) {
+        // if (current_armor == ArmourType.Tartaros) and(left_or_right == 1) {
         //     ui_xmod[left_or_right] = 0;
         //     ui_ymod[left_or_right] = 10;
         //     fix_left = 8.1;
         //     ui_weapon[left_or_right] = spr_weapon_lightning2;
         //     clear = true;
         // }
-        // if (current_armor == ArmorType.Tartaros) and(left_or_right == 2) {
+        // if (current_armor == ArmourType.Tartaros) and(left_or_right == 2) {
         //     ui_xmod[left_or_right] = -1;
         //     ui_ymod[left_or_right] = 10;
         //     fix_right = 8.1;

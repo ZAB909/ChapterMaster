@@ -345,9 +345,9 @@ function star_ui_name_node(){
 				if (owner != eFACTION.Player ){
 					context.set_color_solid(global.star_name_colors[owner])
 				} else {
-					var main_color = make_color_rgb(obj_controller.targetR1 *255, obj_controller.targetG1 * 255, obj_controller.targetB1 * 255)
-					var pauldron_color = make_color_rgb(obj_controller.targetR3 *255, obj_controller.targetG3 *255, obj_controller.targetB3 *255)
-					context.set_vertical_gradient(main_color, pauldron_color)
+					var main_color = make_colour_from_array(body_colour_replace);
+					var pauldron_color = make_colour_from_array(pauldron_colour_replace);
+					context.set_vertical_gradient(main_color, pauldron_color);
 				}
 			})
 		.finalize()
