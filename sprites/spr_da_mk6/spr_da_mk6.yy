@@ -26,7 +26,7 @@
   "origin": 9,
   "parent": {
     "name": "dark_angels_specials",
-    "path": "folders/Sprites/New UI/Marine Viewer/body_types/specialist/dark_angels_specials.yy",
+    "path": "folders/Sprites/Marine Viewer/body_types/specialist/dark_angels_specials.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

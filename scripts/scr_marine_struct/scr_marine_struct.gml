@@ -1084,6 +1084,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			},
 			armour_choice:irandom(1),
 			variation:irandom(10),
+			backpack_variation:irandom(10),
 		}, 
 		"left_arm":{},
 		"right_arm":{}, 

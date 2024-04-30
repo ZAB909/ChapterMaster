@@ -206,7 +206,7 @@ function scr_draw_unit_image(x_draw, y_draw){
             //TODO make some sort of reusable structure to handle this sort of colour logic
             // also not ideal way of creating colour variation but it's a first pass
             var cloth_variation=body.torso.cloth.variation;
-            var cloth_col = [201.0/255.0, 178.0/255.0, 147.0/255.0, 1];
+            var cloth_col = [201.0/255.0, 178.0/255.0, 147.0/255.0];
             with (obj_controller){
                 if (cloth_variation < 2){
                     cloth_col = body_colour_replace;
@@ -340,11 +340,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                 set_shader_color(ShaderType.RightPauldron, Colors.Gold);
                 ttrim=0;
                 specialist_colours=0;
-            }
-
-            shader_set_uniform_f(obj_controller.colour_to_find8, 46/255,49/255,146/255 );//body
-            var main_body_shade = shadow_creator(obj_controller.targetR1*255,obj_controller.targetG1*255,obj_controller.targetB1*255, 0.7);
-            shader_set_uniform_f(obj_controller.colour_to_set8, color_get_red(main_body_shade)/255,color_get_green(main_body_shade)/255,color_get_blue(main_body_shade)/255);//body         
+            }       
 			// Marine draw sequence
             /*
             main
@@ -520,9 +516,17 @@ function scr_draw_unit_image(x_draw, y_draw){
                  // Draw the backpack
                 if (armour_type!=ArmourType.Dreadnought){
                     if (ui_back){
-                        if (specialist_colours==0) then draw_sprite(armour_sprite,10,xx+x_draw,yy+y_draw);
-                        if (specialist_colours==1) then draw_sprite(armour_sprite,11,xx+x_draw,yy+y_draw);
-                        if (specialist_colours>=2) then draw_sprite(armour_sprite,12,xx+x_draw,yy+y_draw);
+                        if (body.torso.backpack_variation>2){
+                            if (specialist_colours==0) then draw_sprite(armour_sprite,10,xx+x_draw,yy+y_draw);
+                            if (specialist_colours==1) then draw_sprite(armour_sprite,11,xx+x_draw,yy+y_draw);
+                            if (specialist_colours>=2) then draw_sprite(armour_sprite,12,xx+x_draw,yy+y_draw);
+                        } else {
+                            if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1){
+                                if array_contains(["MK5 Heresy", "MK6 Corvus","MK7 Aquila", "MK8 Errant", "Artificer Armour"], armour()){
+                                    draw_sprite(spr_da_backpack,0,xx+x_draw,yy+y_draw);
+                                }
+                            }
+                        }
                     }else{
                         if (back_type==BackType.Jump){
                             if (specialist_colours==0) then draw_sprite(spr_pack_jump,0,xx+x_draw,yy+y_draw);
@@ -683,6 +687,8 @@ function scr_draw_unit_image(x_draw, y_draw){
                             armour_draw=[spr_sanguin_guard,0];
                             draw_sprite(spr_sanguin_guard,1,xx+x_draw,yy+y_draw);
                         }
+                    } else if(global.chapter_name=="Dark Angels"){
+                        specific_armour_sprite = spr_azreal;
                     }
                 } else if (armour_type==ArmourType.Tartaros){
                     specific_armour_sprite = spr_tartaros2_colors;
