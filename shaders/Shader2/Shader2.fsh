@@ -1,4 +1,4 @@
-vvarying vec2 v_vTexcoord;
+varying vec2 v_vTexcoord;
 uniform vec4 main_colour;
 void main()
 {
