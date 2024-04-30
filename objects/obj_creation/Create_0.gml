@@ -894,8 +894,6 @@ scr_colors_initialize();
 		col_g[weapon_color]/255,
 		col_b[weapon_color]/255,
 	];
-colour_to_find8 = shader_get_uniform(sReplaceColor, "f_Colour8");
-colour_to_set8 = shader_get_uniform(sReplaceColor, "f_Replace8");
 /* */
 action_set_alarm(30, 1);
 /*  */

@@ -345,6 +345,7 @@ function star_ui_name_node(){
 				if (owner != eFACTION.Player ){
 					context.set_color_solid(global.star_name_colors[owner])
 				} else {
+					scr_shader_initialize();
 					var main_color = make_colour_from_array(body_colour_replace);
 					var pauldron_color = make_colour_from_array(pauldron_colour_replace);
 					context.set_vertical_gradient(main_color, pauldron_color);
