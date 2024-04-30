@@ -45,7 +45,7 @@ function scr_colors_initialize() {
         ["Mephiston Red", 145, 12, 9],
         ["Orange", 255, 156, 0],
         ["Brown", 112, 66, 0],
-        ["Bone", 225, 217, 193],
+        ["Bone", 211, 199, 157],
         ["Yellow", 255, 220, 0],
         ["Gold", 255, 164, 12],
         ["Copper", 166, 129, 0],
