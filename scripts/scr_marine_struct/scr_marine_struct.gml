@@ -1253,7 +1253,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 			if (global.chapter_name=="Black Templars"){
 				if (irandom(14)==0){
-					body[$"torso"].robes =1;
+					body[$"torso"].robes =choose(1,2);
 				}				
 			}
 			if (global.chapter_name=="Space Wolves") or (obj_ini.progenitor=3) {
@@ -1265,16 +1265,18 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			} 
 
 			if (array_contains(["Dark Angels","Black Templars"],global.chapter_name) || obj_ini.progenitor==1){
-				if (irandom(19)==0){
-					body[$"torso"].robes =choose(0,0,1);
+				if (irandom(14)==0){
+					body[$"torso"].robes =choose(0,0,0,1,1,2);
 					if (irandom(2)<2){
 						body[$"head"].hood =1;
 					}
 				}
-			}else  if(irandom(49)==0){
-				body[$"torso"].robes =choose(0,1);
-				if (irandom(2)==0){
-					body[$"head"].hood =1;
+			}else  if(irandom(30)==0){
+				body.torso.robes =choose(0,1,2,2,2,2,2);
+				if (body.torso<2){
+					if (irandom(2)==0){
+						body[$"head"].hood =1;
+					}
 				}
 			}
 			break;
