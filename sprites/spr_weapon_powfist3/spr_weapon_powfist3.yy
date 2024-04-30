@@ -14,7 +14,9 @@
   "For3D": false,
   "frames": [
     {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"33dc232c-077a-436b-a8c8-a0f1d5790709",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"1f63d6d5-5348-4de0-93e9-654ba8f0f015",},
     {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"0e23187f-ea5b-4f6a-8f8e-891133df4873",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"2207e35b-8196-4970-9d09-c5b6c7384988",},
   ],
   "gridX": 0,
   "gridY": 0,
@@ -44,7 +46,7 @@
     "events": {"resourceType":"KeyframeStore<MessageEventKeyframe>","resourceVersion":"1.0","Keyframes":[],},
     "eventStubScript": null,
     "eventToFunction": {},
-    "length": 2.0,
+    "length": 4.0,
     "lockOrigin": false,
     "moments": {"resourceType":"KeyframeStore<MomentsEventKeyframe>","resourceVersion":"1.0","Keyframes":[],},
     "playback": 1,
@@ -56,7 +58,9 @@
     "tracks": [
       {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"1.0","Keyframes":[
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"33dc232c-077a-436b-a8c8-a0f1d5790709","path":"sprites/spr_weapon_powfist3/spr_weapon_powfist3.yy",},},},"Disabled":false,"id":"2f985514-10dc-409d-8bb4-a0230f0abe9e","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
-            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"0e23187f-ea5b-4f6a-8f8e-891133df4873","path":"sprites/spr_weapon_powfist3/spr_weapon_powfist3.yy",},},},"Disabled":false,"id":"1e26d9ff-bc47-4c61-8f21-3997c326cfb4","IsCreationKey":false,"Key":1.0,"Length":1.0,"Stretch":false,},
+            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"1f63d6d5-5348-4de0-93e9-654ba8f0f015","path":"sprites/spr_weapon_powfist3/spr_weapon_powfist3.yy",},},},"Disabled":false,"id":"9593d03d-b1b0-45bd-be2c-e067f04395ae","IsCreationKey":false,"Key":1.0,"Length":1.0,"Stretch":false,},
+            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"0e23187f-ea5b-4f6a-8f8e-891133df4873","path":"sprites/spr_weapon_powfist3/spr_weapon_powfist3.yy",},},},"Disabled":false,"id":"1e26d9ff-bc47-4c61-8f21-3997c326cfb4","IsCreationKey":false,"Key":2.0,"Length":1.0,"Stretch":false,},
+            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"2207e35b-8196-4970-9d09-c5b6c7384988","path":"sprites/spr_weapon_powfist3/spr_weapon_powfist3.yy",},},},"Disabled":false,"id":"a5e59c5a-032a-408f-a62c-64525220aaf7","IsCreationKey":false,"Key":3.0,"Length":1.0,"Stretch":false,},
           ],},"modifiers":[],"spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange": null,
