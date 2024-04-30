@@ -8,6 +8,24 @@ enum ShaderType {
     Weapon
 }
 
+// Define armour types
+enum ArmourType {
+    Normal,
+    Indomitus,
+    Tartaros,
+    Dreadnought,
+    None
+}
+
+    // Define backpack types
+    enum BackType {
+        None,
+        Jump,
+        Dev
+    }
+function make_colour_from_array(col_array){
+    return make_color_rgb(col_array[0] *255, col_array[1] * 255, col_array[2] * 255);
+}
 function scr_draw_unit_image(x_draw, y_draw){
     draw_set_font(fnt_40k_14b);
     draw_set_color(c_gray);
@@ -120,28 +138,12 @@ function scr_draw_unit_image(x_draw, y_draw){
     
         // if (_armour_type!=ArType.Norm) then ui_back=false;
 
-        // Define backpack types
-        enum BackType {
-            None,
-            Jump,
-            Dev
-        }
-
         if (unit_back=="Jump Pack"){
 			ui_back=false;
 			back_type=BackType.Jump;
 		}else if (unit_back=="Heavy Weapons Pack"){
             ui_back=false;
 			back_type=BackType.Dev;
-        }
-
-        // Define armour types
-        enum ArmourType {
-            Normal,
-            Indomitus,
-            Tartaros,
-            Dreadnought,
-            None
         }
 
         switch(unit_armour){
@@ -182,39 +184,45 @@ function scr_draw_unit_image(x_draw, y_draw){
                 y_draw+=40;   
         if(shader_is_compiled(sReplaceColor)){
             shader_set(sReplaceColor);
-            shader_set_uniform_f(obj_controller.colour_to_find1, obj_controller.sourceR1,obj_controller.sourceG1,obj_controller.sourceB1 ); //body / blue-origin  
-            shader_set_uniform_f(obj_controller.colour_to_set1, obj_controller.targetR1,obj_controller.targetG1,obj_controller.targetB1 );
-            shader_set_uniform_f(obj_controller.colour_to_find2, obj_controller.sourceR2,obj_controller.sourceG2,obj_controller.sourceB2 ); //helmet / red-origin
-            shader_set_uniform_f(obj_controller.colour_to_set2, obj_controller.targetR2,obj_controller.targetG2,obj_controller.targetB2 );
-            shader_set_uniform_f(obj_controller.colour_to_find3, obj_controller.sourceR3,obj_controller.sourceG3,obj_controller.sourceB3 ); //left pauldron / yellow-origin
-            shader_set_uniform_f(obj_controller.colour_to_set3, obj_controller.targetR3,obj_controller.targetG3,obj_controller.targetB3 );
-            shader_set_uniform_f(obj_controller.colour_to_find4, obj_controller.sourceR4,obj_controller.sourceG4,obj_controller.sourceB4 ); //lens / green-origin
-            shader_set_uniform_f(obj_controller.colour_to_set4, obj_controller.targetR4,obj_controller.targetG4,obj_controller.targetB4 );
-            shader_set_uniform_f(obj_controller.colour_to_find5, obj_controller.sourceR5,obj_controller.sourceG5,obj_controller.sourceB5 ); // trim / pink-origin
-            shader_set_uniform_f(obj_controller.colour_to_set5, obj_controller.targetR5,obj_controller.targetG5,obj_controller.targetB5 );
-            shader_set_uniform_f(obj_controller.colour_to_find6, obj_controller.sourceR6,obj_controller.sourceG6,obj_controller.sourceB6 ); //right pauldron / white-origin
-            shader_set_uniform_f(obj_controller.colour_to_set6, obj_controller.targetR6,obj_controller.targetG6,obj_controller.targetB6 );
-            shader_set_uniform_f(obj_controller.colour_to_find7, obj_controller.sourceR7,obj_controller.sourceG7,obj_controller.sourceB7 ); //weapon / cyan-origin
-            shader_set_uniform_f(obj_controller.colour_to_set7, obj_controller.targetR7,obj_controller.targetG7,obj_controller.targetB7 );
+         
+        with (obj_controller){
+                shader_set_uniform_f_array(colour_to_find1, body_colour_find );
+                shader_set_uniform_f_array(colour_to_set1, body_colour_replace );
+                shader_set_uniform_f_array(colour_to_find2, secondary_colour_find );       
+                shader_set_uniform_f_array(colour_to_set2, secondary_colour_replace );
+                shader_set_uniform_f_array(colour_to_find3, pauldron_colour_find );       
+                shader_set_uniform_f_array(colour_to_set3, pauldron_colour_replace );
+                shader_set_uniform_f_array(colour_to_find4, lens_colour_find );       
+                shader_set_uniform_f_array(colour_to_set4, lens_colour_replace );
+                shader_set_uniform_f_array(colour_to_find5, trim_colour_find );
+                shader_set_uniform_f_array(colour_to_set5, trim_colour_replace );
+                shader_set_uniform_f_array(colour_to_find6, pauldron2_colour_find );
+                shader_set_uniform_f_array(colour_to_set6, pauldron2_colour_replace );
+                shader_set_uniform_f_array(colour_to_find7, weapon_colour_find );
+                shader_set_uniform_f_array(colour_to_set7, weapon_colour_replace );
+            }
             shader_get_uniform(sReplaceColor, "f_Colour8");
 
             //TODO make some sort of reusable structure to handle this sort of colour logic
+            // also not ideal way of creating colour variation but it's a first pass
             var cloth_variation=body.torso.cloth.variation;
-            var cloth_col = [201.0/255.0, 178.0/255.0, 147.0/255.0];
-            if (cloth_variation < 2){
-                cloth_col = [obj_controller.targetR1,obj_controller.targetG1,obj_controller.targetB1];
-            } else if (cloth_variation < 4){
-                cloth_col = [obj_controller.targetR2,obj_controller.targetG2,obj_controller.targetB2];
-            } else if (cloth_variation < 6){
-                cloth_col = [obj_controller.targetR3,obj_controller.targetG3,obj_controller.targetB3];
-            } else if (cloth_variation < 8){
-                cloth_col = [obj_controller.targetR5,obj_controller.targetG5,obj_controller.targetB5];
-            }else if (cloth_variation < 10){
-                cloth_col = [obj_controller.targetR6,obj_controller.targetG6,obj_controller.targetB6];
-            }else if (cloth_variation < 12){
-                cloth_col = [obj_controller.targetR7,obj_controller.targetG7,obj_controller.targetB7];
+            var cloth_col = [201.0/255.0, 178.0/255.0, 147.0/255.0, 1];
+            with (obj_controller){
+                if (cloth_variation < 2){
+                    cloth_col = body_colour_replace;
+                } else if (cloth_variation < 4){
+                    cloth_col = secondary_colour_replace;
+                } else if (cloth_variation < 6){
+                    cloth_col = pauldron_colour_replace;
+                } else if (cloth_variation < 8){
+                    cloth_col = trim_colour_replace;
+                }else if (cloth_variation < 10){
+                    cloth_col = pauldron2_colour_replace;
+                }else if (cloth_variation < 12){
+                    cloth_col = weapon_colour_replace;
+                }
+                shader_set_uniform_f_array(shader_get_uniform(sReplaceColor, "robes_colour_replace"), cloth_col);
             }
-            shader_set_uniform_f(shader_get_uniform(sReplaceColor, "robes_colour_replace"), cloth_col[0],cloth_col[1],cloth_col[2]);
             // Special specialist stuff here
             /*
             ui_specialist=0;
@@ -1039,4 +1047,10 @@ function scr_draw_unit_image(x_draw, y_draw){
             if (string_count("Howling Banshee",name_role())>0) then draw_sprite(spr_eldar_hire,1,xx+x_draw,yy+y_draw);
         }
     }
+}
+
+function base_colour(R,G,B) constructor{
+    r=R;
+    g=G;
+    b=B;
 }
