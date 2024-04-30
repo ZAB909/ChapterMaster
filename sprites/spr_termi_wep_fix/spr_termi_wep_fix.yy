@@ -33,7 +33,7 @@
   "origin": 0,
   "parent": {
     "name": "Marine Viewer",
-    "path": "folders/Sprites/New UI/Marine Viewer.yy",
+    "path": "folders/Sprites/Marine Viewer.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

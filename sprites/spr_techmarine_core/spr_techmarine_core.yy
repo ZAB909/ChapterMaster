@@ -39,7 +39,7 @@
   "origin": 9,
   "parent": {
     "name": "specialist",
-    "path": "folders/Sprites/New UI/Marine Viewer/body_types/specialist.yy",
+    "path": "folders/Sprites/Marine Viewer/body_types/specialist.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

@@ -26,7 +26,7 @@
   "origin": 0,
   "parent": {
     "name": "helms",
-    "path": "folders/Sprites/New UI/Marine Viewer/helms.yy",
+    "path": "folders/Sprites/Marine Viewer/helms.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

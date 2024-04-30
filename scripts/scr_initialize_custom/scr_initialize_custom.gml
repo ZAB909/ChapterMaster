@@ -755,7 +755,7 @@ function scr_initialize_custom() {
 	    wep2[i,5]="Bolt Pistol";
 	    armour[i,5]="Power Armour";
 	    mobi[i,5]="";
-	    gear[i,5]="";
+	    gear[i,5]="Iron Halo";
 	    role[i,6]="Dreadnought";
 	    wep1[i,6]="Dreadnought Lightning Claw";
 	    wep2[i,6]="Lascannon";
@@ -1335,7 +1335,8 @@ function scr_initialize_custom() {
 			break;	
 	}	
 
-	chapter_master_equip.armour="Artificer Armour";
+	chapter_master_equip.armour = "Artificer Armour";
+	chapter_master_equip.gear = "Iron Halo";
 
 	//TODO will refactor how traits are distributed to chapter masters along with a refactor of chapter data
 	last_artifact = find_last_artifact();
@@ -1763,8 +1764,8 @@ function scr_initialize_custom() {
 // wep1 power sword // wep2 storm bolter default
 		wep1[company][k]=wep1[101,2];
 
-	    wep2[company][k]=wep2[101,2];
-	    armour[company][k]="MK4 Maximus";
+		wep2[company][k] = wep2[101, 2];
+		armour[company][k] = "Artificer Armour";
 
 	    
 	    unit.add_exp(210+irandom(30));

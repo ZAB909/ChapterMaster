@@ -30,7 +30,7 @@
   "origin": 9,
   "parent": {
     "name": "dreadnought",
-    "path": "folders/Sprites/New UI/Marine Viewer/dreadnought.yy",
+    "path": "folders/Sprites/Marine Viewer/dreadnought.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {
