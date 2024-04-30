@@ -58,6 +58,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Marine Viewer","folderPath":"folders/Sprites/Marine Viewer.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"bionics","folderPath":"folders/Sprites/Marine Viewer/bionics.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"body_types","folderPath":"folders/Sprites/Marine Viewer/body_types.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"deprecated","folderPath":"folders/Sprites/Marine Viewer/body_types/deprecated.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"specialist","folderPath":"folders/Sprites/Marine Viewer/body_types/specialist.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"decorations","folderPath":"folders/Sprites/Marine Viewer/decorations.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"dreadnought","folderPath":"folders/Sprites/Marine Viewer/dreadnought.yy",},
