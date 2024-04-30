@@ -419,6 +419,7 @@
     {"id":{"name":"spr_weapon_frcstaff","path":"sprites/spr_weapon_frcstaff/spr_weapon_frcstaff.yy",},},
     {"id":{"name":"spr_lib_area_pad","path":"sprites/spr_lib_area_pad/spr_lib_area_pad.yy",},},
     {"id":{"name":"spr_weapon_inferno","path":"sprites/spr_weapon_inferno/spr_weapon_inferno.yy",},},
+    {"id":{"name":"spr_cloth_tabbard","path":"sprites/spr_cloth_tabbard/spr_cloth_tabbard.yy",},},
     {"id":{"name":"spr_weapon_relbla","path":"sprites/spr_weapon_relbla/spr_weapon_relbla.yy",},},
     {"id":{"name":"spr_weapon_storm","path":"sprites/spr_weapon_storm/spr_weapon_storm.yy",},},
     {"id":{"name":"spr_weapon_stalker","path":"sprites/spr_weapon_stalker/spr_weapon_stalker.yy",},},

@@ -974,7 +974,11 @@ function scr_draw_unit_image(x_draw, y_draw){
                     draw_sprite(spr_marine_cloth_hood,0,xx+x_draw+hood_offset_x,yy+y_draw+hood_offset_y);     
                 }
                 if (struct_exists(body[$ "torso"],"robes")) {
-                    draw_sprite(spr_marine_robes,body[$ "torso"][$ "robes"],xx+x_draw+robe_offset_x,yy+y_draw+robe_offset_y);     
+                    if (body.torso.robes<2){
+                        draw_sprite(spr_marine_robes,body.torso.robes,xx+x_draw+robe_offset_x,yy+y_draw+robe_offset_y);     
+                    } else {
+                        draw_sprite(spr_cloth_tabbard,body.torso.robes,xx+x_draw+robe_offset_x,yy+y_draw+robe_offset_y);     
+                    }
                 }              
             }
 

@@ -131,6 +131,7 @@
     {"name":"spr_weapon_frcstaff","order":12,"path":"sprites/spr_weapon_frcstaff/spr_weapon_frcstaff.yy",},
     {"name":"spr_lib_area_pad","order":17,"path":"sprites/spr_lib_area_pad/spr_lib_area_pad.yy",},
     {"name":"spr_weapon_inferno","order":14,"path":"sprites/spr_weapon_inferno/spr_weapon_inferno.yy",},
+    {"name":"spr_cloth_tabbard","order":14,"path":"sprites/spr_cloth_tabbard/spr_cloth_tabbard.yy",},
     {"name":"spr_weapon_relbla","order":32,"path":"sprites/spr_weapon_relbla/spr_weapon_relbla.yy",},
     {"name":"spr_weapon_storm","order":37,"path":"sprites/spr_weapon_storm/spr_weapon_storm.yy",},
     {"name":"spr_weapon_stalker","order":35,"path":"sprites/spr_weapon_stalker/spr_weapon_stalker.yy",},
