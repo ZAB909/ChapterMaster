@@ -22,9 +22,13 @@
     {"name":"New Ground","order":2,"path":"folders/Sprites/New Ground.yy",},
     {"name":"New UI","order":3,"path":"folders/Sprites/New UI.yy",},
     {"name":"buttons","order":74,"path":"folders/Sprites/New UI/buttons.yy",},
+<<<<<<< HEAD
     {"name":"standards","order":74,"path":"folders/Sprites/New UI/Gear/standards.yy",},
     {"name":"Icons","order":73,"path":"folders/Sprites/New UI/Icons.yy",},
     {"name":"dark_angels_specials","order":5,"path":"folders/Sprites/Marine Viewer/body_types/specialist/dark_angels_specials.yy",},
+=======
+    {"name":"Icons","order":73,"path":"folders/Sprites/New UI/Icons.yy",},
+>>>>>>> 23830c7b (Terminator Fists fixes)
     {"name":"tooltips","order":75,"path":"folders/Sprites/New UI/tooltips.yy",},
     {"name":"Primary","order":4,"path":"folders/Sprites/Primary.yy",},
     {"name":"Ships","order":5,"path":"folders/Sprites/Ships.yy",},
@@ -50,7 +54,7 @@
     {"name":"spr_creation_nosplash","order":27,"path":"sprites/spr_creation_nosplash/spr_creation_nosplash.yy",},
     {"name":"spr_rg_mk6_helm","order":10,"path":"sprites/spr_rg_mk6_helm/spr_rg_mk6_helm.yy",},
     {"name":"spr_creation_slate","order":29,"path":"sprites/spr_creation_slate/spr_creation_slate.yy",},
-    {"name":"spr_gear_halo","order":6,"path":"sprites/spr_gear_halo/spr_gear_halo.yy",},
+    {"name":"spr_gear_halo","order":2,"path":"sprites/spr_gear_halo/spr_gear_halo.yy",},
     {"name":"spr_gear_hood1","order":7,"path":"sprites/spr_gear_hood1/spr_gear_hood1.yy",},
     {"name":"spr_gear_hood3","order":9,"path":"sprites/spr_gear_hood3/spr_gear_hood3.yy",},
     {"name":"spr_gear_hood2","order":8,"path":"sprites/spr_gear_hood2/spr_gear_hood2.yy",},
@@ -125,7 +129,7 @@
     {"name":"spr_weapon_powfist_old","order":26,"path":"sprites/spr_weapon_powfist_old/spr_weapon_powfist_old.yy",},
     {"name":"spr_weapon_powmaul","order":29,"path":"sprites/spr_weapon_powmaul/spr_weapon_powmaul.yy",},
     {"name":"spr_weapon_lightning1","order":17,"path":"sprites/spr_weapon_lightning1/spr_weapon_lightning1.yy",},
-    {"name":"spr_weapon_lightning2","order":18,"path":"sprites/spr_weapon_lightning2/spr_weapon_lightning2.yy",},
+    {"name":"spr_weapon_lightning2","order":4,"path":"sprites/spr_weapon_lightning2/spr_weapon_lightning2.yy",},
     {"name":"spr_weapon_frcstaff","order":12,"path":"sprites/spr_weapon_frcstaff/spr_weapon_frcstaff.yy",},
     {"name":"spr_lib_area_pad","order":17,"path":"sprites/spr_lib_area_pad/spr_lib_area_pad.yy",},
     {"name":"spr_weapon_inferno","order":14,"path":"sprites/spr_weapon_inferno/spr_weapon_inferno.yy",},

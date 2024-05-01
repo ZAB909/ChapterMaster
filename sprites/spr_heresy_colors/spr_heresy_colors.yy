@@ -37,8 +37,8 @@
   "nineSlice": null,
   "origin": 0,
   "parent": {
-    "name": "body_types",
-    "path": "folders/Sprites/Marine Viewer/body_types.yy",
+    "name": "deprecated",
+    "path": "folders/Sprites/Marine Viewer/body_types/deprecated.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

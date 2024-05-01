@@ -47,8 +47,8 @@ function scr_chapter_new(argument0) {
 	    homeworld_exists=1;recruiting_exists=1;homeworld_rule=3;aspirant_trial="Survival of the Fittest";
 	    adv[1]="Enemy: Fallen";dis[1]="Never Forgive";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Caliban Green";color_to_secondary="Caliban Green";color_to_trim="Silver";
-	    color_to_pauldron="Caliban Green";color_to_pauldron2="Caliban Green";color_to_lens="Dark Red";
+	    color_to_main="Caliban Green";color_to_secondary="Caliban Green";color_to_trim="Grey";
+	    color_to_pauldron="Caliban Green";color_to_pauldron2="Caliban Green";color_to_lens="Red";
 	    color_to_weapon="Black";col_special=0;trim=0;
 	    hchaplain="Sapphon";clibrarian="Ezekial";fmaster="Sepharon";hapothecary="Razaek";
 		admiral="Korahael";recruiter="Ranaeus";

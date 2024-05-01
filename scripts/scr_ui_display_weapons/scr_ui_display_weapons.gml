@@ -161,6 +161,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
         if (left_or_right == 2) and (ui_arm[2] == false) and (fix_right == 0) then fix_right = 1;
     }
 
+    // Offset weapon sprites meant for normal power armor but used on terminators
     if (current_armor != ArmourType.Normal && display_type != "terminator_ranged" && display_type != "terminator_melee"){
         ui_ymod[left_or_right] -= 20;
         if (display_type == "normal_ranged") {
@@ -272,12 +273,12 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
         ui_above[left_or_right] = true;
         ui_spec[left_or_right] = false;
     }
-    // Flip for offhand
+    // Flip the ui_xmod for offhand
     if (left_or_right == 2)
         /*and (current_armor=0)*/
         and(ui_xmod[left_or_right] < 0)
-    	and(display_type != "power_fist")
-    	and(display_type != "lightning_claw")
+        and(display_type != "power_fist")
+        and(display_type != "lightning_claw")
     	then ui_xmod[left_or_right] = ui_xmod[left_or_right] * -1;
 }
 

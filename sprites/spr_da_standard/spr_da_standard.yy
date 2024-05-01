@@ -23,13 +23,13 @@
   "height": 331,
   "HTile": false,
   "layers": [
-    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"55d07529-e68c-4a92-aa0c-3a18a388ae71","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"b0908247-a8b7-4640-ae49-5b6753746fc6","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": null,
   "origin": 9,
   "parent": {
     "name": "standards",
-    "path": "folders/Sprites/New UI/Gear/standards.yy",
+    "path": "folders/Sprites/Marine Viewer/gear/standards.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {
