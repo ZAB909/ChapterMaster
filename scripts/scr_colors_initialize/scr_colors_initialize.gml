@@ -27,7 +27,8 @@ enum Colors {
     Enchanted_Blue,
     Ultramarine,
     Purple,
-    Pink
+    Pink,
+    Grey,
 }
 
 function scr_colors_initialize() {
@@ -61,7 +62,8 @@ function scr_colors_initialize() {
         ["Enchanted Blue", 58, 110, 158],
         ["Ultramarine", 21, 92, 165],
         ["Purple", 117, 0, 217],
-        ["Pink", 255, 0, 198]
+        ["Pink", 255, 0, 198],
+        ["Grey", 103, 103, 103],
     ];
 
     for (var i = 0; i < array_length(colors_array); i++) {
