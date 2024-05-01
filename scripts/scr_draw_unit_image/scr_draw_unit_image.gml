@@ -714,7 +714,11 @@ function scr_draw_unit_image(x_draw, y_draw){
                         } else if (arm>=10) then draw_sprite(spr_pack_arms,arm-10,xx+x_draw,yy+y_draw);  */                  
                     }
                     if (halo==1){ // Draw the Iron Halo
-                        draw_sprite(spr_gear_halo,0,xx+x_draw,yy+y_draw);
+                        if (global.chapter_name == "Dark Angels") {
+                            draw_sprite(spr_gear_halo,1,xx+x_draw,yy+y_draw);
+                        } else {
+                            draw_sprite(spr_gear_halo,0,xx+x_draw,yy+y_draw);
+                        }
                     }
                 }
 
