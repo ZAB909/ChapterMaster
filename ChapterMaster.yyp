@@ -1053,6 +1053,7 @@
     {"id":{"name":"obj_ingame_menu","path":"objects/obj_ingame_menu/obj_ingame_menu.yy",},},
     {"id":{"name":"obj_fade","path":"objects/obj_fade/obj_fade.yy",},},
     {"id":{"name":"obj_defeat","path":"objects/obj_defeat/obj_defeat.yy",},},
+    {"id":{"name":"spr_marine_head","path":"sprites/spr_marine_head/spr_marine_head.yy",},},
     {"id":{"name":"obj_ini","path":"objects/obj_ini/obj_ini.yy",},},
     {"id":{"name":"obj_controller","path":"objects/obj_controller/obj_controller.yy",},},
     {"id":{"name":"obj_mass_equip","path":"objects/obj_mass_equip/obj_mass_equip.yy",},},

@@ -547,15 +547,14 @@ function scr_draw_unit_image(x_draw, y_draw){
                 var specific_helm = false;
                 var helm_draw=[0,0];
                 if (armour()=="Scout Armour"){
-                    draw_sprite(spr_marine_base,skin_color,xx+x_draw,yy+y_draw);
-                    draw_sprite(spr_marine_base,5,xx+x_draw,yy+y_draw);// Kind of crops the '_skin_color tone' pixels below the scout ones
+                    if (unit_is_sniper = true){
+                        draw_sprite(spr_marine_head,skin_color,xx+x_draw,yy+y_draw);
+                        draw_sprite(spr_scout_colors,11,xx+x_draw,yy+y_draw);// Scout Sniper Cloak
+                    }
                     draw_sprite(armour_sprite,specialist_colours,xx+x_draw,yy+y_draw);
                     draw_sprite(spr_facial_colors,clothing_style,xx+x_draw,yy+y_draw);
                     specific_armour_sprite=armour_sprite;
                     armour_bypass=true;
-                    if (unit_is_sniper = true){
-                        draw_sprite(spr_scout_colors,11,xx+x_draw,yy+y_draw);// Scout Sniper Cloak
-                    }
                 }else if (armour()=="MK3 Iron Armour"){
                     specific_armour_sprite = spr_mk3_colors;
                     if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1){
