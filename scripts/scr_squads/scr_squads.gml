@@ -133,50 +133,59 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 				unit_type = squad_unit_types[i];
 				required_load = "none";
 				optional_load = "none";
+
+				var optional_loadout_slots = [];
 				 if (struct_exists(fill_squad[$ unit_type],"loadout")){						//find out if the unit type for the squad has optional equipment thresholds
 					if (struct_exists(fill_squad[$ unit_type][$ "loadout"],"option")){
 						if (optional_load == "none"){
 						  	optional_load = DeepCloneStruct(fill_squad[$ unit_type][$ "loadout"][$ "option"]);			//create a fulfillment object for optional loadouts
 
-						  	load_out_areas = struct_get_names(fill_squad[$ unit_type][$ "loadout"][$ "option"]);
+						  	optional_loadout_slots = struct_get_names(fill_squad[$ unit_type][$ "loadout"][$ "option"]);
 
-						  	for (load_out_name = 0; load_out_name < array_length(load_out_areas);load_out_name++){
-								load_out_slot = load_out_areas[load_out_name];
+						  	for (load_out_name = 0; load_out_name < array_length(optional_loadout_slots);load_out_name++){
+								load_out_slot = optional_loadout_slots[load_out_name];
 								for (load_item = 0; load_item < array_length(optional_load[$ load_out_slot]);load_item++){									
-						  			array_push(optional_load[$ load_out_slot][load_item],0);
+						  			array_insert(optional_load[$ load_out_slot][load_item], 2, 0);
 						  		}
 						  	}
 						}
 					}					 	
 					 
+					 var required_loadout_slots= [];
 					//if there are required loadout items
 					if (struct_exists(fill_squad[$ unit_type][$ "loadout"],"required")){	//find out if the unit type for the squad has required  equipment thresholds
 						if (required_load == "none"){
 						  	required_load = DeepCloneStruct(fill_squad[$ unit_type][$ "loadout"][$ "required"]);
-						  	load_out_areas = struct_get_names(fill_squad[$ unit_type][$ "loadout"][$ "required"]);
-							for (load_out_name = 0; load_out_name < array_length(load_out_areas);load_out_name++){
-								load_out_slot = load_out_areas[load_out_name];
+						  	required_loadout_slots = struct_get_names(fill_squad[$ unit_type][$ "loadout"][$ "required"]);
+							for (load_out_name = 0; load_out_name < array_length(required_loadout_slots);load_out_name++){
+								load_out_slot = required_loadout_slots[load_out_name];
 								if (is_string(required_load[$ load_out_slot][1])){
 									if (required_load[$ load_out_slot][1] == "max"){
 										required_load[$ load_out_slot][1] = squad_fulfilment[$ unit_type];
 									}
 								}
-								array_push(required_load[$ load_out_slot],0);
+								array_insert(required_load[$ load_out_slot], 2, 0);
 							}
 						}
-					}											
+					}	
+					load_out_areas = ["wep1", "wep2", "armour", "gear", "mobi"];										
 					var copy_squad;
 					var new_copy_unit;
+					var ignore_units=[];
 					for (load_out_name = 0; load_out_name < array_length(load_out_areas);load_out_name++){
 						copy_squad = [];
 						load_out_slot = load_out_areas[load_out_name];
 						array_copy(copy_squad,0,squad.members,0, array_length(squad.members)); //create a copy of the squad members
 						while (array_length(copy_squad) > 0){
 							new_copy_unit = irandom(array_length(copy_squad)-1);  //loop through the squad members randomly so that each squad has different marine loadouts
+							if (array_contains(ignore_units, new_copy_unit)){
+								array_delete(copy_squad, new_copy_unit,1);
+								continue;
+							}
 							unit = obj_ini.TTRPG[copy_squad[new_copy_unit][0], copy_squad[new_copy_unit][1]];
 							if (unit.role() == unit_type){
 								if (struct_exists(fill_squad[$ unit_type],"loadout")){		
-									if (required_load != "none"){
+									if (required_load != "none" && array_contains(required_loadout_slots, load_out_slot)){
 										if (required_load[$ load_out_slot][2] <required_load[$ load_out_slot][1]){		//if the required amount of equipment is not in the squad already equip this marine with equipment
 											item_to_add = required_load[$ load_out_slot][0]
 											var required_load_set = {};
@@ -189,16 +198,17 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 									}
 									if (struct_exists(fill_squad[$ unit_type][$ "loadout"],"option")){
 										if (optional_load != "none"){
-							  				if (struct_exists(optional_load, load_out_slot)){
+							  				if (struct_exists(optional_load, load_out_slot) && array_contains(optional_loadout_slots, load_out_slot)){
 							  					//this basically ensures the optional squad items are randomly selected and allocated in order to make squads more variable
 												
 							  					for (load_item = 0; load_item < array_length(optional_load[$ load_out_slot]);load_item++){
-								  					if (optional_load[$ load_out_slot][load_item][2] <optional_load[$ load_out_slot][load_item][1]){
+							  						var optional_load_data = optional_load[$ load_out_slot][load_item];
+								  					if (optional_load_data[2] <optional_load_data[1]){
 
-								  						if (is_array(optional_load[$ load_out_slot][load_item][0])){ //if the array items are varibale e.g a struct
-								  							item_to_add = optional_load[$ load_out_slot][load_item][0][irandom(array_length(optional_load[$ load_out_slot][load_item][0])-1)]
+								  						if (is_array(optional_load_data[0])){ //if the array items are varibale e.g a struct
+								  							item_to_add = optional_load_data[0][irandom(array_length(optional_load[$ load_out_slot][load_item][0])-1)]
 								  						} else {
-								  							item_to_add = optional_load[$ load_out_slot][load_item][0];
+								  							item_to_add = optional_load_data[0];
 								  						}
 
 								  						// this ensures a marine never gets overloaded with an overly bulky weapon loadout
@@ -225,6 +235,12 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 														opt_load_out[$load_out_slot] = item_to_add;
 														unit.alter_equipment(opt_load_out,false,false);
 												  		optional_load[$ load_out_slot][load_item][2]++;
+												  		if (array_length(optional_load_data)>3){
+												  			if (is_struct(optional_load_data[3])){
+												  				unit.alter_equipment(optional_load_data[3],false,false);
+												  				array_push(ignore_units, new_copy_unit);
+												  			}
+												  		}
 												  		break;
 											  		}
 										  		}

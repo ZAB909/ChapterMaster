@@ -1027,7 +1027,7 @@ function scr_initialize_custom() {
 					},
 					"option" :{
 						"wep1":[
-							[["Flamer","Plasma Gun", "Meltagun"],2],
+							[["Flamer","Plasma Gun", "Meltagun"],2,],
 							[["Multi-Melta", "Heavy Flamer","Missile Launcher", "Lascannon", "Heavy Bolter"], 1]],
 					} 
 				}}],		//tactical marine
@@ -1161,13 +1161,13 @@ function scr_initialize_custom() {
                     },
                     "option" :{
                         "wep1":[
-                            [["Power Sword","Power Axe","Eviscerator"],2],
+                            [["Power Sword","Power Axe","Eviscerator"],2, {}],
                          ],
                         "wep2":[
                             [["Flamer", "Meltagun","Plasma Pistol","Bolt Pistol"],2],
                             
                         ],
-                    } 
+                    }
                 }}],       
                 [role[100][18],{"max":1,"min":1,  //sergeant
 					"loadout":{
