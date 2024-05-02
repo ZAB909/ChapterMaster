@@ -204,15 +204,16 @@ function scr_company_struct(comp) constructor{
 				draw_set_color(c_red);
 				draw_text_transformed(xx+bound_width[0]+5+ string_width(deploy_text) + string_width(current_squad.formation_place)+9, yy+bound_height[0], "column",1,1,0);
 				draw_set_color(c_gray);
-				if (array_length(current_squad.formation_options)>1){
-					if (point_in_rectangle(
+				var point_in_button = (point_in_rectangle(
 						mouse_x,
 						mouse_y,
 						button [0], 
 						button[1], 
 						button[2], 
 						button[3]
-					)){
+					));
+				if (array_length(current_squad.formation_options)>1){
+					if (point_in_button){
 						drop_down_open = true;
 					}
 					if (drop_down_open){
@@ -220,15 +221,7 @@ function scr_company_struct(comp) constructor{
 						for (var col = 0;col<array_length(current_squad.formation_options);col++){
 							if (current_squad.formation_options[col]==current_squad.formation_place) then continue;
 							button = draw_unit_buttons([button[0], button[3] + 2],current_squad.formation_options[col],[1,1],c_red);
-							if (mouse_check_button_pressed(mb_left) && 
-								point_in_rectangle(
-										mouse_x,
-										mouse_y,
-										button [0], 
-										button[1], 
-										button[2], 
-										button[3]									
-									)){
+							if (point_and_click(button)){
 								current_squad.formation_place = current_squad.formation_options[col];
 								drop_down_open = false;
 							}
@@ -248,6 +241,11 @@ function scr_company_struct(comp) constructor{
 						}
 					}
 				}
+				bound_height[0] += button[3] - button[1];
+			}
+			button = draw_unit_buttons([xx+bound_width[0]+30 + string_width(deploy_text), yy+bound_height[0]+10],"Reset Squad Loadout",[1,1],c_green);
+			if (point_and_click(button)){
+				current_squad.sort_squad_loadout();
 			}
 			
 			if (unit_rollover){

@@ -10,21 +10,12 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 	var squad_unit_types, fulfilled,unit, squad;
 	var squad_count = array_length(obj_ini.squads);
 	var fill_squad =  obj_ini.squad_types[$ squad_type];			//grab all the squad struct info from the squad_types struct
-	var squad_fulfilment = {};		
-	squad_unit_types = struct_get_names(fill_squad);		//find out what type of units squad consists of
-	var unit_type_count = array_length(squad_unit_types);		
-	for (var i = 0;i < unit_type_count;i++){
-		if (squad_unit_types[i] == "type_data"){
-			array_delete(squad_unit_types, i, 1);
-			unit_type_count--;
-			i--;
-			continue;
-		}	
-		squad_fulfilment[$ squad_unit_types[i]] =0;	//create a fulfilment structure to log members of squad
-	}
 	squad = new unit_squad(squad_type, company);
 	squad.base_company = company;
-	squad.add_type_data(fill_squad[$ "type_data"]);
+	squad.add_type_data(fill_squad[$ "type_data"]);		
+	squad_unit_types = squad.find_squad_unit_types();
+	var squad_fulfilment = squad.squad_fulfilment;
+
 	var sergeant_found = false;
 	var sgt_types = [obj_ini.role[100][18], obj_ini.role[100][19]]
 
@@ -33,10 +24,12 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 		if (struct_exists(squad_fulfilment ,sgt_types[s])){
 			sergeant_found = false;
 			for (i = 0; i < array_length(obj_ini.TTRPG[company]);i++){
-				if(!is_struct(obj_ini.TTRPG[company][i])){obj_ini.TTRPG[company][i]= new TTRPG_stats("chapter", company,i,"blank");}
-				unit = obj_ini.TTRPG[company][i];
-				if ((obj_ini.name[company][i] =="") or (unit.base_group=="none"))then continue;
-				if (unit.squad== "none"){
+				if(!is_struct(obj_ini.TTRPG[company][i])){
+					obj_ini.TTRPG[company][i]= new TTRPG_stats("chapter", company,i,"blank");
+				}
+				unit = fetch_unit([company, i]);
+				if ((unit.name() =="") or (unit.base_group=="none")) then continue;
+				if (unit.squad == "none"){
 					if (unit.role() == sgt_types[s]){
 						squad_fulfilment[$ sgt_types[s]] += 1;
 						squad.add_member(unit.company, unit.marine_number);
@@ -74,11 +67,11 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 			var exp_unit;
 			for (i = 0; i < array_length(squad.members);i++){
 				if (i==0){
-					exp_unit = obj_ini.TTRPG[squad.members[0][0], squad.members[0][1]];
-					highest_exp = obj_ini.TTRPG[squad.members[0][0], squad.members[0][1]].experience();
+					exp_unit = fetch_unit(squad.members[0]);
+					highest_exp = exp_unit.experience();
 					continue;
 				}
-				unit = obj_ini.TTRPG[squad.members[i][0], squad.members[i][1]];
+				unit = fetch_unit(squad.members[i]);
 				if (unit.experience() > highest_exp){
 					highest_exp = unit.experience();
 					exp_unit = unit;
@@ -120,142 +113,8 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 			obj_ini.squads[squad_index] = squad;
 		}
 
-		// heres where the whole thing gets annoying
-		/*basically each equipment slot is looped through and inside each loop each marine is looped through in a random order to ensure 
-			that each squad looks different and that each marine has a range of optional and required equipment
-			required equipmetn is things like boltguns and combat knives in a tactical squad
-			optional equipment is stuff like lascannons and specialist equipment in a tactical squad or plasma pistols in an assualt squad
-			in future i'd like to tailer these to marine skill sets e.g the marines with the best ranged stats get given the best ranged equipment	
-		*/
 		if (squad_loadout){
-			var required_load, unit_type, load_out_name, load_out_areas, load_out_slot,load_item, optional_load, item_to_add;
-			for (i = 0;i < array_length(squad_unit_types);i++){
-				unit_type = squad_unit_types[i];
-				required_load = "none";
-				optional_load = "none";
-
-				var optional_loadout_slots = [];
-				 if (struct_exists(fill_squad[$ unit_type],"loadout")){						//find out if the unit type for the squad has optional equipment thresholds
-					if (struct_exists(fill_squad[$ unit_type][$ "loadout"],"option")){
-						if (optional_load == "none"){
-						  	optional_load = DeepCloneStruct(fill_squad[$ unit_type][$ "loadout"][$ "option"]);			//create a fulfillment object for optional loadouts
-
-						  	optional_loadout_slots = struct_get_names(fill_squad[$ unit_type][$ "loadout"][$ "option"]);
-
-						  	for (load_out_name = 0; load_out_name < array_length(optional_loadout_slots);load_out_name++){
-								load_out_slot = optional_loadout_slots[load_out_name];
-								for (load_item = 0; load_item < array_length(optional_load[$ load_out_slot]);load_item++){									
-						  			array_insert(optional_load[$ load_out_slot][load_item], 2, 0);
-						  		}
-						  	}
-						}
-					}					 	
-					 
-					 var required_loadout_slots= [];
-					//if there are required loadout items
-					if (struct_exists(fill_squad[$ unit_type][$ "loadout"],"required")){	//find out if the unit type for the squad has required  equipment thresholds
-						if (required_load == "none"){
-						  	required_load = DeepCloneStruct(fill_squad[$ unit_type][$ "loadout"][$ "required"]);
-						  	required_loadout_slots = struct_get_names(fill_squad[$ unit_type][$ "loadout"][$ "required"]);
-							for (load_out_name = 0; load_out_name < array_length(required_loadout_slots);load_out_name++){
-								load_out_slot = required_loadout_slots[load_out_name];
-								if (is_string(required_load[$ load_out_slot][1])){
-									if (required_load[$ load_out_slot][1] == "max"){
-										required_load[$ load_out_slot][1] = squad_fulfilment[$ unit_type];
-									}
-								}
-								array_insert(required_load[$ load_out_slot], 2, 0);
-							}
-						}
-					}	
-					load_out_areas = ["wep1", "wep2", "armour", "gear", "mobi"];										
-					var copy_squad;
-					var new_copy_unit;
-					var ignore_units=[];
-					for (load_out_name = 0; load_out_name < array_length(load_out_areas);load_out_name++){
-						copy_squad = [];
-						load_out_slot = load_out_areas[load_out_name];
-						array_copy(copy_squad,0,squad.members,0, array_length(squad.members)); //create a copy of the squad members
-						while (array_length(copy_squad) > 0){
-							new_copy_unit = irandom(array_length(copy_squad)-1);  //loop through the squad members randomly so that each squad has different marine loadouts
-							if (array_contains(ignore_units, new_copy_unit)){
-								array_delete(copy_squad, new_copy_unit,1);
-								continue;
-							}
-							unit = obj_ini.TTRPG[copy_squad[new_copy_unit][0], copy_squad[new_copy_unit][1]];
-							if (unit.role() == unit_type){
-								if (struct_exists(fill_squad[$ unit_type],"loadout")){		
-									if (required_load != "none" && array_contains(required_loadout_slots, load_out_slot)){
-										if (required_load[$ load_out_slot][2] <required_load[$ load_out_slot][1]){		//if the required amount of equipment is not in the squad already equip this marine with equipment
-											item_to_add = required_load[$ load_out_slot][0]
-											var required_load_set = {};
-											required_load_set[$ load_out_slot] = item_to_add;
-											unit.alter_equipment(required_load_set,false,false);
-											required_load[$ load_out_slot][2]++;
-											array_delete(copy_squad, new_copy_unit,1);
-											continue;
-									  	} //if all required equipment is included in the squad start adding optional equipment
-									}
-									if (struct_exists(fill_squad[$ unit_type][$ "loadout"],"option")){
-										if (optional_load != "none"){
-							  				if (struct_exists(optional_load, load_out_slot) && array_contains(optional_loadout_slots, load_out_slot)){
-							  					//this basically ensures the optional squad items are randomly selected and allocated in order to make squads more variable
-												
-							  					for (load_item = 0; load_item < array_length(optional_load[$ load_out_slot]);load_item++){
-							  						var optional_load_data = optional_load[$ load_out_slot][load_item];
-								  					if (optional_load_data[2] <optional_load_data[1]){
-								  						var equipment_set = array_length(optional_load_data)>3;
-
-								  						if (is_array(optional_load_data[0])){ //if the array items are varibale e.g a struct
-								  							item_to_add = optional_load_data[0][irandom(array_length(optional_load[$ load_out_slot][load_item][0])-1)]
-								  						} else {
-								  							item_to_add = optional_load_data[0];
-								  						}
-
-								  						// this ensures a marine never gets overloaded with an overly bulky weapon loadout
-								  						if (load_out_slot == "wep1") {
-								  							var return_item = unit.weapon_one();
-								  							unit.update_weapon_one(item_to_add,false,false);
-								  							unit.ranged_attack();
-								  							unit.melee_attack();
-								  							if (unit.encumbered_ranged || unit.encumbered_melee && !equipment_set){
-								  								unit.update_weapon_one(return_item,false,false);
-								  								continue;
-								  							}
-								  						} else if (load_out_slot == "wep2"){
-								  							var return_item = unit.weapon_two();
-								  							unit.update_weapon_two(item_to_add,false,false);
-								  							unit.ranged_attack();
-								  							unit.melee_attack();
-								  							if (unit.encumbered_ranged|| unit.encumbered_melee && !equipment_set){
-								  								unit.update_weapon_two(return_item,false,false);
-								  								continue;
-								  							}
-								  						}
-														var opt_load_out = {};
-														opt_load_out[$load_out_slot] = item_to_add;
-														unit.alter_equipment(opt_load_out,false,false);
-												  		optional_load[$ load_out_slot][load_item][2]++;
-												  		if (equipment_set){
-												  			if (is_struct(optional_load_data[3])){
-												  				unit.alter_equipment(optional_load_data[3],false,false);
-												  				array_push(ignore_units, new_copy_unit);
-												  			}
-												  		}
-												  		break;
-											  		}
-										  		}
-							  				}
-										}
-									}			  												  															
-								}
-							}
-							array_delete(copy_squad, new_copy_unit,1);
-						}
-					}
-					 
-				}
-			}
+			squad.sort_squad_loadout(false,false);
 		}
 	}
 }
@@ -276,6 +135,149 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 	formation_place=""
 	formation_options=[];
 	//nickname = scr_squad_names();
+
+
+		// heres where the whole thing gets annoying
+		/*basically each equipment slot is looped through and inside each loop each marine is looped through in a random order to ensure 
+			that each squad looks different and that each marine has a range of optional and required equipment
+			required equipmetn is things like boltguns and combat knives in a tactical squad
+			optional equipment is stuff like lascannons and specialist equipment in a tactical squad or plasma pistols in an assualt squad
+			in future i'd like to tailer these to marine skill sets e.g the marines with the best ranged stats get given the best ranged equipment	
+		*/
+	static sort_squad_loadout = function(from_armoury=true, to_armoury=true){
+		var required_load, unit_type, load_out_name, load_out_areas, load_out_slot,load_item, optional_load, item_to_add;
+		squad_unit_types = find_squad_unit_types();
+		var full_squad_data =  obj_ini.squad_types[$ type];
+		for (i = 0;i < array_length(squad_unit_types);i++){
+			unit_type = squad_unit_types[i];
+			required_load = "none";
+			optional_load = "none";
+
+			var unit_squad_data = full_squad_data[$ unit_type];
+			var optional_loadout_slots = [];
+			 if (struct_exists(unit_squad_data,"loadout")){						//find out if the unit type for the squad has optional equipment thresholds
+				if (struct_exists(unit_squad_data[$ "loadout"],"option")){
+					if (optional_load == "none"){
+					  	optional_load = DeepCloneStruct(unit_squad_data[$ "loadout"][$ "option"]);			//create a fulfillment object for optional loadouts
+
+					  	optional_loadout_slots = struct_get_names(optional_load);
+
+					  	for (load_out_name = 0; load_out_name < array_length(optional_loadout_slots);load_out_name++){
+							load_out_slot = optional_loadout_slots[load_out_name];
+							for (load_item = 0; load_item < array_length(optional_load[$ load_out_slot]);load_item++){									
+					  			array_insert(optional_load[$ load_out_slot][load_item], 2, 0);
+					  		}
+					  	}
+					}
+				}					 	
+				 
+				 var required_loadout_slots= [];
+				//if there are required loadout items
+				if (struct_exists(unit_squad_data[$ "loadout"],"required")){	//find out if the unit type for the squad has required  equipment thresholds
+					if (required_load == "none"){
+					  	required_load = DeepCloneStruct(unit_squad_data[$ "loadout"][$ "required"]);
+					  	required_loadout_slots = struct_get_names(required_load);
+						for (load_out_name = 0; load_out_name < array_length(required_loadout_slots);load_out_name++){
+							load_out_slot = required_loadout_slots[load_out_name];
+							if (is_string(required_load[$ load_out_slot][1])){
+								if (required_load[$ load_out_slot][1] == "max"){
+									required_load[$ load_out_slot][1] = squad_fulfilment[$ unit_type];
+								}
+							}
+							array_insert(required_load[$ load_out_slot], 2, 0);
+						}
+					}
+				}	
+				load_out_areas = ["wep1", "wep2", "armour", "gear", "mobi"];										
+				var copy_squad;
+				var new_copy_unit;
+				var ignore_units=[];
+				for (load_out_name = 0; load_out_name < array_length(load_out_areas);load_out_name++){
+					copy_squad = [];
+					load_out_slot = load_out_areas[load_out_name];
+					array_copy(copy_squad,0,members,0, array_length(members)); //create a copy of the squad members
+					while (array_length(copy_squad) > 0){
+						new_copy_unit = irandom(array_length(copy_squad)-1);  //loop through the squad members randomly so that each squad has different marine loadouts
+						if (array_contains(ignore_units, new_copy_unit)){
+							array_delete(copy_squad, new_copy_unit,1);
+							continue;
+						}
+						unit = obj_ini.TTRPG[copy_squad[new_copy_unit][0], copy_squad[new_copy_unit][1]];
+						if (unit.role() == unit_type){
+							if (struct_exists(unit_squad_data,"loadout")){		
+								if (required_load != "none" && array_contains(required_loadout_slots, load_out_slot)){
+									if (required_load[$ load_out_slot][2] <required_load[$ load_out_slot][1]){		//if the required amount of equipment is not in the squad already equip this marine with equipment
+										item_to_add = required_load[$ load_out_slot][0]
+										var required_load_set = {};
+										required_load_set[$ load_out_slot] = item_to_add;
+										unit.alter_equipment(required_load_set,from_armoury,to_armoury);
+										required_load[$ load_out_slot][2]++;
+										array_delete(copy_squad, new_copy_unit,1);
+										continue;
+								  	} //if all required equipment is included in the squad start adding optional equipment
+								}
+								if (struct_exists(unit_squad_data[$ "loadout"],"option")){
+									if (optional_load != "none"){
+						  				if (struct_exists(optional_load, load_out_slot) && array_contains(optional_loadout_slots, load_out_slot)){
+						  					//this basically ensures the optional squad items are randomly selected and allocated in order to make squads more variable
+											
+						  					for (load_item = 0; load_item < array_length(optional_load[$ load_out_slot]);load_item++){
+						  						var optional_load_data = optional_load[$ load_out_slot][load_item];
+							  					if (optional_load_data[2] <optional_load_data[1]){
+							  						var equipment_set = array_length(optional_load_data)>3;
+
+							  						if (is_array(optional_load_data[0])){ //if the array items are varibale e.g a struct
+							  							item_to_add = optional_load_data[0][irandom(array_length(optional_load[$ load_out_slot][load_item][0])-1)]
+							  						} else {
+							  							item_to_add = optional_load_data[0];
+							  						}
+
+							  						// this ensures a marine never gets overloaded with an overly bulky weapon loadout
+							  						if (load_out_slot == "wep1") {
+							  							var return_item = unit.weapon_one();
+							  							unit.update_weapon_one(item_to_add,from_armoury,to_armoury);
+							  							unit.ranged_attack();
+							  							unit.melee_attack();
+							  							if (unit.encumbered_ranged || unit.encumbered_melee && !equipment_set){
+							  								unit.update_weapon_one(return_item,from_armoury,to_armoury);
+							  								continue;
+							  							}
+							  						} else if (load_out_slot == "wep2"){
+							  							var return_item = unit.weapon_two();
+							  							unit.update_weapon_two(item_to_add,from_armoury,to_armoury);
+							  							unit.ranged_attack();
+							  							unit.melee_attack();
+							  							if (unit.encumbered_ranged|| unit.encumbered_melee && !equipment_set){
+							  								unit.update_weapon_two(return_item,from_armoury,to_armoury);
+							  								continue;
+							  							}
+							  						}
+													var opt_load_out = {};
+													opt_load_out[$load_out_slot] = item_to_add;
+													unit.alter_equipment(opt_load_out,from_armoury,to_armoury);
+											  		optional_load[$ load_out_slot][load_item][2]++;
+											  		if (equipment_set){
+											  			if (is_struct(optional_load_data[3])){
+											  				unit.alter_equipment(optional_load_data[3],from_armoury,to_armoury);
+											  				array_push(ignore_units, new_copy_unit);
+											  			}
+											  		}
+											  		break;
+										  		}
+									  		}
+						  				}
+									}
+								}			  												  															
+							}
+						}
+						array_delete(copy_squad, new_copy_unit,1);
+					}
+				}
+				 
+			}
+		}
+	}
+
 	static add_type_data = function(data){
 		type_data=data;
 		display_name = type_data[$ "display_data"];
@@ -290,6 +292,22 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 	static change_type = function(new_type){
 		type=new_type;
 		add_type_data(obj_ini.squad_types[$ type].type_data)
+	}
+
+	static find_squad_unit_types = function (){//find out what type of units squad consists of
+		var fill_squad =  obj_ini.squad_types[$ type];
+		squad_unit_types = struct_get_names(fill_squad);	
+		var unit_type_count = array_length(squad_unit_types);		
+		for (var i = 0;i < unit_type_count;i++){
+			if (squad_unit_types[i] == "type_data"){
+				array_delete(squad_unit_types, i, 1);
+				unit_type_count--;
+				i--;
+				continue;
+			}	
+			squad_fulfilment[$ squad_unit_types[i]] =0;	//create a fulfilment structure to log members of squad
+		}
+		return squad_unit_types;
 	}
 	// for creating a new sergeant from existing squad members
 	static new_sergeant = function(veteran=false){
