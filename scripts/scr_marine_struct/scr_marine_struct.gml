@@ -1523,7 +1523,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
   	var change_wep = weapon_one();
   	var weapon_list = [];
     if (new_weapon == "Heavy Ranged"){
-    	weapon_list=["Heavy Bolter","Lascannon","Missile Launcher"];
+    	weapon_list=["Multi-Melta", "Heavy Bolter","Lascannon","Missile Launcher"];
     	if array_contains(weapon_list, change_wep){
     		return "no change";
     	}

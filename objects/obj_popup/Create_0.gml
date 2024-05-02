@@ -299,11 +299,13 @@ calculate_equipment_needs =  function (){
             have_wep1_num+=scr_item_count("Lascannon");
             have_wep1_num+=scr_item_count("Heavy Bolter");
             have_wep1_num+=scr_item_count("Missile Launcher");
+            have_wep1_num+=scr_item_count("Multi-Melta");
         }
         if (req_wep2="Heavy Ranged"){
             have_wep2_num+=scr_item_count("Heavy Bolter");
             have_wep2_num+=scr_item_count("Lascannon");
             have_wep2_num+=scr_item_count("Missile Launcher");
+            have_wep1_num+=scr_item_count("Multi-Melta");
         }
         if (req_gear!="") then have_gear_num+=scr_item_count(string(req_gear));
         if (req_mobi!="") then have_mobi_num+=scr_item_count(string(req_mobi));
