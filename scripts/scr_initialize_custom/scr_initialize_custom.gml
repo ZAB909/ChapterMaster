@@ -1777,8 +1777,18 @@ function scr_initialize_custom() {
 					"loadout": {
 						"required": {
 							"wep1": ["Bolter", 5],
-							"wep2": ["Combat Knife", 9]
+							"wep2": ["Combat Knife", 9],
+							"mobi": ["", 5],
 						},
+						"option": {
+							"wep1": [
+								[
+									["Multi-Melta", "Lascannon", "Missile Launcher", "Heavy Bolter"], 4, {
+										"mobi":"Heavy Weapons Pack",
+									}
+								],
+							],
+						}
 					}
 				}
 			],
@@ -3529,7 +3539,7 @@ function scr_initialize_custom() {
 
 						TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
 
-						if (wep1[101, 9] == "Heavy Ranged") then wep1[company][k] = choose("Lascannon", "Missile Launcher", "Heavy Bolter");
+						if (wep1[101, 9] == "Heavy Ranged") then wep1[company][k] = choose("Multi-Melta", "Lascannon", "Missile Launcher", "Heavy Bolter");
 						if (wep1[101, 9] != "Heavy Ranged") then wep1[company][k] = wep1[101, 9];
 
 						spawn_unit = TTRPG[company][k];
@@ -3608,7 +3618,7 @@ function scr_initialize_custom() {
 
 					mobi[company][k] = mobi[100][9];
 
-					if (wep1[101, 9] = "Heavy Ranged") then wep1[company][k] = choose("Lascannon", "Missile Launcher", "Heavy Bolter");
+					if (wep1[101, 9] = "Heavy Ranged") then wep1[company][k] = choose("Multi-Melta", "Lascannon", "Missile Launcher", "Heavy Bolter");
 					if (wep1[101, 9] != "Heavy Ranged") then wep1[company][k] = wep1[101, 9];
 					spawn_unit = TTRPG[company][k]
 					spawn_unit.spawn_exp();
@@ -3664,7 +3674,7 @@ function scr_initialize_custom() {
 
 
 
-					if (wep1[101, 9] = "Heavy Ranged") then wep1[company][k] = choose("Lascannon", "Missile Launcher", "Heavy Bolter");
+					if (wep1[101, 9] = "Heavy Ranged") then wep1[company][k] = choose("Multi-Melta", "Lascannon", "Missile Launcher", "Heavy Bolter");
 					if (wep1[101, 9] != "Heavy Ranged") then wep1[company][k] = wep1[101, 9];
 
 					spawn_unit = TTRPG[company][k];

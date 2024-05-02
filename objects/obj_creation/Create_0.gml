@@ -480,11 +480,11 @@ color_to_pauldron21="Red";
 
     race_21[i,9]=1;
     role_21[i,9]="Devastator Marine";
-    wep1_21[i,9]="Heavy Ranged";
+    wep1_21[i,9]="";
     wep2_21[i,9]="Combat Knife";
     armour_21[i,9]="Power Armour";
 	gear_21[i,9]=""
-    mobi_21[i,9]="Heavy Weapons Pack";
+    mobi_21[i,9]="";
 
     race_21[i,10]=1;
     role_21[i,10]="Assault Marine";
@@ -730,10 +730,10 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
 
     race[i,9]=1;
     role[i,9]="Devastator Marine";
-    wep1[i,9]="Heavy Ranged";
+    wep1[i,9]="";
     wep2[i,9]="Combat Knife";
     armour[i,9]="Power Armour";
-    mobi[i,9]="Heavy Weapons Pack";
+    mobi[i,9]="";
 
     race[i,10]=1;
     role[i,10]="Assault Marine";
