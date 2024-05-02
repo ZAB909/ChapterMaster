@@ -204,6 +204,7 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 							  					for (load_item = 0; load_item < array_length(optional_load[$ load_out_slot]);load_item++){
 							  						var optional_load_data = optional_load[$ load_out_slot][load_item];
 								  					if (optional_load_data[2] <optional_load_data[1]){
+								  						var equipment_set = array_length(optional_load_data)>3;
 
 								  						if (is_array(optional_load_data[0])){ //if the array items are varibale e.g a struct
 								  							item_to_add = optional_load_data[0][irandom(array_length(optional_load[$ load_out_slot][load_item][0])-1)]
@@ -217,7 +218,7 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 								  							unit.update_weapon_one(item_to_add,false,false);
 								  							unit.ranged_attack();
 								  							unit.melee_attack();
-								  							if (unit.encumbered_ranged || unit.encumbered_melee){
+								  							if (unit.encumbered_ranged || unit.encumbered_melee && !equipment_set){
 								  								unit.update_weapon_one(return_item,false,false);
 								  								continue;
 								  							}
@@ -226,7 +227,7 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 								  							unit.update_weapon_two(item_to_add,false,false);
 								  							unit.ranged_attack();
 								  							unit.melee_attack();
-								  							if (unit.encumbered_ranged|| unit.encumbered_melee){
+								  							if (unit.encumbered_ranged|| unit.encumbered_melee && !equipment_set){
 								  								unit.update_weapon_two(return_item,false,false);
 								  								continue;
 								  							}
@@ -235,7 +236,7 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 														opt_load_out[$load_out_slot] = item_to_add;
 														unit.alter_equipment(opt_load_out,false,false);
 												  		optional_load[$ load_out_slot][load_item][2]++;
-												  		if (array_length(optional_load_data)>3){
+												  		if (equipment_set){
 												  			if (is_struct(optional_load_data[3])){
 												  				unit.alter_equipment(optional_load_data[3],false,false);
 												  				array_push(ignore_units, new_copy_unit);
