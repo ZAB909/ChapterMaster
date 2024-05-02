@@ -6,7 +6,6 @@ function reset_manage_arrays(){
 		man_sel=[];
 		ma_lid=[];
 		ma_wid=[];
-		ma_bio=[];
 	    ma_race=[];
 		ma_loc=[];
 		ma_name=[];
@@ -57,6 +56,21 @@ function add_man_to_manage_arrays(unit){
         array_push(display_unit,unit);
         array_push(ma_god,0);
 	}
+}
+
+function update_man_manage_array(index){
+		with (obj_controller){
+			var unit = display_unit[index];
+			ma_lid[index]=unit.ship_location;
+			ma_wid[index]=unit.planet_location;
+			ma_loc[index]=unit.marine_location()[2];
+			ma_role[index]=unit.role();
+			ma_gear[index]=unit.gear();
+			ma_mobi[index]=unit.mobility_item();
+			ma_wep1[index]=unit.weapon_one();
+		    ma_wep2[index]=unit.weapon_two();
+			ma_armour[index]=unit.armour();
+		}
 }
 
 function add_vehicle_to_manage_arrays(unit){
