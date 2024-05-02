@@ -1651,12 +1651,9 @@ function scr_initialize_custom() {
 					"option": {
 						"wep1": [
 							[
-								["Lightning Claw"], 6
-							],
-						],
-						"wep2": [
-							[
-								["Lightning Claw"], 6
+								["Lightning Claw"], 6, {
+									"wep2":"Lightning Claw",
+								}
 							],
 						],
 					}
