@@ -457,7 +457,7 @@ function scr_initialize_custom() {
 	millenium = 41;
 
 	var company = 0;
-	var chaap = 1,
+	var chaap = 6,
 		whirlwind;
 	var second = 100,
 		third = 100,
@@ -697,7 +697,7 @@ function scr_initialize_custom() {
 			tenth -= 40;
 			break;
 		case "Blood Angels":
-			chaap = 3;
+			chaap += 5;
 			apothecary = 10;
 			epistolary = 6;
 			codiciery = 6;
@@ -2266,12 +2266,25 @@ function scr_initialize_custom() {
 		armour[company][k] = "MK7 Aquila";
 		gear[company][k] = gear[101, 15];
 
+	// Chaplains in Reclusium
+	repeat(chaap) {
+		k += 1;
+		commands += 1;
+		man_size += 1;
+		TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
+		race[company][k] = 1;
+		loc[company][k] = home_name;
+		role[company][k] = roles.chaplain;
+		name[company][k] = global.name_generator.generate_space_marine_name();
+		wep1[company][k] = wep1[101, 14];
+		wep2[company][k] = wep2[101, 14];
+		armour[company][k] = wep2[101, 14];
+		gear[company][k] = gear[101, 14];
 		experience[company][k] = 100;
 		spawn_unit = TTRPG[company][k];
 		spawn_unit.spawn_old_guard();
 		spawn_unit.spawn_exp();
 	}
-
 
 	// Honor Guard
 
@@ -2373,32 +2386,24 @@ function scr_initialize_custom() {
 		}
 
 		if (global.chapter_name != "Space Wolves") and(global.chapter_name != "Iron Hands") {
-			var skl;
-			skl = 1;
-			if (chaap > 0) {
-				skl = 2;
-				chaap -= 1;
-			}
-			repeat(skl) {
-				k += 1;
-				commands += 1; // Chaplain
-				TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
-				race[company][k] = 1;
-				loc[company][k] = home_name;
-				role[company][k] = roles.chaplain;
-				wep1[company][k] = wep1[101, 14];
-				name[company][k] = global.name_generator.generate_space_marine_name();
-				wep2[company][k] = wep2[101, 14];
-				spawn_unit = TTRPG[company][k]
-				spawn_unit.spawn_old_guard();
-				spawn_unit.spawn_exp();
-				armour[company][k] = "Terminator Armour";
-				gear[company][k] = gear[101, 14]
-				if (string_count("Crafter", strin) > 0) then armour[company][k] = "Tartaros";
-				if (terminator <= 0) then armour[company][k] = "MK6 Corvus";
-				if (mobi[101, 14] != "") then mobi[company][k] = mobi[101, 14];
-				if (armour[company][k] = "Terminator") or(armour[company][k] = "Tartaros") then man_size += 1;
-			}
+			k += 1;
+			commands += 1; // Chaplain
+			TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
+			race[company][k] = 1;
+			loc[company][k] = home_name;
+			role[company][k] = roles.chaplain;
+			wep1[company][k] = wep1[101, 14];
+			name[company][k] = global.name_generator.generate_space_marine_name();
+			wep2[company][k] = wep2[101, 14];
+			spawn_unit = TTRPG[company][k]
+			spawn_unit.spawn_old_guard();
+			spawn_unit.spawn_exp();
+			armour[company][k] = "Terminator Armour";
+			gear[company][k] = gear[101, 14]
+			if (string_count("Crafter", strin) > 0) then armour[company][k] = "Tartaros";
+			if (terminator <= 0) then armour[company][k] = "MK6 Corvus";
+			if (mobi[101, 14] != "") then mobi[company][k] = mobi[101, 14];
+			if (armour[company][k] = "Terminator") or(armour[company][k] = "Tartaros") then man_size += 1;
 		}
 
 		k += 1;
@@ -2863,32 +2868,24 @@ function scr_initialize_custom() {
 			if (global.chapter_name = "Iron Hands") then armour[company][k] = "Terminator Armour";
 
 			if (global.chapter_name != "Space Wolves") and(global.chapter_name != "Iron Hands") {
-				var skl;
-				skl = 1;
-				if (chaap > 0) {
-					skl = 2;
-					chaap -= 1;
-				}
-				repeat(skl) {
-					k += 1;
-					commands += 1; // Chaplain
-					race[company][k] = 1;
-					TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
-					loc[company][k] = home_name;
-					role[company][k] = roles.chaplain;
-					wep1[company][k] = wep1[101, 14];
-					name[company][k] = global.name_generator.generate_space_marine_name();
-					wep2[company][k] = wep2[101, 14];
-					armour[company][k] = "MK7 Aquila";
-					if (company <= 2) then armour[company][k] = choose("MK8 Errant", "MK6 Corvus");
-					gear[company][k] = gear[101, 14];
+				k += 1;
+				commands += 1; // Chaplain
+				race[company][k] = 1;
+				TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
+				loc[company][k] = home_name;
+				role[company][k] = roles.chaplain;
+				wep1[company][k] = wep1[101, 14];
+				name[company][k] = global.name_generator.generate_space_marine_name();
+				wep2[company][k] = wep2[101, 14];
+				armour[company][k] = "MK7 Aquila";
+				if (company <= 2) then armour[company][k] = choose("MK8 Errant", "MK6 Corvus");
+				gear[company][k] = gear[101, 14];
 
-					if (company = 8) and(obj_creation.equal_specialists = 0) then mobi[company][k] = "Jump Pack";
-					if (mobi[101, 14] != "") then mobi[company][k] = mobi[101, 14];
-					spawn_unit = TTRPG[company][k]
-					spawn_unit.spawn_exp();
-					spawn_unit.spawn_old_guard();
-				}
+				if (company = 8) and(obj_creation.equal_specialists = 0) then mobi[company][k] = "Jump Pack";
+				if (mobi[101, 14] != "") then mobi[company][k] = mobi[101, 14];
+				spawn_unit = TTRPG[company][k]
+				spawn_unit.spawn_exp();
+				spawn_unit.spawn_old_guard();
 			}
 
 			k += 1;
@@ -3307,26 +3304,6 @@ function scr_initialize_custom() {
 		c += 1;
 		if (k = 0) {
 			if (role[0, c] != "") and(role[0, c + 1] = "") then k = c;
-		}
-	}
-	if (global.chapter_name != "Space Wolves") and(global.chapter_name != "Iron Hands") {
-		if (chaap > 0) then repeat(chaap) {
-			k += 1;
-			commands += 1; // Chaplain
-			TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
-			race[company][k] = 1;
-			loc[company][k] = home_name;
-			role[company][k] = roles.chaplain;
-			wep1[company][k] = wep1[101, 14];
-			name[company][k] = global.name_generator.generate_space_marine_name();
-			wep2[company][k] = wep2[101, 14];
-			armour[company][k] = "MK7 Aquila"; // if (company<=2) then armour[company][k]=choose("MK8 Errant","MK6 Corvus");
-			gear[company][k] = gear[101, 14];
-
-			experience[company][k] = 100;
-			bio[company][k] = 0;
-			// if (company=8) then mobi[company][k]="Jump Pack";
-			if (mobi[101, 14] != "") then mobi[company][k] = mobi[101, 14];
 		}
 	}
 
