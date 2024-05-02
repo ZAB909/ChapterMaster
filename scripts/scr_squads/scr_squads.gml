@@ -198,11 +198,11 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 					array_copy(copy_squad,0,members,0, array_length(members)); //create a copy of the squad members
 					while (array_length(copy_squad) > 0){
 						new_copy_unit = irandom(array_length(copy_squad)-1);  //loop through the squad members randomly so that each squad has different marine loadouts
-						if (array_contains(ignore_units, new_copy_unit)){
+						unit = fetch_unit(copy_squad[new_copy_unit]);
+						if (array_contains(ignore_units, unit.marine_number)){
 							array_delete(copy_squad, new_copy_unit,1);
 							continue;
 						}
-						unit = obj_ini.TTRPG[copy_squad[new_copy_unit][0], copy_squad[new_copy_unit][1]];
 						if (unit.role() == unit_type){
 							if (struct_exists(unit_squad_data,"loadout")){		
 								if (required_load != "none" && array_contains(required_loadout_slots, load_out_slot)){
@@ -238,7 +238,7 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 							  							unit.update_weapon_one(item_to_add,from_armoury,to_armoury);
 							  							unit.ranged_attack();
 							  							unit.melee_attack();
-							  							if (unit.encumbered_ranged || unit.encumbered_melee && !equipment_set){
+							  							if ((unit.encumbered_ranged || unit.encumbered_melee )&& !equipment_set){
 							  								unit.update_weapon_one(return_item,from_armoury,to_armoury);
 							  								continue;
 							  							}
@@ -247,7 +247,7 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 							  							unit.update_weapon_two(item_to_add,from_armoury,to_armoury);
 							  							unit.ranged_attack();
 							  							unit.melee_attack();
-							  							if (unit.encumbered_ranged|| unit.encumbered_melee && !equipment_set){
+							  							if ((unit.encumbered_ranged|| unit.encumbered_melee) && !equipment_set){
 							  								unit.update_weapon_two(return_item,from_armoury,to_armoury);
 							  								continue;
 							  							}
@@ -259,10 +259,9 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 											  		if (equipment_set){
 											  			if (is_struct(optional_load_data[3])){
 											  				unit.alter_equipment(optional_load_data[3],from_armoury,to_armoury);
-											  				array_push(ignore_units, new_copy_unit);
+											  				array_push(ignore_units, unit.marine_number);
 											  			}
 											  		}
-											  		break;
 										  		}
 									  		}
 						  				}
