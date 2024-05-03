@@ -76,8 +76,10 @@ function scr_chapter_new(argument0) {
 		company_title[10]="The Redeemed";
 		
 		for(i=100;i<=102;i++){
+		// role[i,1]="Supreme Grand Master";
 		role[i,5]="Master";
 		wep1[i,5]="Power Sword";
+		role[i,2]="Deathwing Knight"
 	
 		}
 	}
