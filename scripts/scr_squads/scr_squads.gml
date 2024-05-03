@@ -7,6 +7,7 @@ the requested squad type , if the squad is not possible it will  not be made*/
 
 
 function create_squad(squad_type, company, squad_loadout = true, squad_index=false){
+
 	var squad_unit_types, fulfilled,unit, squad;
 	var squad_count = array_length(obj_ini.squads);
 	var fill_squad =  obj_ini.squad_types[$ squad_type];			//grab all the squad struct info from the squad_types struct
@@ -134,6 +135,9 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 	type_data={};
 	formation_place=""
 	formation_options=[];
+	//TODO introduce loyalty hits from long periods of exile from hierarchy nodes
+	// nodes will be captains chapter masters and other senior staff
+	time_from_parent_node = 0;
 	//nickname = scr_squad_names();
 
 
