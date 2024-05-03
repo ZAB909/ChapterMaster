@@ -1765,12 +1765,13 @@ function scr_initialize_custom() {
 		wep1[company][k]=wep1[101,2];
 
 		wep2[company][k] = wep2[101, 2];
-		armour[company][k] = "Artificer Armour";
-
-	    
+		armour[company][k] = armour[101, 2];
 	    unit.add_exp(210+irandom(30));
 	    unit.spawn_old_guard();
 	    unit.add_trait(choose("guardian", "champion","observant","perfectionist"));
+		if global.chapter_name == "Dark Angels" {
+			armour[company][k] = "Terminator Armour";
+		}
 	}
 
 
