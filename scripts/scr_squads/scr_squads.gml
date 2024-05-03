@@ -266,6 +266,7 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 											  				array_push(ignore_units, unit.marine_number);
 											  			}
 											  		}
+											  		break;
 										  		}
 									  		}
 						  				}
