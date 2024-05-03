@@ -142,7 +142,7 @@ function scr_restart_variables(saved_game) {
 	        obj_restart_vars.r_race[i,8]=1;
 	        obj_restart_vars.r_role[i,8]="Tactical Marine";
 			obj_restart_vars.r_wep1[i,8]="Bolter";
-			obj_restart_vars.r_wep2[i,8]="Chainsword";
+			obj_restart_vars.r_wep2[i,8]="Combat Knife";
 	        obj_restart_vars.r_armour[i,8]="Power Armour";
 			obj_restart_vars.r_mobi[i,8]="";
 			obj_restart_vars.r_gear[i,8]="";
@@ -198,7 +198,7 @@ function scr_restart_variables(saved_game) {
 	        obj_restart_vars.r_role[i,16]="Techmarine";
 			obj_restart_vars.r_wep1[i,16]="Power Axe";
 			obj_restart_vars.r_wep2[i,16]="Storm Bolter";
-	        obj_restart_vars.r_armour[i,16]="Power Armour";
+	        obj_restart_vars.r_armour[i,16]="Artificer Armour";
 			obj_restart_vars.r_gear[i,16]="Servo Arms";
 			obj_restart_vars.r_mobi[i,16]="";
         
@@ -379,7 +379,7 @@ function scr_restart_variables(saved_game) {
 	        obj_controller.r_race[i,8]=1;
 	        obj_controller.r_role[i,8]="Tactical Marine";
 			obj_controller.r_wep1[i,8]="Bolter";
-			obj_controller.r_wep2[i,8]="Chainsword";
+			obj_controller.r_wep2[i,8]="Combat Knife";
 	        obj_controller.r_armour[i,8]="Power Armour";
 			obj_controller.r_mobi[i,8]="";
 			obj_controller.r_gear[i,8]="";
@@ -425,7 +425,7 @@ function scr_restart_variables(saved_game) {
 	        obj_controller.r_race[i,16]=1;
 	        obj_controller.r_role[i,16]="Techmarine";
 			obj_controller.r_wep1[i,16]="Power Axe";obj_controller.r_wep2[i,16]="Storm Bolter";
-	        obj_controller.r_armour[i,16]="Power Armour";
+	        obj_controller.r_armour[i,16]="Artificer Armour";
 			obj_controller.r_gear[i,16]="Servo Arms";obj_controller.r_mobi[i,16]="";
         
 	        obj_controller.r_race[i,17]=1;
@@ -622,7 +622,7 @@ function scr_restart_variables(saved_game) {
 			race[i,8]=1;
 			role[i,8]="Tactical Marine";
 			wep1[i,8]="Bolter";
-			wep2[i,8]="Chainsword";
+			wep2[i,8]="Combat Knife";
 			armour[i,8]="Power Armour";
 	        
 			race[i,9]=1;
@@ -668,7 +668,7 @@ function scr_restart_variables(saved_game) {
 			role[i,16]="Techmarine";
 			wep1[i,16]="Power Axe";
 			wep2[i,16]="Storm Bolter";
-			armour[i,16]="Power Armour";
+			armour[i,16]="Artificer Armour";
 			gear[i,16]="Servo Arms";
 	        
 			race[i,17]=1;

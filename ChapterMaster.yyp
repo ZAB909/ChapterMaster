@@ -435,6 +435,7 @@
     {"id":{"name":"spr_techpriest","path":"sprites/spr_techpriest/spr_techpriest.yy",},},
     {"id":{"name":"spr_crusader","path":"sprites/spr_crusader/spr_crusader.yy",},},
     {"id":{"name":"spr_sororitas","path":"sprites/spr_sororitas/spr_sororitas.yy",},},
+    {"id":{"name":"scr_choose_weighted","path":"scripts/scr_choose_weighted/scr_choose_weighted.yy",},},
     {"id":{"name":"spr_eldar_hire","path":"sprites/spr_eldar_hire/spr_eldar_hire.yy",},},
     {"id":{"name":"spr_save_header","path":"sprites/spr_save_header/spr_save_header.yy",},},
     {"id":{"name":"spr_save_headers","path":"sprites/spr_save_headers/spr_save_headers.yy",},},

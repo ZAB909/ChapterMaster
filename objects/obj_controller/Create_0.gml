@@ -225,7 +225,7 @@ for(var i=100; i<103; i++){
     
     obj_controller.r_role[i,8]="Tactical Marine";
     obj_controller.r_wep1[i,8]="Bolter";
-    obj_controller.r_wep2[i,8]="Chainsword";
+    obj_controller.r_wep2[i,8]="Combat Knife";
     obj_controller.r_armour[i,8]="Power Armour";
     obj_controller.r_mobi[i,8]="";
     obj_controller.r_gear[i,8]="";
@@ -275,7 +275,7 @@ for(var i=100; i<103; i++){
     obj_controller.r_role[i,16]="Techmarine";
     obj_controller.r_wep1[i,16]="Power Axe";
     obj_controller.r_wep2[i,16]="Storm Bolter";
-    obj_controller.r_armour[i,16]="Power Armour";
+    obj_controller.r_armour[i,16]="Artificer Armour";
     obj_controller.r_gear[i,16]="Servo Arms";
     obj_controller.r_mobi[i,16]="";
     
