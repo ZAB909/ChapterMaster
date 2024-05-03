@@ -1,6 +1,6 @@
 -----------------------
 
-Version  0.9.0.3
+Version  0.9.1.0
 
 Fixed:
 	- Certain Hirelings crashing the game when viewed
@@ -18,6 +18,10 @@ Fixed:
 	- various sprite adjustments to fix alignment
 	- armour equip issues
 	- general stability improvements to management screens
+	- fixed inquisitor inspection and chase functions
+	- governor serf execution crash fix
+	- vehicle weapons fixed
+	- jump pack hammer of wrath fixed
 
 Changed:
 	- Overhaul of managing so that it is not directly linked to companies
@@ -31,15 +35,29 @@ Changed:
 	- garrison leader bonus for garrisoning doubled increased by 50%
 	- psker abundance and psker intolerant respectivly increase and decrease psionic spawn levels
 	- jailing heretics now stops them corrupting even if in the same location as other marines
+	- remove planet tithe alerts
+	- press shift for 3 times map scroll
+	- complete overhaul of weapon descriptions
+	- biography descriptions tweaked
+	- item wuality display now uses colour system
+	- weapons now have distinct hit rates balancing combat
+	- shader options for cloth
+	- colour improvements for many base chapters
+
+
 added:
 	- crozius sprite
 	- fleet viewer to quickly see fleets and zoom to fleet locations
 	- quick view event log locations by pressing view button
 	- quick view garrisons with new troop logger
+	- quick view missions with new mission logger
 	- manage marines by planet location instead of being locked to company manage screens
 	- stat boosts and new traits for spawn captains
 	- ability to demote/promote sgts with a loyalty hit to the demoted sgt
 	- genestealer cults acctually exist hidden from player view so mechanic can now be expanded upon
+	- causulty descriptions now added to battle log flavour
+	- ability to reshuffle squad loadouts
+	- full set of da and da successor sprites
 
 
 -----------------

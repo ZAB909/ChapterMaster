@@ -349,33 +349,97 @@ function scr_load(argument0, argument1) {
 	    var tempa,tempa2,q,good;q=0;good=0;tempa="";tempa2=0;
 	    scr_colors_initialize();
 
-	    tempa=ini_read_string("Controller","main_color","Error");tempa2=0;
-	    q=0;good=0;repeat(30){q+=1;if (tempa=col[q]) and (good=0){good=q;tempa2=q;}}
-	    obj_controller.main_color=tempa2;obj_ini.main_color=tempa2;
+		tempa = ini_read_string("Controller", "main_color", "Error");
+		tempa2 = 0;
+		q = 0;
+		good = 0;
+		for(var q=0; q<global.colors_count; q++){
+			if (tempa = col[q]) and(good = 0) {
+				good = q;
+				tempa2 = q;
+			}
+		}
+		obj_controller.main_color = tempa2;
+		obj_ini.main_color = tempa2;
 
-	    tempa=ini_read_string("Controller","secondary_color","Error");tempa2=0;
-	    q=0;good=0;repeat(30){q+=1;if (tempa=col[q]) and (good=0){good=q;tempa2=q;}}
-	    obj_controller.secondary_color=tempa2;obj_ini.secondary_color=tempa2;
+		tempa = ini_read_string("Controller", "secondary_color", "Error");
+		tempa2 = 0;
+		q = 0;
+		good = 0;
+		for(var q=0; q<global.colors_count; q++){
+			if (tempa = col[q]) and(good = 0) {
+				good = q;
+				tempa2 = q;
+			}
+		}
+		obj_controller.secondary_color = tempa2;
+		obj_ini.secondary_color = tempa2;
 
-	    tempa=ini_read_string("Controller","trim_color","Error");tempa2=0;
-	    q=0;good=0;repeat(30){q+=1;if (tempa=col[q]) and (good=0){good=q;tempa2=q;}}
-	    obj_controller.trim_color=tempa2;obj_ini.trim_color=tempa2;
+		tempa = ini_read_string("Controller", "trim_color", "Error");
+		tempa2 = 0;
+		q = 0;
+		good = 0;
+		for(var q=0; q<global.colors_count; q++){
+			if (tempa = col[q]) and(good = 0) {
+				good = q;
+				tempa2 = q;
+			}
+		}
+		obj_controller.trim_color = tempa2;
+		obj_ini.trim_color = tempa2;
 
-	    tempa=ini_read_string("Controller","pauldron2_color","Error");tempa2=0;
-	    q=0;good=0;repeat(30){q+=1;if (tempa=col[q]) and (good=0){good=q;tempa2=q;}}
-	    obj_controller.pauldron2_color=tempa2;obj_ini.pauldron2_color=tempa2;
+		tempa = ini_read_string("Controller", "pauldron2_color", "Error");
+		tempa2 = 0;
+		q = 0;
+		good = 0;
+		for(var q=0; q<global.colors_count; q++){
+			if (tempa = col[q]) and(good = 0) {
+				good = q;
+				tempa2 = q;
+			}
+		}
+		obj_controller.pauldron2_color = tempa2;
+		obj_ini.pauldron2_color = tempa2;
 
-	    tempa=ini_read_string("Controller","pauldron_color","Error");tempa2=0;
-	    q=0;good=0;repeat(30){q+=1;if (tempa=col[q]) and (good=0){good=q;tempa2=q;}}
-	    obj_controller.pauldron_color=tempa2;obj_ini.pauldron_color=tempa2;
+		tempa = ini_read_string("Controller", "pauldron_color", "Error");
+		tempa2 = 0;
+		q = 0;
+		good = 0;
+		for(var q=0; q<global.colors_count; q++){
+			if (tempa = col[q]) and(good = 0) {
+				good = q;
+				tempa2 = q;
+			}
+		}
+		obj_controller.pauldron_color = tempa2;
+		obj_ini.pauldron_color = tempa2;
 
-	    tempa=ini_read_string("Controller","lens_color","Error");tempa2=0;
-	    q=0;good=0;repeat(30){q+=1;if (tempa=col[q]) and (good=0){good=q;tempa2=q;}}
-	    obj_controller.lens_color=tempa2;obj_ini.lens_color=tempa2;
+		tempa = ini_read_string("Controller", "lens_color", "Error");
+		tempa2 = 0;
+		q = 0;
+		good = 0;
+		for(var q=0; q<global.colors_count; q++){
+			if (tempa = col[q]) and(good = 0) {
+				good = q;
+				tempa2 = q;
+			}
+		}
+		obj_controller.lens_color = tempa2;
+		obj_ini.lens_color = tempa2;
 
-	    tempa=ini_read_string("Controller","weapon_color","Error");tempa2=0;
-	    q=0;good=0;repeat(30){q+=1;if (tempa=col[q]) and (good=0){good=q;tempa2=q;}}
-	    obj_controller.weapon_color=tempa2;obj_ini.weapon_color=tempa2;
+		tempa = ini_read_string("Controller", "weapon_color", "Error");
+		tempa2 = 0;
+		q = 0;
+		good = 0;
+		for(var q=0; q<global.colors_count; q++){
+			if (tempa = col[q]) and(good = 0) {
+				good = q;
+				tempa2 = q;
+			}
+		}
+
+	    obj_controller.weapon_color = tempa2;
+	    obj_ini.weapon_color = tempa2;
 
 	    obj_controller.col_special=ini_read_real("Controller","col_special",0);obj_ini.col_special=obj_controller.col_special;
 	    obj_controller.trim=ini_read_real("Controller","trimmed",0);obj_ini.trim=obj_controller.trim;
@@ -1045,33 +1109,89 @@ function scr_load(argument0, argument1) {
 
 	    var tempa,tempa2,q,good;tempa="";tempa2=0;q=0;good=0;
 
-	    tempa=ini_read_string("Res","maincol","");
-	    tempa2=0;q=0;good=0;repeat(30){q+=1;if (tempa=obj_controller.col[q]) and (good=0){good=q;tempa2=q;}}
-	    obj_controller.restart_main_color=tempa2;
+		tempa = ini_read_string("Res", "maincol", "");
+		tempa2 = 0;
+		q = 0;
+		good = 0;
+		for(var q=0; q<global.colors_count; q++){
+			if (tempa = obj_controller.col[q]) and(good = 0) {
+				good = q;
+				tempa2 = q;
+			}
+		}
+		obj_controller.restart_main_color = tempa2;
 
-	    tempa=ini_read_string("Res","seccol","");
-	    tempa2=0;q=0;good=0;repeat(30){q+=1;if (tempa=obj_controller.col[q]) and (good=0){good=q;tempa2=q;}}
-	    obj_controller.restart_secondary_color=tempa2;
+		tempa = ini_read_string("Res", "seccol", "");
+		tempa2 = 0;
+		q = 0;
+		good = 0;
+		for(var q=0; q<global.colors_count; q++){
+			if (tempa = obj_controller.col[q]) and(good = 0) {
+				good = q;
+				tempa2 = q;
+			}
+		}
+		obj_controller.restart_secondary_color = tempa2;
 
-	    tempa=ini_read_string("Res","tricol","");
-	    tempa2=0;q=0;good=0;repeat(30){q+=1;if (tempa=obj_controller.col[q]) and (good=0){good=q;tempa2=q;}}
-	    obj_controller.restart_trim_color=tempa2;
+		tempa = ini_read_string("Res", "tricol", "");
+		tempa2 = 0;
+		q = 0;
+		good = 0;
+		for(var q=0; q<global.colors_count; q++){
+			if (tempa = obj_controller.col[q]) and(good = 0) {
+				good = q;
+				tempa2 = q;
+			}
+		}
+		obj_controller.restart_trim_color = tempa2;
 
-	    tempa=ini_read_string("Res","paul2col","");
-	    tempa2=0;q=0;good=0;repeat(30){q+=1;if (tempa=obj_controller.col[q]) and (good=0){good=q;tempa2=q;}}
-	    obj_controller.restart_pauldron2_color=tempa2;
+		tempa = ini_read_string("Res", "paul2col", "");
+		tempa2 = 0;
+		q = 0;
+		good = 0;
+		for(var q=0; q<global.colors_count; q++){
+			if (tempa = obj_controller.col[q]) and(good = 0) {
+				good = q;
+				tempa2 = q;
+			}
+		}
+		obj_controller.restart_pauldron2_color = tempa2;
 
-	    tempa=ini_read_string("Res","paul1col","");
-	    tempa2=0;q=0;good=0;repeat(30){q+=1;if (tempa=obj_controller.col[q]) and (good=0){good=q;tempa2=q;}}
-	    obj_controller.restart_pauldron_color=tempa2;
+		tempa = ini_read_string("Res", "paul1col", "");
+		tempa2 = 0;
+		q = 0;
+		good = 0;
+		for(var q=0; q<global.colors_count; q++){
+			if (tempa = obj_controller.col[q]) and(good = 0) {
+				good = q;
+				tempa2 = q;
+			}
+		}
+		obj_controller.restart_pauldron_color = tempa2;
 
-	    tempa=ini_read_string("Res","lenscol","");
-	    tempa2=0;q=0;good=0;repeat(30){q+=1;if (tempa=obj_controller.col[q]) and (good=0){good=q;tempa2=q;}}
-	    obj_controller.restart_lens_color=tempa2;
+		tempa = ini_read_string("Res", "lenscol", "");
+		tempa2 = 0;
+		q = 0;
+		good = 0;
+		for(var q=0; q<global.colors_count; q++){
+			if (tempa = obj_controller.col[q]) and(good = 0) {
+				good = q;
+				tempa2 = q;
+			}
+		}
+		obj_controller.restart_lens_color = tempa2;
 
-	    tempa=ini_read_string("Res","wepcol","");
-	    tempa2=0;q=0;good=0;repeat(30){q+=1;if (tempa=obj_controller.col[q]) and (good=0){good=q;tempa2=q;}}
-	    obj_controller.restart_weapon_color=tempa2;
+		tempa = ini_read_string("Res", "wepcol", "");
+		tempa2 = 0;
+		q = 0;
+		good = 0;
+		for(var q=0; q<global.colors_count; q++){
+			if (tempa = obj_controller.col[q]) and(good = 0) {
+				good = q;
+				tempa2 = q;
+			}
+		}
+		obj_controller.restart_weapon_color = tempa2;
 
 	    //
 

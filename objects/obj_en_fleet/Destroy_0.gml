@@ -6,7 +6,9 @@
 
 
 if (action="") and (orbiting!=0){
-    if (instance_exists(orbiting)){orbiting.present_fleet[owner]-=1;}
+    if (orbiting=instance_nearest(x, y, obj_star)){
+        orbiting.present_fleet[owner]-=1;
+    }
     orbiting=0;
 }
 

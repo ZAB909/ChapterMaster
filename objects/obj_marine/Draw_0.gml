@@ -4,20 +4,21 @@ if (wounded>0) then d3d_set_fog(true,255,0,0);
 if (wounded<=0){
     if(shader_is_compiled(sReplaceColor)){
         shader_set(sReplaceColor);
-        shader_set_uniform_f(colour_to_find1, sourceR1,sourceG1,sourceB1 );       
-        shader_set_uniform_f(colour_to_set1, targetR1,targetG1,targetB1 );
-        shader_set_uniform_f(colour_to_find2, sourceR2,sourceG2,sourceB2 );       
-        shader_set_uniform_f(colour_to_set2, targetR2,targetG2,targetB2 );
-        shader_set_uniform_f(colour_to_find3, sourceR3,sourceG3,sourceB3 );       
-        shader_set_uniform_f(colour_to_set3, targetR3,targetG3,targetB3 );
-        shader_set_uniform_f(colour_to_find4, sourceR4,sourceG4,sourceB4 );       
-        shader_set_uniform_f(colour_to_set4, targetR4,targetG4,targetB4 );
-        shader_set_uniform_f(colour_to_find5, sourceR5,sourceG5,sourceB5 );
-        shader_set_uniform_f(colour_to_set5, targetR5,targetG5,targetB5 );
-        shader_set_uniform_f(colour_to_find6, sourceR6,sourceG6,sourceB6 );
-        shader_set_uniform_f(colour_to_set6, targetR6,targetG6,targetB6 );
-        shader_set_uniform_f(colour_to_find7, sourceR7,sourceG7,sourceB7 );
-        shader_set_uniform_f(colour_to_set7, targetR7,targetG7,targetB7 );
+        
+        shader_set_uniform_f_array(colour_to_find1, body_colour_find );       
+        shader_set_uniform_f_array(colour_to_set1, body_colour_replace );
+        shader_set_uniform_f_array(colour_to_find2, secondary_colour_find );       
+        shader_set_uniform_f_array(colour_to_set2, secondary_colour_replace );
+        shader_set_uniform_f_array(colour_to_find3, pauldron_colour_find );       
+        shader_set_uniform_f_array(colour_to_set3, pauldron_colour_replace );
+        shader_set_uniform_f_array(colour_to_find4, lens_colour_find );       
+        shader_set_uniform_f_array(colour_to_set4, lens_colour_replace );
+        shader_set_uniform_f_array(colour_to_find5, trim_colour_find );
+        shader_set_uniform_f_array(colour_to_set5, trim_colour_replace );
+        shader_set_uniform_f_array(colour_to_find6, pauldron2_colour_find );
+        shader_set_uniform_f_array(colour_to_set6, pauldron2_colour_replace );
+        shader_set_uniform_f_array(colour_to_find7, weapon_colour_find );
+        shader_set_uniform_f_array(colour_to_set7, weapon_colour_replace );
     }
 }
 

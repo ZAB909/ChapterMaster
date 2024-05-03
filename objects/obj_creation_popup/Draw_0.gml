@@ -21,11 +21,11 @@ if (type>0){
         if (type=6) then draw_text_transformed(444,550,string_hash_to_newline("Lens Color"),0.6,0.6,0);
         if (type=7) then draw_text_transformed(444,550,string_hash_to_newline("Weapon Color"),0.6,0.6,0);
     
-        rows=floor(obj_creation.colors)+1;
+        rows=floor(global.colors_count)+1;
         var coli,cu,tot;cu=0;coli=0;tot=0;
         repeat(rows){coli+=1;cu=0;
             repeat(10){cu+=1;tot+=1;
-                if (tot<=obj_creation.colors){
+                if (tot<=global.colors_count){
                     draw_set_color(make_color_rgb(obj_creation.col_r[tot],obj_creation.col_g[tot],obj_creation.col_b[tot]));
                     
                     var x1,x2,y1,y2;

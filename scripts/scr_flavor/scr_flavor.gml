@@ -7,11 +7,11 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	var p1,p2,p3,mes,targeh;
 	mes="";p1=$"";p2="";p3="";
 
-	var wepp;wepp="";
-	if (number_of_attacking_weapons>0){wepp=wep[number_of_attacking_weapons];}
-	if (number_of_attacking_weapons=-51) then wepp="Heavy Bolter Emplacement";
-	if (number_of_attacking_weapons=-52) then wepp="Missile Launcher Emplacement";
-	if (number_of_attacking_weapons=-53) then wepp="Missile Silo";
+	var weapon_name;weapon_name="";
+	if (number_of_attacking_weapons>0){weapon_name=wep[number_of_attacking_weapons];}
+	if (number_of_attacking_weapons=-51) then weapon_name="Heavy Bolter Emplacement";
+	if (number_of_attacking_weapons=-52) then weapon_name="Missile Launcher Emplacement";
+	if (number_of_attacking_weapons=-53) then weapon_name="Missile Silo";
 
 
 	var target_name=target.dudes[targeh];
@@ -36,16 +36,16 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	// show_message("Flavor is being ran");
 	// if (cm_kill=1) then show_message("CMKILL1");
 
-	if (string_count("&",wepp)>0) or (string_count("|",wepp)>0){// Artifact description
-	    if (string_count("Bolter",wepp)>0) then wepp="Bolter";
-	    if (string_count("Plasma Pistol",wepp)>0) then wepp="Plasma Pistol";
-	    if (string_count("Plasma Gun",wepp)>0) then wepp="Plasma Gun";
-	    if (string_count("Power Sword",wepp)>0) then wepp="Power Sword";
-	    if (string_count("Power Spear",wepp)>0) then wepp="Power Spear";
-	    if (string_count("Power Axe",wepp)>0) then wepp="Power Axe";
-	    if (string_count("Power Fist",wepp)>0) then wepp="Power Fist";
-	    if (string_count("Relic Blade",wepp)>0) then wepp="Relic Blade";
-	    if (string_count("&",wepp)>0) then wepp=clean_tags(wepp);
+	if (string_count("&",weapon_name)>0) or (string_count("|",weapon_name)>0){// Artifact description
+	    if (string_count("Bolter",weapon_name)>0) then weapon_name="Bolter";
+	    if (string_count("Plasma Pistol",weapon_name)>0) then weapon_name="Plasma Pistol";
+	    if (string_count("Plasma Gun",weapon_name)>0) then weapon_name="Plasma Gun";
+	    if (string_count("Power Sword",weapon_name)>0) then weapon_name="Power Sword";
+	    if (string_count("Power Spear",weapon_name)>0) then weapon_name="Power Spear";
+	    if (string_count("Power Axe",weapon_name)>0) then weapon_name="Power Axe";
+	    if (string_count("Power Fist",weapon_name)>0) then weapon_name="Power Fist";
+	    if (string_count("Relic Blade",weapon_name)>0) then weapon_name="Relic Blade";
+	    if (string_count("&",weapon_name)>0) then weapon_name=clean_tags(weapon_name);
 	}
 
 	if (obj_ncombat.battle_special="WL10_reveal") or (obj_ncombat.battle_special="WL10_later"){
@@ -64,31 +64,31 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 
 
 
-	if (string_count("Bolt",wepp)>0) and (solod=false){flavored=1;
-	    if (obj_ncombat.bolter_drilling=1) then wepp="Accurate "+wepp;
+	if (string_count("Bolt",weapon_name)>0) and (solod=false){flavored=1;
+	    if (obj_ncombat.bolter_drilling=1) then weapon_name="Accurate "+weapon_name;
 	    if (number_of_shots<200){
-	        if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {wepp}s fire.";
-	        if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {wepp}s fire.";
-	        if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {wepp} fire strike the enemy ranks (X{casulties} casulties).";
-	        if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {wepp} rip through the enemy ranks (X{casulties} casulties).";
+	        if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name}s fire.";
+	        if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {weapon_name}s fire.";
+	        if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name} fire strike the enemy ranks (X{casulties} casulties).";
+	        if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {weapon_name} rip through the enemy ranks (X{casulties} casulties).";
 	    }
 	    if (number_of_shots>=200){
-	        if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {wepp}s fire.  Explosions clap across the {target_name}.";
-	        if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {wepp}s fire.  Explosions clap around the {target_name}.";
-	        if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {wepp}s rip through the enemy ranks (X{casulties} casulties).";
-	        if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {wepp}s rip through the enemy ranks (X{casulties} casulties).";
+	        if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name}s fire.  Explosions clap across the {target_name}.";
+	        if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {weapon_name}s fire.  Explosions clap around the {target_name}.";
+	        if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name}s rip through the enemy ranks (X{casulties} casulties).";
+	        if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {weapon_name}s rip through the enemy ranks (X{casulties} casulties).";
 	    }
 	}
-	if (string_count("Bolt",wepp)>0) and (solod=true){flavored=1;
-	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=string(full_name)+$" fires his {wepp} into the {target_name} ranks (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=string(full_name)+$" fires his {wepp} into the {target_name} ranks (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=string(full_name)+$" fires his {wepp} into a {target_name} but fails to kill it.";
-	    if (target.dudes_num[targeh]=1) and (casulties>0) then p1=string(full_name)+$" fires his {wepp} into a {target_name}.";
+	if (string_count("Bolt",weapon_name)>0) and (solod=true){flavored=1;
+	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=string(full_name)+$" fires his {weapon_name} into the {target_name} ranks (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=string(full_name)+$" fires his {weapon_name} into the {target_name} ranks (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=string(full_name)+$" fires his {weapon_name} into a {target_name} but fails to kill it.";
+	    if (target.dudes_num[targeh]=1) and (casulties>0) then p1=string(full_name)+$" fires his {weapon_name} into a {target_name}.";
 	}
 
 
 
-	if (wepp="hammer_of_wrath"){
+	if (weapon_name="hammer_of_wrath"){
 	    if (solod=false){flavored=1;
 	        if (number_of_shots<20) then p1=$"{number_of_shots} Astartes with Jump Packs leap to the skies.  Sputtering and roaring flames herald their advance.  Once at a suitable height they crash back down amongst the enemy- ";
 	        if (number_of_shots>=20) and (number_of_shots<100) then p1=$"Several squads of Astartes take to the sky, their Jump Packs roaring and shooting flames.  Once at a suitable height they crash back down amongst the enemy- ";
@@ -110,46 +110,46 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 
 
 
-	if (string_count("Plasma Pistol",wepp)>0) and (solod=false){flavored=1;
-	    if (target.dudes_num[targeh]=1) then p1=$"{number_of_shots} {wepp} shoot bolts of energy into a {target_name} (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {wepp} shoot bolts of energy into the {target_name} ranks (X{casulties} casulties).";
+	if (string_count("Plasma Pistol",weapon_name)>0) and (solod=false){flavored=1;
+	    if (target.dudes_num[targeh]=1) then p1=$"{number_of_shots} {weapon_name} shoot bolts of energy into a {target_name} (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name} shoot bolts of energy into the {target_name} ranks (X{casulties} casulties).";
 	}
-	if (wepp="Assault Cannon") and (solod=false){flavored=1;
-	    if (number_of_shots=1) then p1=$"An {wepp} hums and rotates, belching out bullets and flame alike.";
-	    if (number_of_shots>1) then p1=$"{number_of_shots} {wepp} hum and rotat, belching out bullets and flame alike.";
+	if (weapon_name="Assault Cannon") and (solod=false){flavored=1;
+	    if (number_of_shots=1) then p1=$"An {weapon_name} hums and rotates, belching out bullets and flame alike.";
+	    if (number_of_shots>1) then p1=$"{number_of_shots} {weapon_name} hum and rotat, belching out bullets and flame alike.";
 	}
-	else if (string_count("Flamer",wepp)>0) and (solod=false){flavored=1;
-	    if (target.dudes_num[targeh]=1) then p1=$"{number_of_shots} {wepp} bathe the {target_name} in holy promethium.";
-	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {wepp} bathe the {target_name} ranks (X{casulties} casulties) in holy promethium.";
+	else if (string_count("Flamer",weapon_name)>0) and (solod=false){flavored=1;
+	    if (target.dudes_num[targeh]=1) then p1=$"{number_of_shots} {weapon_name} bathe the {target_name} in holy promethium.";
+	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {weapon_name} bathe the {target_name} ranks (X{casulties} casulties) in holy promethium.";
 	}
-	else if (wepp="Missile Launcher") and (solod=false){flavored=1;
-	    if (target.dudes_num[targeh]=1) then p1=$"{number_of_shots} {wepp} fire upon the {target_name}.";
-	    if (target.dudes_num[targeh]>1) then p1=$"{number_of_shots} {wepp} fire on the {target_name} ranks (X{casulties} casulties).";
+	else if (weapon_name="Missile Launcher") and (solod=false){flavored=1;
+	    if (target.dudes_num[targeh]=1) then p1=$"{number_of_shots} {weapon_name} fire upon the {target_name}.";
+	    if (target.dudes_num[targeh]>1) then p1=$"{number_of_shots} {weapon_name} fire on the {target_name} ranks (X{casulties} casulties).";
 	}
-	else if (wepp="Whirlwind Missiles") and (solod=false){flavored=1;
+	else if (weapon_name="Whirlwind Missiles") and (solod=false){flavored=1;
 	    if (target.dudes_num[targeh]=1) then p1=$"{number_of_shots} Whirlwinds fire upon the {target_name}.";
 	    if (target.dudes_num[targeh]>1) then p1=$"{number_of_shots} Whirlwinds fire on the {target_name} ranks (X{casulties} casulties).";
 	}
-	else if (wepp="Sniper Rifle") and (solod=false){flavored=1;
-	    if (target.dudes_num[targeh]=1) then p1=$"{number_of_shots} {wepp} fire upon the {target_name}.";
-	    if (target.dudes_num[targeh]>1) then p1=$"{number_of_shots} {wepp} fire on the {target_name} ranks (X{casulties} casulties).";
+	else if (weapon_name="Sniper Rifle") and (solod=false){flavored=1;
+	    if (target.dudes_num[targeh]=1) then p1=$"{number_of_shots} {weapon_name} fire upon the {target_name}.";
+	    if (target.dudes_num[targeh]>1) then p1=$"{number_of_shots} {weapon_name} fire on the {target_name} ranks (X{casulties} casulties).";
 	}
-	else if (wepp="Stalker Pattern Bolter") and (solod=false){flavored=1;
-	    if (target.dudes_num[targeh]=1) then p1=$"{number_of_shots} {wepp} fire upon the {target_name}.";
-	    if (target.dudes_num[targeh]>1) then p1=$"{number_of_shots} {wepp} fire on the {target_name}.";
+	else if (weapon_name="Stalker Pattern Bolter") and (solod=false){flavored=1;
+	    if (target.dudes_num[targeh]=1) then p1=$"{number_of_shots} {weapon_name} fire upon the {target_name}.";
+	    if (target.dudes_num[targeh]>1) then p1=$"{number_of_shots} {weapon_name} fire on the {target_name}.";
 	}
-	if ((wepp="Lascannon") or (wepp="Twin Linked Lascannon") or (wepp="Lascannons")) and (solod=false){flavored=1;
-	    if (wepp="Lascannons"){wepp="Lascannon";number_of_shots=number_of_shots*2;}
-	    if (number_of_shots=1) then p1=$"A {target_name} is struck by a {wepp}.";
-	    if (number_of_shots>1) then p1=$"{number_of_shots} {wepp} fire upon the {target_name} ranks (X{casulties} casulties).";        
+	if ((weapon_name="Lascannon") or (weapon_name="Twin Linked Lascannon") or (weapon_name="Lascannons")) and (solod=false){flavored=1;
+	    if (weapon_name="Lascannons"){weapon_name="Lascannon";number_of_shots=number_of_shots*2;}
+	    if (number_of_shots=1) then p1=$"A {target_name} is struck by a {weapon_name}.";
+	    if (number_of_shots>1) then p1=$"{number_of_shots} {weapon_name} fire upon the {target_name} ranks (X{casulties} casulties).";        
 	}
-	if (wepp="Webber") and (solod=false){flavored=1;
+	if (weapon_name="Webber") and (solod=false){flavored=1;
 	    if ((target_name="Termagaunt") or (target_name="Hormagaunt")) and (casulties>0) then obj_ncombat.captured_gaunt+=casulties;
-	    if (target.dudes_num[targeh]=1) then p1=$"{number_of_shots} {wepp} spray ooze on the {target_name}.";
-	    if (target.dudes_num[targeh]>1) then p1=$"{number_of_shots} {wepp} spray ooze on the {target_name} ranks (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]=1) then p1=$"{number_of_shots} {weapon_name} spray ooze on the {target_name}.";
+	    if (target.dudes_num[targeh]>1) then p1=$"{number_of_shots} {weapon_name} spray ooze on the {target_name} ranks (X{casulties} casulties).";
 	}
 
-	if (wepp=="fists") or (wepp=="fists") and (solod=false){flavored=1;var ra;ra=choose(1,2,3,4);
+	if (weapon_name=="fists") or (weapon_name=="fists") and (solod=false){flavored=1;var ra;ra=choose(1,2,3,4);
 	    // This needs to be worked out
 	    if (casulties=0) then p2="MELEE";
 	    if (casulties>0){
@@ -160,47 +160,47 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	        if (ra=4) then p2="are struck by your marines in melee.";
 	    }
 	}
-	if (wepp="Close Combat Weapon") and (solod=false){flavored=1;
+	if (weapon_name="Close Combat Weapon") and (solod=false){flavored=1;
 	    if (number_of_shots=1) then p1=$"A {target_name} is struck by a "+string(obj_ini.role[100][6])+".";
 	    if (number_of_shots>1) then p1=$"{number_of_shots} {obj_ini.role[100][6]}s stomp, wrench, and smash at the {target_name} ranks (X{casulties} casulties).";
 	}
-	if (wepp="Chainsword") and (solod=false){flavored=1;
-	    if (number_of_shots=1) then p1=$"A {target_name} is struck by a {wepp}.";
+	if (weapon_name="Chainsword") and (solod=false){flavored=1;
+	    if (number_of_shots=1) then p1=$"A {target_name} is struck by a {weapon_name}.";
 	    if (number_of_shots>1) then p1=$"{number_of_shots} Chainsword motors rev and hack at the {target_name} ranks (X{casulties} casulties).";
 	}
-	if (wepp="Sarissa") and (solod=false){flavored=1;
-	    if (number_of_shots=1) then p1=$"A {target_name} is struck by a Battle Sister's {wepp}.";
+	if (weapon_name="Sarissa") and (solod=false){flavored=1;
+	    if (number_of_shots=1) then p1=$"A {target_name} is struck by a Battle Sister's {weapon_name}.";
 	    // if (number_of_shots>1) and (casulties=0) then p1=$"A Battle Sister "+choose("howls out","roars")+" and hacks at the {target_name} ranks (X{casulties} casulties) with her Sarissa.";
 	    if (number_of_shots>1) then p1=$"{number_of_shots} Battle Sisters {choose("howl out","roar")} as they hack away at the {target_name} ranks (X{casulties} casulties) with their Sarissas.";
 	}
-	if (wepp="Eviscerator") and (solod=false){flavored=1;
-	    if (number_of_shots=1) then p1=$"A {target_name} is struck by a {wepp}.";
+	if (weapon_name="Eviscerator") and (solod=false){flavored=1;
+	    if (number_of_shots=1) then p1=$"A {target_name} is struck by a {weapon_name}.";
 	    if (number_of_shots>1) then p1=$"{number_of_shots} Eviscerators rev and howl, hacking at the {target_name} ranks (X{casulties} casulties).";
 	}
-	if (wepp="Force Staff") and (solod=false){flavored=1;
-	    if (number_of_shots=1) then p1=$"A {target_name} is blasted by a {wepp}.";
-	    if (number_of_shots>1) then p1=$"{number_of_shots} {wepp} crackle and swing into the {target_name} ranks (X{casulties} casulties).";
+	if (weapon_name="Force Staff") and (solod=false){flavored=1;
+	    if (number_of_shots=1) then p1=$"A {target_name} is blasted by a {weapon_name}.";
+	    if (number_of_shots>1) then p1=$"{number_of_shots} {weapon_name} crackle and swing into the {target_name} ranks (X{casulties} casulties).";
 	}
-	if (wepp="Inactive Force Staff") and (solod=false){flavored=1;
-	    if (number_of_shots=1) then p1=$"A {target_name} is struck by a {wepp}.";
-	    if (number_of_shots>1) then p1=$"{number_of_shots} {wepp} are swung into the {target_name} ranks (X{casulties} casulties).";
+	if (weapon_name="Inactive Force Staff") and (solod=false){flavored=1;
+	    if (number_of_shots=1) then p1=$"A {target_name} is struck by a {weapon_name}.";
+	    if (number_of_shots>1) then p1=$"{number_of_shots} {weapon_name} are swung into the {target_name} ranks (X{casulties} casulties).";
 	}
-	if ((string_count("Power",wepp)>0) or (wepp="Lightning Claw")) and (solod=false){flavored=1;
+	if ((string_count("Power",weapon_name)>0) or (weapon_name="Lightning Claw")) and (solod=false){flavored=1;
 	    if (target.dudes_num[targeh]=1){
-	        if (number_of_shots=1) then p1=$"A {target_name} is struck by a {wepp}.";
-	        if (number_of_shots>1) then p1=$"A {target_name} is struck by {number_of_shots} {wepp}s.";
+	        if (number_of_shots=1) then p1=$"A {target_name} is struck by a {weapon_name}.";
+	        if (number_of_shots>1) then p1=$"A {target_name} is struck by {number_of_shots} {weapon_name}s.";
 	    }
 	    if (target.dudes_num[targeh]>1){
-	        if (number_of_shots>1) then p1=$"{number_of_shots} {wepp}s crackle and spark, striking at the {target_name} ranks (X{casulties} casulties).";
+	        if (number_of_shots>1) then p1=$"{number_of_shots} {weapon_name}s crackle and spark, striking at the {target_name} ranks (X{casulties} casulties).";
 	    }
 	}
-	if ((string_count("Power",wepp)>0) or (wepp="Force Staff") or (wepp="Inactive Force Staff") or (wepp="Lightning Claw")) and (solod=true){flavored=1;
-	    if (target.dudes_num[targeh]>1) then p1=$"{full_name} swings his {wepp}.";
+	if ((string_count("Power",weapon_name)>0) or (weapon_name="Force Staff") or (weapon_name="Inactive Force Staff") or (weapon_name="Lightning Claw")) and (solod=true){flavored=1;
+	    if (target.dudes_num[targeh]>1) then p1=$"{full_name} swings his {weapon_name}.";
 	}
 
 
-	if (flavored=0) and (solod=false){p1=$"{number_of_shots} {wepp}+"}
-	if (flavored=0) and (solod=true){p1=$"("+string(full_name)+".{wepp})|";}
+	if (flavored=0) and (solod=false){p1=$"{number_of_shots} {weapon_name}+"}
+	if (flavored=0) and (solod=true){p1=$"("+string(full_name)+".{weapon_name})|";}
 
 
 
@@ -281,23 +281,23 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 
 
 
-	if (string_count("Bolt",wepp)>0) and (solod=false){flavored=1;
-	    if (obj_ncombat.bolter_drilling=1) then wepp="Accurate "+wepp;
+	if (string_count("Bolt",weapon_name)>0) and (solod=false){flavored=1;
+	    if (obj_ncombat.bolter_drilling=1) then weapon_name="Accurate "+weapon_name;
 	    if (number_of_shots<200){
-	        if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {wepp}s fire.  A {target_name} is rocked by the bolts but survives.";
-	        if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {wepp}s fire.  A {target_name} absorbs most of the bolts and dies instantly.";
-	        if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {wepp} fire strikes the ranks (X{casulties} casulties) of the {target_name} but seemingly does no damage.";
-	        if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {wepp} rip through the {target_name} and purge {casulties}.";
+	        if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name}s fire.  A {target_name} is rocked by the bolts but survives.";
+	        if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {weapon_name}s fire.  A {target_name} absorbs most of the bolts and dies instantly.";
+	        if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name} fire strikes the ranks (X{casulties} casulties) of the {target_name} but seemingly does no damage.";
+	        if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {weapon_name} rip through the {target_name} and purge {casulties}.";
 	    }
 	    if (number_of_shots>=200){
-	        if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {wepp}s fire.  Explosions clap across the armour of the {target_name}.";
-	        if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {wepp}s fire.  Explosions clap around the {target_name} and kill it instantly.";
-	        if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {wepp}s rip through the ranks (X{casulties} casulties) of {target_name}, seemingly doing no damage.";
-	        if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {wepp}s rip through the ranks (X{casulties} casulties) of {target_name}, {casulties} dying immediately.";
+	        if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name}s fire.  Explosions clap across the armour of the {target_name}.";
+	        if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {weapon_name}s fire.  Explosions clap around the {target_name} and kill it instantly.";
+	        if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name}s rip through the ranks (X{casulties} casulties) of {target_name}, seemingly doing no damage.";
+	        if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {weapon_name}s rip through the ranks (X{casulties} casulties) of {target_name}, {casulties} dying immediately.";
 	    }
 	}
-	if (string_count("Bolt",wepp)>0) and (solod=true){flavored=1;
-	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=+$"{string(full_name)} fires his {wepp} into the {target_name} ranks (X{casulties} casulties).";
+	if (string_count("Bolt",weapon_name)>0) and (solod=true){flavored=1;
+	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=+$"{string(full_name)} fires his {weapon_name} into the {target_name} ranks (X{casulties} casulties).";
 	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=+$"{string(full_name)} into the {target_name} ranks (X{casulties} casulties) and kills {casulties}.";
 	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=+$"{string(full_name)} into a {target_name} but fails to kill it.";
 	    if (target.dudes_num[targeh]=1) and (casulties>0) then p1=+$"{string(full_name)} into a {target_name}, killing it.";
@@ -305,7 +305,7 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 
 
 
-	if (wepp="hammer_of_wrath"){
+	if (weapon_name="hammer_of_wrath"){
 	    if (solod=false){flavored=1;
 	        if (number_of_shots<20) then p1=$"{number_of_shots} Astartes with Jump Packs leap to the skies.  Sputtering and roaring flames herald their advance.  Once at a suitable height they crash back down amongst the enemy- ";
 	        if (number_of_shots>=20) and (number_of_shots<100) then p1=$"Several squads of Astartes take to the sky, their Jump Packs roaring and shooting flames.  Once at a suitable height they crash back down amongst the enemy- ";
@@ -328,65 +328,65 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 
 
 
-	if (string_count("Plasma Pistol",wepp)>0 || wepp=="Plasma Gun") and (solod=false){flavored=1;
-	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {wepp} shoot bolts of energy into a {target_name} (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {wepp} overwhelm a {target_name} with bolts of energy (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {wepp} shoot bolts of energy into the {target_name} ranks (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {wepp} shoot bolts of energy into the {target_name}, cleansing {casulties}.";
+	if (string_count("Plasma Pistol",weapon_name)>0 || weapon_name=="Plasma Gun") and (solod=false){flavored=1;
+	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name} shoot bolts of energy into a {target_name} (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {weapon_name} overwhelm a {target_name} with bolts of energy (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name} shoot bolts of energy into the {target_name} ranks (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {weapon_name} shoot bolts of energy into the {target_name}, cleansing {casulties}.";
 	}
-	else if (wepp=="Assault Cannon") and (solod=false){flavored=1;
-	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {wepp}s hum and rotate, belching out bullets and flame alike. Explosions clap across the armour of the {target_name}.  (X{casulties} casulties)";
-	    if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {wepp}s hum and rotate, belching out bullets and flame alike. A {target_name} is ripped apart by the rounds (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {wepp}s hum and rotate, belching out bullets and flame alike. The {target_name}s are rocked but unharmed (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {wepp}s hum and rotate, belching out bullets and flame alike. {casulties} {target_name} are purged (X{casulties} casulties).";
+	else if (weapon_name=="Assault Cannon") and (solod=false){flavored=1;
+	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name}s hum and rotate, belching out bullets and flame alike. Explosions clap across the armour of the {target_name}.  (X{casulties} casulties)";
+	    if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {weapon_name}s hum and rotate, belching out bullets and flame alike. A {target_name} is ripped apart by the rounds (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name}s hum and rotate, belching out bullets and flame alike. The {target_name}s are rocked but unharmed (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {weapon_name}s hum and rotate, belching out bullets and flame alike. {casulties} {target_name} are purged (X{casulties} casulties).";
 	}
-	else if (string_count("Flamer",wepp)>0) and (solod=false){flavored=1;
-	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {wepp} bathe the {target_name} in holy promethium (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {wepp} flash-fry the {target_name} inside its armour (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {wepp} wash over the {target_name} ranks (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {wepp} bathe the {target_name} ranks (X{casulties} casulties) in holy promethium, cleansing {casulties}.";
+	else if (string_count("Flamer",weapon_name)>0) and (solod=false){flavored=1;
+	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name} bathe the {target_name} in holy promethium (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {weapon_name} flash-fry the {target_name} inside its armour (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name} wash over the {target_name} ranks (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {weapon_name} bathe the {target_name} ranks (X{casulties} casulties) in holy promethium, cleansing {casulties}.";
 	}
-	else if (wepp="Missile Launcher") and (solod=false){flavored=1;
-	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {wepp} fire upon the {target_name} and fail to do damage (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {wepp} fire upon the {target_name} and blow it to small pieces (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {wepp} fire on the {target_name} ranks (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {wepp} fire upon the {target_name} ranks (X{casulties} casulties) and blow {casulties} to pieces.";
+	else if (weapon_name="Missile Launcher") and (solod=false){flavored=1;
+	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name} fire upon the {target_name} and fail to do damage (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {weapon_name} fire upon the {target_name} and blow it to small pieces (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name} fire on the {target_name} ranks (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {weapon_name} fire upon the {target_name} ranks (X{casulties} casulties) and blow {casulties} to pieces.";
 	}
-	else if (wepp="Whirlwind Missiles") and (solod=false){flavored=1;
+	else if (weapon_name="Whirlwind Missiles") and (solod=false){flavored=1;
 	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} Whirlwinds fire upon the {target_name} and fail to do damage.";
 	    if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} Whirlwinds fire upon the {target_name} and blow it to small pieces.";
 	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} Whirlwinds fire on the {target_name} ranks (X{casulties} casulties).";
 	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} Whirlwinds fire upon the {target_name} ranks (X{casulties} casulties) and blow {casulties} to pieces.";
 	}
-	if (wepp="Sniper Rifle") and (solod=false){flavored=1;
-	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {wepp} fire upon the {target_name} and fail to do damage.";
-	    if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {wepp} fire upon the {target_name} and destroy it.";
-	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {wepp} fire on the {target_name} ranks (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {wepp} fire upon the {target_name} ranks (X{casulties} casulties) and kill {casulties}.";
+	if (weapon_name="Sniper Rifle") and (solod=false){flavored=1;
+	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name} fire upon the {target_name} and fail to do damage.";
+	    if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {weapon_name} fire upon the {target_name} and destroy it.";
+	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name} fire on the {target_name} ranks (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {weapon_name} fire upon the {target_name} ranks (X{casulties} casulties) and kill {casulties}.";
 	}
-	if (wepp="Stalker Pattern Bolter") and (solod=false){flavored=1;
-	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {wepp} fire upon the {target_name} and fail to do damage.";
-	    if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {wepp} fire upon the {target_name} and destroy it.";
-	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {wepp} fire on the {target_name} ranks (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {wepp} fire upon the {target_name} ranks (X{casulties} casulties) and kill {casulties}.";
+	if (weapon_name="Stalker Pattern Bolter") and (solod=false){flavored=1;
+	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name} fire upon the {target_name} and fail to do damage.";
+	    if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {weapon_name} fire upon the {target_name} and destroy it.";
+	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name} fire on the {target_name} ranks (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {weapon_name} fire upon the {target_name} ranks (X{casulties} casulties) and kill {casulties}.";
 	}
-	if ((wepp="Lascannon") or (wepp="Twin Linked Lascannon") or (wepp="Lascannons")) and (solod=false){flavored=1;
-	    if (wepp="Lascannons"){wepp="Lascannon";number_of_shots=number_of_shots*2;}
-	    if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is struck by a {wepp} (X{casulties} casulties).";
-	    if (number_of_shots=1) and (casulties=1) then p1=$"A {target_name} is struck by a {wepp} and killed instantly (X{casulties} casulties).";
-	    if (number_of_shots>1) and (casulties=0) then p1=$"{number_of_shots} {wepp} fire upon a {target_name} and fail to kill it (X{casulties} casulties).";
-	    if (number_of_shots>1) and (casulties=1) then p1=$"{number_of_shots} {wepp} fire upon a {target_name} and turn it into paste (X{casulties} casulties).";
-	    if (number_of_shots>1) and (casulties>1) then p1=$"{number_of_shots} {wepp} fire and purge {casulties} {target_name}.";        
+	if ((weapon_name="Lascannon") or (weapon_name="Twin Linked Lascannon") or (weapon_name="Lascannons")) and (solod=false){flavored=1;
+	    if (weapon_name="Lascannons"){weapon_name="Lascannon";number_of_shots=number_of_shots*2;}
+	    if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is struck by a {weapon_name} (X{casulties} casulties).";
+	    if (number_of_shots=1) and (casulties=1) then p1=$"A {target_name} is struck by a {weapon_name} and killed instantly (X{casulties} casulties).";
+	    if (number_of_shots>1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name} fire upon a {target_name} and fail to kill it (X{casulties} casulties).";
+	    if (number_of_shots>1) and (casulties=1) then p1=$"{number_of_shots} {weapon_name} fire upon a {target_name} and turn it into paste (X{casulties} casulties).";
+	    if (number_of_shots>1) and (casulties>1) then p1=$"{number_of_shots} {weapon_name} fire and purge {casulties} {target_name}.";        
 	}
-	if (wepp="Webber") and (solod=false){flavored=1;
+	if (weapon_name="Webber") and (solod=false){flavored=1;
 	    if ((target_name="Termagaunt") or (target_name="Hormagaunt")) and (casulties>0) then obj_ncombat.captured_gaunt+=casulties;
-	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {wepp} spray ooze on the {target_name} but fail to immobilize it.";
-	    if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {wepp} spray ooze on the {target_name} and fully immobilize it.";
-	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {wepp} spray ooze on the {target_name} ranks (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {wepp} spray ooze on the {target_name} ranks (X{casulties} casulties) and immobilize {casulties} of them.";
+	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name} spray ooze on the {target_name} but fail to immobilize it.";
+	    if (target.dudes_num[targeh]=1) and (casulties=1) then p1=$"{number_of_shots} {weapon_name} spray ooze on the {target_name} and fully immobilize it.";
+	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name} spray ooze on the {target_name} ranks (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {weapon_name} spray ooze on the {target_name} ranks (X{casulties} casulties) and immobilize {casulties} of them.";
 	}
 
-	if (wepp="melee") or (wepp="Melee") or (wepp="fists")and (solod=false){flavored=1;var ra;ra=choose(1,2,3,4);
+	if (weapon_name="melee") or (weapon_name="Melee") or (weapon_name="fists")and (solod=false){flavored=1;var ra;ra=choose(1,2,3,4);
 	    // This needs to be worked out
 	    if (casulties=0) then p2="MELEE";
 	    if (casulties>0){
@@ -397,68 +397,68 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	        if (ra=4) then p2="are struck down by your marines in melee.";
 	    }
 	}
-	if (wepp="Close Combat Weapon") and (solod=false){
+	if (weapon_name="Close Combat Weapon") and (solod=false){
 		flavored=1;
 	    if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is struck by a "+string(obj_ini.role[100][6])+" but survives.";
 	    if (number_of_shots=1) and (casulties=1) then p1=$"A {target_name} is struck down by a "+string(obj_ini.role[100][6])+".";
 	    if (number_of_shots>1) and (casulties=0) then p1=$"{number_of_shots} {string(obj_ini.role[100][6])}s wrench and smash at a {target_name} but fail to destroy it.";
 	    if (number_of_shots>1) and (casulties>1) then p1=$"{number_of_shots} {string(obj_ini.role[100][6])}s stomp, wrench, and smash {casulties} {target_name} into paste.";
 	}
-	if (wepp="Chainsword") and (solod=false){flavored=1;
-	    if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is struck by a {wepp} but survives.";
-	    if (number_of_shots=1) and (casulties=1) then p1=$"A {target_name} is cut down by a {wepp}.";
+	if (weapon_name="Chainsword") and (solod=false){flavored=1;
+	    if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is struck by a {weapon_name} but survives.";
+	    if (number_of_shots=1) and (casulties=1) then p1=$"A {target_name} is cut down by a {weapon_name}.";
 	    if (number_of_shots>1) and (casulties=0) then p1=$"{number_of_shots} Chainsword motors rev and hack at the {target_name} ranks (X{casulties} casulties).";
 	    if (number_of_shots>1) and (casulties>0) then p1=$"{number_of_shots} Chainsword motors rev and hack away at the {target_name} ranks (X{casulties} casulties).  {casulties} are cut down.";
 	}
-	if (wepp="Sarissa") and (solod=false){flavored=1;
-	    if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is struck by a Battle Sister's {wepp} but survives.";
-	    if (number_of_shots=1) and (casulties=1) then p1=$"A {target_name} is struck down by a Battle Sister's {wepp}.";
+	if (weapon_name="Sarissa") and (solod=false){flavored=1;
+	    if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is struck by a Battle Sister's {weapon_name} but survives.";
+	    if (number_of_shots=1) and (casulties=1) then p1=$"A {target_name} is struck down by a Battle Sister's {weapon_name}.";
 	    if (number_of_shots>1) and (casulties=0) then p1=$"A Battle Sister "+choose("howls out","roars")+$" and hacks at the {target_name} ranks (X{casulties} casulties) with her Sarissa.";
 	    if (number_of_shots>1) and (casulties>0) then p1=$"{number_of_shots} Battle Sisters "+choose("howl out","roar")+$" as they hack away at the {target_name} ranks (X{casulties} casulties) with their Sarissas.  {casulties} are cut down.";
 	}
-	if (wepp="Eviscerator") and (solod=false){flavored=1;
-	    if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is struck by a {wepp} but survives.";
-	    if (number_of_shots=1) and (casulties=1) then p1=$"A {target_name} is cut down by a {wepp}.";
+	if (weapon_name="Eviscerator") and (solod=false){flavored=1;
+	    if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is struck by a {weapon_name} but survives.";
+	    if (number_of_shots=1) and (casulties=1) then p1=$"A {target_name} is cut down by a {weapon_name}.";
 	    if (number_of_shots>1) and (casulties=0) then p1=$"{number_of_shots} Eviscerators rev and howl, hacking at the {target_name} ranks (X{casulties} casulties).";
 	    if (number_of_shots>1) and (casulties>0) then p1=$"{number_of_shots} Eviscerators rev and howl, hacking at the {target_name} ranks (X{casulties} casulties).  {casulties} are cut down.";
 	}
-	if (wepp="Force Staff") and (solod=false){flavored=1;
-	    if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is blasted by a {wepp} but survives.";
-	    if (number_of_shots=1) and (casulties=1) then p1=$"A {target_name} is incinerated by a {wepp}.";
-	    if (number_of_shots>1) and (casulties=0) then p1=$"{number_of_shots} {wepp} crackle and swing into the {target_name} ranks (X{casulties} casulties).";
-	    if (number_of_shots>1) and (casulties>0) then p1=$"{number_of_shots} {wepp} crackle and swing into the {target_name} ranks (X{casulties} casulties).  "+string(casulties)+" are smashed.";
+	if (weapon_name="Force Staff") and (solod=false){flavored=1;
+	    if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is blasted by a {weapon_name} but survives.";
+	    if (number_of_shots=1) and (casulties=1) then p1=$"A {target_name} is incinerated by a {weapon_name}.";
+	    if (number_of_shots>1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name} crackle and swing into the {target_name} ranks (X{casulties} casulties).";
+	    if (number_of_shots>1) and (casulties>0) then p1=$"{number_of_shots} {weapon_name} crackle and swing into the {target_name} ranks (X{casulties} casulties).  "+string(casulties)+" are smashed.";
 	}
-	if (wepp="Inactive Force Staff") and (solod=false){flavored=1;
-	    if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is struck by a {wepp} but survives.";
-	    if (number_of_shots=1) and (casulties=1) then p1=$"A {target_name} is smashed by a {wepp}.";
-	    if (number_of_shots>1) and (casulties=0) then p1=$"{number_of_shots} {wepp} are swung into the {target_name} ranks (X{casulties} casulties).";
-	    if (number_of_shots>1) and (casulties>0) then p1=$"{number_of_shots} {wepp} are swung into the {target_name} ranks (X{casulties} casulties).  "+string(casulties)+" are smashed.";
+	if (weapon_name="Inactive Force Staff") and (solod=false){flavored=1;
+	    if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is struck by a {weapon_name} but survives.";
+	    if (number_of_shots=1) and (casulties=1) then p1=$"A {target_name} is smashed by a {weapon_name}.";
+	    if (number_of_shots>1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name} are swung into the {target_name} ranks (X{casulties} casulties).";
+	    if (number_of_shots>1) and (casulties>0) then p1=$"{number_of_shots} {weapon_name} are swung into the {target_name} ranks (X{casulties} casulties).  "+string(casulties)+" are smashed.";
 	}
-	if ((string_count("Power",wepp)>0) or (wepp="Lightning Claw")) and (solod=false){flavored=1;
+	if ((string_count("Power",weapon_name)>0) or (weapon_name="Lightning Claw")) and (solod=false){flavored=1;
 	    if (target.dudes_num[targeh]=1){
-	        if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is struck by a {wepp} but survives.";
-	        if (number_of_shots=1) and (casulties=1) then p1=$"A {target_name} is struck down by a {wepp}.";
+	        if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is struck by a {weapon_name} but survives.";
+	        if (number_of_shots=1) and (casulties=1) then p1=$"A {target_name} is struck down by a {weapon_name}.";
         
-	        if (number_of_shots>1) and (casulties=0) then p1=$"A {target_name} is struck by {number_of_shots} {wepp}s but survives.";
-	        if (number_of_shots>1) and (casulties=1) then p1=$"A {target_name} is struck down by {number_of_shots} {wepp}s.";
+	        if (number_of_shots>1) and (casulties=0) then p1=$"A {target_name} is struck by {number_of_shots} {weapon_name}s but survives.";
+	        if (number_of_shots>1) and (casulties=1) then p1=$"A {target_name} is struck down by {number_of_shots} {weapon_name}s.";
 	    }
 	    if (target.dudes_num[targeh]>1){
-	        if (number_of_shots>1) and (casulties=0) then p1=$"{number_of_shots} {wepp}s crackle and spark, striking at the {target_name} ranks (X{casulties} casulties).";
-	        if (number_of_shots>1) and (casulties>0) then p1=$"{number_of_shots} {wepp}s crackle and spark, hewing through the {target_name} ranks (X{casulties} casulties).  {casulties} are cut down.";
+	        if (number_of_shots>1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name}s crackle and spark, striking at the {target_name} ranks (X{casulties} casulties).";
+	        if (number_of_shots>1) and (casulties>0) then p1=$"{number_of_shots} {weapon_name}s crackle and spark, hewing through the {target_name} ranks (X{casulties} casulties).  {casulties} are cut down.";
 	    }
 	}
-	if ((string_count("Power",wepp)>0) or (wepp="Force Staff") or (wepp="Inactive Force Staff") or (wepp="Lightning Claw")) and (solod=true){flavored=1;
-	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=string(full_name)+" swings his {wepp} into the {target_name} ranks (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=string(full_name)+" swings his {wepp} into the {target_name} ranks (X{casulties} casulties) and kills "+string(casulties)+".";
-	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=string(full_name)+" swings his {wepp} into a {target_name} but fails to kill it.";
-	    if (target.dudes_num[targeh]=1) and (casulties>0) then p1=string(full_name)+" swings his {wepp} into a {target_name}, killing it.";
+	if ((string_count("Power",weapon_name)>0) or (weapon_name="Force Staff") or (weapon_name="Inactive Force Staff") or (weapon_name="Lightning Claw")) and (solod=true){flavored=1;
+	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=string(full_name)+" swings his {weapon_name} into the {target_name} ranks (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=string(full_name)+" swings his {weapon_name} into the {target_name} ranks (X{casulties} casulties) and kills "+string(casulties)+".";
+	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=string(full_name)+" swings his {weapon_name} into a {target_name} but fails to kill it.";
+	    if (target.dudes_num[targeh]=1) and (casulties>0) then p1=string(full_name)+" swings his {weapon_name} into a {target_name}, killing it.";
 	}
 
 
-	if (flavored=0) and (solod=false){p1=$"{number_of_shots} {wepp} {target_name}X {casulties} casulties)";}
-	if (flavored=0) and (solod=true){p1=$"("+string(full_name)+$".{wepp}) {target_name} {casulties}|";}
+	if (flavored=0) and (solod=false){p1=$"{number_of_shots} {weapon_name} {target_name}X {casulties} casulties)";}
+	if (flavored=0) and (solod=true){p1=$"("+string(full_name)+$".{weapon_name}) {target_name} {casulties}|";}
 
-	// if (string_length(p1+p2+p3)<8) then show_message(wepp+" is not displaying anything");
+	// if (string_length(p1+p2+p3)<8) then show_message(weapon_name+" is not displaying anything");
 
 	mes=p1+p2+p3;
 

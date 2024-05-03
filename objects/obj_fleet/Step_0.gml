@@ -1,4 +1,4 @@
-
+show_debug_message("step_Start");
 // if (woohoo<60) then woohoo+=1;
 
 
@@ -51,6 +51,6 @@ if (start=5){
     }
 }
 
-
+show_debug_message("step_end");
 /* */
 /*  */

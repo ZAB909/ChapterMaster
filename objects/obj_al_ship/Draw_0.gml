@@ -1,8 +1,10 @@
 // Draws the ships and their shields
 var __b__;
 __b__ = action_if_variable(name, "", 0);
+show_debug_message("allies draw");
 if (!__b__){
     {
+
         draw_self();
 
         draw_set_color(38144);
@@ -29,3 +31,4 @@ if (!__b__){
         }
     }
 }
+show_debug_message("allies draw");
