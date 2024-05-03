@@ -33,6 +33,9 @@ function scr_draw_unit_image(x_draw, y_draw){
     var blandify = obj_controller.blandify;
     var draw_sequence = [];
     if (name_role()!="") and (base_group=="astartes"){
+        var unit_surface = surface_create(room_width, room_height);
+        var bionics_surface = surface_create(room_width, room_height);
+        surface_set_target(unit_surface);
 
         ui_weapon[1]=spr_weapon_blank;
         ui_weapon[2]=spr_weapon_blank;
@@ -202,6 +205,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                 shader_set_uniform_f_array(colour_to_set7, weapon_colour_replace );
             }
             shader_get_uniform(sReplaceColor, "f_Colour8");
+            shader_set_uniform_i(shader_get_uniform(sReplaceColor, "u_blend_modes"), 0);
 
             //TODO make some sort of reusable structure to handle this sort of colour logic
             // also not ideal way of creating colour variation but it's a first pass
@@ -884,6 +888,10 @@ function scr_draw_unit_image(x_draw, y_draw){
                     }
                 }
                 // Draw bionics
+                surface_reset_target();
+                draw_surface(unit_surface, 0, 0);
+                surface_set_target(bionics_surface);
+
                 for (var part = 0; part < array_length(global.body_parts); part++) {
                     if (struct_exists(body[$ global.body_parts[part]], "bionic")) {
                         if (armour_type == ArmourType.Normal || armour_type == ArmourType.Indomitus) {
@@ -911,6 +919,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                                     break;
 
                                 case "left_leg":
+                                    var cloth_shader_stuff = shader_get_sampler_index(sReplaceColor, "background_texture")
                                     if (armour_type == ArmourType.Normal) {
                                         var sprite_num = 3;
                                         if (specialist_colours >= 2) {
@@ -939,6 +948,14 @@ function scr_draw_unit_image(x_draw, y_draw){
                 }
             }
 
+            
+            surface_reset_target();
+            shader_set_uniform_i(shader_get_uniform(sReplaceColor, "u_blend_modes"), 1);
+            texture_set_stage(shader_get_sampler_index(sReplaceColor, "background_texture"), surface_get_texture(unit_surface));
+            draw_surface(bionics_surface,0,0);
+            shader_reset();
+            shader_set(sReplaceColor);
+            shader_set_uniform_i(shader_get_uniform(sReplaceColor, "u_blend_modes"), 0);
             // Draw Custom Helmets
             if (armour_type==ArmourType.Normal){
                 if (role() == "Company Champion") {
@@ -1047,6 +1064,8 @@ function scr_draw_unit_image(x_draw, y_draw){
             draw_text(xx+x_draw,yy+y_draw,string_hash_to_newline("Color swap shader#did not compile"));
         }
         // if (race()!="1"){draw_set_color(38144);draw_rectangle(xx+x_draw,yy+y_draw,xx+x_draw+166,yy+y_draw+231,0);}
+        surface_free(bionics_surface);
+        surface_free(unit_surface);        
     }
 
     draw_set_alpha(1);
