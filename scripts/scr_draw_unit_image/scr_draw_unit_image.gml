@@ -56,7 +56,7 @@ function scr_draw_unit_image(x_draw, y_draw){
         ttrim=0;
         var armour_bypass = false;
         var hide_bionics = false;
-        var no_robes = false;
+        var robe_bypass = false;
         var armour_draw =[];        
         ui_coloring=""; 
 		var specialist_colours=obj_ini.col_special; 
@@ -568,14 +568,14 @@ function scr_draw_unit_image(x_draw, y_draw){
                 } else if (armour()=="MK4 Maximus"){
                     specific_armour_sprite = spr_mk4_colors;
                     if (array_contains(["Company Champion",obj_ini.role[100][2],obj_ini.role[100][5]], role())){
-                        if (global.chapter_name=="Ultramarines"){
+                        /*if (global.chapter_name=="Ultramarines"){
                             armour_draw=[spr_ultra_honor_guard,body.torso.armour_choice];
                             armour_bypass=true;
                             draw_sprite(spr_ultra_honor_guard,2,xx+x_draw,yy+y_draw);
                         } else {
                             armour_draw=[spr_generic_honor_guard,body.torso.armour_choice];
                             armour_bypass=true;
-                        }
+                        }*/
                         if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1){
                             if (role()==obj_ini.role[100][Role.CAPTAIN]){
                                 specific_armour_sprite = spr_da_mk4;
@@ -680,13 +680,13 @@ function scr_draw_unit_image(x_draw, y_draw){
                         if (role()=="Chapter Master"){
                             armour_bypass=true;
                             hide_bionics = true;
-                            no_robes = true;
+                            robe_bypass = true;
                             armour_draw=[spr_dante,0];
                             draw_sprite(spr_dante,1,xx+x_draw,yy+y_draw);
                         } else if (role()==obj_ini.role[100][2]){
                             armour_bypass=true;
                             hide_bionics = true;
-                            no_robes = true;
+                            robe_bypass = true;
                             armour_draw=[spr_sanguin_guard,0];
                             draw_sprite(spr_sanguin_guard,1,xx+x_draw,yy+y_draw);
                         }

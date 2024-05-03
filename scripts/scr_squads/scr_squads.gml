@@ -135,12 +135,12 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 	type_data={};
 	formation_place=""
 	formation_options=[];
-	//TODO introduce loyalty hits from long periods of exile from hierarchy nodes
-	// nodes will be captains chapter masters and other senior staff
-	time_from_parent_node = 0;
 	//nickname = scr_squad_names();
 
 
+	//TODO introduce loyalty hits from long periods of exile from hierarchy nodes
+	// nodes will be captains chapter masters and other senior staff
+	time_from_parent_node = 0;
 		// heres where the whole thing gets annoying
 		/*basically each equipment slot is looped through and inside each loop each marine is looped through in a random order to ensure 
 			that each squad looks different and that each marine has a range of optional and required equipment
