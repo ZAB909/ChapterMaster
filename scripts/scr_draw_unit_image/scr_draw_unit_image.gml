@@ -996,11 +996,11 @@ function scr_draw_unit_image(x_draw, y_draw){
             shader_set_uniform_i(shader_get_uniform(sReplaceColor, "u_blend_modes"), 0);
             // Draw Custom Helmets
             if (armour_type==ArmourType.Normal){
-                if (role() == "Company Champion") {
+                if (role() == obj_ini.role[100][7]) {
                     draw_sprite(spr_special_helm,0,xx+x_draw,yy+y_draw);
                     draw_sprite(spr_laurel,0,xx+x_draw,yy+y_draw);
                 }
-                if (role() == "Captain") {
+                if (role() == obj_ini.role[100][5]) {
                     draw_sprite(spr_laurel,0,xx+x_draw,yy+y_draw);
                 }
             }
