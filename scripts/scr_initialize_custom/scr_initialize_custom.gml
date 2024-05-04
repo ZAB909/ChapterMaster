@@ -1141,8 +1141,9 @@ function scr_initialize_custom() {
 			lexicanum = 8;
 			break;
 		case "Dark Angels":
+			chaap += 5;
 			veteran = 0;
-			terminator += 90;
+			terminator = 105;
 			break;
 		case "Lamenters":
 			tenth = 0;
@@ -2155,6 +2156,78 @@ function scr_initialize_custom() {
 			}], // sergeant
 			["type_data", {
 				"display_data": $"{roles.tactical} {squad_name}"
+			}]
+		])
+	}
+
+	if (global.chapter_name == "Dark Angels") {
+		variable_struct_set(st, "command_squad", [
+			[roles.captain, {
+				"max": 1,
+				"min": 1,
+			}],
+			[roles.champion, {
+				"max": 1,
+				"min": 1,
+				"loadout": {
+					"required": {
+						"wep1": ["Power Sword", 1],
+						"wep2": ["Bolt Pistol", 1],
+						"gear": ["Combat Shield", 1]
+					},
+				}
+			}],
+			[roles.apothecary, {
+				"max": 1,
+				"min": 0,
+				"role": $"Company {roles.apothecary}"
+			}],
+			[roles.chaplain, {
+				"max": 1,
+				"min": 0,
+				"role": $"Company {roles.chaplain}"
+			}],
+			[roles.ancient, {
+				"max": 1,
+				"min": 1,
+				"role": $"Company {roles.ancient}",
+				"loadout": {
+					"required": {
+						"wep1": ["", 0],
+						"wep2": ["Company Standard", 1],
+					},
+					"option": {
+						"wep1": [
+							[
+								["Chainsword", "Power Sword", "Power Axe", "Lightning Claw", "Power Fist", "Thunder Hammer", "Bolt Pistol", "Plasma Pistol"], 1
+							],
+						],
+					},
+				}
+			}],
+			[roles.veteran, {
+				"max": 5,
+				"min": 0,
+				"role": $"Company {roles.veteran}"
+			}],
+			[roles.terminator, {
+				"max": 5,
+				"min": 0,
+				"role": $"Deathwing {roles.veteran}"
+			}],
+			[roles.techmarine, {
+				"max": 1,
+				"min": 0,
+				"role": $"Company {roles.techmarine}"
+			}],
+			[roles.librarian, {
+				"max": 1,
+				"min": 0,
+				"role": $"Company {roles.librarian}"
+			}],
+			["type_data", {
+				"display_data": $"Command {squad_name}",
+				"formation_options": ["command", "terminator", "veteran", "assualt", "devastator", "scout", "tactical"],
 			}]
 		])
 	}
