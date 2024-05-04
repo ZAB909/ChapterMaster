@@ -835,7 +835,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	  	var armour_list=[];
 	  	var _new_power_armour = array_contains(global.power_armour, new_armour);
 	  	var _old_power_armour = array_contains(global.power_armour, change_armour);
-	   	if (change_armour == new_armour || ((_old_power_armour && _new_power_armour) && new_armour=="Power Armour")){
+	   	if ((change_armour == new_armour || ((_old_power_armour && _new_power_armour) && new_armour=="Power Armour"))){
 	   		return "no change";
 	   	}
 	  	if (_new_power_armour){

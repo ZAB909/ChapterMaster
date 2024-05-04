@@ -465,13 +465,13 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
             if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]) and (vehicle_equipment!=-1){
                 var check=0,scout_check=0;
                 unit = obj_controller.display_unit[i];
-
+                var standard = master_crafted==1?"master_crafted":"any";
                 if (is_struct(unit)){
-                    unit.update_armour(n_armour);
-                    unit.update_mobility_item(n_mobi);
-                    unit.update_weapon_one(n_wep1);
-                    unit.update_weapon_two(n_wep2);
-                    unit.update_gear(n_gear);
+                    unit.update_armour(n_armour, true, true, standard);
+                    unit.update_mobility_item(n_mobi, true, true, standard);
+                    unit.update_weapon_one(n_wep1, true, true, standard);
+                    unit.update_weapon_two(n_wep2, true, true, standard);
+                    unit.update_gear(n_gear, true, true, standard);
 
                     update_man_manage_array(i);
                     continue;
