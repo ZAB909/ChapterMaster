@@ -504,14 +504,14 @@ function scr_draw_unit_image(x_draw, y_draw){
             if (armour_type==ArmourType.Indomitus){
                 if (fix_left>0) then draw_sprite(spr_termi_wep_fix,0,0,y_surface_offset-20);
                 if (fix_right>0){
-                    if (specialist_colours<=1) then draw_sprite(spr_termi_wep_fix,2,0,0-20);
-                    if (specialist_colours>=2) then draw_sprite(spr_termi_wep_fix,3,0,0-20);
+                    if (specialist_colours<=1) then draw_sprite(spr_termi_wep_fix,2,0,y_surface_offset-20);
+                    if (specialist_colours>=2) then draw_sprite(spr_termi_wep_fix,3,0,y_surface_offset-20);
                 }
             }else if (armour_type==ArmourType.Tartaros){
                 if (fix_left>0) then draw_sprite(spr_tartaros_wep_fix,0,0,y_surface_offset-20);
                 if (fix_right>0){
-                    if (specialist_colours<=1) then draw_sprite(spr_tartaros_wep_fix,2,0,0-20);
-                    if (specialist_colours>=2) then draw_sprite(spr_tartaros_wep_fix,3,0,0-20);
+                    if (specialist_colours<=1) then draw_sprite(spr_tartaros_wep_fix,2,0,y_surface_offset-20);
+                    if (specialist_colours>=2) then draw_sprite(spr_tartaros_wep_fix,3,0,y_surface_offset-20);
                 }
             }
         
