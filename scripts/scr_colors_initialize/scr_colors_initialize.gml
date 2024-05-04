@@ -55,7 +55,7 @@ function scr_colors_initialize() {
         ["Copper", 166, 129, 0],
         ["Lime", 0, 190, 0],
         ["Warpstone Glow", 15, 108, 41],
-        ["Caliban Green", 3, 69, 48],
+        ["Caliban Green", 6, 63, 43],
         ["Green", 0, 160, 0],
         ["Dark Green", 0, 70, 0],
         ["Cyan", 0, 228, 255],
