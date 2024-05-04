@@ -928,10 +928,8 @@ function scr_draw_unit_image(x_draw, y_draw){
                 }
                 // Draw bionics
                 surface_reset_target();
-                var bionic_surface = surface_create(512,512);
+                var bionic_surface = surface_create(512,512);             
                 surface_set_target(bionic_surface);
-                shader_set_uniform_i(shader_get_uniform(sReplaceColor, "u_blend_modes"), 1);
-                texture_set_stage(shader_get_sampler_index(sReplaceColor, "background_texture"), surface_get_texture(unit_surface));
 
                 for (var part = 0; part < array_length(global.body_parts); part++) {
                     if (struct_exists(body[$ global.body_parts[part]], "bionic")) {
@@ -986,14 +984,15 @@ function scr_draw_unit_image(x_draw, y_draw){
                         }
                     }
                 }
+                surface_reset_target();
+                shader_set_uniform_i(shader_get_uniform(sReplaceColor, "u_blend_modes"), 1);
+                texture_set_stage(shader_get_sampler_index(sReplaceColor, "background_texture"), surface_get_texture(unit_surface));                   
+                surface_set_target(unit_surface);                
+                draw_surface(bionic_surface, 0,0);
+                surface_free(bionic_surface);
+                shader_set(sReplaceColor);
+                shader_set_uniform_i(shader_get_uniform(sReplaceColor, "u_blend_modes"), 0);                
             }
-
-            shader_reset();
-            surface_reset_target();
-            surface_set_target(unit_surface);
-            draw_surface(bionic_surface, 0, 0);
-            shader_set(sReplaceColor);
-            shader_set_uniform_i(shader_get_uniform(sReplaceColor, "u_blend_modes"), 0);
             // Draw Custom Helmets
             if (armour_type==ArmourType.Normal){
                 if (role() == obj_ini.role[100][7]) {
@@ -1074,10 +1073,10 @@ function scr_draw_unit_image(x_draw, y_draw){
         
             // Draw the fixed upper hands for Terminators or Tartaros
             if (armour_type==ArmourType.Indomitus){
-                if (fix_left>0) and (fix_left!=2) and (fix_left!=4) and (fix_left<8) then draw_sprite(spr_termi_wep_fix,4,0,ui_ymod[1]-20);
+                if (fix_left>0) and (fix_left!=2) and (fix_left!=4) and (fix_left<8) then draw_sprite(spr_termi_wep_fix,4,0,y_surface_offset+ui_ymod[1]-20);
                 if (fix_right>0) and (fix_right!=2) and (fix_right!=4) and (fix_right<8){
-                    if (specialist_colours<=1) then draw_sprite(spr_termi_wep_fix,6,0,ui_ymod[1]-20);
-                    if (specialist_colours>=2) then draw_sprite(spr_termi_wep_fix,7,0,ui_ymod[1]-20);
+                    if (specialist_colours<=1) then draw_sprite(spr_termi_wep_fix,6,0,y_surface_offset+ui_ymod[1]-20);
+                    if (specialist_colours>=2) then draw_sprite(spr_termi_wep_fix,7,0,y_surface_offset+ui_ymod[1]-20);
                 }
             }else if (armour_type==ArmourType.Tartaros){
                 if (fix_left>0) and (fix_left!=2) and (fix_left!=4) and (fix_left<8) then draw_sprite(spr_tartaros_wep_fix,4,0,y_surface_offset+ui_ymod[2]-20);
