@@ -1592,28 +1592,28 @@ function scr_initialize_custom() {
 				"role": $"{roles.sergeant} {roles.terminator}",
 				"loadout": {
 					"required": {
-						"wep1": ["Power Sword", "max"],
+						"wep1": ["Power Sword", 1],
 					},
 				}
 			}],
 			// Terminator
 			[roles.terminator, {
-				"max": 9,
-				"min": 3,
+				"max": 4,
+				"min": 2,
 				"loadout": {
 					"required": {
 						"wep1": ["", 0],
-						"wep2": [wep2[100, 4], 7],
+						"wep2": [wep2[100, 4], 3],
 					},
 					"option": {
 						"wep1": [
 							[
-								["Power Fist", "Chainfist"], 9
+								["Power Fist", "Chainfist"], 4
 							],
 						],
 						"wep2": [
 							[
-								["Assault Cannon", "Heavy Flamer"], 2
+								["Assault Cannon", "Heavy Flamer"], 1
 							],
 						],
 					}
@@ -1633,25 +1633,25 @@ function scr_initialize_custom() {
 				"role": $"{roles.sergeant} Assault {roles.terminator}",
 				"loadout": {
 					"required": {
-						"wep1": ["Thunder Hammer", "max"],
-						"wep2": ["Storm Shield", "max"],
+						"wep1": ["Thunder Hammer", 1],
+						"wep2": ["Storm Shield", 1],
 					},
 				},
 			}],
 			// Assault Terminator
 			[roles.terminator, {
-				"max": 9,
-				"min": 3,
+				"max": 4,
+				"min": 2,
 				"role": $"Assault {roles.terminator}",
 				"loadout": {
 					"required": {
-						"wep1": ["Thunder Hammer", 3],
-						"wep2": ["Storm Shield", 3],
+						"wep1": ["Thunder Hammer", 1],
+						"wep2": ["Storm Shield", 1],
 					},
 					"option": {
 						"wep1": [
 							[
-								["Lightning Claw"], 6, {
+								["Lightning Claw"], 3, {
 									"wep2":"Lightning Claw",
 								}
 							],
@@ -1701,8 +1701,8 @@ function scr_initialize_custom() {
 				"role": $"{roles.sergeant} Sternguard",
 				"loadout": {
 					"required": {
-						"wep1": [wep1[100, 3], "max"],
-						"wep2": ["Stalker Pattern Bolter", "max"],
+						"wep1": [wep1[100, 3], 1],
+						"wep2": ["Stalker Pattern Bolter", 1],
 					},
 				}
 			}],
@@ -1754,8 +1754,8 @@ function scr_initialize_custom() {
 				"role": $"{roles.sergeant} Vanguard",
 				"loadout": {
 					"required": {
-						"wep1": ["Relic Blade", "max"],
-						"wep2": ["Storm Shield", "max"],
+						"wep1": ["Relic Blade", 1],
+						"wep2": ["Storm Shield", 1],
 						"mobi": ["Jump Pack", 1]
 					},
 				}
@@ -1797,7 +1797,8 @@ function scr_initialize_custom() {
 					"required": {
 						"wep1": ["", 0],
 						"wep2": ["", 0],
-						"mobi": ["", 1],
+						"armour": ["", 0],
+						"mobi": ["", 0],
 					},
 					"option": {
 						"wep1": [
@@ -1808,6 +1809,11 @@ function scr_initialize_custom() {
 						"wep2": [
 							[
 								weapon_lists.melee_weapons, 1
+							],
+						],
+						"armour": [
+							[
+								["MK8 Errant", "MK6 Corvus", "MK7 Aquila"], 1
 							],
 						],
 					}
@@ -1860,6 +1866,11 @@ function scr_initialize_custom() {
 								weapon_lists.melee_weapons, 1
 							],
 						],
+						"armour": [
+							[
+								["MK8 Errant", "MK7 Aquila"], 1
+							],
+						],
 					}
 				}
 			}],
@@ -1900,7 +1911,7 @@ function scr_initialize_custom() {
 					"required": {
 						"wep1": ["", 0],
 						"wep2": ["", 0],
-						"gear": ["Combat Shield", "max"]
+						"gear": ["Combat Shield", 1]
 					},
 					"option": {
 						"wep1": [
@@ -1911,6 +1922,11 @@ function scr_initialize_custom() {
 						"wep2": [
 							[
 								weapon_lists.melee_weapons, 1
+							],
+						],
+						"armour": [
+							[
+								["MK6 Corvus", "MK7 Aquila"], 1
 							],
 						],
 					}
@@ -2070,7 +2086,7 @@ function scr_initialize_custom() {
 					"required": {
 						"wep1": [wep1[100, 8], 4],
 						"wep2": [wep2[100, 8], 4],
-						"mobi": ["Bike", "max"]
+						"mobi": ["Bike", 1]
 					},
 					"option": {
 						"wep1": [
