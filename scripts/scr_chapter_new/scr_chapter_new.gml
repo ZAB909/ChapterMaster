@@ -301,8 +301,8 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    homeworld="Lava";homeworld_name="Nocturne";homeworld_exists=1;recruiting_exists=0;
 	    homeworld_rule=1;aspirant_trial="Apprenticeship";discipline="pyromancy";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Warpstone Glow";color_to_secondary="Warpstone Glow";color_to_trim="Copper";
-	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Dark Red";
+	    color_to_main="Firedrake Green";color_to_secondary="Firedrake Green";color_to_trim="Gold";
+	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Red";
 	    color_to_weapon="Black";col_special=0;trim=0;
 	    fmaster="Argos";clibrarian="Velcona";hapothecary="Harath Shen";recruiter="Sol Ba'ken";admiral="Dac'tyr";hchaplain="Elysius";
 	    battle_cry="Into the fires of battle!  Unto the anvil of war";// monastery_name="Fortress of Hera";master_name=
