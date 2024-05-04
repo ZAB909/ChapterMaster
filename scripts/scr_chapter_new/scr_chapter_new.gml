@@ -49,7 +49,7 @@ function scr_chapter_new(argument0) {
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Caliban Green";color_to_secondary="Caliban Green";color_to_trim="Grey";
 	    color_to_pauldron="Caliban Green";color_to_pauldron2="Caliban Green";color_to_lens="Red";
-	    color_to_weapon="Black";col_special=0;trim=0;
+	    color_to_weapon="Dark Red";col_special=0;trim=0;
 	    hchaplain="Sapphon";clibrarian="Ezekial";fmaster="Sepharon";hapothecary="Razaek";
 		admiral="Korahael";recruiter="Ranaeus";
 	    battle_cry="Repent!  For tomorow you may die";

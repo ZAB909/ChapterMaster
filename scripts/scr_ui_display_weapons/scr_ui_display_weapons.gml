@@ -116,10 +116,12 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             if (string_count(melee_weapons_names[i], equiped_weapon) > 0){
                 if (equiped_weapon == "Company Standard"){
                     if (global.chapter_name == "Dark Angels"){
-                        set_as_melee_onehand(spr_da_standard, left_or_right)
+                        set_as_melee_onehand(spr_da_standard, left_or_right);
+                    } else {
+                        set_as_melee_onehand(melee_weapons[$ melee_weapons_names[i]],left_or_right);
                     }
                 } else {
-                    set_as_melee_onehand(melee_weapons[$ melee_weapons_names[i]],left_or_right)
+                    set_as_melee_onehand(melee_weapons[$ melee_weapons_names[i]],left_or_right);
                 }
                 sprite_found = true;
                 break;               

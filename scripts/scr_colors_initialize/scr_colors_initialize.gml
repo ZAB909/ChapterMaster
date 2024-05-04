@@ -29,13 +29,16 @@ enum Colors {
     Purple,
     Pink,
     Grey,
+    Light_Caliban_Green,
+    Deathwing,
+    Dark_Metal,
 }
 
 function scr_colors_initialize() {
 
     var colors_array = [
         ["White", 255, 255, 255],
-        ["Silver", 200, 200, 200],
+        ["Silver", 178, 178, 178],
         ["Fenrisian Grey", 144, 155, 183],
         ["Codex Grey", 112, 117, 110],
         ["Dark Grey", 70, 70, 70],
@@ -46,13 +49,13 @@ function scr_colors_initialize() {
         ["Mephiston Red", 145, 12, 9],
         ["Orange", 255, 156, 0],
         ["Brown", 112, 66, 0],
-        ["Bone", 211, 199, 157],
+        ["Bone", 245, 236, 205],
         ["Yellow", 255, 220, 0],
         ["Gold", 255, 164, 12],
         ["Copper", 166, 129, 0],
         ["Lime", 0, 190, 0],
         ["Warpstone Glow", 15, 108, 41],
-        ["Caliban Green", 0, 59, 20],
+        ["Caliban Green", 3, 69, 48],
         ["Green", 0, 160, 0],
         ["Dark Green", 0, 70, 0],
         ["Cyan", 0, 228, 255],
@@ -63,7 +66,10 @@ function scr_colors_initialize() {
         ["Ultramarine", 21, 92, 165],
         ["Purple", 117, 0, 217],
         ["Pink", 255, 0, 198],
-        ["Grey", 103, 103, 103],
+        ["Grey", 127, 127, 127],
+        ["Light Caliban Green", 30, 102, 59],
+        ["Deathwing", 238, 204, 163],
+        ["Dark Metal", 105, 105, 105],
     ];
 
     for (var i = 0; i < array_length(colors_array); i++) {

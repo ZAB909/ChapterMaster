@@ -82,13 +82,13 @@ function scr_draw_unit_image(x_draw, y_draw){
         // Dark Angels
         if (global.chapter_name=="Dark Angels"){
             // Honour guard
-            if (role() == obj_ini.role[100][2]) then ui_coloring="bone";
+            if (role() == obj_ini.role[100][2]) then ui_coloring="deathwing";
             // Deathwing
             else if (company == 1) {
-                if (role() == obj_ini.role[100][4]) then ui_coloring="bone";
+                if (role() == obj_ini.role[100][4]) then ui_coloring="deathwing";
                 if (string_count("Terminator",armour())>0 || armour()=="Tartaros"){
-                    if (array_contains([obj_ini.role[100][5],obj_ini.role[100][7],obj_ini.role[100][19],"Standard Bearer"],role())){
-                        ui_coloring="bone";
+                    if (array_contains([obj_ini.role[100][5],obj_ini.role[100][7],obj_ini.role[100][19],obj_ini.role[100][11]],role())){
+                        ui_coloring="deathwing";
                     }
                 }
             }
@@ -333,25 +333,32 @@ function scr_draw_unit_image(x_draw, y_draw){
             }
 			
 			// Deathwing
-            if (ui_coloring="bone"){
-                set_shader_color(ShaderType.Body, Colors.Bone);
-                set_shader_color(ShaderType.LeftPauldron, Colors.Bone);
-                set_shader_color(ShaderType.RightPauldron, Colors.Bone);
+            if (ui_coloring == "deathwing"){
+                set_shader_color(ShaderType.Body, Colors.Deathwing);
+                set_shader_color(ShaderType.LeftPauldron, Colors.Deathwing);
+                set_shader_color(ShaderType.RightPauldron, Colors.Deathwing);
                 if (role() != obj_ini.role[100][2]){
-                    set_shader_color(ShaderType.Trim, Colors.Dark_Green);
-                    set_shader_color(ShaderType.Helmet, Colors.Bone);
+                    set_shader_color(ShaderType.Trim, Colors.Light_Caliban_Green);
+                    set_shader_color(ShaderType.Helmet, Colors.Deathwing);
                 }
                 ttrim=0;
                 specialist_colours=0;
             }
-
+            
 			// Ravenwing
             if (ui_coloring="ravenwing"){
                 set_shader_color(ShaderType.Body, Colors.Black);
                 set_shader_color(ShaderType.LeftPauldron, Colors.Black);
                 set_shader_color(ShaderType.RightPauldron, Colors.Black);
-                set_shader_color(ShaderType.Trim, Colors.Bone);
                 set_shader_color(ShaderType.Helmet, Colors.Black);
+                ttrim=0;
+                specialist_colours=0;
+            }
+
+			// Dark Angels Captains
+            if (global.chapter_name == "Dark Angels" && role() == obj_ini.role[100][5] && ui_coloring != "deathwing"){
+                set_shader_color(ShaderType.RightPauldron, Colors.Dark_Red);
+                set_shader_color(ShaderType.Helmet, Colors.Deathwing);
                 ttrim=0;
                 specialist_colours=0;
             }
@@ -994,7 +1001,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                 shader_set_uniform_i(shader_get_uniform(sReplaceColor, "u_blend_modes"), 0);                
             }
             // Draw Custom Helmets
-            if (armour_type==ArmourType.Normal){
+            if (armour_type==ArmourType.Normal && !armour_bypass){
                 if (role() == obj_ini.role[100][7]) {
                     draw_sprite(spr_special_helm,0,0,y_surface_offset);
                     draw_sprite(spr_laurel,0,0,y_surface_offset);
