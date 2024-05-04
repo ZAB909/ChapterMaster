@@ -36,6 +36,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             "Power Fist":spr_weapon_powfist3,
             "Lightning Claw":spr_weapon_lightning2,
             "Chainfist":spr_weapon_chainfist,
+            "Power Fist with Intergrated Bolters":spr_weapon_powfist3,
         }
         var terminator_melee_names=struct_get_names(terminator_melee);
         for (var i=0;i<array_length(terminator_melee_names);i++){
