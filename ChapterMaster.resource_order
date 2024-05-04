@@ -1,4 +1,6 @@
 {
-  "FolderOrderSettings": [],
+  "FolderOrderSettings": [
+    {"name":"textures","order":1,"path":"folders/Sprites/textures.yy",},
+  ],
   "ResourceOrderSettings": [],
 }

@@ -86,6 +86,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"UI","folderPath":"folders/Sprites/UI.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Tile Sets","folderPath":"folders/Tile Sets.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Timelines","folderPath":"folders/Timelines.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"textures","folderPath":"folders/Sprites/textures.yy",},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"custom_icons_help.txt","CopyToMask":153157610357391598,"filePath":"datafiles/icons",},
@@ -851,6 +852,7 @@
     {"id":{"name":"scr_bionics_count","path":"scripts/scr_bionics_count/scr_bionics_count.yy",},},
     {"id":{"name":"scr_ship_count","path":"scripts/scr_ship_count/scr_ship_count.yy",},},
     {"id":{"name":"scr_ship_occupants","path":"scripts/scr_ship_occupants/scr_ship_occupants.yy",},},
+    {"id":{"name":"spr_leopard_sprite","path":"sprites/spr_leopard_sprite/spr_leopard_sprite.yy",},},
     {"id":{"name":"spr_wisdom_icon","path":"sprites/spr_wisdom_icon/spr_wisdom_icon.yy",},},
     {"id":{"name":"scr_event_dudes","path":"scripts/scr_event_dudes/scr_event_dudes.yy",},},
     {"id":{"name":"scr_event_newlines","path":"scripts/scr_event_newlines/scr_event_newlines.yy",},},

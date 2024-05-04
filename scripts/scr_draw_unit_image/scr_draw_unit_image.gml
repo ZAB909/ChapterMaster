@@ -214,7 +214,7 @@ function scr_draw_unit_image(x_draw, y_draw){
             }
             shader_get_uniform(sReplaceColor, "f_Colour8");
             shader_set_uniform_i(shader_get_uniform(sReplaceColor, "u_blend_modes"), 0);
-
+                  
             //TODO make some sort of reusable structure to handle this sort of colour logic
             // also not ideal way of creating colour variation but it's a first pass
             var cloth_variation=body.torso.cloth.variation;
@@ -1050,7 +1050,7 @@ function scr_draw_unit_image(x_draw, y_draw){
             // Weapons for above arms
             if (ui_weapon[1]!=0) and (sprite_exists(ui_weapon[1])) and (ui_above[1]==true) and (fix_left<8){
                 if (ui_twoh[1]==false) and (ui_twoh[2]==false){
-                    draw_sprite(ui_weapon[1],0,ui_xmod[1],ui_ymod[1]);                  
+                    draw_sprite(ui_weapon[1],0,ui_xmod[1],y_surface_offset+ui_ymod[1]);                  
                 }
                 if (ui_twoh[1]==true){
                     if (specialist_colours<=1) then draw_sprite(ui_weapon[1],0,ui_xmod[1],y_surface_offset+ui_ymod[1]);
@@ -1094,8 +1094,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                 colour_scheme  += 2;
                 var right_arm = dreadnought_sprite_components(weapon_one());
                 draw_sprite(right_arm,colour_scheme,0,y_surface_offset);
-            } 			
-            shader_reset();           
+            } 			          
         }else{
             draw_set_color(c_gray);
             draw_text(0,0,string_hash_to_newline("Color swap shader#did not compile"));
@@ -1119,8 +1118,11 @@ function scr_draw_unit_image(x_draw, y_draw){
         }
     }
     surface_reset_target();
+    /*shader_set_uniform_i(shader_get_uniform(sReplaceColor, "u_blend_modes"), 2);                
+    texture_set_stage(shader_get_sampler_index(sReplaceColor, "armour_texture"), sprite_get_texture(spr_leopard_sprite, 0)); */
     draw_surface(unit_surface, xx+x_draw,yy+y_draw-y_surface_offset);
     surface_free(unit_surface);
+    shader_reset();     
 }
 
 function base_colour(R,G,B) constructor{
