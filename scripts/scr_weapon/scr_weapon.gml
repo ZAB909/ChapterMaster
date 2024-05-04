@@ -2014,10 +2014,10 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
         }
         switch (item_type) {
             default:
-                stat_order = ["description", "special_description", "quality", "armour_value", "damage_resistance_mod", "hp_mod", "ranged_mod", "melee_mod", "attack", "ammo", "range", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
+                stat_order = ["description", "special_description", "quality", "armour_value", "damage_resistance_mod", "hp_mod", "ranged_mod", "melee_mod", "attack", "spli", "range", "ammo", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
                 break;
             case "weapon":
-                stat_order = ["description", "special_description", "quality", "attack", "ranged_mod", "melee_mod", "ammo", "range", "armour_value", "hp_mod", "damage_resistance_mod", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
+                stat_order = ["description", "special_description", "quality", "attack", "spli", "range", "ammo", "ranged_mod", "melee_mod", "armour_value", "hp_mod", "damage_resistance_mod", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
                 break;
             }
 			
