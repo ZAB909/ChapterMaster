@@ -744,6 +744,7 @@
     {"id":{"name":"macros","path":"scripts/macros/macros.yy",},},
     {"id":{"name":"spr_weapon_skill_icon","path":"sprites/spr_weapon_skill_icon/spr_weapon_skill_icon.yy",},},
     {"id":{"name":"scr_music","path":"scripts/scr_music/scr_music.yy",},},
+    {"id":{"name":"spr_artificer_colors2","path":"sprites/spr_artificer_colors2/spr_artificer_colors2.yy",},},
     {"id":{"name":"spr_bionic_eye_2","path":"sprites/spr_bionic_eye_2/spr_bionic_eye_2.yy",},},
     {"id":{"name":"string_reverse","path":"scripts/string_reverse/string_reverse.yy",},},
     {"id":{"name":"clean_tags","path":"scripts/clean_tags/clean_tags.yy",},},
