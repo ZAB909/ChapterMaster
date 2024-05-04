@@ -277,7 +277,7 @@ function scr_draw_unit_image(x_draw, y_draw){
             }
 			
 			// Chaplain
-            if (ui_specialist=1 || (ui_specialist=3) and (global.chapter_name="Space Wolves")){
+            if (ui_specialist=1 || ((ui_specialist=3) and (global.chapter_name="Space Wolves"))){
                 set_shader_color(ShaderType.Body, Colors.Black);
                 set_shader_color(ShaderType.Helmet, Colors.Black);
                 set_shader_color(ShaderType.Lens, Colors.Red);
@@ -285,14 +285,13 @@ function scr_draw_unit_image(x_draw, y_draw){
                 set_shader_color(ShaderType.RightPauldron, Colors.Black);
                 ttrim=1;
                 specialist_colours=0;
-            }
-
-            // Dark Angels Head Chaplain
-            if (global.chapter_name == "Dark Angels" && role() == "Master of Sanctity"){
-                set_shader_color(ShaderType.Helmet, Colors.Caliban_Green);
-                set_shader_color(ShaderType.Trim, Colors.Grey);
-                ttrim=0;
-                specialist_colours=0;
+                if (global.chapter_name == "Dark Angels") {
+                    set_shader_color(ShaderType.Trim, Colors.Grey);
+                    if (role() == "Master of Sanctity") {
+                        set_shader_color(ShaderType.Helmet, Colors.Caliban_Green);
+                        ttrim=0;
+                    }
+                }
             }
 			
 			// Apothecary
