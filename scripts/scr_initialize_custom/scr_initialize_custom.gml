@@ -470,7 +470,7 @@ function scr_initialize_custom() {
 	apothecary = 6;
 	codiciery = 6;
 	lexicanum = 10;
-	terminator = 30;
+	terminator = 40;
 	veteran = 70;
 	second = 100;
 	third = 100;
@@ -918,8 +918,8 @@ function scr_initialize_custom() {
 		apothecary = 6,
 		codiciery = 6,
 		lexicanum = 10,
-		terminator = 10,
-		veteran = 95,
+		terminator = 20,
+		veteran = 85,
 		devastator = 20;
 
 
@@ -1142,7 +1142,7 @@ function scr_initialize_custom() {
 			break;
 		case "Dark Angels":
 			veteran = 0;
-			terminator += 80;
+			terminator += 90;
 			break;
 		case "Lamenters":
 			tenth = 0;
