@@ -286,6 +286,14 @@ function scr_draw_unit_image(x_draw, y_draw){
                 ttrim=1;
                 specialist_colours=0;
             }
+
+            // Dark Angels Head Chaplain
+            if (global.chapter_name == "Dark Angels" && role() == "Master of Sanctity"){
+                set_shader_color(ShaderType.Helmet, Colors.Caliban_Green);
+                set_shader_color(ShaderType.Trim, Colors.Grey);
+                ttrim=0;
+                specialist_colours=0;
+            }
 			
 			// Apothecary
             else if (ui_specialist=3) and (global.chapter_name!="Space Wolves"){
@@ -548,8 +556,12 @@ function scr_draw_unit_image(x_draw, y_draw){
                  // Draw the backpack
                 if (armour_type!=ArmourType.Dreadnought){
                     if (ui_back){
-                        if (global.chapter_name == "Dark Angels" && role() == "Chapter Master"){
-                            draw_sprite(spr_da_backpack,1,0,y_surface_offset);
+                        if (global.chapter_name == "Dark Angels") {
+                            if (role() == "Chapter Master") {
+                                draw_sprite(spr_da_backpack,1,0,y_surface_offset);
+                            } else if (role() == "Master of Sanctity") {
+                                draw_sprite(spr_da_chaplain,1,0,y_surface_offset);
+                            }
                         } else if (body.torso.backpack_variation>2){
                             if (specialist_colours==0) then draw_sprite(armour_sprite,10,0,y_surface_offset);
                             if (specialist_colours==1) then draw_sprite(armour_sprite,11,0,y_surface_offset);
@@ -675,9 +687,9 @@ function scr_draw_unit_image(x_draw, y_draw){
                         specific_helm = spr_da_mk7_helm;
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
                             // specific_armour_sprite = spr_da_mk7;
-                            armour_draw=[spr_da_mk7,0];
+                            armour_draw = [spr_da_mk7,0];
                             robe_bypass = true;
-                            armour_bypass=true;
+                            armour_bypass = true;
                         }                          
                     }
                     else if (global.chapter_name=="White Scars" || obj_ini.progenitor==2){specific_helm = spr_ws_mk7_helm;}
@@ -733,6 +745,13 @@ function scr_draw_unit_image(x_draw, y_draw){
                             hide_bionics = true;
                             robe_bypass = true;
                             armour_draw=[spr_azreal,0];
+                        }
+                        if (role()=="Master of Sanctity"){
+                            armour_bypass=true;
+                            hide_bionics = true;
+                            robe_bypass = true;
+                            skull = 0;
+                            armour_draw=[spr_da_chaplain,0];
                         }
                     }
                 } else if (unit_armour="Tartaros"){
