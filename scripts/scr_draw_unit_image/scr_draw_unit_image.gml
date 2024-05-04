@@ -668,7 +668,6 @@ function scr_draw_unit_image(x_draw, y_draw){
                     else {
                         specific_helm = spr_um_mk6_helm;
                     }
-                    helm_draw[0] = -5;
 
                 } else if (armour()=="MK7 Aquila" || unit_armour="Power Armour"){
                     specific_armour_sprite = spr_mk7_colors;
