@@ -95,7 +95,7 @@ function scr_restart_variables(saved_game) {
 	        obj_restart_vars.r_role[i,2]="Honor Guard";
 			obj_restart_vars.r_wep1[i,2]="Power Sword";
 			obj_restart_vars.r_wep2[i,2]="Bolter";
-	        obj_restart_vars.r_armour[i,2]="Power Armour";
+	        obj_restart_vars.r_armour[i,2]="Artificer Armour";
 			obj_restart_vars.r_mobi[i,2]="";
 			obj_restart_vars.r_gear[i,2]="";
         
@@ -325,7 +325,7 @@ function scr_restart_variables(saved_game) {
 	        obj_controller.r_role[i,2]="Honor Guard";
 			obj_controller.r_wep1[i,2]="Power Sword";
 			obj_controller.r_wep2[i,2]="Bolter";
-	        obj_controller.r_armour[i,2]="Power Armour";
+	        obj_controller.r_armour[i,2]="Artificer Armour";
 			obj_controller.r_mobi[i,2]="";
 			obj_controller.r_gear[i,2]="";
         
@@ -585,7 +585,7 @@ function scr_restart_variables(saved_game) {
 			role[i,2]="Honor Guard";
 			wep1[i,2]="Power Sword";
 			wep2[i,2]="Bolter";
-			armour[i,2]="Power Armour";
+			armour[i,2]="Artificer Armour";
 	        
 			race[i,3]=1;
 			role[i,3]="Veteran";

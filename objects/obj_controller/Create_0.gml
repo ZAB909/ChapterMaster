@@ -183,7 +183,7 @@ for(var i=100; i<103; i++){
     obj_controller.r_role[i,2]="Honor Guard";
     obj_controller.r_wep1[i,2]="Power Sword";
     obj_controller.r_wep2[i,2]="Bolter";
-    obj_controller.r_armour[i,2]="Power Armour";
+    obj_controller.r_armour[i,2]="Artificer Armour";
     obj_controller.r_mobi[i,2]="";
     obj_controller.r_gear[i,2]="";
     
