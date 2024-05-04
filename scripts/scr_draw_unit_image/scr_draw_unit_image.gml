@@ -777,9 +777,9 @@ function scr_draw_unit_image(x_draw, y_draw){
                     if (ui_arm[1]){
                         if (struct_exists(body[$ "right_arm"],"bionic") && armour_type==ArmourType.Normal && !hide_bionics){
                             if (body[$ "right_arm"][$ "bionic"].variant == 0){
-                                draw_sprite(spr_bionics_arm,0,0,y_surface_offset-4);
+                                draw_sprite(spr_bionics_arm,0,0,y_surface_offset);
                             }else{
-                                draw_sprite(spr_bionics_arm_2,1,5,y_surface_offset-10);
+                                draw_sprite(spr_bionics_arm_2,1,0,y_surface_offset);
                             }
                         } else {
                             draw_sprite(armour_sprite,6,0,y_surface_offset);
@@ -789,9 +789,9 @@ function scr_draw_unit_image(x_draw, y_draw){
                         if  (specialist_colours<=1){
                             if (struct_exists(body[$ "left_arm"],"bionic") && armour_type==ArmourType.Normal && !hide_bionics){
                                     if (body[$ "left_arm"][$ "bionic"].variant == 0){
-                                        draw_sprite(spr_bionics_arm,1,0,y_surface_offset-4);
+                                        draw_sprite(spr_bionics_arm,1,0,y_surface_offset);
                                     } else{
-                                        draw_sprite(spr_bionics_arm_2,0,-8,y_surface_offset-10);
+                                        draw_sprite(spr_bionics_arm_2,0,0,y_surface_offset);
                                     }
                             }else {
                                 draw_sprite(armour_sprite,8,0,y_surface_offset);
@@ -799,9 +799,9 @@ function scr_draw_unit_image(x_draw, y_draw){
                         }else if(specialist_colours>=2){
                             if (struct_exists(body[$ "left_arm"],"bionic") && armour_type==ArmourType.Normal && !hide_bionics){
                                     if (body[$ "left_arm"][$ "bionic"].variant == 0){
-                                        draw_sprite(spr_bionics_arm,3,0,y_surface_offset-4);
+                                        draw_sprite(spr_bionics_arm,3,0,y_surface_offset);
                                     } else{
-                                        draw_sprite(spr_bionics_arm_2,2,-8,y_surface_offset-10);
+                                        draw_sprite(spr_bionics_arm_2,2,0,y_surface_offset);
                                     }
                             }else {
                                 draw_sprite(armour_sprite,9,0,y_surface_offset);
