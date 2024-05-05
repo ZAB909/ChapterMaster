@@ -748,6 +748,7 @@
     {"id":{"name":"spr_bionic_eye_2","path":"sprites/spr_bionic_eye_2/spr_bionic_eye_2.yy",},},
     {"id":{"name":"string_reverse","path":"scripts/string_reverse/string_reverse.yy",},},
     {"id":{"name":"clean_tags","path":"scripts/clean_tags/clean_tags.yy",},},
+    {"id":{"name":"spr_weapon_powfist4","path":"sprites/spr_weapon_powfist4/spr_weapon_powfist4.yy",},},
     {"id":{"name":"is_specialist","path":"scripts/is_specialist/is_specialist.yy",},},
     {"id":{"name":"scr_bolt","path":"scripts/scr_bolt/scr_bolt.yy",},},
     {"id":{"name":"debugl","path":"scripts/debugl/debugl.yy",},},
