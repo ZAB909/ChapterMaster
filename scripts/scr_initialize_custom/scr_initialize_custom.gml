@@ -1,5 +1,6 @@
 
 enum Role {
+	CHAPTER_MASTER = 1,
 	HONOR_GUARD = 2,
 	VETERAN = 3,
 	TERMINATOR = 4,
@@ -1776,6 +1777,8 @@ function scr_initialize_custom() {
 		armour[company][k] = armour[101, 2];
 		if global.chapter_name == "Dark Angels" {
 			armour[company][k] = "Terminator Armour";
+			wep1[company][k] = "Power Mace";
+			wep2[company][k] = "Storm Shield";
 		}
 	}
 

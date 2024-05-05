@@ -796,6 +796,7 @@
     {"id":{"name":"scr_battle_sort","path":"scripts/scr_battle_sort/scr_battle_sort.yy",},},
     {"id":{"name":"spr_um_mk6_helm","path":"sprites/spr_um_mk6_helm/spr_um_mk6_helm.yy",},},
     {"id":{"name":"scr_count_forces","path":"scripts/scr_count_forces/scr_count_forces.yy",},},
+    {"id":{"name":"spr_weapon_powmace","path":"sprites/spr_weapon_powmace/spr_weapon_powmace.yy",},},
     {"id":{"name":"scr_dead_marines","path":"scripts/scr_dead_marines/scr_dead_marines.yy",},},
     {"id":{"name":"scr_ini_ship_cleanup","path":"scripts/scr_ini_ship_cleanup/scr_ini_ship_cleanup.yy",},},
     {"id":{"name":"spr_ultra_honor_guard","path":"sprites/spr_ultra_honor_guard/spr_ultra_honor_guard.yy",},},

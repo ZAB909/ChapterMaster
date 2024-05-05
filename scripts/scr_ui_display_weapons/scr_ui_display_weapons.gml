@@ -37,6 +37,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             "Lightning Claw":spr_weapon_lightning2,
             "Chainfist":spr_weapon_chainfist,
             "Power Fist with Intergrated Bolters":spr_weapon_powfist3,
+            "Power Mace":spr_weapon_powmace,
         }
         var terminator_melee_names=struct_get_names(terminator_melee);
         for (var i=0;i<array_length(terminator_melee_names);i++){
@@ -358,7 +359,7 @@ function set_as_melee_onehand_special(sprite, left_or_right) {
 function set_as_terminator_melee(sprite, left_or_right) {
     ui_weapon[left_or_right] = sprite;
     ui_arm[left_or_right] = false;
-    ui_above[left_or_right] = false;
+    ui_above[left_or_right] = true;
     ui_spec[left_or_right] = true;
     display_type = "terminator_melee";
     if (left_or_right == 1) {

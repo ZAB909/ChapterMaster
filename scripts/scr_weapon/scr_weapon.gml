@@ -484,6 +484,27 @@ global.weapons={
         "tags":["power", "hammer", "siege"],
         "req_exp":140,
     },
+    "Power Mace": {
+        "abbreviation": "PwrMace",                
+        "attack": {
+            "standard": 700,
+            "master_crafted": 800,
+            "artifact": 950
+        },
+        "melee_mod": {
+            "standard": 1.3,
+            "master_crafted": 1.3,
+            "artifact": 1.3
+        },
+        "description": "Wreathed in glowing smoke, these massive weapons are as sinister in aspect as they are lethal in application, and are capable of obliterating even the mightiest heretics in a blaze of killing light.",
+        "weight":24,
+        "ammo": 0,
+        "range": 1,
+        "spli": 10,
+        "arp": 1,
+        "tags":["power", "mace", "siege", "pious"],
+        "req_exp":200,
+    },
     "Tome":{
         "abbreviation": "Tome",                
         "attack": {
