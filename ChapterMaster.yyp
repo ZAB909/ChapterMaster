@@ -82,11 +82,11 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Chaos","folderPath":"folders/Sprites/Ships/Chaos.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Imperium","folderPath":"folders/Sprites/Ships/Imperium.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Xeno","folderPath":"folders/Sprites/Ships/Xeno.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"textures","folderPath":"folders/Sprites/textures.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"tilesets","folderPath":"folders/Sprites/tilesets.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"UI","folderPath":"folders/Sprites/UI.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Tile Sets","folderPath":"folders/Tile Sets.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Timelines","folderPath":"folders/Timelines.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"textures","folderPath":"folders/Sprites/textures.yy",},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"custom_icons_help.txt","CopyToMask":153157610357391598,"filePath":"datafiles/icons",},

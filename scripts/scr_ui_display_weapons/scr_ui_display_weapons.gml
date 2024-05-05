@@ -91,8 +91,12 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
 
     // Handle one-handed melee
     if (!sprite_found){
+        var standards = {
+            "Dark Angels" : spr_da_standard,
+        }
+        var chap_name = global.chapter_name;
         var melee_weapons ={
-            "Company Standard":spr_weapon_standard,
+            "Company Standard":struct_exists(standards, chap_name) ? standards[$ chap_name] :spr_weapon_standard ,
             "Chainsword":spr_weapon_chsword,
             "Combat Knife":spr_weapon_knife,
             "Power Sword":spr_weapon_powswo,
@@ -111,15 +115,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
         var wep_
         for (var i=0;i<array_length(melee_weapons_names);i++){
             if (string_count(melee_weapons_names[i], equiped_weapon) > 0){
-                if (equiped_weapon == "Company Standard"){
-                    if (global.chapter_name == "Dark Angels"){
-                        set_as_melee_onehand(spr_da_standard, left_or_right);
-                    } else {
-                        set_as_melee_onehand(melee_weapons[$ melee_weapons_names[i]],left_or_right);
-                    }
-                } else {
-                    set_as_melee_onehand(melee_weapons[$ melee_weapons_names[i]],left_or_right);
-                }
+                set_as_melee_onehand(melee_weapons[$ melee_weapons_names[i]],left_or_right);
                 sprite_found = true;
                 break;               
             }                      
