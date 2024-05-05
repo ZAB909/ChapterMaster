@@ -77,6 +77,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             "Lascannon":spr_weapon_lasca,
             "Multi-Melta":spr_weapon_mmelta,
             "Heavy Flamer":spr_weapon_hflamer,
+            "Eviscerator":spr_weapon_evisc,
         }
         var heavy_ranged_names=struct_get_names(heavy_ranged);
         for (var i=0;i<array_length(heavy_ranged_names);i++){
@@ -97,7 +98,6 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             "Power Sword":spr_weapon_powswo,
             "Eldar Power Sword":spr_weapon_eldsword,
             "Power Spear":spr_weapon_powspear,
-            "Eviscerator":spr_weapon_evisc,
             "Thunder Hammer":spr_weapon_thhammer,
             "Relic Blade":spr_weapon_relbla,
             "Power Axe":spr_weapon_powaxe,
