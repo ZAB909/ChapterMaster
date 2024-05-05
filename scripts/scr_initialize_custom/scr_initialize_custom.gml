@@ -1764,7 +1764,7 @@ function scr_initialize_custom() {
 		unit = TTRPG[company][k];
 		race[company][k] = 1;
 		loc[company][k] = home_name;
-		role[company][k] = roles.honor_guard;
+		role[company][k] = role[100][2];
 		name[company][k] = global.name_generator.generate_space_marine_name();
 		unit.add_exp(210 + irandom(30));
 		unit.spawn_old_guard();
