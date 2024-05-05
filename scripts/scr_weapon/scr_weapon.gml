@@ -497,7 +497,8 @@ global.weapons={
             "artifact": 1.3
         },
         "description": "Wreathed in glowing smoke, these massive weapons are as sinister in aspect as they are lethal in application, and are capable of obliterating even the mightiest heretics in a blaze of killing light.",
-        "weight":24,
+        "melee_hands": 2.25,
+        "ranged_hands": 2,
         "ammo": 0,
         "range": 1,
         "spli": 10,
