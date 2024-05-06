@@ -81,7 +81,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
         }
         var heavy_ranged_names=struct_get_names(heavy_ranged);
         for (var i=0;i<array_length(heavy_ranged_names);i++){
-            if (string_count(heavy_ranged_names[i], equiped_weapon) > 0){
+            if (heavy_ranged_names[i] == equiped_weapon) {
                 set_as_ranged_twohand(heavy_ranged[$ heavy_ranged_names[i]],left_or_right)
                 sprite_found = true;
                 break;               
@@ -114,7 +114,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
         var melee_weapons_names=struct_get_names(melee_weapons);
         var wep_
         for (var i=0;i<array_length(melee_weapons_names);i++){
-            if (string_count(melee_weapons_names[i], equiped_weapon) > 0){
+            if (melee_weapons_names[i] == equiped_weapon){
                 set_as_melee_onehand(melee_weapons[$ melee_weapons_names[i]],left_or_right);
                 sprite_found = true;
                 break;               
@@ -125,15 +125,15 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
     // Handle one-handed special melee
     if (!sprite_found){
         if (string_count("DUB", equiped_weapon) == 0){
-            if (string_count("Power Fist", equiped_weapon) > 0) {
+            if ("Power Fist" == equiped_weapon) {
                 set_as_melee_onehand_special(spr_weapon_powfist, left_or_right);
                 sprite_found = !sprite_found;
                 display_type="power_fist"
-            }if (string_count("Chainfist", equiped_weapon) > 0) {
+            }if ("Chainfist" == equiped_weapon) {
                 set_as_melee_onehand_special(spr_weapon_powfist, left_or_right);
                 sprite_found = !sprite_found;
                 display_type="power_fist"
-            }else if (string_count("Lightning Claw", equiped_weapon) > 0) {
+            }else if ("Lightning Claw" == equiped_weapon) {
                 set_as_melee_onehand_special(spr_weapon_lightning1, left_or_right);
                 sprite_found = !sprite_found;
                 display_type="lightning_claw"
@@ -148,7 +148,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
         }
         var special_ranged_names=struct_get_names(special_ranged);
         for (var i=0;i<array_length(special_ranged_names);i++){
-            if (string_count(special_ranged_names[i], equiped_weapon) > 0){
+            if (special_ranged_names[i] == equiped_weapon){
                 set_as_special_ranged(special_ranged[$ special_ranged_names[i]],left_or_right)
                 sprite_found = true;
                 break;               
@@ -161,8 +161,8 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
         ui_ymod[left_or_right] -= 20;
         if (display_type == "normal_ranged") {
             if (current_armor == ArmourType.Indomitus) {
-                ui_xmod[left_or_right] -= 14;
-                ui_ymod[left_or_right] += 25;
+                ui_xmod[left_or_right] -= 18;
+                ui_ymod[left_or_right] += 12;
             }
             if (current_armor == ArmourType.Tartaros) {
                 ui_xmod[left_or_right] -= 14;
@@ -250,20 +250,20 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             ui_ymod[left_or_right] = 20;
         }
     }
-    if (string_count("Storm Shield", equiped_weapon) > 0) {
+    if ("Storm Shield" == equiped_weapon) {
         ui_weapon[left_or_right] = spr_weapon_storm;
         ui_arm[left_or_right] = 2;
         ui_above[left_or_right] = true;
         ui_spec[left_or_right] = false;
     }
-    if (string_count("Boarding Shield", equiped_weapon) > 0) {
+    if ("Boarding Shield" == equiped_weapon) {
         ui_weapon[left_or_right] = spr_weapon_boarding;
         ui_arm[left_or_right] = 2;
         ui_above[left_or_right] = true;
         ui_spec[left_or_right] = false;
     }
 
-    if (string_count("Power Mace", equiped_weapon) > 0) {
+    if ("Power Mace" == equiped_weapon) {
         ui_arm[left_or_right] = 0;
     }
 
