@@ -37,7 +37,7 @@ enum Colors {
 function scr_colors_initialize() {
 
     var colors_array = [
-        ["White", 255, 255, 255],
+        ["White", 229, 229, 229],
         ["Silver", 178, 178, 178],
         ["Fenrisian Grey", 144, 155, 183],
         ["Codex Grey", 112, 117, 110],
