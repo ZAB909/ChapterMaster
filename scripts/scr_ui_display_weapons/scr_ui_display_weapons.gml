@@ -266,6 +266,11 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
         ui_above[left_or_right] = true;
         ui_spec[left_or_right] = false;
     }
+
+    if (string_count("Power Mace", equiped_weapon) > 0) {
+        ui_arm[left_or_right] = 0;
+    }
+
     // Flip the ui_xmod for offhand
     if (left_or_right == 2  && ui_xmod[left_or_right] < 0) {
         /*and (current_armor=0)*/
