@@ -1180,7 +1180,7 @@ if (action==""){
             
             
             
-           inquisition_inspection_logic();
+            inquisition_inspection_logic();
             // End Test-Slave Incubator Crap
             
             if (obj_controller.known[eFACTION.Inquisition]=1){obj_controller.known[eFACTION.Inquisition]=3;}

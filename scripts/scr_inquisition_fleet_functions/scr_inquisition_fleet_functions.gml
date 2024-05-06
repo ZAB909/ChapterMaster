@@ -168,7 +168,7 @@ function new_inquisitor_inspection(){
     }	
 }
 
-inquisition_inspection_logic(){
+function inquisition_inspection_logic(){
 	var inspec_alert_string = "";
 	var cur_star=instance_nearest(x,y,obj_star);
 
