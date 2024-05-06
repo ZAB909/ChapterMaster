@@ -155,7 +155,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 		homeworld="Ice";homeworld_name="Inwit";recruiting_world="Hive";recruiting_name="Necromunda";
 		homeworld_exists=1;recruiting_exists=1;homeworld_rule=2;aspirant_trial="Survival of the Fittest";
 		color_to_main="Gold";color_to_secondary="Gold";color_to_trim="Dark Red";color_to_pauldron="Gold"
-		color_to_pauldron2="Gold";color_to_lens="Green";color_to_weapon="Black"
+		color_to_pauldron2="Gold";color_to_lens="Lime";color_to_weapon="Black"
 		hapothecary="Dyserna";hchaplain="Guaron";clibrarian="Vidos Harn";fmaster="Atornus Geis";admiral="Kyne Phasn"
                 recruiter="Taelos"
 		battle_cry="Primarch-Progenitor, to your glory and the glory of him on earth!";
@@ -187,9 +187,9 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    homeworld="Ice";homeworld_name="Fenris";
 	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=2;aspirant_trial="Exposure";discipline="rune Magick";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Fenrisian Grey";color_to_secondary="Fenrisian Grey";color_to_trim="Gold";
-	    color_to_pauldron="Gold";color_to_pauldron2="Gold";color_to_lens="Dark Red";
-	    color_to_weapon="Blue";col_special=0;trim=0;
+	    color_to_main="Fenrisian Grey";color_to_secondary="Fenrisian Grey";color_to_trim="Dark Gold";
+	    color_to_pauldron="Dark Gold";color_to_pauldron2="Dark Gold";color_to_lens="Red";
+	    color_to_weapon="Dark Gold";col_special=0;trim=0;
 	    hapothecary="Ulstvan Morkaison";hchaplain="Ulrik the Slayer";clibrarian="Njal Stormcaller";fmaster="Krom Dragongaze";
 		admiral="Gunnar Red Moon";recruiter="Sven Bloodhowl";
 	    battle_cry="For Russ and the Allfather";// monastery_name="The Fang";master_name=
@@ -235,7 +235,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=3;aspirant_trial="Blood Duel";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Sanguine Red";color_to_secondary="Sanguine Red";color_to_trim="Dark Grey";
-	    color_to_pauldron="Sanguine Red";color_to_pauldron2="Sanguine Red";color_to_lens="Green";
+	    color_to_pauldron="Sanguine Red";color_to_pauldron2="Sanguine Red";color_to_lens="Lime";
 	    color_to_weapon="Black";col_special=0;trim=0;
 	    hchaplain="Astorash the Grim";clibrarian="Mephiston";fmaster="Incarael";
 	    battle_cry="For the Emperor and Sanguinius! Death! DEATH";// monastery_name="Fortress of Hera";master_name=
@@ -302,7 +302,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    homeworld="Lava";homeworld_name="Nocturne";homeworld_exists=1;recruiting_exists=0;
 	    homeworld_rule=1;aspirant_trial="Apprenticeship";discipline="pyromancy";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Firedrake Green";color_to_secondary="Firedrake Green";color_to_trim="Gold";
+	    color_to_main="Firedrake Green";color_to_secondary="Firedrake Green";color_to_trim="Dark Gold";
 	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Red";
 	    color_to_weapon="Black";col_special=0;trim=0;
 	    fmaster="Argos";clibrarian="Velcona";hapothecary="Harath Shen";recruiter="Sol Ba'ken";admiral="Dac'tyr";hchaplain="Elysius";
@@ -437,7 +437,7 @@ if (argument0="Minotaurs"){founding=10;points=450;
 	    homeworld_rule=0;aspirant_trial="Knowledge of Self";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Sanguine Red";color_to_secondary="Sanguine Red";color_to_trim="Black";
-	    color_to_pauldron2="Bone";color_to_pauldron="Bone";color_to_lens="Green";
+	    color_to_pauldron2="Bone";color_to_pauldron="Bone";color_to_lens="Lime";
 	    color_to_weapon="Black";col_special=0;trim=1;
 	    battle_cry=choose("None shall find us wanting.","Knowledge is power, guard it well");
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
@@ -489,7 +489,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    recruiting_world="Death";recruiting_name=global.name_generator.generate_star_name();
 	    homeworld_rule=0;aspirant_trial="Challenge";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Purple";color_to_secondary="Purple";color_to_trim="Gold";
+	    color_to_main="Purple";color_to_secondary="Purple";color_to_trim="Dark Gold";
 	    color_to_pauldron2="Purple";color_to_pauldron="Purple";color_to_lens="Red";
 	    color_to_weapon="Purple";col_special=0;trim=1;
 	    battle_cry="Cold and Hard, Soul Drinkers";
@@ -516,7 +516,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    recruiting_world="Death";recruiting_name=global.name_generator.generate_star_name();
 	    homeworld_rule=0;aspirant_trial="Challenge";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Yellow";color_to_secondary="Yellow";color_to_trim="Gold";
+	    color_to_main="Yellow";color_to_secondary="Yellow";color_to_trim="Dark Gold";
 	    color_to_pauldron2="Yellow";color_to_pauldron="Yellow";color_to_lens="Red";
 	    color_to_weapon="Black";col_special=0;trim=0;
 	    battle_cry="For those we cherish, we die in Glory";
