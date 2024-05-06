@@ -1180,57 +1180,7 @@ if (action==""){
             
             
             
-            if (obj_ini.fleet_type=1) and (string_count("investigate",trade_goods)=0){
-                var cur_star = instance_nearest(x,y,obj_star);
-                scr_event_log("","Inquisitor finishes inspection of "+string(cur_star.name)+".", cur_star.name);
-                scr_loyalty("blarg","inspect_world");// This updates the loyalties
-                if (whom=0) then scr_alert("green","duhuhuhu","Inquisitor Ship finishes inspection of "+string(cur_star.name)+".",x,y);
-                if (whom>0) then scr_alert("green","duhuhuhu",inquis_string+" finishes inspection of "+string(cur_star.name)+".",x,y);
-            }
-            if (obj_ini.fleet_type!=1) and (string_count("investigate",trade_goods)=0){
-                scr_event_log("","Inquisitor finishes inspection of your fleet.");
-                scr_loyalty("blarg","inspect_fleet");// This updates the loyalties
-                if (whom=0) then scr_alert("green","duhuhuhu","Inquisitor Ship finishes inspection of your fleet.",x,y);
-                if (whom>0) then scr_alert("green","duhuhuhu",inquis_string+" finishes inspecting your fleet.",x,y);
-                target=noone;
-            }
-            
-            // Test-Slave Incubator Crap
-            if (obj_controller.und_gene_vaults=0) and (string_count("investigate",trade_goods)=0){
-                var e,sla,hur;e=0;sla=0;hur=0;
-                repeat(120){e+=1;
-                    if (obj_ini.slave_batch_num[e]>0) then sla+=obj_ini.slave_batch_num[e];
-                }
-                if (obj_controller.marines<=200) and (sla>=100) and (obj_controller.gene_seed>=1100) then hur=1;
-                if (obj_controller.marines<=500) and (obj_controller.marines>200) and (sla>=75) and (obj_controller.gene_seed>=900) then hur=1;
-                if (obj_controller.marines<=700) and (obj_controller.marines>500) and (sla>=50) and (obj_controller.gene_seed>=750) then hur=1;
-                if (obj_controller.marines>700) and (sla>=50) and (obj_controller.gene_seed>=500) then hur=1;
-                if (obj_controller.marines>990) and (sla>=50) then hur=2;
-                if (hur>0){
-                    obj_turn_end.popups+=1;
-                    obj_turn_end.popup[obj_turn_end.popups]=1;
-                    obj_turn_end.popup_type[obj_turn_end.popups]="Inquisition Inspection";
-                    obj_turn_end.popup_image[obj_turn_end.popups]="inquisition";
-                    
-                    if (hur=1) then obj_controller.disposition[4]-=max(6,round(obj_controller.disposition[4]*0.2));
-                    if (hur=2) then obj_controller.disposition[4]-=max(3,round(obj_controller.disposition[4]*0.1));
-                    
-                    
-                    obj_controller.inqis_flag_gene+=1;
-                    if (obj_controller.inqis_flag_gene=1){
-                        if (hur=1) then obj_turn_end.popup_text[obj_turn_end.popups]=inquis_string+" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Your Chapter has plenty enough Gene-Seed to restore itself to full strength and the Incubators on top of that are excessive.  Both have been reported, and you are ordered to remove the Test-Slave Incubators.  Relations with the Inquisition are also more strained than before.";
-                        if (hur=2) then obj_turn_end.popup_text[obj_turn_end.popups]=inquis_string+" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Your Chapter is already at full strength and the Incubators on top of that are excessive.  The Incubators have been reported, and you are ordered to remove them immediately.  Relations with the Inquisition are also slightly more strained than before.";
-                    }
-                    if (obj_controller.inqis_flag_gene=2){
-                        if (hur=1) then obj_turn_end.popup_text[obj_turn_end.popups]=inquis_string+" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Both the stores and incubators have been reported, and you are AGAIN ordered to remove the Test-Slave Incubators.  The Inquisitor says this is your final warning.";
-                        if (hur=2) then obj_turn_end.popup_text[obj_turn_end.popups]=inquis_string+" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Your Chapter is already at full strength and the Incubators are unneeded.  The Incubators have been reported, AGAIN, and you are to remove them.  The Inquisitor says this is your final warning.";
-                    }
-                    if (obj_controller.inqis_flag_gene=3){
-                        if (obj_controller.faction_status[eFACTION.Inquisition]!="War") then obj_controller.alarm[8]=1;
-                    }
-                    
-                }
-            }
+           inquisition_inspection_logic();
             // End Test-Slave Incubator Crap
             
             if (obj_controller.known[eFACTION.Inquisition]=1){obj_controller.known[eFACTION.Inquisition]=3;}
