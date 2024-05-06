@@ -281,12 +281,11 @@ function scr_draw_unit_image(x_draw, y_draw){
                 set_shader_color(ShaderType.Body, Colors.Black);
                 set_shader_color(ShaderType.Helmet, Colors.Black);
                 set_shader_color(ShaderType.Lens, Colors.Red);
-                set_shader_color(ShaderType.Trim, Colors.Gold);
+                set_shader_color(ShaderType.Trim, Colors.Dark_Gold);
                 set_shader_color(ShaderType.RightPauldron, Colors.Black);
                 ttrim=1;
                 specialist_colours=0;
                 if (global.chapter_name == "Dark Angels") {
-                    set_shader_color(ShaderType.Trim, Colors.Grey);
                     if (role() == "Master of Sanctity") {
                         set_shader_color(ShaderType.Helmet, Colors.Caliban_Green);
                         ttrim=0;
@@ -308,7 +307,7 @@ function scr_draw_unit_image(x_draw, y_draw){
             else if (ui_specialist=5){
                 set_shader_color(ShaderType.Body, Colors.Red);
                 set_shader_color(ShaderType.Helmet, Colors.Red);
-                set_shader_color(ShaderType.Lens, Colors.Green);
+                set_shader_color(ShaderType.Lens, Colors.Lime);
                 set_shader_color(ShaderType.Trim, Colors.Silver);
                 set_shader_color(ShaderType.RightPauldron, Colors.Red);
                 ttrim=1;
@@ -320,7 +319,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                 set_shader_color(ShaderType.Body, Colors.Ultramarine);
                 set_shader_color(ShaderType.Helmet, Colors.Ultramarine);
                 set_shader_color(ShaderType.Lens, Colors.Cyan);
-                set_shader_color(ShaderType.Trim, Colors.Gold);
+                set_shader_color(ShaderType.Trim, Colors.Dark_Gold);
                 set_shader_color(ShaderType.RightPauldron, Colors.Ultramarine);
                 ttrim=1;
                 specialist_colours=0;
@@ -376,7 +375,6 @@ function scr_draw_unit_image(x_draw, y_draw){
                 set_shader_color(ShaderType.Helmet, Colors.Gold);
                 set_shader_color(ShaderType.LeftPauldron, Colors.Gold);
                 set_shader_color(ShaderType.Trim, Colors.Gold);
-                set_shader_color(ShaderType.RightPauldron, Colors.Gold);
                 ttrim=0;
                 specialist_colours=0;
             }       
@@ -393,7 +391,6 @@ function scr_draw_unit_image(x_draw, y_draw){
         
             //Rejoice!
             // draw_sprite(spr_marine_base,img,0,y_surface_offset);
-            var robe_bypass = false;
             var clothing_style=3;
             if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1)  {clothing_style=0;}
             else if (global.chapter_name=="White Scars" || obj_ini.progenitor==2)  {clothing_style=1; }
