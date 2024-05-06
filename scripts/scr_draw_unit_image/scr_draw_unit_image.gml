@@ -766,6 +766,8 @@ function scr_draw_unit_image(x_draw, y_draw){
                     if (halo==1){ // Draw the Iron Halo
                         if (global.chapter_name == "Dark Angels") {
                             draw_sprite(spr_gear_halo,3,0,y_surface_offset);
+                        } else if (armour()=="Artificer Armour"){
+                            draw_sprite(spr_gear_halo,2,0,y_surface_offset);
                         } else {
                             draw_sprite(spr_gear_halo,0,0,y_surface_offset);
                         }
