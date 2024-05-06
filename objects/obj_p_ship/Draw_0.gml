@@ -21,7 +21,8 @@ if (selected=1){draw_set_color(38144);
                 obj_cursor.board=1;
             }
             if (point_distance(mouse_x,mouse_y,e.x,e.y)>32){
-                obj_cursor.board=0;obj_cursor.image_alpha=1;
+                obj_cursor.board=0;
+                obj_cursor.image_alpha=1;
             }
         }
     }
@@ -29,10 +30,13 @@ if (selected=1){draw_set_color(38144);
     draw_set_alpha(1);
 }
 
-
+shader_set(Ship_shader);
+shader_set_uniform_f_array(shader_get_uniform(Ship_shader, "main_colour"), ship_colour);
+//draw_sprite(sprite_index, 0, x, y);
 draw_self();
 
 
+shader_reset();
 draw_set_color(38144);
 draw_set_font(fnt_info);
 draw_set_halign(fa_center);
@@ -66,7 +70,6 @@ if (shields>0){
 }
 
 if (master_present!=0) then draw_sprite_ext(spr_popup_select,0,x,y,2,2,0,c_white,1);
-
 
 }
 }

@@ -360,7 +360,7 @@
     {"id":{"name":"spr_errant_colors","path":"sprites/spr_errant_colors/spr_errant_colors.yy",},},
     {"id":{"name":"spr_da_mk7_helm","path":"sprites/spr_da_mk7_helm/spr_da_mk7_helm.yy",},},
     {"id":{"name":"spr_iron_colors","path":"sprites/spr_iron_colors/spr_iron_colors.yy",},},
-    {"id":{"name":"Shader2","path":"shaders/Shader2/Shader2.yy",},},
+    {"id":{"name":"Ship_shader","path":"shaders/Ship_shader/Ship_shader.yy",},},
     {"id":{"name":"spr_iron2_colors","path":"sprites/spr_iron2_colors/spr_iron2_colors.yy",},},
     {"id":{"name":"spr_maximus_colors","path":"sprites/spr_maximus_colors/spr_maximus_colors.yy",},},
     {"id":{"name":"spr_noarmour_colors","path":"sprites/spr_noarmour_colors/spr_noarmour_colors.yy",},},

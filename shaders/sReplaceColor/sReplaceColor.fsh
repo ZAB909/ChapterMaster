@@ -111,7 +111,7 @@ void main()
     if (background_col.rgb == vec3((robes_colour_replace.r * 0.75) + 0.01, robes_colour_replace.g * 0.75, robes_colour_replace.b * 0.75).rgb) {
       col.a = 0.0;
     }
-    if ((background_col.rgb != f_Replace1.rgb) && (background_col.rgb != f_Replace2.rgb) && (background_col.rgb != f_Replace3.rgb)) {
+    if ((background_col.rgb != f_Replace1.rgb) && (background_col.rgb != f_Replace2.rgb) && (background_col.rgb != f_Replace3.rgb) && background_col.a >0 ) {
       col.a = 0.0;
     }
   }
