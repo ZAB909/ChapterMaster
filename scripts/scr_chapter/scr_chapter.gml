@@ -250,7 +250,7 @@ function scr_chapter(argument0) {
 	    custom=0;points_spent=0;points_total=0;keyboard_string="Salamanders";flash=0;adv_selecting=0;advantage1=6;adv1="Crafters";
 	    advantage2=17;adv2="Slow and Purposeful";advantage3=0;adv3="";disadvantage1=0;dis1="";disadvantage2=0;dis2="";disadvantage3=0;dis3="";
 	    battle_cry="Into the fires of battle, unto the anvil of war!";monastery_name="Prometheus";master_name="Tu'Shan";
-	    main_color="Warpstone Glow";secondary_color="Black";lens_color="Yellow";weapon_color="Black";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
+	    main_color="Firedrake Green";secondary_color="Black";lens_color="Yellow";weapon_color="Black";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
 	    veteran_name="Veteran";devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
 	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Pyre Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=2;master_ranged=3;forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";

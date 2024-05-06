@@ -267,20 +267,6 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	}
 
 
-
-
-
-
-	exit;
-
-
-
-
-
-
-
-
-
 	if (string_count("Bolt",weapon_name)>0) and (solod=false){flavored=1;
 	    if (obj_ncombat.bolter_drilling=1) then weapon_name="Accurate "+weapon_name;
 	    if (number_of_shots<200){

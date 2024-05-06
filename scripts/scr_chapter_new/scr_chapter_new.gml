@@ -17,7 +17,7 @@ function scr_chapter_new(argument0) {
 
 	i=99;
 	repeat(3){i+=1;// First is for the correct slot, second is for default
-	    role[i,2]="Honor Guard";wep1[i,2]="Power Sword";wep2[i,2]="Bolter";armour[i,2]="Power Armour";
+	    role[i,2]="Honor Guard";wep1[i,2]="Power Sword";wep2[i,2]="Bolter";armour[i,2]="Artificer Armour";
 	    role[i,3]="Veteran";wep1[i,3]="Chainsword";wep2[i,3]="Combiflamer";armour[i,3]="Power Armour";
 	    role[i,4]="Terminator";wep1[i,4]="Power Fist";wep2[i,4]="Storm Bolter";armour[i,4]="Terminator Armour";
 	    role[i,5]="Captain";wep1[i,5]="Power Fist";wep2[i,5]="Bolt Pistol";armour[i,5]="Power Armour";gear[i,5]="Iron Halo";
@@ -49,7 +49,7 @@ function scr_chapter_new(argument0) {
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Caliban Green";color_to_secondary="Caliban Green";color_to_trim="Grey";
 	    color_to_pauldron="Caliban Green";color_to_pauldron2="Caliban Green";color_to_lens="Red";
-	    color_to_weapon="Black";col_special=0;trim=0;
+	    color_to_weapon="Dark Red";col_special=0;trim=0;
 	    hchaplain="Sapphon";clibrarian="Ezekial";fmaster="Sepharon";hapothecary="Razaek";
 		admiral="Korahael";recruiter="Ranaeus";
 	    battle_cry="Repent!  For tomorow you may die";
@@ -233,8 +233,8 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    homeworld="Desert";homeworld_name="Baal";
 	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=3;aspirant_trial="Blood Duel";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Red";color_to_secondary="Red";color_to_trim="Dark Grey";
-	    color_to_pauldron="Red";color_to_pauldron2="Red";color_to_lens="Green";
+	    color_to_main="Sanguine Red";color_to_secondary="Sanguine Red";color_to_trim="Dark Grey";
+	    color_to_pauldron="Sanguine Red";color_to_pauldron2="Sanguine Red";color_to_lens="Green";
 	    color_to_weapon="Black";col_special=0;trim=0;
 	    hchaplain="Astorash the Grim";clibrarian="Mephiston";fmaster="Incarael";
 	    battle_cry="For the Emperor and Sanguinius! Death! DEATH";// monastery_name="Fortress of Hera";master_name=
@@ -301,8 +301,8 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    homeworld="Lava";homeworld_name="Nocturne";homeworld_exists=1;recruiting_exists=0;
 	    homeworld_rule=1;aspirant_trial="Apprenticeship";discipline="pyromancy";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Warpstone Glow";color_to_secondary="Warpstone Glow";color_to_trim="Copper";
-	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Dark Red";
+	    color_to_main="Firedrake Green";color_to_secondary="Firedrake Green";color_to_trim="Gold";
+	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Red";
 	    color_to_weapon="Black";col_special=0;trim=0;
 	    fmaster="Argos";clibrarian="Velcona";hapothecary="Harath Shen";recruiter="Sol Ba'ken";admiral="Dac'tyr";hchaplain="Elysius";
 	    battle_cry="Into the fires of battle!  Unto the anvil of war";// monastery_name="Fortress of Hera";master_name=
@@ -435,7 +435,7 @@ if (argument0="Minotaurs"){founding=10;points=450;
 	    recruiting_world="Death";recruiting_name="Trontiux";
 	    homeworld_rule=0;aspirant_trial="Knowledge of Self";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Sanguine";color_to_secondary="Sanguine";color_to_trim="Black";
+	    color_to_main="Sanguine Red";color_to_secondary="Sanguine Red";color_to_trim="Black";
 	    color_to_pauldron2="Bone";color_to_pauldron="Bone";color_to_lens="Green";
 	    color_to_weapon="Black";col_special=0;trim=1;
 	    battle_cry=choose("None shall find us wanting.","Knowledge is power, guard it well");
@@ -543,7 +543,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    homeworld_exists=1;recruiting_exists=1;homeworld_rule=2;aspirant_trial="Apprenticeship";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Dark Red";color_to_secondary="Black";color_to_trim="Copper";
-	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Sanguine";
+	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Sanguine Red";
 	    color_to_weapon="Black";col_special=0;trim=1;
 	    hapothecary="Vaylund";
 	    hchaplain="Eli";

@@ -484,6 +484,28 @@ global.weapons={
         "tags":["power", "hammer", "siege"],
         "req_exp":140,
     },
+    "Power Mace": {
+        "abbreviation": "PwrMace",                
+        "attack": {
+            "standard": 700,
+            "master_crafted": 800,
+            "artifact": 950
+        },
+        "melee_mod": {
+            "standard": 1.3,
+            "master_crafted": 1.3,
+            "artifact": 1.3
+        },
+        "description": "Wreathed in glowing smoke, these massive weapons are as sinister in aspect as they are lethal in application, and are capable of obliterating even the mightiest heretics in a blaze of killing light.",
+        "melee_hands": 2.25,
+        "ranged_hands": 2,
+        "ammo": 0,
+        "range": 1,
+        "spli": 10,
+        "arp": 1,
+        "tags":["power", "mace", "siege", "pious"],
+        "req_exp":200,
+    },
     "Tome":{
         "abbreviation": "Tome",                
         "attack": {
@@ -2014,10 +2036,10 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
         }
         switch (item_type) {
             default:
-                stat_order = ["description", "special_description", "quality", "armour_value", "damage_resistance_mod", "hp_mod", "ranged_mod", "melee_mod", "attack", "ammo", "range", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
+                stat_order = ["description", "special_description", "quality", "armour_value", "damage_resistance_mod", "hp_mod", "ranged_mod", "melee_mod", "attack", "spli", "range", "ammo", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
                 break;
             case "weapon":
-                stat_order = ["description", "special_description", "quality", "attack", "ranged_mod", "melee_mod", "ammo", "range", "armour_value", "hp_mod", "damage_resistance_mod", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
+                stat_order = ["description", "special_description", "quality", "attack", "spli", "range", "ammo", "ranged_mod", "melee_mod", "armour_value", "hp_mod", "damage_resistance_mod", "melee_hands", "ranged_hands", "special_properties", "req_exp", "tags"];
                 break;
             }
 			

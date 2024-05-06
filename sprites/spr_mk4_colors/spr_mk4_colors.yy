@@ -4,7 +4,7 @@
   "name": "spr_mk4_colors",
   "bbox_bottom": 220,
   "bbox_left": 0,
-  "bbox_right": 154,
+  "bbox_right": 155,
   "bbox_top": 0,
   "bboxMode": 0,
   "collisionKind": 1,
@@ -34,7 +34,7 @@
   "height": 232,
   "HTile": false,
   "layers": [
-    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"37daef98-5d4d-4a73-ab67-e44998796929","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"9a59aa8b-c6c5-4de7-8185-846467be92bc","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": null,
   "origin": 0,

@@ -89,7 +89,7 @@ function scr_turn_first() {
 	            nfleet.image_index=9;
 	            nfleet.home_x=x+lengthdir_x(5000,point_direction(x,y,room_width/2,room_height/2));
 	            nfleet.home_y=y+lengthdir_y(5000,point_direction(x,y,room_width/2,room_height/2));
-	            nfleet.trade_goods="BLOODBLOODBLOOD";
+	            nfleet.trade_goods="Khorne_warband";
 	            nfleet.capital_number=10;
 	            nfleet.frigate_number=20;
 	            nfleet.escort_number=40;

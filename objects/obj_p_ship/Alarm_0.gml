@@ -20,6 +20,7 @@ maxshields=shields;
 armour_front=obj_ini.ship_front_armour[ship_id];
 armour_other=obj_ini.ship_other_armour[ship_id];
 weapons=obj_ini.ship_weapons[ship_id];turrets=0;
+ship_colour=obj_controller.body_colour_replace;
 
 weapon[1]=obj_ini.ship_wep[ship_id,1];weapon_facing[1]="";weapon_cooldown[1]=0;
 weapon_hp[1]=hp/4;weapon_dam[1]=0;weapon_ammo[1]=999;weapon_range[1]=0;weapon_minrange[1]=0;
