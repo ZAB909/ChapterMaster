@@ -1,294 +1,10 @@
-function array_sum(_prev, _curr, _index) {
-    return _prev + _curr
-}
+
 var orb=orbiting;
 
 if (round(owner)!=eFACTION.Imperium) and (navy=1) then owner= noone;
 
-if ((trade_goods="BLOODBLOODBLOOD") or (trade_goods="BLOODBLOODBLOODBLOOD")) and (owner=eFACTION.Chaos) {
-    if (orb!=0) and (instance_exists(orb)) and (action=""){
-        if (orb.present_fleet[1]+orb.present_fleet[2]+orb.present_fleet[3]+orb.present_fleet[6]+orb.present_fleet[7]+orb.present_fleet[9]+orb.present_fleet[13]=0){
-            var ii=0,good=0,part=0,contin=0;
-            
-            // No forces already landed
-            repeat(orb.planets){
-				ii+=1;
-                if (planet_feature_bool(orb.p_feature[ii], P_features.World_Eaters)==1) {
-					good-=1;
-					
-                    if (orb.p_guardsmen[ii]+orb.p_pdf[ii]+orb.p_sisters[ii]+orb.p_player[ii]<=0) and (orb.p_population[ii]>orb.p_max_population[ii]/20){
-                        orb.p_population[ii]=round(orb.p_population[ii]/2);
-                        if (orb.p_population[ii]<=orb.p_max_population[ii]/20) then contin=99;
-                    }
-                    if (orb.p_guardsmen[ii]+orb.p_pdf[ii]+orb.p_sisters[ii]+orb.p_player[ii]<=0) and (orb.p_population[ii]<=orb.p_max_population[ii]/20) then contin=99;
-                }
-            }
-            // Next planet; rembark the chaos forces
-            if (contin=99){
-                ii=0;
-                repeat(orb.planets){
-                    ii+=1;
-                    if (planet_feature_bool(orb.p_feature[ii], P_features.World_Eaters)==1){
-                        orb.p_chaos[ii]=0;
-                        orb.p_traitors[ii]=max(4,orb.p_traitors[ii]+1);
-						delete_features(orb.p_feature[ii], P_features.World_Eaters);
-                        contin=100;
-                        
-                        if (ii>1){delete_features(orb.p_feature[ii-1], P_features.World_Eaters);contin=100;}
-                    }
-                }
-            }
-            // No forces landed
-            if ((good=0) or (contin=100)){
-				ii=0;
-				good=0;
-                repeat(orb.planets) {
-					ii+=1;
-                    if (good=0) and (trade_goods="BLOODBLOODBLOOD"){
-                        if (orb.p_guardsmen[ii]+orb.p_pdf[ii]+orb.p_sisters[ii]+orb.p_player[ii]>0) and (orb.p_population[ii]>orb.p_max_population[ii]/20){
-							array_push(orb.p_feature[ii], new new_planet_feature(P_features.World_Eaters));
-                            good=ii;orb.p_chaos[ii]=6;
-                        }// Forces landed
-                    }
-                    if (good=0) and (trade_goods="BLOODBLOODBLOODBLOOD"){
-                        if (orb.p_player[ii]>0) and (orb.p_population[ii]>orb.p_max_population[ii]/20){
-                            good=ii;orb.p_chaos[ii]=6;array_push(orb.p_feature[ii], new new_planet_feature(P_features.World_Eaters));
-                        }// Forces landed
-                    }
-                }
-                
-                if (good=0) and (trade_goods!="BLOODBLOODBLOODBLOOD"){// Nothing to see here, continue to next star*/
-                    ii=0;
-                    repeat(orb.planets){ii+=1;
-                        if (string_count("World Eaters",orb.p_feature[ii])>0){
-                            orb.p_chaos[ii]=0;orb.p_traitors[ii]=max(4,orb.p_traitors[ii]+1);
-                            delete_features(orb.p_feature[ii], P_features.World_Eaters);contin=100;
-                            if (ii>1){delete_features(orb.p_feature[ii-1], P_features.World_Eaters);contin=100;}
-                        }
-                    }
-                    
-                    with(orb) {
-						y-=20000;
-					}
-					
-                    with(obj_star) {
-						if (planets=1) and (p_type[1]="Dead") then y-=20000;
-					}
-                    with(obj_star) {
-						if (owner=eFACTION.Chaos) or (owner=eFACTION.Ork) or (owner=eFACTION.Necrons) or (owner=eFACTION.Eldar) then y-=20000;
-					}
-					var bd,b;
-                    with(obj_star) {
-						bd=0;
-						b=0;
-                        repeat(4) {
-							b+=1;
-							if (p_guardsmen[b]+p_pdf[b]+p_sisters[b]+p_player[b]>0)
-								and (p_population[b]>p_max_population[b]/20) 
-								then bd+=1;
-						}
-                        if (bd=4) then y-=20000;
-                    }
-                    
-                    var nx,ny,n2,yy2,ndir,next_star;
-					next_star=0;
-                    ndir = point_direction(x,y,home_x,home_y);
-                    nx  = x+lengthdir_x(250,ndir);
-					ny  = y+lengthdir_y(250,ndir);
-                    n2  = x+lengthdir_x(450,ndir);
-					yy2 = y+lengthdir_y(450,ndir);
-                    
-					
-					if !point_in_rectangle(n2,yy2, 50,50,room_width,room_height) {
-						trade_goods="BLOODBLOODBLOODBLOOD";
-                        // show_message("BLOODBLOODBLOODBLOOD");
-                    }
-                    
-                    if (trade_goods!="BLOODBLOODBLOODBLOOD") {
-                        next_star=instance_nearest(nx,ny,obj_star);
-                        action_x=next_star.x;action_y=next_star.y;
-                        action="";
-						alarm[4]=1;
-                    }
-                    
-                    with(obj_star){if (y<=-16000) then y+=20000;}
-                    with(obj_star){if (y<=-16000) then y+=20000;}
-                    with(obj_star){if (y<=-16000) then y+=20000;}
-                }
-                
-                
-                
-                if (good=0){
-                    if (trade_goods="BLOODBLOODBLOODBLOOD") {
-                        debugl("BLOOD: A");
-                        
-                        // Go after the player now
-                        var yarr = false;
-                        
-                        if (obj_ini.fleet_type=1) {
-							debugl("BLOOD: B");
-                            with(obj_temp3){instance_destroy();}
-                            with(obj_star){if (y<=-16000) then y+=20000;}
-                            with(obj_star){if (y<=-16000) then y+=20000;}
-                            with(obj_star){if (y<=-16000) then y+=20000;}
-                            
-                            with(obj_star){
-                                if array_contains(p_owner, eFACTION.Player) then instance_create(x,y,obj_temp3);
-                            }
-
-                            if (instance_exists(obj_temp3)) {
-								debugl("BLOOD: C");
-                                var pee1  = instance_nearest(x,y,obj_temp3);
-                                next_star = instance_nearest(pee1.x,pee1.y,obj_star);
-                                yarr=true;
-								with(obj_temp3){instance_destroy();}
-                                action_x=next_star.x;
-								action_y=next_star.y;
-								alarm[4]=1;
-								action="";
-								yarr=true;
-                            }
-                        }
-						
-						//was (A or B) and A before, which simplifies to A
-                        if (obj_ini.fleet_type!=1)  {
-							debugl("BLOOD: D");
-                            // Chase player fleets
-                            with(obj_temp8){instance_destroy();}
-                            with(obj_p_fleet){
-                                if (action="move") and point_in_rectangle(x, y, 0, 0, room_width, room_height) {
-                                    if point_in_rectangle(action_x, action_y, 0, 0, room_width, room_height) {
-                                        var tem = instance_create(action_x,action_y,obj_temp8);
-										tem.eta = action_eta;
-                                    }
-                                }
-                            }
-                            if (instance_exists(obj_temp8)) and (instance_exists(orbiting)) {
-								debugl("BLOOD: E");
-                                var my_dis;
-                                var that = instance_nearest(x,y,obj_temp8);
-								etah=that.eta;
-                                var thatp = instance_nearest(that.x,that.y,obj_star);
-                                
-                                if (thatp != noone){
-									var next_star = noone;
-                                    my_dis= point_distance(orbiting.x,orbiting.y,thatp.x,thatp.y)/48;
-                                    if rectangle_in_rectangle(thatp.x, thatp.y, thatp.x2, thatp.y2, orbiting.x, orbiting.y, orbiting.x2, orbiting.y2) > 0
-										then my_dis=my_dis/2;
-                                    
-                                    if (my_dis<=etah){
-                                        next_star=thatp
-										yarr=true;
-                                        with(obj_temp8){instance_destroy();}
-                                        // trade_goods="player_hold";
-                                    }
-                                }
-                                with(obj_temp8){instance_destroy();}
-                            }
-                            // End chase
-                            
-                            
-                            // Go after home planet or fleet?
-                            with(obj_temp7){instance_destroy();}
-                            with(obj_temp8){instance_destroy();}
-                            
-                            
-                            if (action="") and (yarr=false){
-								debugl("BLOOD: F");
-
-                                var homeworld_distance=9999;
-								var fleet_distance=9999;
-								var fleet_nearby = noone;
-								var homeworld_nearby = noone;
-								var planet_nearby = noone;
-								
-                                with(obj_p_fleet) {
-									if (action="") then instance_create(x,y,obj_temp7);
-								}
-                                with(obj_star) {
-									if array_contains(p_owner, eFACTION.Player)
-										then instance_create(x,y,obj_temp8);
-								}
-                                
-                                if (instance_exists(obj_temp7)) {
-									fleet_nearby = instance_nearest(x,y,obj_temp7);
-									fleet_distance = point_distance(x,y,fleet_nearby.x,fleet_nearby.y);
-								}
-                                if (instance_exists(obj_temp8)) {
-									homeworld_nearby=instance_nearest(x,y,obj_temp8);
-									homeworld_distance=point_distance(x,y,homeworld_nearby.x,homeworld_nearby.y)-30;
-								}
-                                
-                                if (homeworld_distance<fleet_distance) and (homeworld_distance<5000) and (homeworld_distance>40) {// Go towards planet
-									if (instance_exists(homeworld_nearby)) {
-										next_star=homeworld_nearby;
-										yarr=true;
-									}
-
-                                    with(obj_temp7){instance_destroy();}
-                                    with(obj_temp8){instance_destroy();}
-                                }
-                                
-                                
-                                if (fleet_distance<homeworld_distance) and (fleet_distance<7000) and (fleet_distance>40) and (instance_exists(obj_temp7)) { // Go towards that fleet
-                                    planet_nearby = instance_nearest(fleet_nearby.x,fleet_nearby.y,obj_star);
-                                    
-                                    if (instance_exists(planet_nearby)) and (instance_exists(orbiting)){debugl("BLOOD: G");
-                                        if (fleet_distance<=500) and (orbiting!=planet_nearby){// Case 1; really close, wait for them to make the move
-                                            with(obj_temp7){instance_destroy();}
-                                            with(obj_temp8){instance_destroy();}
-                                            
-                                            with(obj_star){if (y<=-16000) then y+=20000;}
-                                            with(obj_star){if (y<=-16000) then y+=20000;}
-                                            with(obj_star){if (y<=-16000) then y+=20000;}
-                                            
-                                            exit;
-                                        }
-                                        if (fleet_distance>500){// Case 2; kind of far away, move closer
-											var diss=fleet_distance/2;
-											var goto=0;
-                                            var dirr = point_direction(x,y,fleet_nearby.x,fleet_nearby.y);
-											debugl("BLOOD: H");
-                                            
-                                            with(orbiting){y-=20000;}
-                                            goto=instance_nearest(x+lengthdir_x(diss,dirr),y+lengthdir_y(diss,dirr),obj_star);
-                                            with(orbiting){y+=20000;}
-                                            if (goto.present_fleet[1]=0) {
-												action_x=goto.x;
-												action_y=goto.y;
-												alarm[4]=1;
-											}
-
-                                            with(obj_temp7){instance_destroy();}
-                                            with(obj_temp8){instance_destroy();}
-                                            exit;
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            with(obj_temp7){instance_destroy();}
-                            with(obj_temp8){instance_destroy();}
-                        }
-						
-                        if (yarr=true){
-                            action_x=next_star.x;
-							action_y=next_star.y;
-                            action="";alarm[4]=1;
-                            debugl("BLOOD: YARR");
-                        }
-						
-                        with(obj_star){if (y<=-16000) then y+=20000;}
-                        with(obj_star){if (y<=-16000) then y+=20000;}
-                        with(obj_star){if (y<=-16000) then y+=20000;}
-                    }    
-                }
-            }
-        }
-    }
-}
-
-if (orbiting != 0 && action==""){
+//TODO centralise orbiting logic
+if (orbiting != 0 && action=="" && owner!=noone){
     var orbiting_found=instance_exists(orbiting);
     if (orbiting_found){
         orbiting_found = variable_instance_exists(orbiting, "present_fleet");
@@ -297,9 +13,13 @@ if (orbiting != 0 && action==""){
         }
     } 
     if (!orbiting_found) {
-    	orbiting = instance_nearest(x,y,obj_star);
-    	orbiting.present_fleet[owner]++;
+        orbiting = instance_nearest(x,y,obj_star);
+        orbiting.present_fleet[owner]++;
     }
+}
+
+if ((trade_goods="Khorne_warband") or (trade_goods="Khorne_warband_landing_force")) and (owner=eFACTION.Chaos) {
+    khorne_fleet_cargo()
 }
 
 if (orbiting != noone) {
@@ -2099,76 +1819,7 @@ if (action="move") and (action_eta<5000){
         
         // 135 ; fleet chase
         if (string_count("Inqis",trade_goods)>0) and (string_count("fleet",trade_goods)>0) and (string_count("_her",trade_goods)=0) {
-            var good=0,acty="";
-			
-			if (!instance_exists(target)){// Reaquire target
-                var target_player_fleet = get_largest_player_fleet();
-                if (target_player_fleet != "none"){
-                    if (target_player_fleet.action == ""){
-                        set_fleet_target(target_player_fleet.x,target_player_fleet.y, target_player_fleet);
-                    } else {
-                        set_fleet_target(target_player_fleet.action_x,target_player_fleet.action_y, target_player_fleet);         
-                    }                        
-                }
-			}
-			if (instance_exists(target)) {
-
-	            var at_star=instance_nearest(target.x,target.y,obj_star).id;
-	            var target_at_star=instance_nearest(x,y,obj_star).id;
-	            if (target.action!="") then at_star=555;
-            
-	            if (at_star!=target_at_star){
-                    trade_goods+="!";
-                    acty="chase";
-                    scr_loyalty("Avoiding Inspections","+");
-                }
-            
-	            // if (string_count("!",trade_goods)>=3) then demand stop fleet
-            
-                
-                //Inquisitor is pissed as hell
-	            if (string_count("!",trade_goods)=5){
-	                obj_controller.alarm[8]=10;
-	                instance_destroy();
-                    exit;
-	            }
-            
-            
-	            if (acty="chase"){
-	                instance_activate_object(obj_star);
-	                var goal_x,goal_y,target_meet=0;
-                
-	                chase_fleet_target_set();
-                    target_meet=instance_nearest(action_x,action_y,obj_star);
-	                if (string_count("!",trade_goods)=4) and (instance_exists(obj_turn_end)){
-                
-	                // color / type / text /x/y
-                
-	                    scr_alert("blank","blank","blank",target_meet.x,target_meet.y);
-                    
-	                    var massa,iq;iq=0;
-	                    massa="Inquisitor ";
-                        if (inquisitor>0){
-                            iq=inquisitor
-                        }
-                    
-	                    massa+=string(obj_controller.inquisitor[iq]);
-                    
-	                    if (target.action="") then massa+=$" DEMANDS that you keep your fleet at {target_meet.name} until ";
-	                    if (target.action!="") then massa+=$" DEMANDS that you station your fleet at {target_meet.name} until ";
-                
-	                    scr_event_log("red",string(massa)+" they may inspect it.");
-                        var gender = obj_controller.inquisitor_gender[iq]==1?"he":"she"
-	                    if (obj_controller.inquisitor_gender[iq]=1) then massa+=$"{gender} is able to complete the inspection.  Further avoidance will be met with harsh action.";
-
-	                    scr_popup("Fleet Inspection",massa,"inquisition","");
-                
-	                // scr_poup("
-	                }
-                
-	                exit;
-				}
-            }
+            inquisition_fleet_inspection_chase();
         }
 
 
@@ -2196,7 +1847,7 @@ if (action="move") and (action_eta<5000){
             // show_message("Tau|||  Other Owner: "+string(steh.owner)+"   ret: "+string(ret)+"    mergus: "+string(mergus));
         }
         
-        if (owner=eFACTION.Chaos) and (trade_goods="csm") or (trade_goods="BLOODBLOODBLOOD") then mergus=0;
+        if (owner=eFACTION.Chaos) and (trade_goods="csm") or (trade_goods="Khorne_warband") then mergus=0;
         if (trade_goods="merge") then mergus=0;
         // if (steh.owner!=owner) then mergus=0;
         
@@ -2292,7 +1943,7 @@ if (action="move") and (action_eta<5000){
         
         x=old_x;y=old_y;
         
-        if (steh.x=old_x) and (steh.y=old_y) and (steh.owner=self.owner) and (steh.action="") and ((owner = eFACTION.Tau) or (owner = eFACTION.Chaos)) and (mergus=10) and (trade_goods!="csm") and (trade_goods!="BLOODBLOODBLOOD"){// Move somewhere new
+        if (steh.x=old_x) and (steh.y=old_y) and (steh.owner=self.owner) and (steh.action="") and ((owner = eFACTION.Tau) or (owner = eFACTION.Chaos)) and (mergus=10) and (trade_goods!="csm") and (trade_goods!="Khorne_warband"){// Move somewhere new
             var stue, stue2;stue=0;stue2=0;
             var goood;goood=0;
             
