@@ -165,8 +165,8 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
         ui_ymod[left_or_right] -= 20;
         if (display_type == "normal_ranged") {
             if (current_armor == ArmourType.Indomitus) {
-                ui_xmod[left_or_right] -= 18;
-                ui_ymod[left_or_right] += 30;
+                ui_xmod[left_or_right] -= 14;
+                ui_ymod[left_or_right] += 25;
             }
             if (current_armor == ArmourType.Tartaros) {
                 ui_xmod[left_or_right] -= 14;
@@ -177,8 +177,8 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             ui_arm[left_or_right] = 2;
             ui_hand[left_or_right] = 1;
             if (current_armor == ArmourType.Indomitus) {
-                ui_xmod[left_or_right] -= 21;
-                ui_ymod[left_or_right] += 22;
+                ui_xmod[left_or_right] -= 18;
+                ui_ymod[left_or_right] += 24;
             }
             if (current_armor == ArmourType.Tartaros) {
                 ui_xmod[left_or_right] -= 18;

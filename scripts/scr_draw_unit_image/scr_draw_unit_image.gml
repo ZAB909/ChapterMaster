@@ -1124,27 +1124,31 @@ function scr_draw_unit_image(x_draw, y_draw){
             // Draw terminator hands
             if ui_hand[1] == 1 {
                 if (armour_type == ArmourType.Tartaros){
-                    draw_sprite(spr_tartaros_wep_fix,4,0,y_surface_offset);
+                    draw_sprite(spr_terminator_hands,0,0,y_surface_offset);
                 }
                 else if (armour_type == ArmourType.Indomitus){
-                    draw_sprite(spr_termi_wep_fix,4,0,y_surface_offset);
+                    draw_sprite(spr_terminator_hands,0,0,y_surface_offset);
                 }
             }
             if ui_hand[2] == 1 {
                 if (armour_type == ArmourType.Tartaros){
                     if (specialist_colours <= 1){
-                        draw_sprite(spr_tartaros_wep_fix,6,0,y_surface_offset);
+                        var spr_w = sprite_get_width(spr_terminator_hands) - sprite_get_xoffset(spr_terminator_hands) * 2;
+                        draw_sprite_ext(spr_terminator_hands,0,spr_w,y_surface_offset,-1,1,0,c_white,1);
                     }
                     else if (specialist_colours >= 2){
-                        draw_sprite(spr_tartaros_wep_fix,7,0,y_surface_offset);
+                        var spr_w = sprite_get_width(spr_terminator_hands) - sprite_get_xoffset(spr_terminator_hands) * 2;
+                        draw_sprite_ext(spr_terminator_hands,0,spr_w,y_surface_offset,-1,1,0,c_white,1);
                     }
                 }
                 else if (armour_type == ArmourType.Indomitus){
                     if (specialist_colours <= 1){
-                        draw_sprite(spr_termi_wep_fix,6,0,y_surface_offset);
+                        var spr_w = sprite_get_width(spr_terminator_hands) - sprite_get_xoffset(spr_terminator_hands) * 2;
+                        draw_sprite_ext(spr_terminator_hands,0,spr_w,y_surface_offset,-1,1,0,c_white,1);
                     }
                     else if (specialist_colours >= 2){
-                        draw_sprite(spr_termi_wep_fix,7,0,y_surface_offset);
+                        var spr_w = sprite_get_width(spr_terminator_hands) - sprite_get_xoffset(spr_terminator_hands) * 2;
+                        draw_sprite_ext(spr_terminator_hands,0,spr_w,y_surface_offset,-1,1,0,c_white,1);
                     }
                 }
             }
