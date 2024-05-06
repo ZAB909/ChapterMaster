@@ -1179,26 +1179,19 @@ if (action==""){
             
             
             
-            
-            inquisition_inspection_logic();
+            if (string_count("investigate",trade_goods)==0){
+                inquisition_inspection_logic();
+            }
             // End Test-Slave Incubator Crap
             
             if (obj_controller.known[eFACTION.Inquisition]=1){obj_controller.known[eFACTION.Inquisition]=3;}
             if (obj_controller.known[eFACTION.Inquisition]=2){obj_controller.known[eFACTION.Inquisition]=4;}
             
-            instance_deactivate_object(orbiting);
-            repeat(choose(1,2)){
-                orbiting=instance_nearest(x,y,obj_star);
-                instance_deactivate_object(orbiting);
-            }
-            
-            repeat(5){
-                orbiting=instance_nearest(x,y,obj_star);
-                if (orbiting.owner=eFACTION.Eldar) then instance_deactivate_object(orbiting);
-            }
+            orbiting=instance_nearest(x,y,obj_star);
+
             // 135;
             if (obj_controller.loyalty_hidden<=0){// obj_controller.alarm[7]=1;global.defeat=2;
-                var moo;moo=false;
+                var moo=false;
                 if (obj_controller.penitent=1) and (moo=false){
                     obj_controller.alarm[8]=1;
                     moo=true;
@@ -1206,18 +1199,18 @@ if (action==""){
                 if (obj_controller.penitent=0) and (moo=false) then scr_audience(4,"loyalty_zero",0,"",0,0);
             }
             
-            orbiting=instance_nearest(x,y,obj_star);
-            action_x=orbiting.x;
-            action_y=orbiting.y;
+            exit_star=distance_removed_star(x,y, choose(2,3,4));
+            action_x=exit_star.x;
+            action_y=exit_star.y;
+            orbiting=exit_star;
             alarm[4]=1;
-            instance_activate_object(obj_star);
             trade_goods="|DELETE|";
             exit;
         }
     }
     
     if (owner=eFACTION.Tau){
-        if (instance_exists(obj_p_fleet)) and (obj_controller.known[eFACTION.Tau]=0){
+        if (instance_exists(obj_p_fleet)) and (obj_controller.known[eFACTION.Tau]==0){
             var p_ship =instance_nearest(x,y,obj_p_fleet);
             if (p_ship.action="") and (point_distance(x,y,p_ship.x,p_ship.y)<=80) then obj_controller.known[eFACTION.Tau] = 1;
         }

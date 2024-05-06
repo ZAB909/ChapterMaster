@@ -81,10 +81,13 @@ function star_by_name(search_name){
 	return "none";
 }
 
-function distance_removed_star(origional_x,origional_y, star_offset = choose(2,3)){
+function distance_removed_star(origional_x,origional_y, star_offset = choose(2,3), disclude_hulk=true, disclude_elder=true){
 	var from = instance_nearest(origional_x,origional_y,obj_star);
     for(var i=0; i<star_offset; i++){
-        from=instance_nearest(origional_x,origional_y,obj_star)
+        from=instance_nearest(origional_x,origional_y,obj_star);
+        if (disclude_elder && from.owner=eFACTION.Eldar){
+        	i--;
+        }
         with(from){
         	instance_deactivate_object(id);
         };

@@ -172,25 +172,23 @@ function inquisition_inspection_logic(){
 	var inspec_alert_string = "";
 	var cur_star=instance_nearest(x,y,obj_star);
 
-	 if (string_count("fleet",trade_goods)==0 && string_count("investigate",trade_goods)=0){
-            var cur_star = instance_nearest(x,y,obj_star);
-            inspec_alert_string = $"Inquisitor finishes inspection of {cur_star.name}";
-            scr_event_log("","Inquisitor finishes inspection of "+string(cur_star.name)+".", cur_star.name);
+	var inquis_string = $"Inquisitor {obj_controller.inquisitor[inquisitor]}";
+	 if (string_count("fleet",trade_goods)==0){
+            inspec_alert_string = $"{inquis_string} finishes inspection of {cur_star.name}";
             scr_loyalty("blarg","inspect_world");// This updates the loyalties
-            if (whom=0) then scr_alert("green","duhuhuhu","Inquisitor Ship finishes inspection of "+string(cur_star.name)+".",x,y);
-            if (whom>0) then scr_alert("green","duhuhuhu",inquis_string+" finishes inspection of "+string(cur_star.name)+".",x,y);
         } 
-        else if (string_count("fleet",trade_goods)>0 && string_count("investigate",trade_goods)=0){
-        	inspec_alert_string = $"Inquisitor finishes inspection of your fleet";
-            scr_event_log("","Inquisitor finishes inspection of your fleet.");
+        else if (string_count("fleet",trade_goods)>0){
+        	inspec_alert_string = $"{inquis_string} finishes inspection of your fleet";
             scr_loyalty("blarg","inspect_fleet");// This updates the loyalties
-            if (whom=0) then scr_alert("green","duhuhuhu","Inquisitor Ship finishes inspection of your fleet.",x,y);
-            if (whom>0) then scr_alert("green","duhuhuhu",inquis_string+" finishes inspecting your fleet.",x,y);
             target=noone;
+        }
+        if (inspec_alert_string!=""){
+	        scr_event_log("", inspec_alert_string, cur_star.name);
+	        scr_alert("green","duhuhuhu",inspec_alert_string, x,y);
         }
         
         // Test-Slave Incubator Crap
-        if (obj_controller.und_gene_vaults=0) and (string_count("investigate",trade_goods)=0){
+        if (obj_controller.und_gene_vaults=0){
             var e,sla,hur;e=0;sla=0;hur=0;
             repeat(120){e+=1;
                 if (obj_ini.slave_batch_num[e]>0) then sla+=obj_ini.slave_batch_num[e];
