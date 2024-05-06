@@ -1129,17 +1129,17 @@ if (slide=3){
 
 
 if (slide=4){
-    draw_set_color(38144);
     draw_set_font(fnt_40k_30b);
     draw_set_halign(fa_center);
     draw_set_alpha(1);
+    draw_set_color(38144);
+
     
     tooltip="";tooltip2="";
     obj_cursor.image_index=0;
-    
-    draw_text(800,80,string_hash_to_newline(string(chapter)));
 
-    draw_rectangle(444,252,444+167,252+232,0);
+    draw_text_color_simple(800,80,string_hash_to_newline(string(chapter)),38144);
+    draw_rectangle_color_simple(444,252,444+167,252+232,1,38144);
 
     if( shader_is_compiled(sReplaceColor)){
         shader_set(sReplaceColor);
@@ -1161,15 +1161,15 @@ if (slide=4){
         
         //Rejoice!
         
-        if (col_special=0) then draw_sprite(spr_aquila_colors,10,444,252);
-        if (col_special=1) then draw_sprite(spr_aquila_colors,11,444,252);
-        if (col_special>=2) then draw_sprite(spr_aquila_colors,12,444,252);
+        if (col_special=0) then draw_sprite(spr_mk7_colors,10,444,252);
+        if (col_special=1) then draw_sprite(spr_mk7_colors,11,444,252);
+        if (col_special>=2) then draw_sprite(spr_mk7_colors,12,444,252);
         
-        draw_sprite(spr_aquila_colors,col_special,444,252);
-        if (col_special<=1){draw_sprite(spr_aquila_colors,6,444,252);draw_sprite(spr_aquila_colors,8,444,252);}
-        if (col_special>=2){draw_sprite(spr_aquila_colors,6,444,252);draw_sprite(spr_aquila_colors,9,444,252);}
-        if (trim=0) and (col_special<=1) then draw_sprite(spr_aquila_colors,4,444,252);
-        if (trim=0) and (col_special>=2) then draw_sprite(spr_aquila_colors,5,444,252);
+        draw_sprite(spr_mk7_colors,col_special,444,252);
+        if (col_special<=1){draw_sprite(spr_mk7_colors,6,444,252);draw_sprite(spr_mk7_colors,8,444,252);}
+        if (col_special>=2){draw_sprite(spr_mk7_colors,6,444,252);draw_sprite(spr_mk7_colors,9,444,252);}
+        if (trim=0) and (col_special<=1) then draw_sprite(spr_mk7_colors,4,444,252);
+        if (trim=0) and (col_special>=2) then draw_sprite(spr_mk7_colors,5,444,252);
         
         
         draw_sprite(spr_weapon_colors,0,444,252);

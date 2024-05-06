@@ -1054,6 +1054,7 @@
     {"id":{"name":"obj_p1_bullet","path":"objects/obj_p1_bullet/obj_p1_bullet.yy",},},
     {"id":{"name":"obj_p1_bullet_miss","path":"objects/obj_p1_bullet_miss/obj_p1_bullet_miss.yy",},},
     {"id":{"name":"obj_main_menu","path":"objects/obj_main_menu/obj_main_menu.yy",},},
+    {"id":{"name":"scr_draw_text_color_simple","path":"scripts/scr_draw_text_color_simple/scr_draw_text_color_simple.yy",},},
     {"id":{"name":"obj_cuicons","path":"objects/obj_cuicons/obj_cuicons.yy",},},
     {"id":{"name":"obj_img","path":"objects/obj_img/obj_img.yy",},},
     {"id":{"name":"obj_lol_version","path":"objects/obj_lol_version/obj_lol_version.yy",},},

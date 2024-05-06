@@ -72,11 +72,11 @@ function scr_colors_initialize() {
         ["Dark Metal", 105, 105, 105],
     ];
 
-    for (var i = 0; i < array_length(colors_array); i++) {
+	global.colors_count = array_length(colors_array);
+    for (var i = 0; i < global.colors_count; i++) {
         col[i] = colors_array[i][0];
         col_r[i] = colors_array[i][1];
         col_g[i] = colors_array[i][2];
         col_b[i] = colors_array[i][3];
     }
-	global.colors_count = array_length(colors_array);
 }
