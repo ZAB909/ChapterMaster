@@ -61,6 +61,7 @@ function scr_draw_unit_image(x_draw, y_draw){
         var armour_bypass = false;
         var hide_bionics = false;
         var robe_bypass = false;
+        var halo_bypass = false;
         var armour_draw =[];        
         ui_coloring=""; 
 		var specialist_colours=obj_ini.col_special; 
@@ -102,7 +103,7 @@ function scr_draw_unit_image(x_draw, y_draw){
         // Sets up the description for the equipement of current marine            
     
         var armour_type=ArmourType.Normal,armour_sprite=spr_weapon_blank;
-        var back_type=BackType.None,hood=0,skull=0,arm=0,halo=0,braz=0,slow=0,brothers=-5,body_part;
+        var back_type=BackType.None,hood=0,skull=0,arm=0,braz=0,slow=0,brothers=-5,body_part;
 
         var skin_color=obj_ini.skin_color;
 
@@ -119,8 +120,6 @@ function scr_draw_unit_image(x_draw, y_draw){
         }
         if (unit_gear="Psychic Hood"){
             hood=-50;
-        }else if (unit_gear="Iron Halo"){
-            halo=1;
         }else if (unit_gear="Servo Arms" || unit_gear="Master Servo Arms"){
             var mas;
             // mas=string_count("Master",gear());
@@ -763,15 +762,22 @@ function scr_draw_unit_image(x_draw, y_draw){
                             draw_sprite(spr_pack_arm,arm,0,y_surface_offset)
                         } else if (arm>=10) then draw_sprite(spr_pack_arms,arm-10,0,y_surface_offset);  */                  
                     }
-                    if (halo==1){ // Draw the Iron Halo
-                        if (global.chapter_name == "Dark Angels") {
-                            draw_sprite(spr_gear_halo,3,0,y_surface_offset);
-                        } else if (armour()=="Artificer Armour"){
-                            draw_sprite(spr_gear_halo,2,0,y_surface_offset);
-                        } else {
-                            draw_sprite(spr_gear_halo,0,0,y_surface_offset);
-                        }
+                }
+
+                if (unit_gear == "Iron Halo" && !halo_bypass) { // Draw the Iron Halo
+                    var halo_color = 0;
+                    var halo_type = 0; // 0,2,4...
+                    var halo_offset_y = 0;
+                    if (array_contains(["Raven Guard", "Dark Angels"], global.chapter_name)) {
+                        halo_color = 1;
                     }
+                    if (armour()=="Artificer Armour" && !armour_bypass){
+                        halo_offset_y -= 14;
+                    } else if (armour_type == ArmourType.Indomitus){
+                        halo_type = 2;
+                        halo_offset_y -= 20;
+                    }
+                    draw_sprite(spr_gear_halo,halo_type+halo_color,0,y_surface_offset+halo_offset_y);
                 }
 
                 // Draw arms
