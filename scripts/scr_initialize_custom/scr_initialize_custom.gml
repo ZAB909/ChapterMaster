@@ -2862,7 +2862,11 @@ function scr_initialize_custom() {
 		gear[company][k] = gear[100, 2];
 		mobi[company][k] = mobi[100, 2];
 		// wep1 power sword // wep2 storm bolter default
-		wep1[company][k] = wep1[101, 2];
+		wep1[company][k] = choose_weighted([
+			["Power Sword", 3],
+			["Power Axe", 3],
+			["Relic Blade", 1]
+		]);
 		wep2[company][k] = wep2[101, 2];
 		armour[company][k] = armour[101, 2];
 		if global.chapter_name == "Dark Angels" {
