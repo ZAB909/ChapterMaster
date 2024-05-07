@@ -33,6 +33,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             "Chainfist":spr_weapon_chainfist,
             "Power Fist with Intergrated Bolters":spr_weapon_powfist4,
             "Power Mace":spr_weapon_powmace,
+            "Gauntlets of Ultramar":spr_weapon_gauntlets_ultramar,
         }
         var terminator_melee_names=struct_get_names(terminator_melee);
         for (var i=0;i<array_length(terminator_melee_names);i++){
@@ -276,6 +277,10 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
 
     if ("Power Mace" == equiped_weapon) {
         ui_arm[left_or_right] = 0;
+    }
+
+    if ("Gauntlets of Ultramar" == equiped_weapon) {
+        ui_twoh[left_or_right] = true;
     }
 
     // Flip the ui_xmod for offhand
