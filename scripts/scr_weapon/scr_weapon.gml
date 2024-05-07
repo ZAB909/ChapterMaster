@@ -969,6 +969,23 @@ global.weapons={
         "spli": 3,
         "arp": 0
     },
+    "Gauntlets of Ultramar": {
+        "abbreviation": "GntltUltrm", 
+        "attack": {
+            "standard": 900,
+            "master_crafted": 1000,
+            "artifact": 1200
+        },
+        "description": "Two mighty Power Fists with incorporated Bolters that were reclaimed from a fallen Chaos champion, slain during the Gamalia Reclusiam Massacre by the Primarch of the Ultramarines, Roboute Guilliman himself.",
+        "melee_hands": 2.25,
+        "ranged_hands": 2.25,
+        "ammo": 0,
+        "range": 1,
+        "spli": 6,
+        "arp": 1,
+        "second_profiles":["Integrated Bolters"],
+        "tags":["artifact","power","fist","pair"],
+    },
     "Twin Linked Heavy Bolter": {
         "abbreviation": "TwnHvyBltr", 
         "attack": {

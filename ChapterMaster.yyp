@@ -90,6 +90,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"UI","folderPath":"folders/Sprites/UI.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Tile Sets","folderPath":"folders/Tile Sets.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Timelines","folderPath":"folders/Timelines.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"artifacts","folderPath":"folders/Sprites/Marine Viewer/artifacts.yy",},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"custom_icons_help.txt","CopyToMask":153157610357391598,"filePath":"datafiles/icons",},
@@ -479,6 +480,7 @@
     {"id":{"name":"spr_help_panel","path":"sprites/spr_help_panel/spr_help_panel.yy",},},
     {"id":{"name":"UIRenderComponents","path":"scripts/UIRenderComponents/UIRenderComponents.yy",},},
     {"id":{"name":"spr_dread_lascannon","path":"sprites/spr_dread_lascannon/spr_dread_lascannon.yy",},},
+    {"id":{"name":"spr_weapon_gauntlets_ultramar","path":"sprites/spr_weapon_gauntlets_ultramar/spr_weapon_gauntlets_ultramar.yy",},},
     {"id":{"name":"spr_help_exit","path":"sprites/spr_help_exit/spr_help_exit.yy",},},
     {"id":{"name":"spr_popup_dialogue","path":"sprites/spr_popup_dialogue/spr_popup_dialogue.yy",},},
     {"id":{"name":"spr_popup_manage","path":"sprites/spr_popup_manage/spr_popup_manage.yy",},},
