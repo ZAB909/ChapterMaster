@@ -916,20 +916,36 @@ global.weapons={
         "spli": 3,
         "arp": 1
     },
-    "Integrated Bolters": {
+    "Integrated Bolter": {
         "abbreviation": "IntgBltr", 
         "attack": {
-            "standard": 75,
-            "master_crafted": 82.5,
-            "artifact": 90
+            "standard": 50,
+            "master_crafted": 55,
+            "artifact": 60
         },
-        "description": "Integrated Bolters are a set of Bolter weapons that are integrated or built directly into the structure of the vehicle, armor, or Dreadnought.",
+        "description": "A Bolter that can be built directly into the structure of the vehicle, armor, another weapon or Dreadnought. When used as a weapon, it leaves both hands free, allowing to use any, even a twohanded weapon, efficiently.",
         "melee_hands": 0,
         "ranged_hands": 0,
         "ammo": 20,
-        "range": 8.1,
-        "spli": 3,
-        "arp": 1,
+        "range": 12,
+        "spli": 4,
+        "arp": 0,
+        "tags":["bolt"]
+    },
+    "Integrated Bolters": {
+        "abbreviation": "IntgBltrs", 
+        "attack": {
+            "standard": 100,
+            "master_crafted": 110,
+            "artifact": 120
+        },
+        "description": "A pair of Bolters that can be built directly into the structure of the vehicle, armor, another weapon or Dreadnought. When used as a weapon, it leaves both hands free, allowing to use any, even a twohanded weapon, efficiently.",
+        "melee_hands": 0,
+        "ranged_hands": 0,
+        "ammo": 40,
+        "range": 12,
+        "spli": 8,
+        "arp": 0,
         "tags":["bolt"]
     },
     "Power Fist with Intergrated Bolters": {
@@ -951,7 +967,7 @@ global.weapons={
         "range": 1,
         "spli": 3,
         "arp": 1,
-        "second_profiles":["Integrated Bolters"],
+        "second_profiles":["Integrated Bolter"],
         "tags":["power","fist"],
     },    
     "Power Fists": {
@@ -2189,7 +2205,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                         }
                         //item_desc_tooltip += $"#Properties:#{special_properties_string}#"
                     }
-                    /*if (array_length(special_properties_array)>0){
+                    if (array_length(special_properties_array) > 0){
                         var special_properties_string = ""
                         for (var j = 0; j < array_length(special_properties_array); j++) {
                             special_properties_string += special_properties_array[j]
@@ -2198,7 +2214,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                             }
                         }
                         item_desc_tooltip += $"#Properties:#{special_properties_string}#"
-                    }*/
+                    }
                     break;
                 case "special_description":
                     if (special_description!=""){
