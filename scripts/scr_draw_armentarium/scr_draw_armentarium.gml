@@ -168,7 +168,7 @@ function calculate_research_points(turn_end=false){
         //in this instance tech heretics are techmarines with the "tech_heretic" trait
         if (turn_end){
             if (array_length(techs)==0) then scr_loyalty("Upset Machine Spirits","+");
-            if (array_length(heretics)>0){
+            if (array_length(heretics)>0 && turn>75){
                 var heretic_location, same_location, current_heretic, current_tech;
                 //iterate through tech heretics;
                 for (var heretic=0; heretic<array_length(heretics); heretic++){

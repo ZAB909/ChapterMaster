@@ -72,6 +72,10 @@ function scr_get_stars() {
 	return stars;
 }
 
+function planet_imperium_ground_total(planet_check){
+    return p_guardsmen[planet_check]+p_pdf[planet_check]+p_sisters[planet_check]+p_player[planet_check];
+}
+
 function star_by_name(search_name){
 	with(obj_star){
 		if (name = search_name){

@@ -66,64 +66,7 @@ function scr_turn_first() {
 	        var did_so;did_so=false;
 	        if (turn>=150) and (faction_defeated[10]=0) and (known[eFACTION.Chaos]=0) and (faction_gender[10]=2){
 	        // if (turn>=100000) and (faction_defeated[10]=0) and (known[eFACTION.Chaos]=0){faction_gender[10]=2;
-	            with(obj_turn_end){audiences+=1;audien[audiences]=10;known[eFACTION.Chaos]=2;audien_topic[audiences]="intro";did_so=true;}
-	            fdir=terra_direction+choose(-90,90);
-				fdir+=floor(random_range(-35,35));
-            
-	            var len,width,height,t,c,s;
-	            width = room_width;height = room_height;
-	            t = degtorad(fdir);
-				c = abs(cos(t));
-				s = abs(sin(t));
-	            if (c * height > s * width) {
-					len = (width/2) / c;
-				} else {
-					len = (height/2) / s;
-				}
-	            ox=width/2+lengthdir_x(len,fdir);
-	            oy=height/2+lengthdir_y(len,fdir);
-            
-	            var nfleet = instance_create(ox,oy,obj_en_fleet);
-	            nfleet.owner = eFACTION.Chaos;
-				nfleet.sprite_index=spr_fleet_chaos;
-	            nfleet.image_index=9;
-	            nfleet.home_x=x+lengthdir_x(5000,point_direction(x,y,room_width/2,room_height/2));
-	            nfleet.home_y=y+lengthdir_y(5000,point_direction(x,y,room_width/2,room_height/2));
-	            nfleet.trade_goods="Khorne_warband";
-	            nfleet.capital_number=10;
-	            nfleet.frigate_number=20;
-	            nfleet.escort_number=40;
-				
-				var rep, filtered_array, candidate_systems;
-				candidate_systems = [];
-	            with(obj_star){
-					rep=0;
-					ya=false;
-					//should probably get turned into its own helper if used multiple times
-					filtered_array = array_filter(p_owner, function(val, idx) {
-						return scr_is_planet_owned_by_allies(self, idx)
-					})
-					if array_length(filtered_array)
-						array_push(candidate_systems, self)
-	            }
-				
-				var skulls = array_reduce(candidate_systems, method({nfleet}, function(prev, curr) {
-						if !prev
-							return curr
-						var prev_dist = point_distance(prev.x, prev.y, nfleet.x, nfleet.y)
-						var curr_dist = point_distance(curr.x, curr.y, nfleet.x, nfleet.y)
-						
-						return (prev_dist > curr_dist) ? curr : prev;
-				}),noone)
-
-	            nfleet.action_x=skulls.x;
-				nfleet.action_y=skulls.y;
-	            nfleet.alarm[4]=1;
-            
-	            var tix;tix="Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+" continues his Black Crusade into Sector "+string(obj_ini.sector_name)+".";
-	            scr_alert("purple","lol",string(tix),nfleet.x,nfleet.y);scr_event_log("purple",tix);
-	            scr_popup("Black Crusade","A Black Crusade led by the Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+" has arrived in "+string(obj_ini.sector_name)+".  His forces have already carved a bloody path through many sectors and yours is next.  "+string(obj_controller.faction_leader[eFACTION.Chaos])+" also seems to be set on killing you.  The Black Crusade's current target is system "+string(skulls.name)+".","","");
-	            // title / text / image / speshul
+	        	spawn_chaos_warlord();
             
 	        }
 	        if (did_so=false) and (faction_defeated[7]=1){

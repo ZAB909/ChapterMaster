@@ -4,10 +4,7 @@ function array_sum(_prev, _curr, _index) {
     return _prev + _curr;
 }
 
-//TODO move to planet based functions area
-function planet_imperium_ground_total(planet_imperium_ground_total){
-    return p_guardsmen[planet_imperium_ground_total]+p_pdf[planet_imperium_ground_total]+p_sisters[iplanet_imperium_ground_totali]+p_player[iplanet_imperium_ground_totali];
-}
+
 //to be run within with scope
 function set_fleet_target(targ_x, targ_y, final_target){
 	action_x = targ_x;
