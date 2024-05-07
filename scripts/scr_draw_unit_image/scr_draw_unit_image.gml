@@ -1180,6 +1180,14 @@ function scr_draw_unit_image(x_draw, y_draw){
                 }
             }
 
+            var shield_offset_x = 0;
+            var shield_offset_y = 0;
+            if (armour_type == ArmourType.Indomitus){
+                shield_offset_x = -15;
+                shield_offset_y = -10;
+            }
+            if (gear() == "Combat Shield") then draw_sprite (spr_gear_combat_shield, 1, shield_offset_x, y_surface_offset + shield_offset_y);
+
             // if (braz=1) then draw_sprite(spr_pack_brazier,1,0,y_surface_offset);
             if (armour_type==ArmourType.Dreadnought){
                 draw_sprite(spr_dreadnought_chasis_colors,specialist_colours,0,y_surface_offset);
