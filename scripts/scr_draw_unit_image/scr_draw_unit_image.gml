@@ -83,7 +83,7 @@ function scr_draw_unit_image(x_draw, y_draw){
         // Dark Angels
         if (global.chapter_name=="Dark Angels"){
             // Deathwing
-            if ((company == 1 || role() == obj_ini.role[100][2]) && ui_specialist == 0) then ui_coloring="deathwing";
+            if ((company == 1 && ui_specialist == 0) || role()==obj_ini.role[100,2]) then ui_coloring="deathwing";
             // Ravenwing
             else if (company == 2 && ui_specialist == 0) {
                 ui_coloring="ravenwing";
@@ -276,6 +276,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                 ttrim=1;
                 specialist_colours=0;
                 if (global.chapter_name == "Dark Angels") {
+                    set_shader_color(ShaderType.Trim, Colors.Copper);
                     if (role() == "Master of Sanctity") {
                         set_shader_color(ShaderType.Helmet, Colors.Caliban_Green);
                         ttrim=0;
