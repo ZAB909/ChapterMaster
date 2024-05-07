@@ -705,8 +705,8 @@ function scr_initialize_custom() {
 			break;
 		case "Dark Angels":
 			chaap += 5;
-			veteran = 0;
-			terminator = 105;
+			veteran = 5;
+			terminator = 100;
 			break;
 		case "Lamenters":
 			tenth = 0;
@@ -1722,78 +1722,6 @@ function scr_initialize_custom() {
 		])
 	}
 
-	if (global.chapter_name == "Dark Angels") {
-		variable_struct_set(st, "command_squad", [
-			[roles.captain, {
-				"max": 1,
-				"min": 1,
-			}],
-			[roles.champion, {
-				"max": 1,
-				"min": 1,
-				"loadout": {
-					"required": {
-						"wep1": ["Power Sword", 1],
-						"wep2": ["Bolt Pistol", 1],
-						"gear": ["Combat Shield", 1]
-					},
-				}
-			}],
-			[roles.apothecary, {
-				"max": 1,
-				"min": 0,
-				"role": $"Company {roles.apothecary}"
-			}],
-			[roles.chaplain, {
-				"max": 1,
-				"min": 0,
-				"role": $"Company {roles.chaplain}"
-			}],
-			[roles.ancient, {
-				"max": 1,
-				"min": 1,
-				"role": $"Company {roles.ancient}",
-				"loadout": {
-					"required": {
-						"wep1": ["", 0],
-						"wep2": ["Company Standard", 1],
-					},
-					"option": {
-						"wep1": [
-							[
-								["Chainsword", "Power Sword", "Power Axe", "Lightning Claw", "Power Fist", "Thunder Hammer", "Bolt Pistol", "Plasma Pistol"], 1
-							],
-						],
-					},
-				}
-			}],
-			[roles.veteran, {
-				"max": 5,
-				"min": 0,
-				"role": $"Company {roles.veteran}"
-			}],
-			[roles.terminator, {
-				"max": 5,
-				"min": 0,
-				"role": $"Deathwing {roles.veteran}"
-			}],
-			[roles.techmarine, {
-				"max": 1,
-				"min": 0,
-				"role": $"Company {roles.techmarine}"
-			}],
-			[roles.librarian, {
-				"max": 1,
-				"min": 0,
-				"role": $"Company {roles.librarian}"
-			}],
-			["type_data", {
-				"display_data": $"Command {squad_name}",
-				"formation_options": ["command", "terminator", "veteran", "assualt", "devastator", "scout", "tactical"],
-			}]
-		])
-	}
-
 	var squad_names = struct_get_names(st);
 	for (var st_iter = 0; st_iter < array_length(squad_names); st_iter++) {
 		var s_group = st[$squad_names[st_iter]];
@@ -2622,6 +2550,13 @@ function scr_initialize_custom() {
 		spawn_unit.spawn_old_guard();
 		spawn_unit.spawn_exp();
 		armour[company][k] = choose_weighted(armour_weighted_lists.quality_armour);
+		if (global.chapter_name == "Dark Angels" && company == 1){
+			wep1[company][k] = wep1[101, 4];
+			wep2[company][k] = wep2[101, 4];
+			gear[company][k] = gear[101, 4];
+			mobi[company][k] = mobi[101, 4];
+			armour[company][k] = armour[101, 4];
+		}
 	}
 
 	for (i = 0; i < 2; i++) {
