@@ -391,7 +391,7 @@ if (type=8) and (instance_exists(obj_controller)){
         
         repeat(min(obj_controller.man_max,23)){
             if (obj_controller.man[sel]=="man"){
-                var unit=display_unit[sel];
+                var unit=obj_controller.display_unit[sel];
                 temp1=unit.name_role();
                 temp2=obj_controller.ma_loc[sel];
                 if (obj_controller.ma_wid[sel]!=0){
@@ -507,7 +507,7 @@ if (type=8) and (instance_exists(obj_controller)){
             var arti_index = obj_controller.menu_artifact;
             var arti = obj_ini.artifact_struct[arti_index];
             var arti_base = arti.type();
-            repeat(obj_controller.man_max-2){
+            repeat(min(obj_controller.man_max,23)){
                 i+=1;
                 if (this=0) and (obj_controller.man_sel[i]=1) then this=i;
             }
