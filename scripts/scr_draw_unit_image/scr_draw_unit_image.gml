@@ -82,19 +82,10 @@ function scr_draw_unit_image(x_draw, y_draw){
         else if (role()=="Death Company"){ui_specialist=15;}
         // Dark Angels
         if (global.chapter_name=="Dark Angels"){
-            // Honour guard
-            if (role() == obj_ini.role[100][2]) then ui_coloring="deathwing";
             // Deathwing
-            else if (company == 1) {
-                if (role() == obj_ini.role[100][4]) then ui_coloring="deathwing";
-                if (string_count("Terminator",armour())>0 || armour()=="Tartaros"){
-                    if (array_contains([obj_ini.role[100][5],obj_ini.role[100][7],obj_ini.role[100][19],obj_ini.role[100][11]],role())){
-                        ui_coloring="deathwing";
-                    }
-                }
-            }
+            if ((company == 1 || role() == obj_ini.role[100][2]) && ui_specialist == 0) then ui_coloring="deathwing";
             // Ravenwing
-            else if (company == 2) {
+            else if (company == 2 && ui_specialist == 0) {
                 ui_coloring="ravenwing";
             }
         }
