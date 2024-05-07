@@ -809,6 +809,7 @@
     {"id":{"name":"scr_civil_roster","path":"scripts/scr_civil_roster/scr_civil_roster.yy",},},
     {"id":{"name":"spr_constitution_icon","path":"sprites/spr_constitution_icon/spr_constitution_icon.yy",},},
     {"id":{"name":"scr_battle_sort","path":"scripts/scr_battle_sort/scr_battle_sort.yy",},},
+    {"id":{"name":"spr_gear_combat_shield","path":"sprites/spr_gear_combat_shield/spr_gear_combat_shield.yy",},},
     {"id":{"name":"spr_um_mk6_helm","path":"sprites/spr_um_mk6_helm/spr_um_mk6_helm.yy",},},
     {"id":{"name":"scr_count_forces","path":"scripts/scr_count_forces/scr_count_forces.yy",},},
     {"id":{"name":"spr_weapon_powmace","path":"sprites/spr_weapon_powmace/spr_weapon_powmace.yy",},},
