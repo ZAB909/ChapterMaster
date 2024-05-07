@@ -122,17 +122,17 @@ function scr_draw_unit_image(x_draw, y_draw){
                 if (specialist_colours=1) then arm=0;
             }
             if (mas>0){
-            	switch(specialist_colours){
-            		case 0:
-            			arm=10;
-            			break;
-            		case 1:
-            			arm=11;
-            			break;
-            		case 2:
-            			arm=12;
-            			break;	                				                			
-            	}
+                switch(specialist_colours){
+                    case 0:
+                        arm=10;
+                        break;
+                    case 1:
+                        arm=11;
+                        break;
+                    case 2:
+                        arm=12;
+                        break;	                				                			
+                }
             }
         }
         if (ui_specialist=1) and (global.chapter_name!="Iron Hands") then skull=-50;
@@ -1155,7 +1155,7 @@ function scr_draw_unit_image(x_draw, y_draw){
                     draw_sprite(spr_terminator_hands,2,0,y_surface_offset+18);
                 }
                 else if (armour_type == ArmourType.Indomitus){
-                    draw_sprite(spr_terminator_hands,2,0,y_surface_offset+18);
+                    draw_sprite(spr_terminator_hands,2,0,y_surface_offset);
                 }
             }
             if ui_hand[2] == 2 {
