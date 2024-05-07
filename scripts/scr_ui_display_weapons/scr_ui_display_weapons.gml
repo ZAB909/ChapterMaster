@@ -165,8 +165,8 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
                 ui_ymod[left_or_right] += 12;
             }
             if (current_armor == ArmourType.Tartaros) {
-                ui_xmod[left_or_right] -= 14;
-                ui_ymod[left_or_right] -= 0;
+                ui_xmod[left_or_right] -= 10;
+                ui_ymod[left_or_right] += 16;
             }
         }
         if (display_type == "melee_onehand") {
@@ -175,11 +175,14 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             if (current_armor == ArmourType.Indomitus) {
                 ui_xmod[left_or_right] -= 18;
                 ui_ymod[left_or_right] += 24;
-            }
-            if (current_armor == ArmourType.Tartaros) {
+            } else if (current_armor == ArmourType.Tartaros) {
                 ui_xmod[left_or_right] -= 18;
-                ui_ymod[left_or_right] -= 12;
+                ui_ymod[left_or_right] += 40;
             }
+        }
+
+        if (equiped_weapon == "Thunder Hammer") {
+            ui_hand[left_or_right] = 2;
         }
     }
 
@@ -250,6 +253,14 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             ui_ymod[left_or_right] = 20;
         }
     }
+
+    if (display_type == "terminator_ranged") {
+        if (current_armor == ArmourType.Tartaros){
+            ui_xmod[left_or_right] = 0;
+            ui_ymod[left_or_right] = 20;
+        }
+    }
+
     if ("Storm Shield" == equiped_weapon) {
         ui_weapon[left_or_right] = spr_weapon_storm;
         ui_arm[left_or_right] = 2;
@@ -268,7 +279,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
     }
 
     // Flip the ui_xmod for offhand
-    if (left_or_right == 2  && ui_xmod[left_or_right] < 0) {
+    if (left_or_right == 2  && ui_xmod[left_or_right] != 0) {
         /*and (current_armor=0)*/
         ui_xmod[left_or_right] = ui_xmod[left_or_right] * -1;
     }
