@@ -52,6 +52,9 @@ function scr_cheatcode(argument0) {
         if (cheatcode_string=="sisterhospitaler"){
             scr_add_man("Sister Hospitaler",0,"","","","","",0,true,"default","");
         }
+        if (cheatcode_string=="chaosfleetspawn"){
+            spawn_chaos_warlord();
+        }
          if (cheatcode_string=="techuprising"){
             var pip = instance_create(0,0,obj_popup);
             pip.title = "Technical Differences!";

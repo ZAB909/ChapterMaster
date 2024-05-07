@@ -34,6 +34,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"object","folderPath":"folders/Scripts/compatibility/object.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"view","folderPath":"folders/Scripts/compatibility/view.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Diplomacy","folderPath":"folders/Scripts/Diplomacy.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"fleet","folderPath":"folders/Scripts/fleet.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Helpers","folderPath":"folders/Scripts/Helpers.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Draw Shapes","folderPath":"folders/Scripts/Helpers/Draw Shapes.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Files","folderPath":"folders/Scripts/Helpers/Files.yy",},
@@ -87,7 +88,6 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"UI","folderPath":"folders/Sprites/UI.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Tile Sets","folderPath":"folders/Tile Sets.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Timelines","folderPath":"folders/Timelines.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"fleet","folderPath":"folders/Scripts/fleet.yy",},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"custom_icons_help.txt","CopyToMask":153157610357391598,"filePath":"datafiles/icons",},

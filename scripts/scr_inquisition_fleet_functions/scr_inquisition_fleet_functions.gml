@@ -188,7 +188,7 @@ function inquisition_inspection_logic(){
         }
         
         // Test-Slave Incubator Crap
-        if (obj_controller.und_gene_vaults=0){
+        if (obj_controller.und_gene_vaults==0){
             var e,sla,hur;e=0;sla=0;hur=0;
             repeat(120){e+=1;
                 if (obj_ini.slave_batch_num[e]>0) then sla+=obj_ini.slave_batch_num[e];
