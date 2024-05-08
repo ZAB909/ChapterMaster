@@ -111,7 +111,7 @@ for (g=1;g<array_length(unit_struct);g++){
                if (is_struct(mobi_item)){
                 if( mobi_item.has_tag("jump")){
                     for (var stack_index=1;stack_index<array_length(wep);stack_index++){
-                        if (wep[stack_index]==""||(wep[stack_index]=="hammer_of_wrath" && !head_role)){
+                        if ((wep[stack_index]==""||(wep[stack_index]=="hammer_of_wrath" && !head_role)) && wep_solo[stack_index]==""){
                             add_data_to_stack(stack_index,unit.hammer_of_wrath());
                             ammo[stack_index] = -1;
                             if (head_role){
@@ -169,7 +169,7 @@ for (g=1;g<array_length(unit_struct);g++){
                 var weapon_stack_index=0;
                 var primary_ranged = unit.ranged_damage_data[3];//collect unit ranged data
                 for (weapon_stack_index=1;weapon_stack_index<array_length(wep);weapon_stack_index++){
-                    if (wep[weapon_stack_index]==""||(wep[weapon_stack_index]==primary_ranged.name && !head_role)){
+                     if ((wep[weapon_stack_index]==""||(wep[weapon_stack_index]==primary_ranged.name && !head_role)) && wep_solo[weapon_stack_index]==""){
                         add_data_to_stack(weapon_stack_index,primary_ranged,unit.ranged_damage_data[0]);
                         if (head_role){
                             wep_title[weapon_stack_index]=unit.role();
@@ -180,7 +180,7 @@ for (g=1;g<array_length(unit_struct);g++){
                 }
                 var primary_melee = unit.melee_damage_data[3];//collect unit melee data
                 for (weapon_stack_index=1;weapon_stack_index<array_length(wep);weapon_stack_index++){
-                    if (wep[weapon_stack_index]==""||(wep[weapon_stack_index]==primary_melee.name && !head_role)){
+                    if ((wep[weapon_stack_index]==""||(wep[weapon_stack_index]==primary_melee.name && !head_role)) && wep_solo[weapon_stack_index]==""){
                         if (range[weapon_stack_index]>1.9) then continue//creates secondary weapon stack for close combat ranged weaponry use
                         primary_melee.range=1;
                         add_data_to_stack(weapon_stack_index,primary_melee,unit.melee_damage_data[0]);
