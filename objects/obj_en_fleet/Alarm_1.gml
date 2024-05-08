@@ -1825,26 +1825,25 @@ if (action="move") and (action_eta<5000){
             
             
             if (image_index=1){// Start influence thing
-                var rando3, rando4;
-                rando3=floor(random(100))+1;
-                rando4=floor(random(stue.planets))+1;
+                var  tau_influence;
+                var tau_influence_chance=irandom(100)+1;
+                var tau_influence_planet=irandom(stue.planets)+1;
                 
-                // show_message(string(stue.p_type[rando4])+" | "+string(stue.p_influence[rando4]));
-                // show_message(string(rando3)+"|"+string(rando4));
-                
-                
-                if (stue.p_type[rando4]!="Dead"){
-                
-                    scr_alert("green","owner","Tau ship broadcasts subversive messages to "+string(sta.name)+" "+string(rando4)+".",sta.x,sta.y);
-                
-                    if (rando3<=70) and (stue.p_influence[rando4]<70){
-                        stue.p_influence[rando4]+=10;
-                        if (stue.p_type[rando4]="Forge") then stue.p_influence[rando4]-=5;
-                    }
+                with (stue){
+                    if (p_type[tau_influence_planet]!="Dead"){
                     
-                    if (rando3<=3) and (stue.p_influence[rando4]<70){
-                        stue.p_influence[rando4]+=30;
-                        if (stue.p_type[rando4]="Forge") then stue.p_influence[rando4]-=25;
+                        scr_alert("green","owner",$"Tau ship broadcasts subversive messages to {planet_numeral_name()}.",sta.x,sta.y);
+                        tau_influence = p_influence[tau_influence_planet][eFACTION.Tau]
+                    
+                        if (tau_influence_chance<=70) and (tau_influence<70){
+                        	adjust_influence[tau_influence_planet](eFACTION.Tau, 10, tau_influence_planet);
+                            if (p_type[tau_influence_planet]=="Forge") then adjust_influence(eFACTION.Tau, -5, tau_influence_planet);
+                        }
+                        
+                        if (tau_influence_chance<=3) and (tau_influence<70){
+                            adjust_influence(eFACTION.Tau, 30, tau_influence_planet);
+                            if (p_type[tau_influence_planet]=="Forge") then adjust_influence(eFACTION.Tau, -25, tau_influence_planet);
+                        }
                     }
                 }
             } 
@@ -1853,7 +1852,9 @@ if (action="move") and (action_eta<5000){
             
             instance_deactivate_object(stue);
             
-            with(obj_star){if (owner != eFACTION.Tau) then instance_deactivate_object(instance_id);}
+            with(obj_star){
+            	if (owner != eFACTION.Tau) then instance_deactivate_object(instance_id);
+            }
             
             var good;good=0;
             

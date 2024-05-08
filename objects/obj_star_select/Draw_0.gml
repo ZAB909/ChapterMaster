@@ -360,7 +360,8 @@ if (obj_controller.selecting_planet!=0){
                 
                 
                 var improve_cost,yep,o;improve_cost=1500;
-                o=0;yep=0;repeat(4){o+=1;if (obj_ini.adv[o]="Siege Masters") then yep=1;}if (yep=1) then improve_cost=1100;
+                o=0;yep=0;
+                if (array_contains(obj_ini.adv, "Siege Masters")) then improve_cost=1100;
                 
                 draw_set_color(0);
                 draw_text(xx+671-1,yy+281-1,string_hash_to_newline(string(improve_cost)));
@@ -371,7 +372,9 @@ if (obj_controller.selecting_planet!=0){
                 draw_text(xx+671,yy+281,string_hash_to_newline(string(improve_cost)));
                 
                 if (scr_hit(xx+481,yy+282,xx+716,yy+300)=true){
-                    draw_set_color(0);draw_set_alpha(0.2);draw_rectangle(xx+481,yy+280,xx+716,yy+298,0);
+                    draw_set_color(0);
+                    draw_set_alpha(0.2);
+                    draw_rectangle(xx+481,yy+280,xx+716,yy+298,0);
                     if (obj_controller.cooldown<=0) and (obj_controller.mouse_left=1) and (obj_controller.requisition>=improve_cost){
                         obj_controller.cooldown=8000;
                         obj_controller.requisition-=improve_cost;
@@ -387,7 +390,8 @@ if (obj_controller.selecting_planet!=0){
                     }
                     
                 }
-                draw_set_alpha(1);draw_set_color(0);
+                draw_set_alpha(1);
+                draw_set_color(0);
             }
             var forti_string = ["None", "Sparse","Light","Moderate","Heavy","Major","Extreme"];
             var planet_forti = $"Defenses: {forti_string[target.p_fortified[current_planet]]}";
@@ -403,13 +407,15 @@ if (obj_controller.selecting_planet!=0){
         }
         
         var temp6="???";
-        if (max(target.p_heresy[current_planet],target.p_influence[current_planet])<=10) then temp6="None";
-        if (max(target.p_heresy[current_planet],target.p_influence[current_planet])>10) and (max(target.p_heresy[current_planet],target.p_influence[current_planet])<=30) then temp6="Little";
-        if (max(target.p_heresy[current_planet],target.p_influence[current_planet])>30) and (max(target.p_heresy[current_planet],target.p_influence[current_planet])<=50) then temp6="Major";
-        if (max(target.p_heresy[current_planet],target.p_influence[current_planet])>50) and (max(target.p_heresy[current_planet],target.p_influence[current_planet])<=70) then temp6="Heavy";
-        if (max(target.p_heresy[current_planet],target.p_influence[current_planet])>70) and (max(target.p_heresy[current_planet],target.p_influence[current_planet])<=96) then temp6="Extreme";
-        if (target.p_heresy[current_planet]>=96) or (target.p_influence[current_planet]>=96) then temp6="Maximum";
-        draw_text(xx+480,yy+300,string_hash_to_newline("Corruption: "+string(temp6)));
+        var tau_influence = target.p_influence[current_planet][eFACTION.Tau];
+        var target_planet_heresy=target_planet_heresy
+        if (max(target_planet_heresy,tau_influence)<=10) then temp6="None";
+        if (max(target_planet_heresy,tau_influence)>10) and (max(target_planet_heresy,tau_influence)<=30) then temp6="Little";
+        if (max(target_planet_heresy,tau_influence)>30) and (max(target_planet_heresy,tau_influence)<=50) then temp6="Major";
+        if (max(target_planet_heresy,tau_influence)>50) and (max(target_planet_heresy,tau_influence)<=70) then temp6="Heavy";
+        if (max(target_planet_heresy,tau_influence)>70) and (max(target_planet_heresy,tau_influence)<=96) then temp6="Extreme";
+        if (target_planet_heresy>=96) or (tau_influence>=96) then temp6="Maximum";
+        draw_text(xx+480,yy+300,$"Corruption: {temp6}");
         
         
         draw_set_font(fnt_40k_14b);
@@ -421,15 +427,16 @@ if (obj_controller.selecting_planet!=0){
         var temp8="",t=-1;
         repeat(8){
             var ahuh,ahuh2,ahuh3;ahuh="";ahuh2=0;ahuh3=0;t+=1;
-            
-            if (t=0){ahuh="Adepta Sororitas: ";ahuh2=target.p_sisters[current_planet];}
-            if (t=1){ahuh="Ork Presence: ";ahuh2=target.p_orks[current_planet];}
-            if (t=2){ahuh="Tau Presence: ";ahuh2=target.p_tau[current_planet];}
-            if (t=3){ahuh="Tyranid Presence: ";ahuh2=target.p_tyranids[current_planet];}
-            if (t=4){ahuh="Traitor Presence: ";ahuh2=target.p_traitors[current_planet];if (ahuh2>6) then ahuh="Daemon Presence: ";}
-            if (t=5){ahuh="CSM Presence: ";ahuh2=target.p_chaos[current_planet];}
-            if (t=6){ahuh="Daemon Presence: ";ahuh2=target.p_demons[current_planet];}
-            if (t=7){ahuh="Necron Presence: ";ahuh2=target.p_necrons[current_planet];}
+            with (target){
+                if (t=0){ahuh="Adepta Sororitas: ";ahuh2=p_sisters[current_planet];}
+                if (t=1){ahuh="Ork Presence: ";ahuh2=p_orks[current_planet];}
+                if (t=2){ahuh="Tau Presence: ";ahuh2=p_tau[current_planet];}
+                if (t=3){ahuh="Tyranid Presence: ";ahuh2=p_tyranids[current_planet];}
+                if (t=4){ahuh="Traitor Presence: ";ahuh2=p_traitors[current_planet];if (ahuh2>6) then ahuh="Daemon Presence: ";}
+                if (t=5){ahuh="CSM Presence: ";ahuh2=p_chaos[current_planet];}
+                if (t=6){ahuh="Daemon Presence: ";ahuh2=p_demons[current_planet];}
+                if (t=7){ahuh="Necron Presence: ";ahuh2=p_necrons[current_planet];}
+            }
             
             if (t!=0){
                 if (ahuh2=1) then ahuh3="Tiny";if (ahuh2=2) then ahuh3="Sparse";

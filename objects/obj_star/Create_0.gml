@@ -64,21 +64,12 @@ for(run=1; run<=8; run++){
     p_hurssy[run]=0;
     p_hurssy_time[run]=0;
     p_heresy_secret[run]=0;
-    p_influence[run]=0;
+    p_influence[run] = array_create(15, 0);
+
     p_raided[run]=0;
     // 
-    p_problem[0,run]="";
-    p_timer[0,run]=0;
-    p_problem[1,run]="";
-    p_timer[1,run]=0;
-    p_problem[2,run]="";
-    p_timer[2,run]=0;
-    p_problem[3,run]="";
-    p_timer[3,run]=0;
-    p_problem[4,run]="";
-    p_timer[4,run]=0;
-    p_problem[5,run]="";
-    p_timer[5,run]=0;
+    p_problem[0] = array_create(6,"");
+    p_timer[0] = array_create(6,0);
 }
 
 system_player_ground_forces = 0;

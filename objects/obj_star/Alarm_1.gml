@@ -255,19 +255,11 @@ if (owner == eFACTION.Tau){
             }
         }
     }
-    
-    p_owner[1]=8;
-    p_first[1]=8;
-    p_influence[1]=70;
-    p_owner[2]=8;
-    p_first[2]=8;
-    p_influence[2]=70;
-    p_owner[3]=8;
-    p_first[3]=8;
-    p_influence[3]=70;
-    p_owner[4]=8;
-    p_first[4]=8;
-    p_influence[4]=70;
+    for (var i=1;i<planets;i++){
+        p_owner[i]=eFACTION.Tau;
+        p_first[i]=eFACTION.Tau;
+        p_influence[i][eFACTION.Tau]=65+irandom(15);
+    }
 }
 // Create Nids
 if (owner == eFACTION.Tyranids){
@@ -284,7 +276,7 @@ if (owner == eFACTION.Tyranids){
             array_push(p_feature[i], new new_planet_feature(P_features.Gene_Stealer_Cult));
 
         }
-        p_owner[i] = 2;
+        p_owner[i] = eFaction.Imperium;
     }
 }
 

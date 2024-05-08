@@ -5,6 +5,7 @@ function array_sum(_prev, _curr, _index) {
 }
 
 
+
 //to be run within with scope
 function set_fleet_target(targ_x, targ_y, final_target){
 	action_x = targ_x;

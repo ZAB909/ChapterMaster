@@ -419,7 +419,7 @@ function scr_save(save_slot,save_id) {
 	                ini_write_real("Star","sr"+string(i)+"hurssy_time"+string(g),instance_array[i].p_hurssy_time[g]);
 	                ini_write_real("Star","sr"+string(i)+"heresy"+string(g),instance_array[i].p_heresy[g]);
 	                ini_write_real("Star","sr"+string(i)+"heresy_secret"+string(g),instance_array[i].p_heresy_secret[g]);
-	                ini_write_real("Star","sr"+string(i)+"influence"+string(g),instance_array[i].p_influence[g]);
+	                ini_write_string("Star","sr"+string(i)+"influence"+string(g),base64_encode(json_stringify(instance_array[i].p_influence[g])));
 	                ini_write_real("Star","sr"+string(i)+"raided"+string(g),instance_array[i].p_raided[g]);
 
 	                ini_write_string("Star","sr"+string(i)+"prob"+string(g)+".1",instance_array[i].p_problem[g,1]);

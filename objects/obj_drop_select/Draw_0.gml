@@ -730,7 +730,7 @@ if (menu=0) and (purge>=2){
     influ=p_target.p_influence[obj_controller.selecting_planet];
     if (p_target.p_large[obj_controller.selecting_planet]=1) then poppy=string(p_target.p_population[obj_controller.selecting_planet])+"B";
     if (p_target.p_large[obj_controller.selecting_planet]=0) then poppy=string(scr_display_number(p_target.p_population[obj_controller.selecting_planet]));
-    draw_text(x2+14,y2+312,string_hash_to_newline("Heresy: "+string(max(hers,influ))+"%"));
+    draw_text(x2+14,y2+312,string_hash_to_newline("Heresy: "+string(max(hers,influ[eFACTION.Tau]))+"%"));
     draw_text(x2+14,y2+332,string_hash_to_newline("Population: "+string(poppy)));
     
     
