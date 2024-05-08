@@ -1510,7 +1510,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	    	qual_string = "no_items";
 	    }
 	    if (new_weapon=="Company Standard"){
-	    	if (unit.role()!=obj_ini.role[100][11]){
+	    	if (role()!=obj_ini.role[100][11]){
 	    		viable = false;
 	    		qual_string = "wrong_role";
 	    	}

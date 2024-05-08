@@ -222,13 +222,13 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
         //     clear = true;
         // }
     // }
-    if (display_type == "lightning_claw") {
-        if (current_armor == ArmourType.Normal && left_or_right == 1) {
-            ui_xmod[left_or_right] += 11;
-        }
-        if (current_armor == ArmourType.Normal && left_or_right == 2) {
-            ui_xmod[left_or_right] -= 8;
-        }
+    // if (display_type == "lightning_claw") {
+    //     if (current_armor == ArmourType.Normal && left_or_right == 1) {
+    //         ui_xmod[left_or_right] += 11;
+    //     }
+    //     if (current_armor == ArmourType.Normal && left_or_right == 2) {
+    //         ui_xmod[left_or_right] -= 8;
+    //     }
         // if (current_armor != ArmourType.Normal) {
         //     ui_arm[left_or_right] = false;
         //     ui_above[left_or_right] = true;
@@ -247,7 +247,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
         //     ui_weapon[left_or_right] = spr_weapon_lightning2;
         //     clear = true;
         // }
-    }
+    // }
     if (display_type == "terminator_melee") {
         if (current_armor == ArmourType.Tartaros){
             ui_xmod[left_or_right] = 2;
