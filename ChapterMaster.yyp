@@ -57,6 +57,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Creation","folderPath":"folders/Sprites/Creation.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Groundside","folderPath":"folders/Sprites/Groundside.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Marine Viewer","folderPath":"folders/Sprites/Marine Viewer.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"artifacts","folderPath":"folders/Sprites/Marine Viewer/artifacts.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"bionics","folderPath":"folders/Sprites/Marine Viewer/bionics.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"body_types","folderPath":"folders/Sprites/Marine Viewer/body_types.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"deprecated","folderPath":"folders/Sprites/Marine Viewer/body_types/deprecated.yy",},
@@ -88,7 +89,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"UI","folderPath":"folders/Sprites/UI.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Tile Sets","folderPath":"folders/Tile Sets.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Timelines","folderPath":"folders/Timelines.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"artifacts","folderPath":"folders/Sprites/Marine Viewer/artifacts.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"dark_angels","folderPath":"folders/Sprites/Marine Viewer/helms/dark_angels.yy",},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"custom_icons_help.txt","CopyToMask":153157610357391598,"filePath":"datafiles/icons",},
