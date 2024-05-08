@@ -64,17 +64,17 @@ function scr_enemy_ai_d() {
             
 	            result="";tixt="";
 	            if (dice1<=(p_heresy[i]*2)) then result="chaos";
-	            if (dice2<=(p_influence[i]*2)) and (result="") then result="tau";
+	            if (dice2<=(p_influence[i][eFACTION.Tau]*2)) and (result="") then result="tau";
 	            if (result="") then result="imperial";
-            
-	            if (wob=1) then tixt="War of Succession on "+string(name)+" I has ended";
-	            if (wob=2) then tixt="War of Succession on "+string(name)+" II has ended";
-	            if (wob=3) then tixt="War of Succession on "+string(name)+" III has ended";
-	            if (wob=4) then tixt="War of Succession on "+string(name)+" IV has ended";
+
+            	tixt=$"War of Succession on {planet_numeral_name(1)} has ended";
             
 	            if (p_owner[i]=2) and (result="chaos"){
 	                tixt+=" with Chaos in control.";dispo[wob]=0;
-	                p_owner[i]=10;p_pdf[i]+=p_guardsmen[i];p_guardsmen[i]=0;scr_alert("red","succession",string(tixt),x,y);
+	                p_owner[i]=10;
+	                p_pdf[i]+=p_guardsmen[i];
+	                p_guardsmen[i]=0;
+	                scr_alert("red","succession",string(tixt),x,y);
 	            }
 	            if (p_owner[i]=2) and (result="tau"){
 	                tixt+=" with a Tau sympathizer in control.";dispo[wob]=10+choose(1,2,3,4,5,6);

@@ -101,8 +101,34 @@ function distance_removed_star(origional_x,origional_y, star_offset = choose(2,3
     return from;     
 }
 
+function adjust_influence(faction, value, planet){
+	p_influence[planet][faction]+=value;
+	var total_influence =  array_reduce(p_influence[planet], array_sum,1);
+	if (total_influence>100){
+		var difference = total_influence-100;
+		while (difference>0){
+			for (i=0;i<15;i++){
+				if (p_influence[planet][i]>0){
+					p_influence[planet][i]--;
+					difference--;
+				}
+			}
+		}
+	} else if (total_influence<0){
+		while (total_influence<0){
+			for (i=0;i<15;i++){
+				if (p_influence[planet][i]>0){
+					p_influence[planet][i]++;
+					total_influence++;
+				}
+			}
+		}
+	}
+}
 
-
+function planet_numeral_name(planet){
+	return $"{name} {scr_roman(planet)}";
+}
 //function scr_get_player_fleets() {
 //	var player_fleets = [];
 //	with(obj_p_fleet){

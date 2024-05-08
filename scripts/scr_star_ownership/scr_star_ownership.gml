@@ -9,8 +9,13 @@ function scr_star_ownership(argument0) {
 	repeat(4){run+=1;
 	    if (p_type[run]="Dead") and (p_owner[run]!=2) and (p_first[run]!=1) and (p_first[run]!=5) then p_owner[run]=2;
 	    if (p_owner[run]=7) and (p_orks[run]=0) then p_owner[run]=p_first[run];
-	    if (p_owner[run]=8) and (p_tau[run]=0) and (p_pdf[run]=0){p_owner[run]=2;p_influence[run]=round(p_influence[run]/2);}
-	    if (p_owner[run]=10) and (p_chaos[run]=0) and (p_traitors[run]=0) and (p_population[run]<=0){p_owner[run]=p_first[run];p_heresy[run]=0;if (p_owner[run]=10) then p_owner[run]=2;}
+	    if (p_owner[run]=8) and (p_tau[run]=0) and (p_pdf[run]=0){
+	    	p_owner[run]=2;
+	    	p_influence[run][eFACTION.Tau]=round(p_influence[run][eFACTION.Tau]/2);
+	    }
+	    if (p_owner[run]=10) and (p_chaos[run]=0) and (p_traitors[run]=0) and (p_population[run]<=0){
+	    	p_owner[run]=p_first[run];p_heresy[run]=0;
+	    	if (p_owner[run]=10) then p_owner[run]=2;}
 	    if (p_type[run]="Daemon") then p_owner[run]=10;
     
 	    if (p_owner[run]=1) and (p_type[run]!="Dead") then player_owner+=1;

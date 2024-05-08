@@ -413,7 +413,7 @@ function scr_enemy_ai_c() {
 	        rando=floor(random(100))+1;
 	        // Check for industrial facilities
 	        if (p_type[i]!="Dead") and (p_type[i]!="Lava"){
-	            if (p_tau[i]>=2) and (p_influence[i]>=70){// Have the proppa facilities and size
+	            if (p_tau[i]>=2) and (p_influence[i][eFACTION.Tau]>=70){// Have the proppa facilities and size
 	                var fleet;fleet=0;contin=2;
 	                if (instance_number(obj_en_fleet)=0) then contin=3;
 	                if (instance_number(obj_en_fleet)>0) then contin=2;

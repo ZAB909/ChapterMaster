@@ -566,13 +566,18 @@ function scr_load(argument0, argument1) {
 	                new_star.p_sisters[g]=ini_read_real("Star","sr"+string(i)+"si"+string(g),0);
 	                new_star.p_necrons[g]=ini_read_real("Star","sr"+string(i)+"ne"+string(g),0);
 	                new_star.p_tyranids[g]=ini_read_real("Star","sr"+string(i)+"tyr"+string(g),0);
-	                    new_star.p_halp[g]=ini_read_real("Star","sr"+string(i)+"halp"+string(g),0);
+	                new_star.p_halp[g]=ini_read_real("Star","sr"+string(i)+"halp"+string(g),0);
 
 	                new_star.p_heresy[g]=ini_read_real("Star","sr"+string(i)+"heresy"+string(g),0);
 	                new_star.p_hurssy[g]=ini_read_real("Star","sr"+string(i)+"hurssy"+string(g),0);
 	                new_star.p_hurssy_time[g]=ini_read_real("Star","sr"+string(i)+"hurssy_time"+string(g),0);
 	                new_star.p_heresy_secret[g]=ini_read_real("Star","sr"+string(i)+"heresy_secret"+string(g),0);
-	                new_star.p_influence[g]=ini_read_real("Star","sr"+string(i)+"influence"+string(g),0);
+	                new_star.p_influence[g]=ini_read_string("Star","sr"+string(i)+"influence"+string(g),"");
+	                if (new_star.p_influence[g] != ""){
+	                	new_star.p_influence[g]=json_parse(base64_decode(new_star.p_influence[g]));
+	                } else {
+	                	new_star.p_influence[g] = array_create(15, 0);
+	                }
 	                new_star.p_raided[g]=ini_read_real("Star","sr"+string(i)+"raided"+string(g),0);
 
 

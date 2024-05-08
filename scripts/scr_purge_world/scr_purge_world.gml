@@ -35,7 +35,7 @@ function scr_purge_world(star, planet, action_type, action_score) {
     
 	    pop_before=star.p_population[planet];
     
-	    heres_before=max(star.p_heresy[planet]+star.p_heresy_secret[planet],star.p_influence[planet]);// Starting heresy
+	    heres_before=max(star.p_heresy[planet]+star.p_heresy_secret[planet],star.p_influence[planet][eFACTION.Tau]);// Starting heresy
     
 	    // Minimum kills
 	    if (pop_before>0) then overkill=max(pop_before*0.1,((heres_before/200)*pop_before));
@@ -111,7 +111,7 @@ function scr_purge_world(star, planet, action_type, action_score) {
         
 	        pop_before=star.p_population[planet];
         
-	        heres_before=max(star.p_heresy[planet]+star.p_heresy_secret[planet],star.p_influence[planet]);// Starting heresy
+	        heres_before=max(star.p_heresy[planet]+star.p_heresy_secret[planet],star.p_influence[planet][eFACTION.Tau]);// Starting heresy
         
 	        // Minimum kills
 	        if (pop_before>0) then overkill=min(pop_before*0.01,((heres_before/200)*pop_before));
@@ -167,7 +167,7 @@ function scr_purge_world(star, planet, action_type, action_score) {
         
 	        pop_before=star.p_population[planet];
         
-	        heres_before=max(star.p_heresy[planet]+star.p_heresy_secret[planet],star.p_influence[planet]);// Starting heresy
+	        heres_before=max(star.p_heresy[planet]+star.p_heresy_secret[planet],star.p_influence[planet][eFACTION.Tau]);// Starting heresy
         
 	        // Minimum kills
 	        kill=min(action_score*30,pop_before);// How many people ARE going to be killed
@@ -275,12 +275,12 @@ function scr_purge_world(star, planet, action_type, action_score) {
 	if (action_type!=4){
 	    if (isquest=0){// DO EET
 	        txt2=txt1;
-	        star.p_heresy[planet]-=sci2;star.p_influence[planet]-=sci2;
+	        star.p_heresy[planet]-=sci2;star.p_influence[planet][eFACTION.Tau]-=sci2;
 	        if (action_type<3) then star.p_population[planet]=pop_after;
 	        if (action_type=3) and (star.p_large[planet]=0) then star.p_population[planet]=pop_after;
         
 	        if (star.p_heresy[planet]<0) then star.p_heresy[planet]=0;
-	        if (star.p_influence[planet]<0) then star.p_influence[planet]=0;
+	        if (star.p_influence[planet][eFACTION.Tau]<0) then star.p_influence[planet][eFACTION.Tau]=0;
         
 	        var pip=instance_create(0,0,obj_popup);
 	        pip.title="Purge Results";pip.text=txt2;
