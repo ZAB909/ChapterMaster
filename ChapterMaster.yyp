@@ -650,6 +650,7 @@
     {"id":{"name":"spr_pulse","path":"sprites/spr_pulse/spr_pulse.yy",},},
     {"id":{"name":"spr_railgun","path":"sprites/spr_railgun/spr_railgun.yy",},},
     {"id":{"name":"spr_ground_las","path":"sprites/spr_ground_las/spr_ground_las.yy",},},
+    {"id":{"name":"spr_weapon_standard2","path":"sprites/spr_weapon_standard2/spr_weapon_standard2.yy",},},
     {"id":{"name":"spr_green_las","path":"sprites/spr_green_las/spr_green_las.yy",},},
     {"id":{"name":"spr_ground_conv","path":"sprites/spr_ground_conv/spr_ground_conv.yy",},},
     {"id":{"name":"spr_ground_plasma","path":"sprites/spr_ground_plasma/spr_ground_plasma.yy",},},
