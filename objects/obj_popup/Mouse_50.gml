@@ -289,11 +289,11 @@ if (type=6) and (cooldown<=0){// Actually changing equipment right here
         var befi;befi=target_comp;
 
         if (change_tab=0){
-            if (mouse_y>=yy+220) and (mouse_y<yy+240){target_comp=1;cooldown=8000;tab=obj_controller.last_weapons_tab;}
-            if (mouse_y>=yy+240) and (mouse_y<yy+260){target_comp=2;cooldown=8000;tab=obj_controller.last_weapons_tab;}
-            if (mouse_y>=yy+260) and (mouse_y<yy+280){target_comp=3;cooldown=8000;}
-            if (mouse_y>=yy+280) and (mouse_y<yy+300){target_comp=4;cooldown=8000;}
-            if (mouse_y>=yy+300) and (mouse_y<yy+320){target_comp=5;cooldown=8000;}
+            if (mouse_y>=yy+215) and (mouse_y<yy+235){target_comp=1;cooldown=8000;tab=obj_controller.last_weapons_tab;}
+            if (mouse_y>=yy+235) and (mouse_y<yy+255){target_comp=2;cooldown=8000;tab=obj_controller.last_weapons_tab;}
+            if (mouse_y>=yy+255) and (mouse_y<yy+275){target_comp=3;cooldown=8000;}
+            if (mouse_y>=yy+275) and (mouse_y<yy+295){target_comp=4;cooldown=8000;}
+            if (mouse_y>=yy+295) and (mouse_y<yy+315){target_comp=5;cooldown=8000;}
         }
 
         if ((befi!=target_comp) and (vehicle_equipment!=-1)) or (change_tab=1){
