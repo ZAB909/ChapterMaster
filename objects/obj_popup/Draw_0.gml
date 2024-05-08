@@ -691,23 +691,23 @@ if (zm=0) and (type=6) and (instance_exists(obj_controller)){
     if (mouse_x>=xx+1296) and (mouse_x<xx+1574){
         if (mouse_y>=yy+215) and (mouse_y<yy+235){
             draw_set_alpha(0.5);
-            draw_line(xx+1296,yy+225,xx+1574,yy+225);
+            draw_line(xx+1296,yy+230,xx+1574,yy+230);
         }
         if (mouse_y>=yy+235) and (mouse_y<yy+255){
             draw_set_alpha(0.5);
-            draw_line(xx+1296,yy+245,xx+1574,yy+245);
+            draw_line(xx+1296,yy+250,xx+1574,yy+250);
         }
         if (mouse_y>=yy+255) and (mouse_y<yy+275){
             draw_set_alpha(0.5);
-            draw_line(xx+1296,yy+265,xx+1574,yy+265);
+            draw_line(xx+1296,yy+270,xx+1574,yy+270);
         }
         if (mouse_y>=yy+275) and (mouse_y<yy+295){
             draw_set_alpha(0.5);
-            draw_line(xx+1296,yy+285,xx+1574,yy+285);
+            draw_line(xx+1296,yy+290,xx+1574,yy+290);
         }
         if (mouse_y>=yy+295) and (mouse_y<yy+315){
             draw_set_alpha(0.5);
-            draw_line(xx+1296,yy+305,xx+1574,yy+305);
+            draw_line(xx+1296,yy+310,xx+1574,yy+310);
         }
     }
     draw_set_alpha(1);
