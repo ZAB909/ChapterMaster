@@ -2965,14 +2965,14 @@ function scr_initialize_custom() {
 			loc[company][k] = home_name;
 			TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
 			role[company][k] = roles.ancient;
-			wep1[company][k] = "Bold Pistol";
 			name[company][k] = global.name_generator.generate_space_marine_name();
-			wep2[company][k] = "Company Standard";
-			armour[company][k] = "MK5 Heresy";
 			if (company = 8) and(obj_creation.equal_specialists = 0) then mobi[company][k] = "Jump Pack";
 			spawn_unit = TTRPG[company][k];
 			spawn_unit.spawn_exp();
 			spawn_unit.spawn_old_guard();
+			wep1[company][k] = "Bolt Pistol";
+			wep2[company][k] = "Company Standard";
+			armour[company][k] = choose_weighted(armour_weighted_lists.old_armour);
 
 			k += 1;
 			man_size += 1; // Company Champion
