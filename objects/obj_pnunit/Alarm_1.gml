@@ -79,6 +79,22 @@ add_data_to_stack = function(stack_index, weapon, unit_damage=false){
         }
     }
 }
+
+add_second_profiles_to_stack = function(weapon){
+    if (array_length(weapon.second_profiles)>0){//for adding in intergrated weaponry
+        var secondary_profile;
+        for (var p=0;p<array_length(weapon.second_profiles);p++){
+
+            secondary_profile = gear_weapon_data("weapon",weapon.second_profiles[p],"all")
+            if (!is_struct(secondary_profile))then continue;
+            for (var wep_stack=1;wep_stack<array_length(wep);wep_stack++){
+                if (wep[wep_stack]==""||wep[wep_stack]==weapon.name){
+                    add_data_to_stack(wep_stack,secondary_profile)
+                }
+            }    
+        }
+    }    
+}
 var mobi_item;
 for (g=1;g<array_length(unit_struct);g++){
     unit = unit_struct[g];
@@ -97,9 +113,9 @@ for (g=1;g<array_length(unit_struct);g++){
             }
             //if (marine_mobi[g]="Bike") then scr_special_weapon("Twin Linked Bolters",g,true);
 
-
+            var mobi_item=unit.get_mobility_data();
+            var gear_item=unit.get_gear_data();
             if (unit.mobility_item()!="Bike") and (unit.mobility_item()!=""){
-               mobi_item=unit.get_mobility_data();
                if (is_struct(mobi_item)){
                 if( mobi_item.has_tag("jump")){
                     for (var stack_index=1;stack_index<array_length(wep);stack_index++){
@@ -115,6 +131,12 @@ for (g=1;g<array_length(unit_struct);g++){
                     }                
                 }
                }
+            }
+            if (is_struct(mobi_item)){
+               add_second_profiles_to_stack(mobi_item);
+            }
+            if (is_struct(gear_item)){
+                add_second_profiles_to_stack(gear_item);
             }
 
             if (unit.IsSpecialist("libs",true)||(unit.role()=="Chapter Master"&&obj_ncombat.chapter_master_psyker=1)){
