@@ -176,12 +176,12 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
                 ui_xmod[left_or_right] -= 18;
                 ui_ymod[left_or_right] += 24;
             } else if (current_armor == ArmourType.Tartaros) {
-                ui_xmod[left_or_right] -= 18;
-                ui_ymod[left_or_right] += 40;
+                ui_xmod[left_or_right] -= 14;
+                ui_ymod[left_or_right] += 38;
             }
         }
 
-        if (equiped_weapon == "Thunder Hammer") {
+        if (array_contains(["Thunder Hammer", "Chainaxe", "Crozius Arcanum"], equiped_weapon)) {
             ui_hand[left_or_right] = 2;
         }
     }
@@ -277,6 +277,11 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
     if ("Power Mace" == equiped_weapon) {
         ui_arm[left_or_right] = 0;
     }
+
+    if ("Company Standard" == equiped_weapon) {
+        ui_hand[left_or_right] = 0;
+    }
+    
 
     // Flip the ui_xmod for offhand
     if (left_or_right == 2  && ui_xmod[left_or_right] != 0) {
