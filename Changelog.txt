@@ -41,6 +41,8 @@ Changed:
 	- biography descriptions tweaked
 	- item wuality display now uses colour system
 	- weapons now have distinct hit rates balancing combat
+	- shader options for cloth
+	- colour improvements for many base chapters
 
 
 added:
@@ -54,6 +56,8 @@ added:
 	- ability to demote/promote sgts with a loyalty hit to the demoted sgt
 	- genestealer cults acctually exist hidden from player view so mechanic can now be expanded upon
 	- causulty descriptions now added to battle log flavour
+	- ability to reshuffle squad loadouts
+	- full set of da and da successor sprites
 
 
 -----------------

@@ -2,10 +2,10 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "spr_if_mk7_helm",
-  "bbox_bottom": 82,
-  "bbox_left": 5,
-  "bbox_right": 136,
-  "bbox_top": 32,
+  "bbox_bottom": 56,
+  "bbox_left": 0,
+  "bbox_right": 130,
+  "bbox_top": 0,
   "bboxMode": 0,
   "collisionKind": 1,
   "collisionTolerance": 0,
@@ -18,7 +18,7 @@
   ],
   "gridX": 0,
   "gridY": 0,
-  "height": 262,
+  "height": 232,
   "HTile": false,
   "layers": [
     {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"7536232f-1df8-4400-8dee-84cca601fa0b","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
@@ -27,7 +27,7 @@
   "origin": 9,
   "parent": {
     "name": "helms",
-    "path": "folders/Sprites/New UI/Marine Viewer/helms.yy",
+    "path": "folders/Sprites/Marine Viewer/helms.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {
@@ -72,5 +72,5 @@
   },
   "type": 0,
   "VTile": false,
-  "width": 181,
+  "width": 167,
 }

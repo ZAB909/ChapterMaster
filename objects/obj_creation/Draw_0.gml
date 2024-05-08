@@ -1129,47 +1129,47 @@ if (slide=3){
 
 
 if (slide=4){
-    draw_set_color(38144);
     draw_set_font(fnt_40k_30b);
     draw_set_halign(fa_center);
     draw_set_alpha(1);
+    draw_set_color(38144);
+
     
     tooltip="";tooltip2="";
     obj_cursor.image_index=0;
-    
-    draw_text(800,80,string_hash_to_newline(string(chapter)));
 
-    draw_rectangle(444,252,444+167,252+232,0);
+    draw_text_color_simple(800,80,string_hash_to_newline(string(chapter)),38144);
+    draw_rectangle_color_simple(444,252,444+167,252+232,1,38144);
 
     if( shader_is_compiled(sReplaceColor)){
         shader_set(sReplaceColor);
         
-        shader_set_uniform_f(colour_to_find1, sourceR1,sourceG1,sourceB1 );       
-        shader_set_uniform_f(colour_to_set1, targetR1,targetG1,targetB1 );
-        shader_set_uniform_f(colour_to_find2, sourceR2,sourceG2,sourceB2 );       
-        shader_set_uniform_f(colour_to_set2, targetR2,targetG2,targetB2 );
-        shader_set_uniform_f(colour_to_find3, sourceR3,sourceG3,sourceB3 );       
-        shader_set_uniform_f(colour_to_set3, targetR3,targetG3,targetB3 );
-        shader_set_uniform_f(colour_to_find4, sourceR4,sourceG4,sourceB4 );       
-        shader_set_uniform_f(colour_to_set4, targetR4,targetG4,targetB4 );
-        shader_set_uniform_f(colour_to_find5, sourceR5,sourceG5,sourceB5 );
-        shader_set_uniform_f(colour_to_set5, targetR5,targetG5,targetB5 );
-        shader_set_uniform_f(colour_to_find6, sourceR6,sourceG6,sourceB6 );
-        shader_set_uniform_f(colour_to_set6, targetR6,targetG6,targetB6 );
-        shader_set_uniform_f(colour_to_find7, sourceR7,sourceG7,sourceB7 );
-        shader_set_uniform_f(colour_to_set7, targetR7,targetG7,targetB7 );
+        shader_set_uniform_f_array(colour_to_find1, body_colour_find );       
+        shader_set_uniform_f_array(colour_to_set1, body_colour_replace );
+        shader_set_uniform_f_array(colour_to_find2, secondary_colour_find );       
+        shader_set_uniform_f_array(colour_to_set2, secondary_colour_replace );
+        shader_set_uniform_f_array(colour_to_find3, pauldron_colour_find );       
+        shader_set_uniform_f_array(colour_to_set3, pauldron_colour_replace );
+        shader_set_uniform_f_array(colour_to_find4, lens_colour_find );       
+        shader_set_uniform_f_array(colour_to_set4, lens_colour_replace );
+        shader_set_uniform_f_array(colour_to_find5, trim_colour_find );
+        shader_set_uniform_f_array(colour_to_set5, trim_colour_replace );
+        shader_set_uniform_f_array(colour_to_find6, pauldron2_colour_find );
+        shader_set_uniform_f_array(colour_to_set6, pauldron2_colour_replace );
+        shader_set_uniform_f_array(colour_to_find7, weapon_colour_find );
+        shader_set_uniform_f_array(colour_to_set7, weapon_colour_replace );
         
         //Rejoice!
         
-        if (col_special=0) then draw_sprite(spr_aquila_colors,10,444,252);
-        if (col_special=1) then draw_sprite(spr_aquila_colors,11,444,252);
-        if (col_special>=2) then draw_sprite(spr_aquila_colors,12,444,252);
+        if (col_special=0) then draw_sprite(spr_mk7_colors,10,444,252);
+        if (col_special=1) then draw_sprite(spr_mk7_colors,11,444,252);
+        if (col_special>=2) then draw_sprite(spr_mk7_colors,12,444,252);
         
-        draw_sprite(spr_aquila_colors,col_special,444,252);
-        if (col_special<=1){draw_sprite(spr_aquila_colors,6,444,252);draw_sprite(spr_aquila_colors,8,444,252);}
-        if (col_special>=2){draw_sprite(spr_aquila_colors,6,444,252);draw_sprite(spr_aquila_colors,9,444,252);}
-        if (trim=0) and (col_special<=1) then draw_sprite(spr_aquila_colors,4,444,252);
-        if (trim=0) and (col_special>=2) then draw_sprite(spr_aquila_colors,5,444,252);
+        draw_sprite(spr_mk7_colors,col_special,444,252);
+        if (col_special<=1){draw_sprite(spr_mk7_colors,6,444,252);draw_sprite(spr_mk7_colors,8,444,252);}
+        if (col_special>=2){draw_sprite(spr_mk7_colors,6,444,252);draw_sprite(spr_mk7_colors,9,444,252);}
+        if (trim=0) and (col_special<=1) then draw_sprite(spr_mk7_colors,4,444,252);
+        if (trim=0) and (col_special>=2) then draw_sprite(spr_mk7_colors,5,444,252);
         
         
         draw_sprite(spr_weapon_colors,0,444,252);

@@ -81,7 +81,7 @@ if (within=1) or (selected>0){
     if (owner = eFACTION.Tau) then ppp="Tau Fleet";
     if (owner = eFACTION.Tyranids) then ppp="Hive Fleet";
     if (owner = eFACTION.Chaos) then ppp="Heretic Fleet";
-    if (owner = eFACTION.Chaos) and ((trade_goods="BLOODBLOODBLOOD") or (trade_goods="BLOODBLOODBLOODBLOOD")){
+    if (owner = eFACTION.Chaos) and ((trade_goods="Khorne_warband") or (trade_goods="Khorne_warband_landing_force")){
         ppp=string(obj_controller.faction_leader[eFACTION.Chaos])+"'s Fleet";
         if (string_count("s's Fleet",ppp)>0) then ppp=string_replace(ppp,"s's Fleet","s' Fleet");
     }

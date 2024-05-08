@@ -5,7 +5,7 @@
   "bbox_bottom": 231,
   "bbox_left": 0,
   "bbox_right": 165,
-  "bbox_top": 9,
+  "bbox_top": 0,
   "bboxMode": 0,
   "collisionKind": 1,
   "collisionTolerance": 0,
@@ -35,7 +35,7 @@
   "origin": 0,
   "parent": {
     "name": "body_types",
-    "path": "folders/Sprites/New UI/Marine Viewer/body_types.yy",
+    "path": "folders/Sprites/Marine Viewer/body_types.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

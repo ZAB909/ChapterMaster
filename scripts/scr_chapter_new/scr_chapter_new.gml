@@ -17,10 +17,10 @@ function scr_chapter_new(argument0) {
 
 	i=99;
 	repeat(3){i+=1;// First is for the correct slot, second is for default
-	    role[i,2]="Honor Guard";wep1[i,2]="Power Sword";wep2[i,2]="Bolter";armour[i,2]="Power Armour";
+	    role[i,2]="Honor Guard";wep1[i,2]="Power Sword";wep2[i,2]="Bolter";armour[i,2]="Artificer Armour";
 	    role[i,3]="Veteran";wep1[i,3]="Chainsword";wep2[i,3]="Combiflamer";armour[i,3]="Power Armour";
 	    role[i,4]="Terminator";wep1[i,4]="Power Fist";wep2[i,4]="Storm Bolter";armour[i,4]="Terminator Armour";
-	    role[i,5]="Captain";wep1[i,5]="Power Fist";wep2[i,5]="Bolt Pistol";armour[i,5]="Power Armour";
+	    role[i,5]="Captain";wep1[i,5]="Power Fist";wep2[i,5]="Bolt Pistol";armour[i,5]="Power Armour";gear[i,5]="Iron Halo";
 	    role[i,6]="Dreadnought";wep1[i,6]="Close Combat Weapon";wep2[i,6]="Lascannon";armour[i,6]="Dreadnought";
 	    role[i,8]="Tactical Marine";wep1[i,8]="Bolter";wep2[i,8]="Chainsword";armour[i,8]="Power Armour";
 	    role[i,9]="Devastator Marine";wep1[i,9]="Heavy Ranged";wep2[i,9]="Combat Knife";armour[i,9]="Power Armour";
@@ -47,9 +47,9 @@ function scr_chapter_new(argument0) {
 	    homeworld_exists=1;recruiting_exists=1;homeworld_rule=3;aspirant_trial="Survival of the Fittest";
 	    adv[1]="Enemy: Fallen";dis[1]="Never Forgive";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Dark Green";color_to_secondary="Dark Green";color_to_trim="Silver";
-	    color_to_pauldron="Dark Green";color_to_pauldron2="Dark Green";color_to_lens="Dark Red";
-	    color_to_weapon="Black";col_special=0;trim=0;
+	    color_to_main="Caliban Green";color_to_secondary="Caliban Green";color_to_trim="Grey";
+	    color_to_pauldron="Caliban Green";color_to_pauldron2="Caliban Green";color_to_lens="Red";
+	    color_to_weapon="Dark Red";col_special=0;trim=0;
 	    hchaplain="Sapphon";clibrarian="Ezekial";fmaster="Sepharon";hapothecary="Razaek";
 		honorcapt="Belial";watchmaster="Sammael";arsenalmaster="Astoran";admiral="Korahael";marchmaster="Balthazar";
 		ritesmaster="Araphil";victualler="Ezekiah";lordexec="Molochi";relmaster="Xerophus";recruiter="Ranaeus";
@@ -77,8 +77,10 @@ function scr_chapter_new(argument0) {
 		company_title[10]="The Redeemed";
 		
 		for(i=100;i<=102;i++){
+		// role[i,1]="Supreme Grand Master";
 		role[i,5]="Master";
 		wep1[i,5]="Power Sword";
+		role[i,2]="Deathwing Knight"
 	
 		}
 	}
@@ -157,11 +159,13 @@ if (argument0="White Scars"){founding="N/A";points=150;
 		adv[1]="Bolter Drilling";adv[2]="Siege Masters";
 		homeworld="Ice";homeworld_name="Inwit";recruiting_world="Hive";recruiting_name="Necromunda";
 		homeworld_exists=1;recruiting_exists=1;homeworld_rule=2;aspirant_trial="Survival of the Fittest";
+Captain_naming
 		color_to_main="Gold";color_to_secondary="Gold";color_to_trim="Red";color_to_pauldron="Gold"
 		color_to_pauldron2="Gold";color_to_lens="Red";color_to_weapon="Black"
 		hapothecary="Dyserna";hchaplain="Guaron";clibrarian="Vidos Harn";fmaster="Atornus Geis";
 		admiral="Kyne Phasn";honorcapt="Darnath Lysander";watchmaster="Helion";arsenalmaster="Tor Garadon";;marchmaster="Maluan";
 		ritesmaster="Antaros";victualler="Jonas";lordexec="Chalosa";relmaster="Kaheron";recruiter="Taelos";
+
 		battle_cry="Primarch-Progenitor, to your glory and the glory of him on earth!";
 	        equal_specialists=0;load_to_ships=[2,0,0];successors=21;
 	        mutations=2;mutations_selected=2;
@@ -240,8 +244,8 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    homeworld="Desert";homeworld_name="Baal";
 	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=3;aspirant_trial="Blood Duel";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Red";color_to_secondary="Red";color_to_trim="Black";
-	    color_to_pauldron="Red";color_to_pauldron2="Red";color_to_lens="Green";
+	    color_to_main="Sanguine Red";color_to_secondary="Sanguine Red";color_to_trim="Dark Grey";
+	    color_to_pauldron="Sanguine Red";color_to_pauldron2="Sanguine Red";color_to_lens="Green";
 	    color_to_weapon="Black";col_special=0;trim=0;
 	    hchaplain="Astorath the Grim";clibrarian="Mephiston";fmaster="Incarael";hapothecary="Corbulo";
 		honorcapt="Areno Karlaen";watchmaster="Donatos Aphael";arsenalmaster="Machiavi";admiral="Castigon";marchmaster="Sendini";
@@ -312,8 +316,8 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    homeworld="Lava";homeworld_name="Nocturne";homeworld_exists=1;recruiting_exists=0;
 	    homeworld_rule=1;aspirant_trial="Apprenticeship";discipline="pyromancy";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Green";color_to_secondary="Green";color_to_trim="Copper";
-	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Dark Red";
+	    color_to_main="Firedrake Green";color_to_secondary="Firedrake Green";color_to_trim="Gold";
+	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Red";
 	    color_to_weapon="Black";col_special=0;trim=0;
 	    fmaster="Argos";clibrarian="Velcona";hapothecary="Harath Shen";hchaplain="Leotrak Esar";
 		watchmaster="Pellas Mir'San";arsenalmaster="Adrax Agatone" admiral="Dac'tyr";
@@ -450,7 +454,7 @@ if (argument0="Minotaurs"){founding=10;points=450;
 	    recruiting_world="Death";recruiting_name="Trontiux";
 	    homeworld_rule=0;aspirant_trial="Knowledge of Self";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Sanguine";color_to_secondary="Sanguine";color_to_trim="Black";
+	    color_to_main="Sanguine Red";color_to_secondary="Sanguine Red";color_to_trim="Black";
 	    color_to_pauldron2="Bone";color_to_pauldron="Bone";color_to_lens="Green";
 	    color_to_weapon="Black";col_special=0;trim=1;
 	    battle_cry=choose("None shall find us wanting.","Knowledge is power, guard it well");
@@ -531,9 +535,9 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    recruiting_world="Death";recruiting_name=global.name_generator.generate_star_name();
 	    homeworld_rule=0;aspirant_trial="Challenge";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Gold";color_to_secondary="Gold";color_to_trim="Gold";
-	    color_to_pauldron2="White";color_to_pauldron="Gold";color_to_lens="Dark Red";
-	    color_to_weapon="Black";col_special=0;trim=1;
+	    color_to_main="Yellow";color_to_secondary="Yellow";color_to_trim="Gold";
+	    color_to_pauldron2="Yellow";color_to_pauldron="Yellow";color_to_lens="Red";
+	    color_to_weapon="Black";col_special=0;trim=0;
 	    battle_cry="For those we cherish, we die in Glory";
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
 	    mutations=0;mutations_selected=0;
@@ -559,7 +563,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    homeworld_exists=1;recruiting_exists=1;homeworld_rule=2;aspirant_trial="Apprenticeship";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Dark Red";color_to_secondary="Black";color_to_trim="Copper";
-	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Sanguine";
+	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Sanguine Red";
 	    color_to_weapon="Black";col_special=0;trim=1;
 	    hapothecary="Vaylund";
 	    hchaplain="Eli";

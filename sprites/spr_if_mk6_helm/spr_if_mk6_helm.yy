@@ -2,9 +2,9 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "spr_if_mk6_helm",
-  "bbox_bottom": 48,
+  "bbox_bottom": 47,
   "bbox_left": 0,
-  "bbox_right": 106,
+  "bbox_right": 100,
   "bbox_top": 0,
   "bboxMode": 0,
   "collisionKind": 1,
@@ -30,7 +30,7 @@
   "origin": 9,
   "parent": {
     "name": "helms",
-    "path": "folders/Sprites/New UI/Marine Viewer/helms.yy",
+    "path": "folders/Sprites/Marine Viewer/helms.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

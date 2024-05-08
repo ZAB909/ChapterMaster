@@ -2,10 +2,10 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "spr_weapon_plasg",
-  "bbox_bottom": 182,
-  "bbox_left": 17,
-  "bbox_right": 151,
-  "bbox_top": 75,
+  "bbox_bottom": 195,
+  "bbox_left": 22,
+  "bbox_right": 144,
+  "bbox_top": 86,
   "bboxMode": 0,
   "collisionKind": 1,
   "collisionTolerance": 0,
@@ -14,20 +14,20 @@
   "For3D": false,
   "frames": [
     {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"8fe8f87d-cc4c-49b1-a8c7-5b595d9a9e9d",},
-    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"b2768106-8da1-4067-9176-36ca541c0381",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"a4883e21-05cf-4d8f-bed5-d89946e80145",},
   ],
   "gridX": 0,
   "gridY": 0,
   "height": 231,
   "HTile": false,
   "layers": [
-    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"f59e1da7-9307-4e5c-a603-0c553050214b","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"a706dab6-8c95-4ca5-a281-da3624393a99","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": null,
   "origin": 0,
   "parent": {
     "name": "weapons",
-    "path": "folders/Sprites/New UI/Gear/weapons.yy",
+    "path": "folders/Sprites/Marine Viewer/weapons.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {
@@ -56,7 +56,7 @@
     "tracks": [
       {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"1.0","Keyframes":[
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"8fe8f87d-cc4c-49b1-a8c7-5b595d9a9e9d","path":"sprites/spr_weapon_plasg/spr_weapon_plasg.yy",},},},"Disabled":false,"id":"e8b5a45b-814c-49dc-9fc4-16d6bf9347bd","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
-            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"b2768106-8da1-4067-9176-36ca541c0381","path":"sprites/spr_weapon_plasg/spr_weapon_plasg.yy",},},},"Disabled":false,"id":"e886f5be-f327-4d43-af1a-267881ce686c","IsCreationKey":false,"Key":1.0,"Length":1.0,"Stretch":false,},
+            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"a4883e21-05cf-4d8f-bed5-d89946e80145","path":"sprites/spr_weapon_plasg/spr_weapon_plasg.yy",},},},"Disabled":false,"id":"b9d35f28-492c-48ce-bc59-00dd43378397","IsCreationKey":false,"Key":1.0,"Length":1.0,"Stretch":false,},
           ],},"modifiers":[],"spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange": null,

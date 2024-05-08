@@ -345,9 +345,10 @@ function star_ui_name_node(){
 				if (owner != eFACTION.Player ){
 					context.set_color_solid(global.star_name_colors[owner])
 				} else {
-					var main_color = make_color_rgb(obj_controller.targetR1 *255, obj_controller.targetG1 * 255, obj_controller.targetB1 * 255)
-					var pauldron_color = make_color_rgb(obj_controller.targetR3 *255, obj_controller.targetG3 *255, obj_controller.targetB3 *255)
-					context.set_vertical_gradient(main_color, pauldron_color)
+					scr_shader_initialize();
+					var main_color = make_colour_from_array(obj_controller.body_colour_replace);
+					var pauldron_color = make_colour_from_array(obj_controller.pauldron_colour_replace);
+					context.set_vertical_gradient(main_color, pauldron_color);
 				}
 			})
 		.finalize()
@@ -361,7 +362,7 @@ function star_ui_name_node(){
 				context.set_valign(fa_middle)
 				context.owner.resize(new_w, 32)
 				if (owner == eFACTION.Player){
-					var trim_color = make_color_rgb(obj_controller.targetR5 *255, obj_controller.targetG5 *255, obj_controller.targetB5 *255)
+					var trim_color = make_colour_from_array(obj_controller.trim_colour_replace);
 					context.set_color_solid(trim_color)
 				}
 			})

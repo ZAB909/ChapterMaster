@@ -2,10 +2,10 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "spr_marine_base",
-  "bbox_bottom": 229,
+  "bbox_bottom": 223,
   "bbox_left": 0,
-  "bbox_right": 166,
-  "bbox_top": 26,
+  "bbox_right": 148,
+  "bbox_top": 0,
   "bboxMode": 0,
   "collisionKind": 1,
   "collisionTolerance": 0,
@@ -32,7 +32,7 @@
   "origin": 0,
   "parent": {
     "name": "body_types",
-    "path": "folders/Sprites/New UI/Marine Viewer/body_types.yy",
+    "path": "folders/Sprites/Marine Viewer/body_types.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

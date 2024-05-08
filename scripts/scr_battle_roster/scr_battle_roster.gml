@@ -397,20 +397,26 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                         targ.veh_acc[targ.veh] = deploying_unit.veh_acc[company][v];
                         if (vokay = 2) then targ.veh_local[targ.veh] = 1;
 
-                        if (deploying_unit.veh_role[company][v] = "Rhino") or(deploying_unit.veh_role[company][v] = "Whirlwind") or(deploying_unit.veh_role[company][v] = "Land Speeder") {
-                            targ.veh_hp[targ.veh] = deploying_unit.veh_hp[company][v] * 2;
-                            targ.veh_hp_multiplier[targ.veh] = 2;
-                            targ.veh_ac[targ.veh] = 20;
-                        }
-                        if (deploying_unit.veh_role[company][v] = "Predator") {
-                            targ.veh_hp[targ.veh] = deploying_unit.veh_hp[company][v] * 3;
+
+						if (deploying_unit.veh_role[company][v] = "Land Speeder") {
+						targ.veh_hp[targ.veh] = deploying_unit.veh_hp[company][v] * 3;
                             targ.veh_hp_multiplier[targ.veh] = 3;
                             targ.veh_ac[targ.veh] = 30;
                         }
-                        if (deploying_unit.veh_role[company][v] = "Land Raider") {
-                            targ.veh_hp[targ.veh] = deploying_unit.veh_hp[company][v] * 4;
-                            targ.veh_hp_multiplier[targ.veh] = 4;
+                        if (deploying_unit.veh_role[company][v] = "Rhino") or(deploying_unit.veh_role[company][v] = "Whirlwind") {
+                            targ.veh_hp[targ.veh] = deploying_unit.veh_hp[company][v] * 5;
+                            targ.veh_hp_multiplier[targ.veh] = 5;
                             targ.veh_ac[targ.veh] = 40;
+                        }
+                        if (deploying_unit.veh_role[company][v] = "Predator") {
+                            targ.veh_hp[targ.veh] = deploying_unit.veh_hp[company][v] * 6;
+                            targ.veh_hp_multiplier[targ.veh] = 6;
+                            targ.veh_ac[targ.veh] = 45;
+                        }
+                        if (deploying_unit.veh_role[company][v] = "Land Raider") {
+                            targ.veh_hp[targ.veh] = deploying_unit.veh_hp[company][v] * 8;
+                            targ.veh_hp_multiplier[targ.veh] = 8;
+                            targ.veh_ac[targ.veh] = 50;
                         }
 
                         // STC Bonuses

@@ -202,7 +202,7 @@ function scr_chapter_random(argument0) {
 	if (ran1=55){phrase1="Red";col_main="Red";}
 	if (ran1=56){phrase1="Repentant";col_main="Black";}
 	if (ran1=57){phrase1="Ruby";col_main="Red";}
-	if (ran1=58){phrase1="Sanguine";col_main="Dark Red";}
+	if (ran1=58){phrase1="Sanguine";col_main="Sanguine Red";}
 	if (ran1=59){phrase1="Sapphire";col_main="Blue";}
 	if (ran1=60){phrase1="Savage";col_main="Dark Red";}
 	if (ran1=61){phrase1="Screaming";col_main="White";}

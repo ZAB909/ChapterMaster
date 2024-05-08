@@ -26,7 +26,7 @@
   "origin": 9,
   "parent": {
     "name": "packs",
-    "path": "folders/Sprites/New UI/Gear/packs.yy",
+    "path": "folders/Sprites/Marine Viewer/packs.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

@@ -2,10 +2,10 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "mk7_chest_variants",
-  "bbox_bottom": 99,
-  "bbox_left": 52,
-  "bbox_right": 116,
-  "bbox_top": 50,
+  "bbox_bottom": 80,
+  "bbox_left": 71,
+  "bbox_right": 98,
+  "bbox_top": 54,
   "bboxMode": 0,
   "collisionKind": 1,
   "collisionTolerance": 0,
@@ -26,7 +26,7 @@
   "origin": 9,
   "parent": {
     "name": "decorations",
-    "path": "folders/Sprites/New UI/Marine Viewer/decorations.yy",
+    "path": "folders/Sprites/Marine Viewer/decorations.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

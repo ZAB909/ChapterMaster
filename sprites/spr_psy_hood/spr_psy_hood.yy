@@ -29,7 +29,7 @@
   "origin": 0,
   "parent": {
     "name": "gear",
-    "path": "folders/Sprites/New UI/Marine Viewer/gear.yy",
+    "path": "folders/Sprites/Marine Viewer/gear.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

@@ -3,8 +3,8 @@
   "resourceVersion": "1.0",
   "name": "spr_weapon_storm",
   "bbox_bottom": 178,
-  "bbox_left": 0,
-  "bbox_right": 166,
+  "bbox_left": 2,
+  "bbox_right": 184,
   "bbox_top": 54,
   "bboxMode": 0,
   "collisionKind": 1,
@@ -21,13 +21,13 @@
   "height": 232,
   "HTile": false,
   "layers": [
-    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"c7271dc0-5abe-4e4b-8b34-87a4da3a0d08","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"a804a20d-f1cf-466a-afcf-3914005ace51","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": null,
-  "origin": 0,
+  "origin": 9,
   "parent": {
     "name": "weapons",
-    "path": "folders/Sprites/New UI/Gear/weapons.yy",
+    "path": "folders/Sprites/Marine Viewer/weapons.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {
@@ -61,7 +61,7 @@
     ],
     "visibleRange": null,
     "volume": 1.0,
-    "xorigin": 0,
+    "xorigin": 10,
     "yorigin": 0,
   },
   "swatchColours": null,
@@ -72,5 +72,5 @@
   },
   "type": 0,
   "VTile": false,
-  "width": 167,
+  "width": 187,
 }

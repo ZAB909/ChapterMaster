@@ -529,9 +529,11 @@ while (i<array_length(recruit_name)){
         array_delete(recruit_distance,i,1);
         array_delete(recruit_training,i,1);
         array_delete(recruit_exp,i,1);
+        continue;
     } else {
         total_recruits++;
     }
+    i++;
 }
 if (recruits_finished==1){
     scr_alert("green","recruitment",$"{obj_ini.role[100][12]} {recruit_first} has joined X Company.",0,0);

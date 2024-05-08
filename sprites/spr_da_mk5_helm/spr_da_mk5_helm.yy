@@ -3,8 +3,8 @@
   "resourceVersion": "1.0",
   "name": "spr_da_mk5_helm",
   "bbox_bottom": 43,
-  "bbox_left": 67,
-  "bbox_right": 97,
+  "bbox_left": 68,
+  "bbox_right": 98,
   "bbox_top": 13,
   "bboxMode": 0,
   "collisionKind": 1,
@@ -27,7 +27,7 @@
   "origin": 0,
   "parent": {
     "name": "helms",
-    "path": "folders/Sprites/New UI/Marine Viewer/helms.yy",
+    "path": "folders/Sprites/Marine Viewer/helms.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

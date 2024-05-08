@@ -15,7 +15,7 @@ if (action="") and (orbiting!=0){
 
 
 if (instance_exists(obj_controller)){
-    if ((trade_goods="BLOODBLOODBLOOD") or (trade_goods="BLOODBLOODBLOODBLOOD")) and (obj_controller.faction_defeated[10]=0){
+    if ((trade_goods="Khorne_warband") or (trade_goods="Khorne_warband_landing_force")) and (obj_controller.faction_defeated[10]=0){
         with(obj_temp2){instance_destroy();}
         with(obj_star){
 			if system_feature_bool(p_feature, P_features.World_Eaters == 1)then instance_create(x,y,obj_temp2);

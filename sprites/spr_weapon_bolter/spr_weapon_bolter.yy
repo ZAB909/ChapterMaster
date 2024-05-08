@@ -2,10 +2,10 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "spr_weapon_bolter",
-  "bbox_bottom": 202,
-  "bbox_left": 0,
-  "bbox_right": 161,
-  "bbox_top": 114,
+  "bbox_bottom": 192,
+  "bbox_left": 1,
+  "bbox_right": 165,
+  "bbox_top": 104,
   "bboxMode": 0,
   "collisionKind": 1,
   "collisionTolerance": 0,
@@ -21,7 +21,7 @@
   "height": 231,
   "HTile": false,
   "layers": [
-    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"4507f05f-dca6-4975-939c-6992843e7b3f","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"7a5d4ba3-4ada-4267-8a4f-d821528d14bf","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": {
     "resourceType": "GMNineSliceData",
@@ -50,7 +50,7 @@
   "origin": 0,
   "parent": {
     "name": "weapons",
-    "path": "folders/Sprites/New UI/Gear/weapons.yy",
+    "path": "folders/Sprites/Marine Viewer/weapons.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {
