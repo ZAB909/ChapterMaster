@@ -768,6 +768,9 @@ function scr_draw_unit_image(x_draw, y_draw){
                     } else if (armour_type == ArmourType.Indomitus){
                         halo_type = 2;
                         halo_offset_y -= 20;
+                    } else if (armour_type == ArmourType.Tartaros){
+                        halo_type = 2;
+                        halo_offset_y -= 2;
                     }
                     draw_sprite(spr_gear_halo,halo_type+halo_color,0,y_surface_offset+halo_offset_y);
                 }
@@ -917,8 +920,8 @@ function scr_draw_unit_image(x_draw, y_draw){
                       //if (_armour_type==ArType.Tart || _armour_type==ArType.Term) then draw_sprite(spr_terminator_chap,1,0-2,0-11);
                     }
                     shader_reset();
-                    if (armour_type!=ArmourType.Tartaros && armour_type!=ArmourType.Indomitus) then draw_sprite(spr_chaplain_skull_helm,0,0,y_surface_offset);
-                    if (armour_type==ArmourType.Tartaros || armour_type==ArmourType.Indomitus) draw_sprite(spr_chaplain_skull_helm,0,0,y_surface_offset);
+                    if (armour_type == ArmourType.Normal || armour_type==ArmourType.Indomitus) then draw_sprite(spr_chaplain_skull_helm,0,0,y_surface_offset);
+                    if (armour_type==ArmourType.Tartaros) then draw_sprite(spr_chaplain_skull_helm,0,0,y_surface_offset+5);
                     shader_set(sReplaceColor);
                 }
             }
@@ -1121,7 +1124,7 @@ function scr_draw_unit_image(x_draw, y_draw){
             // Draw terminator hands
             if ui_hand[1] == 1 {
                 if (armour_type == ArmourType.Tartaros){
-                    draw_sprite(spr_terminator_hands,0,0,y_surface_offset+18);
+                    draw_sprite(spr_terminator_hands,0,4,y_surface_offset+13);
                 }
                 else if (armour_type == ArmourType.Indomitus){
                     draw_sprite(spr_terminator_hands,0,0,y_surface_offset);
@@ -1131,11 +1134,11 @@ function scr_draw_unit_image(x_draw, y_draw){
                 if (armour_type == ArmourType.Tartaros){
                     if (specialist_colours <= 1){
                         var spr_w = sprite_get_width(spr_terminator_hands) - sprite_get_xoffset(spr_terminator_hands) * 2;
-                        draw_sprite_ext(spr_terminator_hands,0,spr_w,y_surface_offset+18,-1,1,0,c_white,1);
+                        draw_sprite_ext(spr_terminator_hands,0,spr_w-4,y_surface_offset+13,-1,1,0,c_white,1);
                     }
                     else if (specialist_colours >= 2){
                         var spr_w = sprite_get_width(spr_terminator_hands) - sprite_get_xoffset(spr_terminator_hands) * 2;
-                        draw_sprite_ext(spr_terminator_hands,1,spr_w,y_surface_offset+18,-1,1,0,c_white,1);
+                        draw_sprite_ext(spr_terminator_hands,1,spr_w-4,y_surface_offset+13,-1,1,0,c_white,1);
                     }
                 }
                 else if (armour_type == ArmourType.Indomitus){
@@ -1152,7 +1155,7 @@ function scr_draw_unit_image(x_draw, y_draw){
 
             if ui_hand[1] == 2 {
                 if (armour_type == ArmourType.Tartaros){
-                    draw_sprite(spr_terminator_hands,2,0,y_surface_offset+18);
+                    draw_sprite(spr_terminator_hands,2,4,y_surface_offset+13);
                 }
                 else if (armour_type == ArmourType.Indomitus){
                     draw_sprite(spr_terminator_hands,2,0,y_surface_offset);
@@ -1162,11 +1165,11 @@ function scr_draw_unit_image(x_draw, y_draw){
                 if (armour_type == ArmourType.Tartaros){
                     if (specialist_colours <= 1){
                         var spr_w = sprite_get_width(spr_terminator_hands) - sprite_get_xoffset(spr_terminator_hands) * 2;
-                        draw_sprite_ext(spr_terminator_hands,2,spr_w,y_surface_offset+18,-1,1,0,c_white,1);
+                        draw_sprite_ext(spr_terminator_hands,2,spr_w-4,y_surface_offset+13,-1,1,0,c_white,1);
                     }
                     else if (specialist_colours >= 2){
                         var spr_w = sprite_get_width(spr_terminator_hands) - sprite_get_xoffset(spr_terminator_hands) * 2;
-                        draw_sprite_ext(spr_terminator_hands,3,spr_w,y_surface_offset+18,-1,1,0,c_white,1);
+                        draw_sprite_ext(spr_terminator_hands,3,spr_w-4,y_surface_offset+13,-1,1,0,c_white,1);
                     }
                 }
                 else if (armour_type == ArmourType.Indomitus){
@@ -1186,6 +1189,8 @@ function scr_draw_unit_image(x_draw, y_draw){
             if (armour_type == ArmourType.Indomitus){
                 shield_offset_x = -15;
                 shield_offset_y = -10;
+            } else if (armour_type == ArmourType.Tartaros) {
+                shield_offset_x = -8;
             }
             if (gear() == "Combat Shield") then draw_sprite (spr_gear_combat_shield, 1, shield_offset_x, y_surface_offset + shield_offset_y);
 
