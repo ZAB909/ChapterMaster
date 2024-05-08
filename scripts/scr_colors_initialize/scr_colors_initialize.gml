@@ -67,7 +67,7 @@ function scr_colors_initialize() {
         ["Light Blue", 0, 150, 255],
         ["Blue", 0, 0, 220],
         ["Enchanted Blue", 58, 110, 158],
-        ["Ultramarine", 21, 92, 165],
+        ["Ultramarine", 4, 78, 168],
         ["Purple", 117, 0, 217],
         ["Pink", 255, 0, 198],
     ];
