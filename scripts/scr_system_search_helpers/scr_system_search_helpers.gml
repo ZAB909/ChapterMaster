@@ -143,6 +143,23 @@ function has_problem_planet(planet, problem, star="none"){
 		return array_contains(star.p_problem[planet], problem);
 	}
 }
+function has_problem_planet_and_time(planet, problem, time,star="none"){
+	var had_problem = false;
+	if (star=="none"){
+		for (var i =1;i<array_length(p_problem[planet]);i++){
+			if (p_problem[planet][i] == problem){
+				if (p_timer[planet][i] == time){
+					had_problem=true;
+				}
+			}
+		}
+	} else {
+		with (star){
+			had_problem=remove_planet_problem(planet, problem)
+		}
+	}
+	return had_problem;	
+}	
 
 function find_problem_planet(planet, problem, star="none"){
 	var had_problem = false;
@@ -166,7 +183,7 @@ function remove_planet_problem(planet, problem, star="none"){
 		for (var i =1;i<array_length(p_problem[planet]);i++){
 			if (p_problem[planet][i] == problem){
 				p_problem[planet][i]="";
-				p_timer[planet][i]=0;
+				p_timer[planet][i]=-1;
 				had_problem=true;
 			}
 		}
@@ -203,6 +220,10 @@ function problem_count_down(planet, count_change=1){
 	for (var i=1;i<array_length(p_problem[planet]);i++){
 		if (p_problem[planet][i]!=""){
 			p_timer[planet][i]-=count_change;
+			if (p_timer[planet][i]==-5){
+				p_problem[planet][i]="";
+				p_timer[planet][i]=-1;
+			}
 		}
 	}
 }
