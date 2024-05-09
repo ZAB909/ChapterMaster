@@ -255,7 +255,7 @@ if (owner == eFACTION.Tau){
             }
         }
     }
-    for (var i=1;i<planets;i++){
+    for (var i=1;i<=planets;i++){
         p_owner[i]=eFACTION.Tau;
         p_first[i]=eFACTION.Tau;
         p_influence[i][eFACTION.Tau]=65+irandom(15);
