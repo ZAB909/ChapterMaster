@@ -372,11 +372,12 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=$"{number_of_shots} {weapon_name} spray ooze on the {target_name} ranks (X{casulties} casulties) and immobilize {casulties} of them.";
 	}
 
-	if (weapon_name="melee") or (weapon_name="Melee") or (weapon_name="fists")and (solod=false){flavored=1;var ra;ra=choose(1,2,3,4);
+	if (weapon_name="melee") or (weapon_name="Melee") or (weapon_name="fists")and (solod=false){
+		flavored=1;var ra=choose(1,2,3,4);
 	    // This needs to be worked out
 	    if (casulties=0) then p2="MELEE";
 	    if (casulties>0){
-	        p1=casulties+$" {target_name} ";
+	        p1=$"{casulties} {target_name} ";
 	        if (ra=1) then p2="are struck down with gun-barrels and combat knifes.";
 	        if (ra=2) then p2="are killed by your marines in hand-to-hand combat.";
 	        if (ra=3) then p2="are smashed aside by your marines.";

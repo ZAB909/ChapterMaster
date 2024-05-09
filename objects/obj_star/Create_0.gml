@@ -100,7 +100,7 @@ global.star_name_colors = [
 	#AD5272,// bug boys
 	c_purple, // chaos
 	38144, //nothing for heretics either
-	38144, //why 12 is skipped in general, we will never know
+	#AD5272, //why 12 is skipped in general, we will never know
 	#80FF00 // Sleepy robots
 ]
 
