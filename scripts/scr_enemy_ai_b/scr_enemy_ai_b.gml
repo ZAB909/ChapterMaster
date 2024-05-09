@@ -303,16 +303,31 @@ function scr_enemy_ai_b() {
 		if (planet_feature_bool(p_feature[i], P_features.Gene_Stealer_Cult)){
 			var cult = return_planet_features(p_feature[i], P_features.Gene_Stealer_Cult)[0];
 			cult.cult_age++;
-		    if (p_tyranids[i]>0) and (p_tyranids[i]<=3) and (p_type[i]!="Space Hulk"){
+			adjust_influence(eFACTION.Tyranids, cult.cult_age/100, i)
+			if (cult.hiding){
+				if (p_influence[i][eFACTION.Tyranids]>40){
+					if(irandom(50)<1){
+						hiding=false;
+	                    scr_popup("System Lost",$"A hidden Genesteaer Cult in {name} Has suddenly burst forth from hiding!","Genestealer Cult","");
+	                    owner = eFACTION.Tyranids;
+	                    scr_event_log("red",$"A hidden Genesteaer Cult in {name} {i} has Started a revolt.", name);		
+	                    p_tyranids[i]+=1;				
+					}
+				}
+			}
+		    if (!cult.hiding) and (p_tyranids[i]<=3) and (p_type[i]!="Space Hulk") && (p_influence[i][eFACTION.Tyranids]>10){
 		        var spread=0;
-		        rando=floor(random(100))+1;
-		      
+		        rando=irandom(150);
+		      	rando-=p_influence[i][eFACTION.Tyranids];
 		        if (rando<=15) then spread=1;
 		      
 		        if (p_type[i]="Lava") and (p_tyranids[i]=2) then spread=0;
 		        if ((p_type[i]="Ice") or (p_type[i]="Desert")) and (p_tyranids[i]=3) then spread=0;
 		      
 		        if (spread=1) then p_tyranids[i]+=1;
+		    }
+		    if (p_influence[i][eFACTION.Tyranids]>55){
+		    	p_owner[i] = eFACTION.Tyranids;
 		    }
 		}
 

@@ -1000,8 +1000,10 @@ enum eFACTION {
 	Tyranids,
 	Chaos,
 	Heretics,
+    Genestealer,
 	Necrons = 13
 }
+
 imperial_factions = [
     eFACTION.Imperium,
     eFACTION.Mechanicus,
@@ -1328,6 +1330,8 @@ if (instance_exists(obj_ini)){
         debugl("New Game");
     }
 }
+//Set player colour
+global.star_name_colors[1] = make_color_rgb(body_colour_replace[0],body_colour_replace[1],body_colour_replace[2])
 // ** Loads the game **
 if (global.load>0){
     load_game=global.load;

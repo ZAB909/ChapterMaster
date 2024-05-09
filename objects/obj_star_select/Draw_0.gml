@@ -100,14 +100,7 @@ if (target.craftworld=0) and (target.space_hulk=0){
 }
 
 if (target.craftworld=0) and (target.space_hulk=0){
-    if (target.owner  = eFACTION.Player) or (target.owner = eFACTION.Ecclesiarchy) then draw_set_color(c_white);
-    if (target.owner = eFACTION.Imperium) then draw_set_color(c_gray);
-    if (target.owner = eFACTION.Mechanicus) then draw_set_color(c_red);
-    if (target.owner = eFACTION.Ork) then draw_set_color(38144);
-    if (target.owner = eFACTION.Tau) then draw_set_color(117758);
-    if (target.owner = eFACTION.Tyranids) then draw_set_color(7492269);
-    if (target.owner = eFACTION.Chaos) then draw_set_color(c_purple);
-    if (target.owner = eFACTION.Necrons) then draw_set_color(65408);
+    draw_set_color(global.star_name_colors[target.owner]);
     draw_text_transformed(xx+184,yy+180,system_string,1,1,0);
 }
 
@@ -276,10 +269,11 @@ if (obj_controller.selecting_planet!=0){
         
         // Draw disposition here
         var succession,yyy;succession=0;yyy=0;
-        repeat(4){yyy+=1;if (target.p_problem[current_planet,yyy]="succession") then succession=1;}
-        
+
+        if (has_problem_planet(current_planet, "succession",target)) then succession=1;
+
         if ((target.dispo[current_planet]>=0) and (target.p_owner[current_planet]<=5) and (target.p_population[current_planet]>0)) and (succession=0){
-            var wack;wack=0;
+            var wack=0;
             draw_set_color(c_blue);
             draw_rectangle(xx+349,yy+175,xx+349+(min(100,target.dispo[current_planet])*3.68),yy+192,0);
         }
@@ -287,16 +281,34 @@ if (obj_controller.selecting_planet!=0){
         draw_rectangle(xx+349,yy+175,xx+717,yy+192,1);
         draw_set_color(c_white);
         
-        if (succession=0){
+        if (!succession){
             if (target.dispo[current_planet]>=0) and (target.p_first[current_planet]<=5) and (target.p_owner[current_planet]<=5) and (target.p_population[current_planet]>0) then draw_text(xx+534,yy+176,string_hash_to_newline("Disposition: "+string(min(100,target.dispo[current_planet]))+"/100"));
             if (target.dispo[current_planet]>-30) and (target.dispo[current_planet]<0) and (target.p_owner[current_planet]<=5) and (target.p_population[current_planet]>0) then draw_text(xx+534,yy+176,string_hash_to_newline("Disposition: ???/100"));
             if ((target.dispo[current_planet]>=0) and (target.p_first[current_planet]<=5) and (target.p_owner[current_planet]>5)) or (target.p_population[current_planet]<=0) then draw_text(xx+534,yy+176,string_hash_to_newline("-------------"));
             if (target.dispo[current_planet]<=-3000) then draw_text(xx+534,yy+176,string_hash_to_newline("Disposition: N/A"));
-        }
-        if (succession=1) then draw_text(xx+534,yy+176,string_hash_to_newline("War of Succession"));
+        }else  if (succession=1) then draw_text(xx+534,yy+176,string_hash_to_newline("War of Succession"));
         draw_set_color(c_gray);
         // End draw disposition
-        
+        draw_set_color(c_gray);
+        draw_rectangle(xx+349,yy+193,xx+717,yy+210,0);
+        var bar_width = 717-349;
+        var bar_start_point = xx+349;
+        var bar_percent_length = (bar_width/100);
+        var current_bar_percent = 0;
+        with (target){
+            for (var i=1;i<13;i++){
+                if (p_influence[current_planet][i]>0){
+                    draw_set_color(global.star_name_colors[i]);
+                    var current_start = bar_start_point+(current_bar_percent*bar_percent_length)
+                    draw_rectangle(current_start,yy+193,current_start+(bar_percent_length*p_influence[current_planet][i]),yy+210,0);
+                    current_bar_percent+=p_influence[current_planet][i];
+                }
+                draw_set_color(c_gray);
+            }
+        }
+        draw_set_color(c_white);   
+        draw_text(xx+534,yy+194,"Population Influence");
+        yy+=20;
         draw_set_font(fnt_40k_14b);draw_set_halign(fa_left);
         if (target.craftworld=0) and (target.space_hulk=0) then draw_text(xx+480,yy+196,string_hash_to_newline(string(target.name)+" "+string(nm)+"  ("+string(target.p_type[current_planet])+")"));
         if (target.craftworld=1) then draw_text(xx+480,yy+196,string_hash_to_newline(string(target.name)+" (Craftworld)"));
@@ -408,7 +420,7 @@ if (obj_controller.selecting_planet!=0){
         
         var temp6="???";
         var tau_influence = target.p_influence[current_planet][eFACTION.Tau];
-        var target_planet_heresy=target_planet_heresy
+        var target_planet_heresy=target.p_heresy[current_planet];
         if (max(target_planet_heresy,tau_influence)<=10) then temp6="None";
         if (max(target_planet_heresy,tau_influence)>10) and (max(target_planet_heresy,tau_influence)<=30) then temp6="Little";
         if (max(target_planet_heresy,tau_influence)>30) and (max(target_planet_heresy,tau_influence)<=50) then temp6="Major";

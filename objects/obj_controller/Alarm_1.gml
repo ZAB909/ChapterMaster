@@ -588,7 +588,7 @@ if (did==1){
         yy=floor(random(748+480))+64;
         current_system=instance_nearest(xx,yy,obj_star);
         if (current_system.planets>0) and (current_system.owner == eFACTION.Imperium){
-            var forge_planet = irandom(current_system.planets)+1;
+            var forge_planet = irandom(current_system.planets-1)+1;
             current_system.plant[forge_planet]=1;
             current_system.p_type[forge_planet]="Forge";
             current_system.owner = eFACTION.Mechanicus;

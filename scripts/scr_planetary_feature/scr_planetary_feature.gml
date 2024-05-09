@@ -54,6 +54,7 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		player_hidden = 1;
 		planet_display = "Genestealer Cult";
 		cult_age = 0;
+		hiding=true;
 		break;
 		case P_features.Necron_Tomb:
 		awake = 0;
