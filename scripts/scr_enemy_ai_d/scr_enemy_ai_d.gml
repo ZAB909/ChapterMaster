@@ -435,23 +435,10 @@ function scr_enemy_ai_d() {
 	    }
 
 	}
-
-
-
-
-
-	var g,h;
-	g=0;h=0;
-	repeat(20){
-	    h+=1;
-	    if (h>4){g+=1;h=1;}
-	    /*if (g<5) and (i<5){if (p_problem[g,h]="Hive Fleet") and (p_timer[g,h]=0){
-	        scr_alert("red","owner","Contact has been lost with "+string(name)+"!");
-	        // vision=0;
-	        g=50;i=50;
-	    }}*/
-	    if (g<5) and (i<5){
-	    	if (p_problem[g,h]="Hive Fleet") and (p_timer[g,h]=3){
+	
+	var h;
+	for (var g=1;g<=planets;g++){
+		if (has_problem_planet_and_time(g,"Hive Fleet", 3)){
 	        var woop;
 	        woop=0;woop=scr_role_count("Chief "+string(obj_ini.role[100,17]),"");
         
@@ -478,32 +465,23 @@ function scr_enemy_ai_d() {
         
         
         
-	        g=50;i=50;obj_controller.known[eFACTION.Tyranids]=1;
-	    }}
-    
-    
-    
-    
-	    if (g<5) and (i<5){if (p_problem[g,h]!="") and (p_timer[g,h]=-5){
-	        p_problem[g,h]="";p_timer[g,h]=-1;g=50;i=50;
-	    }}
+	        g=50;
+	        i=50;
+	        obj_controller.known[eFACTION.Tyranids]=1;
+		}
 	}
 
-
-
-
-
-
-
-	if (storm>0){storm-=1;
+	if (storm>0){
+		storm-=1;
 	    if (storm=0){
-	        var tr;tr="Warp Storms over "+string(name)+" dissipate.";
+	        var tr="Warp Storms over "+string(name)+" dissipate.";
 	        scr_alert("green","warp",tr,x,y);scr_event_log("green",tr);
 	    }
 	}
-	if (trader>0){trader-=1;
+	if (trader>0){
+		trader-=1;
 	    if (trader=0){
-	        var tr;tr="Rogue Trader fleet departs from "+string(name)+".";
+	        var tr="Rogue Trader fleet departs from "+string(name)+".";
 	        scr_alert("green","warp",tr,x,y);scr_event_log("green",tr);
 	    }
 	}
