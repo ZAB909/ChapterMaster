@@ -28,7 +28,7 @@ function scr_initialize_custom() {
 
 	// Initializes all of the marine/vehicle/ship variables for the chapter.
 
-	techs = 20;
+	techs = 16;
 	epistolary = 5;
 	apothecary = 6;
 	codiciery = 6;
@@ -476,7 +476,7 @@ function scr_initialize_custom() {
 	k = 0;
 	i = 0;
 	v = 0;
-	var techs = 20,
+	var techs = 16,
 		epistolary = 4,
 		apothecary = 6,
 		codiciery = 6,
@@ -525,8 +525,8 @@ function scr_initialize_custom() {
 	var chapter_option, o, psyky;
 	psyky = 0;
 	if (array_contains(obj_creation.adv, "Tech-Brothers")) {
-		techs += 10;
-		tenth -= 10;
+		techs += 6;
+		tenth -= 6;
 	}
 	if (array_contains(obj_creation.adv, "Melee Enthusiasts")) {
 		assault = 30;
@@ -535,9 +535,9 @@ function scr_initialize_custom() {
 		siege = 1;
 	}
 	if (array_contains(obj_creation.adv, "Crafters")) {
-		techs += 5;
+		techs += 3;
 		terminator += 5;
-		tenth -= 10;
+		tenth -= 8;
 	}
 	if (array_contains(obj_creation.adv, "Psyker Abundance")) {
 		tenth -= 10;
@@ -555,7 +555,7 @@ function scr_initialize_custom() {
 		intolerant = 1;
 	}
 	if (array_contains(obj_creation.dis, "Sieged")) {
-		techs -= 10;
+		techs -= 6;
 		epistolary -= 3;
 		apothecary -= 4;
 		codiciery -= 3;
@@ -577,8 +577,8 @@ function scr_initialize_custom() {
 	}
 
 	if (array_contains(obj_creation.dis, "Tech-Heresy")) {
-		techs -= 10;
-		tenth += 1;
+		techs -= 3;
+		tenth += 3;
 	}
 	if (array_contains(obj_creation.adv, "Reverent Guardians")) {
 		chaap += 10;
@@ -715,7 +715,7 @@ function scr_initialize_custom() {
 			seventh = 0;
 			sixth = 0;
 			fifth = 0;
-			techs = 8;
+			techs = 0;
 			epistolary = 6;
 			apothecary = 5;
 			codiciery = 3;
@@ -2483,6 +2483,25 @@ function scr_initialize_custom() {
 			if (armour[company][k] = "Terminator") or(armour[company][k] = "Tartaros") then man_size += 1;
 		}
 
+		k += 1;
+		commands += 1; // Techmarine
+		race[company][k] = 1;
+		TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
+		loc[company][k] = home_name;
+		role[company][k] = roles.techmarine;
+		name[company][k] = global.name_generator.generate_space_marine_name();
+		spawn_unit = TTRPG[company][k]
+		spawn_unit.spawn_old_guard();
+		spawn_unit.spawn_exp();
+		wep1[company][k] = wep1[101, 16];
+		wep2[company][k] = "Storm Bolter";
+		armour[company][k] = "Terminator Armour";
+		gear[company][k] = gear[101, 16];
+		if (string_count("Crafter", strin) > 0) then armour[company][k] = "Tartaros";
+		if (terminator <= 0) then armour[company][k] = "Artificer Armour";
+		if (mobi[101, 16] != "") then mobi[company][k] = mobi[101, 16];
+		if (armour[company][k] = "Terminator") or(armour[company][k] = "Tartaros") then man_size += 1;
+
 		k += 1; // Standard bearer
 		man_size += 1;
 		race[company][k] = 1;
@@ -2941,6 +2960,7 @@ function scr_initialize_custom() {
 				spawn_unit.spawn_exp();
 				spawn_unit.spawn_old_guard();
 			}
+
 			if (global.chapter_name = "Iron Hands") {
 				k += 1;
 				commands += 1;
@@ -2959,6 +2979,22 @@ function scr_initialize_custom() {
 				spawn_unit.spawn_exp();
 				spawn_unit.spawn_old_guard();
 			}
+
+			k += 1; // Techmarine
+			commands += 1;
+			race[company][k] = 1;
+			TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
+			loc[company][k] = home_name;
+			role[company][k] = roles.techmarine;
+			name[company][k] = global.name_generator.generate_space_marine_name();
+			if (mobi[101, 16] != "") then mobi[company][k] = mobi[101, 16];
+			spawn_unit = TTRPG[company][k]
+			spawn_unit.spawn_exp();
+			spawn_unit.spawn_old_guard();
+			armour[company][k] = "Artificer Armour";
+			gear[company][k] = gear[101, 16];
+			wep1[company][k] = wep1[101, 16];
+			wep2[company][k] = wep2[101, 16];
 
 			k += 1; // Standard Bearer
 			race[company][k] = 1;
