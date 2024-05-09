@@ -211,7 +211,7 @@ function open_problem_slot(planet, star="none"){
 }
 
 function remove_star_problem(problem){
-	for (var i=0;i<planets;i++){
+	for (var i=0;i<=planets;i++){
 		remove_planet_problem(i, problem);
 	}
 }

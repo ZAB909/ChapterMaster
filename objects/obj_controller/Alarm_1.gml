@@ -498,7 +498,7 @@ if (did==1){
 				
                 owner = eFACTION.Chaos;
 				p_owner = array_create(5, owner);
-                for (var i=1;i<planets;i++){
+                for (var i=1;i<=planets;i++){
                     p_heresy[i]=floor(random_range(75,100));
                     if (p_type[i]=="Dead") then p_type[i]=choose("Hive","Temperate","Desert","Ice");
 

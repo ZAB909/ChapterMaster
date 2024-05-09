@@ -590,7 +590,7 @@ function scr_enemy_ai_d() {
 
 	// Local problems will go here
 	var planet;
-	for (var i=0;i<planets;i++){
+	for (var i=0;i<=planets;i++){
 		planet=i+1;
 		if (i < array_length(system_garrison)){
 			var garrison = system_garrison[i];
