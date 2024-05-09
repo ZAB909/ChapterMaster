@@ -319,10 +319,9 @@ if (string_count("_attack",battle_special)>0) and (string_count("mech",battle_sp
         instance_activate_object(obj_star);
         with(obj_star){if (name!=obj_ncombat.battle_loc) then instance_deactivate_object(id);}
         with(obj_star){
-            if (p_problem[obj_ncombat.battle_id,1]="bomb"){p_problem[obj_ncombat.battle_id,1]="";p_timer[obj_ncombat.battle_id,1]=0;p_necrons[obj_ncombat.battle_id]=4;}
-            if (p_problem[obj_ncombat.battle_id,2]="bomb"){p_problem[obj_ncombat.battle_id,2]="";p_timer[obj_ncombat.battle_id,2]=0;p_necrons[obj_ncombat.battle_id]=4;}
-            if (p_problem[obj_ncombat.battle_id,3]="bomb"){p_problem[obj_ncombat.battle_id,3]="";p_timer[obj_ncombat.battle_id,3]=0;p_necrons[obj_ncombat.battle_id]=4;}
-            if (p_problem[obj_ncombat.battle_id,4]="bomb"){p_problem[obj_ncombat.battle_id,4]="";p_timer[obj_ncombat.battle_id,4]=0;p_necrons[obj_ncombat.battle_id]=4;}
+            if (remove_planet_problem(p_problem,"bomb")){
+                p_necrons[obj_ncombat.battle_id]=4;
+            }
             if (awake_tomb_world(p_feature[obj_ncombat.battle_id])==0) then awaken_tomb_world(p_feature[obj_ncombat.battle_id])
         }
         with(obj_temp7){instance_destroy();}
@@ -448,25 +447,19 @@ if ((string_count("spyrer",battle_special)>0))/* and (string_count("demon",battl
 }
 
 if ((string_count("fallen",battle_special)>0)) and (defeat=0){
-    var fallen;fallen=0;
-    if (obj_turn_end.battle_object[obj_turn_end.current_battle].p_problem[obj_turn_end.battle_world[obj_turn_end.current_battle],1]="fallen") then fallen=1;
-    if (obj_turn_end.battle_object[obj_turn_end.current_battle].p_problem[obj_turn_end.battle_world[obj_turn_end.current_battle],2]="fallen") then fallen=2;
-    if (obj_turn_end.battle_object[obj_turn_end.current_battle].p_problem[obj_turn_end.battle_world[obj_turn_end.current_battle],3]="fallen") then fallen=3;
-    if (obj_turn_end.battle_object[obj_turn_end.current_battle].p_problem[obj_turn_end.battle_world[obj_turn_end.current_battle],4]="fallen") then fallen=4;
-    
-    obj_turn_end.battle_object[obj_turn_end.current_battle].p_problem[obj_turn_end.battle_world[obj_turn_end.current_battle],fallen]="";
-    obj_turn_end.battle_object[obj_turn_end.current_battle].p_timer[obj_turn_end.battle_world[obj_turn_end.current_battle],fallen]=-1;
-    
-    var tixt;tixt="The Fallen on "+string(obj_turn_end.battle_object[obj_turn_end.current_battle].name);
-    tixt+=scr_roman(obj_turn_end.battle_world[obj_turn_end.current_battle]);
-    scr_event_log("","Mission Succesful: "+string(tixt)+" have been captured or purged.");
-    
-    tixt+=" have been captured or purged.  They shall be brought to the Chapter "+string(obj_ini.role[100][14])+"s posthaste, in order to account for their sins.  ";
-    var ran;ran=choose(1,1,2,3);
-    if (ran=1) then tixt+="Suffering is the beginning to penance.";
-    if (ran=2) then tixt+="Their screams shall be the harbringer of their contrition.";
-    if (ran=3) then tixt+="The shame they inflicted upon us shall be written in their flesh.";
-    scr_popup("Hunt the Fallen Completed",tixt,"fallen","");
+    var fallen=0;
+    with (obj_turn_end){
+        remove_planet_problem(battle_world[current_battle], "fallen", battle_object[current_battle])
+        var tixt="The Fallen on "+ battle_object[current_battle].name;
+        tixt+=scr_roman(battle_world[current_battle]);
+        scr_event_log("",$"Mission Succesful: {tixt} have been captured or purged.");
+        tixt+=$" have been captured or purged.  They shall be brought to the Chapter {obj_ini.role[100][14]}s posthaste, in order to account for their sins.  ";
+        var ran;ran=choose(1,1,2,3);
+        if (ran=1) then tixt+="Suffering is the beginning to penance.";
+        if (ran=2) then tixt+="Their screams shall be the harbringer of their contrition.";
+        if (ran=3) then tixt+="The shame they inflicted upon us shall be written in their flesh.";
+        scr_popup("Hunt the Fallen Completed",tixt,"fallen","");        
+    }
 }
 
 if (defeat=0) and (enemy=9) and (battle_special="tyranid_org"){

@@ -68,8 +68,8 @@ for(run=1; run<=8; run++){
 
     p_raided[run]=0;
     // 
-    p_problem[0] = array_create(6,"");
-    p_timer[0] = array_create(6,0);
+    p_problem[run] = array_create(6,"");
+    p_timer[run] = array_create(6,0);
 }
 
 system_player_ground_forces = 0;

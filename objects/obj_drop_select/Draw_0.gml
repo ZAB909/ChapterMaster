@@ -381,7 +381,8 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
         if (attacking==10) or (attacking==11){
             var pause,r;pause=0;r=0;
             repeat(4){r+=1;
-                if (p_target.p_problem[obj_controller.selecting_planet,r]="meeting") or (p_target.p_problem[obj_controller.selecting_planet,r]="meeting_trap") then pause=r;
+                if (has_problem_planet(obj_controller.selecting_planet, "meeting", p_target) ||
+                has_problem_planet(obj_controller.selecting_planet, "meeting_trap", p_target)) then pause=r;
             }
             if (pause>0) then p_target.p_problem[obj_controller.selecting_planet,pause]="";
             if (pause>0) then p_target.p_timer[obj_controller.selecting_planet,pause]=-1;
@@ -411,10 +412,7 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
 
         
         if (obj_ncombat.enemy=9) and (obj_ncombat.battle_object.space_hulk=0){
-            if (p_target.p_problem[obj_controller.selecting_planet,1]="tyranid_org") then obj_ncombat.battle_special="tyranid_org";
-            if (p_target.p_problem[obj_controller.selecting_planet,2]="tyranid_org") then obj_ncombat.battle_special="tyranid_org";
-            if (p_target.p_problem[obj_controller.selecting_planet,3]="tyranid_org") then obj_ncombat.battle_special="tyranid_org";
-            if (p_target.p_problem[obj_controller.selecting_planet,4]="tyranid_org") then obj_ncombat.battle_special="tyranid_org";
+            if (has_problem_planet(obj_controller.selecting_planet, "tyranid_org", p_target)) then obj_ncombat.battle_special="tyranid_org";
         }
         
         if (obj_ncombat.enemy=11){

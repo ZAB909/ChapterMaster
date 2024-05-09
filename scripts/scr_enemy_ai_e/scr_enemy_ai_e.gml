@@ -464,82 +464,64 @@ function scr_enemy_ai_e() {
         }
 
         if (p_player[run] > 0 && force_count > 0) {
-            var spyrer, fallen, s;
+            var spyrer, fallen;
             spyrer = 0;
             fallen = 0;
-            s = 0;
 
-            repeat(4) {
-                s += 1;
-                if (p_player[run] > 0) and(p_problem[run, s] = "meeting") or(p_problem[run, s] = "meeting_trap") {
-                    if (p_problem[run, s] = "meeting") then chaos_meeting = run;
-                    if (p_problem[run, s] = "meeting_trap") then chaos_meeting = run + 0.1;
+            if (p_player[run] > 0){
+                if (has_problem_planet(run,  "meeting")) {
+                    chaos_meeting = run;
+                } else if (has_problem_planet(run,  "meeting_trap")){
+                    chaos_meeting = run + 0.1;
                 }
-                if (p_player[run] > 20) and(p_problem[run, s] = "spyrer") {
+            } 
+            if (has_problem_planet(run,  "spyrer")) {
+                if (p_player[run] > 20){
                     var tixt;
-                    tixt = "The Spyrer on " + string(name);
-                    if (run = 1) then tixt += " I";
-                    if (run = 2) then tixt += " II";
-                    if (run = 3) then tixt += " III";
-                    if (run = 4) then tixt += " IV";
+                    tixt = "The Spyrer on " + planet_numeral_name(run);
                     tixt += " seems to have vanished, presumably gone into hiding.";
                     scr_popup("Spyrer Rampage", tixt, "spyrer", "");
-                }
-                if (p_player[run] <= 20) and(p_problem[run, s] = "spyrer") {
+                } else if ((p_player[run] <= 20)){
                     obj_turn_end.battles += 1;
                     obj_turn_end.battle[obj_turn_end.battles] = 1;
                     obj_turn_end.battle_world[obj_turn_end.battles] = run;
                     obj_turn_end.battle_opponent[obj_turn_end.battles] = 30;
                     obj_turn_end.battle_location[obj_turn_end.battles] = name;
                     obj_turn_end.battle_object[obj_turn_end.battles] = id;
-                    obj_turn_end.battle_special[obj_turn_end.battles] = "spyrer";
+                    obj_turn_end.battle_special[obj_turn_end.battles] = "spyrer";                    
                 }
-                if (p_player[run] > 0) and(p_problem[run, s] = "fallen") {
-                    var chan;
-                    chan = choose(1, 2, 3, 4);
-                    if (chan <= 2) {
-                        obj_turn_end.battles += 1;
-                        obj_turn_end.battle[obj_turn_end.battles] = 1;
-                        obj_turn_end.battle_world[obj_turn_end.battles] = run;
-                        obj_turn_end.battle_opponent[obj_turn_end.battles] = 10;
-                        obj_turn_end.battle_location[obj_turn_end.battles] = name;
-                        obj_turn_end.battle_object[obj_turn_end.battles] = id;
-                        if (chan = 1) then obj_turn_end.battle_special[obj_turn_end.battles] = "fallen1";
-                        if (chan = 2) then obj_turn_end.battle_special[obj_turn_end.battles] = "fallen2";
-                    }
-                    if (chan >= 3) {
-                        if (p_problem[run, 1] = "fallen") then fallen = 1;
-                        if (p_problem[run, 2] = "fallen") then fallen = 2;
-                        if (p_problem[run, 3] = "fallen") then fallen = 3;
-                        if (p_problem[run, 4] = "fallen") then fallen = 4;
-                        p_problem[run, fallen] = "";
-                        p_timer[run, fallen] = 0;
-                        var tixt;
-                        tixt = "Your marines have scoured " + string(name);
-                        if (run = 1) then tixt += " I";
-                        if (run = 2) then tixt += " II";
-                        if (run = 3) then tixt += " III";
-                        if (run = 4) then tixt += " IV";
+            }
+
+            if (p_player[run] > 0) and (has_problem_planet(run,  "fallen")) {
+                var chan;
+                chan = choose(1, 2, 3, 4);
+                if (chan <= 2) {
+                    obj_turn_end.battles += 1;
+                    obj_turn_end.battle[obj_turn_end.battles] = 1;
+                    obj_turn_end.battle_world[obj_turn_end.battles] = run;
+                    obj_turn_end.battle_opponent[obj_turn_end.battles] = 10;
+                    obj_turn_end.battle_location[obj_turn_end.battles] = name;
+                    obj_turn_end.battle_object[obj_turn_end.battles] = id;
+                    if (chan = 1) then obj_turn_end.battle_special[obj_turn_end.battles] = "fallen1";
+                    if (chan = 2) then obj_turn_end.battle_special[obj_turn_end.battles] = "fallen2";
+
+                }else if (chan >= 3) {
+                    if (remove_planet_problem(run, "fallen")){
+                        tixt = "Your marines have scoured " + planet_numeral_name(run);
                         tixt += " in search of the Fallen.  Despite their best efforts, and meticulous searching, none have been found.  It appears as though the information was faulty or out of date.";
                         scr_popup("Hunt the Fallen", tixt, "fallen", "");
-                        if (run = 1) then scr_event_log("", "Mission Successful: No Fallen located upon " + string(name) + " I.");
-                        if (run = 2) then scr_event_log("", "Mission Successful: No Fallen located upon " + string(name) + " II.");
-                        if (run = 3) then scr_event_log("", "Mission Successful: No Fallen located upon " + string(name) + " III.");
-                        if (run = 4) then scr_event_log("", "Mission Successful: No Fallen located upon " + string(name) + " IV.");
+                        scr_event_log("", $"Mission Successful: No Fallen located upon {planet_numeral_name(run)}");
                     }
                 }
             }
+
         }
         if (p_player[run] > 0) and((p_problem[run, 1] = "bomb") or(p_problem[run, 2] = "bomb") or(p_problem[run, 3] = "bomb") or(p_problem[run, 4] = "bomb")) {
             var have_bomb;
             have_bomb = scr_check_equip("Plasma Bomb", name, run, 0);
             if (have_bomb > 0) {
                 var tixt;
-                tixt = "Your marines on " + string(name);
-                if (run = 1) then tixt += " I";
-                if (run = 2) then tixt += " II";
-                if (run = 3) then tixt += " III";
-                if (run = 4) then tixt += " IV";
+                tixt = "Your marines on " + planet_numeral_name(run);
                 tixt += " are prepared and ready to enter the Necron Tombs.  A Plasma Bomb is in tow.";
                 scr_popup("Necron Tomb Excursion", tixt, "necron_cave", "blarg|" + string(name) + "|" + string(run) + "|999|");
             }

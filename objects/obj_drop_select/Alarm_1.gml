@@ -202,13 +202,12 @@ if (bes_score>0) then attacking=bes;
 
 var spesh;spesh=false;
 if (planet_feature_bool(p_target.p_feature[obj_controller.selecting_planet],P_features.Warlord10)==1) and (obj_controller.faction_defeated[10]=0) and (obj_controller.faction_gender[10]=1) and (obj_controller.known[eFACTION.Chaos]>0) and (obj_controller.turn>=obj_controller.chaos_turn) then spesh=true;
-
-    if (p_target.p_problem[obj_controller.selecting_planet,1]="tyranid_org"){tyranids=2;attacking=9;}
-    if (p_target.p_problem[obj_controller.selecting_planet,2]="tyranid_org"){tyranids=2;attacking=9;}
-    if (p_target.p_problem[obj_controller.selecting_planet,3]="tyranid_org"){tyranids=2;attacking=9;}
-    if (p_target.p_problem[obj_controller.selecting_planet,4]="tyranid_org"){tyranids=2;attacking=9;}
     
 
+if (has_problem_planet(obj_controller.selecting_planet, "tyranid_org", p_target)){
+    tyranids=2;
+    attacking=9;
+}
 
 var forces,t_attack;forces=0;t_attack=0;
 if (sisters>0){forces+=1;force_present[forces]=5;}
