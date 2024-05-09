@@ -126,9 +126,113 @@ function adjust_influence(faction, value, planet){
 	}
 }
 
-function planet_numeral_name(planet){
-	return $"{name} {scr_roman(planet)}";
+function planet_numeral_name(planet, star="none"){
+	if (star=="none"){
+		return $"{name} {scr_roman(planet)}";
+	} else {
+		with (star){
+			return $"{name} {scr_roman(planet)}";
+		}		
+	}
 }
+
+function has_problem_planet(planet, problem, star="none"){
+	if (star=="none"){
+		return array_contains(p_problem[planet], problem);
+	} else {
+		return array_contains(star.p_problem[planet], problem);
+	}
+}
+
+function find_problem_planet(planet, problem, star="none"){
+	var had_problem = false;
+	if (star=="none"){
+		for (var i =1;i<array_length(p_problem[planet]);i++){
+			if (p_problem[planet][i] == problem){
+				return i;
+			}
+		}
+	} else {
+		with (star){
+			return find_problem_planet(planet, problem);
+		}
+	}
+	return -1;
+}	
+
+function remove_planet_problem(planet, problem, star="none"){
+	var had_problem = false;
+	if (star=="none"){
+		for (var i =1;i<array_length(p_problem[planet]);i++){
+			if (p_problem[planet][i] == problem){
+				p_problem[planet][i]="";
+				p_timer[planet][i]=0;
+				had_problem=true;
+			}
+		}
+	} else {
+		with (star){
+			had_problem=remove_planet_problem(planet, problem)
+		}
+	}
+	return had_problem;	
+}
+
+function open_problem_slot(planet, star="none"){
+	if (star=="none"){
+		for (i=1;i<array_length(p_problem[planet]);i++){
+			if (p_problem[planet][i] ==""){
+				return i;
+			}
+		}
+	} else {
+		with (star){
+			return open_problem_slot(planet)
+		}
+	}
+	return -1;
+}
+
+function remove_star_problem(problem){
+	for (var i=0;i<planets;i++){
+		remove_planet_problem(i, problem);
+	}
+}
+
+function problem_count_down(planet, count_change=1){
+	for (var i=1;i<array_length(p_problem[planet]);i++){
+		if (p_problem[planet][i]!=""){
+			p_timer[planet][i]-=count_change;
+		}
+	}
+}
+
+function add_new_problem(planet, problem, timer,star="none"){
+	problem_added=false;
+	if (star=="none"){
+		for (i=1;i<array_length(p_problem[planet]);i++){
+			if (p_problem[planet][i] ==""){
+				p_problem[planet][i]=problem;
+				p_timer[planet][i] = timer;
+				problem_added=true;
+				break;
+			}
+		}
+	} else {
+		with (star){
+			problem_added =  add_new_problem(planet, problem, timer);
+		}
+	}
+	return 	problem_added;
+}
+
+function new_star_event_marker(colour){
+    var bob=instance_create(x+16,y-24,obj_star_event);
+    bob.image_alpha=1;
+    bob.image_speed=1;
+    bob.color=colour;
+}
+
 //function scr_get_player_fleets() {
 //	var player_fleets = [];
 //	with(obj_p_fleet){

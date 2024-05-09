@@ -464,7 +464,7 @@ if (did==1){
             rando=1;
             current_system=instance_nearest(xx,yy,obj_star);
             with (current_system){
-                if  planets>0) and (current_system.p_type[1]!="Dead") and (current_system.owner == eFACTION.Imperium){
+                if  (planets>0) and (current_system.p_type[1]!="Dead") and (current_system.owner == eFACTION.Imperium){
                     p_owner[1] = eFACTION.Tau;
                     owner = eFACTION.Tau;
                     p_influence[1][eFACTION.Tau]=70;
@@ -498,13 +498,13 @@ if (did==1){
 				
                 owner = eFACTION.Chaos;
 				p_owner = array_create(5, owner);
-                for (var i=1 i<planets;i++){
+                for (var i=1;i<planets;i++){
                     p_heresy[i]=floor(random_range(75,100));
                     if (p_type[i]=="Dead") then p_type[i]=choose("Hive","Temperate","Desert","Ice");
 
                     if (p_type[i]!="Dead") then p_traitors[i]=6;
                     // give them big defences
-                    if (p_type[1]!="Dead") then p_fortified[i]=choose(4,5,5,4,4,3,6);
+                    if (p_type[i]!="Dead") then p_fortified[i]=choose(4,5,5,4,4,3,6);
                 }
             }
         }
@@ -588,12 +588,12 @@ if (did==1){
         yy=floor(random(748+480))+64;
         current_system=instance_nearest(xx,yy,obj_star);
         if (current_system.planets>0) and (current_system.owner == eFACTION.Imperium){
-            var forge_planet = irandom(planets)+1;
-            forge_planet]=1;
-            forge_planet]="Forge";
+            var forge_planet = irandom(current_system.planets)+1;
+            current_system.plant[forge_planet]=1;
+            current_system.p_type[forge_planet]="Forge";
             current_system.owner = eFACTION.Mechanicus;
-            forge_planet] = current_system.owner;
-            forge_planet] = current_system.owner;
+            current_system.p_owner[forge_planet] = current_system.owner;
+            current_system.p_first[forge_planet] = current_system.owner;
         }
         instance_deactivate_object(current_system);
     }

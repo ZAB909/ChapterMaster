@@ -8,19 +8,14 @@ function scr_enemy_ai_d() {
 	// Planetary problems here
 
 	var i;i=0;
-	repeat(4){i+=1;
+	repeat(planets){i+=1;
 	    if (p_necrons[i]>0) and (p_necrons[i]<6) then p_necrons[i]+=1;
+    	problem_count_down(i);
     
-	    // if (p_problem[i,0]!="") then p_timer[i,0]-=1;
-	    if (p_problem[i,1]!="") then p_timer[i,1]-=1;
-	    if (p_problem[i,2]!="") then p_timer[i,2]-=1;
-	    if (p_problem[i,3]!="") then p_timer[i,3]-=1;
-	    if (p_problem[i,4]!="") then p_timer[i,4]-=1;
-    
-    
-	    var wob;wob=0;
-	    repeat(4){wob+=1;
-	        if (p_problem[i,wob]="fallen") and (storm-1>0) then p_timer[i,wob]+=1;
+	    var wob=0;
+	    var fallen= find_problem_planet(i, "fallen");
+	    if (fallen>-1 and storm-1>0){
+	    	p_timer[i][fallen]++;
 	    }
     
     
@@ -32,10 +27,10 @@ function scr_enemy_ai_d() {
 	        var enemy1,enemies,minimum,tx;
 	        enemy1="";enemies=0;minimum=5;tx="";
         
-	        if (p_guardsmen[i]+p_pdf[i]<=1000000) then minimum=4;
-	        if (p_guardsmen[i]+p_pdf[i]<=500000) then minimum=3;
-	        if (p_guardsmen[i]+p_pdf[i]<=200000) then minimum=2;
-	        if (p_guardsmen[i]+p_pdf[i]<=1000) then minimum=1;
+	        if (p_guardsmen[i]+p_pdf[i]<=1000000) { minimum=4;}
+	        else if (p_guardsmen[i]+p_pdf[i]<=500000) { minimum=3;}
+	        else if (p_guardsmen[i]+p_pdf[i]<=200000) { minimum=2;}
+	        else if (p_guardsmen[i]+p_pdf[i]<=1000) { minimum=1;}
         
 	        if (p_orks[i]>=minimum){enemy1="Ork";enemies+=1;}
 	        if (p_tau[i]>=minimum){enemy1="Tau";enemies+=1;}
@@ -45,7 +40,8 @@ function scr_enemy_ai_d() {
 	        if (p_tyranids[i]>=minimum) and (vision>0) and (p_tyranids[i]>3){enemy1="Tyranid";enemies+=1;}
         
 	        if (enemies=1){
-	        	p_halp[i]=1;tx="The Planetary Governor of "+string(name)+" "+scr_roman(i)+" requests help against "+string(enemy1)+" forces!";
+	        	p_halp[i]=1;
+	        	tx=$"The Planetary Governor of {planet_numeral_name(i)} requests help against "+string(enemy1)+" forces!";
 	            scr_alert("green","halp",string(tx),x,y);
 	            scr_event_log("",string(tx), name);
 	        }
@@ -286,10 +282,7 @@ function scr_enemy_ai_d() {
 	            if (i=3) then tixt+=string(name)+" III";if (i=4) then tixt+=string(name)+" IV";
 	            tixt+=" has not been deactivated in time.  It has awakened, rank upon rank of Necrons pouring out to the planet's surface.  The Inquisition is not pleased with your failure.";
 	            scr_popup("Inquisition Mission Failed",tixt,"necron_army","");
-	            if (i=1) then scr_event_log("red","Inquisition Mission Failed: Bombing run failed; the Necron Tomb on "+string(name)+" I has become active.");
-	            if (i=2) then scr_event_log("red","Inquisition Mission Failed: Bombing run failed; the Necron Tomb on "+string(name)+" II has become active.");
-	            if (i=3) then scr_event_log("red","Inquisition Mission Failed: Bombing run failed; the Necron Tomb on "+string(name)+" III has become active.");
-	            if (i=4) then scr_event_log("red","Inquisition Mission Failed: Bombing run failed; the Necron Tomb on "+string(name)+" IV has become active.");
+	            scr_event_log("red",$"Inquisition Mission Failed: Bombing run failed; the Necron Tomb on {planet_numeral_name(i)} has become active.");
             
 	            p_problem[i,wob]="";p_timer[i,wob]=0;p_necrons[i]=4;
 	            if (awake_tomb_world(p_feature[i])==0) then awaken_tomb_world(p_feature[i]);
@@ -391,7 +384,7 @@ function scr_enemy_ai_d() {
     
     
 	    if ((p_tyranids[i]=3) or (p_tyranids[i]=4)) and (p_population[i]>0){
-	        if (p_problem[i,1]!="Hive Fleet") and (p_problem[i,2]!="Hive Fleet") and (p_problem[i,3]!="Hive Fleet") and (p_problem[i,4]!="Hive Fleet"){
+	        if (!(has_problem_planet(i, "Hive Fleet"))){
 	            var roll, cont;
 	            roll=floor(random(100))+201;
 	            cont=0;
@@ -400,21 +393,14 @@ function scr_enemy_ai_d() {
 	            if (p_tyranids[i]=3) and (roll<=5) then cont=1;
 	            if (p_tyranids[i]=4) and (roll<=8) then cont=1;
             
-            
-	            if (cont=1){
-	                var firstest;
-	                firstest=0;
-                
-	                if (p_problem[i,4]="") then firstest=4;
-	                if (p_problem[i,3]="") then firstest=3;
-	                if (p_problem[i,2]="") then firstest=2;
-	                if (p_problem[i,1]="") then firstest=1;
-                
-	                p_problem[i,firstest]="Hive Fleet";
-	                p_timer[i,firstest]=floor(random_range(60,120))+1;
-	                p_timer[i,firstest]+=floor(random_range(80,120))+1;
-	                // p_timer[i,firstest]=floor(random_range(3,6))+1;
-	                // show_message("Hive Fleet Destination: "+string(name)+"#ETA: "+string(p_timer[i,firstest]));
+            	var firstest=open_problem_slot(i);
+	            if (cont=1 && firstest>-1){
+
+	                p_problem[i][firstest]="Hive Fleet";
+	                p_timer[i][firstest]=floor(random_range(60,120))+1;
+	                p_timer[i][firstest]+=floor(random_range(80,120))+1;
+	                // p_timer[i][firstest]=floor(random_range(3,6))+1;
+	                // show_message("Hive Fleet Destination: "+string(name)+"#ETA: "+string(p_timer[i][firstest]));
                 
                 
 	                var fleet, xx, yy;
@@ -439,7 +425,7 @@ function scr_enemy_ai_d() {
 	                fleet.action_x=x;
 	                fleet.action_y=y;
                 
-	                fleet.action_eta=p_timer[i,firstest];
+	                fleet.action_eta=p_timer[i][firstest];
 	                fleet.action="move";
 	            }
             
