@@ -275,13 +275,13 @@ if ((zm=0) and (type<=4)) or (type=98){
         if (image=="new_forge_master"){
              if (pathway="selection_options"){
                 if (option1enter){
-                    techs[charisma_pick].draw_unit_image(1190,210);
+                    techs[charisma_pick].draw_unit_image(1190,210,true);
                     techs[charisma_pick].stat_display();
                 } else if (option2enter){
-                    techs[talent_pick].draw_unit_image(1190,210);
+                    techs[talent_pick].draw_unit_image(1190,210,true);
                     techs[talent_pick].stat_display();            
                 }else if (option3enter){
-                    techs[experience_pick].draw_unit_image(1190,210);
+                    techs[experience_pick].draw_unit_image(1190,210,true);
                     techs[experience_pick].stat_display();            
                 }
             }
