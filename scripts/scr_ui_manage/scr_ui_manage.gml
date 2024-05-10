@@ -411,8 +411,9 @@ function scr_ui_manage() {
 
 			// Draw unit image
 			draw_set_color(c_white);
-			selected_unit.draw_unit_image(1208,210, 1580, 518);
-
+			if (surface_exists(temp[121])){
+				draw_surface(temp[121], xx+1208-200, yy+210-130);
+			}
 
 			//TODO implement tooltip explaining potential loyalty hit of demoting a sgt
 			if (view_squad &&  company_data!={}){

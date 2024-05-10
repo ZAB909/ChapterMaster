@@ -273,16 +273,20 @@ if ((zm=0) and (type<=4)) or (type=98){
             option3enter=false;
         }
         if (image=="new_forge_master"){
+            var new_master_image = false;
              if (pathway="selection_options"){
                 if (option1enter){
-                    techs[charisma_pick].draw_unit_image(1190,210,true);
+                    new_master_image = techs[charisma_pick].draw_unit_image(1190,210,true);
                     techs[charisma_pick].stat_display();
                 } else if (option2enter){
-                    techs[talent_pick].draw_unit_image(1190,210,true);
+                    new_master_image=techs[talent_pick].draw_unit_image(1190,210,true);
                     techs[talent_pick].stat_display();            
                 }else if (option3enter){
-                    techs[experience_pick].draw_unit_image(1190,210,true);
+                    new_master_image =techs[experience_pick].draw_unit_image(1190,210,true);
                     techs[experience_pick].stat_display();            
+                }
+                if (surface_exists(new_master_image)){
+                    draw_surface(new_master_image, xx+1208-200, yy+210-130)
                 }
             }
         }

@@ -113,9 +113,7 @@ function set_shader_array(shader_array){
         }
     }
 }
-function scr_draw_unit_image(_x1, _y1, _x2, _y2, _background=false){
-    var unit_surface_width = _x2 - _x1;
-    var unit_surface_height = _y2 - _y1;
+function scr_draw_unit_image(_background=false){
     var x_surface_offset = min(200);
     var y_surface_offset = min(110);
     var unit_surface = surface_create(600, 600);
@@ -126,12 +124,12 @@ function scr_draw_unit_image(_x1, _y1, _x2, _y2, _background=false){
 	var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0, bb="", img=0;
     var blandify = obj_controller.blandify;
     var draw_sequence = [];
-    if (_background){
+    /*if (_background){
         draw_rectangle_color_simple(1,1,unit_surface_width-1,unit_surface_height-1,0,c_black);
         draw_rectangle_color_simple(1,1,unit_surface_width-1,unit_surface_height-1,1,c_gray);
         draw_rectangle_color_simple(2,2,unit_surface_width-2,unit_surface_height-2,1,c_black);
         draw_rectangle_color_simple(3,3,unit_surface_width-3,unit_surface_height-3,1,c_gray);
-    }
+    }*/
     if (name_role()!="") and (base_group=="astartes"){
         ui_weapon[1]=spr_weapon_blank;
         ui_weapon[2]=spr_weapon_blank;
@@ -792,6 +790,9 @@ function scr_draw_unit_image(_x1, _y1, _x2, _y2, _background=false){
                             draw_sprite(spr_gear_halo,0,0,y_surface_offset);
                         }
                     }
+                    var halo_offset_y=0;
+                    var halo_type = 2;
+                    var halo_color=0;
                     if (armour()=="Artificer Armour" && !armour_bypass){
                         halo_offset_y -= 14;
                     } else if (armour_type == ArmourType.Indomitus){
@@ -916,20 +917,19 @@ function scr_draw_unit_image(_x1, _y1, _x2, _y2, _background=false){
                         with (obj_ini.complex_livery_data.sgt){
                             set_shader_color(0,helm_primary);
                             set_shader_color(1,helm_secondary);
-                            draw_sprite(specific_helm,helm_pattern,helm_draw[0],y_surface_offset+0);
+                            draw_sprite(specific_helm,helm_pattern,helm_draw[0]+x_surface_offset,y_surface_offset+0);
                         }
-                        draw_sprite(specific_helm,0,helm_draw[0],y_surface_offset+0);
                     }else if(role()==obj_ini.role[100][19]){
                         with (obj_ini.complex_livery_data.vet_sgt){
                             set_shader_color(0,helm_primary);
                             set_shader_color(1,helm_secondary);
-                            draw_sprite(specific_helm,helm_pattern,helm_draw[0],y_surface_offset+0);
+                            draw_sprite(specific_helm,helm_pattern,helm_draw[0]+x_surface_offset,y_surface_offset+0);
                         }
                     }else if(role()==obj_ini.role[100][Role.CAPTAIN]){
                         with (obj_ini.complex_livery_data.captain){
                             set_shader_color(0,helm_primary);
                             set_shader_color(1,helm_secondary);
-                            draw_sprite(specific_helm,helm_pattern,helm_draw[0],y_surface_offset+0);
+                            draw_sprite(specific_helm,helm_pattern,helm_draw[0]+x_surface_offset,y_surface_offset+0);
                         }
                     }
                     set_shader_to_base_values();
@@ -1277,9 +1277,10 @@ function scr_draw_unit_image(_x1, _y1, _x2, _y2, _background=false){
     surface_reset_target();
     /*shader_set_uniform_i(shader_get_uniform(sReplaceColor, "u_blend_modes"), 2);                
     texture_set_stage(shader_get_sampler_index(sReplaceColor, "armour_texture"), sprite_get_texture(spr_leopard_sprite, 0)); */
-    draw_surface(unit_surface, xx+_x1-x_surface_offset,yy+_y1-y_surface_offset);
-    surface_free(unit_surface);
-    shader_reset();     
+    //draw_surface(unit_surface, xx+_x1-x_surface_offset,yy+_y1-y_surface_offset);
+    //surface_free(unit_surface);
+    shader_reset();
+    return unit_surface;   
 }
 
 function base_colour(R,G,B) constructor{
