@@ -661,6 +661,7 @@ function scr_initialize_custom() {
 	col_special=obj_creation.col_special;
 	trim=obj_creation.trim;
 	skin_color=obj_creation.skin_color;
+	complex_livery_data = obj_creation.complex_livery_data;
 
 	/*main_color=obj_creation.main_color;
 	secondary_color=obj_creation.secondary_color;

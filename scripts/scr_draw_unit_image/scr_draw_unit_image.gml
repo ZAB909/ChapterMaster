@@ -85,6 +85,34 @@ enum ArmourType {
 function make_colour_from_array(col_array){
     return make_color_rgb(col_array[0] *255, col_array[1] * 255, col_array[2] * 255);
 }
+
+function set_shader_to_base_values(){
+    with (obj_controller){
+            shader_set_uniform_f_array(colour_to_find1, body_colour_find );
+            shader_set_uniform_f_array(colour_to_set1, body_colour_replace );
+            shader_set_uniform_f_array(colour_to_find2, secondary_colour_find );       
+            shader_set_uniform_f_array(colour_to_set2, secondary_colour_replace );
+            shader_set_uniform_f_array(colour_to_find3, pauldron_colour_find );       
+            shader_set_uniform_f_array(colour_to_set3, pauldron_colour_replace );
+            shader_set_uniform_f_array(colour_to_find4, lens_colour_find );       
+            shader_set_uniform_f_array(colour_to_set4, lens_colour_replace );
+            shader_set_uniform_f_array(colour_to_find5, trim_colour_find );
+            shader_set_uniform_f_array(colour_to_set5, trim_colour_replace );
+            shader_set_uniform_f_array(colour_to_find6, pauldron2_colour_find );
+            shader_set_uniform_f_array(colour_to_set6, pauldron2_colour_replace );
+            shader_set_uniform_f_array(colour_to_find7, weapon_colour_find );
+            shader_set_uniform_f_array(colour_to_set7, weapon_colour_replace );
+        }
+        shader_set_uniform_i(shader_get_uniform(sReplaceColor, "u_blend_modes"), 0);   
+}
+
+function set_shader_array(shader_array){
+    for (var i=0;i<array_length(shader_array);i++){
+        if (shader_array[i]>-1){
+            set_shader_color(i, shader_array[i]);
+        }
+    }
+}
 function scr_draw_unit_image(x_draw, y_draw){
     var unit_surface = surface_create(512,512);
     surface_set_target(unit_surface);
@@ -255,24 +283,7 @@ function scr_draw_unit_image(x_draw, y_draw){
         if(shader_is_compiled(sReplaceColor)){
             shader_set(sReplaceColor);
          
-        with (obj_controller){
-                shader_set_uniform_f_array(colour_to_find1, body_colour_find );
-                shader_set_uniform_f_array(colour_to_set1, body_colour_replace );
-                shader_set_uniform_f_array(colour_to_find2, secondary_colour_find );       
-                shader_set_uniform_f_array(colour_to_set2, secondary_colour_replace );
-                shader_set_uniform_f_array(colour_to_find3, pauldron_colour_find );       
-                shader_set_uniform_f_array(colour_to_set3, pauldron_colour_replace );
-                shader_set_uniform_f_array(colour_to_find4, lens_colour_find );       
-                shader_set_uniform_f_array(colour_to_set4, lens_colour_replace );
-                shader_set_uniform_f_array(colour_to_find5, trim_colour_find );
-                shader_set_uniform_f_array(colour_to_set5, trim_colour_replace );
-                shader_set_uniform_f_array(colour_to_find6, pauldron2_colour_find );
-                shader_set_uniform_f_array(colour_to_set6, pauldron2_colour_replace );
-                shader_set_uniform_f_array(colour_to_find7, weapon_colour_find );
-                shader_set_uniform_f_array(colour_to_set7, weapon_colour_replace );
-            }
-            shader_get_uniform(sReplaceColor, "f_Colour8");
-            shader_set_uniform_i(shader_get_uniform(sReplaceColor, "u_blend_modes"), 0);
+            set_shader_to_base_values();
                   
             //TODO make some sort of reusable structure to handle this sort of colour logic
             // also not ideal way of creating colour variation but it's a first pass
@@ -303,23 +314,24 @@ function scr_draw_unit_image(x_draw, y_draw){
             if (role()=obj_ini.role[100,16]) then ui_specialist=5;// Techmarine
             if (role()=obj_ini.role[100,17]) then ui_specialist=7;// Librarian
             */
+            var shader_array_set = array_create(8, -1);
         
             ttrim=obj_controller.trim;
 			specialist_colours=obj_ini.col_special;
 			
 			// Chaplain
             if (ui_specialist=1 || ((ui_specialist=3) and (global.chapter_name="Space Wolves"))){
-                set_shader_color(ShaderType.Body, Colors.Black);
-                set_shader_color(ShaderType.Helmet, Colors.Black);
-                set_shader_color(ShaderType.Lens, Colors.Red);
-                set_shader_color(ShaderType.Trim, Colors.Gold);
-                set_shader_color(ShaderType.RightPauldron, Colors.Black);
+                shader_array_set[ShaderType.Body] = Colors.Black;
+                shader_array_set[ShaderType.Helmet] = Colors.Black;
+                shader_array_set[ShaderType.Lens] = Colors.Red;
+                shader_array_set[ShaderType.Trim] = Colors.Gold;
+                shader_array_set[ShaderType.RightPauldron] = Colors.Black;
                 ttrim=1;
                 specialist_colours=0;
                 if (global.chapter_name == "Dark Angels") {
-                    set_shader_color(ShaderType.Trim, Colors.Grey);
+                    shader_array_set[ShaderType.Trim] = Colors.Grey;
                     if (role() == "Master of Sanctity") {
-                        set_shader_color(ShaderType.Helmet, Colors.Caliban_Green);
+                        shader_array_set[ShaderType.Helmet] = Colors.Caliban_Green;
                         ttrim=0;
                     }
                 }
@@ -327,57 +339,57 @@ function scr_draw_unit_image(x_draw, y_draw){
 			
 			// Apothecary
             else if (ui_specialist=3) and (global.chapter_name!="Space Wolves"){
-                set_shader_color(ShaderType.Body, Colors.White);
-                set_shader_color(ShaderType.Helmet, Colors.White);
-                set_shader_color(ShaderType.Lens, Colors.Red);
-                set_shader_color(ShaderType.RightPauldron, Colors.White);
+                shader_array_set[ShaderType.Body] = Colors.White;
+                shader_array_set[ShaderType.Helmet] = Colors.White;
+                shader_array_set[ShaderType.Lens] = Colors.Red;
+                shader_array_set[ShaderType.RightPauldron] = Colors.White;
                 ttrim=0;
                 specialist_colours=0;
             }
 			
 			// Techmarine
             else if (ui_specialist=5){
-                set_shader_color(ShaderType.Body, Colors.Red);
-                set_shader_color(ShaderType.Helmet, Colors.Red);
-                set_shader_color(ShaderType.Lens, Colors.Green);
-                set_shader_color(ShaderType.Trim, Colors.Silver);
-                set_shader_color(ShaderType.RightPauldron, Colors.Red);
+                shader_array_set[ShaderType.Body] = Colors.Red;
+                shader_array_set[ShaderType.Helmet] = Colors.Red;
+                shader_array_set[ShaderType.Lens] = Colors.Green;
+                shader_array_set[ShaderType.Trim] = Colors.Silver;
+                shader_array_set[ShaderType.RightPauldron] = Colors.Red;
                 ttrim=1;
                 specialist_colours=0;
             }
 
 			// Librarian
             else if (ui_specialist=7){
-                set_shader_color(ShaderType.Body, Colors.Ultramarine);
-                set_shader_color(ShaderType.Helmet, Colors.Ultramarine);
-                set_shader_color(ShaderType.Lens, Colors.Cyan);
-                set_shader_color(ShaderType.Trim, Colors.Gold);
-                set_shader_color(ShaderType.RightPauldron, Colors.Ultramarine);
+                shader_array_set[ShaderType.Body] = Colors.Ultramarine;
+                shader_array_set[ShaderType.Helmet] = Colors.Ultramarine;
+                shader_array_set[ShaderType.Lens] = Colors.Cyan;
+                shader_array_set[ShaderType.Trim] = Colors.Gold;
+                shader_array_set[ShaderType.RightPauldron] = Colors.Ultramarine;
                 ttrim=1;
                 specialist_colours=0;
             }
 			
 			// Death Company
             else if (ui_specialist=15){
-                set_shader_color(ShaderType.Body, Colors.Black);
-                set_shader_color(ShaderType.Helmet, Colors.Black);
-                set_shader_color(ShaderType.LeftPauldron, Colors.Black);
-                set_shader_color(ShaderType.Lens, Colors.Red);
-                set_shader_color(ShaderType.Trim, Colors.Black);
-                set_shader_color(ShaderType.RightPauldron, Colors.Black);
-                set_shader_color(ShaderType.Weapon, Colors.Dark_Red);
+                shader_array_set[ShaderType.Body] = Colors.Black;
+                shader_array_set[ShaderType.Helmet] = Colors.Black;
+                shader_array_set[ShaderType.LeftPauldron] = Colors.Black;
+                shader_array_set[ShaderType.Lens] = Colors.Red;
+                shader_array_set[ShaderType.Trim] = Colors.Black;
+                shader_array_set[ShaderType.RightPauldron] = Colors.Black;
+                shader_array_set[ShaderType.Weapon] = Colors.Dark_Red;
                 ttrim=0;
                 specialist_colours=0;
             }
 			
 			// Deathwing
             if (ui_coloring == "deathwing"){
-                set_shader_color(ShaderType.Body, Colors.Deathwing);
-                set_shader_color(ShaderType.LeftPauldron, Colors.Deathwing);
-                set_shader_color(ShaderType.RightPauldron, Colors.Deathwing);
+                shader_array_set[ShaderType.Body] = Colors.Deathwing;
+                shader_array_set[ShaderType.LeftPauldron] = Colors.Deathwing;
+                shader_array_set[ShaderType.RightPauldron] = Colors.Deathwing;
                 if (role() != obj_ini.role[100][2]){
-                    set_shader_color(ShaderType.Trim, Colors.Light_Caliban_Green);
-                    set_shader_color(ShaderType.Helmet, Colors.Deathwing);
+                    shader_array_set[ShaderType.Trim] = Colors.Light_Caliban_Green;
+                    shader_array_set[ShaderType.Helmet] = Colors.Deathwing;
                 }
                 ttrim=0;
                 specialist_colours=0;
@@ -385,32 +397,34 @@ function scr_draw_unit_image(x_draw, y_draw){
             
 			// Ravenwing
             if (ui_coloring="ravenwing"){
-                set_shader_color(ShaderType.Body, Colors.Black);
-                set_shader_color(ShaderType.LeftPauldron, Colors.Black);
-                set_shader_color(ShaderType.RightPauldron, Colors.Black);
-                set_shader_color(ShaderType.Helmet, Colors.Black);
+                shader_array_set[ShaderType.Body] = Colors.Black;
+                shader_array_set[ShaderType.LeftPauldron] = Colors.Black;
+                shader_array_set[ShaderType.RightPauldron] = Colors.Black;
+                shader_array_set[ShaderType.Helmet] = Colors.Black;
                 ttrim=0;
                 specialist_colours=0;
             }
 
 			// Dark Angels Captains
             if (global.chapter_name == "Dark Angels" && role() == obj_ini.role[100][5] && ui_coloring != "deathwing"){
-                set_shader_color(ShaderType.RightPauldron, Colors.Dark_Red);
-                set_shader_color(ShaderType.Helmet, Colors.Deathwing);
+                shader_array_set[ShaderType.RightPauldron] = Colors.Dark_Red;
+                shader_array_set[ShaderType.Helmet] = Colors.Deathwing;
                 ttrim=0;
                 specialist_colours=0;
             }
 
 			// Blood Angels
             else if (ui_coloring="gold"){
-                set_shader_color(ShaderType.Body, Colors.Gold);
-                set_shader_color(ShaderType.Helmet, Colors.Gold);
-                set_shader_color(ShaderType.LeftPauldron, Colors.Gold);
-                set_shader_color(ShaderType.Trim, Colors.Gold);
-                set_shader_color(ShaderType.RightPauldron, Colors.Gold);
+                shader_array_set[ShaderType.Body] = Colors.Gold;
+                shader_array_set[ShaderType.Helmet] = Colors.Gold;
+                shader_array_set[ShaderType.LeftPauldron] = Colors.Gold;
+                shader_array_set[ShaderType.Trim] = Colors.Gold;
+                shader_array_set[ShaderType.RightPauldron] = Colors.Gold;
                 ttrim=0;
                 specialist_colours=0;
-            }       
+            }
+            //We can return to the custom shader values at any time during draw doing this 
+            set_shader_array(shader_array_set);
 			// Marine draw sequence
             /*
             main
@@ -655,29 +669,18 @@ function scr_draw_unit_image(x_draw, y_draw){
                     specific_armour_sprite = spr_mk5_colors;
                     //TODO sort this mess out streamline system somehow
                     if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1){
-                        specific_helm = spr_da_mk5_helm;
+                        specific_helm = spr_generic_sgt_mk7;
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
                             // specific_armour_sprite = spr_da_mk5;
                             armour_draw=[spr_da_mk5,0];
                             robe_bypass = true;
                             armour_bypass=true;
                         }                        
-                    }
-                    else if (global.chapter_name=="White Scars" || obj_ini.progenitor==2){specific_helm = spr_ws_mk5_helm;}
-                    else if (global.chapter_name=="Space Wolves" || obj_ini.progenitor==3){specific_helm = spr_sw_mk5_helm;}
-                    else if (global.chapter_name=="Imperial Fists" || obj_ini.progenitor==4){specific_helm = spr_if_mk5_helm;}
-                    else if (global.chapter_name=="Blood Angels" || obj_ini.progenitor=5){specific_helm = spr_ba_mk5_helm;}
-                    else if (global.chapter_name=="Iron Hands" || obj_ini.progenitor==6){specific_helm = spr_ih_mk5_helm;}
-                    else if (global.chapter_name=="Ultramarines" || obj_ini.progenitor==7){specific_helm = spr_um_mk5_helm;}
-                    else if (global.chapter_name=="Salamanders" || obj_ini.progenitor==8){specific_helm = spr_sal_mk5_helm;}
-                    else if (global.chapter_name=="Raven Guard" || obj_ini.progenitor==9) {specific_helm = spr_rg_mk5_helm;}
-                    else {
-                         specific_helm = spr_um_mk5_helm;
-                    }                    
+                    }                   
                 } else if (armour()=="MK6 Corvus"){
                     specific_armour_sprite = spr_beakie_colors;
                     if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1){
-                        specific_helm = spr_da_mk6_helm;
+                        specific_helm = spr_generic_sgt_mk7;
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
                             // specific_armour_sprite = spr_da_mk6;
                             armour_draw=[spr_da_mk6,0];
@@ -685,20 +688,9 @@ function scr_draw_unit_image(x_draw, y_draw){
                             armour_bypass=true;
                         }                      
                     }
-                    else if (global.chapter_name=="White Scars" || obj_ini.progenitor==2){specific_helm = spr_ws_mk6_helm;}
-                    else if (global.chapter_name=="Space Wolves" || obj_ini.progenitor==3){specific_helm = spr_sw_mk6_helm;}
-                    else if (global.chapter_name=="Imperial Fists" || obj_ini.progenitor==4){specific_helm = spr_if_mk6_helm;}
-                    else if (global.chapter_name=="Blood Angels" || obj_ini.progenitor=5){specific_helm = spr_ba_mk6_helm;}
-                    else if (global.chapter_name=="Iron Hands" || obj_ini.progenitor==6){specific_helm = spr_ih_mk6_helm;}
-                    else if (global.chapter_name=="Ultramarines" || obj_ini.progenitor==7){specific_helm = spr_um_mk6_helm;}
-                    else if (global.chapter_name=="Salamanders" || obj_ini.progenitor==8){specific_helm = spr_sal_mk6_helm;}
-                    else if (global.chapter_name=="Raven Guard" || obj_ini.progenitor==9){specific_helm = spr_rg_mk6_helm;}
-                    else {
-                        specific_helm = spr_um_mk6_helm;
-                    }
 
                 } else if (armour()=="MK7 Aquila" || unit_armour="Power Armour"){
-                    specific_armour_sprite = spr_mk7_colors;
+                    specific_armour_sprite = spr_generic_sgt_mk7;
                     if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1){
                         specific_helm = spr_da_mk7_helm;
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
@@ -707,17 +699,6 @@ function scr_draw_unit_image(x_draw, y_draw){
                             robe_bypass = true;
                             armour_bypass = true;
                         }                          
-                    }
-                    else if (global.chapter_name=="White Scars" || obj_ini.progenitor==2){specific_helm = spr_ws_mk7_helm;}
-                    else if (global.chapter_name=="Space Wolves" || obj_ini.progenitor==3){specific_helm = spr_sw_mk7_helm;}
-                    else if (global.chapter_name=="Imperial Fists" || obj_ini.progenitor==4){specific_helm = spr_if_mk7_helm;}
-                    else if (global.chapter_name=="Blood Angels" || obj_ini.progenitor=5){specific_helm = spr_ba_mk7_helm;}
-                    else if (global.chapter_name=="Iron Hands" || obj_ini.progenitor==6){specific_helm = spr_ih_mk7_helm;}
-                    else if (global.chapter_name=="Ultramarines" || obj_ini.progenitor==7){specific_helm = spr_um_mk7_helm;}
-                    else if (global.chapter_name=="Salamanders" || obj_ini.progenitor==8){specific_helm = spr_sal_mk7_helm;}
-                    else if (global.chapter_name=="Raven Guard" || obj_ini.progenitor==9){specific_helm = spr_rg_mk7_helm;}
-                    else {
-                        specific_helm = spr_um_mk7_helm;
                     }
                 } else if (armour()=="MK8 Errant"){
                     specific_armour_sprite = spr_mk8_colors;
@@ -910,13 +891,32 @@ function scr_draw_unit_image(x_draw, y_draw){
                 if (brothers>=0) and (blandify=0) then draw_sprite(spr_gear_techb,brothers,0,y_surface_offset);// Tech-Brothers bling
                 //sgt helms
                 if (specific_helm!=false){
-                    shader_reset();
+                    with (obj_controller){
+                        shader_set_uniform_f_array(colour_to_find1, [30/255,30/255,30/255]);
+                        shader_set_uniform_f_array(colour_to_find2, [200/255,0/255,0/255]);
+                    }
                     if (role()==obj_ini.role[100][18]){
+                        with (obj_ini.complex_livery_data.sgt){
+                            set_shader_color(0,helm_primary);
+                            set_shader_color(1,helm_secondary);
+                            draw_sprite(specific_helm,helm_pattern,helm_draw[0],y_surface_offset+0);
+                        }
                         draw_sprite(specific_helm,0,helm_draw[0],y_surface_offset+0);
                     }else if(role()==obj_ini.role[100][19]){
-                        draw_sprite(specific_helm,1,helm_draw[0],y_surface_offset+0);
-                    } 
-                    shader_set(sReplaceColor);
+                        with (obj_ini.complex_livery_data.vet_sgt){
+                            set_shader_color(0,helm_primary);
+                            set_shader_color(1,helm_secondary);
+                            draw_sprite(specific_helm,helm_pattern,helm_draw[0],y_surface_offset+0);
+                        }
+                    }else if(role()==obj_ini.role[100][Role.CAPTAIN]){
+                        with (obj_ini.complex_livery_data.captain){
+                            set_shader_color(0,helm_primary);
+                            set_shader_color(1,helm_secondary);
+                            draw_sprite(specific_helm,helm_pattern,helm_draw[0],y_surface_offset+0);
+                        }
+                    }
+                    set_shader_to_base_values();
+                    set_shader_array(shader_array_set);
                 }            
                 // Apothecary Lens
                 if (ui_specialist=3){

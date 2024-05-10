@@ -595,7 +595,7 @@ function scr_ui_manage() {
                         break;
                 }
                 if (hp_mod != 0) {
-                    tooltip_text += string_hash_to_newline($"{name}: {string_sign(hp_mod)}%#");
+                    tooltip_text += string_hash_to_newline($"{name}: {format_number_with_sign(hp_mod)}%#");
                 }
             }
         	x1 = x_left;

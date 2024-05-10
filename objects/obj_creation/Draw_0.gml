@@ -1360,36 +1360,6 @@ if (slide=4){
                     cords : [620, 287],
                     type : "sgt_helm_secondary",
                 },
-                /*{
-                    text : $"Pauldron 1: {col[pauldron2_color]}",
-                    tooltip:"First Pauldron",
-                    tooltip2:"The color of your Astartes' right Pauldron.  Normally this Pauldron displays their rank and designation.",
-                    cords : [620, 322],
-                },
-                {
-                    text : $"Pauldron 2: {col[pauldron_color]}",
-                    tooltip:"Second Pauldron",
-                    tooltip2:"The color of your Astartes' left Pauldron.  Normally this Pauldron contains the Chapter Insignia.",
-                    cords : [620, 357],
-                },
-                {
-                    text : $"Trim: {col[trim_color]}",
-                    tooltip:"Trim",
-                    tooltip2:"The trim color that appears on the Pauldrons, armour plating, and any decorations.",
-                    cords : [620, 392],                
-                },
-                {
-                    text : $"Lens: {col[lens_color]}",
-                    tooltip:"Lens",
-                    tooltip2:"The color of your Astartes' lenses.  Most of the time this will be the visor color.",
-                    cords : [620, 427],                
-                },
-                {
-                    text : $"Weapon: {col[weapon_color]}",
-                    tooltip:"Weapon",
-                    tooltip2:"The primary color of your Astartes' weapons.",
-                    cords : [620, 462],                
-                } */ 
             ];
             var button_cords, cur_button;
             for (var i=0;i<array_length(button_data);i++){
@@ -1428,7 +1398,7 @@ if (slide=4){
             for (var i=0;i<array_length(livery_type_options);i++){
                 cur_button = livery_type_options[i];
                 draw_set_alpha(1);
-                yar = complex_depth_selection==(i) ?1:0;
+                yar = complex_depth_selection==(i) ? 1 : 0;
                 if (custom<2) then draw_set_alpha(0.5);
                 draw_sprite(spr_creation_check,yar,cur_button.cords[0],cur_button.cords[1]);
                  if (scr_hit(cur_button.cords[0],cur_button.cords[1],cur_button.cords[0]+32,cur_button.cords[1]+32) and allow_colour_click){
@@ -1436,6 +1406,7 @@ if (slide=4){
                         var onceh=0;
                         if (complex_depth_selection=i) and (onceh=0){complex_depth_selection=0;onceh=1;}
                         if (complex_depth_selection!=i) and (onceh=0){complex_depth_selection=i;onceh=1;}
+                        complex_livery_data.sgt.helm_pattern=complex_depth_selection;
                  }
                  draw_text_transformed(cur_button.cords[0]+30,cur_button.cords[1]+4,cur_button.text,0.4,0.4,0);
             }                                           
@@ -1482,7 +1453,7 @@ if (slide=4){
             }
         }
     } else {
-        var complex_livery_options = ["Sergeant Markers","Veteran Sergeant Markers"],
+        var complex_livery_options = ["Sergeant Markers","Veteran Sergeant Markers", "Captain Markers"],
         for (var i=0;i<array_length(complex_livery_options);i++){
             yyy+=spacing;
             if (point_and_click(draw_unit_buttons([xxx,yyy], complex_livery_options[i],[0.5,0.5], 38144,, fnt_40k_30b, 1))){

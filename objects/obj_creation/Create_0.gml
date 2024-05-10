@@ -32,14 +32,17 @@ complex_selection = "sgt";
 complex_depth_selection = 0;
 complex_livery_data = {
 	sgt : {
+		helm_pattern:0,
 		helm_primary : 0,
 		helm_secondary : 0,
 	},
 	vet_sgt : {
+		helm_pattern:0,
 		helm_primary : 0,
 		helm_secondary : 0,
 	},
 	captain : {
+		helm_pattern:0,
 		helm_primary : 0,
 		helm_secondary : 0,
 	}		
