@@ -278,7 +278,7 @@ function scr_company_struct(comp) constructor{
 							sprite_draw_delay = [member,unit_sprite_coords];
 							obj_controller.temp[120] = member;
 						}else{
-							member.draw_unit_image(unit_sprite_coords[0]-xx,unit_sprite_coords[1]-yy);
+							member.draw_unit_image(unit_sprite_coords[0]-xx,unit_sprite_coords[1]-yy,true);
 						}								
 					}
 					x_mod+=x_overlap_mod;
@@ -287,7 +287,7 @@ function scr_company_struct(comp) constructor{
 			if (is_array(sprite_draw_delay)){
 				member = sprite_draw_delay[0];
 				unit_sprite_coords=sprite_draw_delay[1]
-				member.draw_unit_image(unit_sprite_coords[0]-xx,unit_sprite_coords[1]-yy);
+				member.draw_unit_image(unit_sprite_coords[0]-xx,unit_sprite_coords[1]-yy,true);
 				draw_set_color(c_red);
 				draw_rectangle(unit_sprite_coords[0], unit_sprite_coords[1], unit_sprite_coords[2], unit_sprite_coords[3], 1);
 				draw_set_color(c_gray);

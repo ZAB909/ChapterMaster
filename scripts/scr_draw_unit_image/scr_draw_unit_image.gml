@@ -113,7 +113,7 @@ function set_shader_array(shader_array){
         }
     }
 }
-function scr_draw_unit_image(x_draw, y_draw){
+function scr_draw_unit_image(x_draw, y_draw, background=false){
     var unit_surface = surface_create(512,512);
     surface_set_target(unit_surface);
     draw_clear_alpha(c_black, 0);//RESET surface
@@ -279,7 +279,13 @@ function scr_draw_unit_image(x_draw, y_draw){
         if (ui_twoh[1]=true) and (ui_arm[1]==0) then ui_arm[2] = 0;
         if (ui_twoh[2]=true) and (ui_arm[2]==0) then ui_arm[1] = 0;
 
-        y_draw+=40;   
+        y_draw+=40;
+        if (background){
+            draw_rectangle_color_simple(0,0,166,261,0,c_black);
+            draw_rectangle_color_simple(0,0,166,261,1,c_gray);
+            draw_rectangle_color_simple(1,1,165,260,1,c_black);
+            draw_rectangle_color_simple(2,2,164,259,1,c_gray);
+        }
         if(shader_is_compiled(sReplaceColor)){
             shader_set(sReplaceColor);
          
