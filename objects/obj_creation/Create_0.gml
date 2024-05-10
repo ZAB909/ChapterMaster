@@ -29,6 +29,21 @@ premades=true;
 
 complex_livery=false;
 complex_selection = "sgt";
+complex_depth_selection = 0;
+complex_livery_data = {
+	sgt : {
+		helm_primary : 0,
+		helm_secondary : 0,
+	},
+	vet_sgt : {
+		helm_primary : 0,
+		helm_secondary : 0,
+	},
+	captain : {
+		helm_primary : 0,
+		helm_secondary : 0,
+	}		
+}
 fade_in=50;
 slate1=80;
 slate2=0;

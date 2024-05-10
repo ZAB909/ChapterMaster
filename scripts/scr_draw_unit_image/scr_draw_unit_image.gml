@@ -8,6 +8,65 @@ enum ShaderType {
     Weapon
 }
 
+//TODO this is a laxy fix and can be written better
+function set_shader_color(shaderType, colorIndex) {
+    var findShader, setShader;
+    if (instance_exists(obj_controller)){
+        with (obj_controller){
+            switch (shaderType) {
+                case ShaderType.Body:
+                    setShader = colour_to_set1;
+                    break;
+                case ShaderType.Helmet:
+                    setShader = colour_to_set2;
+                    break;
+                case ShaderType.LeftPauldron:
+                    setShader = colour_to_set3;
+                    break;
+                case ShaderType.Lens:
+                    setShader = colour_to_set4;
+                    break;
+                case ShaderType.Trim:
+                    setShader = colour_to_set5;
+                    break;
+                case ShaderType.RightPauldron:
+                    setShader = colour_to_set6;
+                    break;
+                case ShaderType.Weapon:
+                    setShader = colour_to_set7;
+                    break;
+            }
+            shader_set_uniform_f(setShader, col_r[colorIndex]/255, col_g[colorIndex]/255, col_b[colorIndex]/255);
+        }
+    } else if (instance_exists(obj_creation)){
+        with (obj_controller){
+            switch (shaderType) {
+                case ShaderType.Body:
+                    setShader = colour_to_set1;
+                    break;
+                case ShaderType.Helmet:
+                    setShader = colour_to_set2;
+                    break;
+                case ShaderType.LeftPauldron:
+                    setShader = colour_to_set3;
+                    break;
+                case ShaderType.Lens:
+                    setShader = colour_to_set4;
+                    break;
+                case ShaderType.Trim:
+                    setShader = colour_to_set5;
+                    break;
+                case ShaderType.RightPauldron:
+                    setShader = colour_to_set6;
+                    break;
+                case ShaderType.Weapon:
+                    setShader = colour_to_set7;
+                    break;
+            }
+            shader_set_uniform_f(setShader, col_r[colorIndex]/255, col_g[colorIndex]/255, col_b[colorIndex]/255);
+        }        
+    }
+}
 // Define armour types
 enum ArmourType {
     Normal,
@@ -247,34 +306,6 @@ function scr_draw_unit_image(x_draw, y_draw){
         
             ttrim=obj_controller.trim;
 			specialist_colours=obj_ini.col_special;
-			
-            function set_shader_color(shaderType, colorIndex) {
-                var findShader, setShader;
-                switch (shaderType) {
-                    case ShaderType.Body:
-                        setShader = obj_controller.colour_to_set1;
-                        break;
-                    case ShaderType.Helmet:
-                        setShader = obj_controller.colour_to_set2;
-                        break;
-                    case ShaderType.LeftPauldron:
-                        setShader = obj_controller.colour_to_set3;
-                        break;
-                    case ShaderType.Lens:
-                        setShader = obj_controller.colour_to_set4;
-                        break;
-                    case ShaderType.Trim:
-                        setShader = obj_controller.colour_to_set5;
-                        break;
-                    case ShaderType.RightPauldron:
-                        setShader = obj_controller.colour_to_set6;
-                        break;
-                    case ShaderType.Weapon:
-                        setShader = obj_controller.colour_to_set7;
-                        break;
-                }
-                shader_set_uniform_f(setShader, obj_controller.col_r[colorIndex]/255, obj_controller.col_g[colorIndex]/255, obj_controller.col_b[colorIndex]/255);
-            }
 			
 			// Chaplain
             if (ui_specialist=1 || ((ui_specialist=3) and (global.chapter_name="Space Wolves"))){

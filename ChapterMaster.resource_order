@@ -2,5 +2,7 @@
   "FolderOrderSettings": [
     {"name":"textures","order":1,"path":"folders/Sprites/textures.yy",},
   ],
-  "ResourceOrderSettings": [],
+  "ResourceOrderSettings": [
+    {"name":"spr_generic_sgt_mk7","order":1,"path":"sprites/spr_generic_sgt_mk7/spr_generic_sgt_mk7.yy",},
+  ],
 }

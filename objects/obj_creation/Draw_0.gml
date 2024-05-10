@@ -27,7 +27,7 @@ if (slate3>0){
     draw_line(xx+30,yy+70+(slate3*36),xx+790,yy+70+(slate3*36));
 }
 
-
+var allow_colour_click = (cooldown<=0)   and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup));
 
 draw_set_alpha(slate4/30);
 if (slate4>0){
@@ -313,10 +313,12 @@ if (slide>=2){
                 draw_sprite_stretched(spr_creation_arrow,1,1164-144,160,32,32);
                 
                 if (scr_hit(1164-194,149,1164-162,193)=true){obj_cursor.image_index=1;
-                    if (cooldown<=0) and (mouse_left>=1){cooldown=8000;founding-=1;if (founding=0) then founding=10;}
+                    if (cooldown<=0) and (mouse_left>=1){cooldown=8000;founding-=1;
+                    if (founding=0) then founding=10;}
                 }
                 if (scr_hit(1164-144,149,1164-112,193)=true){obj_cursor.image_index=1;
-                    if (cooldown<=0) and (mouse_left>=1){cooldown=8000;founding+=1;if (founding=11) then founding=1;}
+                    if (cooldown<=0) and (mouse_left>=1){cooldown=8000;founding+=1;
+                    if (founding=11) then founding=1;}
                 }
             }
             
@@ -417,22 +419,30 @@ if (slide=2){
         draw_text_transformed(617,497,string_hash_to_newline("GeneSeed Stability ("+string(stability)+")"),0.5,0.5,0);
         
         if (custom=2) then draw_sprite_stretched(spr_arrow,0,625,325,32,32);
-        if (scr_hit(625,325,657,357)=true){obj_cursor.image_index=1;if (cooldown<=0) and (custom=2) and (strength>1) and (mouse_left>=1){strength-=1;points-=10;cooldown=8000;}}
+        if (scr_hit(625,325,657,357)=true){obj_cursor.image_index=1;
+        if (cooldown<=0) and (custom=2) and (strength>1) and (mouse_left>=1){strength-=1;points-=10;cooldown=8000;}}
         if (custom=2) then draw_sprite_stretched(spr_arrow,0,625,380,32,32);
-        if (scr_hit(625,380,657,412)=true){obj_cursor.image_index=1;if (cooldown<=0) and (custom=2) and (cooperation>1) and (mouse_left>=1){cooperation-=1;points-=10;cooldown=8000;}}
+        if (scr_hit(625,380,657,412)=true){obj_cursor.image_index=1;
+        if (cooldown<=0) and (custom=2) and (cooperation>1) and (mouse_left>=1){cooperation-=1;points-=10;cooldown=8000;}}
         if (custom=2) then draw_sprite_stretched(spr_arrow,0,625,435,32,32);
-        if (scr_hit(625,435,657,467)=true){obj_cursor.image_index=1;if (cooldown<=0) and (custom=2) and (purity>1) and (mouse_left>=1){purity-=1;points-=10;cooldown=8000;}}
+        if (scr_hit(625,435,657,467)=true){obj_cursor.image_index=1;
+        if (cooldown<=0) and (custom=2) and (purity>1) and (mouse_left>=1){purity-=1;points-=10;cooldown=8000;}}
         if (custom=2) then draw_sprite_stretched(spr_arrow,0,625,490,32,32);
-        if (scr_hit(625,490,657,522)=true){obj_cursor.image_index=1;if (cooldown<=0) and (custom=2) and (stability>1) and (mouse_left>=1){stability-=1;points-=10;cooldown=8000;}}
+        if (scr_hit(625,490,657,522)=true){obj_cursor.image_index=1;
+        if (cooldown<=0) and (custom=2) and (stability>1) and (mouse_left>=1){stability-=1;points-=10;cooldown=8000;}}
         
         if (custom=2) then draw_sprite_stretched(spr_arrow,1,1135,325,32,32);
-        if (scr_hit(1135,325,1167,357)=true){obj_cursor.image_index=1;if (cooldown<=0) and (custom=2) and (strength<10) and (points+10<=maxpoints) and (mouse_left>=1){strength+=1;points+=10;cooldown=8000;}}
+        if (scr_hit(1135,325,1167,357)=true){obj_cursor.image_index=1;
+        if (cooldown<=0) and (custom=2) and (strength<10) and (points+10<=maxpoints) and (mouse_left>=1){strength+=1;points+=10;cooldown=8000;}}
         if (custom=2) then draw_sprite_stretched(spr_arrow,1,1135,380,32,32);
-        if (scr_hit(1135,380,1167,412)=true){obj_cursor.image_index=1;if (cooldown<=0) and (custom=2) and (cooperation<10) and (points+10<=maxpoints) and (mouse_left>=1){cooperation+=1;points+=10;cooldown=8000;}}
+        if (scr_hit(1135,380,1167,412)=true){obj_cursor.image_index=1;
+        if (cooldown<=0) and (custom=2) and (cooperation<10) and (points+10<=maxpoints) and (mouse_left>=1){cooperation+=1;points+=10;cooldown=8000;}}
         if (custom=2) then draw_sprite_stretched(spr_arrow,1,1135,435,32,32);
-        if (scr_hit(1135,435,1167,467)=true){obj_cursor.image_index=1;if (cooldown<=0) and (custom=2) and (purity<10) and (points+10<=maxpoints) and (mouse_left>=1){purity+=1;points+=10;cooldown=8000;}}
+        if (scr_hit(1135,435,1167,467)=true){obj_cursor.image_index=1;
+        if (cooldown<=0) and (custom=2) and (purity<10) and (points+10<=maxpoints) and (mouse_left>=1){purity+=1;points+=10;cooldown=8000;}}
         if (custom=2) then draw_sprite_stretched(spr_arrow,1,1135,490,32,32);
-        if (scr_hit(1135,490,1167,522)=true){obj_cursor.image_index=1;if (cooldown<=0) and (custom=2) and (stability<10) and (points+10<=maxpoints) and (mouse_left>=1){stability+=1;points+=10;cooldown=8000;}}
+        if (scr_hit(1135,490,1167,522)=true){obj_cursor.image_index=1;
+        if (cooldown<=0) and (custom=2) and (stability<10) and (points+10<=maxpoints) and (mouse_left>=1){stability+=1;points+=10;cooldown=8000;}}
         
         if (scr_hit(532,325,1166,357)=true){tooltip="Strength";tooltip2="How many companies your chapter begins with.  For every score below five a company will be removed; conversely, each score higher grants 50 additional astartes.";}
         if (scr_hit(486,380,1166,412)=true){tooltip="Cooperation";tooltip2="How diplomatic your chapter is.  A low score will lower starting dispositions of Imperial factions and make disposition increases less likely to occur.";}
@@ -1166,12 +1176,30 @@ if (slide=4){
         if (col_special>=2) then draw_sprite(spr_mk7_colors,12,444,252);
         
         draw_sprite(spr_mk7_colors,col_special,444,252);
-        if (col_special<=1){draw_sprite(spr_mk7_colors,6,444,252);draw_sprite(spr_mk7_colors,8,444,252);}
-        if (col_special>=2){draw_sprite(spr_mk7_colors,6,444,252);draw_sprite(spr_mk7_colors,9,444,252);}
+        if (col_special<=1){
+            draw_sprite(spr_mk7_colors,6,444,252);
+            draw_sprite(spr_mk7_colors,8,444,252);
+        }
+        if (col_special>=2){
+            draw_sprite(spr_mk7_colors,6,444,252);
+            draw_sprite(spr_mk7_colors,9,444,252);
+        }
         if (trim=0) and (col_special<=1) then draw_sprite(spr_mk7_colors,4,444,252);
         if (trim=0) and (col_special>=2) then draw_sprite(spr_mk7_colors,5,444,252);
+        if (complex_selection=="Sergeant Markers" && complex_livery){
+            sgt_col_1 = complex_livery_data.sgt.helm_primary;
+            sgt_col_2 = complex_livery_data.sgt.helm_secondary;
+            shader_set_uniform_f_array(colour_to_find1, [30/255,30/255,30/255]);
+            shader_set_uniform_f(colour_to_set1, col_r[sgt_col_1]/255, col_g[sgt_col_1]/255, col_b[sgt_col_1]/255);
+            shader_set_uniform_f_array(colour_to_find2, [200/255,0/255,0/255]);
+            shader_set_uniform_f(colour_to_set2, col_r[sgt_col_2]/255, col_g[sgt_col_2]/255, col_b[sgt_col_2]/255);
+            draw_sprite(spr_generic_sgt_mk7, complex_depth_selection, 444,252);
+        }
         
-        
+        shader_set_uniform_f_array(colour_to_find1, body_colour_find );       
+        shader_set_uniform_f_array(colour_to_set1, body_colour_replace );
+        shader_set_uniform_f_array(colour_to_find2, secondary_colour_find );       
+        shader_set_uniform_f_array(colour_to_set2, secondary_colour_replace );        
         draw_sprite(spr_weapon_colors,0,444,252);
         shader_reset();
         
@@ -1203,138 +1231,214 @@ if (slide=4){
     
     draw_set_font(fnt_40k_30b);
     draw_text_transformed(444,215,string_hash_to_newline("Livelry"),0.6,0.6,0);
-    if (point_and_click(draw_unit_buttons([444,450], complex_livery?"Simple Livery":"Complex Livery",[1,1], c_green,, fnt_40k_14b, 1))){
+    if (point_and_click(draw_unit_buttons([544,215], complex_livery? "Simple Livery":"Complex Livery",[1,1], c_green,, fnt_40k_14b, 1))){
         complex_livery=!complex_livery;
     }
     var str,str_width,hei,x8,y8;x8=0;y8=0;
-    
+    //Dont ask why the pauldron colours are switched i guess duke got confused between left and right at some point
+    //TODO extract this function somewhere
+    /*function draw_checkbox (cords, text, main_alpha, checked){
+            draw_set_alpha(main_alpha);
+            yar = col_special==(i+1) ?1:0;
+            if (custom<2) then draw_set_alpha(0.5);
+            draw_sprite(spr_creation_check,yar,cur_button.cords[0],cur_button.cords[1]);
+             if (scr_hit(cur_button.cords[0],cur_button.cords[1],cur_button.cords[0]+32,cur_button.cords[1]+32) and allow_colour_click){
+                    cooldown=8000;
+                    var onceh=0;
+                    if (col_special=i+1) and (onceh=0){col_special=0;onceh=1;}
+                    if (col_special!=i+1) and (onceh=0){col_special=i+1;onceh=1;}
+             }
+             draw_text_transformed(cur_button.cords[0]+30,cur_button.cords[1]+4,cur_button.text,0.4,0.4,0);
+    }*/
     if (!complex_livery){
-        var allow_colour_click = (cooldown<=0)   and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup);
+        var button_data = [
+            {
+                text : $"Primary : {col[main_color]}",
+                tooltip:"Primary",
+                tooltip2:"The main color of your Astartes and their vehicles.",
+                cords : [620, 252],
+            },
+            {
+                text : $"Secondary: {col[main_color]}",
+                tooltip:"Secondary",
+                tooltip2:"The secondary color of your Astartes and their vehicles.",
+                cords : [620, 287],
+            },
+            {
+                text : $"Pauldron 1: {col[pauldron2_color]}",
+                tooltip:"First Pauldron",
+                tooltip2:"The color of your Astartes' right Pauldron.  Normally this Pauldron displays their rank and designation.",
+                cords : [620, 322],
+            },
+            {
+                text : $"Pauldron 2: {col[pauldron_color]}",
+                tooltip:"Second Pauldron",
+                tooltip2:"The color of your Astartes' left Pauldron.  Normally this Pauldron contains the Chapter Insignia.",
+                cords : [620, 357],
+            },
+            {
+                text : $"Trim: {col[trim_color]}",
+                tooltip:"Trim",
+                tooltip2:"The trim color that appears on the Pauldrons, armour plating, and any decorations.",
+                cords : [620, 392],                
+            },
+            {
+                text : $"Lens: {col[lens_color]}",
+                tooltip:"Lens",
+                tooltip2:"The color of your Astartes' lenses.  Most of the time this will be the visor color.",
+                cords : [620, 427],                
+            },
+            {
+                text : $"Weapon: {col[weapon_color]}",
+                tooltip:"Weapon",
+                tooltip2:"The primary color of your Astartes' weapons.",
+                cords : [620, 462],                
+            }             
+        ]
+        var button_cords, cur_button;
+        for (var i=0;i<array_length(button_data);i++){
+            cur_button = button_data[i];
+            button_cords = draw_unit_buttons(cur_button.cords, cur_button.text,[0.5,0.5], 38144,, fnt_40k_30b, 1);
+            if (scr_hit(button_cords[0],button_cords[1],button_cords[2],button_cords[3])){
+                 tooltip=cur_button.tooltip;
+                 tooltip2=cur_button.tooltip2;
+            }
+            if (point_and_click(button_cords)){
+                cooldown=8000;
+                var pp=instance_create(0,0,obj_creation_popup);
+                pp.type=i+1;
+            }
+        }
         draw_set_color(38144);
-        draw_set_alpha(1);
-        if (custom<2) then draw_set_alpha(0.5);
-        str="Primary: "+string(col[main_color]);x8=620;y8=252;
-        str_width=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
-        draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
-        draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-        if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
-            tooltip="Primary";tooltip2="The main color of your Astartes and their vehicles.";
-            draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
-            if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=1;}
+        var livery_type_options = [
+            {
+                cords : [437,500],   
+                text : $"Breastplate",             
+            },
+            {
+                cords : [554,500],   
+                text : $"Vertical",             
+            },
+            {
+                cords : [662,500],   
+                text : $"Quadrant",             
+            },
+            {
+                cords : [770,500],   
+                text : $"Trim",             
+            }                                    
+        ]
+        var yar;
+        for (var i=0;i<array_length(livery_type_options);i++){
+            cur_button = livery_type_options[i];
+            draw_set_alpha(1);
+            yar = col_special==(i+1) ?1:0;
+            if (custom<2) then draw_set_alpha(0.5);
+            draw_sprite(spr_creation_check,yar,cur_button.cords[0],cur_button.cords[1]);
+             if (scr_hit(cur_button.cords[0],cur_button.cords[1],cur_button.cords[0]+32,cur_button.cords[1]+32) and allow_colour_click){
+                    cooldown=8000;
+                    var onceh=0;
+                    if (col_special=i+1) and (onceh=0){col_special=0;onceh=1;}
+                    if (col_special!=i+1) and (onceh=0){col_special=i+1;onceh=1;}
+             }
+             draw_text_transformed(cur_button.cords[0]+30,cur_button.cords[1]+4,cur_button.text,0.4,0.4,0);
         }
-        
-        y8+=35;
-        draw_set_color(38144);draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-        str="Secondary: "+string(col[secondary_color]);
-        str_width=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
-        draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
-        draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-        if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
-            tooltip="Secondary";tooltip2="The secondary color of your Astartes and their vehicles.";
-            draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
-            if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=2;}
-        }
-        
-        y8+=35;
-        draw_set_color(38144);draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-        str="Pauldron 1: "+string(col[pauldron2_color]);
-        str_width=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
-        draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
-        draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-        if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
-            tooltip="First Pauldron";tooltip2="The color of your Astartes' right Pauldron.  Normally this Pauldron displays their rank and designation.";
-            draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
-            if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=3;}
-        }
-        
-        y8+=35;
-        draw_set_color(38144);draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-        str="Pauldron 2: "+string(col[pauldron_color]);
-        str_width=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
-        draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
-        draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-        if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
-            tooltip="Second Pauldron";tooltip2="The color of your Astartes' left Pauldron.  Normally this Pauldron contains the Chapter Insignia.";
-            draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
-            if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=4;}
-        }
-        
-        y8+=35;
-        draw_set_color(38144);draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-        str="Trim: "+string(col[trim_color]);
-        str_width=(string_width(string_hash_to_newline(str))/2)+4;
-        hei=(string_height(string_hash_to_newline(str))/2)+4;
-        draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
-        draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-        if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
-            tooltip="Trim";tooltip2="The trim color that appears on the Pauldrons, armour plating, and any decorations.";
-            draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
-            if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=5;}
-        }
-        
-        y8+=35;
-        draw_set_color(38144);draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-        str="Lens: "+string(col[lens_color]);
-        str_width=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
-        draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
-        draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-        if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
-            tooltip="Lens";tooltip2="The color of your Astartes' lenses.  Most of the time this will be the visor color.";
-            draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);
-            if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
-            if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=6;}
-        }
-        
-        y8+=35;
-        draw_set_color(38144);draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-        str="Weapon: "+string(col[weapon_color]);
-        str_width=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
-        draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
-        draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-        if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
-            tooltip="Weapon";tooltip2="The primary color of your Astartes' weapons.";
-            draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);
-            if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
-            if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=7;}
-        }
-        
-        
-        draw_set_color(38144);
-        
-        draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-        yar=0;if (col_special=1) then yar=1;draw_sprite(spr_creation_check,yar,437,500);yar=0;
-        if (scr_hit(437,500,437+32,500+32)) and allow_colour_click){
-            cooldown=8000;var onceh;onceh=0;
-            if (col_special=1) and (onceh=0){col_special=0;onceh=1;}
-            if (col_special!=1) and (onceh=0){col_special=1;onceh=1;}
-        }draw_text_transformed(437+30,500+4,string_hash_to_newline("Breastplate"),0.4,0.4,0);
-        
-        draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-        yar=0;if (col_special=2) then yar=1;draw_sprite(spr_creation_check,yar,554,500);yar=0;
-        if (scr_hit(554,500,554+32,500+32)) and allow_colour_click){
-            cooldown=8000;var onceh;onceh=0;
-            if (col_special=2) and (onceh=0){col_special=0;onceh=1;}
-            if (col_special!=2) and (onceh=0){col_special=2;onceh=1;}
-        }draw_text_transformed(554+30,500+4,string_hash_to_newline("Vertical"),0.4,0.4,0);
-        
-        draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-        yar=0;if (col_special=3) then yar=1;draw_sprite(spr_creation_check,yar,662,500);yar=0;
-        if (scr_hit(662,500,662+32,500+32)) and allow_colour_click){
-            cooldown=8000;var onceh;onceh=0;
-            if (col_special=3) and (onceh=0){col_special=0;onceh=1;}
-            if (col_special!=3) and (onceh=0){col_special=3;onceh=1;}
-        }draw_text_transformed(662+30,500+4,string_hash_to_newline("Quadrant"),0.4,0.4,0);
-        
-        draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-        yar=0;if (trim=1) then yar=1;draw_sprite(spr_creation_check,yar,770,500);yar=0;
-        if (scr_hit(770,500,770+32,500+32)) and allow_colour_click){
-            cooldown=8000;var onceh;onceh=0;
-            if (trim=1) and (onceh=0){trim=0;onceh=1;}
-            if (trim=0) and (onceh=0){trim=1;onceh=1;}
-        }draw_text_transformed(770+30,500+4,string_hash_to_newline("Trim"),0.4,0.4,0);
     } else {
-        if (complex_selection=="sgt"){
-
+        if (complex_selection=="Sergeant Markers"){
+            var button_data = [
+                {
+                    text : $"Primary : {col[complex_livery_data.sgt.helm_primary]}",
+                    tooltip:"Primary Helm Colour",
+                    tooltip2:"Primary helm colour of sgt.",
+                    cords : [620, 252],
+                    type : "sgt_helm_primary",
+                },
+                {
+                    text : $"Secondary: {col[complex_livery_data.sgt.helm_secondary]}",
+                    tooltip:"Secondary",
+                    tooltip2:"Secondary helm colour of sgt.",
+                    cords : [620, 287],
+                    type : "sgt_helm_secondary",
+                },
+                /*{
+                    text : $"Pauldron 1: {col[pauldron2_color]}",
+                    tooltip:"First Pauldron",
+                    tooltip2:"The color of your Astartes' right Pauldron.  Normally this Pauldron displays their rank and designation.",
+                    cords : [620, 322],
+                },
+                {
+                    text : $"Pauldron 2: {col[pauldron_color]}",
+                    tooltip:"Second Pauldron",
+                    tooltip2:"The color of your Astartes' left Pauldron.  Normally this Pauldron contains the Chapter Insignia.",
+                    cords : [620, 357],
+                },
+                {
+                    text : $"Trim: {col[trim_color]}",
+                    tooltip:"Trim",
+                    tooltip2:"The trim color that appears on the Pauldrons, armour plating, and any decorations.",
+                    cords : [620, 392],                
+                },
+                {
+                    text : $"Lens: {col[lens_color]}",
+                    tooltip:"Lens",
+                    tooltip2:"The color of your Astartes' lenses.  Most of the time this will be the visor color.",
+                    cords : [620, 427],                
+                },
+                {
+                    text : $"Weapon: {col[weapon_color]}",
+                    tooltip:"Weapon",
+                    tooltip2:"The primary color of your Astartes' weapons.",
+                    cords : [620, 462],                
+                } */ 
+            ];
+            var button_cords, cur_button;
+            for (var i=0;i<array_length(button_data);i++){
+                cur_button = button_data[i];
+                button_cords = draw_unit_buttons(cur_button.cords, cur_button.text,[0.5,0.5], 38144,, fnt_40k_30b, 1);
+                if (scr_hit(button_cords[0],button_cords[1],button_cords[2],button_cords[3])){
+                     tooltip=cur_button.tooltip;
+                     tooltip2=cur_button.tooltip2;
+                }
+                if (point_and_click(button_cords)){
+                    cooldown=8000;
+                    var pp=instance_create(0,0,obj_creation_popup);
+                    pp.type=cur_button.type;
+                }
+            }
+            draw_set_color(38144);
+            var livery_type_options = [
+                {
+                    cords : [437,500],   
+                    text : $"Single Colour",             
+                },
+                {
+                    cords : [554,500],   
+                    text : $"Stripe",             
+                },
+                {
+                    cords : [662,500],   
+                    text : $"Muzzle",             
+                },
+                {
+                    cords : [770,500],   
+                    text : $"Pattern",             
+                }                               
+            ]  
+            var yar;
+            for (var i=0;i<array_length(livery_type_options);i++){
+                cur_button = livery_type_options[i];
+                draw_set_alpha(1);
+                yar = complex_depth_selection==(i) ?1:0;
+                if (custom<2) then draw_set_alpha(0.5);
+                draw_sprite(spr_creation_check,yar,cur_button.cords[0],cur_button.cords[1]);
+                 if (scr_hit(cur_button.cords[0],cur_button.cords[1],cur_button.cords[0]+32,cur_button.cords[1]+32) and allow_colour_click){
+                        cooldown=8000;
+                        var onceh=0;
+                        if (complex_depth_selection=i) and (onceh=0){complex_depth_selection=0;onceh=1;}
+                        if (complex_depth_selection!=i) and (onceh=0){complex_depth_selection=i;onceh=1;}
+                 }
+                 draw_text_transformed(cur_button.cords[0]+30,cur_button.cords[1]+4,cur_button.text,0.4,0.4,0);
+            }                                           
         }
     }
     draw_set_alpha(1);
@@ -1343,40 +1447,49 @@ if (slide=4){
     draw_line(845,204,845,740);
     draw_line(846,204,846,740);
     draw_text_transformed(862,215,string_hash_to_newline("Astartes Role Settings"),0.6,0.6,0);
-    draw_set_font(fnt_40k_14b);var c,ide,spacing;c=100;spacing=30;
+    draw_set_font(fnt_40k_14b);var c,role_id,spacing;c=100;spacing=30;
     draw_set_halign(fa_left);var xxx,yyy;xxx=862;yyy=255-spacing;
     
     
-    var derpaderp;
-    derpaderp=0;
-    
-    repeat(13){derpaderp+=1;
-        if (derpaderp=1) then ide=15;
-        if (derpaderp=2) then ide=14;
-        if (derpaderp=3) then ide=17;
-        if (derpaderp=4) then ide=16;
-        if (derpaderp=5) then ide=5;
-        if (derpaderp=6) then ide=2;
-        if (derpaderp=7) then ide=4;
-        if (derpaderp=8) then ide=3;
-        if (derpaderp=9) then ide=6;
-        if (derpaderp=10) then ide=8;
-        if (derpaderp=11) then ide=9;
-        if (derpaderp=12) then ide=10;
-        if (derpaderp=13) then ide=12;
+    if (!complex_livery){
+        var role_slot;
+        role_slot=0;
         
-        draw_set_alpha(1);
-        if (race[c,ide]!=0){
-            if (custom<2) then draw_set_alpha(0.5);
-            yyy+=spacing;draw_set_color(38144);draw_rectangle(xxx,yyy,1150,yyy+20,0);
-            draw_set_color(0);draw_text(xxx,yyy,string_hash_to_newline(role[c,ide]));
-            if (scr_hit(xxx,yyy,1150,yyy+20)=true) and (!instance_exists(obj_creation_popup)){if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_set_color(c_white);draw_rectangle(xxx,yyy,1150,yyy+20,0);
-                draw_set_alpha(1);tooltip=string(role[c,ide])+" Settings";tooltip2="Click to open the settings for this unit.";
-                if (mouse_left>=1) and (custom>0) and (cooldown<=0) and (custom=2){var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=ide+100;cooldown=8000;}
+        repeat(13){role_slot+=1;
+            if (role_slot=1) then role_id=15;
+            if (role_slot=2) then role_id=14;
+            if (role_slot=3) then role_id=17;
+            if (role_slot=4) then role_id=16;
+            if (role_slot=5) then role_id=5;
+            if (role_slot=6) then role_id=2;
+            if (role_slot=7) then role_id=4;
+            if (role_slot=8) then role_id=3;
+            if (role_slot=9) then role_id=6;
+            if (role_slot=10) then role_id=8;
+            if (role_slot=11) then role_id=9;
+            if (role_slot=12) then role_id=10;
+            if (role_slot=13) then role_id=12;
+            
+            draw_set_alpha(1);
+            if (race[c,role_id]!=0){
+                if (custom<2) then draw_set_alpha(0.5);
+                yyy+=spacing;draw_set_color(38144);draw_rectangle(xxx,yyy,1150,yyy+20,0);
+                draw_set_color(0);draw_text(xxx,yyy,string_hash_to_newline(role[c,role_id]));
+                if (scr_hit(xxx,yyy,1150,yyy+20)=true) and (!instance_exists(obj_creation_popup)){if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_set_color(c_white);draw_rectangle(xxx,yyy,1150,yyy+20,0);
+                    draw_set_alpha(1);tooltip=string(role[c,role_id])+" Settings";tooltip2="Click to open the settings for this unit.";
+                    if (mouse_left>=1) and (custom>0) and (cooldown<=0) and (custom=2){var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=role_id+100;cooldown=8000;}
+                }
+            }
+        }
+    } else {
+        var complex_livery_options = ["Sergeant Markers","Veteran Sergeant Markers"],
+        for (var i=0;i<array_length(complex_livery_options);i++){
+            yyy+=spacing;
+            if (point_and_click(draw_unit_buttons([xxx,yyy], complex_livery_options[i],[0.5,0.5], 38144,, fnt_40k_30b, 1))){
+                complex_selection=complex_livery_options[i];
             }
         }
     }
-
     
     
     
@@ -1386,7 +1499,7 @@ if (slide=4){
     if (custom<2) then draw_set_alpha(0.5);
     yar=0;if (equal_specialists=1) then yar=1;draw_sprite(spr_creation_check,yar,860,645);yar=0;
     if (scr_hit(860,645,1150,765)=true) and (!instance_exists(obj_creation_popup)){tooltip="Specialist Distribution";tooltip2="Check if you wish for your Companies to be uniform and each contain "+string(role[100][10])+"s and "+string(role[100][9])+"s.";}
-    if (scr_hit(860,650,860+32,650+32)=true) and allow_colour_click){
+    if (scr_hit(860,650,860+32,650+32) and allow_colour_click){
         cooldown=8000;var onceh;onceh=0;
         if (equal_specialists=1) and (onceh=0){equal_specialists=0;onceh=1;}
         if (equal_specialists!=1) and (onceh=0){equal_specialists=1;onceh=1;}
@@ -1394,8 +1507,8 @@ if (slide=4){
     draw_set_alpha(1);
     
     yar=0;if (load_to_ships[0]=1) then yar=1;draw_sprite(spr_creation_check,yar,860,645+40);yar=0;
-    if (scr_hit(860,645+40,1005,765+40)=true) and (!instance_exists(obj_creation_popup)){tooltip="Load to Ships";tooltip2="Check to have your Astartes automatically loaded into ships when the game starts.";}
-    if (scr_hit(860,645+40,860+32,645+32+40)=true) and (cooldown<=0) and (mouse_left>=1) and (!instance_exists(obj_creation_popup)){
+    if (scr_hit(860,645+40,1005,765+40) and !instance_exists(obj_creation_popup)){tooltip="Load to Ships";tooltip2="Check to have your Astartes automatically loaded into ships when the game starts.";}
+    if (scr_hit(860,645+40,860+32,645+32+40) and (cooldown<=0) and (mouse_left>=1) and (!instance_exists(obj_creation_popup))){
         cooldown=8000;var onceh;onceh=0;
         if (load_to_ships[0]=1) and (onceh=0){load_to_ships[0]=0;onceh=1;}
         if (load_to_ships[0]!=1) and (onceh=0){load_to_ships[0]=1;onceh=1;}
@@ -1585,7 +1698,7 @@ if (slide=5){
     if (custom<2) then draw_set_alpha(0.5);
     
     x1=450;y1=260;yar=0;if (preomnor=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and allow_colour_click){
+    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
         cooldown=8000;var onceh;onceh=0;
         if (preomnor=1) and (onceh=0){preomnor=0;mutations_selected-=1;onceh=1;}
         if (preomnor!=1) and (onceh=0) and (mutations>mutations_selected){preomnor=1;mutations_selected+=1;onceh=1;}
@@ -1593,7 +1706,7 @@ if (slide=5){
     if (scr_hit(x1,y1,700,y1+20)=true){tooltip="Anemic Preomnor";tooltip2="Your Astartes lack the detoxifying gland called the Preomnor- they are more susceptible to poisons and toxins.";}
     
     y1+=spac;yar=0;if (voice=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and allow_colour_click){
+    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
         cooldown=8000;var onceh;onceh=0;
         if (voice=1) and (onceh=0){voice=0;mutations_selected-=1;onceh=1;disposition[2]+=8;}
         if (voice!=1) and (onceh=0) and (mutations>mutations_selected){voice=1;mutations_selected+=1;onceh=1;disposition[2]-=8;}
@@ -1601,7 +1714,7 @@ if (slide=5){
     if (scr_hit(x1,y1,700,y1+20)=true){tooltip="Disturbing Voice";tooltip2="Your Astartes have a voice like a creaking door or a rumble.  Decreases Imperium and Imperial Guard disposition.";}
     
     y1+=spac;yar=0;if (doomed=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and allow_colour_click){
+    if (scr_hit(x1,y1,x1+32,y1+32)  && allow_colour_click){
         cooldown=8000;var onceh;onceh=0;
         if (doomed=1) and (onceh=0){doomed=0;mutations_selected-=4;onceh=1;disposition[1]+=8;disposition[6]-=8;}
         if (doomed!=1) and (onceh=0) and (mutations>mutations_selected){doomed=1;mutations_selected+=4;onceh=1;disposition[1]-=8;disposition[6]+=8;}
@@ -1609,7 +1722,7 @@ if (slide=5){
     if (scr_hit(x1,y1,700,y1+20)=true){tooltip="Doomed";tooltip2="Your Chapter cannot make more Astartes until enough research is generated.  Counts as four mutations.";}
     
     y1+=spac;yar=0;if (lyman=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and allow_colour_click){
+    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
         cooldown=8000;var onceh;onceh=0;
         if (lyman=1) and (onceh=0){lyman=0;mutations_selected-=1;onceh=1;}
         if (lyman!=1) and (onceh=0) and (mutations>mutations_selected){lyman=1;mutations_selected+=1;onceh=1;}
@@ -1617,7 +1730,7 @@ if (slide=5){
     if (scr_hit(x1,y1,700,y1+20)=true){tooltip="Faulty Lyman's Ear";tooltip2="Lacking a working Lyman's ear, all deep-striked Astartes recieve moderate penalties to both attack and defense.";}
     
     y1+=spac;yar=0;if (omophagea=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and allow_colour_click){
+    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
         cooldown=8000;var onceh;onceh=0;
         if (omophagea=1) and (onceh=0){omophagea=0;mutations_selected-=1;onceh=1;}
         if (omophagea!=1) and (onceh=0) and (mutations>mutations_selected){omophagea=1;mutations_selected+=1;onceh=1;}
@@ -1625,7 +1738,7 @@ if (slide=5){
     if (scr_hit(x1,y1,700,y1+20)=true){tooltip="Hyper-Stimulated Omophagea";tooltip2="After every battle the Astartes have a chance to feast upon their fallen enemies, or seldom, their allies.";}
     
     y1+=spac;yar=0;if (ossmodula=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and allow_colour_click){
+    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
         cooldown=8000;var onceh;onceh=0;
         if (ossmodula=1) and (onceh=0){ossmodula=0;mutations_selected-=1;onceh=1;}
         if (ossmodula!=1) and (onceh=0) and (mutations>mutations_selected){ossmodula=1;mutations_selected+=1;onceh=1;}
@@ -1633,7 +1746,7 @@ if (slide=5){
     if (scr_hit(x1,y1,700,y1+20)=true){tooltip="Hyperactive Ossmodula";tooltip2="Instead of wound tissue bone is generated; Apothecaries must spend twice the normal time healing your Astartes.";}
     
     y1+=spac;yar=0;if (zygote=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and allow_colour_click){
+    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
         cooldown=8000;var onceh;onceh=0;
         if (zygote=1) and (onceh=0){zygote=0;mutations_selected-=2;onceh=1;}
         if (zygote!=1) and (onceh=0) and (mutations>mutations_selected){zygote=1;mutations_selected+=2;onceh=1;}
@@ -1643,7 +1756,7 @@ if (slide=5){
     x1=750;y1=260-spac;
     
     y1+=spac;yar=0;if (membrane=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and allow_colour_click){
+    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
         cooldown=8000;var onceh;onceh=0;
         if (membrane=1) and (onceh=0){membrane=0;mutations_selected-=1;onceh=1;}
         if (membrane!=1) and (onceh=0) and (mutations>mutations_selected){membrane=1;mutations_selected+=1;onceh=1;}
@@ -1651,7 +1764,7 @@ if (slide=5){
     if (scr_hit(x1,y1,1020,y1+20)=true){tooltip="Inactive Sus-an Membrane";tooltip2="Your Astartes do not have a Sus-an Membrane; they cannot enter suspended animation and recieve more casualties as a result.";}
     
     y1+=spac;yar=0;if (betchers=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and allow_colour_click){
+    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
         cooldown=8000;var onceh;onceh=0;
         if (betchers=1) and (onceh=0){betchers=0;mutations_selected-=1;onceh=1;}
         if (betchers!=1) and (onceh=0) and (mutations>mutations_selected){betchers=1;mutations_selected+=1;onceh=1;}
@@ -1659,7 +1772,7 @@ if (slide=5){
     if (scr_hit(x1,y1,1020,y1+20)=true){tooltip="Missing Betchers Gland";tooltip2="Your Astartes cannot spit acid, and as a result, have slightly less attack in melee combat.";}
     
     y1+=spac;yar=0;if (catalepsean=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and allow_colour_click){
+    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
         cooldown=8000;var onceh;onceh=0;
         if (catalepsean=1) and (onceh=0){catalepsean=0;mutations_selected-=1;onceh=1;}
         if (catalepsean!=1) and (onceh=0) and (mutations>mutations_selected){catalepsean=1;mutations_selected+=1;onceh=1;}
@@ -1667,7 +1780,7 @@ if (slide=5){
     if (scr_hit(x1,y1,1020,y1+20)=true){tooltip="Mutated Catalepsean Node";tooltip2="Your Astartes cannot sleep portions of their brains at a time, or generally at all.  They have a slight decrease to attack.";}
     
     y1+=spac;yar=0;if (secretions=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and allow_colour_click){
+    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
         cooldown=8000;var onceh;onceh=0;
         if (secretions=1) and (onceh=0){secretions=0;mutations_selected-=1;onceh=1;disposition[2]+=8;}
         if (secretions!=1) and (onceh=0) and (mutations>mutations_selected){secretions=1;mutations_selected+=1;onceh=1;disposition[2]-=8;}
@@ -1675,7 +1788,7 @@ if (slide=5){
     if (scr_hit(x1,y1,1020,y1+20)=true){tooltip="Oolitic Secretions";tooltip2="Either by secretions or radiation, your Astartes have an unusual or strange skin color.  Decreases disposition.";}
     
     y1+=spac;yar=0;if (occulobe=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and allow_colour_click){
+    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
         cooldown=8000;var onceh;onceh=0;
         if (occulobe=1) and (onceh=0){occulobe=0;mutations_selected-=1;onceh=1;}
         if (occulobe!=1) and (onceh=0) and (mutations>mutations_selected){occulobe=1;mutations_selected+=1;onceh=1;}
@@ -1683,7 +1796,7 @@ if (slide=5){
     if (scr_hit(x1,y1,1020,y1+20)=true){tooltip="Oversensitive Occulobe";tooltip2="Your Astartes are no longer immune to stun grenades, bright lights, and have a massive penalty during morning battles.";}
     
     y1+=spac;yar=0;if (mucranoid=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and allow_colour_click){
+    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
         cooldown=8000;var onceh;onceh=0;
         if (mucranoid=1) and (onceh=0){mucranoid=0;mutations_selected-=1;onceh=1;disposition[1]+=4;disposition[2]+=4;disposition[3]+=4;disposition[5]+=4;disposition[6]+=4;}
         if (mucranoid!=1) and (onceh=0) and (mutations>mutations_selected){mucranoid=1;mutations_selected+=1;onceh=1;disposition[1]-=4;disposition[2]-=4;disposition[3]-=4;disposition[5]-=4;disposition[6]-=4;}
