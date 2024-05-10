@@ -118,7 +118,7 @@ function scr_draw_unit_image(_x1, _y1, _x2, _y2, _background=false){
     var unit_surface_height = _y2 - _y1;
     var x_surface_offset = min(200);
     var y_surface_offset = min(110);
-    var unit_surface = surface_create(unit_surface_width, unit_surface_height);
+    var unit_surface = surface_create(600, 600);
     surface_set_target(unit_surface);
     draw_clear_alpha(c_black, 0);//RESET surface
     draw_set_font(fnt_40k_14b);
@@ -1277,7 +1277,7 @@ function scr_draw_unit_image(_x1, _y1, _x2, _y2, _background=false){
     surface_reset_target();
     /*shader_set_uniform_i(shader_get_uniform(sReplaceColor, "u_blend_modes"), 2);                
     texture_set_stage(shader_get_sampler_index(sReplaceColor, "armour_texture"), sprite_get_texture(spr_leopard_sprite, 0)); */
-    draw_surface(unit_surface, xx+_x1,yy+_y1);
+    draw_surface(unit_surface, xx+_x1-x_surface_offset,yy+_y1-y_surface_offset);
     surface_free(unit_surface);
     shader_reset();     
 }
