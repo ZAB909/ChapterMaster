@@ -27,6 +27,8 @@ global.load=0;
 skip=false;
 premades=true;
 
+complex_livery=false;
+complex_selection = "sgt";
 fade_in=50;
 slate1=80;
 slate2=0;
@@ -897,4 +899,5 @@ scr_colors_initialize();
 /* */
 action_set_alarm(30, 1);
 /*  */
+
 	
