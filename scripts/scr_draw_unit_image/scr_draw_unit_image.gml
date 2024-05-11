@@ -345,7 +345,7 @@ function scr_draw_unit_image(_background=false){
 			specialist_colours=obj_ini.col_special;
 			
 			// Chaplain
-            if (ui_specialist=1 || ((ui_specialist=3) and (global.chapter_name="Space Wolves"))){
+            if ((ui_specialist=1 and global.chapter_name!="Iron Hands") || (ui_specialist=3 and global.chapter_name="Space Wolves")){
                 shader_array_set[ShaderType.Body] = Colors.Black;
                 shader_array_set[ShaderType.Helmet] = Colors.Black;
                 shader_array_set[ShaderType.Lens] = Colors.Red;
@@ -373,7 +373,7 @@ function scr_draw_unit_image(_background=false){
             }
 			
 			// Techmarine
-            else if (ui_specialist=5){
+            else if (ui_specialist=5) and (global.chapter_name!="Iron Hands"){
                 shader_array_set[ShaderType.Body] = Colors.Red;
                 shader_array_set[ShaderType.Helmet] = Colors.Red;
                 shader_array_set[ShaderType.Lens] = Colors.Lime;
