@@ -2448,48 +2448,67 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				}
 				break;
 			case obj_ini.role[100][16]: //techmarines
-				if ((global.chapter_name=="Iron Hands" || obj_ini.progenitor=6 || array_contains(obj_ini.dis, "Tech-Heresy"))){
-					add_bionics("right_arm","standard",false);
-					bionic_count = choose(6,6,7,7,7,8,9);
+				if ((old_guard >= 90 && company > 0 && company < 6) || company == 1){
+					update_armour(choose("Artificer Armour"),false,false)
+					age -= gauss(600, 100);
+					add_trait("ancient");
+					add_exp(100);	
+					bionic_count = choose(1,2,3,4,5)
+				} else if (company > 0 && company < 6){
+					update_armour(choose("MK6 Corvus","MK7 Aquila","MK8 Errant", "Artificer Armour"),false,false);
+					age -= gauss(400, 100);
+					add_trait("old_guard");
+					add_exp(50);
+					bionic_count = choose(1,1,2,3,4)
+				} else {
+					update_armour(choose("MK6 Corvus","MK7 Aquila","MK8 Errant"),false,false);
+					age -= gauss(200, 100);
+					add_trait("seasoned");
+					add_exp(25);
+					bionic_count = choose(1,1,1,2,3)
+				}
+				if ((global.chapter_name == "Iron Hands" || obj_ini.progenitor = 6 || array_contains(obj_ini.dis, "Tech-Heresy"))) {
+					add_bionics("right_arm", "standard", false);
+					bionic_count = choose(6, 6, 7, 7, 7, 8, 9);
 					add_trait("flesh_is_weak");
 					var tech_heresy = irandom(19);
-				}else {
-			    	bionic_count = irandom(5)+1;
-				  if (irandom(2) ==0){
-				    add_trait("flesh_is_weak");
-				  }
-				  var tech_heresy = irandom(49);
-			  	}
-			  	if (array_contains(obj_ini.dis, "Tech-Heresy")){
-			  		var tech_heresy = irandom(10);
-			  		technology+=4;
-			  	}
-			  	if (tech_heresy==0){
-			  		add_trait("tech_heretic");
-			  		edit_corruption(30);
-			  	}
-				if (technology<35){
-					technology=35;
+				} else {
+					bionic_count = irandom(5) + 1;
+					if (irandom(2) == 0) {
+						add_trait("flesh_is_weak");
+					}
+					var tech_heresy = irandom(49);
 				}
-			  add_trait("mars_trained");
-			  if (irandom(1) ==0){
-			    add_trait("tinkerer");
-			  }
-			  if (religion !="cult_mechanicus"){
-			  	religion_sub_cult = "none";
-			  }
-			  if (array_contains(obj_ini.adv, "Crafters")){
-			  	if (irandom(2)==0){
-			  		add_trait("crafter");
-			  	}
-			  } else if (obj_ini.progenitor==8 || obj_ini.progenitor==6){
-			  	technology+=2;
-			  	if (irandom(4)==0){
-			  		add_trait("crafter");
-			  	}			  	
-			  }
-			  religion = "cult_mechanicus"	
-			  add_exp(irandom(50));
+				if (array_contains(obj_ini.dis, "Tech-Heresy")) {
+					var tech_heresy = irandom(10);
+					technology += 4;
+				}
+				if (tech_heresy == 0) {
+					add_trait("tech_heretic");
+					edit_corruption(30);
+				}
+				if (technology < 35) {
+					technology = 35;
+				}
+				add_trait("mars_trained");
+				if (irandom(1) == 0) {
+					add_trait("tinkerer");
+				}
+				if (religion != "cult_mechanicus") {
+					religion_sub_cult = "none";
+				}
+				if (array_contains(obj_ini.adv, "Crafters")) {
+					if (irandom(2) == 0) {
+						add_trait("crafter");
+					}
+				} else if (obj_ini.progenitor == 8 || obj_ini.progenitor == 6) {
+					technology += 2;
+					if (irandom(4) == 0) {
+						add_trait("crafter");
+					}
+				}
+				religion = "cult_mechanicus"
+				add_exp(irandom(50));
 				break;
 			case  obj_ini.role[100][12]: //scouts
 				bionic_count = choose(0,0,0,0,0,0,0,0,0,0,0,1);
@@ -2500,9 +2519,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 						update_armour(choose("MK3 Iron Armour","MK4 Maximus", "MK5 Heresy"),false,false)
 						age -= gauss(600, 100);
 						add_trait("ancient");
-						add_exp(choose(100,75));	
+						add_exp(100);	
 						bionic_count = choose(0,0,1,2,3)
-					} else{
+					} else {
 						update_armour(choose("MK6 Corvus","MK7 Aquila","MK8 Errant"),false,false);
 						age -= gauss(400, 100);
 						add_trait("old_guard");
@@ -2524,18 +2543,34 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				}
 				break;
 			case "Codiciery":
-				update_armour(choose("MK5 Heresy","MK6 Corvus","MK7 Aquila", "MK4 Maximus","MK8 Errant"),false,false);
-				age -= gauss(150, 20);
+				update_armour("MK6 Corvus", "MK7 Aquila",false,false);
+				age -= gauss(100, 20);
 				break;
 			case "Lexicanum":
-				update_armour(choose("MK5 Heresy","MK6 Corvus","MK7 Aquila", "MK4 Maximus","MK8 Errant"),false,false);
-				age -= gauss(200, 30);
+				update_armour("MK6 Corvus", "MK7 Aquila",false,false);
+				age -= gauss(150, 30);
 				add_trait("seasoned");
 				break;
-			case obj_ini.role[100,17]:
-				update_armour(choose("MK5 Heresy","MK6 Corvus","MK7 Aquila", "MK4 Maximus","MK8 Errant"),false,false);
-				age -= gauss(400, 250);
-				add_trait("seasoned");
+			case obj_ini.role[100][Role.LIBRARIAN]:
+				if ((old_guard >= 90 && company > 0 && company < 6) || company == 1){
+					update_armour(choose("MK3 Iron Armour","MK4 Maximus", "MK5 Heresy"),false,false)
+					age -= gauss(600, 100);
+					add_trait("ancient");
+					add_exp(100);	
+					bionic_count = choose(0,0,1,2,3)
+				} else if (company > 0 && company < 6){
+					update_armour(choose("MK6 Corvus","MK7 Aquila","MK8 Errant"),false,false);
+					age -= gauss(400, 100);
+					add_trait("old_guard");
+					add_exp(50);
+					bionic_count = choose(0,0,0,1,2)
+				} else {
+					update_armour(choose("MK6 Corvus", "MK7 Aquila"),false,false);
+					age -= gauss(200, 100);
+					add_trait("seasoned");
+					add_exp(25);
+					bionic_count = choose(0,0,0,0,1)
+				}
 				break;	
 			case obj_ini.role[100][Role.COMPANY_CHAMPION]:
 				if(old_guard>=80 || company == 1){
