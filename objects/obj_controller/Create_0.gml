@@ -202,7 +202,7 @@ for(var i=100; i<103; i++){
     obj_controller.r_gear[i,4]="";
     
     obj_controller.r_role[i,5]="Captain";
-    obj_controller.r_wep1[i,5]="Power Fist";
+    obj_controller.r_wep1[i,5]="Power Sword";
     obj_controller.r_wep2[i,5]="Bolt Pistol";
     obj_controller.r_armour[i,5]="Power Armour";
     obj_controller.r_mobi[i,5]="";
@@ -217,10 +217,10 @@ for(var i=100; i<103; i++){
     
     obj_controller.r_role[i,7]="Company Champion";
     obj_controller.r_wep1[i,7]="Power Sword";
-    obj_controller.r_wep2[i,7]="Storm Shield";
+    obj_controller.r_wep2[i,7]="Bolt Pistol";
     obj_controller.r_armour[i,7]="Power Armour";
     obj_controller.r_mobi[i,7]="";
-    obj_controller.r_gear[i,7]="";
+    obj_controller.r_gear[i,7]="Combat Shield";
     
     obj_controller.r_role[i,8]="Tactical Marine";
     obj_controller.r_wep1[i,8]="Bolter";
@@ -265,7 +265,7 @@ for(var i=100; i<103; i++){
     obj_controller.r_mobi[i,14]="";
     
     obj_controller.r_role[i,15]="Apothecary";
-    obj_controller.r_wep1[i,15]="Power Sword";
+    obj_controller.r_wep1[i,15]="Chainsword";
     obj_controller.r_wep2[i,15]="Bolt Pistol";
     obj_controller.r_armour[i,15]="Power Armour";
     obj_controller.r_gear[i,15]="Narthecium";

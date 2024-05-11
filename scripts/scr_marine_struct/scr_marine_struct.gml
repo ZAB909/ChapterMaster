@@ -2253,7 +2253,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		return [points,reasons];
 	}
 
-	static roll_backstory = function(){
+	static roll_history_armour = function(){
 		var old_guard = irandom(100);
 		var age = (obj_ini.millenium*1000)+obj_ini.year-4 - (company * 3);
 		repeat(10-company){
@@ -2277,6 +2277,24 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					add_trait("old_guard");
 					add_exp(50);
 					bionic_count = choose(0,0,0,1,2)
+				}
+				charisma += (irandom(10));
+				wisdom += (irandom(10));
+				piety += (irandom(10));
+				if (irandom(1)==0){
+					add_trait("natural_leader");
+				}
+				if (array_contains(obj_ini.adv, "Melee Enthusiasts")){
+					weapon_skill += irandom(5);
+					if (irandom(1)==0){
+						add_trait("melee_enthusiast");
+					}
+				}
+				if (array_contains(obj_ini.adv, "Slow and Purposeful")){
+					constitution += irandom(5);
+					if (irandom(1)==0){
+						add_trait("slow_and_purposeful");
+					}
 				}
 				break;
 			case  obj_ini.role[100][15]:  //apothecary
@@ -2513,27 +2531,21 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				age -= gauss(400, 250);
 				add_trait("seasoned");
 				break;	
-			case obj_ini.role[100][Role.CAPTAIN]:
-				charisma += (irandom(10));
-				wisdom += (irandom(10));
-				piety += (irandom(10));
-				if (irandom(1)==0){
-					add_trait("natural_leader");
-				}
-				if (array_contains(obj_ini.adv, "Melee Enthusiasts")){
-					weapon_skill += irandom(5);
-					if (irandom(1)==0){
-						add_trait("melee_enthusiast");
-					}
-				}
-				if (array_contains(obj_ini.adv, "Slow and Purposeful")){
-					constitution += irandom(5);
-					if (irandom(1)==0){
-						add_trait("slow_and_purposeful");
-					}
+			case obj_ini.role[100][Role.COMPANY_CHAMPION]:
+				if(old_guard>=80 || company == 1){
+					update_armour(choose("MK3 Iron Armour","MK4 Maximus", "MK5 Heresy"),false,false)
+					age -= gauss(600, 100);
+					add_trait("ancient");
+					add_exp(choose(100,75));	
+					bionic_count = choose(0,0,1,2,3)
+				} else{
+					update_armour(choose("MK6 Corvus","MK7 Aquila","MK8 Errant"),false,false);
+					age -= gauss(400, 100);
+					add_trait("old_guard");
+					add_exp(50);
+					bionic_count = choose(0,0,0,1,2)
 				}
 				break;
-
 		}
 		if (irandom(75)>74){
 			add_trait("tyrannic_vet");

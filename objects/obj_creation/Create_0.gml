@@ -426,7 +426,7 @@ color_to_pauldron21="Red";
 	
     race_21[i,5]=1;
     role_21[i,5]="Captain";
-    wep1_21[i,5]="Power Fist";
+    wep1_21[i,5]="Power Sword";
     wep2_21[i,5]="Bolt Pistol";
     armour_21[i,5]="Power Armour";
 	gear_21[i,5]="Iron Halo";
@@ -444,9 +444,9 @@ color_to_pauldron21="Red";
     race_21[i,7]=1;
     role_21[i,7]="Company Champion";
     wep1_21[i,7]="Power Sword";
-    wep2_21[i,7]="Storm Shield";
+    wep2_21[i,7]="Bolt Pistol";
     armour_21[i,7]="Power Armour";
-	gear_21[i,7]=""
+	gear_21[i,7]="Combat Shield"
 	mobi_21[i,7]="";
 
     race_21[i,8]=1;
@@ -498,7 +498,7 @@ color_to_pauldron21="Red";
 
     race_21[i,15]=1;
     role_21[i,15]="Apothecary";
-    wep1_21[i,15]="Power Sword";
+    wep1_21[i,15]="Chainsword";
     wep2_21[i,15]="Bolt Pistol";
     armour_21[i,15]="Power Armour";
     gear_21[i,15]="Narthecium";
@@ -684,7 +684,7 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
 
     race[i,5]=1;
     role[i,5]="Captain";
-    wep1[i,5]="Power Fist";
+    wep1[i,5]="Power Sword";
     wep2[i,5]="Bolt Pistol";
     armour[i,5]="Power Armour";
     gear[i,5]="Iron Halo";
@@ -698,8 +698,9 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
     race[i,7]=1;
     role[i,7]="Company Champion";
     wep1[i,7]="Power Sword";
-    wep2[i,7]="Storm Shield";
+    wep2[i,7]="Bolt Pistol";
     armour[i,7]="Power Armour";
+    gear[i,7]="Combat Shield";
 
     race[i,8]=1;
     role[i,8]="Tactical Marine";
@@ -742,7 +743,7 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
 
     race[i,15]=1;
     role[i,15]="Apothecary";
-    wep1[i,15]="Power Sword";
+    wep1[i,15]="Chainsword";
     wep2[i,15]="Bolt Pistol";
     armour[i,15]="Power Armour";
     gear[i,15]="Narthecium";
