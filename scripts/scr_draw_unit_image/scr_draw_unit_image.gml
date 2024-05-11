@@ -267,7 +267,7 @@ function scr_draw_unit_image(x_draw, y_draw){
             }
 			
 			// Chaplain
-            if (ui_specialist=1 || ((ui_specialist=3) and (global.chapter_name="Space Wolves"))){
+            if ((ui_specialist=1 and global.chapter_name!="Iron Hands") || (ui_specialist=3 and global.chapter_name="Space Wolves")){
                 set_shader_color(ShaderType.Body, Colors.Black);
                 set_shader_color(ShaderType.Helmet, Colors.Black);
                 set_shader_color(ShaderType.Lens, Colors.Red);
@@ -295,7 +295,7 @@ function scr_draw_unit_image(x_draw, y_draw){
             }
 			
 			// Techmarine
-            else if (ui_specialist=5){
+            else if (ui_specialist=5) and (global.chapter_name!="Iron Hands"){
                 set_shader_color(ShaderType.Body, Colors.Red);
                 set_shader_color(ShaderType.Helmet, Colors.Red);
                 set_shader_color(ShaderType.Lens, Colors.Lime);

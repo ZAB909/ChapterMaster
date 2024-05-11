@@ -389,7 +389,7 @@ function scr_management(argument0) {
 					num[1]++;
 					nam[1] = role_names[Role.CAPTAIN] + " " + unit.name();
 				}
-	            if (unit.role() == role_names[Role.CHAPLAIN]) then num[2]++;
+	            if (unit.role() == role_names[Role.CHAPLAIN] && global.chapter_name != "Iron Hands") then num[2]++;
 				// Space Wolves exception
 				if (chapter_name != "Space Wolves" && unit.role()=role_names[Role.APOTHECARY]) then num[3]++;
 	            if (unit.role() == role_names[Role.LIBRARIAN]) then num[4]++;
