@@ -740,8 +740,8 @@ function scr_draw_unit_image(x_draw, y_draw){
                     }
                 }
 
-                if (armour_type==ArmourType.Normal){
-                    if (ui_specialist==5 && armour_bypass==false){
+                if (ui_specialist==5){
+                    if (armour_type==ArmourType.Normal && armour_bypass==false){
                         if (array_contains(traits, "tinkerer")){
                             //specific_armour_sprite="none";
                             armour_sprite =spr_techmarine_core;
@@ -749,7 +749,12 @@ function scr_draw_unit_image(x_draw, y_draw){
                         }
                     }
                     if (arm>0){
-                        draw_sprite(spr_servo_arms,0,0,y_surface_offset);
+                        var arm_offset_x = 0;
+                        var arm_offset_y = 0;
+                        if (armour_type == ArmourType.Indomitus) {
+                            arm_offset_y = -16;
+                        }
+                        draw_sprite(spr_servo_arms,0,0+arm_offset_x,y_surface_offset+arm_offset_y);
                         /*if (arm<10){
                             draw_sprite(spr_pack_arm,arm,0,y_surface_offset)
                         } else if (arm>=10) then draw_sprite(spr_pack_arms,arm-10,0,y_surface_offset);  */                  
@@ -908,9 +913,14 @@ function scr_draw_unit_image(x_draw, y_draw){
                         if (ttrim=1) then draw_sprite(spr_gear_hood2,0,0-2,y_surface_offset-11);
                         if (ttrim==0) then draw_sprite(spr_gear_hood2,1,0-2,y_surface_offset-11);
                     } else {
+                        var hood_offset_x = 0;
+                        var hood_offset_y = 0;
+                        if (armour_type == ArmourType.Indomitus) {
+                            hood_offset_y = -8;
+                        }
                         //if (obj_ini.main_color=obj_ini.secondary_color) then draw_sprite(spr_gear_hood1,hood,0,y_surface_offset);
                         //if (obj_ini.main_color!=obj_ini.secondary_color) then draw_sprite(spr_gear_hood3,hood,0,y_surface_offset);
-                        draw_sprite(spr_psy_hood,2,0,y_surface_offset);
+                        draw_sprite(spr_psy_hood,2,0+hood_offset_x,y_surface_offset+hood_offset_y);
                     } 
                 }
 
