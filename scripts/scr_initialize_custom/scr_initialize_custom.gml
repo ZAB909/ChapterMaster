@@ -1044,7 +1044,9 @@ function scr_initialize_custom() {
 
 	//made all the exp buffs sort into neat little structs so theyre easier to dev and player modify
 	//value 1 = mean, value 10 = sd
-	company_spawn_buffs = [0, [130, 10],
+	company_spawn_buffs = [
+		[35, 5],
+		[130, 10],
 		[110, 10],
 		[105, 10],
 		[95, 10],
@@ -1059,14 +1061,15 @@ function scr_initialize_custom() {
 	variable_struct_set(role_spawn_buffs, roles.captain, [70, 40]);
 	variable_struct_set(role_spawn_buffs, roles.terminator, [30, 10]);
 	variable_struct_set(role_spawn_buffs, roles.veteran, [10, 5]);
-	variable_struct_set(role_spawn_buffs, roles.chaplain, [60, 30]);
-	variable_struct_set(role_spawn_buffs, roles.apothecary, [95, 20]);
-	variable_struct_set(role_spawn_buffs, roles.techmarine, [95, 20]);
+	variable_struct_set(role_spawn_buffs, roles.chaplain, [25, 10]);
+	variable_struct_set(role_spawn_buffs, roles.apothecary, [25, 10]);
+	variable_struct_set(role_spawn_buffs, roles.techmarine, [25, 10]);
+	variable_struct_set(role_spawn_buffs, roles.librarian, [25, 10]);
 	variable_struct_set(role_spawn_buffs, roles.ancient, [30, 30]);
 	variable_struct_set(role_spawn_buffs, roles.champion, [40, 5]);
-	variable_struct_set(role_spawn_buffs, roles.tactical, [3, 5]);
-	variable_struct_set(role_spawn_buffs, roles.assault, 0);
-	variable_struct_set(role_spawn_buffs, roles.devastator, 0);
+	variable_struct_set(role_spawn_buffs, roles.tactical, [5, 2]);
+	variable_struct_set(role_spawn_buffs, roles.assault, [2, 1]);
+	variable_struct_set(role_spawn_buffs, roles.devastator, [1, 1]);
 	variable_struct_set(role_spawn_buffs, roles.scout, 0);
 
 
@@ -2130,7 +2133,7 @@ function scr_initialize_custom() {
 		TTRPG[company, 5] = new TTRPG_stats("chapter", company, 1, "blank");
 	}
 
-	// Tech Marines in the armoury
+	// Techmarines in the armoury
 	repeat(techs) {
 		k += 1;
 		commands += 1;
@@ -2142,11 +2145,10 @@ function scr_initialize_custom() {
 		name[company][k] = global.name_generator.generate_space_marine_name();
 		spawn_unit = TTRPG[company][k];
 		spawn_unit.roll_history_armour();
+		spawn_unit.roll_exp();
 		wep1[company][k] = wep1[101, 16];
 		wep2[company][k] = choose_weighted(weapon_weighted_lists.pistols);
-		armour[company][k] = "Artificer Armour";
 		gear[company][k] = gear[101, 16];
-		experience[company][k] = 100;
 	}
 
 	// Librarians in the librarium
@@ -2155,6 +2157,7 @@ function scr_initialize_custom() {
 		commands += 1;
 		man_size += 1;
 		TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
+		spawn_unit = TTRPG[company][k];
 		race[company][k] = 1;
 		loc[company][k] = home_name;
 		role[company][k] = roles.librarian;
@@ -2162,7 +2165,6 @@ function scr_initialize_custom() {
 		wep1[company][k] = wep1[101, 17];
 		wep2[company][k] = choose_weighted(weapon_weighted_lists.pistols);
 		gear[company][k] = gear[101, 17];
-		experience[company][k] = 125;
 		if (psyky = 1) then experience[company][k] += 10;
 		var
 		let = "", letmax = 0;
@@ -2187,7 +2189,8 @@ function scr_initialize_custom() {
 			letmax = 5;
 		}
 		spe[company][k] += string(let) + "0|";
-		TTRPG[company][k].roll_history_armour();
+		spawn_unit.roll_history_armour();
+		spawn_unit.roll_exp();
 		TTRPG[company][k].add_trait("warp_touched");
 		TTRPG[company][k].psionic = choose(13, 14, 15, 16);
 		TTRPG[company][k].update_powers();
@@ -2205,7 +2208,6 @@ function scr_initialize_custom() {
 		wep1[company][k] = wep1[101, 17];
 		wep2[company][k] = choose_weighted(weapon_weighted_lists.pistols);
 		gear[company][k] = gear[101, 17];
-		experience[company][k] = 80;
 		if (psyky = 1) then experience[company][k] += 10;
 		var
 		let, letmax;
@@ -2233,6 +2235,7 @@ function scr_initialize_custom() {
 		}
 		spe[company][k] += string(let) + "0|";
 		TTRPG[company][k].roll_history_armour();
+		TTRPG[company][k].roll_exp();
 		TTRPG[company][k].add_trait("warp_touched");
 		TTRPG[company][k].psionic = choose(11, 12, 13, 14, 15);
 		TTRPG[company][k].update_powers();
@@ -2251,7 +2254,6 @@ function scr_initialize_custom() {
 		wep1[company][k] = wep1[101, 17];
 		wep2[company][k] = choose_weighted(weapon_weighted_lists.pistols);
 		gear[company][k] = gear[101, 17];
-		experience[company][k] = 40;
 		if (psyky = 1) then experience[company][k] += 10;
 		var
 		let = "", letmax = 0;
@@ -2277,6 +2279,7 @@ function scr_initialize_custom() {
 		}
 		spe[company][k] += string(let) + "0|";
 		TTRPG[company][k].roll_history_armour();
+		TTRPG[company][k].roll_exp();
 		TTRPG[company][k].add_trait("warp_touched");
 		TTRPG[company][k].psionic = choose(8, 9, 10, 11, 12, 13, 14);
 	}
@@ -2291,7 +2294,6 @@ function scr_initialize_custom() {
 		loc[company][k] = home_name;
 		role[company][k] = roles.apothecary;
 		name[company][k] = global.name_generator.generate_space_marine_name();
-		experience[company][k] = 100;
 		wep1[company][k] = "Chainsword";
 		wep2[company][k] = choose_weighted(weapon_weighted_lists.pistols);
 		gear[company][k] = gear[101, 15];
@@ -2313,7 +2315,6 @@ function scr_initialize_custom() {
 		wep1[company][k] = wep1[101, 14];
 		wep2[company][k] = choose_weighted(weapon_weighted_lists.pistols);
 		gear[company][k] = gear[101, 14];
-		experience[company][k] = 100;
 		spawn_unit = TTRPG[company][k];
 		spawn_unit.roll_history_armour();
 		spawn_unit.roll_exp();
@@ -3011,7 +3012,6 @@ function scr_initialize_custom() {
 				spawn_unit = TTRPG[company][k]
 				spawn_unit.roll_exp();
 				spawn_unit.roll_history_armour();
-				armour[company][k] = "Artificer Armour";
 				gear[company][k] = gear[101, 16];
 				wep1[company][k] = wep1[101, 16];
 				wep2[company][k] = choose_weighted(weapon_weighted_lists.pistols);
