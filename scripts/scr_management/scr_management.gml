@@ -361,13 +361,13 @@ function scr_management(argument0) {
 			// nam[1] = role_names[Role.CAPTAIN];
 			nam[2] = role_names[Role.CHAPLAIN];
 			nam[3] = role_names[Role.APOTHECARY];
-			nam[4] = role_names[Role.LIBRARIAN];
-			nam[5] = "Codiciery";
-			nam[6] = "Lexicanum";
-			nam[7] = "Company" + role_names[Role.ANCIENT];
-			nam[8] = (role_names[Role.COMPANY_CHAMPION] == "Company Champion") ? "Champion" : role_names[Role.COMPANY_CHAMPION];
-			nam[9] = role_names[Role.TERMINATOR];
-			nam[10] = role_names[Role.TECHMARINE];
+			nam[4] = role_names[Role.TECHMARINE];
+			nam[5] = role_names[Role.LIBRARIAN];
+			nam[6] = "Codiciery";
+			nam[7] = "Lexicanum";
+			nam[8] = "Company" + role_names[Role.ANCIENT];
+			nam[9] = (role_names[Role.COMPANY_CHAMPION] == "Company Champion") ? "Champion" : role_names[Role.COMPANY_CHAMPION];
+			nam[10] = role_names[Role.TERMINATOR];
 			nam[11] = role_names[Role.SERGEANT];
 			nam[12] = (role_names[Role.VETERAN_SERGEANT] == "Veteran Sergeant") ? "Sergeant" : role_names[Role.VETERAN_SERGEANT];
 			nam[13] = role_names[Role.VETERAN];
@@ -389,16 +389,16 @@ function scr_management(argument0) {
 					num[1]++;
 					nam[1] = role_names[Role.CAPTAIN] + " " + unit.name();
 				}
-	            if (unit.role() == role_names[Role.CHAPLAIN] && global.chapter_name != "Iron Hands") then num[2]++;
 				// Space Wolves exception
-				if (chapter_name != "Space Wolves" && unit.role()=role_names[Role.APOTHECARY]) then num[3]++;
-	            if (unit.role() == role_names[Role.LIBRARIAN]) then num[4]++;
-	            if (unit.role() == "Codiciery") then num[5]++;
-	            if (unit.role() == "Lexicanum") then num[6]++;
-	            if (unit.role() == role_names[Role.ANCIENT]) then num[7]++;
-	            if (unit.role() == role_names[Role.COMPANY_CHAMPION]) then num[8]++;
-				if (unit.role() == role_names[Role.TERMINATOR]) then num[9]++;
-				if (unit.role() == role_names[Role.TECHMARINE]) then num[10]++;
+				if (chapter_name != "Iron Hands" && unit.role() == role_names[Role.CHAPLAIN]) then num[2]++;
+				if (chapter_name != "Space Wolves" && unit.role() == role_names[Role.APOTHECARY]) then num[3]++;
+				if (unit.role() == role_names[Role.TECHMARINE]) then num[4]++;
+				if (unit.role() == role_names[Role.LIBRARIAN]) then num[5]++;
+				if (unit.role() == "Codiciery") then num[6]++;
+				if (unit.role() == "Lexicanum") then num[7]++;
+				if (unit.role() == role_names[Role.ANCIENT]) then num[8]++;
+				if (unit.role() == role_names[Role.COMPANY_CHAMPION]) then num[9]++;
+				if (unit.role() == role_names[Role.TERMINATOR]) then num[10]++;
 				if (unit.role() == role_names[Role.VETERAN_SERGEANT]) then num[11]++;
 				if (unit.role() == role_names[Role.SERGEANT]) then num[12]++;
 				if (unit.role() == role_names[Role.VETERAN]) then num[13]++;
