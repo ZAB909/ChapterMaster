@@ -2194,7 +2194,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 		return is_at_loc;
 	}
-	static spawn_exp =function(){
+	static roll_exp =function(){
 		var spawn_ex = 0;
 		if (obj_ini.company_spawn_buffs[company] != 0){
 			spawn_ex += floor(gauss(obj_ini.company_spawn_buffs[company][0], obj_ini.company_spawn_buffs[company][1]));	//finds the on game spwan buff a marine should get from being spawned at game start
@@ -2253,8 +2253,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		return [points,reasons];
 	}
 
-	static spawn_old_guard =function(){
-		var old_guard=irandom(100);
+	static roll_backstory = function(){
+		var old_guard = irandom(100);
 		var age = (obj_ini.millenium*1000)+obj_ini.year-4 - (company * 3);
 		repeat(10-company){
 			age -= (irandom(30));
@@ -2265,34 +2265,61 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 		switch(role()){
 			case obj_ini.role[100][5]:  //captain
-				if(old_guard>=75){
-					update_armour("MK3 Iron Armour",false,false);
+				if(old_guard>=80 || company == 1){
+					update_armour(choose("MK3 Iron Armour","MK4 Maximus", "MK5 Heresy"),false,false)
+					age -= gauss(600, 150);
+					add_trait("ancient");
+					add_exp(choose(100,75));	
+					bionic_count = choose(0,0,1,2,3)
+				} else {
+					update_armour(choose("MK6 Corvus","MK7 Aquila","MK8 Errant"),false,false);
 					age -= gauss(400, 200);
 					add_trait("old_guard");
 					add_exp(50);
-					bionic_count = choose(0,0,1,2,3)
-				} // 25% of iron within
-				else{
-					update_armour(choose("MK5 Heresy","MK6 Corvus","MK7 Aquila", "MK4 Maximus","MK8 Errant"),false,false);
-					age -= gauss(400, 25);
-					add_trait("seasoned");
-					add_exp(25);
+					bionic_count = choose(0,0,0,1,2)
 				}
 				break;
 			case  obj_ini.role[100][15]:  //apothecary
-				update_armour("MK7 Aquila",false,false);
-				if (company<=2){update_armour(choose("MK8 Errant","MK6 Corvus"),false,false)
-				}else{
-					update_armour(choose("MK5 Heresy","MK6 Corvus","MK7 Aquila", "MK4 Maximus","MK8 Errant"),false,false);
+				if company > 0 {
+					if(old_guard>=80 || company == 1){
+						update_armour(choose("MK3 Iron Armour","MK4 Maximus", "MK5 Heresy"),false,false)
+						age -= gauss(600, 100);
+						add_trait("ancient");
+						add_exp(choose(100,75));	
+						bionic_count = choose(0,0,1,2,3)
+					} else{
+						update_armour(choose("MK6 Corvus","MK7 Aquila","MK8 Errant"),false,false);
+						age -= gauss(400, 100);
+						add_trait("old_guard");
+						add_exp(50);
+						bionic_count = choose(0,0,0,1,2)
+					}
+				} else {
+					update_armour(choose("MK7 Aquila"),false,false);
+					age -= gauss(200, 100);
+					add_trait("seasoned");
+					add_exp(25);
+					bionic_count = choose(0,0,0,0,1)
 				}
-				age -= gauss(400, 250);
 				if (intelligence<40){
 					intelligence=40;
 				}
 				break;
-			case obj_ini.role[100][11]:
-				 update_armour("MK5 Heresy",false,false);
-				 age -= gauss(400, 250);
+			case obj_ini.role[100][11]: // Ancient
+				if(old_guard>=50 || company == 1){
+					update_armour(choose("MK3 Iron Armour","MK4 Maximus", "MK5 Heresy"),false,false)
+					age -= gauss(600, 150);
+					add_trait("ancient");
+					add_exp(choose(100,75));	
+					bionic_count = choose(0,0,1,2,3)
+				} else{
+					update_armour(choose("MK6 Corvus","MK7 Aquila","MK8 Errant"),false,false);
+					age -= gauss(400, 200);
+					add_trait("old_guard");
+					add_exp(50);
+					bionic_count = choose(0,0,0,1,2)
+				}
+				age -= gauss(400, 250);
 				break;
 			case  obj_ini.role[100][8]:		//tacticals
 				if (old_guard=99){
@@ -2397,7 +2424,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				}
 				break;
 			case obj_ini.role[100][16]: //techmarines
-				update_armour(choose("MK8 Errant","MK6 Corvus","MK4 Maximus","MK3 Iron Armour"),false,false)
 				if ((global.chapter_name=="Iron Hands" || obj_ini.progenitor=6 || array_contains(obj_ini.dis, "Tech-Heresy"))){
 					add_bionics("right_arm","standard",false);
 					bionic_count = choose(6,6,7,7,7,8,9);
@@ -2445,15 +2471,33 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				bionic_count = choose(0,0,0,0,0,0,0,0,0,0,0,1);
 				break;
 			case  obj_ini.role[100][14]:  //chaplain
-				update_armour(choose("MK5 Heresy","MK6 Corvus","MK7 Aquila", "MK4 Maximus","MK8 Errant"),false,false);
-				age -= gauss(400, 250);
+				if company > 0 {
+					if(old_guard>=80 || company == 1){
+						update_armour(choose("MK3 Iron Armour","MK4 Maximus", "MK5 Heresy"),false,false)
+						age -= gauss(600, 100);
+						add_trait("ancient");
+						add_exp(choose(100,75));	
+						bionic_count = choose(0,0,1,2,3)
+					} else{
+						update_armour(choose("MK6 Corvus","MK7 Aquila","MK8 Errant"),false,false);
+						age -= gauss(400, 100);
+						add_trait("old_guard");
+						add_exp(50);
+						bionic_count = choose(0,0,0,1,2)
+					}
+				} else {
+					update_armour(choose("MK7 Aquila"),false,false);
+					age -= gauss(200, 100);
+					add_trait("seasoned");
+					add_exp(25);
+					bionic_count = choose(0,0,0,0,1)
+				}
 				if (piety<35){
 					piety=35;
 				}
 				if(irandom(1) ==0){
 					add_trait("zealous_faith")
 				}
-				add_exp(irandom(50));
 				break;
 			case "Codiciery":
 				update_armour(choose("MK5 Heresy","MK6 Corvus","MK7 Aquila", "MK4 Maximus","MK8 Errant"),false,false);
