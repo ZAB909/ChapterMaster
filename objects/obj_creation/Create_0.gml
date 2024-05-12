@@ -36,21 +36,21 @@ complex_livery_data = {
 		helm_primary : 0,
 		helm_secondary : 0,
 		helm_detail : 0,
-		helm_lense : 0,
+		helm_lens : 0,
 	},
 	vet_sgt : {
 		helm_pattern:0,
 		helm_primary : 0,
 		helm_secondary : 0,
 		helm_detail : 0,
-		helm_lense : 0,
+		helm_lens : 0,
 	},
 	captain : {
 		helm_pattern:0,
 		helm_primary : 0,
 		helm_secondary : 0,
 		helm_detail : 0,
-		helm_lense : 0,
+		helm_lens : 0,
 	}		
 }
 fade_in=50;

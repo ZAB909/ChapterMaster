@@ -167,7 +167,8 @@ if (argument0="White Scars"){founding="N/A";points=150;
 		ritesmaster="Antaros";victualler="Jonas";lordexec="Chalosa";relmaster="Kaheron";recruiter="Taelos";
 
 		battle_cry="Primarch-Progenitor, to your glory and the glory of him on earth!";
-	        equal_specialists=0;load_to_ships=[2,0,0];successors=21;
+	        equal_specialists=0;load_to_ships=[2,0,0];
+			successors=21;
 	        mutations=2;mutations_selected=2;
 	        preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=1;
 	        zygote=0;betchers=1;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;

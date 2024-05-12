@@ -1186,20 +1186,45 @@ if (slide=4){
         }
         if (trim=0) and (col_special<=1) then draw_sprite(spr_mk7_colors,4,444,252);
         if (trim=0) and (col_special>=2) then draw_sprite(spr_mk7_colors,5,444,252);
+        //TODO this can be imprved but for now it's fit for purpose
         if (complex_selection=="Sergeant Markers" && complex_livery){
-            sgt_col_1 = complex_livery_data.sgt.helm_primary;
-            sgt_col_2 = complex_livery_data.sgt.helm_secondary;
+            var sgt_col_1 = complex_livery_data.sgt.helm_primary;
+            var sgt_col_2 = complex_livery_data.sgt.helm_secondary;
+            var lens_col = complex_livery_data.sgt.helm_lens;
+            shader_set_uniform_f_array(colour_to_find1, [30/255,30/255,30/255]);
+            shader_set_uniform_f_array(colour_to_set1, col_r[sgt_col_1]/255, col_g[sgt_col_1]/255, col_b[sgt_col_1]/255);
+            shader_set_uniform_f_array(colour_to_find2, [200/255,0/255,0/255]);
+            shader_set_uniform_f(colour_to_set2, col_r[sgt_col_2]/255, col_g[sgt_col_2]/255, col_b[sgt_col_2]/255);
+            shader_set_uniform_f(colour_to_set4, col_r[lens_col]/255, col_g[lens_col]/255, col_b[lens_col]/255);
+            draw_sprite(spr_generic_sgt_mk7, complex_depth_selection, 444,252);
+        }
+        else if (complex_selection=="Veteran Sergeant Markers" && complex_livery){
+            var sgt_col_1 = complex_livery_data.vet_sgt.helm_primary;
+            var sgt_col_2 = complex_livery_data.vet_sgt.helm_secondary;
+            var lens_col = complex_livery_data.vet_sgt.helm_lens;
             shader_set_uniform_f_array(colour_to_find1, [30/255,30/255,30/255]);
             shader_set_uniform_f(colour_to_set1, col_r[sgt_col_1]/255, col_g[sgt_col_1]/255, col_b[sgt_col_1]/255);
             shader_set_uniform_f_array(colour_to_find2, [200/255,0/255,0/255]);
             shader_set_uniform_f(colour_to_set2, col_r[sgt_col_2]/255, col_g[sgt_col_2]/255, col_b[sgt_col_2]/255);
+            shader_set_uniform_f(colour_to_set4, col_r[lens_col]/255, col_g[lens_col]/255, col_b[lens_col]/255);
             draw_sprite(spr_generic_sgt_mk7, complex_depth_selection, 444,252);
         }
-        
+        else if (complex_selection=="Sergeant Markers" && complex_livery){
+            var sgt_col_1 = complex_livery_data.captain.helm_primary;
+            var sgt_col_2 = complex_livery_data.captain.helm_secondary;
+            var lens_col = complex_livery_data.captain.helm_lens;
+            shader_set_uniform_f_array(colour_to_find1, [30/255,30/255,30/255]);
+            shader_set_uniform_f(colour_to_set1, col_r[sgt_col_1]/255, col_g[sgt_col_1]/255, col_b[sgt_col_1]/255);
+            shader_set_uniform_f_array(colour_to_find2, [200/255,0/255,0/255]);
+            shader_set_uniform_f(colour_to_set2, col_r[sgt_col_2]/255, col_g[sgt_col_2]/255, col_b[sgt_col_2]/255);
+            shader_set_uniform_f(colour_to_set4, col_r[lens_col]/255, col_g[lens_col]/255, col_b[lens_col]/255);
+            draw_sprite(spr_generic_sgt_mk7, complex_depth_selection, 444,252);
+        }                
         shader_set_uniform_f_array(colour_to_find1, body_colour_find );       
         shader_set_uniform_f_array(colour_to_set1, body_colour_replace );
         shader_set_uniform_f_array(colour_to_find2, secondary_colour_find );       
-        shader_set_uniform_f_array(colour_to_set2, secondary_colour_replace );        
+        shader_set_uniform_f_array(colour_to_set2, secondary_colour_replace ); 
+        shader_set_uniform_f_array(colour_to_set4, lens_colour_replace );              
         draw_sprite(spr_weapon_colors,0,444,252);
         shader_reset();
         
@@ -1285,7 +1310,7 @@ if (slide=4){
             {
                 text : $"Lens: {col[lens_color]}",
                 tooltip:"Lens",
-                tooltip2:"The color of your Astartes' lenses.  Most of the time this will be the visor color.",
+                tooltip2:"The color of your Astartes' lenss.  Most of the time this will be the visor color.",
                 cords : [620, 427],                
             },
             {
@@ -1352,21 +1377,24 @@ if (slide=4){
                     tooltip:"Primary Helm Colour",
                     tooltip2:"Primary helm colour of sgt.",
                     cords : [620, 252],
-                    type : "sgt_helm_primary",
+                    type : "helm_primary",
+                    role : "sgt",
                 },
                 {
                     text : $"Helm Secondary: {col[complex_livery_data.sgt.helm_secondary]}",
                     tooltip:"Secondary",
                     tooltip2:"Secondary helm colour of sgt.",
                     cords : [620, 287],
-                    type : "sgt_helm_secondary",
+                    type : "helm_secondary",
+                    role : "sgt",
                 },
                 {
-                    text : $"Helm Secondary: {col[complex_livery_data.sgt.helm_secondary]}",
+                    text : $"Helm lens: {col[complex_livery_data.sgt.helm_secondary]}",
                     tooltip:"Secondary",
-                    tooltip2:"Secondary helm colour of sgt.",
-                    cords : [620, 287],
-                    type : "sgt_helm_lense",
+                    tooltip2:"helm lens colour of sgt.",
+                    cords : [620, 322],
+                    type : "helm_lens",
+                    role : "sgt",
                 },                
             ];
             complex_livery_data.sgt.helm_pattern=complex_depth_selection;
@@ -1377,21 +1405,52 @@ if (slide=4){
                     tooltip:"Primary Helm Colour",
                     tooltip2:"Primary helm colour of sgt.",
                     cords : [620, 252],
-                    type : "sgt_helm_primary",
+                    type : "helm_primary",
+                    role : "vet_sgt",
                 },
                 {
                     text : $"Helm Secondary: {col[complex_livery_data.sgt.helm_secondary]}",
                     tooltip:"Secondary",
                     tooltip2:"Secondary helm colour of sgt.",
                     cords : [620, 287],
-                    type : "sgt_helm_secondary",
+                    type : "helm_secondary",
+                    role : "vet_sgt",
+                },
+                {
+                    text : $"Helm lens: {col[complex_livery_data.sgt.helm_secondary]}",
+                    tooltip:"Secondary",
+                    tooltip2:"helm lens colour of sgt.",
+                    cords : [620, 322],
+                    type : "helm_lens",
+                    role : "vet_sgt",
+                },                
+            ];
+            complex_livery_data.vet_sgt.helm_pattern=complex_depth_selection;
+        }else if (complex_selection=="Captain Markers"){
+            button_data = [
+                {
+                    text : $"Helm Primary : {col[complex_livery_data.sgt.helm_primary]}",
+                    tooltip:"Primary Helm Colour",
+                    tooltip2:"Primary helm colour of sgt.",
+                    cords : [620, 252],
+                    type : "helm_primary",
+                    role : "captain",
                 },
                 {
                     text : $"Helm Secondary: {col[complex_livery_data.sgt.helm_secondary]}",
                     tooltip:"Secondary",
                     tooltip2:"Secondary helm colour of sgt.",
                     cords : [620, 287],
-                    type : "sgt_helm_lense",
+                    type : "helm_secondary",
+                    role : "captain",
+                },
+                {
+                    text : $"Helm lens: {col[complex_livery_data.sgt.helm_secondary]}",
+                    tooltip:"lens",
+                    tooltip2:"helm lens colour of sgt.",
+                    cords : [620, 322],
+                    type : "helm_lens",
+                    role : "captain",
                 },                
             ];
             complex_livery_data.vet_sgt.helm_pattern=complex_depth_selection;
@@ -1408,6 +1467,7 @@ if (slide=4){
                 cooldown=8000;
                 var pp=instance_create(0,0,obj_creation_popup);
                 pp.type=cur_button.type;
+                pp.role = cur_button.role
             }
         }
         draw_set_color(38144);

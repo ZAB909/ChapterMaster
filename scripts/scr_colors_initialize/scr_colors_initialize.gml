@@ -33,7 +33,6 @@ enum Colors {
     Deathwing,
     Dark_Metal,
 }
-
 function scr_colors_initialize() {
 
     var colors_array = [

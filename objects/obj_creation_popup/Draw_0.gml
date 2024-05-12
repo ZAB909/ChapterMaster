@@ -58,8 +58,9 @@ if (col_shift){
                             if (type = 5) then obj_creation.trim_color = current_color;
                             if (type = 6) then obj_creation.lens_color = current_color;
                             if (type = 7) then obj_creation.weapon_color = current_color;
-                            if (type = "sgt_helm_primary") then obj_creation.complex_livery_data.sgt.helm_primary = current_color;
-                            if (type = "sgt_helm_secondary") then obj_creation.complex_livery_data.sgt.helm_secondary = current_color;
+                            if (is_string(type)){
+                                obj_creation.complex_livery_data[$ role][$ type] = current_color;
+                            }
                             with(obj_creation) {
                                 shader_reset();
                             }
