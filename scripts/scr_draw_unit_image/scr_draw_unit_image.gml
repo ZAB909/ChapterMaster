@@ -196,10 +196,19 @@ function scr_draw_unit_image(_background=false){
         else if (role()=="Death Company"){ui_specialist=15;}
         // Dark Angels
         if (global.chapter_name=="Dark Angels"){
+            // Honour guard
+            if (role() == obj_ini.role[100][2]) then ui_coloring="deathwing";
             // Deathwing
-            if ((company == 1 && ui_specialist == 0) || role()==obj_ini.role[100,2]) then ui_coloring="deathwing";
+            else if (company == 1) {
+                if (role() == obj_ini.role[100][4]) then ui_coloring="deathwing";
+                if (string_count("Terminator",armour())>0 || armour()=="Tartaros"){
+                    if (array_contains([obj_ini.role[100][5],obj_ini.role[100][7],obj_ini.role[100][19],obj_ini.role[100][11]],role())){
+                        ui_coloring="deathwing";
+                    }
+                }
+                    }
             // Ravenwing
-            else if (company == 2 && ui_specialist == 0) {
+            else if (company == 2) {
                 ui_coloring="ravenwing";
             }
         }
@@ -208,7 +217,7 @@ function scr_draw_unit_image(_background=false){
         // Sets up the description for the equipement of current marine            
     
         var armour_type=ArmourType.Normal,armour_sprite=spr_weapon_blank;
-        var back_type=BackType.None,hood=0,skull=0,arm=0,braz=0,slow=0,brothers=-5,body_part;
+        var back_type=BackType.None,hood=0,skull=0,arm=0,halo=0,braz=0,slow=0,brothers=-5,body_part;
 
         var skin_color=obj_ini.skin_color;
 
@@ -225,6 +234,8 @@ function scr_draw_unit_image(_background=false){
         }
         if (unit_gear="Psychic Hood"){
             hood=-50;
+        }else if (unit_gear="Iron Halo"){
+            halo=1;
         }else if (unit_gear="Servo Arms" || unit_gear="Master Servo Arms"){
             var mas;
             // mas=string_count("Master",gear());
@@ -683,8 +694,8 @@ function scr_draw_unit_image(_background=false){
                 } else if (armour()=="MK5 Heresy"){
                     specific_armour_sprite = spr_mk5_colors;
                     //TODO sort this mess out streamline system somehow
+                    specific_helm = spr_generic_sgt_mk5;
                     if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1){
-                        specific_helm = spr_generic_sgt_mk7;
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
                             // specific_armour_sprite = spr_da_mk5;
                             armour_draw=[spr_da_mk5,0];
@@ -706,6 +717,7 @@ function scr_draw_unit_image(_background=false){
 
                 } else if (armour()=="MK7 Aquila" || unit_armour="Power Armour"){
                     specific_armour_sprite = spr_generic_sgt_mk7;
+                    specific_helm = spr_generic_sgt_mk7;
                     if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1){
                         specific_helm = spr_da_mk7_helm;
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
@@ -793,15 +805,19 @@ function scr_draw_unit_image(_background=false){
                             draw_sprite(spr_pack_arm,arm,x_surface_offset,y_surface_offset)
                         } else if (arm>=10) then draw_sprite(spr_pack_arms,arm-10,x_surface_offset,y_surface_offset);  */                  
                     }
-                }
-
-                if (unit_gear == "Iron Halo" && !halo_bypass) { // Draw the Iron Halo
-                    var halo_color = 0;
-                    var halo_type = 0; // 0,2,4...
+                    if (halo==1){ // Draw the Iron Halo
+                        if (global.chapter_name == "Dark Angels") {
+                            draw_sprite(spr_gear_halo,3,0,y_surface_offset);
+                        } else {
+                            draw_sprite(spr_gear_halo,0,0,y_surface_offset);
                     var halo_offset_y = 0;
                     if (array_contains(["Raven Guard", "Dark Angels"], global.chapter_name)) {
                         halo_color = 1;
                     }
+                    }
+                    var halo_offset_y=0;
+                    var halo_type = 2;
+                    var halo_color=0;
                     if (armour()=="Artificer Armour" && !armour_bypass){
                         halo_offset_y -= 14;
                     } else if (armour_type == ArmourType.Indomitus){
