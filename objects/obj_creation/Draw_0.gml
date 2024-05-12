@@ -1344,73 +1344,106 @@ if (slide=4){
              draw_text_transformed(cur_button.cords[0]+30,cur_button.cords[1]+4,cur_button.text,0.4,0.4,0);
         }
     } else {
+        var button_data=[];
         if (complex_selection=="Sergeant Markers"){
-            var button_data = [
+            button_data = [
                 {
-                    text : $"Primary : {col[complex_livery_data.sgt.helm_primary]}",
+                    text : $"Helm Primary : {col[complex_livery_data.sgt.helm_primary]}",
                     tooltip:"Primary Helm Colour",
                     tooltip2:"Primary helm colour of sgt.",
                     cords : [620, 252],
                     type : "sgt_helm_primary",
                 },
                 {
-                    text : $"Secondary: {col[complex_livery_data.sgt.helm_secondary]}",
+                    text : $"Helm Secondary: {col[complex_livery_data.sgt.helm_secondary]}",
                     tooltip:"Secondary",
                     tooltip2:"Secondary helm colour of sgt.",
                     cords : [620, 287],
                     type : "sgt_helm_secondary",
                 },
+                {
+                    text : $"Helm Secondary: {col[complex_livery_data.sgt.helm_secondary]}",
+                    tooltip:"Secondary",
+                    tooltip2:"Secondary helm colour of sgt.",
+                    cords : [620, 287],
+                    type : "sgt_helm_lense",
+                },                
             ];
-            var button_cords, cur_button;
-            for (var i=0;i<array_length(button_data);i++){
-                cur_button = button_data[i];
-                button_cords = draw_unit_buttons(cur_button.cords, cur_button.text,[0.5,0.5], 38144,, fnt_40k_30b, 1);
-                if (scr_hit(button_cords[0],button_cords[1],button_cords[2],button_cords[3])){
-                     tooltip=cur_button.tooltip;
-                     tooltip2=cur_button.tooltip2;
-                }
-                if (point_and_click(button_cords)){
-                    cooldown=8000;
-                    var pp=instance_create(0,0,obj_creation_popup);
-                    pp.type=cur_button.type;
-                }
-            }
-            draw_set_color(38144);
-            var livery_type_options = [
+            complex_livery_data.sgt.helm_pattern=complex_depth_selection;
+        } else if (complex_selection=="Veteran Sergeant Markers"){
+            button_data = [
                 {
-                    cords : [437,500],   
-                    text : $"Single Colour",             
+                    text : $"Helm Primary : {col[complex_livery_data.sgt.helm_primary]}",
+                    tooltip:"Primary Helm Colour",
+                    tooltip2:"Primary helm colour of sgt.",
+                    cords : [620, 252],
+                    type : "sgt_helm_primary",
                 },
                 {
-                    cords : [554,500],   
-                    text : $"Stripe",             
+                    text : $"Helm Secondary: {col[complex_livery_data.sgt.helm_secondary]}",
+                    tooltip:"Secondary",
+                    tooltip2:"Secondary helm colour of sgt.",
+                    cords : [620, 287],
+                    type : "sgt_helm_secondary",
                 },
                 {
-                    cords : [662,500],   
-                    text : $"Muzzle",             
-                },
-                {
-                    cords : [770,500],   
-                    text : $"Pattern",
-                }                               
-            ]  
-            var yar;
-            for (var i=0;i<array_length(livery_type_options);i++){
-                cur_button = livery_type_options[i];
-                draw_set_alpha(1);
-                yar = complex_depth_selection==(i) ? 1 : 0;
-                if (custom<2) then draw_set_alpha(0.5);
-                draw_sprite(spr_creation_check,yar,cur_button.cords[0],cur_button.cords[1]);
-                 if (scr_hit(cur_button.cords[0],cur_button.cords[1],cur_button.cords[0]+32,cur_button.cords[1]+32) and allow_colour_click){
-                        cooldown=8000;
-                        var onceh=0;
-                        if (complex_depth_selection=i) and (onceh=0){complex_depth_selection=0;onceh=1;}
-                        if (complex_depth_selection!=i) and (onceh=0){complex_depth_selection=i;onceh=1;}
-                        complex_livery_data.sgt.helm_pattern=complex_depth_selection;
-                 }
-                 draw_text_transformed(cur_button.cords[0]+30,cur_button.cords[1]+4,cur_button.text,0.4,0.4,0);
-            }                                           
+                    text : $"Helm Secondary: {col[complex_livery_data.sgt.helm_secondary]}",
+                    tooltip:"Secondary",
+                    tooltip2:"Secondary helm colour of sgt.",
+                    cords : [620, 287],
+                    type : "sgt_helm_lense",
+                },                
+            ];
+            complex_livery_data.vet_sgt.helm_pattern=complex_depth_selection;
         }
+        var button_cords, cur_button;
+        for (var i=0;i<array_length(button_data);i++){
+            cur_button = button_data[i];
+            button_cords = draw_unit_buttons(cur_button.cords, cur_button.text,[0.5,0.5], 38144,, fnt_40k_30b, 1);
+            if (scr_hit(button_cords[0],button_cords[1],button_cords[2],button_cords[3])){
+                 tooltip=cur_button.tooltip;
+                 tooltip2=cur_button.tooltip2;
+            }
+            if (point_and_click(button_cords)){
+                cooldown=8000;
+                var pp=instance_create(0,0,obj_creation_popup);
+                pp.type=cur_button.type;
+            }
+        }
+        draw_set_color(38144);
+        var livery_type_options = [
+            {
+                cords : [437,500],   
+                text : $"Single Colour",             
+            },
+            {
+                cords : [554,500],   
+                text : $"Stripe",             
+            },
+            {
+                cords : [662,500],   
+                text : $"Muzzle",             
+            },
+            {
+                cords : [770,500],   
+                text : $"Pattern",
+            }                               
+        ]  
+        var yar;
+        for (var i=0;i<array_length(livery_type_options);i++){
+            cur_button = livery_type_options[i];
+            draw_set_alpha(1);
+            yar = complex_depth_selection==(i) ? 1 : 0;
+            if (custom<2) then draw_set_alpha(0.5);
+            draw_sprite(spr_creation_check,yar,cur_button.cords[0],cur_button.cords[1]);
+             if (scr_hit(cur_button.cords[0],cur_button.cords[1],cur_button.cords[0]+32,cur_button.cords[1]+32) and allow_colour_click){
+                    cooldown=8000;
+                    var onceh=0;
+                    if (complex_depth_selection=i) and (onceh=0){complex_depth_selection=0;onceh=1;}
+                    else if (complex_depth_selection!=i) and (onceh=0){complex_depth_selection=i;onceh=1;}
+             }
+             draw_text_transformed(cur_button.cords[0]+30,cur_button.cords[1]+4,cur_button.text,0.4,0.4,0);
+        }                                           
     }
     draw_set_alpha(1);
     

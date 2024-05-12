@@ -622,6 +622,7 @@ function scr_save(save_slot,save_id) {
 	    ini_write_real("Ini","master_necron_vehicles",obj_ini.master_necron_vehicles);
 	    ini_write_real("Ini","master_monolith",obj_ini.master_monolith);
 	    ini_write_string("Ini","master_special",obj_ini.master_special_killed);
+	    ini_write_string("Ini","complex_livery",base64_encode(json_stringify(obj_ini.complex_livery_data)));
 
 
 	    //

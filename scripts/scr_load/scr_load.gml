@@ -664,6 +664,35 @@ function scr_load(argument0, argument1) {
 	    obj_ini.master_necron_vehicles=ini_read_real("Ini","master_necron_vehicles",0);
 	    obj_ini.master_monolith=ini_read_real("Ini","master_monolith",0);
 	    obj_ini.master_special_killed=ini_read_string("Ini","master_special","");
+	    obj_ini.complex_livery_data=ini_read_string("Ini","complex_livery","");
+	    if (obj_ini.complex_livery_data!=""){
+	    	obj_ini.complex_livery_data=json_parse(base64_decode(obj_ini.complex_livery_data));
+	    } else{
+	    	//TODO centralise and initialisation method for this other reference place is obj_creation create
+			obj_ini.complex_livery_data = {
+				sgt : {
+					helm_pattern:0,
+					helm_primary : 0,
+					helm_secondary : 0,
+					helm_detail : 0,
+					helm_lense : 0,
+				},
+				vet_sgt : {
+					helm_pattern:0,
+					helm_primary : 0,
+					helm_secondary : 0,
+					helm_detail : 0,
+					helm_lense : 0,
+				},
+				captain : {
+					helm_pattern:0,
+					helm_primary : 0,
+					helm_secondary : 0,
+					helm_detail : 0,
+					helm_lense : 0,
+				}		
+			}	    	
+	    }
 	    //
 	    obj_ini.preomnor=ini_read_real("Ini","preomnor",0);
 	    obj_ini.voice=ini_read_real("Ini","voice",0);

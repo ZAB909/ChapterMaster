@@ -934,13 +934,13 @@ function scr_draw_unit_image(_background=false){
                         shader_set_uniform_f_array(colour_to_find1, [30/255,30/255,30/255]);
                         shader_set_uniform_f_array(colour_to_find2, [200/255,0/255,0/255]);
                     }
-                    if (role()==obj_ini.role[100][18]){
+                    if (role()==obj_ini.role[100][Role.SERGEANT]){
                         with (obj_ini.complex_livery_data.sgt){
                             set_shader_color(0,helm_primary);
                             set_shader_color(1,helm_secondary);
                             draw_sprite(specific_helm,helm_pattern,helm_draw[0]+x_surface_offset,y_surface_offset+0);
                         }
-                    }else if(role()==obj_ini.role[100][19]){
+                    }else if(role()==obj_ini.role[100][Role.VETERAN_SERGEANT]){
                         with (obj_ini.complex_livery_data.vet_sgt){
                             set_shader_color(0,helm_primary);
                             set_shader_color(1,helm_secondary);
