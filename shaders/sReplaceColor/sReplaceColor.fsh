@@ -36,7 +36,12 @@ void main()
   if (col.rgb == f_Colour1.rgb && u_blend_modes!=2)
   {
     if (u_blend_modes==2){
-      col.rgb = texture2D(background_texture, v_vTexcoord).rgb;
+      vec4 background = texture2D(background_texture, v_vTexcoord);
+      if (background.a>0.0){
+        col.rgb = background.rgb;
+      } else {
+        col.rgb = f_Replace1.rgb;
+      }
     } else {
       col.rgb = f_Replace1.rgb;
     }
