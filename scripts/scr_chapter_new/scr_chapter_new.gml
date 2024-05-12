@@ -159,7 +159,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 		adv[1]="Bolter Drilling";adv[2]="Siege Masters";
 		homeworld="Ice";homeworld_name="Inwit";recruiting_world="Hive";recruiting_name="Necromunda";
 		homeworld_exists=1;recruiting_exists=1;homeworld_rule=2;aspirant_trial="Survival of the Fittest";
-Captain_naming
+
 		color_to_main="Gold";color_to_secondary="Gold";color_to_trim="Red";color_to_pauldron="Gold"
 		color_to_pauldron2="Gold";color_to_lens="Red";color_to_weapon="Black"
 		hapothecary="Dyserna";hchaplain="Guaron";clibrarian="Vidos Harn";fmaster="Atornus Geis";
