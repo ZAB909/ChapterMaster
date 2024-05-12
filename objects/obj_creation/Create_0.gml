@@ -121,8 +121,21 @@ hapothecary=global.name_generator.generate_space_marine_name();
 hchaplain=global.name_generator.generate_space_marine_name();
 clibrarian=global.name_generator.generate_space_marine_name();
 fmaster=global.name_generator.generate_space_marine_name();
-recruiter=global.name_generator.generate_space_marine_name();
-admiral=global.name_generator.generate_space_marine_name();
+honorcapt=global.name_generator.generate_space_marine_name();		//1st
+watchmaster=global.name_generator.generate_space_marine_name();		//2nd
+arsenalmaster=global.name_generator.generate_space_marine_name();	//3rd
+admiral=global.name_generator.generate_space_marine_name();			//4th
+marchmaster=global.name_generator.generate_space_marine_name();		//5th
+ritesmaster=global.name_generator.generate_space_marine_name();		//6th
+victualler=global.name_generator.generate_space_marine_name();		//7th
+lordexec=global.name_generator.generate_space_marine_name();		//8th
+relmaster=global.name_generator.generate_space_marine_name();		//9th
+recruiter=global.name_generator.generate_space_marine_name();		//10th
+
+
+
+
+
 
 equal_specialists=0;
 load_to_ships=[2,0,0];

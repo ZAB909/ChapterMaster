@@ -703,7 +703,14 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			array_push(role_history ,[role(), obj_controller.turn])
 		}
 		if (new_role==obj_ini.role[100][5]){
+			if (company==2) then obj_ini.watch_master_name=name();
+			if (company==3) then obj_ini.arsenal_master_name=name();
 	        if (company==4) then obj_ini.lord_admiral_name=name();
+			if (company==5) then obj_ini.march_master_name=name();
+			if (company==6) then obj_ini.rites_master_name=name();
+			if (company==7) then obj_ini.chief_victualler_name=name();
+			if (company==8) then obj_ini.lord_executioner_name=name();
+			if (company==9) then obj_ini.relic_master_name=name();
 	        if (company==10) then obj_ini.recruiter_name=name();
 	        scr_recent("captain_promote",name(),company);			
 		} else  if (new_role==obj_ini.role[100][4]){
