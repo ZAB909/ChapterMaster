@@ -35,7 +35,11 @@ void main()
   vec4 col = texture2D(gm_BaseTexture, v_vTexcoord);
   if (col.rgb == f_Colour1.rgb && u_blend_modes!=2)
   {
-    col.rgb = f_Replace1.rgb;
+    if (u_blend_modes==2){
+      col.rgb = texture2D(background_texture, v_vTexcoord).rgb;
+    } else {
+      col.rgb = f_Replace1.rgb;
+    }
   }
   if (col.rgb == f_Replace1.rgb && u_blend_modes==2){//draw textured armour
     vec2 i=vec2(5.0*v_vTexcoord.x, 5.0*v_vTexcoord.y);

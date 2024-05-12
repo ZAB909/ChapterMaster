@@ -696,6 +696,7 @@ function scr_draw_unit_image(_background=false){
                     //TODO sort this mess out streamline system somehow
                     specific_helm = spr_generic_sgt_mk5;
                     if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1){
+                        specific_helm = [spr_da_mk5_helm,spr_generic_sgt_mk5];
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
                             // specific_armour_sprite = spr_da_mk5;
                             armour_draw=[spr_da_mk5,0];
@@ -705,8 +706,9 @@ function scr_draw_unit_image(_background=false){
                     }                   
                 } else if (armour()=="MK6 Corvus"){
                     specific_armour_sprite = spr_beakie_colors;
+                    specific_helm = spr_generic_sgt_mk7;
                     if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1){
-                        specific_helm = spr_generic_sgt_mk7;
+                        specific_helm = [spr_da_mk6_helm,spr_generic_sgt_mk7];
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
                             // specific_armour_sprite = spr_da_mk6;
                             armour_draw=[spr_da_mk6,0];
@@ -719,7 +721,7 @@ function scr_draw_unit_image(_background=false){
                     specific_armour_sprite = spr_generic_sgt_mk7;
                     specific_helm = spr_generic_sgt_mk7;
                     if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1){
-                        specific_helm = spr_da_mk7_helm;
+                        specific_helm = [spr_da_mk7_helm,spr_generic_sgt_mk7];
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
                             // specific_armour_sprite = spr_da_mk7;
                             armour_draw = [spr_da_mk7,0];
@@ -935,6 +937,13 @@ function scr_draw_unit_image(_background=false){
                 if (brothers>=0) and (blandify=0) then draw_sprite(spr_gear_techb,brothers,x_surface_offset,y_surface_offset);// Tech-Brothers bling
                 //sgt helms
                 if (specific_helm!=false){
+                    var return_helm = false;
+                    if (is_array(specific_helm)){
+                        //draw_sprite(specific_helm[0],0,helm_draw[0]+x_surface_offset,y_surface_offset+0);
+                        return_helm =specific_helm[0];
+                        specific_helm=specific_helm[1];
+
+                    }
                     with (obj_controller){
                         shader_set_uniform_f_array(colour_to_find1, [30/255,30/255,30/255]);
                         shader_set_uniform_f_array(colour_to_find2, [200/255,0/255,0/255]);
@@ -963,6 +972,15 @@ function scr_draw_unit_image(_background=false){
                     }
                     set_shader_to_base_values();
                     set_shader_array(shader_array_set);
+                    if (return_helm!=false){
+                        surface_reset_target();
+                        shader_set_uniform_i(shader_get_uniform(sReplaceColor, "u_blend_modes"), 3);
+                        texture_set_stage(shader_get_sampler_index(sReplaceColor, "background_texture"), surface_get_texture(unit_surface));                   
+                        surface_set_target(unit_surface);                
+                        draw_sprite(specific_helm,0,helm_draw[0]+x_surface_offset,y_surface_offset+0);
+                        shader_set(sReplaceColor);
+                        shader_set_uniform_i(shader_get_uniform(sReplaceColor, "u_blend_modes"), 0);                         
+                    }
                 }            
                 // Apothecary Lens
                 if (ui_specialist=3){
