@@ -276,7 +276,7 @@ function scr_company_struct(comp) constructor{
 					}
 					member_width++;
 					unit_sprite_coords = [xx+25+x_mod, yy+144+y_mod, xx+25+x_mod+166, yy+144+y_mod+231];
-					cur_member_surface.draw_part(unit_sprite_coords[0],unit_sprite_coords[1], 0,0, 166, 231);
+					cur_member_surface.draw_part(unit_sprite_coords[0],unit_sprite_coords[1], 0,0, 166, 231,true);
 					if (point_in_rectangle(mouse_x, mouse_y, unit_sprite_coords[0], unit_sprite_coords[1], unit_sprite_coords[2], unit_sprite_coords[3]) && !exit_period && unit_rollover){
 						sprite_draw_delay = [member,unit_sprite_coords, cur_member_surface];
 						obj_controller.temp[120] = member;									
@@ -292,7 +292,7 @@ function scr_company_struct(comp) constructor{
 			if (is_array(sprite_draw_delay)){
 				member = sprite_draw_delay[0];
 				unit_sprite_coords=sprite_draw_delay[1]
-				sprite_draw_delay[2].draw_part(unit_sprite_coords[0],unit_sprite_coords[1], 0,0, 166, 231);
+				sprite_draw_delay[2].draw_part(unit_sprite_coords[0],unit_sprite_coords[1], 0,0, 166, 231, true);
 				draw_set_color(c_red);
 				draw_rectangle(unit_sprite_coords[0], unit_sprite_coords[1], unit_sprite_coords[2], unit_sprite_coords[3], 1);
 				draw_set_color(c_gray);

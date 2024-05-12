@@ -30,7 +30,7 @@ function unit_image(unit_surface) constructor{
             draw_rectangle_color_simple(xx-3+left,yy-3+top,xx+width+3,yy+3+height,1,c_gray);
         }     
         if (surface_exists(u_surface)){
-            draw_surface_part(u_surface, left, top, width,height, xx-200,yy-90);
+            draw_surface_part(u_surface, left+200, top+90, width,height, xx,yy);
         }       
     }
 }
