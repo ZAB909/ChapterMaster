@@ -1159,7 +1159,7 @@ function scr_draw_unit_image(_background=false){
                     hood_offset_y = 10;
                 }
                 if (struct_exists(body[$ "head"],"hood")) {
-                    draw_sprite(spr_marine_cloth_hood,0,0+hood_offset_x,y_surface_offset+hood_offset_y);     
+                    draw_sprite(spr_marine_cloth_hood,0,x_surface_offset+hood_offset_x,y_surface_offset+hood_offset_y);     
                 }
                 if (struct_exists(body[$ "torso"],"robes")) {
                     if (body.torso.robes<2){
