@@ -1192,7 +1192,7 @@ if (slide=4){
             var sgt_col_2 = complex_livery_data.sgt.helm_secondary;
             var lens_col = complex_livery_data.sgt.helm_lens;
             shader_set_uniform_f_array(colour_to_find1, [30/255,30/255,30/255]);
-            shader_set_uniform_f_array(colour_to_set1, col_r[sgt_col_1]/255, col_g[sgt_col_1]/255, col_b[sgt_col_1]/255);
+            shader_set_uniform_f(colour_to_set1, col_r[sgt_col_1]/255, col_g[sgt_col_1]/255, col_b[sgt_col_1]/255);
             shader_set_uniform_f_array(colour_to_find2, [200/255,0/255,0/255]);
             shader_set_uniform_f(colour_to_set2, col_r[sgt_col_2]/255, col_g[sgt_col_2]/255, col_b[sgt_col_2]/255);
             shader_set_uniform_f(colour_to_set4, col_r[lens_col]/255, col_g[lens_col]/255, col_b[lens_col]/255);

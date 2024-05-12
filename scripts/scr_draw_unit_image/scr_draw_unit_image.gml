@@ -650,7 +650,7 @@ function scr_draw_unit_image(_background=false){
                         }
                     }  
                 }                
-                var specific_helm = true;
+                var specific_helm = false;
                 var helm_draw=[0,0];
                 if (armour()=="Scout Armour"){
                     if (unit_is_sniper = true){

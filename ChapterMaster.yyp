@@ -68,6 +68,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"gear","folderPath":"folders/Sprites/Marine Viewer/gear.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"standards","folderPath":"folders/Sprites/Marine Viewer/gear/standards.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"helms","folderPath":"folders/Sprites/Marine Viewer/helms.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"dark_angels","folderPath":"folders/Sprites/Marine Viewer/helms/dark_angels.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"packs","folderPath":"folders/Sprites/Marine Viewer/packs.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"weapons_terminator","folderPath":"folders/Sprites/Marine Viewer/weapons_terminator.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"weapons","folderPath":"folders/Sprites/Marine Viewer/weapons.yy",},
@@ -89,8 +90,6 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"UI","folderPath":"folders/Sprites/UI.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Tile Sets","folderPath":"folders/Tile Sets.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Timelines","folderPath":"folders/Timelines.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"dark_angels","folderPath":"folders/Sprites/Marine Viewer/helms/dark_angels.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"fleet","folderPath":"folders/Scripts/fleet.yy",},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"custom_icons_help.txt","CopyToMask":153157610357391598,"filePath":"datafiles/icons",},
