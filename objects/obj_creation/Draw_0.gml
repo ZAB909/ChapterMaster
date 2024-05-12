@@ -1391,7 +1391,7 @@ if (slide=4){
                 },
                 {
                     cords : [770,500],   
-                    text : $"Pattern",             
+                    text : $"Pattern",
                 }                               
             ]  
             var yar;

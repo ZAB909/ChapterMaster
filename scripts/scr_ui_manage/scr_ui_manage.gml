@@ -411,8 +411,8 @@ function scr_ui_manage() {
 
 			// Draw unit image
 			draw_set_color(c_white);
-			if (surface_exists(temp[121])){
-				draw_surface(temp[121], xx+1208-200, yy+210-130);
+			if (is_struct(temp[121])){
+				temp[121].draw(xx+1208, yy+210)
 			}
 
 			//TODO implement tooltip explaining potential loyalty hit of demoting a sgt

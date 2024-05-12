@@ -8,6 +8,33 @@ enum ShaderType {
     Weapon
 }
 
+function unit_image(unit_surface) constructor{
+    u_surface = unit_surface;
+    static draw = function (xx, yy, _background=false){
+        if (_background){
+            draw_rectangle_color_simple(xx-1,yy-1,xx+1+166,yy+271+1,0,c_black);
+            draw_rectangle_color_simple(xx-1,yy-1,xx+166+1,yy+271+1,1,c_gray);
+            draw_rectangle_color_simple(xx-2,yy-2,xx+166+2,yy+2+271,1,c_black);
+            draw_rectangle_color_simple(xx-3,yy-3,xx+166+3,yy+3+271,1,c_gray);
+        }      
+        if (surface_exists(u_surface)){
+            draw_surface(u_surface, xx-200,yy-90);
+        }
+    }
+
+    static draw_part = function (xx, yy,left,top,width,height, _background=false){
+        if (_background){
+            draw_rectangle_color_simple(xx-1+left,yy-1+top,xx+1+width,yy+height+1,0,c_black);
+            draw_rectangle_color_simple(xx-1+left,yy-1+top,xx+width+1,yy+height+1,1,c_gray);
+            draw_rectangle_color_simple(xx-2+left,yy-2+top,xx+width+2,yy+2+height,1,c_black);
+            draw_rectangle_color_simple(xx-3+left,yy-3+top,xx+width+3,yy+3+height,1,c_gray);
+        }     
+        if (surface_exists(u_surface)){
+            draw_surface_part(u_surface, left, top, width,height, xx-200,yy-90);
+        }       
+    }
+}
+
 //TODO this is a laxy fix and can be written better
 function set_shader_color(shaderType, colorIndex) {
     var findShader, setShader;
@@ -124,12 +151,6 @@ function scr_draw_unit_image(_background=false){
 	var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0, bb="", img=0;
     var blandify = obj_controller.blandify;
     var draw_sequence = [];
-    /*if (_background){
-        draw_rectangle_color_simple(1,1,unit_surface_width-1,unit_surface_height-1,0,c_black);
-        draw_rectangle_color_simple(1,1,unit_surface_width-1,unit_surface_height-1,1,c_gray);
-        draw_rectangle_color_simple(2,2,unit_surface_width-2,unit_surface_height-2,1,c_black);
-        draw_rectangle_color_simple(3,3,unit_surface_width-3,unit_surface_height-3,1,c_gray);
-    }*/
     if (name_role()!="") and (base_group=="astartes"){
         ui_weapon[1]=spr_weapon_blank;
         ui_weapon[2]=spr_weapon_blank;
@@ -1280,7 +1301,7 @@ function scr_draw_unit_image(_background=false){
     //draw_surface(unit_surface, xx+_x1-x_surface_offset,yy+_y1-y_surface_offset);
     //surface_free(unit_surface);
     shader_reset();
-    return unit_surface;   
+    return new unit_image(unit_surface);   
 }
 
 function base_colour(R,G,B) constructor{
