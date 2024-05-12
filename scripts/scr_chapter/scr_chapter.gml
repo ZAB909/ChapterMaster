@@ -129,7 +129,7 @@ function scr_chapter(argument0) {
 	    disadvantage1=0;disadvantage2=0;disadvantage3=0;dis1="";dis2="";dis3="";
 	    battle_cry="Primarch-Progenitor, to your glory and the glory of him on earth!";
 	    monastery_name="Phalanx";master_name="Vorn Hagen";
-	    main_color="Gold";secondary_color="Red";lens_color="Red";weapon_color="Black";
+	    main_color="Dark Gold";secondary_color="Red";lens_color="Red";weapon_color="Black";
 	    initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";veteran_name="Veteran";
 	    devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
 	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";
@@ -222,7 +222,7 @@ function scr_chapter(argument0) {
 	    custom=0;points_spent=0;points_total=0;keyboard_string="Ultramarines";flash=0;adv_selecting=0;advantage1=0;adv1="";
 	    advantage2=0;adv2="";advantage3=0;adv3="";disadvantage1=0;dis1="";disadvantage2=0;dis2="";disadvantage3=0;dis3="";
 	    battle_cry="Courage and honor";monastery_name="Fortress of Hera";master_name="Marneus Calgar";
-	    main_color="Blue";secondary_color="Gold";lens_color="Red";weapon_color="Black";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
+	    main_color="Blue";secondary_color="Dark Gold";lens_color="Red";weapon_color="Black";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
 	    veteran_name="Veteran";devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
 	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=1;master_ranged=1;forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";
