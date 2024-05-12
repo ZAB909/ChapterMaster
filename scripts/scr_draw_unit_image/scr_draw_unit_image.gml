@@ -806,28 +806,29 @@ function scr_draw_unit_image(_background=false){
                         } else if (arm>=10) then draw_sprite(spr_pack_arms,arm-10,x_surface_offset,y_surface_offset);  */                  
                     }
                     if (halo==1){ // Draw the Iron Halo
-                        if (global.chapter_name == "Dark Angels") {
-                            draw_sprite(spr_gear_halo,3,0,y_surface_offset);
+                        /*if (global.chapter_name == "Dark Angels") {
+                            draw_sprite(spr_gear_halo,3,x_surface_offset,y_surface_offset);
                         } else {
-                            draw_sprite(spr_gear_halo,0,0,y_surface_offset);
-                    var halo_offset_y = 0;
-                    if (array_contains(["Raven Guard", "Dark Angels"], global.chapter_name)) {
-                        halo_color = 1;
+                            draw_sprite(spr_gear_halo,0,x_surface_offset,y_surface_offset);
+                        }*/
+                        var halo_offset_y = 0;
+                        var halo_color=0;
+                        if (array_contains(["Raven Guard", "Dark Angels"], global.chapter_name)) {
+                            halo_color = 1;
+                        }
+                        var halo_offset_y=0;
+                        var halo_type = 2;
+                        if (armour()=="Artificer Armour" && !armour_bypass){
+                            halo_offset_y -= 14;
+                        } else if (armour_type == ArmourType.Indomitus){
+                            halo_type = 2;
+                            halo_offset_y -= 20;
+                        } else if (armour_type == ArmourType.Tartaros){
+                            halo_type = 2;
+                            halo_offset_y -= 2;
+                        }
+                        draw_sprite(spr_gear_halo,halo_type+halo_color,x_surface_offset,y_surface_offset+halo_offset_y);
                     }
-                    }
-                    var halo_offset_y=0;
-                    var halo_type = 2;
-                    var halo_color=0;
-                    if (armour()=="Artificer Armour" && !armour_bypass){
-                        halo_offset_y -= 14;
-                    } else if (armour_type == ArmourType.Indomitus){
-                        halo_type = 2;
-                        halo_offset_y -= 20;
-                    } else if (armour_type == ArmourType.Tartaros){
-                        halo_type = 2;
-                        halo_offset_y -= 2;
-                    }
-                    draw_sprite(spr_gear_halo,halo_type+halo_color,x_surface_offset,y_surface_offset+halo_offset_y);
                 }
 
                 // Draw arms
