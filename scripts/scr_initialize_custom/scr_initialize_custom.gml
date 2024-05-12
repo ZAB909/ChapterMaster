@@ -672,8 +672,16 @@ function scr_initialize_custom() {
 	high_chaplain_name=obj_creation.hchaplain;
 	high_apothecary_name=obj_creation.hapothecary;
 	forge_master_name=obj_creation.fmaster;
-	lord_admiral_name=obj_creation.admiral;
-	recruiter_name=obj_creation.recruiter;
+	honor_captain_name=obj_creation.honorcapt;		//1st
+	watch_master_name=obj_creation.watchmaster;		//2nd
+	arsenal_master_name=obj_creation.arsenalmaster;	//3rd
+	lord_admiral_name=obj_creation.admiral;			//4th
+	march_master_name=obj_creation.marchmaster;		//5th
+	rites_master_name=obj_creation.ritesmaster;		//6th
+	chief_victualler_name=obj_creation.victualler;	//7th
+	lord_executioner_name=obj_creation.lordexec;	//8th
+	relic_master_name=obj_creation.relmaster;		//9th
+	recruiter_name=obj_creation.recruiter;			//10th
 
 	master_melee=obj_creation.chapter_master_melee;
 	master_ranged=obj_creation.chapter_master_ranged;
@@ -1819,7 +1827,7 @@ function scr_initialize_custom() {
 	    loc[company][k]=home_name;
 	    role[company][k]=role[100][5];
 	    wep1[company][k]=wep1[101,5];
-	    name[company][k]=global.name_generator.generate_space_marine_name();
+	    name[company][k]=honor_captain_name;
 	    wep2[company][k]=wep2[101,5];
 	    
 	    gear[company][k]=gear[101,5];
@@ -2205,11 +2213,59 @@ function scr_initialize_custom() {
 	        wep1[company][k]=wep1[101,5];
 	        name[company][k]=global.name_generator.generate_space_marine_name();
 
-	        if (company==4){
+	        if (company==1){
+     	        if (honor_captain_name!=""){
+     	        	 name[company][k]=honor_captain_name;
+     	        } else{
+     	        	honor_captain_name = name[company][k];
+     	        }
+     	    }else if  (company==2){
+     	        if (watch_master_name!=""){
+     	        	 name[company][k]=watch_master_name;
+     	        } else{
+     	        	watch_master_name = name[company][k];
+     	        }
+			}else if  (company==3){
+     	        if (arsenal_master_name!=""){
+     	        	 name[company][k]=arsenal_master_name;
+     	        } else{
+     	        	arsenal_master_name = name[company][k];
+     	        }
+			}else if  (company==4){
      	        if (lord_admiral_name!=""){
      	        	 name[company][k]=lord_admiral_name;
      	        } else{
      	        	lord_admiral_name = name[company][k];
+     	        }
+			}else if  (company==5){
+     	        if (march_master_name!=""){
+     	        	 name[company][k]=march_master_name;
+     	        } else{
+     	        	march_master_name = name[company][k];
+     	        }
+     	    }else if  (company==6){
+     	        if (rites_master_name!=""){
+     	        	 name[company][k]=rites_master_name;
+     	        } else{
+     	        	rites_master_name = name[company][k];
+     	        }
+     	    }else if  (company==7){
+     	        if (chief_victualler_name!=""){
+     	        	 name[company][k]=chief_victualler_name;
+     	        } else{
+     	        	chief_victualler_name = name[company][k];
+     	        }
+     	    }else if  (company==8){
+     	        if (lord_executioner_name!=""){
+     	        	 name[company][k]=lord_executioner_name;
+     	        } else{
+     	        	lord_executioner_name = name[company][k];
+     	        }
+     	    }else if  (company==9){
+     	        if (relic_master_name!=""){
+     	        	 name[company][k]=relic_master_name;
+     	        } else{
+     	        	relic_master_name = name[company][k];
      	        }
      	    }else if  (company==10){
      	        if (recruiter_name!=""){
