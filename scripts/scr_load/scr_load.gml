@@ -1086,6 +1086,7 @@ function scr_load(argument0, argument1) {
 	        fla.orbiting=ini_read_real("Fleet","ef"+string(i)+"orb",0);
 	        fla.navy=ini_read_real("Fleet","ef"+string(i)+"navy",0);
 	        fla.guardsmen_unloaded=ini_read_real("Fleet","ef"+string(i)+"unl",0);
+	        fla.inquisitor=ini_read_real("Fleet","ef"+string(i)+"inquis",-1);
 
 	        if (fla.navy=1){var e;e=-1;
 	            repeat(20){e+=1;

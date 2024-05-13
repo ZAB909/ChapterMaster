@@ -1905,15 +1905,17 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			var primary_weapon;
 			var secondary_weapon="none";
 			if (weapon_slot==0){
-				//if player has not ranged weapons
-				if (((_wep1.range>1.1 ||_wep1.range==0) && (_wep2.range>1.1||_wep2.range==0)) && (!_wep1.has_tags(["pistol","flame"]) && !_wep2.has_tags(["pistol","flame"]))){
+				//if player has not melee weapons
+				var valid1 = ((_wep1.range<=1.1 && _wep1.range!=0) || (!_wep1.has_tags(["pistol","flame"])));
+				var valid2 = ((_wep2.range<=1.1 && _wep2.range!=0) || (!_wep2.has_tags(["pistol","flame"])));
+				if (!valid1 && !valid2){
 					primary_weapon=new equipment_struct({},"");//create blank weapon struct
 					primary_weapon.attack=strength/3;//calculate damage from player fists
 					primary_weapon.name="fists";
 				} else {
-					if (_wep1.range>1.1 && !_wep1.has_tags(["pistol","flame"])){
+					if (!valid1 && valid2){
 						primary_weapon=_wep2;
-					} else if (_wep2.range>1.1 && !_wep2.has_tags(["pistol","flame"])){
+					} else if (valid1 && !valid2){
 						primary_weapon=_wep1;
 					} else {
 						var highest = _wep1.attack>_wep2.attack ? _wep1 :_wep2;
@@ -1928,9 +1930,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 							primary_weapon=highest;
 							melee_att*=0.5;
 							if (primary_weapon.has_tag("flame")){
-								explanation_string+=$"Primary is Flame: +50%#"
+								explanation_string+=$"Primary is Flame: -50%#"
 							} else if primary_weapon.has_tag("pistol"){
-								explanation_string+=$"Primary is Pistol: +50%#"
+								explanation_string+=$"Primary is Pistol: -50%#"
 							}
 							secondary_weapon=lowest;
 						}

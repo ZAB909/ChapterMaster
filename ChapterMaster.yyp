@@ -980,6 +980,7 @@
     {"id":{"name":"spr_da_mk6_helm","path":"sprites/spr_da_mk6_helm/spr_da_mk6_helm.yy",},},
     {"id":{"name":"fnt_40k_14b","path":"fonts/fnt_40k_14b/fnt_40k_14b.yy",},},
     {"id":{"name":"fnt_40k_30b","path":"fonts/fnt_40k_30b/fnt_40k_30b.yy",},},
+    {"id":{"name":"spr_generic_sgt_mk6","path":"sprites/spr_generic_sgt_mk6/spr_generic_sgt_mk6.yy",},},
     {"id":{"name":"spr_dante","path":"sprites/spr_dante/spr_dante.yy",},},
     {"id":{"name":"spr_um_mk5_helm","path":"sprites/spr_um_mk5_helm/spr_um_mk5_helm.yy",},},
     {"id":{"name":"fnt_large","path":"fonts/fnt_large/fnt_large.yy",},},

@@ -244,7 +244,7 @@ function scr_company_struct(comp) constructor{
 				}
 				bound_height[0] += button[3] - button[1];
 			}
-			button = draw_unit_buttons([xx+bound_width[0]+30 + string_width(deploy_text), yy+bound_height[0]+10],"Reset Squad Loadout",[1,1],c_green);
+			button = draw_unit_buttons([xx+bound_width[0]+30 + string_width(deploy_text), yy+bound_height[0]+10+35],"Reset Squad Loadout",[1,1],c_green);
 			if (point_and_click(button)){
 				current_squad.sort_squad_loadout();
 			}

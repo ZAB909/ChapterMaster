@@ -665,6 +665,7 @@ function scr_draw_unit_image(_background=false){
                     specific_armour_sprite = spr_mk3_colors;
                     if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1){
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
+                            specific_helm = false;
                             // specific_armour_sprite = spr_da_mk3;
                             armour_draw=[spr_da_mk3,0];
                             robe_bypass = true;
@@ -684,6 +685,7 @@ function scr_draw_unit_image(_background=false){
                         }*/
                         if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1){
                             if (role()==obj_ini.role[100][Role.CAPTAIN]){
+                                specific_helm = false;
                                 // specific_armour_sprite = spr_da_mk4;
                                 armour_draw=[spr_da_mk4,0];
                                 robe_bypass = true;
@@ -698,6 +700,7 @@ function scr_draw_unit_image(_background=false){
                     if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1){
                         specific_helm = [spr_da_mk5_helm,spr_generic_sgt_mk5];
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
+                            specific_helm = false;
                             // specific_armour_sprite = spr_da_mk5;
                             armour_draw=[spr_da_mk5,0];
                             robe_bypass = true;
@@ -710,6 +713,7 @@ function scr_draw_unit_image(_background=false){
                     if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1){
                         specific_helm = [spr_da_mk6_helm,spr_generic_sgt_mk7];
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
+                            specific_helm = false;
                             // specific_armour_sprite = spr_da_mk6;
                             armour_draw=[spr_da_mk6,0];
                             robe_bypass = true;
@@ -723,6 +727,7 @@ function scr_draw_unit_image(_background=false){
                     if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1){
                         specific_helm = [spr_da_mk7_helm,spr_generic_sgt_mk7];
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
+                            specific_helm = false;
                             // specific_armour_sprite = spr_da_mk7;
                             armour_draw = [spr_da_mk7,0];
                             robe_bypass = true;
@@ -733,6 +738,7 @@ function scr_draw_unit_image(_background=false){
                     specific_armour_sprite = spr_mk8_colors;
                     if (global.chapter_name=="Dark Angels" || obj_ini.progenitor==1){
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
+                            specific_helm = false;
                             // specific_armour_sprite = spr_da_mk8;
                             armour_draw=[spr_da_mk8,0];
                             robe_bypass = true;
@@ -948,36 +954,58 @@ function scr_draw_unit_image(_background=false){
                         shader_set_uniform_f_array(colour_to_find1, [30/255,30/255,30/255]);
                         shader_set_uniform_f_array(colour_to_find2, [200/255,0/255,0/255]);
                     }
+                    var helm_pat =-1;
+                    var prime=0;
+                    var sec=0;
+                    var lenne2=0;
                     if (role()==obj_ini.role[100][Role.SERGEANT]){
                         with (obj_ini.complex_livery_data.sgt){
                             set_shader_color(0,helm_primary);
                             set_shader_color(1,helm_secondary);
                             set_shader_color(ShaderType.Lens,helm_lens);
-                            draw_sprite(specific_helm,helm_pattern,helm_draw[0]+x_surface_offset,y_surface_offset+0);
+                            helm_pat=helm_pattern;
                         }
                     }else if(role()==obj_ini.role[100][Role.VETERAN_SERGEANT]){
                         with (obj_ini.complex_livery_data.vet_sgt){
                             set_shader_color(0,helm_primary);
                             set_shader_color(1,helm_secondary);
                             set_shader_color(ShaderType.Lens,helm_lens);
-                            draw_sprite(specific_helm,helm_pattern,helm_draw[0]+x_surface_offset,y_surface_offset+0);
+                            helm_pat=helm_pattern;
                         }
                     }else if(role()==obj_ini.role[100][Role.CAPTAIN]){
                         with (obj_ini.complex_livery_data.captain){
                             set_shader_color(0,helm_primary);
                             set_shader_color(1,helm_secondary);
                             set_shader_color(ShaderType.Lens,helm_lens);
-                            draw_sprite(specific_helm,helm_pattern,helm_draw[0]+x_surface_offset,y_surface_offset+0);
+                            helm_pat=helm_pattern;
                         }
+                    } else {
+                        return_helm = false;
+                    }
+                    if (helm_pat!=-1){
+                        set_shader_color(0,prime);
+                        set_shader_color(1,sec);
+                        set_shader_color(ShaderType.Lens,lenne2);
+                        draw_sprite(specific_helm,helm_pat,helm_draw[0]+x_surface_offset,y_surface_offset+0);
                     }
                     set_shader_to_base_values();
                     set_shader_array(shader_array_set);
+
+                    // this allows us to layer rank iconography over custom special helms
                     if (return_helm!=false){
+                        shader_set_uniform_i(shader_get_uniform(sReplaceColor, "helm_replace"), prime);
+                        shader_set_uniform_i(shader_get_uniform(sReplaceColor, "helm_second_replace"), sec);
+                        shader_set_uniform_i(shader_get_uniform(sReplaceColor, "helm_lense_replace"), lenne2);
                         surface_reset_target();
+                        var special_helm_suface = surface_create(512,512);             
+                        surface_set_target(special_helm_suface);
+                        draw_sprite(return_helm,0,helm_draw[0]+x_surface_offset,y_surface_offset+0);  
+                        surface_reset_target();                 
                         shader_set_uniform_i(shader_get_uniform(sReplaceColor, "u_blend_modes"), 3);
                         texture_set_stage(shader_get_sampler_index(sReplaceColor, "background_texture"), surface_get_texture(unit_surface));                   
                         surface_set_target(unit_surface);                
-                        draw_sprite(specific_helm,0,helm_draw[0]+x_surface_offset,y_surface_offset+0);
+                        draw_surface(special_helm_suface,0,0);
+                        surface_free(special_helm_suface);
                         shader_set(sReplaceColor);
                         shader_set_uniform_i(shader_get_uniform(sReplaceColor, "u_blend_modes"), 0);                         
                     }

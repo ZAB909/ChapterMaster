@@ -16,6 +16,9 @@ uniform vec3 f_Replace6;
 uniform vec3 f_Replace7;
 uniform vec3 f_Replace8;
 uniform vec3 robes_colour_replace;
+uniform vec3 helm_replace;
+uniform vec3 helm_second_replace;
+uniform vec3 helm_lense_replace;
 
 varying vec2 v_vTexcoord;
 varying vec4 v_vColour;
@@ -29,20 +32,21 @@ void main()
   vec3 robes_colour_base = vec3(201.0 / 255.0, 178.0 / 255.0, 147.0 / 255.0);
   vec3 robes_highlight = vec3(230.0 / 255.0, 203.0 / 255.0, 168.0 / 255.0);
   vec3 robes_darkness = vec3(189.0 / 255.0, 167.0 / 255.0, 138.0 / 255.0);
-  vec3 robes_colour_base_2 = vec3(170.0 / 255.0, 150.0 / 255.0, 121.0 / 255.0);
+  vec3 robes_colour_base_2 = vec3(169.0 / 255.0, 150.0 / 255.0, 123.0 / 255.0);
   vec3 robes_highlight_2 = vec3(186.0 / 255.0, 165.0 / 255.0, 135.0 / 255.0);
   vec3 robes_darkness_2 = vec3(148.0 / 255.0, 132.0 / 255.0, 108.0 / 255.0);
   vec4 col = texture2D(gm_BaseTexture, v_vTexcoord);
   if (col.rgb == f_Colour1.rgb && u_blend_modes!=2)
   {
-    if (u_blend_modes==2){
+    if (u_blend_modes==3){
       vec4 background = texture2D(background_texture, v_vTexcoord);
-      if (background.a>0.0){
+      if (background.rgb==helm_replace.rgb||background.rgb==helm_second_replace.rgb||helm_lense_replace.rgb==helm_replace.rgb){
         col.rgb = background.rgb;
       } else {
         col.rgb = f_Replace1.rgb;
       }
-    } else {
+    } 
+    if (u_blend_modes!=3){
       col.rgb = f_Replace1.rgb;
     }
   }
