@@ -958,44 +958,48 @@ function scr_draw_unit_image(_background=false){
                     var prime=0;
                     var sec=0;
                     var lenne2=0;
+                    var recolour_helm =false;
                     if (role()==obj_ini.role[100][Role.SERGEANT]){
                         with (obj_ini.complex_livery_data.sgt){
-                            set_shader_color(0,helm_primary);
-                            set_shader_color(1,helm_secondary);
-                            set_shader_color(ShaderType.Lens,helm_lens);
+                            prime=helm_primary;
+                            sec=helm_secondary;
+                            lenne2 =helm_lens;
                             helm_pat=helm_pattern;
+                            recolour_helm=true;
                         }
                     }else if(role()==obj_ini.role[100][Role.VETERAN_SERGEANT]){
                         with (obj_ini.complex_livery_data.vet_sgt){
-                            set_shader_color(0,helm_primary);
-                            set_shader_color(1,helm_secondary);
-                            set_shader_color(ShaderType.Lens,helm_lens);
+                            prime=helm_primary;
+                            sec=helm_secondary;
+                            lenne2 =helm_lens;
                             helm_pat=helm_pattern;
+                            recolour_helm=true;
                         }
                     }else if(role()==obj_ini.role[100][Role.CAPTAIN]){
                         with (obj_ini.complex_livery_data.captain){
-                            set_shader_color(0,helm_primary);
-                            set_shader_color(1,helm_secondary);
-                            set_shader_color(ShaderType.Lens,helm_lens);
+                            prime=helm_primary;
+                            sec=helm_secondary;
+                            lenne2 =helm_lens;
                             helm_pat=helm_pattern;
+                            recolour_helm=true;
                         }
                     } else {
                         return_helm = false;
                     }
-                    if (helm_pat!=-1){
+                    if (recolour_helm){
                         set_shader_color(0,prime);
                         set_shader_color(1,sec);
-                        set_shader_color(ShaderType.Lens,lenne2);
+                        set_shader_color(ShaderType.Lens,lenne2);                        
                         draw_sprite(specific_helm,helm_pat,helm_draw[0]+x_surface_offset,y_surface_offset+0);
+                        shader_set_uniform_i(shader_get_uniform(sReplaceColor, "helm_replace"), prime);
+                        shader_set_uniform_i(shader_get_uniform(sReplaceColor, "helm_second_replace"), sec);
+                        shader_set_uniform_i(shader_get_uniform(sReplaceColor, "helm_lense_replace"), lenne2);                        
                     }
                     set_shader_to_base_values();
                     set_shader_array(shader_array_set);
 
                     // this allows us to layer rank iconography over custom special helms
                     if (return_helm!=false){
-                        shader_set_uniform_i(shader_get_uniform(sReplaceColor, "helm_replace"), prime);
-                        shader_set_uniform_i(shader_get_uniform(sReplaceColor, "helm_second_replace"), sec);
-                        shader_set_uniform_i(shader_get_uniform(sReplaceColor, "helm_lense_replace"), lenne2);
                         surface_reset_target();
                         var special_helm_suface = surface_create(512,512);             
                         surface_set_target(special_helm_suface);
@@ -1049,6 +1053,7 @@ function scr_draw_unit_image(_background=false){
                 }
             }
             //purity seals/decorations
+            //TODO imprvoe this logic to be more extendable
             if (armour_type==ArmourType.Normal){
                 if (struct_exists(body[$ "torso"],"purity_seal")){
                     if (body[$ "torso"][$"purity_seal"][2]==1){
