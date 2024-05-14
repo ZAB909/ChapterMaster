@@ -18,6 +18,80 @@ enum Role {
 	SERGEANT = 18,
 	VETERAN_SERGEANT = 19
 }
+progenitor_livery(chapter){
+	//default
+	var livery_data = {
+		sgt : {
+			helm_pattern:0,
+			helm_primary : 0,
+			helm_secondary : 0,
+			helm_detail : 0,
+			helm_lens : 0,
+		},
+		vet_sgt : {
+			helm_pattern:0,
+			helm_primary : 0,
+			helm_secondary : 0,
+			helm_detail : 0,
+			helm_lens : 0,
+		},
+		captain : {
+			helm_pattern:0,
+			helm_primary : 0,
+			helm_secondary : 0,
+			helm_detail : 0,
+			helm_lens : 0,
+		}		
+	}	
+	//custom for chapters
+	if (chapter=="Space Wolves"){
+		livery_data = {
+			sgt : {
+				helm_pattern:0,
+				helm_primary : 0,
+				helm_secondary : 0,
+				helm_detail : 0,
+				helm_lens : 0,
+			},
+			vet_sgt : {
+				helm_pattern:0,
+				helm_primary : 0,
+				helm_secondary : 0,
+				helm_detail : 0,
+				helm_lens : 0,
+			},
+			captain : {
+				helm_pattern:0,
+				helm_primary : 0,
+				helm_secondary : 0,
+				helm_detail : 0,
+				helm_lens : 0,
+			}		
+		}
+	}
+	return livery_data;
+}
+
+function progenitor_map(){
+	var founding_chapters = [
+		"",
+		"Dark Angels",
+		"White Scars",
+		"Space Wolves",
+		"Imperial Fists",
+		"Blood Angels",
+		"Iron Hands",
+		"Ultramarines",
+		"Salamanders",
+		"Raven Guard"
+	]
+	for (i=1;i<10;i++){
+		if (global.chapter_name==founding_chapters[i] || obj_ini.progenitor==i){
+			return founding_chapters[i];
+		}
+	}
+	return "";
+}
 
 function scr_initialize_custom() {
 
@@ -662,6 +736,14 @@ function scr_initialize_custom() {
 	trim=obj_creation.trim;
 	skin_color=obj_creation.skin_color;
 	complex_livery_data = obj_creation.complex_livery_data;
+	var complex_type = ["sgt", "vet_sgt", "captain"];
+	for (var i=0;i<4;i++){
+		with (complex_livery_data[$ complex_type[i]]){
+			if (helm_primary==0 && helm_secondary==0 && helm_lens==0){
+				complex_livery_data = progenitor_livery(progenitor_map());
+			}
+		}
+	}
 
 	/*main_color=obj_creation.main_color;
 	secondary_color=obj_creation.secondary_color;

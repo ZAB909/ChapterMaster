@@ -30,6 +30,7 @@ premades=true;
 complex_livery=false;
 complex_selection = "sgt";
 complex_depth_selection = 0;
+//TODO probably make this array based at some point ot match other unit data
 complex_livery_data = {
 	sgt : {
 		helm_pattern:0,

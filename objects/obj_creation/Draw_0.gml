@@ -1389,7 +1389,7 @@ if (slide=4){
                     role : "sgt",
                 },
                 {
-                    text : $"Helm lens: {col[complex_livery_data.sgt.helm_secondary]}",
+                    text : $"Helm lens: {col[complex_livery_data.sgt.helm_lens]}",
                     tooltip:"Secondary",
                     tooltip2:"helm lens colour of sgt.",
                     cords : [620, 322],
@@ -1417,7 +1417,7 @@ if (slide=4){
                     role : "vet_sgt",
                 },
                 {
-                    text : $"Helm lens: {col[complex_livery_data.sgt.helm_secondary]}",
+                    text : $"Helm lens: {col[complex_livery_data.sgt.helm_lens]}",
                     tooltip:"Secondary",
                     tooltip2:"helm lens colour of sgt.",
                     cords : [620, 322],
@@ -1445,7 +1445,7 @@ if (slide=4){
                     role : "captain",
                 },
                 {
-                    text : $"Helm lens: {col[complex_livery_data.sgt.helm_secondary]}",
+                    text : $"Helm lens: {col[complex_livery_data.sgt.helm_lens]}",
                     tooltip:"lens",
                     tooltip2:"helm lens colour of sgt.",
                     cords : [620, 322],
