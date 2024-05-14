@@ -198,7 +198,7 @@ function inquisition_inspection_logic(){
             
             obj_controller.inqis_flag_gene+=1;
             if (obj_controller.inqis_flag_gene=1){
-                if (hur=1) then =inquis_string+=" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Your Chapter has plenty enough Gene-Seed to restore itself to full strength and the Incubators on top of that are excessive.  Both have been reported, and you are ordered to remove the Test-Slave Incubators.  Relations with the Inquisition are also more strained than before.";
+                if (hur=1) then inquis_string+=" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Your Chapter has plenty enough Gene-Seed to restore itself to full strength and the Incubators on top of that are excessive.  Both have been reported, and you are ordered to remove the Test-Slave Incubators.  Relations with the Inquisition are also more strained than before.";
                 if (hur=2) then inquis_string+=" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Your Chapter is already at full strength and the Incubators on top of that are excessive.  The Incubators have been reported, and you are ordered to remove them immediately.  Relations with the Inquisition are also slightly more strained than before.";
             }
             if (obj_controller.inqis_flag_gene=2){
@@ -217,7 +217,7 @@ function inquisition_inspection_logic(){
 function inquisitor_approval_gene_banks(){
     var gene_slave_count = 0;
     var hur=0
-    for (var e=0;e<array_length(obj_ini.slave_batch_num;e++){
+    for (var e=0;e<array_length(obj_ini.slave_batch_num);e++){
         if (obj_ini.slave_batch_num[e]>0) then gene_slave_count+=obj_ini.slave_batch_num[e];
     }
     if (obj_controller.marines<=200) and (gene_slave_count>=100) and (obj_controller.gene_seed>=1100) then hur=1;
@@ -239,7 +239,7 @@ function inquisitor_ship_approaches(){
         if (approach_system.name==player_fleet_location.name){
             inquis_string = "Our navigators report that an inquisitor's ship is currently warping towards our flagship. It is likely that the inquisitor on board (provided he/she makes it) will attempt to perform an inspection of our flagship.";
             do_alert = true;
-            if (fleet_has_roles(target), ["Ork Sniper","Flash Git","Ranger"]){
+            if (fleet_has_roles(target, ["Ork Sniper","Flash Git","Ranger"])){
                 inquis_string+="Currently, there are non-imperial hirelings within the fleet. It would be wise to at least unload them on a planet below, if we wish to remain in good graces with inquisition, and possibly imperium at large.";
             }
         }

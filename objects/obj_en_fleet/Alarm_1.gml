@@ -1031,7 +1031,7 @@ if (action==""){
                         if (ca=11) then ca=-5;}
                         if (ca>=0) and (ca<11){
                             unit=fetch_unit([ca,ia]);
-                            if (string(obj_ini.loc[ca,ia])=cur_star.name) and (unit.planet_location)>0){
+                            if (obj_ini.loc[ca,ia]=cur_star.name) and (unit.planet_location>0){
                                 if (unit.role()="Ork Sniper") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}
                                 if (unit.role()="Flash Git") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}
                                 if (unit.role()="Ranger") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}

@@ -8,7 +8,8 @@ function scr_loyalty(argument0, argument1) {
 	    var i, noplus;i=0;noplus=0;
     
 	    repeat(30){
-	        i+=1;noplus=0;
+	        i+=1;
+	        noplus=0;
         
 	        if (obj_controller.loyal[i]=argument0){// Increases detection chance by a variable amount
 	            var amount;amount=0;
@@ -64,7 +65,9 @@ function scr_loyalty(argument0, argument1) {
 	                obj_controller.loyalty_hidden-=2;
 	                obj_controller.loyal_num[i]+=5;
 	                obj_controller.loyal_time[i]=9999;
-	                amount=0;noplus=1;exit;
+	                amount=0;
+	                noplus=1;
+	                exit;
 	            }
             
 	            if (argument0="Refusing to Crusade"){
