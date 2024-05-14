@@ -28,8 +28,9 @@ uniform sampler2D background_texture;
 uniform sampler2D armour_texture;
 
 vec3 light_or_dark(vec3 m_colour, float shade){
-  return vec3((m_colour.r * shade) + 0.01, m_colour.g * shade, m_colour.b * shade)
+  return vec3((m_colour.r * shade) + 0.01, m_colour.g * shade, m_colour.b * shade);
 }
+
 void main()
 {
   vec3 robes_colour_base = vec3(201.0 / 255.0, 178.0 / 255.0, 147.0 / 255.0);
@@ -101,22 +102,22 @@ void main()
 
   if (col.rgb == robes_colour_base.rgb || col.rgb == robes_colour_base_2.rgb)
   {
-    col.rgb = light_or_dark(robes_colour_replace.r , 1.0).rgb;.rgb;
+    col.rgb = light_or_dark(robes_colour_replace , 1.0).rgb;
   }
   if (col.rgb == robes_highlight.rgb || col.rgb == robes_highlight_2.rgb) {
-    col.rgb = light_or_dark(robes_colour_replace.r , 1.25).rgb;
+    col.rgb = light_or_dark(robes_colour_replace , 1.25).rgb;
     //col.rgb = mix(robes_highlight.rgb, robes_colour_replace.rgb, 0.25);
   }
   if (col.rgb == robes_darkness.rgb || col.rgb == robes_darkness_2.rgb) {
     //col.rgb = vec3(col.r*0.8, col.g*0.8, col.b*0.8).rgb;
     //col.rgb = robes_colour_replace.rgb;
     //col.rgb = mix(robes_darkness.rbg, robes_colour_replace.rgb, 0.25);
-    col.rgb = light_or_dark(robes_colour_replace.r , 0.75).rgb;
+    col.rgb = light_or_dark(robes_colour_replace , 0.75).rgb;
   }
   if (u_blend_modes == 1) {
-    vec3 robe = light_or_dark(robes_colour_replace, 1.0).rgb
-    vec3 robe_light = light_or_dark(robes_colour_replace, 1.25).rgb
-    vec3 robe_dark = light_or_dark(robes_colour_replace, 0.75).rgb
+    vec3 robe = light_or_dark(robes_colour_replace, 1.0).rgb;
+    vec3 robe_light = light_or_dark(robes_colour_replace, 1.25).rgb;
+    vec3 robe_dark = light_or_dark(robes_colour_replace, 0.75).rgb;
 
     vec4 background_col = texture2D(background_texture, v_vTexcoord);
 

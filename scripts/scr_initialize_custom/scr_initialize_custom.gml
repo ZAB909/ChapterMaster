@@ -68,6 +68,30 @@ function progenitor_livery(chapter, specific="none"){
 				helm_lens : 0,
 			}		
 		}
+	} else if (chapter=="Ultramarines"){
+		livery_data = {
+			sgt : {
+				helm_pattern:0,
+				helm_primary : Colors.Red,
+				helm_secondary : Colors.Red,
+				helm_detail : Colors.Red,
+				helm_lens : Colors.Green,
+			},
+			vet_sgt : {
+				helm_pattern:1,
+				helm_primary : Colors.Red,
+				helm_secondary : Colors.White,
+				helm_detail : Colors.Red,
+				helm_lens : Colors.Green,
+			},
+			captain : {
+				helm_pattern:0,
+				helm_primary : Colors.Ultramarine,
+				helm_secondary : Colors.Ultramarine,
+				helm_detail : Colors.Ultramarine,
+				helm_lens : Colors.Red,
+			}		
+		}		
 	}
 	if (specific=="none"){
 		return livery_data;
