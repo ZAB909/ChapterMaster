@@ -7,7 +7,7 @@ function scr_enemy_ai_d() {
 
 	// Planetary problems here
 
-	var i;i=0;
+	var i=0;
 	repeat(planets){i+=1;
 	    if (p_necrons[i]>0) and (p_necrons[i]<6) then p_necrons[i]+=1;
     	problem_count_down(i);
@@ -50,42 +50,85 @@ function scr_enemy_ai_d() {
 	            scr_event_log("",string(tx), name);
 	        }
 	    }
-    
-	    var wob;wob=0;
-	    repeat(4){wob+=1;
-	        if (p_problem[i,wob]="succession") and (p_timer[i,wob]=0){
-	            var dice1,dice2,result,tixt;
-	            dice1=floor(random(100))+1;
-	            dice2=floor(random(100))+1;
-            
-	            result="";tixt="";
-	            if (dice1<=(p_heresy[i]*2)) then result="chaos";
-	            if (dice2<=(p_influence[i][eFACTION.Tau]*2)) and (result="") then result="tau";
-	            if (result="") then result="imperial";
-
-            	tixt=$"War of Succession on {planet_numeral_name(1)} has ended";
-            
-	            if (p_owner[i]=2) and (result="chaos"){
-	                tixt+=" with Chaos in control.";dispo[wob]=0;
-	                p_owner[i]=10;
-	                p_pdf[i]+=p_guardsmen[i];
-	                p_guardsmen[i]=0;
-	                scr_alert("red","succession",string(tixt),x,y);
-	            }
-	            if (p_owner[i]=2) and (result="tau"){
-	                tixt+=" with a Tau sympathizer in control.";dispo[wob]=10+choose(1,2,3,4,5,6);
-	                p_owner[i]=8;p_pdf[i]+=p_guardsmen[i];p_guardsmen[i]=0;p_tau[i]=2;scr_alert("red","succession",string(tixt),x,y);
-                
-	            }
-	            if (result="imperial"){tixt+=".";
-	                scr_alert("green","succession",string(tixt),x,y);
-	            }
-	            p_problem[i,wob]="";delete_features(p_feature[i], P_features.Succession_War);
-	            if (result="chaos") then scr_event_log("purple",tixt);
-	            if (result="tau") then scr_event_log("red",tixt);
-	            if (result="imperial") then scr_event_log("",tixt);
-	        }
+	    if (has_problem_planet_and_time(i, "succession", 0)){
+            var dice1,dice2,result,tixt;
+            dice1=floor(random(100))+1;
+            dice2=floor(random(100))+1;
         
+            result="";tixt="";
+            if (dice1<=(p_heresy[i]*2)) then result="chaos";
+            if (dice2<=(p_influence[i][eFACTION.Tau]*2)) and (result="") then result="tau";
+            if (result="") then result="imperial";
+
+        	tixt=$"War of Succession on {planet_numeral_name(1)} has ended";
+        
+            if (p_owner[i]=2) and (result="chaos"){
+                tixt+=" with Chaos in control.";
+                dispo[i]=0;
+                p_owner[i]=10;
+                p_pdf[i]+=p_guardsmen[i];
+                p_guardsmen[i]=0;
+                scr_alert("red","succession",string(tixt),x,y);
+            }
+            if (p_owner[i]=2) and (result="tau"){
+                tixt+=" with a Tau sympathizer in control.";
+                dispo[i]=10+choose(1,2,3,4,5,6);
+                p_owner[i]=8;
+                p_pdf[i]+=p_guardsmen[i];
+                p_guardsmen[i]=0;
+                p_tau[i]=2;
+                scr_alert("red","succession",string(tixt),x,y);
+            
+            }
+            if (result="imperial"){tixt+=".";
+                scr_alert("green","succession",string(tixt),x,y);
+            }
+            delete_features(p_feature[i], P_features.Succession_War);
+            if (result="chaos") then scr_event_log("purple",tixt);
+            if (result="tau") then scr_event_log("red",tixt);
+            if (result="imperial") then scr_event_log("",tixt);
+            remove_planet_problem(i, "succession");
+	    }
+	   if (has_problem_planet_and_time(i, "recon", 0)){
+            var tixt="Inquisition Mission Failed: Investigate ";
+            tixt+=string(name)+" "+scr_roman(i)+".";
+            scr_alert("red","mission_failed",string(tixt),0,0);
+            scr_event_log("red",tixt);
+            obj_controller.disposition[4]-=5;
+            remove_planet_problem(i, "recon");
+        }
+
+        if (has_problem_planet_and_time(i, "great_crusade", 0)){
+            var flet,cont,dir;cont=0;
+            flet=instance_nearest(x,y,obj_p_fleet);
+        
+            if (flet.action="") then cont=1;
+            if (cont=1) and (point_distance(x,y,flet.x,flet.y)<40) then cont=2;
+        
+            if (cont=2){
+                flet.action="crusade1";
+                dir=point_direction(room_width/2,room_height/2,x,y);
+                flet.action_x=x+lengthdir_x(2000,dir);
+                flet.action_y=y+lengthdir_y(2000,dir);
+                // flet.action_eta=floor(random(8))+12;
+                flet.action_eta=floor(random(8))+2;
+                flet.alarm[4]=1;
+                scr_alert("green","crusade","Fleet embarks upon Crusade.",x,y);
+                scr_event_log("","Fleet embarks upon Crusade.");
+            }
+            if (cont=1) or (cont=0){
+                // hit loyalty here
+                obj_controller.disposition[2]-=5;
+                obj_controller.disposition[4]-=10;
+                scr_alert("red","crusade","No ships designated for Crusade.",x,y);
+                scr_loyalty("Refusing to Crusade","+");
+                scr_event_log("red","No ships designated for Crusade.");
+                if (obj_controller.penitent=1) then obj_controller.penitent_current=0;
+            }
+        	remove_planet_problem(i, "great_crusade");
+        }        
+
+	    repeat(4){wob+=1;
         
 	        if (p_problem[i,wob]!=""){
 	            if (string_pos("mech_",p_problem[i,wob])>0){
@@ -184,7 +227,7 @@ function scr_enemy_ai_d() {
                     
                     
 	                    if (p_problem[i,wob]="mech_tomb1") and (p_player[i]>=20){
-	                        var check;check=scr_marine_count(id,i,20);
+	                        var check=scr_marine_count(id,i,20);
                         
 	                        if (check>=20){
 	                            p_problem[i,wob]="mech_tomb2!0!";p_timer[i,wob]=999;
@@ -267,14 +310,6 @@ function scr_enemy_ai_d() {
 	            }
 	        }
         
-	        if (p_problem[i,wob]="recon") and (p_timer[i,wob]=0){
-	            var tixt;tixt="Inquisition Mission Failed: Investigate ";
-	            tixt+=string(name)+" "+scr_roman(i)+".";
-	            scr_alert("red","mission_failed",string(tixt),0,0);
-	            scr_event_log("red",tixt);
-	            obj_controller.disposition[4]-=5;p_problem[i,wob]="";
-	        }
-        
 	        if (p_problem[i,wob]="bomb") and (p_timer[i,wob]=0){
 	            var tixt;
 	            tixt="The Necron Tomb of planet ";
@@ -289,37 +324,6 @@ function scr_enemy_ai_d() {
             
 	            // scr_alert("red","mission_failed",string(tixt),0,0);
 	            obj_controller.disposition[4]-=8;p_problem[i,wob]="";
-	        }
-        
-	        if (p_problem[i,wob]="great_crusade") and (p_timer[i,wob]=0){
-	            var flet,cont,dir;cont=0;
-	            flet=instance_nearest(x,y,obj_p_fleet);
-            
-	            if (flet.action="") then cont=1;
-	            if (cont=1) and (point_distance(x,y,flet.x,flet.y)<40) then cont=2;
-            
-	            if (cont=2){
-	                flet.action="crusade1";
-	                dir=point_direction(room_width/2,room_height/2,x,y);
-	                flet.action_x=x+lengthdir_x(2000,dir);
-	                flet.action_y=y+lengthdir_y(2000,dir);
-	                // flet.action_eta=floor(random(8))+12;
-	                flet.action_eta=floor(random(8))+2;
-	                flet.alarm[4]=1;
-	                scr_alert("green","crusade","Fleet embarks upon Crusade.",x,y);
-	                scr_event_log("","Fleet embarks upon Crusade.");
-	            }
-	            if (cont=1) or (cont=0){
-	                // hit loyalty here
-	                obj_controller.disposition[2]-=5;
-	                obj_controller.disposition[4]-=10;
-	                scr_alert("red","crusade","No ships designated for Crusade.",x,y);
-	                scr_loyalty("Refusing to Crusade","+");
-	                scr_event_log("red","No ships designated for Crusade.");
-	                if (obj_controller.penitent=1) then obj_controller.penitent_current=0;
-	            }
-            
-	            p_problem[i,wob]="";p_timer[i,wob]=0;// p_necrons[i]=4;
 	        }
         
 	        if ((p_problem[i,wob]="inquisitor1") or (p_problem[i,wob]="inquisitor2")) and (p_timer[i,wob]=6){
@@ -443,7 +447,8 @@ function scr_enemy_ai_d() {
 	        woop=0;woop=scr_role_count("Chief "+string(obj_ini.role[100,17]),"");
         
 	        var o,yep,yep2;o=0;yep=true;yep2=false;
-	        repeat(4){o+=1;if (obj_ini.dis[o]="Psyker Intolerant") then yep=false;}
+	        array_contains(obj_ini.dis, "Psyker Intolerant") then yep=false;
+	        
 	        if (obj_controller.known[eFACTION.Tyranids]=0) and (woop!=0) and (yep!=false){
 	            scr_popup("Shadow in the Warp","Chief "+string(obj_ini.role[100,17])+" "+string(obj_ini.name[0,5])+" reports a disturbance in the warp.  He claims it is like a shadow.","shadow","");
 	            scr_event_log("red","Chief "+string(obj_ini.role[100,17])+" reports a disturbance in the warp.  He claims it is like a shadow.");

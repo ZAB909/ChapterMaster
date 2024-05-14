@@ -10,7 +10,7 @@ function mission_name_key(mission){
 		"mech_raider" : "Provide Land Raider to Mechanicus",
 		"mech_bionics" : "Provide Bionic Augmented marines to study",
 		"mech_mars" : "Send Techmarines to mars",
-		"mech_tomb": "Explore Mechanicus Tomb",
+		"mech_tomb1": "Explore Mechanicus Tomb",
 		"fallen" : "Find Chapter Fallen",
 		"recon" : "Recon Mission for Inquisitor",
 		"cleanse" : "Cleanse Planet for Inquisitor",
@@ -18,6 +18,7 @@ function mission_name_key(mission){
 		"recon" : "Recon Mission for Inquisitor",
 		"bomb" : "Bombard World for inquisitor",
 		"great_crusade": "Answer Crusade Muster Call",
+		"harlequins" : "Harlequin presence Report",
 	}
 	if (struct_exists(mission_key, mission)){
 		return mission_key[$ mission];

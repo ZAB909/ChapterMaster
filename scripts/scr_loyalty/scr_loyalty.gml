@@ -134,7 +134,7 @@ function scr_loyalty(argument0, argument1) {
 	            if (that.p_hurssy[2]>0) then hurr+=that.p_hurssy[2];
 	            if (that.p_hurssy[3]>0) then hurr+=that.p_hurssy[3];
 	            if (that.p_hurssy[4]>0) then hurr+=that.p_hurssy[4];
-            
+            	var unit;
 	            if (instance_exists(that)) then repeat(4400){
 	                i+=1;
 	                if (i<=30){
@@ -145,15 +145,15 @@ function scr_loyalty(argument0, argument1) {
 	                if (ca<=10) and (ca>=0){
 	                    ia+=1;if (ia=400){ca+=1;ia=1;if (ca=11) then ca=-5;}
 	                    if (ca>=0) and (ca<11){
+	         				unit = fetch_unit([ca,ia]);
 	                        if (obj_ini.loc[ca,ia]=that.name){
 	                            if (obj_ini.role[ca,ia]="Ork Sniper") and (obj_ini.race[ca,ia]!=1){hurr+=1;sniper+=1;}
 	                            if (obj_ini.role[ca,ia]="Flash Git") and (obj_ini.race[ca,ia]!=1){hurr+=1;git+=1;}
 	                            if (obj_ini.role[ca,ia]="Ranger") and (obj_ini.race[ca,ia]!=1){hurr+=1;finder+=1;}
-	                            if (string_count("Daemon",obj_ini.wep1[ca,ia])>0){hurr+=8;demonic+=1;}
-	                            if (string_count("Daemon",obj_ini.wep2[ca,ia])>0){hurr+=8;demonic+=1;}
-	                            if (string_count("Daemon",obj_ini.armour[ca,ia])>0){hurr+=8;demonic+=1;}
-	                            if (string_count("Daemon",obj_ini.mobi[ca,ia])>0){hurr+=8;demonic+=1;}
-	                            if (string_count("Daemon",obj_ini.gear[ca,ia])>0){hurr+=8;demonic+=1;}
+	                            if (unit.equipped_artifact_tag("Daemon")){
+	                            	hurr+=8;
+	                            	demonic+=1;
+	                            }
 	                        }
 	                    }
 	                }

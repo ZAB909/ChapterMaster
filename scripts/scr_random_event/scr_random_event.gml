@@ -1023,23 +1023,14 @@ function scr_random_event(execute_now) {
 		}
 		
 	    var planet=irandom_range(1,star.planets);
-		for(var i = 1; i<= 4;i++){
-			if(star.p_problem[planet,i] == "") {
-				star.p_problem[planet,i] = "harlequins";
-				star.p_timer[planet,i] = irandom_range(2,5);
-				break;
-			}
-			if(i == 4){
-				debugl("RE: Harlequins, couldn't assing a problem to the planet");
-				exit;
-			}
-		}
-	    var text="Eldar Harlequins have been seen on planet " + string(star.name) + " " + scr_roman(planet) + ". Their purposes are unknown.";
-	    scr_popup("Harlequin Troupe",text,"harlequin","");
-	    var star_alert = instance_create(star.x+16,star.y-24,obj_star_event);
-		star_alert.image_alpha=1;
-		star_alert.image_speed=1;
-		star_alert.col="green";
+	    if ( add_new_problem(planet, "harlequins", irandom_range(2,5),star)){
+		    var text="Eldar Harlequins have been seen on planet " + string(star.name) + " " + scr_roman(planet) + ". Their purposes are unknown.";
+		    scr_popup("Harlequin Troupe",text,"harlequin","");
+		    var star_alert = instance_create(star.x+16,star.y-24,obj_star_event);
+			star_alert.image_alpha=1;
+			star_alert.image_speed=1;
+			star_alert.col="green";
+	    }
 	}
     
 	else if (chosen_event == EVENT.succession_war){

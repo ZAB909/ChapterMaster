@@ -2616,6 +2616,20 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		return artis;
 	}
 
+	static equipped_artifact_tag = function(tag){
+		var cur_artis = equipped_artifacts();
+		var arti;
+		var has_tag = false;
+		for(var i=0;i<array_length(cur_artis);i++){
+			arti = obj_ini.artifact_struct[cur_artis[i]];
+			has_tag = arti.has_tag(tag);
+			if (has_tag){
+				break;
+			}
+		}
+		return has_tag;
+	}
+
 	static movement_after_math = function(end_company=company, end_slot=marine_number){
 		if (squad != "none"){
 			var squad_data = obj_ini.squads[squad];

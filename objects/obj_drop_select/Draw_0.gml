@@ -379,14 +379,8 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
         if (sh_target!=-50){sh_target.acted+=1;}
         
         if (attacking==10) or (attacking==11){
-            var pause,r;pause=0;r=0;
-            repeat(4){r+=1;
-                if (has_problem_planet(obj_controller.selecting_planet, "meeting", p_target) ||
-                has_problem_planet(obj_controller.selecting_planet, "meeting_trap", p_target)) then pause=r;
-            }
-            if (pause>0) then p_target.p_problem[obj_controller.selecting_planet,pause]="";
-            if (pause>0) then p_target.p_timer[obj_controller.selecting_planet,pause]=-1;
-            
+            remove_planet_problem(obj_controller.selecting_planet, "meeting", p_target);
+            remove_planet_problem(obj_controller.selecting_planet, "meeting_trap", p_target);
         }
             
         instance_create(0,0,obj_ncombat);
@@ -627,7 +621,7 @@ if (menu=0) and (purge>=2){
     // Disposition here
     var succession=0,pp=obj_controller.selecting_planet
 
-    if (array_contains(p_target.p_problem[pp], "succession")) then succession=1;
+    var succession = has_problem_planet(pp,"succession",p_target);
     
     if ((p_target.dispo[pp]>=0) and (p_target.p_owner[pp]<=5) and (p_target.p_population[pp]>0)) and (succession=0){
         var wack;wack=0;

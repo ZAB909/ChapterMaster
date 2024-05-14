@@ -82,17 +82,15 @@ function scr_purge_world(star, planet, action_type, action_score) {
 
 	if (action_type=2){// Burn baby burn
 	    var i=0;
-	    repeat(star.planets){i+=1;
-	        if (star.p_problem[planet,i]="cleanse") and (isquest=0){
-	        	isquest=1;
-		        thequest="cleanse";
-		        questnum=i;
-		    }
+	    if (has_problem_planet(planet, "cleanse", star)){
+        	isquest=1;
+	        thequest="cleanse";
+	        questnum=i;
 	    }
+
 	    if (isquest=1){
 	        if (thequest="cleanse") and (action_score>=20){
-	            star.p_problem[planet][questnum]="";
-	            star.p_timer[planet][questnum]=-1;
+	        	remove_planet_problem(thequest);
             
 	            if (obj_controller.demanding=0) then obj_controller.disposition[4]+=1;
 	            if (obj_controller.demanding=1) then obj_controller.disposition[4]+=choose(0,0,1);
@@ -101,9 +99,7 @@ function scr_purge_world(star, planet, action_type, action_score) {
 	            scr_event_log("","Inquisition Mission Completed: The mutants of "+string(star.name)+" "+string(scr_roman(planet))+" have been cleansed by promethium.");
 	            scr_gov_disp(star.name,planet,choose(1,2,3));
 	        }
-	    }
-    
-	    if (isquest=0){
+	    }else if (isquest=0){
 	        txt1="Your forces scour "+string(star.name)+" "+string(planet)+", burning homes and towns that reek of heresy.  The screams and wails of the damned carry through the air.";
      
 	        if (star.p_large[planet]=0) then max_kill=action_score*12000;// Population if normal

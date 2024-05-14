@@ -191,10 +191,6 @@ function inquisition_inspection_logic(){
     if (obj_controller.und_gene_vaults==0){
         var hur = inquisitor_approval_gene_banks()
         if (hur>0){
-            obj_turn_end.popups+=1;
-            obj_turn_end.popup[obj_turn_end.popups]=1;
-            obj_turn_end.popup_type[obj_turn_end.popups]="Inquisition Inspection";
-            obj_turn_end.popup_image[obj_turn_end.popups]="inquisition";
             
             if (hur=1) then obj_controller.disposition[4]-=max(6,round(obj_controller.disposition[4]*0.2));
             if (hur=2) then obj_controller.disposition[4]-=max(3,round(obj_controller.disposition[4]*0.1));
@@ -202,16 +198,17 @@ function inquisition_inspection_logic(){
             
             obj_controller.inqis_flag_gene+=1;
             if (obj_controller.inqis_flag_gene=1){
-                if (hur=1) then obj_turn_end.popup_text[obj_turn_end.popups]=inquis_string+" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Your Chapter has plenty enough Gene-Seed to restore itself to full strength and the Incubators on top of that are excessive.  Both have been reported, and you are ordered to remove the Test-Slave Incubators.  Relations with the Inquisition are also more strained than before.";
-                if (hur=2) then obj_turn_end.popup_text[obj_turn_end.popups]=inquis_string+" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Your Chapter is already at full strength and the Incubators on top of that are excessive.  The Incubators have been reported, and you are ordered to remove them immediately.  Relations with the Inquisition are also slightly more strained than before.";
+                if (hur=1) then =inquis_string+=" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Your Chapter has plenty enough Gene-Seed to restore itself to full strength and the Incubators on top of that are excessive.  Both have been reported, and you are ordered to remove the Test-Slave Incubators.  Relations with the Inquisition are also more strained than before.";
+                if (hur=2) then inquis_string+=" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Your Chapter is already at full strength and the Incubators on top of that are excessive.  The Incubators have been reported, and you are ordered to remove them immediately.  Relations with the Inquisition are also slightly more strained than before.";
             }
             if (obj_controller.inqis_flag_gene=2){
-                if (hur=1) then obj_turn_end.popup_text[obj_turn_end.popups]=inquis_string+" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Both the stores and incubators have been reported, and you are AGAIN ordered to remove the Test-Slave Incubators.  The Inquisitor says this is your final warning.";
-                if (hur=2) then obj_turn_end.popup_text[obj_turn_end.popups]=inquis_string+" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Your Chapter is already at full strength and the Incubators are unneeded.  The Incubators have been reported, AGAIN, and you are to remove them.  The Inquisitor says this is your final warning.";
+                if (hur=1) then inquis_string+=" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Both the stores and incubators have been reported, and you are AGAIN ordered to remove the Test-Slave Incubators.  The Inquisitor says this is your final warning.";
+                if (hur=2) then inquis_string+=" has noted your abundant Gene-Seed stores and Test-Slave Incubators.  Your Chapter is already at full strength and the Incubators are unneeded.  The Incubators have been reported, AGAIN, and you are to remove them.  The Inquisitor says this is your final warning.";
             }
             if (obj_controller.inqis_flag_gene=3){
                 if (obj_controller.faction_status[eFACTION.Inquisition]!="War") then obj_controller.alarm[8]=1;
             }
+            scr_popup("Inquisition Inspection", inquis_string, "inquisition");           
             
         }
     }
@@ -235,11 +232,16 @@ function inquisitor_approval_gene_banks(){
 function inquisitor_ship_approaches(){
     if ((string_count("eet",trade_goods)!=0) and (string_count("_her",trade_goods)!=0)) then exit;
     var approach_system = instance_nearest(action_x,action_y,obj_star);
+    var inquis_string;
     var do_alert = false;
     if (string_count("fleet",trade_goods)>0){
         player_fleet_location = fleets_next_location(target);
         if (approach_system.name==player_fleet_location.name){
+            inquis_string = "Our navigators report that an inquisitor's ship is currently warping towards our flagship. It is likely that the inquisitor on board (provided he/she makes it) will attempt to perform an inspection of our flagship.";
             do_alert = true;
+            if (fleet_has_roles(target), ["Ork Sniper","Flash Git","Ranger"]){
+                inquis_string+="Currently, there are non-imperial hirelings within the fleet. It would be wise to at least unload them on a planet below, if we wish to remain in good graces with inquisition, and possibly imperium at large.";
+            }
         }
     } else if (approach_system.owner  == eFACTION.Player){
         do_alert = true;
@@ -251,6 +253,7 @@ function inquisitor_ship_approaches(){
         } else {
             scr_alert("green","duhuhuhu",$"Inquisitor {obj_controller.inquisitor[inquisitor]} approaches {approach_system.name}.",x,y);
         }
+        scr_popup("Inquisition Inspection", inquis_string, "");
     }
 }
 

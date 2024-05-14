@@ -1,4 +1,4 @@
-function scr_popup(type, text, image, popup_special) {
+function scr_popup(type, text, image, popup_special="") {
 
 	// title / text / image / speshul
 

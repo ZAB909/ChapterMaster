@@ -1023,22 +1023,22 @@ if (action==""){
                 // Check for xenos or demon-equip items on those planets
                 //TODO update this to check weapon or artifact tags
                 var e=0,ia=-1,ca=0;
+                var unit;
                 repeat(4400){
                     if (ca<=10) and (ca>=0){
                         ia+=1;
                         if (ia=400){ca+=1;ia=1;
                         if (ca=11) then ca=-5;}
                         if (ca>=0) and (ca<11){
-                            
-                            if (string(obj_ini.loc[ca,ia])=cur_star.name) and (real(obj_ini.TTRPG[ca][ia].planet_location)>0){
-                                if (obj_ini.role[ca,ia]="Ork Sniper") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}
-                                if (obj_ini.role[ca,ia]="Flash Git") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}
-                                if (obj_ini.role[ca,ia]="Ranger") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}
-                                if (string_count("Daemon",obj_ini.wep1[ca,ia])>0){tem1_base+=3;dem+=1;}
-                                if (string_count("Daemon",obj_ini.wep2[ca,ia])>0){tem1_base+=3;dem+=1;}
-                                if (string_count("Daemon",obj_ini.armour[ca,ia])>0){tem1_base+=3;dem+=1;}
-                                if (string_count("Daemon",obj_ini.mobi[ca,ia])>0){tem1_base+=3;dem+=1;}
-                                if (string_count("Daemon",obj_ini.gear[ca,ia])>0){tem1_base+=3;dem+=1;}
+                            unit=fetch_unit([ca,ia]);
+                            if (string(obj_ini.loc[ca,ia])=cur_star.name) and (unit.planet_location)>0){
+                                if (unit.role()="Ork Sniper") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}
+                                if (unit.role()="Flash Git") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}
+                                if (unit.role()="Ranger") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}
+                                if (unit.equipped_artifact_tag("Daemon")){
+                                	tem1_base+=3;
+                                	dem+=1;
+                                }
                             }
                         }
                     }
