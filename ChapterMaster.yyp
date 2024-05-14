@@ -450,6 +450,7 @@
     {"id":{"name":"spr_load_splash","path":"sprites/spr_load_splash/spr_load_splash.yy",},},
     {"id":{"name":"spr_formation_bars","path":"sprites/spr_formation_bars/spr_formation_bars.yy",},},
     {"id":{"name":"spr_formation_arrow","path":"sprites/spr_formation_arrow/spr_formation_arrow.yy",},},
+    {"id":{"name":"scr_player_fleet_functions","path":"scripts/scr_player_fleet_functions/scr_player_fleet_functions.yy",},},
     {"id":{"name":"spr_formation_splash","path":"sprites/spr_formation_splash/spr_formation_splash.yy",},},
     {"id":{"name":"spr_purge_panel","path":"sprites/spr_purge_panel/spr_purge_panel.yy",},},
     {"id":{"name":"spr_purge_buttons","path":"sprites/spr_purge_buttons/spr_purge_buttons.yy",},},

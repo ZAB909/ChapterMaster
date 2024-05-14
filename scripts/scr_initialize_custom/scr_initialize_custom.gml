@@ -18,7 +18,7 @@ enum Role {
 	SERGEANT = 18,
 	VETERAN_SERGEANT = 19
 }
-progenitor_livery(chapter){
+function progenitor_livery(chapter, specific="none"){
 	//default
 	var livery_data = {
 		sgt : {
@@ -69,7 +69,11 @@ progenitor_livery(chapter){
 			}		
 		}
 	}
-	return livery_data;
+	if (specific=="none"){
+		return livery_data;
+	} else {
+		return livery_data[$ specific];
+	}
 }
 
 function progenitor_map(){
@@ -737,7 +741,7 @@ function scr_initialize_custom() {
 	skin_color=obj_creation.skin_color;
 	complex_livery_data = obj_creation.complex_livery_data;
 	var complex_type = ["sgt", "vet_sgt", "captain"];
-	for (var i=0;i<4;i++){
+	for (var i=0;i<3;i++){
 		with (complex_livery_data[$ complex_type[i]]){
 			if (helm_primary==0 && helm_secondary==0 && helm_lens==0){
 				complex_livery_data = progenitor_livery(progenitor_map());

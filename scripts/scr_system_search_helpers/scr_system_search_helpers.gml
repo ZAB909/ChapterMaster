@@ -254,6 +254,17 @@ function new_star_event_marker(colour){
     bob.color=colour;
 }
 
+function is_dead_star(){
+	dead_star=true;
+	for (i=1;i<planets;i++){
+		if (p_type[i] !="dead"){
+			dead_star=false;
+			break;
+		}
+	}
+	return dead_star;
+}
+
 //function scr_get_player_fleets() {
 //	var player_fleets = [];
 //	with(obj_p_fleet){

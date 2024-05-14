@@ -14,19 +14,31 @@ function set_fleet_target(targ_x, targ_y, final_target){
 	action_eta=floor(point_distance(x,y,targ_x,targ_y)/128)+1;
 }
 
-function chase_fleet_target_set(){
-	var targ_location;
-	if (target.action!=""){
-        goal_x=target.action_x;
-        goal_y=target.action_y;
-        targ_location=instance_nearest(goal_x,goal_y,obj_star);
+function fleets_next_location(fleet="none"){
+	var targ_location ="none";
+	if (fleet=="none"){
+		if (action!=""){
+	        var goal_x=target.action_x;
+	        var goal_y=target.action_y;
+	        targ_location=instance_nearest(goal_x,goal_y,obj_star);
+		} else {
+			targ_location=instance_nearest(target.x,target.y,obj_star);
+		}		
 	} else {
-		targ_location=instance_nearest(target.x,target.y,obj_star);
+		with (fleet){
+			targ_location = fleets_next_location();
+		}
 	}
-	action_x=targ_location.x;
-    action_y=targ_location.y;
-    action="";
-    set_fleet_movement();    
+	return targ_location.id;
+}
+function chase_fleet_target_set(){
+	var targ_location = fleets_next_location(target);
+	if (targ_location!="none"){
+		action_x=targ_location.x;
+	    action_y=targ_location.y;
+	    action="";
+	    set_fleet_movement();
+	}
 }
 
 function fleet_intercept_time_calculate(target_intercept){

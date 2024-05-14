@@ -1248,26 +1248,26 @@ if (action==""){
         
         
         if (capital_number>0){
-            var onceh;onceh=0;
-            if (orbiting.p_type[4]!="Dead") and (orbiting.planets=4){orbiting.p_tyranids[4]=5;onceh+=1;}
-            if (orbiting.p_type[3]!="Dead") and (orbiting.planets>=3) and (onceh<capital_number){orbiting.p_tyranids[3]=5;onceh+=1;}
-            if (orbiting.p_type[2]!="Dead") and (orbiting.planets>=2) and (onceh<capital_number){orbiting.p_tyranids[2]=5;onceh+=1;}
-            if (orbiting.p_type[1]!="Dead") and (orbiting.planets>=1) and (onceh<capital_number){orbiting.p_tyranids[1]=5;onceh+=1;}
+            var capitals_engaged=0;
+            with (orbiting){
+            	for (var i=1;i<planets;i++){
+            		if (capitals_engaged=capital_number) then break;
+            		if (p_type[i]!="Dead"){
+            			p_tyranids[4]=5;
+            			capitals_engaged+=1;
+            		}
+            	}
+            }
         }
         
         
+
+        var n=false;
+        with (orbiting){
+        	n = is_dead_star();
+        }
         
-        
-        var n;
-        n=0;
-        
-        if (orbiting.planets=0) then n=1;
-        if (orbiting.planets=1) and (orbiting.p_type[1]="Dead") then n=1;
-        if (orbiting.planets=2) and (orbiting.p_type[1]="Dead") and (orbiting.p_type[2]="Dead") then n=1;
-        if (orbiting.planets=3) and (orbiting.p_type[1]="Dead") and (orbiting.p_type[2]="Dead") and (orbiting.p_type[3]="Dead") then n=1;
-        if (orbiting.planets=4) and (orbiting.p_type[1]="Dead") and (orbiting.p_type[2]="Dead") and (orbiting.p_type[3]="Dead") and (orbiting.p_type[4]="Dead") then n=1;
-        
-        if (n=1){
+        if (n){
             var xx,yy,good, plin, plin2;
             xx=0;yy=0;good=0;plin=0;plin2=0;
             
@@ -1424,15 +1424,7 @@ if (action="move") and (action_eta<5000){
     }*/
     
     if (action_eta==2) and (owner=eFACTION.Inquisition) {
-        if (instance_nearest(action_x,action_y,obj_star).owner  = eFACTION.Player) and (string_count("eet",trade_goods)=0) and (string_count("_her",trade_goods)=0){
-            var approach_system = instance_nearest(action_x,action_y,obj_star).name;
-            if (inquisitor==0){
-                scr_alert("green","duhuhuhu",$"Inquisitor Ship approaches {approach_system}.",x,y);
-            } else {
-                scr_alert("green","duhuhuhu",$"Inquisitor {obj_controller.inquisitor[inquisitor]} approaches {approach_system}.",x,y);
-            }
-
-        }
+    	inquisitor_ship_approaches();
     }else if (action_eta==0) {
         var steh, sta, steh_dist, old_x, old_y;
         steh=instance_nearest(action_x,action_y,obj_star);
