@@ -867,6 +867,7 @@
     {"id":{"name":"spr_wisdom_icon","path":"sprites/spr_wisdom_icon/spr_wisdom_icon.yy",},},
     {"id":{"name":"scr_event_dudes","path":"scripts/scr_event_dudes/scr_event_dudes.yy",},},
     {"id":{"name":"scr_event_newlines","path":"scripts/scr_event_newlines/scr_event_newlines.yy",},},
+    {"id":{"name":"spr_generic_terminator_sgt","path":"sprites/spr_generic_terminator_sgt/spr_generic_terminator_sgt.yy",},},
     {"id":{"name":"scr_event_gossip","path":"scripts/scr_event_gossip/scr_event_gossip.yy",},},
     {"id":{"name":"scr_alert","path":"scripts/scr_alert/scr_alert.yy",},},
     {"id":{"name":"scr_popup","path":"scripts/scr_popup/scr_popup.yy",},},

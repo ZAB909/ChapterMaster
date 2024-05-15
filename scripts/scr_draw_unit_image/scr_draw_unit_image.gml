@@ -790,6 +790,7 @@ function scr_draw_unit_image(_background=false){
                     specific_armour_sprite = spr_tartaros2_colors;
                 } else if (unit_armour="Terminator Armour"){
                     specific_armour_sprite = spr_terminator3_colors;
+                    specific_helm = spr_generic_terminator_sgt;
                     if(global.chapter_name == "Dark Angels"){
                         if (role() == obj_ini.role[100][2]){
                             armour_bypass=true;
