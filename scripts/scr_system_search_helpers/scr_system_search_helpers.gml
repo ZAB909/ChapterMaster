@@ -291,7 +291,7 @@ function problem_count_down(planet, count_change=1){
 }
 
 function add_new_problem(planet, problem, timer,star="none", other_data={}){
-	problem_added=false;
+	var problem_added=false;
 	if (star=="none"){
 		for (i=1;i<array_length(p_problem[planet]);i++){
 			if (p_problem[planet][i] ==""){
@@ -318,7 +318,7 @@ function new_star_event_marker(colour){
 }
 
 function is_dead_star(star="none"){
-	dead_star=true;
+	var dead_star=true;
 	if (star=="none"){
 		for (i=1;i<planets;i++){
 			if (p_type[i] !="dead"){

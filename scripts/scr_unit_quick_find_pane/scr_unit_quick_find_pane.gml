@@ -268,9 +268,9 @@ function scr_unit_quick_find_pane() constructor{
 			    draw_text(xx+80, yy+90+(20*i), $"{mission.system} {scr_roman_numerals()[mission.planet-1]}" );
 			    draw_set_halign(fa_left);
 			    if (entered){
-			    	draw_text(xx+160, yy+90+(20*i), mission.mission);
+			    	draw_text(xx+160-20, yy+90+(20*i), mission.mission);
 			    } else {
-			    	draw_text(xx+160, yy+90+(20*i), string_truncate(mission.mission,150));
+			    	draw_text(xx+160-20, yy+90+(20*i), string_truncate(mission.mission,150));
 			    }
 			    draw_set_halign(fa_center);
 			    if (!entered){
