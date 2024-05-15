@@ -163,6 +163,23 @@ function planet_numeral_name(planet, star="none"){
 		}		
 	}
 }
+function has_problem_star(problem, star="none"){
+	var has_problem = false;
+	if (star=="none"){
+		for (var i=1;i<planets;i++){
+			has_problem = has_problem_planet(i, problem);
+			if (has_problem){
+				has_problem=i;
+				break
+			}
+		}
+	} else {
+		with (star){
+			has_problem = has_problem_star(problem);
+		}
+	}
+	return has_problem;
+}
 
 function has_problem_planet(planet, problem, star="none"){
 	if (star=="none"){
@@ -187,10 +204,26 @@ function has_problem_planet_and_time(planet, problem, time,star="none"){
 		}
 	}
 	return had_problem;	
-}	
+}
+ function has_problem_planet_with_time(planet, problem,star="none"){
+	var had_problem = false;
+	if (star=="none"){
+		for (var i =1;i<array_length(p_problem[planet]);i++){
+			if (p_problem[planet][i] == problem){
+				if (p_timer[planet][i] >0){
+					had_problem=i;
+				}
+			}
+		}
+	} else {
+		with (star){
+			had_problem=remove_planet_problem(planet, problem)
+		}
+	}
+	return had_problem;	
+}
 
 function find_problem_planet(planet, problem, star="none"){
-	var had_problem = false;
 	if (star=="none"){
 		for (var i =1;i<array_length(p_problem[planet]);i++){
 			if (p_problem[planet][i] == problem){
@@ -203,7 +236,7 @@ function find_problem_planet(planet, problem, star="none"){
 		}
 	}
 	return -1;
-}	
+}
 
 function remove_planet_problem(planet, problem, star="none"){
 	var had_problem = false;
@@ -212,6 +245,7 @@ function remove_planet_problem(planet, problem, star="none"){
 			if (p_problem[planet][i] == problem){
 				p_problem[planet][i]="";
 				p_timer[planet][i]=-1;
+				p_problem_other_data[planet][i]={};
 				had_problem=true;
 			}
 		}
@@ -239,7 +273,7 @@ function open_problem_slot(planet, star="none"){
 }
 
 function remove_star_problem(problem){
-	for (var i=0;i<=planets;i++){
+	for (var i=1;i<=planets;i++){
 		remove_planet_problem(i, problem);
 	}
 }
@@ -256,20 +290,21 @@ function problem_count_down(planet, count_change=1){
 	}
 }
 
-function add_new_problem(planet, problem, timer,star="none"){
+function add_new_problem(planet, problem, timer,star="none", other_data={}){
 	problem_added=false;
 	if (star=="none"){
 		for (i=1;i<array_length(p_problem[planet]);i++){
 			if (p_problem[planet][i] ==""){
 				p_problem[planet][i]= problem;
+				p_problem_other_data[planet][i]=other_data;
 				p_timer[planet][i] = timer;
-				problem_added=true;
+				problem_added=i;
 				break;
 			}
 		}
 	} else {
 		with (star){
-			problem_added =  add_new_problem(planet, problem, timer);
+			problem_added =  add_new_problem(planet, problem, timer,"none",other_data);
 		}
 	}
 	return 	problem_added;

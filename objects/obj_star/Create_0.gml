@@ -69,6 +69,7 @@ for(run=1; run<=8; run++){
     p_raided[run]=0;
     // 
     p_problem[run] = array_create(8,"");
+    p_problem_other_data[run] = array_create(8,{});
     p_timer[run] = array_create(8,-1);
 }
 

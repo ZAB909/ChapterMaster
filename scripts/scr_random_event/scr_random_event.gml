@@ -1060,15 +1060,9 @@ function scr_random_event(execute_now) {
 			}
 		}
 		
-		array_push(star.p_feature[planet], new new_planet_feature(P_features.Succession_War))
-	    for(var i = 1; i <= 4; i++){
-			if(star.p_problem[planet,i] == "" ) {
-				star.p_problem[planet,i] = "succession";
-				star.p_timer[planet,i] = irandom(6) + 4;
-				star.dispo[planet] = -5000; 
-				break;
-			}
-		}
+		array_push(star.p_feature[planet], new new_planet_feature(P_features.Succession_War));
+		add_new_problem(planet, "succession",irandom(6) + 4, star);
+		star.dispo[planet] = -5000; 
 		
 		var text = string(star.name) + scr_roman(planet);
 		scr_popup("War of Succession","The planetary governor of "+string(text)+" has died.  Several subordinates and other parties each claim to be the true heir and successor- war has erupted across the planet as a result.  Heresy thrives in chaos.","succession","");
@@ -1526,13 +1520,8 @@ function scr_random_event(execute_now) {
 		var eta = scr_mission_eta(star.x,star.y, 1);
 		
 		var assigned_problem = false;
-		for(var i = 1; i<=4 && !assigned_problem; i++) {
-			if(star.p_problem[planet,i] == "") {
-				star.p_problem[planet,i] = "fallen";
-				star.p_timer[planet,i] = eta;
-				assigned_problem = true;
-			}
-		}
+		
+		add_new_problem(planet, "fallen", eta,star)
 		
 		if(!assigned_problem) {
 			debugl("RE: Hunt the Fallen, coulnd't assign a problem to the planet");

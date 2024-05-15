@@ -74,7 +74,7 @@ function scr_cheatcode(argument0) {
                 }  
             }else {
                 with(obj_controller){
-                    scr_random_event(1);
+                    scr_random_event(false);
                 }
             }
         }

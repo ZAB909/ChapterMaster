@@ -177,10 +177,9 @@ function scr_destroy_planet(argument0) {
 	    p_tyranids[baid]=0;p_traitors[baid]=0;p_chaos[baid]=0;
 	    p_demons[baid]=0;p_sisters[baid]=0;p_necrons[baid]=0;
 	    // 
-	    for (i=0; i<5;i++){
-	    	p_problem[i]=array_create(5, "");
-	    	p_timer[i]=array_create(5, 0);
-	    }
+    	p_problem[baid]=array_create(8, "");
+    	p_timer[baid]=array_create(8, 0);
+    	p_problem_other_data[baid]=array_create(8, {});
 	}
 
 	pip.text+=", scouring all life across the planet.  It has been rendered a barren, lifeless chunk of rock.";

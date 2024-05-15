@@ -422,17 +422,11 @@ function scr_save(save_slot,save_id) {
 	                ini_write_string("Star","sr"+string(i)+"influence"+string(g),base64_encode(json_stringify(instance_array[i].p_influence[g])));
 	                ini_write_real("Star","sr"+string(i)+"raided"+string(g),instance_array[i].p_raided[g]);
 
-	                ini_write_string("Star","sr"+string(i)+"prob"+string(g)+".1",instance_array[i].p_problem[g,1]);
-	                ini_write_real("Star","sr"+string(i)+"time"+string(g)+".1",instance_array[i].p_timer[g,1]);
-
-	                ini_write_string("Star","sr"+string(i)+"prob"+string(g)+".2",instance_array[i].p_problem[g,2]);
-	                ini_write_real("Star","sr"+string(i)+"time"+string(g)+".2",instance_array[i].p_timer[g,2]);
-
-	                ini_write_string("Star","sr"+string(i)+"prob"+string(g)+".3",instance_array[i].p_problem[g,3]);
-	                ini_write_real("Star","sr"+string(i)+"time"+string(g)+".3",instance_array[i].p_timer[g,3]);
-
-	                ini_write_string("Star","sr"+string(i)+"prob"+string(g)+".4",instance_array[i].p_problem[g,4]);
-	                ini_write_real("Star","sr"+string(i)+"time"+string(g)+".4",instance_array[i].p_timer[g,4]);
+	                for (var p=0;p<8;p++){
+		                ini_write_string("Star","sr{i}prob{g}.{p}",instance_array[i].p_problem[g,p]);
+		                ini_write_real("Star","sr{i}time{g}.{p}",instance_array[i].p_timer[g,p]);
+		                ini_write_real("Star","sr{i}prob_other{g}.{p}",base64_encode(json_stringify(instance_array[i].p_problem_other_data[g,p])));	                	
+	                }
 	            }
 	        }
 	    }

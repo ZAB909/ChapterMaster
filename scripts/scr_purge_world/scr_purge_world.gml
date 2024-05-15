@@ -134,18 +134,15 @@ function scr_purge_world(star, planet, action_type, action_score) {
 
 	if (action_type=3){// Blam!
 	    var i=0;
-	    repeat(star.planets){i+=1;
-	        if (star.p_problem[planet][i]="purge") and (isquest=0){
-	        	isquest=1;
-	        	thequest="purge";
-	        	questnum=i;
-	        }
+	    if (has_problem_planet(planet, "purge", star)){
+        	isquest=1;
+        	thequest="purge";
+        	questnum=i;
 	    }
+
 	    if (isquest=1){
 	        if (thequest="purge") and (action_score>=10){
-	            star.p_problem[planet][questnum]="";
-	            star.p_timer[questnum]=-1;
-            
+	        	remove_planet_problem(planet, "purge", star);
             
 	            if (obj_controller.demanding=0) then obj_controller.disposition[4]+=1;
 	            if (obj_controller.demanding=1) then obj_controller.disposition[4]+=choose(0,0,1);

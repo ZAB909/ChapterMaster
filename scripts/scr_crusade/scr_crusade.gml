@@ -170,14 +170,8 @@ function launch_crusade(){
 	else{
 		var assigned_crusade = false;
 		for(var i = 1; i <= star_id.planets && !assigned_crusade;i++){
-			for(var j = 1; j <= 4 && !assigned_crusade;  j++){
-				if(star_id.p_problem[i][j] == ""){
-					star_id.p_problem[i][j] = "great_crusade";
-					star_id.p_timer[i][j] = 36;
-					assigned_crusade = true;
-					break;
-				}
-			}
+			assigned_crusade = add_new_problem(i, "great_crusade", 36,star_id);
+			if (assigned_crusade) then break;
 		}
 		if(!assigned_crusade){
 			debugl("RE: Crusade, couldn't assign a crusade at the system");
