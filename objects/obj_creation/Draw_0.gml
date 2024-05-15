@@ -1401,7 +1401,7 @@ if (slide=4){
         } else if (complex_selection=="Veteran Sergeant Markers"){
             button_data = [
                 {
-                    text : $"Helm Primary : {col[complex_livery_data.sgt.helm_primary]}",
+                    text : $"Helm Primary : {col[complex_livery_data.vet_sgt.helm_primary]}",
                     tooltip:"Primary Helm Colour",
                     tooltip2:"Primary helm colour of sgt.",
                     cords : [620, 252],
@@ -1409,7 +1409,7 @@ if (slide=4){
                     role : "vet_sgt",
                 },
                 {
-                    text : $"Helm Secondary: {col[complex_livery_data.sgt.helm_secondary]}",
+                    text : $"Helm Secondary: {col[complex_livery_data.vet_sgt.helm_secondary]}",
                     tooltip:"Secondary",
                     tooltip2:"Secondary helm colour of sgt.",
                     cords : [620, 287],
@@ -1417,7 +1417,7 @@ if (slide=4){
                     role : "vet_sgt",
                 },
                 {
-                    text : $"Helm lens: {col[complex_livery_data.sgt.helm_lens]}",
+                    text : $"Helm lens: {col[complex_livery_data.vet_sgt.helm_lens]}",
                     tooltip:"Secondary",
                     tooltip2:"helm lens colour of sgt.",
                     cords : [620, 322],
@@ -1429,25 +1429,25 @@ if (slide=4){
         }else if (complex_selection=="Captain Markers"){
             button_data = [
                 {
-                    text : $"Helm Primary : {col[complex_livery_data.sgt.helm_primary]}",
+                    text : $"Helm Primary : {col[complex_livery_data.captain.helm_primary]}",
                     tooltip:"Primary Helm Colour",
-                    tooltip2:"Primary helm colour of sgt.",
+                    tooltip2:"Primary helm colour of captain.",
                     cords : [620, 252],
                     type : "helm_primary",
                     role : "captain",
                 },
                 {
-                    text : $"Helm Secondary: {col[complex_livery_data.sgt.helm_secondary]}",
+                    text : $"Helm Secondary: {col[complex_livery_data.captain.helm_secondary]}",
                     tooltip:"Secondary",
-                    tooltip2:"Secondary helm colour of sgt.",
+                    tooltip2:"Secondary helm colour of captain.",
                     cords : [620, 287],
                     type : "helm_secondary",
                     role : "captain",
                 },
                 {
-                    text : $"Helm lens: {col[complex_livery_data.sgt.helm_lens]}",
+                    text : $"Helm lens: {col[complex_livery_data.captain.helm_lens]}",
                     tooltip:"lens",
-                    tooltip2:"helm lens colour of sgt.",
+                    tooltip2:"helm lens colour of captain.",
                     cords : [620, 322],
                     type : "helm_lens",
                     role : "captain",

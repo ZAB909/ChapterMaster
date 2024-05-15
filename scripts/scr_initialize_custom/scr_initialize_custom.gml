@@ -768,7 +768,7 @@ function scr_initialize_custom() {
 	for (var i=0;i<3;i++){
 		with (complex_livery_data[$ complex_type[i]]){
 			if (helm_primary==0 && helm_secondary==0 && helm_lens==0){
-				self = progenitor_livery(progenitor_map(), complex_type[i]);
+				obj_ini.complex_livery_data[$ complex_type[i]] = progenitor_livery(progenitor_map(), complex_type[i]);
 			}
 		}
 	}
