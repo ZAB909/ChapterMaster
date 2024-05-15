@@ -1209,7 +1209,7 @@ if (slide=4){
             shader_set_uniform_f(colour_to_set4, col_r[lens_col]/255, col_g[lens_col]/255, col_b[lens_col]/255);
             draw_sprite(spr_generic_sgt_mk7, complex_depth_selection, 444,252);
         }
-        else if (complex_selection=="Sergeant Markers" && complex_livery){
+        else if (complex_selection=="Captain Markers" && complex_livery){
             var sgt_col_1 = complex_livery_data.captain.helm_primary;
             var sgt_col_2 = complex_livery_data.captain.helm_secondary;
             var lens_col = complex_livery_data.captain.helm_lens;
@@ -1453,7 +1453,7 @@ if (slide=4){
                     role : "captain",
                 },                
             ];
-            complex_livery_data.vet_sgt.helm_pattern=complex_depth_selection;
+            complex_livery_data.captain.helm_pattern=complex_depth_selection;
         }
         var button_cords, cur_button;
         for (var i=0;i<array_length(button_data);i++){
