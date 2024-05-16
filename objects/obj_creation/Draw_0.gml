@@ -1457,6 +1457,33 @@ if (slide=4){
                 },                
             ];
             complex_livery_data.captain.helm_pattern=complex_depth_selection;
+        } else if (complex_selection=="Veteran Markers"){
+            button_data = [
+                {
+                    text : $"Helm Primary : {col[complex_livery_data.veteran.helm_primary]}",
+                    tooltip:"Primary Helm Colour",
+                    tooltip2:"Primary helm colour of Veterans.",
+                    cords : [620, 252],
+                    type : "helm_primary",
+                    role : "veteran",
+                },
+                {
+                    text : $"Helm Secondary: {col[complex_livery_data.veteran.helm_secondary]}",
+                    tooltip:"Secondary",
+                    tooltip2:"Secondary helm colour of Veterans.",
+                    cords : [620, 287],
+                    type : "helm_secondary",
+                    role : "veteran",
+                },
+                {
+                    text : $"Helm lens: {col[complex_livery_data.veteran.helm_lens]}",
+                    tooltip:"lens",
+                    tooltip2:"helm lens colour of Veterans.",
+                    cords : [620, 322],
+                    type : "helm_lens",
+                    role : "veteran",
+                },                
+            ];
         }
         var button_cords, cur_button;
         for (var i=0;i<array_length(button_data);i++){
@@ -1549,7 +1576,7 @@ if (slide=4){
             }
         }
     } else {
-        var complex_livery_options = ["Sergeant Markers","Veteran Sergeant Markers", "Captain Markers"],
+        var complex_livery_options = ["Sergeant Markers","Veteran Sergeant Markers", "Captain Markers", "Veteran Markers"],
         for (var i=0;i<array_length(complex_livery_options);i++){
             yyy+=spacing;
             if (point_and_click(draw_unit_buttons([xxx,yyy], complex_livery_options[i],[0.5,0.5], 38144,, fnt_40k_30b, 1))){

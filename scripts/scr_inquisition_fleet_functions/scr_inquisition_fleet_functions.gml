@@ -175,11 +175,11 @@ function inquisition_inspection_logic(){
 	var inquis_string = $"Inquisitor {obj_controller.inquisitor[inquisitor]}";
 	 if (string_count("fleet",trade_goods)==0){
             inspec_alert_string = $"{inquis_string} finishes inspection of {cur_star.name}";
-            scr_loyalty("blarg","inspect_world");// This updates the loyalties
+            inquisition_inspection_loyalty("inspect_world");// This updates the loyalties
     } 
     else if (string_count("fleet",trade_goods)>0){
     	inspec_alert_string = $"{inquis_string} finishes inspection of your fleet";
-        scr_loyalty("blarg","inspect_fleet");// This updates the loyalties
+        inquisition_inspection_loyalty("inspect_fleet");// This updates the loyalties
         target=noone;
     }
     if (inspec_alert_string!=""){
@@ -257,6 +257,177 @@ function inquisitor_ship_approaches(){
     }
 }
 
+function inquisition_inspection_loyalty(inspection_type){
+if (inspection_type="inspect_world") or (inspection_type="inspect_fleet"){
+        var i,diceh,ca,ia,that,wid,hurr;
+        i=0;diceh=0;ca=0;ia=0;that=0;wid=0;hurr=0;
+    
+        var sniper,finder,git,demonic;
+        sniper=0;finder=0;git=0;demonic=0;
+    
+    
+        if (inspection_type="inspect_world"){
+
+            that=instance_nearest(x,y,obj_star);
+            // show_message(that);
+            instance_activate_object(obj_en_fleet);
+            
+            for (var i =1;i<=that.planets;i++){
+                if (that.p_hurssy[i]>0) then hurr+=that.p_hurssy[i];
+            }
+            var unit;
+             for (var g=1;g<array_length(obj_ini.artifact);g++){
+                g+=1;good=0;geh=0;
+                i=0;
+                if (obj_ini.artifact[g]!="" && obj_ini.artifact_loc[i]=that.name){
+                    if (artifact_struct[g].inquisition_disprove() && !obj_controller.und_armouries){
+                        hurr+=8;
+                        demonic+=1;
+                    }
+                }
+            }
+
+            for (var ca=0;ca<11;ca++){
+                for (var ia=0;ia<500;ca++){
+                    unit = fetch_unit([ca,ia]);
+                    if (obj_ini.loc[ca,ia]==that.name){
+                        if (unit.role()="Ork Sniper") and (obj_ini.race[ca,ia]!=1){hurr+=1;sniper+=1;}
+                        if (unit.role()="Flash Git") and (obj_ini.race[ca,ia]!=1){hurr+=1;git+=1;}
+                        if (unit.role()="Ranger") and (obj_ini.race[ca,ia]!=1){hurr+=1;finder+=1;}
+                        var artis = unit.equipped_artifacts();
+                        for (var art=0;art<array_length(artis);art++){
+                            var artifact = obj_ini.artifact_struct[artis[art]];
+                            if (artifact.inquisition_disprove()){
+                                hurr+=8;
+                                demonic+=1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    
+        if (inspection_type="inspect_fleet"){
+            with(obj_en_fleet){
+                if (string_count("Inqis",trade_goods)=0) or (owner  != eFACTION.Inquisition) then instance_deactivate_object(id);
+            }
+            if (instance_exists(obj_en_fleet)) and (instance_exists(obj_p_fleet)){
+                var player_inspection_fleet=instance_nearest(obj_en_fleet.x,obj_en_fleet.y,obj_p_fleet);
+            
+                var valid,g,t;i=-1;t=0;valid[0]=0;g=0;
+                player_ships = fleet_full_ship_array(player_inspection_fleet);
+                repeat(50){i+=1;valid[i]=0;}i=0;
+            
+                for (var g=1;g<array_length(obj_ini.artifact);g++){
+                    g+=1;good=0;geh=0;
+                    i=0;
+                    if (obj_ini.artifact[g]!="" && array_contains(player_ships, obj_ini.artifact_sid[g]-500)){
+                        if (artifact_struct[g].inquisition_disprove() && !obj_controller.und_armouries){
+                            hurr+=8;
+                            demonic+=1;
+                        }
+                    }
+                }
+                i=0;geh=0;good=0;
+                var unit;
+                if (player_inspection_fleet.hurssy>0) then hurr+=player_inspection_fleet.hurssy;
+            
+                for (var ca=0;ca<11;ca++){
+                    for (var ia=0;ia<500;ca++){
+
+                        unit = fetch_unit([ca,ia]);
+                        if (unit.name()=="") then continue;
+                        array_contains(player_ships,unit.ship_location)
+                        if (geh=1){
+                            unit = fetch_unit([ca,ia]);
+                            if (unit.name()=="") then continue;
+                            if (unit.base_group=="ork"){
+                                hurr+=1
+                                if (unit.role()="Ork Sniper") then sniper++;
+                                if (unit.role()="Flash Git")then gitt++
+                            }else if (unit.role()="Ranger") and (obj_ini.race[ca,ia]!=1){hurr+=1;finder+=1;}
+                            var artis = unit.equipped_artifacts();
+                            for (var art=0;art<array_length(artis);art++){
+                                var artifact = obj_ini.artifact_struct[artis[art]];
+                                if (artifact.inquisition_disprove()){
+                                    hurr+=8;
+                                    demonic+=1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            instance_activate_object(obj_en_fleet);
+        }
+    
+        if (hurr>0){
+            var hurrr=floor(random(12))+1;
+            if (hurrr<=hurr){
+                obj_controller.alarm[8]=1;
+                if (demonic>0) then scr_alert("red","inspect","Inquisitor discovers Daemonic item(s) in your posession.",0,0);
+                if (sniper>0) then scr_alert("red","inspect","Inquisitor discovers Ork Sniper(s) hired by your chapter.",0,0);
+                if (git>0) then scr_alert("red","inspect","Inquisitor discovers Flash Git(z) hired by your chapter.",0,0);
+                if (finder>0) then scr_alert("red","inspect","Inquisitor discovers Eldar Ranger(s) hired by your chapter.",0,0);
+                if (demonic+sniper+git+finder=0) then scr_alert("red","inspect","Inquisitor discovers heretical material in your posession.",0,0);
+            }
+        }
+        i=0;
+    
+        repeat(22){
+            i+=1;diceh=0;
+        
+            if (obj_controller.loyal_num[i]<1) and (obj_controller.loyal_num[i]>0) and (obj_controller.loyal[i]!="Avoiding Inspections"){
+                diceh=random(floor(100))+1;
+            
+                if (diceh<=(obj_controller.loyal_num[i]*1000)){
+                    if (obj_controller.loyal[i]="Heretic Contact"){
+                        obj_controller.loyal_num[i]=80;obj_controller.loyal_time[i]=9999;
+                        scr_alert("red","inspect","Inquisitor discovers evidence of Chaos Lord correspondence.",0,0);
+                    
+                        var one;one=0;
+                        if (obj_controller.disposition[4]>=80) and (one=0){obj_controller.disposition[4]=30;one=1;}
+                        if (obj_controller.disposition[4]<80) and (obj_controller.disposition[4]>10) and (one=0){obj_controller.disposition[4]=5;one=2;}
+                        if (obj_controller.disposition[4]<=10) and (one=0){obj_controller.disposition[4]=0;one=3;}
+                    
+                        if ((obj_controller.loyalty-80)<=0) and (one<3) then one=3;
+                        if (one=1) then with(obj_controller){scr_audience(4,"chaos_audience1",0,"",0,0);}
+                        if (one=2) then with(obj_controller){scr_audience(4,"chaos_audience2",0,"",0,0);}
+                        if (one=3) then obj_controller.alarm[8]=1;
+                    }
+                    if (obj_controller.loyal[i]="Heretical Homeworld"){obj_controller.loyal_num[i]=20;obj_controller.loyal_time[i]=3;}
+                    if (obj_controller.loyal[i]="Traitorous Marines"){obj_controller.loyal_num[i]=30;obj_controller.loyal_time[i]=9999;}
+                    // if (obj_controller.loyal[i]="Use of Sorcery"){obj_controller.loyal_num[i]=30;obj_controller.loyal_time[i]=9999;}
+                    if (obj_controller.loyal[i]="Mutant Gene-Seed"){obj_controller.loyal_num[i]=30;obj_controller.loyal_time[i]=9999;}
+                
+                    if (obj_controller.loyal[i]="Non-Codex Arming"){obj_controller.loyal_num[i]=12;obj_controller.loyal_time[i]=3;}
+                    if (obj_controller.loyal[i]="Non-Codex Size"){obj_controller.loyal_num[i]=12;obj_controller.loyal_time[i]=3;}
+                    if (obj_controller.loyal[i]="Lack of Apothecary"){obj_controller.loyal_num[i]=8;obj_controller.loyal_time[i]=1;}
+                    if (obj_controller.loyal[i]="Upset Machine Spirits"){obj_controller.loyal_num[i]=8;obj_controller.loyal_time[i]=1;}
+                    if (obj_controller.loyal[i]="Undevout"){obj_controller.loyal_num[i]=20;obj_controller.loyal_time[i]=3;}
+                    if (obj_controller.loyal[i]="Irreverance for His Servants"){obj_controller.loyal_num[i]=12;obj_controller.loyal_time[i]=5;}
+                    if (obj_controller.loyal[i]="Unvigilant"){obj_controller.loyal_num[i]=12;obj_controller.loyal_time[i]=9999;}
+                    if (obj_controller.loyal[i]="Conduct Unbecoming"){obj_controller.loyal_num[i]=8;obj_controller.loyal_time[i]=9999;}
+                    if (obj_controller.loyal[i]="Refusing to Crusade"){obj_controller.loyal_num[i]=20;obj_controller.loyal_time[i]=9999;}
+                
+                    if (obj_controller.loyal[i]="Eldar Contact"){obj_controller.loyal_num[i]=4;obj_controller.loyal_time[i]=9999;}
+                    if (obj_controller.loyal[i]="Ork Contact"){obj_controller.loyal_num[i]=4;obj_controller.loyal_time[i]=9999;}
+                    if (obj_controller.loyal[i]="Tau Contact"){obj_controller.loyal_num[i]=4;obj_controller.loyal_time[i]=9999;}
+                    if (obj_controller.loyal[i]="Xeno Trade"){obj_controller.loyal_num[i]=20;obj_controller.loyal_time[i]=9999;}
+                    if (obj_controller.loyal[i]="Xeno Associate"){obj_controller.loyal_num[i]=20;obj_controller.loyal_time[i]=9999;}
+                
+                    if (obj_controller.loyal[i]="Inquisitor Killer"){obj_controller.loyal_num[i]=100;obj_controller.loyal_time[i]=9999;}
+                    // if (obj_controller.loyal[i]="Avoiding Inspections"){obj_controller.loyal_num[i]=20;obj_controller.loyal_time[i]=120;}
+                    // if (obj_controller.loyal[i]="Lost Standard"){obj_controller.loyal_num[i]=10;obj_controller.loyal_time[i]=9999;}
+                
+                    obj_controller.loyalty_hidden-=obj_controller.loyal_num[i];
+                }
+            }
+        }// End repeat
+    
+        obj_controller.loyalty=obj_controller.loyalty_hidden;
+    }    
+}
 
 
 

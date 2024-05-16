@@ -654,29 +654,7 @@ function scr_load(argument0, argument1) {
 	    	obj_ini.complex_livery_data=json_parse(base64_decode(obj_ini.complex_livery_data));
 	    } else{
 	    	//TODO centralise and initialisation method for this other reference place is obj_creation create
-			obj_ini.complex_livery_data = {
-				sgt : {
-					helm_pattern:0,
-					helm_primary : 0,
-					helm_secondary : 0,
-					helm_detail : 0,
-					helm_lense : 0,
-				},
-				vet_sgt : {
-					helm_pattern:0,
-					helm_primary : 0,
-					helm_secondary : 0,
-					helm_detail : 0,
-					helm_lense : 0,
-				},
-				captain : {
-					helm_pattern:0,
-					helm_primary : 0,
-					helm_secondary : 0,
-					helm_detail : 0,
-					helm_lense : 0,
-				}		
-			}	    	
+			obj_ini.complex_livery_data = complex_livery_default();	    	
 	    }
 	    //
 	    obj_ini.preomnor=ini_read_real("Ini","preomnor",0);
