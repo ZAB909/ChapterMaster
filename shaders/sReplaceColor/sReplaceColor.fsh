@@ -39,16 +39,14 @@ void main()
   vec3 robes_highlight_2 = vec3(186.0 / 255.0, 165.0 / 255.0, 135.0 / 255.0);
   vec3 robes_darkness_2 = vec3(148.0 / 255.0, 132.0 / 255.0, 108.0 / 255.0);
   vec4 col = texture2D(gm_BaseTexture, v_vTexcoord);
+  if (u_blend_modes==3 && (col.rgb == f_Colour1.rgb|| col.rgb == f_Colour2.rgb)){
+    vec4 background = texture2D(background_texture, v_vTexcoord);
+    if (background.rgb==helm_replace.rgb || background.rgb==helm_second_replace.rgb||helm_lense_replace.rgb==helm_replace.rgb){
+      col.rgb = background.rgb;
+    }
+  }   
   if (col.rgb == f_Colour1.rgb && u_blend_modes!=2)
   {
-    if (u_blend_modes==3){
-      vec4 background = texture2D(background_texture, v_vTexcoord);
-      if (background.rgb==helm_replace.rgb||background.rgb==helm_second_replace.rgb||helm_lense_replace.rgb==helm_replace.rgb){
-        col.rgb = background.rgb;
-      } else {
-        col.rgb = f_Replace1.rgb;
-      }
-    } 
     if (u_blend_modes!=3){
       col.rgb = f_Replace1.rgb;
     }

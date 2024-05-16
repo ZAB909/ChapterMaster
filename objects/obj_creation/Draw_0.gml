@@ -1140,14 +1140,15 @@ if (slide=4){
     obj_cursor.image_index=0;
 
     draw_text_color_simple(800,80,string_hash_to_newline(string(chapter)),38144);
-     var draw_sprites = [spr_mk7_colors, spr_mk4_colors,spr_mk5_colors,spr_beakie_colors,spr_mk8_colors,spr_mk3_colors, spr_terminator3_colors];
+    var draw_sprites = [spr_mk7_colors, spr_mk4_colors,spr_mk5_colors,spr_beakie_colors,spr_mk8_colors,spr_mk3_colors, spr_terminator3_colors];
+    var draw_hem = [spr_generic_sgt_mk7, spr_generic_sgt_mk4,spr_generic_sgt_mk5,spr_generic_sgt_mk6,spr_generic_sgt_mk7,spr_generic_sgt_mk3, spr_generic_terminator_sgt];
     if (custom>1) then draw_sprite_stretched(spr_creation_arrow,0,444-10,252,32,32);// Left Arrow
-    if (custom>1) then draw_sprite_stretched(spr_creation_arrow,1,444+157+2,252,32,32);// Right Arrow 
-    if (point_and_click([444-10,252,450,265])){
+    if (custom>1) then draw_sprite_stretched(spr_creation_arrow,1,444+157+2,242,32,32);// Right Arrow 
+    if (point_and_click([444-10,252,470,280])){
         test_sprite++;
         if (test_sprite==array_length(draw_sprites)) then test_sprite=0;
     }   
-    if (point_and_click([444+157+2,252, 450+165, 252+15])){
+    if (point_and_click([444+157+2,242, 450+175, 270])){
         test_sprite--;
         if (test_sprite<0) then test_sprite=(array_length(draw_sprites)-1);
     }
@@ -1172,6 +1173,7 @@ if (slide=4){
         
         //Rejoice!
         tester_sprite = draw_sprites[test_sprite];
+        tester_helm = draw_hem[test_sprite];
         if (col_special=0) then draw_sprite(tester_sprite,10,444,252);
         if (col_special=1) then draw_sprite(tester_sprite,11,444,252);
         if (col_special>=2) then draw_sprite(tester_sprite,12,444,252);
@@ -1197,7 +1199,7 @@ if (slide=4){
             shader_set_uniform_f_array(colour_to_find2, [200/255,0/255,0/255]);
             shader_set_uniform_f(colour_to_set2, col_r[sgt_col_2]/255, col_g[sgt_col_2]/255, col_b[sgt_col_2]/255);
             shader_set_uniform_f(colour_to_set4, col_r[lens_col]/255, col_g[lens_col]/255, col_b[lens_col]/255);
-            draw_sprite(spr_generic_sgt_mk7, complex_depth_selection, 444,252);
+            draw_sprite(tester_helm, complex_depth_selection, 444,252);
         }
         else if (complex_selection=="Veteran Sergeant Markers" && complex_livery){
             var sgt_col_1 = complex_livery_data.vet_sgt.helm_primary;
@@ -1208,7 +1210,7 @@ if (slide=4){
             shader_set_uniform_f_array(colour_to_find2, [200/255,0/255,0/255]);
             shader_set_uniform_f(colour_to_set2, col_r[sgt_col_2]/255, col_g[sgt_col_2]/255, col_b[sgt_col_2]/255);
             shader_set_uniform_f(colour_to_set4, col_r[lens_col]/255, col_g[lens_col]/255, col_b[lens_col]/255);
-            draw_sprite(spr_generic_sgt_mk7, complex_depth_selection, 444,252);
+            draw_sprite(tester_helm, complex_depth_selection, 444,252);
         }
         else if (complex_selection=="Captain Markers" && complex_livery){
             var sgt_col_1 = complex_livery_data.captain.helm_primary;
@@ -1219,7 +1221,7 @@ if (slide=4){
             shader_set_uniform_f_array(colour_to_find2, [200/255,0/255,0/255]);
             shader_set_uniform_f(colour_to_set2, col_r[sgt_col_2]/255, col_g[sgt_col_2]/255, col_b[sgt_col_2]/255);
             shader_set_uniform_f(colour_to_set4, col_r[lens_col]/255, col_g[lens_col]/255, col_b[lens_col]/255);
-            draw_sprite(spr_generic_sgt_mk7, complex_depth_selection, 444,252);
+            draw_sprite(tester_helm, complex_depth_selection, 444,252);
         }                
         shader_set_uniform_f_array(colour_to_find1, body_colour_find );       
         shader_set_uniform_f_array(colour_to_set1, body_colour_replace );
