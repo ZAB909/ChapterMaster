@@ -44,7 +44,7 @@ function scr_colors_initialize() {
         ["Dark Metal", 105, 105, 105],
         ["Dark Grey", 70, 70, 70],
         ["Black", 35, 35, 35],
-        ["Red", 200, 0, 0],
+        ["Red", 201, 0, 0],
         ["Sanguine Red", 150, 0, 0],
         ["Dark Red", 124, 0, 0],
         ["Gold", 229, 162, 22],

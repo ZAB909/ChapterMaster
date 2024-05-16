@@ -1492,7 +1492,7 @@ function scr_initialize_custom() {
 			chapter_master_equip.wep1=last_artifact;
 			break;
 		case "Iron Hands":
-			chapter_master_equip.wep1="Power Axe|";
+			chapter_master_equip.wep1="Power Axe";
 			chapter_master.add_trait("flesh_is_weak");
 			chapter_master.add_trait("zealous_faith");
 			chapter_master.add_trait("tinkerer");
