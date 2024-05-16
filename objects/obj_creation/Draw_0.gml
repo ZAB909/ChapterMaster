@@ -1178,15 +1178,15 @@ if (slide=4){
         
         draw_sprite(tester_sprite,col_special,444,252);
         if (col_special<=1){
-            draw_sprite(spr_mk7_colors,6,444,252);
-            draw_sprite(spr_mk7_colors,8,444,252);
+            draw_sprite(tester_sprite,6,444,252);
+            draw_sprite(tester_sprite,8,444,252);
         }
         if (col_special>=2){
-            draw_sprite(spr_mk7_colors,6,444,252);
-            draw_sprite(spr_mk7_colors,9,444,252);
+            draw_sprite(tester_sprite,6,444,252);
+            draw_sprite(tester_sprite,9,444,252);
         }
-        if (trim=0) and (col_special<=1) then draw_sprite(spr_mk7_colors,4,444,252);
-        if (trim=0) and (col_special>=2) then draw_sprite(spr_mk7_colors,5,444,252);
+        if (trim=0) and (col_special<=1) then draw_sprite(tester_sprite,4,444,252);
+        if (trim=0) and (col_special>=2) then draw_sprite(tester_sprite,5,444,252);
         //TODO this can be imprved but for now it's fit for purpose
         if (complex_selection=="Sergeant Markers" && complex_livery){
             var sgt_col_1 = complex_livery_data.sgt.helm_primary;
