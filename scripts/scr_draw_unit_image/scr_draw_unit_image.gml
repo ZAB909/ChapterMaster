@@ -663,6 +663,7 @@ function scr_draw_unit_image(_background=false){
                     armour_bypass=true;
                 }else if (armour()=="MK3 Iron Armour"){
                     specific_armour_sprite = spr_mk3_colors;
+                    specific_helm = spr_generic_sgt_mk3;
                     if (progenitor_map()=="Dark Angels"){
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
                             specific_helm = false;
@@ -673,7 +674,8 @@ function scr_draw_unit_image(_background=false){
                         }
                     }
                 } else if (armour()=="MK4 Maximus"){
-                    specific_armour_sprite = spr_mk4_colors;
+                    specific_helm = spr_generic_sgt_mk4;
+                    specific_armour_sprite =specific_armour_sprite = spr_mk4_colors;
                     if (array_contains(["Company Champion",obj_ini.role[100][2],obj_ini.role[100][5]], role())){
                         /*if (global.chapter_name=="Ultramarines"){
                             armour_draw=[spr_ultra_honor_guard,body.torso.armour_choice];
@@ -709,7 +711,7 @@ function scr_draw_unit_image(_background=false){
                     }                   
                 } else if (armour()=="MK6 Corvus"){
                     specific_armour_sprite = spr_beakie_colors;
-                    specific_helm = spr_generic_sgt_mk7;
+                    specific_helm = spr_generic_sgt_mk6;
                     if (progenitor_map()=="Dark Angels"){
                         specific_helm = [spr_da_mk6_helm,spr_generic_sgt_mk7];
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
@@ -951,10 +953,6 @@ function scr_draw_unit_image(_background=false){
                         specific_helm=specific_helm[1];
 
                     }
-                    with (obj_controller){
-                        shader_set_uniform_f_array(colour_to_find1, [30/255,30/255,30/255]);
-                        shader_set_uniform_f_array(colour_to_find2, [200/255,0/255,0/255]);
-                    }
                     var helm_pat =-1;
                     var prime=0;
                     var sec=0;
@@ -988,8 +986,13 @@ function scr_draw_unit_image(_background=false){
                         return_helm = false;
                     }
                     if (recolour_helm){
-                        set_shader_color(0,prime);
-                        set_shader_color(1,sec);
+                        with (obj_controller){
+                            shader_set_uniform_f_array(colour_to_find1, [30/255,30/255,30/255]);
+                            shader_set_uniform_f_array(colour_to_find2, [200/255,0/255,0/255]);
+                        }
+                        shader_set_uniform_i(shader_get_uniform(sReplaceColor, "u_blend_modes"), 0);                        
+                        set_shader_color(ShaderType.Body,prime);
+                        set_shader_color(ShaderType.Helmet,sec);
                         set_shader_color(ShaderType.Lens,lenne2);                        
                         draw_sprite(specific_helm,helm_pat,helm_draw[0]+x_surface_offset,y_surface_offset+0);
                         shader_set_uniform_i(shader_get_uniform(sReplaceColor, "helm_replace"), prime);

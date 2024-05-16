@@ -5,7 +5,6 @@ uniform vec3 f_Colour4;
 uniform vec3 f_Colour5;
 uniform vec3 f_Colour6;
 uniform vec3 f_Colour7;
-uniform vec3 f_Colour8;
 
 uniform vec3 f_Replace1;
 uniform vec3 f_Replace2;
@@ -14,7 +13,7 @@ uniform vec3 f_Replace4;
 uniform vec3 f_Replace5;
 uniform vec3 f_Replace6;
 uniform vec3 f_Replace7;
-uniform vec3 f_Replace8;
+
 uniform vec3 robes_colour_replace;
 uniform vec3 helm_replace;
 uniform vec3 helm_second_replace;
@@ -94,10 +93,6 @@ void main()
   if (col.rgb == f_Colour7.rgb)
   {
     col.rgb = f_Replace7.rgb;
-  }
-  if (col.rgb == f_Colour8.rgb)
-  {
-    col.rgb = f_Replace8.rgb;
   }
 
   if (col.rgb == robes_colour_base.rgb || col.rgb == robes_colour_base_2.rgb)
