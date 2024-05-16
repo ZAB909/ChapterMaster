@@ -54,6 +54,7 @@ complex_livery_data = {
 		helm_lens : 0,
 	}		
 }
+test_sprite = 0;
 fade_in=50;
 slate1=80;
 slate2=0;
