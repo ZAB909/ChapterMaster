@@ -83,6 +83,8 @@ if (owner==1){
 */
 
 //ad hoc way of determining whether stuff is in view or not...needs work
+
+
 var cam = view_get_camera(view_current)
 var x1 = camera_get_view_x(cam)
 var y1 = camera_get_view_y(cam)
@@ -91,7 +93,7 @@ var h = y1 + camera_get_view_height(view_current)
 
 draw_set_alpha(1);
 
-if obj_controller.zoomed || rectangle_in_rectangle(ui_node.gui_x, ui_node.gui_y, ui_node.gui_x + ui_node.width , ui_node.gui_y + ui_node.height, x1, y1, w, h) > 0 {
+if (obj_controller.zoomed || rectangle_in_rectangle(ui_node.gui_x, ui_node.gui_y, ui_node.gui_x + ui_node.width , ui_node.gui_y + ui_node.height, x1, y1, w, h) > 0) {
 	ui_node.activate();
 } else {
 	ui_node.deactivate();
@@ -100,3 +102,9 @@ if (ui_node!=noone &&  global.load==0){
     ui_node.render(x,y);
 }
 draw_set_valign(fa_top)
+
+
+
+
+
+

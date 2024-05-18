@@ -23,6 +23,8 @@ storm=0;
 storm_image=0;
 trader=0;
 visited=0;
+stored_owner = 0;
+star_surface = 0;
 
 // sets up default planet variables
 for(run=1; run<=8; run++){

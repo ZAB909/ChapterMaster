@@ -46,6 +46,8 @@ Changed:
 	- improved item sprites like iron halos
 	- optomised draw sequence for sprites
 	- gui code for fleet combat overhauled
+	- complete overhaul of mission problem text so we can start adding and creating new missions
+	- tech heretics won't now spawn and spread till after turn 70
 
 
 added:
@@ -60,10 +62,13 @@ added:
 	- genestealer cults acctually exist hidden from player view so mechanic can now be expanded upon
 	- causulty descriptions now added to battle log flavour
 	- ability to reshuffle squad loadouts
-	- full set of da and da successor sprites
+	- full set of dark angle and da successor sprites
+		- going forward hopefully all chapters will get the same treatment
 	- factions other than tau can now excert influence on a planet
 	- custom selcetion of sgt, vet_sgt and captain helmet options
 	- genestealer cults are now viewable planet features
+	- all planets now have an influence bar to show how much of the populace is influenced by various factions (to be expanded)
+	- 
 
 
 -----------------

@@ -920,19 +920,21 @@ if (action==""){
         var max_dis;
         max_dis=400;
     
-        obj_controller.temp[88]=owner;
-        with(obj_crusade){if (owner!=obj_controller.temp[88]){x-=40000;}}
+        var fleet_owner = owner;
+        with(obj_crusade){if (owner!=fleet_owner){x-=40000;}}
         
         with(obj_star){
-            var ns;ns=instance_nearest(x,y,obj_crusade);
+            var ns=instance_nearest(x,y,obj_crusade);
             if (point_distance(x,y,ns.x,ns.y)>ns.radius){x-=40000;}
             if (owner=ns.owner){x-=40000;}
         }
         
-        var ns;ns=instance_nearest(x,y,obj_star);
+        var ns=instance_nearest(x,y,obj_star);
         if (ns.owner != eFACTION.Ork) and (point_distance(x,y,ns.x,ns.y)<=max_dis) and (point_distance(x,y,ns.x,ns.y)>40) and (instance_exists(obj_crusade)) and (image_index>3){
-            action_x=ns.x;action_y=ns.y;alarm[4]=1;
-            home_x=orbiting.x;home_y=orbiting.y;
+            action_x=ns.x;
+            action_y=ns.y;alarm[4]=1;
+            home_x=orbiting.x;
+            home_y=orbiting.y;
             exit;
         }
         
@@ -1318,7 +1320,7 @@ if (action==""){
     if (owner=eFACTION.Ork) and (action="") and (instance_exists(orbiting)){// Should fix orks converging on useless planets
         var maxp,bad,i,hides,hide;maxp=0;bad=0;i=0;hides=1;hide=0;
         
-        bad = !is_dead_star(orbiting);
+        bad = is_dead_star(orbiting);
         
         if (bad=1){
             hides+=choose(0,1,2,3);

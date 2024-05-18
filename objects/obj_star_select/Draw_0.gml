@@ -296,9 +296,16 @@ if (obj_controller.selecting_planet!=0){
         var bar_percent_length = (bar_width/100);
         var current_bar_percent = 0;
         with (target){
+            var hidden_cult = false;
+            if (planet_feature_bool(p_feature[current_planet],P_features.Gene_Stealer_Cult)){
+                hidden_cult = return_planet_features(p_feature[current_planet],P_features.Gene_Stealer_Cult)[0].hiding;
+            }            
             for (var i=1;i<13;i++){
                 if (p_influence[current_planet][i]>0){
                     draw_set_color(global.star_name_colors[i]);
+                    if (hidden_cult){
+                        draw_set_color(global.star_name_colors[eFACTION.Imperium]);
+                    }
                     var current_start = bar_start_point+(current_bar_percent*bar_percent_length)
                     draw_rectangle(current_start,yy+193,current_start+(bar_percent_length*p_influence[current_planet][i]),yy+210,0);
                     current_bar_percent+=p_influence[current_planet][i];
@@ -393,11 +400,7 @@ if (obj_controller.selecting_planet!=0){
                         target.p_fortified[current_planet]+=1;
                         
                         if (target.dispo[current_planet]>0) and (target.dispo[current_planet]<=100){
-                            if (target.p_fortified[current_planet]=1) then target.dispo[current_planet]=min(100,target.dispo[current_planet]+8);
-                            if (target.p_fortified[current_planet]=2) then target.dispo[current_planet]=min(100,target.dispo[current_planet]+7);
-                            if (target.p_fortified[current_planet]=3) then target.dispo[current_planet]=min(100,target.dispo[current_planet]+6);
-                            if (target.p_fortified[current_planet]=4) then target.dispo[current_planet]=min(100,target.dispo[current_planet]+5);
-                            if (target.p_fortified[current_planet]=5) then target.dispo[current_planet]=min(100,target.dispo[current_planet]+4);
+                            target.dispo[current_planet]=min(100,target.dispo[current_planet]+(9-target.p_fortified[current_planet]));
                         }
                     }
                     
@@ -469,21 +472,26 @@ if (obj_controller.selecting_planet!=0){
         var fit,to_show,temp9;t=-1;to_show=0;temp9="";
         repeat(11){t+=1;fit[t]="";}
     	var planet_displays = [], i;
-    	var feat_count;
+    	var feat_count, _cur_feature;
     	var feat_count = array_length(target.p_feature[current_planet]);
         var upgrade_count = array_length(target.p_upgrades[current_planet]);
         var size = ["", "Small", "", "Large"]
     	if ( feat_count > 0){
         	for (i =0; i <  feat_count ;i++){
-        		if (target.p_feature[current_planet][i].planet_display != 0){
-        			if (target.p_feature[current_planet][i].player_hidden == 1){
+                cur_feature= target.p_feature[current_planet][i]
+        		if (cur_feature.planet_display != 0){
+                    if (cur_feature.f_type == P_features.Gene_Stealer_Cult){
+                        if (!cur_feature.hiding){
+                            array_push(planet_displays, [cur_feature.planet_display, cur_feature]);
+                        }
+                    }else if (cur_feature.player_hidden == 1){
                         array_push(planet_displays, ["????", ""] );
                     }else{
-                        array_push(planet_displays, [target.p_feature[current_planet][i].planet_display, target.p_feature[current_planet][i]]);
+                        array_push(planet_displays, [cur_feature.planet_display, cur_feature]);
         			}
-                    if (target.p_feature[current_planet][i].f_type == P_features.Monastery){
-                        if (target.p_feature[current_planet][i].forge>0){
-                            var forge = target.p_feature[current_planet][i].forge_data;
+                    if (cur_feature.f_type == P_features.Monastery){
+                        if (cur_feature.forge>0){
+                            var forge = cur_feature.forge_data;
                             var size_string= $"{size[forge.size]} Chapter Forge"
                             array_push(planet_displays, [size_string, target.p_feature[current_planet][i].forge_data]);
                         }
