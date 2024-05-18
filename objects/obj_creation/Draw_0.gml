@@ -39,8 +39,8 @@ if (slate4>0){
         
         draw_set_font(fnt_40k_30b);
         draw_set_halign(fa_left);
-        draw_text_transformed(440,133,string_hash_to_newline("Founding Chapters"),0.75,0.75,0);
-        draw_text_transformed(440,363,string_hash_to_newline("Existing Chapters"),0.75,0.75,0);
+        draw_text_transformed(440,133,"Founding Chapters",0.75,0.75,0);
+        draw_text_transformed(440,363,"Existing Chapters",0.75,0.75,0);
         draw_text_transformed(440,593,string_hash_to_newline("Other"),0.75,0.75,0);
 		draw_text_transformed(440,463,string_hash_to_newline("Custom Chapters"),0.75,0.75,0);
         
@@ -863,7 +863,9 @@ if (slide=3){
                 if (cooldown<=0) and (mouse_left>=1){text_selected="home_name";cooldown=8000;keyboard_string=homeworld_name;}
             }
             if (text_selected="home_name") then homeworld_name=keyboard_string;
-            draw_set_alpha(0.75);draw_rectangle(525,398,760,418,1);draw_set_alpha(1);
+            draw_set_alpha(0.75);
+            draw_rectangle(525,398,760,418,1);
+            draw_set_alpha(1);
         }
         
         if (custom>1) then draw_sprite_stretched(spr_creation_arrow,0,525,285,32,32);// Left Arrow
@@ -872,14 +874,14 @@ if (slide=3){
         var planet_change_allow = (mouse_left>=1) and (cooldown<=0) and (custom>1);
         for (var i=0;i<array_length(planet_types);i++){
             if (homeworld==planet_types[i] && planet_change_allow){
-                if ((scr_hit(525,285,525+32,285+32))){
+                if (point_and_click([525,285,525+32,285+32])){
                     if (i==array_length(planet_types)-1){
                         homeworld=planet_types[0];
                     } else {
                         homeworld=planet_types[i+1];
                     }
                     break;
-                } else if (scr_hit(725,285,725+32,285+32)){
+                } else if (point_and_click([725,285,725+32,285+32])){
                     if (i==0){
                         homeworld=planet_types[array_length(planet_types)-1];
                     } else {
@@ -887,7 +889,6 @@ if (slide=3){
                     }
                     break;
                 }
-
             }
         }
     }
@@ -903,7 +904,11 @@ if (slide=3){
             if (text_selected="flagship_name") and (text_bar<=30) then draw_text_transformed(644,398,string_hash_to_newline(string(flagship_name)+"|"),0.5,0.5,0);
             if (scr_text_hit(644,398,true,flagship_name)){
                 obj_cursor.image_index=2;
-                if (cooldown<=0) and (mouse_left>=1){text_selected="flagship_name";cooldown=8000;keyboard_string=flagship_name;}
+                if (cooldown<=0) and (mouse_left>=1){
+                    text_selected="flagship_name";
+                    cooldown=8000;
+                    keyboard_string=flagship_name;
+                }
             }
             if (text_selected="flagship_name") then flagship_name=keyboard_string;
             draw_set_alpha(0.75);draw_rectangle(525,398,760,418,1);draw_set_alpha(1);
@@ -1787,116 +1792,146 @@ if (slide=5){
     draw_text_transformed(503,210,string_hash_to_newline("Gene-Seed Mutations"),0.6,0.6,0);
     if (mutations>mutations_selected) then draw_text_transformed(585,230,string_hash_to_newline("Select "+string(mutations-mutations_selected)+" More"),0.5,0.5,0);
     
-    var x1,y1,spac;spac=34;
+    var x1,y1,spac=34;
     
     if (custom<2) then draw_set_alpha(0.5);
-    
-    x1=450;y1=260;yar=0;if (preomnor=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
-        cooldown=8000;var onceh;onceh=0;
-        if (preomnor=1) and (onceh=0){preomnor=0;mutations_selected-=1;onceh=1;}
-        if (preomnor!=1) and (onceh=0) and (mutations>mutations_selected){preomnor=1;mutations_selected+=1;onceh=1;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Anemic Preomnor"),0.4,0.4,0);
-    if (scr_hit(x1,y1,700,y1+20)){tooltip="Anemic Preomnor";tooltip2="Your Astartes lack the detoxifying gland called the Preomnor- they are more susceptible to poisons and toxins.";}
-    
-    y1+=spac;yar=0;if (voice=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
-        cooldown=8000;var onceh;onceh=0;
-        if (voice=1) and (onceh=0){voice=0;mutations_selected-=1;onceh=1;disposition[2]+=8;}
-        if (voice!=1) and (onceh=0) and (mutations>mutations_selected){voice=1;mutations_selected+=1;onceh=1;disposition[2]-=8;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Disturbing Voice"),0.4,0.4,0);
-    if (scr_hit(x1,y1,700,y1+20)){tooltip="Disturbing Voice";tooltip2="Your Astartes have a voice like a creaking door or a rumble.  Decreases Imperium and Imperial Guard disposition.";}
-    
-    y1+=spac;yar=0;if (doomed=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)  && allow_colour_click){
-        cooldown=8000;var onceh;onceh=0;
-        if (doomed=1) and (onceh=0){doomed=0;mutations_selected-=4;onceh=1;disposition[1]+=8;disposition[6]-=8;}
-        if (doomed!=1) and (onceh=0) and (mutations>mutations_selected){doomed=1;mutations_selected+=4;onceh=1;disposition[1]-=8;disposition[6]+=8;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Doomed"),0.4,0.4,0);
-    if (scr_hit(x1,y1,700,y1+20)){tooltip="Doomed";tooltip2="Your Chapter cannot make more Astartes until enough research is generated.  Counts as four mutations.";}
-    
-    y1+=spac;yar=0;if (lyman=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
-        cooldown=8000;var onceh;onceh=0;
-        if (lyman=1) and (onceh=0){lyman=0;mutations_selected-=1;onceh=1;}
-        if (lyman!=1) and (onceh=0) and (mutations>mutations_selected){lyman=1;mutations_selected+=1;onceh=1;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Faulty Lyman's Ear"),0.4,0.4,0);
-    if (scr_hit(x1,y1,700,y1+20)){tooltip="Faulty Lyman's Ear";tooltip2="Lacking a working Lyman's ear, all deep-striked Astartes recieve moderate penalties to both attack and defense.";}
-    
-    y1+=spac;yar=0;if (omophagea=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
-        cooldown=8000;var onceh;onceh=0;
-        if (omophagea=1) and (onceh=0){omophagea=0;mutations_selected-=1;onceh=1;}
-        if (omophagea!=1) and (onceh=0) and (mutations>mutations_selected){omophagea=1;mutations_selected+=1;onceh=1;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Hyper-Stimulated Omophagea"),0.4,0.4,0);
-    if (scr_hit(x1,y1,700,y1+20)){tooltip="Hyper-Stimulated Omophagea";tooltip2="After every battle the Astartes have a chance to feast upon their fallen enemies, or seldom, their allies.";}
-    
-    y1+=spac;yar=0;if (ossmodula=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
-        cooldown=8000;var onceh;onceh=0;
-        if (ossmodula=1) and (onceh=0){ossmodula=0;mutations_selected-=1;onceh=1;}
-        if (ossmodula!=1) and (onceh=0) and (mutations>mutations_selected){ossmodula=1;mutations_selected+=1;onceh=1;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Hyperactive Ossmodula"),0.4,0.4,0);
-    if (scr_hit(x1,y1,700,y1+20)){tooltip="Hyperactive Ossmodula";tooltip2="Instead of wound tissue bone is generated; Apothecaries must spend twice the normal time healing your Astartes.";}
-    
-    y1+=spac;yar=0;if (zygote=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
-        cooldown=8000;var onceh;onceh=0;
-        if (zygote=1) and (onceh=0){zygote=0;mutations_selected-=2;onceh=1;}
-        if (zygote!=1) and (onceh=0) and (mutations>mutations_selected){zygote=1;mutations_selected+=2;onceh=1;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Lost Zygote"),0.4,0.4,0);
-    if (scr_hit(x1,y1,700,y1+20)){tooltip="Lost Zygote";tooltip2="One of the Zygotes is faulty or missing.  The Astartes only have one each and generate half the normal Gene-Seed.";}
-    
-    x1=750;y1=260-spac;
-    
-    y1+=spac;yar=0;if (membrane=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
-        cooldown=8000;var onceh;onceh=0;
-        if (membrane=1) and (onceh=0){membrane=0;mutations_selected-=1;onceh=1;}
-        if (membrane!=1) and (onceh=0) and (mutations>mutations_selected){membrane=1;mutations_selected+=1;onceh=1;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Inactive Sus-an Membrane"),0.4,0.4,0);
-    if (scr_hit(x1,y1,1020,y1+20)){tooltip="Inactive Sus-an Membrane";tooltip2="Your Astartes do not have a Sus-an Membrane; they cannot enter suspended animation and recieve more casualties as a result.";}
-    
-    y1+=spac;yar=0;if (betchers=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
-        cooldown=8000;var onceh;onceh=0;
-        if (betchers=1) and (onceh=0){betchers=0;mutations_selected-=1;onceh=1;}
-        if (betchers!=1) and (onceh=0) and (mutations>mutations_selected){betchers=1;mutations_selected+=1;onceh=1;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Missing Betchers Gland"),0.4,0.4,0);
-    if (scr_hit(x1,y1,1020,y1+20)){tooltip="Missing Betchers Gland";tooltip2="Your Astartes cannot spit acid, and as a result, have slightly less attack in melee combat.";}
-    
-    y1+=spac;yar=0;if (catalepsean=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
-        cooldown=8000;var onceh;onceh=0;
-        if (catalepsean=1) and (onceh=0){catalepsean=0;mutations_selected-=1;onceh=1;}
-        if (catalepsean!=1) and (onceh=0) and (mutations>mutations_selected){catalepsean=1;mutations_selected+=1;onceh=1;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Mutated Catalepsean Node"),0.4,0.4,0);
-    if (scr_hit(x1,y1,1020,y1+20)){tooltip="Mutated Catalepsean Node";tooltip2="Your Astartes cannot sleep portions of their brains at a time, or generally at all.  They have a slight decrease to attack.";}
-    
-    y1+=spac;yar=0;if (secretions=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
-        cooldown=8000;var onceh;onceh=0;
-        if (secretions=1) and (onceh=0){secretions=0;mutations_selected-=1;onceh=1;disposition[2]+=8;}
-        if (secretions!=1) and (onceh=0) and (mutations>mutations_selected){secretions=1;mutations_selected+=1;onceh=1;disposition[2]-=8;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Oolitic Secretions"),0.4,0.4,0);
-    if (scr_hit(x1,y1,1020,y1+20)){tooltip="Oolitic Secretions";tooltip2="Either by secretions or radiation, your Astartes have an unusual or strange skin color.  Decreases disposition.";}
-    
-    y1+=spac;yar=0;if (occulobe=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
-        cooldown=8000;var onceh;onceh=0;
-        if (occulobe=1) and (onceh=0){occulobe=0;mutations_selected-=1;onceh=1;}
-        if (occulobe!=1) and (onceh=0) and (mutations>mutations_selected){occulobe=1;mutations_selected+=1;onceh=1;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Oversensitive Occulobe"),0.4,0.4,0);
-    if (scr_hit(x1,y1,1020,y1+20)){tooltip="Oversensitive Occulobe";tooltip2="Your Astartes are no longer immune to stun grenades, bright lights, and have a massive penalty during morning battles.";}
-    
-    y1+=spac;yar=0;if (mucranoid=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32) and allow_colour_click){
-        cooldown=8000;var onceh;onceh=0;
-        if (mucranoid=1) and (onceh=0){mucranoid=0;mutations_selected-=1;onceh=1;disposition[1]+=4;disposition[2]+=4;disposition[3]+=4;disposition[5]+=4;disposition[6]+=4;}
-        if (mucranoid!=1) and (onceh=0) and (mutations>mutations_selected){mucranoid=1;mutations_selected+=1;onceh=1;disposition[1]-=4;disposition[2]-=4;disposition[3]-=4;disposition[5]-=4;disposition[6]-=4;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Rampant Mucranoid"),0.4,0.4,0);
-    if (scr_hit(x1,y1,1020,y1+20)){tooltip="Rampant Mucranoid";tooltip2="Your Astartes' Mucranoid cannot be turned off; the slime lowers most dispositions and occasionally damages their armour.";}
-    
+    var mutations_defects = [
+        {
+            t_tip :"Anemic Preomnor",
+            t_tip2: "Your Astartes lack the detoxifying gland called the Preomnor- they are more susceptible to poisons and toxins.",
+            data : preomnor,
+            mutation_points : 1,
+        },
+        {
+            t_tip :"Disturbing Voice",
+            t_tip2: "Your Astartes have a voice like a creaking door or a rumble.  Decreases Imperium and Imperial Guard disposition.",
+            data : voice,
+            mutation_points : 1,
+            disposition:[[eFACTION.Imperium,-8]],
+        },
+        {
+            t_tip :"Doomed",
+            t_tip2: "Your Chapter cannot make more Astartes until enough research is generated.  Counts as four mutations.",
+            data : doomed,
+            mutation_points : 4,
+            disposition:[[eFACTION.Imperium,-8],[6,8]],
+        },
+        {
+            t_tip :"Faulty Lyman's Ear",
+            t_tip2: "Lacking a working Lyman's ear, all deep-striked Astartes recieve moderate penalties to both attack and defense.",
+            data : lyman,
+            mutation_points : 1,
+        },
+        {
+            t_tip :"Hyper-Stimulated Omophagea",
+            t_tip2: "After every battle the Astartes have a chance to feast upon their fallen enemies, or seldom, their allies.",
+            data : omophagea,
+            mutation_points : 1,
+        },
+        {
+            t_tip :"Hyperactive Ossmodula",
+            t_tip2: "Instead of wound tissue bone is generated; Apothecaries must spend twice the normal time healing your Astartes.",
+            data : ossmodula,
+            mutation_points : 1,
+        }, 
+        {
+            t_tip :"Lost Zygote",
+            t_tip2: "One of the Zygotes is faulty or missing.  The Astartes only have one each and generate half the normal Gene-Seed.",
+            data : zygote,
+            mutation_points : 2,
+        },
+        {
+            t_tip :"Inactive Sus-an Membrane",
+            t_tip2: "Your Astartes do not have a Sus-an Membrane; they cannot enter suspended animation and recieve more casualties as a result.",
+            data : membrane,
+            mutation_points : 1,
+        },
+        {
+            t_tip :"Missing Betchers Gland",
+            t_tip2: "Your Astartes cannot spit acid, and as a result, have slightly less attack in melee combat.",
+            data : betchers,
+            mutation_points : 1,
+        }, 
+        {
+            t_tip :"Mutated Catalepsean Node",
+            t_tip2: "Your Astartes cannot spit acid, and as a result, have slightly less attack in melee combat.",
+            data : catalepsean,
+            mutation_points : 1,
+        }, 
+        {
+            t_tip :"Oolitic Secretions",
+            t_tip2: "Either by secretions or radiation, your Astartes have an unusual or strange skin color.  Decreases disposition.",
+            data : secretions,
+            mutation_points : 1,
+            disposition:[[eFACTION.Imperium,-8]],
+        },
+        {
+            t_tip :"Oversensitive Occulobe",
+            t_tip2: "Your Astartes are no longer immune to stun grenades, bright lights, and have a massive penalty during morning battles.",
+            data : occulobe,
+            mutation_points : 1,
+            disposition:[[eFACTION.Imperium,-8]],
+        },
+        {
+            t_tip :"Rampant Mucranoid",
+            t_tip2: "Your Astartes' Mucranoid cannot be turned off; the slime lowers most dispositions and occasionally damages their armour.",
+            data : mucranoid,
+            mutation_points : 1,
+            disposition:[[1,-4],[eFACTION.Imperium,-8],[3,-4],[4,-4],[5,-4],[6,-4]],
+        },                                                                          
+    ]
+    x1=450;
+    y1=260;
+    for (var i=0;i<array_length(mutations_defects);i++){
+        mutation_data = mutations_defects[i];
+        draw_sprite(spr_creation_check,mutation_data.data,x1,y1);
+        if (point_and_click([x1,y1,x1+32,y1+32]) && allow_colour_click){
+            cooldown=8000;
+            var onceh=0;
+            if (mutation_data.data){
+                mutation_data.data=0;
+                mutations_selected-=mutation_data.mutation_points;
+                if (struct_exists(mutation_data, disposition)){
+                   for (var s=0;s<array_length(mutation_data.disposition);s++){
+                        disposition[mutation_data.disposition[s][0]] -= mutation_data.disposition[s][1];
+                   }
+                }                
+            }
+            else if (!mutation_data.data) and (mutations>mutations_selected){
+                mutation_data.data=1;
+                mutations_selected+=mutation_data.mutation_points;
+                if (struct_exists(mutation_data, disposition)){
+                   for (var s=0;s<array_length(mutation_data.disposition);s++){
+                        disposition[mutation_data.disposition[s][0]] += mutation_data.disposition[s][1];
+                   }
+                }
+            }
+        }
+        draw_text_transformed(x1+30,y1+4,mutation_data.t_tip,0.4,0.4,0);
+        if (scr_hit(x1,y1,x1+250,y1+20)){
+            tooltip=mutation_data.t_tip;
+            tooltip2=mutation_data.t_tip2;
+        }    
+        y1+=spac
+        if (i==6){
+            x1=750;
+            y1=260;
+        }
+    }
+    preomnor=mutations_defects[0].data;
+    voice=mutations_defects[1].data;
+    doomed=mutations_defects[2].data;
+    lyman=mutations_defects[3].data;
+    omophagea=mutations_defects[4].data;
+    ossmodula=mutations_defects[5].data;
+    zygote=mutations_defects[6].data;
+    membrane=mutations_defects[7].data;
+    betchers=mutations_defects[8].data;
+    catalepsean=mutations_defects[9].data;
+    secretions = mutations_defects[10].data;
+    occulobe=mutations_defects[11].data;
+    mucranoid=mutations_defects[12].data;
+
     draw_set_alpha(1);
     
     draw_line(445,505,1125,505);
@@ -2004,22 +2039,19 @@ if (slide=6){
     }
     
     x6=800;y6=265;h=0;it="";
+    var ranged_options = ["","Integrated Bolters","Infernus Pistol","Plasma Pistol","Plasma Gun","Master Crafted Heavy Bolter","Master Crafted Meltagun","Storm Shield",""];
     repeat(7){h+=1;
-        if (h=1) then it="Integrated Bolters";
-        if (h=2) then it="Infernus Pistol";
-        if (h=3) then it="Plasma Pistol";
-        if (h=4) then it="Plasma Gun";
-        if (h=5) then it="Master Crafted Heavy Bolter";
-        if (h=6) then it="Master Crafted Meltagun";
-        if (h=7) then it="Storm Shield";
-        
-        yar=0;if (chapter_master_ranged=h) then yar=1;draw_sprite(spr_creation_check,yar,x6,y6);yar=0;
-        if (scr_hit(x6,y6,x6+32,y6+32)) and (cooldown<=0) and (mouse_left>=1) and (custom>0) and (restarted=0) and (!instance_exists(obj_creation_popup)){
-            cooldown=8000;var onceh;onceh=0;
-            if (chapter_master_ranged=h) and (onceh=0){chapter_master_ranged=0;onceh=1;}
-            if (chapter_master_ranged!=h) and (onceh=0){chapter_master_ranged=h;onceh=1;}
+        yar=0;
+        if (chapter_master_ranged=h) then yar=1;
+        draw_sprite(spr_creation_check,yar,x6,y6);
+        yar=0;
+        if point_and_click([x6,y6,x6+32,y6+32]) and (custom>0) and (restarted=0) and (!instance_exists(obj_creation_popup)){
+            cooldown=8000;
+            var onceh=0;
+            if (chapter_master_ranged=h) {chapter_master_ranged=0;}
+            else if (chapter_master_ranged!=h) {chapter_master_ranged=h;}
         }
-        draw_text_transformed(x6+30,y6+4,string_hash_to_newline(it),0.4,0.4,0);
+        draw_text_transformed(x6+30,y6+4,ranged_options[h],0.4,0.4,0);
         y6+=spac;
     }
     
@@ -2033,34 +2065,38 @@ if (slide=6){
     // draw_text_transformed(444,505,"Select Speciality",0.6,0.6,0);
     draw_set_halign(fa_center);
     
-    var ha2;ha2=string(dis[1])+string(dis[2])+string(dis[3])+string(dis[4]);
-    if (chapter_master_specialty=3) and ((race[100,17]=0) or (string_count("Psyker Intolerant",ha2)>0)) then chapter_master_speciality=choose(1,2);
+    var psy_intolerance = array_contains(dis, "Psyker Intolerant");
+    if (chapter_master_specialty=3) and ((race[100,17]=0) or (psy_intolerance)) then chapter_master_speciality=choose(1,2);
     x6=474;y6=500;h=0;it="";
-    
+    var leader_types = [
+        ["",""],
+        ["Born Leader","You always know the right words to inspire your men or strike doubt in the hearts of the enemy.  Increases Disposition and Grants a +10% Requisition Income Bonus."],
+        ["Champion","Even before your rise to Chapter Master you were a renowned warrior, nearly without compare.  Increases Chapter Master Experience, Melee Damage, and Ranged Damage."],
+        ["Psyker","The impossible is nothing to you; despite being a Psyker you have slowly risen to lead a Chapter.  Chapter Master gains every Power within the chosen Discipline."],
+    ]
     repeat(3){h+=1;
+        var cur_leader_type = leader_types[h];
         draw_set_alpha(1);
-        if ((race[100,17]=0) or (string_count("Psyker Intolerant",ha2)>0)) and (h=3) then draw_set_alpha(0.5);
+        var nope=0 = (h=3) and ((race[100,17]=0) or (psy_intolerance));
+        if (nope) then draw_set_alpha(0.5);
         if (custom<2) or (restarted>0) then draw_set_alpha(0.5);
         
         // draw_sprite(spr_cm_specialty,h-1,x6,y6);
         scr_image("commander",h-1,x6,y6,162,208);
         
-        if (h=1) then draw_text_transformed(x6+81,y6+214,string_hash_to_newline("Born Leader"),0.5,0.5,0);
-        if (h=2) then draw_text_transformed(x6+81,y6+214,string_hash_to_newline("Champion"),0.5,0.5,0);
-        if (h=3) then draw_text_transformed(x6+81,y6+214,string_hash_to_newline("Psyker"),0.5,0.5,0);
+        draw_text_transformed(x6+81,y6+214,cur_leader_type[0],0.5,0.5,0);
+
+        draw_sprite(spr_creation_check,chapter_master_specialty==h,x6,y6+214);
         
-        yar=0;if (chapter_master_specialty=h) then yar=1;draw_sprite(spr_creation_check,yar,x6,y6+214);yar=0;
-        
-        var nope;nope=0;if (h=3) and ((race[100,17]=0) or (string_count("Psyker Intolerant",ha2)>0)) then nope=1;
         
         if (scr_hit(x6,y6+214,x6+32,y6+32+214)) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (restarted=0) and (nope=0){
-            cooldown=8000;var onceh;onceh=0;
+            cooldown=8000;
+            var onceh=0;
             if (chapter_master_specialty!=h) and (onceh=0){chapter_master_specialty=h;onceh=1;}
         }
         if (scr_hit(x6,y6+214,x6+162,y6+234)) and (nope=0){
-            if (h=1){tooltip="Born Leader";tooltip2="You always know the right words to inspire your men or strike doubt in the hearts of the enemy.  Increases Disposition and Grants a +10% Requisition Income Bonus.";}
-            if (h=2){tooltip="Champion";tooltip2="Even before your rise to Chapter Master you were a renowned warrior, nearly without compare.  Increases Chapter Master Experience, Melee Damage, and Ranged Damage.";}
-            if (h=3){tooltip="Psyker";tooltip2="The impossible is nothing to you; despite being a Psyker you have slowly risen to lead a Chapter.  Chapter Master gains every Power within the chosen Discipline.";}
+            tooltip = cur_leader_type[0];
+            tooltip2= cur_leader_type[1]
         }
         
         x6+=240;draw_set_alpha(1);
@@ -2202,13 +2238,7 @@ if (slide>=2) or (goto_slide>=2){
     
     if (popup="") and ((change_slide>=70) or (change_slide<=0)) and (cooldown<=0){
         if (mouse_x>925) and (mouse_y>756) and (mouse_x<997) and (mouse_y<824) and (mouse_left>=1) and (!instance_exists(obj_creation_popup)){// Next slide
-            
-            if (slide=2) then scr_creation(2);
-            if (slide=3) then scr_creation(3);
-            if (slide=4) then scr_creation(4);
-            if (slide=5) then scr_creation(5);
-            if (slide=6) then scr_creation(6);
-            
+            if (slide>=2 && slide<=6) then scr_creation(slide);            
         }
         
         

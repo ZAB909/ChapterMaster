@@ -89,23 +89,26 @@ function distance_removed_star(origional_x,origional_y, star_offset = choose(2,3
 	var from = instance_nearest(origional_x,origional_y,obj_star);
     for(var i=0; i<star_offset; i++){
         from=instance_nearest(origional_x,origional_y,obj_star);
-        if (disclude_elder && from.owner=eFACTION.Eldar){
-        	i--;
-        	instance_deactivate_object(from.id);
-        	continue;
-        }
-        if (disclude_deads){
-        	if (is_dead_star(from)){
-	        	i--;
-	        	instance_deactivate_object(from.id);
-	        	continue;        		
-        	}
-        }
         with(from){
         	instance_deactivate_object(id);
         };
+        from=instance_nearest(origional_x,origional_y,obj_star);
+        if (instance_exists(from)){
+	        if (disclude_elder && from.owner==eFACTION.Eldar){
+	        	i--;
+	        	instance_deactivate_object(from);
+	        	continue;
+	        }
+	        if (disclude_deads){
+	        	if (is_dead_star(from)){
+		        	i--;
+		        	instance_deactivate_object(from);
+		        	continue;        		
+	        	}
+	        }
+	    }        
     }
-    from=instance_nearest(origional_x,origional_y,obj_star);
+    //from=instance_nearest(origional_x,origional_y,obj_star);
     instance_activate_object(obj_star);
     return from;     
 }
@@ -320,7 +323,7 @@ function new_star_event_marker(colour){
 function is_dead_star(star="none"){
 	var dead_star=true;
 	if (star=="none"){
-		for (i=1;i<planets;i++){
+		for (i=1;i<=planets;i++){
 			if (p_type[i] !="dead"){
 				dead_star=false;
 				break;
@@ -328,7 +331,7 @@ function is_dead_star(star="none"){
 		}
 	} else {
 		with (star){
-			is_dead_star();
+			dead_star = is_dead_star();
 		}
 	}
 	return dead_star;

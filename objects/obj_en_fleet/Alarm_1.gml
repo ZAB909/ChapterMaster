@@ -1001,7 +1001,7 @@ if (action==""){
                 valid=false;
             }
         }
-        if( ((orbiting.owner  = eFACTION.Player) or (obj_ini.fleet_type!=1)) and (trade_goods!="cancel_inspection") && valid){
+        if (((orbiting.owner = eFACTION.Player || system_feature_bool(orbiting.p_feature, P_features.Monastery)) or (obj_ini.fleet_type!=1)) and (trade_goods!="cancel_inspection") && valid){
             if (obj_controller.disposition[6]>=60) then scr_loyalty("Xeno Associate","+");
             if (obj_controller.disposition[7]>=60) then scr_loyalty("Xeno Associate","+");
             if (obj_controller.disposition[8]>=60) then scr_loyalty("Xeno Associate","+");
@@ -1173,13 +1173,7 @@ if (action==""){
                         
                     }
                 }
-            }
-            
-            
-            
-            
-            
-            if (string_count("investigate",trade_goods)==0){
+            }else if (string_count("investigate",trade_goods)==0){
                 inquisition_inspection_logic();
             }
             // End Test-Slave Incubator Crap
@@ -1282,18 +1276,11 @@ if (action==""){
                     if (good=0) then plin=instance_nearest(xx,yy,obj_star);
                     if (good=1) and (n=5) then plin2=instance_nearest(xx,yy,obj_star);
                     
-                    if (plin.planets=1) and (plin.p_type[1]!="Dead") then good=1;
-                    if (plin.planets=2) and (plin.p_type[1]!="Dead") and (plin.p_type[2]!="Dead") then good=1;
-                    if (plin.planets=3) and (plin.p_type[1]!="Dead") and (plin.p_type[2]!="Dead") and (plin.p_type[3]!="Dead") then good=1;
-                    if (plin.planets=4) and (plin.p_type[1]!="Dead") and (plin.p_type[2]!="Dead") and (plin.p_type[3]!="Dead") and (plin.p_type[4]!="Dead") then good=1;
-                    
-                    
+                    good = !array_contains(plin.p_type, "dead");
+
                     if (good=1) and (n=5){
                         if (!instance_exists(plin2)) then exit;
-                        if (plin2.planets=1) and (plin2.p_type[1]!="Dead") then good=2;
-                        if (plin2.planets=2) and (plin2.p_type[1]!="Dead") and (plin2.p_type[2]!="Dead") then good=2;
-                        if (plin2.planets=3) and (plin2.p_type[1]!="Dead") and (plin2.p_type[2]!="Dead") and (plin2.p_type[3]!="Dead") then good=2;
-                        if (plin2.planets=4) and (plin2.p_type[1]!="Dead") and (plin2.p_type[2]!="Dead") and (plin2.p_type[3]!="Dead") and (plin2.p_type[4]!="Dead") then good=2;
+                        if (!array_contains(plin.p_type, "dead")) then good++
                         
                         var new_fleet;
                         new_fleet=instance_create(x,y,obj_en_fleet);
@@ -1317,7 +1304,7 @@ if (action==""){
                         new_fleet.action_x=plin2.x;
                         new_fleet.action_y=plin2.y;
                         new_fleet.alarm[4]=1;
-                        good=5;
+                        break;
                     }
                     
                     
@@ -1331,25 +1318,24 @@ if (action==""){
     if (owner=eFACTION.Ork) and (action="") and (instance_exists(orbiting)){// Should fix orks converging on useless planets
         var maxp,bad,i,hides,hide;maxp=0;bad=0;i=0;hides=1;hide=0;
         
-        if (orbiting.planets<=0) or ((orbiting.planets=1) and (orbiting.p_type[1]="Dead")) then bad=1;
-        if (orbiting.planets=2) and (orbiting.p_type[1]="Dead") and (orbiting.p_type[2]="Dead") then bad=1;
+        bad = !is_dead_star(orbiting);
         
         if (bad=1){
             hides+=choose(0,1,2,3);
             
             repeat(hides){
-                hide=instance_nearest(x,y,obj_star);
-                with(hide){y+=20000;}
+                instance_deactivate_object(instance_nearest(x,y,obj_star));
             }
             
-            with(obj_star){if ((planets=1) and (p_type[1]="Dead")) or (owner=eFACTION.Ork) then y+=20000;}
-            var nex;nex=instance_nearest(x,y,obj_star);
-            action_x=nex.x;action_y=nex.y;alarm[4]=1;
-            with(obj_star){if (y>=17000) then y-=20000;}
-            with(obj_star){if (y>=17000) then y-=20000;}
-            with(obj_star){if (y>=17000) then y-=20000;}
-            with(obj_star){if (y>=17000) then y-=20000;}
-            with(obj_star){if (y>=17000) then y-=20000;}
+            with(obj_star){
+            	if ((planets=1) and (p_type[1]="Dead")) or (owner=eFACTION.Ork) then instance_deactivate_object(id);
+            }
+            var nex=instance_nearest(x,y,obj_star);
+            action_x=nex.x;
+            action_y=nex.y;
+            set_fleet_movement();
+
+            instance_activate_object(obj_star);
             exit;
         }
         
