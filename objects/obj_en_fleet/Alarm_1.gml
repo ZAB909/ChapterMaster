@@ -1322,7 +1322,7 @@ if (action==""){
         
         bad = is_dead_star(orbiting);
         
-        if (bad=1){
+        if (bad){
             hides+=choose(0,1,2,3);
             
             repeat(hides){
@@ -1340,50 +1340,6 @@ if (action==""){
             instance_activate_object(obj_star);
             exit;
         }
-        
-        /*i=0;repeat(4){i+=1;if (orbiting.p_type[i]!="") then maxp+=1;}
-        i=0;repeat(4){i+=1;
-            if (orbiting.p_player[i]+orbiting.p_traitors[i]+orbiting.p_chaos[i]+orbiting.p_tyranids[i]+orbiting.p_tau[i]+orbiting.p_necrons[i]=0) 
-             or (orbiting.p_type[i]="Dead") 
-              or (orbiting.p_owner[i]=7) then bad+=1;
-        }
-        if (bad>=maxp){
-            with(orbiting){y+=20000;}
-            with(obj_star){if ((planets=1) and (p_type[1]="Dead")) or (owner = eFACTION.Ork) then y+=20000;}
-            var nex;nex=instance_nearest(x,y,obj_star);
-            action_x=nex.x;action_y=nex.y;alarm[4]=1;
-            with(obj_star){if (y>=16000) then y-=20000;}
-            with(obj_star){if (y>=16000) then y-=20000;}
-            with(obj_star){if (y>=16000) then y-=20000;}
-            exit;
-        }*/
-    
-        
-        
-        /*
-        i=0;repeat(4){i+=1;
-            if (i<=orbiting.planets) and (orbiting.p_type[i]!="") and (orbiting.p_type[i]!="Dead") and (orbiting.p_player[i]+orbiting.p_traitors[i]+orbiting.p_chaos[i]+orbiting.p_tyranids[i]+orbiting.p_tau[i]+orbiting.p_necrons[i]+orbiting.p_sisters[i]>0) and (orbiting.p_orks[i]<=4) then maxp+=1;
-            else bad+=1;
-        }
-        
-        
-        i=0;repeat(4){i+=1;if (orbiting.p_type[i]!="") and (orbiting.p_type[i]!="Dead") then maxp+=1;}
-        i=0;repeat(4){i+=1;
-            if (orbiting.p_player[i]+orbiting.p_traitors[i]+orbiting.p_chaos[i]+orbiting.p_tyranids[i]+orbiting.p_tau[i]+orbiting.p_necrons[i]+orbiting.p_sisters[i]=0) 
-             or (orbiting.p_type[i]="Dead") 
-              or (orbiting.p_owner[i]=7) then bad+=1;
-        }
-        
-        if (maxp=0) or (bad>=maxp){
-            with(orbiting){y+=20000;}
-            with(obj_star){if ((planets=1) and (p_type[1]="Dead")) or (owner = eFACTION.Ork) or (planets=0) then y+=20000;}
-            var nex;nex=instance_nearest(x,y,obj_star);
-            action_x=nex.x;action_y=nex.y;alarm[1]=4;
-            with(obj_star){if (y>=17000) then y-=20000;}
-            with(obj_star){if (y>=17000) then y-=20000;}
-            with(obj_star){if (y>=17000) then y-=20000;}
-            exit;
-        }*/
     }
 }
 

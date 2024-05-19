@@ -45,6 +45,21 @@ function scr_get_planet_with_type(star, type){
 		}
 	return -1;
 }
+function planets_without_type(type,star="none"){
+	var return_planets = [];
+	if (star=="none"){
+		for(var i = 1; i <= planets; i++){
+			if(p_type[i] != type){
+				array_push(return_planets, i);
+			}
+		}
+	} else {
+		with (star){
+			return_planets = planets_without_type(type);
+		}
+	}
+	return return_planets;
+}
 
 function scr_star_has_planet_with_type(star, type){
 	return scr_get_planet_with_type(star,type) != -1;

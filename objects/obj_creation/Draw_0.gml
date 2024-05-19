@@ -477,7 +477,7 @@ if (slide=2){
                     if (points+20<=maxpoints) and (adv_num[i]=0) and (popup=""){
                         popup="advantages";
                         cooldown=8000;
-                        temp=1;
+                        temp=i;
                     }
                     var removable=false;
                     if (i=4 && adv_num[i]>0){
@@ -509,15 +509,15 @@ if (slide=2){
                     if ((dis_num[i]=0) and (dis_num[i+1]=0) and (popup="")){
                         popup="disadvantages";
                         cooldown=8000;
-                        temp=1;
+                        temp=i;
                     }
                     var removable=false;
                     if (i=4 && dis_num[i]>0){
                         removable=true;
-                    } else if (dis_num[i]>0 && dis_num[i+1]=0){
+                    } else if (dis_num[i]>0 && dis_num[i+1]==0){
                         removable=true;
                     }                    
-                    if  (mouse_x<=830) and (dis_num[i]>0) and (dis_num[i]=0) and (points+20<=maxpoints) {
+                    if  (mouse_x<=830) and (removable) and (points+20<=maxpoints) {
                         points+=20;
                         dis[i]="";
                         dis_num[i]=0;
@@ -1292,7 +1292,7 @@ if (slide=4){
                 cords : [620, 252],
             },
             {
-                text : $"Secondary: {col[main_color]}",
+                text : $"Secondary: {col[secondary_color]}",
                 tooltip:"Secondary",
                 tooltip2:"The secondary color of your Astartes and their vehicles.",
                 cords : [620, 287],
@@ -1366,13 +1366,18 @@ if (slide=4){
             cur_button = livery_type_options[i];
             draw_set_alpha(1);
             yar = col_special==(i+1) ?1:0;
+            if (cur_button.text=="Trim") then yar = trim;
             if (custom<2) then draw_set_alpha(0.5);
             draw_sprite(spr_creation_check,yar,cur_button.cords[0],cur_button.cords[1]);
              if (scr_hit(cur_button.cords[0],cur_button.cords[1],cur_button.cords[0]+32,cur_button.cords[1]+32) and allow_colour_click){
-                    cooldown=8000;
-                    var onceh=0;
+                cooldown=8000;
+                var onceh=0;
+                if (cur_button.text!="Trim"){
                     if (col_special=i+1) and (onceh=0){col_special=0;onceh=1;}
                     if (col_special!=i+1) and (onceh=0){col_special=i+1;onceh=1;}
+                } else {
+                    trim=!trim;
+                }
              }
              draw_text_transformed(cur_button.cords[0]+30,cur_button.cords[1]+4,cur_button.text,0.4,0.4,0);
         }
