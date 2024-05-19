@@ -8,6 +8,7 @@
     {"name":"spr_generic_sgt_mk7","order":1,"path":"sprites/spr_generic_sgt_mk7/spr_generic_sgt_mk7.yy",},
     {"name":"spr_generic_sgt_mk8","order":2,"path":"sprites/spr_generic_sgt_mk8/spr_generic_sgt_mk8.yy",},
     {"name":"scr_player_fleet_functions","order":1,"path":"scripts/scr_player_fleet_functions/scr_player_fleet_functions.yy",},
+    {"name":"scr_ork_fleet_functions","order":2,"path":"scripts/scr_ork_fleet_functions/scr_ork_fleet_functions.yy",},
     {"name":"spr_generic_terminator_sgt","order":5,"path":"sprites/spr_generic_terminator_sgt/spr_generic_terminator_sgt.yy",},
     {"name":"spr_generic_sgt_mk6","order":4,"path":"sprites/spr_generic_sgt_mk6/spr_generic_sgt_mk6.yy",},
     {"name":"spr_generic_sgt_mk3","order":6,"path":"sprites/spr_generic_sgt_mk3/spr_generic_sgt_mk3.yy",},
