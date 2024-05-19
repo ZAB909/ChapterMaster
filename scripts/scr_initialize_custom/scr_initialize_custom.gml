@@ -1339,18 +1339,40 @@ function scr_initialize_custom() {
 				]
 			],
 			"devastator_squad": [
-					[role[100][9], 
-						{"max":9,"min":4,
-							"loadout":{//devastator
-								"required":{
-									"wep1":["Bolter",4], 
-									"wep2":["Combat Knife",4]
-								}
+				[role[100][9],
+					{
+						"max": 9,
+						"min": 4,
+						"loadout": {
+							"required": {
+								"wep1": ["Bolter", 5],
+								"wep2": ["Combat Knife", 9],
+								"mobi": ["", 5],
+							},
+							"option": {
+								"wep1": [
+									[
+										["Heavy Bolter", "Heavy Bolter", "Heavy Bolter", "Heavy Bolter", "Missile Launcher", "Missile Launcher", "Multi-Melta", "Lascannon"], 4, {
+											"mobi":"Heavy Weapons Pack",
+										}
+									],
+								],
 							}
 						}
-					],			//veterans
-
-				[role[100][18], {"max":1,"min":1, "role":$"{role[100,9]} {role[100,18]}"}],//sergeant
+					}
+				],
+				[role[100][18], {
+					"max": 1,
+					"min": 1,
+					"role": $"{role[100][9]} {role[100][18]}",
+					"loadout": {
+						"required": {
+							"wep1": ["Bolt Pistol", 1],
+							"wep2": ["Chainsword", 1],
+							"mobi": ["", 1],
+						},
+					}
+				}],
 				["type_data" , {
 					"display_data":$"{role[100,9]} {squad_name}",
 					"formation_options" : ["devastator"],
