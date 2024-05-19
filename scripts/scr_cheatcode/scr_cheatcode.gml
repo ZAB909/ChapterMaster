@@ -159,7 +159,7 @@ function scr_cheatcode(argument0) {
     } else if (cheatcode_string == "recruit") {
         var _start_pos = 0
         var length = (array_length(obj_controller.recruit_name) - 1)
-        var i = 1
+        var i = 0;
         while (i < length) {
             if (obj_controller.recruit_name[i] == "") {
                 _start_pos = i
@@ -170,12 +170,12 @@ function scr_cheatcode(argument0) {
             }
         }
 
-        for (i = _start_pos; i < (cheatcode_m_digits + _start_pos); i++) {
-            obj_controller.recruit_name[i] = global.name_generator.generate_space_marine_name()
-            obj_controller.recruit_exp[i] = 20
-            obj_controller.recruit_corruption[i] = 0
-            obj_controller.recruit_distance[i] = 0
-            obj_controller.recruit_training[i] = 1
+        for (i = _start_pos; i < (cheatcode_m_digits + _start_pos); i++){
+            array_insert(obj_controller.recruit_corruption, i, 0);
+            array_insert(obj_controller.recruit_distance , i, 0);
+            array_insert(obj_controller.recruit_training, i, 1);
+            array_insert(obj_controller.recruit_exp, i, 20); 
+            array_insert(obj_controller.recruit_name, i, global.name_generator.generate_space_marine_name());
         }
         scr_alert("green", "recruitment", (string(cheatcode_m_digits) + "has started training."), 0, 0)
     }

@@ -93,7 +93,7 @@ var h = y1 + camera_get_view_height(view_current)
 
 draw_set_alpha(1);
 
-if (obj_controller.zoomed || rectangle_in_rectangle(ui_node.gui_x, ui_node.gui_y, ui_node.gui_x + ui_node.width , ui_node.gui_y + ui_node.height, x1, y1, w, h) > 0) {
+if (obj_controller.zoomed || rectangle_in_rectangle(ui_node.gui_x, ui_node.gui_y, ui_node.gui_x + ui_node.width , ui_node.gui_y + ui_node.height, x1, y1, w, h)) {
 	ui_node.activate();
 } else {
 	ui_node.deactivate();
