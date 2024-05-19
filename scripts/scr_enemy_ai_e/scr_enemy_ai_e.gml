@@ -762,8 +762,8 @@ function scr_enemy_ai_e() {
                                 obj_controller.gene_seed -= 1;
                                 array_insert(obj_controller.recruit_corruption, i, new_recruit_corruption);
                                 array_insert(obj_controller.recruit_distance , i, 0);
-                                array_insert(obj_controller.recruit_training, i, new_recruit_exp);
-                                array_insert(obj_controller.recruit_exp, i, months_to_neo); 
+                                array_insert(obj_controller.recruit_training, i, months_to_neo);
+                                array_insert(obj_controller.recruit_exp, i, new_recruit_exp); 
                                 array_insert(obj_controller.recruit_name, i, global.name_generator.generate_space_marine_name());                                                                                           
                                 break;
                             }
