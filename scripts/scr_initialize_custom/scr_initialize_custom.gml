@@ -59,21 +59,21 @@ function progenitor_livery(chapter, specific="none"){
 		livery_data = {
 			sgt : {
 				helm_pattern:3,
-				helm_primary :Colors.Light_Blue,
+				helm_primary :Colors.Fenrisian_Grey,
 				helm_secondary : Colors.Red,
 				helm_detail : 0,
 				helm_lens : Colors.Red,
 			},
 			vet_sgt : {
 				helm_pattern:3,
-				helm_primary : Colors.Light_Blue,
+				helm_primary : Colors.Fenrisian_Grey,
 				helm_secondary : Colors.Black,
 				helm_detail : 0,
 				helm_lens : Colors.Red,
 			},
 			captain : {
 				helm_pattern:3,
-				helm_primary : Colors.Light_Blue,
+				helm_primary : Colors.Fenrisian_Grey,
 				helm_secondary : Colors.Black,
 				helm_detail : 0,
 				helm_lens : Colors.Red,
