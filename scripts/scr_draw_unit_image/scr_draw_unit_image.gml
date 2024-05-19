@@ -141,8 +141,8 @@ function set_shader_array(shader_array){
     }
 }
 function scr_draw_unit_image(_background=false){
-    var x_surface_offset = min(200);
-    var y_surface_offset = min(110);
+    var x_surface_offset = 200;
+    var y_surface_offset = 110;
     var unit_surface = surface_create(600, 600);
     surface_set_target(unit_surface);
     draw_clear_alpha(c_black, 0);//RESET surface
@@ -737,6 +737,7 @@ function scr_draw_unit_image(_background=false){
                         }                          
                     }
                 } else if (armour()=="MK8 Errant"){
+                    specific_helm = spr_generic_sgt_mk8;
                     specific_armour_sprite = spr_mk8_colors;
                     if (progenitor_map()=="Dark Angels"){
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){

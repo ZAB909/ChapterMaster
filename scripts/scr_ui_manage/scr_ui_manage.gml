@@ -412,7 +412,7 @@ function scr_ui_manage() {
 			// Draw unit image
 			draw_set_color(c_white);
 			if (is_struct(temp[121])){
-				temp[121].draw(xx+1208, yy+210)
+				temp[121].draw(xx+1208, yy+240)
 			}
 
 			//TODO implement tooltip explaining potential loyalty hit of demoting a sgt
