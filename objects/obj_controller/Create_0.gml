@@ -1,3 +1,4 @@
+
 /*
     Creates all instances and logic for the game, 
     This is the MAIN script to load in the actual game UI and where most if not all MISC Stuff from the game is:
@@ -71,7 +72,7 @@
     
     The Machine God watches over you.
 */
-
+scr_colors_initialize();
 is_test_map=false;
 target_navy_number=5;
 global.sound_playing=0;
@@ -1324,7 +1325,12 @@ if (instance_exists(obj_ini)){
     }
 }
 //Set player colour
-global.star_name_colors[1] = make_color_rgb(body_colour_replace[0],body_colour_replace[1],body_colour_replace[2])
+try{
+    global.star_name_colors[1] = make_color_rgb(body_colour_replace[0],body_colour_replace[1],body_colour_replace[2]);
+}
+catch(_exception){
+    global.star_name_colors[1] = make_color_rgb(col_r[1],col_g[1],col_b[1]);
+}
 // ** Loads the game **
 if (global.load>0){
     load_game=global.load;

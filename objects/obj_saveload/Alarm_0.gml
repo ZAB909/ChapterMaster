@@ -31,6 +31,9 @@ if (load_part=6){
         scr_load(5,global.load);
         calculate_research_points();
         location_viewer = new scr_unit_quick_find_pane();
+        with(obj_controller){
+            global.star_name_colors[1] = make_color_rgb(body_colour_replace[0],body_colour_replace[1],body_colour_replace[2]);
+        }
     }
     trickle=50;
     

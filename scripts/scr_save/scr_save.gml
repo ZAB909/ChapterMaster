@@ -423,9 +423,9 @@ function scr_save(save_slot,save_id) {
 	                ini_write_real("Star","sr"+string(i)+"raided"+string(g),instance_array[i].p_raided[g]);
 
 	                for (var p=0;p<8;p++){
-		                ini_write_string("Star","sr{i}prob{g}.{p}",instance_array[i].p_problem[g,p]);
-		                ini_write_real("Star","sr{i}time{g}.{p}",instance_array[i].p_timer[g,p]);
-		                ini_write_real("Star","sr{i}prob_other{g}.{p}",base64_encode(json_stringify(instance_array[i].p_problem_other_data[g,p])));	                	
+		                ini_write_string("Star",$"sr{i}prob{g}.{p}",instance_array[i].p_problem[g,p]);
+		                ini_write_real("Star",$"sr{i}time{g}.{p}",instance_array[i].p_timer[g,p]);
+		                ini_write_string("Star",$"sr{i}prob_other{g}.{p}",base64_encode(json_stringify(instance_array[i].p_problem_other_data[g,p])));	                	
 	                }
 	            }
 	        }
