@@ -1906,8 +1906,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			var secondary_weapon="none";
 			if (weapon_slot==0){
 				//if player has not melee weapons
-				var valid1 = ((_wep1.range<=1.1 && _wep1.range!=0) || (!_wep1.has_tags(["pistol","flame"])));
-				var valid2 = ((_wep2.range<=1.1 && _wep2.range!=0) || (!_wep2.has_tags(["pistol","flame"])));
+				var valid1 = ((_wep1.range<=1.1 && _wep1.range!=0) || (_wep1.has_tags(["pistol","flame"])));
+				var valid2 = ((_wep2.range<=1.1 && _wep2.range!=0) || (_wep2.has_tags(["pistol","flame"])));
 				if (!valid1 && !valid2){
 					primary_weapon=new equipment_struct({},"");//create blank weapon struct
 					primary_weapon.attack=strength/3;//calculate damage from player fists
