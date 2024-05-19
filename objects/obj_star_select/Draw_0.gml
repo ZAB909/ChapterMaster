@@ -105,24 +105,21 @@ if (target.craftworld=0) and (target.space_hulk=0){
 }
 
 
-if (global.cheat_debug == true && obj_controller.selecting_planet > 0 && loading == false)
+if (global.cheat_debug && obj_controller.selecting_planet && !loading)
     {
-        draw_set_color(c_gray)
-        draw_rectangle(((xx + 184) - 123), (yy + 200), ((xx + 184) + 123), (yy + 226), false)
-        draw_set_color(c_black)
-        draw_text((xx + 184), (yy + 204), string_hash_to_newline("Debug"))
-        draw_set_color(c_white)
-        draw_set_alpha(0.2)
-        if (scr_hit(((xx + 184) - 123), ((xx + 184) + 123), (yy + 200), (yy + 226)) == true)
-        {
-            draw_rectangle(((xx + 184) - 123), (yy + 200), ((xx + 184) + 123), (yy + 226), false)
-            if (obj_controller.cooldown <= 0 && obj_controller.mouse_left == 1)
-            {
-                debug = true
-                obj_controller.cooldown = 8000
-            }
+        draw_set_color(c_gray);
+        var rect = [((xx + 184) - 123), (yy + 200), ((xx + 184) + 123), (yy + 226)];
+        draw_rectangle(rect[0],rect[1],rect[2],rect[3], false);
+        draw_set_color(c_black);
+        draw_text((xx + 184), (yy + 204), string_hash_to_newline("Debug"));
+        draw_set_color(c_white);
+        draw_set_alpha(0.2);
+        if (point_and_click(rect)){
+            debug = true;
         }
-        draw_set_alpha(1)
+        if (scr_hit(((xx + 184) - 123), ((xx + 184) + 123), (yy + 200), (yy + 226)) == true){
+            draw_rectangle(((xx + 184) - 123), (yy + 200), ((xx + 184) + 123), (yy + 226), false);
+        }
     }
 
 
@@ -722,13 +719,15 @@ if (target!=0){
 
 
 
-if (debug=1){
+if (debug){
     var xx,yy,current_planet;
     xx=__view_get( e__VW.XView, 0 )+0;
     yy=__view_get( e__VW.YView, 0 )+0;
     
     if (scr_hit(xx+274,yy+426,xx+337,yy+451)=true) and (obj_controller.cooldown<=0) and (obj_controller.mouse_left=1){
-        debug=0;obj_controller.cooldown=8000;exit;
+        debug=0;
+        obj_controller.cooldown=8000;
+        exit;
     }
     
     xx=__view_get( e__VW.XView, 0 )+27;

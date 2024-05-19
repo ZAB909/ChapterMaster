@@ -272,7 +272,7 @@ if (defeat=0) and (npowers=true){
                 if (planet_feature_bool(p_feature[battle_planet], P_features.Gene_Stealer_Cult)==1){
                     who_cleansed="Gene Stealer Cult"
                     make_alert=true;
-                    delete_features(p_feature[run], P_features.Gene_Stealer_Cult);
+                    delete_features(p_feature[battle_planet], P_features.Gene_Stealer_Cult);
                 } 
                 if (make_alert){
                      if (p_first[battle_planet] == 1){

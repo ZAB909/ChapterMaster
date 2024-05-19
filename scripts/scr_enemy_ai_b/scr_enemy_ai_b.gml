@@ -305,7 +305,7 @@ function scr_enemy_ai_b() {
 			cult.cult_age++;
 			adjust_influence(eFACTION.Tyranids, cult.cult_age/100, i)
 			if (cult.hiding){
-				if (p_influence[i][eFACTION.Tyranids]>40){
+				if (p_influence[i][eFACTION.Tyranids]>50){
 					if(irandom(50)<1){
 						hiding=false;
 	                    scr_popup("System Lost",$"A hidden Genesteaer Cult in {name} Has suddenly burst forth from hiding!","Genestealer Cult","");
