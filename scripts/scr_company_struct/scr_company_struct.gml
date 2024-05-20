@@ -2,6 +2,7 @@
 function scr_company_struct(comp) constructor{
 	company = comp;
 	company_squads = [];
+
 	static squad_search = function(){
 		company_squads = [];
 		for (var i=0;i<array_length(obj_ini.squads);i++){
@@ -10,7 +11,9 @@ function scr_company_struct(comp) constructor{
 			}
 		}
 	}
+
 	squad_search();
+
 	cur_squad = 0;
 	exit_period=false;
 	unit_rollover=false;
@@ -262,8 +265,8 @@ function scr_company_struct(comp) constructor{
 			var unit_sprite_coords=[];
 			for (var i=0;i<array_length(current_squad.members);i++){
 				member = obj_ini.TTRPG[current_squad.members[i][0]][current_squad.members[i][1]];
-				if (!array_equals(squad_draw_surfaces[i][0], [current_squad.members[i][0], current_squad.members[i][1]])){
-					squad_draw_surfaces[i][0] =[current_squad.members[i][0], current_squad.members[i][1]];
+				if (!array_equals(squad_draw_surfaces[i][0], current_squad.members[i])){
+					squad_draw_surfaces[i][0] = current_squad.members[i];
 					squad_draw_surfaces[i][1] = member.draw_unit_image();
 				}
 				var cur_member_surface = squad_draw_surfaces[i][1];
