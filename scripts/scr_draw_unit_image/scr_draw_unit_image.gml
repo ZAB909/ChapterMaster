@@ -674,7 +674,7 @@ function scr_draw_unit_image(_background=false){
                     }
                 } else if (armour()=="MK4 Maximus"){
                     specific_helm = spr_generic_sgt_mk4;
-                    specific_armour_sprite =specific_armour_sprite = spr_mk4_colors;
+                    specific_armour_sprite = spr_mk4_colors;
                     if (array_contains(["Company Champion",obj_ini.role[100][2],obj_ini.role[100][5]], role())){
                         /*if (global.chapter_name=="Ultramarines"){
                             armour_draw=[spr_ultra_honor_guard,body.torso.armour_choice];

@@ -54,6 +54,7 @@ name_bad=0;
 heheh=0;
 icons_top=1;
 icons_max=0;
+turn_selection_change=false;
 
 scrollbar_engaged=0;
 

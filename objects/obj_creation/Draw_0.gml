@@ -1410,7 +1410,10 @@ if (slide=4){
                     role : "sgt",
                 },                
             ];
-            complex_livery_data.sgt.helm_pattern=complex_depth_selection;
+            if (turn_selection_change){
+                complex_depth_selection=complex_livery_data.sgt.helm_pattern;
+            } else {complex_livery_data.sgt.helm_pattern=complex_depth_selection;}
+
         } else if (complex_selection=="Veteran Sergeant Markers"){
             button_data = [
                 {
@@ -1438,7 +1441,10 @@ if (slide=4){
                     role : "vet_sgt",
                 },                
             ];
-            complex_livery_data.vet_sgt.helm_pattern=complex_depth_selection;
+            if (turn_selection_change){
+                complex_depth_selection=complex_livery_data.vet_sgt.helm_pattern;
+            } else {complex_livery_data.vet_sgt.helm_pattern=complex_depth_selection;}
+
         }else if (complex_selection=="Captain Markers"){
             button_data = [
                 {
@@ -1466,7 +1472,9 @@ if (slide=4){
                     role : "captain",
                 },                
             ];
-            complex_livery_data.captain.helm_pattern=complex_depth_selection;
+             if (turn_selection_change){
+                complex_depth_selection=complex_livery_data.captain.helm_pattern;
+            } else {complex_livery_data.captain.helm_pattern=complex_depth_selection;}
         } else if (complex_selection=="Veteran Markers"){
             button_data = [
                 {
@@ -1494,7 +1502,11 @@ if (slide=4){
                     role : "veteran",
                 },                
             ];
+             if (turn_selection_change){
+                complex_depth_selection=complex_livery_data.veteran.helm_pattern;
+            } else {complex_livery_data.veteran.helm_pattern=complex_depth_selection;}
         }
+        turn_selection_change = false;
         var button_cords, cur_button;
         for (var i=0;i<array_length(button_data);i++){
             cur_button = button_data[i];
@@ -1579,18 +1591,26 @@ if (slide=4){
                 if (custom<2) then draw_set_alpha(0.5);
                 yyy+=spacing;draw_set_color(38144);draw_rectangle(xxx,yyy,1150,yyy+20,0);
                 draw_set_color(0);draw_text(xxx,yyy,string_hash_to_newline(role[c,role_id]));
-                if (scr_hit(xxx,yyy,1150,yyy+20)) and (!instance_exists(obj_creation_popup)){if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_set_color(c_white);draw_rectangle(xxx,yyy,1150,yyy+20,0);
-                    draw_set_alpha(1);tooltip=string(role[c,role_id])+" Settings";tooltip2="Click to open the settings for this unit.";
-                    if (mouse_left>=1) and (custom>0) and (cooldown<=0) and (custom=2){var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=role_id+100;cooldown=8000;}
+                if (scr_hit(xxx,yyy,1150,yyy+20)) and (!instance_exists(obj_creation_popup)){
+                    if (custom=2) then draw_set_alpha(0.2);
+                    if (custom<2) then draw_set_alpha(0.1);draw_set_color(c_white);draw_rectangle(xxx,yyy,1150,yyy+20,0);
+                    draw_set_alpha(1);tooltip=string(role[c,role_id])+" Settings";
+                    tooltip2="Click to open the settings for this unit.";
+                    if (mouse_left>=1) and (custom>0) and (cooldown<=0) and (custom=2){
+                        var pp=instance_create(0,0,obj_creation_popup);
+                        pp.type=role_id+100;
+                        cooldown=8000;
+                    }
                 }
             }
         }
     } else {
-        var complex_livery_options = ["Sergeant Markers","Veteran Sergeant Markers", "Captain Markers", "Veteran Markers"],
+        var complex_livery_options = ["Sergeant Markers","Veteran Sergeant Markers", "Captain Markers", "Veteran Markers"];
         for (var i=0;i<array_length(complex_livery_options);i++){
             yyy+=spacing;
             if (point_and_click(draw_unit_buttons([xxx,yyy], complex_livery_options[i],[0.5,0.5], 38144,, fnt_40k_30b, 1))){
                 complex_selection=complex_livery_options[i];
+                turn_selection_change=true;
             }
         }
     }

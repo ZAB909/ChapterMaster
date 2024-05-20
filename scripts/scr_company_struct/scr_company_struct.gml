@@ -200,8 +200,8 @@ function scr_company_struct(comp) constructor{
 				}
 			}
 			//TODO compartmentalise drop down option logic
+			var deploy_text = "Squad will deploy in the";
 			if (current_squad.formation_place!=""){
-				var deploy_text = "Squad will deploy in the";
 				draw_set_font(fnt_40k_14b)
 				draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0], deploy_text,1,1,0);
 				button = draw_unit_buttons([xx+bound_width[0]+5 + string_width(deploy_text), yy+bound_height[0]-2],current_squad.formation_place,[1,1],c_green);
