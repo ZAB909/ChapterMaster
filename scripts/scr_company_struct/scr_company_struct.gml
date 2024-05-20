@@ -21,7 +21,11 @@ function scr_company_struct(comp) constructor{
 	selected_unit=obj_controller.temp[120];
 	drop_down_open=false;
 	captain = "none";
-	squad_draw_surfaces = array_create(15, [[-1,-1]])
+	squad_draw_surfaces = array_create(15, []);
+	for (var i=0;i<15;i++){
+		squad_draw_surfaces[i]=[[-1,-1],false];
+	}
+
 	if (company>0 && company<11){
 		var unit;
 		var company_units = obj_controller.display_unit;
@@ -264,9 +268,10 @@ function scr_company_struct(comp) constructor{
 			var sprite_draw_delay="none"
 			var unit_sprite_coords=[];
 			for (var i=0;i<array_length(current_squad.members);i++){
-				member = obj_ini.TTRPG[current_squad.members[i][0]][current_squad.members[i][1]];
+				member = fetch_unit(current_squad.members[i]);
 				if (!array_equals(squad_draw_surfaces[i][0], current_squad.members[i])){
-					squad_draw_surfaces[i][0] = current_squad.members[i];
+					show_debug_message("non equal arrays {0}, {1}",squad_draw_surfaces[i][0], current_squad.members[i]);
+					squad_draw_surfaces[i][0] = [member.company, member.marine_number];
 					squad_draw_surfaces[i][1] = member.draw_unit_image();
 				}
 				var cur_member_surface = squad_draw_surfaces[i][1];

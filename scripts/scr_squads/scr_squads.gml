@@ -101,7 +101,7 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 		//update units squad marker
 		squad.squad_fulfilment = squad_fulfilment;
 		for (i = 0; i < array_length(squad.members);i++){
-			unit = obj_ini.TTRPG[squad.members[i][0], squad.members[i][1]];
+			unit = fetch_unit(squad.members[i]);
 			if (!squad_index){
 				unit.squad = squad_count;
 			} else {
@@ -320,7 +320,7 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 		var highest_exp = 0;
 		var member_length = array_length(members);
 		for (i = 0; i < member_length;i++){
-			unit = obj_ini.TTRPG[members[i][0]][members[i][1]];
+			unit = fetch_unit(members[i]);
 			if (unit.name() == ""){
 				array_delete(members, i, 1);
 				member_length--;
@@ -379,7 +379,7 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 		var member_length = array_length(members);
 		for (var i=0;i<member_length;i++){
 			//checks squad member is still valid
-			unit = obj_ini.TTRPG[members[i][0]][members[i][1]];
+			unit = fetch_unit(members[i]);
 			if (unit.name() == ""){
 				array_delete(members, i, 1);
 				member_length--;
@@ -449,7 +449,7 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 		var planet_side=false;
 		var exact_loc = false;
 		for (i = 0; i < member_length;i++){
-			unit = obj_ini.TTRPG[members[i][0]][members[i][1]];
+			unit = fetch_unit(members[i]);
 			if (unit.name() == ""){
 				array_delete(members, i, 1);
 				member_length--;
@@ -518,7 +518,7 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 		var leader="none", unit;
 		var highest_exp = 0;
 		for (var i=0;i<member_length;i++){
-			unit = obj_ini.TTRPG[members[i][0]][members[i][1]]
+			unit = fetch_unit(members[i]);
 			if (unit.name() == ""){
 				array_delete(members, i, 1);
 				member_length--;
@@ -609,7 +609,7 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 	static member_loop = function(member_func, data_pack){
 		member_length = array_length(members);
 		for (var i=0;i<member_length;i++){
-			unit = obj_ini.TTRPG[members[i][0]][members[i][1]];
+			unit = fetch_unit(members[i]);
 			if (unit.name() == ""){
 				array_delete(members, i, 1);
 				member_length--;
