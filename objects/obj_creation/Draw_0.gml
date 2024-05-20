@@ -1146,7 +1146,7 @@ if (slide=4){
 
     draw_text_color_simple(800,80,string_hash_to_newline(string(chapter)),38144);
     var draw_sprites = [spr_mk7_colors, spr_mk4_colors,spr_mk5_colors,spr_beakie_colors,spr_mk8_colors,spr_mk3_colors, spr_terminator3_colors];
-    var draw_hem = [spr_generic_sgt_mk7, spr_generic_sgt_mk4,spr_generic_sgt_mk5,spr_generic_sgt_mk6,spr_generic_sgt_mk7,spr_generic_sgt_mk3, spr_generic_terminator_sgt];
+    var draw_hem = [spr_generic_sgt_mk7, spr_generic_sgt_mk4,spr_generic_sgt_mk5,spr_generic_sgt_mk6,spr_generic_sgt_mk8,spr_generic_sgt_mk3, spr_generic_terminator_sgt];
     if (custom>1) then draw_sprite_stretched(spr_creation_arrow,0,444-10,252,32,32);// Left Arrow
     if (custom>1) then draw_sprite_stretched(spr_creation_arrow,1,444+157+2,242,32,32);// Right Arrow 
     if (point_and_click([444-10,252,470,280])){
