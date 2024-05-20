@@ -548,7 +548,7 @@ function scr_draw_unit_image(_background=false){
 				if (brothers>-5) then brothers=1;
 				armour_sprite=spr_artificer_colors;
 				if (hood=-50) then hood=2;
-			}else if (unit_armour=="Dreadnought") then armour_sprite=spr_dread_colors;
+			}
         
             if (armour_sprite=spr_weapon_blank) and (armour()!=""){
                 if (string_count("Power Armour",armour())>0){
@@ -569,7 +569,6 @@ function scr_draw_unit_image(_background=false){
 					if (hood=-50) then hood=9;
 					if (skull==1) then skull=2;
 				}
-                if (string_count("Dread",armour())>0) then armour_sprite=spr_dread_colors;
             }
         
             // Draw the lights
