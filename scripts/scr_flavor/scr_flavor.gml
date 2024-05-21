@@ -80,8 +80,8 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
         
 	        if (target.dudes_num[targeh]>1) and (casulties=0) then p1+=$"they smash into the {target_name} ranks (X{casulties} casulties).";
 	        if (target.dudes_num[targeh]>1) and (casulties>0) then p1+=$"they smash into the {target_name} ranks (X{casulties} casulties).";
-	        if (target.dudes_num[targeh]=1) and (casulties=0) then p1+="a {target_name} survives the attack.";
-	        if (target.dudes_num[targeh]=1) and (casulties=1) then p1+="a {target_name} takes one of the charges.";
+	        if (target.dudes_num[targeh]=1) and (casulties=0) then p1+=$"a {target_name} survives the attack.";
+	        if (target.dudes_num[targeh]=1) and (casulties=1) then p1+=$"a {target_name} takes one of the charges.";
 	    }
 	    if (solod=true){
 	        if (target.dudes_num[targeh]=1) then p1=string(full_name)+$" activates his Jump Pack and launches up into the air, and then crashes down into a {target_name}- ";
