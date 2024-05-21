@@ -147,6 +147,23 @@ function scr_weapons_equip() {
 						}
 					}
 				}
+			} else {
+				i+=1;
+				item_name[i]="Inferno Cannon";
+				i+=1;
+				item_name[i]="Multi-Melta";
+				i+=1;
+				item_name[i]="Plasma Cannon";
+				i+=1;
+				item_name[i]="Assault Cannon";
+				i+=1;
+				item_name[i]="Autocannon";	
+				i+=1;
+				item_name[i]="Missile Launcher";
+				i+=1;
+				item_name[i]="Twin Linked Lascannon";
+				i+=1;
+				item_name[i]="Twin Linked Heavy Bolter";																								
 			}
 	}
 
@@ -173,6 +190,8 @@ function scr_weapons_equip() {
 		} else {
 			i+=1;
 			item_name[i]="Close Combat Weapon";
+			i+=1;
+			item_name[i]="Dreadnought Lightning Claw";
 		}
 	}
 
