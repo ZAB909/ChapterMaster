@@ -14,6 +14,7 @@ enum Colors {
     Gold,
     Orange,
     Brown,
+    LightBrown,
     Deathwing,
     Bone,
     Yellow,
@@ -37,7 +38,7 @@ enum Colors {
 function scr_colors_initialize() {
 
     var colors_array = [
-        ["White", 229, 229, 229],
+        ["White", 240, 240, 240],
         ["Silver", 178, 178, 178],
         ["Fenrisian Grey", 144, 155, 183],
         ["Grey", 127, 127, 127],
@@ -52,6 +53,8 @@ function scr_colors_initialize() {
         ["Gold", 229, 162, 22],
         ["Orange", 255, 156, 0],
         ["Brown", 112, 66, 0],
+        ["Light Brown", 160,117,75],
+        ["Lightest Brown", 173, 128, 82],
         ["Deathwing", 238, 204, 163],
         ["Bone", 245, 236, 205],
         ["Yellow", 255, 220, 0],
