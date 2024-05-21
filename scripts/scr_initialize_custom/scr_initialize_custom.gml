@@ -275,24 +275,24 @@ function progenitor_livery(chapter, specific="none"){
 	}else if (chapter=="Blood Angels"){
 		livery_data = {
 			sgt : {
-				helm_pattern:0,
-				helm_primary : Colors.Gold,
-				helm_secondary : Colors.Gold,
-				helm_detail : Colors.Gold,
+				helm_pattern:2,
+				helm_primary : Colors.Sanguine_Red,
+				helm_secondary : Colors.Black,
+				helm_detail : Colors.Sanguine_Red,
 				helm_lens : Colors.Lime,
 			},
 			vet_sgt : {
 				helm_pattern:1,
 				helm_primary : Colors.White,
-				helm_secondary : Colors.Gold,
+				helm_secondary : Colors.Black,
 				helm_detail : Colors.White,
 				helm_lens : Colors.Lime,
 			},
 			captain : {
 				helm_pattern:0,
-				helm_primary : Colors.Gold,
-				helm_secondary : Colors.Gold,
-				helm_detail : Colors.Gold,
+				helm_primary : Colors.Copper,
+				helm_secondary : Colors.Copper,
+				helm_detail : Colors.Copper,
 				helm_lens : Colors.Lime,
 			},
 			veteran : {
@@ -307,16 +307,16 @@ function progenitor_livery(chapter, specific="none"){
 		livery_data = {
 			sgt : {
 				helm_pattern:0,
-				helm_primary : Colors.Deathwing,
-				helm_secondary : Colors.Deathwing,
-				helm_detail : Colors.Deathwing,
+				helm_primary : Colors.Copper,
+				helm_secondary : Colors.Copper,
+				helm_detail : Colors.Copper,
 				helm_lens : Colors.Lime,
 			},
 			vet_sgt : {
 				helm_pattern:1,
-				helm_primary : Colors.Black,
-				helm_secondary : Colors.Deathwing,
-				helm_detail : Colors.Black,
+				helm_primary : Colors.White,
+				helm_secondary : Colors.Black,
+				helm_detail : Colors.White,
 				helm_lens : Colors.Lime,
 			},
 			captain : {
@@ -328,9 +328,9 @@ function progenitor_livery(chapter, specific="none"){
 			},
 			veteran : {
 				helm_pattern:0,
-				helm_primary : Colors.Black,
-				helm_secondary : Colors.Black,
-				helm_detail : Colors.Black,
+				helm_primary : Colors.White,
+				helm_secondary : Colors.White,
+				helm_detail : Colors.White,
 				helm_lens : Colors.Lime,			
 			}				
 		}
