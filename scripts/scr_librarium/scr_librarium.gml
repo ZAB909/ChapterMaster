@@ -120,6 +120,7 @@ function scr_librarium(){
             }
 
             var artifact_name = obj_ini.artifact_struct[menu_artifact].name;
+            if (artifact_name == "") then artifact_name = obj_ini.artifact[menu_artifact];
             obj_ini.artifact_struct[menu_artifact].name = artifact_namer.draw(artifact_name); 
             draw_sprite(spr_arrow, 0, xx + 403, yy + 433);
             draw_sprite(spr_arrow, 1, xx + 795, yy + 433);
