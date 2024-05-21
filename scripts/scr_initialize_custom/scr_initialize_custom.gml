@@ -272,6 +272,68 @@ function progenitor_livery(chapter, specific="none"){
 				helm_lens : Colors.Green,			
 			}				
 		} 
+	}else if (chapter=="Blood Angels"){
+		livery_data = {
+			sgt : {
+				helm_pattern:0,
+				helm_primary : Colors.Gold,
+				helm_secondary : Colors.Gold,
+				helm_detail : Colors.Gold,
+				helm_lens : Colors.Lime,
+			},
+			vet_sgt : {
+				helm_pattern:1,
+				helm_primary : Colors.White,
+				helm_secondary : Colors.Gold,
+				helm_detail : Colors.White,
+				helm_lens : Colors.Lime,
+			},
+			captain : {
+				helm_pattern:0,
+				helm_primary : Colors.Gold,
+				helm_secondary : Colors.Gold,
+				helm_detail : Colors.Gold,
+				helm_lens : Colors.Lime,
+			},
+			veteran : {
+				helm_pattern:0,
+				helm_primary : Colors.White,
+				helm_secondary : Colors.White,
+				helm_detail : Colors.White,
+				helm_lens : Colors.Lime,			
+			}				
+		}
+	}else if (global.chapter_name=="Blood Ravens"){
+		livery_data = {
+			sgt : {
+				helm_pattern:0,
+				helm_primary : Colors.Deathwing,
+				helm_secondary : Colors.Deathwing,
+				helm_detail : Colors.Deathwing,
+				helm_lens : Colors.Lime,
+			},
+			vet_sgt : {
+				helm_pattern:1,
+				helm_primary : Colors.Black,
+				helm_secondary : Colors.Deathwing,
+				helm_detail : Colors.Black,
+				helm_lens : Colors.Lime,
+			},
+			captain : {
+				helm_pattern:0,
+				helm_primary : Colors.Sanguine_Red,
+				helm_secondary : Colors.Sanguine_Red,
+				helm_detail : Colors.Sanguine_Red,
+				helm_lens : Colors.Lime,
+			},
+			veteran : {
+				helm_pattern:0,
+				helm_primary : Colors.Black,
+				helm_secondary : Colors.Black,
+				helm_detail : Colors.Black,
+				helm_lens : Colors.Lime,			
+			}				
+		}
 	}else {
 		livery_data =  {
 			sgt : {
