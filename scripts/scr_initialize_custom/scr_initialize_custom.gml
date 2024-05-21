@@ -1038,7 +1038,7 @@ function scr_initialize_custom() {
 	skin_color=obj_creation.skin_color;
 	complex_livery_data = obj_creation.complex_livery_data;
 	var complex_type = ["sgt", "vet_sgt", "captain", "veteran"];
-	for (var i=0;i<3;i++){
+	for (var i=0;i<array_length(complex_type);i++){
 		with (complex_livery_data[$ complex_type[i]]){
 			if (helm_primary==0 && helm_secondary==0 && helm_lens==0){
 				obj_ini.complex_livery_data[$ complex_type[i]] = progenitor_livery(progenitor_map(), complex_type[i]);
