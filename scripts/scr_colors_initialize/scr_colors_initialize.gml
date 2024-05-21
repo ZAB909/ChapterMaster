@@ -15,6 +15,7 @@ enum Colors {
     Orange,
     Brown,
     LightBrown,
+    LightestBrown,
     Deathwing,
     Bone,
     Yellow,
