@@ -715,9 +715,25 @@ function scr_ui_manage() {
 			draw_set_color(line_color);
 		}
 
+		if (cn.temp[116]!=""){
+			carry_data = cn.temp[116][2];
+			var carry_string = $"Melee Burden: {carry_data[0]}/{carry_data[1]}"
+			x1 = x_right;
+			y1 = yy+444;
+			x2 = x1-string_width(carry_string);
+			y2 = y1+string_height(carry_string);
+			if (selected_unit.encumbered_melee){
+				draw_set_color(#bf4040);
+			}
+			draw_text_outline(x1,y1,string_hash_to_newline(carry_string));
+			tooltip_text = string_hash_to_newline(carry_data[2]);
+			array_push(tooltip_drawing, [tooltip_text, [x2,y1,x1,y2]]);
+			draw_set_color(line_color);
+		}
+
 		if (cn.temp[117]!=""){
 			carry_data = cn.temp[117][2];
-			var carry_string = $"Carrying: {carry_data[0]}/{carry_data[1]}";
+			var carry_string = $"Ranged Burden: {carry_data[0]}/{carry_data[1]}"
 			x1 = x_right;
 			y1 = yy+466;
 			x2 = x1-string_width(carry_string);
@@ -730,6 +746,7 @@ function scr_ui_manage() {
 			array_push(tooltip_drawing, [tooltip_text, [x2,y1,x1,y2]]);
 			draw_set_color(line_color);
 		}
+
 		// Animated scanline
 		draw_animated_scanline(xx+1007+18, yy+140+4, 530, 368);
 	}	
