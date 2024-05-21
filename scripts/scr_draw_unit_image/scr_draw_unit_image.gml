@@ -986,8 +986,8 @@ function scr_draw_unit_image(_background=false){
                         with (obj_ini.complex_livery_data.veteran){
                             prime=helm_primary;
                             sec=helm_secondary;
-                            lenne2 =helm_lens;
-                            helm_pat=helm_pattern;
+                            lenne2 =h elm_lens;
+                            helm_pat= helm_pattern;
                             recolour_helm=true;
                         }
                     } else {
