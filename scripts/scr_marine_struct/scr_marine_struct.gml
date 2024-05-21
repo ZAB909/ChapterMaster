@@ -1485,10 +1485,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 		var is_artifact = !is_string(item);
 		if (!is_artifact && art_only == false){
-			return $"{quality_string_conversion(quality)}{item}";
+			return $"{item}";
 		} else if (is_artifact) {
 			if (obj_ini.artifact_struct[item].name==""){
-				return  $"{quality_string_conversion(quality)}{obj_ini.artifact[item]}";
+				return  $"{obj_ini.artifact[item]}";
 			} else {
 				return obj_ini.artifact_struct[item].name;
 			}
