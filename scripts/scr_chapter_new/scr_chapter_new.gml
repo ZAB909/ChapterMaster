@@ -245,7 +245,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    homeworld="Desert";homeworld_name="Baal";
 	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=3;aspirant_trial="Blood Duel";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Sanguine Red";color_to_secondary="Sanguine Red";color_to_trim="Dark Grey";
+	    color_to_main="Sanguine Red";color_to_secondary="Sanguine Red";color_to_trim="Lighter Black";
 	    color_to_pauldron="Sanguine Red";color_to_pauldron2="Sanguine Red";color_to_lens="Lime";
 	    color_to_weapon="Black";col_special=0;trim=0;
 	    hchaplain="Astorath the Grim";clibrarian="Mephiston";fmaster="Incarael";hapothecary="Corbulo";
@@ -455,8 +455,8 @@ if (argument0="Minotaurs"){founding=10;points=450;
 	    recruiting_world="Death";recruiting_name="Trontiux";
 	    homeworld_rule=0;aspirant_trial="Knowledge of Self";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Sanguine Red";color_to_secondary="Sanguine Red";color_to_trim="Black";
-	    color_to_pauldron2="Bone";color_to_pauldron="Bone";color_to_lens="Lime";
+	    color_to_main="Sanguine Red";color_to_secondary="Sanguine Red";color_to_trim="Lighter Black";
+	    color_to_pauldron2="Deathwing";color_to_pauldron="Deathwing";color_to_lens="Lime";
 	    color_to_weapon="Black";col_special=0;trim=1;
 	    battle_cry=choose("None shall find us wanting.","Knowledge is power, guard it well");
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
