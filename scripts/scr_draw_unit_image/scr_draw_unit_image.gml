@@ -712,7 +712,7 @@ function scr_draw_unit_image(_background=false){
                     specific_armour_sprite = spr_beakie_colors;
                     specific_helm = spr_generic_sgt_mk6;
                     if (progenitor_map()=="Dark Angels"){
-                        specific_helm = [spr_da_mk6_helm,spr_generic_sgt_mk7];
+                        specific_helm = [spr_da_mk6_helm,spr_generic_sgt_mk6];
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
                             specific_helm = false;
                             // specific_armour_sprite = spr_da_mk6;
@@ -723,7 +723,7 @@ function scr_draw_unit_image(_background=false){
                     }
 
                 } else if (armour()=="MK7 Aquila" || unit_armour="Power Armour"){
-                    specific_armour_sprite = spr_generic_sgt_mk7;
+                    specific_armour_sprite = spr_mk7_colors;
                     specific_helm = spr_generic_sgt_mk7;
                     if (progenitor_map()=="Dark Angels"){
                         specific_helm = [spr_da_mk7_helm,spr_generic_sgt_mk7];
