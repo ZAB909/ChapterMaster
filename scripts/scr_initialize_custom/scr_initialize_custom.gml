@@ -352,10 +352,10 @@ function progenitor_livery(chapter, specific="none"){
 			},
 			captain : {
 				helm_pattern:0,
-				helm_primary : Colors.Ultramarine,
-				helm_secondary : Colors.Ultramarine,
-				helm_detail : Colors.Ultramarine,
-				helm_lens : Colors.Red,
+				helm_primary : obj_creation.main_color,
+				helm_secondary : obj_creation.main_color,
+				helm_detail : obj_creation.main_color
+				helm_lens : obj_creation.lens_color,
 			},
 			veteran : {
 				helm_pattern:0,
