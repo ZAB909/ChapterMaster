@@ -184,7 +184,7 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 
 
 	if (flavored=0) and (solod=false){p1=$"{number_of_shots} {weapon_name}+"}
-	if (flavored=0) and (solod=true){p1=$"("+string(full_name)+".{weapon_name})|";}
+	if (flavored=0) and (solod=true){p1=$"("+string(full_name)+$".{weapon_name})|";}
 
 
 
@@ -419,10 +419,10 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	    }
 	}
 	if ((string_count("Power",weapon_name)>0) or (weapon_name="Force Staff") or (weapon_name="Inactive Force Staff") or (weapon_name="Lightning Claw")) and (solod=true){flavored=1;
-	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=string(full_name)+" swings his {weapon_name} into the {target_name} ranks (X{casulties} casulties).";
-	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=string(full_name)+" swings his {weapon_name} into the {target_name} ranks (X{casulties} casulties) and kills "+string(casulties)+".";
-	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=string(full_name)+" swings his {weapon_name} into a {target_name} but fails to kill it.";
-	    if (target.dudes_num[targeh]=1) and (casulties>0) then p1=string(full_name)+" swings his {weapon_name} into a {target_name}, killing it.";
+	    if (target.dudes_num[targeh]>1) and (casulties=0) then p1=string(full_name)+$" swings his {weapon_name} into the {target_name} ranks (X{casulties} casulties).";
+	    if (target.dudes_num[targeh]>1) and (casulties>0) then p1=string(full_name)+$" swings his {weapon_name} into the {target_name} ranks (X{casulties} casulties) and kills "+string(casulties)+".";
+	    if (target.dudes_num[targeh]=1) and (casulties=0) then p1=string(full_name)+$" swings his {weapon_name} into a {target_name} but fails to kill it.";
+	    if (target.dudes_num[targeh]=1) and (casulties>0) then p1=string(full_name)+$" swings his {weapon_name} into a {target_name}, killing it.";
 	}
 
 
