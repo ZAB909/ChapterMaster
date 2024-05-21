@@ -583,7 +583,7 @@ function scr_load(argument0, argument1) {
 
 	                for (var p=0;p<8;p++){
 	                	new_star.p_problem[g,p]=ini_read_string("Star",$"sr{i}prob{g}.{p}","");
-	                	new_star.p_timer[g,p]=ini_read_string("Star",$"sr{i}time{g}.{p}","");
+	                	new_star.p_timer[g,p]=ini_read_real("Star",$"sr{i}time{g}.{p}",-1);
 	                	new_star.p_problem_other_data[g,p]=ini_read_string("Star",$"sr{i}prob_other{g}.{p}","");
 	                	if (new_star.p_problem_other_data[g][p]!=""){
 	                		new_star.p_problem_other_data[g][p] = json_parse(base64_decode(new_star.p_problem_other_data[g][p]));
