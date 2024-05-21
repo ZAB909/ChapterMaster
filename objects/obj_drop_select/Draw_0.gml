@@ -379,13 +379,8 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
         if (sh_target!=-50){sh_target.acted+=1;}
         
         if (attacking==10) or (attacking==11){
-            var pause,r;pause=0;r=0;
-            repeat(4){r+=1;
-                if (p_target.p_problem[obj_controller.selecting_planet,r]="meeting") or (p_target.p_problem[obj_controller.selecting_planet,r]="meeting_trap") then pause=r;
-            }
-            if (pause>0) then p_target.p_problem[obj_controller.selecting_planet,pause]="";
-            if (pause>0) then p_target.p_timer[obj_controller.selecting_planet,pause]=-1;
-            
+            remove_planet_problem(obj_controller.selecting_planet, "meeting", p_target);
+            remove_planet_problem(obj_controller.selecting_planet, "meeting_trap", p_target);
         }
             
         instance_create(0,0,obj_ncombat);
@@ -411,10 +406,7 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
 
         
         if (obj_ncombat.enemy=9) and (obj_ncombat.battle_object.space_hulk=0){
-            if (p_target.p_problem[obj_controller.selecting_planet,1]="tyranid_org") then obj_ncombat.battle_special="tyranid_org";
-            if (p_target.p_problem[obj_controller.selecting_planet,2]="tyranid_org") then obj_ncombat.battle_special="tyranid_org";
-            if (p_target.p_problem[obj_controller.selecting_planet,3]="tyranid_org") then obj_ncombat.battle_special="tyranid_org";
-            if (p_target.p_problem[obj_controller.selecting_planet,4]="tyranid_org") then obj_ncombat.battle_special="tyranid_org";
+            if (has_problem_planet(obj_controller.selecting_planet, "tyranid_org", p_target)) then obj_ncombat.battle_special="tyranid_org";
         }
         
         if (obj_ncombat.enemy=11){
@@ -629,7 +621,7 @@ if (menu=0) and (purge>=2){
     // Disposition here
     var succession=0,pp=obj_controller.selecting_planet
 
-    if (array_contains(p_target.p_problem[pp], "succession")) then succession=1;
+    var succession = has_problem_planet(pp,"succession",p_target);
     
     if ((p_target.dispo[pp]>=0) and (p_target.p_owner[pp]<=5) and (p_target.p_population[pp]>0)) and (succession=0){
         var wack;wack=0;
@@ -730,7 +722,7 @@ if (menu=0) and (purge>=2){
     influ=p_target.p_influence[obj_controller.selecting_planet];
     if (p_target.p_large[obj_controller.selecting_planet]=1) then poppy=string(p_target.p_population[obj_controller.selecting_planet])+"B";
     if (p_target.p_large[obj_controller.selecting_planet]=0) then poppy=string(scr_display_number(p_target.p_population[obj_controller.selecting_planet]));
-    draw_text(x2+14,y2+312,string_hash_to_newline("Heresy: "+string(max(hers,influ))+"%"));
+    draw_text(x2+14,y2+312,string_hash_to_newline("Heresy: "+string(max(hers,influ[eFACTION.Tau]))+"%"));
     draw_text(x2+14,y2+332,string_hash_to_newline("Population: "+string(poppy)));
     
     

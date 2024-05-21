@@ -164,7 +164,7 @@ function scr_chapter_random(argument0) {
 	if (ran1=17){phrase1="Dark";col_main="Dark Green";}
 	if (ran1=18){phrase1="Death";col_main="Black";homeworld="Lava";}
 	if (ran1=19){phrase1="Delta";col_main="Green";}
-	if (ran1=20){phrase1="Desert";col_main="Gold";homeworld="Desert";}
+	if (ran1=20){phrase1="Desert";col_main="Dark Gold";homeworld="Desert";}
 	if (ran1=21){phrase1="Desolation";col_main="Black";}
 	if (ran1=22){phrase1="Diamond";col_main="White";}
 	if (ran1=23){phrase1="Doom";col_main="Red";}
@@ -174,7 +174,7 @@ function scr_chapter_random(argument0) {
 	if (ran1=27){phrase1="Flying";col_main="White";fleet_type=1;}
 	if (ran1=28){phrase1="Frenzied";col_main="Red";}
 	if (ran1=29){phrase1="Furious";col_main="Dark Red";}
-	if (ran1=30){phrase1="Golden";col_main="Gold";}
+	if (ran1=30){phrase1="Golden";col_main="Dark Gold";}
 	if (ran1=31){phrase1="Gore";col_main="Red";}
 	if (ran1=32){phrase1="Grail";col_main="Yellow";}
 	if (ran1=33){phrase1="Green";col_main="Green";}
@@ -188,7 +188,7 @@ function scr_chapter_random(argument0) {
 	if (ran1=41){phrase1="Maleficent";col_main="Purple";}
 	if (ran1=42){phrase1="Malevolent";col_main="Black";}
 	if (ran1=43){phrase1="Nova";col_main="White";}
-	if (ran1=44){phrase1="Omega";col_main="Gold";}
+	if (ran1=44){phrase1="Omega";col_main="Dark Gold";}
 	if (ran1=45){phrase1="Orange";col_main="Orange";}
 	if (ran1=46){phrase1="Ozone";col_main="Light Blue";}
 	if (ran1=47){phrase1="Penitent";col_main="Black";fleet_type=3;}

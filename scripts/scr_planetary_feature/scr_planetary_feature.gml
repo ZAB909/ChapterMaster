@@ -53,6 +53,8 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		sealed = 0;
 		player_hidden = 1;
 		planet_display = "Genestealer Cult";
+		cult_age = 0;
+		hiding=true;
 		break;
 		case P_features.Necron_Tomb:
 		awake = 0;
@@ -264,6 +266,18 @@ function search_planet_features(planet, search_feature){
 	return feature_positions;
 }
 
+function return_planet_features(planet, search_feature){
+	var feature_count = array_length(planet);
+	var feature_positions = [];
+	if (feature_count > 0){
+		for (var fc = 0; fc < feature_count; fc++){
+			if (planet[fc].f_type == search_feature){
+				array_push(feature_positions, planet[fc]);
+			}
+		}
+	}
+	return feature_positions;	
+}
 
 // returns 1 if dearch feature is on at least one planet in system returns 0 is search feature is not found in system
 function system_feature_bool(system, search_feature){
@@ -283,8 +297,12 @@ function planet_feature_bool(planet, search_feature){
 	var feature_exists = 0;
 	if (feature_count > 0){
 	for (var fc = 0; fc < feature_count; fc++){
-		if (planet[fc].f_type == search_feature){
-			feature_exists = 1;
+		if (!is_array(search_feature)){
+			if (planet[fc].f_type == search_feature){
+				feature_exists = 1;
+			}
+		} else {
+			feature_exists = array_contains(search_feature,planet[fc].f_type);
 		}
 		if (feature_exists == 1){break;}
 	}}

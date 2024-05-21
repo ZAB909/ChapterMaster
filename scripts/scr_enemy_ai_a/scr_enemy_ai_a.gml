@@ -38,9 +38,9 @@ function scr_enemy_ai_a() {
 	    var chapter_asset_discovery,o=0,yep=0,stop=false,shitty=false;
     
 	    chapter_asset_discovery=floor(random(200))+1;
-	    repeat(planets){
-	    	o+=1;
-	    	if (array_contains(obj_ini.dis,"Shitty Luck")) then shitty=true;}
+
+	    if (array_contains(obj_ini.dis,"Shitty Luck")) then shitty=true;
+
 	    if (shitty=true) then chapter_asset_discovery=floor(random(50))+1;
     
 	    if (present_fleet[1]=0){
@@ -51,15 +51,17 @@ function scr_enemy_ai_a() {
 	    // 137 ; chapter_asset_discovery=floor(random(20))+1;
     
 	    o=0;
-	    repeat(planets){
-	    	o+=1;
-	        if (p_first[o]=1) and (p_owner[o]=2) then p_owner[o]=1;
-	        if (p_type[o]="Dead") and (array_length(p_upgrades[o])>0){
-	            if (planet_feature_bool(p_feature[o], P_features.Secret_Base)==0) /*and (string_count(".0|",p_upgrades[o])>0)*/{
-	                if (chapter_asset_discovery<=2) then yep=o;
-	            }
-	        }
-	    }
+	    if (chapter_asset_discovery<=5){
+		    repeat(planets){
+		    	o+=1;
+		        if (p_first[o]=1) and (p_owner[o]=2) then p_owner[o]=1;
+		        if (p_type[o]=="Dead") and (array_length(p_upgrades[o])>0){
+		            if (planet_feature_bool(p_feature[o], [P_features.Secret_Base,P_features.Arsenal,P_features.Gene_Vault])==0) /*and (string_count(".0|",p_upgrades[o])>0)*/{
+		                yep=o;
+		            }
+		        }
+		    }
+		}
     	
     	//if an inquis wants to check out a dead world with chapter assets
 	    if (yep>0){
@@ -67,10 +69,10 @@ function scr_enemy_ai_a() {
 	        with(obj_en_fleet){
 	        	//checks if there is already an inquis ship investigating planet
 	            if (owner=4){
-	                if (point_distance(action_x,action_y,planet_coords[0],planet_coords[1])<2 && 
+	                if (point_distance(action_x,action_y,planet_coords[0],planet_coords[1])<30 && 
 	                	string_count("investigate_dead",trade_goods)>0){
-	                		stop=true;
-	            		}
+	                	stop=true;
+	            	}
 	            }
 	        }
         	
@@ -79,16 +81,9 @@ function scr_enemy_ai_a() {
 	            var plap=0,old_x=x,old_y=y,flee=0;
             	var _current_planet_name = name;
             	var launch_planet, launch_point_found=false;
-            	with (obj_star){
-            		if (name!=_current_planet_name && (owner=eFACTION.Imperium || owner=eFACTION.Mechanicus)){
-            			if (point_in_rectangle(x,y, old_x-1000, old_y-1000,old_x+1000, old_y+1000)){
-            				launch_planet=self;
-            				launch_point_found=true;
-            				break;
-            			}
-            		}
-            	}
-            	if (launch_point_found){
+            	launch_planet = nearest_star_with_ownership(x,y, [owner=eFACTION.Imperium || owner=eFACTION.Mechanicus]);
+
+            	if (instance_exists(launch_planet)){
 		            flee=instance_create(launch_planet.x,launch_planet.y-24,obj_en_fleet);
 		            with (flee){
 		            	base_inquis_fleet();

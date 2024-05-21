@@ -273,16 +273,20 @@ if ((zm=0) and (type<=4)) or (type=98){
             option3enter=false;
         }
         if (image=="new_forge_master"){
-             if (pathway="selection_options"){
+            var new_master_image = false;
+            if (pathway="selection_options"){
                 if (option1enter){
-                    techs[charisma_pick].draw_unit_image(1190,210);
+                    new_master_image = techs[charisma_pick].draw_unit_image();
                     techs[charisma_pick].stat_display();
                 } else if (option2enter){
-                    techs[talent_pick].draw_unit_image(1190,210);
+                    new_master_image=techs[talent_pick].draw_unit_image();
                     techs[talent_pick].stat_display();            
                 }else if (option3enter){
-                    techs[experience_pick].draw_unit_image(1190,210);
+                    new_master_image =techs[experience_pick].draw_unit_image();
                     techs[experience_pick].stat_display();            
+                }
+                if (is_struct(new_master_image)){
+                    new_master_image.draw(xx+1208, yy+210, true);
                 }
             }
         }
@@ -391,7 +395,7 @@ if (type=8) and (instance_exists(obj_controller)){
         
         repeat(min(obj_controller.man_max,23)){
             if (obj_controller.man[sel]=="man"){
-                var unit=display_unit[sel];
+                var unit=obj_controller.display_unit[sel];
                 temp1=unit.name_role();
                 temp2=obj_controller.ma_loc[sel];
                 if (obj_controller.ma_wid[sel]!=0){
@@ -507,7 +511,7 @@ if (type=8) and (instance_exists(obj_controller)){
             var arti_index = obj_controller.menu_artifact;
             var arti = obj_ini.artifact_struct[arti_index];
             var arti_base = arti.type();
-            repeat(obj_controller.man_max-2){
+            repeat(min(obj_controller.man_max,23)){
                 i+=1;
                 if (this=0) and (obj_controller.man_sel[i]=1) then this=i;
             }
@@ -691,23 +695,23 @@ if (zm=0) and (type=6) and (instance_exists(obj_controller)){
     if (mouse_x>=xx+1296) and (mouse_x<xx+1574){
         if (mouse_y>=yy+215) and (mouse_y<yy+235){
             draw_set_alpha(0.5);
-            draw_line(xx+1296,yy+225,xx+1574,yy+225);
+            draw_line(xx+1296,yy+230,xx+1574,yy+230);
         }
         if (mouse_y>=yy+235) and (mouse_y<yy+255){
             draw_set_alpha(0.5);
-            draw_line(xx+1296,yy+245,xx+1574,yy+245);
+            draw_line(xx+1296,yy+250,xx+1574,yy+250);
         }
         if (mouse_y>=yy+255) and (mouse_y<yy+275){
             draw_set_alpha(0.5);
-            draw_line(xx+1296,yy+265,xx+1574,yy+265);
+            draw_line(xx+1296,yy+270,xx+1574,yy+270);
         }
         if (mouse_y>=yy+275) and (mouse_y<yy+295){
             draw_set_alpha(0.5);
-            draw_line(xx+1296,yy+285,xx+1574,yy+285);
+            draw_line(xx+1296,yy+290,xx+1574,yy+290);
         }
         if (mouse_y>=yy+295) and (mouse_y<yy+315){
             draw_set_alpha(0.5);
-            draw_line(xx+1296,yy+305,xx+1574,yy+305);
+            draw_line(xx+1296,yy+310,xx+1574,yy+310);
         }
     }
     draw_set_alpha(1);

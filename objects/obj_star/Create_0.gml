@@ -23,6 +23,8 @@ storm=0;
 storm_image=0;
 trader=0;
 visited=0;
+stored_owner = 0;
+star_surface = 0;
 
 // sets up default planet variables
 for(run=1; run<=8; run++){
@@ -64,21 +66,13 @@ for(run=1; run<=8; run++){
     p_hurssy[run]=0;
     p_hurssy_time[run]=0;
     p_heresy_secret[run]=0;
-    p_influence[run]=0;
+    p_influence[run] = array_create(15, 0);
+
     p_raided[run]=0;
     // 
-    p_problem[0,run]="";
-    p_timer[0,run]=0;
-    p_problem[1,run]="";
-    p_timer[1,run]=0;
-    p_problem[2,run]="";
-    p_timer[2,run]=0;
-    p_problem[3,run]="";
-    p_timer[3,run]=0;
-    p_problem[4,run]="";
-    p_timer[4,run]=0;
-    p_problem[5,run]="";
-    p_timer[5,run]=0;
+    p_problem[run] = array_create(8,"");
+    p_problem_other_data[run] = array_create(8,{});
+    p_timer[run] = array_create(8,-1);
 }
 
 system_player_ground_forces = 0;
@@ -109,7 +103,7 @@ global.star_name_colors = [
 	#AD5272,// bug boys
 	c_purple, // chaos
 	38144, //nothing for heretics either
-	38144, //why 12 is skipped in general, we will never know
+	#AD5272, //why 12 is skipped in general, we will never know
 	#80FF00 // Sleepy robots
 ]
 

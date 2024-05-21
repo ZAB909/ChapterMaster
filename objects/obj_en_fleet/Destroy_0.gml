@@ -16,19 +16,7 @@ if (action="") and (orbiting!=0){
 
 if (instance_exists(obj_controller)){
     if ((trade_goods="Khorne_warband") or (trade_goods="Khorne_warband_landing_force")) and (obj_controller.faction_defeated[10]=0){
-        with(obj_temp2){instance_destroy();}
-        with(obj_star){
-			if system_feature_bool(p_feature, P_features.World_Eaters == 1)then instance_create(x,y,obj_temp2);
-        }
-        if (!instance_exists(obj_temp2)){
-            obj_controller.faction_defeated[10]=1;show_message("WL10 defeated");
-            if (instance_exists(obj_turn_end)){
-                scr_event_log("","Enemy Leader Assassinated: Chaos Lord");
-                scr_alert("","ass","Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+" has been killed.",0,0);
-                scr_popup("Black Crusade Ended","The Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+"'s flagship has been destroyed with him at the helm.  Without his leadership the Black Crusade is destined to crumble apart and disintegrate from infighting.  Sector "+string(obj_ini.sector_name)+" is no longer at threat by the forces of Chaos.","","");
-            }
-        }
-        with(obj_temp2){instance_destroy();}
+        destroy_khorne_fleet();
     }
     if (trade_goods="WL7") and (obj_controller.faction_defeated[7]<=0) and (safe=0){
         obj_controller.faction_defeated[7]=1;

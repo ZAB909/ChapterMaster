@@ -224,17 +224,17 @@ if (owner == eFACTION.Tau){
         fleet.image_index=floor((capital)+(frigate/2)+(escort/4));
     }
     
-    for (var i = 1; i <= 4; i++) {
+    for (var i = 1; i <=planets; i++) {
         if (p_type[i] != "Dead") {
             p_tau[i] = choose(1,2,3,4);
         }
     }
-    for (var i = 1; i <= 4; i++) {
+    for (var i = 1; i <=planets; i++) {
         if (p_type[i] == "Desert" && p_tau[i] < 4) {
             p_tau[i] = 4;
         }
     }
-    for (var i = 1; i <= 4; i++) {
+    for (var i = 1; i <=planets; i++) {
         if (p_tau[i] > 0) {
             p_owner[i] = 8;
             p_first[i] = 8;
@@ -255,19 +255,11 @@ if (owner == eFACTION.Tau){
             }
         }
     }
-    
-    p_owner[1]=8;
-    p_first[1]=8;
-    p_influence[1]=70;
-    p_owner[2]=8;
-    p_first[2]=8;
-    p_influence[2]=70;
-    p_owner[3]=8;
-    p_first[3]=8;
-    p_influence[3]=70;
-    p_owner[4]=8;
-    p_first[4]=8;
-    p_influence[4]=70;
+    for (var i=1;i<=planets;i++){
+        p_owner[i]=eFACTION.Tau;
+        p_first[i]=eFACTION.Tau;
+        p_influence[i][eFACTION.Tau]=65+irandom(15);
+    }
 }
 // Create Nids
 if (owner == eFACTION.Tyranids){
@@ -281,24 +273,31 @@ if (owner == eFACTION.Tyranids){
                     p_tyranids[i] = choose(4,5,5);
                     break;
             }
-            array_push(p_feature[i], new new_planet_feature(P_features.Gene_Stealer_Cult));
+            //array_push(p_feature[i], new new_planet_feature(P_features.Gene_Stealer_Cult));
 
         }
-        p_owner[i] = 2;
+        p_owner[i] = eFaction.Imperium;
     }
 }
 
 if (owner>20){
-    for (var i = 1; i <= 4; i++) {
+    for (var i = 1; i <= planets; i++) {
         if (p_population[i] > 0) {
-            p_tyranids[i] = 3;
+            var new_cult = new new_planet_feature(P_features.Gene_Stealer_Cult);
+            array_push(p_feature[i], new_cult);
+            new_cult.cult_age = irandom(300)
+            p_influence[i][eFACTION.Tyranids] = new_cult.cult_age/10 + irandom(30);
+            p_tyranids[i] = min(3, floor(p_influence[i][eFACTION.Tyranids]/15))
+            if (p_tyranids[i]!=0){
+                new_cult.hiding =false;
+            }
         }
         p_owner[i] = 2;
     }
     owner = eFACTION.Tyranids;
 }
 
-for(var i=1; i<=4; i++){
+for(var i=1; i<=planets; i++){
     if (p_owner[i]=8) and (p_guardsmen[i]>0){
         p_pdf[i]+=p_guardsmen[i];
         p_guardsmen[i]=0;
@@ -307,12 +306,13 @@ for(var i=1; i<=4; i++){
         p_owner[i]=5;
         p_first[i]=5;
         p_sisters[i]=4;
+        adjust_influence(eFACTION.Ecclesiarchy, (p_sisters[i]*10)-irandom(5), i);
     }
     // if (p_owner[i]=3) or (p_owner[i]=5){p_feature[i]="Artifact|";}Testing ; 137
 }
 
 if (name=="Kim Jong") and (owner == eFACTION.Chaos){
-    for (var i = 1; i <= 4; i++) {
+    for (var i = 1; i <=planets; i++) {
         if (p_type[i] != "Dead") {
             p_heresy[i] = 100;
             p_traitors[i] = 2;
@@ -363,6 +363,7 @@ if (i==1) and (planets>0){
                                 array_push(p_feature[i], new new_planet_feature(P_features.Sororitas_Cathedral))
                                 if (p_heresy[i]>10) then p_heresy[i]-=10;
                                 p_sisters[i]=choose(2,2,3);
+                                adjust_influence(eFACTION.Ecclesiarchy, (p_sisters[i]*10)-irandom(3), i)
                                 goo=1;
                                 break;
                             case 2:

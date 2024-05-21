@@ -272,7 +272,7 @@ if (defeat=0) and (npowers=true){
                 if (planet_feature_bool(p_feature[battle_planet], P_features.Gene_Stealer_Cult)==1){
                     who_cleansed="Gene Stealer Cult"
                     make_alert=true;
-                    delete_features(p_feature[run], P_features.Gene_Stealer_Cult);
+                    delete_features(p_feature[battle_planet], P_features.Gene_Stealer_Cult);
                 } 
                 if (make_alert){
                      if (p_first[battle_planet] == 1){
@@ -425,22 +425,8 @@ if (defeat=0) and (enemy=9) and (battle_special="tyranid_org"){
         // thatta=obj_star;
 
         with(obj_star){
-            var u;u=0;
-            repeat(4){u+=1;
-                if (p_problem[u,1]="tyranid_org"){p_problem[u,1]="";p_timer[u,1]=0;}
-                if (p_problem[u,2]="tyranid_org"){p_problem[u,2]="";p_timer[u,2]=0;}
-                if (p_problem[u,3]="tyranid_org"){p_problem[u,3]="";p_timer[u,3]=0;}
-                if (p_problem[u,4]="tyranid_org"){p_problem[u,4]="";p_timer[u,4]=0;}
-            }
+            remove_star_problem("tyranid_org");
         }
-
-        /*var u;u=0;
-        repeat(4){u+=1;
-            if (thatta.p_problem[u,1]="tyranid_org"){thatta.p_problem[u,1]="";thatta.p_timer[u,1]=0;}
-            if (thatta.p_problem[u,2]="tyranid_org"){thatta.p_problem[u,2]="";thatta.p_timer[u,2]=0;}
-            if (thatta.p_problem[u,3]="tyranid_org"){thatta.p_problem[u,3]="";thatta.p_timer[u,3]=0;}
-            if (thatta.p_problem[u,4]="tyranid_org"){thatta.p_problem[u,4]="";thatta.p_timer[u,4]=0;}
-        }*/
     }
 
     scr_event_log("","Inquisition Mission Completed: A Gaunt organism has been captured for the Inquisition.");

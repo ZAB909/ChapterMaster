@@ -27,6 +27,12 @@ global.load=0;
 skip=false;
 premades=true;
 
+complex_livery=false;
+complex_selection = "sgt";
+complex_depth_selection = 0;
+//TODO probably make this array based at some point ot match other unit data
+complex_livery_data = complex_livery_default();
+test_sprite = 0;
 fade_in=50;
 slate1=80;
 slate2=0;
@@ -48,6 +54,7 @@ name_bad=0;
 heheh=0;
 icons_top=1;
 icons_max=0;
+turn_selection_change=false;
 
 scrollbar_engaged=0;
 
@@ -910,4 +917,5 @@ scr_colors_initialize();
 /* */
 action_set_alarm(30, 1);
 /*  */
+
 	

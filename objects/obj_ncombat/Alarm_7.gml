@@ -183,11 +183,8 @@ if (battle_special="WL10_reveal") or (battle_special="WL10_later"){var moar,ox,o
 if (battle_special="study2a") or (battle_special="study2b"){
     if (defeat=1){
         var ii,good;ii=0;good=0;
-        repeat(4){if (good=0){ii+=1;if (string_count("mech_tomb",battle_object.p_problem[battle_id,ii])>0) then good=ii;}}
-        
-        if (good>0){
-            battle_object.p_problem[battle_id,good]="";
-            battle_object.p_timer[battle_id,good]=-1;
+
+        if (remove_planet_problem(battle_id, "mech_tomb", battle_object)){
             obj_controller.disposition[3]-=10;
             
             if (battle_special="study2a"){
@@ -319,11 +316,11 @@ if (string_count("_attack",battle_special)>0) and (string_count("mech",battle_sp
         instance_activate_object(obj_star);
         with(obj_star){if (name!=obj_ncombat.battle_loc) then instance_deactivate_object(id);}
         with(obj_star){
-            if (p_problem[obj_ncombat.battle_id,1]="bomb"){p_problem[obj_ncombat.battle_id,1]="";p_timer[obj_ncombat.battle_id,1]=0;p_necrons[obj_ncombat.battle_id]=4;}
-            if (p_problem[obj_ncombat.battle_id,2]="bomb"){p_problem[obj_ncombat.battle_id,2]="";p_timer[obj_ncombat.battle_id,2]=0;p_necrons[obj_ncombat.battle_id]=4;}
-            if (p_problem[obj_ncombat.battle_id,3]="bomb"){p_problem[obj_ncombat.battle_id,3]="";p_timer[obj_ncombat.battle_id,3]=0;p_necrons[obj_ncombat.battle_id]=4;}
-            if (p_problem[obj_ncombat.battle_id,4]="bomb"){p_problem[obj_ncombat.battle_id,4]="";p_timer[obj_ncombat.battle_id,4]=0;p_necrons[obj_ncombat.battle_id]=4;}
-            if (awake_tomb_world(p_feature[obj_ncombat.battle_id])==0) then awaken_tomb_world(p_feature[obj_ncombat.battle_id])
+            var planet = obj_ncombat.battle_id;
+            if (remove_planet_problem(planet,"bomb")){
+                p_necrons[planet]=4;
+            }
+            if (awake_tomb_world(p_feature[planet])==0) then awaken_tomb_world(p_feature[planet])
         }
         with(obj_temp7){instance_destroy();}
         instance_activate_object(obj_star);
@@ -382,13 +379,10 @@ if (string_count("_attack",battle_special)>0) and (string_count("mech",battle_sp
                     // show_message("TEMP5: "+string(instance_number(obj_temp5))+"#Star: "+string(you));
                     
                     var ppp;ppp=0;
-                    if (you.p_problem[obj_temp8.wid,1]="bomb"){ppp=1;seal_tomb_world(you.p_feature[obj_temp8.wid]);you.p_problem[obj_temp8.wid,1]="";you.p_timer[obj_temp8.wid,1]=0;}
-                    if (you.p_problem[obj_temp8.wid,2]="bomb"){ppp=2;seal_tomb_world(you.p_feature[obj_temp8.wid]);you.p_problem[obj_temp8.wid,2]="";you.p_timer[obj_temp8.wid,2]=0;}
-                    if (you.p_problem[obj_temp8.wid,3]="bomb"){ppp=3;seal_tomb_world(you.p_feature[obj_temp8.wid]);you.p_problem[obj_temp8.wid,3]="";you.p_timer[obj_temp8.wid,3]=0;}
-                    if (you.p_problem[obj_temp8.wid,4]="bomb"){ppp=4;seal_tomb_world(you.p_feature[obj_temp8.wid]);you.p_problem[obj_temp8.wid,4]="";you.p_timer[obj_temp8.wid,4]=0;}
-                    
+                    remove_planet_problem(obj_temp8.wid, "bomb", you);
+
                     pip.option1="";pip.option2="";pip.option3="";
-                    scr_event_log("","Inquisition Mission Completed: Your Astartes have sealed the Necron Tomb on "+string(you.name)+" "+string(scr_roman(ppp))+".");
+                    scr_event_log("","Inquisition Mission Completed: Your Astartes have sealed the Necron Tomb on "+string(you.name)+" "+string(scr_roman(obj_temp8.wid))+".");
                     scr_gov_disp(you.name,obj_temp8.wid,choose(1,2,3,4,5));
                     
                     if (!instance_exists(obj_temp8)){
@@ -427,12 +421,8 @@ if ((string_count("spyrer",battle_special)>0))/* and (string_count("demon",battl
     var cur_star = obj_turn_end.battle_object[obj_turn_end.current_battle];
     var planet = obj_turn_end.battle_world[obj_turn_end.current_battle]
     var planet_string = scr_roman_numerals()[planet-1];
-    for (var i=1;i<array_length(cur_star.p_problem[planet]); i++){
-        if (cur_star.p_problem[planet][i]=="spyrer"){
-            cur_star.p_problem[planet][i]="";
-            cur_star.p_timer[planet][i]=-1;
-        }
-    }
+        
+    remove_planet_problem(planet ,"spyrer",cur_star)
     
     var tixt=$"The Spyrer on {cur_star.name} {planet_string} has been removed.  The citizens and craftsman may sleep more soundly, the Inquisition likely pleased."
 
@@ -448,25 +438,19 @@ if ((string_count("spyrer",battle_special)>0))/* and (string_count("demon",battl
 }
 
 if ((string_count("fallen",battle_special)>0)) and (defeat=0){
-    var fallen;fallen=0;
-    if (obj_turn_end.battle_object[obj_turn_end.current_battle].p_problem[obj_turn_end.battle_world[obj_turn_end.current_battle],1]="fallen") then fallen=1;
-    if (obj_turn_end.battle_object[obj_turn_end.current_battle].p_problem[obj_turn_end.battle_world[obj_turn_end.current_battle],2]="fallen") then fallen=2;
-    if (obj_turn_end.battle_object[obj_turn_end.current_battle].p_problem[obj_turn_end.battle_world[obj_turn_end.current_battle],3]="fallen") then fallen=3;
-    if (obj_turn_end.battle_object[obj_turn_end.current_battle].p_problem[obj_turn_end.battle_world[obj_turn_end.current_battle],4]="fallen") then fallen=4;
-    
-    obj_turn_end.battle_object[obj_turn_end.current_battle].p_problem[obj_turn_end.battle_world[obj_turn_end.current_battle],fallen]="";
-    obj_turn_end.battle_object[obj_turn_end.current_battle].p_timer[obj_turn_end.battle_world[obj_turn_end.current_battle],fallen]=-1;
-    
-    var tixt;tixt="The Fallen on "+string(obj_turn_end.battle_object[obj_turn_end.current_battle].name);
-    tixt+=scr_roman(obj_turn_end.battle_world[obj_turn_end.current_battle]);
-    scr_event_log("","Mission Succesful: "+string(tixt)+" have been captured or purged.");
-    
-    tixt+=" have been captured or purged.  They shall be brought to the Chapter "+string(obj_ini.role[100][14])+"s posthaste, in order to account for their sins.  ";
-    var ran;ran=choose(1,1,2,3);
-    if (ran=1) then tixt+="Suffering is the beginning to penance.";
-    if (ran=2) then tixt+="Their screams shall be the harbringer of their contrition.";
-    if (ran=3) then tixt+="The shame they inflicted upon us shall be written in their flesh.";
-    scr_popup("Hunt the Fallen Completed",tixt,"fallen","");
+    var fallen=0;
+    with (obj_turn_end){
+        remove_planet_problem(battle_world[current_battle], "fallen", battle_object[current_battle])
+        var tixt="The Fallen on "+ battle_object[current_battle].name;
+        tixt+=scr_roman(battle_world[current_battle]);
+        scr_event_log("",$"Mission Succesful: {tixt} have been captured or purged.");
+        tixt+=$" have been captured or purged.  They shall be brought to the Chapter {obj_ini.role[100][14]}s posthaste, in order to account for their sins.  ";
+        var ran;ran=choose(1,1,2,3);
+        if (ran=1) then tixt+="Suffering is the beginning to penance.";
+        if (ran=2) then tixt+="Their screams shall be the harbringer of their contrition.";
+        if (ran=3) then tixt+="The shame they inflicted upon us shall be written in their flesh.";
+        scr_popup("Hunt the Fallen Completed",tixt,"fallen","");        
+    }
 }
 
 if (defeat=0) and (enemy=9) and (battle_special="tyranid_org"){

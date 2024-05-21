@@ -134,7 +134,7 @@ if (obj_controller.cooldown<=0) and (loading=1){
         
         // Recon Stuff
         var recon=0;
-        if (array_contains(target.p_problem[obj_controller.selecting_planet], "recon")) then recon=1;
+        if (has_problem_planet(obj_controller.selecting_planet, "recon",target)) then recon=1;
 
         if (recon==1){
             var arti=instance_create(target.x,target.y,obj_temp7);// Unloading / artifact crap

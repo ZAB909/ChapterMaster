@@ -17,6 +17,8 @@ guardsmen_ratio=0;
 guardsmen_unloaded=0;
 ii_check=floor(random(5))+1;
 etah=0;safe=0;
+//TODO set up special save method for faction specific fleet variables
+inquisitor=-1;
 
 image_xscale=1.25;image_yscale=1.25;
 

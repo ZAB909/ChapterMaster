@@ -51,6 +51,24 @@ for (i=1;i<=60;i++){
 }
 
 var dreaded=false, unit;
+
+add_second_profiles_to_stack = function(weapon){
+    if (array_length(weapon.second_profiles)>0){//for adding in intergrated weaponry
+        var secondary_profile;
+        for (var p=0;p<array_length(weapon.second_profiles);p++){
+
+            secondary_profile = gear_weapon_data("weapon",weapon.second_profiles[p],"all")
+            if (!is_struct(secondary_profile))then continue;
+            for (var wep_stack=1;wep_stack<array_length(wep);wep_stack++){
+                if (wep[wep_stack]==""||wep[wep_stack]==weapon.name){
+                    add_data_to_stack(wep_stack,secondary_profile)
+                }
+            }    
+        }
+    }    
+}
+
+
 add_data_to_stack = function(stack_index, weapon, unit_damage=false){
     if (!unit_damage==false){
         att[stack_index]+=unit_damage;
@@ -65,20 +83,9 @@ add_data_to_stack = function(stack_index, weapon, unit_damage=false){
     if (obj_ncombat.started=0) then ammo[stack_index]=weapon.ammo;
 
 
-    if (array_length(weapon.second_profiles)>0){//for adding in intergrated weaponry
-        var secondary_profile;
-        for (var p=0;p<array_length(weapon.second_profiles);p++){
-
-            secondary_profile = gear_weapon_data("weapon",weapon.second_profiles[p],"all")
-            if (!is_struct(secondary_profile))then continue;
-            for (var wep_stack=1;wep_stack<array_length(wep);wep_stack++){
-                if (wep[wep_stack]==""||wep[wep_stack]==weapon.name){
-                    add_data_to_stack(wep_stack,secondary_profile)
-                }
-            }    
-        }
-    }
+    add_second_profiles_to_stack(weapon)
 }
+
 var mobi_item;
 for (g=1;g<array_length(unit_struct);g++){
     unit = unit_struct[g];
@@ -97,13 +104,14 @@ for (g=1;g<array_length(unit_struct);g++){
             }
             //if (marine_mobi[g]="Bike") then scr_special_weapon("Twin Linked Bolters",g,true);
 
-
+            var mobi_item=unit.get_mobility_data();
+            var gear_item=unit.get_gear_data();
+            var armour_item=unit.get_armour_data();
             if (unit.mobility_item()!="Bike") and (unit.mobility_item()!=""){
-               mobi_item=unit.get_mobility_data();
                if (is_struct(mobi_item)){
                 if( mobi_item.has_tag("jump")){
                     for (var stack_index=1;stack_index<array_length(wep);stack_index++){
-                        if (wep[stack_index]==""||(wep[stack_index]=="hammer_of_wrath" && !head_role)){
+                        if ((wep[stack_index]==""||(wep[stack_index]=="hammer_of_wrath" && !head_role)) && wep_solo[stack_index]==""){
                             add_data_to_stack(stack_index,unit.hammer_of_wrath());
                             ammo[stack_index] = -1;
                             if (head_role){
@@ -116,6 +124,15 @@ for (g=1;g<array_length(unit_struct);g++){
                 }
                }
             }
+            if (is_struct(mobi_item)){
+               add_second_profiles_to_stack(mobi_item);
+            }
+            if (is_struct(gear_item)){
+                add_second_profiles_to_stack(gear_item);
+            }
+            if (is_struct(armour_item)){
+                add_second_profiles_to_stack(armour_item);
+            }            
 
             if (unit.IsSpecialist("libs",true)||(unit.role()=="Chapter Master"&&obj_ncombat.chapter_master_psyker=1)){
                 var cast_dice=irandom(99)+1;
@@ -152,7 +169,7 @@ for (g=1;g<array_length(unit_struct);g++){
                 var weapon_stack_index=0;
                 var primary_ranged = unit.ranged_damage_data[3];//collect unit ranged data
                 for (weapon_stack_index=1;weapon_stack_index<array_length(wep);weapon_stack_index++){
-                    if (wep[weapon_stack_index]==""||(wep[weapon_stack_index]==primary_ranged.name && !head_role)){
+                     if ((wep[weapon_stack_index]==""||(wep[weapon_stack_index]==primary_ranged.name && !head_role)) && wep_solo[weapon_stack_index]==""){
                         add_data_to_stack(weapon_stack_index,primary_ranged,unit.ranged_damage_data[0]);
                         if (head_role){
                             wep_title[weapon_stack_index]=unit.role();
@@ -163,7 +180,7 @@ for (g=1;g<array_length(unit_struct);g++){
                 }
                 var primary_melee = unit.melee_damage_data[3];//collect unit melee data
                 for (weapon_stack_index=1;weapon_stack_index<array_length(wep);weapon_stack_index++){
-                    if (wep[weapon_stack_index]==""||(wep[weapon_stack_index]==primary_melee.name && !head_role)){
+                    if ((wep[weapon_stack_index]==""||(wep[weapon_stack_index]==primary_melee.name && !head_role)) && wep_solo[weapon_stack_index]==""){
                         if (range[weapon_stack_index]>1.9) then continue//creates secondary weapon stack for close combat ranged weaponry use
                         primary_melee.range=1;
                         add_data_to_stack(weapon_stack_index,primary_melee,unit.melee_damage_data[0]);

@@ -176,10 +176,7 @@ if (obj_controller.cooldown<=0) and (once_only=0){// Need to change max_ships to
         
         
         if (obj_ncombat.enemy=9){
-            if (p_target.p_problem[obj_controller.selecting_planet,1]="tyranid_org") then obj_ncombat.battle_special="tyranid_org";
-            if (p_target.p_problem[obj_controller.selecting_planet,2]="tyranid_org") then obj_ncombat.battle_special="tyranid_org";
-            if (p_target.p_problem[obj_controller.selecting_planet,3]="tyranid_org") then obj_ncombat.battle_special="tyranid_org";
-            if (p_target.p_problem[obj_controller.selecting_planet,4]="tyranid_org") then obj_ncombat.battle_special="tyranid_org";
+            if (has_problem_planet(obj_controller.selecting_planet, "tyranid_org", p_target)) then obj_ncombat.battle_special="tyranid_org";
         }
         
         if (obj_ncombat.enemy=6) then obj_ncombat.threat=eldar;

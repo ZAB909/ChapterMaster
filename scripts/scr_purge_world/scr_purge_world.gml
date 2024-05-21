@@ -35,7 +35,7 @@ function scr_purge_world(star, planet, action_type, action_score) {
     
 	    pop_before=star.p_population[planet];
     
-	    heres_before=max(star.p_heresy[planet]+star.p_heresy_secret[planet],star.p_influence[planet]);// Starting heresy
+	    heres_before=max(star.p_heresy[planet]+star.p_heresy_secret[planet],star.p_influence[planet][eFACTION.Tau]);// Starting heresy
     
 	    // Minimum kills
 	    if (pop_before>0) then overkill=max(pop_before*0.1,((heres_before/200)*pop_before));
@@ -82,17 +82,15 @@ function scr_purge_world(star, planet, action_type, action_score) {
 
 	if (action_type=2){// Burn baby burn
 	    var i=0;
-	    repeat(star.planets){i+=1;
-	        if (star.p_problem[planet,i]="cleanse") and (isquest=0){
-	        	isquest=1;
-		        thequest="cleanse";
-		        questnum=i;
-		    }
+	    if (has_problem_planet(planet, "cleanse", star)){
+        	isquest=1;
+	        thequest="cleanse";
+	        questnum=i;
 	    }
+
 	    if (isquest=1){
 	        if (thequest="cleanse") and (action_score>=20){
-	            star.p_problem[planet][questnum]="";
-	            star.p_timer[planet][questnum]=-1;
+	        	remove_planet_problem(thequest);
             
 	            if (obj_controller.demanding=0) then obj_controller.disposition[4]+=1;
 	            if (obj_controller.demanding=1) then obj_controller.disposition[4]+=choose(0,0,1);
@@ -101,9 +99,7 @@ function scr_purge_world(star, planet, action_type, action_score) {
 	            scr_event_log("","Inquisition Mission Completed: The mutants of "+string(star.name)+" "+string(scr_roman(planet))+" have been cleansed by promethium.");
 	            scr_gov_disp(star.name,planet,choose(1,2,3));
 	        }
-	    }
-    
-	    if (isquest=0){
+	    }else if (isquest=0){
 	        txt1="Your forces scour "+string(star.name)+" "+string(planet)+", burning homes and towns that reek of heresy.  The screams and wails of the damned carry through the air.";
      
 	        if (star.p_large[planet]=0) then max_kill=action_score*12000;// Population if normal
@@ -111,7 +107,7 @@ function scr_purge_world(star, planet, action_type, action_score) {
         
 	        pop_before=star.p_population[planet];
         
-	        heres_before=max(star.p_heresy[planet]+star.p_heresy_secret[planet],star.p_influence[planet]);// Starting heresy
+	        heres_before=max(star.p_heresy[planet]+star.p_heresy_secret[planet],star.p_influence[planet][eFACTION.Tau]);// Starting heresy
         
 	        // Minimum kills
 	        if (pop_before>0) then overkill=min(pop_before*0.01,((heres_before/200)*pop_before));
@@ -138,18 +134,15 @@ function scr_purge_world(star, planet, action_type, action_score) {
 
 	if (action_type=3){// Blam!
 	    var i=0;
-	    repeat(star.planets){i+=1;
-	        if (star.p_problem[planet][i]="purge") and (isquest=0){
-	        	isquest=1;
-	        	thequest="purge";
-	        	questnum=i;
-	        }
+	    if (has_problem_planet(planet, "purge", star)){
+        	isquest=1;
+        	thequest="purge";
+        	questnum=i;
 	    }
+
 	    if (isquest=1){
 	        if (thequest="purge") and (action_score>=10){
-	            star.p_problem[planet][questnum]="";
-	            star.p_timer[questnum]=-1;
-            
+	        	remove_planet_problem(planet, "purge", star);
             
 	            if (obj_controller.demanding=0) then obj_controller.disposition[4]+=1;
 	            if (obj_controller.demanding=1) then obj_controller.disposition[4]+=choose(0,0,1);
@@ -167,7 +160,7 @@ function scr_purge_world(star, planet, action_type, action_score) {
         
 	        pop_before=star.p_population[planet];
         
-	        heres_before=max(star.p_heresy[planet]+star.p_heresy_secret[planet],star.p_influence[planet]);// Starting heresy
+	        heres_before=max(star.p_heresy[planet]+star.p_heresy_secret[planet],star.p_influence[planet][eFACTION.Tau]);// Starting heresy
         
 	        // Minimum kills
 	        kill=min(action_score*30,pop_before);// How many people ARE going to be killed
@@ -275,12 +268,12 @@ function scr_purge_world(star, planet, action_type, action_score) {
 	if (action_type!=4){
 	    if (isquest=0){// DO EET
 	        txt2=txt1;
-	        star.p_heresy[planet]-=sci2;star.p_influence[planet]-=sci2;
+	        star.p_heresy[planet]-=sci2;star.p_influence[planet][eFACTION.Tau]-=sci2;
 	        if (action_type<3) then star.p_population[planet]=pop_after;
 	        if (action_type=3) and (star.p_large[planet]=0) then star.p_population[planet]=pop_after;
         
 	        if (star.p_heresy[planet]<0) then star.p_heresy[planet]=0;
-	        if (star.p_influence[planet]<0) then star.p_influence[planet]=0;
+	        if (star.p_influence[planet][eFACTION.Tau]<0) then star.p_influence[planet][eFACTION.Tau]=0;
         
 	        var pip=instance_create(0,0,obj_popup);
 	        pip.title="Purge Results";pip.text=txt2;

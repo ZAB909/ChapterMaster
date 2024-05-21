@@ -1,7 +1,11 @@
-
+var equip = false;
 tooltip="";tooltip2="";
-
-if (type>0){
+col_shift =  (is_string(type));
+if (!col_shift){
+    col_shift=type>0;
+    var equip = type>20;
+}
+if (col_shift){
     draw_set_color(0);
     draw_rectangle(430,536,845,748,0);
     draw_set_color(38144);
@@ -10,8 +14,7 @@ if (type>0){
     draw_rectangle(431,537,846,747,1);
     
     
-    
-    if (type<=20){
+    if (!equip){
         draw_set_font(fnt_40k_30b);
         if (type=1) then draw_text_transformed(444,550,string_hash_to_newline("Primary Color"),0.6,0.6,0);
         if (type=2) then draw_text_transformed(444,550,string_hash_to_newline("Secondary Color"),0.6,0.6,0);
@@ -20,7 +23,8 @@ if (type>0){
         if (type=5) then draw_text_transformed(444,550,string_hash_to_newline("Trim Color"),0.6,0.6,0);
         if (type=6) then draw_text_transformed(444,550,string_hash_to_newline("Lens Color"),0.6,0.6,0);
         if (type=7) then draw_text_transformed(444,550,string_hash_to_newline("Weapon Color"),0.6,0.6,0);
-    
+        if (type="sgt_helm_primary") then draw_text_transformed(444,550,string_hash_to_newline("Sgt Helm"),0.6,0.6,0);
+        if (type="sgt_helm_secondary") then draw_text_transformed(444,550,string_hash_to_newline("Sgt Helm"),0.6,0.6,0);
         rows = 4;
         columns = 10;
         var column;
@@ -54,6 +58,9 @@ if (type>0){
                             if (type = 5) then obj_creation.trim_color = current_color;
                             if (type = 6) then obj_creation.lens_color = current_color;
                             if (type = 7) then obj_creation.weapon_color = current_color;
+                            if (is_string(type)){
+                                obj_creation.complex_livery_data[$ role][$ type] = current_color;
+                            }
                             with(obj_creation) {
                                 shader_reset();
                             }
@@ -93,7 +100,7 @@ if (type>0){
     
     
     
-    if (type>=100){
+    if (equip){
         var co=100,ide=type-100;
         
         draw_set_font(fnt_40k_30b);
