@@ -19,22 +19,31 @@ draw_set_color(38144);
 draw_set_font(fnt_40k_14b);
 draw_set_halign(fa_center);
 
-var ppp;ppp="";
-if (owner  = eFACTION.Player) then ppp=global.chapter_name;
-if (owner = eFACTION.Imperium) then ppp="Imperial Navy";
-if (owner = eFACTION.Mechanicus) then ppp="Mechanicus Fleet";
-if (owner = eFACTION.Tau) then ppp="Tau Fleet";
-// 
+var ppp="";
+switch(owner){
+    case eFACTION.Player:
+        ppp=global.chapter_name;
+        break;
+    case eFACTION.Imperium:
+        ppp="Imperial Navy";
+        break;
+    case eFACTION.Mechanicus:
+        pppp="Mechanicus Fleet";
+        break;
+    case eFACTION.Tau:
+        ppp="Tau Fleet";
+        break;                
 
-if (obj_controller.zoomed=0) then draw_text_transformed(x,y-32,string_hash_to_newline(string(ppp)),1,1,0);
-if (obj_controller.zoomed=1) then draw_text_transformed(x,y-48,string_hash_to_newline(string(ppp)),5,5,0);
+}
+// 
+var scale = zoomed ? 5 : 1;
+if (obj_controller.zoomed=0) then draw_text_transformed(x,y-32,ppp,scale,scale,0);
     
 draw_circle(x,y,12,0);
 draw_set_halign(fa_left);
 
 
 // Order here
-
 
 if (owner  = eFACTION.Player) and (instance_nearest(x,y,obj_p_fleet).action=""){
     var free=1,z=obj_fleet_select;
@@ -43,6 +52,14 @@ if (owner  = eFACTION.Player) and (instance_nearest(x,y,obj_p_fleet).action=""){
     if (obj_fleet_select.currently_entered) then free = 0;
     
     if (free=1){
+        var player_fleet = instance_nearest(x,y,obj_p_fleet);
+        if (player_fleet.just_left){
+            if point_and_click(draw_unit_buttons([player_fleet.x+20, player_fleet.y-10], "X",[1,1], c_red,, fnt_40k_30b, 1)){
+                with (player_fleet){
+                    cancel_fleet_movement();
+                }
+            }
+        }
         var sys, sys_dist, mine, connected;
         sys_dist=9999;connected=0;
         
@@ -83,19 +100,36 @@ if (owner  = eFACTION.Player) and (instance_nearest(x,y,obj_p_fleet).action=""){
             
             draw_set_font(fnt_40k_14b);
             var eta=0;
-            eta=floor(point_distance(mine.x,mine.y,sys.x,sys.y)/instance_nearest(x,y,obj_p_fleet).action_spd)+1;
+            eta=floor(point_distance(mine.x,mine.y,sys.x,sys.y)/player_fleet.action_spd)+1;
             if (connected=0) then eta=eta*2;
             if (web!=0) then eta=1;
             if (sys.storm>0) or (instance_nearest(x,y+24,obj_star).storm>0) then eta="N/A";
             
             draw_set_font(fnt_40k_14b);
-            eta = "ETA "+string(eta);
-            if (obj_controller.zoomed=0) then draw_text_transformed(sys.x+16,sys.y,eta,1,1,0);
-            if (obj_controller.zoomed=1) then draw_text_transformed(sys.x+24,sys.y,eta,5,5,0);
+            eta = "ETA "+string(eta) + " Press SHIFT to ignore way points";
+
+            draw_text_transformed(sys.x+17,sys.y,eta,scale,scale,0);
             
-            if (connected=1){
-                if (obj_controller.zoomed=0) then draw_text_transformed(sys.x+17,sys.y,eta,1,1,0);
-                if (obj_controller.zoomed=1) then draw_text_transformed(sys.x+25,sys.y,eta,5,5,0);
+            if (mouse_check_button(mb_right)){
+                var ship_count = player_fleet_ship_count(player_fleet);
+                var fleet_selected = player_fleet_selected_count(player_fleet);
+                var move_fleet;
+                if (ship_count && fleet_selected){
+                    if (ship_count== fleet_selected){
+                        move_fleet = player_fleet;
+                    } else {
+                        move_fleet = split_selected_into_new_fleet(player_fleet);
+                    }
+                    if (keyboard_check(vk_shift)){
+                        final_course = [sys];
+                    } else {
+                        var final_course = star_travel.final_array_path();
+                    }
+                    with (move_fleet){
+                        set_new_player_fleet_course(final_course);
+                    }
+                }
+                instance_destroy();
             }
         }
         instance_activate_object(obj_star);

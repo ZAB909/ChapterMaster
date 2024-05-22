@@ -215,7 +215,30 @@ function load_unit_to_fleet(fleet, unit){
 	}
 	return loaded;
 }
-
+function calculate_fleet_eta(xx,yy,xxx,yyy, fleet_speed,star1=true, star2=true){
+	var warp_lane = false;
+	eta = 0;
+		//Some duke unfinished webway stuff copied here for reference
+		/*for (var w = 1;w<5;w++){
+			if (planet_feature_bool(mine.p_feature[w], P_features.Webway)==1) then web1=1;
+			if (planet_feature_bool(sys.p_feature[w], P_features.Webway)==1) then web2=1;
+		}*/
+	if (star1 && star2){
+		star1 = instance_nearest(xx,yy, obj_star);
+		star2 = instance_nearest(xxx,yyy, obj_star);
+		warp_lane = (star1.buddy==star2 || star2.buddy == star1);
+	} else if (star1){
+		star1 = instance_nearest(xx,yy, obj_star);
+	}
+	eta=floor(point_distance(xx,yy,xxx,yyy)/fleet_speed)+1;
+	if (!warp_lane) then eta*=2;
+	if (instance_exists(star2)){
+		if (star2.storm){
+			eta += 10000;
+		}
+	}
+	return eta;
+}
 function fastest_route_algorithm(start_x,start_y, xx,yy,ship_speed, start_from_star=false) constructor{
 	var star_number = instance_number(obj_star);
 	target = instance_nearest(xx,yy,obj_star);
@@ -249,11 +272,8 @@ function fastest_route_algorithm(start_x,start_y, xx,yy,ship_speed, start_from_s
 			var visit_data = unvisited_stars[s];
 			if (visit_data[3]) then continue;
 			visit_star = unvisited_stars[s][0];
-			warp_lane = current_star.buddy==visit_star || visit_star.buddy == current_star;
-			eta=floor(point_distance(current_star.x,current_star.y,visit_star.x,visit_star.y)/ship_speed)+1;
+			eta = calculate_fleet_eta(current_star.x,current_star.y,visit_star.x,visit_star.y, ship_speed, true, true);
 			if (eta){
-				if (!warp_lane) then eta*=2;
-				if (current_star.storm) then eta += 900;
 				if (eta+cur_travel<visit_data[1]
 					|| visit_data[1]==-1 ){
 					visit_data[1] = eta+cur_travel;
@@ -294,9 +314,14 @@ function fastest_route_algorithm(start_x,start_y, xx,yy,ship_speed, start_from_s
              cur_star = final_route_info[2][i];
         }
         draw_line_dashed(cur_star.x,cur_star.y,final_route_info[0].x,final_route_info[0].y,16,0.5);
-        var eta = $"ETA {final_route_info[1]}";
+        var eta = $"ETA {final_route_info[1]+1}";
         if (obj_controller.zoomed=0) then draw_text_transformed(cur_star.x+16,cur_star.y+15,eta,1,1,0);
         if (obj_controller.zoomed=1) then draw_text_transformed(cur_star.x+24,cur_star.y+40,eta,5,5,0);             
+	}
+	static final_array_path = function(){
+		var final_path = final_route_info[2];
+		array_push(final_path, final_route_info[0]);
+		return final_path;
 	}
 }
 

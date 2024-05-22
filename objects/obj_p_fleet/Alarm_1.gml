@@ -3,15 +3,11 @@ var spid, dir;spid=0;dir=0;
 
 acted=0;
 
-if (action="lost"){var i;
-    i=0;repeat(capital_number){i+=1;obj_ini.ship_location[capital_num[i]]="Lost";}
-    i=0;repeat(frigate_number){i+=1;obj_ini.ship_location[frigate_num[i]]="Lost";}
-    i=0;repeat(escort_number){i+=1;obj_ini.ship_location[escort_num[i]]="Lost";}
+if (action="lost"){
+    set_fleet_location("Lost");
     exit;
-}
 
-
-if (action=""){
+}else if (action==""){
     spid=instance_nearest(x,y,obj_star);
     // spid.present_fleets+=1;
     spid.present_fleet[1]+=1;
@@ -27,13 +23,10 @@ if (action=""){
 }
 
 
-if (action="move") or (action="crusade1") or (action="crusade2") or (action="crusade3"){
+else if (action="move") or (action="crusade1") or (action="crusade2") or (action="crusade3"){
     
     var i;
-    i=0;repeat(capital_number){i+=1;obj_ini.ship_location[capital_num[i]]="Warp";}
-    i=0;repeat(frigate_number){i+=1;obj_ini.ship_location[frigate_num[i]]="Warp";}
-    i=0;repeat(escort_number){i+=1;obj_ini.ship_location[escort_num[i]]="Warp";}
-
+    set_fleet_location("Warp");
 
     if (instance_nearest(action_x,action_y,obj_star).storm>0) then exit;
 
@@ -45,13 +38,15 @@ if (action="move") or (action="crusade1") or (action="crusade2") or (action="cru
     y=y+lengthdir_y(spid,dir);
 
     action_eta-=1;
+    just_left=false;
     
     
     if (action_eta=0) and (action="crusade1"){
         var dr;dr=point_direction(room_width/2,room_height/2,x,y);
         action_x=x+lengthdir_x(600,dr);
         action_y=y+lengthdir_y(600,dr);
-        action="crusade2";action_eta=choose(3,4,5);
+        action="crusade2";
+        action_eta=choose(3,4,5);
         alarm[4]=1;
     }
     if (action_eta=0) and (action="crusade2"){
@@ -59,8 +54,9 @@ if (action="move") or (action="crusade1") or (action="crusade2") or (action="cru
             if (owner>5) then instance_deactivate_object(id);
             if (instance_nearest(x,y,obj_en_fleet).owner>5) and (point_distance(x,y,instance_nearest(x,y,obj_en_fleet).x,instance_nearest(x,y,obj_en_fleet).y)<50) then instance_deactivate_object(id);
         }
-        var ret;ret=instance_nearest(x,y,obj_star);
-        action_x=ret.x;action_y=ret.y;
+        var ret=instance_nearest(x,y,obj_star);
+        action_x=ret.x;
+        action_y=ret.y;
         action="crusade3";action_eta=floor(point_distance(x,y,ret.x,ret.y)/128)+1;
         alarm[4]=1;instance_activate_object(obj_star);
     }
@@ -78,7 +74,8 @@ if (action="move") or (action="crusade1") or (action="crusade2") or (action="cru
         var steh;
         steh=instance_nearest(action_x,action_y,obj_star);
         if (steh.vision=0) then steh.vision=1;
-        steh.present_fleet[1]+=1;orbiting=steh;
+        steh.present_fleet[1]+=1;
+        orbiting=steh;
         // show_message("Present Fleets at alarm[1]: "+string(steh.present_fleets));
         
         var b;b=0;repeat(4){b+=1;if (steh.p_first[b]<=5) and (steh.dispo[b]>-30) and (steh.dispo[b]<0) then steh.dispo[b]=min(obj_ini.imperium_disposition,obj_controller.disposition[2])+choose(-1,-2,-3,-4,0,1,2,3,4);}
@@ -96,21 +93,17 @@ if (action="move") or (action="crusade1") or (action="crusade2") or (action="cru
         
         
         var i;
-        i=0;if (capital_number>0) then repeat(capital_number){
-            i+=1;obj_ini.ship_location[capital_num[i]]=steh.name;
-        }
-        i=0;if (frigate_number>0) then repeat(frigate_number){
-            i+=1;obj_ini.ship_location[frigate_num[i]]=steh.name;
-        }
-        i=0;if (escort_number>0) then repeat(escort_number){
-            i+=1;obj_ini.ship_location[escort_num[i]]=steh.name;
-        }
+        set_fleet_location(steh.name);
         if (steh.visited == 0){
 			for (var plan_num =1; plan_num < 5; plan_num++){
 		        if (array_length(steh.p_feature[plan_num])!=0)then with(steh){scr_planetary_feature(plan_num);}
 			}
 			steh.visited = 1
 		}
+
+        if (array_length(complex_route)>0){
+            set_new_player_fleet_course(complex_route);
+        }
     }
     
 }
