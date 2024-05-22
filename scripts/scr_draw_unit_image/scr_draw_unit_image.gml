@@ -449,6 +449,15 @@ function scr_draw_unit_image(_background=false){
                 ttrim=0;
                 specialist_colours=0;
             }
+
+			// Blood Angels Sergeants
+            if (global.chapter_name == "Blood Angels" && role() == obj_ini.role[100][Role.SERGEANT]){
+                shader_array_set[ShaderType.LeftPauldron] = Colors.Black;
+                shader_array_set[ShaderType.RightPauldron] = Colors.Black;
+                ttrim=0;
+                specialist_colours=0;
+            }
+
             //We can return to the custom shader values at any time during draw doing this 
             set_shader_array(shader_array_set);
 			// Marine draw sequence
