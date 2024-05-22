@@ -174,7 +174,8 @@ function scr_draw_unit_image(_background=false){
         ttrim=0;
         var armour_bypass = false;
         var hide_bionics = false;
-        var robe_bypass = false;
+        var robes_bypass = false;
+        var hood_bypass = false;
         var halo_bypass = false;
         var armour_draw =[];        
         ui_coloring=""; 
@@ -217,7 +218,7 @@ function scr_draw_unit_image(_background=false){
         // Sets up the description for the equipement of current marine            
     
         var armour_type=ArmourType.Normal,armour_sprite=spr_weapon_blank;
-        var back_type=BackType.None,hood=0,skull=0,arm=0,halo=0,braz=0,slow=0,brothers=-5,body_part;
+        var back_type=BackType.None,psy_hood=0,skull=0,arm=0,halo=0,braz=0,slow=0,brothers=-5,body_part;
 
         var skin_color=obj_ini.skin_color;
 
@@ -233,7 +234,7 @@ function scr_draw_unit_image(_background=false){
             }
         }
         if (unit_gear="Psychic Hood"){
-            hood=-50;
+            psy_hood=-50;
         }else if (unit_gear="Iron Halo"){
             halo=1;
         }else if (unit_gear="Servo Arms" || unit_gear="Master Servo Arms"){
@@ -316,20 +317,24 @@ function scr_draw_unit_image(_background=false){
             // also not ideal way of creating colour variation but it's a first pass
             var cloth_variation=body.torso.cloth.variation;
             var cloth_col = [201.0/255.0, 178.0/255.0, 147.0/255.0];
-            with (obj_controller){
-                if (cloth_variation < 2){
-                    cloth_col = body_colour_replace;
-                } else if (cloth_variation < 4){
-                    cloth_col = secondary_colour_replace;
-                } else if (cloth_variation < 6){
-                    cloth_col = pauldron_colour_replace;
-                } else if (cloth_variation < 8){
-                    cloth_col = trim_colour_replace;
-                }else if (cloth_variation < 10){
-                    cloth_col = pauldron2_colour_replace;
-                }else if (cloth_variation < 12){
-                    cloth_col = weapon_colour_replace;
+            if (global.chapter_name != "Dark Angels"){
+                with (obj_controller){
+                    if (cloth_variation < 2){
+                        cloth_col = body_colour_replace;
+                    } else if (cloth_variation < 4){
+                        cloth_col = secondary_colour_replace;
+                    } else if (cloth_variation < 6){
+                        cloth_col = pauldron_colour_replace;
+                    } else if (cloth_variation < 8){
+                        cloth_col = trim_colour_replace;
+                    }else if (cloth_variation < 10){
+                        cloth_col = pauldron2_colour_replace;
+                    }else if (cloth_variation < 12){
+                        cloth_col = weapon_colour_replace;
+                    }
                 }
+            }
+            with (obj_controller){
                 shader_set_uniform_f_array(shader_get_uniform(sReplaceColor, "robes_colour_replace"), cloth_col);
             }
             // Special specialist stuff here
@@ -473,7 +478,6 @@ function scr_draw_unit_image(_background=false){
         
             //Rejoice!
             // draw_sprite(spr_marine_base,img,x_surface_offset,y_surface_offset);
-            var robe_bypass = false;
             var clothing_style=3;
             if (progenitor_map()=="Dark Angels")  {clothing_style=0;}
             else if (progenitor_map()=="White Scars")  {clothing_style=1; }
@@ -510,53 +514,53 @@ function scr_draw_unit_image(_background=false){
                         unit_is_sniper = true;
                     }
                 }
-				if (hood=-50) then hood=0;
+				if (psy_hood=-50) then psy_hood=0;
 			}else if (armour()=="MK3 Iron Armour"){
 				if (slow>0) then slow=13;
 				if (brothers>-5) then brothers=3;
 				armour_sprite=spr_mk3_colors;
-				if (hood=-50) then hood=5;
+				if (psy_hood=-50) then psy_hood=5;
 			}else if (armour()=="MK4 Maximus"){
 				if (slow>0) then slow=13;
 				if (brothers>-5) then brothers=3;
 				armour_sprite=spr_mk4_colors;
-				if (hood=-50) then hood=6;
+				if (psy_hood=-50) then psy_hood=6;
 			}else if (armour()=="MK5 Heresy"){
 				if (slow>0) then slow=13;
 				if (brothers>-5) then brothers=3;
 				armour_sprite=spr_mk5_colors;
-				if (hood=-50) then hood=6;
+				if (psy_hood=-50) then psy_hood=6;
 			}else if (armour()=="MK6 Corvus"){
 				if (slow>0) then slow=13;
 				if (brothers>-5) then brothers=2;
 				armour_sprite=spr_beakie_colors;
-				if (hood=-50) then hood=3;
+				if (psy_hood=-50) then psy_hood=3;
 			}else if (armour()=="MK7 Aquila" || armour()=="Power Armour"){
 				if (brothers>-5) then brothers=0;
 				if (slow>0) then slow=13;
 				armour_sprite=spr_mk7_colors;
-				if (hood=-50) then hood=1;
+				if (psy_hood=-50) then psy_hood=1;
 			}else if (armour()=="MK8 Errant"){
 				if (slow>0) then slow=13;
 				if (brothers>-5) then brothers=0;
 				armour_sprite=spr_mk8_colors;
-				if (hood=-50) then hood=4;
+				if (psy_hood=-50) then psy_hood=4;
 			}else if (armour()=="Tartaros"){
 				armour_sprite=spr_tartaros2_colors;
 				if (brothers>-5) then brothers=4;
-				if (hood=-50) then hood=8;
+				if (psy_hood=-50) then psy_hood=8;
 				if (skull==1) then skull=3;
 			}
             if (unit_armour=="Terminator Armour"){
 				armour_sprite=spr_terminator3_colors;
 				if (brothers>-5) then brothers=5;
-				if (hood=-50) then hood=9;
+				if (psy_hood=-50) then psy_hood=9;
 				if (skull==1) then skull=2;
 			}else if (unit_armour=="Artificer Armour"){
 				if (slow>0) then slow=13;
 				if (brothers>-5) then brothers=1;
 				armour_sprite=spr_artificer_colors;
-				if (hood=-50) then hood=2;
+				if (psy_hood=-50) then psy_hood=2;
 			}
         
             if (armour_sprite=spr_weapon_blank) and (armour()!=""){
@@ -564,18 +568,18 @@ function scr_draw_unit_image(_background=false){
 					if (slow>0) then slow=13;
 					if (brothers>-5) then brothers=0;
 					armour_sprite=spr_mk7_colors;
-					if (hood=-50) then hood=1;
+					if (psy_hood=-50) then psy_hood=1;
 				}
                 if (string_count("Artifi",armour())>0){
 					if (slow>0) then slow=13;
 					if (brothers>-5) then brothers=1;
 					armour_sprite=spr_artificer_colors;
-					if (hood=-50) then hood=2;
+					if (psy_hood=-50) then psy_hood=2;
 				}
                 if (string_count("Termi",armour())>0){
 					if (brothers>-5) then brothers=5;
 					armour_sprite=spr_terminator3_colors;
-					if (hood=-50) then hood=9;
+					if (psy_hood=-50) then psy_hood=9;
 					if (skull==1) then skull=2;
 				}
             }
@@ -677,7 +681,8 @@ function scr_draw_unit_image(_background=false){
                             specific_helm = false;
                             // specific_armour_sprite = spr_da_mk3;
                             armour_draw=[spr_da_mk3,0];
-                            robe_bypass = true;
+                            robes_bypass = true;
+                            hood_bypass = true;
                             armour_bypass=true;
                         }
                     }
@@ -698,7 +703,8 @@ function scr_draw_unit_image(_background=false){
                                 specific_helm = false;
                                 // specific_armour_sprite = spr_da_mk4;
                                 armour_draw=[spr_da_mk4,0];
-                                robe_bypass = true;
+                            robes_bypass = true;
+                            hood_bypass = true;
                                 armour_bypass=true;
                             }
                         }                        
@@ -713,7 +719,8 @@ function scr_draw_unit_image(_background=false){
                             specific_helm = false;
                             // specific_armour_sprite = spr_da_mk5;
                             armour_draw=[spr_da_mk5,0];
-                            robe_bypass = true;
+                            robes_bypass = true;
+                            hood_bypass = true;
                             armour_bypass=true;
                         }                        
                     }                   
@@ -726,7 +733,8 @@ function scr_draw_unit_image(_background=false){
                             specific_helm = false;
                             // specific_armour_sprite = spr_da_mk6;
                             armour_draw=[spr_da_mk6,0];
-                            robe_bypass = true;
+                            robes_bypass = true;
+                            hood_bypass = true;
                             armour_bypass=true;
                         }                      
                     }
@@ -740,7 +748,8 @@ function scr_draw_unit_image(_background=false){
                             specific_helm = false;
                             // specific_armour_sprite = spr_da_mk7;
                             armour_draw = [spr_da_mk7,0];
-                            robe_bypass = true;
+                            robes_bypass = true;
+                            hood_bypass = true;
                             armour_bypass = true;
                         }                          
                     }
@@ -752,7 +761,8 @@ function scr_draw_unit_image(_background=false){
                             specific_helm = false;
                             // specific_armour_sprite = spr_da_mk8;
                             armour_draw=[spr_da_mk8,0];
-                            robe_bypass = true;
+                            robes_bypass = true;
+                            hood_bypass = true;
                             armour_bypass=true;
                         }                          
                     }                    
@@ -772,13 +782,15 @@ function scr_draw_unit_image(_background=false){
                         if (role()=="Chapter Master"){
                             armour_bypass=true;
                             hide_bionics = true;
-                            robe_bypass = true;
+                            robes_bypass = true;
+                            hood_bypass = true;
                             armour_draw=[spr_dante,0];
                             draw_sprite(spr_dante,1,x_surface_offset,y_surface_offset);
                         } else if (role()==obj_ini.role[100][2]){
                             armour_bypass=true;
                             hide_bionics = true;
-                            robe_bypass = true;
+                            robes_bypass = true;
+                            hood_bypass = true;
                             armour_draw=[spr_sanguin_guard,0];
                             draw_sprite(spr_sanguin_guard,1,x_surface_offset,y_surface_offset);
                         }
@@ -786,13 +798,15 @@ function scr_draw_unit_image(_background=false){
                         if (role()=="Chapter Master"){
                             armour_bypass=true;
                             hide_bionics = true;
-                            robe_bypass = true;
+                            robes_bypass = true;
+                            hood_bypass = true;
                             armour_draw=[spr_azreal,0];
                         }
                         if (role()=="Master of Sanctity"){
                             armour_bypass=true;
                             hide_bionics = true;
-                            robe_bypass = true;
+                            robes_bypass = true;
+                            hood_bypass = true;
                             skull = 0;
                             armour_draw=[spr_da_chaplain,0];
                         }
@@ -1050,14 +1064,15 @@ function scr_draw_unit_image(_background=false){
                 }
             
                 // Hood
-                if (hood>0){
+                if (psy_hood>0){
                     var yep=0;
-                    if (array_contains(obj_ini.adv,"Daemon Binders") && blandify==0 && hood<7){
+                    hood_bypass = true;
+                    if (array_contains(obj_ini.adv,"Daemon Binders") && blandify==0 && psy_hood<7){
                         if (ttrim=1) then draw_sprite(spr_gear_hood2,0,x_surface_offset-2,y_surface_offset-11);
                         if (ttrim==0) then draw_sprite(spr_gear_hood2,1,x_surface_offset-2,y_surface_offset-11);
                     } else {
-                        //if (obj_ini.main_color=obj_ini.secondary_color) then draw_sprite(spr_gear_hood1,hood,x_surface_offset,y_surface_offset);
-                        //if (obj_ini.main_color!=obj_ini.secondary_color) then draw_sprite(spr_gear_hood3,hood,x_surface_offset,y_surface_offset);
+                        //if (obj_ini.main_color=obj_ini.secondary_color) then draw_sprite(spr_gear_hood1,psy_hood,x_surface_offset,y_surface_offset);
+                        //if (obj_ini.main_color!=obj_ini.secondary_color) then draw_sprite(spr_gear_hood3,psy_hood,x_surface_offset,y_surface_offset);
                         draw_sprite(spr_psy_hood,2,x_surface_offset,y_surface_offset);
                     } 
                 }
@@ -1222,7 +1237,11 @@ function scr_draw_unit_image(_background=false){
 			}
 
             // Drawing Robes
-            if (armour_type == ArmourType.Normal && !robe_bypass) {
+            if (global.chapter_name == "Dark Angels" && role() != obj_ini.role[100][Role.SERGEANT] && role() != obj_ini.role[100][Role.VETERAN_SERGEANT]){
+                robes_bypass = true;
+                hood_bypass = true;
+            }
+            if (armour_type == ArmourType.Normal && (!robes_bypass || !hood_bypass)) {
                 var robe_offset_x = 0;
                 var robe_offset_y = 0;
                 var hood_offset_x = 0;
@@ -1233,10 +1252,10 @@ function scr_draw_unit_image(_background=false){
                     hood_offset_x = 1;
                     hood_offset_y = 10;
                 }
-                if (struct_exists(body[$ "head"],"hood")) {
+                if (struct_exists(body[$ "head"],"hood") && !hood_bypass) {
                     draw_sprite(spr_marine_cloth_hood,0,x_surface_offset+hood_offset_x,y_surface_offset+hood_offset_y);     
                 }
-                if (struct_exists(body[$ "torso"],"robes")) {
+                if (struct_exists(body[$ "torso"],"robes") && !robes_bypass) {
                     if (body.torso.robes<2){
                         draw_sprite(spr_marine_robes,body.torso.robes,x_surface_offset+robe_offset_x,y_surface_offset+robe_offset_y);     
                     } else {
