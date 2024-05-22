@@ -199,16 +199,11 @@ function scr_draw_unit_image(_background=false){
         // Dark Angels
         if (global.chapter_name=="Dark Angels"){
             // Honour guard
-            if (role() == obj_ini.role[100][2]) then ui_coloring="deathwing";
+            if (role() == obj_ini.role[100][Role.HONOR_GUARD]) then ui_coloring="deathwing";
             // Deathwing
-            else if (company == 1) {
-                if (role() == obj_ini.role[100][4]) then ui_coloring="deathwing";
-                if (string_count("Terminator",armour())>0 || armour()=="Tartaros"){
-                    if (array_contains([obj_ini.role[100][5],obj_ini.role[100][7],obj_ini.role[100][19],obj_ini.role[100][11]],role())){
-                        ui_coloring="deathwing";
-                    }
-                }
-                    }
+            else if (company == 1 && !array_contains([obj_ini.role[100][Role.CHAPLAIN],obj_ini.role[100][Role.LIBRARIAN], obj_ini.role[100][Role.TECHMARINE]], role())) {
+                ui_coloring="deathwing";
+            }
             // Ravenwing
             else if (company == 2) {
                 ui_coloring="ravenwing";
@@ -422,7 +417,9 @@ function scr_draw_unit_image(_background=false){
                 shader_array_set[ShaderType.RightPauldron] = Colors.Deathwing;
                 if (role() != obj_ini.role[100][2]){
                     shader_array_set[ShaderType.Trim] = Colors.Light_Caliban_Green;
-                    shader_array_set[ShaderType.Helmet] = Colors.Deathwing;
+                    if (role() != obj_ini.role[100][Role.APOTHECARY]){
+                        shader_array_set[ShaderType.Helmet] = Colors.Deathwing;
+                    }
                 }
                 ttrim=0;
                 specialist_colours=0;
@@ -433,7 +430,9 @@ function scr_draw_unit_image(_background=false){
                 shader_array_set[ShaderType.Body] = Colors.Black;
                 shader_array_set[ShaderType.LeftPauldron] = Colors.Black;
                 shader_array_set[ShaderType.RightPauldron] = Colors.Black;
-                shader_array_set[ShaderType.Helmet] = Colors.Black;
+                if (role() != obj_ini.role[100][Role.APOTHECARY]){
+                    shader_array_set[ShaderType.Helmet] = Colors.Black;
+                }
                 ttrim=0;
                 specialist_colours=0;
             }
