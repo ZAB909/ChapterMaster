@@ -271,15 +271,12 @@ function scr_draw_unit_image(_background=false){
 
         switch(unit_armour){
             case "Terminator Armour":
-                ui_back=false;
                 armour_type = ArmourType.Indomitus;
                 break;
             case "Tartaros":
-                ui_back=false;
                 armour_type = ArmourType.Tartaros;
                 break;
             case "Dreadnought":
-                ui_back=false;
                 armour_type = ArmourType.Dreadnought;
                 break;
             case "(None)":
@@ -620,35 +617,29 @@ function scr_draw_unit_image(_background=false){
                 if (braz=1) and (blandify=0){
                     if (armour_type==ArmourType.Normal) then draw_sprite(spr_pack_brazier,0,x_surface_offset,y_surface_offset);
                     if (armour_type!=ArmourType.Normal) then draw_sprite(spr_pack_brazier,1,0-2,0);
-                }                             
+                }
                  // Draw the backpack
                 if (armour_type!=ArmourType.Dreadnought){
                     if (ui_back){
-                        if (global.chapter_name == "Dark Angels") {
-                            if (role() == "Chapter Master") {
-                                draw_sprite(spr_da_backpack,1,x_surface_offset,y_surface_offset);
-                            } else if (role() == "Master of Sanctity") {
-                                draw_sprite(spr_da_chaplain,1,x_surface_offset,y_surface_offset);
-                            }
-                        } else if (body.torso.backpack_variation>2){
-                            if (specialist_colours==0) then draw_sprite(armour_sprite,10,x_surface_offset,y_surface_offset);
-                            if (specialist_colours==1) then draw_sprite(armour_sprite,11,x_surface_offset,y_surface_offset);
-                            if (specialist_colours>=2) then draw_sprite(armour_sprite,12,x_surface_offset,y_surface_offset);
-                        } else {
+                        var back_sprite [0, 0];
+                        if (specialist_colours==0) then back_sprite = [armour_sprite, 10];
+                        if (specialist_colours==1) then back_sprite = [armour_sprite, 11];
+                        if (specialist_colours>=2) then back_sprite = [armour_sprite, 12];
+                        if (body.torso.backpack_variation < 3) {
                             if (progenitor_map()=="Dark Angels"){
                                 if array_contains(["MK5 Heresy", "MK6 Corvus","MK7 Aquila", "MK8 Errant", "Artificer Armour"], armour()){
-                                    draw_sprite(spr_da_backpack,0,x_surface_offset,y_surface_offset);
-                                } else {
-                                    if (specialist_colours==0) then draw_sprite(armour_sprite,10,x_surface_offset,y_surface_offset);
-                                    if (specialist_colours==1) then draw_sprite(armour_sprite,11,x_surface_offset,y_surface_offset);
-                                    if (specialist_colours>=2) then draw_sprite(armour_sprite,12,x_surface_offset,y_surface_offset);
+                                    back_sprite = [spr_da_backpack, 0];
                                 }
-                            } else{
-                                if (specialist_colours==0) then draw_sprite(armour_sprite,10,x_surface_offset,y_surface_offset);
-                                if (specialist_colours==1) then draw_sprite(armour_sprite,11,x_surface_offset,y_surface_offset);
-                                if (specialist_colours>=2) then draw_sprite(armour_sprite,12,x_surface_offset,y_surface_offset);
                             }
                         }
+                        if (global.chapter_name == "Dark Angels") {
+                            if (role() == "Chapter Master") {
+                                back_sprite = [spr_da_backpack, 1];
+                            } else if (role() == "Master of Sanctity") {
+                                back_sprite = [spr_da_chaplain, 1];
+                            }
+                        }
+                        draw_sprite(back_sprite[0],back_sprite[1],x_surface_offset,y_surface_offset);
                     }else{
                         if (back_type==BackType.Jump){
                             if (specialist_colours==0) then draw_sprite(spr_pack_jump,0,x_surface_offset,y_surface_offset);
@@ -661,7 +652,8 @@ function scr_draw_unit_image(_background=false){
                             if (specialist_colours>=2) then draw_sprite(spr_pack_devastator,2,x_surface_offset,y_surface_offset);
                         }
                     }  
-                }                
+                }
+
                 var specific_helm = false;
                 var helm_draw=[0,0];
                 if (armour()=="Scout Armour"){
