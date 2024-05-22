@@ -175,7 +175,7 @@ function scr_draw_unit_image(_background=false){
         var armour_bypass = false;
         var hide_bionics = false;
         var robes_bypass = false;
-        var hood_bypass = false;
+        var robes_hood_bypass = false;
         var halo_bypass = false;
         var arm_bypass = false;
         var armour_draw =[];        
@@ -674,7 +674,7 @@ function scr_draw_unit_image(_background=false){
                             // specific_armour_sprite = spr_da_mk3;
                             armour_draw=[spr_da_mk3,0];
                             robes_bypass = true;
-                            hood_bypass = true;
+                            robes_hood_bypass = true;
                             armour_bypass=true;
                         }
                     }
@@ -697,7 +697,7 @@ function scr_draw_unit_image(_background=false){
                             // specific_armour_sprite = spr_da_mk4;
                             armour_draw=[spr_da_mk4,0];
                             robes_bypass = true;
-                            hood_bypass = true;
+                            robes_hood_bypass = true;
                             armour_bypass=true;
                         }
                     }
@@ -711,7 +711,7 @@ function scr_draw_unit_image(_background=false){
                             // specific_armour_sprite = spr_da_mk5;
                             armour_draw=[spr_da_mk5,0];
                             robes_bypass = true;
-                            hood_bypass = true;
+                            robes_hood_bypass = true;
                             armour_bypass=true;
                         }                        
                     }                   
@@ -724,7 +724,7 @@ function scr_draw_unit_image(_background=false){
                             // specific_armour_sprite = spr_da_mk6;
                             armour_draw=[spr_da_mk6,0];
                             robes_bypass = true;
-                            hood_bypass = true;
+                            robes_hood_bypass = true;
                             armour_bypass=true;
                         }                      
                     }
@@ -738,7 +738,7 @@ function scr_draw_unit_image(_background=false){
                             // specific_armour_sprite = spr_da_mk7;
                             armour_draw = [spr_da_mk7,0];
                             robes_bypass = true;
-                            hood_bypass = true;
+                            robes_hood_bypass = true;
                             armour_bypass = true;
                         }                          
                     }
@@ -751,7 +751,7 @@ function scr_draw_unit_image(_background=false){
                             // specific_armour_sprite = spr_da_mk8;
                             armour_draw=[spr_da_mk8,0];
                             robes_bypass = true;
-                            hood_bypass = true;
+                            robes_hood_bypass = true;
                             armour_bypass=true;
                         }                          
                     }                    
@@ -772,14 +772,14 @@ function scr_draw_unit_image(_background=false){
                             armour_bypass=true;
                             hide_bionics = true;
                             robes_bypass = true;
-                            hood_bypass = true;
+                            robes_hood_bypass = true;
                             armour_draw=[spr_dante,0];
                             draw_sprite(spr_dante,1,x_surface_offset,y_surface_offset);
                         } else if (role()==obj_ini.role[100][2]){
                             armour_bypass=true;
                             hide_bionics = true;
                             robes_bypass = true;
-                            hood_bypass = true;
+                            robes_hood_bypass = true;
                             armour_draw=[spr_sanguin_guard,0];
                             draw_sprite(spr_sanguin_guard,1,x_surface_offset,y_surface_offset);
                         }
@@ -788,14 +788,14 @@ function scr_draw_unit_image(_background=false){
                             armour_bypass=true;
                             hide_bionics = true;
                             robes_bypass = true;
-                            hood_bypass = true;
+                            robes_hood_bypass = true;
                             armour_draw=[spr_azreal,0];
                         }
                         if (role()=="Master of Sanctity"){
                             armour_bypass=true;
                             hide_bionics = true;
                             robes_bypass = true;
-                            hood_bypass = true;
+                            robes_hood_bypass = true;
                             skull = 0;
                             armour_draw=[spr_da_chaplain,0];
                         }
@@ -1060,15 +1060,20 @@ function scr_draw_unit_image(_background=false){
                 // Hood
                 if (psy_hood>0){
                     var yep=0;
-                    hood_bypass = true;
+                    var psy_hood_offset_x = 0;
+                    var psy_hood_offset_y = 0;
+                    robes_hood_bypass = true;
                     if (array_contains(obj_ini.adv,"Daemon Binders") && blandify==0 && psy_hood<7){
                         if (ttrim=1) then draw_sprite(spr_gear_hood2,0,x_surface_offset-2,y_surface_offset-11);
                         if (ttrim==0) then draw_sprite(spr_gear_hood2,1,x_surface_offset-2,y_surface_offset-11);
                     } else {
-                        //if (obj_ini.main_color=obj_ini.secondary_color) then draw_sprite(spr_gear_hood1,psy_hood,x_surface_offset,y_surface_offset);
-                        //if (obj_ini.main_color!=obj_ini.secondary_color) then draw_sprite(spr_gear_hood3,psy_hood,x_surface_offset,y_surface_offset);
-                        draw_sprite(spr_psy_hood,2,x_surface_offset,y_surface_offset);
-                    } 
+                        if (armour_type == ArmourType.Indomitus) {
+                            psy_hood_offset_y = -8;
+                        }
+                        //if (obj_ini.main_color=obj_ini.secondary_color) then draw_sprite(spr_gear_hood1,hood,0,y_surface_offset);
+                        //if (obj_ini.main_color!=obj_ini.secondary_color) then draw_sprite(spr_gear_hood3,hood,0,y_surface_offset);
+                        draw_sprite(spr_psy_hood,2, x_surface_offset+psy_hood_offset_x, y_surface_offset+psy_hood_offset_y);
+                    }
                 }
 
                 //Chaplain head and Terminator version
@@ -1247,9 +1252,9 @@ function scr_draw_unit_image(_background=false){
             // Drawing Robes
             if (global.chapter_name == "Dark Angels" && role() != obj_ini.role[100][Role.SERGEANT] && role() != obj_ini.role[100][Role.VETERAN_SERGEANT]){
                 robes_bypass = true;
-                hood_bypass = true;
+                robes_hood_bypass = true;
             }
-            if (armour_type == ArmourType.Normal && (!robes_bypass || !hood_bypass)) {
+            if (armour_type == ArmourType.Normal && (!robes_bypass || !robes_hood_bypass)) {
                 var robe_offset_x = 0;
                 var robe_offset_y = 0;
                 var hood_offset_x = 0;
@@ -1260,7 +1265,7 @@ function scr_draw_unit_image(_background=false){
                     hood_offset_x = 1;
                     hood_offset_y = 10;
                 }
-                if (struct_exists(body[$ "head"],"hood") && !hood_bypass) {
+                if (struct_exists(body[$ "head"],"hood") && !robes_hood_bypass) {
                     draw_sprite(spr_marine_cloth_hood,0,x_surface_offset+hood_offset_x,y_surface_offset+hood_offset_y);     
                 }
                 if (struct_exists(body[$ "torso"],"robes") && !robes_bypass) {
