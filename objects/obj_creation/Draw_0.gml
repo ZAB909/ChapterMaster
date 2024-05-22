@@ -2112,7 +2112,7 @@ if (slide=6){
     repeat(3){h+=1;
         var cur_leader_type = leader_types[h];
         draw_set_alpha(1);
-        var nope=0 = (h=3) and ((race[100,17]=0) or (psy_intolerance));
+        var nope = (h=3) and ((race[100,17]=0) or (psy_intolerance));
         if (nope) then draw_set_alpha(0.5);
         if (custom<2) or (restarted>0) then draw_set_alpha(0.5);
         
