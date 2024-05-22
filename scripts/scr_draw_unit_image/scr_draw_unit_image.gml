@@ -669,8 +669,8 @@ function scr_draw_unit_image(_background=false){
                     specific_armour_sprite = spr_mk3_colors;
                     specific_helm = spr_generic_sgt_mk3;
                     if (progenitor_map()=="Dark Angels"){
+                        specific_helm = false;
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
-                            specific_helm = false;
                             // specific_armour_sprite = spr_da_mk3;
                             armour_draw=[spr_da_mk3,0];
                             robes_bypass = true;
@@ -689,26 +689,25 @@ function scr_draw_unit_image(_background=false){
                         } else {
                             armour_draw=[spr_generic_honor_guard,body.torso.armour_choice];
                             armour_bypass=true;
-                        }*/
-                        if (progenitor_map()=="Dark Angels"){
-                            if (role()==obj_ini.role[100][Role.CAPTAIN]){
-                                specific_helm = false;
-                                // specific_armour_sprite = spr_da_mk4;
-                                armour_draw=[spr_da_mk4,0];
+                        }*/                      
+                    }
+                    if (progenitor_map()=="Dark Angels"){
+                        specific_helm = false;
+                        if (role()==obj_ini.role[100][Role.CAPTAIN]){
+                            // specific_armour_sprite = spr_da_mk4;
+                            armour_draw=[spr_da_mk4,0];
                             robes_bypass = true;
                             hood_bypass = true;
-                                armour_bypass=true;
-                            }
-                        }                        
-                   }        
+                            armour_bypass=true;
+                        }
+                    }
                 } else if (armour()=="MK5 Heresy"){
                     specific_armour_sprite = spr_mk5_colors;
                     //TODO sort this mess out streamline system somehow
                     specific_helm = spr_generic_sgt_mk5;
                     if (progenitor_map()=="Dark Angels"){
-                        specific_helm = [spr_da_mk5_helm,spr_generic_sgt_mk5];
+                        specific_helm = false;
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
-                            specific_helm = false;
                             // specific_armour_sprite = spr_da_mk5;
                             armour_draw=[spr_da_mk5,0];
                             robes_bypass = true;
@@ -720,9 +719,8 @@ function scr_draw_unit_image(_background=false){
                     specific_armour_sprite = spr_beakie_colors;
                     specific_helm = spr_generic_sgt_mk6;
                     if (progenitor_map()=="Dark Angels"){
-                        specific_helm = [spr_da_mk6_helm,spr_generic_sgt_mk6];
+                        specific_helm = false;
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
-                            specific_helm = false;
                             // specific_armour_sprite = spr_da_mk6;
                             armour_draw=[spr_da_mk6,0];
                             robes_bypass = true;
@@ -735,9 +733,8 @@ function scr_draw_unit_image(_background=false){
                     specific_armour_sprite = spr_mk7_colors;
                     specific_helm = spr_generic_sgt_mk7;
                     if (progenitor_map()=="Dark Angels"){
-                        specific_helm = [spr_da_mk7_helm,spr_generic_sgt_mk7];
+                        specific_helm = false;
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
-                            specific_helm = false;
                             // specific_armour_sprite = spr_da_mk7;
                             armour_draw = [spr_da_mk7,0];
                             robes_bypass = true;
@@ -749,8 +746,8 @@ function scr_draw_unit_image(_background=false){
                     specific_helm = spr_generic_sgt_mk8;
                     specific_armour_sprite = spr_mk8_colors;
                     if (progenitor_map()=="Dark Angels"){
+                        specific_helm = false;
                         if (role()==obj_ini.role[100][Role.CAPTAIN]){
-                            specific_helm = false;
                             // specific_armour_sprite = spr_da_mk8;
                             armour_draw=[spr_da_mk8,0];
                             robes_bypass = true;
@@ -809,6 +806,7 @@ function scr_draw_unit_image(_background=false){
                     specific_armour_sprite = spr_terminator3_colors;
                     specific_helm = spr_generic_terminator_sgt;
                     if(global.chapter_name == "Dark Angels"){
+                        specific_helm = false;
                         if (role() == obj_ini.role[100][2]){
                             armour_bypass=true;
                             armour_draw=[spr_da_term_honor,0];
@@ -1209,16 +1207,30 @@ function scr_draw_unit_image(_background=false){
                 if (role() == obj_ini.role[100][Role.COMPANY_CHAMPION]) {
                     draw_sprite(spr_special_helm,0,x_surface_offset,y_surface_offset);
                     draw_sprite(spr_laurel,0,x_surface_offset,y_surface_offset);
+                    draw_sprite(spr_helm_decorations,0,x_surface_offset,y_surface_offset);
                 }
                 if (role() == obj_ini.role[100][Role.CAPTAIN]) {
                     draw_sprite(spr_laurel,0,x_surface_offset,y_surface_offset);
                 }
-                if (role() == obj_ini.role[100][Role.SERGEANT]) {
+                if (role() == obj_ini.role[100][Role.SERGEANT] || role() == obj_ini.role[100][Role.VETERAN_SERGEANT]) {
                     draw_sprite(spr_helm_decorations,0,x_surface_offset,y_surface_offset);
                 }
             }
+            if (armour_type==ArmourType.Indomitus && !armour_bypass){
+                if (role() == obj_ini.role[100][Role.COMPANY_CHAMPION]) {
+                    draw_sprite(spr_laurel,0,x_surface_offset,y_surface_offset-8);
+                    draw_sprite(spr_helm_decorations,0,x_surface_offset,y_surface_offset-10);
+                }
+                if (role() == obj_ini.role[100][Role.CAPTAIN]) {
+                    draw_sprite(spr_laurel,0,x_surface_offset,y_surface_offset-8);
+                }
+                if (role() == obj_ini.role[100][Role.SERGEANT] || role() == obj_ini.role[100][Role.VETERAN_SERGEANT]) {
+                    draw_sprite(spr_helm_decorations,0,x_surface_offset,y_surface_offset-10);
+                }
+            }
 
-            if (hood==0) and (armour_type==ArmourType.Normal) and (armour()!="") and (role()==obj_ini.role[100][2]) && (global.chapter_name!="Ultramarines") && (global.chapter_name!="Blood Angels"){
+
+            if (psy_hood==0) and (armour_type==ArmourType.Normal) and (armour()!="") and (role()==obj_ini.role[100][2]) && (global.chapter_name!="Ultramarines") && (global.chapter_name!="Blood Angels"){
                 var helm_ii,o,yep;
                 helm_ii=0;
 				yep=0;
