@@ -383,11 +383,11 @@ function scr_draw_unit_image(_background=false){
 
 			// Librarian
             else if (ui_specialist=7){
-                shader_array_set[ShaderType.Body] = Colors.Ultramarine;
-                shader_array_set[ShaderType.Helmet] = Colors.Ultramarine;
+                shader_array_set[ShaderType.Body] = Colors.Dark_Ultramarine;
+                shader_array_set[ShaderType.Helmet] = Colors.Dark_Ultramarine;
                 shader_array_set[ShaderType.Lens] = Colors.Cyan;
-                shader_array_set[ShaderType.Trim] = Colors.Dark_Gold;
-                shader_array_set[ShaderType.RightPauldron] = Colors.Ultramarine;
+                shader_array_set[ShaderType.Trim] = Colors.Gold;
+                shader_array_set[ShaderType.RightPauldron] = Colors.Dark_Ultramarine;
                 ttrim=1;
                 specialist_colours=0;
             }
@@ -940,13 +940,18 @@ function scr_draw_unit_image(_background=false){
                 if (!armour_bypass){
                     draw_sprite(armour_sprite,specialist_colours,x_surface_offset,y_surface_offset);
                     // Draw additional torso decals
-                    if (armour()=="MK7 Aquila"){
-                        if (struct_exists(body.torso, "variation")){
-                            if (body.torso.variation%2 == 1){
-                                draw_sprite(mk7_chest_variants,0,x_surface_offset,y_surface_offset);
+
+                    if (array_contains(["MK3 Iron Armour", "MK6 Corvus", "MK7 Aquila", "MK8 Errant"], armour())){
+                        if (back_type == BackType.Jump || back_type == BackType.Dev){
+                            draw_sprite(mk7_chest_variants,1,x_surface_offset,y_surface_offset);
+                        } else if (armour()=="MK7 Aquila"){
+                            if (struct_exists(body.torso, "variation")){
+                                if (body.torso.variation%2 == 1){
+                                    draw_sprite(mk7_chest_variants,0,x_surface_offset,y_surface_offset);
+                                }
                             }
                         }
-                    }  
+                    }
                     // Draw pauldron trim
                     if (specific_armour_sprite != "none"){
                         if (ttrim==0 && specialist_colours<=1) then draw_sprite(specific_armour_sprite,4,x_surface_offset,y_surface_offset);
