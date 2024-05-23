@@ -26,19 +26,19 @@ function split_selected_into_new_fleet(start_fleet="none"){
         // Pass over ships to the new fleet, if they are selected
         var cap_number = capital_number;
 
-        for (i=1; i<=cap_number;i++){
+        for (i=0; i<=cap_number;i++){
             if (capital[i]!="") and (capital_sel[i]){
             	move_ship_between_player_fleets(self, new_fleet,"capital", i);
             }
         }
         var frig_number = frigate_number;
-        for (i=1; i<=frig_number;i++){
+        for (i=0; i<=frig_number;i++){
             if (frigate[i]!="") and (frigate_sel[i]){
             	move_ship_between_player_fleets(self, new_fleet,"frigate", i);
             }
         }
         var esc_number = escort_number;
-        for (i=1; i<=esc_number;i++){
+        for (i=0; i<=esc_number;i++){
             if (escort[i]!="") and (escort_sel[i]){
             	move_ship_between_player_fleets(self, new_fleet,"escort", i)
             }
