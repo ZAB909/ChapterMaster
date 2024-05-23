@@ -232,6 +232,17 @@ if (shop = "equipment") {
         item_cost[i] = 0;
     }
     i += 1;
+    item[i] = "Heavy Thunder Hammer";
+    if (research.power_fields[0]>2){
+        forge_cost[i] = 750;
+    }    
+    item_stocked[i] = scr_item_count(item[i]);
+    item_cost[i] = 135;
+    if (rene = 1) {
+        nobuy[i] = 1;
+        item_cost[i] = 0;
+    }
+    i += 1;
     x_mod[i] = 9;
     item[i] = "Lascutter";
     forge_cost[i] = 500;
