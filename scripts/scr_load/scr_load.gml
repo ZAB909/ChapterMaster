@@ -11,6 +11,15 @@ function scr_load(argument0, argument1) {
 				obj_ini.TTRPG[company, marine].load_json_data(marStruct);
 			} else {obj_ini.TTRPG[company, marine] = new TTRPG_stats("chapter", company, marine,"blank");}		
 	};
+
+	function return_json_from_ini(ini_area,ini_code, default_val=[]){
+		var ini_fetch = ini_read_string(ini_area,ini_code,"");
+		if (ini_fetch!=""){
+			return json_parse(base64_decode(ini_fetch));
+		} else {
+			return default_val;
+		}
+	}
 	var rang,i,g,stars,pfleets,efleets,unit;
 	rang=0;i=0;g=0;stars=0;pfleets=0;efleets=0;
 
@@ -123,7 +132,10 @@ function scr_load(argument0, argument1) {
 	        obj_controller.stc_vehicles_un=ini_read_real("Controller","stc_vehicles_un",0);
 	        obj_controller.stc_ships_un=ini_read_real("Controller","stc_ships_un",0);
 	    var j;j=0;repeat(6){j+=1;obj_controller.stc_bonus[j]=ini_read_real("Controller","stc_bonus_"+string(j),0);}
-	    j=-1;repeat(5){j+=1;obj_ini.adv[j]=ini_read_string("Controller","adv"+string(j),"");obj_ini.dis[j]=ini_read_string("Controller","dis"+string(j),"");} //
+	    j=-1;repeat(5){
+	    	j+=1;obj_ini.adv[j]=ini_read_string("Controller","adv"+string(j),"");
+	    	obj_ini.dis[j]=ini_read_string("Controller","dis"+string(j),"");
+		} //
 
 
 
@@ -997,24 +1009,25 @@ function scr_load(argument0, argument1) {
 	        fla.hurssy_time=ini_read_real("Fleet","pf"+string(i)+"hurssy_time",0);
 	        fla.orbiting=ini_read_real("Fleet","pf"+string(i)+"orb",0);
 
-	        var g;g=-1;repeat(10){g+=1;
-	            fla.capital[g]=ini_read_string("Fleet","pf"+string(i)+"capital"+string(g),"");
-	            fla.capital_num[g]=ini_read_real("Fleet","pf"+string(i)+"capital_num"+string(g),0);
-	            fla.capital_sel[g]=ini_read_real("Fleet","pf"+string(i)+"capital_sel"+string(g),0);
-	            fla.capital_uid[g]=ini_read_real("Fleet","pf"+string(i)+"capital_uid"+string(g),0);
-	        }
-	        g=-1;repeat(21){g+=1;
-	            fla.frigate[g]=ini_read_string("Fleet","pf"+string(i)+"frigate"+string(g),"");
-	            fla.frigate_num[g]=ini_read_real("Fleet","pf"+string(i)+"frigate_num"+string(g),0);
-	            fla.frigate_sel[g]=ini_read_real("Fleet","pf"+string(i)+"frigate_sel"+string(g),0);
-	            fla.frigate_uid[g]=ini_read_real("Fleet","pf"+string(i)+"frigate_uid"+string(g),0);
-	        }
-	        g=-1;repeat(35){g+=1;
-	            fla.escort[g]=ini_read_string("Fleet","pf"+string(i)+"escort"+string(g),"");
-	            fla.escort_num[g]=ini_read_real("Fleet","pf"+string(i)+"escort_num"+string(g),0);
-	            fla.escort_sel[g]=ini_read_real("Fleet","pf"+string(i)+"escort_sel"+string(g),0);
-	            fla.escort_uid[g]=ini_read_real("Fleet","pf"+string(i)+"escort_uid"+string(g),0);
-	        }
+	        fla.complex_route = return_json_from_ini("Fleet", $"pf{i}complex_route", []);
+	        fla.just_left = ini_read_real("Fleet",$"pf{i}just_left",0);
+
+	        fla.capital = return_json_from_ini("Fleet", $"pf{i}capital", array_create(100, ""));
+	        fla.capital_num = return_json_from_ini("Fleet", $"pf{i}capital_num", array_create(100, -1));
+	        fla.capital_sel = return_json_from_ini("Fleet", $"pf{i}capital_sel", array_create(100, 0));
+	        fla.capital_uid = return_json_from_ini("Fleet", $"pf{i}capital_uid", array_create(100, -1));
+
+
+	        fla.frigate = return_json_from_ini("Fleet", $"pf{i}frigate", array_create(100, ""));
+	        fla.frigate_num = return_json_from_ini("Fleet", $"pf{i}frigate_num", array_create(100, -1));
+	        fla.frigate_sel = return_json_from_ini("Fleet", $"pf{i}frigate_sel", array_create(100, 0));
+	        fla.frigate_uid = return_json_from_ini("Fleet", $"pf{i}frigate_uid", array_create(100, -1));
+
+
+	        fla.escort = return_json_from_ini("Fleet", $"pf{i}escort", array_create(100, ""));
+	        fla.escort_num = return_json_from_ini("Fleet", $"pf{i}escort_num", array_create(100, -1));
+	        fla.escort_sel = return_json_from_ini("Fleet", $"pf{i}escort_sel", array_create(100, 0));
+	        fla.escort_uid = return_json_from_ini("Fleet", $"pf{i}escort_uid", array_create(100, -1));	        
 	    }
 
 	    // ENEMY FLEET OBJECTS

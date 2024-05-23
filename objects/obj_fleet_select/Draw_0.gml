@@ -36,7 +36,7 @@ switch(owner){
 
 }
 // 
-var scale = zoomed ? 5 : 1;
+var scale = obj_controller.zoomed ? 5 : 1;
 if (obj_controller.zoomed=0) then draw_text_transformed(x,y-32,ppp,scale,scale,0);
     
 draw_circle(x,y,12,0);
