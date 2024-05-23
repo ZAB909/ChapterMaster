@@ -155,9 +155,9 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	                    if (co=10) then col=22-obj_controller.bat_scout_column;
 	                }
                 
-	                if (unit.role()=deploying_unit.role[100][5]) or (unit.role()="Standard Bearer") or (unit.role()=deploying_unit.role[100][7]){
+	                if (unit.role()=deploying_unit.role[100][5]) or (unit.role()=deploying_unit.role[100][11]) or (unit.role()=deploying_unit.role[100][7]){
 	                    if (unit.role()=deploying_unit.role[100][5]){new_combat.en_captains+=1;if (new_combat.en_big_mofo>5) then new_combat.en_big_mofo=5;}
-	                    if (unit.role()="Standard Bearer") then new_combat.en_standard_bearers+=1;
+	                    if (unit.role()=deploying_unit.role[100][11]) then new_combat.en_standard_bearers+=1;
 						if (unit.role()=deploying_unit.role[100][7]) then new_combat.champions+=1;
                     
 	                    if (co=1){
@@ -318,9 +318,9 @@ function scr_civil_roster(_unit_location, _target_location, _is_planet) {
 	                    if (co=10) then col=obj_controller.bat_scout_column;
 	                }
                 
-	                if (unit.role()=deploying_unit.role[100][5]) or (unit.role()="Standard Bearer") or (unit.role()=deploying_unit.role[100][7]){
+	                if (unit.role()=deploying_unit.role[100][5]) or (unit.role()=deploying_unit.role[100][11]) or (unit.role()=deploying_unit.role[100][7]){
 	                    if (unit.role()=deploying_unit.role[100][5]){new_combat.captains+=1;if (new_combat.big_mofo>5) then new_combat.big_mofo=5;}
-	                    if (unit.role()="Standard Bearer") then new_combat.standard_bearers+=1;
+	                    if (unit.role()=deploying_unit.role[100][11]) then new_combat.standard_bearers+=1;
 						if (unit.role()=deploying_unit.role[100][7]) then new_combat.champions+=1;
                     
 	                    if (co=1){
