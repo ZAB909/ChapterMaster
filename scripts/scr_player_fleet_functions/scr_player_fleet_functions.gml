@@ -24,23 +24,29 @@ function split_selected_into_new_fleet(start_fleet="none"){
 		new_fleet = instance_create(x,y,obj_p_fleet);
 		new_fleet.owner  = eFACTION.Player;
         // Pass over ships to the new fleet, if they are selected
-        var cap_number = capital_number+1;
+        var cap_number = array_length(capital);
 
-        for (i=0; i<=cap_number;i++){
+        for (i=0; i<cap_number;i++){
             if (capital[i]!="") and (capital_sel[i]){
             	move_ship_between_player_fleets(self, new_fleet,"capital", i);
+            	i--;
+            	cap_number--;
             }
         }
-        var frig_number = frigate_number+1;
-        for (i=0; i<=frig_number;i++){
+        var frig_number = array_length(frigate);
+        for (i=0; i<frig_number;i++){
             if (frigate[i]!="") and (frigate_sel[i]){
             	move_ship_between_player_fleets(self, new_fleet,"frigate", i);
+            	i--;
+            	frig_number--;
             }
         }
-        var esc_number = escort_number+1;
-        for (i=0; i<=esc_number;i++){
+        var esc_number = array_length(escort);
+        for (i=0; i<esc_number;i++){
             if (escort[i]!="") and (escort_sel[i]){
             	move_ship_between_player_fleets(self, new_fleet,"escort", i)
+            	i--;
+            	esc_number--;
             }
         }
        	set_player_fleet_image();	
@@ -99,28 +105,37 @@ function move_ship_between_player_fleets(out_fleet, in_fleet, class, index){
 		array_insert(in_fleet.capital, 1,out_fleet.capital[index]);
 		array_insert(in_fleet.capital_num, 1,out_fleet.capital_num[index])
 		array_insert(in_fleet.capital_uid, 1,out_fleet.capital_uid[index]);
+		array_insert(in_fleet.capital_sel, 1,out_fleet.capital_sel[index]);
+
 		in_fleet.capital_number++;
 		array_delete(out_fleet.capital, index, 1);
 		array_delete(out_fleet.capital_num, index, 1);
 		array_delete(out_fleet.capital_uid, index, 1);
+		array_delete(out_fleet.capital_sel, index, 1);
+
 		out_fleet.capital_number--;
+
 	} else if (class=="frigate"){
 		array_insert(in_fleet.frigate, 1,out_fleet.frigate[index]);
 		array_insert(in_fleet.frigate_num, 1,out_fleet.frigate_num[index])
 		array_insert(in_fleet.frigate_uid, 1,out_fleet.frigate_uid[index]);
+		array_insert(in_fleet.frigate_sel, 1,out_fleet.frigate_sel[index]);
 		in_fleet.frigate_number++;
 		array_delete(out_fleet.frigate, index, 1);
 		array_delete(out_fleet.frigate_num, index, 1);
 		array_delete(out_fleet.frigate_uid, index, 1);
+		array_delete(out_fleet.frigate_sel, index, 1);
 		out_fleet.frigate_number--;
 	}else if (class=="escort"){
 		array_insert(in_fleet.escort, 1,out_fleet.escort[index]);
 		array_insert(in_fleet.escort_num, 1,out_fleet.escort_num[index])
 		array_insert(in_fleet.escort_uid, 1,out_fleet.escort_uid[index]);
+		array_insert(in_fleet.escort_sel, 1,out_fleet.escort_uid[index]);
 		in_fleet.escort_number++;
 		array_delete(out_fleet.escort, index, 1);
 		array_delete(out_fleet.escort_num, index, 1);
 		array_delete(out_fleet.escort_uid, index, 1);
+		array_delete(out_fleet.escort_sel, index, 1);
 		out_fleet.escort_number--;
 	}
 }
@@ -168,19 +183,19 @@ function player_fleet_ship_count(fleet="none"){
 		frigate_number = 0;
 		escort_number = 0;
 
-		for (i=1; i<=capital_number;i++){
+		for (i=0; i<array_length(capital);i++){
 			if (capital[i]!=""){
 				ship_count++;
 				capital_number++;
 			}
 		}
-		for (i=1; i<=frigate_number;i++){
+		for (i=0; i<array_length(frigate);i++){
 			if (frigate[i]!=""){
 				ship_count++;
 				frigate_number++;
 			}
 		}
-		for (i=1; i<=escort_number;i++){
+		for (i=0; i<array_length(escort);i++){
 			if (escort[i]!=""){
 				ship_count++;
 				escort_number++;
@@ -196,14 +211,14 @@ function player_fleet_ship_count(fleet="none"){
 function player_fleet_selected_count(fleet="none"){
 	var ship_count = 0;
 	if (fleet=="none"){
-		for (i=1; i<=capital_number;i++){
-			if (capital_sel[i]) then ship_count++;
+		for (i=0; i<array_length(capital);i++){
+			if(capital[i]!="" && capital_sel[i]) then ship_count++;
 		}
-		for (i=1; i<=frigate_number;i++){
-			if (frigate_sel[i]) then ship_count++;
+		for (i=0; i<array_length(frigate);i++){
+			if(frigate[i]!="" && frigate_sel[i]) then ship_count++;
 		}
-		for (i=1; i<=escort_number;i++){
-			if (escort_sel[i]) then ship_count++;
+		for (i=0; i<array_length(escort);i++){
+			if(escort[i]!="" && escort_sel[i]) then ship_count++;
 		}
 	} else {
 		with(fleet){
