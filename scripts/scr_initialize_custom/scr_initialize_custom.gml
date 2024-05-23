@@ -259,9 +259,9 @@ function progenitor_livery(chapter, specific="none"){
 			},
 			captain : {
 				helm_pattern:0,
-				helm_primary : Colors.Ultramarine,
-				helm_secondary : Colors.Ultramarine,
-				helm_detail : Colors.Ultramarine,
+				helm_primary : Colors.Dark_Ultramarine,
+				helm_secondary : Colors.Dark_Ultramarine,
+				helm_detail : Colors.Dark_Ultramarine,
 				helm_lens : Colors.Red,
 			},
 			veteran : {

@@ -385,11 +385,11 @@ function scr_draw_unit_image(_background=false){
 
 			// Librarian
             else if (ui_specialist=7){
-                shader_array_set[ShaderType.Body] = Colors.Ultramarine;
-                shader_array_set[ShaderType.Helmet] = Colors.Ultramarine;
+                shader_array_set[ShaderType.Body] = Colors.Dark_Ultramarine;
+                shader_array_set[ShaderType.Helmet] = Colors.Dark_Ultramarine;
                 shader_array_set[ShaderType.Lens] = Colors.Cyan;
                 shader_array_set[ShaderType.Trim] = Colors.Gold;
-                shader_array_set[ShaderType.RightPauldron] = Colors.Ultramarine;
+                shader_array_set[ShaderType.RightPauldron] = Colors.Dark_Ultramarine;
                 ttrim=1;
                 specialist_colours=0;
             }
