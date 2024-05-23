@@ -1257,12 +1257,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					psionic = max(psionic-5, 0);
 				}
 			}
-
-			if (global.chapter_name=="Black Templars"){
-				if (irandom(14)==0){
-					body[$"torso"].robes =choose(1,2);
-				}				
-			}
 			if (global.chapter_name=="Space Wolves") or (obj_ini.progenitor=3) {
 				religion_sub_cult = "The Allfather";
 			} else if(global.chapter_name=="Salamanders") or (obj_ini.progenitor==8){
@@ -1271,19 +1265,22 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				religion_sub_cult = "The Cult of Iron";
 			} 
 
-			if (array_contains(["Dark Angels","Black Templars"],global.chapter_name) || obj_ini.progenitor==1){
+			if (global.chapter_name == "Black Templars"){
 				if (irandom(14)==0){
 					body[$"torso"].robes =choose(0,0,0,1,1,2);
-					if (irandom(2)<2){
-						body[$"head"].hood =1;
+					if (body[$"torso"].robes == 0 && irandom(1) == 0){
+						body[$"head"].hood = 1;
 					}
 				}
-			}else  if(irandom(30)==0){
+			}else if(global.chapter_name == "Dark Angels" || obj_ini.progenitor==1){
+				body[$"torso"].robes = choose(0,0,0,1,2);
+				if (body[$"torso"].robes == 0 && irandom(1) == 0){
+					body[$"head"].hood = 1;
+				}
+			}else if(irandom(30)==0){
 				body.torso.robes =choose(0,1,2,2,2,2,2);
-				if (body.torso<2){
-					if (irandom(2)==0){
-						body[$"head"].hood =1;
-					}
+				if (body[$"torso"].robes == 0 && irandom(1) == 0){
+					body[$"head"].hood = 1;
 				}
 			}
 			break;

@@ -86,7 +86,38 @@ function progenitor_livery(chapter, specific="none"){
 				helm_lens : Colors.Red,			
 			}		
 		}
-	} else if (chapter=="Raven Guard"){
+	}else if (chapter == "Dark Angels"){
+		livery_data = {
+			sgt: {
+				helm_pattern: 0,
+				helm_primary: obj_creation.main_color,
+				helm_secondary: obj_creation.main_color,
+				helm_detail: obj_creation.trim_color,
+				helm_lens: obj_creation.lens_color,
+			},
+			vet_sgt: {
+				helm_pattern: 1,
+				helm_primary: obj_creation.main_color,
+				helm_secondary: obj_creation.main_color,
+				helm_detail: obj_creation.trim_color,
+				helm_lens: obj_creation.lens_color,
+			},
+			captain: {
+				helm_pattern: 0,
+				helm_primary: obj_creation.main_color,
+				helm_secondary: obj_creation.main_color,
+				helm_detail: obj_creation.trim_color,
+				helm_lens: obj_creation.lens_color,
+			},
+			veteran: {
+				helm_pattern: 0,
+				helm_primary: obj_creation.main_color,
+				helm_secondary: obj_creation.main_color,
+				helm_detail: obj_creation.trim_color,
+				helm_lens: obj_creation.lens_color,
+			}
+		}
+	}else if (chapter=="Raven Guard"){
 		livery_data = {
 			sgt : {
 				helm_pattern:0,
@@ -277,8 +308,8 @@ function progenitor_livery(chapter, specific="none"){
 			sgt : {
 				helm_pattern:1,
 				helm_primary : Colors.Sanguine_Red,
-				helm_secondary : Colors.Black,
-				helm_detail : Colors.Sanguine_Red,
+				helm_secondary : Colors.Sanguine_Red,
+				helm_detail : Colors.Lighter_Black,
 				helm_lens : Colors.Lime,
 			},
 			vet_sgt : {
@@ -290,9 +321,9 @@ function progenitor_livery(chapter, specific="none"){
 			},
 			captain : {
 				helm_pattern:0,
-				helm_primary : Colors.Copper,
-				helm_secondary : Colors.Copper,
-				helm_detail : Colors.Copper,
+				helm_primary : Colors.Sanguine_Red,
+				helm_secondary : Colors.Sanguine_Red,
+				helm_detail : Colors.Gold,
 				helm_lens : Colors.Lime,
 			},
 			veteran : {
