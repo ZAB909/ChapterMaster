@@ -277,7 +277,12 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
     }
 
     if ("Storm Shield" == equiped_weapon) {
-        ui_weapon[left_or_right] = spr_weapon_storm;
+        if (global.chapter_name == "Dark Angels" && role() == obj_ini.role[100][Role.HONOR_GUARD]){
+            ui_weapon[left_or_right] = spr_weapon_storm;
+        }
+        else {
+            ui_weapon[left_or_right] = spr_weapon_storm2;
+        }
         ui_arm[left_or_right] = 2;
         ui_above[left_or_right] = true;
         ui_spec[left_or_right] = false;
