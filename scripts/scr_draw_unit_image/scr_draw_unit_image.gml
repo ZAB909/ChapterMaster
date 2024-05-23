@@ -1210,13 +1210,13 @@ function scr_draw_unit_image(_background=false){
                 if (role() == obj_ini.role[100][Role.COMPANY_CHAMPION]) {
                     draw_sprite(spr_special_helm,0,x_surface_offset,y_surface_offset);
                     draw_sprite(spr_laurel,0,x_surface_offset,y_surface_offset);
-                    draw_sprite(spr_helm_decorations,0,x_surface_offset,y_surface_offset);
+                    draw_sprite(spr_helm_decorations,1,x_surface_offset,y_surface_offset);
                 }
                 if (role() == obj_ini.role[100][Role.CAPTAIN]) {
                     draw_sprite(spr_laurel,0,x_surface_offset,y_surface_offset);
                 }
                 if (role() == obj_ini.role[100][Role.SERGEANT] || role() == obj_ini.role[100][Role.VETERAN_SERGEANT]) {
-                    draw_sprite(spr_helm_decorations,0,x_surface_offset,y_surface_offset);
+                    draw_sprite(spr_helm_decorations,1,x_surface_offset,y_surface_offset);
                 }
             }
             if (armour_type==ArmourType.Indomitus && !armour_bypass){
