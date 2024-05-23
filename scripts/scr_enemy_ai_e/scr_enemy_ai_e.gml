@@ -378,25 +378,12 @@ function scr_enemy_ai_e() {
 
             repeat(9) {
                 i += 1;
-                var special_stop;
-                special_stop = false;
-
+                var special_stop = false;;
                 if (i = 10) or(i = 11) {
-                    var run, s;
-                    run = 0;
-                    s = 0;
-                    repeat(4) {
-                        run += 1;
-                        s = 0;
-                        repeat(4) {
-                            s += 1;
-                            if (p_problem[run, s] = "meeting") or(p_problem[run, s] = "meeting_trap") then special_stop = true;
-                        }
-                    }
+                    special_stop = has_problem_star("meeting")||has_problem_star("meeting_trap");
                 }
 
-
-                if (obj_controller.faction_status[i] = "War") and(onceh = 0) and(special_stop = false) { // Quene battle
+                if (obj_controller.faction_status[i] = "War") and(onceh = 0) and(!special_stop) { // Quene battle
                     obj_turn_end.battles += 1;
                     obj_turn_end.battle[obj_turn_end.battles] = 1;
                     obj_turn_end.battle_world[obj_turn_end.battles] = -50;
@@ -415,7 +402,7 @@ function scr_enemy_ai_e() {
                         }
                         with(obj_en_fleet) {
                             if (action = "") and(orbiting = obj_controller.temp[1049]) and(owner = 10) {
-                                if (string_count("BLOOD", trade_goods) > 0) then instance_create(x, y, obj_temp2);
+                                if (string_count("Khorne_warband", trade_goods) > 0) then instance_create(x, y, obj_temp2);
                                 if (string_lower(trade_goods) = "csm") then instance_create(x, y, obj_temp3);
                             }
                         }
@@ -516,7 +503,7 @@ function scr_enemy_ai_e() {
             }
 
         }
-        if (p_player[run] > 0) and((p_problem[run, 1] = "bomb") or(p_problem[run, 2] = "bomb") or(p_problem[run, 3] = "bomb") or(p_problem[run, 4] = "bomb")) {
+        if (p_player[run] > 0) and(has_problem_planet(run,"bomb")) {
             var have_bomb;
             have_bomb = scr_check_equip("Plasma Bomb", name, run, 0);
             if (have_bomb > 0) {
@@ -569,25 +556,13 @@ function scr_enemy_ai_e() {
                         }
                         break;
                     case 10:
-                        var pause = 0,
-                            r = 0;
-                        for (r = 0; r < array_length(p_problem[run]); r++) {
-                            if (p_problem[run][r] == "meeting" || p_problem[run][r] == "meeting_trap") {
-                                pause = 1;
-                            }
-                        }
+                         var pause = has_problem_planet(run,"meeting")||has_problem_planet(run,"meeting_trap");
                         if (p_guardsmen[run] + p_pdf[run] == 0 && p_player[run] > 0 && p_traitors[run] > 0 && pause == 0 && obj_controller.faction_status[10] == "War") {
                             battle_opponent = 10;
                         }
                         break;
                     case 11:
-                        var pause = 0,
-                            r = 0;
-                        for (r = 0; r < array_length(p_problem[run]); r++) {
-                            if (p_problem[run][r] == "meeting" || p_problem[run][r] == "meeting_trap") {
-                                pause = 1;
-                            }
-                        }
+                        var pause = has_problem_planet(run,"meeting")||has_problem_planet(run,"meeting_trap");
                         if (p_guardsmen[run] + p_pdf[run] == 0 && p_player[run] > 0 && p_chaos[run] > 0 && pause == 0 && obj_controller.faction_status[10] == "War") {
                             battle_opponent = 11;
                         }
@@ -787,8 +762,8 @@ function scr_enemy_ai_e() {
                                 obj_controller.gene_seed -= 1;
                                 array_insert(obj_controller.recruit_corruption, i, new_recruit_corruption);
                                 array_insert(obj_controller.recruit_distance , i, 0);
-                                array_insert(obj_controller.recruit_training, i, new_recruit_exp);
-                                array_insert(obj_controller.recruit_exp, i, months_to_neo); 
+                                array_insert(obj_controller.recruit_training, i, months_to_neo);
+                                array_insert(obj_controller.recruit_exp, i, new_recruit_exp); 
                                 array_insert(obj_controller.recruit_name, i, global.name_generator.generate_space_marine_name());                                                                                           
                                 break;
                             }

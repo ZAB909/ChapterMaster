@@ -149,7 +149,7 @@ if (start == 7) {
         _result_box_text += $"\nEscorts Lost: {string(escort_lost)} ({string((escort_lost / max(0, escort_max)) * 100)}%)";
     }
     if (ships_max && (_all_lost > 0) && !_wiped_out) {
-        _result_box_text += $"\nShips Damaged: {string(_only_damaged)} ({string((_only_damaged / (ships_max - _all_lost)) * 100)}%)";
+        _result_box_text += $"\nShips Damaged: {string(ships_damaged)} ({string((ships_damaged / (ships_max - _all_lost)) * 100)}%)";
     } else if (!_wiped_out) {
         _result_box_text += "\nShips Damaged: 0 (0%)";
     }

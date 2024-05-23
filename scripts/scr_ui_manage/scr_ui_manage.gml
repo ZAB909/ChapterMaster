@@ -410,9 +410,10 @@ function scr_ui_manage() {
 			*/			    
 
 			// Draw unit image
-			draw_set_color(c_white);	    	
-			selected_unit.draw_unit_image(1208,210);
-
+			draw_set_color(c_white);
+			if (is_struct(temp[121])){
+				temp[121].draw(xx+1208, yy+240)
+			}
 
 			//TODO implement tooltip explaining potential loyalty hit of demoting a sgt
 			if (view_squad &&  company_data!={}){
@@ -745,6 +746,7 @@ function scr_ui_manage() {
 			array_push(tooltip_drawing, [tooltip_text, [x2,y1,x1,y2]]);
 			draw_set_color(line_color);
 		}
+
 		// Animated scanline
 		draw_animated_scanline(xx+1007+18, yy+140+4, 530, 368);
 	}	

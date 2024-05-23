@@ -10,7 +10,7 @@ function mission_name_key(mission){
 		"mech_raider" : "Provide Land Raider to Mechanicus",
 		"mech_bionics" : "Provide Bionic Augmented marines to study",
 		"mech_mars" : "Send Techmarines to mars",
-		"mech_tomb": "Explore Mechanicus Tomb",
+		"mech_tomb1": "Explore Mechanicus Tomb",
 		"fallen" : "Find Chapter Fallen",
 		"recon" : "Recon Mission for Inquisitor",
 		"cleanse" : "Cleanse Planet for Inquisitor",
@@ -18,6 +18,7 @@ function mission_name_key(mission){
 		"recon" : "Recon Mission for Inquisitor",
 		"bomb" : "Bombard World for inquisitor",
 		"great_crusade": "Answer Crusade Muster Call",
+		"harlequins" : "Harlequin presence Report",
 	}
 	if (struct_exists(mission_key, mission)){
 		return mission_key[$ mission];
@@ -256,15 +257,25 @@ function scr_unit_quick_find_pane() constructor{
 		    var i = 0;
 		    while(i<array_length(mission_log) && (yy+90+(20*i)+12 +20)<main_panel.YY+yy+main_panel.height)		
 			{
-				mission = mission_log[i]
+				mission = mission_log[i];
+				entered=false;
 				if (scr_hit(xx+10, yy+90+(20*i),xx+main_panel.width,yy+90+(20*i)+18)){
 					draw_set_color(c_gray);
 					draw_rectangle(xx+10+20, yy+90+(20*i)-2,xx+main_panel.width-20,yy+90+(20*i)+18, 0)
 					draw_set_color(c_white);
+					entered=true;
 				}
 			    draw_text(xx+80, yy+90+(20*i), $"{mission.system} {scr_roman_numerals()[mission.planet-1]}" );
-			    draw_text(xx+160, yy+90+(20*i), mission.mission);
-			    draw_text(xx+310, yy+90+(20*i), mission.time);
+			    draw_set_halign(fa_left);
+			    if (entered){
+			    	draw_text(xx+160-20, yy+90+(20*i), mission.mission);
+			    } else {
+			    	draw_text(xx+160-20, yy+90+(20*i), string_truncate(mission.mission,150));
+			    }
+			    draw_set_halign(fa_center);
+			    if (!entered){
+			    	draw_text(xx+310, yy+90+(20*i), mission.time);
+			    }
 			    if (point_and_click([xx+10, yy+90+(20*i)-2,xx+main_panel.width,yy+90+(20*i)+18])){
 			    	var star = star_by_name(mission.system);
 			    	if (star!="none")

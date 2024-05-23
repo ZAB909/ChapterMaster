@@ -2,6 +2,7 @@
 function scr_company_struct(comp) constructor{
 	company = comp;
 	company_squads = [];
+
 	static squad_search = function(){
 		company_squads = [];
 		for (var i=0;i<array_length(obj_ini.squads);i++){
@@ -10,7 +11,9 @@ function scr_company_struct(comp) constructor{
 			}
 		}
 	}
+
 	squad_search();
+
 	cur_squad = 0;
 	exit_period=false;
 	unit_rollover=false;
@@ -18,6 +21,11 @@ function scr_company_struct(comp) constructor{
 	selected_unit=obj_controller.temp[120];
 	drop_down_open=false;
 	captain = "none";
+	squad_draw_surfaces = array_create(15, []);
+	for (var i=0;i<15;i++){
+		squad_draw_surfaces[i]=[[-1,-1],false];
+	}
+
 	if (company>0 && company<11){
 		var unit;
 		var company_units = obj_controller.display_unit;
@@ -196,8 +204,8 @@ function scr_company_struct(comp) constructor{
 				}
 			}
 			//TODO compartmentalise drop down option logic
+			var deploy_text = "Squad will deploy in the";
 			if (current_squad.formation_place!=""){
-				var deploy_text = "Squad will deploy in the";
 				draw_set_font(fnt_40k_14b)
 				draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0], deploy_text,1,1,0);
 				button = draw_unit_buttons([xx+bound_width[0]+5 + string_width(deploy_text), yy+bound_height[0]-2],current_squad.formation_place,[1,1],c_green);
@@ -243,7 +251,7 @@ function scr_company_struct(comp) constructor{
 				}
 				bound_height[0] += button[3] - button[1];
 			}
-			button = draw_unit_buttons([xx+bound_width[0]+30 + string_width(deploy_text), yy+bound_height[0]+10],"Reset Squad Loadout",[1,1],c_green);
+			button = draw_unit_buttons([xx+bound_width[0]+30 + string_width(deploy_text), yy+bound_height[0]+10+35],"Reset Squad Loadout",[1,1],c_green);
 			if (point_and_click(button)){
 				current_squad.sort_squad_loadout();
 			}
@@ -260,7 +268,13 @@ function scr_company_struct(comp) constructor{
 			var sprite_draw_delay="none"
 			var unit_sprite_coords=[];
 			for (var i=0;i<array_length(current_squad.members);i++){
-				member = obj_ini.TTRPG[current_squad.members[i][0]][current_squad.members[i][1]];
+				member = fetch_unit(current_squad.members[i]);
+				if (!array_equals(squad_draw_surfaces[i][0], current_squad.members[i])){
+					show_debug_message("non equal arrays {0}, {1}",squad_draw_surfaces[i][0], current_squad.members[i]);
+					squad_draw_surfaces[i][0] = [member.company, member.marine_number];
+					squad_draw_surfaces[i][1] = member.draw_unit_image();
+				}
+				var cur_member_surface = squad_draw_surfaces[i][1];
 				if (member.name()!=""){
 					if (member_width==5){
 						member_width=0;
@@ -269,16 +283,15 @@ function scr_company_struct(comp) constructor{
 						y_mod += 231;
 					}
 					member_width++;
-					unit_sprite_coords = [xx+25+x_mod, yy+144+y_mod, xx+25+x_mod+166, yy+144+y_mod+271];
-					if (point_in_rectangle(mouse_x, mouse_y, unit_sprite_coords[0], unit_sprite_coords[1], unit_sprite_coords[2], unit_sprite_coords[3]-40) && !exit_period && unit_rollover){
-						sprite_draw_delay = [member,unit_sprite_coords];
+					unit_sprite_coords = [xx+25+x_mod, yy+144+y_mod, xx+25+x_mod+166, yy+144+y_mod+231];
+					cur_member_surface.draw_part(unit_sprite_coords[0],unit_sprite_coords[1], 0,0, 166, 231,true);
+					if (point_in_rectangle(mouse_x, mouse_y, unit_sprite_coords[0], unit_sprite_coords[1], unit_sprite_coords[2], unit_sprite_coords[3]) && !exit_period && unit_rollover){
+						sprite_draw_delay = [member,unit_sprite_coords, cur_member_surface];
 						obj_controller.temp[120] = member;									
 					}else {
 						if (obj_controller.temp[120].company==member.company && obj_controller.temp[120].marine_number==member.marine_number && !is_array(sprite_draw_delay)){
-							sprite_draw_delay = [member,unit_sprite_coords];
+							sprite_draw_delay = [member,unit_sprite_coords, cur_member_surface];
 							obj_controller.temp[120] = member;
-						}else{
-							member.draw_unit_image(unit_sprite_coords[0]-xx,unit_sprite_coords[1]-yy);
 						}								
 					}
 					x_mod+=x_overlap_mod;
@@ -287,7 +300,7 @@ function scr_company_struct(comp) constructor{
 			if (is_array(sprite_draw_delay)){
 				member = sprite_draw_delay[0];
 				unit_sprite_coords=sprite_draw_delay[1]
-				member.draw_unit_image(unit_sprite_coords[0]-xx,unit_sprite_coords[1]-yy);
+				sprite_draw_delay[2].draw_part(unit_sprite_coords[0],unit_sprite_coords[1], 0,0, 166, 231, true);
 				draw_set_color(c_red);
 				draw_rectangle(unit_sprite_coords[0], unit_sprite_coords[1], unit_sprite_coords[2], unit_sprite_coords[3], 1);
 				draw_set_color(c_gray);

@@ -703,7 +703,14 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			array_push(role_history ,[role(), obj_controller.turn])
 		}
 		if (new_role==obj_ini.role[100][5]){
+			if (company==2) then obj_ini.watch_master_name=name();
+			if (company==3) then obj_ini.arsenal_master_name=name();
 	        if (company==4) then obj_ini.lord_admiral_name=name();
+			if (company==5) then obj_ini.march_master_name=name();
+			if (company==6) then obj_ini.rites_master_name=name();
+			if (company==7) then obj_ini.chief_victualler_name=name();
+			if (company==8) then obj_ini.lord_executioner_name=name();
+			if (company==9) then obj_ini.relic_master_name=name();
 	        if (company==10) then obj_ini.recruiter_name=name();
 	        scr_recent("captain_promote",name(),company);			
 		} else  if (new_role==obj_ini.role[100][4]){
@@ -1250,12 +1257,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					psionic = max(psionic-5, 0);
 				}
 			}
-
-			if (global.chapter_name=="Black Templars"){
-				if (irandom(14)==0){
-					body[$"torso"].robes =choose(1,2);
-				}				
-			}
 			if (global.chapter_name=="Space Wolves") or (obj_ini.progenitor=3) {
 				religion_sub_cult = "The Allfather";
 			} else if(global.chapter_name=="Salamanders") or (obj_ini.progenitor==8){
@@ -1264,19 +1265,22 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				religion_sub_cult = "The Cult of Iron";
 			} 
 
-			if (array_contains(["Dark Angels","Black Templars"],global.chapter_name) || obj_ini.progenitor==1){
+			if (global.chapter_name == "Black Templars"){
 				if (irandom(14)==0){
 					body[$"torso"].robes =choose(0,0,0,1,1,2);
-					if (irandom(2)<2){
-						body[$"head"].hood =1;
+					if (body[$"torso"].robes == 0 && irandom(1) == 0){
+						body[$"head"].hood = 1;
 					}
 				}
-			}else  if(irandom(30)==0){
+			}else if(global.chapter_name == "Dark Angels" || obj_ini.progenitor==1){
+				body[$"torso"].robes = choose(0,0,0,1,2);
+				if (body[$"torso"].robes == 0 && irandom(1) == 0){
+					body[$"head"].hood = 1;
+				}
+			}else if(irandom(30)==0){
 				body.torso.robes =choose(0,1,2,2,2,2,2);
-				if (body.torso<2){
-					if (irandom(2)==0){
-						body[$"head"].hood =1;
-					}
+				if (body[$"torso"].robes == 0 && irandom(1) == 0){
+					body[$"head"].hood = 1;
 				}
 			}
 			break;
@@ -1478,10 +1482,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 		var is_artifact = !is_string(item);
 		if (!is_artifact && art_only == false){
-			return $"{quality_string_conversion(quality)}{item}";
+			return $"{item}";
 		} else if (is_artifact) {
 			if (obj_ini.artifact_struct[item].name==""){
-				return  $"{quality_string_conversion(quality)}{obj_ini.artifact[item]}";
+				return  $"{obj_ini.artifact[item]}";
 			} else {
 				return obj_ini.artifact_struct[item].name;
 			}
@@ -1898,15 +1902,17 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			var primary_weapon;
 			var secondary_weapon="none";
 			if (weapon_slot==0){
-				//if player has not ranged weapons
-				if (((_wep1.range>1.1 ||_wep1.range==0) && (_wep2.range>1.1||_wep2.range==0)) && (!_wep1.has_tags(["pistol","flame"]) && !_wep2.has_tags(["pistol","flame"]))){
+				//if player has not melee weapons
+				var valid1 = ((_wep1.range<=1.1 && _wep1.range!=0) || (_wep1.has_tags(["pistol","flame"])));
+				var valid2 = ((_wep2.range<=1.1 && _wep2.range!=0) || (_wep2.has_tags(["pistol","flame"])));
+				if (!valid1 && !valid2){
 					primary_weapon=new equipment_struct({},"");//create blank weapon struct
 					primary_weapon.attack=strength/3;//calculate damage from player fists
 					primary_weapon.name="fists";
 				} else {
-					if (_wep1.range>1.1 && !_wep1.has_tags(["pistol","flame"])){
+					if (!valid1 && valid2){
 						primary_weapon=_wep2;
-					} else if (_wep2.range>1.1 && !_wep2.has_tags(["pistol","flame"])){
+					} else if (valid1 && !valid2){
 						primary_weapon=_wep1;
 					} else {
 						var highest = _wep1.attack>_wep2.attack ? _wep1 :_wep2;
@@ -1921,9 +1927,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 							primary_weapon=highest;
 							melee_att*=0.5;
 							if (primary_weapon.has_tag("flame")){
-								explanation_string+=$"Primary is Flame: +50%#"
+								explanation_string+=$"Primary is Flame: -50%#"
 							} else if primary_weapon.has_tag("pistol"){
-								explanation_string+=$"Primary is Pistol: +50%#"
+								explanation_string+=$"Primary is Pistol: -50%#"
 							}
 							secondary_weapon=lowest;
 						}
@@ -2734,6 +2740,20 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}
 		}
 		return artis;
+	}
+
+	static equipped_artifact_tag = function(tag){
+		var cur_artis = equipped_artifacts();
+		var arti;
+		var has_tag = false;
+		for(var i=0;i<array_length(cur_artis);i++){
+			arti = obj_ini.artifact_struct[cur_artis[i]];
+			has_tag = arti.has_tag(tag);
+			if (has_tag){
+				break;
+			}
+		}
+		return has_tag;
 	}
 
 	static movement_after_math = function(end_company=company, end_slot=marine_number){

@@ -1,4 +1,4 @@
-function scr_popup(type, text, image, popup_special) {
+function scr_popup(type, text, image, popup_special="") {
 
 	// title / text / image / speshul
 
@@ -13,8 +13,10 @@ function scr_popup(type, text, image, popup_special) {
 	    obj_turn_end.popup_text[obj_turn_end.popups]=text;
 	    obj_turn_end.popup_image[obj_turn_end.popups]=image;
 	    obj_turn_end.popup_special[obj_turn_end.popups]=popup_special;
+	} else {
+	    var pip=instance_create(0,0,obj_popup);
+	    pip.title=type;
+	    pip.text=text;
+	    pip.image=image;	
 	}
-
-
-
 }

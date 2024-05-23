@@ -297,8 +297,12 @@ function planet_feature_bool(planet, search_feature){
 	var feature_exists = 0;
 	if (feature_count > 0){
 	for (var fc = 0; fc < feature_count; fc++){
-		if (planet[fc].f_type == search_feature){
-			feature_exists = 1;
+		if (!is_array(search_feature)){
+			if (planet[fc].f_type == search_feature){
+				feature_exists = 1;
+			}
+		} else {
+			feature_exists = array_contains(search_feature,planet[fc].f_type);
 		}
 		if (feature_exists == 1){break;}
 	}}

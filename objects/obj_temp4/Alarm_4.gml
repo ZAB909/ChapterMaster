@@ -90,7 +90,7 @@ with(obj_fleet_select){instance_destroy();}
  delete_features(planet.p_feature[num], P_features.Artifact);
 
 i=-1;
-if (array_contains(artifact_tags[last_artifact-1], "Daemonic")) then repeat(array_length(man_sel[i])){
+if (array_contains(obj_ini.artifact_tags[last_artifact-1], "Daemonic")) then repeat(array_length(man_sel[i])){
     i+=1;
     if (man_sel[i]=1){
         if (obj_controller.man[i]="man"){obj_ini.TTRPG[comp][i].corruption+=choose(0,2,4,6,8);}

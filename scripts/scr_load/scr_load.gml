@@ -581,31 +581,16 @@ function scr_load(argument0, argument1) {
 	                new_star.p_raided[g]=ini_read_real("Star","sr"+string(i)+"raided"+string(g),0);
 
 
-
-	                /*
-	                ini_write_string("Star","sr"+string(i)+"prob"+string(g)+".1",instance_array[i].p_problem[g,1]);
-	                ini_write_real("Star","sr"+string(i)+"time"+string(g)+".1",instance_array[i].p_timer[g,1]);
-
-	                ini_write_string("Star","sr"+string(i)+"prob"+string(g)+"2",instance_array[i].p_problem[g,2]);
-	                ini_write_real("Star","sr"+string(i)+"time"+string(g)+".2",instance_array[i].p_timer[g,2]);
-
-	                ini_write_string("Star","sr"+string(i)+"prob"+string(g)+".3",instance_array[i].p_problem[g,3]);
-	                ini_write_real("Star","sr"+string(i)+"time"+string(g)+".3",instance_array[i].p_timer[g,3]);
-
-	                ini_write_string("Star","sr"+string(i)+"prob"+string(g)+".4",instance_array[i].p_problem[g,4]);
-	                ini_write_real("Star","sr"+string(i)+"time"+string(g)+".4",instance_array[i].p_timer[g,4]);
-	                */
-
-
-
-	                new_star.p_problem[g,1]=ini_read_string("Star","sr"+string(i)+"prob"+string(g)+".1","");
-	                new_star.p_timer[g,1]=ini_read_real("Star","sr"+string(i)+"time"+string(g)+".1",0);
-	                new_star.p_problem[g,2]=ini_read_string("Star","sr"+string(i)+"prob"+string(g)+".2","");
-	                new_star.p_timer[g,2]=ini_read_real("Star","sr"+string(i)+"time"+string(g)+".2",0);
-	                new_star.p_problem[g,3]=ini_read_string("Star","sr"+string(i)+"prob"+string(g)+".3","");
-	                new_star.p_timer[g,3]=ini_read_real("Star","sr"+string(i)+"time"+string(g)+".3",0);
-	                new_star.p_problem[g,4]=ini_read_string("Star","sr"+string(i)+"prob"+string(g)+".4","");
-	                new_star.p_timer[g,4]=ini_read_real("Star","sr"+string(i)+"time"+string(g)+".4",0);
+	                for (var p=0;p<8;p++){
+	                	new_star.p_problem[g,p]=ini_read_string("Star",$"sr{i}prob{g}.{p}","");
+	                	new_star.p_timer[g,p]=ini_read_real("Star",$"sr{i}time{g}.{p}",-1);
+	                	new_star.p_problem_other_data[g,p]=ini_read_string("Star",$"sr{i}prob_other{g}.{p}","");
+	                	if (new_star.p_problem_other_data[g][p]!=""){
+	                		new_star.p_problem_other_data[g][p] = json_parse(base64_decode(new_star.p_problem_other_data[g][p]));
+	                	} else {
+	                		new_star.p_problem_other_data[g][p]={};
+	                	}
+	                }
 	            }
 	        }
 	    }
@@ -664,6 +649,13 @@ function scr_load(argument0, argument1) {
 	    obj_ini.master_necron_vehicles=ini_read_real("Ini","master_necron_vehicles",0);
 	    obj_ini.master_monolith=ini_read_real("Ini","master_monolith",0);
 	    obj_ini.master_special_killed=ini_read_string("Ini","master_special","");
+	    obj_ini.complex_livery_data=ini_read_string("Ini","complex_livery","");
+	    if (obj_ini.complex_livery_data!=""){
+	    	obj_ini.complex_livery_data=json_parse(base64_decode(obj_ini.complex_livery_data));
+	    } else{
+	    	//TODO centralise and initialisation method for this other reference place is obj_creation create
+			obj_ini.complex_livery_data = complex_livery_default();	    	
+	    }
 	    //
 	    obj_ini.preomnor=ini_read_real("Ini","preomnor",0);
 	    obj_ini.voice=ini_read_real("Ini","voice",0);
@@ -1057,6 +1049,7 @@ function scr_load(argument0, argument1) {
 	        fla.orbiting=ini_read_real("Fleet","ef"+string(i)+"orb",0);
 	        fla.navy=ini_read_real("Fleet","ef"+string(i)+"navy",0);
 	        fla.guardsmen_unloaded=ini_read_real("Fleet","ef"+string(i)+"unl",0);
+	        fla.inquisitor=ini_read_real("Fleet","ef"+string(i)+"inquis",-1);
 
 	        if (fla.navy=1){var e;e=-1;
 	            repeat(20){e+=1;

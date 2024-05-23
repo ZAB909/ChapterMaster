@@ -168,33 +168,46 @@ if ((title="Inquisition Mission") or (title="Inquisition Recon")) and (title!="A
 if (image="chaos_messenger") and (title="Chaos Meeting"){
     if (mission="meeting_1") or (mission="meeting_1t"){
         if (option1=""){
-            option1="Die, heretic!";option2="Very well.  Lead the way.";
+            option1="Die, heretic!";
+            option2="Very well.  Lead the way.";
             option3="I must take care of an urgent matter first.  (Exit)";
             exit;
         }
         if (option1!=""){
             if (press=1){
-                with(obj_star){var i,r;i=0;r=0;
-                    repeat(4){i+=1;r=0;repeat(4){r+=1;if (p_problem[i,r]="meeting") or (p_problem[i,r]="meeting_trap"){p_problem[i,r]="";p_timer[i,r]=-1;}}}
+                remove_planet_problem()
+                with(obj_star){
+                    var i=0;
+                    repeat(planets){
+                        remove_planet_problem(i, "meeting");
+                        remove_planet_problem(i, "meeting_trap");
+                    }
                 }
                 obj_controller.disposition[10]-=10;
                 text="The heretic is killed in a most violent fashion.  With a lack of go-between the meeting cannot proceed.";
                 option1="";option2="";option3="";mission="";// image="";
-                if (obj_controller.blood_debt=1){obj_controller.penitent_current+=1;obj_controller.penitent_turn=0;obj_controller.penitent_turnly=0;}
+                if (obj_controller.blood_debt=1){
+                    obj_controller.penitent_current+=1;
+                    obj_controller.penitent_turn=0;
+                    obj_controller.penitent_turnly=0;
+                }
                 with(obj_temp_meeting){instance_destroy();}
-                cooldown=20;exit;
+                cooldown=20;
+                exit;
             }
-            if (press=2) and (mission="meeting_1"){
+            else if (press=2) and (mission="meeting_1"){
                 obj_controller.complex_event=true;obj_controller.current_eventing="chaos_meeting_1";
                 text="mission_star signal your readiness to the heretic.  Nearly twenty minutes of following the man passes before mission_star all enter an ordinary-looking structure.  Down, within the basement, mission_star then pass into the entrance of a tunnel.  As the trek downward continues more and more heretics appear- cultists, renegades that appear to be from the local garrison, and occasionally even the fallen of your kind.  Overall the heretics seem well supplied and equip.  This observation is interrupted as your group enters into a larger chamber, revealing a network of tunnels and what appears to be ancient catacombs.  Bones of the ancient dead, the forgotten, litter the walls and floor.  And the chamber seems to open up wider, and wider, until mission_star find yourself within a hall.  Within this hall, waiting for mission_star, are several dozen Chaos Terminators, a Greater Daemon of Tzeentch and Slaanesh, and Chaos Lord "+string(obj_controller.faction_leader[eFACTION.Chaos])+".";
                 option1="";option2="";option3="";mission="cslord1";image="";img=0;image_wid=0;size=3;
                 cooldown=20;exit;
             }
-            if (press=2) and (mission="meeting_1t"){
-                with(obj_star){var i,r;i=0;r=0;
-                    repeat(4){i+=1;r=0;repeat(4){r+=1;if (p_problem[i,r]="meeting") or (p_problem[i,r]="meeting_trap"){p_problem[i,r]="";p_timer[i,r]=-1;}}}
+            else if (press=2) and (mission="meeting_1t"){
+                with(obj_star){
+                    remove_star_problem("meeting");
+                    remove_star_problem("meeting_trap");
                 }
-                obj_controller.complex_event=true;obj_controller.current_eventing="chaos_trap";
+                obj_controller.complex_event=true;
+                obj_controller.current_eventing="chaos_trap";
                 text="mission_star signal your readiness to the heretic.  Nearly twenty minutes of following the man passes before mission_star all enter an ordinary-looking structure.  Down, within the basement, mission_star then pass into the entrance of a tunnel.  As the trek downward continues more and more heretics appear- cultists, renegades that appear to be from the local garrison, and occasionally even the fallen of your kind.  Overall the heretics seem well supplied and equip.  This observation is interrupted as your group enters into a larger chamber, revealing a network of tunnels and what appears to be ancient catacombs.  Bones of the ancient dead, the forgotten, litter the walls and floor.  And the chamber seems to open up wider, and wider, until mission_star find yourself within a hall.  Within this hall, waiting for mission_star, are several dozen Chaos Terminators, a handful of Helbrute, and many more Chaos Space Marines.  The Chaos Lord is nowhere to be seen.  It is a trap.";
                 option1="";option2="";option3="";mission="cslord1t";image="";img=0;image_wid=0;size=3;
                 cooldown=20;exit;
@@ -437,13 +450,11 @@ if (image="mechanicus") and (title="Mechanicus Mission") or (title="Mechanicus M
                 
                 with(obj_temp5){instance_destroy();}
                 if (eh>0){
-                    repeat(4){eh2+=1;if (tempy.p_problem[that,eh2]="") and (that2=0) then that2=eh2;}
-                    if (that2>0){
-                        tempy.p_problem[that,that2]="mech_tomb1";
+                    if (find_problem_planet(that, "", tempy)>0){
+                        add_new_problem(that, "mech_tomb1",17, tempy);
                         text="The Adeptus Mechanicus await your forces at "+string(tempy.name)+" "+scr_roman(that)+".  They are expecting at least two squads of Astartes and have placed the testing on hold until their arrival.  mission_star have 16 months to arrive.";
                         scr_event_log("","Mechanicus Mission Accepted: At least two squads of marines are expected at "+string(tempy.name)+" "+scr_roman(that)+" within 16 months.", tempy.name); 
-                        instance_create(tempy.x+16,tempy.y-24,obj_star_event);
-                        tempy.p_timer[that,that2]=17;
+                        new_star_event_marker("green");
                         title="Mechanicus Mission Accepted";
                         option1="";option2="";cooldown=15;exit;
                     }
@@ -453,36 +464,34 @@ if (image="mechanicus") and (title="Mechanicus Mission") or (title="Mechanicus M
     
     
         if (string_count("raider",mission)>0) or (string_count("bionics",mission)>0) or (string_count("mech_mars",mission)>0){
-            with(obj_temp5){instance_destroy();}
-            with(obj_star){if (name=obj_popup.loc) then instance_create(x,y,obj_temp5);}
-            if (instance_exists(obj_temp5)){
-                var tempy,eh,eh2,that,that2;tempy=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);eh=0;that=0;eh2=0;that2=0;
-                repeat(4){eh+=1;if (tempy.p_owner[eh]=3) and (tempy.p_type[eh]="Forge") then that=eh;}
-                
-                with(obj_temp5){instance_destroy();}
-                if (eh>0){
-                    repeat(4){eh2+=1;if (tempy.p_problem[that,eh2]="") and (that2=0) then that2=eh2;}
-                    if (that2>0){
-                        if (string_count("raider",mission)>0){
-                            tempy.p_problem[that,that2]="mech_raider!0!";
-                            text="The Adeptus Mechanicus await your forces at "+string(tempy.name)+" "+scr_roman(that)+".  They are expecting six "+string(obj_ini.role[100][16])+"s and a Land Raider.";
-                            scr_event_log("","Mechanicus Mission Accepted: Six of your "+string(obj_ini.role[100][16])+"s and a Land Raider are to be stationed at "+string(tempy.name)+" "+scr_roman(that)+" for 24 months.", tempy.name); 
-                        }
-                        if (string_count("bionics",mission)>0){
-                            tempy.p_problem[that,that2]="mech_bionics!0!";
-                            text="The Adeptus Mechanicus await your forces at "+string(tempy.name)+" "+scr_roman(that)+".  They are expecting ten Astartes with bionics.";
-                            scr_event_log("","Mechanicus Mission Accepted: Ten Astartes with bionics are to be stationed at "+string(tempy.name)+" "+scr_roman(that)+" for 24 months for testing purposes.", tempy.name); 
-                        }
-                        if (string_count("mars",mission)>0){
-                            tempy.p_problem[that,that2]="mech_mars";
-                            text="The Adeptus Mechanicus await your "+string(obj_ini.role[100][16])+"s at "+string(tempy.name)+" "+scr_roman(that)+".  They are willing to hold on the voyage for up to 12 months.";
-                            scr_event_log("","Mechanicus Mission Accepted: "+string(obj_ini.role[100][16])+"s are expected at "+string(tempy.name)+" "+scr_roman(that)+" within 12 months, for the voyage to Mars.", tempy.name); 
-                        }
-                        instance_create(tempy.x+16,tempy.y-24,obj_star_event);
-                        tempy.p_timer[that,that2]=49;if (string_count("mars",mission)>0) then tempy.p_timer[that,that2]=13;
-                        title="Mechanicus Mission Accepted";
-                        option1="";option2="";cooldown=15;exit;
+           
+            var mission_star = star_by_name(obj_popup.loc);
+            if (instance_exists(mission_star)){
+                var forge_planet = scr_get_planet_with_type(mission_star, "Forge");
+                if (mission_star.p_owner[eh]=3 && forge_planet){
+                    mission_loc=planet_numeral_name(forge_planet,mission_star);
+                    if (string_count("raider",mission)){
+                        add_new_problem(forge_planet, "mech_raider", 49, mission_star, {"completion":0});
+                        text=$"The Adeptus Mechanicus await your forces at {mission_loc}.  They are expecting six {obj_ini.role[100][16]}s and a Land Raider.";
+                        scr_event_log("",$"Mechanicus Mission Accepted: Six of your "+string(obj_ini.role[100][16])+"s and a Land Raider are to be stationed at {mission_loc} for 24 months.", mission_star.name);                         
+                    } else if (string_count("bionics",mission)){
+                        add_new_problem(forge_planet, "mech_bionics", 49, mission_star, {"completion":0});
+                        text=$"The Adeptus Mechanicus await your forces at {mission_loc}.  They are expecting ten Astartes with bionics.";
+                        scr_event_log("",$"Mechanicus Mission Accepted: Ten Astartes with bionics are to be stationed at {mission_loc} for 24 months for testing purposes.", mission_star.name);                         
+                    } else if (string_count("mars",mission)){
+                        add_new_problem(forge_planet, "mech_mars", 13, mission_star);
+                        text=$"The Adeptus Mechanicus await your {obj_ini.role[100][16]}s at {mission_loc}.  They are willing to hold on the voyage for up to 12 months.";
+                        scr_event_log("",$"Mechanicus Mission Accepted: {obj_ini.role[100][16]}s are expected at {mission_loc} within 12 months, for the voyage to Mars.", tempy.name);                         
                     }
+                    with (mission_star){
+                        new_star_event_marker("green")
+                    }
+                    cooldown=15;
+                    title="Mechanicus Mission Accepted";
+                    option1="";
+                    option2="";
+                    option3="";
+                    exit;
                 }
             }
         }

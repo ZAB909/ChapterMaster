@@ -523,7 +523,6 @@ while (i<array_length(recruit_name)){
         scr_add_man(obj_ini.role[100][12],10,"Scout Armour",obj_ini.role[100][12],"",recruit_exp[i],recruit_name[i],recruit_corruption[i],false,"default","");
         if (recruit_first=="") then recruit_first=recruit_name[i];
         recruits_finished+=1;
-        recruit_training[i]=-50;
         array_delete(recruit_name,i,1);
         array_delete(recruit_corruption,i,1);
         array_delete(recruit_distance,i,1);

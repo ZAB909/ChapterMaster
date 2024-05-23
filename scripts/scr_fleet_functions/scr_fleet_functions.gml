@@ -14,30 +14,36 @@ function set_fleet_target(targ_x, targ_y, final_target){
 	action_eta=floor(point_distance(x,y,targ_x,targ_y)/128)+1;
 }
 
-function chase_fleet_target_set(){
-	var targ_location;
-	if (target.action!=""){
-        goal_x=target.action_x;
-        goal_y=target.action_y;
-        targ_location=instance_nearest(goal_x,goal_y,obj_star);
+function fleets_next_location(fleet="none"){
+	var targ_location ="none";
+	if (fleet=="none"){
+		if (action!=""){
+	        var goal_x=fleet.action_x;
+	        var goal_y=fleet.action_y;
+	        targ_location=instance_nearest(goal_x,goal_y,obj_star);
+		} else {
+			targ_location=instance_nearest(fleet.x,fleet.y,obj_star);
+		}		
 	} else {
-		targ_location=instance_nearest(target.x,target.y,obj_star);
+		with (fleet){
+			targ_location = fleets_next_location();
+		}
 	}
-	action_x=targ_location.x;
-    action_y=targ_location.y;
-    action="";
-    set_fleet_movement();    
+	return targ_location.id;
+}
+function chase_fleet_target_set(){
+	var targ_location = fleets_next_location(target);
+	if (targ_location!="none"){
+		action_x=targ_location.x;
+	    action_y=targ_location.y;
+	    action="";
+	    set_fleet_movement();
+	}
 }
 
 function fleet_intercept_time_calculate(target_intercept){
 	var intercept_time = -1
-	if (target.action!=""){
-        goal_x=target_intercept.action_x;
-        goal_y=target_intercept.action_y;
-        targ_location=instance_nearest(goal_x,goal_y,obj_star);
-	} else {
-		targ_location=instance_nearest(target_intercept.x,target_intercept.y,obj_star);
-	}
+	targ_location = fleets_next_location(target_intercept);
 	if (instance_exists(targ_location)){
 		intercept_time=floor(point_distance(x,y,action_x,action_y)/action_spd)+1;
 	}
@@ -193,19 +199,8 @@ function set_fleet_movement(){
 //TODO build into unit struct
 function load_unit_to_fleet(fleet, unit){
 	var loaded = false;
-	var all_ships = [];
+	var all_ships = fleet_full_ship_array(fleet);
 	var i, ship_ident;
-	with (fleet){
-		for (i=1; i<=capital_number;i++){
-			array_push(all_ships, capital_num[i]);
-		}
-		for (i=1; i<=frigate_number;i++){
-			array_push(all_ships, frigate_num[i]);
-		}
-		for (i=1; i<=escort_number;i++){
-			array_push(all_ships, escort_num[i]);
-		}				
-	}
 
 	for (i=0;i<array_length(all_ships);i++){
 		ship_ident = all_ships[i];

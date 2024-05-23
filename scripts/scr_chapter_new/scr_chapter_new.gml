@@ -52,7 +52,8 @@ function scr_chapter_new(argument0) {
 	    color_to_pauldron="Caliban Green";color_to_pauldron2="Caliban Green";color_to_lens="Red";
 	    color_to_weapon="Dark Red";col_special=0;trim=0;
 	    hchaplain="Sapphon";clibrarian="Ezekial";fmaster="Sepharon";hapothecary="Razaek";
-		admiral="Korahael";recruiter="Ranaeus";
+		honorcapt="Belial";watchmaster="Sammael";arsenalmaster="Astoran";admiral="Korahael";marchmaster="Balthazar";
+		ritesmaster="Araphil";victualler="Ezekiah";lordexec="Molochi";relmaster="Xerophus";recruiter="Ranaeus";
 	    battle_cry="Repent!  For tomorow you may die";
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=9;
 	    mutations=0;mutations_selected=0;
@@ -94,7 +95,9 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    color_to_pauldron="White";color_to_pauldron2="White";color_to_lens="Red";
 	    color_to_weapon="Black";col_special=0;
 	    hapothecary="Ogholei";hchaplain="Jaghorin";clibrarian="Saghai";fmaster="Khamkar";
-		admiral="Joghaten";recruiter="Jodagha";
+		honorcapt="Jurga";watchmaster="Khajog";arsenalmaster="Kor'sarro";admiral="Joghaten";
+		marchmaster="Suboden";ritesmaster="Seglei";victualler="Dorghai";lordexec="Vorgha";relmaster="Khadajei";
+		recruiter="Jodagha";
 	    battle_cry="For the Emperor and the Khan!";// monastery_name="Quan Zhou";master_name=
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=12;
 	    mutations=0;mutations_selected=0;
@@ -129,7 +132,10 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    color_to_main="Ultramarine";color_to_secondary="Ultramarine";color_to_trim="Gold";
 	    color_to_pauldron="Ultramarine";color_to_pauldron2="Ultramarine";color_to_lens="Red";
 	    color_to_weapon="Red";col_special=0;
-	    hapothecary="Corpus Helix";hchaplain="Ortan Cassius";clibrarian="Varro Tigurius";fmaster="Fennias Maxim";admiral="Lazlo Tiberius";
+	    hapothecary="Corpus Helix";hchaplain="Ortan Cassius";clibrarian="Varro Tigurius";fmaster="Fennias Maxim";
+		honorcapt="Severus Agemman";watchmaster="Cato Sicarius";arsenalmaster="Mikael Fabian";admiral="Uriel Ventris";
+		marchmaster="Caito Galenus";ritesmaster="Maximus Epathus";victualler="Gerad Ixion";lordexec="Numitor";relmaster="Sinon";
+		recruiter="Antilochus";
 	    battle_cry="Courage and honor";// monastery_name="Fortress of Hera";master_name=
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=27;
 	    mutations=0;mutations_selected=0;
@@ -154,12 +160,16 @@ if (argument0="White Scars"){founding="N/A";points=150;
 		adv[1]="Bolter Drilling";adv[2]="Siege Masters";
 		homeworld="Ice";homeworld_name="Inwit";recruiting_world="Hive";recruiting_name="Necromunda";
 		homeworld_exists=1;recruiting_exists=1;homeworld_rule=2;aspirant_trial="Survival of the Fittest";
-		color_to_main="Gold";color_to_secondary="Gold";color_to_trim="Dark Red";color_to_pauldron="Gold"
-		color_to_pauldron2="Gold";color_to_lens="Lime";color_to_weapon="Black"
-		hapothecary="Dyserna";hchaplain="Guaron";clibrarian="Vidos Harn";fmaster="Atornus Geis";admiral="Kyne Phasn"
-                recruiter="Taelos"
+
+		color_to_main="Gold";color_to_secondary="Gold";color_to_trim="Red";color_to_pauldron="Gold"
+		color_to_pauldron2="Gold";color_to_lens="Red";color_to_weapon="Black"
+		hapothecary="Dyserna";hchaplain="Guaron";clibrarian="Vidos Harn";fmaster="Atornus Geis";
+		admiral="Kyne Phasn";honorcapt="Darnath Lysander";watchmaster="Helion";arsenalmaster="Tor Garadon";;marchmaster="Maluan";
+		ritesmaster="Antaros";victualler="Jonas";lordexec="Chalosa";relmaster="Kaheron";recruiter="Taelos";
+
 		battle_cry="Primarch-Progenitor, to your glory and the glory of him on earth!";
-	        equal_specialists=0;load_to_ships=[2,0,0];successors=21;
+	        equal_specialists=0;load_to_ships=[2,0,0];
+			successors=21;
 	        mutations=2;mutations_selected=2;
 	        preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=1;
 	        zygote=0;betchers=1;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
@@ -191,7 +201,8 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    color_to_pauldron="Dark Gold";color_to_pauldron2="Dark Gold";color_to_lens="Red";
 	    color_to_weapon="Dark Gold";col_special=0;trim=0;
 	    hapothecary="Ulstvan Morkaison";hchaplain="Ulrik the Slayer";clibrarian="Njal Stormcaller";fmaster="Krom Dragongaze";
-		admiral="Gunnar Red Moon";recruiter="Sven Bloodhowl";
+		honorcapt="Bran Redmaw";watchmaster="Engir Krakendoom";arsenalmaster="Erik Morkai";admiral="Gunnar Red Moon";marchmaster="Harald Deathwolf";
+		ritesmaster="Bjorn Stormwolf";victualler="Vorek Gnarlfist";lordexec="Krom Dragongaze";relmaster="Ragnar Blackmane";recruiter="Sven Bloodhowl";
 	    battle_cry="For Russ and the Allfather";// monastery_name="The Fang";master_name=
 	    equal_specialists=1;load_to_ships=[2,0,0];successors=1;
 	    mutations=0;mutations_selected=0;
@@ -203,12 +214,13 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    disposition[7]=0;// Reserved
 	    chapter_master_name="Logan Grimnar";chapter_master_melee=6;
 	    chapter_master_ranged=1;chapter_master_specialty=2;
-    
-	    company_title[1]="Champions of Fenris";company_title[2]="The Bloodmaws";company_title[3]="The Seawolves";
-	    company_title[4]="The Sons of Morkai";company_title[5]="The Red Moons";company_title[6]="The Deathwolves";
-	    company_title[7]="The Stormwolves";company_title[8]="The Ironwolves";company_title[9]="The Drakeslayers";
-	    company_title[10]="The Blackmanes";company_title[11]="The Firehowlers";company_title[12]="The Grimbloods";
-	    company_title[13]="The Wulfen";
+		
+		//Weird since they have 13 companies if the hard coding changes in the future this will as well
+	    /*company_title[0]="Champions of Fenris";*/company_title[1]="The Bloodmaws";company_title[2]="The Seawolves";
+	    company_title[3]="The Sons of Morkai";company_title[4]="The Red Moons";company_title[5]="The Deathwolves";
+	    company_title[6]="The Stormwolves";company_title[7]="The Ironwolves";company_title[8]="The Drakeslayers";
+	    company_title[9]="The Blackmanes";/*company_title[10]="The Firehowlers";company_title[12]="The Grimbloods";
+	    company_title[13]="The Wulfen";*/
     
 	    i=99;repeat(3){i+=1;
 	        role[i,2]="Wolf Guard";wep1[i,2]="Power Axe";wep2[i,2]="Bolter";armour[i,2]="Power Armour";
@@ -234,10 +246,12 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    homeworld="Desert";homeworld_name="Baal";
 	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=3;aspirant_trial="Blood Duel";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Sanguine Red";color_to_secondary="Sanguine Red";color_to_trim="Dark Grey";
+	    color_to_main="Sanguine Red";color_to_secondary="Sanguine Red";color_to_trim="Lighter Black";
 	    color_to_pauldron="Sanguine Red";color_to_pauldron2="Sanguine Red";color_to_lens="Lime";
 	    color_to_weapon="Black";col_special=0;trim=0;
-	    hchaplain="Astorash the Grim";clibrarian="Mephiston";fmaster="Incarael";
+	    hchaplain="Astorath the Grim";clibrarian="Mephiston";fmaster="Incarael";hapothecary="Corbulo";
+		honorcapt="Areno Karlaen";watchmaster="Donatos Aphael";arsenalmaster="Machiavi";admiral="Castigon";marchmaster="Sendini";
+		ritesmaster="Raxiatel";victualler="Phaeton";lordexec="Zedrenael";relmaster="Sendroth";recruiter="Borgio";
 	    battle_cry="For the Emperor and Sanguinius! Death! DEATH";// monastery_name="Fortress of Hera";master_name=
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=3;
 	    mutations=0;mutations_selected=0;
@@ -271,6 +285,8 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Dark Red";
 	    color_to_weapon="Silver";col_special=0;trim=0;
 	    hchaplain="Jorggir Shidd";clibrarian="Lydriik";fmaster="Feirros";hapothecary="Anaar Telech";
+		honorcapt="Caanok Var";watchmaster="Eutuun Hes";arsenalmaster="Sind Grolvoch";admiral="Maarkul Rumann";marchmaster="Tyrrod";
+		ritesmaster="Golloth";victualler="Raan";lordexec="Doroor Hesh";relmaster="Verrox";recruiter="Telavech";
 	    battle_cry="The flesh is weak";// monastery_name="Fortress of Hera";master_name=
 	    equal_specialists=1;load_to_ships=[2,0,0];successors=6;
 	    mutations=0;mutations_selected=0;
@@ -305,7 +321,9 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    color_to_main="Firedrake Green";color_to_secondary="Firedrake Green";color_to_trim="Dark Gold";
 	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Red";
 	    color_to_weapon="Black";col_special=0;trim=0;
-	    fmaster="Argos";clibrarian="Velcona";hapothecary="Harath Shen";recruiter="Sol Ba'ken";admiral="Dac'tyr";hchaplain="Elysius";
+	    fmaster="Argos";clibrarian="Velcona";hapothecary="Harath Shen";hchaplain="Leotrak Esar";
+		watchmaster="Pellas Mir'San";arsenalmaster="Adrax Agatone" admiral="Dac'tyr";
+		marchmaster="Mulcebor";ritesmaster="Ur'zan Draakgard";recruiter="Sol Ba'ken";
 	    battle_cry="Into the fires of battle!  Unto the anvil of war";// monastery_name="Fortress of Hera";master_name=
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=2;
 	    mutations=1;mutations_selected=1;
@@ -338,8 +356,9 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    color_to_main="Black";color_to_secondary="Black";color_to_trim="Silver";
 	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Dark Red";
 	    color_to_weapon="Black";col_special=0;trim=0;
-	    hchaplain="Cordae";fmaster="Dyloss";clibrarian="Taaloss";hapothecary="Vincente"
-	    recruiter="Korvydae";admiral="Aethon Shaan";
+	    hchaplain="Jolaran Tael";fmaster="Saar Laeron";clibrarian="Taalis Shraek";hapothecary="Vynda Aason"
+	    honorcapt="Vykar Kaed";watchmaster="Aaja Solari";arsenalmaster="Vordin Krayn";admiral="Aethon Shaan";marchmaster="Kyrin Solaq";
+		ritesmaster="Syras Colfaen";victualler="Aervar Qeld";lordexec="Reszasz Krevaan";relmaster="Vos Delorn";recruiter="Kalae Korvydae";
 	    battle_cry="Victorus aut Mortis";// monastery_name="Fortress of Hera";master_name=
 	    equal_specialists=0;load_to_ships=[2,0,0];successors=8;
 	    mutations=2;mutations_selected=2;
@@ -400,9 +419,9 @@ if (argument0="Minotaurs"){founding=10;points=450;
 	    recruiting_world="Death";recruiting_name=global.name_generator.generate_star_name();
 	    homeworld_rule=0;aspirant_trial="Challenge";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Copper";color_to_secondary="Copper";color_to_trim="Copper";
-	    color_to_pauldron2="Red";color_to_pauldron="Copper";color_to_lens="Red";
-	    color_to_weapon="Brown";col_special=0;trim=1;
+	    color_to_main="Lightest Brown";color_to_secondary="Lightest Brown";color_to_trim="Light Brown";
+	    color_to_pauldron2="Dark Red";color_to_pauldron="Dark Red";color_to_lens="Red";
+	    color_to_weapon="Dark Red";col_special=0;trim=1;
 		hchaplain="Ivanus Enkomi"; 
 		fmaster="Varro Crag";clibrarian="Lykos Gorgon";hapothecary="Raze Korthos"
 	    recruiter="Axion Eurytos";admiral="Thoul Brontes";
@@ -429,14 +448,15 @@ if (argument0="Minotaurs"){founding=10;points=450;
 	    selected_chapter=12;chapter=argument0;icon=12;icon_name="br";
 	    fleet_type=2;strength=5;purity=10;stability=6;cooperation=7;
 	    adv[1]="Scavengers";adv[2]="Psyker Abundance";dis[1]="Suspicious";
-	    hapothecary="Galan";hchaplain="Apollo Diomedes";clibrarian="Jonah Orion";
-		fmaster="Martellus";admiral="Aramus";recruiter="Cyrus";
+	    hapothecary="Galan";hchaplain="Mikelus";clibrarian="Jonah Orion";fmaster="Martellus";
+		honorcapt="Apollo Diomedes";watchmaster="Yriel Rikarius";marchmaster="Aramus";
+		ritesmaster="Tarkus";victualler="Atanaxis";lordexec="Thaddeus";relmaster="Avitus";recruiter="Cyrus";
 	    homeworld="Dead";homeworld_name="Aurelia";flagship_name="Omnis Arcanum";
 	    homeworld_exists=0;recruiting_exists=1;
 	    recruiting_world="Death";recruiting_name="Trontiux";
 	    homeworld_rule=0;aspirant_trial="Knowledge of Self";
 	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Sanguine Red";color_to_secondary="Sanguine Red";color_to_trim="Black";
+	    color_to_main="Sanguine Red";color_to_secondary="Sanguine Red";color_to_trim="Lighter Black";
 	    color_to_pauldron2="Bone";color_to_pauldron="Bone";color_to_lens="Lime";
 	    color_to_weapon="Black";col_special=0;trim=1;
 	    battle_cry=choose("None shall find us wanting.","Knowledge is power, guard it well");
@@ -459,8 +479,9 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 		homeworld_exists=1;recruiting_exists=0;homeworld_rule=1;aspirant_trial="Challenge"
 		color_to_main="Blue";color_to_secondary="Blue";color_to_trim="White";color_to_pauldron="Blue"
 		color_to_pauldron2="Blue";color_to_lens="Red";color_to_weapon="Black"
-		hapothecary="Curien Droga";hchaplain="Marqol Tomasi";clibrarian="Eustace Mendoza";fmaster="Javier Adon";admiral="Alessio Cortez"
-        recruiter="Ishmael Icario"
+		hapothecary="Curien Droga";hchaplain="Marqol Tomasi";clibrarian="Eustace Mendoza";fmaster="Javier Adon";
+		honorcapt="Alessio Cortez";watchmaster="Steffan Hios";arsenalmaster="Faradis Anto";admiral="Isidore Haleous";
+		marchmaster="Balthazar";recruiter="Ishmael Icario"
 		battle_cry="There is only the Emperor!  He is our shield and our protector!";
 	        equal_specialists=0;load_to_ships=[2,0,0];successors=0;
 	        mutations=2;mutations_selected=2;

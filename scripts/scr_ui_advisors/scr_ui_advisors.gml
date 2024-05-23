@@ -1170,7 +1170,7 @@ function scr_ui_advisors() {
             draw_set_halign(fa_left);
 
             var t_eta = 0;
-            for (var qp = 1, n = 0; qp <= 300 && n < 36; qp++) {
+            for (var qp = 0, n = 0; qp <= 300 && n < 36; qp++) {
                 if (recruit_name[qp] != "") {
                     n++;
                     draw_rectangle(xx + 947, yy + 100 + ((n - 1) * 20), xx + 1577, yy + 100 + (n * 20), 1);

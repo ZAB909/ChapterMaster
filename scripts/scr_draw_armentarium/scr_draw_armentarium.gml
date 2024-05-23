@@ -164,7 +164,7 @@ function calculate_research_points(turn_end=false){
             forge_string += $"Forges: +{5*player_forges}#";
         }
         forge_points = floor(forge_points);
-        var tech_test, charisma_test, piety_test, met_non_heretic;
+        var tech_test, charisma_test, piety_test, met_non_heretic, heretics_pursuade_chances, new_pursuasion;
         //in this instance tech heretics are techmarines with the "tech_heretic" trait
         if (turn_end){
             if (array_length(techs)==0) then scr_loyalty("Upset Machine Spirits","+");
@@ -175,16 +175,21 @@ function calculate_research_points(turn_end=false){
                     heretic_location = tech_locations[heretics[heretic]];
                     current_heretic = techs[heretics[heretic]];
                     if (current_heretic.in_jail()) then continue;
+                    heretics_pursuade_chances = (floor(current_heretic.charisma/5) - 3)
                     //iterate through rest of techs
+                    pursuasions =[];
                     met_non_heretic = false;
-                    for (var i=0; i<array_length(techs); i++){
+                    for (var i=0; i<array_length(techs) && heretics_pursuade_chances>0; i++){
                         same_location=false;
+                        new_pursuasion = irandom(array_length(techs)-1);
                         //if tech is also heretic skip
-                        if (array_contains(heretics,i)) then continue;
-                        current_tech = techs[i];
+                        if (array_contains(heretics,new_pursuasion)) then continue;
+                        if (array_contains(pursuasions,new_pursuasion)) then continue;
+                        heretics_pursuade_chances--;
+                        current_tech = techs[new_pursuasion];
 
                         // find out if heretic is in same location as techmarine
-                        if (same_locations(heretic_location,tech_locations[i])){
+                        if (same_locations(heretic_location,tech_locations[new_pursuasion])){
                             met_non_heretic=true;
                             //if so do a an opposed technology test of techmarine vs tech  heretic techmarine
                             tech_test = global.character_tester.oppposed_test(current_heretic,current_tech, "technology");
@@ -217,7 +222,7 @@ function calculate_research_points(turn_end=false){
                                     }
                                 }
                             }
-                            if (i==forge_master){
+                            if (new_pursuasion==forge_master){
                                 // if tech is the forge master then forge master takes a wisdom in this case doubling as a perception test
                                 // if forge master passes tech heresy is noted and chapter master notified
                                 if (global.character_tester.standard_test(current_tech, "wisdom", - 40)[0] && !notice_heresy){

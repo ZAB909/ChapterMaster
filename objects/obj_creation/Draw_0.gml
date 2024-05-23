@@ -27,7 +27,7 @@ if (slate3>0){
     draw_line(xx+30,yy+70+(slate3*36),xx+790,yy+70+(slate3*36));
 }
 
-
+var allow_colour_click = (cooldown<=0)   and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup));
 
 draw_set_alpha(slate4/30);
 if (slate4>0){
@@ -39,8 +39,8 @@ if (slate4>0){
         
         draw_set_font(fnt_40k_30b);
         draw_set_halign(fa_left);
-        draw_text_transformed(440,133,string_hash_to_newline("Founding Chapters"),0.75,0.75,0);
-        draw_text_transformed(440,363,string_hash_to_newline("Existing Chapters"),0.75,0.75,0);
+        draw_text_transformed(440,133,"Founding Chapters",0.75,0.75,0);
+        draw_text_transformed(440,363,"Existing Chapters",0.75,0.75,0);
         draw_text_transformed(440,593,string_hash_to_newline("Other"),0.75,0.75,0);
 		draw_text_transformed(440,463,string_hash_to_newline("Custom Chapters"),0.75,0.75,0);
         
@@ -59,7 +59,7 @@ if (slate4>0){
                 draw_set_alpha(0.1);draw_set_color(c_white);
                 draw_rectangle(x2,167,x2+48,167+48,0);
                 draw_set_alpha(slate4/30);
-                if (mouse_left>=1) and (cooldown<=0) and (change_slide<=0) and (premades=true){
+                if (mouse_left>=1) and (cooldown<=0) and (change_slide<=0) and (premades){
                     cooldown=8000;chapter=chapter_id[i];scr_chapter_new(chapter);
                     if (chapter!="nopw_nopw"){icon=i;custom=0;change_slide=1;goto_slide=2;chapter_string=chapter;}
                 }
@@ -80,7 +80,7 @@ if (slate4>0){
                 draw_set_alpha(0.1);draw_set_color(c_white);
                 draw_rectangle(x2,397,x2+48,397+48,0);
                 draw_set_alpha(slate4/30);
-                if (mouse_left>=1) and (cooldown<=0) and (change_slide<=0) and (premades=true){
+                if (mouse_left>=1) and (cooldown<=0) and (change_slide<=0) and (premades){
                     cooldown=8000;chapter=chapter_id[i];scr_chapter_new(chapter);
                     if (chapter!="nopw_nopw"){icon=i;custom=0;change_slide=1;goto_slide=2;chapter_string=chapter;}
                 }
@@ -139,7 +139,7 @@ if (slate4>0){
                 draw_set_alpha(0.1);draw_set_color(c_white);
                 draw_rectangle(x2,y2,x2+48,y2+48,0);
                 draw_set_alpha(slate4/30);
-                if (mouse_left>=1) and (cooldown<=0) and (change_slide<=0) and (premades=true){
+                if (mouse_left>=1) and (cooldown<=0) and (change_slide<=0) and (premades){
                     cooldown=8000;chapter=chapter_id[i];scr_chapter_new(chapter);
                     if (chapter!="nopw_nopw"){icon=i;custom=0;change_slide=1;goto_slide=2;chapter_string=chapter;}
                 }
@@ -263,7 +263,7 @@ if (slide>=2){
     if (icon>20) then draw_sprite_stretched(spr_icon_chapters,icon-19,436,74,128,128);
     
     obj_cursor.image_index=0;
-    if (scr_hit(436,74,436+128,74+128)=true) and (popup=""){obj_cursor.image_index=1;
+    if (scr_hit(436,74,436+128,74+128)) and (popup=""){obj_cursor.image_index=1;
         tooltip="Chapter Icon";tooltip2="Your Chapter's icon.  Click to edit.";
         
         /*if (cooldown<=0) and (mouse_left=1){
@@ -288,10 +288,10 @@ if (slide>=2){
     
     
     if (slide=2){
-        /*if (scr_hit(548,149,584,193)=true){obj_cursor.image_index=1;
+        /*if (scr_hit(548,149,584,193)){obj_cursor.image_index=1;
             if (cooldown<=0) and (mouse_left>=1){cooldown=8000;scr_icon("-");}
         }
-        if (scr_hit(595,149,634,193)=true){obj_cursor.image_index=1;
+        if (scr_hit(595,149,634,193)){obj_cursor.image_index=1;
             if (cooldown<=0) and (mouse_left>=1){cooldown=8000;scr_icon("+");}
         }*/
         
@@ -306,17 +306,19 @@ if (slide>=2){
             if (founding=10) then draw_sprite_stretched(spr_icon_chapters,0,1164-128,74,128,128);
             draw_set_alpha(1);
             
-            if (scr_hit(1164-128,74,1164,74+128)=true){tooltip="Founding Chapter";tooltip2="The parent Chapter whos Gene-Seed your own originates from.";}
+            if (scr_hit(1164-128,74,1164,74+128)){tooltip="Founding Chapter";tooltip2="The parent Chapter whos Gene-Seed your own originates from.";}
             
             if (custom>1){
                 draw_sprite_stretched(spr_creation_arrow,0,1164-194,160,32,32);
                 draw_sprite_stretched(spr_creation_arrow,1,1164-144,160,32,32);
                 
-                if (scr_hit(1164-194,149,1164-162,193)=true){obj_cursor.image_index=1;
-                    if (cooldown<=0) and (mouse_left>=1){cooldown=8000;founding-=1;if (founding=0) then founding=10;}
+                if (scr_hit(1164-194,149,1164-162,193)){obj_cursor.image_index=1;
+                    if (cooldown<=0) and (mouse_left>=1){cooldown=8000;founding-=1;
+                    if (founding=0) then founding=10;}
                 }
-                if (scr_hit(1164-144,149,1164-112,193)=true){obj_cursor.image_index=1;
-                    if (cooldown<=0) and (mouse_left>=1){cooldown=8000;founding+=1;if (founding=11) then founding=1;}
+                if (scr_hit(1164-144,149,1164-112,193)){obj_cursor.image_index=1;
+                    if (cooldown<=0) and (mouse_left>=1){cooldown=8000;founding+=1;
+                    if (founding=11) then founding=1;}
                 }
             }
             
@@ -343,7 +345,7 @@ if (slide=2){
     if (custom=2){
         if (text_selected="chapter") and (text_bar>30) then draw_text(800,80,string_hash_to_newline(string(chapter)));
         if (text_selected="chapter") and (text_bar<=30) then draw_text(805,80,string_hash_to_newline(string(chapter)+"|"));
-        if (scr_text_hit(800,80,true,chapter)=true){
+        if (scr_text_hit(800,80,true,chapter)){
             obj_cursor.image_index=2;
             if (cooldown<=0) and (mouse_left>=1){text_selected="chapter";cooldown=8000;keyboard_string=chapter;}
         }
@@ -357,7 +359,7 @@ if (slide=2){
     
     obj_cursor.image_index=0;
     if (custom>0) and (restarted=0){
-        if (scr_hit(436,74,436+128,74+128)=true) and (popup=""){obj_cursor.image_index=1;
+        if (scr_hit(436,74,436+128,74+128)) and (popup=""){obj_cursor.image_index=1;
             if (cooldown<=0) and (mouse_left=1){
                 popup="icons";cooldown=8000;
             }
@@ -379,27 +381,27 @@ if (slide=2){
         draw_text_transformed(800,211,string_hash_to_newline("Chapter Type"),0.6,0.6,0);
         draw_set_halign(fa_left);
         
-        if (scr_hit(516,242,674,266)=true){tooltip="Homeworld";tooltip2="Your chapter has a homeworld that they base on.  Contained upon it is a massive Fortress Monastery, which provides high levels of defense and automated weapons.";}
-        if (scr_hit(768,242,866,266)=true){tooltip="Fleet Based";tooltip2="Rather than a homeworld your chapter begins near their recruiting world.  The fleet includes a Battle Barge, which serves as a mobile base, and powerful ship.";}
-        if (scr_hit(952,242,1084,266)=true){tooltip="Penitent";tooltip2="As with Fleet Based, but you must crusade and fight until your penitence meter runs out.  Note that recruiting is disabled until then.";}// Avoiding fights will result in excomunicatus traitorus.
+        if (scr_hit(516,242,674,266)){tooltip="Homeworld";tooltip2="Your chapter has a homeworld that they base on.  Contained upon it is a massive Fortress Monastery, which provides high levels of defense and automated weapons.";}
+        if (scr_hit(768,242,866,266)){tooltip="Fleet Based";tooltip2="Rather than a homeworld your chapter begins near their recruiting world.  The fleet includes a Battle Barge, which serves as a mobile base, and powerful ship.";}
+        if (scr_hit(952,242,1084,266)){tooltip="Penitent";tooltip2="As with Fleet Based, but you must crusade and fight until your penitence meter runs out.  Note that recruiting is disabled until then.";}// Avoiding fights will result in excomunicatus traitorus.
         
         if (custom<2) then draw_set_alpha(0.5);
         yar=0;if (fleet_type=1) then yar=1;draw_sprite(spr_creation_check,yar,519,239);yar=0;
-        if (scr_hit(519,239,519+32,239+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom=2){cooldown=8000;
+        if (scr_hit(519,239,519+32,239+32)) and (cooldown<=0) and (mouse_left>=1) and (custom=2){cooldown=8000;
             if (points+20<=maxpoints) and (fleet_type=3){points+=20;fleet_type=1;}
             if (fleet_type=2){fleet_type=1;}
         }
         draw_text_transformed(551,239,string_hash_to_newline("Homeworld"),0.6,0.6,0);
         
         yar=0;if (fleet_type=2) then yar=1;draw_sprite(spr_creation_check,yar,771,239);yar=0;
-        if (scr_hit(771,239,771+32,239+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom=2){cooldown=8000;
+        if (scr_hit(771,239,771+32,239+32)) and (cooldown<=0) and (mouse_left>=1) and (custom=2){cooldown=8000;
             if (points+20<=maxpoints) and (fleet_type=3){points+=20;fleet_type=2;}
             if (fleet_type=1){fleet_type=2;}
         }
         draw_text_transformed(804,239,string_hash_to_newline("Fleet Based"),0.6,0.6,0);
         
         yar=0;if (fleet_type=3) then yar=1;draw_sprite(spr_creation_check,yar,958,239);yar=0;
-        if (scr_hit(958,239,958+32,239+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom=2){if (fleet_type!=3) then points-=20;fleet_type=3;cooldown=8000;}
+        if (scr_hit(958,239,958+32,239+32)) and (cooldown<=0) and (mouse_left>=1) and (custom=2){if (fleet_type!=3) then points-=20;fleet_type=3;cooldown=8000;}
         draw_text_transformed(990,239,string_hash_to_newline("Penitent"),0.6,0.6,0);
         draw_set_alpha(1);
         
@@ -415,38 +417,38 @@ if (slide=2){
         draw_text_transformed(617,387,string_hash_to_newline("Cooperation ("+string(cooperation)+")"),0.5,0.5,0);
         draw_text_transformed(617,442,string_hash_to_newline("GeneSeed Purity ("+string(purity)+")"),0.5,0.5,0);
         draw_text_transformed(617,497,string_hash_to_newline("GeneSeed Stability ("+string(stability)+")"),0.5,0.5,0);
+        var arrow_buttons_controls = [strength, cooperation, purity, stability]
+        for (var i=0;i<4;i++){
+            if (custom=2) then draw_sprite_stretched(spr_arrow,0,625,325+(i*55),32,32);
+            if (scr_hit(625,325+(i*55),657,357+(i*55))){
+                obj_cursor.image_index=1;
+                if (cooldown<=0) and (custom=2) and (arrow_buttons_controls[i]>1) and (mouse_left>=1){
+                    arrow_buttons_controls[i]-=1;
+                    points-=10;
+                    cooldown=8000;
+                }
+            }
+            if (custom=2) then draw_sprite_stretched(spr_arrow,1,1135,325+(i*55),32,32);
+            if (scr_hit(1135,325+(i*55),1167,357+(i*55))){
+                obj_cursor.image_index=1;
+                if (cooldown<=0) and (custom=2) and (arrow_buttons_controls[i]<10) and (points+10<=maxpoints) and (mouse_left>=1){
+                    arrow_buttons_controls[i]+=1;
+                    points+=10;
+                    cooldown=8000;
+                }
+            }
+            draw_rectangle(668,330+(i*55),1125,351+(i*55),1);   
+            draw_rectangle(668,330+(i*55),668+(arrow_buttons_controls[i]*45.7),351+(i*55),0);     
+        }
+        strength = arrow_buttons_controls[0];
+        cooperation = arrow_buttons_controls[1];
+        purity = arrow_buttons_controls[2];
+        stability = arrow_buttons_controls[3];
         
-        if (custom=2) then draw_sprite_stretched(spr_arrow,0,625,325,32,32);
-        if (scr_hit(625,325,657,357)=true){obj_cursor.image_index=1;if (cooldown<=0) and (custom=2) and (strength>1) and (mouse_left>=1){strength-=1;points-=10;cooldown=8000;}}
-        if (custom=2) then draw_sprite_stretched(spr_arrow,0,625,380,32,32);
-        if (scr_hit(625,380,657,412)=true){obj_cursor.image_index=1;if (cooldown<=0) and (custom=2) and (cooperation>1) and (mouse_left>=1){cooperation-=1;points-=10;cooldown=8000;}}
-        if (custom=2) then draw_sprite_stretched(spr_arrow,0,625,435,32,32);
-        if (scr_hit(625,435,657,467)=true){obj_cursor.image_index=1;if (cooldown<=0) and (custom=2) and (purity>1) and (mouse_left>=1){purity-=1;points-=10;cooldown=8000;}}
-        if (custom=2) then draw_sprite_stretched(spr_arrow,0,625,490,32,32);
-        if (scr_hit(625,490,657,522)=true){obj_cursor.image_index=1;if (cooldown<=0) and (custom=2) and (stability>1) and (mouse_left>=1){stability-=1;points-=10;cooldown=8000;}}
-        
-        if (custom=2) then draw_sprite_stretched(spr_arrow,1,1135,325,32,32);
-        if (scr_hit(1135,325,1167,357)=true){obj_cursor.image_index=1;if (cooldown<=0) and (custom=2) and (strength<10) and (points+10<=maxpoints) and (mouse_left>=1){strength+=1;points+=10;cooldown=8000;}}
-        if (custom=2) then draw_sprite_stretched(spr_arrow,1,1135,380,32,32);
-        if (scr_hit(1135,380,1167,412)=true){obj_cursor.image_index=1;if (cooldown<=0) and (custom=2) and (cooperation<10) and (points+10<=maxpoints) and (mouse_left>=1){cooperation+=1;points+=10;cooldown=8000;}}
-        if (custom=2) then draw_sprite_stretched(spr_arrow,1,1135,435,32,32);
-        if (scr_hit(1135,435,1167,467)=true){obj_cursor.image_index=1;if (cooldown<=0) and (custom=2) and (purity<10) and (points+10<=maxpoints) and (mouse_left>=1){purity+=1;points+=10;cooldown=8000;}}
-        if (custom=2) then draw_sprite_stretched(spr_arrow,1,1135,490,32,32);
-        if (scr_hit(1135,490,1167,522)=true){obj_cursor.image_index=1;if (cooldown<=0) and (custom=2) and (stability<10) and (points+10<=maxpoints) and (mouse_left>=1){stability+=1;points+=10;cooldown=8000;}}
-        
-        if (scr_hit(532,325,1166,357)=true){tooltip="Strength";tooltip2="How many companies your chapter begins with.  For every score below five a company will be removed; conversely, each score higher grants 50 additional astartes.";}
-        if (scr_hit(486,380,1166,412)=true){tooltip="Cooperation";tooltip2="How diplomatic your chapter is.  A low score will lower starting dispositions of Imperial factions and make disposition increases less likely to occur.";}
-        if (scr_hit(442,435,1166,467)=true){tooltip="Purity";tooltip2="A measure of how pure and mutation-free your chapter's gene-seed is.  A perfect score means no mutations must be chosen.  The lower the score, the more mutations.";}
-        if (scr_hit(423,490,1166,522)=true){tooltip="Stability";tooltip2="A measure of how easily new mutations and corruption can occur with your chapter-gene seed.  A perfect score makes the gene-seed almost perfectly stable.";}
-        
-        draw_rectangle(668,330,1125,351,1);
-        draw_rectangle(668,330,668+(strength*45.7),351,0);
-        draw_rectangle(668,385,1125,406,1);
-        draw_rectangle(668,385,668+(cooperation*45.7),406,0);
-        draw_rectangle(668,440,1125,461,1);
-        draw_rectangle(668,440,668+(purity*45.7),461,0);
-        draw_rectangle(668,495,1125,516,1);
-        draw_rectangle(668,495,668+(stability*45.7),516,0);
+        if (scr_hit(532,325,1166,357)){tooltip="Strength";tooltip2="How many companies your chapter begins with.  For every score below five a company will be removed; conversely, each score higher grants 50 additional astartes.";}
+        if (scr_hit(486,380,1166,412)){tooltip="Cooperation";tooltip2="How diplomatic your chapter is.  A low score will lower starting dispositions of Imperial factions and make disposition increases less likely to occur.";}
+        if (scr_hit(442,435,1166,467)){tooltip="Purity";tooltip2="A measure of how pure and mutation-free your chapter's gene-seed is.  A perfect score means no mutations must be chosen.  The lower the score, the more mutations.";}
+        if (scr_hit(423,490,1166,522)){tooltip="Stability";tooltip2="A measure of how easily new mutations and corruption can occur with your chapter-gene seed.  A perfect score makes the gene-seed almost perfectly stable.";}
     }
     
     if (popup!="icons"){
@@ -459,72 +461,75 @@ if (slide=2){
     
     
     if (popup!="icons"){
-        draw_set_halign(fa_left);draw_set_font(fnt_40k_30b);
-        draw_text_transformed(436,564,string_hash_to_newline("Chapter Advantages"),0.5,0.5,0);draw_set_font(fnt_40k_14);
-        if (adv_num[1]=0) then draw_text(436,590,string_hash_to_newline("[+]"));if (adv_num[1]>0) then draw_text(436,590,string_hash_to_newline("[-] "+string(adv[1])));
-        if (adv_num[2]=0) and (adv_num[1]>0) then draw_text(436,610,string_hash_to_newline("[+]"));if (adv_num[2]>0) then draw_text(436,610,string_hash_to_newline("[-] "+string(adv[2])));
-        if (adv_num[3]=0) and (adv_num[2]>0) then draw_text(436,630,string_hash_to_newline("[+]"));if (adv_num[3]>0) then draw_text(436,630,string_hash_to_newline("[-] "+string(adv[3])));
-        if (adv_num[4]=0) and (adv_num[3]>0) then draw_text(436,650,string_hash_to_newline("[+]"));if (adv_num[4]>0) then draw_text(436,650,string_hash_to_newline("[-] "+string(adv[4])));
-        
-        draw_set_font(fnt_40k_30b);draw_text_transformed(810,564,string_hash_to_newline("Chapter Disadvantages"),0.5,0.5,0);draw_set_font(fnt_40k_14);
-        if (dis_num[1]=0) then draw_text(810,590,string_hash_to_newline("[+]"));if (dis_num[1]>0) then draw_text(810,590,string_hash_to_newline("[-] "+string(dis[1])));
-        if (dis_num[2]=0) and (dis_num[1]>0) then draw_text(810,610,string_hash_to_newline("[+]"));if (dis_num[2]>0) then draw_text(810,610,string_hash_to_newline("[-] "+string(dis[2])));
-        if (dis_num[3]=0) and (dis_num[2]>0) then draw_text(810,630,string_hash_to_newline("[+]"));if (dis_num[3]>0) then draw_text(810,630,string_hash_to_newline("[-] "+string(dis[3])));
-        if (dis_num[4]=0) and (dis_num[3]>0) then draw_text(810,650,string_hash_to_newline("[+]"));if (dis_num[4]>0) then draw_text(810,650,string_hash_to_newline("[-] "+string(dis[4])));
-        
-        if (scr_hit(436,564,631,583)=true){tooltip="Chapter Advantages";tooltip2="Advantages cost 20 points, and improve the performance of your chapter in a specific domain.";}
-        if (scr_hit(810,564,1030,583)=true){tooltip="Chapter Disadvantages";tooltip2="Disadvantages Grant 20 additional points, and penalize the performance of your chapter.";}
-    }
-    
-    if (popup!="icons"){
-        if (scr_hit(436,590,640,619)=true){
-            if (adv_num[1]!=0){tooltip=advantage[adv_num[1]];tooltip2=advantage_tooltip[adv_num[1]];}
-            if (mouse_left>=1) and (cooldown<=0) and (points+20<=maxpoints) and (adv_num[1]=0) and (popup="") and (custom>1){popup="advantages";cooldown=8000;temp=1;}
-            if (mouse_left>=1) and (mouse_x<=456) and (adv_num[1]>0) and (adv_num[2]=0) and (cooldown<=0) and (custom>1){points-=20;adv[1]="";adv_num[1]=0;cooldown=8000;}
+        var advantage_click = (mouse_left>=1  && cooldown<=0  &&  custom>1);
+        draw_set_halign(fa_left);
+        draw_set_font(fnt_40k_30b);
+        draw_text_transformed(436,564,"Chapter Advantages",0.5,0.5,0);draw_set_font(fnt_40k_14);
+        for (i=1;i<5;i++){
+            var draw_string = adv_num[i]==0?"[+]":"[-] "+adv[i];
+            draw_text(436,570+(i*20), draw_string);
+            if (scr_hit(436,570+(i*20),640,599+(i*20))){
+                if (adv_num[i]!=0){
+                    tooltip=advantage[adv_num[i]];
+                    tooltip2=advantage_tooltip[adv_num[i]];
+                }
+                if (advantage_click){
+                    if (points+20<=maxpoints) and (adv_num[i]=0) and (popup=""){
+                        popup="advantages";
+                        cooldown=8000;
+                        temp=i;
+                    }
+                    var removable=false;
+                    if (i=4 && adv_num[i]>0){
+                        removable=true;
+                    } else if (adv_num[i]>0 && adv_num[i+1]=0){
+                        removable=true;
+                    }
+                    if  (mouse_x<=456) and (removable){
+                        points-=20;
+                        adv[i]="";
+                        adv_num[i]=0;
+                        cooldown=8000;
+                    }
+                }              
+            }
         }
-        if (scr_hit(436,610,640,639)=true){
-            if (adv_num[2]!=0){tooltip=advantage[adv_num[2]];tooltip2=advantage_tooltip[adv_num[2]];}
-            if (mouse_left>=1) and (cooldown<=0) and (points+20<=maxpoints) and (adv_num[2]=0) and (adv_num[1]!=0) and (popup="") and (custom>1){popup="advantages";cooldown=8000;temp=2;}
-            if (mouse_left>=1) and (mouse_x<=456) and (adv_num[2]>0) and (adv_num[3]=0) and (cooldown<=0) and (custom>1){points-=20;adv[2]="";adv_num[2]=0;cooldown=8000;}
+        draw_set_font(fnt_40k_30b);
+        draw_text_transformed(810,564,"Chapter Disadvantages",0.5,0.5,0);
+        draw_set_font(fnt_40k_14);
+        for (i=1;i<5;i++){
+            var draw_string = dis_num[i]==0?"[+]":"[-] "+dis[i];
+            draw_text(810,570+(i*20), draw_string);
+            if (scr_hit(810,570+(i*20),1014,599+(i*20))){
+                if (dis_num[1]!=0){
+                    tooltip=disadvantage[dis_num[i]];
+                    tooltip2=dis_tooltip[dis_num[i]];
+                }
+                if (advantage_click){
+                    if ((dis_num[i]=0) and (dis_num[i+1]=0) and (popup="")){
+                        popup="disadvantages";
+                        cooldown=8000;
+                        temp=i;
+                    }
+                    var removable=false;
+                    if (i=4 && dis_num[i]>0){
+                        removable=true;
+                    } else if (dis_num[i]>0 && dis_num[i+1]==0){
+                        removable=true;
+                    }                    
+                    if  (mouse_x<=830) and (removable) and (points+20<=maxpoints) {
+                        points+=20;
+                        dis[i]="";
+                        dis_num[i]=0;
+                        cooldown=8000;
+                    }   
+                }             
+            }
         }
-        if (scr_hit(436,630,640,659)=true){
-            if (adv_num[3]!=0){tooltip=advantage[adv_num[3]];tooltip2=advantage_tooltip[adv_num[3]];}
-            if (mouse_left>=1) and (cooldown<=0) and (points+20<=maxpoints) and (adv_num[3]=0) and (adv_num[2]!=0) and (popup="") and (custom>1){popup="advantages";cooldown=8000;temp=3;}
-            if (mouse_left>=1) and (mouse_x<=456) and (adv_num[3]>0) and (adv_num[4]=0) and (cooldown<=0) and (custom>1){points-=20;adv[3]="";adv_num[3]=0;cooldown=8000;}
-        }
-        if (scr_hit(436,650,640,679)=true){
-            if (adv_num[4]!=0){tooltip=advantage[adv_num[4]];tooltip2=advantage_tooltip[adv_num[4]];}
-            if (mouse_left>=1) and (cooldown<=0) and (points+20<=maxpoints) and (adv_num[4]=0) and (adv_num[3]!=0) and (popup="") and (custom>1){popup="advantages";cooldown=8000;temp=4;}
-            if (mouse_left>=1) and (mouse_x<=456) and (adv_num[4]>0) and (cooldown<=0) and (custom>1){points-=20;adv[4]="";adv_num[4]=0;cooldown=8000;}
-        }
-        
-        if (scr_hit(810,590,1014,619)=true){
-            if (dis_num[1]!=0){tooltip=disadvantage[dis_num[1]];tooltip2=dis_tooltip[dis_num[1]];}
-            if (mouse_left>=1) and (cooldown<=0) and (dis_num[1]=0) and (dis_num[2]=0) and (popup="") and (custom>1){popup="disadvantages";cooldown=8000;temp=1;}
-            if (mouse_left>=1) and (mouse_x<=830) and (dis_num[1]>0) and (dis_num[2]=0) and (cooldown<=0) and (points+20<=maxpoints) and (custom>1){points+=20;dis[1]="";dis_num[1]=0;cooldown=8000;}
-        }
-        if (scr_hit(810,610,1014,639)=true){
-            if (dis_num[2]!=0){tooltip=disadvantage[dis_num[2]];tooltip2=dis_tooltip[dis_num[2]];}
-            if (mouse_left>=1) and (cooldown<=0) and (dis_num[2]=0) and (dis_num[3]=0) and (dis_num[1]>0) and (popup="") and (custom>1){popup="disadvantages";cooldown=8000;temp=2;}
-            if (mouse_left>=1) and (mouse_x<=830) and (dis_num[2]>0) and (dis_num[3]=0) and (cooldown<=0) and (points+20<=maxpoints) and (custom>1){points+=20;dis[2]="";dis_num[2]=0;cooldown=8000;}
-        }
-        if (scr_hit(810,630,1014,659)=true){
-            if (dis_num[3]!=0){tooltip=disadvantage[dis_num[3]];tooltip2=dis_tooltip[dis_num[3]];}
-            if (mouse_left>=1) and (cooldown<=0) and (dis_num[3]=0) and (dis_num[4]=0) and (dis_num[2]>0) and (popup="") and (custom>1){popup="disadvantages";cooldown=8000;temp=3;}
-            if (mouse_left>=1) and (mouse_x<=830) and (dis_num[3]>0) and (dis_num[4]=0) and (cooldown<=0) and (points+20<=maxpoints) and (custom>1){points+=20;dis[3]="";dis_num[3]=0;cooldown=8000;}
-        }
-        if (scr_hit(810,650,1014,679)=true){
-            if (dis_num[4]!=0){tooltip=disadvantage[dis_num[4]];tooltip2=dis_tooltip[dis_num[4]];}
-            if (mouse_left>=1) and (cooldown<=0) and (dis_num[4]=0) and (popup="") and (dis_num[3]>0) and (custom>1){popup="disadvantages";cooldown=8000;temp=4;}
-            if (mouse_left>=1) and (mouse_x<=830) and (dis_num[4]>0) and (cooldown<=0) and (points+20<=maxpoints) and (custom>1){points+=20;dis[4]="";dis_num[4]=0;cooldown=8000;}
-        }
-        
         draw_set_alpha(1);
-    }
-    
-    
-    
-    if (popup="icons"){
+        if (scr_hit(436,564,631,583)){tooltip="Chapter Advantages";tooltip2="Advantages cost 20 points, and improve the performance of your chapter in a specific domain.";}
+        if (scr_hit(810,564,1030,583)){tooltip="Chapter Disadvantages";tooltip2="Disadvantages Grant 20 additional points, and penalize the performance of your chapter.";}
+    }else if (popup="icons"){
         draw_set_alpha(1);
         draw_set_color(0);
         draw_rectangle(450,206,1144,711,0);
@@ -534,7 +539,8 @@ if (slide=2){
         draw_line(445,728,1125,728);
         draw_line(445,729,1125,729);
         
-        draw_set_font(fnt_40k_30b);draw_set_halign(fa_center);
+        draw_set_font(fnt_40k_30b);
+        draw_set_halign(fa_center);
         draw_text_transformed(800,211,string_hash_to_newline("Select an Icon"),0.6,0.6,0);
         draw_text_transformed(800,687,string_hash_to_newline("Cancel"),0.6,0.6,0);
         
@@ -542,13 +548,14 @@ if (slide=2){
         cw=string_width(string_hash_to_newline("Cancel"))*0.6;
         ch=string_height(string_hash_to_newline("Cancel"))*0.6;
         
-        if (scr_hit(800,687,800+cw,687+ch)=true){
+        if (scr_hit(800,687,800+cw,687+ch)){
             draw_set_color(c_white);draw_set_alpha(0.25);
             draw_text_transformed(800,687,string_hash_to_newline("Cancel"),0.6,0.6,0);
             draw_set_color(38144);draw_set_alpha(1);
             
             if (mouse_left=1) and (cooldown<=0){
-                cooldown=8000;popup="";
+                cooldown=8000;
+                popup="";
             }
         }
         
@@ -579,7 +586,7 @@ if (slide=2){
                     draw_sprite_stretched(obj_cuicons.spr_custom_icon[ic-76],0,x3,y3,96,96);
                 }
                 
-                if (scr_hit(x3,y3,x3+96,y3+96)=true){
+                if (scr_hit(x3,y3,x3+96,y3+96)){
                     draw_set_blend_mode(bm_add);draw_set_alpha(0.25);draw_set_color(16119285);
                     // if (ic<=20) then draw_sprite_stretched(spr_icon,ic,x3,y3,96,96);
                     if (ic<=20) then scr_image("creation",ic,x3,y3,96,96);
@@ -634,7 +641,7 @@ if (slide=2){
         }
         
         
-        if (scr_hit(x3,y3+bs,x4,y4+bs)=true) and (cooldown<=0) and (scrollbar_engaged<=0) and (mouse_left=1){// Click within the scrollbar grip area
+        if (scr_hit(x3,y3+bs,x4,y4+bs)) and (cooldown<=0) and (scrollbar_engaged<=0) and (mouse_left=1){// Click within the scrollbar grip area
             scrollbar_engaged=mouse_y-(y3+bs);cooldown=8000;
         }
         
@@ -661,11 +668,11 @@ if (slide=2){
                 
                 draw_text(436,230+(i*20),string_hash_to_newline(advantage[i]));
                 
-                if (scr_hit(436,230+(i*20),436+string_width(string_hash_to_newline(advantage[i])),249+(i*20))=true) and (cooldown<=0) and (mouse_left>=1) and (advantage[i]="Cancel"){
+                if (scr_hit(436,230+(i*20),436+string_width(string_hash_to_newline(advantage[i])),249+(i*20))) and (cooldown<=0) and (mouse_left>=1) and (advantage[i]="Cancel"){
                     cooldown=8000;popup="";
                 }
-                if (scr_hit(436,230+(i*20),436+string_width(string_hash_to_newline(advantage[i])),249+(i*20))=true){tooltip=advantage[i];tooltip2=advantage_tooltip[i];draw_set_color(c_white);draw_set_alpha(0.2);draw_text(436,230+(i*20),string_hash_to_newline(advantage[i]));}
-                if (scr_hit(436,230+(i*20),436+string_width(string_hash_to_newline(advantage[i])),249+(i*20))=true) and (cooldown<=0) and (mouse_left>=1) and (string_count(advantage[i],ha)=0){
+                if (scr_hit(436,230+(i*20),436+string_width(string_hash_to_newline(advantage[i])),249+(i*20))){tooltip=advantage[i];tooltip2=advantage_tooltip[i];draw_set_color(c_white);draw_set_alpha(0.2);draw_text(436,230+(i*20),string_hash_to_newline(advantage[i]));}
+                if (scr_hit(436,230+(i*20),436+string_width(string_hash_to_newline(advantage[i])),249+(i*20))) and (cooldown<=0) and (mouse_left>=1) and (string_count(advantage[i],ha)=0){
                     if (disable=0){cooldown=8000;adv[temp]=advantage[i];adv_num[temp]=i;popup="";points+=20;}
         }}}
         repeat(14){i+=1;disable=0;
@@ -678,11 +685,11 @@ if (slide=2){
                 
                 draw_text(670,230+((i-14)*20),string_hash_to_newline(advantage[i]));
                 
-                if (scr_hit(670,230+((i-14)*20),670+string_width(string_hash_to_newline(advantage[i])),249+((i-14)*20))=true) and (cooldown<=0) and (mouse_left>=1) and (advantage[i]="Cancel"){
+                if (scr_hit(670,230+((i-14)*20),670+string_width(string_hash_to_newline(advantage[i])),249+((i-14)*20))) and (cooldown<=0) and (mouse_left>=1) and (advantage[i]="Cancel"){
                     cooldown=8000;popup="";
                 }
-                if (scr_hit(670,230+((i-14)*20),670+string_width(string_hash_to_newline(advantage[i])),249+((i-14)*20))=true){tooltip=advantage[i];tooltip2=advantage_tooltip[i];draw_set_color(c_white);draw_set_alpha(0.2);draw_text(670,230+((i-14)*20),string_hash_to_newline(advantage[i]));}
-                if (scr_hit(670,230+((i-14)*20),670+string_width(string_hash_to_newline(advantage[i])),249+((i-14)*20))=true) and (cooldown<=0) and (mouse_left>=1) and (string_count(advantage[i],ha)=0){
+                if (scr_hit(670,230+((i-14)*20),670+string_width(string_hash_to_newline(advantage[i])),249+((i-14)*20))){tooltip=advantage[i];tooltip2=advantage_tooltip[i];draw_set_color(c_white);draw_set_alpha(0.2);draw_text(670,230+((i-14)*20),string_hash_to_newline(advantage[i]));}
+                if (scr_hit(670,230+((i-14)*20),670+string_width(string_hash_to_newline(advantage[i])),249+((i-14)*20))) and (cooldown<=0) and (mouse_left>=1) and (string_count(advantage[i],ha)=0){
                     if (disable=0){cooldown=8000;adv[temp]=advantage[i];adv_num[temp]=i;popup="";points+=20;}
         }}}
         repeat(14){i+=1;disable=0;
@@ -695,11 +702,11 @@ if (slide=2){
                 
                 draw_text(904,230+((i-28)*20),string_hash_to_newline(advantage[i]));
                 
-                if (scr_hit(904,230+((i-28)*20),904+string_width(string_hash_to_newline(advantage[i])),249+((i-28)*20))=true) and (cooldown<=0) and (mouse_left>=1) and (advantage[i]="Cancel"){
+                if (scr_hit(904,230+((i-28)*20),904+string_width(string_hash_to_newline(advantage[i])),249+((i-28)*20))) and (cooldown<=0) and (mouse_left>=1) and (advantage[i]="Cancel"){
                     cooldown=8000;popup="";
                 }
-                if (scr_hit(904,230+((i-28)*20),904+string_width(string_hash_to_newline(advantage[i])),249+((i-28)*20))=true){tooltip=advantage[i];tooltip2=advantage_tooltip[i];draw_set_color(c_white);draw_set_alpha(0.2);draw_text(904,230+((i-28)*20),string_hash_to_newline(advantage[i]));}
-                if (scr_hit(904,230+((i-28)*20),904+string_width(string_hash_to_newline(advantage[i])),249+((i-28)*20))=true) and (cooldown<=0) and (mouse_left>=1) and (string_count(advantage[i],ha)>0){
+                if (scr_hit(904,230+((i-28)*20),904+string_width(string_hash_to_newline(advantage[i])),249+((i-28)*20))){tooltip=advantage[i];tooltip2=advantage_tooltip[i];draw_set_color(c_white);draw_set_alpha(0.2);draw_text(904,230+((i-28)*20),string_hash_to_newline(advantage[i]));}
+                if (scr_hit(904,230+((i-28)*20),904+string_width(string_hash_to_newline(advantage[i])),249+((i-28)*20))) and (cooldown<=0) and (mouse_left>=1) and (string_count(advantage[i],ha)>0){
                     if (disable=0){cooldown=8000;adv[temp]=advantage[i];adv_num[temp]=i;popup="";points+=20;}
         }}}
     }
@@ -712,22 +719,22 @@ if (slide=2){
         repeat(14){i+=1;
             if (advantage[i]!=""){
                 draw_text(436,230+(i*20),advantage[i]);
-                if (scr_hit(436,230+(i*20),436+string_width(advantage[i]),249+(i*20))=true){tooltip=advantage[i];tooltip2=advantage_tooltip[i];}
-                if (scr_hit(436,230+(i*20),436+string_width(advantage[i]),249+(i*20))=true) and (cooldown<=0) and (mouse_left>=1){
+                if (scr_hit(436,230+(i*20),436+string_width(advantage[i]),249+(i*20))){tooltip=advantage[i];tooltip2=advantage_tooltip[i];}
+                if (scr_hit(436,230+(i*20),436+string_width(advantage[i]),249+(i*20))) and (cooldown<=0) and (mouse_left>=1){
                     cooldown=8000;adv[temp]=advantage[i];adv_num[temp]=i;popup="";points+=20;
         }}}
         repeat(14){i+=1;
             if (advantage[i]!=""){
                 draw_text(670,230+((i-14)*20),advantage[i]);
-                if (scr_hit(670,230+((i-14)*20),670+string_width(advantage[i]),249+((i-14)*20))=true){tooltip=advantage[i];tooltip2=advantage_tooltip[i];}
-                if (scr_hit(670,230+((i-14)*20),670+string_width(advantage[i]),249+((i-14)*20))=true) and (cooldown<=0) and (mouse_left>=1){
+                if (scr_hit(670,230+((i-14)*20),670+string_width(advantage[i]),249+((i-14)*20))){tooltip=advantage[i];tooltip2=advantage_tooltip[i];}
+                if (scr_hit(670,230+((i-14)*20),670+string_width(advantage[i]),249+((i-14)*20))) and (cooldown<=0) and (mouse_left>=1){
                     cooldown=8000;adv[temp]=advantage[i];adv_num[temp]=i;popup="";points+=20;
         }}}
         repeat(14){i+=1;
             if (advantage[i]!=""){
                 draw_text(904,230+((i-28)*20),advantage[i]);
-                if (scr_hit(904,230+((i-28)*20),904+string_width(advantage[i]),249+((i-28)*20))=true){tooltip=advantage[i];tooltip2=advantage_tooltip[i];}
-                if (scr_hit(904,230+((i-28)*20),904+string_width(advantage[i]),249+((i-28)*20))=true) and (cooldown<=0) and (mouse_left>=1){
+                if (scr_hit(904,230+((i-28)*20),904+string_width(advantage[i]),249+((i-28)*20))){tooltip=advantage[i];tooltip2=advantage_tooltip[i];}
+                if (scr_hit(904,230+((i-28)*20),904+string_width(advantage[i]),249+((i-28)*20))) and (cooldown<=0) and (mouse_left>=1){
                     cooldown=8000;adv[temp]=advantage[i];adv_num[temp]=i;popup="";points+=20;
         }}}
     }*/
@@ -748,11 +755,11 @@ if (slide=2){
                 
                 draw_text(436,230+(i*20),string_hash_to_newline(disadvantage[i]));
                 
-                if (scr_hit(436,230+(i*20),436+string_width(string_hash_to_newline(disadvantage[i])),249+(i*20))=true) and (cooldown<=0) and (mouse_left>=1) and (disadvantage[i]="Cancel"){
+                if (scr_hit(436,230+(i*20),436+string_width(string_hash_to_newline(disadvantage[i])),249+(i*20))) and (cooldown<=0) and (mouse_left>=1) and (disadvantage[i]="Cancel"){
                     cooldown=8000;popup="";
                 }
-                if (scr_hit(436,230+(i*20),436+string_width(string_hash_to_newline(disadvantage[i])),249+(i*20))=true){tooltip=disadvantage[i];tooltip2=dis_tooltip[i];draw_set_color(c_white);draw_set_alpha(0.2);draw_text(436,230+(i*20),string_hash_to_newline(disadvantage[i]));}
-                if (scr_hit(436,230+(i*20),436+string_width(string_hash_to_newline(disadvantage[i])),249+(i*20))=true) and (cooldown<=0) and (mouse_left>=1) and (string_count(disadvantage[i],ha)=0){
+                if (scr_hit(436,230+(i*20),436+string_width(string_hash_to_newline(disadvantage[i])),249+(i*20))){tooltip=disadvantage[i];tooltip2=dis_tooltip[i];draw_set_color(c_white);draw_set_alpha(0.2);draw_text(436,230+(i*20),string_hash_to_newline(disadvantage[i]));}
+                if (scr_hit(436,230+(i*20),436+string_width(string_hash_to_newline(disadvantage[i])),249+(i*20))) and (cooldown<=0) and (mouse_left>=1) and (string_count(disadvantage[i],ha)=0){
                     if (disable=0){cooldown=8000;dis[temp]=disadvantage[i];dis_num[temp]=i;popup="";points-=20;}
         }}}
         repeat(14){i+=1;disable=0;
@@ -765,11 +772,11 @@ if (slide=2){
                 if (disadvantage[i]="Blood Debt") and (fleet_type=3){disable=1;draw_set_alpha(0.5);}
                 
                 draw_text(670,230+((i-14)*20),string_hash_to_newline(disadvantage[i]));
-                if (scr_hit(670,230+((i-14)*20),670+string_width(string_hash_to_newline(disadvantage[i])),249+((i-14)*20))=true) and (cooldown<=0) and (mouse_left>=1) and (disadvantage[i]="Cancel"){
+                if (scr_hit(670,230+((i-14)*20),670+string_width(string_hash_to_newline(disadvantage[i])),249+((i-14)*20))) and (cooldown<=0) and (mouse_left>=1) and (disadvantage[i]="Cancel"){
                     cooldown=8000;popup="";
                 }
-                if (scr_hit(670,230+((i-14)*20),670+string_width(string_hash_to_newline(disadvantage[i])),249+((i-14)*20))=true){tooltip=disadvantage[i];tooltip2=dis_tooltip[i];draw_set_color(c_white);draw_set_alpha(0.2);draw_text(670,230+((i-14)*20),string_hash_to_newline(disadvantage[i]));}
-                if (scr_hit(670,230+((i-14)*20),670+string_width(string_hash_to_newline(disadvantage[i])),249+((i-14)*20))=true) and (cooldown<=0) and (mouse_left>=1) and (string_count(disadvantage[i],ha)=0){
+                if (scr_hit(670,230+((i-14)*20),670+string_width(string_hash_to_newline(disadvantage[i])),249+((i-14)*20))){tooltip=disadvantage[i];tooltip2=dis_tooltip[i];draw_set_color(c_white);draw_set_alpha(0.2);draw_text(670,230+((i-14)*20),string_hash_to_newline(disadvantage[i]));}
+                if (scr_hit(670,230+((i-14)*20),670+string_width(string_hash_to_newline(disadvantage[i])),249+((i-14)*20))) and (cooldown<=0) and (mouse_left>=1) and (string_count(disadvantage[i],ha)=0){
                     if (disable=0){cooldown=8000;dis[temp]=disadvantage[i];dis_num[temp]=i;popup="";points-=20;}
         }}}
         repeat(14){i+=1;disable=0;
@@ -782,11 +789,11 @@ if (slide=2){
                 if (disadvantage[i]="Blood Debt") and (fleet_type=3){disable=1;draw_set_alpha(0.5);}
                 
                 draw_text(904,230+((i-28)*20),string_hash_to_newline(disadvantage[i]));
-                if (scr_hit(904,230+((i-28)*20),904+string_width(string_hash_to_newline(disadvantage[i])),249+((i-28)*20))=true) and (cooldown<=0) and (mouse_left>=1) and (disadvantage[i]="Cancel"){
+                if (scr_hit(904,230+((i-28)*20),904+string_width(string_hash_to_newline(disadvantage[i])),249+((i-28)*20))) and (cooldown<=0) and (mouse_left>=1) and (disadvantage[i]="Cancel"){
                     cooldown=8000;popup="";
                 }
-                if (scr_hit(904,230+((i-28)*20),904+string_width(string_hash_to_newline(disadvantage[i])),249+((i-28)*20))=true){tooltip=disadvantage[i];tooltip2=dis_tooltip[i];draw_set_color(c_white);draw_set_alpha(0.2);draw_text(904,230+((i-28)*20),string_hash_to_newline(disadvantage[i]));}
-                if (scr_hit(904,230+((i-28)*20),904+string_width(string_hash_to_newline(disadvantage[i])),249+((i-28)*20))=true) and (cooldown<=0) and (mouse_left>=1) and (string_count(disadvantage[i],ha)=0){
+                if (scr_hit(904,230+((i-28)*20),904+string_width(string_hash_to_newline(disadvantage[i])),249+((i-28)*20))){tooltip=disadvantage[i];tooltip2=dis_tooltip[i];draw_set_color(c_white);draw_set_alpha(0.2);draw_text(904,230+((i-28)*20),string_hash_to_newline(disadvantage[i]));}
+                if (scr_hit(904,230+((i-28)*20),904+string_width(string_hash_to_newline(disadvantage[i])),249+((i-28)*20))) and (cooldown<=0) and (mouse_left>=1) and (string_count(disadvantage[i],ha)=0){
                     if (disable=0){cooldown=8000;dis[temp]=disadvantage[i];dis_num[temp]=i;popup="";points-=20;}
         }}}
     }
@@ -823,9 +830,9 @@ if (slide=3){
     
     
     
-    
-    if (fleet_type=1) then draw_text_transformed(644,218,string_hash_to_newline("Homeworld"),0.6,0.6,0);
-    if (fleet_type!=1) then draw_text_transformed(644,218,string_hash_to_newline("Flagship"),0.6,0.6,0);
+    var fleet_type_text = fleet_type==1?"Homeworld":"Flagship";
+    draw_text_transformed(644,218,fleet_type_text,0.6,0.6,0);
+
     var eh,eh2;eh=0;eh2=0;name_bad=0;
     
     if (homeworld="Lava") then eh=0;
@@ -851,43 +858,38 @@ if (slide=3){
         if (custom>1){
             if (text_selected="home_name") and (text_bar>30) then draw_text_transformed(644,398,string_hash_to_newline(string(homeworld_name)),0.5,0.5,0);
             if (text_selected="home_name") and (text_bar<=30) then draw_text_transformed(644,398,string_hash_to_newline(string(homeworld_name)+"|"),0.5,0.5,0);
-            if (scr_text_hit(644,398,true,homeworld_name)=true){
+            if (scr_text_hit(644,398,true,homeworld_name)){
                 obj_cursor.image_index=2;
                 if (cooldown<=0) and (mouse_left>=1){text_selected="home_name";cooldown=8000;keyboard_string=homeworld_name;}
             }
             if (text_selected="home_name") then homeworld_name=keyboard_string;
-            draw_set_alpha(0.75);draw_rectangle(525,398,760,418,1);draw_set_alpha(1);
+            draw_set_alpha(0.75);
+            draw_rectangle(525,398,760,418,1);
+            draw_set_alpha(1);
         }
         
         if (custom>1) then draw_sprite_stretched(spr_creation_arrow,0,525,285,32,32);// Left Arrow
-        if (scr_hit(525,285,525+32,285+32)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
-            var onceh;onceh=0;cooldown=8000;
-            if (homeworld="Dead") and (onceh=0){homeworld="Ice";onceh=1;}
-            if (homeworld="Ice") and (onceh=0){homeworld="Temperate";onceh=1;}
-            if (homeworld="Temperate") and (onceh=0){homeworld="Feudal";onceh=1;}
-            if (homeworld="Feudal") and (onceh=0){homeworld="Shrine";onceh=1;}
-            if (homeworld="Shrine") and (onceh=0){homeworld="Agri";onceh=1;}
-            if (homeworld="Agri") and (onceh=0){homeworld="Death";onceh=1;}
-            if (homeworld="Death") and (onceh=0){homeworld="Hive";onceh=1;}
-            if (homeworld="Hive") and (onceh=0){homeworld="Forge";onceh=1;}
-            if (homeworld="Forge") and (onceh=0){homeworld="Desert";onceh=1;}
-            if (homeworld="Desert") and (onceh=0){homeworld="Lava";onceh=1;}
-            if (homeworld="Lava") and (onceh=0){homeworld="Dead";onceh=1;}
-        }
         if (custom>1) then draw_sprite_stretched(spr_creation_arrow,1,725,285,32,32);// Right Arrow
-        if (scr_hit(725,285,725+32,285+32)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
-            var onceh;onceh=0;cooldown=8000;
-            if (homeworld="Lava") and (onceh=0){homeworld="Desert";onceh=1;}
-            if (homeworld="Desert") and (onceh=0){homeworld="Forge";onceh=1;}
-            if (homeworld="Forge") and (onceh=0){homeworld="Hive";onceh=1;}
-            if (homeworld="Hive") and (onceh=0){homeworld="Death";onceh=1;}
-            if (homeworld="Death") and (onceh=0){homeworld="Agri";onceh=1;}
-            if (homeworld="Agri") and (onceh=0){homeworld="Shrine";onceh=1;}
-            if (homeworld="Shrine") and (onceh=0){homeworld="Feudal";onceh=1;}
-            if (homeworld="Feudal") and (onceh=0){homeworld="Temperate";onceh=1;}
-            if (homeworld="Temperate") and (onceh=0){homeworld="Ice";onceh=1;}
-            if (homeworld="Ice") and (onceh=0){homeworld="Dead";onceh=1;}
-            if (homeworld="Dead") and (onceh=0){homeworld="Lava";onceh=1;}
+        var planet_types = ["Dead","Ice", "Temperate","Feudal","Shrine","Agri","Death","Hive","Forge","Desert","Lava"];
+        var planet_change_allow = (mouse_left>=1) and (cooldown<=0) and (custom>1);
+        for (var i=0;i<array_length(planet_types);i++){
+            if (homeworld==planet_types[i] && planet_change_allow){
+                if (point_and_click([525,285,525+32,285+32])){
+                    if (i==array_length(planet_types)-1){
+                        homeworld=planet_types[0];
+                    } else {
+                        homeworld=planet_types[i+1];
+                    }
+                    break;
+                } else if (point_and_click([725,285,725+32,285+32])){
+                    if (i==0){
+                        homeworld=planet_types[array_length(planet_types)-1];
+                    } else {
+                        homeworld=planet_types[i-1];
+                    }
+                    break;
+                }
+            }
         }
     }
     if (fleet_type!=1){
@@ -900,9 +902,13 @@ if (slide=3){
         if (custom>1){
             if (text_selected="flagship_name") and (text_bar>30) then draw_text_transformed(644,398,string_hash_to_newline(string(flagship_name)),0.5,0.5,0);
             if (text_selected="flagship_name") and (text_bar<=30) then draw_text_transformed(644,398,string_hash_to_newline(string(flagship_name)+"|"),0.5,0.5,0);
-            if (scr_text_hit(644,398,true,flagship_name)=true){
+            if (scr_text_hit(644,398,true,flagship_name)){
                 obj_cursor.image_index=2;
-                if (cooldown<=0) and (mouse_left>=1){text_selected="flagship_name";cooldown=8000;keyboard_string=flagship_name;}
+                if (cooldown<=0) and (mouse_left>=1){
+                    text_selected="flagship_name";
+                    cooldown=8000;
+                    keyboard_string=flagship_name;
+                }
             }
             if (text_selected="flagship_name") then flagship_name=keyboard_string;
             draw_set_alpha(0.75);draw_rectangle(525,398,760,418,1);draw_set_alpha(1);
@@ -916,7 +922,7 @@ if (slide=3){
     if (fleet_type!=3){
         if (fleet_type!=1) or (custom<2) then draw_set_alpha(0.5);
         yar=0;if (recruiting_exists=1) then yar=1;draw_sprite(spr_creation_check,yar,858,221);yar=0;
-        if (scr_hit(858,221,858+32,221+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (fleet_type=1){cooldown=8000;var onceh;onceh=0;
+        if (scr_hit(858,221,858+32,221+32)) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (fleet_type=1){cooldown=8000;var onceh;onceh=0;
             if (recruiting_exists=1) and (onceh=0){recruiting_exists=0;onceh=1;}
             if (recruiting_exists=0) and (onceh=0){recruiting_exists=1;onceh=1;}
         }
@@ -936,7 +942,7 @@ if (slide=3){
             if (recruiting="Shrine") then eh2=16;
             
             if (custom>1) then draw_sprite_stretched(spr_creation_arrow,0,865,285,32,32);// Left Arrow
-            if (scr_hit(865,285,865+32,285+32)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
+            if (scr_hit(865,285,865+32,285+32)) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
                 var onceh;onceh=0;cooldown=8000;
                 if (recruiting="Dead") and (onceh=0){recruiting="Ice";onceh=1;}
                 if (recruiting="Ice") and (onceh=0){recruiting="Temperate";onceh=1;}
@@ -951,7 +957,7 @@ if (slide=3){
                 if (recruiting="Lava") and (onceh=0){recruiting="Dead";onceh=1;}
             }
             if (custom>1) then draw_sprite_stretched(spr_creation_arrow,1,1055,285,32,32);// Right Arrow
-            if (scr_hit(1055,285,1055+32,285+32)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
+            if (scr_hit(1055,285,1055+32,285+32)) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
                 var onceh;onceh=0;cooldown=8000;
                 if (recruiting="Dead") and (onceh=0){recruiting="Lava";onceh=1;}
                 if (recruiting="Lava") and (onceh=0){recruiting="Desert";onceh=1;}
@@ -979,7 +985,7 @@ if (slide=3){
             if (custom>1){
                 if (text_selected="recruiting_name") and (text_bar>30) then draw_text_transformed(644+333,398,string_hash_to_newline(string(recruiting_name)),0.5,0.5,0);
                 if (text_selected="recruiting_name") and (text_bar<=30) then draw_text_transformed(644+333,398,string_hash_to_newline(string(recruiting_name)+"|"),0.5,0.5,0);
-                if (scr_text_hit(644+333,398,true,recruiting_name)=true){
+                if (scr_text_hit(644+333,398,true,recruiting_name)){
                     obj_cursor.image_index=2;
                     if (cooldown<=0) and (mouse_left>=1){text_selected="recruiting_name";cooldown=8000;keyboard_string=recruiting_name;}
                 }
@@ -1000,11 +1006,11 @@ if (slide=3){
     }
     
     
-    if (scr_hit(575,216,710,242)=true){
+    if (scr_hit(575,216,710,242)){
         if (fleet_type!=1){tooltip="Battle Barge";tooltip2="The name of your Flagship Battle Barge.";}
         if (fleet_type=1){tooltip="Homeworld";tooltip2="The world that your Chapter's Fortress Monastery is located upon.  More civilized worlds are more easily defensible but the citizens may pose a risk or be a nuisance.";}
     }
-    if (scr_hit(895,216,1075,242)=true){
+    if (scr_hit(895,216,1075,242)){
         tooltip="Recruiting World";tooltip2="The world that your Chapter selects recruits from.  More harsh worlds provide recruits with more grit and warrior mentality.  If you are a homeworld-based Chapter, you may uncheck 'Recruiting World' to recruit from your homeworld instead.";
     }
     
@@ -1019,22 +1025,22 @@ if (slide=3){
     
     if (fleet_type=1){
         if (custom<2) then draw_set_alpha(0.5);
-        draw_text_transformed(445,480,string_hash_to_newline("Homeworld Rule"),0.6,0.6,0);
-        draw_text_transformed(485,512,string_hash_to_newline("Planetary Governer"),0.5,0.5,0);
-        draw_text_transformed(485,544,string_hash_to_newline("Passive Supervision"),0.5,0.5,0);
-        draw_text_transformed(485,576,string_hash_to_newline("Personal Rule"),0.5,0.5,0);
+        draw_text_transformed(445,480,"Homeworld Rule",0.6,0.6,0);
+        draw_text_transformed(485,512,"Planetary Governer",0.5,0.5,0);
+        draw_text_transformed(485,544,"Passive Supervision",0.5,0.5,0);
+        draw_text_transformed(485,576,"Personal Rule",0.5,0.5,0);
         
         yar=0;if (homeworld_rule=1) then yar=1;draw_sprite(spr_creation_check,yar,445,512);yar=0;
-        if (scr_hit(445,512,445+32,512+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (homeworld_rule!=1){cooldown=8000;homeworld_rule=1;}
-        if (scr_hit(445,512,670,512+32)=true){tooltip="Planetary Governer";tooltip2="Your Chapter's homeworld is ruled by a single Planetary Governer, who does with the planet mostly as they see fit.  While heavily influenced by your Astartes the planet is sovereign.";}
+        if (scr_hit(445,512,445+32,512+32)) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (homeworld_rule!=1){cooldown=8000;homeworld_rule=1;}
+        if (scr_hit(445,512,670,512+32)){tooltip="Planetary Governer";tooltip2="Your Chapter's homeworld is ruled by a single Planetary Governer, who does with the planet mostly as they see fit.  While heavily influenced by your Astartes the planet is sovereign.";}
         
         yar=0;if (homeworld_rule=2) then yar=1;draw_sprite(spr_creation_check,yar,445,544);yar=0;
-        if (scr_hit(445,544,445+32,544+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (homeworld_rule!=2){cooldown=8000;homeworld_rule=2;}
-        if (scr_hit(445,544,620,544+32)=true){tooltip="Passive Supervision";tooltip2="Instead of a Planetary Governer the planet is broken up into many countries or clans.  The people are less united but happier, and see your illusive Astartes as semi-divine beings.";}
+        if (scr_hit(445,544,445+32,544+32)) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (homeworld_rule!=2){cooldown=8000;homeworld_rule=2;}
+        if (scr_hit(445,544,620,544+32)){tooltip="Passive Supervision";tooltip2="Instead of a Planetary Governer the planet is broken up into many countries or clans.  The people are less united but happier, and see your illusive Astartes as semi-divine beings.";}
         
         yar=0;if (homeworld_rule=3) then yar=1;draw_sprite(spr_creation_check,yar,445,576);yar=0;
-        if (scr_hit(445,576,445+32,576+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (homeworld_rule!=3){cooldown=8000;homeworld_rule=3;}
-        if (scr_hit(445,576,670,576+32)=true){tooltip="Planetary Governer";tooltip2="You personally take the rule of the Planetary Governer, ruling over your homeworld with an iron fist.  Your every word and directive, be they good or bad, are absolute law.";}
+        if (scr_hit(445,576,445+32,576+32)) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (homeworld_rule!=3){cooldown=8000;homeworld_rule=3;}
+        if (scr_hit(445,576,670,576+32)){tooltip="Planetary Governer";tooltip2="You personally take the rule of the Planetary Governer, ruling over your homeworld with an iron fist.  Your every word and directive, be they good or bad, are absolute law.";}
     }
     
     
@@ -1051,10 +1057,10 @@ if (slide=3){
     if (aspirant_trial="Apprenticeship") then asp_info="- 10-11 years of training.#- 34-43 starting XP.#- 30-50% more recruits on Lava planets.";
     draw_text_ext_transformed(700,544,string_hash_to_newline(string(asp_info)),64,950,0.5,0.5,0);
      
-    if (scr_hit(750,480,950,510)=true){tooltip="Aspirant Trial";tooltip2="A special challenge is needed for Aspirants to be judged worthy of becoming Astartes.  After completing the Trial they then become a Neophyte, beginning implantation and training.";}
+    if (scr_hit(750,480,950,510)){tooltip="Aspirant Trial";tooltip2="A special challenge is needed for Aspirants to be judged worthy of becoming Astartes.  After completing the Trial they then become a Neophyte, beginning implantation and training.";}
     
     if (custom>1) then draw_sprite_stretched(spr_creation_arrow,0,700,502,32,32);
-    if (scr_hit(700,502,700+32,502+32)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
+    if (scr_hit(700,502,700+32,502+32)) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
         var onceh;onceh=0;cooldown=8000;
         if (aspirant_trial="Apprenticeship") and (onceh=0){aspirant_trial="Challenge";onceh=1;}
         if (aspirant_trial="Challenge") and (onceh=0){aspirant_trial="Knowledge of Self";onceh=1;}
@@ -1066,7 +1072,7 @@ if (slide=3){
     }
     
     if (custom>1) then draw_sprite_stretched(spr_creation_arrow,1,738,502,32,32);
-    if (scr_hit(738,502,738+32,502+32)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
+    if (scr_hit(738,502,738+32,502+32)) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
         var onceh;onceh=0;cooldown=8000;
         if (aspirant_trial="Blood Duel") and (onceh=0){aspirant_trial="Hunting the Hunter";onceh=1;}
         if (aspirant_trial="Hunting the Hunter") and (onceh=0){aspirant_trial="Survival of the Fittest";onceh=1;}
@@ -1084,7 +1090,7 @@ if (slide=3){
     
     if (race[100,17]!=0){
         draw_text_transformed(445,665,string_hash_to_newline("Psychic Discipline"),0.6,0.6,0);
-        if (scr_hit(445,665,620,690)=true){tooltip="Psychic Discipline";tooltip2="The Psychic Discipline that your psykers will use by default.";}
+        if (scr_hit(445,665,620,690)){tooltip="Psychic Discipline";tooltip2="The Psychic Discipline that your psykers will use by default.";}
         
         var fug,fug2;fug=string_delete(discipline,2,string_length(discipline));
         fug2=string_delete(discipline,1,1);draw_text_transformed(513,697,string_hash_to_newline(string_upper(fug)+string(fug2)),0.5,0.5,0);
@@ -1102,7 +1108,7 @@ if (slide=3){
         if (custom=2) then draw_sprite_stretched(spr_creation_arrow,1,475,688,32,32);
         draw_set_alpha(1);
         
-        if (scr_hit(437,688,437+32,688+32)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
+        if (scr_hit(437,688,437+32,688+32)) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
             var onceh;onceh=0;cooldown=8000;
             if (discipline="default") and (onceh=0){discipline="rune Magick";onceh=1;}
             if (discipline="rune Magick") and (onceh=0){discipline="telekinesis";onceh=1;}
@@ -1110,7 +1116,7 @@ if (slide=3){
             if (discipline="pyromancy") and (onceh=0){discipline="biomancy";onceh=1;}
             if (discipline="biomancy") and (onceh=0){discipline="default";onceh=1;}
         }
-        if (scr_hit(475,688,475+32,688+32)=true) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
+        if (scr_hit(475,688,475+32,688+32)) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
             var onceh;onceh=0;cooldown=8000;
             if (discipline="default") and (onceh=0){discipline="biomancy";onceh=1;}
             if (discipline="biomancy") and (onceh=0){discipline="pyromancy";onceh=1;}
@@ -1139,8 +1145,19 @@ if (slide=4){
     obj_cursor.image_index=0;
 
     draw_text_color_simple(800,80,string_hash_to_newline(string(chapter)),38144);
+    var draw_sprites = [spr_mk7_colors, spr_mk4_colors,spr_mk5_colors,spr_beakie_colors,spr_mk8_colors,spr_mk3_colors, spr_terminator3_colors];
+    var draw_hem = [spr_generic_sgt_mk7, spr_generic_sgt_mk4,spr_generic_sgt_mk5,spr_generic_sgt_mk6,spr_generic_sgt_mk8,spr_generic_sgt_mk3, spr_generic_terminator_sgt];
+    if (custom>1) then draw_sprite_stretched(spr_creation_arrow,0,444-10,252,32,32);// Left Arrow
+    if (custom>1) then draw_sprite_stretched(spr_creation_arrow,1,444+157+2,242,32,32);// Right Arrow 
+    if (point_and_click([444-10,252,470,280])){
+        test_sprite++;
+        if (test_sprite==array_length(draw_sprites)) then test_sprite=0;
+    }   
+    if (point_and_click([444+157+2,242, 450+175, 270])){
+        test_sprite--;
+        if (test_sprite<0) then test_sprite=(array_length(draw_sprites)-1);
+    }
     draw_rectangle_color_simple(444,252,444+167,252+232,1,38144);
-
     if( shader_is_compiled(sReplaceColor)){
         shader_set(sReplaceColor);
         
@@ -1160,18 +1177,72 @@ if (slide=4){
         shader_set_uniform_f_array(colour_to_set7, weapon_colour_replace );
         
         //Rejoice!
+        tester_sprite = draw_sprites[test_sprite];
+        tester_helm = draw_hem[test_sprite];
+        if (col_special=0) then draw_sprite(tester_sprite,10,444,252);
+        if (col_special=1) then draw_sprite(tester_sprite,11,444,252);
+        if (col_special>=2) then draw_sprite(tester_sprite,12,444,252);
         
-        if (col_special=0) then draw_sprite(spr_mk7_colors,10,444,252);
-        if (col_special=1) then draw_sprite(spr_mk7_colors,11,444,252);
-        if (col_special>=2) then draw_sprite(spr_mk7_colors,12,444,252);
-        
-        draw_sprite(spr_mk7_colors,col_special,444,252);
-        if (col_special<=1){draw_sprite(spr_mk7_colors,6,444,252);draw_sprite(spr_mk7_colors,8,444,252);}
-        if (col_special>=2){draw_sprite(spr_mk7_colors,6,444,252);draw_sprite(spr_mk7_colors,9,444,252);}
-        if (trim=0) and (col_special<=1) then draw_sprite(spr_mk7_colors,4,444,252);
-        if (trim=0) and (col_special>=2) then draw_sprite(spr_mk7_colors,5,444,252);
-        
-        
+        draw_sprite(tester_sprite,col_special,444,252);
+        if (col_special<=1){
+            draw_sprite(tester_sprite,6,444,252);
+            draw_sprite(tester_sprite,8,444,252);
+        }
+        if (col_special>=2){
+            draw_sprite(tester_sprite,6,444,252);
+            draw_sprite(tester_sprite,9,444,252);
+        }
+        if (trim=0) and (col_special<=1) then draw_sprite(tester_sprite,4,444,252);
+        if (trim=0) and (col_special>=2) then draw_sprite(tester_sprite,5,444,252);
+        //TODO this can be imprved but for now it's fit for purpose
+        if (complex_selection=="Sergeant Markers" && complex_livery){
+            var sgt_col_1 = complex_livery_data.sgt.helm_primary;
+            var sgt_col_2 = complex_livery_data.sgt.helm_secondary;
+            var lens_col = complex_livery_data.sgt.helm_lens;
+            shader_set_uniform_f_array(colour_to_find1, [30/255,30/255,30/255]);
+            shader_set_uniform_f(colour_to_set1, col_r[sgt_col_1]/255, col_g[sgt_col_1]/255, col_b[sgt_col_1]/255);
+            shader_set_uniform_f_array(colour_to_find2, [200/255,0/255,0/255]);
+            shader_set_uniform_f(colour_to_set2, col_r[sgt_col_2]/255, col_g[sgt_col_2]/255, col_b[sgt_col_2]/255);
+            shader_set_uniform_f(colour_to_set4, col_r[lens_col]/255, col_g[lens_col]/255, col_b[lens_col]/255);
+            draw_sprite(tester_helm, complex_depth_selection, 444,252);
+        }
+        else if (complex_selection=="Veteran Sergeant Markers" && complex_livery){
+            var sgt_col_1 = complex_livery_data.vet_sgt.helm_primary;
+            var sgt_col_2 = complex_livery_data.vet_sgt.helm_secondary;
+            var lens_col = complex_livery_data.vet_sgt.helm_lens;
+            shader_set_uniform_f_array(colour_to_find1, [30/255,30/255,30/255]);
+            shader_set_uniform_f(colour_to_set1, col_r[sgt_col_1]/255, col_g[sgt_col_1]/255, col_b[sgt_col_1]/255);
+            shader_set_uniform_f_array(colour_to_find2, [200/255,0/255,0/255]);
+            shader_set_uniform_f(colour_to_set2, col_r[sgt_col_2]/255, col_g[sgt_col_2]/255, col_b[sgt_col_2]/255);
+            shader_set_uniform_f(colour_to_set4, col_r[lens_col]/255, col_g[lens_col]/255, col_b[lens_col]/255);
+            draw_sprite(tester_helm, complex_depth_selection, 444,252);
+        }
+        else if (complex_selection=="Captain Markers" && complex_livery){
+            var sgt_col_1 = complex_livery_data.captain.helm_primary;
+            var sgt_col_2 = complex_livery_data.captain.helm_secondary;
+            var lens_col = complex_livery_data.captain.helm_lens;
+            shader_set_uniform_f_array(colour_to_find1, [30/255,30/255,30/255]);
+            shader_set_uniform_f(colour_to_set1, col_r[sgt_col_1]/255, col_g[sgt_col_1]/255, col_b[sgt_col_1]/255);
+            shader_set_uniform_f_array(colour_to_find2, [200/255,0/255,0/255]);
+            shader_set_uniform_f(colour_to_set2, col_r[sgt_col_2]/255, col_g[sgt_col_2]/255, col_b[sgt_col_2]/255);
+            shader_set_uniform_f(colour_to_set4, col_r[lens_col]/255, col_g[lens_col]/255, col_b[lens_col]/255);
+            draw_sprite(tester_helm, complex_depth_selection, 444,252);
+        } else if (complex_selection=="Veteran Markers" && complex_livery){
+            var sgt_col_1 = complex_livery_data.veteran.helm_primary;
+            var sgt_col_2 = complex_livery_data.veteran.helm_secondary;
+            var lens_col = complex_livery_data.veteran.helm_lens;
+            shader_set_uniform_f_array(colour_to_find1, [30/255,30/255,30/255]);
+            shader_set_uniform_f(colour_to_set1, col_r[sgt_col_1]/255, col_g[sgt_col_1]/255, col_b[sgt_col_1]/255);
+            shader_set_uniform_f_array(colour_to_find2, [200/255,0/255,0/255]);
+            shader_set_uniform_f(colour_to_set2, col_r[sgt_col_2]/255, col_g[sgt_col_2]/255, col_b[sgt_col_2]/255);
+            shader_set_uniform_f(colour_to_set4, col_r[lens_col]/255, col_g[lens_col]/255, col_b[lens_col]/255);
+            draw_sprite(tester_helm, complex_depth_selection, 444,252);
+        }                 
+        shader_set_uniform_f_array(colour_to_find1, body_colour_find );       
+        shader_set_uniform_f_array(colour_to_set1, body_colour_replace );
+        shader_set_uniform_f_array(colour_to_find2, secondary_colour_find );       
+        shader_set_uniform_f_array(colour_to_set2, secondary_colour_replace ); 
+        shader_set_uniform_f_array(colour_to_set4, lens_colour_replace );              
         draw_sprite(spr_weapon_colors,0,444,252);
         shader_reset();
         
@@ -1203,166 +1274,356 @@ if (slide=4){
     
     draw_set_font(fnt_40k_30b);
     draw_text_transformed(444,215,string_hash_to_newline("Livelry"),0.6,0.6,0);
+    if (point_and_click(draw_unit_buttons([544,215], complex_livery? "Simple Livery":"Complex Livery",[1,1], c_green,, fnt_40k_14b, 1))){
+        complex_livery=!complex_livery;
+    }
     var str,str_width,hei,x8,y8;x8=0;y8=0;
-    
-    
-    draw_set_color(38144);draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-    str="Primary: "+string(col[main_color]);x8=620;y8=252;
-    str_width=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
-    draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
-    draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-    if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
-        tooltip="Primary";tooltip2="The main color of your Astartes and their vehicles.";
-        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
-        if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=1;}
+    //Dont ask why the pauldron colours are switched i guess duke got confused between left and right at some point
+    //TODO extract this function somewhere
+    /*function draw_checkbox (cords, text, main_alpha, checked){
+            draw_set_alpha(main_alpha);
+            yar = col_special==(i+1) ?1:0;
+            if (custom<2) then draw_set_alpha(0.5);
+            draw_sprite(spr_creation_check,yar,cur_button.cords[0],cur_button.cords[1]);
+             if (scr_hit(cur_button.cords[0],cur_button.cords[1],cur_button.cords[0]+32,cur_button.cords[1]+32) and allow_colour_click){
+                    cooldown=8000;
+                    var onceh=0;
+                    if (col_special=i+1) and (onceh=0){col_special=0;onceh=1;}
+                    if (col_special!=i+1) and (onceh=0){col_special=i+1;onceh=1;}
+             }
+             draw_text_transformed(cur_button.cords[0]+30,cur_button.cords[1]+4,cur_button.text,0.4,0.4,0);
+    }*/
+    if (!complex_livery){
+        var button_data = [
+            {
+                text : $"Primary : {col[main_color]}",
+                tooltip:"Primary",
+                tooltip2:"The main color of your Astartes and their vehicles.",
+                cords : [620, 252],
+            },
+            {
+                text : $"Secondary: {col[secondary_color]}",
+                tooltip:"Secondary",
+                tooltip2:"The secondary color of your Astartes and their vehicles.",
+                cords : [620, 287],
+            },
+            {
+                text : $"Pauldron 1: {col[pauldron2_color]}",
+                tooltip:"First Pauldron",
+                tooltip2:"The color of your Astartes' right Pauldron.  Normally this Pauldron displays their rank and designation.",
+                cords : [620, 322],
+            },
+            {
+                text : $"Pauldron 2: {col[pauldron_color]}",
+                tooltip:"Second Pauldron",
+                tooltip2:"The color of your Astartes' left Pauldron.  Normally this Pauldron contains the Chapter Insignia.",
+                cords : [620, 357],
+            },
+            {
+                text : $"Trim: {col[trim_color]}",
+                tooltip:"Trim",
+                tooltip2:"The trim color that appears on the Pauldrons, armour plating, and any decorations.",
+                cords : [620, 392],                
+            },
+            {
+                text : $"Lens: {col[lens_color]}",
+                tooltip:"Lens",
+                tooltip2:"The color of your Astartes' lenss.  Most of the time this will be the visor color.",
+                cords : [620, 427],                
+            },
+            {
+                text : $"Weapon: {col[weapon_color]}",
+                tooltip:"Weapon",
+                tooltip2:"The primary color of your Astartes' weapons.",
+                cords : [620, 462],                
+            }             
+        ]
+        var button_cords, cur_button;
+        for (var i=0;i<array_length(button_data);i++){
+            cur_button = button_data[i];
+            button_cords = draw_unit_buttons(cur_button.cords, cur_button.text,[0.5,0.5], 38144,, fnt_40k_30b, 1);
+            if (scr_hit(button_cords[0],button_cords[1],button_cords[2],button_cords[3])){
+                 tooltip=cur_button.tooltip;
+                 tooltip2=cur_button.tooltip2;
+            }
+            if (point_and_click(button_cords)){
+                cooldown=8000;
+                var pp=instance_create(0,0,obj_creation_popup);
+                pp.type=i+1;
+            }
+        }
+        draw_set_color(38144);
+        var livery_type_options = [
+            {
+                cords : [437,500],   
+                text : $"Breastplate",             
+            },
+            {
+                cords : [554,500],   
+                text : $"Vertical",             
+            },
+            {
+                cords : [662,500],   
+                text : $"Quadrant",             
+            },
+            {
+                cords : [770,500],   
+                text : $"Trim",             
+            }                                    
+        ]
+        var yar;
+        for (var i=0;i<array_length(livery_type_options);i++){
+            cur_button = livery_type_options[i];
+            draw_set_alpha(1);
+            yar = col_special==(i+1) ?1:0;
+            if (cur_button.text=="Trim") then yar = trim;
+            if (custom<2) then draw_set_alpha(0.5);
+            draw_sprite(spr_creation_check,yar,cur_button.cords[0],cur_button.cords[1]);
+             if (scr_hit(cur_button.cords[0],cur_button.cords[1],cur_button.cords[0]+32,cur_button.cords[1]+32) and allow_colour_click){
+                cooldown=8000;
+                var onceh=0;
+                if (cur_button.text!="Trim"){
+                    if (col_special=i+1) and (onceh=0){col_special=0;onceh=1;}
+                    if (col_special!=i+1) and (onceh=0){col_special=i+1;onceh=1;}
+                } else {
+                    trim=!trim;
+                }
+             }
+             draw_text_transformed(cur_button.cords[0]+30,cur_button.cords[1]+4,cur_button.text,0.4,0.4,0);
+        }
+    } else {
+        var button_data=[];
+        if (complex_selection=="Sergeant Markers"){
+            button_data = [
+                {
+                    text : $"Helm Primary : {col[complex_livery_data.sgt.helm_primary]}",
+                    tooltip:"Primary Helm Colour",
+                    tooltip2:"Primary helm colour of sgt.",
+                    cords : [620, 252],
+                    type : "helm_primary",
+                    role : "sgt",
+                },
+                {
+                    text : $"Helm Secondary: {col[complex_livery_data.sgt.helm_secondary]}",
+                    tooltip:"Secondary",
+                    tooltip2:"Secondary helm colour of sgt.",
+                    cords : [620, 287],
+                    type : "helm_secondary",
+                    role : "sgt",
+                },
+                {
+                    text : $"Helm lens: {col[complex_livery_data.sgt.helm_lens]}",
+                    tooltip:"Secondary",
+                    tooltip2:"helm lens colour of sgt.",
+                    cords : [620, 322],
+                    type : "helm_lens",
+                    role : "sgt",
+                },                
+            ];
+            if (turn_selection_change){
+                complex_depth_selection=complex_livery_data.sgt.helm_pattern;
+            } else {complex_livery_data.sgt.helm_pattern=complex_depth_selection;}
+
+        } else if (complex_selection=="Veteran Sergeant Markers"){
+            button_data = [
+                {
+                    text : $"Helm Primary : {col[complex_livery_data.vet_sgt.helm_primary]}",
+                    tooltip:"Primary Helm Colour",
+                    tooltip2:"Primary helm colour of sgt.",
+                    cords : [620, 252],
+                    type : "helm_primary",
+                    role : "vet_sgt",
+                },
+                {
+                    text : $"Helm Secondary: {col[complex_livery_data.vet_sgt.helm_secondary]}",
+                    tooltip:"Secondary",
+                    tooltip2:"Secondary helm colour of sgt.",
+                    cords : [620, 287],
+                    type : "helm_secondary",
+                    role : "vet_sgt",
+                },
+                {
+                    text : $"Helm lens: {col[complex_livery_data.vet_sgt.helm_lens]}",
+                    tooltip:"Secondary",
+                    tooltip2:"helm lens colour of sgt.",
+                    cords : [620, 322],
+                    type : "helm_lens",
+                    role : "vet_sgt",
+                },                
+            ];
+            if (turn_selection_change){
+                complex_depth_selection=complex_livery_data.vet_sgt.helm_pattern;
+            } else {complex_livery_data.vet_sgt.helm_pattern=complex_depth_selection;}
+
+        }else if (complex_selection=="Captain Markers"){
+            button_data = [
+                {
+                    text : $"Helm Primary : {col[complex_livery_data.captain.helm_primary]}",
+                    tooltip:"Primary Helm Colour",
+                    tooltip2:"Primary helm colour of captain.",
+                    cords : [620, 252],
+                    type : "helm_primary",
+                    role : "captain",
+                },
+                {
+                    text : $"Helm Secondary: {col[complex_livery_data.captain.helm_secondary]}",
+                    tooltip:"Secondary",
+                    tooltip2:"Secondary helm colour of captain.",
+                    cords : [620, 287],
+                    type : "helm_secondary",
+                    role : "captain",
+                },
+                {
+                    text : $"Helm lens: {col[complex_livery_data.captain.helm_lens]}",
+                    tooltip:"lens",
+                    tooltip2:"helm lens colour of captain.",
+                    cords : [620, 322],
+                    type : "helm_lens",
+                    role : "captain",
+                },                
+            ];
+             if (turn_selection_change){
+                complex_depth_selection=complex_livery_data.captain.helm_pattern;
+            } else {complex_livery_data.captain.helm_pattern=complex_depth_selection;}
+        } else if (complex_selection=="Veteran Markers"){
+            button_data = [
+                {
+                    text : $"Helm Primary : {col[complex_livery_data.veteran.helm_primary]}",
+                    tooltip:"Primary Helm Colour",
+                    tooltip2:"Primary helm colour of Veterans.",
+                    cords : [620, 252],
+                    type : "helm_primary",
+                    role : "veteran",
+                },
+                {
+                    text : $"Helm Secondary: {col[complex_livery_data.veteran.helm_secondary]}",
+                    tooltip:"Secondary",
+                    tooltip2:"Secondary helm colour of Veterans.",
+                    cords : [620, 287],
+                    type : "helm_secondary",
+                    role : "veteran",
+                },
+                {
+                    text : $"Helm lens: {col[complex_livery_data.veteran.helm_lens]}",
+                    tooltip:"lens",
+                    tooltip2:"helm lens colour of Veterans.",
+                    cords : [620, 322],
+                    type : "helm_lens",
+                    role : "veteran",
+                },                
+            ];
+             if (turn_selection_change){
+                complex_depth_selection=complex_livery_data.veteran.helm_pattern;
+            } else {complex_livery_data.veteran.helm_pattern=complex_depth_selection;}
+        }
+        turn_selection_change = false;
+        var button_cords, cur_button;
+        for (var i=0;i<array_length(button_data);i++){
+            cur_button = button_data[i];
+            button_cords = draw_unit_buttons(cur_button.cords, cur_button.text,[0.5,0.5], 38144,, fnt_40k_30b, 1);
+            if (scr_hit(button_cords[0],button_cords[1],button_cords[2],button_cords[3])){
+                 tooltip=cur_button.tooltip;
+                 tooltip2=cur_button.tooltip2;
+            }
+            if (point_and_click(button_cords)){
+                cooldown=8000;
+                var pp=instance_create(0,0,obj_creation_popup);
+                pp.type=cur_button.type;
+                pp.role = cur_button.role
+            }
+        }
+        draw_set_color(38144);
+        var livery_type_options = [
+            {
+                cords : [437,500],   
+                text : $"Single Colour",             
+            },
+            {
+                cords : [554,500],   
+                text : $"Stripe",             
+            },
+            {
+                cords : [662,500],   
+                text : $"Muzzle",             
+            },
+            {
+                cords : [770,500],   
+                text : $"Pattern",
+            }                               
+        ]  
+        var yar;
+        for (var i=0;i<array_length(livery_type_options);i++){
+            cur_button = livery_type_options[i];
+            draw_set_alpha(1);
+            yar = complex_depth_selection==(i) ? 1 : 0;
+            if (custom<2) then draw_set_alpha(0.5);
+            draw_sprite(spr_creation_check,yar,cur_button.cords[0],cur_button.cords[1]);
+             if (scr_hit(cur_button.cords[0],cur_button.cords[1],cur_button.cords[0]+32,cur_button.cords[1]+32) and allow_colour_click){
+                    cooldown=8000;
+                    var onceh=0;
+                    if (complex_depth_selection=i) and (onceh=0){complex_depth_selection=0;onceh=1;}
+                    else if (complex_depth_selection!=i) and (onceh=0){complex_depth_selection=i;onceh=1;}
+             }
+             draw_text_transformed(cur_button.cords[0]+30,cur_button.cords[1]+4,cur_button.text,0.4,0.4,0);
+        }                                           
     }
-    
-    y8+=35;
-    draw_set_color(38144);draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-    str="Secondary: "+string(col[secondary_color]);
-    str_width=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
-    draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
-    draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-    if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
-        tooltip="Secondary";tooltip2="The secondary color of your Astartes and their vehicles.";
-        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
-        if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=2;}
-    }
-    
-    y8+=35;
-    draw_set_color(38144);draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-    str="Pauldron 1: "+string(col[pauldron2_color]);
-    str_width=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
-    draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
-    draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-    if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
-        tooltip="First Pauldron";tooltip2="The color of your Astartes' right Pauldron.  Normally this Pauldron displays their rank and designation.";
-        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
-        if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=3;}
-    }
-    
-    y8+=35;
-    draw_set_color(38144);draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-    str="Pauldron 2: "+string(col[pauldron_color]);
-    str_width=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
-    draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
-    draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-    if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
-        tooltip="Second Pauldron";tooltip2="The color of your Astartes' left Pauldron.  Normally this Pauldron contains the Chapter Insignia.";
-        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
-        if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=4;}
-    }
-    
-    y8+=35;
-    draw_set_color(38144);draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-    str="Trim: "+string(col[trim_color]);
-    str_width=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
-    draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
-    draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-    if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
-        tooltip="Trim";tooltip2="The trim color that appears on the Pauldrons, armour plating, and any decorations.";
-        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
-        if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=5;}
-    }
-    
-    y8+=35;
-    draw_set_color(38144);draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-    str="Lens: "+string(col[lens_color]);
-    str_width=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
-    draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
-    draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-    if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
-        tooltip="Lens";tooltip2="The color of your Astartes' lenses.  Most of the time this will be the visor color.";
-        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
-        if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=6;}
-    }
-    
-    y8+=35;
-    draw_set_color(38144);draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-    str="Weapon: "+string(col[weapon_color]);
-    str_width=(string_width(string_hash_to_newline(str))/2)+4;hei=(string_height(string_hash_to_newline(str))/2)+4;
-    draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_color(0);
-    draw_text_transformed(x8+2,y8+2,string_hash_to_newline(string(str)),0.5,0.5,0);
-    if (scr_hit(x8,y8,x8+str_width,y8+hei)=true) and (!instance_exists(obj_creation_popup)){
-        tooltip="Weapon";tooltip2="The primary color of your Astartes' weapons.";
-        draw_set_color(c_white);if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_rectangle(x8,y8,x8+str_width,y8+hei,0);draw_set_alpha(1);
-        if (mouse_left>=1) and (cooldown<=0) and (custom>1){cooldown=8000;var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=7;}
-    }
-    
-    
-    draw_set_color(38144);
-    
-    draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-    yar=0;if (col_special=1) then yar=1;draw_sprite(spr_creation_check,yar,437,500);yar=0;
-    if (scr_hit(437,500,437+32,500+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
-        cooldown=8000;var onceh;onceh=0;
-        if (col_special=1) and (onceh=0){col_special=0;onceh=1;}
-        if (col_special!=1) and (onceh=0){col_special=1;onceh=1;}
-    }draw_text_transformed(437+30,500+4,string_hash_to_newline("Breastplate"),0.4,0.4,0);
-    
-    draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-    yar=0;if (col_special=2) then yar=1;draw_sprite(spr_creation_check,yar,554,500);yar=0;
-    if (scr_hit(554,500,554+32,500+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
-        cooldown=8000;var onceh;onceh=0;
-        if (col_special=2) and (onceh=0){col_special=0;onceh=1;}
-        if (col_special!=2) and (onceh=0){col_special=2;onceh=1;}
-    }draw_text_transformed(554+30,500+4,string_hash_to_newline("Vertical"),0.4,0.4,0);
-    
-    draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-    yar=0;if (col_special=3) then yar=1;draw_sprite(spr_creation_check,yar,662,500);yar=0;
-    if (scr_hit(662,500,662+32,500+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
-        cooldown=8000;var onceh;onceh=0;
-        if (col_special=3) and (onceh=0){col_special=0;onceh=1;}
-        if (col_special!=3) and (onceh=0){col_special=3;onceh=1;}
-    }draw_text_transformed(662+30,500+4,string_hash_to_newline("Quadrant"),0.4,0.4,0);
-    
-    draw_set_alpha(1);if (custom<2) then draw_set_alpha(0.5);
-    yar=0;if (trim=1) then yar=1;draw_sprite(spr_creation_check,yar,770,500);yar=0;
-    if (scr_hit(770,500,770+32,500+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
-        cooldown=8000;var onceh;onceh=0;
-        if (trim=1) and (onceh=0){trim=0;onceh=1;}
-        if (trim=0) and (onceh=0){trim=1;onceh=1;}
-    }draw_text_transformed(770+30,500+4,string_hash_to_newline("Trim"),0.4,0.4,0);
     draw_set_alpha(1);
     
     draw_line(844,204,844,740);
     draw_line(845,204,845,740);
     draw_line(846,204,846,740);
     draw_text_transformed(862,215,string_hash_to_newline("Astartes Role Settings"),0.6,0.6,0);
-    draw_set_font(fnt_40k_14b);var c,ide,spacing;c=100;spacing=30;
+    draw_set_font(fnt_40k_14b);var c,role_id,spacing;c=100;spacing=30;
     draw_set_halign(fa_left);var xxx,yyy;xxx=862;yyy=255-spacing;
     
     
-    var derpaderp;
-    derpaderp=0;
-    
-    repeat(13){derpaderp+=1;
-        if (derpaderp=1) then ide=15;
-        if (derpaderp=2) then ide=14;
-        if (derpaderp=3) then ide=17;
-        if (derpaderp=4) then ide=16;
-        if (derpaderp=5) then ide=5;
-        if (derpaderp=6) then ide=2;
-        if (derpaderp=7) then ide=4;
-        if (derpaderp=8) then ide=3;
-        if (derpaderp=9) then ide=6;
-        if (derpaderp=10) then ide=8;
-        if (derpaderp=11) then ide=9;
-        if (derpaderp=12) then ide=10;
-        if (derpaderp=13) then ide=12;
+    if (!complex_livery){
+        var role_slot;
+        role_slot=0;
         
-        draw_set_alpha(1);
-        if (race[c,ide]!=0){
-            if (custom<2) then draw_set_alpha(0.5);
-            yyy+=spacing;draw_set_color(38144);draw_rectangle(xxx,yyy,1150,yyy+20,0);
-            draw_set_color(0);draw_text(xxx,yyy,string_hash_to_newline(role[c,ide]));
-            if (scr_hit(xxx,yyy,1150,yyy+20)=true) and (!instance_exists(obj_creation_popup)){if (custom=2) then draw_set_alpha(0.2);if (custom<2) then draw_set_alpha(0.1);draw_set_color(c_white);draw_rectangle(xxx,yyy,1150,yyy+20,0);
-                draw_set_alpha(1);tooltip=string(role[c,ide])+" Settings";tooltip2="Click to open the settings for this unit.";
-                if (mouse_left>=1) and (custom>0) and (cooldown<=0) and (custom=2){var pp;pp=instance_create(0,0,obj_creation_popup);pp.type=ide+100;cooldown=8000;}
+        repeat(13){role_slot+=1;
+            if (role_slot=1) then role_id=15;
+            if (role_slot=2) then role_id=14;
+            if (role_slot=3) then role_id=17;
+            if (role_slot=4) then role_id=16;
+            if (role_slot=5) then role_id=5;
+            if (role_slot=6) then role_id=2;
+            if (role_slot=7) then role_id=4;
+            if (role_slot=8) then role_id=3;
+            if (role_slot=9) then role_id=6;
+            if (role_slot=10) then role_id=8;
+            if (role_slot=11) then role_id=9;
+            if (role_slot=12) then role_id=10;
+            if (role_slot=13) then role_id=12;
+            
+            draw_set_alpha(1);
+            if (race[c,role_id]!=0){
+                if (custom<2) then draw_set_alpha(0.5);
+                yyy+=spacing;draw_set_color(38144);draw_rectangle(xxx,yyy,1150,yyy+20,0);
+                draw_set_color(0);draw_text(xxx,yyy,string_hash_to_newline(role[c,role_id]));
+                if (scr_hit(xxx,yyy,1150,yyy+20)) and (!instance_exists(obj_creation_popup)){
+                    if (custom=2) then draw_set_alpha(0.2);
+                    if (custom<2) then draw_set_alpha(0.1);draw_set_color(c_white);draw_rectangle(xxx,yyy,1150,yyy+20,0);
+                    draw_set_alpha(1);tooltip=string(role[c,role_id])+" Settings";
+                    tooltip2="Click to open the settings for this unit.";
+                    if (mouse_left>=1) and (custom>0) and (cooldown<=0) and (custom=2){
+                        var pp=instance_create(0,0,obj_creation_popup);
+                        pp.type=role_id+100;
+                        cooldown=8000;
+                    }
+                }
+            }
+        }
+    } else {
+        var complex_livery_options = ["Sergeant Markers","Veteran Sergeant Markers", "Captain Markers", "Veteran Markers"];
+        for (var i=0;i<array_length(complex_livery_options);i++){
+            yyy+=spacing;
+            if (point_and_click(draw_unit_buttons([xxx,yyy], complex_livery_options[i],[0.5,0.5], 38144,, fnt_40k_30b, 1))){
+                complex_selection=complex_livery_options[i];
+                turn_selection_change=true;
             }
         }
     }
-
     
     
     
@@ -1371,8 +1632,8 @@ if (slide=4){
     
     if (custom<2) then draw_set_alpha(0.5);
     yar=0;if (equal_specialists=1) then yar=1;draw_sprite(spr_creation_check,yar,860,645);yar=0;
-    if (scr_hit(860,645,1150,765)=true) and (!instance_exists(obj_creation_popup)){tooltip="Specialist Distribution";tooltip2="Check if you wish for your Companies to be uniform and each contain "+string(role[100][10])+"s and "+string(role[100][9])+"s.";}
-    if (scr_hit(860,650,860+32,650+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
+    if (scr_hit(860,645,1150,765)) and (!instance_exists(obj_creation_popup)){tooltip="Specialist Distribution";tooltip2="Check if you wish for your Companies to be uniform and each contain "+string(role[100][10])+"s and "+string(role[100][9])+"s.";}
+    if (scr_hit(860,650,860+32,650+32) and allow_colour_click){
         cooldown=8000;var onceh;onceh=0;
         if (equal_specialists=1) and (onceh=0){equal_specialists=0;onceh=1;}
         if (equal_specialists!=1) and (onceh=0){equal_specialists=1;onceh=1;}
@@ -1380,16 +1641,16 @@ if (slide=4){
     draw_set_alpha(1);
     
     yar=0;if (load_to_ships[0]=1) then yar=1;draw_sprite(spr_creation_check,yar,860,645+40);yar=0;
-    if (scr_hit(860,645+40,1005,765+40)=true) and (!instance_exists(obj_creation_popup)){tooltip="Load to Ships";tooltip2="Check to have your Astartes automatically loaded into ships when the game starts.";}
-    if (scr_hit(860,645+40,860+32,645+32+40)=true) and (cooldown<=0) and (mouse_left>=1) and (!instance_exists(obj_creation_popup)){
+    if (scr_hit(860,645+40,1005,765+40) and !instance_exists(obj_creation_popup)){tooltip="Load to Ships";tooltip2="Check to have your Astartes automatically loaded into ships when the game starts.";}
+    if (scr_hit(860,645+40,860+32,645+32+40) and (cooldown<=0) and (mouse_left>=1) and (!instance_exists(obj_creation_popup))){
         cooldown=8000;var onceh;onceh=0;
         if (load_to_ships[0]=1) and (onceh=0){load_to_ships[0]=0;onceh=1;}
         if (load_to_ships[0]!=1) and (onceh=0){load_to_ships[0]=1;onceh=1;}
     }draw_text_transformed(860+30,645+4+40,string_hash_to_newline("Load to Ships"),0.4,0.4,0);
     
     yar=0;if (load_to_ships[0]=2) then yar=1;draw_sprite(spr_creation_check,yar,1010,645+40);yar=0;
-    if (scr_hit(1010,645+40,1150,665+40)=true) and (!instance_exists(obj_creation_popup)){tooltip="Load (Sans Escorts)";tooltip2="Check to have your Astartes automatically loaded into ships, except for Escorts, when the game starts.";}
-    if (scr_hit(1010,645+40,1020+32,645+32+40)=true) and (cooldown<=0) and (mouse_left>=1) and (!instance_exists(obj_creation_popup)){
+    if (scr_hit(1010,645+40,1150,665+40)) and (!instance_exists(obj_creation_popup)){tooltip="Load (Sans Escorts)";tooltip2="Check to have your Astartes automatically loaded into ships, except for Escorts, when the game starts.";}
+    if (scr_hit(1010,645+40,1020+32,645+32+40)) and (cooldown<=0) and (mouse_left>=1) and (!instance_exists(obj_creation_popup)){
         cooldown=8000;var onceh;onceh=0;
         if (load_to_ships[0]=2) and (onceh=0){load_to_ships[0]=0;onceh=1;}
         if (load_to_ships[0]!=2) and (onceh=0){load_to_ships[0]=2;onceh=1;}
@@ -1401,8 +1662,8 @@ if (slide=4){
 			yar=1;
 		}
 		draw_sprite(spr_creation_check,yar,860,645+80);yar=0;
-    	if (scr_hit(860,645+80,1005,765+80)=true) and (!instance_exists(obj_creation_popup)){tooltip="Distribute Scouts";tooltip2="Check to have your Scouts split across ships in the fleet.";}
-    	if (scr_hit(860,645+80,860+32,645+32+80)=true) and (cooldown<=0) and (mouse_left>=1) and (!instance_exists(obj_creation_popup)){
+    	if (scr_hit(860,645+80,1005,765+80)) and (!instance_exists(obj_creation_popup)){tooltip="Distribute Scouts";tooltip2="Check to have your Scouts split across ships in the fleet.";}
+    	if (scr_hit(860,645+80,860+32,645+32+80)) and (cooldown<=0) and (mouse_left>=1) and (!instance_exists(obj_creation_popup)){
     		 cooldown=8000;var onceh;onceh=0;
     		 if (load_to_ships[1]=0) and (onceh=0){load_to_ships[1]=1;onceh=1;}
      		 if (load_to_ships[1]=1) and (onceh=0){load_to_ships[1]=0;onceh=1;}   		 
@@ -1414,8 +1675,8 @@ if (slide=4){
 			yar=1;
 		}
 		draw_sprite(spr_creation_check,yar,1010,645+80);yar=0;
-    	if (scr_hit(1010,645+80,1150,765+80)=true) and (!instance_exists(obj_creation_popup)){tooltip="Distribute Veterans";tooltip2="Check to have your Veterans split across the fleet.";}
-    	if (scr_hit(1010,645+80,1020+32,645+32+80)=true) and (cooldown<=0) and (mouse_left>=1) and (!instance_exists(obj_creation_popup)){
+    	if (scr_hit(1010,645+80,1150,765+80)) and (!instance_exists(obj_creation_popup)){tooltip="Distribute Veterans";tooltip2="Check to have your Veterans split across the fleet.";}
+    	if (scr_hit(1010,645+80,1020+32,645+32+80)) and (cooldown<=0) and (mouse_left>=1) and (!instance_exists(obj_creation_popup)){
     		 cooldown=8000;var onceh;onceh=0;
     		 if (load_to_ships[2]=0) and (onceh=0){load_to_ships[2]=1;onceh=1;}
      		 if (load_to_ships[2]=1) and (onceh=0){load_to_ships[2]=0;onceh=1;}   		 
@@ -1432,7 +1693,7 @@ if (slide=4){
     
     if (!instance_exists(obj_creation_popup)){
     
-        if (scr_hit(540,547,800,725)=true){tooltip="Advisor Names";tooltip2="The names of your main Advisors.  They provide useful information and reports on the divisions of your Chapter.";}
+        if (scr_hit(540,547,800,725)){tooltip="Advisor Names";tooltip2="The names of your main Advisors.  They provide useful information and reports on the divisions of your Chapter.";}
     
         draw_text_transformed(444,550,string_hash_to_newline("Advisor Names"),0.6,0.6,0);
         draw_set_font(fnt_40k_14b);
@@ -1566,116 +1827,146 @@ if (slide=5){
     draw_text_transformed(503,210,string_hash_to_newline("Gene-Seed Mutations"),0.6,0.6,0);
     if (mutations>mutations_selected) then draw_text_transformed(585,230,string_hash_to_newline("Select "+string(mutations-mutations_selected)+" More"),0.5,0.5,0);
     
-    var x1,y1,spac;spac=34;
+    var x1,y1,spac=34;
     
     if (custom<2) then draw_set_alpha(0.5);
-    
-    x1=450;y1=260;yar=0;if (preomnor=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
-        cooldown=8000;var onceh;onceh=0;
-        if (preomnor=1) and (onceh=0){preomnor=0;mutations_selected-=1;onceh=1;}
-        if (preomnor!=1) and (onceh=0) and (mutations>mutations_selected){preomnor=1;mutations_selected+=1;onceh=1;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Anemic Preomnor"),0.4,0.4,0);
-    if (scr_hit(x1,y1,700,y1+20)=true){tooltip="Anemic Preomnor";tooltip2="Your Astartes lack the detoxifying gland called the Preomnor- they are more susceptible to poisons and toxins.";}
-    
-    y1+=spac;yar=0;if (voice=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
-        cooldown=8000;var onceh;onceh=0;
-        if (voice=1) and (onceh=0){voice=0;mutations_selected-=1;onceh=1;disposition[2]+=8;}
-        if (voice!=1) and (onceh=0) and (mutations>mutations_selected){voice=1;mutations_selected+=1;onceh=1;disposition[2]-=8;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Disturbing Voice"),0.4,0.4,0);
-    if (scr_hit(x1,y1,700,y1+20)=true){tooltip="Disturbing Voice";tooltip2="Your Astartes have a voice like a creaking door or a rumble.  Decreases Imperium and Imperial Guard disposition.";}
-    
-    y1+=spac;yar=0;if (doomed=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
-        cooldown=8000;var onceh;onceh=0;
-        if (doomed=1) and (onceh=0){doomed=0;mutations_selected-=4;onceh=1;disposition[1]+=8;disposition[6]-=8;}
-        if (doomed!=1) and (onceh=0) and (mutations>mutations_selected){doomed=1;mutations_selected+=4;onceh=1;disposition[1]-=8;disposition[6]+=8;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Doomed"),0.4,0.4,0);
-    if (scr_hit(x1,y1,700,y1+20)=true){tooltip="Doomed";tooltip2="Your Chapter cannot make more Astartes until enough research is generated.  Counts as four mutations.";}
-    
-    y1+=spac;yar=0;if (lyman=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
-        cooldown=8000;var onceh;onceh=0;
-        if (lyman=1) and (onceh=0){lyman=0;mutations_selected-=1;onceh=1;}
-        if (lyman!=1) and (onceh=0) and (mutations>mutations_selected){lyman=1;mutations_selected+=1;onceh=1;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Faulty Lyman's Ear"),0.4,0.4,0);
-    if (scr_hit(x1,y1,700,y1+20)=true){tooltip="Faulty Lyman's Ear";tooltip2="Lacking a working Lyman's ear, all deep-striked Astartes recieve moderate penalties to both attack and defense.";}
-    
-    y1+=spac;yar=0;if (omophagea=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
-        cooldown=8000;var onceh;onceh=0;
-        if (omophagea=1) and (onceh=0){omophagea=0;mutations_selected-=1;onceh=1;}
-        if (omophagea!=1) and (onceh=0) and (mutations>mutations_selected){omophagea=1;mutations_selected+=1;onceh=1;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Hyper-Stimulated Omophagea"),0.4,0.4,0);
-    if (scr_hit(x1,y1,700,y1+20)=true){tooltip="Hyper-Stimulated Omophagea";tooltip2="After every battle the Astartes have a chance to feast upon their fallen enemies, or seldom, their allies.";}
-    
-    y1+=spac;yar=0;if (ossmodula=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
-        cooldown=8000;var onceh;onceh=0;
-        if (ossmodula=1) and (onceh=0){ossmodula=0;mutations_selected-=1;onceh=1;}
-        if (ossmodula!=1) and (onceh=0) and (mutations>mutations_selected){ossmodula=1;mutations_selected+=1;onceh=1;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Hyperactive Ossmodula"),0.4,0.4,0);
-    if (scr_hit(x1,y1,700,y1+20)=true){tooltip="Hyperactive Ossmodula";tooltip2="Instead of wound tissue bone is generated; Apothecaries must spend twice the normal time healing your Astartes.";}
-    
-    y1+=spac;yar=0;if (zygote=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
-        cooldown=8000;var onceh;onceh=0;
-        if (zygote=1) and (onceh=0){zygote=0;mutations_selected-=2;onceh=1;}
-        if (zygote!=1) and (onceh=0) and (mutations>mutations_selected){zygote=1;mutations_selected+=2;onceh=1;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Lost Zygote"),0.4,0.4,0);
-    if (scr_hit(x1,y1,700,y1+20)=true){tooltip="Lost Zygote";tooltip2="One of the Zygotes is faulty or missing.  The Astartes only have one each and generate half the normal Gene-Seed.";}
-    
-    x1=750;y1=260-spac;
-    
-    y1+=spac;yar=0;if (membrane=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
-        cooldown=8000;var onceh;onceh=0;
-        if (membrane=1) and (onceh=0){membrane=0;mutations_selected-=1;onceh=1;}
-        if (membrane!=1) and (onceh=0) and (mutations>mutations_selected){membrane=1;mutations_selected+=1;onceh=1;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Inactive Sus-an Membrane"),0.4,0.4,0);
-    if (scr_hit(x1,y1,1020,y1+20)=true){tooltip="Inactive Sus-an Membrane";tooltip2="Your Astartes do not have a Sus-an Membrane; they cannot enter suspended animation and recieve more casualties as a result.";}
-    
-    y1+=spac;yar=0;if (betchers=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
-        cooldown=8000;var onceh;onceh=0;
-        if (betchers=1) and (onceh=0){betchers=0;mutations_selected-=1;onceh=1;}
-        if (betchers!=1) and (onceh=0) and (mutations>mutations_selected){betchers=1;mutations_selected+=1;onceh=1;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Missing Betchers Gland"),0.4,0.4,0);
-    if (scr_hit(x1,y1,1020,y1+20)=true){tooltip="Missing Betchers Gland";tooltip2="Your Astartes cannot spit acid, and as a result, have slightly less attack in melee combat.";}
-    
-    y1+=spac;yar=0;if (catalepsean=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
-        cooldown=8000;var onceh;onceh=0;
-        if (catalepsean=1) and (onceh=0){catalepsean=0;mutations_selected-=1;onceh=1;}
-        if (catalepsean!=1) and (onceh=0) and (mutations>mutations_selected){catalepsean=1;mutations_selected+=1;onceh=1;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Mutated Catalepsean Node"),0.4,0.4,0);
-    if (scr_hit(x1,y1,1020,y1+20)=true){tooltip="Mutated Catalepsean Node";tooltip2="Your Astartes cannot sleep portions of their brains at a time, or generally at all.  They have a slight decrease to attack.";}
-    
-    y1+=spac;yar=0;if (secretions=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
-        cooldown=8000;var onceh;onceh=0;
-        if (secretions=1) and (onceh=0){secretions=0;mutations_selected-=1;onceh=1;disposition[2]+=8;}
-        if (secretions!=1) and (onceh=0) and (mutations>mutations_selected){secretions=1;mutations_selected+=1;onceh=1;disposition[2]-=8;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Oolitic Secretions"),0.4,0.4,0);
-    if (scr_hit(x1,y1,1020,y1+20)=true){tooltip="Oolitic Secretions";tooltip2="Either by secretions or radiation, your Astartes have an unusual or strange skin color.  Decreases disposition.";}
-    
-    y1+=spac;yar=0;if (occulobe=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
-        cooldown=8000;var onceh;onceh=0;
-        if (occulobe=1) and (onceh=0){occulobe=0;mutations_selected-=1;onceh=1;}
-        if (occulobe!=1) and (onceh=0) and (mutations>mutations_selected){occulobe=1;mutations_selected+=1;onceh=1;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Oversensitive Occulobe"),0.4,0.4,0);
-    if (scr_hit(x1,y1,1020,y1+20)=true){tooltip="Oversensitive Occulobe";tooltip2="Your Astartes are no longer immune to stun grenades, bright lights, and have a massive penalty during morning battles.";}
-    
-    y1+=spac;yar=0;if (mucranoid=1) then yar=1;draw_sprite(spr_creation_check,yar,x1,y1);yar=0;
-    if (scr_hit(x1,y1,x1+32,y1+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (!instance_exists(obj_creation_popup)){
-        cooldown=8000;var onceh;onceh=0;
-        if (mucranoid=1) and (onceh=0){mucranoid=0;mutations_selected-=1;onceh=1;disposition[1]+=4;disposition[2]+=4;disposition[3]+=4;disposition[5]+=4;disposition[6]+=4;}
-        if (mucranoid!=1) and (onceh=0) and (mutations>mutations_selected){mucranoid=1;mutations_selected+=1;onceh=1;disposition[1]-=4;disposition[2]-=4;disposition[3]-=4;disposition[5]-=4;disposition[6]-=4;}
-    }draw_text_transformed(x1+30,y1+4,string_hash_to_newline("Rampant Mucranoid"),0.4,0.4,0);
-    if (scr_hit(x1,y1,1020,y1+20)=true){tooltip="Rampant Mucranoid";tooltip2="Your Astartes' Mucranoid cannot be turned off; the slime lowers most dispositions and occasionally damages their armour.";}
-    
+    var mutations_defects = [
+        {
+            t_tip :"Anemic Preomnor",
+            t_tip2: "Your Astartes lack the detoxifying gland called the Preomnor- they are more susceptible to poisons and toxins.",
+            data : preomnor,
+            mutation_points : 1,
+        },
+        {
+            t_tip :"Disturbing Voice",
+            t_tip2: "Your Astartes have a voice like a creaking door or a rumble.  Decreases Imperium and Imperial Guard disposition.",
+            data : voice,
+            mutation_points : 1,
+            disposition:[[eFACTION.Imperium,-8]],
+        },
+        {
+            t_tip :"Doomed",
+            t_tip2: "Your Chapter cannot make more Astartes until enough research is generated.  Counts as four mutations.",
+            data : doomed,
+            mutation_points : 4,
+            disposition:[[eFACTION.Imperium,-8],[6,8]],
+        },
+        {
+            t_tip :"Faulty Lyman's Ear",
+            t_tip2: "Lacking a working Lyman's ear, all deep-striked Astartes recieve moderate penalties to both attack and defense.",
+            data : lyman,
+            mutation_points : 1,
+        },
+        {
+            t_tip :"Hyper-Stimulated Omophagea",
+            t_tip2: "After every battle the Astartes have a chance to feast upon their fallen enemies, or seldom, their allies.",
+            data : omophagea,
+            mutation_points : 1,
+        },
+        {
+            t_tip :"Hyperactive Ossmodula",
+            t_tip2: "Instead of wound tissue bone is generated; Apothecaries must spend twice the normal time healing your Astartes.",
+            data : ossmodula,
+            mutation_points : 1,
+        }, 
+        {
+            t_tip :"Lost Zygote",
+            t_tip2: "One of the Zygotes is faulty or missing.  The Astartes only have one each and generate half the normal Gene-Seed.",
+            data : zygote,
+            mutation_points : 2,
+        },
+        {
+            t_tip :"Inactive Sus-an Membrane",
+            t_tip2: "Your Astartes do not have a Sus-an Membrane; they cannot enter suspended animation and recieve more casualties as a result.",
+            data : membrane,
+            mutation_points : 1,
+        },
+        {
+            t_tip :"Missing Betchers Gland",
+            t_tip2: "Your Astartes cannot spit acid, and as a result, have slightly less attack in melee combat.",
+            data : betchers,
+            mutation_points : 1,
+        }, 
+        {
+            t_tip :"Mutated Catalepsean Node",
+            t_tip2: "Your Astartes cannot spit acid, and as a result, have slightly less attack in melee combat.",
+            data : catalepsean,
+            mutation_points : 1,
+        }, 
+        {
+            t_tip :"Oolitic Secretions",
+            t_tip2: "Either by secretions or radiation, your Astartes have an unusual or strange skin color.  Decreases disposition.",
+            data : secretions,
+            mutation_points : 1,
+            disposition:[[eFACTION.Imperium,-8]],
+        },
+        {
+            t_tip :"Oversensitive Occulobe",
+            t_tip2: "Your Astartes are no longer immune to stun grenades, bright lights, and have a massive penalty during morning battles.",
+            data : occulobe,
+            mutation_points : 1,
+            disposition:[[eFACTION.Imperium,-8]],
+        },
+        {
+            t_tip :"Rampant Mucranoid",
+            t_tip2: "Your Astartes' Mucranoid cannot be turned off; the slime lowers most dispositions and occasionally damages their armour.",
+            data : mucranoid,
+            mutation_points : 1,
+            disposition:[[1,-4],[eFACTION.Imperium,-8],[3,-4],[4,-4],[5,-4],[6,-4]],
+        },                                                                          
+    ]
+    x1=450;
+    y1=260;
+    for (var i=0;i<array_length(mutations_defects);i++){
+        mutation_data = mutations_defects[i];
+        draw_sprite(spr_creation_check,mutation_data.data,x1,y1);
+        if (point_and_click([x1,y1,x1+32,y1+32]) && allow_colour_click){
+            cooldown=8000;
+            var onceh=0;
+            if (mutation_data.data){
+                mutation_data.data=0;
+                mutations_selected-=mutation_data.mutation_points;
+                if (struct_exists(mutation_data, disposition)){
+                   for (var s=0;s<array_length(mutation_data.disposition);s++){
+                        disposition[mutation_data.disposition[s][0]] -= mutation_data.disposition[s][1];
+                   }
+                }                
+            }
+            else if (!mutation_data.data) and (mutations>mutations_selected){
+                mutation_data.data=1;
+                mutations_selected+=mutation_data.mutation_points;
+                if (struct_exists(mutation_data, disposition)){
+                   for (var s=0;s<array_length(mutation_data.disposition);s++){
+                        disposition[mutation_data.disposition[s][0]] += mutation_data.disposition[s][1];
+                   }
+                }
+            }
+        }
+        draw_text_transformed(x1+30,y1+4,mutation_data.t_tip,0.4,0.4,0);
+        if (scr_hit(x1,y1,x1+250,y1+20)){
+            tooltip=mutation_data.t_tip;
+            tooltip2=mutation_data.t_tip2;
+        }    
+        y1+=spac
+        if (i==6){
+            x1=750;
+            y1=260;
+        }
+    }
+    preomnor=mutations_defects[0].data;
+    voice=mutations_defects[1].data;
+    doomed=mutations_defects[2].data;
+    lyman=mutations_defects[3].data;
+    omophagea=mutations_defects[4].data;
+    ossmodula=mutations_defects[5].data;
+    zygote=mutations_defects[6].data;
+    membrane=mutations_defects[7].data;
+    betchers=mutations_defects[8].data;
+    catalepsean=mutations_defects[9].data;
+    secretions = mutations_defects[10].data;
+    occulobe=mutations_defects[11].data;
+    mucranoid=mutations_defects[12].data;
+
     draw_set_alpha(1);
     
     draw_line(445,505,1125,505);
@@ -1773,7 +2064,7 @@ if (slide=6){
         if (h=8) then it="Master Crafted Force Staff";
         
         yar=0;if (chapter_master_melee=h) then yar=1;draw_sprite(spr_creation_check,yar,x6,y6);yar=0;
-        if (scr_hit(x6,y6,x6+32,y6+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>0) and (restarted=0) and (!instance_exists(obj_creation_popup)){
+        if (scr_hit(x6,y6,x6+32,y6+32)) and (cooldown<=0) and (mouse_left>=1) and (custom>0) and (restarted=0) and (!instance_exists(obj_creation_popup)){
             cooldown=8000;var onceh;onceh=0;
             if (chapter_master_melee=h) and (onceh=0){chapter_master_melee=0;onceh=1;}
             if (chapter_master_melee!=h) and (onceh=0){chapter_master_melee=h;onceh=1;}
@@ -1783,22 +2074,19 @@ if (slide=6){
     }
     
     x6=800;y6=265;h=0;it="";
+    var ranged_options = ["","Integrated Bolters","Infernus Pistol","Plasma Pistol","Plasma Gun","Master Crafted Heavy Bolter","Master Crafted Meltagun","Storm Shield",""];
     repeat(7){h+=1;
-        if (h=1) then it="Integrated Bolters";
-        if (h=2) then it="Infernus Pistol";
-        if (h=3) then it="Plasma Pistol";
-        if (h=4) then it="Plasma Gun";
-        if (h=5) then it="Master Crafted Heavy Bolter";
-        if (h=6) then it="Master Crafted Meltagun";
-        if (h=7) then it="Storm Shield";
-        
-        yar=0;if (chapter_master_ranged=h) then yar=1;draw_sprite(spr_creation_check,yar,x6,y6);yar=0;
-        if (scr_hit(x6,y6,x6+32,y6+32)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>0) and (restarted=0) and (!instance_exists(obj_creation_popup)){
-            cooldown=8000;var onceh;onceh=0;
-            if (chapter_master_ranged=h) and (onceh=0){chapter_master_ranged=0;onceh=1;}
-            if (chapter_master_ranged!=h) and (onceh=0){chapter_master_ranged=h;onceh=1;}
+        yar=0;
+        if (chapter_master_ranged=h) then yar=1;
+        draw_sprite(spr_creation_check,yar,x6,y6);
+        yar=0;
+        if point_and_click([x6,y6,x6+32,y6+32]) and (custom>0) and (restarted=0) and (!instance_exists(obj_creation_popup)){
+            cooldown=8000;
+            var onceh=0;
+            if (chapter_master_ranged=h) {chapter_master_ranged=0;}
+            else if (chapter_master_ranged!=h) {chapter_master_ranged=h;}
         }
-        draw_text_transformed(x6+30,y6+4,string_hash_to_newline(it),0.4,0.4,0);
+        draw_text_transformed(x6+30,y6+4,ranged_options[h],0.4,0.4,0);
         y6+=spac;
     }
     
@@ -1812,34 +2100,38 @@ if (slide=6){
     // draw_text_transformed(444,505,"Select Speciality",0.6,0.6,0);
     draw_set_halign(fa_center);
     
-    var ha2;ha2=string(dis[1])+string(dis[2])+string(dis[3])+string(dis[4]);
-    if (chapter_master_specialty=3) and ((race[100,17]=0) or (string_count("Psyker Intolerant",ha2)>0)) then chapter_master_speciality=choose(1,2);
+    var psy_intolerance = array_contains(dis, "Psyker Intolerant");
+    if (chapter_master_specialty=3) and ((race[100,17]=0) or (psy_intolerance)) then chapter_master_speciality=choose(1,2);
     x6=474;y6=500;h=0;it="";
-    
+    var leader_types = [
+        ["",""],
+        ["Born Leader","You always know the right words to inspire your men or strike doubt in the hearts of the enemy.  Increases Disposition and Grants a +10% Requisition Income Bonus."],
+        ["Champion","Even before your rise to Chapter Master you were a renowned warrior, nearly without compare.  Increases Chapter Master Experience, Melee Damage, and Ranged Damage."],
+        ["Psyker","The impossible is nothing to you; despite being a Psyker you have slowly risen to lead a Chapter.  Chapter Master gains every Power within the chosen Discipline."],
+    ]
     repeat(3){h+=1;
+        var cur_leader_type = leader_types[h];
         draw_set_alpha(1);
-        if ((race[100,17]=0) or (string_count("Psyker Intolerant",ha2)>0)) and (h=3) then draw_set_alpha(0.5);
+        var nope = (h=3) and ((race[100,17]=0) or (psy_intolerance));
+        if (nope) then draw_set_alpha(0.5);
         if (custom<2) or (restarted>0) then draw_set_alpha(0.5);
         
         // draw_sprite(spr_cm_specialty,h-1,x6,y6);
         scr_image("commander",h-1,x6,y6,162,208);
         
-        if (h=1) then draw_text_transformed(x6+81,y6+214,string_hash_to_newline("Born Leader"),0.5,0.5,0);
-        if (h=2) then draw_text_transformed(x6+81,y6+214,string_hash_to_newline("Champion"),0.5,0.5,0);
-        if (h=3) then draw_text_transformed(x6+81,y6+214,string_hash_to_newline("Psyker"),0.5,0.5,0);
+        draw_text_transformed(x6+81,y6+214,cur_leader_type[0],0.5,0.5,0);
+
+        draw_sprite(spr_creation_check,chapter_master_specialty==h,x6,y6+214);
         
-        yar=0;if (chapter_master_specialty=h) then yar=1;draw_sprite(spr_creation_check,yar,x6,y6+214);yar=0;
         
-        var nope;nope=0;if (h=3) and ((race[100,17]=0) or (string_count("Psyker Intolerant",ha2)>0)) then nope=1;
-        
-        if (scr_hit(x6,y6+214,x6+32,y6+32+214)=true) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (restarted=0) and (nope=0){
-            cooldown=8000;var onceh;onceh=0;
+        if (scr_hit(x6,y6+214,x6+32,y6+32+214)) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (restarted=0) and (nope=0){
+            cooldown=8000;
+            var onceh=0;
             if (chapter_master_specialty!=h) and (onceh=0){chapter_master_specialty=h;onceh=1;}
         }
-        if (scr_hit(x6,y6+214,x6+162,y6+234)=true) and (nope=0){
-            if (h=1){tooltip="Born Leader";tooltip2="You always know the right words to inspire your men or strike doubt in the hearts of the enemy.  Increases Disposition and Grants a +10% Requisition Income Bonus.";}
-            if (h=2){tooltip="Champion";tooltip2="Even before your rise to Chapter Master you were a renowned warrior, nearly without compare.  Increases Chapter Master Experience, Melee Damage, and Ranged Damage.";}
-            if (h=3){tooltip="Psyker";tooltip2="The impossible is nothing to you; despite being a Psyker you have slowly risen to lead a Chapter.  Chapter Master gains every Power within the chosen Discipline.";}
+        if (scr_hit(x6,y6+214,x6+162,y6+234)) and (nope=0){
+            tooltip = cur_leader_type[0];
+            tooltip2= cur_leader_type[1]
         }
         
         x6+=240;draw_set_alpha(1);
@@ -1853,7 +2145,7 @@ if (slide=6){
 	
 	draw_rectangle(1000,135,1180,170,1)
 	draw_text_transformed(1090,135,string("Save Chapter"),0.6,0.6,0);draw_set_font(fnt_40k_14b);
-	if (scr_hit(1000,135,1180,170)=true) {
+	if (scr_hit(1000,135,1180,170)) {
 		tooltip2="Click to save your chapter";
 		tooltip= "Do you want to save your chapter?"
 	
@@ -1953,10 +2245,10 @@ if (slide>=2) or (goto_slide>=2){
     
     if (slide>=2) and (slide<6) and (custom!=2){
         draw_set_alpha(0.8);
-        if (popup="") and ((change_slide>=70) or (change_slide<=0)) and (scr_hit(927+64+12,761+12,927+128-12,761+64-12)=true) then draw_set_alpha(1);
+        if (popup="") and ((change_slide>=70) or (change_slide<=0)) and (scr_hit(927+64+12,761+12,927+128-12,761+64-12)) then draw_set_alpha(1);
         draw_sprite(spr_creation_arrow,4,927+64,761);
         if (popup="") and ((change_slide>=70) or (change_slide<=0)) and (cooldown<=0) and (mouse_left>=1){
-            if (scr_hit(927+64+12,761+12,927+128-12,761+64-12)=true){
+            if (scr_hit(927+64+12,761+12,927+128-12,761+64-12)){
                 scr_creation(2);scr_creation(3.5);scr_creation(4);
                 scr_creation(5);scr_creation(6);
             }
@@ -1981,13 +2273,7 @@ if (slide>=2) or (goto_slide>=2){
     
     if (popup="") and ((change_slide>=70) or (change_slide<=0)) and (cooldown<=0){
         if (mouse_x>925) and (mouse_y>756) and (mouse_x<997) and (mouse_y<824) and (mouse_left>=1) and (!instance_exists(obj_creation_popup)){// Next slide
-            
-            if (slide=2) then scr_creation(2);
-            if (slide=3) then scr_creation(3);
-            if (slide=4) then scr_creation(4);
-            if (slide=5) then scr_creation(5);
-            if (slide=6) then scr_creation(6);
-            
+            if (slide>=2 && slide<=6) then scr_creation(slide);            
         }
         
         

@@ -183,11 +183,8 @@ if (battle_special="WL10_reveal") or (battle_special="WL10_later"){var moar,ox,o
 if (battle_special="study2a") or (battle_special="study2b"){
     if (defeat=1){
         var ii,good;ii=0;good=0;
-        repeat(4){if (good=0){ii+=1;if (string_count("mech_tomb",battle_object.p_problem[battle_id,ii])>0) then good=ii;}}
-        
-        if (good>0){
-            battle_object.p_problem[battle_id,good]="";
-            battle_object.p_timer[battle_id,good]=-1;
+
+        if (remove_planet_problem(battle_id, "mech_tomb", battle_object)){
             obj_controller.disposition[3]-=10;
             
             if (battle_special="study2a"){
@@ -319,10 +316,11 @@ if (string_count("_attack",battle_special)>0) and (string_count("mech",battle_sp
         instance_activate_object(obj_star);
         with(obj_star){if (name!=obj_ncombat.battle_loc) then instance_deactivate_object(id);}
         with(obj_star){
-            if (remove_planet_problem(p_problem,"bomb")){
-                p_necrons[obj_ncombat.battle_id]=4;
+            var planet = obj_ncombat.battle_id;
+            if (remove_planet_problem(planet,"bomb")){
+                p_necrons[planet]=4;
             }
-            if (awake_tomb_world(p_feature[obj_ncombat.battle_id])==0) then awaken_tomb_world(p_feature[obj_ncombat.battle_id])
+            if (awake_tomb_world(p_feature[planet])==0) then awaken_tomb_world(p_feature[planet])
         }
         with(obj_temp7){instance_destroy();}
         instance_activate_object(obj_star);
@@ -381,13 +379,10 @@ if (string_count("_attack",battle_special)>0) and (string_count("mech",battle_sp
                     // show_message("TEMP5: "+string(instance_number(obj_temp5))+"#Star: "+string(you));
                     
                     var ppp;ppp=0;
-                    if (you.p_problem[obj_temp8.wid,1]="bomb"){ppp=1;seal_tomb_world(you.p_feature[obj_temp8.wid]);you.p_problem[obj_temp8.wid,1]="";you.p_timer[obj_temp8.wid,1]=0;}
-                    if (you.p_problem[obj_temp8.wid,2]="bomb"){ppp=2;seal_tomb_world(you.p_feature[obj_temp8.wid]);you.p_problem[obj_temp8.wid,2]="";you.p_timer[obj_temp8.wid,2]=0;}
-                    if (you.p_problem[obj_temp8.wid,3]="bomb"){ppp=3;seal_tomb_world(you.p_feature[obj_temp8.wid]);you.p_problem[obj_temp8.wid,3]="";you.p_timer[obj_temp8.wid,3]=0;}
-                    if (you.p_problem[obj_temp8.wid,4]="bomb"){ppp=4;seal_tomb_world(you.p_feature[obj_temp8.wid]);you.p_problem[obj_temp8.wid,4]="";you.p_timer[obj_temp8.wid,4]=0;}
-                    
+                    remove_planet_problem(obj_temp8.wid, "bomb", you);
+
                     pip.option1="";pip.option2="";pip.option3="";
-                    scr_event_log("","Inquisition Mission Completed: Your Astartes have sealed the Necron Tomb on "+string(you.name)+" "+string(scr_roman(ppp))+".");
+                    scr_event_log("","Inquisition Mission Completed: Your Astartes have sealed the Necron Tomb on "+string(you.name)+" "+string(scr_roman(obj_temp8.wid))+".");
                     scr_gov_disp(you.name,obj_temp8.wid,choose(1,2,3,4,5));
                     
                     if (!instance_exists(obj_temp8)){
@@ -426,12 +421,8 @@ if ((string_count("spyrer",battle_special)>0))/* and (string_count("demon",battl
     var cur_star = obj_turn_end.battle_object[obj_turn_end.current_battle];
     var planet = obj_turn_end.battle_world[obj_turn_end.current_battle]
     var planet_string = scr_roman_numerals()[planet-1];
-    for (var i=1;i<array_length(cur_star.p_problem[planet]); i++){
-        if (cur_star.p_problem[planet][i]=="spyrer"){
-            cur_star.p_problem[planet][i]="";
-            cur_star.p_timer[planet][i]=-1;
-        }
-    }
+        
+    remove_planet_problem(planet ,"spyrer",cur_star)
     
     var tixt=$"The Spyrer on {cur_star.name} {planet_string} has been removed.  The citizens and craftsman may sleep more soundly, the Inquisition likely pleased."
 

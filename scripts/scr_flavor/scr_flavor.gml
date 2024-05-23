@@ -32,22 +32,6 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	    }
 	}
 
-
-	// show_message("Flavor is being ran");
-	// if (cm_kill=1) then show_message("CMKILL1");
-
-	if (string_count("&",weapon_name)>0) or (string_count("|",weapon_name)>0){// Artifact description
-	    if (string_count("Bolter",weapon_name)>0) then weapon_name="Bolter";
-	    if (string_count("Plasma Pistol",weapon_name)>0) then weapon_name="Plasma Pistol";
-	    if (string_count("Plasma Gun",weapon_name)>0) then weapon_name="Plasma Gun";
-	    if (string_count("Power Sword",weapon_name)>0) then weapon_name="Power Sword";
-	    if (string_count("Power Spear",weapon_name)>0) then weapon_name="Power Spear";
-	    if (string_count("Power Axe",weapon_name)>0) then weapon_name="Power Axe";
-	    if (string_count("Power Fist",weapon_name)>0) then weapon_name="Power Fist";
-	    if (string_count("Relic Blade",weapon_name)>0) then weapon_name="Relic Blade";
-	    if (string_count("&",weapon_name)>0) then weapon_name=clean_tags(weapon_name);
-	}
-
 	if (obj_ncombat.battle_special="WL10_reveal") or (obj_ncombat.battle_special="WL10_later"){
 	    if (target_name="Veteran Chaos Terminator") and (target_name>0) then obj_ncombat.chaos_angry+=casulties*2;
 	    if (target_name="Veteran Chaos Chosen") and (target_name>0) then obj_ncombat.chaos_angry+=casulties;
@@ -96,8 +80,8 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
         
 	        if (target.dudes_num[targeh]>1) and (casulties=0) then p1+=$"they smash into the {target_name} ranks (X{casulties} casulties).";
 	        if (target.dudes_num[targeh]>1) and (casulties>0) then p1+=$"they smash into the {target_name} ranks (X{casulties} casulties).";
-	        if (target.dudes_num[targeh]=1) and (casulties=0) then p1+="a {target_name} survives the attack.";
-	        if (target.dudes_num[targeh]=1) and (casulties=1) then p1+="a {target_name} takes one of the charges.";
+	        if (target.dudes_num[targeh]=1) and (casulties=0) then p1+=$"a {target_name} survives the attack.";
+	        if (target.dudes_num[targeh]=1) and (casulties=1) then p1+=$"a {target_name} takes one of the charges.";
 	    }
 	    if (solod=true){
 	        if (target.dudes_num[targeh]=1) then p1=string(full_name)+$" activates his Jump Pack and launches up into the air, and then crashes down into a {target_name}- ";

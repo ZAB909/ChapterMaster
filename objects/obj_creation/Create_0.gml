@@ -27,6 +27,12 @@ global.load=0;
 skip=false;
 premades=true;
 
+complex_livery=false;
+complex_selection = "sgt";
+complex_depth_selection = 0;
+//TODO probably make this array based at some point ot match other unit data
+complex_livery_data = complex_livery_default();
+test_sprite = 0;
 fade_in=50;
 slate1=80;
 slate2=0;
@@ -48,6 +54,7 @@ name_bad=0;
 heheh=0;
 icons_top=1;
 icons_max=0;
+turn_selection_change=false;
 
 scrollbar_engaged=0;
 
@@ -101,8 +108,21 @@ hapothecary=global.name_generator.generate_space_marine_name();
 hchaplain=global.name_generator.generate_space_marine_name();
 clibrarian=global.name_generator.generate_space_marine_name();
 fmaster=global.name_generator.generate_space_marine_name();
-recruiter=global.name_generator.generate_space_marine_name();
-admiral=global.name_generator.generate_space_marine_name();
+honorcapt=global.name_generator.generate_space_marine_name();		//1st
+watchmaster=global.name_generator.generate_space_marine_name();		//2nd
+arsenalmaster=global.name_generator.generate_space_marine_name();	//3rd
+admiral=global.name_generator.generate_space_marine_name();			//4th
+marchmaster=global.name_generator.generate_space_marine_name();		//5th
+ritesmaster=global.name_generator.generate_space_marine_name();		//6th
+victualler=global.name_generator.generate_space_marine_name();		//7th
+lordexec=global.name_generator.generate_space_marine_name();		//8th
+relmaster=global.name_generator.generate_space_marine_name();		//9th
+recruiter=global.name_generator.generate_space_marine_name();		//10th
+
+
+
+
+
 
 equal_specialists=0;
 load_to_ships=[2,0,0];
@@ -911,4 +931,5 @@ scr_colors_initialize();
 /* */
 action_set_alarm(30, 1);
 /*  */
+
 	

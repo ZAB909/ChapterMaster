@@ -19,6 +19,443 @@ enum Role {
 	VETERAN_SERGEANT = 19
 }
 
+function complex_livery_default(){
+	return {
+		sgt : {
+			helm_pattern:3,
+			helm_primary : 0,
+			helm_secondary : 0,
+			helm_detail : 0,
+			helm_lens : 0,
+		},
+		vet_sgt : {
+			helm_pattern:3,
+			helm_primary : 0,
+			helm_secondary : 0,
+			helm_detail : 0,
+			helm_lens : 0,
+		},
+		captain : {
+			helm_pattern:3,
+			helm_primary : 0,
+			helm_secondary : 0,
+			helm_detail : 0,
+			helm_lens : 0,
+		},
+		veteran : {
+			helm_pattern:3,
+			helm_primary : 0,
+			helm_secondary : 0,
+			helm_detail : 0,
+			helm_lens : 0,			
+		}		
+	};
+}
+function progenitor_livery(chapter, specific="none"){
+	//default
+	var livery_data = complex_livery_default();	
+	//custom for chapters
+	if (chapter=="Space Wolves"){
+		livery_data = {
+			sgt : {
+				helm_pattern:3,
+				helm_primary :Colors.Fenrisian_Grey,
+				helm_secondary : Colors.Red,
+				helm_detail : 0,
+				helm_lens : Colors.Red,
+			},
+			vet_sgt : {
+				helm_pattern:3,
+				helm_primary : Colors.Fenrisian_Grey,
+				helm_secondary : Colors.Black,
+				helm_detail : 0,
+				helm_lens : Colors.Red,
+			},
+			captain : {
+				helm_pattern:3,
+				helm_primary : Colors.Fenrisian_Grey,
+				helm_secondary : Colors.Black,
+				helm_detail : 0,
+				helm_lens : Colors.Red,
+			},
+			veteran : {
+				helm_pattern:0,
+				helm_primary : Colors.White,
+				helm_secondary : Colors.White,
+				helm_detail : Colors.White,
+				helm_lens : Colors.Red,			
+			}		
+		}
+	}else if (chapter == "Dark Angels"){
+		livery_data = {
+			sgt: {
+				helm_pattern: 0,
+				helm_primary: obj_creation.main_color,
+				helm_secondary: obj_creation.main_color,
+				helm_detail: obj_creation.trim_color,
+				helm_lens: obj_creation.lens_color,
+			},
+			vet_sgt: {
+				helm_pattern: 1,
+				helm_primary: obj_creation.main_color,
+				helm_secondary: obj_creation.main_color,
+				helm_detail: obj_creation.trim_color,
+				helm_lens: obj_creation.lens_color,
+			},
+			captain: {
+				helm_pattern: 0,
+				helm_primary: obj_creation.main_color,
+				helm_secondary: obj_creation.main_color,
+				helm_detail: obj_creation.trim_color,
+				helm_lens: obj_creation.lens_color,
+			},
+			veteran: {
+				helm_pattern: 0,
+				helm_primary: obj_creation.main_color,
+				helm_secondary: obj_creation.main_color,
+				helm_detail: obj_creation.trim_color,
+				helm_lens: obj_creation.lens_color,
+			}
+		}
+	}else if (chapter=="Raven Guard"){
+		livery_data = {
+			sgt : {
+				helm_pattern:0,
+				helm_primary :Colors.White,
+				helm_secondary : Colors.White,
+				helm_detail : 0,
+				helm_lens : Colors.Red,
+			},
+			vet_sgt : {
+				helm_pattern:1,
+				helm_primary : Colors.Black,
+				helm_secondary : Colors.White,
+				helm_detail : 0,
+				helm_lens : Colors.Red,
+			},
+			captain : {
+				helm_pattern:0,
+				helm_primary : Colors.White,
+				helm_secondary : Colors.White,
+				helm_detail : 0,
+				helm_lens : Colors.Red,
+			},
+			veteran : {
+				helm_pattern:0,
+				helm_primary : Colors.Black,
+				helm_secondary : Colors.Black,
+				helm_detail : Colors.Black,
+				helm_lens : Colors.Green,			
+			}		
+		}
+	}else if (chapter=="Salamanders"){
+		livery_data = {
+			sgt : {
+				helm_pattern:0,
+				helm_primary :Colors.Black,
+				helm_secondary : Colors.Black,
+				helm_detail : 0,
+				helm_lens : Colors.Red,
+			},
+			vet_sgt : {
+				helm_pattern:1,
+				helm_primary : Colors.Black,
+				helm_secondary : Colors.Red,
+				helm_detail : 0,
+				helm_lens : Colors.Red,
+			},
+			captain : {
+				helm_pattern:0,
+				helm_primary : Colors.Firedrake_Green,
+				helm_secondary : Colors.Firedrake_Green,
+				helm_detail : 0,
+				helm_lens : Colors.Red,
+			},
+			veteran : {
+				helm_pattern:0,
+				helm_primary : Colors.Black,
+				helm_secondary : Colors.Black,
+				helm_detail : Colors.Black,
+				helm_lens : Colors.Green,			
+			}		
+		}
+	}else if (chapter=="White Scars"){
+		livery_data = {
+			sgt : {
+				helm_pattern:0,
+				helm_primary :Colors.White,
+				helm_secondary : Colors.White,
+				helm_detail : 0,
+				helm_lens : Colors.Red,
+			},
+			vet_sgt : {
+				helm_pattern:1,
+				helm_primary : Colors.White,
+				helm_secondary : Colors.Red,
+				helm_detail : 0,
+				helm_lens : Colors.Red,
+			},
+			captain : {
+				helm_pattern:0,
+				helm_primary : Colors.White,
+				helm_secondary : Colors.White,
+				helm_detail : 0,
+				helm_lens : Colors.Red,
+			},
+			veteran : {
+				helm_pattern:0,
+				helm_primary : Colors.White,
+				helm_secondary : Colors.White,
+				helm_detail : Colors.White,
+				helm_lens : Colors.Green,			
+			}		
+		}
+	}else if (chapter=="Iron Hands"){
+		livery_data = {
+			sgt : {
+				helm_pattern:0,
+				helm_primary :Colors.White,
+				helm_secondary : Colors.White,
+				helm_detail : 0,
+				helm_lens : Colors.Red,
+			},
+			vet_sgt : {
+				helm_pattern:1,
+				helm_primary : Colors.Black,
+				helm_secondary : Colors.White,
+				helm_detail : 0,
+				helm_lens : Colors.Red,
+			},
+			captain : {
+				helm_pattern:0,
+				helm_primary : Colors.White,
+				helm_secondary : Colors.White,
+				helm_detail : 0,
+				helm_lens : Colors.Red,
+			},
+			veteran : {
+				helm_pattern:0,
+				helm_primary : Colors.Black,
+				helm_secondary : Colors.Black,
+				helm_detail : Colors.Black,
+				helm_lens : Colors.Green,			
+			}		
+		}
+	}else if (chapter=="Ultramarines"){
+		livery_data = {
+			sgt : {
+				helm_pattern:0,
+				helm_primary : Colors.Red,
+				helm_secondary : Colors.Red,
+				helm_detail : Colors.Red,
+				helm_lens : Colors.Green,
+			},
+			vet_sgt : {
+				helm_pattern:1,
+				helm_primary : Colors.Red,
+				helm_secondary : Colors.White,
+				helm_detail : Colors.Red,
+				helm_lens : Colors.Green,
+			},
+			captain : {
+				helm_pattern:0,
+				helm_primary : Colors.Ultramarine,
+				helm_secondary : Colors.Ultramarine,
+				helm_detail : Colors.Ultramarine,
+				helm_lens : Colors.Red,
+			},
+			veteran : {
+				helm_pattern:0,
+				helm_primary : Colors.White,
+				helm_secondary : Colors.White,
+				helm_detail : Colors.White,
+				helm_lens : Colors.Red,			
+			}				
+		}
+	}else if (chapter=="Imperial Fists"){
+		livery_data = {
+			sgt : {
+				helm_pattern:0,
+				helm_primary : Colors.Black,
+				helm_secondary : Colors.Black,
+				helm_detail : Colors.Red,
+				helm_lens : Colors.Green,
+			},
+			vet_sgt : {
+				helm_pattern:1,
+				helm_primary : Colors.Black,
+				helm_secondary : Colors.White,
+				helm_detail : Colors.Red,
+				helm_lens : Colors.Green,
+			},
+			captain : {
+				helm_pattern:0,
+				helm_primary : Colors.Dark_Gold,
+				helm_secondary : Colors.Dark_Gold,
+				helm_detail : Colors.Dark_Gold,
+				helm_lens : Colors.Red,
+			},
+			veteran : {
+				helm_pattern:0,
+				helm_primary : Colors.Red,
+				helm_secondary : Colors.Red,
+				helm_detail : Colors.Red,
+				helm_lens : Colors.Green,			
+			}				
+		} 
+	}else if (chapter=="Blood Angels"){
+		livery_data = {
+			sgt : {
+				helm_pattern:1,
+				helm_primary : Colors.Sanguine_Red,
+				helm_secondary : Colors.Sanguine_Red,
+				helm_detail : Colors.Lighter_Black,
+				helm_lens : Colors.Lime,
+			},
+			vet_sgt : {
+				helm_pattern:1,
+				helm_primary : Colors.Gold,
+				helm_secondary : Colors.Black,
+				helm_detail : Colors.Gold,
+				helm_lens : Colors.Lime,
+			},
+			captain : {
+				helm_pattern:0,
+				helm_primary : Colors.Sanguine_Red,
+				helm_secondary : Colors.Sanguine_Red,
+				helm_detail : Colors.Gold,
+				helm_lens : Colors.Lime,
+			},
+			veteran : {
+				helm_pattern:0,
+				helm_primary : Colors.Gold,
+				helm_secondary : Colors.Gold,
+				helm_detail : Colors.Gold,
+				helm_lens : Colors.Lime,			
+			}				
+		}
+	}else if (global.chapter_name=="Blood Ravens"){
+		livery_data = {
+			sgt : {
+				helm_pattern:0,
+				helm_primary : Colors.Black,
+				helm_secondary : Colors.Black,
+				helm_detail : Colors.Black,
+				helm_lens : Colors.Lime,
+			},
+			vet_sgt : {
+				helm_pattern:1,
+				helm_primary : Colors.Black,
+				helm_secondary : Colors.White,
+				helm_detail : Colors.Black,
+				helm_lens : Colors.Lime,
+			},
+			captain : {
+				helm_pattern:0,
+				helm_primary : Colors.Copper,
+				helm_secondary : Colors.Copper,
+				helm_detail : Colors.Copper,
+				helm_lens : Colors.Lime,
+			},
+			veteran : {
+				helm_pattern:0,
+				helm_primary : Colors.White,
+				helm_secondary : Colors.White,
+				helm_detail : Colors.White,
+				helm_lens : Colors.Lime,			
+			}				
+		}
+	}else if (global.chapter_name=="Minotaurs"){
+		livery_data = {
+			sgt : {
+				helm_pattern:0,
+				helm_primary : Colors.Black,
+				helm_secondary : Colors.Black,
+				helm_detail : Colors.Black,
+				helm_lens : Colors.Red,
+			},
+			vet_sgt : {
+				helm_pattern:1,
+				helm_primary : obj_creation.main_color,
+				helm_secondary : Colors.Black,
+				helm_detail : obj_creation.main_color,
+				helm_lens : Colors.Red,
+			},
+			captain : {
+				helm_pattern:2,
+				helm_primary : obj_creation.main_color,
+				helm_secondary : Colors.Dark_Red,
+				helm_detail : obj_creation.main_color,
+				helm_lens : Colors.Red,
+			},
+			veteran : {
+				helm_pattern:0,
+				helm_primary : obj_creation.main_color,
+				helm_secondary : obj_creation.main_color,
+				helm_detail : obj_creation.main_color,
+				helm_lens : Colors.Red,			
+			}				
+		}
+	}else {
+		livery_data =  {
+			sgt : {
+				helm_pattern:0,
+				helm_primary : Colors.Red,
+				helm_secondary : Colors.Red,
+				helm_detail : Colors.Red,
+				helm_lens : Colors.Green,
+			},
+			vet_sgt : {
+				helm_pattern:1,
+				helm_primary : Colors.Red,
+				helm_secondary : Colors.White,
+				helm_detail : Colors.Red,
+				helm_lens : Colors.Green,
+			},
+			captain : {
+				helm_pattern:0,
+				helm_primary : obj_creation.main_color,
+				helm_secondary : obj_creation.main_color,
+				helm_detail : obj_creation.main_color,
+				helm_lens : obj_creation.lens_color,
+			},
+			veteran : {
+				helm_pattern:0,
+				helm_primary : Colors.White,
+				helm_secondary : Colors.White,
+				helm_detail : Colors.White,
+				helm_lens : Colors.Red,			
+			}			
+		}	
+	}
+	if (specific=="none"){
+		return livery_data;
+	} else {
+		return livery_data[$ specific];
+	}
+}
+
+function progenitor_map(){
+	var founding_chapters = [
+		"",
+		"Dark Angels",
+		"White Scars",
+		"Space Wolves",
+		"Imperial Fists",
+		"Blood Angels",
+		"Iron Hands",
+		"Ultramarines",
+		"Salamanders",
+		"Raven Guard"
+	]
+	for (i=1;i<10;i++){
+		if (global.chapter_name==founding_chapters[i] || obj_ini.progenitor==i){
+			return founding_chapters[i];
+		}
+	}
+	return "";
+}
+
 function scr_initialize_custom() {
 
 	progenitor = obj_creation.founding;
@@ -796,19 +1233,36 @@ function scr_initialize_custom() {
 	col_special = obj_creation.col_special;
 	trim = obj_creation.trim;
 	skin_color = obj_creation.skin_color;
+	complex_livery_data = obj_creation.complex_livery_data;
+	var complex_type = ["sgt", "vet_sgt", "captain", "veteran"];
+	for (var i=0;i<array_length(complex_type);i++){
+		with (complex_livery_data[$ complex_type[i]]){
+			if (helm_primary==0 && helm_secondary==0 && helm_lens==0){
+				obj_ini.complex_livery_data[$ complex_type[i]] = progenitor_livery(progenitor_map(), complex_type[i]);
+			}
+		}
+	}
 
 	/*main_color=obj_creation.main_color;
 	secondary_color=obj_creation.secondary_color;
 	lens_color=obj_creation.lens_color;
 	weapon_color=obj_creation.weapon_color;*/
 
-	master_name = obj_creation.chapter_master_name;
-	chief_librarian_name = obj_creation.clibrarian;
-	high_chaplain_name = obj_creation.hchaplain;
-	high_apothecary_name = obj_creation.hapothecary;
-	forge_master_name = obj_creation.fmaster;
-	lord_admiral_name = obj_creation.admiral;
-	recruiter_name = obj_creation.recruiter;
+	master_name=obj_creation.chapter_master_name;
+	chief_librarian_name=obj_creation.clibrarian;
+	high_chaplain_name=obj_creation.hchaplain;
+	high_apothecary_name=obj_creation.hapothecary;
+	forge_master_name=obj_creation.fmaster;
+	honor_captain_name=obj_creation.honorcapt;		//1st
+	watch_master_name=obj_creation.watchmaster;		//2nd
+	arsenal_master_name=obj_creation.arsenalmaster;	//3rd
+	lord_admiral_name=obj_creation.admiral;			//4th
+	march_master_name=obj_creation.marchmaster;		//5th
+	rites_master_name=obj_creation.ritesmaster;		//6th
+	chief_victualler_name=obj_creation.victualler;	//7th
+	lord_executioner_name=obj_creation.lordexec;	//8th
+	relic_master_name=obj_creation.relmaster;		//9th
+	recruiter_name=obj_creation.recruiter;			//10th
 
 	master_melee = obj_creation.chapter_master_melee;
 	master_ranged = obj_creation.chapter_master_ranged;
@@ -2404,7 +2858,7 @@ function scr_initialize_custom() {
 		loc[company][k] = home_name;
 		role[company][k] = roles.captain;
 		wep1[company][k] = "Relic Blade";
-		name[company][k] = global.name_generator.generate_space_marine_name();
+		name[company][k] = honor_captain_name;
 		wep2[company][k] = choose("Storm Shield", "Storm Bolter");
 		gear[company][k] = gear[101, 5];
 		spawn_unit = TTRPG[company][k]
@@ -2933,29 +3387,81 @@ function scr_initialize_custom() {
 			}
 		}
 
-		var spawn_unit;
-		if (stahp = 0) {
-			k += 1;
-			commands += 1; // Captain
-			TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
-			race[company][k] = 1;
-			loc[company][k] = home_name;
-			role[company][k] = roles.captain;
-			name[company][k] = global.name_generator.generate_space_marine_name();
-			if (company == 4) {
-				if (lord_admiral_name != "") {
-					name[company][k] = lord_admiral_name;
-				} else {
-					lord_admiral_name = name[company][k];
-				}
-			} else if (company == 10) {
-				if (recruiter_name != "") {
-					name[company][k] = recruiter_name;
-				} else {
-					recruiter_name = name[company][k];
-				}
-			}
-			spawn_unit = TTRPG[company][k];
+	    var spawn_unit;
+	    if (stahp=0){
+	        k+=1;
+	        commands+=1;// Captain
+	        TTRPG[company][k]=new TTRPG_stats("chapter", company,k);
+	        race[company][k]=1;
+	        loc[company][k]=home_name;
+	        role[company][k]=role[100][5];
+	        wep1[company][k]=wep1[101,5];
+	        name[company][k]=global.name_generator.generate_space_marine_name();
+
+	        if (company==1){
+     	        if (honor_captain_name!=""){
+     	        	 name[company][k]=honor_captain_name;
+     	        } else{
+     	        	honor_captain_name = name[company][k];
+     	        }
+     	    }else if  (company==2){
+     	        if (watch_master_name!=""){
+     	        	 name[company][k]=watch_master_name;
+     	        } else{
+     	        	watch_master_name = name[company][k];
+     	        }
+			}else if  (company==3){
+     	        if (arsenal_master_name!=""){
+     	        	 name[company][k]=arsenal_master_name;
+     	        } else{
+     	        	arsenal_master_name = name[company][k];
+     	        }
+			}else if  (company==4){
+     	        if (lord_admiral_name!=""){
+     	        	 name[company][k]=lord_admiral_name;
+     	        } else{
+     	        	lord_admiral_name = name[company][k];
+     	        }
+			}else if  (company==5){
+     	        if (march_master_name!=""){
+     	        	 name[company][k]=march_master_name;
+     	        } else{
+     	        	march_master_name = name[company][k];
+     	        }
+     	    }else if  (company==6){
+     	        if (rites_master_name!=""){
+     	        	 name[company][k]=rites_master_name;
+     	        } else{
+     	        	rites_master_name = name[company][k];
+     	        }
+     	    }else if  (company==7){
+     	        if (chief_victualler_name!=""){
+     	        	 name[company][k]=chief_victualler_name;
+     	        } else{
+     	        	chief_victualler_name = name[company][k];
+     	        }
+     	    }else if  (company==8){
+     	        if (lord_executioner_name!=""){
+     	        	 name[company][k]=lord_executioner_name;
+     	        } else{
+     	        	lord_executioner_name = name[company][k];
+     	        }
+     	    }else if  (company==9){
+     	        if (relic_master_name!=""){
+     	        	 name[company][k]=relic_master_name;
+     	        } else{
+     	        	relic_master_name = name[company][k];
+     	        }
+     	    }else if  (company==10){
+     	        if (recruiter_name!=""){
+     	        	 name[company][k]=recruiter_name;
+     	        } else{
+     	        	recruiter_name = name[company][k];
+     	        }
+     	    }
+
+	        wep2[company][k]=wep2[101,5];
+	        spawn_unit = TTRPG[company][k];
 			// used to randomly make a marine an old guard of their company, giving a bit more xp (TODO) and fancier armor they've hanged onto all these years	
 			spawn_unit.roll_age();
 			spawn_unit.roll_exp();

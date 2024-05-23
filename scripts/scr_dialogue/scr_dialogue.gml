@@ -236,16 +236,17 @@ function scr_dialogue(diplo_keyphrase) {
 	}
 	// Actually here to kill you
 	if (diplo_keyphrase=="cs_meeting60"){
+		var chaos_leader = obj_controller.faction_leader[eFACTION.Chaos];
 		disposition[10]+=10;
-	    diplo_text="[["+string(obj_controller.faction_leader[eFACTION.Chaos])+" is silent for a moment, then a slow chuckle rises from deep within his ancient power armour. The chuckle erupts into hideous laughter that chills your blood with its otherworldly tenor.]]##I thank you, I have not truly laughed in three hundred years. I shall take your skull as a memento of this day and your fine jest. But before I do, indulge my curiosity. Let us say you did kill me, /then/ what would you do? Claim the price on my head? Go crawling back on your belly to your Imperial masters like a whipped cur, dragging your kill behind you? Become master of this sector yourself now that you’ve bested your greatest foe? Or perhaps you’d offer up my soul to the Dark Gods, ignorantly fumbling about in the darkness for their favor? Tell me.";
+	    diplo_text=$"[[{chaos_leader} is silent for a moment, then a slow chuckle rises from deep within his ancient power armour. The chuckle erupts into hideous laughter that chills your blood with its otherworldly tenor.]]##I thank you, I have not truly laughed in three hundred years. I shall take your skull as a memento of this day and your fine jest. But before I do, indulge my curiosity. Let us say you did kill me, /then/ what would you do? Claim the price on my head? Go crawling back on your belly to your Imperial masters like a whipped cur, dragging your kill behind you? Become master of this sector yourself now that you’ve bested your greatest foe? Or perhaps you’d offer up my soul to the Dark Gods, ignorantly fumbling about in the darkness for their favor? Tell me.";
     
 	    diplo_option[1]="The reward for one such as you will be great, and I /will/ claim it.";
 		diplo_goto[1]="cs_meeting61";
 	    diplo_option[2]="The atrocities you’ve visited on this sector are reason enough.";
 		diplo_goto[2]="cs_meeting63";
-	    diplo_option[3]="You think me ignorant of the ways of Chaos, "+string(obj_controller.faction_leader[eFACTION.Chaos])+", but I know one truth. There is power in blood. Your blood. My power. They will hear me.";
+	    diplo_option[3]=$"You think me ignorant of the ways of Chaos, {chaos_leader}, but I know one truth. There is power in blood. Your blood. My power. They will hear me.";
 		diplo_goto[3]="cs_meeting65";
-	    diplo_option[4]="I’m just tired of listening to you talk, "+string(obj_controller.faction_leader[eFACTION.Chaos])+".";
+	    diplo_option[4]=$"I’m just tired of listening to you talk, {chaos_leader}.";
 		diplo_goto[4]="cs_meeting67";
 	}
 	// Reward
@@ -302,14 +303,8 @@ function scr_dialogue(diplo_keyphrase) {
 		faction_status[eFACTION.Chaos]="Antagonism";
     
 	    with(obj_star){
-	        for (var run=1; run<=4; run++) {
-    			for (var s=1; s<=4; s++) {
-	                if (p_problem[run,s]=="meeting") or (p_problem[run,s]=="meeting_trap"){
-						p_problem[run,s]="";
-						p_timer[run,s]=-1;
-					}
-	            }
-	        }
+	    	remove_star_problem("meeting");
+	    	remove_star_problem("meeting_trap");
 	    }
     
 	    var born=false;
@@ -383,14 +378,8 @@ function scr_dialogue(diplo_keyphrase) {
 	        obj_ncombat.leader=1;
         
 	        with(obj_star){
-	            for (var run=1; run<=4; run++) {
-    				for (var s=1; s<=4; s++) {
-	                    if (p_problem[run,s]="meeting") or (p_problem[run,s]="meeting_trap"){
-							p_problem[run,s]="";
-							p_timer[run,s]=-1;
-						}
-	                }
-	            }
+	        	remove_star_problem("meeting");
+	        	remove_star_problem("meeting_trap");
 	        }
 	    }
     

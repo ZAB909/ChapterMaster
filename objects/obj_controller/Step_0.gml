@@ -594,6 +594,7 @@ if (menu==1 && (managing>0 || managing<0)){
             temp[117]=unit.ranged_attack();
             // Damage Resistance
             temp[118]=string(damage_res)+"%";
+            temp[121] = unit.draw_unit_image();
         /*if (man[sel]="vehicle"){
             // TODO
         }*/
