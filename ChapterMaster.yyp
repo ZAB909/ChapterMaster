@@ -572,6 +572,7 @@
     {"id":{"name":"spr_ship_inter","path":"sprites/spr_ship_inter/spr_ship_inter.yy",},},
     {"id":{"name":"DiploCommonComponents","path":"scripts/DiploCommonComponents/DiploCommonComponents.yy",},},
     {"id":{"name":"spr_ship_craftworld","path":"sprites/spr_ship_craftworld/spr_ship_craftworld.yy",},},
+    {"id":{"name":"spr_helm_decorations","path":"sprites/spr_helm_decorations/spr_helm_decorations.yy",},},
     {"id":{"name":"spr_ship_ammer","path":"sprites/spr_ship_ammer/spr_ship_ammer.yy",},},
     {"id":{"name":"spr_dread_iron_clad","path":"sprites/spr_dread_iron_clad/spr_dread_iron_clad.yy",},},
     {"id":{"name":"scr_has_adv","path":"scripts/scr_has_adv/scr_has_adv.yy",},},
