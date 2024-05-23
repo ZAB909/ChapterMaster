@@ -327,7 +327,18 @@ function fastest_route_algorithm(start_x,start_y, xx,yy,ship_speed, start_from_s
 
 
 
-
+function calculate_action_speed(capitals=true, frigates=true, escorts=true){
+	var fleet_speed=128;
+	if (capitals>0){
+	    fleet_speed=100;
+	} else if (frigates>0){
+	    fleet_speed=128;
+	}else if (escorts>0){
+	    fleet_speed=174;
+	}
+	if (obj_controller.stc_ships>=6) and (fleet_speed>=100) then fleet_speed*=0.8;
+	return fleet_speed;
+}
 
 
 

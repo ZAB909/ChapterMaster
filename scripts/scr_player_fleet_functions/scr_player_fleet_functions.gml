@@ -145,7 +145,7 @@ function set_player_fleet_image(){
     ii+=round((frigate_number/2));
     ii+=round((escort_number/4));
     if (ii<=1) then ii=1;
-    image_index=ii;	
+    image_index=min(ii,9);	
 }
 
 function fleet_full_ship_array(fleet="none"){
@@ -208,6 +208,7 @@ function player_fleet_ship_count(fleet="none"){
 	}
 	return ship_count;		
 }
+
 function player_fleet_selected_count(fleet="none"){
 	var ship_count = 0;
 	if (fleet=="none"){

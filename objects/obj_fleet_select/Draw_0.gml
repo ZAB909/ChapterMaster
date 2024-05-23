@@ -84,10 +84,34 @@ if (owner  = eFACTION.Player) and (instance_nearest(x,y,obj_p_fleet).action=""){
         
         
         if (sys_dist<32) and (sys.id!=mine.id){
+            var has_capitals = false;
+            var has_frigates = false;
+            var has_escorts = false;
+            with (player_fleet){
+                for (i=0; i<array_length(capital);i++){
+                    if(capital[i]!="" && capital_sel[i]){
+                        has_capitals=true
+                        break;
+                    }
+                } 
+                for (i=0; i<array_length(frigate);i++){
+                    if(frigate[i]!="" && frigate_sel[i]){
+                        has_frigates=true
+                        break;
+                    }
+                } 
+                for (i=0; i<array_length(escort);i++){
+                    if(escort[i]!="" && escort_sel[i]){
+                        has_escorts=true
+                        break;
+                    }
+                }                                 
+            }               
+            var selection_travel_speed = calculate_action_speed(has_capitals,has_frigates,has_escorts);
             if (is_array(star_travel)){
-                star_travel = new fastest_route_algorithm(mine.x,mine.y,sys.x,sys.y, instance_nearest(x,y,obj_p_fleet).action_spd);
+                star_travel = new fastest_route_algorithm(mine.x,mine.y,sys.x,sys.y, selection_travel_speed);
             }else if (sys.id != star_travel.final_route_info[0]){
-                star_travel = new fastest_route_algorithm(mine.x,mine.y,sys.x,sys.y, instance_nearest(x,y,obj_p_fleet).action_spd);
+                star_travel = new fastest_route_algorithm(mine.x,mine.y,sys.x,sys.y, selection_travel_speed);
             }
             star_travel.draw_route();
             draw_set_color(c_white);
@@ -99,18 +123,30 @@ if (owner  = eFACTION.Player) and (instance_nearest(x,y,obj_p_fleet).action=""){
             draw_line_dashed(x,y,sys.x,sys.y,16,0.5);
             
             draw_set_font(fnt_40k_14b);
-            var eta=0;
-            eta=floor(point_distance(mine.x,mine.y,sys.x,sys.y)/player_fleet.action_spd)+1;
-            if (connected=0) then eta=eta*2;
-            if (web!=0) then eta=1;
+            var eta=0;       
+
+            eta = calculate_fleet_eta(mine.x,mine.y,sys.x,sys.y, selection_travel_speed);
+
             if (sys.storm>0) or (instance_nearest(x,y+24,obj_star).storm>0) then eta="N/A";
             
             draw_set_font(fnt_40k_14b);
-            eta = "ETA "+string(eta) + " Press SHIFT to ignore way points";
+            eta = "ETA "+string(eta) + "#Press SHIFT to ignore way points";
+            var speed_string = "";
+            var viable=true;
+            if (!has_capitals){
+                speed_string = "#Speed bonus *1.25 frigates and smaller";
+                if (!has_frigates){
+                    speed_string = "#Speed bonus *1.75 Escort fleet"
+                    if (!has_escorts){
+                        speed_string = "#No Ships Selected"
+                        viable=false;
+                    }                     
+                } 
+            }
+            eta+=speed_string;      
 
-            draw_text_transformed(sys.x+17,sys.y,eta,scale,scale,0);
-            
-            if (mouse_check_button(mb_right)){
+            draw_text_transformed(sys.x+17,sys.y,string_hash_to_newline(eta),scale,scale,0);
+            if (mouse_check_button(mb_right) && viable){
                 var ship_count = player_fleet_ship_count(player_fleet);
                 var fleet_selected = player_fleet_selected_count(player_fleet);
                 var move_fleet;
