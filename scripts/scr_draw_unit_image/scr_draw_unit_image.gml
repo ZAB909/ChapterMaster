@@ -1379,8 +1379,13 @@ function scr_draw_unit_image(_background=false){
             } else if (armour_type == ArmourType.Tartaros) {
                 shield_offset_x = -8;
             }
-            if (gear() == "Combat Shield") then draw_sprite (spr_gear_combat_shield, 1, x_surface_offset + shield_offset_x, y_surface_offset + shield_offset_y);
-
+            if (gear() == "Combat Shield"){
+                if (role() == obj_ini.role[100][Role.COMPANY_CHAMPION]){
+                    draw_sprite (spr_gear_combat_shield, 1, x_surface_offset + shield_offset_x, y_surface_offset + shield_offset_y);
+                } else {
+                    draw_sprite (spr_gear_combat_shield, 0, x_surface_offset + shield_offset_x, y_surface_offset + shield_offset_y);
+                }
+            }
             // if (braz=1) then draw_sprite(spr_pack_brazier,1,x_surface_offset,y_surface_offset);
             if (armour_type==ArmourType.Dreadnought){
                 draw_sprite(spr_dreadnought_chasis_colors,specialist_colours,x_surface_offset,y_surface_offset);
