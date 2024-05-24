@@ -819,6 +819,7 @@ function scr_draw_unit_image(_background=false){
                             //specific_armour_sprite="none";
                             armour_sprite =spr_techmarine_core;
                             specific_armour_sprite = spr_techmarine_core;
+                            armour_bypass = true;
                         }
                     }
 
