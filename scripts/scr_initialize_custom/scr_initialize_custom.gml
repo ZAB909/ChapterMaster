@@ -2230,8 +2230,8 @@ function scr_initialize_custom() {
 	switch (master_melee) {
 		case 1:
 			chapter_master_equip = {
-				"wep1": "Power Fist with Intergrated Bolters",
-				"wep2": "Power Fist with Intergrated Bolters"
+				"wep1": "Boltstorm Gauntlet",
+				"wep2": "Boltstorm Gauntlet"
 			};
 			break;
 		case 2:
@@ -2335,15 +2335,23 @@ function scr_initialize_custom() {
 			}
 			chapter_master.add_trait("still_standing");
 			chapter_master.add_trait("tyrannic_vet");
+
 			arti = obj_ini.artifact_struct[last_artifact];
-			arti.name = "Gauntlets of Ultramar";
-			arti.custom_description = "Two mighty Power Fists with incorporated Bolters that were reclaimed from a fallen Chaos champion, slain during the Gamalia Reclusiam Massacre by the Primarch of the Ultramarines, Roboute Guilliman himself";
-			obj_ini.artifact[last_artifact] = "Gauntlets of Ultramar";
+			arti.name = "Gauntlet of Ultramar";
+			arti.custom_description = "A mighty Power Fist with an Integrated Bolter that was reclaimed from a fallen Chaos champion, slain during the Gamalia Reclusiam Massacre by the Primarch of the Ultramarines, Roboute Guilliman himself";
+			obj_ini.artifact[last_artifact] = "Boltstorm Gauntlet";
 			obj_ini.artifact_identified[last_artifact] = 0;
 			arti.bearer = [0, 1];
 			chapter_master_equip.wep1 = last_artifact;
-			chapter_master_equip.wep2 = "";
+			last_artifact++;
 
+			arti = obj_ini.artifact_struct[last_artifact];
+			arti.name = "Gauntlet of Ultramar";
+			arti.custom_description = "A mighty Power Fist with an Integrated Bolter that was reclaimed from a fallen Chaos champion, slain during the Gamalia Reclusiam Massacre by the Primarch of the Ultramarines, Roboute Guilliman himself";
+			obj_ini.artifact[last_artifact] = "Boltstorm Gauntlet";
+			obj_ini.artifact_identified[last_artifact] = 0;
+			arti.bearer = [0, 1];
+			chapter_master_equip.wep2 = last_artifact;
 			last_artifact++;
 
 			chapter_master_equip.armour = last_artifact;

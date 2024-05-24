@@ -31,9 +31,8 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             "Power Fist":spr_weapon_powfist4,
             "Lightning Claw":spr_weapon_lightning2,
             "Chainfist":spr_weapon_chainfist,
-            "Power Fist with Intergrated Bolters":spr_weapon_powfist4,
             "Power Mace":spr_weapon_powmace,
-            "Gauntlets of Ultramar":spr_weapon_gauntlets_ultramar,
+            "Boltstorm Gauntlet":spr_weapon_boltstorm_gauntlet,
         }
         var terminator_melee_names=struct_get_names(terminator_melee);
         for (var i=0;i<array_length(terminator_melee_names);i++){
@@ -301,10 +300,6 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
 
     if ("Company Standard" == equiped_weapon) {
         ui_hand[left_or_right] = 0;
-    }
-
-    if ("Gauntlets of Ultramar" == equiped_weapon) {
-        ui_twoh[left_or_right] = true;
     }
 
     // Flip the ui_xmod for offhand
