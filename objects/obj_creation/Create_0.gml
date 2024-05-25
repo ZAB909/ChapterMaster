@@ -254,6 +254,7 @@ if((file_exists("chaptersave#1.ini")=true) and (chapter_made=1)){
 		recruiting_exists21= ini_read_real("Save","recruiting_exists",recruiting_exists);
 		homeworld_rule21= ini_read_real("Save","home_world_rule",homeworld_rule);
 		aspirant_trial21=ini_read_string("Save","aspirant_trial",aspirant_trial);
+		discipline21=ini_read_string("Save","discipline",discipline);
 		
 		color_to_main21= ini_read_string("Controller","main_color","Red");
 	    color_to_secondary21= ini_read_string("Controller","secondary_color","Red");

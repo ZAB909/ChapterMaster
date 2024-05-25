@@ -44,7 +44,7 @@ function scr_chapter_new(argument0) {
 
 	if (argument0="Dark Angels"){founding="N/A";points=150;
 	    selected_chapter=1;chapter=argument0;icon=1;icon_name="da";founding=0;fleet_type=1;strength=10;purity=8;stability=10;cooperation=5;
-	    homeworld="Dead";homeworld_name="The Rock";recruiting_world="Death";recruiting_name="Kimmeria";
+	    homeworld="Dead";homeworld_name="The Rock";recruiting="Death";recruiting_name="Kimmeria";
 	    homeworld_exists=1;recruiting_exists=1;homeworld_rule=3;aspirant_trial="Survival of the Fittest";
 	    adv[1]="Enemy: Fallen";dis[1]="Never Forgive";
 	    // Pauldron2: Left, Pauldron: Right
@@ -126,7 +126,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 
 	if (argument0="Ultramarines"){founding="N/A";points=150;
 	    selected_chapter=7;chapter=argument0;icon=7;icon_name="um";founding=0;fleet_type=1;strength=5;purity=10;stability=10;cooperation=10;
-	    homeworld="Temperate";homeworld_name="Macragge";recruiting_world="Death";recruiting_name="Parmenio";
+	    homeworld="Temperate";homeworld_name="Macragge";recruiting="Death";recruiting_name="Parmenio";
 	    homeworld_exists=1;recruiting_exists=1;homeworld_rule=3;aspirant_trial="Exposure";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Dark Ultramarine";color_to_secondary="Dark Ultramarine";color_to_trim="Gold";
@@ -158,7 +158,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
   if (argument0="Imperial Fists"){founding="N/A";points=150;
 		selected_chapter=4;chapter=argument0;icon=4;icon_name="if";founding=0;fleet_type=1;strength=6;purity=7;stability=10;cooperation=8;
 		adv[1]="Bolter Drilling";adv[2]="Siege Masters";
-		homeworld="Ice";homeworld_name="Inwit";recruiting_world="Hive";recruiting_name="Necromunda";
+		homeworld="Ice";homeworld_name="Inwit";recruiting="Hive";recruiting_name="Necromunda";
 		homeworld_exists=1;recruiting_exists=1;homeworld_rule=2;aspirant_trial="Survival of the Fittest";
 
 		color_to_main="Gold";color_to_secondary="Gold";color_to_trim="Red";color_to_pauldron="Gold"
@@ -416,7 +416,7 @@ if (argument0="Minotaurs"){founding=10;points=450;
 	    fleet_type=2;strength=5;purity=10;stability=10;cooperation=2;
 	    adv[1]="Paragon";adv[2]="Siege Masters";adv[3]="Boarders";adv[4]="Enemy: Fallen";dis[1]="Suspicious";
 	    homeworld_exists=0;recruiting_exists=1;
-	    recruiting_world="Death";recruiting_name=global.name_generator.generate_star_name();
+	    recruiting="Death";recruiting_name=global.name_generator.generate_star_name();
 	    homeworld_rule=0;aspirant_trial="Challenge";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Lightest Brown";color_to_secondary="Lightest Brown";color_to_trim="Light Brown";
@@ -453,7 +453,7 @@ if (argument0="Minotaurs"){founding=10;points=450;
 		ritesmaster="Tarkus";victualler="Atanaxis";lordexec="Thaddeus";relmaster="Avitus";recruiter="Cyrus";
 	    homeworld="Dead";homeworld_name="Aurelia";flagship_name="Omnis Arcanum";
 	    homeworld_exists=0;recruiting_exists=1;
-	    recruiting_world="Death";recruiting_name="Trontiux";
+	    recruiting="Death";recruiting_name="Trontiux";
 	    homeworld_rule=0;aspirant_trial="Knowledge of Self";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Sanguine Red";color_to_secondary="Sanguine Red";color_to_trim="Lighter Black";
@@ -507,7 +507,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    adv[1]="Melee Enthusiasts";adv[2]="Kings of Space";adv[3]="Boarders";adv[4]="Daemon Binders";dis[1]="Suspicious";
 	    homeworld="Dead";homeworld_name="Entymion";
 	    homeworld_exists=0;recruiting_exists=1;
-	    recruiting_world="Death";recruiting_name=global.name_generator.generate_star_name();
+	    recruiting="Death";recruiting_name=global.name_generator.generate_star_name();
 	    homeworld_rule=0;aspirant_trial="Challenge";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Purple";color_to_secondary="Purple";color_to_trim="Dark Gold";
@@ -534,7 +534,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    adv[1]="Melee Enthusiasts";dis[1]="Shitty Luck";dis[2]="Sieged";dis[3]="Suspicious";
 	    homeworld="Dead";homeworld_name="Lacrima Vex";
 	    homeworld_exists=0;recruiting_exists=1;
-	    recruiting_world="Death";recruiting_name=global.name_generator.generate_star_name();
+	    recruiting="Death";recruiting_name=global.name_generator.generate_star_name();
 	    homeworld_rule=0;aspirant_trial="Challenge";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Yellow";color_to_secondary="Yellow";color_to_trim="Dark Gold";
@@ -561,7 +561,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	if (argument0="Doom Benefactors"){points=100;
 	    selected_chapter=135;chapter=argument0;icon=0;icon_name="eye";founding=0;scr_icon("");
 	    fleet_type=1;strength=1;purity=10;stability=7;cooperation=8;
-	    homeworld="Forge";homeworld_name="Ariana Prime";recruiting_world="Death";recruiting_name=global.name_generator.generate_star_name();
+	    homeworld="Forge";homeworld_name="Ariana Prime";recruiting="Death";recruiting_name=global.name_generator.generate_star_name();
 	    homeworld_exists=1;recruiting_exists=1;homeworld_rule=2;aspirant_trial="Apprenticeship";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Dark Red";color_to_secondary="Black";color_to_trim="Copper";
@@ -603,8 +603,8 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    fleet_type=fleet_type21;
 		strength=strength21;
 		purity=purity21;stability=stability21;cooperation=cooperation21;
-	    homeworld=homeworld_name;recruiting_world=recruiting_world21;recruiting_name=recruiting_name21;
-	    homeworld_exists=homeworld_rule21;recruiting_exists=recruiting_exists21;homeworld_rule=homeworld_rule21;aspirant_trial=aspirant_trial21;
+	    homeworld=homeworld21;homeworld_name=homeworld_name21;recruiting=recruiting_world21;recruiting_name=recruiting_name21;
+	    homeworld_exists=homeworld_rule21;recruiting_exists=recruiting_exists21;homeworld_rule=homeworld_rule21;aspirant_trial=aspirant_trial21;discipline=discipline21;
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main=color_to_main21;
 		color_to_secondary=color_to_secondary21;color_to_trim=color_to_trim21;

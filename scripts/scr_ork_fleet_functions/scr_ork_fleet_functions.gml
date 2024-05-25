@@ -39,7 +39,7 @@ function build_new_ork_ships_to_fleet(star){
         }
     	var new_wagh_star = instance_nearest(x,y,obj_star);
         if (instance_exists(new_wagh_star)){
-            fleet.action_x=new_wagh_star.x;
+            action_x=new_wagh_star.x;
             action_y=new_wagh_star.y;
             set_fleet_movement();
         }
