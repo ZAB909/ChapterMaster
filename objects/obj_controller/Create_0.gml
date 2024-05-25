@@ -1748,6 +1748,8 @@ action_set_alarm(2, 0);
 
 
 controller_standard_draw=function(){
+ // if (instance_exists(obj_turn_end)) then exit;
+
     script_execute(scr_ui_manage,0,0,0,0,0);
     script_execute(scr_ui_advisors,0,0,0,0,0);
     script_execute(scr_ui_diplomacy,0,0,0,0,0);
@@ -1757,15 +1759,6 @@ controller_standard_draw=function(){
     // Main UI
     if (zoomed==0) and (zui==0){
         draw_sprite(spr_new_ui,0,xx+0,yy+0);
-            draw_sprite_ext(
-                spr_forge_points_icon,0, 
-                xx+4,
-                yy + 50,
-                1, 
-                1, 
-                0,
-                c_white,
-                1); 
         draw_set_color(c_white);
         // Buttons here
         draw_sprite(spr_ui_but_4,0,xx+1374,yy+8);
@@ -1802,9 +1795,6 @@ controller_standard_draw=function(){
         
         if (y_slide>0) then draw_set_alpha((100-(y_slide*2))/100);
         
-        //forge points number
-        draw_text_transformed(xx+36-2,yy + 82-4, string(forge_points), 1.7, 1.7, 0);
-        
         draw_set_alpha(1);
         draw_sprite(spr_new_banner,0,xx+1439+new_banner_x,yy+62);
         draw_sprite(spr_new_ui_cover,0,xx+0,yy+(900-17));
@@ -1830,23 +1820,23 @@ controller_standard_draw=function(){
         draw_set_color(38144);
         draw_set_font(fnt_menu);
         draw_set_halign(fa_center);
-        
-        draw_text(xx+662,yy+17,string_hash_to_newline("Sector "+string(obj_ini.sector_name)));
-        draw_text(xx+662.5,yy+17.5,string_hash_to_newline("Sector "+string(obj_ini.sector_name)));
+        // Draws the sector name
+        draw_text(xx+775,yy+17,string_hash_to_newline("Sector "+string(obj_ini.sector_name)));
+        draw_text(xx+775.5,yy+17.5,string_hash_to_newline("Sector "+string(obj_ini.sector_name)));
         
         // Checks if you are penitent
         if (obj_controller.faction_status[eFACTION.Imperium]!="War"){
             if (penitent_max==0){
-                draw_text(xx+887,yy+17,string_hash_to_newline("Loyal"));
-                draw_text(xx+887,yy+17.5,string_hash_to_newline("Loyal"));
+                draw_text(xx+998,yy+17,string_hash_to_newline("Loyal"));
+                draw_text(xx+998,yy+17.5,string_hash_to_newline("Loyal"));
             }
             if (penitent_max>0){
                 var endb=0,endb2="";
                 endb=min(0,(((penitent_turn+1)*(penitent_turn+1))-120)*-1);
                 if (endb<0) then endb2=" "+string(endb);
                 draw_set_color(c_red);
-                draw_text(xx+887,yy+17,string_hash_to_newline(string(min(100,floor((penitent_current/penitent_max)*100)))+"% Penitent"));
-                draw_text(xx+887,yy+17.5,string_hash_to_newline(string(min(100,floor((penitent_current/penitent_max)*100)))+"% Penitent"));
+                draw_text(xx+998,yy+17,string_hash_to_newline(string(min(100,floor((penitent_current/penitent_max)*100)))+"% Penitent"));
+                draw_text(xx+998,yy+17.5,string_hash_to_newline(string(min(100,floor((penitent_current/penitent_max)*100)))+"% Penitent"));
                 draw_set_color(38144);
                 // TODO Need a tooltip for here to display the actual amounts
             }
@@ -1854,8 +1844,8 @@ controller_standard_draw=function(){
         // Sets you to renegade
         if (obj_controller.faction_status[eFACTION.Imperium]=="War"){
             draw_set_color(255);
-            draw_text(xx+887,yy+17,string_hash_to_newline("Renegade"));
-            draw_text(xx+887,yy+17.5,string_hash_to_newline("Renegade"));
+            draw_text(xx+998,yy+17,string_hash_to_newline("Renegade"));
+            draw_text(xx+998,yy+17.5,string_hash_to_newline("Renegade"));
             draw_set_color(38144);
         }
         // Checks if the chapter name is less than 140 chars, adjusts chapter_master_name_width accordingly
@@ -1883,21 +1873,30 @@ controller_standard_draw=function(){
         draw_set_color(16291875);
         draw_text(xx+36,yy+16,string_hash_to_newline(string(floor(requisition))+string(inc)));
         draw_text(xx+36.5,yy+16.5,string_hash_to_newline(string(floor(requisition))+string(inc)));
+        // Draws forge points
+        draw_sprite_ext(spr_forge_points_icon, 0, xx+160, yy+15, 0.3, 0.3, 0, c_white, 1)
+        draw_set_color(#af5a00)
+        draw_text(xx+180,yy+16, string(forge_points));
+        draw_text(xx+180.5,yy+16.5, string(forge_points));
         // Draws the current loyalty
-        draw_sprite(spr_new_resource,1,xx+133+32,yy+17);
+        draw_sprite(spr_new_resource,1,xx+267,yy+17);
         draw_set_color(1164001);
-        draw_text(xx+157+32,yy+16,string_hash_to_newline(string(loyalty)));
-        draw_text(xx+157.5+32,yy+16.5,string_hash_to_newline(string(loyalty)));
+        draw_text(xx+290,yy+16,string_hash_to_newline(string(loyalty)));
+        draw_text(xx+290.5,yy+16.5,string_hash_to_newline(string(loyalty)));
         // Draws the current gene seed
-        draw_sprite(spr_new_resource,2,xx+250,yy+17);
+        draw_sprite(spr_new_resource,2,xx+355,yy+17);
         draw_set_color(c_red);
-        draw_text(xx+267,yy+16,string_hash_to_newline(string(gene_seed)));
-        draw_text(xx+267.5,yy+16.5,string_hash_to_newline(string(gene_seed)));
-        // Draws the current marines on your command
-        draw_sprite(spr_new_resource,3,xx+373-10,yy+17);
+        draw_text(xx+370,yy+16,string_hash_to_newline(string(gene_seed)));
+        draw_text(xx+370.5,yy+16.5,string_hash_to_newline(string(gene_seed)));
+        // Draws the current marines in your command
+        draw_sprite(spr_new_resource,3,xx+475-10,yy+17);
         draw_set_color(16291875);
-        draw_text(xx+395-10,yy+16,string_hash_to_newline(string(marines)+"/"+string(command)));
-        draw_text(xx+395.5-10,yy+16.5,string_hash_to_newline(string(marines)+"/"+string(command)));
+        draw_text(xx+495-10,yy+16,string_hash_to_newline(string(marines)+"/"+string(command)));
+        draw_text(xx+495.5-10,yy+16.5,string_hash_to_newline(string(marines)+"/"+string(command)));
+
+        if (menu==0){
+            location_viewer.draw();
+        }
     }
 
     draw_set_font(fnt_40k_14b);

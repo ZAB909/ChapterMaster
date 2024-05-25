@@ -165,8 +165,8 @@ function dungeon_struct() constructor{
 		var unit, mem;
 		var xx =unit_data_slate.XX;
 		var yy =unit_data_slate.YY;	
-		var x_depth=0;
-		var y_depth=0;
+		var _x_depth=0;
+		var _y_depth=0;
 		var _draw_colour = c_red;
 		var mis_obj_cords = draw_unit_buttons([xx+70,yy+70], "Mission Objectives",[1.5,1.5],c_red);
 		if (point_and_click(mis_obj_cords)){
@@ -177,8 +177,11 @@ function dungeon_struct() constructor{
 			current_view="log";
 		}
 		_draw_colour = current_view == "unit"?c_gray:c_red;
-		var unit_overviews = draw_unit_buttons([mission_log_chords[2]+20,yy+70], "Unit Overviews",[1.5,1.5],_draw_colour);
-		var start_y = unit_overviews[3]+10;
+		var unit_overviews_chords = draw_unit_buttons([mission_log_chords[2]+20,yy+70], "Unit Overviews",[1.5,1.5],_draw_colour);
+		if (point_and_click(unit_overviews_chords)){
+			current_view="unit";
+		}
+		var start_y = unit_overviews_chords[3]+10;
 		var start_x =mis_obj_cords[0]+50;
 		var health_bar;
 		if (current_view=="unit"){
@@ -191,8 +194,8 @@ function dungeon_struct() constructor{
 					draw_set_alpha(1);
 					mem = members[i];
 					unit = mem.struct;
-					unit_draw=[start_x+(170*x_depth),start_y+(250*y_depth)];
-					mem.unit_draw=[start_x+(170*x_depth),start_y+(250*y_depth)];
+					unit_draw = [start_x+(170*_x_depth),start_y+(250*_y_depth)];
+					mem.unit_draw=[start_x+(170*_x_depth),start_y+(250*_y_depth)];
 					mem.unit_image.draw(unit_draw[0],unit_draw[1], true);
 					//if (selected_unit>-1 && selected_unit != i)
 					if (point_in_rectangle(mouse_x, mouse_y, unit_draw[0], unit_draw[1]+21, unit_draw[0]+166,unit_draw[1]+271)){										
@@ -206,27 +209,27 @@ function dungeon_struct() constructor{
 							}
 						}
 					};
-					x_depth++;
-					if (x_depth==4){
-						x_depth=0;
-						y_depth++;
+					_x_depth++;
+					if (_x_depth==4){
+						_x_depth=0;
+						_y_depth++;
 					}				
 				}
 				draw_set_color(c_black);
 				draw_rectangle(start_x,start_y,start_x+(170*4), start_y+21, 0);
-				x_depth=0;
-				y_depth=0;
+				_x_depth=0;
+				_y_depth=0;
 				for (var i=0;i<array_length(members);i++){
 					mem = members[i];
 					unit = members[i].struct;
-					unit_draw=[start_x+(170*x_depth),start_y+(250*y_depth)];
+					unit_draw=[start_x+(170*_x_depth),start_y+(250*_y_depth)];
 					mem.unit_draw = unit_draw;
 					mem.dungeon_data_panel(unit_draw[0], unit_draw[1]+135);
 					draw_set_color(c_gray);
-					x_depth++;
-					if (x_depth==4){
-						x_depth=0;
-						y_depth++;
+					_x_depth++;
+					if (_x_depth==4){
+						_x_depth=0;
+						_y_depth++;
 					}
 					if (dungeon.solution>-1){
 						if(!members[i].action_able){
@@ -279,7 +282,7 @@ function dungeon_struct() constructor{
 				mem =  members[unit_data_slate.individual_display];
 				mem.current_draw_loc[0] += mem.draw_increments[0];
 				mem.current_draw_loc[1] += mem.draw_increments[1];
-				unit.unit_image.draw(mem.current_draw_loc[0], mem.current_draw_loc[1], true);
+				mem.unit_image.draw(mem.current_draw_loc[0], mem.current_draw_loc[1], true);
 				var seq = (unit_data_slate.individual_view_sequence-10)/10;
 				mem.dungeon_data_panel(mem.current_draw_loc[0]+xx+(166*(seq)), mem.current_draw_loc[1]+yy+(135));		
 			}else if (unit_data_slate.individual_view_sequence>22 && unit_data_slate.individual_view_sequence<=32){
@@ -287,14 +290,14 @@ function dungeon_struct() constructor{
 				mem =  members[unit_data_slate.individual_display];
 				mem.current_draw_loc[0] -= mem.draw_increments[0];
 				mem.current_draw_loc[1] -= mem.draw_increments[1];
-				unit.unit_image.draw(mem.current_draw_loc[0], mem.current_draw_loc[1], true);
+				mem.unit_image.draw(mem.current_draw_loc[0], mem.current_draw_loc[1], true);
 				var seq = (10-(unit_data_slate.individual_view_sequence-22))/10;
 				mem.dungeon_data_panel(mem.current_draw_loc[0]+xx+(166*(seq)), mem.current_draw_loc[1]+yy+(135));						
 			}else {
 				unit = members[unit_data_slate.individual_display].struct;
 				mem =  members[unit_data_slate.individual_display];
 				draw_set_color(c_gray);
-				unit.unit_image.draw(mem.current_draw_loc[0], mem.current_draw_loc[1], true);
+				mem.unit_image.draw(mem.current_draw_loc[0], mem.current_draw_loc[1], true);
 				mem.dungeon_data_panel(mem.current_draw_loc[0]+xx+(166), mem.current_draw_loc[1]+yy+(135));
 		        draw_set_color(c_gray);
 		        draw_set_halign(fa_center);
@@ -356,7 +359,6 @@ function dungeon_struct() constructor{
 			}
 			for (var i=0; i <unit_count;i++){
 				cur_fig = members[i].map_figure;
-				members[i].struct.set_unit_shader();
 				cur_fig.draw(xx,yy);
 				shader_reset();
 			}

@@ -33,6 +33,19 @@ function unit_image(unit_surface) constructor{
             draw_surface_part(u_surface, left+200, top+90, width,height, xx,yy);
         }       
     }
+
+    static draw_part_ext = function(xx, yy,left,top,width,height,xscale, yscale,_background=false, alpha=1){
+        if (_background){
+            draw_rectangle_color_simple(xx-1+left,yy-1+top,xx+1+(width*xscale),yy+(height*yscale)+1,0,c_black);
+            draw_rectangle_color_simple(xx-1+left,yy-1+top,xx+(width*xscale)+1,yy+(height*yscale)+1,1,c_gray);
+            draw_rectangle_color_simple(xx-2+left,yy-2+top,xx+(width*xscale)+2,yy+2+(height*yscale),1,c_black);
+            draw_rectangle_color_simple(xx-3+left,yy-3+top,xx+(width*xscale)+3,yy+3+(height*yscale),1,c_gray);
+        }          
+        if (surface_exists(u_surface)){
+            draw_surface_part_ext(u_surface, left+200, top+90, width,height, xx,yy, xscale, yscale, c_white, alpha);
+        }  
+    }
+
 }
 
 //TODO this is a laxy fix and can be written better
