@@ -1,6 +1,5 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-
 function savechapter(){
 	//saves a player made chapter into an ini file for use later
 	chaptersave  = "chaptersave#1.ini"
@@ -29,7 +28,6 @@ function savechapter(){
 		ini_write_real("Save","recruiting_exists",recruiting_exists);
 		ini_write_real("Save","home_world_rule",homeworld_rule);
 		ini_write_string("Save","aspirant_trial",aspirant_trial);
-		ini_write_string("Save","discipline",discipline);
 		
 		ini_write_string("Controller","main_color",col[main_color]);
 	    ini_write_string("Controller","secondary_color",col[secondary_color]);
@@ -115,14 +113,13 @@ chapter_id[21] = chapter21;
  stability21=stability;
  cooperation21=cooperation;
  homeworld21=homeworld;
- homeworld_name21=homeworld_name;
+ homeworld_name21=homeworld;
  recruiting_world21=recruiting;
  recruiting_name21=recruiting_name;
  homeworld_exists21=homeworld_exists;
  recruiting_exists21=recruiting_exists;
  homeworld_rule21=homeworld_rule;
  aspirant_trial21=aspirant_trial;
- discipline21=discipline;
 
 	    // Pauldron2: Left, Pauldron: Right
 		 color_to_main21=col[main_color];
