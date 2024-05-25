@@ -278,12 +278,15 @@ function dungeon_struct() constructor{
 					}		
 				}
 			} else if (unit_data_slate.individual_view_sequence>10 && unit_data_slate.individual_view_sequence<=20){
-				unit = members[unit_data_slate.individual_display].struct;
-				mem =  members[unit_data_slate.individual_display];
-				mem.current_draw_loc[0] += mem.draw_increments[0];
-				mem.current_draw_loc[1] += mem.draw_increments[1];
-				mem.unit_image.draw(mem.current_draw_loc[0], mem.current_draw_loc[1], true);
-				var seq = (unit_data_slate.individual_view_sequence-10)/10;
+				var seq;
+				with (unit_data_slate){
+					unit = members[individual_display].struct;
+					mem =  members[individual_display];
+					mem.current_draw_loc[0] += mem.draw_increments[0];
+					mem.current_draw_loc[1] += mem.draw_increments[1];
+					mem.unit_image.draw(mem.current_draw_loc[0], mem.current_draw_loc[1], true);
+					var seq = (individual_view_sequence-10)/10;
+				}
 				mem.dungeon_data_panel(mem.current_draw_loc[0]+xx+(166*(seq)), mem.current_draw_loc[1]+yy+(135));		
 			}else if (unit_data_slate.individual_view_sequence>22 && unit_data_slate.individual_view_sequence<=32){
 				unit = members[unit_data_slate.individual_display].struct;
@@ -520,13 +523,69 @@ global.obstacles = {
 		}			
 	]
 }
-function dungeon_map_maker() constructor{
-	var i;
-	rooms = {
+function dungeon_map_maker(size=10) constructor{
+	enum Direction{
+		east,
+		west,
+		north,
+		south, 
+		up, 
+		down
+	}
+	map = array_create(size array_create(size, {room_type:"null"}));
+	entrance = [0,floor(size)/2];
+	static return_room_from_array(coords){
+		return map[coords[0]][coords[1]];
+	}
+	static set_room_from_array(coords, room_data){
+		return map[coords[0]][coords[1]];
+	}
+	static fetch_current_room(){
+		return_room_from_array(current_room);
+	};
+	static fetch_current_room_neigbour(move_direction=Direction.east){
+		var array_edit;
+		switch(move_direction){
+			case Direction.east;
+				array_edit = [current_room[0]+1, current_room[1]]);
+			case Direction.west;
+				array_edit = [current_room[0]-1, current_room[1]]);
+			case Direction.south;
+				array_edit = [current_room[0], current_room[1]+1]);
+			case Direction.north;
+				array_edit = [current_room[0]+1, current_room[1]-1]);
+		}
+		return_room_from_array(array_edit);
+	};	
+	set_room_from_array(entrance, {
 		room_type : "enterance",
 		obstacles : new obstacle(global.obstacles)
+	});
+
+
+	var generation_possible=true;
+	var north, south, east, west;
+	while (generation_possible){
+		north=false; south=false; east=false; west=false;
+		viable_rooms = [];
+		if (current_room[0]>0){
+			var east_room  = fetch_current_room_neigbour(Direction.east);
+		}
+		if (current_room[0]<size-1){
+			var west_room  = fetch_current_room_neigbour(Direction.west);
+		}
+		if (current_room[1]>0){
+			var north_room  = fetch_current_room_neigbour(Direction.north);
+		}
+		if (current_room[1]<size-1){
+			var south_room  = fetch_current_room_neigbour(Direction.south);
+		}
+		viable_rooms = [east_room,west_room,north_room,south_room];
+		build_room = viable_rooms[irandom(array_length(viable_rooms)-1)];	
 	}
-	current_room = rooms;
+
+
+	current_room = entrance;
 	current_obstacle = current_room.obstacles;
 	solution=-1;
 	viable_members=[];
@@ -534,6 +593,24 @@ function dungeon_map_maker() constructor{
 function obstacle(bd) constructor{
 	base_data = bd;
 	overcome=false;
+}
+
+function dungeon_map(size=10) constructor{
+	map = array_create(size array_create(size, {}));
+	entrance = [0,floor(size)/2];
+	static return_room_from_array(coords){
+		return map[coords[0]][coords[1]];
+	}
+	static set_room_from_array(coords, room_data){
+		return map[coords[0]][coords[1]];
+	}
+	static fetch_current_room(){
+		return_room_from_array(current_room);
+	};
+	set_room_from_array(entrance, {
+		room_type : "enterance",
+		obstacles : new obstacle(global.obstacles)
+	});
 }
 
 
