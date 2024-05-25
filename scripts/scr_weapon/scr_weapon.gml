@@ -1543,7 +1543,7 @@ global.weapons={
             "master_crafted": 600,
             "artifact": 750
         },
-        "description": "A heavy variant of the plasma gun, its power output is significantly higher and its damage capability shows. However, it is mounted in a tank turret.,
+        "description": "A heavy variant of the plasma gun, its power output is significantly higher and its damage capability shows. However, it is mounted in a tank turret.",
         "melee_hands": 1,
         "ranged_hands": 3,
         "ammo": 16,
