@@ -228,3 +228,135 @@ function player_fleet_selected_count(fleet="none"){
 	}
 	return ship_count;			
 }
+
+
+
+
+function new_player_ship(type, start_loc="home"){
+    var ship_names="",new_name="",index=0;
+    for(var k=1; k<=array_length(obj_ini.ship); k++){
+        if (index==0) and (obj_ini.ship[k]=="") then index=k;
+    }
+    
+    for(var k=1; k<=200; k++){
+        if (new_name==""){
+            new_name=global.name_generator.generate_imperial_ship_name();
+            if (array_contains(obj_ini.ship,new_name)) then new_name="";
+        } else {break};
+    }
+   obj_ini.ship[index]=new_name;
+    obj_ini.ship_uid[index]=floor(random(99999999))+1;
+    obj_ini.ship_owner[index]=1; //TODO: determine if this means the player or not
+    obj_ini.ship_size[index]=1;
+    obj_ini.ship_location[index]=start_loc;
+    obj_ini.ship_leadership[index]=100;	
+    if (string_count("Battle Barge",type)>0){
+        obj_ini.ship_class[index]="Battle Barge";
+        obj_ini.ship_size[index]=3;
+        obj_ini.ship_hp[index]=1200;
+        obj_ini.ship_maxhp[index]=1200;
+        obj_ini.ship_conditions[index]="";
+        obj_ini.ship_speed[index]=20;
+        obj_ini.ship_turning[index]=45;
+        obj_ini.ship_front_armour[index]=6;
+        obj_ini.ship_other_armour[index]=6;
+        obj_ini.ship_weapons[index]=5;
+        obj_ini.ship_shields[index]=12;
+        obj_ini.ship_wep[index,1]="Weapons Battery";
+        obj_ini.ship_wep_facing[index,1]="left";
+        obj_ini.ship_wep_condition[index,1]="";
+        obj_ini.ship_wep[index,2]="Weapons Battery";
+        obj_ini.ship_wep_facing[index,2]="right";
+        obj_ini.ship_wep_condition[index,2]="";
+        obj_ini.ship_wep[index,3]="Thunderhawk Launch Bays";
+        obj_ini.ship_wep_facing[index,3]="special";
+        obj_ini.ship_wep_condition[index,3]="";
+        obj_ini.ship_wep[index,4]="Torpedo Tubes";
+        obj_ini.ship_wep_facing[index,4]="front";
+        obj_ini.ship_wep_condition[index,4]="";
+        obj_ini.ship_wep[index,5]="Bombardment Cannons";
+        obj_ini.ship_wep_facing[index,5]="most";
+        obj_ini.ship_wep_condition[index,5]="";
+        obj_ini.ship_capacity[index]=600;
+        obj_ini.ship_carrying[index]=0;
+        obj_ini.ship_contents[index]="";
+        obj_ini.ship_turrets[index]=3;
+    }
+    if (string_count("Strike Cruiser",type)>0){
+        obj_ini.ship_class[index]="Strike Cruiser";
+        obj_ini.ship_size[index]=2;
+        obj_ini.ship_hp[index]=600;
+        obj_ini.ship_maxhp[index]=600;
+        obj_ini.ship_conditions[index]="";
+        obj_ini.ship_speed[index]=25;
+        obj_ini.ship_turning[index]=90;
+        obj_ini.ship_front_armour[index]=6;
+        obj_ini.ship_other_armour[index]=6;
+        obj_ini.ship_weapons[index]=4;
+        obj_ini.ship_shields[index]=6;
+        obj_ini.ship_wep[index,1]="Weapons Battery";
+        obj_ini.ship_wep_facing[index,1]="left";
+        obj_ini.ship_wep_condition[index,1]="";
+        obj_ini.ship_wep[index,2]="Weapons Battery";
+        obj_ini.ship_wep_facing[index,2]="right";
+        obj_ini.ship_wep_condition[index,2]="";
+        obj_ini.ship_wep[index,3]="Thunderhawk Launch Bays";
+        obj_ini.ship_wep_facing[index,3]="special";
+        obj_ini.ship_wep_condition[index,3]="";
+        obj_ini.ship_wep[index,4]="Bombardment Cannons";
+        obj_ini.ship_wep_facing[index,4]="most";
+        obj_ini.ship_wep_condition[index,4]="";
+        obj_ini.ship_capacity[index]=250;
+        obj_ini.ship_carrying[index]=0;
+        obj_ini.ship_contents[index]="";
+        obj_ini.ship_turrets[index]=1;
+    }
+    if (string_count("Gladius",type)>0){
+        obj_ini.ship_class[index]="Gladius";
+        obj_ini.ship_hp[index]=200;
+        obj_ini.ship_maxhp[index]=200;
+        obj_ini.ship_conditions[index]="";
+        obj_ini.ship_speed[index]=30;
+        obj_ini.ship_turning[index]=90;
+        obj_ini.ship_front_armour[index]=5;
+        obj_ini.ship_other_armour[index]=5;
+        obj_ini.ship_weapons[index]=1;
+        obj_ini.ship_shields[index]=1;
+        obj_ini.ship_wep[index,1]="Weapons Battery";
+        obj_ini.ship_wep_facing[index,1]="most";
+        obj_ini.ship_wep_condition[index,1]="";
+        obj_ini.ship_capacity[index]=30;
+        obj_ini.ship_carrying[index]=0;
+        obj_ini.ship_contents[index]="";
+        obj_ini.ship_turrets[index]=1;
+    }
+    if (string_count("Hunter",type)>0){
+        obj_ini.ship_class[index]="Hunter";
+        obj_ini.ship_hp[index]=200;
+        obj_ini.ship_maxhp[index]=200;
+        obj_ini.ship_conditions[index]="";
+        obj_ini.ship_speed[index]=30;
+        obj_ini.ship_turning[index]=90;
+        obj_ini.ship_front_armour[index]=5;
+        obj_ini.ship_other_armour[index]=5;
+        obj_ini.ship_weapons[index]=2;
+        obj_ini.ship_shields[index]=1;
+        obj_ini.ship_wep[index,1]="Torpedoes";
+        obj_ini.ship_wep_facing[index,1]="front";
+        obj_ini.ship_wep_condition[index,1]="";
+        obj_ini.ship_wep[index,2]="Weapons Battery";
+        obj_ini.ship_wep_facing[index,2]="most";
+        obj_ini.ship_wep_condition[index,2]="";
+        obj_ini.ship_capacity[index]=25;
+        obj_ini.ship_carrying[index]=0;
+        obj_ini.ship_contents[index]="";
+        obj_ini.ship_turrets[index]=1;
+    }
+    return index;
+}
+
+
+
+
+
+

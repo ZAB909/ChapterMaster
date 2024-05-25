@@ -691,154 +691,25 @@ function scr_initialize_custom() {
 	    ship_capacity[i]=0;ship_carrying[i]=0;ship_contents[i]="";ship_turrets[i]=0;
 	}*/
 
-	var ship_names = [];
-
-	if (battle_barges >= 1) {
-		for (v = 1; v <= battle_barges; v++) {
-			if (flagship_name != "") and(v = 1) then ship[v] = flagship_name;
-			if (flagship_name = "") or(v > 1) then ship[v] = global.name_generator.generate_imperial_ship_name();
-			ship_uid[v] = floor(random(99999999)) + 1;
-			ship_owner[v] = 1;
-			ship_class[v] = "Battle Barge";
-			ship_size[v] = 3;
-			ship_location[v] = "home";
-			ship_leadership[v] = 100;
-			ship_hp[v] = 1200;
-			ship_maxhp[v] = 1200;
-			ship_conditions[v] = "";
-			ship_speed[v] = 20;
-			ship_turning[v] = 45;
-			ship_front_armour[v] = 6;
-			ship_other_armour[v] = 6;
-			ship_weapons[v] = 5;
-			ship_shields[v] = 12;
-			ship_wep[v, 1] = "Weapons Battery";
-			ship_wep_facing[v, 1] = "left";
-			ship_wep_condition[v, 1] = "";
-			ship_wep[v, 2] = "Weapons Battery";
-			ship_wep_facing[v, 2] = "right";
-			ship_wep_condition[v, 2] = "";
-			ship_wep[v, 3] = "Thunderhawk Launch Bays";
-			ship_wep_facing[v, 3] = "special";
-			ship_wep_condition[v, 3] = "";
-			ship_wep[v, 4] = "Torpedo Tubes";
-			ship_wep_facing[v, 4] = "front";
-			ship_wep_condition[v, 4] = "";
-			ship_wep[v, 5] = "Bombardment Cannons";
-			ship_wep_facing[v, 5] = "most";
-			ship_wep_condition[v, 5] = "";
-			ship_capacity[v] = 600;
-			ship_carrying[v] = 0;
-			ship_contents[v] = "";
-			ship_turrets[v] = 3;
-			array_push(ship_names, ship[v])
+	if (battle_barges>=1){
+	 	for (v=1;v<=battle_barges;v++){
+	 		var new_ship = new_player_ship("Battle Barge", "home")
+		    if (flagship_name!="") and (v=1) then ship[new_ship]=flagship_name;
+		    if (flagship_name="") or (v>1) then ship[new_ship]=global.name_generator.generate_imperial_ship_name();
 		}
 	}
 
-	for (i = 0; i < strike_cruisers; i++) {
-		v += 1;
-		ship[v] = global.name_generator.generate_imperial_ship_name();
-		ship_owner[v] = 1;
-		ship_class[v] = "Strike Cruiser";
-		ship_size[v] = 2;
-		ship_uid[v] = floor(random(99999999)) + 1;
-		ship_leadership[v] = 100;
-		ship_hp[v] = 600;
-		ship_maxhp[v] = 600;
-		ship_location[v] = "home";
-		ship_conditions[v] = "";
-		ship_speed[v] = 25;
-		ship_turning[v] = 90;
-		ship_front_armour[v] = 6;
-		ship_other_armour[v] = 6;
-		ship_weapons[v] = 4;
-		ship_shields[v] = 6;
-		ship_wep[v, 1] = "Weapons Battery";
-		ship_wep_facing[v, 1] = "left";
-		ship_wep_condition[v, 1] = "";
-		ship_wep[v, 2] = "Weapons Battery";
-		ship_wep_facing[v, 2] = "right";
-		ship_wep_condition[v, 2] = "";
-		ship_wep[v, 3] = "Thunderhawk Launch Bays";
-		ship_wep_facing[v, 3] = "special";
-		ship_wep_condition[v, 3] = "";
-		ship_wep[v, 4] = "Bombardment Cannons";
-		ship_wep_facing[v, 4] = "most";
-		ship_wep_condition[v, 4] = "";
-		ship_capacity[v] = 250;
-		ship_carrying[v] = 0;
-		ship_contents[v] = "";
-		ship_turrets[v] = 1;
-		while (array_contains(ship_names, ship[v])) {
-			ship[v] = global.name_generator.generate_imperial_ship_name();
-		}
-		array_push(ship_names, ship[v])
+	for(i=0;i<strike_cruisers;i++){
+		new_player_ship("Strike Cruiser");
 	}
 
 
-	for (i = 0; i < gladius; i++) {
-		v += 1; // Single weapon battery has 25% more damage than the hunter class destroyer
-		ship[v] = global.name_generator.generate_imperial_ship_name();
-		ship_owner[v] = 1;
-		ship_class[v] = "Gladius";
-		ship_size[v] = 1;
-		ship_uid[v] = floor(random(99999999)) + 1;
-		ship_leadership[v] = 100;
-		ship_hp[v] = 200;
-		ship_maxhp[v] = 200;
-		ship_location[v] = "home";
-		ship_conditions[v] = "";
-		ship_speed[v] = 30;
-		ship_turning[v] = 90;
-		ship_front_armour[v] = 5;
-		ship_other_armour[v] = 5;
-		ship_weapons[v] = 1;
-		ship_shields[v] = 1;
-		ship_wep[v, 1] = "Weapons Battery";
-		ship_wep_facing[v, 1] = "most";
-		ship_wep_condition[v, 1] = "";
-		ship_capacity[v] = 100;
-		ship_carrying[v] = 0;
-		ship_contents[v] = "";
-		ship_turrets[v] = 1;
-		while (array_contains(ship_names, ship[v])) {
-			ship[v] = global.name_generator.generate_imperial_ship_name();
-		}
-		array_push(ship_names, ship[v])
+	for(i=0;i<gladius;i++){
+		new_player_ship("Gladius");
 	}
 
-	for (i = 0; i < hunters; i++) {
-		v += 1;
-		ship[v] = global.name_generator.generate_imperial_ship_name();
-		ship_owner[v] = 1;
-		ship_class[v] = "Hunter";
-		ship_size[v] = 1;
-		ship_uid[v] = floor(random(99999999)) + 1;
-		ship_leadership[v] = 100;
-		ship_hp[v] = 200;
-		ship_maxhp[v] = 200;
-		ship_location[v] = "home";
-		ship_conditions[v] = "";
-		ship_speed[v] = 35;
-		ship_turning[v] = 90;
-		ship_front_armour[v] = 5;
-		ship_other_armour[v] = 5;
-		ship_weapons[v] = 2;
-		ship_shields[v] = 1;
-		ship_wep[v, 1] = "Torpedoes";
-		ship_wep_facing[v, 1] = "front";
-		ship_wep_condition[v, 1] = "";
-		ship_wep[v, 2] = "Weapons Battery";
-		ship_wep_facing[v, 2] = "most";
-		ship_wep_condition[v, 2] = "";
-		ship_capacity[v] = 50;
-		ship_carrying[v] = 0;
-		ship_contents[v] = "";
-		ship_turrets[v] = 1;
-		while (array_contains(ship_names, ship[v])) {
-			ship[v] = global.name_generator.generate_imperial_ship_name();
-		}
-		array_push(ship_names, ship[v])
+	for(i=0;i<hunters;i++){
+		new_player_ship("Hunter");
 	}
 
 	var j = 0,

@@ -1,6 +1,7 @@
 
 if (instance_exists(orbiting)) and (obj_controller.is_test_map=true){
-    draw_set_color(c_red);draw_line_width(x,y,orbiting.x,orbiting.y,1);
+    draw_set_color(c_red);
+    draw_line_width(x,y,orbiting.x,orbiting.y,1);
 }
 
 var m_dist, within;m_dist=point_distance(x,y,mouse_x,mouse_y);within=0;
