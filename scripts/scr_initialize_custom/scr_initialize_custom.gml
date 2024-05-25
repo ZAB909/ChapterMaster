@@ -691,8 +691,6 @@ function scr_initialize_custom() {
 	    ship_capacity[i]=0;ship_carrying[i]=0;ship_contents[i]="";ship_turrets[i]=0;
 	}*/
 
-	var ship_names = [];
-
 	if (battle_barges>=1){
 	 	for (v=1;v<=battle_barges;v++){
 	 		var new_ship = new_player_ship("Battle Barge", "home")

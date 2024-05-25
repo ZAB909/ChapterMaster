@@ -234,22 +234,16 @@ function player_fleet_selected_count(fleet="none"){
 
 function new_player_ship(type, start_loc="home"){
     var ship_names="",new_name="",index=0;
-    for(var k=1; k<=40; k++){
-        if (obj_ini.ship[k]!="") then ship_names+=string(obj_ini.ship[k]);
+    for(var k=1; k<=array_length(obj_ini.ship); k++){
         if (index==0) and (obj_ini.ship[k]=="") then index=k;
     }
-    for(var k=1; k<=50; k++){
+    
+    for(var k=1; k<=200; k++){
         if (new_name==""){
             new_name=global.name_generator.generate_imperial_ship_name();
-            if (string_count(new_name,ship_names)>0) then new_name="";
+            if (array_contains(obj_ini.ship,new_name)) then new_name="";
         } else {break};
     }
-    for(var k=1; k<=50; k++){
-        if (new_name==""){
-            new_name=global.name_generator.generate_imperial_ship_name();
-            if (string_count(new_name,ship_names)>0) then new_name="";
-        } else {break};
-    }	
    obj_ini.ship[index]=new_name;
     obj_ini.ship_uid[index]=floor(random(99999999))+1;
     obj_ini.ship_owner[index]=1; //TODO: determine if this means the player or not
@@ -358,7 +352,6 @@ function new_player_ship(type, start_loc="home"){
         obj_ini.ship_contents[index]="";
         obj_ini.ship_turrets[index]=1;
     }
-    array_push(obj_ini.ship_names,ship[index])
     return index;
 }
 

@@ -100,6 +100,9 @@ else if (action="move") or (action="crusade1") or (action="crusade2") or (action
 			}
 			steh.visited = 1
 		}
+        if (array_length(complex_route)>0){
+            set_new_player_fleet_course(complex_route);
+        }        
     }
     
 }
