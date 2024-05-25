@@ -327,6 +327,7 @@ if (refresh=true) and (obj_controller.settings>0){
     have_wep2_num+=scr_item_count(req_wep2);
     
     if (req_armour="Power Armour"){
+		have_armour_num+=scr_item_count("MK8 Errant");
         have_armour_num+=scr_item_count("MK7 Aquila");
         have_armour_num+=scr_item_count("MK6 Corvus");
         have_armour_num+=scr_item_count("Power Armour");
@@ -339,6 +340,7 @@ if (refresh=true) and (obj_controller.settings>0){
         have_armour_num+=scr_item_count("Tartaros");
     }
     if (req_armour="Scout Armour") then have_armour_num+=scr_item_count("Scout Armour");
+	have_armour_num+=scr_item_count(req_armour);
     
     have_gear_num+=scr_item_count(req_gear);
     have_mobi_num+=scr_item_count(req_mobi);
