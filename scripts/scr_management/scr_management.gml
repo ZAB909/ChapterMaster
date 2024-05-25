@@ -387,7 +387,7 @@ function scr_management(argument0) {
 	        	unit = fetch_unit([company,i]);
 	            if (unit.role()=role_names[Role.CAPTAIN]){
 					num[1]++;
-					nam[1] = unit.name();
+					nam[1] = role_names[Role.CAPTAIN] + " " + unit.name();
 				}
 				// Space Wolves exception
 				if (chapter_name != "Iron Hands" && unit.role() == role_names[Role.CHAPLAIN]) then num[2]++;

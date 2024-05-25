@@ -13,10 +13,7 @@ slate_panel.inside_method = function(){
         wid=175;
         hei=200;
     }
-    if (header=1){
-        wid=150;
-        hei=380;
-    }
+    if (header=1){wid=150;hei=320;}
 
     draw_set_halign(fa_center);
 
@@ -115,18 +112,18 @@ slate_panel.inside_method = function(){
             draw_set_alpha(1);
         }
         draw_set_font(fnt_cul_14);
-        draw_text(x2+(wid/2),y2+30,string_hash_to_newline(title));
+        draw_text(x2+(wid/2),y2+20,string_hash_to_newline(title));
         draw_set_font(fnt_40k_12);
         if (line[1]!=""){
             if (italic[1]=1) then draw_set_font(fnt_40k_12i);
             draw_func = (bold[1] == 1) ? draw_text_bold : draw_text;
-            draw_func(x2+(wid/2),y2+53,string_hash_to_newline(line[1]));
+            draw_func(x2+(wid/2),y2+43,string_hash_to_newline(line[1]));
             draw_set_font(fnt_40k_12);
         }
         var l;l=1;
         repeat(24){l+=1;
             if (line[l]!=""){
-                draw_text(x2+(wid/2),y2+53+((l-1)*18),string_truncate(line[l], 134));
+                draw_text(x2+(wid/2),y2+43+((l-1)*18),string_truncate(line[l], 134));
             }
         }
     }
@@ -142,10 +139,7 @@ if (header=3){
 } else if (header=2){
     wid=175;
     hei=200;
-}else if (header=1){
-    wid=150;
-    hei=380;
-}
+}else if (header=1){wid=150;hei=320;}
 var x_scale = (wid/850)
 var y_scale = (hei/860)
 slate_panel.draw(x2, y2, x_scale,y_scale);
