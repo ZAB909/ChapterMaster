@@ -1561,13 +1561,13 @@ global.weapons={
         },
         "description": "The Conversion Beam Projector is a heavy energy weapon that harnesses advanced technology to project a concentrated beam of destructive energy. Armor detonates as the matter that comproises it is transformed into pure energy. This is the heavy version mounted in a turret.",
         "melee_hands": 0,
-        "ranged_hands": 1,
+        "ranged_hands": 0,
         "ammo": 6,
         "range": 20,
         "spli": 1,
-        "arp": 1
+        "arp": 1,
 	"tags":[ "vehicle", "turret"]
-    },  
+    },
     "Neutron Blaster Turret": {
         "abbreviation": "NtrnBlstr", 
         "attack": {
@@ -1581,7 +1581,7 @@ global.weapons={
         "ammo": 6,
         "range": 20,
         "spli": 2,
-        "arp": 1
+        "arp": 1,
 	"tags":[ "vehicle", "turret"]
     },  
     "Volkite Saker Turret": {
