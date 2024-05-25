@@ -1258,15 +1258,52 @@ global.weapons={
     },
     "Heavy Bolter Sponsons": {
         "abbreviation": "HvyBltrs", 
-        "description": "",
+        "attack": {
+            "standard": 240,
+            "master_crafted": 264,
+            "artifact": 288
+        },
+        "description": "Heavy Bolters are mounted in sponsons. They are known for high rates of fire and effectiveness against infantry and light vehicles.",
+        "melee_hands": 0,
+        "ranged_hands": 0,
+        "ammo": 20,
+        "range": 16,
+        "spli": 4,
+        "arp": 1,
+        "tags":["heavy_ranged","vehicle","sponson"]
     },  
     "Heavy Flamer Sponsons": {
         "abbreviation": "HvyFlmrs", 
-        "description": "",
+        "attack": {
+            "standard": 550,
+            "master_crafted": 605,
+            "artifact": 660
+        },
+        "description": "A significantly heavier flamer attached to the sponsons on a vehicle.",
+        "abbreviation": "TwnHvyFlmrs", 
+        "melee_hands": 0,
+        "ranged_hands": 0,
+        "ammo": 12,
+        "range": 2.1,
+        "spli": 1,
+        "arp": -1,
+        "tags":["flame", "vehicle","sponson"]
     },  
     "Volkite Culverin Sponsons": {
         "abbreviation": "VlkClvs", 
-        "description": "",
+        "attack": {
+            "standard": 480,
+            "master_crafted": 528,
+            "artifact": 576
+        },
+        "description": "An advanced thermal weapon from a bygone era, Volkite Culverins are able to ignite entire formations of enemy forces. In this case it is mounted to the sponsons on a vehicle.",
+        "melee_hands": 0,
+        "ranged_hands": 0,
+        "ammo": 25,
+        "range": 18,
+        "spli": 1,
+        "arp": 0,
+        "tags":["vehicle", "Sponson", "volkite"]
     },  
     "Autocannon Turret": {
         "abbreviation": "Autocnn", 
@@ -1453,31 +1490,115 @@ global.weapons={
     },
     "Twin Linked Assault Cannon Turret": {
         "abbreviation": "TwnAssCnn", 
-        "description": "",
+        "attack": {
+            "standard": 240,
+            "master_crafted": 264,
+            "artifact": 288
+        },
+        "description": "A heavy rotary autocannon with a devastating fire rate that can be counted in the hundreds per minute, in a twin mount. It is incredibly effective against infantry and lightly armored targets.",
+        "melee_hands": 2.1,
+        "ranged_hands": 2.25,
+        "ammo": 15,
+        "range": 12,
+        "spli": 20,
+        "arp": 0,
+        "tags":["heavy_ranged","twin_linked", "vehicle","turret"]
     },  
     "Flamestorm Cannon Turret": {
         "abbreviation": "FlmstCnn", 
-        "description": "",
+        "attack": {
+            "standard": 600,
+            "master_crafted": 660,
+            "artifact": 720
+        },
+        "description": "A huge vehicle-mounted flamethrower cannon, the heat produced by this terrifying weapon can melt armoured ceramite.",
+        "melee_hands": 0,
+        "ranged_hands": 0,
+        "ammo": 12,
+        "range": 3,
+        "spli": 3,
+        "arp": 1,
+        "tags":["flame", "vehicle","turret"]
     },  
     "Magna-Melta Turret": {
         "abbreviation": "MgnMlt", 
-        "description": "",
+        "attack": {
+            "standard": 450,
+            "master_crafted": 495,
+            "artifact": 540
+        },
+        "description": "Though bearing longer range than the Meltagun, this weapon's great size usually restricts it to vehicles. In this case it is mounted to the turret on a vehicle.",
+        "melee_hands": 0,
+        "ranged_hands": 0,
+        "ammo": 12,
+        "range": 4.1,
+        "spli": 3,
+        "arp": 1,
+        "tags":["vehicle", "turret", "melta"]
     },  
     "Plasma Destroyer Turret": {
         "abbreviation": "PlsmDestr", 
-        "description": "",
+        "attack": {
+            "standard": 500,
+            "master_crafted": 600,
+            "artifact": 750
+        },
+        "description": "A heavy variant of the plasma gun, its power output is significantly higher and its damage capability shows. However, it is mounted in a tank turret.,
+        "melee_hands": 1,
+        "ranged_hands": 3,
+        "ammo": 16,
+        "range": 14,
+        "spli": 2,
+        "arp": 1,
+        "tags":["plasma", "vehicle", "turret"]
     },  
     "Heavy Conversion Beamer Turret": {
         "abbreviation": "HvyCnvBmr", 
-        "description": "",
+        "attack": {
+            "standard": 800,
+            "master_crafted": 900,
+            "artifact": 1000
+        },
+        "description": "The Conversion Beam Projector is a heavy energy weapon that harnesses advanced technology to project a concentrated beam of destructive energy. Armor detonates as the matter that comproises it is transformed into pure energy. This is the heavy version mounted in a turret.",
+        "melee_hands": 0,
+        "ranged_hands": 1,
+        "ammo": 6,
+        "range": 20,
+        "spli": 1,
+        "arp": 1
+	"tags":[ "vehicle", "turret"]
     },  
     "Neutron Blaster Turret": {
         "abbreviation": "NtrnBlstr", 
-        "description": "",
+        "attack": {
+            "standard": 800,
+            "master_crafted": 900,
+            "artifact": 1000
+        },
+        "description": "This is a Neutron blaster, typically found in Sabre Strike Tanks, this one has been mounted in a space marine tank turret.",
+        "melee_hands": 0,
+        "ranged_hands": 1,
+        "ammo": 6,
+        "range": 20,
+        "spli": 2,
+        "arp": 1
+	"tags":[ "vehicle", "turret"]
     },  
     "Volkite Saker Turret": {
         "abbreviation": "VlkSkr", 
-        "description": "",
+        "attack": {
+            "standard": 380,
+            "master_crafted": 428,
+            "artifact": 476
+        },
+        "description": "An advanced thermal weapon from a bygone era, Volkite sakers are optimized for spreading damage across swaths of enemy troops.",
+        "melee_hands": 0,
+        "ranged_hands": 0,
+        "ammo": 25,
+        "range": 14,
+        "spli": 12,
+        "arp": 0,
+        "tags":["vehicle", "turret", "volkite"]
     },
 				
 }
@@ -1922,21 +2043,45 @@ global.gear = {
     "Smoke Launchers": {
       "description": "Useful for providing concealment in open terrain, these launchers project wide-spectrum concealing smoke to prevent accurate targeting of the vehicle.",
       "abbreviation": "SmkLnchrs",
+      "damage_resistance_mod": {
+        "standard": 5,
+        "master_crafted": 10,
+        "artifact": 15
+      },
       "tags":["smoke","conceal", "vehicle"]
     },
     "Dozer Blades": {
       "description": "An attachment for the front of vehicles, useful for clearing difficult terrain and can be used as an improvised weapon. ",
       "abbreviation": "DzrBlds",
+        "attack": {
+            "standard": 25,
+            "master_crafted": 30,
+            "artifact": 35
+        },
+        "ammo": 0,
+        "range": 1,
+        "spli": 1,
+        "arp": 0,
        "tags":["vehicle"],              
     },
     "Searchlight": {
       "description": "A simple solution for fighting in dark environments, searchlights serve to illuminate enemies for ease of targeting.",
       "abbreviation": "SrchLght",
+      "ranged_mod": {
+        "standard": 5,
+        "master_crafted": 10,
+        "artifact": 15
+      },
        "tags":["vehicle"],              
     },
     "Frag Assault Launchers": {
         "abbreviation": "FrgAssLnchrs", 
-        "description": "",
+        "description": "These launchers enable a vehicle to clear an area for its loaded troops, or prevent boarding by an enemy at close range.",
+      "damage_resistance_mod": {
+        "standard": 10,
+        "master_crafted": 15,
+        "artifact": 20
+      },
          "tags":["vehicle"],              
     },             
   },
