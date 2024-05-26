@@ -153,13 +153,19 @@ function fleet_full_ship_array(fleet="none"){
 	var i;
 	if (fleet=="none"){
 		for (i=1; i<=capital_number;i++){
-			array_push(all_ships, capital_num[i]);
+			if (i>=0 && i < array_length(obj_ini.ship_location)){
+				array_push(all_ships, capital_num[i]);
+			}
 		}
 		for (i=1; i<=frigate_number;i++){
-			array_push(all_ships, frigate_num[i]);
+			if (i>=0 && i < array_length(obj_ini.ship_location)){
+				array_push(all_ships, frigate_num[i]);
+			}
 		}
 		for (i=1; i<=escort_number;i++){
-			array_push(all_ships, escort_num[i]);
+			if (i>=0 && i < array_length(obj_ini.ship_location)){
+				array_push(all_ships, escort_num[i]);
+			}
 		}			
 	} else {
 		with (fleet){
@@ -173,7 +179,9 @@ function set_fleet_location(location){
 	var temp;
 	for (var i=0;i<array_length(fleet_ships);i++){
 		temp = fleet_ships[i];
-		obj_ini.ship_location[temp] = location;
+		if (temp>=0 && temp < array_length(obj_ini.ship_location)){
+			obj_ini.ship_location[temp] = location;
+		}
 	}
 }
 function player_fleet_ship_count(fleet="none"){

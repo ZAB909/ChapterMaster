@@ -1,7 +1,7 @@
 
 
 function ini_encode_and_json(ini_area, ini_code,value){
-	return ini_write_string(ini_area,ini_code,base64_encode(json_stringify(encode_and_json)));
+	return ini_write_string(ini_area,ini_code,base64_encode(json_stringify(value)));
 }
 function scr_save(save_slot,save_id) {
 
