@@ -82,7 +82,7 @@ if (loading=0){
 
 }
 
-if (obj_controller.cooldown<=0) and (loading=1){
+if (obj_controller.cooldown<=0) and (loading==1){
 	if (point_in_rectangle(mouse_x, mouse_y,xx+274,yy+426,xx+337,yy+451)){
         obj_controller.selecting_planet=0;
         obj_controller.cooldown=8000;
@@ -102,25 +102,7 @@ if (obj_controller.cooldown<=0) and (loading=1){
             current_squad.assignment="none";
         }
         instance_destroy();
-    }
-    if (obj_controller.menu=1 && obj_controller.managing>0 && obj_controller.view_squad && obj_controller.selecting_planet>0){
-        var company_data = obj_controller.company_data;
-        var squad_index = company_data.company_squads[company_data.cur_squad];
-        var current_squad=obj_ini.squads[squad_index];
-        current_squad.set_location(loading_name,0,obj_controller.selecting_planet);
-        current_squad.assignment={
-            type:mission,
-            location:target.name,
-            ident:obj_controller.selecting_planet,
-        };
-        var operation_data = {
-            type:"squad", 
-            reference:squad_index,
-            job:mission,
-            task_time : 0
-        };
-        array_push(target.p_operatives[obj_controller.selecting_planet],operation_data)
-    }     
+    }  
     if (obj_controller.selecting_planet>0){
         obj_controller.cooldown=8000;
         obj_controller.unload=obj_controller.selecting_planet;
@@ -351,32 +333,7 @@ if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_
             }
         }
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         obj_controller.cooldown=8000;
         
         // Start battle here
@@ -413,11 +370,9 @@ if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_
         }
         
         
-        stahr=target;
-        if (planet_feature_bool(target.p_feature[obj_controller.selecting_planet], P_features.Monastery) == 1) then obj_fleet.player_lasers=stahr.p_lasers[1];
-        if (planet_feature_bool(target.p_feature[obj_controller.selecting_planet], P_features.Monastery) == 1) then obj_fleet.player_lasers=stahr.p_lasers[2];
-        if (planet_feature_bool(target.p_feature[obj_controller.selecting_planet], P_features.Monastery) == 1) then obj_fleet.player_lasers=stahr.p_lasers[3];
-        if (planet_feature_bool(target.p_feature[obj_controller.selecting_planet], P_features.Monastery) == 1) then obj_fleet.player_lasers=stahr.p_lasers[4];
+        for (var i=0;i<target.planets;i++){
+             if (planet_feature_bool(target.p_feature[i], P_features.Monastery) == 1) then obj_fleet.player_lasers=target.p_lasers[i];
+        }
         instance_deactivate_object(obj_star);
         
         
@@ -426,22 +381,15 @@ if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_
         
         // 
         
-        
-        var i;i=0;
-        repeat(8){
-            i+=1;if (pfleet.capital[i]!="") then obj_fleet.fighting[pfleet.capital_num[i]]=1;
+        var fleet_ships = fleet_full_ship_array(pfleet);
+        var p_ship_id;
+        for (i=0;i<array_length(fleet_ships);i++){
+            p_ship_id = fleet_ships[i];
+            if (obj_ini.ship[p_ship_id] != ""){
+                obj_fleet.fighting[p_ship_id] = 1;
+            }
         }
-        
-        i=0;
-        repeat(30){
-            i+=1;if (pfleet.frigate[i]!="") then obj_fleet.fighting[pfleet.frigate_num[i]]=1;
-        }
-        
-        i=0;
-        repeat(30){
-            i+=1;if (pfleet.escort[i]!="") then obj_fleet.fighting[pfleet.escort_num[i]]=1;
-        }
-        
+
         // instance_deactivate_object(battle_object[current_battle]);
         instance_deactivate_object(pfleet);
         

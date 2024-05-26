@@ -192,7 +192,7 @@ function scr_company_struct(comp) constructor{
 								obj_controller.menu=0;
 				                obj_controller.hide_banner=0;
 				                obj_controller.x = garrrison_star.x;
-				                obj_controller.y =garrrison_star.y;
+				                obj_controller.y = garrrison_star.y;
 				                obj_controller.selection_data =  {
 				                	planet:cur_assignment.ident,
 				                	feature:"",
@@ -309,7 +309,7 @@ function scr_company_struct(comp) constructor{
 					exit_period = true;
 				}
 			}						
-			if (!unit_rollover){
+			if (!unit_rollover && !instance_exists(obj_star_select)){
 				if (point_in_rectangle(mouse_x, mouse_y, xx+25, yy+144, xx+525, yy+981) && !exit_period){
 					if (rollover_sequence<10){
 						rollover_sequence++;

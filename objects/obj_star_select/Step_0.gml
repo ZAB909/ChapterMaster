@@ -25,21 +25,31 @@ if (loading==1){
         if (target.space_hulk=1) then exit;
     }
     
-    if (target.planets>=1) and (obj_controller.cooldown<=0){
-        dist=point_distance(xx+159,yy+287,mouse_x,mouse_y);   
-        if (dist<=22) then obj_controller.selecting_planet=1; 
-    }
-    if (target.planets>=2) and (obj_controller.cooldown<=0){
-        dist=point_distance(xx+200,yy+287,mouse_x,mouse_y);   
-        if (dist<=22) then obj_controller.selecting_planet=2; 
-    }
-    if (target.planets>=3) and (obj_controller.cooldown<=0){
-        dist=point_distance(xx+241,yy+287,mouse_x,mouse_y);   
-        if (dist<=22) then obj_controller.selecting_planet=3; 
-    }
-    if (target.planets>=4) and (obj_controller.cooldown<=0){
-        dist=point_distance(xx+282,yy+287,mouse_x,mouse_y);   
-        if (dist<=22) then obj_controller.selecting_planet=4; 
+    for (var i =0;i<target.planets;i++){
+        if (point_distance(xx+159+(i*41),yy+287,mouse_x,mouse_y)<=22){
+            obj_controller.selecting_planet=i+1;
+            if (mouse_check_button_pressed(mb_left)){
+                if (obj_controller.menu==1 && obj_controller.managing>0 && obj_controller.view_squad && obj_controller.selecting_planet>0){
+                    var company_data = obj_controller.company_data;
+                    var squad_index = company_data.company_squads[company_data.cur_squad];
+                    var current_squad=obj_ini.squads[squad_index];
+                    current_squad.set_location(loading_name,0,obj_controller.selecting_planet);
+                    current_squad.assignment={
+                        type:mission,
+                        location:target.name,
+                        ident:obj_controller.selecting_planet,
+                    };
+                    var operation_data = {
+                        type:"squad", 
+                        reference:squad_index,
+                        job:mission,
+                        task_time : 0
+                    };
+                    array_push(target.p_operatives[obj_controller.selecting_planet],operation_data)
+                }
+                instance_destroy();
+            }
+        }            
     }
 }
 
