@@ -149,9 +149,9 @@ function scr_weapons_equip() {
 				}
 			} else {
 				i+=1;
-				item_name[i]="Inferno Cannon";
-				i+=1;
 				item_name[i]="Multi-Melta";
+				i+=1;
+				item_name[i]="Twin Linked Heavy Flamer Sponsons";
 				i+=1;
 				item_name[i]="Plasma Cannon";
 				i+=1;
@@ -162,6 +162,8 @@ function scr_weapons_equip() {
 				item_name[i]="Missile Launcher";
 				i+=1;
 				item_name[i]="Twin Linked Lascannon";
+				i+=1;
+				item_name[i]="Twin Linked Assault Cannon Mount";
 				i+=1;
 				item_name[i]="Twin Linked Heavy Bolter";																								
 			}
@@ -191,6 +193,8 @@ function scr_weapons_equip() {
 			i+=1;
 			item_name[i]="Close Combat Weapon";
 			i+=1;
+			item_name[i]="Dreadnought Power Claw";
+			i+=1;
 			item_name[i]="Dreadnought Lightning Claw";
 		}
 	}
@@ -207,7 +211,7 @@ function scr_weapons_equip() {
 			i=0; // Land Raider Relic Front Weapon
 			i+=1;item_name[i]="(None)";
 			//i+=1;item_name[i]="Thunderfire Cannon Mount";
-			i+=1;item_name[i]="Twin Linked Lascannon Mount";
+			i+=1;item_name[i]="Neutron Blaster Turret";
 			i+=1;item_name[i]="Reaper Autocannon Mount";
 			//i+=1;item_name[i]="Twin Linked Helfrost Cannon Mount";
 			//i+=1;item_name[i]="Graviton Cannon Mount";
@@ -305,13 +309,15 @@ function scr_weapons_equip() {
 	    i+=1;item_name[i]="Armoured Ceramite";
 	    i+=1;item_name[i]="Artificer Hull";
 	    i+=1;item_name[i]="Heavy Armour";
-			if dude!=50{i+=1;item_name[i]="Lucifer Pattern Engine";} //not available for Land Raiders
+			if dude=50{i+=1;item_name[i]="Void Shield";} //only for Land Raiders
 	}
-	if (tc=5) and (tb=1) and ((dude=50) or (dude=51) or (dude=52) or (dude=54)){var i;i=0; // Tank Accessory
+	if (tc=5) and (tb=1) and ((dude=50) or (dude=51) or (dude=52) or (dude=54) or (dude=6)){var i;i=0; // Tank Accessory
 			i+=1;item_name[i]="(None)";
-	    i+=1;item_name[i]="Dozer Blades";
+	    if dude!=6 {i+=1;item_name[i]="Dozer Blades"};
 	    i+=1;item_name[i]="Searchlight";
 	    i+=1;item_name[i]="Smoke Launchers";
+		i+=1;item_name[i]="Frag Assault Launchers";
+		if dude!=50 and dude!=6{i+=1;item_name[i]="Lucifer Pattern Engine"}; //not available for Land Raiders
 	}
 
 	if (tc=3) and (dude=1){ // dude=1 for normal infantry gear
