@@ -18,13 +18,13 @@ function fleets_next_location(fleet="none"){
 	var targ_location ="none";
 	if (fleet=="none"){
 		if (action!=""){
-	        var goal_x=fleet.action_x;
-	        var goal_y=fleet.action_y;
+	        var goal_x=action_x;
+	        var goal_y=action_y;
 	        targ_location=instance_nearest(goal_x,goal_y,obj_star);
 		} else {
-			targ_location=instance_nearest(fleet.x,fleet.y,obj_star);
+			targ_location=instance_nearest(x,y,obj_star);
 		}		
-	} else {
+	} else if (instance_exists(fleet)){
 		with (fleet){
 			targ_location = fleets_next_location();
 		}
