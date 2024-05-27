@@ -1813,7 +1813,6 @@ function scr_initialize_custom() {
 					"required": {
 						"wep1": ["", 0],
 						"wep2": ["", 0],
-						"armour": ["", 0],
 						"mobi": ["", 0],
 					},
 					"option": {
@@ -1825,11 +1824,6 @@ function scr_initialize_custom() {
 						"wep2": [
 							[
 								weapon_lists.melee_weapons, 1
-							],
-						],
-						"armour": [
-							[
-								["MK8 Errant", "MK6 Corvus", "MK7 Aquila"], 1
 							],
 						],
 					}
@@ -1884,11 +1878,6 @@ function scr_initialize_custom() {
 								weapon_lists.melee_weapons, 1
 							],
 						],
-						"armour": [
-							[
-								["MK8 Errant", "MK7 Aquila"], 1
-							],
-						],
 					}
 				}
 			}],
@@ -1940,11 +1929,6 @@ function scr_initialize_custom() {
 						"wep2": [
 							[
 								weapon_lists.melee_weapons, 1
-							],
-						],
-						"armour": [
-							[
-								["MK6 Corvus", "MK7 Aquila"], 1
 							],
 						],
 					}
@@ -2471,6 +2455,8 @@ function scr_initialize_custom() {
 	chapter_master.alter_equipment(chapter_master_equip, false, false, "master_crafted")
 	//TODO not sure why the strin method is ever used? will investigate and replace later
 	if (string_count("Paragon", strin) > 0) then chapter_master.add_trait("paragon")
+	chapter_master.roll_age();
+	chapter_master.roll_exp();
 
 	//TODO All heads of specialties data should be in chapter data
 	// Forge Master
@@ -2484,13 +2470,14 @@ function scr_initialize_custom() {
 	armour[company, 2] = "Artificer Armour";
 	gear[company, 2] = "Master Servo Arms";
 	chaos[company, 2] = 0;
-	experience[company, 2] = 475;
 	spawn_unit = TTRPG[company, 2];
 	if (spawn_unit.technology < 40) {
 		spawn_unit.technology = 40;
 	}
 	spawn_unit.add_trait("mars_trained");
 	spawn_unit.add_bionics("right_arm", "standard", false);
+	spawn_unit.roll_age();
+	spawn_unit.roll_exp();
 	if (global.chapter_name = "Lamenters") then armour[company, 2] = "MK6 Corvus";
 	if (global.chapter_name = "Iron Hands") {
 		repeat(9) {
@@ -2513,12 +2500,13 @@ function scr_initialize_custom() {
 		armour[company, 3] = "Artificer Armour";
 		gear[company, 3] = gear[101, 14];
 		chaos[company, 3] = -100;
-		experience[company, 3] = 525;
 		if (global.chapter_name = "Lamenters") then armour[company, 3] = "MK6 Corvus";
 		spawn_unit = TTRPG[company, 3];
 		if (spawn_unit.piety < 45) {
 			spawn_unit.piety = 45;
 		}
+		spawn_unit.roll_age();
+		spawn_unit.roll_exp();
 		spawn_unit.add_trait("zealous_faith");
 	}
 
@@ -2533,7 +2521,9 @@ function scr_initialize_custom() {
 	armour[company, 4] = "Artificer Armour";
 	gear[company, 4] = gear[101, 15];
 	chaos[company, 4] = 0;
-	experience[company, 4] = 500;
+	spawn_unit = TTRPG[company][4];
+	spawn_unit.roll_age();
+	spawn_unit.roll_exp();
 	if (global.chapter_name = "Lamenters") then armour[company, 4] = "MK6 Corvus";
 
 	// Chief Librarian
@@ -2548,7 +2538,9 @@ function scr_initialize_custom() {
 	armour[company, 5] = "Artificer Armour";
 	gear[company, 5] = gear[101, 17];
 	chaos[company, 5] = 0;
-	experience[company, 5] = 550;
+	spawn_unit = TTRPG[company][5];
+	spawn_unit.roll_age();
+	spawn_unit.roll_exp();
 	if (global.chapter_name = "Lamenters") then armour[company, 5] = "MK6 Corvus";
 	if (obj_creation.discipline = "default") {
 		let = "D";
@@ -2655,9 +2647,9 @@ function scr_initialize_custom() {
 		spawn_unit.roll_history_armour();
 		spawn_unit.roll_age();
 		spawn_unit.roll_exp();
-		TTRPG[company][k].add_trait("warp_touched");
-		TTRPG[company][k].psionic = choose(13, 14, 15, 16);
-		TTRPG[company][k].update_powers();
+		spawn_unit.add_trait("warp_touched");
+		spawn_unit.psionic = choose(13, 14, 15, 16);
+		spawn_unit.update_powers();
 	}
 	// Codiciery
 	repeat(codiciery) {
@@ -2698,12 +2690,13 @@ function scr_initialize_custom() {
 			letmax = 5;
 		}
 		spe[company][k] += string(let) + "0|";
-		TTRPG[company][k].roll_history_armour();
-		TTRPG[company][k].roll_age();
-		TTRPG[company][k].roll_exp();
-		TTRPG[company][k].add_trait("warp_touched");
-		TTRPG[company][k].psionic = choose(11, 12, 13, 14, 15);
-		TTRPG[company][k].update_powers();
+		spawn_unit = TTRPG[company][k];
+		spawn_unit.roll_history_armour();
+		spawn_unit.roll_age();
+		spawn_unit.roll_exp();
+		spawn_unit.add_trait("warp_touched");
+		spawn_unit.psionic = choose(11, 12, 13, 14, 15);
+		spawn_unit.update_powers();
 	}
 
 	// Lexicanum
@@ -2743,11 +2736,12 @@ function scr_initialize_custom() {
 			letmax = 5;
 		}
 		spe[company][k] += string(let) + "0|";
-		TTRPG[company][k].roll_history_armour();
-		TTRPG[company][k].roll_age();
-		TTRPG[company][k].roll_exp();
-		TTRPG[company][k].add_trait("warp_touched");
-		TTRPG[company][k].psionic = choose(8, 9, 10, 11, 12, 13, 14);
+		spawn_unit = TTRPG[company][k];
+		spawn_unit.roll_history_armour();
+		spawn_unit.roll_age();
+		spawn_unit.roll_exp();
+		spawn_unit.add_trait("warp_touched");
+		spawn_unit.psionic = choose(8, 9, 10, 11, 12, 13, 14);
 	}
 
 	// Apothecaries in Apothecarion
@@ -2812,8 +2806,9 @@ function scr_initialize_custom() {
 		loc[company][k] = home_name;
 		role[company][k] = roles.honor_guard;
 		name[company][k] = global.name_generator.generate_space_marine_name();
-		spawn_unit.add_exp(210 + irandom(30));
 		spawn_unit.roll_history_armour();
+		spawn_unit.roll_age();
+		spawn_unit.roll_exp();
 		spawn_unit.add_trait(choose("guardian", "champion", "observant", "perfectionist"));
 		gear[company][k] = gear[100, 2];
 		mobi[company][k] = mobi[100, 2];
@@ -3076,7 +3071,6 @@ function scr_initialize_custom() {
 		spawn_unit.roll_age();
 		spawn_unit.roll_exp();
 		armour[company][k] = "Terminator Armour";
-
 		if (string_count("Crafter", strin) > 0) and(k <= 20) then armour[company][k] = "Tartaros";
 	}
 	repeat(veteran) {
@@ -3095,13 +3089,11 @@ function scr_initialize_custom() {
 		wep2[company][k] = wep2[101, 3];
 		gear[company][k] = gear[101, 3];
 		mobi[company][k] = mobi[101, 3];
-		armour[company][k] = choose_weighted(armour_weighted_lists.quality_armour);
 		if (global.chapter_name == "Dark Angels" && company == 1){
 			wep1[company][k] = wep1[101, 4];
 			wep2[company][k] = wep2[101, 4];
 			gear[company][k] = gear[101, 4];
 			mobi[company][k] = mobi[101, 4];
-			armour[company][k] = armour[101, 4];
 		}
 	}
 
@@ -3489,10 +3481,7 @@ function scr_initialize_custom() {
 				wep1[company][k] = wep1[101, 14];
 				name[company][k] = global.name_generator.generate_space_marine_name();
 				wep2[company][k] = choose_weighted(weapon_weighted_lists.pistols);
-				armour[company][k] = "MK7 Aquila";
-				if (company <= 2) then armour[company][k] = choose("MK8 Errant", "MK6 Corvus");
 				gear[company][k] = gear[101, 14];
-
 				if (company = 8) and(obj_creation.equal_specialists = 0) then mobi[company][k] = "Jump Pack";
 				if (mobi[101, 14] != "") then mobi[company][k] = mobi[101, 14];
 				spawn_unit = TTRPG[company][k]
