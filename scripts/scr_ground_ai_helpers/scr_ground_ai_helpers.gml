@@ -40,11 +40,13 @@ function planet_forces_array(planet){
 		p_tyranids[planet],
 		p_necrons[planet],
 	];
+	return force_array;
 }
 
 function guard_target_matrix(planet){
+	guard_attack = "";
     // if (p_eldar[planet]>0) and (p_owner[planet]!=6) then guard_attack="eldar";
-    if (planet_forces[eFaction.Tau] + planet_forces[eFaction.Orks] + planet_forces[eFaction.Heretics]+ planet_forces[eFaction.Chaos])
+    //if (planet_forces[eFACTION.Tau] + planet_forces[eFACTION.Ork] + planet_forces[eFACTION.Heretics]+ planet_forces[eFACTION.Chaos])
     if (p_tau[planet]>0) then guard_attack="tau";
     if (p_orks[planet]>0) then guard_attack="ork";
     if (p_traitors[planet]>0) then guard_attack="traitors";

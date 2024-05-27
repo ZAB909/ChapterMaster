@@ -55,6 +55,12 @@ function scr_cheatcode(argument0) {
         if (cheatcode_string=="chaosfleetspawn"){
             spawn_chaos_warlord();
         }
+        if (cheatcode_string=="neworkfleet"){
+            var p_fleet =  get_largest_player_fleet();
+            with (instance_nearest(p_fleet.x,p_fleet.y, obj_star)){
+                new_ork_fleet(x,y);
+            }
+        }
          if (cheatcode_string=="techuprising"){
             var pip = instance_create(0,0,obj_popup);
             pip.title = "Technical Differences!";

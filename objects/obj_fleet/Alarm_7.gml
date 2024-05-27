@@ -1,4 +1,4 @@
-
+show_debug_message("alarm 7 fleet");
 var yeehaw1, yeehaw2, tstar;
 yeehaw1=0;yeehaw2=0;tstar=0;
 
@@ -163,5 +163,5 @@ instance_activate_all();
 if (instance_exists(obj_p_assra)){obj_p_assra.alarm[0]=1;}
 alarm[4]=2;
 
-
+show_debug_message("alarm 7 fleet");
 

@@ -408,7 +408,7 @@ function scr_enemy_ai_b() {
 						if (visited==1) {  //visited variable checks whether the star has been visited by the chapter or not 1 for true 0 for false
 							if(p_type[i]=="Forge") { 
 								dispo[i]-=10; // 10 disposition decreases for the respective planet
-								obj_controller.disposition[eFaction.Mechanicus]-=10; // 10 disposition decrease for the toaster Fetishest since they aren't that many toasters in 41 millennia
+								obj_controller.disposition[eFACTION.Mechanicus]-=10; // 10 disposition decrease for the toaster Fetishest since they aren't that many toasters in 41 millennia
 							}  
 							else if(planet_feature_bool(p_feature[i], P_features.Sororitas_Cathedral) or (p_type[i]=="Shrine")) { 
 								dispo[i]-=10; // 10 disposition decreases for the respective planet

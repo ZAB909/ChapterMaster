@@ -1,4 +1,4 @@
-
+show_debug_message("alarm 6 fleet");
 /*
 enemy[2]=6;enemy_status[2]=1;
 en_capital[2]=2;en_frigate[2]=3;en_escort[2]=5;
@@ -173,6 +173,6 @@ obj_fleet_spawner.alarm[0]=1;
 
 
 // alarm[1]=2;
-
+show_debug_message("alarm 6 fleet");
 /* */
 /*  */
