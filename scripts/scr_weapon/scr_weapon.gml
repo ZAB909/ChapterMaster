@@ -167,8 +167,8 @@ global.weapons={
         "ammo": 0,
         "range": 1,
         "spli": 2,
-        "arp": 0
-	"tags":["sword"],
+        "arp": 0,
+		"tags":["sword"],
     },
     "Chainsword": {
         "abbreviation": "ChSwrd",
@@ -915,7 +915,7 @@ global.weapons={
         "ammo": 1,
         "range": 20,
         "spli": 3,
-        "arp": 1
+        "arp": 1,
         "tags":["heavy_ranged", "ancient"]
     },
     "Integrated Bolters": {
@@ -1048,7 +1048,7 @@ global.weapons={
         "ammo": 6,
         "range": 20,
         "spli": 25,
-        "arp": 1
+        "arp": 1,
         "tags":["vehicle", "indirect"]
     },
     "HK Missile": {
@@ -1069,7 +1069,7 @@ global.weapons={
         "ammo": 20,
         "range": 16,
         "spli": 3,
-        "arp": 1
+        "arp": 1,
        "tags":["vehicle", "dreadnought", "heavy_ranged", "bolt"]
     },
     "Twin Linked Lascannon Mount": {
@@ -1085,7 +1085,7 @@ global.weapons={
         "ammo": 10,
         "range": 20,
         "spli": 3,
-        "arp": 1
+        "arp": 1,
        "tags":["las", "vehicle", "heavy_ranged", "dreadnought"]
     },
     "Twin Linked Assault Cannon Mount": {
