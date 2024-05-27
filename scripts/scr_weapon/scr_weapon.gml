@@ -459,8 +459,8 @@ global.weapons={
         "ranged_hands": 0,
         "ammo": 0,
         "range": 1,
-        "spli": 10,
-        "arp": 0,
+        "spli": 15,
+        "arp": 1,
         "tags":["power", "vehicle", "dual", "dreadnought", "fist"],
     },
     "Thunder Hammer": {
