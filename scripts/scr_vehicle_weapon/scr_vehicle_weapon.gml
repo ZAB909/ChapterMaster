@@ -22,6 +22,7 @@ function scr_vehicle_weapon(argument0, argument1) {
 	if (weep="Thunder Hammer")then melee=1;if (weep="Power Sword")then melee=1;
 	if (weep="Power Weapon")then melee=1;if (weep="Power Axe")then melee=1;
 	if (weep="Power Fist")then melee=1;if (weep="Power Fists")then melee=1;
+	if (weep="Dozer Blades") then melee=1;
 	if (melee=1) then wep_range[argument1]=max(target[argument1].sprite_width-8,target[argument1].sprite_height-8,sprite_height-8);
 
 
@@ -78,6 +79,7 @@ function scr_vehicle_weapon(argument0, argument1) {
 	if (weep="Combat Knife"){with(bull){instance_destroy();}target[argument1].hp-=dym;}
 	if (weep="Force Staff"){with(bull){instance_destroy();}target[argument1].hp-=dym;}
 	if (weep="Thunder Hammer"){with(bull){instance_destroy();}target[argument1].hp-=dym;}
+	if (weep="Dozer Blades"){with(bull){instance_destroy();}target[argument1].hp-=dym;}
 
 	if (weep="Power Sword"){with(bull){instance_destroy();}target[argument1].hp-=dym;}
 	if (weep="Power Weapon"){with(bull){instance_destroy();}target[argument1].hp-=dym;}
